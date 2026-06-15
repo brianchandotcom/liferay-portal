@@ -15,27 +15,24 @@ export interface Category {
 }
 
 interface VocabularyMultiSelectProps {
-	hasUpdatePermission: boolean;
-	initialSelectedCategories: Category[];
+	disabled: boolean;
 	label: string;
-	onSelectionChange: (categories: Category[]) => void;
+	onChange: (categories: Category[]) => void;
 	placeholder: string;
+	value: Category[];
 	vocabularyERC: string;
 }
 
 export default function VocabularyMultiSelect({
-	hasUpdatePermission,
-	initialSelectedCategories,
+	disabled,
 	label,
-	onSelectionChange,
+	onChange,
 	placeholder,
+	value,
 	vocabularyERC,
 }: VocabularyMultiSelectProps) {
 	const [apiURL, setApiURL] = useState<string | undefined>();
 	const [inputValue, setInputValue] = useState('');
-	const [selected, setSelected] = useState<Category[]>(
-		initialSelectedCategories
-	);
 
 	const containerRef = useRef<HTMLDivElement>(null);
 
@@ -43,23 +40,26 @@ export default function VocabularyMultiSelect({
 		getVocabularyByExternalReferenceCode({
 			siteGroupId: Liferay.ThemeDisplay.getSiteGroupId(),
 			vocabularyERC,
-		}).then(({data}) => {
-			if (data?.id) {
+		})
+			.then(({data}) => {
+
+				// When the vocabulary is not available in this scope, point at
+				// a nonexistent vocabulary so the field still renders enabled
+				// but empty, the same as a scoped vocabulary with no categories
+
+				const vocabularyId = data?.id ?? 0;
+
 				setApiURL(
-					`${Liferay.ThemeDisplay.getPortalURL()}/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/${data.id}/taxonomy-categories`
+					`${Liferay.ThemeDisplay.getPortalURL()}/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/${vocabularyId}/taxonomy-categories`
 				);
-			}
-		});
+			})
+			.catch(() => {});
 	}, [vocabularyERC]);
 
 	const removeCategory = (id: number) => {
-		const remainingCategories = selected.filter(
-			(selectedCategory) => selectedCategory.id !== id
+		onChange(
+			value.filter((selectedCategory) => selectedCategory.id !== id)
 		);
-
-		setSelected(remainingCategories);
-
-		onSelectionChange(remainingCategories);
 	};
 
 	return (
@@ -69,9 +69,9 @@ export default function VocabularyMultiSelect({
 			{apiURL && (
 				<ItemSelector<any>
 					apiURL={apiURL}
-					disabled={!hasUpdatePermission}
+					disabled={disabled}
 					displaySelectedItems={false}
-					items={selected}
+					items={value}
 					locator={{id: 'id', label: 'name', value: 'name'}}
 					multiSelect
 					onChange={setInputValue}
@@ -90,9 +90,7 @@ export default function VocabularyMultiSelect({
 							}
 						});
 
-						setSelected(categories);
-
-						onSelectionChange(categories);
+						onChange(categories);
 
 						const input =
 							containerRef.current?.querySelector('input');
@@ -112,11 +110,11 @@ export default function VocabularyMultiSelect({
 			)}
 
 			<div className="lfr-cmp__vocabulary-multi-select-selected">
-				{selected.map((category) => (
+				{value.map((category) => (
 					<Label
 						closeButtonProps={{
 							'aria-label': Liferay.Language.get('remove'),
-							'disabled': !hasUpdatePermission,
+							disabled,
 							'onClick': (event: React.MouseEvent) => {
 								event.preventDefault();
 

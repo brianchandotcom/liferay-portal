@@ -191,7 +191,7 @@ export default function CalendarView({items}: CalendarViewProps) {
 					setMoreLinkPopover({
 						alignElement: arg.jsEvent.currentTarget as HTMLElement,
 						date: arg.date,
-						tasks: arg.hiddenSegs.map(
+						tasks: arg.allSegs.map(
 							(seg) => seg.event.extendedProps.task
 						),
 					});

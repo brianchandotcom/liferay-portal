@@ -262,12 +262,11 @@ public class MCPServerServlet extends HttpServlet {
 			String content = (String)response.getEntity();
 
 			if (content != null) {
-				List<String> maskExternalReferenceCodes =
-					_getDataMaskExternalReferenceCodes(
-						companyId, profileObjectEntryId);
-
 				content = _dataMaskingEngine.redact(
-					companyId, maskExternalReferenceCodes, content);
+					companyId,
+					_getDataMaskExternalReferenceCodes(
+						companyId, profileObjectEntryId),
+					content);
 			}
 
 			if (responseCode < 300) {

@@ -649,8 +649,8 @@ test(
 );
 
 test(
-	'Guest users do not see the wish list CTA on the card, product detail and listing pages',
-	{tag: '@LPD-92440'},
+	'Guest users do not see restricted storefront tabs or the wish list CTA',
+	{tag: ['@LPD-92440', '@LPD-93812']},
 	async ({
 		apiHelpers,
 		commerceAdminChannelDetailsPage,
@@ -660,8 +660,6 @@ test(
 		page,
 		pageEditorPage,
 	}) => {
-		test.setTimeout(180000);
-
 		const productName = 'Wear Sensors';
 
 		const {channel, site} = await classicCommerceSetUp(
@@ -678,82 +676,81 @@ test(
 			[{pageName: 'Product Detail', parentPageName: 'Catalog'}]
 		);
 
-		try {
-			await test.step('Verify the wish list CTA is hidden from the guest on the listing page', async () => {
-				await expect(
-					commerceThemeClassicCatalogPage.productCardAddToCartButton(
-						productName
-					)
-				).toBeVisible();
+		await test.step('Verify the storefront navigation bar is not shown to guests', async () => {
+			await expect(page.locator('.navbar-site')).toHaveCount(0);
+		});
 
-				await expect(
-					commerceThemeClassicCatalogPage.productCardAddToWishListButton(
-						productName
-					)
-				).toHaveCount(0);
-			});
+		await test.step('Verify the wish list CTA is hidden from the guest on the listing page', async () => {
+			await expect(
+				commerceThemeClassicCatalogPage.productCardAddToCartButton(
+					productName
+				)
+			).toBeVisible();
 
-			await test.step('Verify the wish list CTA is hidden from the guest on the product detail page', async () => {
-				await commerceThemeClassicCatalogPage
-					.productCardLink(productName)
-					.click();
+			await expect(
+				commerceThemeClassicCatalogPage.productCardAddToWishListButton(
+					productName
+				)
+			).toHaveCount(0);
+		});
 
-				await expect(
-					page.getByRole('heading', {name: productName})
-				).toBeVisible();
+		await test.step('Verify the wish list CTA is hidden from the guest on the product detail page', async () => {
+			await commerceThemeClassicCatalogPage
+				.productCardLink(productName)
+				.click();
 
-				await expect(page.locator('.add-to-wish-list')).toHaveCount(0);
-			});
+			await expect(
+				page.getByRole('heading', {name: productName})
+			).toBeVisible();
 
-			let productCardDisplayPageURL: string;
+			await expect(page.locator('.add-to-wish-list')).toHaveCount(0);
+		});
 
-			await test.step('Create a product display page template with the product card fragment', async () => {
-				await performLoginViaApi({page, screenName: 'test'});
+		let productCardDisplayPageURL: string;
 
-				const className =
-					await apiHelpers.jsonWebServicesClassName.fetchClassName(
-						'com.liferay.commerce.product.model.CPDefinition'
-					);
-
-				const product =
-					await apiHelpers.headlessCommerceAdminCatalog.getProductByName(
-						productName
-					);
-
-				const displayPageTemplateName = getRandomString();
-
-				await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addDisplayPageLayoutPageTemplateEntry(
-					{
-						classNameId: className.classNameId,
-						groupId: String(site.id),
-						name: displayPageTemplateName,
-					}
-				);
-
-				await displayPageTemplatesPage.goto(site.friendlyUrlPath);
-				await displayPageTemplatesPage.editTemplate(
-					displayPageTemplateName
-				);
-
-				await pageEditorPage.addFragment('Product', 'Product Card');
-
-				await displayPageTemplatesPage.publishTemplate();
-
-				productCardDisplayPageURL = `/web${site.friendlyUrlPath}/e/${displayPageTemplateName}/${className.classNameId}/${product.id}`;
-			});
-
-			await test.step('Verify the wish list CTA is hidden from the guest on the product card fragment', async () => {
-				await performLogout(page);
-
-				await page.goto(productCardDisplayPageURL);
-
-				await expect(page.locator('.product-card')).toBeVisible();
-
-				await expect(page.locator('.add-to-wish-list')).toHaveCount(0);
-			});
-		}
-		finally {
+		await test.step('Create a product display page template with the product card fragment', async () => {
 			await performLoginViaApi({page, screenName: 'test'});
-		}
+
+			const className =
+				await apiHelpers.jsonWebServicesClassName.fetchClassName(
+					'com.liferay.commerce.product.model.CPDefinition'
+				);
+
+			const product =
+				await apiHelpers.headlessCommerceAdminCatalog.getProductByName(
+					productName
+				);
+
+			const displayPageTemplateName = getRandomString();
+
+			await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addDisplayPageLayoutPageTemplateEntry(
+				{
+					classNameId: className.classNameId,
+					groupId: String(site.id),
+					name: displayPageTemplateName,
+				}
+			);
+
+			await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+			await displayPageTemplatesPage.editTemplate(
+				displayPageTemplateName
+			);
+
+			await pageEditorPage.addFragment('Product', 'Product Card');
+
+			await displayPageTemplatesPage.publishTemplate();
+
+			productCardDisplayPageURL = `/web${site.friendlyUrlPath}/e/${displayPageTemplateName}/${className.classNameId}/${product.id}`;
+		});
+
+		await test.step('Verify the wish list CTA is hidden from the guest on the product card fragment', async () => {
+			await performLogout(page);
+
+			await page.goto(productCardDisplayPageURL);
+
+			await expect(page.locator('.product-card')).toBeVisible();
+
+			await expect(page.locator('.add-to-wish-list')).toHaveCount(0);
+		});
 	}
 );

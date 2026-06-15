@@ -43,8 +43,8 @@ renderResponse.setTitle((oAuthClientPRLocalMetadata == null) ? LanguageUtil.get(
 					<liferay-ui:message arguments="<%= HtmlUtil.escape(((OAuthClientPRLocalMetadataMetadataJSONException)errorException).getMessage()) %>" key="oauth-client-pr-local-metadata-invalid-metadata-json-x" />
 				</liferay-ui:error>
 
-				<liferay-ui:error exception="<%= OAuthClientPRLocalMetadataResourceException.class %>">
-					<liferay-ui:message arguments="<%= HtmlUtil.escape(((OAuthClientPRLocalMetadataResourceException)errorException).getMessage()) %>" key="oauth-client-pr-local-metadata-invalid-https-resource-x" />
+				<liferay-ui:error exception="<%= OAuthClientPRLocalMetadataProtectedResourceURIException.class %>">
+					<liferay-ui:message arguments="<%= HtmlUtil.escape(((OAuthClientPRLocalMetadataProtectedResourceURIException)errorException).getMessage()) %>" key="oauth-client-pr-local-metadata-invalid-https-resource-x" />
 				</liferay-ui:error>
 
 				<aui:fieldset label="general">

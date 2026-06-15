@@ -72,7 +72,13 @@ public class PropertyValidator {
 
 		List<ConsumedKey> consumedKeys = new ArrayList<>();
 
-		for (PropertyScanner propertyScanner : _propertyScanners) {
+		List<PropertyScanner> propertyScanners = Arrays.asList(
+			new CommandsXMLPropertyScanner(),
+			new JenkinsResultsParserJavaPropertyScanner(),
+			new PortalPropertyScanner(), new PropertiesFilePropertyScanner(),
+			new ShellPropertyScanner());
+
+		for (PropertyScanner propertyScanner : propertyScanners) {
 			for (File file :
 					propertyScanner.findFiles(
 						jenkinsRepositoryDir, jenkinsResultsParserSourceDir)) {
@@ -416,12 +422,6 @@ public class PropertyValidator {
 		Pattern.compile("(?<!System)\\.getProperty\\(\\s*\"([^\"]+)\"");
 	private static final Pattern _propertyKeyLiteralPattern = Pattern.compile(
 		"\"([a-z][a-z0-9]*(?:[.-][a-z0-9]+)+(?:\\[[^\"]*\\])*[.\\[]?)\"");
-	private static final List<PropertyScanner> _propertyScanners =
-		Arrays.asList(
-			new CommandsXMLPropertyScanner(),
-			new JenkinsResultsParserJavaPropertyScanner(),
-			new PortalPropertyScanner(), new PropertiesFilePropertyScanner(),
-			new ShellPropertyScanner());
 	private static final Pattern _shellGetBuildPropertyPattern =
 		Pattern.compile("get_build_property(?:_value)?\\s+\"([^\"$]+)");
 

@@ -5,12 +5,9 @@
 
 package com.liferay.exportimport.rest.dto.v1_0;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
-import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -182,45 +179,6 @@ public class ExportProcessRequest implements Serializable {
 	private Supplier<Date> _endDateSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
-	public Integer getLast() {
-		if (_lastSupplier != null) {
-			last = _lastSupplier.get();
-
-			_lastSupplier = null;
-		}
-
-		return last;
-	}
-
-	public void setLast(Integer last) {
-		this.last = last;
-
-		_lastSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setLast(UnsafeSupplier<Integer, Exception> lastUnsafeSupplier) {
-		_lastSupplier = () -> {
-			try {
-				return lastUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Integer last;
-
-	@JsonIgnore
-	private Supplier<Integer> _lastSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getLogo() {
 		if (_logoSupplier != null) {
 			logo = _logoSupplier.get();
@@ -339,58 +297,6 @@ public class ExportProcessRequest implements Serializable {
 
 	@JsonIgnore
 	private Supplier<Boolean> _permissionsSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema
-	@JsonGetter("range")
-	@Valid
-	public Range getRange() {
-		if (_rangeSupplier != null) {
-			range = _rangeSupplier.get();
-
-			_rangeSupplier = null;
-		}
-
-		return range;
-	}
-
-	@JsonIgnore
-	public String getRangeAsString() {
-		Range range = getRange();
-
-		if (range == null) {
-			return null;
-		}
-
-		return range.toString();
-	}
-
-	public void setRange(Range range) {
-		this.range = range;
-
-		_rangeSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setRange(UnsafeSupplier<Range, Exception> rangeUnsafeSupplier) {
-		_rangeSupplier = () -> {
-			try {
-				return rangeUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Range range;
-
-	@JsonIgnore
-	private Supplier<Range> _rangeSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getRatings() {
@@ -715,18 +621,6 @@ public class ExportProcessRequest implements Serializable {
 			sb.append("\"");
 		}
 
-		Integer last = getLast();
-
-		if (last != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"last\": ");
-
-			sb.append(last);
-		}
-
 		Boolean logo = getLogo();
 
 		if (logo != null) {
@@ -765,20 +659,6 @@ public class ExportProcessRequest implements Serializable {
 			sb.append("\"permissions\": ");
 
 			sb.append(permissions);
-		}
-
-		Range range = getRange();
-
-		if (range != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"range\": ");
-
-			sb.append("\"");
-			sb.append(range);
-			sb.append("\"");
 		}
 
 		Boolean ratings = getRatings();
@@ -880,44 +760,6 @@ public class ExportProcessRequest implements Serializable {
 	)
 	public String xClassName;
 
-	@GraphQLName("Range")
-	public static enum Range {
-
-		ALL("all"), DATE_RANGE("dateRange"), LAST("last");
-
-		@JsonCreator
-		public static Range create(String value) {
-			if ((value == null) || value.equals("")) {
-				return null;
-			}
-
-			for (Range range : values()) {
-				if (Objects.equals(range.getValue(), value)) {
-					return range;
-				}
-			}
-
-			throw new IllegalArgumentException("Invalid enum value: " + value);
-		}
-
-		@JsonValue
-		public String getValue() {
-			return _value;
-		}
-
-		@Override
-		public String toString() {
-			return _value;
-		}
-
-		private Range(String value) {
-			_value = value;
-		}
-
-		private final String _value;
-
-	}
-
 	private static String _escape(Object object) {
 		return StringUtil.replace(
 			String.valueOf(object), _JSON_ESCAPE_STRINGS[0],
@@ -1007,4 +849,4 @@ public class ExportProcessRequest implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-149618300
+// LIFERAY-REST-BUILDER-HASH:866154181

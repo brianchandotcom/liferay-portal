@@ -89,25 +89,6 @@ public class ExportProcessRequest implements Cloneable, Serializable {
 
 	protected Date endDate;
 
-	public Integer getLast() {
-		return last;
-	}
-
-	public void setLast(Integer last) {
-		this.last = last;
-	}
-
-	public void setLast(UnsafeSupplier<Integer, Exception> lastUnsafeSupplier) {
-		try {
-			last = lastUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Integer last;
-
 	public Boolean getLogo() {
 		return logo;
 	}
@@ -166,33 +147,6 @@ public class ExportProcessRequest implements Cloneable, Serializable {
 	}
 
 	protected Boolean permissions;
-
-	public Range getRange() {
-		return range;
-	}
-
-	public String getRangeAsString() {
-		if (range == null) {
-			return null;
-		}
-
-		return range.toString();
-	}
-
-	public void setRange(Range range) {
-		this.range = range;
-	}
-
-	public void setRange(UnsafeSupplier<Range, Exception> rangeUnsafeSupplier) {
-		try {
-			range = rangeUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Range range;
 
 	public Boolean getRatings() {
 		return ratings;
@@ -356,38 +310,5 @@ public class ExportProcessRequest implements Cloneable, Serializable {
 		return ExportProcessRequestSerDes.toJSON(this);
 	}
 
-	public static enum Range {
-
-		ALL("all"), DATE_RANGE("dateRange"), LAST("last");
-
-		public static Range create(String value) {
-			for (Range range : values()) {
-				if (Objects.equals(range.getValue(), value) ||
-					Objects.equals(range.name(), value)) {
-
-					return range;
-				}
-			}
-
-			return null;
-		}
-
-		public String getValue() {
-			return _value;
-		}
-
-		@Override
-		public String toString() {
-			return _value;
-		}
-
-		private Range(String value) {
-			_value = value;
-		}
-
-		private final String _value;
-
-	}
-
 }
-// LIFERAY-REST-BUILDER-HASH:61670162
+// LIFERAY-REST-BUILDER-HASH:828206440

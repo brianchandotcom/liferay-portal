@@ -128,12 +128,12 @@ public class OpenAPIUtil {
 		JSONObject operationJSONObject, Map<String, Object> properties,
 		List<Object> required, JSONObject openAPIJSONObject) {
 
-		Map<String, Object> resolvedSchema = (Map<String, Object>)_resolveRefs(
+		Map<String, Object> bodySchemaMap = (Map<String, Object>)_resolveRefs(
 			openAPIJSONObject, _getBodySchemaJSONObject(operationJSONObject),
 			new HashSet<>());
 
 		Map<String, Object> partProperties =
-			(Map<String, Object>)resolvedSchema.get("properties");
+			(Map<String, Object>)bodySchemaMap.get("properties");
 
 		if (partProperties == null) {
 			return;
@@ -152,11 +152,11 @@ public class OpenAPIUtil {
 			}
 		}
 
-		List<Object> schemaRequired = (List<Object>)resolvedSchema.get(
+		List<Object> bodySchemaRequired = (List<Object>)bodySchemaMap.get(
 			"required");
 
-		if (schemaRequired != null) {
-			required.addAll(schemaRequired);
+		if (bodySchemaRequired != null) {
+			required.addAll(bodySchemaRequired);
 		}
 	}
 
@@ -174,11 +174,11 @@ public class OpenAPIUtil {
 
 		Map<String, Object> property = new LinkedHashMap<>();
 
-		JSONObject schemaJSONObject = parameterJSONObject.getJSONObject(
-			"schema");
+		JSONObject parameterSchemaJSONObject =
+			parameterJSONObject.getJSONObject("schema");
 
-		for (String key : schemaJSONObject.keySet()) {
-			property.put(key, schemaJSONObject.get(key));
+		for (String key : parameterSchemaJSONObject.keySet()) {
+			property.put(key, parameterSchemaJSONObject.get(key));
 		}
 
 		if (parameterJSONObject.has("description")) {
@@ -438,15 +438,15 @@ public class OpenAPIUtil {
 			throw new IllegalArgumentException("Request body has no content");
 		}
 
-		JSONObject schemaJSONObject = mediaTypeJSONObject.getJSONObject(
+		JSONObject bodySchemaJSONObject = mediaTypeJSONObject.getJSONObject(
 			"schema");
 
-		if (schemaJSONObject == null) {
+		if (bodySchemaJSONObject == null) {
 			throw new IllegalArgumentException(
 				"Request body content has no \"schema\"");
 		}
 
-		return schemaJSONObject;
+		return bodySchemaJSONObject;
 	}
 
 	private static String _getDescription(
@@ -531,17 +531,21 @@ public class OpenAPIUtil {
 				JSONObject requestBodyJSONObject =
 					operationJSONObject.getJSONObject("requestBody");
 
-				Object bodySchema = null;
+				Map<String, Object> bodySchemaMap = null;
 
 				if (requestBodyJSONObject.getJSONObject("content") != null) {
-					bodySchema = _resolveRefs(
+					Object resolvedObject = _resolveRefs(
 						openAPIJSONObject,
 						_getBodySchemaJSONObject(operationJSONObject),
 						new HashSet<>());
+
+					if (resolvedObject instanceof Map) {
+						bodySchemaMap = (Map<String, Object>)resolvedObject;
+					}
 				}
 
-				if (!(bodySchema instanceof Map)) {
-					bodySchema = LinkedHashMapBuilder.<String, Object>put(
+				if (bodySchemaMap == null) {
+					bodySchemaMap = LinkedHashMapBuilder.<String, Object>put(
 						"type", "object"
 					).build();
 				}
@@ -550,27 +554,26 @@ public class OpenAPIUtil {
 					"description");
 
 				if (Validator.isNotNull(requestBodyDescription)) {
-					Map<String, Object> bodySchemaMap =
-						(Map<String, Object>)bodySchema;
+					Object bodySchemaDescription = bodySchemaMap.get(
+						"description");
 
-					Object schemaDescription = bodySchemaMap.get("description");
-
-					if (Validator.isNull(schemaDescription)) {
+					if (Validator.isNull(bodySchemaDescription)) {
 						bodySchemaMap.put(
 							"description", requestBodyDescription);
 					}
 					else if (!Objects.equals(
-								schemaDescription, requestBodyDescription)) {
+								bodySchemaDescription,
+								requestBodyDescription)) {
 
 						bodySchemaMap.put(
 							"description",
 							StringBundler.concat(
 								requestBodyDescription, StringPool.SPACE,
-								schemaDescription));
+								bodySchemaDescription));
 					}
 				}
 
-				properties.put("body", bodySchema);
+				properties.put("body", bodySchemaMap);
 
 				required.add("body");
 			}
@@ -914,13 +917,13 @@ public class OpenAPIUtil {
 		JSONObject inputJSONObject, JSONObject openAPIJSONObject,
 		Operation operation, Http.Options options) {
 
-		Map<String, Object> bodySchema = (Map<String, Object>)_resolveRefs(
+		Map<String, Object> bodySchemaMap = (Map<String, Object>)_resolveRefs(
 			openAPIJSONObject,
 			_getBodySchemaJSONObject(operation._operationJSONObject),
 			new HashSet<>());
 
 		Map<String, Object> partProperties =
-			(Map<String, Object>)bodySchema.get("properties");
+			(Map<String, Object>)bodySchemaMap.get("properties");
 
 		if (partProperties == null) {
 			return;

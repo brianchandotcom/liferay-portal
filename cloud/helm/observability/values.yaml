@@ -591,6 +591,9 @@ kube-state-metrics:
         enabled: true
         ingress:
             -   from:
+                    -   namespaceSelector:
+                            matchLabels:
+                                kubernetes.io/metadata.name: gmp-system
                     -   podSelector: {}
     podDisruptionBudget:
         maxUnavailable: 1
@@ -617,6 +620,9 @@ prometheus-node-exporter:
         enabled: true
         ingress:
             -   from:
+                    -   namespaceSelector:
+                            matchLabels:
+                                kubernetes.io/metadata.name: gmp-system
                     -   podSelector: {}
     prometheus:
         monitor:

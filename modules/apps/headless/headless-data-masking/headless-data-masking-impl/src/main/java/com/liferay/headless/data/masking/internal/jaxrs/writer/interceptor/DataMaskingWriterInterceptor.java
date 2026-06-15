@@ -6,8 +6,6 @@
 package com.liferay.headless.data.masking.internal.jaxrs.writer.interceptor;
 
 import com.liferay.headless.data.masking.engine.DataMaskingEngine;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -112,19 +110,7 @@ public class DataMaskingWriterInterceptor implements WriterInterceptor {
 			return StandardCharsets.UTF_8;
 		}
 
-		try {
-			return Charset.forName(charset);
-		}
-		catch (RuntimeException runtimeException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to resolve charset \"" + charset +
-						"\"; falling back to UTF-8",
-					runtimeException);
-			}
-
-			return StandardCharsets.UTF_8;
-		}
+		return Charset.forName(charset);
 	}
 
 	private List<String> _getDataMaskExternalReferenceCodes(
@@ -157,9 +143,6 @@ public class DataMaskingWriterInterceptor implements WriterInterceptor {
 
 		return false;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DataMaskingWriterInterceptor.class);
 
 	@Reference
 	private DataMaskingEngine _dataMaskingEngine;

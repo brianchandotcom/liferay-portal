@@ -138,7 +138,7 @@ public class JiraRestController extends BaseRestController {
 
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<String> handleException(Exception exception) {
-		_log.error(exception, exception);
+		_log.error(exception);
 
 		return new ResponseEntity<>(
 			exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);

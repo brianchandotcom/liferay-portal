@@ -5,7 +5,7 @@
 
 package com.liferay.headless.data.masking.internal.jaxrs.writer.interceptor;
 
-import com.liferay.headless.data.masking.service.v1_0.DataMaskingService;
+import com.liferay.headless.data.masking.engine.DataMaskingEngine;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -37,8 +37,8 @@ public class DataMaskingWriterInterceptorTest {
 	@Before
 	public void setUp() {
 		ReflectionTestUtil.setFieldValue(
-			_dataMaskingWriterInterceptor, "_dataMaskingService",
-			_dataMaskingService);
+			_dataMaskingWriterInterceptor, "_dataMaskingEngine",
+			_dataMaskingEngine);
 		ReflectionTestUtil.setFieldValue(
 			_dataMaskingWriterInterceptor, "_httpServletRequest",
 			_httpServletRequest);
@@ -75,7 +75,7 @@ public class DataMaskingWriterInterceptorTest {
 		);
 
 		Mockito.verify(
-			_dataMaskingService, Mockito.never()
+			_dataMaskingEngine, Mockito.never()
 		).redact(
 			Mockito.anyLong(), Mockito.anyList(), Mockito.anyString()
 		);
@@ -104,14 +104,14 @@ public class DataMaskingWriterInterceptorTest {
 		);
 
 		Mockito.verify(
-			_dataMaskingService, Mockito.never()
+			_dataMaskingEngine, Mockito.never()
 		).redact(
 			Mockito.anyLong(), Mockito.anyList(), Mockito.anyString()
 		);
 	}
 
-	private final DataMaskingService _dataMaskingService = Mockito.mock(
-		DataMaskingService.class);
+	private final DataMaskingEngine _dataMaskingEngine = Mockito.mock(
+		DataMaskingEngine.class);
 	private final DataMaskingWriterInterceptor _dataMaskingWriterInterceptor =
 		new DataMaskingWriterInterceptor();
 	private final HttpServletRequest _httpServletRequest = Mockito.mock(

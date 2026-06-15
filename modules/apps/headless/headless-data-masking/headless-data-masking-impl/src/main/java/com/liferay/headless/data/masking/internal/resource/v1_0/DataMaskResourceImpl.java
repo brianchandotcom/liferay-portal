@@ -7,7 +7,7 @@ package com.liferay.headless.data.masking.internal.resource.v1_0;
 
 import com.liferay.headless.data.masking.dto.v1_0.DataMaskPreviewRequest;
 import com.liferay.headless.data.masking.dto.v1_0.DataMaskPreviewResult;
-import com.liferay.headless.data.masking.internal.masking.DataMask;
+import com.liferay.headless.data.masking.internal.engine.DataMask;
 import com.liferay.headless.data.masking.resource.v1_0.DataMaskResource;
 import com.liferay.portal.kernel.util.Validator;
 

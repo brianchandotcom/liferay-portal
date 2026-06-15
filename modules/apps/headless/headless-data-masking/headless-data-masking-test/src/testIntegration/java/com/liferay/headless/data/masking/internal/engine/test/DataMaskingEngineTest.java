@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.headless.data.masking.internal.masking.test;
+package com.liferay.headless.data.masking.internal.engine.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.headless.data.masking.service.v1_0.DataMaskingService;
+import com.liferay.headless.data.masking.engine.DataMaskingEngine;
 import com.liferay.headless.data.masking.test.util.DataMaskTestUtil;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.petra.string.StringBundler;
@@ -48,7 +48,7 @@ public class DataMaskingEngineTest {
 	@FeatureFlags(featureFlags = @FeatureFlag("LPD-90204"))
 	@Test
 	public void testRedactionAppliesAllSystemMasks() throws Exception {
-		String redactedText = _dataMaskingService.redact(
+		String redactedText = _dataMaskingEngine.redact(
 			TestPropsValues.getCompanyId(),
 			Arrays.asList(
 				"L_DATA_MASK_IBAN", "L_DATA_MASK_CREDIT_CARD_NUMBER",
@@ -113,7 +113,7 @@ public class DataMaskingEngineTest {
 		ObjectEntry domainMaskObjectEntry = DataMaskTestUtil.addCustomMask(
 			RandomTestUtil.randomString(), "example\\.com", "[DOMAIN]");
 
-		String redactedText = _dataMaskingService.redact(
+		String redactedText = _dataMaskingEngine.redact(
 			TestPropsValues.getCompanyId(),
 			Arrays.asList(
 				domainMaskObjectEntry.getExternalReferenceCode(),
@@ -129,7 +129,7 @@ public class DataMaskingEngineTest {
 		ObjectEntry badMaskObjectEntry = DataMaskTestUtil.addCustomMask(
 			RandomTestUtil.randomString(), "Contact", "$5-no-such-group");
 
-		String redactedText = _dataMaskingService.redact(
+		String redactedText = _dataMaskingEngine.redact(
 			TestPropsValues.getCompanyId(),
 			Arrays.asList(
 				badMaskObjectEntry.getExternalReferenceCode(),
@@ -148,7 +148,7 @@ public class DataMaskingEngineTest {
 	public void testRedactionIsSkippedForUnknownMask() throws Exception {
 		String text = "Contact: " + _SAMPLE_EMAIL;
 
-		String redactedText = _dataMaskingService.redact(
+		String redactedText = _dataMaskingEngine.redact(
 			TestPropsValues.getCompanyId(),
 			Arrays.asList("L_UNKNOWN_DATA_MASK"), text);
 
@@ -162,7 +162,7 @@ public class DataMaskingEngineTest {
 	public void testRedactionIsSkippedWhenFeatureFlagIsOff() throws Exception {
 		String text = "Contact: " + _SAMPLE_EMAIL;
 
-		String redactedText = _dataMaskingService.redact(
+		String redactedText = _dataMaskingEngine.redact(
 			TestPropsValues.getCompanyId(),
 			Arrays.asList("L_DATA_MASK_EMAIL_ADDRESS"), text);
 
@@ -172,7 +172,7 @@ public class DataMaskingEngineTest {
 	@FeatureFlags(featureFlags = @FeatureFlag("LPD-90204"))
 	@Test
 	public void testRedactsCreditCardAcrossFormats() throws Exception {
-		String redactedText = _dataMaskingService.redact(
+		String redactedText = _dataMaskingEngine.redact(
 			TestPropsValues.getCompanyId(),
 			Arrays.asList("L_DATA_MASK_CREDIT_CARD_NUMBER"),
 			"Cards: 4111111111111111, 4111 1111 1111 1111, " +
@@ -187,7 +187,7 @@ public class DataMaskingEngineTest {
 	@FeatureFlags(featureFlags = @FeatureFlag("LPD-90204"))
 	@Test
 	public void testRedactsEmailAcrossFormats() throws Exception {
-		String redactedText = _dataMaskingService.redact(
+		String redactedText = _dataMaskingEngine.redact(
 			TestPropsValues.getCompanyId(),
 			Arrays.asList("L_DATA_MASK_EMAIL_ADDRESS"),
 			"Emails: a.b+tag@sub.example.co.uk and USER@EXAMPLE.COM.");
@@ -199,7 +199,7 @@ public class DataMaskingEngineTest {
 	@FeatureFlags(featureFlags = @FeatureFlag("LPD-90204"))
 	@Test
 	public void testRedactsIBANAcrossFormats() throws Exception {
-		String redactedText = _dataMaskingService.redact(
+		String redactedText = _dataMaskingEngine.redact(
 			TestPropsValues.getCompanyId(), Arrays.asList("L_DATA_MASK_IBAN"),
 			"IBANs: DE89 3704 0044 0532 0130 00, NL91ABNA0417164300, " +
 				"GB29NWBK60161331926819.");
@@ -213,7 +213,7 @@ public class DataMaskingEngineTest {
 	@FeatureFlags(featureFlags = @FeatureFlag("LPD-90204"))
 	@Test
 	public void testRedactsPhoneAcrossFormats() throws Exception {
-		String redactedText = _dataMaskingService.redact(
+		String redactedText = _dataMaskingEngine.redact(
 			TestPropsValues.getCompanyId(),
 			Arrays.asList("L_DATA_MASK_PHONE_NUMBER"),
 			"Phones: +1 (202) 555-0199, +34600123456 and +44 20 7946 0958.");
@@ -253,6 +253,6 @@ public class DataMaskingEngineTest {
 	private static final String _SAMPLE_SSN = "123-45-6789";
 
 	@Inject
-	private DataMaskingService _dataMaskingService;
+	private DataMaskingEngine _dataMaskingEngine;
 
 }

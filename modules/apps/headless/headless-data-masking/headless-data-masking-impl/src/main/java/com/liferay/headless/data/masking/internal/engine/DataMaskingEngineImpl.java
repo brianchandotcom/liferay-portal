@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.headless.data.masking.internal.masking;
+package com.liferay.headless.data.masking.internal.engine;
 
-import com.liferay.headless.data.masking.service.v1_0.DataMaskingService;
+import com.liferay.headless.data.masking.engine.DataMaskingEngine;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -31,8 +31,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Jose Luis Navarro
  */
-@Component(service = DataMaskingService.class)
-public class DataMaskingEngine implements DataMaskingService {
+@Component(service = DataMaskingEngine.class)
+public class DataMaskingEngineImpl implements DataMaskingEngine {
 
 	@Override
 	public void evictPattern(String regex) {
@@ -162,7 +162,7 @@ public class DataMaskingEngine implements DataMaskingService {
 		"L_DATA_MASK";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DataMaskingEngine.class);
+		DataMaskingEngineImpl.class);
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

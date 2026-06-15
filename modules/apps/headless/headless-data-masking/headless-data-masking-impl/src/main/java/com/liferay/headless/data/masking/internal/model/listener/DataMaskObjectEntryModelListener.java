@@ -6,7 +6,7 @@
 package com.liferay.headless.data.masking.internal.model.listener;
 
 import com.liferay.batch.engine.unit.BatchEngineUnitThreadLocal;
-import com.liferay.headless.data.masking.service.v1_0.DataMaskingService;
+import com.liferay.headless.data.masking.engine.DataMaskingEngine;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.listener.RelevantObjectEntryModelListener;
 import com.liferay.portal.kernel.exception.ModelListenerException;
@@ -102,9 +102,8 @@ public class DataMaskObjectEntryModelListener
 	private void _evictPatterns(ObjectEntry objectEntry) {
 		Map<String, Serializable> values = objectEntry.getValues();
 
-		_dataMaskingService.evictPattern((String)values.get("detectionRegex"));
-		_dataMaskingService.evictPattern(
-			(String)values.get("replacementRegex"));
+		_dataMaskingEngine.evictPattern((String)values.get("detectionRegex"));
+		_dataMaskingEngine.evictPattern((String)values.get("replacementRegex"));
 	}
 
 	private boolean _isDataMaskingSeedImport() {
@@ -120,6 +119,6 @@ public class DataMaskObjectEntryModelListener
 		"L_DATA_MASK";
 
 	@Reference
-	private DataMaskingService _dataMaskingService;
+	private DataMaskingEngine _dataMaskingEngine;
 
 }

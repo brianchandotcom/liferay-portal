@@ -5,7 +5,7 @@
 
 package com.liferay.headless.data.masking.internal.jaxrs.writer.interceptor;
 
-import com.liferay.headless.data.masking.service.v1_0.DataMaskingService;
+import com.liferay.headless.data.masking.engine.DataMaskingEngine;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -83,7 +83,7 @@ public class DataMaskingWriterInterceptor implements WriterInterceptor {
 
 			String body = byteArrayOutputStream.toString(charset);
 
-			String redacted = _dataMaskingService.redact(
+			String redacted = _dataMaskingEngine.redact(
 				companyId, maskExternalReferenceCodes, body);
 
 			originalOutputStream.write(redacted.getBytes(charset));
@@ -157,7 +157,7 @@ public class DataMaskingWriterInterceptor implements WriterInterceptor {
 		DataMaskingWriterInterceptor.class);
 
 	@Reference
-	private DataMaskingService _dataMaskingService;
+	private DataMaskingEngine _dataMaskingEngine;
 
 	@Context
 	private HttpServletRequest _httpServletRequest;

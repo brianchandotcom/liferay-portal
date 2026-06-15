@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.headless.data.masking.internal.masking.test;
+package com.liferay.headless.data.masking.internal.engine.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.headless.data.masking.service.v1_0.DataMaskingService;
+import com.liferay.headless.data.masking.engine.DataMaskingEngine;
 import com.liferay.headless.data.masking.test.util.DataMaskTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.TestInfo;
@@ -69,7 +69,7 @@ public class DataMaskingEnginePerformanceTest {
 		String payload = sb.toString();
 
 		for (int i = 0; i < 5; i++) {
-			_dataMaskingService.redact(
+			_dataMaskingEngine.redact(
 				companyId, maskExternalReferenceCodes, payload);
 		}
 
@@ -80,7 +80,7 @@ public class DataMaskingEnginePerformanceTest {
 				_MAX_OVERHEAD_MILLISECONDS * iterations, "redact")) {
 
 			for (int i = 0; i < iterations; i++) {
-				_dataMaskingService.redact(
+				_dataMaskingEngine.redact(
 					companyId, maskExternalReferenceCodes, payload);
 			}
 		}
@@ -104,6 +104,6 @@ public class DataMaskingEnginePerformanceTest {
 	private static final String _SAMPLE_SSN = "123-45-6789";
 
 	@Inject
-	private DataMaskingService _dataMaskingService;
+	private DataMaskingEngine _dataMaskingEngine;
 
 }

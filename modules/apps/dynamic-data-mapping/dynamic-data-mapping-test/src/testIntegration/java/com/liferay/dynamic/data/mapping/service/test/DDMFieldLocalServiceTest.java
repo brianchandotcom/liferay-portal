@@ -6,6 +6,7 @@
 package com.liferay.dynamic.data.mapping.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.dynamic.data.mapping.model.DDMFieldAttribute;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
@@ -15,16 +16,20 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.service.DDMFieldLocalService;
+import com.liferay.dynamic.data.mapping.service.persistence.DDMFieldAttributePersistence;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestHelper;
 import com.liferay.dynamic.data.mapping.util.DDMFormFieldUtil;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.search.ReindexCacheThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -74,6 +79,80 @@ public class DDMFieldLocalServiceTest {
 	@After
 	public void tearDown() throws Exception {
 		_ddmFieldLocalService.deleteDDMFormValues(_STORAGE_ID);
+	}
+
+	@Test
+	public void testGetDDMFormValues() throws Exception {
+		Locale locale = LocaleUtil.getSiteDefault();
+
+		DDMForm ddmForm = new DDMForm();
+
+		ddmForm.setAvailableLocales(Collections.singleton(locale));
+		ddmForm.setDefaultLocale(locale);
+
+		List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();
+
+		ddmFormFields.add(
+			_createDDMFormField(
+				locale, ddmForm, "field1", "text", "string", null, null));
+
+		DDMStructure ddmStructure = _ddmStructureTestHelper.addStructure(
+			ddmForm, StorageType.DEFAULT.toString());
+
+		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
+
+		ddmFormValues.setAvailableLocales(Collections.singleton(locale));
+		ddmFormValues.setDDMFormFieldValues(
+			Collections.singletonList(
+				_createDDMFormFieldValue(
+					locale, "field1", RandomTestUtil.randomString())));
+		ddmFormValues.setDefaultLocale(locale);
+
+		_ddmFieldLocalService.updateDDMFormValues(
+			ddmStructure.getStructureId(), _STORAGE_ID, ddmFormValues);
+
+		long ctCollectionId = RandomTestUtil.randomLong();
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					ctCollectionId)) {
+
+			for (DDMFieldAttribute ddmFieldAttribute :
+					_ddmFieldAttributePersistence.findByStorageId(
+						_STORAGE_ID)) {
+
+				DDMFieldAttribute publicationDDMFieldAttribute =
+					_ddmFieldAttributePersistence.create(
+						RandomTestUtil.randomLong());
+
+				publicationDDMFieldAttribute.setCtCollectionId(ctCollectionId);
+				publicationDDMFieldAttribute.setCompanyId(
+					ddmFieldAttribute.getCompanyId());
+				publicationDDMFieldAttribute.setFieldId(
+					ddmFieldAttribute.getFieldId());
+				publicationDDMFieldAttribute.setStorageId(
+					ddmFieldAttribute.getStorageId());
+				publicationDDMFieldAttribute.setAttributeName(
+					ddmFieldAttribute.getAttributeName());
+				publicationDDMFieldAttribute.setLanguageId(
+					ddmFieldAttribute.getLanguageId());
+				publicationDDMFieldAttribute.setLargeAttributeValue(
+					ddmFieldAttribute.getLargeAttributeValue());
+				publicationDDMFieldAttribute.setSmallAttributeValue(
+					ddmFieldAttribute.getSmallAttributeValue());
+
+				_ddmFieldAttributePersistence.update(
+					publicationDDMFieldAttribute);
+			}
+		}
+
+		try (SafeCloseable safeCloseable =
+				ReindexCacheThreadLocal.openReindexMode()) {
+
+			Assert.assertEquals(
+				ddmFormValues,
+				_ddmFieldLocalService.getDDMFormValues(ddmForm, _STORAGE_ID));
+		}
 	}
 
 	@Test
@@ -661,6 +740,9 @@ public class DDMFieldLocalServiceTest {
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
+
+	@Inject
+	private DDMFieldAttributePersistence _ddmFieldAttributePersistence;
 
 	@Inject
 	private DDMFieldLocalService _ddmFieldLocalService;

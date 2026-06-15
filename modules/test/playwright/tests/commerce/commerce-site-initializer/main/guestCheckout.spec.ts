@@ -17,7 +17,11 @@ import {
 	performLoginViaApi,
 	performLogout,
 } from '../../../../utils/performLogin';
-import {classicCommerceSetUp, guestCheckoutSetUp} from '../../utils/commerce';
+import {
+	classicCommerceSetUp,
+	enableGuestPageView,
+	guestCheckoutSetUp,
+} from '../../utils/commerce';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -750,6 +754,44 @@ test(
 				await expect(page.locator('.product-card')).toBeVisible();
 
 				await expect(page.locator('.add-to-wish-list')).toHaveCount(0);
+			});
+		}
+		finally {
+			await performLoginViaApi({page, screenName: 'test'});
+		}
+	}
+);
+
+test(
+	'Guest cannot use the mini cart quick add when guest checkout is disabled in B2B channel site',
+	{tag: '@LPD-94001'},
+	async ({apiHelpers, commerceMiniCartPage, page}) => {
+		test.setTimeout(90000);
+
+		const {site} = await classicCommerceSetUp(
+			apiHelpers,
+			`B2B_${getRandomString()}`
+		);
+
+		await enableGuestPageView(page, site);
+
+		try {
+			await test.step('Open the mini cart as a guest', async () => {
+				await performLogout(page);
+
+				await page.goto(`/web${site.friendlyUrlPath}`);
+
+				await commerceMiniCartPage.miniCartButton.click();
+			});
+
+			await test.step('Verify the quick add is disabled', async () => {
+				await expect(
+					commerceMiniCartPage.searchProductsInput
+				).toBeDisabled();
+
+				await expect(
+					commerceMiniCartPage.quickAddToCartButton
+				).toBeDisabled();
 			});
 		}
 		finally {

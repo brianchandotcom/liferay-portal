@@ -30,13 +30,20 @@ export default function SectionTags({
 
 			{hasItems && (
 				<ClayLabel displayType="secondary">
-					{sub(Liferay.Language.get('x-items'), additionCount)}
+					{additionCount === 1
+						? sub(Liferay.Language.get('x-item'), additionCount)
+						: sub(Liferay.Language.get('x-items'), additionCount)}
 				</ClayLabel>
 			)}
 
 			{hasDeletions && (
 				<ClayLabel displayType="warning">
-					{sub(Liferay.Language.get('x-deletions'), deletionCount)}
+					{deletionCount === 1
+						? sub(Liferay.Language.get('x-deletion'), deletionCount)
+						: sub(
+								Liferay.Language.get('x-deletions'),
+								deletionCount
+							)}
 				</ClayLabel>
 			)}
 		</div>

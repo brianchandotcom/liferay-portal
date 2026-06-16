@@ -34,7 +34,16 @@ import java.lang.management.RuntimeMXBean;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Supplier;
+
+import javax.management.AttributeNotFoundException;
+import javax.management.InstanceNotFoundException;
+import javax.management.MBeanException;
+import javax.management.MBeanServer;
+import javax.management.MalformedObjectNameException;
+import javax.management.ObjectName;
+import javax.management.ReflectionException;
 
 /**
  * @author Lily Chi
@@ -71,6 +80,34 @@ public class ProductionReadinessRuleUtil {
 		}
 
 		return builder.pass();
+	}
+
+	private static ProductionReadinessResult _checkDatabaseConfiguration() {
+		int jdbcMaxPoolSize = GetterUtil.getInteger(
+			PropsUtil.get("jdbc.default.maximumPoolSize"));
+
+		int tomcatMaxThreads = _getMaxThreads();
+
+		if ((jdbcMaxPoolSize <= 0) || (tomcatMaxThreads <= 0)) {
+			return null;
+		}
+
+		ProductionReadinessResult.Builder builder =
+			ProductionReadinessResult.builder(
+				"database-configuration", "pool-vs-thread-size"
+			).currentValue(
+				StringBundler.concat(
+					"DB Pool Size=", jdbcMaxPoolSize, ", Tomcat Threads=",
+					tomcatMaxThreads)
+			).recommendedValue(
+				"DB Pool Size >= Tomcat Threads"
+			);
+
+		if (jdbcMaxPoolSize >= tomcatMaxThreads) {
+			return builder.pass();
+		}
+
+		return builder.fail();
 	}
 
 	private static ProductionReadinessResult _checkDLImagePreviewDPI() {
@@ -556,6 +593,42 @@ public class ProductionReadinessRuleUtil {
 		).fail();
 	}
 
+	private static int _getMaxThreads() {
+		try {
+			MBeanServer mBeanServer =
+				ManagementFactory.getPlatformMBeanServer();
+
+			ObjectName objectName = new ObjectName(
+				"Catalina:type=ThreadPool,name=*");
+
+			Set<ObjectName> objectNames = mBeanServer.queryNames(
+				objectName, null);
+
+			int maxThreads = 0;
+
+			for (ObjectName name : objectNames) {
+				int threads = GetterUtil.getInteger(
+					mBeanServer.getAttribute(name, "maxThreads"));
+
+				if (threads > maxThreads) {
+					maxThreads = threads;
+				}
+			}
+
+			return maxThreads;
+		}
+		catch (AttributeNotFoundException | InstanceNotFoundException |
+			   MalformedObjectNameException | MBeanException |
+			   ReflectionException exception) {
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(exception);
+			}
+
+			return 200;
+		}
+	}
+
 	private static long _getOSHugePageSize() {
 		File file = new File("/proc/meminfo");
 
@@ -657,6 +730,7 @@ public class ProductionReadinessRuleUtil {
 		_productionReadinessResultSuppliers = List.of(
 			ProductionReadinessRuleUtil::_checkBetaLanguages,
 			ProductionReadinessRuleUtil::_checkCounterIncrement,
+			ProductionReadinessRuleUtil::_checkDatabaseConfiguration,
 			ProductionReadinessRuleUtil::_checkDLImagePreviewDPI,
 			ProductionReadinessRuleUtil::_checkDLPreviewForking,
 			ProductionReadinessRuleUtil::_checkExplicitGCDisabled,

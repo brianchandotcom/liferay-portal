@@ -21,7 +21,6 @@ import {getAiHubTokenSKUs} from '../../../../../utils/productUtils';
 import {useProductPurchaseOutletContext} from '../../../ProductPurchaseOutlet';
 import {ProductPurchaseAIHubToken} from '../../../services/ProductPurchaseAIHubToken';
 import {productPurchaseStore} from '../../../store';
-import LicenseTermsCheckbox from '../../App/License/LicenseTermsCheckbox';
 
 import './AIHubOrderSummary.scss';
 
@@ -245,12 +244,9 @@ const AIHubTokenOrderSummary = () => {
 				</div>
 			</Section>
 
-			<LicenseTermsCheckbox />
-
 			<div className="d-flex flex-column mt-4 w-100">
 				<ClayButton
 					className="font-weight-bold w-100"
-					disabled={!paymentStore.eulaAgreement}
 					displayType="primary"
 					onClick={onSubmit}
 					size="regular"

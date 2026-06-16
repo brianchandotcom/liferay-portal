@@ -200,7 +200,7 @@ public class AnalyticsBatchExportImportManagerImpl
 					"Uploading resource " + resourceName,
 					notificationUnsafeConsumer);
 
-				_upload(
+				_uploadWithRetry(
 					companyId, "gzip", tempFile, resourceLastModifiedDate,
 					resourceName);
 
@@ -324,7 +324,7 @@ public class AnalyticsBatchExportImportManagerImpl
 						zipInputStream, gzipOutputStream, false);
 				}
 
-				_upload(
+				_uploadWithRetry(
 					companyId, "gzip", tempFile, resourceLastModifiedDate,
 					resourceName);
 
@@ -939,7 +939,101 @@ public class AnalyticsBatchExportImportManagerImpl
 		}
 	}
 
-	private void _upload(
+	private int _upload(
+			AnalyticsConfiguration analyticsConfiguration, int attempt,
+			String boundary, long companyId, String contentEncoding,
+			File multipartFile, String resourceName)
+		throws Exception {
+
+		HttpPost httpPost = new HttpPost(
+			analyticsConfiguration.liferayAnalyticsEndpointURL() +
+				"/dxp-batch-entities");
+
+		httpPost.setEntity(new FileEntity(multipartFile));
+
+		httpPost.setHeader(HttpHeaders.CONTENT_ENCODING, contentEncoding);
+		httpPost.setHeader(
+			HttpHeaders.CONTENT_TYPE,
+			ContentTypes.MULTIPART_FORM_DATA + "; boundary=" + boundary);
+		httpPost.setHeader(
+			"OSB-Asah-Data-Source-ID",
+			analyticsConfiguration.liferayAnalyticsDataSourceId());
+		httpPost.setHeader(
+			"OSB-Asah-Faro-Backend-Security-Signature",
+			analyticsConfiguration.
+				liferayAnalyticsFaroBackendSecuritySignature());
+		httpPost.setHeader(
+			"OSB-Asah-Project-ID",
+			analyticsConfiguration.liferayAnalyticsProjectId());
+
+		try (CloseableHttpClient closeableHttpClient = _getCloseableHttpClient(
+				true);
+
+			CloseableHttpResponse closeableHttpResponse =
+				closeableHttpClient.execute(httpPost)) {
+
+			StatusLine statusLine = closeableHttpResponse.getStatusLine();
+
+			int statusCode = statusLine.getStatusCode();
+
+			String responseBody = StringPool.BLANK;
+
+			try {
+				responseBody = EntityUtils.toString(
+					closeableHttpResponse.getEntity(),
+					Charset.defaultCharset());
+			}
+			catch (Exception exception) {
+				_log.error(
+					StringBundler.concat(
+						"Unable to read upload response body for ",
+						resourceName, " (HTTP ", statusCode, ")"),
+					exception);
+			}
+
+			if (statusCode == HttpURLConnection.HTTP_FORBIDDEN) {
+				JSONObject responseJSONObject = _jsonFactory.createJSONObject(
+					responseBody);
+
+				boolean disconnected = StringUtil.equals(
+					GetterUtil.getString(responseJSONObject.getString("state")),
+					"DISCONNECTED");
+
+				_processInvalidTokenMessage(
+					analyticsConfiguration, companyId, disconnected,
+					responseJSONObject.getString("message"));
+			}
+
+			if ((statusCode >= 200) && (statusCode < 300)) {
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Upload completed successfully on attempt " +
+							(attempt + 1));
+				}
+
+				return statusCode;
+			}
+
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					StringBundler.concat(
+						"Upload of ", resourceName, " returned HTTP ",
+						statusCode, " on attempt ", attempt + 1, ": ",
+						responseBody));
+			}
+
+			if ((statusCode != 400) && (statusCode != 408) &&
+				(statusCode != 429) && (statusCode < 500)) {
+
+				throw new RuntimeException(
+					"Upload failed with HTTP response code: " + statusCode);
+			}
+
+			return statusCode;
+		}
+	}
+
+	private void _uploadWithRetry(
 		long companyId, String contentEncoding, File file,
 		Date resourceLastModifiedDate, String resourceName) {
 
@@ -989,97 +1083,15 @@ public class AnalyticsBatchExportImportManagerImpl
 					(resourceLastModifiedDate != null) ? "INCREMENTAL" :
 						"FULL");
 
-				HttpPost httpPost = new HttpPost(
-					analyticsConfiguration.liferayAnalyticsEndpointURL() +
-						"/dxp-batch-entities");
+				int statusCode = _upload(
+					analyticsConfiguration, attempt, boundary, companyId,
+					contentEncoding, multipartFile, resourceName);
 
-				httpPost.setEntity(new FileEntity(multipartFile));
-
-				httpPost.setHeader(
-					HttpHeaders.CONTENT_ENCODING, contentEncoding);
-				httpPost.setHeader(
-					HttpHeaders.CONTENT_TYPE,
-					ContentTypes.MULTIPART_FORM_DATA + "; boundary=" +
-						boundary);
-				httpPost.setHeader(
-					"OSB-Asah-Data-Source-ID",
-					analyticsConfiguration.liferayAnalyticsDataSourceId());
-				httpPost.setHeader(
-					"OSB-Asah-Faro-Backend-Security-Signature",
-					analyticsConfiguration.
-						liferayAnalyticsFaroBackendSecuritySignature());
-				httpPost.setHeader(
-					"OSB-Asah-Project-ID",
-					analyticsConfiguration.liferayAnalyticsProjectId());
-
-				try (CloseableHttpClient closeableHttpClient =
-						_getCloseableHttpClient(true);
-
-					CloseableHttpResponse closeableHttpResponse =
-						closeableHttpClient.execute(httpPost)) {
-
-					StatusLine statusLine =
-						closeableHttpResponse.getStatusLine();
-
-					int statusCode = statusLine.getStatusCode();
-
-					String responseBody = StringPool.BLANK;
-
-					try {
-						responseBody = EntityUtils.toString(
-							closeableHttpResponse.getEntity(),
-							Charset.defaultCharset());
-					}
-					catch (Exception exception) {
-						_log.error(
-							StringBundler.concat(
-								"Unable to read upload response body for ",
-								resourceName, " (HTTP ", statusCode, ")"),
-							exception);
-					}
-
-					if (statusCode == HttpURLConnection.HTTP_FORBIDDEN) {
-						JSONObject responseJSONObject =
-							_jsonFactory.createJSONObject(responseBody);
-
-						boolean disconnected = StringUtil.equals(
-							GetterUtil.getString(
-								responseJSONObject.getString("state")),
-							"DISCONNECTED");
-
-						_processInvalidTokenMessage(
-							analyticsConfiguration, companyId, disconnected,
-							responseJSONObject.getString("message"));
-					}
-
-					if ((statusCode >= 200) && (statusCode < 300)) {
-						if (_log.isInfoEnabled()) {
-							_log.info(
-								"Upload completed successfully on attempt " +
-									(attempt + 1));
-						}
-
-						return;
-					}
-
-					lastStatusCode = statusCode;
-
-					if (_log.isInfoEnabled()) {
-						_log.info(
-							StringBundler.concat(
-								"Upload of ", resourceName, " returned HTTP ",
-								statusCode, " on attempt ", attempt + 1, ": ",
-								responseBody));
-					}
-
-					if ((statusCode != 400) && (statusCode != 408) &&
-						(statusCode != 429) && (statusCode < 500)) {
-
-						throw new RuntimeException(
-							"Upload failed with HTTP response code: " +
-								statusCode);
-					}
+				if ((statusCode >= 200) && (statusCode < 300)) {
+					return;
 				}
+
+				lastStatusCode = statusCode;
 			}
 			catch (IOException ioException) {
 				if (attempt == (retryCount - 1)) {

@@ -37,7 +37,7 @@ run "should_install_keda_when_enabled" {
 	}
 
 	assert {
-		condition=helm_release.keda[0].namespace == "keda-system" && helm_release.keda[0].create_namespace == true
+		condition=helm_release.keda[0].create_namespace == true && helm_release.keda[0].namespace == "keda-system"
 		error_message="The KEDA Helm release must default to the keda-system namespace and create it"
 	}
 

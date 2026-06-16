@@ -7,7 +7,6 @@ package com.liferay.fragment.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.fragment.constants.FragmentConstants;
-import com.liferay.fragment.constants.FragmentEntryField;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
@@ -135,7 +134,7 @@ public class FragmentEntryIndexerReindexTest {
 			fragmentCollection.getFragmentCollectionId());
 
 		_assertFieldValue(
-			FragmentEntryField.FRAGMENT_COLLECTION_ID,
+			"fragmentCollectionId",
 			String.valueOf(fragmentCollection.getFragmentCollectionId()),
 			fragmentEntry.getName());
 
@@ -197,15 +196,12 @@ public class FragmentEntryIndexerReindexTest {
 
 		_assertFieldValue(Field.NAME, name, name);
 		_assertFieldValue(
-			FragmentEntryField.FRAGMENT_COLLECTION_ID,
+			"fragmentCollectionId",
 			String.valueOf(_fragmentCollection.getFragmentCollectionId()),
 			name);
-		_assertFieldValue(FragmentEntryField.HEAD, String.valueOf(head), name);
-		_assertFieldValue(
-			FragmentEntryField.HEAD_LISTABLE, String.valueOf(headListable),
-			name);
-		_assertFieldValue(
-			FragmentEntryField.MARKETPLACE, String.valueOf(marketplace), name);
+		_assertFieldValue("head", String.valueOf(head), name);
+		_assertFieldValue("headListable", String.valueOf(headListable), name);
+		_assertFieldValue("marketplace", String.valueOf(marketplace), name);
 	}
 
 	private void _assertNoFieldValues(String queryString) throws Exception {
@@ -240,7 +236,7 @@ public class FragmentEntryIndexerReindexTest {
 				queryString
 			).withSearchContext(
 				searchContext -> searchContext.setAttribute(
-					FragmentEntryField.HEAD, Boolean.FALSE)
+					"head", Boolean.FALSE)
 			).build());
 	}
 

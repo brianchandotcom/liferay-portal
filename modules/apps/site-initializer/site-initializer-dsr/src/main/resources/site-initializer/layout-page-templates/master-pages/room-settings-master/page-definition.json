@@ -1,0 +1,52 @@
+{
+	"pageElement": {
+		"id": "d0a9e1f3-a4c7-438a-b5b6-0b4c5d6e7f89",
+		"pageElements": [
+			{
+				"definition": {
+					"fragment": {
+						"key": "com.liferay.site.dsr.site.initializer.internal.fragment.renderer.RoomSettingsToolbarComponentSectionFragmentRenderer"
+					},
+					"fragmentConfig": {
+					},
+					"fragmentFields": [
+					],
+					"indexed": true
+				},
+				"id": "e1b0f2a4-b5d8-449b-c6c7-1c5d6e7f8a90",
+				"type": "Fragment"
+			},
+			{
+				"definition": {
+					"fragmentSettings": {
+						"unallowedFragments": [
+							{
+								"key": "page-bar"
+							},
+							{
+								"key": "sidebar"
+							},
+							{
+								"key": "sidebar-trigger"
+							},
+							{
+								"key": "vertical-navigation"
+							}
+						]
+					}
+				},
+				"id": "f2c1a3b5-c6e9-45ac-d7d8-2d6e7f8a9b01",
+				"type": "DropZone"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"themeSettings": {
+			"lfr-theme:regular:show-footer": "false",
+			"lfr-theme:regular:show-header": "false",
+			"lfr-theme:regular:show-header-search": "false"
+		}
+	},
+	"version": 1.1
+}

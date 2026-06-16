@@ -4,7 +4,8 @@
  */
 
 import {IInternalRenderer, IItemsActions} from '@liferay/frontend-data-set-web';
-import {openModal} from 'frontend-js-components-web';
+import {openModal, openToast} from 'frontend-js-components-web';
+import {sessionStorage} from 'frontend-js-web';
 
 import {openFDSDeleteConfirmationModal} from '../../common/utils/openModalUtil';
 import {IRoom} from '../../common/utils/types';
@@ -26,6 +27,19 @@ export default function RoomsFDSPropsTransformer({
 	itemsActions: IItemsActions[];
 	otherProps: any;
 }) {
+	const successMessage = sessionStorage.getItem(
+		'com.liferay.site.dsr.site.initializer.roomSettingsSuccessMessage',
+		sessionStorage.TYPES.NECESSARY
+	);
+
+	if (successMessage) {
+		sessionStorage.removeItem(
+			'com.liferay.site.dsr.site.initializer.roomSettingsSuccessMessage'
+		);
+
+		openToast({message: successMessage, type: 'success'});
+	}
+
 	return {
 		...otherProps,
 		creationMenu: {

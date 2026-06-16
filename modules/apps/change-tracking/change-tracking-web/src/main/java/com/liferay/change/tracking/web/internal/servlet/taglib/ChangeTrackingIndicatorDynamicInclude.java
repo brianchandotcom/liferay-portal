@@ -756,10 +756,10 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 					"/o/change-tracking-rest/v1.0/ct-entries/history";
 
 			timelineItemsURL = HttpComponentsUtil.addParameter(
-				timelineItemsURL, "classNameId", classNameId);
-			timelineItemsURL = HttpComponentsUtil.addParameter(
 				timelineItemsURL, "currentURL",
 				_portal.getCurrentURL(httpServletRequest));
+			timelineItemsURL = HttpComponentsUtil.addParameter(
+				timelineItemsURL, "classNameId", classNameId);
 
 			if (classPK != 0) {
 				timelineItemsURL = HttpComponentsUtil.addParameter(

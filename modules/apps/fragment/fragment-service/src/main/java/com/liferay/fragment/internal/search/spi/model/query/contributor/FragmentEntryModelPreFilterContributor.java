@@ -5,7 +5,6 @@
 
 package com.liferay.fragment.internal.search.spi.model.query.contributor;
 
-import com.liferay.fragment.constants.FragmentEntryField;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -30,26 +29,23 @@ public class FragmentEntryModelPreFilterContributor
 		SearchContext searchContext) {
 
 		boolean head = GetterUtil.getBoolean(
-			searchContext.getAttribute(FragmentEntryField.HEAD), Boolean.TRUE);
+			searchContext.getAttribute("head"), Boolean.TRUE);
 		boolean headListable = GetterUtil.getBoolean(
-			searchContext.getAttribute(FragmentEntryField.HEAD_LISTABLE));
+			searchContext.getAttribute("headListable"));
 
 		if (headListable) {
-			booleanFilter.addRequiredTerm(
-				FragmentEntryField.HEAD_LISTABLE, true);
+			booleanFilter.addRequiredTerm("headListable", true);
 		}
 		else if (head) {
-			booleanFilter.addRequiredTerm(FragmentEntryField.HEAD, true);
+			booleanFilter.addRequiredTerm("head", true);
 		}
 
 		long fragmentCollectionId = GetterUtil.getLong(
-			searchContext.getAttribute(
-				FragmentEntryField.FRAGMENT_COLLECTION_ID));
+			searchContext.getAttribute("fragmentCollectionId"));
 
 		if (fragmentCollectionId > 0) {
 			booleanFilter.addRequiredTerm(
-				FragmentEntryField.FRAGMENT_COLLECTION_ID,
-				fragmentCollectionId);
+				"fragmentCollectionId", fragmentCollectionId);
 		}
 	}
 

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.TermRangeQuery;
 import com.liferay.portal.kernel.search.WildcardQuery;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Localization;
@@ -1075,13 +1076,14 @@ public class AssetListFiltersUtilTest {
 		return objectField;
 	}
 
-	private static final long _CLASS_NAME_ID = 30601L;
+	private static final long _CLASS_NAME_ID = RandomTestUtil.randomLong();
 
-	private static final long _CLASS_TYPE_ID = 42L;
+	private static final long _CLASS_TYPE_ID = RandomTestUtil.randomLong();
 
-	private static final long _COMPANY_ID = 12345L;
+	private static final long _COMPANY_ID = RandomTestUtil.randomLong();
 
-	private static final long _LIST_TYPE_DEFINITION_ID = 77L;
+	private static final long _LIST_TYPE_DEFINITION_ID =
+		RandomTestUtil.randomLong();
 
 	private static final MockedStatic<ObjectDefinitionLocalServiceUtil>
 		_objectDefinitionLocalServiceUtilMockedStatic =

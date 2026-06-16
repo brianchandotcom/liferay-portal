@@ -47,55 +47,9 @@ describe('CalendarTaskCard', () => {
 		jest.useRealTimers();
 	});
 
-	it('renders the task title', () => {
-		const {getByText} = render(<CalendarTaskCard task={createTask()} />);
-
-		expect(getByText('Design the landing page')).toBeInTheDocument();
-	});
-
-	it('renders the blocked icon when the task is blocked', () => {
-		const {container} = render(
-			<CalendarTaskCard
-				task={createTask({state: {key: 'blocked', name: 'Blocked'}})}
-			/>
-		);
-
-		expect(
-			container.querySelector('.lexicon-icon-block')
-		).toBeInTheDocument();
-	});
-
 	it('does not render the blocked icon when the task is not blocked', () => {
 		const {container} = render(<CalendarTaskCard task={createTask()} />);
 
-		expect(
-			container.querySelector('.lexicon-icon-block')
-		).not.toBeInTheDocument();
-	});
-
-	it('renders the overdue icon when the due date is past and the state is not done', () => {
-		const {container} = render(
-			<CalendarTaskCard task={createTask({dueDate: pastDueDate})} />
-		);
-
-		expect(
-			container.querySelector('.lexicon-icon-exclamation-full')
-		).toBeInTheDocument();
-	});
-
-	it('shows the overdue icon instead of the blocked icon when a blocked task is also overdue', () => {
-		const {container} = render(
-			<CalendarTaskCard
-				task={createTask({
-					dueDate: pastDueDate,
-					state: {key: 'blocked', name: 'Blocked'},
-				})}
-			/>
-		);
-
-		expect(
-			container.querySelector('.lexicon-icon-exclamation-full')
-		).toBeInTheDocument();
 		expect(
 			container.querySelector('.lexicon-icon-block')
 		).not.toBeInTheDocument();
@@ -123,5 +77,51 @@ describe('CalendarTaskCard', () => {
 
 		expect(avatar).toBeInTheDocument();
 		expect(avatar).toHaveAttribute('src', 'https://example.com/jane.png');
+	});
+
+	it('renders the blocked icon when the task is blocked', () => {
+		const {container} = render(
+			<CalendarTaskCard
+				task={createTask({state: {key: 'blocked', name: 'Blocked'}})}
+			/>
+		);
+
+		expect(
+			container.querySelector('.lexicon-icon-block')
+		).toBeInTheDocument();
+	});
+
+	it('renders the overdue icon when the due date is past and the state is not done', () => {
+		const {container} = render(
+			<CalendarTaskCard task={createTask({dueDate: pastDueDate})} />
+		);
+
+		expect(
+			container.querySelector('.lexicon-icon-exclamation-full')
+		).toBeInTheDocument();
+	});
+
+	it('renders the task title', () => {
+		const {getByText} = render(<CalendarTaskCard task={createTask()} />);
+
+		expect(getByText('Design the landing page')).toBeInTheDocument();
+	});
+
+	it('shows the overdue icon instead of the blocked icon when a blocked task is also overdue', () => {
+		const {container} = render(
+			<CalendarTaskCard
+				task={createTask({
+					dueDate: pastDueDate,
+					state: {key: 'blocked', name: 'Blocked'},
+				})}
+			/>
+		);
+
+		expect(
+			container.querySelector('.lexicon-icon-exclamation-full')
+		).toBeInTheDocument();
+		expect(
+			container.querySelector('.lexicon-icon-block')
+		).not.toBeInTheDocument();
 	});
 });

@@ -65,36 +65,6 @@ describe('CalendarMoreLinkPopover', () => {
 		jest.useRealTimers();
 	});
 
-	it('renders every task for the day', () => {
-		const {getByText} = renderPopover([
-			createTask({id: 1, title: 'Alpha'}),
-			createTask({id: 2, title: 'Beta'}),
-		]);
-
-		expect(getByText('Alpha')).toBeInTheDocument();
-		expect(getByText('Beta')).toBeInTheDocument();
-	});
-
-	it('renders the state label for a task', () => {
-		const {getByText} = renderPopover([
-			createTask({state: {key: 'inProgress', name: 'In Progress'}}),
-		]);
-
-		expect(getByText('In Progress')).toBeInTheDocument();
-	});
-
-	it('shows only the overdue label for an overdue task', () => {
-		const {getByText, queryByText} = renderPopover([
-			createTask({
-				dueDate: pastDueDate,
-				state: {key: 'inProgress', name: 'In Progress'},
-			}),
-		]);
-
-		expect(getByText('overdue')).toBeInTheDocument();
-		expect(queryByText('In Progress')).not.toBeInTheDocument();
-	});
-
 	it('orders tasks by overdue, blocked, in progress, not started, then done', () => {
 		const {getAllByTestId} = renderPopover([
 			createTask({
@@ -136,5 +106,35 @@ describe('CalendarMoreLinkPopover', () => {
 			'NotStartedTask',
 			'DoneTask',
 		]);
+	});
+
+	it('renders every task for the day', () => {
+		const {getByText} = renderPopover([
+			createTask({id: 1, title: 'Alpha'}),
+			createTask({id: 2, title: 'Beta'}),
+		]);
+
+		expect(getByText('Alpha')).toBeInTheDocument();
+		expect(getByText('Beta')).toBeInTheDocument();
+	});
+
+	it('renders the state label for a task', () => {
+		const {getByText} = renderPopover([
+			createTask({state: {key: 'inProgress', name: 'In Progress'}}),
+		]);
+
+		expect(getByText('In Progress')).toBeInTheDocument();
+	});
+
+	it('shows only the overdue label for an overdue task', () => {
+		const {getByText, queryByText} = renderPopover([
+			createTask({
+				dueDate: pastDueDate,
+				state: {key: 'inProgress', name: 'In Progress'},
+			}),
+		]);
+
+		expect(getByText('overdue')).toBeInTheDocument();
+		expect(queryByText('In Progress')).not.toBeInTheDocument();
 	});
 });

@@ -184,6 +184,7 @@ import {config as searchExperiencesWebConfig} from './tests/search-experiences-w
 import {config as segmentExperimentWebConfig} from './tests/segment-experiment-web/main/config';
 import {config as segmentsWebConfig} from './tests/segments-web/main/config';
 import {config as seoStudioWebConfig} from './tests/seo-studio-web/main/config';
+import {config as serverAdminWebConfig} from './tests/server-admin-web/main/config';
 import {config as pageManagementSiteConfig} from './tests/setup/page-management-site/main/config';
 import {config as pageManagementSiteTeardownConfig} from './tests/setup/page-management-site/teardown/config';
 import {config as siteCmsSiteConfig} from './tests/setup/site-cms-site/main/config';
@@ -416,6 +417,7 @@ export default defineConfig({
 		segmentExperimentWebConfig,
 		segmentsWebConfig,
 		seoStudioWebConfig,
+		serverAdminWebConfig,
 		siteAdminWebConfig,
 		siteCmpSiteInitializerConfig,
 		siteCmsSiteInitializerConfig,

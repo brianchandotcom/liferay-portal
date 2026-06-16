@@ -450,11 +450,11 @@ public class ProductionReadinessRuleUtilTest {
 	@Test
 	public void testCheckFileStoreImplementationPass() throws Exception {
 		String[] validImpls = {
+			"com.liferay.portal.store.azure.AzureStore",
 			"com.liferay.portal.store.file.system.AdvancedFileSystemStore",
-			"com.liferay.portal.store.s3.S3Store",
-			"com.liferay.portal.store.s3.IBMS3Store",
 			"com.liferay.portal.store.gcs.GCSStore",
-			"com.liferay.portal.store.azure.AzureStore"
+			"com.liferay.portal.store.s3.IBMS3Store",
+			"com.liferay.portal.store.s3.S3Store"
 		};
 
 		for (String impl : validImpls) {

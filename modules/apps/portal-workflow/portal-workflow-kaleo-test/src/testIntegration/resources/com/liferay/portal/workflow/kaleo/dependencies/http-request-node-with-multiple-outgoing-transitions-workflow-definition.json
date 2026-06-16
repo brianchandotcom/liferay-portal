@@ -1,0 +1,241 @@
+{
+	"#child-nodes": [
+		{
+			"#tag-name": "name",
+			"#value": "HTTP Request Node With Multiple Outgoing Transitions Workflow Definition"
+		},
+		{
+			"#tag-name": "version",
+			"#value": "1"
+		},
+		{
+			"#child-nodes": [
+				{
+					"#tag-name": "name",
+					"#value": "start"
+				},
+				{
+					"#cdata-value": [
+						"{",
+						"    \"xy\": [",
+						"        291,",
+						"        34",
+						"    ]",
+						"}"
+					],
+					"#tag-name": "metadata"
+				},
+				{
+					"#tag-name": "initial",
+					"#value": "true"
+				},
+				{
+					"#child-nodes": [
+						{
+							"#tag-name": "label",
+							"#value": "Start",
+							"language-id": "en_US"
+						}
+					],
+					"#tag-name": "labels"
+				},
+				{
+					"#child-nodes": [
+						{
+							"#child-nodes": [
+								{
+									"#child-nodes": [
+										{
+											"#tag-name": "label",
+											"#value": "Start",
+											"language-id": "en_US"
+										}
+									],
+									"#tag-name": "labels"
+								},
+								{
+									"#tag-name": "name",
+									"#value": "start"
+								},
+								{
+									"#tag-name": "target",
+									"#value": "http-request"
+								},
+								{
+									"#tag-name": "default",
+									"#value": "true"
+								}
+							],
+							"#tag-name": "transition"
+						}
+					],
+					"#tag-name": "transitions"
+				}
+			],
+			"#tag-name": "state"
+		},
+		{
+			"#child-nodes": [
+				{
+					"#tag-name": "name",
+					"#value": "end-1"
+				},
+				{
+					"#cdata-value": [
+						"{",
+						"    \"terminal\": true,",
+						"    \"xy\": [",
+						"        102,",
+						"        424",
+						"    ]",
+						"}"
+					],
+					"#tag-name": "metadata"
+				},
+				{
+					"#child-nodes": [
+						{
+							"#tag-name": "label",
+							"#value": "End 1",
+							"language-id": "en_US"
+						}
+					],
+					"#tag-name": "labels"
+				}
+			],
+			"#tag-name": "state"
+		},
+		{
+			"#child-nodes": [
+				{
+					"#tag-name": "name",
+					"#value": "end-2"
+				},
+				{
+					"#cdata-value": [
+						"{",
+						"    \"terminal\": true,",
+						"    \"xy\": [",
+						"        527,",
+						"        417",
+						"    ]",
+						"}"
+					],
+					"#tag-name": "metadata"
+				},
+				{
+					"#child-nodes": [
+						{
+							"#tag-name": "label",
+							"#value": "End 2",
+							"language-id": "en_US"
+						}
+					],
+					"#tag-name": "labels"
+				}
+			],
+			"#tag-name": "state"
+		},
+		{
+			"#child-nodes": [
+				{
+					"#tag-name": "name",
+					"#value": "http-request"
+				},
+				{
+					"#cdata-value": [
+						"{",
+						"    \"xy\": [",
+						"        300,",
+						"        227",
+						"    ]",
+						"}"
+					],
+					"#tag-name": "metadata"
+				},
+				{
+					"#child-nodes": [
+						{
+							"#tag-name": "label",
+							"#value": "HTTP Request",
+							"language-id": "en_US"
+						}
+					],
+					"#tag-name": "labels"
+				},
+				{
+					"#tag-name": "http-method",
+					"#value": "POST"
+				},
+				{
+					"#child-nodes": [
+						{
+							"#child-nodes": [
+								{
+									"#child-nodes": [
+										{
+											"#tag-name": "label",
+											"#value": "End 1",
+											"language-id": "en_US"
+										}
+									],
+									"#tag-name": "labels"
+								},
+								{
+									"#tag-name": "name",
+									"#value": "end-1"
+								},
+								{
+									"#tag-name": "target",
+									"#value": "end-1"
+								},
+								{
+									"#tag-name": "default",
+									"#value": "true"
+								}
+							],
+							"#tag-name": "transition"
+						},
+						{
+							"#child-nodes": [
+								{
+									"#child-nodes": [
+										{
+											"#tag-name": "label",
+											"#value": "End 2",
+											"language-id": "en_US"
+										}
+									],
+									"#tag-name": "labels"
+								},
+								{
+									"#tag-name": "name",
+									"#value": "end-2"
+								},
+								{
+									"#tag-name": "target",
+									"#value": "end-2"
+								},
+								{
+									"#tag-name": "default",
+									"#value": "false"
+								}
+							],
+							"#tag-name": "transition"
+						}
+					],
+					"#tag-name": "transitions"
+				},
+				{
+					"#tag-name": "url",
+					"#value": "http://localhost:8080/o/headless-admin-site/v1.0/sites"
+				}
+			],
+			"#tag-name": "http-request"
+		}
+	],
+	"#tag-name": "workflow-definition",
+	"xmlns": "urn:liferay.com:liferay-workflow_7.4.0",
+	"xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
+	"xsi:schemaLocation": "urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
+}

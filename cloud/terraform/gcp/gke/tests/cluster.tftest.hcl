@@ -135,8 +135,8 @@ run "should_pin_a_non_regional_cluster_to_the_first_zone" {
 
 run "should_set_node_autoscaling_bounds" {
 	assert {
-		condition=google_container_node_pool.general_purpose.autoscaling[0].min_node_count == 2 && google_container_node_pool.general_purpose.autoscaling[0].max_node_count == 8
-		error_message="Node pool autoscaling bounds must follow min_node_count/max_node_count"
+		condition=google_container_node_pool.general_purpose.autoscaling[0].max_node_count == 8 && google_container_node_pool.general_purpose.autoscaling[0].min_node_count == 2
+		error_message="Node pool autoscaling bounds must follow max_node_count/min_node_count"
 	}
 
 	command=plan

@@ -10,6 +10,7 @@ import co.elastic.clients.elasticsearch._types.ElasticsearchVersionInfo;
 import co.elastic.clients.elasticsearch._types.Time;
 import co.elastic.clients.elasticsearch._types.TimeUnit;
 import co.elastic.clients.elasticsearch.core.InfoResponse;
+import co.elastic.clients.elasticsearch.inference.ElasticsearchInferenceClient;
 import co.elastic.clients.elasticsearch.license.ElasticsearchLicenseClient;
 import co.elastic.clients.elasticsearch.license.GetLicenseResponse;
 import co.elastic.clients.elasticsearch.license.LicenseStatus;
@@ -190,13 +191,13 @@ public class ElasticsearchSearchEngineInformation
 	public boolean isInferenceAPISupported() {
 		LicenseType licenseType = _getActiveLicenseType();
 
-		if ((licenseType == LicenseType.Trial) ||
-			(licenseType == LicenseType.Enterprise)) {
+		if ((licenseType != LicenseType.Trial) &&
+			(licenseType != LicenseType.Enterprise)) {
 
-			return true;
+			return false;
 		}
 
-		return false;
+		return _isInferenceAPIAvailable();
 	}
 
 	@Reference
@@ -445,6 +446,39 @@ public class ElasticsearchSearchEngineInformation
 			infoResponse.version();
 
 		return elasticsearchVersionInfo.number();
+	}
+
+	private boolean _isInferenceAPIAvailable() {
+		try {
+			ElasticsearchClient elasticsearchClient =
+				elasticsearchConnectionManager.getElasticsearchClient();
+
+			if (elasticsearchClient == null) {
+				return false;
+			}
+
+			ElasticsearchInferenceClient elasticsearchInferenceClient =
+				elasticsearchClient.inference();
+
+			elasticsearchInferenceClient.get();
+
+			return true;
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to query the Elasticsearch \"_inference\" API: " +
+						exception.getMessage());
+			}
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to query the Elasticsearch \"_inference\" API",
+					exception);
+			}
+
+			return false;
+		}
 	}
 
 	private void _setClusterAndNodeInformation(

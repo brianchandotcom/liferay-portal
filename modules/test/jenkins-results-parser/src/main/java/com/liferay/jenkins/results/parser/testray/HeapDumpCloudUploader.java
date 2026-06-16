@@ -70,7 +70,8 @@ public class HeapDumpCloudUploader {
 			return;
 		}
 
-		String heapDumpsBasePath = "s3://" + s3BucketName + "/heap-dumps";
+		String heapDumpsBasePath = JenkinsResultsParserUtil.combine(
+			"s3://", s3BucketName, "/heap-dumps");
 
 		String sentinelS3Path = heapDumpsBasePath + "/last-upload";
 

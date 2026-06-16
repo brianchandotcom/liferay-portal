@@ -7,22 +7,30 @@ mock_provider "time" {}
 
 override_data {
 	target=data.google_compute_zones.available
-	values={ names=["us-central1-a", "us-central1-b", "us-central1-c"] }
+	values={
+		names=["us-central1-a", "us-central1-b", "us-central1-c"]
+	}
 }
 
 override_data {
 	target=data.google_netblock_ip_ranges.health_checkers
-	values={ cidr_blocks_ipv4=["35.191.0.0/16"] }
+	values={
+		cidr_blocks_ipv4=["35.191.0.0/16"]
+	}
 }
 
 override_data {
 	target=data.google_netblock_ip_ranges.legacy_health_checkers
-	values={ cidr_blocks_ipv4=["130.211.0.0/22"] }
+	values={
+		cidr_blocks_ipv4=["130.211.0.0/22"]
+	}
 }
 
 override_data {
 	target=data.google_project.project
-	values={ number="1234567890" }
+	values={
+		number="1234567890"
+	}
 }
 
 run "should_derive_cluster_name_from_deployment_name" {
@@ -32,13 +40,13 @@ run "should_derive_cluster_name_from_deployment_name" {
 	}
 
 	assert {
-		condition=output.cluster_name == "liferay-test-gke"
-		error_message="The cluster_name output must mirror the cluster resource name"
+		condition=google_service_account.node_sa.account_id == "liferay-test-node-sa"
+		error_message="The node service account ID must be derived from deployment_name"
 	}
 
 	assert {
-		condition=google_service_account.node_sa.account_id == "liferay-test-node-sa"
-		error_message="The node service account id must be derived from deployment_name"
+		condition=output.cluster_name == "liferay-test-gke"
+		error_message="The cluster_name output must mirror the cluster resource name"
 	}
 
 	command=plan
@@ -46,13 +54,13 @@ run "should_derive_cluster_name_from_deployment_name" {
 
 run "should_enable_authenticator_groups_with_a_security_group" {
 	assert {
-		condition=length(google_container_cluster.primary.authenticator_groups_config) == 1
-		error_message="Setting gke_security_group must emit an authenticator_groups_config block"
+		condition=google_container_cluster.primary.authenticator_groups_config[0].security_group == "gke-security-groups@example.com"
+		error_message="The authenticator groups config must use the supplied security group"
 	}
 
 	assert {
-		condition=google_container_cluster.primary.authenticator_groups_config[0].security_group == "gke-security-groups@example.com"
-		error_message="The authenticator groups config must use the supplied security group"
+		condition=length(google_container_cluster.primary.authenticator_groups_config) == 1
+		error_message="Setting gke_security_group must emit an authenticator_groups_config block"
 	}
 
 	command=plan
@@ -114,7 +122,7 @@ run "should_not_accept_uppercase_deployment_name" {
 run "should_pin_a_non_regional_cluster_to_the_first_zone" {
 	assert {
 		condition=google_container_cluster.primary.location == "us-central1-a"
-		error_message="A non-regional cluster must be pinned to the first available zone"
+		error_message="A nonregional cluster must be pinned to the first available zone"
 	}
 
 	assert {
@@ -127,8 +135,8 @@ run "should_pin_a_non_regional_cluster_to_the_first_zone" {
 
 run "should_set_node_autoscaling_bounds" {
 	assert {
-		condition=google_container_node_pool.general_purpose.autoscaling[0].min_node_count == 2 && google_container_node_pool.general_purpose.autoscaling[0].max_node_count == 8
-		error_message="Node pool autoscaling bounds must follow min_node_count/max_node_count"
+		condition=google_container_node_pool.general_purpose.autoscaling[0].max_node_count == 8 && google_container_node_pool.general_purpose.autoscaling[0].min_node_count == 2
+		error_message="Node pool autoscaling bounds must follow max_node_count/min_node_count"
 	}
 
 	command=plan

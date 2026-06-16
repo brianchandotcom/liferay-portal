@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`withSheet should render 1`] = `
+<div>
+  <div
+    class="sheet sheet-lg"
+  >
+    <p>
+      Test Test
+    </p>
+  </div>
+</div>
+`;

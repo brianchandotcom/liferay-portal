@@ -1,0 +1,28 @@
+.form-root {
+	.form-control:disabled {
+		border-color: $lightBackground;
+		color: $mainLighten52;
+		cursor: not-allowed;
+	}
+
+	.form-control-label {
+		font-size: $fontSizeSmall;
+
+		&.required {
+			.content-container:after {
+			  color: $error;
+			  content: '*';
+			  margin-left: 4px;
+			}
+		}
+
+		> .content-container {
+			margin: 0;
+			padding: 0;
+		}
+
+		> span {
+			margin-left: 4px;
+		}
+	}
+}

@@ -240,7 +240,7 @@ const useProjectUsageData = (
 								.STORAGE_CAPACITY_DOCUMENT_LIBRARY
 						],
 						infoText: i18n.translate(
-							'the-amount-of-data-in-gbs-stored-in-the-backup-service-document-library-service-provided-through-liferay-cloud-infrastructure-and-the-customization-artifacts-built-from-the-customers-git-repository-client-extensions-and-osgi-modules'
+							'amount-of-storage-space-available-for-your-projects'
 						),
 						maxCountText: i18n.translate('total-storage'),
 						title: i18n.translate('storage'),

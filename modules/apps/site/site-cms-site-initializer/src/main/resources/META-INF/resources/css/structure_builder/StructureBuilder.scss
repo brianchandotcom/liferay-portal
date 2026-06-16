@@ -1,11 +1,11 @@
-@import 'cadmin-variables';
+@import 'atlas-variables';
 
 $structureFieldsWidth: 448px;
 $structureFieldsWidthMobile: 320px;
 
 .structure-builder {
 	&__sidebar {
-		background-color: $cadmin-light-l1;
+		background-color: $light-l1;
 		width: $structureFieldsWidth;
 
 		@include media-breakpoint-down(sm) {
@@ -29,11 +29,11 @@ $structureFieldsWidthMobile: 320px;
 	&__tree {
 		&-node {
 			&--field-icon {
-				color: $cadmin-blue-l1;
+				color: $blue-l1;
 			}
 
 			&--group-icon {
-				color: $cadmin-teal-l1;
+				color: $teal-l1;
 			}
 
 			&--input {
@@ -41,13 +41,13 @@ $structureFieldsWidthMobile: 320px;
 
 				&:active,
 				&:focus {
-					outline-color: $cadmin-primary-l1;
+					outline-color: $primary-l1;
 				}
 			}
 
 			&--structure-icon,
 			&--related-content-icon {
-				color: $cadmin-orange-l1;
+				color: $orange-l1;
 			}
 		}
 	}
@@ -63,8 +63,8 @@ $structureFieldsWidthMobile: 320px;
 	}
 
 	&__help-button {
-		background-color: $cadmin-dark;
-		border-color: $cadmin-dark;
+		background-color: $dark;
+		border-color: $dark;
 		bottom: 2.5rem;
 		right: 2.5rem;
 		z-index: 100;
@@ -72,8 +72,8 @@ $structureFieldsWidthMobile: 320px;
 		&:hover,
 		&:focus,
 		&:active {
-			background-color: $cadmin-dark-l1;
-			border-color: $cadmin-dark-l1;
+			background-color: $dark-l1;
+			border-color: $dark-l1;
 		}
 	}
 

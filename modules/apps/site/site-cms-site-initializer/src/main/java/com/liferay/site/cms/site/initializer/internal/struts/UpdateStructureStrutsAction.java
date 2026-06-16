@@ -120,50 +120,6 @@ public class UpdateStructureStrutsAction implements StrutsAction {
 		return null;
 	}
 
-	private void _updateObjectRelationships(
-			ObjectDefinition objectDefinition, long objectDefinitionId,
-			ObjectDefinitionResource objectDefinitionResource)
-		throws Exception {
-
-		ObjectDefinition existingObjectDefinition =
-			objectDefinitionResource.getObjectDefinition(objectDefinitionId);
-
-		ObjectRelationship[] existingObjectRelationships =
-			existingObjectDefinition.getObjectRelationships();
-
-		if (ArrayUtil.isEmpty(existingObjectRelationships)) {
-			return;
-		}
-
-		Map<String, ObjectRelationship> objectRelationshipsMap =
-			new LinkedHashMap<>();
-
-		ObjectRelationship[] objectRelationships =
-			objectDefinition.getObjectRelationships();
-
-		if (objectRelationships != null) {
-			for (ObjectRelationship objectRelationship : objectRelationships) {
-				objectRelationshipsMap.put(
-					objectRelationship.getName(), objectRelationship);
-			}
-		}
-
-		for (ObjectRelationship existingObjectRelationship :
-				existingObjectRelationships) {
-
-			objectRelationshipsMap.putIfAbsent(
-				existingObjectRelationship.getName(),
-				existingObjectRelationship);
-		}
-
-		Collection<ObjectRelationship> objectRelationshipsCollection =
-			objectRelationshipsMap.values();
-
-		objectDefinition.setObjectRelationships(
-			() -> objectRelationshipsCollection.toArray(
-				new ObjectRelationship[0]));
-	}
-
 	private void _deleteRelationships(long objectDefinitionId)
 		throws Exception {
 
@@ -228,6 +184,50 @@ public class UpdateStructureStrutsAction implements StrutsAction {
 		}
 
 		return objectRelationships;
+	}
+
+	private void _updateObjectRelationships(
+			ObjectDefinition objectDefinition, long objectDefinitionId,
+			ObjectDefinitionResource objectDefinitionResource)
+		throws Exception {
+
+		ObjectDefinition existingObjectDefinition =
+			objectDefinitionResource.getObjectDefinition(objectDefinitionId);
+
+		ObjectRelationship[] existingObjectRelationships =
+			existingObjectDefinition.getObjectRelationships();
+
+		if (ArrayUtil.isEmpty(existingObjectRelationships)) {
+			return;
+		}
+
+		Map<String, ObjectRelationship> objectRelationshipsMap =
+			new LinkedHashMap<>();
+
+		ObjectRelationship[] objectRelationships =
+			objectDefinition.getObjectRelationships();
+
+		if (objectRelationships != null) {
+			for (ObjectRelationship objectRelationship : objectRelationships) {
+				objectRelationshipsMap.put(
+					objectRelationship.getName(), objectRelationship);
+			}
+		}
+
+		for (ObjectRelationship existingObjectRelationship :
+				existingObjectRelationships) {
+
+			objectRelationshipsMap.putIfAbsent(
+				existingObjectRelationship.getName(),
+				existingObjectRelationship);
+		}
+
+		Collection<ObjectRelationship> objectRelationshipsCollection =
+			objectRelationshipsMap.values();
+
+		objectDefinition.setObjectRelationships(
+			() -> objectRelationshipsCollection.toArray(
+				new ObjectRelationship[0]));
 	}
 
 	private void _updateStructure(

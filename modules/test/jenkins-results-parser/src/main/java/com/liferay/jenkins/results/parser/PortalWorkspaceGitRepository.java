@@ -157,9 +157,7 @@ public class PortalWorkspaceGitRepository extends BaseWorkspaceGitRepository {
 			return;
 		}
 
-		Retryable<Object> retryable = new Retryable<Object>(
-			true, _SETUP_PROFILE_DXP_RETRY_COUNT,
-			_SETUP_PROFILE_DXP_RETRY_DELAY, true) {
+		Retryable<Object> retryable = new Retryable<Object>(true, 2, 5, true) {
 
 			@Override
 			public Object execute() {
@@ -439,10 +437,6 @@ public class PortalWorkspaceGitRepository extends BaseWorkspaceGitRepository {
 					"test.", Environment.get("HOSTNAME"), ".properties")),
 			_getPortalTestProperties(), true);
 	}
-
-	private static final int _SETUP_PROFILE_DXP_RETRY_COUNT = 2;
-
-	private static final int _SETUP_PROFILE_DXP_RETRY_DELAY = 5;
 
 	private Properties _appServerProperties;
 	private boolean _setUpBinariesCache;

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.site.dsr.site.initializer.internal.constants.DSRConstants;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -163,6 +164,21 @@ public class ViewRoomsSectionDisplayContext extends BaseSectionDisplayContext {
 				"update"
 			).build(
 				"share"
+			),
+			FDSActionDropdownItemBuilder.setHref(
+				() -> StringBundler.concat(
+					themeDisplay.getPathFriendlyURLPublic(),
+					DSRConstants.DSR_FRIENDLY_URL, "/e/room-settings/",
+					PortalUtil.getClassNameId(objectDefinition.getClassName()),
+					"/{embedded.id}?redirect=", themeDisplay.getURLCurrent())
+			).setIcon(
+				"cog"
+			).setLabel(
+				LanguageUtil.get(httpServletRequest, "settings")
+			).setPermissionKey(
+				"update"
+			).build(
+				"settings"
 			),
 			FDSActionDropdownItemBuilder.setHref(
 				"#"

@@ -13,6 +13,7 @@ export {default as CMSFileSelectorEventHandler} from './document_library/CMSFile
 // Main
 
 export {default as ActivityLog} from './main_view/analytics/components/ActivityLog';
+
 export {default as FrequencyChart} from './main_view/analytics/components/FrequencyChart';
 export {default as LatestActivity} from './main_view/analytics/components/LatestActivity';
 export {default as MostActiveVisitors} from './main_view/analytics/components/MostActiveVisitors';
@@ -23,3 +24,4 @@ export {default as RoomGeneral} from './main_view/analytics/components/RoomGener
 export {default as RoomStatistics} from './main_view/analytics/components/RoomStatistics';
 export {default as RoomTrend} from './main_view/analytics/components/RoomTrend';
 export {default as TimelineEngagementChart} from './main_view/analytics/components/TimelineEngagementChart';
+export {default as RoomSettingsToolbar} from './main_view/rooms/RoomSettingsToolbar';

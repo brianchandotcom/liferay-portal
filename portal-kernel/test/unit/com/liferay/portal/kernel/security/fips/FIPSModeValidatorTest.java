@@ -54,14 +54,14 @@ public class FIPSModeValidatorTest {
 			ReflectionTestUtil.getFieldValue(
 				FIPSModeValidator.class, "_allowedProviderNames");
 
-		for (String allowedProvider : allowedProviderNames.keySet()) {
+		for (String allowedProviderName : allowedProviderNames.keySet()) {
 			_assertSecurityException(
 				"are not allowed in FIPS mode for",
 				() -> ReflectionTestUtil.invoke(
 					FIPSModeValidator.class, "_validateProviders",
 					new Class<?>[] {Provider[].class},
 					(Object)new Provider[] {
-						_createProvider(allowedProvider),
+						_createProvider(allowedProviderName),
 						_createProvider(RandomTestUtil.randomString())
 					}));
 		}

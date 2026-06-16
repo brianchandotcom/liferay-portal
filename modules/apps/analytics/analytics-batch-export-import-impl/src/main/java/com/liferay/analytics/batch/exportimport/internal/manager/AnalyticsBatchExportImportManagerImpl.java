@@ -549,8 +549,8 @@ public class AnalyticsBatchExportImportManagerImpl
 			analyticsConfiguration.liferayAnalyticsURL() + "/endpoints/" +
 				analyticsConfiguration.liferayAnalyticsProjectId());
 
-		try (CloseableHttpClient closeableHttpClient =
-				_getCloseableHttpClient()) {
+		try (CloseableHttpClient closeableHttpClient = _getCloseableHttpClient(
+				false)) {
 
 			CloseableHttpResponse closeableHttpResponse =
 				closeableHttpClient.execute(httpGet);
@@ -724,8 +724,8 @@ public class AnalyticsBatchExportImportManagerImpl
 			HttpUriRequest httpUriRequest)
 		throws Exception {
 
-		try (CloseableHttpClient closeableHttpClient =
-				_getCloseableHttpClient()) {
+		try (CloseableHttpClient closeableHttpClient = _getCloseableHttpClient(
+				false)) {
 
 			CloseableHttpResponse closeableHttpResponse =
 				closeableHttpClient.execute(httpUriRequest);
@@ -760,10 +760,25 @@ public class AnalyticsBatchExportImportManagerImpl
 		}
 	}
 
-	private CloseableHttpClient _getCloseableHttpClient() {
+	private CloseableHttpClient _getCloseableHttpClient(
+		boolean disableAutomaticRetries) {
+
 		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
 
 		httpClientBuilder.useSystemProperties();
+
+		if (disableAutomaticRetries) {
+			RequestConfig.Builder requestConfigBuilder = RequestConfig.custom();
+
+			requestConfigBuilder.setConnectionRequestTimeout(60000);
+			requestConfigBuilder.setConnectTimeout(30000);
+			requestConfigBuilder.setSocketTimeout(600000);
+
+			httpClientBuilder.setDefaultRequestConfig(
+				requestConfigBuilder.build());
+
+			httpClientBuilder.disableAutomaticRetries();
+		}
 
 		return httpClientBuilder.build();
 	}
@@ -827,24 +842,6 @@ public class AnalyticsBatchExportImportManagerImpl
 			analyticsConfiguration.liferayAnalyticsProjectId());
 
 		return options;
-	}
-
-	private CloseableHttpClient _getUploadHttpClient() {
-		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
-
-		httpClientBuilder.useSystemProperties();
-
-		RequestConfig.Builder requestConfigBuilder = RequestConfig.custom();
-
-		requestConfigBuilder.setConnectionRequestTimeout(60000);
-		requestConfigBuilder.setConnectTimeout(30000);
-		requestConfigBuilder.setSocketTimeout(600000);
-
-		httpClientBuilder.setDefaultRequestConfig(requestConfigBuilder.build());
-
-		httpClientBuilder.disableAutomaticRetries();
-
-		return httpClientBuilder.build();
 	}
 
 	private boolean _isEnabled(long companyId) {
@@ -1053,7 +1050,7 @@ public class AnalyticsBatchExportImportManagerImpl
 				httpPost.setEntity(new FileEntity(multipartFile));
 
 				try (CloseableHttpClient closeableHttpClient =
-						_getUploadHttpClient();
+						_getCloseableHttpClient(true);
 
 					CloseableHttpResponse closeableHttpResponse =
 						closeableHttpClient.execute(httpPost)) {

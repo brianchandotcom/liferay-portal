@@ -27,13 +27,13 @@ import java.util.zip.GZIPOutputStream;
 public class HeapDumpCloudUploader {
 
 	public HeapDumpCloudUploader(
-		String phase, String masterHostname, String jobName, String buildNumber,
+		String buildNumber, String jobName, String masterHostname, String phase,
 		String slaveHostname) {
 
-		_phase = phase;
-		_masterHostname = masterHostname;
-		_jobName = jobName;
 		_buildNumber = buildNumber;
+		_jobName = jobName;
+		_masterHostname = masterHostname;
+		_phase = phase;
 		_slaveHostname = slaveHostname;
 	}
 
@@ -46,25 +46,9 @@ public class HeapDumpCloudUploader {
 			return;
 		}
 
-		String s3BucketName;
+		String s3BucketName = _getS3BucketName();
 
-		try {
-			s3BucketName = JenkinsResultsParserUtil.getBuildProperty(
-				"env.S3_BUCKET_NAME");
-		}
-		catch (IOException ioException) {
-			System.out.println(
-				"ERROR: Unable to read \"env.S3_BUCKET_NAME\": " +
-					ioException.getMessage());
-
-			return;
-		}
-
-		if (JenkinsResultsParserUtil.isNullOrEmpty(s3BucketName)) {
-			System.out.println(
-				"INFO: \"S3_BUCKET_NAME\" is not set, skipping heap dump " +
-					"upload");
-
+		if (s3BucketName == null) {
 			return;
 		}
 
@@ -107,6 +91,32 @@ public class HeapDumpCloudUploader {
 		finally {
 			gzippedFile.delete();
 		}
+	}
+
+	private String _getS3BucketName() {
+		String s3BucketName;
+
+		try {
+			s3BucketName = JenkinsResultsParserUtil.getBuildProperty(
+				"env.S3_BUCKET_NAME");
+		}
+		catch (IOException ioException) {
+			System.out.println(
+				"ERROR: Unable to read \"env.S3_BUCKET_NAME\": " +
+					ioException.getMessage());
+
+			return null;
+		}
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(s3BucketName)) {
+			System.out.println(
+				"INFO: \"S3_BUCKET_NAME\" is not set, skipping heap dump " +
+					"upload");
+
+			return null;
+		}
+
+		return s3BucketName;
 	}
 
 	private File _gzip(File file) {

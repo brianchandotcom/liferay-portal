@@ -38,6 +38,7 @@ public class SHSubshellCheck extends BaseFileCheck {
 		try (UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
 
+			boolean escaped = false;
 			boolean insideDoubleQuotes = false;
 			boolean insideLocalBlock = false;
 			boolean insideSingleQuotes = false;
@@ -81,9 +82,17 @@ public class SHSubshellCheck extends BaseFileCheck {
 				sb.append(lineContent);
 
 				for (int i = 0; i < lineContent.length(); i++) {
+					if (escaped) {
+						escaped = false;
+
+						continue;
+					}
+
 					char c = lineContent.charAt(i);
 
-					if ((i > 0) && (lineContent.charAt(i - 1) == '\\')) {
+					if (c == '\\') {
+						escaped = true;
+
 						continue;
 					}
 
@@ -135,6 +144,7 @@ public class SHSubshellCheck extends BaseFileCheck {
 						startLineNumber);
 				}
 
+				escaped = false;
 				insideDoubleQuotes = false;
 				insideLocalBlock = false;
 				insideSingleQuotes = false;

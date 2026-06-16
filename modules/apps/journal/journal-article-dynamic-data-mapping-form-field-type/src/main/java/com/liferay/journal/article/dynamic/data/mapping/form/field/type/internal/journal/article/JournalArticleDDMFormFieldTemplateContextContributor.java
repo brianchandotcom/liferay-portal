@@ -201,8 +201,11 @@ public class JournalArticleDDMFormFieldTemplateContextContributor
 			}
 
 			JournalArticle journalArticle =
-				_journalArticleLocalService.fetchLatestArticle(
-					jsonObject.getLong("classPK"));
+				_journalArticleLocalService.fetchLatestArticle(classPK);
+
+			if (journalArticle == null) {
+				return jsonObject.toString();
+			}
 
 			jsonObject.put(
 				"title", journalArticle.getTitle()

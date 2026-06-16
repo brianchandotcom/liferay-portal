@@ -10,7 +10,7 @@
 				"en_US": "PageSpeed"
 			},
 			"name": "pageSpeed",
-			"objectActionExecutorKey": "function#liferay-seostudio-pagespeed-object-action-pagespeed",
+			"objectActionExecutorKey": "function#liferay-seostudio-etc-pagespeed-object-action-pagespeed",
 			"objectActionTriggerKey": "onAfterAdd",
 			"parameters": {
 			}

@@ -3,12 +3,12 @@ assemble:
 liferay-seostudio-etc-gsc-oahs:
     .serviceAddress: localhost:58081
     .serviceScheme: http
-    name: Liferay SEO Studio GSC OAuth Application Headless Server
+    name: Liferay SEO Studio Etc GSC OAuth Application Headless Server
     scopes:
         -   c_seostudiogsccredentials.everything
     type: oAuthApplicationHeadlessServer
 liferay-seostudio-etc-gsc-oaua:
     .serviceAddress: localhost:58081
     .serviceScheme: http
-    name: Liferay SEO Studio GSC OAuth Application User Agent
+    name: Liferay SEO Studio Etc GSC OAuth Application User Agent
     type: oAuthApplicationUserAgent

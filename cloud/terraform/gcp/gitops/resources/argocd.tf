@@ -417,6 +417,7 @@ resource "kubernetes_manifest" "liferay_applicationset" {
 						}
 						managedNamespaceMetadata={
 							labels={
+								"liferay.com/observable"="true"
 								"pod-security.kubernetes.io/enforce"="restricted"
 							}
 						}

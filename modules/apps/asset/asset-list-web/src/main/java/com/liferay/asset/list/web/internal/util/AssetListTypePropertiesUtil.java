@@ -203,7 +203,7 @@ public class AssetListTypePropertiesUtil {
 		long classNameId, long classTypeId, Locale locale,
 		ObjectField objectField, String type) {
 
-		JSONObject jsonObject = JSONUtil.put(
+		return JSONUtil.put(
 			"classNameId", classNameId
 		).put(
 			"classTypeId", classTypeId
@@ -212,26 +212,27 @@ public class AssetListTypePropertiesUtil {
 		).put(
 			"name", objectField.getName()
 		).put(
+			"options",
+			() -> {
+				if (!type.equals("picklist") ||
+					(objectField.getListTypeDefinitionId() <= 0)) {
+
+					return null;
+				}
+
+				return JSONUtil.toJSONArray(
+					ListTypeEntryLocalServiceUtil.getListTypeEntries(
+						objectField.getListTypeDefinitionId()),
+					listTypeEntry -> JSONUtil.put(
+						"label", listTypeEntry.getName(locale, true)
+					).put(
+						"value", listTypeEntry.getKey()
+					),
+					_log);
+			}
+		).put(
 			"type", type
 		);
-
-		if (!type.equals("picklist") ||
-			(objectField.getListTypeDefinitionId() <= 0)) {
-
-			return jsonObject;
-		}
-
-		return jsonObject.put(
-			"options",
-			JSONUtil.toJSONArray(
-				ListTypeEntryLocalServiceUtil.getListTypeEntries(
-					objectField.getListTypeDefinitionId()),
-				listTypeEntry -> JSONUtil.put(
-					"label", listTypeEntry.getName(locale, true)
-				).put(
-					"value", listTypeEntry.getKey()
-				),
-				_log));
 	}
 
 	private static String _toType(String businessType) {

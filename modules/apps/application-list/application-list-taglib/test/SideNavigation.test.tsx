@@ -55,6 +55,8 @@ const renderComponent = ({expandedKeys = ['content', 'workflow']} = {}) =>
 		<SideNavigation
 			canonicalName="sideNavigationCanonicalName"
 			categoryImageUrl="categoryImageUrl"
+			colorScheme="light"
+			colorSchemeSessionKey="colorSchemeSessionKey"
 			expandedKeys={expandedKeys}
 			expandedKeysSessionKey="expandedKeysSessionKey"
 			items={ITEMS}

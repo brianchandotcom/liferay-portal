@@ -478,42 +478,6 @@ public class AnalyticsBatchExportImportManagerImpl
 		return httpUriRequest;
 	}
 
-	private File _buildMultipartFile(
-			String boundary, File file, String resourceName, String uploadType)
-		throws Exception {
-
-		File tempFile = FileUtil.createTempFile();
-
-		try (OutputStream outputStream = new FileOutputStream(tempFile)) {
-			String header = StringBundler.concat(
-				"--", boundary, "\r\n",
-				"Content-Disposition: form-data; name=\"file\"; filename=\"",
-				resourceName, "\"\r\n", "Content-Type: ",
-				ContentTypes.MULTIPART_FORM_DATA, "\r\n\r\n");
-
-			outputStream.write(header.getBytes(StandardCharsets.US_ASCII));
-
-			Files.copy(file.toPath(), outputStream);
-
-			header = StringBundler.concat(
-				"\r\n--", boundary, "\r\n", "Content-Disposition: form-data; ",
-				"name=\"uploadType\"\r\n\r\n", uploadType);
-
-			outputStream.write(header.getBytes(StandardCharsets.US_ASCII));
-
-			header = StringBundler.concat("\r\n--", boundary, "--\r\n");
-
-			outputStream.write(header.getBytes(StandardCharsets.US_ASCII));
-		}
-		catch (Exception exception) {
-			tempFile.delete();
-
-			throw exception;
-		}
-
-		return tempFile;
-	}
-
 	private void _checkCompany(long companyId) {
 		if (_analyticsConfigurationRegistry.isActive()) {
 			return;
@@ -1020,7 +984,7 @@ public class AnalyticsBatchExportImportManagerImpl
 				String boundary = StringUtil.removeSubstring(
 					String.valueOf(UUID.randomUUID()), "-");
 
-				multipartFile = _buildMultipartFile(
+				multipartFile = _writeMultipartFile(
 					boundary, file, resourceName,
 					(resourceLastModifiedDate != null) ? "INCREMENTAL" :
 						"FULL");
@@ -1148,6 +1112,42 @@ public class AnalyticsBatchExportImportManagerImpl
 			StringBundler.concat(
 				"Upload failed after ", retryCount,
 				" attempts with HTTP response code: ", lastStatusCode));
+	}
+
+	private File _writeMultipartFile(
+			String boundary, File file, String resourceName, String uploadType)
+		throws Exception {
+
+		File tempFile = FileUtil.createTempFile();
+
+		try (OutputStream outputStream = new FileOutputStream(tempFile)) {
+			String header = StringBundler.concat(
+				"--", boundary, "\r\n",
+				"Content-Disposition: form-data; name=\"file\"; filename=\"",
+				resourceName, "\"\r\n", "Content-Type: ",
+				ContentTypes.MULTIPART_FORM_DATA, "\r\n\r\n");
+
+			outputStream.write(header.getBytes(StandardCharsets.US_ASCII));
+
+			Files.copy(file.toPath(), outputStream);
+
+			header = StringBundler.concat(
+				"\r\n--", boundary, "\r\n", "Content-Disposition: form-data; ",
+				"name=\"uploadType\"\r\n\r\n", uploadType);
+
+			outputStream.write(header.getBytes(StandardCharsets.US_ASCII));
+
+			header = StringBundler.concat("\r\n--", boundary, "--\r\n");
+
+			outputStream.write(header.getBytes(StandardCharsets.US_ASCII));
+		}
+		catch (Exception exception) {
+			tempFile.delete();
+
+			throw exception;
+		}
+
+		return tempFile;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

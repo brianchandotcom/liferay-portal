@@ -1,5 +1,4 @@
 {{- if eq (include "observability.cloudProvider" .) "gcp" -}}
-{{- $projectId := required "gcp.projectId must be set when cloudProvider=gcp" .Values.gcp.projectId -}}
 apiVersion: v1
 data:
     gmp-datasource.yaml: |
@@ -13,7 +12,7 @@ data:
                 name: {{ .Values.datasource.name | quote }}
                 type: {{ .Values.datasource.type | quote }}
                 uid: {{ include "observability.datasourceUid" . | quote }}
-                url: {{ printf "https://monitoring.googleapis.com/v1/projects/%s/location/global/prometheus" $projectId | quote }}
+                url: {{ printf "http://%s-frontend:%v" (include "observability.fullname" .) .Values.frontend.port | quote }}
 kind: ConfigMap
 metadata:
     labels:

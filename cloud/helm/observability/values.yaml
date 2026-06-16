@@ -432,6 +432,18 @@ datasource:
     name: Prometheus
     type: prometheus
     uid: managed-prometheus
+frontend:
+    image:
+        repository: gke.gcr.io/prometheus-engine/frontend
+        tag: v0.18.0-gke.2
+    port: 9090
+    resources:
+        limits:
+            cpu: 100m
+            memory: 128Mi
+        requests:
+            cpu: 10m
+            memory: 32Mi
 fullnameOverride: ""
 gcp:
     projectId: ""

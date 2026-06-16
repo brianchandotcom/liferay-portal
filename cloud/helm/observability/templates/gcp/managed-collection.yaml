@@ -3,6 +3,22 @@
 {{- $interval := .Values.alloy.scrapeInterval -}}
 {{- $kubeStateMetricsName := index .Values "kube-state-metrics" "nameOverride" | default "kube-state-metrics" -}}
 {{- $nodeExporterName := index .Values "prometheus-node-exporter" "nameOverride" | default "prometheus-node-exporter" -}}
+{{- if $scrape.cadvisor.enabled }}
+apiVersion: monitoring.googleapis.com/v1
+kind: ClusterNodeMonitoring
+metadata:
+    labels:
+        {{- include "observability.labels" . | nindent 8 }}
+    name: {{ printf "%s-cadvisor" (include "observability.fullname" .) | trunc 63 | trimSuffix "-" }}
+spec:
+    endpoints:
+        -   interval: {{ $interval | quote }}
+            path: {{ $scrape.cadvisor.path | quote }}
+            scheme: https
+            tls:
+                insecureSkipVerify: true
+---
+{{- end }}
 {{- if $scrape.envoy.enabled }}
 apiVersion: monitoring.googleapis.com/v1
 kind: ClusterPodMonitoring

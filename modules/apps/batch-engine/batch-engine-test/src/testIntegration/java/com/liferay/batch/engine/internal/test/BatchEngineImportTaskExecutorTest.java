@@ -645,6 +645,10 @@ public class BatchEngineImportTaskExecutorTest
 
 		_batchEngineImportTaskExecutor.execute(_batchEngineImportTask);
 
+		_batchEngineImportTask =
+			_batchEngineImportTaskLocalService.getBatchEngineImportTask(
+				_batchEngineImportTask.getBatchEngineImportTaskId());
+
 		Assert.assertEquals(
 			BatchEngineTaskExecuteStatus.COMPLETED.toString(),
 			_batchEngineImportTask.getExecuteStatus());
@@ -713,6 +717,10 @@ public class BatchEngineImportTaskExecutorTest
 
 			_batchEngineImportTaskExecutor.execute(_batchEngineImportTask);
 		}
+
+		_batchEngineImportTask =
+			_batchEngineImportTaskLocalService.getBatchEngineImportTask(
+				_batchEngineImportTask.getBatchEngineImportTaskId());
 
 		Assert.assertEquals(
 			BatchEngineTaskExecuteStatus.FAILED.toString(),
@@ -1363,6 +1371,10 @@ public class BatchEngineImportTaskExecutorTest
 				batchEngineTaskOperation.name(), parameters, null);
 
 		_batchEngineImportTaskExecutor.execute(_batchEngineImportTask);
+
+		_batchEngineImportTask =
+			_batchEngineImportTaskLocalService.getBatchEngineImportTask(
+				_batchEngineImportTask.getBatchEngineImportTaskId());
 	}
 
 	private byte[] _toContent(String contentType, StringBundler sb)

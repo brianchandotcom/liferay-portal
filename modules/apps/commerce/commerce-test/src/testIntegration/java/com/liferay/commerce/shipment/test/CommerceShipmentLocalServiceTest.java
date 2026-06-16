@@ -66,18 +66,19 @@ public class CommerceShipmentLocalServiceTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
-		_user = UserTestUtil.addUser();
 
 		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
 			_group.getCompanyId());
 
 		_commerceChannel = CommerceTestUtil.addCommerceChannel(
 			_group.getGroupId(), _commerceCurrency.getCode());
+
+		_user = UserTestUtil.addUser();
 	}
 
 	@Test
 	public void testGetCommerceShipments() throws Exception {
-		CommerceOrder commerceOrder = _addCommerceOrderWithShipments();
+		CommerceOrder commerceOrder = _addCommerceOrder();
 
 		List<CommerceShipment> commerceShipments =
 			_commerceShipmentLocalService.getCommerceShipments(
@@ -90,7 +91,7 @@ public class CommerceShipmentLocalServiceTest {
 
 	@Test
 	public void testGetCommerceShipmentsCount() throws Exception {
-		CommerceOrder commerceOrder = _addCommerceOrderWithShipments();
+		CommerceOrder commerceOrder = _addCommerceOrder();
 
 		int count = _commerceShipmentLocalService.getCommerceShipmentsCount(
 			commerceOrder.getCommerceOrderId());
@@ -102,7 +103,7 @@ public class CommerceShipmentLocalServiceTest {
 	public void testGetCommerceShipmentStatusesByCommerceOrderId()
 		throws Exception {
 
-		CommerceOrder commerceOrder = _addCommerceOrderWithShipments();
+		CommerceOrder commerceOrder = _addCommerceOrder();
 
 		int[] statuses =
 			_commerceShipmentLocalService.
@@ -140,21 +141,11 @@ public class CommerceShipmentLocalServiceTest {
 		commerceOrder = _commerceOrderLocalService.getCommerceOrder(
 			commerceOrder.getCommerceOrderId());
 
-		int orderStatusIndex = RandomTestUtil.randomInt(
-			0, CommerceShipmentConstants.ALLOWED_ORDER_STATUSES.length - 1);
-
-		int orderStatus =
-			CommerceShipmentConstants.ALLOWED_ORDER_STATUSES[orderStatusIndex];
-
-		commerceOrder.setOrderStatus(orderStatus);
-
 		CommerceAddress commerceAddress =
 			CommerceTestUtil.addUserCommerceAddress(
 				_commerceChannel.getGroupId(), _user.getUserId());
 
 		commerceOrder.setBillingAddressId(
-			commerceAddress.getCommerceAddressId());
-		commerceOrder.setShippingAddressId(
 			commerceAddress.getCommerceAddressId());
 
 		BigDecimal amount = BigDecimal.valueOf(RandomTestUtil.nextDouble());
@@ -166,6 +157,16 @@ public class CommerceShipmentLocalServiceTest {
 		commerceOrder.setCommerceShippingMethodId(
 			commerceShippingMethod.getCommerceShippingMethodId());
 
+		commerceOrder.setShippingAddressId(
+			commerceAddress.getCommerceAddressId());
+
+		commerceOrder.setOrderStatus(
+			CommerceShipmentConstants.ALLOWED_ORDER_STATUSES
+				[RandomTestUtil.randomInt(
+					0,
+					CommerceShipmentConstants.ALLOWED_ORDER_STATUSES.length -
+						1)]);
+
 		CommerceShippingFixedOption commerceShippingFixedOption =
 			CommerceTestUtil.addCommerceShippingFixedOption(
 				commerceShippingMethod, amount);
@@ -175,11 +176,8 @@ public class CommerceShipmentLocalServiceTest {
 		commerceOrder.setShippingOptionName(
 			commerceShippingFixedOption.getNameCurrentValue());
 
-		return _commerceOrderLocalService.updateCommerceOrder(commerceOrder);
-	}
-
-	private CommerceOrder _addCommerceOrderWithShipments() throws Exception {
-		CommerceOrder commerceOrder = _addCommerceOrder();
+		commerceOrder = _commerceOrderLocalService.updateCommerceOrder(
+			commerceOrder);
 
 		List<CommerceOrderItem> commerceOrderItems =
 			commerceOrder.getCommerceOrderItems();

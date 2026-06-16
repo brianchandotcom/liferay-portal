@@ -86,7 +86,7 @@ public class JakartaTransformSourceProcessorTest
 	}
 
 	private void _testInvalidDependenciesFile(
-			String jakartaTransformDependenciesFilePath, String message)
+			String jakartaTransformDependenciesFilePath, String expectedMessage)
 		throws Exception {
 
 		_jakartaTransformDependenciesFilePath =
@@ -105,11 +105,10 @@ public class JakartaTransformSourceProcessorTest
 			}
 
 			Assert.assertTrue(throwable instanceof IOException);
-			Assert.assertTrue(
-				throwable.getMessage(
-				).contains(
-					message
-				));
+
+			String message = throwable.getMessage();
+
+			Assert.assertTrue(message.contains(expectedMessage));
 		}
 	}
 

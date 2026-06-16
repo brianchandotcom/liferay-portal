@@ -22,8 +22,8 @@ import java.util.concurrent.TimeUnit;
 
 import javax.annotation.PreDestroy;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * @author Amos Fong
@@ -43,10 +43,10 @@ public abstract class BasePubsubPublisher extends BasePubsubClient {
 			if ((exception instanceof ExecutionException) &&
 				(exception.getCause() instanceof Exception)) {
 
-				handleError(message, (Exception)exception.getCause());
+				handleError((Exception)exception.getCause(), message);
 			}
 			else {
-				handleError(message, exception);
+				handleError(exception, message);
 			}
 		}
 	}
@@ -106,7 +106,7 @@ public abstract class BasePubsubPublisher extends BasePubsubClient {
 		return 60;
 	}
 
-	protected void handleError(Message message, Exception exception)
+	protected void handleError(Exception exception, Message message)
 		throws Exception {
 
 		_log.error("Unable to publish message " + message, exception);
@@ -136,7 +136,7 @@ public abstract class BasePubsubPublisher extends BasePubsubClient {
 		return builder.build();
 	}
 
-	private static final Logger _log = LoggerFactory.getLogger(
+	private static final Log _log = LogFactory.getLog(
 		BasePubsubPublisher.class);
 
 	private final Map<String, Publisher> _publisherMap = new HashMap<>();

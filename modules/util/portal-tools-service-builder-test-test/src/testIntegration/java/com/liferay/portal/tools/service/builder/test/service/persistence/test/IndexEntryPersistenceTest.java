@@ -125,7 +125,9 @@ public class IndexEntryPersistenceTest {
 
 		newIndexEntry.setPortletId(RandomTestUtil.randomString());
 
-		_indexEntries.add(_persistence.update(newIndexEntry));
+		newIndexEntry = _persistence.update(newIndexEntry);
+
+		_indexEntries.add(newIndexEntry);
 
 		IndexEntry existingIndexEntry = _persistence.findByPrimaryKey(
 			newIndexEntry.getPrimaryKey());
@@ -604,4 +606,4 @@ public class IndexEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1289302592
+// LIFERAY-SERVICE-BUILDER-HASH:1098283934

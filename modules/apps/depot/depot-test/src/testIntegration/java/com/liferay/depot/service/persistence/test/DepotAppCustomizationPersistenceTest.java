@@ -126,8 +126,10 @@ public class DepotAppCustomizationPersistenceTest {
 
 		newDepotAppCustomization.setPortletId(RandomTestUtil.randomString());
 
-		_depotAppCustomizations.add(
-			_persistence.update(newDepotAppCustomization));
+		newDepotAppCustomization = _persistence.update(
+			newDepotAppCustomization);
+
+		_depotAppCustomizations.add(newDepotAppCustomization);
 
 		DepotAppCustomization existingDepotAppCustomization =
 			_persistence.findByPrimaryKey(
@@ -557,4 +559,4 @@ public class DepotAppCustomizationPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1199357578
+// LIFERAY-SERVICE-BUILDER-HASH:2058003484

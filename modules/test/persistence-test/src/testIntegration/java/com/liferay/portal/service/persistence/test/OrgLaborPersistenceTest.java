@@ -143,7 +143,9 @@ public class OrgLaborPersistenceTest {
 
 		newOrgLabor.setSatClose(RandomTestUtil.nextInt());
 
-		_orgLabors.add(_persistence.update(newOrgLabor));
+		newOrgLabor = _persistence.update(newOrgLabor);
+
+		_orgLabors.add(newOrgLabor);
 
 		OrgLabor existingOrgLabor = _persistence.findByPrimaryKey(
 			newOrgLabor.getPrimaryKey());
@@ -485,4 +487,4 @@ public class OrgLaborPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:219133126
+// LIFERAY-SERVICE-BUILDER-HASH:851558342

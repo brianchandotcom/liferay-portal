@@ -125,7 +125,9 @@ public class SocialRelationPersistenceTest {
 
 		newSocialRelation.setType(RandomTestUtil.nextInt());
 
-		_socialRelations.add(_persistence.update(newSocialRelation));
+		newSocialRelation = _persistence.update(newSocialRelation);
+
+		_socialRelations.add(newSocialRelation);
 
 		SocialRelation existingSocialRelation = _persistence.findByPrimaryKey(
 			newSocialRelation.getPrimaryKey());
@@ -586,4 +588,4 @@ public class SocialRelationPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1838882260
+// LIFERAY-SERVICE-BUILDER-HASH:1021798

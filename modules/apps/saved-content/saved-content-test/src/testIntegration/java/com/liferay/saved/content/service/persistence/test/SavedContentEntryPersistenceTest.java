@@ -138,7 +138,9 @@ public class SavedContentEntryPersistenceTest {
 
 		newSavedContentEntry.setClassPK(RandomTestUtil.nextLong());
 
-		_savedContentEntries.add(_persistence.update(newSavedContentEntry));
+		newSavedContentEntry = _persistence.update(newSavedContentEntry);
+
+		_savedContentEntries.add(newSavedContentEntry);
 
 		SavedContentEntry existingSavedContentEntry =
 			_persistence.findByPrimaryKey(newSavedContentEntry.getPrimaryKey());
@@ -708,4 +710,4 @@ public class SavedContentEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-361224957
+// LIFERAY-SERVICE-BUILDER-HASH:474436523

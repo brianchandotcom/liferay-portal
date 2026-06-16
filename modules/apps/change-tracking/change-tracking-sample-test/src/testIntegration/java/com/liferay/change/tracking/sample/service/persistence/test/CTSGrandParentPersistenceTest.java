@@ -117,7 +117,9 @@ public class CTSGrandParentPersistenceTest {
 
 		newCTSGrandParent.setName(RandomTestUtil.randomString());
 
-		_ctsGrandParents.add(_persistence.update(newCTSGrandParent));
+		newCTSGrandParent = _persistence.update(newCTSGrandParent);
+
+		_ctsGrandParents.add(newCTSGrandParent);
 
 		CTSGrandParent existingCTSGrandParent = _persistence.findByPrimaryKey(
 			newCTSGrandParent.getPrimaryKey());
@@ -410,4 +412,4 @@ public class CTSGrandParentPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2051560569
+// LIFERAY-SERVICE-BUILDER-HASH:7946473

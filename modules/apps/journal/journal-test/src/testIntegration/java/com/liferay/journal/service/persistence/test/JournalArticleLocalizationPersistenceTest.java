@@ -129,8 +129,10 @@ public class JournalArticleLocalizationPersistenceTest {
 		newJournalArticleLocalization.setLanguageId(
 			RandomTestUtil.randomString());
 
-		_journalArticleLocalizations.add(
-			_persistence.update(newJournalArticleLocalization));
+		newJournalArticleLocalization = _persistence.update(
+			newJournalArticleLocalization);
+
+		_journalArticleLocalizations.add(newJournalArticleLocalization);
 
 		JournalArticleLocalization existingJournalArticleLocalization =
 			_persistence.findByPrimaryKey(
@@ -537,4 +539,4 @@ public class JournalArticleLocalizationPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-929088097
+// LIFERAY-SERVICE-BUILDER-HASH:-1041766921

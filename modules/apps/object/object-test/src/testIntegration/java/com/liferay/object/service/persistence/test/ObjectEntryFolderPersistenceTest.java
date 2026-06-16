@@ -144,7 +144,9 @@ public class ObjectEntryFolderPersistenceTest {
 
 		newObjectEntryFolder.setStatus(RandomTestUtil.nextInt());
 
-		_objectEntryFolders.add(_persistence.update(newObjectEntryFolder));
+		newObjectEntryFolder = _persistence.update(newObjectEntryFolder);
+
+		_objectEntryFolders.add(newObjectEntryFolder);
 
 		ObjectEntryFolder existingObjectEntryFolder =
 			_persistence.findByPrimaryKey(newObjectEntryFolder.getPrimaryKey());
@@ -646,4 +648,4 @@ public class ObjectEntryFolderPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2081101818
+// LIFERAY-SERVICE-BUILDER-HASH:523643676

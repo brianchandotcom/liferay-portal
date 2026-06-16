@@ -118,7 +118,9 @@ public class CTScorePersistenceTest {
 
 		newCTScore.setScore(RandomTestUtil.nextInt());
 
-		_ctScores.add(_persistence.update(newCTScore));
+		newCTScore = _persistence.update(newCTScore);
+
+		_ctScores.add(newCTScore);
 
 		CTScore existingCTScore = _persistence.findByPrimaryKey(
 			newCTScore.getPrimaryKey());
@@ -451,4 +453,4 @@ public class CTScorePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:636671779
+// LIFERAY-SERVICE-BUILDER-HASH:-2013155455

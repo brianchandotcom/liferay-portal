@@ -129,7 +129,9 @@ public class DDMFieldAttributePersistenceTest {
 		newDDMFieldAttribute.setSmallAttributeValue(
 			RandomTestUtil.randomString());
 
-		_ddmFieldAttributes.add(_persistence.update(newDDMFieldAttribute));
+		newDDMFieldAttribute = _persistence.update(newDDMFieldAttribute);
+
+		_ddmFieldAttributes.add(newDDMFieldAttribute);
 
 		DDMFieldAttribute existingDDMFieldAttribute =
 			_persistence.findByPrimaryKey(newDDMFieldAttribute.getPrimaryKey());
@@ -543,4 +545,4 @@ public class DDMFieldAttributePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:331030245
+// LIFERAY-SERVICE-BUILDER-HASH:1375402831

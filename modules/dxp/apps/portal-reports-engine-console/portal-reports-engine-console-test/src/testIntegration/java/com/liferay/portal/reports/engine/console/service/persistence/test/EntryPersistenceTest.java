@@ -152,7 +152,9 @@ public class EntryPersistenceTest {
 
 		newEntry.setStatus(RandomTestUtil.randomString());
 
-		_entries.add(_persistence.update(newEntry));
+		newEntry = _persistence.update(newEntry);
+
+		_entries.add(newEntry);
 
 		Entry existingEntry = _persistence.findByPrimaryKey(
 			newEntry.getPrimaryKey());
@@ -488,4 +490,4 @@ public class EntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1351570719
+// LIFERAY-SERVICE-BUILDER-HASH:-855877625

@@ -138,8 +138,10 @@ public class FriendlyURLEntryLocalizationPersistenceTest {
 		newFriendlyURLEntryLocalization.setUrlTitle(
 			RandomTestUtil.randomString());
 
-		_friendlyURLEntryLocalizations.add(
-			_persistence.update(newFriendlyURLEntryLocalization));
+		newFriendlyURLEntryLocalization = _persistence.update(
+			newFriendlyURLEntryLocalization);
+
+		_friendlyURLEntryLocalizations.add(newFriendlyURLEntryLocalization);
 
 		FriendlyURLEntryLocalization existingFriendlyURLEntryLocalization =
 			_persistence.findByPrimaryKey(
@@ -650,4 +652,4 @@ public class FriendlyURLEntryLocalizationPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:27422787
+// LIFERAY-SERVICE-BUILDER-HASH:-1803230131

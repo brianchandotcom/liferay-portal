@@ -133,7 +133,9 @@ public class JSONStorageEntryPersistenceTest {
 
 		newJSONStorageEntry.setValueString(RandomTestUtil.randomString());
 
-		_jsonStorageEntries.add(_persistence.update(newJSONStorageEntry));
+		newJSONStorageEntry = _persistence.update(newJSONStorageEntry);
+
+		_jsonStorageEntries.add(newJSONStorageEntry);
 
 		JSONStorageEntry existingJSONStorageEntry =
 			_persistence.findByPrimaryKey(newJSONStorageEntry.getPrimaryKey());
@@ -577,4 +579,4 @@ public class JSONStorageEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-721895333
+// LIFERAY-SERVICE-BUILDER-HASH:364213623

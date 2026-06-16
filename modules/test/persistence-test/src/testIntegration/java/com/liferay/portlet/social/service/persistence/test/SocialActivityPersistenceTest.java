@@ -139,7 +139,9 @@ public class SocialActivityPersistenceTest {
 
 		newSocialActivity.setReceiverUserId(RandomTestUtil.nextLong());
 
-		_socialActivities.add(_persistence.update(newSocialActivity));
+		newSocialActivity = _persistence.update(newSocialActivity);
+
+		_socialActivities.add(newSocialActivity);
 
 		SocialActivity existingSocialActivity = _persistence.findByPrimaryKey(
 			newSocialActivity.getPrimaryKey());
@@ -674,4 +676,4 @@ public class SocialActivityPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1325737225
+// LIFERAY-SERVICE-BUILDER-HASH:692533011

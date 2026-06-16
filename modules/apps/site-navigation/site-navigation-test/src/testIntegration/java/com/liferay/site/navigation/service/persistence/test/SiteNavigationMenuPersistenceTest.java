@@ -146,7 +146,9 @@ public class SiteNavigationMenuPersistenceTest {
 
 		newSiteNavigationMenu.setLastPublishDate(RandomTestUtil.nextDate());
 
-		_siteNavigationMenus.add(_persistence.update(newSiteNavigationMenu));
+		newSiteNavigationMenu = _persistence.update(newSiteNavigationMenu);
+
+		_siteNavigationMenus.add(newSiteNavigationMenu);
 
 		SiteNavigationMenu existingSiteNavigationMenu =
 			_persistence.findByPrimaryKey(
@@ -729,4 +731,4 @@ public class SiteNavigationMenuPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1169645437
+// LIFERAY-SERVICE-BUILDER-HASH:-1805045977

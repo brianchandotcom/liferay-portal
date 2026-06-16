@@ -239,7 +239,9 @@ public class ManyColumnsEntryPersistenceTest {
 
 		newManyColumnsEntry.setColumn64(RandomTestUtil.nextInt());
 
-		_manyColumnsEntries.add(_persistence.update(newManyColumnsEntry));
+		newManyColumnsEntry = _persistence.update(newManyColumnsEntry);
+
+		_manyColumnsEntries.add(newManyColumnsEntry);
 
 		ManyColumnsEntry existingManyColumnsEntry =
 			_persistence.findByPrimaryKey(newManyColumnsEntry.getPrimaryKey());
@@ -848,4 +850,4 @@ public class ManyColumnsEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1995720371
+// LIFERAY-SERVICE-BUILDER-HASH:-331931033

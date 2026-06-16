@@ -134,7 +134,9 @@ public class ObjectFolderPersistenceTest {
 
 		newObjectFolder.setStatus(RandomTestUtil.nextInt());
 
-		_objectFolders.add(_persistence.update(newObjectFolder));
+		newObjectFolder = _persistence.update(newObjectFolder);
+
+		_objectFolders.add(newObjectFolder);
 
 		ObjectFolder existingObjectFolder = _persistence.findByPrimaryKey(
 			newObjectFolder.getPrimaryKey());
@@ -587,4 +589,4 @@ public class ObjectFolderPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-498848516
+// LIFERAY-SERVICE-BUILDER-HASH:-933257862

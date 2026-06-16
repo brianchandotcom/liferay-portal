@@ -132,8 +132,10 @@ public class PortletPreferenceValuePersistenceTest {
 
 		newPortletPreferenceValue.setSmallValue(RandomTestUtil.randomString());
 
-		_portletPreferenceValues.add(
-			_persistence.update(newPortletPreferenceValue));
+		newPortletPreferenceValue = _persistence.update(
+			newPortletPreferenceValue);
+
+		_portletPreferenceValues.add(newPortletPreferenceValue);
 
 		PortletPreferenceValue existingPortletPreferenceValue =
 			_persistence.findByPrimaryKey(
@@ -595,4 +597,4 @@ public class PortletPreferenceValuePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:652783522
+// LIFERAY-SERVICE-BUILDER-HASH:1570263298

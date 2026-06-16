@@ -144,7 +144,9 @@ public class CSDiagramEntryPersistenceTest {
 
 		newCSDiagramEntry.setSku(RandomTestUtil.randomString());
 
-		_csDiagramEntries.add(_persistence.update(newCSDiagramEntry));
+		newCSDiagramEntry = _persistence.update(newCSDiagramEntry);
+
+		_csDiagramEntries.add(newCSDiagramEntry);
 
 		CSDiagramEntry existingCSDiagramEntry = _persistence.findByPrimaryKey(
 			newCSDiagramEntry.getPrimaryKey());
@@ -622,4 +624,4 @@ public class CSDiagramEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1234556000
+// LIFERAY-SERVICE-BUILDER-HASH:-327564316

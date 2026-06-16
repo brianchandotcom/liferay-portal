@@ -128,7 +128,9 @@ public class ObjectViewColumnPersistenceTest {
 
 		newObjectViewColumn.setPriority(RandomTestUtil.nextInt());
 
-		_objectViewColumns.add(_persistence.update(newObjectViewColumn));
+		newObjectViewColumn = _persistence.update(newObjectViewColumn);
+
+		_objectViewColumns.add(newObjectViewColumn);
 
 		ObjectViewColumn existingObjectViewColumn =
 			_persistence.findByPrimaryKey(newObjectViewColumn.getPrimaryKey());
@@ -465,4 +467,4 @@ public class ObjectViewColumnPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1387626022
+// LIFERAY-SERVICE-BUILDER-HASH:-1578875894

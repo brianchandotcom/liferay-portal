@@ -185,7 +185,9 @@ public class CommerceDiscountPersistenceTest {
 
 		newCommerceDiscount.setStatusDate(RandomTestUtil.nextDate());
 
-		_commerceDiscounts.add(_persistence.update(newCommerceDiscount));
+		newCommerceDiscount = _persistence.update(newCommerceDiscount);
+
+		_commerceDiscounts.add(newCommerceDiscount);
 
 		CommerceDiscount existingCommerceDiscount =
 			_persistence.findByPrimaryKey(newCommerceDiscount.getPrimaryKey());
@@ -813,4 +815,4 @@ public class CommerceDiscountPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1060095329
+// LIFERAY-SERVICE-BUILDER-HASH:276959809

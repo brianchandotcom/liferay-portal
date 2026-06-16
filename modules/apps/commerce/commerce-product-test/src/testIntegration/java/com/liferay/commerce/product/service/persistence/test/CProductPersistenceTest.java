@@ -136,7 +136,9 @@ public class CProductPersistenceTest {
 
 		newCProduct.setLatestVersion(RandomTestUtil.nextInt());
 
-		_cProducts.add(_persistence.update(newCProduct));
+		newCProduct = _persistence.update(newCProduct);
+
+		_cProducts.add(newCProduct);
 
 		CProduct existingCProduct = _persistence.findByPrimaryKey(
 			newCProduct.getPrimaryKey());
@@ -586,4 +588,4 @@ public class CProductPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-594503603
+// LIFERAY-SERVICE-BUILDER-HASH:-1936652787

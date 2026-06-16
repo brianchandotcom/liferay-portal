@@ -121,8 +121,9 @@ public class CacheReplicatorEntryPersistenceTest {
 
 		newCacheReplicatorEntry.setName(RandomTestUtil.randomString());
 
-		_cacheReplicatorEntries.add(
-			_persistence.update(newCacheReplicatorEntry));
+		newCacheReplicatorEntry = _persistence.update(newCacheReplicatorEntry);
+
+		_cacheReplicatorEntries.add(newCacheReplicatorEntry);
 
 		CacheReplicatorEntry existingCacheReplicatorEntry =
 			_persistence.findByPrimaryKey(
@@ -507,4 +508,4 @@ public class CacheReplicatorEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1117330332
+// LIFERAY-SERVICE-BUILDER-HASH:-635750484

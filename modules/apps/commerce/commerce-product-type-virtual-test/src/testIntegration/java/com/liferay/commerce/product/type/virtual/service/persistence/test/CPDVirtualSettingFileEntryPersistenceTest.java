@@ -144,8 +144,10 @@ public class CPDVirtualSettingFileEntryPersistenceTest {
 
 		newCPDVirtualSettingFileEntry.setVersion(RandomTestUtil.randomString());
 
-		_cpdVirtualSettingFileEntries.add(
-			_persistence.update(newCPDVirtualSettingFileEntry));
+		newCPDVirtualSettingFileEntry = _persistence.update(
+			newCPDVirtualSettingFileEntry);
+
+		_cpdVirtualSettingFileEntries.add(newCPDVirtualSettingFileEntry);
 
 		CPDVirtualSettingFileEntry existingCPDVirtualSettingFileEntry =
 			_persistence.findByPrimaryKey(
@@ -640,4 +642,4 @@ public class CPDVirtualSettingFileEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2015420311
+// LIFERAY-SERVICE-BUILDER-HASH:-1084227417

@@ -120,7 +120,9 @@ public class DSLQueryStatusEntryPersistenceTest {
 
 		newDSLQueryStatusEntry.setStatusDate(RandomTestUtil.nextDate());
 
-		_dslQueryStatusEntries.add(_persistence.update(newDSLQueryStatusEntry));
+		newDSLQueryStatusEntry = _persistence.update(newDSLQueryStatusEntry);
+
+		_dslQueryStatusEntries.add(newDSLQueryStatusEntry);
 
 		DSLQueryStatusEntry existingDSLQueryStatusEntry =
 			_persistence.findByPrimaryKey(
@@ -418,4 +420,4 @@ public class DSLQueryStatusEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1319606101
+// LIFERAY-SERVICE-BUILDER-HASH:12722765

@@ -131,7 +131,9 @@ public class DepotEntryPersistenceTest {
 
 		newDepotEntry.setType(RandomTestUtil.nextInt());
 
-		_depotEntries.add(_persistence.update(newDepotEntry));
+		newDepotEntry = _persistence.update(newDepotEntry);
+
+		_depotEntries.add(newDepotEntry);
 
 		DepotEntry existingDepotEntry = _persistence.findByPrimaryKey(
 			newDepotEntry.getPrimaryKey());
@@ -549,4 +551,4 @@ public class DepotEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-170172425
+// LIFERAY-SERVICE-BUILDER-HASH:2121966625

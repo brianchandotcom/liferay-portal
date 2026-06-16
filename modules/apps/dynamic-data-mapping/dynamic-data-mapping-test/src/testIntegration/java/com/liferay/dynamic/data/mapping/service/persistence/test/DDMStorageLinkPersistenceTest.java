@@ -127,7 +127,9 @@ public class DDMStorageLinkPersistenceTest {
 
 		newDDMStorageLink.setStructureVersionId(RandomTestUtil.nextLong());
 
-		_ddmStorageLinks.add(_persistence.update(newDDMStorageLink));
+		newDDMStorageLink = _persistence.update(newDDMStorageLink);
+
+		_ddmStorageLinks.add(newDDMStorageLink);
 
 		DDMStorageLink existingDDMStorageLink = _persistence.findByPrimaryKey(
 			newDDMStorageLink.getPrimaryKey());
@@ -538,4 +540,4 @@ public class DDMStorageLinkPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-554063572
+// LIFERAY-SERVICE-BUILDER-HASH:1986717300

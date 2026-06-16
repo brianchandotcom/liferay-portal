@@ -160,8 +160,10 @@ public class CPInstanceUnitOfMeasurePersistenceTest {
 
 		newCPInstanceUnitOfMeasure.setSku(RandomTestUtil.randomString());
 
-		_cpInstanceUnitOfMeasures.add(
-			_persistence.update(newCPInstanceUnitOfMeasure));
+		newCPInstanceUnitOfMeasure = _persistence.update(
+			newCPInstanceUnitOfMeasure);
+
+		_cpInstanceUnitOfMeasures.add(newCPInstanceUnitOfMeasure);
 
 		CPInstanceUnitOfMeasure existingCPInstanceUnitOfMeasure =
 			_persistence.findByPrimaryKey(
@@ -703,4 +705,4 @@ public class CPInstanceUnitOfMeasurePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:922751571
+// LIFERAY-SERVICE-BUILDER-HASH:-1547151755

@@ -150,8 +150,11 @@ public class CommerceInventoryBookedQuantityPersistenceTest {
 		newCommerceInventoryBookedQuantity.setUnitOfMeasureKey(
 			RandomTestUtil.randomString());
 
+		newCommerceInventoryBookedQuantity = _persistence.update(
+			newCommerceInventoryBookedQuantity);
+
 		_commerceInventoryBookedQuantities.add(
-			_persistence.update(newCommerceInventoryBookedQuantity));
+			newCommerceInventoryBookedQuantity);
 
 		CommerceInventoryBookedQuantity
 			existingCommerceInventoryBookedQuantity =
@@ -570,4 +573,4 @@ public class CommerceInventoryBookedQuantityPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1405918681
+// LIFERAY-SERVICE-BUILDER-HASH:389412273

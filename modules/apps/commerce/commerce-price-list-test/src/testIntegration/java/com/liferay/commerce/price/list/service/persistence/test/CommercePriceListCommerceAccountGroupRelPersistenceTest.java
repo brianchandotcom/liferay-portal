@@ -158,8 +158,11 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceTest {
 		newCommercePriceListCommerceAccountGroupRel.setLastPublishDate(
 			RandomTestUtil.nextDate());
 
+		newCommercePriceListCommerceAccountGroupRel = _persistence.update(
+			newCommercePriceListCommerceAccountGroupRel);
+
 		_commercePriceListCommerceAccountGroupRels.add(
-			_persistence.update(newCommercePriceListCommerceAccountGroupRel));
+			newCommercePriceListCommerceAccountGroupRel);
 
 		CommercePriceListCommerceAccountGroupRel
 			existingCommercePriceListCommerceAccountGroupRel =
@@ -710,4 +713,4 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1797718161
+// LIFERAY-SERVICE-BUILDER-HASH:1275792663

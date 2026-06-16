@@ -150,7 +150,9 @@ public class AssetVocabularyPersistenceTest {
 
 		newAssetVocabulary.setStatus(RandomTestUtil.nextInt());
 
-		_assetVocabularies.add(_persistence.update(newAssetVocabulary));
+		newAssetVocabulary = _persistence.update(newAssetVocabulary);
+
+		_assetVocabularies.add(newAssetVocabulary);
 
 		AssetVocabulary existingAssetVocabulary = _persistence.findByPrimaryKey(
 			newAssetVocabulary.getPrimaryKey());
@@ -723,4 +725,4 @@ public class AssetVocabularyPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1602756632
+// LIFERAY-SERVICE-BUILDER-HASH:-1620095168

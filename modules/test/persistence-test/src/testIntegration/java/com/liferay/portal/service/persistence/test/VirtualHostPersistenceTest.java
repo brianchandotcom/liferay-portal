@@ -123,7 +123,9 @@ public class VirtualHostPersistenceTest {
 
 		newVirtualHost.setLanguageId(RandomTestUtil.randomString());
 
-		_virtualHosts.add(_persistence.update(newVirtualHost));
+		newVirtualHost = _persistence.update(newVirtualHost);
+
+		_virtualHosts.add(newVirtualHost);
 
 		VirtualHost existingVirtualHost = _persistence.findByPrimaryKey(
 			newVirtualHost.getPrimaryKey());
@@ -518,4 +520,4 @@ public class VirtualHostPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:704810919
+// LIFERAY-SERVICE-BUILDER-HASH:621608833

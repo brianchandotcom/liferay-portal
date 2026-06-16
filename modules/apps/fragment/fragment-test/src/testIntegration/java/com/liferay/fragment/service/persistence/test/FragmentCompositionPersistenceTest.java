@@ -162,7 +162,9 @@ public class FragmentCompositionPersistenceTest {
 
 		newFragmentComposition.setStatusDate(RandomTestUtil.nextDate());
 
-		_fragmentCompositions.add(_persistence.update(newFragmentComposition));
+		newFragmentComposition = _persistence.update(newFragmentComposition);
+
+		_fragmentCompositions.add(newFragmentComposition);
 
 		FragmentComposition existingFragmentComposition =
 			_persistence.findByPrimaryKey(
@@ -773,4 +775,4 @@ public class FragmentCompositionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1065141667
+// LIFERAY-SERVICE-BUILDER-HASH:1389237505

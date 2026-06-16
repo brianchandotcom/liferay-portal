@@ -136,8 +136,10 @@ public class ObjectViewFilterColumnPersistenceTest {
 		newObjectViewFilterColumn.setObjectFieldName(
 			RandomTestUtil.randomString());
 
-		_objectViewFilterColumns.add(
-			_persistence.update(newObjectViewFilterColumn));
+		newObjectViewFilterColumn = _persistence.update(
+			newObjectViewFilterColumn);
+
+		_objectViewFilterColumns.add(newObjectViewFilterColumn);
 
 		ObjectViewFilterColumn existingObjectViewFilterColumn =
 			_persistence.findByPrimaryKey(
@@ -528,4 +530,4 @@ public class ObjectViewFilterColumnPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1814737784
+// LIFERAY-SERVICE-BUILDER-HASH:1854775932

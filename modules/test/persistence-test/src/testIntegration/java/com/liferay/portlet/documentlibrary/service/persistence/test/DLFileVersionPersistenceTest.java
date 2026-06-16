@@ -176,7 +176,9 @@ public class DLFileVersionPersistenceTest {
 
 		newDLFileVersion.setStatusDate(RandomTestUtil.nextDate());
 
-		_dlFileVersions.add(_persistence.update(newDLFileVersion));
+		newDLFileVersion = _persistence.update(newDLFileVersion);
+
+		_dlFileVersions.add(newDLFileVersion);
 
 		DLFileVersion existingDLFileVersion = _persistence.findByPrimaryKey(
 			newDLFileVersion.getPrimaryKey());
@@ -816,4 +818,4 @@ public class DLFileVersionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1502414282
+// LIFERAY-SERVICE-BUILDER-HASH:1296643732

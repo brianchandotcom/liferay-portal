@@ -129,7 +129,9 @@ public class AccountGroupRelPersistenceTest {
 
 		newAccountGroupRel.setClassPK(RandomTestUtil.nextLong());
 
-		_accountGroupRels.add(_persistence.update(newAccountGroupRel));
+		newAccountGroupRel = _persistence.update(newAccountGroupRel);
+
+		_accountGroupRels.add(newAccountGroupRel);
 
 		AccountGroupRel existingAccountGroupRel = _persistence.findByPrimaryKey(
 			newAccountGroupRel.getPrimaryKey());
@@ -545,4 +547,4 @@ public class AccountGroupRelPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1504385723
+// LIFERAY-SERVICE-BUILDER-HASH:-1804310193

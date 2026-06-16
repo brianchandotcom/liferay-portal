@@ -124,7 +124,9 @@ public class WebDAVPropsPersistenceTest {
 
 		newWebDAVProps.setProps(RandomTestUtil.randomString());
 
-		_webDAVPropses.add(_persistence.update(newWebDAVProps));
+		newWebDAVProps = _persistence.update(newWebDAVProps);
+
+		_webDAVPropses.add(newWebDAVProps);
 
 		WebDAVProps existingWebDAVProps = _persistence.findByPrimaryKey(
 			newWebDAVProps.getPrimaryKey());
@@ -491,4 +493,4 @@ public class WebDAVPropsPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-818312119
+// LIFERAY-SERVICE-BUILDER-HASH:1942885153

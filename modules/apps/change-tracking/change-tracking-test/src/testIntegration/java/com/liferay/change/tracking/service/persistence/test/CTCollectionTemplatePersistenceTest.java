@@ -127,8 +127,9 @@ public class CTCollectionTemplatePersistenceTest {
 
 		newCTCollectionTemplate.setDescription(RandomTestUtil.randomString());
 
-		_ctCollectionTemplates.add(
-			_persistence.update(newCTCollectionTemplate));
+		newCTCollectionTemplate = _persistence.update(newCTCollectionTemplate);
+
+		_ctCollectionTemplates.add(newCTCollectionTemplate);
 
 		CTCollectionTemplate existingCTCollectionTemplate =
 			_persistence.findByPrimaryKey(
@@ -465,4 +466,4 @@ public class CTCollectionTemplatePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1974366682
+// LIFERAY-SERVICE-BUILDER-HASH:-1292633120

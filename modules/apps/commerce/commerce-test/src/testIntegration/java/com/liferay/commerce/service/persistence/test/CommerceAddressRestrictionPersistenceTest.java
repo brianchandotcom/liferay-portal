@@ -138,8 +138,10 @@ public class CommerceAddressRestrictionPersistenceTest {
 
 		newCommerceAddressRestriction.setCountryId(RandomTestUtil.nextLong());
 
-		_commerceAddressRestrictions.add(
-			_persistence.update(newCommerceAddressRestriction));
+		newCommerceAddressRestriction = _persistence.update(
+			newCommerceAddressRestriction);
+
+		_commerceAddressRestrictions.add(newCommerceAddressRestriction);
 
 		CommerceAddressRestriction existingCommerceAddressRestriction =
 			_persistence.findByPrimaryKey(
@@ -604,4 +606,4 @@ public class CommerceAddressRestrictionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1855729308
+// LIFERAY-SERVICE-BUILDER-HASH:1320145230

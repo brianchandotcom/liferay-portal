@@ -143,7 +143,9 @@ public class CommerceCatalogPersistenceTest {
 
 		newCommerceCatalog.setSystem(RandomTestUtil.randomBoolean());
 
-		_commerceCatalogs.add(_persistence.update(newCommerceCatalog));
+		newCommerceCatalog = _persistence.update(newCommerceCatalog);
+
+		_commerceCatalogs.add(newCommerceCatalog);
 
 		CommerceCatalog existingCommerceCatalog = _persistence.findByPrimaryKey(
 			newCommerceCatalog.getPrimaryKey());
@@ -618,4 +620,4 @@ public class CommerceCatalogPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-795767743
+// LIFERAY-SERVICE-BUILDER-HASH:1804209971

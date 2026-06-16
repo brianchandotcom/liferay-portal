@@ -125,8 +125,10 @@ public class LocalizedEntryLocalizationPersistenceTest {
 
 		newLocalizedEntryLocalization.setContent(RandomTestUtil.randomString());
 
-		_localizedEntryLocalizations.add(
-			_persistence.update(newLocalizedEntryLocalization));
+		newLocalizedEntryLocalization = _persistence.update(
+			newLocalizedEntryLocalization);
+
+		_localizedEntryLocalizations.add(newLocalizedEntryLocalization);
 
 		LocalizedEntryLocalization existingLocalizedEntryLocalization =
 			_persistence.findByPrimaryKey(
@@ -521,4 +523,4 @@ public class LocalizedEntryLocalizationPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1612408537
+// LIFERAY-SERVICE-BUILDER-HASH:1529263777

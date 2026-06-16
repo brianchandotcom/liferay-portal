@@ -167,8 +167,10 @@ public class CommerceInventoryWarehousePersistenceTest {
 
 		newCommerceInventoryWarehouse.setType(RandomTestUtil.randomString());
 
-		_commerceInventoryWarehouses.add(
-			_persistence.update(newCommerceInventoryWarehouse));
+		newCommerceInventoryWarehouse = _persistence.update(
+			newCommerceInventoryWarehouse);
+
+		_commerceInventoryWarehouses.add(newCommerceInventoryWarehouse);
 
 		CommerceInventoryWarehouse existingCommerceInventoryWarehouse =
 			_persistence.findByPrimaryKey(
@@ -754,4 +756,4 @@ public class CommerceInventoryWarehousePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1744868925
+// LIFERAY-SERVICE-BUILDER-HASH:2078569553

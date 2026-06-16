@@ -143,8 +143,10 @@ public class CPInstanceOptionValueRelPersistenceTest {
 
 		newCPInstanceOptionValueRel.setCPInstanceId(RandomTestUtil.nextLong());
 
-		_cpInstanceOptionValueRels.add(
-			_persistence.update(newCPInstanceOptionValueRel));
+		newCPInstanceOptionValueRel = _persistence.update(
+			newCPInstanceOptionValueRel);
+
+		_cpInstanceOptionValueRels.add(newCPInstanceOptionValueRel);
 
 		CPInstanceOptionValueRel existingCPInstanceOptionValueRel =
 			_persistence.findByPrimaryKey(
@@ -678,4 +680,4 @@ public class CPInstanceOptionValueRelPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1890474379
+// LIFERAY-SERVICE-BUILDER-HASH:1060382629

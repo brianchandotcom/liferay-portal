@@ -142,8 +142,9 @@ public class OpenIdConnectSessionPersistenceTest {
 
 		newOpenIdConnectSession.setSessionId(RandomTestUtil.randomString());
 
-		_openIdConnectSessions.add(
-			_persistence.update(newOpenIdConnectSession));
+		newOpenIdConnectSession = _persistence.update(newOpenIdConnectSession);
+
+		_openIdConnectSessions.add(newOpenIdConnectSession);
 
 		OpenIdConnectSession existingOpenIdConnectSession =
 			_persistence.findByPrimaryKey(
@@ -650,4 +651,4 @@ public class OpenIdConnectSessionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-94933892
+// LIFERAY-SERVICE-BUILDER-HASH:207899442

@@ -137,8 +137,10 @@ public class CommerceDiscountUsageEntryPersistenceTest {
 		newCommerceDiscountUsageEntry.setCommerceDiscountId(
 			RandomTestUtil.nextLong());
 
-		_commerceDiscountUsageEntries.add(
-			_persistence.update(newCommerceDiscountUsageEntry));
+		newCommerceDiscountUsageEntry = _persistence.update(
+			newCommerceDiscountUsageEntry);
+
+		_commerceDiscountUsageEntries.add(newCommerceDiscountUsageEntry);
 
 		CommerceDiscountUsageEntry existingCommerceDiscountUsageEntry =
 			_persistence.findByPrimaryKey(
@@ -534,4 +536,4 @@ public class CommerceDiscountUsageEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1730952601
+// LIFERAY-SERVICE-BUILDER-HASH:-2110951881

@@ -138,8 +138,9 @@ public class CommerceTaxFixedRatePersistenceTest {
 
 		newCommerceTaxFixedRate.setRate(RandomTestUtil.nextDouble());
 
-		_commerceTaxFixedRates.add(
-			_persistence.update(newCommerceTaxFixedRate));
+		newCommerceTaxFixedRate = _persistence.update(newCommerceTaxFixedRate);
+
+		_commerceTaxFixedRates.add(newCommerceTaxFixedRate);
 
 		CommerceTaxFixedRate existingCommerceTaxFixedRate =
 			_persistence.findByPrimaryKey(
@@ -576,4 +577,4 @@ public class CommerceTaxFixedRatePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-504764818
+// LIFERAY-SERVICE-BUILDER-HASH:1005123486

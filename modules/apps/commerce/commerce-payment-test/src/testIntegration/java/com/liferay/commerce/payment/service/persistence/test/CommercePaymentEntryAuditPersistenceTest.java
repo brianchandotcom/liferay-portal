@@ -142,8 +142,10 @@ public class CommercePaymentEntryAuditPersistenceTest {
 		newCommercePaymentEntryAudit.setLogTypeSettings(
 			RandomTestUtil.randomString());
 
-		_commercePaymentEntryAudits.add(
-			_persistence.update(newCommercePaymentEntryAudit));
+		newCommercePaymentEntryAudit = _persistence.update(
+			newCommercePaymentEntryAudit);
+
+		_commercePaymentEntryAudits.add(newCommercePaymentEntryAudit);
 
 		CommercePaymentEntryAudit existingCommercePaymentEntryAudit =
 			_persistence.findByPrimaryKey(
@@ -523,4 +525,4 @@ public class CommercePaymentEntryAuditPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1413621051
+// LIFERAY-SERVICE-BUILDER-HASH:1892280911

@@ -146,7 +146,9 @@ public class AuditEventPersistenceTest {
 
 		newAuditEvent.setSessionID(RandomTestUtil.randomString());
 
-		_auditEvents.add(_persistence.update(newAuditEvent));
+		newAuditEvent = _persistence.update(newAuditEvent);
+
+		_auditEvents.add(newAuditEvent);
 
 		AuditEvent existingAuditEvent = _persistence.findByPrimaryKey(
 			newAuditEvent.getPrimaryKey());
@@ -492,4 +494,4 @@ public class AuditEventPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1141355602
+// LIFERAY-SERVICE-BUILDER-HASH:-1124926776

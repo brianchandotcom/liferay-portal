@@ -141,8 +141,10 @@ public class SocialActivityCounterPersistenceTest {
 
 		newSocialActivityCounter.setActive(RandomTestUtil.randomBoolean());
 
-		_socialActivityCounters.add(
-			_persistence.update(newSocialActivityCounter));
+		newSocialActivityCounter = _persistence.update(
+			newSocialActivityCounter);
+
+		_socialActivityCounters.add(newSocialActivityCounter);
 
 		SocialActivityCounter existingSocialActivityCounter =
 			_persistence.findByPrimaryKey(
@@ -675,4 +677,4 @@ public class SocialActivityCounterPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:224167999
+// LIFERAY-SERVICE-BUILDER-HASH:154975353

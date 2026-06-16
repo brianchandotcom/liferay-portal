@@ -129,7 +129,9 @@ public class MembershipRequestPersistenceTest {
 
 		newMembershipRequest.setStatusId(RandomTestUtil.nextLong());
 
-		_membershipRequests.add(_persistence.update(newMembershipRequest));
+		newMembershipRequest = _persistence.update(newMembershipRequest);
+
+		_membershipRequests.add(newMembershipRequest);
 
 		MembershipRequest existingMembershipRequest =
 			_persistence.findByPrimaryKey(newMembershipRequest.getPrimaryKey());
@@ -485,4 +487,4 @@ public class MembershipRequestPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2081815015
+// LIFERAY-SERVICE-BUILDER-HASH:50441065

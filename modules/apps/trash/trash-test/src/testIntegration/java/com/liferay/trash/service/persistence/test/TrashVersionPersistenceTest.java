@@ -126,7 +126,9 @@ public class TrashVersionPersistenceTest {
 
 		newTrashVersion.setStatus(RandomTestUtil.nextInt());
 
-		_trashVersions.add(_persistence.update(newTrashVersion));
+		newTrashVersion = _persistence.update(newTrashVersion);
+
+		_trashVersions.add(newTrashVersion);
 
 		TrashVersion existingTrashVersion = _persistence.findByPrimaryKey(
 			newTrashVersion.getPrimaryKey());
@@ -512,4 +514,4 @@ public class TrashVersionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1856086181
+// LIFERAY-SERVICE-BUILDER-HASH:2061438851

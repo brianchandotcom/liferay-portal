@@ -125,7 +125,9 @@ public class DynamicQueryEntryPersistenceTest {
 
 		newDynamicQueryEntry.setStatus(RandomTestUtil.nextInt());
 
-		_dynamicQueryEntries.add(_persistence.update(newDynamicQueryEntry));
+		newDynamicQueryEntry = _persistence.update(newDynamicQueryEntry);
+
+		_dynamicQueryEntries.add(newDynamicQueryEntry);
 
 		DynamicQueryEntry existingDynamicQueryEntry =
 			_persistence.findByPrimaryKey(newDynamicQueryEntry.getPrimaryKey());
@@ -431,4 +433,4 @@ public class DynamicQueryEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1275084678
+// LIFERAY-SERVICE-BUILDER-HASH:-1962705422

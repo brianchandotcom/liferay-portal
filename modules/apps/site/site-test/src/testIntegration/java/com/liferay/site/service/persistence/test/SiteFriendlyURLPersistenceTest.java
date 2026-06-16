@@ -133,7 +133,9 @@ public class SiteFriendlyURLPersistenceTest {
 
 		newSiteFriendlyURL.setLastPublishDate(RandomTestUtil.nextDate());
 
-		_siteFriendlyURLs.add(_persistence.update(newSiteFriendlyURL));
+		newSiteFriendlyURL = _persistence.update(newSiteFriendlyURL);
+
+		_siteFriendlyURLs.add(newSiteFriendlyURL);
 
 		SiteFriendlyURL existingSiteFriendlyURL = _persistence.findByPrimaryKey(
 			newSiteFriendlyURL.getPrimaryKey());
@@ -629,4 +631,4 @@ public class SiteFriendlyURLPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1652987541
+// LIFERAY-SERVICE-BUILDER-HASH:-1181561529

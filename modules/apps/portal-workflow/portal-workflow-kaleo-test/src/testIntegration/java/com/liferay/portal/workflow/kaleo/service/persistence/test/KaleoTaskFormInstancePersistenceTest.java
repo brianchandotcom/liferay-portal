@@ -159,8 +159,10 @@ public class KaleoTaskFormInstancePersistenceTest {
 
 		newKaleoTaskFormInstance.setMetadata(RandomTestUtil.randomString());
 
-		_kaleoTaskFormInstances.add(
-			_persistence.update(newKaleoTaskFormInstance));
+		newKaleoTaskFormInstance = _persistence.update(
+			newKaleoTaskFormInstance);
+
+		_kaleoTaskFormInstances.add(newKaleoTaskFormInstance);
 
 		KaleoTaskFormInstance existingKaleoTaskFormInstance =
 			_persistence.findByPrimaryKey(
@@ -669,4 +671,4 @@ public class KaleoTaskFormInstancePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-252434928
+// LIFERAY-SERVICE-BUILDER-HASH:549252802

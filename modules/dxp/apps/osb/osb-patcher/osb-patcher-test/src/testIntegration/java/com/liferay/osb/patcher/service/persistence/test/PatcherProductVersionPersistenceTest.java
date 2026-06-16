@@ -134,8 +134,10 @@ public class PatcherProductVersionPersistenceTest {
 
 		newPatcherProductVersion.setName(RandomTestUtil.randomString());
 
-		_patcherProductVersions.add(
-			_persistence.update(newPatcherProductVersion));
+		newPatcherProductVersion = _persistence.update(
+			newPatcherProductVersion);
+
+		_patcherProductVersions.add(newPatcherProductVersion);
 
 		PatcherProductVersion existingPatcherProductVersion =
 			_persistence.findByPrimaryKey(
@@ -560,4 +562,4 @@ public class PatcherProductVersionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-522476710
+// LIFERAY-SERVICE-BUILDER-HASH:-1374297588

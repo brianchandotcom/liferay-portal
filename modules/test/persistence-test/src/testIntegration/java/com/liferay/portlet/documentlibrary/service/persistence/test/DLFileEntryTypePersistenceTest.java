@@ -148,7 +148,9 @@ public class DLFileEntryTypePersistenceTest {
 
 		newDLFileEntryType.setLastPublishDate(RandomTestUtil.nextDate());
 
-		_dlFileEntryTypes.add(_persistence.update(newDLFileEntryType));
+		newDLFileEntryType = _persistence.update(newDLFileEntryType);
+
+		_dlFileEntryTypes.add(newDLFileEntryType);
 
 		DLFileEntryType existingDLFileEntryType = _persistence.findByPrimaryKey(
 			newDLFileEntryType.getPrimaryKey());
@@ -711,4 +713,4 @@ public class DLFileEntryTypePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1646720508
+// LIFERAY-SERVICE-BUILDER-HASH:-62395798

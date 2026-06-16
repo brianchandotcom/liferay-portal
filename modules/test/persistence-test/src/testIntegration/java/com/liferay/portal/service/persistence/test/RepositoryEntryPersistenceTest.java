@@ -137,7 +137,9 @@ public class RepositoryEntryPersistenceTest {
 
 		newRepositoryEntry.setLastPublishDate(RandomTestUtil.nextDate());
 
-		_repositoryEntries.add(_persistence.update(newRepositoryEntry));
+		newRepositoryEntry = _persistence.update(newRepositoryEntry);
+
+		_repositoryEntries.add(newRepositoryEntry);
 
 		RepositoryEntry existingRepositoryEntry = _persistence.findByPrimaryKey(
 			newRepositoryEntry.getPrimaryKey());
@@ -592,4 +594,4 @@ public class RepositoryEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:692016234
+// LIFERAY-SERVICE-BUILDER-HASH:-622311726

@@ -140,7 +140,9 @@ public class ListTypeEntryPersistenceTest {
 
 		newListTypeEntry.setStatus(RandomTestUtil.nextInt());
 
-		_listTypeEntries.add(_persistence.update(newListTypeEntry));
+		newListTypeEntry = _persistence.update(newListTypeEntry);
+
+		_listTypeEntries.add(newListTypeEntry);
 
 		ListTypeEntry existingListTypeEntry = _persistence.findByPrimaryKey(
 			newListTypeEntry.getPrimaryKey());
@@ -622,4 +624,4 @@ public class ListTypeEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1233956051
+// LIFERAY-SERVICE-BUILDER-HASH:764330581

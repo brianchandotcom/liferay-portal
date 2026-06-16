@@ -115,7 +115,9 @@ public class CompanyInfoPersistenceTest {
 
 		newCompanyInfo.setKey(RandomTestUtil.randomString());
 
-		_companyInfos.add(_persistence.update(newCompanyInfo));
+		newCompanyInfo = _persistence.update(newCompanyInfo);
+
+		_companyInfos.add(newCompanyInfo);
 
 		CompanyInfo existingCompanyInfo = _persistence.findByPrimaryKey(
 			newCompanyInfo.getPrimaryKey());
@@ -454,4 +456,4 @@ public class CompanyInfoPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-296591164
+// LIFERAY-SERVICE-BUILDER-HASH:1988050698

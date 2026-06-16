@@ -157,7 +157,9 @@ public class CommerceCurrencyPersistenceTest {
 
 		newCommerceCurrency.setLastPublishDate(RandomTestUtil.nextDate());
 
-		_commerceCurrencies.add(_persistence.update(newCommerceCurrency));
+		newCommerceCurrency = _persistence.update(newCommerceCurrency);
+
+		_commerceCurrencies.add(newCommerceCurrency);
 
 		CommerceCurrency existingCommerceCurrency =
 			_persistence.findByPrimaryKey(newCommerceCurrency.getPrimaryKey());
@@ -696,4 +698,4 @@ public class CommerceCurrencyPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1014422538
+// LIFERAY-SERVICE-BUILDER-HASH:-1855499828

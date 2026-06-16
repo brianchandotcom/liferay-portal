@@ -166,8 +166,10 @@ public class KaleoNotificationRecipientPersistenceTest {
 		newKaleoNotificationRecipient.setNotificationReceptionType(
 			RandomTestUtil.randomString(3));
 
-		_kaleoNotificationRecipients.add(
-			_persistence.update(newKaleoNotificationRecipient));
+		newKaleoNotificationRecipient = _persistence.update(
+			newKaleoNotificationRecipient);
+
+		_kaleoNotificationRecipients.add(newKaleoNotificationRecipient);
 
 		KaleoNotificationRecipient existingKaleoNotificationRecipient =
 			_persistence.findByPrimaryKey(
@@ -613,4 +615,4 @@ public class KaleoNotificationRecipientPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:372870470
+// LIFERAY-SERVICE-BUILDER-HASH:248852810

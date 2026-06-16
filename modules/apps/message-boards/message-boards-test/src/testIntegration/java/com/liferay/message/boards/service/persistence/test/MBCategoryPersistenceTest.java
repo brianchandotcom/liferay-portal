@@ -156,7 +156,9 @@ public class MBCategoryPersistenceTest {
 
 		newMBCategory.setStatusDate(RandomTestUtil.nextDate());
 
-		_mbCategories.add(_persistence.update(newMBCategory));
+		newMBCategory = _persistence.update(newMBCategory);
+
+		_mbCategories.add(newMBCategory);
 
 		MBCategory existingMBCategory = _persistence.findByPrimaryKey(
 			newMBCategory.getPrimaryKey());
@@ -803,4 +805,4 @@ public class MBCategoryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:29810680
+// LIFERAY-SERVICE-BUILDER-HASH:902096164

@@ -133,7 +133,9 @@ public class MBBanPersistenceTest {
 
 		newMBBan.setLastPublishDate(RandomTestUtil.nextDate());
 
-		_mbBans.add(_persistence.update(newMBBan));
+		newMBBan = _persistence.update(newMBBan);
+
+		_mbBans.add(newMBBan);
 
 		MBBan existingMBBan = _persistence.findByPrimaryKey(
 			newMBBan.getPrimaryKey());
@@ -555,4 +557,4 @@ public class MBBanPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1624529589
+// LIFERAY-SERVICE-BUILDER-HASH:460789613

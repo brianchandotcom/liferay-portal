@@ -138,7 +138,9 @@ public class KaleoTaskPersistenceTest {
 
 		newKaleoTask.setDescription(RandomTestUtil.randomString());
 
-		_kaleoTasks.add(_persistence.update(newKaleoTask));
+		newKaleoTask = _persistence.update(newKaleoTask);
+
+		_kaleoTasks.add(newKaleoTask);
 
 		KaleoTask existingKaleoTask = _persistence.findByPrimaryKey(
 			newKaleoTask.getPrimaryKey());
@@ -537,4 +539,4 @@ public class KaleoTaskPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:424417598
+// LIFERAY-SERVICE-BUILDER-HASH:1589705424

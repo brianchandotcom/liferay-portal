@@ -152,7 +152,9 @@ public class CommerceOrderTypePersistenceTest {
 
 		newCommerceOrderType.setStatusDate(RandomTestUtil.nextDate());
 
-		_commerceOrderTypes.add(_persistence.update(newCommerceOrderType));
+		newCommerceOrderType = _persistence.update(newCommerceOrderType);
+
+		_commerceOrderTypes.add(newCommerceOrderType);
 
 		CommerceOrderType existingCommerceOrderType =
 			_persistence.findByPrimaryKey(newCommerceOrderType.getPrimaryKey());
@@ -674,4 +676,4 @@ public class CommerceOrderTypePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1208755277
+// LIFERAY-SERVICE-BUILDER-HASH:2025453697

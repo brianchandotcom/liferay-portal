@@ -127,7 +127,9 @@ public class ObjectStateFlowPersistenceTest {
 
 		newObjectStateFlow.setObjectFieldId(RandomTestUtil.nextLong());
 
-		_objectStateFlows.add(_persistence.update(newObjectStateFlow));
+		newObjectStateFlow = _persistence.update(newObjectStateFlow);
+
+		_objectStateFlows.add(newObjectStateFlow);
 
 		ObjectStateFlow existingObjectStateFlow = _persistence.findByPrimaryKey(
 			newObjectStateFlow.getPrimaryKey());
@@ -520,4 +522,4 @@ public class ObjectStateFlowPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2003534547
+// LIFERAY-SERVICE-BUILDER-HASH:1080156531

@@ -149,7 +149,9 @@ public class CalendarResourcePersistenceTest {
 
 		newCalendarResource.setLastPublishDate(RandomTestUtil.nextDate());
 
-		_calendarResources.add(_persistence.update(newCalendarResource));
+		newCalendarResource = _persistence.update(newCalendarResource);
+
+		_calendarResources.add(newCalendarResource);
 
 		CalendarResource existingCalendarResource =
 			_persistence.findByPrimaryKey(newCalendarResource.getPrimaryKey());
@@ -690,4 +692,4 @@ public class CalendarResourcePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1585737225
+// LIFERAY-SERVICE-BUILDER-HASH:1631722103

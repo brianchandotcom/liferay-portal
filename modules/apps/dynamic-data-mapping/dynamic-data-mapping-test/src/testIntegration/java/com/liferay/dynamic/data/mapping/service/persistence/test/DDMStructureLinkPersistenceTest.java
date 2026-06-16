@@ -123,7 +123,9 @@ public class DDMStructureLinkPersistenceTest {
 
 		newDDMStructureLink.setStructureId(RandomTestUtil.nextLong());
 
-		_ddmStructureLinks.add(_persistence.update(newDDMStructureLink));
+		newDDMStructureLink = _persistence.update(newDDMStructureLink);
+
+		_ddmStructureLinks.add(newDDMStructureLink);
 
 		DDMStructureLink existingDDMStructureLink =
 			_persistence.findByPrimaryKey(newDDMStructureLink.getPrimaryKey());
@@ -513,4 +515,4 @@ public class DDMStructureLinkPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-99900774
+// LIFERAY-SERVICE-BUILDER-HASH:1885532546

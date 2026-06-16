@@ -131,7 +131,9 @@ public class ObjectFilterPersistenceTest {
 
 		newObjectFilter.setJSON(RandomTestUtil.randomString());
 
-		_objectFilters.add(_persistence.update(newObjectFilter));
+		newObjectFilter = _persistence.update(newObjectFilter);
+
+		_objectFilters.add(newObjectFilter);
 
 		ObjectFilter existingObjectFilter = _persistence.findByPrimaryKey(
 			newObjectFilter.getPrimaryKey());
@@ -473,4 +475,4 @@ public class ObjectFilterPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1627630330
+// LIFERAY-SERVICE-BUILDER-HASH:-86182832

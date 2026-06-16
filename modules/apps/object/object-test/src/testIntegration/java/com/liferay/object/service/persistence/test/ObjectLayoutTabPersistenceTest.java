@@ -131,7 +131,9 @@ public class ObjectLayoutTabPersistenceTest {
 
 		newObjectLayoutTab.setPriority(RandomTestUtil.nextInt());
 
-		_objectLayoutTabs.add(_persistence.update(newObjectLayoutTab));
+		newObjectLayoutTab = _persistence.update(newObjectLayoutTab);
+
+		_objectLayoutTabs.add(newObjectLayoutTab);
 
 		ObjectLayoutTab existingObjectLayoutTab = _persistence.findByPrimaryKey(
 			newObjectLayoutTab.getPrimaryKey());
@@ -487,4 +489,4 @@ public class ObjectLayoutTabPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1340953873
+// LIFERAY-SERVICE-BUILDER-HASH:1390226969

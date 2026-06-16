@@ -731,11 +731,8 @@ public class BatchEngineExportTaskPersistenceImpl
 				session.save(batchEngineExportTask);
 			}
 			else {
-				session.evict(
-					BatchEngineExportTaskImpl.class,
-					batchEngineExportTask.getPrimaryKeyObj());
-
-				session.saveOrUpdate(batchEngineExportTask);
+				batchEngineExportTask = (BatchEngineExportTask)session.merge(
+					batchEngineExportTask);
 			}
 
 			session.flush();
@@ -1021,4 +1018,4 @@ public class BatchEngineExportTaskPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1920316974
+// LIFERAY-SERVICE-BUILDER-HASH:-2024281679

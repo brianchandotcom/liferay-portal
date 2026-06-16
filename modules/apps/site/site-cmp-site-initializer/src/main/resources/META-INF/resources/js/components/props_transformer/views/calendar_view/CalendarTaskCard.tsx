@@ -8,6 +8,7 @@ import {AssigneeAvatar} from '@liferay/object-dynamic-data-mapping-form-field-ty
 import classNames from 'classnames';
 import React from 'react';
 
+import isOverdue from '../../../../utils/isOverdue';
 import {ITaskObjectEntry} from '../../../../utils/types';
 
 import './CalendarTaskCard.scss';
@@ -19,18 +20,14 @@ interface CalendarTaskCardProps {
 export default function CalendarTaskCard({task}: CalendarTaskCardProps) {
 	const {assignTo, dueDate, state, title} = task;
 
-	const isBlocked = state?.key === 'blocked';
-
-	const isOverdue =
-		Boolean(dueDate) &&
-		state?.key !== 'done' &&
-		dueDate.slice(0, 10) < new Date().toISOString().slice(0, 10);
+	const blocked = state?.key === 'blocked';
+	const overdue = isOverdue({dueDate, state});
 
 	return (
 		<div
 			className={classNames(
 				'lfr__cmp-calendar-task-card',
-				isOverdue
+				overdue
 					? 'lfr__cmp-calendar-task-card-state-overdue'
 					: state?.key &&
 							`lfr__cmp-calendar-task-card-state-${state.key}`
@@ -38,14 +35,14 @@ export default function CalendarTaskCard({task}: CalendarTaskCardProps) {
 		>
 			<span className="lfr__cmp-calendar-task-card-title">{title}</span>
 
-			{isBlocked && !isOverdue && (
+			{blocked && !overdue && (
 				<ClayIcon
 					className="lfr__cmp-calendar-task-card-icon lfr__cmp-calendar-task-card-icon-blocked"
 					symbol="block"
 				/>
 			)}
 
-			{isOverdue && (
+			{overdue && (
 				<ClayIcon
 					className="lfr__cmp-calendar-task-card-icon lfr__cmp-calendar-task-card-icon-overdue"
 					symbol="exclamation-full"

@@ -7,6 +7,7 @@ import ClayDropDown from '@clayui/drop-down';
 import {AssigneeAvatar} from '@liferay/object-dynamic-data-mapping-form-field-type';
 import React from 'react';
 
+import isOverdue from '../../../../utils/isOverdue';
 import {ITaskObjectEntry} from '../../../../utils/types';
 import StateLabel from '../../../StateLabel';
 
@@ -23,16 +24,8 @@ const OVERDUE_PRIORITY = 0;
 
 const UNKNOWN_PRIORITY = 5;
 
-function isTaskOverdue(task: ITaskObjectEntry): boolean {
-	return (
-		Boolean(task.dueDate) &&
-		task.state?.key !== 'done' &&
-		task.dueDate.slice(0, 10) < new Date().toISOString().slice(0, 10)
-	);
-}
-
 function getDisplayState(task: ITaskObjectEntry) {
-	if (isTaskOverdue(task)) {
+	if (isOverdue(task)) {
 		return {key: 'overdue', name: Liferay.Language.get('overdue')};
 	}
 
@@ -40,7 +33,7 @@ function getDisplayState(task: ITaskObjectEntry) {
 }
 
 function getTaskPriority(task: ITaskObjectEntry): number {
-	if (isTaskOverdue(task)) {
+	if (isOverdue(task)) {
 		return OVERDUE_PRIORITY;
 	}
 

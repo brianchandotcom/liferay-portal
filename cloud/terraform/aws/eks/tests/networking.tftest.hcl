@@ -77,7 +77,7 @@ run "should_compute_default_subnet_cidrs" {
 run "should_create_an_envoy_ingress_rule_per_port" {
 	assert {
 		condition=aws_vpc_security_group_ingress_rule.envoy_ingress_managed["10080"].cidr_ipv4 == "10.0.0.0/16"
-		error_message="Envoy ingress rules must be scoped to the VPC CIDR"
+		error_message="The Envoy ingress rules must be scoped to the VPC CIDR"
 	}
 
 	assert {

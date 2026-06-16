@@ -5,7 +5,13 @@
 
 import i18n from '~/utils/I18n';
 
-export const ROLE_TYPES = {
+interface IRoleType {
+	key: string;
+	name: string;
+	raysourceName?: string;
+}
+
+export const ROLE_TYPES: Record<string, IRoleType> = {
 	admin: {
 		key: 'Administrator',
 		name: i18n.translate('administrator'),
@@ -19,7 +25,6 @@ export const ROLE_TYPES = {
 	paasUser: {
 		key: 'PaaS User',
 		name: i18n.translate('paas-user'),
-		raysourceName: 'PaaS User',
 	},
 	partnerManager: {
 		key: 'Partner Manager',

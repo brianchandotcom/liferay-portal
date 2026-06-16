@@ -1,4 +1,5 @@
 dependencies {
+	testIntegrationImplementation project(":apps:frontend-data-set:frontend-data-set-api")
 	testIntegrationImplementation project(":apps:frontend-data-set:frontend-data-set-test-util")
 	testIntegrationImplementation project(":apps:object:object-api")
 	testIntegrationImplementation project(":apps:portal:portal-props-test-util")

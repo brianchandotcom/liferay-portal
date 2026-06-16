@@ -133,15 +133,15 @@ public class PortalWorkspaceGitRepository extends BaseWorkspaceGitRepository {
 	}
 
 	public void setUpPortalProfile() {
-		String setupProfileDXPBranchNames;
+		String setupProfileDXPBranchNamesString;
 
 		try {
-			setupProfileDXPBranchNames =
+			setupProfileDXPBranchNamesString =
 				JenkinsResultsParserUtil.getBuildProperty(
 					"portal.setup.profile.dxp.branch.names");
 
 			if (JenkinsResultsParserUtil.isNullOrEmpty(
-					setupProfileDXPBranchNames)) {
+					setupProfileDXPBranchNamesString)) {
 
 				return;
 			}
@@ -150,14 +150,14 @@ public class PortalWorkspaceGitRepository extends BaseWorkspaceGitRepository {
 			return;
 		}
 
-		List<String> setupProfileDXPBranchNamesList = Arrays.asList(
-			setupProfileDXPBranchNames.split(","));
+		List<String> setupProfileDXPBranchNames = Arrays.asList(
+			setupProfileDXPBranchNamesString.split(","));
 
-		if (!setupProfileDXPBranchNamesList.contains(getUpstreamBranchName())) {
+		if (!setupProfileDXPBranchNames.contains(getUpstreamBranchName())) {
 			return;
 		}
 
-		Retryable<Object> setupProfileDXPRetryable = new Retryable<Object>(
+		Retryable<Object> retryable = new Retryable<Object>(
 			true, _SETUP_PROFILE_DXP_RETRY_COUNT,
 			_SETUP_PROFILE_DXP_RETRY_DELAY, true) {
 
@@ -176,7 +176,7 @@ public class PortalWorkspaceGitRepository extends BaseWorkspaceGitRepository {
 
 		};
 
-		setupProfileDXPRetryable.executeWithRetries();
+		retryable.executeWithRetries();
 	}
 
 	public void setUpTCKHome() {

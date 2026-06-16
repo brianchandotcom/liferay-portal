@@ -199,7 +199,7 @@ describe('openCMSFileSelectorModal', () => {
 
 		mockedFetch.mockImplementation((url) => {
 			if (url.toString().includes('/object-entry-folders/555')) {
-				return Promise.resolve({ok: false});
+				return Promise.resolve({ok: false, status: 404});
 			}
 
 			return jsonResponse([fileItem]);
@@ -228,6 +228,41 @@ describe('openCMSFileSelectorModal', () => {
 		expect(
 			mockedFetch.mock.calls.some(([url]) =>
 				url?.toString?.().includes('/object-entry-folders/555')
+			)
+		).toBe(true);
+	});
+
+	it('keeps the remembered folder when the validation request fails transiently', async () => {
+		setLastBreadcrumbFolders(FOLDER_MEMORY_KEY, [
+			{id: null, label: 'Files'},
+			{id: 555, label: 'Folder', scopeId: 1},
+		]);
+
+		mockedFetch.mockImplementation((url) => {
+			if (url.toString().includes('/object-entry-folders/555')) {
+				return Promise.resolve({ok: false, status: 500});
+			}
+
+			return jsonResponse([fileItem]);
+		});
+
+		openModal({
+			folderMemoryKey: FOLDER_MEMORY_KEY,
+			groupId: 123,
+			onSelect: jest.fn(),
+		});
+
+		await screen.findByRole('dialog');
+
+		await waitFor(() => {
+			expect(getDecodedSearchURLs().length).toBeGreaterThan(0);
+		});
+
+		expect(getLastBreadcrumbFolders(FOLDER_MEMORY_KEY)).not.toBeNull();
+
+		expect(
+			getDecodedSearchURLs().every((url) =>
+				url.includes('folderId eq 555')
 			)
 		).toBe(true);
 	});

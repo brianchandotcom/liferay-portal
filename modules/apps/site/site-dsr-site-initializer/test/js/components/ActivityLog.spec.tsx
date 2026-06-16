@@ -23,17 +23,7 @@ const mockLiferayLanguageGet = jest.fn((key: string) => {
 	return key;
 });
 
-(global as any).Liferay = {
-	Language: {
-		get: mockLiferayLanguageGet,
-	},
-	ThemeDisplay: {
-		...global.Liferay?.ThemeDisplay,
-		getBCP47LanguageId: () => 'en-US',
-	},
-};
-
-const {Liferay: originalLiferay} = global.window;
+let originalLiferay: any;
 
 jest.mock('frontend-js-web', () => ({
 	...(jest.requireActual('frontend-js-web') as any),
@@ -66,8 +56,18 @@ jest.mock(
 
 describe('ActivityLog Component', () => {
 	beforeAll(() => {
-		window['Liferay'] = {
+		originalLiferay = window.Liferay;
+
+		window.Liferay = {
 			...originalLiferay,
+			Language: {
+				...originalLiferay?.Language,
+				get: mockLiferayLanguageGet,
+			},
+			ThemeDisplay: {
+				...originalLiferay?.ThemeDisplay,
+				getBCP47LanguageId: () => 'en-US',
+			},
 
 			detach: (name, fn): void => {
 				window.removeEventListener(name as string, fn as EventListener);
@@ -110,9 +110,9 @@ describe('ActivityLog Component', () => {
 	});
 
 	afterAll(() => {
-		cleanup();
-
 		window.Liferay = originalLiferay;
+
+		cleanup();
 
 		jest.resetAllMocks();
 	});

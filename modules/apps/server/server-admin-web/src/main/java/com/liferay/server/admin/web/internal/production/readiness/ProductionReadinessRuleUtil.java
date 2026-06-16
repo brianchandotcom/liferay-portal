@@ -7,6 +7,7 @@ package com.liferay.server.admin.web.internal.production.readiness;
 
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -22,6 +23,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.search.elasticsearch8.configuration.ElasticsearchConfiguration;
 
 import java.io.File;
 
@@ -557,20 +559,26 @@ public class ProductionReadinessRuleUtil {
 	}
 
 	private static ProductionReadinessResult _checkSidecarDetection() {
-		File file = new File(
-			PropsValues.LIFERAY_HOME,
-			"osgi/configs/com.liferay.portal.search.elasticsearch8." +
-				"configuration.ElasticsearchConfiguration.config");
-
 		ProductionReadinessResult.Builder builder =
 			ProductionReadinessResult.builder(
 				"search-engine-connectivity-validation", "sidecar-detection");
 
-		if (!file.exists() || !_isProductionModeEnabled(file)) {
-			return builder.fail();
+		try {
+			ElasticsearchConfiguration elasticsearchConfiguration =
+				ConfigurationProviderUtil.getSystemConfiguration(
+					ElasticsearchConfiguration.class);
+
+			if (elasticsearchConfiguration.productionModeEnabled()) {
+				return builder.pass();
+			}
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(exception);
+			}
 		}
 
-		return builder.pass();
+		return builder.fail();
 	}
 
 	private static ProductionReadinessResult _checkUnusedLanguages() {
@@ -673,21 +681,6 @@ public class ProductionReadinessRuleUtil {
 		}
 
 		return -1;
-	}
-
-	private static boolean _isProductionModeEnabled(File file) {
-		try {
-			String content = FileUtil.read(file);
-
-			return content.contains("productionModeEnabled=B\"true\"");
-		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(exception);
-			}
-
-			return false;
-		}
 	}
 
 	private static boolean _isStrongerThanPBKDF2(String algorithm) {

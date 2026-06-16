@@ -5,6 +5,7 @@
 
 package com.liferay.server.admin.web.internal.production.readiness;
 
+import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -13,6 +14,7 @@ import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.search.elasticsearch8.configuration.ElasticsearchConfiguration;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.File;
@@ -1093,13 +1095,28 @@ public class ProductionReadinessRuleUtilTest {
 	}
 
 	@Test
-	public void testCheckSidecarDetectionMissingFileFail() throws Exception {
-		File liferayHome = temporaryFolder.newFolder("liferayHomeMissing");
+	public void testCheckSidecarDetectionProductionModeDisabledFail()
+		throws Exception {
 
-		try (AutoCloseable closeable =
-				ReflectionTestUtil.setFieldValueWithAutoCloseable(
-					PropsValues.class, "LIFERAY_HOME",
-					liferayHome.getAbsolutePath())) {
+		try (MockedStatic<ConfigurationProviderUtil>
+				configurationProviderUtilMockedStatic = Mockito.mockStatic(
+					ConfigurationProviderUtil.class)) {
+
+			ElasticsearchConfiguration elasticsearchConfiguration =
+				Mockito.mock(ElasticsearchConfiguration.class);
+
+			Mockito.when(
+				elasticsearchConfiguration.productionModeEnabled()
+			).thenReturn(
+				false
+			);
+
+			configurationProviderUtilMockedStatic.when(
+				() -> ConfigurationProviderUtil.getSystemConfiguration(
+					ElasticsearchConfiguration.class)
+			).thenReturn(
+				elasticsearchConfiguration
+			);
 
 			ProductionReadinessResult productionReadinessResult =
 				ReflectionTestUtil.invoke(
@@ -1113,15 +1130,28 @@ public class ProductionReadinessRuleUtilTest {
 	}
 
 	@Test
-	public void testCheckSidecarDetectionPass() throws Exception {
-		File liferayHome = temporaryFolder.newFolder("liferayHomePass");
+	public void testCheckSidecarDetectionProductionModeEnabledPass()
+		throws Exception {
 
-		_writeSidecarConfig(liferayHome, "productionModeEnabled=B\"true\"\n");
+		try (MockedStatic<ConfigurationProviderUtil>
+				configurationProviderUtilMockedStatic = Mockito.mockStatic(
+					ConfigurationProviderUtil.class)) {
 
-		try (AutoCloseable closeable =
-				ReflectionTestUtil.setFieldValueWithAutoCloseable(
-					PropsValues.class, "LIFERAY_HOME",
-					liferayHome.getAbsolutePath())) {
+			ElasticsearchConfiguration elasticsearchConfiguration =
+				Mockito.mock(ElasticsearchConfiguration.class);
+
+			Mockito.when(
+				elasticsearchConfiguration.productionModeEnabled()
+			).thenReturn(
+				true
+			);
+
+			configurationProviderUtilMockedStatic.when(
+				() -> ConfigurationProviderUtil.getSystemConfiguration(
+					ElasticsearchConfiguration.class)
+			).thenReturn(
+				elasticsearchConfiguration
+			);
 
 			ProductionReadinessResult productionReadinessResult =
 				ReflectionTestUtil.invoke(
@@ -1135,17 +1165,19 @@ public class ProductionReadinessRuleUtilTest {
 	}
 
 	@Test
-	public void testCheckSidecarDetectionProductionModeDisabledFail()
+	public void testCheckSidecarDetectionUnreadableConfigurationFail()
 		throws Exception {
 
-		File liferayHome = temporaryFolder.newFolder("liferayHomeDisabled");
+		try (MockedStatic<ConfigurationProviderUtil>
+				configurationProviderUtilMockedStatic = Mockito.mockStatic(
+					ConfigurationProviderUtil.class)) {
 
-		_writeSidecarConfig(liferayHome, "productionModeEnabled=B\"false\"\n");
-
-		try (AutoCloseable closeable =
-				ReflectionTestUtil.setFieldValueWithAutoCloseable(
-					PropsValues.class, "LIFERAY_HOME",
-					liferayHome.getAbsolutePath())) {
+			configurationProviderUtilMockedStatic.when(
+				() -> ConfigurationProviderUtil.getSystemConfiguration(
+					ElasticsearchConfiguration.class)
+			).thenThrow(
+				new RuntimeException()
+			);
 
 			ProductionReadinessResult productionReadinessResult =
 				ReflectionTestUtil.invoke(
@@ -1488,21 +1520,6 @@ public class ProductionReadinessRuleUtilTest {
 		).thenReturn(
 			runtimeMXBean
 		);
-	}
-
-	private void _writeSidecarConfig(File liferayHome, String content)
-		throws Exception {
-
-		File configsDir = new File(liferayHome, "osgi/configs");
-
-		configsDir.mkdirs();
-
-		File configFile = new File(
-			configsDir,
-			"com.liferay.portal.search.elasticsearch8.configuration." +
-				"ElasticsearchConfiguration.config");
-
-		Files.writeString(configFile.toPath(), content);
 	}
 
 }

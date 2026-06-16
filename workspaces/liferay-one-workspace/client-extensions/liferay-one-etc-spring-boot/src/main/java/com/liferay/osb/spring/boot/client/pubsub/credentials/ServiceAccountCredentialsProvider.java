@@ -15,8 +15,8 @@ import java.io.IOException;
 
 import java.util.Arrays;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import org.springframework.beans.factory.annotation.Value;
 
@@ -58,7 +58,7 @@ public class ServiceAccountCredentialsProvider {
 			googleCredentials.createScoped(Arrays.asList(SCOPE)));
 	}
 
-	private static final Logger _log = LoggerFactory.getLogger(
+	private static final Log _log = LogFactory.getLog(
 		ServiceAccountCredentialsProvider.class);
 
 	@Value("${pubsub.service.account.credentials.client.email.address:}")

@@ -6,7 +6,6 @@
 package com.liferay.osb.spring.boot.client.pubsub;
 
 import com.google.api.gax.core.CredentialsProvider;
-import com.google.api.gax.rpc.AlreadyExistsException;
 import com.google.api.gax.rpc.NotFoundException;
 import com.google.cloud.pubsub.v1.TopicAdminClient;
 import com.google.cloud.pubsub.v1.TopicAdminSettings;
@@ -14,8 +13,8 @@ import com.google.pubsub.v1.TopicName;
 
 import com.liferay.osb.spring.boot.client.pubsub.credentials.ServiceAccountCredentialsProvider;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -33,10 +32,10 @@ public abstract class BasePubsubClient {
 		try (TopicAdminClient topicAdminClient = TopicAdminClient.create(
 				topicAdminSettings)) {
 
-			_ensureTopicExists(topicAdminClient, topic);
+			_ensureTopicExists(topic, topicAdminClient);
 
 			if (isDeadLetterTopicEnabled()) {
-				_ensureTopicExists(topicAdminClient, getDeadLetterTopic(topic));
+				_ensureTopicExists(getDeadLetterTopic(topic), topicAdminClient);
 			}
 		}
 	}
@@ -64,7 +63,8 @@ public abstract class BasePubsubClient {
 	}
 
 	private void _ensureTopicExists(
-		TopicAdminClient topicAdminClient, String name) {
+			String name, TopicAdminClient topicAdminClient)
+		throws Exception {
 
 		TopicName topicName = TopicName.ofProjectTopicName(
 			getProjectId(), getNamespace() + name);
@@ -79,21 +79,11 @@ public abstract class BasePubsubClient {
 					notFoundException);
 			}
 
-			try {
-				topicAdminClient.createTopic(topicName);
-			}
-			catch (AlreadyExistsException alreadyExistsException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Topic already exists " + topicName,
-						alreadyExistsException);
-				}
-			}
+			topicAdminClient.createTopic(topicName);
 		}
 	}
 
-	private static final Logger _log = LoggerFactory.getLogger(
-		BasePubsubClient.class);
+	private static final Log _log = LogFactory.getLog(BasePubsubClient.class);
 
 	@Autowired
 	private ServiceAccountCredentialsProvider

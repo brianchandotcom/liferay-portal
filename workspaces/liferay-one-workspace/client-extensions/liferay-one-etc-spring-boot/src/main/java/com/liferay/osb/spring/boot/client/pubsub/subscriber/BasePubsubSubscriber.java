@@ -25,8 +25,8 @@ import com.liferay.osb.spring.boot.client.pubsub.Message;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * @author Amos Fong
@@ -86,8 +86,9 @@ public abstract class BasePubsubSubscriber extends BasePubsubClient {
 			getCredentialsProvider()
 		).build();
 
-		_subscriber.startAsync(
-		).awaitRunning();
+		_subscriber.startAsync();
+
+		_subscriber.awaitRunning();
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
@@ -100,8 +101,9 @@ public abstract class BasePubsubSubscriber extends BasePubsubClient {
 	public void stop() {
 		if (_subscriber != null) {
 			try {
-				_subscriber.stopAsync(
-				).awaitTerminated();
+				_subscriber.stopAsync();
+
+				_subscriber.awaitTerminated();
 
 				if (_log.isInfoEnabled()) {
 					_log.info(
@@ -212,7 +214,7 @@ public abstract class BasePubsubSubscriber extends BasePubsubClient {
 		}
 	}
 
-	private static final Logger _log = LoggerFactory.getLogger(
+	private static final Log _log = LogFactory.getLog(
 		BasePubsubSubscriber.class);
 
 	private Subscriber _subscriber;

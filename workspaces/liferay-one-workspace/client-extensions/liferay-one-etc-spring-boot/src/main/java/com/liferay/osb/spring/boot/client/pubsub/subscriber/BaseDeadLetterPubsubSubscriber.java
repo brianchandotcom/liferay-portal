@@ -16,8 +16,8 @@ import com.liferay.osb.spring.boot.client.pubsub.Message;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * @author Kyle Bischof
@@ -67,14 +67,14 @@ public abstract class BaseDeadLetterPubsubSubscriber
 	}
 
 	protected abstract void onDeadLetter(
-			Message message, String sourceSubscriptionName, int deliveryAttempt)
+			int deliveryAttempt, Message message, String sourceSubscriptionName)
 		throws Exception;
 
 	@Override
 	protected final void receive(Message message) throws Exception {
 		onDeadLetter(
-			message, message.get(SOURCE_SUBSCRIPTION_ATTRIBUTE_NAME),
-			_getDeliveryAttempt(message));
+			_getDeliveryAttempt(message), message,
+			message.get(SOURCE_SUBSCRIPTION_ATTRIBUTE_NAME));
 	}
 
 	private int _getDeliveryAttempt(Message message) {
@@ -99,7 +99,7 @@ public abstract class BaseDeadLetterPubsubSubscriber
 		}
 	}
 
-	private static final Logger _log = LoggerFactory.getLogger(
+	private static final Log _log = LogFactory.getLog(
 		BaseDeadLetterPubsubSubscriber.class);
 
 	private final Map<String, String> _topics = new ConcurrentHashMap<>();

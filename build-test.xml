@@ -16062,12 +16062,9 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 					<elseif>
 						<equals arg1="${database.type}" arg2="oracle" />
 						<then>
-							<sql classpath="${test.app.server.lib.portal.dir}/${jdbc.oracle.driver}" driver="oracle.jdbc.OracleDriver" onerror="continue" output="data.pump.log" password="${oracle.admin.password}" print="true" url="${database.oracle.url}" userid="${oracle.admin.user}">
-								<![CDATA[
-									drop user lportal cascade;
-									select directory_name, directory_path from dba_directories where directory_name='DATA_PUMP_DIR';
-								]]>
-							</sql>
+							<exec executable="${oracle.sqlplus.executable}" failonerror="true" inputstring="whenever sqlerror exit failure&#10;connect ${oracle.admin.user}/&quot;${oracle.admin.password}&quot; as sysdba&#10;whenever sqlerror continue&#10;set heading off&#10;set feedback off&#10;set pagesize 0&#10;set linesize 1000&#10;set trimspool on&#10;drop user lportal cascade;&#10;select directory_name || ',' || directory_path from dba_directories where directory_name='DATA_PUMP_DIR';&#10;exit&#10;" output="data.pump.log">
+								<arg value="/nolog" />
+							</exec>
 
 							<loadfile
 								property="data.pump.log.content"

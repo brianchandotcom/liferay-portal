@@ -5,10 +5,10 @@
 
 package com.liferay.portal.servlet.filters.portal.instances;
 
-import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.exception.NoSuchVirtualHostException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.servlet.BaseFilter;
 import com.liferay.portal.kernel.servlet.TryFinallyFilter;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -37,7 +37,7 @@ public class PortalInstancesFilter
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse, Object object) {
 
-		CentralizedThreadLocal.clearShortLivedCentralizedThreadLocals();
+		CompanyThreadLocal.setCompanyId(GetterUtil.getLong(object));
 	}
 
 	@Override
@@ -45,6 +45,8 @@ public class PortalInstancesFilter
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws Exception {
+
+		long companyId = CompanyThreadLocal.getCompanyId();
 
 		// Company ID needs to always be called here so that it is properly set
 		// in subsequent calls
@@ -61,11 +63,9 @@ public class PortalInstancesFilter
 				WebKeys.UNKNOWN_VIRTUAL_HOST, Boolean.TRUE);
 
 			httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND);
-
-			return null;
 		}
 
-		return null;
+		return companyId;
 	}
 
 	@Override

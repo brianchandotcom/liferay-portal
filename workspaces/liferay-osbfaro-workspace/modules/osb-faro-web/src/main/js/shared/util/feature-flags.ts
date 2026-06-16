@@ -18,6 +18,7 @@ export type FeatureFlagKey =
 	| 'ENABLE_ASSET_CARD'
 	| 'ENABLE_BLOCKLIST_KEYWORDS'
 	| 'ENABLE_COMMERCE'
+	| 'ENABLE_DELETE_DATA_SOURCE_BUTTON'
 	| 'ENABLE_FORM_ABANDONMENT'
 	| 'ENABLE_REAL_TIME_SEGMENTS';
 
@@ -30,6 +31,7 @@ export const FEATURE_FLAGS: FeatureFlagDefinition[] = [
 	{defaultValue: false, key: 'ENABLE_ASSET_CARD'},
 	{defaultValue: false, key: 'ENABLE_BLOCKLIST_KEYWORDS'},
 	{defaultValue: false, key: 'ENABLE_COMMERCE'},
+	{defaultValue: true, key: 'ENABLE_DELETE_DATA_SOURCE_BUTTON'},
 	{defaultValue: false, key: 'ENABLE_FORM_ABANDONMENT'},
 	{defaultValue: false, key: 'ENABLE_REAL_TIME_SEGMENTS'}
 ];
@@ -93,6 +95,10 @@ export const ENABLE_BLOCKLIST_KEYWORDS = isFeatureFlagEnabled(
 );
 
 export const ENABLE_COMMERCE = isFeatureFlagEnabled('ENABLE_COMMERCE');
+
+export const ENABLE_DELETE_DATA_SOURCE_BUTTON = isFeatureFlagEnabled(
+	'ENABLE_DELETE_DATA_SOURCE_BUTTON'
+);
 
 export const ENABLE_FORM_ABANDONMENT = isFeatureFlagEnabled(
 	'ENABLE_FORM_ABANDONMENT'

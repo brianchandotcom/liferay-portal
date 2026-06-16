@@ -16,7 +16,7 @@ run "should_configure_argo_workflows_with_defaults" {
 
 	assert {
 		condition=helm_release.argo_workflows.upgrade_install == true
-		error_message="The Argo Workflows Helm release must use upgrade_install"
+		error_message="The Argo Workflows Helm release must have upgrade_install enabled"
 	}
 
 	assert {

@@ -40,7 +40,7 @@ run "should_create_namespace_and_secret_with_defaults" {
 
 	assert {
 		condition=kubernetes_secret.argocd_secret.metadata[0].labels["app.kubernetes.io/managed-by"] == "Helm"
-		error_message="argocd-secret must override the managed-by label to Helm so Helm adopts it"
+		error_message="The argocd-secret resource must override the managed-by label to Helm so Helm adopts it"
 	}
 
 	command=plan

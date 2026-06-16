@@ -6,7 +6,6 @@
 package com.liferay.headless.admin.fragment.internal.resource.v1_0;
 
 import com.liferay.fragment.constants.FragmentConstants;
-import com.liferay.fragment.constants.FragmentEntryField;
 import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.exception.RequiredFragmentEntryVersionException;
 import com.liferay.fragment.exception.UnsupportedUnpublishFragmentEntryOperationException;
@@ -313,10 +312,8 @@ public class FragmentResourceImpl extends BaseFragmentResourceImpl {
 				Field.ENTRY_CLASS_PK),
 			searchContext -> {
 				searchContext.setAttribute(
-					FragmentEntryField.FRAGMENT_COLLECTION_ID,
-					fragmentCollectionId);
-				searchContext.setAttribute(
-					FragmentEntryField.HEAD_LISTABLE, Boolean.TRUE);
+					"fragmentCollectionId", fragmentCollectionId);
+				searchContext.setAttribute("headListable", Boolean.TRUE);
 				searchContext.setCompanyId(contextCompany.getCompanyId());
 				searchContext.setGroupIds(new long[] {groupId});
 			},

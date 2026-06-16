@@ -16,6 +16,7 @@ import {pagesAdminPagesTest} from '../../../fixtures/pagesAdminPagesTest';
 import dragAndDropElement from '../../../utils/dragAndDropElement';
 import getRandomString from '../../../utils/getRandomString';
 import {selectAndExpectToHaveValue} from '../../../utils/selectAndExpectToHaveValue';
+import {waitForAlert} from '../../../utils/waitForAlert';
 import {pagesPagesTest} from '../../layout-admin-web/main/fixtures/pagesPagesTest';
 import {
 	addAttributeFilter,
@@ -3493,6 +3494,134 @@ test(
 			await page.getByRole('button', {exact: true, name: tab}).click();
 
 			await expect(page.getByRole('cell', {name: 'Sort'})).toHaveCount(3);
+		}
+	}
+);
+
+test(
+	'Vote and comment events appear as default events in Event Analysis',
+	{
+		tag: '@LRAC-11541',
+	},
+	async ({analyticsChannel: channel, page, project}) => {
+		const defaultEventNames = ['VOTE', 'posted'];
+
+		// VOTE (ratings) and posted (comments) are default events that ship
+		// hidden, so show them before checking the Event Analysis picker
+
+		await navigateToACSettingsViaURL({
+			acPage: ACPage.definitionsEventsDefaultPage,
+			page,
+			projectID: project.groupId,
+		});
+
+		try {
+			for (const defaultEventName of defaultEventNames) {
+				await page
+					.getByPlaceholder('Search')
+					.first()
+					.fill(defaultEventName);
+
+				await page.keyboard.press('Enter');
+
+				const row = page.getByRole('row', {name: defaultEventName});
+
+				await row.hover();
+
+				await row.getByRole('button', {name: 'Set to Show'}).click();
+
+				await waitForAlert(
+					page,
+					`Success:${defaultEventName} has been set to show.`,
+					{autoClose: false}
+				);
+			}
+
+			await navigateToACPageViaURL({
+				acPage: ACPage.eventAnalysisPage,
+				channelID: channel.id,
+				page,
+				projectID: project.groupId,
+			});
+
+			await page.getByRole('link', {name: 'Create Analysis'}).click();
+
+			await setEventAnalysisName({
+				eventAnalysisName: `Event Analysis ${getRandomString()}`,
+				page,
+			});
+
+			await page.locator('.event-section-root').getByLabel('Add').click();
+
+			// They appear under the Default tab
+
+			await page
+				.locator('.card-tab')
+				.filter({hasText: 'Default'})
+				.first()
+				.click();
+
+			for (const defaultEventName of defaultEventNames) {
+				await expect(
+					page.getByRole('menuitem', {
+						exact: true,
+						name: defaultEventName,
+					})
+				).toBeVisible();
+			}
+
+			// They are not custom events
+
+			await page
+				.locator('.card-tab')
+				.filter({hasText: 'Custom'})
+				.first()
+				.click();
+
+			for (const defaultEventName of defaultEventNames) {
+				await expect(
+					page.getByRole('menuitem', {
+						exact: true,
+						name: defaultEventName,
+					})
+				).toHaveCount(0);
+			}
+		}
+		finally {
+
+			// Restore the hidden state on the shared project
+
+			await navigateToACSettingsViaURL({
+				acPage: ACPage.definitionsEventsDefaultPage,
+				page,
+				projectID: project.groupId,
+			});
+
+			for (const defaultEventName of defaultEventNames) {
+				await page
+					.getByPlaceholder('Search')
+					.first()
+					.fill(defaultEventName);
+
+				await page.keyboard.press('Enter');
+
+				const row = page.getByRole('row', {name: defaultEventName});
+
+				await row.hover();
+
+				await row.getByRole('button', {name: 'Set to Hide'}).click();
+
+				await page
+					.locator('.confirmation-modal-root')
+					.getByRole('button', {exact: true, name: 'Hide'})
+					.click();
+
+				await waitForAlert(
+					page,
+					`Success:${defaultEventName} set to hide.`,
+					{autoClose: false}
+				);
+			}
 		}
 	}
 );

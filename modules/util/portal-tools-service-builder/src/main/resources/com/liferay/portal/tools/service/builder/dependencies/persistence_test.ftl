@@ -308,7 +308,13 @@ public class ${entity.name}PersistenceTest {
 			</#if>
 		</#list>
 
-		_${entity.pluralVariableName}.add(_persistence.update(new${entity.name}));
+		<#if serviceBuilder.isVersionGTE_7_4_0()>
+			new${entity.name} = _persistence.update(new${entity.name});
+
+			_${entity.pluralVariableName}.add(new${entity.name});
+		<#else>
+			_${entity.pluralVariableName}.add(_persistence.update(new${entity.name}));
+		</#if>
 
 		<#if hasEagerBlob>
 			Session session = _persistence.openSession();

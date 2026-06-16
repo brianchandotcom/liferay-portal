@@ -1,0 +1,66 @@
+{{- if eq (include "observability.cloudProvider" .) "gcp" -}}
+{{- $projectId := required "gcp.projectId must be set when cloudProvider=gcp" .Values.gcp.projectId -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    labels:
+        {{- include "observability.labels" . | nindent 8 }}
+        app.kubernetes.io/component: frontend
+    name: {{ printf "%s-frontend" (include "observability.fullname" .) | trunc 63 | trimSuffix "-" }}
+    namespace: {{ include "observability.namespace" . | quote }}
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            {{- include "observability.selectorLabels" . | nindent 12 }}
+            app.kubernetes.io/component: frontend
+    template:
+        metadata:
+            labels:
+                {{- include "observability.labels" . | nindent 16 }}
+                app.kubernetes.io/component: frontend
+        spec:
+            containers:
+                -   args:
+                        -   "--query.project-id={{ $projectId }}"
+                        -   "--web.listen-address=:{{ .Values.frontend.port }}"
+                    image: {{ printf "%s:%s" .Values.frontend.image.repository .Values.frontend.image.tag | quote }}
+                    name: frontend
+                    ports:
+                        -   containerPort: {{ .Values.frontend.port }}
+                            name: web
+                    readinessProbe:
+                        httpGet:
+                            path: /-/ready
+                            port: web
+                    resources:
+                        {{- toYaml .Values.frontend.resources | nindent 24 }}
+                    securityContext:
+                        allowPrivilegeEscalation: false
+                        capabilities:
+                            drop:
+                                -   ALL
+                        readOnlyRootFilesystem: true
+            securityContext:
+                runAsNonRoot: true
+                seccompProfile:
+                    type: RuntimeDefault
+            serviceAccountName: grafana
+---
+apiVersion: v1
+kind: Service
+metadata:
+    labels:
+        {{- include "observability.labels" . | nindent 8 }}
+        app.kubernetes.io/component: frontend
+    name: {{ printf "%s-frontend" (include "observability.fullname" .) | trunc 63 | trimSuffix "-" }}
+    namespace: {{ include "observability.namespace" . | quote }}
+spec:
+    ports:
+        -   name: web
+            port: {{ .Values.frontend.port }}
+            targetPort: web
+    selector:
+        {{- include "observability.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: frontend
+{{- end -}}

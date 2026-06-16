@@ -29,7 +29,7 @@ public class FragmentEntryModelPreFilterContributor
 		SearchContext searchContext) {
 
 		boolean head = GetterUtil.getBoolean(
-			searchContext.getAttribute("head"), Boolean.TRUE);
+			searchContext.getAttribute("head"), true);
 		boolean headListable = GetterUtil.getBoolean(
 			searchContext.getAttribute("headListable"));
 

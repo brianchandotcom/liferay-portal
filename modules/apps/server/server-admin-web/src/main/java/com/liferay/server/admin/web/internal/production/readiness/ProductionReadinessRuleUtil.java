@@ -7,6 +7,7 @@ package com.liferay.server.admin.web.internal.production.readiness;
 
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -22,6 +23,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.search.elasticsearch8.configuration.ElasticsearchConfiguration;
 
 import java.io.File;
 
@@ -556,6 +558,29 @@ public class ProductionReadinessRuleUtil {
 		return builder.pass();
 	}
 
+	private static ProductionReadinessResult _checkSidecarDetection() {
+		ProductionReadinessResult.Builder builder =
+			ProductionReadinessResult.builder(
+				"search-engine-connectivity-validation", "sidecar-detection");
+
+		try {
+			ElasticsearchConfiguration elasticsearchConfiguration =
+				ConfigurationProviderUtil.getSystemConfiguration(
+					ElasticsearchConfiguration.class);
+
+			if (elasticsearchConfiguration.productionModeEnabled()) {
+				return builder.pass();
+			}
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(exception);
+			}
+		}
+
+		return builder.fail();
+	}
+
 	private static ProductionReadinessResult _checkUnusedLanguages() {
 		List<String> enabledLocales = List.of(PropsValues.LOCALES_ENABLED);
 
@@ -745,6 +770,7 @@ public class ProductionReadinessRuleUtil {
 			ProductionReadinessRuleUtil::_checkPasswordEncryption,
 			ProductionReadinessRuleUtil::_checkPortalDeveloperProperties,
 			ProductionReadinessRuleUtil::_checkPreventDiagnosticOverhead,
+			ProductionReadinessRuleUtil::_checkSidecarDetection,
 			ProductionReadinessRuleUtil::_checkUnusedLanguages);
 	private static final List<String> _recommendedDLStoreImplClassNames =
 		List.of(

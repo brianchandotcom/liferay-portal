@@ -5,6 +5,7 @@
 
 package com.liferay.server.admin.web.internal.production.readiness;
 
+import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -13,6 +14,7 @@ import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.search.elasticsearch8.configuration.ElasticsearchConfiguration;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.File;
@@ -26,6 +28,7 @@ import java.lang.management.RuntimeMXBean;
 import java.nio.file.Files;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -51,6 +54,99 @@ public class ProductionReadinessRuleUtilTest {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
+
+	@Test
+	public void testCheck() throws Exception {
+		try (MockedStatic<PropsUtil> propsUtilMockedStatic = Mockito.mockStatic(
+				PropsUtil.class);
+			MockedStatic<ServerDetector> serverDetectorMockedStatic =
+				Mockito.mockStatic(ServerDetector.class);
+			MockedStatic<ManagementFactory> managementFactoryMockedStatic =
+				Mockito.mockStatic(ManagementFactory.class);
+			AutoCloseable closeable1 =
+				ReflectionTestUtil.setFieldValueWithAutoCloseable(
+					PropsValues.class, "DL_FILE_ENTRY_PREVIEW_DOCUMENT_DPI",
+					75);
+			AutoCloseable closeable2 =
+				ReflectionTestUtil.setFieldValueWithAutoCloseable(
+					PropsValues.class,
+					"DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_ENABLED", true);
+			AutoCloseable closeable3 =
+				ReflectionTestUtil.setFieldValueWithAutoCloseable(
+					PropsValues.class, "DL_STORE_IMPL",
+					"com.liferay.portal.store.s3.S3Store");
+			AutoCloseable closeable4 =
+				ReflectionTestUtil.setFieldValueWithAutoCloseable(
+					PropsValues.class, "LOCALES", new String[] {"en_US"});
+			AutoCloseable closeable5 =
+				ReflectionTestUtil.setFieldValueWithAutoCloseable(
+					PropsValues.class, "LOCALES_BETA", new String[0]);
+			AutoCloseable closeable6 =
+				ReflectionTestUtil.setFieldValueWithAutoCloseable(
+					PropsValues.class, "LOCALES_ENABLED",
+					new String[] {"en_US"});
+			AutoCloseable closeable7 =
+				ReflectionTestUtil.setFieldValueWithAutoCloseable(
+					PropsValues.class, "LIFERAY_HOME",
+					temporaryFolder.getRoot(
+					).getAbsolutePath())) {
+
+			_stubPropsUtilDefaults(propsUtilMockedStatic);
+
+			serverDetectorMockedStatic.when(
+				ServerDetector::isTomcat
+			).thenReturn(
+				false
+			);
+
+			_stubHeapMemoryUsage(
+				managementFactoryMockedStatic,
+				_memoryUsage(2L * 1024 * 1024 * 1024, 2L * 1024 * 1024 * 1024));
+
+			RuntimeMXBean runtimeMXBean = Mockito.mock(RuntimeMXBean.class);
+
+			Mockito.when(
+				runtimeMXBean.getInputArguments()
+			).thenReturn(
+				Collections.emptyList()
+			);
+
+			managementFactoryMockedStatic.when(
+				ManagementFactory::getRuntimeMXBean
+			).thenReturn(
+				runtimeMXBean
+			);
+
+			GarbageCollectorMXBean garbageCollectorMXBean = Mockito.mock(
+				GarbageCollectorMXBean.class);
+
+			Mockito.when(
+				garbageCollectorMXBean.getName()
+			).thenReturn(
+				"G1 Young Generation"
+			);
+
+			managementFactoryMockedStatic.when(
+				ManagementFactory::getGarbageCollectorMXBeans
+			).thenReturn(
+				Collections.singletonList(garbageCollectorMXBean)
+			);
+
+			_stubMBeanServerMaxThreads(managementFactoryMockedStatic, 200);
+
+			Collection<ProductionReadinessResult> productionReadinessResults =
+				ProductionReadinessRuleUtil.check();
+
+			Assert.assertFalse(productionReadinessResults.isEmpty());
+
+			for (ProductionReadinessResult productionReadinessResult :
+					productionReadinessResults) {
+
+				Assert.assertNotNull(productionReadinessResult.getCategory());
+				Assert.assertNotNull(productionReadinessResult.getKey());
+			}
+		}
+	}
 
 	@Test
 	public void testCheckBetaLanguagesFail() throws Exception {
@@ -999,6 +1095,102 @@ public class ProductionReadinessRuleUtilTest {
 	}
 
 	@Test
+	public void testCheckSidecarDetectionProductionModeDisabledFail()
+		throws Exception {
+
+		try (MockedStatic<ConfigurationProviderUtil>
+				configurationProviderUtilMockedStatic = Mockito.mockStatic(
+					ConfigurationProviderUtil.class)) {
+
+			ElasticsearchConfiguration elasticsearchConfiguration =
+				Mockito.mock(ElasticsearchConfiguration.class);
+
+			Mockito.when(
+				elasticsearchConfiguration.productionModeEnabled()
+			).thenReturn(
+				false
+			);
+
+			configurationProviderUtilMockedStatic.when(
+				() -> ConfigurationProviderUtil.getSystemConfiguration(
+					ElasticsearchConfiguration.class)
+			).thenReturn(
+				elasticsearchConfiguration
+			);
+
+			ProductionReadinessResult productionReadinessResult =
+				ReflectionTestUtil.invoke(
+					ProductionReadinessRuleUtil.class, "_checkSidecarDetection",
+					new Class<?>[0]);
+
+			Assert.assertFalse(productionReadinessResult.isPass());
+			Assert.assertEquals(
+				"sidecar-detection", productionReadinessResult.getKey());
+		}
+	}
+
+	@Test
+	public void testCheckSidecarDetectionProductionModeEnabledPass()
+		throws Exception {
+
+		try (MockedStatic<ConfigurationProviderUtil>
+				configurationProviderUtilMockedStatic = Mockito.mockStatic(
+					ConfigurationProviderUtil.class)) {
+
+			ElasticsearchConfiguration elasticsearchConfiguration =
+				Mockito.mock(ElasticsearchConfiguration.class);
+
+			Mockito.when(
+				elasticsearchConfiguration.productionModeEnabled()
+			).thenReturn(
+				true
+			);
+
+			configurationProviderUtilMockedStatic.when(
+				() -> ConfigurationProviderUtil.getSystemConfiguration(
+					ElasticsearchConfiguration.class)
+			).thenReturn(
+				elasticsearchConfiguration
+			);
+
+			ProductionReadinessResult productionReadinessResult =
+				ReflectionTestUtil.invoke(
+					ProductionReadinessRuleUtil.class, "_checkSidecarDetection",
+					new Class<?>[0]);
+
+			Assert.assertTrue(productionReadinessResult.isPass());
+			Assert.assertEquals(
+				"sidecar-detection", productionReadinessResult.getKey());
+		}
+	}
+
+	@Test
+	public void testCheckSidecarDetectionUnreadableConfigurationFail()
+		throws Exception {
+
+		try (MockedStatic<ConfigurationProviderUtil>
+				configurationProviderUtilMockedStatic = Mockito.mockStatic(
+					ConfigurationProviderUtil.class)) {
+
+			configurationProviderUtilMockedStatic.when(
+				() -> ConfigurationProviderUtil.getSystemConfiguration(
+					ElasticsearchConfiguration.class)
+			).thenThrow(
+				new RuntimeException()
+			);
+
+			ProductionReadinessResult productionReadinessResult =
+				ReflectionTestUtil.invoke(
+					ProductionReadinessRuleUtil.class, "_checkSidecarDetection",
+					new Class<?>[0]);
+
+			Assert.assertFalse(productionReadinessResult.isPass());
+			Assert.assertEquals(
+				"sidecar-detection", productionReadinessResult.getKey());
+		}
+	}
+
+	@Test
 	public void testCheckUnusedLanguagesFail() throws Exception {
 		try (AutoCloseable closeable1 =
 				ReflectionTestUtil.setFieldValueWithAutoCloseable(
@@ -1268,6 +1460,46 @@ public class ProductionReadinessRuleUtilTest {
 			ManagementFactory::getPlatformMBeanServer
 		).thenReturn(
 			mBeanServer
+		);
+	}
+
+	private void _stubPropsUtilDefaults(
+		MockedStatic<PropsUtil> propsUtilMockedStatic) {
+
+		propsUtilMockedStatic.when(
+			() -> PropsUtil.get(ArgumentMatchers.anyString())
+		).thenReturn(
+			""
+		);
+
+		propsUtilMockedStatic.when(
+			() -> PropsUtil.getArray(ArgumentMatchers.anyString())
+		).thenReturn(
+			new String[0]
+		);
+
+		propsUtilMockedStatic.when(
+			() -> PropsUtil.get("counter.increment")
+		).thenReturn(
+			"2000"
+		);
+
+		propsUtilMockedStatic.when(
+			() -> PropsUtil.get("jdbc.default.maximumPoolSize")
+		).thenReturn(
+			"60"
+		);
+
+		propsUtilMockedStatic.when(
+			() -> PropsUtil.get("direct.servlet.context.reload")
+		).thenReturn(
+			"false"
+		);
+
+		propsUtilMockedStatic.when(
+			() -> PropsUtil.get("passwords.encryption.algorithm")
+		).thenReturn(
+			"BCRYPT"
 		);
 	}
 

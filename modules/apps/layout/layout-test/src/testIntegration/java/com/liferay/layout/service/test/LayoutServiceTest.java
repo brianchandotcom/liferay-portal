@@ -6,9 +6,13 @@
 package com.liferay.layout.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.change.tracking.model.CTCollection;
+import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -27,6 +31,7 @@ import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.context.ContextUserReplace;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -36,6 +41,7 @@ import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
@@ -45,6 +51,9 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
+import java.io.ByteArrayInputStream;
+
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
@@ -307,6 +316,37 @@ public class LayoutServiceTest {
 	}
 
 	@Test
+	@TestInfo("LPD-94951")
+	public void testGetTempFileNamesInsidePublication() throws Exception {
+		CTCollection ctCollection = _ctCollectionLocalService.addCTCollection(
+			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			0, RandomTestUtil.randomString(), null);
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					ctCollection.getCtCollectionId())) {
+
+			String folderName = RandomTestUtil.randomString();
+			String sourceFileName = RandomTestUtil.randomString() + ".lar";
+
+			_layoutService.addTempFileEntry(
+				_group.getGroupId(), folderName, sourceFileName,
+				new ByteArrayInputStream(RandomTestUtil.randomBytes()),
+				ContentTypes.APPLICATION_ZIP);
+
+			String[] tempFileNames = _layoutService.getTempFileNames(
+				_group.getGroupId(), folderName);
+
+			Assert.assertEquals(
+				Arrays.toString(tempFileNames), 1, tempFileNames.length);
+			Assert.assertEquals(sourceFileName, tempFileNames[0]);
+		}
+		finally {
+			_ctCollectionLocalService.deleteCTCollection(ctCollection);
+		}
+	}
+
+	@Test
 	public void testUpdateLayoutTemplate() throws Exception {
 		Layout layout = _addTypePortletLayout(
 			RandomTestUtil.randomString(), false, StringPool.BLANK);
@@ -514,6 +554,9 @@ public class LayoutServiceTest {
 		"1-2-1-columns-ii", "1-3-1-columns", "1-3-2-columns", "2-1-2-columns",
 		"2-2-columns", "3-2-3-columns"
 	};
+
+	@Inject
+	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@Inject
 	private FriendlyURLNormalizer _friendlyURLNormalizer;

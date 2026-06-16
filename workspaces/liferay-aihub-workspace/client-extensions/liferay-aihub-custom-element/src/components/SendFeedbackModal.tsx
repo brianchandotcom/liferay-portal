@@ -13,7 +13,7 @@ const REASON_OPTIONS: {label: string; value: ReportFeedbackReason | ''}[] = [
 	{label: 'Select Reason', value: ''},
 	{
 		label: 'Incorrect or Inaccurate Response',
-		value: 'incorrect',
+		value: 'inaccurateResponse',
 	},
 	{
 		label: 'Inappropriate or Harmful Content',
@@ -21,7 +21,7 @@ const REASON_OPTIONS: {label: string; value: ReportFeedbackReason | ''}[] = [
 	},
 	{
 		label: 'Exposure of Personal or Sensitive Data (PII)',
-		value: 'piiExposure',
+		value: 'personalDataExposure',
 	},
 	{label: 'Agent Error or Malfunction', value: 'agentError'},
 	{label: 'Other', value: 'other'},

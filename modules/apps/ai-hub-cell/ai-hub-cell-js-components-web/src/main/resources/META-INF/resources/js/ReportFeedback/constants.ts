@@ -12,7 +12,7 @@ export const REASON_OPTIONS: {
 	{label: Liferay.Language.get('select-reason'), value: ''},
 	{
 		label: Liferay.Language.get('incorrect-or-inaccurate-response'),
-		value: 'incorrect',
+		value: 'inaccurateResponse',
 	},
 	{
 		label: Liferay.Language.get('inappropriate-or-harmful-content'),
@@ -22,7 +22,7 @@ export const REASON_OPTIONS: {
 		label: Liferay.Language.get(
 			'exposure-of-personal-or-sensitive-data-pii'
 		),
-		value: 'piiExposure',
+		value: 'personalDataExposure',
 	},
 	{
 		label: Liferay.Language.get('agent-error-or-malfunction'),

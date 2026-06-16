@@ -7247,10 +7247,10 @@ public class JenkinsResultsParserUtil {
 
 		redactTokenVariants.add(token);
 
-		String jsonEscapedToken = JSONObject.quote(token);
+		String quotedToken = JSONObject.quote(token);
 
 		redactTokenVariants.add(
-			jsonEscapedToken.substring(1, jsonEscapedToken.length() - 1));
+			quotedToken.substring(1, quotedToken.length() - 1));
 
 		try {
 			String urlEncodedToken = URLEncoder.encode(

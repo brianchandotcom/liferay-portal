@@ -41,12 +41,16 @@ Post a fresh comment on each run rather than editing a prior one, so the PR keep
 <!-- pr-check {"result": "success", "sha": "<tested-SHA>"} -->
 ```
 
-Write that body to a file and post it with `--body-file`:
+Post the body with `--body-file`, never inline `--body` (a literal `!` in an inline body gets shell-escaped and corrupts the marker). Use `mktemp` for the file so it stays out of the working tree, and remove it afterward.
 
 ```bash
+comment_file=$(mktemp)
+
 gh pr comment \
 	--body-file "${comment_file}" \
 	"<pr-url>"
+
+rm "${comment_file}"
 ```
 
 When the comment fails to post, surface the error — without it the webhook has nothing to parse, so the status and label will not appear.

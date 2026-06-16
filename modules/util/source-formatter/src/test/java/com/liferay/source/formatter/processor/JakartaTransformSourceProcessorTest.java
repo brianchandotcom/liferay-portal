@@ -42,33 +42,14 @@ public class JakartaTransformSourceProcessorTest
 		test(
 			"jakartatransform/JakartaTransformExternalDependencies.testgradle");
 
-		_jakartaTransformDependenciesFilePath =
-			"/jakarta-transform-dependencies-does-not-exist.txt";
+		_testInvalidDependenciesFile(
+			"/jakarta-transform-dependencies-does-not-exist.txt",
+			"Unable to read file");
 
-		test("jakartatransform/JakartaTransform.testgradle");
-
-		_jakartaTransformDependenciesFilePath =
+		_testInvalidDependenciesFile(
 			"src/test/resources/com/liferay/source/formatter/dependencies" +
-				"/jakartatransform/jakarta-transform-dependencies-invalid.txt";
-
-		try {
-			test("jakartatransform/JakartaTransform.testgradle");
-
-			Assert.fail();
-		}
-		catch (Exception exception) {
-			Throwable throwable = exception;
-
-			while (throwable.getCause() != null) {
-				throwable = throwable.getCause();
-			}
-
-			Assert.assertTrue(throwable instanceof IOException);
-
-			String message = throwable.getMessage();
-
-			Assert.assertTrue(message.contains("Invalid line"));
-		}
+				"/jakartatransform/jakarta-transform-dependencies-invalid.txt",
+			"Invalid line");
 	}
 
 	@Test
@@ -102,6 +83,34 @@ public class JakartaTransformSourceProcessorTest
 		}
 
 		return sourceFormatterArgs;
+	}
+
+	private void _testInvalidDependenciesFile(
+			String jakartaTransformDependenciesFilePath, String message)
+		throws Exception {
+
+		_jakartaTransformDependenciesFilePath =
+			jakartaTransformDependenciesFilePath;
+
+		try {
+			test("jakartatransform/JakartaTransform.testgradle");
+
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			Throwable throwable = exception;
+
+			while (throwable.getCause() != null) {
+				throwable = throwable.getCause();
+			}
+
+			Assert.assertTrue(throwable instanceof IOException);
+			Assert.assertTrue(
+				throwable.getMessage(
+				).contains(
+					message
+				));
+		}
 	}
 
 	private String _jakartaTransformDependenciesFilePath;

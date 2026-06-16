@@ -152,7 +152,7 @@ public class AssetListAssetEntryProviderFiltersTest {
 
 	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-74731"))
 	@Test
-	public void testGetAssetEntryQueryWithInvalidFiltersJSON()
+	public void testGetAssetEntryQueryWithInvalidFilters()
 		throws Exception {
 
 		AssetListEntry assetListEntry = _addDynamicAssetListEntryWithFilters(

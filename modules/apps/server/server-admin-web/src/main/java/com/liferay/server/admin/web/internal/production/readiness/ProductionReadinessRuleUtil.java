@@ -249,8 +249,9 @@ public class ProductionReadinessRuleUtil {
 				"heap-allocation-consistency"
 			).currentValue(
 				StringBundler.concat(
-					"Xms=", xmsBytes / 1024 / 1024, "MB, Xmx=",
-					xmxBytes / 1024 / 1024, "MB")
+					"Xms=", (long)_toUnit(xmsBytes, _BYTES_PER_MEGABYTE),
+					"MB, Xmx=", (long)_toUnit(xmxBytes, _BYTES_PER_MEGABYTE),
+					"MB")
 			);
 
 		if ((xmsBytes > 0) && (xmsBytes == xmxBytes)) {
@@ -265,7 +266,7 @@ public class ProductionReadinessRuleUtil {
 
 		long xmxBytes = heapMemoryUsage.getMax();
 
-		double maxMemoryGB = xmxBytes / (1024.0 * 1024.0 * 1024.0);
+		double maxMemoryGB = _toUnit(xmxBytes, _BYTES_PER_GIGABYTE);
 
 		ProductionReadinessResult.Builder builder =
 			ProductionReadinessResult.builder(
@@ -287,7 +288,7 @@ public class ProductionReadinessRuleUtil {
 
 		long xmxBytes = heapMemoryUsage.getMax();
 
-		double maxMemoryGB = xmxBytes / (1024.0 * 1024.0 * 1024.0);
+		double maxMemoryGB = _toUnit(xmxBytes, _BYTES_PER_GIGABYTE);
 
 		ProductionReadinessResult.Builder builder =
 			ProductionReadinessResult.builder(
@@ -342,7 +343,9 @@ public class ProductionReadinessRuleUtil {
 				return builder.currentValue(
 					StringBundler.concat(
 						"-XX:LargePageSizeInBytes = ", largePageSizeArg,
-						", OS's huge page size = ", osHugePageSize / 1024, "kB")
+						", OS's huge page size = ",
+						(long)_toUnit(osHugePageSize, _BYTES_PER_KILOBYTE),
+						"KB")
 				).messageKeySuffix(
 					"size-mismatch"
 				).fail();
@@ -723,13 +726,13 @@ public class ProductionReadinessRuleUtil {
 		long multiplier = 1;
 
 		if (sizeStr.endsWith("k") || sizeStr.endsWith("kb")) {
-			multiplier = 1024;
+			multiplier = _BYTES_PER_KILOBYTE;
 		}
 		else if (sizeStr.endsWith("m") || sizeStr.endsWith("mb")) {
-			multiplier = 1024 * 1024;
+			multiplier = _BYTES_PER_MEGABYTE;
 		}
 		else if (sizeStr.endsWith("g") || sizeStr.endsWith("gb")) {
-			multiplier = 1024 * 1024 * 1024;
+			multiplier = _BYTES_PER_GIGABYTE;
 		}
 
 		if (multiplier > 1) {
@@ -738,6 +741,16 @@ public class ProductionReadinessRuleUtil {
 
 		return GetterUtil.getLong(sizeStr) * multiplier;
 	}
+
+	private static double _toUnit(long bytes, long bytesPerUnit) {
+		return (double)bytes / bytesPerUnit;
+	}
+
+	private static final long _BYTES_PER_GIGABYTE = 1024 * 1024 * 1024;
+
+	private static final long _BYTES_PER_KILOBYTE = 1024;
+
+	private static final long _BYTES_PER_MEGABYTE = 1024 * 1024;
 
 	private static final String _CATEGORY_JVM_AND_INFRASTRUCTURE_VALIDATION =
 		"jvm-and-infrastructure-validation";

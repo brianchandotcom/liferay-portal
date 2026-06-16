@@ -88,7 +88,7 @@ public class ProductionReadinessRuleUtil {
 				String.valueOf(counterIncrement)
 			);
 
-		if (counterIncrement < _MIN_COUNTER_INCREMENT) {
+		if (counterIncrement < 2000) {
 			return builder.fail();
 		}
 
@@ -107,7 +107,7 @@ public class ProductionReadinessRuleUtil {
 
 		ProductionReadinessResult.Builder builder =
 			ProductionReadinessResult.builder(
-				_CATEGORY_DATABASE_CONFIGURATION, "pool-vs-thread-size"
+				"database-configuration", "pool-vs-thread-size"
 			).currentValue(
 				StringBundler.concat(
 					"DB Pool Size=", jdbcMaxPoolSize, ", Tomcat Threads=",
@@ -283,7 +283,7 @@ public class ProductionReadinessRuleUtil {
 				maxMemoryGB + "GB"
 			);
 
-		if (maxMemoryGB <= _MAX_HEAP_SIZE_GB) {
+		if (maxMemoryGB <= 32.0) {
 			return builder.pass();
 		}
 
@@ -302,7 +302,7 @@ public class ProductionReadinessRuleUtil {
 				_CATEGORY_JVM_AND_INFRASTRUCTURE_VALIDATION,
 				"huge-pages-configuration");
 
-		if (maxMemoryGB <= _HUGE_PAGES_HEAP_SIZE_THRESHOLD_GB) {
+		if (maxMemoryGB <= 4.0) {
 			return builder.messageKeySuffix(
 				"heap-under-4gb"
 			).pass();
@@ -577,8 +577,7 @@ public class ProductionReadinessRuleUtil {
 
 		ProductionReadinessResult.Builder builder =
 			ProductionReadinessResult.builder(
-				_CATEGORY_SEARCH_ENGINE_CONNECTIVITY_VALIDATION,
-				"sidecar-detection");
+				"search-engine-connectivity-validation", "sidecar-detection");
 
 		if (!file.exists() || !_isProductionModeEnabled(file)) {
 			return builder.fail();
@@ -656,7 +655,7 @@ public class ProductionReadinessRuleUtil {
 				_log.warn(exception);
 			}
 
-			return _DEFAULT_MAX_THREADS;
+			return 200;
 		}
 	}
 
@@ -721,7 +720,7 @@ public class ProductionReadinessRuleUtil {
 			if (parts.length >= 3) {
 				int rounds = GetterUtil.getInteger(parts[2]);
 
-				if (rounds >= _MIN_PBKDF2_ROUNDS) {
+				if (rounds >= 1300000) {
 					return true;
 				}
 			}
@@ -756,30 +755,13 @@ public class ProductionReadinessRuleUtil {
 		return GetterUtil.getLong(sizeStr) * multiplier;
 	}
 
-	private static final String _CATEGORY_DATABASE_CONFIGURATION =
-		"database-configuration";
-
 	private static final String _CATEGORY_JVM_AND_INFRASTRUCTURE_VALIDATION =
 		"jvm-and-infrastructure-validation";
 
 	private static final String _CATEGORY_PORTAL_PROPERTIES_CONFIGURATION =
 		"portal-properties-configuration";
 
-	private static final String
-		_CATEGORY_SEARCH_ENGINE_CONNECTIVITY_VALIDATION =
-			"search-engine-connectivity-validation";
-
-	private static final int _DEFAULT_MAX_THREADS = 200;
-
-	private static final double _HUGE_PAGES_HEAP_SIZE_THRESHOLD_GB = 4.0;
-
 	private static final int _MAX_DL_IMAGE_PREVIEW_DPI = 75;
-
-	private static final double _MAX_HEAP_SIZE_GB = 32.0;
-
-	private static final int _MIN_COUNTER_INCREMENT = 2000;
-
-	private static final int _MIN_PBKDF2_ROUNDS = 1300000;
 
 	private static final String _PREFIX_HUGEPAGESIZE = "Hugepagesize:";
 

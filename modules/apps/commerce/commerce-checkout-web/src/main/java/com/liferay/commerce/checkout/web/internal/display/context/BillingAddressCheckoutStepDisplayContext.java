@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.service.ListTypeLocalService;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -57,6 +58,10 @@ public class BillingAddressCheckoutStepDisplayContext
 
 	@Override
 	public List<CommerceAddress> getCommerceAddresses() throws PortalException {
+		if (!hasViewCommerceAddressesPermission()) {
+			return Collections.emptyList();
+		}
+
 		CommerceContext commerceContext = getCommerceContext();
 		CommerceOrder commerceOrder = getCommerceOrder();
 

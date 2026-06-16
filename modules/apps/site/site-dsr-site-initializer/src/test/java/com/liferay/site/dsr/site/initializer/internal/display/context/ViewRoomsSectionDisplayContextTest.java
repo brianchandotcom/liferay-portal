@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.site.dsr.site.initializer.internal.constants.DSRConstants;
@@ -95,6 +96,13 @@ public class ViewRoomsSectionDisplayContextTest {
 
 		_languageUtilMockedStatic.when(
 			() -> LanguageUtil.get(
+				Mockito.any(HttpServletRequest.class), Mockito.eq("settings"))
+		).thenReturn(
+			"Settings"
+		);
+
+		_languageUtilMockedStatic.when(
+			() -> LanguageUtil.get(
 				Mockito.any(HttpServletRequest.class), Mockito.eq("share"))
 		).thenReturn(
 			"Share"
@@ -145,6 +153,12 @@ public class ViewRoomsSectionDisplayContextTest {
 		);
 
 		Mockito.when(
+			_objectDefinition.getClassName()
+		).thenReturn(
+			_CLASS_NAME
+		);
+
+		Mockito.when(
 			_objectDefinition.getLabel(Mockito.any(Locale.class))
 		).thenReturn(
 			RandomTestUtil.randomString()
@@ -156,10 +170,22 @@ public class ViewRoomsSectionDisplayContextTest {
 			RandomTestUtil.randomLong()
 		);
 
+		_portalUtilMockedStatic.when(
+			() -> PortalUtil.getClassNameId(_CLASS_NAME)
+		).thenReturn(
+			_CLASS_NAME_ID
+		);
+
 		Mockito.when(
 			_themeDisplay.getLocale()
 		).thenReturn(
 			LocaleUtil.ENGLISH
+		);
+
+		Mockito.when(
+			_themeDisplay.getPathFriendlyURLPublic()
+		).thenReturn(
+			StringPool.BLANK
 		);
 
 		Mockito.when(
@@ -173,12 +199,19 @@ public class ViewRoomsSectionDisplayContextTest {
 		).thenReturn(
 			StringPool.BLANK
 		);
+
+		Mockito.when(
+			_themeDisplay.getURLCurrent()
+		).thenReturn(
+			_URL_CURRENT
+		);
 	}
 
 	@After
 	public void tearDown() {
 		_languageUtilMockedStatic.close();
 		_layoutSetPrototypeLocalServiceUtilMockedStatic.close();
+		_portalUtilMockedStatic.close();
 	}
 
 	@Test
@@ -330,7 +363,7 @@ public class ViewRoomsSectionDisplayContextTest {
 			viewRoomsSectionDisplayContext.getFDSActionDropdownItems();
 
 		Assert.assertEquals(
-			fdsActionDropdownItems.toString(), 4,
+			fdsActionDropdownItems.toString(), 5,
 			fdsActionDropdownItems.size());
 
 		_assertFDSActionDropdownItem(
@@ -349,8 +382,14 @@ public class ViewRoomsSectionDisplayContextTest {
 			"#", "share", "share", "Share", null, "update", null,
 			fdsActionDropdownItems.get(2));
 		_assertFDSActionDropdownItem(
-			"#", "trash", "delete", "Delete", "delete", "delete", null,
+			StringBundler.concat(
+				DSRConstants.DSR_FRIENDLY_URL, "/e/room-settings/",
+				_CLASS_NAME_ID, "/{embedded.id}?redirect=", _URL_CURRENT),
+			"cog", "settings", "Settings", null, "update", null,
 			fdsActionDropdownItems.get(3));
+		_assertFDSActionDropdownItem(
+			"#", "trash", "delete", "Delete", "delete", "delete", null,
+			fdsActionDropdownItems.get(4));
 
 		ObjectEntryService objectEntryService = Mockito.mock(
 			ObjectEntryService.class);
@@ -370,7 +409,7 @@ public class ViewRoomsSectionDisplayContextTest {
 			viewRoomsSectionDisplayContext.getFDSActionDropdownItems();
 
 		Assert.assertEquals(
-			fdsActionDropdownItems.toString(), 5,
+			fdsActionDropdownItems.toString(), 6,
 			fdsActionDropdownItems.size());
 
 		_assertFDSActionDropdownItem(
@@ -448,7 +487,14 @@ public class ViewRoomsSectionDisplayContextTest {
 		return mockHttpServletRequest;
 	}
 
+	private static final String _CLASS_NAME =
+		"com.liferay.object.model.ObjectDefinition#D1S2";
+
+	private static final long _CLASS_NAME_ID = RandomTestUtil.randomLong();
+
 	private static final String _GROUP_DISPLAY_URL = "groupDisplayURL";
+
+	private static final String _URL_CURRENT = "currentURL";
 
 	private final Group _group = Mockito.mock(Group.class);
 	private final MockedStatic<LanguageUtil> _languageUtilMockedStatic =
@@ -460,6 +506,8 @@ public class ViewRoomsSectionDisplayContextTest {
 			LayoutSetPrototypeLocalServiceUtil.class);
 	private final ObjectDefinition _objectDefinition = Mockito.mock(
 		ObjectDefinition.class);
+	private final MockedStatic<PortalUtil> _portalUtilMockedStatic =
+		Mockito.mockStatic(PortalUtil.class);
 	private final ThemeDisplay _themeDisplay = Mockito.mock(ThemeDisplay.class);
 
 }

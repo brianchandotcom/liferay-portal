@@ -48,10 +48,16 @@
 
 	&-toolbar {
 		align-items: center;
-		display: flex;
-		gap: 0.5rem;
-		justify-content: center;
+		margin-left: 0;
+		margin-right: 0;
 		padding: 0.5rem;
+
+		&-center {
+			align-items: center;
+			display: flex;
+			gap: 0.5rem;
+			justify-content: center;
+		}
 
 		&-date-picker {
 			position: relative;
@@ -62,6 +68,19 @@
 				pointer-events: none;
 				position: absolute;
 			}
+		}
+
+		&-end {
+			align-items: center;
+			display: flex;
+			gap: 0.5rem;
+			justify-content: flex-end;
+		}
+
+		&-start {
+			align-items: center;
+			display: flex;
+			gap: 0.5rem;
 		}
 	}
 

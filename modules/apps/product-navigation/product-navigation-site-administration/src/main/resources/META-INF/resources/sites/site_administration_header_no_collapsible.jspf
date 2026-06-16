@@ -67,6 +67,21 @@
 		<clay:content-col
 			cssClass="autofit-col-end"
 		>
+			<react:component
+				module="{SideNavigationColorSchemeButton} from application-list-taglib"
+				props='<%=
+					HashMapBuilder.<String, Object>put(
+						"colorScheme", SessionClicks.get(request, "com_liferay_application_list_taglib_SideNavigationColorScheme", "light")
+					).put(
+						"colorSchemeSessionKey", "com_liferay_application_list_taglib_SideNavigationColorScheme"
+					).build()
+				%>'
+			/>
+		</clay:content-col>
+
+		<clay:content-col
+			cssClass="autofit-col-end"
+		>
 			<clay:button
 				aria-label='<%= LanguageUtil.get(request, "close") %>'
 				borderless="<%= true %>"

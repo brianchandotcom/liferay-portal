@@ -99,7 +99,7 @@ run "should_harden_the_kms_key" {
 
 	assert {
 		condition=aws_kms_key.eks_secrets.deletion_window_in_days == 7
-		error_message="The EKS secrets KMS key must use a 7-day deletion window"
+		error_message="The EKS secrets KMS key must use a 7 day deletion window"
 	}
 
 	assert {

@@ -355,13 +355,20 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			InputStream inputStream, String mimeType)
 		throws PortalException {
 
-		GroupPermissionUtil.check(
-			getPermissionChecker(), groupId, ActionKeys.EXPORT_IMPORT_LAYOUTS);
+		Group group = _groupLocalService.getGroup(groupId);
 
-		return TempFileEntryUtil.addTempFileEntry(
-			groupId, getUserId(),
-			DigesterUtil.digestHex(DigesterUtil.SHA_256, folderName), fileName,
-			inputStream, mimeType);
+		GroupPermissionUtil.check(
+			getPermissionChecker(), group, ActionKeys.EXPORT_IMPORT_LAYOUTS);
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					group.getCtCollectionId())) {
+
+			return TempFileEntryUtil.addTempFileEntry(
+				groupId, getUserId(),
+				DigesterUtil.digestHex(DigesterUtil.SHA_256, folderName),
+				fileName, inputStream, mimeType);
+		}
 	}
 
 	@Override
@@ -499,12 +506,20 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			long groupId, String folderName, String fileName)
 		throws PortalException {
 
-		GroupPermissionUtil.check(
-			getPermissionChecker(), groupId, ActionKeys.EXPORT_IMPORT_LAYOUTS);
+		Group group = _groupLocalService.getGroup(groupId);
 
-		TempFileEntryUtil.deleteTempFileEntry(
-			groupId, getUserId(),
-			DigesterUtil.digestHex(DigesterUtil.SHA_256, folderName), fileName);
+		GroupPermissionUtil.check(
+			getPermissionChecker(), group, ActionKeys.EXPORT_IMPORT_LAYOUTS);
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					group.getCtCollectionId())) {
+
+			TempFileEntryUtil.deleteTempFileEntry(
+				groupId, getUserId(),
+				DigesterUtil.digestHex(DigesterUtil.SHA_256, folderName),
+				fileName);
+		}
 	}
 
 	@Override

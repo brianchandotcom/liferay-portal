@@ -7,6 +7,7 @@ package com.liferay.server.admin.web.internal.production.readiness;
 
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -75,6 +76,8 @@ public class ProductionReadinessRuleUtil {
 				_CATEGORY_PORTAL_PROPERTIES_CONFIGURATION, "counter-increment"
 			).currentValue(
 				String.valueOf(counterIncrement)
+			).recommendedValue(
+				"counter.increment >= 2000"
 			);
 
 		if (counterIncrement < 2000) {
@@ -88,7 +91,7 @@ public class ProductionReadinessRuleUtil {
 		int jdbcMaxPoolSize = GetterUtil.getInteger(
 			PropsUtil.get("jdbc.default.maximumPoolSize"));
 
-		int tomcatMaxThreads = _getMaxThreads();
+		int tomcatMaxThreads = _getTomcatMaxThreads();
 
 		if ((jdbcMaxPoolSize <= 0) || (tomcatMaxThreads <= 0)) {
 			return null;
@@ -99,10 +102,10 @@ public class ProductionReadinessRuleUtil {
 				"database-configuration", "pool-vs-thread-size"
 			).currentValue(
 				StringBundler.concat(
-					"DB Pool Size=", jdbcMaxPoolSize, ", Tomcat Threads=",
-					tomcatMaxThreads)
+					"jdbc.default.maximumPoolSize = ", jdbcMaxPoolSize,
+					", Tomcat maxThreads = ", tomcatMaxThreads)
 			).recommendedValue(
-				"DB Pool Size >= Tomcat Threads"
+				"jdbc.default.maximumPoolSize >= " + tomcatMaxThreads
 			);
 
 		if (jdbcMaxPoolSize >= tomcatMaxThreads) {
@@ -142,7 +145,7 @@ public class ProductionReadinessRuleUtil {
 			).messageParameters(
 				PropsKeys.DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_ENABLED
 			).recommendedValue(
-				PropsKeys.DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_ENABLED + "=true"
+				PropsKeys.DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_ENABLED + " = true"
 			);
 
 		if (PropsValues.DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_ENABLED) {
@@ -224,7 +227,7 @@ public class ProductionReadinessRuleUtil {
 			).currentValue(
 				StringUtil.merge(gcNames, ", ")
 			).recommendedValue(
-				"G1, Shenandoah, or ZGC"
+				"G1, Shenandoah, ZGC"
 			);
 
 		if (pass) {
@@ -357,12 +360,12 @@ public class ProductionReadinessRuleUtil {
 		List<String> inputArguments = runtimeMXBean.getInputArguments();
 
 		boolean jmxEnabled = false;
-		String enabledArg = null;
+		String enabledArgument = null;
 
 		for (String inputArgument : inputArguments) {
 			if (inputArgument.startsWith("-Dcom.sun.management.jmxremote")) {
 				jmxEnabled = true;
-				enabledArg = inputArgument;
+				enabledArgument = inputArgument;
 
 				break;
 			}
@@ -375,7 +378,7 @@ public class ProductionReadinessRuleUtil {
 
 		if (jmxEnabled) {
 			return builder.currentValue(
-				"JMX Configuration has been enabled (" + enabledArg + ")"
+				"JMX Configuration has been enabled (" + enabledArgument + ")"
 			).fail();
 		}
 
@@ -442,8 +445,9 @@ public class ProductionReadinessRuleUtil {
 					_CATEGORY_JVM_AND_INFRASTRUCTURE_VALIDATION,
 					"jsp-engine-settings"
 				).currentValue(
-					"development or mappedfile is not set, Tomcat will use " +
-						"the default value development=true or mappedfile=true"
+					StringBundler.concat(
+						"development = ", (development == null) || development,
+						"mappedfile = ", (mappedFile == null) || mappedFile)
 				).recommendedValue(
 					"development=false, mappedfile=false"
 				).fail();
@@ -455,7 +459,7 @@ public class ProductionReadinessRuleUtil {
 					"jsp-engine-settings"
 				).currentValue(
 					StringBundler.concat(
-						"development=", development, ", mappedfile=",
+						"development = ", development, ", mappedfile = ",
 						mappedFile)
 				).recommendedValue(
 					"development=false, mappedfile=false"
@@ -508,7 +512,7 @@ public class ProductionReadinessRuleUtil {
 				"PBKDF2WithHmacSHA1/160/1300000 (or stronger)"
 			);
 
-		if (_isStrongerThanPBKDF2(algorithm)) {
+		if (_isStrongerAlgorithm(algorithm)) {
 			return builder.pass();
 		}
 
@@ -527,12 +531,12 @@ public class ProductionReadinessRuleUtil {
 
 		if (hasDeveloperProperties) {
 			return builder.currentValue(
-				"portal-developer.properties included"
+				"portal-developer.properties"
 			).fail();
 		}
 
 		return builder.currentValue(
-			"portal-developer.properties is not included"
+			StringPool.BLANK
 		).pass();
 	}
 
@@ -618,7 +622,36 @@ public class ProductionReadinessRuleUtil {
 		).fail();
 	}
 
-	private static int _getMaxThreads() {
+	private static long _getOSHugePageSize() {
+		File file = new File("/proc/meminfo");
+
+		if (!file.exists()) {
+			return -1;
+		}
+
+		try {
+			String content = FileUtil.read(file);
+
+			for (String line : StringUtil.splitLines(content)) {
+				if (line.startsWith(_PREFIX_HUGEPAGESIZE)) {
+					String sizeStr = line.substring(
+						_PREFIX_HUGEPAGESIZE.length()
+					).trim();
+
+					return _parseSize(StringUtil.removeSubstring(sizeStr, " "));
+				}
+			}
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(exception);
+			}
+		}
+
+		return -1;
+	}
+
+	private static int _getTomcatMaxThreads() {
 		try {
 			MBeanServer mBeanServer =
 				ManagementFactory.getPlatformMBeanServer();
@@ -654,36 +687,7 @@ public class ProductionReadinessRuleUtil {
 		}
 	}
 
-	private static long _getOSHugePageSize() {
-		File file = new File("/proc/meminfo");
-
-		if (!file.exists()) {
-			return -1;
-		}
-
-		try {
-			String content = FileUtil.read(file);
-
-			for (String line : StringUtil.splitLines(content)) {
-				if (line.startsWith(_PREFIX_HUGEPAGESIZE)) {
-					String sizeStr = line.substring(
-						_PREFIX_HUGEPAGESIZE.length()
-					).trim();
-
-					return _parseSize(StringUtil.removeSubstring(sizeStr, " "));
-				}
-			}
-		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(exception);
-			}
-		}
-
-		return -1;
-	}
-
-	private static boolean _isStrongerThanPBKDF2(String algorithm) {
+	private static boolean _isStrongerAlgorithm(String algorithm) {
 		if (algorithm == null) {
 			return false;
 		}

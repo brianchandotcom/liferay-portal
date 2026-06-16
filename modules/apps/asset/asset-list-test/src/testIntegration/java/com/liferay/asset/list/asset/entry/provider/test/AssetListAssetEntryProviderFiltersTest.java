@@ -157,24 +157,24 @@ public class AssetListAssetEntryProviderFiltersTest {
 			).build());
 
 		_assertFilteredClassPKs(
-			_buildFiltersJSONArray(_commonFieldFilter("title", "eq", "alpha")),
+			_buildFiltersJSONArray(_commonFieldFilter("eq", "title", "alpha")),
 			objectEntry1);
 		_assertFilteredClassPKs(
 			_buildFiltersJSONArray(
-				_commonFieldFilter("title", "contains", "alpha")),
+				_commonFieldFilter("contains", "title", "alpha")),
 			objectEntry1);
 		_assertFilteredClassPKs(
 			_buildFiltersJSONArray(
-				_commonFieldFilter("title", "not-contains", "alpha")),
+				_commonFieldFilter("not-contains", "title", "alpha")),
 			objectEntry2);
 
 		_assertFilteredClassPKs(
 			_buildFiltersJSONArray(
-				_commonFieldFilter("createDate", "gt", "2000-01-01")),
+				_commonFieldFilter("gt", "createDate", "2000-01-01")),
 			objectEntry1, objectEntry2);
 		_assertFilteredClassPKs(
 			_buildFiltersJSONArray(
-				_commonFieldFilter("createDate", "lt", "2000-01-01")));
+				_commonFieldFilter("lt", "createDate", "2000-01-01")));
 	}
 
 	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-74731"))
@@ -194,7 +194,7 @@ public class AssetListAssetEntryProviderFiltersTest {
 
 		List<Long> actualClassPKs = _getFilteredClassPKs(
 			_buildFiltersJSONArray(
-				_commonFieldFilter("title", "contains", "crossfilter")));
+				_commonFieldFilter("contains", "title", "crossfilter")));
 
 		Assert.assertEquals(
 			actualClassPKs.toString(), 2, actualClassPKs.size());
@@ -651,7 +651,7 @@ public class AssetListAssetEntryProviderFiltersTest {
 	}
 
 	private JSONObject _commonFieldFilter(
-		String propertyName, String operatorName, Object value) {
+		String operatorName, String propertyName, Object value) {
 
 		return JSONUtil.put(
 			"operatorName", operatorName

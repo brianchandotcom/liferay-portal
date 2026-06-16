@@ -6,6 +6,7 @@
 package com.liferay.portal.workflow.kaleo.internal.runtime.integration.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.AssertUtils;
@@ -14,6 +15,7 @@ import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.DefaultWorkflowNodeSetting;
 import com.liferay.portal.kernel.workflow.NoSuchWorkflowDefinitionException;
@@ -289,6 +291,79 @@ public class WorkflowDefinitionManagerTest extends BaseWorkflowManagerTestCase {
 		Assert.assertEquals(
 			workflowDefinition.getName(), workflowDefinition.getName());
 		Assert.assertTrue(workflowDefinition.isActive());
+	}
+
+	@Test
+	public void testDeployWorkflowDefinitionWithHTTPRequestNode()
+		throws Exception {
+
+		AssertUtils.assertFailure(
+			KaleoDefinitionValidationException.
+				MustNotSetMultipleOutgoingTransitions.class,
+			"The HTTP Request node cannot have multiple outgoing transitions",
+			() -> {
+				InputStream inputStream = getResourceInputStream(
+					"http-request-node-with-multiple-outgoing-transitions-" +
+						"workflow-definition.json");
+
+				_workflowDefinitionManager.deployWorkflowDefinition(
+					FileUtil.getBytes(inputStream),
+					TestPropsValues.getCompanyId(),
+					RandomTestUtil.randomString(),
+					"HTTP Request Node With Multiple Outgoing Transitions " +
+						"Workflow Definition",
+					RandomTestUtil.randomString(), TestPropsValues.getUserId());
+			});
+
+		InputStream inputStream = getResourceInputStream(
+			"http-request-node-workflow-definition.json");
+
+		WorkflowDefinition workflowDefinition =
+			_workflowDefinitionManager.deployWorkflowDefinition(
+				FileUtil.getBytes(inputStream), TestPropsValues.getCompanyId(),
+				RandomTestUtil.randomString(),
+				"HTTP Request Node Workflow Definition",
+				RandomTestUtil.randomString(), TestPropsValues.getUserId());
+
+		List<WorkflowNode> workflowNodes =
+			workflowDefinition.getWorkflowNodes();
+
+		WorkflowNode workflowNode = workflowNodes.get(2);
+
+		Assert.assertEquals(
+			WorkflowNode.Type.HTTP_REQUEST, workflowNode.getType());
+
+		_assertEquals(
+			List.of(
+				_createWorkflowNodeSetting("httpMethod", "POST"),
+				_createWorkflowNodeSetting(
+					"inputVariables",
+					JSONUtil.put(
+						JSONUtil.put(
+							"name", "siteRequestBody"
+						).put(
+							"type", "string"
+						)
+					).toString()),
+				_createWorkflowNodeSetting(
+					"outputVariables",
+					JSONUtil.put(
+						JSONUtil.put(
+							"name", "siteResponseBody"
+						).put(
+							"type", "string"
+						)
+					).toString()),
+				_createWorkflowNodeSetting(
+					"requestBody", "{{siteRequestBody}}"),
+				_createWorkflowNodeSetting("timeout", "10000"),
+				_createWorkflowNodeSetting(
+					"url",
+					StringBundler.concat(
+						"http://localhost:",
+						PortalUtil.getPortalServerPort(false),
+						"/o/headless-admin-site/v1.0/sites"))),
+			workflowNode.getWorkflowNodeSettings());
 	}
 
 	@Test

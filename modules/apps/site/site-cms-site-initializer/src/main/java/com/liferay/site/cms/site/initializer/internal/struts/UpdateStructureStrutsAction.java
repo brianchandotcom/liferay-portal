@@ -156,11 +156,12 @@ public class UpdateStructureStrutsAction implements StrutsAction {
 				existingObjectRelationship);
 		}
 
-		Collection<ObjectRelationship> mergedObjectRelationships =
+		Collection<ObjectRelationship> mergedObjectRelationshipsCollection =
 			objectRelationshipsMap.values();
 
 		objectDefinition.setObjectRelationships(
-			() -> mergedObjectRelationships.toArray(new ObjectRelationship[0]));
+			() -> mergedObjectRelationshipsCollection.toArray(
+				new ObjectRelationship[0]));
 	}
 
 	private void _deleteRelationships(long objectDefinitionId)

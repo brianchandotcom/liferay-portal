@@ -500,46 +500,6 @@ public class JobFactory {
 				}
 			}
 
-			if (jobName.startsWith("test-portal-aws(")) {
-				if (jsonObject != null) {
-					job = new PortalAWSJob(jsonObject);
-				}
-				else {
-					job = new PortalAWSJob(
-						buildProfile, jobName, upstreamBranchName);
-				}
-			}
-
-			if (jobName.startsWith("test-portal-environment(")) {
-				if (jsonObject != null) {
-					job = new PortalEnvironmentJob(jsonObject);
-				}
-				else {
-					job = new PortalEnvironmentJob(
-						buildProfile, jobName, upstreamBranchName);
-				}
-			}
-
-			if (jobName.startsWith("test-portal-environment-release(")) {
-				if (jsonObject != null) {
-					job = new PortalReleaseEnvironmentJob(jsonObject);
-				}
-				else {
-					job = new PortalReleaseEnvironmentJob(
-						buildProfile, jobName, upstreamBranchName);
-				}
-			}
-
-			if (jobName.startsWith("test-portal-fixpack-environment(")) {
-				if (jsonObject != null) {
-					job = new PortalFixpackEnvironmentJob(jsonObject);
-				}
-				else {
-					job = new PortalFixpackEnvironmentJob(
-						buildProfile, jobName, upstreamBranchName);
-				}
-			}
-
 			if (jobName.equals("test-portal-fixpack-release")) {
 				if (jsonObject != null) {
 					job = new PortalFixpackReleaseJob(jsonObject);
@@ -611,7 +571,6 @@ public class JobFactory {
 					"test-portal-testsuite-upstream-controller(") ||
 				jobName.startsWith("test-portal-upstream-controller(") ||
 				jobName.equals("test-poshi-release") ||
-				jobName.equals("test-results-consistency-report-controller") ||
 				jobName.startsWith(
 					"test-qa-websites-functional-daily-controller(") ||
 				jobName.startsWith(

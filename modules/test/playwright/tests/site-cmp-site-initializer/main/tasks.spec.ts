@@ -666,9 +666,15 @@ test(
 
 			await expect(calendarView.moreLinkButton).toBeVisible();
 
-			await clickAndExpectToBeVisible({
-				target: calendarView.moreLinkPopover,
-				trigger: calendarView.moreLinkButton,
+			await test.step('Check that the custom popover opens', async () => {
+				await clickAndExpectToBeVisible({
+					target: calendarView.moreLinkPopover,
+					trigger: calendarView.moreLinkButton,
+				});
+			});
+
+			await test.step('Check that the default FullCalendar popover does not open', async () => {
+				await expect(page.locator('.fc-popover')).toBeHidden();
 			});
 
 			await expect(

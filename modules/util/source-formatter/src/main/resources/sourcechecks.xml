@@ -1190,6 +1190,10 @@
 			<description name="Finds incorrect use of deprecated packages in `package.json` files." />
 			<property name="deprecatedPackageNames" value="@clayui/checkbox,liferay-module-config-generator,metal-cli" />
 		</check>
+		<check name="JSONObjectDefinitionFileCheck">
+			<category name="Styling" />
+			<description name="Sorts `objectFields`, listing nonrelationship fields before relationship fields, in `*-object-definition.json` and `*object-definition.batch-engine-data.json` files." />
+		</check>
 		<check name="JSONPackageJSONBNDVersionCheck">
 			<category name="Bug Prevention" />
 			<description name="Checks the version for dependencies in `package.json` files." />

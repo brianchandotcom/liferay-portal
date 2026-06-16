@@ -379,23 +379,6 @@
 			"objectFields": [
 				{
 					"DBType": "String",
-					"businessType": "Picklist",
-					"defaultValue": "field",
-					"externalReferenceCode": "TYPE",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Type"
-					},
-					"listTypeDefinitionExternalReferenceCode": "L_API_PROPERTY_TYPES",
-					"name": "type",
-					"required": false,
-					"state": false,
-					"system": true,
-					"type": "String"
-				},
-				{
-					"DBType": "String",
 					"businessType": "Text",
 					"externalReferenceCode": "DESCRIPTION",
 					"indexed": true,
@@ -449,6 +432,23 @@
 						"en_US": "Object Relationship Names"
 					},
 					"name": "objectRelationshipNames",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Picklist",
+					"defaultValue": "field",
+					"externalReferenceCode": "TYPE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Type"
+					},
+					"listTypeDefinitionExternalReferenceCode": "L_API_PROPERTY_TYPES",
+					"name": "type",
 					"required": false,
 					"state": false,
 					"system": true,

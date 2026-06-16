@@ -7,22 +7,30 @@ mock_provider "time" {}
 
 override_data {
 	target=data.google_compute_zones.available
-	values={ names=["us-central1-a", "us-central1-b", "us-central1-c"] }
+	values={
+		names=["us-central1-a", "us-central1-b", "us-central1-c"]
+	}
 }
 
 override_data {
 	target=data.google_netblock_ip_ranges.health_checkers
-	values={ cidr_blocks_ipv4=["35.191.0.0/16"] }
+	values={
+		cidr_blocks_ipv4=["35.191.0.0/16"]
+	}
 }
 
 override_data {
 	target=data.google_netblock_ip_ranges.legacy_health_checkers
-	values={ cidr_blocks_ipv4=["130.211.0.0/22"] }
+	values={
+		cidr_blocks_ipv4=["130.211.0.0/22"]
+	}
 }
 
 override_data {
 	target=data.google_project.project
-	values={ number="1234567890" }
+	values={
+		number="1234567890"
+	}
 }
 
 run "should_derive_cluster_name_from_deployment_name" {
@@ -38,7 +46,7 @@ run "should_derive_cluster_name_from_deployment_name" {
 
 	assert {
 		condition=google_service_account.node_sa.account_id == "liferay-test-node-sa"
-		error_message="The node service account id must be derived from deployment_name"
+		error_message="The node service account ID must be derived from deployment_name"
 	}
 
 	command=plan
@@ -114,7 +122,7 @@ run "should_not_accept_uppercase_deployment_name" {
 run "should_pin_a_non_regional_cluster_to_the_first_zone" {
 	assert {
 		condition=google_container_cluster.primary.location == "us-central1-a"
-		error_message="A non-regional cluster must be pinned to the first available zone"
+		error_message="A nonregional cluster must be pinned to the first available zone"
 	}
 
 	assert {

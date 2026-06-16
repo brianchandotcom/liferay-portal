@@ -25,21 +25,42 @@ public class AccountEntryUtil {
 			AccountEntryUserRelLocalServiceUtil.
 				getAccountEntryUserRelsByAccountUserId(userId);
 
-		if (accountEntryUserRels.size() != 2) {
+		if ((accountEntryUserRels.size() != 2) &&
+			(accountEntryUserRels.size() != 3)) {
+
 			return null;
 		}
+
+		AccountEntry customerAccountEntry = null;
+		boolean hasAIHubAccountEntry = false;
+		boolean hasSEOStudioAccountEntry = false;
 
 		for (AccountEntryUserRel accountEntryUserRel : accountEntryUserRels) {
 			AccountEntry accountEntry = accountEntryUserRel.getAccountEntry();
 
-			if (!Objects.equals(
-					accountEntry.getExternalReferenceCode(), "L_AI_HUB")) {
+			String externalReferenceCode =
+				accountEntry.getExternalReferenceCode();
 
-				return accountEntry;
+			if (Objects.equals(externalReferenceCode, "L_AI_HUB")) {
+				hasAIHubAccountEntry = true;
+			}
+			else if (Objects.equals(externalReferenceCode, "L_SEO_STUDIO")) {
+				hasSEOStudioAccountEntry = true;
+			}
+			else {
+				customerAccountEntry = accountEntry;
 			}
 		}
 
-		return null;
+		if (((accountEntryUserRels.size() == 2) &&
+			 (!hasAIHubAccountEntry || hasSEOStudioAccountEntry)) ||
+			((accountEntryUserRels.size() == 3) &&
+			 (!hasAIHubAccountEntry || !hasSEOStudioAccountEntry))) {
+
+			return null;
+		}
+
+		return customerAccountEntry;
 	}
 
 	public static long getUserAccountEntryGroupId(long userId)

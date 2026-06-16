@@ -163,6 +163,10 @@ function getRootBreadcrumbFolders(): FolderCrumb[] {
 }
 
 async function isFolderAvailable(folder: FolderCrumb): Promise<boolean> {
+
+	// The root ("Files") has no backing object entry folder to validate, so it
+	// is always available.
+
 	if (folder.id === null) {
 		return true;
 	}
@@ -172,8 +176,17 @@ async function isFolderAvailable(folder: FolderCrumb): Promise<boolean> {
 			`${OBJECT_ENTRY_FOLDERS_API_URL}/${folder.id}`
 		);
 
-		if (!response.ok) {
+		// Only a confirmed deletion (the folder is gone or in the recycle bin)
+		// should drop the selector back to the root. A transient failure
+		// (network error, server error, missing permission) is inconclusive,
+		// so the remembered folder is kept rather than wiped.
+
+		if (response.status === 404) {
 			return false;
+		}
+
+		if (!response.ok) {
+			return true;
 		}
 
 		const objectEntryFolder = await response.json();
@@ -181,7 +194,7 @@ async function isFolderAvailable(folder: FolderCrumb): Promise<boolean> {
 		return objectEntryFolder?.status?.code !== STATUS_IN_TRASH;
 	}
 	catch (error) {
-		return false;
+		return true;
 	}
 }
 

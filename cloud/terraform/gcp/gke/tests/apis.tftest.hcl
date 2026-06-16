@@ -32,7 +32,7 @@ run "should_enable_required_project_apis" {
 	}
 
 	assert {
-		condition=google_project_service.apis["container.googleapis.com"].service == "container.googleapis.com" && google_project_service.apis["connectgateway.googleapis.com"].service == "connectgateway.googleapis.com"
+		condition=google_project_service.apis["connectgateway.googleapis.com"].service == "connectgateway.googleapis.com" && google_project_service.apis["container.googleapis.com"].service == "container.googleapis.com"
 		error_message="The GKE and Connect Gateway APIs must be enabled"
 	}
 

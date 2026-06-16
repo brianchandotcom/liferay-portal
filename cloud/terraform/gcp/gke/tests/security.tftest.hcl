@@ -28,12 +28,12 @@ override_data {
 run "should_allow_health_check_traffic_from_deduplicated_cidrs" {
 	assert {
 		condition=google_compute_firewall.allow_health_checks.name == "liferay-test-allow-health-checks"
-		error_message="The health-check firewall name must be derived from deployment_name"
+		error_message="The health check firewall name must be derived from deployment_name"
 	}
 
 	assert {
-		condition=length(local.health_check_cidrs) == 2 && contains(local.health_check_cidrs, "35.191.0.0/16") && contains(local.health_check_cidrs, "130.211.0.0/22")
-		error_message="health_check_cidrs must be the de-duplicated union of both health-checker netblocks"
+		condition=length(local.health_check_cidrs) == 2 && contains(local.health_check_cidrs, "130.211.0.0/22") && contains(local.health_check_cidrs, "35.191.0.0/16")
+		error_message="health_check_cidrs must be the deduplicated union of both health checker netblocks"
 	}
 
 	command=plan

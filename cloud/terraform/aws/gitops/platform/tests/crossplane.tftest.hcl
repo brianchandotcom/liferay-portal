@@ -5,12 +5,12 @@ mock_provider "random" {}
 run "should_apply_crossplane_security_contexts" {
 	assert {
 		condition=yamldecode(helm_release.crossplane.values[0]).podSecurityContextCrossplane.runAsNonRoot == true
-		error_message="The Crossplane pod security context must run as non-root"
+		error_message="The Crossplane pod security context must run as nonroot"
 	}
 
 	assert {
 		condition=yamldecode(helm_release.crossplane.values[0]).securityContextCrossplane.readOnlyRootFilesystem == true
-		error_message="The Crossplane container security context must use a read-only root filesystem"
+		error_message="The Crossplane container security context must use a readonly root filesystem"
 	}
 
 	assert {

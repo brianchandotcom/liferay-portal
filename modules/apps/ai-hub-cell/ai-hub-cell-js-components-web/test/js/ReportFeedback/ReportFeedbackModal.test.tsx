@@ -84,7 +84,7 @@ describe('ReportFeedbackModal', () => {
 		renderModal();
 
 		fireEvent.change(await screen.findByRole('combobox'), {
-			target: {value: 'incorrect'},
+			target: {value: 'inaccurateResponse'},
 		});
 		fireEvent.click(screen.getByRole('button', {name: 'send'}));
 

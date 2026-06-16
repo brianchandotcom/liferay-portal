@@ -65,7 +65,7 @@ describe('useReportFeedback', () => {
 		);
 
 		act(() => {
-			result.current.setReason('piiExposure');
+			result.current.setReason('personalDataExposure');
 			result.current.setUserMessage('  leaked data  ');
 		});
 
@@ -79,7 +79,7 @@ describe('useReportFeedback', () => {
 		expect(mockPostAIIssueReport).toHaveBeenCalledWith({
 			agentDefinitionExternalReferenceCodes: ['agent-1', 'agent-2'],
 			feedback: 'negative',
-			reason: 'piiExposure',
+			reason: 'personalDataExposure',
 			surface: 'aiAssistant',
 			userMessage: 'leaked data',
 		});

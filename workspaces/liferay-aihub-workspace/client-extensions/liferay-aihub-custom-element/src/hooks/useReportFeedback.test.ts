@@ -62,7 +62,7 @@ describe('useReportFeedback', () => {
 		);
 
 		act(() => {
-			result.current.setReason('piiExposure');
+			result.current.setReason('personalDataExposure');
 			result.current.setUserMessage('  sensitive  ');
 		});
 
@@ -77,7 +77,7 @@ describe('useReportFeedback', () => {
 			agentDefinitionExternalReferenceCodes: ['agent-1'],
 			chatbotExternalReferenceCode: 'chatbot-1',
 			feedback: 'negative',
-			reason: 'piiExposure',
+			reason: 'personalDataExposure',
 			surface: 'clickToChat',
 			userMessage: 'sensitive',
 		});

@@ -93,7 +93,7 @@ describe('SendFeedbackModal', () => {
 		const {onSubmitted} = renderModal();
 
 		fireEvent.change(screen.getByLabelText(/Reason/), {
-			target: {value: 'incorrect'},
+			target: {value: 'inaccurateResponse'},
 		});
 		fireEvent.click(screen.getByRole('button', {name: 'Send'}));
 
@@ -101,7 +101,7 @@ describe('SendFeedbackModal', () => {
 
 		expect(mockedPost).toHaveBeenCalledWith(
 			expect.objectContaining({
-				reason: 'incorrect',
+				reason: 'inaccurateResponse',
 				surface: 'clickToChat',
 			})
 		);

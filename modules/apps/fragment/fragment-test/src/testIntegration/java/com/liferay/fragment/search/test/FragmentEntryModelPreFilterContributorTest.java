@@ -6,7 +6,6 @@
 package com.liferay.fragment.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.fragment.constants.FragmentEntryField;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
@@ -54,14 +53,11 @@ public class FragmentEntryModelPreFilterContributorTest {
 		String booleanFilterString = booleanFilter.toString();
 
 		Assert.assertFalse(
-			booleanFilterString,
-			booleanFilterString.contains(FragmentEntryField.HEAD_LISTABLE));
+			booleanFilterString, booleanFilterString.contains("headListable"));
 		Assert.assertTrue(
-			booleanFilterString,
-			booleanFilterString.contains(FragmentEntryField.HEAD));
+			booleanFilterString, booleanFilterString.contains("head"));
 
-		searchContext.setAttribute(
-			FragmentEntryField.HEAD_LISTABLE, Boolean.TRUE);
+		searchContext.setAttribute("headListable", Boolean.TRUE);
 
 		booleanFilter = new BooleanFilter();
 
@@ -71,12 +67,10 @@ public class FragmentEntryModelPreFilterContributorTest {
 		booleanFilterString = booleanFilter.toString();
 
 		Assert.assertTrue(
-			booleanFilterString,
-			booleanFilterString.contains(FragmentEntryField.HEAD_LISTABLE));
+			booleanFilterString, booleanFilterString.contains("headListable"));
 
-		searchContext.setAttribute(FragmentEntryField.HEAD, Boolean.FALSE);
-		searchContext.setAttribute(
-			FragmentEntryField.HEAD_LISTABLE, Boolean.FALSE);
+		searchContext.setAttribute("head", Boolean.FALSE);
+		searchContext.setAttribute("headListable", Boolean.FALSE);
 
 		booleanFilter = new BooleanFilter();
 
@@ -86,12 +80,10 @@ public class FragmentEntryModelPreFilterContributorTest {
 		booleanFilterString = booleanFilter.toString();
 
 		Assert.assertFalse(
-			booleanFilterString,
-			booleanFilterString.contains(FragmentEntryField.HEAD));
+			booleanFilterString, booleanFilterString.contains("head"));
 
 		searchContext.setAttribute(
-			FragmentEntryField.FRAGMENT_COLLECTION_ID,
-			RandomTestUtil.randomLong());
+			"fragmentCollectionId", RandomTestUtil.randomLong());
 
 		booleanFilter = new BooleanFilter();
 
@@ -102,8 +94,7 @@ public class FragmentEntryModelPreFilterContributorTest {
 
 		Assert.assertTrue(
 			booleanFilterString,
-			booleanFilterString.contains(
-				FragmentEntryField.FRAGMENT_COLLECTION_ID));
+			booleanFilterString.contains("fragmentCollectionId"));
 	}
 
 	@Inject(

@@ -765,6 +765,8 @@ For any claim about where a line sits in the diff (between X and Y, after X, bef
 
 Flag every rule violation you find. When confidence in a flag is partial, still include it and append `verify against <source>` so the human can confirm — do not drop the catch.
 
+When a violation is a mechanical formatting or layout suggestion that SourceFormatter also governs (collapsing or expanding a boolean return or a ternary, method chaining, line wrapping, whitespace, blank lines, import order, or the ordering of members, parameters, or declarations), append the sentence "SourceFormatter is authoritative: if applying this suggestion fails SourceFormatter, ignore it." to that violation description. Do not add this sentence to correctness, naming, test, or prose violations.
+
 Output ONLY valid JSON, with no Markdown code fence and no surrounding prose: {"chance": <0-100>, "violations": ["one description per violation"]} where chance is your confidence that Brian Chan would close this PR for these violations.'
 	local input_tokens=0
 	local output_tokens=0

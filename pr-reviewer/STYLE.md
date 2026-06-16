@@ -59,7 +59,7 @@ This is the most taste driven area and the hardest to reduce to a rule, so it de
 
 - Prefer the form a careful reader grasps fastest: fewer lines, fewer variables, fewer levels of nesting, fewer moving parts.
 - If removing something would not be noticed — a variable, a comment, a guard, an assertion, a wrapper, a `finally` — remove it.
-- Collapse a redundant boolean (`if (x) { return true; } return false;` becomes `return x;`), unwrap a needless ternary, and combine nested conditions when the result reads more directly.
+- Collapse a redundant boolean (`if (x) { return true; } return false;` becomes `return x;`) only when `x` is a single term: a boolean variable, field, or method call. When the method returns `boolean` and `x` contains a logical or relational operator (`&&`, `||`, `&`, `|`, `^`, `==`, `!=`, `<`, `>`, `<=`, `>=`), leave the expanded `if (x) { return true; } return false;` form: SourceFormatter's `JavaReturnStatementCheck` rewrites such a `return` back into that form, so collapsing it is a guaranteed format failure. Unwrap a needless ternary, and combine nested conditions when the result reads more directly.
 - Replace a hand written loop with the library call that does the same thing.
 - When two forms are equivalent, choose the one that matches the surrounding code.
 - Do not abstract, generalize, or add flexibility beyond what the change in front of you needs.

@@ -20,6 +20,8 @@ import com.google.pubsub.v1.TopicName;
 
 import com.liferay.one.pubsub.BasePubsubClient;
 import com.liferay.one.pubsub.Message;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -37,7 +39,7 @@ public abstract class BasePubsubSubscriber extends BasePubsubClient {
 	public void initialize() throws Exception {
 		String subscriptionName = getSubscriptionName();
 
-		if ((subscriptionName == null) || subscriptionName.isEmpty()) {
+		if (Validator.isNull(subscriptionName)) {
 			Class<?> clazz = getClass();
 
 			subscriptionName = clazz.getName();
@@ -125,15 +127,15 @@ public abstract class BasePubsubSubscriber extends BasePubsubClient {
 	}
 
 	protected String getMessageFilter() {
-		return "";
+		return StringPool.BLANK;
 	}
 
 	protected String getSubscriptionName() {
-		return "";
+		return StringPool.BLANK;
 	}
 
 	protected String getTopic() {
-		return "";
+		return StringPool.BLANK;
 	}
 
 	protected abstract void receive(Message message) throws Exception;

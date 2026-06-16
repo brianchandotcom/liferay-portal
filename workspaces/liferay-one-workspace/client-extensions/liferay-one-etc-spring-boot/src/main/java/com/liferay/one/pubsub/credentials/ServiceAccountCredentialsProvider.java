@@ -11,6 +11,8 @@ import com.google.auth.Credentials;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.auth.oauth2.ServiceAccountCredentials;
 
+import com.liferay.portal.kernel.util.Validator;
+
 import java.io.IOException;
 
 import java.util.Arrays;
@@ -32,8 +34,10 @@ public class ServiceAccountCredentialsProvider {
 		"https://www.googleapis.com/auth/cloud-platform";
 
 	public CredentialsProvider getCredentialsProvider() throws IOException {
-		if (!_clientEmailAddress.isEmpty() && !_clientId.isEmpty() &&
-			!_privateKeyId.isEmpty() && !_privateKeyPkcs8.isEmpty()) {
+		if (Validator.isNotNull(_clientEmailAddress) &&
+			Validator.isNotNull(_clientId) &&
+			Validator.isNotNull(_privateKeyId) &&
+			Validator.isNotNull(_privateKeyPkcs8)) {
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(

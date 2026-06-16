@@ -5,6 +5,8 @@
 
 package com.liferay.one.pubsub;
 
+import com.liferay.petra.string.StringBundler;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -74,7 +76,7 @@ public class Message {
 
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder();
+		StringBundler sb = new StringBundler(7);
 
 		sb.append("{topic=");
 		sb.append(_topic);

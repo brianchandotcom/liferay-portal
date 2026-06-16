@@ -12,12 +12,10 @@ import com.google.pubsub.v1.Subscription;
 import com.google.pubsub.v1.TopicName;
 
 import com.liferay.one.pubsub.Message;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 /**
  * @author Kyle Bischof
@@ -73,34 +71,10 @@ public abstract class BaseDeadLetterPubsubSubscriber
 	@Override
 	protected final void receive(Message message) throws Exception {
 		onDeadLetter(
-			_getDeliveryAttempt(message), message,
-			message.get(SOURCE_SUBSCRIPTION_ATTRIBUTE_NAME));
+			GetterUtil.getInteger(
+				message.get(SOURCE_DELIVERY_COUNT_ATTRIBUTE_NAME)),
+			message, message.get(SOURCE_SUBSCRIPTION_ATTRIBUTE_NAME));
 	}
-
-	private int _getDeliveryAttempt(Message message) {
-		String deliveryAttempt = message.get(
-			SOURCE_DELIVERY_COUNT_ATTRIBUTE_NAME);
-
-		if ((deliveryAttempt == null) || deliveryAttempt.isEmpty()) {
-			return 0;
-		}
-
-		try {
-			return Integer.parseInt(deliveryAttempt);
-		}
-		catch (NumberFormatException numberFormatException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Unable to parse delivery attempt " + deliveryAttempt,
-					numberFormatException);
-			}
-
-			return 0;
-		}
-	}
-
-	private static final Log _log = LogFactory.getLog(
-		BaseDeadLetterPubsubSubscriber.class);
 
 	private final Map<String, String> _topics = new ConcurrentHashMap<>();
 

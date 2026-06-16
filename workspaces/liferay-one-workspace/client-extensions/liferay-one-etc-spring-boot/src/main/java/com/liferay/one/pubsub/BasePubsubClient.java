@@ -12,6 +12,7 @@ import com.google.cloud.pubsub.v1.TopicAdminSettings;
 import com.google.pubsub.v1.TopicName;
 
 import com.liferay.one.pubsub.credentials.ServiceAccountCredentialsProvider;
+import com.liferay.petra.string.StringPool;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -49,7 +50,7 @@ public abstract class BasePubsubClient {
 	}
 
 	protected String getNamespace() {
-		return "";
+		return StringPool.BLANK;
 	}
 
 	protected abstract String getProjectId();

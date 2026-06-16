@@ -198,16 +198,23 @@ public class PageSpecificationResourceTest
 			ServiceContextTestUtil.getServiceContext(
 				testGroup.getGroupId(), TestPropsValues.getUserId());
 
-		_testGetSitePageSpecificationWithLayoutWithDraftLayout(
-			_addLayout(LayoutConstants.TYPE_CONTENT, serviceContext),
-			serviceContext);
-
 		Layout layout = _addLayout(
 			LayoutConstants.TYPE_PORTLET, serviceContext);
 
 		_testGetSitePageSpecification(
 			layout, layout.getExternalReferenceCode());
 
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			LayoutPageTemplateEntryTestUtil.
+				getWidgetPageLayoutPageTemplateEntry(serviceContext);
+
+		_testGetSitePageSpecification(
+			_layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid()),
+			layoutPageTemplateEntry.getExternalReferenceCode());
+
+		_testGetSitePageSpecificationWithLayoutWithDraftLayout(
+			_addLayout(LayoutConstants.TYPE_CONTENT, serviceContext),
+			serviceContext);
 		_testGetSitePageSpecificationWithLayoutWithDraftLayout(
 			LayoutPageTemplateEntryTestUtil.
 				getBasicLayoutPageTemplateEntryLayout(serviceContext),
@@ -224,14 +231,6 @@ public class PageSpecificationResourceTest
 			LayoutPageTemplateEntryTestUtil.
 				getMasterLayoutPageTemplateEntryLayout(serviceContext),
 			serviceContext);
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			LayoutPageTemplateEntryTestUtil.
-				getWidgetPageLayoutPageTemplateEntry(serviceContext);
-
-		_testGetSitePageSpecification(
-			_layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid()),
-			layoutPageTemplateEntry.getExternalReferenceCode());
 
 		_testGetSitePageSpecificationWithStyleBookEntryScopeERC(serviceContext);
 	}

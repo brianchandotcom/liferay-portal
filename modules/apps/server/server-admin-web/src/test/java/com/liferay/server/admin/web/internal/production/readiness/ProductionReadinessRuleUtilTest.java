@@ -29,6 +29,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import javax.management.MBeanServer;
+import javax.management.ObjectName;
+
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -136,6 +139,82 @@ public class ProductionReadinessRuleUtilTest {
 			Assert.assertTrue(productionReadinessResult.isPass());
 			Assert.assertEquals(
 				"counter-increment", productionReadinessResult.getKey());
+		}
+	}
+
+	@Test
+	public void testCheckDatabaseConfigurationFail() throws Exception {
+		try (MockedStatic<PropsUtil> propsUtilMockedStatic = Mockito.mockStatic(
+				PropsUtil.class);
+			MockedStatic<ManagementFactory> managementFactoryMockedStatic =
+				Mockito.mockStatic(ManagementFactory.class)) {
+
+			propsUtilMockedStatic.when(
+				() -> PropsUtil.get("jdbc.default.maximumPoolSize")
+			).thenReturn(
+				"10"
+			);
+
+			_stubMBeanServerMaxThreads(managementFactoryMockedStatic, 200);
+
+			ProductionReadinessResult productionReadinessResult =
+				ReflectionTestUtil.invoke(
+					ProductionReadinessRuleUtil.class,
+					"_checkDatabaseConfiguration", new Class<?>[0]);
+
+			Assert.assertFalse(productionReadinessResult.isPass());
+			Assert.assertEquals(
+				"pool-vs-thread-size", productionReadinessResult.getKey());
+		}
+	}
+
+	@Test
+	public void testCheckDatabaseConfigurationNull() throws Exception {
+		try (MockedStatic<PropsUtil> propsUtilMockedStatic = Mockito.mockStatic(
+				PropsUtil.class);
+			MockedStatic<ManagementFactory> managementFactoryMockedStatic =
+				Mockito.mockStatic(ManagementFactory.class)) {
+
+			propsUtilMockedStatic.when(
+				() -> PropsUtil.get("jdbc.default.maximumPoolSize")
+			).thenReturn(
+				"0"
+			);
+
+			_stubMBeanServerMaxThreads(managementFactoryMockedStatic, 200);
+
+			ProductionReadinessResult productionReadinessResult =
+				ReflectionTestUtil.invoke(
+					ProductionReadinessRuleUtil.class,
+					"_checkDatabaseConfiguration", new Class<?>[0]);
+
+			Assert.assertNull(productionReadinessResult);
+		}
+	}
+
+	@Test
+	public void testCheckDatabaseConfigurationPass() throws Exception {
+		try (MockedStatic<PropsUtil> propsUtilMockedStatic = Mockito.mockStatic(
+				PropsUtil.class);
+			MockedStatic<ManagementFactory> managementFactoryMockedStatic =
+				Mockito.mockStatic(ManagementFactory.class)) {
+
+			propsUtilMockedStatic.when(
+				() -> PropsUtil.get("jdbc.default.maximumPoolSize")
+			).thenReturn(
+				"200"
+			);
+
+			_stubMBeanServerMaxThreads(managementFactoryMockedStatic, 200);
+
+			ProductionReadinessResult productionReadinessResult =
+				ReflectionTestUtil.invoke(
+					ProductionReadinessRuleUtil.class,
+					"_checkDatabaseConfiguration", new Class<?>[0]);
+
+			Assert.assertTrue(productionReadinessResult.isPass());
+			Assert.assertEquals(
+				"pool-vs-thread-size", productionReadinessResult.getKey());
 		}
 	}
 
@@ -1156,6 +1235,39 @@ public class ProductionReadinessRuleUtilTest {
 			ManagementFactory::getMemoryMXBean
 		).thenReturn(
 			memoryMXBean
+		);
+	}
+
+	private void _stubMBeanServerMaxThreads(
+			MockedStatic<ManagementFactory> managementFactoryMockedStatic,
+			int maxThreads)
+		throws Exception {
+
+		MBeanServer mBeanServer = Mockito.mock(MBeanServer.class);
+
+		ObjectName objectName = new ObjectName(
+			"Catalina:type=ThreadPool,name=http-nio-8080");
+
+		Mockito.when(
+			mBeanServer.queryNames(
+				ArgumentMatchers.any(ObjectName.class),
+				ArgumentMatchers.isNull())
+		).thenReturn(
+			Collections.singleton(objectName)
+		);
+
+		Mockito.when(
+			mBeanServer.getAttribute(
+				ArgumentMatchers.any(ObjectName.class),
+				ArgumentMatchers.eq("maxThreads"))
+		).thenReturn(
+			maxThreads
+		);
+
+		managementFactoryMockedStatic.when(
+			ManagementFactory::getPlatformMBeanServer
+		).thenReturn(
+			mBeanServer
 		);
 	}
 

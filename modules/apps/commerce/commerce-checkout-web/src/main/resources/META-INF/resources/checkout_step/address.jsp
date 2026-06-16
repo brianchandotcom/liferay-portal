@@ -30,7 +30,7 @@ String paramName = baseAddressCheckoutStepDisplayContext.getParamName();
 <c:if test="<%= !GetterUtil.getBoolean(request.getAttribute(CommerceCheckoutWebKeys.SHOW_ERROR_NO_BILLING_ADDRESS)) %>">
 	<div class="form-group-autofit">
 		<c:if test="<%= !commerceOrder.isGuestOrder() %>">
-			<c:if test="<%= baseAddressCheckoutStepDisplayContext.hasPermission(permissionChecker, accountEntry, AccountActionKeys.VIEW_ADDRESSES) %>">
+			<c:if test="<%= baseAddressCheckoutStepDisplayContext.hasViewCommerceAddressesPermission() %>">
 				<aui:select label='<%= "choose-" + baseAddressCheckoutStepDisplayContext.getTitle() %>' name="commerceAddress" onChange='<%= liferayPortletResponse.getNamespace() + "selectAddress();" %>' wrapperCssClass="commerce-form-group-item-row form-group-item">
 					<c:choose>
 						<c:when test="<%= hasManageAddressesPermission %>">

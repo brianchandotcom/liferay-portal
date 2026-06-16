@@ -3,17 +3,21 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page} from '@playwright/test';
+import {Locator, Page, expect} from '@playwright/test';
 
 import {SiteSettingsPage} from '../site-admin-web/SiteSettingsPage';
 
 export class AccountInstanceSettingsPage {
+	readonly addRepeatableFieldButton: Locator;
 	readonly allowedAccountTypesCombobox: Locator;
 	readonly deleteRepeatableFieldButtons: Locator;
 	readonly page: Page;
 	readonly siteSettingsPage: SiteSettingsPage;
 
 	constructor(page: Page) {
+		this.addRepeatableFieldButton = page
+			.locator('.ddm-form-field-repeatable-add-button')
+			.first();
 		this.allowedAccountTypesCombobox = page
 			.getByLabel('Allowed Account Types')
 			.first()
@@ -44,9 +48,18 @@ export class AccountInstanceSettingsPage {
 			siteUrl
 		);
 
-		while ((await this.deleteRepeatableFieldButtons.count()) > 0) {
+		await expect(this.addRepeatableFieldButton).toBeVisible();
+
+		let count = await this.deleteRepeatableFieldButtons.count();
+
+		while (count > 0) {
 			await this.deleteRepeatableFieldButtons.first().click();
-			await this.page.waitForTimeout(500);
+
+			count -= 1;
+
+			await expect(this.deleteRepeatableFieldButtons).toHaveCount(count, {
+				timeout: 2000,
+			});
 		}
 
 		await this.allowedAccountTypesCombobox.click();

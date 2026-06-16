@@ -155,6 +155,8 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 	public static final String DOWNLOAD_BUNDLE_TASK_NAME = "downloadBundle";
 
+	public static final String EVERGREEN_CONFIGURATION_NAME = "evergreen";
+
 	public static final String INIT_BUNDLE_TASK_NAME = "initBundle";
 
 	public static final String LIFERAY_CONFIGS_DIR_NAME = "configs";
@@ -188,6 +190,8 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		"stopDockerContainer";
 
 	public static final String TAG_DOCKER_IMAGE_TASK_NAME = "tagDockerImage";
+
+	public static final String UPDATE_WORKSPACE_TASK_NAME = "updateWorkspace";
 
 	public static final String UPGRADE_JAKARTA_TASK_NAME = "upgradeJakarta";
 
@@ -246,6 +250,9 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		Configuration providedModulesConfiguration =
 			_addConfigurationProvidedModules(project);
 
+		Configuration evergreenConfiguration = _addConfigurationEvergreen(
+			project);
+
 		TargetPlatformRootProjectConfigurator.INSTANCE.apply(project);
 
 		_addTaskCreateToken(project);
@@ -284,6 +291,8 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		_configureTaskUpgradeSourceCode(
 			upgradeSourceCodeTask, workspaceExtension);
 
+		_addTaskUpdateWorkspace(project, evergreenConfiguration);
+
 		_addTaskUpgradeJakarta(project);
 	}
 
@@ -318,6 +327,28 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		return configuration;
 	}
 
+	private Configuration _addConfigurationEvergreen(final Project project) {
+		Configuration configuration = GradleUtil.addConfiguration(
+			project, EVERGREEN_CONFIGURATION_NAME);
+
+		configuration.defaultDependencies(
+			new Action<DependencySet>() {
+
+				@Override
+				public void execute(DependencySet dependencySet) {
+					_addDependenciesEvergreen(project);
+				}
+
+			});
+
+		configuration.setDescription(
+			"Configures the evergreen AI agent rules files for this project.");
+		configuration.setTransitive(false);
+		configuration.setVisible(false);
+
+		return configuration;
+	}
+
 	private Configuration _addConfigurationProvidedModules(Project project) {
 		Configuration configuration = GradleUtil.addConfiguration(
 			project, PROVIDED_MODULES_CONFIGURATION_NAME);
@@ -334,6 +365,12 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		GradleUtil.addDependency(
 			project, BUNDLE_SUPPORT_CONFIGURATION_NAME, "com.liferay",
 			"com.liferay.portal.tools.bundle.support", "latest.release");
+	}
+
+	private void _addDependenciesEvergreen(Project project) {
+		GradleUtil.addDependency(
+			project, EVERGREEN_CONFIGURATION_NAME, "com.liferay.workspace",
+			"com.liferay.sample.workspace.evergreen", "latest.release");
 	}
 
 	private void _addDockerTasks(
@@ -1523,6 +1560,41 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			});
 
 		return dockerStopContainer;
+	}
+
+	private Task _addTaskUpdateWorkspace(
+		final Project project, final Configuration evergreenConfiguration) {
+
+		Task task = GradleUtil.addTask(
+			project, UPDATE_WORKSPACE_TASK_NAME, DefaultTask.class);
+
+		task.doLast(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					project.copy(
+						new Action<CopySpec>() {
+
+							@Override
+							public void execute(CopySpec copySpec) {
+								copySpec.from(
+									project.zipTree(
+										evergreenConfiguration.
+											getSingleFile()));
+								copySpec.into(project.getProjectDir());
+							}
+
+						});
+				}
+
+			});
+
+		task.setDescription(
+			"Downloads and extracts the latest AI agent rules files into the " +
+				"workspace.");
+
+		return task;
 	}
 
 	private FormatSourceTask _addTaskUpgradeJakarta(Project project) {

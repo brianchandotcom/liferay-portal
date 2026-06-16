@@ -52,6 +52,7 @@ import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -148,6 +149,8 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 			"objectFieldAcceptedFileExtensions",
 			GetterUtil.getString(
 				ddmFormField.getProperty("objectFieldAcceptedFileExtensions"))
+		).put(
+			"strings", _getStrings(ddmFormFieldRenderingContext)
 		).put(
 			"value",
 			() -> {
@@ -584,6 +587,64 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 		serviceContext.setAddGuestPermissions(true);
 
 		return serviceContext;
+	}
+
+	private Map<String, String> _getStrings(
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
+
+		Locale locale = ddmFormFieldRenderingContext.getLocale();
+
+		if (locale == null) {
+			locale = LocaleUtil.getDefault();
+		}
+
+		ResourceBundle resourceBundle = getResourceBundle(locale);
+
+		return HashMapBuilder.put(
+			"attentionValueIsAtLabel",
+			_language.get(resourceBundle, "attention-value-is-at-x")
+		).put(
+			"clearLabel", _language.get(resourceBundle, "clear")
+		).put(
+			"completeLabel", _language.get(resourceBundle, "complete")
+		).put(
+			"documentLabel", _language.get(resourceBundle, "document")
+		).put(
+			"fileLabel", _language.get(resourceBundle, "file")
+		).put(
+			"invalidExtensionErrorMessage",
+			_language.get(
+				resourceBundle, "please-enter-a-file-with-a-valid-extension-x")
+		).put(
+			"invalidFileSizeErrorMessage",
+			_language.get(
+				resourceBundle,
+				"please-enter-a-file-with-a-valid-file-size-no-larger-than-x")
+		).put(
+			"maximumSubmissionLimitReachedErrorMessage",
+			_language.get(
+				resourceBundle,
+				"the-maximum-number-of-submissions-allowed-for-this-form-has-" +
+					"been-reached")
+		).put(
+			"progressLabel", _language.get(resourceBundle, "progress-x")
+		).put(
+			"selectLabel", _language.get(resourceBundle, "select")
+		).put(
+			"selectXLabel", _language.get(resourceBundle, "select-x")
+		).put(
+			"signInRequiredErrorMessage",
+			_language.get(
+				resourceBundle, "you-need-to-be-signed-in-to-edit-this-field")
+		).put(
+			"unselectFileLabel", _language.get(resourceBundle, "unselect-file")
+		).put(
+			"uploadPermissionErrorMessage",
+			_language.get(
+				resourceBundle,
+				"you-need-to-be-assigned-to-the-same-site-where-the-form-was-" +
+					"created-to-use-this-field")
+		).build();
 	}
 
 	private Map<String, Object> _getUploadParameters(

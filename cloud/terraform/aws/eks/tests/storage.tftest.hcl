@@ -72,13 +72,13 @@ run "should_create_the_gp3_default_storage_class" {
 	}
 
 	assert {
-		condition=kubernetes_storage_class_v1.gp3_storage_class.parameters["type"] == "gp3" && kubernetes_storage_class_v1.gp3_storage_class.parameters["encrypted"] == "true"
+		condition=kubernetes_storage_class_v1.gp3_storage_class.parameters["encrypted"] == "true" && kubernetes_storage_class_v1.gp3_storage_class.parameters["type"] == "gp3"
 		error_message="The gp3 storage class must provision encrypted gp3 volumes"
 	}
 
 	assert {
 		condition=kubernetes_storage_class_v1.gp3_storage_class.volume_binding_mode == "WaitForFirstConsumer"
-		error_message="The gp3 storage class must bind volumes on first consumer"
+		error_message="The gp3 storage class must bind volumes on the first consumer"
 	}
 
 	command=plan

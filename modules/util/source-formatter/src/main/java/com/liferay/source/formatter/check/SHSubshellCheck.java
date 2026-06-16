@@ -5,10 +5,10 @@
 
 package com.liferay.source.formatter.check;
 
+import com.liferay.petra.io.unsync.UnsyncBufferedReader;
 import com.liferay.petra.io.unsync.UnsyncStringReader;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -59,6 +59,8 @@ public class SHSubshellCheck extends BaseFileCheck {
 					continue;
 				}
 
+				String lineContent;
+
 				if (!insideLocalBlock) {
 					Matcher matcher = _variableDefinitionPattern.matcher(
 						trimmedLine);
@@ -70,16 +72,28 @@ public class SHSubshellCheck extends BaseFileCheck {
 					insideLocalBlock = true;
 					startLineNumber = lineNumber;
 
-					sb.append(matcher.group(2));
+					lineContent = matcher.group(2);
 				}
 				else {
-					sb.append(line);
+					lineContent = line;
 				}
 
-				insideSingleQuotes = _updateQuotesState(
-					line, '\'', insideSingleQuotes);
-				insideDoubleQuotes = _updateQuotesState(
-					line, '"', insideDoubleQuotes);
+				sb.append(lineContent);
+
+				for (int i = 0; i < lineContent.length(); i++) {
+					char c = lineContent.charAt(i);
+
+					if ((i > 0) && (lineContent.charAt(i - 1) == '\\')) {
+						continue;
+					}
+
+					if ((c == '\'') && !insideDoubleQuotes) {
+						insideSingleQuotes = !insideSingleQuotes;
+					}
+					else if ((c == '"') && !insideSingleQuotes) {
+						insideDoubleQuotes = !insideDoubleQuotes;
+					}
+				}
 
 				if (insideSingleQuotes || insideDoubleQuotes ||
 					trimmedLine.endsWith("\\")) {
@@ -130,24 +144,6 @@ public class SHSubshellCheck extends BaseFileCheck {
 		}
 
 		return content;
-	}
-
-	private boolean _updateQuotesState(String s, char c, boolean insideQuotes) {
-		int count = 0;
-
-		for (int i = 0; i < s.length(); i++) {
-			if ((s.charAt(i) != c) || ((i > 0) && (s.charAt(i - 1) == '\\'))) {
-				continue;
-			}
-
-			count++;
-		}
-
-		if ((count % 2) != 0) {
-			return !insideQuotes;
-		}
-
-		return insideQuotes;
 	}
 
 	private static final String _ALLOWED_SUBSHELL_NAMES_KEY =

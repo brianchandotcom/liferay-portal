@@ -653,7 +653,7 @@
 																					{
 																						"definition": {
 																							"fragment": {
-																								"key": "marketplace-search",
+																								"key": "marketplace-nav-search",
 																								"siteKey": "[$GROUP_KEY$]"
 																							},
 																							"fragmentConfig": {

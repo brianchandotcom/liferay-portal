@@ -192,7 +192,7 @@ async function fetchSearchResults(category, searchValue) {
 							<img alt="${product.name}" class="app-search-bar-image" draggable="false" height="56" src="${product.urlImage?.replace('https://', 'http://') || ''}" width="56" />
 						</div>
 
-						<div class="app-name font-weight-bold w-100">${product.name.replace(searchRegex, '<mark>$1</mark>')}</div>
+						<div class="app-name font-weight-semi-bold w-100">${Liferay.Util.escapeHTML(product.name).replace(searchRegex, '<mark>$1</mark>')}</div>
 					</a>
 				</li>
 			`;
@@ -546,7 +546,7 @@ function renderNoResults(query) {
 				<div class="align-items-center d-flex search-no-results-container">
 					${getClayIconSVG('warning')}
 
-					<span>Oops! No results for <strong>"${query}"</strong></span>
+					<span>Oops! No results for <strong>"${Liferay.Util.escapeHTML(query)}"</strong></span>
 				</div>
 			</li>
 		</ul>
@@ -574,7 +574,7 @@ function renderRecentSearches() {
 		<div class="align-items-center d-flex justify-content-between results-title-container w-100">
 			<h4 class="m-0 text-black-50 text-nowrap">Recent Searches</h4>
 			<div class="divider-horizontal flex-grow-1 mx-3"></div>
-			<button class="btn font-weight-bold p-0 section-action-button text-nowrap">Clear All</button>
+			<button class="btn font-weight-semi-bold p-0 section-action-button text-nowrap">Clear All</button>
 		</div>
 	`;
 
@@ -601,7 +601,7 @@ function renderRecentSearches() {
 			<a class="align-items-center d-flex text-dark text-decoration-none w-100">
 				${getClayIconSVG('restore')}
 
-				<span class="font-weight-bold w-100">${searchItem}</span>
+				<span class="font-weight-semi-bold w-100">${searchItem}</span>
 			</a>
 
 			<button class="bg-transparent border-0 btn btn-sm text-muted">
@@ -643,17 +643,25 @@ async function syncContextParams() {
 
 	searchInput.value = keywordValue;
 
-	if (keywordValue && keywordParam.key !== 'keyword') {
+	if (
+		keywordValue &&
+		keywordParam.key !== 'keyword' &&
+		!window.performance
+			?.getEntriesByType?.('navigation')
+			?.find((nav) => nav.type === 'back_forward')
+	) {
 		try {
 			const data = await getProducts(
 				state.categorySelected,
 				keywordValue
 			);
 
+			const escapedKeyword = Liferay.Util.escapeHTML(keywordValue);
+
 			showFeedbackAlert(
 				data.items.length
-					? `<strong class="mx-1">${data.totalCount}</strong> results for <strong class="mx-1">${keywordValue}</strong>`
-					: `No results for <strong class="mx-1">${keywordValue}</strong>. Feel free to browse the catalog.`
+					? `<strong class="mx-1">${data.totalCount}</strong> results for <strong class="mx-1">${escapedKeyword}</strong>`
+					: `No results for <strong class="mx-1">${escapedKeyword}</strong>. Feel free to browse the catalog.`
 			);
 		}
 		catch (error) {
@@ -678,6 +686,7 @@ function selectCategory(category, updateHistory = true) {
 
 	if (category === 'All Categories') {
 		categoriesTrigger.textContent = 'All Categories';
+
 		url.searchParams.delete('category');
 		url.searchParams.delete('type');
 
@@ -842,7 +851,7 @@ async function renderFeaturedSection({
 	const viewAllLink = document.createElement('a');
 
 	viewAllLink.classList.add(
-		'font-weight-bold',
+		'font-weight-semi-bold',
 		'p-0',
 		'section-action-button',
 		'text-nowrap'
@@ -898,7 +907,7 @@ async function renderFeaturedSection({
 		imageContainer.appendChild(productImage);
 
 		const productNameDiv = document.createElement('div');
-		productNameDiv.classList.add('font-weight-bold', 'w-100');
+		productNameDiv.classList.add('font-weight-semi-bold', 'w-100');
 		productNameDiv.textContent = product.name;
 
 		productLink.appendChild(imageContainer);

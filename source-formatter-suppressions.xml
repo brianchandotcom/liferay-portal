@@ -88,6 +88,7 @@
 		<suppress checks="JavaCompanyThreadLocalCheck" files="portal-impl/src/com/liferay/portal/security/permission/PermissionCacheUtil\.java" />
 		<suppress checks="JavaCompanyThreadLocalCheck" files="portal-impl/src/com/liferay/portal/service/impl/CompanyLocalServiceImpl\.java" />
 		<suppress checks="JavaCompanyThreadLocalCheck" files="portal-impl/src/com/liferay/portal/service/impl/VirtualHostLocalServiceImpl\.java" />
+		<suppress checks="JavaCompanyThreadLocalCheck" files="portal-impl/src/com/liferay/portal/servlet/filters/portal/instances/PortalInstancesFilter\.java" />
 		<suppress checks="JavaCompanyThreadLocalCheck" files="portal-impl/src/com/liferay/portal/util/PortalInstances\.java" />
 		<suppress checks="JavaCompanyThreadLocalCheck" files="portal-kernel/src/com/liferay/portal/kernel/cache/transactional/TransactionalPortalCacheUtil\.java" />
 		<suppress checks="JavaCompanyThreadLocalCheck" files="portal-kernel/src/com/liferay/portal/kernel/cluster/ClusterableInvokerUtil\.java" />

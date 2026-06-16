@@ -11,17 +11,11 @@ import useAnalyticsQuery from '../../../src/main/resources/META-INF/resources/js
 import LatestActivity from '../../../src/main/resources/META-INF/resources/js/main_view/analytics/components/LatestActivity';
 import {latestActivityFixture} from '../fixtures/LatestActivityFixture';
 
+let originalLiferay: any;
+
 const mockLiferayLanguageGet = jest.fn((key: string) => {
 	return key;
 });
-
-(global as any).Liferay = {
-	...(global as any).Liferay,
-	Language: {
-		...(global as any).Liferay.Language,
-		get: mockLiferayLanguageGet,
-	},
-};
 
 jest.mock('moment', () => {
 	const mockMomentInstance = {
@@ -73,6 +67,22 @@ jest.mock(
 );
 
 describe('LatestActivity', () => {
+	beforeAll(() => {
+		originalLiferay = (global as any).Liferay;
+
+		(global as any).Liferay = {
+			...originalLiferay,
+			Language: {
+				...originalLiferay?.Language,
+				get: mockLiferayLanguageGet,
+			},
+		};
+	});
+
+	afterAll(() => {
+		(global as any).Liferay = originalLiferay;
+	});
+
 	beforeEach(() => {
 		jest.fn();
 	});

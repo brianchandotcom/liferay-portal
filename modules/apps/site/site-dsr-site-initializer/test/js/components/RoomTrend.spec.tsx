@@ -15,17 +15,7 @@ import React from 'react';
 
 import RoomTrend from '../../../src/main/resources/META-INF/resources/js/main_view/analytics/components/RoomTrend';
 
-global.Liferay = {
-	Language: {
-		get: (key: string) => key,
-	},
-	ThemeDisplay: {
-		getPathContext: () => '',
-		getPortalURL: () => 'http://localhost',
-	},
-} as any;
-
-const {Liferay: originalLiferay} = global.window;
+let originalLiferay: any;
 
 jest.mock(
 	'../../../src/main/resources/META-INF/resources/js/common/services/RoomService',
@@ -52,8 +42,19 @@ const mockRoom = {
 
 describe('RoomTrend', () => {
 	beforeAll(() => {
-		window['Liferay'] = {
+		originalLiferay = window.Liferay;
+
+		window.Liferay = {
 			...originalLiferay,
+			Language: {
+				...originalLiferay?.Language,
+				get: (key: string) => key,
+			},
+			ThemeDisplay: {
+				...originalLiferay?.ThemeDisplay,
+				getPathContext: () => '',
+				getPortalURL: () => 'http://localhost',
+			},
 			detach: (name, fn): void => {
 				window.removeEventListener(name as string, fn as EventListener);
 			},
@@ -95,9 +96,9 @@ describe('RoomTrend', () => {
 	});
 
 	afterAll(() => {
-		cleanup();
-
 		window.Liferay = originalLiferay;
+
+		cleanup();
 
 		jest.resetAllMocks();
 	});

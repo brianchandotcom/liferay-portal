@@ -11,17 +11,11 @@ import useAnalyticsQuery from '../../../src/main/resources/META-INF/resources/js
 import MostActiveVisitors from '../../../src/main/resources/META-INF/resources/js/main_view/analytics/components/MostActiveVisitors';
 import {mostActiveVisitorsFixture} from '../fixtures/MostActiveVisitorsFixture';
 
+let originalLiferay: any;
+
 const mockLiferayLanguageGet = jest.fn((key: string) => {
 	return key;
 });
-
-(global as any).Liferay = {
-	...(global as any).Liferay,
-	Language: {
-		...(global as any).Liferay.Language,
-		get: mockLiferayLanguageGet,
-	},
-};
 
 jest.mock(
 	'../../../src/main/resources/META-INF/resources/js/common/hooks/useIsInViewport',
@@ -50,6 +44,22 @@ jest.mock(
 );
 
 describe('MostActiveVisitors', () => {
+	beforeAll(() => {
+		originalLiferay = (global as any).Liferay;
+
+		(global as any).Liferay = {
+			...originalLiferay,
+			Language: {
+				...originalLiferay?.Language,
+				get: mockLiferayLanguageGet,
+			},
+		};
+	});
+
+	afterAll(() => {
+		(global as any).Liferay = originalLiferay;
+	});
+
 	beforeEach(() => {
 		jest.fn();
 	});

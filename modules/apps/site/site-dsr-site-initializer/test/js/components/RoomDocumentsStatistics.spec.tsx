@@ -9,6 +9,8 @@ import React from 'react';
 
 import DocumentsStatistics from '../../../src/main/resources/META-INF/resources/js/main_view/analytics/components/RoomDocumentsStatistics';
 
+let originalLiferay: any;
+
 const mockLiferayLanguageGet = jest.fn((key: string) => {
 	if (key === '1-hour') {
 		return '1 hour';
@@ -32,14 +34,6 @@ const mockLiferayLanguageGet = jest.fn((key: string) => {
 
 	return key;
 });
-
-(global as any).Liferay = {
-	...(global as any).Liferay,
-	Language: {
-		...(global as any).Liferay.Language,
-		get: mockLiferayLanguageGet,
-	},
-};
 
 jest.mock('frontend-js-web', () => ({
 	...(jest.requireActual('frontend-js-web') as any),
@@ -79,6 +73,22 @@ jest.mock(
 );
 
 describe('RoomDocumentsStatistics', () => {
+	beforeAll(() => {
+		originalLiferay = (global as any).Liferay;
+
+		(global as any).Liferay = {
+			...originalLiferay,
+			Language: {
+				...originalLiferay?.Language,
+				get: mockLiferayLanguageGet,
+			},
+		};
+	});
+
+	afterAll(() => {
+		(global as any).Liferay = originalLiferay;
+	});
+
 	beforeEach(() => {
 		jest.fn();
 	});

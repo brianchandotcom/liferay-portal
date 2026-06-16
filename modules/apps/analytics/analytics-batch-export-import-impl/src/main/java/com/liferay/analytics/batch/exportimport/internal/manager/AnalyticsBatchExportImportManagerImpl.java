@@ -197,7 +197,7 @@ public class AnalyticsBatchExportImportManagerImpl
 		try {
 			if (!skipUpload) {
 				_notify(
-					"Uploading resources " + resourceName,
+					"Uploading resource " + resourceName,
 					notificationUnsafeConsumer);
 
 				_upload(
@@ -205,7 +205,7 @@ public class AnalyticsBatchExportImportManagerImpl
 					resourceName);
 
 				_notify(
-					"Completed uploading resources " + resourceName,
+					"Completed uploading resource " + resourceName,
 					notificationUnsafeConsumer);
 			}
 			else {
@@ -226,11 +226,11 @@ public class AnalyticsBatchExportImportManagerImpl
 
 			if (_log.isDebugEnabled()) {
 				if (deleted) {
-					_log.debug("Deleted temp file: " + tempFile.getName());
+					_log.debug("Deleted temp file " + tempFile.getName());
 				}
 				else {
 					_log.debug(
-						"Unable to delete temp file: " + tempFile.getName());
+						"Unable to delete temp file " + tempFile.getName());
 				}
 			}
 		}
@@ -1121,25 +1121,29 @@ public class AnalyticsBatchExportImportManagerImpl
 		File tempFile = FileUtil.createTempFile();
 
 		try (OutputStream outputStream = new FileOutputStream(tempFile)) {
-			String header = StringBundler.concat(
+			String filePartHeader = StringBundler.concat(
 				"--", boundary, "\r\n",
 				"Content-Disposition: form-data; name=\"file\"; filename=\"",
 				resourceName, "\"\r\n", "Content-Type: ",
 				ContentTypes.MULTIPART_FORM_DATA, "\r\n\r\n");
 
-			outputStream.write(header.getBytes(StandardCharsets.US_ASCII));
+			outputStream.write(
+				filePartHeader.getBytes(StandardCharsets.US_ASCII));
 
 			Files.copy(file.toPath(), outputStream);
 
-			header = StringBundler.concat(
+			String uploadTypePart = StringBundler.concat(
 				"\r\n--", boundary, "\r\n", "Content-Disposition: form-data; ",
 				"name=\"uploadType\"\r\n\r\n", uploadType);
 
-			outputStream.write(header.getBytes(StandardCharsets.US_ASCII));
+			outputStream.write(
+				uploadTypePart.getBytes(StandardCharsets.US_ASCII));
 
-			header = StringBundler.concat("\r\n--", boundary, "--\r\n");
+			String closingBoundary = StringBundler.concat(
+				"\r\n--", boundary, "--\r\n");
 
-			outputStream.write(header.getBytes(StandardCharsets.US_ASCII));
+			outputStream.write(
+				closingBoundary.getBytes(StandardCharsets.US_ASCII));
 		}
 		catch (Exception exception) {
 			tempFile.delete();

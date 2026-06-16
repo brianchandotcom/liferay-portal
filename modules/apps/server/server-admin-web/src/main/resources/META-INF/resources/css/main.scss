@@ -1,3 +1,5 @@
+@import 'atlas-variables';
+
 .portlet-admin {
 	.server-admin-tabs {
 		margin-top: 20px;
@@ -37,6 +39,26 @@
 		li {
 			padding-left: 15px;
 			padding-right: 15px;
+		}
+	}
+}
+
+.production-readiness-dashboard {
+	.production-readiness-section {
+		.list-group-item {
+			.flex-grow-1 {
+				min-width: 0;
+				overflow-wrap: anywhere;
+			}
+		}
+
+		.panel-header {
+			background-color: $light;
+			width: 100%;
+		}
+
+		.panel-unstyled {
+			border: 0;
 		}
 	}
 }

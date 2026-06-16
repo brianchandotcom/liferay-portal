@@ -6,6 +6,7 @@
 package com.liferay.portal.security.content.security.policy.internal.servlet.filter;
 
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.security.content.security.policy.internal.configuration.ContentSecurityPolicyConfiguration;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -51,6 +52,14 @@ public class ContentSecurityPolicyFilterTest {
 		_testIsExcludedURIPath(true, null, "/group/guest/home");
 	}
 
+	@Test
+	public void testIsLayoutEditMode() {
+		_testIsLayoutEditMode(false, null, "test");
+		_testIsLayoutEditMode(false, "view", "test");
+		_testIsLayoutEditMode(false, Constants.EDIT, null);
+		_testIsLayoutEditMode(true, Constants.EDIT, "test");
+	}
+
 	private void _testIsExcludedURIPath(
 		boolean excludedURIPath, String forwardRequestURI, String requestURI) {
 
@@ -79,6 +88,31 @@ public class ContentSecurityPolicyFilterTest {
 					HttpServletRequest.class
 				},
 				_contentSecurityPolicyConfiguration, httpServletRequest));
+	}
+
+	private void _testIsLayoutEditMode(
+		boolean layoutEditMode, String layoutMode, String remoteUser) {
+
+		HttpServletRequest httpServletRequest = Mockito.mock(
+			HttpServletRequest.class);
+
+		Mockito.when(
+			httpServletRequest.getParameter("p_l_mode")
+		).thenReturn(
+			layoutMode
+		);
+
+		Mockito.when(
+			httpServletRequest.getRemoteUser()
+		).thenReturn(
+			remoteUser
+		);
+
+		Assert.assertEquals(
+			layoutEditMode,
+			ReflectionTestUtil.invoke(
+				_contentSecurityPolicyFilter, "_isLayoutEditMode",
+				new Class<?>[] {HttpServletRequest.class}, httpServletRequest));
 	}
 
 	private ContentSecurityPolicyConfiguration

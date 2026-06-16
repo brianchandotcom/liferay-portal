@@ -88,6 +88,8 @@ describe('Field DocumentLibrary', () => {
 	beforeEach(() => {
 		jest.useFakeTimers();
 		fetch.mockResponseOnce(JSON.stringify({}));
+
+		Liferay.ThemeDisplay.isSignedIn = jest.fn(() => false);
 	});
 
 	it('disables guest upload field if maximumSubmissionLimitReached property is true', () => {
@@ -144,6 +146,20 @@ describe('Field DocumentLibrary', () => {
 		const button = container.querySelector('button[aria-required="true"]');
 
 		expect(button.hasAttribute('aria-invalid')).toBe(false);
+	});
+
+	it('falls back to Liferay.Language.get for the select label when the strings prop is not provided', () => {
+		Liferay.ThemeDisplay.isSignedIn = jest.fn(() => true);
+
+		const {getByText} = render(
+			<DocumentLibraryWithProvider {...defaultDocumentLibraryConfig} />
+		);
+
+		act(() => {
+			jest.runAllTimers();
+		});
+
+		expect(getByText('select')).toBeInTheDocument();
 	});
 
 	it('has a helptext', () => {
@@ -354,6 +370,23 @@ describe('Field DocumentLibrary', () => {
 		});
 
 		expect(container).toMatchSnapshot();
+	});
+
+	it('renders the select label from the strings prop when provided', () => {
+		Liferay.ThemeDisplay.isSignedIn = jest.fn(() => true);
+
+		const {getByText} = render(
+			<DocumentLibraryWithProvider
+				{...defaultDocumentLibraryConfig}
+				strings={{selectLabel: 'Selecionar'}}
+			/>
+		);
+
+		act(() => {
+			jest.runAllTimers();
+		});
+
+		expect(getByText('Selecionar')).toBeInTheDocument();
 	});
 
 	it('shows guest upload field if allowGuestUsers property is enabled', () => {

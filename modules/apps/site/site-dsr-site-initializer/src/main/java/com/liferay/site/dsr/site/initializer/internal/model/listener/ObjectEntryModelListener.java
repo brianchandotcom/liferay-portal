@@ -250,8 +250,7 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 			_importLayouts(parameterMap, false, sourceGroup, group, user);
 			_importLayouts(parameterMap, true, sourceGroup, group, user);
 
-			// The order is important. You must always import the layouts
-			// first, then copy the file entries.
+			// Copy file entries after importing layouts
 
 			_copyFileEntries(fileEntryIds, group);
 

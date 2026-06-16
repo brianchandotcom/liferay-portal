@@ -28,6 +28,14 @@ public class FragmentEntryModelPreFilterContributor
 		BooleanFilter booleanFilter, ModelSearchSettings modelSearchSettings,
 		SearchContext searchContext) {
 
+		long fragmentCollectionId = GetterUtil.getLong(
+			searchContext.getAttribute("fragmentCollectionId"));
+
+		if (fragmentCollectionId > 0) {
+			booleanFilter.addRequiredTerm(
+				"fragmentCollectionId", fragmentCollectionId);
+		}
+
 		boolean head = GetterUtil.getBoolean(
 			searchContext.getAttribute("head"), true);
 		boolean headListable = GetterUtil.getBoolean(
@@ -38,14 +46,6 @@ public class FragmentEntryModelPreFilterContributor
 		}
 		else if (head) {
 			booleanFilter.addRequiredTerm("head", true);
-		}
-
-		long fragmentCollectionId = GetterUtil.getLong(
-			searchContext.getAttribute("fragmentCollectionId"));
-
-		if (fragmentCollectionId > 0) {
-			booleanFilter.addRequiredTerm(
-				"fragmentCollectionId", fragmentCollectionId);
 		}
 	}
 

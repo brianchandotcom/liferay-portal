@@ -664,6 +664,41 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/PerformanceMetric"
             tags: ["PerformanceMetric"]
+    "/performance-metric/export":
+        get:
+            operationId: getPerformanceMetricExport
+            parameters:
+                -   in: query
+                    name: depotEntryIds
+                    schema:
+                        items:
+                            format: int64
+                            type: integer
+                        type: array
+                -   in: query
+                    name: groupBy
+                    schema:
+                        type: string
+                -   in: query
+                    name: metricType
+                    schema:
+                        type: string
+                -   in: query
+                    name: rangeKey
+                    schema:
+                        type: integer
+            responses:
+                200:
+                    content:
+                        text/csv:
+                            schema:
+                                format: binary
+                                type: string
+                    headers:
+                        Content-Disposition:
+                            schema:
+                                type: string
+            tags: ["PerformanceMetric"]
     "/performance-overview-metric":
         get:
             operationId: getPerformanceOverviewMetric
@@ -731,4 +766,39 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/PerformanceTopAsset"
+            tags: ["PerformanceTopAsset"]
+    "/performance-top-asset/export":
+        get:
+            operationId: getPerformanceTopAssetExport
+            parameters:
+                -   in: query
+                    name: assetFilter
+                    schema:
+                        type: string
+                -   in: query
+                    name: depotEntryIds
+                    schema:
+                        items:
+                            format: int64
+                            type: integer
+                        type: array
+                -   in: query
+                    name: rangeKey
+                    schema:
+                        type: integer
+                -   in: query
+                    name: sort
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        text/csv:
+                            schema:
+                                format: binary
+                                type: string
+                    headers:
+                        Content-Disposition:
+                            schema:
+                                type: string
             tags: ["PerformanceTopAsset"]

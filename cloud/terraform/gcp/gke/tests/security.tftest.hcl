@@ -67,13 +67,13 @@ run "should_allow_master_traffic_from_the_master_cidr" {
 
 run "should_open_envoy_ingress_ports" {
 	assert {
-		condition=google_compute_firewall.envoy_ingress_managed.name == "liferay-test-envoy-ingress"
-		error_message="The Envoy ingress firewall name must be derived from deployment_name"
+		condition=contains(google_compute_firewall.envoy_ingress_managed.source_ranges, "10.0.0.0/16")
+		error_message="The Envoy ingress firewall must be scoped to the VPC CIDR"
 	}
 
 	assert {
-		condition=contains(google_compute_firewall.envoy_ingress_managed.source_ranges, "10.0.0.0/16")
-		error_message="The Envoy ingress firewall must be scoped to the VPC CIDR"
+		condition=google_compute_firewall.envoy_ingress_managed.name == "liferay-test-envoy-ingress"
+		error_message="The Envoy ingress firewall name must be derived from deployment_name"
 	}
 
 	assert {

@@ -40,13 +40,13 @@ run "should_derive_cluster_name_from_deployment_name" {
 	}
 
 	assert {
-		condition=output.cluster_name == "liferay-test-gke"
-		error_message="The cluster_name output must mirror the cluster resource name"
+		condition=google_service_account.node_sa.account_id == "liferay-test-node-sa"
+		error_message="The node service account ID must be derived from deployment_name"
 	}
 
 	assert {
-		condition=google_service_account.node_sa.account_id == "liferay-test-node-sa"
-		error_message="The node service account ID must be derived from deployment_name"
+		condition=output.cluster_name == "liferay-test-gke"
+		error_message="The cluster_name output must mirror the cluster resource name"
 	}
 
 	command=plan
@@ -54,13 +54,13 @@ run "should_derive_cluster_name_from_deployment_name" {
 
 run "should_enable_authenticator_groups_with_a_security_group" {
 	assert {
-		condition=length(google_container_cluster.primary.authenticator_groups_config) == 1
-		error_message="Setting gke_security_group must emit an authenticator_groups_config block"
+		condition=google_container_cluster.primary.authenticator_groups_config[0].security_group == "gke-security-groups@example.com"
+		error_message="The authenticator groups config must use the supplied security group"
 	}
 
 	assert {
-		condition=google_container_cluster.primary.authenticator_groups_config[0].security_group == "gke-security-groups@example.com"
-		error_message="The authenticator groups config must use the supplied security group"
+		condition=length(google_container_cluster.primary.authenticator_groups_config) == 1
+		error_message="Setting gke_security_group must emit an authenticator_groups_config block"
 	}
 
 	command=plan

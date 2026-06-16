@@ -54,13 +54,13 @@ run "should_compute_subnet_cidrs" {
 
 run "should_name_network_resources_from_deployment_name" {
 	assert {
-		condition=google_compute_network.vpc.name == "liferay-test-vpc"
-		error_message="The VPC network name must be derived from deployment_name"
+		condition=google_compute_global_address.private_ip_alloc.name == "liferay-test-psa-range"
+		error_message="The private service access range name must be derived from deployment_name"
 	}
 
 	assert {
-		condition=google_compute_subnetwork.subnet.name == "liferay-test-subnet"
-		error_message="The subnet name must be derived from deployment_name"
+		condition=google_compute_network.vpc.name == "liferay-test-vpc"
+		error_message="The VPC network name must be derived from deployment_name"
 	}
 
 	assert {
@@ -69,14 +69,19 @@ run "should_name_network_resources_from_deployment_name" {
 	}
 
 	assert {
-		condition=google_compute_global_address.private_ip_alloc.name == "liferay-test-psa-range"
-		error_message="The private service access range name must be derived from deployment_name"
+		condition=google_compute_subnetwork.subnet.name == "liferay-test-subnet"
+		error_message="The subnet name must be derived from deployment_name"
 	}
 
 	command=plan
 }
 
 run "should_name_secondary_ip_ranges_from_deployment_name" {
+	assert {
+		condition=google_compute_subnetwork.subnet.secondary_ip_range[0].ip_cidr_range == "10.0.16.0/20" && google_compute_subnetwork.subnet.secondary_ip_range[1].ip_cidr_range == "10.0.32.0/20"
+		error_message="The subnet secondary ranges must use the computed pod and service CIDRs"
+	}
+
 	assert {
 		condition=google_container_cluster.primary.ip_allocation_policy[0].cluster_secondary_range_name == "liferay-test-pods"
 		error_message="The pod secondary range name must be derived from deployment_name"
@@ -85,11 +90,6 @@ run "should_name_secondary_ip_ranges_from_deployment_name" {
 	assert {
 		condition=google_container_cluster.primary.ip_allocation_policy[0].services_secondary_range_name == "liferay-test-services"
 		error_message="The services secondary range name must be derived from deployment_name"
-	}
-
-	assert {
-		condition=google_compute_subnetwork.subnet.secondary_ip_range[0].ip_cidr_range == "10.0.16.0/20" && google_compute_subnetwork.subnet.secondary_ip_range[1].ip_cidr_range == "10.0.32.0/20"
-		error_message="The subnet secondary ranges must use the computed pod and service CIDRs"
 	}
 
 	command=plan

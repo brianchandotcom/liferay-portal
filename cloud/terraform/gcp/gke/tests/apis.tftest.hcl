@@ -35,11 +35,6 @@ override_data {
 
 run "should_enable_required_project_apis" {
 	assert {
-		condition=length(google_project_service.apis) == 18
-		error_message="All required project APIs must be enabled"
-	}
-
-	assert {
 		condition=google_project_service.apis["connectgateway.googleapis.com"].service == "connectgateway.googleapis.com" && google_project_service.apis["container.googleapis.com"].service == "container.googleapis.com"
 		error_message="The GKE and Connect Gateway APIs must be enabled"
 	}
@@ -49,18 +44,23 @@ run "should_enable_required_project_apis" {
 		error_message="Project APIs must not be disabled on destroy"
 	}
 
+	assert {
+		condition=length(google_project_service.apis) == 18
+		error_message="All required project APIs must be enabled"
+	}
+
 	command=plan
 }
 
 run "should_grant_storage_transfer_agent_roles" {
 	assert {
-		condition=length(google_project_iam_member.storagetransfer_agent_permissions) == 2
-		error_message="The Storage Transfer agent must be granted both required roles"
+		condition=google_project_iam_member.storagetransfer_agent_permissions["roles/storage.admin"].member == "serviceAccount:project-1234567890@storage-transfer-service.iam.gserviceaccount.com"
+		error_message="The Storage Transfer roles must bind the project's Storage Transfer service agent"
 	}
 
 	assert {
-		condition=google_project_iam_member.storagetransfer_agent_permissions["roles/storage.admin"].member == "serviceAccount:project-1234567890@storage-transfer-service.iam.gserviceaccount.com"
-		error_message="The Storage Transfer roles must bind the project's Storage Transfer service agent"
+		condition=length(google_project_iam_member.storagetransfer_agent_permissions) == 2
+		error_message="The Storage Transfer agent must be granted both required roles"
 	}
 
 	command=plan

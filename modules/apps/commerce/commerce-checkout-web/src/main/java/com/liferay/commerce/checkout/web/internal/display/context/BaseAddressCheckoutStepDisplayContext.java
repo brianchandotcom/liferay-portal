@@ -5,6 +5,7 @@
 
 package com.liferay.commerce.checkout.web.internal.display.context;
 
+import com.liferay.account.constants.AccountActionKeys;
 import com.liferay.account.constants.AccountListTypeConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.ListTypeLocalService;
@@ -40,6 +42,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -88,10 +91,18 @@ public abstract class BaseAddressCheckoutStepDisplayContext {
 	public CommerceAddress getCommerceAddress(long commerceAddressId)
 		throws PortalException {
 
+		if (!hasViewCommerceAddressesPermission()) {
+			return null;
+		}
+
 		return commerceAddressService.fetchCommerceAddress(commerceAddressId);
 	}
 
 	public List<CommerceAddress> getCommerceAddresses() throws PortalException {
+		if (!hasViewCommerceAddressesPermission()) {
+			return Collections.emptyList();
+		}
+
 		return commerceAddressService.getCommerceAddressesByCompanyId(
 			_commerceOrder.getCompanyId(), AccountEntry.class.getName(),
 			_commerceOrder.getCommerceAccountId(), QueryUtil.ALL_POS,
@@ -261,11 +272,38 @@ public abstract class BaseAddressCheckoutStepDisplayContext {
 		return false;
 	}
 
+	public boolean hasViewCommerceAddressesPermission() throws PortalException {
+		AccountEntry accountEntry = _commerceOrder.getAccountEntry();
+
+		if (accountEntry == null) {
+			return false;
+		}
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if (hasPermission(
+				permissionChecker, accountEntry,
+				AccountActionKeys.MANAGE_ADDRESSES) ||
+			hasPermission(
+				permissionChecker, accountEntry,
+				AccountActionKeys.VIEW_ADDRESSES)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isCommerceOrderMultishipping() {
 		return CommerceOrderUtil.isCommerceOrderMultishipping(_commerceOrder);
 	}
 
 	public boolean isShippingUsedAsBilling() throws PortalException {
+		if (!hasViewCommerceAddressesPermission()) {
+			return false;
+		}
+
 		AccountEntry accountEntry = _commerceOrder.getAccountEntry();
 
 		CommerceAddress defaultBillingCommerceAddress = null;

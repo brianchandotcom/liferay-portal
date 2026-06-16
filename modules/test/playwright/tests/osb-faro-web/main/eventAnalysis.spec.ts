@@ -18,6 +18,7 @@ import getRandomString from '../../../utils/getRandomString';
 import {selectAndExpectToHaveValue} from '../../../utils/selectAndExpectToHaveValue';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {pagesPagesTest} from '../../layout-admin-web/main/fixtures/pagesPagesTest';
+import {faroConfig} from './faro.config';
 import {
 	addAttributeFilter,
 	addBooleanFilter,
@@ -34,6 +35,7 @@ import {
 	navigateToACPageViaURL,
 	navigateToACSettingsViaURL,
 } from './utils/navigation';
+import {signInToAnalyticsCloud} from './utils/signInToAnalyticsCloud';
 import {changeTimeFilter} from './utils/time-filter';
 import {
 	selectPaginationItemsPerPage,
@@ -3622,6 +3624,127 @@ test(
 					{autoClose: false}
 				);
 			}
+		}
+	}
+);
+
+test(
+	'A member can save an analysis and open one saved by another user',
+	{tag: '@LRAC-10569'},
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
+
+		// Seed a custom event with a string and a boolean attribute
+
+		await apiHelpers.jsonWebServicesOSBAsah.createEvents([
+			{
+				applicationId: 'CustomEvent',
+				canonicalUrl: 'https://www.liferay.com',
+				channelId: channel.id,
+				eventDate: new Date().toISOString(),
+				eventId: 'customEvent',
+				properties: [
+					{name: 'category', value: 'wetsuit'},
+					{name: 'like', value: 'true'},
+				],
+				title: 'Liferay',
+				userId: '1',
+			},
+		]);
+
+		await apiHelpers.jsonWebServicesOSBAsah.createEventDefinition([
+			{
+				applicationId: 'CustomEvent',
+				displayName: 'customEvent',
+				eventAttributeDefinitions: [
+					{
+						dataType: 'STRING',
+						displayName: 'category',
+						name: 'category',
+						type: 'LOCAL',
+					},
+					{
+						dataType: 'BOOLEAN',
+						displayName: 'like',
+						name: 'like',
+						type: 'LOCAL',
+					},
+				],
+				name: 'customEvent',
+				type: 'CUSTOM',
+			},
+		]);
+
+		// As the admin, save an analysis carrying a breakdown and a filter
+
+		await navigateToACPageViaURL({
+			acPage: ACPage.eventAnalysisPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await page.getByRole('link', {name: 'Create Analysis'}).click();
+
+		await setEventAnalysisName({eventAnalysisName: 'Admin Analysis', page});
+
+		await addCustomEvent({customEventName: 'customEvent', page});
+
+		await addBreakdown({breakdownName: 'category', page, tab: 'Event'});
+
+		await addBooleanFilter({attributeName: 'like', page, value: 'true'});
+
+		await changeTimeFilter({page, timeFilterPeriod: 'Last 24 hours'});
+
+		await page
+			.locator('.event-analysis-toolbar-right-content')
+			.getByRole('button', {name: 'Save Analysis'})
+			.click();
+
+		// Sign in as a member (non-admin) user
+
+		await signInToAnalyticsCloud(page, 'corbin.murakami@faro.io');
+
+		try {
+
+			// The member can create and save their own analysis
+
+			await createAndSaveEventAnalysis({
+				channelId: channel.id,
+				eventName: 'customEvent',
+				name: 'Member Analysis',
+				page,
+				projectId: project.groupId,
+			});
+
+			// The member can open the analysis the admin saved
+
+			await navigateToACPageViaURL({
+				acPage: ACPage.eventAnalysisPage,
+				channelID: channel.id,
+				page,
+				projectID: project.groupId,
+			});
+
+			await page.getByRole('link', {name: 'Admin Analysis'}).click();
+
+			// The admin's breakdown, filter and result all render for the member
+
+			await expect(
+				page
+					.locator('.attribute-breakdown-section-root')
+					.getByText('category')
+			).toBeVisible();
+
+			await expect(
+				page.locator('.attribute-filter-section-root').getByText('like')
+			).toBeVisible();
+
+			await expect(
+				page.getByRole('cell').getByText('wetsuit')
+			).toBeVisible();
+		}
+		finally {
+			await signInToAnalyticsCloud(page, faroConfig.user.login);
 		}
 	}
 );

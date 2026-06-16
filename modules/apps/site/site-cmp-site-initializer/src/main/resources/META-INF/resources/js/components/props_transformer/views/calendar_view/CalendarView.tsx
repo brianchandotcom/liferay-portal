@@ -8,6 +8,7 @@ import ClayDatePicker from '@clayui/date-picker';
 import ClayIcon from '@clayui/icon';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import FullCalendar from '@fullcalendar/react';
+import {useLiferayState} from '@liferay/frontend-js-state-web/react';
 import classNames from 'classnames';
 import {dateUtils} from 'frontend-js-web';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
@@ -16,6 +17,7 @@ import {ITask, ITaskObjectEntry} from '../../../../utils/types';
 import {UPDATE_TASKS_QUICK_FILTER_VISIBILITY} from '../../../task/TasksQuickFilters';
 import CalendarMoreLinkPopover from './CalendarMoreLinkPopover';
 import CalendarTaskCard from './CalendarTaskCard';
+import {unscheduledTasksAtom} from './unscheduledTasksAtom';
 
 import './CalendarView.scss';
 
@@ -40,6 +42,9 @@ export default function CalendarView({items}: CalendarViewProps) {
 		useState<MoreLinkPopover | null>(null);
 	const [title, setTitle] = useState('');
 
+	const [, setUnscheduledTasks] =
+		useLiferayState<ITaskObjectEntry[]>(unscheduledTasksAtom);
+
 	const events = useMemo(
 		() =>
 			items
@@ -58,6 +63,27 @@ export default function CalendarView({items}: CalendarViewProps) {
 				})),
 		[items]
 	);
+
+	const unscheduledTasks = useMemo(
+		() =>
+			items
+				.filter((item) => !item.embedded?.dueDate)
+				.map((item) => item.embedded)
+				.filter(Boolean),
+		[items]
+	);
+
+	// Share the unscheduled tasks with the info panel component, since the FDS
+	// core provides the info panel with only the currently selected items.
+
+	useEffect(() => {
+		setUnscheduledTasks(unscheduledTasks);
+	}, [setUnscheduledTasks, unscheduledTasks]);
+
+	// Reset the shared tasks when the calendar unmounts so the info panel does
+	// not show a stale list after switching to another view.
+
+	useEffect(() => () => setUnscheduledTasks([]), [setUnscheduledTasks]);
 
 	const currentYear = new Date().getFullYear();
 	const locale = Liferay.ThemeDisplay.getBCP47LanguageId();

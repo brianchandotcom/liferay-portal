@@ -4,40 +4,23 @@
  */
 
 import ClayDropDown from '@clayui/drop-down';
+import {Immutable} from '@liferay/frontend-js-state-web';
 import {AssigneeAvatar} from '@liferay/object-dynamic-data-mapping-form-field-type';
 import React from 'react';
 
 import isOverdue from '../../../../utils/isOverdue';
 import {ITaskObjectEntry} from '../../../../utils/types';
 import StateLabel from '../../../StateLabel';
+import sortTasksByPriority from './sortTasksByPriority';
 
 import './CalendarMoreLinkPopover.scss';
 
-const STATE_PRIORITY: {[key: string]: number} = {
-	blocked: 1,
-	done: 4,
-	inProgress: 2,
-	notStarted: 3,
-};
-
-const OVERDUE_PRIORITY = 0;
-
-const UNKNOWN_PRIORITY = 5;
-
-function getDisplayState(task: ITaskObjectEntry) {
+function getDisplayState(task: Immutable<ITaskObjectEntry>) {
 	if (isOverdue(task)) {
 		return {key: 'overdue', name: Liferay.Language.get('overdue')};
 	}
 
 	return task.state;
-}
-
-function getTaskPriority(task: ITaskObjectEntry): number {
-	if (isOverdue(task)) {
-		return OVERDUE_PRIORITY;
-	}
-
-	return STATE_PRIORITY[task.state?.key] ?? UNKNOWN_PRIORITY;
 }
 
 interface CalendarMoreLinkPopoverProps {
@@ -51,9 +34,7 @@ export default function CalendarMoreLinkPopover({
 	onClose,
 	tasks,
 }: CalendarMoreLinkPopoverProps) {
-	const sortedTasks = [...tasks].sort(
-		(taskA, taskB) => getTaskPriority(taskA) - getTaskPriority(taskB)
-	);
+	const sortedTasks = sortTasksByPriority(tasks);
 
 	return (
 		<ClayDropDown.Menu

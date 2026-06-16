@@ -34,6 +34,7 @@ import ACTIONS from './actions/creationMenuActions';
 import {cmpTasksFDSAtom} from './atoms';
 import AssigneeRenderer from './cell_renderers/AssigneeRenderer';
 import CalendarView from './views/calendar_view/CalendarView';
+import UnscheduledTasksPanel from './views/calendar_view/UnscheduledTasksPanel';
 import KanbanView from './views/kanban_view/KanbanView';
 
 export default function ProjectTasksFDSPropsTransformer({
@@ -160,6 +161,9 @@ export default function ProjectTasksFDSPropsTransformer({
 		},
 		hideManagementBarInEmptyState: true,
 		id,
+		infoPanelComponent: Liferay.FeatureFlags['LPD-69885']
+			? UnscheduledTasksPanel
+			: null,
 		itemsActions: styleActions(itemsActions),
 		async onActionDropdownItemClick({
 			action,

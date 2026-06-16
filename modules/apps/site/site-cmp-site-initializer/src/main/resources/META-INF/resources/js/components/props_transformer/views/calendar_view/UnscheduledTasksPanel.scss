@@ -1,0 +1,13 @@
+.lfr__cmp-unscheduled-tasks-panel {
+	&-search {
+		margin-bottom: 1rem;
+	}
+
+	&-list {
+		margin-bottom: 0;
+
+		.list-group-item {
+			align-items: center;
+		}
+	}
+}

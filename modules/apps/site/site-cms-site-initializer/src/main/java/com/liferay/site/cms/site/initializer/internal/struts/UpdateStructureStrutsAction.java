@@ -120,7 +120,7 @@ public class UpdateStructureStrutsAction implements StrutsAction {
 		return null;
 	}
 
-	private void _addObjectRelationships(
+	private void _updateObjectRelationships(
 			ObjectDefinition objectDefinition, long objectDefinitionId,
 			ObjectDefinitionResource objectDefinitionResource)
 		throws Exception {
@@ -358,7 +358,7 @@ public class UpdateStructureStrutsAction implements StrutsAction {
 				}
 			}
 
-			_addObjectRelationships(
+			_updateObjectRelationships(
 				_objectDefinition, _objectDefinitionId,
 				objectDefinitionResource);
 

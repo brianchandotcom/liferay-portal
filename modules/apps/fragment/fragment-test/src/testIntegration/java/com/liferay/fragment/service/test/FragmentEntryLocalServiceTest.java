@@ -562,16 +562,10 @@ public class FragmentEntryLocalServiceTest {
 		Assert.assertNull(
 			_fragmentEntryLocalService.fetchFragmentEntry(
 				fragmentEntry.getFragmentEntryId()));
-	}
 
-	@Test
-	public void testDeleteFragmentEntryApprovedAndDraftByExternalReferenceCode()
-		throws Exception {
-
-		FragmentEntry fragmentEntry =
-			FragmentEntryTestUtil.addFragmentEntryByStatus(
-				_fragmentCollection.getFragmentCollectionId(),
-				WorkflowConstants.STATUS_APPROVED);
+		fragmentEntry = FragmentEntryTestUtil.addFragmentEntryByStatus(
+			_fragmentCollection.getFragmentCollectionId(),
+			WorkflowConstants.STATUS_APPROVED);
 
 		FragmentEntry draftFragmentEntry = _fragmentEntryLocalService.getDraft(
 			fragmentEntry.getFragmentEntryId());

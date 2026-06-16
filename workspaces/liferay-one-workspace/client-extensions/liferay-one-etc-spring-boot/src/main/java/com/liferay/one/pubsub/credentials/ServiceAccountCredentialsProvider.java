@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.osb.spring.boot.client.pubsub.credentials;
+package com.liferay.one.pubsub.credentials;
 
 import com.google.api.gax.core.CredentialsProvider;
 import com.google.api.gax.core.FixedCredentialsProvider;
@@ -19,11 +19,13 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 /**
  * @author Amos Fong
  * @author Kyle Bischof
  */
+@Component
 public class ServiceAccountCredentialsProvider {
 
 	public static final String SCOPE =
@@ -61,16 +63,20 @@ public class ServiceAccountCredentialsProvider {
 	private static final Log _log = LogFactory.getLog(
 		ServiceAccountCredentialsProvider.class);
 
-	@Value("${pubsub.service.account.credentials.client.email.address:}")
+	@Value(
+		"${liferay.one.pubsub.service.account.credentials.client.email.address:}"
+	)
 	private String _clientEmailAddress;
 
-	@Value("${pubsub.service.account.credentials.client.id:}")
+	@Value("${liferay.one.pubsub.service.account.credentials.client.id:}")
 	private String _clientId;
 
-	@Value("${pubsub.service.account.credentials.private.key.id:}")
+	@Value("${liferay.one.pubsub.service.account.credentials.private.key.id:}")
 	private String _privateKeyId;
 
-	@Value("${pubsub.service.account.credentials.private.key.pkcs8:}")
+	@Value(
+		"${liferay.one.pubsub.service.account.credentials.private.key.pkcs8:}"
+	)
 	private String _privateKeyPkcs8;
 
 }

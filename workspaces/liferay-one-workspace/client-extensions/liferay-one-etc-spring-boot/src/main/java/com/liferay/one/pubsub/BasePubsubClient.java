@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.osb.spring.boot.client.pubsub;
+package com.liferay.one.pubsub;
 
 import com.google.api.gax.core.CredentialsProvider;
 import com.google.api.gax.rpc.NotFoundException;
@@ -11,7 +11,7 @@ import com.google.cloud.pubsub.v1.TopicAdminClient;
 import com.google.cloud.pubsub.v1.TopicAdminSettings;
 import com.google.pubsub.v1.TopicName;
 
-import com.liferay.osb.spring.boot.client.pubsub.credentials.ServiceAccountCredentialsProvider;
+import com.liferay.one.pubsub.credentials.ServiceAccountCredentialsProvider;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

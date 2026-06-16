@@ -3,16 +3,16 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.one.model;
+package com.liferay.one.salesforce.model;
 
 import org.json.JSONObject;
 
 /**
  * @author Kyle Bischof
  */
-public class SalesforceProduct2 {
+public class Product2 {
 
-	public SalesforceProduct2(JSONObject jsonObject) {
+	public Product2(JSONObject jsonObject) {
 		_description = jsonObject.optString("Description");
 		_id = jsonObject.optString("Id");
 		_name = jsonObject.optString("Name");

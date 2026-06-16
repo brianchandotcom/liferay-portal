@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.osb.spring.boot.client.pubsub.subscriber;
+package com.liferay.one.pubsub.subscriber;
 
 import com.google.cloud.pubsub.v1.SubscriptionAdminClient;
 import com.google.cloud.pubsub.v1.SubscriptionAdminSettings;
@@ -11,7 +11,7 @@ import com.google.pubsub.v1.ProjectSubscriptionName;
 import com.google.pubsub.v1.Subscription;
 import com.google.pubsub.v1.TopicName;
 
-import com.liferay.osb.spring.boot.client.pubsub.Message;
+import com.liferay.one.pubsub.Message;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

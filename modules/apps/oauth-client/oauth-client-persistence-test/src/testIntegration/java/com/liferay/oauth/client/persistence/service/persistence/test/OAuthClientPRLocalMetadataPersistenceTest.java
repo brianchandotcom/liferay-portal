@@ -117,12 +117,8 @@ public class OAuthClientPRLocalMetadataPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		long pk = RandomTestUtil.nextLong();
-
 		OAuthClientPRLocalMetadata newOAuthClientPRLocalMetadata =
-			_persistence.create(pk);
-
-		newOAuthClientPRLocalMetadata.setMvccVersion(RandomTestUtil.nextLong());
+			addOAuthClientPRLocalMetadata();
 
 		newOAuthClientPRLocalMetadata.setUuid(RandomTestUtil.randomString());
 
@@ -681,8 +677,6 @@ public class OAuthClientPRLocalMetadataPersistenceTest {
 		OAuthClientPRLocalMetadata oAuthClientPRLocalMetadata =
 			_persistence.create(pk);
 
-		oAuthClientPRLocalMetadata.setMvccVersion(RandomTestUtil.nextLong());
-
 		oAuthClientPRLocalMetadata.setUuid(RandomTestUtil.randomString());
 
 		oAuthClientPRLocalMetadata.setExternalReferenceCode(
@@ -722,4 +716,4 @@ public class OAuthClientPRLocalMetadataPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1645110208
+// LIFERAY-SERVICE-BUILDER-HASH:1023229233

@@ -16,6 +16,8 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileTime;
 
 import java.time.Instant;
+import java.time.OffsetDateTime;
+import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
 
 import java.util.ArrayList;
@@ -231,6 +233,50 @@ public class CloudBucketUtil {
 			!destinationFileName.equals("build-database.json")) {
 
 			_validateChecksumFile(destinationFile, s3SourcePath);
+		}
+	}
+
+	public static long getNewestS3ObjectLastModified(String s3DirPath)
+		throws IOException, TimeoutException {
+
+		Matcher s3ObjectPathMatcher = _s3ObjectPathPattern.matcher(s3DirPath);
+
+		if (!s3ObjectPathMatcher.find()) {
+			throw new RuntimeException("Invalid S3 object path: " + s3DirPath);
+		}
+
+		Process process = JenkinsResultsParserUtil.executeBashCommands(
+			true,
+			JenkinsResultsParserUtil.combine(
+				"aws s3api list-objects-v2 --bucket ",
+				s3ObjectPathMatcher.group("bucketName"), " --prefix ",
+				s3ObjectPathMatcher.group("objectPath"),
+				" --query \"sort_by(Contents, &LastModified)[-1]",
+				".LastModified\" --output text"));
+
+		String lastModified = JenkinsResultsParserUtil.readInputStream(
+			process.getInputStream());
+
+		lastModified = lastModified.replace(
+			"Finished executing Bash commands.", "");
+
+		lastModified = lastModified.trim();
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(lastModified) ||
+			lastModified.equals("None")) {
+
+			return Long.MIN_VALUE;
+		}
+
+		try {
+			OffsetDateTime offsetDateTime = OffsetDateTime.parse(lastModified);
+
+			Instant instant = offsetDateTime.toInstant();
+
+			return instant.toEpochMilli();
+		}
+		catch (DateTimeParseException dateTimeParseException) {
+			return Long.MIN_VALUE;
 		}
 	}
 

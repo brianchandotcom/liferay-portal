@@ -58,16 +58,16 @@ public class PortalInstancesFilterTest {
 
 	@Test
 	public void testDoFilterFinally() throws Exception {
-		String hostName = StringUtil.toLowerCase(RandomTestUtil.randomString());
+		String hostname = StringUtil.toLowerCase(RandomTestUtil.randomString());
 
 		_layoutSetLocalService.updateVirtualHosts(
 			TestPropsValues.getGroupId(), false,
 			TreeMapBuilder.put(
-				hostName, StringPool.BLANK
+				hostname, StringPool.BLANK
 			).build());
 
 		VirtualHost virtualHost = _virtualHostLocalService.getVirtualHost(
-			hostName);
+			hostname);
 
 		try (SafeCloseable safeCloseable =
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
@@ -76,7 +76,7 @@ public class PortalInstancesFilterTest {
 			MockHttpServletRequest mockHttpServletRequest =
 				new MockHttpServletRequest();
 
-			mockHttpServletRequest.addHeader("Host", hostName);
+			mockHttpServletRequest.addHeader("Host", hostname);
 
 			Object object = _portalInstancesFilter.doFilterTry(
 				mockHttpServletRequest, new MockHttpServletResponse());
@@ -99,19 +99,19 @@ public class PortalInstancesFilterTest {
 
 	@Test
 	public void testExistingVirtualHost() throws Exception {
-		String hostName = StringUtil.toLowerCase(RandomTestUtil.randomString());
+		String hostname = StringUtil.toLowerCase(RandomTestUtil.randomString());
 
 		LayoutSet layoutSet = _layoutSetLocalService.updateVirtualHosts(
 			TestPropsValues.getGroupId(), false,
 			TreeMapBuilder.put(
-				hostName, StringPool.BLANK
+				hostname, StringPool.BLANK
 			).build());
 
 		VirtualHost virtualHost = _virtualHostLocalService.getVirtualHost(
-			hostName);
+			hostname);
 
 		try {
-			_test(virtualHost.getCompanyId(), hostName, layoutSet, null);
+			_test(virtualHost.getCompanyId(), hostname, layoutSet, null);
 		}
 		finally {
 			_virtualHostLocalService.deleteVirtualHost(virtualHost);
@@ -159,10 +159,10 @@ public class PortalInstancesFilterTest {
 				PropsValuesTestUtil.swapWithSafeCloseable(
 					"VIRTUAL_HOSTS_STRICT_ACCESS", true)) {
 
-			String hostName = StringUtil.toLowerCase(
+			String hostname = StringUtil.toLowerCase(
 				RandomTestUtil.randomString());
 
-			_test(null, hostName, null, true);
+			_test(null, hostname, null, true);
 
 			List<LogEntry> logEntries = logCapture.getLogEntries();
 
@@ -175,7 +175,7 @@ public class PortalInstancesFilterTest {
 			Assert.assertSame(
 				NoSuchVirtualHostException.class, throwable.getClass());
 
-			Assert.assertEquals(hostName, throwable.getMessage());
+			Assert.assertEquals(hostname, throwable.getMessage());
 		}
 	}
 

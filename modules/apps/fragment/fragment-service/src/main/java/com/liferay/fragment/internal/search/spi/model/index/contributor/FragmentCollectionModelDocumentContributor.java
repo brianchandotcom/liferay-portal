@@ -5,7 +5,6 @@
 
 package com.liferay.fragment.internal.search.spi.model.index.contributor;
 
-import com.liferay.fragment.constants.FragmentCollectionField;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -30,9 +29,7 @@ public class FragmentCollectionModelDocumentContributor
 		document.addText(
 			Field.DESCRIPTION, fragmentCollection.getDescription());
 		document.addText(Field.NAME, fragmentCollection.getName());
-		document.addKeyword(
-			FragmentCollectionField.MARKETPLACE,
-			fragmentCollection.isMarketplace());
+		document.addKeyword("marketplace", fragmentCollection.isMarketplace());
 	}
 
 }

@@ -5,7 +5,6 @@
 
 package com.liferay.fragment.internal.search.spi.model.index.contributor;
 
-import com.liferay.fragment.constants.FragmentEntryField;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -27,15 +26,13 @@ public class FragmentEntryModelDocumentContributor
 	public void contribute(Document document, FragmentEntry fragmentEntry) {
 		document.addText(Field.NAME, fragmentEntry.getName());
 		document.addKeyword(
-			FragmentEntryField.FRAGMENT_COLLECTION_ID,
-			fragmentEntry.getFragmentCollectionId());
-		document.addKeyword(FragmentEntryField.HEAD, fragmentEntry.isHead());
+			"fragmentCollectionId", fragmentEntry.getFragmentCollectionId());
+		document.addKeyword("head", fragmentEntry.isHead());
 		document.addKeyword(
-			FragmentEntryField.HEAD_LISTABLE,
+			"headListable",
 			fragmentEntry.isHead() ||
 			(fragmentEntry.getHeadId() == fragmentEntry.getFragmentEntryId()));
-		document.addKeyword(
-			FragmentEntryField.MARKETPLACE, fragmentEntry.isMarketplace());
+		document.addKeyword("marketplace", fragmentEntry.isMarketplace());
 	}
 
 }

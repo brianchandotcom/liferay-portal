@@ -27,9 +27,9 @@ public abstract class BaseWebCacheItem implements WebCacheItem {
 
 		JWTClaimsSet jwtClaimsSet = signedJWT.getJWTClaimsSet();
 
-		Date expirationTime = jwtClaimsSet.getExpirationTime();
+		Date expirationDate = jwtClaimsSet.getExpirationTime();
 
-		return expirationTime.getTime();
+		return expirationDate.getTime();
 	}
 
 	protected static boolean isExpired(String accessToken) {

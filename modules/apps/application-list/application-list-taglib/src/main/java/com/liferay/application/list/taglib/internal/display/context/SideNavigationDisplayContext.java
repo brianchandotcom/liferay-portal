@@ -79,6 +79,10 @@ public class SideNavigationDisplayContext {
 				"%s/product_icons/%s_sm.svg",
 				_themeDisplay.getPathThemeImages(), _panelCategory.getKey())
 		).put(
+			"colorScheme", _getColorScheme()
+		).put(
+			"colorSchemeSessionKey", _COLOR_SCHEME_SESSION_KEY
+		).put(
 			"expandedKeys", _getExpandedKeys()
 		).put(
 			"expandedKeysSessionKey", _getExpandedKeysSessionKey()
@@ -121,6 +125,11 @@ public class SideNavigationDisplayContext {
 			_httpServletRequest, _VISIBLE_SESSION_KEY, "visible");
 
 		return state.equals("visible");
+	}
+
+	private String _getColorScheme() {
+		return SessionClicks.get(
+			_httpServletRequest, _COLOR_SCHEME_SESSION_KEY, "light");
 	}
 
 	private List<String> _getExpandedKeys() {
@@ -215,6 +224,9 @@ public class SideNavigationDisplayContext {
 
 		return propsItems;
 	}
+
+	private static final String _COLOR_SCHEME_SESSION_KEY =
+		"com_liferay_application_list_taglib_SideNavigationColorScheme";
 
 	private static final String _VISIBLE_SESSION_KEY =
 		"com_liferay_application_list_taglib_SideNavigationState";

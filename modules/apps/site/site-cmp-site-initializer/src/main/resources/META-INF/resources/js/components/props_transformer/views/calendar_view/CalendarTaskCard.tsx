@@ -25,13 +25,11 @@ export default function CalendarTaskCard({task}: CalendarTaskCardProps) {
 
 	return (
 		<div
-			className={classNames(
-				'lfr__cmp-calendar-task-card',
-				overdue
-					? 'lfr__cmp-calendar-task-card-state-overdue'
-					: state?.key &&
-							`lfr__cmp-calendar-task-card-state-${state.key}`
-			)}
+			className={classNames('lfr__cmp-calendar-task-card', {
+				'lfr__cmp-calendar-task-card-state-overdue': overdue,
+				[`lfr__cmp-calendar-task-card-state-${state?.key}`]:
+					!overdue && state?.key,
+			})}
 		>
 			<span className="lfr__cmp-calendar-task-card-title">{title}</span>
 

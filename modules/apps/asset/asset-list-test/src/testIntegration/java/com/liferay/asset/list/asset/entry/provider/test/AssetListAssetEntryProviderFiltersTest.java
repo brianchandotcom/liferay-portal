@@ -217,7 +217,7 @@ public class AssetListAssetEntryProviderFiltersTest {
 		_assertFilteredClassPKs(
 			_buildFiltersJSONArray(
 				_filter(
-					"dueDate", "between",
+					"between", "dueDate",
 					JSONUtil.putAll("2026-01-01", "2026-03-01"))),
 			objectEntry1);
 
@@ -234,7 +234,7 @@ public class AssetListAssetEntryProviderFiltersTest {
 		_assertFilteredClassPKs(
 			_buildFiltersJSONArray(
 				_filter(
-					"startTime", "between",
+					"between", "startTime",
 					JSONUtil.putAll("2026-01-15 00:00", "2026-01-15 23:59"))),
 			objectEntry3);
 	}
@@ -256,16 +256,16 @@ public class AssetListAssetEntryProviderFiltersTest {
 			).build());
 
 		_assertFilteredClassPKs(
-			_buildFiltersJSONArray(_filter("title", "eq", "alpha")),
+			_buildFiltersJSONArray(_filter("eq", "title", "alpha")),
 			objectEntry1);
 		_assertFilteredClassPKs(
-			_buildFiltersJSONArray(_filter("title", "not-eq", "alpha")),
+			_buildFiltersJSONArray(_filter("not-eq", "title", "alpha")),
 			objectEntry2);
 		_assertFilteredClassPKs(
-			_buildFiltersJSONArray(_filter("priority", "eq", "2")),
+			_buildFiltersJSONArray(_filter("eq", "priority", "2")),
 			objectEntry2);
 		_assertFilteredClassPKs(
-			_buildFiltersJSONArray(_filter("priority", "not-eq", "2")),
+			_buildFiltersJSONArray(_filter("not-eq", "priority", "2")),
 			objectEntry1);
 	}
 
@@ -380,11 +380,11 @@ public class AssetListAssetEntryProviderFiltersTest {
 
 		_assertFilteredClassPKs(
 			_buildFiltersJSONArray(
-				_filter("learnDocumentation", "contains", "alpha")),
+				_filter("contains", "learnDocumentation", "alpha")),
 			objectEntry1);
 		_assertFilteredClassPKs(
 			_buildFiltersJSONArray(
-				_filter("learnDocumentation", "not-contains", "alpha")),
+				_filter("not-contains", "learnDocumentation", "alpha")),
 			objectEntry2);
 	}
 
@@ -414,8 +414,8 @@ public class AssetListAssetEntryProviderFiltersTest {
 
 		_assertFilteredClassPKs(
 			_buildFiltersJSONArray(
-				_filter("title", "contains", "match"),
-				_filter("priority", "eq", "5")),
+				_filter("contains", "title", "match"),
+				_filter("eq", "priority", "5")),
 			objectEntry1);
 	}
 
@@ -453,21 +453,21 @@ public class AssetListAssetEntryProviderFiltersTest {
 			).build());
 
 		_assertFilteredClassPKs(
-			_buildFiltersJSONArray(_filter("priority", "gt", "5")),
+			_buildFiltersJSONArray(_filter("gt", "priority", "5")),
 			objectEntry3);
 		_assertFilteredClassPKs(
-			_buildFiltersJSONArray(_filter("priority", "ge", "5")),
+			_buildFiltersJSONArray(_filter("ge", "priority", "5")),
 			objectEntry2, objectEntry3);
 
 		_assertFilteredClassPKs(
-			_buildFiltersJSONArray(_filter("priority", "lt", "5")),
+			_buildFiltersJSONArray(_filter("lt", "priority", "5")),
 			objectEntry1);
 		_assertFilteredClassPKs(
-			_buildFiltersJSONArray(_filter("priority", "le", "5")),
+			_buildFiltersJSONArray(_filter("le", "priority", "5")),
 			objectEntry1, objectEntry2);
 		_assertFilteredClassPKs(
 			_buildFiltersJSONArray(
-				_filter("priority", "between", JSONUtil.putAll("4", "11"))),
+				_filter("between", "priority", JSONUtil.putAll("4", "11"))),
 			objectEntry2, objectEntry3);
 	}
 
@@ -540,10 +540,10 @@ public class AssetListAssetEntryProviderFiltersTest {
 			).build());
 
 		_assertFilteredClassPKs(
-			_buildFiltersJSONArray(_filter("title", "contains", "liferay")),
+			_buildFiltersJSONArray(_filter("contains", "title", "liferay")),
 			objectEntry1);
 		_assertFilteredClassPKs(
-			_buildFiltersJSONArray(_filter("title", "not-contains", "liferay")),
+			_buildFiltersJSONArray(_filter("not-contains", "title", "liferay")),
 			objectEntry2);
 	}
 
@@ -675,7 +675,7 @@ public class AssetListAssetEntryProviderFiltersTest {
 	}
 
 	private JSONObject _filter(
-		String propertyName, String operatorName, Object value) {
+		String operatorName, String propertyName, Object value) {
 
 		return JSONUtil.put(
 			"classNameId",

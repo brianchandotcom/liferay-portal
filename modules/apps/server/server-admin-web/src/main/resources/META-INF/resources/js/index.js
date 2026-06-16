@@ -5,6 +5,8 @@
 
 import {delegate} from 'frontend-js-web';
 
+export {ProductionReadinessDashboard} from './production_readiness/index';
+
 const MAP_DATA_PARAMS = {
 	classname: 'className',
 };

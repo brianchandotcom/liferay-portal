@@ -5,6 +5,7 @@
 
 package com.liferay.server.admin.web.internal.production.readiness;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -50,22 +51,8 @@ import javax.management.ReflectionException;
 public class ProductionReadinessRuleUtil {
 
 	public static Collection<ProductionReadinessResult> check() {
-		Collection<ProductionReadinessResult> productionReadinessResults =
-			new ArrayList<>();
-
-		for (Supplier<ProductionReadinessResult>
-				productionReadinessResultSupplier :
-					_productionReadinessResultSuppliers) {
-
-			ProductionReadinessResult productionReadinessResult =
-				productionReadinessResultSupplier.get();
-
-			if (productionReadinessResult != null) {
-				productionReadinessResults.add(productionReadinessResult);
-			}
-		}
-
-		return productionReadinessResults;
+		return TransformUtil.transform(
+			_productionReadinessResultSuppliers, Supplier::get);
 	}
 
 	private static ProductionReadinessResult _checkBetaLanguages() {

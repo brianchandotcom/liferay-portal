@@ -5,6 +5,7 @@
 
 package com.liferay.portal.workflow.kaleo.definition.internal.parser;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.workflow.kaleo.definition.Definition;
 import com.liferay.portal.workflow.kaleo.definition.HTTPRequestNode;
@@ -45,9 +46,9 @@ public class HTTPRequestNodeValidator
 
 		if (Validator.isNull(url)) {
 			throw new KaleoDefinitionValidationException(
-				String.format(
-					"HTTP call node %s must set a \"url\"",
-					httpRequestNode.getDefaultLabel()));
+				StringBundler.concat(
+					"The ", httpRequestNode.getDefaultLabel(),
+					" node must have a URL"));
 		}
 
 		if (httpRequestNode.getOutgoingTransitionsCount() == 0) {

@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -129,6 +130,53 @@ public class PortalWorkspaceGitRepository extends BaseWorkspaceGitRepository {
 	public String getPortalPrivateRepositoryDirName() {
 		return JenkinsResultsParserUtil.getGitDirectoryName(
 			"liferay-portal-ee", getUpstreamBranchName() + "-private");
+	}
+
+	public void setUpPortalProfile() {
+		String setupProfileDXPBranchNames;
+
+		try {
+			setupProfileDXPBranchNames =
+				JenkinsResultsParserUtil.getBuildProperty(
+					"portal.setup.profile.dxp.branch.names");
+
+			if (JenkinsResultsParserUtil.isNullOrEmpty(
+					setupProfileDXPBranchNames)) {
+
+				return;
+			}
+		}
+		catch (IOException ioException) {
+			return;
+		}
+
+		List<String> setupProfileDXPBranchNamesList = Arrays.asList(
+			setupProfileDXPBranchNames.split(","));
+
+		if (!setupProfileDXPBranchNamesList.contains(getUpstreamBranchName())) {
+			return;
+		}
+
+		Retryable<Object> setupProfileDXPRetryable = new Retryable<Object>(
+			true, _SETUP_PROFILE_DXP_RETRY_COUNT,
+			_SETUP_PROFILE_DXP_RETRY_DELAY, true) {
+
+			@Override
+			public Object execute() {
+				try {
+					AntUtil.callTarget(
+						getDirectory(), "build.xml", "setup-profile-dxp");
+				}
+				catch (AntException antException) {
+					throw new RuntimeException(antException);
+				}
+
+				return null;
+			}
+
+		};
+
+		setupProfileDXPRetryable.executeWithRetries();
 	}
 
 	public void setUpTCKHome() {
@@ -391,6 +439,10 @@ public class PortalWorkspaceGitRepository extends BaseWorkspaceGitRepository {
 					"test.", Environment.get("HOSTNAME"), ".properties")),
 			_getPortalTestProperties(), true);
 	}
+
+	private static final int _SETUP_PROFILE_DXP_RETRY_COUNT = 2;
+
+	private static final int _SETUP_PROFILE_DXP_RETRY_DELAY = 5;
 
 	private Properties _appServerProperties;
 	private boolean _setUpBinariesCache;

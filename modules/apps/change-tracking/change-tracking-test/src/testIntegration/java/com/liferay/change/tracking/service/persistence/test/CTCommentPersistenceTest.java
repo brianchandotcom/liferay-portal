@@ -125,7 +125,9 @@ public class CTCommentPersistenceTest {
 
 		newCTComment.setValue(RandomTestUtil.randomString());
 
-		_ctComments.add(_persistence.update(newCTComment));
+		newCTComment = _persistence.update(newCTComment);
+
+		_ctComments.add(newCTComment);
 
 		CTComment existingCTComment = _persistence.findByPrimaryKey(
 			newCTComment.getPrimaryKey());
@@ -435,4 +437,4 @@ public class CTCommentPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1097213148
+// LIFERAY-SERVICE-BUILDER-HASH:-1422675606

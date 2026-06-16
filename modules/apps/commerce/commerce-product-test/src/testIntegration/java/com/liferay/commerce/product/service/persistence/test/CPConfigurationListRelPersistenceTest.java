@@ -136,8 +136,10 @@ public class CPConfigurationListRelPersistenceTest {
 		newCPConfigurationListRel.setCPConfigurationListId(
 			RandomTestUtil.nextLong());
 
-		_cpConfigurationListRels.add(
-			_persistence.update(newCPConfigurationListRel));
+		newCPConfigurationListRel = _persistence.update(
+			newCPConfigurationListRel);
+
+		_cpConfigurationListRels.add(newCPConfigurationListRel);
 
 		CPConfigurationListRel existingCPConfigurationListRel =
 			_persistence.findByPrimaryKey(
@@ -588,4 +590,4 @@ public class CPConfigurationListRelPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1270917068
+// LIFERAY-SERVICE-BUILDER-HASH:-120472000

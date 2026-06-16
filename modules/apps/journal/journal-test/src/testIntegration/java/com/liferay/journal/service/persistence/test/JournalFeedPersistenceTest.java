@@ -165,7 +165,9 @@ public class JournalFeedPersistenceTest {
 
 		newJournalFeed.setLastPublishDate(RandomTestUtil.nextDate());
 
-		_journalFeeds.add(_persistence.update(newJournalFeed));
+		newJournalFeed = _persistence.update(newJournalFeed);
+
+		_journalFeeds.add(newJournalFeed);
 
 		JournalFeed existingJournalFeed = _persistence.findByPrimaryKey(
 			newJournalFeed.getPrimaryKey());
@@ -679,4 +681,4 @@ public class JournalFeedPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-164028143
+// LIFERAY-SERVICE-BUILDER-HASH:-189051229

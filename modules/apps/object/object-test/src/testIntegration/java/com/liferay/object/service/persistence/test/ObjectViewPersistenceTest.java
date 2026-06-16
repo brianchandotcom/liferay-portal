@@ -129,7 +129,9 @@ public class ObjectViewPersistenceTest {
 
 		newObjectView.setName(RandomTestUtil.randomString());
 
-		_objectViews.add(_persistence.update(newObjectView));
+		newObjectView = _persistence.update(newObjectView);
+
+		_objectViews.add(newObjectView);
 
 		ObjectView existingObjectView = _persistence.findByPrimaryKey(
 			newObjectView.getPrimaryKey());
@@ -470,4 +472,4 @@ public class ObjectViewPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:33270107
+// LIFERAY-SERVICE-BUILDER-HASH:-1880262709

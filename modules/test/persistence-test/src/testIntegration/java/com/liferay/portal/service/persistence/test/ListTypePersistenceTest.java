@@ -128,7 +128,9 @@ public class ListTypePersistenceTest {
 
 		newListType.setType(RandomTestUtil.randomString());
 
-		_listTypes.add(_persistence.update(newListType));
+		newListType = _persistence.update(newListType);
+
+		_listTypes.add(newListType);
 
 		ListType existingListType = _persistence.findByPrimaryKey(
 			newListType.getPrimaryKey());
@@ -532,4 +534,4 @@ public class ListTypePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:118657379
+// LIFERAY-SERVICE-BUILDER-HASH:-1600780597

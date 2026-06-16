@@ -149,7 +149,9 @@ public class AssetListEntryPersistenceTest {
 
 		newAssetListEntry.setLastPublishDate(RandomTestUtil.nextDate());
 
-		_assetListEntries.add(_persistence.update(newAssetListEntry));
+		newAssetListEntry = _persistence.update(newAssetListEntry);
+
+		_assetListEntries.add(newAssetListEntry);
 
 		AssetListEntry existingAssetListEntry = _persistence.findByPrimaryKey(
 			newAssetListEntry.getPrimaryKey());
@@ -801,4 +803,4 @@ public class AssetListEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1420633711
+// LIFERAY-SERVICE-BUILDER-HASH:-2023074775

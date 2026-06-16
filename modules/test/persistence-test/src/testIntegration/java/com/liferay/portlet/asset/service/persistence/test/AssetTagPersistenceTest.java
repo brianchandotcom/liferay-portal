@@ -137,7 +137,9 @@ public class AssetTagPersistenceTest {
 
 		newAssetTag.setLastPublishDate(RandomTestUtil.nextDate());
 
-		_assetTags.add(_persistence.update(newAssetTag));
+		newAssetTag = _persistence.update(newAssetTag);
+
+		_assetTags.add(newAssetTag);
 
 		AssetTag existingAssetTag = _persistence.findByPrimaryKey(
 			newAssetTag.getPrimaryKey());
@@ -630,4 +632,4 @@ public class AssetTagPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1782296109
+// LIFERAY-SERVICE-BUILDER-HASH:-2015687529

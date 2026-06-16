@@ -179,7 +179,9 @@ public class PasswordPolicyPersistenceTest {
 
 		newPasswordPolicy.setResetTicketMaxAge(RandomTestUtil.nextLong());
 
-		_passwordPolicies.add(_persistence.update(newPasswordPolicy));
+		newPasswordPolicy = _persistence.update(newPasswordPolicy);
+
+		_passwordPolicies.add(newPasswordPolicy);
 
 		PasswordPolicy existingPasswordPolicy = _persistence.findByPrimaryKey(
 			newPasswordPolicy.getPrimaryKey());
@@ -716,4 +718,4 @@ public class PasswordPolicyPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1526058145
+// LIFERAY-SERVICE-BUILDER-HASH:1769136977

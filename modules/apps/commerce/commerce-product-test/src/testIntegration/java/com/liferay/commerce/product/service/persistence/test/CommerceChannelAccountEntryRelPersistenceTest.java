@@ -155,8 +155,10 @@ public class CommerceChannelAccountEntryRelPersistenceTest {
 
 		newCommerceChannelAccountEntryRel.setType(RandomTestUtil.nextInt());
 
-		_commerceChannelAccountEntryRels.add(
-			_persistence.update(newCommerceChannelAccountEntryRel));
+		newCommerceChannelAccountEntryRel = _persistence.update(
+			newCommerceChannelAccountEntryRel);
+
+		_commerceChannelAccountEntryRels.add(newCommerceChannelAccountEntryRel);
 
 		CommerceChannelAccountEntryRel existingCommerceChannelAccountEntryRel =
 			_persistence.findByPrimaryKey(
@@ -708,4 +710,4 @@ public class CommerceChannelAccountEntryRelPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-948993592
+// LIFERAY-SERVICE-BUILDER-HASH:-541740856

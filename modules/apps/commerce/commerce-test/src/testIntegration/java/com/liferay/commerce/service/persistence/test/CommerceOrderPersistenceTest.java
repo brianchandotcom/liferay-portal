@@ -316,7 +316,9 @@ public class CommerceOrderPersistenceTest {
 
 		newCommerceOrder.setStatusDate(RandomTestUtil.nextDate());
 
-		_commerceOrders.add(_persistence.update(newCommerceOrder));
+		newCommerceOrder = _persistence.update(newCommerceOrder);
+
+		_commerceOrders.add(newCommerceOrder);
 
 		CommerceOrder existingCommerceOrder = _persistence.findByPrimaryKey(
 			newCommerceOrder.getPrimaryKey());
@@ -1309,4 +1311,4 @@ public class CommerceOrderPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1805098404
+// LIFERAY-SERVICE-BUILDER-HASH:-2114684150

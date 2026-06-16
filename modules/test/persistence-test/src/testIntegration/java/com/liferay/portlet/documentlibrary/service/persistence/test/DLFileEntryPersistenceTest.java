@@ -183,7 +183,9 @@ public class DLFileEntryPersistenceTest {
 
 		newDLFileEntry.setLastPublishDate(RandomTestUtil.nextDate());
 
-		_dlFileEntries.add(_persistence.update(newDLFileEntry));
+		newDLFileEntry = _persistence.update(newDLFileEntry);
+
+		_dlFileEntries.add(newDLFileEntry);
 
 		DLFileEntry existingDLFileEntry = _persistence.findByPrimaryKey(
 			newDLFileEntry.getPrimaryKey());
@@ -999,4 +1001,4 @@ public class DLFileEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1990051859
+// LIFERAY-SERVICE-BUILDER-HASH:1774967035

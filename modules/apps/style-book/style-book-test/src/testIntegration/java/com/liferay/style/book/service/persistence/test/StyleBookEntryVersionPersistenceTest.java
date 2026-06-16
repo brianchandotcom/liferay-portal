@@ -155,8 +155,10 @@ public class StyleBookEntryVersionPersistenceTest {
 
 		newStyleBookEntryVersion.setThemeId(RandomTestUtil.randomString());
 
-		_styleBookEntryVersions.add(
-			_persistence.update(newStyleBookEntryVersion));
+		newStyleBookEntryVersion = _persistence.update(
+			newStyleBookEntryVersion);
+
+		_styleBookEntryVersions.add(newStyleBookEntryVersion);
 
 		StyleBookEntryVersion existingStyleBookEntryVersion =
 			_persistence.findByPrimaryKey(
@@ -829,4 +831,4 @@ public class StyleBookEntryVersionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:621762665
+// LIFERAY-SERVICE-BUILDER-HASH:-1781155025

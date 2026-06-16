@@ -122,7 +122,9 @@ public class UserGroupGroupRolePersistenceTest {
 
 		newUserGroupGroupRole.setRoleId(RandomTestUtil.nextLong());
 
-		_userGroupGroupRoles.add(_persistence.update(newUserGroupGroupRole));
+		newUserGroupGroupRole = _persistence.update(newUserGroupGroupRole);
+
+		_userGroupGroupRoles.add(newUserGroupGroupRole);
 
 		UserGroupGroupRole existingUserGroupGroupRole =
 			_persistence.findByPrimaryKey(
@@ -547,4 +549,4 @@ public class UserGroupGroupRolePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1693735603
+// LIFERAY-SERVICE-BUILDER-HASH:-468355383

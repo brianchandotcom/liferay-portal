@@ -141,7 +141,9 @@ public class RedirectEntryPersistenceTest {
 
 		newRedirectEntry.setSourceURL(RandomTestUtil.randomString());
 
-		_redirectEntries.add(_persistence.update(newRedirectEntry));
+		newRedirectEntry = _persistence.update(newRedirectEntry);
+
+		_redirectEntries.add(newRedirectEntry);
 
 		RedirectEntry existingRedirectEntry = _persistence.findByPrimaryKey(
 			newRedirectEntry.getPrimaryKey());
@@ -624,4 +626,4 @@ public class RedirectEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-891073831
+// LIFERAY-SERVICE-BUILDER-HASH:1939766401

@@ -155,7 +155,9 @@ public class COREntryPersistenceTest {
 
 		newCOREntry.setStatusDate(RandomTestUtil.nextDate());
 
-		_corEntries.add(_persistence.update(newCOREntry));
+		newCOREntry = _persistence.update(newCOREntry);
+
+		_corEntries.add(newCOREntry);
 
 		COREntry existingCOREntry = _persistence.findByPrimaryKey(
 			newCOREntry.getPrimaryKey());
@@ -663,4 +665,4 @@ public class COREntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1330246321
+// LIFERAY-SERVICE-BUILDER-HASH:1069158919

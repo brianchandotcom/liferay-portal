@@ -166,8 +166,10 @@ public class CPDefinitionInventoryPersistenceTest {
 		newCPDefinitionInventory.setMultipleOrderQuantity(
 			new BigDecimal(RandomTestUtil.nextDouble()));
 
-		_cpDefinitionInventories.add(
-			_persistence.update(newCPDefinitionInventory));
+		newCPDefinitionInventory = _persistence.update(
+			newCPDefinitionInventory);
+
+		_cpDefinitionInventories.add(newCPDefinitionInventory);
 
 		CPDefinitionInventory existingCPDefinitionInventory =
 			_persistence.findByPrimaryKey(
@@ -690,4 +692,4 @@ public class CPDefinitionInventoryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1775726870
+// LIFERAY-SERVICE-BUILDER-HASH:-1539306494

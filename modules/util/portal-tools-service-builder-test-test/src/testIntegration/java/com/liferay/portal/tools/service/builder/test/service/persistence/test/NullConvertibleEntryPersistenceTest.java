@@ -119,8 +119,9 @@ public class NullConvertibleEntryPersistenceTest {
 
 		newNullConvertibleEntry.setName(RandomTestUtil.randomString());
 
-		_nullConvertibleEntries.add(
-			_persistence.update(newNullConvertibleEntry));
+		newNullConvertibleEntry = _persistence.update(newNullConvertibleEntry);
+
+		_nullConvertibleEntries.add(newNullConvertibleEntry);
 
 		NullConvertibleEntry existingNullConvertibleEntry =
 			_persistence.findByPrimaryKey(
@@ -493,4 +494,4 @@ public class NullConvertibleEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:759023956
+// LIFERAY-SERVICE-BUILDER-HASH:-2035544722

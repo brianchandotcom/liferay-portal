@@ -131,7 +131,9 @@ public class ChangesetCollectionPersistenceTest {
 
 		newChangesetCollection.setDescription(RandomTestUtil.randomString());
 
-		_changesetCollections.add(_persistence.update(newChangesetCollection));
+		newChangesetCollection = _persistence.update(newChangesetCollection);
+
+		_changesetCollections.add(newChangesetCollection);
 
 		ChangesetCollection existingChangesetCollection =
 			_persistence.findByPrimaryKey(
@@ -564,4 +566,4 @@ public class ChangesetCollectionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-880122624
+// LIFERAY-SERVICE-BUILDER-HASH:266850374

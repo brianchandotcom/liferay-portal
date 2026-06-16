@@ -119,7 +119,9 @@ public class UniqueFinderEntryPersistenceTest {
 
 		newUniqueFinderEntry.setName(RandomTestUtil.randomString());
 
-		_uniqueFinderEntries.add(_persistence.update(newUniqueFinderEntry));
+		newUniqueFinderEntry = _persistence.update(newUniqueFinderEntry);
+
+		_uniqueFinderEntries.add(newUniqueFinderEntry);
 
 		UniqueFinderEntry existingUniqueFinderEntry =
 			_persistence.findByPrimaryKey(newUniqueFinderEntry.getPrimaryKey());
@@ -473,4 +475,4 @@ public class UniqueFinderEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:206529581
+// LIFERAY-SERVICE-BUILDER-HASH:-465531723

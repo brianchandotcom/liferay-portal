@@ -164,7 +164,9 @@ public class ObjectFieldPersistenceTest {
 
 		newObjectField.setSystem(RandomTestUtil.randomBoolean());
 
-		_objectFields.add(_persistence.update(newObjectField));
+		newObjectField = _persistence.update(newObjectField);
+
+		_objectFields.add(newObjectField);
 
 		ObjectField existingObjectField = _persistence.findByPrimaryKey(
 			newObjectField.getPrimaryKey());
@@ -777,4 +779,4 @@ public class ObjectFieldPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1059492661
+// LIFERAY-SERVICE-BUILDER-HASH:-1968025669

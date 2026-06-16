@@ -149,7 +149,9 @@ public class CommerceChannelPersistenceTest {
 		newCommerceChannel.setDiscountsTargetNetPrice(
 			RandomTestUtil.randomBoolean());
 
-		_commerceChannels.add(_persistence.update(newCommerceChannel));
+		newCommerceChannel = _persistence.update(newCommerceChannel);
+
+		_commerceChannels.add(newCommerceChannel);
 
 		CommerceChannel existingCommerceChannel = _persistence.findByPrimaryKey(
 			newCommerceChannel.getPrimaryKey());
@@ -639,4 +641,4 @@ public class CommerceChannelPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-21638614
+// LIFERAY-SERVICE-BUILDER-HASH:1949056784

@@ -144,7 +144,9 @@ public class KaleoNodePersistenceTest {
 
 		newKaleoNode.setTerminal(RandomTestUtil.randomBoolean());
 
-		_kaleoNodes.add(_persistence.update(newKaleoNode));
+		newKaleoNode = _persistence.update(newKaleoNode);
+
+		_kaleoNodes.add(newKaleoNode);
 
 		KaleoNode existingKaleoNode = _persistence.findByPrimaryKey(
 			newKaleoNode.getPrimaryKey());
@@ -503,4 +505,4 @@ public class KaleoNodePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1433396725
+// LIFERAY-SERVICE-BUILDER-HASH:195095991

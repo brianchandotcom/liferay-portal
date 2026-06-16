@@ -143,8 +143,10 @@ public class DLOpenerFileEntryReferencePersistenceTest {
 
 		newDLOpenerFileEntryReference.setType(RandomTestUtil.nextInt());
 
-		_dlOpenerFileEntryReferences.add(
-			_persistence.update(newDLOpenerFileEntryReference));
+		newDLOpenerFileEntryReference = _persistence.update(
+			newDLOpenerFileEntryReference);
+
+		_dlOpenerFileEntryReferences.add(newDLOpenerFileEntryReference);
 
 		DLOpenerFileEntryReference existingDLOpenerFileEntryReference =
 			_persistence.findByPrimaryKey(
@@ -605,4 +607,4 @@ public class DLOpenerFileEntryReferencePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1425768405
+// LIFERAY-SERVICE-BUILDER-HASH:833611621

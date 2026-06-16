@@ -116,7 +116,9 @@ public class PatcherBuildRelPersistenceTest {
 
 		newPatcherBuildRel.setParentPatcherBuildId(RandomTestUtil.nextLong());
 
-		_patcherBuildRels.add(_persistence.update(newPatcherBuildRel));
+		newPatcherBuildRel = _persistence.update(newPatcherBuildRel);
+
+		_patcherBuildRels.add(newPatcherBuildRel);
 
 		PatcherBuildRel existingPatcherBuildRel = _persistence.findByPrimaryKey(
 			newPatcherBuildRel.getPrimaryKey());
@@ -419,4 +421,4 @@ public class PatcherBuildRelPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1926073329
+// LIFERAY-SERVICE-BUILDER-HASH:-1194142089

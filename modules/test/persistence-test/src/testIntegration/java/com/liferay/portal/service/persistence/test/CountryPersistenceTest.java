@@ -160,7 +160,9 @@ public class CountryPersistenceTest {
 
 		newCountry.setStatus(RandomTestUtil.nextInt());
 
-		_countries.add(_persistence.update(newCountry));
+		newCountry = _persistence.update(newCountry);
+
+		_countries.add(newCountry);
 
 		Country existingCountry = _persistence.findByPrimaryKey(
 			newCountry.getPrimaryKey());
@@ -781,4 +783,4 @@ public class CountryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:501125916
+// LIFERAY-SERVICE-BUILDER-HASH:1333328580

@@ -128,7 +128,9 @@ public class PLOEntryPersistenceTest {
 
 		newPLOEntry.setValue(RandomTestUtil.randomString());
 
-		_ploEntries.add(_persistence.update(newPLOEntry));
+		newPLOEntry = _persistence.update(newPLOEntry);
+
+		_ploEntries.add(newPLOEntry);
 
 		PLOEntry existingPLOEntry = _persistence.findByPrimaryKey(
 			newPLOEntry.getPrimaryKey());
@@ -521,4 +523,4 @@ public class PLOEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:11038434
+// LIFERAY-SERVICE-BUILDER-HASH:-1502411394

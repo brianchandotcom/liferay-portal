@@ -149,7 +149,9 @@ public class SXPBlueprintPersistenceTest {
 
 		newSXPBlueprint.setStatusDate(RandomTestUtil.nextDate());
 
-		_sxpBlueprints.add(_persistence.update(newSXPBlueprint));
+		newSXPBlueprint = _persistence.update(newSXPBlueprint);
+
+		_sxpBlueprints.add(newSXPBlueprint);
 
 		SXPBlueprint existingSXPBlueprint = _persistence.findByPrimaryKey(
 			newSXPBlueprint.getPrimaryKey());
@@ -619,4 +621,4 @@ public class SXPBlueprintPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:923323422
+// LIFERAY-SERVICE-BUILDER-HASH:-358167130

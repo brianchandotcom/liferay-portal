@@ -164,8 +164,10 @@ public class KaleoTaskInstanceTokenPersistenceTest {
 		newKaleoTaskInstanceToken.setWorkflowContext(
 			RandomTestUtil.randomString());
 
-		_kaleoTaskInstanceTokens.add(
-			_persistence.update(newKaleoTaskInstanceToken));
+		newKaleoTaskInstanceToken = _persistence.update(
+			newKaleoTaskInstanceToken);
+
+		_kaleoTaskInstanceTokens.add(newKaleoTaskInstanceToken);
 
 		KaleoTaskInstanceToken existingKaleoTaskInstanceToken =
 			_persistence.findByPrimaryKey(
@@ -704,4 +706,4 @@ public class KaleoTaskInstanceTokenPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-548191919
+// LIFERAY-SERVICE-BUILDER-HASH:-1204026389

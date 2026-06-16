@@ -140,8 +140,10 @@ public class SharepointOAuth2TokenEntryPersistenceTest {
 		newSharepointOAuth2TokenEntry.setRefreshToken(
 			RandomTestUtil.randomString());
 
-		_sharepointOAuth2TokenEntries.add(
-			_persistence.update(newSharepointOAuth2TokenEntry));
+		newSharepointOAuth2TokenEntry = _persistence.update(
+			newSharepointOAuth2TokenEntry);
+
+		_sharepointOAuth2TokenEntries.add(newSharepointOAuth2TokenEntry);
 
 		SharepointOAuth2TokenEntry existingSharepointOAuth2TokenEntry =
 			_persistence.findByPrimaryKey(
@@ -586,4 +588,4 @@ public class SharepointOAuth2TokenEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:349851106
+// LIFERAY-SERVICE-BUILDER-HASH:932257762

@@ -292,11 +292,8 @@ public class AnalyticsMessagePersistenceImpl
 				session.save(analyticsMessage);
 			}
 			else {
-				session.evict(
-					AnalyticsMessageImpl.class,
-					analyticsMessage.getPrimaryKeyObj());
-
-				session.saveOrUpdate(analyticsMessage);
+				analyticsMessage = (AnalyticsMessage)session.merge(
+					analyticsMessage);
 			}
 
 			session.flush();
@@ -522,4 +519,4 @@ public class AnalyticsMessagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-317890152
+// LIFERAY-SERVICE-BUILDER-HASH:2118337763

@@ -122,8 +122,10 @@ public class VersionedEntryVersionPersistenceTest {
 
 		newVersionedEntryVersion.setGroupId(RandomTestUtil.nextLong());
 
-		_versionedEntryVersions.add(
-			_persistence.update(newVersionedEntryVersion));
+		newVersionedEntryVersion = _persistence.update(
+			newVersionedEntryVersion);
+
+		_versionedEntryVersions.add(newVersionedEntryVersion);
 
 		VersionedEntryVersion existingVersionedEntryVersion =
 			_persistence.findByPrimaryKey(
@@ -507,4 +509,4 @@ public class VersionedEntryVersionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1876509600
+// LIFERAY-SERVICE-BUILDER-HASH:720558866

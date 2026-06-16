@@ -116,7 +116,9 @@ public class CTSchemaVersionPersistenceTest {
 		newCTSchemaVersion.setSchemaContext(
 			new HashMap<String, Serializable>());
 
-		_ctSchemaVersions.add(_persistence.update(newCTSchemaVersion));
+		newCTSchemaVersion = _persistence.update(newCTSchemaVersion);
+
+		_ctSchemaVersions.add(newCTSchemaVersion);
 
 		CTSchemaVersion existingCTSchemaVersion = _persistence.findByPrimaryKey(
 			newCTSchemaVersion.getPrimaryKey());
@@ -405,4 +407,4 @@ public class CTSchemaVersionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1634056614
+// LIFERAY-SERVICE-BUILDER-HASH:-1793370604

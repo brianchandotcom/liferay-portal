@@ -179,9 +179,11 @@ public class LayoutPageTemplateStructureRelElementVariationPersistenceTest {
 		newLayoutPageTemplateStructureRelElementVariation.setTargetElement(
 			RandomTestUtil.randomString());
 
+		newLayoutPageTemplateStructureRelElementVariation = _persistence.update(
+			newLayoutPageTemplateStructureRelElementVariation);
+
 		_layoutPageTemplateStructureRelElementVariations.add(
-			_persistence.update(
-				newLayoutPageTemplateStructureRelElementVariation));
+			newLayoutPageTemplateStructureRelElementVariation);
 
 		LayoutPageTemplateStructureRelElementVariation
 			existingLayoutPageTemplateStructureRelElementVariation =
@@ -854,4 +856,4 @@ public class LayoutPageTemplateStructureRelElementVariationPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:116599080
+// LIFERAY-SERVICE-BUILDER-HASH:806345008

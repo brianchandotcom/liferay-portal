@@ -138,8 +138,10 @@ public class CommercePriceModifierRelPersistenceTest {
 
 		newCommercePriceModifierRel.setClassPK(RandomTestUtil.nextLong());
 
-		_commercePriceModifierRels.add(
-			_persistence.update(newCommercePriceModifierRel));
+		newCommercePriceModifierRel = _persistence.update(
+			newCommercePriceModifierRel);
+
+		_commercePriceModifierRels.add(newCommercePriceModifierRel);
 
 		CommercePriceModifierRel existingCommercePriceModifierRel =
 			_persistence.findByPrimaryKey(
@@ -604,4 +606,4 @@ public class CommercePriceModifierRelPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:260764559
+// LIFERAY-SERVICE-BUILDER-HASH:-1420995713

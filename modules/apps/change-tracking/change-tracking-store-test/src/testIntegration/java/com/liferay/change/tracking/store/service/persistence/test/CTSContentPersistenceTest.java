@@ -140,7 +140,9 @@ public class CTSContentPersistenceTest {
 
 		newCTSContent.setStoreType(RandomTestUtil.randomString());
 
-		_ctsContents.add(_persistence.update(newCTSContent));
+		newCTSContent = _persistence.update(newCTSContent);
+
+		_ctsContents.add(newCTSContent);
 
 		CTSContent existingCTSContent = _persistence.findByPrimaryKey(
 			newCTSContent.getPrimaryKey());
@@ -579,4 +581,4 @@ public class CTSContentPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-601863533
+// LIFERAY-SERVICE-BUILDER-HASH:-597241943

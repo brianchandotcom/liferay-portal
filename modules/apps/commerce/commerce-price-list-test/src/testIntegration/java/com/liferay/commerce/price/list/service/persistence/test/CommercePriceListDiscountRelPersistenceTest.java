@@ -148,8 +148,10 @@ public class CommercePriceListDiscountRelPersistenceTest {
 		newCommercePriceListDiscountRel.setLastPublishDate(
 			RandomTestUtil.nextDate());
 
-		_commercePriceListDiscountRels.add(
-			_persistence.update(newCommercePriceListDiscountRel));
+		newCommercePriceListDiscountRel = _persistence.update(
+			newCommercePriceListDiscountRel);
+
+		_commercePriceListDiscountRels.add(newCommercePriceListDiscountRel);
 
 		CommercePriceListDiscountRel existingCommercePriceListDiscountRel =
 			_persistence.findByPrimaryKey(
@@ -639,4 +641,4 @@ public class CommercePriceListDiscountRelPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2019876907
+// LIFERAY-SERVICE-BUILDER-HASH:-1626406933

@@ -135,7 +135,9 @@ public class CPTaxCategoryPersistenceTest {
 
 		newCPTaxCategory.setDescription(RandomTestUtil.randomString());
 
-		_cpTaxCategories.add(_persistence.update(newCPTaxCategory));
+		newCPTaxCategory = _persistence.update(newCPTaxCategory);
+
+		_cpTaxCategories.add(newCPTaxCategory);
 
 		CPTaxCategory existingCPTaxCategory = _persistence.findByPrimaryKey(
 			newCPTaxCategory.getPrimaryKey());
@@ -573,4 +575,4 @@ public class CPTaxCategoryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:736322576
+// LIFERAY-SERVICE-BUILDER-HASH:-1977242584

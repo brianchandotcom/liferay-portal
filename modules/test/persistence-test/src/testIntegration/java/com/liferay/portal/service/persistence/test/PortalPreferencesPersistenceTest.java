@@ -118,7 +118,9 @@ public class PortalPreferencesPersistenceTest {
 
 		newPortalPreferences.setOwnerType(RandomTestUtil.nextInt());
 
-		_portalPreferenceses.add(_persistence.update(newPortalPreferences));
+		newPortalPreferences = _persistence.update(newPortalPreferences);
+
+		_portalPreferenceses.add(newPortalPreferences);
 
 		PortalPreferences existingPortalPreferences =
 			_persistence.findByPrimaryKey(newPortalPreferences.getPrimaryKey());
@@ -491,4 +493,4 @@ public class PortalPreferencesPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-476297778
+// LIFERAY-SERVICE-BUILDER-HASH:3701590

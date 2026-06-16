@@ -131,7 +131,9 @@ public class RatingsStatsPersistenceTest {
 
 		newRatingsStats.setAverageScore(RandomTestUtil.nextDouble());
 
-		_ratingsStatses.add(_persistence.update(newRatingsStats));
+		newRatingsStats = _persistence.update(newRatingsStats);
+
+		_ratingsStatses.add(newRatingsStats);
 
 		RatingsStats existingRatingsStats = _persistence.findByPrimaryKey(
 			newRatingsStats.getPrimaryKey());
@@ -520,4 +522,4 @@ public class RatingsStatsPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2014442678
+// LIFERAY-SERVICE-BUILDER-HASH:358866002

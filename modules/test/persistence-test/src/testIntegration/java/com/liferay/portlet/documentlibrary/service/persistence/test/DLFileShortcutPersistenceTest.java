@@ -156,7 +156,9 @@ public class DLFileShortcutPersistenceTest {
 
 		newDLFileShortcut.setStatusDate(RandomTestUtil.nextDate());
 
-		_dlFileShortcuts.add(_persistence.update(newDLFileShortcut));
+		newDLFileShortcut = _persistence.update(newDLFileShortcut);
+
+		_dlFileShortcuts.add(newDLFileShortcut);
 
 		DLFileShortcut existingDLFileShortcut = _persistence.findByPrimaryKey(
 			newDLFileShortcut.getPrimaryKey());
@@ -736,4 +738,4 @@ public class DLFileShortcutPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-663751336
+// LIFERAY-SERVICE-BUILDER-HASH:56616404

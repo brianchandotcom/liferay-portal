@@ -126,7 +126,9 @@ public class LVEntryLocalizationPersistenceTest {
 
 		newLVEntryLocalization.setContent(RandomTestUtil.randomString());
 
-		_lvEntryLocalizations.add(_persistence.update(newLVEntryLocalization));
+		newLVEntryLocalization = _persistence.update(newLVEntryLocalization);
+
+		_lvEntryLocalizations.add(newLVEntryLocalization);
 
 		LVEntryLocalization existingLVEntryLocalization =
 			_persistence.findByPrimaryKey(
@@ -512,4 +514,4 @@ public class LVEntryLocalizationPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1234433673
+// LIFERAY-SERVICE-BUILDER-HASH:2086693931

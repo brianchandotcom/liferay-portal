@@ -147,8 +147,11 @@ public class CommercePaymentMethodGroupRelQualifierPersistenceTest {
 		newCommercePaymentMethodGroupRelQualifier.
 			setCommercePaymentMethodGroupRelId(RandomTestUtil.nextLong());
 
+		newCommercePaymentMethodGroupRelQualifier = _persistence.update(
+			newCommercePaymentMethodGroupRelQualifier);
+
 		_commercePaymentMethodGroupRelQualifiers.add(
-			_persistence.update(newCommercePaymentMethodGroupRelQualifier));
+			newCommercePaymentMethodGroupRelQualifier);
 
 		CommercePaymentMethodGroupRelQualifier
 			existingCommercePaymentMethodGroupRelQualifier =
@@ -662,4 +665,4 @@ public class CommercePaymentMethodGroupRelQualifierPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:824251996
+// LIFERAY-SERVICE-BUILDER-HASH:-1927560020

@@ -151,7 +151,9 @@ public class BookmarksFolderPersistenceTest {
 
 		newBookmarksFolder.setStatusDate(RandomTestUtil.nextDate());
 
-		_bookmarksFolders.add(_persistence.update(newBookmarksFolder));
+		newBookmarksFolder = _persistence.update(newBookmarksFolder);
+
+		_bookmarksFolders.add(newBookmarksFolder);
 
 		BookmarksFolder existingBookmarksFolder = _persistence.findByPrimaryKey(
 			newBookmarksFolder.getPrimaryKey());
@@ -679,4 +681,4 @@ public class BookmarksFolderPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:441011861
+// LIFERAY-SERVICE-BUILDER-HASH:43402575

@@ -140,7 +140,9 @@ public class DLContentPersistenceTest {
 
 		newDLContent.setSize(RandomTestUtil.nextLong());
 
-		_dlContents.add(_persistence.update(newDLContent));
+		newDLContent = _persistence.update(newDLContent);
+
+		_dlContents.add(newDLContent);
 
 		DLContent existingDLContent = _persistence.findByPrimaryKey(
 			newDLContent.getPrimaryKey());
@@ -557,4 +559,4 @@ public class DLContentPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:220111309
+// LIFERAY-SERVICE-BUILDER-HASH:201945963

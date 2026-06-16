@@ -158,8 +158,10 @@ public class CalendarNotificationTemplatePersistenceTest {
 		newCalendarNotificationTemplate.setLastPublishDate(
 			RandomTestUtil.nextDate());
 
-		_calendarNotificationTemplates.add(
-			_persistence.update(newCalendarNotificationTemplate));
+		newCalendarNotificationTemplate = _persistence.update(
+			newCalendarNotificationTemplate);
+
+		_calendarNotificationTemplates.add(newCalendarNotificationTemplate);
 
 		CalendarNotificationTemplate existingCalendarNotificationTemplate =
 			_persistence.findByPrimaryKey(
@@ -697,4 +699,4 @@ public class CalendarNotificationTemplatePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-442389299
+// LIFERAY-SERVICE-BUILDER-HASH:-10957153

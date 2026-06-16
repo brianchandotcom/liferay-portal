@@ -166,8 +166,10 @@ public class CPDefinitionOptionValueRelPersistenceTest {
 		newCPDefinitionOptionValueRel.setUnitOfMeasureKey(
 			RandomTestUtil.randomString());
 
-		_cpDefinitionOptionValueRels.add(
-			_persistence.update(newCPDefinitionOptionValueRel));
+		newCPDefinitionOptionValueRel = _persistence.update(
+			newCPDefinitionOptionValueRel);
+
+		_cpDefinitionOptionValueRels.add(newCPDefinitionOptionValueRel);
 
 		CPDefinitionOptionValueRel existingCPDefinitionOptionValueRel =
 			_persistence.findByPrimaryKey(
@@ -751,4 +753,4 @@ public class CPDefinitionOptionValueRelPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1109761622
+// LIFERAY-SERVICE-BUILDER-HASH:960810872

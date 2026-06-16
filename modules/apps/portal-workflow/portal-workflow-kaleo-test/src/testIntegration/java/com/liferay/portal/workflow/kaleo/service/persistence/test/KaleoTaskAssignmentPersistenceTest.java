@@ -155,7 +155,9 @@ public class KaleoTaskAssignmentPersistenceTest {
 		newKaleoTaskAssignment.setAssigneeScriptRequiredContexts(
 			RandomTestUtil.randomString());
 
-		_kaleoTaskAssignments.add(_persistence.update(newKaleoTaskAssignment));
+		newKaleoTaskAssignment = _persistence.update(newKaleoTaskAssignment);
+
+		_kaleoTaskAssignments.add(newKaleoTaskAssignment);
 
 		KaleoTaskAssignment existingKaleoTaskAssignment =
 			_persistence.findByPrimaryKey(
@@ -573,4 +575,4 @@ public class KaleoTaskAssignmentPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1998538005
+// LIFERAY-SERVICE-BUILDER-HASH:1132352105

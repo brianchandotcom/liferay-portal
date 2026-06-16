@@ -129,8 +129,10 @@ public class PushNotificationsDevicePersistenceTest {
 
 		newPushNotificationsDevice.setToken(RandomTestUtil.randomString());
 
-		_pushNotificationsDevices.add(
-			_persistence.update(newPushNotificationsDevice));
+		newPushNotificationsDevice = _persistence.update(
+			newPushNotificationsDevice);
+
+		_pushNotificationsDevices.add(newPushNotificationsDevice);
 
 		PushNotificationsDevice existingPushNotificationsDevice =
 			_persistence.findByPrimaryKey(
@@ -547,4 +549,4 @@ public class PushNotificationsDevicePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1648983621
+// LIFERAY-SERVICE-BUILDER-HASH:-1262352453

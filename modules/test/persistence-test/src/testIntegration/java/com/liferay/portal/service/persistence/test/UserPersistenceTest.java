@@ -197,7 +197,9 @@ public class UserPersistenceTest {
 
 		newUser.setStatus(RandomTestUtil.nextInt());
 
-		_users.add(_persistence.update(newUser));
+		newUser = _persistence.update(newUser);
+
+		_users.add(newUser);
 
 		User existingUser = _persistence.findByPrimaryKey(
 			newUser.getPrimaryKey());
@@ -901,4 +903,4 @@ public class UserPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1662105256
+// LIFERAY-SERVICE-BUILDER-HASH:2019496854

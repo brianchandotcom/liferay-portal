@@ -119,7 +119,9 @@ public class ServiceComponentPersistenceTest {
 
 		newServiceComponent.setData(RandomTestUtil.randomString());
 
-		_serviceComponents.add(_persistence.update(newServiceComponent));
+		newServiceComponent = _persistence.update(newServiceComponent);
+
+		_serviceComponents.add(newServiceComponent);
 
 		ServiceComponent existingServiceComponent =
 			_persistence.findByPrimaryKey(newServiceComponent.getPrimaryKey());
@@ -495,4 +497,4 @@ public class ServiceComponentPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-71458242
+// LIFERAY-SERVICE-BUILDER-HASH:171207430

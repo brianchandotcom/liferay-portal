@@ -130,7 +130,9 @@ public class PortletItemPersistenceTest {
 
 		newPortletItem.setClassNameId(RandomTestUtil.nextLong());
 
-		_portletItems.add(_persistence.update(newPortletItem));
+		newPortletItem = _persistence.update(newPortletItem);
+
+		_portletItems.add(newPortletItem);
 
 		PortletItem existingPortletItem = _persistence.findByPrimaryKey(
 			newPortletItem.getPrimaryKey());
@@ -538,4 +540,4 @@ public class PortletItemPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1645080112
+// LIFERAY-SERVICE-BUILDER-HASH:-246214370

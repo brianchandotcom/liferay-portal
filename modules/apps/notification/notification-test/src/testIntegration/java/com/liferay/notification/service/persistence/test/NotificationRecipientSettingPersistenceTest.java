@@ -140,8 +140,10 @@ public class NotificationRecipientSettingPersistenceTest {
 
 		newNotificationRecipientSetting.setValue(RandomTestUtil.randomString());
 
-		_notificationRecipientSettings.add(
-			_persistence.update(newNotificationRecipientSetting));
+		newNotificationRecipientSetting = _persistence.update(
+			newNotificationRecipientSetting);
+
+		_notificationRecipientSettings.add(newNotificationRecipientSetting);
 
 		NotificationRecipientSetting existingNotificationRecipientSetting =
 			_persistence.findByPrimaryKey(
@@ -616,4 +618,4 @@ public class NotificationRecipientSettingPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1273174584
+// LIFERAY-SERVICE-BUILDER-HASH:-1765690740

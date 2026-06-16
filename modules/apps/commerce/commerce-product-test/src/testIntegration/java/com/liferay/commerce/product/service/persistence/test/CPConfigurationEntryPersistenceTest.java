@@ -203,8 +203,9 @@ public class CPConfigurationEntryPersistenceTest {
 
 		newCPConfigurationEntry.setWidth(RandomTestUtil.nextDouble());
 
-		_cpConfigurationEntries.add(
-			_persistence.update(newCPConfigurationEntry));
+		newCPConfigurationEntry = _persistence.update(newCPConfigurationEntry);
+
+		_cpConfigurationEntries.add(newCPConfigurationEntry);
 
 		CPConfigurationEntry existingCPConfigurationEntry =
 			_persistence.findByPrimaryKey(
@@ -886,4 +887,4 @@ public class CPConfigurationEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:584419423
+// LIFERAY-SERVICE-BUILDER-HASH:-2146566841

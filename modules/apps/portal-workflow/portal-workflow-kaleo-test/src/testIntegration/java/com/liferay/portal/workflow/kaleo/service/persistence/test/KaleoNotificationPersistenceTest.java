@@ -151,7 +151,9 @@ public class KaleoNotificationPersistenceTest {
 		newKaleoNotification.setNotificationTypes(
 			RandomTestUtil.randomString());
 
-		_kaleoNotifications.add(_persistence.update(newKaleoNotification));
+		newKaleoNotification = _persistence.update(newKaleoNotification);
+
+		_kaleoNotifications.add(newKaleoNotification);
 
 		KaleoNotification existingKaleoNotification =
 			_persistence.findByPrimaryKey(newKaleoNotification.getPrimaryKey());
@@ -558,4 +560,4 @@ public class KaleoNotificationPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1303351294
+// LIFERAY-SERVICE-BUILDER-HASH:-1274619000

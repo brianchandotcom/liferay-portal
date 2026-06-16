@@ -129,8 +129,10 @@ public class AnnouncementsDeliveryPersistenceTest {
 
 		newAnnouncementsDelivery.setWebsite(RandomTestUtil.randomBoolean());
 
-		_announcementsDeliveries.add(
-			_persistence.update(newAnnouncementsDelivery));
+		newAnnouncementsDelivery = _persistence.update(
+			newAnnouncementsDelivery);
+
+		_announcementsDeliveries.add(newAnnouncementsDelivery);
 
 		AnnouncementsDelivery existingAnnouncementsDelivery =
 			_persistence.findByPrimaryKey(
@@ -553,4 +555,4 @@ public class AnnouncementsDeliveryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1463241155
+// LIFERAY-SERVICE-BUILDER-HASH:-234966299

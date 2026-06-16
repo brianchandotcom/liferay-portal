@@ -136,8 +136,11 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceTest {
 		newCPSpecificationOptionListTypeDefinitionRel.setListTypeDefinitionId(
 			RandomTestUtil.nextLong());
 
+		newCPSpecificationOptionListTypeDefinitionRel = _persistence.update(
+			newCPSpecificationOptionListTypeDefinitionRel);
+
 		_cpSpecificationOptionListTypeDefinitionRels.add(
-			_persistence.update(newCPSpecificationOptionListTypeDefinitionRel));
+			newCPSpecificationOptionListTypeDefinitionRel);
 
 		CPSpecificationOptionListTypeDefinitionRel
 			existingCPSpecificationOptionListTypeDefinitionRel =
@@ -632,4 +635,4 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:298054921
+// LIFERAY-SERVICE-BUILDER-HASH:55205659

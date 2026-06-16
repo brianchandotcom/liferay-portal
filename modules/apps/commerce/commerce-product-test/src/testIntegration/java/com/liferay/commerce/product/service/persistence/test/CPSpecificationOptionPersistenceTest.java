@@ -153,8 +153,10 @@ public class CPSpecificationOptionPersistenceTest {
 
 		newCPSpecificationOption.setLastPublishDate(RandomTestUtil.nextDate());
 
-		_cpSpecificationOptions.add(
-			_persistence.update(newCPSpecificationOption));
+		newCPSpecificationOption = _persistence.update(
+			newCPSpecificationOption);
+
+		_cpSpecificationOptions.add(newCPSpecificationOption);
 
 		CPSpecificationOption existingCPSpecificationOption =
 			_persistence.findByPrimaryKey(
@@ -700,4 +702,4 @@ public class CPSpecificationOptionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1283899812
+// LIFERAY-SERVICE-BUILDER-HASH:2142805974

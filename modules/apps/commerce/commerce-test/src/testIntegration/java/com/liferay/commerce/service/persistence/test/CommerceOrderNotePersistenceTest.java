@@ -138,7 +138,9 @@ public class CommerceOrderNotePersistenceTest {
 
 		newCommerceOrderNote.setRestricted(RandomTestUtil.randomBoolean());
 
-		_commerceOrderNotes.add(_persistence.update(newCommerceOrderNote));
+		newCommerceOrderNote = _persistence.update(newCommerceOrderNote);
+
+		_commerceOrderNotes.add(newCommerceOrderNote);
 
 		CommerceOrderNote existingCommerceOrderNote =
 			_persistence.findByPrimaryKey(newCommerceOrderNote.getPrimaryKey());
@@ -624,4 +626,4 @@ public class CommerceOrderNotePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:14966380
+// LIFERAY-SERVICE-BUILDER-HASH:-59050498

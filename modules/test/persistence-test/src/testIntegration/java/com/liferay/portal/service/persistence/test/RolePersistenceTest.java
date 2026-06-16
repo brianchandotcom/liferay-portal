@@ -145,7 +145,9 @@ public class RolePersistenceTest {
 
 		newRole.setStatus(RandomTestUtil.nextInt());
 
-		_roles.add(_persistence.update(newRole));
+		newRole = _persistence.update(newRole);
+
+		_roles.add(newRole);
 
 		Role existingRole = _persistence.findByPrimaryKey(
 			newRole.getPrimaryKey());
@@ -710,4 +712,4 @@ public class RolePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1670381234
+// LIFERAY-SERVICE-BUILDER-HASH:981109946

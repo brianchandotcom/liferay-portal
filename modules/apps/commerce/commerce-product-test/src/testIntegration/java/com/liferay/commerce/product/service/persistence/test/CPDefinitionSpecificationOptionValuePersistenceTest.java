@@ -176,8 +176,11 @@ public class CPDefinitionSpecificationOptionValuePersistenceTest {
 		newCPDefinitionSpecificationOptionValue.setLastPublishDate(
 			RandomTestUtil.nextDate());
 
+		newCPDefinitionSpecificationOptionValue = _persistence.update(
+			newCPDefinitionSpecificationOptionValue);
+
 		_cpDefinitionSpecificationOptionValues.add(
-			_persistence.update(newCPDefinitionSpecificationOptionValue));
+			newCPDefinitionSpecificationOptionValue);
 
 		CPDefinitionSpecificationOptionValue
 			existingCPDefinitionSpecificationOptionValue =
@@ -878,4 +881,4 @@ public class CPDefinitionSpecificationOptionValuePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:42624393
+// LIFERAY-SERVICE-BUILDER-HASH:640902703

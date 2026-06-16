@@ -153,7 +153,9 @@ public class KaleoTransitionPersistenceTest {
 
 		newKaleoTransition.setDefaultTransition(RandomTestUtil.randomBoolean());
 
-		_kaleoTransitions.add(_persistence.update(newKaleoTransition));
+		newKaleoTransition = _persistence.update(newKaleoTransition);
+
+		_kaleoTransitions.add(newKaleoTransition);
 
 		KaleoTransition existingKaleoTransition = _persistence.findByPrimaryKey(
 			newKaleoTransition.getPrimaryKey());
@@ -633,4 +635,4 @@ public class KaleoTransitionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1634883322
+// LIFERAY-SERVICE-BUILDER-HASH:-2102990744

@@ -134,7 +134,9 @@ public class LayoutLocalizationPersistenceTest {
 
 		newLayoutLocalization.setLastPublishDate(RandomTestUtil.nextDate());
 
-		_layoutLocalizations.add(_persistence.update(newLayoutLocalization));
+		newLayoutLocalization = _persistence.update(newLayoutLocalization);
+
+		_layoutLocalizations.add(newLayoutLocalization);
 
 		LayoutLocalization existingLayoutLocalization =
 			_persistence.findByPrimaryKey(
@@ -616,4 +618,4 @@ public class LayoutLocalizationPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1461656693
+// LIFERAY-SERVICE-BUILDER-HASH:-771706937

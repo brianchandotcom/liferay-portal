@@ -153,7 +153,9 @@ public class DDMStructureVersionPersistenceTest {
 
 		newDDMStructureVersion.setStatusDate(RandomTestUtil.nextDate());
 
-		_ddmStructureVersions.add(_persistence.update(newDDMStructureVersion));
+		newDDMStructureVersion = _persistence.update(newDDMStructureVersion);
+
+		_ddmStructureVersions.add(newDDMStructureVersion);
 
 		DDMStructureVersion existingDDMStructureVersion =
 			_persistence.findByPrimaryKey(
@@ -622,4 +624,4 @@ public class DDMStructureVersionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-452636397
+// LIFERAY-SERVICE-BUILDER-HASH:-207695979

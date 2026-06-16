@@ -144,7 +144,9 @@ public class SourcePersistenceTest {
 
 		newSource.setDriverPassword(RandomTestUtil.randomString());
 
-		_sources.add(_persistence.update(newSource));
+		newSource = _persistence.update(newSource);
+
+		_sources.add(newSource);
 
 		Source existingSource = _persistence.findByPrimaryKey(
 			newSource.getPrimaryKey());
@@ -579,4 +581,4 @@ public class SourcePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2007166926
+// LIFERAY-SERVICE-BUILDER-HASH:1282373680

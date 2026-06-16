@@ -131,8 +131,10 @@ public class UserNotificationDeliveryPersistenceTest {
 
 		newUserNotificationDelivery.setDeliver(RandomTestUtil.randomBoolean());
 
-		_userNotificationDeliveries.add(
-			_persistence.update(newUserNotificationDelivery));
+		newUserNotificationDelivery = _persistence.update(
+			newUserNotificationDelivery);
+
+		_userNotificationDeliveries.add(newUserNotificationDelivery);
 
 		UserNotificationDelivery existingUserNotificationDelivery =
 			_persistence.findByPrimaryKey(
@@ -577,4 +579,4 @@ public class UserNotificationDeliveryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-841737405
+// LIFERAY-SERVICE-BUILDER-HASH:274105569

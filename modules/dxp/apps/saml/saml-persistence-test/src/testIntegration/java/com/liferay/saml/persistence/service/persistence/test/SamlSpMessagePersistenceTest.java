@@ -123,7 +123,9 @@ public class SamlSpMessagePersistenceTest {
 
 		newSamlSpMessage.setSamlIdpResponseKey(RandomTestUtil.randomString());
 
-		_samlSpMessages.add(_persistence.update(newSamlSpMessage));
+		newSamlSpMessage = _persistence.update(newSamlSpMessage);
+
+		_samlSpMessages.add(newSamlSpMessage);
 
 		SamlSpMessage existingSamlSpMessage = _persistence.findByPrimaryKey(
 			newSamlSpMessage.getPrimaryKey());
@@ -496,4 +498,4 @@ public class SamlSpMessagePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-529848748
+// LIFERAY-SERVICE-BUILDER-HASH:1035552162

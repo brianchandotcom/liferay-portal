@@ -127,8 +127,9 @@ public class RecentLayoutRevisionPersistenceTest {
 
 		newRecentLayoutRevision.setPlid(RandomTestUtil.nextLong());
 
-		_recentLayoutRevisions.add(
-			_persistence.update(newRecentLayoutRevision));
+		newRecentLayoutRevision = _persistence.update(newRecentLayoutRevision);
+
+		_recentLayoutRevisions.add(newRecentLayoutRevision);
 
 		RecentLayoutRevision existingRecentLayoutRevision =
 			_persistence.findByPrimaryKey(
@@ -560,4 +561,4 @@ public class RecentLayoutRevisionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:117253373
+// LIFERAY-SERVICE-BUILDER-HASH:-1068676635

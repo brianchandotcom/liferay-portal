@@ -129,7 +129,9 @@ public class ObjectLayoutColumnPersistenceTest {
 
 		newObjectLayoutColumn.setSize(RandomTestUtil.nextInt());
 
-		_objectLayoutColumns.add(_persistence.update(newObjectLayoutColumn));
+		newObjectLayoutColumn = _persistence.update(newObjectLayoutColumn);
+
+		_objectLayoutColumns.add(newObjectLayoutColumn);
 
 		ObjectLayoutColumn existingObjectLayoutColumn =
 			_persistence.findByPrimaryKey(
@@ -471,4 +473,4 @@ public class ObjectLayoutColumnPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1946251368
+// LIFERAY-SERVICE-BUILDER-HASH:-1727625470

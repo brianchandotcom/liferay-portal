@@ -136,8 +136,9 @@ public class CommerceOrderPaymentPersistenceTest {
 
 		newCommerceOrderPayment.setStatus(RandomTestUtil.nextInt());
 
-		_commerceOrderPayments.add(
-			_persistence.update(newCommerceOrderPayment));
+		newCommerceOrderPayment = _persistence.update(newCommerceOrderPayment);
+
+		_commerceOrderPayments.add(newCommerceOrderPayment);
 
 		CommerceOrderPayment existingCommerceOrderPayment =
 			_persistence.findByPrimaryKey(
@@ -496,4 +497,4 @@ public class CommerceOrderPaymentPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-659364403
+// LIFERAY-SERVICE-BUILDER-HASH:-145142081

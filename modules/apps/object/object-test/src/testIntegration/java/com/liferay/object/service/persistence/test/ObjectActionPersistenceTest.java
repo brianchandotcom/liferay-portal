@@ -153,7 +153,9 @@ public class ObjectActionPersistenceTest {
 
 		newObjectAction.setStatus(RandomTestUtil.nextInt());
 
-		_objectActions.add(_persistence.update(newObjectAction));
+		newObjectAction = _persistence.update(newObjectAction);
+
+		_objectActions.add(newObjectAction);
 
 		ObjectAction existingObjectAction = _persistence.findByPrimaryKey(
 			newObjectAction.getPrimaryKey());
@@ -705,4 +707,4 @@ public class ObjectActionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-230034920
+// LIFERAY-SERVICE-BUILDER-HASH:-132397846

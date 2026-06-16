@@ -628,10 +628,7 @@ public class DLContentPersistenceImpl
 				session.save(dlContent);
 			}
 			else {
-				session.evict(
-					DLContentImpl.class, dlContent.getPrimaryKeyObj());
-
-				session.saveOrUpdate(dlContent);
+				dlContent = (DLContent)session.merge(dlContent);
 			}
 
 			session.flush();
@@ -969,4 +966,4 @@ public class DLContentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:897256232
+// LIFERAY-SERVICE-BUILDER-HASH:-1552810903

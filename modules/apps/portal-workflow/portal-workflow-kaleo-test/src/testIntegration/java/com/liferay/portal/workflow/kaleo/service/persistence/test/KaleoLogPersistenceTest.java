@@ -174,7 +174,9 @@ public class KaleoLogPersistenceTest {
 
 		newKaleoLog.setWorkflowContext(RandomTestUtil.randomString());
 
-		_kaleoLogs.add(_persistence.update(newKaleoLog));
+		newKaleoLog = _persistence.update(newKaleoLog);
+
+		_kaleoLogs.add(newKaleoLog);
 
 		KaleoLog existingKaleoLog = _persistence.findByPrimaryKey(
 			newKaleoLog.getPrimaryKey());
@@ -639,4 +641,4 @@ public class KaleoLogPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1154988301
+// LIFERAY-SERVICE-BUILDER-HASH:760193821

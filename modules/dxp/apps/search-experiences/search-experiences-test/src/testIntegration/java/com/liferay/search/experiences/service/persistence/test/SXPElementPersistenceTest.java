@@ -151,7 +151,9 @@ public class SXPElementPersistenceTest {
 
 		newSXPElement.setStatus(RandomTestUtil.nextInt());
 
-		_sxpElements.add(_persistence.update(newSXPElement));
+		newSXPElement = _persistence.update(newSXPElement);
+
+		_sxpElements.add(newSXPElement);
 
 		SXPElement existingSXPElement = _persistence.findByPrimaryKey(
 			newSXPElement.getPrimaryKey());
@@ -644,4 +646,4 @@ public class SXPElementPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-402410646
+// LIFERAY-SERVICE-BUILDER-HASH:-1219519392

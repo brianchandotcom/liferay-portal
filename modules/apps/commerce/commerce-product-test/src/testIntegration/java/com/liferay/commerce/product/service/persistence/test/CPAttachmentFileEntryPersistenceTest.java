@@ -174,8 +174,10 @@ public class CPAttachmentFileEntryPersistenceTest {
 
 		newCPAttachmentFileEntry.setStatusDate(RandomTestUtil.nextDate());
 
-		_cpAttachmentFileEntries.add(
-			_persistence.update(newCPAttachmentFileEntry));
+		newCPAttachmentFileEntry = _persistence.update(
+			newCPAttachmentFileEntry);
+
+		_cpAttachmentFileEntries.add(newCPAttachmentFileEntry);
 
 		CPAttachmentFileEntry existingCPAttachmentFileEntry =
 			_persistence.findByPrimaryKey(
@@ -866,4 +868,4 @@ public class CPAttachmentFileEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1168727120
+// LIFERAY-SERVICE-BUILDER-HASH:34817944

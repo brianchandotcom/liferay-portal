@@ -138,8 +138,10 @@ public class CPDAvailabilityEstimatePersistenceTest {
 		newCPDAvailabilityEstimate.setLastPublishDate(
 			RandomTestUtil.nextDate());
 
-		_cpdAvailabilityEstimates.add(
-			_persistence.update(newCPDAvailabilityEstimate));
+		newCPDAvailabilityEstimate = _persistence.update(
+			newCPDAvailabilityEstimate);
+
+		_cpdAvailabilityEstimates.add(newCPDAvailabilityEstimate);
 
 		CPDAvailabilityEstimate existingCPDAvailabilityEstimate =
 			_persistence.findByPrimaryKey(
@@ -594,4 +596,4 @@ public class CPDAvailabilityEstimatePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1940216050
+// LIFERAY-SERVICE-BUILDER-HASH:-484152596

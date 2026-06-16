@@ -127,7 +127,9 @@ public class LVEntryPersistenceTest {
 
 		newLVEntry.setUniqueGroupKey(RandomTestUtil.randomString());
 
-		_lvEntries.add(_persistence.update(newLVEntry));
+		newLVEntry = _persistence.update(newLVEntry);
+
+		_lvEntries.add(newLVEntry);
 
 		LVEntry existingLVEntry = _persistence.findByPrimaryKey(
 			newLVEntry.getPrimaryKey());
@@ -605,4 +607,4 @@ public class LVEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1918151625
+// LIFERAY-SERVICE-BUILDER-HASH:159555103

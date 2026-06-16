@@ -120,7 +120,9 @@ public class RememberMeTokenPersistenceTest {
 
 		newRememberMeToken.setValue(RandomTestUtil.randomString());
 
-		_rememberMeTokens.add(_persistence.update(newRememberMeToken));
+		newRememberMeToken = _persistence.update(newRememberMeToken);
+
+		_rememberMeTokens.add(newRememberMeToken);
 
 		RememberMeToken existingRememberMeToken = _persistence.findByPrimaryKey(
 			newRememberMeToken.getPrimaryKey());
@@ -432,4 +434,4 @@ public class RememberMeTokenPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1024995132
+// LIFERAY-SERVICE-BUILDER-HASH:-916237966

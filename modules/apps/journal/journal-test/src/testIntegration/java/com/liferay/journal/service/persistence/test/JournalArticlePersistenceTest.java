@@ -187,7 +187,9 @@ public class JournalArticlePersistenceTest {
 
 		newJournalArticle.setStatusDate(RandomTestUtil.nextDate());
 
-		_journalArticles.add(_persistence.update(newJournalArticle));
+		newJournalArticle = _persistence.update(newJournalArticle);
+
+		_journalArticles.add(newJournalArticle);
 
 		JournalArticle existingJournalArticle = _persistence.findByPrimaryKey(
 			newJournalArticle.getPrimaryKey());
@@ -1172,4 +1174,4 @@ public class JournalArticlePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1731830790
+// LIFERAY-SERVICE-BUILDER-HASH:-1881453920

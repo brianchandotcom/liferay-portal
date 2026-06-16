@@ -124,7 +124,9 @@ public class SamlIbSloMessagePersistenceTest {
 		newSamlIbSloMessage.setSamlIdpSessionIndex(
 			RandomTestUtil.randomString());
 
-		_samlIbSloMessages.add(_persistence.update(newSamlIbSloMessage));
+		newSamlIbSloMessage = _persistence.update(newSamlIbSloMessage);
+
+		_samlIbSloMessages.add(newSamlIbSloMessage);
 
 		SamlIbSloMessage existingSamlIbSloMessage =
 			_persistence.findByPrimaryKey(newSamlIbSloMessage.getPrimaryKey());
@@ -490,4 +492,4 @@ public class SamlIbSloMessagePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-916748487
+// LIFERAY-SERVICE-BUILDER-HASH:1133324899

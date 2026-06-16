@@ -130,7 +130,9 @@ public class TicketPersistenceTest {
 
 		newTicket.setExpirationDate(RandomTestUtil.nextDate());
 
-		_tickets.add(_persistence.update(newTicket));
+		newTicket = _persistence.update(newTicket);
+
+		_tickets.add(newTicket);
 
 		Ticket existingTicket = _persistence.findByPrimaryKey(
 			newTicket.getPrimaryKey());
@@ -524,4 +526,4 @@ public class TicketPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:845844700
+// LIFERAY-SERVICE-BUILDER-HASH:-2077138468

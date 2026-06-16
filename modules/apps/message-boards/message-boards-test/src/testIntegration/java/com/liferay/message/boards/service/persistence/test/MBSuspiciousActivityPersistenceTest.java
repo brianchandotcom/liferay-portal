@@ -141,8 +141,9 @@ public class MBSuspiciousActivityPersistenceTest {
 
 		newMBSuspiciousActivity.setValidated(RandomTestUtil.randomBoolean());
 
-		_mbSuspiciousActivities.add(
-			_persistence.update(newMBSuspiciousActivity));
+		newMBSuspiciousActivity = _persistence.update(newMBSuspiciousActivity);
+
+		_mbSuspiciousActivities.add(newMBSuspiciousActivity);
 
 		MBSuspiciousActivity existingMBSuspiciousActivity =
 			_persistence.findByPrimaryKey(
@@ -653,4 +654,4 @@ public class MBSuspiciousActivityPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:684536265
+// LIFERAY-SERVICE-BUILDER-HASH:1038066977

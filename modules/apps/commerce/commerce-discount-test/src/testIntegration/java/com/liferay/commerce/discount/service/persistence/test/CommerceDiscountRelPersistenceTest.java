@@ -131,7 +131,9 @@ public class CommerceDiscountRelPersistenceTest {
 
 		newCommerceDiscountRel.setTypeSettings(RandomTestUtil.randomString());
 
-		_commerceDiscountRels.add(_persistence.update(newCommerceDiscountRel));
+		newCommerceDiscountRel = _persistence.update(newCommerceDiscountRel);
+
+		_commerceDiscountRels.add(newCommerceDiscountRel);
 
 		CommerceDiscountRel existingCommerceDiscountRel =
 			_persistence.findByPrimaryKey(
@@ -497,4 +499,4 @@ public class CommerceDiscountRelPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-865290242
+// LIFERAY-SERVICE-BUILDER-HASH:867726896

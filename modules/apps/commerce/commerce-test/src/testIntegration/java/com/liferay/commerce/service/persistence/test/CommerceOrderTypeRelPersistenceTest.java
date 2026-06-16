@@ -140,8 +140,9 @@ public class CommerceOrderTypeRelPersistenceTest {
 		newCommerceOrderTypeRel.setCommerceOrderTypeId(
 			RandomTestUtil.nextLong());
 
-		_commerceOrderTypeRels.add(
-			_persistence.update(newCommerceOrderTypeRel));
+		newCommerceOrderTypeRel = _persistence.update(newCommerceOrderTypeRel);
+
+		_commerceOrderTypeRels.add(newCommerceOrderTypeRel);
 
 		CommerceOrderTypeRel existingCommerceOrderTypeRel =
 			_persistence.findByPrimaryKey(
@@ -653,4 +654,4 @@ public class CommerceOrderTypeRelPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:59772391
+// LIFERAY-SERVICE-BUILDER-HASH:979222311

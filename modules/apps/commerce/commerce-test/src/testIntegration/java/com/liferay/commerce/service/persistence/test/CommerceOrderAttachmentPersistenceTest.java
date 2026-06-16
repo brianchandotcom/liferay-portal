@@ -151,8 +151,10 @@ public class CommerceOrderAttachmentPersistenceTest {
 
 		newCommerceOrderAttachment.setType(RandomTestUtil.randomString());
 
-		_commerceOrderAttachments.add(
-			_persistence.update(newCommerceOrderAttachment));
+		newCommerceOrderAttachment = _persistence.update(
+			newCommerceOrderAttachment);
+
+		_commerceOrderAttachments.add(newCommerceOrderAttachment);
 
 		CommerceOrderAttachment existingCommerceOrderAttachment =
 			_persistence.findByPrimaryKey(
@@ -691,4 +693,4 @@ public class CommerceOrderAttachmentPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:793127760
+// LIFERAY-SERVICE-BUILDER-HASH:1416523454

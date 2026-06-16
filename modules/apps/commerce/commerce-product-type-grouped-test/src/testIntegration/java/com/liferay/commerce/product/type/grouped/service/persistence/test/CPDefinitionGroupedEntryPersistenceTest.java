@@ -144,8 +144,10 @@ public class CPDefinitionGroupedEntryPersistenceTest {
 
 		newCPDefinitionGroupedEntry.setQuantity(RandomTestUtil.nextInt());
 
-		_cpDefinitionGroupedEntries.add(
-			_persistence.update(newCPDefinitionGroupedEntry));
+		newCPDefinitionGroupedEntry = _persistence.update(
+			newCPDefinitionGroupedEntry);
+
+		_cpDefinitionGroupedEntries.add(newCPDefinitionGroupedEntry);
 
 		CPDefinitionGroupedEntry existingCPDefinitionGroupedEntry =
 			_persistence.findByPrimaryKey(
@@ -642,4 +644,4 @@ public class CPDefinitionGroupedEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1330224768
+// LIFERAY-SERVICE-BUILDER-HASH:-2002894502

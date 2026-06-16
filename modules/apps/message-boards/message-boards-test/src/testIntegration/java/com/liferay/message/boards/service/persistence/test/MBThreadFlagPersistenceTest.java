@@ -133,7 +133,9 @@ public class MBThreadFlagPersistenceTest {
 
 		newMBThreadFlag.setLastPublishDate(RandomTestUtil.nextDate());
 
-		_mbThreadFlags.add(_persistence.update(newMBThreadFlag));
+		newMBThreadFlag = _persistence.update(newMBThreadFlag);
+
+		_mbThreadFlags.add(newMBThreadFlag);
 
 		MBThreadFlag existingMBThreadFlag = _persistence.findByPrimaryKey(
 			newMBThreadFlag.getPrimaryKey());
@@ -573,4 +575,4 @@ public class MBThreadFlagPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-336038264
+// LIFERAY-SERVICE-BUILDER-HASH:-1427288890

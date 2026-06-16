@@ -125,7 +125,9 @@ public class SamlSpAuthRequestPersistenceTest {
 		newSamlSpAuthRequest.setSamlSpAuthRequestKey(
 			RandomTestUtil.randomString());
 
-		_samlSpAuthRequests.add(_persistence.update(newSamlSpAuthRequest));
+		newSamlSpAuthRequest = _persistence.update(newSamlSpAuthRequest);
+
+		_samlSpAuthRequests.add(newSamlSpAuthRequest);
 
 		SamlSpAuthRequest existingSamlSpAuthRequest =
 			_persistence.findByPrimaryKey(newSamlSpAuthRequest.getPrimaryKey());
@@ -509,4 +511,4 @@ public class SamlSpAuthRequestPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:909221951
+// LIFERAY-SERVICE-BUILDER-HASH:-738323699

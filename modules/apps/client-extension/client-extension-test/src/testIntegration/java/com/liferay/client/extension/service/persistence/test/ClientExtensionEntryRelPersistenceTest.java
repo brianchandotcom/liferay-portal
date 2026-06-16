@@ -153,8 +153,10 @@ public class ClientExtensionEntryRelPersistenceTest {
 		newClientExtensionEntryRel.setLastPublishDate(
 			RandomTestUtil.nextDate());
 
-		_clientExtensionEntryRels.add(
-			_persistence.update(newClientExtensionEntryRel));
+		newClientExtensionEntryRel = _persistence.update(
+			newClientExtensionEntryRel);
+
+		_clientExtensionEntryRels.add(newClientExtensionEntryRel);
 
 		ClientExtensionEntryRel existingClientExtensionEntryRel =
 			_persistence.findByPrimaryKey(
@@ -723,4 +725,4 @@ public class ClientExtensionEntryRelPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:527959896
+// LIFERAY-SERVICE-BUILDER-HASH:-1657813550

@@ -124,7 +124,9 @@ public class ImagePersistenceTest {
 
 		newImage.setSize(RandomTestUtil.nextInt());
 
-		_images.add(_persistence.update(newImage));
+		newImage = _persistence.update(newImage);
+
+		_images.add(newImage);
 
 		Image existingImage = _persistence.findByPrimaryKey(
 			newImage.getPrimaryKey());
@@ -409,4 +411,4 @@ public class ImagePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-42450143
+// LIFERAY-SERVICE-BUILDER-HASH:-2092644773

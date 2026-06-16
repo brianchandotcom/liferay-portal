@@ -6,6 +6,8 @@
 import Label from '@clayui/label';
 import React from 'react';
 
+import isOverdue from '../utils/isOverdue';
+
 type NameDisplayType =
 	| 'danger'
 	| 'info'
@@ -39,16 +41,13 @@ function StateLabel({dueDate, state}: StateLabelProps) {
 		return null;
 	}
 
-	const isOverdue =
-		dueDate && state.key !== 'done' && Date.parse(dueDate) < Date.now();
-
 	return (
 		<div>
 			<Label displayType={mapKeyToNameDisplayType[state.key]}>
 				{state.name}
 			</Label>
 
-			{isOverdue && (
+			{isOverdue({dueDate, state}) && (
 				<Label displayType="warning">
 					{Liferay.Language.get('overdue')}
 				</Label>

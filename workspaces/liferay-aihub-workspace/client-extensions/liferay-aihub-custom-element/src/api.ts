@@ -163,9 +163,9 @@ export async function postChatMessage(
 export type ReportFeedbackReason =
 	| 'agentError'
 	| 'harmfulContent'
-	| 'incorrect'
+	| 'inaccurateResponse'
 	| 'other'
-	| 'piiExposure';
+	| 'personalDataExposure';
 
 export type ReportFeedbackType = 'negative' | 'positive';
 

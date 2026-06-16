@@ -10,9 +10,9 @@ const AI_HUB_ENDPOINT = '/o/ai-hub/v1.0';
 export type ReportFeedbackReason =
 	| 'agentError'
 	| 'harmfulContent'
-	| 'incorrect'
+	| 'inaccurateResponse'
 	| 'other'
-	| 'piiExposure';
+	| 'personalDataExposure';
 
 export type ReportFeedbackSurface =
 	| 'aiAssistant'

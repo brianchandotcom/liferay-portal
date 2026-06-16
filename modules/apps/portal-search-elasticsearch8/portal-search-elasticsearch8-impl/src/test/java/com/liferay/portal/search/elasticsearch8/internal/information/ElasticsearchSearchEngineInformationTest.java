@@ -6,6 +6,8 @@
 package com.liferay.portal.search.elasticsearch8.internal.information;
 
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch.inference.ElasticsearchInferenceClient;
+import co.elastic.clients.elasticsearch.inference.GetInferenceResponse;
 import co.elastic.clients.elasticsearch.license.ElasticsearchLicenseClient;
 import co.elastic.clients.elasticsearch.license.GetLicenseResponse;
 import co.elastic.clients.elasticsearch.license.LicenseStatus;
@@ -37,7 +39,7 @@ public class ElasticsearchSearchEngineInformationTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Before
-	public void setUp() {
+	public void setUp() throws Exception {
 		_elasticsearchSearchEngineInformation =
 			new ElasticsearchSearchEngineInformation();
 
@@ -48,6 +50,18 @@ public class ElasticsearchSearchEngineInformationTest {
 			_elasticsearchClient.license()
 		).thenReturn(
 			_elasticsearchLicenseClient
+		);
+
+		Mockito.when(
+			_elasticsearchClient.inference()
+		).thenReturn(
+			_elasticsearchInferenceClient
+		);
+
+		Mockito.when(
+			_elasticsearchInferenceClient.get()
+		).thenReturn(
+			Mockito.mock(GetInferenceResponse.class)
 		);
 
 		Mockito.when(
@@ -67,6 +81,23 @@ public class ElasticsearchSearchEngineInformationTest {
 			true, LicenseStatus.Active, LicenseType.Trial);
 		_testIsInferenceAPISupported(
 			false, LicenseStatus.Expired, LicenseType.Enterprise);
+
+		_setLicense(LicenseStatus.Active, LicenseType.Enterprise);
+
+		Mockito.when(
+			_elasticsearchInferenceClient.get()
+		).thenThrow(
+			new IOException(RandomTestUtil.randomString())
+		);
+
+		Assert.assertFalse(
+			_elasticsearchSearchEngineInformation.isInferenceAPISupported());
+
+		Mockito.doReturn(
+			Mockito.mock(GetInferenceResponse.class)
+		).when(
+			_elasticsearchInferenceClient
+		).get();
 
 		Mockito.when(
 			_elasticsearchLicenseClient.get()
@@ -156,6 +187,8 @@ public class ElasticsearchSearchEngineInformationTest {
 	private final ElasticsearchConnectionManager
 		_elasticsearchConnectionManager = Mockito.mock(
 			ElasticsearchConnectionManager.class);
+	private final ElasticsearchInferenceClient _elasticsearchInferenceClient =
+		Mockito.mock(ElasticsearchInferenceClient.class);
 	private final ElasticsearchLicenseClient _elasticsearchLicenseClient =
 		Mockito.mock(ElasticsearchLicenseClient.class);
 	private ElasticsearchSearchEngineInformation

@@ -6,6 +6,7 @@
 package com.liferay.style.book.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.style.book.model.StyleBookTokenSet;
 
 /**
  * Provides a wrapper for {@link StyleBookTokenSetService}.
@@ -26,6 +27,19 @@ public class StyleBookTokenSetServiceWrapper
 		StyleBookTokenSetService styleBookTokenSetService) {
 
 		_styleBookTokenSetService = styleBookTokenSetService;
+	}
+
+	@Override
+	public StyleBookTokenSet addStyleBookTokenSet(
+			String externalReferenceCode, String description,
+			String frontendTokenCategoryName, String name,
+			long styleBookEntryId, String themeId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _styleBookTokenSetService.addStyleBookTokenSet(
+			externalReferenceCode, description, frontendTokenCategoryName, name,
+			styleBookEntryId, themeId, serviceContext);
 	}
 
 	/**
@@ -53,4 +67,4 @@ public class StyleBookTokenSetServiceWrapper
 	private StyleBookTokenSetService _styleBookTokenSetService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2101222606
+// LIFERAY-SERVICE-BUILDER-HASH:-1689006679

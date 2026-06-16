@@ -43,182 +43,61 @@ public class ConsentManagementPlatformCookiesConsentCheckerTest {
 
 	@Test
 	public void testHasConsent() throws Exception {
-		Assert.assertTrue(
-			_cookiesConsentChecker.hasConsent(
-				CookiesConstants.CONSENT_TYPE_FUNCTIONAL,
-				_createMockHttpServletRequest()));
-
-		MockHttpServletRequest mockHttpServletRequest =
-			_createMockHttpServletRequest();
-
-		mockHttpServletRequest.setCookies(
-			new Cookie(
-				CookiesConstants.NAME_CONSENT_STATE,
-				"%%%" + RandomTestUtil.randomString()));
-
-		Assert.assertTrue(
-			_cookiesConsentChecker.hasConsent(
-				CookiesConstants.CONSENT_TYPE_FUNCTIONAL,
-				mockHttpServletRequest));
-
-		mockHttpServletRequest = _createMockHttpServletRequest();
-
-		mockHttpServletRequest.setCookies(
-			new Cookie(
-				CookiesConstants.NAME_CONSENT_STATE,
-				URLEncoder.encode(
-					RandomTestUtil.randomString(), StandardCharsets.UTF_8)));
-
-		Assert.assertTrue(
-			_cookiesConsentChecker.hasConsent(
-				CookiesConstants.CONSENT_TYPE_FUNCTIONAL,
-				mockHttpServletRequest));
-
-		mockHttpServletRequest = _createMockHttpServletRequest();
-
-		mockHttpServletRequest.setCookies(
-			new Cookie(
-				CookiesConstants.NAME_CONSENT_STATE,
-				_encodeCookieValue(
-					JSONUtil.put(
-						CookiesConstants.NAME_CONSENT_TYPE_FUNCTIONAL, true
-					).put(
-						CookiesConstants.NAME_CONSENT_TYPE_NECESSARY, true
-					).put(
-						CookiesConstants.NAME_CONSENT_TYPE_PERFORMANCE, true
-					).put(
-						CookiesConstants.NAME_CONSENT_TYPE_PERSONALIZATION, true
-					))));
-
-		Assert.assertTrue(
-			_cookiesConsentChecker.hasConsent(
-				CookiesConstants.CONSENT_TYPE_FUNCTIONAL,
-				mockHttpServletRequest));
-		Assert.assertTrue(
-			_cookiesConsentChecker.hasConsent(
-				CookiesConstants.CONSENT_TYPE_NECESSARY,
-				mockHttpServletRequest));
-		Assert.assertTrue(
-			_cookiesConsentChecker.hasConsent(
-				CookiesConstants.CONSENT_TYPE_PERFORMANCE,
-				mockHttpServletRequest));
-		Assert.assertTrue(
-			_cookiesConsentChecker.hasConsent(
-				CookiesConstants.CONSENT_TYPE_PERSONALIZATION,
-				mockHttpServletRequest));
-
-		mockHttpServletRequest = _createMockHttpServletRequest();
-
-		mockHttpServletRequest.setCookies(
-			new Cookie(
-				CookiesConstants.NAME_CONSENT_STATE,
-				_encodeCookieValue(
-					JSONUtil.put(
-						CookiesConstants.NAME_CONSENT_TYPE_FUNCTIONAL, false
-					).put(
-						CookiesConstants.NAME_CONSENT_TYPE_NECESSARY, false
-					).put(
-						CookiesConstants.NAME_CONSENT_TYPE_PERFORMANCE, false
-					).put(
-						CookiesConstants.NAME_CONSENT_TYPE_PERSONALIZATION,
-						false
-					))));
-
-		Assert.assertFalse(
-			_cookiesConsentChecker.hasConsent(
-				CookiesConstants.CONSENT_TYPE_FUNCTIONAL,
-				mockHttpServletRequest));
-		Assert.assertTrue(
-			_cookiesConsentChecker.hasConsent(
-				CookiesConstants.CONSENT_TYPE_NECESSARY,
-				mockHttpServletRequest));
-		Assert.assertFalse(
-			_cookiesConsentChecker.hasConsent(
-				CookiesConstants.CONSENT_TYPE_PERFORMANCE,
-				mockHttpServletRequest));
-		Assert.assertFalse(
-			_cookiesConsentChecker.hasConsent(
-				CookiesConstants.CONSENT_TYPE_PERSONALIZATION,
-				mockHttpServletRequest));
-
-		mockHttpServletRequest = _createMockHttpServletRequest();
-
-		mockHttpServletRequest.setCookies(
-			new Cookie(
-				CookiesConstants.NAME_CONSENT_STATE,
-				_encodeCookieValue(
-					JSONUtil.put(
-						CookiesConstants.NAME_CONSENT_TYPE_FUNCTIONAL, true
-					).put(
-						CookiesConstants.NAME_CONSENT_TYPE_NECESSARY, true
-					).put(
-						CookiesConstants.NAME_CONSENT_TYPE_PERFORMANCE, false
-					).put(
-						CookiesConstants.NAME_CONSENT_TYPE_PERSONALIZATION, true
-					))));
-
-		Assert.assertTrue(
-			_cookiesConsentChecker.hasConsent(
-				CookiesConstants.CONSENT_TYPE_FUNCTIONAL,
-				mockHttpServletRequest));
-		Assert.assertFalse(
-			_cookiesConsentChecker.hasConsent(
-				CookiesConstants.CONSENT_TYPE_PERFORMANCE,
-				mockHttpServletRequest));
-		Assert.assertTrue(
-			_cookiesConsentChecker.hasConsent(
-				CookiesConstants.CONSENT_TYPE_PERSONALIZATION,
-				mockHttpServletRequest));
-
-		mockHttpServletRequest = _createMockHttpServletRequest();
-
-		mockHttpServletRequest.setCookies(
-			new Cookie(
-				CookiesConstants.NAME_CONSENT_STATE,
-				_encodeCookieValue(
-					JSONUtil.put(
-						CookiesConstants.NAME_CONSENT_TYPE_FUNCTIONAL, false
-					).put(
-						CookiesConstants.NAME_CONSENT_TYPE_NECESSARY, true
-					).put(
-						CookiesConstants.NAME_CONSENT_TYPE_PERSONALIZATION,
-						false
-					))));
-
-		Assert.assertFalse(
-			_cookiesConsentChecker.hasConsent(
-				CookiesConstants.CONSENT_TYPE_FUNCTIONAL,
-				mockHttpServletRequest));
-		Assert.assertTrue(
-			_cookiesConsentChecker.hasConsent(
-				CookiesConstants.CONSENT_TYPE_PERFORMANCE,
-				mockHttpServletRequest));
-
-		mockHttpServletRequest = _createMockHttpServletRequest();
-
-		mockHttpServletRequest.setCookies(
-			new Cookie(
-				CookiesConstants.NAME_CONSENT_STATE,
-				_encodeCookieValue(
-					JSONUtil.put(
-						CookiesConstants.NAME_CONSENT_TYPE_FUNCTIONAL, "true"
-					).put(
-						CookiesConstants.NAME_CONSENT_TYPE_NECESSARY, "true"
-					).put(
-						CookiesConstants.NAME_CONSENT_TYPE_PERFORMANCE, "false"
-					).put(
-						CookiesConstants.NAME_CONSENT_TYPE_PERSONALIZATION,
-						"false"
-					))));
-
-		Assert.assertTrue(
-			_cookiesConsentChecker.hasConsent(
-				CookiesConstants.CONSENT_TYPE_FUNCTIONAL,
-				mockHttpServletRequest));
-		Assert.assertFalse(
-			_cookiesConsentChecker.hasConsent(
-				CookiesConstants.CONSENT_TYPE_PERFORMANCE,
-				mockHttpServletRequest));
+		_testHasConsent(
+			"%%%" + RandomTestUtil.randomString(), true, true, true, true);
+		_testHasConsent(
+			URLEncoder.encode(
+				RandomTestUtil.randomString(), StandardCharsets.UTF_8),
+			true, true, true, true);
+		_testHasConsent(
+			_encodeCookieValue(
+				JSONUtil.put(
+					CookiesConstants.NAME_CONSENT_TYPE_FUNCTIONAL, "true"
+				).put(
+					CookiesConstants.NAME_CONSENT_TYPE_PERFORMANCE, "false"
+				).put(
+					CookiesConstants.NAME_CONSENT_TYPE_PERSONALIZATION, "false"
+				)),
+			true, true, false, false);
+		_testHasConsent(
+			_encodeCookieValue(
+				JSONUtil.put(
+					CookiesConstants.NAME_CONSENT_TYPE_FUNCTIONAL, false
+				).put(
+					CookiesConstants.NAME_CONSENT_TYPE_PERFORMANCE, false
+				).put(
+					CookiesConstants.NAME_CONSENT_TYPE_PERSONALIZATION, false
+				)),
+			false, true, false, false);
+		_testHasConsent(
+			_encodeCookieValue(
+				JSONUtil.put(
+					CookiesConstants.NAME_CONSENT_TYPE_FUNCTIONAL, false
+				).put(
+					CookiesConstants.NAME_CONSENT_TYPE_PERSONALIZATION, false
+				)),
+			false, true, true, false);
+		_testHasConsent(
+			_encodeCookieValue(
+				JSONUtil.put(
+					CookiesConstants.NAME_CONSENT_TYPE_FUNCTIONAL, true
+				).put(
+					CookiesConstants.NAME_CONSENT_TYPE_PERFORMANCE, false
+				).put(
+					CookiesConstants.NAME_CONSENT_TYPE_PERSONALIZATION, true
+				)),
+			true, true, false, true);
+		_testHasConsent(
+			_encodeCookieValue(
+				JSONUtil.put(
+					CookiesConstants.NAME_CONSENT_TYPE_FUNCTIONAL, true
+				).put(
+					CookiesConstants.NAME_CONSENT_TYPE_PERFORMANCE, true
+				).put(
+					CookiesConstants.NAME_CONSENT_TYPE_PERSONALIZATION, true
+				)),
+			true, true, true, true);
+		_testHasConsent(null, true, true, true, true);
 	}
 
 	private MockHttpServletRequest _createMockHttpServletRequest()
@@ -235,6 +114,45 @@ public class ConsentManagementPlatformCookiesConsentCheckerTest {
 
 	private String _encodeCookieValue(JSONObject jsonObject) {
 		return URLEncoder.encode(jsonObject.toString(), StandardCharsets.UTF_8);
+	}
+
+	private void _testHasConsent(
+			String consentStateCookieValue, boolean expectedFunctionalConsent,
+			boolean expectedNecessaryConsent,
+			boolean expectedPerformanceConsent,
+			boolean expectedPersonalizationConsent)
+		throws Exception {
+
+		MockHttpServletRequest mockHttpServletRequest =
+			_createMockHttpServletRequest();
+
+		if (consentStateCookieValue != null) {
+			mockHttpServletRequest.setCookies(
+				new Cookie(
+					CookiesConstants.NAME_CONSENT_STATE,
+					consentStateCookieValue));
+		}
+
+		Assert.assertEquals(
+			expectedFunctionalConsent,
+			_cookiesConsentChecker.hasConsent(
+				CookiesConstants.CONSENT_TYPE_FUNCTIONAL,
+				mockHttpServletRequest));
+		Assert.assertEquals(
+			expectedNecessaryConsent,
+			_cookiesConsentChecker.hasConsent(
+				CookiesConstants.CONSENT_TYPE_NECESSARY,
+				mockHttpServletRequest));
+		Assert.assertEquals(
+			expectedPerformanceConsent,
+			_cookiesConsentChecker.hasConsent(
+				CookiesConstants.CONSENT_TYPE_PERFORMANCE,
+				mockHttpServletRequest));
+		Assert.assertEquals(
+			expectedPersonalizationConsent,
+			_cookiesConsentChecker.hasConsent(
+				CookiesConstants.CONSENT_TYPE_PERSONALIZATION,
+				mockHttpServletRequest));
 	}
 
 	@Inject(

@@ -15,13 +15,16 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.servlet.PageContextFactoryUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.util.Collections;
+import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -76,7 +79,37 @@ public class CaptchaDDMFormFieldTemplateContextContributor
 				new PipingServletResponse(
 					httpServletResponse, unsyncStringWriter)));
 
-		captchaTag.runTag();
+		Locale locale = ddmFormFieldRenderingContext.getLocale();
+		Object originalLocale = null;
+		Locale originalThemeDisplayLocale = null;
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (locale != null) {
+			originalLocale = httpServletRequest.getAttribute(WebKeys.LOCALE);
+
+			httpServletRequest.setAttribute(WebKeys.LOCALE, locale);
+
+			if (themeDisplay != null) {
+				originalThemeDisplayLocale = themeDisplay.getLocale();
+
+				themeDisplay.setLocale(locale);
+			}
+		}
+
+		try {
+			captchaTag.runTag();
+		}
+		finally {
+			if (locale != null) {
+				httpServletRequest.setAttribute(WebKeys.LOCALE, originalLocale);
+
+				if (themeDisplay != null) {
+					themeDisplay.setLocale(originalThemeDisplayLocale);
+				}
+			}
+		}
 
 		return unsyncStringWriter.toString();
 	}

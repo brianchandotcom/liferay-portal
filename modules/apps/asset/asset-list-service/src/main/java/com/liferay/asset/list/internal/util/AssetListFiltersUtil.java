@@ -119,7 +119,7 @@ public class AssetListFiltersUtil {
 	}
 
 	private static String _getCommonFieldName(
-		String propertyName, Locale locale) {
+		Locale locale, String propertyName) {
 
 		if (!_commonFieldTypes.containsKey(propertyName)) {
 			return null;
@@ -271,7 +271,7 @@ public class AssetListFiltersUtil {
 
 		if (_isCommonFieldRow(jsonObject)) {
 			return _toCommonFieldClause(
-				jsonObject, jsonObject.getString("propertyName"), locale);
+				jsonObject, locale, jsonObject.getString("propertyName"));
 		}
 
 		ObjectField objectField = _fetchObjectField(
@@ -284,11 +284,11 @@ public class AssetListFiltersUtil {
 
 		if (objectField.isMetadata()) {
 			return _toCommonFieldClause(
-				jsonObject, _aliasMetadataName(objectField.getName()), locale);
+				jsonObject, locale, _aliasMetadataName(objectField.getName()));
 		}
 
 		NestedQuery nestedQuery = _toNestedQuery(
-			jsonObject, objectField, locale);
+			jsonObject, locale, objectField);
 
 		if (nestedQuery == null) {
 			return null;
@@ -298,13 +298,13 @@ public class AssetListFiltersUtil {
 	}
 
 	private static BooleanClause<Query> _toCommonFieldClause(
-		JSONObject jsonObject, String propertyName, Locale locale) {
+		JSONObject jsonObject, Locale locale, String propertyName) {
 
 		if (Validator.isNull(propertyName)) {
 			return null;
 		}
 
-		String field = _getCommonFieldName(propertyName, locale);
+		String field = _getCommonFieldName(locale, propertyName);
 		String type = _getCommonFieldType(propertyName);
 
 		if ((field == null) || (type == null)) {
@@ -315,8 +315,9 @@ public class AssetListFiltersUtil {
 			jsonObject.getString("operatorName"), "contains");
 
 		Query valueQuery = _toCommonFieldValueQuery(
-			jsonObject, field, operatorName, type,
-			_localizedCommonFieldNames.contains(propertyName));
+			field, jsonObject,
+			_localizedCommonFieldNames.contains(propertyName), operatorName,
+			type);
 
 		if (valueQuery == null) {
 			return null;
@@ -341,7 +342,7 @@ public class AssetListFiltersUtil {
 	}
 
 	private static Query _toCommonFieldRangeQuery(
-		JSONObject jsonObject, String field, String operatorName, String type) {
+		String field, JSONObject jsonObject, String operatorName, String type) {
 
 		boolean dateType = type.equals("date");
 
@@ -401,15 +402,15 @@ public class AssetListFiltersUtil {
 	}
 
 	private static Query _toCommonFieldValueQuery(
-		JSONObject jsonObject, String field, String operatorName, String type,
-		boolean localized) {
+		String field, JSONObject jsonObject, boolean localized,
+		String operatorName, String type) {
 
 		if (operatorName.equals("between") || operatorName.equals("ge") ||
 			operatorName.equals("gt") || operatorName.equals("le") ||
 			operatorName.equals("lt")) {
 
 			return _toCommonFieldRangeQuery(
-				jsonObject, field, operatorName, type);
+				field, jsonObject, operatorName, type);
 		}
 
 		String value = jsonObject.getString("value");
@@ -449,7 +450,7 @@ public class AssetListFiltersUtil {
 	}
 
 	private static NestedQuery _toNestedQuery(
-		JSONObject jsonObject, ObjectField objectField, Locale locale) {
+		JSONObject jsonObject, Locale locale, ObjectField objectField) {
 
 		String propertyName = jsonObject.getString("propertyName");
 		String value = jsonObject.getString("value");

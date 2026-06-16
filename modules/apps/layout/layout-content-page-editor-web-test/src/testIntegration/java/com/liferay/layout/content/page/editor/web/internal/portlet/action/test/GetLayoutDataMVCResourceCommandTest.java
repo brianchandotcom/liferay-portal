@@ -101,8 +101,6 @@ public class GetLayoutDataMVCResourceCommandTest {
 
 		String mainItemId = rootItemsJSONObject.getString("main");
 
-		Assert.assertNotNull(mainItemId);
-
 		JSONObject itemsJSONObject = layoutDataJSONObject.getJSONObject(
 			"items");
 

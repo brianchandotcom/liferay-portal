@@ -22,7 +22,6 @@ import com.bmuschko.gradle.docker.tasks.image.Dockerfile;
 import com.liferay.gradle.plugins.LiferayBasePlugin;
 import com.liferay.gradle.plugins.node.NodeExtension;
 import com.liferay.gradle.plugins.node.task.NpmInstallTask;
-import com.liferay.gradle.plugins.source.formatter.FormatSourceTask;
 import com.liferay.gradle.plugins.source.formatter.SourceFormatterPlugin;
 import com.liferay.gradle.plugins.workspace.LiferayWorkspaceYarnPlugin;
 import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
@@ -31,8 +30,10 @@ import com.liferay.gradle.plugins.workspace.docker.DockerPruneImage;
 import com.liferay.gradle.plugins.workspace.internal.configurator.TargetPlatformRootProjectConfigurator;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.workspace.internal.util.StringUtil;
+import com.liferay.gradle.plugins.workspace.internal.util.VersionUtil;
 import com.liferay.gradle.plugins.workspace.task.CreateTokenTask;
 import com.liferay.gradle.plugins.workspace.task.InitBundleTask;
+import com.liferay.gradle.plugins.workspace.task.UpgradeJakartaTask;
 import com.liferay.gradle.plugins.workspace.task.UpgradeSourceCodeTask;
 import com.liferay.gradle.plugins.workspace.task.VerifyBundleTask;
 import com.liferay.gradle.plugins.workspace.task.VerifyProductTask;
@@ -76,6 +77,8 @@ import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.artifacts.DependencySet;
+import org.gradle.api.artifacts.LenientConfiguration;
+import org.gradle.api.artifacts.ResolvedConfiguration;
 import org.gradle.api.artifacts.dsl.DependencyHandler;
 import org.gradle.api.execution.TaskExecutionGraph;
 import org.gradle.api.file.CopySpec;
@@ -85,6 +88,8 @@ import org.gradle.api.file.DuplicatesStrategy;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileCopyDetails;
 import org.gradle.api.file.ProjectLayout;
+import org.gradle.api.file.RegularFile;
+import org.gradle.api.file.RegularFileProperty;
 import org.gradle.api.initialization.Settings;
 import org.gradle.api.invocation.Gradle;
 import org.gradle.api.logging.Logger;
@@ -95,6 +100,7 @@ import org.gradle.api.provider.Property;
 import org.gradle.api.provider.Provider;
 import org.gradle.api.provider.SetProperty;
 import org.gradle.api.specs.Spec;
+import org.gradle.api.specs.Specs;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.TaskOutputs;
@@ -293,7 +299,10 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 		_configureTaskUpdateWorkspace(updateWorkspaceTask);
 
-		_addTaskUpgradeJakarta(project);
+		UpgradeJakartaTask upgradeJakartaTask = _addTaskUpgradeJakarta(project);
+
+		_configureTaskUpgradeJakarta(
+			project, upgradeJakartaTask, workspaceExtension);
 	}
 
 	public boolean isDefaultRepositoryEnabled() {
@@ -1565,18 +1574,18 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		return task;
 	}
 
-	private FormatSourceTask _addTaskUpgradeJakarta(Project project) {
-		FormatSourceTask formatSourceTask = GradleUtil.addTask(
-			project, UPGRADE_JAKARTA_TASK_NAME, FormatSourceTask.class);
+	private UpgradeJakartaTask _addTaskUpgradeJakarta(Project project) {
+		UpgradeJakartaTask upgradeJakartaTask = GradleUtil.addTask(
+			project, UPGRADE_JAKARTA_TASK_NAME, UpgradeJakartaTask.class);
 
-		formatSourceTask.onlyIf(_skipIfExecutingParentTaskSpec);
-		formatSourceTask.setCheckCategoryNames("JakartaTransform");
-		formatSourceTask.setDescription(
+		upgradeJakartaTask.onlyIf(_skipIfExecutingParentTaskSpec);
+		upgradeJakartaTask.setCheckCategoryNames("JakartaTransform");
+		upgradeJakartaTask.setDescription(
 			"Runs the Jakarta source code upgrade.");
-		formatSourceTask.setGroup("build");
-		formatSourceTask.setJavaParserEnabled(false);
+		upgradeJakartaTask.setGroup("build");
+		upgradeJakartaTask.setJavaParserEnabled(false);
 
-		return formatSourceTask;
+		return upgradeJakartaTask;
 	}
 
 	private UpgradeSourceCodeTask _addTaskUpgradeSourceCode(Project project) {
@@ -1992,6 +2001,21 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			});
 	}
 
+	private void _configureTaskUpgradeJakarta(
+		Project project, UpgradeJakartaTask upgradeJakartaTask,
+		WorkspaceExtension workspaceExtension) {
+
+		RegularFileProperty jakartaTransformDependenciesFileProperty =
+			upgradeJakartaTask.getJakartaTransformDependenciesFile();
+
+		Property<String> toVersionProperty = upgradeJakartaTask.getToVersion();
+
+		jakartaTransformDependenciesFileProperty.convention(
+			project.provider(
+				() -> _getJakartaTransformDependenciesFile(
+					project, toVersionProperty, workspaceExtension)));
+	}
+
 	private void _configureTaskUpgradeSourceCode(
 		UpgradeSourceCodeTask upgradeSourceCodeTask,
 		WorkspaceExtension workspaceExtension) {
@@ -2090,6 +2114,73 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		}
 
 		return sb.toString();
+	}
+
+	private RegularFile _getJakartaTransformDependenciesFile(
+		Project project, Property<String> toVersionProperty,
+		WorkspaceExtension workspaceExtension) {
+
+		String toVersion = toVersionProperty.getOrNull();
+
+		String targetPlatformVersion;
+
+		if (Validator.isNotNull(toVersion)) {
+			targetPlatformVersion = toVersion;
+		}
+		else {
+			targetPlatformVersion =
+				workspaceExtension.getTargetPlatformVersion();
+
+			if (Validator.isNull(targetPlatformVersion)) {
+				return null;
+			}
+		}
+
+		String normalizedTargetPlatformVersion =
+			VersionUtil.normalizeTargetPlatformVersion(targetPlatformVersion);
+
+		String productName = "portal";
+
+		if (VersionUtil.isDXPVersion(normalizedTargetPlatformVersion)) {
+			productName = "dxp";
+		}
+
+		String dependencyNotation = StringUtil.concat(
+			"com.liferay.portal:release.", productName, ".tools:",
+			normalizedTargetPlatformVersion, "@txt");
+
+		ConfigurationContainer configurationContainer =
+			project.getConfigurations();
+
+		DependencyHandler dependencyHandler = project.getDependencies();
+
+		Configuration detachedConfiguration =
+			configurationContainer.detachedConfiguration(
+				dependencyHandler.create(dependencyNotation));
+
+		ResolvedConfiguration resolvedConfiguration =
+			detachedConfiguration.getResolvedConfiguration();
+
+		LenientConfiguration lenientConfiguration =
+			resolvedConfiguration.getLenientConfiguration();
+
+		ProjectLayout projectLayout = project.getLayout();
+
+		Directory projectDirectory = projectLayout.getProjectDirectory();
+
+		for (File file : lenientConfiguration.getFiles(Specs.satisfyAll())) {
+			return projectDirectory.file(file.getAbsolutePath());
+		}
+
+		Logger logger = project.getLogger();
+
+		if (logger.isInfoEnabled()) {
+			logger.info(
+				"Unable to resolve Jakarta transform dependencies artifact: {}",
+				dependencyNotation);
+		}
+
+		return null;
 	}
 
 	private String _loadTemplate(String name) {

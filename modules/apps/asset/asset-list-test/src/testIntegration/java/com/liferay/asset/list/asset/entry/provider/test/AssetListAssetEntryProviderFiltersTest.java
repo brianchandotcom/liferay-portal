@@ -100,28 +100,28 @@ public class AssetListAssetEntryProviderFiltersTest {
 					_listTypeDefinition.getListTypeDefinitionId(),
 					ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST,
 					null, ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
-					"Categories", "categories", false, false),
+					RandomTestUtil.randomString(), "categories", false, false),
 				ObjectFieldUtil.createObjectField(
 					_listTypeDefinition.getListTypeDefinitionId(),
 					ObjectFieldConstants.BUSINESS_TYPE_PICKLIST, null,
 					ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
-					"Category", "category", false, false),
+					RandomTestUtil.randomString(), "category", false, false),
 				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_DATE,
 					ObjectFieldConstants.DB_TYPE_DATE, true, false, null,
-					"Due Date", "dueDate", false),
+					RandomTestUtil.randomString(), "dueDate", false),
 				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 					ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
-					"Learn Documentation", "learnDocumentation", false),
+					RandomTestUtil.randomString(), "learnDocumentation", false),
 				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_INTEGER,
 					ObjectFieldConstants.DB_TYPE_INTEGER, true, false, null,
-					"Priority", "priority", false),
+					RandomTestUtil.randomString(), "priority", false),
 				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_DATE_TIME,
 					ObjectFieldConstants.DB_TYPE_DATE_TIME, true, false, null,
-					"Start Time", "startTime",
+					RandomTestUtil.randomString(), "startTime",
 					Collections.singletonList(
 						_createObjectFieldSetting(
 							ObjectFieldSettingConstants.NAME_TIME_STORAGE,
@@ -131,7 +131,7 @@ public class AssetListAssetEntryProviderFiltersTest {
 				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 					ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
-					"Title", "title", false)),
+					RandomTestUtil.randomString(), "title", false)),
 			ObjectDefinitionConstants.SCOPE_SITE);
 
 		ObjectField titleObjectField =

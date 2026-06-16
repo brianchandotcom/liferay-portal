@@ -160,7 +160,7 @@ public class SHSubshellCheck extends BaseFileCheck {
 		"allowedSubshellNames";
 
 	private static final Pattern _subshellPattern = Pattern.compile(
-		"\\$\\(\\s*(?!\\()(\\w+)");
+		"\\$\\(\\s*(?!\\()([\\w./-]+)");
 	private static final Pattern _variableDefinitionPattern = Pattern.compile(
 		"local\\s+(-[a-zA-Z]+\\s+)?\\w+=(.*)");
 

@@ -18,8 +18,6 @@ import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 
 import java.util.concurrent.TimeoutException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.zip.Deflater;
 import java.util.zip.GZIPOutputStream;
 
@@ -73,48 +71,8 @@ public class HeapDumpCloudUploader {
 		String heapDumpsBasePath = JenkinsResultsParserUtil.combine(
 			"s3://", s3BucketName, "/heap-dumps");
 
-		String sentinelS3Path = heapDumpsBasePath + "/last-upload";
-
-		try {
-			String listing = CloudBucketUtil.listS3Files(sentinelS3Path, true);
-
-			if (!JenkinsResultsParserUtil.isNullOrEmpty(listing)) {
-				Matcher matcher = _s3ListingDateTimePattern.matcher(listing);
-
-				if (matcher.find()) {
-					String dateTimeString = JenkinsResultsParserUtil.combine(
-						matcher.group("date"), " ", matcher.group("time"));
-
-					LocalDateTime uploadDateTime = LocalDateTime.parse(
-						dateTimeString,
-						DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-
-					long uploadMillis = uploadDateTime.toInstant(
-						ZoneOffset.UTC
-					).toEpochMilli();
-
-					long elapsedMillis =
-						JenkinsResultsParserUtil.getCurrentTimeMillis() -
-							uploadMillis;
-
-					long minutesAgo = elapsedMillis / (60 * 1000);
-
-					if (minutesAgo < _THROTTLE_MINUTES) {
-						System.out.println(
-							JenkinsResultsParserUtil.combine(
-								"INFO: Skipping heap dump upload, last was ",
-								String.valueOf(minutesAgo),
-								" min ago (throttle window: ",
-								String.valueOf(_THROTTLE_MINUTES),
-								" min). Local file: ",
-								hprofFile.getAbsolutePath()));
-
-						return;
-					}
-				}
-			}
-		}
-		catch (IOException | TimeoutException exception) {
+		if (_isThrottled(heapDumpsBasePath, hprofFile)) {
+			return;
 		}
 
 		File gzippedFile = _gzip(hprofFile);
@@ -134,8 +92,6 @@ public class HeapDumpCloudUploader {
 
 		try {
 			CloudBucketUtil.uploadS3File(s3Key, gzippedFile);
-
-			CloudBucketUtil.uploadS3Object("", sentinelS3Path);
 
 			System.out.println(
 				JenkinsResultsParserUtil.combine(
@@ -188,10 +144,42 @@ public class HeapDumpCloudUploader {
 		return gzippedFile;
 	}
 
-	private static final int _THROTTLE_MINUTES = 30;
+	private boolean _isThrottled(String heapDumpsS3Path, File hprofFile) {
+		long lastModifiedMillis;
 
-	private static final Pattern _s3ListingDateTimePattern = Pattern.compile(
-		"(?<date>\\d{4}-\\d{2}-\\d{2})\\s+(?<time>\\d{2}:\\d{2}:\\d{2})");
+		try {
+			lastModifiedMillis = CloudBucketUtil.getNewestS3ObjectLastModified(
+				heapDumpsS3Path);
+		}
+		catch (IOException | TimeoutException exception) {
+			return false;
+		}
+
+		if (lastModifiedMillis == Long.MIN_VALUE) {
+			return false;
+		}
+
+		long elapsedMillis =
+			JenkinsResultsParserUtil.getCurrentTimeMillis() -
+				lastModifiedMillis;
+
+		long minutesAgo = elapsedMillis / (60 * 1000);
+
+		if (minutesAgo >= _THROTTLE_MINUTES) {
+			return false;
+		}
+
+		System.out.println(
+			JenkinsResultsParserUtil.combine(
+				"INFO: Skipping heap dump upload, last was ",
+				String.valueOf(minutesAgo), " min ago (throttle window: ",
+				String.valueOf(_THROTTLE_MINUTES), " min). Local file: ",
+				hprofFile.getAbsolutePath()));
+
+		return true;
+	}
+
+	private static final int _THROTTLE_MINUTES = 30;
 
 	private final String _buildNumber;
 	private final String _jobName;

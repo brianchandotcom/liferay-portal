@@ -116,6 +116,21 @@ The webhook applies the status and label when it processes the `pull_request` ev
 
 Use a direct, to-the-point style. Avoid being verbose. Present the proposed title and body to the user before submitting, and proceed once they approve.
 
+Create the pull request with `--body-file`, never inline `--body` (a literal `!` in an inline body gets shell-escaped and corrupts the marker). Use `mktemp` for the file so it stays out of the working tree, and remove it afterward.
+
+```bash
+body_file=$(mktemp)
+
+gh pr create \
+	--base master \
+	--body-file "${body_file}" \
+	--head <github-username>:<branch-name> \
+	--repo <target-org/repo> \
+	--title "<title>"
+
+rm "${body_file}"
+```
+
 ### Transitioned Jira Ticket
 
 Fetch the input ticket (issue type, status, subtasks) and resolve the **target ticket** — the one whose status reflects active work and on which the PR URL is recorded:

@@ -181,19 +181,6 @@ public class BuildFactory {
 				buildURL, (TopLevelBuild)parentBuild);
 		}
 
-		if (jobName.startsWith("test-portal-aws(")) {
-			return new PortalAWSTopLevelBuild(
-				buildURL, (TopLevelBuild)parentBuild);
-		}
-
-		if (jobName.startsWith("test-portal-environment(") ||
-			jobName.startsWith("test-portal-environment-release(") ||
-			jobName.startsWith("test-portal-fixpack-environment(")) {
-
-			return new PortalEnvironmentBuild(
-				buildURL, (TopLevelBuild)parentBuild);
-		}
-
 		if (jobName.equals("test-portal-fixpack-release")) {
 			return new PortalFixpackReleasePortalTopLevelBuild(
 				buildURL, (TopLevelBuild)parentBuild);

@@ -3,16 +3,16 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.one.model;
+package com.liferay.one.salesforce.model;
 
 import org.json.JSONObject;
 
 /**
  * @author Kyle Bischof
  */
-public class SalesforcePricebookEntry {
+public class PricebookEntry {
 
-	public SalesforcePricebookEntry(JSONObject jsonObject) {
+	public PricebookEntry(JSONObject jsonObject) {
 		_active = jsonObject.optBoolean("IsActive");
 		_currencyIsoCode = jsonObject.optString("CurrencyIsoCode");
 		_id = jsonObject.optString("Id");

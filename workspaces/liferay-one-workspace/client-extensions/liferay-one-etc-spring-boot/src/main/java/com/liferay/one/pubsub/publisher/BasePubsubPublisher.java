@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.osb.spring.boot.client.pubsub.publisher;
+package com.liferay.one.pubsub.publisher;
 
 import com.google.api.core.ApiFuture;
 import com.google.api.gax.retrying.RetrySettings;
@@ -12,8 +12,8 @@ import com.google.protobuf.ByteString;
 import com.google.pubsub.v1.PubsubMessage;
 import com.google.pubsub.v1.TopicName;
 
-import com.liferay.osb.spring.boot.client.pubsub.BasePubsubClient;
-import com.liferay.osb.spring.boot.client.pubsub.Message;
+import com.liferay.one.pubsub.BasePubsubClient;
+import com.liferay.one.pubsub.Message;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -3,9 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.osb.spring.boot.client.pubsub.subscriber;
+package com.liferay.one.pubsub.subscriber;
 
-import com.google.api.gax.rpc.AlreadyExistsException;
 import com.google.api.gax.rpc.NotFoundException;
 import com.google.cloud.pubsub.v1.AckReplyConsumer;
 import com.google.cloud.pubsub.v1.MessageReceiver;
@@ -19,8 +18,8 @@ import com.google.pubsub.v1.PubsubMessage;
 import com.google.pubsub.v1.Subscription;
 import com.google.pubsub.v1.TopicName;
 
-import com.liferay.osb.spring.boot.client.pubsub.BasePubsubClient;
-import com.liferay.osb.spring.boot.client.pubsub.Message;
+import com.liferay.one.pubsub.BasePubsubClient;
+import com.liferay.one.pubsub.Message;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -200,17 +199,7 @@ public abstract class BasePubsubSubscriber extends BasePubsubClient {
 					).build());
 			}
 
-			try {
-				subscriptionAdminClient.createSubscription(builder.build());
-			}
-			catch (AlreadyExistsException alreadyExistsException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Subscription already exists " +
-							projectSubscriptionName,
-						alreadyExistsException);
-				}
-			}
+			subscriptionAdminClient.createSubscription(builder.build());
 		}
 	}
 

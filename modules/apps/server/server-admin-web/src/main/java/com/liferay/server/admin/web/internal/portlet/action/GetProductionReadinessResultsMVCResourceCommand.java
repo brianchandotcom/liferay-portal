@@ -8,6 +8,7 @@ package com.liferay.server.admin.web.internal.portlet.action;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -78,13 +79,11 @@ public class GetProductionReadinessResultsMVCResourceCommand
 				_toJSONObject(ignoredRules, locale, productionReadinessResult));
 		}
 
-		JSONObject responseJSONObject = _jsonFactory.createJSONObject(
-		).put(
+		JSONObject responseJSONObject = JSONUtil.put(
 			"results", resultsJSONArray
 		).put(
 			"summary",
-			_jsonFactory.createJSONObject(
-			).put(
+			JSONUtil.put(
 				"failed", failed
 			).put(
 				"ignored", ignored
@@ -108,8 +107,7 @@ public class GetProductionReadinessResultsMVCResourceCommand
 			locale, productionReadinessResult.getMessageKey(),
 			productionReadinessResult.getMessageParameters(), false);
 
-		return _jsonFactory.createJSONObject(
-		).put(
+		return JSONUtil.put(
 			"category", productionReadinessResult.getCategory()
 		).put(
 			"categoryLabel",

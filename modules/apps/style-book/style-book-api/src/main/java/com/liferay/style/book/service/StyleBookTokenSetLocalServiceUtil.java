@@ -36,6 +36,17 @@ public class StyleBookTokenSetLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.style.book.service.impl.StyleBookTokenSetLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static StyleBookTokenSet addStyleBookTokenSet(
+			String externalReferenceCode, String description,
+			String frontendTokenCategoryName, String name,
+			long styleBookEntryId, String themeId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addStyleBookTokenSet(
+			externalReferenceCode, description, frontendTokenCategoryName, name,
+			styleBookEntryId, themeId, serviceContext);
+	}
 
 	/**
 	 * Adds the style book token set to the database. Also notifies the appropriate model listeners.
@@ -393,4 +404,4 @@ public class StyleBookTokenSetLocalServiceUtil {
 			StyleBookTokenSetLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1460216221
+// LIFERAY-SERVICE-BUILDER-HASH:-1201639620

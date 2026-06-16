@@ -422,11 +422,9 @@ public class PullRequest {
 			if (!Objects.equals(testSuiteName, "default")) {
 				Matcher matcher = _liferayContextPattern.matcher(testSuiteName);
 
-				if (!matcher.find()) {
-					continue;
+				if (matcher.find()) {
+					testSuiteName = matcher.group("testSuiteName");
 				}
-
-				testSuiteName = matcher.group("testSuiteName");
 			}
 
 			if (testSuiteNames.contains(testSuiteName)) {
@@ -636,11 +634,9 @@ public class PullRequest {
 			if (!Objects.equals(testSuiteName, "default")) {
 				Matcher matcher = _liferayContextPattern.matcher(testSuiteName);
 
-				if (!matcher.find()) {
-					continue;
+				if (matcher.find()) {
+					testSuiteName = matcher.group("testSuiteName");
 				}
-
-				testSuiteName = matcher.group("testSuiteName");
 			}
 
 			if (JenkinsResultsParserUtil.isNullOrEmpty(testSuiteName)) {

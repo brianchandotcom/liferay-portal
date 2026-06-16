@@ -1328,7 +1328,7 @@ public class ProductionReadinessRuleUtilTest {
 
 	private boolean _invokeIsStrongerThanPBKDF2(String algorithm) {
 		return ReflectionTestUtil.invoke(
-			ProductionReadinessRuleUtil.class, "_isStrongerThanPBKDF2",
+			ProductionReadinessRuleUtil.class, "_isStrongerAlgorithm",
 			new Class<?>[] {String.class}, algorithm);
 	}
 

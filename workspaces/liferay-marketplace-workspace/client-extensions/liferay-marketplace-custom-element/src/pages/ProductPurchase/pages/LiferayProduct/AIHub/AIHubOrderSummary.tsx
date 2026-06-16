@@ -200,15 +200,6 @@ const AIHubOrderSummary = () => {
 
 				<div className="d-flex mx-5">
 					<div className="col-1 d-flex justify-content-end m-0 p-0">
-						{i18n.translate('vat')}:
-					</div>
-					<span className="font-weight-bold ml-2">
-						{valueFallBack(summary?.taxValueFormatted)}
-					</span>
-				</div>
-
-				<div className="d-flex mx-5">
-					<div className="col-1 d-flex justify-content-end m-0 p-0">
 						{i18n.translate('total')}:
 					</div>
 					<span className="d-flex font-weight-bold ml-2">
@@ -220,23 +211,6 @@ const AIHubOrderSummary = () => {
 					</span>
 				</div>
 			</Section>
-
-			<p className="liferay-ai-hub-form-aggreements-text">
-				<span>Please read</span>
-
-				<a
-					className="ml-1"
-					href={productAgreements.links.aiHub.agreement}
-					target="_blank"
-				>
-					this agreement
-				</a>
-
-				<span className="ml-1">
-					carefully before accessing or in any way using the AI Hub
-					experience.
-				</span>
-			</p>
 
 			<div className="d-flex flex-row text-justify">
 				<ClayCheckbox

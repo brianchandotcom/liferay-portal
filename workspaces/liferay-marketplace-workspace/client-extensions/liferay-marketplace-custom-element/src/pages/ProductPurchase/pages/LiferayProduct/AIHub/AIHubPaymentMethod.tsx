@@ -36,7 +36,9 @@ export default function PaymentMethod() {
 			payment.billingAddress
 		);
 
-		return isAddressValid.success;
+		const isTaxIdValid = !!payment.taxId;
+
+		return isAddressValid.success && isTaxIdValid;
 	}, [payment]);
 
 	const {licenseType} = useSelector(

@@ -14,34 +14,6 @@
 	"name": "AIHubGuardrail",
 	"objectFields": [
 		{
-			"DBType": "Long",
-			"businessType": "Relationship",
-			"externalReferenceCode": "ACCOUNT_TO_AI_HUB_GUARDRAILS",
-			"indexed": true,
-			"indexedLanguageId": "en_US",
-			"label": {
-				"en_US": "Account to AI Hub Guardrails"
-			},
-			"name": "r_accountToAIHubGuardrails_accountEntryId",
-			"objectDefinitionExternalReferenceCode1": "L_ACCOUNT",
-			"objectFieldSettings": [
-				{
-					"name": "objectDefinition1ShortName",
-					"value": "AccountEntry"
-				},
-				{
-					"name": "objectRelationshipERCObjectFieldName",
-					"value": "r_accountToAIHubGuardrails_accountEntryERC"
-				}
-			],
-			"objectRelationshipExternalReferenceCode": "L_ACCOUNT_TO_L_AI_HUB_GUARDRAILS",
-			"readOnly": false,
-			"relationshipType": "oneToMany",
-			"required": true,
-			"system": true,
-			"type": "Long"
-		},
-		{
 			"DBType": "Boolean",
 			"businessType": "Boolean",
 			"defaultValue": true,
@@ -238,6 +210,34 @@
 			"required": true,
 			"system": true,
 			"type": "String"
+		},
+		{
+			"DBType": "Long",
+			"businessType": "Relationship",
+			"externalReferenceCode": "ACCOUNT_TO_AI_HUB_GUARDRAILS",
+			"indexed": true,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "Account to AI Hub Guardrails"
+			},
+			"name": "r_accountToAIHubGuardrails_accountEntryId",
+			"objectDefinitionExternalReferenceCode1": "L_ACCOUNT",
+			"objectFieldSettings": [
+				{
+					"name": "objectDefinition1ShortName",
+					"value": "AccountEntry"
+				},
+				{
+					"name": "objectRelationshipERCObjectFieldName",
+					"value": "r_accountToAIHubGuardrails_accountEntryERC"
+				}
+			],
+			"objectRelationshipExternalReferenceCode": "L_ACCOUNT_TO_L_AI_HUB_GUARDRAILS",
+			"readOnly": false,
+			"relationshipType": "oneToMany",
+			"required": true,
+			"system": true,
+			"type": "Long"
 		}
 	],
 	"objectFolderExternalReferenceCode": "default",

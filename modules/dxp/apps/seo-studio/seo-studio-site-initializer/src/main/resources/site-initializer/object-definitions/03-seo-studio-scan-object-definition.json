@@ -70,60 +70,6 @@
 			"type": "DateTime"
 		},
 		{
-			"DBType": "Long",
-			"businessType": "Relationship",
-			"externalReferenceCode": "ACCOUNT_TO_SEO_STUDIO_SCANS",
-			"indexed": true,
-			"label": {
-				"en_US": "Account to SEO Studio Scans"
-			},
-			"name": "r_accountToSEOStudioScans_accountEntryId",
-			"objectDefinitionExternalReferenceCode1": "L_ACCOUNT",
-			"objectFieldSettings": [
-				{
-					"name": "objectDefinition1ShortName",
-					"value": "AccountEntry"
-				},
-				{
-					"name": "objectRelationshipERCObjectFieldName",
-					"value": "r_accountToSEOStudioScans_accountEntryERC"
-				}
-			],
-			"objectRelationshipExternalReferenceCode": "L_ACCOUNT_TO_L_SEO_STUDIO_SCANS",
-			"readOnly": "false",
-			"relationshipType": "oneToMany",
-			"required": true,
-			"system": true,
-			"type": "Long"
-		},
-		{
-			"DBType": "Long",
-			"businessType": "Relationship",
-			"externalReferenceCode": "SEO_STUDIO_DOMAIN_TO_SEO_STUDIO_SCANS",
-			"indexed": true,
-			"label": {
-				"en_US": "SEO Studio Domain to SEO Studio Scans"
-			},
-			"name": "r_seoStudioDomainToSEOStudioScans_seoStudioDomainId",
-			"objectDefinitionExternalReferenceCode1": "L_SEO_STUDIO_DOMAIN",
-			"objectFieldSettings": [
-				{
-					"name": "objectDefinition1ShortName",
-					"value": "SEOStudioDomain"
-				},
-				{
-					"name": "objectRelationshipERCObjectFieldName",
-					"value": "r_seoStudioDomainToSEOStudioScans_seoStudioDomainERC"
-				}
-			],
-			"objectRelationshipExternalReferenceCode": "L_SEO_STUDIO_DOMAIN_TO_L_SEO_STUDIO_SCANS",
-			"readOnly": "false",
-			"relationshipType": "oneToMany",
-			"required": true,
-			"system": true,
-			"type": "Long"
-		},
-		{
 			"DBType": "String",
 			"businessType": "Picklist",
 			"externalReferenceCode": "SCAN_RANGE",
@@ -288,6 +234,60 @@
 				"en_US": "Triggering User ID"
 			},
 			"name": "triggeringUserId",
+			"system": true,
+			"type": "Long"
+		},
+		{
+			"DBType": "Long",
+			"businessType": "Relationship",
+			"externalReferenceCode": "ACCOUNT_TO_SEO_STUDIO_SCANS",
+			"indexed": true,
+			"label": {
+				"en_US": "Account to SEO Studio Scans"
+			},
+			"name": "r_accountToSEOStudioScans_accountEntryId",
+			"objectDefinitionExternalReferenceCode1": "L_ACCOUNT",
+			"objectFieldSettings": [
+				{
+					"name": "objectDefinition1ShortName",
+					"value": "AccountEntry"
+				},
+				{
+					"name": "objectRelationshipERCObjectFieldName",
+					"value": "r_accountToSEOStudioScans_accountEntryERC"
+				}
+			],
+			"objectRelationshipExternalReferenceCode": "L_ACCOUNT_TO_L_SEO_STUDIO_SCANS",
+			"readOnly": "false",
+			"relationshipType": "oneToMany",
+			"required": true,
+			"system": true,
+			"type": "Long"
+		},
+		{
+			"DBType": "Long",
+			"businessType": "Relationship",
+			"externalReferenceCode": "SEO_STUDIO_DOMAIN_TO_SEO_STUDIO_SCANS",
+			"indexed": true,
+			"label": {
+				"en_US": "SEO Studio Domain to SEO Studio Scans"
+			},
+			"name": "r_seoStudioDomainToSEOStudioScans_seoStudioDomainId",
+			"objectDefinitionExternalReferenceCode1": "L_SEO_STUDIO_DOMAIN",
+			"objectFieldSettings": [
+				{
+					"name": "objectDefinition1ShortName",
+					"value": "SEOStudioDomain"
+				},
+				{
+					"name": "objectRelationshipERCObjectFieldName",
+					"value": "r_seoStudioDomainToSEOStudioScans_seoStudioDomainERC"
+				}
+			],
+			"objectRelationshipExternalReferenceCode": "L_SEO_STUDIO_DOMAIN_TO_L_SEO_STUDIO_SCANS",
+			"readOnly": "false",
+			"relationshipType": "oneToMany",
+			"required": true,
 			"system": true,
 			"type": "Long"
 		}

@@ -14,35 +14,6 @@
 	"name": "AIHubReport",
 	"objectFields": [
 		{
-			"DBType": "Long",
-			"businessType": "Relationship",
-			"defaultValue": "null",
-			"externalReferenceCode": "ACCOUNT_TO_AI_HUB_REPORTS",
-			"indexed": true,
-			"indexedLanguageId": "en_US",
-			"label": {
-				"en_US": "Account to AI Hub Reports"
-			},
-			"name": "r_accountToAIHubReports_accountEntryId",
-			"objectDefinitionExternalReferenceCode1": "L_ACCOUNT",
-			"objectFieldSettings": [
-				{
-					"name": "objectDefinition1ShortName",
-					"value": "AccountEntry"
-				},
-				{
-					"name": "objectRelationshipERCObjectFieldName",
-					"value": "r_accountToAIHubReports_accountEntryERC"
-				}
-			],
-			"objectRelationshipExternalReferenceCode": "L_ACCOUNT_TO_L_AI_HUB_REPORTS",
-			"readOnly": false,
-			"relationshipType": "oneToMany",
-			"required": true,
-			"system": true,
-			"type": "Long"
-		},
-		{
 			"DBType": "String",
 			"businessType": "Picklist",
 			"defaultValue": "null",
@@ -125,6 +96,35 @@
 			"readOnlyConditionExpression": "",
 			"system": true,
 			"type": "Clob"
+		},
+		{
+			"DBType": "Long",
+			"businessType": "Relationship",
+			"defaultValue": "null",
+			"externalReferenceCode": "ACCOUNT_TO_AI_HUB_REPORTS",
+			"indexed": true,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "Account to AI Hub Reports"
+			},
+			"name": "r_accountToAIHubReports_accountEntryId",
+			"objectDefinitionExternalReferenceCode1": "L_ACCOUNT",
+			"objectFieldSettings": [
+				{
+					"name": "objectDefinition1ShortName",
+					"value": "AccountEntry"
+				},
+				{
+					"name": "objectRelationshipERCObjectFieldName",
+					"value": "r_accountToAIHubReports_accountEntryERC"
+				}
+			],
+			"objectRelationshipExternalReferenceCode": "L_ACCOUNT_TO_L_AI_HUB_REPORTS",
+			"readOnly": false,
+			"relationshipType": "oneToMany",
+			"required": true,
+			"system": true,
+			"type": "Long"
 		}
 	],
 	"objectFolderExternalReferenceCode": "default",

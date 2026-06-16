@@ -13,62 +13,6 @@
 	"name": "AIHubCrawlerJob",
 	"objectFields": [
 		{
-			"DBType": "Long",
-			"businessType": "Relationship",
-			"externalReferenceCode": "ACCOUNT_TO_AI_HUB_CRAWLER_JOBS",
-			"indexed": true,
-			"indexedLanguageId": "en_US",
-			"label": {
-				"en_US": "Account to AI Hub Crawler Jobs"
-			},
-			"name": "r_accountToAIHubCrawlerJobs_accountEntryId",
-			"objectDefinitionExternalReferenceCode1": "L_ACCOUNT",
-			"objectFieldSettings": [
-				{
-					"name": "objectDefinition1ShortName",
-					"value": "AccountEntry"
-				},
-				{
-					"name": "objectRelationshipERCObjectFieldName",
-					"value": "r_accountToAIHubCrawlerJobs_accountEntryERC"
-				}
-			],
-			"objectRelationshipExternalReferenceCode": "L_ACCOUNT_TO_L_AI_HUB_CRAWLER_JOBS",
-			"readOnly": false,
-			"relationshipType": "oneToMany",
-			"required": true,
-			"system": true,
-			"type": "Long"
-		},
-		{
-			"DBType": "Long",
-			"businessType": "Relationship",
-			"externalReferenceCode": "AI_HUB_CONTENT_RETRIEVER_TO_AI_HUB_CRAWLER_JOBS",
-			"indexed": true,
-			"indexedLanguageId": "en_US",
-			"label": {
-				"en_US": "AI Hub Content Retriever to AI Hub Crawler Jobs"
-			},
-			"name": "r_contentRetrieverToCrawlerJobs_aiHubContentRetrieverId",
-			"objectDefinitionExternalReferenceCode1": "L_AI_HUB_CONTENT_RETRIEVER",
-			"objectFieldSettings": [
-				{
-					"name": "objectDefinition1ShortName",
-					"value": "AIHubContentRetriever"
-				},
-				{
-					"name": "objectRelationshipERCObjectFieldName",
-					"value": "r_contentRetrieverToCrawlerJobs_aiHubContentRetrieverERC"
-				}
-			],
-			"objectRelationshipExternalReferenceCode": "L_AI_HUB_CONTENT_RETRIEVER_TO_L_AI_HUB_CRAWLER_JOBS",
-			"readOnly": false,
-			"relationshipType": "oneToMany",
-			"required": true,
-			"system": true,
-			"type": "Long"
-		},
-		{
 			"DBType": "String",
 			"businessType": "Picklist",
 			"externalReferenceCode": "CRAWLER_JOB_STATUS",
@@ -82,18 +26,6 @@
 			"required": true,
 			"system": true,
 			"type": "String"
-		},
-		{
-			"DBType": "Integer",
-			"businessType": "Integer",
-			"externalReferenceCode": "INDEXED_DOCUMENTS_COUNT",
-			"indexed": true,
-			"label": {
-				"en_US": "Indexed Documents Count"
-			},
-			"name": "indexedDocumentCount",
-			"system": true,
-			"type": "Integer"
 		},
 		{
 			"DBType": "DateTime",
@@ -154,6 +86,18 @@
 			"type": "Long"
 		},
 		{
+			"DBType": "Integer",
+			"businessType": "Integer",
+			"externalReferenceCode": "INDEXED_DOCUMENTS_COUNT",
+			"indexed": true,
+			"label": {
+				"en_US": "Indexed Documents Count"
+			},
+			"name": "indexedDocumentCount",
+			"system": true,
+			"type": "Integer"
+		},
+		{
 			"DBType": "DateTime",
 			"businessType": "DateTime",
 			"externalReferenceCode": "START_DATE",
@@ -170,6 +114,62 @@
 			],
 			"system": true,
 			"type": "DateTime"
+		},
+		{
+			"DBType": "Long",
+			"businessType": "Relationship",
+			"externalReferenceCode": "ACCOUNT_TO_AI_HUB_CRAWLER_JOBS",
+			"indexed": true,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "Account to AI Hub Crawler Jobs"
+			},
+			"name": "r_accountToAIHubCrawlerJobs_accountEntryId",
+			"objectDefinitionExternalReferenceCode1": "L_ACCOUNT",
+			"objectFieldSettings": [
+				{
+					"name": "objectDefinition1ShortName",
+					"value": "AccountEntry"
+				},
+				{
+					"name": "objectRelationshipERCObjectFieldName",
+					"value": "r_accountToAIHubCrawlerJobs_accountEntryERC"
+				}
+			],
+			"objectRelationshipExternalReferenceCode": "L_ACCOUNT_TO_L_AI_HUB_CRAWLER_JOBS",
+			"readOnly": false,
+			"relationshipType": "oneToMany",
+			"required": true,
+			"system": true,
+			"type": "Long"
+		},
+		{
+			"DBType": "Long",
+			"businessType": "Relationship",
+			"externalReferenceCode": "AI_HUB_CONTENT_RETRIEVER_TO_AI_HUB_CRAWLER_JOBS",
+			"indexed": true,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "AI Hub Content Retriever to AI Hub Crawler Jobs"
+			},
+			"name": "r_contentRetrieverToCrawlerJobs_aiHubContentRetrieverId",
+			"objectDefinitionExternalReferenceCode1": "L_AI_HUB_CONTENT_RETRIEVER",
+			"objectFieldSettings": [
+				{
+					"name": "objectDefinition1ShortName",
+					"value": "AIHubContentRetriever"
+				},
+				{
+					"name": "objectRelationshipERCObjectFieldName",
+					"value": "r_contentRetrieverToCrawlerJobs_aiHubContentRetrieverERC"
+				}
+			],
+			"objectRelationshipExternalReferenceCode": "L_AI_HUB_CONTENT_RETRIEVER_TO_L_AI_HUB_CRAWLER_JOBS",
+			"readOnly": false,
+			"relationshipType": "oneToMany",
+			"required": true,
+			"system": true,
+			"type": "Long"
 		}
 	],
 	"objectFolderExternalReferenceCode": "default",

@@ -6,15 +6,36 @@
 package com.liferay.server.admin.web.internal.production.readiness;
 
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.PropsValues;
+import com.liferay.portal.kernel.util.ServerDetector;
+import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
+import java.io.File;
+
+import java.lang.management.GarbageCollectorMXBean;
+import java.lang.management.ManagementFactory;
+import java.lang.management.MemoryMXBean;
+import java.lang.management.MemoryUsage;
+import java.lang.management.RuntimeMXBean;
+
+import java.nio.file.Files;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 
+import org.mockito.ArgumentMatchers;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
@@ -193,6 +214,48 @@ public class ProductionReadinessRuleUtilTest {
 	}
 
 	@Test
+	public void testCheckExplicitGCDisabledFail() {
+		try (MockedStatic<ManagementFactory> managementFactoryMockedStatic =
+				Mockito.mockStatic(ManagementFactory.class)) {
+
+			_stubRuntimeInputArguments(
+				managementFactoryMockedStatic, Collections.emptyList());
+
+			ProductionReadinessResult productionReadinessResult =
+				ReflectionTestUtil.invoke(
+					ProductionReadinessRuleUtil.class,
+					"_checkExplicitGCDisabled", new Class<?>[0]);
+
+			Assert.assertFalse(productionReadinessResult.isPass());
+			Assert.assertEquals(
+				"explicit-gc-disabled", productionReadinessResult.getKey());
+			Assert.assertEquals(
+				"-XX:+DisableExplicitGC",
+				productionReadinessResult.getRecommendedValue());
+		}
+	}
+
+	@Test
+	public void testCheckExplicitGCDisabledPass() {
+		try (MockedStatic<ManagementFactory> managementFactoryMockedStatic =
+				Mockito.mockStatic(ManagementFactory.class)) {
+
+			_stubRuntimeInputArguments(
+				managementFactoryMockedStatic,
+				Collections.singletonList("-XX:+DisableExplicitGC"));
+
+			ProductionReadinessResult productionReadinessResult =
+				ReflectionTestUtil.invoke(
+					ProductionReadinessRuleUtil.class,
+					"_checkExplicitGCDisabled", new Class<?>[0]);
+
+			Assert.assertTrue(productionReadinessResult.isPass());
+			Assert.assertEquals(
+				"explicit-gc-disabled", productionReadinessResult.getKey());
+		}
+	}
+
+	@Test
 	public void testCheckFileStoreImplementationFail() throws Exception {
 		try (AutoCloseable closeable =
 				ReflectionTestUtil.setFieldValueWithAutoCloseable(
@@ -237,6 +300,471 @@ public class ProductionReadinessRuleUtilTest {
 				Assert.assertEquals(
 					impl, productionReadinessResult.getCurrentValue());
 			}
+		}
+	}
+
+	@Test
+	public void testCheckGarbageCollectorTypeFail() {
+		try (MockedStatic<ManagementFactory> managementFactoryMockedStatic =
+				Mockito.mockStatic(ManagementFactory.class)) {
+
+			GarbageCollectorMXBean garbageCollectorMXBean = Mockito.mock(
+				GarbageCollectorMXBean.class);
+
+			Mockito.when(
+				garbageCollectorMXBean.getName()
+			).thenReturn(
+				"PS Scavenge"
+			);
+
+			managementFactoryMockedStatic.when(
+				ManagementFactory::getGarbageCollectorMXBeans
+			).thenReturn(
+				Collections.singletonList(garbageCollectorMXBean)
+			);
+
+			ProductionReadinessResult productionReadinessResult =
+				ReflectionTestUtil.invoke(
+					ProductionReadinessRuleUtil.class,
+					"_checkGarbageCollectorType", new Class<?>[0]);
+
+			Assert.assertFalse(productionReadinessResult.isPass());
+			Assert.assertEquals(
+				"garbage-collector-type", productionReadinessResult.getKey());
+		}
+	}
+
+	@Test
+	public void testCheckGarbageCollectorTypePass() {
+		try (MockedStatic<ManagementFactory> managementFactoryMockedStatic =
+				Mockito.mockStatic(ManagementFactory.class)) {
+
+			GarbageCollectorMXBean garbageCollectorMXBean = Mockito.mock(
+				GarbageCollectorMXBean.class);
+
+			Mockito.when(
+				garbageCollectorMXBean.getName()
+			).thenReturn(
+				"G1 Young Generation"
+			);
+
+			managementFactoryMockedStatic.when(
+				ManagementFactory::getGarbageCollectorMXBeans
+			).thenReturn(
+				Collections.singletonList(garbageCollectorMXBean)
+			);
+
+			ProductionReadinessResult productionReadinessResult =
+				ReflectionTestUtil.invoke(
+					ProductionReadinessRuleUtil.class,
+					"_checkGarbageCollectorType", new Class<?>[0]);
+
+			Assert.assertTrue(productionReadinessResult.isPass());
+			Assert.assertEquals(
+				"garbage-collector-type", productionReadinessResult.getKey());
+		}
+	}
+
+	@Test
+	public void testCheckHeapAllocationConsistencyFail() {
+		try (MockedStatic<ManagementFactory> managementFactoryMockedStatic =
+				Mockito.mockStatic(ManagementFactory.class)) {
+
+			_stubHeapMemoryUsage(
+				managementFactoryMockedStatic,
+				_memoryUsage(2L * 1024 * 1024 * 1024, 4L * 1024 * 1024 * 1024));
+
+			ProductionReadinessResult productionReadinessResult =
+				ReflectionTestUtil.invoke(
+					ProductionReadinessRuleUtil.class,
+					"_checkHeapAllocationConsistency", new Class<?>[0]);
+
+			Assert.assertFalse(productionReadinessResult.isPass());
+			Assert.assertEquals(
+				"heap-allocation-consistency",
+				productionReadinessResult.getKey());
+		}
+	}
+
+	@Test
+	public void testCheckHeapAllocationConsistencyPass() {
+		try (MockedStatic<ManagementFactory> managementFactoryMockedStatic =
+				Mockito.mockStatic(ManagementFactory.class)) {
+
+			_stubHeapMemoryUsage(
+				managementFactoryMockedStatic,
+				_memoryUsage(4L * 1024 * 1024 * 1024, 4L * 1024 * 1024 * 1024));
+
+			ProductionReadinessResult productionReadinessResult =
+				ReflectionTestUtil.invoke(
+					ProductionReadinessRuleUtil.class,
+					"_checkHeapAllocationConsistency", new Class<?>[0]);
+
+			Assert.assertTrue(productionReadinessResult.isPass());
+			Assert.assertEquals(
+				"heap-allocation-consistency",
+				productionReadinessResult.getKey());
+		}
+	}
+
+	@Test
+	public void testCheckHeapSizeUpperLimitFail() {
+		try (MockedStatic<ManagementFactory> managementFactoryMockedStatic =
+				Mockito.mockStatic(ManagementFactory.class)) {
+
+			_stubHeapMemoryUsage(
+				managementFactoryMockedStatic,
+				_memoryUsage(
+					64L * 1024 * 1024 * 1024, 64L * 1024 * 1024 * 1024));
+
+			ProductionReadinessResult productionReadinessResult =
+				ReflectionTestUtil.invoke(
+					ProductionReadinessRuleUtil.class,
+					"_checkHeapSizeUpperLimit", new Class<?>[0]);
+
+			Assert.assertFalse(productionReadinessResult.isPass());
+			Assert.assertEquals(
+				"heap-size-upper-limit", productionReadinessResult.getKey());
+		}
+	}
+
+	@Test
+	public void testCheckHeapSizeUpperLimitPass() {
+		try (MockedStatic<ManagementFactory> managementFactoryMockedStatic =
+				Mockito.mockStatic(ManagementFactory.class)) {
+
+			_stubHeapMemoryUsage(
+				managementFactoryMockedStatic,
+				_memoryUsage(
+					16L * 1024 * 1024 * 1024, 16L * 1024 * 1024 * 1024));
+
+			ProductionReadinessResult productionReadinessResult =
+				ReflectionTestUtil.invoke(
+					ProductionReadinessRuleUtil.class,
+					"_checkHeapSizeUpperLimit", new Class<?>[0]);
+
+			Assert.assertTrue(productionReadinessResult.isPass());
+			Assert.assertEquals(
+				"heap-size-upper-limit", productionReadinessResult.getKey());
+		}
+	}
+
+	@Test
+	public void testCheckHugePagesConfigurationConfiguredPass() {
+		try (MockedStatic<ManagementFactory> managementFactoryMockedStatic =
+				Mockito.mockStatic(ManagementFactory.class);
+			MockedStatic<FileUtil> fileUtilMockedStatic = Mockito.mockStatic(
+				FileUtil.class)) {
+
+			_stubHeapMemoryUsage(
+				managementFactoryMockedStatic,
+				_memoryUsage(8L * 1024 * 1024 * 1024, 8L * 1024 * 1024 * 1024));
+
+			_stubRuntimeInputArguments(
+				managementFactoryMockedStatic,
+				Arrays.asList(
+					"-XX:+UseLargePages", "-XX:LargePageSizeInBytes=2048k"));
+
+			fileUtilMockedStatic.when(
+				() -> FileUtil.read(ArgumentMatchers.any(File.class))
+			).thenReturn(
+				"Hugepagesize:    2048 kB\n"
+			);
+
+			ProductionReadinessResult productionReadinessResult =
+				ReflectionTestUtil.invoke(
+					ProductionReadinessRuleUtil.class,
+					"_checkHugePagesConfiguration", new Class<?>[0]);
+
+			Assert.assertTrue(productionReadinessResult.isPass());
+			Assert.assertEquals(
+				"huge-pages-configuration", productionReadinessResult.getKey());
+		}
+	}
+
+	@Test
+	public void testCheckHugePagesConfigurationMissingSizeFail() {
+		try (MockedStatic<ManagementFactory> managementFactoryMockedStatic =
+				Mockito.mockStatic(ManagementFactory.class)) {
+
+			_stubHeapMemoryUsage(
+				managementFactoryMockedStatic,
+				_memoryUsage(8L * 1024 * 1024 * 1024, 8L * 1024 * 1024 * 1024));
+
+			_stubRuntimeInputArguments(
+				managementFactoryMockedStatic,
+				Collections.singletonList("-XX:+UseLargePages"));
+
+			ProductionReadinessResult productionReadinessResult =
+				ReflectionTestUtil.invoke(
+					ProductionReadinessRuleUtil.class,
+					"_checkHugePagesConfiguration", new Class<?>[0]);
+
+			Assert.assertFalse(productionReadinessResult.isPass());
+			Assert.assertEquals(
+				"huge-pages-configuration", productionReadinessResult.getKey());
+		}
+	}
+
+	@Test
+	public void testCheckHugePagesConfigurationNoLargePagesFail() {
+		try (MockedStatic<ManagementFactory> managementFactoryMockedStatic =
+				Mockito.mockStatic(ManagementFactory.class)) {
+
+			_stubHeapMemoryUsage(
+				managementFactoryMockedStatic,
+				_memoryUsage(8L * 1024 * 1024 * 1024, 8L * 1024 * 1024 * 1024));
+
+			_stubRuntimeInputArguments(
+				managementFactoryMockedStatic, Collections.emptyList());
+
+			ProductionReadinessResult productionReadinessResult =
+				ReflectionTestUtil.invoke(
+					ProductionReadinessRuleUtil.class,
+					"_checkHugePagesConfiguration", new Class<?>[0]);
+
+			Assert.assertFalse(productionReadinessResult.isPass());
+			Assert.assertEquals(
+				"huge-pages-configuration", productionReadinessResult.getKey());
+			Assert.assertEquals(
+				"-XX:+UseLargePages",
+				productionReadinessResult.getRecommendedValue());
+		}
+	}
+
+	@Test
+	public void testCheckHugePagesConfigurationSmallHeapPass() {
+		try (MockedStatic<ManagementFactory> managementFactoryMockedStatic =
+				Mockito.mockStatic(ManagementFactory.class)) {
+
+			_stubHeapMemoryUsage(
+				managementFactoryMockedStatic,
+				_memoryUsage(2L * 1024 * 1024 * 1024, 2L * 1024 * 1024 * 1024));
+
+			ProductionReadinessResult productionReadinessResult =
+				ReflectionTestUtil.invoke(
+					ProductionReadinessRuleUtil.class,
+					"_checkHugePagesConfiguration", new Class<?>[0]);
+
+			Assert.assertTrue(productionReadinessResult.isPass());
+			Assert.assertEquals(
+				"huge-pages-configuration", productionReadinessResult.getKey());
+		}
+	}
+
+	@Test
+	public void testCheckJMXConfigurationDisabledFail() {
+		try (MockedStatic<ManagementFactory> managementFactoryMockedStatic =
+				Mockito.mockStatic(ManagementFactory.class)) {
+
+			_stubRuntimeInputArguments(
+				managementFactoryMockedStatic,
+				Collections.singletonList(
+					"-Dcom.sun.management.jmxremote.port=9000"));
+
+			ProductionReadinessResult productionReadinessResult =
+				ReflectionTestUtil.invoke(
+					ProductionReadinessRuleUtil.class,
+					"_checkJMXConfigurationDisabled", new Class<?>[0]);
+
+			Assert.assertFalse(productionReadinessResult.isPass());
+			Assert.assertEquals(
+				"jmx-configuration-disabled",
+				productionReadinessResult.getKey());
+			Assert.assertTrue(
+				productionReadinessResult.getCurrentValue(),
+				productionReadinessResult.getCurrentValue(
+				).contains(
+					"-Dcom.sun.management.jmxremote.port=9000"
+				));
+		}
+	}
+
+	@Test
+	public void testCheckJMXConfigurationDisabledPass() {
+		try (MockedStatic<ManagementFactory> managementFactoryMockedStatic =
+				Mockito.mockStatic(ManagementFactory.class)) {
+
+			_stubRuntimeInputArguments(
+				managementFactoryMockedStatic, Collections.emptyList());
+
+			ProductionReadinessResult productionReadinessResult =
+				ReflectionTestUtil.invoke(
+					ProductionReadinessRuleUtil.class,
+					"_checkJMXConfigurationDisabled", new Class<?>[0]);
+
+			Assert.assertTrue(productionReadinessResult.isPass());
+			Assert.assertEquals(
+				"jmx-configuration-disabled",
+				productionReadinessResult.getKey());
+		}
+	}
+
+	@Test
+	public void testCheckJSPEngineSettingsFail() throws Exception {
+		File catalinaBase = temporaryFolder.newFolder("catalina");
+
+		File confDir = new File(catalinaBase, "conf");
+
+		confDir.mkdirs();
+
+		File webXml = new File(confDir, "web.xml");
+
+		Files.writeString(webXml.toPath(), "<web-app/>");
+
+		String originalCatalinaBase = System.getProperty("catalina.base");
+		String originalCatalinaHome = System.getProperty("catalina.home");
+
+		System.setProperty("catalina.base", catalinaBase.getAbsolutePath());
+
+		try (MockedStatic<ServerDetector> serverDetectorMockedStatic =
+				Mockito.mockStatic(ServerDetector.class);
+			MockedStatic<FileUtil> fileUtilMockedStatic = Mockito.mockStatic(
+				FileUtil.class);
+			MockedStatic<SAXReaderUtil> saxReaderUtilMockedStatic =
+				Mockito.mockStatic(SAXReaderUtil.class)) {
+
+			serverDetectorMockedStatic.when(
+				ServerDetector::isTomcat
+			).thenReturn(
+				true
+			);
+
+			fileUtilMockedStatic.when(
+				() -> FileUtil.read(ArgumentMatchers.any(File.class))
+			).thenReturn(
+				"<web-app/>"
+			);
+
+			Document document = _mockJspWebXmlDocument("true", "false");
+
+			saxReaderUtilMockedStatic.when(
+				() -> SAXReaderUtil.read(ArgumentMatchers.anyString())
+			).thenReturn(
+				document
+			);
+
+			ProductionReadinessResult productionReadinessResult =
+				ReflectionTestUtil.invoke(
+					ProductionReadinessRuleUtil.class,
+					"_checkJSPEngineSettings", new Class<?>[0]);
+
+			Assert.assertFalse(productionReadinessResult.isPass());
+			Assert.assertEquals(
+				"jsp-engine-settings", productionReadinessResult.getKey());
+		}
+		finally {
+			_restoreSystemProperty("catalina.base", originalCatalinaBase);
+			_restoreSystemProperty("catalina.home", originalCatalinaHome);
+		}
+	}
+
+	@Test
+	public void testCheckJSPEngineSettingsNoCatalinaBase() {
+		String originalCatalinaBase = System.getProperty("catalina.base");
+		String originalCatalinaHome = System.getProperty("catalina.home");
+
+		System.clearProperty("catalina.base");
+		System.clearProperty("catalina.home");
+
+		try (MockedStatic<ServerDetector> serverDetectorMockedStatic =
+				Mockito.mockStatic(ServerDetector.class)) {
+
+			serverDetectorMockedStatic.when(
+				ServerDetector::isTomcat
+			).thenReturn(
+				true
+			);
+
+			ProductionReadinessResult productionReadinessResult =
+				ReflectionTestUtil.invoke(
+					ProductionReadinessRuleUtil.class,
+					"_checkJSPEngineSettings", new Class<?>[0]);
+
+			Assert.assertNull(productionReadinessResult);
+		}
+		finally {
+			_restoreSystemProperty("catalina.base", originalCatalinaBase);
+			_restoreSystemProperty("catalina.home", originalCatalinaHome);
+		}
+	}
+
+	@Test
+	public void testCheckJSPEngineSettingsNotTomcat() {
+		try (MockedStatic<ServerDetector> serverDetectorMockedStatic =
+				Mockito.mockStatic(ServerDetector.class)) {
+
+			serverDetectorMockedStatic.when(
+				ServerDetector::isTomcat
+			).thenReturn(
+				false
+			);
+
+			ProductionReadinessResult productionReadinessResult =
+				ReflectionTestUtil.invoke(
+					ProductionReadinessRuleUtil.class,
+					"_checkJSPEngineSettings", new Class<?>[0]);
+
+			Assert.assertNull(productionReadinessResult);
+		}
+	}
+
+	@Test
+	public void testCheckJSPEngineSettingsPass() throws Exception {
+		File catalinaBase = temporaryFolder.newFolder("catalina");
+
+		File confDir = new File(catalinaBase, "conf");
+
+		confDir.mkdirs();
+
+		File webXml = new File(confDir, "web.xml");
+
+		Files.writeString(webXml.toPath(), "<web-app/>");
+
+		String originalCatalinaBase = System.getProperty("catalina.base");
+		String originalCatalinaHome = System.getProperty("catalina.home");
+
+		System.setProperty("catalina.base", catalinaBase.getAbsolutePath());
+
+		try (MockedStatic<ServerDetector> serverDetectorMockedStatic =
+				Mockito.mockStatic(ServerDetector.class);
+			MockedStatic<FileUtil> fileUtilMockedStatic = Mockito.mockStatic(
+				FileUtil.class);
+			MockedStatic<SAXReaderUtil> saxReaderUtilMockedStatic =
+				Mockito.mockStatic(SAXReaderUtil.class)) {
+
+			serverDetectorMockedStatic.when(
+				ServerDetector::isTomcat
+			).thenReturn(
+				true
+			);
+
+			fileUtilMockedStatic.when(
+				() -> FileUtil.read(ArgumentMatchers.any(File.class))
+			).thenReturn(
+				"<web-app/>"
+			);
+
+			Document document = _mockJspWebXmlDocument("false", "false");
+
+			saxReaderUtilMockedStatic.when(
+				() -> SAXReaderUtil.read(ArgumentMatchers.anyString())
+			).thenReturn(
+				document
+			);
+
+			ProductionReadinessResult productionReadinessResult =
+				ReflectionTestUtil.invoke(
+					ProductionReadinessRuleUtil.class,
+					"_checkJSPEngineSettings", new Class<?>[0]);
+
+			Assert.assertTrue(productionReadinessResult.isPass());
+			Assert.assertEquals(
+				"jsp-engine-settings", productionReadinessResult.getKey());
+		}
+		finally {
+			_restoreSystemProperty("catalina.base", originalCatalinaBase);
+			_restoreSystemProperty("catalina.home", originalCatalinaHome);
 		}
 	}
 
@@ -351,6 +879,47 @@ public class ProductionReadinessRuleUtilTest {
 	}
 
 	@Test
+	public void testCheckPreventDiagnosticOverheadFail() {
+		try (MockedStatic<ManagementFactory> managementFactoryMockedStatic =
+				Mockito.mockStatic(ManagementFactory.class)) {
+
+			_stubRuntimeInputArguments(
+				managementFactoryMockedStatic,
+				Collections.singletonList("-XX:+UnlockDiagnosticVMOptions"));
+
+			ProductionReadinessResult productionReadinessResult =
+				ReflectionTestUtil.invoke(
+					ProductionReadinessRuleUtil.class,
+					"_checkPreventDiagnosticOverhead", new Class<?>[0]);
+
+			Assert.assertFalse(productionReadinessResult.isPass());
+			Assert.assertEquals(
+				"prevent-diagnostic-overhead",
+				productionReadinessResult.getKey());
+		}
+	}
+
+	@Test
+	public void testCheckPreventDiagnosticOverheadPass() {
+		try (MockedStatic<ManagementFactory> managementFactoryMockedStatic =
+				Mockito.mockStatic(ManagementFactory.class)) {
+
+			_stubRuntimeInputArguments(
+				managementFactoryMockedStatic, Collections.emptyList());
+
+			ProductionReadinessResult productionReadinessResult =
+				ReflectionTestUtil.invoke(
+					ProductionReadinessRuleUtil.class,
+					"_checkPreventDiagnosticOverhead", new Class<?>[0]);
+
+			Assert.assertTrue(productionReadinessResult.isPass());
+			Assert.assertEquals(
+				"prevent-diagnostic-overhead",
+				productionReadinessResult.getKey());
+		}
+	}
+
+	@Test
 	public void testCheckUnusedLanguagesFail() throws Exception {
 		try (AutoCloseable closeable1 =
 				ReflectionTestUtil.setFieldValueWithAutoCloseable(
@@ -432,6 +1001,34 @@ public class ProductionReadinessRuleUtilTest {
 			_invokeIsStrongerThanPBKDF2("PBKDF2WithHmacSHA1/160/1000"));
 	}
 
+	@Test
+	public void testParseSizeGigabytes() {
+		Assert.assertEquals(1073741824L, _invokeParseSize("1g"));
+	}
+
+	@Test
+	public void testParseSizeKilobytes() {
+		Assert.assertEquals(2097152L, _invokeParseSize("2048k"));
+	}
+
+	@Test
+	public void testParseSizeMegabytes() {
+		Assert.assertEquals(2097152L, _invokeParseSize("2m"));
+	}
+
+	@Test
+	public void testParseSizeNull() {
+		Assert.assertEquals(-1L, _invokeParseSize(null));
+	}
+
+	@Test
+	public void testParseSizePlainNumber() {
+		Assert.assertEquals(100L, _invokeParseSize("100"));
+	}
+
+	@Rule
+	public TemporaryFolder temporaryFolder = new TemporaryFolder();
+
 	private ProductionReadinessResult _assertPasswordEncryption(
 		String algorithm, boolean expectedPass) {
 
@@ -462,6 +1059,123 @@ public class ProductionReadinessRuleUtilTest {
 		return ReflectionTestUtil.invoke(
 			ProductionReadinessRuleUtil.class, "_isStrongerThanPBKDF2",
 			new Class<?>[] {String.class}, algorithm);
+	}
+
+	private long _invokeParseSize(String sizeStr) {
+		return ReflectionTestUtil.invoke(
+			ProductionReadinessRuleUtil.class, "_parseSize",
+			new Class<?>[] {String.class}, sizeStr);
+	}
+
+	private MemoryUsage _memoryUsage(long init, long max) {
+		return new MemoryUsage(init, 0, max, max);
+	}
+
+	private Document _mockJspWebXmlDocument(
+		String developmentValue, String mappedFileValue) {
+
+		Document document = Mockito.mock(Document.class);
+		Element rootElement = Mockito.mock(Element.class);
+		Element servletElement = Mockito.mock(Element.class);
+		Element developmentParam = Mockito.mock(Element.class);
+		Element mappedFileParam = Mockito.mock(Element.class);
+
+		Mockito.when(
+			developmentParam.elementText("param-name")
+		).thenReturn(
+			"development"
+		);
+
+		Mockito.when(
+			developmentParam.elementText("param-value")
+		).thenReturn(
+			developmentValue
+		);
+
+		Mockito.when(
+			mappedFileParam.elementText("param-name")
+		).thenReturn(
+			"mappedFile"
+		);
+
+		Mockito.when(
+			mappedFileParam.elementText("param-value")
+		).thenReturn(
+			mappedFileValue
+		);
+
+		Mockito.when(
+			servletElement.elementText("servlet-name")
+		).thenReturn(
+			"jsp"
+		);
+
+		Mockito.when(
+			servletElement.elements("init-param")
+		).thenReturn(
+			Arrays.asList(developmentParam, mappedFileParam)
+		);
+
+		Mockito.when(
+			rootElement.elements("servlet")
+		).thenReturn(
+			Collections.singletonList(servletElement)
+		);
+
+		Mockito.when(
+			document.getRootElement()
+		).thenReturn(
+			rootElement
+		);
+
+		return document;
+	}
+
+	private void _restoreSystemProperty(String key, String previousValue) {
+		if (previousValue == null) {
+			System.clearProperty(key);
+		}
+		else {
+			System.setProperty(key, previousValue);
+		}
+	}
+
+	private void _stubHeapMemoryUsage(
+		MockedStatic<ManagementFactory> managementFactoryMockedStatic,
+		MemoryUsage memoryUsage) {
+
+		MemoryMXBean memoryMXBean = Mockito.mock(MemoryMXBean.class);
+
+		Mockito.when(
+			memoryMXBean.getHeapMemoryUsage()
+		).thenReturn(
+			memoryUsage
+		);
+
+		managementFactoryMockedStatic.when(
+			ManagementFactory::getMemoryMXBean
+		).thenReturn(
+			memoryMXBean
+		);
+	}
+
+	private void _stubRuntimeInputArguments(
+		MockedStatic<ManagementFactory> managementFactoryMockedStatic,
+		List<String> inputArguments) {
+
+		RuntimeMXBean runtimeMXBean = Mockito.mock(RuntimeMXBean.class);
+
+		Mockito.when(
+			runtimeMXBean.getInputArguments()
+		).thenReturn(
+			inputArguments
+		);
+
+		managementFactoryMockedStatic.when(
+			ManagementFactory::getRuntimeMXBean
+		).thenReturn(
+			runtimeMXBean
+		);
 	}
 
 }

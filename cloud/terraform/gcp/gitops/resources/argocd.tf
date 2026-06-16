@@ -505,6 +505,14 @@ resource "kubernetes_manifest" "observability_application" {
 				namespace=var.observability_config.namespace
 				server="https://kubernetes.default.svc"
 			}
+			ignoreDifferences=[
+				{
+					group=""
+					jsonPointers=["/data"]
+					kind="Secret"
+					name="liferay-observability-grafana"
+				},
+			]
 			project=local.infrastructure_appproject_name
 			sources=[
 				merge(
@@ -570,6 +578,7 @@ resource "kubernetes_manifest" "observability_application" {
 				}
 				syncOptions=[
 					"CreateNamespace=true",
+					"RespectIgnoreDifferences=true",
 					"SkipDryRunOnMissingResource=true",
 				]
 			}

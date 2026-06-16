@@ -4,8 +4,21 @@ mock_provider "kubernetes" {}
 mock_provider "random" {}
 mock_provider "time" {}
 
+override_data {
+	target=data.aws_availability_zones.available
+	values={
+		names=["us-east-1a", "us-east-1b", "us-east-1c"]
+	}
+}
+
+override_data {
+	target=data.aws_caller_identity.current
+	values={
+		account_id="123456789012"
+	}
+}
+
 override_module {
-	target=module.eks
 	outputs={
 		cluster_addons={}
 		cluster_certificate_authority_data="dGVzdA=="
@@ -17,71 +30,62 @@ override_module {
 		oidc_provider="oidc.eks.us-east-1.amazonaws.com/id/EXAMPLE"
 		oidc_provider_arn="arn:aws:iam::123456789012:oidc-provider/oidc.eks.us-east-1.amazonaws.com/id/EXAMPLE"
 	}
+	target=module.eks
 }
 
 override_module {
-	target=module.vpc
+	outputs={}
+	target=module.envoy_proxy_role
+}
+
+override_module {
 	outputs={
 		private_subnets=["subnet-aaa", "subnet-bbb"]
 		vpc_id="vpc-0123456789abcdef0"
 	}
+	target=module.vpc
 }
 
-override_module {
-	target=module.envoy_proxy_role
-	outputs={}
+run "should_create_the_ebs_csi_driver_role_and_policy" {
+	assert {
+		condition=aws_iam_role.ebs_csi_driver.name == "liferay-test-ebs_csi_driver"
+		error_message="The EBS CSI driver role name must be derived from deployment_name"
+	}
+
+	assert {
+		condition=endswith(aws_iam_role_policy_attachment.role_policy_attachment_ebs_csi_driver.policy_arn, "AmazonEBSCSIDriverPolicy")
+		error_message="The EBS CSI driver role must attach the AmazonEBSCSIDriverPolicy"
+	}
+
+	assert {
+		condition=jsondecode(aws_iam_role.ebs_csi_driver.assume_role_policy).Statement[0].Condition.StringEquals["oidc.eks.us-east-1.amazonaws.com/id/EXAMPLE:sub"] == "system:serviceaccount:kube-system:ebs-csi-controller-sa"
+		error_message="The EBS CSI driver trust policy must scope to the ebs-csi-controller-sa service account"
+	}
+
+	command=plan
 }
 
-override_data {
-	target=data.aws_caller_identity.current
-	values={ account_id="123456789012" }
-}
+run "should_create_the_gp3_default_storage_class" {
+	assert {
+		condition=kubernetes_storage_class_v1.gp3_storage_class.metadata[0].annotations["storageclass.kubernetes.io/is-default-class"] == "true"
+		error_message="The gp3 storage class must be marked as the default class"
+	}
 
-override_data {
-	target=data.aws_availability_zones.available
-	values={ names=["us-east-1a", "us-east-1b", "us-east-1c"] }
+	assert {
+		condition=kubernetes_storage_class_v1.gp3_storage_class.parameters["type"] == "gp3" && kubernetes_storage_class_v1.gp3_storage_class.parameters["encrypted"] == "true"
+		error_message="The gp3 storage class must provision encrypted gp3 volumes"
+	}
+
+	assert {
+		condition=kubernetes_storage_class_v1.gp3_storage_class.volume_binding_mode == "WaitForFirstConsumer"
+		error_message="The gp3 storage class must bind volumes on first consumer"
+	}
+
+	command=plan
 }
 
 variables {
 	deployment_name="liferay-test"
 	envoy_gateway_helm_chart_version="1.5.2"
 	region="us-east-1"
-}
-
-run "should_create_the_ebs_csi_driver_role_and_policy" {
-	command=plan
-
-	assert {
-		condition=aws_iam_role.ebs_csi_driver.name == "liferay-test-ebs_csi_driver"
-		error_message="The EBS CSI driver role name must be derived from deployment_name."
-	}
-
-	assert {
-		condition=jsondecode(aws_iam_role.ebs_csi_driver.assume_role_policy).Statement[0].Condition.StringEquals["oidc.eks.us-east-1.amazonaws.com/id/EXAMPLE:sub"] == "system:serviceaccount:kube-system:ebs-csi-controller-sa"
-		error_message="The EBS CSI driver trust policy must scope to the ebs-csi-controller-sa service account."
-	}
-
-	assert {
-		condition=endswith(aws_iam_role_policy_attachment.role_policy_attachment_ebs_csi_driver.policy_arn, "AmazonEBSCSIDriverPolicy")
-		error_message="The EBS CSI driver role must attach the AmazonEBSCSIDriverPolicy."
-	}
-}
-
-run "should_create_the_gp3_default_storage_class" {
-	command=plan
-
-	assert {
-		condition=kubernetes_storage_class_v1.gp3_storage_class.metadata[0].annotations["storageclass.kubernetes.io/is-default-class"] == "true"
-		error_message="The gp3 storage class must be marked as the default class."
-	}
-
-	assert {
-		condition=kubernetes_storage_class_v1.gp3_storage_class.parameters["type"] == "gp3" && kubernetes_storage_class_v1.gp3_storage_class.parameters["encrypted"] == "true"
-		error_message="The gp3 storage class must provision encrypted gp3 volumes."
-	}
-
-	assert {
-		condition=kubernetes_storage_class_v1.gp3_storage_class.volume_binding_mode == "WaitForFirstConsumer"
-		error_message="The gp3 storage class must bind volumes on first consumer."
-	}
 }

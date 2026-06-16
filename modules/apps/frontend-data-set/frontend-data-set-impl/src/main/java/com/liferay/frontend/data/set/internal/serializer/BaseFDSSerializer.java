@@ -21,7 +21,9 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -82,15 +84,10 @@ public abstract class BaseFDSSerializer {
 
 			long userId = PortalUtil.getUserId(httpServletRequest);
 
-			List<SharingEntry> sharingEntries =
-				sharingEntryLocalService.getToUserSharingEntries(
-					userId,
-					classNameLocalService.getClassNameId(
-						objectDefinition.getClassName()));
-
-			Set<Long> sharingEntriesClassPKs = SetUtil.fromCollection(
-				TransformUtil.transform(
-					sharingEntries, SharingEntry::getClassPK));
+			Set<Long> sharingEntriesClassPKs = _getSharingEntriesClassPKs(
+				classNameLocalService.getClassNameId(
+					objectDefinition.getClassName()),
+				userId);
 
 			Page<ObjectEntry> page = objectEntryManager.getObjectEntries(
 				companyId, objectDefinition, null, null,
@@ -160,6 +157,9 @@ public abstract class BaseFDSSerializer {
 	@Reference
 	protected SharingEntryLocalService sharingEntryLocalService;
 
+	@Reference
+	protected UserGroupLocalService userGroupLocalService;
+
 	private String _getFilterString(
 		String fdsName, Set<Long> sharingEntriesClassPKs, long userId) {
 
@@ -179,6 +179,34 @@ public abstract class BaseFDSSerializer {
 		sb.append("))");
 
 		return sb.toString();
+	}
+
+	private Set<Long> _getSharingEntriesClassPKs(
+		long classNameId, long userId) {
+
+		Set<Long> sharingEntriesClassPKs = SetUtil.fromCollection(
+			TransformUtil.transform(
+				sharingEntryLocalService.getToUserSharingEntries(
+					userId, classNameId),
+				SharingEntry::getClassPK));
+
+		for (UserGroup userGroup :
+				userGroupLocalService.getUserUserGroups(userId)) {
+
+			sharingEntriesClassPKs.addAll(
+				TransformUtil.transform(
+					sharingEntryLocalService.getToUserGroupSharingEntries(
+						userGroup.getUserGroupId()),
+					sharingEntry -> {
+						if (sharingEntry.getClassNameId() != classNameId) {
+							return null;
+						}
+
+						return sharingEntry.getClassPK();
+					}));
+		}
+
+		return sharingEntriesClassPKs;
 	}
 
 	private JSONArray _toJSONArray(List<ObjectEntry> objectEntries)

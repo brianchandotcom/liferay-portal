@@ -44,11 +44,6 @@ override_module {
 
 run "should_configure_the_envoy_gateway_helm_release" {
 	assert {
-		condition=helm_release.envoy_gateway.version == "v1.5.2"
-		error_message="The Envoy Gateway chart version must be \"v${var.envoy_gateway_helm_chart_version}\""
-	}
-
-	assert {
 		condition=helm_release.envoy_gateway.chart == "gateway-helm"
 		error_message="The Envoy Gateway release must use the gateway-helm chart"
 	}
@@ -56,6 +51,11 @@ run "should_configure_the_envoy_gateway_helm_release" {
 	assert {
 		condition=helm_release.envoy_gateway.namespace == "envoy-gateway-system"
 		error_message="The Envoy Gateway release must default to the envoy-gateway-system namespace"
+	}
+
+	assert {
+		condition=helm_release.envoy_gateway.version == "v1.5.2"
+		error_message="The Envoy Gateway chart version must be \"v${var.envoy_gateway_helm_chart_version}\""
 	}
 
 	command=plan
@@ -95,6 +95,11 @@ run "should_honor_a_custom_gateway_namespace" {
 
 run "should_set_the_envoy_gateway_helm_values" {
 	assert {
+		condition=yamldecode(helm_release.envoy_gateway.values[0]).config.envoyGateway.extensionApis.enableBackend == false
+		error_message="The Envoy Gateway backend extension API must be disabled"
+	}
+
+	assert {
 		condition=yamldecode(helm_release.envoy_gateway.values[0]).deployment.replicas == 2
 		error_message="The Envoy Gateway deployment must run 2 replicas"
 	}
@@ -102,11 +107,6 @@ run "should_set_the_envoy_gateway_helm_values" {
 	assert {
 		condition=yamldecode(helm_release.envoy_gateway.values[0]).podDisruptionBudget.maxUnavailable == 1
 		error_message="The Envoy Gateway pod disruption budget must allow at most 1 unavailable pod"
-	}
-
-	assert {
-		condition=yamldecode(helm_release.envoy_gateway.values[0]).config.envoyGateway.extensionApis.enableBackend == false
-		error_message="The Envoy Gateway backend extension API must be disabled"
 	}
 
 	command=plan

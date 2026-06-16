@@ -44,13 +44,13 @@ override_module {
 
 run "should_cap_availability_zones_at_2_by_default" {
 	assert {
-		condition=length(local.selected_azs) == 2
-		error_message="The selected_azs list must be capped at max_availability_zones (default 2) even when more AZs are available"
+		condition=length(local.default_private_subnets) == 2
+		error_message="The default private subnet list must follow the AZ cap"
 	}
 
 	assert {
-		condition=length(local.default_private_subnets) == 2
-		error_message="The default private subnet list must follow the AZ cap"
+		condition=length(local.selected_azs) == 2
+		error_message="The selected_azs list must be capped at max_availability_zones (default 2) even when more AZs are available"
 	}
 
 	command=plan
@@ -72,8 +72,8 @@ run "should_compute_default_subnet_cidrs" {
 
 run "should_create_an_envoy_ingress_rule_per_port" {
 	assert {
-		condition=length(aws_vpc_security_group_ingress_rule.envoy_ingress_managed) == 2
-		error_message="One managed ingress rule must be created per Envoy port (10080, 10443)"
+		condition=aws_vpc_security_group_ingress_rule.envoy_ingress_managed["10080"].cidr_ipv4 == "10.0.0.0/16"
+		error_message="Envoy ingress rules must be scoped to the VPC CIDR"
 	}
 
 	assert {
@@ -87,19 +87,14 @@ run "should_create_an_envoy_ingress_rule_per_port" {
 	}
 
 	assert {
-		condition=aws_vpc_security_group_ingress_rule.envoy_ingress_managed["10080"].cidr_ipv4 == "10.0.0.0/16"
-		error_message="Envoy ingress rules must be scoped to the VPC CIDR"
+		condition=length(aws_vpc_security_group_ingress_rule.envoy_ingress_managed) == 2
+		error_message="One managed ingress rule must be created per Envoy port (10080, 10443)"
 	}
 
 	command=plan
 }
 
 run "should_extend_subnets_when_max_availability_zones_increases" {
-	assert {
-		condition=length(local.selected_azs) == 3
-		error_message="Raising max_availability_zones must select more AZs"
-	}
-
 	assert {
 		condition=length(local.default_private_subnets) == 3 && local.default_private_subnets[2] == "10.0.3.0/24"
 		error_message="Raising max_availability_zones must extend the computed private subnet list"
@@ -108,6 +103,11 @@ run "should_extend_subnets_when_max_availability_zones_increases" {
 	assert {
 		condition=length(local.default_public_subnets) == 3 && local.default_public_subnets[2] == "10.0.103.0/24"
 		error_message="Raising max_availability_zones must extend the computed public subnet list"
+	}
+
+	assert {
+		condition=length(local.selected_azs) == 3
+		error_message="Raising max_availability_zones must select more AZs"
 	}
 
 	command=plan

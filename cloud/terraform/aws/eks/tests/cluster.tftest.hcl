@@ -62,7 +62,7 @@ run "should_accept_custom_deployment_namespace" {
 run "should_accept_deployment_name_with_3_characters" {
 	assert {
 		condition=output.deployment_name == "abc"
-		error_message="The 3-character lowercase deployment_name must be accepted"
+		error_message="The deployment_name with 3 lowercase characters must be accepted"
 	}
 
 	command=plan

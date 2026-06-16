@@ -257,8 +257,6 @@ public class AssetListFiltersUtil {
 			calendar.add(Calendar.DAY_OF_MONTH, -7);
 		}
 
-		// "now" requires no offset.
-
 		return _format.format(calendar.getTime());
 	}
 
@@ -324,12 +322,6 @@ public class AssetListFiltersUtil {
 		}
 
 		if (_isNegatedOperator(operatorName)) {
-
-			// A standalone MUST_NOT clause matches no documents, so anchor
-			// the negation with a positive MatchAllQuery. The nested path does
-			// not need this because its negation lives inside a positive
-			// NestedQuery.
-
 			BooleanQuery booleanQuery = new BooleanQuery();
 
 			booleanQuery.add(new MatchAllQuery(), BooleanClauseOccur.MUST);
@@ -430,10 +422,6 @@ public class AssetListFiltersUtil {
 		if (type.equals("decimal") || type.equals("integer")) {
 			return new TermQuery(field, value);
 		}
-
-		// Localized fields (title) are indexed as analyzed text, so match them
-		// through the analyzer. Other text fields (userName,
-		// externalReferenceCode) are keywords matched exactly or by substring.
 
 		if (localized) {
 			return new MatchQuery(field, value);
@@ -649,11 +637,6 @@ public class AssetListFiltersUtil {
 		return new MatchQuery(subfield, value);
 	}
 
-	// Common Fields are indexed at the document root by
-	// AssetEntryDocumentContributor, not under nestedFieldArray. Keep this
-	// registry in sync with the group emitted by
-	// AssetListTypePropertiesUtil#_getCommonFieldsItemsJSONArray.
-
 	private static final Map<String, String> _commonFieldTypes =
 		HashMapBuilder.put(
 			Field.CREATE_DATE, "date"
@@ -680,7 +663,6 @@ public class AssetListFiltersUtil {
 		).put(
 			"viewCount", "integer"
 		).build();
-
 	private static final Format _format =
 		FastDateFormatFactoryUtil.getSimpleDateFormat("yyyyMMddHHmmss");
 	private static final Set<String> _localizedCommonFieldNames =

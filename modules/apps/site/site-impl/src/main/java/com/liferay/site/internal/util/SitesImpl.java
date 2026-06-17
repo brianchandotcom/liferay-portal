@@ -410,7 +410,125 @@ public class SitesImpl implements Sites {
 			return;
 		}
 
-		doMergeLayoutPrototypeLayout(layout);
+		if (!layout.isPortletLayoutPageTemplateEntryLinkActive()) {
+			return;
+		}
+
+		Group group = layout.getGroup();
+
+		if (group.isLayoutPrototype() || group.hasStagingGroup()) {
+			return;
+		}
+
+		long lastMergeTime = GetterUtil.getLong(
+			layout.getTypeSettingsProperty(LAST_MERGE_TIME));
+
+		if (lastMergeTime == 0) {
+			try {
+				MergeLayoutPrototypesThreadLocal.setInProgress(true);
+
+				Layout targetLayout = _layoutLocalService.getLayout(
+					layout.getPlid());
+
+				if (targetLayout != null) {
+					lastMergeTime = GetterUtil.getLong(
+						targetLayout.getTypeSettingsProperty(LAST_MERGE_TIME));
+				}
+			}
+			finally {
+				MergeLayoutPrototypesThreadLocal.setInProgress(false);
+			}
+		}
+
+		if (Validator.isNull(layout.getLayoutPrototypeUuid())) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Merge not performed because layout prototype does not " +
+					"exist for layout PLID " + layout.getPlid());
+			}
+
+			return;
+		}
+
+		LayoutPrototype layoutPrototype =
+			_layoutPrototypeLocalService.getLayoutPrototypeByUuidAndCompanyId(
+				layout.getLayoutPrototypeUuid(), layout.getCompanyId());
+
+		Layout layoutPrototypeLayout = layoutPrototype.getLayout();
+
+		Date modifiedDate = layoutPrototypeLayout.getModifiedDate();
+
+		if (lastMergeTime >= modifiedDate.getTime()) {
+			return;
+		}
+
+		UnicodeProperties prototypeTypeSettingsUnicodeProperties =
+			layoutPrototypeLayout.getTypeSettingsProperties();
+
+		int mergeFailCount = GetterUtil.getInteger(
+			prototypeTypeSettingsUnicodeProperties.getProperty(
+				MERGE_FAIL_COUNT));
+
+		if (mergeFailCount >
+		    PropsValues.LAYOUT_PROTOTYPE_MERGE_FAIL_THRESHOLD) {
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					StringBundler.concat(
+						"Merge not performed because the fail threshold was ",
+						"reached for layoutPrototypeId ",
+						layoutPrototype.getLayoutPrototypeId(),
+						" and layoutId ", layoutPrototypeLayout.getLayoutId(),
+						". Update the count in the database to try again."));
+			}
+
+			return;
+		}
+
+		String owner = _acquireLock(
+			Layout.class.getName(), layout.getPlid(),
+			PropsValues.LAYOUT_PROTOTYPE_MERGE_LOCK_MAX_TIME);
+
+		if (owner == null) {
+			return;
+		}
+
+		EntityCacheUtil.clearLocalCache();
+
+		layout = _layoutLocalService.fetchLayout(layout.getPlid());
+
+		try {
+			MergeLayoutPrototypesThreadLocal.setInProgress(true);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"Applying layout prototype ", layoutPrototype.getUuid(),
+						" (mvccVersion ", layoutPrototype.getMvccVersion(),
+						") to layout ", layout.getPlid(), " (mvccVersion ",
+						layout.getMvccVersion(), ")"));
+			}
+
+			applyLayoutPrototype(layoutPrototype, layout, true);
+		}
+		catch (CTTransactionException ctTransactionException) {
+			throw ctTransactionException;
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+
+			prototypeTypeSettingsUnicodeProperties.setProperty(
+				MERGE_FAIL_COUNT, String.valueOf(++mergeFailCount));
+
+			// Invoke updateImpl so that we do not trigger the listeners
+
+			_layoutLocalService.updateLayout(layoutPrototypeLayout);
+		}
+		finally {
+			MergeLayoutPrototypesThreadLocal.setInProgress(false);
+
+			_releaseLock(Layout.class.getName(), layout.getPlid(), owner);
+		}
 	}
 
 	@Override
@@ -473,130 +591,6 @@ public class SitesImpl implements Sites {
 			targetLayout.getCompanyId(),
 			unreferencedPortletIds.toArray(new String[0]),
 			targetLayout.getPlid());
-	}
-
-	protected void doMergeLayoutPrototypeLayout(Layout layout)
-		throws Exception {
-
-		if (!layout.isPortletLayoutPageTemplateEntryLinkActive()) {
-			return;
-		}
-
-		Group group = layout.getGroup();
-
-		if (group.isLayoutPrototype() || group.hasStagingGroup()) {
-			return;
-		}
-
-		long lastMergeTime = GetterUtil.getLong(
-			layout.getTypeSettingsProperty(LAST_MERGE_TIME));
-
-		if (lastMergeTime == 0) {
-			try {
-				MergeLayoutPrototypesThreadLocal.setInProgress(true);
-
-				Layout targetLayout = _layoutLocalService.getLayout(
-					layout.getPlid());
-
-				if (targetLayout != null) {
-					lastMergeTime = GetterUtil.getLong(
-						targetLayout.getTypeSettingsProperty(LAST_MERGE_TIME));
-				}
-			}
-			finally {
-				MergeLayoutPrototypesThreadLocal.setInProgress(false);
-			}
-		}
-
-		if (Validator.isNull(layout.getLayoutPrototypeUuid())) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Merge not performed because layout prototype does not " +
-						"exist for layout PLID " + layout.getPlid());
-			}
-
-			return;
-		}
-
-		LayoutPrototype layoutPrototype =
-			_layoutPrototypeLocalService.getLayoutPrototypeByUuidAndCompanyId(
-				layout.getLayoutPrototypeUuid(), layout.getCompanyId());
-
-		Layout layoutPrototypeLayout = layoutPrototype.getLayout();
-
-		Date modifiedDate = layoutPrototypeLayout.getModifiedDate();
-
-		if (lastMergeTime >= modifiedDate.getTime()) {
-			return;
-		}
-
-		UnicodeProperties prototypeTypeSettingsUnicodeProperties =
-			layoutPrototypeLayout.getTypeSettingsProperties();
-
-		int mergeFailCount = GetterUtil.getInteger(
-			prototypeTypeSettingsUnicodeProperties.getProperty(
-				MERGE_FAIL_COUNT));
-
-		if (mergeFailCount >
-				PropsValues.LAYOUT_PROTOTYPE_MERGE_FAIL_THRESHOLD) {
-
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					StringBundler.concat(
-						"Merge not performed because the fail threshold was ",
-						"reached for layoutPrototypeId ",
-						layoutPrototype.getLayoutPrototypeId(),
-						" and layoutId ", layoutPrototypeLayout.getLayoutId(),
-						". Update the count in the database to try again."));
-			}
-
-			return;
-		}
-
-		String owner = _acquireLock(
-			Layout.class.getName(), layout.getPlid(),
-			PropsValues.LAYOUT_PROTOTYPE_MERGE_LOCK_MAX_TIME);
-
-		if (owner == null) {
-			return;
-		}
-
-		EntityCacheUtil.clearLocalCache();
-
-		layout = _layoutLocalService.fetchLayout(layout.getPlid());
-
-		try {
-			MergeLayoutPrototypesThreadLocal.setInProgress(true);
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					StringBundler.concat(
-						"Applying layout prototype ", layoutPrototype.getUuid(),
-						" (mvccVersion ", layoutPrototype.getMvccVersion(),
-						") to layout ", layout.getPlid(), " (mvccVersion ",
-						layout.getMvccVersion(), ")"));
-			}
-
-			applyLayoutPrototype(layoutPrototype, layout, true);
-		}
-		catch (CTTransactionException ctTransactionException) {
-			throw ctTransactionException;
-		}
-		catch (Exception exception) {
-			_log.error(exception);
-
-			prototypeTypeSettingsUnicodeProperties.setProperty(
-				MERGE_FAIL_COUNT, String.valueOf(++mergeFailCount));
-
-			// Invoke updateImpl so that we do not trigger the listeners
-
-			_layoutLocalService.updateLayout(layoutPrototypeLayout);
-		}
-		finally {
-			MergeLayoutPrototypesThreadLocal.setInProgress(false);
-
-			_releaseLock(Layout.class.getName(), layout.getPlid(), owner);
-		}
 	}
 
 	protected File exportLayoutSetPrototype(

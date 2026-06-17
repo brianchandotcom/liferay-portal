@@ -60,29 +60,19 @@ Resolve configuration in this order:
 
 1. Read `config.json` when it exists.
 
-1. Otherwise, fall back to these defaults:
-
-	- **patternsReference**: `modules/test/playwright/tests/layout-content-page-editor-web` — the Playwright folder used as the style reference. Read at least one spec from here before writing the first migrated spec.
-
-	- **playwrightTestsRoot**: `modules/test/playwright/tests` — the root for Playwright specs.
-
-	- **poshiTestsRoot**: `portal-web/test/functional/com/liferay/portalweb/tests/enduser` — the root for Poshi `.testcase` files.
-
-	- **componentPlaywrightModules**: `{}` (empty). The inventory phase will ask the user which Playwright modules to scan when the mapping for the source `@component-name` is missing.
-
-	- **defaultComponentName**: unset. The argument resolver will prompt the user with the full list from `test.properties` and remember the choice from then on.
+1. Otherwise, fall back to the defaults noted with each key below.
 
 The keys are:
 
-- **componentPlaywrightModules**: a mapping from `@component-name` to the list of Playwright modules under `playwrightTestsRoot` that own its existing specs. The inventory phase scans these modules to detect tests that already cover, or partially cover, the Poshi tests being migrated.
+- **componentPlaywrightModules**: a mapping from `@component-name` to the list of Playwright modules under `playwrightTestsRoot` that own its existing specs. The inventory phase scans these modules to detect tests that already cover, or partially cover, the Poshi tests being migrated, and asks the user which modules to scan when the mapping for the source `@component-name` is missing. Defaults to `{}` (empty).
 
-- **defaultComponentName**: the last `@component-name` the user chose interactively. Suggested as the default on subsequent runs when `${ARGUMENTS}` is empty.
+- **defaultComponentName**: the last `@component-name` the user chose interactively, suggested as the default on subsequent runs when `${ARGUMENTS}` is empty. The argument resolver prompts the user with the full list from `test.properties` and remembers the choice from then on. Unset by default.
 
-- **patternsReference**: the Playwright folder used as the style reference.
+- **patternsReference**: the Playwright folder used as the style reference. Defaults to `modules/test/playwright/tests/layout-content-page-editor-web`.
 
-- **playwrightTestsRoot**: the root for Playwright specs.
+- **playwrightTestsRoot**: the root for Playwright specs. Defaults to `modules/test/playwright/tests`.
 
-- **poshiTestsRoot**: the root for Poshi `.testcase` files.
+- **poshiTestsRoot**: the root for Poshi `.testcase` files. Defaults to `portal-web/test/functional/com/liferay/portalweb/tests/enduser`.
 
 After resolving the values, show them to the user via `AskUserQuestion` and offer to keep them or override any value for this run. Persist overrides only when the user explicitly asks (write `config.json`, never modify `config.example.json`).
 

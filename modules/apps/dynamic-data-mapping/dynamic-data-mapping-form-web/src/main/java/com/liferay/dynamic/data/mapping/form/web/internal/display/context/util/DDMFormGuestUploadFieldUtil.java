@@ -8,16 +8,13 @@ package com.liferay.dynamic.data.mapping.form.web.internal.display.context.util;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
-import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalService;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -45,24 +42,16 @@ public class DDMFormGuestUploadFieldUtil {
 			return false;
 		}
 
-		int count = 0;
-
 		DDMFormInstanceRecordLocalService ddmFormInstanceRecordLocalService =
 			_ddmFormInstanceRecordLocalServiceSnapshot.get();
 
-		for (DDMFormInstanceRecord ddmFormInstanceRecord :
-				ddmFormInstanceRecordLocalService.getFormInstanceRecords(
-					ddmFormInstance.getFormInstanceId(),
-					WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
+		int count =
+			ddmFormInstanceRecordLocalService.getFormInstanceRecordsCount(
+				ddmFormInstance.getFormInstanceId(),
+				httpServletRequest.getRemoteAddr());
 
-			if (Objects.equals(
-					ddmFormInstanceRecord.getIpAddress(),
-					httpServletRequest.getRemoteAddr()) &&
-				(++count == guestUploadMaximumSubmissions)) {
-
-				return true;
-			}
+		if (count >= guestUploadMaximumSubmissions) {
+			return true;
 		}
 
 		return false;

@@ -340,13 +340,13 @@ public class OpenSearchQueryVisitor implements QueryVisitor<QueryVariant> {
 		builder.scoreMode(ChildScoreMode.Sum);
 
 		if (nestedQuery.isInnerHitsEnabled()) {
-			QueryConfig nestedQueryConfig = nestedQuery.getQueryConfig();
+			QueryConfig queryConfig = nestedQuery.getQueryConfig();
 
 			Highlight highlight = _highlightTranslator.translate(
-				nestedQueryConfig.getHighlightFieldNames(),
-				nestedQueryConfig.getHighlightFragmentSize(),
-				nestedQueryConfig.isHighlightRequireFieldMatch(),
-				nestedQueryConfig.getHighlightSnippetSize());
+				queryConfig.getHighlightFieldNames(),
+				queryConfig.getHighlightFragmentSize(),
+				queryConfig.isHighlightRequireFieldMatch(),
+				queryConfig.getHighlightSnippetSize());
 
 			if (highlight != null) {
 				InnerHits.Builder innerHitsBuilder = new InnerHits.Builder(

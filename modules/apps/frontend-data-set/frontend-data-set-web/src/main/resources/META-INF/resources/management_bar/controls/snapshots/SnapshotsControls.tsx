@@ -76,25 +76,49 @@ const SnapshotsControlsTrigger = React.forwardRef(
 
 function SaveSnapshotModalComponent({
 	closeModal,
+	existingLabels,
 	initialLabel,
 	namespace,
 	onSave,
 	title,
 }: {
 	closeModal: () => void;
+	existingLabels: string[];
 	initialLabel: string;
 	namespace: string;
 	onSave: (label: string) => void;
 	title: string;
 }) {
 	const [label, setLabel] = useState(initialLabel);
-	const [nameValidationError, setNameValidationError] = useState(false);
+	const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+	const trimmedLabel = label.trim();
+
+	const getValidationError = () => {
+		if (!trimmedLabel) {
+			return Liferay.Language.get('this-field-is-required');
+		}
+
+		const duplicated = existingLabels.some(
+			(existingLabel) =>
+				existingLabel.trim().toLowerCase() ===
+				trimmedLabel.toLowerCase()
+		);
+
+		if (duplicated) {
+			return Liferay.Language.get(
+				'a-view-with-this-name-already-exists'
+			);
+		}
+
+		return null;
+	};
 
 	const handleSave = () => {
-		const trimmedLabel = label.trim();
+		const validationError = getValidationError();
 
-		if (!trimmedLabel) {
-			setNameValidationError(true);
+		if (validationError) {
+			setErrorMessage(validationError);
 
 			return;
 		}
@@ -111,9 +135,7 @@ function SaveSnapshotModalComponent({
 			</ClayModal.Header>
 
 			<ClayModal.Body>
-				<ClayForm.Group
-					className={nameValidationError ? 'has-error' : ''}
-				>
+				<ClayForm.Group className={errorMessage ? 'has-error' : ''}>
 					<label htmlFor={`${namespace}labelInput`}>
 						{Liferay.Language.get('name')}
 
@@ -125,18 +147,18 @@ function SaveSnapshotModalComponent({
 						id={`${namespace}labelInput`}
 						onChange={(event) => {
 							setLabel(event.target.value);
-							setNameValidationError(false);
+							setErrorMessage(null);
 						}}
 						type="text"
 						value={label}
 					/>
 
-					{nameValidationError && (
+					{errorMessage && (
 						<ClayForm.FeedbackGroup>
 							<ClayForm.FeedbackItem>
 								<ClayForm.FeedbackIndicator symbol="exclamation-full" />
 
-								{Liferay.Language.get('this-field-is-required')}
+								{errorMessage}
 							</ClayForm.FeedbackItem>
 						</ClayForm.FeedbackGroup>
 					)}
@@ -153,7 +175,10 @@ function SaveSnapshotModalComponent({
 							{Liferay.Language.get('cancel')}
 						</ClayButton>
 
-						<ClayButton onClick={handleSave}>
+						<ClayButton
+							disabled={!trimmedLabel}
+							onClick={handleSave}
+						>
 							{Liferay.Language.get('save')}
 						</ClayButton>
 					</ClayButton.Group>
@@ -311,11 +336,16 @@ const SnapshotsControls = () => {
 			});
 	};
 
+	const ownedSnapshotItems = ownedSnapshots?.items ?? [];
+
 	const openSaveSnapshotModal = () => {
 		openModal({
 			contentComponent: ({closeModal}) => (
 				<SaveSnapshotModalComponent
 					closeModal={closeModal}
+					existingLabels={ownedSnapshotItems.map(
+						(item: ISnapshot) => item.label
+					)}
 					initialLabel={initialLabel}
 					namespace={namespace ?? ''}
 					onSave={(label) =>
@@ -387,6 +417,12 @@ const SnapshotsControls = () => {
 			contentComponent: ({closeModal}) => (
 				<SaveSnapshotModalComponent
 					closeModal={closeModal}
+					existingLabels={ownedSnapshotItems
+						.filter(
+							(item: ISnapshot) =>
+								item.erc !== activeSnapshot.erc
+						)
+						.map((item: ISnapshot) => item.label)}
 					initialLabel={initialLabel}
 					namespace={namespace ?? ''}
 					onSave={(label) =>

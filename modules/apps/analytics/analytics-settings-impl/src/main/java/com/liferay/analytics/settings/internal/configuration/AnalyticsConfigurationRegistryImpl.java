@@ -20,6 +20,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.configuration.module.configuration.BaseManagedServiceFactory;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.concurrent.SystemExecutorServiceUtil;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserConstants;
+import com.liferay.portal.kernel.security.auth.CompanyInheritableThreadLocalCallable;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -413,8 +415,18 @@ public class AnalyticsConfigurationRegistryImpl
 					companyId, dispatchTriggerNames.toArray(new String[0]));
 			}
 
-			_analyticsSettingsManager.updateCompanyConfiguration(
-				companyId, Collections.singletonMap("firstSync", false));
+			ExecutorService executorService =
+				SystemExecutorServiceUtil.getExecutorService();
+
+			executorService.submit(
+				new CompanyInheritableThreadLocalCallable<>(
+					() -> {
+						_analyticsSettingsManager.updateCompanyConfiguration(
+							companyId,
+							Collections.singletonMap("firstSync", false));
+
+						return null;
+					}));
 		}
 		catch (Exception exception) {
 			_log.error(exception);

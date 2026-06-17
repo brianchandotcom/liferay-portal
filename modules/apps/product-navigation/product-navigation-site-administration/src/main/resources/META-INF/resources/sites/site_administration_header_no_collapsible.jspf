@@ -64,20 +64,22 @@
 			</clay:content-col>
 		</c:if>
 
-		<clay:content-col
-			cssClass="autofit-col-end"
-		>
-			<react:component
-				module="{SideNavigationColorSchemeButton} from application-list-taglib"
-				props='<%=
-					HashMapBuilder.<String, Object>put(
-						"colorScheme", SessionClicks.get(request, "com_liferay_application_list_taglib_SideNavigationColorScheme", "light")
-					).put(
-						"colorSchemeSessionKey", "com_liferay_application_list_taglib_SideNavigationColorScheme"
-					).build()
-				%>'
-			/>
-		</clay:content-col>
+		<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-57922") %>'>
+			<clay:content-col
+				cssClass="autofit-col-end"
+			>
+				<react:component
+					module="{SideNavigationColorSchemeButton} from application-list-taglib"
+					props='<%=
+						HashMapBuilder.<String, Object>put(
+							"colorScheme", SessionClicks.get(request, "com_liferay_application_list_taglib_SideNavigationColorScheme", "light")
+						).put(
+							"colorSchemeSessionKey", "com_liferay_application_list_taglib_SideNavigationColorScheme"
+						).build()
+					%>'
+				/>
+			</clay:content-col>
+		</c:if>
 
 		<clay:content-col
 			cssClass="autofit-col-end"

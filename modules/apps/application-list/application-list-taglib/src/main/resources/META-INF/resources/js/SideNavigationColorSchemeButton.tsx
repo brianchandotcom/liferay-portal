@@ -13,11 +13,43 @@ function SideNavigationColorSchemeButton({
 	colorScheme: 'dark' | 'light';
 	colorSchemeSessionKey: string;
 }) {
-	const [colorScheme, setColorScheme] = useState(initialColorScheme);
+	const [colorScheme, setColorScheme] = useState<'dark' | 'light'>(() => {
+		const current = document.documentElement.dataset.colorScheme;
+
+		return current === 'dark' || current === 'light'
+			? current
+			: initialColorScheme;
+	});
 
 	useEffect(() => {
-		document.documentElement.dataset.colorScheme = colorScheme;
+		if (document.documentElement.dataset.colorScheme !== colorScheme) {
+			document.documentElement.dataset.colorScheme = colorScheme;
+		}
 	}, [colorScheme]);
+
+	useEffect(() => {
+		const observer = new MutationObserver((mutations) => {
+			mutations.forEach((mutation) => {
+				if (
+					mutation.type === 'attributes' &&
+					mutation.attributeName === 'data-color-scheme'
+				) {
+					const newValue =
+						document.documentElement.dataset.colorScheme;
+					if (newValue === 'dark' || newValue === 'light') {
+						setColorScheme(newValue);
+					}
+				}
+			});
+		});
+
+		observer.observe(document.documentElement, {
+			attributeFilter: ['data-color-scheme'],
+			attributes: true,
+		});
+
+		return () => observer.disconnect();
+	}, []);
 
 	const toggle = async () => {
 		const nextColorScheme = colorScheme === 'dark' ? 'light' : 'dark';

@@ -221,6 +221,18 @@ describe('NewImport', () => {
 		expect(nameInput).toHaveValue('');
 	});
 
+	it('checks every section by default', async () => {
+		await goToDataSelectionStep();
+
+		expect(screen.getByRole('checkbox', {name: 'Design'})).toBeChecked();
+		expect(
+			screen.getByRole('checkbox', {name: 'Site Builder'})
+		).toBeChecked();
+		expect(
+			screen.getByRole('checkbox', {name: 'Content & Data'})
+		).toBeChecked();
+	});
+
 	it('shows the file summary and the lar contents on the Data Selection step after uploading a file and clicking Continue', async () => {
 		(postImportPreview as jest.Mock).mockImplementationOnce(() =>
 			Promise.resolve({
@@ -240,8 +252,6 @@ describe('NewImport', () => {
 		expect(screen.getByText('4 KB')).toBeInTheDocument();
 
 		expect(screen.getByText('Design')).toBeInTheDocument();
-
-		await user.click(screen.getByRole('checkbox', {name: 'Design'}));
 
 		await user.click(screen.getByRole('button', {name: 'Expand Design'}));
 
@@ -266,10 +276,7 @@ describe('NewImport', () => {
 
 		await user.click(screen.getByRole('button', {name: 'Expand Design'}));
 
-		await user.click(
-			screen.getByRole('checkbox', {name: 'Theme Settings'})
-		);
-		await user.click(screen.getByRole('checkbox', {name: 'Logo'}));
+		await user.click(screen.getByRole('checkbox', {name: 'Fragments'}));
 
 		expect(
 			screen.getByRole('checkbox', {name: 'Design'})
@@ -282,6 +289,8 @@ describe('NewImport', () => {
 
 	it('lists the available handlers with a Select prefix when nothing is selected', async () => {
 		await goToDataSelectionStep();
+
+		await user.click(screen.getByRole('checkbox', {name: 'Design'}));
 
 		expect(
 			screen.getByText('Select Theme Settings, Logo, Fragments')
@@ -371,11 +380,9 @@ describe('NewImport', () => {
 	it('renders the Comments and Ratings block inside the Site Content section when commentsAndRatingsEnabled is true', async () => {
 		await goToDataSelectionStep({commentsAndRatingsEnabled: true});
 
-		await user.click(
-			screen.getByRole('checkbox', {name: 'Content & Data'})
-		);
-
-		expect(screen.getByText('comments-and-ratings')).toBeInTheDocument();
+		expect(
+			await screen.findByText('comments-and-ratings')
+		).toBeInTheDocument();
 		expect(screen.getByLabelText('comments')).toBeInTheDocument();
 		expect(screen.getByLabelText('ratings')).toBeInTheDocument();
 	});

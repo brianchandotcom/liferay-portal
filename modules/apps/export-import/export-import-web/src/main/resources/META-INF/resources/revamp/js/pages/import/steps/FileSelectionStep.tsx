@@ -21,7 +21,7 @@ export default function FileSelectionStep({
 }) {
 	const [progress, setProgress] = useState<number>();
 
-	const {setFieldValue, values} = useFormikContext<{
+	const {setFieldTouched, setFieldValue, values} = useFormikContext<{
 		fileSelector?: File;
 		name: string;
 	}>();
@@ -42,9 +42,16 @@ export default function FileSelectionStep({
 
 		if (!currentFile) {
 			setFieldValue('contentSelection', undefined);
+			setFieldTouched('contentSelection', false, false);
 			setImportPreview(undefined);
 		}
-	}, [values.fileSelector, values.name, setFieldValue, setImportPreview]);
+	}, [
+		values.fileSelector,
+		values.name,
+		setFieldTouched,
+		setFieldValue,
+		setImportPreview,
+	]);
 
 	const handleUpload = async (file: File, signal?: AbortSignal) => {
 		const result = await postImportPreview({

@@ -10,8 +10,8 @@ import {PageTreeModalConfiguration} from '../../../pages/export/components/PageT
 import {ExportImportProcess} from '../../../types/exportImportProcess';
 import {PreviewPortletDataHandlerSection} from '../../../types/portletDataHandler';
 import {
+	getVisibleSections,
 	updateSelection,
-	withSiteBuilderSection,
 } from '../../../utils/contentSelection';
 import ContentSection, {SectionSelection} from './ContentSection';
 
@@ -47,17 +47,10 @@ export default function ContentSelector({
 	const currentValue = value || {};
 	const errorId = errorMessage ? `${name}-error-message` : undefined;
 
-	const visibleSections = sections.filter(
-		(section) =>
-			showDeletions || !!section.additionCount || !section.deletionCount
-	);
-
-	const renderedSections = lookAndFeelEnabled
-		? withSiteBuilderSection(
-				visibleSections,
-				Liferay.Language.get('category.site_administration.build')
-			)
-		: visibleSections;
+	const visibleSections = getVisibleSections(sections, {
+		lookAndFeelEnabled,
+		showDeletions,
+	});
 
 	return (
 		<div
@@ -67,7 +60,7 @@ export default function ContentSelector({
 			className="c-gap-4 d-flex flex-column mt-4"
 			role="group"
 		>
-			{renderedSections.map(
+			{visibleSections.map(
 				(section: PreviewPortletDataHandlerSection) => (
 					<ContentSection
 						commentsAndRatingsEnabled={commentsAndRatingsEnabled}

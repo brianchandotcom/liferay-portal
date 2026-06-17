@@ -1,4 +1,3 @@
-import autobind from 'autobind-decorator';
 import getCN from 'classnames';
 import omitDefinedProps from 'shared/util/omitDefinedProps';
 import PropTypes from 'prop-types';
@@ -39,7 +38,11 @@ class FormSearchableSelect extends React.Component<IFormSearchableSelectProps> {
 		onSelect: PropTypes.func,
 	};
 
-	@autobind
+	constructor(props: IFormSearchableSelectProps) {
+		super(props);
+		this.handleSelect = this.handleSelect.bind(this);
+	}
+
 	handleSelect(value: any) {
 		const {
 			field: {name},

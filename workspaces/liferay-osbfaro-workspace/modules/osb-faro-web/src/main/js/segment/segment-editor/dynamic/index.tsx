@@ -1,5 +1,4 @@
 import * as API from 'shared/api';
-import autobind from 'autobind-decorator';
 import CriteriaBuilder from './criteria-builder';
 import CriteriaSidebar from './criteria-sidebar';
 import DndProvider from 'shared/components/DndProvider';
@@ -127,7 +126,6 @@ interface ISegmentEditorProps {
 
 class SegmentEditor extends React.Component<ISegmentEditorProps> {
 	static contextType = ReferencedObjectsContext;
-	declare context: React.ContextType<typeof ReferencedObjectsContext>;
 
 	static defaultProps = {
 		segment: new Segment(),
@@ -137,11 +135,19 @@ class SegmentEditor extends React.Component<ISegmentEditorProps> {
 		enabledSequentialSegment: false,
 	};
 
+	constructor(props: ISegmentEditorProps) {
+		super(props);
+		this.createSegment = this.createSegment.bind(this);
+		this.hasChanges = this.hasChanges.bind(this);
+		this.handleSubmit = this.handleSubmit.bind(this);
+	}
+
+	declare context: React.ContextType<typeof ReferencedObjectsContext>;
+
 	_defaultExternalReferenceCode = uuidv4();
 
 	_formRef = React.createRef<any>();
 
-	@autobind
 	createSegment({
 		criteria,
 		externalReferenceCode,
@@ -176,7 +182,6 @@ class SegmentEditor extends React.Component<ISegmentEditorProps> {
 		return request({...requestData});
 	}
 
-	@autobind
 	hasChanges(
 		newIncludeAnonymousUsers: boolean,
 		newName: string,
@@ -203,7 +208,6 @@ class SegmentEditor extends React.Component<ISegmentEditorProps> {
 		);
 	}
 
-	@autobind
 	handleSubmit(form: FormValues) {
 		const {onSubmit} = this.props;
 

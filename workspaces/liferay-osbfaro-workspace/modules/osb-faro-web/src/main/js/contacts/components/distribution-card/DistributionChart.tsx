@@ -1,4 +1,3 @@
-import autobind from 'autobind-decorator';
 import Card from 'shared/components/Card';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
@@ -6,7 +5,6 @@ import ErrorDisplay from 'shared/components/ErrorDisplay';
 import Loading from 'shared/components/Loading';
 import React from 'react';
 import {ANIMATION_DURATION, AXIS, getTextWidth} from 'shared/util/recharts';
-import {autoCancel, hasRequest} from 'shared/util/request-decorator';
 import {
 	Bar,
 	CartesianGrid,
@@ -63,7 +61,6 @@ interface IDistributionChartProps extends PropsFromRedux {
 	viewAllLink: string;
 }
 
-@hasRequest
 class DistributionChart extends React.Component<
 	IDistributionChartProps,
 	{hoverIndex: number}
@@ -71,6 +68,11 @@ class DistributionChart extends React.Component<
 	state = {
 		hoverIndex: -1,
 	};
+
+	constructor(props: IDistributionChartProps) {
+		super(props);
+		this.handleFetchChartData = this.handleFetchChartData.bind(this);
+	}
 
 	componentDidMount() {
 		this.handleFetchChartData();
@@ -107,8 +109,6 @@ class DistributionChart extends React.Component<
 		return ticks.filter((t): t is number => typeof t === 'number');
 	}
 
-	@autoCancel
-	@autobind
 	handleFetchChartData() {
 		const {
 			channelId,

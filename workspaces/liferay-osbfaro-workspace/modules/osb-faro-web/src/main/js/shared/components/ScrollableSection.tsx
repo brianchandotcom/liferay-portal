@@ -1,4 +1,3 @@
-import autobind from 'autobind-decorator';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
@@ -47,7 +46,14 @@ export default class ScrollableSection extends React.Component<
 		showScroll: false,
 	};
 
-	private _containerRef = createRef<HTMLDivElement>();
+	constructor(props: IScrollableSectionProps) {
+		super(props);
+		this.handleShowScroll = this.handleShowScroll.bind(this);
+		this.handleScrollLeft = this.handleScrollLeft.bind(this);
+		this.handleScrollRight = this.handleScrollRight.bind(this);
+		this.scrollToBeg = this.scrollToBeg.bind(this);
+		this.scrollToEnd = this.scrollToEnd.bind(this);
+	}
 
 	componentDidMount() {
 		window.addEventListener('resize', this.handleShowScroll);
@@ -69,7 +75,8 @@ export default class ScrollableSection extends React.Component<
 		window.removeEventListener('resize', this.handleShowScroll);
 	}
 
-	@autobind
+	private _containerRef = createRef<HTMLDivElement>();
+
 	handleShowScroll() {
 		if (this._containerRef.current) {
 			const {offsetWidth, scrollWidth} = this._containerRef.current;
@@ -78,7 +85,6 @@ export default class ScrollableSection extends React.Component<
 		}
 	}
 
-	@autobind
 	handleScrollLeft() {
 		if (this._containerRef.current) {
 			const {offsetWidth} = this._containerRef.current;
@@ -87,7 +93,6 @@ export default class ScrollableSection extends React.Component<
 		}
 	}
 
-	@autobind
 	handleScrollRight() {
 		if (this._containerRef.current) {
 			const {offsetWidth} = this._containerRef.current;
@@ -99,7 +104,6 @@ export default class ScrollableSection extends React.Component<
 	/**
 	 * Public method to scroll to beginning of container.
 	 */
-	@autobind
 	scrollToBeg() {
 		if (this._containerRef.current) {
 			scrollTo(this._containerRef, 0);
@@ -109,7 +113,6 @@ export default class ScrollableSection extends React.Component<
 	/**
 	 * Public method to scroll to end of container.
 	 */
-	@autobind
 	scrollToEnd() {
 		if (this._containerRef.current) {
 			const {scrollWidth} = this._containerRef.current;

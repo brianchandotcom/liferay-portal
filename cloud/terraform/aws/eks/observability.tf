@@ -1,16 +1,3 @@
-locals {
-	aws_recording_rules=[
-		for k, v in local.observability_rules :
-		{
-			expr=v.expr
-			record=v.record
-		}
-		if try(v.cloudProvider, "aws") == "aws"
-	]
-	observability_interval=try(local.observability_values.alerting.interval, "1m")
-	observability_rules=try(local.observability_values.alerting.recordingRules, {})
-	observability_values=yamldecode(file("${path.module}/../../../helm/observability/values.yaml"))
-}
 module "alloy_role" {
 	amazon_managed_service_prometheus_workspace_arns=aws_prometheus_workspace.amp[*].arn
 	attach_amazon_managed_service_prometheus_policy=true
@@ -138,20 +125,6 @@ resource "aws_iam_policy" "rds_exporter" {
 		]
 		Version="2012-10-17"
 	})
-}
-resource "aws_prometheus_rule_group_namespace" "liferay" {
-	count=var.observability_config.enabled && length(local.aws_recording_rules) > 0 ? 1 : 0
-	data=yamlencode({
-		groups=[
-			{
-				interval=local.observability_interval
-				name="liferay-recording-rules"
-				rules=local.aws_recording_rules
-			}
-		]
-	})
-	name="liferay-recording-rules"
-	workspace_id=aws_prometheus_workspace.amp[0].id
 }
 resource "aws_prometheus_workspace" "amp" {
 	alias="${var.deployment_name}-amp-workspace"

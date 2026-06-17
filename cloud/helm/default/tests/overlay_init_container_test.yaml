@@ -1,4 +1,4 @@
-suite: overlay init container
+suite: Overlay Init Container
 templates:
     -   templates/configmap.yaml
     -   templates/liferay-init-scripts-cm.yaml
@@ -22,10 +22,10 @@ tests:
     -   asserts:
             -   matchRegex:
                     path: spec.template.spec.initContainers[?(@.name=="liferay-overlay")].command[2]
-                    pattern: osgi/
+                    pattern: osgi
             -   matchRegex:
                     path: spec.template.spec.initContainers[?(@.name=="liferay-overlay")].command[2]
-                    pattern: osgi/configs/
+                    pattern: osgi/configs
         documentSelector:
             path: kind
             skipEmptyTemplates: true
@@ -34,9 +34,9 @@ tests:
         set:
             overlay.copy:
                 -   from: overlay-build-1/osgi/*
-                    into: osgi/
+                    into: osgi
                 -   from: overlay-build-1/configs/*.config
-                    into: osgi/configs/
+                    into: osgi/configs
             overlay.enabled: true
     -   asserts:
             -   contains:

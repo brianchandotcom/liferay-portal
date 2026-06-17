@@ -3,7 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {render, screen} from '@testing-library/react';
+import {render, screen, waitFor} from '@testing-library/react';
+import {openModal} from 'frontend-js-components-web';
+import {fetch} from 'frontend-js-web';
 import React from 'react';
 
 import '@testing-library/jest-dom';
@@ -17,6 +19,27 @@ jest.mock(
 	'../../../../src/main/resources/META-INF/resources/management_bar/controls/snapshots/shareSnapshotAction',
 	() => jest.fn()
 );
+
+jest.mock('frontend-js-components-web', () => ({
+	...jest.requireActual('frontend-js-components-web'),
+	openModal: jest.fn(),
+	openToast: jest.fn(),
+}));
+
+jest.mock('frontend-js-web', () => ({
+	...jest.requireActual('frontend-js-web'),
+	fetch: jest.fn(() =>
+		Promise.resolve({
+			json: () => ({
+				externalReferenceCode: 'erc',
+				id: 1,
+				label: 'New View',
+				viewConfig: '{}',
+			}),
+			ok: true,
+		})
+	),
+}));
 
 global.Liferay = {
 	Language: {
@@ -105,6 +128,150 @@ describe('SnapshotsControls action gating', () => {
 			expect(screen.queryByText('rename-view')).not.toBeInTheDocument();
 			expect(screen.queryByText('share-view')).not.toBeInTheDocument();
 			expect(screen.queryByText('delete-view')).not.toBeInTheDocument();
+		});
+	});
+});
+
+describe('SnapshotsControls view name validation', () => {
+	const secondSnapshot = {erc: 'second-erc', id: 3, label: 'Second View'};
+
+	const renderModalFor = async (actionLabel: string, viewsState: any) => {
+		renderSnapshotsControls(viewsState);
+
+		await openActionsDropdown();
+
+		await userEvent.click(await screen.findByText(actionLabel));
+
+		const {contentComponent} = (openModal as jest.Mock).mock.calls.at(
+			-1
+		)[0];
+
+		render(contentComponent({closeModal: jest.fn()}));
+	};
+
+	const ownedViewsState = (overrides: any = {}) => ({
+		activeSnapshotERC: ownedSnapshot.erc,
+		activeView: null,
+		defaultSnapshot: {},
+		paginationDelta: null,
+		snapshotUpdated: false,
+		snapshots: [
+			{headerVisible: false, items: [ownedSnapshot, secondSnapshot]},
+		],
+		sorts: [],
+		visibleFieldNames: {},
+		...overrides,
+	});
+
+	beforeEach(() => {
+		(fetch as jest.Mock).mockClear();
+		(openModal as jest.Mock).mockClear();
+	});
+
+	describe('"Save View As"', () => {
+		it('disables "Save" while the name is empty or only whitespace', async () => {
+			await renderModalFor(
+				'save-view-as',
+				ownedViewsState({activeSnapshotERC: null})
+			);
+
+			expect(
+				screen.getByRole('button', {name: 'save'})
+			).toBeDisabled();
+
+			await userEvent.type(screen.getByLabelText(/name/), '   ');
+
+			expect(
+				screen.getByRole('button', {name: 'save'})
+			).toBeDisabled();
+		});
+
+		it('blocks saving and warns when the name matches an existing view', async () => {
+			await renderModalFor(
+				'save-view-as',
+				ownedViewsState({activeSnapshotERC: null})
+			);
+
+			await userEvent.type(
+				screen.getByLabelText(/name/),
+				ownedSnapshot.label
+			);
+
+			await userEvent.click(screen.getByRole('button', {name: 'save'}));
+
+			expect(
+				screen.getByText('a-view-with-this-name-already-exists')
+			).toBeInTheDocument();
+			expect(fetch).not.toHaveBeenCalled();
+		});
+
+		it('treats names that differ only in casing as duplicates', async () => {
+			await renderModalFor(
+				'save-view-as',
+				ownedViewsState({activeSnapshotERC: null})
+			);
+
+			await userEvent.type(
+				screen.getByLabelText(/name/),
+				ownedSnapshot.label.toUpperCase()
+			);
+
+			await userEvent.click(screen.getByRole('button', {name: 'save'}));
+
+			expect(
+				screen.getByText('a-view-with-this-name-already-exists')
+			).toBeInTheDocument();
+			expect(fetch).not.toHaveBeenCalled();
+		});
+
+		it('sends the form for a valid, unique name', async () => {
+			await renderModalFor(
+				'save-view-as',
+				ownedViewsState({activeSnapshotERC: null})
+			);
+
+			await userEvent.type(
+				screen.getByLabelText(/name/),
+				'A Brand New View'
+			);
+
+			await userEvent.click(screen.getByRole('button', {name: 'save'}));
+
+			expect(
+				screen.queryByText('a-view-with-this-name-already-exists')
+			).not.toBeInTheDocument();
+
+			await waitFor(() => expect(fetch).toHaveBeenCalled());
+		});
+	});
+
+	describe('"Rename View"', () => {
+		it('allows keeping the current name unchanged', async () => {
+			await renderModalFor('rename-view', ownedViewsState());
+
+			await userEvent.click(screen.getByRole('button', {name: 'save'}));
+
+			expect(
+				screen.queryByText('a-view-with-this-name-already-exists')
+			).not.toBeInTheDocument();
+
+			await waitFor(() => expect(fetch).toHaveBeenCalled());
+		});
+
+		it('blocks renaming to another existing view name', async () => {
+			await renderModalFor('rename-view', ownedViewsState());
+
+			const nameInput = screen.getByLabelText(/name/);
+
+			await userEvent.clear(nameInput);
+			await userEvent.type(nameInput, secondSnapshot.label);
+
+			await userEvent.click(screen.getByRole('button', {name: 'save'}));
+
+			expect(
+				screen.getByText('a-view-with-this-name-already-exists')
+			).toBeInTheDocument();
+			expect(fetch).not.toHaveBeenCalled();
 		});
 	});
 });

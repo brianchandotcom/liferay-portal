@@ -1,7 +1,15 @@
 {
 	"componentNamePlaywrightModules": {
-		"portal-analytics-cloud": ["analytics-settings-web", "analytics-web"]
+		"portal-analytics-cloud": [
+			"analytics-client-js",
+			"analytics-reports-js-components-web",
+			"analytics-settings-web",
+			"analytics-web",
+			"osb-faro-web",
+			"segment-experiment-web",
+			"segments-web"
+		]
 	},
 	"defaultComponentName": "portal-analytics-cloud",
-	"referencePlaywrightModulePath": "modules/test/playwright/tests/analytics-settings-web"
+	"referencePlaywrightModulePath": "modules/test/playwright/tests/layout-content-page-editor-web"
 }

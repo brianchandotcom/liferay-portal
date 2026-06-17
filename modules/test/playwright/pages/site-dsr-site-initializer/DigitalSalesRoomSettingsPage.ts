@@ -17,7 +17,9 @@ export class DigitalSalesRoomSettingsPage {
 		this.externalReferenceCodeInput = page.locator(
 			'[name="ObjectEntry_externalReferenceCode"]'
 		);
-		this.friendlyURLInput = page.locator('[name="ObjectField_friendlyURL"]');
+		this.friendlyURLInput = page.locator(
+			'[name="ObjectField_friendlyURL"]'
+		);
 		this.nameInput = page.locator('[name="ObjectField_name"]');
 		this.page = page;
 		this.saveButton = page.getByRole('button', {name: 'Save'});

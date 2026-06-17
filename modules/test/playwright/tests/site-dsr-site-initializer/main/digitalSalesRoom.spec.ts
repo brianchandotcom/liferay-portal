@@ -176,9 +176,9 @@ test(
 		await expect(
 			digitalSalesRoomSettingsPage.externalReferenceCodeInput
 		).toHaveValue(updatedExternalReferenceCode);
-		await expect(
-			digitalSalesRoomSettingsPage.friendlyURLInput
-		).toHaveValue(updatedFriendlyURL);
+		await expect(digitalSalesRoomSettingsPage.friendlyURLInput).toHaveValue(
+			updatedFriendlyURL
+		);
 		await expect(digitalSalesRoomSettingsPage.nameInput).toHaveValue(
 			updatedName
 		);

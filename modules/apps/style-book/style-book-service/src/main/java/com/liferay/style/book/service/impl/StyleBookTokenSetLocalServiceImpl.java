@@ -72,11 +72,6 @@ public class StyleBookTokenSetLocalServiceImpl
 		styleBookTokenSet.setUserId(user.getUserId());
 		styleBookTokenSet.setUserName(user.getFullName());
 
-		Date date = new Date();
-
-		styleBookTokenSet.setCreateDate(serviceContext.getCreateDate(date));
-		styleBookTokenSet.setModifiedDate(serviceContext.getModifiedDate(date));
-
 		styleBookTokenSet.setDescription(description);
 		styleBookTokenSet.setFrontendTokenCategoryName(
 			frontendTokenCategoryName);

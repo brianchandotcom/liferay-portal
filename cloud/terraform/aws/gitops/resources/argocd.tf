@@ -563,7 +563,7 @@ resource "kubernetes_manifest" "observability_application" {
 								},
 								{
 									name="aws.ampWorkspaceID"
-									value=try(data.aws_prometheus_workspace.amp[0].workspace_id, "")
+									value=try(data.aws_prometheus_workspace.amp[0].id, "")
 								},
 								{
 									name="aws.ampWorkspaceURL"

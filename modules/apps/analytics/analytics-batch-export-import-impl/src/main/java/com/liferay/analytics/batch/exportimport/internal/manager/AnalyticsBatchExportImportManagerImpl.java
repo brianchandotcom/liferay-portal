@@ -200,7 +200,7 @@ public class AnalyticsBatchExportImportManagerImpl
 					"Uploading resource " + resourceName,
 					notificationUnsafeConsumer);
 
-				_uploadWithRetry(
+				_upload(
 					companyId, "gzip", tempFile, resourceLastModifiedDate,
 					resourceName);
 
@@ -324,7 +324,7 @@ public class AnalyticsBatchExportImportManagerImpl
 						zipInputStream, gzipOutputStream, false);
 				}
 
-				_uploadWithRetry(
+				_upload(
 					companyId, "gzip", tempFile, resourceLastModifiedDate,
 					resourceName);
 
@@ -950,7 +950,6 @@ public class AnalyticsBatchExportImportManagerImpl
 				"/dxp-batch-entities");
 
 		httpPost.setEntity(new FileEntity(multipartFile));
-
 		httpPost.setHeader(HttpHeaders.CONTENT_ENCODING, contentEncoding);
 		httpPost.setHeader(
 			HttpHeaders.CONTENT_TYPE,
@@ -1033,7 +1032,7 @@ public class AnalyticsBatchExportImportManagerImpl
 		}
 	}
 
-	private void _uploadWithRetry(
+	private void _upload(
 		long companyId, String contentEncoding, File file,
 		Date resourceLastModifiedDate, String resourceName) {
 

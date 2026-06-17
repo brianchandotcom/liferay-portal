@@ -249,10 +249,11 @@ public class CloudBucketUtil {
 			true,
 			JenkinsResultsParserUtil.combine(
 				"aws s3api list-objects-v2 --bucket ",
-				s3ObjectPathMatcher.group("bucketName"), " --prefix ",
+				s3ObjectPathMatcher.group("bucketName"),
+				" --output text --prefix ",
 				s3ObjectPathMatcher.group("objectPath"),
 				" --query \"sort_by(Contents, &LastModified)[-1]",
-				".LastModified\" --output text"));
+				".LastModified\""));
 
 		String lastModified = JenkinsResultsParserUtil.readInputStream(
 			process.getInputStream());

@@ -394,9 +394,7 @@ public class SitesImpl implements Sites {
 	}
 
 	@Override
-	public void mergeLayoutPrototypeLayout(Layout layout)
-		throws Exception {
-
+	public void mergeLayoutPrototypeLayout(Layout layout) throws Exception {
 		String layoutSetPrototypeLayoutERC =
 			layout.getLayoutSetPrototypeLayoutERC();
 

@@ -3,32 +3,51 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {commerceEvents} from 'commerce-frontend-js';
+
 import PendingOrderIdDataRenderer, {
 	wipeCurrencyAndNavigate,
 } from '../data_renderers/PendingOrderIdDataRenderer';
 
-const PendingOrdersFDSPropsTransformer = (props) => ({
-	...props,
-	customDataRenderers: {
-		pendingOrderIdDataRenderer: (itemProps) =>
-			PendingOrderIdDataRenderer({
-				...itemProps,
-				setCurrentOrderURL: props.additionalProps.setCurrentOrderURL,
-			}),
-	},
-	onActionDropdownItemClick: ({
-		action: {
-			data: {id: actionId},
-		},
-		itemData: cart,
-	}) => {
-		if (actionId === 'view') {
-			wipeCurrencyAndNavigate({
-				cart,
-				setCurrentOrderURL: props.additionalProps.setCurrentOrderURL,
-			});
+const PendingOrdersFDSPropsTransformer = (props) => {
+	let currentOrder;
+
+	const refreshDataSet = ({order} = {}) => {
+		if (!currentOrder || currentOrder.id !== order?.id) {
+			currentOrder = order;
+
+			Liferay.fire(commerceEvents.FDS_UPDATE_DISPLAY, {id: props.id});
 		}
-	},
-});
+	};
+
+	Liferay.on(commerceEvents.CURRENT_ORDER_UPDATED, refreshDataSet);
+	Liferay.on(commerceEvents.CURRENT_ORDER_DELETED, refreshDataSet);
+
+	return {
+		...props,
+		customDataRenderers: {
+			pendingOrderIdDataRenderer: (itemProps) =>
+				PendingOrderIdDataRenderer({
+					...itemProps,
+					setCurrentOrderURL:
+						props.additionalProps.setCurrentOrderURL,
+				}),
+		},
+		onActionDropdownItemClick: ({
+			action: {
+				data: {id: actionId},
+			},
+			itemData: cart,
+		}) => {
+			if (actionId === 'view') {
+				wipeCurrencyAndNavigate({
+					cart,
+					setCurrentOrderURL:
+						props.additionalProps.setCurrentOrderURL,
+				});
+			}
+		},
+	};
+};
 
 export default PendingOrdersFDSPropsTransformer;

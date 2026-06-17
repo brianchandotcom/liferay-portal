@@ -26,6 +26,8 @@ import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.json.JSONObject;
+
 /**
  * @author Kenji Heigel
  */
@@ -243,27 +245,73 @@ public class CloudBucketUtil {
 			return null;
 		}
 
+		JSONObject credentialJSONObject =
+			JenkinsResultsParserUtil.createJSONObject(
+				JenkinsResultsParserUtil.read(new File(file)));
+
+		String serviceAccountImpersonationURL = credentialJSONObject.optString(
+			"service_account_impersonation_url");
+
+		String authenticationCommand = null;
+
+		File federatedCredentialFile = null;
+
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("gcloud storage sign-url ");
 		sb.append(url);
-		sb.append(" --private-key-file=");
-		sb.append(file);
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(
+				serviceAccountImpersonationURL)) {
+
+			authenticationCommand = _getGCPAuthenticationCommand(url, url);
+
+			sb.append(" --private-key-file=");
+			sb.append(file);
+		}
+		else {
+			federatedCredentialFile = _writeFederatedCredentialFile(
+				credentialJSONObject);
+
+			authenticationCommand = JenkinsResultsParserUtil.combine(
+				"gcloud auth login --cred-file=",
+				federatedCredentialFile.toString(), " --quiet");
+
+			Matcher serviceAccountImpersonationURLMatcher =
+				_serviceAccountImpersonationURLPattern.matcher(
+					serviceAccountImpersonationURL);
+
+			if (serviceAccountImpersonationURLMatcher.find()) {
+				sb.append(" --impersonate-service-account=");
+				sb.append(
+					serviceAccountImpersonationURLMatcher.group(
+						"serviceAccount"));
+			}
+		}
+
 		sb.append(" --duration=");
 		sb.append(duration);
 		sb.append("m");
 
-		Process process = JenkinsResultsParserUtil.executeBashCommands(
-			true, _getGCPAuthenticationCommand(url, url), sb.toString());
+		try {
+			Process process = JenkinsResultsParserUtil.executeBashCommands(
+				true, authenticationCommand, sb.toString());
 
-		Matcher matcher = _signedURLPattern.matcher(
-			JenkinsResultsParserUtil.readInputStream(process.getInputStream()));
+			Matcher signedURLMatcher = _signedURLPattern.matcher(
+				JenkinsResultsParserUtil.readInputStream(
+					process.getInputStream()));
 
-		if (matcher.find()) {
-			return matcher.group(0);
+			if (signedURLMatcher.find()) {
+				return signedURLMatcher.group(0);
+			}
+
+			return null;
 		}
-
-		return null;
+		finally {
+			if (federatedCredentialFile != null) {
+				JenkinsResultsParserUtil.delete(federatedCredentialFile);
+			}
+		}
 	}
 
 	public static boolean isS3ObjectOlderThan(
@@ -944,6 +992,25 @@ public class CloudBucketUtil {
 		}
 	}
 
+	private static File _writeFederatedCredentialFile(
+			JSONObject credentialJSONObject)
+		throws IOException {
+
+		File federatedCredentialFile = File.createTempFile(
+			"federated-credential", ".json");
+
+		JSONObject federatedCredentialJSONObject = new JSONObject(
+			credentialJSONObject.toString());
+
+		federatedCredentialJSONObject.remove(
+			"service_account_impersonation_url");
+
+		JenkinsResultsParserUtil.write(
+			federatedCredentialFile, federatedCredentialJSONObject.toString());
+
+		return federatedCredentialFile;
+	}
+
 	private static final String _CHECKSUM_FILE_EXTENSION = ".sha512";
 
 	private static final boolean _VALIDATE_CHECKSUM;
@@ -955,6 +1022,8 @@ public class CloudBucketUtil {
 		"\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2} +\\d+ (?<fileName>.+)");
 	private static final Pattern _s3ObjectPathPattern = Pattern.compile(
 		"s3://(?<bucketName>[^/]+)/(?<objectPath>.+)");
+	private static final Pattern _serviceAccountImpersonationURLPattern =
+		Pattern.compile("/serviceAccounts/(?<serviceAccount>[^/:]+):");
 	private static final Pattern _signedURLPattern = Pattern.compile(
 		"https:\\/\\/([a-zA-Z\\d-]+\\.)?storage\\." +
 			"(cloud\\.google\\.com|googleapis\\.com)\\/.*");

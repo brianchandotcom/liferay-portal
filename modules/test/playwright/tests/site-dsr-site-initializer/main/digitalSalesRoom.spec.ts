@@ -4,12 +4,14 @@
  */
 
 import {expect, mergeTests} from '@playwright/test';
+import {createReadStream} from 'fs';
 import path from 'path';
 
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {digitalSalesRoomPagesTest} from '../../../fixtures/digitalSalesRoomPagesTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {PageEditorPage} from '../../../pages/layout-content-page-editor-web/PageEditorPage';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
 import {performUserSwitch, userData} from '../../../utils/performLogin';
@@ -222,6 +224,106 @@ test(
 		);
 
 		await expect(page.locator('.page-editor__sidebar')).toBeVisible();
+	}
+);
+
+test(
+	'Add Document Gallery Block and configure a document card',
+	{tag: '@LPD-92373'},
+	async ({
+		apiHelpers,
+		digitalSalesRoomsPage,
+		editDigitalSalesRoomPage,
+		page,
+	}) => {
+		const documentTitle = `Doc${getRandomInt()}`;
+		const fileName = `${documentTitle}.png`;
+		const filePath = path.join(__dirname, 'dependencies', 'document1.png');
+		const roomName = `A${getRandomInt()}`;
+
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			type: 'business',
+		});
+
+		await digitalSalesRoomsPage.goToRoomsPage();
+
+		await digitalSalesRoomsPage.digitalSalesRoomsTable.newButton.click();
+
+		await editDigitalSalesRoomPage.addDigitalSalesRoom({
+			accountName: account.name,
+			roomName,
+		});
+
+		const pageEditorPage = new PageEditorPage(page);
+
+		await page.goto(`/web/${roomName}/onboarding?p_l_mode=edit`);
+
+		const groupId = await page.evaluate(() =>
+			Liferay.ThemeDisplay.getScopeGroupId()
+		);
+
+		await apiHelpers.headlessDelivery.postDocument(
+			groupId,
+			createReadStream(filePath),
+			{fileName, title: documentTitle}
+		);
+
+		await pageEditorPage.addFragment(
+			'Digital Sales Room',
+			'Document Gallery Block'
+		);
+
+		const fragmentId = await pageEditorPage.getFragmentId(
+			'Document Gallery Block'
+		);
+
+		await pageEditorPage.selectFragment(fragmentId);
+		await pageEditorPage.goToConfigurationTab('General');
+
+		const generalPanel = page.getByRole('tabpanel', {name: 'General'});
+
+		await generalPanel
+			.getByRole('button', {name: 'Select Document 1'})
+			.click();
+		const selectFromModalItem = page.getByRole('menuitem', {
+			name: 'Select Document 1',
+		});
+
+		await selectFromModalItem.click({timeout: 2000}).catch(() => {});
+		await page
+			.frameLocator('iframe[title="Select"]')
+			.getByText(documentTitle, {exact: true})
+			.click();
+
+		await expect(
+			generalPanel.getByRole('textbox', {name: 'Document 1'})
+		).toHaveValue(documentTitle);
+
+		await pageEditorPage.publishPage();
+
+		await page.goto(`/web/${roomName}/onboarding`);
+
+		await expect(
+			editDigitalSalesRoomPage.documentGalleryCard
+		).toBeVisible();
+		await expect(
+			editDigitalSalesRoomPage.documentGalleryCardBadge
+		).toHaveText('PNG');
+		await expect(
+			editDigitalSalesRoomPage.documentGalleryCardIcon
+		).toBeVisible();
+		await expect(
+			editDigitalSalesRoomPage.documentGalleryCardTitle
+		).toHaveText(documentTitle);
+
+		const response = await page.request.get(
+			(await editDigitalSalesRoomPage.documentGalleryCard.getAttribute(
+				'href'
+			)) ?? ''
+		);
+
+		expect(response.status()).toBe(200);
+		expect(response.headers()['content-type']).toContain('image');
 	}
 );
 

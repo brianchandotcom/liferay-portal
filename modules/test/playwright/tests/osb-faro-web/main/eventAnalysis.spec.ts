@@ -3909,3 +3909,118 @@ test(
 		]);
 	}
 );
+
+test(
+	'Reordering the breakdowns re-sorts the Event Analysis result rows',
+	{tag: '@LRAC-10272'},
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
+		const token = getRandomString();
+
+		const eventId = 'reorder' + token;
+		const pageAttribute = 'page' + token;
+		const colorAttribute = 'color' + token;
+
+		// Counts give clean percentages (total 10) and group totals with no
+		// ties, so the row order is deterministic for both breakdown orders
+
+		const countsByCombo: Record<string, number> = {
+			'P1|C1': 4,
+			'P1|C2': 3,
+			'P2|C1': 2,
+			'P2|C2': 1,
+		};
+
+		const events = [];
+
+		let userId = 1;
+
+		for (const [combo, count] of Object.entries(countsByCombo)) {
+			const [pageValue, colorValue] = combo.split('|');
+
+			for (let i = 0; i < count; i++) {
+				events.push({
+					applicationId: 'CustomEvent',
+					canonicalUrl: 'https://www.liferay.com',
+					channelId: channel.id,
+					eventDate: new Date().toISOString(),
+					eventId,
+					properties: [
+						{name: pageAttribute, value: pageValue},
+						{name: colorAttribute, value: colorValue},
+					],
+					title: 'Liferay',
+					userId: String(userId++),
+				});
+			}
+		}
+
+		await apiHelpers.jsonWebServicesOSBAsah.createEvents(events);
+
+		await apiHelpers.jsonWebServicesOSBAsah.createEventDefinition([
+			{
+				applicationId: 'CustomEvent',
+				displayName: eventId,
+				eventAttributeDefinitions: [pageAttribute, colorAttribute].map(
+					(name) => ({
+						dataType: 'STRING',
+						displayName: name,
+						name,
+						type: 'LOCAL',
+					})
+				),
+				name: eventId,
+				type: 'CUSTOM',
+			},
+		]);
+
+		await navigateToACPageViaURL({
+			acPage: ACPage.eventAnalysisPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await page.getByRole('link', {name: 'Create Analysis'}).click();
+
+		await setEventAnalysisName({
+			eventAnalysisName: `Event Analysis ${getRandomString()}`,
+			page,
+		});
+
+		await addCustomEvent({customEventName: eventId, page});
+
+		await addBreakdown({breakdownName: pageAttribute, page, tab: 'Event'});
+
+		await addBreakdown({breakdownName: colorAttribute, page, tab: 'Event'});
+
+		await changeTimeFilter({page, timeFilterPeriod: 'Last 24 hours'});
+
+		const percentSequence = async () =>
+			(await page.getByRole('cell').allInnerTexts())
+				.map((text) => text.trim())
+				.filter((text) => /^\d+%$/.test(text));
+
+		// Grouped by page then color (page totals P1=7, P2=3)
+
+		await expect
+			.poll(percentSequence)
+			.toEqual(['40%', '30%', '20%', '10%']);
+
+		// Move the color breakdown ahead of the page breakdown
+
+		const breakdownChips = page.locator(
+			'.attribute-breakdown-section-root .attribute-chip-container'
+		);
+
+		await dragAndDropElement({
+			dragTarget: breakdownChips.nth(1).locator('.drag-handle'),
+			dropTarget: breakdownChips.nth(0),
+		});
+
+		// Grouped by color then page (color totals C1=6, C2=4): the rows re-sort
+
+		await expect
+			.poll(percentSequence)
+			.toEqual(['40%', '20%', '30%', '10%']);
+	}
+);

@@ -8,6 +8,8 @@ package com.liferay.object.internal.deployer;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.depot.service.DepotEntryGroupRelLocalService;
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
@@ -132,6 +134,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			accountEntryOrganizationRelLocalService,
 		AssetEntryLocalService assetEntryLocalService,
 		BundleContext bundleContext,
+		DepotEntryGroupRelLocalService depotEntryGroupRelLocalService,
+		DepotEntryLocalService depotEntryLocalService,
 		DLFileEntryLocalService dlFileEntryLocalService,
 		GroupLocalService groupLocalService,
 		KaleoDefinitionLocalService kaleoDefinitionLocalService,
@@ -168,6 +172,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			accountEntryOrganizationRelLocalService;
 		_assetEntryLocalService = assetEntryLocalService;
 		_bundleContext = bundleContext;
+		_depotEntryGroupRelLocalService = depotEntryGroupRelLocalService;
+		_depotEntryLocalService = depotEntryLocalService;
 		_dlFileEntryLocalService = dlFileEntryLocalService;
 		_groupLocalService = groupLocalService;
 		_kaleoDefinitionLocalService = kaleoDefinitionLocalService;
@@ -461,12 +467,13 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		ModelResourcePermission<ObjectEntry> modelResourcePermission =
 			new ObjectEntryModelResourcePermission(
 				_accountEntryLocalService,
-				_accountEntryOrganizationRelLocalService, _groupLocalService,
-				objectDefinition.getClassName(), _objectActionLocalService,
-				_objectDefinitionLocalService, _objectEntryLocalService,
-				consumerSupplier, _objectFieldLocalService,
-				portletResourcePermission, _resourcePermissionLocalService,
-				_userGroupRoleLocalService);
+				_accountEntryOrganizationRelLocalService,
+				_depotEntryGroupRelLocalService, _depotEntryLocalService,
+				_groupLocalService, objectDefinition.getClassName(),
+				_objectActionLocalService, _objectDefinitionLocalService,
+				_objectEntryLocalService, consumerSupplier,
+				_objectFieldLocalService, portletResourcePermission,
+				_resourcePermissionLocalService, _userGroupRoleLocalService);
 
 		serviceRegistrations.add(
 			_bundleContext.registerService(
@@ -642,6 +649,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		_accountEntryOrganizationRelLocalService;
 	private final AssetEntryLocalService _assetEntryLocalService;
 	private final BundleContext _bundleContext;
+	private final DepotEntryGroupRelLocalService
+		_depotEntryGroupRelLocalService;
+	private final DepotEntryLocalService _depotEntryLocalService;
 	private final DLFileEntryLocalService _dlFileEntryLocalService;
 	private final GroupLocalService _groupLocalService;
 	private final KaleoDefinitionLocalService _kaleoDefinitionLocalService;

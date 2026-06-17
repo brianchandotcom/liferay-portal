@@ -347,7 +347,9 @@ export class DataSetFragmentPage {
 			'iframe[title="Select an Entity"]'
 		);
 
-		await iframe.getByRole('menuitem', {name: 'Web Content'}).click();
+		await iframe
+			.getByRole('menuitem', {exact: true, name: 'Web Content'})
+			.click();
 
 		await iframe.getByText(entryTitle).first().click();
 

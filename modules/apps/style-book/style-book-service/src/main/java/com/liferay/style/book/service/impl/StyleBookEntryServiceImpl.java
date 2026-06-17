@@ -24,7 +24,6 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
- * @see    StyleBookEntryServiceBaseImpl
  */
 @Component(
 	property = {

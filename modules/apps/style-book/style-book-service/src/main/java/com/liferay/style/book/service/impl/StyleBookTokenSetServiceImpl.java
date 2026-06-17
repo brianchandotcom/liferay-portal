@@ -21,7 +21,6 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Gabriel Lima
- * @see    StyleBookTokenSetServiceBaseImpl
  */
 @Component(
 	property = {

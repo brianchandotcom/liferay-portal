@@ -34,7 +34,6 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Gabriel Lima
- * @see    StyleBookTokenSetLocalServiceBaseImpl
  */
 @Component(
 	property = "model.class.name=com.liferay.style.book.model.StyleBookTokenSet",

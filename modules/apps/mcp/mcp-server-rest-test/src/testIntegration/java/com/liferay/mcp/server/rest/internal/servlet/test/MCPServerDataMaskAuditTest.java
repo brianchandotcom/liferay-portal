@@ -257,7 +257,7 @@ public class MCPServerDataMaskAuditTest {
 					).getAdditionalInfo());
 
 			Assert.assertEquals(
-				"Mask deleted.",
+				"Data mask deleted.",
 				additionalInfoJSONObject.getString("deleteReason"));
 
 			Assert.assertNull(

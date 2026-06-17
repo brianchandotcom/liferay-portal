@@ -46,6 +46,8 @@ export default function SimpleActionLinkRenderer({
 	const title =
 		value && value !== '' ? value : Liferay.Language.get('untitled-asset');
 
+	const linkLabel = itemData.system ? `${title}, ${systemIconLabel}` : title;
+
 	const isFolder =
 		itemData?.entryClassName === OBJECT_ENTRY_FOLDER_CLASS_NAME;
 
@@ -106,7 +108,6 @@ export default function SimpleActionLinkRenderer({
 
 	const systemIcon = itemData.system && (
 		<ClayIcon
-			aria-label={systemIconLabel}
 			className="c-ml-2 lfr-portal-tooltip text-secondary"
 			data-title={systemIconLabel}
 			symbol="lock"
@@ -119,7 +120,7 @@ export default function SimpleActionLinkRenderer({
 				{stickerElement}
 
 				<ClayLink
-					aria-label={title}
+					aria-label={linkLabel}
 					data-senna-off
 					href="#"
 					onClick={(event: React.MouseEvent) => {
@@ -156,7 +157,11 @@ export default function SimpleActionLinkRenderer({
 		<div className="align-items-center d-flex table-list-title">
 			{stickerElement}
 
-			<ClayLink aria-label={title} data-senna-off href={formattedHref}>
+			<ClayLink
+				aria-label={linkLabel}
+				data-senna-off
+				href={formattedHref}
+			>
 				{title}
 
 				{systemIcon}

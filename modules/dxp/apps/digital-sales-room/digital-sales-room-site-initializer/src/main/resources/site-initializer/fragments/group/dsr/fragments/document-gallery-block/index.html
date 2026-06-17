@@ -1,8 +1,7 @@
 [#macro renderDocumentCard document]
-	[#assign extension = (document.getString("extension"))!"" /]
-	[#assign extension = extension?lower_case /]
-
 	[#assign documentURL = themeDisplay.getPathContext() + "/documents/" + document.getLong("repositoryId")?c + "/" + document.getLong("folderId")?c + "/" + (document.getString("fileName")!"")?url("UTF-8") + "/" + (document.getString("uuid")!"")?url("UTF-8") /]
+
+	[#assign extension = (document.getString("extension"))!"" /]
 
 	<a class="dsr-document-card" href="${documentURL}" rel="noopener" target="_blank">
 		<span class="dsr-document-preview">
@@ -49,7 +48,7 @@
 		</div>
 	[#elseif layoutMode == "edit"]
 		<div class="dsr-document-gallery-empty text-center">
-			Select up to four documents in the fragment configuration.
+			${languageUtil.format(locale, "no-x-selected", [languageUtil.get(locale, "documents")])}
 		</div>
 	[/#if]
 </div>

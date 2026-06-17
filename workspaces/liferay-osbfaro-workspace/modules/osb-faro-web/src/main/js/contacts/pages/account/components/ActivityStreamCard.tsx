@@ -1,14 +1,14 @@
 import AccountEventMetricQuery, {
 	AccountEventMetricsData,
-	AccountEventMetricsVariables
+	AccountEventMetricsVariables,
 } from 'shared/queries/AccountEventMetricQuery';
 import AccountEventsTrendQuery, {
 	AccountEventsTrendData,
-	AccountEventsTrendVariables
+	AccountEventsTrendVariables,
 } from 'shared/queries/AccountEventsTrendQuery';
 import AccountUserSessionQuery, {
 	AccountUserSessionData,
-	AccountUserSessionVariables
+	AccountUserSessionVariables,
 } from 'shared/queries/AccountUserSessionQuery';
 import ActivitiesChart from 'contacts/components/ActivitiesChart';
 import ActivityStreamTimeline from './ActivityStreamTimeline';
@@ -25,7 +25,7 @@ import {
 	formatUTCDate,
 	getDateRangeLabel,
 	getDateRangeLabelFromDate,
-	getEndDate
+	getEndDate,
 } from 'shared/util/date';
 import {fetchPolicyDefinition} from 'shared/util/graphql';
 import {getIcon, getStatsColor} from 'shared/util/metrics';
@@ -63,7 +63,7 @@ const ActivityStreamCard: React.FC<IActivityStreamCardProps> = ({
 	accountId,
 	channelId,
 	interval,
-	rangeSelectors
+	rangeSelectors,
 }) => {
 	const {hasSelectedPoint, onPointSelect, selectedPoint} = useSelectedPoint();
 
@@ -91,8 +91,8 @@ const ActivityStreamCard: React.FC<IActivityStreamCardProps> = ({
 			entityType: SessionEntityTypes.Individual,
 			interval,
 			keywords,
-			...safeRangeSelectors
-		}
+			...safeRangeSelectors,
+		},
 	});
 
 	const {
@@ -100,7 +100,7 @@ const ActivityStreamCard: React.FC<IActivityStreamCardProps> = ({
 		items: activityHistory,
 		loading,
 		refetch,
-		total: totalSessions
+		total: totalSessions,
 	} = mapListResultsToProps(metricResponse, ({eventMetric}) => ({
 		items: eventMetric.totalEventsMetric.histogram.metrics?.map(
 			({key, value}, index: number) => ({
@@ -109,10 +109,10 @@ const ActivityStreamCard: React.FC<IActivityStreamCardProps> = ({
 				totalSessions:
 					eventMetric?.totalSessionsMetric?.histogram?.metrics?.[
 						index
-					].value
+					].value,
 			})
 		),
-		total: eventMetric.totalSessionsMetric?.value
+		total: eventMetric.totalSessionsMetric?.value,
 	}));
 
 	const trendResponse = useQuery<
@@ -126,8 +126,8 @@ const ActivityStreamCard: React.FC<IActivityStreamCardProps> = ({
 			entityId: '',
 			entityType: SessionEntityTypes.Individual,
 			keywords,
-			...safeRangeSelectors
-		}
+			...safeRangeSelectors,
+		},
 	});
 
 	const getDateRange = (): SafeRangeSelectors => {
@@ -156,14 +156,14 @@ const ActivityStreamCard: React.FC<IActivityStreamCardProps> = ({
 				rangeKey: rangeSelectors.rangeKey,
 				rangeStart: `${formattedRangeStart}T${formatTimestamp(
 					intervalInitDate
-				)}`
+				)}`,
 			});
 		}
 
 		return getSafeRangeSelectors({
 			rangeEnd: formattedRangeEnd,
 			rangeKey: rangeSelectors.rangeKey,
-			rangeStart: formattedRangeStart
+			rangeStart: formattedRangeStart,
 		});
 	};
 
@@ -180,8 +180,8 @@ const ActivityStreamCard: React.FC<IActivityStreamCardProps> = ({
 			keywords,
 			page: page - 1,
 			size: delta,
-			...getDateRange()
-		}
+			...getDateRange(),
+		},
 	});
 
 	const sessionsData = sessionsResponse.data?.eventsByUserSessions;
@@ -231,28 +231,28 @@ const ActivityStreamCard: React.FC<IActivityStreamCardProps> = ({
 
 	return (
 		<WrapSafeResults
-			className='flex-grow-1 loading-root'
+			className="flex-grow-1 loading-root"
 			error={error}
 			errorProps={{
 				className: 'flex-grow-1',
-				onReload: refetch
+				onReload: refetch,
 			}}
 			loading={loading}
 			page={false}
 			pageDisplay={false}
 		>
 			<Card.Body>
-				<div className='account-activity-stream'>
-					<div className='trend-summary mb-4'>
-						<div className='font-weight-semi-bold'>
+				<div className="account-activity-stream">
+					<div className="trend-summary mb-4">
+						<div className="font-weight-semi-bold">
 							<Text size={7}>
 								{sub(Liferay.Language.get('x-activities'), [
-									trendValue
+									trendValue,
 								])}
 							</Text>
 						</div>
 
-						<div className='text-secondary'>
+						<div className="text-secondary">
 							{!isNil(trendClassification) &&
 								trendClassification !==
 									TrendClassification.Neutral && (
@@ -260,7 +260,7 @@ const ActivityStreamCard: React.FC<IActivityStreamCardProps> = ({
 										style={{
 											color: getStatsColor(
 												trendClassification
-											)
+											),
 										}}
 										symbol={getIcon(trendPercentage) ?? ''}
 									/>
@@ -270,26 +270,26 @@ const ActivityStreamCard: React.FC<IActivityStreamCardProps> = ({
 								Liferay.Language.get('x-vs-previous-period'),
 								[
 									<span
-										className='mr-1'
-										key='percentage'
+										className="mr-1"
+										key="percentage"
 										style={{
 											color: getStatsColor(
 												trendClassification || ''
-											)
+											),
 										}}
 									>
 										{`${toRounded(
 											Math.abs(trendPercentage),
 											2
 										)}%`}
-									</span>
+									</span>,
 								],
 								false
 							)}
 						</div>
 					</div>
 
-					<div className='position-relative'>
+					<div className="position-relative">
 						<ActivitiesChart
 							alwaysShowSelectedTooltip
 							hideGrid={isChartEmpty}
@@ -300,29 +300,31 @@ const ActivityStreamCard: React.FC<IActivityStreamCardProps> = ({
 							selectedPoint={selectedPoint}
 							tooltipRenderRows={({
 								totalEvents,
-								totalSessions
+								totalSessions,
 							}) => [
 								{
 									label: Liferay.Language.get('events'),
-									value: totalEvents.toLocaleString()
+									value: totalEvents.toLocaleString(),
 								},
 								{
 									label: Liferay.Language.get('sessions'),
-									value: (totalSessions ?? 0).toLocaleString()
-								}
+									value: (
+										totalSessions ?? 0
+									).toLocaleString(),
+								},
 							]}
 						/>
 
 						{isChartEmpty && (
 							<div
-								className='position-absolute d-flex flex-column align-items-center justify-content-center text-center px-3'
+								className="position-absolute d-flex flex-column align-items-center justify-content-center text-center px-3"
 								style={{
 									inset: 0,
-									pointerEvents: 'none'
+									pointerEvents: 'none',
 								}}
 							>
 								<div
-									className='font-weight-semi-bold mb-2'
+									className="font-weight-semi-bold mb-2"
 									style={{pointerEvents: 'auto'}}
 								>
 									{Liferay.Language.get(
@@ -331,7 +333,7 @@ const ActivityStreamCard: React.FC<IActivityStreamCardProps> = ({
 								</div>
 
 								<div
-									className='text-secondary mb-2'
+									className="text-secondary mb-2"
 									style={{pointerEvents: 'auto'}}
 								>
 									{Liferay.Language.get(
@@ -340,12 +342,12 @@ const ActivityStreamCard: React.FC<IActivityStreamCardProps> = ({
 								</div>
 
 								<ClayLink
-									decoration='underline'
+									decoration="underline"
 									href={
 										URLConstants.AccountActivitiesDocumentationLink
 									}
 									style={{pointerEvents: 'auto'}}
-									target='_blank'
+									target="_blank"
 								>
 									{Liferay.Language.get(
 										'learn-more-about-account-activities'
@@ -355,9 +357,9 @@ const ActivityStreamCard: React.FC<IActivityStreamCardProps> = ({
 						)}
 					</div>
 
-					<div className='chart-footer mt-3'>
-						<div className='d-flex align-items-baseline'>
-							<Text color='secondary' size={3} weight='semi-bold'>
+					<div className="chart-footer mt-3">
+						<div className="d-flex align-items-baseline">
+							<Text color="secondary" size={3} weight="semi-bold">
 								{sub(
 									Liferay.Language.get('account-s-events-x'),
 									[dateRangeLabel]
@@ -366,10 +368,10 @@ const ActivityStreamCard: React.FC<IActivityStreamCardProps> = ({
 
 							{selected && (
 								<ClayButton
-									className='ml-2 p-0'
-									displayType='link'
+									className="ml-2 p-0"
+									displayType="link"
 									onClick={() => handleChangeSelection(null)}
-									size='sm'
+									size="sm"
 								>
 									{Liferay.Language.get(
 										'clear-date-selection'
@@ -381,7 +383,7 @@ const ActivityStreamCard: React.FC<IActivityStreamCardProps> = ({
 				</div>
 			</Card.Body>
 
-			<Card.Body className='pt-0'>
+			<Card.Body className="pt-0">
 				<SearchInput
 					onChange={setSearchValue}
 					onSubmit={handleQuerySubmit}

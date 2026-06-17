@@ -7,7 +7,7 @@ import {MetricName} from 'shared/types/MetricName';
 import {
 	mockAudienceReportReq,
 	mockPreferenceReq,
-	mockTimeRangeReq
+	mockTimeRangeReq,
 } from 'test/graphql-data';
 import {MockedProvider} from '@apollo/client/testing';
 import {Name} from '../types';
@@ -46,7 +46,7 @@ jest.mock('recharts', () => {
 					{children}
 				</OriginalModule.Tooltip>
 			);
-		}
+		},
 	};
 });
 
@@ -54,16 +54,16 @@ const WrappedComponent = ({queryProps}: {queryProps: any}) => (
 	<Provider store={mockStore()}>
 		<MemoryRouter
 			initialEntries={[
-				'/workspace/123/456/Home%20Page/https%3A%2F%2Fwww.liferay.com'
+				'/workspace/123/456/Home%20Page/https%3A%2F%2Fwww.liferay.com',
 			]}
 		>
-			<Route path='/workspace/:groupId/:channelId/:title/:touchpoint'>
+			<Route path="/workspace/:groupId/:channelId/:title/:touchpoint">
 				<MockedProvider
 					{...({freezeResults: false} as any)}
 					mocks={[
 						mockTimeRangeReq(),
 						mockPreferenceReq(),
-						mockAudienceReportReq({queryProps})
+						mockAudienceReportReq({queryProps}),
 					]}
 				>
 					<AudienceReport
@@ -76,7 +76,7 @@ const WrappedComponent = ({queryProps}: {queryProps: any}) => (
 						rangeSelectors={{
 							rangeEnd: '',
 							rangeKey: RangeKeyTimeRanges.Last30Days,
-							rangeStart: ''
+							rangeStart: '',
 						}}
 					/>
 				</MockedProvider>
@@ -91,7 +91,7 @@ describe('AudienceReport', () => {
 			<WrappedComponent
 				queryProps={{
 					metricName: MetricName.Views,
-					name: Name.Page
+					name: Name.Page,
 				}}
 			/>
 		);
@@ -106,7 +106,7 @@ describe('AudienceReport', () => {
 			<WrappedComponent
 				queryProps={{
 					metricName: MetricName.Views,
-					name: Name.Page
+					name: Name.Page,
 				}}
 			/>
 		);

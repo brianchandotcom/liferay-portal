@@ -10,12 +10,12 @@ import {toLocale} from 'shared/util/numbers';
 const DATA_SOURCE_STATUSES = {
 	CONFIGURED: {
 		display: 'success',
-		label: Liferay.Language.get('connected')
+		label: Liferay.Language.get('connected'),
 	},
 	UNCONFIGURED: {
 		display: 'secondary',
-		label: Liferay.Language.get('disconnected')
-	}
+		label: Liferay.Language.get('disconnected'),
+	},
 };
 
 interface IReviewSyncedDataFragmentProps {
@@ -31,7 +31,7 @@ interface IReviewSyncedDataFragmentProps {
 const ReviewSyncedDataFragment: React.FC<IReviewSyncedDataFragmentProps> = ({
 	channelsMetric,
 	contactsSelected,
-	sitesSelected
+	sitesSelected,
 }) => {
 	const getLabelProps = (selected: boolean) =>
 		selected
@@ -58,8 +58,8 @@ const ReviewSyncedDataFragment: React.FC<IReviewSyncedDataFragmentProps> = ({
 
 	return (
 		<>
-			<div className='mb-2'>
-				<Text size={2} weight='semi-bold'>
+			<div className="mb-2">
+				<Text size={2} weight="semi-bold">
 					{Liferay.Language.get('connection-status').toUpperCase()}
 				</Text>
 			</div>
@@ -67,10 +67,10 @@ const ReviewSyncedDataFragment: React.FC<IReviewSyncedDataFragmentProps> = ({
 			<ClayList>
 				<ClayList.Item flex>
 					<ClayList.ItemField>
-						<ClaySticker displayType='unstyled'>
+						<ClaySticker displayType="unstyled">
 							<ClayIcon
-								className='text-secondary'
-								symbol='nodes'
+								className="text-secondary"
+								symbol="nodes"
 							/>
 						</ClaySticker>
 					</ClayList.ItemField>
@@ -93,7 +93,7 @@ const ReviewSyncedDataFragment: React.FC<IReviewSyncedDataFragmentProps> = ({
 						)}
 					</ClayList.ItemField>
 
-					<ClayList.ItemField className='justify-content-center'>
+					<ClayList.ItemField className="justify-content-center">
 						<ClayLabel displayType={sitesDisplay as any}>
 							{sitesLabel}
 						</ClayLabel>
@@ -102,10 +102,10 @@ const ReviewSyncedDataFragment: React.FC<IReviewSyncedDataFragmentProps> = ({
 
 				<ClayList.Item flex>
 					<ClayList.ItemField>
-						<ClaySticker displayType='unstyled'>
+						<ClaySticker displayType="unstyled">
 							<ClayIcon
-								className='text-secondary'
-								symbol='picture'
+								className="text-secondary"
+								symbol="picture"
 							/>
 						</ClaySticker>
 					</ClayList.ItemField>
@@ -126,7 +126,7 @@ const ReviewSyncedDataFragment: React.FC<IReviewSyncedDataFragmentProps> = ({
 						)}
 					</ClayList.ItemField>
 
-					<ClayList.ItemField className='justify-content-center'>
+					<ClayList.ItemField className="justify-content-center">
 						<ClayLabel displayType={sitesDisplay as any}>
 							{sitesLabel}
 						</ClayLabel>
@@ -135,10 +135,10 @@ const ReviewSyncedDataFragment: React.FC<IReviewSyncedDataFragmentProps> = ({
 
 				<ClayList.Item flex>
 					<ClayList.ItemField>
-						<ClaySticker displayType='unstyled'>
+						<ClaySticker displayType="unstyled">
 							<ClayIcon
-								className='text-secondary'
-								symbol='users'
+								className="text-secondary"
+								symbol="users"
 							/>
 						</ClaySticker>
 					</ClayList.ItemField>
@@ -159,7 +159,7 @@ const ReviewSyncedDataFragment: React.FC<IReviewSyncedDataFragmentProps> = ({
 						)}
 					</ClayList.ItemField>
 
-					<ClayList.ItemField className='justify-content-center'>
+					<ClayList.ItemField className="justify-content-center">
 						<ClayLabel displayType={contactsDisplay as any}>
 							{contactslabel}
 						</ClayLabel>

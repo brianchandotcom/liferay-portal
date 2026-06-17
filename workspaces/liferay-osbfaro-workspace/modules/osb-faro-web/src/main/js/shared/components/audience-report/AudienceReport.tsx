@@ -11,15 +11,15 @@ import {getFilters, RawFilters} from 'shared/util/filter';
 import {
 	getSafeDecodedURIComponent,
 	getSafeRangeSelectors,
-	getSafeTouchpoint
+	getSafeTouchpoint,
 } from 'shared/util/util';
 import {IAudienceReportBaseCardProps, Name, TData} from './types';
 import {RangeSelectors} from 'shared/types';
 import {useParams} from 'react-router-dom';
 
 const AudienceReportTitle: React.FC<IInfoPopoverProps> = ({content, title}) => (
-	<div className='d-inline-flex gap'>
-		<div className='h4 mb-3 mr-2 text-center text-secondary title'>
+	<div className="d-inline-flex gap">
+		<div className="h4 mb-3 mr-2 text-center text-secondary title">
 			{title}
 		</div>
 
@@ -40,32 +40,32 @@ function AudienceReportWithData<TRawData>({
 	mapper,
 	name,
 	segmentsTitle = Liferay.Language.get('viewer-segments'),
-	uniqueVisitorsTitle = Liferay.Language.get('visitors')
+	uniqueVisitorsTitle = Liferay.Language.get('visitors'),
 }: IAudienceReportWithDataProps<TRawData>) {
 	const result: TData = mapper(data);
 
 	const {knownIndividuals, segments, uniqueVisitors} = formatData(result);
 
 	return (
-		<div className='audience-report-chart row w-100'>
-			<div className='col-sm-6'>
-				<div className='row'>
-					<div className='col-sm-6 text-center'>
+		<div className="audience-report-chart row w-100">
+			<div className="col-sm-6">
+				<div className="row">
+					<div className="col-sm-6 text-center">
 						<AudienceReportTitle title={uniqueVisitorsTitle} />
 
 						<AudienceReportDonut {...uniqueVisitors} />
 					</div>
 
-					<div className='col-sm-6 text-center'>
+					<div className="col-sm-6 text-center">
 						<AudienceReportTitle
 							content={
 								name === Name.Page
 									? Liferay.Language.get(
 											'only-known-individuals-that-interacted-with-the-current-page-are-accounted-for-in-this-chart'
-									  )
+										)
 									: Liferay.Language.get(
 											'only-known-individuals-that-interacted-with-the-current-asset-are-accounted-for-in-this-chart'
-									  )
+										)
 							}
 							title={knownIndividualsTitle}
 						/>
@@ -75,21 +75,21 @@ function AudienceReportWithData<TRawData>({
 				</div>
 			</div>
 
-			<div className='col-sm-6 pl-5'>
+			<div className="col-sm-6 pl-5">
 				<AudienceReportTitle
 					content={
 						name === Name.Page
 							? Liferay.Language.get(
 									'only-segmented-known-individuals-that-interacted-with-the-current-page-are-accounted-for-in-this-chart'
-							  )
+								)
 							: Liferay.Language.get(
 									'only-segmented-known-individuals-that-interacted-with-the-current-asset-are-accounted-for-in-this-chart'
-							  )
+								)
 					}
 					title={segmentsTitle}
 				/>
 
-				<div className='audience-report-chart-bar'>
+				<div className="audience-report-chart-bar">
 					<HTMLBarChart {...segments} />
 				</div>
 			</div>
@@ -123,11 +123,11 @@ function AudienceReport<TRawData>({
 			...(experienceId && {experienceId}),
 			...(otherProps.name !== Name.ObjectEntry && {
 				channelId,
-				title: getSafeDecodedURIComponent(title as string)
+				title: getSafeDecodedURIComponent(title as string),
 			}),
 			...getFilters(filters),
-			...getSafeRangeSelectors(rangeSelectors)
-		}
+			...getSafeRangeSelectors(rangeSelectors),
+		},
 	});
 
 	return (

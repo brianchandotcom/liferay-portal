@@ -4,13 +4,13 @@ import sendRequest from 'shared/util/request';
 const {
 	cur: DEFAULT_PAGE,
 	delta: DEFAULT_DELTA,
-	orderDefault
+	orderDefault,
 } = FaroConstants.pagination;
 
 export function fetch({fieldMappingFieldName, groupId}) {
 	return sendRequest({
 		method: 'GET',
-		path: `contacts/${groupId}/field_mapping/${fieldMappingFieldName}`
+		path: `contacts/${groupId}/field_mapping/${fieldMappingFieldName}`,
 	});
 }
 
@@ -28,10 +28,10 @@ export function fetchSuggestions({cur, delta, groupId, query}) {
 		data: {
 			cur,
 			delta,
-			query
+			query,
 		},
 		method: 'GET',
-		path: `contacts/${groupId}/field_mapping/suggestions`
+		path: `contacts/${groupId}/field_mapping/suggestions`,
 	});
 }
 
@@ -39,10 +39,10 @@ export function create({groupId, name, type}) {
 	return sendRequest({
 		data: {
 			name,
-			type
+			type,
 		},
 		method: 'POST',
-		path: `contacts/${groupId}/field_mapping`
+		path: `contacts/${groupId}/field_mapping`,
 	});
 }
 
@@ -56,7 +56,7 @@ export function search(params) {
 		orderByType = orderDefault,
 		ownerType = '',
 		page = DEFAULT_PAGE,
-		query = ''
+		query = '',
 	} = params;
 
 	return sendRequest({
@@ -68,9 +68,9 @@ export function search(params) {
 			fieldMappingFieldName,
 			orderByType,
 			ownerType,
-			query
+			query,
 		},
 		method: 'GET',
-		path: `contacts/${groupId}/field_mapping`
+		path: `contacts/${groupId}/field_mapping`,
 	});
 }

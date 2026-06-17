@@ -2,7 +2,7 @@ import {
 	mockMembershipChange,
 	mockMembershipChangeAggregation,
 	mockSearch,
-	mockSegment
+	mockSegment,
 } from 'test/data';
 
 export const addIndividuals = jest.fn(() => Promise.resolve(mockSegment()));

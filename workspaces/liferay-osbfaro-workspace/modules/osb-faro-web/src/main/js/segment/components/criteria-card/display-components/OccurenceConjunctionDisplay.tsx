@@ -1,7 +1,7 @@
 import React from 'react';
 import {
 	OCCURENCE_OPTIONS,
-	RelationalOperators
+	RelationalOperators,
 } from 'segment/segment-editor/dynamic/utils/constants';
 
 interface IOccurenceConjunctionDisplayProps {

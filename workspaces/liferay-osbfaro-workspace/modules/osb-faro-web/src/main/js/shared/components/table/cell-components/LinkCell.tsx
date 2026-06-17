@@ -8,8 +8,8 @@ interface ILinkCellProps {
 }
 
 const LinkCell = ({data, hrefFormatter}: ILinkCellProps) => (
-	<td className='table-cell-expand' key={data.id}>
-		<div className='table-title text-truncate'>
+	<td className="table-cell-expand" key={data.id}>
+		<div className="table-title text-truncate">
 			<Link to={hrefFormatter(data)}>
 				<TextTruncate title={data.name} />
 			</Link>

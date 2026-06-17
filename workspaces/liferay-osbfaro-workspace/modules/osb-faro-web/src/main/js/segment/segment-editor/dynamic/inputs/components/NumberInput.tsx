@@ -43,14 +43,14 @@ const NumberInput: React.FC<INumberInputProps> = ({
 	return (
 		<Form.GroupItem
 			className={getCN({
-				'has-error': !valid && touched
+				'has-error': !valid && touched,
 			})}
 			shrink
 		>
 			<Input
 				{...otherProps}
 				className={getCN('number-input', className)}
-				data-testid='number-input'
+				data-testid="number-input"
 				onBlur={() => {
 					onChange({touched: true, valid, value});
 
@@ -68,11 +68,11 @@ const NumberInput: React.FC<INumberInputProps> = ({
 					onChange({
 						touched: true,
 						valid: isValid(value),
-						value: numberVal
+						value: numberVal,
 					});
 				}}
 				placeholder={Liferay.Language.get('number')}
-				type='number'
+				type="number"
 				value={value}
 			/>
 		</Form.GroupItem>

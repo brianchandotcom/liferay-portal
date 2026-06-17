@@ -7,7 +7,7 @@ jest.unmock('react-dom');
 
 jest.mock('react-router-dom', () => ({
 	...jest.requireActual('react-router-dom'),
-	useParams: () => ({channelId: '456', groupId: '2000'})
+	useParams: () => ({channelId: '456', groupId: '2000'}),
 }));
 
 describe('GlobalFilter', () => {
@@ -17,11 +17,11 @@ describe('GlobalFilter', () => {
 		const useRequest = require('shared/hooks/useRequest');
 		useRequest.useRequest = jest.fn(() => ({
 			data: {items: []},
-			loading: false
+			loading: false,
 		}));
 
 		const {getByText} = render(
-			<LifecycleContextProvider lifecycleId='1'>
+			<LifecycleContextProvider lifecycleId="1">
 				<GlobalFilter />
 			</LifecycleContextProvider>
 		);

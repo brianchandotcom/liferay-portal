@@ -10,11 +10,11 @@ class BundleQueryStringPlugin {
 	apply(compiler) {
 		compiler.hooks.compilation.tap(
 			'BundleQueryStringPlugin',
-			compilation => {
+			(compilation) => {
 				if (compilation.mainTemplate.hooks.jsonpScript) {
 					compilation.mainTemplate.hooks.jsonpScript.tap(
 						'BundleQueryStringPlugin',
-						result =>
+						(result) =>
 							DEFINE_QUERY_PARAMS +
 							result.replace(
 								/(script\.src.*);/g,

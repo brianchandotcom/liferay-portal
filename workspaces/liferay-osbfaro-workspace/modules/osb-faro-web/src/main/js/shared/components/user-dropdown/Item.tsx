@@ -16,14 +16,14 @@ const UserMenuDropdownItem: React.FC<
 	iconAlignment,
 	label,
 	onClick,
-	url
+	url,
 }) => {
 	const Content = () => {
 		if (iconAlignment === 'left') {
 			return (
 				<>
 					{icon && (
-						<ClayIcon className='icon-root  mr-2' symbol={icon} />
+						<ClayIcon className="icon-root  mr-2" symbol={icon} />
 					)}
 
 					{label}
@@ -35,7 +35,7 @@ const UserMenuDropdownItem: React.FC<
 			<>
 				{label}
 
-				{icon && <ClayIcon className='icon-root  ml-2' symbol={icon} />}
+				{icon && <ClayIcon className="icon-root  ml-2" symbol={icon} />}
 			</>
 		);
 	};
@@ -45,7 +45,8 @@ const UserMenuDropdownItem: React.FC<
 			{url ? (
 				externalLink ? (
 					<ClayLink
-						className='button-root btn btn-block btn-unstyled'
+						className="button-root btn btn-block btn-unstyled"
+
 						// @ts-ignore
 						externalLink
 						href={url}
@@ -56,8 +57,8 @@ const UserMenuDropdownItem: React.FC<
 					<ClayLink
 						block
 						button
-						className='button-root'
-						displayType='unstyled'
+						className="button-root"
+						displayType="unstyled"
 						href={url}
 					>
 						<Content />
@@ -66,8 +67,8 @@ const UserMenuDropdownItem: React.FC<
 			) : (
 				<ClayButton
 					block
-					className='button-root'
-					displayType='unstyled'
+					className="button-root"
+					displayType="unstyled"
 					onClick={onClick}
 				>
 					<Content />

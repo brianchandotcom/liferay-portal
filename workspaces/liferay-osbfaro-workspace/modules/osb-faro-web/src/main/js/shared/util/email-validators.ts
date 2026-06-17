@@ -14,7 +14,7 @@ export const validateEmailDomainArr = (
 ): string | void => {
 	const emailDomains = items.concat(inputListValue || []);
 
-	if (emailDomains.some(emailDomain => !validateEmailDomain(emailDomain))) {
+	if (emailDomains.some((emailDomain) => !validateEmailDomain(emailDomain))) {
 		return Liferay.Language.get(
 			'please-enter-the-domain-in-this-format-domain-com'
 		);
@@ -32,7 +32,7 @@ export const validateEmailArr = (
 
 	let error = '';
 
-	if (emails.some(email => !validateEmail(email))) {
+	if (emails.some((email) => !validateEmail(email))) {
 		error = Liferay.Language.get(
 			'please-enter-the-email-in-this-format-sample-email-com'
 		);

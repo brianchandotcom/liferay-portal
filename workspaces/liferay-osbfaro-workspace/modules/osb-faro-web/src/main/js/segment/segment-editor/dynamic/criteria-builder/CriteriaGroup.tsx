@@ -11,12 +11,12 @@ import {
 	Conjunctions,
 	NESTED_OR_LIMIT_ALERT,
 	SEQUENTIAL_LIMIT_ALERT,
-	SUPPORTED_CONJUNCTION_OPTIONS
+	SUPPORTED_CONJUNCTION_OPTIONS,
 } from '../utils/constants';
 import {
 	ConnectDragPreview,
 	ConnectDragSource,
-	DragSource as dragSource
+	DragSource as dragSource,
 } from 'react-dnd';
 import {Criterion, CriterionGroup, OnMove} from '../utils/types';
 import {DragTypes} from '../utils/drag-types';
@@ -28,12 +28,12 @@ import {
 	getSequentialLimitState,
 	getSupportedOperatorsFromType,
 	isCriterionGroup,
-	isValid
+	isValid,
 } from '../utils/utils';
 import {
 	insertAtIndex,
 	replaceAtIndex,
-	replaceWithMultipleAtIndex
+	replaceWithMultipleAtIndex,
 } from 'shared/util/array';
 import {isArray} from 'lodash';
 import {SegmentTypes} from 'shared/util/constants';
@@ -45,7 +45,7 @@ import {SegmentTypes} from 'shared/util/constants';
 const beginDrag = ({
 	criteria,
 	index,
-	parentGroupId
+	parentGroupId,
 }: {
 	criteria: CriterionGroup;
 	index: number;
@@ -57,7 +57,7 @@ const beginDrag = ({
 		childGroupIds,
 		criteriaGroupId: parentGroupId,
 		criterion: criteria,
-		index
+		index,
 	};
 };
 
@@ -70,12 +70,12 @@ const beginDrag = ({
 const withDragSource = dragSource(
 	DragTypes.CriteriaGroup,
 	{
-		beginDrag
+		beginDrag,
 	},
 	(connect, monitor) => ({
 		connectDragPreview: connect.dragPreview(),
 		connectDragSource: connect.dragSource(),
-		dragging: monitor.isDragging()
+		dragging: monitor.isDragging(),
 	})
 );
 
@@ -100,7 +100,7 @@ interface ICriteriaGroupProps {
 
 class CriteriaGroup extends React.Component<ICriteriaGroupProps> {
 	static defaultProps = {
-		root: false
+		root: false,
 	};
 
 	private NestedCriteriaGroupWithDrag: React.ComponentType<any>;
@@ -130,7 +130,7 @@ class CriteriaGroup extends React.Component<ICriteriaGroupProps> {
 
 		onChange({
 			...criteria,
-			conjunctionName: conjunctionSelected
+			conjunctionName: conjunctionSelected,
 		});
 	}
 
@@ -154,7 +154,7 @@ class CriteriaGroup extends React.Component<ICriteriaGroupProps> {
 			touched,
 			type,
 			valid,
-			value
+			value,
 		} = criterion;
 
 		const operators = getSupportedOperatorsFromType(type ?? '');
@@ -166,23 +166,24 @@ class CriteriaGroup extends React.Component<ICriteriaGroupProps> {
 			touched,
 			type,
 			valid,
-			value: isValid(value) ? value : defaultValue
+			value: isValid(value) ? value : defaultValue,
 		};
 
 		if (root && !criteria) {
 			onChange({
 				conjunctionName: Conjunctions.And,
 				criteriaGroupId: generateGroupId(),
-				items: [newCriterion]
+				items: [newCriterion],
 			} as unknown as CriterionGroup);
-		} else {
+		}
+		else {
 			onChange({
 				...criteria,
 				items: insertAtIndex(
 					criteria.items,
 					index,
 					newCriterion as unknown as Criterion
-				)
+				),
 			});
 		}
 	}
@@ -191,7 +192,7 @@ class CriteriaGroup extends React.Component<ICriteriaGroupProps> {
 		return (newCriterion: Criterion | Criterion[]) => {
 			const {
 				criteria: {conjunctionName, criteriaGroupId, items},
-				onChange
+				onChange,
 			} = this.props;
 
 			onChange({
@@ -202,8 +203,8 @@ class CriteriaGroup extends React.Component<ICriteriaGroupProps> {
 							newCriterion,
 							[...items],
 							index
-					  )
-					: replaceAtIndex([...items], index, newCriterion)
+						)
+					: replaceAtIndex([...items], index, newCriterion),
 			});
 		};
 	}
@@ -216,7 +217,7 @@ class CriteriaGroup extends React.Component<ICriteriaGroupProps> {
 			...criteria,
 			items: criteria.items.filter(
 				(_fItem: unknown, fIndex: number) => fIndex !== index
-			)
+			),
 		});
 	}
 
@@ -273,7 +274,7 @@ class CriteriaGroup extends React.Component<ICriteriaGroupProps> {
 			onMove,
 			root,
 			segmentType,
-			sequential
+			sequential,
 		} = this.props;
 
 		const criterionGroup = isCriterionGroup(criterion);
@@ -285,7 +286,7 @@ class CriteriaGroup extends React.Component<ICriteriaGroupProps> {
 				: this.props.stepNumber;
 
 		const classes = getCN('criterion', {
-			'criterion-group': criterionGroup
+			'criterion-group': criterionGroup,
 		});
 
 		const NestedCriteriaGroupWithDrag = this.NestedCriteriaGroupWithDrag;
@@ -348,7 +349,7 @@ class CriteriaGroup extends React.Component<ICriteriaGroupProps> {
 			id,
 			onMove,
 			root,
-			sequential
+			sequential,
 		} = this.props;
 
 		const sequentialLimitState =
@@ -358,18 +359,18 @@ class CriteriaGroup extends React.Component<ICriteriaGroupProps> {
 		const alertConfig = sequentialLimitState
 			? SEQUENTIAL_LIMIT_ALERT[sequentialLimitState]
 			: nestedOrLimitState
-			? NESTED_OR_LIMIT_ALERT[nestedOrLimitState]
-			: null;
+				? NESTED_OR_LIMIT_ALERT[nestedOrLimitState]
+				: null;
 		const atLimit = !!alertConfig;
 
 		const classes = getCN(
 			'sheet',
 			{
-				'criteria-group-root': criteria
+				'criteria-group-root': criteria,
 			},
 			`criteria-group-item${root ? '-root' : ''}`,
 			{
-				'dnd-drag': dragging
+				'dnd-drag': dragging,
 			}
 		);
 		const singleRow =
@@ -400,8 +401,8 @@ class CriteriaGroup extends React.Component<ICriteriaGroupProps> {
 					{singleRow &&
 						!root &&
 						connectDragSource(
-							<div className='criteria-group-drag-icon drag-icon'>
-								<ClayIcon className='icon-root' symbol='drag' />
+							<div className="criteria-group-drag-icon drag-icon">
+								<ClayIcon className="icon-root" symbol="drag" />
 							</div>
 						)}
 
@@ -427,9 +428,9 @@ class CriteriaGroup extends React.Component<ICriteriaGroupProps> {
 
 					{alertConfig && (
 						<Alert
-							className='text-center my-3'
+							className="text-center my-3"
 							displayType={alertConfig.color}
-							variant='feedback'
+							variant="feedback"
 						>
 							{alertConfig.text}
 						</Alert>

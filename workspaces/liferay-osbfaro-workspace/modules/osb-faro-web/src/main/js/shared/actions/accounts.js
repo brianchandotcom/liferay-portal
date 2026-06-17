@@ -4,7 +4,7 @@ import {CALL_API} from '../middleware/api';
 import {createActionTypes} from 'redux-toolbox';
 
 export const actionTypes = {
-	...createActionTypes('fetch', 'account')
+	...createActionTypes('fetch', 'account'),
 };
 
 export function fetchAccount(data) {
@@ -17,13 +17,13 @@ export function fetchAccount(data) {
 				types: [
 					actionTypes.FETCH_ACCOUNT_REQUEST,
 					actionTypes.FETCH_ACCOUNT_SUCCESS,
-					actionTypes.FETCH_ACCOUNT_FAILURE
-				]
-			}
+					actionTypes.FETCH_ACCOUNT_FAILURE,
+				],
+			},
 		},
 		payload: {
-			id: data.accountId
+			id: data.accountId,
 		},
-		type: 'NO_OP'
+		type: 'NO_OP',
 	};
 }

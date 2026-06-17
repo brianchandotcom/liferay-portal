@@ -9,7 +9,7 @@ import {createOrderIOMap, VISITORS_METRIC} from 'shared/util/pagination';
 import {graphql} from '@apollo/client/react/hoc';
 import {
 	metricsListColumns,
-	sitePagesListColumns
+	sitePagesListColumns,
 } from 'shared/util/table-columns';
 import {OrderedMap} from 'immutable';
 import {OrderParams} from 'shared/util/records';
@@ -25,9 +25,9 @@ import {withBaseResults, withRangeKey} from 'shared/hoc';
 const withData = () =>
 	graphql(
 		TouchpointsQuery,
-		getMetricsMapper(result => ({
+		getMetricsMapper((result) => ({
 			items: result.pages.assetMetrics,
-			total: result.pages.total
+			total: result.pages.total,
 		}))
 	);
 
@@ -52,11 +52,11 @@ const TableWithData: React.FC<ITableWithDataProps> = withRangeKey(
 			[
 				<ClayLink
 					href={URLConstants.DocumentationLink}
-					key='DOCUMENTATION'
-					target='_blank'
+					key="DOCUMENTATION"
+					target="_blank"
 				>
 					{Liferay.Language.get('documentation').toLowerCase()}
-				</ClayLink>
+				</ClayLink>,
 			],
 			false
 		),
@@ -64,25 +64,25 @@ const TableWithData: React.FC<ITableWithDataProps> = withRangeKey(
 		getColumns: ({
 			channelId,
 			groupId,
-			rangeSelectors
+			rangeSelectors,
 		}: ITableWithDataProps) => [
 			sitePagesListColumns.getTitleUrl({
 				channelId,
 				groupId,
 				rangeSelectors,
-				route: Routes.SITES_TOUCHPOINTS_OVERVIEW
+				route: Routes.SITES_TOUCHPOINTS_OVERVIEW,
 			}),
 			metricsListColumns.visitorsMetric,
 			metricsListColumns.viewsMetric,
 			metricsListColumns.avgTimeOnPageMetric,
 			metricsListColumns.bounceRateMetric,
 			metricsListColumns.entrancesMetric,
-			metricsListColumns.exitRateMetric
+			metricsListColumns.exitRateMetric,
 		],
 		legacyDropdownRangeKey: false,
 		rangeKeys: [Yesterday, Last7Days, Last30Days, Last90Days],
 		rowIdentifier: 'assetId',
-		showDropdownRangeKey: true
+		showDropdownRangeKey: true,
 	})
 );
 
@@ -93,25 +93,25 @@ interface IInterestDetailsProps {
 
 const InterestDetails: React.FC<IInterestDetailsProps> = ({
 	className,
-	router
+	router,
 }) => {
 	const {channelId, groupId, interestId} = useParams();
 	const {delta, orderIOMap, page, query} = useQueryPagination({
-		initialOrderIOMap: createOrderIOMap(VISITORS_METRIC)
+		initialOrderIOMap: createOrderIOMap(VISITORS_METRIC),
 	});
 
 	const rangeSelectors = useQueryRangeSelectors();
 
 	return (
 		<Card className={getCN(className)} pageDisplay>
-			<Card.Header className='align-items-center d-flex justify-content-between'>
+			<Card.Header className="align-items-center d-flex justify-content-between">
 				<Card.Title>
 					{sub(
 						Liferay.Language.get('pages-containing-x'),
 						[
-							<span className='interest-title' key='INTEREST_ID'>
+							<span className="interest-title" key="INTEREST_ID">
 								{`"${interestId}"`}
-							</span>
+							</span>,
 						],
 						false
 					)}

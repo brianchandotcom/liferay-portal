@@ -8,8 +8,8 @@ interface ITouchpointKnownIndividualsPageProps {
 const TouchpointKnownIndividualsPage: React.FC<
 	ITouchpointKnownIndividualsPageProps
 > = ({router}) => (
-	<div className='row'>
-		<div className='col-sm-12'>
+	<div className="row">
+		<div className="col-sm-12">
 			<KnownIndividualsListCard router={router} />
 		</div>
 	</div>

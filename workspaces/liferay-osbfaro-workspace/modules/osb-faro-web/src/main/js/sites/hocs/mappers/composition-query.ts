@@ -6,7 +6,7 @@ import {safeResultToProps} from 'shared/util/mappers';
 const getMapResultToProps = (compositionBagName: CompositionTypes) =>
 	safeResultToProps(
 		({
-			[compositionBagName]: {compositions, maxCount, total, totalCount}
+			[compositionBagName]: {compositions, maxCount, total, totalCount},
 		}: {
 			[key: string]: {
 				compositions: Array<any>;
@@ -19,7 +19,7 @@ const getMapResultToProps = (compositionBagName: CompositionTypes) =>
 			items: compositions,
 			maxCount,
 			total,
-			totalCount
+			totalCount,
 		})
 	);
 
@@ -36,21 +36,21 @@ const mapPropsToOptions = ({
 	delta,
 	id,
 	page,
-	rangeSelectors
+	rangeSelectors,
 }: IMapPropsArgs) => ({
 	variables: {
 		channelId,
 		id,
 		size: delta,
 		start: (page - 1) * delta,
-		...getSafeRangeSelectors(rangeSelectors)
-	}
+		...getSafeRangeSelectors(rangeSelectors),
+	},
 });
 
 const mapCardPropsToOptions = ({
 	activeTabId,
 	channelId,
-	rangeSelectors
+	rangeSelectors,
 }: {
 	activeTabId: string;
 	channelId: string;
@@ -61,8 +61,8 @@ const mapCardPropsToOptions = ({
 		channelId,
 		size: 5,
 		start: 0,
-		...getSafeRangeSelectors(rangeSelectors)
-	}
+		...getSafeRangeSelectors(rangeSelectors),
+	},
 });
 
 export {getMapResultToProps, mapCardPropsToOptions, mapPropsToOptions};

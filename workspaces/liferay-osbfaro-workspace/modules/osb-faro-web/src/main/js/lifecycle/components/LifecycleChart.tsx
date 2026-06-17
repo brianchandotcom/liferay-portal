@@ -7,7 +7,7 @@ import {ButtonWithIcon, Icon, Text} from '@clayui/core';
 import {ILifecycleStage} from 'lifecycle/utils/types';
 import {
 	LifecycleStages,
-	lifecycleStagesLabelMap
+	lifecycleStagesLabelMap,
 } from 'contacts/pages/account/utils/constants';
 import {SectionHeader} from 'shared/components/SectionHeader';
 import {sub} from 'shared/util/lang';
@@ -18,14 +18,14 @@ const EMPTY_STAGES: ILifecycleStage[] = [
 	LifecycleStages.ENGAGED,
 	LifecycleStages.PIPELINE,
 	LifecycleStages.ONBOARDING,
-	LifecycleStages.ESTABLISHED
-].map(stageType => ({
+	LifecycleStages.ESTABLISHED,
+].map((stageType) => ({
 	accountCount: 0,
 	averageStageDuration: 0,
 	conversionRateToNextStage: 0,
 	description: '',
 	percentage: 0,
-	stageType
+	stageType,
 }));
 
 const REFERENCE_BAR_HEIGHT = 136;
@@ -58,7 +58,7 @@ const StageMetrics = ({
 	percentage,
 	placeholder,
 	referencePercentage,
-	stageType
+	stageType,
 }: IStageMetricsProps) => {
 	const barHeight = getBarHeight(percentage, referencePercentage);
 
@@ -68,38 +68,38 @@ const StageMetrics = ({
 	const titleId = `stage-metrics-title-${stageType}`;
 
 	return (
-		<div className='col-12 col-lg d-flex flex-column p-3 stage-metrics'>
-			<div className='align-items-center d-flex mb-2'>
-				<Text id={titleId} size={4} weight='semi-bold'>
+		<div className="col-12 col-lg d-flex flex-column p-3 stage-metrics">
+			<div className="align-items-center d-flex mb-2">
+				<Text id={titleId} size={4} weight="semi-bold">
 					{lifecycleStagesLabelMap[stageType].label}
 				</Text>
 				<ButtonWithIcon
 					aria-labelledby={titleId}
 					borderless
-					className='ml-auto'
-					data-tooltip-align='top'
-					displayType='secondary'
+					className="ml-auto"
+					data-tooltip-align="top"
+					displayType="secondary"
 					onClick={() => onFilterClick(stageType)}
-					size='sm'
-					symbol='filter'
+					size="sm"
+					symbol="filter"
 					title={
 						sub(Liferay.Language.get('filter-by-x'), [
-							lifecycleStagesLabelMap[stageType].label
+							lifecycleStagesLabelMap[stageType].label,
 						]) as string
 					}
 				/>
 			</div>
-			<Text as='p' color='secondary'>
+			<Text as="p" color="secondary">
 				{description}
 			</Text>
-			<div className='justify-self-center mt-auto'>
+			<div className="justify-self-center mt-auto">
 				<div>
-					<p className='mb-0'>
-						<Text size={7} weight='bold'>
+					<p className="mb-0">
+						<Text size={7} weight="bold">
 							{accountCount}
 						</Text>
 					</p>
-					<Text color='secondary' size={4}>
+					<Text color="secondary" size={4}>
 						{(
 							sub(
 								Liferay.Language.get(
@@ -110,10 +110,10 @@ const StageMetrics = ({
 						).toLowerCase()}
 					</Text>
 				</div>
-				<div className='mt-3 text-secondary'>
+				<div className="mt-3 text-secondary">
 					{averageDaysInStage != 0 ? (
 						<>
-							<span className='mr-4'>{`${averageDaysInStage.toFixed(
+							<span className="mr-4">{`${averageDaysInStage.toFixed(
 								2
 							)}`}</span>
 							<span>
@@ -122,7 +122,7 @@ const StageMetrics = ({
 						</>
 					) : (
 						<>
-							<span className='mr-4'>{'—'}</span>
+							<span className="mr-4">{'—'}</span>
 							<span>
 								{Liferay.Language.get(
 									'no-activity'
@@ -133,7 +133,7 @@ const StageMetrics = ({
 				</div>
 			</div>
 			<div
-				className='align-items-end d-none d-lg-flex mt-3 mx-n2'
+				className="align-items-end d-none d-lg-flex mt-3 mx-n2"
 				style={{height: REFERENCE_BAR_HEIGHT}}
 			>
 				{!placeholder && (
@@ -158,22 +158,22 @@ const StageProgression = ({
 	nextBarHeight,
 	percentage,
 	placeholder,
-	previousBarHeight
+	previousBarHeight,
 }: IStageProgressionProps) => {
 	const topLeft = REFERENCE_BAR_HEIGHT - previousBarHeight;
 	const topRight = REFERENCE_BAR_HEIGHT - nextBarHeight;
 
 	return (
-		<div className='align-items-center align-items-lg-stretch border-light col-12 col-lg-auto d-flex flex-lg-column flex-row justify-content-center justify-content-lg-start px-2 py-3 stage-progression'>
-			<Label className='mt-lg-auto p-0' displayType='info'>
-				<span className='inline-item ml-1'>
+		<div className="align-items-center align-items-lg-stretch border-light col-12 col-lg-auto d-flex flex-lg-column flex-row justify-content-center justify-content-lg-start px-2 py-3 stage-progression">
+			<Label className="mt-lg-auto p-0" displayType="info">
+				<span className="inline-item ml-1">
 					{`${percentage.toFixed(0)}%`}
-					<span className='d-lg-none ml-1'>
+					<span className="d-lg-none ml-1">
 						{Liferay.Language.get(
 							'conversion-to-next-stage'
 						).toLowerCase()}
 					</span>
-					<Icon symbol='angle-right-small' />
+					<Icon symbol="angle-right-small" />
 				</span>
 			</Label>
 			<div
@@ -182,13 +182,13 @@ const StageProgression = ({
 					'd-lg-block',
 					'mt-auto',
 					'mx-n2',
-					placeholder ? '' : 'bg-light stage-progression__fill'
+					placeholder ? '' : 'bg-light stage-progression__fill',
 				])}
 				style={{
 					clipPath: placeholder
 						? undefined
 						: `polygon(0 ${topLeft}px, 100% ${topRight}px, 100% 100%, 0 100%)`,
-					height: REFERENCE_BAR_HEIGHT
+					height: REFERENCE_BAR_HEIGHT,
 				}}
 			/>
 		</div>
@@ -208,37 +208,39 @@ const LifecycleChart = ({error, loading, stages}: ILifecycleChartProps) => {
 
 	const resolvedStages: ILifecycleStage[] = isEmpty
 		? EMPTY_STAGES
-		: stages.filter(stage => stage.stageType !== LifecycleStages.AT_RISK)!;
+		: stages.filter(
+				(stage) => stage.stageType !== LifecycleStages.AT_RISK
+			)!;
 
 	const onFilterClick = (stageType: LifecycleStages) =>
 		updateFilters({lifecycleStageFilter: stageType});
 
 	const refPct = Math.max(
-		...resolvedStages.map(stage => stage.percentage),
+		...resolvedStages.map((stage) => stage.percentage),
 		0
 	);
 
 	return (
 		<>
 			<SectionHeader
-				icon='polls'
+				icon="polls"
 				title={Liferay.Language.get('lifecycle-stages')}
 			/>
-			<Card className='p-3'>
+			<Card className="p-3">
 				<Card.Title>
 					{Liferay.Language.get('accounts-by-stage')}
 				</Card.Title>
 				<Card.Body noPadding>
-					<div className='mt-1'>
-						<Text color='secondary' size={3}>
+					<div className="mt-1">
+						<Text color="secondary" size={3}>
 							{Liferay.Language.get(
 								'the-distribution-of-accounts-across-the-lifecycle-stages-within-the-timeframe'
 							)}
 						</Text>
 						{loading ? (
-							<Loading className='mt-4' />
+							<Loading className="mt-4" />
 						) : (
-							<div className='flex-lg-nowrap h-100 mt-4 no-gutters row'>
+							<div className="flex-lg-nowrap h-100 mt-4 no-gutters row">
 								{resolvedStages.map((stage, index) => {
 									const nextStage = resolvedStages[index + 1];
 									return (

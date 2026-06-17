@@ -3,14 +3,14 @@ import React from 'react';
 export enum Alignments {
 	Center = 'center',
 	Left = 'left',
-	Right = 'right'
+	Right = 'right',
 }
 
 export enum Weights {
 	Light = 'light',
 	Normal = 'normal',
 	Semibold = 'semibold',
-	Bold = 'bold'
+	Bold = 'bold',
 }
 
 export type Column = {

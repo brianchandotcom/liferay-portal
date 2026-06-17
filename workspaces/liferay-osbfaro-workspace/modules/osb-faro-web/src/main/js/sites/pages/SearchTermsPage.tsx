@@ -9,9 +9,9 @@ interface ISearchTermsPageProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 const SearchTermsPage: FC<ISearchTermsPageProps> = ({router}) => (
-	<div className='sites-dashboard-root'>
-		<div className='row'>
-			<div className='col-xl-12'>
+	<div className="sites-dashboard-root">
+		<div className="row">
+			<div className="col-xl-12">
 				<SearchTerms router={router} />
 			</div>
 		</div>

@@ -26,7 +26,7 @@ const IndividualLinkCell: React.FC<IIndividualLinksProps> = ({
 	className,
 	data,
 	disabled,
-	groupId
+	groupId,
 }) => {
 	const id = data.individualId || data.ownerId || data.id;
 
@@ -48,7 +48,7 @@ const IndividualLinkCell: React.FC<IIndividualLinksProps> = ({
 				toRoute(Routes.CONTACTS_INDIVIDUAL, {
 					channelId,
 					groupId,
-					id
+					id,
 				})
 			}
 		/>

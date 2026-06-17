@@ -9,17 +9,17 @@ export enum Size {
 	ExtraSmall = 'extra-small',
 	Small = 'small',
 	Medium = 'medium',
-	Large = 'large'
+	Large = 'large',
 }
 
 export enum Weight {
 	Normal = 'normal',
-	Bold = 'bold'
+	Bold = 'bold',
 }
 
 export enum PosX {
 	Left = 'left',
-	Right = 'right'
+	Right = 'right',
 }
 
 type Text = {
@@ -61,8 +61,8 @@ export const fontMapper: {
 	[LanguageIds.Japanese]: {
 		path: `${pathThemeRoot}/fonts/noto-sans-jp-bold.ttf`,
 		style: ['NotoSansJP', 'bold'],
-		test: isJapaneseLang
-	}
+		test: isJapaneseLang,
+	},
 };
 
 export class JSPDFExtension {
@@ -96,6 +96,7 @@ export class JSPDFExtension {
 		paddingY: number;
 		pageHeight: number;
 		pageWidth: number;
+
 		/**
 		 * jsPDF does not render a text on padding Y is equal 0
 		 * we need to add a safe padding Y at first to fix it.
@@ -114,7 +115,7 @@ export class JSPDFExtension {
 		containers,
 		date = new Date(),
 		fontFamily,
-		name
+		name,
 	}: {
 		containers: JSPDFExtensionContainer[];
 		date?: Date;
@@ -126,7 +127,7 @@ export class JSPDFExtension {
 		this.config = {
 			container: {
 				list: containers,
-				padding: 2
+				padding: 2,
 			},
 			date,
 			fontFamily,
@@ -134,7 +135,7 @@ export class JSPDFExtension {
 				['extra-small']: {lineHeight: 1.5, size: 5},
 				large: {lineHeight: 4.5, size: 18},
 				medium: {lineHeight: 3.5, size: 14},
-				small: {lineHeight: 2.5, size: 8}
+				small: {lineHeight: 2.5, size: 8},
 			},
 			name,
 			paddingX: 10,
@@ -143,7 +144,7 @@ export class JSPDFExtension {
 			pageWidth: this.doc.internal.pageSize.getWidth(),
 			safePaddingY: 5,
 			spacingBetweenBreakLines: 2,
-			spacingBetweenTexts: 5
+			spacingBetweenTexts: 5,
 		};
 
 		this.textList = [];
@@ -153,7 +154,7 @@ export class JSPDFExtension {
 		 * Configure PDF to support extra fonts
 		 */
 
-		Object.keys(fontMapper).forEach(key => {
+		Object.keys(fontMapper).forEach((key) => {
 			const {path, style} = fontMapper[key];
 
 			this.doc.addFont(path, style[0], style[1]);
@@ -200,7 +201,7 @@ export class JSPDFExtension {
 	}
 
 	setExtraFont(value: string) {
-		Object.keys(fontMapper).forEach(key => {
+		Object.keys(fontMapper).forEach((key) => {
 			const {style, test} = fontMapper[key];
 
 			if (test(value)) {
@@ -251,10 +252,10 @@ export class JSPDFExtension {
 						options,
 						text: {
 							...text,
-							value: line
+							value: line,
 						},
 						x: this.config.paddingX,
-						y: posY + linePosY
+						y: posY + linePosY,
 					});
 
 					linePosY =
@@ -267,15 +268,16 @@ export class JSPDFExtension {
 					prevLineHeight +
 					lines.length * this.config.fontSize[text.size].lineHeight +
 					lines.length * this.config.spacingBetweenBreakLines;
-			} else {
+			}
+			else {
 				data.push({
 					options,
 					text: {
 						...text,
-						value: textValue
+						value: textValue,
 					},
 					x: this.config.paddingX,
-					y: posY
+					y: posY,
 				});
 
 				prevLineHeight =
@@ -312,10 +314,12 @@ export class JSPDFExtension {
 					) {
 						containerX = previousContainerX;
 						containerY = previousContainerY;
-					} else {
+					}
+					else {
 						previousContainerX = this.config.container.padding;
 					}
-				} else {
+				}
+				else {
 					previousContainerX = this.config.container.padding;
 				}
 
@@ -341,7 +345,8 @@ export class JSPDFExtension {
 						containerWidth,
 						containerHeight
 					);
-				} else {
+				}
+				else {
 					this.doc.addImage(
 						imageData,
 						'JPEG',
@@ -389,7 +394,7 @@ export class JSPDFExtension {
 		/**
 		 * Render Float Texts
 		 */
-		this.floatTextList.forEach(text => {
+		this.floatTextList.forEach((text) => {
 			this.setFont(text);
 
 			this.doc.textWithLink(
@@ -398,7 +403,7 @@ export class JSPDFExtension {
 				text.posY + this.config.fontSize[text.size].lineHeight,
 				{
 					align: text.posX,
-					url: text.url
+					url: text.url,
 				}
 			);
 		});
@@ -427,14 +432,14 @@ export class JSPDFExtension {
 				);
 
 				this.doc.textWithLink(text.value!, x + padding, y + padding, {
-					url: text.url
+					url: text.url,
 				});
 
 				return;
 			}
 
 			this.doc.textWithLink(text.value!, x, y, {
-				url: text.url
+				url: text.url,
 			});
 		});
 

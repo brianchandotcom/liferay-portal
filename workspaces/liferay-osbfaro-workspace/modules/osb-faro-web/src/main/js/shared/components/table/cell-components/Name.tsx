@@ -29,11 +29,11 @@ const Name: React.FC<INameProps> = ({
 	renderIcon,
 	renderSecondaryInfo,
 	routeFn = noop,
-	tooltip = false
+	tooltip = false,
 }) => {
 	const getSecondaryInfo = () =>
 		!!renderSecondaryInfo && (
-			<div className='secondary-info text-truncate'>
+			<div className="secondary-info text-truncate">
 				{renderSecondaryInfo(data) || '-'}
 			</div>
 		);
@@ -51,19 +51,19 @@ const Name: React.FC<INameProps> = ({
 	return (
 		<td className={getCN('name-cell-root', className)}>
 			<div
-				className='content-container'
+				className="content-container"
 				style={maxWidth ? {maxWidth: `${maxWidth}px`} : undefined}
 			>
 				{!!renderIcon && (
-					<div className='icon-container'>{renderIcon(data)}</div>
+					<div className="icon-container">{renderIcon(data)}</div>
 				)}
 
-				<div className='text-truncate'>
-					<div className='table-title text-truncate'>
+				<div className="text-truncate">
+					<div className="table-title text-truncate">
 						{disabled || !url ? (
 							titleContent
 						) : (
-							<Link className='text-truncate' to={url}>
+							<Link className="text-truncate" to={url}>
 								{titleContent}
 							</Link>
 						)}

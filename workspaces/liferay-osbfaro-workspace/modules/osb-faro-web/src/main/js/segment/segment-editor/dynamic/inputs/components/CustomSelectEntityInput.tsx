@@ -26,16 +26,17 @@ const CustomSelectEntityInput: React.FC<ICustomSelectEntityInputProps> = ({
 		if (items.size === 1) {
 			onChange({
 				valid: true,
-				value: setPropertyValue(value, 'value', 0, entity.id)
+				value: setPropertyValue(value, 'value', 0, entity.id),
 			});
-		} else {
+		}
+		else {
 			onChange(
 				items
 					.valueSeq()
 					.toArray()
 					.map(({id}) => ({
 						valid: true,
-						value: setPropertyValue(value, 'value', 0, id)
+						value: setPropertyValue(value, 'value', 0, id),
 					}))
 			);
 		}

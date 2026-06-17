@@ -5,9 +5,9 @@ export default () => [
 		trend: {
 			__typename: 'orderIncompleteCurrencyValuesTrend',
 			percentage: 100.0,
-			trendClassification: 'POSITIVE'
+			trendClassification: 'POSITIVE',
 		},
-		value: '20000.00'
+		value: '20000.00',
 	},
 	{
 		__typename: 'orderIncompleteCurrencyValues',
@@ -15,9 +15,9 @@ export default () => [
 		trend: {
 			__typename: 'orderIncompleteCurrencyValuesTrend',
 			percentage: 20.0,
-			trendClassification: 'POSITIVE'
+			trendClassification: 'POSITIVE',
 		},
-		value: '50000.00'
+		value: '50000.00',
 	},
 	{
 		__typename: 'orderIncompleteCurrencyValues',
@@ -25,8 +25,8 @@ export default () => [
 		trend: {
 			__typename: 'orderIncompleteCurrencyValuesTrend',
 			percentage: 100.0,
-			trendClassification: 'NEGATIVE'
+			trendClassification: 'NEGATIVE',
 		},
-		value: '100000.00'
-	}
+		value: '100000.00',
+	},
 ];

@@ -28,7 +28,8 @@ $c: '.analytics-header';
 		}
 	}
 
-	#{$c}-subtitle, #{$c}-title {
+	#{$c}-subtitle,
+	#{$c}-title {
 		display: inline-block;
 	}
 

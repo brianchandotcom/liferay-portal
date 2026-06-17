@@ -5,14 +5,14 @@ export const ACTION_TYPES: {[key: string]: ActionType} = {
 	add: 'add',
 	clearAll: 'clear-all',
 	remove: 'remove',
-	toggle: 'toggle'
+	toggle: 'toggle',
 };
 
 export enum ActionTypes {
 	Add = 'add',
 	ClearAll = 'clear-all',
 	Toggle = 'toggle',
-	Remove = 'remove'
+	Remove = 'remove',
 }
 
 type ActionType = 'add' | 'clear-all' | 'toggle' | 'remove';
@@ -45,14 +45,14 @@ export const selectionReducer = (
 			return {
 				selectedItems: selectedItems.merge(
 					OrderedMap(
-						(payload?.items ?? []).map(item => [item.id, item])
+						(payload?.items ?? []).map((item) => [item.id, item])
 					)
-				)
+				),
 			};
 		}
 		case 'clear-all': {
 			return {
-				selectedItems: OrderedMap()
+				selectedItems: OrderedMap(),
 			};
 		}
 		case 'remove': {
@@ -60,7 +60,7 @@ export const selectionReducer = (
 			return {
 				selectedItems: selectedItems.filter(
 					(_, key) => !items.some(({id}) => id === key)
-				) as OrderedMap<any, any> // Assert return type from .filter() is OrderedMap until we can update Immutable package
+				) as OrderedMap<any, any>, // Assert return type from .filter() is OrderedMap until we can update Immutable package
 			};
 		}
 		case 'toggle': {
@@ -69,12 +69,13 @@ export const selectionReducer = (
 			}
 			if (selectedItems.has(payload.item.id)) {
 				return {selectedItems: selectedItems.delete(payload.item.id)};
-			} else {
+			}
+			else {
 				return {
 					selectedItems: selectedItems.set(
 						payload.item.id,
 						payload.item
-					)
+					),
 				};
 			}
 		}
@@ -86,19 +87,19 @@ export const selectionReducer = (
 
 export const SelectionProvider = ({
 	children,
-	selectedItems: initialValue
+	selectedItems: initialValue,
 }: SelectionProviderProps) => {
 	const [state, dispatch] = useReducer(selectionReducer, {
 		selectedItems: initialValue
-			? OrderedMap(initialValue.map(item => [item.id, item]))
-			: OrderedMap()
+			? OrderedMap(initialValue.map((item) => [item.id, item]))
+			: OrderedMap(),
 	});
 
 	return (
 		<SelectionContext.Provider
 			value={{
 				selectedItems: state.selectedItems,
-				selectionDispatch: dispatch
+				selectionDispatch: dispatch,
 			}}
 		>
 			{children}
@@ -118,9 +119,8 @@ export const useSelectionContext = () => {
 
 export const withSelectionProvider =
 	<P extends object>(WrappedComponent: React.ComponentType<P>) =>
-	(props: P) =>
-		(
-			<SelectionProvider>
-				<WrappedComponent {...props} />
-			</SelectionProvider>
-		);
+	(props: P) => (
+		<SelectionProvider>
+			<WrappedComponent {...props} />
+		</SelectionProvider>
+	);

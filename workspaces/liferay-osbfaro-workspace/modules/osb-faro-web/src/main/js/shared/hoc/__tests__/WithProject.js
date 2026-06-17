@@ -5,14 +5,14 @@ jest.unmock('react-dom');
 
 jest.mock(
 	'shared/hoc/WithAction',
-	() => () => wrappedComponent => wrappedComponent
+	() => () => (wrappedComponent) => wrappedComponent
 );
 
 describe('WithProject', () => {
 	it('should pass the project to the WrappedComponent', () => {
 		let result = null;
 
-		const MockComponent = props => {
+		const MockComponent = (props) => {
 			result = props;
 
 			return null;
@@ -22,7 +22,7 @@ describe('WithProject', () => {
 
 		renderWithStore(WrappedComponent, {
 			id: 'test',
-			project: 'fooProject'
+			project: 'fooProject',
 		});
 
 		expect(result.project).toBe('fooProject');

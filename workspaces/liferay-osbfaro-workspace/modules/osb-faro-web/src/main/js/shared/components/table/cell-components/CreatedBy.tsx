@@ -14,14 +14,14 @@ interface ICreatedByProps {
 const CreatedByCell: React.FC<ICreatedByProps> = ({
 	className,
 	data: {dateModified, userName},
-	timeZoneId
+	timeZoneId,
 }) => (
 	<td className={className}>
 		<b>{userName}</b>
-		<div className='text-secondary'>
+		<div className="text-secondary">
 			<em>
 				{sub(Liferay.Language.get('last-edited-x'), [
-					formatDateToTimeZone(dateModified, 'M/D/YY', timeZoneId)
+					formatDateToTimeZone(dateModified, 'M/D/YY', timeZoneId),
 				])}
 			</em>
 		</div>

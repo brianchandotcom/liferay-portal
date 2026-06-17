@@ -2,7 +2,7 @@ module.exports = {
 	EConfigInURLBehavior: {
 		OFF: 'off',
 		PUSH: 'push',
-		REPLACE: 'replace'
+		REPLACE: 'replace',
 	},
-	FrontendDataSet: () => null
+	FrontendDataSet: () => null,
 };

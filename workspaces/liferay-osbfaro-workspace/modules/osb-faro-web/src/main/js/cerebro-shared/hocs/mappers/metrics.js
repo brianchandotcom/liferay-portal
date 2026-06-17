@@ -15,7 +15,7 @@ const getMetricsMapper = (getData, metrics, chartDataMapFn) => {
 				metrics,
 				rangeSelectors,
 				chartDataMapFn
-			)
+			),
 		})
 	);
 
@@ -29,24 +29,24 @@ const getMetricsMapper = (getData, metrics, chartDataMapFn) => {
 		filters,
 		interval,
 		rangeSelectors,
-		router: {params}
+		router: {params},
 	}) => {
 		const {variables} = getVariables({
 			assetId,
 			filters,
 			interval,
 			params,
-			rangeSelectors
+			rangeSelectors,
 		});
 
 		return {
-			variables
+			variables,
 		};
 	};
 
 	return {
 		options: mapPropsToOptions,
-		props: mapResultToProps
+		props: mapResultToProps,
 	};
 };
 

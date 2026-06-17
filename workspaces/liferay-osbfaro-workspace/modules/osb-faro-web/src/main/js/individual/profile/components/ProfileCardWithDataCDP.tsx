@@ -5,7 +5,7 @@ import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import EventMetricQuery, {
 	EventMetricsData,
-	EventMetricsVariables
+	EventMetricsVariables,
 } from 'shared/queries/EventMetricQuery';
 import Loading from 'shared/components/Loading';
 import moment from 'moment';
@@ -16,7 +16,7 @@ import Toolbar from 'shared/components/toolbar';
 import URLConstants from 'shared/util/url-constants';
 import UserSessionQuery, {
 	UserSessionData,
-	UserSessionVariables
+	UserSessionVariables,
 } from 'shared/queries/UserSessionQuery';
 import VerticalTimeline from 'shared/components/VerticalTimeline';
 import {compose, withPaginationBar} from 'shared/hoc';
@@ -25,7 +25,7 @@ import {
 	formatUTCDate,
 	getDateRangeLabel,
 	getDateRangeLabelFromDate,
-	getEndDate
+	getEndDate,
 } from 'shared/util/date';
 import {fetchPolicyDefinition} from 'shared/util/graphql';
 import {formatSessions, getActivityLabel} from 'shared/util/activities';
@@ -37,7 +37,7 @@ import {mapListResultsToProps} from 'shared/util/mappers';
 import {
 	RangeKeyTimeRanges,
 	SessionEntityTypes,
-	Sizes
+	Sizes,
 } from 'shared/util/constants';
 import {sub} from 'shared/util/lang';
 import {useQuery} from '@apollo/client';
@@ -92,7 +92,7 @@ const ProfileCardWithDataCDP: React.FC<IProfileCardWithDataCDPProps> = ({
 	query,
 	rangeSelectors,
 	resetPage,
-	timeZoneId
+	timeZoneId,
 }) => {
 	const {hasSelectedPoint, onPointSelect, selectedPoint} = useSelectedPoint();
 	const [searchValue, setSearchValue] = useState<string>('');
@@ -107,8 +107,8 @@ const ProfileCardWithDataCDP: React.FC<IProfileCardWithDataCDPProps> = ({
 				entityType: SessionEntityTypes.Individual,
 				interval,
 				keywords: query,
-				...getSafeRangeSelectors(rangeSelectors)
-			}
+				...getSafeRangeSelectors(rangeSelectors),
+			},
 		}
 	);
 
@@ -117,7 +117,7 @@ const ProfileCardWithDataCDP: React.FC<IProfileCardWithDataCDPProps> = ({
 		items: activityHistory,
 		loading,
 		refetch,
-		total: activityTotal
+		total: activityTotal,
 	} = mapListResultsToProps(activityResponse, ({eventMetric}) => ({
 		items: eventMetric.totalEventsMetric.histogram.metrics?.map(
 			({key, value}, index: number) => ({
@@ -126,10 +126,10 @@ const ProfileCardWithDataCDP: React.FC<IProfileCardWithDataCDPProps> = ({
 				totalSessions:
 					eventMetric?.totalSessionsMetric?.histogram?.metrics?.[
 						index
-					].value
+					].value,
 			})
 		),
-		total: eventMetric.totalEventsMetric?.value
+		total: eventMetric.totalEventsMetric?.value,
 	}));
 
 	const getDateRange = (
@@ -161,14 +161,14 @@ const ProfileCardWithDataCDP: React.FC<IProfileCardWithDataCDPProps> = ({
 					rangeKey,
 					rangeStart: `${formattedRangeStart}T${formatTimestamp(
 						intervalInitDate
-					)}`
+					)}`,
 				});
 			}
 
 			return getSafeRangeSelectors({
 				rangeEnd: formattedRangeEnd,
 				rangeKey,
-				rangeStart: formattedRangeStart
+				rangeStart: formattedRangeStart,
 			});
 		}
 
@@ -186,8 +186,8 @@ const ProfileCardWithDataCDP: React.FC<IProfileCardWithDataCDPProps> = ({
 				entityType: SessionEntityTypes.Individual,
 				keywords: query,
 				page: page - 1,
-				size: delta
-			}
+				size: delta,
+			},
 		}
 	);
 
@@ -195,7 +195,7 @@ const ProfileCardWithDataCDP: React.FC<IProfileCardWithDataCDPProps> = ({
 		sessionsResponse,
 		({eventsByUserSessions: {totalEvents, userSessions}}) => ({
 			items: formatSessions(userSessions),
-			total: totalEvents
+			total: totalEvents,
 		})
 	);
 
@@ -222,7 +222,7 @@ const ProfileCardWithDataCDP: React.FC<IProfileCardWithDataCDPProps> = ({
 		if (sessionsMappedResults?.loading) {
 			return (
 				<NoResultsDisplay>
-					<Loading key='LOADING' />
+					<Loading key="LOADING" />
 				</NoResultsDisplay>
 			);
 		}
@@ -237,7 +237,7 @@ const ProfileCardWithDataCDP: React.FC<IProfileCardWithDataCDPProps> = ({
 						icon={{
 							border: false,
 							size: Sizes.XXXLarge,
-							symbol: 'ac_no_results_found'
+							symbol: 'ac_no_results_found',
 						}}
 						spacer
 						title={Liferay.Language.get(
@@ -245,8 +245,8 @@ const ProfileCardWithDataCDP: React.FC<IProfileCardWithDataCDPProps> = ({
 						)}
 					>
 						<ClayButton
-							className='button-root'
-							displayType='secondary'
+							className="button-root"
+							displayType="secondary"
 							onClick={() => {
 								onQueryChange('');
 								setSearchValue('');
@@ -269,18 +269,18 @@ const ProfileCardWithDataCDP: React.FC<IProfileCardWithDataCDPProps> = ({
 							</span>
 
 							<ClayLink
-								className='d-block mb-3'
-								decoration='underline'
+								className="d-block mb-3"
+								decoration="underline"
 								href={URLConstants.IndividualProfilesDocument}
-								key='DOCUMENTATION'
-								target='_blank'
+								key="DOCUMENTATION"
+								target="_blank"
 							>
 								{Liferay.Language.get(
 									'learn-more-about-individuals'
 								)}
 
-								<span className='inline-item inline-item-after'>
-									<ClayIcon fontSize={8} symbol='shortcut' />
+								<span className="inline-item inline-item-after">
+									<ClayIcon fontSize={8} symbol="shortcut" />
 								</span>
 							</ClayLink>
 						</>
@@ -294,18 +294,18 @@ const ProfileCardWithDataCDP: React.FC<IProfileCardWithDataCDPProps> = ({
 
 	return (
 		<WrapSafeResults
-			className='flex-grow-1 loading-root'
+			className="flex-grow-1 loading-root"
 			error={error}
 			errorProps={{
 				className: 'flex-grow-1',
-				onReload: refetch
+				onReload: refetch,
 			}}
 			loading={loading}
 			page={false}
 			pageDisplay={false}
 		>
 			<Card.Body>
-				<div className='individuals-activities-chart'>
+				<div className="individuals-activities-chart">
 					<ActivitiesChart
 						alwaysShowSelectedTooltip
 						history={activityHistory}
@@ -315,27 +315,27 @@ const ProfileCardWithDataCDP: React.FC<IProfileCardWithDataCDPProps> = ({
 						selectedPoint={selectedPoint}
 					/>
 
-					<div className='selected-info'>
-						<div className='activities-date d-flex align-items-baseline'>
-							<div className='text-4 text-secondary'>
+					<div className="selected-info">
+						<div className="activities-date d-flex align-items-baseline">
+							<div className="text-4 text-secondary">
 								{activityHistory?.length
 									? sub(
 											Liferay.Language.get(
 												'the-individual-performed-the-events-during-x'
 											),
 											[date]
-									  )
+										)
 									: Liferay.Language.get(
 											'individuals-events'
-									  )}
+										)}
 							</div>
 
 							{selected && (
 								<ClayButton
-									className='button-root'
-									displayType='link'
+									className="button-root"
+									displayType="link"
 									onClick={() => handleChangeSelection(null)}
-									size='sm'
+									size="sm"
 								>
 									{Liferay.Language.get(
 										'clear-date-selection'
@@ -344,9 +344,9 @@ const ProfileCardWithDataCDP: React.FC<IProfileCardWithDataCDPProps> = ({
 							)}
 
 							<>
-								<span className='events-count-circle ml-auto'></span>
+								<span className="events-count-circle ml-auto"></span>
 
-								<div className='ml-2'>
+								<div className="ml-2">
 									{getActivityLabel(
 										(selected
 											? totalEvents
@@ -356,9 +356,9 @@ const ProfileCardWithDataCDP: React.FC<IProfileCardWithDataCDPProps> = ({
 							</>
 						</div>
 
-						<div className='mt-4'>
+						<div className="mt-4">
 							<SearchInput
-								className='search-input mr-3'
+								className="search-input mr-3"
 								onChange={setSearchValue}
 								onSubmit={handleQuery}
 								placeholder={Liferay.Language.get('search')}

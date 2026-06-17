@@ -1,11 +1,11 @@
 import BaseDropdown from './base-dropdown';
 import Constants from 'shared/util/constants';
 import EVENT_DEFINITION_QUERY, {
-	UPDATE_EVENT_DEFINITION
+	UPDATE_EVENT_DEFINITION,
 } from 'event-analysis/queries/EventDefinitionQuery';
 import EVENT_DEFINITIONS_QUERY, {
 	EventDefinitionsData,
-	EventDefinitionsVariables
+	EventDefinitionsVariables,
 } from 'event-analysis/queries/EventDefinitionsQuery';
 import React, {useState} from 'react';
 import {Align} from '@clayui/drop-down';
@@ -18,7 +18,7 @@ import {SafeResults} from 'shared/hoc/util';
 import {useQuery} from '@apollo/client';
 
 const {
-	pagination: {orderDefault}
+	pagination: {orderDefault},
 } = Constants;
 
 interface IAnalysisDropdownProps {
@@ -36,7 +36,7 @@ const AnalysisDropdown: React.FC<IAnalysisDropdownProps> = ({
 	eventId,
 	onEventChange,
 	open,
-	trigger
+	trigger,
 }) => {
 	const [query, setQuery] = useState('');
 	const [eventType, setEventType] = useState<EventTypes>(EventTypes.All);
@@ -53,9 +53,9 @@ const AnalysisDropdown: React.FC<IAnalysisDropdownProps> = ({
 				size: 200,
 				sort: {
 					column: DISPLAY_NAME,
-					type: orderDefault.toUpperCase()
-				}
-			}
+					type: orderDefault.toUpperCase(),
+				},
+			},
 		}
 	);
 
@@ -69,25 +69,25 @@ const AnalysisDropdown: React.FC<IAnalysisDropdownProps> = ({
 							{
 								onClick: () => setEventType(EventTypes.All),
 								tabId: EventTypes.All,
-								title: Liferay.Language.get('all')
+								title: Liferay.Language.get('all'),
 							},
 							{
 								onClick: () => setEventType(EventTypes.Default),
 								tabId: EventTypes.Default,
-								title: Liferay.Language.get('default')
+								title: Liferay.Language.get('default'),
 							},
 							{
 								onClick: () => setEventType(EventTypes.Custom),
 								tabId: EventTypes.Custom,
-								title: Liferay.Language.get('custom')
-							}
+								title: Liferay.Language.get('custom'),
+							},
 						]}
 						title={Liferay.Language.get('events')}
 					/>
 
 					<SafeResults {...result} page={false} pageDisplay={false}>
 						{({
-							eventDefinitions: {eventDefinitions}
+							eventDefinitions: {eventDefinitions},
 						}: {
 							eventDefinitions: {eventDefinitions: Event[]};
 						}) => (
@@ -111,7 +111,7 @@ const AnalysisDropdown: React.FC<IAnalysisDropdownProps> = ({
 
 												close();
 											},
-											query: EVENT_DEFINITION_QUERY
+											query: EVENT_DEFINITION_QUERY,
 										}
 									);
 

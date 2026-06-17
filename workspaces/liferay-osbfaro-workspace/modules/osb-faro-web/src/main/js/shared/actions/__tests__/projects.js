@@ -5,7 +5,7 @@ import {
 	fetchProject,
 	fetchProjects,
 	fetchProjectViaCorpProjectUuid,
-	updateProject
+	updateProject,
 } from '../projects';
 import {isFSA} from 'flux-standard-action';
 
@@ -25,7 +25,7 @@ describe('Projects Actions', () => {
 				emailAddressDomains: [],
 				friendlyURL: 'ggwp',
 				groupId: '123',
-				name: 'Configure'
+				name: 'Configure',
 			});
 
 			expect(isFSA(action)).toBe(true);
@@ -63,7 +63,7 @@ describe('Projects Actions', () => {
 	describe('fetchProjectViaCorpProjectUuid', () => {
 		it('should return an action', () => {
 			const action = fetchProjectViaCorpProjectUuid({
-				corpProjectUuid: '23-44'
+				corpProjectUuid: '23-44',
 			});
 
 			expect(isFSA(action)).toBe(true);
@@ -77,7 +77,7 @@ describe('Projects Actions', () => {
 				emailAddressDomains: [],
 				friendlyURL: 'bananas',
 				groupId: '23',
-				name: 'Test Test'
+				name: 'Test Test',
 			});
 
 			expect(isFSA(action)).toBe(true);

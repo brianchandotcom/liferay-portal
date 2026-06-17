@@ -14,14 +14,14 @@ const TokenCell: React.FC<
 			className={getCN(className)}
 			data-testid={`row-token-${token.slice(-4)}`}
 		>
-			<span className='text-secondary mr-1'>
+			<span className="text-secondary mr-1">
 				{Liferay.Language.get('token-ending-in')}
 			</span>
 
-			<strong className='font-weight-bold'>{token.slice(-4)}</strong>
+			<strong className="font-weight-bold">{token.slice(-4)}</strong>
 
 			{expired && (
-				<Label className='ml-2' display='danger' size='lg' uppercase>
+				<Label className="ml-2" display="danger" size="lg" uppercase>
 					{Liferay.Language.get('expired')}
 				</Label>
 			)}

@@ -10,7 +10,7 @@ import {SummaryBaseCard} from './SummaryBaseCard';
 import {SummaryTitle} from './SummaryTitle';
 
 export const SummaryDraftCard: React.FC<{experiment: IExperiment}> = ({
-	experiment: {dxpExperienceName, dxpSegmentName, dxpVariants, goal, status}
+	experiment: {dxpExperienceName, dxpSegmentName, dxpVariants, goal, status},
 }) => {
 	const currentStep = dxpVariants ? 3 : goal ? 2 : 1;
 
@@ -25,7 +25,7 @@ export const SummaryDraftCard: React.FC<{experiment: IExperiment}> = ({
 					{dxpExperienceName ? (
 						<>
 							<div>
-								<span className='text-secondary mr-1'>
+								<span className="text-secondary mr-1">
 									{`${Liferay.Language.get('experience')}:`}
 								</span>
 
@@ -33,7 +33,7 @@ export const SummaryDraftCard: React.FC<{experiment: IExperiment}> = ({
 							</div>
 
 							<div>
-								<span className='text-secondary mr-1'>
+								<span className="text-secondary mr-1">
 									{`${Liferay.Language.get('segment')}:`}
 								</span>
 								{dxpSegmentName}
@@ -46,7 +46,7 @@ export const SummaryDraftCard: React.FC<{experiment: IExperiment}> = ({
 					)}
 				</span>
 			),
-			title: Liferay.Language.get('test-target')
+			title: Liferay.Language.get('test-target'),
 		},
 		{
 			Description: ({className}: {className?: string}) => (
@@ -62,7 +62,7 @@ export const SummaryDraftCard: React.FC<{experiment: IExperiment}> = ({
 					)}
 				</span>
 			),
-			title: Liferay.Language.get('test-metric')
+			title: Liferay.Language.get('test-metric'),
 		},
 		{
 			Description: ({className}: {className?: string}) => (
@@ -73,11 +73,11 @@ export const SummaryDraftCard: React.FC<{experiment: IExperiment}> = ({
 									? Liferay.Language.get('x-variants')
 									: Liferay.Language.get('x-variant'),
 								[totalVariants]
-						  )
+							)
 						: Liferay.Language.get('no-variants-created')}
 				</span>
 			),
-			title: Liferay.Language.get('variants')
+			title: Liferay.Language.get('variants'),
 		},
 		{
 			Description: ({className}: {className?: string}) => (
@@ -87,8 +87,8 @@ export const SummaryDraftCard: React.FC<{experiment: IExperiment}> = ({
 					)}
 				</span>
 			),
-			title: Liferay.Language.get('review-&-run')
-		}
+			title: Liferay.Language.get('review-&-run'),
+		},
 	];
 
 	return (
@@ -101,9 +101,9 @@ export const SummaryDraftCard: React.FC<{experiment: IExperiment}> = ({
 			/>
 
 			<SummaryBaseCard.Body>
-				<div className='w-100 mt-4'>
+				<div className="w-100 mt-4">
 					<SummaryTitle
-						className='mb-4'
+						className="mb-4"
 						label={Liferay.Language.get('test-target')}
 					/>
 
@@ -119,14 +119,14 @@ export const SummaryDraftCard: React.FC<{experiment: IExperiment}> = ({
 											'analytics-summary-card-step-content',
 											{
 												[`analytics-summary-card-step-content-${status}`]:
-													status
+													status,
 											}
 										)}
 									>
 										<Card.Body>
-											<div className='h4'>{title}</div>
+											<div className="h4">{title}</div>
 
-											<Description className='analytics-summary-card-step-content-description' />
+											<Description className="analytics-summary-card-step-content-description" />
 										</Card.Body>
 									</Card>
 								)}

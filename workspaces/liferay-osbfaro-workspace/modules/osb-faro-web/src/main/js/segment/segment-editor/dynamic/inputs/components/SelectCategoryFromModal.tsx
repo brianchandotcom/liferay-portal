@@ -16,8 +16,8 @@ const CATEGORY_COLUMNS = [
 		accessor: 'name',
 		className: 'table-cell-expand',
 		label: Liferay.Language.get('name'),
-		sortable: true
-	}
+		sortable: true,
+	},
 ];
 
 const connector = connect(null, {close, open});
@@ -39,12 +39,12 @@ const SelectCategoryFromModal: React.FC<ISelectCategoryFromModalProps> = ({
 	onCategoriesChange,
 	open,
 	selectedCategories,
-	vocabularyId
+	vocabularyId,
 }) => {
 	const categoriesDataFn = async ({
 		delta = 5,
 		page = 1,
-		query
+		query,
 	}: {
 		delta?: number;
 		page?: number;
@@ -56,12 +56,12 @@ const SelectCategoryFromModal: React.FC<ISelectCategoryFromModalProps> = ({
 			keywords: query ?? '',
 			page,
 			pageSize: delta,
-			vocabularyId
+			vocabularyId,
 		});
 
 		return {
 			items: (result.items ?? []) as CategoryItem[],
-			total: result.totalCount ?? 0
+			total: result.totalCount ?? 0,
 		};
 	};
 
@@ -77,9 +77,9 @@ const SelectCategoryFromModal: React.FC<ISelectCategoryFromModalProps> = ({
 					items
 						.valueSeq()
 						.filter(Boolean)
-						.map(item => ({
+						.map((item) => ({
 							id: item!.id,
-							name: item!.name
+							name: item!.name,
 						}))
 						.toArray()
 				);
@@ -88,20 +88,20 @@ const SelectCategoryFromModal: React.FC<ISelectCategoryFromModalProps> = ({
 			},
 			rowIdentifier: 'id',
 			submitMessage: Liferay.Language.get('select'),
-			title: Liferay.Language.get('select-category')
+			title: Liferay.Language.get('select-category'),
 		});
 	};
 
 	const handleRemoveCategory = (id: string) => {
-		onCategoriesChange(selectedCategories.filter(c => c.id !== id));
+		onCategoriesChange(selectedCategories.filter((c) => c.id !== id));
 	};
 
 	if (selectedCategories.length === 0) {
 		return (
 			<Form.GroupItem shrink>
 				<ClayButton
-					className='button-root'
-					displayType='secondary'
+					className="button-root"
+					displayType="secondary"
 					onClick={handleOpenModal}
 				>
 					{`+ ${Liferay.Language.get('add-category')}`}
@@ -114,20 +114,20 @@ const SelectCategoryFromModal: React.FC<ISelectCategoryFromModalProps> = ({
 		<>
 			<Form.GroupItem shrink>
 				<div
-					className='input-group-item input-list-root'
+					className="input-group-item input-list-root"
 					style={{maxWidth: '52rem', width: 'fit-content'}}
 				>
 					<div
-						className='form-control form-control-tag-group'
+						className="form-control form-control-tag-group"
 						style={{
 							maxWidth: '52rem',
 							overflowY: 'auto',
-							width: 'fit-content'
+							width: 'fit-content',
 						}}
 					>
-						{selectedCategories.map(category => (
+						{selectedCategories.map((category) => (
 							<Label
-								display='secondary'
+								display="secondary"
 								key={category.id}
 								onRemove={() =>
 									handleRemoveCategory(category.id)
@@ -139,13 +139,13 @@ const SelectCategoryFromModal: React.FC<ISelectCategoryFromModalProps> = ({
 
 						<ClayButton
 							aria-label={Liferay.Language.get('clear')}
-							className='button-root text-secondary'
-							displayType='unstyled'
+							className="button-root text-secondary"
+							displayType="unstyled"
 							onClick={() => onCategoriesChange([])}
 						>
 							<ClayIcon
-								className='icon-root'
-								symbol='times-circle'
+								className="icon-root"
+								symbol="times-circle"
 							/>
 						</ClayButton>
 					</div>
@@ -153,7 +153,7 @@ const SelectCategoryFromModal: React.FC<ISelectCategoryFromModalProps> = ({
 			</Form.GroupItem>
 
 			<Form.GroupItem shrink>
-				<ClayButton displayType='secondary' onClick={handleOpenModal}>
+				<ClayButton displayType="secondary" onClick={handleOpenModal}>
 					{Liferay.Language.get('select')}
 				</ClayButton>
 			</Form.GroupItem>

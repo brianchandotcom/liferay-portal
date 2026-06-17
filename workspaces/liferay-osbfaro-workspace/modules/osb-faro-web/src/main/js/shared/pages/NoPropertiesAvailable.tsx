@@ -11,7 +11,7 @@ import {User} from 'shared/util/records';
 import {withRequest} from 'shared/hoc';
 
 const {
-	pagination: {cur: defaultPage}
+	pagination: {cur: defaultPage},
 } = Constants;
 
 interface INoPropertiesAvailableProps
@@ -28,17 +28,17 @@ const NoPropertiesAvailable: React.FC<INoPropertiesAvailableProps> = ({
 	currentUser,
 	dataSources,
 	groupId,
-	open
+	open,
 }) => {
 	const admin = currentUser.isAdmin();
 
 	const description = admin
 		? Liferay.Language.get(
 				'to-get-your-workspace-set-up-you-will-need-to-create-a-property-and-sync-your-dxp-sites'
-		  )
+			)
 		: Liferay.Language.get(
 				'you-have-not-been-added-to-any-properties.-please-contact-your-analytics-cloud-administrator'
-		  );
+			);
 
 	const title = admin
 		? Liferay.Language.get('first-connect-your-dxp-sites')
@@ -46,7 +46,7 @@ const NoPropertiesAvailable: React.FC<INoPropertiesAvailableProps> = ({
 
 	return (
 		<BasePage
-			className='no-properties-available-root'
+			className="no-properties-available-root"
 			documentTitle={Liferay.Language.get('no-properties-available')}
 		>
 			<BasePage.Header breadcrumbs={[]} groupId={groupId}>
@@ -64,17 +64,17 @@ const NoPropertiesAvailable: React.FC<INoPropertiesAvailableProps> = ({
 									? description
 									: Liferay.Language.get(
 											'first-complete-the-onboarding-to-get-your-workspace-set-up'
-									  )}
+										)}
 							</p>
 
 							{admin && (
 								<ClayButton
-									className='button-root'
-									displayType='primary'
+									className="button-root"
+									displayType="primary"
 									onClick={() =>
 										open(modalTypes.ONBOARDING_MODAL, {
 											groupId,
-											onClose: close
+											onClose: close,
 										})
 									}
 								>
@@ -87,7 +87,7 @@ const NoPropertiesAvailable: React.FC<INoPropertiesAvailableProps> = ({
 					icon={{
 						border: false,
 						size: Sizes.XXXLarge,
-						symbol: 'ac_satellite'
+						symbol: 'ac_satellite',
 					}}
 					spacer
 					title={
@@ -108,10 +108,10 @@ export default compose<any>(
 				delta: 1,
 				groupId,
 				page: defaultPage,
-				query: ''
+				query: '',
 			}),
 		({total}: {total: number}) => ({
-			dataSources: !!total
+			dataSources: !!total,
 		})
 	),
 	connect(null, {close, open})

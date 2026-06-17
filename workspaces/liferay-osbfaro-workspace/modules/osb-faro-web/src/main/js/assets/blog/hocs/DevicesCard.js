@@ -52,7 +52,7 @@ const BROWSER_DEVICE_QUERY = gql`
 const withBlogsDevices = () =>
 	graphql(
 		BROWSER_DEVICE_QUERY,
-		getDevicesMapper(result => result.blog.viewsMetric)
+		getDevicesMapper((result) => result.blog.viewsMetric)
 	);
 
 export default withDevicesCard(withBlogsDevices, {
@@ -61,5 +61,5 @@ export default withDevicesCard(withBlogsDevices, {
 	),
 	documentationUrl: URLConstants.SitesDashboardBlogsViewsByTechnology,
 	reportContainer: ReportContainer.ViewsByTechnologyCard,
-	title: Liferay.Language.get('there-are-no-views-on-the-selected-period')
+	title: Liferay.Language.get('there-are-no-views-on-the-selected-period'),
 });

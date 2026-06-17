@@ -1,7 +1,7 @@
 import * as d3 from 'd3';
 import ChartTooltip, {
 	Alignments,
-	Weights
+	Weights,
 } from 'shared/components/chart-tooltip';
 import React from 'react';
 import Trend from 'shared/components/Trend';
@@ -42,32 +42,32 @@ export const Tooltip = ({dataPoint}: {dataPoint: any[]}) => {
 						getDateUtil(control.payload.key)
 					)}`,
 					weight: Weights.Semibold,
-					width: 140
+					width: 140,
 				},
 				{
 					align: Alignments.Right,
 					label: Liferay.Language.get('high'),
 					weight: Weights.Semibold,
-					width: 60
+					width: 60,
 				},
 				{
 					align: Alignments.Right,
 					label: Liferay.Language.get('low'),
 					weight: Weights.Semibold,
-					width: 60
+					width: 60,
 				},
 				{
 					align: Alignments.Right,
 					label: Liferay.Language.get('median'),
 					weight: Weights.Semibold,
-					width: 60
+					width: 60,
 				},
 				{
 					label: '',
-					width: 60
-				}
-			]
-		}
+					width: 60,
+				},
+			],
+		},
 	];
 
 	const rows = [
@@ -76,59 +76,59 @@ export const Tooltip = ({dataPoint}: {dataPoint: any[]}) => {
 				{
 					color: control.color,
 					label: control.name,
-					weight: Weights.Semibold
+					weight: Weights.Semibold,
 				},
 				{
 					align: Alignments.Right,
-					label: control.payload.tooltip.control.high
+					label: control.payload.tooltip.control.high,
 				},
 				{
 					align: Alignments.Right,
-					label: control.payload.tooltip.control.low
+					label: control.payload.tooltip.control.low,
 				},
 				{
 					align: Alignments.Right,
-					label: control.payload.tooltip.control.median
+					label: control.payload.tooltip.control.median,
 				},
 				{
 					align: Alignments.Right,
 					label: improvementLabel(
 						control.payload.tooltip.control.improvement
-					)
-				}
-			]
+					),
+				},
+			],
 		},
 		{
 			columns: [
 				{
 					color: variant.color,
 					label: variant.name,
-					weight: Weights.Semibold
+					weight: Weights.Semibold,
 				},
 				{
 					align: Alignments.Right,
-					label: variant.payload.tooltip.variant.high
+					label: variant.payload.tooltip.variant.high,
 				},
 				{
 					align: Alignments.Right,
-					label: variant.payload.tooltip.variant.low
+					label: variant.payload.tooltip.variant.low,
 				},
 				{
 					align: Alignments.Right,
-					label: variant.payload.tooltip.variant.median
+					label: variant.payload.tooltip.variant.median,
 				},
 				{
 					align: Alignments.Right,
 					label: improvementLabel(
 						variant.payload.tooltip.variant.improvement
-					)
-				}
-			]
-		}
+					),
+				},
+			],
+		},
 	];
 
 	return (
-		<div className='bb-tooltip-container position-static'>
+		<div className="bb-tooltip-container position-static">
 			<ChartTooltip header={header} rows={rows as any} />
 		</div>
 	);

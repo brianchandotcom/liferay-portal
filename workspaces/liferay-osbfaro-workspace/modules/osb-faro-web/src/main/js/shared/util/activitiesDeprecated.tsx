@@ -3,7 +3,7 @@ import React from 'react';
 import {
 	ActivityActions,
 	AssetTypes,
-	TimeIntervals
+	TimeIntervals,
 } from 'shared/util/constants';
 import {
 	countBy,
@@ -15,7 +15,7 @@ import {
 	map,
 	mapValues,
 	orderBy,
-	toPairs
+	toPairs,
 } from 'lodash/fp';
 import {DEFAULT_ACTIVITY_MAX} from 'shared/api/activities';
 import {RangeSelectors} from 'shared/types';
@@ -30,7 +30,7 @@ const ACTIVITY_ACTIONS_TITLE_LANG_MAP: Record<string, string> = {
 	[ActivityActions.Downloads]: Liferay.Language.get('downloaded-x'),
 	[ActivityActions.Impressions]: Liferay.Language.get('impression-made-on-x'),
 	[ActivityActions.Submissions]: Liferay.Language.get('submitted-x'),
-	[ActivityActions.Visits]: Liferay.Language.get('visited-x')
+	[ActivityActions.Visits]: Liferay.Language.get('visited-x'),
 };
 
 const ACTIVITY_ACTIONS_DESCRIPTION_LANG_MAP: Record<
@@ -39,30 +39,30 @@ const ACTIVITY_ACTIONS_DESCRIPTION_LANG_MAP: Record<
 > = {
 	[ActivityActions.Comments]: {
 		plural: Liferay.Language.get('x-comments'),
-		singular: Liferay.Language.get('x-comment')
+		singular: Liferay.Language.get('x-comment'),
 	},
 	[ActivityActions.Downloads]: {
 		plural: Liferay.Language.get('x-downloads'),
-		singular: Liferay.Language.get('x-download')
+		singular: Liferay.Language.get('x-download'),
 	},
 	[ActivityActions.Impressions]: {
 		plural: Liferay.Language.get('x-impressions'),
-		singular: Liferay.Language.get('x-impression')
+		singular: Liferay.Language.get('x-impression'),
 	},
 	[ActivityActions.Submissions]: {
 		plural: Liferay.Language.get('x-submissions'),
-		singular: Liferay.Language.get('x-submission')
+		singular: Liferay.Language.get('x-submission'),
 	},
 	[ActivityActions.Visits]: {
 		plural: Liferay.Language.get('x-visits'),
-		singular: Liferay.Language.get('x-visit')
-	}
+		singular: Liferay.Language.get('x-visit'),
+	},
 };
 
 export const INTERVAL_MAP = {
 	D: TimeIntervals.Day,
 	M: TimeIntervals.Month,
-	W: TimeIntervals.Week
+	W: TimeIntervals.Week,
 };
 
 /**
@@ -75,7 +75,7 @@ export const INTERVAL_MAP = {
  */
 export function buildLegendItems({
 	activityChange,
-	activityCount
+	activityCount,
 }: {
 	activityChange: number;
 	activityCount: number;
@@ -85,12 +85,12 @@ export function buildLegendItems({
 			change: activityChange,
 			id: CHART_ACTIVITY_ID,
 			secondaryInfo: sub(Liferay.Language.get('x-day-change'), [
-				DEFAULT_ACTIVITY_MAX
+				DEFAULT_ACTIVITY_MAX,
 			]) as string,
 			title: sub(Liferay.Language.get('total-activity-count-x'), [
-				activityCount.toLocaleString()
-			]) as string
-		}
+				activityCount.toLocaleString(),
+			]) as string,
+		},
 	];
 }
 
@@ -117,7 +117,7 @@ function formatActivities(
 				dataSourceAssetPK,
 				id,
 				name,
-				startTime
+				startTime,
 			}) => {
 				const assetRoute = getAssetRoute(assetType);
 
@@ -134,9 +134,9 @@ function formatActivities(
 								assetType !== AssetTypes.WebPage
 									? 'Any'
 									: canonicalUrl
-									? encodeURIComponent(canonicalUrl)
-									: dataSourceAssetPK
-					  })}`
+										? encodeURIComponent(canonicalUrl)
+										: dataSourceAssetPK,
+						})}`
 					: null;
 
 				return {
@@ -148,7 +148,7 @@ function formatActivities(
 						[<strong key={id}>{name}</strong>],
 						false
 					),
-					url: assetURL
+					url: assetURL,
 				};
 			}
 		);
@@ -196,15 +196,15 @@ export function formatSessions(
 				subtitle: getActivitiesSummary(activities),
 				time: startTime,
 				title: sub(Liferay.Language.get('visited-x'), [
-					new URL(activities[0].url).hostname
-				])
+					new URL(activities[0].url).hostname,
+				]),
 			}))
 		),
 		toPairs,
 		orderBy([([time]) => moment(time).unix()], ['desc']),
 		map(([time, items]: any[]) => [
 			{header: true, title: formatGroupingTime(time)},
-			items
+			items,
 		]),
 		flattenDepth(2)
 	)(sessions);
@@ -228,7 +228,7 @@ const getActivitiesSummary: (activities: any[]) => React.ReactNode[] = flow(
 				),
 				[count]
 			)}
-		</span>
+		</span>,
 	]),
 	flattenDepth(2)
 );
@@ -243,7 +243,7 @@ export function getActivityLabel(totalElements: number): React.ReactNode[] {
 		totalElements === 1
 			? Liferay.Language.get('activity-x')
 			: Liferay.Language.get('activities-x'),
-		[<b key='ACTIVITIES'>{totalElements}</b>],
+		[<b key="ACTIVITIES">{totalElements}</b>],
 		false
 	) as React.ReactNode[];
 }

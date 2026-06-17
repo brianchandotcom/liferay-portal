@@ -5,7 +5,7 @@ import {useLocation} from 'react-router-dom';
 import {useQueryParams} from '../useQueryParams';
 
 jest.mock('react-router-dom', () => ({
-	useLocation: jest.fn()
+	useLocation: jest.fn(),
 }));
 
 describe('useQueryParams', () => {
@@ -18,7 +18,7 @@ describe('useQueryParams', () => {
 
 	it('parses query parameters correctly', () => {
 		(useLocation as jest.Mock).mockReturnValue({
-			search: '?name=Marcio&age=30'
+			search: '?name=Marcio&age=30',
 		});
 		const {result} = renderHook(() => useQueryParams());
 
@@ -27,7 +27,7 @@ describe('useQueryParams', () => {
 
 	it('decodes query parameters correctly', () => {
 		(useLocation as jest.Mock).mockReturnValue({
-			search: '?name=Marcio+Fonseca&age=30'
+			search: '?name=Marcio+Fonseca&age=30',
 		});
 		const {result} = renderHook(() => useQueryParams());
 

@@ -3,11 +3,11 @@ import getCN from 'classnames';
 import React from 'react';
 
 export enum ButtonDisplayMode {
-	SPACED_BUTTONS = 'mdn-button-tab'
+	SPACED_BUTTONS = 'mdn-button-tab',
 }
 
 export enum CardTabSizes {
-	Small = 'small'
+	Small = 'small',
 }
 
 interface ICardTabsProps {
@@ -25,7 +25,7 @@ const CardTabs: React.FC<ICardTabsProps> = ({
 	className,
 	onChange,
 	size,
-	tabs
+	tabs,
 }) => {
 	const handleEmitOnChange = (
 		onClick: (() => void) | undefined,
@@ -47,17 +47,17 @@ const CardTabs: React.FC<ICardTabsProps> = ({
 			{tabs.map(({onClick, secondaryInfo, tabId, title}) => (
 				<li
 					className={getCN('card-tab', {
-						active: activeTabId === tabId
+						active: activeTabId === tabId,
 					})}
 					data-testid={tabId}
 					key={tabId}
 				>
 					<ClayButton
-						className='button-root'
-						displayType='unstyled'
+						className="button-root"
+						displayType="unstyled"
 						onClick={() => handleEmitOnChange(onClick, tabId)}
 					>
-						<span className='title'>{title}</span>
+						<span className="title">{title}</span>
 
 						<div>{secondaryInfo}</div>
 					</ClayButton>

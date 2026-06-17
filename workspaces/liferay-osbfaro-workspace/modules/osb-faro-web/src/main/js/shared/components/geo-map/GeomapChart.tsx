@@ -9,10 +9,10 @@ import React from 'react';
 const DEFAULT_COLOR = {
 	range: {
 		max: '#006be6',
-		min: '#97c5ff'
+		min: '#97c5ff',
 	},
 	selected: '#006eff',
-	value: 'pop_est'
+	value: 'pop_est',
 };
 
 /**
@@ -130,7 +130,7 @@ class GeomapBase {
 	getSize() {
 		return {
 			height: this._height,
-			width: this._width
+			width: this._width,
 		};
 	}
 
@@ -140,11 +140,13 @@ class GeomapBase {
 	_handleClick(d: any) {
 		if (d && this._selected !== d) {
 			this._selected = d;
-		} else {
+		}
+		else {
 			this._selected = null;
 		}
 
 		// Highlight the clicked province
+
 		this.mapLayer!.selectAll('path').style('fill', (d: any) =>
 			this._selected && d === this._selected
 				? this._color.selected
@@ -179,6 +181,7 @@ class GeomapBase {
 		const features = mapData.features;
 
 		// Calculate domain based on values received
+
 		const values = features.map(
 			(f: any) => f.properties[this._color.value]
 		);
@@ -230,7 +233,7 @@ const Geomap = ({
 			forwardRef.current = new GeomapBase({
 				...otherProps,
 				data,
-				element: elementRef.current
+				element: elementRef.current,
 			});
 
 			forwardRef.current.attached();

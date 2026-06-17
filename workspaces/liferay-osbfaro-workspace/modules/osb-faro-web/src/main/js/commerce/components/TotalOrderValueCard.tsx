@@ -1,6 +1,6 @@
 import CommerceMetricCard from './CommerceMetricCard';
 import CommerceTotalOrderValueQuery, {
-	CommerceTotalOrderValueData
+	CommerceTotalOrderValueData,
 } from 'commerce/queries/TotalOrderValueQuery';
 import React from 'react';
 

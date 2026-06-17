@@ -9,20 +9,20 @@ const withRecommendation = compose(
 	graphql(RecommendationQuery, {
 		options: ({
 			router: {
-				params: {jobId}
-			}
+				params: {jobId},
+			},
 		}) => ({
 			variables: {
-				jobId
-			}
+				jobId,
+			},
 		}),
-		props: safeResultToProps(({jobById}) => ({job: jobById}))
+		props: safeResultToProps(({jobById}) => ({job: jobById})),
 	}),
 	withLoading(),
 	withError({page: true}),
 	withNull('job', {
 		entityType: Liferay.Language.get('recommendation-model'),
-		linkRoute: Routes.SETTINGS_RECOMMENDATIONS
+		linkRoute: Routes.SETTINGS_RECOMMENDATIONS,
 	})
 );
 

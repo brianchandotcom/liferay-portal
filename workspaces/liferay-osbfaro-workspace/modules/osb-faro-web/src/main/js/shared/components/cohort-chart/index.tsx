@@ -27,12 +27,12 @@ export default class CohortChart extends React.Component<ICohortChartProps> {
 			<tr>
 				<th />
 
-				<th className='visitors table-column-text-end'>
+				<th className="visitors table-column-text-end">
 					{aggregatedVisitorsCount.toLocaleString()}
 				</th>
 
 				{aggregatedCounts.map(({retention}, i) => (
-					<th className='table-column-text-center' key={i}>
+					<th className="table-column-text-center" key={i}>
 						{`${retention.toFixed(2)}%`}
 					</th>
 				))}
@@ -47,12 +47,12 @@ export default class CohortChart extends React.Component<ICohortChartProps> {
 			<tr>
 				<th />
 
-				<th className='visitors-header table-column-text-end'>
+				<th className="visitors-header table-column-text-end">
 					{Liferay.Language.get('visitors')}
 				</th>
 
 				{periodLabels.map((periodLabel, index) => (
-					<th className='period table-column-text-center' key={index}>
+					<th className="period table-column-text-center" key={index}>
 						{periodLabel}
 					</th>
 				))}
@@ -67,9 +67,9 @@ export default class CohortChart extends React.Component<ICohortChartProps> {
 
 		return (
 			<tr key={rowIndex}>
-				<td className='interval'>{dateLabels[rowIndex]}</td>
+				<td className="interval">{dateLabels[rowIndex]}</td>
 
-				<td className='visitors table-column-text-end'>
+				<td className="visitors table-column-text-end">
 					{rowVisitorsCount.toLocaleString()}
 				</td>
 
@@ -81,7 +81,7 @@ export default class CohortChart extends React.Component<ICohortChartProps> {
 							dateLabelFn,
 							periodLabel,
 							retention,
-							value
+							value,
 						},
 						i
 					) => (
@@ -104,7 +104,7 @@ export default class CohortChart extends React.Component<ICohortChartProps> {
 		const {data} = this.props;
 
 		return (
-			<table className='cohort-chart-root'>
+			<table className="cohort-chart-root">
 				<thead>
 					{this.renderPeriods()}
 

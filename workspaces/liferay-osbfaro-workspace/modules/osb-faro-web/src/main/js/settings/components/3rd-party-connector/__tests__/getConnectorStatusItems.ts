@@ -55,11 +55,11 @@ describe('item shape', () => {
 			getInitialLogEntries(ConnectorStatus.Active, 0),
 			getInitialLogEntries(ConnectorStatus.Active, 1),
 			getInitialLogEntries(ConnectorStatus.Inactive, 1),
-			getInitialLogEntries(ConnectorStatus.Disconnected, 0)
+			getInitialLogEntries(ConnectorStatus.Disconnected, 0),
 		];
 
-		allSeeds.forEach(entries => {
-			entries.forEach(entry => {
+		allSeeds.forEach((entries) => {
+			entries.forEach((entry) => {
 				expect(typeof entry.bold).toBe('boolean');
 				expect(typeof entry.icon).toBe('string');
 				expect(['secondary', 'success']).toContain(

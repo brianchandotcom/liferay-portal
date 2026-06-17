@@ -54,6 +54,7 @@ export default gql`
 `;
 
 // LRAC-6976 POC TEMP
+
 export const TOUCHPOINTS_QUERY_TEST = gql`
 	query Touchpoint(
 		$channelId: String

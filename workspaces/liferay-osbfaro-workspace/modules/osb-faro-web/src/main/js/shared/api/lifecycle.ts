@@ -12,11 +12,11 @@ interface IFetchLifecycles {
 }
 
 export async function fetchLifecycles({
-	groupId
+	groupId,
 }: IFetchLifecycles): Promise<ILifecycle[]> {
 	return sendRequest({
 		method: 'GET',
-		path: `contacts/${groupId}/account-lifecycle`
+		path: `contacts/${groupId}/account-lifecycle`,
 	});
 }
 
@@ -52,15 +52,15 @@ export async function fetchOverviewMetrics({
 	country,
 	groupId,
 	industry,
-	lifecycleId
+	lifecycleId,
 }: IFetchOverviewMetrics) {
 	return sendRequest({
 		data: {
 			...(country && {country}),
-			...(industry && {industry})
+			...(industry && {industry}),
 		},
 		method: 'GET',
-		path: `contacts/${groupId}/account-lifecycle/${lifecycleId}/overview`
+		path: `contacts/${groupId}/account-lifecycle/${lifecycleId}/overview`,
 	});
 }
 
@@ -75,25 +75,25 @@ export async function fetchLifecycleStages({
 	country,
 	groupId,
 	industry,
-	lifecycleId
+	lifecycleId,
 }: IFetchLifecycleStages) {
 	return sendRequest({
 		data: {
 			...(country && {country}),
-			...(industry && {industry})
+			...(industry && {industry}),
 		},
 		method: 'GET',
-		path: `contacts/${groupId}/account-lifecycle/${lifecycleId}/stages`
+		path: `contacts/${groupId}/account-lifecycle/${lifecycleId}/stages`,
 	});
 }
 
 export async function fetchAccountLifecycles({
-	groupId
+	groupId,
 }: {
 	groupId: string;
 }): Promise<IAccountLifecycle[]> {
 	return sendRequest({
 		method: 'GET',
-		path: `contacts/${groupId}/account-lifecycle`
+		path: `contacts/${groupId}/account-lifecycle`,
 	});
 }

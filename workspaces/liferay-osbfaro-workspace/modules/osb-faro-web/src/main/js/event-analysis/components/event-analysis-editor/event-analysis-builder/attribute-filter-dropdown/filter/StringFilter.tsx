@@ -6,7 +6,7 @@ import {DataTypes, IFilterProps, Operators} from 'event-analysis/utils/types';
 import {getSafeDecodedURIComponent} from 'shared/util/util';
 import {
 	STRING_OPERATOR_LABELS_MAP,
-	STRING_OPTIONS
+	STRING_OPTIONS,
 } from 'event-analysis/utils/utils';
 import {useParams} from 'react-router-dom';
 import {useStatefulPagination} from 'shared/hooks/useStatefulPagination';
@@ -27,7 +27,7 @@ const StringFilter: React.FC<IFilterProps> = ({
 	displayName,
 	eventId,
 	filter,
-	onSubmit
+	onSubmit,
 }) => {
 	const getInitialValues = () => {
 		if (filter) {
@@ -55,7 +55,7 @@ const StringFilter: React.FC<IFilterProps> = ({
 					description,
 					displayName,
 					operator,
-					values: [value]
+					values: [value],
 				});
 			}}
 		>
@@ -63,17 +63,17 @@ const StringFilter: React.FC<IFilterProps> = ({
 				handleSubmit,
 				isValid,
 				setValues,
-				values: {value, ...otherFields}
+				values: {value, ...otherFields},
 			}) => (
 				<Form.Form onSubmit={handleSubmit}>
-					<div className='options-body'>
+					<div className="options-body">
 						<Form.Group autoFit>
 							<Form.GroupItem>
 								<Form.Select
 									label={Liferay.Language.get('condition')}
-									name='operator'
+									name="operator"
 								>
-									{STRING_OPTIONS.map(value => (
+									{STRING_OPTIONS.map((value) => (
 										<Form.Select.Item
 											key={value}
 											value={value}
@@ -95,20 +95,20 @@ const StringFilter: React.FC<IFilterProps> = ({
 											if (data) {
 												return {
 													data: data.eventAttributeValues.eventAttributeValues.map(
-														value =>
+														(value) =>
 															getSafeDecodedURIComponent(
 																value
 															)
 													),
 													total: data
 														.eventAttributeValues
-														.total
+														.total,
 												};
 											}
 
 											return {
 												data: [],
-												total: 0
+												total: 0,
 											};
 										},
 										query: EventAttributeValuesQuery,
@@ -118,10 +118,10 @@ const StringFilter: React.FC<IFilterProps> = ({
 												attributeId,
 											eventDefinitionId: eventId,
 											size: delta,
-											start: (page - 1) * delta
-										}
+											start: (page - 1) * delta,
+										},
 									}}
-									name='value'
+									name="value"
 									onChange={(value: string) =>
 										setValues({value, ...otherFields})
 									}
@@ -133,13 +133,13 @@ const StringFilter: React.FC<IFilterProps> = ({
 						</Form.Group>
 					</div>
 
-					<div className='options-footer'>
+					<div className="options-footer">
 						<ClayButton
 							block
-							className='button-root'
+							className="button-root"
 							disabled={!isValid}
-							displayType='primary'
-							type='submit'
+							displayType="primary"
+							type="submit"
 						>
 							{Liferay.Language.get('apply')}
 						</ClayButton>

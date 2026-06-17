@@ -8,14 +8,14 @@ interface ICriteriaSidebarSearchBarProps {
 
 const CriteriaSidebarSearchBar: React.FC<ICriteriaSidebarSearchBarProps> = ({
 	onChange,
-	searchValue
+	searchValue,
 }) => (
-	<div className='input-group'>
-		<div className='input-group-item'>
+	<div className="input-group">
+		<div className="input-group-item">
 			<SearchInput
 				onChange={onChange}
 				placeholder={Liferay.Language.get('search')}
-				type='text'
+				type="text"
 				value={searchValue}
 			/>
 		</div>

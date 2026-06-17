@@ -7,7 +7,7 @@ import {CopyInputValue} from '../CopyInputValue';
 import {
 	createConnector,
 	generateConnectorToken,
-	updateConnector
+	updateConnector,
 } from 'shared/api/connector';
 import {CredentialTypes} from 'shared/util/constants';
 import {DataSource} from 'shared/util/records';
@@ -32,7 +32,7 @@ const ConnectorAuth: React.FC<IConnectorAuthProps> = ({
 	disabled = false,
 	groupId,
 	onCancel,
-	onSubmit
+	onSubmit,
 }) => {
 	const endpointURL = `${window.location.origin}${config.endpointPath}`;
 
@@ -44,15 +44,16 @@ const ConnectorAuth: React.FC<IConnectorAuthProps> = ({
 			try {
 				const data = await generateConnectorToken({
 					groupId,
-					type: config.slug
+					type: config.slug,
 				});
 
 				if (data?.token) setToken(data.token);
-			} catch (error) {
+			}
+			catch (error) {
 				addAlert({
 					alertType: Alert.Types.Error,
 					message: (error as Error).message,
-					timeout: false
+					timeout: false,
 				});
 			}
 		};
@@ -62,7 +63,7 @@ const ConnectorAuth: React.FC<IConnectorAuthProps> = ({
 
 	return (
 		<ClayForm
-			onSubmit={async event => {
+			onSubmit={async (event) => {
 				event.preventDefault();
 				setIsSubmitting(true);
 
@@ -74,54 +75,57 @@ const ConnectorAuth: React.FC<IConnectorAuthProps> = ({
 								channelsConfiguration: dataSource
 									.getIn([
 										'provider',
-										'channelsConfiguration'
+										'channelsConfiguration',
 									])
 									?.toJS(),
 								credentials: {
 									privateKey: token,
 									publicKey: '',
-									type: CredentialTypes.Token
+									type: CredentialTypes.Token,
 								},
 								groupId,
 								id: dataSource.id ?? '',
-								name: dataSource.name
+								name: dataSource.name,
 							}
 						);
 
 						onSubmit(updatedDataSource);
-					} else {
+					}
+					else {
 						const newDataSource = await createConnector(
 							config.slug,
 							{
 								credentials: {
 									privateKey: token,
 									publicKey: '',
-									type: CredentialTypes.Token
+									type: CredentialTypes.Token,
 								},
 								groupId,
-								name: config.displayName
+								name: config.displayName,
 							}
 						);
 
 						onSubmit(newDataSource);
 					}
-				} catch (error) {
+				}
+				catch (error) {
 					addAlert({
 						alertType: Alert.Types.Error,
 						message: Liferay.Language.get(
 							'there-was-an-error-processing-your-request.-try-again.-if-the-problem-persists,-please-contact-support'
-						)
+						),
 					});
-				} finally {
+				}
+				finally {
 					setIsSubmitting(false);
 				}
 			}}
 		>
-			<label htmlFor='endpoint'>
-				<Text weight='semi-bold'>{config.languages.endpointLabel}</Text>
+			<label htmlFor="endpoint">
+				<Text weight="semi-bold">{config.languages.endpointLabel}</Text>
 			</label>
 
-			<Text as='p' color='secondary' size={3}>
+			<Text as="p" color="secondary" size={3}>
 				{config.languages.endpointHelper}
 			</Text>
 
@@ -131,8 +135,8 @@ const ConnectorAuth: React.FC<IConnectorAuthProps> = ({
 				value={endpointURL}
 			/>
 
-			<label htmlFor='token'>
-				<Text weight='semi-bold'>{config.languages.tokenLabel}</Text>
+			<label htmlFor="token">
+				<Text weight="semi-bold">{config.languages.tokenLabel}</Text>
 			</label>
 
 			<CopyInputValue
@@ -142,12 +146,12 @@ const ConnectorAuth: React.FC<IConnectorAuthProps> = ({
 			/>
 
 			{!disabled && (
-				<div className='mt-4'>
+				<div className="mt-4">
 					<ClayButton
 						{...buttonProps}
 						disabled={isSubmitting || !token}
 						loading={isSubmitting}
-						type='submit'
+						type="submit"
 					>
 						{Liferay.Language.get('continue')}
 					</ClayButton>
@@ -156,7 +160,7 @@ const ConnectorAuth: React.FC<IConnectorAuthProps> = ({
 						<ClayButton
 							block
 							borderless
-							displayType='secondary'
+							displayType="secondary"
 							onClick={onCancel}
 						>
 							{Liferay.Language.get('cancel')}

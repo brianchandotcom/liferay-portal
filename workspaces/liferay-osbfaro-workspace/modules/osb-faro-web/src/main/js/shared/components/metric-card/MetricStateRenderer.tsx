@@ -14,7 +14,7 @@ const MetricStateRenderer: React.FC<IMetricStateRendererProps> = ({
 	children,
 	error,
 	loading,
-	spacer = false
+	spacer = false,
 }) => (
 	<StatesRenderer empty={false} error={!!error} loading={loading}>
 		<StatesRenderer.Loading spacer={spacer} />

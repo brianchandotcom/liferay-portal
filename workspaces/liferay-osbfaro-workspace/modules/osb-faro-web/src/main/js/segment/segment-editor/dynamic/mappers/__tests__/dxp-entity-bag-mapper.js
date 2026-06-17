@@ -9,7 +9,7 @@ describe('DXPEntityBag Mapper', () => {
 				delta: 10,
 				orderIOMap: createOrderIOMap('name', 'ASC'),
 				page: 1,
-				query: ''
+				query: '',
 			})
 		).toEqual(
 			expect.objectContaining({
@@ -18,8 +18,8 @@ describe('DXPEntityBag Mapper', () => {
 					keywords: '',
 					size: 10,
 					sort: {column: 'name', type: 'ASC'},
-					start: 0
-				}
+					start: 0,
+				},
 			})
 		);
 	});
@@ -27,13 +27,13 @@ describe('DXPEntityBag Mapper', () => {
 	it('should map results to props', () => {
 		expect(
 			getMapResultToProps('organizations')({
-				organizations: {dxpEntities: [], total: 0}
+				organizations: {dxpEntities: [], total: 0},
 			})
 		).toEqual(
 			expect.objectContaining({
 				empty: true,
 				items: [],
-				total: 0
+				total: 0,
 			})
 		);
 	});

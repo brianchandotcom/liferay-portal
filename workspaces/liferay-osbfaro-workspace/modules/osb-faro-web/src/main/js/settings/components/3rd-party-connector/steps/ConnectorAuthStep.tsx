@@ -18,7 +18,7 @@ const ConnectorAuthStep = ({
 	addAlert,
 	config,
 	groupId,
-	onNext
+	onNext,
 }: IConnectorAuthStepProps) => {
 	const {dataSource} = useWizardPage();
 	const history = useHistory();
@@ -26,7 +26,7 @@ const ConnectorAuthStep = ({
 	const handleCancel = () => {
 		history.push(
 			toRoute(Routes.SETTINGS_DATA_SOURCE_LIST, {
-				groupId
+				groupId,
 			})
 		);
 	};
@@ -39,7 +39,7 @@ const ConnectorAuthStep = ({
 				config={config}
 				groupId={groupId}
 				onCancel={handleCancel}
-				onSubmit={createdDataSource => {
+				onSubmit={(createdDataSource) => {
 					updateSearchParams(
 						history,
 						'dataSourceId',

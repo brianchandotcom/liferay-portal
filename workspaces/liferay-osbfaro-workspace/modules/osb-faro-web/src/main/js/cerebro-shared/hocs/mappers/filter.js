@@ -6,15 +6,15 @@ import {getVariables, safeResultToProps} from 'shared/util/mappers';
  * @description Get Filters Mapper
  * @param {function} getData
  */
-const getFiltersMapper = getData => {
-	const mapResultToProps = safeResultToProps(result => {
+const getFiltersMapper = (getData) => {
+	const mapResultToProps = safeResultToProps((result) => {
 		const {device = [], geolocation = []} = getData(result);
 
 		return {
 			items: [
 				getFilterItem(device, 'devices'),
-				getFilterItem(geolocation, 'location')
-			]
+				getFilterItem(geolocation, 'location'),
+			],
 		};
 	});
 
@@ -28,7 +28,7 @@ const getFiltersMapper = getData => {
 
 	return {
 		options: mapPropsToOptions,
-		props: mapResultToProps
+		props: mapResultToProps,
 	};
 };
 

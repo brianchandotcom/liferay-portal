@@ -4,7 +4,8 @@ function invariant(condition, format, ...args) {
 
 		if (format === undefined) {
 			error = new Error('Invariant Violation');
-		} else {
+		}
+		else {
 			let argIndex = 0;
 
 			error = new Error(format.replace(/%s/g, () => args[argIndex++]));

@@ -20,7 +20,7 @@ export const CHART_COLORS = [
 	'#FF73C3',
 	'#FFD76E',
 	'#9CE269',
-	'#5FC8FF'
+	'#5FC8FF',
 ];
 
 export const URL_COLOR = '#6B6C7E';

@@ -13,31 +13,31 @@ const Target: React.FC<ITargetProps> = ({
 	children,
 	message,
 	onDrop,
-	targetType
+	targetType,
 }) => {
 	const [{isOver}, drop] = useDrop({
 		accept: targetType,
 		collect: (monitor: any) => ({
 			endDrag: monitor.getDropResult(),
-			isOver: monitor.isOver()
+			isOver: monitor.isOver(),
 		}),
 		drop: (item: object, monitor: any) => {
 			if (onDrop) {
 				onDrop(monitor.getItem());
 			}
-		}
+		},
 	});
 
 	return (
 		<div
 			className={getCN('drop-target-container', {
-				'file-over': isOver
+				'file-over': isOver,
 			})}
 			ref={drop}
 		>
 			{children}
 
-			<div className='drop-zone'>{message}</div>
+			<div className="drop-zone">{message}</div>
 		</div>
 	);
 };

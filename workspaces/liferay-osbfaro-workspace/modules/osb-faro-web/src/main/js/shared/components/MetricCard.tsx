@@ -35,7 +35,7 @@ const MetricCard: React.FC<IMetricCardProps> = ({
 	title,
 	trend,
 	trendClassName,
-	value
+	value,
 }) => {
 	if (loading) {
 		return (
@@ -58,20 +58,20 @@ const MetricCard: React.FC<IMetricCardProps> = ({
 			minHeight={minHeight}
 		>
 			<Card.Title>
-				<div className='text-uppercase text-weight-semi-bold'>
+				<div className="text-uppercase text-weight-semi-bold">
 					<Text>{title}</Text>
 				</div>
 			</Card.Title>
 
-			<Card.Body className='justify-content-between d-flex' noPadding>
-				<div className='mt-2'>
-					<Text color='secondary' size={3}>
+			<Card.Body className="justify-content-between d-flex" noPadding>
+				<div className="mt-2">
+					<Text color="secondary" size={3}>
 						{description}
 					</Text>
 				</div>
 
 				<div>
-					<div className='mt-2 text-lowercase text-weight-semi-bold'>
+					<div className="mt-2 text-lowercase text-weight-semi-bold">
 						<Text size={7}>{value}</Text>
 					</div>
 
@@ -91,8 +91,8 @@ const MetricCard: React.FC<IMetricCardProps> = ({
 
 						{renderTrendLabel(
 							<span
-								className='mr-1'
-								key='percentage'
+								className="mr-1"
+								key="percentage"
 								style={{color: percentageColor}}
 							>
 								{`${toRounded(

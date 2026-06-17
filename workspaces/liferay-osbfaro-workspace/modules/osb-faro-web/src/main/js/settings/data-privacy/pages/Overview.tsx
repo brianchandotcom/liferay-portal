@@ -10,7 +10,7 @@ import {compose} from 'redux';
 import {connect} from 'react-redux';
 import {
 	convertMillisecondsToDays,
-	convertMillisecondsToMonths
+	convertMillisecondsToMonths,
 } from 'shared/util/date';
 import {
 	DATA_RETENTION_PERIOD_KEY,
@@ -19,7 +19,7 @@ import {
 	ONE_MONTH,
 	SEVEN_MONTHS,
 	THIRTEEN_MONTHS,
-	TWO_DAYS
+	TWO_DAYS,
 } from 'shared/util/constants';
 import {get} from 'lodash';
 import {Option, Picker} from '@clayui/core';
@@ -37,12 +37,12 @@ if (FARO_ENV === FaroEnv.Local || FARO_ENV === FaroEnv.Staging) {
 const getRetentionLabel = (milliseconds: number): string => {
 	if (milliseconds < parseInt(ONE_MONTH)) {
 		return sub(Liferay.Language.get('x-days'), [
-			convertMillisecondsToDays(milliseconds)
+			convertMillisecondsToDays(milliseconds),
 		]) as string;
 	}
 
 	return sub(Liferay.Language.get('x-months'), [
-		convertMillisecondsToMonths(milliseconds)
+		convertMillisecondsToMonths(milliseconds),
 	]) as string;
 };
 
@@ -50,7 +50,7 @@ const fetchDownload = ({
 	fromDate,
 	groupId,
 	toDate,
-	type
+	type,
 }: {
 	fromDate: string;
 	groupId: string;
@@ -60,7 +60,7 @@ const fetchDownload = ({
 	fetch(
 		`/o/proxy/download/${type}/logs?projectGroupId=${groupId}&fromDate=${fromDate}&toDate=${toDate}`,
 		{method: 'GET'}
-	).then(response => {
+	).then((response) => {
 		if (response.status === 200) {
 			return response.text();
 		}
@@ -78,7 +78,7 @@ export const Overview: React.FC<IOverviewProps> = ({close, groupId, open}) => {
 	const [updatePreference] = useMutation(PreferenceMutation);
 
 	const {data} = useQuery(PreferenceQuery, {
-		variables: {key: DATA_RETENTION_PERIOD_KEY}
+		variables: {key: DATA_RETENTION_PERIOD_KEY},
 	});
 
 	const currentUser = useCurrentUser();
@@ -93,20 +93,20 @@ export const Overview: React.FC<IOverviewProps> = ({close, groupId, open}) => {
 					cache.writeQuery({
 						data,
 						query: PreferenceQuery,
-						variables: {key: DATA_RETENTION_PERIOD_KEY}
+						variables: {key: DATA_RETENTION_PERIOD_KEY},
 					});
 				},
 				variables: {
 					key: DATA_RETENTION_PERIOD_KEY,
-					value
-				}
+					value,
+				},
 			});
 
 		if (curVal > newVal) {
 			open(modalTypes.CONFIRMATION_MODAL, {
 				message: (
 					<div>
-						<p className='text-secondary'>
+						<p className="text-secondary">
 							{sub(
 								Liferay.Language.get(
 									'are-you-sure-you-want-to-change-the-retention-period-to-x'
@@ -115,7 +115,7 @@ export const Overview: React.FC<IOverviewProps> = ({close, groupId, open}) => {
 							)}
 						</p>
 
-						<div className='h5'>
+						<div className="h5">
 							{sub(
 								Liferay.Language.get(
 									'you-will-permanently-lose-analytics-data-that-has-been-recorded-over-x-ago.-you-will-not-be-able-to-undo-this-operation'
@@ -131,9 +131,10 @@ export const Overview: React.FC<IOverviewProps> = ({close, groupId, open}) => {
 				submitButtonDisplay: 'warning',
 				submitMessage: Liferay.Language.get('change-period'),
 				title: Liferay.Language.get('changing-retention-period'),
-				titleIcon: 'warning-full'
+				titleIcon: 'warning-full',
 			});
-		} else {
+		}
+		else {
 			updateDateRetentionPeriod();
 		}
 	};
@@ -148,7 +149,7 @@ export const Overview: React.FC<IOverviewProps> = ({close, groupId, open}) => {
 			onClose: close,
 			onSubmit: ({
 				fromDate,
-				toDate
+				toDate,
 			}: {
 				fromDate: string;
 				toDate: string;
@@ -157,9 +158,9 @@ export const Overview: React.FC<IOverviewProps> = ({close, groupId, open}) => {
 					fromDate,
 					groupId,
 					toDate,
-					type: 'data-control-tasks'
+					type: 'data-control-tasks',
 				}),
-			title: Liferay.Language.get('export-request-log')
+			title: Liferay.Language.get('export-request-log'),
 		});
 
 	const handleOpenSuppressionModal = () =>
@@ -172,7 +173,7 @@ export const Overview: React.FC<IOverviewProps> = ({close, groupId, open}) => {
 			onClose: close,
 			onSubmit: ({
 				fromDate,
-				toDate
+				toDate,
 			}: {
 				fromDate: string;
 				toDate: string;
@@ -181,39 +182,39 @@ export const Overview: React.FC<IOverviewProps> = ({close, groupId, open}) => {
 					fromDate,
 					groupId,
 					toDate,
-					type: 'suppressions'
+					type: 'suppressions',
 				}),
-			title: Liferay.Language.get('export-suppression-list')
+			title: Liferay.Language.get('export-suppression-list'),
 		});
 
 	return (
 		<BasePage
-			className='data-privacy-overview-root'
+			className="data-privacy-overview-root"
 			pageTitle={Liferay.Language.get('data-control-&-privacy')}
 		>
-			<div className='row'>
-				<div className='col-xl-8'>
+			<div className="row">
+				<div className="col-xl-8">
 					<Card>
 						<Card.Body>
-							<div className='container'>
-								<div className='row justify-content-between'>
-									<div className='col-lg-8'>
-										<div className='h4'>
+							<div className="container">
+								<div className="row justify-content-between">
+									<div className="col-lg-8">
+										<div className="h4">
 											{Liferay.Language.get(
 												'retention-period'
 											)}
 										</div>
 
-										<p className='text-secondary'>
+										<p className="text-secondary">
 											{Liferay.Language.get(
 												'analytics-cloud-stores-event-data-and-inactive-anonymous-individuals-for-the-period-specified.-known-profile-data-will-be-stored-indefinitely-unless-it-is-removed-from-the-source-or-requested-to-be-deleted.-contact-sales-to-customize-retention-period'
 											)}
 										</p>
 									</div>
 
-									<div className='col-lg-auto align-self-center'>
+									<div className="col-lg-auto align-self-center">
 										<Picker
-											data-testid='data-retention-period-select-input'
+											data-testid="data-retention-period-select-input"
 											disabled={!currentUser.isAdmin()}
 											items={RETENTION_OPTIONS}
 											onSelectionChange={
@@ -221,10 +222,10 @@ export const Overview: React.FC<IOverviewProps> = ({close, groupId, open}) => {
 											}
 											selectedKey={get(data, [
 												'preference',
-												'value'
+												'value',
 											])}
 										>
-											{item => (
+											{(item) => (
 												<Option key={item}>
 													{getRetentionLabel(
 														parseInt(item)
@@ -237,27 +238,27 @@ export const Overview: React.FC<IOverviewProps> = ({close, groupId, open}) => {
 
 								<hr />
 
-								<div className='row mt-3 justify-content-between'>
-									<div className='col-lg-8'>
-										<div className='h4'>
+								<div className="row mt-3 justify-content-between">
+									<div className="col-lg-8">
+										<div className="h4">
 											{Liferay.Language.get(
 												'request-log'
 											)}
 										</div>
 
-										<p className='text-secondary'>
+										<p className="text-secondary">
 											{Liferay.Language.get(
 												'data-subjects-and-your-organization-can-request-access,-deletion,-and-suppression-of-their-data-in-analytics-cloud.-some-requests-may-take-up-to-7-days-to-complete.-we-will-notify-the-requestor-by-email-once-the-download-is-ready'
 											)}
 										</p>
 									</div>
 
-									<div className='col-lg-auto'>
+									<div className="col-lg-auto">
 										<ClayLink
 											block
 											button
-											className='button-root mb-2'
-											displayType='secondary'
+											className="button-root mb-2"
+											displayType="secondary"
 											href={toRoute(
 												Routes.SETTINGS_DATA_PRIVACY_REQUEST_LOG,
 												{groupId}
@@ -268,8 +269,8 @@ export const Overview: React.FC<IOverviewProps> = ({close, groupId, open}) => {
 
 										<ClayButton
 											block
-											className='button-root'
-											displayType='secondary'
+											className="button-root"
+											displayType="secondary"
 											onClick={handleOpenRequestModal}
 										>
 											{Liferay.Language.get('export-log')}
@@ -279,27 +280,27 @@ export const Overview: React.FC<IOverviewProps> = ({close, groupId, open}) => {
 
 								<hr />
 
-								<div className='row mt-3 justify-content-between'>
-									<div className='col-lg-8'>
-										<div className='h4'>
+								<div className="row mt-3 justify-content-between">
+									<div className="col-lg-8">
+										<div className="h4">
 											{Liferay.Language.get(
 												'suppressed-users'
 											)}
 										</div>
 
-										<p className='text-secondary'>
+										<p className="text-secondary">
 											{Liferay.Language.get(
 												'suppressed-data-subjects-will-be-excluded-in-further-identity-resolution-activity.-deleted-data-subjects-will-automatically-be-suppressed-by-their-user-id-and-their-identity-will-not-be-resolvable'
 											)}
 										</p>
 									</div>
 
-									<div className='col-lg-auto'>
+									<div className="col-lg-auto">
 										<ClayLink
 											block
 											button
-											className='button-root mb-2'
-											displayType='secondary'
+											className="button-root mb-2"
+											displayType="secondary"
 											href={toRoute(
 												Routes.SETTINGS_DATA_PRIVACY_SUPPRESSED_USERS,
 												{groupId}
@@ -310,10 +311,10 @@ export const Overview: React.FC<IOverviewProps> = ({close, groupId, open}) => {
 
 										<ClayButton
 											block
-											className='button-root'
-											data-testid='export-suppressed-user-button'
+											className="button-root"
+											data-testid="export-suppressed-user-button"
 											disabled={!currentUser.isAdmin()}
-											displayType='secondary'
+											displayType="secondary"
 											onClick={handleOpenSuppressionModal}
 										>
 											{Liferay.Language.get(

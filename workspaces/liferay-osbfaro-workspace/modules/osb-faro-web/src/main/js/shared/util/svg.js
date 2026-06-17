@@ -28,7 +28,7 @@ const svgs = keyBy(reqSVG(clayCssReq).concat(reqSVG(faroReq)), 'id');
  */
 const DEFAULT_SVG = {
 	id: 'question-circle',
-	viewBox: '0 0 512 512'
+	viewBox: '0 0 512 512',
 };
 
 /**

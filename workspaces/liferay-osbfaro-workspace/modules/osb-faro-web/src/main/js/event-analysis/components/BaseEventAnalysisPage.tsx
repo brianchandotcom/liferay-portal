@@ -12,7 +12,7 @@ import {
 	Breakdowns,
 	CalculationTypes,
 	Event,
-	Filters
+	Filters,
 } from 'event-analysis/utils/types';
 import {close, modalTypes, open} from 'shared/actions/modals';
 import {compose, withRangeKey} from 'shared/hoc';
@@ -21,7 +21,7 @@ import {
 	CreateEventAnalysisMutation,
 	EventAnalysisMutationData,
 	EventAnalysisMutationVariables,
-	UpdateEventAnalysisMutation
+	UpdateEventAnalysisMutation,
 } from 'event-analysis/queries/EventAnalysisQuery';
 import {getSafeRangeSelectors} from 'shared/util/util';
 import {hasChanges} from 'shared/util/react';
@@ -35,26 +35,26 @@ import {WithRangeKeyProps} from 'shared/hoc/WithRangeKey';
 
 enum MessageKeys {
 	NameCannotBeBlank = 'name-cannot-be-blank',
-	NameIsAlreadyUsed = 'name-is-already-used'
+	NameIsAlreadyUsed = 'name-is-already-used',
 }
 
 const ERRORS = {
 	[MessageKeys.NameCannotBeBlank]: {
 		alertType: Alert.Types.Error,
-		message: Liferay.Language.get('name-cannot-be-blank')
+		message: Liferay.Language.get('name-cannot-be-blank'),
 	},
 	[MessageKeys.NameIsAlreadyUsed]: {
 		alertType: Alert.Types.Warning,
 		message: Liferay.Language.get(
 			'this-analysis-name-is-currently-in-use.-please-try-a-different-one'
-		)
-	}
+		),
+	},
 };
 
 const connector = connect(null, {
 	addAlert,
 	close,
-	open
+	open,
 });
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
@@ -77,7 +77,7 @@ const BaseEventAnalysisPage: React.FC<IBaseEventAnalysisPageProps> = ({
 	event: initialEvent = null as Event | null,
 	name: initialName = '',
 	open,
-	rangeSelectors: initialRangeSelectors
+	rangeSelectors: initialRangeSelectors,
 }) => {
 	const history = useHistory();
 
@@ -86,7 +86,7 @@ const BaseEventAnalysisPage: React.FC<IBaseEventAnalysisPageProps> = ({
 	const {
 		channelId = '',
 		groupId = '',
-		id: eventAnalysisId
+		id: eventAnalysisId,
 	} = useParams<{channelId: string; groupId: string; id: string}>();
 
 	const [compareToPrevious, setCompareToPrevious] = useState<boolean>(
@@ -106,7 +106,7 @@ const BaseEventAnalysisPage: React.FC<IBaseEventAnalysisPageProps> = ({
 		breakdowns,
 		changed: attributesContextChanged,
 		filterOrder,
-		filters
+		filters,
 	} = useContext(AttributesContext);
 
 	const Mutation = eventAnalysisId
@@ -128,7 +128,7 @@ const BaseEventAnalysisPage: React.FC<IBaseEventAnalysisPageProps> = ({
 				message: Liferay.Language.get('this-will-only-take-a-moment'),
 				title: eventAnalysisId
 					? Liferay.Language.get('creating')
-					: Liferay.Language.get('updating')
+					: Liferay.Language.get('updating'),
 			},
 			{closeOnBlur: false}
 		);
@@ -138,10 +138,10 @@ const BaseEventAnalysisPage: React.FC<IBaseEventAnalysisPageProps> = ({
 				analysisType: type,
 				channelId,
 				compareToPrevious,
-				eventAnalysisBreakdowns: breakdownOrder.map(breakdownId =>
+				eventAnalysisBreakdowns: breakdownOrder.map((breakdownId) =>
 					omit(breakdowns[breakdownId], 'id')
 				),
-				eventAnalysisFilters: filterOrder.map(filterId =>
+				eventAnalysisFilters: filterOrder.map((filterId) =>
 					omit(filters[filterId], 'id')
 				),
 				eventAnalysisId,
@@ -149,8 +149,8 @@ const BaseEventAnalysisPage: React.FC<IBaseEventAnalysisPageProps> = ({
 				name,
 				userId: String(currentUser.userId),
 				userName: currentUser.name,
-				...getSafeRangeSelectors(rangeSelectors!)
-			}
+				...getSafeRangeSelectors(rangeSelectors!),
+			},
 		})
 			.then(() => {
 				setSubmitting(false);
@@ -161,7 +161,7 @@ const BaseEventAnalysisPage: React.FC<IBaseEventAnalysisPageProps> = ({
 				history.push(
 					toRoute(Routes.EVENT_ANALYSIS, {
 						channelId,
-						groupId
+						groupId,
 					})
 				);
 
@@ -169,12 +169,12 @@ const BaseEventAnalysisPage: React.FC<IBaseEventAnalysisPageProps> = ({
 					alertType: Alert.Types.Success,
 					message: Liferay.Language.get(
 						'the-analysis-was-saved-successfully'
-					)
+					),
 				});
 			})
 			.catch(
 				({
-					graphQLErrors
+					graphQLErrors,
 				}: {
 					graphQLErrors: {messageKey: MessageKeys}[];
 				}) => {
@@ -189,7 +189,7 @@ const BaseEventAnalysisPage: React.FC<IBaseEventAnalysisPageProps> = ({
 					addAlert({
 						alertType,
 						message,
-						timeout: false
+						timeout: false,
 					});
 				}
 			);
@@ -233,7 +233,7 @@ const BaseEventAnalysisPage: React.FC<IBaseEventAnalysisPageProps> = ({
 
 	return (
 		<BasePage
-			className='create-event-analysis-root'
+			className="create-event-analysis-root"
 			documentTitle={Liferay.Language.get('event-analysis')}
 		>
 			<BasePage.Header
@@ -241,9 +241,9 @@ const BaseEventAnalysisPage: React.FC<IBaseEventAnalysisPageProps> = ({
 					breadcrumbs.getHome({
 						channelId,
 						groupId,
-						label: selectedChannel?.name ?? ''
+						label: selectedChannel?.name ?? '',
 					}),
-					breadcrumbs.getEventAnalysis({channelId, groupId})
+					breadcrumbs.getEventAnalysis({channelId, groupId}),
 				]}
 				groupId={groupId}
 			>
@@ -254,7 +254,7 @@ const BaseEventAnalysisPage: React.FC<IBaseEventAnalysisPageProps> = ({
 
 			<Form
 				initialValues={{
-					name: initialName
+					name: initialName,
 				}}
 				onSubmit={handleSubmit}
 			>

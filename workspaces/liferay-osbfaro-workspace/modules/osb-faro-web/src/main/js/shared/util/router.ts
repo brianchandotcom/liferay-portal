@@ -6,7 +6,8 @@ import {matchPath} from 'react-router-dom';
 function createURL(href: string): URL {
 	try {
 		return new URL(href);
-	} catch {
+	}
+	catch {
 		return new URL(href, document.baseURI);
 	}
 }
@@ -90,15 +91,15 @@ export const Routes = buildRoutes({
 											ASSETS_BLOGS_OVERVIEW:
 												'/:assetId/page/:touchpoint/:title?/:type?',
 											ASSETS_BLOGS_ROUTES:
-												'/:assetId/:tabId(page|known-individuals)/:touchpoint/:title?/:type?'
-										}
+												'/:assetId/:tabId(page|known-individuals)/:touchpoint/:title?/:type?',
+										},
 									},
 									ASSETS_CUSTOM: {
 										path: '/custom',
 										routes: {
 											ASSETS_CUSTOM_DASHBOARD:
-												'/:id/page/:touchpoint/:title?/:type?'
-										}
+												'/:id/page/:touchpoint/:title?/:type?',
+										},
 									},
 									ASSETS_DOCUMENTS_AND_MEDIA: {
 										path: '/documents-and-media',
@@ -108,8 +109,8 @@ export const Routes = buildRoutes({
 											ASSETS_DOCUMENTS_AND_MEDIA_OVERVIEW:
 												'/:assetId/page/:touchpoint/:title?/:type?',
 											ASSETS_DOCUMENTS_AND_MEDIA_ROUTES:
-												'/:assetId/:tabId(page|known-individuals)/:touchpoint/:title?/:type?'
-										}
+												'/:assetId/:tabId(page|known-individuals)/:touchpoint/:title?/:type?',
+										},
 									},
 									ASSETS_FORMS: {
 										path: '/forms',
@@ -119,8 +120,8 @@ export const Routes = buildRoutes({
 											ASSETS_FORMS_OVERVIEW:
 												'/:assetId/page/:touchpoint/:title?/:type?',
 											ASSETS_FORMS_ROUTES:
-												'/:assetId/:tabId(page|known-individuals)/:touchpoint/:title?/:type?'
-										}
+												'/:assetId/:tabId(page|known-individuals)/:touchpoint/:title?/:type?',
+										},
 									},
 									ASSETS_OBJECT_ENTRY: {
 										path: '/object-entry',
@@ -130,8 +131,8 @@ export const Routes = buildRoutes({
 											ASSETS_OBJECT_ENTRY_OVERVIEW:
 												'/:assetId/page/:touchpoint/:title?/:type?',
 											ASSETS_OBJECT_ENTRY_ROUTES:
-												'/:assetId/:tabId(page|known-individuals)/:touchpoint/:title?/:type?'
-										}
+												'/:assetId/:tabId(page|known-individuals)/:touchpoint/:title?/:type?',
+										},
 									},
 									ASSETS_WEB_CONTENT: {
 										path: '/web-content',
@@ -141,10 +142,10 @@ export const Routes = buildRoutes({
 											ASSETS_WEB_CONTENT_OVERVIEW:
 												'/:assetId/page/:touchpoint/:title?/:type?',
 											ASSETS_WEB_CONTENT_ROUTES:
-												'/:assetId/:tabId(page|known-individuals)/:touchpoint/:title?/:type?'
-										}
-									}
-								}
+												'/:assetId/:tabId(page|known-individuals)/:touchpoint/:title?/:type?',
+										},
+									},
+								},
 							},
 							COMMERCE: `/${COMMERCE}`,
 							CONTACTS: {
@@ -162,8 +163,8 @@ export const Routes = buildRoutes({
 												'/interests',
 											CONTACTS_ACCOUNT_PROFILE:
 												'/profile',
-											CONTACTS_ACCOUNT_SEGMENTS: `/${SEGMENTS}`
-										}
+											CONTACTS_ACCOUNT_SEGMENTS: `/${SEGMENTS}`,
+										},
 									},
 									CONTACTS_ENTITY: `/:type(${ACCOUNTS}|${INDIVIDUALS}|${SEGMENTS})/:id`,
 									CONTACTS_INDIVIDUALS: {
@@ -188,16 +189,20 @@ export const Routes = buildRoutes({
 																	'/interests/:interestId',
 																CONTACTS_INDIVIDUAL_INTERESTS:
 																	'/interests',
-																CONTACTS_INDIVIDUAL_SEGMENTS: `/${SEGMENTS}`
-															}
-														}
-													}
-												}
-										}
+																CONTACTS_INDIVIDUAL_SEGMENTS: `/${SEGMENTS}`,
+															},
+														},
+													},
+												},
+										},
 									},
+
 									// Deprecated - Prefer the more specific routes for the entity type
+
 									CONTACTS_INTEREST_DETAILS: `/:type(${ACCOUNTS}|${INDIVIDUALS}|${SEGMENTS})/:id/interests/:interestId`,
+
 									// Deprecated - Prefer the more specific routes for the entity type
+
 									CONTACTS_INTERESTS: `/:type(${ACCOUNTS}|${INDIVIDUALS}|${SEGMENTS})/:id/interests`,
 
 									/*
@@ -219,22 +224,22 @@ export const Routes = buildRoutes({
 											CONTACTS_SEGMENT_INTERESTS:
 												'/interests',
 											CONTACTS_SEGMENT_MEMBERSHIP:
-												'/membership'
-										}
+												'/membership',
+										},
 									},
-									CONTACTS_SEGMENT_CREATE: `/${SEGMENTS}/create`
-								}
+									CONTACTS_SEGMENT_CREATE: `/${SEGMENTS}/create`,
+								},
 							},
 							EVENT_ANALYSIS: {
 								path: '/event-analysis',
 								routes: {
 									EVENT_ANALYSIS_CREATE: '/create',
-									EVENT_ANALYSIS_EDIT: '/:id'
-								}
+									EVENT_ANALYSIS_EDIT: '/:id',
+								},
 							},
 							LIFECYCLE: {
 								path: '/lifecycle',
-								routes: {}
+								routes: {},
 							},
 							SITES: {
 								path: '/sites',
@@ -243,12 +248,12 @@ export const Routes = buildRoutes({
 										path: '/interests',
 										routes: {
 											SITES_INTEREST_DETAILS:
-												'/:interestId'
-										}
+												'/:interestId',
+										},
 									},
 									SITES_SEARCH_TERMS: {
 										path: '/search-terms',
-										routes: {}
+										routes: {},
 									},
 									SITES_TOUCHPOINTS: {
 										path: '/pages',
@@ -260,19 +265,19 @@ export const Routes = buildRoutes({
 											SITES_TOUCHPOINTS_PATH:
 												'/path/:touchpoint/:title?',
 											SITES_TOUCHPOINTS_ROUTES:
-												'/:typeId/:touchpoint/:title?'
-										}
-									}
-								}
+												'/:typeId/:touchpoint/:title?',
+										},
+									},
+								},
 							},
 							TESTS: {
 								path: '/tests',
 								routes: {
-									TESTS_OVERVIEW: '/overview/:id'
-								}
+									TESTS_OVERVIEW: '/overview/:id',
+								},
 							},
-							UI_KIT: '/ui-kit/:name?'
-						}
+							UI_KIT: '/ui-kit/:name?',
+						},
 					},
 					SETTINGS: {
 						path: '/settings',
@@ -280,8 +285,8 @@ export const Routes = buildRoutes({
 							SETTINGS_APIS: {
 								path: '/apis',
 								routes: {
-									SETTINGS_APIS_TOKEN_LIST: '/tokens'
-								}
+									SETTINGS_APIS_TOKEN_LIST: '/tokens',
+								},
 							},
 							SETTINGS_CHANNELS: '/properties',
 							SETTINGS_CHANNELS_VIEW: '/properties/:id',
@@ -293,8 +298,8 @@ export const Routes = buildRoutes({
 									SETTINGS_DATA_PRIVACY_REQUEST_LOG:
 										'/request-log',
 									SETTINGS_DATA_PRIVACY_SUPPRESSED_USERS:
-										'/suppressed-users'
-								}
+										'/suppressed-users',
+								},
 							},
 							SETTINGS_DATA_SOURCE: '/data-source/:id',
 							SETTINGS_DATA_SOURCE_CLEAR_DATA:
@@ -318,8 +323,8 @@ export const Routes = buildRoutes({
 											SETTINGS_DEFINITIONS_EVENT_ATTRIBUTES_LOCAL:
 												'/local',
 											SETTINGS_DEFINITIONS_EVENT_ATTRIBUTES_VIEW:
-												'/:attributeId(\\d+)'
-										}
+												'/:attributeId(\\d+)',
+										},
 									},
 									SETTINGS_DEFINITIONS_EVENTS: {
 										path: '/events',
@@ -331,15 +336,15 @@ export const Routes = buildRoutes({
 											SETTINGS_DEFINITIONS_EVENTS_DEFAULT:
 												'/default',
 											SETTINGS_DEFINITIONS_EVENTS_VIEW:
-												'/:eventId(\\d+)'
-										}
+												'/:eventId(\\d+)',
+										},
 									},
 									SETTINGS_DEFINITIONS_INDIVIDUAL_ATTRIBUTES:
 										'/individual-attributes',
 									SETTINGS_DEFINITIONS_INTEREST_TOPICS:
 										'/interest-topics',
-									SETTINGS_DEFINITIONS_SEARCH: '/search'
-								}
+									SETTINGS_DEFINITIONS_SEARCH: '/search',
+								},
 							},
 							SETTINGS_FEATURE_FLAGS: '/feature-flags',
 							SETTINGS_RECOMMENDATIONS: {
@@ -349,28 +354,28 @@ export const Routes = buildRoutes({
 										path: '/:jobId([\\d]+)',
 										routes: {
 											SETTINGS_RECOMMENDATION_EDIT:
-												'/edit'
-										}
+												'/edit',
+										},
 									},
 									SETTINGS_RECOMMENDATIONS_CREATE_ITEM_SIMILARITY_MODEL:
-										'/create-item-similarity-model'
-								}
+										'/create-item-similarity-model',
+								},
 							},
 							SETTINGS_USAGE: '/usage',
 							SETTINGS_USERS: {
 								path: '/users',
 								routes: {
-									SETTINGS_USERS_REQUESTS: '/requests'
-								}
+									SETTINGS_USERS_REQUESTS: '/requests',
+								},
 							},
-							SETTINGS_WORKSPACE: '/workspace'
-						}
-					}
-				}
-			}
-		}
+							SETTINGS_WORKSPACE: '/workspace',
+						},
+					},
+				},
+			},
+		},
 	},
-	WORKSPACES: '/workspaces'
+	WORKSPACES: '/workspaces',
 });
 
 type Config = {
@@ -390,7 +395,8 @@ export function buildRoutes(
 	for (const [key, pathOrConfig] of Object.entries(config)) {
 		if (isString(pathOrConfig)) {
 			routes[key] = prefix + pathOrConfig;
-		} else {
+		}
+		else {
 			routes[key] = prefix + pathOrConfig.path;
 
 			if (pathOrConfig.routes) {
@@ -413,16 +419,16 @@ const ROUTE_TO_TYPE_MAP = {
 	[ASSETS]: EntityTypes.Asset,
 	[INDIVIDUALS]: EntityTypes.Individual,
 	[PAGES]: EntityTypes.Page,
-	[SEGMENTS]: EntityTypes.IndividualsSegment
+	[SEGMENTS]: EntityTypes.IndividualsSegment,
 };
 
 const PROVIDER_ROUTE_TO_TYPE_MAP = {
 	[CSV]: DataSourceTypes.Csv,
-	[LIFERAY]: DataSourceTypes.Liferay
+	[LIFERAY]: DataSourceTypes.Liferay,
 };
 
 const TYPE_TO_ROUTE_MAP = {
-	...invert(ROUTE_TO_TYPE_MAP)
+	...invert(ROUTE_TO_TYPE_MAP),
 };
 
 export const assetTypePaths = {
@@ -430,7 +436,7 @@ export const assetTypePaths = {
 	custom: Routes.ASSETS_CUSTOM_DASHBOARD,
 	document: Routes.ASSETS_DOCUMENTS_AND_MEDIA_OVERVIEW,
 	form: Routes.ASSETS_FORMS_OVERVIEW,
-	journal: Routes.ASSETS_WEB_CONTENT_OVERVIEW
+	journal: Routes.ASSETS_WEB_CONTENT_OVERVIEW,
 };
 
 export const toAssetOverviewRoute = (
@@ -443,9 +449,10 @@ export const toAssetOverviewRoute = (
 	if (assetType === 'blog') {
 		route = toRoute(assetTypePaths[assetType], {
 			...routeParams,
-			assetType: 'blogs'
+			assetType: 'blogs',
 		});
-	} else {
+	}
+	else {
 		route = toRoute(assetTypePaths[assetType], routeParams);
 	}
 

@@ -1,10 +1,10 @@
 import BaseDropdown from '../base-dropdown';
 import EVENT_ATTRIBUTE_DEFINITION_QUERY, {
-	UPDATE_EVENT_ATTRIBUTE_DEFINITION
+	UPDATE_EVENT_ATTRIBUTE_DEFINITION,
 } from 'event-analysis/queries/EventAttributeDefinitionQuery';
 import EVENT_ATTRIBUTE_DEFINITIONS_QUERY, {
 	EventAttributeDefinitionsData,
-	EventAttributeDefinitionsVariables
+	EventAttributeDefinitionsVariables,
 } from 'event-analysis/queries/EventAttributeDefinitionsQuery';
 import FilterOptions from './filter';
 import getCN from 'classnames';
@@ -14,7 +14,7 @@ import {
 	Attribute,
 	AttributeOwnerTypes,
 	AttributeTypes,
-	Filter
+	Filter,
 } from 'event-analysis/utils/types';
 import {close, modalTypes, open} from 'shared/actions/modals';
 import {connect, ConnectedProps} from 'react-redux';
@@ -22,7 +22,7 @@ import {CSSTransition, TransitionGroup} from 'react-transition-group';
 import {DISPLAY_NAME} from 'shared/util/pagination';
 import {
 	getModifiedEventAttributeDefinitions,
-	getTabs
+	getTabs,
 } from 'event-analysis/utils/utils';
 import {OrderByDirections} from 'shared/util/constants';
 import {SafeResults} from 'shared/hoc/util';
@@ -51,7 +51,7 @@ const AttributeFilterDropdown: React.FC<IAttributeFilterDropdownProps> = ({
 	filter,
 	open,
 	trigger,
-	uneditableIds
+	uneditableIds,
 }) => {
 	const [attributeOwnerType, setAttributeOwnerType] =
 		useState<AttributeOwnerTypes>(AttributeOwnerTypes.Event);
@@ -71,10 +71,10 @@ const AttributeFilterDropdown: React.FC<IAttributeFilterDropdownProps> = ({
 			size: 200,
 			sort: {
 				column: DISPLAY_NAME,
-				type: OrderByDirections.Ascending
+				type: OrderByDirections.Ascending,
 			},
-			type: AttributeTypes.All
-		}
+			type: AttributeTypes.All,
+		},
 	});
 
 	const attributeId = attribute ? attribute.id : null;
@@ -91,8 +91,8 @@ const AttributeFilterDropdown: React.FC<IAttributeFilterDropdownProps> = ({
 	return (
 		<BaseDropdown
 			alignmentPosition={alignmentPosition}
-			className='event-analysis-editor-attribute-dropdown-root'
-			onActiveChange={active => {
+			className="event-analysis-editor-attribute-dropdown-root"
+			onActiveChange={(active) => {
 				if (!active) {
 					setAttributeOwnerType(AttributeOwnerTypes.Event);
 					setQuery('');
@@ -106,15 +106,15 @@ const AttributeFilterDropdown: React.FC<IAttributeFilterDropdownProps> = ({
 			{({setActive}) => (
 				<TransitionGroup
 					className={getCN('transition-carousel-group', {
-						'show-overflow': selectedAttribute
+						'show-overflow': selectedAttribute,
 					})}
 				>
 					{!selectedAttribute && (
 						<CSSTransition
-							classNames='transition-attribute-carousel-right'
+							classNames="transition-attribute-carousel-right"
 							timeout={250}
 						>
-							<div className='d-flex flex-column'>
+							<div className="d-flex flex-column">
 								<BaseDropdown.Header
 									activeTabId={attributeOwnerType}
 									tabs={getTabs(setAttributeOwnerType)}
@@ -128,8 +128,8 @@ const AttributeFilterDropdown: React.FC<IAttributeFilterDropdownProps> = ({
 								>
 									{({
 										eventAttributeDefinitions: {
-											eventAttributeDefinitions
-										}
+											eventAttributeDefinitions,
+										},
 									}: {
 										eventAttributeDefinitions: {
 											eventAttributeDefinitions: Attribute[];
@@ -140,7 +140,7 @@ const AttributeFilterDropdown: React.FC<IAttributeFilterDropdownProps> = ({
 												{
 													attribute: attribute!,
 													attributeOwnerType,
-													eventAttributeDefinitions
+													eventAttributeDefinitions,
 												}
 											);
 
@@ -153,7 +153,7 @@ const AttributeFilterDropdown: React.FC<IAttributeFilterDropdownProps> = ({
 												items={
 													modifiedEventAttributeDefinitions
 												}
-												onEditClick={item => {
+												onEditClick={(item) => {
 													if (!item) {
 														return;
 													}
@@ -166,13 +166,13 @@ const AttributeFilterDropdown: React.FC<IAttributeFilterDropdownProps> = ({
 																UPDATE_EVENT_ATTRIBUTE_DEFINITION,
 															onClose,
 															query: EVENT_ATTRIBUTE_DEFINITION_QUERY,
-															showTypecast: true
+															showTypecast: true,
 														}
 													);
 
 													setActive(false);
 												}}
-												onItemClick={item => {
+												onItemClick={(item) => {
 													setSelectedAttribute(
 														item as Attribute
 													);
@@ -194,10 +194,10 @@ const AttributeFilterDropdown: React.FC<IAttributeFilterDropdownProps> = ({
 
 					{selectedAttribute && (
 						<CSSTransition
-							classNames='transition-attribute-carousel-left'
+							classNames="transition-attribute-carousel-left"
 							timeout={250}
 						>
-							<div className='w-100'>
+							<div className="w-100">
 								<FilterOptions
 									attribute={selectedAttribute!}
 									attributeOwnerType={attributeOwnerType}
@@ -210,7 +210,7 @@ const AttributeFilterDropdown: React.FC<IAttributeFilterDropdownProps> = ({
 									onEditClick={
 										uneditableIds &&
 										uneditableIds.some(
-											uneditableAttributeId =>
+											(uneditableAttributeId) =>
 												uneditableAttributeId ===
 												selectedAttribute.id
 										)
@@ -224,12 +224,12 @@ const AttributeFilterDropdown: React.FC<IAttributeFilterDropdownProps> = ({
 																UPDATE_EVENT_ATTRIBUTE_DEFINITION,
 															onClose,
 															query: EVENT_ATTRIBUTE_DEFINITION_QUERY,
-															showTypecast: true
+															showTypecast: true,
 														}
 													);
 
 													setActive(false);
-											  }
+												}
 									}
 								/>
 							</div>

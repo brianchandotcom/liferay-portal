@@ -8,19 +8,19 @@ jest.unmock('react-dom');
 jest.mock('../edit/Dynamic', () => ({
 	__esModule: true,
 	default: ({type}: {type: string}) => (
-		<div data-testid='dynamic-segment' data-type={type} />
-	)
+		<div data-testid="dynamic-segment" data-type={type} />
+	),
 }));
 
 describe('Edit', () => {
 	it('should render', () => {
-		render(<Edit groupId='23' />);
+		render(<Edit groupId="23" />);
 
 		expect(screen.getByTestId('dynamic-segment')).toBeInTheDocument();
 	});
 
 	it('should render a dynamic segment', () => {
-		render(<Edit groupId='23' type={SegmentTypes.Batch} />);
+		render(<Edit groupId="23" type={SegmentTypes.Batch} />);
 
 		const dynamicSegment = screen.getByTestId('dynamic-segment');
 

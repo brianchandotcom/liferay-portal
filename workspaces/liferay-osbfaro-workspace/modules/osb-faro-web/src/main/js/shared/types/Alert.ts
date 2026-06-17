@@ -5,13 +5,13 @@ export namespace Alert {
 		Error = 'ERROR',
 		Pending = 'PENDING',
 		Success = 'SUCCESS',
-		Warning = 'WARNING'
+		Warning = 'WARNING',
 	}
 
 	export type AddAlert = ({
 		alertType,
 		message,
-		timeout
+		timeout,
 	}: {
 		alertType: Types;
 		message: string;

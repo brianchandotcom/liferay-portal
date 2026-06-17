@@ -36,7 +36,7 @@ const checkValidChannel =
 		useEffect(() => {
 			const isHome = matchPath(location.pathname, {
 				exact: true,
-				path: Routes.WORKSPACE_WITH_ID
+				path: Routes.WORKSPACE_WITH_ID,
 			});
 
 			if (isHome) {
@@ -45,7 +45,7 @@ const checkValidChannel =
 				history.replace(
 					toRoute(Routes.SITES, {
 						...(channel && {channelId: channel.id}),
-						groupId
+						groupId,
 					})
 				);
 			}

@@ -19,15 +19,15 @@ const ClearAllButton: React.FC<IClearAllButtonProps> = ({onClear}) => {
 
 	return (
 		<>
-			<div className='criteria-builder-clear-all mt-4 text-center'>
+			<div className="criteria-builder-clear-all mt-4 text-center">
 				<ClayButton
 					borderless
-					displayType='secondary'
+					displayType="secondary"
 					onClick={() => onOpenChange(true)}
-					size='sm'
+					size="sm"
 				>
-					<Text weight='semi-bold'>
-						<ClayIcon className='mr-2' symbol='times-circle' />
+					<Text weight="semi-bold">
+						<ClayIcon className="mr-2" symbol="times-circle" />
 
 						{Liferay.Language.get('clear-all')}
 					</Text>
@@ -36,10 +36,10 @@ const ClearAllButton: React.FC<IClearAllButtonProps> = ({onClear}) => {
 
 			{open && (
 				<Modal
-					data-testid='clear-all-modal'
+					data-testid="clear-all-modal"
 					observer={observer}
-					size='sm'
-					status='warning'
+					size="sm"
+					status="warning"
 				>
 					<Modal.Header>
 						{Liferay.Language.get('clear-all')}
@@ -55,14 +55,14 @@ const ClearAllButton: React.FC<IClearAllButtonProps> = ({onClear}) => {
 						last={
 							<ClayButton.Group spaced>
 								<ClayButton
-									displayType='secondary'
+									displayType="secondary"
 									onClick={() => onOpenChange(false)}
 								>
 									{Liferay.Language.get('cancel')}
 								</ClayButton>
 
 								<ClayButton
-									displayType='warning'
+									displayType="warning"
 									onClick={handleConfirm}
 								>
 									{Liferay.Language.get('continue')}

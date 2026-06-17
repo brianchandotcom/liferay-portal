@@ -1,6 +1,8 @@
 $c: '.analytics-locations-card';
 
-#{$c} .bubble, #{$c} rect, #{$c} text {
+#{$c} .bubble,
+#{$c} rect,
+#{$c} text {
 	animation: fadein 1s ease-in-out;
 }
 

@@ -4,7 +4,7 @@ import {createActionTypes} from 'redux-toolbox';
 import {interest} from 'shared/middleware/schema';
 
 export const actionTypes = {
-	...createActionTypes('fetch', 'interests')
+	...createActionTypes('fetch', 'interests'),
 };
 
 export function searchInterests(data) {
@@ -17,11 +17,11 @@ export function searchInterests(data) {
 				types: [
 					actionTypes.FETCH_INTERESTS_REQUEST,
 					actionTypes.FETCH_INTERESTS_SUCCESS,
-					actionTypes.FETCH_INTERESTS_FAILURE
-				]
+					actionTypes.FETCH_INTERESTS_FAILURE,
+				],
 			},
-			contactsEntityId: data.contactsEntityId
+			contactsEntityId: data.contactsEntityId,
 		},
-		type: 'NO_OP'
+		type: 'NO_OP',
 	};
 }

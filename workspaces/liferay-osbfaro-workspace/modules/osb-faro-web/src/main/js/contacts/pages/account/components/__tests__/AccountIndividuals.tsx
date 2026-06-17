@@ -11,13 +11,13 @@ jest.mock('@liferay/frontend-data-set-web', () => ({
 	FrontendDataSet: (props: any) => {
 		lastFDSProps = props;
 
-		return <div data-testid='fds-component' id={props.id} />;
-	}
+		return <div data-testid="fds-component" id={props.id} />;
+	},
 }));
 
 jest.mock('react-router-dom', () => ({
 	...jest.requireActual('react-router-dom'),
-	useParams: () => ({channelId: '456', groupId: '23', id: 'acc-1'})
+	useParams: () => ({channelId: '456', groupId: '23', id: 'acc-1'}),
 }));
 
 describe('AccountIndividuals', () => {
@@ -78,7 +78,7 @@ describe('AccountIndividuals', () => {
 			'name',
 			'department',
 			'jobTitle',
-			'lastActivityDate'
+			'lastActivityDate',
 		]);
 		expect(fields.every((field: any) => field.sortable === true)).toBe(
 			true
@@ -104,7 +104,7 @@ describe('AccountIndividuals', () => {
 
 		const link = renderer({
 			itemData: {id: 'individual-1'},
-			value: 'Ada Lovelace'
+			value: 'Ada Lovelace',
 		});
 
 		expect(link.props.href).toContain(

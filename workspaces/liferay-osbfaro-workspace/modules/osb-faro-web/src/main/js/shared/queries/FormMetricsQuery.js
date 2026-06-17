@@ -2,7 +2,7 @@ import {
 	BROWSER_FRAGMENT,
 	DEVICE_FRAGMENT,
 	GEOLOCATION_FRAGMENT,
-	METRIC_FRAGMENT
+	METRIC_FRAGMENT,
 } from 'shared/queries/fragments';
 import {gql} from '@apollo/client';
 

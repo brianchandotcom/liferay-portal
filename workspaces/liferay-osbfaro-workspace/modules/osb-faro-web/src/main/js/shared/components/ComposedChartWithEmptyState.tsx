@@ -14,7 +14,7 @@ const ComposedChartWithEmptyState: React.FC<
 > = ({children, emptyDescription, emptyTitle, showEmptyState = false}) => (
 	<div
 		className={getCN('composed-chart-with-empty-state', {
-			'composed-chart-with-empty-state--show': showEmptyState
+			'composed-chart-with-empty-state--show': showEmptyState,
 		})}
 	>
 		{children}

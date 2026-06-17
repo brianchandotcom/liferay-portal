@@ -1,16 +1,16 @@
 .sticker {
 	$displays: (
 		boolean: $fieldGreen,
-		chartBlue: $chartBlue,
-		chartLimeGreen: $chartLimeGreen,
-		chartOrange: $chartOrange,
-		chartRed: $chartRed,
-		chartSeaGreen: $chartSeaGreen,
+		chartblue: $chartBlue,
+		chartlimegreen: $chartLimeGreen,
+		chartorange: $chartOrange,
+		chartred: $chartRed,
+		chartseagreen: $chartSeaGreen,
 		date: $fieldPurple,
 		number: $fieldLightBlue,
 		point: $chartLimeGreen,
 		secondary: $mainLighten74,
-		string: $fieldDarkBlue
+		string: $fieldDarkBlue,
 	);
 
 	@each $name, $color in $displays {

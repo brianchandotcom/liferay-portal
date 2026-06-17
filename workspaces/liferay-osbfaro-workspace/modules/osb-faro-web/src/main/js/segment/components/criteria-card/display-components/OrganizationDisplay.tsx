@@ -3,12 +3,12 @@ import ReferencedEntityDisplay from './ReferencedEntityDisplay';
 import {EntityType} from 'segment/segment-editor/dynamic/context/referencedObjects';
 import {
 	getOperator,
-	getPropertyValue
+	getPropertyValue,
 } from 'segment/segment-editor/dynamic/utils/custom-inputs';
 import {
 	getOperatorLabel,
 	maybeFormatToKnownType,
-	maybeFormatValue
+	maybeFormatValue,
 } from '../utils';
 import {ICustomDisplayComponentProps} from '../types';
 import {isOfKnownType} from 'segment/segment-editor/dynamic/utils/utils';
@@ -17,7 +17,7 @@ import {PropertyTypes} from 'segment/segment-editor/dynamic/utils/constants';
 const OrganizationDisplay: React.FC<ICustomDisplayComponentProps> = ({
 	criterion,
 	property,
-	timeZoneId
+	timeZoneId,
 }) => {
 	const value = getPropertyValue(criterion.value, 'value', 0);
 
@@ -44,7 +44,8 @@ const OrganizationDisplay: React.FC<ICustomDisplayComponentProps> = ({
 					type={EntityType.Organizations}
 				/>
 			);
-		} else {
+		}
+		else {
 			return (
 				<b>{maybeFormatValue(value, propertyDataType, timeZoneId)}</b>
 			);

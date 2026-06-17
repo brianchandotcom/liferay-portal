@@ -21,40 +21,40 @@ interface IRowActionsProps {
 
 const RowActions: React.FC<IRowActionsProps> = ({
 	actions = [],
-	quickActions = []
+	quickActions = [],
 }) => (
 	<>
 		{!!quickActions?.length && (
-			<div className='quick-action-menu'>
+			<div className="quick-action-menu">
 				{quickActions.map(({href, iconSymbol, label, onClick}) =>
 					href ? (
 						<ClayLink
 							aria-label={label}
 							button
-							className='button-root component-action quick-action-item'
+							className="button-root component-action quick-action-item"
 							data-tooltip
-							displayType='unstyled'
+							displayType="unstyled"
 							href={href}
 							key={label}
 							title={label}
 						>
 							<ClayIcon
-								className='icon-root'
+								className="icon-root"
 								symbol={iconSymbol}
 							/>
 						</ClayLink>
 					) : (
 						<ClayButton
 							aria-label={label}
-							className='button-root component-action quick-action-item'
+							className="button-root component-action quick-action-item"
 							data-tooltip
-							displayType='unstyled'
+							displayType="unstyled"
 							key={label}
 							onClick={onClick}
 							title={label}
 						>
 							<ClayIcon
-								className='icon-root'
+								className="icon-root"
 								symbol={iconSymbol}
 							/>
 						</ClayButton>
@@ -66,15 +66,15 @@ const RowActions: React.FC<IRowActionsProps> = ({
 		{!!actions?.length && (
 			<ClayDropDown
 				alignmentPosition={Align.BottomRight}
-				className='dropdown-action'
+				className="dropdown-action"
 				closeOnClick
 				trigger={
 					<ClayButton
 						aria-label={Liferay.Language.get('menu')}
-						className='component-action'
-						displayType='unstyled'
+						className="component-action"
+						displayType="unstyled"
 					>
-						<ClayIcon symbol='ellipsis-v' />
+						<ClayIcon symbol="ellipsis-v" />
 					</ClayButton>
 				}
 			>
@@ -86,7 +86,7 @@ const RowActions: React.FC<IRowActionsProps> = ({
 					>
 						{iconSymbol && (
 							<ClayIcon
-								className='icon-root mr-2'
+								className="icon-root mr-2"
 								symbol={iconSymbol}
 							/>
 						)}

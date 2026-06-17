@@ -4,7 +4,7 @@ import {ENTITY_MAP} from 'segment/segment-editor/dynamic/inputs/IndividualSelect
 import {
 	getOperatorLabel,
 	maybeFormatToKnownType,
-	maybeFormatValue
+	maybeFormatValue,
 } from '../utils';
 import {IDisplayComponentProps} from '../types';
 import {isOfKnownType} from 'segment/segment-editor/dynamic/utils/utils';
@@ -13,7 +13,7 @@ import {PropertyTypes} from 'segment/segment-editor/dynamic/utils/constants';
 const IndividualDisplay: React.FC<IDisplayComponentProps> = ({
 	criterion,
 	property,
-	timeZoneId
+	timeZoneId,
 }) => {
 	const {operatorName, propertyName, value} = criterion;
 

@@ -3,7 +3,7 @@ import {
 	getDataSourceLangKey,
 	getPluralMessage,
 	getTypeLangKey,
-	sub
+	sub,
 } from '../lang';
 
 describe('sub', () => {

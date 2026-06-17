@@ -25,10 +25,10 @@ export default () => ({
 					pageTitle: null,
 					properties: [
 						{name: 'email', value: 'john.doe@example.com'},
-						{name: 'subject', value: 'Welcome Newsletter'}
+						{name: 'subject', value: 'Welcome Newsletter'},
 					],
 					referrer: 'https://hubspot.com',
-					url: 'https://hubspot.com'
+					url: 'https://hubspot.com',
 				},
 				{
 					__typename: 'Event',
@@ -46,18 +46,18 @@ export default () => ({
 						{name: 'formId', value: 'abc123'},
 						{
 							name: 'pageUrl',
-							value: 'https://hubspot.com/landing-page'
-						}
+							value: 'https://hubspot.com/landing-page',
+						},
 					],
 					referrer: 'https://hubspot.com',
-					url: 'https://hubspot.com'
-				}
+					url: 'https://hubspot.com',
+				},
 			],
 			languageId: null,
 			screenHeight: '',
 			screenWidth: '',
 			timezoneOffset: null,
-			userAgent: 'HubSpot Webhook'
+			userAgent: 'HubSpot Webhook',
 		},
 		{
 			__typename: 'UserSession',
@@ -83,19 +83,19 @@ export default () => ({
 					properties: [
 						{
 							name: 'externalReferenceCode',
-							value: '2d420977-ed76-97d2-4478-379f03130595'
-						}
+							value: '2d420977-ed76-97d2-4478-379f03130595',
+						},
 					],
 					referrer: '',
-					url: 'https://learn-dev.liferay.com/home'
-				}
+					url: 'https://learn-dev.liferay.com/home',
+				},
 			],
 			languageId: 'en-US',
 			screenHeight: '844',
 			screenWidth: '390',
 			timezoneOffset: '-03:00',
 			userAgent:
-				'Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/121.0.0.0 Mobile/15E148 Safari/604.1'
+				'Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/121.0.0.0 Mobile/15E148 Safari/604.1',
 		},
 		{
 			__typename: 'UserSession',
@@ -124,11 +124,11 @@ export default () => ({
 					properties: [
 						{
 							name: 'externalReferenceCode',
-							value: '2d420977-ed76-97d2-4478-379f03130595'
-						}
+							value: '2d420977-ed76-97d2-4478-379f03130595',
+						},
 					],
 					referrer: 'https://learn-dev.liferay.com/home',
-					url: 'https://learn-dev.liferay.com/capabilities/content-management-system'
+					url: 'https://learn-dev.liferay.com/capabilities/content-management-system',
 				},
 				{
 					__typename: 'Event',
@@ -145,11 +145,11 @@ export default () => ({
 					properties: [
 						{
 							name: 'externalReferenceCode',
-							value: '2d420977-ed76-97d2-4478-379f03130595'
-						}
+							value: '2d420977-ed76-97d2-4478-379f03130595',
+						},
 					],
 					referrer: 'https://learn-dev.liferay.com/c/portal/logout',
-					url: 'https://learn-dev.liferay.com/home'
+					url: 'https://learn-dev.liferay.com/home',
 				},
 				{
 					__typename: 'Event',
@@ -166,11 +166,11 @@ export default () => ({
 					properties: [
 						{
 							name: 'externalReferenceCode',
-							value: '2d420977-ed76-97d2-4478-379f03130595'
-						}
+							value: '2d420977-ed76-97d2-4478-379f03130595',
+						},
 					],
 					referrer: '',
-					url: 'https://learn-dev.liferay.com/'
+					url: 'https://learn-dev.liferay.com/',
 				},
 				{
 					__typename: 'Event',
@@ -187,12 +187,12 @@ export default () => ({
 					properties: [
 						{
 							name: 'externalReferenceCode',
-							value: '2d420977-ed76-97d2-4478-379f03130595'
-						}
+							value: '2d420977-ed76-97d2-4478-379f03130595',
+						},
 					],
 					referrer:
 						'https://learn-dev.liferay.com/capabilities/security',
-					url: 'https://learn-dev.liferay.com/'
+					url: 'https://learn-dev.liferay.com/',
 				},
 				{
 					__typename: 'Event',
@@ -210,11 +210,11 @@ export default () => ({
 					properties: [
 						{
 							name: 'externalReferenceCode',
-							value: '2d420977-ed76-97d2-4478-379f03130595'
-						}
+							value: '2d420977-ed76-97d2-4478-379f03130595',
+						},
 					],
 					referrer: 'https://learn-dev.liferay.com/',
-					url: 'https://learn-dev.liferay.com/capabilities/security'
+					url: 'https://learn-dev.liferay.com/capabilities/security',
 				},
 				{
 					__typename: 'Event',
@@ -231,20 +231,20 @@ export default () => ({
 					properties: [
 						{
 							name: 'externalReferenceCode',
-							value: '2d420977-ed76-97d2-4478-379f03130595'
-						}
+							value: '2d420977-ed76-97d2-4478-379f03130595',
+						},
 					],
 					referrer:
 						'https://learn-dev.liferay.com/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fview_configuration_screen&_com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet_configurationScreenKey=analytics-cloud-connection',
-					url: 'https://learn-dev.liferay.com/'
-				}
+					url: 'https://learn-dev.liferay.com/',
+				},
 			],
 			languageId: 'en-US',
 			screenHeight: '1321',
 			screenWidth: '2560',
 			timezoneOffset: '-03:00',
 			userAgent:
-				'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36'
+				'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36',
 		},
 		{
 			__typename: 'UserSession',
@@ -269,10 +269,10 @@ export default () => ({
 					pageTitle: null,
 					properties: [
 						{name: 'email', value: 'john.doe@example.com'},
-						{name: 'subject', value: 'May Product Updates'}
+						{name: 'subject', value: 'May Product Updates'},
 					],
 					referrer: 'https://hubspot.com',
-					url: 'https://hubspot.com'
+					url: 'https://hubspot.com',
 				},
 				{
 					__typename: 'Event',
@@ -289,19 +289,19 @@ export default () => ({
 					properties: [
 						{
 							name: 'linkUrl',
-							value: 'https://liferay.com/products'
+							value: 'https://liferay.com/products',
 						},
-						{name: 'email', value: 'john.doe@example.com'}
+						{name: 'email', value: 'john.doe@example.com'},
 					],
 					referrer: 'https://hubspot.com',
-					url: 'https://hubspot.com'
-				}
+					url: 'https://hubspot.com',
+				},
 			],
 			languageId: null,
 			screenHeight: '',
 			screenWidth: '',
 			timezoneOffset: null,
-			userAgent: 'HubSpot Webhook'
-		}
-	]
+			userAgent: 'HubSpot Webhook',
+		},
+	],
 });

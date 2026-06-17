@@ -4,7 +4,7 @@ import {
 	JobRunStatuses,
 	JobStatuses,
 	JobTypes,
-	RangeKeyTimeRanges
+	RangeKeyTimeRanges,
 } from 'shared/util/constants';
 
 export const CANONICAL_URL = 'canonicalUrl';
@@ -49,14 +49,14 @@ export const JOB_RUN_STATUSES_DISPLAY_MAP = {
 	[JobRunStatuses.Completed]: 'success',
 	[JobRunStatuses.Failed]: 'danger',
 	[JobRunStatuses.Published]: 'primary',
-	[JobRunStatuses.Running]: 'warning'
+	[JobRunStatuses.Running]: 'warning',
 };
 
 export const JOB_RUN_STATUSES_LABEL_MAP = {
 	[JobRunStatuses.Completed]: Liferay.Language.get('completed'),
 	[JobRunStatuses.Failed]: Liferay.Language.get('failed'),
 	[JobRunStatuses.Published]: Liferay.Language.get('live-version'),
-	[JobRunStatuses.Running]: Liferay.Language.get('training')
+	[JobRunStatuses.Running]: Liferay.Language.get('training'),
 };
 
 export const JOB_STATUSES_DISPLAY_MAP = {
@@ -64,7 +64,7 @@ export const JOB_STATUSES_DISPLAY_MAP = {
 	[JobStatuses.Pending]: 'secondary',
 	[JobStatuses.Ready]: 'success',
 	[JobStatuses.Running]: 'warning',
-	[JobStatuses.Scheduled]: 'info'
+	[JobStatuses.Scheduled]: 'info',
 };
 
 export const JOB_STATUSES_LABEL_MAP = {
@@ -72,81 +72,81 @@ export const JOB_STATUSES_LABEL_MAP = {
 	[JobStatuses.Pending]: Liferay.Language.get('pending'),
 	[JobStatuses.Ready]: Liferay.Language.get('ready'),
 	[JobStatuses.Running]: Liferay.Language.get('training'),
-	[JobStatuses.Scheduled]: Liferay.Language.get('scheduled')
+	[JobStatuses.Scheduled]: Liferay.Language.get('scheduled'),
 };
 
 export const JOB_RUN_FREQUENCIES_LABEL_MAP = {
 	[JobRunFrequencies.Every7Days]: Liferay.Language.get('every-7-days'),
 	[JobRunFrequencies.Every14Days]: Liferay.Language.get('every-14-days'),
 	[JobRunFrequencies.Every30Days]: Liferay.Language.get('every-30-days'),
-	[JobRunFrequencies.Manual]: Liferay.Language.get('run-manually')
+	[JobRunFrequencies.Manual]: Liferay.Language.get('run-manually'),
 };
 
 export const JOB_RUN_FREQUENCIES_LIST = [
 	{
 		name: Liferay.Language.get('run-manually'),
-		value: JobRunFrequencies.Manual
+		value: JobRunFrequencies.Manual,
 	},
 	{
 		name: Liferay.Language.get('every-7-days'),
-		value: JobRunFrequencies.Every7Days
+		value: JobRunFrequencies.Every7Days,
 	},
 	{
 		name: Liferay.Language.get('every-14-days'),
-		value: JobRunFrequencies.Every14Days
+		value: JobRunFrequencies.Every14Days,
 	},
 	{
 		name: Liferay.Language.get('every-30-days'),
-		value: JobRunFrequencies.Every30Days
-	}
+		value: JobRunFrequencies.Every30Days,
+	},
 ];
 
 export const JOB_RUN_DATA_PERIODS_LABEL_MAP = {
 	[JobRunDataPeriods.Last7Days]: Liferay.Language.get('last-7-days'),
 	[JobRunDataPeriods.Last30Days]: Liferay.Language.get('last-30-days'),
 	[JobRunDataPeriods.Last180Days]: Liferay.Language.get('last-180-days'),
-	[JobRunDataPeriods.Last365Days]: Liferay.Language.get('last-year')
+	[JobRunDataPeriods.Last365Days]: Liferay.Language.get('last-year'),
 };
 
 export const JOB_RUN_DATA_PERIODS_RANGE_KEY_MAP = {
 	[JobRunDataPeriods.Last7Days]: RangeKeyTimeRanges.Last7Days,
 	[JobRunDataPeriods.Last30Days]: RangeKeyTimeRanges.Last30Days,
 	[JobRunDataPeriods.Last180Days]: RangeKeyTimeRanges.Last180Days,
-	[JobRunDataPeriods.Last365Days]: RangeKeyTimeRanges.LastYear
+	[JobRunDataPeriods.Last365Days]: RangeKeyTimeRanges.LastYear,
 };
 
 export const JOB_RUN_DATA_PERIODS_LIST = [
 	{
 		name: Liferay.Language.get('last-7-days'),
-		value: JobRunDataPeriods.Last7Days
+		value: JobRunDataPeriods.Last7Days,
 	},
 	{
 		name: Liferay.Language.get('last-30-days'),
-		value: JobRunDataPeriods.Last30Days
+		value: JobRunDataPeriods.Last30Days,
 	},
 	{
 		name: Liferay.Language.get('last-180-days'),
-		value: JobRunDataPeriods.Last180Days
+		value: JobRunDataPeriods.Last180Days,
 	},
 	{
 		name: Liferay.Language.get('last-year'),
-		value: JobRunDataPeriods.Last365Days
-	}
+		value: JobRunDataPeriods.Last365Days,
+	},
 ];
 
 export const JOB_TYPES_LABEL_MAP = {
-	[JobTypes.ItemSimilarity]: Liferay.Language.get('item-similarity')
+	[JobTypes.ItemSimilarity]: Liferay.Language.get('item-similarity'),
 };
 
 export const RULE_NAME_LABEL_MAP = {
 	excludeFilter: Liferay.Language.get('exclude'),
-	includeFilter: Liferay.Language.get('include')
+	includeFilter: Liferay.Language.get('include'),
 };
 
 export const getPropertiesFromItems = (itemFilters: Filter[]): JobProperty[] =>
 	itemFilters.map(({name, value}) => ({
 		filter: value,
-		negate: name === EXCLUDE
+		negate: name === EXCLUDE,
 	}));
 
 export const getFilterValueBreakdown = (

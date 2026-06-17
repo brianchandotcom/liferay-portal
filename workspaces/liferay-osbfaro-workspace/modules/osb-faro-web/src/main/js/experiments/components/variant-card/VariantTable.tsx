@@ -5,19 +5,19 @@ import {createOrderIOMap} from 'shared/util/pagination';
 import {
 	getBestVariant,
 	getMetricUnit,
-	mergedVariants
+	mergedVariants,
 } from 'experiments/util/experiments';
 import {IExperiment} from '../summary-card/types';
 import {MetricName} from 'experiments/util/types';
 import {useStatefulPagination} from 'shared/hooks/useStatefulPagination';
 
 export const VariantTable = ({
-	experiment
+	experiment,
 }: {
 	experiment: IExperiment & {type?: string};
 }) => {
 	const {onOrderIOMapChange, orderIOMap} = useStatefulPagination(undefined, {
-		initialOrderIOMap: createOrderIOMap('dxpVariantName')
+		initialOrderIOMap: createOrderIOMap('dxpVariantName'),
 	});
 
 	const {
@@ -27,7 +27,7 @@ export const VariantTable = ({
 		publishedDXPVariantId,
 		status,
 		type,
-		winnerDXPVariantId
+		winnerDXPVariantId,
 	} = experiment;
 
 	const variantMetrics = metrics?.variantMetrics ?? [];
@@ -37,11 +37,11 @@ export const VariantTable = ({
 	const bestVariant = getBestVariant({
 		dxpVariants: experiment.dxpVariants,
 		goal: goal as {metric: MetricName} | undefined,
-		metrics: {variantMetrics}
+		metrics: {variantMetrics},
 	});
 
 	return (
-		<div className='analytics-variant-card-table'>
+		<div className="analytics-variant-card-table">
 			<Table
 				columns={
 					columns({
@@ -51,7 +51,7 @@ export const VariantTable = ({
 						publishedDXPVariantId,
 						status,
 						type,
-						winnerDXPVariantId
+						winnerDXPVariantId,
 					}) as Column[]
 				}
 				headingNowrap={false}
@@ -59,7 +59,7 @@ export const VariantTable = ({
 				items={variants}
 				onOrderIOMapChange={onOrderIOMapChange}
 				orderIOMap={orderIOMap}
-				rowIdentifier='dxpVariantId'
+				rowIdentifier="dxpVariantId"
 			/>
 		</div>
 	);

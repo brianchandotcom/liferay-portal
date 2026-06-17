@@ -10,7 +10,7 @@ import {withFilterComponent} from 'shared/hoc/Filter';
 const withBlogFilter = () =>
 	graphql(
 		globalFilterAssetQuery('blog', 'viewsMetric'),
-		getFiltersMapper(result => result.blog.viewsMetric)
+		getFiltersMapper((result) => result.blog.viewsMetric)
 	);
 
 export default withFilterComponent(withBlogFilter);

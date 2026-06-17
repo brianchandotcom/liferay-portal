@@ -29,7 +29,7 @@ const Overview: React.FC<IOverviewProps> = ({channelId, groupId, segment}) => {
 		includeAnonymousUsers,
 		individualCount,
 		knownIndividualCount,
-		sequential
+		sequential,
 	} = segment;
 	const {timeZoneId} = useTimeZone();
 
@@ -54,8 +54,8 @@ const Overview: React.FC<IOverviewProps> = ({channelId, groupId, segment}) => {
 	}, []);
 
 	return (
-		<div className='overview-layout'>
-			<div className='overview-column-main'>
+		<div className="overview-layout">
+			<div className="overview-column-main">
 				{activation && (
 					<SegmentActivationCard
 						segmentActivation={activation}
@@ -83,7 +83,7 @@ const Overview: React.FC<IOverviewProps> = ({channelId, groupId, segment}) => {
 				/>
 			</div>
 
-			<div className='overview-column-side' ref={_sideColumnRef}>
+			<div className="overview-column-side" ref={_sideColumnRef}>
 				<ReferencedObjectsProvider segment={segment}>
 					<CriteriaCard
 						channelId={channelId}

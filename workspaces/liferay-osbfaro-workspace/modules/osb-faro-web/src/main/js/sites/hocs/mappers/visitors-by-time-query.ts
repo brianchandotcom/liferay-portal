@@ -20,26 +20,26 @@ const mapResultToProps = safeResultToProps((result: IVisitorsByTimeResult) => {
 	return !sumTotal
 		? {data, total: 0}
 		: {
-				data: data.map(item => ({
+				data: data.map((item) => ({
 					...item,
-					column: WEEKDAYS[item.column]
-				}))
-		  };
+					column: WEEKDAYS[item.column],
+				})),
+			};
 });
 
 const mapPropsToOptions = ({
 	rangeSelectors,
 	router: {
-		params: {channelId}
-	}
+		params: {channelId},
+	},
 }: {
 	rangeSelectors: RangeSelectors;
 	router: {params: {channelId: string}};
 }) => ({
 	variables: {
 		channelId,
-		...getSafeRangeSelectors(rangeSelectors)
-	}
+		...getSafeRangeSelectors(rangeSelectors),
+	},
 });
 
 export {mapPropsToOptions, mapResultToProps};

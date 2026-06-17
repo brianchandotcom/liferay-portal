@@ -27,7 +27,7 @@ const FieldPreviewModal: React.FC<IFieldPreviewModalProps> = ({
 	}, []);
 
 	const getFieldData = () =>
-		dataSourceFn().then(fieldData => {
+		dataSourceFn().then((fieldData) => {
 			setFieldData(get(fieldData, [0, 'values'], []));
 		});
 
@@ -35,12 +35,12 @@ const FieldPreviewModal: React.FC<IFieldPreviewModalProps> = ({
 		<Modal
 			{...otherProps}
 			className={getCN('field-preview-modal-root', className)}
-			size='lg'
+			size="lg"
 		>
 			<Modal.Header
 				onClose={onClose}
 				title={sub(Liferay.Language.get('field-preview-x'), [
-					sourceName
+					sourceName,
 				])}
 			/>
 

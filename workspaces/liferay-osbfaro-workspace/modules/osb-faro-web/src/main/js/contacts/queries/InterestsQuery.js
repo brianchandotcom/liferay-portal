@@ -4,10 +4,10 @@ import {gql} from '@apollo/client';
 
 const INTERESTS_ID_MAP = {
 	[CompositionTypes.AccountInterests]: 'accountId',
-	[CompositionTypes.SegmentInterests]: 'individualSegmentId'
+	[CompositionTypes.SegmentInterests]: 'individualSegmentId',
 };
 
-export default queryName => gql`
+export default (queryName) => gql`
 	query Interests(
 		$active: Boolean!
 		$channelId: String

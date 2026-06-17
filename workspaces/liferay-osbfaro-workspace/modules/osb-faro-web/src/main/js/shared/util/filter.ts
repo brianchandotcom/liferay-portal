@@ -27,7 +27,7 @@ type FilterItem = {
 
 export const filterLangMap = {
 	devices: Liferay.Language.get('devices'),
-	location: Liferay.Language.get('location')
+	location: Liferay.Language.get('location'),
 };
 
 /**
@@ -78,12 +78,12 @@ export const isClearFilterVisible = (filters: RawFilters) => {
  */
 export const mapEntryToFilterItem = ({
 	metrics,
-	valueKey
+	valueKey,
 }: RawFilterEntry): Omit<FilterInput, 'category'> => ({
 	checked: false,
 	inputType: 'radio',
 	label: valueKey,
-	value: toThousands(metrics.length)
+	value: toThousands(metrics.length),
 });
 
 /**
@@ -99,7 +99,7 @@ export const getFilterItem = (
 	data: RawFilterEntry[],
 	category: FilterTypes
 ): FilterItem => {
-	let items = data.map(item => ({...mapEntryToFilterItem(item), category}));
+	let items = data.map((item) => ({...mapEntryToFilterItem(item), category}));
 
 	items = orderBy(items, [({label}) => label.toLowerCase()]);
 
@@ -108,6 +108,6 @@ export const getFilterItem = (
 		items,
 		label: filterLangMap[category],
 		name: filterLangMap[category],
-		value: toThousands(items.length)
+		value: toThousands(items.length),
 	};
 };

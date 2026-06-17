@@ -16,7 +16,7 @@ import {
 	getNextSunday,
 	getSundays,
 	getWeekIntervalsMap,
-	handleDayInterval
+	handleDayInterval,
 } from '../intervals';
 import {getDate} from 'shared/util/date';
 import {INTERVAL_KEY_MAP} from 'shared/util/time';
@@ -30,13 +30,13 @@ const mockData = [
 	{
 		intervalInitDate: data.getTimestamp(0),
 		scoreAvg: 2,
-		totalElements: 5
+		totalElements: 5,
 	},
 	{
 		intervalInitDate: data.getTimestamp(1),
 		scoreAvg: 4,
-		totalElements: 10
-	}
+		totalElements: 10,
+	},
 ];
 
 describe('createDateKeysIMap', () => {
@@ -118,7 +118,9 @@ describe('getDates functions', () => {
 	});
 
 	it('get by even or odd indexes', () => {
+
 		// even array
+
 		const evenIndexes = getByEvenOrOddIndexes(dates.slice(0, 9));
 
 		expect(evenIndexes).toEqual([
@@ -126,10 +128,11 @@ describe('getDates functions', () => {
 			dates[2],
 			dates[4],
 			dates[6],
-			dates[8]
+			dates[8],
 		]);
 
 		// odd array should include first item
+
 		const oddIndexes = getByEvenOrOddIndexes(dates.slice(0, 8));
 
 		expect(oddIndexes).toEqual([
@@ -137,7 +140,7 @@ describe('getDates functions', () => {
 			dates[1],
 			dates[3],
 			dates[5],
-			dates[7]
+			dates[7],
 		]);
 	});
 
@@ -150,7 +153,7 @@ describe('getDates functions', () => {
 			dates[0],
 			dates[4],
 			dates[8],
-			dates[12]
+			dates[12],
 		]);
 	});
 
@@ -164,7 +167,7 @@ describe('getDates functions', () => {
 			dates[6],
 			dates[12],
 			dates[18],
-			dates[23]
+			dates[23],
 		]);
 	});
 });
@@ -265,8 +268,10 @@ describe('getIntervalHandle functions', () => {
 
 describe('handleDayInterval', () => {
 	it('should extract an array of dates from a start and end date using the handleFn argument as step', () => {
+
 		// function to step two days
-		const handleFn = date => moment.utc(date).add(2, 'days').valueOf();
+
+		const handleFn = (date) => moment.utc(date).add(2, 'days').valueOf();
 		const lastDate = moment.utc('2020-06-18').valueOf();
 
 		const intervals = handleDayInterval(handleFn, mockDate, lastDate);
@@ -275,7 +280,7 @@ describe('handleDayInterval', () => {
 			moment.utc('2020-06-12').valueOf(),
 			moment.utc('2020-06-14').valueOf(),
 			moment.utc('2020-06-16').valueOf(),
-			moment.utc('2020-06-18').valueOf()
+			moment.utc('2020-06-18').valueOf(),
 		]);
 	});
 });

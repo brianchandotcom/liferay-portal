@@ -16,7 +16,7 @@ interface IKnownIndividualsSessionProps {
 }
 
 export const KnownIndividualsSession = ({
-	currentPlan
+	currentPlan,
 }: IKnownIndividualsSessionProps) => {
 	const {timeZoneId} = useTimeZone();
 	const {count, limit, status} = currentPlan.metrics.get('individuals');
@@ -25,7 +25,7 @@ export const KnownIndividualsSession = ({
 	const available = limit - count;
 
 	return (
-		<div className='mt-4 mb-5'>
+		<div className="mt-4 mb-5">
 			<UsageMetric
 				description={
 					sub(
@@ -37,7 +37,7 @@ export const KnownIndividualsSession = ({
 								moment(currentPlan.startDate),
 								CUSTOM_DATE_FORMAT,
 								timeZoneId
-							)
+							),
 						]
 					) as string
 				}
@@ -53,17 +53,17 @@ export const KnownIndividualsSession = ({
 								]
 							],
 							label: Liferay.Language.get('known-individuals'),
-							value: count
-						}
+							value: count,
+						},
 					}}
 					legendText={sub(
 						available === 1
 							? Liferay.Language.get(
 									'1-known-individual-is-available'
-							  )
+								)
 							: Liferay.Language.get(
 									'x-known-individuals-are-available'
-							  ),
+								),
 						[(available > 0 ? available : 0).toLocaleString()]
 					)}
 					limit={limit}
@@ -77,9 +77,9 @@ export const KnownIndividualsSession = ({
 					}
 				/>
 
-				<div className='mt-4'>
-					<div className='mb-1'>
-						<Text color='secondary' size={3}>
+				<div className="mt-4">
+					<div className="mb-1">
+						<Text color="secondary" size={3}>
 							{Liferay.Language.get(
 								'individuals-breakdown'
 							).toUpperCase()}
@@ -96,7 +96,7 @@ export const KnownIndividualsSession = ({
 									),
 									[toThousands(syncedIndividualsCount)]
 								) as string,
-								value: syncedIndividualsCount
+								value: syncedIndividualsCount,
 							},
 							itemB: {
 								color: Colors.primary,
@@ -104,8 +104,8 @@ export const KnownIndividualsSession = ({
 									Liferay.Language.get('known-individuals-x'),
 									[toThousands(count)]
 								) as string,
-								value: count
-							}
+								value: count,
+							},
 						}}
 						total={syncedIndividualsCount + count}
 					/>

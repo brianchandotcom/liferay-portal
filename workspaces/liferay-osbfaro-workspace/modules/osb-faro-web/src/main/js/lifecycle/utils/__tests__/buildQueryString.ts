@@ -17,7 +17,7 @@ describe('buildQueryString', () => {
 		expect(
 			buildQueryString({
 				countryFilter: 'US',
-				industryFilter: 'Tech'
+				industryFilter: 'Tech',
 			})
 		).toBe("country eq 'US' and industry eq 'Tech'");
 	});

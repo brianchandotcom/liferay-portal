@@ -5,13 +5,13 @@
  */
 export function mapGrowthHistory(growth) {
 	return {
-		data: growth.map(item => ({
+		data: growth.map((item) => ({
 			added: item.addedIndividualsCount,
 			anonymousCount: item.anonymousIndividualsCount,
 			knownCount: item.knownIndividualsCount,
 			modifiedDate: item.intervalInitDate,
 			removed: item.removedIndividualsCount,
-			value: item.individualsCount
-		}))
+			value: item.individualsCount,
+		})),
 	};
 }

@@ -7,7 +7,7 @@ import request, {
 	getServiceError,
 	parseFromJSON,
 	serializeQueryString,
-	stringifyValues
+	stringifyValues,
 } from '../request';
 import {reloadPage} from '../router';
 
@@ -15,7 +15,7 @@ describe('addParams', () => {
 	it('should correctly append query string params', () => {
 		const result = addParams('http://www.test.com', {
 			name: 'joe',
-			title: 'blogger'
+			title: 'blogger',
 		});
 
 		expect(result).toContain('joe');
@@ -24,7 +24,7 @@ describe('addParams', () => {
 
 	it('should use correct param separator', () => {
 		const result = addParams('http://www.test.com?parameter=1', {
-			name: 'joe'
+			name: 'joe',
 		});
 
 		expect(result.split('?').length - 1).toBe(1);
@@ -34,7 +34,7 @@ describe('addParams', () => {
 describe('getFormData', () => {
 	it('should return a FormData object', () => {
 		const formData = getFormData({
-			name: 'test'
+			name: 'test',
 		});
 
 		expect(formData instanceof FormData).toBe(true);
@@ -79,7 +79,7 @@ describe('serializeQueryString', () => {
 	it('should contain params', () => {
 		const queryString = serializeQueryString(
 			{
-				name: 'test'
+				name: 'test',
 			},
 			true
 		);
@@ -89,7 +89,7 @@ describe('serializeQueryString', () => {
 
 	it('should contain params', () => {
 		const queryString = serializeQueryString({
-			name: 'joe'
+			name: 'joe',
 		});
 
 		expect(queryString).toContain('joe');
@@ -119,7 +119,7 @@ describe('request', () => {
 		return request({
 			contentType: '',
 			method: 'GET',
-			path: 'contacts/field_mapping'
+			path: 'contacts/field_mapping',
 		}).then(() => {
 			const requestURL = fetch.mock.calls[0][0];
 
@@ -133,10 +133,10 @@ describe('request', () => {
 
 		return request({
 			data: {
-				a: 2
+				a: 2,
 			},
 			method: 'GET',
-			path: 'contacts/field_mapping'
+			path: 'contacts/field_mapping',
 		}).then(() => {
 			const requestURL = fetch.mock.calls[0][0];
 
@@ -149,13 +149,13 @@ describe('request', () => {
 
 		fetch.mockReturnValue(Promise.resolve(new Response(`{"a": ${value}}`)));
 
-		return request({}).then(data => expect(data.a).toBe(value));
+		return request({}).then((data) => expect(data.a).toBe(value));
 	});
 
 	it('should throw an error if the response cannot be parsed', () => {
 		fetch.mockReturnValue(Promise.resolve(new Response('{test:}')));
 
-		return request({}).catch(error =>
+		return request({}).catch((error) =>
 			expect(error instanceof SyntaxError).toBe(true)
 		);
 	});
@@ -163,7 +163,7 @@ describe('request', () => {
 	it('should reject on a xhr status greater than or equal to 300', () => {
 		fetch.mockReturnValue(Promise.resolve(new Response('', {status: 301})));
 
-		return request({}).catch(error =>
+		return request({}).catch((error) =>
 			expect(error instanceof Error).toBe(true)
 		);
 	});
@@ -171,19 +171,19 @@ describe('request', () => {
 	it('should handle an xhr status of 204 where the response is empty', () => {
 		fetch.mockReturnValue(Promise.resolve(new Response('', {status: 204})));
 
-		return request({}).then(response => expect(response).toEqual({}));
+		return request({}).then((response) => expect(response).toEqual({}));
 	});
 
 	it('should reject on a xhr status equal to 403', () => {
 		fetch.mockReturnValue(
 			Promise.resolve(
 				new Response('', {
-					status: 403
+					status: 403,
 				})
 			)
 		);
 
-		return request({}).catch(error =>
+		return request({}).catch((error) =>
 			expect(error instanceof Error).toBe(true)
 		);
 	});
@@ -192,12 +192,12 @@ describe('request', () => {
 		fetch.mockReturnValue(
 			Promise.resolve(
 				new Response('{ "messageKey": "test"}', {
-					status: 500
+					status: 500,
 				})
 			)
 		);
 
-		return request({}).catch(error => {
+		return request({}).catch((error) => {
 			expect(error instanceof Error).toBe(true);
 			expect(error.message).toBe('test');
 		});
@@ -207,7 +207,7 @@ describe('request', () => {
 		fetch.mockReturnValue(
 			Promise.resolve(
 				new Response('', {
-					status: 401
+					status: 401,
 				})
 			)
 		);
@@ -231,7 +231,7 @@ describe('stringifyValues', () => {
 
 		const val = stringifyValues({
 			arr,
-			obj
+			obj,
 		});
 
 		expect(val.arr).toBe(JSON.stringify(arr));

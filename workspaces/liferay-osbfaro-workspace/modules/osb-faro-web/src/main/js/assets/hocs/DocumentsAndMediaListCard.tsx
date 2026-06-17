@@ -8,7 +8,7 @@ import URLConstants from 'shared/util/url-constants';
 import {
 	createOrderIOMap,
 	DOWNLOADS_METRIC,
-	getGraphQLVariablesFromPagination
+	getGraphQLVariablesFromPagination,
 } from 'shared/util/pagination';
 import {getSafeRangeSelectors} from 'shared/util/util';
 import {mapListResultsToProps} from 'shared/util/mappers';
@@ -22,7 +22,7 @@ import {useQueryRangeSelectors} from 'shared/hooks/useQueryRangeSelectors';
 
 const DocumentsAndMediaListCard: React.FC = () => {
 	const {delta, orderIOMap, page, query} = useQueryPagination({
-		initialOrderIOMap: createOrderIOMap(DOWNLOADS_METRIC)
+		initialOrderIOMap: createOrderIOMap(DOWNLOADS_METRIC),
 	});
 
 	const {channelId, groupId} = useParams();
@@ -35,18 +35,18 @@ const DocumentsAndMediaListCard: React.FC = () => {
 				delta,
 				orderIOMap,
 				page,
-				query
+				query,
 			}),
-			...getSafeRangeSelectors(rangeSelectors)
-		}
+			...getSafeRangeSelectors(rangeSelectors),
+		},
 	});
 
 	return (
-		<Card className='documents-and-media-root' pageDisplay>
+		<Card className="documents-and-media-root" pageDisplay>
 			<ListComponent
-				{...mapListResultsToProps(response, result => ({
+				{...mapListResultsToProps(response, (result) => ({
 					items: result.documents.assetMetrics,
-					total: result.documents.total
+					total: result.documents.total,
 				}))}
 				columns={[
 					metricsListColumns.getTitleId({
@@ -56,12 +56,12 @@ const DocumentsAndMediaListCard: React.FC = () => {
 							'document-name'
 						)} | ${Liferay.Language.get('id').toUpperCase()}`,
 						rangeSelectors,
-						route: Routes.ASSETS_DOCUMENTS_AND_MEDIA_OVERVIEW
+						route: Routes.ASSETS_DOCUMENTS_AND_MEDIA_OVERVIEW,
 					}),
 					metricsListColumns.downloadsMetric,
 					metricsListColumns.impressionMadeMetric,
 					metricsListColumns.commentsMetric,
-					metricsListColumns.ratingsMetric
+					metricsListColumns.ratingsMetric,
 				]}
 				delta={delta}
 				entityLabel={Liferay.Language.get('documents-and-media')}
@@ -70,7 +70,7 @@ const DocumentsAndMediaListCard: React.FC = () => {
 					<NoResultsDisplay
 						description={
 							<>
-								<span className='mr-1'>
+								<span className="mr-1">
 									{Liferay.Language.get(
 										'check-back-later-to-verify-if-data-has-been-received-from-your-data-sources,-or-you-can-try-a-different-date-range'
 									)}
@@ -80,8 +80,8 @@ const DocumentsAndMediaListCard: React.FC = () => {
 									href={
 										URLConstants.AssetsDocumentsAndMediaListDocumentation
 									}
-									key='DOCUMENTATION'
-									target='_blank'
+									key="DOCUMENTATION"
+									target="_blank"
 								>
 									{Liferay.Language.get(
 										'learn-more-about-documents-and-media'
@@ -92,7 +92,7 @@ const DocumentsAndMediaListCard: React.FC = () => {
 						icon={{
 							border: false,
 							size: Sizes.XXXLarge,
-							symbol: 'ac_satellite'
+							symbol: 'ac_satellite',
 						}}
 						title={Liferay.Language.get(
 							'there-are-no-visitors-data-found'

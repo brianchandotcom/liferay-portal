@@ -8,7 +8,7 @@ import URLConstants from 'shared/util/url-constants';
 import {
 	createOrderIOMap,
 	getGraphQLVariablesFromPagination,
-	MODIFIED_DATE
+	MODIFIED_DATE,
 } from 'shared/util/pagination';
 import {EXPERIMENT_LIST_QUERY} from '../queries/ExperimentQuery';
 import {get} from 'lodash';
@@ -27,7 +27,7 @@ const ExperimentsListPage = () => {
 		groupId: string;
 	}>();
 	const {delta, orderIOMap, page, query} = useQueryPagination({
-		initialOrderIOMap: createOrderIOMap(MODIFIED_DATE)
+		initialOrderIOMap: createOrderIOMap(MODIFIED_DATE),
 	});
 	const dataSourceStates = useDataSources();
 	const {selectedChannel} = useChannelContext();
@@ -37,7 +37,7 @@ const ExperimentsListPage = () => {
 	const {
 		data = {},
 		error,
-		loading
+		loading,
 	} = useQuery(EXPERIMENT_LIST_QUERY, {
 		fetchPolicy: 'network-only',
 		variables: {
@@ -45,10 +45,10 @@ const ExperimentsListPage = () => {
 				delta,
 				orderIOMap,
 				page,
-				query
+				query,
 			}),
-			channelId
-		}
+			channelId,
+		},
 	});
 
 	const authorized = currentUser.isAdmin();
@@ -60,8 +60,8 @@ const ExperimentsListPage = () => {
 					breadcrumbs.getHome({
 						channelId,
 						groupId,
-						label: selectedChannel && selectedChannel.name
-					})
+						label: selectedChannel && selectedChannel.name,
+					}),
 				]}
 				groupId={groupId}
 			>
@@ -78,16 +78,16 @@ const ExperimentsListPage = () => {
 								{authorized
 									? Liferay.Language.get(
 											'connect-a-data-source-with-sites-data'
-									  )
+										)
 									: Liferay.Language.get(
 											'please-contact-your-workspace-administrator-to-add-data-sources'
-									  )}
+										)}
 
 								<ClayLink
-									className='d-block mb-3'
+									className="d-block mb-3"
 									href={URLConstants.DataSourceConnection}
-									key='DOCUMENTATION'
-									target='_blank'
+									key="DOCUMENTATION"
+									target="_blank"
 								>
 									{Liferay.Language.get(
 										'access-our-documentation-to-learn-more'
@@ -97,12 +97,12 @@ const ExperimentsListPage = () => {
 								{authorized && (
 									<ClayLink
 										button
-										className='button-root'
-										displayType='primary'
+										className="button-root"
+										displayType="primary"
 										href={toRoute(
 											Routes.SETTINGS_DATA_SOURCE_LIST,
 											{
-												groupId
+												groupId,
 											}
 										)}
 									>

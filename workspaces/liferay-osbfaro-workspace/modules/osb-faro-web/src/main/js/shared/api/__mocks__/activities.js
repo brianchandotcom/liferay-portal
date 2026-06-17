@@ -3,7 +3,7 @@ import * as data from 'test/data';
 export const fetchGroup = jest.fn(() =>
 	Promise.resolve({
 		items: [data.mockActivity(2)],
-		total: 1
+		total: 1,
 	})
 );
 

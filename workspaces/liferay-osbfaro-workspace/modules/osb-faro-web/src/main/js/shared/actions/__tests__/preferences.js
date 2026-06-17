@@ -9,7 +9,7 @@ describe('Preferences Actions', () => {
 				distributionTab: {},
 				distributionTabId: 'Test Tab',
 				groupId: '321',
-				id: '123'
+				id: '123',
 			});
 
 			expect(isFSA(action)).toBe(true);
@@ -22,7 +22,7 @@ describe('Preferences Actions', () => {
 			const action = actions.fetchDistributionTabs({
 				distributionKey: '321',
 				groupId: '123',
-				id: '321'
+				id: '321',
 			});
 
 			expect(isFSA(action)).toBe(true);
@@ -36,7 +36,7 @@ describe('Preferences Actions', () => {
 				distributionKey: '123',
 				distributionTabId: 'Test Tab',
 				groupId: '321',
-				id: '123'
+				id: '123',
 			});
 
 			expect(isFSA(action)).toBe(true);
@@ -66,7 +66,7 @@ describe('Preferences Actions', () => {
 		it('should return an action', () => {
 			const action = actions.updateDefaultChannelId({
 				defaultChannelId: '122',
-				groupId: '321'
+				groupId: '321',
 			});
 
 			expect(isFSA(action)).toBe(true);
@@ -78,7 +78,7 @@ describe('Preferences Actions', () => {
 		it('should return an action', () => {
 			const action = actions.updateUpgradeModalSeen({
 				groupId: '321',
-				upgradeModalSeen: true
+				upgradeModalSeen: true,
 			});
 
 			expect(isFSA(action)).toBe(true);

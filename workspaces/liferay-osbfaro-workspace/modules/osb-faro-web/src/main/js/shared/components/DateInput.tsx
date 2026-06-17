@@ -12,7 +12,7 @@ import {
 	DATE_MASK,
 	DATE_TIME_MASK,
 	DEFAULT_DATE_FORMAT,
-	DEFAULT_TIMEZONE_ID
+	DEFAULT_TIMEZONE_ID,
 } from 'shared/util/date';
 import {DatePickerRetentionPeriodHeader} from './DatePickerRetentionPeriodHeader';
 import {formatDateWithTimezone} from './dropdown-range-key/utils';
@@ -48,7 +48,7 @@ const DateInput: React.FC<IDateInputProps> = ({
 	showRetentionPeriod = true,
 	showTimeSelector = false,
 	timeZoneId,
-	value
+	value,
 }) => {
 	const [active, setActive] = useState(false);
 
@@ -75,7 +75,8 @@ const DateInput: React.FC<IDateInputProps> = ({
 
 		if (showTimeSelector) {
 			date = applyTimeZone(value, timeZoneId);
-		} else {
+		}
+		else {
 			date = moment(value);
 		}
 
@@ -96,13 +97,13 @@ const DateInput: React.FC<IDateInputProps> = ({
 		<ClayDropDown
 			active={active}
 			alignmentPosition={Align.TopLeft}
-			className='dropdown-range-key-root'
+			className="dropdown-range-key-root"
 			menuElementAttrs={{
 				className: getCN(className, 'dropdown-range-key-menu-root', {
-					'show-date-picker': active
-				})
+					'show-date-picker': active,
+				}),
 			}}
-			onActiveChange={active => {
+			onActiveChange={(active) => {
 				setActive(active);
 
 				!active && onDateInputBlur();
@@ -112,10 +113,10 @@ const DateInput: React.FC<IDateInputProps> = ({
 					<Input.Group>
 						<Input.GroupItem>
 							<MaskedInput
-								autoComplete='off'
-								data-testid='date-input'
+								autoComplete="off"
+								data-testid="date-input"
 								id={id}
-								inset='after'
+								inset="after"
 								keepCharPositions
 								mask={
 									showTimeSelector
@@ -129,7 +130,7 @@ const DateInput: React.FC<IDateInputProps> = ({
 									showTimeSelector
 										? Liferay.Language.get(
 												'yyyy-mm-dd-hh-mm-zz'
-										  )
+											)
 										: Liferay.Language.get('yyyy-mm-dd')
 								}
 								readOnly={readOnly}
@@ -137,18 +138,18 @@ const DateInput: React.FC<IDateInputProps> = ({
 								value={getDateValue()}
 							/>
 
-							<Input.Inset position='after'>
+							<Input.Inset position="after">
 								<ClayButton
 									aria-label={Liferay.Language.get(
 										'choose-a-date'
 									)}
-									className='button-root'
-									displayType='unstyled'
+									className="button-root"
+									displayType="unstyled"
 									onClick={() => setActive(true)}
 								>
 									<ClayIcon
-										className='icon-root'
-										symbol='calendar'
+										className="icon-root"
+										symbol="calendar"
 									/>
 								</ClayButton>
 							</Input.Inset>

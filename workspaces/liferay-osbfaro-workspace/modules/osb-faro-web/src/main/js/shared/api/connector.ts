@@ -23,7 +23,7 @@ export function createConnector(
 ) {
 	const data = pickBy(
 		{
-			credentials
+			credentials,
 		},
 		Boolean
 	);
@@ -31,10 +31,10 @@ export function createConnector(
 	return sendRequest({
 		data: {
 			...data,
-			name
+			name,
 		},
 		method: 'POST',
-		path: `contacts/${groupId}/data_source/${slug}`
+		path: `contacts/${groupId}/data_source/${slug}`,
 	});
 }
 
@@ -46,14 +46,14 @@ export function updateConnector(
 		groupId,
 		id,
 		name,
-		status
+		status,
 	}: UpdateConnectorParams
 ) {
 	const data = pickBy(
 		{
 			channelsConfiguration,
 			credentials,
-			status
+			status,
 		},
 		Boolean
 	);
@@ -61,10 +61,10 @@ export function updateConnector(
 	return sendRequest({
 		data: {
 			...data,
-			name
+			name,
 		},
 		method: 'PATCH',
-		path: `contacts/${groupId}/data_source/${id}/${slug}`
+		path: `contacts/${groupId}/data_source/${id}/${slug}`,
 	});
 }
 
@@ -74,16 +74,16 @@ export function fetchConnectorEntityCount(
 ) {
 	return sendRequest({
 		method: 'GET',
-		path: `contacts/${groupId}/data-source-metrics/${id}/${entity}_count`
+		path: `contacts/${groupId}/data-source-metrics/${id}/${entity}_count`,
 	});
 }
 
 export function generateConnectorToken({
 	groupId,
-	type
+	type,
 }: RESTParams & {type: string}) {
 	return sendRequest({
 		method: 'POST',
-		path: `main/${groupId}/oauth2/tokens/new?type=${type}`
+		path: `main/${groupId}/oauth2/tokens/new?type=${type}`,
 	});
 }

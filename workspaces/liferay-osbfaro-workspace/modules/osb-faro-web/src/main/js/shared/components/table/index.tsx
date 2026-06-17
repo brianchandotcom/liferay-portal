@@ -83,7 +83,7 @@ const Table: React.FC<ITableProps> = ({
 	rowIdentifier = 'id',
 	selectedItemsIOMap = OrderedMap(),
 	showCheckbox = false,
-	striped = true
+	striped = true,
 }) => {
 	const handleSortOrderChange = (orderParams: OrderParams) => {
 		if (onOrderIOMapChange) {
@@ -91,7 +91,8 @@ const Table: React.FC<ITableProps> = ({
 				onOrderIOMapChange(
 					orderIOMap.set(orderParams.field, orderParams)
 				);
-			} else {
+			}
+			else {
 				onOrderIOMapChange(
 					OrderedMap({[orderParams.field]: orderParams})
 				);
@@ -116,7 +117,7 @@ const Table: React.FC<ITableProps> = ({
 
 		return orderBy(
 			items,
-			item => {
+			(item) => {
 				const fieldValue = item[field];
 
 				if (typeof fieldValue === 'string') {
@@ -151,13 +152,13 @@ const Table: React.FC<ITableProps> = ({
 		{
 			'show-quick-actions-on-hover': renderRowActions,
 			'table-bordered': bordered,
-			'table-striped': striped
+			'table-striped': striped,
 		}
 	);
 
 	return (
 		<div className={rootClassName}>
-			<div className='table-responsive'>
+			<div className="table-responsive">
 				<table className={classes}>
 					<HeaderRow
 						columns={columns}
@@ -197,7 +198,7 @@ const Table: React.FC<ITableProps> = ({
 													: getRowIdentifierValue(
 															item,
 															rowIdentifier
-													  )
+														)
 											}
 											onClick={
 												disabled
@@ -215,7 +216,7 @@ const Table: React.FC<ITableProps> = ({
 												onSelectItemsChange
 													? selectedItemsIOMap.has(
 															item?.id
-													  )
+														)
 													: undefined
 											}
 											showCheckbox={showCheckbox}

@@ -10,9 +10,9 @@
 
 		&.required {
 			.content-container:after {
-			  color: $error;
-			  content: '*';
-			  margin-left: 4px;
+				color: $error;
+				content: '*';
+				margin-left: 4px;
 			}
 		}
 

@@ -10,8 +10,8 @@ import {withPolling} from 'shared/hoc';
 const ActivatingDisplay = () => (
 	<WorkspacesBasePage title={Liferay.Language.get('activating-workspace')}>
 		<Sheet>
-			<Sheet.Header className='mb-4'>
-				<h3 className='title'>
+			<Sheet.Header className="mb-4">
+				<h3 className="title">
 					{Liferay.Language.get('your-workspace-is-being-activated')}
 				</h3>
 			</Sheet.Header>
@@ -33,10 +33,10 @@ const ActivatingDisplay = () => (
 			<Sheet.Footer divider={false}>
 				<ClayLink
 					button
-					className='button-root'
-					displayType='primary'
+					className="button-root"
+					displayType="primary"
 					href={URLConstants.DocumentationAdminLink}
-					target='_blank'
+					target="_blank"
 				>
 					{Liferay.Language.get('check-out-docs')}
 				</ClayLink>

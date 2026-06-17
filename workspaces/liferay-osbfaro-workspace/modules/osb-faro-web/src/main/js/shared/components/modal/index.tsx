@@ -20,11 +20,11 @@ const Modal: React.FC<IModalProps> = ({children, className, size, type}) => (
 		aria-modal
 		className={getCN('modal-dialog', className, {
 			[`modal-${size}`]: size,
-			[`modal-${type}`]: type
+			[`modal-${type}`]: type,
 		})}
-		role='dialog'
+		role="dialog"
 	>
-		<div className='modal-content'>{children}</div>
+		<div className="modal-content">{children}</div>
 	</div>
 );
 
@@ -32,5 +32,5 @@ export default Object.assign(Modal, {
 	Body,
 	Footer,
 	Header,
-	SIZES
+	SIZES,
 });

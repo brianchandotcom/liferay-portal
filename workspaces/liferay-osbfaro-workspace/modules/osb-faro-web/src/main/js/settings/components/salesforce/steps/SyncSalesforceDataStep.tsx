@@ -16,7 +16,7 @@ interface ISyncSalesforceDataStepProps {
 
 const SyncSalesforceDataStep = ({
 	onNext,
-	onPrev
+	onPrev,
 }: ISyncSalesforceDataStepProps) => {
 	const [loading, setLoading] = useState(false);
 	const {dataSource} = useWizardPage();
@@ -28,7 +28,7 @@ const SyncSalesforceDataStep = ({
 		if (dataSource) {
 			const accounts = dataSource.provider?.getIn([
 				'accountsConfiguration',
-				'enableAllAccounts'
+				'enableAllAccounts',
 			]);
 
 			const contactsConfiguration = dataSource.provider?.get(
@@ -46,7 +46,7 @@ const SyncSalesforceDataStep = ({
 
 	return (
 		<ClayForm
-			onSubmit={async event => {
+			onSubmit={async (event) => {
 				event.preventDefault();
 
 				if (!dataSource) {
@@ -58,31 +58,33 @@ const SyncSalesforceDataStep = ({
 
 					await updateSalesforce({
 						accountsConfiguration: {
-							enableAllAccounts: enabledAccount
+							enableAllAccounts: enabledAccount,
 						},
 						contactsConfiguration: {
 							enableAllContacts: enabledIndividual,
-							enableAllLeads: enabledIndividual
+							enableAllLeads: enabledIndividual,
 						},
 						groupId,
-						id: dataSource.id
+						id: dataSource.id,
 					} as any);
-				} catch (error) {
+				}
+				catch (error) {
 					addAlert({
 						alertType: Alert.Types.Error,
 						message: Liferay.Language.get(
 							'there-was-an-error-processing-your-request.-try-again.-if-the-problem-persists,-please-contact-support'
-						)
+						),
 					});
-				} finally {
+				}
+				finally {
 					setLoading(false);
 
 					onNext();
 				}
 			}}
 		>
-			<div className='mb-2'>
-				<Text size={2} weight='semi-bold'>
+			<div className="mb-2">
+				<Text size={2} weight="semi-bold">
 					{Liferay.Language.get('connection-status').toUpperCase()}
 				</Text>
 			</div>
@@ -95,7 +97,7 @@ const SyncSalesforceDataStep = ({
 					onIndividualChange={() =>
 						setEnabledIndividual(!enabledIndividual)
 					}
-					type='checkbox'
+					type="checkbox"
 				/>
 			)}
 

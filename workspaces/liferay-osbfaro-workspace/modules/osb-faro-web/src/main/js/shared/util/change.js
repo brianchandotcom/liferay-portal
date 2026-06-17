@@ -48,7 +48,7 @@ export function getNetChange(prev, current) {
 		change > 0
 			? `+${change.toLocaleString()}`
 			: `-${Math.abs(change).toLocaleString()}`,
-		isFinite(percentage) ? percentage : isNaN(percentage) ? 0 : 100
+		isFinite(percentage) ? percentage : isNaN(percentage) ? 0 : 100,
 	];
 }
 

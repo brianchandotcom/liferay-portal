@@ -11,7 +11,7 @@ export const Search: React.FC<ISearchProps> = ({groupId}) => (
 	<BasePage
 		breadcrumbItems={[
 			getDefinitions({groupId}),
-			{active: true, label: Liferay.Language.get('search')}
+			{active: true, label: Liferay.Language.get('search')},
 		]}
 		pageDescription={Liferay.Language.get(
 			'collect-your-propertys-search-data-by-defining-search-query-parameters'

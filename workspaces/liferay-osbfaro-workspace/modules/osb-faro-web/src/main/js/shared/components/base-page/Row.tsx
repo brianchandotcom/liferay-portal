@@ -3,7 +3,7 @@ import React from 'react';
 
 const Row: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
 	children,
-	className
+	className,
 }) => (
 	<div
 		className={getCN(

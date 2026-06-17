@@ -21,7 +21,7 @@ const CopyInputValue = ({
 	addAlert,
 	disabled,
 	title,
-	value
+	value,
 }: ICopyInputValueProps) => {
 	const [isUrlCopied, setIsUrlCopied] = useState(false);
 	const [copyTitle, setCopyTitle] = useState(
@@ -43,7 +43,7 @@ const CopyInputValue = ({
 				alertType: Alert.Types.Success,
 				message: Liferay.Language.get(
 					'copied-successfully-to-the-clipboard'
-				)
+				),
 			});
 
 			setTimeout(() => {
@@ -60,20 +60,20 @@ const CopyInputValue = ({
 	return (
 		<ClayForm.Group
 			className={getCN({
-				'has-success': isUrlCopied
+				'has-success': isUrlCopied,
 			})}
 		>
-			{title && <label htmlFor='value'>{title}</label>}
+			{title && <label htmlFor="value">{title}</label>}
 
 			<ClayInput.Group>
 				<ClayInput.GroupItem prepend>
 					<ClayInput
 						disabled={disabled}
-						id='value'
+						id="value"
 						insetAfter
-						name='value'
+						name="value"
 						readOnly={!isUrlCopied}
-						type='text'
+						type="text"
 						value={value ? value : Liferay.Language.get('loading')}
 					/>
 				</ClayInput.GroupItem>

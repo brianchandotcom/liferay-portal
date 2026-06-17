@@ -9,7 +9,7 @@ interface ICurrentStatusProps {
 
 const CurrentStatus: React.FC<ICurrentStatusProps> = ({
 	className,
-	data: {currentMember}
+	data: {currentMember},
 }) => (
 	<td className={className}>
 		{currentMember

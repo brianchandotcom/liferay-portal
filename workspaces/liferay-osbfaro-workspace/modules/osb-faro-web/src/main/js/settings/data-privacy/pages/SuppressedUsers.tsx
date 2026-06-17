@@ -18,10 +18,10 @@ export const SuppressedUsers = ({router}: {router: Router}) => {
 				getDataPrivacy({groupId}),
 				{
 					active: true,
-					label: Liferay.Language.get('suppressed-user-list')
-				}
+					label: Liferay.Language.get('suppressed-user-list'),
+				},
 			]}
-			className='suppressed-users-page-root'
+			className="suppressed-users-page-root"
 			documentTitle={Liferay.Language.get('suppressed-user-list')}
 		>
 			<SuppressedUserList

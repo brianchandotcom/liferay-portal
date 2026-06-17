@@ -9,11 +9,11 @@ describe('Url Utils', () => {
 				params: {
 					groupId: '32719',
 					title: 'my page',
-					touchpoint: 'http://mypage.com/'
+					touchpoint: 'http://mypage.com/',
 				},
 				query: {
-					rangeKey: '30'
-				}
+					rangeKey: '30',
+				},
 			};
 
 			expect(getUrl(path, router)).toEqual(
@@ -29,11 +29,11 @@ describe('Url Utils', () => {
 					assetId: '123',
 					groupId: '32719',
 					title: 'my asset',
-					touchpoint: 'Any'
+					touchpoint: 'Any',
 				},
 				query: {
-					rangeKey: '30'
-				}
+					rangeKey: '30',
+				},
 			};
 
 			expect(getUrl(path, router)).toEqual(

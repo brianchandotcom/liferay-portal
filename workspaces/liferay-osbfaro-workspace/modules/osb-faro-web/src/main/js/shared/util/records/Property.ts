@@ -21,7 +21,7 @@ export default class Property
 		name: '',
 		options: [],
 		propertyKey: '',
-		type: null
+		type: null,
 	})
 	implements IProperty
 {

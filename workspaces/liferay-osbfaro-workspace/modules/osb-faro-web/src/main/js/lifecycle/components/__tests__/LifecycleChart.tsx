@@ -4,7 +4,7 @@ import {cleanup, fireEvent, render} from '@testing-library/react';
 import {ILifecycleStage} from 'lifecycle/utils/types';
 import {
 	LifecycleContextProvider,
-	useLifecycle
+	useLifecycle,
 } from '../../context/LifecycleContext';
 import {LifecycleStages} from 'contacts/pages/account/utils/constants';
 
@@ -17,7 +17,7 @@ const sampleStages: ILifecycleStage[] = [
 		conversionRateToNextStage: 492,
 		description: 'Aware description.',
 		percentage: 43.6,
-		stageType: LifecycleStages.AWARE
+		stageType: LifecycleStages.AWARE,
 	},
 	{
 		accountCount: 64,
@@ -25,7 +25,7 @@ const sampleStages: ILifecycleStage[] = [
 		conversionRateToNextStage: 64,
 		description: 'Engaged description.',
 		percentage: 28.4,
-		stageType: LifecycleStages.ENGAGED
+		stageType: LifecycleStages.ENGAGED,
 	},
 	{
 		accountCount: 41,
@@ -33,7 +33,7 @@ const sampleStages: ILifecycleStage[] = [
 		conversionRateToNextStage: 54,
 		description: 'Pipeline description.',
 		percentage: 18.2,
-		stageType: LifecycleStages.PIPELINE
+		stageType: LifecycleStages.PIPELINE,
 	},
 	{
 		accountCount: 22,
@@ -41,7 +41,7 @@ const sampleStages: ILifecycleStage[] = [
 		conversionRateToNextStage: 0,
 		description: 'Onboarding description.',
 		percentage: 9.8,
-		stageType: LifecycleStages.ONBOARDING
+		stageType: LifecycleStages.ONBOARDING,
 	},
 	{
 		accountCount: 0,
@@ -49,14 +49,14 @@ const sampleStages: ILifecycleStage[] = [
 		conversionRateToNextStage: null,
 		description: 'Established description.',
 		percentage: 0,
-		stageType: LifecycleStages.ESTABLISHED
-	}
+		stageType: LifecycleStages.ESTABLISHED,
+	},
 ];
 
 const FilterProbe = () => {
 	const {filters} = useLifecycle();
 	return (
-		<span data-testid='lifecycle-filter'>
+		<span data-testid="lifecycle-filter">
 			{filters.lifecycleStageFilter ?? 'none'}
 		</span>
 	);
@@ -64,7 +64,7 @@ const FilterProbe = () => {
 
 const renderChart = (props: Parameters<typeof LifecycleChart>[0] = {}) =>
 	render(
-		<LifecycleContextProvider lifecycleId='1'>
+		<LifecycleContextProvider lifecycleId="1">
 			<LifecycleChart {...props} />
 			<FilterProbe />
 		</LifecycleContextProvider>
@@ -143,7 +143,7 @@ describe('LifecycleChart', () => {
 				conversionRateToNextStage: 10,
 				description: '',
 				percentage: 10,
-				stageType: LifecycleStages.AWARE
+				stageType: LifecycleStages.AWARE,
 			},
 			{
 				accountCount: 1,
@@ -151,7 +151,7 @@ describe('LifecycleChart', () => {
 				conversionRateToNextStage: 10,
 				description: '',
 				percentage: 10,
-				stageType: LifecycleStages.ENGAGED
+				stageType: LifecycleStages.ENGAGED,
 			},
 			{
 				accountCount: 1,
@@ -159,7 +159,7 @@ describe('LifecycleChart', () => {
 				conversionRateToNextStage: 10,
 				description: '',
 				percentage: 10,
-				stageType: LifecycleStages.PIPELINE
+				stageType: LifecycleStages.PIPELINE,
 			},
 			{
 				accountCount: 1,
@@ -167,7 +167,7 @@ describe('LifecycleChart', () => {
 				conversionRateToNextStage: 10,
 				description: '',
 				percentage: 10,
-				stageType: LifecycleStages.ONBOARDING
+				stageType: LifecycleStages.ONBOARDING,
 			},
 			{
 				accountCount: 0,
@@ -175,12 +175,12 @@ describe('LifecycleChart', () => {
 				conversionRateToNextStage: null,
 				description: '',
 				percentage: 0,
-				stageType: LifecycleStages.ESTABLISHED
-			}
+				stageType: LifecycleStages.ESTABLISHED,
+			},
 		];
 
 		const {getByText, queryByText} = renderChart({
-			stages: stagesWithLongDecimals
+			stages: stagesWithLongDecimals,
 		});
 
 		expect(getByText('9.83')).toBeInTheDocument();
@@ -197,7 +197,7 @@ describe('LifecycleChart', () => {
 
 		const labels = Array.from(
 			container.querySelectorAll('.label-info')
-		).map(el => el.textContent);
+		).map((el) => el.textContent);
 
 		expect(labels[0]).toContain('492%');
 		expect(labels[1]).toContain('64%');

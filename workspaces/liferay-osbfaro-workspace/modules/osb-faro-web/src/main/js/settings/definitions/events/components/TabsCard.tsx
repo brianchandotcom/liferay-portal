@@ -21,13 +21,13 @@ const NAV_ITEMS = [
 	{
 		exact: true,
 		label: Liferay.Language.get('default-events'),
-		route: Routes.SETTINGS_DEFINITIONS_EVENTS_DEFAULT
+		route: Routes.SETTINGS_DEFINITIONS_EVENTS_DEFAULT,
 	},
 	{
 		exact: true,
 		label: Liferay.Language.get('custom-events'),
-		route: Routes.SETTINGS_DEFINITIONS_EVENTS_CUSTOM
-	}
+		route: Routes.SETTINGS_DEFINITIONS_EVENTS_CUSTOM,
+	},
 ];
 
 interface ITabsCardProps {
@@ -41,13 +41,13 @@ const TabsCard: React.FC<ITabsCardProps> = ({groupId}) => {
 		matchedRoute === Routes.SETTINGS_DEFINITIONS_EVENTS_CUSTOM;
 
 	const initialItem =
-		NAV_ITEMS.find(item => item.route === matchedRoute) ?? NAV_ITEMS[0];
+		NAV_ITEMS.find((item) => item.route === matchedRoute) ?? NAV_ITEMS[0];
 
 	const [activeLabel, setActiveLabel] = useState(initialItem.label);
 
 	return (
-		<Card key='cardContainer' pageDisplay>
-			<ClayNavigationBar className='my-3' triggerLabel={activeLabel}>
+		<Card key="cardContainer" pageDisplay>
+			<ClayNavigationBar className="my-3" triggerLabel={activeLabel}>
 				{NAV_ITEMS.map(({label, route}) => (
 					<ClayNavigationBar.Item
 						active={matchedRoute === route}
@@ -67,15 +67,15 @@ const TabsCard: React.FC<ITabsCardProps> = ({groupId}) => {
 				<ClayLink
 					borderless
 					button
-					className='block-list-button button-root m-3'
-					displayType='secondary'
+					className="block-list-button button-root m-3"
+					displayType="secondary"
 					href={toRoute(
 						Routes.SETTINGS_DEFINITIONS_EVENTS_BLOCK_LIST,
 						{groupId}
 					)}
 					small
 				>
-					<ClayIcon className='icon-root mr-2' symbol='ac_block' />
+					<ClayIcon className="icon-root mr-2" symbol="ac_block" />
 
 					{Liferay.Language.get('block-list')}
 				</ClayLink>

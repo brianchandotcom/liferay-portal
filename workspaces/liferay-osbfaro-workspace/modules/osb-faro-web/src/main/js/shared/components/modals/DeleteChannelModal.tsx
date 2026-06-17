@@ -39,14 +39,14 @@ const DeleteChannelModal: React.FC<IDeleteChannelModalProps> = ({
 	className,
 	groupId,
 	onClose,
-	onSubmit
+	onSubmit,
 }) => {
 	const {data, error, loading, refetch} = useRequest({
 		dataSourceFn: API.dataSource.fetchChannels,
 		variables: {
 			channelIds,
-			groupId
-		}
+			groupId,
+		},
 	});
 
 	return (
@@ -73,7 +73,7 @@ const DeleteChannelModal: React.FC<IDeleteChannelModalProps> = ({
 			>
 				{({items, total}: {items: DataSource[]; total: number}) => (
 					<>
-						<div className='text-secondary'>
+						<div className="text-secondary">
 							<p>
 								<strong>
 									{sub(

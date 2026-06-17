@@ -1,7 +1,7 @@
 import withAction from './WithAction';
 import {
 	fetchProject,
-	fetchProjectViaCorpProjectUuid
+	fetchProjectViaCorpProjectUuid,
 } from '../actions/projects';
 
 /**
@@ -24,7 +24,7 @@ export const withProject = (bypassErrorPage = false) =>
 					state
 						.get('projects')
 						.find(
-							project =>
+							(project) =>
 								String(project.getIn(['data', 'groupId'])) ===
 								groupId
 						) || state.getIn(['projects', groupId])

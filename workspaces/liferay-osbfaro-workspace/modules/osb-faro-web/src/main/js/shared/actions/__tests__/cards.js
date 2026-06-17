@@ -7,7 +7,7 @@ describe('Card Actions', () => {
 			const action = fetchCard({
 				contactsCardTemplateId: 'test',
 				contactsEntityId: '123',
-				contactsEntityType: 1
+				contactsEntityType: 1,
 			});
 
 			expect(isFSA(action)).toBe(true);

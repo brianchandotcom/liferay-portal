@@ -7,16 +7,16 @@ jest.unmock('react-dom');
 
 jest.mock('react-router-dom', () => ({
 	...jest.requireActual('react-router-dom'),
-	useParams: () => ({channelId: '456', groupId: '2000'})
+	useParams: () => ({channelId: '456', groupId: '2000'}),
 }));
 
 const renderFilter = (props = {}) =>
 	render(
-		<LifecycleContextProvider lifecycleId='1'>
+		<LifecycleContextProvider lifecycleId="1">
 			<FieldValueFilter
-				entityLabel='Industries'
-				fieldMappingFieldName='industry'
-				filterKey='industryFilter'
+				entityLabel="Industries"
+				fieldMappingFieldName="industry"
+				filterKey="industryFilter"
 				{...props}
 			/>
 		</LifecycleContextProvider>
@@ -38,7 +38,7 @@ describe('FieldValueFilter', () => {
 		const useRequest = require('shared/hooks/useRequest');
 		useRequest.useRequest = jest.fn(() => ({
 			data: {items: ['Tech', 'Finance']},
-			loading: false
+			loading: false,
 		}));
 
 		const {getByText} = renderFilter();
@@ -50,7 +50,7 @@ describe('FieldValueFilter', () => {
 		const useRequest = require('shared/hooks/useRequest');
 		useRequest.useRequest = jest.fn(() => ({
 			data: {items: ['Tech', 'Finance']},
-			loading: false
+			loading: false,
 		}));
 
 		const {getByRole} = renderFilter();
@@ -66,10 +66,10 @@ describe('FieldValueFilter', () => {
 		useRequest.useRequest = jest.fn(() => ({
 			data: {
 				items: [
-					'A very very very long industry value that would overflow the filter'
-				]
+					'A very very very long industry value that would overflow the filter',
+				],
 			},
-			loading: false
+			loading: false,
 		}));
 
 		const {baseElement, getByRole} = renderFilter();
@@ -90,7 +90,7 @@ describe('FieldValueFilter', () => {
 		renderFilter({
 			entityLabel: 'Countries',
 			fieldMappingFieldName: 'country',
-			filterKey: 'countryFilter'
+			filterKey: 'countryFilter',
 		});
 
 		expect(spy).toHaveBeenCalledWith(
@@ -98,8 +98,8 @@ describe('FieldValueFilter', () => {
 				variables: expect.objectContaining({
 					channelId: '456',
 					fieldMappingFieldName: 'country',
-					groupId: '2000'
-				})
+					groupId: '2000',
+				}),
 			})
 		);
 	});

@@ -10,7 +10,7 @@ import {fromJS} from 'immutable';
 import {
 	getFilterCriterionIMap,
 	getIndexFromPropertyName,
-	getPropertyValue
+	getPropertyValue,
 } from '../utils/custom-inputs';
 import {isNull} from 'lodash';
 import {PropertyTypes} from '../utils/constants';
@@ -33,7 +33,7 @@ export default class SessionInput extends React.Component<ISessionInputProps> {
 			channelId,
 			groupId,
 			property: {name},
-			value: valueIMap
+			value: valueIMap,
 		} = this.props;
 
 		return API.session
@@ -41,7 +41,7 @@ export default class SessionInput extends React.Component<ISessionInputProps> {
 				channelId,
 				fieldName: name,
 				groupId: groupId!,
-				query: getPropertyValue(valueIMap, 'value', 0)
+				query: getPropertyValue(valueIMap, 'value', 0),
 			})
 			.then(({items}) => items);
 	}
@@ -73,7 +73,10 @@ export default class SessionInput extends React.Component<ISessionInputProps> {
 			valid: {...valid, dateFilter: isNull(criterion) || criterion.valid},
 			value: isNull(criterion)
 				? value.deleteIn(['criterionGroup', 'items', 1])
-				: value.setIn(['criterionGroup', 'items', 1], fromJS(criterion))
+				: value.setIn(
+						['criterionGroup', 'items', 1],
+						fromJS(criterion)
+					),
 		});
 	}
 
@@ -88,7 +91,7 @@ export default class SessionInput extends React.Component<ISessionInputProps> {
 		onChange({
 			touched: {...touched, customInput: true},
 			valid: {...valid, customInput: criterion.valid},
-			value: criterion.value
+			value: criterion.value,
 		});
 	}
 
@@ -121,7 +124,7 @@ export default class SessionInput extends React.Component<ISessionInputProps> {
 		const conjunctionCriterion = this.getConjunctionDateFilterIMap();
 
 		return (
-			<div className='criteria-statement'>
+			<div className="criteria-statement">
 				<Form.Group autoFit>{this.renderCustomInput()}</Form.Group>
 
 				<Form.Group autoFit>

@@ -8,27 +8,28 @@ interface IWelcomeProps {
 }
 
 const Welcome: React.FC<IWelcomeProps> = ({onNext}) => (
-	<div className='welcome'>
-		<Modal.Body className='d-flex flex-column align-items-center'>
+	<div className="welcome">
+		<Modal.Body className="d-flex flex-column align-items-center">
+
 			{/* TODO: LRAC-7427 Adjust SVGs with Linear Gradients */}
-			<div className='ac-property-buildings' />
+			<div className="ac-property-buildings" />
 
 			<h2>{Liferay.Language.get('introducing-properties')}</h2>
 
-			<span className='subtitle'>
+			<span className="subtitle">
 				{Liferay.Language.get(
 					'we-ve-upgraded-your-analytics-cloud-workspace-to-include-properties'
 				)}
 			</span>
 
-			<ul className='description'>
+			<ul className="description">
 				<li>
-					<p className='description-title'>
+					<p className="description-title">
 						{Liferay.Language.get(
 							'track-user-activities-across-experiences-that-matter'
 						)}
 					</p>
-					<p className='description-subtitle'>
+					<p className="description-subtitle">
 						{Liferay.Language.get(
 							'scope-user-sessions-to-their-intended-experiences-by-combining-sites-for-each-property'
 						)}
@@ -40,12 +41,12 @@ const Welcome: React.FC<IWelcomeProps> = ({onNext}) => (
 					</p>
 				</li>
 				<li>
-					<p className='description-title'>
+					<p className="description-title">
 						{Liferay.Language.get(
 							'take-control-of-the-data-access-with-property-permissions'
 						)}
 					</p>
-					<p className='description-subtitle'>
+					<p className="description-subtitle">
 						{Liferay.Language.get(
 							'flexible-user-access-controls-with-custom-permissioning-for-each-property'
 						)}
@@ -54,11 +55,11 @@ const Welcome: React.FC<IWelcomeProps> = ({onNext}) => (
 			</ul>
 		</Modal.Body>
 
-		<Modal.Footer className='d-flex justify-content-end'>
+		<Modal.Footer className="d-flex justify-content-end">
 			<ClayButton
 				autoFocus
-				className='button-root wide'
-				displayType='secondary'
+				className="button-root wide"
+				displayType="secondary"
 				onClick={() => onNext()}
 			>
 				{Liferay.Language.get('next')}

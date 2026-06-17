@@ -18,8 +18,8 @@ export default createReducer(new List(), {
 			new Map({
 				closeOnBlur,
 				props: new Map(props),
-				type
+				type,
 			})
 		);
-	}
+	},
 });

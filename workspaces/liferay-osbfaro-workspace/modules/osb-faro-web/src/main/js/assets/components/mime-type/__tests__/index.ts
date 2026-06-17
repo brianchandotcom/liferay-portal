@@ -65,7 +65,9 @@ describe('getMimeType', () => {
 	});
 
 	it('should handle mimeType without slash by using it as prefix', () => {
+
 		// Even if it's not a standard mime type, the logic uses the first part.
+
 		expect(getMimeType({mimeType: 'image'})).toEqual(
 			STRUCTURES_MAP.CMSDocumentImage
 		);

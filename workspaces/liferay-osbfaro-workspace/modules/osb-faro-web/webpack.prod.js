@@ -5,14 +5,14 @@ const webpack = require('webpack');
 module.exports = merge(common.config, {
 	mode: 'production',
 	output: {
-		chunkFilename: '[id].[chunkhash].js'
+		chunkFilename: '[id].[chunkhash].js',
 	},
 	performance: {
-		hints: false
+		hints: false,
 	},
 	plugins: [
 		new webpack.DefinePlugin({
-			FARO_DEV_MODE: false
-		})
-	]
+			FARO_DEV_MODE: false,
+		}),
+	],
 });

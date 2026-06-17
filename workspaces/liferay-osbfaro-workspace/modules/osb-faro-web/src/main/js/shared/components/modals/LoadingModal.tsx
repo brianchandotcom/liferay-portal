@@ -14,20 +14,20 @@ const LoadingModal: React.FC<ILoadingModalProps> = ({
 	className,
 	icon,
 	message = Liferay.Language.get('loading'),
-	title
+	title,
 }) => (
-	<Modal className={getCN('loading-modal-root', className)} size='sm'>
-		{title && <h1 className='title'>{title}</h1>}
+	<Modal className={getCN('loading-modal-root', className)} size="sm">
+		{title && <h1 className="title">{title}</h1>}
 
-		<div className='icon-container'>
+		<div className="icon-container">
 			{icon ? (
-				<ClayIcon className='icon-root icon-size-xl' symbol={icon} />
+				<ClayIcon className="icon-root icon-size-xl" symbol={icon} />
 			) : (
 				<Loading />
 			)}
 		</div>
 
-		{message && <p className='message'>{message}</p>}
+		{message && <p className="message">{message}</p>}
 	</Modal>
 );
 

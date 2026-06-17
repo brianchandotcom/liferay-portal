@@ -29,6 +29,6 @@ export function getSingleProjectRoute({corpProjectUuid, groupId}) {
 	return groupId
 		? toRoute(Routes.WORKSPACE_WITH_ID, {groupId})
 		: toRoute(Routes.WORKSPACE_ADD_WITH_CORP_PROJECT_UUID, {
-				corpProjectUuid
-		  });
+				corpProjectUuid,
+			});
 }

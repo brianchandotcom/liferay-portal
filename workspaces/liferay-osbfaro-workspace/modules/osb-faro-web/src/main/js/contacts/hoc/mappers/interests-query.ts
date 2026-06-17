@@ -18,7 +18,7 @@ const mapPropsToOptions = ({
 	id,
 	orderIOMap,
 	page,
-	query
+	query,
 }: IMapPropsArgs) => ({
 	variables: {
 		active: true,
@@ -27,13 +27,13 @@ const mapPropsToOptions = ({
 		keywords: query,
 		size: delta,
 		sort: getSortFromOrderIOMap(orderIOMap),
-		start: (page - 1) * delta
-	}
+		start: (page - 1) * delta,
+	},
 });
 
 const mapCardPropsToOptions = ({
 	channelId,
-	id
+	id,
 }: {
 	channelId: string;
 	id: string;
@@ -45,10 +45,10 @@ const mapCardPropsToOptions = ({
 		size: 5,
 		sort: {
 			column: COUNT,
-			type: OrderByDirections.Descending
+			type: OrderByDirections.Descending,
 		},
-		start: 0
-	}
+		start: 0,
+	},
 });
 
 export {mapCardPropsToOptions, mapPropsToOptions};

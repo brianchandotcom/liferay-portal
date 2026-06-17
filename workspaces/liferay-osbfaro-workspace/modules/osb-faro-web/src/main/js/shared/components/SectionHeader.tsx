@@ -11,16 +11,16 @@ interface ISectionHeader {
 const SectionHeader: React.FC<ISectionHeader> = ({
 	className = 'mb-3',
 	icon,
-	title
+	title,
 }) => (
 	<div className={className}>
-		<span className='mr-2'>
-			<Text color='secondary' size={4}>
+		<span className="mr-2">
+			<Text color="secondary" size={4}>
 				<ClayIcon symbol={icon} />
 			</Text>
 		</span>
 
-		<Text color='secondary' size={4} weight='semi-bold'>
+		<Text color="secondary" size={4} weight="semi-bold">
 			{title.toUpperCase()}
 		</Text>
 	</div>

@@ -7,7 +7,7 @@ import {
 	convertHistogramKeysToDate,
 	getMetricsChartData,
 	getMetricsData,
-	getSiteMetricsChartData
+	getSiteMetricsChartData,
 } from '../util';
 import {getIntervals} from 'shared/util/charts';
 import {RangeKeyTimeRanges} from 'shared/util/constants';
@@ -23,8 +23,8 @@ describe('convertHistogramKeysToDate', () => {
 					key: '2018-07-16T00:00',
 					previousValueKey: '2018-07-15T00:00',
 					value: 15,
-					valueKey: '2018-07-16T00:00'
-				}
+					valueKey: '2018-07-16T00:00',
+				},
 			].map(convertHistogramKeysToDate)
 		).toMatchSnapshot();
 	});
@@ -39,7 +39,7 @@ describe('getMetricsChartData', () => {
 			name: 'fooMetric',
 			title: '',
 			tooltipTitle: '',
-			type: MetricType.Number
+			type: MetricType.Number,
 		};
 
 		expect(getMetricsChartData(mockParameters)).toMatchSnapshot();
@@ -58,15 +58,15 @@ describe('getMetricsData', () => {
 				sortField: 'comments',
 				title: 'comments',
 				tooltipTitle: 'Avg. Comments',
-				type: MetricType.Number
+				type: MetricType.Number,
 			},
 			{
 				name: 'views',
 				sortField: 'views',
 				title: 'Views',
 				tooltipTitle: 'Avg. Views',
-				type: MetricType.Number
-			}
+				type: MetricType.Number,
+			},
 		] as any;
 
 		const result = {
@@ -80,17 +80,17 @@ describe('getMetricsData', () => {
 							previousValueKey: previousValueKeyDate,
 							trend: {
 								percentage: 10,
-								trendClassification: 'NEUTRAL'
+								trendClassification: 'NEUTRAL',
 							},
 							value: 15,
-							valueKey: valueKeyDate
-						}
-					]
+							valueKey: valueKeyDate,
+						},
+					],
 				},
 				trend: {
 					percentage: 10,
-					trendClassification: 'NEUTRAL'
-				}
+					trendClassification: 'NEUTRAL',
+				},
 			},
 			views: {
 				histogram: {
@@ -102,31 +102,31 @@ describe('getMetricsData', () => {
 							previousValueKey: previousValueKeyDate,
 							trend: {
 								percentage: 10,
-								trendClassification: 'NEUTRAL'
+								trendClassification: 'NEUTRAL',
 							},
 							value: 5,
-							valueKey: valueKeyDate
-						}
-					]
+							valueKey: valueKeyDate,
+						},
+					],
 				},
 				trend: {
 					percentage: -100,
-					trendClassification: 'NEGATIVE'
-				}
-			}
+					trendClassification: 'NEGATIVE',
+				},
+			},
 		};
 		const metricsData = getMetricsData(result as any, metrics, {
-			rangeKey: rangeKey as unknown as RangeKeyTimeRanges
+			rangeKey: rangeKey as unknown as RangeKeyTimeRanges,
 		});
 
 		const dateKeysIMap = new Map([
-			[toUnix(keyDate), [toUnix(valueKeyDate)]]
+			[toUnix(keyDate), [toUnix(valueKeyDate)]],
 		]);
 		const prevDateKeysIMap = new Map([
-			[toUnix(keyDate), [toUnix(previousValueKeyDate)]]
+			[toUnix(keyDate), [toUnix(previousValueKeyDate)]],
 		]);
 
-		metricsData.forEach(metricData => {
+		metricsData.forEach((metricData) => {
 			delete (metricData as any).format;
 		});
 
@@ -137,12 +137,12 @@ describe('getMetricsData', () => {
 						asymmetricComparison: undefined,
 						color: '#6B6C7E',
 						icon: 'caret-top-l',
-						label: '10%'
+						label: '10%',
 					},
 					name: 'comments',
 					title: 'comments',
 					type: 'number',
-					value: ''
+					value: '',
 				},
 				data: [
 					{
@@ -150,15 +150,15 @@ describe('getMetricsData', () => {
 						data: [15],
 						id: 'data_1',
 						name: 'Avg. Comments',
-						tooltipTitle: 'Avg. Comments'
+						tooltipTitle: 'Avg. Comments',
 					},
 					{
 						color: CHART_BLUE_L2,
 						data: [0],
 						id: 'data_previous',
-						name: 'Previous Period'
+						name: 'Previous Period',
 					},
-					{data: [toUnix(keyDate)], id: 'x'}
+					{data: [toUnix(keyDate)], id: 'x'},
 				],
 				dateKeysIMap,
 				intervals: getIntervals(
@@ -167,7 +167,7 @@ describe('getMetricsData', () => {
 					'D',
 					dateKeysIMap
 				),
-				prevDateKeysIMap
+				prevDateKeysIMap,
 			},
 			{
 				content: {
@@ -175,12 +175,12 @@ describe('getMetricsData', () => {
 					details: {
 						color: '#DA1414',
 						icon: 'caret-bottom-l',
-						label: '100%'
+						label: '100%',
 					},
 					name: 'views',
 					title: 'Views',
 					type: 'number',
-					value: ''
+					value: '',
 				},
 				data: [
 					{
@@ -188,15 +188,15 @@ describe('getMetricsData', () => {
 						data: [5],
 						id: 'data_1',
 						name: 'Avg. Views',
-						tooltipTitle: 'Avg. Views'
+						tooltipTitle: 'Avg. Views',
 					},
 					{
 						color: CHART_BLUE_L2,
 						data: [0],
 						id: 'data_previous',
-						name: 'Previous Period'
+						name: 'Previous Period',
 					},
-					{data: [toUnix(keyDate)], id: 'x'}
+					{data: [toUnix(keyDate)], id: 'x'},
 				],
 				dateKeysIMap,
 				intervals: getIntervals(
@@ -205,8 +205,8 @@ describe('getMetricsData', () => {
 					'D',
 					dateKeysIMap
 				),
-				prevDateKeysIMap
-			}
+				prevDateKeysIMap,
+			},
 		]);
 	});
 });
@@ -222,7 +222,7 @@ describe('getSiteMetricsChartData', () => {
 					.histogram.metrics.map(convertHistogramKeysToDate),
 				knownVisitorsMetric: data
 					.mockMetricFragment(55)
-					.histogram.metrics.map(convertHistogramKeysToDate)
+					.histogram.metrics.map(convertHistogramKeysToDate),
 			},
 			histogram: data
 				.mockMetricFragment(85)
@@ -230,7 +230,7 @@ describe('getSiteMetricsChartData', () => {
 			name,
 			title,
 			tooltipTitle,
-			type
+			type,
 		};
 		expect(
 			getSiteMetricsChartData(mockParameters as any)

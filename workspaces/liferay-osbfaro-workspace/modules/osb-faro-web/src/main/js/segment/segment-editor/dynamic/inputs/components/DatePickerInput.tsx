@@ -18,10 +18,10 @@ const DatePickerInput: React.FC<IDatePickerInputProps> = ({
 	onChange,
 	touched,
 	valid,
-	value
+	value,
 }) => {
 	const classNames = getCN({
-		'has-error': !valid && touched
+		'has-error': !valid && touched,
 	});
 
 	return (

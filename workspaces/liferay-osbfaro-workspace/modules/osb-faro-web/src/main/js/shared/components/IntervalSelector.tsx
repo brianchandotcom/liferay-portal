@@ -11,7 +11,7 @@ const {day, month, week} = INTERVAL_KEY_MAP;
 const INTERVAL_LANG_MAP = {
 	[day]: Liferay.Language.get('day'),
 	[month]: Liferay.Language.get('month'),
-	[week]: Liferay.Language.get('week')
+	[week]: Liferay.Language.get('week'),
 };
 
 interface IntervalSelectorIProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -34,16 +34,16 @@ const IntervalSelector: React.FC<IntervalSelectorIProps> = ({
 			{...omitDefinedProps(otherProps, IntervalSelector.propTypes)}
 			className={classes}
 		>
-			{[day, week, month].map(interval => (
+			{[day, week, month].map((interval) => (
 				<ClayButton
 					className={getCN(
 						'button-root interval-option text-uppercase',
 						{
-							active: interval === activeInterval
+							active: interval === activeInterval,
 						}
 					)}
 					disabled={disabled}
-					displayType='secondary'
+					displayType="secondary"
 					key={interval}
 					onClick={() => onChange(interval)}
 					small
@@ -58,12 +58,12 @@ const IntervalSelector: React.FC<IntervalSelectorIProps> = ({
 IntervalSelector.propTypes = {
 	activeInterval: PropTypes.oneOf([day, month, week]),
 	disabled: PropTypes.bool,
-	onChange: PropTypes.func.isRequired
+	onChange: PropTypes.func.isRequired,
 };
 
 IntervalSelector.defaultProps = {
 	activeInterval: day,
-	disabled: false
+	disabled: false,
 };
 
 export default IntervalSelector;

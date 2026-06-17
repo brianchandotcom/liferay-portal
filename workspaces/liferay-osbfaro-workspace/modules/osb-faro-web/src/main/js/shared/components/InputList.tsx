@@ -10,7 +10,7 @@ const KEYS = [COMMA, ENTER, SPACE];
 
 enum Display {
 	Error = 'info-circle',
-	Warning = 'warning-full'
+	Warning = 'warning-full',
 }
 
 interface IErrorProps {
@@ -39,7 +39,7 @@ const InputList: FC<IInputListProps> = ({
 	disabled = false,
 	errorAttr = {
 		className: 'has-error',
-		icon: {display: Display.Error, size: 'sm'}
+		icon: {display: Display.Error, size: 'sm'},
 	},
 	errorMessage = Liferay.Language.get('error'),
 	inputValue = '',
@@ -50,7 +50,7 @@ const InputList: FC<IInputListProps> = ({
 	onValidationFail = noop,
 	placeholder = '',
 	validateOnBlur = false,
-	validationFn = () => true
+	validationFn = () => true,
 }) => {
 	const [focused, setFocused] = useState(false);
 	const [valid, setValid] = useState(true);
@@ -76,7 +76,8 @@ const InputList: FC<IInputListProps> = ({
 				event.target.value = '';
 
 				onInputChange('');
-			} else {
+			}
+			else {
 				setValid(false);
 
 				onValidationFail();
@@ -91,7 +92,7 @@ const InputList: FC<IInputListProps> = ({
 	const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
 		const {
 			keyCode,
-			target: {value}
+			target: {value},
 		} = event as any;
 
 		if (value && keyCodesToSplit.includes(keyCode)) {
@@ -101,22 +102,25 @@ const InputList: FC<IInputListProps> = ({
 				onItemsChange([...items, value]);
 
 				onInputChange('');
-			} else {
+			}
+			else {
 				setValid(false);
 
 				onValidationFail();
 			}
-		} else if (!value && keyCode === BACKSPACE && items.length) {
+		}
+		else if (!value && keyCode === BACKSPACE && items.length) {
 			event.preventDefault();
 
 			onItemsChange(items.slice(0, items.length - 1));
-		} else {
+		}
+		else {
 			setValid(true);
 		}
 	};
 
 	const handleInputChange = ({
-		target: {value}
+		target: {value},
 	}: React.ChangeEvent<HTMLInputElement>) => {
 		onInputChange(value);
 	};
@@ -124,7 +128,7 @@ const InputList: FC<IInputListProps> = ({
 	const handleRemoveItem = (index?: number) => {
 		onItemsChange([
 			...items.slice(0, index),
-			...items.slice((index as number) + 1)
+			...items.slice((index as number) + 1),
 		]);
 	};
 
@@ -137,14 +141,14 @@ const InputList: FC<IInputListProps> = ({
 
 		const pastedItems = pastedText
 			.split(new RegExp(`\\n|\\t|[${keysToSplit.join('')}]`))
-			.filter(item => item.length);
+			.filter((item) => item.length);
 
 		if (pastedItems.length) {
 			event.preventDefault();
 
 			const [valid, invalid] = partition(
 				pastedItems,
-				item => item && validationFn(item)
+				(item) => item && validationFn(item)
 			);
 
 			if (valid.length) {
@@ -163,23 +167,23 @@ const InputList: FC<IInputListProps> = ({
 
 	const {
 		className: errorClassName,
-		icon: {display, size}
+		icon: {display, size},
 	} = errorAttr;
 
 	const classes = getCN('input-group-item input-list-root', className, {
 		disabled,
 		[errorClassName]: !valid,
-		focus: focused && valid
+		focus: focused && valid,
 	});
 
 	return (
 		<div className={classes}>
-			<div className='form-control form-control-tag-group'>
+			<div className="form-control form-control-tag-group">
 				{items &&
 					items.length > 0 &&
 					items.map((item: string, i: number) => (
 						<Label
-							display='secondary'
+							display="secondary"
 							index={i}
 							key={i}
 							onRemove={!disabled ? handleRemoveItem : undefined}
@@ -189,7 +193,7 @@ const InputList: FC<IInputListProps> = ({
 					))}
 
 				<input
-					className='form-control-inset'
+					className="form-control-inset"
 					disabled={disabled}
 					onBlur={handleBlur}
 					onChange={handleInputChange}
@@ -197,15 +201,15 @@ const InputList: FC<IInputListProps> = ({
 					onKeyDown={handleKeyDown}
 					onPaste={handlePaste}
 					placeholder={placeholder}
-					type='text'
+					type="text"
 					value={inputValue}
 				/>
 			</div>
 
 			{!valid && errorMessage && (
-				<div className='form-feedback-group'>
-					<div className='form-feedback-item'>
-						<span className='form-feedback-indicator'>
+				<div className="form-feedback-group">
+					<div className="form-feedback-item">
+						<span className="form-feedback-indicator">
 							<ClayIcon
 								className={`icon-root icon-size-${size}`}
 								symbol={display}

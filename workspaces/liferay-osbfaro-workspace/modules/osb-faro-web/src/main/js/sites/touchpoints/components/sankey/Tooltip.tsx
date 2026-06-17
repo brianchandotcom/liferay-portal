@@ -13,12 +13,13 @@ export const Tooltip: React.FC<any> = ({payload}) => {
 	if (!data?.main) {
 		if (data?.type === 'previous' || data?.target?.main) {
 			description = sub(Liferay.Language.get('page-views-x'), [
-				Liferay.Language.get('referral')
+				Liferay.Language.get('referral'),
 			]);
 			name = data?.source?.name ?? payload[0].name;
-		} else {
+		}
+		else {
 			description = sub(Liferay.Language.get('page-views-x'), [
-				Liferay.Language.get('exit-pages')
+				Liferay.Language.get('exit-pages'),
 			]);
 			name = data?.target?.name ?? payload[0].name;
 		}
@@ -26,14 +27,14 @@ export const Tooltip: React.FC<any> = ({payload}) => {
 
 	return (
 		<div
-			className='clay-popover-top fade popover position-relative show'
+			className="clay-popover-top fade popover position-relative show"
 			style={{minWidth: 240}}
 		>
-			<div className='popover-header'>{description}</div>
-			<div className='popover-body'>
-				<div className='d-flex justify-content-between'>
+			<div className="popover-header">{description}</div>
+			<div className="popover-body">
+				<div className="d-flex justify-content-between">
 					<div
-						className='mr-2'
+						className="mr-2"
 						style={{maxWidth: 'calc(100% - 50px)'}}
 					>
 						{name}

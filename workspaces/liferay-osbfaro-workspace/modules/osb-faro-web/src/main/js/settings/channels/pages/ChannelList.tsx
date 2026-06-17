@@ -15,7 +15,7 @@ import {
 	ACTION_TYPES,
 	ActionTypes,
 	useSelectionContext,
-	withSelectionProvider
+	withSelectionProvider,
 } from 'shared/context/selection';
 import {addAlert} from 'shared/actions/alerts';
 import {Alert} from 'shared/types';
@@ -48,8 +48,8 @@ type FormValues = {
 };
 
 const ChannelName: ChannelNameFn = ({data, hrefFormatter}) => (
-	<td className='table-cell-expand' key={data.id}>
-		<div className='table-title text-truncate'>
+	<td className="table-cell-expand" key={data.id}>
+		<div className="table-title text-truncate">
 			<Link to={hrefFormatter(data)}>
 				<TextTruncate title={data.name} />
 			</Link>
@@ -63,8 +63,8 @@ const connector = connect(
 			'preferences',
 			'user',
 			'defaultChannelId',
-			'data'
-		])
+			'data',
+		]),
 	}),
 	{addAlert, close, open, updateDefaultChannelId}
 );
@@ -85,19 +85,19 @@ const ChannelList: React.FC<IChannelListProps> = ({
 	groupId,
 	history,
 	open,
-	updateDefaultChannelId
+	updateDefaultChannelId,
 }) => {
 	const {selectedItems, selectionDispatch} = useSelectionContext();
 
 	const {delta, orderIOMap, page, query} = useQueryPagination({
-		initialOrderIOMap: createOrderIOMap(CREATE_TIME)
+		initialOrderIOMap: createOrderIOMap(CREATE_TIME),
 	});
 
 	const {
 		data,
 		error,
 		loading,
-		refetch: refetchChannels
+		refetch: refetchChannels,
 	} = useRequest({
 		dataSourceFn: API.channels.search,
 		variables: {
@@ -105,8 +105,8 @@ const ChannelList: React.FC<IChannelListProps> = ({
 			delta,
 			groupId,
 			orderIOMap,
-			query
-		}
+			query,
+		},
 	});
 
 	const currentUser = useCurrentUser();
@@ -116,13 +116,13 @@ const ChannelList: React.FC<IChannelListProps> = ({
 	const handleAddChannel = () => {
 		open(modalTypes.ADD_CHANNEL_MODAL, {
 			onClose: close,
-			onSubmit: handleSubmit
+			onSubmit: handleSubmit,
 		});
 	};
 
 	const handleUnableToDeleteProperty = () => {
 		open(modalTypes.UNABLE_DELETE_PROPERTY_MODAL, {
-			onClose: close
+			onClose: close,
 		});
 	};
 
@@ -156,14 +156,14 @@ const ChannelList: React.FC<IChannelListProps> = ({
 			),
 			deleteButtonLabel: Liferay.Language.get('clear-data'),
 			deleteConfirmationText: sub(Liferay.Language.get('clear-x'), [
-				message
+				message,
 			]),
 			onClose: close,
 			onSubmit: () =>
 				API.channels
 					.clear({
 						groupId,
-						ids
+						ids,
 					})
 					.then(() => {
 						const clearedMessage: string = getPluralMessage(
@@ -178,9 +178,9 @@ const ChannelList: React.FC<IChannelListProps> = ({
 							alertType: Alert.Types.Success,
 							message: sub(
 								clearedMessage,
-								[<b key='clearedCount'>{ids.length}</b>],
+								[<b key="clearedCount">{ids.length}</b>],
 								false
-							) as string
+							) as string,
 						});
 
 						selectionDispatch?.({type: ActionTypes.ClearAll});
@@ -189,19 +189,19 @@ const ChannelList: React.FC<IChannelListProps> = ({
 
 						close();
 					})
-					.catch(err =>
+					.catch((err) =>
 						addAlert({
 							alertType: Alert.Types.Error,
 							message:
 								err.message === UNAUTHORIZED_ACCESS
 									? Liferay.Language.get(
 											'unauthorized-access'
-									  )
+										)
 									: Liferay.Language.get('error'),
-							timeout: false
+							timeout: false,
 						})
 					),
-			title: sub(Liferay.Language.get('clear-x-data?'), [message])
+			title: sub(Liferay.Language.get('clear-x-data?'), [message]),
 		});
 	};
 
@@ -235,14 +235,14 @@ const ChannelList: React.FC<IChannelListProps> = ({
 			),
 			deleteButtonLabel: Liferay.Language.get('delete'),
 			deleteConfirmationText: sub(Liferay.Language.get('delete-x'), [
-				message
+				message,
 			]),
 			onClose: close,
 			onSubmit: () =>
 				API.channels
 					.delete({
 						groupId,
-						ids
+						ids,
 					})
 					.then(() => {
 						const deletedMessage: string = getPluralMessage(
@@ -257,15 +257,15 @@ const ChannelList: React.FC<IChannelListProps> = ({
 							alertType: Alert.Types.Success,
 							message: sub(
 								deletedMessage,
-								[<b key='deleteCount'>{ids.length}</b>],
+								[<b key="deleteCount">{ids.length}</b>],
 								false
-							) as string
+							) as string,
 						});
 
 						if (ids.includes(defaultChannelId)) {
 							updateDefaultChannelId({
 								defaultChannelId: null,
-								groupId
+								groupId,
 							});
 						}
 
@@ -275,19 +275,19 @@ const ChannelList: React.FC<IChannelListProps> = ({
 
 						close();
 					})
-					.catch(err =>
+					.catch((err) =>
 						addAlert({
 							alertType: Alert.Types.Error,
 							message:
 								err.message === UNAUTHORIZED_ACCESS
 									? Liferay.Language.get(
 											'unauthorized-access'
-									  )
+										)
 									: Liferay.Language.get('error'),
-							timeout: false
+							timeout: false,
 						})
 					),
-			title: sub(Liferay.Language.get('delete-x?'), [message])
+			title: sub(Liferay.Language.get('delete-x?'), [message]),
 		});
 	};
 
@@ -301,8 +301,8 @@ const ChannelList: React.FC<IChannelListProps> = ({
 				addAlert({
 					alertType: Alert.Types.Success,
 					message: sub(Liferay.Language.get('x-has-been-created'), [
-						name
-					]) as string
+						name,
+					]) as string,
 				});
 
 				close();
@@ -310,7 +310,7 @@ const ChannelList: React.FC<IChannelListProps> = ({
 				history.push(
 					toRoute(Routes.SETTINGS_CHANNELS_VIEW, {
 						groupId,
-						id
+						id,
 					})
 				);
 			})
@@ -329,9 +329,9 @@ const ChannelList: React.FC<IChannelListProps> = ({
 				<Nav>
 					<Nav.Item>
 						<ClayButton
-							className='button-root nav-btn p-2'
-							data-testid='addproperty-button'
-							displayType='primary'
+							className="button-root nav-btn p-2"
+							data-testid="addproperty-button"
+							displayType="primary"
 							onClick={handleAddChannel}
 						>
 							{Liferay.Language.get('new-property')}
@@ -339,13 +339,14 @@ const ChannelList: React.FC<IChannelListProps> = ({
 					</Nav.Item>
 				</Nav>
 			);
-		} else {
+		}
+		else {
 			return (
 				<Nav>
 					<ClayButton
 						borderless
-						className='button-root'
-						displayType='secondary'
+						className="button-root"
+						displayType="secondary"
 						onClick={() =>
 							handleClearData(
 								selectedItems.keySeq().toArray(),
@@ -359,8 +360,8 @@ const ChannelList: React.FC<IChannelListProps> = ({
 
 					<ClayButton
 						borderless
-						className='button-root'
-						displayType='secondary'
+						className="button-root"
+						displayType="secondary"
 						onClick={() => {
 							const ableToDeleteChannel = !selectedItems.some(
 								({commerceChannelsCount, groupsCount}) =>
@@ -372,7 +373,8 @@ const ChannelList: React.FC<IChannelListProps> = ({
 									selectedItems.keySeq().toArray(),
 									selectedItems.first().name
 								);
-							} else {
+							}
+							else {
 								handleUnableToDeleteProperty();
 							}
 						}}
@@ -388,7 +390,7 @@ const ChannelList: React.FC<IChannelListProps> = ({
 	const authorized: boolean = currentUser.isAdmin();
 
 	const renderRowActions = ({
-		data: {commerceChannelsCount, groupsCount, id, name}
+		data: {commerceChannelsCount, groupsCount, id, name},
 	}: {
 		data: {
 			commerceChannelsCount: number;
@@ -401,7 +403,7 @@ const ChannelList: React.FC<IChannelListProps> = ({
 			{
 				iconSymbol: 'magic',
 				label: Liferay.Language.get('clear-data'),
-				onClick: () => handleClearData([id], name)
+				onClick: () => handleClearData([id], name),
 			},
 			{
 				iconSymbol: 'trash',
@@ -409,18 +411,19 @@ const ChannelList: React.FC<IChannelListProps> = ({
 				onClick: () => {
 					if (!commerceChannelsCount && !groupsCount) {
 						handleDeleteChannel([id], name);
-					} else {
+					}
+					else {
 						handleUnableToDeleteProperty();
 					}
-				}
-			}
+				},
+			},
 		];
 
 		return (
 			<RowActions
 				actions={actions.map(({label, onClick}) => ({
 					label,
-					onClick
+					onClick,
 				}))}
 				quickActions={actions}
 			/>
@@ -429,7 +432,7 @@ const ChannelList: React.FC<IChannelListProps> = ({
 
 	return (
 		<BasePage
-			key='sitesListPage'
+			key="sitesListPage"
 			pageDescription={
 				<>
 					<div>
@@ -456,29 +459,29 @@ const ChannelList: React.FC<IChannelListProps> = ({
 								hrefFormatter: ({id}: {id: string}) =>
 									toRoute(Routes.SETTINGS_CHANNELS_VIEW, {
 										groupId,
-										id
-									})
+										id,
+									}),
 							},
 							className: 'table-cell-expand',
-							label: Liferay.Language.get('property-name')
+							label: Liferay.Language.get('property-name'),
 						},
 						{
 							accessor: 'groupsCount',
 							className: 'text-right',
 							label: Liferay.Language.get('sites'),
-							sortable: false
+							sortable: false,
 						},
 						{
 							accessor: 'commerceChannelsCount',
 							className: 'text-right',
 							label: Liferay.Language.get('channels'),
-							sortable: false
+							sortable: false,
 						},
 						{
 							accessor: 'id',
 							className: 'text-right',
 							label: Liferay.Language.get('property-id'),
-							sortable: false
+							sortable: false,
 						},
 						{
 							accessor: 'permissionType',
@@ -487,14 +490,14 @@ const ChannelList: React.FC<IChannelListProps> = ({
 									? Liferay.Language.get('all-users')
 									: Liferay.Language.get('select-users'),
 							label: Liferay.Language.get('access-setting'),
-							sortable: false
+							sortable: false,
 						},
 						{
 							accessor: 'createTime',
 							dataFormatter: (date: string | number) =>
 								formatDateToTimeZone(date, 'll', timeZoneId),
-							label: Liferay.Language.get('date-added')
-						}
+							label: Liferay.Language.get('date-added'),
+						},
 					]}
 					currentUser={currentUser}
 					delta={delta}
@@ -511,10 +514,10 @@ const ChannelList: React.FC<IChannelListProps> = ({
 									)}
 
 									<ClayLink
-										className='d-block mb-3'
+										className="d-block mb-3"
 										href={URLConstants.CreateProperty}
-										key='DOCUMENTATION'
-										target='_blank'
+										key="DOCUMENTATION"
+										target="_blank"
 									>
 										{Liferay.Language.get(
 											'access-our-documentation-to-learn-more'
@@ -525,7 +528,7 @@ const ChannelList: React.FC<IChannelListProps> = ({
 							icon={{
 								border: false,
 								size: Sizes.XXXLarge,
-								symbol: 'ac_satellite'
+								symbol: 'ac_satellite',
 							}}
 							title={Liferay.Language.get('no-properties-found')}
 						/>
@@ -535,7 +538,7 @@ const ChannelList: React.FC<IChannelListProps> = ({
 					query={query}
 					renderNav={authorized ? renderNav : null}
 					renderRowActions={authorized ? renderRowActions : null}
-					rowIdentifier='id'
+					rowIdentifier="id"
 					showCheckbox={authorized}
 					total={data?.total}
 				>

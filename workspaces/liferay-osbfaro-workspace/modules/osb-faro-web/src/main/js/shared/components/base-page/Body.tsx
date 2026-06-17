@@ -14,14 +14,14 @@ const Body: React.FC<IBodyProps> = ({
 	disabled,
 	fluid = false,
 	pageContainer = true,
-	sidebarOpened = false
+	sidebarOpened = false,
 }) => {
 	if (fluid) {
 		return (
 			<div
 				className={getCN('fluid-body-root', className, {
 					disabled,
-					'sidebar-opened': sidebarOpened
+					'sidebar-opened': sidebarOpened,
 				})}
 			>
 				{children}
@@ -36,12 +36,12 @@ const Body: React.FC<IBodyProps> = ({
 				{
 					disabled,
 					'page-container': pageContainer,
-					'sidebar-opened': sidebarOpened
+					'sidebar-opened': sidebarOpened,
 				},
 				className
 			)}
 		>
-			<span className='children-wrapper'>{children}</span>
+			<span className="children-wrapper">{children}</span>
 		</div>
 	);
 };

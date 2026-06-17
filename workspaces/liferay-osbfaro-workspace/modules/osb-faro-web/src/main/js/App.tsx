@@ -11,7 +11,7 @@ import store from 'shared/store';
 import UnassignedSegmentsProvider from 'shared/context/unassignedSegments';
 import {
 	ApolloProvider,
-	ApolloProvider as ApolloProviderHooks
+	ApolloProvider as ApolloProviderHooks,
 } from '@apollo/client';
 
 import {ClayIconSpriteContext} from '@clayui/icon';
@@ -25,7 +25,7 @@ import {
 	Route,
 	BrowserRouter as Router,
 	Switch,
-	useLocation
+	useLocation,
 } from 'react-router-dom';
 import {OnboardingContext} from 'shared/context/onboarding';
 import {Pendo} from 'shared/util/pendo';
@@ -41,12 +41,14 @@ import {useFetchCurrentUser} from 'shared/hooks/useCurrentUser';
 const AddWorkspace = lazy(
 	() =>
 		import(
+
 			/* webpackChunkName: "AddWorkspace" */ './shared/pages/AddWorkspace'
 		)
 );
 const SelectWorkspaceAccount = lazy(
 	() =>
 		import(
+
 			/* webpackChunkName: "SelectWorkspaceAccount" */ './shared/pages/SelectWorkspaceAccount'
 		)
 );
@@ -56,9 +58,11 @@ const Workspaces = lazy(
 );
 
 // WorkspaceLayer
+
 const WorkspaceLayer = lazy(
 	() =>
 		import(
+
 			/* webpackChunkName: "WorkspaceLayer" */ './shared/components/WorkspaceLayer'
 		)
 );
@@ -68,6 +72,7 @@ const WorkspaceLayer = lazy(
 const OAuthReceive = lazy(
 	() =>
 		import(
+
 			/* webpackChunkName: "OAuthReceive" */ './settings/pages/OAuthReceive'
 		)
 );
@@ -76,12 +81,12 @@ const RoutesContainer = ({children}: {children: React.ReactNode}) => {
 	const location = useLocation();
 
 	const matchingPath = matchPath<any>(location.pathname, {
-		path: Routes.WORKSPACE_WITH_ID
+		path: Routes.WORKSPACE_WITH_ID,
 	});
 
 	const groupId = matchingPath?.params.groupId ?? '0';
 
-	const project: Project = useSelector<any, any>(state =>
+	const project: Project = useSelector<any, any>((state) =>
 		state.getIn(['projects', groupId, 'data'])
 	);
 
@@ -133,7 +138,7 @@ const App = () => {
 				submitButtonDisplay: 'warning',
 				submitMessage: Liferay.Language.get('leave-page'),
 				title: Liferay.Language.get('unsaved-changes'),
-				titleIcon: 'warning-full'
+				titleIcon: 'warning-full',
 			})
 		);
 	};
@@ -142,7 +147,7 @@ const App = () => {
 		<ApolloProvider client={client}>
 			<ApolloProviderHooks client={client}>
 				<Provider store={store}>
-					<ClayIconSpriteContext.Provider value='/o/osb-faro-web/dist/sprite.svg'>
+					<ClayIconSpriteContext.Provider value="/o/osb-faro-web/dist/sprite.svg">
 						<ClayLinkContext.Provider
 							value={({
 								children,
@@ -174,7 +179,7 @@ const App = () => {
 									value={{
 										onboardingTriggered,
 										setOnboardingTriggered: () =>
-											setOnboardingTriggered(true)
+											setOnboardingTriggered(true),
 									}}
 								>
 									<ChannelProvider>

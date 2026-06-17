@@ -53,7 +53,7 @@ function updateSearchParams(
 
 	history.push({
 		pathname: window.location.pathname,
-		search: params.toString()
+		search: params.toString(),
 	});
 }
 
@@ -84,32 +84,32 @@ const WizardSteps = ({addAlert, close, open, steps}: IWizardStepsProps) => {
 	};
 
 	return (
-		<div className='w-100'>
-			<Text color='secondary' size={3}>
+		<div className="w-100">
+			<Text color="secondary" size={3}>
 				{sub(Liferay.Language.get('step-x-of-x'), [
 					stepIndex + 1,
-					steps.length
+					steps.length,
 				])}
 			</Text>
 
-			<div className='mb-3 mt-2'>
-				<Heading level={4} weight='bold'>
+			<div className="mb-3 mt-2">
+				<Heading level={4} weight="bold">
 					{currentStep.title}
 				</Heading>
 			</div>
 
-			<div className='mb-1'>
-				<Text color='secondary' size={4}>
+			<div className="mb-1">
+				<Text color="secondary" size={4}>
 					{currentStep.description}
 				</Text>
 			</div>
 
 			<ClayLink
-				decoration='underline'
+				decoration="underline"
 				href={URLConstants.HelpConnectDxp}
-				target='_blank'
+				target="_blank"
 			>
-				<Text size={4} weight='semi-bold'>
+				<Text size={4} weight="semi-bold">
 					{Liferay.Language.get('learn-more-about-data-sources')}
 				</Text>
 
@@ -117,13 +117,13 @@ const WizardSteps = ({addAlert, close, open, steps}: IWizardStepsProps) => {
 					aria-label={Liferay.Language.get(
 						'learn-more-about-data-sources'
 					)}
-					className='ml-1'
+					className="ml-1"
 					fontSize={12}
-					symbol='shortcut'
+					symbol="shortcut"
 				/>
 			</ClayLink>
 
-			<div className='mt-5'>
+			<div className="mt-5">
 				{!loadingContext && (
 					<currentStep.content
 						addAlert={addAlert}
@@ -150,7 +150,7 @@ const WizardSteps = ({addAlert, close, open, steps}: IWizardStepsProps) => {
 const connector = connect(null, {
 	addAlert,
 	close,
-	open
+	open,
 });
 
 const WizardPage = ({children}: {children: React.ReactNode}) => {
@@ -172,26 +172,26 @@ const WizardPage = ({children}: {children: React.ReactNode}) => {
 
 	return (
 		<WizardPageProvider>
-			<div className='wizard-page'>
+			<div className="wizard-page">
 				<Toolbar
 					backURL={{
 						label: Liferay.Language.get('data-sources'),
 						url: toRoute(Routes.SETTINGS_DATA_SOURCE_LIST, {
-							groupId
-						})
+							groupId,
+						}),
 					}}
 				/>
 
 				<ClayLayout.Container fluid>
 					<ClayLayout.Row>
 						<ClayLayout.Col md={6} sm={12}>
-							<div className='wizard-page__content-col'>
+							<div className="wizard-page__content-col">
 								{children}
 							</div>
 						</ClayLayout.Col>
 						<ClayLayout.Col size={6}>
-							<div className='wizard-page__onboarding-col'>
-								<div className='wizard-page__onboarding-image' />
+							<div className="wizard-page__onboarding-col">
+								<div className="wizard-page__onboarding-image" />
 							</div>
 						</ClayLayout.Col>
 					</ClayLayout.Row>

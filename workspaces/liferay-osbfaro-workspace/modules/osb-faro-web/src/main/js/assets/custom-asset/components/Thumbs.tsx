@@ -15,7 +15,7 @@ type Item = {
 
 const Thumbs: React.FC<IThumbsProps> = ({
 	items: initialItems,
-	onSelectThumb
+	onSelectThumb,
 }) => {
 	const [items, setitems] = useState<Item[]>(initialItems);
 
@@ -30,14 +30,14 @@ const Thumbs: React.FC<IThumbsProps> = ({
 	const selectThumb = (id: number) => {
 		const updatedItems = items.map((item: Item, index: number) => ({
 			...item,
-			selected: id === index
+			selected: id === index,
 		}));
 
 		setitems(updatedItems);
 	};
 
 	return (
-		<div className='analytics-add-report-thumbs'>
+		<div className="analytics-add-report-thumbs">
 			{items.map(({selected, svg, text}, index) => {
 				const {id, viewBox} = getSVG(svg);
 

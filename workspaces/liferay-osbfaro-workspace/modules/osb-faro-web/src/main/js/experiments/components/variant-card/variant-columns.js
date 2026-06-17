@@ -7,7 +7,7 @@ import {
 	getFormattedMedian,
 	getFormattedMedianLabel,
 	getFormattedProbabilityToWin,
-	getVariantLabels
+	getVariantLabels,
 } from 'experiments/util/experiments';
 
 export default ({
@@ -17,7 +17,7 @@ export default ({
 	publishedDXPVariantId,
 	status,
 	type,
-	winnerDXPVariantId
+	winnerDXPVariantId,
 }) => {
 	const arr = [
 		{
@@ -29,29 +29,29 @@ export default ({
 						dxpVariantId,
 						publishedDXPVariantId,
 						status,
-						winnerDXPVariantId
+						winnerDXPVariantId,
 					})}
 					title={dxpVariantName}
 				/>
 			),
 			label: Liferay.Language.get('variants'),
-			sortable: true
+			sortable: true,
 		},
 		{
 			accessor: 'median',
 			cellRenderer: ({data: {median}}) => (
-				<Cell className='text-right' title={false}>
+				<Cell className="text-right" title={false}>
 					{`${getFormattedMedian(median, metric)}${metricUnit}`}
 				</Cell>
 			),
 			className: 'text-right',
 			label: getFormattedMedianLabel(metric),
-			sortable: true
+			sortable: true,
 		},
 		{
 			accessor: 'confidenceInterval',
 			cellRenderer: ({data: {confidenceInterval}}) => (
-				<Cell className='text-right' title={false}>
+				<Cell className="text-right" title={false}>
 					{`${getFormattedMedian(
 						confidenceInterval[0],
 						metric
@@ -63,8 +63,8 @@ export default ({
 			),
 			className: 'text-right',
 			label: Liferay.Language.get('confidence-interval'),
-			sortable: true
-		}
+			sortable: true,
+		},
 	];
 
 	if (type === 'AB') {
@@ -73,24 +73,24 @@ export default ({
 				accessor: 'improvement',
 				cellRenderer: ({data: {improvement}}) => (
 					<ImprovementCell
-						className='text-right'
+						className="text-right"
 						improvement={improvement}
 					/>
 				),
 				className: 'text-right',
 				label: Liferay.Language.get('improvement'),
-				sortable: true
+				sortable: true,
 			},
 			{
 				accessor: 'probabilityToWin',
 				cellRenderer: ({data: {probabilityToWin}}) => (
-					<Cell className='text-right' title={false}>
+					<Cell className="text-right" title={false}>
 						{`${getFormattedProbabilityToWin(probabilityToWin)}%`}
 					</Cell>
 				),
 				className: 'text-right',
 				label: Liferay.Language.get('probability-to-win'),
-				sortable: true
+				sortable: true,
 			}
 		);
 	}
@@ -99,7 +99,7 @@ export default ({
 		accessor: 'uniqueVisitors',
 		cellRenderer: ({data: {trafficSplit, uniqueVisitors}}) => (
 			<UniqueVisitorCell
-				className='text-right'
+				className="text-right"
 				trafficSplit={trafficSplit}
 				uniqueVisitors={uniqueVisitors}
 			/>
@@ -109,7 +109,7 @@ export default ({
 			type === 'AB'
 				? Liferay.Language.get('unique-visitors')
 				: Liferay.Language.get('traffic-split'),
-		sortable: true
+		sortable: true,
 	});
 
 	return arr;

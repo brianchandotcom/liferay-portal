@@ -2,7 +2,7 @@ import ActivityStreamTimeline, {
 	formatAttributeValue,
 	formatSessionTimeRange,
 	groupByDate,
-	isEmptyValue
+	isEmptyValue,
 } from '../ActivityStreamTimeline';
 import React from 'react';
 import {AccountUserSession} from 'shared/queries/AccountUserSessionQuery';
@@ -26,7 +26,7 @@ const buildSession = (
 	timezoneOffset: '-03:00',
 	userAgent: 'Mozilla/5.0',
 	userName: 'Jane Doe',
-	...overrides
+	...overrides,
 });
 
 describe('ActivityStreamTimeline helpers', () => {
@@ -34,7 +34,7 @@ describe('ActivityStreamTimeline helpers', () => {
 		it('collapses sessions on the same UTC day into one bucket', () => {
 			const groups = groupByDate([
 				buildSession({createDate: '2024-04-03T08:00:00.000Z'}),
-				buildSession({createDate: '2024-04-03T20:00:00.000Z'})
+				buildSession({createDate: '2024-04-03T20:00:00.000Z'}),
 			]);
 
 			expect(groups).toHaveLength(1);
@@ -46,13 +46,13 @@ describe('ActivityStreamTimeline helpers', () => {
 			const groups = groupByDate([
 				buildSession({createDate: '2024-04-01T10:00:00.000Z'}),
 				buildSession({createDate: '2024-04-03T10:00:00.000Z'}),
-				buildSession({createDate: '2024-04-02T10:00:00.000Z'})
+				buildSession({createDate: '2024-04-02T10:00:00.000Z'}),
 			]);
 
-			expect(groups.map(g => g.dateKey)).toEqual([
+			expect(groups.map((g) => g.dateKey)).toEqual([
 				'2024-04-03',
 				'2024-04-02',
-				'2024-04-01'
+				'2024-04-01',
 			]);
 		});
 
@@ -67,20 +67,20 @@ describe('ActivityStreamTimeline helpers', () => {
 			const groups = groupByDate([
 				buildSession({
 					createDate: '2024-04-03T08:00:00.000Z',
-					userName: 'Alice'
+					userName: 'Alice',
 				}),
 				buildSession({
 					createDate: '2024-04-03T10:00:00.000Z',
-					userName: 'Alice'
+					userName: 'Alice',
 				}),
 				buildSession({
 					createDate: '2024-04-03T09:00:00.000Z',
-					userName: 'Bob'
-				})
+					userName: 'Bob',
+				}),
 			]);
 
 			const userGroups = groups[0].userGroups;
-			const alice = userGroups.find(u => u.userName === 'Alice');
+			const alice = userGroups.find((u) => u.userName === 'Alice');
 
 			expect(userGroups).toHaveLength(2);
 			expect(alice?.sessions).toHaveLength(2);
@@ -96,12 +96,12 @@ describe('ActivityStreamTimeline helpers', () => {
 			const groups = groupByDate([
 				buildSession({
 					createDate: '2024-04-03T08:00:00.000Z',
-					events: [{} as never, {} as never, {} as never]
+					events: [{} as never, {} as never, {} as never],
 				}),
 				buildSession({
 					createDate: '2024-04-03T20:00:00.000Z',
-					events: [{} as never, {} as never]
-				})
+					events: [{} as never, {} as never],
+				}),
 			]);
 
 			expect(groups[0].totalEvents).toBe(5);
@@ -113,7 +113,7 @@ describe('ActivityStreamTimeline helpers', () => {
 			const result = formatSessionTimeRange(
 				buildSession({
 					completeDate: '2024-04-03T08:30:00.000Z',
-					createDate: '2024-04-03T08:00:00.000Z'
+					createDate: '2024-04-03T08:00:00.000Z',
 				}),
 				'UTC'
 			);
@@ -125,7 +125,7 @@ describe('ActivityStreamTimeline helpers', () => {
 			const result = formatSessionTimeRange(
 				buildSession({
 					completeDate: null,
-					createDate: '2024-04-03T08:00:00.000Z'
+					createDate: '2024-04-03T08:00:00.000Z',
 				}),
 				'UTC'
 			);
@@ -137,7 +137,7 @@ describe('ActivityStreamTimeline helpers', () => {
 			const result = formatSessionTimeRange(
 				buildSession({
 					completeDate: '2024-04-03T08:00:00.000Z',
-					createDate: '2024-04-03T08:00:00.000Z'
+					createDate: '2024-04-03T08:00:00.000Z',
 				}),
 				'UTC'
 			);
@@ -193,7 +193,7 @@ describe('ActivityStreamTimeline rendering', () => {
 		page: 1,
 		sessions: [] as AccountUserSession[],
 		timeZoneId: 'UTC',
-		totalItems: 0
+		totalItems: 0,
 	};
 
 	it('renders the loading state', () => {
@@ -245,8 +245,8 @@ describe('ActivityStreamTimeline rendering', () => {
 						screenWidth: 1920,
 						timezoneOffset: '-03:00',
 						userAgent: 'Mozilla/5.0',
-						userName: 'Jane Doe'
-					}
+						userName: 'Jane Doe',
+					},
 				]}
 				totalItems={1}
 			/>
@@ -274,10 +274,10 @@ describe('ActivityStreamTimeline rendering', () => {
 								pageKeywords: '',
 								pageTitle: 'Home',
 								referrer: '',
-								url: 'https://example.com/raw?utm=1'
-							}
-						]
-					})
+								url: 'https://example.com/raw?utm=1',
+							},
+						],
+					}),
 				]}
 				totalItems={1}
 			/>
@@ -306,10 +306,10 @@ describe('ActivityStreamTimeline rendering', () => {
 								pageKeywords: '',
 								pageTitle: 'Home',
 								referrer: '',
-								url: 'https://example.com/raw?utm=1'
-							}
-						]
-					})
+								url: 'https://example.com/raw?utm=1',
+							},
+						],
+					}),
 				]}
 				totalItems={1}
 			/>
@@ -338,8 +338,8 @@ describe('ActivityStreamTimeline rendering', () => {
 						screenWidth: 1920,
 						timezoneOffset: '-03:00',
 						userAgent: 'Mozilla/5.0',
-						userName: null
-					}
+						userName: null,
+					},
 				]}
 				totalItems={1}
 			/>

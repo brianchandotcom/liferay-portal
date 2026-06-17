@@ -23,6 +23,7 @@ const Overview = lazy(
 const KnownIndividuals = lazy(
 	() =>
 		import(
+
 			/* webpackChunkName: "ObjectEntryKnownIndividuals" */ './KnownIndividualsListCard'
 		)
 );
@@ -31,13 +32,13 @@ const NAV_ITEMS = [
 	{
 		exact: true,
 		label: Liferay.Language.get('overview'),
-		route: Routes.ASSETS_OBJECT_ENTRY_OVERVIEW
+		route: Routes.ASSETS_OBJECT_ENTRY_OVERVIEW,
 	},
 	{
 		exact: true,
 		label: Liferay.Language.get('known-individuals'),
-		route: Routes.ASSETS_OBJECT_ENTRY_KNOWN_INDIVIDUALS
-	}
+		route: Routes.ASSETS_OBJECT_ENTRY_KNOWN_INDIVIDUALS,
+	},
 ];
 
 const ObjectEntry: React.FC<{
@@ -51,8 +52,8 @@ const ObjectEntry: React.FC<{
 			groupId = '',
 			title = '',
 			touchpoint,
-			type = ''
-		}
+			type = '',
+		},
 	} = router;
 
 	const [filters] = useState({});
@@ -76,10 +77,10 @@ const ObjectEntry: React.FC<{
 					breadcrumbs.getHome({
 						channelId,
 						groupId,
-						label: selectedChannel?.name
+						label: selectedChannel?.name,
 					}),
 					breadcrumbs.getAssets({channelId, groupId}),
-					breadcrumbs.getEntityName({label: decodedTitle})
+					breadcrumbs.getEntityName({label: decodedTitle}),
 				]}
 				groupId={groupId}
 			>
@@ -99,7 +100,7 @@ const ObjectEntry: React.FC<{
 						groupId,
 						title,
 						touchpoint,
-						type
+						type,
 					}}
 					routeQueries={pickBy(rangeSelectorsFromQuery)}
 				/>
@@ -108,13 +109,13 @@ const ObjectEntry: React.FC<{
 			{getMatchedRoute(NAV_ITEMS) ===
 				Routes.ASSETS_OBJECT_ENTRY_OVERVIEW && (
 				<BasePage.SubHeader>
-					<div className='d-flex justify-content-end w-100'>
+					<div className="d-flex justify-content-end w-100">
 						<DownloadPDFReport
 							disabled={!!dataSourceStates.empty}
 							subtitle={selectedChannel?.name}
 							title={
 								sub(Liferay.Language.get('x-dashboard'), [
-									decodedTitle
+									decodedTitle,
 								]) as string
 							}
 						/>
@@ -125,7 +126,7 @@ const ObjectEntry: React.FC<{
 			<BasePage.Context.Provider
 				value={{
 					filters,
-					router
+					router,
 				}}
 			>
 				<BasePage.Body>

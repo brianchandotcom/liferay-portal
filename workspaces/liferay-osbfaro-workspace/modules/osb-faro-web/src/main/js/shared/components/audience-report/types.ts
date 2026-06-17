@@ -38,7 +38,7 @@ export enum Name {
 	Form = 'form',
 	Journal = 'journal',
 	ObjectEntry = 'objectEntry',
-	Page = 'page'
+	Page = 'page',
 }
 
 export interface IAudienceReportBaseCardProps {

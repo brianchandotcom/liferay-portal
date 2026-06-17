@@ -3,7 +3,7 @@ import {formatDateToTimeZone} from 'shared/util/date';
 import {
 	getMetricName,
 	mergedVariants,
-	toThousandsABTesting
+	toThousandsABTesting,
 } from 'experiments/util/experiments';
 import {IExperiment} from './types';
 import {MetricName} from 'experiments/util/types';
@@ -38,7 +38,7 @@ export const SummaryWinnerCard: React.FC<{
 		startedDate,
 		status,
 		type,
-		winnerDXPVariantId
+		winnerDXPVariantId,
 	} = experiment;
 
 	const variants = mergedVariants(dxpVariants, variantMetrics);
@@ -56,16 +56,16 @@ export const SummaryWinnerCard: React.FC<{
 			<SummaryBaseCard.Header
 				Description={() =>
 					sub(Liferay.Language.get('started-x'), [
-						formatDateToTimeZone(startedDate, 'll', timeZoneId)
+						formatDateToTimeZone(startedDate, 'll', timeZoneId),
 					]) as any
 				}
 				title={Liferay.Language.get('winner-declared')}
 			/>
 
 			{winnerVariant && winnerVariant?.control ? (
-				<SummaryAlert symbol='check-circle'>
+				<SummaryAlert symbol="check-circle">
 					<SummaryTitle
-						className='font-weight-bold mb-1'
+						className="font-weight-bold mb-1"
 						label={
 							sub(
 								Liferay.Language.get(
@@ -78,7 +78,7 @@ export const SummaryWinnerCard: React.FC<{
 											secondPlaceVariant?.improvement ?? 0
 										),
 										2
-									)}%`
+									)}%`,
 								]
 							) as string
 						}
@@ -91,9 +91,9 @@ export const SummaryWinnerCard: React.FC<{
 					</strong>
 				</SummaryAlert>
 			) : (
-				<SummaryAlert symbol='exclamation-circle'>
+				<SummaryAlert symbol="exclamation-circle">
 					<SummaryTitle
-						className='font-weight-bold mb-1'
+						className="font-weight-bold mb-1"
 						label={
 							sub(
 								Liferay.Language.get(
@@ -104,7 +104,7 @@ export const SummaryWinnerCard: React.FC<{
 									`${toRounded(
 										winnerVariant?.improvement ?? 0,
 										2
-									)}%`
+									)}%`,
 								]
 							) as string
 						}
@@ -119,13 +119,13 @@ export const SummaryWinnerCard: React.FC<{
 			)}
 
 			<SummaryBaseCard.Body>
-				<div className='w-100 mt-4'>
+				<div className="w-100 mt-4">
 					<SummaryParagraph
 						description={description}
 						title={Liferay.Language.get('summary')}
 					/>
 
-					<div className='analytics-summary-card-sections'>
+					<div className="analytics-summary-card-sections">
 						<SummarySection
 							title={Liferay.Language.get('test-completion')}
 						>
@@ -171,7 +171,7 @@ export const SummaryWinnerCard: React.FC<{
 												winnerVariant.improvement,
 												2
 											)}%`}
-											status='up'
+											status="up"
 										/>
 									)}
 							</SummarySection>

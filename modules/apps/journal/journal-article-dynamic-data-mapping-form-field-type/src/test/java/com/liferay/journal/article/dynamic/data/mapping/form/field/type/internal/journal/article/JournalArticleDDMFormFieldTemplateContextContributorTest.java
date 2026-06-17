@@ -82,6 +82,38 @@ public class JournalArticleDDMFormFieldTemplateContextContributorTest {
 	}
 
 	@Test
+	public void testGetValueWhenArticleIsDeleted() throws Exception {
+		long classPK = RandomTestUtil.randomLong();
+
+		Mockito.when(
+			_journalArticleLocalService.fetchLatestArticle(classPK)
+		).thenReturn(
+			null
+		);
+
+		JSONObject inputJSONObject = _jsonFactory.createJSONObject();
+
+		String title = RandomTestUtil.randomString();
+
+		inputJSONObject.put(
+			"classNameId", RandomTestUtil.randomLong()
+		).put(
+			"classPK", classPK
+		).put(
+			"title", title
+		);
+
+		String json = ReflectionTestUtil.invoke(
+			_journalArticleDDMFormFieldTemplateContextContributor, "_getValue",
+			new Class<?>[] {String.class}, inputJSONObject.toString());
+
+		JSONObject jsonObject = _jsonFactory.createJSONObject(json);
+
+		Assert.assertEquals(classPK, jsonObject.getLong("classPK"));
+		Assert.assertEquals(title, jsonObject.getString("title"));
+	}
+
+	@Test
 	public void testGetValueWithNullValue() throws Exception {
 		String value = ReflectionTestUtil.invoke(
 			_journalArticleDDMFormFieldTemplateContextContributor, "_getValue",

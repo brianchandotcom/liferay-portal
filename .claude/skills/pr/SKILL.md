@@ -116,7 +116,7 @@ The webhook applies the status and label when it processes the `pull_request` ev
 
 Use a direct, to-the-point style. Avoid being verbose. Present the proposed title and body to the user before submitting, and proceed once they approve.
 
-Create the pull request with `--body-file`, never inline `--body` (a literal `!` in an inline body gets shell-escaped and corrupts the marker). Use `mktemp` for the file so it stays out of the working tree, and remove it afterward.
+Create the pull request with `--body-file`, or with `--body` from a quoted-heredoc variable; either keeps the marker's literal `!` off the command line, where it could otherwise trigger history expansion and corrupt the marker. Use `mktemp` for the file so it stays out of the working tree, and remove it afterward.
 
 ```bash
 body_file=$(mktemp)

@@ -41,7 +41,7 @@ Post a fresh comment on each run rather than editing a prior one, so the PR keep
 <!-- pr-check {"result": "success", "sha": "<tested-SHA>"} -->
 ```
 
-Post the body with `--body-file`, never inline `--body` (a literal `!` in an inline body gets shell-escaped and corrupts the marker). Use `mktemp` for the file so it stays out of the working tree, and remove it afterward.
+Post the body with `--body-file`, or with `--body` from a quoted-heredoc variable; either keeps the marker's literal `!` off the command line, where it could otherwise trigger history expansion and corrupt the marker. Use `mktemp` for the file so it stays out of the working tree, and remove it afterward.
 
 ```bash
 comment_file=$(mktemp)

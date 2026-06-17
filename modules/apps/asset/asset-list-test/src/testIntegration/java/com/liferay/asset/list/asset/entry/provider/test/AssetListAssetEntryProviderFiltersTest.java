@@ -33,6 +33,7 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -61,7 +62,6 @@ import com.liferay.segments.constants.SegmentsEntryConstants;
 
 import java.io.Serializable;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -627,17 +627,11 @@ public class AssetListAssetEntryProviderFiltersTest {
 				null, null, StringPool.BLANK, StringPool.BLANK,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		List<Long> actualClassPKs = new ArrayList<>();
+		List<Long> actualClassPKs = TransformUtil.transform(
+			infoPage.getPageItems(), AssetEntry::getClassPK);
 
-		for (AssetEntry assetEntry : infoPage.getPageItems()) {
-			actualClassPKs.add(assetEntry.getClassPK());
-		}
-
-		List<Long> expectedClassPKs = new ArrayList<>();
-
-		for (ObjectEntry objectEntry : expectedObjectEntries) {
-			expectedClassPKs.add(objectEntry.getObjectEntryId());
-		}
+		List<Long> expectedClassPKs = TransformUtil.transformToList(
+			expectedObjectEntries, ObjectEntry::getObjectEntryId);
 
 		Assert.assertEquals(
 			actualClassPKs.toString(), expectedClassPKs.size(),
@@ -718,13 +712,8 @@ public class AssetListAssetEntryProviderFiltersTest {
 				StringPool.BLANK, StringPool.BLANK, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);
 
-		List<Long> classPKs = new ArrayList<>();
-
-		for (AssetEntry assetEntry : infoPage.getPageItems()) {
-			classPKs.add(assetEntry.getClassPK());
-		}
-
-		return classPKs;
+		return TransformUtil.transform(
+			infoPage.getPageItems(), AssetEntry::getClassPK);
 	}
 
 	private JSONObject _picklistFilter(

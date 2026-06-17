@@ -1,6 +1,23 @@
+mock_provider "aws" {}
 mock_provider "helm" {}
 mock_provider "kubernetes" {}
 mock_provider "random" {}
+override_data {
+	target=data.aws_caller_identity.current
+	values={
+		account_id="123456789012"
+	}
+}
+override_data {
+	target=data.aws_eks_cluster.cluster
+	values={
+		identity=[{
+			oidc=[{
+				issuer="https://oidc.eks.us-east-1.amazonaws.com/id/EXAMPLE"
+			}]
+		}]
+	}
+}
 run "should_append_a_second_values_document_when_saml_sso_is_enabled" {
 	assert {
 		condition=length(helm_release.argocd.values) == 2
@@ -90,9 +107,12 @@ run "should_honor_a_custom_argocd_namespace" {
 	}
 }
 variables {
+	ack_prometheusservice_helm_chart_version="1.4.1"
 	argo_workflows_helm_chart_version="1.0.10"
 	argocd_helm_chart_version="9.5.16"
 	crossplane_helm_chart_version="2.1.3"
+	deployment_name="liferay-test"
 	external_secrets_helm_chart_version="1.0.0"
 	keda_helm_chart_version="2.19.0"
+	region="us-east-1"
 }

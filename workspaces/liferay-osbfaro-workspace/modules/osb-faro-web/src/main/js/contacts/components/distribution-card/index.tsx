@@ -1,6 +1,5 @@
 import AddDataSource from './AddDataSource';
 import AddPropertyForm from './AddPropertyForm';
-import autobind from 'autobind-decorator';
 import Card from 'shared/components/Card';
 import DistributionChart from './DistributionChart';
 import ErrorDisplay from 'shared/components/ErrorDisplay';
@@ -76,11 +75,20 @@ class DistributionCard extends React.Component<
 		showAddProperty: false,
 	};
 
+	constructor(props: IDistributionCardProps) {
+		super(props);
+		this.handleAddTab = this.handleAddTab.bind(this);
+		this.handleDeleteTab = this.handleDeleteTab.bind(this);
+		this.handleFetchDistributionTabs =
+			this.handleFetchDistributionTabs.bind(this);
+		this.handleSelectTab = this.handleSelectTab.bind(this);
+		this.handleShowAddProperty = this.handleShowAddProperty.bind(this);
+	}
+
 	componentDidMount() {
 		this.handleFetchDistributionTabs();
 	}
 
-	@autobind
 	handleAddTab(tab: DistributionTab) {
 		const {addAlert, addDistributionTab, distributionKey, groupId, id} =
 			this.props;
@@ -109,7 +117,6 @@ class DistributionCard extends React.Component<
 			);
 	}
 
-	@autobind
 	handleDeleteTab(tabId: string) {
 		const {distributionKey, groupId, id, removeDistributionTab} =
 			this.props;
@@ -124,7 +131,6 @@ class DistributionCard extends React.Component<
 		);
 	}
 
-	@autobind
 	handleFetchDistributionTabs() {
 		const {distributionKey, fetchDistributionTabs, groupId, id} =
 			this.props;
@@ -132,7 +138,6 @@ class DistributionCard extends React.Component<
 		fetchDistributionTabs({distributionKey, groupId, id});
 	}
 
-	@autobind
 	handleSelectTab(tabId: string) {
 		const {distributionTabsIList} = this.props;
 
@@ -143,7 +148,6 @@ class DistributionCard extends React.Component<
 		});
 	}
 
-	@autobind
 	handleShowAddProperty(showAddProperty: boolean) {
 		this.setState({showAddProperty});
 	}

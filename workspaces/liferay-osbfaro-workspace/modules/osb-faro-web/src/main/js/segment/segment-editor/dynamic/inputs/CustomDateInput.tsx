@@ -1,4 +1,3 @@
-import autobind from 'autobind-decorator';
 import DateInput from './DateInput';
 import Form from 'shared/components/form';
 import React from 'react';
@@ -19,7 +18,13 @@ import {Option, Picker} from '@clayui/core';
 const DATE_OPERATORS = SUPPORTED_OPERATORS_MAP[PropertyTypes.Date];
 
 export default class CustomDateInput extends React.Component<ISegmentEditorCustomInputBase> {
-	@autobind
+	constructor(props: ISegmentEditorCustomInputBase) {
+		super(props);
+		this.handleDateChange = this.handleDateChange.bind(this);
+		this.handleOperatorChange = this.handleOperatorChange.bind(this);
+		this.renderOperatorDropdown = this.renderOperatorDropdown.bind(this);
+	}
+
 	handleDateChange(newDate: Criterion | Criterion[]) {
 		const {onChange, value} = this.props;
 
@@ -30,14 +35,12 @@ export default class CustomDateInput extends React.Component<ISegmentEditorCusto
 		onChange({value: setCompleteDate(value, newValue)});
 	}
 
-	@autobind
 	handleOperatorChange(newValue: React.Key) {
 		const {onChange, value} = this.props;
 
 		onChange({value: setOperator(value, 0, newValue)});
 	}
 
-	@autobind
 	renderOperatorDropdown() {
 		const {value} = this.props;
 

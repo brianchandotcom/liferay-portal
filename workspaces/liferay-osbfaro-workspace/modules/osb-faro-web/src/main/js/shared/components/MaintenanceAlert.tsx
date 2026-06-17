@@ -1,5 +1,4 @@
 import Alert, {AlertTypes} from 'shared/components/Alert';
-import autobind from 'autobind-decorator';
 import getCN from 'classnames';
 import moment from 'moment';
 import React from 'react';
@@ -30,7 +29,11 @@ export class MaintenanceAlert extends React.Component<IMaintenanceAlertProps> {
 		showMessage: false,
 	};
 
-	@autobind
+	constructor(props: IMaintenanceAlertProps) {
+		super(props);
+		this.handleDismissClick = this.handleDismissClick.bind(this);
+	}
+
 	handleDismissClick() {
 		const {
 			currentUserId,

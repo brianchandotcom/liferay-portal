@@ -1,5 +1,4 @@
 import * as API from 'shared/api';
-import autobind from 'autobind-decorator';
 import DateFilterConjunctionInput from './components/DateFilterConjunctionInput';
 import Form from 'shared/components/form';
 import OccurenceConjunctionInput from './components/OccurenceConjunctionInput';
@@ -97,9 +96,16 @@ interface IBehaviorInputProps extends ISegmentEditorCustomInputBase {
 
 export class BehaviorInput extends React.Component<IBehaviorInputProps> {
 	static contextType = ReferencedObjectsContext;
-	declare context: React.ContextType<typeof ReferencedObjectsContext>;
 
-	_completedAnalytics = false;
+	constructor(props: IBehaviorInputProps) {
+		super(props);
+		this.assetsDataFn = this.assetsDataFn.bind(this);
+		this.handleAssetSelect = this.handleAssetSelect.bind(this);
+		this.handleDateFilterConjunctionChange =
+			this.handleDateFilterConjunctionChange.bind(this);
+		this.handleOccurenceConjunctionChange =
+			this.handleOccurenceConjunctionChange.bind(this);
+	}
 
 	componentDidUpdate() {
 		const {
@@ -116,7 +122,10 @@ export class BehaviorInput extends React.Component<IBehaviorInputProps> {
 		}
 	}
 
-	@autobind
+	_completedAnalytics = false;
+
+	declare context: React.ContextType<typeof ReferencedObjectsContext>;
+
 	assetsDataFn({delta, orderIOMap, page, query}: {[key: string]: any}) {
 		const {
 			channelId,
@@ -182,7 +191,6 @@ export class BehaviorInput extends React.Component<IBehaviorInputProps> {
 		}
 	}
 
-	@autobind
 	handleAssetSelect(items: import('immutable').OrderedMap<string, any>) {
 		const {
 			context: {addEntities, addEntity},
@@ -230,7 +238,6 @@ export class BehaviorInput extends React.Component<IBehaviorInputProps> {
 		}
 	}
 
-	@autobind
 	handleDateFilterConjunctionChange(criterion: Criterion | null) {
 		const {onChange, touched, valid, value} = this.props;
 
@@ -246,7 +253,6 @@ export class BehaviorInput extends React.Component<IBehaviorInputProps> {
 		});
 	}
 
-	@autobind
 	handleOccurenceConjunctionChange({
 		criterion,
 		touched: occurenceCountTouched,

@@ -1,5 +1,4 @@
 import * as API from 'shared/api';
-import autobind from 'autobind-decorator';
 import CustomNumberInput from './CustomNumberInput';
 import CustomStringInput from './CustomStringInput';
 import DateFilterConjunctionInput from './components/DateFilterConjunctionInput';
@@ -27,7 +26,13 @@ interface ISessionInputProps extends ISegmentEditorCustomInputBase {
 }
 
 export default class SessionInput extends React.Component<ISessionInputProps> {
-	@autobind
+	constructor(props: ISessionInputProps) {
+		super(props);
+		this.fieldValuesDataSourceFn = this.fieldValuesDataSourceFn.bind(this);
+		this.handleConjunctionChange = this.handleConjunctionChange.bind(this);
+		this.handleCustomInputChange = this.handleCustomInputChange.bind(this);
+	}
+
 	fieldValuesDataSourceFn() {
 		const {
 			channelId,
@@ -64,7 +69,6 @@ export default class SessionInput extends React.Component<ISessionInputProps> {
 		return {propertyName: 'completeDate'};
 	}
 
-	@autobind
 	handleConjunctionChange(criterion: Criterion | null) {
 		const {onChange, touched, valid, value} = this.props;
 
@@ -80,7 +84,6 @@ export default class SessionInput extends React.Component<ISessionInputProps> {
 		});
 	}
 
-	@autobind
 	handleCustomInputChange(criterion: Criterion | Criterion[]) {
 		if (Array.isArray(criterion)) {
 			criterion = criterion[0];

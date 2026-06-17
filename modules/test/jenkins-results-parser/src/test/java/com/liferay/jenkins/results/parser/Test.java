@@ -16,6 +16,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,9 +25,12 @@ import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.io.SAXReader;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.rules.ErrorCollector;
+
+import org.mockito.Mockito;
 
 /**
  * @author Peter Yoo
@@ -36,6 +40,13 @@ public class Test {
 	@Before
 	public void setUp() throws Exception {
 		JenkinsResultsParserUtil.clearCache();
+	}
+
+	@After
+	public void tearDown() {
+		Environment.setInstance(new Environment());
+
+		Shell.setInstance(new Shell());
 	}
 
 	@Rule
@@ -288,6 +299,23 @@ public class Test {
 		return _simpleClassNames;
 	}
 
+	protected Shell mockShell() {
+		Shell shell = Mockito.mock(
+			Shell.class,
+			invocation -> {
+				Shell.ExecutionRequest executionRequest =
+					invocation.getArgument(0);
+
+				throw new AssertionError(
+					"Unstubbed command: " +
+						Arrays.toString(executionRequest.getCommands()));
+			});
+
+		Shell.setInstance(shell);
+
+		return shell;
+	}
+
 	protected String read(File file) throws IOException {
 		return new String(Files.readAllBytes(Paths.get(file.toURI())));
 	}
@@ -302,6 +330,20 @@ public class Test {
 		}
 
 		return string.replace("${" + token + "}", value);
+	}
+
+	protected void stubShellCommand(
+			Shell shell, String command, String standardOut)
+		throws Exception {
+
+		Mockito.doReturn(
+			new Shell.ExecutionResult(0, "", standardOut)
+		).when(
+			shell
+		).doExecute(
+			Mockito.argThat(
+				executionRequest -> _matchesCommand(executionRequest, command))
+		);
 	}
 
 	protected void testEquals(String expected, String actual) {
@@ -348,6 +390,18 @@ public class Test {
 		getSimpleClassNames());
 	protected ExpectedMessageGenerator expectedMessageGenerator;
 	protected Map<String, TestSample> testSamples = new HashMap<>();
+
+	private boolean _matchesCommand(
+		Shell.ExecutionRequest executionRequest, String command) {
+
+		if (executionRequest == null) {
+			return false;
+		}
+
+		String[] commands = executionRequest.getCommands();
+
+		return commands[0].contains(command);
+	}
 
 	private static final String[][] _XML_REPLACEMENTS = {
 		{"<pre>", "<pre><![CDATA["}, {"</pre>", "]]></pre>"},

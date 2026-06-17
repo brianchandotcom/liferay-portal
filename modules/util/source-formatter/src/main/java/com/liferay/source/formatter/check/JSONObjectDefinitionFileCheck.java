@@ -12,7 +12,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.check.util.JSONSourceUtil;
 
@@ -110,13 +109,10 @@ public class JSONObjectDefinitionFileCheck extends BaseFileCheck {
 				return -1;
 			}
 
-			NaturalOrderStringComparator naturalOrderStringComparator =
-				new NaturalOrderStringComparator();
-
 			String name1 = jsonObject1.getString("name");
 			String name2 = jsonObject2.getString("name");
 
-			return naturalOrderStringComparator.compare(name1, name2);
+			return name1.compareTo(name2);
 		}
 
 		private boolean _isRelationship(JSONObject jsonObject) {

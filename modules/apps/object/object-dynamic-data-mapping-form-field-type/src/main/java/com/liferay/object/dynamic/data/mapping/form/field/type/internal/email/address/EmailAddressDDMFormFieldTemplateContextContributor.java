@@ -6,15 +6,11 @@
 package com.liferay.object.dynamic.data.mapping.form.field.type.internal.email.address;
 
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTemplateContextContributor;
-import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
-import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
-import com.liferay.dynamic.data.mapping.util.DDMFormFieldTemplateContextContributorUtil;
-import com.liferay.dynamic.data.mapping.util.DDMFormFieldValueUtil;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.dynamic.data.mapping.form.field.type.constants.ObjectDDMFormFieldTypeConstants;
-import com.liferay.petra.string.StringPool;
+import com.liferay.object.dynamic.data.mapping.form.field.type.internal.BaseDDMFormFieldTemplateContextContributor;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
@@ -30,16 +26,12 @@ import org.osgi.service.component.annotations.Component;
 	service = DDMFormFieldTemplateContextContributor.class
 )
 public class EmailAddressDDMFormFieldTemplateContextContributor
-	implements DDMFormFieldTemplateContextContributor {
+	extends BaseDDMFormFieldTemplateContextContributor {
 
 	@Override
 	public Map<String, Object> getParameters(
 		DDMFormField ddmFormField,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
-
-		DDMForm ddmForm = ddmFormField.getDDMForm();
-		boolean localizedObjectField = GetterUtil.getBoolean(
-			ddmFormField.getProperty("localizedObjectField"));
 
 		return HashMapBuilder.<String, Object>put(
 			ObjectFieldSettingConstants.NAME_AUTOCOMPLETE_DOMAINS,
@@ -56,37 +48,8 @@ public class EmailAddressDDMFormFieldTemplateContextContributor
 			GetterUtil.getString(
 				ddmFormField.getProperty(
 					ObjectFieldSettingConstants.NAME_BLOCKED_DOMAINS))
-		).put(
-			"localizedObjectField", localizedObjectField
-		).put(
-			"predefinedValue",
-			() -> {
-				LocalizedValue localizedValue =
-					ddmFormField.getPredefinedValue();
-
-				if (localizedValue == null) {
-					return StringPool.BLANK;
-				}
-
-				return GetterUtil.getString(
-					localizedValue.getString(
-						ddmFormFieldRenderingContext.getLocale()));
-			}
-		).put(
-			"value",
-			() -> {
-				if (localizedObjectField) {
-					return DDMFormFieldValueUtil.getValueJSONObject(
-						ddmFormFieldRenderingContext);
-				}
-
-				return GetterUtil.getString(
-					ddmFormFieldRenderingContext.getValue());
-			}
 		).putAll(
-			DDMFormFieldTemplateContextContributorUtil.
-				getLocalizationParameters(
-					ddmFormField, ddmForm.getDefaultLocale())
+			super.getParameters(ddmFormField, ddmFormFieldRenderingContext)
 		).build();
 	}
 

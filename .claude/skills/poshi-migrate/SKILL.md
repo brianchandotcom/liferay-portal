@@ -418,7 +418,7 @@ Before retrying, gather the artifacts and decide:
 After the first green run, repeat each migrated Playwright spec ten times to surface flakiness from timing, viewport, or network races:
 
 ```bash
-cd modules/test/playwright && yarn test --repeat-each=5 <relative-spec-path>
+cd modules/test/playwright && yarn test --repeat-each=10 <relative-spec-path>
 ```
 
 All ten runs must pass. When any run fails, fix the underlying race before declaring the migration done. Do not apply the flake check to Jest, JUnit unit, or Java integration tests — they are deterministic enough that the extra runs only burn time.

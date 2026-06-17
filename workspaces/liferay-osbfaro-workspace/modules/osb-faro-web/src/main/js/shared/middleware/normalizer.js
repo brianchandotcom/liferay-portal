@@ -1,6 +1,6 @@
 import {normalize} from 'normalizr';
 
-export default () => next => action => {
+export default () => (next) => (action) => {
 	const {meta, payload, type} = action;
 
 	if (payload && meta && meta.schema) {
@@ -10,9 +10,9 @@ export default () => next => action => {
 			meta,
 			payload: {
 				entities,
-				result
+				result,
 			},
-			type
+			type,
 		};
 	}
 

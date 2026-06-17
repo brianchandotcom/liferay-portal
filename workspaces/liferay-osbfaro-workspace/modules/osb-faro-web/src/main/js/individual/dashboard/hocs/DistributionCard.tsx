@@ -10,7 +10,7 @@ import {toPromise} from 'shared/util/validators';
 import {useParams} from 'react-router-dom';
 
 const connector = connect(null, {
-	fetchDistribution: fetchIndividualsDistribution
+	fetchDistribution: fetchIndividualsDistribution,
 });
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
@@ -33,8 +33,8 @@ const IndividualsDistributionCard: React.FC<
 	return (
 		<DistributionCard
 			channelId={channelId}
-			distributionKey='individualsDashboard'
-			fetchDistribution={name => toPromise(fetchDistribution(name))}
+			distributionKey="individualsDashboard"
+			fetchDistribution={(name) => toPromise(fetchDistribution(name))}
 			groupId={groupId}
 			id={id ?? groupId}
 			noResultsRenderer={() => (
@@ -46,12 +46,12 @@ const IndividualsDistributionCard: React.FC<
 							)}
 
 							<ClayLink
-								className='d-block'
+								className="d-block"
 								href={
 									URLConstants.IndividualsDashboardBreakdownDocumentation
 								}
-								key='DOCUMENTATION'
-								target='_blank'
+								key="DOCUMENTATION"
+								target="_blank"
 							>
 								{Liferay.Language.get(
 									'learn-more-about-distribution'
@@ -64,7 +64,7 @@ const IndividualsDistributionCard: React.FC<
 			)}
 			viewAllLink={toRoute(Routes.CONTACTS_INDIVIDUALS_DISTRIBUTION, {
 				channelId,
-				groupId
+				groupId,
 			})}
 			{...otherProps}
 		/>

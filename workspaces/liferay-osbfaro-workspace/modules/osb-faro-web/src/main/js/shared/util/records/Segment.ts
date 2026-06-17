@@ -50,14 +50,14 @@ export default class Segment
 			assets: Map(),
 			attributes: Map(),
 			events: Map(),
-			fieldMappings: Map()
+			fieldMappings: Map(),
 		}),
 		segmentType: null,
 		sequential: false,
 		state: '',
 		status: null,
 		type: EntityTypes.IndividualsSegment,
-		userName: null
+		userName: null,
 	})
 	implements ISegment
 {

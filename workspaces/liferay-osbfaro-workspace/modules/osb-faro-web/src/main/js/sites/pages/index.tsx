@@ -20,6 +20,7 @@ import {useDataSources} from 'shared/context/dataSources';
 const InterestDetails = lazy(
 	() =>
 		import(
+
 			/* webpackChunkName: "SitesDashboardInterestDetails" */ './InterestDetails'
 		)
 );
@@ -33,12 +34,14 @@ const Overview = lazy(
 const SearchTermsPage = lazy(
 	() =>
 		import(
+
 			/* webpackChunkName: "SitesDashboardSearchTerms" */ './SearchTermsPage'
 		)
 );
 const Touchpoints = lazy(
 	() =>
 		import(
+
 			/* webpackChunkName: "SitesDashboardTouchpoints" */ './Touchpoints'
 		)
 );
@@ -47,23 +50,23 @@ const NAV_ITEMS = [
 	{
 		exact: true,
 		label: Liferay.Language.get('overview'),
-		route: Routes.SITES
+		route: Routes.SITES,
 	},
 	{
 		exact: true,
 		label: Liferay.Language.get('pages'),
-		route: Routes.SITES_TOUCHPOINTS
+		route: Routes.SITES_TOUCHPOINTS,
 	},
 	{
 		exact: false,
 		label: Liferay.Language.get('interests'),
-		route: Routes.SITES_INTERESTS
+		route: Routes.SITES_INTERESTS,
 	},
 	{
 		exact: true,
 		label: Liferay.Language.get('search-terms'),
-		route: Routes.SITES_SEARCH_TERMS
-	}
+		route: Routes.SITES_SEARCH_TERMS,
+	},
 ];
 
 type RouterParams = {
@@ -99,7 +102,7 @@ export const Dashboard: React.FC<IDashboardProps> = ({router}) => {
 
 	return (
 		<BasePage
-			className='sites-dashboard-root'
+			className="sites-dashboard-root"
 			documentTitle={Liferay.Language.get('sites')}
 		>
 			<BasePage.Header
@@ -107,8 +110,8 @@ export const Dashboard: React.FC<IDashboardProps> = ({router}) => {
 					breadcrumbs.getHome({
 						channelId,
 						groupId,
-						label: selectedChannelName
-					})
+						label: selectedChannelName,
+					}),
 				]}
 				groupId={groupId}
 			>
@@ -129,7 +132,7 @@ export const Dashboard: React.FC<IDashboardProps> = ({router}) => {
 
 			{matchedRoute !== Routes.SITES_INTERESTS && (
 				<BasePage.SubHeader>
-					<div className='d-flex justify-content-end w-100'>
+					<div className="d-flex justify-content-end w-100">
 						{matchedRoute === Routes.SITES && (
 							<DownloadPDFReport
 								disabled={!!dataSourceStates.empty}
@@ -160,7 +163,7 @@ export const Dashboard: React.FC<IDashboardProps> = ({router}) => {
 			<BasePage.Context.Provider
 				value={{
 					filters: {},
-					router
+					router,
 				}}
 			>
 				<BasePage.Body>
@@ -172,18 +175,18 @@ export const Dashboard: React.FC<IDashboardProps> = ({router}) => {
 										{authorized
 											? Liferay.Language.get(
 													'connect-a-data-source-with-sites-data'
-											  )
+												)
 											: Liferay.Language.get(
 													'please-contact-your-workspace-administrator-to-add-data-sources'
-											  )}
+												)}
 
 										<ClayLink
-											className='d-block mb-3'
+											className="d-block mb-3"
 											href={
 												URLConstants.DataSourceConnection
 											}
-											key='DOCUMENTATION'
-											target='_blank'
+											key="DOCUMENTATION"
+											target="_blank"
 										>
 											{Liferay.Language.get(
 												'access-our-documentation-to-learn-more'
@@ -193,12 +196,12 @@ export const Dashboard: React.FC<IDashboardProps> = ({router}) => {
 										{authorized && (
 											<ClayLink
 												button
-												className='button-root'
-												displayType='primary'
+												className="button-root"
+												displayType="primary"
 												href={toRoute(
 													Routes.SETTINGS_DATA_SOURCE_LIST,
 													{
-														groupId
+														groupId,
 													}
 												)}
 											>
@@ -240,7 +243,7 @@ export const Dashboard: React.FC<IDashboardProps> = ({router}) => {
 
 									<BundleRouter
 										componentProps={{
-											channelName: selectedChannelName
+											channelName: selectedChannelName,
 										}}
 										data={Overview}
 										destructured={false}

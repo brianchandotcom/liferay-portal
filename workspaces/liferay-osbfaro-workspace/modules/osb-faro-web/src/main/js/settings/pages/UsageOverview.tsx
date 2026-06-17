@@ -11,7 +11,7 @@ import {
 	formatPlanData,
 	isBasicPlan,
 	PLAN_TYPES,
-	PLANS
+	PLANS,
 } from 'shared/util/subscriptions';
 import {KnownIndividualsSession} from 'settings/components/usage-overview/KnownIndividualsSession';
 import {PageViewsSession} from 'settings/components/usage-overview/PageViewsSession';
@@ -27,22 +27,22 @@ const subscriptionStatuses = (admin: boolean) => ({
 		message: admin
 			? Liferay.Language.get(
 					'usage-limit-is-approaching.-please-contact-your-sales-representative-at-the-earliest-convenience'
-			  )
+				)
 			: Liferay.Language.get(
 					'usage-limit-is-approaching.-please-contact-your-workspace-administrator-at-the-earliest-convenience'
-			  ),
-		title: Liferay.Language.get('alert')
+				),
+		title: Liferay.Language.get('alert'),
 	},
 	[SubscriptionStatuses.Over]: {
 		message: admin
 			? Liferay.Language.get(
 					'usage-limit-exceeded.-please-contact-your-sales-representative-to-upgrade-the-plan'
-			  )
+				)
 			: Liferay.Language.get(
 					'usage-limit-exceeded.-please-contact-your-workspace-administrator-to-upgrade-the-plan'
-			  ),
-		title: Liferay.Language.get('alert')
-	}
+				),
+		title: Liferay.Language.get('alert'),
+	},
 });
 
 const getAlertStatusCode = (currentPlan: {
@@ -68,7 +68,7 @@ const getAlertStatusCode = (currentPlan: {
 };
 
 export const UsageOverview = ({
-	project
+	project,
 }: {
 	project: {faroSubscription: any};
 }) => {
@@ -97,11 +97,11 @@ export const UsageOverview = ({
 				displayType: 'primary',
 				href: 'https://support.liferay.com/',
 				icon: {
-					symbol: 'shortcut'
+					symbol: 'shortcut',
 				},
 				label: Liferay.Language.get('go-to-customer-portal'),
-				target: '_blank'
-			}
+				target: '_blank',
+			},
 		];
 	}
 
@@ -111,12 +111,12 @@ export const UsageOverview = ({
 				subscriptionStatuses(admin) as {
 					[key: string]: {message: string; title: string};
 				}
-		  )[alertStatusCode]
+			)[alertStatusCode]
 		: undefined;
 
 	return (
 		<BasePage
-			key='UsageOverview'
+			key="UsageOverview"
 			pageActions={pageActions}
 			pageDescription={Liferay.Language.get(
 				'plans-are-limited-by-the-total-amount-of-individuals-and-page-views'
@@ -148,8 +148,8 @@ export const UsageOverview = ({
 
 						<Card.Body>
 							{isBasicPlan(currentPlan) ? (
-								<p className='mb-0'>
-									<Text color='secondary' size={3}>
+								<p className="mb-0">
+									<Text color="secondary" size={3}>
 										{Liferay.Language.get(
 											'when-either-limit-is-exceeded-the-current-plan-will-have-to-be-upgraded-to-business-or-enterprise'
 										)}
@@ -158,7 +158,7 @@ export const UsageOverview = ({
 							) : (
 								<>
 									<p>
-										<Text color='secondary' size={3}>
+										<Text color="secondary" size={3}>
 											{Liferay.Language.get(
 												'when-either-limit-is-exceeded-the-current-plan-will-either-have-to-be-upgraded-or-add-ons-will-have-to-be-purchased-to-accommodate-the-overage'
 											)}
@@ -166,16 +166,16 @@ export const UsageOverview = ({
 									</p>
 
 									<p
-										className='mb-0'
-										data-testid='next-anniversary-date'
+										className="mb-0"
+										data-testid="next-anniversary-date"
 									>
-										<Text color='secondary' size={3}>
+										<Text color="secondary" size={3}>
 											{sub(
 												Liferay.Language.get(
 													'plan-usage-resets-on-x'
 												),
 												[
-													<b key='DATE'>
+													<b key="DATE">
 														{formatDateToTimeZone(
 															moment(
 																currentPlan.startDate
@@ -183,7 +183,7 @@ export const UsageOverview = ({
 															CUSTOM_DATE_FORMAT,
 															timeZoneId
 														)}
-													</b>
+													</b>,
 												],
 												false
 											)}

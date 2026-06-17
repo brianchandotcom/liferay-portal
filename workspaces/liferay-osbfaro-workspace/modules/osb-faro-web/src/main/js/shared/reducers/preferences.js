@@ -11,7 +11,7 @@ const handleDistributionTabFailure = (
 ) =>
 	state.mergeIn([scope, 'distributionCardTabs', id], {
 		error: true,
-		loading: false
+		loading: false,
 	});
 const handleDistributionTabRequest = (
 	state,
@@ -19,21 +19,21 @@ const handleDistributionTabRequest = (
 ) =>
 	state.mergeIn([scope, 'distributionCardTabs', id], {
 		error: false,
-		loading: true
+		loading: true,
 	});
 const handleDistributionTabSuccess = (
 	state,
 	{
 		meta: {id, scope = PreferencesScopes.User},
-		payload: {distributionCardTabPreferencesMap, order}
+		payload: {distributionCardTabPreferencesMap, order},
 	}
 ) =>
 	state.mergeIn([scope, 'distributionCardTabs', id], {
 		data: order.map(
-			id => new DistributionTab(distributionCardTabPreferencesMap[id])
+			(id) => new DistributionTab(distributionCardTabPreferencesMap[id])
 		),
 		error: false,
-		loading: false
+		loading: false,
 	});
 
 /* Default Channel Id */
@@ -44,7 +44,7 @@ const handleDefaultChannelIdSuccess = (
 	state.mergeIn([scope, 'defaultChannelId'], {
 		data: payload.defaultChannelId,
 		error: false,
-		loading: false
+		loading: false,
 	});
 const handleDefaultChannelIdRequest = (
 	state,
@@ -63,7 +63,7 @@ const handleUpgradeModalSeenSuccess = (
 	state.mergeIn([scope, 'upgradeModalSeen'], {
 		data: payload,
 		error: false,
-		loading: false
+		loading: false,
 	});
 const handleUpgradeModalSeenRequest = (
 	state,
@@ -110,7 +110,7 @@ const actionHandlers = {
 	[actionTypes.UPDATE_UPGRADE_MODAL_SEEN_REQUEST]:
 		handleUpgradeModalSeenRequest,
 	[actionTypes.UPDATE_UPGRADE_MODAL_SEEN_FAILURE]:
-		handleUpgradeModalSeenFailure
+		handleUpgradeModalSeenFailure,
 };
 
 export default createReducer(new Map(), actionHandlers);

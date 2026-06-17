@@ -1,5 +1,5 @@
 import CommerceAverageRevenuePerAccountQuery, {
-	CommerceAverageRevenuePerAccountData
+	CommerceAverageRevenuePerAccountData,
 } from 'commerce/queries/AverageRevenuePerAccountQuery';
 import CommerceMetricCard from './CommerceMetricCard';
 import React from 'react';

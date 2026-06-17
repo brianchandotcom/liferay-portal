@@ -10,10 +10,10 @@ interface IAccountNamesProps {
 
 const AccountNames: React.FC<IAccountNamesProps> = ({
 	className,
-	data: {accountName}
+	data: {accountName},
 }) => (
 	<td className={getCN('name-cell-root', className)}>
-		<div className='text-truncate'>{accountName || '-'}</div>
+		<div className="text-truncate">{accountName || '-'}</div>
 	</td>
 );
 

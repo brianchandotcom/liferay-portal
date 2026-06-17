@@ -4,7 +4,7 @@ import {Entity} from '../../types';
 import {fetchConnectorEntityCount} from 'shared/api/connector';
 
 jest.mock('shared/api/connector', () => ({
-	fetchConnectorEntityCount: jest.fn(() => Promise.resolve(7))
+	fetchConnectorEntityCount: jest.fn(() => Promise.resolve(7)),
 }));
 
 describe('demandbase config', () => {
@@ -40,7 +40,7 @@ describe('demandbase config', () => {
 	it('delegates fetchCount to fetchConnectorEntityCount with the entity', async () => {
 		await demandbaseConfig.entities[0].fetchCount!({
 			groupId: '42',
-			id: 'data-source-9'
+			id: 'data-source-9',
 		});
 
 		expect(fetchConnectorEntityCount).toHaveBeenCalledWith(

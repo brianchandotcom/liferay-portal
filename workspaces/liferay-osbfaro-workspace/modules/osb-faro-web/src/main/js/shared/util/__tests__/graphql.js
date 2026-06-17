@@ -7,26 +7,26 @@ const mockGQLQuery = {
 				{
 					variable: {
 						name: {
-							value: 'name'
-						}
-					}
+							value: 'name',
+						},
+					},
 				},
 				{
 					variable: {
 						name: {
-							value: 'rangeKey'
-						}
-					}
-				}
-			]
-		}
-	]
+							value: 'rangeKey',
+						},
+					},
+				},
+			],
+		},
+	],
 };
 
 const mockVariables = {
 	name: 'Tester',
 	rangeKey: '30',
-	test: 'no'
+	test: 'no',
 };
 
 describe('GraphQL Utils', () => {
@@ -34,7 +34,7 @@ describe('GraphQL Utils', () => {
 		it('Returns the variable definitions from a GQLQuery', () => {
 			expect(getVariableDefinitions(mockGQLQuery)).toEqual({
 				name: true,
-				rangeKey: true
+				rangeKey: true,
 			});
 		});
 	});
@@ -44,11 +44,11 @@ describe('GraphQL Utils', () => {
 			expect(
 				removeUnusedVariables(mockVariables, {
 					name: true,
-					rangeKey: true
+					rangeKey: true,
 				})
 			).toEqual({
 				name: 'Tester',
-				rangeKey: '30'
+				rangeKey: '30',
 			});
 		});
 	});

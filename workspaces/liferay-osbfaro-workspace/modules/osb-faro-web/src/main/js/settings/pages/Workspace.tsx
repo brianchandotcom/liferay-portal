@@ -18,7 +18,7 @@ type History = {
 
 const connector = connect(null, {
 	addAlert,
-	updateProject
+	updateProject,
 });
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
@@ -38,7 +38,7 @@ export const Workspace: React.FC<IWorkspaceProps> = ({
 	groupId,
 	history,
 	project,
-	updateProject
+	updateProject,
 }) => {
 	const currentUser = useCurrentUser();
 
@@ -47,7 +47,7 @@ export const Workspace: React.FC<IWorkspaceProps> = ({
 		friendlyURL,
 		incidentReportEmailAddresses,
 		name,
-		timeZoneId
+		timeZoneId,
 	}: Record<string, any>) =>
 		(
 			updateProject({
@@ -56,21 +56,21 @@ export const Workspace: React.FC<IWorkspaceProps> = ({
 				groupId,
 				incidentReportEmailAddresses,
 				name,
-				timeZoneId
+				timeZoneId,
 			}) as unknown as Promise<any>
 		)
 			.then(() => {
 				if (friendlyURL !== groupId) {
 					history.push(
 						toRoute(Routes.SETTINGS_WORKSPACE, {
-							groupId: friendlyURL || project.groupId
+							groupId: friendlyURL || project.groupId,
 						})
 					);
 				}
 
 				addAlert({
 					alertType: Alert.Types.Success,
-					message: Liferay.Language.get('workspace-settings-saved')
+					message: Liferay.Language.get('workspace-settings-saved'),
 				});
 			})
 			.catch((error: {field?: string}) => {
@@ -78,7 +78,7 @@ export const Workspace: React.FC<IWorkspaceProps> = ({
 					addAlert({
 						alertType: Alert.Types.Error,
 						message: Liferay.Language.get('unknown-error'),
-						timeout: false
+						timeout: false,
 					});
 				}
 
@@ -87,15 +87,15 @@ export const Workspace: React.FC<IWorkspaceProps> = ({
 
 	return (
 		<BasePage
-			className='workspace-settings'
-			key='workspaceSettingsPage'
+			className="workspace-settings"
+			key="workspaceSettingsPage"
 			pageDescription={Liferay.Language.get(
 				'view-and-edit-your-workspace-settings.-data-center-location-and-friendly-workspace-url-cannot-be-edited-once-it-has-been-set'
 			)}
 			pageTitle={Liferay.Language.get('workspace-settings')}
 		>
 			<AddWorkspaceForm
-				className='add-workspace-root col-lg-7 pl-0'
+				className="add-workspace-root col-lg-7 pl-0"
 				disabled={!currentUser.isAdmin()}
 				editing
 				emailAddressDomains={emailAddressDomains}
@@ -113,11 +113,11 @@ export default compose<React.ComponentType<any>>(
 	withQuery(
 		({groupId}: {groupId: string}) =>
 			API.projects.fetchEmailAddressDomains({
-				groupId
+				groupId,
 			}),
 		(val: any) => val,
 		({data, error}: {data: any; error: any}) => ({
-			emailAddressDomains: error ? [] : data
+			emailAddressDomains: error ? [] : data,
 		})
 	)
 )(Workspace);

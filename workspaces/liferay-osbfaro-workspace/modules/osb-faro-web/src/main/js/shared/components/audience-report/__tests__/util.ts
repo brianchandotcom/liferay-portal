@@ -1,6 +1,7 @@
 import {formatData} from '../util';
 
 describe('formatData', () => {
+
 	/**
 	 * Apollo Client 3 deep-freezes query results in development to surface
 	 * accidental mutations. formatData must therefore not sort the metrics
@@ -11,7 +12,7 @@ describe('formatData', () => {
 		const metrics = Object.freeze([
 			{value: 434, valueKey: '804330050123744518'},
 			{value: 214, valueKey: '804357143036930828'},
-			{value: 141, valueKey: 'Liferayers'}
+			{value: 141, valueKey: 'Liferayers'},
 		]);
 
 		expect(() =>
@@ -21,9 +22,9 @@ describe('formatData', () => {
 					knownUsersCount: 100,
 					nonsegmentedKnownUsersCount: 40,
 					segmentedAnonymousUsersCount: 30,
-					segmentedKnownUsersCount: 30
+					segmentedKnownUsersCount: 30,
 				},
-				segment: {metrics, total: 789}
+				segment: {metrics, total: 789},
 			})
 		).not.toThrow();
 	});

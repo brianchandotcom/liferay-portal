@@ -11,7 +11,7 @@ const getSegmentsData = (
 	{
 		segments,
 		total,
-		totalOthers
+		totalOthers,
 	}: {
 		segments: {value: number; valueKey: string}[];
 		total: number;
@@ -24,16 +24,16 @@ const getSegmentsData = (
 	const TOOLTIP_HEADER = [
 		{
 			label: Liferay.Language.get('segment'),
-			weight: 'semibold'
+			weight: 'semibold',
 		},
 		{
-			label: ''
+			label: '',
 		},
 		{
 			align: 'right',
 			label: '%',
-			weight: 'semibold'
-		}
+			weight: 'semibold',
+		},
 	];
 
 	/**
@@ -42,7 +42,7 @@ const getSegmentsData = (
 	 */
 	const getTooltipColumns = ({
 		value,
-		valueKey
+		valueKey,
 	}: {
 		value: number;
 		valueKey: string;
@@ -54,18 +54,18 @@ const getSegmentsData = (
 					: valueKey,
 			truncated: true,
 			weight: 'semibold',
-			width: 160
+			width: 160,
 		},
 		{
 			align: 'right',
-			label: `${toThousands(value)}`
+			label: `${toThousands(value)}`,
 		},
 		{
 			align: 'right',
 			label: `${toRounded(getPercentage(value, total))}%`,
 			weight: 'semibold',
-			width: 50
-		}
+			width: 50,
+		},
 	];
 
 	/**
@@ -86,26 +86,27 @@ const getSegmentsData = (
 		columns: [
 			{
 				icon: 'ac_segment',
-				label: valueKey
-			}
+				label: valueKey,
+			},
 		],
 		progress: [
 			{
 				color,
-				value: getValue(value)
-			}
+				value: getValue(value),
+			},
 		],
 		tooltip: {
 			header: TOOLTIP_HEADER,
 			rows: [
 				{
-					columns: getTooltipColumns({value, valueKey})
-				}
-			]
-		}
+					columns: getTooltipColumns({value, valueKey}),
+				},
+			],
+		},
 	}));
 
 	// Max value
+
 	let maxValue = Math.max(...segments.map(({value}) => value));
 
 	if (segments.length > MAX_BARS) {
@@ -120,26 +121,27 @@ const getSegmentsData = (
 					{
 						icon: 'ac_segment',
 						label: sub(Liferay.Language.get('x-more-segments'), [
-							totalOthers - (MAX_BARS - 1)
-						]) as string
-					}
+							totalOthers - (MAX_BARS - 1),
+						]) as string,
+					},
 				],
 				progress: [
 					{
 						color,
-						value: getValue(value)
-					}
+						value: getValue(value),
+					},
 				],
 				tooltip: {
 					header: TOOLTIP_HEADER,
-					rows: otherArrItems.map(item => ({
-						columns: getTooltipColumns(item)
-					}))
-				}
-			}
+					rows: otherArrItems.map((item) => ({
+						columns: getTooltipColumns(item),
+					})),
+				},
+			},
 		];
 
 		// Update max value
+
 		maxValue = value > maxValue ? value : maxValue;
 	}
 
@@ -152,9 +154,9 @@ const getSegmentsData = (
 				: MAX_VALUE_EMPTY_STATE,
 			minValue: 0,
 			show: true,
-			type: 'percentage'
+			type: 'percentage',
 		},
-		items
+		items,
 	};
 };
 
@@ -178,34 +180,34 @@ export const formatData = ({
 		knownUsersCount,
 		nonsegmentedKnownUsersCount,
 		segmentedAnonymousUsersCount,
-		segmentedKnownUsersCount
+		segmentedKnownUsersCount,
 	},
-	segment: {metrics, total: totalOthers}
+	segment: {metrics, total: totalOthers},
 }: any): FormattedData => {
 	const knownIndividualsData = [
 		{
 			color: martellL4,
 			count: segmentedKnownUsersCount,
-			label: Liferay.Language.get('segmented')
+			label: Liferay.Language.get('segmented'),
 		},
 		{
 			color: martellD4,
 			count: nonsegmentedKnownUsersCount,
-			label: Liferay.Language.get('unsegmented')
-		}
+			label: Liferay.Language.get('unsegmented'),
+		},
 	];
 
 	const uniqueVisitorsData = [
 		{
 			color: mormont,
 			count: anonymousUsersCount,
-			label: Liferay.Language.get('anonymous-individuals')
+			label: Liferay.Language.get('anonymous-individuals'),
 		},
 		{
 			color: stark,
 			count: knownUsersCount,
-			label: Liferay.Language.get('known-individuals')
-		}
+			label: Liferay.Language.get('known-individuals'),
+		},
 	];
 
 	const segments = getSegmentsData(
@@ -215,10 +217,10 @@ export const formatData = ({
 					.slice()
 					.sort((a: any, b: any) => b.value - a.value)
 					.filter(({valueKey}: any) => valueKey !== 'others'),
-				...metrics.filter(({valueKey}: any) => valueKey === 'others')
+				...metrics.filter(({valueKey}: any) => valueKey === 'others'),
 			],
 			total: segmentedAnonymousUsersCount + segmentedKnownUsersCount,
-			totalOthers
+			totalOthers,
 		},
 		martellL4
 	);
@@ -237,9 +239,9 @@ export const formatData = ({
 				),
 				[0]
 			) as string,
-			show: knownIndividualsTotal === 0
+			show: knownIndividualsTotal === 0,
 		},
-		total: knownIndividualsTotal
+		total: knownIndividualsTotal,
 	};
 
 	const uniqueVisitorsTotal = uniqueVisitorsData.reduce(
@@ -254,14 +256,14 @@ export const formatData = ({
 				Liferay.Language.get('x-visitors-interacted-with-this-content'),
 				[0]
 			) as string,
-			show: uniqueVisitorsTotal === 0
+			show: uniqueVisitorsTotal === 0,
 		},
-		total: uniqueVisitorsTotal
+		total: uniqueVisitorsTotal,
 	};
 
 	return {
 		knownIndividuals,
 		segments,
-		uniqueVisitors
+		uniqueVisitors,
 	};
 };

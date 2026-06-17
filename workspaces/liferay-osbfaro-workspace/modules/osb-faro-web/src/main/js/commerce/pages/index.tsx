@@ -22,8 +22,8 @@ const NAV_ITEMS = [
 	{
 		exact: true,
 		label: Liferay.Language.get('overview'),
-		route: Routes.COMMERCE
-	}
+		route: Routes.COMMERCE,
+	},
 ];
 
 type RouterParams = {
@@ -52,7 +52,7 @@ const CommerceDashboard: React.FC<ICommerceDashboardProps> = ({router}) => {
 
 	return (
 		<BasePage
-			className='commerce-dashboard-root'
+			className="commerce-dashboard-root"
 			documentTitle={Liferay.Language.get('commerce')}
 		>
 			<BasePage.Header
@@ -60,8 +60,8 @@ const CommerceDashboard: React.FC<ICommerceDashboardProps> = ({router}) => {
 					breadcrumbs.getHome({
 						channelId,
 						groupId,
-						label: selectedChannelName
-					})
+						label: selectedChannelName,
+					}),
 				]}
 				groupId={groupId}
 			>
@@ -78,7 +78,7 @@ const CommerceDashboard: React.FC<ICommerceDashboardProps> = ({router}) => {
 			<BasePage.Context.Provider
 				value={{
 					filters: {},
-					router
+					router,
 				}}
 			>
 				<BasePage.Body>
@@ -90,18 +90,18 @@ const CommerceDashboard: React.FC<ICommerceDashboardProps> = ({router}) => {
 										{authorized
 											? Liferay.Language.get(
 													'connect-a-data-source-with-sites-data'
-											  )
+												)
 											: Liferay.Language.get(
 													'please-contact-your-workspace-administrator-to-add-data-sources'
-											  )}
+												)}
 
 										<ClayLink
-											className='d-block mb-3'
+											className="d-block mb-3"
 											href={
 												URLConstants.DataSourceConnection
 											}
-											key='DOCUMENTATION'
-											target='_blank'
+											key="DOCUMENTATION"
+											target="_blank"
 										>
 											{Liferay.Language.get(
 												'access-our-documentation-to-learn-more'
@@ -111,12 +111,12 @@ const CommerceDashboard: React.FC<ICommerceDashboardProps> = ({router}) => {
 										{authorized && (
 											<ClayLink
 												button
-												className='button-root'
-												displayType='primary'
+												className="button-root"
+												displayType="primary"
 												href={toRoute(
 													Routes.SETTINGS_DATA_SOURCE_LIST,
 													{
-														groupId
+														groupId,
 													}
 												)}
 											>
@@ -137,7 +137,7 @@ const CommerceDashboard: React.FC<ICommerceDashboardProps> = ({router}) => {
 								<Switch>
 									<BundleRouter
 										componentProps={{
-											channelName: selectedChannelName
+											channelName: selectedChannelName,
 										}}
 										data={Overview}
 										destructured={false}

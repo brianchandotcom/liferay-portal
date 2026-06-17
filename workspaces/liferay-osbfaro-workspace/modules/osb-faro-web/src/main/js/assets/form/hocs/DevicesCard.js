@@ -50,7 +50,7 @@ const BROWSER_DEVICE = gql`
 const withFormsDevices = () =>
 	graphql(
 		BROWSER_DEVICE,
-		getDevicesMapper(result => result.form.submissionsMetric)
+		getDevicesMapper((result) => result.form.submissionsMetric)
 	);
 
 export default withDevicesCard(withFormsDevices, {
@@ -61,5 +61,5 @@ export default withDevicesCard(withFormsDevices, {
 	reportContainer: ReportContainer.SubmissionsByTechnologyCard,
 	title: Liferay.Language.get(
 		'there-are-no-submissions-on-the-selected-period'
-	)
+	),
 });

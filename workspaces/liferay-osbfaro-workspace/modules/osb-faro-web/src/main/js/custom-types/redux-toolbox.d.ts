@@ -12,6 +12,7 @@ declare module 'clipboard' {
 
 	class Clipboard {
 		constructor(
+
 			// eslint-disable-next-line no-undef
 			selector: string | Element | NodeListOf<Element>,
 			options?: {[key: string]: any}

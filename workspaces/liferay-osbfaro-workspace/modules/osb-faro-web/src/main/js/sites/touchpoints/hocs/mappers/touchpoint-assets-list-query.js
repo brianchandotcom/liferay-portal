@@ -6,7 +6,7 @@ const assetTypeLabels = {
 	custom: Liferay.Language.get('custom'),
 	document: Liferay.Language.get('documents-and-media'),
 	form: Liferay.Language.get('forms'),
-	journal: Liferay.Language.get('web-content')
+	journal: Liferay.Language.get('web-content'),
 };
 
 const mapResultToProps = safeResultToProps(({assets}) => {
@@ -16,7 +16,7 @@ const mapResultToProps = safeResultToProps(({assets}) => {
 			assetType,
 			interactions: defaultMetric.value,
 			title: assetTitle || assetId,
-			type: assetTypeLabels[assetType]
+			type: assetTypeLabels[assetType],
 		})
 	);
 
@@ -32,7 +32,7 @@ const mapPropsToOptions = ({
 	filters,
 	rangeSelectors,
 	router: {params},
-	touchpoint
+	touchpoint,
 }) => {
 	const {variables} = getVariables({filters, params, rangeSelectors});
 
@@ -40,15 +40,15 @@ const mapPropsToOptions = ({
 		return {
 			variables: {
 				...variables,
-				touchpoint: getSafeTouchpoint(touchpoint)
-			}
+				touchpoint: getSafeTouchpoint(touchpoint),
+			},
 		};
 	}
 
 	return getVariables({
 		filters,
 		params,
-		rangeSelectors
+		rangeSelectors,
 	});
 };
 

@@ -5,7 +5,7 @@ import {
 	HOURS,
 	HOURS_IN_A_DAY,
 	MAX_DAYS,
-	TIME_WINDOW_OPTIONS
+	TIME_WINDOW_OPTIONS,
 } from '../../utils/constants';
 import {Option, Picker} from '@clayui/core';
 
@@ -17,13 +17,13 @@ interface IRealTimePeriodInputProps {
 
 export const DEFAULT_OPTIONS = {
 	interval: 1,
-	timeWindow: DAYS
+	timeWindow: DAYS,
 };
 
 const RealTimePeriodInput: React.FC<IRealTimePeriodInputProps> = ({
 	initialInterval = DEFAULT_OPTIONS.interval,
 	initialTimeWindow = DEFAULT_OPTIONS.timeWindow,
-	onChange
+	onChange,
 }) => {
 	const [interval, setInterval] = useState<number>(initialInterval);
 	const [timeWindow, setTimeWindow] = useState(initialTimeWindow);
@@ -53,20 +53,20 @@ const RealTimePeriodInput: React.FC<IRealTimePeriodInputProps> = ({
 
 	return (
 		<Form.Group autoFit>
-			<Form.GroupItem className='unit' label shrink>
+			<Form.GroupItem className="unit" label shrink>
 				{Liferay.Language.get('in-the-last').toLowerCase()}
 			</Form.GroupItem>
 			<Picker
-				className='operator-input'
+				className="operator-input"
 				items={INTERVAL_OPTIONS}
 				onSelectionChange={handleIntervalChange}
 				selectedKey={interval.toString()}
 				shrink
 			>
-				{number => <Option key={number}>{number.toString()}</Option>}
+				{(number) => <Option key={number}>{number.toString()}</Option>}
 			</Picker>
 			<Picker
-				className='operator-input ml-2'
+				className="operator-input ml-2"
 				items={TIME_WINDOW_OPTIONS}
 				onSelectionChange={handleTimePeriodChange}
 				selectedKey={timeWindow}

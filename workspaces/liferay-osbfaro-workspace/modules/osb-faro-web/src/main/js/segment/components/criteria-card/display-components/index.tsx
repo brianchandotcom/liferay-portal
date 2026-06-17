@@ -16,13 +16,13 @@ const NON_REMOTE_DISPLAYS: Record<string, React.ComponentType<any>> = {
 	interest: InterestDisplay,
 	organization: OrganizationDisplay,
 	session: SessionDisplay,
-	web: BehaviorDisplay
+	web: BehaviorDisplay,
 };
 
 const DisplayComponent: React.FC<IDisplayComponentProps> = ({
 	criterion,
 	property,
-	segmentType
+	segmentType,
 }) => {
 	const Display = (getRemoteCriterionTypeByPropertyKey(property.propertyKey)
 		?.DisplayComponent ??

@@ -20,7 +20,7 @@ const ErrorPage: React.FC<IErrorPageProps> = ({
 		'the-page-you-are-looking-for-does-not-exist'
 	),
 	subtitle = Liferay.Language.get('page-not-found'),
-	title = '404'
+	title = '404',
 }) => (
 	<div className={getCN('error-page-root', 'page-container', className)}>
 		<h1>{title}</h1>
@@ -31,8 +31,8 @@ const ErrorPage: React.FC<IErrorPageProps> = ({
 
 		<ClayLink
 			button
-			className='button-root'
-			displayType='secondary'
+			className="button-root"
+			displayType="secondary"
 			href={href}
 		>
 			{linkLabel}

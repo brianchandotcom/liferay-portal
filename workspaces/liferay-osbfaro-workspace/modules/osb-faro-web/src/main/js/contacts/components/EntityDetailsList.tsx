@@ -26,11 +26,11 @@ interface IEntityDetailsListProps extends React.HTMLAttributes<HTMLElement> {
 
 export default class EntityDetailsList extends React.Component<IEntityDetailsListProps> {
 	static defaultProps = {
-		title: Liferay.Language.get('properties')
+		title: Liferay.Language.get('properties'),
 	};
 
 	state = {
-		hideBlanks: false
+		hideBlanks: false,
 	};
 
 	_detailsData: any;
@@ -46,7 +46,7 @@ export default class EntityDetailsList extends React.Component<IEntityDetailsLis
 	@autobind
 	filterDetails({
 		hideBlanks,
-		query = ''
+		query = '',
 	}: {
 		hideBlanks: boolean;
 		query?: string;
@@ -56,7 +56,7 @@ export default class EntityDetailsList extends React.Component<IEntityDetailsLis
 				return false;
 			}
 
-			return some(pick(rowData, DETAIL_QUERY_OPTIONS), item =>
+			return some(pick(rowData, DETAIL_QUERY_OPTIONS), (item) =>
 				item
 					? item
 							.toString()
@@ -68,7 +68,7 @@ export default class EntityDetailsList extends React.Component<IEntityDetailsLis
 
 		return Promise.resolve({
 			items,
-			total: items.length
+			total: items.length,
 		});
 	}
 
@@ -79,7 +79,7 @@ export default class EntityDetailsList extends React.Component<IEntityDetailsLis
 			detailsListColumns.name,
 			detailsListColumns.sourceName,
 			detailsListColumns.getDataSourceName(groupId),
-			detailsListColumns.getDateModified(timeZoneId)
+			detailsListColumns.getDateModified(timeZoneId),
 		];
 	}
 
@@ -98,7 +98,7 @@ export default class EntityDetailsList extends React.Component<IEntityDetailsLis
 					sourceName: fieldValue.get('sourceName'),
 					value: values
 						.map((fieldMapping: any) => fieldMapping.get('value'))
-						.join(', ')
+						.join(', '),
 				};
 			})
 			.valueSeq()
@@ -116,7 +116,7 @@ export default class EntityDetailsList extends React.Component<IEntityDetailsLis
 	@autobind
 	handleToggleBlankRows(event: React.ChangeEvent<HTMLInputElement>) {
 		this.setState({
-			hideBlanks: event.target.checked
+			hideBlanks: event.target.checked,
 		});
 	}
 
@@ -140,7 +140,7 @@ export default class EntityDetailsList extends React.Component<IEntityDetailsLis
 	render() {
 		const {
 			props: {className, title},
-			state: {hideBlanks}
+			state: {hideBlanks},
 		} = this;
 
 		return (
@@ -151,31 +151,31 @@ export default class EntityDetailsList extends React.Component<IEntityDetailsLis
 				<Card.Header>
 					<Card.Title>{title}</Card.Title>
 
-					<div className='secondary-info'>
+					<div className="secondary-info">
 						{this._knownCount === 1
 							? sub(
 									Liferay.Language.get(
 										'1-known-individual-is-available-of-x-total'
 									),
 									[
-										<b key='TOTAL'>
+										<b key="TOTAL">
 											{this._detailsData.length}
-										</b>
+										</b>,
 									],
 									false
-							  )
+								)
 							: sub(
 									Liferay.Language.get(
 										'x-known-individuals-are-available-of-x-total'
 									),
 									[
-										<b key='KNOWN'>{this._knownCount}</b>,
-										<b key='TOTAL'>
+										<b key="KNOWN">{this._knownCount}</b>,
+										<b key="TOTAL">
 											{this._detailsData.length}
-										</b>
+										</b>,
 									],
 									false
-							  )}
+								)}
 					</div>
 				</Card.Header>
 
@@ -187,7 +187,7 @@ export default class EntityDetailsList extends React.Component<IEntityDetailsLis
 						internalSort
 						navRenderer={this.renderNav}
 						nowrap={false}
-						rowIdentifier='name'
+						rowIdentifier="name"
 						showPagination={false}
 					/>
 				</Card.Body>

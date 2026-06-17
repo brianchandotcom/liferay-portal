@@ -36,7 +36,9 @@ function getKeys(langPath) {
 		const buffer = fs.readFileSync(langPath);
 
 		keys = properties.parse(buffer.toString('utf8'));
-	} catch (e) {
+	}
+	catch (e) {
+
 		// eslint-disable-next-line no-console
 		console.error(`Failed to read lang key file: ${langPath}`);
 	}

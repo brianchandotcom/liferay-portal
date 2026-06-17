@@ -2,7 +2,7 @@ import BasePage from 'settings/components/base-page/BasePage';
 import EVENT_DEFINITION_QUERY, {
 	EventDefinitionData,
 	EventDefinitionVariables,
-	UPDATE_EVENT_DEFINITION
+	UPDATE_EVENT_DEFINITION,
 } from 'event-analysis/queries/EventDefinitionQuery';
 import EventDetailsCard from '../components/EventDetailsCard';
 import React from 'react';
@@ -25,7 +25,7 @@ const View: React.FC<IViewProps> = ({close, eventId, groupId, open}) => {
 	const result = useQuery<EventDefinitionData, EventDefinitionVariables>(
 		EVENT_DEFINITION_QUERY,
 		{
-			variables: {id: eventId}
+			variables: {id: eventId},
 		}
 	);
 
@@ -37,9 +37,9 @@ const View: React.FC<IViewProps> = ({close, eventId, groupId, open}) => {
 					id: eventId,
 					mutation: UPDATE_EVENT_DEFINITION,
 					onClose: close,
-					query: EVENT_DEFINITION_QUERY
-				})
-		}
+					query: EVENT_DEFINITION_QUERY,
+				}),
+		},
 	];
 
 	return (
@@ -49,8 +49,8 @@ const View: React.FC<IViewProps> = ({close, eventId, groupId, open}) => {
 					description,
 					displayName,
 					eventAttributeDefinitions,
-					name
-				}
+					name,
+				},
 			}: {
 				eventDefinition: Event;
 			}) => (
@@ -58,7 +58,7 @@ const View: React.FC<IViewProps> = ({close, eventId, groupId, open}) => {
 					breadcrumbItems={[
 						getDefinitions({groupId}),
 						getEvents({groupId}),
-						{active: true, label: displayName || name}
+						{active: true, label: displayName || name},
 					]}
 					pageActions={viewEventPageActions}
 					pageDescription={

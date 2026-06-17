@@ -19,7 +19,7 @@ export const DATE_MASK = [
 	/\d/,
 	'-',
 	/\d/,
-	/\d/
+	/\d/,
 ];
 
 export const DATE_TIME_MASK = [
@@ -38,7 +38,7 @@ export const DATE_TIME_MASK = [
 	/\d/,
 	':',
 	/\d/,
-	/\d/
+	/\d/,
 ];
 
 export const DEFAULT_DATE_FORMAT = 'YYYY-MM-DD';
@@ -53,7 +53,7 @@ const FORMATTED_LANGUAGE_IDS = {
 	[LanguageIds.English]: 'en',
 	[LanguageIds.Japanese]: 'ja',
 	[LanguageIds.Portuguese]: 'pt-br',
-	[LanguageIds.Spanish]: 'es'
+	[LanguageIds.Spanish]: 'es',
 };
 
 export const ISO_8601_DATE_FORMAT = 'YYYY-MM-DDTHH:mm:ss.SSS[Z]';
@@ -65,7 +65,7 @@ export const WEEKDAYS = [
 	Liferay.Language.get('wednesday'),
 	Liferay.Language.get('thursday'),
 	Liferay.Language.get('friday'),
-	Liferay.Language.get('saturday')
+	Liferay.Language.get('saturday'),
 ];
 
 moment.locale(FORMATTED_LANGUAGE_IDS[DEFAULT_LANGUAGE_ID]);
@@ -117,7 +117,7 @@ export function applyTimeZone(
 }
 
 export function generateDateRange(period = 30, interval = 'days') {
-	return rangeRight(0, period).map(cur =>
+	return rangeRight(0, period).map((cur) =>
 		moment.utc().startOf(interval).subtract(cur, interval).valueOf()
 	);
 }
@@ -168,7 +168,8 @@ export function getDateRangeLabelFromDate(date, interval) {
 export function getEndDate(date, interval) {
 	if (interval === INTERVAL_KEY_MAP.week) {
 		return moment.utc(date).add('6', 'days');
-	} else if (interval === INTERVAL_KEY_MAP.month) {
+	}
+	else if (interval === INTERVAL_KEY_MAP.month) {
 		return moment.utc(date).endOf('month');
 	}
 
@@ -202,7 +203,7 @@ export function getLastDate(dates, interval, key) {
 export function getTotalDaysToDate(createDate) {
 	const duration = moment.duration({
 		from: moment(createDate).clone(),
-		to: new Date()
+		to: new Date(),
 	});
 
 	return Math.floor(duration.asDays());

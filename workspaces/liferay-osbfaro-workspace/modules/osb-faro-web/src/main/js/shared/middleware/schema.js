@@ -18,13 +18,13 @@ export const individual = new schema.Entity(
 	{processStrategy}
 );
 export const interest = new schema.Entity('interests', {}, {processStrategy});
-export const project = groupId =>
+export const project = (groupId) =>
 	new schema.Entity(
 		'projects',
 		{},
 		{
 			idAttribute: ({groupId: id}) => groupId || id,
-			processStrategy
+			processStrategy,
 		}
 	);
 
@@ -43,8 +43,8 @@ export const layoutTemplate = new schema.Entity(
 	{
 		data: {
 			contactsCardTemplatesList: [cardTemplates],
-			headerContactsCardTemplates: cardTemplates
-		}
+			headerContactsCardTemplates: cardTemplates,
+		},
 	},
 	{processStrategy}
 );
@@ -52,20 +52,20 @@ export const layoutTemplate = new schema.Entity(
 const ENTITIES_SCHEMA_MAP = {
 	[EntityTypes.Account]: account,
 	[EntityTypes.Individual]: individual,
-	[EntityTypes.IndividualsSegment]: segment
+	[EntityTypes.IndividualsSegment]: segment,
 };
 
 export function getLayoutSchema(type) {
 	return {
 		contactsLayoutTemplate: layoutTemplate,
-		faroEntity: ENTITIES_SCHEMA_MAP[type]
+		faroEntity: ENTITIES_SCHEMA_MAP[type],
 	};
 }
 
 export function getCardSchema(type) {
 	return {
 		contactsCardTemplate: cardTemplate,
-		faroEntity: ENTITIES_SCHEMA_MAP[type]
+		faroEntity: ENTITIES_SCHEMA_MAP[type],
 	};
 }
 
@@ -82,7 +82,7 @@ export function getDistributionSchema(individualSegmentId) {
 		{},
 		{
 			idAttribute: () => individualSegmentId,
-			processStrategy
+			processStrategy,
 		}
 	);
 }

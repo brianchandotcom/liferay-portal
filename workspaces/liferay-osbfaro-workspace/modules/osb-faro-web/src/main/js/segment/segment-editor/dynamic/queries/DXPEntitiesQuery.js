@@ -8,7 +8,7 @@ import {gql} from '@apollo/client';
  * @param {string} metricName
  * @returns GraphQL query
  */
-export default entityName => {
+export default (entityName) => {
 	if ([EntityType.Teams, EntityType.Groups].includes(entityName)) {
 		return gql`
 			query DXPEntitiesList(

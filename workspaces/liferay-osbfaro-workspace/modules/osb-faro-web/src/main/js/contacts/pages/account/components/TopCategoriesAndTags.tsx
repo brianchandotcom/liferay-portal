@@ -43,13 +43,13 @@ interface ITopCategoriesAndTagsProps {
 enum GroupByMetric {
 	DOWNLOADS = 'downloads',
 	IMPRESSIONS = 'impressions',
-	VIEWS = 'views'
+	VIEWS = 'views',
 }
 
 const GROUP_BY_TO_METRIC: Record<GroupByMetric, TaxonomyMetric> = {
 	[GroupByMetric.DOWNLOADS]: 'downloadsMetric',
 	[GroupByMetric.IMPRESSIONS]: 'impressionsMetric',
-	[GroupByMetric.VIEWS]: 'viewsMetric'
+	[GroupByMetric.VIEWS]: 'viewsMetric',
 };
 
 const TABS = ['category', 'tag'] as const;
@@ -60,15 +60,15 @@ const GroupByTrigger = React.forwardRef<
 >(({label, ...rest}, ref) => (
 	<ClayButton
 		{...rest}
-		className='rounded-lg'
-		displayType='secondary'
+		className="rounded-lg"
+		displayType="secondary"
 		ref={ref}
-		size='sm'
+		size="sm"
 	>
 		{label}
 		<ClayIcon
-			className='inline-item inline-item-after'
-			symbol='caret-bottom'
+			className="inline-item inline-item-after"
+			symbol="caret-bottom"
 		/>
 	</ClayButton>
 ));
@@ -90,12 +90,12 @@ const TabContent: React.FC<ITabContentProps> = ({
 	items,
 	loading,
 	selectedMetric,
-	setGroupBy
+	setGroupBy,
 }) => {
 	const groupByLabels: Record<GroupByMetric, string> = {
 		[GroupByMetric.DOWNLOADS]: Liferay.Language.get('downloads'),
 		[GroupByMetric.IMPRESSIONS]: Liferay.Language.get('impressions'),
-		[GroupByMetric.VIEWS]: Liferay.Language.get('views')
+		[GroupByMetric.VIEWS]: Liferay.Language.get('views'),
 	};
 
 	const groupByLabel = groupByLabels[groupBy];
@@ -107,15 +107,15 @@ const TabContent: React.FC<ITabContentProps> = ({
 			<StatesRenderer.Loading />
 			<StatesRenderer.Empty>
 				<ClayEmptyState
-					className='py-3 text-center'
+					className="py-3 text-center"
 					description={
 						isCategory
 							? Liferay.Language.get(
 									'categories-will-appear-here-when-available'
-							  )
+								)
 							: Liferay.Language.get(
 									'tags-will-appear-here-when-available'
-							  )
+								)
 					}
 					small
 					title={
@@ -126,8 +126,8 @@ const TabContent: React.FC<ITabContentProps> = ({
 				/>
 			</StatesRenderer.Empty>
 			<StatesRenderer.Success>
-				<div className='align-items-center d-flex'>
-					<div className='font-weight-semi-bold mr-2'>
+				<div className="align-items-center d-flex">
+					<div className="font-weight-semi-bold mr-2">
 						<Text size={3}>{Liferay.Language.get('group-by')}</Text>
 					</div>
 
@@ -136,7 +136,7 @@ const TabContent: React.FC<ITabContentProps> = ({
 						as={GroupByTrigger}
 						items={Object.keys(groupByLabels) as GroupByMetric[]}
 						label={groupByLabel}
-						onSelectionChange={key =>
+						onSelectionChange={(key) =>
 							setGroupBy(key as GroupByMetric)
 						}
 						selectedKey={groupBy}
@@ -147,7 +147,7 @@ const TabContent: React.FC<ITabContentProps> = ({
 					</Picker>
 				</div>
 
-				<ClayTable className='mt-3'>
+				<ClayTable className="mt-3">
 					<ClayTable.Head>
 						<ClayTable.Row>
 							<ClayTable.Cell expanded headingCell>
@@ -166,10 +166,10 @@ const TabContent: React.FC<ITabContentProps> = ({
 						</ClayTable.Row>
 					</ClayTable.Head>
 					<ClayTable.Body>
-						{items.map(item => (
+						{items.map((item) => (
 							<ClayTable.Row key={item.id}>
 								<ClayTable.Cell expanded>
-									<Text size={3} weight='semi-bold'>
+									<Text size={3} weight="semi-bold">
 										{item.name}
 									</Text>
 								</ClayTable.Cell>
@@ -196,12 +196,12 @@ const TabContent: React.FC<ITabContentProps> = ({
 };
 
 const TopCategoriesAndTags: React.FC<ITopCategoriesAndTagsProps> = ({
-	className
+	className,
 }) => {
 	const {
 		channelId,
 		groupId,
-		id: accountId
+		id: accountId,
 	} = useParams<{
 		channelId: string;
 		groupId: string;
@@ -245,7 +245,7 @@ const TopCategoriesAndTags: React.FC<ITopCategoriesAndTagsProps> = ({
 		{items: TaxonomyItem[]}
 	>({
 		dataSourceFn,
-		variables: {accountId, channelId, groupId, isCategory, selectedMetric}
+		variables: {accountId, channelId, groupId, isCategory, selectedMetric},
 	});
 
 	const items = data?.items ?? [];
@@ -266,14 +266,14 @@ const TopCategoriesAndTags: React.FC<ITopCategoriesAndTagsProps> = ({
 			className={classNames('top-categories-and-tags', className)}
 			minHeight={260}
 		>
-			<Card.Title className='p-3'>
-				<Text weight='semi-bold'>
+			<Card.Title className="p-3">
+				<Text weight="semi-bold">
 					{Liferay.Language.get(
 						'top-asset-vocabularies-and-categories'
 					).toUpperCase()}
 				</Text>
 			</Card.Title>
-			<Card.Body className='p-0'>
+			<Card.Body className="p-0">
 				<ClayTabs active={activeTab} onActiveChange={setActiveTab}>
 					<ClayTabs.Item>
 						{Liferay.Language.get('category')}
@@ -282,10 +282,10 @@ const TopCategoriesAndTags: React.FC<ITopCategoriesAndTagsProps> = ({
 				</ClayTabs>
 
 				<ClayTabs.Content activeIndex={activeTab} fade>
-					<ClayTabs.TabPane className='pb-0'>
+					<ClayTabs.TabPane className="pb-0">
 						{tabContent}
 					</ClayTabs.TabPane>
-					<ClayTabs.TabPane className='pb-0'>
+					<ClayTabs.TabPane className="pb-0">
 						{tabContent}
 					</ClayTabs.TabPane>
 				</ClayTabs.Content>

@@ -12,23 +12,23 @@ const steps: Step[] = [
 		description: Liferay.Language.get(
 			'to-connect-your-salesforce-environment-with-liferay-analytics-cloud,-generate-a-token-and-paste-the-code-on-the-input-below'
 		),
-		title: Liferay.Language.get('connect-salesforce')
+		title: Liferay.Language.get('connect-salesforce'),
 	},
 	{
 		content: (props: any) => <SyncSalesforceDataStep {...props} />,
 		description: Liferay.Language.get(
 			'select-which-salesforce-data-you-would-like-to-sync-to-analytics-cloud'
 		),
-		title: Liferay.Language.get('sync-Salesforce-data')
+		title: Liferay.Language.get('sync-Salesforce-data'),
 	},
 	{
 		content: (props: any) => (
 			<AssignIndividualsDataToPropertiesStep
 				{...props}
-				onSubmit={dataSource => {
+				onSubmit={(dataSource) => {
 					const accountsEnabled = dataSource.provider?.getIn([
 						'accountsConfiguration',
-						'enableAllAccounts'
+						'enableAllAccounts',
 					]);
 
 					const contactsConfiguration = dataSource.provider?.get(
@@ -44,14 +44,15 @@ const steps: Step[] = [
 							alertType: Alert.Types.Success,
 							message: Liferay.Language.get(
 								'the-data-source-setup-is-now-complete,-and-you-will-begin-to-see-data-as-activities-occur-on-your-sites'
-							)
+							),
 						});
-					} else {
+					}
+					else {
 						props.addAlert({
 							alertType: Alert.Types.Success,
 							message: Liferay.Language.get(
 								'the-data-source-setup-has-finished'
-							)
+							),
 						});
 					}
 				}}
@@ -65,8 +66,8 @@ const steps: Step[] = [
 		description: Liferay.Language.get(
 			'properties-allow-you-to-aggregate-data-on-your-users,-sites-and-dxp-commerce-channels.-individuals-data-will-be-available-in-any-property-they-are-assigned-to'
 		),
-		title: Liferay.Language.get('assign-individuals-data-to-properties')
-	}
+		title: Liferay.Language.get('assign-individuals-data-to-properties'),
+	},
 ];
 
 const ConnectSalesforce = () => <WizardPage steps={steps} />;

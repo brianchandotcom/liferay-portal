@@ -10,7 +10,7 @@ import TextTruncate from 'shared/components/TextTruncate';
 import {
 	EXPERIMENT_DRAFT_QUERY,
 	EXPERIMENT_QUERY,
-	EXPERIMENT_STATUS_QUERY
+	EXPERIMENT_STATUS_QUERY,
 } from 'experiments/queries/ExperimentQuery';
 import {getActions} from 'experiments/util/experiments';
 import {getSafeDecodedURIComponent} from 'shared/util/util';
@@ -25,7 +25,7 @@ import {useQuery} from '@apollo/client';
 import {VariantCard} from 'experiments/components/variant-card/VariantCard';
 
 const ExperimentActions = ({
-	experiment
+	experiment,
 }: {
 	experiment: {
 		id: string;
@@ -37,7 +37,7 @@ const ExperimentActions = ({
 	const {id, pageURL, publishable, status} = experiment;
 	const [visibleDeleteModal, setVisibleDeleteModal] = useState(false);
 	const {observer, onClose} = useModal({
-		onClose: () => setVisibleDeleteModal(false)
+		onClose: () => setVisibleDeleteModal(false),
 	});
 
 	return (
@@ -47,7 +47,7 @@ const ExperimentActions = ({
 					id,
 					onDelete: () => setVisibleDeleteModal(true),
 					pageURL,
-					publishable
+					publishable,
 				})}
 			/>
 
@@ -67,7 +67,7 @@ const ExperimentOverviewPage = () => {
 
 	const {data, error, loading} = useQuery(EXPERIMENT_STATUS_QUERY, {
 		fetchPolicy: 'no-cache',
-		variables: {channelId, experimentId: id}
+		variables: {channelId, experimentId: id},
 	});
 
 	return (
@@ -93,7 +93,7 @@ const ExperimentOverviewContent = ({status}: {status: string}) => {
 	const {
 		channelId = '',
 		groupId = '',
-		id = ''
+		id = '',
 	} = useParams<{
 		channelId: string;
 		groupId: string;
@@ -109,7 +109,7 @@ const ExperimentOverviewContent = ({status}: {status: string}) => {
 
 	const {data, error, loading} = useQuery(Query, {
 		fetchPolicy: 'network-only',
-		variables: {channelId, experimentId: id}
+		variables: {channelId, experimentId: id},
 	});
 
 	return (
@@ -127,12 +127,12 @@ const ExperimentOverviewContent = ({status}: {status: string}) => {
 									channelId,
 									groupId,
 									label:
-										selectedChannel && selectedChannel.name
+										selectedChannel && selectedChannel.name,
 								}),
 								breadcrumbs.getTests({channelId, groupId}),
 								breadcrumbs.getEntityName({
-									label: data.experiment.name
-								})
+									label: data.experiment.name,
+								}),
 							]}
 							groupId={groupId}
 						>
@@ -147,7 +147,7 @@ const ExperimentOverviewContent = ({status}: {status: string}) => {
 											href={getSafeDecodedURIComponent(
 												data.experiment.pageURL
 											)}
-											target='_blank'
+											target="_blank"
 										>
 											{getSafeDecodedURIComponent(
 												data.experiment.pageURL
@@ -165,22 +165,22 @@ const ExperimentOverviewContent = ({status}: {status: string}) => {
 									{
 										exact: true,
 										label: Liferay.Language.get('report'),
-										route: Routes.TESTS_OVERVIEW
-									}
+										route: Routes.TESTS_OVERVIEW,
+									},
 								]}
 								routeParams={{
 									channelId,
 									groupId,
 									id,
 									title: data.experiment.name,
-									touchpoint: data.experiment.pageURL
+									touchpoint: data.experiment.pageURL,
 								}}
 							/>
 						</BasePage.Header>
 
 						<BasePage.Body>
-							<div className='row'>
-								<div className='col-sm-12'>
+							<div className="row">
+								<div className="col-sm-12">
 									<SummaryCard experiment={data.experiment} />
 								</div>
 							</div>
@@ -188,8 +188,8 @@ const ExperimentOverviewContent = ({status}: {status: string}) => {
 							{data.experiment.status !== 'DRAFT' && (
 								<>
 									{data.experiment.type === 'MAB' && (
-										<div className='row'>
-											<div className='col-sm-12'>
+										<div className="row">
+											<div className="col-sm-12">
 												<TestTrafficCard
 													experiment={data.experiment}
 												/>
@@ -197,8 +197,8 @@ const ExperimentOverviewContent = ({status}: {status: string}) => {
 										</div>
 									)}
 
-									<div className='row'>
-										<div className='col-sm-12'>
+									<div className="row">
+										<div className="col-sm-12">
 											<VariantCard
 												experiment={data.experiment}
 											/>
@@ -206,8 +206,8 @@ const ExperimentOverviewContent = ({status}: {status: string}) => {
 									</div>
 
 									{data.experiment.type === 'AB' && (
-										<div className='row'>
-											<div className='col-sm-12'>
+										<div className="row">
+											<div className="col-sm-12">
 												<SessionsCard
 													experiment={data.experiment}
 												/>

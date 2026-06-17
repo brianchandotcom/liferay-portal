@@ -27,7 +27,7 @@ import {InMemoryCache} from '@apollo/client';
  * <add backend ticket id here once filed>.
  */
 
-const isPlainObject = value =>
+const isPlainObject = (value) =>
 	value !== null && typeof value === 'object' && !Array.isArray(value);
 
 const deepMergeMetric = (existing, incoming) => {
@@ -55,13 +55,13 @@ const metricRootMerge = {
 	journal: metricRootField,
 	objectEntry: metricRootField,
 	page: metricRootField,
-	site: metricRootField
+	site: metricRootField,
 };
 
 export default new InMemoryCache({
 	typePolicies: {
 		Query: {
-			fields: metricRootMerge
-		}
-	}
+			fields: metricRootMerge,
+		},
+	},
 });

@@ -12,14 +12,14 @@ import {validContactsConfig} from 'shared/util/data-sources';
 import {withRequest} from 'shared/hoc';
 
 const EnrichedProfilesBody = ({count}: {count: number}) => (
-	<Card.Body className='d-flex flex-column'>
-		<div className='total d-flex flex-grow-1 text-center justify-content-center align-items-center'>
+	<Card.Body className="d-flex flex-column">
+		<div className="total d-flex flex-grow-1 text-center justify-content-center align-items-center">
 			{sub(Liferay.Language.get('x-profiles'), [
-				isFinite(count) ? count.toLocaleString() : 0
+				isFinite(count) ? count.toLocaleString() : 0,
 			])}
 		</div>
 
-		<div className='description text-center'>
+		<div className="description text-center">
 			{Liferay.Language.get(
 				'enriched-with-attributes-or-behaviors-in-the-last-30-days'
 			)}
@@ -50,7 +50,7 @@ interface IEnrichedProfilesCardProps extends React.HTMLAttributes<HTMLElement> {
 }
 
 const EnrichedProfilesCard: React.FC<IEnrichedProfilesCardProps> = ({
-	dataSources
+	dataSources,
 }) => {
 	const {channelId = '', groupId = ''} = useParams<{
 		channelId: string;
@@ -63,13 +63,13 @@ const EnrichedProfilesCard: React.FC<IEnrichedProfilesCardProps> = ({
 		<Card
 			className={getCN('enriched-profiles-card-root', {
 				inverted: !contactsConfigured,
-				['text-secondary']: contactsConfigured
+				['text-secondary']: contactsConfigured,
 			})}
 			reportContainer={ReportContainer.EnrichedProfilesCard}
 		>
 			{contactsConfigured ? (
 				<>
-					<Card.Header className='d-flex justify-content-between'>
+					<Card.Header className="d-flex justify-content-between">
 						<Card.Title>
 							{Liferay.Language.get('enriched-profiles')}
 						</Card.Title>
@@ -84,7 +84,7 @@ const EnrichedProfilesCard: React.FC<IEnrichedProfilesCardProps> = ({
 				</>
 			) : (
 				<Card.Body>
-					<div className='d-flex justify-content-between'>
+					<div className="d-flex justify-content-between">
 						<Card.Title>
 							{Liferay.Language.get('know-your-audience-better')}
 						</Card.Title>

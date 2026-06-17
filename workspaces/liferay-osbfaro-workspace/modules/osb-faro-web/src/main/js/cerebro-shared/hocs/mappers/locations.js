@@ -8,7 +8,7 @@ import {getVariables, safeResultToProps} from 'shared/util/mappers';
  * @description Get Locations Mapper
  * @param {function} getMetric
  */
-const getLocationsMapper = getMetric => {
+const getLocationsMapper = (getMetric) => {
 	const mapResultToProps = safeResultToProps(
 		(result, {filters}, {rangeSelectors}) => {
 			let {geolocation} = getMetric(result);
@@ -25,8 +25,8 @@ const getLocationsMapper = getMetric => {
 				...getSafeRangeSelectors(rangeSelectors),
 				data: {
 					geolocation: locationsData,
-					total: locationsData.length
-				}
+					total: locationsData.length,
+				},
 			};
 		}
 	);
@@ -40,12 +40,12 @@ const getLocationsMapper = getMetric => {
 		filters,
 		interval,
 		rangeSelectors,
-		router: {params}
+		router: {params},
 	}) => getVariables({filters, interval, params, rangeSelectors});
 
 	return {
 		options: mapPropsToOptions,
-		props: mapResultToProps
+		props: mapResultToProps,
 	};
 };
 
@@ -54,16 +54,16 @@ const getLocationsMapper = getMetric => {
  * @description Get Countries Mapper
  * @param {function} getMetric
  */
-const getLocationsMapperCountries = getMetric => {
-	const mapResultToProps = safeResultToProps(result => {
+const getLocationsMapperCountries = (getMetric) => {
+	const mapResultToProps = safeResultToProps((result) => {
 		const {geolocation} = getMetric(result);
 		const countries = getLocationsData(geolocation, location);
 
 		return {
 			data: {
 				countries,
-				total: countries.length
-			}
+				total: countries.length,
+			},
 		};
 	});
 
@@ -77,27 +77,27 @@ const getLocationsMapperCountries = getMetric => {
 		filters,
 		interval,
 		rangeSelectors,
-		router: {params}
+		router: {params},
 	}) => {
 		const {variables} = getVariables({
 			experienceId,
 			filters,
 			interval,
 			params,
-			rangeSelectors
+			rangeSelectors,
 		});
 
 		return {
 			variables: {
 				...variables,
-				location: 'Any'
-			}
+				location: 'Any',
+			},
 		};
 	};
 
 	return {
 		options: mapPropsToOptions,
-		props: mapResultToProps
+		props: mapResultToProps,
 	};
 };
 export {getLocationsMapper, getLocationsMapperCountries};

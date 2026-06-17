@@ -30,44 +30,44 @@ const EventAnalysisEditor: React.FC<IEventAnalysisEditorProps> = ({
 	onRangeSelectorsChange,
 	onTypeChange,
 	rangeSelectors,
-	type
+	type,
 }) => (
 	<Card
-		className='event-analysis-editor-root'
+		className="event-analysis-editor-root"
 		reportContainer={ReportContainer.EventAnalysisPage}
 	>
 		<EventAnalysisBuilder event={event} onEventChange={onEventChange} />
 
-		<div className='options-container d-flex flex-column-reverse flex-md-row justify-content-between'>
+		<div className="options-container d-flex flex-column-reverse flex-md-row justify-content-between">
 			<CardTabs
 				activeTabId={type}
-				className='type-selector'
+				className="type-selector"
 				size={CardTabSizes.Small}
 				tabs={[
 					{
 						onClick: () => onTypeChange(CalculationTypes.Total),
 						tabId: CalculationTypes.Total,
-						title: Liferay.Language.get('total')
+						title: Liferay.Language.get('total'),
 					},
 					{
 						onClick: () => onTypeChange(CalculationTypes.Unique),
 						tabId: CalculationTypes.Unique,
-						title: Liferay.Language.get('unique')
+						title: Liferay.Language.get('unique'),
 					},
 					{
 						onClick: () => onTypeChange(CalculationTypes.Average),
 						tabId: CalculationTypes.Average,
-						title: Liferay.Language.get('average')
-					}
+						title: Liferay.Language.get('average'),
+					},
 				]}
 			/>
 
-			<div className='d-flex align-items-center mb-3 mb-md-0'>
+			<div className="d-flex align-items-center mb-3 mb-md-0">
 				<Checkbox
 					checked={compareToPrevious}
-					className='compare-to-previous-checkbox mb-0 mr-4'
+					className="compare-to-previous-checkbox mb-0 mr-4"
 					label={Liferay.Language.get('compare-to-previous')}
-					onChange={event =>
+					onChange={(event) =>
 						onCompareToPreviousChange(event.currentTarget.checked)
 					}
 				/>

@@ -20,53 +20,53 @@ const useRequestMock = jest.fn();
 
 jest.mock('react-router-dom', () => ({
 	...jest.requireActual('react-router-dom'),
-	useParams: () => useParamsMock()
+	useParams: () => useParamsMock(),
 }));
 
 jest.mock('shared/hooks/useCurrentUser', () => ({
-	useCurrentUser: () => useCurrentUserMock()
+	useCurrentUser: () => useCurrentUserMock(),
 }));
 
 jest.mock('shared/hooks/useRequest', () => ({
-	useRequest: (args: any) => useRequestMock(args)
+	useRequest: (args: any) => useRequestMock(args),
 }));
 
 jest.mock('settings/components/data-source/utils', () => ({
-	useDisconnectDataSource: (args: any) => useDisconnectDataSourceMock(args)
+	useDisconnectDataSource: (args: any) => useDisconnectDataSourceMock(args),
 }));
 
 jest.mock('shared/api/connector', () => ({
 	generateConnectorToken: jest.fn(() =>
 		Promise.resolve({token: 'fake-token'})
 	),
-	updateConnector: jest.fn(() => Promise.resolve({}))
+	updateConnector: jest.fn(() => Promise.resolve({})),
 }));
 
 jest.mock('shared/api/data-source', () => ({
-	fetch: jest.fn(() => Promise.resolve({}))
+	fetch: jest.fn(() => Promise.resolve({})),
 }));
 
 jest.mock('shared/api/api-tokens', () => ({
-	revoke: jest.fn(() => Promise.resolve({}))
+	revoke: jest.fn(() => Promise.resolve({})),
 }));
 
 jest.mock('settings/components/base-page/BasePage', () => ({
 	__esModule: true,
-	default: ({children}: any) => <div>{children}</div>
+	default: ({children}: any) => <div>{children}</div>,
 }));
 
 jest.mock('settings/components/AssignedPropertiesTable', () => ({
-	AssignedPropertiesTable: () => <div data-testid='assigned-properties' />
+	AssignedPropertiesTable: () => <div data-testid="assigned-properties" />,
 }));
 
 jest.mock('shared/components/ErrorDisplay', () => ({
 	__esModule: true,
-	default: () => <div data-testid='error-display' />
+	default: () => <div data-testid="error-display" />,
 }));
 
 jest.mock('shared/components/Loading', () => ({
 	__esModule: true,
-	default: () => <div data-testid='loading' />
+	default: () => <div data-testid="loading" />,
 }));
 
 jest.mock('settings/components/data-source/DataSourceEditableTitle', () => ({
@@ -74,33 +74,33 @@ jest.mock('settings/components/data-source/DataSourceEditableTitle', () => ({
 		description,
 		displayType,
 		label,
-		onUpdateName
+		onUpdateName,
 	}: any) => (
-		<div data-displaytype={displayType} data-testid='data-source-title'>
-			<span data-testid='data-source-title-label'>{label}</span>
+		<div data-displaytype={displayType} data-testid="data-source-title">
+			<span data-testid="data-source-title-label">{label}</span>
 
 			{description && (
-				<span data-testid='data-source-title-description'>
+				<span data-testid="data-source-title-description">
 					{description}
 				</span>
 			)}
 
 			<button
-				data-testid='trigger-update-name'
+				data-testid="trigger-update-name"
 				onClick={() => onUpdateName('Renamed Data Source')}
-				type='button'
+				type="button"
 			/>
 		</div>
-	)
+	),
 }));
 
 jest.mock('settings/components/CopyInputValue', () => ({
 	CopyInputValue: ({title, value}: any) => (
-		<div data-testid='copy-input'>
-			<span data-testid='copy-input-title'>{title}</span>
-			<span data-testid='copy-input-value'>{value}</span>
+		<div data-testid="copy-input">
+			<span data-testid="copy-input-title">{title}</span>
+			<span data-testid="copy-input-value">{value}</span>
 		</div>
-	)
+	),
 }));
 
 const buildConfig = (
@@ -115,12 +115,12 @@ const buildConfig = (
 		connectTitle: 'connectTitle',
 		endpointHelper: 'endpointHelper',
 		endpointLabel: 'endpointLabel',
-		tokenLabel: 'tokenLabel'
+		tokenLabel: 'tokenLabel',
 	},
 	singleton: false,
 	slug: 'acme',
 	type: 'ACME',
-	...overrides
+	...overrides,
 });
 
 const buildDataSource = (
@@ -128,7 +128,7 @@ const buildDataSource = (
 	{
 		credentials,
 		providerData = null,
-		state
+		state,
 	}: {
 		credentials?: {[key: string]: any};
 		providerData?: any;
@@ -141,7 +141,7 @@ const buildDataSource = (
 		name: 'My Data Source',
 		provider: providerData ? fromJS(providerData) : undefined,
 		state,
-		status
+		status,
 	});
 
 const renderOverview = (
@@ -166,7 +166,7 @@ const mockEntityCounts = (counts: {[entity: string]: number | undefined}) =>
 	useRequestMock.mockReturnValue({
 		data: counts,
 		error: false,
-		loading: false
+		loading: false,
 	});
 
 const mockEntityCount = (count: number | undefined) =>
@@ -186,19 +186,19 @@ describe('ConnectorOverview', () => {
 		useParamsMock.mockReturnValue({groupId: '23', id: 'ds-1'});
 		useCurrentUserMock.mockReturnValue({isAdmin: () => true});
 		useDisconnectDataSourceMock.mockReturnValue({
-			handleDisconnect: jest.fn()
+			handleDisconnect: jest.fn(),
 		});
 		useRequestMock.mockReturnValue({
 			data: undefined,
 			error: false,
-			loading: false
+			loading: false,
 		});
 	});
 
 	describe('Page header status', () => {
 		it('renders the Active badge with success display when status is ACTIVE', () => {
 			const {getByTestId} = renderOverview({
-				dataSource: buildDataSource(DataSourceStatuses.Active)
+				dataSource: buildDataSource(DataSourceStatuses.Active),
 			});
 
 			expect(getByTestId('data-source-title-label').textContent).toBe(
@@ -213,7 +213,7 @@ describe('ConnectorOverview', () => {
 
 		it('renders the Inactive badge with warning display when status is INACTIVE', () => {
 			const {getByTestId} = renderOverview({
-				dataSource: buildDataSource(DataSourceStatuses.Inactive)
+				dataSource: buildDataSource(DataSourceStatuses.Inactive),
 			});
 
 			expect(getByTestId('data-source-title-label').textContent).toBe(
@@ -229,8 +229,8 @@ describe('ConnectorOverview', () => {
 		it('renders the Disconnected badge with secondary display when state is DISCONNECTED', () => {
 			const {getByTestId} = renderOverview({
 				dataSource: buildDataSource(DataSourceStatuses.Inactive, {
-					state: DataSourceStates.Disconnected
-				})
+					state: DataSourceStates.Disconnected,
+				}),
 			});
 
 			expect(getByTestId('data-source-title-label').textContent).toBe(
@@ -255,12 +255,12 @@ describe('ConnectorOverview', () => {
 	describe('Authentication card — default (non-disconnected)', () => {
 		it.each([
 			['Active', DataSourceStatuses.Active],
-			['Inactive', DataSourceStatuses.Inactive]
+			['Inactive', DataSourceStatuses.Inactive],
 		])(
 			'renders the configure-data-source description text for status %s',
 			(_, status) => {
 				const {getByText} = renderOverview({
-					dataSource: buildDataSource(status)
+					dataSource: buildDataSource(status),
 				});
 
 				expect(
@@ -273,7 +273,7 @@ describe('ConnectorOverview', () => {
 
 		it('renders the Learn more about data sources link', () => {
 			const {getByText} = renderOverview({
-				dataSource: buildDataSource(DataSourceStatuses.Inactive)
+				dataSource: buildDataSource(DataSourceStatuses.Inactive),
 			});
 
 			expect(getByText('Learn more about data sources.')).toBeTruthy();
@@ -281,7 +281,7 @@ describe('ConnectorOverview', () => {
 
 		it('does not render the Data Source Type or Data Source ID inputs', () => {
 			const {container} = renderOverview({
-				dataSource: buildDataSource(DataSourceStatuses.Inactive)
+				dataSource: buildDataSource(DataSourceStatuses.Inactive),
 			});
 
 			expect(container.querySelector('#dataSourceType')).toBeNull();
@@ -290,11 +290,11 @@ describe('ConnectorOverview', () => {
 
 		it('renders the Endpoint URL and Token copy inputs', () => {
 			const {getAllByTestId} = renderOverview({
-				dataSource: buildDataSource(DataSourceStatuses.Inactive)
+				dataSource: buildDataSource(DataSourceStatuses.Inactive),
 			});
 
 			const titles = getAllByTestId('copy-input-title').map(
-				node => node.textContent
+				(node) => node.textContent
 			);
 
 			expect(titles).toContain('Endpoint URL');
@@ -303,7 +303,7 @@ describe('ConnectorOverview', () => {
 
 		it('does not render any connection-status alert in this card', () => {
 			const {queryByText} = renderOverview({
-				dataSource: buildDataSource(DataSourceStatuses.Inactive)
+				dataSource: buildDataSource(DataSourceStatuses.Inactive),
 			});
 
 			expect(queryByText('SUCCESS_ALERT')).toBeNull();
@@ -315,8 +315,8 @@ describe('ConnectorOverview', () => {
 		const renderDisconnected = () =>
 			renderOverview({
 				dataSource: buildDataSource(DataSourceStatuses.Inactive, {
-					state: DataSourceStates.Disconnected
-				})
+					state: DataSourceStates.Disconnected,
+				}),
 			});
 
 		it('renders the generate-a-new-token description text', () => {
@@ -357,7 +357,7 @@ describe('ConnectorOverview', () => {
 			await waitFor(() =>
 				expect(generateConnectorToken).toHaveBeenCalledWith({
 					groupId: '23',
-					type: 'acme'
+					type: 'acme',
 				})
 			);
 
@@ -365,7 +365,7 @@ describe('ConnectorOverview', () => {
 				expect(updateConnector).toHaveBeenCalledWith('acme', {
 					groupId: '23',
 					id: 'ds-1',
-					status: DataSourceStatuses.Active
+					status: DataSourceStatuses.Active,
 				})
 			);
 
@@ -376,18 +376,18 @@ describe('ConnectorOverview', () => {
 	describe('Token state and auto-fetch', () => {
 		it.each([
 			['Active', DataSourceStatuses.Active],
-			['Inactive', DataSourceStatuses.Inactive]
+			['Inactive', DataSourceStatuses.Inactive],
 		])(
 			'fetches the OAuth2 token for status %s by calling generateConnectorToken with the connector slug',
 			async (_, status) => {
 				renderOverview({
-					dataSource: buildDataSource(status)
+					dataSource: buildDataSource(status),
 				});
 
 				await waitFor(() =>
 					expect(generateConnectorToken).toHaveBeenCalledWith({
 						groupId: '23',
-						type: 'acme'
+						type: 'acme',
 					})
 				);
 			}
@@ -395,16 +395,16 @@ describe('ConnectorOverview', () => {
 
 		it('renders the fetched token in the Token copy input', async () => {
 			(generateConnectorToken as jest.Mock).mockResolvedValueOnce({
-				token: 'fetched-token'
+				token: 'fetched-token',
 			});
 
 			const {getAllByTestId} = renderOverview({
-				dataSource: buildDataSource(DataSourceStatuses.Active)
+				dataSource: buildDataSource(DataSourceStatuses.Active),
 			});
 
 			await waitFor(() => {
 				const values = getAllByTestId('copy-input-value').map(
-					node => node.textContent
+					(node) => node.textContent
 				);
 
 				expect(values).toContain('fetched-token');
@@ -414,8 +414,8 @@ describe('ConnectorOverview', () => {
 		it('does not auto-fetch a token when the data source is disconnected (user mints a new one via Generate Token)', async () => {
 			renderOverview({
 				dataSource: buildDataSource(DataSourceStatuses.Inactive, {
-					state: DataSourceStates.Disconnected
-				})
+					state: DataSourceStates.Disconnected,
+				}),
 			});
 
 			await Promise.resolve();
@@ -425,13 +425,13 @@ describe('ConnectorOverview', () => {
 
 		it('on Generate Token click: stores the freshly minted token in state', async () => {
 			(generateConnectorToken as jest.Mock).mockResolvedValueOnce({
-				token: 'freshly-minted-token'
+				token: 'freshly-minted-token',
 			});
 
 			const {getByLabelText} = renderOverview({
 				dataSource: buildDataSource(DataSourceStatuses.Inactive, {
-					state: DataSourceStates.Disconnected
-				})
+					state: DataSourceStates.Disconnected,
+				}),
 			});
 
 			fireEvent.click(getByLabelText('Generate Token'));
@@ -439,7 +439,7 @@ describe('ConnectorOverview', () => {
 			await waitFor(() =>
 				expect(generateConnectorToken).toHaveBeenCalledWith({
 					groupId: '23',
-					type: 'acme'
+					type: 'acme',
 				})
 			);
 		});
@@ -454,7 +454,7 @@ describe('ConnectorOverview', () => {
 
 		it('shows the disconnect button when the data source is inactive but still has a token', () => {
 			const {getByLabelText} = renderOverview({
-				dataSource: buildDataSource(DataSourceStatuses.Inactive)
+				dataSource: buildDataSource(DataSourceStatuses.Inactive),
 			});
 
 			expect(getByLabelText('Disconnect Data Source')).toBeTruthy();
@@ -463,8 +463,8 @@ describe('ConnectorOverview', () => {
 		it('hides the disconnect button when the data source is already disconnected', () => {
 			const {queryByLabelText} = renderOverview({
 				dataSource: buildDataSource(DataSourceStatuses.Inactive, {
-					state: DataSourceStates.Disconnected
-				})
+					state: DataSourceStates.Disconnected,
+				}),
 			});
 
 			expect(queryByLabelText('Disconnect Data Source')).toBeNull();
@@ -492,16 +492,16 @@ describe('ConnectorOverview', () => {
 
 		it('disconnect: passes a beforeSubmit that revokes the fetched OAuth2 token (so revoke runs before the disconnect endpoint)', async () => {
 			(generateConnectorToken as jest.Mock).mockResolvedValueOnce({
-				token: 'fetched-token'
+				token: 'fetched-token',
 			});
 
 			const {getAllByTestId} = renderOverview({
-				dataSource: buildDataSource(DataSourceStatuses.Active)
+				dataSource: buildDataSource(DataSourceStatuses.Active),
 			});
 
 			await waitFor(() => {
 				const values = getAllByTestId('copy-input-value').map(
-					node => node.textContent
+					(node) => node.textContent
 				);
 
 				expect(values).toContain('fetched-token');
@@ -516,7 +516,7 @@ describe('ConnectorOverview', () => {
 
 			expect(revoke).toHaveBeenCalledWith({
 				groupId: '23',
-				token: 'fetched-token'
+				token: 'fetched-token',
 			});
 		});
 
@@ -524,7 +524,7 @@ describe('ConnectorOverview', () => {
 			(generateConnectorToken as jest.Mock).mockResolvedValueOnce({});
 
 			renderOverview({
-				dataSource: buildDataSource(DataSourceStatuses.Active)
+				dataSource: buildDataSource(DataSourceStatuses.Active),
 			});
 
 			await waitFor(() =>
@@ -543,19 +543,19 @@ describe('ConnectorOverview', () => {
 
 		it('disconnect: beforeSubmit propagates revoke failures so the shared hook can show its error alert', async () => {
 			(generateConnectorToken as jest.Mock).mockResolvedValueOnce({
-				token: 'fetched-token'
+				token: 'fetched-token',
 			});
 			(revoke as jest.Mock).mockRejectedValueOnce(
 				new Error('Unable to revoke OAuth2 authorization')
 			);
 
 			const {getAllByTestId} = renderOverview({
-				dataSource: buildDataSource(DataSourceStatuses.Active)
+				dataSource: buildDataSource(DataSourceStatuses.Active),
 			});
 
 			await waitFor(() => {
 				const values = getAllByTestId('copy-input-value').map(
-					node => node.textContent
+					(node) => node.textContent
 				);
 
 				expect(values).toContain('fetched-token');
@@ -572,13 +572,13 @@ describe('ConnectorOverview', () => {
 
 			expect(revoke).toHaveBeenCalledWith({
 				groupId: '23',
-				token: 'fetched-token'
+				token: 'fetched-token',
 			});
 		});
 
 		it('disconnect: onSubmit refetches the data source', async () => {
 			renderOverview({
-				dataSource: buildDataSource(DataSourceStatuses.Active)
+				dataSource: buildDataSource(DataSourceStatuses.Active),
 			});
 
 			const {onSubmit} =
@@ -602,7 +602,7 @@ describe('ConnectorOverview', () => {
 				expect(updateConnector).toHaveBeenCalledWith('acme', {
 					groupId: '23',
 					id: 'ds-1',
-					name: 'Renamed Data Source'
+					name: 'Renamed Data Source',
 				})
 			);
 
@@ -617,7 +617,7 @@ describe('ConnectorOverview', () => {
 			const {getAllByTestId} = renderOverview({config});
 
 			const values = getAllByTestId('copy-input-value').map(
-				node => node.textContent
+				(node) => node.textContent
 			);
 
 			expect(values).toContain(`${window.location.origin}/api/custom`);
@@ -629,11 +629,11 @@ describe('ConnectorOverview', () => {
 			useRequestMock.mockReturnValue({
 				data: undefined,
 				error: new Error('boom'),
-				loading: false
+				loading: false,
 			});
 
 			const {getByText, queryByTestId} = renderOverview({
-				dataSource: buildDataSource(DataSourceStatuses.Active)
+				dataSource: buildDataSource(DataSourceStatuses.Active),
 			});
 
 			expect(queryByTestId('error-display')).toBeNull();
@@ -649,15 +649,15 @@ describe('ConnectorOverview', () => {
 			useRequestMock.mockReturnValue({
 				data: undefined,
 				error: new Error('boom'),
-				loading: false
+				loading: false,
 			});
 
 			const config = buildConfig({
-				entities: [{entity: Entity.Events}]
+				entities: [{entity: Entity.Events}],
 			});
 
 			const {container, getByText, queryByText} = renderOverview({
-				config
+				config,
 			});
 
 			expect(container.querySelectorAll('.list-group-item')).toHaveLength(
@@ -674,7 +674,7 @@ describe('ConnectorOverview', () => {
 			useRequestMock.mockReturnValue({
 				data: undefined,
 				error: false,
-				loading: true
+				loading: true,
 			});
 
 			const {getByTestId} = renderOverview();
@@ -688,7 +688,7 @@ describe('ConnectorOverview', () => {
 			mockEntityCount(0);
 
 			const {getByText} = renderOverview({
-				dataSource: buildDataSource(DataSourceStatuses.Active)
+				dataSource: buildDataSource(DataSourceStatuses.Active),
 			});
 
 			expect(
@@ -702,7 +702,7 @@ describe('ConnectorOverview', () => {
 			mockEntityCount(7);
 
 			const {getByText} = renderOverview({
-				dataSource: buildDataSource(DataSourceStatuses.Active)
+				dataSource: buildDataSource(DataSourceStatuses.Active),
 			});
 
 			expect(
@@ -716,7 +716,7 @@ describe('ConnectorOverview', () => {
 			mockEntityCount(0);
 
 			const {getByText} = renderOverview({
-				dataSource: buildDataSource(DataSourceStatuses.Inactive)
+				dataSource: buildDataSource(DataSourceStatuses.Inactive),
 			});
 
 			expect(
@@ -730,7 +730,7 @@ describe('ConnectorOverview', () => {
 			mockEntityCount(12);
 
 			const {getByText} = renderOverview({
-				dataSource: buildDataSource(DataSourceStatuses.Inactive)
+				dataSource: buildDataSource(DataSourceStatuses.Inactive),
 			});
 
 			expect(
@@ -745,8 +745,8 @@ describe('ConnectorOverview', () => {
 
 			const {getByText} = renderOverview({
 				dataSource: buildDataSource(DataSourceStatuses.Inactive, {
-					state: DataSourceStates.Disconnected
-				})
+					state: DataSourceStates.Disconnected,
+				}),
 			});
 
 			expect(
@@ -762,7 +762,7 @@ describe('ConnectorOverview', () => {
 			mockEntityCount(0);
 
 			const {queryByText} = renderOverview({
-				dataSource: buildDataSource(DataSourceStatuses.Active)
+				dataSource: buildDataSource(DataSourceStatuses.Active),
 			});
 
 			expect(
@@ -776,7 +776,7 @@ describe('ConnectorOverview', () => {
 			mockEntityCount(7);
 
 			const {getByText} = renderOverview({
-				dataSource: buildDataSource(DataSourceStatuses.Active)
+				dataSource: buildDataSource(DataSourceStatuses.Active),
 			});
 
 			expect(
@@ -790,7 +790,7 @@ describe('ConnectorOverview', () => {
 			mockEntityCount(7);
 
 			const {container, queryByText} = renderOverview({
-				dataSource: buildDataSource(DataSourceStatuses.Active)
+				dataSource: buildDataSource(DataSourceStatuses.Active),
 			});
 
 			const closeButton = container.querySelector(
@@ -823,7 +823,7 @@ describe('ConnectorOverview', () => {
 			mockEntityCount(7);
 
 			const {queryByText} = renderOverview({
-				dataSource: buildDataSource(DataSourceStatuses.Active)
+				dataSource: buildDataSource(DataSourceStatuses.Active),
 			});
 
 			expect(
@@ -842,7 +842,7 @@ describe('ConnectorOverview', () => {
 			mockEntityCount(7);
 
 			const {getByText} = renderOverview({
-				dataSource: buildDataSource(DataSourceStatuses.Active)
+				dataSource: buildDataSource(DataSourceStatuses.Active),
 			});
 
 			expect(
@@ -857,8 +857,8 @@ describe('ConnectorOverview', () => {
 
 			const {container, queryByText} = renderOverview({
 				dataSource: buildDataSource(DataSourceStatuses.Inactive, {
-					state: DataSourceStates.Disconnected
-				})
+					state: DataSourceStates.Disconnected,
+				}),
 			});
 
 			const closeButton = container.querySelector(
@@ -892,8 +892,8 @@ describe('ConnectorOverview', () => {
 
 			const {queryByText} = renderOverview({
 				dataSource: buildDataSource(DataSourceStatuses.Inactive, {
-					state: DataSourceStates.Disconnected
-				})
+					state: DataSourceStates.Disconnected,
+				}),
 			});
 
 			expect(
@@ -913,8 +913,8 @@ describe('ConnectorOverview', () => {
 
 			const {getByText} = renderOverview({
 				dataSource: buildDataSource(DataSourceStatuses.Inactive, {
-					state: DataSourceStates.Disconnected
-				})
+					state: DataSourceStates.Disconnected,
+				}),
 			});
 
 			expect(
@@ -928,7 +928,7 @@ describe('ConnectorOverview', () => {
 			mockEntityCount(0);
 
 			const {queryByText} = renderOverview({
-				dataSource: buildDataSource(DataSourceStatuses.Inactive)
+				dataSource: buildDataSource(DataSourceStatuses.Inactive),
 			});
 
 			expect(
@@ -942,7 +942,7 @@ describe('ConnectorOverview', () => {
 			mockEntityCount(12);
 
 			const {getByText} = renderOverview({
-				dataSource: buildDataSource(DataSourceStatuses.Inactive)
+				dataSource: buildDataSource(DataSourceStatuses.Inactive),
 			});
 
 			expect(
@@ -957,8 +957,8 @@ describe('ConnectorOverview', () => {
 
 			const {getByText} = renderOverview({
 				dataSource: buildDataSource(DataSourceStatuses.Inactive, {
-					state: DataSourceStates.Disconnected
-				})
+					state: DataSourceStates.Disconnected,
+				}),
 			});
 
 			expect(
@@ -974,7 +974,7 @@ describe('ConnectorOverview', () => {
 			mockEntityCount(0);
 
 			const config = buildConfig({
-				entities: [{entity: Entity.Accounts}, {entity: Entity.Events}]
+				entities: [{entity: Entity.Accounts}, {entity: Entity.Events}],
 			});
 
 			const {getByText} = renderOverview({config});
@@ -986,11 +986,11 @@ describe('ConnectorOverview', () => {
 		it('marks each entity row Configured/Unconfigured based on its own count, independent of the others', () => {
 			mockEntityCounts({
 				[Entity.Accounts]: 0,
-				[Entity.Events]: 5
+				[Entity.Events]: 5,
 			});
 
 			const config = buildConfig({
-				entities: [{entity: Entity.Accounts}, {entity: Entity.Events}]
+				entities: [{entity: Entity.Accounts}, {entity: Entity.Events}],
 			});
 
 			const {getAllByText} = renderOverview({config});
@@ -1004,16 +1004,16 @@ describe('ConnectorOverview', () => {
 		it('treats hasData as true when at least one entity has count > 0 (Accounts: 0, Events: 1) — Available Data alert appears for ACTIVE', () => {
 			mockEntityCounts({
 				[Entity.Accounts]: 0,
-				[Entity.Events]: 1
+				[Entity.Events]: 1,
 			});
 
 			const config = buildConfig({
-				entities: [{entity: Entity.Accounts}, {entity: Entity.Events}]
+				entities: [{entity: Entity.Accounts}, {entity: Entity.Events}],
 			});
 
 			const {getByText} = renderOverview({
 				config,
-				dataSource: buildDataSource(DataSourceStatuses.Active)
+				dataSource: buildDataSource(DataSourceStatuses.Active),
 			});
 
 			expect(
@@ -1026,16 +1026,16 @@ describe('ConnectorOverview', () => {
 		it('uses the "all data is up to date" Connection Status message when at least one entity has data', () => {
 			mockEntityCounts({
 				[Entity.Accounts]: 0,
-				[Entity.Events]: 3
+				[Entity.Events]: 3,
 			});
 
 			const config = buildConfig({
-				entities: [{entity: Entity.Accounts}, {entity: Entity.Events}]
+				entities: [{entity: Entity.Accounts}, {entity: Entity.Events}],
 			});
 
 			const {getByText} = renderOverview({
 				config,
-				dataSource: buildDataSource(DataSourceStatuses.Active)
+				dataSource: buildDataSource(DataSourceStatuses.Active),
 			});
 
 			expect(
@@ -1048,16 +1048,16 @@ describe('ConnectorOverview', () => {
 		it('treats hasData as false when every entity has count 0', () => {
 			mockEntityCounts({
 				[Entity.Accounts]: 0,
-				[Entity.Events]: 0
+				[Entity.Events]: 0,
 			});
 
 			const config = buildConfig({
-				entities: [{entity: Entity.Accounts}, {entity: Entity.Events}]
+				entities: [{entity: Entity.Accounts}, {entity: Entity.Events}],
 			});
 
 			const {getByText, queryByText} = renderOverview({
 				config,
-				dataSource: buildDataSource(DataSourceStatuses.Active)
+				dataSource: buildDataSource(DataSourceStatuses.Active),
 			});
 
 			expect(

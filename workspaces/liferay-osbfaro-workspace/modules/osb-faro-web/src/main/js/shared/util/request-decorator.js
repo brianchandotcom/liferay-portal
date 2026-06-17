@@ -26,7 +26,7 @@ export function hasRequest(WrappedComponent) {
 		componentWillUnmount() {
 			const requests = get(this, requestSymbol, []);
 
-			requests.map(requestKey => {
+			requests.map((requestKey) => {
 				const request = get(this, requestKey);
 
 				if (request && request.cancel) {
@@ -63,7 +63,7 @@ export function autoCancelWith(cancel = true) {
 				if (!this[requestSymbol]) {
 					Object.defineProperty(this, requestSymbol, {
 						value: [],
-						writable: true
+						writable: true,
 					});
 				}
 
@@ -86,11 +86,11 @@ export function autoCancelWith(cancel = true) {
 
 						return this[requestKey];
 					},
-					writable: true
+					writable: true,
 				});
 
 				return this[key];
-			}
+			},
 		};
 	};
 }

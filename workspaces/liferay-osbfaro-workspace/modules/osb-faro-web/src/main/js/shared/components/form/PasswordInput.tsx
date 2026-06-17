@@ -19,28 +19,28 @@ export default class PasswordInput extends React.Component<
 	IPasswordInputState
 > {
 	static defaultProps = {
-		disabled: false
+		disabled: false,
 	};
 
 	static propTypes = {
-		disabled: PropTypes.bool
+		disabled: PropTypes.bool,
 	};
 
 	state = {
-		showPassword: false
+		showPassword: false,
 	};
 
 	@autobind
 	handleShowPasswordToggle() {
 		this.setState({
-			showPassword: !this.state.showPassword
+			showPassword: !this.state.showPassword,
 		});
 	}
 
 	render() {
 		const {
 			props: {disabled, placeholder, ...otherProps},
-			state: {showPassword}
+			state: {showPassword},
 		} = this;
 
 		return (
@@ -55,18 +55,18 @@ export default class PasswordInput extends React.Component<
 									? Liferay.Language.get('hidden')
 									: Liferay.Language.get('watch')
 							}
-							className='button-root'
+							className="button-root"
 							disabled={disabled}
-							displayType='unstyled'
+							displayType="unstyled"
 							onClick={this.handleShowPasswordToggle}
 						>
 							<ClayIcon
-								className='icon-root'
+								className="icon-root"
 								symbol={showPassword ? 'hidden' : 'view'}
 							/>
 						</ClayButton>
 					),
-					position: 'after'
+					position: 'after',
 				}}
 				placeholder={placeholder}
 				type={showPassword ? 'text' : 'password'}

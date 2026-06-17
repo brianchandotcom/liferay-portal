@@ -6,11 +6,11 @@ const modalTypes = Modal.modalTypes;
 export {actionTypes, modalTypes};
 
 export const close = () => ({
-	type: actionTypes.CLOSE_MODAL
+	type: actionTypes.CLOSE_MODAL,
 });
 
 export const closeAll = () => ({
-	type: actionTypes.CLOSE_ALL_MODALS
+	type: actionTypes.CLOSE_ALL_MODALS,
 });
 
 export const open = (
@@ -24,8 +24,8 @@ export const open = (
 		payload: {
 			closeOnBlur,
 			props,
-			type
+			type,
 		},
-		type: actionTypes.OPEN_MODAL
+		type: actionTypes.OPEN_MODAL,
 	};
 };

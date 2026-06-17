@@ -4,8 +4,8 @@ const mockData = {
 	cohort: {
 		anonymousCohortHeatMapMetrics: ['test'],
 		knownCohortHeatMapMetrics: ['foo'],
-		visitorsCohortHeatMapMetrics: ['bar']
-	}
+		visitorsCohortHeatMapMetrics: ['bar'],
+	},
 };
 
 describe('Cohort Query Mapper', () => {
@@ -18,8 +18,8 @@ describe('Cohort Query Mapper', () => {
 				expect.objectContaining({
 					variables: {
 						channelId,
-						interval
-					}
+						interval,
+					},
 				})
 			);
 		});
@@ -31,16 +31,16 @@ describe('Cohort Query Mapper', () => {
 				expect.objectContaining({
 					data: {
 						anonymousVisitors: {
-							items: expect.any(Array)
+							items: expect.any(Array),
 						},
 						knownVisitors: {
-							items: expect.any(Array)
+							items: expect.any(Array),
 						},
 						visitors: {
-							items: expect.any(Array)
-						}
+							items: expect.any(Array),
+						},
 					},
-					empty: false
+					empty: false,
 				})
 			);
 		});
@@ -52,24 +52,24 @@ describe('Cohort Query Mapper', () => {
 						cohort: {
 							anonymousCohortHeatMapMetrics: [],
 							knownCohortHeatMapMetrics: [],
-							visitorsCohortHeatMapMetrics: []
-						}
-					}
+							visitorsCohortHeatMapMetrics: [],
+						},
+					},
 				})
 			).toEqual(
 				expect.objectContaining({
 					data: {
 						anonymousVisitors: {
-							items: expect.any(Array)
+							items: expect.any(Array),
 						},
 						knownVisitors: {
-							items: expect.any(Array)
+							items: expect.any(Array),
 						},
 						visitors: {
-							items: expect.any(Array)
-						}
+							items: expect.any(Array),
+						},
 					},
-					empty: true
+					empty: true,
 				})
 			);
 		});

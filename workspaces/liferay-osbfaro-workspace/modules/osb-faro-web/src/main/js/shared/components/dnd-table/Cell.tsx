@@ -13,7 +13,7 @@ const Cell: React.FC<ICellProps> = ({
 	cellRendererProps,
 	className,
 	data,
-	dataFormatter = val => val
+	dataFormatter = (val) => val,
 }) => {
 	if (CellRenderer) {
 		return (

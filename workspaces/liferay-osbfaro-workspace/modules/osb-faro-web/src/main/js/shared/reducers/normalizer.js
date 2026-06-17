@@ -8,7 +8,7 @@ import {
 	RemoteData,
 	SearchResults,
 	Segment,
-	User
+	User,
 } from 'shared/util/records';
 import {fromJS, Map} from 'immutable';
 import {keys} from 'lodash';
@@ -21,14 +21,14 @@ const ENTITY_RECORD_MAP = {
 	layouts: EntityLayout,
 	projects: Project,
 	segments: Segment,
-	users: User
+	users: User,
 };
 
 function getRequestState(Record, data) {
 	return new RemoteData({
 		data: new Record(fromJS(data)),
 		error: false,
-		loading: false
+		loading: false,
 	});
 }
 
@@ -60,7 +60,7 @@ export default (state = new Map(), action) => {
 										data: entity.data,
 										fieldMappingFieldName:
 											meta.fieldMappingFieldName,
-										loading: false
+										loading: false,
 									})
 								)
 							);

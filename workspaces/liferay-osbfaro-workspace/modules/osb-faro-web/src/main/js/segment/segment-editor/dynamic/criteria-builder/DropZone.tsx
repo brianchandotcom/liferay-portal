@@ -2,13 +2,13 @@ import getCN from 'classnames';
 import React from 'react';
 import {
 	AddProperty,
-	withReferencedObjectsConsumer
+	withReferencedObjectsConsumer,
 } from '../context/referencedObjects';
 import {compose} from 'redux';
 import {
 	ConnectDropTarget,
 	DropTarget as dropTarget,
-	DropTargetMonitor
+	DropTargetMonitor,
 } from 'react-dnd';
 import {DragTypes} from '../utils/drag-types';
 import {OnCriterionAdd, OnMove} from '../utils/types';
@@ -16,7 +16,7 @@ import {OnCriterionAdd, OnMove} from '../utils/types';
 const acceptedDragTypes = [
 	DragTypes.CriteriaGroup,
 	DragTypes.CriteriaRow,
-	DragTypes.Property
+	DragTypes.Property,
 ];
 
 /**
@@ -29,7 +29,7 @@ const canDrop = (
 	{
 		criteriaGroupId: destGroupId,
 		disabled,
-		dropIndex: destIndex
+		dropIndex: destIndex,
 	}: {
 		criteriaGroupId: string;
 		disabled?: boolean;
@@ -45,7 +45,7 @@ const canDrop = (
 		childGroupIds = [],
 		criteriaGroupId: startGroupId,
 		criterion,
-		index: startIndex
+		index: startIndex,
 	} = monitor.getItem();
 
 	const disallowedGroupIds = [criterion.criteriaGroupId, ...childGroupIds];
@@ -76,7 +76,7 @@ const drop = (
 		criteriaGroupId: destGroupId,
 		dropIndex: destIndex,
 		onCriterionAdd,
-		onMove
+		onMove,
 	}: {
 		addProperty: AddProperty;
 		criteriaGroupId: string;
@@ -90,7 +90,7 @@ const drop = (
 		criteriaGroupId: startGroupId,
 		criterion,
 		index: startIndex,
-		property
+		property,
 	} = monitor.getItem();
 
 	const itemType = monitor.getItemType();
@@ -101,7 +101,8 @@ const drop = (
 
 	if (itemType === DragTypes.Property) {
 		onCriterionAdd(destIndex, criterion);
-	} else if (
+	}
+	else if (
 		itemType === DragTypes.CriteriaRow ||
 		itemType === DragTypes.CriteriaGroup
 	) {
@@ -126,16 +127,16 @@ const DropZone: React.FC<IDropZoneProps> = ({
 	before,
 	canDrop,
 	connectDropTarget,
-	hover
+	hover,
 }) => (
-	<div className='drop-zone-root'>
+	<div className="drop-zone-root">
 		{connectDropTarget(
 			<div
 				className={getCN('drop-zone-target', {
-					'drop-zone-target-before': before
+					'drop-zone-target-before': before,
 				})}
 			>
-				{canDrop && hover && <div className='drop-zone-indicator' />}
+				{canDrop && hover && <div className="drop-zone-indicator" />}
 			</div>
 		)}
 	</div>
@@ -147,12 +148,12 @@ export default compose<React.ComponentType<any>>(
 		acceptedDragTypes,
 		{
 			canDrop,
-			drop
+			drop,
 		},
 		(connect, monitor) => ({
 			canDrop: monitor.canDrop(),
 			connectDropTarget: connect.dropTarget(),
-			hover: monitor.isOver()
+			hover: monitor.isOver(),
 		})
 	)
 )(DropZone);

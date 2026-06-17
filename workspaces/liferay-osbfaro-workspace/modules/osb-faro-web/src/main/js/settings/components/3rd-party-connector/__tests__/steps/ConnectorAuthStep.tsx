@@ -10,15 +10,15 @@ const useWizardPageMock = jest.fn();
 
 jest.mock('react-router-dom', () => ({
 	...jest.requireActual('react-router-dom'),
-	useHistory: () => useHistoryMock()
+	useHistory: () => useHistoryMock(),
 }));
 
 jest.mock('settings/components/base-page/WizardPageContext', () => ({
-	useWizardPage: () => useWizardPageMock()
+	useWizardPage: () => useWizardPageMock(),
 }));
 
 jest.mock('settings/components/base-page/utis', () => ({
-	updateSearchParams: jest.fn()
+	updateSearchParams: jest.fn(),
 }));
 
 const connectorAuthSpy = jest.fn();
@@ -28,7 +28,7 @@ jest.mock('settings/components/3rd-party-connector/ConnectorAuth', () => ({
 	default: (props: any) => {
 		connectorAuthSpy(props);
 		return null;
-	}
+	},
 }));
 
 const buildConfig = (
@@ -43,12 +43,12 @@ const buildConfig = (
 		connectTitle: 'connectTitle',
 		endpointHelper: 'endpointHelper',
 		endpointLabel: 'endpointLabel',
-		tokenLabel: 'tokenLabel'
+		tokenLabel: 'tokenLabel',
 	},
 	singleton: false,
 	slug: 'acme',
 	type: 'ACME',
-	...overrides
+	...overrides,
 });
 
 describe('ConnectorAuthStep', () => {
@@ -68,7 +68,7 @@ describe('ConnectorAuthStep', () => {
 			<ConnectorAuthStep
 				addAlert={jest.fn() as any}
 				config={buildConfig()}
-				groupId='23'
+				groupId="23"
 				onNext={jest.fn()}
 			/>
 		);
@@ -87,7 +87,7 @@ describe('ConnectorAuthStep', () => {
 			<ConnectorAuthStep
 				addAlert={jest.fn() as any}
 				config={buildConfig()}
-				groupId='23'
+				groupId="23"
 				onNext={onNext}
 			/>
 		);
@@ -114,7 +114,7 @@ describe('ConnectorAuthStep', () => {
 			<ConnectorAuthStep
 				addAlert={jest.fn() as any}
 				config={buildConfig()}
-				groupId='23'
+				groupId="23"
 				onNext={onNext}
 			/>
 		);
@@ -130,7 +130,7 @@ describe('ConnectorAuthStep', () => {
 			<ConnectorAuthStep
 				addAlert={jest.fn() as any}
 				config={buildConfig()}
-				groupId='23'
+				groupId="23"
 				onNext={jest.fn()}
 			/>
 		);

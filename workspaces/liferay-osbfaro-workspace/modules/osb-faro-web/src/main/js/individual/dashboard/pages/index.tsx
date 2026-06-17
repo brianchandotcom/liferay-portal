@@ -16,6 +16,7 @@ import {useDataSources} from 'shared/context/dataSources';
 const Distribution = lazy(
 	() =>
 		import(
+
 			/* webpackChunkName: "IndividualsDashboardDistribution" */ './Distribution'
 		)
 );
@@ -23,6 +24,7 @@ const Distribution = lazy(
 const KnownIndividuals = lazy(
 	() =>
 		import(
+
 			/* webpackChunkName: "IndividualsDashboardKnownIndividuals" */ './KnownIndividuals'
 		)
 );
@@ -30,6 +32,7 @@ const KnownIndividuals = lazy(
 const InterestDetails = lazy(
 	() =>
 		import(
+
 			/* webpackChunkName: "IndividualsDashboardInterestDetails" */ './InterestDetails'
 		)
 );
@@ -37,6 +40,7 @@ const InterestDetails = lazy(
 const Interests = lazy(
 	() =>
 		import(
+
 			/* webpackChunkName: "IndividualsDashboardInterests" */ './Interests'
 		)
 );
@@ -44,6 +48,7 @@ const Interests = lazy(
 const Overview = lazy(
 	() =>
 		import(
+
 			/* webpackChunkName: "IndividualsDashboardOverview" */ './Overview'
 		)
 );
@@ -52,23 +57,23 @@ const NAV_ITEMS = [
 	{
 		exact: true,
 		label: Liferay.Language.get('overview'),
-		route: Routes.CONTACTS_INDIVIDUALS
+		route: Routes.CONTACTS_INDIVIDUALS,
 	},
 	{
 		exact: true,
 		label: Liferay.Language.get('known-individuals'),
-		route: Routes.CONTACTS_INDIVIDUALS_KNOWN_INDIVIDUALS
+		route: Routes.CONTACTS_INDIVIDUALS_KNOWN_INDIVIDUALS,
 	},
 	{
 		exact: false,
 		label: Liferay.Language.get('interests'),
-		route: Routes.CONTACTS_INDIVIDUALS_INTERESTS
+		route: Routes.CONTACTS_INDIVIDUALS_INTERESTS,
 	},
 	{
 		exact: true,
 		label: Liferay.Language.get('distribution'),
-		route: Routes.CONTACTS_INDIVIDUALS_DISTRIBUTION
-	}
+		route: Routes.CONTACTS_INDIVIDUALS_DISTRIBUTION,
+	},
 ];
 
 const Dashboard: React.FC<React.HTMLAttributes<HTMLDivElement>> = () => {
@@ -82,7 +87,7 @@ const Dashboard: React.FC<React.HTMLAttributes<HTMLDivElement>> = () => {
 
 	return (
 		<BasePage
-			className='individuals-dashboard-root'
+			className="individuals-dashboard-root"
 			documentTitle={Liferay.Language.get('individuals')}
 		>
 			<BasePage.Header
@@ -90,8 +95,8 @@ const Dashboard: React.FC<React.HTMLAttributes<HTMLDivElement>> = () => {
 					breadcrumbs.getHome({
 						channelId,
 						groupId,
-						label: selectedChannel && selectedChannel.name
-					})
+						label: selectedChannel && selectedChannel.name,
+					}),
 				]}
 				groupId={groupId}
 			>
@@ -107,7 +112,7 @@ const Dashboard: React.FC<React.HTMLAttributes<HTMLDivElement>> = () => {
 
 			{matchedRoute === Routes.CONTACTS_INDIVIDUALS && (
 				<BasePage.SubHeader>
-					<div className='d-flex justify-content-end w-100'>
+					<div className="d-flex justify-content-end w-100">
 						<DownloadPDFReport
 							dateRangeDescription={
 								sub(
@@ -129,7 +134,7 @@ const Dashboard: React.FC<React.HTMLAttributes<HTMLDivElement>> = () => {
 
 			{matchedRoute === Routes.CONTACTS_INDIVIDUALS_KNOWN_INDIVIDUALS && (
 				<BasePage.SubHeader>
-					<div className='d-flex justify-content-end w-100'>
+					<div className="d-flex justify-content-end w-100">
 						<DownloadStaticCSVReport
 							disabled={!!dataSourceStates.empty}
 							type={CSVType.Individual}

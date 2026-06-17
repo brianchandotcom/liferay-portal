@@ -3,7 +3,7 @@ import React from 'react';
 
 export const SummaryTitle = ({
 	className,
-	label
+	label,
 }: {
 	className?: string;
 	label: React.ReactNode;

@@ -13,11 +13,11 @@ const UniqueVisitorsCell: React.FC<UniqueVisitorsCellIProps> = ({
 	...otherProps
 }) => (
 	<td {...otherProps}>
-		<div className='d-flex flex-column w-100'>
-			<span className='unique-visitors'>
+		<div className="d-flex flex-column w-100">
+			<span className="unique-visitors">
 				{toThousands(uniqueVisitors)}
 			</span>
-			<span className='traffic-quota'>
+			<span className="traffic-quota">
 				{`${toRounded(trafficSplit)}% ${Liferay.Language.get(
 					'traffic-split'
 				)}`}

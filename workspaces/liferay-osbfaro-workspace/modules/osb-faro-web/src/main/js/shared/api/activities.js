@@ -15,7 +15,7 @@ export function fetchHistory({
 	interval = DEFAULT_ACTIVITY_INTERVAL,
 	max = DEFAULT_ACTIVITY_MAX,
 	rangeEnd = null,
-	rangeStart = null
+	rangeStart = null,
 }) {
 	return sendRequest({
 		data: {
@@ -26,11 +26,11 @@ export function fetchHistory({
 			...pickBy({
 				max,
 				rangeEnd,
-				rangeStart
-			})
+				rangeStart,
+			}),
 		},
 		method: 'GET',
-		path: `contacts/${groupId}/activity/history`
+		path: `contacts/${groupId}/activity/history`,
 	});
 }
 
@@ -44,7 +44,7 @@ export function fetchGroup({
 	groupId,
 	orderIOMap,
 	query,
-	startDate
+	startDate,
 }) {
 	const orderParams = orderIOMap.first();
 
@@ -60,10 +60,10 @@ export function fetchGroup({
 			endDate,
 			orderByFields,
 			query,
-			startDate
+			startDate,
 		},
 		method: 'GET',
-		path: `contacts/${groupId}/activity_group`
+		path: `contacts/${groupId}/activity_group`,
 	});
 }
 
@@ -85,10 +85,10 @@ export function searchAssets({
 			applicationId,
 			channelId,
 			eventId,
-			orderByFields
+			orderByFields,
 		},
 		method: 'GET',
-		path: `contacts/${groupId}/activity/asset`
+		path: `contacts/${groupId}/activity/asset`,
 	});
 }
 
@@ -96,9 +96,9 @@ export function searchCount({action, groupId, ...otherParams}) {
 	return sendRequest({
 		data: {
 			...otherParams,
-			action
+			action,
 		},
 		method: 'GET',
-		path: `contacts/${groupId}/activity/count`
+		path: `contacts/${groupId}/activity/count`,
 	});
 }

@@ -1,7 +1,7 @@
 import ClayForm from '@clayui/form';
 import DataSourceQuery, {
 	DataSource,
-	DataSourceSyncData
+	DataSourceSyncData,
 } from 'shared/queries/DataSourceQuery';
 import React, {useEffect, useState} from 'react';
 import {CREATE_DATE} from 'shared/util/pagination';
@@ -25,7 +25,7 @@ const ReviewSyncedDataStep = ({onNext, onPrev}: IReviewSyncedDataStepProps) => {
 	const [dataSource, setDataSource] = useState<DataSource>({
 		contactsSyncDetails: {selected: false},
 		id: '',
-		sitesSyncDetails: {selected: false}
+		sitesSyncDetails: {selected: false},
 	});
 	const [getDataSources, {data}] = useLazyQuery<DataSourceSyncData>(
 		DataSourceQuery,
@@ -35,10 +35,10 @@ const ReviewSyncedDataStep = ({onNext, onPrev}: IReviewSyncedDataStepProps) => {
 				size: 1,
 				sort: {
 					column: CREATE_DATE,
-					type: OrderByDirections.Descending
+					type: OrderByDirections.Descending,
 				},
-				type: DataSourceTypes.Liferay
-			}
+				type: DataSourceTypes.Liferay,
+			},
 		}
 	);
 
@@ -58,7 +58,7 @@ const ReviewSyncedDataStep = ({onNext, onPrev}: IReviewSyncedDataStepProps) => {
 
 	return (
 		<ClayForm
-			onSubmit={async event => {
+			onSubmit={async (event) => {
 				event.preventDefault();
 
 				updateSearchParams(history, 'dataSourceId', dataSource.id);

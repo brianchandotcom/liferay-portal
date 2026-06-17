@@ -19,7 +19,7 @@ interface IFormSearchableSelectProps
 
 class FormSearchableSelect extends React.Component<IFormSearchableSelectProps> {
 	static defaultProps = {
-		onSearchChange: noop
+		onSearchChange: noop,
 	};
 
 	static propTypes = {
@@ -27,16 +27,16 @@ class FormSearchableSelect extends React.Component<IFormSearchableSelectProps> {
 			name: PropTypes.string,
 			onBlur: PropTypes.func,
 			onChange: PropTypes.func,
-			value: PropTypes.any
+			value: PropTypes.any,
 		}),
 		form: PropTypes.shape({
 			errors: PropTypes.object,
-			touched: PropTypes.object
+			touched: PropTypes.object,
 		}),
 		initialValue: PropTypes.any,
 		label: PropTypes.node,
 		onSearchChange: PropTypes.func,
-		onSelect: PropTypes.func
+		onSelect: PropTypes.func,
 	};
 
 	@autobind
@@ -44,7 +44,7 @@ class FormSearchableSelect extends React.Component<IFormSearchableSelectProps> {
 		const {
 			field: {name},
 			form: {setFieldValue},
-			onSelect
+			onSelect,
 		} = this.props;
 
 		setFieldValue(name, value);
@@ -65,7 +65,7 @@ class FormSearchableSelect extends React.Component<IFormSearchableSelectProps> {
 
 		const classes = getCN(className, {
 			'has-error': error && touched,
-			'has-success': !error && touched
+			'has-success': !error && touched,
 		});
 
 		return (

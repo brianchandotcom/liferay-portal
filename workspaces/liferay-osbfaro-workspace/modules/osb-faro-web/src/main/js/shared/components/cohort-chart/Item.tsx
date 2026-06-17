@@ -10,8 +10,9 @@ const Item: React.FC<CohortHeatMapType> = ({
 	dateLabelFn,
 	periodLabel,
 	retention,
-	value
+	value,
 }) => {
+
 	// eslint-disable-next-line no-undef
 	const _ref = useRef<HTMLTableDataCellElement>(null);
 
@@ -21,12 +22,12 @@ const Item: React.FC<CohortHeatMapType> = ({
 	const handleMouseOver = () => setVisible(true);
 
 	const content = (
-		<span className='cohort-item-popover d-flex justify-content-between'>
-			<span className='period'>{periodLabel}</span>
+		<span className="cohort-item-popover d-flex justify-content-between">
+			<span className="period">{periodLabel}</span>
 
-			<span className='visitors'>
+			<span className="visitors">
 				{sub(Liferay.Language.get('x-visitors'), [
-					value.toLocaleString()
+					value.toLocaleString(),
 				])}
 			</span>
 		</span>
@@ -34,7 +35,7 @@ const Item: React.FC<CohortHeatMapType> = ({
 
 	return (
 		<td
-			className='cohort-item-root table-column-text-center'
+			className="cohort-item-root table-column-text-center"
 			onBlur={handleMouseOver}
 			onFocus={handleMouseOut}
 			onMouseOut={handleMouseOut}
@@ -42,14 +43,14 @@ const Item: React.FC<CohortHeatMapType> = ({
 			ref={_ref}
 			style={{background: colorHex || undefined}}
 		>
-			<span className='retention'>{`${retention.toFixed(2)}%`}</span>
+			<span className="retention">{`${retention.toFixed(2)}%`}</span>
 
 			{ReactDOM.createPortal(
 				<Popover
 					alignElement={_ref.current!}
 					content={content}
 					title={sub(Liferay.Language.get('x-cohort'), [
-						dateLabelFn(date, true)
+						dateLabelFn(date, true),
 					])}
 					visible={visible}
 				/>,

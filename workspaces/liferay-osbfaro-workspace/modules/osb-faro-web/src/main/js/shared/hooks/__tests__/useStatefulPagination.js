@@ -25,7 +25,7 @@ describe('useStatefulPagination', () => {
 			delta: DEFAULT_DELTA,
 			filterBy: expect.anything(),
 			page: DEFAULT_PAGE,
-			query: ''
+			query: '',
 		});
 		expect(typeof result.onDeltaChange).toBe('function');
 		expect(typeof result.onPageChange).toBe('function');
@@ -110,7 +110,7 @@ describe('useStatefulPagination', () => {
 
 		const Component = () => {
 			result = useStatefulPagination(null, {
-				initialOrderIOMap: createOrderIOMap('name')
+				initialOrderIOMap: createOrderIOMap('name'),
 			});
 
 			return null;
@@ -206,7 +206,7 @@ describe('useStatefulPagination', () => {
 		act(() => {
 			result.onFilterByChange(
 				Map({
-					biz: Set(['buz'])
+					biz: Set(['buz']),
 				})
 			);
 		});

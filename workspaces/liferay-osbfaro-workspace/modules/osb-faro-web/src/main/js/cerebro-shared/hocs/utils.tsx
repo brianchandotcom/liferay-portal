@@ -14,7 +14,7 @@ type TWithError = () => (
 
 const withError: TWithError =
 	() =>
-	Component =>
+	(Component) =>
 	({error, errorMessage, ...props}) => {
 		if (error) {
 			return (
@@ -41,7 +41,7 @@ type TWithEmpty = (params?: {
 
 const withEmpty: TWithEmpty =
 	({emptyDescription, emptyIcon, emptyTitle, primary} = {}) =>
-	Component =>
+	(Component) =>
 	({
 		filterEnabled = false,
 		items,
@@ -60,14 +60,15 @@ const withEmpty: TWithEmpty =
 						icon={{
 							border: false,
 							size: Sizes.XXXLarge,
-							symbol: 'ac_no_results_found'
+							symbol: 'ac_no_results_found',
 						}}
 						title={Liferay.Language.get(
 							'there-are-no-results-found'
 						)}
 					/>
 				);
-			} else if (noResultsRenderer) {
+			}
+			else if (noResultsRenderer) {
 				return noResultsRenderer;
 			}
 

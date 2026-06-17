@@ -8,7 +8,7 @@ import EventDefinitionsQuery, {
 	HideEventDefinitionsData,
 	HideEventDefinitionsVariables,
 	UnhideEventDefinitions,
-	UnhideEventDefinitionsData
+	UnhideEventDefinitionsData,
 } from 'event-analysis/queries/EventDefinitionsQuery';
 import Nav from 'shared/components/Nav';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
@@ -22,7 +22,7 @@ import {connect, ConnectedProps} from 'react-redux';
 import {
 	createOrderIOMap,
 	getSortFromOrderIOMap,
-	NAME
+	NAME,
 } from 'shared/util/pagination';
 import {Event, EventTypes} from 'event-analysis/utils/types';
 import {eventListColumns} from 'shared/util/table-columns';
@@ -35,7 +35,7 @@ import {useMutation, useQuery} from '@apollo/client';
 import {useQueryPagination} from 'shared/hooks/useQueryPagination';
 import {
 	useSelectionContext,
-	withSelectionProvider
+	withSelectionProvider,
 } from 'shared/context/selection';
 
 const connector = connect(null, {addAlert, close, open});
@@ -50,12 +50,12 @@ const EventList: React.FC<IEventListProps> = ({
 	addAlert,
 	close,
 	groupId,
-	open
+	open,
 }) => {
 	const {selectedItems, selectionDispatch} = useSelectionContext();
 
 	const {delta, orderIOMap, page, query} = useQueryPagination({
-		initialOrderIOMap: createOrderIOMap(NAME)
+		initialOrderIOMap: createOrderIOMap(NAME),
 	});
 
 	const {data, error, loading, refetch} = useQuery<
@@ -70,8 +70,8 @@ const EventList: React.FC<IEventListProps> = ({
 			size: delta,
 			sort: getSortFromOrderIOMap(
 				orderIOMap
-			) as EventDefinitionsVariables['sort']
-		}
+			) as EventDefinitionsVariables['sort'],
+		},
 	});
 
 	const [hideEventDefinitions] = useMutation<
@@ -79,19 +79,19 @@ const EventList: React.FC<IEventListProps> = ({
 		HideEventDefinitionsVariables
 	>(HideEventDefinitions, {
 		onCompleted: ({
-			hideEventDefinitions
+			hideEventDefinitions,
 		}: {
 			hideEventDefinitions: Event[];
 		}) => {
 			if (!selectedItems.isEmpty()) {
 				selectionDispatch?.({
 					payload: {
-						items: hideEventDefinitions
+						items: hideEventDefinitions,
 					},
-					type: 'add'
+					type: 'add',
 				});
 			}
-		}
+		},
 	});
 
 	const [unhideEventDefinitions] = useMutation<
@@ -99,19 +99,19 @@ const EventList: React.FC<IEventListProps> = ({
 		HideEventDefinitionsVariables
 	>(UnhideEventDefinitions, {
 		onCompleted: ({
-			unhideEventDefinitions
+			unhideEventDefinitions,
 		}: {
 			unhideEventDefinitions: Event[];
 		}) => {
 			if (!selectedItems.isEmpty()) {
 				selectionDispatch?.({
 					payload: {
-						items: unhideEventDefinitions
+						items: unhideEventDefinitions,
 					},
-					type: 'add'
+					type: 'add',
 				});
 			}
-		}
+		},
 	});
 
 	const currentUser = useCurrentUser();
@@ -123,7 +123,7 @@ const EventList: React.FC<IEventListProps> = ({
 
 		open(modalTypes.CONFIRMATION_MODAL, {
 			message: (
-				<p className='text-secondary'>
+				<p className="text-secondary">
 					{Liferay.Language.get(
 						'hiding-events-in-the-interface-may-require-reconfiguration-of-segments-and-other-analysis-using-this-event.-hidden-events-will-be-available-for-calculating-metrics'
 					)}
@@ -134,8 +134,8 @@ const EventList: React.FC<IEventListProps> = ({
 			onSubmit: () => {
 				hideEventDefinitions({
 					variables: {
-						eventDefinitionIds: events.map(({id}) => id)
-					}
+						eventDefinitionIds: events.map(({id}) => id),
+					},
 				})
 					.then(() => {
 						addAlert({
@@ -147,13 +147,13 @@ const EventList: React.FC<IEventListProps> = ({
 												'x-events-have-been-set-to-hide'
 											),
 											[visibleEventsCount]
-									  )
+										)
 									: sub(
 											Liferay.Language.get(
 												'x-set-to-hide'
 											),
 											[visibleEvents[0].displayName]
-									  )
+										),
 						});
 					})
 					.catch(() =>
@@ -162,7 +162,7 @@ const EventList: React.FC<IEventListProps> = ({
 							message: Liferay.Language.get(
 								'there-was-an-error-processing-your-request.-please-try-again'
 							),
-							timeout: false
+							timeout: false,
 						})
 					);
 			},
@@ -172,9 +172,9 @@ const EventList: React.FC<IEventListProps> = ({
 				visibleEventsCount > 1
 					? Liferay.Language.get('hide-events')
 					: sub(Liferay.Language.get('hide-x'), [
-							visibleEvents[0].displayName
-					  ]),
-			titleIcon: 'warning'
+							visibleEvents[0].displayName,
+						]),
+			titleIcon: 'warning',
 		});
 	};
 
@@ -185,8 +185,8 @@ const EventList: React.FC<IEventListProps> = ({
 
 		unhideEventDefinitions({
 			variables: {
-				eventDefinitionIds: events.map(({id}) => id)
-			}
+				eventDefinitionIds: events.map(({id}) => id),
+			},
 		})
 			.then(() => {
 				addAlert({
@@ -198,13 +198,13 @@ const EventList: React.FC<IEventListProps> = ({
 										'x-events-have-been-set-to-show'
 									),
 									[hiddenEventsCount]
-							  )
+								)
 							: sub(
 									Liferay.Language.get(
 										'x-has-been-set-to-show'
 									),
 									[hiddenEvents[0].displayName]
-							  )
+								),
 				});
 			})
 			.catch(() =>
@@ -213,7 +213,7 @@ const EventList: React.FC<IEventListProps> = ({
 					message: Liferay.Language.get(
 						'there-was-an-error-processing-your-request.-please-try-again'
 					),
-					timeout: false
+					timeout: false,
 				})
 			);
 	};
@@ -238,8 +238,8 @@ const EventList: React.FC<IEventListProps> = ({
 									: handleHideEvents;
 
 								hideEventFn([data]);
-							}
-						}
+							},
+						},
 					]}
 				/>
 			);
@@ -247,7 +247,7 @@ const EventList: React.FC<IEventListProps> = ({
 	};
 
 	const hasUnhiddenEvent = (events: OrderedMap<string, Event>) =>
-		events.some(event => !event?.hidden);
+		events.some((event) => !event?.hidden);
 
 	return (
 		<CrossPageSelect
@@ -255,7 +255,7 @@ const EventList: React.FC<IEventListProps> = ({
 				eventListColumns.getName({groupId}),
 				eventListColumns.displayName,
 				eventListColumns.description,
-				eventListColumns.hidden
+				eventListColumns.hidden,
 			]}
 			delta={delta}
 			emptyTitle={Liferay.Language.get('there-are-no-events-found')}
@@ -267,7 +267,7 @@ const EventList: React.FC<IEventListProps> = ({
 					icon={{
 						border: false,
 						size: Sizes.XXXLarge,
-						symbol: 'ac_satellite'
+						symbol: 'ac_satellite',
 					}}
 				/>
 			}
@@ -282,8 +282,8 @@ const EventList: React.FC<IEventListProps> = ({
 								<Nav.Item>
 									<ClayButton
 										borderless
-										className='button-root nav-btn'
-										displayType='secondary'
+										className="button-root nav-btn"
+										displayType="secondary"
 										onClick={() => {
 											const hideEventFn =
 												hasUnhiddenEvent(selectedItems)
@@ -296,7 +296,7 @@ const EventList: React.FC<IEventListProps> = ({
 										}}
 									>
 										<ClayIcon
-											className='mr-2'
+											className="mr-2"
 											symbol={
 												hasUnhiddenEvent(selectedItems)
 													? 'ac_hidden'
@@ -310,11 +310,11 @@ const EventList: React.FC<IEventListProps> = ({
 									</ClayButton>
 								</Nav.Item>
 							</Nav>
-					  )
+						)
 					: null
 			}
 			renderRowActions={renderRowActions}
-			rowIdentifier='id'
+			rowIdentifier="id"
 			showCheckbox={authorized}
 			showDropdownRangeKey={false}
 			total={get(data, ['eventDefinitions', 'total'], 0)}

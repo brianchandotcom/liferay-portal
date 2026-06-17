@@ -16,14 +16,14 @@ interface ITimeZoneAlertProps extends React.HTMLAttributes<HTMLElement> {
 const TimeZoneAlert: React.FC<ITimeZoneAlertProps> = ({
 	modifiedTime,
 	onClose,
-	stripe
+	stripe,
 }) => {
 	const {displayTimeZone, timeZoneId} = useTimeZone();
 	const currentUser = useCurrentUser();
 
 	return (
 		<Alert
-			iconSymbol='exclamation-full'
+			iconSymbol="exclamation-full"
 			onClose={onClose}
 			stripe={stripe}
 			title={Liferay.Language.get('info')}
@@ -39,7 +39,7 @@ const TimeZoneAlert: React.FC<ITimeZoneAlertProps> = ({
 						modifiedTime,
 						timeZoneId,
 						currentUser.languageId
-					).fromNow()
+					).fromNow(),
 				]
 			)}
 		</Alert>

@@ -7,7 +7,7 @@ import {
 	getCompleteDate,
 	getOperator,
 	setCompleteDate,
-	setOperator
+	setOperator,
 } from '../utils/custom-inputs';
 import {Option, Picker} from '@clayui/core';
 import {PropertyTypes, SUPPORTED_OPERATORS_MAP} from '../utils/constants';
@@ -38,12 +38,12 @@ export default class CustomDateTimeInput extends React.Component<ISegmentEditorC
 		const {value} = this.props;
 
 		return (
-			<Form.GroupItem className='operator' shrink>
+			<Form.GroupItem className="operator" shrink>
 				<Picker
-					className='criterion-input operator-input'
+					className="criterion-input operator-input"
 					items={DATE_TIME_OPERATORS.map(({key, label}) => ({
 						label,
-						value: key
+						value: key,
 					}))}
 					onSelectionChange={this.handleOperatorChange}
 					selectedKey={getOperator(value, 0)}

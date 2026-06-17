@@ -20,17 +20,19 @@ export const DropdownRangeKeyContent: React.FC<
 > = ({
 	alignmentPosition = Align.BottomRight,
 	data,
+
 	/**
 	 * Legacy can be removed once we convert all uses of
 	 * DropdownRangeKey to include the new values
 	 */
 	legacy = true,
 	onRangeSelectorChange,
+
 	/**
 	 * When legacy props is true, rangeKeys will be ignored.
 	 */
 	rangeKeys,
-	rangeSelectors
+	rangeSelectors,
 }) => {
 	const [active, setActive] = useState(false);
 	const [customDateRange, setCustomDateRange] = useState<MomentDateRange>({
@@ -39,7 +41,7 @@ export const DropdownRangeKeyContent: React.FC<
 			: null,
 		start: rangeSelectors?.rangeStart
 			? moment(rangeSelectors.rangeStart, DEFAULT_DATE_FORMAT)
-			: null
+			: null,
 	});
 	const [seeMore, setSeeMore] = useState(false);
 	const [showDatePicker, setShowDatePicker] = useState(false);
@@ -52,7 +54,7 @@ export const DropdownRangeKeyContent: React.FC<
 		rangeKeys,
 		retentionPeriod: retentionPeriod as number,
 		seeMore,
-		timeRange
+		timeRange,
 	});
 
 	let selectedItem = null;
@@ -62,12 +64,12 @@ export const DropdownRangeKeyContent: React.FC<
 			rangeEnd: rangeSelectors.rangeEnd,
 			rangeKey: rangeSelectors.rangeKey,
 			rangeStart: rangeSelectors.rangeStart,
-			timeRange
+			timeRange,
 		});
 	}
 
 	useEffect(() => {
-		const unlisten = history.listen(location => {
+		const unlisten = history.listen((location) => {
 			const query = new URLSearchParams(location.search);
 
 			if (query.get('downloadReport')) {
@@ -77,7 +79,7 @@ export const DropdownRangeKeyContent: React.FC<
 						rangeKey: query.get(
 							'rangeKey'
 						) as any as RangeKeyTimeRanges,
-						rangeStart: query.get('rangeStart') || ''
+						rangeStart: query.get('rangeStart') || '',
 					});
 				}
 			}
@@ -95,7 +97,7 @@ export const DropdownRangeKeyContent: React.FC<
 					rangeEnd: customDateRange.end.format(DEFAULT_DATE_FORMAT),
 					rangeKey: RangeKeyTimeRanges.CustomRange,
 					rangeStart:
-						customDateRange.start.format(DEFAULT_DATE_FORMAT)
+						customDateRange.start.format(DEFAULT_DATE_FORMAT),
 				});
 			}
 
@@ -107,13 +109,13 @@ export const DropdownRangeKeyContent: React.FC<
 		<ClayDropDown
 			active={active}
 			alignmentPosition={alignmentPosition}
-			className='dropdown-range-key-root'
+			className="dropdown-range-key-root"
 			menuElementAttrs={{
 				className: getCN('dropdown-range-key-menu-root', {
-					'show-date-picker': showDatePicker
-				})
+					'show-date-picker': showDatePicker,
+				}),
 			}}
-			onActiveChange={active => {
+			onActiveChange={(active) => {
 				setActive(active);
 				setShowDatePicker(false);
 				setSeeMore(false);
@@ -121,16 +123,16 @@ export const DropdownRangeKeyContent: React.FC<
 			trigger={
 				<ClayButton
 					borderless
-					className='button-root'
-					displayType='secondary'
-					size='sm'
+					className="button-root"
+					displayType="secondary"
+					size="sm"
 				>
 					{selectedItem?.label ??
 						Liferay.Language.get('select-date-range')}
 
 					<ClayIcon
-						className='icon-root ml-2'
-						symbol='caret-bottom'
+						className="icon-root ml-2"
+						symbol="caret-bottom"
 					/>
 				</ClayButton>
 			}
@@ -146,7 +148,7 @@ export const DropdownRangeKeyContent: React.FC<
 					{filteredItems.map(({description, label, value}, index) => (
 						<ClayDropDown.Item
 							className={getCN('c-pointer', {
-								active: selectedItem?.value === value
+								active: selectedItem?.value === value,
 							})}
 							key={index}
 							onClick={() => {
@@ -156,12 +158,12 @@ export const DropdownRangeKeyContent: React.FC<
 									onRangeSelectorChange({
 										rangeEnd: '',
 										rangeKey: value,
-										rangeStart: ''
+										rangeStart: '',
 									});
 
 								setCustomDateRange({
 									end: null,
-									start: null
+									start: null,
 								});
 							}}
 						>

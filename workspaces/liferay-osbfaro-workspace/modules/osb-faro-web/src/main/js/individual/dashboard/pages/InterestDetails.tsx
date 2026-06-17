@@ -14,31 +14,31 @@ interface IInterestDetailsProps extends React.HTMLAttributes<HTMLDivElement> {
 const InterestDetailsPage: React.FC<IInterestDetailsProps> = ({router}) => {
 	const {
 		params: {channelId, groupId},
-		query: {rangeKey}
+		query: {rangeKey},
 	} = router;
 
 	return (
 		<BasePage.Body
-			className='individuals-dashboard-interest-details-root'
+			className="individuals-dashboard-interest-details-root"
 			pageContainer
 		>
-			<div className='back-button-root mb-2'>
+			<div className="back-button-root mb-2">
 				<ClayLink
 					borderless
 					button
-					displayType='secondary'
+					displayType="secondary"
 					href={setUriQueryValues(
-						pickBy({rangeKey}, param => !isNil(param)),
+						pickBy({rangeKey}, (param) => !isNil(param)),
 
 						toRoute(Routes.CONTACTS_INDIVIDUALS_INTERESTS, {
 							channelId,
-							groupId
+							groupId,
 						})
 					)}
 				>
 					<ClayIcon
-						className='icon-root mr-2'
-						symbol='angle-left-small'
+						className="icon-root mr-2"
+						symbol="angle-left-small"
 					/>
 
 					{Liferay.Language.get('back-to-interests')}

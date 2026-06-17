@@ -203,11 +203,14 @@
 						padding-right: 8px;
 
 						&.hover-left {
-							box-shadow: inset 1px 0 $primary, -1px 0 $primary;
+							box-shadow:
+								inset 1px 0 $primary,
+								-1px 0 $primary;
 						}
 
 						&.hover-right {
-							box-shadow: inset -1px 0 0 0 $primary,
+							box-shadow:
+								inset -1px 0 0 0 $primary,
 								1px 0 $primary;
 						}
 

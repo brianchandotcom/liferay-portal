@@ -5,7 +5,7 @@ import {
 	getColorHex,
 	getPeriodLabel,
 	IntervalType,
-	VisitorsType
+	VisitorsType,
 } from './utils';
 import {get} from 'lodash';
 
@@ -53,7 +53,7 @@ export default class CohortCard extends React.Component<ICohortCardProps> {
 						formatDate(date, interval, abbreviated),
 					periodLabel: getPeriodLabel(period, interval),
 					retention,
-					value
+					value,
 				};
 
 				const row = get(acc, rowDimension, [] as CohortHeatMapType[]);
@@ -71,7 +71,7 @@ export default class CohortCard extends React.Component<ICohortCardProps> {
 	}
 
 	getDateLabels(formattedData: CohortHeatMapType[][]) {
-		return formattedData.map(row => {
+		return formattedData.map((row) => {
 			const {date, dateLabelFn} = row[0];
 
 			return dateLabelFn(date, false);

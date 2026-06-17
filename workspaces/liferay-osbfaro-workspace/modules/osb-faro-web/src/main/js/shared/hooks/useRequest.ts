@@ -8,12 +8,12 @@ export const useRequest = <TParams extends object, TData>({
 	initialState = {
 		data: null,
 		error: false,
-		loading: true
+		loading: true,
 	},
-	normalize = val => val,
+	normalize = (val) => val,
 	resetStateIfSkipingRequest = false,
 	skipRequest = false,
-	variables
+	variables,
 }: {
 	dataSourceFn?: (params: TParams) => Promise<TData> | undefined;
 	debounceDelay?: number;
@@ -27,7 +27,7 @@ export const useRequest = <TParams extends object, TData>({
 	const debounceRef = useRef<ReturnType<typeof debounce>>();
 
 	const debouncedDataSourceFn = useCallback<any>(
-		debounce(debounceDelay)(vars => {
+		debounce(debounceDelay)((vars) => {
 			if (!dataSourceFn) {
 				return;
 			}
@@ -40,7 +40,7 @@ export const useRequest = <TParams extends object, TData>({
 			}
 
 			promise
-				.then(result => {
+				.then((result) => {
 					if (requestAbortControllerRef.current?.signal.aborted) {
 						return;
 					}
@@ -48,11 +48,11 @@ export const useRequest = <TParams extends object, TData>({
 					setState({
 						...state,
 						data: normalize(result),
-						loading: false
+						loading: false,
 					});
 				})
 				.catch(
-					err =>
+					(err) =>
 						!err.IS_CANCELLATION_ERROR &&
 						setState({...state, error: true, loading: false})
 				);
@@ -68,13 +68,14 @@ export const useRequest = <TParams extends object, TData>({
 
 	const [state, setState] = useState({
 		...initialState,
-		refetch: getData
+		refetch: getData,
 	});
 
 	useDeepEqualEffect(() => {
 		if (!skipRequest) {
 			getData();
-		} else if (resetStateIfSkipingRequest) {
+		}
+		else if (resetStateIfSkipingRequest) {
 			setState({...state, ...initialState});
 		}
 

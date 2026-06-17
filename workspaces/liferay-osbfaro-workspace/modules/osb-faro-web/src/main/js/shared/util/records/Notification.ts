@@ -2,13 +2,13 @@ import {Record} from 'immutable';
 
 export enum NotificationTypes {
 	Alert = 'ALERT',
-	Modal = 'MODAL'
+	Modal = 'MODAL',
 }
 
 export enum NotificationSubtypes {
 	BlockedEventsLimit = 'BLOCKED_EVENTS_LIMIT',
 	TimeZoneAdmin = 'TIME_ZONE_ADMIN',
-	TimeZoneChanged = 'TIME_ZONE_CHANGED'
+	TimeZoneChanged = 'TIME_ZONE_CHANGED',
 }
 
 interface INotification {
@@ -21,7 +21,7 @@ export default class Notification
 	extends Record({
 		id: '',
 		subtype: null,
-		type: null
+		type: null,
 	})
 	implements INotification
 {

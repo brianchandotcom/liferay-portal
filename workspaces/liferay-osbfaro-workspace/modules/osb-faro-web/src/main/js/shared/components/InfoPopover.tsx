@@ -15,7 +15,7 @@ const InfoPopover: React.FC<IInfoPopoverProps> = ({
 	className,
 	content,
 	popOverAttr,
-	title
+	title,
 }) => {
 	const _iconSpanRef = useRef<HTMLSpanElement>(null);
 
@@ -31,7 +31,7 @@ const InfoPopover: React.FC<IInfoPopoverProps> = ({
 				onMouseOver={() => setShowPopover(true)}
 				ref={_iconSpanRef}
 			>
-				<ClayIcon className='icon-root' symbol='question-circle-full' />
+				<ClayIcon className="icon-root" symbol="question-circle-full" />
 			</span>
 
 			{ReactDOM.createPortal(

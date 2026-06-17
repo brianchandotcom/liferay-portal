@@ -8,7 +8,7 @@ import {
 	removeItemsByIndex,
 	setCompleteDate,
 	setOperator,
-	setPropertyValue
+	setPropertyValue,
 } from '../custom-inputs';
 import {RelationalOperators, TimeSpans} from '../../utils/constants';
 
@@ -19,19 +19,20 @@ const mockValue = createCustomValueMap([
 			{
 				operatorName: RelationalOperators.EQ,
 				propertyName: 'context/city',
-				value: 'foo'
+				value: 'foo',
 			},
 			{
 				operatorName: RelationalOperators.GT,
 				propertyName: 'completeDate',
-				value: TimeSpans.Last7Days
-			}
-		]
-	}
+				value: TimeSpans.Last7Days,
+			},
+		],
+	},
 ]);
 
 describe('Custom Inputs Util', () => {
 	describe('createCustomValueMap', () => {
+
 		// This unit test is skipped because uuid is generated every time test is run.
 
 		it.skip('should create an immutable valueIMap from a given param array', () => {
@@ -43,15 +44,15 @@ describe('Custom Inputs Util', () => {
 							{
 								operatorName: RelationalOperators.EQ,
 								propertyName: 'context/city',
-								value: 'foo'
+								value: 'foo',
 							},
 							{
 								operatorName: RelationalOperators.GT,
 								propertyName: 'completeDate',
-								value: TimeSpans.Last7Days
-							}
-						]
-					}
+								value: TimeSpans.Last7Days,
+							},
+						],
+					},
 				])
 			).toMatchSnapshot();
 		});
@@ -97,7 +98,7 @@ describe('Custom Inputs Util', () => {
 			);
 
 			const updatedMockValue = removeItemsByIndex(mockValue, [
-				indexToRemove
+				indexToRemove,
 			]);
 
 			expect(

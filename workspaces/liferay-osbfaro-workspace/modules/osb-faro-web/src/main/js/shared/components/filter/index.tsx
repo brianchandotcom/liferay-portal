@@ -24,7 +24,7 @@ type SelectedItems = {[key: string]: string[]};
 
 const Filter: React.FC<IFilterProps> = ({
 	items: initialItems = [],
-	onChange
+	onChange,
 }) => {
 	const [selectedItems, setSelectedItems] = useState<SelectedItems>({});
 	const [showDropdown, setShowDropdown] = useState(false);
@@ -46,7 +46,7 @@ const Filter: React.FC<IFilterProps> = ({
 	}, [initialItems]);
 
 	const getCheckedItems = (parentItems: Item[]): Item[] =>
-		parentItems.map(item => {
+		parentItems.map((item) => {
 			const categoryItems = selectedItems[item.category];
 
 			let childItems = null;
@@ -59,7 +59,7 @@ const Filter: React.FC<IFilterProps> = ({
 				return {
 					...item,
 					checked: true,
-					items: childItems
+					items: childItems,
 				};
 			}
 
@@ -75,8 +75,9 @@ const Filter: React.FC<IFilterProps> = ({
 
 		if (checked) {
 			categoryItems.push(label);
-		} else {
-			remove(categoryItems, n => n === label);
+		}
+		else {
+			remove(categoryItems, (n) => n === label);
 		}
 
 		selectedItems[category] = categoryItems;
@@ -85,13 +86,14 @@ const Filter: React.FC<IFilterProps> = ({
 	};
 
 	const handleChangeDropdownItem = ({
-		dropdownItem
+		dropdownItem,
 	}: {
 		dropdownItem: Item;
 	}): void => {
 		if (dropdownItem.inputType == 'radio') {
 			updateRadioItems(dropdownItem);
-		} else if (dropdownItem.inputType == 'checkbox') {
+		}
+		else if (dropdownItem.inputType == 'checkbox') {
 			updateCheckboxItems(dropdownItem);
 		}
 	};
@@ -113,7 +115,7 @@ const Filter: React.FC<IFilterProps> = ({
 
 		if (
 			(dropdown && dropdown.contains(target as Node)) ||
-			dropdownMenu.find(menu => menu.contains(target as Node))
+			dropdownMenu.find((menu) => menu.contains(target as Node))
 		)
 			return;
 
@@ -127,20 +129,20 @@ const Filter: React.FC<IFilterProps> = ({
 	};
 
 	return (
-		<div className='analytics-filter' ref={_elementRef}>
-			<div className='analytics-dropdown dropdown btn-group border-0'>
+		<div className="analytics-filter" ref={_elementRef}>
+			<div className="analytics-dropdown dropdown btn-group border-0">
 				<ClayButton
-					aria-label='Dropdown Filter'
-					className='dropdown-toggle btn-outline-borderless'
-					displayType='secondary'
+					aria-label="Dropdown Filter"
+					className="dropdown-toggle btn-outline-borderless"
+					displayType="secondary"
 					onClick={handleClickToggleDropdown}
-					size='sm'
+					size="sm"
 				>
 					{Liferay.Language.get('filter')}
 
 					<ClayIcon
-						className='icon-root ml-2'
-						symbol='caret-bottom'
+						className="icon-root ml-2"
+						symbol="caret-bottom"
 					/>
 				</ClayButton>
 			</div>

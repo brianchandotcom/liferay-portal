@@ -13,7 +13,7 @@ import {Sizes} from 'shared/util/constants';
 import {useRequest} from 'shared/hooks/useRequest';
 import {
 	useSelectionContext,
-	withSelectionProvider
+	withSelectionProvider,
 } from 'shared/context/selection';
 import {useStatefulPagination} from 'shared/hooks/useStatefulPagination';
 
@@ -25,13 +25,14 @@ interface ISelectChannelsModalProps {
 }
 
 const SelectChannelsModal: React.FC<ISelectChannelsModalProps> = ({
+
 	/**
 	 * const {groupId} = useParams() doesn't work on Modals
 	 */
 	groupId,
 	initialItems = [],
 	onClose,
-	onSelect
+	onSelect,
 }) => {
 	const {selectedItems, selectionDispatch} = useSelectionContext();
 
@@ -43,9 +44,9 @@ const SelectChannelsModal: React.FC<ISelectChannelsModalProps> = ({
 		onQueryChange,
 		orderIOMap,
 		page,
-		query
+		query,
 	} = useStatefulPagination(undefined, {
-		initialOrderIOMap: createOrderIOMap(NAME)
+		initialOrderIOMap: createOrderIOMap(NAME),
 	});
 
 	const {data, error, loading} = useRequest({
@@ -55,8 +56,8 @@ const SelectChannelsModal: React.FC<ISelectChannelsModalProps> = ({
 			delta,
 			groupId,
 			orderIOMap,
-			query
-		}
+			query,
+		},
 	});
 
 	const [showAlert, setShowAlert] = useState(false);
@@ -71,8 +72,8 @@ const SelectChannelsModal: React.FC<ISelectChannelsModalProps> = ({
 	useEffect(() => {
 		if (initialItems.length) {
 			selectionDispatch?.({
-				payload: {items: initialItems.map(id => ({id}))},
-				type: 'add'
+				payload: {items: initialItems.map((id) => ({id}))},
+				type: 'add',
 			});
 		}
 	}, [initialItems]);
@@ -89,21 +90,21 @@ const SelectChannelsModal: React.FC<ISelectChannelsModalProps> = ({
 			if (channelsWithSites.length) {
 				selectionDispatch?.({
 					payload: {items: channelsWithSites},
-					type: 'add'
+					type: 'add',
 				});
 			}
 		}
 	}, [data]);
 
 	return (
-		<Modal size='lg'>
+		<Modal size="lg">
 			<Modal.Header
 				onClose={onClose}
 				title={Liferay.Language.get('select-properties')}
 			/>
 
 			<ClayForm
-				onSubmit={event => {
+				onSubmit={(event) => {
 					event.preventDefault();
 
 					if (selectedItems.isEmpty()) {
@@ -117,11 +118,11 @@ const SelectChannelsModal: React.FC<ISelectChannelsModalProps> = ({
 					onClose();
 				}}
 			>
-				<Modal.Body className='p-0' inlineScroller>
+				<Modal.Body className="p-0" inlineScroller>
 					{showAlert && (
-						<div className='px-4'>
+						<div className="px-4">
 							<ClayAlert
-								displayType='danger'
+								displayType="danger"
 								onClose={() => setShowAlert(false)}
 								title={Liferay.Language.get('error')}
 							>
@@ -140,7 +141,7 @@ const SelectChannelsModal: React.FC<ISelectChannelsModalProps> = ({
 								label: Liferay.Language.get(
 									'available-properties'
 								),
-								title: true
+								title: true,
 							},
 							{
 								accessor: 'commerceChannelsCount',
@@ -148,14 +149,14 @@ const SelectChannelsModal: React.FC<ISelectChannelsModalProps> = ({
 								label: Liferay.Language.get(
 									'dxp-commerce-channels'
 								),
-								sortable: false
+								sortable: false,
 							},
 							{
 								accessor: 'groupsCount',
 								className: 'text-right',
 								label: Liferay.Language.get('sites'),
-								sortable: false
-							}
+								sortable: false,
+							},
 						]}
 						delta={delta}
 						entityLabel={Liferay.Language.get('properties')}
@@ -171,10 +172,10 @@ const SelectChannelsModal: React.FC<ISelectChannelsModalProps> = ({
 										)}
 
 										<ClayLink
-											className='d-block mb-3'
+											className="d-block mb-3"
 											href={URLConstants.CreateProperty}
-											key='DOCUMENTATION'
-											target='_blank'
+											key="DOCUMENTATION"
+											target="_blank"
 										>
 											{Liferay.Language.get(
 												'access-our-documentation-to-learn-more'
@@ -185,7 +186,7 @@ const SelectChannelsModal: React.FC<ISelectChannelsModalProps> = ({
 								icon={{
 									border: false,
 									size: Sizes.XXXLarge,
-									symbol: 'ac_satellite'
+									symbol: 'ac_satellite',
 								}}
 								title={Liferay.Language.get(
 									'there-are-no-properties-found'
@@ -199,24 +200,24 @@ const SelectChannelsModal: React.FC<ISelectChannelsModalProps> = ({
 						orderByOptions={[
 							{
 								label: Liferay.Language.get('property-name'),
-								value: NAME
-							}
+								value: NAME,
+							},
 						]}
 						orderIOMap={orderIOMap}
 						page={page}
 						query={query}
-						rowIdentifier='id'
+						rowIdentifier="id"
 						showCheckbox
 						total={data?.total}
 					/>
 				</Modal.Body>
 
 				<Modal.Footer>
-					<ClayButton displayType='secondary' onClick={onClose}>
+					<ClayButton displayType="secondary" onClick={onClose}>
 						{Liferay.Language.get('cancel')}
 					</ClayButton>
 
-					<ClayButton displayType='primary' type='submit'>
+					<ClayButton displayType="primary" type="submit">
 						{Liferay.Language.get('select')}
 					</ClayButton>
 				</Modal.Footer>

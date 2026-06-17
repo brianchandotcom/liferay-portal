@@ -10,7 +10,7 @@ import {withFilterComponent} from 'shared/hoc/Filter';
 const withFormsFilter = () =>
 	graphql(
 		globalFilterAssetQuery('form', 'submissionsMetric'),
-		getFiltersMapper(result => result.form.submissionsMetric)
+		getFiltersMapper((result) => result.form.submissionsMetric)
 	);
 
 export default withFilterComponent(withFormsFilter);

@@ -6,12 +6,12 @@ import RecommendationPageAssetsQuery from 'settings/recommendations/queries/Reco
 import {
 	createOrderIOMap,
 	getSortFromOrderIOMap,
-	TITLE
+	TITLE,
 } from 'shared/util/pagination';
 import {
 	EXCLUDE,
 	Filter,
-	getFilterValueBreakdown
+	getFilterValueBreakdown,
 } from 'settings/recommendations/utils/utils';
 import {getMapResultToProps} from 'shared/hoc/mappers/metrics';
 import {graphql} from '@apollo/client/react/hoc';
@@ -29,7 +29,7 @@ const withData = () =>
 			orderIOMap,
 			page,
 			query,
-			useNegateValue
+			useNegateValue,
 		}: {
 			delta: number;
 			itemFilters: Filter[];
@@ -43,17 +43,17 @@ const withData = () =>
 				keywords: query,
 				propertyFilters: itemFilters.map(({name, value}) => ({
 					filter: value,
-					negate: useNegateValue ? name === EXCLUDE : false
+					negate: useNegateValue ? name === EXCLUDE : false,
 				})),
 				size: delta,
 				sort: getSortFromOrderIOMap(orderIOMap),
-				start: (page - 1) * delta
-			}
+				start: (page - 1) * delta,
+			},
 		}),
 		props: getMapResultToProps(({pageAssets: {pageAssets, total}}) => ({
 			items: pageAssets,
-			total
-		}))
+			total,
+		})),
 	});
 
 const TableWithData = withStatefulPagination(
@@ -66,7 +66,7 @@ const TableWithData = withStatefulPagination(
 			{
 				accessor: 'title',
 				className: 'table-cell-expand text-truncate',
-				label: Liferay.Language.get('page-name')
+				label: Liferay.Language.get('page-name'),
 			},
 			{
 				accessor: secondColumnHeader || 'url',
@@ -74,21 +74,22 @@ const TableWithData = withStatefulPagination(
 				dataFormatter: (val: unknown) => {
 					if (isString(val)) {
 						return val;
-					} else if (isArray(val)) {
+					}
+					else if (isArray(val)) {
 						return val
 							.map(({value}: {value: string}) => value)
 							.join(', ');
 					}
 				},
 				label: secondColumnHeader || 'url',
-				sortable: false
-			}
+				sortable: false,
+			},
 		],
-		showDropdownRangeKey: false
+		showDropdownRangeKey: false,
 	}),
 	{
 		initialDelta: 10,
-		initialOrderIOMap: createOrderIOMap(TITLE)
+		initialOrderIOMap: createOrderIOMap(TITLE),
 	},
 	(props: {[key: string]: any}) => omit(props, 'onSearchValueChange'),
 	false
@@ -103,7 +104,7 @@ interface IMatchingPagesModalProps {
 const MatchingPagesModal: React.FC<IMatchingPagesModalProps> = ({
 	itemFilters,
 	onClose,
-	useNegateValue = false
+	useNegateValue = false,
 }) => {
 	const {name, value} = itemFilters[0];
 
@@ -112,7 +113,7 @@ const MatchingPagesModal: React.FC<IMatchingPagesModalProps> = ({
 	const customFilter = itemFilters.length === 1 && metadataTag;
 
 	return (
-		<Modal className='matching-pages-modal-root' size='xl'>
+		<Modal className="matching-pages-modal-root" size="xl">
 			<Modal.Header
 				onClose={onClose}
 				title={Liferay.Language.get('matching-pages')}
@@ -121,7 +122,7 @@ const MatchingPagesModal: React.FC<IMatchingPagesModalProps> = ({
 			<Modal.Body>
 				{!!customFilter && !useNegateValue && (
 					<div>
-						<span className='include-exclude'>
+						<span className="include-exclude">
 							{`${
 								name === EXCLUDE
 									? Liferay.Language.get('exclude')
@@ -131,7 +132,7 @@ const MatchingPagesModal: React.FC<IMatchingPagesModalProps> = ({
 
 						<MetadataTag value={metadataTag} />
 
-						<span className='rule'>
+						<span className="rule">
 							{exactMatchSign ? `"${rule}"` : rule}
 						</span>
 					</div>
@@ -146,8 +147,8 @@ const MatchingPagesModal: React.FC<IMatchingPagesModalProps> = ({
 
 			<Modal.Footer>
 				<ClayButton
-					className='button-root'
-					displayType='primary'
+					className="button-root"
+					displayType="primary"
 					onClick={onClose}
 				>
 					{Liferay.Language.get('done')}

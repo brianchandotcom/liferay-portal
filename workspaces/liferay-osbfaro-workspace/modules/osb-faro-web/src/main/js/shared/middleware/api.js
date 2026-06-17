@@ -11,7 +11,7 @@ export function toAction(type, ...objs) {
 	return action;
 }
 
-export default () => next => action => {
+export default () => (next) => (action) => {
 	const request = get(action, ['meta', CALL_API]);
 
 	if (isNil(request)) {
@@ -27,23 +27,23 @@ export default () => next => action => {
 	const retVal = requestFn ? requestFn(data) : sendRequest(request);
 
 	return retVal.then(
-		payload => {
+		(payload) => {
 			next(
 				toAction(successType, action, {
 					meta: {
 						...action.meta,
-						schema: request.schema
+						schema: request.schema,
 					},
-					payload
+					payload,
 				})
 			);
 
 			return {payload};
 		},
-		error => {
+		(error) => {
 			next(
 				toAction(failureType, action, {
-					error: true
+					error: true,
 				})
 			);
 

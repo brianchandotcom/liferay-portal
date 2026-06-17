@@ -18,7 +18,7 @@ export function getConnectorConnectionStatusAlert(
 			displayType: 'warning',
 			message: Liferay.Language.get(
 				'data-is-no-longer-being-received-reconnect-to-resume-syncing'
-			)
+			),
 		};
 	}
 
@@ -28,7 +28,7 @@ export function getConnectorConnectionStatusAlert(
 				displayType: 'success',
 				message: Liferay.Language.get(
 					'all-data-coming-from-this-data-source-is-up-to-date.-there-are-no-errors-to-report'
-				)
+				),
 			};
 		}
 
@@ -36,7 +36,7 @@ export function getConnectorConnectionStatusAlert(
 			displayType: 'warning',
 			message: Liferay.Language.get(
 				'you-have-successfully-connected-to-your-data-source-complete-your-data-source-configuration-to-start-syncing-data'
-			)
+			),
 		};
 	}
 
@@ -46,9 +46,9 @@ export function getConnectorConnectionStatusAlert(
 			entityCount > 0
 				? Liferay.Language.get(
 						'data-is-no-longer-being-received-review-your-data-source-configuration-to-confirm-it-is-still-active'
-				  )
+					)
 				: Liferay.Language.get(
 						'your-token-was-generated-successfully-complete-your-data-source-configuration-to-start-syncing-data'
-				  )
+					),
 	};
 }

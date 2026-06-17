@@ -8,9 +8,9 @@ describe('currentUser reducer', () => {
 
 		const action = {
 			payload: {
-				result: id
+				result: id,
 			},
-			type: userActionTypes.FETCH_CURRENT_USER_SUCCESS
+			type: userActionTypes.FETCH_CURRENT_USER_SUCCESS,
 		};
 
 		const state = reducer(new RemoteData(), action);

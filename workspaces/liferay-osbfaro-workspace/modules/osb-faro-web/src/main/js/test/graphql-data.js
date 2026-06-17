@@ -6,7 +6,7 @@ import AssetAppearsOnQuery from 'shared/queries/AssetAppearsOnQuery';
 import BlockedCustomEventDefinitionsQuery from 'settings/definitions/events/queries/BlockedCustomEventDefinitionsQuery';
 import EventAnalysisResultQuery from 'event-analysis/queries/EventAnalysisResultQuery';
 import EventAttributeDefinitionQuery, {
-	EVENT_ATTRIBUTE_DEFINITION_WITH_RECENT_VALUES_QUERY
+	EVENT_ATTRIBUTE_DEFINITION_WITH_RECENT_VALUES_QUERY,
 } from 'event-analysis/queries/EventAttributeDefinitionQuery';
 import EventAttributeDefinitionsQuery from 'event-analysis/queries/EventAttributeDefinitionsQuery';
 import EventAttributeValuesQuery from 'event-analysis/queries/EventAttributeValuesQuery';
@@ -34,30 +34,30 @@ import {
 	AssetMetricQuery,
 	AssetTabsQuery,
 	SitesMetricQuery,
-	SitesTabsQuery
+	SitesTabsQuery,
 } from 'shared/components/metric-card/queries';
 import {
 	AttributeTypes,
 	DataTypes,
-	DateGroupings
+	DateGroupings,
 } from 'event-analysis/utils/types';
 import {
 	CompositionTypes,
 	DATA_RETENTION_PERIOD_KEY,
 	OrderByDirections,
 	RangeKeyTimeRanges,
-	THIRTEEN_MONTHS
+	THIRTEEN_MONTHS,
 } from 'shared/util/constants';
 import {COUNT, NAME} from 'shared/util/pagination';
 import {
 	EventAnalysisListQuery,
-	EventAnalysisQuery
+	EventAnalysisQuery,
 } from 'event-analysis/queries/EventAnalysisQuery';
 import {EventTypes} from 'event-analysis/utils/types';
 import {
 	EXPERIMENT_DRAFT_QUERY,
 	EXPERIMENT_QUERY,
-	EXPERIMENT_STATUS_QUERY
+	EXPERIMENT_STATUS_QUERY,
 } from 'experiments/queries/ExperimentQuery';
 import {getSafeRangeSelectors} from 'shared/util/util';
 import {INTERVAL_KEY_MAP} from 'shared/util/time';
@@ -67,7 +67,7 @@ import {SegmentPageViewsQuery} from 'shared/queries/SegmentPageViewsQuery';
 
 const METRIC_TYPENAME_MAP = {
 	histogram: 'HistogramMetric',
-	trend: 'Trend'
+	trend: 'Trend',
 };
 
 export function mockAssetAppearsOnReq(variables, empty) {
@@ -84,9 +84,9 @@ export function mockAssetAppearsOnReq(variables, empty) {
 					{
 						__typename: 'AssetMetric',
 						name: 'viewsMetric',
-						value: 113948
-					}
-				]
+						value: 113948,
+					},
+				],
 			},
 			{
 				__typename: 'BlogMetric',
@@ -97,9 +97,9 @@ export function mockAssetAppearsOnReq(variables, empty) {
 					{
 						__typename: 'AssetMetric',
 						name: 'viewsMetric',
-						value: 912285
-					}
-				]
+						value: 912285,
+					},
+				],
 			},
 			{
 				__typename: 'BlogMetric',
@@ -110,9 +110,9 @@ export function mockAssetAppearsOnReq(variables, empty) {
 					{
 						__typename: 'AssetMetric',
 						name: 'viewsMetric',
-						value: 431627
-					}
-				]
+						value: 431627,
+					},
+				],
 			},
 			{
 				__typename: 'BlogMetric',
@@ -123,9 +123,9 @@ export function mockAssetAppearsOnReq(variables, empty) {
 					{
 						__typename: 'AssetMetric',
 						name: 'viewsMetric',
-						value: 273970
-					}
-				]
+						value: 273970,
+					},
+				],
 			},
 			{
 				__typename: 'BlogMetric',
@@ -136,10 +136,10 @@ export function mockAssetAppearsOnReq(variables, empty) {
 					{
 						__typename: 'AssetMetric',
 						name: 'viewsMetric',
-						value: 95519
-					}
-				]
-			}
+						value: 95519,
+					},
+				],
+			},
 		];
 	}
 
@@ -156,18 +156,18 @@ export function mockAssetAppearsOnReq(variables, empty) {
 				size: 2,
 				start: 0,
 				title: 'Blog Title',
-				...variables
-			}
+				...variables,
+			},
 		},
 		result: {
 			data: {
 				assetPages: {
 					__typename: 'AssetPages',
 					assetMetrics,
-					total: empty ? 0 : 1000
-				}
-			}
-		}
+					total: empty ? 0 : 1000,
+				},
+			},
+		},
 	};
 }
 
@@ -185,8 +185,8 @@ export function mockAssetMetricReq({empty, metricName, queryName, rangeKey}) {
 				rangeKey,
 				rangeStart: null,
 				title: 'My awesome asset',
-				touchpoint: 'https://liferay.com'
-			}
+				touchpoint: 'https://liferay.com',
+			},
 		},
 		result: {
 			data: {
@@ -209,41 +209,41 @@ export function mockAssetMetricReq({empty, metricName, queryName, rangeKey}) {
 											trend: {
 												__typename: 'Trend',
 												percentage: null,
-												trendClassification: 'NEUTRAL'
+												trendClassification: 'NEUTRAL',
 											},
 											value: 0,
-											valueKey: '2024-01-17T18:00'
-										}
-								  ],
-							total: empty ? 0 : 5
+											valueKey: '2024-01-17T18:00',
+										},
+									],
+							total: empty ? 0 : 5,
 						},
 						previousValue: null,
 						trend: {
 							__typename: 'Trend',
 							percentage: null,
-							trendClassification: 'NEUTRAL'
+							trendClassification: 'NEUTRAL',
 						},
-						value: 0
-					}
-				}
-			}
-		}
+						value: 0,
+					},
+				},
+			},
+		},
 	};
 }
 
 export function mockAssetTabsReq({metrics, name, rangeKey}) {
 	const assetMetrics = {};
 
-	metrics.forEach(metric => {
+	metrics.forEach((metric) => {
 		assetMetrics[metric.name] = {
 			__typename: 'Metric',
 			previousValue: null,
 			trend: {
 				__typename: 'Trend',
 				percentage: null,
-				trendClassification: 'NEUTRAL'
+				trendClassification: 'NEUTRAL',
 			},
-			value: 100
+			value: 100,
 		};
 	});
 
@@ -260,17 +260,17 @@ export function mockAssetTabsReq({metrics, name, rangeKey}) {
 				rangeKey,
 				rangeStart: null,
 				title: 'My awesome asset',
-				touchpoint: 'https://liferay.com'
-			}
+				touchpoint: 'https://liferay.com',
+			},
 		},
 		result: {
 			data: {
 				[name]: {
 					__typename: 'AssetMetric',
-					...assetMetrics
-				}
-			}
-		}
+					...assetMetrics,
+				},
+			},
+		},
 	};
 }
 
@@ -286,8 +286,8 @@ export function mockAudienceReportReq({queryProps}) {
 				rangeKey: 30,
 				rangeStart: null,
 				title: 'Home Page',
-				touchpoint: 'https://www.liferay.com'
-			}
+				touchpoint: 'https://www.liferay.com',
+			},
 		},
 		result: {
 			data: {
@@ -301,7 +301,7 @@ export function mockAudienceReportReq({queryProps}) {
 							knownUsersCount: 98,
 							nonsegmentedKnownUsersCount: 96,
 							segmentedAnonymousUsersCount: null,
-							segmentedKnownUsersCount: 2
+							segmentedKnownUsersCount: 2,
 						},
 						segment: {
 							__typename: 'MetricBag',
@@ -309,15 +309,15 @@ export function mockAudienceReportReq({queryProps}) {
 								{
 									__typename: 'Metric',
 									value: 2,
-									valueKey: 'UK Visitors'
-								}
+									valueKey: 'UK Visitors',
+								},
 							],
-							total: 1
-						}
-					}
-				}
-			}
-		}
+							total: 1,
+						},
+					},
+				},
+			},
+		},
 	};
 }
 
@@ -327,8 +327,8 @@ export function mockExperimentDraftReq() {
 			query: EXPERIMENT_DRAFT_QUERY,
 			variables: {
 				channelId: '2000',
-				experimentId: '123'
-			}
+				experimentId: '123',
+			},
 		},
 		result: {
 			data: {
@@ -340,15 +340,15 @@ export function mockExperimentDraftReq() {
 					goal: {
 						__typename: 'Goal',
 						metric: 'CLICK_RATE',
-						target: ''
+						target: '',
 					},
 					id: '123',
 					name: 'draw',
 					pageURL: 'https://www.beryl.com/experiment-test',
-					status: 'DRAFT'
-				}
-			}
-		}
+					status: 'DRAFT',
+				},
+			},
+		},
 	};
 }
 
@@ -364,8 +364,8 @@ export function mockExperimentReq({
 			query: EXPERIMENT_QUERY,
 			variables: {
 				channelId: '2000',
-				experimentId: '123'
-			}
+				experimentId: '123',
+			},
 		},
 		result: {
 			data: {
@@ -385,16 +385,16 @@ export function mockExperimentReq({
 								{
 									__typename: 'HistogramMetric',
 									key: '2023-10-02T00:00',
-									value: 84
+									value: 84,
 								},
 								{
 									__typename: 'HistogramMetric',
 									key: '2023-10-03T00:00',
-									value: 75
-								}
+									value: 75,
+								},
 							],
 							trafficSplit: 50.0,
-							uniqueVisitors: 402
+							uniqueVisitors: 402,
 						},
 						{
 							__typename: 'DXPVariant',
@@ -406,23 +406,23 @@ export function mockExperimentReq({
 								{
 									__typename: 'HistogramMetric',
 									key: '2023-10-02T00:00',
-									value: 100
+									value: 100,
 								},
 								{
 									__typename: 'HistogramMetric',
 									key: '2023-10-03T00:00',
-									value: 75
-								}
+									value: 75,
+								},
 							],
 							trafficSplit: 50.0,
-							uniqueVisitors: 394
-						}
+							uniqueVisitors: 394,
+						},
 					],
 					finishedDate: '2023-10-23T21:52:55.714Z',
 					goal: {
 						__typename: 'Goal',
 						metric: 'CLICK_RATE',
-						target: ''
+						target: '',
 					},
 					id: '123',
 					metrics: {
@@ -437,7 +437,7 @@ export function mockExperimentReq({
 								dxpVariantId: 'DEFAULT',
 								improvement: 0.0,
 								median: 37.0,
-								probabilityToWin: 63.0
+								probabilityToWin: 63.0,
 							},
 							{
 								__typename: 'VariantMetrics',
@@ -445,9 +445,9 @@ export function mockExperimentReq({
 								dxpVariantId: '44167',
 								improvement: -18.91891891891892,
 								median: 30.0,
-								probabilityToWin: 5070.0
-							}
-						]
+								probabilityToWin: 5070.0,
+							},
+						],
 					},
 					metricsHistogram: [
 						{
@@ -459,16 +459,16 @@ export function mockExperimentReq({
 									confidenceInterval: [66.0, 73.0],
 									dxpVariantId: 'DEFAULT',
 									improvement: 0.0,
-									median: 70.0
+									median: 70.0,
 								},
 								{
 									__typename: 'VariantMetrics',
 									confidenceInterval: [28.0, 31.0],
 									dxpVariantId: '44167',
 									improvement: -57.14285714285714,
-									median: 30.0
-								}
-							]
+									median: 30.0,
+								},
+							],
 						},
 						{
 							__typename: 'ExperimentMetrics',
@@ -479,17 +479,17 @@ export function mockExperimentReq({
 									confidenceInterval: [66.0, 73.0],
 									dxpVariantId: 'DEFAULT',
 									improvement: 0.0,
-									median: 70.0
+									median: 70.0,
 								},
 								{
 									__typename: 'VariantMetrics',
 									confidenceInterval: [28.0, 31.0],
 									dxpVariantId: '44167',
 									improvement: -57.14285714285714,
-									median: 30.0
-								}
-							]
-						}
+									median: 30.0,
+								},
+							],
+						},
 					],
 					modifiedDate: '2023-10-24T09:02:38.912Z',
 					name: 'draw',
@@ -501,17 +501,17 @@ export function mockExperimentReq({
 						{
 							__typename: 'HistogramMetric',
 							key: '2020-09-30T00:00',
-							value: 99
-						}
+							value: 99,
+						},
 					],
 					startedDate: '2020-09-30T12:00:00.000Z',
 					status,
 					type,
 					winnerDXPVariantId: null,
-					...experiment
-				}
-			}
-		}
+					...experiment,
+				},
+			},
+		},
 	};
 }
 
@@ -522,17 +522,17 @@ export function mockExperimentStatusReq({status}) {
 			query: EXPERIMENT_STATUS_QUERY,
 			variables: {
 				channelId: '2000',
-				experimentId: '123'
-			}
+				experimentId: '123',
+			},
 		},
 		result: {
 			data: {
 				experiment: {
 					__typename: 'Experiment',
-					status
-				}
-			}
-		}
+					status,
+				},
+			},
+		},
 	};
 }
 
@@ -540,12 +540,12 @@ export function mockBag({itemTypeName, items, name, typeName}) {
 	return {
 		[name]: {
 			__typename: typeName,
-			[name]: items.map(item => ({
+			[name]: items.map((item) => ({
 				__typename: itemTypeName,
-				...item
+				...item,
 			})),
-			total: items.length
-		}
+			total: items.length,
+		},
 	};
 }
 
@@ -562,19 +562,19 @@ export function mockBlockedCustomEventDefinitionsReq(
 				size: items.length,
 				sort: {
 					column: 'name',
-					type: 'ASC'
+					type: 'ASC',
 				},
-				...mockVariables
-			}
+				...mockVariables,
+			},
 		},
 		result: {
 			data: mockBag({
 				items,
 				itemTypeName: 'BlockedCustomEventDefinition',
 				name: 'blockedCustomEventDefinitions',
-				typeName: 'BlockedCustomEventDefinitionBag'
-			})
-		}
+				typeName: 'BlockedCustomEventDefinitionBag',
+			}),
+		},
 	};
 }
 
@@ -583,17 +583,17 @@ export function mockCompositionBag({
 	compositions = [],
 	maxCount = 0,
 	total = 0,
-	totalCount = 0
+	totalCount = 0,
 }) {
 	const result = {
 		__typename: 'CompositionBag',
-		compositions: compositions.map(item => ({
+		compositions: compositions.map((item) => ({
 			__typename: 'Composition',
-			...item
+			...item,
 		})),
 		maxCount,
 		total,
-		totalCount
+		totalCount,
 	};
 
 	return compositionBagName ? {[compositionBagName]: result} : result;
@@ -604,7 +604,7 @@ export function mockDataControlTaskBag(items) {
 		items,
 		itemTypeName: 'DataControlTask',
 		name: 'dataControlTasks',
-		typeName: 'DataControlTaskBag'
+		typeName: 'DataControlTaskBag',
 	});
 }
 
@@ -612,16 +612,16 @@ export function mockDataSourcesReq(dataSources = [], variables = {type: null}) {
 	return {
 		request: {
 			query: SitesDashboardQuery,
-			variables
+			variables,
 		},
 		result: {
 			data: {
-				dataSources: dataSources.map(dataSource => ({
+				dataSources: dataSources.map((dataSource) => ({
 					...dataSource,
-					__typename: 'DataSource'
-				}))
-			}
-		}
+					__typename: 'DataSource',
+				})),
+			},
+		},
 	};
 }
 
@@ -636,8 +636,8 @@ export function mockAcquisitionsReq() {
 				rangeKey: 30,
 				rangeStart: null,
 				size: 5,
-				start: 0
-			}
+				start: 0,
+			},
 		},
 		result: {
 			data: {
@@ -647,15 +647,15 @@ export function mockAcquisitionsReq() {
 						{
 							__typename: 'Composition',
 							count: 2686,
-							name: 'direct'
-						}
+							name: 'direct',
+						},
 					],
 					maxCount: 2686,
 					total: 1,
-					totalCount: 2686
-				}
-			}
-		}
+					totalCount: 2686,
+				},
+			},
+		},
 	};
 }
 
@@ -670,8 +670,8 @@ export function mockSitesMetricReq(metricName, {rangeKey}) {
 				location: 'Any',
 				rangeEnd: null,
 				rangeKey,
-				rangeStart: null
-			}
+				rangeStart: null,
+			},
 		},
 		result: {
 			data: {
@@ -691,10 +691,10 @@ export function mockSitesMetricReq(metricName, {rangeKey}) {
 									trend: {
 										__typename: 'Trend',
 										percentage: null,
-										trendClassification: 'NEUTRAL'
+										trendClassification: 'NEUTRAL',
 									},
 									value: 0,
-									valueKey: '2024-01-17T18:00'
+									valueKey: '2024-01-17T18:00',
 								},
 								{
 									__typename: 'HistogramMetric',
@@ -704,10 +704,10 @@ export function mockSitesMetricReq(metricName, {rangeKey}) {
 									trend: {
 										__typename: 'Trend',
 										percentage: null,
-										trendClassification: 'NEUTRAL'
+										trendClassification: 'NEUTRAL',
 									},
 									value: 0,
-									valueKey: '2024-01-17T19:00'
+									valueKey: '2024-01-17T19:00',
 								},
 								{
 									__typename: 'HistogramMetric',
@@ -717,10 +717,10 @@ export function mockSitesMetricReq(metricName, {rangeKey}) {
 									trend: {
 										__typename: 'Trend',
 										percentage: null,
-										trendClassification: 'NEUTRAL'
+										trendClassification: 'NEUTRAL',
 									},
 									value: 0,
-									valueKey: '2024-01-17T20:00'
+									valueKey: '2024-01-17T20:00',
 								},
 								{
 									__typename: 'HistogramMetric',
@@ -730,10 +730,10 @@ export function mockSitesMetricReq(metricName, {rangeKey}) {
 									trend: {
 										__typename: 'Trend',
 										percentage: null,
-										trendClassification: 'NEUTRAL'
+										trendClassification: 'NEUTRAL',
 									},
 									value: 0,
-									valueKey: '2024-01-17T21:00'
+									valueKey: '2024-01-17T21:00',
 								},
 								{
 									__typename: 'HistogramMetric',
@@ -743,21 +743,21 @@ export function mockSitesMetricReq(metricName, {rangeKey}) {
 									trend: {
 										__typename: 'Trend',
 										percentage: null,
-										trendClassification: 'NEUTRAL'
+										trendClassification: 'NEUTRAL',
 									},
 									value: 0,
-									valueKey: '2024-01-17T22:00'
-								}
+									valueKey: '2024-01-17T22:00',
+								},
 							],
-							total: 5
+							total: 5,
 						},
 						previousValue: null,
 						trend: {
 							__typename: 'Trend',
 							percentage: null,
-							trendClassification: 'NEUTRAL'
+							trendClassification: 'NEUTRAL',
 						},
-						value: 0
+						value: 0,
 					},
 					knownVisitorsMetric: {
 						__typename: 'Metric',
@@ -773,10 +773,10 @@ export function mockSitesMetricReq(metricName, {rangeKey}) {
 									trend: {
 										__typename: 'Trend',
 										percentage: null,
-										trendClassification: 'NEUTRAL'
+										trendClassification: 'NEUTRAL',
 									},
 									value: 0,
-									valueKey: '2024-01-17T18:00'
+									valueKey: '2024-01-17T18:00',
 								},
 								{
 									__typename: 'HistogramMetric',
@@ -786,10 +786,10 @@ export function mockSitesMetricReq(metricName, {rangeKey}) {
 									trend: {
 										__typename: 'Trend',
 										percentage: null,
-										trendClassification: 'NEUTRAL'
+										trendClassification: 'NEUTRAL',
 									},
 									value: 0,
-									valueKey: '2024-01-17T19:00'
+									valueKey: '2024-01-17T19:00',
 								},
 								{
 									__typename: 'HistogramMetric',
@@ -799,10 +799,10 @@ export function mockSitesMetricReq(metricName, {rangeKey}) {
 									trend: {
 										__typename: 'Trend',
 										percentage: null,
-										trendClassification: 'NEUTRAL'
+										trendClassification: 'NEUTRAL',
 									},
 									value: 0,
-									valueKey: '2024-01-17T20:00'
+									valueKey: '2024-01-17T20:00',
 								},
 								{
 									__typename: 'HistogramMetric',
@@ -812,10 +812,10 @@ export function mockSitesMetricReq(metricName, {rangeKey}) {
 									trend: {
 										__typename: 'Trend',
 										percentage: null,
-										trendClassification: 'NEUTRAL'
+										trendClassification: 'NEUTRAL',
 									},
 									value: 0,
-									valueKey: '2024-01-17T21:00'
+									valueKey: '2024-01-17T21:00',
 								},
 								{
 									__typename: 'HistogramMetric',
@@ -825,21 +825,21 @@ export function mockSitesMetricReq(metricName, {rangeKey}) {
 									trend: {
 										__typename: 'Trend',
 										percentage: null,
-										trendClassification: 'NEUTRAL'
+										trendClassification: 'NEUTRAL',
 									},
 									value: 0,
-									valueKey: '2024-01-17T22:00'
-								}
+									valueKey: '2024-01-17T22:00',
+								},
 							],
-							total: 5
+							total: 5,
 						},
 						previousValue: null,
 						trend: {
 							__typename: 'Trend',
 							percentage: null,
-							trendClassification: 'NEUTRAL'
+							trendClassification: 'NEUTRAL',
 						},
-						value: 1
+						value: 1,
 					},
 					visitorsMetric: {
 						__typename: 'Metric',
@@ -855,10 +855,10 @@ export function mockSitesMetricReq(metricName, {rangeKey}) {
 									trend: {
 										__typename: 'Trend',
 										percentage: null,
-										trendClassification: 'NEUTRAL'
+										trendClassification: 'NEUTRAL',
 									},
 									value: 0,
-									valueKey: '2024-01-17T18:00'
+									valueKey: '2024-01-17T18:00',
 								},
 								{
 									__typename: 'HistogramMetric',
@@ -868,10 +868,10 @@ export function mockSitesMetricReq(metricName, {rangeKey}) {
 									trend: {
 										__typename: 'Trend',
 										percentage: null,
-										trendClassification: 'NEUTRAL'
+										trendClassification: 'NEUTRAL',
 									},
 									value: 0,
-									valueKey: '2024-01-17T19:00'
+									valueKey: '2024-01-17T19:00',
 								},
 								{
 									__typename: 'HistogramMetric',
@@ -881,10 +881,10 @@ export function mockSitesMetricReq(metricName, {rangeKey}) {
 									trend: {
 										__typename: 'Trend',
 										percentage: null,
-										trendClassification: 'NEUTRAL'
+										trendClassification: 'NEUTRAL',
 									},
 									value: 0,
-									valueKey: '2024-01-17T20:00'
+									valueKey: '2024-01-17T20:00',
 								},
 								{
 									__typename: 'HistogramMetric',
@@ -894,10 +894,10 @@ export function mockSitesMetricReq(metricName, {rangeKey}) {
 									trend: {
 										__typename: 'Trend',
 										percentage: null,
-										trendClassification: 'NEUTRAL'
+										trendClassification: 'NEUTRAL',
 									},
 									value: 0,
-									valueKey: '2024-01-17T21:00'
+									valueKey: '2024-01-17T21:00',
 								},
 								{
 									__typename: 'HistogramMetric',
@@ -907,25 +907,25 @@ export function mockSitesMetricReq(metricName, {rangeKey}) {
 									trend: {
 										__typename: 'Trend',
 										percentage: null,
-										trendClassification: 'NEUTRAL'
+										trendClassification: 'NEUTRAL',
 									},
 									value: 0,
-									valueKey: '2024-01-17T22:00'
-								}
+									valueKey: '2024-01-17T22:00',
+								},
 							],
-							total: 5
+							total: 5,
 						},
 						previousValue: null,
 						trend: {
 							__typename: 'Trend',
 							percentage: null,
-							trendClassification: 'NEUTRAL'
+							trendClassification: 'NEUTRAL',
 						},
-						value: 1
-					}
-				}
-			}
-		}
+						value: 1,
+					},
+				},
+			},
+		},
 	};
 }
 
@@ -940,8 +940,8 @@ export function mockSitesTabsReq({rangeKey}) {
 				location: 'Any',
 				rangeEnd: null,
 				rangeKey,
-				rangeStart: null
-			}
+				rangeStart: null,
+			},
 		},
 		result: {
 			data: {
@@ -953,9 +953,9 @@ export function mockSitesTabsReq({rangeKey}) {
 						trend: {
 							__typename: 'Trend',
 							percentage: null,
-							trendClassification: 'NEUTRAL'
+							trendClassification: 'NEUTRAL',
 						},
-						value: 0
+						value: 0,
 					},
 					sessionDurationMetric: {
 						__typename: 'Metric',
@@ -963,9 +963,9 @@ export function mockSitesTabsReq({rangeKey}) {
 						trend: {
 							__typename: 'Trend',
 							percentage: null,
-							trendClassification: 'NEUTRAL'
+							trendClassification: 'NEUTRAL',
 						},
-						value: 25184
+						value: 25184,
 					},
 					sessionsPerVisitorMetric: {
 						__typename: 'Metric',
@@ -973,9 +973,9 @@ export function mockSitesTabsReq({rangeKey}) {
 						trend: {
 							__typename: 'Trend',
 							percentage: null,
-							trendClassification: 'NEUTRAL'
+							trendClassification: 'NEUTRAL',
 						},
-						value: 1
+						value: 1,
 					},
 					visitorsMetric: {
 						__typename: 'Metric',
@@ -983,13 +983,13 @@ export function mockSitesTabsReq({rangeKey}) {
 						trend: {
 							__typename: 'Trend',
 							percentage: null,
-							trendClassification: 'NEUTRAL'
+							trendClassification: 'NEUTRAL',
 						},
-						value: 1
-					}
-				}
-			}
-		}
+						value: 1,
+					},
+				},
+			},
+		},
 	};
 }
 
@@ -1005,10 +1005,10 @@ export function mockSitesTopPagesReq() {
 				size: 5,
 				sort: {
 					column: 'visitorsMetric',
-					type: 'DESC'
+					type: 'DESC',
 				},
-				start: 0
-			}
+				start: 0,
+			},
 		},
 		result: {
 			data: {
@@ -1021,16 +1021,16 @@ export function mockSitesTopPagesReq() {
 							assetTitle: 'My asset A',
 							entrancesMetric: {
 								__typename: 'Metric',
-								value: 10
+								value: 10,
 							},
 							exitRateMetric: {
 								__typename: 'Metric',
-								value: 15
+								value: 15,
 							},
 							visitorsMetric: {
 								__typename: 'Metric',
-								value: 20
-							}
+								value: 20,
+							},
 						},
 						{
 							__typename: 'assetMetric',
@@ -1038,22 +1038,22 @@ export function mockSitesTopPagesReq() {
 							assetTitle: 'My asset B',
 							entrancesMetric: {
 								__typename: 'Metric',
-								value: 10
+								value: 10,
 							},
 							exitRateMetric: {
 								__typename: 'Metric',
-								value: 15
+								value: 15,
 							},
 							visitorsMetric: {
 								__typename: 'Metric',
-								value: 20
-							}
-						}
+								value: 20,
+							},
+						},
 					],
-					total: 2
-				}
-			}
-		}
+					total: 2,
+				},
+			},
+		},
 	};
 }
 
@@ -1068,10 +1068,10 @@ export function mockInterestsReq() {
 				size: 5,
 				sort: {
 					column: 'count',
-					type: 'DESC'
+					type: 'DESC',
 				},
-				start: 0
-			}
+				start: 0,
+			},
 		},
 		result: {
 			data: {
@@ -1081,15 +1081,15 @@ export function mockInterestsReq() {
 						{
 							__typename: 'CompositionItem',
 							count: 10,
-							name: 'composition 01'
-						}
+							name: 'composition 01',
+						},
 					],
 					maxCount: 0,
 					total: 0,
-					totalCount: 0
-				}
-			}
-		}
+					totalCount: 0,
+				},
+			},
+		},
 	};
 }
 
@@ -1101,9 +1101,9 @@ export function mockIndividualInterestsReq(getVariables, result) {
 		size: 5,
 		sort: {
 			column: COUNT,
-			type: OrderByDirections.Descending
+			type: OrderByDirections.Descending,
 		},
-		start: 0
+		start: 0,
 	};
 
 	return {
@@ -1111,7 +1111,7 @@ export function mockIndividualInterestsReq(getVariables, result) {
 			query: IndividualInterestsQuery,
 			variables: getVariables
 				? getVariables(defaultVariables)
-				: defaultVariables
+				: defaultVariables,
 		},
 		result: {
 			data: mockCompositionBag({
@@ -1119,28 +1119,28 @@ export function mockIndividualInterestsReq(getVariables, result) {
 				compositions: [
 					{
 						count: 2,
-						name: 'cutting-edge platforms'
+						name: 'cutting-edge platforms',
 					},
 					{count: 2, name: 'mesh'},
 					{
 						count: 2,
-						name: 'mesh synergistic schemas'
+						name: 'mesh synergistic schemas',
 					},
 					{
 						count: 2,
-						name: 'synergistic schemas'
+						name: 'synergistic schemas',
 					},
 					{
 						count: 1,
-						name: 'rich e-commerce'
-					}
+						name: 'rich e-commerce',
+					},
 				],
 				maxCount: 2,
 				total: 5,
-				totalCount: 3
+				totalCount: 3,
 			}),
-			...result
-		}
+			...result,
+		},
 	};
 }
 
@@ -1152,9 +1152,9 @@ export function mockIndividualMetricsReq() {
 				channelId: '123123',
 				interval: INTERVAL_KEY_MAP.week,
 				...getSafeRangeSelectors({
-					rangeKey: RangeKeyTimeRanges.Last30Days
-				})
-			}
+					rangeKey: RangeKeyTimeRanges.Last30Days,
+				}),
+			},
 		},
 		result: {
 			data: {
@@ -1169,13 +1169,13 @@ export function mockIndividualMetricsReq() {
 									__typename: 'HistogramMetric',
 									key: '1',
 									value: 1323321,
-									valueKey: '1'
-								}
+									valueKey: '1',
+								},
 							],
-							total: 1
+							total: 1,
 						},
 						trend: {percentage: 0},
-						value: 1323321
+						value: 1323321,
 					}),
 					knownIndividualsMetric: mockMetric({
 						histogram: {
@@ -1186,13 +1186,13 @@ export function mockIndividualMetricsReq() {
 									__typename: 'HistogramMetric',
 									key: '2',
 									value: 11987,
-									valueKey: '1'
-								}
+									valueKey: '1',
+								},
 							],
-							total: 1
+							total: 1,
 						},
 						trend: {percentage: 12.5},
-						value: 11987
+						value: 11987,
 					}),
 					totalIndividualsMetric: mockMetric({
 						histogram: {
@@ -1203,17 +1203,17 @@ export function mockIndividualMetricsReq() {
 									__typename: 'HistogramMetric',
 									key: '3',
 									value: 1300000000,
-									valueKey: '1'
-								}
+									valueKey: '1',
+								},
 							],
-							total: 1
+							total: 1,
 						},
 						trend: {percentage: -25},
-						value: 1300000000
-					})
-				}
-			}
-		}
+						value: 1300000000,
+					}),
+				},
+			},
+		},
 	};
 }
 
@@ -1221,12 +1221,12 @@ export function mockDXPEntitiesBag(entityName, items) {
 	return {
 		[entityName]: {
 			__typename: 'DXPEntityBag',
-			dxpEntities: items.map(item => ({
+			dxpEntities: items.map((item) => ({
 				__typename: 'DXEntity',
-				...item
+				...item,
 			})),
-			total: items.length
-		}
+			total: items.length,
+		},
 	};
 }
 
@@ -1235,17 +1235,17 @@ export function mockEventAttributeDefinitionReq(item, mockVariables = {}) {
 		request: {
 			query: EventAttributeDefinitionQuery,
 			variables: {
-				...mockVariables
-			}
+				...mockVariables,
+			},
 		},
 		result: {
 			data: {
 				eventAttributeDefinition: {
 					__typename: 'EventAttributeDefinition',
-					...item
-				}
-			}
-		}
+					...item,
+				},
+			},
+		},
 	};
 }
 
@@ -1257,17 +1257,17 @@ export function mockEventAttributeDefinitionWithRecentValuesReq(
 		request: {
 			query: EVENT_ATTRIBUTE_DEFINITION_WITH_RECENT_VALUES_QUERY,
 			variables: {
-				...mockVariables
-			}
+				...mockVariables,
+			},
 		},
 		result: {
 			data: {
 				eventAttributeDefinition: {
 					__typename: 'EventAttributeDefinition',
-					...item
-				}
-			}
-		}
+					...item,
+				},
+			},
+		},
 	};
 }
 
@@ -1281,21 +1281,21 @@ export function mockEventAttributeDefinitionsReq(items, mockVariables = {}) {
 				size: items.length,
 				sort: {
 					column: NAME,
-					type: OrderByDirections.Ascending
+					type: OrderByDirections.Ascending,
 				},
 				type: AttributeTypes.All,
-				...mockVariables
-			}
+				...mockVariables,
+			},
 		},
 		result: {
 			data: {
 				eventAttributeDefinitions: {
 					__typename: 'EventAttributeDefinitionBag',
 					eventAttributeDefinitions: items,
-					total: items.length
-				}
-			}
-		}
+					total: items.length,
+				},
+			},
+		},
 	};
 }
 
@@ -1304,17 +1304,17 @@ export function mockEventDefinitionReq(item, mockVariables = {}) {
 		request: {
 			query: EventDefinitionQuery,
 			variables: {
-				...mockVariables
-			}
+				...mockVariables,
+			},
 		},
 		result: {
 			data: {
 				eventDefinition: {
 					__typename: 'EventDefinition',
-					...item
-				}
-			}
-		}
+					...item,
+				},
+			},
+		},
 	};
 }
 
@@ -1329,20 +1329,20 @@ export function mockEventDefinitionsReq(items, mockVariables = {}) {
 				size: items.length,
 				sort: {
 					column: NAME,
-					type: OrderByDirections.Ascending
+					type: OrderByDirections.Ascending,
 				},
-				...mockVariables
-			}
+				...mockVariables,
+			},
 		},
 		result: {
 			data: {
 				eventDefinitions: {
 					__typename: 'EventDefinitionBag',
 					eventDefinitions: items,
-					total: items.length
-				}
-			}
-		}
+					total: items.length,
+				},
+			},
+		},
 	};
 }
 
@@ -1351,8 +1351,8 @@ export function mockEventAnalysisReq() {
 		request: {
 			query: EventAnalysisQuery,
 			variables: {
-				eventAnalysisId: '1'
-			}
+				eventAnalysisId: '1',
+			},
 		},
 		result: {
 			data: {
@@ -1371,7 +1371,7 @@ export function mockEventAnalysisReq() {
 							dateGrouping: DateGroupings.Day,
 							description: null,
 							displayName: 'assetId',
-							sortType: OrderByDirections.Descending
+							sortType: OrderByDirections.Descending,
 						},
 						{
 							__typename: 'EventAnalysisBreakdown',
@@ -1382,8 +1382,8 @@ export function mockEventAnalysisReq() {
 							dateGrouping: DateGroupings.Day,
 							description: null,
 							displayName: 'category',
-							sortType: OrderByDirections.Descending
-						}
+							sortType: OrderByDirections.Descending,
+						},
 					],
 					eventAnalysisFilters: [
 						{
@@ -1394,8 +1394,8 @@ export function mockEventAnalysisReq() {
 							description: null,
 							displayName: 'pageTitle',
 							operator: 'contains',
-							values: ['page title']
-						}
+							values: ['page title'],
+						},
 					],
 					eventDefinitionId: '1',
 					name: 'My First Event Analysis',
@@ -1413,7 +1413,7 @@ export function mockEventAnalysisReq() {
 								id: '9',
 								name: 'assetId',
 								sampleValue: null,
-								type: AttributeTypes.Local
+								type: AttributeTypes.Local,
 							},
 							{
 								__typename: 'EventAttributeDefinition',
@@ -1423,7 +1423,7 @@ export function mockEventAnalysisReq() {
 								id: '11',
 								name: 'category',
 								sampleValue: null,
-								type: AttributeTypes.Local
+								type: AttributeTypes.Local,
 							},
 							{
 								__typename: 'EventAttributeDefinition',
@@ -1433,8 +1433,8 @@ export function mockEventAnalysisReq() {
 								id: '26',
 								name: 'pageTitle',
 								sampleValue: null,
-								type: AttributeTypes.Global
-							}
+								type: AttributeTypes.Global,
+							},
 						],
 						eventDefinition: {
 							__typename: 'EventDefinition',
@@ -1443,12 +1443,12 @@ export function mockEventAnalysisReq() {
 							hidden: false,
 							id: '1',
 							name: 'assetClicked',
-							type: EventTypes.Default
-						}
-					}
-				}
-			}
-		}
+							type: EventTypes.Default,
+						},
+					},
+				},
+			},
+		},
 	};
 }
 
@@ -1470,14 +1470,14 @@ export function mockEventAnalysisResultReq(
 				rangeKey: 30,
 				rangeStart: null,
 				size: 2,
-				...mockVariables
-			}
+				...mockVariables,
+			},
 		},
 		result: {
 			data: {
-				eventAnalysisResult
-			}
-		}
+				eventAnalysisResult,
+			},
+		},
 	};
 }
 
@@ -1493,19 +1493,19 @@ export function mockEventAnalysisListReq(items) {
 				size: 2,
 				sort: {
 					column: 'name',
-					type: OrderByDirections.Ascending
-				}
-			}
+					type: OrderByDirections.Ascending,
+				},
+			},
 		},
 		result: {
 			data: {
 				eventAnalyses: {
 					__typename: 'EventAnalysisBag',
 					eventAnalyses: items,
-					total: items.length
-				}
-			}
-		}
+					total: items.length,
+				},
+			},
+		},
 	};
 }
 
@@ -1519,20 +1519,20 @@ export function mockEventPropertiesReq(items, mockVariables = {}) {
 				size: items.length,
 				sort: {
 					column: NAME,
-					type: OrderByDirections.Ascending
+					type: OrderByDirections.Ascending,
 				},
-				...mockVariables
-			}
+				...mockVariables,
+			},
 		},
 		result: {
 			data: {
 				eventProperties: {
 					__typename: 'EventPropertyBag',
 					eventProperties: items,
-					total: items.length
-				}
-			}
-		}
+					total: items.length,
+				},
+			},
+		},
 	};
 }
 
@@ -1544,24 +1544,24 @@ export function mockOrganizationsListReq(items) {
 				keywords: '',
 				size: 5,
 				sort: {column: 'name', type: 'ASC'},
-				start: 0
-			}
+				start: 0,
+			},
 		},
 		result: {
 			data: {
 				...mockDXPEntitiesBag(
 					'organizations',
 					items ||
-						range(5).map(i => ({
+						range(5).map((i) => ({
 							dataSourceName: `fooDataSource-${i}`,
 							id: i,
 							name: `fooOrganization-${i}`,
 							parentName: 'fooParentOrganization',
-							type: 'fooOrganizationType'
+							type: 'fooOrganizationType',
 						}))
-				)
-			}
-		}
+				),
+			},
+		},
 	};
 }
 
@@ -1571,11 +1571,11 @@ export function mockMetric(metrics = {}) {
 			const typeName = METRIC_TYPENAME_MAP[key];
 			return typeName
 				? isArray(value)
-					? value.map(item => ({...item, __typename: typeName}))
+					? value.map((item) => ({...item, __typename: typeName}))
 					: {...value, __typename: typeName}
 				: value;
 		}),
-		__typename: 'Metric'
+		__typename: 'Metric',
 	};
 }
 
@@ -1585,17 +1585,17 @@ export function mockRecommendationReq(item = {}, mockVariables = {}) {
 			query: RecommendationQuery,
 			variables: {
 				jobId: '321',
-				...mockVariables
-			}
+				...mockVariables,
+			},
 		},
 		result: {
 			data: {
 				jobById: {
 					...item,
-					__typename: 'Job'
-				}
-			}
-		}
+					__typename: 'Job',
+				},
+			},
+		},
 	};
 }
 
@@ -1609,12 +1609,12 @@ export function mockPagePathReq(data = [], {rangeKey = 30}) {
 				rangeEnd: null,
 				rangeKey,
 				rangeStart: null,
-				title: 'Liferay DXP - Home'
-			}
+				title: 'Liferay DXP - Home',
+			},
 		},
 		result: {
-			data
-		}
+			data,
+		},
 	};
 }
 
@@ -1625,24 +1625,24 @@ export function mockRecommendationActivitiesReq(items, mockVariables = {}) {
 			variables: {
 				applicationId: 'Page',
 				eventContextPropertyFilters: [
-					{filter: '.*custom-assets', negate: false}
+					{filter: '.*custom-assets', negate: false},
 				],
 				eventId: 'pageUnloaded',
 				rangeKey: '30',
 				size: 0,
 				start: 0,
-				...mockVariables
-			}
+				...mockVariables,
+			},
 		},
 		result: {
 			data: {
 				activities: {
 					__typename: 'ActivityBag',
 					activities: items,
-					total: items.length
-				}
-			}
-		}
+					total: items.length,
+				},
+			},
+		},
 	};
 }
 
@@ -1655,18 +1655,18 @@ export function mockRecommendationJobRunsReq(items, mockVariables = {}) {
 				size: 5,
 				sort: {column: 'id', type: 'DESC'},
 				start: 0,
-				...mockVariables
-			}
+				...mockVariables,
+			},
 		},
 		result: {
 			data: {
 				jobRuns: {
 					__typename: 'JobRunBag',
 					jobRuns: items,
-					total: items.length
-				}
-			}
-		}
+					total: items.length,
+				},
+			},
+		},
 	};
 }
 
@@ -1679,18 +1679,18 @@ export function mockRecommendationPageAssetsReq(items, mockVariables = {}) {
 				size: 5,
 				sort: {column: 'title', type: 'DESC'},
 				start: 0,
-				...mockVariables
-			}
+				...mockVariables,
+			},
 		},
 		result: {
 			data: {
 				pageAssets: {
 					__typename: 'PageAssetBag',
 					pageAssets: items,
-					total: items.length
-				}
-			}
-		}
+					total: items.length,
+				},
+			},
+		},
 	};
 }
 
@@ -1699,18 +1699,18 @@ export function mockSearchStringListReq() {
 		request: {
 			query: PreferenceQuery,
 			variables: {
-				key: 'search-query-strings'
-			}
+				key: 'search-query-strings',
+			},
 		},
 		result: {
 			data: {
 				preference: {
 					__typename: 'Preference',
 					key: 'search-query-strings',
-					value: JSON.stringify(['jackson'])
-				}
-			}
-		}
+					value: JSON.stringify(['jackson']),
+				},
+			},
+		},
 	};
 }
 
@@ -1725,18 +1725,20 @@ export function mockSegmentPageViewsReq({segmentPageViews}) {
 				rangeEnd: null,
 				rangeKey: 0,
 				rangeStart: null,
-				segmentIds: segmentPageViews.map(segment => segment.segmentId),
-				title: 'Liferay DXP - Home'
-			}
+				segmentIds: segmentPageViews.map(
+					(segment) => segment.segmentId
+				),
+				title: 'Liferay DXP - Home',
+			},
 		},
 		result: {
 			data: {
-				segmentPageViews: segmentPageViews.map(segment => ({
+				segmentPageViews: segmentPageViews.map((segment) => ({
 					...segment,
-					__typename: 'SegmentPageView'
-				}))
-			}
-		}
+					__typename: 'SegmentPageView',
+				})),
+			},
+		},
 	};
 }
 
@@ -1749,18 +1751,18 @@ export function mockSuppressedUsersListReq(items, mockVariables = {}) {
 				size: 5,
 				sort: {column: 'createDate', type: 'DESC'},
 				start: 0,
-				...mockVariables
-			}
+				...mockVariables,
+			},
 		},
 		result: {
 			data: {
 				suppressions: {
 					__typename: 'SuppressionBag',
 					suppressions: items,
-					total: items.length
-				}
-			}
-		}
+					total: items.length,
+				},
+			},
+		},
 	};
 }
 
@@ -1774,17 +1776,17 @@ export function mockEventAttributeValues() {
 				eventDefinitionId: '789',
 				keywords: '',
 				size: 100,
-				start: 0
-			}
+				start: 0,
+			},
 		},
 		result: {
 			data: {
 				eventAttributeValues: {
 					eventAttributeValues: ['test1', 'test2'],
-					total: 2
-				}
-			}
-		}
+					total: 2,
+				},
+			},
+		},
 	};
 }
 
@@ -1793,25 +1795,25 @@ export function mockPreferenceReq(value = THIRTEEN_MONTHS) {
 		request: {
 			query: PreferenceQuery,
 			variables: {
-				key: DATA_RETENTION_PERIOD_KEY
-			}
+				key: DATA_RETENTION_PERIOD_KEY,
+			},
 		},
 		result: {
 			data: {
 				preference: {
 					__typename: 'Preference',
 					key: DATA_RETENTION_PERIOD_KEY,
-					value
-				}
-			}
-		}
+					value,
+				},
+			},
+		},
 	};
 }
 
 export function mockTimeRangeReq() {
 	return {
 		request: {
-			query: TimeRangeQuery
+			query: TimeRangeQuery,
 		},
 		result: {
 			data: {
@@ -1821,46 +1823,46 @@ export function mockTimeRangeReq() {
 						default: false,
 						endDate: '2020-05-08T23:00',
 						rangeKey: 0,
-						startDate: '2020-05-08T00:00'
+						startDate: '2020-05-08T00:00',
 					},
 					{
 						__typename: 'TimeRange',
 						default: false,
 						endDate: '2020-05-07T23:00',
 						rangeKey: 1,
-						startDate: '2020-05-07T00:00'
+						startDate: '2020-05-07T00:00',
 					},
 					{
 						__typename: 'TimeRange',
 						default: false,
 						endDate: '2020-05-07T23:59:59.999999999',
 						rangeKey: 7,
-						startDate: '2020-05-01T00:00'
+						startDate: '2020-05-01T00:00',
 					},
 					{
 						__typename: 'TimeRange',
 						default: false,
 						endDate: '2020-05-07T23:59:59.999999999',
 						rangeKey: 90,
-						startDate: '2020-02-08T00:00'
+						startDate: '2020-02-08T00:00',
 					},
 					{
 						__typename: 'TimeRange',
 						default: false,
 						endDate: '2020-05-07T23:59:59.999999999',
 						rangeKey: 28,
-						startDate: '2020-04-10T00:00'
+						startDate: '2020-04-10T00:00',
 					},
 					{
 						__typename: 'TimeRange',
 						default: true,
 						endDate: '2020-05-07T23:59:59.999999999',
 						rangeKey: 30,
-						startDate: '2020-04-08T00:00'
-					}
-				]
-			}
-		}
+						startDate: '2020-04-08T00:00',
+					},
+				],
+			},
+		},
 	};
 }
 
@@ -1880,20 +1882,20 @@ export function mockTouchpointsReq(items, mockVariables = {}) {
 				title: '',
 				touchpoint: null,
 				...getSafeRangeSelectors({
-					rangeKey: RangeKeyTimeRanges.Last30Days
+					rangeKey: RangeKeyTimeRanges.Last30Days,
 				}),
-				...mockVariables
-			}
+				...mockVariables,
+			},
 		},
 		result: {
 			data: {
 				pages: {
 					__typename: 'AssetMetricBag',
 					assetMetrics: items,
-					total: items.length
-				}
-			}
-		}
+					total: items.length,
+				},
+			},
+		},
 	};
 }
 
@@ -1902,11 +1904,11 @@ export function mockJobBag(items) {
 		items,
 		itemTypeName: 'Job',
 		name: 'jobs',
-		typeName: 'JobBag'
+		typeName: 'JobBag',
 	});
 }
 
-export const mockEventMetrics = variables => ({
+export const mockEventMetrics = (variables) => ({
 	request: {
 		query: EventMetricQuery,
 		variables: {
@@ -1918,8 +1920,8 @@ export const mockEventMetrics = variables => ({
 			rangeEnd: null,
 			rangeKey: 30,
 			rangeStart: null,
-			...variables
-		}
+			...variables,
+		},
 	},
 	result: {
 		data: {
@@ -1934,150 +1936,150 @@ export const mockEventMetrics = variables => ({
 								__typename: 'HistogramMetric',
 								key: '2021-12-09T14:00',
 								value: 0.0,
-								valueKey: '2021-12-09T14:00'
+								valueKey: '2021-12-09T14:00',
 							},
 							{
 								__typename: 'HistogramMetric',
 								key: '2021-12-09T15:00',
 								value: 0.0,
-								valueKey: '2021-12-09T15:00'
+								valueKey: '2021-12-09T15:00',
 							},
 							{
 								__typename: 'HistogramMetric',
 								key: '2021-12-09T16:00',
 								value: 0.0,
-								valueKey: '2021-12-09T16:00'
+								valueKey: '2021-12-09T16:00',
 							},
 							{
 								__typename: 'HistogramMetric',
 								key: '2021-12-09T17:00',
 								value: 0.0,
-								valueKey: '2021-12-09T17:00'
+								valueKey: '2021-12-09T17:00',
 							},
 							{
 								__typename: 'HistogramMetric',
 								key: '2021-12-09T18:00',
 								value: 0.0,
-								valueKey: '2021-12-09T18:00'
+								valueKey: '2021-12-09T18:00',
 							},
 							{
 								__typename: 'HistogramMetric',
 								key: '2021-12-09T19:00',
 								value: 0.0,
-								valueKey: '2021-12-09T19:00'
+								valueKey: '2021-12-09T19:00',
 							},
 							{
 								__typename: 'HistogramMetric',
 								key: '2021-12-09T20:00',
 								value: 0.0,
-								valueKey: '2021-12-09T20:00'
+								valueKey: '2021-12-09T20:00',
 							},
 							{
 								__typename: 'HistogramMetric',
 								key: '2021-12-09T21:00',
 								value: 0.0,
-								valueKey: '2021-12-09T21:00'
+								valueKey: '2021-12-09T21:00',
 							},
 							{
 								__typename: 'HistogramMetric',
 								key: '2021-12-09T22:00',
 								value: 0.0,
-								valueKey: '2021-12-09T22:00'
+								valueKey: '2021-12-09T22:00',
 							},
 							{
 								__typename: 'HistogramMetric',
 								key: '2021-12-09T23:00',
 								value: 0.0,
-								valueKey: '2021-12-09T23:00'
+								valueKey: '2021-12-09T23:00',
 							},
 							{
 								__typename: 'HistogramMetric',
 								key: '2021-12-10T00:00',
 								value: 0.0,
-								valueKey: '2021-12-10T00:00'
+								valueKey: '2021-12-10T00:00',
 							},
 							{
 								__typename: 'HistogramMetric',
 								key: '2021-12-10T01:00',
 								value: 0.0,
-								valueKey: '2021-12-10T01:00'
+								valueKey: '2021-12-10T01:00',
 							},
 							{
 								__typename: 'HistogramMetric',
 								key: '2021-12-10T02:00',
 								value: 0.0,
-								valueKey: '2021-12-10T02:00'
+								valueKey: '2021-12-10T02:00',
 							},
 							{
 								__typename: 'HistogramMetric',
 								key: '2021-12-10T03:00',
 								value: 0.0,
-								valueKey: '2021-12-10T03:00'
+								valueKey: '2021-12-10T03:00',
 							},
 							{
 								__typename: 'HistogramMetric',
 								key: '2021-12-10T04:00',
 								value: 0.0,
-								valueKey: '2021-12-10T04:00'
+								valueKey: '2021-12-10T04:00',
 							},
 							{
 								__typename: 'HistogramMetric',
 								key: '2021-12-10T05:00',
 								value: 0.0,
-								valueKey: '2021-12-10T05:00'
+								valueKey: '2021-12-10T05:00',
 							},
 							{
 								__typename: 'HistogramMetric',
 								key: '2021-12-10T06:00',
 								value: 0.0,
-								valueKey: '2021-12-10T06:00'
+								valueKey: '2021-12-10T06:00',
 							},
 							{
 								__typename: 'HistogramMetric',
 								key: '2021-12-10T07:00',
 								value: 0.0,
-								valueKey: '2021-12-10T07:00'
+								valueKey: '2021-12-10T07:00',
 							},
 							{
 								__typename: 'HistogramMetric',
 								key: '2021-12-10T08:00',
 								value: 0.0,
-								valueKey: '2021-12-10T08:00'
+								valueKey: '2021-12-10T08:00',
 							},
 							{
 								__typename: 'HistogramMetric',
 								key: '2021-12-10T09:00',
 								value: 0.0,
-								valueKey: '2021-12-10T09:00'
+								valueKey: '2021-12-10T09:00',
 							},
 							{
 								__typename: 'HistogramMetric',
 								key: '2021-12-10T10:00',
 								value: 0.0,
-								valueKey: '2021-12-10T10:00'
+								valueKey: '2021-12-10T10:00',
 							},
 							{
 								__typename: 'HistogramMetric',
 								key: '2021-12-10T11:00',
 								value: 0.0,
-								valueKey: '2021-12-10T11:00'
+								valueKey: '2021-12-10T11:00',
 							},
 							{
 								__typename: 'HistogramMetric',
 								key: '2021-12-10T12:00',
 								value: 0.0,
-								valueKey: '2021-12-10T12:00'
+								valueKey: '2021-12-10T12:00',
 							},
 							{
 								__typename: 'HistogramMetric',
 								key: '2021-12-10T13:00',
 								value: 0.0,
-								valueKey: '2021-12-10T13:00'
-							}
+								valueKey: '2021-12-10T13:00',
+							},
 						],
-						total: 24
+						total: 24,
 					},
-					value: 0.0
+					value: 0.0,
 				},
 				totalSessionsMetric: {
 					__typename: 'Metric',
@@ -2088,169 +2090,169 @@ export const mockEventMetrics = variables => ({
 								__typename: 'HistogramMetric',
 								key: '2021-12-09T14:00',
 								value: 0.0,
-								valueKey: '2021-12-09T14:00'
+								valueKey: '2021-12-09T14:00',
 							},
 							{
 								__typename: 'HistogramMetric',
 								key: '2021-12-09T15:00',
 								value: 0.0,
-								valueKey: '2021-12-09T15:00'
+								valueKey: '2021-12-09T15:00',
 							},
 							{
 								__typename: 'HistogramMetric',
 								key: '2021-12-09T16:00',
 								value: 0.0,
-								valueKey: '2021-12-09T16:00'
+								valueKey: '2021-12-09T16:00',
 							},
 							{
 								__typename: 'HistogramMetric',
 								key: '2021-12-09T17:00',
 								value: 0.0,
-								valueKey: '2021-12-09T17:00'
+								valueKey: '2021-12-09T17:00',
 							},
 							{
 								__typename: 'HistogramMetric',
 								key: '2021-12-09T18:00',
 								value: 0.0,
-								valueKey: '2021-12-09T18:00'
+								valueKey: '2021-12-09T18:00',
 							},
 							{
 								__typename: 'HistogramMetric',
 								key: '2021-12-09T19:00',
 								value: 0.0,
-								valueKey: '2021-12-09T19:00'
+								valueKey: '2021-12-09T19:00',
 							},
 							{
 								__typename: 'HistogramMetric',
 								key: '2021-12-09T20:00',
 								value: 0.0,
-								valueKey: '2021-12-09T20:00'
+								valueKey: '2021-12-09T20:00',
 							},
 							{
 								__typename: 'HistogramMetric',
 								key: '2021-12-09T21:00',
 								value: 0.0,
-								valueKey: '2021-12-09T21:00'
+								valueKey: '2021-12-09T21:00',
 							},
 							{
 								__typename: 'HistogramMetric',
 								key: '2021-12-09T22:00',
 								value: 0.0,
-								valueKey: '2021-12-09T22:00'
+								valueKey: '2021-12-09T22:00',
 							},
 							{
 								__typename: 'HistogramMetric',
 								key: '2021-12-09T23:00',
 								value: 0.0,
-								valueKey: '2021-12-09T23:00'
+								valueKey: '2021-12-09T23:00',
 							},
 							{
 								__typename: 'HistogramMetric',
 								key: '2021-12-10T00:00',
 								value: 0.0,
-								valueKey: '2021-12-10T00:00'
+								valueKey: '2021-12-10T00:00',
 							},
 							{
 								__typename: 'HistogramMetric',
 								key: '2021-12-10T01:00',
 								value: 0.0,
-								valueKey: '2021-12-10T01:00'
+								valueKey: '2021-12-10T01:00',
 							},
 							{
 								__typename: 'HistogramMetric',
 								key: '2021-12-10T02:00',
 								value: 0.0,
-								valueKey: '2021-12-10T02:00'
+								valueKey: '2021-12-10T02:00',
 							},
 							{
 								__typename: 'HistogramMetric',
 								key: '2021-12-10T03:00',
 								value: 0.0,
-								valueKey: '2021-12-10T03:00'
+								valueKey: '2021-12-10T03:00',
 							},
 							{
 								__typename: 'HistogramMetric',
 								key: '2021-12-10T04:00',
 								value: 0.0,
-								valueKey: '2021-12-10T04:00'
+								valueKey: '2021-12-10T04:00',
 							},
 							{
 								__typename: 'HistogramMetric',
 								key: '2021-12-10T05:00',
 								value: 0.0,
-								valueKey: '2021-12-10T05:00'
+								valueKey: '2021-12-10T05:00',
 							},
 							{
 								__typename: 'HistogramMetric',
 								key: '2021-12-10T06:00',
 								value: 0.0,
-								valueKey: '2021-12-10T06:00'
+								valueKey: '2021-12-10T06:00',
 							},
 							{
 								__typename: 'HistogramMetric',
 								key: '2021-12-10T07:00',
 								value: 0.0,
-								valueKey: '2021-12-10T07:00'
+								valueKey: '2021-12-10T07:00',
 							},
 							{
 								__typename: 'HistogramMetric',
 								key: '2021-12-10T08:00',
 								value: 0.0,
-								valueKey: '2021-12-10T08:00'
+								valueKey: '2021-12-10T08:00',
 							},
 							{
 								__typename: 'HistogramMetric',
 								key: '2021-12-10T09:00',
 								value: 0.0,
-								valueKey: '2021-12-10T09:00'
+								valueKey: '2021-12-10T09:00',
 							},
 							{
 								__typename: 'HistogramMetric',
 								key: '2021-12-10T10:00',
 								value: 0.0,
-								valueKey: '2021-12-10T10:00'
+								valueKey: '2021-12-10T10:00',
 							},
 							{
 								__typename: 'HistogramMetric',
 								key: '2021-12-10T11:00',
 								value: 0.0,
-								valueKey: '2021-12-10T11:00'
+								valueKey: '2021-12-10T11:00',
 							},
 							{
 								__typename: 'HistogramMetric',
 								key: '2021-12-10T12:00',
 								value: 0.0,
-								valueKey: '2021-12-10T12:00'
+								valueKey: '2021-12-10T12:00',
 							},
 							{
 								__typename: 'HistogramMetric',
 								key: '2021-12-10T13:00',
 								value: 0.0,
-								valueKey: '2021-12-10T13:00'
-							}
+								valueKey: '2021-12-10T13:00',
+							},
 						],
-						total: 24
+						total: 24,
 					},
-					value: 0.0
-				}
-			}
-		}
-	}
+					value: 0.0,
+				},
+			},
+		},
+	},
 });
 
 export function mockCommerceTotalOrderValueReq({Query, data, variables}) {
 	return {
 		request: {
 			query: Query,
-			variables
+			variables,
 		},
 		result: {
-			data
-		}
+			data,
+		},
 	};
 }
 
-export const mockSessions = variables => ({
+export const mockSessions = (variables) => ({
 	request: {
 		query: UserSessionQuery,
 		variables: {
@@ -2263,8 +2265,8 @@ export const mockSessions = variables => ({
 			rangeKey: 30,
 			rangeStart: null,
 			size: 50,
-			...variables
-		}
+			...variables,
+		},
 	},
 	result: {
 		data: {
@@ -2292,26 +2294,26 @@ export const mockSessions = variables => ({
 								pageKeywords: '',
 								pageTitle: 'Home - Liferay DXP',
 								referrer: '',
-								url: 'http://localhost:8080/'
-							}
+								url: 'http://localhost:8080/',
+							},
 						],
 						languageId: 'en-US',
 						screenHeight: '1080',
 						screenWidth: '2132',
 						timezoneOffset: '-03:00',
 						userAgent:
-							'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36'
-					}
-				]
-			}
-		}
-	}
+							'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36',
+					},
+				],
+			},
+		},
+	},
 });
 
 const ACCOUNT_HISTOGRAM_KEYS = [
 	'2024-04-01T00:00',
 	'2024-04-02T00:00',
-	'2024-04-03T00:00'
+	'2024-04-03T00:00',
 ];
 
 export const mockAccountEventMetricsReq = ({
@@ -2320,10 +2322,10 @@ export const mockAccountEventMetricsReq = ({
 	empty = false,
 	interval = 'D',
 	keywords = '',
-	rangeKey = 30
+	rangeKey = 30,
 } = {}) => {
-	const buildHistogram = value =>
-		ACCOUNT_HISTOGRAM_KEYS.map(key => ({
+	const buildHistogram = (value) =>
+		ACCOUNT_HISTOGRAM_KEYS.map((key) => ({
 			__typename: 'HistogramMetric',
 			key,
 			previousValue: 0,
@@ -2331,10 +2333,10 @@ export const mockAccountEventMetricsReq = ({
 			trend: {
 				__typename: 'Trend',
 				percentage: 0,
-				trendClassification: 'NEUTRAL'
+				trendClassification: 'NEUTRAL',
 			},
 			value,
-			valueKey: key
+			valueKey: key,
 		}));
 
 	return {
@@ -2349,8 +2351,8 @@ export const mockAccountEventMetricsReq = ({
 				keywords,
 				rangeEnd: null,
 				rangeKey,
-				rangeStart: null
-			}
+				rangeStart: null,
+			},
 		},
 		result: {
 			data: {
@@ -2361,34 +2363,34 @@ export const mockAccountEventMetricsReq = ({
 						histogram: {
 							__typename: 'HistogramMetricBag',
 							metrics: buildHistogram(empty ? 0 : 12),
-							total: empty ? 0 : 36
+							total: empty ? 0 : 36,
 						},
 						previousValue: 0,
 						trend: {
 							__typename: 'Trend',
 							percentage: 0,
-							trendClassification: 'NEUTRAL'
+							trendClassification: 'NEUTRAL',
 						},
-						value: empty ? 0 : 36
+						value: empty ? 0 : 36,
 					},
 					totalSessionsMetric: {
 						__typename: 'Metric',
 						histogram: {
 							__typename: 'HistogramMetricBag',
 							metrics: buildHistogram(empty ? 0 : 4),
-							total: empty ? 0 : 12
+							total: empty ? 0 : 12,
 						},
 						previousValue: 0,
 						trend: {
 							__typename: 'Trend',
 							percentage: 0,
-							trendClassification: 'NEUTRAL'
+							trendClassification: 'NEUTRAL',
 						},
-						value: empty ? 0 : 12
-					}
-				}
-			}
-		}
+						value: empty ? 0 : 12,
+					},
+				},
+			},
+		},
 	};
 };
 
@@ -2399,7 +2401,7 @@ export const mockAccountEventsTrendReq = ({
 	percentage = 22.5,
 	rangeKey = 30,
 	trendClassification = 'POSITIVE',
-	value = 56
+	value = 56,
 } = {}) => ({
 	request: {
 		query: AccountEventsTrendQuery,
@@ -2411,8 +2413,8 @@ export const mockAccountEventsTrendReq = ({
 			keywords,
 			rangeEnd: null,
 			rangeKey,
-			rangeStart: null
-		}
+			rangeStart: null,
+		},
 	},
 	result: {
 		data: {
@@ -2424,13 +2426,13 @@ export const mockAccountEventsTrendReq = ({
 					trend: {
 						__typename: 'Trend',
 						percentage,
-						trendClassification
+						trendClassification,
 					},
-					value
-				}
-			}
-		}
-	}
+					value,
+				},
+			},
+		},
+	},
 });
 
 const DEFAULT_ACCOUNT_USER_SESSIONS = [
@@ -2454,16 +2456,16 @@ const DEFAULT_ACCOUNT_USER_SESSIONS = [
 				pageKeywords: '',
 				pageTitle: 'Home',
 				referrer: '',
-				url: 'https://liferay.com/home'
-			}
+				url: 'https://liferay.com/home',
+			},
 		],
 		languageId: 'en-US',
 		screenHeight: 1080,
 		screenWidth: 1920,
 		timezoneOffset: '-03:00',
 		userAgent: 'Mozilla/5.0',
-		userName: 'Jane Doe'
-	}
+		userName: 'Jane Doe',
+	},
 ];
 
 export const mockAccountUserSessionsReq = ({
@@ -2474,7 +2476,7 @@ export const mockAccountUserSessionsReq = ({
 	rangeKey = 30,
 	sessions = DEFAULT_ACCOUNT_USER_SESSIONS,
 	size = 2,
-	totalEvents = 1
+	totalEvents = 1,
 } = {}) => ({
 	request: {
 		query: AccountUserSessionQuery,
@@ -2488,8 +2490,8 @@ export const mockAccountUserSessionsReq = ({
 			rangeEnd: null,
 			rangeKey,
 			rangeStart: null,
-			size
-		}
+			size,
+		},
 	},
 	result: {
 		data: {
@@ -2497,10 +2499,10 @@ export const mockAccountUserSessionsReq = ({
 				__typename: 'EventsByUserSession',
 				totalEventsMetric: {
 					__typename: 'Metric',
-					value: totalEvents
+					value: totalEvents,
 				},
-				userSessions: sessions
-			}
-		}
-	}
+				userSessions: sessions,
+			},
+		},
+	},
 });

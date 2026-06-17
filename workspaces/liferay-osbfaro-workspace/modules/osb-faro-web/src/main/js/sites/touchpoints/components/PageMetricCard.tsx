@@ -1,5 +1,5 @@
 import MetricBaseCard, {
-	IGenericMetricBaseCardProps
+	IGenericMetricBaseCardProps,
 } from 'shared/components/metric-card/MetricBaseCard';
 import React from 'react';
 import {
@@ -9,17 +9,17 @@ import {
 	ExitRateMetric,
 	Metric,
 	ViewsMetric,
-	VisitorsMetric
+	VisitorsMetric,
 } from 'shared/components/metric-card/metrics';
 import {ICommonVariables} from 'shared/types';
 import {
 	PageMetricQuery,
-	PageMetricTabsQuery
+	PageMetricTabsQuery,
 } from 'shared/components/metric-card/queries';
 import {ReportContainer} from 'shared/components/download-report/DownloadPDFReport';
 import {useAssetVariables} from 'shared/components/metric-card/hooks';
 
-const PageMetricCard: React.FC<IGenericMetricBaseCardProps> = props => {
+const PageMetricCard: React.FC<IGenericMetricBaseCardProps> = (props) => {
 	const variables = (commonVariables: ICommonVariables) =>
 		useAssetVariables(commonVariables);
 
@@ -29,7 +29,7 @@ const PageMetricCard: React.FC<IGenericMetricBaseCardProps> = props => {
 		BounceRateMetric,
 		AvgTimeOnPageMetric,
 		EntrancesMetric,
-		ExitRateMetric
+		ExitRateMetric,
 	];
 
 	return (
@@ -39,7 +39,7 @@ const PageMetricCard: React.FC<IGenericMetricBaseCardProps> = props => {
 			queries={{
 				MetricQuery: PageMetricQuery,
 				name: 'page',
-				TabsQuery: PageMetricTabsQuery
+				TabsQuery: PageMetricTabsQuery,
 			}}
 			reportContainer={ReportContainer.VisitorsBehaviorCard}
 			variables={variables}

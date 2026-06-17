@@ -7,8 +7,8 @@ import {DATA_RETENTION_PERIOD_KEY} from 'shared/util/constants';
 export const useRetentionPeriod = () => {
 	const {data, error, loading} = useQuery(PreferenceQuery, {
 		variables: {
-			key: DATA_RETENTION_PERIOD_KEY
-		}
+			key: DATA_RETENTION_PERIOD_KEY,
+		},
 	});
 
 	if (error) {

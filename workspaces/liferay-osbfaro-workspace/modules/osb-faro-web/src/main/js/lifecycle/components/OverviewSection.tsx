@@ -15,10 +15,10 @@ const renderTrendLabel = (percentageNode: React.ReactNode) =>
 
 const OverviewSection: React.FC<IOverviewSectionProps> = ({
 	loading = false,
-	metrics
+	metrics,
 }) => {
 	const getMetric = (metricType: OverviewMetricType) =>
-		metrics?.find(metric => metric.metricType === metricType);
+		metrics?.find((metric) => metric.metricType === metricType);
 
 	const atRiskAccounts = getMetric(OverviewMetricType.AtRisk);
 	const netNewPipelineGenerated = getMetric(OverviewMetricType.NewPipeline);
@@ -30,32 +30,32 @@ const OverviewSection: React.FC<IOverviewSectionProps> = ({
 				'total-new-accounts-that-entered-the-pipeline-stage-within-the-selected-timeframe,-excluding-cross-sells,-upsells,-and-renewals.'
 			),
 			metric: netNewPipelineGenerated,
-			title: Liferay.Language.get('net-new-pipeline-generated')
+			title: Liferay.Language.get('net-new-pipeline-generated'),
 		},
 		{
 			description: Liferay.Language.get(
 				'the-total-number-of-accounts-specifically-stuck-in-the-engaged-stage-that-have-exceeded-their-designated-time-in-stage-threshold-90-days'
 			),
 			metric: stalledAccounts,
-			title: Liferay.Language.get('stalled-accounts')
+			title: Liferay.Language.get('stalled-accounts'),
 		},
 		{
 			description: Liferay.Language.get(
 				'accounts-with-decreasing-product-usage-or-signs-of-churn-risk.-action-is-required'
 			),
 			metric: atRiskAccounts,
-			title: Liferay.Language.get('at-risk-accounts')
-		}
+			title: Liferay.Language.get('at-risk-accounts'),
+		},
 	];
 
 	return (
 		<>
 			<SectionHeader
-				icon='box-container'
+				icon="box-container"
 				title={Liferay.Language.get('overview')}
 			/>
 
-			<ClayLayout.Row className='row g-4'>
+			<ClayLayout.Row className="row g-4">
 				{cards.map(({description, metric, title}) => (
 					<ClayLayout.Col key={title} lg={4} md={12}>
 						<MetricCard
@@ -65,7 +65,7 @@ const OverviewSection: React.FC<IOverviewSectionProps> = ({
 							renderTrendLabel={renderTrendLabel}
 							title={title}
 							trend={metric?.trend}
-							trendClassName='text-lowercase'
+							trendClassName="text-lowercase"
 							value={metric?.value ?? 0}
 						/>
 					</ClayLayout.Col>

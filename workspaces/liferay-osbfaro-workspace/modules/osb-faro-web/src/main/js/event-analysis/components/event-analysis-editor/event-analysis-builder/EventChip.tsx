@@ -14,13 +14,13 @@ const EventChip: React.FC<IEventChipProps> = React.forwardRef<
 	IEventChipProps & {onClick?: () => void}
 >(({event: {displayName, name}, onClick, onEventChange}, ref) => (
 	<Chip
-		className='event-chip-root'
+		className="event-chip-root"
 		onCloseClick={() => onEventChange(null)}
 		ref={ref}
 	>
 		<ClayButton
-			className='button-root event-name'
-			displayType='unstyled'
+			className="button-root event-name"
+			displayType="unstyled"
 			onClick={onClick}
 		>
 			{displayName || name}
@@ -30,7 +30,7 @@ const EventChip: React.FC<IEventChipProps> = React.forwardRef<
 
 const EventChipWrapper: React.FC<IEventChipProps> = ({
 	event,
-	onEventChange
+	onEventChange,
 }) => (
 	<EventDropdown
 		eventId={event.id}

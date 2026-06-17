@@ -32,7 +32,7 @@ const BaseCard: React.FC<BaseCardIProps> = ({
 	legacyDropdownRangeKey = true,
 	minHeight,
 	reportContainer,
-	showInterval = false
+	showInterval = false,
 }) => {
 	const context = useContext(BasePage.Context);
 
@@ -40,7 +40,7 @@ const BaseCard: React.FC<BaseCardIProps> = ({
 		experienceId,
 		filters,
 		rangeSelectors: contextRangeSelectors,
-		router
+		router,
 	} = context;
 
 	const [interval, setInterval] = useState(INTERVAL_KEY_MAP.day);
@@ -61,7 +61,7 @@ const BaseCard: React.FC<BaseCardIProps> = ({
 		onChangeInterval: setInterval,
 		onRangeSelectorsChange: isGlobal ? undefined : setLocalRangeSelectors,
 		rangeSelectors: currentRangeSelectors,
-		router
+		router,
 	};
 
 	return (

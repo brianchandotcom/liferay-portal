@@ -1,5 +1,6 @@
 import {RangeKeyTimeRanges} from 'shared/util/constants';
 import {setUriQueryValue, setUriQueryValues, toRoute} from 'shared/util/router';
+
 /**
  * Get URL
  * @param {string} path
@@ -15,7 +16,7 @@ export const getUrl = (path, {params, query}) => {
 		groupId,
 		id,
 		title,
-		touchpoint
+		touchpoint,
 	};
 
 	return rangeKey
@@ -28,7 +29,8 @@ const setUriQueryInRoute = (path, query, routeParams) => {
 
 	if (rangeKey === RangeKeyTimeRanges.CustomRange) {
 		return setUriQueryValues(query, toRoute(path, routeParams));
-	} else {
+	}
+	else {
 		return setUriQueryValue(
 			toRoute(path, routeParams),
 			'rangeKey',

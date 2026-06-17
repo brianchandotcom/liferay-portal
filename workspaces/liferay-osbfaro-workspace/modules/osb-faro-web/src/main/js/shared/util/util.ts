@@ -3,13 +3,13 @@ import {align} from './align';
 import {
 	ALIGNMENTS_MAP,
 	POSITIONS,
-	RangeKeyTimeRanges
+	RangeKeyTimeRanges,
 } from 'shared/util/constants';
 import {flow, get, isFinite, isNil, isString, toLower, trim} from 'lodash';
 import {
 	RangeSelectors,
 	RawRangeSelectors,
-	SafeRangeSelectors
+	SafeRangeSelectors,
 } from 'shared/types';
 
 /**
@@ -33,7 +33,7 @@ export const getRangeSelectorsFromQuery = (query: {[key: string]: any}) => {
 	return {
 		rangeEnd: rangeEnd === 'null' ? null : rangeEnd,
 		rangeKey,
-		rangeStart: rangeStart === 'null' ? null : rangeStart
+		rangeStart: rangeStart === 'null' ? null : rangeStart,
 	};
 };
 
@@ -46,7 +46,8 @@ export const getSafeDecodedURIComponent = (
 
 	try {
 		return decodeURIComponent(encodedURIComponent);
-	} catch (error) {
+	}
+	catch (error) {
 		return encodedURIComponent;
 	}
 };
@@ -65,7 +66,7 @@ export const getSafeRangeSelectors = (
 	return {
 		rangeEnd: rangeEnd || null,
 		rangeKey: rangeKey === 'CUSTOM' ? null : parseInt(rangeKey),
-		rangeStart: rangeStart || null
+		rangeStart: rangeStart || null,
 	};
 };
 
@@ -83,14 +84,14 @@ export const normalizeRangeSelectors = (
 		return {
 			rangeEnd,
 			rangeKey: RangeKeyTimeRanges.CustomRange,
-			rangeStart
+			rangeStart,
 		};
 	}
 
 	return {
 		rangeEnd: '',
 		rangeKey: String(rangeKey) as RangeKeyTimeRanges,
-		rangeStart: ''
+		rangeStart: '',
 	};
 };
 
@@ -113,7 +114,8 @@ export const getSafeTouchpoint = (touchpoint: string) => {
 		const remainingUrl = url.href.replace(url.origin, '');
 
 		return remainingUrl === '/' ? url.origin : url.origin + remainingUrl;
-	} catch (e) {
+	}
+	catch (e) {
 		return touchpoint !== 'Any'
 			? getSafeDecodedURIComponent(touchpoint)
 			: null;
@@ -127,7 +129,7 @@ export const getSafeTouchpoint = (touchpoint: string) => {
 export const downloadDataAsFile = ({
 	data,
 	name,
-	type
+	type,
 }: {
 	data: string;
 	name: string;
@@ -253,10 +255,11 @@ type Ref<T> =
 export const mergeRef =
 	<T>(...refs: Ref<T>[]) =>
 	(instance: T | null) =>
-		refs.forEach(ref => {
+		refs.forEach((ref) => {
 			if (typeof ref === 'function') {
 				ref(instance);
-			} else if (ref) {
+			}
+			else if (ref) {
 				ref.current = instance;
 			}
 		});

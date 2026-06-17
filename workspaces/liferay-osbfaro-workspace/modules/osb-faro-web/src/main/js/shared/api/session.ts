@@ -18,7 +18,7 @@ export const fetchFieldValues = ({
 	filter,
 	groupId,
 	page = defaultCur,
-	query
+	query,
 }: IFetchFieldValues): Promise<{
 	disableSearch: boolean;
 	items: string[];
@@ -31,8 +31,8 @@ export const fetchFieldValues = ({
 			delta,
 			fieldName,
 			filter,
-			query: query ? escapeSingleQuotes(query) : query
+			query: query ? escapeSingleQuotes(query) : query,
 		},
 		method: 'GET',
-		path: `contacts/${groupId}/session/values`
+		path: `contacts/${groupId}/session/values`,
 	});

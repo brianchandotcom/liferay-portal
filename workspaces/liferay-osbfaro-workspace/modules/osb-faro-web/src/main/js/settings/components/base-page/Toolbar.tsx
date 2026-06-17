@@ -12,24 +12,24 @@ interface IToolbarProps {
 }
 
 const Toolbar: React.FC<IToolbarProps> = ({backURL}) => (
-	<ClayToolbar className='bg-white mb-4'>
-		<ClayToolbar.Nav className='mx-4'>
+	<ClayToolbar className="bg-white mb-4">
+		<ClayToolbar.Nav className="mx-4">
 			<ClayToolbar.Item>
-				<div className='component-action'>
+				<div className="component-action">
 					<Link
 						aria-label={Liferay.Language.get('back')}
-						className='text-secondary'
+						className="text-secondary"
 						to={backURL.url}
 					>
-						<ClayIcon className='mb-1' symbol='angle-left' />
+						<ClayIcon className="mb-1" symbol="angle-left" />
 					</Link>
 				</div>
 			</ClayToolbar.Item>
 
-			<ClayToolbar.Item className='pl-0'>
+			<ClayToolbar.Item className="pl-0">
 				<ClayToolbar.Section>
-					<span className='text-dark'>
-						<Text size={5} weight='bold'>
+					<span className="text-dark">
+						<Text size={5} weight="bold">
 							{backURL.label}
 						</Text>
 					</span>

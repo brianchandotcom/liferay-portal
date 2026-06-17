@@ -3,27 +3,27 @@ import sendRequest from 'shared/util/request';
 import {
 	buildOrderByFields,
 	createOrderIOMap,
-	NAME
+	NAME,
 } from 'shared/util/pagination';
 import {escapeSingleQuotes} from 'segment/segment-editor/dynamic/utils/odata';
 import {INDIVIDUALS} from 'shared/util/router';
 
 const {
-	pagination: {cur: DEFAULT_PAGE, delta: DEFAULT_DELTA}
+	pagination: {cur: DEFAULT_PAGE, delta: DEFAULT_DELTA},
 } = Constants;
 
 export function fetch({channelId, groupId, individualId}) {
 	return sendRequest({
 		data: {channelId},
 		method: 'GET',
-		path: `contacts/${groupId}/individual/${individualId}`
+		path: `contacts/${groupId}/individual/${individualId}`,
 	});
 }
 
 export function fetchDetails({groupId, individualId}) {
 	return sendRequest({
 		method: 'GET',
-		path: `contacts/${groupId}/individual/${individualId}/details`
+		path: `contacts/${groupId}/individual/${individualId}/details`,
 	});
 }
 
@@ -31,7 +31,7 @@ export function fetchEnrichedProfilesCount({channelId, groupId}) {
 	return sendRequest({
 		data: {channelId},
 		method: 'GET',
-		path: `contacts/${groupId}/individual/enriched_profiles_count`
+		path: `contacts/${groupId}/individual/enriched_profiles_count`,
 	});
 }
 
@@ -41,7 +41,7 @@ export function fetchMembership({
 	individualSegmentId,
 	orderIOMap,
 	page,
-	query
+	query,
 }) {
 	const orderParams = orderIOMap.first();
 
@@ -53,10 +53,10 @@ export function fetchMembership({
 			delta,
 			individualSegmentId,
 			orderByFields,
-			query
+			query,
 		},
 		method: 'GET',
-		path: `contacts/${groupId}/individual`
+		path: `contacts/${groupId}/individual`,
 	});
 }
 
@@ -64,17 +64,17 @@ export function fetchFieldValues({
 	channelId,
 	fieldMappingFieldName,
 	groupId,
-	query = ''
+	query = '',
 }) {
 	return sendRequest({
 		data: {
 			channelId,
 			delta: 20,
 			fieldMappingFieldName,
-			query: escapeSingleQuotes(query)
+			query: escapeSingleQuotes(query),
 		},
 		method: 'GET',
-		path: `contacts/${groupId}/individual/field_values`
+		path: `contacts/${groupId}/individual/field_values`,
 	});
 }
 
@@ -112,9 +112,9 @@ export function search(params) {
 			query,
 			rangeEnd,
 			rangeKey,
-			rangeStart
+			rangeStart,
 		},
 		method: 'POST',
-		path: `contacts/${groupId}/individual/search`
+		path: `contacts/${groupId}/individual/search`,
 	});
 }

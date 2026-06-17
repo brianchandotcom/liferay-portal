@@ -17,15 +17,15 @@ describe('Projects Reducer', () => {
 			meta: {newId, prevId},
 			payload: {
 				entities: {projects: {[prevId]: {data: {}}}},
-				id: prevId
+				id: prevId,
 			},
-			type: actionTypes.UPDATE_PROJECT_SUCCESS
+			type: actionTypes.UPDATE_PROJECT_SUCCESS,
 		};
 
 		const prevState = new OrderedMap({
 			[prevId]: new RemoteData({
-				data: fromJS(mockProject(1))
-			})
+				data: fromJS(mockProject(1)),
+			}),
 		});
 
 		expect(prevState.get(newId)).toBeFalsy();

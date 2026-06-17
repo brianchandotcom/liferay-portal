@@ -36,7 +36,7 @@ const InfoPanel: React.FC<IInfoPanelProps> = ({data, onClose}) => {
 
 	const mimeType = getMimeType({
 		assetType: data?.itemData?.assetType,
-		mimeType: data?.itemData?.mimeType
+		mimeType: data?.itemData?.mimeType,
 	});
 
 	return (
@@ -44,45 +44,45 @@ const InfoPanel: React.FC<IInfoPanelProps> = ({data, onClose}) => {
 			className={getCN(
 				'info-panel-root  c-slideout c-slideout-absolute c-slideout-push c-slideout-end',
 				{
-					'c-slideout-shown': !!data
+					'c-slideout-shown': !!data,
 				}
 			)}
-			id='infoPanel'
+			id="infoPanel"
 			ref={sidePanelRef}
 		>
 			<div
 				className={getCN('sidebar sidebar-light', {
-					'c-slideout-show': !!data
+					'c-slideout-show': !!data,
 				})}
 				style={{width: 472}}
 			>
-				<div className='sidebar-header'>
-					<div className='autofit-row'>
-						<div className='autofit-col autofit-col-expand'>
-							<span className='component-title'>
-								<div className='align-items-center d-flex'>
-									<span className='mr-3'>
+				<div className="sidebar-header">
+					<div className="autofit-row">
+						<div className="autofit-col autofit-col-expand">
+							<span className="component-title">
+								<div className="align-items-center d-flex">
+									<span className="mr-3">
 										<ClaySticker
 											className={mimeType.className}
-											displayType='dark'
+											displayType="dark"
 										>
 											<ClayIcon symbol={mimeType.icon} />
 										</ClaySticker>
 									</span>
 
-									<Heading level={4} weight='semi-bold'>
+									<Heading level={4} weight="semi-bold">
 										{data?.itemData?.assetTitle ??
 											data?.itemData?.id}
 									</Heading>
 								</div>
 							</span>
 						</div>
-						<div className='autofit-col'>
+						<div className="autofit-col">
 							<ClayButtonWithIcon
-								className='close'
-								displayType='unstyled'
+								className="close"
+								displayType="unstyled"
 								onClick={() => onClose()}
-								symbol='times'
+								symbol="times"
 							/>
 						</div>
 					</div>
@@ -91,7 +91,7 @@ const InfoPanel: React.FC<IInfoPanelProps> = ({data, onClose}) => {
 				<ClayTabs active={activeTab} onActiveChange={setActiveTab}>
 					<ClayTabs.Item
 						innerProps={{
-							'aria-controls': 'tabpanel-1'
+							'aria-controls': 'tabpanel-1',
 						}}
 					>
 						{Liferay.Language.get('details')}
@@ -99,7 +99,7 @@ const InfoPanel: React.FC<IInfoPanelProps> = ({data, onClose}) => {
 
 					<ClayTabs.Item
 						innerProps={{
-							'aria-controls': 'tabpanel-2'
+							'aria-controls': 'tabpanel-2',
 						}}
 					>
 						{Liferay.Language.get('categorization')}
@@ -107,33 +107,33 @@ const InfoPanel: React.FC<IInfoPanelProps> = ({data, onClose}) => {
 				</ClayTabs>
 
 				<ClayTabs.Content activeIndex={activeTab} fade>
-					<ClayTabs.TabPane aria-labelledby='tab-1'>
+					<ClayTabs.TabPane aria-labelledby="tab-1">
 						<ClayPanel
 							collapsable={false}
 							displayTitle={
-								<ClayPanel.Header className='border-bottom'>
-									<ClayPanel.Title className='panel-title text-secondary'>
+								<ClayPanel.Header className="border-bottom">
+									<ClayPanel.Title className="panel-title text-secondary">
 										{Liferay.Language.get('metadata')}
 									</ClayPanel.Title>
 								</ClayPanel.Header>
 							}
-							displayType='unstyled'
+							displayType="unstyled"
 						>
 							<ClayPanel.Body>
-								<div className='mb-2'>
-									<Text size={4} weight='semi-bold'>
+								<div className="mb-2">
+									<Text size={4} weight="semi-bold">
 										{Liferay.Language.get('erc')}
 									</Text>
 								</div>
 
-								<Text color='secondary' size={3}>
+								<Text color="secondary" size={3}>
 									{data?.itemData?.id}
 								</Text>
 							</ClayPanel.Body>
 						</ClayPanel>
 					</ClayTabs.TabPane>
 
-					<ClayTabs.TabPane aria-labelledby='tab-2'>
+					<ClayTabs.TabPane aria-labelledby="tab-2">
 						<CategoriesInfoPanelContent
 							items={data?.itemData?.assetCategories}
 							vocabularies={data?.itemData?.assetVocabularies}
@@ -156,7 +156,7 @@ interface CategoriesInfoPanelContentProps {
 
 const CategoriesInfoPanelContent: React.FC<CategoriesInfoPanelContentProps> = ({
 	items,
-	vocabularies
+	vocabularies,
 }) => {
 	const title = Liferay.Language.get('categories');
 	const hasItems = !!items?.length;
@@ -166,26 +166,26 @@ const CategoriesInfoPanelContent: React.FC<CategoriesInfoPanelContentProps> = ({
 				const key = category.vocabularyId;
 
 				return map.set(key, [...(map.get(key) ?? []), category]);
-		  }, new Map<string, typeof items>())
+			}, new Map<string, typeof items>())
 		: null;
 
 	return (
 		<ClayPanel
 			collapsable={false}
 			displayTitle={
-				<ClayPanel.Header className='border-bottom'>
-					<ClayPanel.Title className='panel-title text-secondary'>
+				<ClayPanel.Header className="border-bottom">
+					<ClayPanel.Title className="panel-title text-secondary">
 						{title}
 					</ClayPanel.Title>
 				</ClayPanel.Header>
 			}
-			displayType='unstyled'
+			displayType="unstyled"
 		>
 			<ClayPanel.Body>
 				{!hasItems && (
 					<>
-						<div className='mb-2'>
-							<Text size={4} weight='semi-bold'>
+						<div className="mb-2">
+							<Text size={4} weight="semi-bold">
 								{sub(
 									Liferay.Language.get(
 										'no-x-were-found-for-this-asset'
@@ -195,7 +195,7 @@ const CategoriesInfoPanelContent: React.FC<CategoriesInfoPanelContentProps> = ({
 							</Text>
 						</div>
 
-						<Text color='secondary' size={3}>
+						<Text color="secondary" size={3}>
 							{sub(
 								Liferay.Language.get(
 									'go-to-your-content-management-system-to-manage-x'
@@ -215,9 +215,9 @@ const CategoriesInfoPanelContent: React.FC<CategoriesInfoPanelContentProps> = ({
 						}
 
 						return (
-							<div className='mb-3' key={id}>
-								<div className='mb-2'>
-									<Text size={2} weight='semi-bold'>
+							<div className="mb-3" key={id}>
+								<div className="mb-2">
+									<Text size={2} weight="semi-bold">
 										{name}
 									</Text>
 								</div>
@@ -225,7 +225,7 @@ const CategoriesInfoPanelContent: React.FC<CategoriesInfoPanelContentProps> = ({
 								{categories.map(
 									({id: categoryId, name: categoryName}) => (
 										<ClayLabel
-											className='label-lg'
+											className="label-lg"
 											key={categoryId}
 										>
 											{categoryName}
@@ -251,19 +251,19 @@ const TagsInfoPanelContent: React.FC<TagsInfoPanelContentProps> = ({items}) => {
 		<ClayPanel
 			collapsable={false}
 			displayTitle={
-				<ClayPanel.Header className='border-bottom'>
-					<ClayPanel.Title className='panel-title text-secondary'>
+				<ClayPanel.Header className="border-bottom">
+					<ClayPanel.Title className="panel-title text-secondary">
 						{title}
 					</ClayPanel.Title>
 				</ClayPanel.Header>
 			}
-			displayType='unstyled'
+			displayType="unstyled"
 		>
 			<ClayPanel.Body>
 				{!items?.length && (
 					<>
-						<div className='mb-2'>
-							<Text size={4} weight='semi-bold'>
+						<div className="mb-2">
+							<Text size={4} weight="semi-bold">
 								{sub(
 									Liferay.Language.get(
 										'no-x-were-found-for-this-asset'
@@ -273,7 +273,7 @@ const TagsInfoPanelContent: React.FC<TagsInfoPanelContentProps> = ({items}) => {
 							</Text>
 						</div>
 
-						<Text color='secondary' size={3}>
+						<Text color="secondary" size={3}>
 							{sub(
 								Liferay.Language.get(
 									'go-to-your-content-management-system-to-manage-x'
@@ -286,7 +286,7 @@ const TagsInfoPanelContent: React.FC<TagsInfoPanelContentProps> = ({items}) => {
 
 				{!!items?.length &&
 					items.map(({id, name}) => (
-						<ClayLabel className='label-lg' key={id}>
+						<ClayLabel className="label-lg" key={id}>
 							{name}
 						</ClayLabel>
 					))}

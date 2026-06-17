@@ -3,7 +3,7 @@ import {LanguageIds} from 'shared/util/constants';
 
 describe('fontMapper', () => {
 	it('test fontMapper function', () => {
-		Object.keys(fontMapper).forEach(key => {
+		Object.keys(fontMapper).forEach((key) => {
 			const {test} = fontMapper[key];
 
 			if (key === LanguageIds.Japanese) {
@@ -32,7 +32,7 @@ describe('JSPDFExtension', () => {
 			containers,
 			date: new Date(0),
 			fontFamily,
-			name
+			name,
 		});
 
 		expect(jsPDFExtension).toBeInstanceOf(JSPDFExtension);
@@ -46,14 +46,14 @@ describe('JSPDFExtension', () => {
 			containers,
 			date: new Date(0),
 			fontFamily,
-			name
+			name,
 		});
 
 		jsPDFExtension.addText({
 			color: 'black',
 			size: Size.Small,
 			value: 'test',
-			weight: Weight.Bold
+			weight: Weight.Bold,
 		});
 
 		expect(jsPDFExtension.textList).toHaveLength(1);
@@ -67,7 +67,7 @@ describe('JSPDFExtension', () => {
 			containers,
 			date: new Date(0),
 			fontFamily,
-			name
+			name,
 		});
 
 		jsPDFExtension.addFloatText({
@@ -76,7 +76,7 @@ describe('JSPDFExtension', () => {
 			posY: 10,
 			size: Size.Small,
 			value: 'test',
-			weight: Weight.Bold
+			weight: Weight.Bold,
 		});
 
 		expect(jsPDFExtension.floatTextList).toHaveLength(1);
@@ -90,7 +90,7 @@ describe('JSPDFExtension', () => {
 			containers,
 			date: new Date(0),
 			fontFamily,
-			name
+			name,
 		});
 		const text = 'This is a very long text that needs to be truncated';
 		const truncatedText = jsPDFExtension.truncateText(text);
@@ -108,7 +108,7 @@ describe('JSPDFExtension', () => {
 			containers,
 			date: new Date(0),
 			fontFamily,
-			name
+			name,
 		});
 		const fileName = jsPDFExtension.getName();
 
@@ -123,7 +123,7 @@ describe('JSPDFExtension', () => {
 			containers,
 			date: new Date(0),
 			fontFamily,
-			name
+			name,
 		});
 		const posX = jsPDFExtension.getPosX(PosX.Left);
 
@@ -138,7 +138,7 @@ describe('JSPDFExtension', () => {
 			containers,
 			date: new Date(0),
 			fontFamily,
-			name
+			name,
 		});
 
 		jsPDFExtension.setExtraFont('日本語');
@@ -154,14 +154,14 @@ describe('JSPDFExtension', () => {
 			containers,
 			date: new Date(0),
 			fontFamily,
-			name
+			name,
 		});
 
 		jsPDFExtension.setFont({
 			color: 'black',
 			size: Size.Small,
 			value: 'test',
-			weight: Weight.Bold
+			weight: Weight.Bold,
 		});
 
 		expect(jsPDFExtension.doc.getFont()).toEqual(
@@ -179,14 +179,14 @@ describe('JSPDFExtension', () => {
 			containers,
 			date: new Date(0),
 			fontFamily,
-			name
+			name,
 		});
 
 		jsPDFExtension.addText({
 			color: 'black',
 			size: Size.Small,
 			value: 'test',
-			weight: Weight.Bold
+			weight: Weight.Bold,
 		});
 
 		const data = jsPDFExtension.getData();
@@ -202,7 +202,7 @@ describe('JSPDFExtension', () => {
 			containers,
 			date: new Date(0),
 			fontFamily,
-			name
+			name,
 		});
 		const headerHeight = 100;
 
@@ -219,14 +219,14 @@ describe('JSPDFExtension', () => {
 			containers,
 			date: new Date(0),
 			fontFamily,
-			name
+			name,
 		});
 
 		jsPDFExtension.addText({
 			color: 'black',
 			size: Size.Small,
 			value: 'test',
-			weight: Weight.Bold
+			weight: Weight.Bold,
 		});
 
 		jsPDFExtension.addFloatText({
@@ -236,15 +236,17 @@ describe('JSPDFExtension', () => {
 			size: Size.Small,
 			url: '/workspace/34074/730958655458976297/sites',
 			value: 'test',
-			weight: Weight.Bold
+			weight: Weight.Bold,
 		});
 
 		// Mock the save function to prevent downloading the PDF
+
 		jsPDFExtension.doc.save = jest.fn();
 
 		jsPDFExtension.render();
 
 		// Assert that the save function was called
+
 		expect(jsPDFExtension.doc.save).toHaveBeenCalledTimes(1);
 
 		expect(jsPDFExtension.doc.output('datauristring')).toBeString();

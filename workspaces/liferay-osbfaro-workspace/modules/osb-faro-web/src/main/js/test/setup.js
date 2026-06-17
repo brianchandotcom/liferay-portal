@@ -8,6 +8,7 @@ import {TextDecoder, TextEncoder} from 'util';
 // cache merge policies) are addressed. See MIGRATION_PLAN.md, Phase 12.
 // The `./pedantic` module remains available to re-enable the strict behavior
 // (throw on any console.error/warn) once tests are clean.
+
 console.error = jest.fn(); // eslint-disable-line no-console
 console.warn = jest.fn(); // eslint-disable-line no-console
 
@@ -21,30 +22,31 @@ document.body.className = 'dxp';
 global.ResizeObserver = jest.fn().mockImplementation(() => ({
 	disconnect: jest.fn(),
 	observe: jest.fn(),
-	unobserve: jest.fn()
+	unobserve: jest.fn(),
 }));
 
 global.analytics = {
 	group: () => {},
 	identify: () => {},
-	track: () => {}
+	track: () => {},
 };
 
 global.AUI = () => ({
-	use: (module, callback) => callback()
+	use: (module, callback) => callback(),
 });
 
 global.Liferay = {
 	FeatureFlags: {},
 	Language: {
-		get: lang
-	}
+		get: lang,
+	},
 };
 
 global.localStorage = (() => {
 	let store = {};
 
 	return {
+
 		/**
 		 * Clear
 		 */
@@ -75,12 +77,12 @@ global.localStorage = (() => {
 		 */
 		setItem(key, value) {
 			store[key] = value.toString();
-		}
+		},
 	};
 })();
 
 global.pendo = {
-	initialize: () => {}
+	initialize: () => {},
 };
 
 global.TextDecoder = TextDecoder;

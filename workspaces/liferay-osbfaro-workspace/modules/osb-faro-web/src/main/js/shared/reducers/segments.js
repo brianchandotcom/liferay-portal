@@ -5,7 +5,7 @@ import {Map} from 'immutable';
 
 const actionHandlers = {
 	[actionTypes.FETCH_SEGMENT_REQUEST]: handleLoading,
-	[actionTypes.FETCH_SEGMENT_FAILURE]: handleError
+	[actionTypes.FETCH_SEGMENT_FAILURE]: handleError,
 };
 
 export default createReducer(new Map(), actionHandlers);

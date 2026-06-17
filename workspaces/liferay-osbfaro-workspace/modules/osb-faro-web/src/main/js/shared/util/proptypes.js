@@ -1,6 +1,7 @@
 import {PropTypes} from 'prop-types';
 
 export const HOC_CARD_PROPTYPES = {
+
 	/**
 	 * Filters
 	 * @type {object}
@@ -11,5 +12,5 @@ export const HOC_CARD_PROPTYPES = {
 	 * Router
 	 * @type {object}
 	 */
-	router: PropTypes.object.isRequired
+	router: PropTypes.object.isRequired,
 };

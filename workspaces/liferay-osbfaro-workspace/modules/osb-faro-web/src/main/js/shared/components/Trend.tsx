@@ -10,8 +10,8 @@ interface ITrendProps extends React.HTMLAttributes<HTMLDivElement> {
 
 const Trend: React.FC<ITrendProps> = ({className, color, icon, label}) => (
 	<div className={getCN('analytics-trend', className)} style={{color}}>
-		{icon && <ClayIcon className='icon-root' symbol={icon} />}
-		<span className='analytics-trend-percent mb-0'>{label}</span>
+		{icon && <ClayIcon className="icon-root" symbol={icon} />}
+		<span className="analytics-trend-percent mb-0">{label}</span>
 	</div>
 );
 

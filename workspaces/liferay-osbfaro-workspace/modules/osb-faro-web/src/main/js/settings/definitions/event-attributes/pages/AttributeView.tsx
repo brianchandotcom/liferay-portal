@@ -4,7 +4,7 @@ import EVENT_ATTRIBUTE_DEFINITION_QUERY, {
 	EVENT_ATTRIBUTE_DEFINITION_WITH_RECENT_VALUES_QUERY,
 	EventAttributeDefinitionData,
 	EventAttributeDefinitionVariables,
-	UPDATE_EVENT_ATTRIBUTE_DEFINITION
+	UPDATE_EVENT_ATTRIBUTE_DEFINITION,
 } from 'event-analysis/queries/EventAttributeDefinitionQuery';
 import Label from 'shared/components/Label';
 import React from 'react';
@@ -34,13 +34,13 @@ const AttributeView: React.FC<IAttributeViewProps> = ({
 	attributeId,
 	close,
 	groupId,
-	open
+	open,
 }) => {
 	const result = useQuery<
 		EventAttributeDefinitionData,
 		EventAttributeDefinitionVariables
 	>(EVENT_ATTRIBUTE_DEFINITION_WITH_RECENT_VALUES_QUERY, {
-		variables: {id: attributeId}
+		variables: {id: attributeId},
 	});
 
 	const viewAttributePageActions = [
@@ -52,9 +52,9 @@ const AttributeView: React.FC<IAttributeViewProps> = ({
 					mutation: UPDATE_EVENT_ATTRIBUTE_DEFINITION,
 					onClose: close,
 					query: EVENT_ATTRIBUTE_DEFINITION_QUERY,
-					showTypecast: true
-				})
-		}
+					showTypecast: true,
+				}),
+		},
 	];
 
 	return (
@@ -65,8 +65,8 @@ const AttributeView: React.FC<IAttributeViewProps> = ({
 					description,
 					displayName,
 					name,
-					recentValues
-				}
+					recentValues,
+				},
 			}: {
 				eventAttributeDefinition: Attribute;
 			}) => (
@@ -74,7 +74,7 @@ const AttributeView: React.FC<IAttributeViewProps> = ({
 					breadcrumbItems={[
 						getDefinitions({groupId}),
 						getEventAttributes({groupId}),
-						{active: true, label: name}
+						{active: true, label: name},
 					]}
 					pageActions={viewAttributePageActions}
 					pageDescription={
@@ -82,12 +82,12 @@ const AttributeView: React.FC<IAttributeViewProps> = ({
 							{description ? (
 								<div>{description}</div>
 							) : (
-								<div className='no-description'>
+								<div className="no-description">
 									{Liferay.Language.get('no-description')}
 								</div>
 							)}
 
-							<Label display='primary' uppercase>
+							<Label display="primary" uppercase>
 								{dataType}
 							</Label>
 						</>
@@ -97,7 +97,7 @@ const AttributeView: React.FC<IAttributeViewProps> = ({
 				>
 					<StatesRenderer empty={!recentValues?.length}>
 						<StatesRenderer.Empty
-							className='bg-white rounded'
+							className="bg-white rounded"
 							description={
 								<>
 									{Liferay.Language.get(
@@ -105,12 +105,12 @@ const AttributeView: React.FC<IAttributeViewProps> = ({
 									)}
 
 									<ClayLink
-										className='d-block mb-3'
+										className="d-block mb-3"
 										href={
 											URLConstants.EventAttributesDocumentation
 										}
-										key='DOCUMENTATION'
-										target='_blank'
+										key="DOCUMENTATION"
+										target="_blank"
 									>
 										{Liferay.Language.get(
 											'learn-more-about-event-tracking'
@@ -129,31 +129,31 @@ const AttributeView: React.FC<IAttributeViewProps> = ({
 										accessor: 'value',
 										className:
 											'table-cell-expand-small text-truncate',
-										dataFormatter: value =>
+										dataFormatter: (value) =>
 											getSafeDisplayValue(value),
 										label: Liferay.Language.get(
 											'sample-raw-data'
 										),
-										sortable: false
+										sortable: false,
 									},
 									{
 										accessor: 'lastSeenDate',
 										cellRenderer: ({data}) => (
 											<DateCell
-												className='table-column-text-end'
+												className="table-column-text-end"
 												data={data}
-												datePath='lastSeenDate'
+												datePath="lastSeenDate"
 											/>
 										),
 										className: 'table-column-text-end',
 										label: Liferay.Language.get(
 											'last-seen'
 										),
-										sortable: false
-									}
+										sortable: false,
+									},
 								]}
 								items={recentValues ?? []}
-								rowIdentifier='value'
+								rowIdentifier="value"
 							/>
 						</StatesRenderer.Success>
 					</StatesRenderer>

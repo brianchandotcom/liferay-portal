@@ -7,17 +7,17 @@ const SequentialEventOrderPopover: React.FC = () => {
 
 	return (
 		<ClayPopover
-			alignPosition='top'
+			alignPosition="top"
 			header={Liferay.Language.get('sequential-event-order')}
 			onShowChange={setShow}
 			show={show}
 			trigger={
 				<span
-					className='ml-2'
+					className="ml-2"
 					onMouseEnter={() => setShow(true)}
 					onMouseLeave={() => setShow(false)}
 				>
-					<ClaySticker displayType='info' shape='circle' size='sm'>
+					<ClaySticker displayType="info" shape="circle" size="sm">
 						{'S'}
 					</ClaySticker>
 				</span>

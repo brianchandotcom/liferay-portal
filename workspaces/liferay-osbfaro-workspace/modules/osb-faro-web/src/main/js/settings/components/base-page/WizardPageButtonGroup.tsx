@@ -12,19 +12,19 @@ export const WizardPageButtonGroup: React.FC<IWizardPageButtonGroupProps> = ({
 	nextButtonLabel,
 	nextButtonLoading,
 	onCancel,
-	prevButtonLabel
+	prevButtonLabel,
 }) => (
-	<div className='mt-5'>
+	<div className="mt-5">
 		<ClayButton
 			block
 			disabled={nextButtonLoading}
 			loading={nextButtonLoading}
-			type='submit'
+			type="submit"
 		>
 			{nextButtonLabel}
 		</ClayButton>
 
-		<ClayButton block borderless displayType='secondary' onClick={onCancel}>
+		<ClayButton block borderless displayType="secondary" onClick={onCancel}>
 			{prevButtonLabel}
 		</ClayButton>
 	</div>

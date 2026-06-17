@@ -68,7 +68,7 @@ function CommerceMetricCard<TGraphQlData>({
 	description,
 	emptyTitle,
 	label,
-	mapper
+	mapper,
 }: ICommerceMetricCardProps<TGraphQlData>): React.ReactElement {
 	const {channelId} = useParams<{channelId: string}>();
 	const initialRangeSelectors = useQueryRangeSelectors();
@@ -81,8 +81,8 @@ function CommerceMetricCard<TGraphQlData>({
 			fetchPolicy: 'network-only',
 			variables: {
 				channelId,
-				...getSafeRangeSelectors(rangeSelectors)
-			}
+				...getSafeRangeSelectors(rangeSelectors),
+			},
 		}
 	);
 	const currentUser = useCurrentUser();
@@ -93,7 +93,7 @@ function CommerceMetricCard<TGraphQlData>({
 
 	return (
 		<BaseCard
-			className='commerce-card-root'
+			className="commerce-card-root"
 			label={label}
 			legacyDropdownRangeKey={false}
 			minHeight={298}
@@ -102,14 +102,14 @@ function CommerceMetricCard<TGraphQlData>({
 				setRangeSelectors(rangeSelectors);
 
 				return (
-					<Card.Body className='align-items-center justify-content-center'>
+					<Card.Body className="align-items-center justify-content-center">
 						<CommerceCardWithStatesRenderer
 							empty={!result?.length}
 							emptyTitle={emptyTitle}
 							error={error}
 							loading={loading}
 						>
-							<h1 className='commerce-card-currency font-size-lg-3x font-weight-semibold mb-2'>
+							<h1 className="commerce-card-currency font-size-lg-3x font-weight-semibold mb-2">
 								{formatCurrency(
 									currencyCode,
 									currentUser.languageId,
@@ -117,29 +117,29 @@ function CommerceMetricCard<TGraphQlData>({
 								)}
 							</h1>
 
-							<div className='d-flex align-items-center mb-2'>
-								<span className='font-size-sm-1x text-secondary'>
+							<div className="d-flex align-items-center mb-2">
+								<span className="font-size-sm-1x text-secondary">
 									{sub(
 										Liferay.Language.get('x-vs-previous'),
 										[
 											<TrendComponent
-												className='d-inline'
+												className="d-inline"
 												color={getStatsColor(
 													trend.trendClassification
 												)}
 												icon={getIcon(trend.percentage)}
-												key='TREND'
+												key="TREND"
 												label={`${toRounded(
 													Math.abs(trend.percentage)
 												)}%`}
-											/>
+											/>,
 										],
 										false
 									)}
 								</span>
 							</div>
 
-							<p className='font-size-sm-1x text-center'>
+							<p className="font-size-sm-1x text-center">
 								{description}
 							</p>
 						</CommerceCardWithStatesRenderer>
@@ -158,9 +158,9 @@ function getCurrency(currencies: Currency[]): Currency {
 			currencyCode: defaultCurrencyCode,
 			trend: {
 				percentage: 0,
-				trendClassification: 'NEUTRAL'
+				trendClassification: 'NEUTRAL',
 			},
-			value: '0'
+			value: '0',
 		};
 	}
 
@@ -178,7 +178,7 @@ function formatCurrency(
 ): string {
 	return new Intl.NumberFormat(locale.replace('_', '-'), {
 		currency: currencyCode,
-		style: 'currency'
+		style: 'currency',
 	}).format(parseFloat(value));
 }
 

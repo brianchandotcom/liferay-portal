@@ -15,7 +15,7 @@ interface IDropdownRangeKeyDatePickerProps {
 export const DropdownRangeKeyDatePicker = ({
 	customDateRange,
 	onCustomRangeChange,
-	retentionPeriod
+	retentionPeriod,
 }: IDropdownRangeKeyDatePickerProps) => {
 	const {timeZoneId} = useTimeZone();
 
@@ -25,12 +25,12 @@ export const DropdownRangeKeyDatePicker = ({
 			displayLabel={false}
 			header={
 				<>
-					<ClayText size={2} weight='semi-bold'>
+					<ClayText size={2} weight="semi-bold">
 						{Liferay.Language.get('custom-range').toUpperCase()}
 					</ClayText>
 
 					<div>
-						<ClayText color='secondary' size={2}>
+						<ClayText color="secondary" size={2}>
 							{sub(
 								Liferay.Language.get(
 									'dates-prior-to-x-months-cannot-be-selected-due-to-your-workspaces-data-retention-period'
@@ -51,7 +51,7 @@ export const DropdownRangeKeyDatePicker = ({
 			onSelect={({end, start}: MomentDateRange) =>
 				onCustomRangeChange({
 					end,
-					start
+					start,
 				})
 			}
 			timeZoneId={timeZoneId}

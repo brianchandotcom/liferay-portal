@@ -12,7 +12,7 @@ interface ICreateItemSimilarityProps {
 }
 
 const CreateItemSimilarity: React.FC<ICreateItemSimilarityProps> = ({
-	router
+	router,
 }) => {
 	const {groupId = ''} = router.params;
 
@@ -22,19 +22,19 @@ const CreateItemSimilarity: React.FC<ICreateItemSimilarityProps> = ({
 				getRecommendations({groupId}),
 				{
 					active: true,
-					label: Liferay.Language.get('new-model')
-				}
+					label: Liferay.Language.get('new-model'),
+				},
 			]}
 			pageDescription={Liferay.Language.get(
 				'item-similarity-model-uses-items-and-iteractions-for-training'
 			)}
 			pageTitle={Liferay.Language.get('new-item-similarity-model')}
 		>
-			<div className='row'>
-				<div className='col-xl-8'>
+			<div className="row">
+				<div className="col-xl-8">
 					<RecommendationStepCard
 						cancelHref={toRoute(Routes.SETTINGS_RECOMMENDATIONS, {
-							groupId
+							groupId,
 						})}
 						jobType={JobTypes.ItemSimilarity}
 						router={router}

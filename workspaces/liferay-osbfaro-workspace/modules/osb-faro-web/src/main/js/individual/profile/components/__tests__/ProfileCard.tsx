@@ -9,7 +9,7 @@ import {
 	mockEventMetrics,
 	mockPreferenceReq,
 	mockSessions,
-	mockTimeRangeReq
+	mockTimeRangeReq,
 } from 'test/graphql-data';
 import {mockIndividual} from 'test/data';
 import {Provider} from 'react-redux';
@@ -23,7 +23,7 @@ const DefaultComponent = ({children}: {children: React.ReactNode}) => (
 	<Provider store={mockStore()}>
 		<MemoryRouter
 			initialEntries={[
-				'/workspace/23/123123/contacts/individuals/known-individuals/4423123123'
+				'/workspace/23/123123/contacts/individuals/known-individuals/4423123123',
 			]}
 		>
 			<Route path={Routes.CONTACTS_INDIVIDUAL}>{children}</Route>
@@ -41,35 +41,35 @@ describe('IndividualProfileCard', () => {
 				<MockedProvider
 					mocks={[
 						mockEventMetrics({
-							rangeKey: 30
+							rangeKey: 30,
 						}),
 						mockTimeRangeReq(),
 						mockPreferenceReq(),
 						mockSessions({
-							rangeKey: 30
-						})
+							rangeKey: 30,
+						}),
 					]}
 				>
 					<IndividualProfileCard
-						channelId='123123'
+						channelId="123123"
 						delta={50}
 						entity={new Individual(mockIndividual())}
-						groupId='123'
-						interval='D'
+						groupId="123"
+						interval="D"
 						onChangeInterval={jest.fn()}
 						onDeltaChange={jest.fn()}
 						onPageChange={jest.fn()}
 						onQueryChange={jest.fn()}
 						onRangeSelectorsChange={jest.fn()}
 						page={1}
-						query=''
+						query=""
 						rangeSelectors={{
 							rangeEnd: '',
 							rangeKey: RangeKeyTimeRanges.Last30Days,
-							rangeStart: ''
+							rangeStart: '',
 						}}
 						resetPage={jest.fn()}
-						tabId=''
+						tabId=""
 					/>
 				</MockedProvider>
 			</DefaultComponent>
@@ -100,29 +100,29 @@ describe('IndividualProfileCard', () => {
 						mockEventMetrics(searchKeyword),
 						mockSessions(searchKeyword),
 						mockEventMetrics(searchKeyword),
-						mockSessions(searchKeyword)
+						mockSessions(searchKeyword),
 					]}
 				>
 					<IndividualProfileCard
-						channelId='123123'
+						channelId="123123"
 						delta={20}
 						entity={new Individual(mockIndividual())}
-						groupId='123'
-						interval='D'
+						groupId="123"
+						interval="D"
 						onChangeInterval={jest.fn()}
 						onDeltaChange={jest.fn()}
 						onPageChange={jest.fn()}
 						onQueryChange={jest.fn()}
 						onRangeSelectorsChange={jest.fn()}
 						page={0}
-						query='add to cart'
+						query="add to cart"
 						rangeSelectors={{
 							rangeEnd: '',
 							rangeKey: RangeKeyTimeRanges.Last30Days,
-							rangeStart: ''
+							rangeStart: '',
 						}}
 						resetPage={jest.fn()}
-						tabId=''
+						tabId=""
 					/>
 				</MockedProvider>
 			</DefaultComponent>
@@ -139,7 +139,7 @@ describe('IndividualProfileCard', () => {
 		fireEvent.keyDown(searchInput, {
 			charCode: 13,
 			code: 'Enter',
-			key: 'Enter'
+			key: 'Enter',
 		});
 
 		jest.runAllTimers();
@@ -176,29 +176,29 @@ describe('IndividualProfileCard', () => {
 						mockEventMetrics(searchKeyword),
 						mockSessions(searchKeyword),
 						mockEventMetrics(searchKeyword),
-						mockSessions(searchKeyword)
+						mockSessions(searchKeyword),
 					]}
 				>
 					<IndividualProfileCard
-						channelId='123123'
+						channelId="123123"
 						delta={20}
 						entity={new Individual(mockIndividual())}
-						groupId='123'
-						interval='D'
+						groupId="123"
+						interval="D"
 						onChangeInterval={jest.fn()}
 						onDeltaChange={jest.fn()}
 						onPageChange={jest.fn()}
 						onQueryChange={jest.fn()}
 						onRangeSelectorsChange={jest.fn()}
 						page={0}
-						query=''
+						query=""
 						rangeSelectors={{
 							rangeEnd: '',
 							rangeKey: RangeKeyTimeRanges.Last30Days,
-							rangeStart: ''
+							rangeStart: '',
 						}}
 						resetPage={jest.fn()}
-						tabId=''
+						tabId=""
 					/>
 				</MockedProvider>
 			</DefaultComponent>
@@ -215,7 +215,7 @@ describe('IndividualProfileCard', () => {
 		fireEvent.keyDown(searchInput, {
 			charCode: 13,
 			code: 'Enter',
-			key: 'Enter'
+			key: 'Enter',
 		});
 
 		await act(async () => {
@@ -238,25 +238,25 @@ describe('IndividualProfileCard', () => {
 			<DefaultComponent>
 				<MockedProvider mocks={[]}>
 					<IndividualProfileCard
-						channelId='123123'
+						channelId="123123"
 						delta={20}
 						entity={new Individual(mockIndividual())}
-						groupId='123'
-						interval='D'
+						groupId="123"
+						interval="D"
 						onChangeInterval={jest.fn()}
 						onDeltaChange={jest.fn()}
 						onPageChange={jest.fn()}
 						onQueryChange={jest.fn()}
 						onRangeSelectorsChange={jest.fn()}
 						page={0}
-						query=''
+						query=""
 						rangeSelectors={{
 							rangeEnd: '',
 							rangeKey: RangeKeyTimeRanges.Last30Days,
-							rangeStart: ''
+							rangeStart: '',
 						}}
 						resetPage={jest.fn()}
-						tabId=''
+						tabId=""
 					/>
 				</MockedProvider>
 			</DefaultComponent>
@@ -274,25 +274,25 @@ describe('IndividualProfileCard', () => {
 			<DefaultComponent>
 				<MockedProvider mocks={[]}>
 					<IndividualProfileCard
-						channelId='123123'
+						channelId="123123"
 						delta={20}
 						entity={new Individual(mockIndividual())}
-						groupId='123'
-						interval='D'
+						groupId="123"
+						interval="D"
 						onChangeInterval={jest.fn()}
 						onDeltaChange={jest.fn()}
 						onPageChange={jest.fn()}
 						onQueryChange={jest.fn()}
 						onRangeSelectorsChange={jest.fn()}
 						page={0}
-						query=''
+						query=""
 						rangeSelectors={{
 							rangeEnd: '',
 							rangeKey: RangeKeyTimeRanges.Last30Days,
-							rangeStart: ''
+							rangeStart: '',
 						}}
 						resetPage={jest.fn()}
-						tabId=''
+						tabId=""
 					/>
 				</MockedProvider>
 			</DefaultComponent>

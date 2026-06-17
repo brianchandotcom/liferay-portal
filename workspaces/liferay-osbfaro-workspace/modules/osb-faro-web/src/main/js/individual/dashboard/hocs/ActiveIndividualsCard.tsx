@@ -7,7 +7,7 @@ import {compose} from 'redux';
 import {graphql, OperationOption} from '@apollo/client/react/hoc';
 import {
 	mapPropsToOptions,
-	mapResultToProps
+	mapResultToProps,
 } from '../hocs/mappers/site-metrics-query';
 import {ReportContainer} from 'shared/components/download-report/DownloadPDFReport';
 import {useParams} from 'react-router-dom';
@@ -16,7 +16,7 @@ import {withError} from 'shared/hoc';
 const ChartWithData = compose<any>(
 	graphql(IndividualSiteMetricsQuery, {
 		options: mapPropsToOptions,
-		props: mapResultToProps
+		props: mapResultToProps,
 	} as OperationOption<object, object>),
 	withError({page: false})
 )(ActiveIndividualsChart);
@@ -33,7 +33,7 @@ const ActiveIndividualsCard = () => {
 			showInterval
 		>
 			{({interval, rangeSelectors}) => (
-				<Card.Body className='justify-content-center'>
+				<Card.Body className="justify-content-center">
 					<ChartWithData
 						active
 						channelId={channelId}

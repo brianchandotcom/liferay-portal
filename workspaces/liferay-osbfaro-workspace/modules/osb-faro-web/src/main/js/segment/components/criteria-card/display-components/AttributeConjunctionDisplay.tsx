@@ -4,7 +4,7 @@ import {Criterion} from 'segment/segment-editor/dynamic/utils/types';
 import {DataTypes} from 'event-analysis/utils/types';
 import {
 	EntityType,
-	ReferencedObjectsContext
+	ReferencedObjectsContext,
 } from 'segment/segment-editor/dynamic/context/referencedObjects';
 import {formatTime} from 'shared/util/time';
 import {formatUTCDate} from 'shared/util/date';
@@ -76,7 +76,7 @@ const AttributeConjunctionDisplay: React.FC<
 			<b>{displayValue}</b>
 		</>
 	) : (
-		<b className='undefined-entity'>
+		<b className="undefined-entity">
 			{Liferay.Language.get('undefined-attribute')}
 		</b>
 	);

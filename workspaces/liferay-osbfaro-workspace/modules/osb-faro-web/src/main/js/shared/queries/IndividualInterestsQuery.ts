@@ -7,7 +7,7 @@ export interface IIndividualInterestsData {
 			{
 				name: string;
 				count: number;
-			}
+			},
 		];
 		maxCount: number;
 		total: number;

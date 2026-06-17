@@ -33,14 +33,17 @@ export const FEATURE_FLAGS: FeatureFlagDefinition[] = [
 	{defaultValue: false, key: 'ENABLE_COMMERCE'},
 	{defaultValue: true, key: 'ENABLE_DELETE_DATA_SOURCE_BUTTON'},
 	{defaultValue: false, key: 'ENABLE_FORM_ABANDONMENT'},
-	{defaultValue: false, key: 'ENABLE_REAL_TIME_SEGMENTS'}
+	{defaultValue: false, key: 'ENABLE_REAL_TIME_SEGMENTS'},
 ];
 
-const DEFAULTS = FEATURE_FLAGS.reduce((acc, {defaultValue, key}) => {
-	acc[key] = defaultValue;
+const DEFAULTS = FEATURE_FLAGS.reduce(
+	(acc, {defaultValue, key}) => {
+		acc[key] = defaultValue;
 
-	return acc;
-}, {} as Record<FeatureFlagKey, boolean>);
+		return acc;
+	},
+	{} as Record<FeatureFlagKey, boolean>
+);
 
 type FeatureFlagOverrides = Partial<Record<FeatureFlagKey, boolean>>;
 
@@ -51,7 +54,8 @@ function readOverrides(): FeatureFlagOverrides {
 				window.localStorage.getItem(FEATURE_FLAGS_STORAGE_KEY) || '{}'
 			) || {}
 		);
-	} catch (error) {
+	}
+	catch (error) {
 		return {};
 	}
 }

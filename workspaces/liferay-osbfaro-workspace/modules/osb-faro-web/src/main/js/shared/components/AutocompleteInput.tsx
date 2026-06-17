@@ -41,7 +41,7 @@ const AutocompleteInput: React.FC<IAutocompleteProps> = ({
 	onBlur,
 	onChange,
 	placeholder,
-	value
+	value,
 }) => {
 	const [networkState, setNetworkState] = useState(NetworkState.Unused);
 
@@ -49,9 +49,9 @@ const AutocompleteInput: React.FC<IAutocompleteProps> = ({
 
 	if (graphqlQuery) {
 		const {
-			mapResultsToProps = value => value,
+			mapResultsToProps = (value) => value,
 			query,
-			variables
+			variables,
 		} = graphqlQuery;
 		const debouncedInputValue = useDebounce(value, DEBOUNCE_DELAY);
 
@@ -59,24 +59,25 @@ const AutocompleteInput: React.FC<IAutocompleteProps> = ({
 			fetchPolicy: 'network-only',
 			variables: {
 				...variables,
-				keywords: debouncedInputValue
-			}
+				keywords: debouncedInputValue,
+			},
 		});
 
 		response = {
 			...response,
-			...mapResultsToProps(response.data)
+			...mapResultsToProps(response.data),
 		};
-	} else {
+	}
+	else {
 		response = useRequest({
 			dataSourceFn: ({value}) => dataSourceFn?.(value),
 			debounceDelay: DEBOUNCE_DELAY,
 			initialState: {
 				data: [],
 				error: false,
-				loading: false
+				loading: false,
 			},
-			variables: {value}
+			variables: {value},
 		});
 	}
 
@@ -89,24 +90,24 @@ const AutocompleteInput: React.FC<IAutocompleteProps> = ({
 	return (
 		<ClayAutocomplete
 			allowsCustomValue
-			aria-labelledby='clay-autocomplete-label-1'
+			aria-labelledby="clay-autocomplete-label-1"
 			className={getCN('select-input-root', className)}
-			data-testid='attribute-value-string-input'
+			data-testid="attribute-value-string-input"
 			disabled={disabled}
-			id='clay-autocomplete-1'
+			id="clay-autocomplete-1"
 			items={items as string[]}
 			loadingState={networkState}
-			menuTrigger='focus'
+			menuTrigger="focus"
 			messages={{
 				loading: Liferay.Language.get('loading'),
-				notFound: Liferay.Language.get('no-results-were-found')
+				notFound: Liferay.Language.get('no-results-were-found'),
 			}}
 			onBlur={onBlur}
 			onChange={onChange}
 			placeholder={placeholder}
 			value={value}
 		>
-			{item => (
+			{(item) => (
 				<ClayAutocomplete.Item key={item}>{item}</ClayAutocomplete.Item>
 			)}
 		</ClayAutocomplete>

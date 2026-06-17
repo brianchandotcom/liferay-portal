@@ -24,17 +24,17 @@ export default class BooleanInput extends React.Component<IBooleanInputProps> {
 			displayValue,
 			operatorRenderer: OperatorDropdown,
 			property: {entityName},
-			value
+			value,
 		} = this.props;
 
 		return (
-			<div className='criteria-statement'>
+			<div className="criteria-statement">
 				<Form.Group autoFit>
-					<Form.GroupItem className='entity-name' label shrink>
+					<Form.GroupItem className="entity-name" label shrink>
 						{entityName}
 					</Form.GroupItem>
 
-					<Form.GroupItem className='display-value' label shrink>
+					<Form.GroupItem className="display-value" label shrink>
 						{displayValue}
 					</Form.GroupItem>
 
@@ -42,7 +42,7 @@ export default class BooleanInput extends React.Component<IBooleanInputProps> {
 
 					<Form.GroupItem shrink>
 						<Picker
-							className='criterion-input'
+							className="criterion-input"
 							items={BOOLEAN_OPTIONS}
 							onSelectionChange={this.handleChange}
 							selectedKey={value}

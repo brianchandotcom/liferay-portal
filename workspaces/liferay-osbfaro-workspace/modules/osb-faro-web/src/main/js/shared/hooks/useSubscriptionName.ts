@@ -4,7 +4,7 @@ import {useSelector} from 'react-redux';
 type RootState = Map<string, any>;
 
 export const useSubscriptionName = ({
-	groupId
+	groupId,
 }: {
 	groupId: string;
 }): string | null =>

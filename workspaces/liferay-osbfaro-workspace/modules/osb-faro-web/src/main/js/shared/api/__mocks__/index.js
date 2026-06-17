@@ -47,5 +47,5 @@ export {
 	projects,
 	tags,
 	user,
-	vocabularies
+	vocabularies,
 };

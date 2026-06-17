@@ -15,7 +15,7 @@ import {sub} from 'shared/util/lang';
 import {useQuery} from '@apollo/client';
 
 const {
-	pagination: {orderDescending}
+	pagination: {orderDescending},
 } = Constants;
 
 interface ITrainingItemProps {
@@ -29,22 +29,22 @@ const TrainingItem: React.FC<ITrainingItemProps> = ({
 	close,
 	name,
 	open,
-	value
+	value,
 }) => (
-	<div className='training-item-root d-flex align-items-baseline'>
+	<div className="training-item-root d-flex align-items-baseline">
 		<ClayButton
 			aria-label={Liferay.Language.get('watch')}
 			borderless
-			className='button-root'
-			displayType='secondary'
+			className="button-root"
+			displayType="secondary"
 			onClick={() => {
 				open(modalTypes.MATCHING_PAGES_MODAL, {
 					itemFilters: [{name, value}],
-					onClose: close
+					onClose: close,
 				});
 			}}
 		>
-			<ClayIcon className='icon-root' symbol='view' />
+			<ClayIcon className="icon-root" symbol="view" />
 		</ClayButton>
 
 		<RuleItem name={name} value={value} />
@@ -60,33 +60,33 @@ interface ITrainingItemsCardProps {
 const TrainingItemsCard: React.FC<ITrainingItemsCardProps> = ({
 	close,
 	itemFilters,
-	open
+	open,
 }) => {
 	const {data, loading} = useQuery(RecommendationPageAssetsQuery, {
 		variables: {
 			propertyFilters: itemFilters.map(({name, value}) => ({
 				filter: value,
-				negate: name === EXCLUDE
+				negate: name === EXCLUDE,
 			})),
 			size: 0,
 			sort: {
 				column: 'title',
-				type: orderDescending.toUpperCase()
+				type: orderDescending.toUpperCase(),
 			},
-			start: 0
-		}
+			start: 0,
+		},
 	});
 
 	const renderTotalTrainingUrls = () => {
 		if (loading) {
-			return <Loading key='LOADING' />;
+			return <Loading key="LOADING" />;
 		}
 
 		return get(data, ['pageAssets', 'total'], 0).toLocaleString();
 	};
 
 	return (
-		<Card className='training-items-card-root'>
+		<Card className="training-items-card-root">
 			<Card.Header>
 				<Card.Title>
 					{Liferay.Language.get('training-items')}
@@ -104,20 +104,20 @@ const TrainingItemsCard: React.FC<ITrainingItemsCardProps> = ({
 					/>
 				))}
 
-				<div className='total-training-urls d-flex align-items-center'>
+				<div className="total-training-urls d-flex align-items-center">
 					<ClayButton
 						aria-label={Liferay.Language.get('watch')}
 						borderless
-						className='button-root'
-						displayType='secondary'
+						className="button-root"
+						displayType="secondary"
 						onClick={() => {
 							open(modalTypes.MATCHING_PAGES_MODAL, {
 								itemFilters,
-								onClose: close
+								onClose: close,
 							});
 						}}
 					>
-						<ClayIcon className='icon-root' symbol='view' />
+						<ClayIcon className="icon-root" symbol="view" />
 					</ClayButton>
 
 					{sub(

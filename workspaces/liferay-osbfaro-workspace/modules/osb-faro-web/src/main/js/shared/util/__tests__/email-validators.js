@@ -2,7 +2,7 @@ import {
 	validateEmail,
 	validateEmailArr,
 	validateEmailDomain,
-	validateEmailDomainArr
+	validateEmailDomainArr,
 } from '../email-validators';
 
 describe('email-validators', () => {
@@ -59,7 +59,7 @@ describe('email-validators', () => {
 
 		it('should return an error message when an email is not valid', () => {
 			validateEmailArr(['test@liferay.com', 'liferay.com']).catch(
-				error => {
+				(error) => {
 					expect(error).toEqual(
 						'Please enter the email in this format: sample@email.com'
 					);

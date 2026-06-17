@@ -2,7 +2,7 @@ import * as API from 'shared/api';
 import ClayButton from '@clayui/button';
 import Form, {
 	validateMaxLength,
-	validateRequired
+	validateRequired,
 } from 'shared/components/form';
 import Loading, {Align} from 'shared/components/Loading';
 import Modal from 'shared/components/modal';
@@ -27,7 +27,7 @@ const ReportIssue: React.FC<IHelpWidgetScreenProps & PropsFromRedux> = ({
 	addAlert,
 	groupId,
 	onClose,
-	onNext
+	onNext,
 }) => {
 	const onSubmit = (
 		{description, issueTitle}: ReportIssueFormValues,
@@ -38,7 +38,7 @@ const ReportIssue: React.FC<IHelpWidgetScreenProps & PropsFromRedux> = ({
 				currentUrl: window.location.href,
 				description,
 				groupId: groupId ?? '',
-				title: issueTitle
+				title: issueTitle,
 			})
 			.then(() => {
 				setSubmitting(false);
@@ -50,7 +50,7 @@ const ReportIssue: React.FC<IHelpWidgetScreenProps & PropsFromRedux> = ({
 					alertType: Alert.Types.Error,
 					message: Liferay.Language.get(
 						'there-was-an-error-processing-your-request.-please-try-again'
-					)
+					),
 				});
 
 				setSubmitting(false);
@@ -72,16 +72,16 @@ const ReportIssue: React.FC<IHelpWidgetScreenProps & PropsFromRedux> = ({
 					<Form.Form onSubmit={handleSubmit}>
 						<Modal.Body>
 							<Form.Group>
-								<Form.GroupItem className='mb-4'>
+								<Form.GroupItem className="mb-4">
 									<Form.Input
 										label={Liferay.Language.get(
 											'issue-title'
 										)}
-										name='issueTitle'
+										name="issueTitle"
 										required
 										validate={sequence([
 											validateRequired,
-											validateMaxLength(150)
+											validateMaxLength(150),
 										])}
 									/>
 								</Form.GroupItem>
@@ -91,14 +91,14 @@ const ReportIssue: React.FC<IHelpWidgetScreenProps & PropsFromRedux> = ({
 										label={Liferay.Language.get(
 											'description'
 										)}
-										name='description'
+										name="description"
 										required
-										type='textarea'
+										type="textarea"
 										validate={validateRequired}
 									/>
 								</Form.GroupItem>
 
-								<Form.GroupItem className='text-secondary'>
+								<Form.GroupItem className="text-secondary">
 									{Liferay.Language.get(
 										'please-include-as-many-details-as-possible'
 									)}
@@ -108,18 +108,18 @@ const ReportIssue: React.FC<IHelpWidgetScreenProps & PropsFromRedux> = ({
 
 						<Modal.Footer>
 							<ClayButton
-								className='button-root'
-								displayType='secondary'
+								className="button-root"
+								displayType="secondary"
 								onClick={onClose}
 							>
 								{Liferay.Language.get('cancel')}
 							</ClayButton>
 
 							<ClayButton
-								className='button-root'
+								className="button-root"
 								disabled={!isValid}
-								displayType='primary'
-								type='submit'
+								displayType="primary"
+								type="submit"
 							>
 								{isSubmitting && <Loading align={Align.Left} />}
 

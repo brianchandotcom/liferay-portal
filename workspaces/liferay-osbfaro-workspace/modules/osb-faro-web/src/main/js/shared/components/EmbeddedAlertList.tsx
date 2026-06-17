@@ -19,7 +19,7 @@ export interface IEmbeddedAlertListProps
 
 const EmbeddedAlertList: React.FC<IEmbeddedAlertListProps> = ({
 	alerts = [],
-	className
+	className,
 }) => (
 	<div className={getCN('embedded-alert-list-root', className)}>
 		{alerts.map(

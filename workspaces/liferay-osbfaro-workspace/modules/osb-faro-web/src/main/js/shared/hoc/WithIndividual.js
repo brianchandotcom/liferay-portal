@@ -11,14 +11,14 @@ export default withAction(
 			href: toRoute(Routes.CONTACTS_LIST_ENTITY, {
 				channelId,
 				groupId,
-				type: INDIVIDUALS
+				type: INDIVIDUALS,
 			}),
 			linkLabel: Liferay.Language.get('go-to-individuals'),
 			message: Liferay.Language.get(
 				'the-individual-you-are-looking-for-does-not-exist'
 			),
-			subtitle: Liferay.Language.get('individual-not-found')
+			subtitle: Liferay.Language.get('individual-not-found'),
 		}),
-		propName: 'individual'
+		propName: 'individual',
 	}
 );

@@ -10,7 +10,7 @@ import {
 	SINCE,
 	TIME_CONJUNCTION_OPTIONS,
 	TIME_PERIOD_OPTIONS,
-	TimeSpans
+	TimeSpans,
 } from '../../utils/constants';
 import {Map} from 'immutable';
 import {Option, Picker} from '@clayui/core';
@@ -27,7 +27,8 @@ export const getInitialConjunction = (
 
 	if (operatorName === GT && TIME_PERIOD_VALUES.includes(value)) {
 		return SINCE;
-	} else if (!operatorName) {
+	}
+	else if (!operatorName) {
 		return EVER;
 	}
 
@@ -59,7 +60,7 @@ const DateFilterConjunctionInput: React.FC<
 					propertyName,
 					touched: false,
 					valid: true,
-					value: TimeSpans.Last24Hours
+					value: TimeSpans.Last24Hours,
 				} as unknown as Criterion);
 				break;
 			case Between:
@@ -68,7 +69,7 @@ const DateFilterConjunctionInput: React.FC<
 					propertyName,
 					touched: false,
 					valid: false,
-					value: Map({end: '', start: ''})
+					value: Map({end: '', start: ''}),
 				} as unknown as Criterion);
 				break;
 			case EVER:
@@ -82,7 +83,7 @@ const DateFilterConjunctionInput: React.FC<
 					valid: ![SINCE, Between, EVER].includes(conjunction),
 					value: [SINCE, Between, EVER].includes(conjunction)
 						? ''
-						: dateFilter
+						: dateFilter,
 				} as unknown as Criterion);
 				break;
 		}
@@ -93,7 +94,7 @@ const DateFilterConjunctionInput: React.FC<
 	const handleDateFilterBlur = () => {
 		onChange({
 			...conjunctionCriterion,
-			touched: true
+			touched: true,
 		});
 	};
 
@@ -109,9 +110,9 @@ const DateFilterConjunctionInput: React.FC<
 			valid:
 				operatorName === Between
 					? !!(dateFilter as {end?: string; start?: string}).end &&
-					  !!(dateFilter as {end?: string; start?: string}).start
+						!!(dateFilter as {end?: string; start?: string}).start
 					: !!dateFilter,
-			value: dateFilter
+			value: dateFilter,
 		});
 	};
 
@@ -127,8 +128,8 @@ const DateFilterConjunctionInput: React.FC<
 		<>
 			<Form.GroupItem shrink>
 				<Picker
-					className='conjunction-input'
-					data-testid='conjunction-input'
+					className="conjunction-input"
+					data-testid="conjunction-input"
 					items={TIME_CONJUNCTION_OPTIONS}
 					onSelectionChange={handleConjunctionChange}
 					selectedKey={conjunction}

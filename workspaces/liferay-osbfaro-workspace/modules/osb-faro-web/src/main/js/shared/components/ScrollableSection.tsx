@@ -10,9 +10,10 @@ const scrollBy = (ref: React.RefObject<HTMLElement>, val: number): void => {
 		if (ref.current.scrollBy) {
 			ref.current.scrollBy({
 				behavior: 'smooth',
-				left: val
+				left: val,
 			});
-		} else {
+		}
+		else {
 			ref.current.scrollLeft += val;
 		}
 	}
@@ -23,9 +24,10 @@ const scrollTo = (ref: React.RefObject<HTMLElement>, val: number): void => {
 		if (ref.current.scrollTo) {
 			ref.current.scrollTo({
 				behavior: 'smooth',
-				left: val
+				left: val,
 			});
-		} else {
+		}
+		else {
 			ref.current.scrollLeft = val;
 		}
 	}
@@ -42,7 +44,7 @@ export default class ScrollableSection extends React.Component<
 	IScrollableSectionState
 > {
 	state = {
-		showScroll: false
+		showScroll: false,
 	};
 
 	private _containerRef = createRef<HTMLDivElement>();
@@ -119,25 +121,25 @@ export default class ScrollableSection extends React.Component<
 	render() {
 		const {
 			props: {children},
-			state: {showScroll}
+			state: {showScroll},
 		} = this;
 
 		return (
-			<div className='scrollable-section-root d-inline-flex'>
+			<div className="scrollable-section-root d-inline-flex">
 				{showScroll && (
-					<div className='scroll-back-container d-flex align-items-center'>
+					<div className="scroll-back-container d-flex align-items-center">
 						<ClayButton
 							aria-label={Liferay.Language.get('scroll-left')}
 							borderless
-							className='button-root'
-							displayType='secondary'
+							className="button-root"
+							displayType="secondary"
 							monospaced
 							onClick={this.handleScrollLeft}
-							size='sm'
+							size="sm"
 						>
 							<ClayIcon
-								className='icon-root'
-								symbol='angle-left-small'
+								className="icon-root"
+								symbol="angle-left-small"
 							/>
 						</ClayButton>
 					</div>
@@ -145,7 +147,7 @@ export default class ScrollableSection extends React.Component<
 
 				<div
 					className={getCN('scroll-container', {
-						scrollable: showScroll
+						scrollable: showScroll,
 					})}
 					ref={this._containerRef}
 				>
@@ -153,19 +155,19 @@ export default class ScrollableSection extends React.Component<
 				</div>
 
 				{showScroll && (
-					<div className='scroll-forward-container d-flex align-items-center'>
+					<div className="scroll-forward-container d-flex align-items-center">
 						<ClayButton
 							aria-label={Liferay.Language.get('scroll-right')}
 							borderless
-							className='button-root'
-							displayType='secondary'
+							className="button-root"
+							displayType="secondary"
 							monospaced
 							onClick={this.handleScrollRight}
-							size='sm'
+							size="sm"
 						>
 							<ClayIcon
-								className='icon-root'
-								symbol='angle-right-small'
+								className="icon-root"
+								symbol="angle-right-small"
 							/>
 						</ClayButton>
 					</div>

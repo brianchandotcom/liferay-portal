@@ -2,13 +2,13 @@ import * as API from 'shared/api';
 import React, {useEffect} from 'react';
 import {
 	ActionType,
-	useUnassignedSegmentsContext
+	useUnassignedSegmentsContext,
 } from 'shared/context/unassignedSegments';
 import {close, modalTypes, open} from 'shared/actions/modals';
 import {connect, ConnectedProps} from 'react-redux';
 import {
 	fetchUpgradeModalSeen,
-	updateUpgradeModalSeen
+	updateUpgradeModalSeen,
 } from 'shared/actions/preferences';
 import {RootState} from 'shared/store';
 import {useChannelContext} from 'shared/context/channel';
@@ -19,7 +19,7 @@ const connector = connect(
 		upgradeModalSeen: state.getIn(
 			['preferences', 'user', 'upgradeModalSeen', 'data'],
 			true
-		)
+		),
 	}),
 	{close, fetchUpgradeModalSeen, open, updateUpgradeModalSeen}
 );
@@ -52,8 +52,8 @@ const withUnassignedSegments = (
 			dataSourceFn: API.individualSegment.searchUnassigned,
 			variables: {
 				delta: 10000,
-				groupId
-			}
+				groupId,
+			},
 		});
 
 		useEffect(() => {
@@ -66,7 +66,7 @@ const withUnassignedSegments = (
 
 				unassignedSegmentsDispatch?.({
 					payload: items,
-					type: ActionType.setSegments
+					type: ActionType.setSegments,
 				});
 
 				if (
@@ -82,11 +82,11 @@ const withUnassignedSegments = (
 							onClose: () => {
 								updateUpgradeModalSeen({
 									groupId,
-									upgradeModalSeen: true
+									upgradeModalSeen: true,
 								});
 
 								close();
-							}
+							},
 						},
 						{closeOnBlur: false}
 					);

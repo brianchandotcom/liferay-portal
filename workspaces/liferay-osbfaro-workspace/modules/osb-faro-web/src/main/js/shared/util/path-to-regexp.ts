@@ -27,7 +27,7 @@ export const parse = (str: string): PathToken[] => {
 	const PATH_REGEXP = new RegExp(
 		[
 			'(\\\\.)',
-			'([\\/.])?(?:(?:\\:(\\w+)(?:\\(((?:\\\\.|[^\\\\()])+)\\))?|\\(((?:\\\\.|[^\\\\()])+)\\))([+*?])?)'
+			'([\\/.])?(?:(?:\\:(\\w+)(?:\\(((?:\\\\.|[^\\\\()])+)\\))?|\\(((?:\\\\.|[^\\\\()])+)\\))([+*?])?)',
 		].join('|'),
 		'g'
 	);
@@ -65,10 +65,10 @@ export const parse = (str: string): PathToken[] => {
 			pattern: capture
 				? escapeGroup(capture)
 				: group
-				? escapeGroup(group)
-				: `[^${escapeString(defaultDelimiter)}]+?`,
+					? escapeGroup(group)
+					: `[^${escapeString(defaultDelimiter)}]+?`,
 			prefix,
-			repeat
+			repeat,
 		});
 	}
 

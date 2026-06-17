@@ -25,7 +25,7 @@ export type SearchFnType = ({items, query}: SearchArgs) => OrderedMap<any, any>;
  */
 export const defaultSearch: SearchFnType = ({items, query}: SearchArgs) =>
 	items.filter(
-		item =>
+		(item) =>
 			Object.values(get(item, 'properties', {})).some((value: any) =>
 				String(getSafeDisplayValue(value, ''))
 					.toLowerCase()
@@ -47,12 +47,14 @@ export const defaultSort = (
 	const field = first?.field ?? '';
 	const sortOrder = first?.sortOrder;
 
-	const sorted = items.sortBy(item => {
+	const sorted = items.sortBy((item) => {
 		if (item[field]) {
 			return item[field];
-		} else if (get(item, ['properties', field])) {
+		}
+		else if (get(item, ['properties', field])) {
 			return item.properties[field];
-		} else {
+		}
+		else {
 			return item;
 		}
 	});
@@ -69,7 +71,7 @@ export const fetchLocalData = ({
 	orderIOMap,
 	page,
 	query,
-	searchSelectedFn = defaultSearch
+	searchSelectedFn = defaultSearch,
 }: {
 	delta: number;
 	items: OrderedMap<any, any>;
@@ -80,7 +82,7 @@ export const fetchLocalData = ({
 	searchSelectedFn?: ({
 		filterBy,
 		items,
-		query
+		query,
 	}: SearchArgs) => OrderedMap<any, any>;
 }) => {
 	const start = (page - 1) * delta;
@@ -92,13 +94,13 @@ export const fetchLocalData = ({
 			? defaultSort(
 					searchSelectedFn({filterBy, items, query: query ?? ''}),
 					orderIOMap
-			  )
+				)
 			: defaultSort(items, orderIOMap);
 
 	return {
 		empty: !result.size,
 		items: result.slice(start, end).toArray(),
-		total: result.size
+		total: result.size,
 	};
 };
 
@@ -123,7 +125,7 @@ export const withLocalData =
 					orderIOMap,
 					page,
 					query,
-					searchSelectedFn
+					searchSelectedFn,
 				})}
 			/>
 		);
@@ -143,7 +145,7 @@ interface IwithSelectionProps {
  */
 export const withSelection: (
 	WrappedComponent: React.ComponentType<any>
-) => React.FC<IwithSelectionProps> = WrappedComponent => {
+) => React.FC<IwithSelectionProps> = (WrappedComponent) => {
 	const WithSelection: React.FC<IwithSelectionProps> = ({
 		checkDisabled = () => false,
 		items = [],
@@ -155,7 +157,7 @@ export const withSelection: (
 		const allChecked =
 			!selectedItems.isEmpty() &&
 			items.every(
-				item => selectedItems.has(item.id) || checkDisabled(item)
+				(item) => selectedItems.has(item.id) || checkDisabled(item)
 			);
 
 		const selectionProps = {
@@ -163,21 +165,21 @@ export const withSelection: (
 			onSelectEntirePage: (checked: boolean) => {
 				selectionDispatch?.({
 					payload: {
-						items: items.filter(item => !checkDisabled(item))
+						items: items.filter((item) => !checkDisabled(item)),
 					},
-					type: checked ? ACTION_TYPES.add : ACTION_TYPES.remove
+					type: checked ? ACTION_TYPES.add : ACTION_TYPES.remove,
 				});
 			},
 			onSelectItemsChange: (item: {id: string}) =>
 				selectionDispatch?.({
 					payload: {item},
-					type: ACTION_TYPES.toggle
+					type: ACTION_TYPES.toggle,
 				}),
 			selectedItemsIOMap: selectedItems,
 			selectEntirePage: allChecked,
 			selectEntirePageIndeterminate:
 				!allChecked && !selectedItems.isEmpty(),
-			showCheckbox
+			showCheckbox,
 		};
 
 		return (
@@ -200,16 +202,16 @@ export const withSelection: (
 export const ViewSelectedToggle = ({
 	onClick,
 	selectedItemsCount,
-	showSelected
+	showSelected,
 }: {
 	onClick: () => void;
 	selectedItemsCount: number;
 	showSelected: boolean;
 }) => (
 	<ClayButton
-		className='button-root'
-		data-testid='view-selected'
-		displayType='unstyled'
+		className="button-root"
+		data-testid="view-selected"
+		displayType="unstyled"
 		onClick={onClick}
 		small
 	>
@@ -217,8 +219,8 @@ export const ViewSelectedToggle = ({
 			{showSelected
 				? Liferay.Language.get('return-to-list')
 				: sub(Liferay.Language.get('view-selected-x'), [
-						selectedItemsCount
-				  ])}
+						selectedItemsCount,
+					])}
 		</b>
 	</ClayButton>
 );
@@ -256,10 +258,10 @@ const CrossPageSelect: React.FC<ICrossPageSelectProps> = ({
 		onPageChange: onStagedPageChange,
 		onQueryChange: onStagedQueryChange,
 		page: stagedPage,
-		query: stagedQuery
+		query: stagedQuery,
 	} = useStatefulPagination(undefined, {
 		initialDelta: delta,
-		initialOrderIOMap: orderIOMap
+		initialOrderIOMap: orderIOMap,
 	});
 	const {selectedItems, selectionDispatch} = useSelectionContext();
 	const [showSelected, setShowSelected] = useState(false);
@@ -292,7 +294,7 @@ const CrossPageSelect: React.FC<ICrossPageSelectProps> = ({
 		orderIOMap,
 		page: stagedPage,
 		query: stagedQuery,
-		searchSelectedFn
+		searchSelectedFn,
 	});
 
 	if (showSelected) {
@@ -316,7 +318,8 @@ const CrossPageSelect: React.FC<ICrossPageSelectProps> = ({
 				{...localData}
 			/>
 		);
-	} else {
+	}
+	else {
 		const sharedProps = {
 			...otherProps,
 			delta,
@@ -332,12 +335,13 @@ const CrossPageSelect: React.FC<ICrossPageSelectProps> = ({
 			renderViewSelectedToggle,
 			selectedItems,
 			selectionDispatch,
-			showCheckbox
+			showCheckbox,
 		};
 
 		if (children) {
 			return children(sharedProps);
-		} else {
+		}
+		else {
 			return <ListComponent {...sharedProps} />;
 		}
 	}

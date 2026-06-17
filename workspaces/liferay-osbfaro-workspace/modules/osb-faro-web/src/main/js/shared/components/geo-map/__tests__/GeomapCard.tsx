@@ -10,35 +10,35 @@ const countries = [
 		id: 'United States',
 		name: 'United States',
 		total: 6911,
-		value: 37.7
+		value: 37.7,
 	},
 	{
 		group: 'Brazil',
 		id: 'Brazil',
 		name: 'Brazil',
 		total: 6274,
-		value: 34.3
+		value: 34.3,
 	},
 	{
 		group: 'India',
 		id: 'India',
 		name: 'India',
 		total: 574,
-		value: 3.1
+		value: 3.1,
 	},
 	{
 		group: 'Spain',
 		id: 'Spain',
 		name: 'Spain',
 		total: 490,
-		value: 2.7
+		value: 2.7,
 	},
 	{
 		group: 'Italy',
 		id: 'Italy',
 		name: 'Italy',
 		total: 463,
-		value: 2.5
+		value: 2.5,
 	},
 	{
 		color: '#CCCCCC',
@@ -46,25 +46,25 @@ const countries = [
 		id: 'others',
 		name: 'Others',
 		total: 3603,
-		value: 19.7
-	}
+		value: 19.7,
+	},
 ];
 
 const props = {
 	data: {
 		countries,
-		total: countries.length
+		total: countries.length,
 	},
 	filters: {},
 	loading: false,
-	metricLabel: 'sessions'
+	metricLabel: 'sessions',
 };
 
 const getBrazilPath = (container: HTMLElement) => {
 	const paths = container.querySelectorAll('.analytics-geomap svg path');
 
 	return Array.from(paths).find(
-		path => (path as any).__data__?.properties?.name === 'Brazil'
+		(path) => (path as any).__data__?.properties?.name === 'Brazil'
 	) as SVGPathElement | undefined;
 };
 
@@ -85,16 +85,16 @@ describe('GeoMapCard', () => {
 				id: 'Local Network',
 				name: 'Local Network',
 				total: 1,
-				value: 100
+				value: 100,
 			},
-			...countries
+			...countries,
 		];
 
 		const {getByText} = render(
 			<GeomapCard
 				{...props}
 				data={{
-					countries: dataWithLocalNetwork
+					countries: dataWithLocalNetwork,
 				}}
 			/>
 		);

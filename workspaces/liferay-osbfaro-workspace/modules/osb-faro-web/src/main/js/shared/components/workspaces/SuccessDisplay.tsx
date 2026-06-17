@@ -9,7 +9,7 @@ const SuccessDisplay = ({friendlyURL}: {friendlyURL: string}) => {
 	const link = (
 		<ClayLink
 			href={`https://analytics.liferay.com/workspace${friendlyURL}`}
-			key='link'
+			key="link"
 		>
 			{`analytics.liferay.com/workspace${friendlyURL}`}
 		</ClayLink>
@@ -18,8 +18,8 @@ const SuccessDisplay = ({friendlyURL}: {friendlyURL: string}) => {
 	return (
 		<WorkspacesBasePage title={Liferay.Language.get('new-workspace')}>
 			<Sheet>
-				<Sheet.Header className='mb-4'>
-					<h3 className='title'>
+				<Sheet.Header className="mb-4">
+					<h3 className="title">
 						{Liferay.Language.get(
 							'your-workspace-is-being-created'
 						)}
@@ -54,10 +54,10 @@ const SuccessDisplay = ({friendlyURL}: {friendlyURL: string}) => {
 				<Sheet.Footer divider={false}>
 					<ClayLink
 						button
-						className='button-root'
-						displayType='primary'
+						className="button-root"
+						displayType="primary"
 						href={URLConstants.DocumentationAdminLink}
-						target='_blank'
+						target="_blank"
 					>
 						{Liferay.Language.get('check-out-docs')}
 					</ClayLink>

@@ -193,7 +193,7 @@ const GeoMapLangKey = {
 	'Western Sahara': Liferay.Language.get('country.western-sahara'),
 	Yemen: Liferay.Language.get('country.yemen'),
 	Zambia: Liferay.Language.get('country.zambia'),
-	Zimbabwe: Liferay.Language.get('country.zimbabwe')
+	Zimbabwe: Liferay.Language.get('country.zimbabwe'),
 };
 
 export default GeoMapLangKey;

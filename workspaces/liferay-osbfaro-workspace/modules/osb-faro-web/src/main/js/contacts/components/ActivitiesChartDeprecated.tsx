@@ -7,7 +7,7 @@ import {
 	AXIS,
 	getAxisTickText,
 	getYAxisWidth,
-	RechartsTooltip
+	RechartsTooltip,
 } from 'shared/util/recharts';
 import {
 	Bar,
@@ -19,7 +19,7 @@ import {
 	Tooltip,
 	TooltipProps,
 	XAxis,
-	YAxis
+	YAxis,
 } from 'recharts';
 import {CHART_COLOR_NAMES} from 'shared/util/charts';
 import {createDateKeysIMap} from 'shared/util/intervals';
@@ -27,7 +27,7 @@ import {
 	formatXAxisDate,
 	getBarColor,
 	getDateTitle,
-	getIntervals
+	getIntervals,
 } from 'shared/util/charts';
 import {get} from 'lodash';
 import {Interval, RangeSelectors} from 'shared/types';
@@ -63,7 +63,7 @@ const ActivitiesChart: React.FC<IChartProps<IActivitiesHistory<number>>> = ({
 	interval,
 	onPointSelect,
 	rangeSelectors,
-	selectedPoint
+	selectedPoint,
 }) => {
 	const _tooltipRef = useRef<any>();
 
@@ -105,8 +105,8 @@ const ActivitiesChart: React.FC<IChartProps<IActivitiesHistory<number>>> = ({
 					rows={[
 						{
 							label: Liferay.Language.get('activities'),
-							value: data.totalElements.toLocaleString()
-						}
+							value: data.totalElements.toLocaleString(),
+						},
 					]}
 					title={Liferay.Language.get('activities')}
 				/>
@@ -131,7 +131,7 @@ const ActivitiesChart: React.FC<IChartProps<IActivitiesHistory<number>>> = ({
 		<ComposedChartWithEmptyState
 			emptyDescription={
 				<>
-					<span className='mr-1'>
+					<span className="mr-1">
 						{Liferay.Language.get(
 							'check-back-later-to-verify-if-data-has-been-received-from-your-data-sources'
 						)}
@@ -139,8 +139,8 @@ const ActivitiesChart: React.FC<IChartProps<IActivitiesHistory<number>>> = ({
 
 					<ClayLink
 						href={URLConstants.AccountActivitiesDocumentationLink}
-						key='DOCUMENTATION'
-						target='_blank'
+						key="DOCUMENTATION"
+						target="_blank"
 					>
 						{Liferay.Language.get(
 							'learn-more-about-account-activities'
@@ -156,26 +156,26 @@ const ActivitiesChart: React.FC<IChartProps<IActivitiesHistory<number>>> = ({
 			<ResponsiveContainer height={height}>
 				<ComposedChart
 					data={history}
-					onClick={pointData => {
+					onClick={(pointData) => {
 						if (alwaysShowSelectedTooltip && pointData) {
 							if (_tooltipRef) {
 								const {
 									getTranslate,
 									props: {viewBox},
-									state: {boxWidth}
+									state: {boxWidth},
 								} = _tooltipRef.current;
 
 								setSelectedTooltipX(
 									getTranslate({
 										key: 'x',
 										tooltipDimension: boxWidth,
-										viewBoxDimension: viewBox.width
+										viewBoxDimension: viewBox.width,
 									})
 								);
 							}
 
 							onPointSelect({
-								index: pointData.activeTooltipIndex ?? null
+								index: pointData.activeTooltipIndex ?? null,
 							});
 						}
 					}}
@@ -184,17 +184,17 @@ const ActivitiesChart: React.FC<IChartProps<IActivitiesHistory<number>>> = ({
 				>
 					<CartesianGrid
 						stroke={AXIS.gridStroke}
-						strokeDasharray='3 3'
+						strokeDasharray="3 3"
 						vertical={false}
 					/>
 
 					<XAxis
 						axisLine={{stroke: AXIS.borderStroke}}
-						dataKey='intervalInitDate'
+						dataKey="intervalInitDate"
 						domain={['dataMin', 'dataMax']}
-						interval='preserveStart'
+						interval="preserveStart"
 						padding={{left: 20, right: 20}}
-						tick={getAxisTickText('x', value =>
+						tick={getAxisTickText('x', (value) =>
 							formatXAxisDate(
 								value,
 								rangeSelectors.rangeKey,
@@ -207,17 +207,17 @@ const ActivitiesChart: React.FC<IChartProps<IActivitiesHistory<number>>> = ({
 						ticks={intervals.filter(
 							(v: number | null): v is number => v !== null
 						)}
-						type='number'
+						type="number"
 					/>
 
 					<XAxis
 						axisLine={{stroke: AXIS.borderStroke}}
-						dataKey='intervalInitDate'
-						orientation='top'
+						dataKey="intervalInitDate"
+						orientation="top"
 						stroke={AXIS.gridStroke}
 						tick={false}
 						tickLine={false}
-						xAxisId='top'
+						xAxisId="top"
 					/>
 
 					<YAxis
@@ -228,7 +228,7 @@ const ActivitiesChart: React.FC<IChartProps<IActivitiesHistory<number>>> = ({
 						tick={getAxisTickText('y')}
 						tickCount={6}
 						tickLine={false}
-						type='number'
+						type="number"
 						width={yAxisWidth}
 					/>
 
@@ -261,7 +261,7 @@ const ActivitiesChart: React.FC<IChartProps<IActivitiesHistory<number>>> = ({
 
 					<Bar
 						animationDuration={ANIMATION_DURATION.bar}
-						dataKey='totalElements'
+						dataKey="totalElements"
 						fill={CHART_BLUE}
 						onMouseEnter={(e, index) => setHoverIndex(index)}
 						onMouseLeave={() => setHoverIndex(-1)}

@@ -10,7 +10,7 @@ const isReactNodeArray = (
 
 const Subsection: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
 	children,
-	className
+	className,
 }) => (
 	<div className={getCN('radio-group-subsection-root', className)}>
 		{children}
@@ -49,7 +49,7 @@ const RadioGroup: React.FC<IRadioGroupProps> = ({
 	disabled = false,
 	inline = false,
 	name,
-	onChange = noop
+	onChange = noop,
 }) => (
 	<div className={getCN('radio-group-root', className, {disabled})}>
 		{React.Children.map(
@@ -63,7 +63,7 @@ const RadioGroup: React.FC<IRadioGroupProps> = ({
 						isReactNodeArray(children) &&
 						children.length > 0,
 					name,
-					onChange
+					onChange,
 				})
 		)}
 	</div>
@@ -71,5 +71,5 @@ const RadioGroup: React.FC<IRadioGroupProps> = ({
 
 export default Object.assign(RadioGroup, {
 	Option,
-	Subsection
+	Subsection,
 });

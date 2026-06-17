@@ -5,7 +5,7 @@ import {
 	fireEvent,
 	render,
 	screen,
-	within
+	within,
 } from '@testing-library/react';
 import {ITopAsset} from 'shared/api/assets';
 import {useRequest} from 'shared/hooks/useRequest';
@@ -14,12 +14,12 @@ jest.unmock('react-dom');
 
 jest.mock('shared/api', () => ({
 	assets: {
-		fetchAccountTopAssets: jest.fn()
-	}
+		fetchAccountTopAssets: jest.fn(),
+	},
 }));
 
 jest.mock('shared/hooks/useRequest', () => ({
-	useRequest: jest.fn()
+	useRequest: jest.fn(),
 }));
 
 const mockPush = jest.fn();
@@ -27,7 +27,7 @@ const mockPush = jest.fn();
 jest.mock('react-router-dom', () => ({
 	...jest.requireActual('react-router-dom'),
 	useHistory: () => ({push: mockPush}),
-	useParams: () => ({channelId: '5', groupId: '23', id: 'acc-1'})
+	useParams: () => ({channelId: '5', groupId: '23', id: 'acc-1'}),
 }));
 
 const mockedUseRequest = useRequest as jest.Mock;
@@ -40,7 +40,7 @@ const buildAsset = (overrides: Partial<ITopAsset> = {}): ITopAsset => ({
 	impressionsMetric: {value: 30},
 	mimeType: undefined,
 	viewsMetric: {value: 10},
-	...overrides
+	...overrides,
 });
 
 const DEFAULT_ASSETS: ITopAsset[] = [
@@ -50,7 +50,7 @@ const DEFAULT_ASSETS: ITopAsset[] = [
 		downloadsMetric: {value: 1},
 		id: 'a-1',
 		impressionsMetric: {value: 100},
-		viewsMetric: {value: 50}
+		viewsMetric: {value: 50},
 	}),
 	buildAsset({
 		assetTitle: 'Blog Post',
@@ -58,7 +58,7 @@ const DEFAULT_ASSETS: ITopAsset[] = [
 		downloadsMetric: {value: 2},
 		id: 'a-2',
 		impressionsMetric: {value: 80},
-		viewsMetric: {value: 40}
+		viewsMetric: {value: 40},
 	}),
 	buildAsset({
 		assetTitle: 'Brochure PDF',
@@ -66,7 +66,7 @@ const DEFAULT_ASSETS: ITopAsset[] = [
 		downloadsMetric: {value: 25},
 		id: 'a-3',
 		impressionsMetric: {value: 30},
-		viewsMetric: {value: 12}
+		viewsMetric: {value: 12},
 	}),
 	buildAsset({
 		assetTitle: 'Lead Form',
@@ -74,7 +74,7 @@ const DEFAULT_ASSETS: ITopAsset[] = [
 		downloadsMetric: {value: 0},
 		id: 'a-4',
 		impressionsMetric: {value: 20},
-		viewsMetric: {value: 8}
+		viewsMetric: {value: 8},
 	}),
 	buildAsset({
 		assetTitle: 'Custom Entry',
@@ -82,13 +82,13 @@ const DEFAULT_ASSETS: ITopAsset[] = [
 		downloadsMetric: {value: 0},
 		id: 'a-5',
 		impressionsMetric: {value: 10},
-		viewsMetric: {value: 4}
-	})
+		viewsMetric: {value: 4},
+	}),
 ];
 
 const mockUseRequestWith = ({
 	data,
-	loading = false
+	loading = false,
 }: {
 	data?: {items: ITopAsset[]};
 	loading?: boolean;
@@ -96,7 +96,7 @@ const mockUseRequestWith = ({
 	mockedUseRequest.mockImplementation(() => ({
 		data,
 		loading,
-		refetch: jest.fn()
+		refetch: jest.fn(),
 	}));
 };
 
@@ -179,7 +179,7 @@ describe('TopAssets', () => {
 			render(<TopAssets />);
 
 			const link = screen.getAllByRole('link', {
-				name: 'Blog Post'
+				name: 'Blog Post',
 			})[0] as HTMLAnchorElement;
 
 			expect(link.getAttribute('href')).toContain('/assets/blogs/');
@@ -189,7 +189,7 @@ describe('TopAssets', () => {
 			render(<TopAssets />);
 
 			const link = screen.getAllByRole('link', {
-				name: 'Brochure PDF'
+				name: 'Brochure PDF',
 			})[0] as HTMLAnchorElement;
 
 			expect(link.getAttribute('href')).toContain(
@@ -201,7 +201,7 @@ describe('TopAssets', () => {
 			render(<TopAssets />);
 
 			const link = screen.getAllByRole('link', {
-				name: 'Lead Form'
+				name: 'Lead Form',
 			})[0] as HTMLAnchorElement;
 
 			expect(link.getAttribute('href')).toContain('/assets/forms/');
@@ -211,7 +211,7 @@ describe('TopAssets', () => {
 			render(<TopAssets />);
 
 			const link = screen.getAllByRole('link', {
-				name: 'Web Content One'
+				name: 'Web Content One',
 			})[0] as HTMLAnchorElement;
 
 			expect(link.getAttribute('href')).toContain('/assets/web-content/');
@@ -221,7 +221,7 @@ describe('TopAssets', () => {
 			render(<TopAssets />);
 
 			const link = screen.getAllByRole('link', {
-				name: 'Custom Entry'
+				name: 'Custom Entry',
 			})[0] as HTMLAnchorElement;
 
 			expect(link.getAttribute('href')).toContain(
@@ -464,10 +464,10 @@ describe('TopAssets', () => {
 							downloadsMetric: {value: 7},
 							id: 'a-solo',
 							impressionsMetric: {value: 999},
-							viewsMetric: {value: 333}
-						})
-					]
-				}
+							viewsMetric: {value: 333},
+						}),
+					],
+				},
 			});
 
 			const {container} = render(<TopAssets />);

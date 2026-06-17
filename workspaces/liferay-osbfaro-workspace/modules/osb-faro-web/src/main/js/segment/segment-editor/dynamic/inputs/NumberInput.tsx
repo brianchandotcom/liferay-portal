@@ -44,17 +44,17 @@ export default class NumberInput extends React.Component<INumberInputProps> {
 			property: {entityName},
 			touched,
 			valid,
-			value
+			value,
 		} = this.props;
 
 		return (
-			<div className='criteria-statement'>
+			<div className="criteria-statement">
 				<Form.Group autoFit>
-					<Form.GroupItem className='entity-name' label shrink>
+					<Form.GroupItem className="entity-name" label shrink>
 						{entityName}
 					</Form.GroupItem>
 
-					<Form.GroupItem className='display-value' label shrink>
+					<Form.GroupItem className="display-value" label shrink>
 						{displayValue}
 					</Form.GroupItem>
 
@@ -63,15 +63,15 @@ export default class NumberInput extends React.Component<INumberInputProps> {
 					{!isNull(value) && (
 						<Form.GroupItem
 							className={getCN(className, {
-								'has-error': !valid && touched
+								'has-error': !valid && touched,
 							})}
 							shrink
 						>
 							<Input
-								data-testid='number-input'
+								data-testid="number-input"
 								onBlur={this.handleBlur}
 								onChange={this.handleChange}
-								type='number'
+								type="number"
 								value={value}
 							/>
 						</Form.GroupItem>

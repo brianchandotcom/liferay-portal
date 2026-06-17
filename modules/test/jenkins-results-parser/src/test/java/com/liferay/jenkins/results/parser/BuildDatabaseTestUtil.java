@@ -56,41 +56,36 @@ public class BuildDatabaseTestUtil {
 	}
 
 	private static JSONObject _newPullRequestsJSONObject(int index) {
-		JSONObject ownerJSONObject = new JSONObject();
-
-		ownerJSONObject.put("login", "test-owner-" + index);
-
-		JSONObject repositoryJSONObject = new JSONObject();
-
-		repositoryJSONObject.put(
-			"name", "test-repository-" + index
-		).put(
-			"owner", ownerJSONObject
-		);
-
-		JSONObject baseJSONObject = new JSONObject();
-
-		baseJSONObject.put("repo", repositoryJSONObject);
-
 		String htmlURL =
 			"https://github.com/test-owner-" + index + "/test-repository-" +
 				index + "/pull/" + index;
 
-		JSONObject pullRequestJSONObject = new JSONObject();
-
-		pullRequestJSONObject.put(
-			"base", baseJSONObject
+		return new JSONObject(
 		).put(
-			"html_url", htmlURL
-		).put(
-			"number", index
+			htmlURL,
+			new JSONObject(
+			).put(
+				"base",
+				new JSONObject(
+				).put(
+					"repo",
+					new JSONObject(
+					).put(
+						"name", "test-repository-" + index
+					).put(
+						"owner",
+						new JSONObject(
+						).put(
+							"login", "test-owner-" + index
+						)
+					)
+				)
+			).put(
+				"html_url", htmlURL
+			).put(
+				"number", index
+			)
 		);
-
-		JSONObject pullRequestsJSONObject = new JSONObject();
-
-		pullRequestsJSONObject.put(htmlURL, pullRequestJSONObject);
-
-		return pullRequestsJSONObject;
 	}
 
 	private static final AtomicInteger _index = new AtomicInteger(1);

@@ -250,6 +250,8 @@ public class FragmentExportImportTest extends BasePortletExportImportTestCase {
 
 		_testExportImportPortletWithValidationWithFragmentEntryContentException(
 			_updateFragmentEntry(fragmentEntry, "${"));
+		_testExportImportPortletWithValidation(
+			_updateFragmentEntry(fragmentEntry, _getRESTClientHTML()));
 	}
 
 	@Test
@@ -417,6 +419,28 @@ public class FragmentExportImportTest extends BasePortletExportImportTestCase {
 				themeDisplay.getRequest(), themeDisplay.getResponse(), layout,
 				locale);
 		}
+	}
+
+	private String _getRESTClientHTML() {
+		return StringBundler.concat(
+			"[#assign restGetSample = restClient.get(",
+			"\"/o/headless-delivery/v1.0/sites/0/site-pages\")]\n",
+			"[#if (restGetSample.items)??]${restGetSample.items?size}",
+			"[/#if]\n<h1>", RandomTestUtil.randomString(), "</h1>");
+	}
+
+	private void _testExportImportPortletWithValidation(
+			FragmentEntry fragmentEntry)
+		throws Exception {
+
+		exportImportPortlet(FragmentPortletKeys.FRAGMENT, false);
+
+		FragmentEntry importedGroupFragmentEntry =
+			_fragmentEntryLocalService.getFragmentEntryByUuidAndGroupId(
+				fragmentEntry.getUuid(), importedGroup.getGroupId());
+
+		Assert.assertEquals(
+			fragmentEntry.getHtml(), importedGroupFragmentEntry.getHtml());
 	}
 
 	private void

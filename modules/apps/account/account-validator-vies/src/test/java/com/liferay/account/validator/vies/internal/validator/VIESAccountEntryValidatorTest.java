@@ -335,15 +335,15 @@ public class VIESAccountEntryValidatorTest {
 				VIESAccountEntryValidatorConfiguration.class);
 
 		Mockito.when(
-			viesAccountEntryValidatorConfiguration.enabled()
-		).thenReturn(
-			enabled
-		);
-
-		Mockito.when(
 			viesAccountEntryValidatorConfiguration.countries()
 		).thenReturn(
 			countries
+		);
+
+		Mockito.when(
+			viesAccountEntryValidatorConfiguration.enabled()
+		).thenReturn(
+			enabled
 		);
 
 		Mockito.when(

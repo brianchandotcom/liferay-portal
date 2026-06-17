@@ -122,11 +122,12 @@ public class ObjectActionAIHubTokensRestController extends BaseRestController {
 	private String _getSalesforceProjectId(
 		JSONObject aiHubApplicationJSONObject) {
 
-		JSONObject orderMetadataJSONObject = MarketplaceUtil.getOrderMetadataJSONObject(
-			Order.toDTO(
-				String.valueOf(
-					aiHubApplicationJSONObject.getJSONObject(
-						"orderToAIHubApplication"))));
+		JSONObject orderMetadataJSONObject =
+			MarketplaceUtil.getOrderMetadataJSONObject(
+				Order.toDTO(
+					String.valueOf(
+						aiHubApplicationJSONObject.getJSONObject(
+							"orderToAIHubApplication"))));
 
 		return orderMetadataJSONObject.getString("salesforceProjectId");
 	}

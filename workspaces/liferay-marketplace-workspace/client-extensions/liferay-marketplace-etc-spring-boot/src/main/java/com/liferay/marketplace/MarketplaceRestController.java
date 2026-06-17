@@ -567,8 +567,8 @@ public class MarketplaceRestController extends BaseRestController {
 	}
 
 	private void _setExchangeRate(Order order) throws Exception {
-		JSONObject orderMetadataJSONObject = MarketplaceUtil.getOrderMetadataJSONObject(
-			order);
+		JSONObject orderMetadataJSONObject =
+			MarketplaceUtil.getOrderMetadataJSONObject(order);
 
 		if (orderMetadataJSONObject.has("exchangeRate")) {
 			return;

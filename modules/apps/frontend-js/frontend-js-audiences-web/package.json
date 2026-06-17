@@ -2,7 +2,7 @@
 	"dependencies": {
 		"ua-parser-js": "2.0.9"
 	},
-	"main": "index.ts",
+	"main": "main/index.ts",
 	"name": "@liferay/frontend-js-audiences-web",
 	"scripts": {
 		"build": "node-scripts build",

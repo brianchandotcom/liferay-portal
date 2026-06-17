@@ -91,7 +91,7 @@ import java.util.function.Supplier;
 	</#if>
 )
 @JsonFilter("Liferay.Vulcan")
-<#if schema.deprecated || schema.requiredPropertySchemaNames?has_content || schema.description??>
+<#if schema.deprecated || schema.description?? || schema.requiredPropertySchemaNames?has_content>
 	<#assign schemaParameters = [] />
 
 	<#if schema.deprecated>

@@ -1230,7 +1230,7 @@ public class WebServerServlet extends HttpServlet {
 
 		boolean download = ParamUtil.getBoolean(httpServletRequest, "download");
 
-		if (!download && _isBrowserExecutableContentType(contentType)) {
+		if (_isBrowserExecutableContentType(contentType)) {
 			download = true;
 		}
 
@@ -1277,13 +1277,14 @@ public class WebServerServlet extends HttpServlet {
 				fileEntry, HttpHeaders.CACHE_CONTROL,
 				HttpHeaders.CACHE_CONTROL_PRIVATE_VALUE));
 
-		String mimeType = fileEntry.getMimeType();
+		String contentDispositionType =
+			_isBrowserExecutableContentType(fileEntry.getMimeType()) ?
+				HttpHeaders.CONTENT_DISPOSITION_ATTACHMENT : null;
 
 		ServletResponseUtil.sendFile(
 			null, httpServletResponse, fileEntry.getTitle(),
-			fileEntry.getContentStream(), fileEntry.getSize(), mimeType,
-			_isBrowserExecutableContentType(mimeType) ?
-				HttpHeaders.CONTENT_DISPOSITION_ATTACHMENT : null);
+			fileEntry.getContentStream(), fileEntry.getSize(),
+			fileEntry.getMimeType(), contentDispositionType);
 	}
 
 	protected void sendGroups(
@@ -1420,7 +1421,7 @@ public class WebServerServlet extends HttpServlet {
 		long groupId = ParamUtil.getLong(httpServletRequest, "groupId");
 		String uuid = ParamUtil.getString(httpServletRequest, "uuid");
 
-		if (Validator.isNotNull(uuid) && (groupId > 0) &&
+		if ((groupId > 0) && Validator.isNotNull(uuid) &&
 			_isBrowserExecutableContentType(contentType)) {
 
 			httpServletResponse.setHeader(
@@ -2001,22 +2002,8 @@ public class WebServerServlet extends HttpServlet {
 	}
 
 	private boolean _isBrowserExecutableContentType(String contentType) {
-		if (contentType == null) {
-			return false;
-		}
-
-		String lowerCaseContentType = StringUtil.toLowerCase(contentType);
-
-		if (lowerCaseContentType.startsWith("application/javascript") ||
-			lowerCaseContentType.startsWith("application/xhtml+xml") ||
-			lowerCaseContentType.startsWith("image/svg+xml") ||
-			lowerCaseContentType.startsWith("text/html") ||
-			lowerCaseContentType.startsWith("text/javascript")) {
-
-			return true;
-		}
-
-		return false;
+		return _browserExecutableContentTypes.contains(
+			StringUtil.toLowerCase(contentType));
 	}
 
 	private boolean _processCompanyInactiveRequest(
@@ -2101,6 +2088,11 @@ public class WebServerServlet extends HttpServlet {
 
 	private static final Set<String> _acceptRangesMimeTypes = SetUtil.fromArray(
 		PropsValues.WEB_SERVER_SERVLET_ACCEPT_RANGES_MIME_TYPES);
+	private static final Set<String> _browserExecutableContentTypes =
+		SetUtil.fromArray(
+			ContentTypes.APPLICATION_JAVASCRIPT, ContentTypes.IMAGE_SVG_XML,
+			ContentTypes.TEXT_HTML, ContentTypes.TEXT_JAVASCRIPT,
+			"application/xhtml+xml");
 	private static final Snapshot<FileEntryFriendlyURLResolver>
 		_fileEntryFriendlyURLResolverSnapshot = new Snapshot<>(
 			WebServerServlet.class, FileEntryFriendlyURLResolver.class);

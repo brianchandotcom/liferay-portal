@@ -602,9 +602,9 @@ public class AssetListFiltersUtil {
 			}
 		}
 
-		if (operatorName.equals("between") || operatorName.equals("gt") ||
-			operatorName.equals("ge") || operatorName.equals("lt") ||
-			operatorName.equals("le")) {
+		if (operatorName.equals("between") || operatorName.equals("ge") ||
+			operatorName.equals("gt") || operatorName.equals("le") ||
+			operatorName.equals("lt")) {
 
 			return _toRangeQuery(
 				filterJSONObject, subfield, operatorName, objectField);

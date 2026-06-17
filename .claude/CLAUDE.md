@@ -93,6 +93,8 @@ cd <module-root> && yarn test
 cd <module-root> && yarn test <test-file-path>
 ```
 
+Read `.claude/rules/jest-testing.md` before creating a frontend unit test.
+
 #### Integration Tests
 
 Integration tests are the default for anything that touches services, persistence, or the portal runtime.
@@ -121,7 +123,3 @@ Functional tests are a last resort, reserved for complete UI flows that cannot b
 ### Format Source
 
 Run `/format-source` (the `format-source` skill). See `.claude/skills/format-source/SKILL.md` for details.
-
-### JS Unit Testing
-
-When creating a new Jest test under `modules/**/*-web/test/`, read `.claude/rules/jest-testing.md` first; editing an existing test auto-loads it via the rule's `paths:`.

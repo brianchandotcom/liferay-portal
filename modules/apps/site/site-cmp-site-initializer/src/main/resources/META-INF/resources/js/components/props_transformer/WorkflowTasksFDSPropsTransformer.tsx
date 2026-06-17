@@ -24,6 +24,7 @@ import WORKFLOW_TASK_MODALS from '../../utils/workflowTaskModals';
 import BulkEditWorkflowAssigneeModalContent from '../modal/BulkEditWorkflowAssigneeModalContent';
 import BulkEditWorkflowDueDateModalContent from '../modal/BulkEditWorkflowDueDateModalContent';
 import ACTIONS from './actions/creationMenuActions';
+import {cmpWorkflowTasksFDSAtom} from './atoms';
 import WorkflowStateRenderer from './cell_renderers/WorkflowStateRenderer';
 import WorkflowTaskActionLinkRenderer from './cell_renderers/WorkflowTaskActionLinkRenderer';
 
@@ -70,6 +71,7 @@ export default function WorkflowTasksFDSPropsTransformer({
 
 	return {
 		...otherProps,
+		atom: cmpWorkflowTasksFDSAtom,
 		bulkActions: bulkActions.map((action) => ({
 			...action,
 			isDisabled: ({

@@ -1,34 +1,53 @@
 @import 'atlas-variables';
 
 .lfr-cmp__workflow-tasks-overview-container {
-	margin-bottom: 0.75rem;
-	margin-top: 1.5rem;
+	margin-bottom: 1.75rem;
+	margin-top: 1rem;
 
-	.statistic-card {
-		align-items: center;
-		display: flex;
-		padding-bottom: 0.25rem;
-		padding-top: 0.25rem;
+	.quick-filter-row {
+		margin-left: 0;
+		margin-right: 0;
+	}
 
-		.statistic-card__body {
-			display: flex;
-			flex-direction: column;
+	.quick-filter-button {
+		border-color: $secondary-l2;
+		border-radius: 0.5rem;
+		height: 100%;
+		min-height: 4.3125rem;
+		padding: 0.875rem 1rem;
+		text-align: left;
+		width: 100%;
+
+		&:hover {
+			background-color: $light-l1;
+			border-color: $secondary-l0;
 		}
 
-		.statistic-card__count {
-			font-size: $h5-font-size;
-			font-weight: $font-weight-bold;
+		&.active {
+			background-color: $light;
+			border-color: $dark;
 		}
 
-		.statistic-card__icon {
-			display: inline-flex;
-			font-size: 1.5rem;
-			margin-right: $spacer;
+		.quick-filter-button-content {
+			line-height: 1.25;
 		}
 
-		.statistic-card__label {
-			color: $secondary;
-			font-size: $h6-font-size;
+		.quick-filter-button-count {
+			font-size: 1rem;
+			font-weight: 600;
 		}
+
+		.sticker {
+			height: 2.5rem;
+			width: 2.5rem;
+		}
+	}
+
+	.sticker-secondary {
+		background-color: $secondary-l3;
+	}
+
+	.sticker-success {
+		background-color: $success-l2;
 	}
 }

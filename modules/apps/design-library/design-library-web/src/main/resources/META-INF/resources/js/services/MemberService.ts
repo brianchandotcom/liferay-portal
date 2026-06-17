@@ -65,7 +65,6 @@ async function getUserGroupMembers(
 	return await request(`/${externalReferenceCode}/user-groups`, {
 		params: {
 			nestedFields: 'roles,numberOfUserAccounts',
-			pageSize: '200',
 		},
 	});
 }
@@ -76,7 +75,6 @@ async function getUserMembers(
 	return await request(`/${externalReferenceCode}/user-accounts`, {
 		params: {
 			nestedFields: 'roles',
-			pageSize: '200',
 		},
 	});
 }

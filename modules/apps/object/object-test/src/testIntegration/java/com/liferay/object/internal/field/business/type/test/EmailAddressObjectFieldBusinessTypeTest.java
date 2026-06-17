@@ -19,6 +19,7 @@ import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.AssertUtils;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -57,7 +59,7 @@ public class EmailAddressObjectFieldBusinessTypeTest {
 	public void setUp() throws Exception {
 		_objectDefinition = ObjectDefinitionTestUtil.publishObjectDefinition();
 
-		_objectField = ObjectFieldUtil.addCustomObjectField(
+		_objectField1 = ObjectFieldUtil.addCustomObjectField(
 			new EmailAddressObjectFieldBuilder(
 			).labelMap(
 				RandomTestUtil.randomLocaleStringMap()
@@ -68,15 +70,7 @@ public class EmailAddressObjectFieldBusinessTypeTest {
 			).userId(
 				TestPropsValues.getUserId()
 			).build());
-
-		_objectFieldBusinessType =
-			_objectFieldBusinessTypeRegistry.getObjectFieldBusinessType(
-				ObjectFieldConstants.BUSINESS_TYPE_EMAIL_ADDRESS);
-	}
-
-	@Test
-	public void testProcessValue() throws Exception {
-		ObjectField objectField = ObjectFieldUtil.addCustomObjectField(
+		_objectField2 = ObjectFieldUtil.addCustomObjectField(
 			new EmailAddressObjectFieldBuilder(
 			).labelMap(
 				RandomTestUtil.randomLocaleStringMap()
@@ -90,9 +84,10 @@ public class EmailAddressObjectFieldBusinessTypeTest {
 					).name(
 						ObjectFieldSettingConstants.NAME_AUTOCOMPLETE_DOMAINS
 					).value(
-						StringBundler.concat(
-							"@", RandomTestUtil.randomString(), ".com,@",
-							RandomTestUtil.randomString(), ".com")
+						StringUtil.merge(
+							new String[] {
+								_getRandomDomain(), _getRandomDomain()
+							})
 					).build(),
 					new ObjectFieldSettingBuilder(
 					).name(
@@ -104,42 +99,58 @@ public class EmailAddressObjectFieldBusinessTypeTest {
 					).name(
 						ObjectFieldSettingConstants.NAME_BLOCKED_DOMAINS
 					).value(
-						"@blocked.com"
+						_BLOCKED_DOMAIN
 					).build())
 			).userId(
 				TestPropsValues.getUserId()
 			).build());
 
+		_objectFieldBusinessType =
+			_objectFieldBusinessTypeRegistry.getObjectFieldBusinessType(
+				ObjectFieldConstants.BUSINESS_TYPE_EMAIL_ADDRESS);
+	}
+
+	@Test
+	public void testProcessValue() throws Exception {
 		AssertUtils.assertFailure(
 			ObjectEntryValuesException.BlockedEmailAddressDomain.class,
 			StringBundler.concat(
-				"The email address domain \"@blocked.com\" is blocked for ",
-				"object field \"", objectField.getName(), "\""),
+				"The email address domain \"",
+				StringUtil.toLowerCase(_BLOCKED_DOMAIN), "\" is blocked for ",
+				"object field \"", _objectField2.getName(), "\""),
 			() -> _objectFieldBusinessType.processValue(
-				objectField, "User@Blocked.com"));
-
+				_objectField2,
+				RandomTestUtil.randomString() + _BLOCKED_DOMAIN));
 		AssertUtils.assertFailure(
 			ObjectEntryValuesException.ExceedsTextMaxLength.class,
 			StringBundler.concat(
 				"Object entry value exceeds the maximum length of 254 ",
-				"characters for object field \"", _objectField.getName(), "\""),
+				"characters for object field \"", _objectField1.getName(),
+				"\""),
 			() -> _objectFieldBusinessType.processValue(
-				_objectField,
-				RandomTestUtil.randomString(245) + "@example.com"));
+				_objectField1, _getRandomEmailAddress(245)));
+
+		String invalidEmailAddress = RandomTestUtil.randomString();
+
 		AssertUtils.assertFailure(
 			ObjectEntryValuesException.InvalidEmailAddress.class,
 			StringBundler.concat(
-				"The email address \"missing@\" is invalid for object field \"",
-				_objectField.getName(), "\""),
+				"The email address \"", invalidEmailAddress,
+				"\" is invalid for object field \"", _objectField1.getName(),
+				"\""),
 			() -> _objectFieldBusinessType.processValue(
-				_objectField, "missing@"));
+				_objectField1, invalidEmailAddress));
 
 		Assert.assertEquals(
-			"", _objectFieldBusinessType.processValue(_objectField, ""));
-		Assert.assertEquals(
-			"user@example.com",
+			StringPool.BLANK,
 			_objectFieldBusinessType.processValue(
-				_objectField, "User@Example.com"));
+				_objectField1, StringPool.BLANK));
+
+		String emailAddress = _getRandomEmailAddress(10);
+
+		Assert.assertEquals(
+			StringUtil.toLowerCase(emailAddress),
+			_objectFieldBusinessType.processValue(_objectField1, emailAddress));
 	}
 
 	@Test
@@ -149,31 +160,34 @@ public class EmailAddressObjectFieldBusinessTypeTest {
 			StringBundler.concat(
 				"The settings ",
 				ObjectFieldSettingConstants.NAME_AUTOCOMPLETE_DOMAINS,
-				" are not allowed for object field ", _objectField.getName()),
+				" are not allowed for object field ", _objectField1.getName()),
 			() -> _objectFieldBusinessType.validateObjectFieldSettings(
-				_objectField,
+				_objectField1,
 				Collections.singletonList(
 					new ObjectFieldSettingBuilder(
 					).name(
 						ObjectFieldSettingConstants.NAME_AUTOCOMPLETE_DOMAINS
 					).value(
-						"@" + RandomTestUtil.randomString() + ".com"
+						_getRandomDomain()
 					).build())));
+
+		String invalidValue = RandomTestUtil.randomString();
+
 		AssertUtils.assertFailure(
 			ObjectFieldSettingValueException.InvalidValue.class,
 			StringBundler.concat(
-				"The value invalid.com of setting \"",
+				"The value ", invalidValue, " of setting \"",
 				ObjectFieldSettingConstants.NAME_AUTOCOMPLETE_DOMAINS,
-				"\" is invalid for object field \"", _objectField.getName(),
+				"\" is invalid for object field \"", _objectField1.getName(),
 				"\""),
 			() -> _objectFieldBusinessType.validateObjectFieldSettings(
-				_objectField,
+				_objectField1,
 				Arrays.asList(
 					new ObjectFieldSettingBuilder(
 					).name(
 						ObjectFieldSettingConstants.NAME_AUTOCOMPLETE_DOMAINS
 					).value(
-						"invalid.com"
+						invalidValue
 					).build(),
 					new ObjectFieldSettingBuilder(
 					).name(
@@ -184,62 +198,72 @@ public class EmailAddressObjectFieldBusinessTypeTest {
 		AssertUtils.assertFailure(
 			ObjectFieldSettingValueException.InvalidValue.class,
 			StringBundler.concat(
-				"The value invalid of setting \"",
+				"The value ", invalidValue, " of setting \"",
 				ObjectFieldSettingConstants.NAME_AUTOCOMPLETE_ENABLED,
-				"\" is invalid for object field \"", _objectField.getName(),
+				"\" is invalid for object field \"", _objectField1.getName(),
 				"\""),
 			() -> _objectFieldBusinessType.validateObjectFieldSettings(
-				_objectField,
+				_objectField1,
 				Collections.singletonList(
 					new ObjectFieldSettingBuilder(
 					).name(
 						ObjectFieldSettingConstants.NAME_AUTOCOMPLETE_ENABLED
 					).value(
-						"invalid"
+						invalidValue
 					).build())));
 		AssertUtils.assertFailure(
 			ObjectFieldSettingValueException.InvalidValue.class,
 			StringBundler.concat(
-				"The value invalid of setting \"",
+				"The value ", invalidValue, " of setting \"",
 				ObjectFieldSettingConstants.NAME_BLOCKED_DOMAINS,
-				"\" is invalid for object field \"", _objectField.getName(),
+				"\" is invalid for object field \"", _objectField1.getName(),
 				"\""),
 			() -> _objectFieldBusinessType.validateObjectFieldSettings(
-				_objectField,
+				_objectField1,
 				Collections.singletonList(
 					new ObjectFieldSettingBuilder(
 					).name(
 						ObjectFieldSettingConstants.NAME_BLOCKED_DOMAINS
 					).value(
-						"invalid"
+						invalidValue
 					).build())));
 		AssertUtils.assertFailure(
 			ObjectFieldSettingValueException.InvalidValue.class,
 			StringBundler.concat(
-				"The value invalid of setting \"",
+				"The value ", invalidValue, " of setting \"",
 				ObjectFieldSettingConstants.NAME_UNIQUE_VALUES,
-				"\" is invalid for object field \"", _objectField.getName(),
+				"\" is invalid for object field \"", _objectField1.getName(),
 				"\""),
 			() -> _objectFieldBusinessType.validateObjectFieldSettings(
-				_objectField,
+				_objectField1,
 				Collections.singletonList(
 					new ObjectFieldSettingBuilder(
 					).name(
 						ObjectFieldSettingConstants.NAME_UNIQUE_VALUES
 					).value(
-						"invalid"
+						invalidValue
 					).build())));
 
 		_objectFieldBusinessType.validateObjectFieldSettings(
-			_objectField,
+			_objectField1, Collections.emptyList());
+		_objectFieldBusinessType.validateObjectFieldSettings(
+			_objectField1,
+			Collections.singletonList(
+				new ObjectFieldSettingBuilder(
+				).name(
+					ObjectFieldSettingConstants.NAME_AUTOCOMPLETE_ENABLED
+				).value(
+					String.valueOf(RandomTestUtil.randomBoolean())
+				).build()));
+		_objectFieldBusinessType.validateObjectFieldSettings(
+			_objectField1,
 			Arrays.asList(
 				new ObjectFieldSettingBuilder(
 				).name(
 					ObjectFieldSettingConstants.NAME_AUTOCOMPLETE_DOMAINS
 				).value(
-					StringBundler.concat(
-						"@", RandomTestUtil.randomString(), ".com,@",
-						RandomTestUtil.randomString(), ".com")
+					StringUtil.merge(
+						new String[] {_getRandomDomain(), _getRandomDomain()})
 				).build(),
 				new ObjectFieldSettingBuilder(
 				).name(
@@ -248,117 +272,113 @@ public class EmailAddressObjectFieldBusinessTypeTest {
 					StringPool.TRUE
 				).build()));
 		_objectFieldBusinessType.validateObjectFieldSettings(
-			_objectField,
-			Collections.singletonList(
-				new ObjectFieldSettingBuilder(
-				).name(
-					ObjectFieldSettingConstants.NAME_AUTOCOMPLETE_ENABLED
-				).value(
-					StringPool.TRUE
-				).build()));
-		_objectFieldBusinessType.validateObjectFieldSettings(
-			_objectField,
-			Collections.singletonList(
-				new ObjectFieldSettingBuilder(
-				).name(
-					ObjectFieldSettingConstants.NAME_AUTOCOMPLETE_ENABLED
-				).value(
-					StringPool.FALSE
-				).build()));
-		_objectFieldBusinessType.validateObjectFieldSettings(
-			_objectField,
+			_objectField1,
 			Collections.singletonList(
 				new ObjectFieldSettingBuilder(
 				).name(
 					ObjectFieldSettingConstants.NAME_BLOCKED_DOMAINS
 				).value(
-					StringBundler.concat(
-						"@", RandomTestUtil.randomString(), ".com,@",
-						RandomTestUtil.randomString(), ".com")
+					StringUtil.merge(
+						new String[] {_getRandomDomain(), _getRandomDomain()})
 				).build()));
-		_objectFieldBusinessType.validateObjectFieldSettings(
-			_objectField, Collections.emptyList());
 	}
 
 	@Test
 	public void testValidateObjectFieldSettingsDefaultValue() throws Exception {
-		String defaultValue = RandomTestUtil.randomString(245) + "@example.com";
+		String invalidDefaultValue1 =
+			RandomTestUtil.randomString() + _BLOCKED_DOMAIN;
 
 		AssertUtils.assertFailure(
 			ObjectFieldSettingValueException.InvalidValue.class,
 			StringBundler.concat(
-				"The value ", defaultValue, " of setting \"",
+				"The value ", invalidDefaultValue1, " of setting \"",
 				ObjectFieldSettingConstants.NAME_DEFAULT_VALUE,
-				"\" is invalid for object field \"", _objectField.getName(),
+				"\" is invalid for object field \"", _objectField1.getName(),
 				"\""),
 			() ->
 				_objectFieldBusinessType.
 					validateObjectFieldSettingsDefaultValue(
-						_objectField,
-						HashMapBuilder.put(
-							ObjectFieldSettingConstants.NAME_DEFAULT_VALUE,
-							defaultValue
-						).put(
-							ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE,
-							ObjectFieldSettingConstants.VALUE_INPUT_AS_VALUE
-						).build()));
-
-		AssertUtils.assertFailure(
-			ObjectFieldSettingValueException.InvalidValue.class,
-			StringBundler.concat(
-				"The value not-an-email of setting \"",
-				ObjectFieldSettingConstants.NAME_DEFAULT_VALUE,
-				"\" is invalid for object field \"", _objectField.getName(),
-				"\""),
-			() ->
-				_objectFieldBusinessType.
-					validateObjectFieldSettingsDefaultValue(
-						_objectField,
-						HashMapBuilder.put(
-							ObjectFieldSettingConstants.NAME_DEFAULT_VALUE,
-							"not-an-email"
-						).put(
-							ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE,
-							ObjectFieldSettingConstants.VALUE_INPUT_AS_VALUE
-						).build()));
-
-		AssertUtils.assertFailure(
-			ObjectFieldSettingValueException.InvalidValue.class,
-			StringBundler.concat(
-				"The value User@Blocked.com of setting \"",
-				ObjectFieldSettingConstants.NAME_DEFAULT_VALUE,
-				"\" is invalid for object field \"", _objectField.getName(),
-				"\""),
-			() ->
-				_objectFieldBusinessType.
-					validateObjectFieldSettingsDefaultValue(
-						_objectField,
+						_objectField1,
 						HashMapBuilder.put(
 							ObjectFieldSettingConstants.NAME_BLOCKED_DOMAINS,
-							"@blocked.com"
+							_BLOCKED_DOMAIN
 						).put(
 							ObjectFieldSettingConstants.NAME_DEFAULT_VALUE,
-							"User@Blocked.com"
+							invalidDefaultValue1
+						).put(
+							ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE,
+							ObjectFieldSettingConstants.VALUE_INPUT_AS_VALUE
+						).build()));
+
+		String invalidDefaultValue2 = _getRandomEmailAddress(245);
+
+		AssertUtils.assertFailure(
+			ObjectFieldSettingValueException.InvalidValue.class,
+			StringBundler.concat(
+				"The value ", invalidDefaultValue2, " of setting \"",
+				ObjectFieldSettingConstants.NAME_DEFAULT_VALUE,
+				"\" is invalid for object field \"", _objectField1.getName(),
+				"\""),
+			() ->
+				_objectFieldBusinessType.
+					validateObjectFieldSettingsDefaultValue(
+						_objectField1,
+						HashMapBuilder.put(
+							ObjectFieldSettingConstants.NAME_DEFAULT_VALUE,
+							invalidDefaultValue2
+						).put(
+							ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE,
+							ObjectFieldSettingConstants.VALUE_INPUT_AS_VALUE
+						).build()));
+
+		String invalidDefaultValue3 = RandomTestUtil.randomString();
+
+		AssertUtils.assertFailure(
+			ObjectFieldSettingValueException.InvalidValue.class,
+			StringBundler.concat(
+				"The value ", invalidDefaultValue3, " of setting \"",
+				ObjectFieldSettingConstants.NAME_DEFAULT_VALUE,
+				"\" is invalid for object field \"", _objectField1.getName(),
+				"\""),
+			() ->
+				_objectFieldBusinessType.
+					validateObjectFieldSettingsDefaultValue(
+						_objectField1,
+						HashMapBuilder.put(
+							ObjectFieldSettingConstants.NAME_DEFAULT_VALUE,
+							invalidDefaultValue3
 						).put(
 							ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE,
 							ObjectFieldSettingConstants.VALUE_INPUT_AS_VALUE
 						).build()));
 
 		_objectFieldBusinessType.validateObjectFieldSettingsDefaultValue(
-			_objectField,
+			_objectField1,
 			HashMapBuilder.put(
 				ObjectFieldSettingConstants.NAME_DEFAULT_VALUE,
-				RandomTestUtil.randomString() + "@example.com"
+				_getRandomEmailAddress(10)
 			).put(
 				ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE,
 				ObjectFieldSettingConstants.VALUE_INPUT_AS_VALUE
 			).build());
 	}
 
+	private String _getRandomDomain() {
+		return CharPool.AT + RandomTestUtil.randomString() + ".com";
+	}
+
+	private String _getRandomEmailAddress(int length) {
+		return RandomTestUtil.randomString(length) + _getRandomDomain();
+	}
+
+	private static final String _BLOCKED_DOMAIN =
+		CharPool.AT + RandomTestUtil.randomString() + ".com";
+
 	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition;
 
-	private ObjectField _objectField;
+	private ObjectField _objectField1;
+	private ObjectField _objectField2;
 	private ObjectFieldBusinessType _objectFieldBusinessType;
 
 	@Inject

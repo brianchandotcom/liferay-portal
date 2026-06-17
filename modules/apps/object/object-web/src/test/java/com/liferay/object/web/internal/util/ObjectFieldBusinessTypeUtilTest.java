@@ -6,7 +6,6 @@
 package com.liferay.object.web.internal.util;
 
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -39,20 +38,6 @@ public class ObjectFieldBusinessTypeUtilTest {
 
 		List<Map<String, String>> objectFieldBusinessTypeMaps =
 			ObjectFieldBusinessTypeUtil.getObjectFieldBusinessTypeMaps(
-				LocaleUtil.US, objectFieldBusinessTypes);
-
-		Assert.assertEquals(
-			"Apple",
-			MapUtil.getString(objectFieldBusinessTypeMaps.get(0), "label"));
-		Assert.assertEquals(
-			"Banana",
-			MapUtil.getString(objectFieldBusinessTypeMaps.get(1), "label"));
-		Assert.assertEquals(
-			"Pineapple",
-			MapUtil.getString(objectFieldBusinessTypeMaps.get(2), "label"));
-
-		objectFieldBusinessTypeMaps =
-			ObjectFieldBusinessTypeUtil.getObjectFieldBusinessTypeMaps(
 				LocaleUtil.BRAZIL, objectFieldBusinessTypes);
 
 		Assert.assertEquals(
@@ -64,6 +49,20 @@ public class ObjectFieldBusinessTypeUtilTest {
 		Assert.assertEquals(
 			"Maca",
 			MapUtil.getString(objectFieldBusinessTypeMaps.get(2), "label"));
+
+		objectFieldBusinessTypeMaps =
+			ObjectFieldBusinessTypeUtil.getObjectFieldBusinessTypeMaps(
+				LocaleUtil.US, objectFieldBusinessTypes);
+
+		Assert.assertEquals(
+			"Apple",
+			MapUtil.getString(objectFieldBusinessTypeMaps.get(0), "label"));
+		Assert.assertEquals(
+			"Banana",
+			MapUtil.getString(objectFieldBusinessTypeMaps.get(1), "label"));
+		Assert.assertEquals(
+			"Pineapple",
+			MapUtil.getString(objectFieldBusinessTypeMaps.get(2), "label"));
 	}
 
 	private ObjectFieldBusinessType _mockObjectFieldBusinessType(
@@ -71,24 +70,6 @@ public class ObjectFieldBusinessTypeUtilTest {
 
 		ObjectFieldBusinessType objectFieldBusinessType = Mockito.mock(
 			ObjectFieldBusinessType.class);
-
-		Mockito.when(
-			objectFieldBusinessType.getDBType()
-		).thenReturn(
-			RandomTestUtil.randomString()
-		);
-
-		Mockito.when(
-			objectFieldBusinessType.getDescription(LocaleUtil.BRAZIL)
-		).thenReturn(
-			ptLabel
-		);
-
-		Mockito.when(
-			objectFieldBusinessType.getDescription(LocaleUtil.US)
-		).thenReturn(
-			enLabel
-		);
 
 		Mockito.when(
 			objectFieldBusinessType.getLabel(LocaleUtil.BRAZIL)
@@ -100,12 +81,6 @@ public class ObjectFieldBusinessTypeUtilTest {
 			objectFieldBusinessType.getLabel(LocaleUtil.US)
 		).thenReturn(
 			enLabel
-		);
-
-		Mockito.when(
-			objectFieldBusinessType.getName()
-		).thenReturn(
-			RandomTestUtil.randomString()
 		);
 
 		return objectFieldBusinessType;

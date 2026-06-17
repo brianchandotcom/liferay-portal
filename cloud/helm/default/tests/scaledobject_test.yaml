@@ -1,4 +1,4 @@
-suite: keda scaled object
+suite: KEDA ScaledObject
 templates:
     -   templates/scaledobject.yaml
 tests:
@@ -76,13 +76,13 @@ tests:
             autoscaling.enabled: true
             autoscaling.type: hpa
     -   asserts:
+            -   equal:
+                    path: spec.scaleTargetRef.name
+                    value: liferay-default
             -   hasDocuments:
                     count: 1
             -   isKind:
                     of: ScaledObject
-            -   equal:
-                    path: spec.scaleTargetRef.name
-                    value: liferay-default
         it: should render the ScaledObject when autoscaling is enabled with type keda
         set:
             autoscaling.enabled: true

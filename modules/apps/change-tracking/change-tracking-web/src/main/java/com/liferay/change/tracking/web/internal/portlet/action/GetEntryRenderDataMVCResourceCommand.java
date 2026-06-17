@@ -309,7 +309,9 @@ public class GetEntryRenderDataMVCResourceCommand
 
 		long leftCtCollectionId = CTConstants.CT_COLLECTION_ID_PRODUCTION;
 
-		if (ctCollection.getStatus() == WorkflowConstants.STATUS_APPROVED) {
+		if ((ctCollection.getStatus() == WorkflowConstants.STATUS_APPROVED) &&
+			(ctEntry.getChangeType() != CTConstants.CT_CHANGE_TYPE_ADDITION)) {
+
 			leftCtCollectionId = ctEntry.getCtCollectionId();
 		}
 

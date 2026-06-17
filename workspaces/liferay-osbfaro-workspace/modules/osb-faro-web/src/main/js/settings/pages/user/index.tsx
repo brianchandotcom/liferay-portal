@@ -32,7 +32,7 @@ export const User = ({className}: {className?: string}) => {
 	API.user
 		.fetchCount({
 			groupId,
-			statuses: [UserStatuses.Requested]
+			statuses: [UserStatuses.Requested],
 		})
 		.then(setUserRequest);
 
@@ -40,7 +40,7 @@ export const User = ({className}: {className?: string}) => {
 		{
 			exact: true,
 			label: Liferay.Language.get('manage-users'),
-			route: Routes.SETTINGS_USERS
+			route: Routes.SETTINGS_USERS,
 		},
 		{
 			exact: true,
@@ -48,18 +48,18 @@ export const User = ({className}: {className?: string}) => {
 				<>
 					{Liferay.Language.get('requests')}
 					{userRequest > 0 && (
-						<ClayBadge className='ml-2' label={userRequest} />
+						<ClayBadge className="ml-2" label={userRequest} />
 					)}
 				</>
 			),
-			route: Routes.SETTINGS_USERS_REQUESTS
-		}
+			route: Routes.SETTINGS_USERS_REQUESTS,
+		},
 	];
 
 	const matchedRoute = getMatchedRoute(NAV_ITEMS);
 
 	const initialItem =
-		NAV_ITEMS.find(item => item.route === matchedRoute) ?? NAV_ITEMS[0];
+		NAV_ITEMS.find((item) => item.route === matchedRoute) ?? NAV_ITEMS[0];
 
 	const [activeTriggerLabel, setActiveTriggerLabel] = useState<string>(
 		initialItem.route === Routes.SETTINGS_USERS
@@ -70,16 +70,16 @@ export const User = ({className}: {className?: string}) => {
 	return (
 		<BasePage
 			className={getCN('user-list-page-root', className)}
-			key='userListPage'
+			key="userListPage"
 			pageDescription={Liferay.Language.get(
 				'invite-new-users-to-analytics-cloud-and-or-configure-existing-users'
 			)}
 			pageTitle={Liferay.Language.get('user-management')}
 		>
-			<Card key='cardContainer' pageDisplay>
+			<Card key="cardContainer" pageDisplay>
 				{currentUser.isAdmin() && (
 					<ClayNavigationBar
-						className='page-subnav mx-4 my-3'
+						className="page-subnav mx-4 my-3"
 						triggerLabel={activeTriggerLabel}
 					>
 						{NAV_ITEMS.map(({label, route}) => (
@@ -94,10 +94,10 @@ export const User = ({className}: {className?: string}) => {
 											route === Routes.SETTINGS_USERS
 												? Liferay.Language.get(
 														'manage-users'
-												  )
+													)
 												: Liferay.Language.get(
 														'requests'
-												  )
+													)
 										);
 									}}
 								>

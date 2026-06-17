@@ -11,7 +11,7 @@ import {
 	JSPDFExtensionContainer,
 	PosX,
 	Size,
-	Weight
+	Weight,
 } from './jsPDF';
 import {sub} from 'shared/util/lang';
 import {Text} from '@clayui/core';
@@ -51,138 +51,138 @@ export enum ReportContainer {
 	ViewsByLocationCard = 'container.report.viewsByLocationCard',
 	ViewsByTechnologyCard = 'container.report.viewsByTechnologyCard',
 	VisitorsBehaviorCard = 'container.report.visitorsBehaviorCard',
-	VisitorsByTimeCard = 'container.report.visitorsByTimeCard'
+	VisitorsByTimeCard = 'container.report.visitorsByTimeCard',
 }
 
 export const CONTAINERS: {[key in ReportContainer]: TReportContainer} = {
 	[ReportContainer.AcquisitionsCard]: {
 		label: Liferay.Language.get('acquisitions'),
-		layout: 2
+		layout: 2,
 	},
 	[ReportContainer.ActiveIndividualsCard]: {
 		label: Liferay.Language.get('active-individuals'),
-		layout: 1
+		layout: 1,
 	},
 	[ReportContainer.AssetAppearsOnCard]: {
 		label: Liferay.Language.get('asset-appears-on'),
-		layout: 1
+		layout: 1,
 	},
 	[ReportContainer.AudienceCard]: {
 		label: Liferay.Language.get('audience'),
-		layout: 1
+		layout: 1,
 	},
 	[ReportContainer.AverageSegmentMembershipDurationCard]: {
 		label: Liferay.Language.get('average-segment-membership-duration'),
-		layout: 1
+		layout: 1,
 	},
 	[ReportContainer.CohortAnalysisCard]: {
 		label: Liferay.Language.get('cohort-analysis'),
-		layout: 1
+		layout: 1,
 	},
 	[ReportContainer.CurrentTotalsCard]: {
 		label: Liferay.Language.get('current-totals'),
-		layout: 1
+		layout: 1,
 	},
 	[ReportContainer.DistributionBreakdownCard]: {
 		label: Liferay.Language.get('distribution-breakdown'),
-		layout: 1
+		layout: 1,
 	},
 	[ReportContainer.DownloadsByLocationCard]: {
 		label: Liferay.Language.get('downloads-by-location'),
-		layout: 2
+		layout: 2,
 	},
 	[ReportContainer.DownloadsByTechnologyCard]: {
 		label: Liferay.Language.get('downloads-by-technology'),
-		layout: 2
+		layout: 2,
 	},
 	[ReportContainer.EnrichedProfilesCard]: {
 		label: Liferay.Language.get('enriched-profiles'),
-		layout: 2
+		layout: 2,
 	},
 	[ReportContainer.EventAnalysisPage]: {
 		label: Liferay.Language.get('event-analysis'),
-		layout: 1
+		layout: 1,
 	},
 	[ReportContainer.InterestsCard]: {
 		label: Liferay.Language.get('interests'),
-		layout: 3
+		layout: 3,
 	},
 	[ReportContainer.MembershipMetricsCard]: {
 		label: Liferay.Language.get('metrics-overview'),
-		layout: 1
+		layout: 1,
 	},
 	[ReportContainer.SearchTermsCard]: {
 		label: Liferay.Language.get('search-terms'),
-		layout: 3
+		layout: 3,
 	},
 	[ReportContainer.SegmentActivationCard]: {
 		label: Liferay.Language.get('activation'),
-		layout: 1
+		layout: 1,
 	},
 	[ReportContainer.SegmentCompositionCard]: {
 		label: Liferay.Language.get('segment-composition'),
-		layout: 2
+		layout: 2,
 	},
 	[ReportContainer.SegmentCriteriaCard]: {
 		label: Liferay.Language.get('segment-criteria'),
-		layout: 1
+		layout: 1,
 	},
 	[ReportContainer.SegmentMembershipCard]: {
 		label: Liferay.Language.get('segment-membership'),
-		layout: 1
+		layout: 1,
 	},
 	[ReportContainer.SegmentMembershipTrendCard]: {
 		label: Liferay.Language.get('segment-membership-trend'),
-		layout: 1
+		layout: 1,
 	},
 	[ReportContainer.SessionsByLocationCard]: {
 		label: Liferay.Language.get('sessions-by-location'),
-		layout: 2
+		layout: 2,
 	},
 	[ReportContainer.SessionTechnologyCard]: {
 		label: Liferay.Language.get('session-technology'),
-		layout: 2
+		layout: 2,
 	},
 	[ReportContainer.SiteActivityCard]: {
 		label: Liferay.Language.get('site-activity'),
-		layout: 1
+		layout: 1,
 	},
 	[ReportContainer.SubmissionsByLocationCard]: {
 		label: Liferay.Language.get('submissions-by-location'),
-		layout: 2
+		layout: 2,
 	},
 	[ReportContainer.SubmissionsByTechnologyCard]: {
 		label: Liferay.Language.get('submissions-by-technology'),
-		layout: 2
+		layout: 2,
 	},
 	[ReportContainer.TopInterestsCard]: {
 		label: Liferay.Language.get('top-interests'),
-		layout: 2
+		layout: 2,
 	},
 	[ReportContainer.TopInterestsAsOfYesterdayCard]: {
 		label: Liferay.Language.get('top-interests-as-of-yesterday'),
-		layout: 1
+		layout: 1,
 	},
 	[ReportContainer.TopPagesCard]: {
 		label: Liferay.Language.get('top-pages'),
-		layout: 2
+		layout: 2,
 	},
 	[ReportContainer.ViewsByLocationCard]: {
 		label: Liferay.Language.get('views-by-location'),
-		layout: 2
+		layout: 2,
 	},
 	[ReportContainer.ViewsByTechnologyCard]: {
 		label: Liferay.Language.get('views-by-technology'),
-		layout: 2
+		layout: 2,
 	},
 	[ReportContainer.VisitorsBehaviorCard]: {
 		label: Liferay.Language.get('visitors-behavior'),
-		layout: 1
+		layout: 1,
 	},
 	[ReportContainer.VisitorsByTimeCard]: {
 		label: Liferay.Language.get('visitors-by-day-and-time'),
-		layout: 3
-	}
+		layout: 3,
+	},
 };
 
 const PRIMARY_COLOR = '#0B5FFF';
@@ -218,7 +218,7 @@ export const formattedContainers = (
 		acc[id] = {
 			...CONTAINERS[id],
 			checked: true,
-			id
+			id,
 		};
 
 		return acc;
@@ -260,7 +260,7 @@ export const fetchSprite = async (): Promise<Element | null> => {
 };
 
 export const inlineSVGIcons = (clonedDoc: Document, sprite: Element) => {
-	clonedDoc.querySelectorAll('svg use').forEach(useEl => {
+	clonedDoc.querySelectorAll('svg use').forEach((useEl) => {
 		const href =
 			useEl.getAttribute('href') ||
 			useEl.getAttribute('xlink:href') ||
@@ -312,9 +312,9 @@ const getContainers = async (
 			backgroundColor: '#F1F2F5',
 			logging: false,
 			onclone: sprite
-				? clonedDoc => inlineSVGIcons(clonedDoc, sprite)
-				: undefined
-		}).then(canvas => {
+				? (clonedDoc) => inlineSVGIcons(clonedDoc, sprite)
+				: undefined,
+		}).then((canvas) => {
 			const imageData = canvas.toDataURL('image/jpeg', 1.0);
 
 			containerArr.push({containerElement, imageData, layout});
@@ -337,7 +337,7 @@ const DownloadPDFReport: React.FC<IDownloadReport> = ({
 	showDateRange,
 	subtitle,
 	title,
-	url
+	url,
 }) => {
 	const [loading, setLoading] = useState(false);
 	const {observer, onOpenChange, open} = useModal();
@@ -358,12 +358,12 @@ const DownloadPDFReport: React.FC<IDownloadReport> = ({
 	);
 
 	return (
-		<div className='download-report'>
+		<div className="download-report">
 			{children ? (
 				React.cloneElement(children, {
 					disabled,
 					loading,
-					onClick: () => onOpenChange(true)
+					onClick: () => onOpenChange(true),
 				})
 			) : (
 				<DownloadReportButton
@@ -389,7 +389,7 @@ const DownloadPDFReport: React.FC<IDownloadReport> = ({
 										'the-x-file-is-being-generated-and-your-download-will-start-soon'
 									),
 									['PDF']
-								) as string
+								) as string,
 							})
 						);
 
@@ -404,11 +404,10 @@ const DownloadPDFReport: React.FC<IDownloadReport> = ({
 							if (!containers) return;
 
 							const doc = new JSPDFExtension({
-								containers: await getContainers(
-									filteredContainers
-								),
+								containers:
+									await getContainers(filteredContainers),
 								fontFamily: 'Helvetica',
-								name: title
+								name: title,
 							});
 
 							doc.addFloatText({
@@ -418,14 +417,14 @@ const DownloadPDFReport: React.FC<IDownloadReport> = ({
 								size: Size.Small,
 								url: window.location.href,
 								value: Liferay.Language.get('access-workspace'),
-								weight: Weight.Normal
+								weight: Weight.Normal,
 							});
 
 							doc.addText({
 								color: PRIMARY_COLOR,
 								size: Size.Small,
 								value: 'Analytics Cloud',
-								weight: Weight.Normal
+								weight: Weight.Normal,
 							});
 
 							if (label) {
@@ -433,7 +432,7 @@ const DownloadPDFReport: React.FC<IDownloadReport> = ({
 									color: SECONDARY_COLOR,
 									size: Size.ExtraSmall,
 									value: label?.toUpperCase(),
-									weight: Weight.Normal
+									weight: Weight.Normal,
 								});
 							}
 
@@ -441,7 +440,7 @@ const DownloadPDFReport: React.FC<IDownloadReport> = ({
 								color: TITLE_COLOR,
 								size: Size.Medium,
 								value: title,
-								weight: Weight.Bold
+								weight: Weight.Bold,
 							});
 
 							if (url) {
@@ -451,7 +450,7 @@ const DownloadPDFReport: React.FC<IDownloadReport> = ({
 									truncateText: true,
 									url,
 									value: getSafeDecodedURIComponent(url),
-									weight: Weight.Bold
+									weight: Weight.Bold,
 								});
 							}
 
@@ -459,7 +458,7 @@ const DownloadPDFReport: React.FC<IDownloadReport> = ({
 								color: SECONDARY_COLOR,
 								size: Size.Small,
 								value: subtitle,
-								weight: Weight.Normal
+								weight: Weight.Normal,
 							});
 
 							doc.render();
@@ -474,7 +473,7 @@ const DownloadPDFReport: React.FC<IDownloadReport> = ({
 					showDateRange={showDateRange}
 				>
 					{Object.values(containers).length > 1 && (
-						<ClayForm.Group className='mt-3'>
+						<ClayForm.Group className="mt-3">
 							<label>
 								<Text size={3}>
 									{Liferay.Language.get('dashboard-reports')}
@@ -504,8 +503,8 @@ const DownloadPDFReport: React.FC<IDownloadReport> = ({
 												...(
 													containers as ContainerList
 												)[id],
-												checked: newValue
-											}
+												checked: newValue,
+											},
 										});
 									}}
 								/>
@@ -520,7 +519,7 @@ const DownloadPDFReport: React.FC<IDownloadReport> = ({
 
 export const Checkbox = ({
 	label,
-	onChange
+	onChange,
 }: {
 	label: string;
 	onChange: (val: boolean) => void;

@@ -23,11 +23,11 @@ interface IMaintenanceAlertProps {
 
 export class MaintenanceAlert extends React.Component<IMaintenanceAlertProps> {
 	static defaultProps = {
-		stripe: false
+		stripe: false,
 	};
 
 	state = {
-		showMessage: false
+		showMessage: false,
 	};
 
 	@autobind
@@ -36,13 +36,13 @@ export class MaintenanceAlert extends React.Component<IMaintenanceAlertProps> {
 			currentUserId,
 			groupId,
 			project: {stateStartDate},
-			setMaintenanceSeen
+			setMaintenanceSeen,
 		} = this.props;
 
 		setMaintenanceSeen({
 			currentUserId,
 			groupId,
-			stateStartDate
+			stateStartDate,
 		});
 	}
 
@@ -51,7 +51,7 @@ export class MaintenanceAlert extends React.Component<IMaintenanceAlertProps> {
 			alertDismissed,
 			className,
 			project: {state, stateStartDate},
-			stripe
+			stripe,
 		} = this.props;
 
 		const showAlert = state === ProjectStates.Scheduled && !alertDismissed;
@@ -60,7 +60,7 @@ export class MaintenanceAlert extends React.Component<IMaintenanceAlertProps> {
 			<div className={getCN('maintenance-alert-root', className)}>
 				{showAlert && (
 					<Alert
-						iconSymbol='warning-full'
+						iconSymbol="warning-full"
 						onClose={this.handleDismissClick}
 						stripe={stripe}
 						title={Liferay.Language.get('scheduled-maintenance')}
@@ -72,7 +72,7 @@ export class MaintenanceAlert extends React.Component<IMaintenanceAlertProps> {
 							),
 							[
 								moment(stateStartDate).format('ll'),
-								moment(stateStartDate).format('LT')
+								moment(stateStartDate).format('LT'),
 							]
 						)}
 					</Alert>
@@ -86,8 +86,8 @@ export const mapState = (
 	store: any,
 	{
 		match: {
-			params: {groupId}
-		}
+			params: {groupId},
+		},
 	}: any
 ) => {
 	const currentUserId = store.getIn(['currentUser', 'data']);
@@ -96,14 +96,14 @@ export const mapState = (
 
 	const prevStateStartDate = store.getIn([
 		'maintenanceSeen',
-		`${groupId}-${currentUserId}`
+		`${groupId}-${currentUserId}`,
 	]);
 
 	return {
 		alertDismissed: prevStateStartDate === project.stateStartDate,
 		currentUserId,
 		groupId,
-		project: store.getIn(['projects', groupId, 'data'], new Project())
+		project: store.getIn(['projects', groupId, 'data'], new Project()),
 	};
 };
 

@@ -25,21 +25,22 @@ interface ITopAssetsProps {
 enum GroupByMetric {
 	DOWNLOADS = 'downloads',
 	IMPRESSIONS = 'impressions',
-	VIEWS = 'views'
+	VIEWS = 'views',
 }
 
 const GROUP_BY_TO_METRIC: Record<GroupByMetric, TopAssetMetric> = {
 	[GroupByMetric.DOWNLOADS]: 'downloadsMetric',
 	[GroupByMetric.IMPRESSIONS]: 'impressionsMetric',
-	[GroupByMetric.VIEWS]: 'viewsMetric'
+	[GroupByMetric.VIEWS]: 'viewsMetric',
 };
 
 const TABS = ['content', 'files'] as const;
 
 // TODO(LPD-91217): confirm `objectType` values once backend lands.
+
 const TAB_OBJECT_TYPES: Record<(typeof TABS)[number], TopAssetObjectType> = {
 	content: 'content',
-	files: 'file'
+	files: 'file',
 };
 
 const TAB_GROUP_BY_METRICS: Record<(typeof TABS)[number], GroupByMetric[]> = {
@@ -47,15 +48,15 @@ const TAB_GROUP_BY_METRICS: Record<(typeof TABS)[number], GroupByMetric[]> = {
 	files: [
 		GroupByMetric.DOWNLOADS,
 		GroupByMetric.IMPRESSIONS,
-		GroupByMetric.VIEWS
-	]
+		GroupByMetric.VIEWS,
+	],
 };
 
 const ASSET_ROUTE_MAP = {
 	blog: Routes.ASSETS_BLOGS_OVERVIEW,
 	document: Routes.ASSETS_DOCUMENTS_AND_MEDIA_OVERVIEW,
 	form: Routes.ASSETS_FORMS_OVERVIEW,
-	webContent: Routes.ASSETS_WEB_CONTENT_OVERVIEW
+	webContent: Routes.ASSETS_WEB_CONTENT_OVERVIEW,
 } as const;
 
 const getAssetRoute = (assetType?: string) =>
@@ -68,15 +69,15 @@ const GroupByTrigger = React.forwardRef<
 >(({label, ...rest}, ref) => (
 	<ClayButton
 		{...rest}
-		className='rounded-lg'
-		displayType='secondary'
+		className="rounded-lg"
+		displayType="secondary"
 		ref={ref}
-		size='sm'
+		size="sm"
 	>
 		{label}
 		<ClayIcon
-			className='inline-item inline-item-after'
-			symbol='caret-bottom'
+			className="inline-item inline-item-after"
+			symbol="caret-bottom"
 		/>
 	</ClayButton>
 ));
@@ -96,7 +97,7 @@ const TopAssetsTabContent: React.FC<ITopAssetsTabContentProps> = ({
 	isFiles,
 	loading,
 	metrics,
-	setGroupBy
+	setGroupBy,
 }) => {
 	const {channelId, groupId} = useParams<{
 		channelId: string;
@@ -106,7 +107,7 @@ const TopAssetsTabContent: React.FC<ITopAssetsTabContentProps> = ({
 	const groupByLabels: Record<GroupByMetric, string> = {
 		[GroupByMetric.DOWNLOADS]: Liferay.Language.get('downloads'),
 		[GroupByMetric.IMPRESSIONS]: Liferay.Language.get('impressions'),
-		[GroupByMetric.VIEWS]: Liferay.Language.get('views')
+		[GroupByMetric.VIEWS]: Liferay.Language.get('views'),
 	};
 
 	const groupByLabel = groupByLabels[groupBy];
@@ -119,15 +120,15 @@ const TopAssetsTabContent: React.FC<ITopAssetsTabContentProps> = ({
 			<StatesRenderer.Loading />
 			<StatesRenderer.Empty>
 				<ClayEmptyState
-					className='py-3 text-center'
+					className="py-3 text-center"
 					description={
 						isFiles
 							? Liferay.Language.get(
 									'files-will-appear-here-when-available'
-							  )
+								)
 							: Liferay.Language.get(
 									'assets-will-appear-here-when-available'
-							  )
+								)
 					}
 					small
 					title={
@@ -138,8 +139,8 @@ const TopAssetsTabContent: React.FC<ITopAssetsTabContentProps> = ({
 				/>
 			</StatesRenderer.Empty>
 			<StatesRenderer.Success>
-				<div className='align-items-center d-flex'>
-					<div className='font-weight-semi-bold mr-2'>
+				<div className="align-items-center d-flex">
+					<div className="font-weight-semi-bold mr-2">
 						<Text size={3}>{Liferay.Language.get('group-by')}</Text>
 					</div>
 
@@ -148,7 +149,7 @@ const TopAssetsTabContent: React.FC<ITopAssetsTabContentProps> = ({
 						as={GroupByTrigger}
 						items={metrics}
 						label={groupByLabel}
-						onSelectionChange={key =>
+						onSelectionChange={(key) =>
 							setGroupBy(key as GroupByMetric)
 						}
 						selectedKey={groupBy}
@@ -159,7 +160,7 @@ const TopAssetsTabContent: React.FC<ITopAssetsTabContentProps> = ({
 					</Picker>
 				</div>
 
-				<ClayTable className='mt-3'>
+				<ClayTable className="mt-3">
 					<ClayTable.Head>
 						<ClayTable.Row>
 							<ClayTable.Cell headingCell>
@@ -171,22 +172,22 @@ const TopAssetsTabContent: React.FC<ITopAssetsTabContentProps> = ({
 						</ClayTable.Row>
 					</ClayTable.Head>
 					<ClayTable.Body>
-						{assets.map(asset => {
+						{assets.map((asset) => {
 							const mimeType = getMimeType({
 								assetType: asset.assetType,
-								mimeType: asset.mimeType
+								mimeType: asset.mimeType,
 							});
 
 							return (
 								<ClayTable.Row key={asset.id}>
 									<ClayTable.Cell expanded>
-										<div className='align-items-center d-flex'>
-											<div className='mr-3'>
+										<div className="align-items-center d-flex">
+											<div className="mr-3">
 												<ClaySticker
 													className={classNames(
 														mimeType.className
 													)}
-													displayType='unstyled'
+													displayType="unstyled"
 												>
 													<ClayIcon
 														symbol={mimeType.icon}
@@ -194,7 +195,7 @@ const TopAssetsTabContent: React.FC<ITopAssetsTabContentProps> = ({
 												</ClaySticker>
 											</div>
 											<ClayLink
-												className='font-weight-semi-bold text-dark'
+												className="font-weight-semi-bold text-dark"
 												href={toRoute(
 													getAssetRoute(
 														asset.assetType
@@ -207,13 +208,13 @@ const TopAssetsTabContent: React.FC<ITopAssetsTabContentProps> = ({
 														...(asset.assetType && {
 															type: encodeURIComponent(
 																asset.assetType
-															)
+															),
 														}),
 														...(asset.assetTitle && {
 															title: encodeURIComponent(
 																asset.assetTitle
-															)
-														})
+															),
+														}),
 													}
 												)}
 											>
@@ -241,7 +242,7 @@ const TopAssets: React.FC<ITopAssetsProps> = ({className}) => {
 	const {
 		channelId,
 		groupId,
-		id: accountId
+		id: accountId,
 	} = useParams<{
 		channelId: string;
 		groupId: string;
@@ -275,8 +276,8 @@ const TopAssets: React.FC<ITopAssetsProps> = ({className}) => {
 			channelId,
 			groupId,
 			objectType: TAB_OBJECT_TYPES[TABS[activeTab]],
-			selectedMetric
-		}
+			selectedMetric,
+		},
 	});
 
 	const assets = data?.items ?? [];
@@ -294,12 +295,12 @@ const TopAssets: React.FC<ITopAssetsProps> = ({className}) => {
 
 	return (
 		<Card className={classNames('top-assets', className)} minHeight={260}>
-			<Card.Title className='p-3'>
-				<Text weight='semi-bold'>
+			<Card.Title className="p-3">
+				<Text weight="semi-bold">
 					{Liferay.Language.get('top-assets').toUpperCase()}
 				</Text>
 			</Card.Title>
-			<Card.Body className='p-0'>
+			<Card.Body className="p-0">
 				<ClayTabs
 					active={activeTab}
 					onActiveChange={handleActiveTabChange}
@@ -313,25 +314,25 @@ const TopAssets: React.FC<ITopAssetsProps> = ({className}) => {
 				</ClayTabs>
 
 				<ClayTabs.Content activeIndex={activeTab} fade>
-					<ClayTabs.TabPane className='pb-0'>
+					<ClayTabs.TabPane className="pb-0">
 						{tabContent}
 					</ClayTabs.TabPane>
-					<ClayTabs.TabPane className='pb-0'>
+					<ClayTabs.TabPane className="pb-0">
 						{tabContent}
 					</ClayTabs.TabPane>
 				</ClayTabs.Content>
 
 				{assets.length > 0 && (
-					<div className='d-flex p-3'>
+					<div className="d-flex p-3">
 						<ClayButton
 							borderless
-							className='ml-auto rounded-lg'
+							className="ml-auto rounded-lg"
 							onClick={() =>
 								history.push(
 									toRoute(Routes.ASSETS, {channelId, groupId})
 								)
 							}
-							size='sm'
+							size="sm"
 						>
 							{Liferay.Language.get('view-all')}
 						</ClayButton>

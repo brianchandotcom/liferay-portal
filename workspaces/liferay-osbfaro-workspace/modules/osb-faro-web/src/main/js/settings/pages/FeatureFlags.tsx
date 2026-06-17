@@ -6,7 +6,7 @@ import {
 	FEATURE_FLAGS,
 	FeatureFlagKey,
 	isFeatureFlagEnabled,
-	setFeatureFlag
+	setFeatureFlag,
 } from 'shared/util/feature-flags';
 import {reloadPage} from 'shared/util/router';
 
@@ -25,11 +25,11 @@ const FeatureFlags = () => {
 		};
 
 	return (
-		<BasePage pageTitle='Feature Flags'>
-			<ClayPanel.Group className='mb-4'>
+		<BasePage pageTitle="Feature Flags">
+			<ClayPanel.Group className="mb-4">
 				{FEATURE_FLAGS.map(({key}) => (
-					<ClayPanel displayType='secondary' key={key}>
-						<ClayPanel.Header className='align-items-center d-flex justify-content-between'>
+					<ClayPanel displayType="secondary" key={key}>
+						<ClayPanel.Header className="align-items-center d-flex justify-content-between">
 							<span>{key}</span>
 
 							<ToggleSwitch

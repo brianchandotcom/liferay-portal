@@ -28,7 +28,7 @@ const ConnectLiferayDXPStep = ({
 	close,
 	groupId,
 	onNext,
-	open
+	open,
 }: IConnectLiferayDXPStepProps) => {
 	const {dataSource, refetchDataSource} = useWizardPage();
 	const {dataSourceId} = useQueryParams();
@@ -42,11 +42,12 @@ const ConnectLiferayDXPStep = ({
 				const token = await fetchToken(groupId, dataSourceId);
 
 				setToken(token);
-			} catch (error) {
+			}
+			catch (error) {
 				addAlert({
 					alertType: Alert.Types.Error,
 					message: (error as Error).message,
-					timeout: false
+					timeout: false,
 				});
 			}
 		};
@@ -60,7 +61,7 @@ const ConnectLiferayDXPStep = ({
 	) {
 		return (
 			<ClayForm
-				onSubmit={async event => {
+				onSubmit={async (event) => {
 					event.preventDefault();
 
 					try {
@@ -74,30 +75,32 @@ const ConnectLiferayDXPStep = ({
 										'first-paste-the-token-into-your-x-instance-in-order-to-continue-with-the-data-source-setup'
 									),
 									[Liferay.Language.get('liferay-dxp')]
-								) as string
+								) as string,
 							});
-						} else {
+						}
+						else {
 							onNext();
 
 							addAlert({
 								alertType: Alert.Types.Success,
 								message: Liferay.Language.get(
 									'token-authenticated-successfully'
-								)
+								),
 							});
 						}
-					} catch (error) {
+					}
+					catch (error) {
 						addAlert({
 							alertType: Alert.Types.Error,
 							message: Liferay.Language.get(
 								'there-was-an-error-processing-your-request.-try-again.-if-the-problem-persists,-please-contact-support'
-							)
+							),
 						});
 					}
 				}}
 			>
-				<label htmlFor='token'>
-					<Text weight='semi-bold'>
+				<label htmlFor="token">
+					<Text weight="semi-bold">
 						{sub(
 							Liferay.Language.get(
 								'copy-this-token-to-your-x-instance'
@@ -118,7 +121,7 @@ const ConnectLiferayDXPStep = ({
 					onCancel={() => {
 						history.push(
 							toRoute(Routes.SETTINGS_DATA_SOURCE_LIST, {
-								groupId
+								groupId,
 							})
 						);
 					}}
@@ -130,21 +133,21 @@ const ConnectLiferayDXPStep = ({
 
 	return (
 		<ClayForm
-			onSubmit={async event => {
+			onSubmit={async (event) => {
 				event.preventDefault();
 
 				onNext();
 			}}
 		>
 			<ClayAlert
-				displayType='success'
+				displayType="success"
 				title={Liferay.Language.get('success')}
 			>
 				{Liferay.Language.get('token-authenticated-successfully')}
 			</ClayAlert>
 
-			<label htmlFor='token'>
-				<Text weight='semi-bold'>
+			<label htmlFor="token">
+				<Text weight="semi-bold">
 					{sub(
 						Liferay.Language.get(
 							'copy-this-token-to-your-x-instance'
@@ -161,7 +164,7 @@ const ConnectLiferayDXPStep = ({
 				onCancel={() => {
 					open(modalTypes.CONFIRMATION_MODAL, {
 						message: (
-							<Text as='p' size={4}>
+							<Text as="p" size={4}>
 								{sub(
 									Liferay.Language.get(
 										'this-action-will-stop-syncing-data-from-your-x-instance-to-this-analytics-cloud-workspace.-the-data-that-was-already-synced-will-remain-available-in-the-properties-the-data-source-was-connected-to.-are-you-sure-you-want-to-continue'
@@ -176,7 +179,7 @@ const ConnectLiferayDXPStep = ({
 							try {
 								await disconnect({
 									groupId,
-									id: dataSourceId
+									id: dataSourceId,
 								});
 
 								updateSearchParams(history, 'dataSourceId', '');
@@ -187,23 +190,25 @@ const ConnectLiferayDXPStep = ({
 									alertType: Alert.Types.Success,
 									message: Liferay.Language.get(
 										'data-source-disconnected'
-									)
+									),
 								});
-							} catch (error) {
+							}
+							catch (error) {
 								addAlert({
 									alertType: Alert.Types.Error,
 									message: Liferay.Language.get(
 										'there-was-an-error-processing-your-request.-try-again.-if-the-problem-persists-please-contact-support'
-									)
+									),
 								});
-							} finally {
+							}
+							finally {
 								close();
 							}
 						},
 						submitButtonDisplay: 'warning',
 						submitMessage: Liferay.Language.get('disconnect'),
 						title: Liferay.Language.get('disconnect-data-source'),
-						titleIcon: 'warning-full'
+						titleIcon: 'warning-full',
 					});
 				}}
 				prevButtonLabel={Liferay.Language.get('disconnect-data-source')}

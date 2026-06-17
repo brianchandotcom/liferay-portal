@@ -11,7 +11,7 @@ import {SegmentTypes} from 'shared/util/constants';
 const EventDisplay: React.FC<IDisplayComponentProps> = ({
 	criterion,
 	property,
-	segmentType
+	segmentType,
 }) => {
 	const {operatorName, value} = criterion;
 
@@ -34,10 +34,10 @@ const EventDisplay: React.FC<IDisplayComponentProps> = ({
 
 	if (
 		options?.length &&
-		options.some(option => option.label === 'hidden' && option.value)
+		options.some((option) => option.label === 'hidden' && option.value)
 	) {
 		return (
-			<b className='undefined-property'>
+			<b className="undefined-property">
 				{Liferay.Language.get('custom-event-no-longer-exists')}
 			</b>
 		);
@@ -45,7 +45,7 @@ const EventDisplay: React.FC<IDisplayComponentProps> = ({
 
 	return (
 		<>
-			<span className='sentence-start'>
+			<span className="sentence-start">
 				{Liferay.Language.get('individual')}
 			</span>
 

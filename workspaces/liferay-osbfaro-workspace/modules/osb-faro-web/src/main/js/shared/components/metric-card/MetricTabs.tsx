@@ -21,11 +21,11 @@ const MetricTabsView: React.FC<IMetricTabsViewProps> = React.memo(
 		return (
 			<CardTabs
 				activeTabId={activeItemIndex}
-				className='analytics-metrics-tabs'
+				className="analytics-metrics-tabs"
 				tabs={buildTabs({
 					activeItemIndex,
 					items,
-					onActiveItemIndexChange: changeActiveItemIndex
+					onActiveItemIndexChange: changeActiveItemIndex,
 				})}
 			/>
 		);
@@ -36,7 +36,7 @@ const MetricTabsRenderer: React.FC<ICommonMetricProps> = ({
 	experienceId,
 	filters,
 	interval,
-	rangeSelectors
+	rangeSelectors,
 }) => {
 	const {activeItemIndex, metrics, queries, variables} = useData();
 	const {changeActiveItemIndex} = useActions();
@@ -47,7 +47,7 @@ const MetricTabsRenderer: React.FC<ICommonMetricProps> = ({
 		interval,
 		Query: queries.TabsQuery,
 		rangeSelectors,
-		variables
+		variables,
 	});
 
 	return (

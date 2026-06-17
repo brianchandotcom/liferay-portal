@@ -23,16 +23,16 @@ const ALERT_DISPLAYS: AlertDisplaysType = {
 	[AlertType.Types.Error]: danger,
 	[AlertType.Types.Pending]: secondary,
 	[AlertType.Types.Success]: success,
-	[AlertType.Types.Warning]: warning
+	[AlertType.Types.Warning]: warning,
 };
 
 const connector = connect(
 	(state: RootState) => ({
 		alertsIMap: state.get('alerts'),
-		modalActive: state.get('modals').size > 0
+		modalActive: state.get('modals').size > 0,
 	}),
 	{
-		removeAlert
+		removeAlert,
 	}
 );
 
@@ -46,11 +46,11 @@ export const AlertFeed: React.FC<IAlertFeedProps> = ({
 	alertsIMap,
 	className,
 	modalActive = false,
-	removeAlert
+	removeAlert,
 }) => (
 	<div
 		className={getCN(className, 'alert-feed-root alert-notifications', {
-			'modal-active': modalActive
+			'modal-active': modalActive,
 		})}
 	>
 		<TransitionGroup>
@@ -59,7 +59,7 @@ export const AlertFeed: React.FC<IAlertFeedProps> = ({
 					const {
 						iconSymbol: symbol,
 						title: label,
-						type: display
+						type: display,
 					} = ALERT_DISPLAYS[alertIMap.get('alertType')];
 
 					const id = alertIMap.get('id');
@@ -68,7 +68,7 @@ export const AlertFeed: React.FC<IAlertFeedProps> = ({
 					return (
 						<CSSTransition
 							appear
-							classNames='transition-slide-up'
+							classNames="transition-slide-up"
 							key={id}
 							timeout={{enter: 150, exit: 150}}
 						>

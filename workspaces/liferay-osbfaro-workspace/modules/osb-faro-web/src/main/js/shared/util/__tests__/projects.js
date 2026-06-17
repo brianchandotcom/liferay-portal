@@ -13,9 +13,9 @@ const mockProjects = [
 			data.mockProject(0, {
 				corpProjectUuid,
 				faroSubscription: data.mockSubscription({
-					name: SubscriptionNames.LiferayAnalyticsCloudBasic
+					name: SubscriptionNames.LiferayAnalyticsCloudBasic,
 				}),
-				name: ''
+				name: '',
 			})
 		)
 	),
@@ -23,9 +23,9 @@ const mockProjects = [
 		fromJS(
 			data.mockProject(124, {
 				faroSubscription: data.mockSubscription({
-					name: SubscriptionNames.LiferayAnalyticsCloudBusiness
+					name: SubscriptionNames.LiferayAnalyticsCloudBusiness,
 				}),
-				name: 'Project B'
+				name: 'Project B',
 			})
 		)
 	),
@@ -33,12 +33,12 @@ const mockProjects = [
 		fromJS(
 			data.mockProject(125, {
 				faroSubscription: data.mockSubscription({
-					name: SubscriptionNames.LiferayAnalyticsCloudBasic
+					name: SubscriptionNames.LiferayAnalyticsCloudBasic,
 				}),
-				name: 'Project C'
+				name: 'Project C',
 			})
 		)
-	)
+	),
 ];
 
 describe('projects', () => {
@@ -74,7 +74,7 @@ describe('projects', () => {
 
 			expect(route).toEqual(
 				toRoute(Routes.WORKSPACE_ADD_WITH_CORP_PROJECT_UUID, {
-					corpProjectUuid
+					corpProjectUuid,
 				})
 			);
 		});

@@ -6,8 +6,8 @@ describe('Apollo cache deepMergeMetric', () => {
 			__typename: 'Site',
 			sessionsMetric: {
 				__typename: 'Metric',
-				geolocation: [{value: 100, valueKey: 'BR'}]
-			}
+				geolocation: [{value: 100, valueKey: 'BR'}],
+			},
 		};
 
 		const fromDevicesQuery = {
@@ -16,8 +16,8 @@ describe('Apollo cache deepMergeMetric', () => {
 				__typename: 'Metric',
 				browser: [{value: 10, valueKey: 'Chrome'}],
 				device: [{value: 8, valueKey: 'Desktop'}],
-				value: 50
-			}
+				value: 50,
+			},
 		};
 
 		expect(deepMergeMetric(fromLocationsQuery, fromDevicesQuery)).toEqual({
@@ -27,8 +27,8 @@ describe('Apollo cache deepMergeMetric', () => {
 				browser: [{value: 10, valueKey: 'Chrome'}],
 				device: [{value: 8, valueKey: 'Desktop'}],
 				geolocation: [{value: 100, valueKey: 'BR'}],
-				value: 50
-			}
+				value: 50,
+			},
 		});
 	});
 
@@ -37,11 +37,11 @@ describe('Apollo cache deepMergeMetric', () => {
 		const devices = {sessionsMetric: {browser: ['D']}};
 
 		expect(deepMergeMetric(locations, devices)).toEqual({
-			sessionsMetric: {browser: ['D'], geolocation: ['L']}
+			sessionsMetric: {browser: ['D'], geolocation: ['L']},
 		});
 
 		expect(deepMergeMetric(devices, locations)).toEqual({
-			sessionsMetric: {browser: ['D'], geolocation: ['L']}
+			sessionsMetric: {browser: ['D'], geolocation: ['L']},
 		});
 	});
 
@@ -50,7 +50,7 @@ describe('Apollo cache deepMergeMetric', () => {
 		const incoming = {sessionsMetric: {geolocation: ['new1', 'new2']}};
 
 		expect(deepMergeMetric(existing, incoming)).toEqual({
-			sessionsMetric: {geolocation: ['new1', 'new2']}
+			sessionsMetric: {geolocation: ['new1', 'new2']},
 		});
 	});
 
@@ -79,7 +79,7 @@ describe('Apollo cache deepMergeMetric', () => {
 		const incoming = {a: {b: {d: 2}}};
 
 		expect(deepMergeMetric(existing, incoming)).toEqual({
-			a: {b: {c: 1, d: 2}}
+			a: {b: {c: 1, d: 2}},
 		});
 	});
 });

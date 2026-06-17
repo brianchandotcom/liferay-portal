@@ -9,7 +9,7 @@ import {MockedProvider} from '@apollo/client/testing';
 import {
 	mockExperimentDraftReq,
 	mockExperimentReq,
-	mockExperimentStatusReq
+	mockExperimentStatusReq,
 } from 'test/graphql-data';
 import {Provider} from 'react-redux';
 import {Routes} from 'shared/util/router';
@@ -23,8 +23,8 @@ jest.mock('react-router-dom', () => ({
 		channelId: '2000',
 		groupId: '1000',
 		id: '123',
-		query: {}
-	})
+		query: {},
+	}),
 }));
 
 const WrappedComponent = ({mocks}: {mocks: any[]}) => (
@@ -49,7 +49,7 @@ describe('ExperimentOverviewPage', () => {
 			<WrappedComponent
 				mocks={[
 					mockExperimentStatusReq({status: 'DRAFT'}),
-					mockExperimentDraftReq()
+					mockExperimentDraftReq(),
 				]}
 			/>
 		);
@@ -57,10 +57,10 @@ describe('ExperimentOverviewPage', () => {
 		await waitForLoadingToBeRemoved(container);
 
 		const reviewButton = (await findByRole('link', {
-			name: /review/i
+			name: /review/i,
 		})) as HTMLAnchorElement;
 		const deleteButton = (await findByRole('link', {
-			name: /delete/i
+			name: /delete/i,
 		})) as HTMLAnchorElement;
 
 		const header = container.querySelector('.header-root')!;
@@ -85,8 +85,8 @@ describe('ExperimentOverviewPage', () => {
 				mocks={[
 					mockExperimentStatusReq({status: 'RUNNING'}),
 					mockExperimentReq({
-						status: 'RUNNING'
-					})
+						status: 'RUNNING',
+					}),
 				]}
 			/>
 		);
@@ -94,7 +94,7 @@ describe('ExperimentOverviewPage', () => {
 		await waitForLoadingToBeRemoved(container);
 
 		const terminateButton = (await findByRole('link', {
-			name: /terminate/i
+			name: /terminate/i,
 		})) as HTMLAnchorElement;
 
 		const header = container.querySelector('.header-root')!;
@@ -113,8 +113,8 @@ describe('ExperimentOverviewPage', () => {
 				mocks={[
 					mockExperimentStatusReq({status: 'FINISHED_NO_WINNER'}),
 					mockExperimentReq({
-						status: 'FINISHED_NO_WINNER'
-					})
+						status: 'FINISHED_NO_WINNER',
+					}),
 				]}
 			/>
 		);
@@ -122,10 +122,10 @@ describe('ExperimentOverviewPage', () => {
 		await waitForLoadingToBeRemoved(container);
 
 		const publishButton = (await findByRole('link', {
-			name: /publish/i
+			name: /publish/i,
 		})) as HTMLAnchorElement;
 		const deleteButton = (await findByRole('link', {
-			name: /delete/i
+			name: /delete/i,
 		})) as HTMLAnchorElement;
 
 		const header = container.querySelector('.header-root')!;
@@ -151,8 +151,8 @@ describe('ExperimentOverviewPage', () => {
 					mockExperimentStatusReq({status: 'TERMINATED'}),
 					mockExperimentReq({
 						publishable: true,
-						status: 'TERMINATED'
-					})
+						status: 'TERMINATED',
+					}),
 				]}
 			/>
 		);
@@ -160,10 +160,10 @@ describe('ExperimentOverviewPage', () => {
 		await waitForLoadingToBeRemoved(container);
 
 		const publishButton = (await findByRole('link', {
-			name: /publish/i
+			name: /publish/i,
 		})) as HTMLAnchorElement;
 		const deleteButton = (await findByRole('link', {
-			name: /delete/i
+			name: /delete/i,
 		})) as HTMLAnchorElement;
 
 		const header = container.querySelector('.header-root')!;
@@ -189,8 +189,8 @@ describe('ExperimentOverviewPage', () => {
 					mockExperimentStatusReq({status: 'FINISHED_WINNER'}),
 					mockExperimentReq({
 						publishable: true,
-						status: 'FINISHED_WINNER'
-					})
+						status: 'FINISHED_WINNER',
+					}),
 				]}
 			/>
 		);
@@ -198,10 +198,10 @@ describe('ExperimentOverviewPage', () => {
 		await waitForLoadingToBeRemoved(container);
 
 		const publishButton = (await findByRole('link', {
-			name: /publish/i
+			name: /publish/i,
 		})) as HTMLAnchorElement;
 		const deleteButton = (await findByRole('link', {
-			name: /delete/i
+			name: /delete/i,
 		})) as HTMLAnchorElement;
 
 		const header = container.querySelector('.header-root')!;
@@ -227,8 +227,8 @@ describe('ExperimentOverviewPage', () => {
 					mockExperimentStatusReq({status: 'FINISHED_NO_WINNER'}),
 					mockExperimentReq({
 						publishable: true,
-						status: 'FINISHED_NO_WINNER'
-					})
+						status: 'FINISHED_NO_WINNER',
+					}),
 				]}
 			/>
 		);
@@ -236,10 +236,10 @@ describe('ExperimentOverviewPage', () => {
 		await waitForLoadingToBeRemoved(container);
 
 		const publishButton = (await findByRole('link', {
-			name: /publish/i
+			name: /publish/i,
 		})) as HTMLAnchorElement;
 		const deleteButton = (await findByRole('link', {
-			name: /delete/i
+			name: /delete/i,
 		})) as HTMLAnchorElement;
 
 		const header = container.querySelector('.header-root')!;
@@ -265,8 +265,8 @@ describe('ExperimentOverviewPage', () => {
 					mockExperimentStatusReq({status: 'FINISHED_WINNER'}),
 					mockExperimentReq({
 						publishable: true,
-						status: 'FINISHED_WINNER'
-					})
+						status: 'FINISHED_WINNER',
+					}),
 				]}
 			/>
 		);
@@ -274,10 +274,10 @@ describe('ExperimentOverviewPage', () => {
 		await waitForLoadingToBeRemoved(container);
 
 		const publishButton = (await findByRole('link', {
-			name: /publish/i
+			name: /publish/i,
 		})) as HTMLAnchorElement;
 		const deleteButton = (await findByRole('link', {
-			name: /delete/i
+			name: /delete/i,
 		})) as HTMLAnchorElement;
 
 		expect(publishButton).toBeInTheDocument();
@@ -298,8 +298,8 @@ describe('ExperimentOverviewPage', () => {
 					mockExperimentStatusReq({status: 'FINISHED_NO_WINNER'}),
 					mockExperimentReq({
 						publishable: true,
-						status: 'FINISHED_NO_WINNER'
-					})
+						status: 'FINISHED_NO_WINNER',
+					}),
 				]}
 			/>
 		);
@@ -307,10 +307,10 @@ describe('ExperimentOverviewPage', () => {
 		await waitForLoadingToBeRemoved(container);
 
 		const publishButton = (await findByRole('link', {
-			name: /publish/i
+			name: /publish/i,
 		})) as HTMLAnchorElement;
 		const deleteButton = (await findByRole('link', {
-			name: /delete/i
+			name: /delete/i,
 		})) as HTMLAnchorElement;
 
 		expect(publishButton).toBeInTheDocument();
@@ -330,8 +330,8 @@ describe('ExperimentOverviewPage', () => {
 				mocks={[
 					mockExperimentStatusReq({status: 'TERMINATED'}),
 					mockExperimentReq({
-						status: 'TERMINATED'
-					})
+						status: 'TERMINATED',
+					}),
 				]}
 			/>
 		);
@@ -355,8 +355,8 @@ describe('ExperimentOverviewPage', () => {
 					mockExperimentReq({
 						publishable: true,
 						publishedDXPVariantId: 'DEFAULT' as any,
-						status: 'TERMINATED'
-					})
+						status: 'TERMINATED',
+					}),
 				]}
 			/>
 		);
@@ -376,8 +376,8 @@ describe('ExperimentOverviewPage', () => {
 					mockExperimentReq({
 						publishable: true,
 						publishedDXPVariantId: '44167' as any,
-						status: 'TERMINATED'
-					})
+						status: 'TERMINATED',
+					}),
 				]}
 			/>
 		);
@@ -396,8 +396,8 @@ describe('ExperimentOverviewPage', () => {
 					mockExperimentStatusReq({status: 'RUNNING'}),
 					mockExperimentReq({
 						status: 'RUNNING',
-						type: 'AB'
-					})
+						type: 'AB',
+					}),
 				]}
 			/>
 		);
@@ -416,8 +416,8 @@ describe('ExperimentOverviewPage', () => {
 					mockExperimentStatusReq({status: 'RUNNING'}),
 					mockExperimentReq({
 						status: 'RUNNING',
-						type: 'MAB'
-					})
+						type: 'MAB',
+					}),
 				]}
 			/>
 		);

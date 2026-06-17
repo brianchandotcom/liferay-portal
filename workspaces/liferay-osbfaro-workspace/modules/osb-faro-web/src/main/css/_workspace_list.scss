@@ -22,7 +22,8 @@
 
 	.border-button {
 		border-radius: 0;
-		box-shadow: inset 0 -1px 0 0 $mainLighten74,
+		box-shadow:
+			inset 0 -1px 0 0 $mainLighten74,
 			inset 4px 0 0 0 $primaryLighten33;
 	}
 
@@ -101,7 +102,8 @@
 
 			&.workspace-limit-reached {
 				background-color: $errorLighten50;
-				box-shadow: inset 0 -1px 0 0 $mainLighten74,
+				box-shadow:
+					inset 0 -1px 0 0 $mainLighten74,
 					inset 4px 0 0 0 $error;
 				cursor: not-allowed;
 
@@ -133,7 +135,8 @@
 	.request-workspace {
 		background-color: $lightBackground;
 		border-radius: 0;
-		box-shadow: inset 0 -1px 0 0 $mainLighten74,
+		box-shadow:
+			inset 0 -1px 0 0 $mainLighten74,
 			inset 4px 0 0 0 $mainLighten52;
 
 		.icon-request-workspace {

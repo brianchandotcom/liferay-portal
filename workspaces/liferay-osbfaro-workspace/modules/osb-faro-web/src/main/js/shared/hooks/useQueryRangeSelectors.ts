@@ -5,7 +5,7 @@ import {useQueryParams} from 'shared/hooks/useQueryParams';
 export const DEFAULT_RANGE_SELECTORS: RangeSelectors = {
 	rangeEnd: null as unknown as string,
 	rangeKey: RangeKeyTimeRanges.Last30Days,
-	rangeStart: null as unknown as string
+	rangeStart: null as unknown as string,
 };
 
 export const useQueryRangeSelectors = (): RangeSelectors => {

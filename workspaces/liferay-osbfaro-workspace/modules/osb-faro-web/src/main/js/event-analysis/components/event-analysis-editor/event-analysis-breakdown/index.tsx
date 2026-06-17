@@ -1,7 +1,7 @@
 import BarComparisonCell from './BarComparisonCell';
 import EventAnalysisResultQuery, {
 	EventAnalysisResultData,
-	EventAnalysisResultVariables
+	EventAnalysisResultVariables,
 } from 'event-analysis/queries/EventAnalysisResultQuery';
 import getCN from 'classnames';
 import PercentOfCell from './PercentOfCell';
@@ -19,7 +19,7 @@ import {
 	Event,
 	Filters,
 	ParsedBreakdownData,
-	ParsedBreakdownItem
+	ParsedBreakdownItem,
 } from 'event-analysis/utils/types';
 import {compose} from 'redux';
 import {EditBreakdown, withAttributesConsumer} from '../context/attributes';
@@ -27,7 +27,7 @@ import {get, isNil, omit} from 'lodash';
 import {getMaxEventValue, parseBreakdownData} from 'event-analysis/utils/utils';
 import {
 	getSafeDecodedURIComponent,
-	getSafeRangeSelectors
+	getSafeRangeSelectors,
 } from 'shared/util/util';
 import {OrderedMap} from 'immutable';
 import {SafeResults} from 'shared/hoc/util';
@@ -85,7 +85,7 @@ const BreakdownTable: React.FC<IBreakdownTableProps> = ({
 	eventAnalysisResult,
 	onDeltaChange,
 	onPageChange,
-	page
+	page,
 }) => {
 	const parseData = (
 		data: BreakdownData
@@ -107,7 +107,7 @@ const BreakdownTable: React.FC<IBreakdownTableProps> = ({
 		items: ParsedBreakdownData;
 	} => {
 		const orderedBreakdowns = breakdownOrder.map(
-			breakdownId => breakdowns[breakdownId]
+			(breakdownId) => breakdowns[breakdownId]
 		);
 
 		const items = parseBreakdownData(data, orderedBreakdowns);
@@ -121,14 +121,14 @@ const BreakdownTable: React.FC<IBreakdownTableProps> = ({
 			event,
 			highestValue,
 			order: breakdownOrder,
-			value: data.value
+			value: data.value,
 		});
 
 		return {
 			columns,
 			count: data.count,
 			highestValue,
-			items
+			items,
 		};
 	};
 
@@ -141,7 +141,7 @@ const BreakdownTable: React.FC<IBreakdownTableProps> = ({
 
 			return [
 				`breakdown${i}`,
-				{field: `breakdown${i}`, sortOrder: sortType}
+				{field: `breakdown${i}`, sortOrder: sortType},
 			];
 		})
 	);
@@ -171,21 +171,21 @@ const BreakdownTable: React.FC<IBreakdownTableProps> = ({
 			attribute,
 			breakdown: {
 				...breakdown,
-				sortType: sortOrder as Breakdown['sortType']
+				sortType: sortOrder as Breakdown['sortType'],
 			},
-			id: breakdown.id ?? ''
+			id: breakdown.id ?? '',
 		});
 	};
 
 	return (
 		<div
 			className={getCN('breakdown-table-root', {
-				'breakdown-single-event': !breakdownOrder.length
+				'breakdown-single-event': !breakdownOrder.length,
 			})}
 			ref={tableRef}
 		>
 			{!breakdownOrder.length ? (
-				<div className='table-hover'>
+				<div className="table-hover">
 					<BarComparisonCell
 						compareToPrevious={compareToPrevious}
 						event={event}
@@ -205,7 +205,7 @@ const BreakdownTable: React.FC<IBreakdownTableProps> = ({
 					onSortChange={handleSort}
 					orderIOMap={orderIOMap}
 					page={page}
-					rowIdentifier='index'
+					rowIdentifier="index"
 					striped={false}
 					total={count}
 				/>
@@ -227,7 +227,7 @@ const BreakdownWithSafeResults: React.FC<
 	filterOrder,
 	filters,
 	rangeSelectors,
-	type
+	type,
 }) => {
 	const {delta, onDeltaChange, onPageChange, page} = useStatefulPagination();
 
@@ -240,17 +240,17 @@ const BreakdownWithSafeResults: React.FC<
 			analysisType: type,
 			channelId,
 			compareToPrevious,
-			eventAnalysisBreakdowns: breakdownOrder.map(breakdownId =>
+			eventAnalysisBreakdowns: breakdownOrder.map((breakdownId) =>
 				omit(breakdowns[breakdownId], 'id')
 			),
-			eventAnalysisFilters: filterOrder.map(filterId =>
+			eventAnalysisFilters: filterOrder.map((filterId) =>
 				omit(filters[filterId], 'id')
 			),
 			eventDefinitionId: event.id,
 			page: page - 1,
 			size: delta,
-			...getSafeRangeSelectors(rangeSelectors!)
-		}
+			...getSafeRangeSelectors(rangeSelectors!),
+		},
 	});
 
 	useEffect(() => {
@@ -260,7 +260,7 @@ const BreakdownWithSafeResults: React.FC<
 	return (
 		<SafeResults {...result} page={false} pageDisplay={false}>
 			{({
-				eventAnalysisResult
+				eventAnalysisResult,
 			}: {
 				eventAnalysisResult: EventAnalysisResultData;
 			}) => (
@@ -303,7 +303,7 @@ const getColumns = ({
 	event,
 	highestValue,
 	order,
-	value
+	value,
 }: {
 	attributes: Attributes;
 	breakdowns: Breakdowns;
@@ -324,7 +324,7 @@ const getColumns = ({
 				accessor,
 				cellRenderer: ({
 					className,
-					data
+					data,
 				}: {
 					className?: string;
 					data: ParsedBreakdownItem;
@@ -349,7 +349,8 @@ const getColumns = ({
 								{Liferay.Language.get('no-results')}
 							</td>
 						);
-					} else if (isNil(dataValue)) {
+					}
+					else if (isNil(dataValue)) {
 						return null;
 					}
 
@@ -373,7 +374,7 @@ const getColumns = ({
 						>
 							<div style={{width: 128}}>
 								<TextTruncate
-									className='white-space-normal'
+									className="white-space-normal"
 									maxCharLength={200}
 									title={getSafeDecodedURIComponent(
 										(dataValue as BreakdownDataItem).name
@@ -384,17 +385,17 @@ const getColumns = ({
 					);
 				},
 				headProps: {
-					order: sortType
+					order: sortType,
 				},
 				label: (
 					<div>
-						<span className='breakdown-category'>
+						<span className="breakdown-category">
 							{attributeType}
 						</span>
 
 						{attributes[attributeId].displayName}
 					</div>
-				)
+				),
 			};
 		}
 	);
@@ -402,7 +403,7 @@ const getColumns = ({
 	columns.push({
 		cellRenderer: ({
 			className,
-			data: {events}
+			data: {events},
 		}: {
 			className?: string;
 			data: ParsedBreakdownItem;
@@ -433,17 +434,17 @@ const getColumns = ({
 			);
 		},
 		label: Liferay.Language.get('events'),
-		sortable: false
+		sortable: false,
 	});
 
 	const fullTitleText = sub(Liferay.Language.get('percent-of-x'), [
-		event.displayName || event.name
+		event.displayName || event.name,
 	]);
 
 	columns.push({
 		cellRenderer: ({
 			className,
-			data: {events}
+			data: {events},
 		}: {
 			className?: string;
 			data: ParsedBreakdownItem;
@@ -459,13 +460,13 @@ const getColumns = ({
 		label: (
 			<div style={{width: 128}}>
 				<TextTruncate
-					className='white-space-normal table-column-text-end'
+					className="white-space-normal table-column-text-end"
 					maxCharLength={40}
 					title={fullTitleText}
 				/>
 			</div>
 		),
-		sortable: false
+		sortable: false,
 	});
 
 	return columns;

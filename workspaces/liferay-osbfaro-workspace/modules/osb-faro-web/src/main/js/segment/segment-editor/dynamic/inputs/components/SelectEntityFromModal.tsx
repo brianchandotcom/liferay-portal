@@ -62,8 +62,8 @@ const SelectEntityFromModal: React.FC<ISelectEntityFromModalProps> = ({
 				{
 					...detailsListColumns.getDataSourceName(groupId),
 					className: 'table-cell-expand',
-					sortable: false
-				}
+					sortable: false,
+				},
 			],
 			dataSourceParams: {groupId},
 			initialDelta,
@@ -77,33 +77,33 @@ const SelectEntityFromModal: React.FC<ISelectEntityFromModalProps> = ({
 			},
 			submitMessage,
 			title,
-			...otherProps
+			...otherProps,
 		});
 	};
 
 	return (
 		<Form.GroupItem>
-			<Input.Group className='select-entity-group'>
+			<Input.Group className="select-entity-group">
 				<Input.GroupItem
 					className={getCN({
-						'has-error': error
+						'has-error': error,
 					})}
 				>
-					<Input.Group className='select-input-root'>
+					<Input.Group className="select-input-root">
 						<Input.GroupItem>
 							<Input />
 						</Input.GroupItem>
 
-						<div className='selected-item-container'>
+						<div className="selected-item-container">
 							{renderEntity(entity)}
 						</div>
 					</Input.Group>
 				</Input.GroupItem>
 
 				<Input.Button
-					displayType='secondary'
+					displayType="secondary"
 					onClick={handleModal}
-					position='append'
+					position="append"
 				>
 					{Liferay.Language.get('select')}
 				</Input.Button>

@@ -7,35 +7,35 @@ export enum AlertTypes {
 	Info = 'info',
 	Secondary = 'secondary',
 	Success = 'success',
-	Warning = 'warning'
+	Warning = 'warning',
 }
 
 export const ALERT_CONFIG_MAP = {
 	[AlertTypes.Danger]: {
 		iconSymbol: 'exclamation-full',
 		title: Liferay.Language.get('error'),
-		type: AlertTypes.Danger
+		type: AlertTypes.Danger,
 	},
 	[AlertTypes.Info]: {
 		iconSymbol: 'info-circle',
 		title: Liferay.Language.get('info'),
-		type: AlertTypes.Info
+		type: AlertTypes.Info,
 	},
 	[AlertTypes.Secondary]: {
 		iconSymbol: 'info-circle',
 		title: Liferay.Language.get('pending'),
-		type: AlertTypes.Secondary
+		type: AlertTypes.Secondary,
 	},
 	[AlertTypes.Success]: {
 		iconSymbol: 'check-circle-full',
 		title: Liferay.Language.get('success'),
-		type: AlertTypes.Success
+		type: AlertTypes.Success,
 	},
 	[AlertTypes.Warning]: {
 		iconSymbol: 'warning-full',
 		title: Liferay.Language.get('warning'),
-		type: AlertTypes.Warning
-	}
+		type: AlertTypes.Warning,
+	},
 };
 
 interface IAlertProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -55,30 +55,30 @@ const Alert: React.FC<IAlertProps> = ({
 	onClose,
 	stripe = false,
 	title = Liferay.Language.get('info'),
-	type = AlertTypes.Info
+	type = AlertTypes.Info,
 }) => {
 	let content = (
 		<>
 			{iconSymbol && (
-				<span className='alert-indicator'>
-					<ClayIcon className='icon-root' symbol={iconSymbol} />
+				<span className="alert-indicator">
+					<ClayIcon className="icon-root" symbol={iconSymbol} />
 				</span>
 			)}
 
-			{title && <strong className='lead'>{`${title}:`}</strong>}
+			{title && <strong className="lead">{`${title}:`}</strong>}
 
 			{children}
 
 			{onClose && (
-				<button className='close' onClick={() => onClose(id!)}>
-					<ClayIcon className='icon-root' symbol='times' />
+				<button className="close" onClick={() => onClose(id!)}>
+					<ClayIcon className="icon-root" symbol="times" />
 				</button>
 			)}
 		</>
 	);
 
 	if (stripe) {
-		content = <div className='container'>{content}</div>;
+		content = <div className="container">{content}</div>;
 	}
 
 	return (
@@ -88,11 +88,11 @@ const Alert: React.FC<IAlertProps> = ({
 				{
 					'alert-dismissible': onClose,
 					'alert-fluid': stripe,
-					[`alert-${type}`]: type
+					[`alert-${type}`]: type,
 				},
 				className
 			)}
-			role='alert'
+			role="alert"
 		>
 			{content}
 		</div>

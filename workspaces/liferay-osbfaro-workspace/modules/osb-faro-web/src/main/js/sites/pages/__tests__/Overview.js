@@ -16,12 +16,12 @@ const MOCK_CONTEXT = {
 	router: {
 		params: {
 			channelId: '123123',
-			groupId: '23'
+			groupId: '23',
 		},
 		query: {
-			rangeKey: '30'
-		}
-	}
+			rangeKey: '30',
+		},
+	},
 };
 
 describe('Sites Dashboard Overview', () => {
@@ -35,12 +35,12 @@ describe('Sites Dashboard Overview', () => {
 						<ChannelContext.Provider value={mockChannelContext()}>
 							<BasePage.Context.Provider value={MOCK_CONTEXT}>
 								<Overview
-									channelName='Test Channel'
+									channelName="Test Channel"
 									router={{
 										params: {
 											channelId: '123123',
-											groupId: '23'
-										}
+											groupId: '23',
+										},
 									}}
 								/>
 							</BasePage.Context.Provider>

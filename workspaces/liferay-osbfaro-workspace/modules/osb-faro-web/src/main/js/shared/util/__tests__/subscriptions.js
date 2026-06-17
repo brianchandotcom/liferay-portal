@@ -7,7 +7,7 @@ import {
 	INDIVIDUALS,
 	isLDPPlan,
 	PAGEVIEWS,
-	SubscriptionNames
+	SubscriptionNames,
 } from '../subscriptions';
 import {fromJS} from 'immutable';
 import {mockSubscription} from 'test/data';
@@ -15,8 +15,8 @@ import {Plan} from '../../util/records';
 
 jest.mock('shared/hooks/useTimeZone', () => ({
 	useTimeZone: () => ({
-		timeZoneId: 'UTC'
-	})
+		timeZoneId: 'UTC',
+	}),
 }));
 
 describe('subscriptions', () => {
@@ -28,7 +28,7 @@ describe('subscriptions', () => {
 						mockSubscription({
 							individualsCount: 5000,
 							name: SubscriptionNames.LiferayAnalyticsCloudEnterprise,
-							pageViewsCount: 5000000
+							pageViewsCount: 5000000,
 						})
 					)
 				)
@@ -36,7 +36,7 @@ describe('subscriptions', () => {
 
 			expect(planAddOns).toEqual({
 				individuals: '10,000',
-				pageViews: '5,000,000'
+				pageViews: '5,000,000',
 			});
 		});
 
@@ -47,7 +47,7 @@ describe('subscriptions', () => {
 						mockSubscription({
 							individualsCount: 5000,
 							name: SubscriptionNames.LxcSubscriptionEngageSite,
-							pageViewsCount: 5000000
+							pageViewsCount: 5000000,
 						})
 					)
 				)
@@ -102,7 +102,7 @@ describe('subscriptions', () => {
 			const plan = formatPlanData(
 				fromJS(
 					mockSubscription({
-						name: SubscriptionNames.LiferayAnalyticsCloudBasic
+						name: SubscriptionNames.LiferayAnalyticsCloudBasic,
 					})
 				)
 			);
@@ -147,8 +147,8 @@ describe('subscriptions', () => {
 		it.each([
 			SubscriptionNames.LiferayDataPlatform,
 			SubscriptionNames.LiferayDataPlatformEnterprise,
-			SubscriptionNames.LiferayDataPlatformPrivateBeta
-		])('returns true for %s', name => {
+			SubscriptionNames.LiferayDataPlatformPrivateBeta,
+		])('returns true for %s', (name) => {
 			expect(isLDPPlan(name)).toBe(true);
 		});
 
@@ -157,8 +157,8 @@ describe('subscriptions', () => {
 			SubscriptionNames.LiferayAnalyticsCloudBusiness,
 			SubscriptionNames.LiferayAnalyticsCloudEnterprise,
 			SubscriptionNames.LiferaySaasEnterprisePlan,
-			SubscriptionNames.LxcBusinessPlan
-		])('returns false for non-LDP plan %s', name => {
+			SubscriptionNames.LxcBusinessPlan,
+		])('returns false for non-LDP plan %s', (name) => {
 			expect(isLDPPlan(name)).toBe(false);
 		});
 

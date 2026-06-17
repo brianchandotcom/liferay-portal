@@ -15,6 +15,7 @@ const AttributeList = lazy(
 const GlobalAttributeList = lazy(
 	() =>
 		import(
+
 			/* webpackChunkName: "GlobalAttributeList" */ './GlobalAttributeList'
 		)
 );
@@ -23,13 +24,13 @@ const NAV_ITEMS = [
 	{
 		exact: true,
 		label: Liferay.Language.get('global-attributes'),
-		route: Routes.SETTINGS_DEFINITIONS_EVENT_ATTRIBUTES_GLOBAL
+		route: Routes.SETTINGS_DEFINITIONS_EVENT_ATTRIBUTES_GLOBAL,
 	},
 	{
 		exact: true,
 		label: Liferay.Language.get('attributes'),
-		route: Routes.SETTINGS_DEFINITIONS_EVENT_ATTRIBUTES_LOCAL
-	}
+		route: Routes.SETTINGS_DEFINITIONS_EVENT_ATTRIBUTES_LOCAL,
+	},
 ];
 
 interface ITabsCardProps {
@@ -40,14 +41,14 @@ const TabsCard: React.FC<ITabsCardProps> = ({groupId}) => {
 	const matchedRoute = getMatchedRoute(NAV_ITEMS);
 
 	const initialItem =
-		NAV_ITEMS.find(item => item.route === matchedRoute) ?? NAV_ITEMS[0];
+		NAV_ITEMS.find((item) => item.route === matchedRoute) ?? NAV_ITEMS[0];
 
 	const [activeLabel, setActiveLabel] = useState(initialItem.label);
 
 	return (
-		<Card key='cardContainer' pageDisplay>
+		<Card key="cardContainer" pageDisplay>
 			<ClayNavigationBar
-				className='page-subnav mx-4 my-3'
+				className="page-subnav mx-4 my-3"
 				triggerLabel={activeLabel}
 			>
 				{NAV_ITEMS.map(({label, route}) => (

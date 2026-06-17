@@ -6,6 +6,6 @@ export function updateSearchParams(history: History, key: string, value: any) {
 
 	history.push({
 		pathname: window.location.pathname,
-		search: params.toString()
+		search: params.toString(),
 	});
 }

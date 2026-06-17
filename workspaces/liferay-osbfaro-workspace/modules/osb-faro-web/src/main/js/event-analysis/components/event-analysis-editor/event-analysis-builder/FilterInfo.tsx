@@ -18,34 +18,34 @@ const FilterInfo: React.FC<IFilterInfoProps> = ({
 	description,
 	name,
 	onEditClick,
-	showDescription
+	showDescription,
 }) => (
-	<div className='filter-info-root'>
-		<div className='filter-name d-flex align-items-center justify-content-between'>
+	<div className="filter-info-root">
+		<div className="filter-name d-flex align-items-center justify-content-between">
 			{name}
 
 			{onEditClick && (
 				<ClayButton
 					aria-label={Liferay.Language.get('edit')}
 					borderless
-					className='button-root'
-					displayType='secondary'
+					className="button-root"
+					displayType="secondary"
 					onClick={() => onEditClick(name)}
-					size='sm'
+					size="sm"
 				>
-					<ClayIcon className='icon-root' symbol='pencil' />
+					<ClayIcon className="icon-root" symbol="pencil" />
 				</ClayButton>
 			)}
 		</div>
 
 		{showDescription && (
-			<div className='description'>
+			<div className="description">
 				{description || Liferay.Language.get('no-description')}
 			</div>
 		)}
 
 		{dataType && (
-			<Label display='info' uppercase>
+			<Label display="info" uppercase>
 				{DATA_TYPE_LABELS_MAP[dataType]}
 			</Label>
 		)}

@@ -18,7 +18,7 @@ describe('IndividualAttributesCDP', () => {
 		screenName: 'foobar',
 		suffix: 'Jr.',
 		userId: '123',
-		uuid: 'uuid-123'
+		uuid: 'uuid-123',
 	};
 
 	it('should render', () => {

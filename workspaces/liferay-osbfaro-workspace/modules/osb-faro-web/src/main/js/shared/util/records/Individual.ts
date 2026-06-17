@@ -31,7 +31,7 @@ export default class Individual
 		lastSessionCountry: null,
 		name: '',
 		properties: Map(),
-		type: EntityTypes.Individual
+		type: EntityTypes.Individual,
 	})
 	implements IIndividual
 {

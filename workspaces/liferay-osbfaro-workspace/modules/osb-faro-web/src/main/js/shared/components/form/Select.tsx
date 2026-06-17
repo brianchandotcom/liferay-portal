@@ -41,7 +41,7 @@ const FormSelect: React.FC<IFormSelectProps> = ({
 	const classes = getCN(className, {
 		'form-inline-group': inline,
 		'has-error': touched && error,
-		'has-success': touched && !error && !disabled
+		'has-success': touched && !error && !disabled,
 	});
 
 	const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -61,7 +61,7 @@ const FormSelect: React.FC<IFormSelectProps> = ({
 			)}
 
 			{secondaryInfo && (
-				<Label className='font-weight-normal' htmlFor={name}>
+				<Label className="font-weight-normal" htmlFor={name}>
 					<p>{secondaryInfo}</p>
 				</Label>
 			)}

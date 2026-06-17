@@ -4,8 +4,8 @@ import React from 'react';
 const CountryFilter = () => (
 	<FieldValueFilter
 		entityLabel={Liferay.Language.get('countries')}
-		fieldMappingFieldName='country'
-		filterKey='countryFilter'
+		fieldMappingFieldName="country"
+		filterKey="countryFilter"
 	/>
 );
 

@@ -6,15 +6,15 @@ export const DEVICE_OPTIONS = [
 	{label: Liferay.Language.get('desktop'), value: 'Desktop'},
 	{
 		label: Liferay.Language.get('smartphone'),
-		value: 'Smartphone'
+		value: 'Smartphone',
 	},
-	{label: Liferay.Language.get('tablet'), value: 'Tablet'}
+	{label: Liferay.Language.get('tablet'), value: 'Tablet'},
 ];
 
 const createSessionProperty = ({
 	label,
 	name,
-	type
+	type,
 }: {
 	label: string;
 	name: string;
@@ -25,7 +25,7 @@ const createSessionProperty = ({
 		label,
 		name,
 		propertyKey: 'session',
-		type
+		type,
 	});
 
 const SESSION_PROPERTIES = List(
@@ -33,34 +33,34 @@ const SESSION_PROPERTIES = List(
 		{
 			label: Liferay.Language.get('browser'),
 			name: 'context/browserName',
-			type: PropertyTypes.SessionText
+			type: PropertyTypes.SessionText,
 		},
 		{
 			label: Liferay.Language.get('device'),
 			name: 'context/deviceType',
 			options: DEVICE_OPTIONS,
-			type: PropertyTypes.SessionText
+			type: PropertyTypes.SessionText,
 		},
 		{
 			label: Liferay.Language.get('geolocation'),
 			name: 'context/country',
-			type: PropertyTypes.SessionGeolocation
+			type: PropertyTypes.SessionGeolocation,
 		},
 		{
 			label: Liferay.Language.get('referrer'),
 			name: 'context/referrer',
-			type: PropertyTypes.SessionText
+			type: PropertyTypes.SessionText,
 		},
 		{
 			label: Liferay.Language.get('date-&-time'),
 			name: 'completeDate',
-			type: PropertyTypes.SessionDateTime
+			type: PropertyTypes.SessionDateTime,
 		},
 		{
 			label: Liferay.Language.get('url'),
 			name: 'context/url',
-			type: PropertyTypes.SessionText
-		}
+			type: PropertyTypes.SessionText,
+		},
 	].map(createSessionProperty)
 );
 

@@ -21,16 +21,16 @@ const groupBrowserData = (data, max) => {
 		...orderedData.slice(0, max),
 		{
 			value: totalOtherValue,
-			valueKey: Liferay.Language.get('others')
-		}
+			valueKey: Liferay.Language.get('others'),
+		},
 	];
 };
 
 const groupDeviceData = (data, max) => {
 	if (data.length <= max) {
-		return data.map(group => ({
+		return data.map((group) => ({
 			...group,
-			label: getDeviceLabel(group.type)
+			label: getDeviceLabel(group.type),
 		}));
 	}
 
@@ -42,27 +42,28 @@ const groupDeviceData = (data, max) => {
 					type: Liferay.Language.get('other'),
 					views:
 						actual.data[0].views +
-						next.data.reduce((acc, next) => acc + next.views, 0)
-				}
+						next.data.reduce((acc, next) => acc + next.views, 0),
+				},
 			],
-			percentageOfTotal: actual.percentageOfTotal + next.percentageOfTotal
+			percentageOfTotal:
+				actual.percentageOfTotal + next.percentageOfTotal,
 		}),
 		{
 			data: [{views: 0}],
 			percentageOfTotal: 0,
-			type: Liferay.Language.get('other')
+			type: Liferay.Language.get('other'),
 		}
 	);
 
 	return [
-		...data.slice(0, max).map(group => ({
+		...data.slice(0, max).map((group) => ({
 			...group,
-			label: getDeviceLabel(group.type)
+			label: getDeviceLabel(group.type),
 		})),
 		{
 			...otherData,
-			label: Liferay.Language.get('others')
-		}
+			label: Liferay.Language.get('others'),
+		},
 	];
 };
 
@@ -71,28 +72,28 @@ const groupDeviceData = (data, max) => {
  * @description Get Devices Mapper
  * @param {function} getMetric
  */
-const getDevicesMapper = getMetric => {
-	const mapResultToProps = safeResultToProps(result => {
+const getDevicesMapper = (getMetric) => {
+	const mapResultToProps = safeResultToProps((result) => {
 		const metric = getMetric(result);
-		const devices = metric.device.map(device => {
+		const devices = metric.device.map((device) => {
 			const data = device.metrics.map(({value, valueKey}) => ({
 				percentage: getPercentage(value, metric.value),
 				type: valueKey,
-				views: value
+				views: value,
 			}));
 
 			return {
 				data,
 				percentageOfTotal: getPercentage(device.value, metric.value),
 				totalViews: device.value,
-				type: device.valueKey
+				type: device.valueKey,
 			};
 		});
 
 		return {
 			browsers: groupBrowserData(metric.browser, MAX_BROWSER),
 			devices: groupDeviceData(devices, MAX_SYSTEMS),
-			total: metric.value
+			total: metric.value,
 		};
 	});
 
@@ -106,13 +107,13 @@ const getDevicesMapper = getMetric => {
 		filters,
 		interval,
 		rangeSelectors,
-		router: {params}
+		router: {params},
 	}) =>
 		getVariables({experienceId, filters, interval, params, rangeSelectors});
 
 	return {
 		options: mapPropsToOptions,
-		props: mapResultToProps
+		props: mapResultToProps,
 	};
 };
 

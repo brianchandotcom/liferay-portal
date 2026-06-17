@@ -16,7 +16,8 @@ export const useFetchProjects = () => {
 					projects.map((result: any) => new Project(fromJS(result)))
 				);
 				setLoading(false);
-			} catch {
+			}
+			catch {
 				throw new Error('Error on fetchProjects');
 			}
 		}
@@ -26,7 +27,7 @@ export const useFetchProjects = () => {
 
 	return {
 		data,
-		loading
+		loading,
 	};
 };
 
@@ -41,7 +42,8 @@ export const useFetchJoinableProjects = () => {
 
 				setData(projects);
 				setLoading(false);
-			} catch {
+			}
+			catch {
 				throw new Error('Error on fetchJoinableProjects');
 			}
 		}
@@ -51,6 +53,6 @@ export const useFetchJoinableProjects = () => {
 
 	return {
 		data,
-		loading
+		loading,
 	};
 };

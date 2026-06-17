@@ -5,7 +5,7 @@ import {createOrderIOMap, NAME} from 'shared/util/pagination';
 import {EntityType} from '../context/referencedObjects';
 import {
 	getMapResultToProps,
-	mapPropsToOptions
+	mapPropsToOptions,
 } from '../mappers/dxp-entity-bag-mapper';
 import {ISegmentEditorCustomInputBase} from '../utils/types';
 import {organizationsListColumns} from 'shared/util/table-columns';
@@ -21,21 +21,21 @@ const OrganizationSelectInput: React.FC<IOrganizationSelectProps> = ({
 	...otherProps
 }) => (
 	<CustomSelectEntityInput
-		className='organization-select-input-root'
+		className="organization-select-input-root"
 		columns={organizationsListColumns}
 		entityLabel={Liferay.Language.get('organizations')}
 		entityType={EntityType.Organizations}
 		graphqlProps={{
 			graphqlQuery: OrganizationsQuery,
 			mapPropsToOptions,
-			mapResultToProps: getMapResultToProps('organizations')
+			mapResultToProps: getMapResultToProps('organizations'),
 		}}
 		initialOrderIOMap={createOrderIOMap(NAME)}
 		orderByOptions={[
 			{
 				label: Liferay.Language.get('name'),
-				value: NAME
-			}
+				value: NAME,
+			},
 		]}
 		property={property}
 		valid={valid}

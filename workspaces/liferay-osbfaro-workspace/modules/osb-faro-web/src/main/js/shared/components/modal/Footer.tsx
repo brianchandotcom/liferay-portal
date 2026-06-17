@@ -8,7 +8,7 @@ interface IFooterProps extends React.HTMLAttributes<HTMLDivElement> {
 const Footer: React.FC<IFooterProps> = ({
 	border = false,
 	children,
-	className
+	className,
 }) => (
 	<div className={getCN('modal-footer', className, {border})}>{children}</div>
 );

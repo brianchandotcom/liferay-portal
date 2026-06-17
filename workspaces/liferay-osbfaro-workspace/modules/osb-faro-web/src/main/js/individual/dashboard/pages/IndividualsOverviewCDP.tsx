@@ -52,7 +52,7 @@ const IndividualsOverviewEmptyState: React.FC<
 	IIndividualsOverviewEmptyStateProps
 > = ({authorized, data, groupId, loading}) => {
 	if (loading) {
-		return <Loading key='LOADING' />;
+		return <Loading key="LOADING" />;
 	}
 
 	if (isNil(data?.total) || data?.total === 0) {
@@ -64,16 +64,16 @@ const IndividualsOverviewEmptyState: React.FC<
 							{authorized
 								? Liferay.Language.get(
 										'connect-a-data-source-to-get-started'
-								  )
+									)
 								: Liferay.Language.get(
 										'contact-an-administrator-to-connect-a-data-source-to-get-started'
-								  )}
+									)}
 
 							<ClayLink
-								className='d-block'
-								decoration='underline'
+								className="d-block"
+								decoration="underline"
 								href={URLConstants.HelpConnectDxp}
-								target='_blank'
+								target="_blank"
 							>
 								<ClayText size={4}>
 									{Liferay.Language.get(
@@ -85,9 +85,9 @@ const IndividualsOverviewEmptyState: React.FC<
 									aria-label={Liferay.Language.get(
 										'learn-more-about-data-sources'
 									)}
-									className='ml-1'
+									className="ml-1"
 									fontSize={12}
-									symbol='shortcut'
+									symbol="shortcut"
 								/>
 							</ClayLink>
 						</>
@@ -95,7 +95,7 @@ const IndividualsOverviewEmptyState: React.FC<
 					icon={{
 						border: false,
 						size: Sizes.XXXLarge,
-						symbol: 'ac_satellite'
+						symbol: 'ac_satellite',
 					}}
 					primary
 					title={Liferay.Language.get('no-data-source-synced')}
@@ -103,10 +103,10 @@ const IndividualsOverviewEmptyState: React.FC<
 					{authorized ? (
 						<ClayLink
 							button
-							className='button-root'
-							displayType='primary'
+							className="button-root"
+							displayType="primary"
 							href={toRoute(Routes.SETTINGS_DATA_SOURCE_LIST, {
-								groupId
+								groupId,
 							})}
 						>
 							{Liferay.Language.get('connect-data-source')}
@@ -136,22 +136,22 @@ const IndividualsOverviewCDP = () => {
 		dataSourceFn: API.dataSource.search,
 		variables: {
 			delta: 1,
-			groupId
-		}
+			groupId,
+		},
 	});
 	const {data, loading} = useQuery(IndividualMetricsQuery, {
 		fetchPolicy: 'network-only',
 		variables: {
 			channelId,
 			interval: INTERVAL_KEY_MAP.week,
-			rangeKey: 30
-		}
+			rangeKey: 30,
+		},
 	});
 
 	return (
 		<>
 			<BasePage.SubHeader>
-				<div className='d-flex justify-content-end w-100'>
+				<div className="d-flex justify-content-end w-100">
 					<DownloadStaticCSVReport
 						disabled={!!dataSourceStates.empty}
 						type={CSVType.Individual}
@@ -239,7 +239,7 @@ const IndividualsOverviewCDP = () => {
 						</ClayLayout.Row>
 
 						<SectionHeader
-							icon='box-container'
+							icon="box-container"
 							title={Liferay.Language.get('individuals')}
 						/>
 

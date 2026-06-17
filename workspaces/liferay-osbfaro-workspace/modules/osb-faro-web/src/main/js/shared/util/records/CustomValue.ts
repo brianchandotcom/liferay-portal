@@ -10,7 +10,7 @@ export default class CustomValue
 	extends Record({
 		criterionGroup: Map(),
 		operator: null,
-		value: null
+		value: null,
 	})
 	implements ICustomValue
 {

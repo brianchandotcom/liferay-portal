@@ -2,7 +2,7 @@ import {
 	FEATURE_FLAGS,
 	FEATURE_FLAGS_STORAGE_KEY,
 	isFeatureFlagEnabled,
-	setFeatureFlag
+	setFeatureFlag,
 } from 'shared/util/feature-flags';
 
 describe('feature-flags', () => {
@@ -36,7 +36,7 @@ describe('feature-flags', () => {
 			JSON.parse(window.localStorage.getItem(FEATURE_FLAGS_STORAGE_KEY))
 		).toEqual({
 			ENABLE_CSVFILE: true,
-			ENABLE_GLOBAL_FILTER: true
+			ENABLE_GLOBAL_FILTER: true,
 		});
 	});
 
@@ -47,7 +47,7 @@ describe('feature-flags', () => {
 	});
 
 	it('exposes a key and default value for every registered flag', () => {
-		FEATURE_FLAGS.forEach(definition => {
+		FEATURE_FLAGS.forEach((definition) => {
 			expect(definition.key).toBeTruthy();
 			expect(typeof definition.defaultValue).toBe('boolean');
 		});

@@ -1,6 +1,6 @@
 import EventAttributeDefinitionsQuery, {
 	EventAttributeDefinitionsData,
-	EventAttributeDefinitionsVariables
+	EventAttributeDefinitionsVariables,
 } from 'event-analysis/queries/EventAttributeDefinitionsQuery';
 import ListComponent from 'shared/hoc/ListComponent';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
@@ -10,7 +10,7 @@ import {attributeListColumns} from 'shared/util/table-columns';
 import {
 	createOrderIOMap,
 	getSortFromOrderIOMap,
-	NAME
+	NAME,
 } from 'shared/util/pagination';
 import {mapListResultsToProps} from 'shared/util/mappers';
 import {Sort} from 'shared/types';
@@ -27,7 +27,7 @@ interface EventAttributeDefinitionsResult {
 
 const GlobalAttributeList: React.FC = () => {
 	const {delta, orderIOMap, page, query} = useQueryPagination({
-		initialOrderIOMap: createOrderIOMap(NAME)
+		initialOrderIOMap: createOrderIOMap(NAME),
 	});
 
 	const {channelId = '', groupId = ''} = useParams<{
@@ -44,20 +44,20 @@ const GlobalAttributeList: React.FC = () => {
 			page: page - 1,
 			size: delta,
 			sort: getSortFromOrderIOMap(orderIOMap) as Sort,
-			type: AttributeTypes.Global
-		}
+			type: AttributeTypes.Global,
+		},
 	});
 
 	return (
 		<ListComponent
-			{...mapListResultsToProps(response, result => {
+			{...mapListResultsToProps(response, (result) => {
 				const typedResult =
 					result as unknown as EventAttributeDefinitionsResult;
 
 				return {
 					items: typedResult.eventAttributeDefinitions
 						.eventAttributeDefinitions,
-					total: typedResult.eventAttributeDefinitions.total
+					total: typedResult.eventAttributeDefinitions.total,
 				};
 			})}
 			columns={[
@@ -65,7 +65,7 @@ const GlobalAttributeList: React.FC = () => {
 				attributeListColumns.displayName,
 				attributeListColumns.description,
 				attributeListColumns.sampleValue,
-				attributeListColumns.dataType
+				attributeListColumns.dataType,
 			]}
 			delta={delta}
 			entityLabel={Liferay.Language.get(
@@ -79,7 +79,7 @@ const GlobalAttributeList: React.FC = () => {
 			orderIOMap={orderIOMap}
 			page={page}
 			query={query}
-			rowIdentifier='id'
+			rowIdentifier="id"
 			showFilterAndOrder={false}
 		/>
 	);

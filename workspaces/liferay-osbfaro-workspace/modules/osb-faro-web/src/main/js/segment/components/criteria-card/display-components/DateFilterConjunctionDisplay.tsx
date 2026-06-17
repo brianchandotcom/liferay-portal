@@ -5,7 +5,7 @@ import {
 	FunctionalOperators,
 	INPUT_DATE_FORMAT,
 	SINCE,
-	TIME_CONJUNCTION_OPTIONS
+	TIME_CONJUNCTION_OPTIONS,
 } from 'segment/segment-editor/dynamic/utils/constants';
 import {formatUTCDate} from 'shared/util/date';
 import {getInitialConjunction} from 'segment/segment-editor/dynamic/inputs/components/DateFilterConjunctionInput';
@@ -32,7 +32,7 @@ const DateFilterConjunctionDisplay: React.FC<{
 					<span>
 						{sub(Liferay.Language.get('x-to-x'), [
 							formatDate(dateFilter.start),
-							formatDate(dateFilter.end)
+							formatDate(dateFilter.end),
 						])}
 					</span>
 				);

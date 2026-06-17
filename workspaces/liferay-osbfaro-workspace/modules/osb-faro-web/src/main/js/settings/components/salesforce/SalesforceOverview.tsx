@@ -35,7 +35,7 @@ import {withSelectionProvider} from 'shared/context/selection';
 const connector = connect(null, {
 	addAlert,
 	close,
-	open
+	open,
 });
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
@@ -48,7 +48,7 @@ const SalesforceOverview: React.FC<ISalesforceOverviewProps> = ({
 	addAlert,
 	close,
 	dataSource: initialDataSource,
-	open
+	open,
 }) => {
 	const [loading, setLoading] = useState(false);
 	const [dataSource, setDataSource] = useState(initialDataSource);
@@ -66,7 +66,7 @@ const SalesforceOverview: React.FC<ISalesforceOverviewProps> = ({
 
 	const [alert, setAlert] = useState<Alert>({
 		displayType: 'success',
-		message: ''
+		message: '',
 	});
 
 	const dataSourceActive = dataSource.status === DataSourceStatuses.Active;
@@ -92,18 +92,20 @@ const SalesforceOverview: React.FC<ISalesforceOverviewProps> = ({
 
 			const newDataSource = await fetch({
 				groupId,
-				id
+				id,
 			});
 
 			setDataSource(new DataSource(newDataSource));
-		} catch (error) {
+		}
+		catch (error) {
 			addAlert({
 				alertType: Alert.Types.Error,
 				message: Liferay.Language.get(
 					'there-was-an-error-processing-your-request.-try-again.-if-the-problem-persists,-please-contact-support'
-				)
+				),
 			});
-		} finally {
+		}
+		finally {
 			setLoading(false);
 		}
 	};
@@ -113,7 +115,7 @@ const SalesforceOverview: React.FC<ISalesforceOverviewProps> = ({
 			displayType: 'success',
 			message: Liferay.Language.get(
 				'you-have-successfully-authenticated-your-token-with-liferay-analytics-cloud.-you-can-now-select-the-data-to-sync'
-			)
+			),
 		};
 
 		if (!dataSourceActive) {
@@ -122,7 +124,8 @@ const SalesforceOverview: React.FC<ISalesforceOverviewProps> = ({
 			alert.message = Liferay.Language.get(
 				'the-data-source-is-disconnected.-data-is-no-longer-being-synced-from-salesforce,-but-you-can-reconnect-to-resume-syncing'
 			);
-		} else if (enabledAllAccounts || enabledAllContacts || enableAllLeads) {
+		}
+		else if (enabledAllAccounts || enabledAllContacts || enableAllLeads) {
 			alert.message = Liferay.Language.get(
 				'all-data-coming-from-this-data-source-is-up-to-date.-there-are-no-errors-to-report'
 			);
@@ -133,7 +136,7 @@ const SalesforceOverview: React.FC<ISalesforceOverviewProps> = ({
 		dataSourceActive,
 		enableAllLeads,
 		enabledAllAccounts,
-		enabledAllContacts
+		enabledAllContacts,
 	]);
 
 	const {handleDisconnect} = useDisconnectDataSource({
@@ -144,7 +147,7 @@ const SalesforceOverview: React.FC<ISalesforceOverviewProps> = ({
 		onSubmit: async () => {
 			await handleUpdateDataSource();
 		},
-		open
+		open,
 	});
 
 	const {display, label} = getDataSourceDisplayObject(dataSource);
@@ -155,8 +158,8 @@ const SalesforceOverview: React.FC<ISalesforceOverviewProps> = ({
 				breadcrumbs.getDataSources({groupId}),
 				breadcrumbs.getDataSourceName({
 					active: true,
-					label: dataSource.name ?? ''
-				})
+					label: dataSource.name ?? '',
+				}),
 			]}
 			documentTitle={Liferay.Language.get('configure-data-source')}
 		>
@@ -174,7 +177,7 @@ const SalesforceOverview: React.FC<ISalesforceOverviewProps> = ({
 			/>
 
 			<Card title={Liferay.Language.get('authentication')}>
-				<div className='mb-4'>
+				<div className="mb-4">
 					<Card.SubHeader
 						title={Liferay.Language.get('connection-status')}
 					/>
@@ -187,18 +190,18 @@ const SalesforceOverview: React.FC<ISalesforceOverviewProps> = ({
 
 					{!dataSourceActive && (
 						<>
-							<div className='mb-3'>
-								<Text color='secondary' size={4}>
+							<div className="mb-3">
+								<Text color="secondary" size={4}>
 									{Liferay.Language.get(
 										'to-reestablish-the-connection-between-salesforce-and-liferay-analytics-cloud,-generate-a-token-and-paste-the-code-on-the-input-below'
 									)}
 								</Text>
 
 								<ClayLink
-									className='ml-1'
+									className="ml-1"
 									href={URLConstants.HelpConnectDxp}
-									key='DOCUMENTATION'
-									target='_blank'
+									key="DOCUMENTATION"
+									target="_blank"
 								>
 									{Liferay.Language.get(
 										'learn-more-about-data-sources'
@@ -216,32 +219,32 @@ const SalesforceOverview: React.FC<ISalesforceOverviewProps> = ({
 					)}
 				</div>
 
-				<div className='mb-4'>
+				<div className="mb-4">
 					<Card.SubHeader
 						title={Liferay.Language.get('data-source-details')}
 					/>
 
-					<ClayInput.Group className='d-flex mt-3'>
-						<ClayInput.GroupItem className='mr-3' shrink>
-							<label htmlFor='dataSourceType'>
+					<ClayInput.Group className="d-flex mt-3">
+						<ClayInput.GroupItem className="mr-3" shrink>
+							<label htmlFor="dataSourceType">
 								{Liferay.Language.get('data-source-type')}
 							</label>
 
 							<ClayInput
 								readOnly
-								type='text'
+								type="text"
 								value={Liferay.Language.get('salesforce')}
 							/>
 						</ClayInput.GroupItem>
 
-						<ClayInput.GroupItem className='ml-0' shrink>
-							<label htmlFor='dataSourceId'>
+						<ClayInput.GroupItem className="ml-0" shrink>
+							<label htmlFor="dataSourceId">
 								{Liferay.Language.get('data-source-id')}
 							</label>
 
 							<ClayInput
 								readOnly
-								type='text'
+								type="text"
 								value={dataSource.id}
 							/>
 						</ClayInput.GroupItem>
@@ -253,12 +256,12 @@ const SalesforceOverview: React.FC<ISalesforceOverviewProps> = ({
 						aria-label={Liferay.Language.get(
 							'disconnect-data-source'
 						)}
-						displayType='danger'
+						displayType="danger"
 						onClick={handleDisconnect}
 						outline
-						size='sm'
+						size="sm"
 					>
-						<ClayIcon className='mr-2' symbol='logout' />
+						<ClayIcon className="mr-2" symbol="logout" />
 
 						{Liferay.Language.get('disconnect-data-source')}
 					</ClayButton>
@@ -273,21 +276,21 @@ const SalesforceOverview: React.FC<ISalesforceOverviewProps> = ({
 					loading={loading}
 					onSubmit={async ({
 						enabledAllAccounts,
-						enabledAllIndividuals
+						enabledAllIndividuals,
 					}: {
 						enabledAllAccounts: boolean;
 						enabledAllIndividuals: boolean;
 					}) => {
 						await updateSalesforce({
 							accountsConfiguration: {
-								enableAllAccounts: enabledAllAccounts
+								enableAllAccounts: enabledAllAccounts,
 							},
 							contactsConfiguration: {
 								enableAllContacts: enabledAllIndividuals,
-								enableAllLeads: enabledAllIndividuals
+								enableAllLeads: enabledAllIndividuals,
 							},
 							groupId,
-							id: dataSource.id
+							id: dataSource.id,
 						} as any);
 
 						await handleUpdateDataSource();
@@ -296,7 +299,7 @@ const SalesforceOverview: React.FC<ISalesforceOverviewProps> = ({
 							alertType: Alert.Types.Success,
 							message: Liferay.Language.get(
 								'synced-data-settings-have-been-saved'
-							)
+							),
 						});
 					}}
 				/>
@@ -329,7 +332,7 @@ const AccountAndIndividuals = ({
 	dataSource,
 	groupId,
 	loading,
-	onSubmit
+	onSubmit,
 }: {
 	currentUser: any;
 	dataSource: DataSource;
@@ -359,14 +362,15 @@ const AccountAndIndividuals = ({
 	);
 
 	const accountsCountResponse = useRequest({
-		dataSourceFn: params =>
+		dataSourceFn: (params) =>
 			fetchConnectorEntityCount(Entity.Accounts, params),
-		variables: {groupId, id: dataSource.id!}
+		variables: {groupId, id: dataSource.id!},
 	});
 
 	const userCountResponse = useRequest({
-		dataSourceFn: params => fetchConnectorEntityCount(Entity.Users, params),
-		variables: {groupId, id: dataSource.id!}
+		dataSourceFn: (params) =>
+			fetchConnectorEntityCount(Entity.Users, params),
+		variables: {groupId, id: dataSource.id!},
 	});
 
 	const hasChangesRef = useRef<boolean | null>(null);
@@ -389,7 +393,7 @@ const AccountAndIndividuals = ({
 				dataSourceActive &&
 				!enabledAllAccounts &&
 				!enabledAllIndividuals && (
-					<ClayAlert displayType='warning' title='Warning'>
+					<ClayAlert displayType="warning" title="Warning">
 						{Liferay.Language.get(
 							'the-data-source-setup-is-almost-complete.-sync-data-to-start-seeing-results-as-activities-occur-on-your-sites'
 						)}
@@ -397,23 +401,23 @@ const AccountAndIndividuals = ({
 				)}
 
 			{hasChangesRef.current && (
-				<ClayAlert displayType='info'>
+				<ClayAlert displayType="info">
 					{Liferay.Language.get(
 						'this-configuration-is-not-saved-yet'
 					)}
 				</ClayAlert>
 			)}
 
-			<div className='mb-2'>
-				<Text color='secondary' size={4}>
+			<div className="mb-2">
+				<Text color="secondary" size={4}>
 					{Liferay.Language.get(
 						'to-configure-your-salesforce-data-source,-go-to-your-salesforce-environment-to-update-this-app-connection'
 					)}
 				</Text>
 			</div>
 
-			<div className='mt-3 text-dark'>
-				<Text size={2} weight='semi-bold'>
+			<div className="mt-3 text-dark">
+				<Text size={2} weight="semi-bold">
 					{Liferay.Language.get('select-items-to-sync').toUpperCase()}
 				</Text>
 			</div>
@@ -448,17 +452,17 @@ const AccountAndIndividuals = ({
 
 			{dataSourceActive && currentUser.isAdmin() && (
 				<ClayButton
-					className='mt-3'
+					className="mt-3"
 					loading={loading}
 					onClick={async () => {
 						hasChangesRef.current = false;
 
 						await onSubmit({
 							enabledAllAccounts,
-							enabledAllIndividuals
+							enabledAllIndividuals,
 						});
 					}}
-					size='sm'
+					size="sm"
 				>
 					{Liferay.Language.get('save')}
 				</ClayButton>

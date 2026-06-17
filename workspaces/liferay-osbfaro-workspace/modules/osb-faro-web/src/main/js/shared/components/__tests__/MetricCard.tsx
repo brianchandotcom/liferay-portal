@@ -16,7 +16,7 @@ describe('MetricCard', () => {
 			</>
 		),
 		title: 'Test title',
-		value: 42
+		value: 42,
 	};
 
 	it('should render', () => {
@@ -49,7 +49,7 @@ describe('MetricCard', () => {
 				{...defaultProps}
 				trend={{
 					percentage: 10,
-					trendClassification: TrendClassification.Positive
+					trendClassification: TrendClassification.Positive,
 				}}
 			/>
 		);
@@ -67,7 +67,7 @@ describe('MetricCard', () => {
 				{...defaultProps}
 				trend={{
 					percentage: -5,
-					trendClassification: TrendClassification.Negative
+					trendClassification: TrendClassification.Negative,
 				}}
 			/>
 		);
@@ -84,7 +84,7 @@ describe('MetricCard', () => {
 				{...defaultProps}
 				trend={{
 					percentage: 0,
-					trendClassification: TrendClassification.Neutral
+					trendClassification: TrendClassification.Neutral,
 				}}
 			/>
 		);
@@ -109,12 +109,12 @@ describe('MetricCard', () => {
 		const {container} = render(
 			<MetricCard
 				{...defaultProps}
-				className='custom-card'
+				className="custom-card"
 				trend={{
 					percentage: 10,
-					trendClassification: TrendClassification.Positive
+					trendClassification: TrendClassification.Positive,
 				}}
-				trendClassName='custom-trend'
+				trendClassName="custom-trend"
 			/>
 		);
 
@@ -126,7 +126,7 @@ describe('MetricCard', () => {
 		const {getByTestId} = render(
 			<MetricCard
 				{...defaultProps}
-				value={<span data-testid='custom-value'>{'5 accounts'}</span>}
+				value={<span data-testid="custom-value">{'5 accounts'}</span>}
 			/>
 		);
 
@@ -139,7 +139,7 @@ describe('MetricCard', () => {
 				{...defaultProps}
 				trend={{
 					percentage: 12.3456,
-					trendClassification: TrendClassification.Positive
+					trendClassification: TrendClassification.Positive,
 				}}
 			/>
 		);

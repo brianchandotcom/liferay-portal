@@ -13,7 +13,7 @@ interface IConnectDXPModalProps {
 const ConnectDXPModal: React.FC<IConnectDXPModalProps> = ({
 	groupId,
 	id,
-	onClose
+	onClose,
 }) => {
 	const [dxpConnected, setDxpConnected] = useState(false);
 	const [step, setStep] = useState(0);
@@ -21,7 +21,7 @@ const ConnectDXPModal: React.FC<IConnectDXPModalProps> = ({
 	const ScreenComponent = MODAL_SCREENS[step];
 
 	return (
-		<Modal className='connect-dxp onboarding-modal-root'>
+		<Modal className="connect-dxp onboarding-modal-root">
 			<ScreenComponent
 				dataSourceId={id}
 				dxpConnected={dxpConnected}

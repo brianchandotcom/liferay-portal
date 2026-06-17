@@ -10,7 +10,7 @@ export const buildHeaderSubtitle = (individual: {
 	const {accountName, lastSessionCountry} = individual;
 
 	return (
-		<Text color='secondary' size={4}>
+		<Text color="secondary" size={4}>
 			{[email, accountName, lastSessionCountry]
 				.filter(Boolean)
 				.join(' | ')}

@@ -11,7 +11,7 @@ import {addAlert} from 'shared/actions/alerts';
 import {
 	addDistributionTab,
 	fetchDistributionTabs,
-	removeDistributionTab
+	removeDistributionTab,
 } from 'shared/actions/preferences';
 import {Alert} from 'shared/types';
 import {connect, ConnectedProps} from 'react-redux';
@@ -28,7 +28,7 @@ const connector = connect(
 				'preferences',
 				PreferencesScopes.Group,
 				'distributionCardTabs',
-				distributionKey
+				distributionKey,
 			],
 			Map()
 		);
@@ -36,7 +36,7 @@ const connector = connect(
 		return {
 			distributionTabsIList: distributionTabs.get('data', List()),
 			error: distributionTabs.get('error', false),
-			loading: distributionTabs.get('loading', true)
+			loading: distributionTabs.get('loading', true),
 		};
 	},
 	{addAlert, addDistributionTab, fetchDistributionTabs, removeDistributionTab}
@@ -68,12 +68,12 @@ class DistributionCard extends React.Component<
 	IDistributionCardState
 > {
 	static defaultProps = {
-		showAddDataSource: false
+		showAddDataSource: false,
 	};
 
 	state = {
 		selectedTabIndex: 0,
-		showAddProperty: false
+		showAddProperty: false,
 	};
 
 	componentDidMount() {
@@ -90,21 +90,21 @@ class DistributionCard extends React.Component<
 			distributionTab: tab,
 			distributionTabId: tab.id,
 			groupId,
-			id
+			id,
 		}) as unknown as Promise<{payload: {order: unknown[]}}>;
 
 		return addPromise
 			.then(({payload: {order}}: {payload: {order: unknown[]}}) =>
 				this.setState({
 					selectedTabIndex: order.length - 1,
-					showAddProperty: false
+					showAddProperty: false,
 				})
 			)
 			.catch(({message}: {message: string}) =>
 				addAlert({
 					alertType: Alert.Types.Error,
 					message,
-					timeout: false
+					timeout: false,
 				})
 			);
 	}
@@ -119,7 +119,7 @@ class DistributionCard extends React.Component<
 				distributionKey,
 				distributionTabId: tabId,
 				groupId,
-				id
+				id,
 			})
 		);
 	}
@@ -139,7 +139,7 @@ class DistributionCard extends React.Component<
 		this.setState({
 			selectedTabIndex: distributionTabsIList.findIndex(
 				(tabIMap: Map<string, string>) => tabIMap.get('id') === tabId
-			)
+			),
 		});
 	}
 
@@ -161,16 +161,16 @@ class DistributionCard extends React.Component<
 				loading,
 				noResultsRenderer,
 				showAddDataSource,
-				viewAllLink
+				viewAllLink,
 			},
-			state: {selectedTabIndex, showAddProperty}
+			state: {selectedTabIndex, showAddProperty},
 		} = this;
 
 		const tabsCount = distributionTabsIList.size;
 
 		return (
 			<Card
-				className='distribution-card-root'
+				className="distribution-card-root"
 				minHeight={536}
 				reportContainer={ReportContainer.DistributionBreakdownCard}
 			>

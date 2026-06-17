@@ -22,7 +22,7 @@ export function getConnectorAvailableDataAlert(
 			kind: 'previously-synced',
 			message: Liferay.Language.get(
 				'previously-synced-data-remains-available-reconnect-or-check-your-data-source-connection-to-resume-data-syncing'
-			)
+			),
 		};
 	}
 
@@ -32,7 +32,7 @@ export function getConnectorAvailableDataAlert(
 			kind: 'previously-synced',
 			message: Liferay.Language.get(
 				'previously-synced-data-remains-available-reconnect-or-check-your-data-source-connection-to-resume-data-syncing'
-			)
+			),
 		};
 	}
 
@@ -42,7 +42,7 @@ export function getConnectorAvailableDataAlert(
 			kind: 'syncing',
 			message: Liferay.Language.get(
 				'your-data-may-take-some-time-to-appear-as-syncing-completes'
-			)
+			),
 		};
 	}
 

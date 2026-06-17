@@ -34,18 +34,18 @@ class Conjunction extends React.Component<IConjunctionProps> {
 		);
 
 		return (
-			<div className='conjunction-container'>
+			<div className="conjunction-container">
 				<ClayButton
 					className={classnames}
 					disabled={disabled}
-					displayType='secondary'
+					displayType="secondary"
 					onClick={onClick}
-					size='sm'
+					size="sm"
 				>
 					{this.getConjunctionLabel(conjunctionName, sequential)}
 				</ClayButton>
 
-				<div className='separator' />
+				<div className="separator" />
 			</div>
 		);
 	}

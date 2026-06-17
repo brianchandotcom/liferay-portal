@@ -7,7 +7,7 @@ import {CustomValue} from 'shared/util/records';
 import {EntityType} from 'segment/segment-editor/dynamic/context/referencedObjects';
 import {
 	getFilterCriterionIMap,
-	getPropertyValue
+	getPropertyValue,
 } from 'segment/segment-editor/dynamic/utils/custom-inputs';
 import {getOperatorLabel, maybeFormatToKnownType} from '../utils';
 import {IDisplayComponentProps} from '../types';
@@ -18,7 +18,7 @@ import {SegmentTypes} from 'shared/util/constants';
 const BehaviorDisplay: React.FC<IDisplayComponentProps> = ({
 	criterion,
 	property,
-	segmentType
+	segmentType,
 }) => {
 	const {operatorName, value} = criterion;
 

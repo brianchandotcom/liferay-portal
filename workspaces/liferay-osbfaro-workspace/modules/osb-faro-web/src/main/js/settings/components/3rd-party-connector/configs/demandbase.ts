@@ -13,15 +13,15 @@ const demandbaseConfig: ConnectorConfig = {
 	entities: [
 		{
 			entity: Entity.Accounts,
-			fetchCount: params =>
-				fetchConnectorEntityCount(Entity.Accounts, params)
-		}
+			fetchCount: (params) =>
+				fetchConnectorEntityCount(Entity.Accounts, params),
+		},
 	],
 	languages: buildLanguages(displayName),
 	requiresLDP: true,
 	singleton: true,
 	slug: SLUG,
-	type: DataSourceTypes.Demandbase
+	type: DataSourceTypes.Demandbase,
 };
 
 export default demandbaseConfig;

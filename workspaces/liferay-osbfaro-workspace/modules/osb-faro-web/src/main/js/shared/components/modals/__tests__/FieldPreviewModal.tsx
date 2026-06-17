@@ -11,7 +11,7 @@ const DefaultComponent = (
 	<FieldPreviewModal
 		dataSourceFn={() => Promise.resolve()}
 		onClose={noop}
-		sourceName='foo'
+		sourceName="foo"
 		{...props}
 	/>
 );

@@ -2,7 +2,7 @@ import {ClassName, FILE_MIME_MAP, STRUCTURES_MAP} from './constants';
 
 export const getMimeType = ({
 	assetType,
-	mimeType
+	mimeType,
 }: {
 	assetType?: string;
 	mimeType?: string;

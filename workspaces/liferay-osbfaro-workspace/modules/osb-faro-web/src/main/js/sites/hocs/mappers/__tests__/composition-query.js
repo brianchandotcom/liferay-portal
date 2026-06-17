@@ -2,7 +2,7 @@ import {CompositionTypes} from 'shared/util/constants';
 import {
 	getMapResultToProps,
 	mapCardPropsToOptions,
-	mapPropsToOptions
+	mapPropsToOptions,
 } from '../composition-query';
 
 const channelId = '321';
@@ -12,8 +12,8 @@ const mockData = {
 		compositions: [{foo: 'bar'}],
 		maxCount: 85,
 		total: 123,
-		totalCount: 321
-	}
+		totalCount: 321,
+	},
 };
 
 const mockProps = {
@@ -23,8 +23,8 @@ const mockProps = {
 	rangeSelectors: {
 		rangeEnd: null,
 		rangeKey: '90',
-		rangeStart: null
-	}
+		rangeStart: null,
+	},
 };
 
 describe('Composition Query Mapper', () => {
@@ -32,14 +32,14 @@ describe('Composition Query Mapper', () => {
 		it('should map interests list query result to props', () => {
 			expect(
 				getMapResultToProps(CompositionTypes.SiteInterests)({
-					data: mockData
+					data: mockData,
 				})
 			).toEqual(
 				expect.objectContaining({
 					items: expect.any(Array),
 					maxCount: expect.any(Number),
 					total: expect.any(Number),
-					totalCount: expect.any(Number)
+					totalCount: expect.any(Number),
 				})
 			);
 		});
@@ -54,8 +54,8 @@ describe('Composition Query Mapper', () => {
 				mapCardPropsToOptions({
 					channelId,
 					rangeSelectors: {
-						rangeKey
-					}
+						rangeKey,
+					},
 				})
 			).toEqual(
 				expect.objectContaining({
@@ -65,8 +65,8 @@ describe('Composition Query Mapper', () => {
 						rangeKey: parseInt(rangeKey),
 						rangeStart: null,
 						size: 5,
-						start: 0
-					})
+						start: 0,
+					}),
 				})
 			);
 		});
@@ -76,7 +76,7 @@ describe('Composition Query Mapper', () => {
 		it('should map interests list query props to options', () => {
 			const {
 				delta,
-				rangeSelectors: {rangeKey}
+				rangeSelectors: {rangeKey},
 			} = mockProps;
 
 			expect(mapPropsToOptions(mockProps)).toEqual(
@@ -85,8 +85,8 @@ describe('Composition Query Mapper', () => {
 						channelId,
 						rangeKey: parseInt(rangeKey),
 						size: parseInt(delta),
-						start: 5
-					})
+						start: 5,
+					}),
 				})
 			);
 		});

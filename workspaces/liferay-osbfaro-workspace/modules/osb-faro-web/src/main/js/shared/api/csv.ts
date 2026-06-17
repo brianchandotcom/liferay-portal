@@ -22,5 +22,5 @@ export const fetchCount = ({
 	sendRequest({
 		data,
 		method: 'GET',
-		path: `main/${groupId}/reports/export/csv/${type}/count`
+		path: `main/${groupId}/reports/export/csv/${type}/count`,
 	});

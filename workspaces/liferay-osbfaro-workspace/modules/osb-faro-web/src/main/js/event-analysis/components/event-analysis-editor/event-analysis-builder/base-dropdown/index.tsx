@@ -20,7 +20,7 @@ const BaseDropdown: React.FC<IBaseDropdownProps> = ({
 	children,
 	className,
 	onActiveChange,
-	trigger
+	trigger,
 }) => {
 	const [active, setActive] = useState(false);
 
@@ -35,7 +35,7 @@ const BaseDropdown: React.FC<IBaseDropdownProps> = ({
 			active={active}
 			alignmentPosition={alignmentPosition}
 			menuElementAttrs={{
-				className: getCN('base-dropdown-menu-root', className)
+				className: getCN('base-dropdown-menu-root', className),
 			}}
 			onActiveChange={setActive}
 			trigger={trigger}
@@ -47,5 +47,5 @@ const BaseDropdown: React.FC<IBaseDropdownProps> = ({
 
 export default Object.assign(BaseDropdown, {
 	Header,
-	SearchableList
+	SearchableList,
 });

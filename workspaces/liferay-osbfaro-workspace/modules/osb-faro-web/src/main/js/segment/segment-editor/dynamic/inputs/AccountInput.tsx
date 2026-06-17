@@ -20,7 +20,7 @@ export default class AccountInput extends React.Component<IAccountInputProps> {
 			channelId,
 			groupId,
 			property: {id},
-			value: valueIMap
+			value: valueIMap,
 		} = this.props;
 
 		return API.accounts
@@ -28,14 +28,14 @@ export default class AccountInput extends React.Component<IAccountInputProps> {
 				channelId,
 				fieldMappingFieldName: id,
 				groupId,
-				query: getPropertyValue(valueIMap, 'value', 0)
+				query: getPropertyValue(valueIMap, 'value', 0),
 			})
 			.then(({items}) => items);
 	}
 
 	render() {
 		const {
-			property: {type}
+			property: {type},
 		} = this.props;
 
 		if (type === PropertyTypes.AccountDate) {

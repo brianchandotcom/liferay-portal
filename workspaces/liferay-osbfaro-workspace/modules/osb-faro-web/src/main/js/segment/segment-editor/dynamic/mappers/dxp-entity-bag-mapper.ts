@@ -6,23 +6,23 @@ export const mapPropsToOptions = ({
 	delta,
 	orderIOMap,
 	page,
-	query
+	query,
 }: IPagination & {channelId: string}) => ({
 	variables: {
 		...getGraphQLVariablesFromPagination({
 			delta,
 			orderIOMap,
 			page,
-			query
+			query,
 		}),
-		channelId
-	}
+		channelId,
+	},
 });
 
 export const getMapResultToProps =
 	(graphqlEntityType: string) =>
 	({
-		[graphqlEntityType]: {dxpEntities, total}
+		[graphqlEntityType]: {dxpEntities, total},
 	}: {
 		[key: string]: {
 			dxpEntities: {id: string; name: string}[];
@@ -31,5 +31,5 @@ export const getMapResultToProps =
 	}) => ({
 		empty: !total,
 		items: dxpEntities,
-		total
+		total,
 	});

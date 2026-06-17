@@ -12,15 +12,15 @@ export const withSegment = (includeReferencedObjects = false) =>
 				href: toRoute(Routes.CONTACTS_LIST_ENTITY, {
 					channelId,
 					groupId,
-					type: SEGMENTS
+					type: SEGMENTS,
 				}),
 				linkLabel: Liferay.Language.get('go-to-segments'),
 				message: Liferay.Language.get(
 					'the-segment-you-are-looking-for-does-not-exist'
 				),
-				subtitle: Liferay.Language.get('segment-not-found')
+				subtitle: Liferay.Language.get('segment-not-found'),
 			}),
-			propName: 'segment'
+			propName: 'segment',
 		}
 	);
 

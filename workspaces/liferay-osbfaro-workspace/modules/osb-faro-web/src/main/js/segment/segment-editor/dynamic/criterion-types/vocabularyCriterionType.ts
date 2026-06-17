@@ -17,9 +17,9 @@ export const vocabularyCriterionType: RemoteCriterionType = {
 	negativeOperator: NotOperators.NotVocabulariesFilter,
 	operators: new Set([
 		CustomFunctionOperators.VocabulariesFilter,
-		NotOperators.NotVocabulariesFilter
+		NotOperators.NotVocabulariesFilter,
 	]),
 	positiveOperator: CustomFunctionOperators.VocabulariesFilter,
 	propertyKey: 'vocabulary',
-	supportsCategories: true
+	supportsCategories: true,
 };

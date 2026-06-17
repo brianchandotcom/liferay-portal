@@ -6,7 +6,7 @@ import {
 	getFill,
 	MAIN_NODE_HEIGHT,
 	MAIN_NODE_WIDTH,
-	URL_COLOR
+	URL_COLOR,
 } from './utils';
 import {getSafeDecodedURIComponent} from 'shared/util/util';
 import {getUrl} from 'shared/util/urls';
@@ -57,11 +57,11 @@ function normalizeNumber(number: number) {
 
 const Title = ({title, x, y}: {title: string; x: number; y: number}) => (
 	<text
-		className='analytics-sankey-node-title'
-		data-testid='sankey-node-title'
-		fontSize='16'
+		className="analytics-sankey-node-title"
+		data-testid="sankey-node-title"
+		fontSize="16"
 		fontWeight={600}
-		textAnchor='start'
+		textAnchor="start"
 		x={x}
 		y={y}
 	>
@@ -80,7 +80,7 @@ export const Node = ({
 	selectedNode,
 	width: initialWidth,
 	x: initialX,
-	y: initialY
+	y: initialY,
 }: any) => {
 	const height = normalizeNumber(initialHeight);
 	const width = normalizeNumber(initialWidth);
@@ -121,9 +121,9 @@ export const Node = ({
 							hovered,
 							index: index - 1,
 							payload,
-							selectedNode
+							selectedNode,
 						})}
-						fillOpacity='1'
+						fillOpacity="1"
 						height={height}
 						radius={getRadius(payload) as number}
 						width={width}
@@ -132,7 +132,7 @@ export const Node = ({
 					/>
 
 					<text
-						textAnchor='middle'
+						textAnchor="middle"
 						x={x + width / 2}
 						y={y + height / 2 + 5}
 					>
@@ -146,18 +146,18 @@ export const Node = ({
 					<Title title={payload.name} x={x} y={y - 32} />
 				) : (
 					<Link
-						data-tooltip-align='right'
+						data-tooltip-align="right"
 						title={Liferay.Language.get('go-to-dashboard-page')}
 						to={getUrl(Routes.SITES_TOUCHPOINTS_OVERVIEW, {
 							params: {
 								channelId,
 								groupId,
 								title: encodeURIComponent(payload.name),
-								touchpoint: payload.url
+								touchpoint: payload.url,
 							},
 							query: {
-								...pickBy(rangeSelectors)
-							}
+								...pickBy(rangeSelectors),
+							},
 						})}
 					>
 						<Title title={payload.name} x={x} y={y - 32} />
@@ -170,30 +170,30 @@ export const Node = ({
 			{showURL(payload.url) && (
 				<>
 					<ClayIcon
-						className='icon-root text-secondary'
+						className="icon-root text-secondary"
 						height={16}
-						symbol='shortcut'
+						symbol="shortcut"
 						width={16}
 						x={x}
 						y={y - 22}
 					/>
 
 					<ClayLink
-						data-tooltip-align='right'
+						data-tooltip-align="right"
 						href={payload.url}
-						target='_blank'
+						target="_blank"
 						title={
 							sub(Liferay.Language.get('visit-x'), [
-								getSafeDecodedURIComponent(payload.url)
+								getSafeDecodedURIComponent(payload.url),
 							]) as string
 						}
 					>
 						<text
-							className='analytics-sankey-node-url'
+							className="analytics-sankey-node-url"
 							fill={URL_COLOR}
-							fontSize='12'
+							fontSize="12"
 							fontWeight={400}
-							textAnchor='start'
+							textAnchor="start"
 							x={x + 20}
 							y={y - 10}
 						>

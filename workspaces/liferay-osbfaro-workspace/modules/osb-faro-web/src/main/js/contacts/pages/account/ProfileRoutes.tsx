@@ -22,13 +22,13 @@ const NAV_ITEMS = [
 	{
 		exact: true,
 		label: Liferay.Language.get('activities'),
-		route: Routes.CONTACTS_ACCOUNT
+		route: Routes.CONTACTS_ACCOUNT,
 	},
 	{
 		exact: true,
 		label: Liferay.Language.get('profile'),
-		route: Routes.CONTACTS_ACCOUNT_PROFILE
-	}
+		route: Routes.CONTACTS_ACCOUNT_PROFILE,
+	},
 ];
 
 const AccountProfileRoutes = () => {
@@ -38,7 +38,7 @@ const AccountProfileRoutes = () => {
 
 	const {data, error, loading} = useRequest({
 		dataSourceFn: API.accounts.fetch,
-		variables: {accountId: id!, channelId: channelId!, groupId: groupId!}
+		variables: {accountId: id!, channelId: channelId!, groupId: groupId!},
 	});
 
 	if (loading) {
@@ -51,7 +51,7 @@ const AccountProfileRoutes = () => {
 				href={toRoute(Routes.CONTACTS_LIST_ENTITY, {
 					channelId: channelId!,
 					groupId: groupId!,
-					type: ACCOUNTS
+					type: ACCOUNTS,
 				})}
 				linkLabel={Liferay.Language.get('go-to-accounts')}
 				message={Liferay.Language.get(
@@ -77,13 +77,13 @@ const AccountProfileRoutes = () => {
 					breadcrumbs.getHome({
 						channelId: channelId!,
 						groupId: groupId!,
-						label: selectedChannel?.name
+						label: selectedChannel?.name,
 					}),
 					breadcrumbs.getAccounts({
 						channelId: channelId!,
-						groupId: groupId!
+						groupId: groupId!,
 					}),
-					breadcrumbs.getEntityName({label: accountName})
+					breadcrumbs.getEntityName({label: accountName}),
 				]}
 				groupId={groupId!}
 			>

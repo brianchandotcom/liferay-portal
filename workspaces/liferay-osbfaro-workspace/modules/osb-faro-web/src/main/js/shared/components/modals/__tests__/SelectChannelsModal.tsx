@@ -6,25 +6,25 @@ import {useRequest} from 'shared/hooks/useRequest';
 jest.unmock('react-dom');
 
 jest.mock('shared/hooks/useRequest', () => ({
-	useRequest: jest.fn()
+	useRequest: jest.fn(),
 }));
 
 jest.mock('shared/hoc/CrossPageSelect', () => ({
 	__esModule: true,
-	default: () => <div />
+	default: () => <div />,
 }));
 
 const mockChannels = [
 	{groupsCount: 2, id: 'channel-1', name: 'Channel With Sites'},
 	{groupsCount: 0, id: 'channel-2', name: 'Channel Without Sites'},
-	{groupsCount: 1, id: 'channel-3', name: 'Another Channel With Sites'}
+	{groupsCount: 1, id: 'channel-3', name: 'Another Channel With Sites'},
 ];
 
 const defaultProps = {
 	groupId: '23',
 	initialItems: [],
 	onClose: jest.fn(),
-	onSelect: jest.fn()
+	onSelect: jest.fn(),
 };
 
 const submitButton = () =>
@@ -35,7 +35,7 @@ describe('SelectChannelsModal', () => {
 		(useRequest as jest.Mock).mockReturnValue({
 			data: {items: mockChannels, total: 3},
 			error: false,
-			loading: false
+			loading: false,
 		});
 	});
 
@@ -76,6 +76,6 @@ describe('SelectChannelsModal', () => {
 
 		const selectedIds: string[] = onSelect.mock.calls[0][0];
 
-		expect(selectedIds.filter(id => id === 'channel-1')).toHaveLength(1);
+		expect(selectedIds.filter((id) => id === 'channel-1')).toHaveLength(1);
 	});
 });

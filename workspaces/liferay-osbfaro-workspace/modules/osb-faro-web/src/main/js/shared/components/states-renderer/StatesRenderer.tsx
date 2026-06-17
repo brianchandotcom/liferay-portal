@@ -1,6 +1,6 @@
 import Loading, {ILoadingProps} from 'shared/components/Loading';
 import NoResultsDisplay, {
-	INoResultsDisplayProps
+	INoResultsDisplayProps,
 } from 'shared/components/NoResultsDisplay';
 import React, {createContext, FC, useContext} from 'react';
 import {ApolloError} from '@apollo/client';
@@ -39,7 +39,7 @@ interface ISuccessStateProps
 const StatesRendererContext = createContext<IStatesRendererContextProps>({
 	empty: false,
 	error: false,
-	loading: false
+	loading: false,
 });
 
 const EmptyState: FC<IEmptyStateProps> = ({
@@ -69,8 +69,8 @@ const EmptyState: FC<IEmptyStateProps> = ({
 						border: false,
 						size: Sizes.XXXLarge,
 						symbol: 'ac_satellite',
-						...icon
-					}
+						...icon,
+					},
 				})}
 				{...otherProps}
 			/>
@@ -81,7 +81,7 @@ const EmptyState: FC<IEmptyStateProps> = ({
 const ErrorState: FC<IErrorStateProps> = ({
 	apolloError,
 	children,
-	show = true
+	show = true,
 }) => {
 	const {error} = useContext(StatesRendererContext);
 

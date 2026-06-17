@@ -5,9 +5,9 @@ export const preview = jest.fn(() =>
 		contactsCardData: {individualFieldDistribution: []},
 		contactsCardTemplate: mockCardTemplate(0, {
 			fieldMapping: mockFieldMapping(0, {
-				dataSourceFieldNames: {AB78DSF: 'jobTitle'}
-			})
+				dataSourceFieldNames: {AB78DSF: 'jobTitle'},
+			}),
 		}),
-		contactsEntity: mockSegment()
+		contactsEntity: mockSegment(),
 	})
 );

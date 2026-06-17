@@ -5,7 +5,7 @@ import {cleanup, render} from '@testing-library/react';
 jest.unmock('react-dom');
 
 const MockedComposedChart = () => (
-	<div data-testid='my-composed-chart'>{'my composed chart content'}</div>
+	<div data-testid="my-composed-chart">{'my composed chart content'}</div>
 );
 
 describe('CollapsibleOverlay', () => {
@@ -14,8 +14,8 @@ describe('CollapsibleOverlay', () => {
 	it('should render without empty state', () => {
 		const {container, getByTestId, getByText} = render(
 			<ComposedChartWithEmptyState
-				emptyDescription='this is an empty description'
-				emptyTitle='this is an empty title'
+				emptyDescription="this is an empty description"
+				emptyTitle="this is an empty title"
 			>
 				<MockedComposedChart />
 			</ComposedChartWithEmptyState>
@@ -35,8 +35,8 @@ describe('CollapsibleOverlay', () => {
 	it('should render empty state', () => {
 		const {container, getByTestId, getByText} = render(
 			<ComposedChartWithEmptyState
-				emptyDescription='this is an empty description'
-				emptyTitle='this is an empty title'
+				emptyDescription="this is an empty description"
+				emptyTitle="this is an empty title"
 				showEmptyState
 			>
 				<MockedComposedChart />
@@ -60,11 +60,11 @@ describe('CollapsibleOverlay', () => {
 		const {container, getByTestId, getByText} = render(
 			<ComposedChartWithEmptyState
 				emptyDescription={
-					<div data-testid='my-custom-description'>
+					<div data-testid="my-custom-description">
 						{'this is an empty description'}
 					</div>
 				}
-				emptyTitle='this is an empty title'
+				emptyTitle="this is an empty title"
 				showEmptyState
 			>
 				<MockedComposedChart />

@@ -5,7 +5,7 @@ jest.mock('shared/api/connector', () => ({
 	generateConnectorToken: jest.fn(() =>
 		Promise.resolve({token: 'fake-token'})
 	),
-	updateConnector: jest.fn(() => Promise.resolve({}))
+	updateConnector: jest.fn(() => Promise.resolve({})),
 }));
 
 import ConnectorAuth from '../ConnectorAuth';
@@ -14,7 +14,7 @@ import {ConnectorConfig} from '../types';
 import {
 	createConnector,
 	generateConnectorToken,
-	updateConnector
+	updateConnector,
 } from 'shared/api/connector';
 import {fireEvent, render, waitFor} from '@testing-library/react';
 
@@ -30,12 +30,12 @@ const buildConfig = (
 		connectTitle: 'Connect Acme',
 		endpointHelper: 'helper text',
 		endpointLabel: 'ENDPOINT_LABEL_ACME',
-		tokenLabel: 'TOKEN_LABEL_ACME'
+		tokenLabel: 'TOKEN_LABEL_ACME',
 	},
 	singleton: true,
 	slug: 'acme',
 	type: 'ACME',
-	...overrides
+	...overrides,
 });
 
 describe('ConnectorAuth', () => {
@@ -52,7 +52,7 @@ describe('ConnectorAuth', () => {
 			<ConnectorAuth
 				addAlert={jest.fn() as any}
 				config={config}
-				groupId='23'
+				groupId="23"
 				onSubmit={jest.fn()}
 			/>
 		);
@@ -60,7 +60,7 @@ describe('ConnectorAuth', () => {
 		await waitFor(() =>
 			expect(generateConnectorToken).toHaveBeenCalledWith({
 				groupId: '23',
-				type: 'acme'
+				type: 'acme',
 			})
 		);
 	});
@@ -72,7 +72,7 @@ describe('ConnectorAuth', () => {
 			<ConnectorAuth
 				addAlert={jest.fn() as any}
 				config={config}
-				groupId='23'
+				groupId="23"
 				onSubmit={jest.fn()}
 			/>
 		);
@@ -91,7 +91,7 @@ describe('ConnectorAuth', () => {
 			<ConnectorAuth
 				addAlert={jest.fn() as any}
 				config={config}
-				groupId='23'
+				groupId="23"
 				onSubmit={onSubmit}
 			/>
 		);
@@ -108,7 +108,7 @@ describe('ConnectorAuth', () => {
 			'acme',
 			expect.objectContaining({
 				groupId: '23',
-				name: 'Acme'
+				name: 'Acme',
 			})
 		);
 	});

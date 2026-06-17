@@ -6,7 +6,7 @@ import {MemoryRouter} from 'react-router-dom';
 import {
 	mockAccountEventMetricsReq,
 	mockAccountEventsTrendReq,
-	mockAccountUserSessionsReq
+	mockAccountUserSessionsReq,
 } from 'test/graphql-data';
 import {MockedProvider} from '@apollo/client/testing';
 import {Provider} from 'react-redux';
@@ -24,7 +24,7 @@ jest.mock('recharts', () => {
 			<OriginalModule.ResponsiveContainer height={350} width={800}>
 				{children}
 			</OriginalModule.ResponsiveContainer>
-		)
+		),
 	};
 });
 
@@ -39,13 +39,13 @@ const Wrapper: React.FC<WrapperProps> = ({mocks}) => (
 		<MemoryRouter>
 			<MockedProvider mocks={mocks}>
 				<ActivityStreamCard
-					accountId='abc'
-					channelId='123123'
-					interval='D'
+					accountId="abc"
+					channelId="123123"
+					interval="D"
 					rangeSelectors={{
 						rangeEnd: null,
 						rangeKey: RangeKeyTimeRanges.Last30Days,
-						rangeStart: null
+						rangeStart: null,
 					}}
 				/>
 			</MockedProvider>
@@ -60,7 +60,7 @@ describe('ActivityStreamCard', () => {
 				mocks={[
 					mockAccountEventMetricsReq(),
 					mockAccountEventsTrendReq(),
-					mockAccountUserSessionsReq()
+					mockAccountUserSessionsReq(),
 				]}
 			/>
 		);
@@ -79,9 +79,9 @@ describe('ActivityStreamCard', () => {
 					mockAccountEventsTrendReq({
 						percentage: 0,
 						trendClassification: 'NEUTRAL',
-						value: 0
+						value: 0,
 					}),
-					mockAccountUserSessionsReq({sessions: [], totalEvents: 0})
+					mockAccountUserSessionsReq({sessions: [], totalEvents: 0}),
 				]}
 			/>
 		);
@@ -109,11 +109,11 @@ describe('ActivityStreamCard', () => {
 					mockAccountUserSessionsReq({
 						keywords: SEARCH_KEYWORDS,
 						sessions: [],
-						totalEvents: 0
+						totalEvents: 0,
 					}),
 					mockAccountEventMetricsReq(),
 					mockAccountEventsTrendReq(),
-					mockAccountUserSessionsReq()
+					mockAccountUserSessionsReq(),
 				]}
 			/>
 		);
@@ -126,7 +126,7 @@ describe('ActivityStreamCard', () => {
 		fireEvent.keyDown(searchInput, {
 			charCode: 13,
 			code: 'Enter',
-			key: 'Enter'
+			key: 'Enter',
 		});
 
 		await act(async () => {
@@ -153,9 +153,9 @@ describe('ActivityStreamCard', () => {
 					mockAccountEventsTrendReq({
 						percentage: 22.5,
 						trendClassification: 'POSITIVE',
-						value: 56
+						value: 56,
 					}),
-					mockAccountUserSessionsReq()
+					mockAccountUserSessionsReq(),
 				]}
 			/>
 		);
@@ -175,9 +175,9 @@ describe('ActivityStreamCard', () => {
 					mockAccountEventsTrendReq({
 						percentage: -10,
 						trendClassification: 'NEGATIVE',
-						value: 4
+						value: 4,
 					}),
-					mockAccountUserSessionsReq()
+					mockAccountUserSessionsReq(),
 				]}
 			/>
 		);
@@ -197,9 +197,9 @@ describe('ActivityStreamCard', () => {
 					mockAccountEventsTrendReq({
 						percentage: 0,
 						trendClassification: 'NEUTRAL',
-						value: 56
+						value: 56,
 					}),
-					mockAccountUserSessionsReq()
+					mockAccountUserSessionsReq(),
 				]}
 			/>
 		);

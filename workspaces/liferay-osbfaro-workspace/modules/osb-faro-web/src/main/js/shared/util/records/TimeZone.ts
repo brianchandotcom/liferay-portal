@@ -10,7 +10,7 @@ export default class TimeZone
 	extends Record({
 		country: 'UTC',
 		displayTimeZone: '(UTC) UTC',
-		timeZoneId: 'UTC'
+		timeZoneId: 'UTC',
 	})
 	implements ITimeZone
 {

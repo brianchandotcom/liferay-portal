@@ -18,22 +18,22 @@ jest.mock('shared/actions/alerts', () => ({
 	addAlert: jest.fn(() => ({
 		meta: {},
 		payload: {},
-		type: 'addAlert'
-	}))
+		type: 'addAlert',
+	})),
 }));
 
 jest.mock('shared/api', () => ({
 	csv: {
 		fetchCount: jest.fn(),
-		fetchCSV: jest.fn()
-	}
+		fetchCSV: jest.fn(),
+	},
 }));
 
 jest.mock('../utils', () => {
 	const original = jest.requireActual('../utils');
 	return {
 		...original,
-		useDownloadCSV: jest.fn(() => () => 'http://test-url.com')
+		useDownloadCSV: jest.fn(() => () => 'http://test-url.com'),
 	};
 });
 
@@ -42,18 +42,18 @@ jest.spyOn(HTMLAnchorElement.prototype, 'click').mockImplementation(() => {});
 const DefaultComponent = () => (
 	<Provider store={mockStore()}>
 		<MemoryRouter initialEntries={['/workspace/123/456/individuals']}>
-			<Route path='/workspace/:groupId/:channelId/individuals'>
+			<Route path="/workspace/:groupId/:channelId/individuals">
 				<MockedProvider
 					cache={
 						new InMemoryCache({
-							addTypename: false
+							addTypename: false,
 						})
 					}
 				>
 					<DownloadStaticCSVReport
 						disabled={false}
 						type={CSVType.Individual}
-						typeLang='Individuals'
+						typeLang="Individuals"
 					/>
 				</MockedProvider>
 			</Route>
@@ -70,7 +70,7 @@ describe('DownloadStaticCSVReport', () => {
 		render(<DefaultComponent />);
 
 		const downloadBtn = screen.getByRole('button', {
-			name: /download report/i
+			name: /download report/i,
 		});
 
 		fireEvent.click(downloadBtn);
@@ -94,7 +94,7 @@ describe('DownloadStaticCSVReport', () => {
 
 		fireEvent.click(
 			screen.getByRole('button', {
-				name: /download report/i
+				name: /download report/i,
 			})
 		);
 
@@ -126,7 +126,7 @@ describe('DownloadStaticCSVReport', () => {
 
 		fireEvent.click(
 			screen.getByRole('button', {
-				name: /download report/i
+				name: /download report/i,
 			})
 		);
 
@@ -139,7 +139,7 @@ describe('DownloadStaticCSVReport', () => {
 		await waitFor(() => {
 			expect(addAlert).toHaveBeenCalledWith(
 				expect.objectContaining({
-					alertType: Alert.Types.Default
+					alertType: Alert.Types.Default,
 				})
 			);
 		});
@@ -157,7 +157,7 @@ describe('DownloadStaticCSVReport', () => {
 
 		fireEvent.click(
 			screen.getByRole('button', {
-				name: /download report/i
+				name: /download report/i,
 			})
 		);
 
@@ -170,7 +170,7 @@ describe('DownloadStaticCSVReport', () => {
 		await waitFor(() => {
 			expect(addAlert).toHaveBeenCalledWith(
 				expect.objectContaining({
-					alertType: Alert.Types.Warning
+					alertType: Alert.Types.Warning,
 				})
 			);
 		});
@@ -185,7 +185,7 @@ describe('DownloadStaticCSVReport', () => {
 
 		fireEvent.click(
 			screen.getByRole('button', {
-				name: /download report/i
+				name: /download report/i,
 			})
 		);
 
@@ -200,7 +200,7 @@ describe('DownloadStaticCSVReport', () => {
 				alertType: Alert.Types.Error,
 				message: Liferay.Language.get(
 					'it-was-not-possible-to-generate-a-csv-file-at-this-moment.-please-try-again-later'
-				)
+				),
 			});
 		});
 	});

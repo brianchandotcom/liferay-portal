@@ -4,19 +4,19 @@ export enum AttributeOwnerTypes {
 	Account = 'ACCOUNT',
 	Event = 'EVENT',
 	Individual = 'INDIVIDUAL',
-	Session = 'SESSION'
+	Session = 'SESSION',
 }
 
 export enum AttributeTypes {
 	All = 'ALL',
 	Global = 'GLOBAL',
-	Local = 'LOCAL'
+	Local = 'LOCAL',
 }
 
 export enum CalculationTypes {
 	Average = 'AVERAGE',
 	Total = 'TOTAL',
-	Unique = 'UNIQUE'
+	Unique = 'UNIQUE',
 }
 
 export enum DataTypes {
@@ -24,19 +24,19 @@ export enum DataTypes {
 	Date = 'DATE',
 	Duration = 'DURATION',
 	Number = 'NUMBER',
-	String = 'STRING'
+	String = 'STRING',
 }
 
 export enum DateGroupings {
 	Day = 'DAY',
 	Month = 'MONTH',
-	Year = 'YEAR'
+	Year = 'YEAR',
 }
 
 export enum EventTypes {
 	All = 'ALL',
 	Custom = 'CUSTOM',
-	Default = 'DEFAULT'
+	Default = 'DEFAULT',
 }
 
 export enum Operators {
@@ -46,7 +46,7 @@ export enum Operators {
 	EQ = 'eq',
 	GT = 'gt',
 	LT = 'lt',
-	NE = 'ne'
+	NE = 'ne',
 }
 
 export type Attribute = {

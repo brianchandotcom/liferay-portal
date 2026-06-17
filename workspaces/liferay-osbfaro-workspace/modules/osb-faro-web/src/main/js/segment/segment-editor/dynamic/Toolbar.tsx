@@ -47,7 +47,7 @@ export class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
 	state = {
 		countLoading: true,
 		criteriaValid: false,
-		membersCount: 0
+		membersCount: 0,
 	};
 
 	componentDidMount() {
@@ -74,6 +74,7 @@ export class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
 	}
 
 	componentWillUnmount() {
+
 		// @ts-ignore: Property 'cancel' does not exist on type '() => any'.
 		this.getMembersCount.cancel();
 	}
@@ -87,7 +88,7 @@ export class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
 			channelId,
 			filter: criteriaString,
 			groupId,
-			...params
+			...params,
 		});
 	}
 
@@ -95,12 +96,13 @@ export class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
 	getMembersCount() {
 		const {
 			props: {criteria, includeAnonymousUsers},
-			state: {criteriaValid}
+			state: {criteriaValid},
 		} = this;
 
 		if (criteria) {
 			this.setState({countLoading: true});
-		} else {
+		}
+		else {
 			this.setState({countLoading: false, membersCount: 0});
 		}
 
@@ -109,7 +111,7 @@ export class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
 				.then(({total}) =>
 					this.setState({countLoading: false, membersCount: total})
 				)
-				.catch(err => {
+				.catch((err) => {
 					if (!err.IS_CANCELLATION_ERROR) {
 						this.setState({countLoading: false});
 					}
@@ -130,7 +132,7 @@ export class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
 			onClose: close,
 			rowIdentifier: 'id',
 			size: 'lg',
-			title: Liferay.Language.get('known-segment-members')
+			title: Liferay.Language.get('known-segment-members'),
 		});
 	}
 
@@ -144,18 +146,18 @@ export class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
 					'data-tooltip-align': 'bottom',
 					title: Liferay.Language.get(
 						'some-of-your-criteria-are-incomplete-or-invalid'
-					)
-			  };
+					),
+				};
 	}
 
 	render() {
 		const {
 			props: {channelId, groupId, id, segmentType, valid},
-			state: {countLoading, criteriaValid, membersCount}
+			state: {countLoading, criteriaValid, membersCount},
 		} = this;
 
 		const totalMembersCount = countLoading ? (
-			<Loading key='LOADING' />
+			<Loading key="LOADING" />
 		) : (
 			membersCount.toLocaleString()
 		);
@@ -164,22 +166,22 @@ export class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
 
 		const viewMembersButtonContent = isBatch ? (
 			<span {...this.getPreviewCriteriaTooltipProps()}>
-				<ClayIcon className='icon-root' symbol='view' />
+				<ClayIcon className="icon-root" symbol="view" />
 			</span>
 		) : (
 			<div {...this.getPreviewCriteriaTooltipProps()}>
-				<ClayIcon className='icon-root mr-2' symbol='view' />
+				<ClayIcon className="icon-root mr-2" symbol="view" />
 				{Liferay.Language.get('view-members')}
 			</div>
 		);
 
 		return (
-			<div className='form-header'>
-				<div className='page-container'>
-					<div className='container-fluid form-header-container'>
-						<div className='form-header-section-left'>
+			<div className="form-header">
+				<div className="page-container">
+					<div className="container-fluid form-header-container">
+						<div className="form-header-section-left">
 							<TitleEditor
-								name='name'
+								name="name"
 								placeholder={Liferay.Language.get(
 									'unnamed-segment'
 								)}
@@ -187,22 +189,22 @@ export class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
 							/>
 						</div>
 
-						<div className='form-header-section-right'>
+						<div className="form-header-section-right">
 							{isBatch && (
-								<div className='btn-group'>
-									<div className='btn-group-item'>
+								<div className="btn-group">
+									<div className="btn-group-item">
 										<Form.ToggleSwitch
-											className='include-anonymous'
+											className="include-anonymous"
 											label={Liferay.Language.get(
 												'include-anonymous'
 											)}
-											name='includeAnonymousUsers'
+											name="includeAnonymousUsers"
 										/>
 									</div>
 
-									<div className='btn-group-item'>
+									<div className="btn-group-item">
 										<InfoPopover
-											className='include-anon-help-icon'
+											className="include-anon-help-icon"
 											content={Liferay.Language.get(
 												'criteria-containing-individual-or-account-attributes-excludes-anonymous-individuals'
 											)}
@@ -211,21 +213,21 @@ export class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
 								</div>
 							)}
 
-							<div className='btn-group'>
+							<div className="btn-group">
 								{isBatch && (
-									<div className='btn-group-item'>
-										<div className='total-members'>
+									<div className="btn-group-item">
+										<div className="total-members">
 											{sub(
 												Liferay.Language.get(
 													'total-members-x'
 												),
 												[
 													<div
-														className='total-members-count'
-														key='TOTAL_MEMBERS_COUNT'
+														className="total-members-count"
+														key="TOTAL_MEMBERS_COUNT"
 													>
 														{totalMembersCount}
-													</div>
+													</div>,
 												],
 												false
 											)}
@@ -233,22 +235,22 @@ export class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
 									</div>
 								)}
 
-								<div className='btn-group-item'>
+								<div className="btn-group-item">
 									<ClayButton
 										aria-label={Liferay.Language.get(
 											'view-members'
 										)}
 										borderless
-										className='button-root preview-criteria'
-										data-testid='preview-criteria-button'
+										className="button-root preview-criteria"
+										data-testid="preview-criteria-button"
 										data-tooltip
 										disabled={
 											!criteriaValid ||
 											(criteriaValid && !membersCount)
 										}
-										displayType='secondary'
+										displayType="secondary"
 										onClick={this.handlePreviewClick}
-										size='sm'
+										size="sm"
 										title={Liferay.Language.get(
 											'view-members'
 										)}
@@ -258,24 +260,24 @@ export class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
 								</div>
 							</div>
 
-							<div className='btn-group'>
-								<div className='btn-group-item save'>
+							<div className="btn-group">
+								<div className="btn-group-item save">
 									<ClayButton
-										className='button-root'
+										className="button-root"
 										disabled={!valid}
-										displayType='primary'
-										size='sm'
-										type='submit'
+										displayType="primary"
+										size="sm"
+										type="submit"
 									>
 										{Liferay.Language.get('save-segment')}
 									</ClayButton>
 								</div>
 
-								<div className='btn-group-item cancel'>
+								<div className="btn-group-item cancel">
 									<ClayLink
 										button
-										className='button-root'
-										displayType='secondary'
+										className="button-root"
+										displayType="secondary"
 										href={
 											id
 												? toRoute(
@@ -283,17 +285,17 @@ export class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
 														{
 															channelId,
 															groupId,
-															id
+															id,
 														}
-												  )
+													)
 												: toRoute(
 														Routes.CONTACTS_LIST_SEGMENT,
 														{
 															channelId,
 															groupId,
-															type: SEGMENTS
+															type: SEGMENTS,
 														}
-												  )
+													)
 										}
 										small
 									>
@@ -311,5 +313,5 @@ export class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
 
 export default connect(null, {
 	close,
-	open
+	open,
 })(Toolbar);

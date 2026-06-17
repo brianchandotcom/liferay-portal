@@ -48,11 +48,11 @@ const Row: React.FC<IRowProps> = ({
 	renderRowActions,
 	rowIndex,
 	selected = false,
-	showCheckbox = false
+	showCheckbox = false,
 }) => {
 	const [state, setState] = useState({
 		editing: false,
-		edits: {}
+		edits: {},
 	});
 
 	const handleCheckboxChange = () => onClick(data);
@@ -61,22 +61,22 @@ const Row: React.FC<IRowProps> = ({
 		event.stopPropagation();
 
 	const handleEdit = () =>
-		setState(prevState => ({
+		setState((prevState) => ({
 			...prevState,
-			editing: true
+			editing: true,
 		}));
 
 	const handleResetEdits = () =>
-		setState(prevState => ({
+		setState((prevState) => ({
 			...prevState,
 			editing: false,
-			edits: {}
+			edits: {},
 		}));
 
 	const handleUpdateEdits = (attr: string, value: any) =>
-		setState(prevState => ({
+		setState((prevState) => ({
 			...prevState,
-			edits: {...prevState.edits, [attr]: value}
+			edits: {...prevState.edits, [attr]: value},
 		}));
 
 	const renderActionColumn = () => {
@@ -84,18 +84,19 @@ const Row: React.FC<IRowProps> = ({
 
 		if (renderRowActions) {
 			return (
-				<Cell className='row-actions' key='ROW_ACTIONS'>
+				<Cell className="row-actions" key="ROW_ACTIONS">
 					<StopClickPropagation>
 						{renderRowActions({
 							data,
-							items
+							items,
 						})}
 					</StopClickPropagation>
 				</Cell>
 			);
-		} else if (renderInlineRowActions) {
+		}
+		else if (renderInlineRowActions) {
 			return (
-				<Cell className='row-inline-actions' key='INLINE_ACTIONS'>
+				<Cell className="row-inline-actions" key="INLINE_ACTIONS">
 					<StopClickPropagation>
 						{renderInlineRowActions({
 							data,
@@ -106,8 +107,8 @@ const Row: React.FC<IRowProps> = ({
 							rowEvents: {
 								onRowCancel: handleResetEdits,
 								onRowEdit: handleEdit,
-								onRowSave: handleResetEdits
-							}
+								onRowSave: handleResetEdits,
+							},
 						})}
 					</StopClickPropagation>
 				</Cell>
@@ -120,7 +121,7 @@ const Row: React.FC<IRowProps> = ({
 	const classes = getCN({
 		clickable,
 		disabled,
-		'table-active': selected
+		'table-active': selected,
 	});
 
 	return (
@@ -141,9 +142,9 @@ const Row: React.FC<IRowProps> = ({
 					cellRenderer: CellRenderer,
 					cellRendererProps,
 					className,
-					dataFormatter = val => val,
+					dataFormatter = (val) => val,
 					editable = false,
-					title
+					title,
 				} = column;
 
 				if (CellRenderer && editable) {
@@ -159,7 +160,8 @@ const Row: React.FC<IRowProps> = ({
 							onUpdateEdits={handleUpdateEdits}
 						/>
 					);
-				} else if (CellRenderer) {
+				}
+				else if (CellRenderer) {
 					return (
 						<CellRenderer
 							{...cellRendererProps}
@@ -171,7 +173,8 @@ const Row: React.FC<IRowProps> = ({
 							rowIndex={rowIndex}
 						/>
 					);
-				} else {
+				}
+				else {
 					const dataValue = get(data, accessor);
 
 					return (

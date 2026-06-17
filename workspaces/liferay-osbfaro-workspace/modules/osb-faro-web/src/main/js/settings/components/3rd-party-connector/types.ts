@@ -5,7 +5,7 @@ export enum Entity {
 	Events = 'events',
 	Individuals = 'individuals',
 	Sites = 'sites',
-	Users = 'users'
+	Users = 'users',
 }
 
 export interface ConnectorEntityCellProps {
@@ -62,5 +62,5 @@ export interface ConnectorConfig {
 export enum ConnectorStatus {
 	Active = 'ACTIVE',
 	Disconnected = 'DISCONNECTED',
-	Inactive = 'INACTIVE'
+	Inactive = 'INACTIVE',
 }

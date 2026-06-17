@@ -35,7 +35,7 @@ const userDropDown: React.FC<IUserDropdownProps> = ({
 	initialActiveMenu,
 	menus,
 	showCaret = false,
-	userName
+	userName,
 }: IUserDropdownProps) => {
 	const [active, setActive] = useState(false);
 	const [activeMenu, setActiveMenu] = useState(initialActiveMenu);
@@ -76,17 +76,17 @@ const userDropDown: React.FC<IUserDropdownProps> = ({
 				active={active}
 				alignElementRef={triggerElementRef}
 				alignmentPosition={alignmentPosition}
-				className='user-menu-dropdown'
+				className="user-menu-dropdown"
 				onSetActive={setActive}
 				ref={menuElementRef}
 			>
-				<TransitionGroup className='transition-carousel-group'>
+				<TransitionGroup className="transition-carousel-group">
 					<CSSTransition
 						classNames={`transition-carousel-slide-in-out-${direction}`}
 						key={activeMenu}
 						timeout={250}
 					>
-						<div className='w-100'>
+						<div className="w-100">
 							<ClayDropDown.ItemList>
 								{initialActiveMenu !== activeMenu && (
 									<ClayDropDown.Group>
@@ -96,8 +96,8 @@ const userDropDown: React.FC<IUserDropdownProps> = ({
 													'back'
 												)}
 												block
-												className='button-root'
-												displayType='unstyled'
+												className="button-root"
+												displayType="unstyled"
 												onClick={() => {
 													setHistory(
 														history.slice(0, -1)
@@ -106,7 +106,7 @@ const userDropDown: React.FC<IUserDropdownProps> = ({
 													setDirection('right');
 												}}
 											>
-												<ClayIcon symbol='order-arrow-left' />
+												<ClayIcon symbol="order-arrow-left" />
 											</ClayButton>
 										</ClayDropDown.Item>
 									</ClayDropDown.Group>
@@ -137,7 +137,7 @@ const userDropDown: React.FC<IUserDropdownProps> = ({
 																) {
 																	setHistory([
 																		...history,
-																		childMenuId
+																		childMenuId,
 																	]);
 
 																	setDirection(
@@ -176,20 +176,20 @@ const Label = React.forwardRef<HTMLButtonElement, ILabelProps>(
 				className
 			)}
 			ref={ref}
-			type='button'
+			type="button"
 			{...otherProps}
 		>
-			<div className='text-truncate'>
-				<Sticker circle className='avatar'>
+			<div className="text-truncate">
+				<Sticker circle className="avatar">
 					{getInitials(userName)}
 				</Sticker>
 
-				<span className='user-name'>{userName}</span>
+				<span className="user-name">{userName}</span>
 
 				{showCaret && (
 					<ClayIcon
-						className='icon-root caret'
-						symbol='caret-bottom'
+						className="icon-root caret"
+						symbol="caret-bottom"
 					/>
 				)}
 			</div>

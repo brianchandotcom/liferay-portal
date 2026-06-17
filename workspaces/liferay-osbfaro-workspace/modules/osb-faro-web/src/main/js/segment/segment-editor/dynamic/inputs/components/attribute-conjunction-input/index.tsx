@@ -10,7 +10,7 @@ import {
 	AddEntity,
 	EntityType,
 	ReferencedEntities,
-	withReferencedObjectsConsumer
+	withReferencedObjectsConsumer,
 } from '../../../context/referencedObjects';
 import {Attribute} from 'event-analysis/utils/types';
 import {Criterion} from '../../../utils/types';
@@ -18,7 +18,7 @@ import {DATA_TYPE_ICONS_MAP} from 'event-analysis/utils/utils';
 import {
 	getDefaultAttributeOperator,
 	getDefaultAttributeValue,
-	validateAttributeValue
+	validateAttributeValue,
 } from './utils';
 import {Map} from 'immutable';
 
@@ -57,7 +57,7 @@ const AttributeFilterConjunctionInput: React.FC<
 	conjunctionCriterion,
 	onChange,
 	touched,
-	valid
+	valid,
 }) => {
 	useEffect(() => {
 		if (!getAttributeId()) {
@@ -75,7 +75,7 @@ const AttributeFilterConjunctionInput: React.FC<
 		const attributeId = getAttributeId();
 
 		return (
-			attributes.find(attribute => attribute?.id === attributeId) ||
+			attributes.find((attribute) => attribute?.id === attributeId) ||
 			attributes[0]
 		);
 	};
@@ -109,7 +109,7 @@ const AttributeFilterConjunctionInput: React.FC<
 	const setAttribute = (attribute: Attribute) => {
 		addEntity({
 			entityType: EntityType.Attributes,
-			payload: Map(attribute)
+			payload: Map(attribute),
 		});
 
 		const defaultAttributeValue = getDefaultAttributeValue(
@@ -129,7 +129,7 @@ const AttributeFilterConjunctionInput: React.FC<
 				operatorName:
 					defaultAttributeOperator as unknown as Criterion['operatorName'],
 				propertyName: `attribute/${attribute.id}`,
-				value: defaultAttributeValue
+				value: defaultAttributeValue,
 			},
 			touched: {...touched, attribute: true, attributeValue: false},
 			valid: {
@@ -139,8 +139,8 @@ const AttributeFilterConjunctionInput: React.FC<
 					defaultAttributeValue,
 					attribute.dataType,
 					defaultAttributeOperator
-				)
-			}
+				),
+			},
 		});
 	};
 
@@ -154,15 +154,15 @@ const AttributeFilterConjunctionInput: React.FC<
 					closeOnClick
 					trigger={
 						<ClayButton
-							className='form-control form-control-select form-control-select-secondary'
-							displayType='secondary'
+							className="form-control form-control-select form-control-select-secondary"
+							displayType="secondary"
 						>
 							{attribute.displayName || attribute.name}
 						</ClayButton>
 					}
 				>
 					<ClayDropDown.Search
-						className='py-2 px-2'
+						className="py-2 px-2"
 						onChange={(query: string) => {
 							setSearchValue(query);
 							setAttributesDisplayed(getAttributes(query));
@@ -180,11 +180,11 @@ const AttributeFilterConjunctionInput: React.FC<
 									active={id === attribute.id}
 									key={name}
 									onClick={() => handleAttributeChange(id)}
-									roleItem='option'
+									roleItem="option"
 								>
 									<Sticker
-										className='mr-3'
-										display='secondary'
+										className="mr-3"
+										display="secondary"
 									>
 										<ClayIcon
 											symbol={
@@ -208,7 +208,7 @@ const AttributeFilterConjunctionInput: React.FC<
 						attribute,
 						criterion: params.criterion,
 						touched,
-						valid
+						valid,
 					})
 				}
 				operatorName={operatorName}
@@ -216,7 +216,7 @@ const AttributeFilterConjunctionInput: React.FC<
 
 			<ValueInput
 				dataType={attribute.dataType}
-				onChange={params =>
+				onChange={(params) =>
 					onChange({
 						attribute,
 						criterion: params.criterion ?? {},
@@ -224,14 +224,14 @@ const AttributeFilterConjunctionInput: React.FC<
 							...touched,
 							attributeValue:
 								params.touched?.attributeValue ??
-								touched.attributeValue
+								touched.attributeValue,
 						},
 						valid: {
 							...valid,
 							attributeValue:
 								params.valid?.attributeValue ??
-								valid.attributeValue
-						}
+								valid.attributeValue,
+						},
 					})
 				}
 				operatorName={operatorName}

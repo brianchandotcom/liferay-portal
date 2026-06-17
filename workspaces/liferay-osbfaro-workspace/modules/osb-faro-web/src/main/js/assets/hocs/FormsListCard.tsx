@@ -8,7 +8,7 @@ import URLConstants from 'shared/util/url-constants';
 import {
 	createOrderIOMap,
 	getGraphQLVariablesFromPagination,
-	SUBMISSIONS_METRIC
+	SUBMISSIONS_METRIC,
 } from 'shared/util/pagination';
 import {getSafeRangeSelectors} from 'shared/util/util';
 import {mapListResultsToProps} from 'shared/util/mappers';
@@ -22,7 +22,7 @@ import {useQueryRangeSelectors} from 'shared/hooks/useQueryRangeSelectors';
 
 const FormsListCard: React.FC = () => {
 	const {delta, orderIOMap, page, query} = useQueryPagination({
-		initialOrderIOMap: createOrderIOMap(SUBMISSIONS_METRIC)
+		initialOrderIOMap: createOrderIOMap(SUBMISSIONS_METRIC),
 	});
 
 	const {channelId, groupId} = useParams();
@@ -35,17 +35,17 @@ const FormsListCard: React.FC = () => {
 				delta,
 				orderIOMap,
 				page,
-				query
+				query,
 			}),
-			...getSafeRangeSelectors(rangeSelectors)
-		}
+			...getSafeRangeSelectors(rangeSelectors),
+		},
 	});
 	return (
-		<Card className='forms-root' pageDisplay>
+		<Card className="forms-root" pageDisplay>
 			<ListComponent
-				{...mapListResultsToProps(response, result => ({
+				{...mapListResultsToProps(response, (result) => ({
 					items: result.forms.assetMetrics,
-					total: result.forms.total
+					total: result.forms.total,
 				}))}
 				columns={[
 					metricsListColumns.getTitleId({
@@ -55,12 +55,12 @@ const FormsListCard: React.FC = () => {
 							'form-name'
 						)} | ${Liferay.Language.get('id').toUpperCase()}`,
 						rangeSelectors,
-						route: Routes.ASSETS_FORMS_OVERVIEW
+						route: Routes.ASSETS_FORMS_OVERVIEW,
 					}),
 					metricsListColumns.submissionsMetric,
 					metricsListColumns.viewsMetric,
 					metricsListColumns.abandonmentsMetric,
-					metricsListColumns.completionTimeMetric
+					metricsListColumns.completionTimeMetric,
 				]}
 				delta={delta}
 				entityLabel={Liferay.Language.get('forms')}
@@ -69,7 +69,7 @@ const FormsListCard: React.FC = () => {
 					<NoResultsDisplay
 						description={
 							<>
-								<span className='mr-1'>
+								<span className="mr-1">
 									{Liferay.Language.get(
 										'check-back-later-to-verify-if-data-has-been-received-from-your-data-sources,-or-you-can-try-a-different-date-range'
 									)}
@@ -79,8 +79,8 @@ const FormsListCard: React.FC = () => {
 									href={
 										URLConstants.AssetsFormsListDocumentation
 									}
-									key='DOCUMENTATION'
-									target='_blank'
+									key="DOCUMENTATION"
+									target="_blank"
 								>
 									{Liferay.Language.get(
 										'learn-more-about-forms'
@@ -91,7 +91,7 @@ const FormsListCard: React.FC = () => {
 						icon={{
 							border: false,
 							size: Sizes.XXXLarge,
-							symbol: 'ac_satellite'
+							symbol: 'ac_satellite',
 						}}
 						title={Liferay.Language.get(
 							'there-are-no-visitors-data-found'

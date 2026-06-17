@@ -60,7 +60,7 @@ const DateInput: React.FC<IDateInputProps> = ({
 	onBlur = noop,
 	onChange = noop,
 	showRetentionPeriod = true,
-	value
+	value,
 }) => {
 	const [active, setActive] = useState(false);
 
@@ -74,7 +74,7 @@ const DateInput: React.FC<IDateInputProps> = ({
 	const handleDateSelect = ({end, start}: MomentDateRange) => {
 		onChange({
 			end: convertMomentToDisplayFormat(end),
-			start: convertMomentToDisplayFormat(start)
+			start: convertMomentToDisplayFormat(start),
 		});
 	};
 
@@ -82,7 +82,7 @@ const DateInput: React.FC<IDateInputProps> = ({
 		if (end || start) {
 			return sub(Liferay.Language.get('x-to-x'), [
 				convertMomentToDisplayFormat(start),
-				convertMomentToDisplayFormat(end)
+				convertMomentToDisplayFormat(end),
 			]) as string;
 		}
 
@@ -91,7 +91,7 @@ const DateInput: React.FC<IDateInputProps> = ({
 
 	const momentDateRange = {
 		end: convertToMoment(value.end, format),
-		start: convertToMoment(value.start, format)
+		start: convertToMoment(value.start, format),
 	};
 
 	const minDate = formatDateWithTimezone(timeZoneId).clone();
@@ -107,13 +107,13 @@ const DateInput: React.FC<IDateInputProps> = ({
 			className={getCN(className, 'dropdown-range-key-root')}
 			menuElementAttrs={{
 				className: getCN('dropdown-range-key-menu-root', {
-					'show-date-picker': active
+					'show-date-picker': active,
 				}),
 				style: {
-					zIndex: 1060
-				}
+					zIndex: 1060,
+				},
 			}}
-			onActiveChange={active => {
+			onActiveChange={(active) => {
 				setActive(active);
 
 				!active && onBlur();
@@ -123,33 +123,33 @@ const DateInput: React.FC<IDateInputProps> = ({
 					<Input.Group>
 						<Input.GroupItem>
 							<Input
-								autoComplete='off'
-								data-testid='date-range-input'
-								inset='after'
+								autoComplete="off"
+								data-testid="date-range-input"
+								inset="after"
 								onClick={() => setActive(true)}
 								placeholder={sub(
 									Liferay.Language.get('x-to-x'),
 									[
 										Liferay.Language.get('yyyy-mm-dd'),
-										Liferay.Language.get('yyyy-mm-dd')
+										Liferay.Language.get('yyyy-mm-dd'),
 									]
 								)}
 								readOnly
 								value={getDateRangeDisplay(momentDateRange)}
 							/>
 
-							<Input.Inset position='after'>
+							<Input.Inset position="after">
 								<ClayButton
 									aria-label={Liferay.Language.get(
 										'choose-date-range'
 									)}
-									className='button-root'
-									displayType='unstyled'
+									className="button-root"
+									displayType="unstyled"
 									onClick={() => setActive(true)}
 								>
 									<ClayIcon
-										className='icon-root'
-										symbol='calendar'
+										className="icon-root"
+										symbol="calendar"
 									/>
 								</ClayButton>
 							</Input.Inset>

@@ -11,6 +11,7 @@ interface ITrackedBehaviorsListProps {
 interface ITableWithDataProps extends ITrackedBehaviorsListProps {}
 
 // TODO: LRAC-4284 Remove mock data once backend is implemented
+
 const mockBehaviors = [
 	{name: 'Page Views', restricted: true, type: 'Page Event'},
 	{name: 'Blog Views', restricted: false, type: 'Blog Event'},
@@ -18,8 +19,8 @@ const mockBehaviors = [
 	{
 		name: 'Document & Media Downloads',
 		restricted: false,
-		type: 'Document & Media Event'
-	}
+		type: 'Document & Media Event',
+	},
 ];
 
 const TableWithData: React.FC<ITableWithDataProps> = ({authorized}) => (
@@ -30,32 +31,32 @@ const TableWithData: React.FC<ITableWithDataProps> = ({authorized}) => (
 					accessor: 'name',
 					cellRenderer: NameCell,
 					label: Liferay.Language.get('attribute-name'),
-					sortable: false
+					sortable: false,
 				},
 				{
 					accessor: 'type',
 					className: 'table-cell-expand',
 					label: Liferay.Language.get('event-type'),
-					sortable: false
+					sortable: false,
 				},
-				definitionsListColumns.restrictAccess(authorized)
+				definitionsListColumns.restrictAccess(authorized),
 			] as Column[]
 		}
 		items={mockBehaviors}
-		rowIdentifier='name'
+		rowIdentifier="name"
 	/>
 );
 
 export const TrackedBehaviorsList: React.FC<ITrackedBehaviorsListProps> = ({
-	authorized
+	authorized,
 }) => (
-	<Card className='tracked-behaviors-list-root'>
+	<Card className="tracked-behaviors-list-root">
 		<TableWithData authorized={authorized} />
 	</Card>
 );
 
 TrackedBehaviorsList.defaultProps = {
-	authorized: false
+	authorized: false,
 };
 
 export default TrackedBehaviorsList;

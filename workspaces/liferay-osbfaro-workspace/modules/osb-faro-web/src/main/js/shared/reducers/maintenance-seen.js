@@ -7,7 +7,7 @@ const actionHandlers = {
 		const {currentUserId, groupId, stateStartDate} = payload;
 
 		return state.set(`${groupId}-${currentUserId}`, stateStartDate);
-	}
+	},
 };
 
 export default createReducer(new Map(), actionHandlers);

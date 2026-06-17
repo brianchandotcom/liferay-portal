@@ -71,7 +71,7 @@ export const SubscriptionNames = {
 	LxcProPlan: 'LXC - Pro Plan',
 	LxcSubscriptionEngageSite: 'LXC Subscription - Engage Site',
 	LxcSubscriptionSupportSite: 'LXC Subscription - Support Site',
-	LxcSubscriptionTransactSite: 'LXC Subscription - Transact Site'
+	LxcSubscriptionTransactSite: 'LXC Subscription - Transact Site',
 };
 
 export const PLAN_TYPES = {
@@ -143,7 +143,7 @@ export const PLAN_TYPES = {
 	[SubscriptionNames.LxcSubscriptionSupportSite]:
 		'lxcSubscriptionSupportSite',
 	[SubscriptionNames.LxcSubscriptionTransactSite]:
-		'lxcSubscriptionTransactSite'
+		'lxcSubscriptionTransactSite',
 };
 
 function formatSubscriptions(allPlans) {
@@ -160,12 +160,12 @@ function formatSubscriptions(allPlans) {
 		['lxcSubscriptionEngageSite']: {},
 		['lxcSubscriptionSupportSite']: {},
 		['lxcSubscriptionTransactSite']: {},
-		[PAGEVIEWS]: {}
+		[PAGEVIEWS]: {},
 	};
 
 	const PLANS = {};
 
-	const hasKeyProperty = key =>
+	const hasKeyProperty = (key) =>
 		Object.prototype.hasOwnProperty.call(allPlans, key);
 
 	for (const key in allPlans) {
@@ -174,7 +174,7 @@ function formatSubscriptions(allPlans) {
 				baseSubscriptionPlan,
 				individualsLimit,
 				name,
-				pageViewsLimit
+				pageViewsLimit,
 			} = allPlans[key];
 
 			const planType = PLAN_TYPES[key];
@@ -183,16 +183,17 @@ function formatSubscriptions(allPlans) {
 				baseSubscriptionPlan,
 				limits: {
 					[INDIVIDUALS]: individualsLimit,
-					[PAGEVIEWS]: pageViewsLimit
+					[PAGEVIEWS]: pageViewsLimit,
 				},
-				name
+				name,
 			};
 
 			const parentPlanType = PLAN_TYPES[baseSubscriptionPlan];
 
 			if (baseSubscriptionPlan) {
 				ADD_ONS[planType][parentPlanType] = formattedPlan;
-			} else {
+			}
+			else {
 				PLANS[planType] = formattedPlan;
 			}
 		}
@@ -208,12 +209,12 @@ export {ADD_ONS, PLANS};
 export const STATUS_DISPLAY_MAP = {
 	[SubscriptionStatuses.Ok]: 'primary',
 	[SubscriptionStatuses.Approaching]: 'warning',
-	[SubscriptionStatuses.Over]: 'danger'
+	[SubscriptionStatuses.Over]: 'danger',
 };
 
 export const DEFAULT_ADDONS = {
 	[INDIVIDUALS]: ADD_ONS[INDIVIDUALS].business,
-	[PAGEVIEWS]: ADD_ONS[PAGEVIEWS].business
+	[PAGEVIEWS]: ADD_ONS[PAGEVIEWS].business,
 };
 
 export function getPlanAddOns(currentPlan) {
@@ -233,7 +234,7 @@ export function getPlanAddOns(currentPlan) {
 
 			return {
 				...acc,
-				[name]: totalLimit ? totalLimit.toLocaleString() : '-'
+				[name]: totalLimit ? totalLimit.toLocaleString() : '-',
 			};
 		}, {});
 }
@@ -400,7 +401,7 @@ export function formatPlanData(subscriptionIMap) {
 					.reduce((acc, addOn) => {
 						acc[PLAN_TYPES[addOn.get('name')]] = addOn;
 						return acc;
-					}, {})
+					}, {}),
 			},
 			endDate: subscriptionIMap.get('endDate'),
 			metrics: {
@@ -413,7 +414,7 @@ export function formatPlanData(subscriptionIMap) {
 					status: subscriptionIMap.get(
 						'individualsStatus',
 						SubscriptionStatuses.Ok
-					)
+					),
 				}),
 				pageViews: new Metric({
 					count: subscriptionIMap.get(
@@ -424,16 +425,16 @@ export function formatPlanData(subscriptionIMap) {
 					status: subscriptionIMap.get(
 						'pageViewsStatus',
 						SubscriptionStatuses.Ok
-					)
+					),
 				}),
 				syncedIndividualsCount: subscriptionIMap.get(
 					'syncedIndividualsCount'
-				)
+				),
 			},
 			name: subscriptionIMap.get('name'),
 			startDate: basicPlan
 				? subscriptionIMap.get('startDate')
-				: subscriptionIMap.get('lastAnniversaryDate')
+				: subscriptionIMap.get('lastAnniversaryDate'),
 		})
 	);
 }

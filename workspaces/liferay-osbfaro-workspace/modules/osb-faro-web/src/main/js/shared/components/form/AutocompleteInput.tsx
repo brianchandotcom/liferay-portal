@@ -24,7 +24,7 @@ const FormAutocompleteInput: React.FC<
 	const error = errors[name];
 
 	const classes = getCN(className, {
-		'has-error': error
+		'has-error': error,
 	});
 
 	return (

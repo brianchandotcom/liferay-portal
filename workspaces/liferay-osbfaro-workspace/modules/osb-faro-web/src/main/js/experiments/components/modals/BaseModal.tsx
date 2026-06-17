@@ -32,14 +32,14 @@ const BaseModal: React.FC<IBaseModalProps> = ({
 	size,
 	status,
 	submitMessage,
-	title
+	title,
 }) => {
 	const [submitting, setSubmitting] = useState(false);
 	const [submitError, setSubmitError] = useState(null);
 
 	let buttonSubmitProps: any = {
 		className: `button-root d-flex align-items-center btn-${status}`,
-		disabled: disabled || submitting
+		disabled: disabled || submitting,
 	};
 
 	if (!disabled) {
@@ -58,19 +58,20 @@ const BaseModal: React.FC<IBaseModalProps> = ({
 							onSuccess && onSuccess();
 							onClose();
 						})
-						.catch(error => {
+						.catch((error) => {
 							console.error(error); // eslint-disable-line no-console
 							setSubmitError(error);
 
 							setSubmitting(false);
 						});
-				} else {
+				}
+				else {
 					setSubmitting(false);
 
 					onSuccess && onSuccess();
 					onClose();
 				}
-			}
+			},
 		};
 	}
 
@@ -90,7 +91,7 @@ const BaseModal: React.FC<IBaseModalProps> = ({
 				last={
 					<ClayButton.Group spaced>
 						<ClayButton
-							displayType='secondary'
+							displayType="secondary"
 							onClick={onCancel || onClose}
 						>
 							{cancelMessage}

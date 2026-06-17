@@ -8,7 +8,7 @@ import WebContentListQuery from 'shared/queries/WebContentListQuery';
 import {
 	createOrderIOMap,
 	getGraphQLVariablesFromPagination,
-	VIEWS_METRIC
+	VIEWS_METRIC,
 } from 'shared/util/pagination';
 import {getSafeRangeSelectors} from 'shared/util/util';
 import {mapListResultsToProps} from 'shared/util/mappers';
@@ -22,7 +22,7 @@ import {useQueryRangeSelectors} from 'shared/hooks/useQueryRangeSelectors';
 
 const WebContentListCard: React.FC = () => {
 	const {delta, orderIOMap, page, query} = useQueryPagination({
-		initialOrderIOMap: createOrderIOMap(VIEWS_METRIC)
+		initialOrderIOMap: createOrderIOMap(VIEWS_METRIC),
 	});
 
 	const {channelId, groupId} = useParams();
@@ -35,18 +35,18 @@ const WebContentListCard: React.FC = () => {
 				delta,
 				orderIOMap,
 				page,
-				query
+				query,
 			}),
-			...getSafeRangeSelectors(rangeSelectors)
-		}
+			...getSafeRangeSelectors(rangeSelectors),
+		},
 	});
 
 	return (
-		<Card className='web-content-root' pageDisplay>
+		<Card className="web-content-root" pageDisplay>
 			<ListComponent
-				{...mapListResultsToProps(response, result => ({
+				{...mapListResultsToProps(response, (result) => ({
 					items: result.journals.assetMetrics,
-					total: result.journals.total
+					total: result.journals.total,
 				}))}
 				columns={[
 					metricsListColumns.getTitleId({
@@ -56,9 +56,9 @@ const WebContentListCard: React.FC = () => {
 							'title'
 						)} | ${Liferay.Language.get('id').toUpperCase()}`,
 						rangeSelectors,
-						route: Routes.ASSETS_WEB_CONTENT_OVERVIEW
+						route: Routes.ASSETS_WEB_CONTENT_OVERVIEW,
 					}),
-					metricsListColumns.viewsMetric
+					metricsListColumns.viewsMetric,
 				]}
 				delta={delta}
 				entityLabel={Liferay.Language.get('web-content')}
@@ -67,7 +67,7 @@ const WebContentListCard: React.FC = () => {
 					<NoResultsDisplay
 						description={
 							<>
-								<span className='mr-1'>
+								<span className="mr-1">
 									{Liferay.Language.get(
 										'check-back-later-to-verify-if-data-has-been-received-from-your-data-sources,-or-you-can-try-a-different-date-range'
 									)}
@@ -77,8 +77,8 @@ const WebContentListCard: React.FC = () => {
 									href={
 										URLConstants.AssetsWebContentListDocumentation
 									}
-									key='DOCUMENTATION'
-									target='_blank'
+									key="DOCUMENTATION"
+									target="_blank"
 								>
 									{Liferay.Language.get(
 										'learn-more-about-web-content'
@@ -89,7 +89,7 @@ const WebContentListCard: React.FC = () => {
 						icon={{
 							border: false,
 							size: Sizes.XXXLarge,
-							symbol: 'ac_satellite'
+							symbol: 'ac_satellite',
 						}}
 						title={Liferay.Language.get(
 							'there-are-no-visitors-data-found'

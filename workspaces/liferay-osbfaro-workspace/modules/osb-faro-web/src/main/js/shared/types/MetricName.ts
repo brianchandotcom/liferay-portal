@@ -16,5 +16,5 @@ export enum MetricName {
 	SessionsPerVisitor = 'sessionsPerVisitorMetric',
 	Submissions = 'submissionsMetric',
 	Views = 'viewsMetric',
-	Visitors = 'visitorsMetric'
+	Visitors = 'visitorsMetric',
 }

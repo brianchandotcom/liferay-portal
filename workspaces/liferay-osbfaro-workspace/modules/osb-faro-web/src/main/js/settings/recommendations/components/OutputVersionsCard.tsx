@@ -9,7 +9,7 @@ import {compose} from 'redux';
 import {
 	createOrderIOMap,
 	getSortFromOrderIOMap,
-	ID
+	ID,
 } from 'shared/util/pagination';
 import {CUSTOM_DATE_FORMAT} from 'shared/util/date';
 import {getFormattedTitle} from 'shared/components/NoResultsDisplay';
@@ -18,12 +18,12 @@ import {graphql} from '@apollo/client/react/hoc';
 import {
 	JOB_RUN_FREQUENCIES_LABEL_MAP,
 	JOB_RUN_STATUSES_DISPLAY_MAP,
-	JOB_RUN_STATUSES_LABEL_MAP
+	JOB_RUN_STATUSES_LABEL_MAP,
 } from '../utils/utils';
 import {
 	JobRunFrequencies,
 	JobRunStatuses,
-	OrderByDirections
+	OrderByDirections,
 } from 'shared/util/constants';
 import {OrderedMap} from 'immutable';
 import {OrderParams} from 'shared/util/records';
@@ -33,7 +33,7 @@ import {
 	withError,
 	withLoading,
 	withPaginationBar,
-	withStatefulPagination
+	withStatefulPagination,
 } from 'shared/hoc';
 
 const getContextItemCount =
@@ -61,7 +61,7 @@ const withData = () =>
 			delta,
 			jobId,
 			orderIOMap,
-			page
+			page,
 		}: {
 			delta: number;
 			jobId: string;
@@ -73,13 +73,13 @@ const withData = () =>
 				jobId,
 				size: delta,
 				sort: getSortFromOrderIOMap(orderIOMap),
-				start: (page - 1) * delta
-			}
+				start: (page - 1) * delta,
+			},
 		}),
 		props: getMapResultToProps(({jobRuns: {jobRuns, total}}) => ({
 			items: jobRuns,
-			total
-		}))
+			total,
+		})),
 	});
 
 const TableWithData = compose(
@@ -90,7 +90,7 @@ const TableWithData = compose(
 	withEmpty({
 		emptyTitle: getFormattedTitle(
 			Liferay.Language.get('output-versions').toLowerCase()
-		)
+		),
 	})
 )(Table);
 
@@ -98,7 +98,7 @@ const OutputVersionsListWithData = withStatefulPagination(
 	TableWithData,
 	{
 		initialDelta: 5,
-		initialOrderIOMap: createOrderIOMap(ID, OrderByDirections.Descending)
+		initialOrderIOMap: createOrderIOMap(ID, OrderByDirections.Descending),
 	},
 	false
 );
@@ -107,20 +107,20 @@ const OutputVersionsCard: React.FC<IOutputVersionsCardProps> = ({
 	jobId,
 	nextRunDate,
 	runFrequency,
-	timeZoneId
+	timeZoneId,
 }) => (
-	<Card className='output-versions-card-root'>
-		<Card.Header className='d-flex justify-content-between'>
+	<Card className="output-versions-card-root">
+		<Card.Header className="d-flex justify-content-between">
 			<Card.Title>{Liferay.Language.get('output-versions')}</Card.Title>
 
-			<div className='training-frequency'>
+			<div className="training-frequency">
 				{Liferay.Language.get('training-frequency')}
 
 				<b>{JOB_RUN_FREQUENCIES_LABEL_MAP[runFrequency]}</b>
 
 				{!!nextRunDate && (
 					<b>{`(${sub(Liferay.Language.get('next-x'), [
-						moment(nextRunDate).fromNow()
+						moment(nextRunDate).fromNow(),
 					])})`}</b>
 				)}
 			</div>
@@ -139,11 +139,11 @@ const OutputVersionsCard: React.FC<IOutputVersionsCardProps> = ({
 								nextDay: CUSTOM_DATE_FORMAT,
 								nextWeek: CUSTOM_DATE_FORMAT,
 								sameDay: `[${Liferay.Language.get('today')}]`,
-								sameElse: CUSTOM_DATE_FORMAT
+								sameElse: CUSTOM_DATE_FORMAT,
 							}),
 						label: Liferay.Language.get('training-date'),
 						sortable: false,
-						title: true
+						title: true,
 					},
 					{
 						accessor: 'context',
@@ -152,31 +152,31 @@ const OutputVersionsCard: React.FC<IOutputVersionsCardProps> = ({
 							'userItemInteractionsDatasetCount'
 						),
 						label: Liferay.Language.get('events'),
-						sortable: false
+						sortable: false,
 					},
 					{
 						accessor: 'context',
 						className: 'table-column-text-end',
 						dataFormatter: getContextItemCount('itemsDatasetCount'),
 						label: Liferay.Language.get('items'),
-						sortable: false
+						sortable: false,
 					},
 					{
 						accessor: 'status',
 						cellRenderer: ({
 							className,
-							data: {status}
+							data: {status},
 						}: {
 							className: string;
 							data: {status: JobRunStatuses};
 						}) => (
 							<td className={className}>
 								<Label
-									className='status'
+									className="status"
 									display={
 										JOB_RUN_STATUSES_DISPLAY_MAP[status]
 									}
-									size='lg'
+									size="lg"
 									uppercase
 								>
 									{JOB_RUN_STATUSES_LABEL_MAP[status]}
@@ -184,8 +184,8 @@ const OutputVersionsCard: React.FC<IOutputVersionsCardProps> = ({
 							</td>
 						),
 						label: Liferay.Language.get('status'),
-						sortable: false
-					}
+						sortable: false,
+					},
 				]}
 				jobId={jobId}
 				showDeltaDropdown={false}

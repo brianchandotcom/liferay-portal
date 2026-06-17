@@ -30,7 +30,7 @@ const CSVPreviewModal: React.FC<ICSVPreviewModalProps> = ({
 	groupId,
 	id,
 	name,
-	onClose = noop
+	onClose = noop,
 }) => {
 	const [data, setData] = useState<CSVFieldData[]>([]);
 
@@ -42,7 +42,7 @@ const CSVPreviewModal: React.FC<ICSVPreviewModalProps> = ({
 					fieldName,
 					fileVersionId,
 					groupId,
-					id
+					id,
 				})
 				.then(setData)
 				.catch(noop);
@@ -52,7 +52,7 @@ const CSVPreviewModal: React.FC<ICSVPreviewModalProps> = ({
 	}, [fieldName, fileVersionId, groupId, id]);
 
 	return (
-		<Modal className={getCN('csv-preview-modal-root', className)} size='lg'>
+		<Modal className={getCN('csv-preview-modal-root', className)} size="lg">
 			<Modal.Header
 				onClose={onClose}
 				title={sub(Liferay.Language.get('data-preview-x'), [name])}

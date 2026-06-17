@@ -4,7 +4,7 @@ import {createActionTypes} from 'redux-toolbox';
 import {segment} from '../middleware/schema';
 
 export const actionTypes = {
-	...createActionTypes('fetch', 'segment')
+	...createActionTypes('fetch', 'segment'),
 };
 
 export function fetchSegment(data) {
@@ -17,13 +17,13 @@ export function fetchSegment(data) {
 				types: [
 					actionTypes.FETCH_SEGMENT_REQUEST,
 					actionTypes.FETCH_SEGMENT_SUCCESS,
-					actionTypes.FETCH_SEGMENT_FAILURE
-				]
-			}
+					actionTypes.FETCH_SEGMENT_FAILURE,
+				],
+			},
 		},
 		payload: {
-			id: data.segmentId
+			id: data.segmentId,
 		},
-		type: 'NO_OP'
+		type: 'NO_OP',
 	};
 }

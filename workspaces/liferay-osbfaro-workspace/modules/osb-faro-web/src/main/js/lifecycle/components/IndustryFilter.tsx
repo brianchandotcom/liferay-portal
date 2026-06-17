@@ -3,10 +3,10 @@ import React from 'react';
 
 const IndustryFilter = () => (
 	<FieldValueFilter
-		className='mr-2'
+		className="mr-2"
 		entityLabel={Liferay.Language.get('industries')}
-		fieldMappingFieldName='industry'
-		filterKey='industryFilter'
+		fieldMappingFieldName="industry"
+		filterKey="industryFilter"
 	/>
 );
 

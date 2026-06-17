@@ -6,7 +6,7 @@ export const POSITIONS = {
 	RightCenter: 2,
 	TopCenter: 0,
 	TopLeft: 7,
-	TopRight: 1
+	TopRight: 1,
 };
 
 export type Position = (typeof POSITIONS)[keyof typeof POSITIONS];
@@ -36,7 +36,8 @@ export function align(
 		);
 		position = suggestion.position;
 		bestRegion = suggestion.region;
-	} else {
+	}
+	else {
 		bestRegion = getAlignRegion(element, alignElement, position);
 	}
 
@@ -113,7 +114,7 @@ function getAlignRegion(
 		left,
 		right: left + r2.width,
 		top,
-		width: r2.width
+		width: r2.width,
 	};
 }
 
@@ -158,7 +159,7 @@ function suggestAlignBestRegion(
 
 	return {
 		position: bestPosition,
-		region: bestRegion
+		region: bestRegion,
 	};
 }
 
@@ -230,6 +231,6 @@ function makeRegion(
 		left,
 		right,
 		top,
-		width
+		width,
 	};
 }

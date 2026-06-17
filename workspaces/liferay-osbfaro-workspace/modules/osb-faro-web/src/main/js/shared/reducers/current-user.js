@@ -7,15 +7,15 @@ const actionHandlers = {
 		state.merge({
 			data: String(action.payload.result),
 			error: false,
-			loading: false
+			loading: false,
 		}),
-	[actionTypes.FETCH_CURRENT_USER_REQUEST]: state =>
+	[actionTypes.FETCH_CURRENT_USER_REQUEST]: (state) =>
 		state.merge({error: false, loading: true}),
-	[actionTypes.FETCH_CURRENT_USER_FAILURE]: state =>
+	[actionTypes.FETCH_CURRENT_USER_FAILURE]: (state) =>
 		state.merge({
 			error: true,
-			loading: false
-		})
+			loading: false,
+		}),
 };
 
 export default createReducer(new RemoteData(), actionHandlers);

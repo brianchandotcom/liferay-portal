@@ -27,7 +27,7 @@ const formatRangeSelectors = (rangeSelectors?: RangeSelectors) => {
 		return {
 			rangeEnd: formatDate(rangeSelectors.rangeEnd ?? ''),
 			rangeKey: RangeKeyTimeRanges.CustomRange,
-			rangeStart: formatDate(rangeSelectors.rangeStart ?? '')
+			rangeStart: formatDate(rangeSelectors.rangeStart ?? ''),
 		};
 	}
 
@@ -40,21 +40,21 @@ const DownloadCSVReport: React.FC<IDownloadReport> = ({
 	disabled,
 	individualId,
 	type,
-	typeLang
+	typeLang,
 }) => {
 	const dispatch = useDispatch();
 	const generateURL = useDownloadCSV({
 		assetId,
 		assetType,
 		individualId,
-		type
+		type,
 	});
 	const {observer, onOpenChange, open} = useModal();
 	const rangeSelectors = useUnsafeQueryRangeSelectors();
 	const {channelId, groupId} = useParams();
 
 	return (
-		<div className='download-report'>
+		<div className="download-report">
 			<DownloadReportButton
 				disabled={disabled}
 				onClick={() => onOpenChange(true)}
@@ -72,7 +72,7 @@ const DownloadCSVReport: React.FC<IDownloadReport> = ({
 					}
 					observer={observer}
 					onClose={() => onOpenChange(false)}
-					onSubmit={async rangeSelectors => {
+					onSubmit={async (rangeSelectors) => {
 						try {
 							const url = generateURL(rangeSelectors);
 							const response = await fetch(url);
@@ -94,7 +94,7 @@ const DownloadCSVReport: React.FC<IDownloadReport> = ({
 											'the-x-file-is-being-generated-and-your-download-will-start-soon'
 										),
 										['CSV']
-									) as string
+									) as string,
 								})
 							);
 
@@ -114,7 +114,7 @@ const DownloadCSVReport: React.FC<IDownloadReport> = ({
 								toDate:
 									formattedRangeSelector?.rangeEnd ??
 									undefined,
-								type
+								type,
 							});
 
 							if (count > MAX_CSV_ENTRIES) {
@@ -126,17 +126,18 @@ const DownloadCSVReport: React.FC<IDownloadReport> = ({
 												'the-csv-file-reached-x-entries'
 											),
 											[toLocale(MAX_CSV_ENTRIES)]
-										)
+										),
 									})
 								);
 							}
-						} catch (e) {
+						}
+						catch (e) {
 							dispatch(
 								addAlert({
 									alertType: Alert.Types.Error,
 									message: Liferay.Language.get(
 										'it-was-not-possible-to-generate-a-csv-file-at-this-moment.-please-try-again-later'
-									)
+									),
 								})
 							);
 						}

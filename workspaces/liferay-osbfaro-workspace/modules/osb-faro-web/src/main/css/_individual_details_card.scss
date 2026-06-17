@@ -1,14 +1,17 @@
 .individual-details-card-root {
 	.avatar-root {
-		margin: 0 0 12px 0;
+		margin: 0 0 12px;
 	}
 
-	.email, .first-seen, .job-title {
+	.email,
+	.first-seen,
+	.job-title {
 		color: $mainLighten28;
 		font-size: $fontSizeSmall;
 	}
 
-	.first-seen, .job-title {
+	.first-seen,
+	.job-title {
 		font-weight: $fontWeightSemiBold;
 	}
 

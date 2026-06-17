@@ -16,13 +16,13 @@ describe('Card Reducer', () => {
 			meta: {
 				contactsEntityId: id,
 				schema: getLayoutSchema(type),
-				type
+				type,
 			},
 			payload: {
 				entities: {},
-				result: {contactsCardData: {foo}, contactsCardTemplate: cardId}
+				result: {contactsCardData: {foo}, contactsCardTemplate: cardId},
 			},
-			type: actionTypes.FETCH_CARD_SUCCESS
+			type: actionTypes.FETCH_CARD_SUCCESS,
 		};
 
 		const state = reducer(new Map(), action);
@@ -41,13 +41,13 @@ describe('Card Reducer', () => {
 			meta: {
 				contactsEntityId: id,
 				schema: getLayoutSchema(type),
-				type
+				type,
 			},
 			payload: {
 				entities: {},
-				result: {contactsCardData: {cardId: {foo}, cardId1: {foo}}}
+				result: {contactsCardData: {cardId: {foo}, cardId1: {foo}}},
 			},
-			type: layoutActionTypes.FETCH_LAYOUT_SUCCESS
+			type: layoutActionTypes.FETCH_LAYOUT_SUCCESS,
 		};
 
 		const state = reducer(new Map(), action);

@@ -4,7 +4,7 @@ import * as Utils from '../utils';
 import {
 	ALL_APPLICATION_IDS,
 	ALL_EVENT_IDS,
-	CustomFunctionOperators
+	CustomFunctionOperators,
 } from '../constants';
 import {CustomValue} from 'shared/util/records';
 import {List, Map} from 'immutable';
@@ -90,13 +90,13 @@ describe('odata', () => {
 
 			expect(
 				ODataUtil.buildQueryString([
-					data.mockNewCriteria(1, {value: null})
+					data.mockNewCriteria(1, {value: null}),
 				])
 			).toEqual('(firstName eq null)');
 
 			expect(
 				ODataUtil.buildQueryString([
-					data.mockNewCriteria(1, {value: 123})
+					data.mockNewCriteria(1, {value: 123}),
 				])
 			).toEqual('(firstName eq 123)');
 		});
@@ -128,9 +128,9 @@ describe('odata', () => {
 						rowId: 'row_01',
 						touched: false,
 						valid: true,
-						value: 'test'
-					}
-				]
+						value: 'test',
+					},
+				],
 			});
 		});
 
@@ -147,9 +147,9 @@ describe('odata', () => {
 						rowId: 'row_01',
 						touched: false,
 						valid: true,
-						value: null
-					}
-				]
+						value: null,
+					},
+				],
 			});
 		});
 
@@ -166,9 +166,9 @@ describe('odata', () => {
 						rowId: 'row_01',
 						touched: false,
 						valid: true,
-						value: 123
-					}
-				]
+						value: 123,
+					},
+				],
 			});
 		});
 
@@ -185,9 +185,9 @@ describe('odata', () => {
 						rowId: 'row_01',
 						touched: false,
 						valid: true,
-						value: 'test'
-					}
-				]
+						value: 'test',
+					},
+				],
 			});
 		});
 
@@ -204,9 +204,9 @@ describe('odata', () => {
 						rowId: 'row_01',
 						touched: false,
 						valid: true,
-						value: 'test'
-					}
-				]
+						value: 'test',
+					},
+				],
 			});
 		});
 
@@ -225,9 +225,9 @@ describe('odata', () => {
 						rowId: 'row_01',
 						touched: false,
 						valid: true,
-						value: 'test'
-					}
-				]
+						value: 'test',
+					},
+				],
 			});
 		});
 
@@ -270,15 +270,15 @@ describe('odata', () => {
 										rowId: 'row_01',
 										touched: false,
 										valid: true,
-										value: 'Page#pageViewed#348853654381438580'
-									})
-								])
+										value: 'Page#pageViewed#348853654381438580',
+									}),
+								]),
 							}),
 							operator: 'lt',
-							value: 2
-						})
-					}
-				]
+							value: 2,
+						}),
+					},
+				],
 			});
 		});
 
@@ -308,15 +308,15 @@ describe('odata', () => {
 										rowId: 'row_01',
 										touched: false,
 										valid: true,
-										value: 'Page#pageViewed#348853654381438580'
-									})
-								])
+										value: 'Page#pageViewed#348853654381438580',
+									}),
+								]),
 							}),
 							operator: 'lt',
-							value: 2
-						})
-					}
-				]
+							value: 2,
+						}),
+					},
+				],
 			});
 		});
 
@@ -346,15 +346,15 @@ describe('odata', () => {
 										rowId: 'row_01',
 										touched: false,
 										valid: true,
-										value: 'Page#pageViewed#348853654381438580'
-									})
-								])
+										value: 'Page#pageViewed#348853654381438580',
+									}),
+								]),
 							}),
 							operator: 'lt',
-							value: 2
-						})
-					}
-				]
+							value: 2,
+						}),
+					},
+				],
 			});
 		});
 
@@ -384,15 +384,15 @@ describe('odata', () => {
 										rowId: 'row_01',
 										touched: false,
 										valid: true,
-										value: 'Page#pageViewed#348853654381438580'
-									})
-								])
+										value: 'Page#pageViewed#348853654381438580',
+									}),
+								]),
 							}),
 							operator: 'lt',
-							value: 2
-						})
-					}
-				]
+							value: 2,
+						}),
+					},
+				],
 			});
 		});
 
@@ -422,13 +422,13 @@ describe('odata', () => {
 										rowId: 'row_01',
 										touched: false,
 										valid: true,
-										value: '48853654381438580'
-									})
-								])
-							})
-						})
-					}
-				]
+										value: '48853654381438580',
+									}),
+								]),
+							}),
+						}),
+					},
+				],
 			});
 		});
 
@@ -458,13 +458,13 @@ describe('odata', () => {
 										rowId: 'row_01',
 										touched: false,
 										valid: true,
-										value: '48853654381438580'
-									})
-								])
-							})
-						})
-					}
-				]
+										value: '48853654381438580',
+									}),
+								]),
+							}),
+						}),
+					},
+				],
 			});
 		});
 	});
@@ -679,15 +679,15 @@ describe('odata', () => {
 									conjunctionName: 'and',
 									criteriaGroupId: 'group_01',
 									items: new List(
-										innerItems.map(item => new Map(item))
-									)
+										innerItems.map((item) => new Map(item))
+									),
 								}),
 								operator: 'ge',
-								value: 1
-							})
-						}
-					]
-				}
+								value: 1,
+							}),
+						},
+					],
+				},
 			];
 		}
 
@@ -698,7 +698,7 @@ describe('odata', () => {
 				rowId: 'row_01',
 				touched: false,
 				valid: true,
-				value: 'vocab-id'
+				value: 'vocab-id',
 			},
 			{
 				operatorName: 'eq',
@@ -706,8 +706,8 @@ describe('odata', () => {
 				rowId: 'row_01',
 				touched: false,
 				valid: true,
-				value: 'My Vocabulary'
-			}
+				value: 'My Vocabulary',
+			},
 		];
 
 		const DAY_ITEM = {
@@ -716,7 +716,7 @@ describe('odata', () => {
 			rowId: 'row_01',
 			touched: false,
 			valid: true,
-			value: '2023-01-01'
+			value: '2023-01-01',
 		};
 
 		it('should round-trip a vocabulary filter with specific asset type and no specific event', () => {
@@ -736,8 +736,8 @@ describe('odata', () => {
 		});
 
 		it('should build a vocabulary filter query for any asset type using applicationId in and eventId in', () => {
-			const appIds = ALL_APPLICATION_IDS.map(id => `'${id}'`).join(',');
-			const eventIds = ALL_EVENT_IDS.map(id => `'${id}'`).join(',');
+			const appIds = ALL_APPLICATION_IDS.map((id) => `'${id}'`).join(',');
+			const eventIds = ALL_EVENT_IDS.map((id) => `'${id}'`).join(',');
 
 			expect(
 				ODataUtil.buildQueryString(
@@ -749,7 +749,7 @@ describe('odata', () => {
 							rowId: 'row_01',
 							touched: false,
 							valid: true,
-							value: ALL_APPLICATION_IDS
+							value: ALL_APPLICATION_IDS,
 						},
 						{
 							operatorName: 'in',
@@ -757,9 +757,9 @@ describe('odata', () => {
 							rowId: 'row_01',
 							touched: false,
 							valid: true,
-							value: ALL_EVENT_IDS
+							value: ALL_EVENT_IDS,
 						},
-						DAY_ITEM
+						DAY_ITEM,
 					])
 				)
 			).toEqual(
@@ -780,7 +780,7 @@ describe('odata', () => {
 							rowId: 'row_01',
 							touched: false,
 							valid: true,
-							value: 'WebContent'
+							value: 'WebContent',
 						},
 						{
 							operatorName: 'in',
@@ -788,9 +788,9 @@ describe('odata', () => {
 							rowId: 'row_01',
 							touched: false,
 							valid: true,
-							value: [{id: 'cat-1', name: 'Category One'}]
+							value: [{id: 'cat-1', name: 'Category One'}],
 						},
-						DAY_ITEM
+						DAY_ITEM,
 					])
 				)
 			).toEqual(
@@ -811,7 +811,7 @@ describe('odata', () => {
 							rowId: 'row_01',
 							touched: false,
 							valid: true,
-							value: 'WebContent'
+							value: 'WebContent',
 						},
 						{
 							operatorName: 'in',
@@ -821,10 +821,10 @@ describe('odata', () => {
 							valid: true,
 							value: [
 								{id: 'cat-1', name: 'Category One'},
-								{id: 'cat-2', name: 'Category Two'}
-							]
+								{id: 'cat-2', name: 'Category Two'},
+							],
 						},
-						DAY_ITEM
+						DAY_ITEM,
 					])
 				)
 			).toEqual(
@@ -844,9 +844,9 @@ describe('odata', () => {
 						rowId: 'row_01',
 						touched: false,
 						valid: true,
-						value: 'WebContent'
+						value: 'WebContent',
 					},
-					DAY_ITEM
+					DAY_ITEM,
 				])
 			);
 
@@ -887,15 +887,15 @@ describe('odata', () => {
 									conjunctionName: 'and',
 									criteriaGroupId: 'group_01',
 									items: new List(
-										innerItems.map(item => new Map(item))
-									)
+										innerItems.map((item) => new Map(item))
+									),
 								}),
 								operator: 'ge',
-								value: 1
-							})
-						}
-					]
-				}
+								value: 1,
+							}),
+						},
+					],
+				},
 			];
 		}
 
@@ -906,7 +906,7 @@ describe('odata', () => {
 				rowId: 'row_01',
 				touched: false,
 				valid: true,
-				value: 'tag-id'
+				value: 'tag-id',
 			},
 			{
 				operatorName: 'eq',
@@ -914,8 +914,8 @@ describe('odata', () => {
 				rowId: 'row_01',
 				touched: false,
 				valid: true,
-				value: 'My Tag'
-			}
+				value: 'My Tag',
+			},
 		];
 
 		const DAY_ITEM = {
@@ -924,7 +924,7 @@ describe('odata', () => {
 			rowId: 'row_01',
 			touched: false,
 			valid: true,
-			value: '2023-01-01'
+			value: '2023-01-01',
 		};
 
 		it('should round-trip a tag filter with specific asset type and no specific event', () => {
@@ -944,8 +944,8 @@ describe('odata', () => {
 		});
 
 		it('should build a tag filter query for any asset type using applicationId in and eventId in', () => {
-			const appIds = ALL_APPLICATION_IDS.map(id => `'${id}'`).join(',');
-			const eventIds = ALL_EVENT_IDS.map(id => `'${id}'`).join(',');
+			const appIds = ALL_APPLICATION_IDS.map((id) => `'${id}'`).join(',');
+			const eventIds = ALL_EVENT_IDS.map((id) => `'${id}'`).join(',');
 
 			expect(
 				ODataUtil.buildQueryString(
@@ -957,7 +957,7 @@ describe('odata', () => {
 							rowId: 'row_01',
 							touched: false,
 							valid: true,
-							value: ALL_APPLICATION_IDS
+							value: ALL_APPLICATION_IDS,
 						},
 						{
 							operatorName: 'in',
@@ -965,9 +965,9 @@ describe('odata', () => {
 							rowId: 'row_01',
 							touched: false,
 							valid: true,
-							value: ALL_EVENT_IDS
+							value: ALL_EVENT_IDS,
 						},
-						DAY_ITEM
+						DAY_ITEM,
 					])
 				)
 			).toEqual(
@@ -987,7 +987,7 @@ describe('odata', () => {
 						rowId: 'row_01',
 						touched: false,
 						valid: true,
-						value: 'WebContent'
+						value: 'WebContent',
 					},
 					{
 						operatorName: 'in',
@@ -995,9 +995,9 @@ describe('odata', () => {
 						rowId: 'row_01',
 						touched: false,
 						valid: true,
-						value: [{id: 'cat-1', name: 'Category One'}]
+						value: [{id: 'cat-1', name: 'Category One'}],
 					},
-					DAY_ITEM
+					DAY_ITEM,
 				])
 			);
 

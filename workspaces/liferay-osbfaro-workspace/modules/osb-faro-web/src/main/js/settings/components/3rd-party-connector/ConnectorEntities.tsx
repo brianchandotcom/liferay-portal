@@ -16,9 +16,9 @@ interface IConnectorEntitiesProps {
 const ConnectorEntities: React.FC<IConnectorEntitiesProps> = ({
 	connectorStatus,
 	entities,
-	syncedCounts
+	syncedCounts,
 }) => (
-	<ClayList className='mb-0'>
+	<ClayList className="mb-0">
 		{entities.map(({entity}) => {
 			const {icon, label} = getEntityDisplay(entity);
 			const count = syncedCounts[entity];
@@ -30,9 +30,9 @@ const ConnectorEntities: React.FC<IConnectorEntitiesProps> = ({
 			return (
 				<ClayList.Item flex key={entity}>
 					<ClayList.ItemField>
-						<ClaySticker displayType='unstyled'>
+						<ClaySticker displayType="unstyled">
 							<ClayIcon
-								className='text-secondary'
+								className="text-secondary"
 								symbol={icon}
 							/>
 						</ClaySticker>
@@ -44,13 +44,13 @@ const ConnectorEntities: React.FC<IConnectorEntitiesProps> = ({
 						{typeof count === 'number' && count >= 0 && (
 							<ClayList.ItemText>
 								{sub(Liferay.Language.get('x-items-synced'), [
-									count
+									count,
 								])}
 							</ClayList.ItemText>
 						)}
 					</ClayList.ItemField>
 
-					<ClayList.ItemField className='justify-content-center'>
+					<ClayList.ItemField className="justify-content-center">
 						<Label
 							displayType={configured ? 'success' : 'secondary'}
 						>

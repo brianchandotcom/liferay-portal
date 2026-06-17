@@ -18,7 +18,7 @@ const Sankey: React.FC<ISankeyProps> = ({data, rangeSelectors, width}) => {
 
 	return (
 		<SankeyChart
-			className='analytics-sankey'
+			className="analytics-sankey"
 			data={data}
 			height={SANKEY_HEIGHT}
 			link={

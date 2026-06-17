@@ -9,7 +9,7 @@ const actionHandlers = {
 	[actionTypes.FETCH_PROJECT_FAILURE]: handleError,
 	[actionTypes.FETCH_PROJECT_VIA_CORP_PROJECT_UUID_FAILURE]: handleError,
 	[actionTypes.FETCH_PROJECT_VIA_CORP_PROJECT_UUID_REQUEST]: handleLoading,
-	[actionTypes.UPDATE_PROJECT_FAILURE]: state =>
+	[actionTypes.UPDATE_PROJECT_FAILURE]: (state) =>
 		state.merge({loading: false}),
 	[actionTypes.UPDATE_PROJECT_REQUEST]: handleLoading,
 	[actionTypes.UPDATE_PROJECT_SUCCESS]: (
@@ -19,14 +19,14 @@ const actionHandlers = {
 		const project = payload.entities.projects[prevId];
 
 		const {
-			data: {groupId}
+			data: {groupId},
 		} = project;
 
 		const updatedState = state.set(
 			newId || String(groupId),
 			new RemoteData({
 				data: new Project(fromJS(project.data)),
-				loading: false
+				loading: false,
 			})
 		);
 
@@ -35,7 +35,7 @@ const actionHandlers = {
 		}
 
 		return updatedState;
-	}
+	},
 };
 
 export default createReducer(new OrderedMap(), actionHandlers);

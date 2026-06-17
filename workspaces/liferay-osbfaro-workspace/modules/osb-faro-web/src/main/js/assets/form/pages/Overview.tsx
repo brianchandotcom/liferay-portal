@@ -8,7 +8,7 @@ import {
 	Accessor,
 	AssetAppearsOnCard,
 	EmptyStateLink,
-	EmptyStateText
+	EmptyStateText,
 } from 'assets/components/AssetAppearsOnCard';
 import {AssetTypes} from 'shared/util/constants';
 import {ENABLE_FORM_ABANDONMENT} from 'shared/util/feature-flags';
@@ -17,8 +17,8 @@ import {Name} from 'shared/components/audience-report/types';
 
 const Overview = () => (
 	<>
-		<div className='row'>
-			<div className='col-sm-12'>
+		<div className="row">
+			<div className="col-sm-12">
 				<FormMetricCard
 					label={Liferay.Language.get('visitors-behavior')}
 					legacyDropdownRangeKey={false}
@@ -26,15 +26,15 @@ const Overview = () => (
 			</div>
 		</div>
 
-		<div className='row'>
-			<div className='col-sm-12'>
+		<div className="row">
+			<div className="col-sm-12">
 				<AudienceReportCard
 					knownIndividualsTitle={Liferay.Language.get(
 						'segmented-submissions'
 					)}
 					query={{
 						metricName: MetricName.Submissions,
-						name: Name.Form
+						name: Name.Form,
 					}}
 					segmentsTitle={Liferay.Language.get('submitter-segments')}
 					uniqueVisitorsTitle={Liferay.Language.get('submissions')}
@@ -42,8 +42,8 @@ const Overview = () => (
 			</div>
 		</div>
 
-		<div className='row'>
-			<div className='col-lg-6 col-md-12'>
+		<div className="row">
+			<div className="col-lg-6 col-md-12">
 				<LocationsCard
 					label={Liferay.Language.get('submissions-by-location')}
 					legacyDropdownRangeKey={false}
@@ -51,7 +51,7 @@ const Overview = () => (
 				/>
 			</div>
 
-			<div className='col-lg-6 col-md-12'>
+			<div className="col-lg-6 col-md-12">
 				<DevicesCard
 					label={Liferay.Language.get('submissions-by-technology')}
 					legacyDropdownRangeKey={false}
@@ -61,8 +61,8 @@ const Overview = () => (
 		</div>
 
 		{ENABLE_FORM_ABANDONMENT && (
-			<div className='row'>
-				<div className='col-sm-12'>
+			<div className="row">
+				<div className="col-sm-12">
 					<FormAbandonmentCard
 						label={Liferay.Language.get('form-abandonment')}
 						legacyDropdownRangeKey={false}
@@ -71,12 +71,12 @@ const Overview = () => (
 			</div>
 		)}
 
-		<div className='row'>
-			<div className='col-sm-12'>
+		<div className="row">
+			<div className="col-sm-12">
 				<AssetAppearsOnCard
 					accessors={[
 						Accessor.SubmissionsMetric,
-						Accessor.ViewsMetric
+						Accessor.ViewsMetric,
 					]}
 					assetType={AssetTypes.Form}
 					emptyStateLink={EmptyStateLink.Form}

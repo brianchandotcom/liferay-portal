@@ -14,25 +14,25 @@ const CollapsibleOverlay: React.FC<ICollapsibleOverlayProps> = ({
 	children,
 	onClose,
 	title = '',
-	visible = false
+	visible = false,
 }) => (
 	<div
 		className={getCN('collapsible-overlay-root', {
-			hidden: !visible
+			hidden: !visible,
 		})}
 		hidden={!visible}
 	>
-		<div className='content-wrapper'>
-			<div className='header'>
+		<div className="content-wrapper">
+			<div className="header">
 				<h3>{title}</h3>
 
 				<ClayButton
 					aria-label={Liferay.Language.get('close')}
-					className='button-root'
-					displayType='unstyled'
+					className="button-root"
+					displayType="unstyled"
 					onClick={onClose}
 				>
-					<ClayIcon className='icon-root' symbol='times' />
+					<ClayIcon className="icon-root" symbol="times" />
 				</ClayButton>
 			</div>
 

@@ -16,11 +16,11 @@ import {Filter, Job, JobParameter} from '../../utils/utils';
 import {
 	JobRunDataPeriods,
 	JobRunFrequencies,
-	JobTypes
+	JobTypes,
 } from 'shared/util/constants';
 import {
 	RECOMMENDATION_MUTATION,
-	RECOMMENDATION_UPDATE_MUTATION
+	RECOMMENDATION_UPDATE_MUTATION,
 } from '../../queries/RecommendationMutation';
 import {Router} from 'shared/types';
 import {Routes, toRoute} from 'shared/util/router';
@@ -31,20 +31,20 @@ import {withHistory} from 'shared/hoc';
 const STEPS: {component: React.ComponentType<any>; title: string}[] = [
 	{
 		component: BasicSettings,
-		title: Liferay.Language.get('basic-settings')
+		title: Liferay.Language.get('basic-settings'),
 	},
 	{
 		component: Interactions,
-		title: Liferay.Language.get('interactions')
+		title: Liferay.Language.get('interactions'),
 	},
 	{
 		component: Items,
-		title: Liferay.Language.get('items')
+		title: Liferay.Language.get('items'),
 	},
 	{
 		component: Summary,
-		title: Liferay.Language.get('summary')
-	}
+		title: Liferay.Language.get('summary'),
+	},
 ];
 
 const connector = connect(null, {addAlert});
@@ -67,10 +67,10 @@ const RecommendationStepCard: React.FC<IRecommendationStepCardProps> = ({
 	history,
 	job,
 	jobType,
-	router
+	router,
 }) => {
 	const {
-		params: {groupId}
+		params: {groupId},
 	} = router;
 
 	const [currentStep, setCurrentStep] = useState(0);
@@ -95,7 +95,7 @@ const RecommendationStepCard: React.FC<IRecommendationStepCardProps> = ({
 			runDataPeriod,
 			runFrequency,
 			runNow,
-			type
+			type,
 		}: {
 			includePreviousPeriod: string | boolean;
 			itemFilters: Filter[];
@@ -110,22 +110,22 @@ const RecommendationStepCard: React.FC<IRecommendationStepCardProps> = ({
 		let parameters = [
 			{
 				name: 'includePreviousPeriod',
-				value: includePreviousPeriod
-			}
+				value: includePreviousPeriod,
+			},
 		];
 
 		if (itemFilters.length) {
 			parameters = [
 				{
 					name: 'includePreviousPeriod',
-					value: includePreviousPeriod
+					value: includePreviousPeriod,
 				},
 				...itemFilters.map(
 					({name, value}: {name: string; value: string}) => ({
 						name,
-						value
+						value,
 					})
-				)
+				),
 			];
 		}
 
@@ -138,8 +138,8 @@ const RecommendationStepCard: React.FC<IRecommendationStepCardProps> = ({
 							parameters,
 							runDataPeriod,
 							runFrequency,
-							runNow
-						}
+							runNow,
+						},
 					})
 			: () =>
 					createRecommendationJob({
@@ -149,8 +149,8 @@ const RecommendationStepCard: React.FC<IRecommendationStepCardProps> = ({
 							runDataPeriod,
 							runFrequency,
 							runNow,
-							type
-						}
+							type,
+						},
 					});
 
 		const key = job ? 'updateJob' : 'createJob';
@@ -159,8 +159,8 @@ const RecommendationStepCard: React.FC<IRecommendationStepCardProps> = ({
 			.then(
 				({
 					data: {
-						[key]: {name}
-					}
+						[key]: {name},
+					},
 				}) => {
 					addAlert({
 						alertType: Alert.Types.Success,
@@ -169,12 +169,12 @@ const RecommendationStepCard: React.FC<IRecommendationStepCardProps> = ({
 								'x-recommendation-model-has-been-saved'
 							),
 							[name]
-						) as string
+						) as string,
 					});
 
 					history.push(
 						toRoute(Routes.SETTINGS_RECOMMENDATIONS, {
-							groupId
+							groupId,
 						})
 					);
 				}
@@ -184,7 +184,7 @@ const RecommendationStepCard: React.FC<IRecommendationStepCardProps> = ({
 					alertType: Alert.Types.Error,
 					message: Liferay.Language.get(
 						'there-was-an-error-processing-your-request.-please-try-again'
-					)
+					),
 				});
 
 				setSubmitting(false);
@@ -222,7 +222,7 @@ const RecommendationStepCard: React.FC<IRecommendationStepCardProps> = ({
 				runDataPeriod,
 				runFrequency,
 				runNow: true,
-				type
+				type,
 			};
 		}
 
@@ -234,7 +234,7 @@ const RecommendationStepCard: React.FC<IRecommendationStepCardProps> = ({
 			runDataPeriod: JobRunDataPeriods.Last30Days,
 			runFrequency: JobRunFrequencies.Every7Days,
 			runNow: true,
-			type: jobType
+			type: jobType,
 		};
 	};
 
@@ -255,7 +255,7 @@ const RecommendationStepCard: React.FC<IRecommendationStepCardProps> = ({
 	const lastStep = currentStep === STEPS.length - 1;
 
 	return (
-		<Card className='recommendation-step-card-root'>
+		<Card className="recommendation-step-card-root">
 			<Form
 				initialValues={getInitialValues() as any}
 				onSubmit={handleSubmit}
@@ -267,7 +267,7 @@ const RecommendationStepCard: React.FC<IRecommendationStepCardProps> = ({
 					initialValues,
 					isSubmitting,
 					setFieldValue,
-					values
+					values,
 				}) => (
 					<Form.Form>
 						<NavigationWarning when={dirty && !isSubmitting} />

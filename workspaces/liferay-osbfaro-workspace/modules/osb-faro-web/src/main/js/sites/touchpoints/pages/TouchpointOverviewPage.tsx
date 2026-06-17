@@ -10,23 +10,23 @@ import {Name} from 'shared/components/audience-report/types';
 
 const TouchpointOverviewPage = () => (
 	<>
-		<div className='row'>
-			<div className='col-sm-12'>
+		<div className="row">
+			<div className="col-sm-12">
 				<PageMetricCard
 					label={Liferay.Language.get('visitors-behavior')}
 				/>
 			</div>
 		</div>
 
-		<div className='row'>
-			<div className='col-sm-12'>
+		<div className="row">
+			<div className="col-sm-12">
 				<AudienceReportCard
 					knownIndividualsTitle={Liferay.Language.get(
 						'segmented-viewers'
 					)}
 					query={{
 						metricName: MetricName.Views,
-						name: Name.Page
+						name: Name.Page,
 					}}
 					segmentsTitle={Liferay.Language.get('viewer-segments')}
 					uniqueVisitorsTitle={Liferay.Language.get('visitors')}
@@ -34,15 +34,15 @@ const TouchpointOverviewPage = () => (
 			</div>
 		</div>
 
-		<div className='row'>
-			<div className='col-lg-6 col-md-12'>
+		<div className="row">
+			<div className="col-lg-6 col-md-12">
 				<LocationsCard
 					label={Liferay.Language.get('views-by-location')}
 					legacyDropdownRangeKey={false}
 				/>
 			</div>
 
-			<div className='col-lg-6 col-md-12'>
+			<div className="col-lg-6 col-md-12">
 				<DevicesCard
 					label={Liferay.Language.get('views-by-technology')}
 					legacyDropdownRangeKey={false}
@@ -51,8 +51,8 @@ const TouchpointOverviewPage = () => (
 		</div>
 
 		{ENABLE_ASSET_CARD && (
-			<div className='row'>
-				<div className='col-lg-6 col-md-12'>
+			<div className="row">
+				<div className="col-lg-6 col-md-12">
 					<AssetsListCard
 						label={Liferay.Language.get('displayed-assets')}
 					/>

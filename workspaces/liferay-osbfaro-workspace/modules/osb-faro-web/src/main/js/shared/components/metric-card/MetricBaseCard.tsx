@@ -18,16 +18,16 @@ const initialState = {
 	queries: {
 		MetricQuery: null,
 		name: '',
-		TabsQuery: null
+		TabsQuery: null,
 	},
-	variables: () => ({})
+	variables: () => ({}),
 };
 
 const MetricContext = createContext(initialState as any);
 
 const MetricContextActions = createContext({
 	changeActiveItemIndex: () => {},
-	changeCompareToPrevious: () => {}
+	changeCompareToPrevious: () => {},
 } as any);
 
 export interface ICommonMetricProps {
@@ -72,7 +72,7 @@ function MetricBaseCard<TChartData>({
 	queries,
 	reportContainer,
 	showIntervals = false,
-	variables
+	variables,
 }: IMetricBaseCardProps<TChartData>): React.ReactElement {
 	const [state, dispatch] = useReducer(reducer, initialState);
 
@@ -80,15 +80,15 @@ function MetricBaseCard<TChartData>({
 		changeActiveItemIndex: (activeItemIndex: number) => {
 			dispatch({
 				payload: activeItemIndex,
-				type: Actions.UpdateActiveItemIndex
+				type: Actions.UpdateActiveItemIndex,
 			});
 		},
 		changeCompareToPrevious: (compareToPrevious: boolean) => {
 			dispatch({
 				payload: compareToPrevious,
-				type: Actions.UpdateCompareToPrevious
+				type: Actions.UpdateCompareToPrevious,
 			});
-		}
+		},
 	};
 
 	return (
@@ -98,12 +98,12 @@ function MetricBaseCard<TChartData>({
 				chartDataMapFn,
 				metrics,
 				queries,
-				variables
+				variables,
 			}}
 		>
 			<MetricContextActions.Provider value={actions}>
 				<BaseCard
-					className='analytics-metrics-card'
+					className="analytics-metrics-card"
 					id={id}
 					label={label}
 					legacyDropdownRangeKey={legacyDropdownRangeKey}
@@ -118,11 +118,11 @@ function MetricBaseCard<TChartData>({
 							experienceId,
 							filters,
 							interval,
-							rangeSelectors
+							rangeSelectors,
 						};
 
 						return (
-							<Card.Body className='analytics-metrics'>
+							<Card.Body className="analytics-metrics">
 								<MetricTabs {...sharedProps} />
 
 								<MetricChart {...sharedProps} />
@@ -165,7 +165,7 @@ export const reducer = (state: TMetricState, action: TMetricAction) => {
 
 enum Actions {
 	UpdateActiveItemIndex = 'UPDATE_ACTIVE_ITEM_INDEX',
-	UpdateCompareToPrevious = 'UPDATE_COMPARE_TO_PREVIOUS'
+	UpdateCompareToPrevious = 'UPDATE_COMPARE_TO_PREVIOUS',
 }
 
 const actionHandlers: Record<
@@ -174,12 +174,12 @@ const actionHandlers: Record<
 > = {
 	[Actions.UpdateActiveItemIndex]: (state, {payload}) => ({
 		...state,
-		activeItemIndex: payload
+		activeItemIndex: payload,
 	}),
 	[Actions.UpdateCompareToPrevious]: (state, {payload}) => ({
 		...state,
-		compareToPrevious: payload
-	})
+		compareToPrevious: payload,
+	}),
 };
 
 export const useData = () => useContext(MetricContext);

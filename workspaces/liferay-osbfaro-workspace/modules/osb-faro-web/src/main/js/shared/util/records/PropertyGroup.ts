@@ -15,7 +15,7 @@ export default class PropertyGroup
 		label: '',
 		name: '',
 		propertyKey: '',
-		propertySubgroups: List()
+		propertySubgroups: List(),
 	})
 	implements IPropertyGroup
 {

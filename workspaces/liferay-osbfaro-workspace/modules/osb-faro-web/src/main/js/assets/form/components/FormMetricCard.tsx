@@ -1,6 +1,6 @@
 import ClayLink from '@clayui/link';
 import MetricBaseCard, {
-	IGenericMetricBaseCardProps
+	IGenericMetricBaseCardProps,
 } from 'shared/components/metric-card/MetricBaseCard';
 import React from 'react';
 import URLConstants from 'shared/util/url-constants';
@@ -9,11 +9,11 @@ import {
 	CompletionTimeMetric,
 	Metric,
 	SubmissionsMetric,
-	ViewsMetric
+	ViewsMetric,
 } from 'shared/components/metric-card/metrics';
 import {
 	AssetMetricQuery,
-	AssetTabsQuery
+	AssetTabsQuery,
 } from 'shared/components/metric-card/queries';
 import {ICommonVariables} from 'shared/types';
 import {ReportContainer} from 'shared/components/download-report/DownloadPDFReport';
@@ -21,7 +21,7 @@ import {useAssetVariables} from 'shared/components/metric-card/hooks';
 
 const NAME = 'form';
 
-const FormMetricCard: React.FC<IGenericMetricBaseCardProps> = props => {
+const FormMetricCard: React.FC<IGenericMetricBaseCardProps> = (props) => {
 	const variables = (commonVariables: ICommonVariables) =>
 		useAssetVariables(commonVariables);
 
@@ -29,7 +29,7 @@ const FormMetricCard: React.FC<IGenericMetricBaseCardProps> = props => {
 		SubmissionsMetric,
 		ViewsMetric,
 		AbandonmentsMetric,
-		CompletionTimeMetric
+		CompletionTimeMetric,
 	];
 
 	return (
@@ -37,7 +37,7 @@ const FormMetricCard: React.FC<IGenericMetricBaseCardProps> = props => {
 			{...props}
 			emptyDescription={
 				<>
-					<span className='mr-1'>
+					<span className="mr-1">
 						{Liferay.Language.get(
 							'check-back-later-to-verify-if-data-has-been-received-from-your-data-sources'
 						)}
@@ -45,8 +45,8 @@ const FormMetricCard: React.FC<IGenericMetricBaseCardProps> = props => {
 
 					<ClayLink
 						href={URLConstants.VisitorBehaviorFormsLink}
-						key='DOCUMENTATION'
-						target='_blank'
+						key="DOCUMENTATION"
+						target="_blank"
 					>
 						{Liferay.Language.get(
 							'learn-more-about-visitor-behavior'
@@ -61,7 +61,7 @@ const FormMetricCard: React.FC<IGenericMetricBaseCardProps> = props => {
 			queries={{
 				MetricQuery: AssetMetricQuery(NAME),
 				name: NAME,
-				TabsQuery: AssetTabsQuery(metrics, NAME)
+				TabsQuery: AssetTabsQuery(metrics, NAME),
 			}}
 			reportContainer={ReportContainer.VisitorsBehaviorCard}
 			variables={variables}

@@ -14,8 +14,9 @@ const ToggleSwitch: React.FC<IToggleSwitchProps> = ({
 	className,
 	label,
 	name,
-	onChange = noop
+	onChange = noop,
 }) => (
+
 	// eslint-disable-next-line jsx-a11y/label-has-associated-control
 	<label
 		className={getCN('toggle-switch toggle-switch-root', className)}
@@ -23,18 +24,18 @@ const ToggleSwitch: React.FC<IToggleSwitchProps> = ({
 	>
 		<input
 			checked={checked}
-			className='toggle-switch-check'
-			data-testid='toggle-switch-input'
+			className="toggle-switch-check"
+			data-testid="toggle-switch-input"
 			id={name}
 			name={name}
 			onChange={onChange}
-			type='checkbox'
+			type="checkbox"
 			value={checked.toString()}
 		/>
 
-		<span aria-hidden='true' className='toggle-switch-bar'>
+		<span aria-hidden="true" className="toggle-switch-bar">
 			<span
-				className='toggle-switch-handle'
+				className="toggle-switch-handle"
 				data-label-off={label}
 				data-label-on={label}
 			/>

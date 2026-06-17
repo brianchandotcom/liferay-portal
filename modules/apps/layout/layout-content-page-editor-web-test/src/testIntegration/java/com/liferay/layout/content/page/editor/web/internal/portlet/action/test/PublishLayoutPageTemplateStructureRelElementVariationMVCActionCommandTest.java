@@ -40,7 +40,8 @@ import org.springframework.mock.web.MockHttpServletResponse;
  * @author Víctor Galán
  */
 @RunWith(Arquillian.class)
-public class PublishLayoutPageTemplateStructureRelElementVariationMVCActionCommandTest {
+public class
+	PublishLayoutPageTemplateStructureRelElementVariationMVCActionCommandTest {
 
 	@ClassRule
 	@Rule
@@ -53,8 +54,7 @@ public class PublishLayoutPageTemplateStructureRelElementVariationMVCActionComma
 	public void testPublishLayoutPageTemplateStructureRelElementVariation()
 		throws Exception {
 
-		Group group = _groupLocalService.getGroup(
-			TestPropsValues.getGroupId());
+		Group group = _groupLocalService.getGroup(TestPropsValues.getGroupId());
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(group);
 
@@ -68,8 +68,7 @@ public class PublishLayoutPageTemplateStructureRelElementVariationMVCActionComma
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			ContentLayoutTestUtil.getMockLiferayPortletActionRequest(
-				_companyLocalService.getCompany(
-					TestPropsValues.getCompanyId()),
+				_companyLocalService.getCompany(TestPropsValues.getCompanyId()),
 				group, draftLayout);
 
 		mockLiferayPortletActionRequest.setParameter(
@@ -101,12 +100,15 @@ public class PublishLayoutPageTemplateStructureRelElementVariationMVCActionComma
 		JSONObject jsonObject = _jsonFactory.createJSONObject(
 			mockHttpServletResponse.getContentAsString());
 
+		long layoutPageTemplateStructureRelElementVariationId =
+			jsonObject.getLong(
+				"layoutPageTemplateStructureRelElementVariationId");
+
 		LayoutPageTemplateStructureRelElementVariation
 			layoutPageTemplateStructureRelElementVariation =
 				_layoutPageTemplateStructureRelElementVariationLocalService.
 					getLayoutPageTemplateStructureRelElementVariation(
-						jsonObject.getLong(
-							"layoutPageTemplateStructureRelElementVariationId"));
+						layoutPageTemplateStructureRelElementVariationId);
 
 		Assert.assertEquals(
 			hide,

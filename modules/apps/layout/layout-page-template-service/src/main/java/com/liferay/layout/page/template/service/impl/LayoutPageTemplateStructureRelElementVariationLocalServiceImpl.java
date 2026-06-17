@@ -43,8 +43,8 @@ public class LayoutPageTemplateStructureRelElementVariationLocalServiceImpl
 
 		LayoutPageTemplateStructureRelElementVariation
 			layoutPageTemplateStructureRelElementVariation =
-				layoutPageTemplateStructureRelElementVariationPersistence.create(
-					counterLocalService.increment());
+				layoutPageTemplateStructureRelElementVariationPersistence.
+					create(counterLocalService.increment());
 
 		layoutPageTemplateStructureRelElementVariation.setUuid(
 			serviceContext.getUuid());

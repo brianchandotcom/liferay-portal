@@ -131,6 +131,7 @@ public class FreeMarkerFragmentEntryProcessorTest {
 	}
 
 	@Test
+	@TestInfo("LPD-93455")
 	public void testAddFragmentEntryWithDynamicDataDuringImport()
 		throws Exception {
 

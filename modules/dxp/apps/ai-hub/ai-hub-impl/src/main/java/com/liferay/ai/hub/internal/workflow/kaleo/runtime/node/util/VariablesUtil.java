@@ -50,7 +50,16 @@ public class VariablesUtil {
 			String variableValue = entry.getValue();
 
 			if (escapeJSON) {
-				variableValue = _escapeJSON(variableValue);
+				variableValue = StringUtil.replace(
+					variableValue,
+					new String[] {
+						StringPool.BACK_SLASH, StringPool.QUOTE,
+						StringPool.NEW_LINE, StringPool.RETURN, StringPool.TAB
+					},
+					new String[] {
+						StringPool.DOUBLE_BACK_SLASH, "\\\"", "\\n", "\\r",
+						"\\t"
+					});
 			}
 
 			value = StringUtil.replace(
@@ -130,18 +139,6 @@ public class VariablesUtil {
 
 			return null;
 		}
-	}
-
-	private static String _escapeJSON(String value) {
-		return StringUtil.replace(
-			value,
-			new String[] {
-				StringPool.BACK_SLASH, StringPool.QUOTE, StringPool.NEW_LINE,
-				StringPool.RETURN, StringPool.TAB
-			},
-			new String[] {
-				StringPool.DOUBLE_BACK_SLASH, "\\\"", "\\n", "\\r", "\\t"
-			});
 	}
 
 	private static Map<String, String> _getInputVariables(

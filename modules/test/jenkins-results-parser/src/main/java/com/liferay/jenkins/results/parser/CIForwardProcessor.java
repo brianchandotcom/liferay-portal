@@ -255,59 +255,82 @@ public class CIForwardProcessor {
 	public String getUnsuccessfulCommentBody() throws IOException {
 		StringBuilder sb = new StringBuilder();
 
+		sb.append("This pull request will not be forwarded to `");
+		sb.append(_recipientUsername);
+		sb.append("` because not all required checks passed:\n");
+
 		List<String> incompleteRequiredCompletedTestSuiteNames =
 			_getIncompleteRequiredCompletedTestSuiteNames();
 
-		if (!incompleteRequiredCompletedTestSuiteNames.isEmpty()) {
-			sb.append("Not all required test suite(s) completed:\n");
+		for (String requiredCompletedTestSuiteName :
+				_getRequiredCompletedTestSuiteNames()) {
 
-			for (String requiredCompletedTestSuiteName :
-					_getRequiredCompletedTestSuiteNames()) {
+			if (incompleteRequiredCompletedTestSuiteNames.contains(
+					requiredCompletedTestSuiteName)) {
 
-				sb.append("`");
-				sb.append(requiredCompletedTestSuiteName);
-				sb.append("`\n");
+				sb.append(
+					_getTestSuiteStatusLine(
+						":warning:", "Not completed",
+						requiredCompletedTestSuiteName));
+
+				continue;
 			}
+
+			sb.append(
+				_getTestSuiteStatusLine(
+					":white_check_mark:", "Completed",
+					requiredCompletedTestSuiteName));
 		}
 
 		List<String> failedRequiredPassingTestSuiteNames =
 			_getFailedRequiredPassingTestSuiteNames();
 
-		if (!failedRequiredPassingTestSuiteNames.isEmpty()) {
-			sb.append("Not all required test suite(s) passed:\n");
+		for (String requiredPassingTestSuiteName :
+				_getRequiredPassingTestSuiteNames()) {
 
-			for (String requiredPassingTestSuiteName :
-					_getRequiredPassingTestSuiteNames()) {
+			if (!failedRequiredPassingTestSuiteNames.contains(
+					requiredPassingTestSuiteName)) {
 
-				sb.append("`");
-				sb.append(requiredPassingTestSuiteName);
-				sb.append("`");
+				sb.append(
+					_getTestSuiteStatusLine(
+						":white_check_mark:", "Passed",
+						requiredPassingTestSuiteName));
 
-				if (requiredPassingTestSuiteName.equals("pr-check") &&
-					failedRequiredPassingTestSuiteNames.contains("pr-check")) {
-
-					sb.append(" - ");
-					sb.append(_getPRCheckMessage());
-				}
-
-				if (requiredPassingTestSuiteName.equals("stable")) {
-					sb.append(" - If you believe that the stable test ");
-					sb.append("failures were caused by flaky tests, please ");
-					sb.append("contact QA for confirmation and rerun the ");
-					sb.append("test.");
-				}
-
-				sb.append("\n");
+				continue;
 			}
+
+			if (requiredPassingTestSuiteName.equals("pr-check")) {
+				sb.append(_getPRCheckStatusLine());
+
+				continue;
+			}
+
+			if (requiredPassingTestSuiteName.equals("stable")) {
+				sb.append(
+					_getTestSuiteStatusLine(
+						":x:",
+						JenkinsResultsParserUtil.combine(
+							"This test suite failed. If you believe the ",
+							"failures were caused by flaky tests, please ",
+							"contact QA for confirmation and rerun the test."),
+						requiredPassingTestSuiteName));
+
+				continue;
+			}
+
+			sb.append(
+				_getTestSuiteStatusLine(
+					":x:",
+					JenkinsResultsParserUtil.combine(
+						"This test suite failed. Fix the failures and push, ",
+						"then rerun the `/pr-check` Claude Code skill and ",
+						"publish the result with `/pr-check-publish` on the ",
+						"new commit before commenting `ci:forward` again."),
+					requiredPassingTestSuiteName));
 		}
 
-		sb.append("\nPull request will not be forwarded to ");
-		sb.append("`");
-		sb.append(_recipientUsername);
-		sb.append("`.\n");
-
-		if (JenkinsResultsParserUtil.isNullOrEmpty(_consoleLogURL)) {
-			sb.append("[Console](");
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(_consoleLogURL)) {
+			sb.append("\n[Console](");
 			sb.append(_consoleLogURL);
 			sb.append(")\n");
 		}
@@ -675,27 +698,36 @@ public class CIForwardProcessor {
 		return sb.toString();
 	}
 
-	private String _getPRCheckMessage() {
+	private String _getPRCheckStatusLine() {
 		if (_pullRequest.hasLabel("pr-check - skipped")) {
-			return JenkinsResultsParserUtil.combine(
-				"Pull requests with a skipped `pr-check` may not be ",
-				"forwarded. Please send this pull request manually using ",
-				"the `pr` Claude Code skill.");
+			return _getTestSuiteStatusLine(
+				":warning:",
+				JenkinsResultsParserUtil.combine(
+					"This pull request has a skipped `pr-check`. Please send ",
+					"this pull request manually using the `/pr` Claude Code ",
+					"skill."),
+				"pr-check");
 		}
 
 		if (_pullRequest.hasLabel("pr-check - failure") ||
 			_pullRequest.hasLabel("pr-check - success")) {
 
-			return JenkinsResultsParserUtil.combine(
-				"The `pr-check` result does not match the current head ",
-				"commit. Please rerun the `/pr-check` Claude Code skill ",
-				"and publish the result with `/pr-check-publish`.");
+			return _getTestSuiteStatusLine(
+				":warning:",
+				JenkinsResultsParserUtil.combine(
+					"The `pr-check` result is for a different commit. Please ",
+					"rerun the `/pr-check` Claude Code skill and publish the ",
+					"result with `/pr-check-publish` on the current commit."),
+				"pr-check");
 		}
 
-		return JenkinsResultsParserUtil.combine(
-			"This pull request has no `pr-check` result. Please run the ",
-			"`/pr-check` Claude Code skill and publish the result with ",
-			"`/pr-check-publish`.");
+		return _getTestSuiteStatusLine(
+			":x:",
+			JenkinsResultsParserUtil.combine(
+				"This pull request has no `pr-check` result. Please run the ",
+				"`/pr-check` Claude Code skill and publish the result with ",
+				"`/pr-check-publish`."),
+			"pr-check");
 	}
 
 	private String[] _getRequiredCompletedTestSuiteNames() throws IOException {
@@ -781,6 +813,31 @@ public class CIForwardProcessor {
 		Collections.sort(filteredComments);
 
 		return filteredComments;
+	}
+
+	private String _getTestSuiteStatusLine(
+		String marker, String message, String testSuiteName) {
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("- ");
+		sb.append(marker);
+		sb.append(" ");
+
+		if (testSuiteName.equals("pr-check")) {
+			sb.append("**pr-check**");
+		}
+		else {
+			sb.append("ci:test:**");
+			sb.append(testSuiteName);
+			sb.append("**");
+		}
+
+		sb.append(" - ");
+		sb.append(message);
+		sb.append("\n");
+
+		return sb.toString();
 	}
 
 	private boolean _hasMergeConflict() {

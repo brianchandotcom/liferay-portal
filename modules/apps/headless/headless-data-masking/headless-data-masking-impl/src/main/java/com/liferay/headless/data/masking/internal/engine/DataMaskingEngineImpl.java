@@ -96,11 +96,11 @@ public class DataMaskingEngineImpl implements DataMaskingEngine {
 			return text;
 		}
 
-		String current = text;
+		String redactedText = text;
 
 		for (DataMask dataMask : dataMasks) {
 			try {
-				current = dataMask.apply(current);
+				redactedText = dataMask.apply(redactedText);
 			}
 			catch (RuntimeException runtimeException) {
 				if (_log.isWarnEnabled()) {
@@ -113,7 +113,7 @@ public class DataMaskingEngineImpl implements DataMaskingEngine {
 			}
 		}
 
-		return current;
+		return redactedText;
 	}
 
 	private DataMask _buildDataMask(ObjectEntry maskObjectEntry) {

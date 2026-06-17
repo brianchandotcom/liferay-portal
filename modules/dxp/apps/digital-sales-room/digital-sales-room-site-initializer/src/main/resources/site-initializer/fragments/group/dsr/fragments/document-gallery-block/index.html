@@ -2,7 +2,7 @@
 	[#assign extension = (document.getString("extension"))!"" /]
 	[#assign extension = extension?lower_case /]
 
-	[#assign documentURL = themeDisplay.getPathContext() + "/documents/" + document.getLong("repositoryId")?c + "/" + document.getLong("folderId")?c + "/" + document.getString("fileName")?url("UTF-8") + "/" + document.getString("uuid")?url("UTF-8") /]
+	[#assign documentURL = themeDisplay.getPathContext() + "/documents/" + document.getLong("repositoryId")?c + "/" + document.getLong("folderId")?c + "/" + (document.getString("fileName")!"")?url("UTF-8") + "/" + (document.getString("uuid")!"")?url("UTF-8") /]
 
 	<a class="dsr-document-card" href="${documentURL}" rel="noopener" target="_blank">
 		<span class="dsr-document-preview">
@@ -13,7 +13,7 @@
 			</span>
 		</span>
 		<span class="dsr-document-footer">
-			<span class="dsr-document-title">${document.getString("title")}</span>
+			<span class="dsr-document-title">${document.getString("title")?html}</span>
 		</span>
 	</a>
 [/#macro]

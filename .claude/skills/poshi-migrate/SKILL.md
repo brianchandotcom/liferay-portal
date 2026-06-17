@@ -28,13 +28,13 @@ The working tree must be clean. Abort and ask the user to commit or stash first 
 
 When `${ARGUMENTS}` is empty, resolve both the `@component-name` and the `.testcase` file interactively in two steps.
 
-#### Step 1: Resolve @component-name
+#### Resolve @component-name
 
 1. Read the root `test.properties` file at the repository root. Parse the `component.names=...` property, which is multi-line and uses `\` continuations with comma-separated values. Strip whitespace and trailing backslashes; the result is a flat list of component identifiers (`portal-acceptance`, `portal-analytics-cloud`, `portal-bpm`, …).
 
 1. Read `config.json` (when it exists) and check for `defaultComponentName`.
 
-	- When the value is set and still appears in the parsed list, ask the user with `AskUserQuestion` whether to keep `${defaultComponentName}` or pick another. When the user keeps the default, skip to Step 2.
+	- When the value is set and still appears in the parsed list, ask the user with `AskUserQuestion` whether to keep `${defaultComponentName}` or pick another. When the user keeps the default, skip to resolving the `.testcase` file.
 
 	- When the value is missing or no longer appears in the list, skip the question.
 
@@ -42,7 +42,7 @@ When `${ARGUMENTS}` is empty, resolve both the `@component-name` and the `.testc
 
 1. Persist the choice to `config.json` under `defaultComponentName` so the next invocation can suggest it as the default. Create `config.json` from `config.example.json` when it does not exist yet.
 
-#### Step 2: Resolve the .testcase File
+#### Resolve the .testcase File
 
 1. Search `${poshiTestsRoot}` recursively for `.testcase` files containing the line `@component-name = "${chosenComponent}"`. Capture, for each match, the repo-relative path and the test count (number of `test <Name> {` blocks).
 
@@ -50,7 +50,7 @@ When `${ARGUMENTS}` is empty, resolve both the `@component-name` and the `.testc
 
 1. Present the first 20 matches to the user as plain text with `<index>. <relative-path> (<N> tests)`. Append a final option such as `0. Type a repo-relative path (not in the list)`. Ask the user to either pick an index or type a repo-relative path manually (for files nested under a different root or not yet committed). Validate that the entered path resolves to an existing `.testcase` file before continuing.
 
-Use the chosen file path as the input for Phase 0 onwards.
+Use the chosen file path as the input for the feasibility phase onwards.
 
 ### Configuration
 
@@ -68,13 +68,13 @@ Resolve configuration in this order:
 
 	- **poshiTestsRoot**: `portal-web/test/functional/com/liferay/portalweb/tests/enduser` — the root for Poshi `.testcase` files.
 
-	- **componentPlaywrightModules**: `{}` (empty). Phase 1 will ask the user which Playwright modules to scan when the mapping for the source `@component-name` is missing.
+	- **componentPlaywrightModules**: `{}` (empty). The inventory phase will ask the user which Playwright modules to scan when the mapping for the source `@component-name` is missing.
 
 	- **defaultComponentName**: unset. The argument resolver will prompt the user with the full list from `test.properties` and remember the choice from then on.
 
 The keys are:
 
-- **componentPlaywrightModules**: a mapping from `@component-name` to the list of Playwright modules under `playwrightTestsRoot` that own its existing specs. Phase 1 scans these modules to detect tests that already cover, or partially cover, the Poshi tests being migrated.
+- **componentPlaywrightModules**: a mapping from `@component-name` to the list of Playwright modules under `playwrightTestsRoot` that own its existing specs. The inventory phase scans these modules to detect tests that already cover, or partially cover, the Poshi tests being migrated.
 
 - **defaultComponentName**: the last `@component-name` the user chose interactively. Suggested as the default on subsequent runs when `${ARGUMENTS}` is empty.
 
@@ -90,9 +90,9 @@ After resolving the values, show them to the user via `AskUserQuestion` and offe
 
 The skill runs in five phases: feasibility, inventory, plan, implement, validate. Each phase is gated on user approval.
 
-### Phase 0: Feasibility
+### Feasibility
 
-Before classifying anything, screen each `test` in the file for blockers that would make a migration to Playwright unviable today. Record the result for use in Phase 1.
+Before classifying anything, screen each `test` in the file for blockers that would make a migration to Playwright unviable today. Record the result for use in the inventory phase.
 
 For each `test`, scan the body and every macro it transitively calls. Flag the test when it depends on any of the following:
 
@@ -108,23 +108,23 @@ For each `test`, scan the body and every macro it transitively calls. Flag the t
 
 Output of this phase, per test:
 
-| Classification | Meaning | Phase 1 follow-up |
+| Classification | Meaning | Inventory Follow-Up |
 | --- | --- | --- |
-| **Migrate** | No blockers, or the only blockers are addressable by an API helper that already exists or that the migration will add. | Route to a layer in Phase 1. |
+| **Migrate** | No blockers, or the only blockers are addressable by an API helper that already exists or that the migration will add. | Route to a layer in the inventory phase. |
 | **Skip** | Blocked on a feature the modern test layer cannot reproduce today and that needs an API endpoint that does not exist yet. | Document the blocker and leave the test in the `.testcase`. Surface it in the plan so the team can prioritize the endpoint. |
-| **Drop** | Obsolete: already covered by an existing spec, or the product contract changed and the assertion no longer applies. | Remove the test from the `.testcase` in Phase 3 with a commit that names the covering spec or the contract change. |
+| **Drop** | Obsolete: already covered by an existing spec, or the product contract changed and the assertion no longer applies. | Remove the test from the `.testcase` in the implementation phase with a commit that names the covering spec or the contract change. |
 
 When a test is **Skip**, propose what the missing endpoint should look like (HTTP verb, path, payload, what UI flow it would replace) so the team can decide whether to build it. Do not improvise UI workarounds.
 
-### Phase 1: Inventory
+### Inventory
 
 1. Read the `.testcase` file. Capture the `setUp`, `tearDown`, and every `test <Name>` block with its `@description`, `@priority`, and the macros or helper calls it invokes.
 
-1. Scan the Playwright modules listed in `componentPlaywrightModules` for the source `@component-name`. For every Poshi `test` not already marked **Skip** in Phase 0, classify the existing coverage as one of:
+1. Scan the Playwright modules listed in `componentPlaywrightModules` for the source `@component-name`. For every Poshi `test` not already marked **Skip** in the feasibility phase, classify the existing coverage as one of:
 
 	- **Already covered** — an existing spec exercises the same behavior end to end. Record the spec path. The test becomes **Drop** in the plan; it does not become a migration.
 
-	- **Partially covered** — an existing spec exercises part of the behavior or shares the same setup. Record the spec path so Phase 2 can plan an extension of that spec instead of a new file.
+	- **Partially covered** — an existing spec exercises part of the behavior or shares the same setup. Record the spec path so the plan can propose extending that spec instead of a new file.
 
 	- **Not covered** — no existing spec touches the behavior. Continue to routing.
 
@@ -138,7 +138,7 @@ When a test is **Skip**, propose what the missing endpoint should look like (HTT
 
 	- **Structure** — same setup, same step order, same assertions in roughly the same place?
 
-	This is the most fragile part of the workflow; expect to iterate on the heuristic as false positives and false negatives surface. When the signals disagree, default to **Partially covered** and let the user resolve the call in Phase 2.
+	This is the most fragile part of the workflow; expect to iterate on the heuristic as false positives and false negatives surface. When the signals disagree, default to **Partially covered** and let the user resolve the call in the plan.
 
 	When `componentPlaywrightModules` does not list the source `@component-name`, ask the user which Playwright modules to scan before continuing. Do not skip this step.
 
@@ -161,7 +161,7 @@ When a test is **Skip**, propose what the missing endpoint should look like (HTT
 
 	- JSP, taglib output, multi-module UI wiring, or anything that only manifests in the rendered page → Playwright.
 
-	Record the matching commit shas and the touched files in the per-test notes so Phase 2 can cite them in the plan. When `git log` returns no match (test predates the convention or the ticket never landed in this repo) record `ticket not in tree` and fall back to the heuristic table in the next step.
+	Record the matching commit shas and the touched files in the per-test notes so the plan can cite them. When `git log` returns no match (test predates the convention or the ticket never landed in this repo) record `ticket not in tree` and fall back to the heuristic table in the next step.
 
 1. For every `test` not classified as **Drop** or **Skip**, decide the routing in this order. Pick the first match. When the previous step recovered a ticket diff, treat its signal as the layer choice unless the diff and the test's actual assertions clearly disagree — in that case, record both signals and mark the test `unsure`.
 
@@ -176,7 +176,7 @@ When a test is **Skip**, propose what the missing endpoint should look like (HTT
 
 1. For each test routed to Playwright, locate the destination spec folder under `playwrightTestsRoot`. The destination is the folder whose owning module renders the feature under test. When in doubt, search the Playwright tests root for an existing spec that imports or interacts with the same UI surface.
 
-### Phase 2: Plan
+### Plan
 
 Build the plan with `EnterPlanMode`. Format:
 
@@ -248,9 +248,9 @@ In order:
 1. One commit per migrated test or consolidated group.
 ```
 
-The plan must be exhaustive: every `test` from Phase 1 appears in either the **Feasibility**, **Existing Coverage**, or **Per-Test Routing** table. Tests marked `unsure` go on their own row and the user must confirm a layer before continuing.
+The plan must be exhaustive: every `test` from the inventory phase appears in either the **Feasibility**, **Existing Coverage**, or **Per-Test Routing** table. Tests marked `unsure` go on their own row and the user must confirm a layer before continuing.
 
-### Phase 3: Implement
+### Implement
 
 After `ExitPlanMode` returns the user's approval, execute the plan in this order:
 
@@ -345,7 +345,7 @@ When the migration requires a new artifact under `<playwrightTestsRoot>/../{help
 
 ##### Tagging
 
-Tag every migrated test with the LPS or LPD ticket recovered in Phase 1. Consolidations carry every ticket they cover.
+Tag every migrated test with the LPS or LPD ticket recovered in the inventory phase. Consolidations carry every ticket they cover.
 
 When the Poshi test has no ticket in its `@description` block and no LPS or LPD ticket surfaces from `git log --grep`, the migrated test goes without a tag. Do not invent a placeholder.
 
@@ -373,7 +373,7 @@ When the Poshi test has no ticket in its `@description` block and no LPS or LPD 
 
 1. Use `TransformUtil.transformToArray` plus `ArrayUtil.contains` for "is `X` in list" assertions instead of manual loops.
 
-### Phase 4: Validate
+### Validate
 
 Tests against the runtime are not done until they pass against a live backend.
 

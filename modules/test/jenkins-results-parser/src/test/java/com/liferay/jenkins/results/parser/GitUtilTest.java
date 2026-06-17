@@ -19,7 +19,7 @@ public class GitUtilTest extends com.liferay.jenkins.results.parser.Test {
 	public void testGetDefaultBranchName() throws Exception {
 		Shell shell = mockShell();
 
-		stubShellCommand(shell, "git remote show origin", "master");
+		setShellCommandOutput(shell, "git remote show origin", "master");
 
 		Assert.assertEquals(
 			"master", GitUtil.getDefaultBranchName(new File(".")));

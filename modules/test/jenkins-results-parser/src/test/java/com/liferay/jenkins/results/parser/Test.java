@@ -307,7 +307,7 @@ public class Test {
 					invocation.getArgument(0);
 
 				throw new AssertionError(
-					"Unstubbed command: " +
+					"No output set for shell command: " +
 						Arrays.toString(executionRequest.getCommands()));
 			});
 
@@ -332,7 +332,7 @@ public class Test {
 		return string.replace("${" + token + "}", value);
 	}
 
-	protected void stubShellCommand(
+	protected void setShellCommandOutput(
 			Shell shell, String command, String standardOut)
 		throws Exception {
 

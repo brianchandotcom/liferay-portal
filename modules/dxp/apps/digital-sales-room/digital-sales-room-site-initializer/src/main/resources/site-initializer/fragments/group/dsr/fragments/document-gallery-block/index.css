@@ -85,7 +85,7 @@
 	-webkit-box-orient: vertical;
 	-webkit-line-clamp: 2;
 	overflow: hidden;
-	word-break: break-word;
+	overflow-wrap: break-word;
 }
 
 .dsr-document-gallery-block-component .dsr-document-gallery-empty {

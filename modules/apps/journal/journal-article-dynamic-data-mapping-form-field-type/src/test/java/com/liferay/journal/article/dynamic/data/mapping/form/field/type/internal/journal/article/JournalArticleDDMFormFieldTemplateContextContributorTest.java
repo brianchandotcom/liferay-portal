@@ -11,6 +11,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -36,13 +37,43 @@ public class JournalArticleDDMFormFieldTemplateContextContributorTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_setUpJournalArticleLocalService();
-		_setUpJSONFactory();
-		_setUpPortal();
+		ReflectionTestUtil.setFieldValue(
+			_journalArticleDDMFormFieldTemplateContextContributor,
+			"_journalArticleLocalService", _journalArticleLocalService);
+
+		ReflectionTestUtil.setFieldValue(
+			_journalArticleDDMFormFieldTemplateContextContributor,
+			"_jsonFactory", _jsonFactory);
+
+		ReflectionTestUtil.setFieldValue(
+			_journalArticleDDMFormFieldTemplateContextContributor, "_portal",
+			_portal);
 	}
 
 	@Test
-	public void testGetValueFetchesLatestArticle() throws Exception {
+	public void testGetValue() throws Exception {
+		_testGetValueFetchesLatestArticle();
+		_testGetValueWhenArticleIsDeleted();
+		_testGetValueWithNullValue();
+	}
+
+	private String _createInputJSON(long classPK, String title) {
+		return JSONUtil.put(
+			"classNameId", RandomTestUtil.randomLong()
+		).put(
+			"classPK", classPK
+		).put(
+			"title", title
+		).toString();
+	}
+
+	private String _invokeGetValue(String value) throws Exception {
+		return ReflectionTestUtil.invoke(
+			_journalArticleDDMFormFieldTemplateContextContributor, "_getValue",
+			new Class<?>[] {String.class}, value);
+	}
+
+	private void _testGetValueFetchesLatestArticle() throws Exception {
 		long classPK = RandomTestUtil.randomLong();
 
 		Mockito.when(
@@ -59,30 +90,14 @@ public class JournalArticleDDMFormFieldTemplateContextContributorTest {
 			latestTitle
 		);
 
-		String oldTitle = RandomTestUtil.randomString();
-
-		JSONObject inputJSONObject = _jsonFactory.createJSONObject();
-
-		inputJSONObject.put(
-			"classNameId", RandomTestUtil.randomLong()
-		).put(
-			"classPK", classPK
-		).put(
-			"title", oldTitle
-		);
-
-		String json = ReflectionTestUtil.invoke(
-			_journalArticleDDMFormFieldTemplateContextContributor, "_getValue",
-			new Class<?>[] {String.class}, inputJSONObject.toString());
-
-		JSONObject jsonObject = _jsonFactory.createJSONObject(json);
+		JSONObject jsonObject = _jsonFactory.createJSONObject(
+			_invokeGetValue(
+				_createInputJSON(classPK, RandomTestUtil.randomString())));
 
 		Assert.assertEquals(latestTitle, jsonObject.getString("title"));
-		Assert.assertNotEquals(oldTitle, jsonObject.getString("title"));
 	}
 
-	@Test
-	public void testGetValueWhenArticleIsDeleted() throws Exception {
+	private void _testGetValueWhenArticleIsDeleted() throws Exception {
 		long classPK = RandomTestUtil.randomLong();
 
 		Mockito.when(
@@ -91,53 +106,17 @@ public class JournalArticleDDMFormFieldTemplateContextContributorTest {
 			null
 		);
 
-		JSONObject inputJSONObject = _jsonFactory.createJSONObject();
-
 		String title = RandomTestUtil.randomString();
 
-		inputJSONObject.put(
-			"classNameId", RandomTestUtil.randomLong()
-		).put(
-			"classPK", classPK
-		).put(
-			"title", title
-		);
-
-		String json = ReflectionTestUtil.invoke(
-			_journalArticleDDMFormFieldTemplateContextContributor, "_getValue",
-			new Class<?>[] {String.class}, inputJSONObject.toString());
-
-		JSONObject jsonObject = _jsonFactory.createJSONObject(json);
+		JSONObject jsonObject = _jsonFactory.createJSONObject(
+			_invokeGetValue(_createInputJSON(classPK, title)));
 
 		Assert.assertEquals(classPK, jsonObject.getLong("classPK"));
 		Assert.assertEquals(title, jsonObject.getString("title"));
 	}
 
-	@Test
-	public void testGetValueWithNullValue() throws Exception {
-		String value = ReflectionTestUtil.invoke(
-			_journalArticleDDMFormFieldTemplateContextContributor, "_getValue",
-			new Class<?>[] {String.class}, (Object)null);
-
-		Assert.assertEquals(StringPool.BLANK, value);
-	}
-
-	private void _setUpJournalArticleLocalService() throws Exception {
-		ReflectionTestUtil.setFieldValue(
-			_journalArticleDDMFormFieldTemplateContextContributor,
-			"_journalArticleLocalService", _journalArticleLocalService);
-	}
-
-	private void _setUpJSONFactory() throws Exception {
-		ReflectionTestUtil.setFieldValue(
-			_journalArticleDDMFormFieldTemplateContextContributor,
-			"_jsonFactory", _jsonFactory);
-	}
-
-	private void _setUpPortal() throws Exception {
-		ReflectionTestUtil.setFieldValue(
-			_journalArticleDDMFormFieldTemplateContextContributor, "_portal",
-			_portal);
+	private void _testGetValueWithNullValue() throws Exception {
+		Assert.assertEquals(StringPool.BLANK, _invokeGetValue(null));
 	}
 
 	private final JournalArticle _journalArticle = Mockito.mock(

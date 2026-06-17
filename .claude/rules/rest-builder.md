@@ -229,6 +229,6 @@ Run every step without asking for confirmation, including the commits.
 
 1. Commit the regenerated output of every module so it stays consistent with the new generator, on its own commit titled `<TICKET> BuildREST` (for example, `LPD-XXXXX BuildREST`), so the mechanical regeneration stays distinct from the hand-written change and reviewers can skip past it.
 
-1. Cover the new feature or fix with a test. The matching integration tests live in `modules/util/portal-tools-rest-builder-test-test/src/testIntegration/java`, where each resource has a `<Tag>ResourceTest` that exercises the generated code at runtime; extend the matching one (or add it), run `<gradlew> testIntegration` from that module, and commit the test once it passes.
+1. Cover the new feature or fix with an integration test that exercises the same `portal-tools-rest-builder-test-impl` `rest-openapi.yaml` case confirmed above. The matching tests live in `modules/util/portal-tools-rest-builder-test-test/src/testIntegration/java`, where each resource has a `<Tag>ResourceTest` that exercises the generated code at runtime; extend the matching one (or add it), run `<gradlew> testIntegration` from that module, and commit the test once it passes.
 
 1. Continue with the work.

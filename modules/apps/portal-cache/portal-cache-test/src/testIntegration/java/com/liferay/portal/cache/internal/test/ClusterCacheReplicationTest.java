@@ -91,7 +91,7 @@ public class ClusterCacheReplicationTest implements Serializable {
 	}
 
 	@Test
-	public void testDoNotReplicatePut() throws Exception {
+	public void testNotifyEntryPutWithoutReplicatePuts() throws Exception {
 
 		// Assert empty on node 1, set up property
 
@@ -219,7 +219,8 @@ public class ClusterCacheReplicationTest implements Serializable {
 	}
 
 	@Test
-	public void testEntityCacheFinderCacheSynchronization() throws Exception {
+	public void testNotifyEntryPutWithEntityCacheAndFinderCache()
+		throws Exception {
 
 		// Assert node 1 does not see any UserGroup with testing prefix
 
@@ -302,7 +303,7 @@ public class ClusterCacheReplicationTest implements Serializable {
 	}
 
 	@Test
-	public void testPingPongFlushing() throws Exception {
+	public void testNotifyEntryPutPingPongFlushing() throws Exception {
 
 		// Assert empty and put value on node 1
 
@@ -382,7 +383,7 @@ public class ClusterCacheReplicationTest implements Serializable {
 	}
 
 	@Test
-	public void testReplicateByCopy() throws Exception {
+	public void testNotifyEntryPutWithReplicatePutsViaCopy() throws Exception {
 
 		// Assert node 1 is empty
 
@@ -487,7 +488,8 @@ public class ClusterCacheReplicationTest implements Serializable {
 	}
 
 	@Test
-	public void testReplicateByRemove() throws Exception {
+	public void testNotifyEntryPutWithoutReplicatePutsViaCopy()
+		throws Exception {
 
 		// Assert node 1 is empty
 
@@ -590,7 +592,8 @@ public class ClusterCacheReplicationTest implements Serializable {
 	}
 
 	@Test
-	public void testReplicateByUpdateViaCopy() throws Exception {
+	public void testNotifyEntryUpdatedWithReplicateUpdatesViaCopy()
+		throws Exception {
 
 		// Assert node 1 is empty
 

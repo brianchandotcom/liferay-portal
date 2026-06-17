@@ -3748,3 +3748,100 @@ test(
 		}
 	}
 );
+
+test(
+	'A hidden custom event is removed from the Event Analysis event picker',
+	{tag: '@LRAC-10228'},
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
+		const eventName = 'hidden' + getRandomString();
+
+		await apiHelpers.jsonWebServicesOSBAsah.createEvents([
+			{
+				applicationId: 'CustomEvent',
+				canonicalUrl: 'https://www.liferay.com',
+				channelId: channel.id,
+				eventDate: new Date().toISOString(),
+				eventId: eventName,
+				title: 'Liferay',
+				userId: '1',
+			},
+		]);
+
+		await apiHelpers.jsonWebServicesOSBAsah.createEventDefinition([
+			{
+				applicationId: 'CustomEvent',
+				displayName: eventName,
+				name: eventName,
+				type: 'CUSTOM',
+			},
+		]);
+
+		const customEvent = page.getByRole('menuitem', {
+			exact: true,
+			name: eventName,
+		});
+
+		async function openCustomEventPicker() {
+			await navigateToACPageViaURL({
+				acPage: ACPage.eventAnalysisPage,
+				channelID: channel.id,
+				page,
+				projectID: project.groupId,
+			});
+
+			await page.getByRole('link', {name: 'Create Analysis'}).click();
+
+			await page.getByLabel('Add').click();
+
+			await page
+				.locator('.card-tab')
+				.filter({hasText: 'Custom'})
+				.first()
+				.click();
+		}
+
+		// The custom event is offered in the event picker
+
+		await openCustomEventPicker();
+
+		await expect(customEvent).toBeVisible();
+
+		// Hide the custom event from the settings list
+
+		await navigateToACSettingsViaURL({
+			acPage: ACPage.definitionsEventsCustomPage,
+			page,
+			projectID: project.groupId,
+		});
+
+		await page.getByPlaceholder('Search').fill(eventName);
+
+		await page.keyboard.press('Enter');
+
+		await page.getByRole('row', {name: eventName}).hover();
+
+		await page
+			.getByRole('row', {name: eventName})
+			.getByRole('button', {name: 'Set to Hide'})
+			.click();
+
+		await page
+			.locator('.confirmation-modal-root')
+			.getByRole('button', {exact: true, name: 'Hide'})
+			.click();
+
+		await page.getByRole('row', {name: eventName}).hover();
+
+		await expect(
+			page
+				.getByRole('row', {name: eventName})
+				.getByRole('button', {name: 'Set to Show'})
+		).toBeVisible();
+
+		// The hidden custom event is no longer offered in the picker
+
+		await openCustomEventPicker();
+
+		await expect(customEvent).toHaveCount(0);
+	}
+);

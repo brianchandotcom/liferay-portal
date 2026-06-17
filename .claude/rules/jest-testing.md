@@ -27,7 +27,7 @@ Import testing utilities from `@testing-library/react` (`render`, `screen`, `cle
 
 Do not import from `@testing-library/react-hooks`; React 18 moved `renderHook` and `act` into `@testing-library/react`.
 
-Matchers like `toBeInTheDocument` and `toBeVisible` are auto-registered at runtime by the shared setup, but TypeScript cannot see them without the side-effect import, and the `yarn checkFormat` type check fails on every matcher call. Add the import on its own line after the external imports:
+Matchers like `toBeInTheDocument` and `toBeVisible` are autoregistered at runtime by the shared setup, but TypeScript cannot see them without the side-effect import, and the `yarn checkFormat` type check fails on every matcher call. Add the import on its own line after the external imports:
 
 ```typescript
 import '@testing-library/jest-dom';
@@ -69,15 +69,15 @@ The shared setup under `modules/frontend-sdk/node-scripts/util/jest` installs th
 
 Every module that runs `yarn test` inherits two setup files from `modules/frontend-sdk/node-scripts/util/jest`: `setup.js` (via `setupFiles`) and `setupAfterEnv.js` (via `setupFilesAfterEnv`). Do not reinstall or reassign what they already provide.
 
-What comes pre-installed:
+What comes preinstalled:
 
 1. **`global.Liferay`**: full mock from `mocks/Liferay.js` (events, `Language`, `ThemeDisplay`, `Util`, `Session`, `PortletKeys`, `FeatureFlags`, `Icons`, ...). Non-obvious defaults: `Language.get(key)` returns the key itself, `ThemeDisplay.getLanguageId()` returns `'en_US'`, `Util.openToast()` returns `true`.
 
-1. **`global.fetch`**: `jest-fetch-mock` enabled portal-wide. Drive responses with `fetch.mockResponseOnce(JSON.stringify(...))`. A `beforeEach` hook re-installs a spy that throws on unmocked calls, so tests must declare every expected network call.
+1. **`global.fetch`**: `jest-fetch-mock` enabled portal-wide. Drive responses with `fetch.mockResponseOnce(JSON.stringify(...))`. A `beforeEach` hook reinstalls a spy that throws on unmocked calls, so tests must declare every expected network call.
 
 1. **`@testing-library/jest-dom` matchers**: registered globally.
 
-1. **Polyfills and environment**: `global.crypto`, `Headers`, `Image.prototype.decode`, `createRange()`, `regenerator-runtime`, `TextEncoder`/`TextDecoder`. CSS and SCSS imports route to an empty stub. Timezone is locked to `UTC`.
+1. **Polyfills and Environment**: `global.crypto`, `Headers`, `Image.prototype.decode`, `createRange()`, `regenerator-runtime`, `TextEncoder`/`TextDecoder`. CSS and SCSS imports route to an empty stub. Timezone is locked to `UTC`.
 
 ### Overriding the Shared Mocks
 
@@ -137,11 +137,11 @@ Check these locations in order before implementing your own:
 
 1. **`modules/frontend-sdk/node-scripts/util/jest/mocks`** for portal-wide stubs.
 
-1. **Your module's `test`** tree for project-local fixtures and helpers.
+1. **Your Module's `test`** tree for project-local fixtures and helpers.
 
 ## Lifecycle
 
-1. `@testing-library/react` auto-calls `cleanup` after every test as long as an `afterEach` exists in scope, so an explicit `afterEach(cleanup)` is not required. Tests that already include it are fine; do not add it in new code unless a specific case demands it.
+1. `@testing-library/react` autocalls `cleanup` after every test as long as an `afterEach` exists in scope, so an explicit `afterEach(cleanup)` is not required. Tests that already include it are fine; do not add it in new code unless a specific case demands it.
 
 1. Reset call history with `jest.clearAllMocks()` in `beforeEach`. The shared Jest config does not set `clearMocks: true`, so call histories on `Liferay.*` and your own spies persist between tests unless cleared. `fetch` is the exception: the shared `setupAfterEnv.js` already calls `fetch.mockRestore()` in an `afterEach` hook, so you do not need to reset fetch yourself.
 
@@ -151,9 +151,9 @@ Check these locations in order before implementing your own:
 
 Follow the [Testing Library query priority](https://testing-library.com/docs/queries/about#priority):
 
-1. **Accessible to everyone**: `getByRole`, `getByLabelText`, `getByPlaceholderText`, `getByText`, `getByDisplayValue`.
+1. **Accessible to Everyone**: `getByRole`, `getByLabelText`, `getByPlaceholderText`, `getByText`, `getByDisplayValue`.
 
-1. **Semantic queries**: `getByAltText`, `getByTitle`.
+1. **Semantic Queries**: `getByAltText`, `getByTitle`.
 
 1. **Test IDs**: `getByTestId`.
 
@@ -181,7 +181,7 @@ jest.useRealTimers();
 
 ## Debugging
 
-The `node-scripts test` wrapper appends `--silent` to every Jest run, so `console.log` and `screen.debug()` output never reaches the terminal. Re-enable it with the `--force-debug` flag:
+The `node-scripts test` wrapper appends `--silent` to every Jest run, so `console.log` and `screen.debug()` output never reaches the terminal. Reenable it with the `--force-debug` flag:
 
 ```bash
 yarn test path/to/Foo.test.tsx --force-debug
@@ -216,5 +216,5 @@ Color contrast is not reliably testable in JSDOM and is disabled by default. Cov
 
 ## Source
 
-- [Liferay frontend testing guidelines](https://github.com/liferay/liferay-frontend-projects/tree/master/guidelines/general/testing)
-- [Testing Library documentation](https://testing-library.com/docs)
+- [Liferay Frontend Testing Guidelines](https://github.com/liferay/liferay-frontend-projects/tree/master/guidelines/general/testing)
+- [Testing Library Documentation](https://testing-library.com/docs)

@@ -74,7 +74,10 @@ test.afterEach(async ({apiHelpers, dataSetManagerApiHelpers}) => {
  *   expression on `friendlyUrlPath`) and must be mapped manually, which also
  *   makes the resolved value observable in the displayed rows.
  */
-async function createTokenizedDataSet({dataSetManagerApiHelpers}: any) {
+async function createTokenizedDataSet({
+	additionalAPIURLParameters = "filter=contains(friendlyUrlPath,'{path}')",
+	dataSetManagerApiHelpers,
+}: any) {
 	const dataSet = {
 		erc: getRandomString(),
 		label: getRandomString(),
@@ -83,7 +86,7 @@ async function createTokenizedDataSet({dataSetManagerApiHelpers}: any) {
 	dataSetERCs.push(dataSet.erc);
 
 	await dataSetManagerApiHelpers.createDataSet({
-		additionalAPIURLParameters: "filter=contains(friendlyUrlPath,'{path}')",
+		additionalAPIURLParameters,
 		erc: dataSet.erc,
 		label: dataSet.label,
 		restApplication: '/headless-delivery/v1.0',
@@ -191,6 +194,43 @@ test(
 					}
 				)
 			).toHaveCount(0);
+		});
+	}
+);
+
+test(
+	'URL token mapping panel auto-selects the only token instead of showing a placeholder',
+	{tag: '@LPD-93809'},
+	async ({dataSetFragmentPage, dataSetManagerApiHelpers, layout}) => {
+		const dataSet =
+			await test.step('Create a data set with a single token in its API URL', async () =>
+				createTokenizedDataSet({
+					additionalAPIURLParameters: '',
+					dataSetManagerApiHelpers,
+				}));
+
+		await test.step('Add the fragment and assign the data set', async () => {
+			await dataSetFragmentPage.addDataSetFragment(layout);
+
+			await dataSetFragmentPage.selectDataSetButton.click();
+
+			await dataSetFragmentPage.selectDataSet(dataSet.label);
+		});
+
+		await test.step('Assert that the only token is auto-selected with no placeholder', async () => {
+			await expect(dataSetFragmentPage.tokenMappingPanel).toBeVisible();
+
+			await expect(
+				dataSetFragmentPage.tokenMappingTokenSelectorTrigger
+			).toContainText('{siteId}');
+
+			await expect(
+				dataSetFragmentPage.tokenMappingTokenSelectorTrigger
+			).not.toContainText('Select an Option');
+
+			await expect(
+				dataSetFragmentPage.tokenMappingMappingSelect
+			).toBeVisible();
 		});
 	}
 );

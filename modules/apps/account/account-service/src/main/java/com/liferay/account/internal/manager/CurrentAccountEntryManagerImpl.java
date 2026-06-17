@@ -49,7 +49,7 @@ public class CurrentAccountEntryManagerImpl
 
 		AccountEntry guestAccountEntry =
 			_accountEntryLocalService.getGuestAccountEntry(
-				CompanyThreadLocal.getCompanyId());
+				CompanyThreadLocal.getNonsystemCompanyId());
 
 		if (userId <= UserConstants.USER_ID_DEFAULT) {
 			return guestAccountEntry;

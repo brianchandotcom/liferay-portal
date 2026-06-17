@@ -1,4 +1,4 @@
-suite: gateway
+suite: Gateway
 templates:
     -   templates/gateway.yaml
 tests:

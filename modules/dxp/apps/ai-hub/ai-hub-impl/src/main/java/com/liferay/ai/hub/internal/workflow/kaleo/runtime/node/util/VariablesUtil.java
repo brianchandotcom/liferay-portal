@@ -5,7 +5,6 @@
 
 package com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -14,7 +13,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 
 import java.io.Serializable;
@@ -22,6 +20,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author João Victor Alves
@@ -32,42 +31,14 @@ public class VariablesUtil {
 		ExecutionContext executionContext, String kaleoNodeSettingName,
 		Map<String, String> kaleoNodeSettingValues) {
 
-		return applyInputVariables(
-			executionContext, kaleoNodeSettingName, kaleoNodeSettingValues,
-			false);
-	}
-
-	public static String applyInputVariables(
-		ExecutionContext executionContext, String kaleoNodeSettingName,
-		Map<String, String> kaleoNodeSettingValues, boolean escapeJSON) {
-
 		Map<String, String> inputVariables = _getInputVariables(
 			kaleoNodeSettingValues, executionContext.getWorkflowContext());
 
 		String value = kaleoNodeSettingValues.get(kaleoNodeSettingName);
 
-		if (Validator.isBlank(value)) {
-			return null;
-		}
-
 		for (Map.Entry<String, String> entry : inputVariables.entrySet()) {
-			String variableValue = entry.getValue();
-
-			if (escapeJSON) {
-				variableValue = StringUtil.replace(
-					variableValue,
-					new String[] {
-						StringPool.BACK_SLASH, StringPool.QUOTE,
-						StringPool.NEW_LINE, StringPool.RETURN, StringPool.TAB
-					},
-					new String[] {
-						StringPool.DOUBLE_BACK_SLASH, "\\\"", "\\n", "\\r",
-						"\\t"
-					});
-			}
-
 			value = StringUtil.replace(
-				value, "{{" + entry.getKey() + "}}", variableValue);
+				value, "{{" + entry.getKey() + "}}", entry.getValue());
 		}
 
 		return value;
@@ -128,10 +99,16 @@ public class VariablesUtil {
 
 		iterator.forEachRemaining(
 			jsonObject -> {
-				String name = jsonObject.getString("name");
+				String value = GetterUtil.getString(
+					workflowContext.get(jsonObject.getString("name")));
 
-				inputVariables.put(
-					name, GetterUtil.getString(workflowContext.get(name)));
+				if (Objects.equals(jsonObject.getString("type"), "json")) {
+					value = StringUtil.replace(
+						value, new String[] {"\\", "\"", "\n", "\r", "\t"},
+						new String[] {"\\\\", "\\\"", "\\n", "\\r", "\\t"});
+				}
+
+				inputVariables.put(jsonObject.getString("name"), value);
 			});
 
 		return inputVariables;

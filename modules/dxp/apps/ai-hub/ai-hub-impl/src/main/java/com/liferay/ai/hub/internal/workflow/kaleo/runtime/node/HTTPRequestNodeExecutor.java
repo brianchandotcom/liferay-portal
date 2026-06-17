@@ -82,7 +82,7 @@ public class HTTPRequestNodeExecutor extends BaseNodeExecutor {
 					GetterUtil.getString(workflowContext.get("userToken"))));
 
 			String requestBody = VariablesUtil.applyInputVariables(
-				executionContext, "requestBody", kaleoNodeSettingValues, true);
+				executionContext, "requestBody", kaleoNodeSettingValues);
 
 			if (Validator.isNotNull(requestBody)) {
 				options.setBody(

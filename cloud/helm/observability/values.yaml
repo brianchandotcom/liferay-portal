@@ -419,6 +419,7 @@ alloy:
             port: http
     scrapeInterval: 1m
 aws:
+    ampWorkspaceID: ""
     ampWorkspaceURL: ""
     region: ""
 centralHub:

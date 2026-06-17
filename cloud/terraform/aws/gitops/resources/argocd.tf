@@ -109,6 +109,7 @@ resource "kubernetes_manifest" "infrastructure_applicationset" {
 						}
 						managedNamespaceMetadata={
 							labels={
+								"liferay.com/observable"="true"
 								"pod-security.kubernetes.io/enforce"="restricted"
 							}
 						}
@@ -559,6 +560,10 @@ resource "kubernetes_manifest" "observability_application" {
 								{
 									name="alloy.scrape.rdsExporter.enabled"
 									value="true"
+								},
+								{
+									name="aws.ampWorkspaceID"
+									value=try(data.aws_prometheus_workspace.amp[0].workspace_id, "")
 								},
 								{
 									name="aws.ampWorkspaceURL"

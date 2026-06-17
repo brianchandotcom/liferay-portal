@@ -51,7 +51,7 @@ import javax.management.ReflectionException;
 /**
  * @author Lily Chi
  */
-public class ProductionReadinessRuleUtil {
+public class ProductionReadinessCheckUtil {
 
 	public static Collection<ProductionReadinessResult> check() {
 		return TransformUtil.transform(
@@ -766,29 +766,29 @@ public class ProductionReadinessRuleUtil {
 		"-XX:LargePageSizeInBytes=";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ProductionReadinessRuleUtil.class);
+		ProductionReadinessCheckUtil.class);
 
 	private static final List<Supplier<ProductionReadinessResult>>
 		_productionReadinessResultSuppliers = List.of(
-			ProductionReadinessRuleUtil::_checkBetaLanguages,
-			ProductionReadinessRuleUtil::_checkCounterIncrement,
-			ProductionReadinessRuleUtil::_checkDatabaseConfiguration,
-			ProductionReadinessRuleUtil::_checkDLImagePreviewDPI,
-			ProductionReadinessRuleUtil::_checkDLPreviewForking,
-			ProductionReadinessRuleUtil::_checkExplicitGCDisabled,
-			ProductionReadinessRuleUtil::_checkFileStoreImplementation,
-			ProductionReadinessRuleUtil::_checkGarbageCollectorType,
-			ProductionReadinessRuleUtil::_checkHeapAllocationConsistency,
-			ProductionReadinessRuleUtil::_checkHeapSizeUpperLimit,
-			ProductionReadinessRuleUtil::_checkHugePagesConfiguration,
-			ProductionReadinessRuleUtil::_checkJMXConfigurationDisabled,
-			ProductionReadinessRuleUtil::_checkJSPEngineSettings,
-			ProductionReadinessRuleUtil::_checkJSPReloading,
-			ProductionReadinessRuleUtil::_checkPasswordEncryption,
-			ProductionReadinessRuleUtil::_checkPortalDeveloperProperties,
-			ProductionReadinessRuleUtil::_checkPreventDiagnosticOverhead,
-			ProductionReadinessRuleUtil::_checkSidecarDetection,
-			ProductionReadinessRuleUtil::_checkUnusedLanguages);
+			ProductionReadinessCheckUtil::_checkBetaLanguages,
+			ProductionReadinessCheckUtil::_checkCounterIncrement,
+			ProductionReadinessCheckUtil::_checkDatabaseConfiguration,
+			ProductionReadinessCheckUtil::_checkDLImagePreviewDPI,
+			ProductionReadinessCheckUtil::_checkDLPreviewForking,
+			ProductionReadinessCheckUtil::_checkExplicitGCDisabled,
+			ProductionReadinessCheckUtil::_checkFileStoreImplementation,
+			ProductionReadinessCheckUtil::_checkGarbageCollectorType,
+			ProductionReadinessCheckUtil::_checkHeapAllocationConsistency,
+			ProductionReadinessCheckUtil::_checkHeapSizeUpperLimit,
+			ProductionReadinessCheckUtil::_checkHugePagesConfiguration,
+			ProductionReadinessCheckUtil::_checkJMXConfigurationDisabled,
+			ProductionReadinessCheckUtil::_checkJSPEngineSettings,
+			ProductionReadinessCheckUtil::_checkJSPReloading,
+			ProductionReadinessCheckUtil::_checkPasswordEncryption,
+			ProductionReadinessCheckUtil::_checkPortalDeveloperProperties,
+			ProductionReadinessCheckUtil::_checkPreventDiagnosticOverhead,
+			ProductionReadinessCheckUtil::_checkSidecarDetection,
+			ProductionReadinessCheckUtil::_checkUnusedLanguages);
 	private static final List<String> _recommendedDLStoreImplClassNames =
 		List.of(
 			"com.liferay.portal.store.azure.AzureStore",

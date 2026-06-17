@@ -63,7 +63,9 @@ export default async function formatPortal(check, files) {
 	}
 
 	if (
-		(!files || !!files.find((file) => file.endsWith('/package.json'))) &&
+		(!files ||
+			!!files.find((file) => file.endsWith('/package.json')) ||
+			!!files.find((file) => file.endsWith('/node-scripts.config.js'))) &&
 		!(await formatPackageJSONFiles())
 	) {
 		checksPassed = false;

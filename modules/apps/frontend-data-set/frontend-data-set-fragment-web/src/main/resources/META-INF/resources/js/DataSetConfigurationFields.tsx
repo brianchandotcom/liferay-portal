@@ -72,7 +72,12 @@ export default function DataSetConfigurationFields({
 	const [selectedTokenKey, setSelectedTokenKey] = useState('');
 
 	useEffect(() => {
-		if (selectedTokenKey && !tokenKeys.includes(selectedTokenKey)) {
+		if (tokenKeys.length === 1) {
+			if (selectedTokenKey !== tokenKeys[0]) {
+				setSelectedTokenKey(tokenKeys[0]);
+			}
+		}
+		else if (selectedTokenKey && !tokenKeys.includes(selectedTokenKey)) {
 			setSelectedTokenKey('');
 		}
 	}, [tokenKeys, selectedTokenKey]);

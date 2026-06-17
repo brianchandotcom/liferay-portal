@@ -225,7 +225,7 @@ Run every step without asking for confirmation, including the commits.
 
 1. Run REST Builder globally to regenerate every module.
 
-1. Confirm the regenerated output reflects the change, especially under `portal-tools-rest-builder-test-impl` — the dummy module that acts as the generator's test bed, whose `rest-openapi.yaml` is meant to cover each generator feature so the regenerated Java is the visible record of what the change produces. When the test bed shows no difference, the existing cases do not cover the new behavior — add a case to its `rest-openapi.yaml` that does (for example, a schema carrying a description but no required properties to cover description generation), commit it, and regenerate again.
+1. Confirm the regenerated output reflects the change, especially under `portal-tools-rest-builder-test-impl` — the dummy module that acts as the generator's test bed, whose `rest-openapi.yaml` is meant to cover each generator feature so the regenerated Java is the visible record of what the change produces. When the test bed shows no difference, the existing cases do not cover the new behavior — add a case to its `rest-openapi.yaml` that does, commit it, and regenerate again.
 
 1. Commit the regenerated output of every module so it stays consistent with the new generator, on its own commit titled `<TICKET> BuildREST` (for example, `LPD-XXXXX BuildREST`), so the mechanical regeneration stays distinct from the hand-written change and reviewers can skip past it.
 

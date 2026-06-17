@@ -289,7 +289,7 @@ public class ToolSetUtil {
 
 		if (openAPIBrief == null) {
 			throw new IllegalArgumentException(
-				"No tool-set was found with name \"" + toolSetName + "\"");
+				"No tool set was found with name \"" + toolSetName + "\"");
 		}
 
 		return openAPIBrief;

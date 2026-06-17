@@ -258,13 +258,13 @@ public class MCPServerServlet extends HttpServlet {
 					companyId, mcpServerProfileExternalReferenceCode),
 				httpServletRequest, inputObject, toolName, toolSetName);
 
-			int responseCode = response.getStatus();
+			int status = response.getStatus();
 
 			String content = (String)response.getEntity();
 
-			if (responseCode < 300) {
+			if (status < 300) {
 				if (content == null) {
-					content = "Status code: " + responseCode;
+					content = "Status code: " + status;
 				}
 
 				return McpSchema.CallToolResult.builder(
@@ -278,7 +278,7 @@ public class MCPServerServlet extends HttpServlet {
 			return McpSchema.CallToolResult.builder(
 			).addTextContent(
 				StringBundler.concat(
-					"Status code: ", responseCode, ", Content:\n", content)
+					"Status code: ", status, ", Content:\n", content)
 			).isError(
 				true
 			).build();
@@ -333,18 +333,18 @@ public class MCPServerServlet extends HttpServlet {
 				values -> GetterUtil.getInteger(
 					values.get("executionOrder"), Integer.MAX_VALUE)));
 
-		List<String> maskExternalReferenceCodes = new ArrayList<>();
+		return TransformUtil.transform(
+			valuesList,
+			values -> {
+				String externalReferenceCode = (String)values.get(
+					"dataMaskExternalReferenceCode");
 
-		for (Map<String, Serializable> values : valuesList) {
-			String externalReferenceCode = (String)values.get(
-				"dataMaskExternalReferenceCode");
+				if (Validator.isNotNull(externalReferenceCode)) {
+					return externalReferenceCode;
+				}
 
-			if (Validator.isNotNull(externalReferenceCode)) {
-				maskExternalReferenceCodes.add(externalReferenceCode);
-			}
-		}
-
-		return maskExternalReferenceCodes;
+				return null;
+			});
 	}
 
 	private String _getMCPServerProfileName(

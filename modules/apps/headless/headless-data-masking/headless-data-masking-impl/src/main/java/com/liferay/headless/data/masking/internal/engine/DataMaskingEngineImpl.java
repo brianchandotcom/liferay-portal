@@ -14,6 +14,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
@@ -45,8 +46,8 @@ public class DataMaskingEngineImpl implements DataMaskingEngine {
 	public String redact(
 		long companyId, List<String> maskExternalReferenceCodes, String text) {
 
-		if (Validator.isNull(text) || (maskExternalReferenceCodes == null) ||
-			maskExternalReferenceCodes.isEmpty() ||
+		if (Validator.isNull(text) ||
+			ListUtil.isEmpty(maskExternalReferenceCodes) ||
 			!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-90204")) {
 
 			return text;

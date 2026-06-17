@@ -39,22 +39,6 @@
 					"type": "String"
 				},
 				{
-					"DBType": "Clob",
-					"businessType": "LongText",
-					"defaultValue": "null",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "en_US",
-					"label": {
-						"en_US": "Tools"
-					},
-					"name": "tools",
-					"required": true,
-					"state": false,
-					"system": true,
-					"type": "String"
-				},
-				{
 					"DBType": "String",
 					"businessType": "Text",
 					"defaultValue": "null",
@@ -71,6 +55,22 @@
 							"value": true
 						}
 					],
+					"required": true,
+					"state": false,
+					"system": true,
+					"type": "String"
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"defaultValue": "null",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Tools"
+					},
+					"name": "tools",
 					"required": true,
 					"state": false,
 					"system": true,

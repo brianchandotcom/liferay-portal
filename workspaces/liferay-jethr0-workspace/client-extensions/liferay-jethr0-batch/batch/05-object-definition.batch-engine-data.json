@@ -125,16 +125,6 @@
 					"DBType": "String",
 					"businessType": "Text",
 					"label": {
-						"en_US": "Name"
-					},
-					"name": "name",
-					"required": true,
-					"type": "String"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"label": {
 						"en_US": "Job Name"
 					},
 					"name": "jobName",
@@ -168,6 +158,16 @@
 					"listTypeDefinitionExternalReferenceCode": "jobType",
 					"name": "jobType",
 					"state": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"label": {
+						"en_US": "Name"
+					},
+					"name": "name",
+					"required": true,
 					"type": "String"
 				},
 				{

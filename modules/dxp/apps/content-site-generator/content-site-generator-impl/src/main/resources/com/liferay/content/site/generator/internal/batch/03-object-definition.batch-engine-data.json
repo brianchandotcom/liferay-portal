@@ -23,22 +23,6 @@
 			"name": "CSGGenerationItem",
 			"objectFields": [
 				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "FILE_NAME",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "en_US",
-					"label": {
-						"en_US": "File Name"
-					},
-					"name": "fileName",
-					"required": true,
-					"state": false,
-					"system": true,
-					"type": "String"
-				},
-				{
 					"DBType": "Long",
 					"businessType": "Attachment",
 					"externalReferenceCode": "BATCH_FILE",
@@ -68,19 +52,20 @@
 					"type": "Long"
 				},
 				{
-					"DBType": "Integer",
-					"businessType": "Integer",
-					"externalReferenceCode": "LOAD_ORDER",
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "FILE_NAME",
 					"indexed": true,
 					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
 					"label": {
-						"en_US": "Load Order"
+						"en_US": "File Name"
 					},
-					"name": "loadOrder",
+					"name": "fileName",
 					"required": true,
 					"state": false,
 					"system": true,
-					"type": "Integer"
+					"type": "String"
 				},
 				{
 					"DBType": "Integer",
@@ -112,6 +97,21 @@
 					"state": false,
 					"system": true,
 					"type": "String"
+				},
+				{
+					"DBType": "Integer",
+					"businessType": "Integer",
+					"externalReferenceCode": "LOAD_ORDER",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Load Order"
+					},
+					"name": "loadOrder",
+					"required": true,
+					"state": false,
+					"system": true,
+					"type": "Integer"
 				},
 				{
 					"DBType": "Clob",
@@ -171,70 +171,6 @@
 			],
 			"objectFields": [
 				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "TITLE",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "en_US",
-					"label": {
-						"en_US": "Title"
-					},
-					"name": "title",
-					"required": true,
-					"state": false,
-					"system": true,
-					"type": "String"
-				},
-				{
-					"DBType": "Clob",
-					"businessType": "LongText",
-					"externalReferenceCode": "PROMPT",
-					"indexed": false,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Prompt"
-					},
-					"name": "prompt",
-					"required": true,
-					"state": false,
-					"system": true,
-					"type": "String"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Picklist",
-					"defaultValue": "refining",
-					"externalReferenceCode": "GENERATION_STATUS",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Generation Status"
-					},
-					"listTypeDefinitionExternalReferenceCode": "L_CSG_GENERATION_STATUSES",
-					"name": "generationStatus",
-					"required": true,
-					"state": true,
-					"system": true,
-					"type": "String"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "TARGET_LANGUAGES",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "en_US",
-					"label": {
-						"en_US": "Target Languages"
-					},
-					"name": "targetLanguages",
-					"required": false,
-					"state": false,
-					"system": true,
-					"type": "String"
-				},
-				{
 					"DBType": "DateTime",
 					"businessType": "DateTime",
 					"externalReferenceCode": "COMMIT_DATE",
@@ -282,6 +218,70 @@
 					},
 					"name": "generatedSiteERC",
 					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Picklist",
+					"defaultValue": "refining",
+					"externalReferenceCode": "GENERATION_STATUS",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Generation Status"
+					},
+					"listTypeDefinitionExternalReferenceCode": "L_CSG_GENERATION_STATUSES",
+					"name": "generationStatus",
+					"required": true,
+					"state": true,
+					"system": true,
+					"type": "String"
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "PROMPT",
+					"indexed": false,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Prompt"
+					},
+					"name": "prompt",
+					"required": true,
+					"state": false,
+					"system": true,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "TARGET_LANGUAGES",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Target Languages"
+					},
+					"name": "targetLanguages",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "TITLE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Title"
+					},
+					"name": "title",
+					"required": true,
 					"state": false,
 					"system": true,
 					"type": "String"

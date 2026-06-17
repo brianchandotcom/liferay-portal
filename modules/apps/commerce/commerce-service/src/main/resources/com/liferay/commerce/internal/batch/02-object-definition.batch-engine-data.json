@@ -642,21 +642,6 @@
 					"type": "BigDecimal"
 				},
 				{
-					"DBType": "Boolean",
-					"businessType": "Boolean",
-					"externalReferenceCode": "AUTHORIZE_RETURN_WITHOUT_RETURNING_PRODUCTS",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Authorize Return Without Returning Products"
-					},
-					"name": "authorizeReturnWithoutReturningProducts",
-					"required": false,
-					"state": false,
-					"system": true,
-					"type": "Boolean"
-				},
-				{
 					"DBType": "BigDecimal",
 					"businessType": "PrecisionDecimal",
 					"externalReferenceCode": "AUTHORIZED",
@@ -670,6 +655,21 @@
 					"state": false,
 					"system": true,
 					"type": "BigDecimal"
+				},
+				{
+					"DBType": "Boolean",
+					"businessType": "Boolean",
+					"externalReferenceCode": "AUTHORIZE_RETURN_WITHOUT_RETURNING_PRODUCTS",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Authorize Return Without Returning Products"
+					},
+					"name": "authorizeReturnWithoutReturningProducts",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "Boolean"
 				},
 				{
 					"DBType": "String",

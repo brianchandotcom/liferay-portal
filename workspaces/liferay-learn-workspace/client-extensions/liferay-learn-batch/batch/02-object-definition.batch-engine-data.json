@@ -1163,6 +1163,25 @@
 			],
 			"objectFields": [
 				{
+					"DBType": "String",
+					"businessType": "MultiselectPicklist",
+					"externalReferenceCode": "PERSONA",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Persona"
+					},
+					"listTypeDefinitionExternalReferenceCode": "P2S3_PERSONAS",
+					"localized": false,
+					"name": "audience",
+					"readOnly": "false",
+					"required": true,
+					"state": false,
+					"type": "String",
+					"unique": false
+				},
+				{
 					"DBType": "Clob",
 					"businessType": "LongText",
 					"externalReferenceCode": "DESCRIPTION",
@@ -1267,25 +1286,6 @@
 					},
 					"localized": false,
 					"name": "name",
-					"readOnly": "false",
-					"required": true,
-					"state": false,
-					"type": "String",
-					"unique": false
-				},
-				{
-					"DBType": "String",
-					"businessType": "MultiselectPicklist",
-					"externalReferenceCode": "PERSONA",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "en_US",
-					"label": {
-						"en_US": "Persona"
-					},
-					"listTypeDefinitionExternalReferenceCode": "P2S3_PERSONAS",
-					"localized": false,
-					"name": "audience",
 					"readOnly": "false",
 					"required": true,
 					"state": false,
@@ -3234,6 +3234,24 @@
 				},
 				{
 					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "TITLE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Title"
+					},
+					"localized": true,
+					"name": "title",
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "String",
 					"businessType": "Picklist",
 					"externalReferenceCode": "STEP_TYPE",
 					"indexed": true,
@@ -3247,24 +3265,6 @@
 					"name": "type",
 					"readOnly": "false",
 					"required": true,
-					"state": false,
-					"type": "String",
-					"unique": false
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "TITLE",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "en_US",
-					"label": {
-						"en_US": "Title"
-					},
-					"localized": true,
-					"name": "title",
-					"readOnly": "false",
-					"required": false,
 					"state": false,
 					"type": "String",
 					"unique": false

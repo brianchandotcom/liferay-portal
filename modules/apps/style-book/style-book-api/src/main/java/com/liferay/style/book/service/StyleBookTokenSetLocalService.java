@@ -60,6 +60,11 @@ public interface StyleBookTokenSetLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.style.book.service.impl.StyleBookTokenSetLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the style book token set local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link StyleBookTokenSetLocalServiceUtil} if injection and service tracking are not available.
 	 */
+	public StyleBookTokenSet addStyleBookTokenSet(
+			String externalReferenceCode, long userId, String description,
+			String frontendTokenCategoryName, String name,
+			long styleBookEntryId, String themeId)
+		throws PortalException;
 
 	/**
 	 * Adds the style book token set to the database. Also notifies the appropriate model listeners.
@@ -348,4 +353,4 @@ public interface StyleBookTokenSetLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1181892511
+// LIFERAY-SERVICE-BUILDER-HASH:1940051513

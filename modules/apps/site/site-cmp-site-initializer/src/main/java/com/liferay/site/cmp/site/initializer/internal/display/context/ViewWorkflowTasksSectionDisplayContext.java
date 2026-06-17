@@ -19,16 +19,15 @@ import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectStateFlowLocalService;
 import com.liferay.object.service.ObjectStateLocalService;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.RoleService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 import com.liferay.site.cmp.site.initializer.internal.frontend.data.set.filter.AssigneeSelectionFDSFilter;
-import com.liferay.site.cmp.site.initializer.internal.frontend.data.set.filter.DueDateRangeFDSFilter;
-import com.liferay.site.cmp.site.initializer.internal.frontend.data.set.filter.StateSelectionFDSFilter;
+import com.liferay.site.cmp.site.initializer.internal.frontend.data.set.filter.WorkflowTaskDueDateRangeFDSFilter;
+import com.liferay.site.cmp.site.initializer.internal.frontend.data.set.filter.WorkflowTaskStatusSelectionFDSFilter;
+import com.liferay.site.cmp.site.initializer.internal.util.WorkflowTaskSearchURLUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -64,12 +63,10 @@ public class ViewWorkflowTasksSectionDisplayContext
 
 	@Override
 	public String getAPIURL() {
-		return StringBundler.concat(
-			"/o/search/v1.0/search?emptySearch=true&entryClassNames=",
-			KaleoTaskInstanceToken.class.getName(),
-			"&filter=keywords/any(k:startswith(k, '",
-			objectDefinition.getExternalReferenceCode(),
-			"'))&nestedFields=embedded");
+		String searchURL = WorkflowTaskSearchURLUtil.getSearchURL(
+			objectDefinition.getExternalReferenceCode());
+
+		return searchURL + "&nestedFields=embedded";
 	}
 
 	@Override
@@ -139,7 +136,8 @@ public class ViewWorkflowTasksSectionDisplayContext
 			new AssigneeSelectionFDSFilter(
 				classNameLocalService, projectObjectDefinition.getCompanyId(),
 				roleService),
-			new DueDateRangeFDSFilter(), new StateSelectionFDSFilter());
+			new WorkflowTaskDueDateRangeFDSFilter(),
+			new WorkflowTaskStatusSelectionFDSFilter());
 	}
 
 }

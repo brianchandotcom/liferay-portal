@@ -4,7 +4,7 @@
  */
 
 import {DEFAULT_FETCH_HEADERS} from '@liferay/frontend-data-set-web';
-import {fetch} from 'frontend-js-web';
+import {addParams, fetch} from 'frontend-js-web';
 
 import {Member} from '../types';
 
@@ -16,15 +16,10 @@ interface RequestOptions extends RequestInit {
 
 async function request(path: string, {params, ...init}: RequestOptions = {}) {
 	const pathContext = Liferay.ThemeDisplay.getPathContext() || '';
-	const url = new URL(`${location.origin}${pathContext}${BASE_PATH}${path}`);
 
-	if (params) {
-		Object.entries(params).forEach(([key, value]) =>
-			url.searchParams.set(key, value)
-		);
-	}
+	const url = addParams(params ?? {}, `${pathContext}${BASE_PATH}${path}`);
 
-	const response = await fetch(url.toString(), {
+	const response = await fetch(url, {
 		headers: DEFAULT_FETCH_HEADERS,
 		...init,
 	});

@@ -570,7 +570,7 @@ public class JenkinsResultsParserUtil {
 			new Shell.ExecutionRequest(
 				baseDir, exitOnFirstFail, printCommands, timeout, commands));
 
-		return _toProcess(executionResult);
+		return new ExecutionResultProcess(executionResult);
 	}
 
 	public static Process executeBashCommands(File baseDir, String... commands)
@@ -7216,10 +7216,6 @@ public class JenkinsResultsParserUtil {
 		}
 
 		return true;
-	}
-
-	private static Process _toProcess(Shell.ExecutionResult executionResult) {
-		return new ExecutionResultProcess(executionResult);
 	}
 
 	private static final long _BYTES_GIGA = 1024 * 1024 * 1024;

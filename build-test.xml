@@ -2500,7 +2500,7 @@ war.path=${app.server.portal.dir}/</echo>
 
 					<get-poshi-java-jdk-opts />
 
-					<gradle-execute dir="@{build.gradle.dir}" failonerror="@{failonerror}" setupbinariescache="false" stacktrace="false" task="@{task}">
+					<gradle-execute dir="@{build.gradle.dir}" failonerror="@{failonerror}" stacktrace="false" task="@{task}">
 						<arg value="--build-file=@{build.gradle.file}" />
 						<arg value="-Ptmp.maven.repository.dir=../.m2-tmp" />
 						<env key="ANT_OPTS" value="${poshi.java.jdk.opts}" />
@@ -2508,7 +2508,7 @@ war.path=${app.server.portal.dir}/</echo>
 					</gradle-execute>
 				</then>
 				<else>
-					<gradle-execute dir="@{build.gradle.dir}" failonerror="@{failonerror}" setupbinariescache="false" stacktrace="false" task="@{task}">
+					<gradle-execute dir="@{build.gradle.dir}" failonerror="@{failonerror}" stacktrace="false" task="@{task}">
 						<arg value="--build-file=@{build.gradle.file}" />
 						<arg value="-Ptmp.maven.repository.dir=../.m2-tmp" />
 					</gradle-execute>

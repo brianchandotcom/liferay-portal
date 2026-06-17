@@ -919,20 +919,12 @@ information.
 		<attribute default="" name="gradlejvmargs" />
 		<attribute default="" name="outputproperty" />
 		<attribute default="" name="refreshdependencies" />
-		<attribute default="true" name="setupbinariescache" />
 		<attribute default="true" name="stacktrace" />
 		<attribute name="task" />
 		<attribute default="" name="test.name" />
 		<element implicit="true" name="args" optional="true" />
 
 		<sequential>
-			<if>
-				<equals arg1="@{setupbinariescache}" arg2="true" />
-				<then>
-					<setup-binaries-cache unless:true="${setup.binaries.cache.executed}" />
-				</then>
-			</if>
-
 			<if>
 				<not>
 					<available file="${project.dir}/tools/${build.binaries.gradle.file}" />
@@ -1241,7 +1233,7 @@ information.
 
 					<echo>Stopping all running Gradle Daemon processes.</echo>
 
-					<gradle-execute dir="." forcedcacheenabled="false" setupbinariescache="false" task="">
+					<gradle-execute dir="." forcedcacheenabled="false" task="">
 						<arg value="--stop" />
 					</gradle-execute>
 				</then>
@@ -1801,51 +1793,6 @@ artifact.url=${remote.repository.cdn.url}/com/liferay/portal/com.liferay.${proce
 		</sequential>
 	</macrodef>
 
-	<macrodef name="setup-binaries-cache">
-		<sequential>
-			<if>
-				<and>
-					<not>
-						<equals arg1="${build.binaries.cache.dir}" arg2="" />
-					</not>
-					<available file="${project.dir}/${build.binaries.cache.dir}" type="dir" />
-				</and>
-				<then>
-					<if>
-						<not>
-							<isset property="env.JENKINS_HOME" />
-						</not>
-						<then>
-							<property location="${project.dir}/${build.binaries.cache.dir}" name="build.binaries.cache.dir.absolute.path" />
-
-							<echo>Updating ${build.binaries.cache.dir.absolute.path}.</echo>
-
-							<retry retrycount="3" retrydelay="30000">
-								<exec dir="${project.dir}/${build.binaries.cache.dir}" executable="git" failonerror="true">
-									<arg value="pull" />
-									<arg value="--rebase" />
-									<arg value="${build.binaries.cache.url}" />
-								</exec>
-							</retry>
-						</then>
-					</if>
-
-					<condition else="true" property="sync.dir.symbolic" value="false">
-						<os family="windows" />
-					</condition>
-
-					<sync-dir
-						dir="${project.dir}/${build.binaries.cache.dir}/.gradle/caches/modules-2/files-2.1"
-						symbolic="${sync.dir.symbolic}"
-						toDir="${project.dir}/.gradle/caches/modules-2/files-2.1"
-					/>
-				</then>
-			</if>
-
-			<property name="setup.binaries.cache.executed" value="true" />
-		</sequential>
-	</macrodef>
-
 	<macrodef name="setup-libs">
 		<sequential>
 			<gradle-execute task="setUpLibs">
@@ -1941,14 +1888,12 @@ artifact.url=${remote.repository.cdn.url}/com/liferay/portal/com.liferay.${proce
 	</macrodef>
 
 	<macrodef name="setup-sdk">
-		<attribute default="true" name="setupbinariescache" />
-
 		<sequential>
 			<lstopwatch action="start" name="setup.sdk" />
 
 			<antcall inheritAll="false" target="update-gradle-properties" />
 
-			<gradle-execute setupbinariescache="@{setupbinariescache}" task="setUpPortalTools">
+			<gradle-execute task="setUpPortalTools">
 				<arg value="--build-file=${project.dir}/modules/util.gradle" />
 			</gradle-execute>
 
@@ -2047,35 +1992,9 @@ artifact.url=${remote.repository.cdn.url}/com/liferay/portal/com.liferay.${proce
 						</then>
 					</if>
 
-					<if>
-						<and>
-							<available file="${project.dir}/${build.binaries.cache.dir}/.yarn/offline-cache" type="dir" />
-							<isset property="env.JENKINS_HOME" />
-						</and>
-						<then>
-							<sync-dir
-								dir="${project.dir}/${build.binaries.cache.dir}/.yarn/offline-cache"
-								symbolic="${sync.dir.symbolic}"
-								toDir="${project.dir}/modules/node_modules_cache"
-							/>
-
-							<if>
-								<available file="${project.dir}/${build.binaries.cache.dir}/.yarn/dxp/apps/osb/osb-faro/offline-cache" type="dir" />
-								<then>
-									<sync-dir
-										dir="${project.dir}/${build.binaries.cache.dir}/.yarn/dxp/apps/osb/osb-faro/offline-cache"
-										symbolic="${sync.dir.symbolic}"
-										toDir="${project.dir}/modules/dxp/apps/osb/osb-faro/node_modules_cache"
-									/>
-								</then>
-							</if>
-						</then>
-						<else>
-							<gradle-execute dir="${project.dir}/modules" task="setUpYarnOfflineCache">
-								<arg value="--build-file=${project.dir}/modules/util.gradle" />
-							</gradle-execute>
-						</else>
-					</if>
+					<gradle-execute dir="${project.dir}/modules" task="setUpYarnOfflineCache">
+						<arg value="--build-file=${project.dir}/modules/util.gradle" />
+					</gradle-execute>
 
 					<if>
 						<not>
@@ -2276,7 +2195,6 @@ rerun your task.
 					<propertyref name="aspectj.configuration" />
 					<propertyref name="baseline.jar.report.level" />
 					<propertyref name="baseline.jar.report.only.dirty.packages" />
-					<propertyref name="build.binaries.cache.dir" />
 					<propertyref name="compile.jsp.include" />
 					<propertyref name="git.working.branch.name" />
 					<propertyref if:set="gradle.update.file.versions.excludes" name="gradle.update.file.versions.excludes" unless:blank="${gradle.update.file.versions.excludes}" />

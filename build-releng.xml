@@ -12,7 +12,7 @@
 
 		<ant antfile="build-maven.xml" inheritAll="false" target="jar-sources" />
 
-		<gradle-execute dir="${project.dir}/modules" setupbinariescache="false" task="portalSourcesJar">
+		<gradle-execute dir="${project.dir}/modules" task="portalSourcesJar">
 			<arg value="--build-file=${project.dir}/modules/releng.gradle" />
 		</gradle-execute>
 	</target>

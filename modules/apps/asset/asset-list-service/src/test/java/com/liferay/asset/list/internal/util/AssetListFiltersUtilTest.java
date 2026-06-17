@@ -87,7 +87,7 @@ public class AssetListFiltersUtilTest {
 	}
 
 	@Test
-	public void testHandlesCommonFieldOperators() {
+	public void testGetFiltersBooleanClausesWithCommonFieldOperators() {
 		_assertMatchQuery(
 			"localized_title_en_US", "Apple",
 			_runAndAssertCommonFieldRow(
@@ -153,7 +153,7 @@ public class AssetListFiltersUtilTest {
 	}
 
 	@Test
-	public void testHandlesDateAndDateTimeOperators() {
+	public void testGetFiltersBooleanClausesWithDateAndDateTimeOperators() {
 		_setUpObjectField(
 			ObjectFieldConstants.BUSINESS_TYPE_DATE,
 			ObjectFieldConstants.DB_TYPE_DATE, "dueDate");
@@ -213,7 +213,7 @@ public class AssetListFiltersUtilTest {
 	}
 
 	@Test
-	public void testHandlesEqualityOperators() {
+	public void testGetFiltersBooleanClausesWithEqualityOperators() {
 		_setUpObjectField(
 			ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN,
 			ObjectFieldConstants.DB_TYPE_BOOLEAN, "visible");
@@ -294,7 +294,23 @@ public class AssetListFiltersUtilTest {
 	}
 
 	@Test
-	public void testHandlesKeywordTextContainsOperators() {
+	public void testGetFiltersBooleanClausesWithInvalidInput() {
+		BooleanClause[] booleanClauses =
+			AssetListFiltersUtil.getFiltersBooleanClauses(
+				_COMPANY_ID, null, LocaleUtil.US);
+
+		Assert.assertEquals(
+			Arrays.toString(booleanClauses), 0, booleanClauses.length);
+
+		booleanClauses = AssetListFiltersUtil.getFiltersBooleanClauses(
+			_COMPANY_ID, JSONFactoryUtil.createJSONArray(), LocaleUtil.US);
+
+		Assert.assertEquals(
+			Arrays.toString(booleanClauses), 0, booleanClauses.length);
+	}
+
+	@Test
+	public void testGetFiltersBooleanClausesWithKeywordTextContainsOperators() {
 		_setUpKeywordTextObjectField("learnDocumentation");
 
 		_assertWildcardQuery(
@@ -320,7 +336,40 @@ public class AssetListFiltersUtilTest {
 	}
 
 	@Test
-	public void testHandlesNumericRangeOperators() {
+	public void testGetFiltersBooleanClausesWithMetadataObjectFields() {
+		_setUpMetadataObjectField(
+			ObjectFieldConstants.BUSINESS_TYPE_DATE,
+			ObjectFieldConstants.DB_TYPE_DATE, "modifiedDate");
+
+		_assertTermRangeQuery(
+			"modified", true, true, "20260115000000", "20260115235959",
+			_runAndAssertCommonFieldRow(
+				_buildFilter("eq", "modifiedDate", "2026-01-15")));
+
+		_setUpMetadataObjectField(
+			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+			ObjectFieldConstants.DB_TYPE_STRING, "creator");
+
+		_assertTermQuery(
+			"userName", "Alice",
+			_runAndAssertCommonFieldRow(
+				_buildFilter("eq", "creator", "Alice")));
+
+		_setUpMetadataObjectField(
+			ObjectFieldConstants.BUSINESS_TYPE_LONG_INTEGER,
+			ObjectFieldConstants.DB_TYPE_LONG, "id");
+
+		BooleanClause[] booleanClauses =
+			AssetListFiltersUtil.getFiltersBooleanClauses(
+				_COMPANY_ID, JSONUtil.putAll(_buildFilter("eq", "id", "5")),
+				LocaleUtil.US);
+
+		Assert.assertEquals(
+			Arrays.toString(booleanClauses), 0, booleanClauses.length);
+	}
+
+	@Test
+	public void testGetFiltersBooleanClausesWithNumericRangeOperators() {
 		_setUpObjectField(
 			ObjectFieldConstants.BUSINESS_TYPE_INTEGER,
 			ObjectFieldConstants.DB_TYPE_INTEGER, "viewCount");
@@ -389,7 +438,7 @@ public class AssetListFiltersUtilTest {
 	}
 
 	@Test
-	public void testHandlesPicklistMultiValueOperators() {
+	public void testGetFiltersBooleanClausesWithPicklistMultiValueOperators() {
 		_setUpPicklistObjectField("status");
 
 		_assertPicklistBooleanQuery(
@@ -476,7 +525,7 @@ public class AssetListFiltersUtilTest {
 	}
 
 	@Test
-	public void testHandlesRelativeDateOperators() {
+	public void testGetFiltersBooleanClausesWithRelativeDateOperators() {
 		_setUpObjectField(
 			ObjectFieldConstants.BUSINESS_TYPE_DATE,
 			ObjectFieldConstants.DB_TYPE_DATE, "dueDate");
@@ -525,7 +574,7 @@ public class AssetListFiltersUtilTest {
 	}
 
 	@Test
-	public void testHandlesTextContainsOperators() {
+	public void testGetFiltersBooleanClausesWithTextContainsOperators() {
 		_setUpObjectField(
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 			ObjectFieldConstants.DB_TYPE_STRING, "title");
@@ -557,55 +606,6 @@ public class AssetListFiltersUtilTest {
 		Assert.assertTrue(
 			containsWithQuantifierQuery.toString(),
 			containsWithQuantifierQuery instanceof MatchQuery);
-	}
-
-	@Test
-	public void testReturnsEmptyClausesForInvalidInput() {
-		BooleanClause[] booleanClauses =
-			AssetListFiltersUtil.getFiltersBooleanClauses(
-				_COMPANY_ID, null, LocaleUtil.US);
-
-		Assert.assertEquals(
-			Arrays.toString(booleanClauses), 0, booleanClauses.length);
-
-		booleanClauses = AssetListFiltersUtil.getFiltersBooleanClauses(
-			_COMPANY_ID, JSONFactoryUtil.createJSONArray(), LocaleUtil.US);
-
-		Assert.assertEquals(
-			Arrays.toString(booleanClauses), 0, booleanClauses.length);
-	}
-
-	@Test
-	public void testRoutesMetadataObjectFieldsToCommonFieldPath() {
-		_setUpMetadataObjectField(
-			ObjectFieldConstants.BUSINESS_TYPE_DATE,
-			ObjectFieldConstants.DB_TYPE_DATE, "modifiedDate");
-
-		_assertTermRangeQuery(
-			"modified", true, true, "20260115000000", "20260115235959",
-			_runAndAssertCommonFieldRow(
-				_buildFilter("eq", "modifiedDate", "2026-01-15")));
-
-		_setUpMetadataObjectField(
-			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-			ObjectFieldConstants.DB_TYPE_STRING, "creator");
-
-		_assertTermQuery(
-			"userName", "Alice",
-			_runAndAssertCommonFieldRow(
-				_buildFilter("eq", "creator", "Alice")));
-
-		_setUpMetadataObjectField(
-			ObjectFieldConstants.BUSINESS_TYPE_LONG_INTEGER,
-			ObjectFieldConstants.DB_TYPE_LONG, "id");
-
-		BooleanClause[] booleanClauses =
-			AssetListFiltersUtil.getFiltersBooleanClauses(
-				_COMPANY_ID, JSONUtil.putAll(_buildFilter("eq", "id", "5")),
-				LocaleUtil.US);
-
-		Assert.assertEquals(
-			Arrays.toString(booleanClauses), 0, booleanClauses.length);
 	}
 
 	private static MockedStatic<ObjectDefinitionLocalServiceUtil>

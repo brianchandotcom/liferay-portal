@@ -44,10 +44,10 @@ public class RESTClientHttpServletRequestWrapperAuthVerifier
 		HttpServletRequest httpServletRequest =
 			accessControlContext.getRequest();
 
-		Object attribute = httpServletRequest.getAttribute(
+		Object value = httpServletRequest.getAttribute(
 			RESTClientHttpServletRequestWrapper.class.getName());
 
-		if (attribute == null) {
+		if (value == null) {
 			return authVerifierResult;
 		}
 

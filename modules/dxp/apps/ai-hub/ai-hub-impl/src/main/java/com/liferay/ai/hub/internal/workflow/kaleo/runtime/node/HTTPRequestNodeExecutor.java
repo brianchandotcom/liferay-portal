@@ -89,14 +89,14 @@ public class HTTPRequestNodeExecutor extends BaseNodeExecutor {
 
 			Http.Options options = new Http.Options();
 
-			String userToken = _decryptUserToken(
-				kaleoInstanceToken.getCompanyId(),
-				GetterUtil.getString(workflowContext.get("userToken")));
+			Company company = _companyLocalService.getCompany(
+				kaleoInstanceToken.getCompanyId());
 
-			if (Validator.isNotNull(userToken)) {
-				options.addHeader(
-					"Liferay-AI-Hub-Cell-On-Behalf-Of", userToken);
-			}
+			options.addHeader(
+				HttpHeaders.AUTHORIZATION,
+				EncryptorUtil.decrypt(
+					company.getKeyObj(),
+					GetterUtil.getString(workflowContext.get("userToken"))));
 
 			String requestBody = VariablesUtil.applyInputVariables(
 				executionContext, "requestBody", kaleoNodeSettingValues, true);
@@ -184,18 +184,6 @@ public class HTTPRequestNodeExecutor extends BaseNodeExecutor {
 					executionContext.getKaleoInstanceToken(),
 					executionContext.getWorkflowContext(),
 					executionContext.getServiceContext())));
-	}
-
-	private String _decryptUserToken(long companyId, String encryptedUserToken)
-		throws Exception {
-
-		if (Validator.isNull(encryptedUserToken)) {
-			return null;
-		}
-
-		Company company = _companyLocalService.getCompany(companyId);
-
-		return EncryptorUtil.decrypt(company.getKeyObj(), encryptedUserToken);
 	}
 
 	@Reference

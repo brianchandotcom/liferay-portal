@@ -132,15 +132,6 @@
 			"name": "JenkinsCohort",
 			"objectFields": [
 				{
-					"DBType": "String",
-					"businessType": "Text",
-					"label": {
-						"en_US": "Name"
-					},
-					"name": "name",
-					"type": "String"
-				},
-				{
 					"DBType": "Integer",
 					"businessType": "Integer",
 					"label": {
@@ -149,6 +140,15 @@
 					"name": "jenkinsServerCount",
 					"required": false,
 					"type": "Integer"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"label": {
+						"en_US": "Name"
+					},
+					"name": "name",
+					"type": "String"
 				}
 			],
 			"objectRelationships": [

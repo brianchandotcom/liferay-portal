@@ -122,15 +122,6 @@
 			"name": "JenkinsNode",
 			"objectFields": [
 				{
-					"DBType": "String",
-					"businessType": "Text",
-					"label": {
-						"en_US": "Primary Label"
-					},
-					"name": "primaryLabel",
-					"type": "String"
-				},
-				{
 					"DBType": "Boolean",
 					"businessType": "Boolean",
 					"label": {
@@ -146,18 +137,6 @@
 						"en_US": "Name"
 					},
 					"name": "name",
-					"type": "String"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Picklist",
-					"label": {
-						"en_US": "Type"
-					},
-					"listTypeDefinitionExternalReferenceCode": "jenkinsNodeType",
-					"name": "type",
-					"required": true,
-					"state": false,
 					"type": "String"
 				},
 				{
@@ -179,6 +158,27 @@
 					"name": "nodeRAM",
 					"required": true,
 					"type": "Integer"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"label": {
+						"en_US": "Primary Label"
+					},
+					"name": "primaryLabel",
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Picklist",
+					"label": {
+						"en_US": "Type"
+					},
+					"listTypeDefinitionExternalReferenceCode": "jenkinsNodeType",
+					"name": "type",
+					"required": true,
+					"state": false,
+					"type": "String"
 				},
 				{
 					"DBType": "String",

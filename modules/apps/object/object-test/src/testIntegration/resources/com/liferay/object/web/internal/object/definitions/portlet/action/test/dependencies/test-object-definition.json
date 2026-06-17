@@ -62,23 +62,6 @@
 	],
 	"objectFields": [
 		{
-			"DBType": "String",
-			"businessType": "Text",
-			"indexed": false,
-			"indexedAsKeyword": false,
-			"indexedLanguageId": "",
-			"label": {
-				"en_US": "Author"
-			},
-			"name": "creator",
-			"objectFieldSettings": [
-			],
-			"required": false,
-			"state": false,
-			"system": true,
-			"type": "String"
-		},
-		{
 			"DBType": "Date",
 			"businessType": "Date",
 			"indexed": false,
@@ -94,6 +77,23 @@
 			"state": false,
 			"system": true,
 			"type": "Date"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "Author"
+			},
+			"name": "creator",
+			"objectFieldSettings": [
+			],
+			"required": false,
+			"state": false,
+			"system": true,
+			"type": "String"
 		},
 		{
 			"DBType": "DateTime",

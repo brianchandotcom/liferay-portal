@@ -326,7 +326,7 @@
 			<finder-column name="segmentsExperienceId" />
 		</finder>
 	</entity>
-	<entity external-reference-code="group" local-service="true" name="LayoutPageTemplateStructureRelElementVariation" remote-service="false" table="LPTStructureElementVariation" uuid="true">
+	<entity external-reference-code="group" local-service="true" name="LayoutPageTemplateStructureRelElementVariation" remote-service="true" table="LPTStructureElementVariation" uuid="true">
 
 		<!-- PK fields -->
 

@@ -415,14 +415,14 @@ public class AnalyticsCloudClient {
 				if (jsonNode != null) {
 					performanceMetric = new PerformanceMetric();
 
+					performanceMetric.setMetricType(() -> metricType);
+
 					ObjectReader objectReader =
 						ObjectMapperHolder._objectMapper.readerFor(
 							Metric[].class);
 
 					performanceMetric.setMetrics(
 						() -> objectReader.readValue(jsonNode));
-
-					performanceMetric.setMetricType(() -> metricType);
 				}
 
 				return performanceMetric;

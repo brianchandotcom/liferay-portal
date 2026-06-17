@@ -6,7 +6,6 @@
 package com.liferay.ai.hub.internal.workflow.kaleo.runtime.node;
 
 import com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util.VariablesUtil;
-import com.liferay.ai.hub.rest.resource.v1_0.util.SseUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.encryptor.EncryptorUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -76,9 +75,6 @@ public class HTTPRequestNodeExecutor extends BaseNodeExecutor {
 		Map<String, Serializable> workflowContext =
 			executionContext.getWorkflowContext();
 
-		String sseEventSinkKey = GetterUtil.getString(
-			workflowContext.get("sseEventSinkKey"));
-
 		try {
 			String url = VariablesUtil.applyInputVariables(
 				executionContext, "url", kaleoNodeSettingValues);
@@ -134,20 +130,8 @@ public class HTTPRequestNodeExecutor extends BaseNodeExecutor {
 				VariablesUtil.getVariablesJSONArray(
 					"outputVariables", kaleoNodeSettingValues),
 				responseBody, workflowContext);
-
-			if (Validator.isNotNull(sseEventSinkKey)) {
-				SseUtil.send(
-					currentKaleoNode.getName(), "Node Completed", null,
-					sseEventSinkKey);
-			}
 		}
 		catch (Exception exception) {
-			if (Validator.isNotNull(sseEventSinkKey)) {
-				SseUtil.send(
-					currentKaleoNode.getName(), "Node Failed", null,
-					sseEventSinkKey);
-			}
-
 			if (exception instanceof PortalException portalException) {
 				throw portalException;
 			}

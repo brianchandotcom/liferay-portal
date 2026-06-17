@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>ADD_PORTLET_LINK</td>
-	<td>//button[contains(.,'Search')]/following-sibling::div//div[contains(@class,'item-body')]//*[normalize-space(text())='${key_portletName}']/../../..//button[contains(@class,'item-add')]</td>
+	<td>//button[contains(.,'Search')]/following-sibling::div//div[contains(@class,'item-body')]//*[normalize-space(text())='${key_portletName}']/../../../..//button[contains(@class,'item-add')]</td>
 	<td></td>
 </tr>
 <tr>

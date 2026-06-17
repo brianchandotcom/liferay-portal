@@ -89,7 +89,7 @@ public interface Sites {
 	public boolean isLayoutSetMergeable(Group group, LayoutSet layoutSet)
 		throws PortalException;
 
-	public void mergeLayoutPrototypeLayout(Group group, Layout layout)
+	public void mergeLayoutPrototypeLayout(Layout layout)
 		throws Exception;
 
 	public void mergeLayoutSetPrototypeLayouts(Group group, LayoutSet layoutSet)

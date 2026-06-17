@@ -4580,7 +4580,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 			Sites sites = _sitesSnapshot.get();
 
-			sites.mergeLayoutPrototypeLayout(group, layout);
+			sites.mergeLayoutPrototypeLayout(layout);
 		}
 		catch (CTTransactionException | PortalException exception) {
 			throw exception;

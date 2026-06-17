@@ -109,7 +109,7 @@ public class AddContentLayoutMVCActionCommand
 
 				// Force propagation from page template to page. See LPS-48430.
 
-				_sites.mergeLayoutPrototypeLayout(layout.getGroup(), layout);
+				_sites.mergeLayoutPrototypeLayout(layout);
 			}
 			else {
 				if (layoutPageTemplateEntryId > 0) {

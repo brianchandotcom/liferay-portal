@@ -44,7 +44,6 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
- * @see    StyleBookEntryLocalServiceBaseImpl
  */
 @Component(
 	property = "model.class.name=com.liferay.style.book.model.StyleBookEntry",

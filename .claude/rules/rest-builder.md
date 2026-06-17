@@ -198,6 +198,16 @@ Run every step without asking for confirmation, including the commits.
 
 1. Continue with the work.
 
+## Running REST Builder Globally
+
+To regenerate every REST Builder module in one pass, run `ant build-rests` from `portal-impl`:
+
+```bash
+(cd "${REPO_ROOT}/portal-impl" && ant build-rests)
+```
+
+A single JVM scans every module directly via `RESTBuilder`, which is faster than running `<gradlew> buildREST` per module.
+
 ## Editing REST Builder Itself
 
 Use this workflow when editing the REST Builder generator itself, rather than the artifacts of any single bundle. The generator's source lives under `modules/util/portal-tools-rest-builder`, split across two folders:
@@ -215,11 +225,7 @@ Run every step without asking for confirmation, including the commits.
 
 1. Commit the hand-written generator change.
 
-1. Regenerate every REST Builder module by running:
-
-	```bash
-	(cd "${REPO_ROOT}/portal-impl" && ant build-rests)
-	```
+1. Run REST Builder globally to regenerate every module.
 
 1. Confirm the regenerated output reflects the change, especially under `portal-tools-rest-builder-test-impl`. When the test bed shows no difference, the existing cases do not cover the new behavior — add a case to its `rest-openapi.yaml` that does (for example, a schema carrying a description but no required properties to cover description generation), commit it, and regenerate again.
 

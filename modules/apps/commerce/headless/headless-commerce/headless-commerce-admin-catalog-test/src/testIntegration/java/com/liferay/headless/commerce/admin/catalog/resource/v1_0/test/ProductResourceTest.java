@@ -45,7 +45,6 @@ import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -352,56 +351,13 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 		_testPatchProductWithNegativeValue("promo price");
 		_testPatchProductWithNegativeValue("weight");
 		_testPatchProductWithNegativeValue("width");
+		_testPatchProductWithObjectField();
 	}
 
 	@Ignore
 	@Override
 	@Test
 	public void testPatchProductByExternalReferenceCode() throws Exception {
-	}
-
-	@Test
-	public void testPatchProductWithExtendedProperties() throws Exception {
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
-				testCompany.getCompanyId(), CPDefinition.class.getName());
-
-		String objectFieldName = "x" + RandomTestUtil.randomString();
-
-		ObjectField objectField = ObjectFieldUtil.addCustomObjectField(
-			new TextObjectFieldBuilder(
-			).userId(
-				TestPropsValues.getUserId()
-			).objectDefinitionId(
-				objectDefinition.getObjectDefinitionId()
-			).labelMap(
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
-			).name(
-				objectFieldName
-			).build());
-
-		Product product = productResource.postProduct(randomProduct());
-
-		String value = RandomTestUtil.randomString();
-
-		String endpoint =
-			"headless-commerce-admin-catalog/v1.0/products/" +
-				product.getProductId();
-
-		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
-			JSONUtil.put(
-				objectFieldName, value
-			).toString(),
-			endpoint, Http.Method.PATCH);
-
-		Assert.assertEquals(value, jsonObject.getString(objectFieldName));
-
-		jsonObject = HTTPTestUtil.invokeToJSONObject(
-			null, endpoint, Http.Method.GET);
-
-		Assert.assertEquals(value, jsonObject.getString(objectFieldName));
-
-		_objectFieldLocalService.deleteObjectField(objectField);
 	}
 
 	@Override
@@ -968,6 +924,45 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 		}
 	}
 
+	private void _testPatchProductWithObjectField() throws Exception {
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
+				testCompany.getCompanyId(), CPDefinition.class.getName());
+
+		ObjectField objectField = ObjectFieldUtil.addCustomObjectField(
+			new TextObjectFieldBuilder(
+			).userId(
+				TestPropsValues.getUserId()
+			).objectDefinitionId(
+				objectDefinition.getObjectDefinitionId()
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).name(
+				"A" + RandomTestUtil.randomString()
+			).build());
+
+		Product product = productResource.postProduct(randomProduct());
+
+		String value = RandomTestUtil.randomString();
+
+		String endpoint =
+			"headless-commerce-admin-catalog/v1.0/products/" +
+				product.getProductId();
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				objectField.getName(), value
+			).toString(),
+			endpoint, Http.Method.PATCH);
+
+		Assert.assertEquals(value, jsonObject.getString(objectField.getName()));
+
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
+			null, endpoint, Http.Method.GET);
+
+		Assert.assertEquals(value, jsonObject.getString(objectField.getName()));
+	}
+
 	private void _testPostProductProductShippingConfigurationFromProductConfiguration()
 		throws Exception {
 
@@ -1233,9 +1228,6 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
-
-	@Inject
-	private ObjectFieldLocalService _objectFieldLocalService;
 
 	@Inject
 	private UserLocalService _userLocalService;

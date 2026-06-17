@@ -531,6 +531,15 @@ public class SitesImpl implements Sites {
 	public void mergeLayoutSetPrototypeLayouts(Group group, LayoutSet layoutSet)
 		throws Exception {
 
+		if (ExportImportThreadLocal.isExportInProcess() ||
+			ExportImportThreadLocal.isImportInProcess() ||
+			ExportImportThreadLocal.isStagingInProcess()) {
+
+			throw new IllegalStateException(
+				"The site template merge cannot start while an export, " +
+					"import, or staging process is in progress");
+		}
+
 		layoutSet = _layoutSetLocalService.fetchLayoutSet(
 			layoutSet.getLayoutSetId());
 
@@ -916,13 +925,6 @@ public class SitesImpl implements Sites {
 	protected void mergeLayoutSetPrototypeLayoutsInBackground(
 			LayoutSetPrototype layoutSetPrototype, LayoutSet layoutSet)
 		throws PortalException {
-
-		if (ExportImportThreadLocal.isExportInProcess() ||
-			ExportImportThreadLocal.isImportInProcess() ||
-			ExportImportThreadLocal.isStagingInProcess()) {
-
-			return;
-		}
 
 		if (isLayoutSetPrototypeMergeBackgroundTaskExists(
 				layoutSetPrototype, layoutSet)) {

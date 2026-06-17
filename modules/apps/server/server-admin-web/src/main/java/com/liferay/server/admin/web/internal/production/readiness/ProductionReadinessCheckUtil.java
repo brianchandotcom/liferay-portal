@@ -69,7 +69,7 @@ public class ProductionReadinessCheckUtil {
 
 	private static ProductionReadinessResult _checkCounterIncrement() {
 		int counterIncrement = GetterUtil.getInteger(
-			PropsUtil.get("counter.increment"));
+			PropsUtil.get(PropsKeys.COUNTER_INCREMENT));
 
 		ProductionReadinessResult.Builder builder =
 			ProductionReadinessResult.builder(
@@ -77,10 +77,10 @@ public class ProductionReadinessCheckUtil {
 			).currentValue(
 				String.valueOf(counterIncrement)
 			).recommendedValue(
-				"counter.increment >= 2000"
+				PropsKeys.COUNTER_INCREMENT + ">=" + _MIN_COUNTER_INCREMENT
 			);
 
-		if (counterIncrement < 2000) {
+		if (counterIncrement < _MIN_COUNTER_INCREMENT) {
 			return builder.fail();
 		}
 
@@ -102,10 +102,10 @@ public class ProductionReadinessCheckUtil {
 				"database-configuration", "pool-vs-thread-size"
 			).currentValue(
 				StringBundler.concat(
-					"jdbc.default.maximumPoolSize = ", jdbcMaxPoolSize,
-					", Tomcat maxThreads = ", tomcatMaxThreads)
+					"jdbc.default.maximumPoolSize=", jdbcMaxPoolSize,
+					", Tomcat maxThreads=", tomcatMaxThreads)
 			).recommendedValue(
-				"jdbc.default.maximumPoolSize >= " + tomcatMaxThreads
+				"jdbc.default.maximumPoolSize>=" + tomcatMaxThreads
 			);
 
 		if (jdbcMaxPoolSize >= tomcatMaxThreads) {
@@ -145,7 +145,7 @@ public class ProductionReadinessCheckUtil {
 			).messageParameters(
 				PropsKeys.DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_ENABLED
 			).recommendedValue(
-				PropsKeys.DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_ENABLED + " = true"
+				PropsKeys.DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_ENABLED + "=true"
 			);
 
 		if (PropsValues.DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_ENABLED) {
@@ -249,9 +249,8 @@ public class ProductionReadinessCheckUtil {
 				"heap-allocation-consistency"
 			).currentValue(
 				StringBundler.concat(
-					"Xms=", (long)_toUnit(xmsBytes, _BYTES_PER_MEGABYTE),
-					"MB, Xmx=", (long)_toUnit(xmxBytes, _BYTES_PER_MEGABYTE),
-					"MB")
+					"Xms=", _toUnit(xmsBytes, _BYTES_PER_MEGABYTE), "MB, Xmx=",
+					_toUnit(xmxBytes, _BYTES_PER_MEGABYTE), "MB")
 			);
 
 		if ((xmsBytes > 0) && (xmsBytes == xmxBytes)) {
@@ -305,8 +304,8 @@ public class ProductionReadinessCheckUtil {
 
 		List<String> inputArguments = runtimeMXBean.getInputArguments();
 
+		String largePageSizeArgument = null;
 		boolean useLargePages = false;
-		String largePageSizeArg = null;
 
 		for (String inputArgument : inputArguments) {
 			if (inputArgument.equals("-XX:+UseLargePages")) {
@@ -315,7 +314,7 @@ public class ProductionReadinessCheckUtil {
 			else if (inputArgument.startsWith(
 						_PREFIX_LARGE_PAGE_SIZE_IN_BYTES)) {
 
-				largePageSizeArg = inputArgument.substring(
+				largePageSizeArgument = inputArgument.substring(
 					_PREFIX_LARGE_PAGE_SIZE_IN_BYTES.length());
 			}
 		}
@@ -328,7 +327,7 @@ public class ProductionReadinessCheckUtil {
 			).fail();
 		}
 
-		if (largePageSizeArg == null) {
+		if (largePageSizeArgument == null) {
 			return builder.messageKeySuffix(
 				"missing-large-page-size"
 			).fail();
@@ -337,15 +336,14 @@ public class ProductionReadinessCheckUtil {
 		long osHugePageSize = _getOSHugePageSize();
 
 		if (osHugePageSize > 0) {
-			long configLargePageSize = _parseSize(largePageSizeArg);
+			long configLargePageSize = _parseSize(largePageSizeArgument);
 
 			if (configLargePageSize != osHugePageSize) {
 				return builder.currentValue(
 					StringBundler.concat(
-						"-XX:LargePageSizeInBytes = ", largePageSizeArg,
+						"-XX:LargePageSizeInBytes = ", largePageSizeArgument,
 						", OS's huge page size = ",
-						(long)_toUnit(osHugePageSize, _BYTES_PER_KILOBYTE),
-						"KB")
+						_toUnit(osHugePageSize, _BYTES_PER_KILOBYTE), "KB")
 				).messageKeySuffix(
 					"size-mismatch"
 				).fail();
@@ -360,12 +358,10 @@ public class ProductionReadinessCheckUtil {
 	private static ProductionReadinessResult _checkJMXConfigurationDisabled() {
 		RuntimeMXBean runtimeMXBean = ManagementFactory.getRuntimeMXBean();
 
-		List<String> inputArguments = runtimeMXBean.getInputArguments();
-
 		boolean jmxEnabled = false;
 		String enabledArgument = null;
 
-		for (String inputArgument : inputArguments) {
+		for (String inputArgument : runtimeMXBean.getInputArguments()) {
 			if (inputArgument.startsWith("-Dcom.sun.management.jmxremote")) {
 				jmxEnabled = true;
 				enabledArgument = inputArgument;
@@ -449,8 +445,8 @@ public class ProductionReadinessCheckUtil {
 					"jsp-engine-settings"
 				).currentValue(
 					StringBundler.concat(
-						"development = ", (development == null) || development,
-						"mappedfile = ", (mappedFile == null) || mappedFile)
+						"development=", (development == null) || development,
+						", mappedfile=", (mappedFile == null) || mappedFile)
 				).recommendedValue(
 					"development=false, mappedfile=false"
 				).fail();
@@ -462,7 +458,7 @@ public class ProductionReadinessCheckUtil {
 					"jsp-engine-settings"
 				).currentValue(
 					StringBundler.concat(
-						"development = ", development, ", mappedfile = ",
+						"development=", development, ", mappedfile=",
 						mappedFile)
 				).recommendedValue(
 					"development=false, mappedfile=false"
@@ -485,15 +481,16 @@ public class ProductionReadinessCheckUtil {
 
 	private static ProductionReadinessResult _checkJSPReloading() {
 		boolean directServletContextReload = GetterUtil.getBoolean(
-			PropsUtil.get("direct.servlet.context.reload"));
+			PropsUtil.get(PropsKeys.DIRECT_SERVLET_CONTEXT_RELOAD));
 
 		ProductionReadinessResult.Builder builder =
 			ProductionReadinessResult.builder(
 				_CATEGORY_PORTAL_PROPERTIES_CONFIGURATION, "jsp-reloading"
 			).currentValue(
-				"direct.servlet.context.reload=" + directServletContextReload
+				PropsKeys.DIRECT_SERVLET_CONTEXT_RELOAD + "=" +
+					directServletContextReload
 			).recommendedValue(
-				"direct.servlet.context.reload=false"
+				PropsKeys.DIRECT_SERVLET_CONTEXT_RELOAD + "=false"
 			);
 
 		if (directServletContextReload) {
@@ -504,7 +501,8 @@ public class ProductionReadinessCheckUtil {
 	}
 
 	private static ProductionReadinessResult _checkPasswordEncryption() {
-		String algorithm = PropsUtil.get("passwords.encryption.algorithm");
+		String algorithm = PropsUtil.get(
+			PropsKeys.PASSWORDS_ENCRYPTION_ALGORITHM);
 
 		ProductionReadinessResult.Builder builder =
 			ProductionReadinessResult.builder(
@@ -512,7 +510,8 @@ public class ProductionReadinessCheckUtil {
 			).currentValue(
 				algorithm
 			).recommendedValue(
-				"PBKDF2WithHmacSHA1/160/1300000 (or stronger)"
+				"PBKDF2WithHmacSHA1/160/" + _MIN_PBKDF2_ROUNDS +
+					", BCRYPT, SCRYPT"
 			);
 
 		if (_isStrongerAlgorithm(algorithm)) {
@@ -523,16 +522,15 @@ public class ProductionReadinessCheckUtil {
 	}
 
 	private static ProductionReadinessResult _checkPortalDeveloperProperties() {
-		boolean hasDeveloperProperties = ArrayUtil.contains(
-			PropsUtil.getArray("include-and-override"),
-			"portal-developer.properties");
-
 		ProductionReadinessResult.Builder builder =
 			ProductionReadinessResult.builder(
 				_CATEGORY_PORTAL_PROPERTIES_CONFIGURATION,
 				"portal-developer-properties");
 
-		if (hasDeveloperProperties) {
+		if (ArrayUtil.contains(
+				PropsUtil.getArray("include-and-override"),
+				"portal-developer.properties")) {
+
 			return builder.currentValue(
 				"portal-developer.properties"
 			).fail();
@@ -637,11 +635,13 @@ public class ProductionReadinessCheckUtil {
 
 			for (String line : StringUtil.splitLines(content)) {
 				if (line.startsWith(_PREFIX_HUGEPAGESIZE)) {
-					String sizeStr = line.substring(
-						_PREFIX_HUGEPAGESIZE.length()
-					).trim();
+					String sizeString = line.substring(
+						_PREFIX_HUGEPAGESIZE.length());
 
-					return _parseSize(StringUtil.removeSubstring(sizeStr, " "));
+					sizeString = sizeString.trim();
+
+					return _parseSize(
+						StringUtil.removeSubstring(sizeString, " "));
 				}
 			}
 		}
@@ -686,7 +686,7 @@ public class ProductionReadinessCheckUtil {
 				_log.warn(exception);
 			}
 
-			return 200;
+			return -1;
 		}
 	}
 
@@ -707,7 +707,7 @@ public class ProductionReadinessCheckUtil {
 			if (parts.length >= 3) {
 				int rounds = GetterUtil.getInteger(parts[2]);
 
-				if (rounds >= 1300000) {
+				if (rounds >= _MIN_PBKDF2_ROUNDS) {
 					return true;
 				}
 			}
@@ -716,30 +716,30 @@ public class ProductionReadinessCheckUtil {
 		return false;
 	}
 
-	private static long _parseSize(String sizeStr) {
-		if (sizeStr == null) {
+	private static long _parseSize(String sizeString) {
+		if (sizeString == null) {
 			return -1;
 		}
 
-		sizeStr = StringUtil.toLowerCase(sizeStr.trim());
+		sizeString = StringUtil.toLowerCase(sizeString.trim());
 
 		long multiplier = 1;
 
-		if (sizeStr.endsWith("k") || sizeStr.endsWith("kb")) {
+		if (sizeString.endsWith("k") || sizeString.endsWith("kb")) {
 			multiplier = _BYTES_PER_KILOBYTE;
 		}
-		else if (sizeStr.endsWith("m") || sizeStr.endsWith("mb")) {
+		else if (sizeString.endsWith("m") || sizeString.endsWith("mb")) {
 			multiplier = _BYTES_PER_MEGABYTE;
 		}
-		else if (sizeStr.endsWith("g") || sizeStr.endsWith("gb")) {
+		else if (sizeString.endsWith("g") || sizeString.endsWith("gb")) {
 			multiplier = _BYTES_PER_GIGABYTE;
 		}
 
 		if (multiplier > 1) {
-			sizeStr = StringUtil.extractDigits(sizeStr);
+			sizeString = StringUtil.extractDigits(sizeString);
 		}
 
-		return GetterUtil.getLong(sizeStr) * multiplier;
+		return GetterUtil.getLong(sizeString) * multiplier;
 	}
 
 	private static double _toUnit(long bytes, long bytesPerUnit) {
@@ -759,6 +759,10 @@ public class ProductionReadinessCheckUtil {
 		"portal-properties-configuration";
 
 	private static final int _MAX_DL_IMAGE_PREVIEW_DPI = 75;
+
+	private static final int _MIN_COUNTER_INCREMENT = 2000;
+
+	private static final int _MIN_PBKDF2_ROUNDS = 1300000;
 
 	private static final String _PREFIX_HUGEPAGESIZE = "Hugepagesize:";
 

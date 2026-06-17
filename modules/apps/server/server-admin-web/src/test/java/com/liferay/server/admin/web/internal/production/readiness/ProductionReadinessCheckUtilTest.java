@@ -7,7 +7,10 @@ package com.liferay.server.admin.web.internal.production.readiness;
 
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.ServerDetector;
@@ -15,7 +18,11 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.search.elasticsearch8.configuration.ElasticsearchConfiguration;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+import com.liferay.portal.util.FastDateFormatFactoryImpl;
 
 import java.io.File;
 
@@ -28,18 +35,19 @@ import java.lang.management.RuntimeMXBean;
 import java.nio.file.Files;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
 import javax.management.MBeanServer;
 import javax.management.ObjectName;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
 
 import org.mockito.ArgumentMatchers;
 import org.mockito.MockedStatic;
@@ -55,96 +63,24 @@ public class ProductionReadinessCheckUtilTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
-	@Test
-	public void testCheck() throws Exception {
-		try (MockedStatic<PropsUtil> propsUtilMockedStatic = Mockito.mockStatic(
-				PropsUtil.class);
-			MockedStatic<ServerDetector> serverDetectorMockedStatic =
-				Mockito.mockStatic(ServerDetector.class);
-			MockedStatic<ManagementFactory> managementFactoryMockedStatic =
-				Mockito.mockStatic(ManagementFactory.class);
-			AutoCloseable closeable1 =
-				ReflectionTestUtil.setFieldValueWithAutoCloseable(
-					PropsValues.class, "DL_FILE_ENTRY_PREVIEW_DOCUMENT_DPI",
-					75);
-			AutoCloseable closeable2 =
-				ReflectionTestUtil.setFieldValueWithAutoCloseable(
-					PropsValues.class,
-					"DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_ENABLED", true);
-			AutoCloseable closeable3 =
-				ReflectionTestUtil.setFieldValueWithAutoCloseable(
-					PropsValues.class, "DL_STORE_IMPL",
-					"com.liferay.portal.store.s3.S3Store");
-			AutoCloseable closeable4 =
-				ReflectionTestUtil.setFieldValueWithAutoCloseable(
-					PropsValues.class, "LOCALES", new String[] {"en_US"});
-			AutoCloseable closeable5 =
-				ReflectionTestUtil.setFieldValueWithAutoCloseable(
-					PropsValues.class, "LOCALES_BETA", new String[0]);
-			AutoCloseable closeable6 =
-				ReflectionTestUtil.setFieldValueWithAutoCloseable(
-					PropsValues.class, "LOCALES_ENABLED",
-					new String[] {"en_US"});
-			AutoCloseable closeable7 =
-				ReflectionTestUtil.setFieldValueWithAutoCloseable(
-					PropsValues.class, "LIFERAY_HOME",
-					temporaryFolder.getRoot(
-					).getAbsolutePath())) {
+	@BeforeClass
+	public static void setUpClass() {
+		FastDateFormatFactoryUtil fastDateFormatFactoryUtil =
+			new FastDateFormatFactoryUtil();
 
-			_stubPropsUtilDefaults(propsUtilMockedStatic);
+		fastDateFormatFactoryUtil.setFastDateFormatFactory(
+			new FastDateFormatFactoryImpl());
+	}
 
-			serverDetectorMockedStatic.when(
-				ServerDetector::isTomcat
-			).thenReturn(
-				false
-			);
+	@Before
+	public void setUp() throws Exception {
+		_tempDirectory = FileUtil.createTempFolder();
+	}
 
-			_stubHeapMemoryUsage(
-				managementFactoryMockedStatic,
-				_memoryUsage(2L * 1024 * 1024 * 1024, 2L * 1024 * 1024 * 1024));
-
-			RuntimeMXBean runtimeMXBean = Mockito.mock(RuntimeMXBean.class);
-
-			Mockito.when(
-				runtimeMXBean.getInputArguments()
-			).thenReturn(
-				Collections.emptyList()
-			);
-
-			managementFactoryMockedStatic.when(
-				ManagementFactory::getRuntimeMXBean
-			).thenReturn(
-				runtimeMXBean
-			);
-
-			GarbageCollectorMXBean garbageCollectorMXBean = Mockito.mock(
-				GarbageCollectorMXBean.class);
-
-			Mockito.when(
-				garbageCollectorMXBean.getName()
-			).thenReturn(
-				"G1 Young Generation"
-			);
-
-			managementFactoryMockedStatic.when(
-				ManagementFactory::getGarbageCollectorMXBeans
-			).thenReturn(
-				Collections.singletonList(garbageCollectorMXBean)
-			);
-
-			_stubMBeanServerMaxThreads(managementFactoryMockedStatic, 200);
-
-			Collection<ProductionReadinessResult> productionReadinessResults =
-				ProductionReadinessCheckUtil.check();
-
-			Assert.assertFalse(productionReadinessResults.isEmpty());
-
-			for (ProductionReadinessResult productionReadinessResult :
-					productionReadinessResults) {
-
-				Assert.assertNotNull(productionReadinessResult.getCategory());
-				Assert.assertNotNull(productionReadinessResult.getKey());
-			}
+	@After
+	public void tearDown() throws Exception {
+		if (_tempDirectory != null) {
+			FileUtil.deltree(_tempDirectory);
 		}
 	}
 
@@ -198,7 +134,7 @@ public class ProductionReadinessCheckUtilTest {
 				PropsUtil.class)) {
 
 			propsUtilMockedStatic.when(
-				() -> PropsUtil.get("counter.increment")
+				() -> PropsUtil.get(PropsKeys.COUNTER_INCREMENT)
 			).thenReturn(
 				"1000"
 			);
@@ -222,7 +158,7 @@ public class ProductionReadinessCheckUtilTest {
 				PropsUtil.class)) {
 
 			propsUtilMockedStatic.when(
-				() -> PropsUtil.get("counter.increment")
+				() -> PropsUtil.get(PropsKeys.COUNTER_INCREMENT)
 			).thenReturn(
 				"2000"
 			);
@@ -251,7 +187,7 @@ public class ProductionReadinessCheckUtilTest {
 				"10"
 			);
 
-			_stubMBeanServerMaxThreads(managementFactoryMockedStatic, 200);
+			_mockMBeanServerMaxThreads(managementFactoryMockedStatic, 200);
 
 			ProductionReadinessResult productionReadinessResult =
 				ReflectionTestUtil.invoke(
@@ -277,7 +213,7 @@ public class ProductionReadinessCheckUtilTest {
 				"0"
 			);
 
-			_stubMBeanServerMaxThreads(managementFactoryMockedStatic, 200);
+			_mockMBeanServerMaxThreads(managementFactoryMockedStatic, 200);
 
 			ProductionReadinessResult productionReadinessResult =
 				ReflectionTestUtil.invoke(
@@ -301,7 +237,7 @@ public class ProductionReadinessCheckUtilTest {
 				"200"
 			);
 
-			_stubMBeanServerMaxThreads(managementFactoryMockedStatic, 200);
+			_mockMBeanServerMaxThreads(managementFactoryMockedStatic, 200);
 
 			ProductionReadinessResult productionReadinessResult =
 				ReflectionTestUtil.invoke(
@@ -393,7 +329,7 @@ public class ProductionReadinessCheckUtilTest {
 		try (MockedStatic<ManagementFactory> managementFactoryMockedStatic =
 				Mockito.mockStatic(ManagementFactory.class)) {
 
-			_stubRuntimeInputArguments(
+			_mockRuntimeInputArguments(
 				managementFactoryMockedStatic, Collections.emptyList());
 
 			ProductionReadinessResult productionReadinessResult =
@@ -415,7 +351,7 @@ public class ProductionReadinessCheckUtilTest {
 		try (MockedStatic<ManagementFactory> managementFactoryMockedStatic =
 				Mockito.mockStatic(ManagementFactory.class)) {
 
-			_stubRuntimeInputArguments(
+			_mockRuntimeInputArguments(
 				managementFactoryMockedStatic,
 				Collections.singletonList("-XX:+DisableExplicitGC"));
 
@@ -489,7 +425,7 @@ public class ProductionReadinessCheckUtilTest {
 			Mockito.when(
 				garbageCollectorMXBean.getName()
 			).thenReturn(
-				"PS Scavenge"
+				RandomTestUtil.randomString()
 			);
 
 			managementFactoryMockedStatic.when(
@@ -545,7 +481,7 @@ public class ProductionReadinessCheckUtilTest {
 		try (MockedStatic<ManagementFactory> managementFactoryMockedStatic =
 				Mockito.mockStatic(ManagementFactory.class)) {
 
-			_stubHeapMemoryUsage(
+			_mockHeapMemoryUsage(
 				managementFactoryMockedStatic,
 				_memoryUsage(2L * 1024 * 1024 * 1024, 4L * 1024 * 1024 * 1024));
 
@@ -566,7 +502,7 @@ public class ProductionReadinessCheckUtilTest {
 		try (MockedStatic<ManagementFactory> managementFactoryMockedStatic =
 				Mockito.mockStatic(ManagementFactory.class)) {
 
-			_stubHeapMemoryUsage(
+			_mockHeapMemoryUsage(
 				managementFactoryMockedStatic,
 				_memoryUsage(4L * 1024 * 1024 * 1024, 4L * 1024 * 1024 * 1024));
 
@@ -587,7 +523,7 @@ public class ProductionReadinessCheckUtilTest {
 		try (MockedStatic<ManagementFactory> managementFactoryMockedStatic =
 				Mockito.mockStatic(ManagementFactory.class)) {
 
-			_stubHeapMemoryUsage(
+			_mockHeapMemoryUsage(
 				managementFactoryMockedStatic,
 				_memoryUsage(
 					64L * 1024 * 1024 * 1024, 64L * 1024 * 1024 * 1024));
@@ -608,7 +544,7 @@ public class ProductionReadinessCheckUtilTest {
 		try (MockedStatic<ManagementFactory> managementFactoryMockedStatic =
 				Mockito.mockStatic(ManagementFactory.class)) {
 
-			_stubHeapMemoryUsage(
+			_mockHeapMemoryUsage(
 				managementFactoryMockedStatic,
 				_memoryUsage(
 					16L * 1024 * 1024 * 1024, 16L * 1024 * 1024 * 1024));
@@ -631,11 +567,11 @@ public class ProductionReadinessCheckUtilTest {
 			MockedStatic<FileUtil> fileUtilMockedStatic = Mockito.mockStatic(
 				FileUtil.class)) {
 
-			_stubHeapMemoryUsage(
+			_mockHeapMemoryUsage(
 				managementFactoryMockedStatic,
 				_memoryUsage(8L * 1024 * 1024 * 1024, 8L * 1024 * 1024 * 1024));
 
-			_stubRuntimeInputArguments(
+			_mockRuntimeInputArguments(
 				managementFactoryMockedStatic,
 				Arrays.asList(
 					"-XX:+UseLargePages", "-XX:LargePageSizeInBytes=2048k"));
@@ -662,11 +598,11 @@ public class ProductionReadinessCheckUtilTest {
 		try (MockedStatic<ManagementFactory> managementFactoryMockedStatic =
 				Mockito.mockStatic(ManagementFactory.class)) {
 
-			_stubHeapMemoryUsage(
+			_mockHeapMemoryUsage(
 				managementFactoryMockedStatic,
 				_memoryUsage(8L * 1024 * 1024 * 1024, 8L * 1024 * 1024 * 1024));
 
-			_stubRuntimeInputArguments(
+			_mockRuntimeInputArguments(
 				managementFactoryMockedStatic,
 				Collections.singletonList("-XX:+UseLargePages"));
 
@@ -686,11 +622,11 @@ public class ProductionReadinessCheckUtilTest {
 		try (MockedStatic<ManagementFactory> managementFactoryMockedStatic =
 				Mockito.mockStatic(ManagementFactory.class)) {
 
-			_stubHeapMemoryUsage(
+			_mockHeapMemoryUsage(
 				managementFactoryMockedStatic,
 				_memoryUsage(8L * 1024 * 1024 * 1024, 8L * 1024 * 1024 * 1024));
 
-			_stubRuntimeInputArguments(
+			_mockRuntimeInputArguments(
 				managementFactoryMockedStatic, Collections.emptyList());
 
 			ProductionReadinessResult productionReadinessResult =
@@ -712,7 +648,7 @@ public class ProductionReadinessCheckUtilTest {
 		try (MockedStatic<ManagementFactory> managementFactoryMockedStatic =
 				Mockito.mockStatic(ManagementFactory.class)) {
 
-			_stubHeapMemoryUsage(
+			_mockHeapMemoryUsage(
 				managementFactoryMockedStatic,
 				_memoryUsage(2L * 1024 * 1024 * 1024, 2L * 1024 * 1024 * 1024));
 
@@ -732,7 +668,7 @@ public class ProductionReadinessCheckUtilTest {
 		try (MockedStatic<ManagementFactory> managementFactoryMockedStatic =
 				Mockito.mockStatic(ManagementFactory.class)) {
 
-			_stubRuntimeInputArguments(
+			_mockRuntimeInputArguments(
 				managementFactoryMockedStatic,
 				Collections.singletonList(
 					"-Dcom.sun.management.jmxremote.port=9000"));
@@ -746,12 +682,12 @@ public class ProductionReadinessCheckUtilTest {
 			Assert.assertEquals(
 				"jmx-configuration-disabled",
 				productionReadinessResult.getKey());
+
+			String currentValue = productionReadinessResult.getCurrentValue();
+
 			Assert.assertTrue(
-				productionReadinessResult.getCurrentValue(),
-				productionReadinessResult.getCurrentValue(
-				).contains(
-					"-Dcom.sun.management.jmxremote.port=9000"
-				));
+				currentValue.contains(
+					"-Dcom.sun.management.jmxremote.port=9000"));
 		}
 	}
 
@@ -760,7 +696,7 @@ public class ProductionReadinessCheckUtilTest {
 		try (MockedStatic<ManagementFactory> managementFactoryMockedStatic =
 				Mockito.mockStatic(ManagementFactory.class)) {
 
-			_stubRuntimeInputArguments(
+			_mockRuntimeInputArguments(
 				managementFactoryMockedStatic, Collections.emptyList());
 
 			ProductionReadinessResult productionReadinessResult =
@@ -777,20 +713,21 @@ public class ProductionReadinessCheckUtilTest {
 
 	@Test
 	public void testCheckJSPEngineSettingsFail() throws Exception {
-		File catalinaBase = temporaryFolder.newFolder("catalina");
+		File catalinaDirectory = new File(_tempDirectory, "catalina");
 
-		File confDir = new File(catalinaBase, "conf");
+		File confDirectory = new File(catalinaDirectory, "conf");
 
-		confDir.mkdirs();
+		confDirectory.mkdirs();
 
-		File webXml = new File(confDir, "web.xml");
+		File webXml = new File(confDirectory, "web.xml");
 
 		Files.writeString(webXml.toPath(), "<web-app/>");
 
 		String originalCatalinaBase = System.getProperty("catalina.base");
 		String originalCatalinaHome = System.getProperty("catalina.home");
 
-		System.setProperty("catalina.base", catalinaBase.getAbsolutePath());
+		System.setProperty(
+			"catalina.base", catalinaDirectory.getAbsolutePath());
 
 		try (MockedStatic<ServerDetector> serverDetectorMockedStatic =
 				Mockito.mockStatic(ServerDetector.class);
@@ -886,20 +823,21 @@ public class ProductionReadinessCheckUtilTest {
 
 	@Test
 	public void testCheckJSPEngineSettingsPass() throws Exception {
-		File catalinaBase = temporaryFolder.newFolder("catalina");
+		File catalinaDirectory = new File(_tempDirectory, "catalina");
 
-		File confDir = new File(catalinaBase, "conf");
+		File confDirectory = new File(catalinaDirectory, "conf");
 
-		confDir.mkdirs();
+		confDirectory.mkdirs();
 
-		File webXml = new File(confDir, "web.xml");
+		File webXml = new File(confDirectory, "web.xml");
 
 		Files.writeString(webXml.toPath(), "<web-app/>");
 
 		String originalCatalinaBase = System.getProperty("catalina.base");
 		String originalCatalinaHome = System.getProperty("catalina.home");
 
-		System.setProperty("catalina.base", catalinaBase.getAbsolutePath());
+		System.setProperty(
+			"catalina.base", catalinaDirectory.getAbsolutePath());
 
 		try (MockedStatic<ServerDetector> serverDetectorMockedStatic =
 				Mockito.mockStatic(ServerDetector.class);
@@ -949,7 +887,7 @@ public class ProductionReadinessCheckUtilTest {
 				PropsUtil.class)) {
 
 			propsUtilMockedStatic.when(
-				() -> PropsUtil.get("direct.servlet.context.reload")
+				() -> PropsUtil.get(PropsKeys.DIRECT_SERVLET_CONTEXT_RELOAD)
 			).thenReturn(
 				"true"
 			);
@@ -971,7 +909,7 @@ public class ProductionReadinessCheckUtilTest {
 				PropsUtil.class)) {
 
 			propsUtilMockedStatic.when(
-				() -> PropsUtil.get("direct.servlet.context.reload")
+				() -> PropsUtil.get(PropsKeys.DIRECT_SERVLET_CONTEXT_RELOAD)
 			).thenReturn(
 				"false"
 			);
@@ -988,23 +926,11 @@ public class ProductionReadinessCheckUtilTest {
 	}
 
 	@Test
-	public void testCheckPasswordEncryptionBCRYPTPass() {
-		_assertPasswordEncryption("BCRYPT", true);
-	}
-
-	@Test
-	public void testCheckPasswordEncryptionMD5Fail() {
-		_assertPasswordEncryption("MD5", false);
-	}
-
-	@Test
-	public void testCheckPasswordEncryptionPBKDF2StrongPass() {
-		_assertPasswordEncryption("PBKDF2WithHmacSHA1/160/1300000", true);
-	}
-
-	@Test
-	public void testCheckPasswordEncryptionPBKDF2WeakFail() {
-		_assertPasswordEncryption("PBKDF2WithHmacSHA1/160/1000", false);
+	public void testCheckPasswordEncryption() {
+		_testCheckPasswordEncryption("BCRYPT", true);
+		_testCheckPasswordEncryption("MD5", false);
+		_testCheckPasswordEncryption("PBKDF2WithHmacSHA1/160/1300000", true);
+		_testCheckPasswordEncryption("PBKDF2WithHmacSHA1/160/1000", false);
 	}
 
 	@Test
@@ -1058,7 +984,7 @@ public class ProductionReadinessCheckUtilTest {
 		try (MockedStatic<ManagementFactory> managementFactoryMockedStatic =
 				Mockito.mockStatic(ManagementFactory.class)) {
 
-			_stubRuntimeInputArguments(
+			_mockRuntimeInputArguments(
 				managementFactoryMockedStatic,
 				Collections.singletonList("-XX:+UnlockDiagnosticVMOptions"));
 
@@ -1079,7 +1005,7 @@ public class ProductionReadinessCheckUtilTest {
 		try (MockedStatic<ManagementFactory> managementFactoryMockedStatic =
 				Mockito.mockStatic(ManagementFactory.class)) {
 
-			_stubRuntimeInputArguments(
+			_mockRuntimeInputArguments(
 				managementFactoryMockedStatic, Collections.emptyList());
 
 			ProductionReadinessResult productionReadinessResult =
@@ -1170,7 +1096,10 @@ public class ProductionReadinessCheckUtilTest {
 
 		try (MockedStatic<ConfigurationProviderUtil>
 				configurationProviderUtilMockedStatic = Mockito.mockStatic(
-					ConfigurationProviderUtil.class)) {
+					ConfigurationProviderUtil.class);
+			LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				ProductionReadinessCheckUtil.class.getName(),
+				LoggerTestUtil.WARN)) {
 
 			configurationProviderUtilMockedStatic.when(
 				() -> ConfigurationProviderUtil.getSystemConfiguration(
@@ -1187,6 +1116,15 @@ public class ProductionReadinessCheckUtilTest {
 			Assert.assertFalse(productionReadinessResult.isPass());
 			Assert.assertEquals(
 				"sidecar-detection", productionReadinessResult.getKey());
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
+
+			LogEntry logEntry = logEntries.get(0);
+
+			Assert.assertTrue(
+				logEntry.getThrowable() instanceof RuntimeException);
 		}
 	}
 
@@ -1236,110 +1174,46 @@ public class ProductionReadinessCheckUtilTest {
 	}
 
 	@Test
-	public void testIsStrongerThanPBKDF2BCRYPT() {
-		Assert.assertTrue(_invokeIsStrongerThanPBKDF2("BCRYPT"));
+	public void testIsStrongerAlgorithm() {
+		_testIsStrongerAlgorithm("BCRYPT", true);
+		_testIsStrongerAlgorithm("BCRYPT/12", true);
+		_testIsStrongerAlgorithm("MD5", false);
+		_testIsStrongerAlgorithm("PBKDF2WithHmacSHA1/160/1300000", true);
+		_testIsStrongerAlgorithm("PBKDF2WithHmacSHA1/160/1000", false);
+		_testIsStrongerAlgorithm("SCRYPT", true);
+		_testIsStrongerAlgorithm(null, false);
 	}
 
 	@Test
-	public void testIsStrongerThanPBKDF2BCRYPTVariant() {
-		Assert.assertTrue(_invokeIsStrongerThanPBKDF2("BCRYPT/12"));
-	}
-
-	@Test
-	public void testIsStrongerThanPBKDF2MD5() {
-		Assert.assertFalse(_invokeIsStrongerThanPBKDF2("MD5"));
-	}
-
-	@Test
-	public void testIsStrongerThanPBKDF2Null() {
-		Assert.assertFalse(_invokeIsStrongerThanPBKDF2(null));
-	}
-
-	@Test
-	public void testIsStrongerThanPBKDF2SCRYPT() {
-		Assert.assertTrue(_invokeIsStrongerThanPBKDF2("SCRYPT"));
-	}
-
-	@Test
-	public void testIsStrongerThanPBKDF2Strong() {
-		Assert.assertTrue(
-			_invokeIsStrongerThanPBKDF2("PBKDF2WithHmacSHA1/160/1300000"));
-	}
-
-	@Test
-	public void testIsStrongerThanPBKDF2Weak() {
-		Assert.assertFalse(
-			_invokeIsStrongerThanPBKDF2("PBKDF2WithHmacSHA1/160/1000"));
-	}
-
-	@Test
-	public void testParseSizeGigabytes() {
-		Assert.assertEquals(1073741824L, _invokeParseSize("1g"));
-	}
-
-	@Test
-	public void testParseSizeKilobytes() {
-		Assert.assertEquals(2097152L, _invokeParseSize("2048k"));
-	}
-
-	@Test
-	public void testParseSizeMegabytes() {
-		Assert.assertEquals(2097152L, _invokeParseSize("2m"));
-	}
-
-	@Test
-	public void testParseSizeNull() {
-		Assert.assertEquals(-1L, _invokeParseSize(null));
-	}
-
-	@Test
-	public void testParseSizePlainNumber() {
-		Assert.assertEquals(100L, _invokeParseSize("100"));
-	}
-
-	@Rule
-	public TemporaryFolder temporaryFolder = new TemporaryFolder();
-
-	private ProductionReadinessResult _assertPasswordEncryption(
-		String algorithm, boolean expectedPass) {
-
-		try (MockedStatic<PropsUtil> propsUtilMockedStatic = Mockito.mockStatic(
-				PropsUtil.class)) {
-
-			propsUtilMockedStatic.when(
-				() -> PropsUtil.get("passwords.encryption.algorithm")
-			).thenReturn(
-				algorithm
-			);
-
-			ProductionReadinessResult productionReadinessResult =
-				ReflectionTestUtil.invoke(
-					ProductionReadinessCheckUtil.class,
-					"_checkPasswordEncryption", new Class<?>[0]);
-
-			Assert.assertEquals(
-				expectedPass, productionReadinessResult.isPass());
-			Assert.assertEquals(
-				"password-encryption", productionReadinessResult.getKey());
-
-			return productionReadinessResult;
-		}
-	}
-
-	private boolean _invokeIsStrongerThanPBKDF2(String algorithm) {
-		return ReflectionTestUtil.invoke(
-			ProductionReadinessCheckUtil.class, "_isStrongerAlgorithm",
-			new Class<?>[] {String.class}, algorithm);
-	}
-
-	private long _invokeParseSize(String sizeStr) {
-		return ReflectionTestUtil.invoke(
-			ProductionReadinessCheckUtil.class, "_parseSize",
-			new Class<?>[] {String.class}, sizeStr);
+	public void testParseSize() {
+		_testParseSize(1073741824L, "1g");
+		_testParseSize(2097152L, "2048k");
+		_testParseSize(2097152L, "2m");
+		_testParseSize(-1L, null);
+		_testParseSize(100L, "100");
 	}
 
 	private MemoryUsage _memoryUsage(long init, long max) {
 		return new MemoryUsage(init, 0, max, max);
+	}
+
+	private void _mockHeapMemoryUsage(
+		MockedStatic<ManagementFactory> managementFactoryMockedStatic,
+		MemoryUsage memoryUsage) {
+
+		MemoryMXBean memoryMXBean = Mockito.mock(MemoryMXBean.class);
+
+		Mockito.when(
+			memoryMXBean.getHeapMemoryUsage()
+		).thenReturn(
+			memoryUsage
+		);
+
+		managementFactoryMockedStatic.when(
+			ManagementFactory::getMemoryMXBean
+		).thenReturn(
+			memoryMXBean
+		);
 	}
 
 	private Document _mockJspWebXmlDocument(
@@ -1402,35 +1276,7 @@ public class ProductionReadinessCheckUtilTest {
 		return document;
 	}
 
-	private void _restoreSystemProperty(String key, String previousValue) {
-		if (previousValue == null) {
-			System.clearProperty(key);
-		}
-		else {
-			System.setProperty(key, previousValue);
-		}
-	}
-
-	private void _stubHeapMemoryUsage(
-		MockedStatic<ManagementFactory> managementFactoryMockedStatic,
-		MemoryUsage memoryUsage) {
-
-		MemoryMXBean memoryMXBean = Mockito.mock(MemoryMXBean.class);
-
-		Mockito.when(
-			memoryMXBean.getHeapMemoryUsage()
-		).thenReturn(
-			memoryUsage
-		);
-
-		managementFactoryMockedStatic.when(
-			ManagementFactory::getMemoryMXBean
-		).thenReturn(
-			memoryMXBean
-		);
-	}
-
-	private void _stubMBeanServerMaxThreads(
+	private void _mockMBeanServerMaxThreads(
 			MockedStatic<ManagementFactory> managementFactoryMockedStatic,
 			int maxThreads)
 		throws Exception {
@@ -1438,7 +1284,7 @@ public class ProductionReadinessCheckUtilTest {
 		MBeanServer mBeanServer = Mockito.mock(MBeanServer.class);
 
 		ObjectName objectName = new ObjectName(
-			"Catalina:type=ThreadPool,name=http-nio-8080");
+			"Catalina:type=ThreadPool,name=" + RandomTestUtil.randomString());
 
 		Mockito.when(
 			mBeanServer.queryNames(
@@ -1463,47 +1309,7 @@ public class ProductionReadinessCheckUtilTest {
 		);
 	}
 
-	private void _stubPropsUtilDefaults(
-		MockedStatic<PropsUtil> propsUtilMockedStatic) {
-
-		propsUtilMockedStatic.when(
-			() -> PropsUtil.get(ArgumentMatchers.anyString())
-		).thenReturn(
-			""
-		);
-
-		propsUtilMockedStatic.when(
-			() -> PropsUtil.getArray(ArgumentMatchers.anyString())
-		).thenReturn(
-			new String[0]
-		);
-
-		propsUtilMockedStatic.when(
-			() -> PropsUtil.get("counter.increment")
-		).thenReturn(
-			"2000"
-		);
-
-		propsUtilMockedStatic.when(
-			() -> PropsUtil.get("jdbc.default.maximumPoolSize")
-		).thenReturn(
-			"60"
-		);
-
-		propsUtilMockedStatic.when(
-			() -> PropsUtil.get("direct.servlet.context.reload")
-		).thenReturn(
-			"false"
-		);
-
-		propsUtilMockedStatic.when(
-			() -> PropsUtil.get("passwords.encryption.algorithm")
-		).thenReturn(
-			"BCRYPT"
-		);
-	}
-
-	private void _stubRuntimeInputArguments(
+	private void _mockRuntimeInputArguments(
 		MockedStatic<ManagementFactory> managementFactoryMockedStatic,
 		List<String> inputArguments) {
 
@@ -1521,5 +1327,55 @@ public class ProductionReadinessCheckUtilTest {
 			runtimeMXBean
 		);
 	}
+
+	private void _restoreSystemProperty(String key, String previousValue) {
+		if (previousValue == null) {
+			System.clearProperty(key);
+		}
+		else {
+			System.setProperty(key, previousValue);
+		}
+	}
+
+	private void _testCheckPasswordEncryption(
+		String algorithm, boolean expected) {
+
+		try (MockedStatic<PropsUtil> propsUtilMockedStatic = Mockito.mockStatic(
+				PropsUtil.class)) {
+
+			propsUtilMockedStatic.when(
+				() -> PropsUtil.get(PropsKeys.PASSWORDS_ENCRYPTION_ALGORITHM)
+			).thenReturn(
+				algorithm
+			);
+
+			ProductionReadinessResult productionReadinessResult =
+				ReflectionTestUtil.invoke(
+					ProductionReadinessCheckUtil.class,
+					"_checkPasswordEncryption", new Class<?>[0]);
+
+			Assert.assertEquals(expected, productionReadinessResult.isPass());
+			Assert.assertEquals(
+				"password-encryption", productionReadinessResult.getKey());
+		}
+	}
+
+	private void _testIsStrongerAlgorithm(String algorithm, boolean expected) {
+		Assert.assertEquals(
+			expected,
+			ReflectionTestUtil.invoke(
+				ProductionReadinessCheckUtil.class, "_isStrongerAlgorithm",
+				new Class<?>[] {String.class}, algorithm));
+	}
+
+	private void _testParseSize(long expected, String sizeString) {
+		Assert.assertEquals(
+			expected,
+			(long)ReflectionTestUtil.invoke(
+				ProductionReadinessCheckUtil.class, "_parseSize",
+				new Class<?>[] {String.class}, sizeString));
+	}
+
+	private File _tempDirectory;
 
 }

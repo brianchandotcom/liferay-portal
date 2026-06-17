@@ -7,16 +7,16 @@ jest.unmock('react-dom');
 const data = [
 	{
 		color: '#FFFFFF',
-		name: 'Legend 1'
+		name: 'Legend 1',
 	},
 	{
 		color: '#EEEEEE',
-		name: 'Legend 2'
+		name: 'Legend 2',
 	},
 	{
 		color: '#C9C9C9',
-		name: 'Legend 3'
-	}
+		name: 'Legend 3',
+	},
 ];
 
 describe('Legend', () => {

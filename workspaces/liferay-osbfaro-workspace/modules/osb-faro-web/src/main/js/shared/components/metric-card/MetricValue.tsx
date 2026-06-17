@@ -11,7 +11,7 @@ interface IMetricValueProps extends React.HTMLAttributes<HTMLDivElement> {
 const MetricValue: React.FC<IMetricValueProps> = ({
 	className,
 	type = MetricType.Number,
-	value
+	value,
 }) => (
 	<div className={getCN('metric-value', className)}>
 		{formatValue(value, getRegexType(type))}

@@ -16,7 +16,7 @@ import {getOperationName} from '@apollo/client/utilities';
 import {getRecommendations} from 'shared/util/breadcrumbs';
 import {
 	RECOMMENDATION_DELETE_MUTATION,
-	RECOMMENDATION_RUN_MUTATION
+	RECOMMENDATION_RUN_MUTATION,
 } from '../queries/RecommendationMutation';
 import {Routes, toRoute} from 'shared/util/router';
 import {sub} from 'shared/util/lang';
@@ -27,7 +27,7 @@ import {useTimeZone} from 'shared/hooks/useTimeZone';
 import {withHistory} from 'shared/hoc';
 
 const {
-	pagination: {orderDescending}
+	pagination: {orderDescending},
 } = Constants;
 const connector = connect(null, {addAlert, close, open});
 
@@ -54,10 +54,10 @@ const View: React.FC<IViewProps> = ({addAlert, close, history, job, open}) => {
 			size: 1,
 			sort: {
 				column: 'id',
-				type: orderDescending.toUpperCase()
+				type: orderDescending.toUpperCase(),
 			},
-			start: 0
-		}
+			start: 0,
+		},
 	});
 
 	const [deleteRecommendationJobs] = useMutation(
@@ -81,15 +81,15 @@ const View: React.FC<IViewProps> = ({addAlert, close, history, job, open}) => {
 	const name = get(job, 'name');
 
 	return (
-		<div className='row'>
-			<div className='col-xl-8'>
+		<div className="row">
+			<div className="col-xl-8">
 				<BasePage
 					breadcrumbItems={[
 						getRecommendations({groupId}),
 						{
 							active: true,
-							label: name
-						}
+							label: name,
+						},
 					]}
 					pageActions={
 						currentUser.isAdmin()
@@ -104,7 +104,7 @@ const View: React.FC<IViewProps> = ({addAlert, close, history, job, open}) => {
 													job,
 													onClose: close,
 													onSubmit: ({
-														runDataPeriod
+														runDataPeriod,
 													}: {
 														runDataPeriod: string;
 													}) => {
@@ -114,12 +114,12 @@ const View: React.FC<IViewProps> = ({addAlert, close, history, job, open}) => {
 															refetchQueries: [
 																getOperationName(
 																	RecommendationJobRunsQuery
-																) as string
+																) as string,
 															],
 															variables: {
 																jobId,
-																runDataPeriod
-															}
+																runDataPeriod,
+															},
 														})
 															.then(() => {
 																addAlert({
@@ -130,7 +130,7 @@ const View: React.FC<IViewProps> = ({addAlert, close, history, job, open}) => {
 																	message:
 																		Liferay.Language.get(
 																			'retraining-has-been-started'
-																		)
+																		),
 																});
 
 																close();
@@ -146,27 +146,27 @@ const View: React.FC<IViewProps> = ({addAlert, close, history, job, open}) => {
 																			'there-was-an-error-processing-your-request.-please-try-again'
 																		),
 																	timeout:
-																		false
+																		false,
 																});
 															});
 													},
 													trainingPeriod: get(
 														job,
 														'trainingPeriod'
-													)
+													),
 												}
 											);
-										}
+										},
 									},
 									{
 										href: toRoute(
 											Routes.SETTINGS_RECOMMENDATION_EDIT,
 											{
 												groupId,
-												jobId
+												jobId,
 											}
 										),
-										label: Liferay.Language.get('edit')
+										label: Liferay.Language.get('edit'),
 									},
 									{
 										label: Liferay.Language.get('delete'),
@@ -176,7 +176,7 @@ const View: React.FC<IViewProps> = ({addAlert, close, history, job, open}) => {
 												{
 													message: (
 														<div>
-															<div className='h4 text-secondary'>
+															<div className="h4 text-secondary">
 																{sub(
 																	Liferay.Language.get(
 																		'delete-x-and-its-historical-training-output-data'
@@ -200,9 +200,9 @@ const View: React.FC<IViewProps> = ({addAlert, close, history, job, open}) => {
 															{
 																variables: {
 																	jobIds: [
-																		jobId
-																	]
-																}
+																		jobId,
+																	],
+																},
 															}
 														)
 															.then(() => {
@@ -217,16 +217,16 @@ const View: React.FC<IViewProps> = ({addAlert, close, history, job, open}) => {
 																				'x-has-been-deleted'
 																			),
 																			[
-																				name
+																				name,
 																			]
-																		) as string
+																		) as string,
 																});
 
 																history.push(
 																	toRoute(
 																		Routes.SETTINGS_RECOMMENDATIONS,
 																		{
-																			groupId
+																			groupId,
 																		}
 																	)
 																);
@@ -242,7 +242,7 @@ const View: React.FC<IViewProps> = ({addAlert, close, history, job, open}) => {
 																			'there-was-an-error-processing-your-request.-please-try-again'
 																		),
 																	timeout:
-																		false
+																		false,
 																});
 															});
 													},
@@ -258,12 +258,12 @@ const View: React.FC<IViewProps> = ({addAlert, close, history, job, open}) => {
 														),
 														[name]
 													),
-													titleIcon: 'warning-full'
+													titleIcon: 'warning-full',
 												}
 											);
-										}
-									}
-							  ]
+										},
+									},
+								]
 							: []
 					}
 					pageActionsDisplayLimit={3}

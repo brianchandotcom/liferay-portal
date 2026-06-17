@@ -11,11 +11,11 @@ import {VariantTable} from './VariantTable';
 
 enum VariantView {
 	Medians = 'medians',
-	PerDay = 'per-day'
+	PerDay = 'per-day',
 }
 
 export const VariantCard = ({
-	experiment
+	experiment,
 }: {
 	experiment: IExperiment & {metricsHistogram?: unknown[]};
 }) => {
@@ -27,7 +27,7 @@ export const VariantCard = ({
 		variantView === VariantView.Medians ? MediansChart : PerDayChart;
 
 	return (
-		<Card className='analytics-variant-card'>
+		<Card className="analytics-variant-card">
 			<Card.Header>
 				<Card.Title>
 					{Liferay.Language.get('variant-report')}
@@ -62,19 +62,19 @@ export const VariantCard = ({
 			</Card.Header>
 
 			<Card.Body>
-				<div className='analytics-variant-card-charts'>
+				<div className="analytics-variant-card-charts">
 					<StatesRenderer
 						empty={!experiment.metricsHistogram?.length}
 					>
 						<StatesRenderer.Empty
-							className='my-6'
+							className="my-6"
 							description={Liferay.Language.get(
 								'metrics-will-show-once-there-are-visitors-to-your-variants'
 							)}
 							icon={{
 								border: false,
 								size: Sizes.XLarge,
-								symbol: 'ac_chart'
+								symbol: 'ac_chart',
 							}}
 							title={Liferay.Language.get(
 								'we-are-currently-collecting-data'

@@ -41,5 +41,5 @@ export const resolvers = {
 	orderTotalCurrencyValues: CommerceTotalOrderValueResolver,
 	pagePath: PagePathResolver,
 	site: IndividualSiteMetricsResolver,
-	siteInterests: InterestsResolver
+	siteInterests: InterestsResolver,
 };

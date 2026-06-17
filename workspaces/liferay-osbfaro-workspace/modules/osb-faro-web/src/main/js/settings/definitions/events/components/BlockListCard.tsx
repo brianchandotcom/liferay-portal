@@ -5,7 +5,7 @@ import BLOCKED_CUSTOM_EVENT_DEFINITIONS_QUERY, {
 	HideBlockedCustomEventDefinitionsData,
 	HideBlockedCustomEventDefinitionsVariables,
 	UnhideBlockedCustomEventDefinitions,
-	UnhideBlockedCustomEventDefinitionsData
+	UnhideBlockedCustomEventDefinitionsData,
 } from '../queries/BlockedCustomEventDefinitionsQuery';
 import Card from 'shared/components/Card';
 import ClayButton from '@clayui/button';
@@ -22,7 +22,7 @@ import {Alert} from 'shared/types';
 import {
 	BlockCustomEventDefinitionsData,
 	BlockCustomEventDefinitionsVariables,
-	UnblockCustomEventDefinitions
+	UnblockCustomEventDefinitions,
 } from 'event-analysis/queries/CustomEventDefinitions';
 import {BlockedCustomEvent} from 'event-analysis/utils/types';
 import {close, modalTypes, open} from 'shared/actions/modals';
@@ -31,7 +31,7 @@ import {connect, ConnectedProps} from 'react-redux';
 import {
 	createOrderIOMap,
 	getSortFromOrderIOMap,
-	NAME
+	NAME,
 } from 'shared/util/pagination';
 import {eventListColumns} from 'shared/util/table-columns';
 import {get} from 'lodash';
@@ -46,7 +46,7 @@ import {useMutation, useQuery} from '@apollo/client';
 import {useQueryPagination} from 'shared/hooks/useQueryPagination';
 import {
 	useSelectionContext,
-	withSelectionProvider
+	withSelectionProvider,
 } from 'shared/context/selection';
 
 const EVENT_LIMIT_REACHED =
@@ -59,8 +59,8 @@ const connector = connect(
 			groupId,
 			'data',
 			'timeZone',
-			'timeZoneId'
-		])
+			'timeZoneId',
+		]),
 	}),
 	{addAlert, close, open, removeAlert}
 );
@@ -80,12 +80,12 @@ const BlockListCard: React.FC<IBlockListCardProps> = ({
 	history,
 	open,
 	removeAlert,
-	timeZoneId
+	timeZoneId,
 }) => {
 	const {selectedItems, selectionDispatch} = useSelectionContext();
 
 	const {delta, orderIOMap, page, query} = useQueryPagination({
-		initialOrderIOMap: createOrderIOMap(NAME)
+		initialOrderIOMap: createOrderIOMap(NAME),
 	});
 
 	const {data, error, loading, refetch} = useQuery<
@@ -99,8 +99,8 @@ const BlockListCard: React.FC<IBlockListCardProps> = ({
 			size: delta,
 			sort: getSortFromOrderIOMap(
 				orderIOMap
-			) as BlockedCustomEventDefinitionsVariables['sort']
-		}
+			) as BlockedCustomEventDefinitionsVariables['sort'],
+		},
 	});
 
 	const [unblockCustomEventDefinitions] = useMutation<
@@ -113,19 +113,19 @@ const BlockListCard: React.FC<IBlockListCardProps> = ({
 		HideBlockedCustomEventDefinitionsVariables
 	>(HideBlockedCustomEventDefinitions, {
 		onCompleted: ({
-			hideBlockedEventDefinitions
+			hideBlockedEventDefinitions,
 		}: {
 			hideBlockedEventDefinitions: BlockedCustomEvent[];
 		}) => {
 			if (!selectedItems.isEmpty()) {
 				selectionDispatch?.({
 					payload: {
-						items: hideBlockedEventDefinitions
+						items: hideBlockedEventDefinitions,
 					},
-					type: 'add'
+					type: 'add',
 				});
 			}
-		}
+		},
 	});
 
 	const [unhideEventDefinitions] = useMutation<
@@ -133,19 +133,19 @@ const BlockListCard: React.FC<IBlockListCardProps> = ({
 		HideBlockedCustomEventDefinitionsVariables
 	>(UnhideBlockedCustomEventDefinitions, {
 		onCompleted: ({
-			unhideBlockedEventDefinitions
+			unhideBlockedEventDefinitions,
 		}: {
 			unhideBlockedEventDefinitions: BlockedCustomEvent[];
 		}) => {
 			if (!selectedItems.isEmpty()) {
 				selectionDispatch?.({
 					payload: {
-						items: unhideBlockedEventDefinitions
+						items: unhideBlockedEventDefinitions,
 					},
-					type: 'add'
+					type: 'add',
 				});
 			}
-		}
+		},
 	});
 
 	const currentUser = useCurrentUser();
@@ -157,7 +157,7 @@ const BlockListCard: React.FC<IBlockListCardProps> = ({
 
 		open(modalTypes.CONFIRMATION_MODAL, {
 			message: (
-				<p className='text-secondary'>
+				<p className="text-secondary">
 					{Liferay.Language.get(
 						'hiding-events-in-the-interface-may-require-reconfiguration-of-segments-and-other-analysis-using-this-event.-hidden-events-will-be-available-for-calculating-metrics'
 					)}
@@ -168,8 +168,8 @@ const BlockListCard: React.FC<IBlockListCardProps> = ({
 			onSubmit: () => {
 				hideEventDefinitions({
 					variables: {
-						eventDefinitionIds: events.map(({id}) => id)
-					}
+						eventDefinitionIds: events.map(({id}) => id),
+					},
 				})
 					.then(() => {
 						addAlert({
@@ -181,13 +181,13 @@ const BlockListCard: React.FC<IBlockListCardProps> = ({
 												'x-events-have-been-set-to-hide'
 											),
 											[visibleEventsCount]
-									  )
+										)
 									: sub(
 											Liferay.Language.get(
 												'x-has-been-set-to-hide'
 											),
 											[visibleEvents[0].name]
-									  )
+										),
 						});
 					})
 					.catch(() =>
@@ -196,7 +196,7 @@ const BlockListCard: React.FC<IBlockListCardProps> = ({
 							message: Liferay.Language.get(
 								'there-was-an-error-processing-your-request.-please-try-again'
 							),
-							timeout: false
+							timeout: false,
 						})
 					);
 			},
@@ -206,9 +206,9 @@ const BlockListCard: React.FC<IBlockListCardProps> = ({
 				visibleEventsCount > 1
 					? Liferay.Language.get('hide-events')
 					: sub(Liferay.Language.get('hide-x'), [
-							visibleEvents[0].name
-					  ]),
-			titleIcon: 'warning'
+							visibleEvents[0].name,
+						]),
+			titleIcon: 'warning',
 		});
 	};
 
@@ -219,8 +219,8 @@ const BlockListCard: React.FC<IBlockListCardProps> = ({
 
 		unhideEventDefinitions({
 			variables: {
-				eventDefinitionIds: events.map(({id}) => id)
-			}
+				eventDefinitionIds: events.map(({id}) => id),
+			},
 		})
 			.then(() => {
 				addAlert({
@@ -232,13 +232,13 @@ const BlockListCard: React.FC<IBlockListCardProps> = ({
 										'x-events-have-been-set-to-show'
 									),
 									[hiddenEventsCount]
-							  )
+								)
 							: sub(
 									Liferay.Language.get(
 										'x-has-been-set-to-show'
 									),
 									[hiddenEvents[0].name]
-							  )
+								),
 				});
 			})
 			.catch(() =>
@@ -247,7 +247,7 @@ const BlockListCard: React.FC<IBlockListCardProps> = ({
 					message: Liferay.Language.get(
 						'there-was-an-error-processing-your-request.-please-try-again'
 					),
-					timeout: false
+					timeout: false,
 				})
 			);
 	};
@@ -257,12 +257,12 @@ const BlockListCard: React.FC<IBlockListCardProps> = ({
 
 		unblockCustomEventDefinitions({
 			variables: {
-				eventDefinitionIds: events.map(({id}) => id)
-			}
+				eventDefinitionIds: events.map(({id}) => id),
+			},
 		})
 			.then(() => {
 				selectionDispatch?.({
-					type: 'clear-all'
+					type: 'clear-all',
 				});
 
 				const updatedPage = eventsCount > 1 ? 1 : Number(page);
@@ -277,17 +277,18 @@ const BlockListCard: React.FC<IBlockListCardProps> = ({
 							{
 								field,
 								page: updatedPage,
-								sortOrder
+								sortOrder,
 							},
 							toRoute(
 								Routes.SETTINGS_DEFINITIONS_EVENTS_BLOCK_LIST,
 								{
-									groupId
+									groupId,
 								}
 							)
 						)
 					);
-				} else {
+				}
+				else {
 					refetch();
 				}
 
@@ -300,18 +301,18 @@ const BlockListCard: React.FC<IBlockListCardProps> = ({
 										'x-events-have-been-returned-to-the-custom-event-list'
 									),
 									[eventsCount]
-							  )
+								)
 							: sub(
 									Liferay.Language.get(
 										'x-has-been-returned-to-the-custom-event-list'
 									),
 									[events[0].name]
-							  )
+								),
 				});
 
 				removeAlert(LIMIT_REACHED_ALERT_ID);
 			})
-			.catch(err => {
+			.catch((err) => {
 				let message: React.ReactNode = Liferay.Language.get(
 					'there-was-an-error-processing-your-request.-please-try-again'
 				);
@@ -324,13 +325,13 @@ const BlockListCard: React.FC<IBlockListCardProps> = ({
 						[
 							<ClayLink
 								href={URLConstants.DocumentationLink}
-								key='DOCUMENTATION_LINK'
-								target='_blank'
+								key="DOCUMENTATION_LINK"
+								target="_blank"
 							>
 								{Liferay.Language.get(
 									'documentation'
 								).toLowerCase()}
-							</ClayLink>
+							</ClayLink>,
 						],
 						false
 					);
@@ -340,7 +341,7 @@ const BlockListCard: React.FC<IBlockListCardProps> = ({
 					alertType: Alert.Types.Error,
 					id: LIMIT_REACHED_ALERT_ID,
 					message,
-					timeout: false
+					timeout: false,
 				});
 			});
 	};
@@ -356,7 +357,7 @@ const BlockListCard: React.FC<IBlockListCardProps> = ({
 						label: Liferay.Language.get('unblock-event'),
 						onClick: () => {
 							handleUnblockEvents([data]);
-						}
+						},
 					},
 					{
 						iconSymbol: hidden ? 'view' : 'ac_hidden',
@@ -369,8 +370,8 @@ const BlockListCard: React.FC<IBlockListCardProps> = ({
 								: handleHideEvents;
 
 							hideEventFn([data]);
-						}
-					}
+						},
+					},
 				]}
 			/>
 		);
@@ -379,7 +380,7 @@ const BlockListCard: React.FC<IBlockListCardProps> = ({
 	const authorized = currentUser.isAdmin();
 
 	const hasUnhiddenEvent = (events: OrderedMap<string, BlockedCustomEvent>) =>
-		events.some(event => !event?.hidden);
+		events.some((event) => !event?.hidden);
 
 	return (
 		<Card pageDisplay>
@@ -388,7 +389,7 @@ const BlockListCard: React.FC<IBlockListCardProps> = ({
 					eventListColumns.name,
 					eventListColumns.lastSeenURL,
 					eventListColumns.getLastSeenDate(timeZoneId),
-					eventListColumns.hidden
+					eventListColumns.hidden,
 				]}
 				delta={delta}
 				error={error}
@@ -396,7 +397,7 @@ const BlockListCard: React.FC<IBlockListCardProps> = ({
 					data,
 					[
 						'blockedCustomEventDefinitions',
-						'blockedCustomEventDefinitions'
+						'blockedCustomEventDefinitions',
 					],
 					[]
 				)}
@@ -410,12 +411,12 @@ const BlockListCard: React.FC<IBlockListCardProps> = ({
 								)}
 
 								<ClayLink
-									className='d-block mb-3'
+									className="d-block mb-3"
 									href={
 										URLConstants.DefinitionsForEventsDocumentation
 									}
-									key='DOCUMENTATION'
-									target='_blank'
+									key="DOCUMENTATION"
+									target="_blank"
 								>
 									{Liferay.Language.get(
 										'access-our-documentation-to-learn-how-to-manage-custom-events'
@@ -426,7 +427,7 @@ const BlockListCard: React.FC<IBlockListCardProps> = ({
 						icon={{
 							border: false,
 							size: Sizes.XXXLarge,
-							symbol: 'ac_satellite'
+							symbol: 'ac_satellite',
 						}}
 						title={Liferay.Language.get(
 							'there-are-no-events-blocked'
@@ -444,8 +445,8 @@ const BlockListCard: React.FC<IBlockListCardProps> = ({
 									<Nav.Item>
 										<ClayButton
 											borderless
-											className='button-root nav-btn'
-											displayType='secondary'
+											className="button-root nav-btn"
+											displayType="secondary"
 											onClick={() => {
 												handleUnblockEvents(
 													selectedItems.toArray()
@@ -453,8 +454,8 @@ const BlockListCard: React.FC<IBlockListCardProps> = ({
 											}}
 										>
 											<ClayIcon
-												className='icon-root mr-2'
-												symbol='undo'
+												className="icon-root mr-2"
+												symbol="undo"
 											/>
 
 											{Liferay.Language.get(
@@ -464,8 +465,8 @@ const BlockListCard: React.FC<IBlockListCardProps> = ({
 
 										<ClayButton
 											borderless
-											className='button-root nav-btn'
-											displayType='secondary'
+											className="button-root nav-btn"
+											displayType="secondary"
 											onClick={() => {
 												const hideEventFn =
 													hasUnhiddenEvent(
@@ -480,7 +481,7 @@ const BlockListCard: React.FC<IBlockListCardProps> = ({
 											}}
 										>
 											<ClayIcon
-												className='icon-root mr-2'
+												className="icon-root mr-2"
 												symbol={
 													hasUnhiddenEvent(
 														selectedItems
@@ -496,13 +497,13 @@ const BlockListCard: React.FC<IBlockListCardProps> = ({
 										</ClayButton>
 									</Nav.Item>
 								</Nav>
-						  )
+							)
 						: null
 				}
 				renderRowActions={
 					authorized && !selectedItems.size ? renderRowActions : null
 				}
-				rowIdentifier='id'
+				rowIdentifier="id"
 				showCheckbox={authorized}
 				total={get(data, ['blockedCustomEventDefinitions', 'total'], 0)}
 			/>

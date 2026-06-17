@@ -14,7 +14,7 @@ const {
 	stark,
 	starkD2,
 	starkL2,
-	starkL4
+	starkL4,
 } = CHART_COLOR_NAMES;
 
 export type IntervalType = 'D' | 'W' | 'M';
@@ -32,37 +32,37 @@ export const VISITORS: VisitorsType = 'visitors';
 export const INTERVAL_OPTIONS = [
 	{
 		label: Liferay.Language.get('day'),
-		value: DAY
+		value: DAY,
 	},
 	{
 		label: Liferay.Language.get('week'),
-		value: WEEK
+		value: WEEK,
 	},
 	{
 		label: Liferay.Language.get('month'),
-		value: MONTH
-	}
+		value: MONTH,
+	},
 ];
 
 export const VISITORS_TYPE_OPTIONS = [
 	{
 		label: Liferay.Language.get('all-visitors'),
-		value: VISITORS
+		value: VISITORS,
 	},
 	{
 		label: Liferay.Language.get('anonymous-visitors'),
-		value: ANONYMOUS_VISITORS
+		value: ANONYMOUS_VISITORS,
 	},
 	{
 		label: Liferay.Language.get('known-visitors'),
-		value: KNOWN_VISITORS
-	}
+		value: KNOWN_VISITORS,
+	},
 ];
 
 const COHORT_COLORS_MAP = {
 	[ANONYMOUS_VISITORS]: [mormontL4, mormontL2, mormont, mormontD2],
 	[KNOWN_VISITORS]: [starkL4, starkL2, stark, starkD2],
-	[VISITORS]: [martellL4, martellL2, martell, martellD2]
+	[VISITORS]: [martellL4, martellL2, martell, martellD2],
 };
 
 export const formatDate = (
@@ -103,7 +103,7 @@ export const formatDate = (
 const PERIOD_LABEL_MAP = {
 	[DAY]: Liferay.Language.get('day-x'),
 	[MONTH]: Liferay.Language.get('month-x'),
-	[WEEK]: Liferay.Language.get('week-x')
+	[WEEK]: Liferay.Language.get('week-x'),
 };
 
 export const getPeriodLabel = (
@@ -119,11 +119,14 @@ export const getColorHex = (
 
 	if (retention >= 75) {
 		return cohortColors[3];
-	} else if (retention >= 50) {
+	}
+	else if (retention >= 50) {
 		return cohortColors[2];
-	} else if (retention >= 25) {
+	}
+	else if (retention >= 25) {
 		return cohortColors[1];
-	} else {
+	}
+	else {
 		return cohortColors[0];
 	}
 };

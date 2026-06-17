@@ -1,6 +1,6 @@
 import {gql} from '@apollo/client';
 
-export default metric =>
+export default (metric) =>
 	gql(`
 		query Custom(
 			$assetId: String!

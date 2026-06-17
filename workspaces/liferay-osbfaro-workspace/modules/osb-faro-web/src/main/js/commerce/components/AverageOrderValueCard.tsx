@@ -1,5 +1,5 @@
 import CommerceAverageOrderValueQuery, {
-	CommerceAverageOrderValueData
+	CommerceAverageOrderValueData,
 } from 'commerce/queries/AverageOrderValueQuery';
 import CommerceMetricCard from './CommerceMetricCard';
 import React from 'react';

@@ -12,9 +12,9 @@ jest.unmock('react-dom');
 describe('Kits', () => {
 	const files = fs
 		.readdirSync(path.resolve(__dirname, '..'))
-		.filter(file => file.match(/Kit\.(jsx|tsx)$/));
+		.filter((file) => file.match(/Kit\.(jsx|tsx)$/));
 
-	files.forEach(file => {
+	files.forEach((file) => {
 		const kitName = file.replace(/\.(jsx|tsx)$/, '');
 
 		describe(kitName, () => {
@@ -26,7 +26,7 @@ describe('Kits', () => {
 					<Provider store={mockStore()}>
 						<MemoryRouter>
 							<MockedProvider addTypename={false}>
-								<Kit groupId='23' />
+								<Kit groupId="23" />
 							</MockedProvider>
 						</MemoryRouter>
 					</Provider>

@@ -51,7 +51,7 @@ export function formatTimeRange(timeRange: RawTimeRange[]) {
 				label: TIME_RANGE_LABELS[
 					rangeKey as keyof typeof TIME_RANGE_LABELS
 				],
-				value: `${rangeKey}` as RangeKeyTimeRanges
+				value: `${rangeKey}` as RangeKeyTimeRanges,
 			};
 		})
 		.sort(
@@ -65,7 +65,7 @@ const filterItemsByRetention = (
 	retentionPeriod: number
 ): Array<TimeRange> =>
 	timeRange.filter(
-		item =>
+		(item) =>
 			!(
 				retentionPeriod === 7 &&
 				item.value === RangeKeyTimeRanges.LastYear
@@ -84,7 +84,7 @@ const filterLegacyItems = (
 				RangeKeyTimeRanges.Last7Days,
 				RangeKeyTimeRanges.Last28Days,
 				RangeKeyTimeRanges.Last30Days,
-				RangeKeyTimeRanges.Last90Days
+				RangeKeyTimeRanges.Last90Days,
 			].includes(value)
 		),
 		retentionPeriod
@@ -128,11 +128,11 @@ export const getFilteredItems: GetFilteredItems = ({
 		RangeKeyTimeRanges.Last24Hours,
 		RangeKeyTimeRanges.Last7Days,
 		RangeKeyTimeRanges.Last30Days,
-		RangeKeyTimeRanges.Last90Days
+		RangeKeyTimeRanges.Last90Days,
 	],
 	retentionPeriod,
 	seeMore,
-	timeRange
+	timeRange,
 }) => {
 	if (legacy) {
 		return filterLegacyItems(timeRange, retentionPeriod);
@@ -156,16 +156,16 @@ export function getSelectedItem({
 	rangeEnd,
 	rangeKey,
 	rangeStart,
-	timeRange
+	timeRange,
 }: IGetSelectedItemProps) {
 	if (rangeKey === 'CUSTOM') {
 		return {
 			label: `${moment(rangeStart).format('ll')} - ${moment(
 				rangeEnd
 			).format('ll')}`,
-			value: 'CUSTOM'
+			value: 'CUSTOM',
 		};
 	}
 
-	return timeRange.find(item => item.value === rangeKey) || timeRange[0];
+	return timeRange.find((item) => item.value === rangeKey) || timeRange[0];
 }

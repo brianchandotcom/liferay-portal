@@ -24,7 +24,7 @@ const DataSourcesContext = createContext<IDataSourcesContext | null>(null);
 export const DataSourcesProvider = ({
 	children,
 	groupId,
-	skip = false
+	skip = false,
 }: {
 	children: React.ReactNode;
 	groupId: string;
@@ -36,7 +36,7 @@ export const DataSourcesProvider = ({
 			groupId,
 			orderIOMap: createOrderIOMap(NAME),
 			page: 1,
-			query: ''
+			query: '',
 		}),
 		[groupId]
 	);
@@ -45,11 +45,11 @@ export const DataSourcesProvider = ({
 		data = {items: []},
 		error,
 		loading,
-		refetch
+		refetch,
 	} = useRequest<any, {items: IDataSourceProps[]}>({
 		dataSourceFn: API.dataSource.search,
 		skipRequest: skip || !groupId || groupId === '0',
-		variables
+		variables,
 	});
 
 	const value = useMemo<IDataSourcesContext>(
@@ -58,7 +58,7 @@ export const DataSourcesProvider = ({
 			error,
 			items: data?.items ?? [],
 			loading,
-			refetch
+			refetch,
 		}),
 		[data, error, loading, refetch]
 	);

@@ -1,11 +1,11 @@
 import BaseDropdown from '../base-dropdown';
 import BreakdownOptions from './options';
 import EventAttributeDefinitionQuery, {
-	UPDATE_EVENT_ATTRIBUTE_DEFINITION
+	UPDATE_EVENT_ATTRIBUTE_DEFINITION,
 } from 'event-analysis/queries/EventAttributeDefinitionQuery';
 import EventAttributeDefinitionsQuery, {
 	EventAttributeDefinitionsData,
-	EventAttributeDefinitionsVariables
+	EventAttributeDefinitionsVariables,
 } from 'event-analysis/queries/EventAttributeDefinitionsQuery';
 import React, {useState} from 'react';
 import {AddBreakdown, EditBreakdown} from '../../context/attributes';
@@ -15,12 +15,12 @@ import {
 	AttributeOwnerTypes,
 	AttributeTypes,
 	Breakdown,
-	DataTypes
+	DataTypes,
 } from 'event-analysis/utils/types';
 import {
 	BREAKDOWN_FNS_MAP,
 	getModifiedEventAttributeDefinitions,
-	getTabs
+	getTabs,
 } from 'event-analysis/utils/utils';
 import {close, modalTypes, open} from 'shared/actions/modals';
 import {connect, ConnectedProps} from 'react-redux';
@@ -57,7 +57,7 @@ const AttributeBreakdownDropdown: React.FC<
 	onAttributeSelect,
 	open,
 	trigger,
-	uneditableIds
+	uneditableIds,
 }) => {
 	const [attributeOwnerType, setAttributeOwnerType] =
 		useState<AttributeOwnerTypes>(AttributeOwnerTypes.Event);
@@ -77,10 +77,10 @@ const AttributeBreakdownDropdown: React.FC<
 			size: 200,
 			sort: {
 				column: DISPLAY_NAME,
-				type: OrderByDirections.Ascending
+				type: OrderByDirections.Ascending,
 			},
-			type: AttributeTypes.All
-		}
+			type: AttributeTypes.All,
+		},
 	});
 
 	const attributeId = attribute ? attribute.id : null;
@@ -104,8 +104,8 @@ const AttributeBreakdownDropdown: React.FC<
 	return (
 		<BaseDropdown
 			alignmentPosition={alignmentPosition}
-			className='event-analysis-editor-attribute-dropdown-root'
-			onActiveChange={active => {
+			className="event-analysis-editor-attribute-dropdown-root"
+			onActiveChange={(active) => {
 				if (!active) {
 					setAttributeOwnerType(AttributeOwnerTypes.Event);
 					setQuery('');
@@ -117,13 +117,13 @@ const AttributeBreakdownDropdown: React.FC<
 			trigger={trigger}
 		>
 			{({setActive}) => (
-				<TransitionGroup className='transition-carousel-group'>
+				<TransitionGroup className="transition-carousel-group">
 					{(!selectedAttribute || !showOptions) && (
 						<CSSTransition
-							classNames='transition-attribute-carousel-right'
+							classNames="transition-attribute-carousel-right"
 							timeout={250}
 						>
-							<div className='d-flex flex-column'>
+							<div className="d-flex flex-column">
 								<BaseDropdown.Header
 									activeTabId={attributeOwnerType}
 									tabs={getTabs(setAttributeOwnerType)}
@@ -137,8 +137,8 @@ const AttributeBreakdownDropdown: React.FC<
 								>
 									{({
 										eventAttributeDefinitions: {
-											eventAttributeDefinitions
-										}
+											eventAttributeDefinitions,
+										},
 									}: {
 										eventAttributeDefinitions: {
 											eventAttributeDefinitions: Attribute[];
@@ -149,7 +149,7 @@ const AttributeBreakdownDropdown: React.FC<
 												{
 													attribute: attribute!,
 													attributeOwnerType,
-													eventAttributeDefinitions
+													eventAttributeDefinitions,
 												}
 											);
 
@@ -162,7 +162,7 @@ const AttributeBreakdownDropdown: React.FC<
 												items={
 													modifiedEventAttributeDefinitions
 												}
-												onEditClick={item => {
+												onEditClick={(item) => {
 													if (!item) {
 														return;
 													}
@@ -175,20 +175,20 @@ const AttributeBreakdownDropdown: React.FC<
 																UPDATE_EVENT_ATTRIBUTE_DEFINITION,
 															onClose,
 															query: EventAttributeDefinitionQuery,
-															showTypecast: true
+															showTypecast: true,
 														}
 													);
 
 													setActive(false);
 												}}
-												onItemClick={item => {
+												onItemClick={(item) => {
 													const attribute =
 														item as Attribute;
 													const {
 														dataType,
 														description,
 														displayName,
-														id: newAttributeId
+														id: newAttributeId,
 													} = attribute;
 
 													const breakdownFn =
@@ -206,9 +206,9 @@ const AttributeBreakdownDropdown: React.FC<
 															description,
 															displayName:
 																displayName ??
-																''
+																'',
 														}),
-														id: breakdownId ?? ''
+														id: breakdownId ?? '',
 													});
 
 													setActive(false);
@@ -236,10 +236,10 @@ const AttributeBreakdownDropdown: React.FC<
 
 					{showOptions && (
 						<CSSTransition
-							classNames='transition-attribute-carousel-left'
+							classNames="transition-attribute-carousel-left"
 							timeout={250}
 						>
-							<div className='w-100'>
+							<div className="w-100">
 								<BreakdownOptions
 									attribute={selectedAttribute!}
 									attributeOwnerType={attributeOwnerType}
@@ -252,7 +252,7 @@ const AttributeBreakdownDropdown: React.FC<
 										uneditableIds &&
 										selectedAttribute &&
 										uneditableIds.some(
-											uneditableAttributeId =>
+											(uneditableAttributeId) =>
 												uneditableAttributeId ===
 												selectedAttribute.id
 										)
@@ -266,12 +266,12 @@ const AttributeBreakdownDropdown: React.FC<
 																UPDATE_EVENT_ATTRIBUTE_DEFINITION,
 															onClose,
 															query: EventAttributeDefinitionQuery,
-															showTypecast: true
+															showTypecast: true,
 														}
 													);
 
 													setActive(false);
-											  }
+												}
 									}
 								/>
 							</div>

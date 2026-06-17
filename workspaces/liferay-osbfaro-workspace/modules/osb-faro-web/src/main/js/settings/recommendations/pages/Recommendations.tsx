@@ -12,7 +12,7 @@ interface IRecommendationsProps {
 
 const Recommendations: React.FC<IRecommendationsProps> = ({
 	history,
-	router
+	router,
 }) => {
 	const {groupId} = router.params;
 

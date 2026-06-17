@@ -8,7 +8,7 @@ import {ApolloProvider} from '@apollo/client';
 import {
 	Checkbox,
 	formattedContainers,
-	ReportContainer
+	ReportContainer,
 } from '../DownloadPDFReport';
 import {createMemoryHistory} from 'history';
 import {CSVType, useDownloadCSV} from '../utils';
@@ -32,13 +32,13 @@ jest.mock('react-router-dom', () => ({
 		channelId: '456',
 		groupId: '2000',
 		query: {
-			rangeKey: RangeKeyTimeRanges.Last30Days
-		}
-	})
+			rangeKey: RangeKeyTimeRanges.Last30Days,
+		},
+	}),
 }));
 
 jest.mock('shared/hooks/useTimeZone', () => ({
-	useTimeZone: () => ({timeZoneId: 'UTC'})
+	useTimeZone: () => ({timeZoneId: 'UTC'}),
 }));
 
 interface IWrapperCSVComponentProps extends React.HTMLAttributes<HTMLElement> {
@@ -54,7 +54,7 @@ const WrapperCSVComponent: React.FC<IWrapperCSVComponentProps> = ({
 	const generateURL = useDownloadCSV({
 		assetId: '123',
 		assetType: 'myAssetType',
-		type
+		type,
 	});
 
 	return (
@@ -76,7 +76,7 @@ const WrapperCSVComponent: React.FC<IWrapperCSVComponentProps> = ({
 					[Liferay.Language.get('individuals')]
 				) as string
 			}
-			onSubmit={rangeSelectors => {
+			onSubmit={(rangeSelectors) => {
 				const url = generateURL(rangeSelectors);
 
 				CSV_URL = url;
@@ -172,7 +172,7 @@ const generateCSVURL = (type: CSVType) => {
 
 	fireEvent.click(
 		getByRole('button', {
-			name: /download report/i
+			name: /download report/i,
 		})
 	);
 
@@ -198,7 +198,7 @@ describe('DownloadReportModal CSV', () => {
 		jest.useFakeTimers();
 
 		// @ts-ignore
-		ReactDOM.createPortal = jest.fn(element => element);
+		ReactDOM.createPortal = jest.fn((element) => element);
 	});
 
 	afterAll(() => {
@@ -212,7 +212,7 @@ describe('DownloadReportModal CSV', () => {
 
 		fireEvent.click(
 			getByRole('button', {
-				name: /download report/i
+				name: /download report/i,
 			})
 		);
 
@@ -226,7 +226,7 @@ describe('DownloadReportModal CSV', () => {
 
 		expect(
 			getByRole('heading', {
-				name: /download report/i
+				name: /download report/i,
 			})
 		).toBeInTheDocument();
 
@@ -271,7 +271,7 @@ describe('DownloadReportModal PDF', () => {
 		jest.useFakeTimers();
 
 		// @ts-ignore
-		ReactDOM.createPortal = jest.fn(element => element);
+		ReactDOM.createPortal = jest.fn((element) => element);
 	});
 
 	afterAll(() => {
@@ -306,7 +306,7 @@ describe('DownloadReportModal PDF', () => {
 			ReportContainer.ViewsByLocationCard,
 			ReportContainer.ViewsByTechnologyCard,
 			ReportContainer.VisitorsBehaviorCard,
-			ReportContainer.VisitorsByTimeCard
+			ReportContainer.VisitorsByTimeCard,
 		];
 
 		const {container, getByRole, getByTestId, getByText} = render(
@@ -329,7 +329,7 @@ describe('DownloadReportModal PDF', () => {
 
 		fireEvent.click(
 			getByRole('button', {
-				name: /download report/i
+				name: /download report/i,
 			})
 		);
 
@@ -343,7 +343,7 @@ describe('DownloadReportModal PDF', () => {
 
 		expect(
 			getByRole('heading', {
-				name: /download report/i
+				name: /download report/i,
 			})
 		).toBeInTheDocument();
 

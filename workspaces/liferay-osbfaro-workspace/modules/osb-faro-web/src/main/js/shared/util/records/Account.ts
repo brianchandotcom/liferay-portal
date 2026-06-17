@@ -23,7 +23,7 @@ export default class Account
 		photoURL: '',
 		properties: Map(),
 		status: null,
-		type: EntityTypes.Account
+		type: EntityTypes.Account,
 	})
 	implements IAccount
 {

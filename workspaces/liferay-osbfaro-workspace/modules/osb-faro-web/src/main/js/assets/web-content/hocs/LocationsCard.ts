@@ -1,5 +1,5 @@
 import getLocationsMapper, {
-	getLocationsMapperCountries
+	getLocationsMapperCountries,
 } from 'cerebro-shared/hocs/mappers/locations';
 import URLConstants from 'shared/util/url-constants';
 import {GEOLOCATION_FRAGMENT} from 'shared/queries/fragments';
@@ -82,6 +82,8 @@ export default withLocationsCard(
 		),
 		documentationUrl: URLConstants.SitesDashboardWebContentViewsByLocation,
 		reportContainer: ReportContainer.ViewsByLocationCard,
-		title: Liferay.Language.get('there-are-no-views-on-the-selected-period')
+		title: Liferay.Language.get(
+			'there-are-no-views-on-the-selected-period'
+		),
 	}
 );

@@ -45,7 +45,8 @@
 		flex-direction: row;
 
 		&.disabled {
-			.email-address, .name {
+			.email-address,
+			.name {
 				color: $mainLighten52;
 			}
 		}
@@ -58,7 +59,8 @@
 			padding: 4px;
 		}
 
-		.email-address, .name {
+		.email-address,
+		.name {
 			font-size: $fontSizeSmall;
 			font-weight: $fontWeightSemiBold;
 			line-height: 24px;

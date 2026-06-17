@@ -4,7 +4,7 @@ export enum LifecycleStages {
 	ENGAGED = 'ENGAGED',
 	ESTABLISHED = 'ESTABLISHED',
 	ONBOARDING = 'ONBOARDING',
-	PIPELINE = 'PIPELINE'
+	PIPELINE = 'PIPELINE',
 }
 
 type DisplayType = 'danger' | 'info' | 'secondary' | 'success' | 'warning';
@@ -15,26 +15,26 @@ export const lifecycleStagesLabelMap: Record<
 > = {
 	[LifecycleStages.AT_RISK]: {
 		displayType: 'danger',
-		label: Liferay.Language.get('at-risk')
+		label: Liferay.Language.get('at-risk'),
 	},
 	[LifecycleStages.AWARE]: {
 		displayType: 'secondary',
-		label: Liferay.Language.get('aware')
+		label: Liferay.Language.get('aware'),
 	},
 	[LifecycleStages.ENGAGED]: {
 		displayType: 'warning',
-		label: Liferay.Language.get('engaged')
+		label: Liferay.Language.get('engaged'),
 	},
 	[LifecycleStages.ESTABLISHED]: {
 		displayType: 'success',
-		label: Liferay.Language.get('established')
+		label: Liferay.Language.get('established'),
 	},
 	[LifecycleStages.ONBOARDING]: {
 		displayType: 'secondary',
-		label: Liferay.Language.get('onboarding')
+		label: Liferay.Language.get('onboarding'),
 	},
 	[LifecycleStages.PIPELINE]: {
 		displayType: 'info',
-		label: Liferay.Language.get('pipeline')
-	}
+		label: Liferay.Language.get('pipeline'),
+	},
 };

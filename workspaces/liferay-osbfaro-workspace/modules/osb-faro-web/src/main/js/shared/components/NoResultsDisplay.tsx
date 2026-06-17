@@ -29,10 +29,10 @@ interface INoResultsDisplayIcon
 const NoResultsDisplayIcon: React.FC<INoResultsDisplayIcon> = ({
 	border = true,
 	size = Sizes.XXXLarge,
-	symbol
+	symbol,
 }) => {
 	const classes = getCN('no-results-icon', {
-		'no-results-icon-border': border
+		'no-results-icon-border': border,
 	});
 
 	return (
@@ -61,7 +61,7 @@ const NoResultsDisplay: React.FC<INoResultsDisplayProps> = ({
 		'display-card': displayCard,
 		'flex-grow-0': !flexGrow,
 		'flex-grow-1': flexGrow,
-		'no-results-primary': primary
+		'no-results-primary': primary,
 	});
 
 	return (
@@ -69,10 +69,10 @@ const NoResultsDisplay: React.FC<INoResultsDisplayProps> = ({
 			<div className={getCN('no-results-content', {spacer})}>
 				{icon && <NoResultsDisplayIcon {...icon} />}
 
-				{title && <div className='h4 no-results-title'>{title}</div>}
+				{title && <div className="h4 no-results-title">{title}</div>}
 
 				{description && (
-					<div className='no-results-description'>{description}</div>
+					<div className="no-results-description">{description}</div>
 				)}
 
 				{children}

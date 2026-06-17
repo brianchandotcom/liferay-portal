@@ -1,7 +1,7 @@
 import ClayButton from '@clayui/button';
 import Form, {
 	validateMinDuration,
-	validateRequired
+	validateRequired,
 } from 'shared/components/form';
 import React from 'react';
 import {createDurationBreakdown} from 'event-analysis/utils/utils';
@@ -18,21 +18,21 @@ const DurationBreakdown: React.FC<IBreakdownProps> = ({
 	breakdown,
 	description,
 	displayName,
-	onSubmit
+	onSubmit,
 }) => {
 	const getInitialValues = () => {
 		if (breakdown) {
 			const {binSize} = breakdown;
 
 			return {
-				binSize: formatTime(binSize ?? 0)
+				binSize: formatTime(binSize ?? 0),
 			};
 		}
 
 		return {
 			binSize: formatTime(DEFAULT_DURATION_BIN),
 			operator: Operators.GT,
-			value: ''
+			value: '',
 		};
 	};
 
@@ -50,14 +50,14 @@ const DurationBreakdown: React.FC<IBreakdownProps> = ({
 							binSize.replace(/_/g, '0') as string
 						),
 						description,
-						displayName
+						displayName,
 					})
 				);
 			}}
 		>
 			{({handleSubmit, isValid}) => (
 				<Form.Form onSubmit={handleSubmit}>
-					<div className='options-body'>
+					<div className="options-body">
 						<Form.Group autoFit>
 							<Form.GroupItem>
 								<Form.Input
@@ -65,25 +65,25 @@ const DurationBreakdown: React.FC<IBreakdownProps> = ({
 										'group-duration-by'
 									)}
 									mask={DURATION_MASK}
-									name='binSize'
-									placeholder='HH:MM:SS'
-									type='string'
+									name="binSize"
+									placeholder="HH:MM:SS"
+									type="string"
 									validate={sequence([
 										validateRequired,
-										validateMinDuration('00:00:01')
+										validateMinDuration('00:00:01'),
 									])}
 								/>
 							</Form.GroupItem>
 						</Form.Group>
 					</div>
 
-					<div className='options-footer'>
+					<div className="options-footer">
 						<ClayButton
 							block
-							className='button-root'
+							className="button-root"
 							disabled={!isValid}
-							displayType='primary'
-							type='submit'
+							displayType="primary"
+							type="submit"
 						>
 							{Liferay.Language.get('apply')}
 						</ClayButton>

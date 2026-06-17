@@ -7,7 +7,7 @@ function delete$({groupId, ids}) {
 	return sendRequest({
 		data: {ids},
 		method: 'DELETE',
-		path: `main/${groupId}/user`
+		path: `main/${groupId}/user`,
 	});
 }
 
@@ -16,7 +16,7 @@ export {delete$ as delete};
 export function fetchCurrentUser({groupId}) {
 	return sendRequest({
 		method: 'GET',
-		path: `main/${groupId}/user/current`
+		path: `main/${groupId}/user/current`,
 	});
 }
 
@@ -26,7 +26,7 @@ export function fetchMany({
 	orderIOMap,
 	page,
 	query,
-	statuses = [UserStatuses.Approved, UserStatuses.Pending]
+	statuses = [UserStatuses.Approved, UserStatuses.Pending],
 }) {
 	const orderParams = orderIOMap.first();
 
@@ -38,10 +38,10 @@ export function fetchMany({
 			delta,
 			orderByFields,
 			query,
-			statuses
+			statuses,
 		},
 		method: 'GET',
-		path: `main/${groupId}/user`
+		path: `main/${groupId}/user`,
 	});
 }
 
@@ -49,10 +49,10 @@ export function fetchCount({groupId, query = '', statuses = [0, 1]}) {
 	return sendRequest({
 		data: {
 			query,
-			statuses
+			statuses,
 		},
 		method: 'GET',
-		path: `main/${groupId}/user/count`
+		path: `main/${groupId}/user/count`,
 	});
 }
 
@@ -60,7 +60,7 @@ export function accept({groupId, id}) {
 	return sendRequest({
 		data: {id},
 		method: 'POST',
-		path: `main/${groupId}/user/${id}/accept`
+		path: `main/${groupId}/user/${id}/accept`,
 	});
 }
 
@@ -68,7 +68,7 @@ export function inviteMany({emailAddresses, groupId, roleName}) {
 	return sendRequest({
 		data: {emailAddresses, roleName},
 		method: 'POST',
-		path: `main/${groupId}/user`
+		path: `main/${groupId}/user`,
 	});
 }
 
@@ -78,7 +78,7 @@ export function updateLanguage({languageId}) {
 		contentType: '',
 		data: {languageId, redirect: location.pathname},
 		method: 'GET',
-		path: 'update_language'
+		path: 'update_language',
 	});
 }
 
@@ -86,6 +86,6 @@ export function updateMany({groupId, ids, roleName}) {
 	return sendRequest({
 		data: {ids, roleName},
 		method: 'PUT',
-		path: `main/${groupId}/user`
+		path: `main/${groupId}/user`,
 	});
 }

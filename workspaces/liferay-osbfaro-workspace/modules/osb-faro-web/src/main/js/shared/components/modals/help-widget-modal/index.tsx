@@ -12,14 +12,14 @@ interface IHelpWidgetModalProps {
 
 const HelpWidgetModal: React.FC<IHelpWidgetModalProps> = ({
 	groupId,
-	onClose
+	onClose,
 }) => {
 	const [step, setStep] = useState(0);
 
 	const ScreenComponent = MODAL_SCREENS[step];
 
 	return (
-		<Modal className='help-widget-modal-root'>
+		<Modal className="help-widget-modal-root">
 			<ScreenComponent
 				groupId={groupId}
 				onClose={onClose}

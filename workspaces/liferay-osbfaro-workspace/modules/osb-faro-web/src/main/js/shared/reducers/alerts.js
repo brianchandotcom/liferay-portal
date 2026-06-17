@@ -9,7 +9,7 @@ const actionHandlers = {
 		return state.mergeIn([id], {
 			alertType,
 			id,
-			message
+			message,
 		});
 	},
 
@@ -24,9 +24,9 @@ const actionHandlers = {
 
 		return state.mergeIn([id], {
 			alertType,
-			message
+			message,
 		});
-	}
+	},
 };
 
 export default createReducer(new Map(), actionHandlers);

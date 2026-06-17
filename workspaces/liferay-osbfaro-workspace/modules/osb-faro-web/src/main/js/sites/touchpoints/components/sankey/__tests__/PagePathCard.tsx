@@ -18,36 +18,36 @@ const PREVIOUS_PATH_NODES = [
 		canonicalUrl: 'https://www.site1.com',
 		external: false,
 		title: 'Site 1',
-		views: 10000
+		views: 10000,
 	},
 	{
 		__typename: 'PagePathNode',
 		canonicalUrl: 'https://www.site2.com',
 		external: false,
 		title: 'Site 2',
-		views: 10000
+		views: 10000,
 	},
 	{
 		__typename: 'PagePathNode',
 		canonicalUrl: 'https://www.site3.com',
 		external: false,
 		title: 'Site 3',
-		views: 5000
+		views: 5000,
 	},
 	{
 		__typename: 'PagePathNode',
 		canonicalUrl: 'others',
 		external: false,
 		title: 'others',
-		views: 500
+		views: 500,
 	},
 	{
 		__typename: 'PagePathNode',
 		canonicalUrl: 'drop-offs',
 		external: false,
 		title: 'drop-offs',
-		views: 8000
-	}
+		views: 8000,
+	},
 ];
 
 const FOLLOWING_PATH_NODES = [
@@ -56,36 +56,36 @@ const FOLLOWING_PATH_NODES = [
 		canonicalUrl: 'https://www.google.com',
 		external: true,
 		title: 'Google',
-		views: 10000
+		views: 10000,
 	},
 	{
 		__typename: 'PagePathNode',
 		canonicalUrl: 'https://www.facebook.com',
 		external: true,
 		title: 'Facebook',
-		views: 10000
+		views: 10000,
 	},
 	{
 		__typename: 'PagePathNode',
 		canonicalUrl: 'https://www.instagram.com',
 		external: true,
 		title: 'Instagram',
-		views: 8000
+		views: 8000,
 	},
 	{
 		__typename: 'PagePathNode',
 		canonicalUrl: 'direct',
 		external: false,
 		title: 'direct',
-		views: 5000
+		views: 5000,
 	},
 	{
 		__typename: 'PagePathNode',
 		canonicalUrl: 'others',
 		external: false,
 		title: 'others',
-		views: 1000
-	}
+		views: 1000,
+	},
 ];
 
 const DATA = {
@@ -95,8 +95,8 @@ const DATA = {
 		followingPagePathNodes: PREVIOUS_PATH_NODES,
 		previousPagePathNodes: FOLLOWING_PATH_NODES,
 		title: 'Liferay Home Page',
-		views: 100000
-	}
+		views: 100000,
+	},
 };
 
 const EMPTY_STATE_DATA = {
@@ -106,8 +106,8 @@ const EMPTY_STATE_DATA = {
 		followingPagePathNodes: [],
 		previousPagePathNodes: [],
 		title: 'Liferay Home Page',
-		views: 100000
-	}
+		views: 100000,
+	},
 };
 
 const WrapperComponent = ({
@@ -115,9 +115,9 @@ const WrapperComponent = ({
 	rangeSelectors = {
 		rangeEnd: '',
 		rangeKey: RangeKeyTimeRanges.Last30Days,
-		rangeStart: ''
+		rangeStart: '',
 	},
-	reqOptions = {}
+	reqOptions = {},
 }: {
 	data: any;
 	rangeSelectors?: RangeSelectors;
@@ -125,10 +125,10 @@ const WrapperComponent = ({
 }) => (
 	<MemoryRouter
 		initialEntries={[
-			'/workspace/4567/123/sites/pages/overview/https%3A%2F%2Fliferay.com%2Fhome/Liferay%20DXP%20-%20Home?rangeKey=30'
+			'/workspace/4567/123/sites/pages/overview/https%3A%2F%2Fliferay.com%2Fhome/Liferay%20DXP%20-%20Home?rangeKey=30',
 		]}
 	>
-		<Route path='/workspace/:groupId/:channelId/sites/pages/overview/:touchpoint/:title'>
+		<Route path="/workspace/:groupId/:channelId/sites/pages/overview/:touchpoint/:title">
 			<MockedProvider
 				cache={new InMemoryCache({freezeResults: false} as any)}
 				mocks={[mockPagePathReq(data, reqOptions)]}
@@ -188,6 +188,7 @@ describe('PagePathCard', () => {
 		expect(nodes).toHaveLength(11);
 
 		nodes.forEach((node, index) => {
+
 			// Main node is always the first one
 
 			if (index === 0) {
@@ -283,7 +284,7 @@ describe('PagePathCard', () => {
 				rangeSelectors={{
 					rangeEnd: '',
 					rangeKey: RangeKeyTimeRanges.Last24Hours,
-					rangeStart: ''
+					rangeStart: '',
 				}}
 				reqOptions={{rangeKey: Number(RangeKeyTimeRanges.Last24Hours)}}
 			/>
@@ -306,7 +307,7 @@ describe('PagePathCard', () => {
 				rangeSelectors={{
 					rangeEnd: '',
 					rangeKey: RangeKeyTimeRanges.Last24Hours,
-					rangeStart: ''
+					rangeStart: '',
 				}}
 				reqOptions={{rangeKey: Number(RangeKeyTimeRanges.Last24Hours)}}
 			/>

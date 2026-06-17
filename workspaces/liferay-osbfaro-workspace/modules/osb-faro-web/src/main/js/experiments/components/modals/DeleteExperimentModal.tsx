@@ -20,7 +20,7 @@ const DeleteExperimentModal = ({
 	addAlert,
 	experimentId,
 	observer,
-	onClose
+	onClose,
 }: IDeleteExperimentModalProps) => {
 	const {channelId, groupId} = useParams<{
 		channelId: string;
@@ -32,14 +32,14 @@ const DeleteExperimentModal = ({
 	const onSubmit = () =>
 		mutate({
 			variables: {
-				experimentId
-			}
+				experimentId,
+			},
 		});
 
 	const onSuccess = () => {
 		addAlert({
 			alertType: Alert.Types.Success,
-			message: Liferay.Language.get('the-test-has-been-deleted')
+			message: Liferay.Language.get('the-test-has-been-deleted'),
 		});
 
 		history.push(toRoute(Routes.TESTS, {channelId, groupId}));
@@ -51,17 +51,17 @@ const DeleteExperimentModal = ({
 			onClose={onClose}
 			onSubmit={onSubmit}
 			onSuccess={onSuccess}
-			status='warning'
+			status="warning"
 			submitMessage={Liferay.Language.get('delete')}
 			title={Liferay.Language.get('deleting-test')}
 		>
-			<p className='font-weight-bold text-secondary'>
+			<p className="font-weight-bold text-secondary">
 				{Liferay.Language.get(
 					'are-you-sure-you-want-to-delete-this-test'
 				)}
 			</p>
 
-			<p className='text-secondary'>
+			<p className="text-secondary">
 				{Liferay.Language.get(
 					'you-will-permanently-lose-all-test-data-and-results-collected-from-this-test'
 				)}{' '}

@@ -13,9 +13,9 @@ export function fetch(params) {
 
 	return sendRequest({
 		data: {
-			...otherParams
+			...otherParams,
 		},
 		method: 'GET',
-		path: `contacts/${groupId}/${entityType}/distribution`
+		path: `contacts/${groupId}/${entityType}/distribution`,
 	});
 }

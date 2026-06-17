@@ -1,5 +1,5 @@
 import getLocationsMapper, {
-	getLocationsMapperCountries
+	getLocationsMapperCountries,
 } from 'cerebro-shared/hocs/mappers/locations';
 import URLConstants from 'shared/util/url-constants';
 import {GEOLOCATION_FRAGMENT} from 'shared/queries/fragments';
@@ -85,6 +85,6 @@ export default withLocationsCard(
 		reportContainer: ReportContainer.DownloadsByLocationCard,
 		title: Liferay.Language.get(
 			'there-are-no-downloads-on-the-selected-period'
-		)
+		),
 	}
 );

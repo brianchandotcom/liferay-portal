@@ -19,6 +19,7 @@ const Overview = lazy(
 const IndividualAttributes = lazy(
 	() =>
 		import(
+
 			/* webpackChunkName: "DefinitionsIndividualAttributes" */ './IndividualAttributes'
 		)
 );
@@ -26,6 +27,7 @@ const IndividualAttributes = lazy(
 const InterestTopics = lazy(
 	() =>
 		import(
+
 			/* webpackChunkName: "DefinitionsInterestTopics" */ './InterestTopics'
 		)
 );
@@ -42,6 +44,7 @@ const Search = lazy(
 const Events = lazy(
 	() =>
 		import(
+
 			/* webpackChunkName: "DefinitionsEvents" */ '../events/pages/Events'
 		)
 );
@@ -49,6 +52,7 @@ const Events = lazy(
 const EventAttributes = lazy(
 	() =>
 		import(
+
 			/* webpackChunkName: "DefinitionsEvents" */ '../event-attributes/pages/EventAttributes'
 		)
 );
@@ -56,6 +60,7 @@ const EventAttributes = lazy(
 const EventView = lazy(
 	() =>
 		import(
+
 			/* webpackChunkName: "DefinitionsEventView" */ '../events/pages/View'
 		)
 );
@@ -63,6 +68,7 @@ const EventView = lazy(
 const AttributeView = lazy(
 	() =>
 		import(
+
 			/* webpackChunkName: "DefinitionsEventAttributesView" */ '../event-attributes/pages/AttributeView'
 		)
 );
@@ -99,7 +105,9 @@ const Definitions: React.FC<IDefinitionsProps> = () => (
 			/>
 
 			{DEVELOPER_MODE && (
+
 				// TODO: LRAC-4511 Remove when new TrackedBehavior page exists
+
 				<BundleRouter
 					data={TrackedBehaviors}
 					exact
@@ -117,7 +125,7 @@ const Definitions: React.FC<IDefinitionsProps> = () => (
 				data={Events}
 				path={[
 					Routes.SETTINGS_DEFINITIONS_EVENTS_CUSTOM,
-					Routes.SETTINGS_DEFINITIONS_EVENTS_DEFAULT
+					Routes.SETTINGS_DEFINITIONS_EVENTS_DEFAULT,
 				]}
 			/>
 
@@ -125,7 +133,7 @@ const Definitions: React.FC<IDefinitionsProps> = () => (
 				data={EventAttributes}
 				path={[
 					Routes.SETTINGS_DEFINITIONS_EVENT_ATTRIBUTES_LOCAL,
-					Routes.SETTINGS_DEFINITIONS_EVENT_ATTRIBUTES_GLOBAL
+					Routes.SETTINGS_DEFINITIONS_EVENT_ATTRIBUTES_GLOBAL,
 				]}
 			/>
 

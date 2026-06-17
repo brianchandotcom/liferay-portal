@@ -10,16 +10,16 @@ export interface ConnectorStatusDisplay {
 const STATUS_DISPLAY: Record<ConnectorStatus, ConnectorStatusDisplay> = {
 	[ConnectorStatus.Active]: {
 		display: 'success',
-		label: Liferay.Language.get('active')
+		label: Liferay.Language.get('active'),
 	},
 	[ConnectorStatus.Disconnected]: {
 		display: 'secondary',
-		label: Liferay.Language.get('disconnected')
+		label: Liferay.Language.get('disconnected'),
 	},
 	[ConnectorStatus.Inactive]: {
 		display: 'warning',
-		label: Liferay.Language.get('inactive')
-	}
+		label: Liferay.Language.get('inactive'),
+	},
 };
 
 export function getConnectorStatusDisplay(

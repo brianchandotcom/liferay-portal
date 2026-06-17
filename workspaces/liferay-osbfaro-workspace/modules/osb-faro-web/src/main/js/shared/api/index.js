@@ -53,5 +53,5 @@ export {
 	session,
 	user,
 	vocabularies,
-	tags
+	tags,
 };

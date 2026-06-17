@@ -5,7 +5,7 @@ import {
 	fetchDataSource,
 	updateCSVDataSource,
 	updateLiferayDataSource,
-	updateSalesforceDataSource
+	updateSalesforceDataSource,
 } from '../data-sources';
 import {isFSA} from 'flux-standard-action';
 

@@ -21,8 +21,8 @@ export default class TimePeriodInput extends React.Component<ITimePeriodInputPro
 
 		return (
 			<Picker
-				className='operator-input'
-				data-testid='clay-select'
+				className="operator-input"
+				data-testid="clay-select"
 				items={TIME_PERIOD_OPTIONS}
 				onSelectionChange={this.handleTimePeriodChange}
 				selectedKey={value}

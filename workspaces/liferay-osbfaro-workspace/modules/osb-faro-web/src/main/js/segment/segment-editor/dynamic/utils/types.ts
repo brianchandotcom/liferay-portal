@@ -4,7 +4,7 @@ import {
 	CustomFunctionOperators,
 	FunctionalOperators,
 	NotOperators,
-	RelationalOperators
+	RelationalOperators,
 } from './constants';
 import {CustomValue, Property} from 'shared/util/records';
 

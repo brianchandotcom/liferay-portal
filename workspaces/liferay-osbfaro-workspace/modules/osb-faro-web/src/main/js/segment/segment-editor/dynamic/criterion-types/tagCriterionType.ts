@@ -17,9 +17,9 @@ export const tagCriterionType: RemoteCriterionType = {
 	negativeOperator: NotOperators.NotTagsFilter,
 	operators: new Set([
 		CustomFunctionOperators.TagsFilter,
-		NotOperators.NotTagsFilter
+		NotOperators.NotTagsFilter,
 	]),
 	positiveOperator: CustomFunctionOperators.TagsFilter,
 	propertyKey: 'tag',
-	supportsCategories: false
+	supportsCategories: false,
 };

@@ -26,22 +26,22 @@ const Edit: React.FC<IEditProps> = ({job, router}) => {
 				getRecommendations({groupId}),
 				{
 					active: true,
-					label: name
-				}
+					label: name,
+				},
 			]}
 			pageDescription={Liferay.Language.get(
 				'item-similarity-model-uses-items-and-iteractions-for-training'
 			)}
 			pageTitle={name}
 		>
-			<div className='row'>
-				<div className='col-xl-8'>
+			<div className="row">
+				<div className="col-xl-8">
 					<RecommendationStepCard
 						cancelHref={toRoute(
 							Routes.SETTINGS_RECOMMENDATION_MODEL_VIEW,
 							{
 								groupId,
-								jobId
+								jobId,
 							}
 						)}
 						job={job}

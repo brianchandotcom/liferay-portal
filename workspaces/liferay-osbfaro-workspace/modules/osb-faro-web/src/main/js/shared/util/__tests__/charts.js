@@ -10,7 +10,7 @@ import {
 	getDateTitle,
 	getIntervals,
 	getLocationsData,
-	getMetricFormatter
+	getMetricFormatter,
 } from '../charts';
 import {getDate} from 'shared/util/date';
 import {INTERVAL_KEY_MAP} from 'shared/util/time';
@@ -157,7 +157,7 @@ describe('getIntervals', () => {
 
 	it('should be return the intervals from a array of dates from the last 24 hours', () => {
 		const mockDates = dates.filter((item, index) => index <= 20).reverse();
-		const dateKeysIMap = new Map(mockDates.map(date => [date, [date]]));
+		const dateKeysIMap = new Map(mockDates.map((date) => [date, [date]]));
 
 		expect(
 			getIntervals(
@@ -171,13 +171,13 @@ describe('getIntervals', () => {
 			mockDates[6],
 			mockDates[12],
 			mockDates[18],
-			mockDates[20]
+			mockDates[20],
 		]);
 	});
 
 	it('should be return the intervals from a array of dates from yesterday', () => {
 		const mockDates = dates.filter((item, index) => index <= 22).reverse();
-		const dateKeysIMap = new Map(mockDates.map(date => [date, [date]]));
+		const dateKeysIMap = new Map(mockDates.map((date) => [date, [date]]));
 
 		expect(
 			getIntervals(
@@ -191,13 +191,13 @@ describe('getIntervals', () => {
 			mockDates[6],
 			mockDates[12],
 			mockDates[18],
-			mockDates[22]
+			mockDates[22],
 		]);
 	});
 
 	it('should be return only sundays as intervals from an array of dates from the last 28 days', () => {
 		const mockDates = dates.filter((item, index) => index <= 27).reverse();
-		const dateKeysIMap = new Map(mockDates.map(date => [date, [date]]));
+		const dateKeysIMap = new Map(mockDates.map((date) => [date, [date]]));
 
 		const intervals = getIntervals(
 			RangeKeyTimeRanges.Last28Days,
@@ -215,13 +215,13 @@ describe('getIntervals', () => {
 			mockDates[2],
 			mockDates[9],
 			mockDates[16],
-			mockDates[23]
+			mockDates[23],
 		]);
 	});
 
 	it('should return the unfiltered interval dates from an array of dates from the last 28 days and with an interval of longer than a day', () => {
 		const mockDates = dates.filter((item, index) => index <= 27).reverse();
-		const dateKeysIMap = new Map(mockDates.map(date => [date, [date]]));
+		const dateKeysIMap = new Map(mockDates.map((date) => [date, [date]]));
 
 		expect(
 			getIntervals(
@@ -235,7 +235,7 @@ describe('getIntervals', () => {
 
 	it('should be return only sundays as intervals from a array of dates from the last 30 days', () => {
 		const mockDates = dates.filter((item, index) => index <= 29).reverse();
-		const dateKeysIMap = new Map(mockDates.map(date => [date, [date]]));
+		const dateKeysIMap = new Map(mockDates.map((date) => [date, [date]]));
 
 		const intervals = getIntervals(
 			RangeKeyTimeRanges.Last30Days,
@@ -253,13 +253,13 @@ describe('getIntervals', () => {
 			mockDates[4],
 			mockDates[11],
 			mockDates[18],
-			mockDates[25]
+			mockDates[25],
 		]);
 	});
 
 	it('should return the unfiltered interval dates from a array of dates from the last 30 days with a week interval', () => {
 		const mockDates = dates.filter((item, index) => index <= 29);
-		const dateKeysIMap = new Map(mockDates.map(date => [date, [date]]));
+		const dateKeysIMap = new Map(mockDates.map((date) => [date, [date]]));
 
 		expect(
 			getIntervals(
@@ -273,7 +273,7 @@ describe('getIntervals', () => {
 
 	it('should be return only the 1st or 15th of each month from a array of dates from the last 90 days with an interval of day', () => {
 		const mockDates = dates.filter((item, index) => index <= 89).reverse();
-		const dateKeysIMap = new Map(mockDates.map(date => [date, [date]]));
+		const dateKeysIMap = new Map(mockDates.map((date) => [date, [date]]));
 
 		const result = getIntervals(
 			RangeKeyTimeRanges.Last90Days,
@@ -289,7 +289,7 @@ describe('getIntervals', () => {
 
 	it('should be return the intervals with multiple of two indexes from a array of dates from the last 90 days with a week interval', () => {
 		const mockDates = dates.filter((item, index) => index <= 89).reverse();
-		const dateKeysIMap = new Map(mockDates.map(date => [date, [date]]));
+		const dateKeysIMap = new Map(mockDates.map((date) => [date, [date]]));
 
 		expect(
 			getIntervals(
@@ -303,7 +303,7 @@ describe('getIntervals', () => {
 
 	it('should be return only the 1st or 15th of each month from a array of dates from the last 180 days with an interval of day', () => {
 		const mockDates = dates.filter((item, index) => index <= 179).reverse();
-		const dateKeysIMap = new Map(mockDates.map(date => [date, [date]]));
+		const dateKeysIMap = new Map(mockDates.map((date) => [date, [date]]));
 
 		const result = getIntervals(
 			RangeKeyTimeRanges.Last180Days,
@@ -319,7 +319,7 @@ describe('getIntervals', () => {
 
 	it('should be return the intervals with multiple of two indexes from a array of dates from the last 180 days with a week interval', () => {
 		const mockDates = dates.filter((item, index) => index <= 179).reverse();
-		const dateKeysIMap = new Map(mockDates.map(date => [date, [date]]));
+		const dateKeysIMap = new Map(mockDates.map((date) => [date, [date]]));
 
 		expect(
 			getIntervals(
@@ -333,7 +333,7 @@ describe('getIntervals', () => {
 
 	it('should be return only the 1st of each month from a array of dates from the last year with an interval of day', () => {
 		const mockDates = dates.filter((item, index) => index <= 364).reverse();
-		const dateKeysIMap = new Map(mockDates.map(date => [date, [date]]));
+		const dateKeysIMap = new Map(mockDates.map((date) => [date, [date]]));
 
 		const result = getIntervals(
 			RangeKeyTimeRanges.LastYear,
@@ -351,7 +351,7 @@ describe('getIntervals', () => {
 
 	it('should be return the intervals with multiple of four indexes from a array of dates from the last year with a week interval', () => {
 		const mockDates = dates.filter((item, index) => index <= 364).reverse();
-		const dateKeysIMap = new Map(mockDates.map(date => [date, [date]]));
+		const dateKeysIMap = new Map(mockDates.map((date) => [date, [date]]));
 
 		expect(
 			getIntervals(
@@ -365,7 +365,7 @@ describe('getIntervals', () => {
 
 	it('should be return only sundays as intervals from an array of dates of a custom rangeKey greater or equal 14 and smaller or equal 30', () => {
 		let mockDates = dates.filter((item, index) => index <= 13).reverse();
-		let dateKeysIMap = new Map(mockDates.map(date => [date, [date]]));
+		let dateKeysIMap = new Map(mockDates.map((date) => [date, [date]]));
 
 		let intervals = getIntervals(
 			RangeKeyTimeRanges.CustomRange,
@@ -379,7 +379,7 @@ describe('getIntervals', () => {
 
 		mockDates = dates.filter((item, index) => index <= 29).reverse();
 
-		dateKeysIMap = new Map(mockDates.map(date => [date, [date]]));
+		dateKeysIMap = new Map(mockDates.map((date) => [date, [date]]));
 		intervals = getIntervals(
 			RangeKeyTimeRanges.CustomRange,
 			mockDates,
@@ -393,7 +393,7 @@ describe('getIntervals', () => {
 
 	it('should be return only the 1st or 15th of each month from a array of dates of a custom rangeKey greater than 30 and smaller or equal 180', () => {
 		let mockDates = dates.filter((item, index) => index <= 39).reverse();
-		let dateKeysIMap = new Map(mockDates.map(date => [date, [date]]));
+		let dateKeysIMap = new Map(mockDates.map((date) => [date, [date]]));
 
 		let intervals = getIntervals(
 			RangeKeyTimeRanges.CustomRange,
@@ -406,7 +406,7 @@ describe('getIntervals', () => {
 		expect(moment.utc(intervals[1]).get('date')).toEqual(1);
 
 		mockDates = dates.filter((item, index) => index <= 179).reverse();
-		dateKeysIMap = new Map(mockDates.map(date => [date, [date]]));
+		dateKeysIMap = new Map(mockDates.map((date) => [date, [date]]));
 
 		intervals = getIntervals(
 			RangeKeyTimeRanges.CustomRange,
@@ -421,7 +421,7 @@ describe('getIntervals', () => {
 
 	it('should be return only the 1st of each month from a array of dates of a custom rangeKey greater than 180', () => {
 		const mockDates = dates.filter((item, index) => index <= 200).reverse();
-		const dateKeysIMap = new Map(mockDates.map(date => [date, [date]]));
+		const dateKeysIMap = new Map(mockDates.map((date) => [date, [date]]));
 
 		const result = getIntervals(
 			RangeKeyTimeRanges.CustomRange,
@@ -450,7 +450,7 @@ describe('getLocationsData', () => {
 		{value: 400},
 		{value: 600},
 		{value: 400},
-		{value: 100}
+		{value: 100},
 	]);
 
 	it('should be return the locations data', () => {
@@ -460,8 +460,8 @@ describe('getLocationsData', () => {
 				id: undefined,
 				name: undefined,
 				total: 200,
-				value: '8'
-			}
+				value: '8',
+			},
 		]);
 	});
 
@@ -472,7 +472,7 @@ describe('getLocationsData', () => {
 			id: 'others',
 			name: 'Other Countries',
 			total: 500,
-			value: '20'
+			value: '20',
 		});
 	});
 
@@ -485,7 +485,7 @@ describe('getLocationsData', () => {
 				{value: 400},
 				{value: 600},
 				{value: 400},
-				{value: 100}
+				{value: 100},
 			],
 			'Brazil'
 		);
@@ -496,7 +496,7 @@ describe('getLocationsData', () => {
 			id: 'others',
 			name: 'Other Regions',
 			total: 500,
-			value: '20'
+			value: '20',
 		});
 	});
 });
@@ -507,61 +507,61 @@ describe('getAxisMeasures', () => {
 			intervalCount: 4,
 			intervals: [0, 0.2, 0.4, 0.6000000000000001, 0.8],
 			intervalValue: 0.2,
-			maxValue: 0.8
+			maxValue: 0.8,
 		});
 		expect(getAxisMeasures(1)).toEqual({
 			intervalCount: 3,
 			intervals: [0, 0.5, 1, 1.5],
 			intervalValue: 0.5,
-			maxValue: 1.5
+			maxValue: 1.5,
 		});
 		expect(getAxisMeasures(1.6)).toEqual({
 			intervalCount: 4,
 			intervals: [0, 0.5, 1, 1.5, 2],
 			intervalValue: 0.5,
-			maxValue: 2
+			maxValue: 2,
 		});
 		expect(getAxisMeasures(1.7)).toEqual({
 			intervalCount: 4,
 			intervals: [0, 0.5, 1, 1.5, 2],
 			intervalValue: 0.5,
-			maxValue: 2
+			maxValue: 2,
 		});
 		expect(getAxisMeasures(11)).toEqual({
 			intervalCount: 3,
 			intervals: [0, 5, 10, 15],
 			intervalValue: 5,
-			maxValue: 15
+			maxValue: 15,
 		});
 		expect(getAxisMeasures(16)).toEqual({
 			intervalCount: 4,
 			intervals: [0, 5, 10, 15, 20],
 			intervalValue: 5,
-			maxValue: 20
+			maxValue: 20,
 		});
 		expect(getAxisMeasures(201)).toEqual({
 			intervalCount: 3,
 			intervals: [0, 100, 200, 300],
 			intervalValue: 100,
-			maxValue: 300
+			maxValue: 300,
 		});
 		expect(getAxisMeasures(745)).toEqual({
 			intervalCount: 4,
 			intervals: [0, 200, 400, 600, 800],
 			intervalValue: 200,
-			maxValue: 800
+			maxValue: 800,
 		});
 		expect(getAxisMeasures(1001)).toEqual({
 			intervalCount: 3,
 			intervals: [0, 500, 1000, 1500],
 			intervalValue: 500,
-			maxValue: 1500
+			maxValue: 1500,
 		});
 		expect(getAxisMeasures(100450)).toEqual({
 			intervalCount: 3,
 			intervals: [0, 50000, 100000, 150000],
 			intervalValue: 50000,
-			maxValue: 150000
+			maxValue: 150000,
 		});
 	});
 });
@@ -571,13 +571,13 @@ describe('getAxisMeasuresFromData', () => {
 		expect(
 			getAxisMeasuresFromData([
 				['data1', 0, 1001, 145],
-				['data2', 100, 400, 3450]
+				['data2', 100, 400, 3450],
 			])
 		).toEqual({
 			intervalCount: 4,
 			intervals: [0, 1000, 2000, 3000, 4000],
 			intervalValue: 1000,
-			maxValue: 4000
+			maxValue: 4000,
 		});
 	});
 });
@@ -599,31 +599,31 @@ describe('getAxisFormatter', () => {
 describe('getDataFormatter', () => {
 	it('should be return the value to any', () => {
 		expect(getDataFormatter()([1, 100, 1000, 10000])).toEqual([
-			1, 100, 1000, 10000
+			1, 100, 1000, 10000,
 		]);
 	});
 
 	it('should be return the data formatted to percentage', () => {
 		expect(getDataFormatter('percentage')([1, 100, 1000, 10000])).toEqual([
-			1, 100, 1000, 10000
+			1, 100, 1000, 10000,
 		]);
 	});
 
 	it('should be return the data formatted to time', () => {
 		expect(getDataFormatter('time')([1, 100, 500, 1000, 10000])).toEqual([
-			0, 0, 1000, 1000, 10000
+			0, 0, 1000, 1000, 10000,
 		]);
 	});
 
 	it('should be return the data formatted to numbers', () => {
 		expect(getDataFormatter('numbers')([1, 100, 1000, 10000])).toEqual([
-			1, 100, 1000, 10000
+			1, 100, 1000, 10000,
 		]);
 	});
 
 	it('should be return the data formatted to ratings', () => {
 		expect(getDataFormatter('ratings')([1, 100, 1000, 10000])).toEqual([
-			1, 100, 1000, 10000
+			1, 100, 1000, 10000,
 		]);
 	});
 });

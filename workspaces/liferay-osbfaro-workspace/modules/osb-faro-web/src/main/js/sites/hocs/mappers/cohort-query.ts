@@ -14,39 +14,39 @@ const mapResultToProps = safeResultToProps(
 		cohort: {
 			anonymousCohortHeatMapMetrics,
 			knownCohortHeatMapMetrics,
-			visitorsCohortHeatMapMetrics
-		}
+			visitorsCohortHeatMapMetrics,
+		},
 	}: ICohortResult) => ({
 		data: {
 			anonymousVisitors: {
-				items: anonymousCohortHeatMapMetrics
+				items: anonymousCohortHeatMapMetrics,
 			},
 			knownVisitors: {
-				items: knownCohortHeatMapMetrics
+				items: knownCohortHeatMapMetrics,
 			},
 			visitors: {
-				items: visitorsCohortHeatMapMetrics
-			}
+				items: visitorsCohortHeatMapMetrics,
+			},
 		},
 		empty: [
 			anonymousCohortHeatMapMetrics,
 			knownCohortHeatMapMetrics,
-			visitorsCohortHeatMapMetrics
-		].some(metric => !metric.length)
+			visitorsCohortHeatMapMetrics,
+		].some((metric) => !metric.length),
 	})
 );
 
 const mapPropsToOptions = ({
 	channelId,
-	interval
+	interval,
 }: {
 	channelId: string;
 	interval: Interval;
 }) => ({
 	variables: {
 		channelId,
-		interval
-	}
+		interval,
+	},
 });
 
 export {mapPropsToOptions, mapResultToProps};

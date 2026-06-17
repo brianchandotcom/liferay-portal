@@ -25,7 +25,7 @@ const Activities = () => {
 	return (
 		<>
 			<BaseCard
-				className='account-activity-stream-card'
+				className="account-activity-stream-card"
 				description={Liferay.Language.get(
 					'chronological-timeline-of-the-accounts-activities-within-the-selected-timeframe-with-details-on-events-and-session-context'
 				)}
@@ -38,7 +38,7 @@ const Activities = () => {
 			>
 				{({
 					interval,
-					rangeSelectors
+					rangeSelectors,
 				}: {
 					interval: Interval;
 					rangeSelectors: RangeSelectors;

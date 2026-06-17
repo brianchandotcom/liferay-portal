@@ -6,7 +6,7 @@ import {
 	getAssetTypeFromValue,
 	getConjunctionCriterionFromValue,
 	getEventTypeFromValue,
-	OCCURRENCE_OPTIONS
+	OCCURRENCE_OPTIONS,
 } from 'segment/segment-editor/dynamic/inputs/shared/remote-filter-input-helpers';
 import {CustomValue} from 'shared/util/records';
 import {getIndexFromPropertyName} from 'segment/segment-editor/dynamic/utils/custom-inputs';
@@ -15,7 +15,7 @@ import {IDisplayComponentProps} from '../types';
 
 const TagDisplay: React.FC<IDisplayComponentProps> = ({
 	criterion,
-	property
+	property,
 }) => {
 	const {operatorName, value} = criterion;
 	const {entityName, label, type} = property;
@@ -53,8 +53,8 @@ const TagDisplay: React.FC<IDisplayComponentProps> = ({
 					'criterionGroup',
 					'items',
 					tagNameIndex,
-					'value'
-			  ]) as string) ?? label
+					'value',
+				]) as string) ?? label
 			: label;
 
 	const conjunctionCriterion = getConjunctionCriterionFromValue(valueIMap);

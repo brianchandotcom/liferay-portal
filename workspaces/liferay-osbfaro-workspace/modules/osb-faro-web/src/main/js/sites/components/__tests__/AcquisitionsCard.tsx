@@ -7,7 +7,7 @@ import {MemoryRouter} from 'react-router-dom';
 import {
 	mockAcquisitionsReq,
 	mockPreferenceReq,
-	mockTimeRangeReq
+	mockTimeRangeReq,
 } from 'test/graphql-data';
 import {MockedProvider} from '@apollo/client/testing';
 import {Provider} from 'react-redux';
@@ -21,12 +21,12 @@ const MOCK_CONTEXT = {
 	router: {
 		params: {
 			channelId: '123',
-			groupId: '456'
+			groupId: '456',
 		},
 		query: {
-			rangeKey: RangeKeyTimeRanges.Last30Days
-		}
-	}
+			rangeKey: RangeKeyTimeRanges.Last30Days,
+		},
+	},
 };
 
 const DefaultComponent = () => (
@@ -38,12 +38,12 @@ const DefaultComponent = () => (
 					mocks={[
 						mockTimeRangeReq(),
 						mockPreferenceReq(),
-						mockAcquisitionsReq()
+						mockAcquisitionsReq(),
 					]}
 				>
 					<AcquisitionsCard
 						compositionBagName={CompositionTypes.Acquisitions}
-						label='card label'
+						label="card label"
 					/>
 				</MockedProvider>
 			</MemoryRouter>

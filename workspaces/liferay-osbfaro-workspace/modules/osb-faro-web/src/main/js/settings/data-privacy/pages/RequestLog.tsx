@@ -17,10 +17,10 @@ export const RequestLog = () => {
 				getDataPrivacy({groupId}),
 				{
 					active: true,
-					label: Liferay.Language.get('request-log')
-				}
+					label: Liferay.Language.get('request-log'),
+				},
 			]}
-			className='request-log-page-root'
+			className="request-log-page-root"
 			documentTitle={Liferay.Language.get('request-log')}
 		>
 			<RequestList currentUser={currentUser} timeZoneId={timeZoneId} />

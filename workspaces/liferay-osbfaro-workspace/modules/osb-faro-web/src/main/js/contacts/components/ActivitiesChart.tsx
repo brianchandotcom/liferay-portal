@@ -6,7 +6,7 @@ import {
 	ChartTooltipRow,
 	getAxisTickText,
 	getYAxisWidth,
-	RechartsTooltip
+	RechartsTooltip,
 } from 'shared/util/recharts';
 import {
 	Bar,
@@ -18,7 +18,7 @@ import {
 	Tooltip,
 	TooltipProps,
 	XAxis,
-	YAxis
+	YAxis,
 } from 'recharts';
 import {CHART_COLOR_NAMES} from 'shared/util/charts';
 import {createDateKeysIMap} from 'shared/util/intervals';
@@ -26,7 +26,7 @@ import {
 	formatXAxisDate,
 	getBarColor,
 	getDateTitle,
-	getIntervals
+	getIntervals,
 } from 'shared/util/charts';
 import {get} from 'lodash';
 import {Interval, RangeSelectors} from 'shared/types';
@@ -68,7 +68,7 @@ const ActivitiesChart: React.FC<
 	onPointSelect,
 	rangeSelectors,
 	selectedPoint,
-	tooltipRenderRows
+	tooltipRenderRows,
 }) => {
 	const _tooltipRef = useRef<any>();
 
@@ -105,26 +105,26 @@ const ActivitiesChart: React.FC<
 				: [
 						{
 							label: Liferay.Language.get('events'),
-							value: totalEvents.toLocaleString()
+							value: totalEvents.toLocaleString(),
 						},
 						{
 							label: Liferay.Language.get('sessions'),
-							value: totalSessions.toLocaleString()
-						}
-				  ];
+							value: totalSessions.toLocaleString(),
+						},
+					];
 
 			if (moment.utc(intervalInitDate).isSame(moment(), 'day')) {
 				rows.push({
 					className: 'text-info text-uppercase mt-4',
 					label: Liferay.Language.get(
 						'data-for-todays-events-may-vary-or-be-incomplete'
-					)
+					),
 				});
 			}
 
 			return (
 				<RechartsTooltip
-					dateTitle=''
+					dateTitle=""
 					rows={rows}
 					title={getDateTitle(
 						dateKeysIMap.get(intervalInitDate),
@@ -153,7 +153,7 @@ const ActivitiesChart: React.FC<
 		<ResponsiveContainer height={height}>
 			<ComposedChart
 				data={history}
-				onClick={pointData => {
+				onClick={(pointData) => {
 					if (alwaysShowSelectedTooltip && pointData) {
 						const tooltip = _tooltipRef.current;
 
@@ -163,7 +163,7 @@ const ActivitiesChart: React.FC<
 									key: 'x',
 									tooltipDimension: tooltip.state.boxWidth,
 									viewBoxDimension:
-										tooltip.props.viewBox.width
+										tooltip.props.viewBox.width,
 								})
 							);
 						}
@@ -179,18 +179,18 @@ const ActivitiesChart: React.FC<
 				{!hideGrid && (
 					<CartesianGrid
 						stroke={AXIS.gridStroke}
-						strokeDasharray='3 3'
+						strokeDasharray="3 3"
 						vertical={false}
 					/>
 				)}
 
 				<XAxis
 					axisLine={{stroke: AXIS.borderStroke}}
-					dataKey='intervalInitDate'
+					dataKey="intervalInitDate"
 					domain={['dataMin', 'dataMax']}
-					interval='preserveStart'
+					interval="preserveStart"
 					padding={{left: 20, right: 20}}
-					tick={getAxisTickText('x', value =>
+					tick={getAxisTickText('x', (value) =>
 						formatXAxisDate(
 							value,
 							rangeSelectors.rangeKey,
@@ -201,17 +201,17 @@ const ActivitiesChart: React.FC<
 					tickLine={false}
 					tickMargin={12}
 					ticks={intervals.filter((v): v is number => v !== null)}
-					type='number'
+					type="number"
 				/>
 
 				<XAxis
 					axisLine={{stroke: AXIS.borderStroke}}
-					dataKey='intervalInitDate'
-					orientation='top'
+					dataKey="intervalInitDate"
+					orientation="top"
 					stroke={AXIS.gridStroke}
 					tick={false}
 					tickLine={false}
-					xAxisId='top'
+					xAxisId="top"
 				/>
 
 				<YAxis
@@ -223,8 +223,8 @@ const ActivitiesChart: React.FC<
 									dy: -20,
 									position: 'top',
 									style: {fill: AXIS.textColor},
-									value: Liferay.Language.get('events')
-							  }
+									value: Liferay.Language.get('events'),
+								}
 							: undefined
 					}
 					name={Liferay.Language.get('events')}
@@ -232,19 +232,19 @@ const ActivitiesChart: React.FC<
 					tick={getAxisTickText('y')}
 					tickCount={6}
 					tickLine={false}
-					type='number'
+					type="number"
 					width={yAxisWidth}
 				/>
 
 				<YAxis
 					axisLine={{stroke: AXIS.borderStroke}}
-					orientation='right'
+					orientation="right"
 					stroke={AXIS.gridStroke}
 					tick={false}
 					tickLine={false}
-					type='number'
+					type="number"
 					width={1}
-					yAxisId='right'
+					yAxisId="right"
 				/>
 
 				{!hideGrid && (
@@ -278,7 +278,7 @@ const ActivitiesChart: React.FC<
 
 				<Bar
 					animationDuration={ANIMATION_DURATION.bar}
-					dataKey='totalEvents'
+					dataKey="totalEvents"
 					fill={CHART_BLUE}
 					onMouseEnter={(e, index) => setHoverIndex(index)}
 					onMouseLeave={() => setHoverIndex(-1)}

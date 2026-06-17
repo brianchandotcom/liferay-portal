@@ -27,19 +27,19 @@ jest.mock('@liferay/frontend-data-set-web', () => ({
 	FrontendDataSet: ({filters, id}: {filters: FakeFilter[]; id: string}) => {
 		lastFilters = filters;
 
-		return <div data-testid='fds-component' id={id} />;
-	}
+		return <div data-testid="fds-component" id={id} />;
+	},
 }));
 
 jest.mock('shared/hooks/useRequest', () => ({
-	useRequest: jest.fn()
+	useRequest: jest.fn(),
 }));
 
 jest.mock('shared/util/breadcrumbs', () => ({
 	getHome: jest.fn(({label}: {label?: string} = {}) => ({
 		active: false,
-		label: label || 'Home'
-	}))
+		label: label || 'Home',
+	})),
 }));
 
 jest.mock('react-router-dom', () => ({
@@ -47,8 +47,8 @@ jest.mock('react-router-dom', () => ({
 	useHistory: jest.fn(),
 	useParams: () => ({
 		channelId: '123',
-		groupId: '23'
-	})
+		groupId: '23',
+	}),
 }));
 
 const mockedUseHistory = useHistory as jest.Mock;
@@ -75,18 +75,18 @@ const accountMetricsMock = [
 	{
 		metricType: 'totalCount',
 		trend: {percentage: 0, trendClassification: 'NEUTRAL'},
-		value: 0
+		value: 0,
 	},
 	{
 		metricType: 'newCount',
 		trend: {percentage: 0, trendClassification: 'NEUTRAL'},
-		value: 0
+		value: 0,
 	},
 	{
 		metricType: 'activeCount',
 		trend: {percentage: 0, trendClassification: 'NEUTRAL'},
-		value: 0
-	}
+		value: 0,
+	},
 ];
 
 const useRequestImpl =
@@ -104,7 +104,7 @@ const renderList = (
 		<Provider store={store}>
 			<ChannelContext.Provider value={mockChannelContext() as any}>
 				<Router history={history}>
-					<List channelId='123' groupId='23' />
+					<List channelId="123" groupId="23" />
 				</Router>
 			</ChannelContext.Provider>
 		</Provider>
@@ -155,11 +155,13 @@ describe('List', () => {
 		it('should preload the rangeKey filter with Last 30 Days by default', () => {
 			renderList();
 
-			const rangeKeyFilter = lastFilters?.find(f => f.id === 'rangeKey');
+			const rangeKeyFilter = lastFilters?.find(
+				(f) => f.id === 'rangeKey'
+			);
 
 			expect(rangeKeyFilter?.preloadedData).toEqual({
 				exclude: false,
-				selectedItems: [{label: 'Last 30 days', value: '30'}]
+				selectedItems: [{label: 'Last 30 days', value: '30'}],
 			});
 		});
 

@@ -10,7 +10,7 @@ import {OrderParams} from 'shared/util/records';
 import {setUriQueryValues} from 'shared/util/router';
 
 const {
-	pagination: {cur: defaultPage}
+	pagination: {cur: defaultPage},
 } = Constants;
 
 interface IHeaderCellProps {
@@ -25,13 +25,13 @@ interface IHeaderCellProps {
 
 const ButtonSort = ({
 	children,
-	sortOrder
+	sortOrder,
 }: {
 	children: React.ReactNode;
 	sortOrder: OrderByDirections;
 }) => (
-	<div className='align-items-center d-flex justify-content-between'>
-		<div className='text-truncate'>{children}</div>
+	<div className="align-items-center d-flex justify-content-between">
+		<div className="text-truncate">{children}</div>
 
 		<ClayButton
 			aria-label={
@@ -39,16 +39,16 @@ const ButtonSort = ({
 					? Liferay.Language.get('ascending')
 					: Liferay.Language.get('descending')
 			}
-			className='component-action ml-2'
-			size='sm'
+			className="component-action ml-2"
+			size="sm"
 		>
 			{!sortOrder ? (
-				<span className='opacity-25'>
-					<ClayIcon className='icon-root' symbol='order-arrow' />
+				<span className="opacity-25">
+					<ClayIcon className="icon-root" symbol="order-arrow" />
 				</span>
 			) : (
 				<ClayIcon
-					className='icon-root'
+					className="icon-root"
 					symbol={
 						sortOrder === OrderByDirections.Ascending
 							? 'order_arrow_ascending'
@@ -67,34 +67,34 @@ const HeaderCell: React.FC<IHeaderCellProps> = ({
 	headerLink = false,
 	onSortOrderChange = noop,
 	sortOrder,
-	sortable = true
+	sortable = true,
 }) => (
 	<th className={getCN('table-head-title', className)}>
 		{sortable ? (
 			headerLink ? (
 				<ClayLink
 					button
-					className='button-root w-100'
-					displayType='unstyled'
+					className="button-root w-100"
+					displayType="unstyled"
 					href={setUriQueryValues({
 						field,
 						page: defaultPage,
 						sortOrder: sortOrder
 							? invertSortOrder(sortOrder)
-							: getDefaultSortOrder(field)
+							: getDefaultSortOrder(field),
 					})}
 				>
 					<ButtonSort sortOrder={sortOrder}>{children}</ButtonSort>
 				</ClayLink>
 			) : (
 				<ClayButton
-					className='inline-item text-truncate-inline'
-					displayType='unstyled'
+					className="inline-item text-truncate-inline"
+					displayType="unstyled"
 					onClick={() => {
 						onSortOrderChange(
 							new OrderParams({
 								field,
-								sortOrder: invertSortOrder(sortOrder)
+								sortOrder: invertSortOrder(sortOrder),
 							})
 						);
 					}}

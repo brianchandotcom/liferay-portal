@@ -30,7 +30,7 @@ const BaseCardHeaderDefault: React.FC<BaseCardHeaderDefaultIProps> = ({
 	onRangeSelectorsChange,
 	rangeSelectors,
 	showInterval,
-	showRangeKey = true
+	showRangeKey = true,
 }) => {
 	const handleRangeSelectorsChange = useCallback((newVal: any) => {
 		onRangeSelectorsChange && onRangeSelectorsChange(newVal);
@@ -46,20 +46,20 @@ const BaseCardHeaderDefault: React.FC<BaseCardHeaderDefaultIProps> = ({
 	);
 
 	return (
-		<Card.Header className='align-items-center d-flex justify-content-between'>
+		<Card.Header className="align-items-center d-flex justify-content-between">
 			<div>
 				<Card.Title>{label}</Card.Title>
 
-				<Text color='secondary' size={4}>
+				<Text color="secondary" size={4}>
 					{description}
 				</Text>
 			</div>
 
-			<div className='d-flex'>
+			<div className="d-flex">
 				{showInterval && (
 					<IntervalSelector
 						activeInterval={interval}
-						className='mr-3'
+						className="mr-3"
 						disabled={isHourlyRangeKey(rangeSelectors.rangeKey)}
 						onChange={handleChangeInterval}
 					/>

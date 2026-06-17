@@ -10,7 +10,7 @@ import React, {useContext} from 'react';
 import {ChannelContext} from 'shared/context/channel';
 import {
 	LifecycleContextProvider,
-	useLifecycle
+	useLifecycle,
 } from '../context/LifecycleContext';
 import {SectionHeader} from 'shared/components/SectionHeader';
 import {useParams} from 'react-router-dom';
@@ -27,8 +27,8 @@ const LifecycleOverview = () => {
 			country: filters.countryFilter,
 			groupId: groupId!,
 			industry: filters.industryFilter,
-			lifecycleId
-		}
+			lifecycleId,
+		},
 	});
 
 	return <OverviewSection loading={overviewLoading} metrics={overviewData} />;
@@ -42,15 +42,15 @@ const LifecycleStagesSection = () => {
 	const {
 		data: stagesData,
 		error: stagesError,
-		loading: stagesLoading
+		loading: stagesLoading,
 	} = useRequest({
 		dataSourceFn: API.lifecycle.fetchLifecycleStages,
 		variables: {
 			country: filters.countryFilter,
 			groupId,
 			industry: filters.industryFilter,
-			lifecycleId
-		}
+			lifecycleId,
+		},
 	});
 
 	return (
@@ -70,7 +70,7 @@ const LifecycleAccounts = () => {
 	return (
 		<section>
 			<SectionHeader
-				icon='box-container'
+				icon="box-container"
 				title={Liferay.Language.get('accounts')}
 			/>
 
@@ -94,7 +94,7 @@ const BaseLifecycle = () => {
 
 	const {data: lifecycles, loading: lifecyclesLoading} = useRequest({
 		dataSourceFn: API.lifecycle.fetchLifecycles,
-		variables: {groupId: groupId!}
+		variables: {groupId: groupId!},
 	});
 
 	const lifecycleId = lifecycles?.[0]?.id ?? '1';
@@ -107,20 +107,20 @@ const BaseLifecycle = () => {
 						breadcrumbs.getHome({
 							channelId: channelId!,
 							groupId: groupId!,
-							label: selectedChannel?.name
-						})
+							label: selectedChannel?.name,
+						}),
 					]}
 					groupId={groupId!}
 				>
 					<BasePage.Row>
 						<BasePage.Header.TitleSection
-							className='mb-3'
+							className="mb-3"
 							title={Liferay.Language.get('lifecycles')}
 						/>
 					</BasePage.Row>
 				</BasePage.Header>
 				<BasePage.SubHeader>
-					<div className='d-flex justify-content-between w-100'>
+					<div className="d-flex justify-content-between w-100">
 						<GlobalFilters />
 					</div>
 				</BasePage.SubHeader>

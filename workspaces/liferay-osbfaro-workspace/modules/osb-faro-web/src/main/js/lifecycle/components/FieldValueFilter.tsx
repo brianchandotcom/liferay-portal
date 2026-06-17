@@ -23,11 +23,11 @@ const TriggerButton = React.forwardRef<HTMLButtonElement, ITriggerButtonProps>(
 			{...rest}
 			className={classNames(buttonClassName, 'rounded-lg')}
 			disabled={loading}
-			displayType='secondary'
+			displayType="secondary"
 			ref={ref}
-			size='sm'
+			size="sm"
 		>
-			<Icon className='inline-item inline-item-before' symbol='filter' />
+			<Icon className="inline-item inline-item-before" symbol="filter" />
 
 			{label || sub(Liferay.Language.get('all-x'), [entityLabel])}
 
@@ -35,8 +35,8 @@ const TriggerButton = React.forwardRef<HTMLButtonElement, ITriggerButtonProps>(
 				<Loading align={Align.Right} />
 			) : (
 				<Icon
-					className='inline-item inline-item-after'
-					symbol='caret-bottom'
+					className="inline-item inline-item-after"
+					symbol="caret-bottom"
 				/>
 			)}
 		</ClayButton>
@@ -56,7 +56,7 @@ const FieldValueFilter = ({
 	className,
 	entityLabel,
 	fieldMappingFieldName,
-	filterKey
+	filterKey,
 }: IProps) => {
 	const {filters, updateFilters} = useLifecycle();
 
@@ -68,33 +68,33 @@ const FieldValueFilter = ({
 			channelId,
 			fieldMappingFieldName,
 			groupId,
-			query: ''
-		}
+			query: '',
+		},
 	});
 
 	return (
 		<Picker
 			aria-label={
 				sub(Liferay.Language.get('filter-by-x'), [
-					entityLabel
+					entityLabel,
 				]) as string
 			}
 			as={TriggerButton}
 			buttonClassName={className}
-			className='ml-3'
+			className="ml-3"
 			entityLabel={entityLabel}
 			label={filters[filterKey]}
 			loading={loading}
-			onSelectionChange={item => {
+			onSelectionChange={(item) => {
 				const value = String(item);
 
 				updateFilters({
-					[filterKey]: value === ALL_VALUES_KEY ? '' : value
+					[filterKey]: value === ALL_VALUES_KEY ? '' : value,
 				});
 			}}
 			searchable
 			selectedKey={filters[filterKey] || ALL_VALUES_KEY}
-			triggerIcon='caret-bottom'
+			triggerIcon="caret-bottom"
 			width={50}
 		>
 			<Option key={ALL_VALUES_KEY}>

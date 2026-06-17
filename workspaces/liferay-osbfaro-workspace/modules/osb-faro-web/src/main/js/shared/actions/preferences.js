@@ -12,7 +12,7 @@ export const actionTypes = {
 	...createActionTypes('remove', 'distribution_tabs'),
 	...createActionTypes('update', 'default_channel_id'),
 	...createActionTypes('update', 'default_site_id'),
-	...createActionTypes('update', 'upgrade_modal_seen')
+	...createActionTypes('update', 'upgrade_modal_seen'),
 };
 
 export function addDistributionTab({
@@ -20,7 +20,7 @@ export function addDistributionTab({
 	distributionTab,
 	distributionTabId,
 	groupId,
-	id
+	id,
 }) {
 	return {
 		meta: {
@@ -30,19 +30,19 @@ export function addDistributionTab({
 					distributionTabId,
 					groupId,
 					scope: PreferencesScopes.Group,
-					segmentId: id
+					segmentId: id,
 				},
 				requestFn: API.preferences.addDistributionTab,
 				types: [
 					actionTypes.ADD_DISTRIBUTION_TABS_REQUEST,
 					actionTypes.ADD_DISTRIBUTION_TABS_SUCCESS,
-					actionTypes.ADD_DISTRIBUTION_TABS_FAILURE
-				]
+					actionTypes.ADD_DISTRIBUTION_TABS_FAILURE,
+				],
 			},
 			id: distributionKey,
-			scope: PreferencesScopes.Group
+			scope: PreferencesScopes.Group,
 		},
-		type: 'NO_OP'
+		type: 'NO_OP',
 	};
 }
 
@@ -55,12 +55,12 @@ export function fetchDefaultChannelId(groupId = 0) {
 				types: [
 					actionTypes.FETCH_DEFAULT_CHANNEL_ID_REQUEST,
 					actionTypes.FETCH_DEFAULT_CHANNEL_ID_SUCCESS,
-					actionTypes.FETCH_DEFAULT_CHANNEL_ID_FAILURE
-				]
+					actionTypes.FETCH_DEFAULT_CHANNEL_ID_FAILURE,
+				],
 			},
-			scope: PreferencesScopes.User
+			scope: PreferencesScopes.User,
 		},
-		type: 'NO_OP'
+		type: 'NO_OP',
 	};
 }
 
@@ -71,19 +71,19 @@ export function fetchDistributionTabs({distributionKey, groupId, id}) {
 				data: {
 					groupId,
 					scope: PreferencesScopes.Group,
-					segmentId: id
+					segmentId: id,
 				},
 				requestFn: API.preferences.fetchDistributionTabs,
 				types: [
 					actionTypes.FETCH_DISTRIBUTION_TABS_REQUEST,
 					actionTypes.FETCH_DISTRIBUTION_TABS_SUCCESS,
-					actionTypes.FETCH_DISTRIBUTION_TABS_FAILURE
-				]
+					actionTypes.FETCH_DISTRIBUTION_TABS_FAILURE,
+				],
 			},
 			id: distributionKey,
-			scope: PreferencesScopes.Group
+			scope: PreferencesScopes.Group,
 		},
-		type: 'NO_OP'
+		type: 'NO_OP',
 	};
 }
 
@@ -96,12 +96,12 @@ export function fetchUpgradeModalSeen(groupId) {
 				types: [
 					actionTypes.FETCH_UPGRADE_MODAL_SEEN_REQUEST,
 					actionTypes.FETCH_UPGRADE_MODAL_SEEN_SUCCESS,
-					actionTypes.FETCH_UPGRADE_MODAL_SEEN_FAILURE
-				]
+					actionTypes.FETCH_UPGRADE_MODAL_SEEN_FAILURE,
+				],
 			},
-			scope: PreferencesScopes.User
+			scope: PreferencesScopes.User,
 		},
-		type: 'NO_OP'
+		type: 'NO_OP',
 	};
 }
 
@@ -109,7 +109,7 @@ export function removeDistributionTab({
 	distributionKey,
 	distributionTabId,
 	groupId,
-	id
+	id,
 }) {
 	return {
 		meta: {
@@ -118,19 +118,19 @@ export function removeDistributionTab({
 					distributionTabId,
 					groupId,
 					scope: PreferencesScopes.Group,
-					segmentId: id
+					segmentId: id,
 				},
 				requestFn: API.preferences.removeDistributionTab,
 				types: [
 					actionTypes.REMOVE_DISTRIBUTION_TABS_REQUEST,
 					actionTypes.REMOVE_DISTRIBUTION_TABS_SUCCESS,
-					actionTypes.REMOVE_DISTRIBUTION_TABS_FAILURE
-				]
+					actionTypes.REMOVE_DISTRIBUTION_TABS_FAILURE,
+				],
 			},
 			id: distributionKey,
-			scope: PreferencesScopes.Group
+			scope: PreferencesScopes.Group,
 		},
-		type: 'NO_OP'
+		type: 'NO_OP',
 	};
 }
 
@@ -141,18 +141,18 @@ export function updateDefaultChannelId({defaultChannelId, groupId}) {
 				data: {
 					defaultChannelId,
 					groupId,
-					scope: PreferencesScopes.User
+					scope: PreferencesScopes.User,
 				},
 				requestFn: API.preferences.updateDefaultChannelId,
 				types: [
 					actionTypes.UPDATE_DEFAULT_CHANNEL_ID_REQUEST,
 					actionTypes.UPDATE_DEFAULT_CHANNEL_ID_SUCCESS,
-					actionTypes.UPDATE_DEFAULT_CHANNEL_ID_FAILURE
-				]
+					actionTypes.UPDATE_DEFAULT_CHANNEL_ID_FAILURE,
+				],
 			},
-			scope: PreferencesScopes.User
+			scope: PreferencesScopes.User,
 		},
-		type: 'NO_OP'
+		type: 'NO_OP',
 	};
 }
 
@@ -163,17 +163,17 @@ export function updateUpgradeModalSeen({groupId, upgradeModalSeen}) {
 				data: {
 					groupId,
 					scope: PreferencesScopes.User,
-					upgradeModalSeen
+					upgradeModalSeen,
 				},
 				requestFn: API.preferences.updateUpgradeModalSeen,
 				types: [
 					actionTypes.UPDATE_UPGRADE_MODAL_SEEN_REQUEST,
 					actionTypes.UPDATE_UPGRADE_MODAL_SEEN_SUCCESS,
-					actionTypes.UPDATE_UPGRADE_MODAL_SEEN_FAILURE
-				]
+					actionTypes.UPDATE_UPGRADE_MODAL_SEEN_FAILURE,
+				],
 			},
-			scope: PreferencesScopes.User
+			scope: PreferencesScopes.User,
 		},
-		type: 'NO_OP'
+		type: 'NO_OP',
 	};
 }

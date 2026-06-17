@@ -1,7 +1,7 @@
 import {
 	fetchSprite,
 	inlineSVGIcons,
-	resetSpriteCache
+	resetSpriteCache,
 } from '../DownloadPDFReport';
 
 const SPRITE_SVG =
@@ -13,7 +13,7 @@ const SPRITE_SVG =
 
 const mockFetch = (text: string) => {
 	global.fetch = jest.fn().mockResolvedValue({
-		text: jest.fn().mockResolvedValue(text)
+		text: jest.fn().mockResolvedValue(text),
 	}) as any;
 };
 

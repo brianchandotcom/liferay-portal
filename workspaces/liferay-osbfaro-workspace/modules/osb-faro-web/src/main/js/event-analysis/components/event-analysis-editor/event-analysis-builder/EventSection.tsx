@@ -6,7 +6,7 @@ import React from 'react';
 import {Align} from '@clayui/drop-down';
 import {
 	DeleteAllAttributes,
-	withAttributesConsumer
+	withAttributesConsumer,
 } from '../context/attributes';
 import {Event} from 'event-analysis/utils/types';
 
@@ -19,7 +19,7 @@ interface IEventSectionProps {
 const EventSection: React.FC<IEventSectionProps> = ({
 	deleteAllAttributes,
 	event,
-	onEventChange
+	onEventChange,
 }) => {
 	const handleEventChange = (event: Event | null): void => {
 		onEventChange(event);
@@ -28,13 +28,13 @@ const EventSection: React.FC<IEventSectionProps> = ({
 	};
 
 	return (
-		<div className='event-section-root d-flex align-items-center'>
-			<div className='section-header'>
+		<div className="event-section-root d-flex align-items-center">
+			<div className="section-header">
 				{Liferay.Language.get('analyze')}
 			</div>
 
-			<div className='event-container d-flex justify-content-between'>
-				<div className='event-list'>
+			<div className="event-container d-flex justify-content-between">
+				<div className="event-list">
 					{event && (
 						<EventChip
 							event={event}
@@ -50,10 +50,10 @@ const EventSection: React.FC<IEventSectionProps> = ({
 						trigger={
 							<ClayButton
 								aria-label={Liferay.Language.get('add')}
-								className='button-root add-event-button'
-								size='sm'
+								className="button-root add-event-button"
+								size="sm"
 							>
-								<ClayIcon className='icon-root' symbol='plus' />
+								<ClayIcon className="icon-root" symbol="plus" />
 							</ClayButton>
 						}
 					/>

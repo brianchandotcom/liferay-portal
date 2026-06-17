@@ -21,10 +21,10 @@ interface IFormGroupProps extends React.HTMLAttributes<HTMLDivElement> {
 const FormGroup: React.FC<IFormGroupProps> = ({
 	autoFit = false,
 	children,
-	className
+	className,
 }) => {
 	const classes = getCN('form-group', className, {
-		'form-group-autofit': autoFit
+		'form-group-autofit': autoFit,
 	});
 
 	return <div className={classes}>{children}</div>;
@@ -41,12 +41,12 @@ const FormGroupItem: React.FC<IFormGroupItemProps> = ({
 	className,
 	label = false,
 	labelSpacer = false,
-	shrink = false
+	shrink = false,
 }) => {
 	const classes = getCN('form-group-item', className, {
 		'form-group-item-label': label,
 		'form-group-item-label-spacer': labelSpacer,
-		'form-group-item-shrink': shrink
+		'form-group-item-shrink': shrink,
 	});
 
 	return <div className={classes}>{children}</div>;
@@ -93,11 +93,11 @@ export default Object.assign(Formik, {
 	PasswordInput,
 	RadioGroup: Object.assign(withField(RadioGroup), {
 		Option: RadioGroup.Option,
-		Subsection: RadioGroup.Subsection
+		Subsection: RadioGroup.Subsection,
 	}),
 	SearchableSelect: withField(SearchableSelect),
 	Select: Object.assign(withField(Select), {Item: Select.Item}),
-	ToggleSwitch: withField(ToggleSwitch)
+	ToggleSwitch: withField(ToggleSwitch),
 });
 
 export * from 'shared/util/validators';

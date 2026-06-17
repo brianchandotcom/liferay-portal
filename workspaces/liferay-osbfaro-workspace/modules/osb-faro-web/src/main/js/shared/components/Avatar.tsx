@@ -40,8 +40,8 @@ const Avatar: React.FC<IAvatarProps> = ({
 				!image
 					? undefined
 					: {
-							backgroundImage: `url(${image})`
-					  }
+							backgroundImage: `url(${image})`,
+						}
 			}
 			symbol={type !== EntityTypes.Individual ? getSymbol(type) : null}
 			{...otherProps}

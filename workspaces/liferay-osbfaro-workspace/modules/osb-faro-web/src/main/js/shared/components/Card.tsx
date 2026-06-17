@@ -12,12 +12,12 @@ const Body: React.FC<ICardBodyProps> = ({
 	alignCenter = false,
 	children,
 	className,
-	noPadding
+	noPadding,
 }) => (
 	<div
 		className={getCN('card-body', className, {
 			'align-center': alignCenter,
-			'no-padding': noPadding
+			'no-padding': noPadding,
 		})}
 	>
 		{alignCenter ? <div>{children}</div> : children}
@@ -26,17 +26,17 @@ const Body: React.FC<ICardBodyProps> = ({
 
 const Footer: React.FC<React.HTMLAttributes<HTMLElement>> = ({
 	children,
-	className
+	className,
 }) => <div className={getCN('card-footer', className)}>{children}</div>;
 
 const Header: React.FC<React.HTMLAttributes<HTMLElement>> = ({
 	children,
-	className
+	className,
 }) => <div className={getCN('card-header', className)}>{children}</div>;
 
 const Title: React.FC<React.HTMLAttributes<HTMLElement>> = ({
 	children,
-	className
+	className,
 }) => <div className={getCN('card-title', className)}>{children}</div>;
 
 interface ICardProps extends React.HTMLAttributes<HTMLElement> {
@@ -59,7 +59,7 @@ const Card: React.FC<ICardProps> & {
 	minHeight,
 	pageDisplay = false,
 	reportContainer,
-	testId
+	testId,
 }) => {
 	const {clearReportContainers, setReportContainer} =
 		useDownloadReportContext();
@@ -74,7 +74,7 @@ const Card: React.FC<ICardProps> & {
 
 	const classes = getCN('card', 'card-root', className, {
 		horizontal,
-		'page-display': pageDisplay
+		'page-display': pageDisplay,
 	});
 
 	return (

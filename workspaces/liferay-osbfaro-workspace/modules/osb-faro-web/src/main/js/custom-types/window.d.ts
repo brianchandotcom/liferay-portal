@@ -17,7 +17,7 @@ import {
 	SubscriptionStatuses,
 	TimeIntervals,
 	UserRoleNames,
-	UserStatuses
+	UserStatuses,
 } from 'shared/util/constants';
 import {compose} from 'redux';
 

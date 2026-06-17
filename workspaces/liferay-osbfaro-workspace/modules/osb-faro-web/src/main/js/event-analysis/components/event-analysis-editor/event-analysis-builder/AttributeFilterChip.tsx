@@ -21,7 +21,7 @@ const AttributeFilterChip: React.FC<{
 	index,
 	onCloseClick,
 	onMove,
-	uneditableIds
+	uneditableIds,
 }) => {
 	const [label, value] = getFilterDisplay(attribute, filter);
 
@@ -31,7 +31,7 @@ const AttributeFilterChip: React.FC<{
 		...attribute,
 		dataType,
 		description,
-		displayName
+		displayName,
 	};
 
 	return (

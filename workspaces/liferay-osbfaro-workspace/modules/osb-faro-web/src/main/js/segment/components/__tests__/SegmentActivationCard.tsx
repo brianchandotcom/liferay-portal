@@ -8,13 +8,13 @@ import {Provider} from 'react-redux';
 import {
 	SegmentActivationFrequencyTypes,
 	SegmentActivationScheduleTypes,
-	SegmentTypes
+	SegmentTypes,
 } from 'shared/util/constants';
 
 jest.unmock('react-dom');
 
 const WrapperComponent: React.FC<{children: React.ReactNode}> = ({
-	children
+	children,
 }) => (
 	<Provider store={mockStore()}>
 		<BrowserRouter>{children}</BrowserRouter>
@@ -26,7 +26,7 @@ jest.mock(
 	() =>
 		function MockDateInput({value}: {value: {start: string; end: string}}) {
 			return (
-				<div data-testid='mock-date-input'>
+				<div data-testid="mock-date-input">
 					{value.start} {'-'} {value.end}
 				</div>
 			);
@@ -41,7 +41,7 @@ describe('SegmentActivationCard', () => {
 					segmentActivation={fromJS({
 						frequencyType:
 							SegmentActivationFrequencyTypes.Indefinitely,
-						scheduleType: SegmentActivationScheduleTypes.Batch
+						scheduleType: SegmentActivationScheduleTypes.Batch,
 					})}
 					segmentType={SegmentTypes.Batch}
 				/>
@@ -57,7 +57,7 @@ describe('SegmentActivationCard', () => {
 					segmentActivation={fromJS({
 						frequencyType:
 							SegmentActivationFrequencyTypes.Indefinitely,
-						scheduleType: SegmentActivationScheduleTypes.RealTime
+						scheduleType: SegmentActivationScheduleTypes.RealTime,
 					})}
 					segmentType={SegmentTypes.Batch}
 				/>
@@ -74,7 +74,7 @@ describe('SegmentActivationCard', () => {
 						frequencyType: SegmentActivationFrequencyTypes.Between,
 						scheduleEndDate: '1757818800000',
 						scheduleStartDate: '1756004400000',
-						scheduleType: SegmentActivationScheduleTypes.Batch
+						scheduleType: SegmentActivationScheduleTypes.Batch,
 					})}
 					segmentType={SegmentTypes.Batch}
 				/>
@@ -90,7 +90,7 @@ describe('SegmentActivationCard', () => {
 					segmentActivation={fromJS({
 						frequencyType:
 							SegmentActivationFrequencyTypes.Indefinitely,
-						scheduleType: SegmentActivationScheduleTypes.Batch
+						scheduleType: SegmentActivationScheduleTypes.Batch,
 					})}
 					segmentType={SegmentTypes.Batch}
 				/>
@@ -114,7 +114,7 @@ describe('SegmentActivationCard', () => {
 					segmentActivation={fromJS({
 						frequencyType:
 							SegmentActivationFrequencyTypes.Indefinitely,
-						scheduleType: SegmentActivationScheduleTypes.RealTime
+						scheduleType: SegmentActivationScheduleTypes.RealTime,
 					})}
 					segmentType={SegmentTypes.RealTime}
 				/>
@@ -142,7 +142,7 @@ describe('SegmentActivationCard', () => {
 						frequencyType: SegmentActivationFrequencyTypes.Between,
 						scheduleEndDate: '1757818800000',
 						scheduleStartDate: '1756004400000',
-						scheduleType: SegmentActivationScheduleTypes.RealTime
+						scheduleType: SegmentActivationScheduleTypes.RealTime,
 					})}
 					segmentType={SegmentTypes.RealTime}
 				/>

@@ -5,12 +5,12 @@ import {
 	getFilterCriterionIMap,
 	getIndexFromPropertyName,
 	getOperator,
-	getPropertyValue
+	getPropertyValue,
 } from 'segment/segment-editor/dynamic/utils/custom-inputs';
 import {
 	getOperatorLabel,
 	maybeFormatToKnownType,
-	maybeFormatValue
+	maybeFormatValue,
 } from '../utils';
 import {IDisplayComponentProps} from '../types';
 import {isOfKnownType} from 'segment/segment-editor/dynamic/utils/utils';
@@ -20,7 +20,7 @@ import {PropertyTypes} from 'segment/segment-editor/dynamic/utils/constants';
 const SessionDisplay: React.FC<IDisplayComponentProps> = ({
 	criterion,
 	property,
-	timeZoneId
+	timeZoneId,
 }) => {
 	const valueIMap = criterion.value as CustomValue;
 
@@ -48,7 +48,7 @@ const SessionDisplay: React.FC<IDisplayComponentProps> = ({
 		);
 
 		values = [cityIndex, regionIndex, countryIndex].filter(
-			index => index > -1
+			(index) => index > -1
 		);
 	}
 
@@ -67,7 +67,7 @@ const SessionDisplay: React.FC<IDisplayComponentProps> = ({
 			{!isOfKnownType(operatorKey) && (
 				<b>
 					{values
-						.map(index =>
+						.map((index) =>
 							maybeFormatValue(
 								getPropertyValue(valueIMap, 'value', index),
 								type,

@@ -22,21 +22,21 @@ const ChannelsMenuDropdownItem: React.FC<ISitesDropdownItem> = ({
 	className,
 	groupId,
 	onClick,
-	route
+	route,
 }) => {
 	const classes = getCN('sites-dropdown-item', className, {
-		active
+		active,
 	});
 
 	return (
 		<ClayDropDown.Item className={classes}>
 			<ClayLink
-				className='link'
+				className="link"
 				href={toRoute(route, {channelId: id, groupId})}
 				onClick={onClick}
 			>
 				<TextTruncate
-					className='link-content-wrapper'
+					className="link-content-wrapper"
 					inline
 					title={name}
 				/>

@@ -14,11 +14,11 @@ interface IProfileProps {
 const Profile: React.FC<IProfileProps> = ({account, loading}) => (
 	<section>
 		<SectionHeader
-			icon='plus-squares'
+			icon="plus-squares"
 			title={Liferay.Language.get('account-details')}
 		/>
 
-		<div className='account-profile-cards mb-3'>
+		<div className="account-profile-cards mb-3">
 			<LifecycleStatus />
 			<AccountInfo account={account} loading={loading} />
 			<TopAssets />

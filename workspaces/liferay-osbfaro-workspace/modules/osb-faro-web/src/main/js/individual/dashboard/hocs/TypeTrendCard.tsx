@@ -7,7 +7,7 @@ import {graphql, OperationOption} from '@apollo/client/react/hoc';
 import {INTERVAL_KEY_MAP} from 'shared/util/time';
 import {
 	mapPropsToOptions,
-	mapResultToProps
+	mapResultToProps,
 } from '../hocs/mappers/individual-metrics-query';
 import {RangeKeyTimeRanges} from 'shared/util/constants';
 import {ReportContainer} from 'shared/components/download-report/DownloadPDFReport';
@@ -17,7 +17,7 @@ import {withError, withLoading} from 'shared/hoc';
 const TypeTrendWithData = compose<any>(
 	graphql(IndividualMetricsQuery, {
 		options: mapPropsToOptions,
-		props: mapResultToProps
+		props: mapResultToProps,
 	} as OperationOption<object, object>),
 	withLoading(),
 	withError({page: false})
@@ -28,7 +28,7 @@ const TypeTrendCard: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 
 	return (
 		<Card
-			className='type-trend-card-root text-secondary'
+			className="type-trend-card-root text-secondary"
 			reportContainer={ReportContainer.CurrentTotalsCard}
 		>
 			<Card.Body>

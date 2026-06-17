@@ -4,8 +4,8 @@ const router = {
 	params: {
 		assetId: 'formId',
 		title: 'Liferay',
-		touchpoint: 'Any'
-	}
+		touchpoint: 'Any',
+	},
 };
 
 const data = {
@@ -15,177 +15,177 @@ const data = {
 				formFieldMetrics: [
 					{
 						fieldAbandonmentsMetric: {
-							value: 5
+							value: 5,
 						},
 						fieldEmptyMetric: {
-							value: 0
+							value: 0,
 						},
 						fieldInteractionDurationMetric: {
-							value: 6230
+							value: 6230,
 						},
 						fieldInteractionsMetric: {
-							value: 812
+							value: 812,
 						},
 						fieldName: 'Name',
 						fieldRefilledMetric: {
-							value: 8
-						}
+							value: 8,
+						},
 					},
 					{
 						fieldAbandonmentsMetric: {
-							value: 16
+							value: 16,
 						},
 						fieldEmptyMetric: {
-							value: 0
+							value: 0,
 						},
 						fieldInteractionDurationMetric: {
-							value: 8410
+							value: 8410,
 						},
 						fieldInteractionsMetric: {
-							value: 796
+							value: 796,
 						},
 						fieldName: 'Address',
 						fieldRefilledMetric: {
-							value: 12
-						}
+							value: 12,
+						},
 					},
 					{
 						fieldAbandonmentsMetric: {
-							value: 4
+							value: 4,
 						},
 						fieldEmptyMetric: {
-							value: 0
+							value: 0,
 						},
 						fieldInteractionDurationMetric: {
-							value: 2100
+							value: 2100,
 						},
 						fieldInteractionsMetric: {
-							value: 792
+							value: 792,
 						},
 						fieldName: 'City',
 						fieldRefilledMetric: {
-							value: 2
-						}
+							value: 2,
+						},
 					},
 					{
 						fieldAbandonmentsMetric: {
-							value: 12
+							value: 12,
 						},
 						fieldEmptyMetric: {
-							value: 0
+							value: 0,
 						},
 						fieldInteractionDurationMetric: {
-							value: 1700
+							value: 1700,
 						},
 						fieldInteractionsMetric: {
-							value: 780
+							value: 780,
 						},
 						fieldName: 'State',
 						fieldRefilledMetric: {
-							value: 1.77
-						}
+							value: 1.77,
+						},
 					},
 					{
 						fieldAbandonmentsMetric: {
-							value: 7
+							value: 7,
 						},
 						fieldEmptyMetric: {
-							value: 0
+							value: 0,
 						},
 						fieldInteractionDurationMetric: {
-							value: 2890
+							value: 2890,
 						},
 						fieldInteractionsMetric: {
-							value: 773
+							value: 773,
 						},
 						fieldName: 'Zip Code',
 						fieldRefilledMetric: {
-							value: 32
-						}
+							value: 32,
+						},
 					},
 					{
 						fieldAbandonmentsMetric: {
-							value: 221
+							value: 221,
 						},
 						fieldEmptyMetric: {
-							value: 0
+							value: 0,
 						},
 						fieldInteractionDurationMetric: {
-							value: 2090
+							value: 2090,
 						},
 						fieldInteractionsMetric: {
-							value: 34
+							value: 34,
 						},
 						fieldName: 'Order Number',
 						fieldRefilledMetric: {
-							value: 23
-						}
+							value: 23,
+						},
 					},
 					{
 						fieldAbandonmentsMetric: {
-							value: 3
+							value: 3,
 						},
 						fieldEmptyMetric: {
-							value: 0
+							value: 0,
 						},
 						fieldInteractionDurationMetric: {
-							value: 3900
+							value: 3900,
 						},
 						fieldInteractionsMetric: {
-							value: 766
+							value: 766,
 						},
 						fieldName: 'Phone Number',
 						fieldRefilledMetric: {
-							value: 11
-						}
+							value: 11,
+						},
 					},
 					{
 						fieldAbandonmentsMetric: {
-							value: 19
+							value: 19,
 						},
 						fieldEmptyMetric: {
-							value: 0
+							value: 0,
 						},
 						fieldInteractionDurationMetric: {
-							value: 2870
+							value: 2870,
 						},
 						fieldInteractionsMetric: {
-							value: 670
+							value: 670,
 						},
 						fieldName: 'Requested Repair Date',
 						fieldRefilledMetric: {
-							value: 7.3
-						}
+							value: 7.3,
+						},
 					},
 					{
 						fieldAbandonmentsMetric: {
-							value: 17
+							value: 17,
 						},
 						fieldEmptyMetric: {
-							value: 0
+							value: 0,
 						},
 						fieldInteractionDurationMetric: {
-							value: 62230
+							value: 62230,
 						},
 						fieldInteractionsMetric: {
-							value: 215
+							value: 215,
 						},
 						fieldName: 'Description of Problem',
 						fieldRefilledMetric: {
-							value: 28
-						}
-					}
+							value: 28,
+						},
+					},
 				],
 				pageAbandonmentsMetric: {
-					value: 461
+					value: 461,
 				},
 				pageIndex: '0',
 				pageViewsMetric: {
-					value: 1273
-				}
-			}
-		]
-	}
+					value: 1273,
+				},
+			},
+		],
+	},
 };
 
 describe('FormAbandonmentQuery mapper', () => {
@@ -200,9 +200,9 @@ describe('FormAbandonmentQuery mapper', () => {
 		const props = mapResultToProps({
 			data: {
 				form: {
-					formPageMetrics: []
-				}
-			}
+					formPageMetrics: [],
+				},
+			},
 		});
 
 		expect(props).toMatchObject({
@@ -210,15 +210,15 @@ describe('FormAbandonmentQuery mapper', () => {
 			header: [
 				{
 					icon: 'document',
-					label: '0 Form Steps'
+					label: '0 Form Steps',
 				},
 				{
 					icon: 'custom-field',
-					label: '0 Fields'
-				}
+					label: '0 Fields',
+				},
 			],
 			items: [],
-			loading: false
+			loading: false,
 		});
 	});
 
@@ -226,7 +226,7 @@ describe('FormAbandonmentQuery mapper', () => {
 		const options = mapPropsToOptions({
 			filters: {},
 			rangeSelectors: {rangeKey: '7'},
-			router
+			router,
 		});
 
 		expect(options).toEqual({
@@ -238,8 +238,8 @@ describe('FormAbandonmentQuery mapper', () => {
 				rangeKey: 7,
 				rangeStart: null,
 				title: 'Liferay',
-				touchpoint: null
-			}
+				touchpoint: null,
+			},
 		});
 	});
 });

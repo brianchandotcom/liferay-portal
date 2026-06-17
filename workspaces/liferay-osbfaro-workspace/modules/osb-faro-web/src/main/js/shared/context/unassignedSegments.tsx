@@ -4,7 +4,7 @@ import {Segment} from 'shared/util/records';
 
 export enum ActionType {
 	setSegments = 'setSegments',
-	updateShowAlert = 'updateShowAlert'
+	updateShowAlert = 'updateShowAlert',
 }
 
 type Action = {
@@ -29,7 +29,7 @@ export const UnassignedSegmentsContext = React.createContext<{
 	unassignedSegmentsDispatch?: Dispatch;
 }>({
 	showUnassignedAlert: true,
-	unassignedSegments: []
+	unassignedSegments: [],
 });
 
 export const unassignedSegmentsReducer = (
@@ -40,13 +40,13 @@ export const unassignedSegmentsReducer = (
 		case 'setSegments': {
 			return {
 				...state,
-				unassignedSegments: payload
+				unassignedSegments: payload,
 			};
 		}
 		case 'updateShowAlert': {
 			return {
 				...state,
-				showUnassignedAlert: false
+				showUnassignedAlert: false,
 			};
 		}
 		default:
@@ -56,14 +56,14 @@ export const unassignedSegmentsReducer = (
 
 export const UnassignedSegmentsProvider = ({
 	children,
-	unassignedSegments: initialSegments
+	unassignedSegments: initialSegments,
 }: unassignedSegmentsProviderProps) => {
 	const [
 		{showUnassignedAlert, unassignedSegments},
-		unassignedSegmentsDispatch
+		unassignedSegmentsDispatch,
 	] = useReducer(unassignedSegmentsReducer, {
 		showUnassignedAlert: true,
-		unassignedSegments: initialSegments || []
+		unassignedSegments: initialSegments || [],
 	});
 
 	return (
@@ -71,7 +71,7 @@ export const UnassignedSegmentsProvider = ({
 			value={{
 				showUnassignedAlert,
 				unassignedSegments,
-				unassignedSegmentsDispatch
+				unassignedSegmentsDispatch,
 			}}
 		>
 			{children}
@@ -91,11 +91,10 @@ export const useUnassignedSegmentsContext = () => {
 
 export const withUnassignedSegmentsProvider =
 	<P extends object>(WrappedComponent: React.ComponentType<P>) =>
-	(props: P) =>
-		(
-			<UnassignedSegmentsProvider>
-				<WrappedComponent {...props} />
-			</UnassignedSegmentsProvider>
-		);
+	(props: P) => (
+		<UnassignedSegmentsProvider>
+			<WrappedComponent {...props} />
+		</UnassignedSegmentsProvider>
+	);
 
 export default UnassignedSegmentsProvider;

@@ -25,6 +25,7 @@ const Overview = lazy(
 const KnownIndividuals = lazy(
 	() =>
 		import(
+
 			/* webpackChunkName: "DocumentsAndMediaKnownIndividuals" */ './KnownIndividuals'
 		)
 );
@@ -33,13 +34,13 @@ const NAV_ITEMS = [
 	{
 		exact: true,
 		label: Liferay.Language.get('overview'),
-		route: Routes.ASSETS_DOCUMENTS_AND_MEDIA_OVERVIEW
+		route: Routes.ASSETS_DOCUMENTS_AND_MEDIA_OVERVIEW,
 	},
 	{
 		exact: true,
 		label: Liferay.Language.get('known-individuals'),
-		route: Routes.ASSETS_DOCUMENTS_AND_MEDIA_KNOWN_INDIVIDUALS
-	}
+		route: Routes.ASSETS_DOCUMENTS_AND_MEDIA_KNOWN_INDIVIDUALS,
+	},
 ];
 
 const DocumentAndMedia: React.FC<{
@@ -53,8 +54,8 @@ const DocumentAndMedia: React.FC<{
 			groupId = '',
 			title = '',
 			touchpoint,
-			type = ''
-		}
+			type = '',
+		},
 	} = router;
 
 	const [filters] = useState({});
@@ -78,10 +79,10 @@ const DocumentAndMedia: React.FC<{
 					breadcrumbs.getHome({
 						channelId,
 						groupId,
-						label: selectedChannel?.name
+						label: selectedChannel?.name,
 					}),
 					breadcrumbs.getAssets({channelId, groupId}),
-					breadcrumbs.getEntityName({label: decodedTitle})
+					breadcrumbs.getEntityName({label: decodedTitle}),
 				]}
 				groupId={groupId}
 			>
@@ -101,7 +102,7 @@ const DocumentAndMedia: React.FC<{
 						groupId,
 						title,
 						touchpoint,
-						type
+						type,
 					}}
 					routeQueries={pickBy(rangeSelectorsFromQuery)}
 				/>
@@ -110,13 +111,13 @@ const DocumentAndMedia: React.FC<{
 			{getMatchedRoute(NAV_ITEMS) ===
 				Routes.ASSETS_DOCUMENTS_AND_MEDIA_OVERVIEW && (
 				<BasePage.SubHeader>
-					<div className='d-flex justify-content-end w-100'>
+					<div className="d-flex justify-content-end w-100">
 						<DownloadPDFReport
 							disabled={!!dataSourceStates.empty}
 							subtitle={selectedChannel?.name}
 							title={
 								sub(Liferay.Language.get('x-dashboard'), [
-									decodedTitle
+									decodedTitle,
 								]) as string
 							}
 						/>
@@ -127,10 +128,10 @@ const DocumentAndMedia: React.FC<{
 			{getMatchedRoute(NAV_ITEMS) ===
 				Routes.ASSETS_DOCUMENTS_AND_MEDIA_KNOWN_INDIVIDUALS && (
 				<BasePage.SubHeader>
-					<div className='d-flex justify-content-end w-100'>
+					<div className="d-flex justify-content-end w-100">
 						<DownloadCSVReport
 							assetId={assetId}
-							assetType='document'
+							assetType="document"
 							disabled={!!dataSourceStates.empty}
 							type={CSVType.Individual}
 							typeLang={Liferay.Language.get('known-individuals')}

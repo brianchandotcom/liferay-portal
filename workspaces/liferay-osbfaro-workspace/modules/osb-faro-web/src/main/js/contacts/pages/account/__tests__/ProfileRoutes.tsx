@@ -12,19 +12,19 @@ import {useRequest} from 'shared/hooks/useRequest';
 jest.unmock('react-dom');
 
 jest.mock('shared/hooks/useRequest', () => ({
-	useRequest: jest.fn()
+	useRequest: jest.fn(),
 }));
 
 jest.mock('shared/util/breadcrumbs', () => ({
 	getAccounts: jest.fn(() => ({active: false, label: 'Accounts'})),
 	getEntityName: jest.fn(({label}: {label?: string} = {}) => ({
 		active: true,
-		label
+		label,
 	})),
 	getHome: jest.fn(({label}: {label?: string} = {}) => ({
 		active: false,
-		label: label || 'Home'
-	}))
+		label: label || 'Home',
+	})),
 }));
 
 jest.mock('react-router-dom', () => ({
@@ -32,18 +32,18 @@ jest.mock('react-router-dom', () => ({
 	useParams: () => ({
 		channelId: '123',
 		groupId: '23',
-		id: 'acc-1'
-	})
+		id: 'acc-1',
+	}),
 }));
 
 jest.mock('../Activities', () => ({
 	__esModule: true,
-	default: () => <div data-testid='account-activities' />
+	default: () => <div data-testid="account-activities" />,
 }));
 
 jest.mock('../Profile', () => ({
 	__esModule: true,
-	default: () => <div data-testid='account-profile' />
+	default: () => <div data-testid="account-profile" />,
 }));
 
 const mockedUseRequest = useRequest as jest.Mock;
@@ -52,7 +52,7 @@ const store = mockStore();
 
 const renderProfileRoutes = (
 	history = createMemoryHistory({
-		initialEntries: ['/workspace/23/123/accounts/acc-1']
+		initialEntries: ['/workspace/23/123/accounts/acc-1'],
 	})
 ) =>
 	render(
@@ -76,7 +76,7 @@ describe('AccountProfileRoutes', () => {
 		mockedUseRequest.mockReturnValue({
 			data: null,
 			error: false,
-			loading: true
+			loading: true,
 		});
 
 		const {container} = renderProfileRoutes();
@@ -89,7 +89,7 @@ describe('AccountProfileRoutes', () => {
 		mockedUseRequest.mockReturnValue({
 			data: null,
 			error: true,
-			loading: false
+			loading: false,
 		});
 
 		renderProfileRoutes();
@@ -105,7 +105,7 @@ describe('AccountProfileRoutes', () => {
 		mockedUseRequest.mockReturnValue({
 			data: null,
 			error: false,
-			loading: false
+			loading: false,
 		});
 
 		renderProfileRoutes();
@@ -117,7 +117,7 @@ describe('AccountProfileRoutes', () => {
 		mockedUseRequest.mockReturnValue({
 			data: null,
 			error: true,
-			loading: false
+			loading: false,
 		});
 
 		renderProfileRoutes();
@@ -132,7 +132,7 @@ describe('AccountProfileRoutes', () => {
 		mockedUseRequest.mockReturnValue({
 			data: {accountName: 'Acme Corp'},
 			error: false,
-			loading: false
+			loading: false,
 		});
 
 		renderProfileRoutes();

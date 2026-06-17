@@ -18,14 +18,14 @@ export {default as TimeZone} from './TimeZone';
 
 export const Changeset = new Record({
 	added: new Map(),
-	removed: new Map()
+	removed: new Map(),
 });
 
 export const Distribution = new Record({
 	data: new List(),
 	error: false,
 	fieldMappingFieldName: null,
-	loading: true
+	loading: true,
 });
 
 export const EntityLayout = new Record({
@@ -33,31 +33,31 @@ export const EntityLayout = new Record({
 	headerContactsCardTemplates: new List(),
 	id: null,
 	name: '',
-	type: null
+	type: null,
 });
 
 export const Metric = new Record({
 	count: 0,
 	limit: 0,
-	status: 0
+	status: 0,
 });
 
 export const Plan = new Record({
 	addOns: new Map({
 		[INDIVIDUALS]: new Map(),
-		[PAGEVIEWS]: new Map()
+		[PAGEVIEWS]: new Map(),
 	}),
 	endDate: Date.now(),
 	metrics: new Map({
 		[INDIVIDUALS]: new Metric(),
-		[PAGEVIEWS]: new Metric()
+		[PAGEVIEWS]: new Metric(),
 	}),
 	name: '',
-	startDate: Date.now()
+	startDate: Date.now(),
 });
 
 export const SearchResults = new Record({
 	disableSearch: false,
 	items: new List(),
-	total: 0
+	total: 0,
 });

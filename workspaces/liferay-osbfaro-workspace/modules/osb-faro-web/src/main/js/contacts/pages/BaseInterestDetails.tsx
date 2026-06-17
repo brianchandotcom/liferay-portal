@@ -14,7 +14,7 @@ import {
 	Routes,
 	SEGMENTS,
 	setUriQueryValue,
-	toRoute
+	toRoute,
 } from 'shared/util/router';
 import {createOrderIOMap, NAME} from 'shared/util/pagination';
 import {formatUTCDateFromUnix} from 'shared/util/date';
@@ -25,7 +25,7 @@ import {useQueryPagination} from 'shared/hooks/useQueryPagination';
 
 const tabIds = {
 	INDIVIDUALS,
-	PAGES
+	PAGES,
 };
 
 interface IIndividualListProps {
@@ -39,7 +39,7 @@ const IndividualsList: React.FC<IIndividualListProps> = ({
 	...otherProps
 }) => {
 	const {delta, orderIOMap, page, query} = useQueryPagination({
-		initialOrderIOMap: createOrderIOMap(NAME)
+		initialOrderIOMap: createOrderIOMap(NAME),
 	});
 
 	return (
@@ -48,7 +48,7 @@ const IndividualsList: React.FC<IIndividualListProps> = ({
 			columns={[
 				individualsListColumns.getName({channelId, groupId}),
 				individualsListColumns.email,
-				individualsListColumns.accountName
+				individualsListColumns.accountName,
 			]}
 			dataSourceFn={API.individuals.search}
 			delta={delta}
@@ -56,13 +56,13 @@ const IndividualsList: React.FC<IIndividualListProps> = ({
 			orderByOptions={[
 				{
 					label: Liferay.Language.get('name'),
-					value: NAME
-				}
+					value: NAME,
+				},
 			]}
 			orderIOMap={orderIOMap}
 			page={page}
 			query={query}
-			rowIdentifier='id'
+			rowIdentifier="id"
 		/>
 	);
 };
@@ -81,7 +81,8 @@ const InterestDetailsList: React.FC<IInterestDetailsListProp> = ({
 }) => {
 	if (tabId == tabIds.INDIVIDUALS) {
 		return <IndividualsList {...otherProps} />;
-	} else {
+	}
+	else {
 		return <InterestPagesList {...otherProps} />;
 	}
 };
@@ -104,7 +105,7 @@ const BaseInterestDetails: React.FC<IBaseInterestDetailsProps> = ({
 	interestDetailsRoute,
 	interestId,
 	tabId,
-	type
+	type,
 }) => {
 	const active = rawActive === 'true';
 
@@ -116,9 +117,9 @@ const BaseInterestDetails: React.FC<IBaseInterestDetailsProps> = ({
 				groupId,
 				id,
 				interestId,
-				tabId: tabIds.INDIVIDUALS
+				tabId: tabIds.INDIVIDUALS,
 			}),
-			label: Liferay.Language.get('individuals')
+			label: Liferay.Language.get('individuals'),
 		},
 		{
 			active: tabIds.PAGES === tabId && active,
@@ -128,12 +129,12 @@ const BaseInterestDetails: React.FC<IBaseInterestDetailsProps> = ({
 					groupId,
 					id,
 					interestId,
-					tabId: PAGES
+					tabId: PAGES,
 				}),
 				'active',
 				true
 			),
-			label: Liferay.Language.get('active-pages')
+			label: Liferay.Language.get('active-pages'),
 		},
 		{
 			active: tabIds.PAGES === tabId && !active,
@@ -143,13 +144,13 @@ const BaseInterestDetails: React.FC<IBaseInterestDetailsProps> = ({
 					groupId,
 					id,
 					interestId,
-					tabId: PAGES
+					tabId: PAGES,
 				}),
 				'active',
 				false
 			),
-			label: Liferay.Language.get('inactive-pages')
-		}
+			label: Liferay.Language.get('inactive-pages'),
+		},
 	];
 
 	const interestName = getSafeDecodedURIComponent(interestId);
@@ -163,34 +164,34 @@ const BaseInterestDetails: React.FC<IBaseInterestDetailsProps> = ({
 		contactsEntityType: entity.type,
 		groupId,
 		[individualsEntityKey]: id,
-		interestName
+		interestName,
 	};
 
 	if (tabId === tabIds.PAGES) {
 		dataSourceParams = {
 			...dataSourceParams,
-			active
+			active,
 		};
 	}
 
 	return (
-		<div className='interest-details-root'>
-			<div className='back-button-root mb-2'>
+		<div className="interest-details-root">
+			<div className="back-button-root mb-2">
 				<ClayLink
 					borderless
 					button
-					displayType='secondary'
+					displayType="secondary"
 					href={toRoute(Routes.CONTACTS_INTERESTS, {
 						channelId,
 						groupId,
 						id,
-						type
+						type,
 					})}
 					small
 				>
 					<ClayIcon
-						className='icon-root icon-size-sm mr-2'
-						symbol='angle-left-small'
+						className="icon-root icon-size-sm mr-2"
+						symbol="angle-left-small"
 					/>
 
 					{Liferay.Language.get('back-to-interests')}
@@ -204,11 +205,11 @@ const BaseInterestDetails: React.FC<IBaseInterestDetailsProps> = ({
 							Liferay.Language.get('interest-x'),
 							[
 								<span
-									className='interest-name'
-									key='INTEREST_NAME'
+									className="interest-name"
+									key="INTEREST_NAME"
 								>
 									{interestName}
-								</span>
+								</span>,
 							],
 							false
 						)}
@@ -217,20 +218,20 @@ const BaseInterestDetails: React.FC<IBaseInterestDetailsProps> = ({
 
 				<Card.Header>
 					<ClayNavigationBar
-						className='page-subnav'
-						key='subnav'
-						triggerLabel='label'
+						className="page-subnav"
+						key="subnav"
+						triggerLabel="label"
 					>
 						{navigationItems.map(({active, href, label}) => (
 							<ClayNavigationBar.Item active={active} key={label}>
 								<ClayLink href={href}>
-									<div className='h4'>{label}</div>
+									<div className="h4">{label}</div>
 								</ClayLink>
 							</ClayNavigationBar.Item>
 						))}
 					</ClayNavigationBar>
 
-					<div className='h4 list-title'>
+					<div className="h4 list-title">
 						{tabId === tabIds.INDIVIDUALS
 							? sub(
 									Liferay.Language.get(
@@ -240,21 +241,21 @@ const BaseInterestDetails: React.FC<IBaseInterestDetailsProps> = ({
 										interestName,
 										formatUTCDateFromUnix(
 											Date.now() - 24 * 60 * 60 * 1000
-										)
+										),
 									]
-							  )
+								)
 							: sub(
 									Liferay.Language.get(
 										'pages-containing-x-as-a-keyword'
 									),
 									[interestName]
-							  )}
+								)}
 					</div>
 				</Card.Header>
 
 				<InterestDetailsList
 					channelId={channelId}
-					className='interest-history-table d-flex flex-column flex-grow-1'
+					className="interest-history-table d-flex flex-column flex-grow-1"
 					dataSourceParams={dataSourceParams}
 					groupId={groupId}
 					tabId={tabId}

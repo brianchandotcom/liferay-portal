@@ -13,7 +13,7 @@ interface IEventAnalysisToolbarProps extends React.HTMLAttributes<HTMLElement> {
 }
 
 const EventAnalysisToolbar: React.FC<IEventAnalysisToolbarProps> = ({
-	isValid
+	isValid,
 }) => {
 	const dataSourceStates = useDataSources();
 
@@ -22,16 +22,16 @@ const EventAnalysisToolbar: React.FC<IEventAnalysisToolbarProps> = ({
 	const {selectedChannel} = useChannelContext();
 
 	return (
-		<div className='event-analysis-toolbar-root'>
-			<div className='event-analysis-toolbar-left-content'>
+		<div className="event-analysis-toolbar-root">
+			<div className="event-analysis-toolbar-left-content">
 				<TitleEditor
-					name='name'
+					name="name"
 					placeholder={Liferay.Language.get('unnamed-analysis')}
 				/>
 			</div>
 
-			<div className='d-flex event-analysis-toolbar-right-content'>
-				<div className='event-analysis-download-report mr-2'>
+			<div className="d-flex event-analysis-toolbar-right-content">
+				<div className="event-analysis-download-report mr-2">
 					<DownloadPDFReport
 						disabled={!!dataSourceStates.empty}
 						infoMessage={Liferay.Language.get(
@@ -43,22 +43,22 @@ const EventAnalysisToolbar: React.FC<IEventAnalysisToolbarProps> = ({
 				</div>
 
 				<ClayButton
-					className='button-root ml-1 mr-2'
+					className="button-root ml-1 mr-2"
 					disabled={!isValid}
-					displayType='primary'
-					size='sm'
-					type='submit'
+					displayType="primary"
+					size="sm"
+					type="submit"
 				>
 					{Liferay.Language.get('save-analysis')}
 				</ClayButton>
 
 				<ClayLink
 					button
-					className='button-root'
-					displayType='secondary'
+					className="button-root"
+					displayType="secondary"
 					href={toRoute(Routes.EVENT_ANALYSIS, {
 						channelId,
-						groupId
+						groupId,
 					})}
 					small
 				>

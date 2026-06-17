@@ -7,15 +7,21 @@
 		}
 
 		&.hover-bottom td {
-			box-shadow: inset 0 -2px 0 0 $primary, inset 0 1px $mainLighten74;
+			box-shadow:
+				inset 0 -2px 0 0 $primary,
+				inset 0 1px $mainLighten74;
 
 			&:first-child {
-				box-shadow: inset 0 -2px $primary, inset 0 1px $mainLighten74,
+				box-shadow:
+					inset 0 -2px $primary,
+					inset 0 1px $mainLighten74,
 					inset 1px 0 $mainLighten74;
 			}
 
 			&:last-child {
-				box-shadow: inset 0 -2px $primary, inset 0 1px $mainLighten74,
+				box-shadow:
+					inset 0 -2px $primary,
+					inset 0 1px $mainLighten74,
 					inset -1px 0 $mainLighten74;
 			}
 		}
@@ -29,15 +35,21 @@
 		}
 
 		&.hover-top td {
-			box-shadow: 0 -2px 0 0 $primary, inset 0 1px $mainLighten74;
+			box-shadow:
+				0 -2px 0 0 $primary,
+				inset 0 1px $mainLighten74;
 
 			&:first-child {
-				box-shadow: 0 -2px $primary, inset 0 1px $mainLighten74,
+				box-shadow:
+					0 -2px $primary,
+					inset 0 1px $mainLighten74,
 					inset 1px 0 $mainLighten74;
 			}
 
 			&:last-child {
-				box-shadow: 0 -2px $primary, inset 0 1px $mainLighten74,
+				box-shadow:
+					0 -2px $primary,
+					inset 0 1px $mainLighten74,
 					inset -1px 0 $mainLighten74;
 			}
 		}

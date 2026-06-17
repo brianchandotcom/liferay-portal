@@ -13,7 +13,7 @@ interface IDownloadReportButton {
 export const DownloadReportButton: React.FC<IDownloadReportButton> = ({
 	disabled,
 	loading = false,
-	onClick
+	onClick,
 }) => {
 	const {loadingCount} = useMutationObserver();
 
@@ -21,11 +21,11 @@ export const DownloadReportButton: React.FC<IDownloadReportButton> = ({
 		<ClayButton
 			borderless
 			disabled={disabled || loading || loadingCount > 0}
-			displayType='secondary'
+			displayType="secondary"
 			onClick={onClick}
-			size='sm'
+			size="sm"
 		>
-			<ClayIcon className='mr-2' symbol='download' />
+			<ClayIcon className="mr-2" symbol="download" />
 
 			{Liferay.Language.get('download-reports')}
 

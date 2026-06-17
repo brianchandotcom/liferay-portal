@@ -9,7 +9,7 @@ export const useResize = (
 		const handleResize = () =>
 			setSize([
 				elementRef?.current?.clientWidth ?? window.innerWidth,
-				elementRef?.current?.clientHeight ?? window.innerHeight
+				elementRef?.current?.clientHeight ?? window.innerHeight,
 			]);
 
 		handleResize();

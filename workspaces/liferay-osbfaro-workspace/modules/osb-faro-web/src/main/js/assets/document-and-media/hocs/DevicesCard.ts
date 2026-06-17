@@ -71,5 +71,7 @@ export default withDevicesCard(withDocumentsAndMediaDevices, {
 	documentationUrl:
 		URLConstants.SitesDashboardDocumentsAndMediaViewsByTechnology,
 	reportContainer: ReportContainer.DownloadsByTechnologyCard,
-	title: Liferay.Language.get('there-are-no-downloads-on-the-selected-period')
+	title: Liferay.Language.get(
+		'there-are-no-downloads-on-the-selected-period'
+	),
 });

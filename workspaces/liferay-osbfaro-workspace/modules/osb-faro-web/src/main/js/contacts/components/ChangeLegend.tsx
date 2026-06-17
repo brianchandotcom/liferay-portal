@@ -32,27 +32,27 @@ export default class ChangeLegend extends React.Component<IChangeLegendProps> {
 
 					return (
 						<div className={`legend-item ${id}`} key={id}>
-							<div className='legend-header'>
+							<div className="legend-header">
 								<span
-									className='legend-color'
+									className="legend-color"
 									style={{backgroundColor: CHART_COLORS[i]}}
 								/>
 
-								<span className='title'>{title}</span>
+								<span className="title">{title}</span>
 							</div>
 
-							<div className='secondary-info'>
+							<div className="secondary-info">
 								{secondaryInfo}
 
 								<span
 									className={getCN('change', {
 										decrease,
-										increase: change > 0
+										increase: change > 0,
 									})}
 								>
 									{!!change && !isNaN(change) && (
 										<ClayIcon
-											className='icon-root'
+											className="icon-root"
 											symbol={
 												decrease
 													? 'caret-bottom'

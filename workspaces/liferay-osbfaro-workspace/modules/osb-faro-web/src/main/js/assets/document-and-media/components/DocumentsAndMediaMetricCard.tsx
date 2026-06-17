@@ -1,19 +1,19 @@
 import ClayLink from '@clayui/link';
 import MetricBaseCard, {
-	IGenericMetricBaseCardProps
+	IGenericMetricBaseCardProps,
 } from 'shared/components/metric-card/MetricBaseCard';
 import React from 'react';
 import URLConstants from 'shared/util/url-constants';
 import {
 	AssetMetricQuery,
-	AssetTabsQuery
+	AssetTabsQuery,
 } from 'shared/components/metric-card/queries';
 import {
 	CommentsMetric,
 	DownloadsMetric,
 	ImpressionMadeMetric,
 	Metric,
-	RatingsMetric
+	RatingsMetric,
 } from 'shared/components/metric-card/metrics';
 import {ICommonVariables} from 'shared/types';
 import {ReportContainer} from 'shared/components/download-report/DownloadPDFReport';
@@ -21,9 +21,9 @@ import {useAssetVariables} from 'shared/components/metric-card/hooks';
 
 const NAME = 'document';
 
-const DocumentsAndMediaMetricCard: React.FC<
-	IGenericMetricBaseCardProps
-> = props => {
+const DocumentsAndMediaMetricCard: React.FC<IGenericMetricBaseCardProps> = (
+	props
+) => {
 	const variables = (commonVariables: ICommonVariables) =>
 		useAssetVariables(commonVariables);
 
@@ -31,7 +31,7 @@ const DocumentsAndMediaMetricCard: React.FC<
 		DownloadsMetric,
 		ImpressionMadeMetric,
 		CommentsMetric,
-		RatingsMetric
+		RatingsMetric,
 	];
 
 	return (
@@ -39,7 +39,7 @@ const DocumentsAndMediaMetricCard: React.FC<
 			{...props}
 			emptyDescription={
 				<>
-					<span className='mr-1'>
+					<span className="mr-1">
 						{Liferay.Language.get(
 							'check-back-later-to-verify-if-data-has-been-received-from-your-data-sources'
 						)}
@@ -47,8 +47,8 @@ const DocumentsAndMediaMetricCard: React.FC<
 
 					<ClayLink
 						href={URLConstants.VisitorBehaviorDocumentsAndMediaLink}
-						key='DOCUMENTATION'
-						target='_blank'
+						key="DOCUMENTATION"
+						target="_blank"
 					>
 						{Liferay.Language.get(
 							'learn-more-about-visitor-behavior'
@@ -63,7 +63,7 @@ const DocumentsAndMediaMetricCard: React.FC<
 			queries={{
 				MetricQuery: AssetMetricQuery(NAME),
 				name: NAME,
-				TabsQuery: AssetTabsQuery(metrics, NAME)
+				TabsQuery: AssetTabsQuery(metrics, NAME),
 			}}
 			reportContainer={ReportContainer.VisitorsBehaviorCard}
 			variables={variables}

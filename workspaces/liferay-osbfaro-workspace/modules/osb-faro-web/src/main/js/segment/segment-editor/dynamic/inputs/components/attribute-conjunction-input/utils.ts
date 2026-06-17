@@ -6,7 +6,7 @@ import {
 	FunctionalOperators,
 	NotOperators,
 	RelationalOperators,
-	STRING_OPTIONS
+	STRING_OPTIONS,
 } from '../../../utils/constants';
 import {isNumber} from 'lodash';
 import {isValid} from '../../../utils/utils';
@@ -14,27 +14,27 @@ import {isValid} from '../../../utils/utils';
 const ATTRIBUTES_DATE_AND_DURATION_OPERATORS_LONGHAND_LABELS_MAP = {
 	[Operators.EQ]: Liferay.Language.get('is').toLowerCase(),
 	[Operators.GT]: Liferay.Language.get('is-after').toLowerCase(),
-	[Operators.LT]: Liferay.Language.get('is-before').toLowerCase()
+	[Operators.LT]: Liferay.Language.get('is-before').toLowerCase(),
 };
 
 const ATTRIBUTES_DATE_AND_DURATION_OPTIONS = [
 	Operators.LT,
 	Operators.EQ,
-	Operators.GT
+	Operators.GT,
 ];
 
 export const ATTRIBUTES_NUMBER_OPERATOR_LONGHAND_LABELS_MAP = {
 	[Operators.EQ]: Liferay.Language.get('is-equal-to').toLowerCase(),
 	[Operators.GT]: Liferay.Language.get('greater-than').toLowerCase(),
 	[Operators.LT]: Liferay.Language.get('less-than').toLowerCase(),
-	[Operators.NE]: Liferay.Language.get('is-not-equal-to').toLowerCase()
+	[Operators.NE]: Liferay.Language.get('is-not-equal-to').toLowerCase(),
 };
 
 const ATTRIBUTE_NUMBER_OPTIONS = [
 	Operators.EQ,
 	Operators.GT,
 	Operators.LT,
-	Operators.NE
+	Operators.NE,
 ];
 
 const ATTRIBUTES_STRING_OPERATOR_LABELS_MAP = {
@@ -43,7 +43,7 @@ const ATTRIBUTES_STRING_OPERATOR_LABELS_MAP = {
 	[NotOperators.NotContains]:
 		Liferay.Language.get('does-not-contain').toLowerCase(),
 	[RelationalOperators.EQ]: Liferay.Language.get('is').toLowerCase(),
-	[RelationalOperators.NE]: Liferay.Language.get('is-not').toLowerCase()
+	[RelationalOperators.NE]: Liferay.Language.get('is-not').toLowerCase(),
 };
 
 export const createOption = (option: string, dataType: DataTypes) => {
@@ -54,12 +54,12 @@ export const createOption = (option: string, dataType: DataTypes) => {
 		[DataTypes.Duration]:
 			ATTRIBUTES_DATE_AND_DURATION_OPERATORS_LONGHAND_LABELS_MAP,
 		[DataTypes.Number]: ATTRIBUTES_NUMBER_OPERATOR_LONGHAND_LABELS_MAP,
-		[DataTypes.String]: ATTRIBUTES_STRING_OPERATOR_LABELS_MAP // "NotContains" differs from segment-editor and event-analysis. We should be able to use the evente-analysis version once we move away from odata.
+		[DataTypes.String]: ATTRIBUTES_STRING_OPERATOR_LABELS_MAP, // "NotContains" differs from segment-editor and event-analysis. We should be able to use the evente-analysis version once we move away from odata.
 	};
 
 	return {
 		label: LABELS_MAP[dataType][option],
-		value: option
+		value: option,
 	};
 };
 
@@ -68,7 +68,7 @@ export const getOperatorOptions = (dataType: DataTypes) => {
 		[DataTypes.Date]: ATTRIBUTES_DATE_AND_DURATION_OPTIONS,
 		[DataTypes.Duration]: ATTRIBUTES_DATE_AND_DURATION_OPTIONS,
 		[DataTypes.Number]: ATTRIBUTE_NUMBER_OPTIONS,
-		[DataTypes.String]: STRING_OPTIONS // STRING_OPTIONS is provided from the segment-editor utils as "NotContains" differs from segment-editor and event-analysis. We should be able to use the evente-analysis version once we move away from odata.
+		[DataTypes.String]: STRING_OPTIONS, // STRING_OPTIONS is provided from the segment-editor utils as "NotContains" differs from segment-editor and event-analysis. We should be able to use the evente-analysis version once we move away from odata.
 	};
 
 	return OPERATOR_OPTIONS[dataType]?.map((option: string) =>
@@ -98,7 +98,7 @@ export const getDefaultAttributeValue = (
 ): string | {end: number | string; start: number | string} => {
 	if (
 		operatorName === FunctionalOperators.Between &&
-		[DataTypes.Number, DataTypes.Date].filter(type => type === dataType)
+		[DataTypes.Number, DataTypes.Date].filter((type) => type === dataType)
 	) {
 		return {end: '', start: ''};
 	}
@@ -122,7 +122,7 @@ export const validateAttributeValue = (
 ): boolean => {
 	if (
 		operatorName === FunctionalOperators.Between &&
-		[DataTypes.Number, DataTypes.Date].filter(type => type === dataType)
+		[DataTypes.Number, DataTypes.Date].filter((type) => type === dataType)
 	) {
 		const {end, start} = value as BetweenNumber;
 

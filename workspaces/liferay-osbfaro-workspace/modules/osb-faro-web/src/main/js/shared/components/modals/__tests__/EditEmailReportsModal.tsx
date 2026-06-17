@@ -15,8 +15,8 @@ jest.mock('shared/actions/alerts', () => ({
 	addAlert: jest.fn(() => ({
 		meta: {},
 		payload: {},
-		type: 'addAlert'
-	}))
+		type: 'addAlert',
+	})),
 }));
 
 jest.unmock('react-dom');
@@ -32,7 +32,7 @@ const DefaultComponent = (
 			<MockedProvider
 				cache={
 					new InMemoryCache({
-						addTypename: false
+						addTypename: false,
 					})
 				}
 			>

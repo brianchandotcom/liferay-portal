@@ -4,11 +4,11 @@ import React, {
 	useCallback,
 	useContext,
 	useMemo,
-	useState
+	useState,
 } from 'react';
 import {
 	buildQueryString,
-	ILifecycleFilterValues
+	ILifecycleFilterValues,
 } from '../utils/buildQueryString';
 import {LifecycleStages} from 'contacts/pages/account/utils/constants';
 
@@ -28,11 +28,11 @@ const LifecycleContext = createContext<ILifecycleContext>({
 		countryFilter: '',
 		filterString: '',
 		industryFilter: '',
-		lifecycleStageFilter: LifecycleStages.AT_RISK
+		lifecycleStageFilter: LifecycleStages.AT_RISK,
 	},
 	lifecycleId: '',
 	resetFilters: () => {},
-	updateFilters: () => {}
+	updateFilters: () => {},
 });
 
 export const useLifecycle = (): ILifecycleContext =>
@@ -41,7 +41,7 @@ export const useLifecycle = (): ILifecycleContext =>
 const initialValues: ILifecycleFilterValues = {
 	countryFilter: '',
 	industryFilter: '',
-	lifecycleStageFilter: LifecycleStages.AT_RISK
+	lifecycleStageFilter: LifecycleStages.AT_RISK,
 };
 
 interface ILifecycleContextProviderProps {
@@ -51,7 +51,7 @@ interface ILifecycleContextProviderProps {
 
 export const LifecycleContextProvider = ({
 	children,
-	lifecycleId
+	lifecycleId,
 }: ILifecycleContextProviderProps) => {
 	const [filterValues, setFilterValues] =
 		useState<ILifecycleFilterValues>(initialValues);
@@ -59,14 +59,14 @@ export const LifecycleContextProvider = ({
 	const filters = useMemo<ILifecycleFilters>(
 		() => ({
 			...filterValues,
-			filterString: buildQueryString(filterValues)
+			filterString: buildQueryString(filterValues),
 		}),
 		[filterValues]
 	);
 
 	const updateFilters = useCallback(
 		(newValues: Partial<ILifecycleFilterValues>) =>
-			setFilterValues(prev => ({...prev, ...newValues})),
+			setFilterValues((prev) => ({...prev, ...newValues})),
 		[]
 	);
 

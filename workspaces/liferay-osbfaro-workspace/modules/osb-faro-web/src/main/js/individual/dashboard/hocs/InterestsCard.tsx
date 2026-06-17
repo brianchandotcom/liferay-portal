@@ -4,7 +4,7 @@ import ClayLink from '@clayui/link';
 import ErrorDisplay from 'shared/components/ErrorDisplay';
 import IndividualInterestsQuery, {
 	IIndividualInterestsData,
-	IIndividualInterestsVariables
+	IIndividualInterestsVariables,
 } from 'shared/queries/IndividualInterestsQuery';
 import React from 'react';
 import StatesRenderer from 'shared/components/states-renderer/StatesRenderer';
@@ -25,10 +25,10 @@ const InterestsCard: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 	}>();
 	const {
 		data = {
-			individualInterests: {compositions: [], maxCount: 0, totalCount: 0}
+			individualInterests: {compositions: [], maxCount: 0, totalCount: 0},
 		},
 		error,
-		loading
+		loading,
 	} = useQuery<IIndividualInterestsData, IIndividualInterestsVariables>(
 		IndividualInterestsQuery,
 		{
@@ -39,15 +39,15 @@ const InterestsCard: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 				size: 5,
 				sort: {
 					column: COUNT,
-					type: OrderByDirections.Descending
+					type: OrderByDirections.Descending,
 				},
-				start: 0
-			}
+				start: 0,
+			},
 		}
 	);
 
 	const {
-		individualInterests: {compositions: items, maxCount, totalCount}
+		individualInterests: {compositions: items, maxCount, totalCount},
 	} = data;
 
 	const columns = [
@@ -59,24 +59,24 @@ const InterestsCard: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 				toRoute(Routes.CONTACTS_INDIVIDUALS_INTEREST_DETAILS, {
 					channelId,
 					groupId,
-					interestId: name
+					interestId: name,
 				}),
-			sortable: false
+			sortable: false,
 		}),
 		compositionListColumns.getRelativeMetricBar({
 			label: Liferay.Language.get('total-individuals'),
 			maxCount,
-			totalCount
+			totalCount,
 		}),
 		compositionListColumns.getPercentOf({
 			metricName: Liferay.Language.get('total-individuals'),
-			totalCount
-		})
+			totalCount,
+		}),
 	] as Column[];
 
 	return (
 		<Card
-			className='interests-card-root'
+			className="interests-card-root"
 			minHeight={536}
 			reportContainer={ReportContainer.TopInterestsAsOfYesterdayCard}
 		>
@@ -94,7 +94,7 @@ const InterestsCard: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 				<StatesRenderer.Empty
 					description={
 						<>
-							<span className='mr-1'>
+							<span className="mr-1">
 								{Liferay.Language.get(
 									'check-back-later-to-verify-if-data-has-been-received-from-your-data-sources'
 								)}
@@ -104,8 +104,8 @@ const InterestsCard: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 								href={
 									URLConstants.IndividualsDashboardInterestsDocumentation
 								}
-								key='DOCUMENTATION'
-								target='_blank'
+								key="DOCUMENTATION"
+								target="_blank"
 							>
 								{Liferay.Language.get(
 									'learn-more-about-interests'
@@ -125,7 +125,7 @@ const InterestsCard: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 					<Table
 						columns={columns}
 						items={items}
-						rowIdentifier='name'
+						rowIdentifier="name"
 					/>
 				</StatesRenderer.Success>
 			</StatesRenderer>
@@ -134,19 +134,19 @@ const InterestsCard: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 				<ClayLink
 					borderless
 					button
-					className='button-root'
-					displayType='secondary'
+					className="button-root"
+					displayType="secondary"
 					href={toRoute(Routes.CONTACTS_INDIVIDUALS_INTERESTS, {
 						channelId,
-						groupId
+						groupId,
 					})}
 					small
 				>
 					{Liferay.Language.get('view-all-interests')}
 
 					<ClayIcon
-						className='icon-root ml-2'
-						symbol='angle-right-small'
+						className="icon-root ml-2"
+						symbol="angle-right-small"
 					/>
 				</ClayLink>
 			</Card.Footer>

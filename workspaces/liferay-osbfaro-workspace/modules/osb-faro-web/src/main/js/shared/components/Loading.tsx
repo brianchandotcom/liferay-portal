@@ -4,12 +4,12 @@ import React from 'react';
 
 export enum Align {
 	Left = 'left',
-	Right = 'right'
+	Right = 'right',
 }
 
 const inlineClassName = {
 	[Align.Left]: 'mr-2',
-	[Align.Right]: 'ml-2'
+	[Align.Right]: 'ml-2',
 };
 
 export interface ILoadingProps extends React.HTMLAttributes<HTMLElement> {
@@ -24,7 +24,7 @@ const Loading: React.FC<ILoadingProps> = ({
 	center = true,
 	className,
 	overlay = false,
-	spacer = false
+	spacer = false,
 }) => {
 	if (align) {
 		return (
@@ -44,7 +44,7 @@ const Loading: React.FC<ILoadingProps> = ({
 			<div className={getCN(className, 'loading-root', {overlay})}>
 				<ClayLoadingIndicator
 					className={getCN('loading-root', {
-						center
+						center,
 					})}
 				/>
 			</div>
@@ -55,7 +55,7 @@ const Loading: React.FC<ILoadingProps> = ({
 		return (
 			<ClayLoadingIndicator
 				className={getCN(className, 'loading-root', {
-					spacer
+					spacer,
 				})}
 			/>
 		);
@@ -64,7 +64,7 @@ const Loading: React.FC<ILoadingProps> = ({
 	return (
 		<ClayLoadingIndicator
 			className={getCN(className, 'loading-root', {
-				center
+				center,
 			})}
 		/>
 	);

@@ -239,7 +239,7 @@ const LanguageIgnoreList = [
 	'country.western-samoa',
 	'country.yemen',
 	'country.zambia',
-	'country.zimbabwe'
+	'country.zimbabwe',
 ];
 
 export default LanguageIgnoreList;

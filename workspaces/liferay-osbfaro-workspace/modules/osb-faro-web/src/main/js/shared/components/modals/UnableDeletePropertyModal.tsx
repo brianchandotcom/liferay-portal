@@ -8,14 +8,14 @@ import {sub} from 'shared/util/lang';
 const UnableDeletePropertyModal: React.FC<{
 	onClose: () => void;
 }> = ({onClose}) => (
-	<Modal type='danger'>
+	<Modal type="danger">
 		<Modal.Header
 			onClose={onClose}
 			title={Liferay.Language.get('unable-to-delete-property')}
 		/>
 
 		<Modal.Body inlineScroller>
-			<p className='text-secondary'>
+			<p className="text-secondary">
 				{sub(
 					Liferay.Language.get(
 						'ensure-no-sites-and-channels-are-assigned-to-it-before-deleting-a-property'
@@ -23,13 +23,13 @@ const UnableDeletePropertyModal: React.FC<{
 					[
 						<ClayLink
 							href={URLConstants.DeletePropertyDocumentation}
-							key='URL'
-							target='_blank'
+							key="URL"
+							target="_blank"
 						>
 							{Liferay.Language.get(
 								'access-our-documentation-to-learn-more'
 							)}
-						</ClayLink>
+						</ClayLink>,
 					],
 					false
 				)}
@@ -38,8 +38,8 @@ const UnableDeletePropertyModal: React.FC<{
 
 		<Modal.Footer>
 			<ClayButton
-				className='button-root'
-				displayType='danger'
+				className="button-root"
+				displayType="danger"
 				onClick={onClose}
 			>
 				{Liferay.Language.get('done')}

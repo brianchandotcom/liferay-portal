@@ -3,7 +3,7 @@ import {getDevicesMapper} from '../devices';
 describe('Shared HOCs Mappers - Devices', () => {
 	it('should map devices information', () => {
 		const mapper = getDevicesMapper(
-			result => result.form.submissionsMetric
+			(result) => result.form.submissionsMetric
 		);
 
 		const data = {
@@ -13,188 +13,189 @@ describe('Shared HOCs Mappers - Devices', () => {
 						browser: [
 							{
 								value: 2248.0,
-								valueKey: 'Chrome'
+								valueKey: 'Chrome',
 							},
 							{
 								value: 782.0,
-								valueKey: 'Firefox'
+								valueKey: 'Firefox',
 							},
 							{
 								value: 137.0,
-								valueKey: 'Chrome Mobile'
+								valueKey: 'Chrome Mobile',
 							},
 							{
 								value: 136.0,
-								valueKey: 'Safari'
+								valueKey: 'Safari',
 							},
 							{
 								value: 124.0,
-								valueKey: 'Mobile Safari'
+								valueKey: 'Mobile Safari',
 							},
 							{
 								value: 109.0,
-								valueKey: 'Edge'
+								valueKey: 'Edge',
 							},
 							{
 								value: 39.0,
-								valueKey: 'Unknown'
+								valueKey: 'Unknown',
 							},
 							{
 								value: 20.0,
-								valueKey: 'Samsung Browser'
+								valueKey: 'Samsung Browser',
 							},
 							{
 								value: 17.0,
-								valueKey: 'Opera Desktop'
+								valueKey: 'Opera Desktop',
 							},
 							{
 								value: 10.0,
-								valueKey: 'Chromium Project'
+								valueKey: 'Chromium Project',
 							},
 							{
 								value: 8.0,
-								valueKey: 'Android'
+								valueKey: 'Android',
 							},
 							{
 								value: 7.0,
-								valueKey: 'Unknown iOS App'
+								valueKey: 'Unknown iOS App',
 							},
 							{
 								value: 6.0,
-								valueKey: 'Vivaldi'
+								valueKey: 'Vivaldi',
 							},
 							{
 								value: 5.0,
-								valueKey: 'Opera Mini for iOS'
+								valueKey: 'Opera Mini for iOS',
 							},
 							{
 								value: 5.0,
-								valueKey: 'Unknown Linux App'
+								valueKey: 'Unknown Linux App',
 							},
 							{
 								value: 4.0,
-								valueKey: 'Opera Mobile'
+								valueKey: 'Opera Mobile',
 							},
 							{
 								value: 3.0,
-								valueKey: 'Yowser for Windows'
+								valueKey: 'Yowser for Windows',
 							},
 							{
 								value: 2.0,
-								valueKey: 'Firefox for Mobile'
+								valueKey: 'Firefox for Mobile',
 							},
 							{
 								value: 2.0,
-								valueKey: 'Unknown Mac OS X App - WebKit Engine'
+								valueKey:
+									'Unknown Mac OS X App - WebKit Engine',
 							},
 							{
 								value: 2.0,
-								valueKey: 'Waterfox'
+								valueKey: 'Waterfox',
 							},
 							{
 								value: 1.0,
-								valueKey: 'Chrome for iOS'
+								valueKey: 'Chrome for iOS',
 							},
 							{
 								value: 1.0,
-								valueKey: 'Edge Mobile'
+								valueKey: 'Edge Mobile',
 							},
 							{
 								value: 1.0,
-								valueKey: 'QQ Browser'
+								valueKey: 'QQ Browser',
 							},
 							{
 								value: 1.0,
-								valueKey: 'UBrowser'
+								valueKey: 'UBrowser',
 							},
 							{
 								value: 1.0,
-								valueKey: 'Yowser for Linux'
-							}
+								valueKey: 'Yowser for Linux',
+							},
 						],
 						device: [
 							{
 								metrics: [
 									{
 										value: 2065.0,
-										valueKey: 'Windows'
+										valueKey: 'Windows',
 									},
 									{
 										value: 995.0,
-										valueKey: 'macOS'
+										valueKey: 'macOS',
 									},
 									{
 										value: 136.0,
-										valueKey: 'Linux'
+										valueKey: 'Linux',
 									},
 									{
 										value: 107.0,
-										valueKey: 'Mac OS X'
+										valueKey: 'Mac OS X',
 									},
 									{
 										value: 53.0,
-										valueKey: 'Ubuntu'
+										valueKey: 'Ubuntu',
 									},
 									{
 										value: 3.0,
-										valueKey: 'ChromeOS'
+										valueKey: 'ChromeOS',
 									},
 									{
 										value: 2.0,
-										valueKey: 'Fedora'
+										valueKey: 'Fedora',
 									},
 									{
 										value: 1.0,
-										valueKey: 'Unknown'
-									}
+										valueKey: 'Unknown',
+									},
 								],
 								value: 3362.0,
-								valueKey: 'Desktop'
+								valueKey: 'Desktop',
 							},
 							{
 								metrics: [
 									{
 										value: 151.0,
-										valueKey: 'Android'
+										valueKey: 'Android',
 									},
 									{
 										value: 61.0,
-										valueKey: 'iOS'
+										valueKey: 'iOS',
 									},
 									{
 										value: 9.0,
-										valueKey: 'Unknown'
+										valueKey: 'Unknown',
 									},
 									{
 										value: 8.0,
-										valueKey: 'FreeBSD'
+										valueKey: 'FreeBSD',
 									},
 									{
 										value: 1.0,
-										valueKey: 'Windows Phone'
-									}
+										valueKey: 'Windows Phone',
+									},
 								],
 								value: 230.0,
-								valueKey: 'SmartPhone'
+								valueKey: 'SmartPhone',
 							},
 							{
 								metrics: [
 									{
 										value: 67.0,
-										valueKey: 'iOS'
+										valueKey: 'iOS',
 									},
 									{
 										value: 12.0,
-										valueKey: 'Android'
-									}
+										valueKey: 'Android',
+									},
 								],
 								value: 79.0,
-								valueKey: 'Tablet'
-							}
-						]
-					}
-				}
-			}
+								valueKey: 'Tablet',
+							},
+						],
+					},
+				},
+			},
 		};
 
 		const result = mapper.props(data);
@@ -209,7 +210,7 @@ describe('Shared HOCs Mappers - Devices', () => {
 				{value: 109, valueKey: 'Edge'},
 				{value: 39, valueKey: 'Unknown'},
 				{value: 20, valueKey: 'Samsung Browser'},
-				{value: 76, valueKey: 'Others'}
+				{value: 76, valueKey: 'Others'},
 			],
 			devices: [
 				{
@@ -221,12 +222,12 @@ describe('Shared HOCs Mappers - Devices', () => {
 						{percentage: 0, type: 'Ubuntu', views: 53},
 						{percentage: 0, type: 'ChromeOS', views: 3},
 						{percentage: 0, type: 'Fedora', views: 2},
-						{percentage: 0, type: 'Unknown', views: 1}
+						{percentage: 0, type: 'Unknown', views: 1},
 					],
 					label: 'Desktop',
 					percentageOfTotal: 0,
 					totalViews: 3362,
-					type: 'Desktop'
+					type: 'Desktop',
 				},
 				{
 					data: [
@@ -234,33 +235,33 @@ describe('Shared HOCs Mappers - Devices', () => {
 						{percentage: 0, type: 'iOS', views: 61},
 						{percentage: 0, type: 'Unknown', views: 9},
 						{percentage: 0, type: 'FreeBSD', views: 8},
-						{percentage: 0, type: 'Windows Phone', views: 1}
+						{percentage: 0, type: 'Windows Phone', views: 1},
 					],
 					label: 'Phone',
 					percentageOfTotal: 0,
 					totalViews: 230,
-					type: 'SmartPhone'
+					type: 'SmartPhone',
 				},
 				{
 					data: [
 						{percentage: 0, type: 'iOS', views: 67},
-						{percentage: 0, type: 'Android', views: 12}
+						{percentage: 0, type: 'Android', views: 12},
 					],
 					label: 'Tablet',
 					percentageOfTotal: 0,
 					totalViews: 79,
-					type: 'Tablet'
-				}
+					type: 'Tablet',
+				},
 			],
 			error: null,
 			loading: false,
-			total: undefined
+			total: undefined,
 		});
 	});
 
 	it('should map devices information in correct order', () => {
 		const mapper = getDevicesMapper(
-			result => result.form.submissionsMetric
+			(result) => result.form.submissionsMetric
 		);
 
 		const data = {
@@ -270,58 +271,58 @@ describe('Shared HOCs Mappers - Devices', () => {
 						browser: [
 							{
 								value: 9.0,
-								valueKey: 'Chrome'
-							}
+								valueKey: 'Chrome',
+							},
 						],
 						device: [
 							{
 								metrics: [
 									{
 										value: 2.0,
-										valueKey: 'Windows'
+										valueKey: 'Windows',
 									},
 									{
 										value: 1.0,
-										valueKey: 'macOS'
-									}
+										valueKey: 'macOS',
+									},
 								],
 								value: 3.0,
-								valueKey: 'Desktop'
+								valueKey: 'Desktop',
 							},
 							{
 								metrics: [
 									{
 										value: 4.0,
-										valueKey: 'Android'
-									}
+										valueKey: 'Android',
+									},
 								],
 								value: 4.0,
-								valueKey: 'SmartPhone'
+								valueKey: 'SmartPhone',
 							},
 							{
 								metrics: [
 									{
 										value: 1.0,
-										valueKey: 'Tizen'
-									}
+										valueKey: 'Tizen',
+									},
 								],
 								value: 1.0,
-								valueKey: 'Tv'
+								valueKey: 'Tv',
 							},
 							{
 								metrics: [
 									{
 										value: 1.0,
-										valueKey: 'Linux'
-									}
+										valueKey: 'Linux',
+									},
 								],
 								value: 1.0,
-								valueKey: 'SmallScreen'
-							}
-						]
-					}
-				}
-			}
+								valueKey: 'SmallScreen',
+							},
+						],
+					},
+				},
+			},
 		};
 
 		const result = mapper.props(data);
@@ -332,37 +333,37 @@ describe('Shared HOCs Mappers - Devices', () => {
 				{
 					data: [
 						{percentage: 0, type: 'Windows', views: 2},
-						{percentage: 0, type: 'macOS', views: 1}
+						{percentage: 0, type: 'macOS', views: 1},
 					],
 					label: 'Desktop',
 					percentageOfTotal: 0,
 					totalViews: 3,
-					type: 'Desktop'
+					type: 'Desktop',
 				},
 				{
 					data: [{percentage: 0, type: 'Android', views: 4}],
 					label: 'Phone',
 					percentageOfTotal: 0,
 					totalViews: 4,
-					type: 'SmartPhone'
+					type: 'SmartPhone',
 				},
 				{
 					data: [{percentage: 0, type: 'Tizen', views: 1}],
 					label: 'TV',
 					percentageOfTotal: 0,
 					totalViews: 1,
-					type: 'Tv'
+					type: 'Tv',
 				},
 				{
 					data: [{type: 'Other', views: 1}],
 					label: 'Others',
 					percentageOfTotal: 0,
-					type: 'Other'
-				}
+					type: 'Other',
+				},
 			],
 			error: null,
 			loading: false,
-			total: undefined
+			total: undefined,
 		});
 	});
 });

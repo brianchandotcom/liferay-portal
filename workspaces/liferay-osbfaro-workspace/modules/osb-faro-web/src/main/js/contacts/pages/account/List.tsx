@@ -29,8 +29,8 @@ const List: React.FC<IListProps> = ({channelId, groupId}) => {
 		dataSourceFn: API.dataSource.fetchChannels,
 		variables: {
 			channelIds: [channelId],
-			groupId
-		}
+			groupId,
+		},
 	});
 
 	const authorized = currentUser.isAdmin();
@@ -50,10 +50,10 @@ const List: React.FC<IListProps> = ({channelId, groupId}) => {
 						<>
 							<p>
 								<Link
-									className='d-block mb-3'
+									className="d-block mb-3"
 									href={URLConstants.DataSourceConnection}
-									key='DOCUMENTATION'
-									target='_blank'
+									key="DOCUMENTATION"
+									target="_blank"
 								>
 									{Liferay.Language.get(
 										'access-our-documentation-to-learn-more'
@@ -62,12 +62,12 @@ const List: React.FC<IListProps> = ({channelId, groupId}) => {
 							</p>
 							<Link
 								button
-								className='button-root'
-								displayType='primary'
+								className="button-root"
+								displayType="primary"
 								href={toRoute(
 									Routes.SETTINGS_DATA_SOURCE_LIST,
 									{
-										groupId
+										groupId,
 									}
 								)}
 							>
@@ -81,7 +81,7 @@ const List: React.FC<IListProps> = ({channelId, groupId}) => {
 			icon={{
 				border: false,
 				size: Sizes.XXXLarge,
-				symbol: 'ac_satellite'
+				symbol: 'ac_satellite',
 			}}
 			spacer
 			title={Liferay.Language.get('no-data-sources-connected')}
@@ -99,8 +99,8 @@ const List: React.FC<IListProps> = ({channelId, groupId}) => {
 					breadcrumbs.getHome({
 						channelId,
 						groupId,
-						label: selectedChannel && selectedChannel.name
-					})
+						label: selectedChannel && selectedChannel.name,
+					}),
 				]}
 				groupId={groupId}
 			>
@@ -116,7 +116,7 @@ const List: React.FC<IListProps> = ({channelId, groupId}) => {
 						<TotalAccounts groupId={groupId} />
 
 						<SectionHeader
-							icon='box-container'
+							icon="box-container"
 							title={Liferay.Language.get('accounts')}
 						/>
 

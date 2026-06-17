@@ -34,7 +34,7 @@ const InviteUsersModal: React.FC<IInviteUsersModalProps> = ({
 		<Modal
 			{...otherProps}
 			className={getCN('invite-users-modal-root', className)}
-			size='lg'
+			size="lg"
 		>
 			<Modal.Header
 				onClose={onClose}
@@ -42,7 +42,7 @@ const InviteUsersModal: React.FC<IInviteUsersModalProps> = ({
 			/>
 
 			<Modal.Body>
-				<div className='description form-text'>
+				<div className="description form-text">
 					{Liferay.Language.get(
 						'enter-the-email-addresses-of-the-people-you-would-like-to-invite-to-analytics-cloud.-separate-each-address-by-space-or-comma'
 					)}
@@ -55,7 +55,7 @@ const InviteUsersModal: React.FC<IInviteUsersModalProps> = ({
 						)}
 						inputValue={inputValue}
 						items={emails}
-						onInputChange={value => setInputValue(value.trim())}
+						onInputChange={(value) => setInputValue(value.trim())}
 						onItemsChange={setEmails}
 						placeholder={Liferay.Language.get(
 							'enter-email-address'
@@ -70,20 +70,20 @@ const InviteUsersModal: React.FC<IInviteUsersModalProps> = ({
 
 			<Modal.Footer>
 				<ClayButton
-					className='button-root'
-					displayType='secondary'
+					className="button-root"
+					displayType="secondary"
 					onClick={onClose}
 				>
 					{Liferay.Language.get('cancel')}
 				</ClayButton>
 
 				<ClayButton
-					className='button-root'
+					className="button-root"
 					disabled={
 						(!inputValue && !emails.length) ||
 						(!!inputValue && !validateEmail(inputValue))
 					}
-					displayType='primary'
+					displayType="primary"
 					onClick={handleSubmit}
 				>
 					{Liferay.Language.get('send')}

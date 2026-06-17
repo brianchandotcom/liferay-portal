@@ -8,8 +8,8 @@ export default () => ({
 			createDate: '2022-11-11T01:00:00.000',
 			id: '123',
 			modifiedByUserName: null,
-			modifiedDate: null
-		}
+			modifiedDate: null,
+		},
 	],
-	total: 1
+	total: 1,
 });

@@ -20,12 +20,12 @@ import {compose} from 'redux';
 import {connect, ConnectedProps} from 'react-redux';
 import {
 	ConnectorAvailableDataAlertKind,
-	getConnectorAvailableDataAlert
+	getConnectorAvailableDataAlert,
 } from './getConnectorAvailableDataAlert';
 import {ConnectorConfig, ConnectorStatus} from './types';
 import {
 	ConnectorStatusItem,
-	getInitialLogEntries
+	getInitialLogEntries,
 } from './getConnectorStatusItems';
 import {CopyInputValue} from '../CopyInputValue';
 import {DataSource} from 'shared/util/records';
@@ -47,7 +47,7 @@ import {withSelectionProvider} from 'shared/context/selection';
 const connector = connect(null, {
 	addAlert,
 	close,
-	open
+	open,
 });
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
@@ -62,7 +62,7 @@ const ConnectorOverview: React.FC<IConnectorOverviewProps> = ({
 	close,
 	config,
 	dataSource: initialDataSource,
-	open
+	open,
 }) => {
 	const [loading, setLoading] = useState(false);
 	const [dataSource, setDataSource] = useState(initialDataSource);
@@ -82,18 +82,20 @@ const ConnectorOverview: React.FC<IConnectorOverviewProps> = ({
 
 			const newDataSource = await fetch({
 				groupId,
-				id
+				id,
 			});
 
 			setDataSource(new DataSource(newDataSource));
-		} catch (error) {
+		}
+		catch (error) {
 			addAlert({
 				alertType: Alert.Types.Error,
 				message: Liferay.Language.get(
 					'there-was-an-error-processing-your-request.-try-again.-if-the-problem-persists,-please-contact-support'
-				)
+				),
 			});
-		} finally {
+		}
+		finally {
 			setLoading(false);
 		}
 	};
@@ -109,17 +111,18 @@ const ConnectorOverview: React.FC<IConnectorOverviewProps> = ({
 			try {
 				const data = await generateConnectorToken({
 					groupId,
-					type: config.slug
+					type: config.slug,
 				});
 
 				if (data?.token) {
 					setToken(data.token);
 				}
-			} catch (error) {
+			}
+			catch (error) {
 				addAlert({
 					alertType: Alert.Types.Error,
 					message: (error as Error).message,
-					timeout: false
+					timeout: false,
 				});
 			}
 		};
@@ -131,7 +134,7 @@ const ConnectorOverview: React.FC<IConnectorOverviewProps> = ({
 		try {
 			const data = await generateConnectorToken({
 				groupId,
-				type: config.slug
+				type: config.slug,
 			});
 
 			if (data?.token) {
@@ -141,15 +144,16 @@ const ConnectorOverview: React.FC<IConnectorOverviewProps> = ({
 			await updateConnector(config.slug, {
 				groupId,
 				id,
-				status: DataSourceStatuses.Active
+				status: DataSourceStatuses.Active,
 			});
 
 			await handleUpdateDataSource();
-		} catch (error) {
+		}
+		catch (error) {
 			addAlert({
 				alertType: Alert.Types.Error,
 				message: (error as Error).message,
-				timeout: false
+				timeout: false,
 			});
 		}
 	};
@@ -167,7 +171,7 @@ const ConnectorOverview: React.FC<IConnectorOverviewProps> = ({
 		onSubmit: async () => {
 			await handleUpdateDataSource();
 		},
-		open
+		open,
 	});
 
 	const {display, label} = getConnectorStatusDisplay(dataSource);
@@ -184,8 +188,8 @@ const ConnectorOverview: React.FC<IConnectorOverviewProps> = ({
 				breadcrumbs.getDataSources({groupId}),
 				breadcrumbs.getDataSourceName({
 					active: true,
-					label: dataSource.name ?? ''
-				})
+					label: dataSource.name ?? '',
+				}),
 			]}
 			documentTitle={Liferay.Language.get('configure-data-source')}
 		>
@@ -208,9 +212,9 @@ const ConnectorOverview: React.FC<IConnectorOverviewProps> = ({
 			<Card title={Liferay.Language.get('authentication')}>
 				{connectorStatus !== ConnectorStatus.Disconnected ? (
 					<>
-						<div className='mb-4'>
-							<Text color='secondary'>
-								<span className='mr-1'>
+						<div className="mb-4">
+							<Text color="secondary">
+								<span className="mr-1">
 									{Liferay.Language.get(
 										'to-configure-your-data-source-utilize-the-token-and-endpoint-url-provided-by-liferay-data-platform'
 									)}
@@ -218,7 +222,7 @@ const ConnectorOverview: React.FC<IConnectorOverviewProps> = ({
 
 								<ClayLink
 									href={URLConstants.DataSourceConnection}
-									target='_blank'
+									target="_blank"
 								>
 									<strong>
 										{Liferay.Language.get(
@@ -227,8 +231,8 @@ const ConnectorOverview: React.FC<IConnectorOverviewProps> = ({
 									</strong>
 
 									<ClayIcon
-										className='ml-1'
-										symbol='shortcut'
+										className="ml-1"
+										symbol="shortcut"
 									/>
 								</ClayLink>
 							</Text>
@@ -256,9 +260,9 @@ const ConnectorOverview: React.FC<IConnectorOverviewProps> = ({
 					</>
 				) : (
 					<>
-						<div className='mb-4'>
-							<Text color='secondary'>
-								<span className='mr-1'>
+						<div className="mb-4">
+							<Text color="secondary">
+								<span className="mr-1">
 									{Liferay.Language.get(
 										'generate-a-new-token-to-continue-configuring-this-data-source'
 									)}
@@ -266,7 +270,7 @@ const ConnectorOverview: React.FC<IConnectorOverviewProps> = ({
 
 								<ClayLink
 									href={URLConstants.DataSourceConnection}
-									target='_blank'
+									target="_blank"
 								>
 									<strong>
 										{Liferay.Language.get(
@@ -275,8 +279,8 @@ const ConnectorOverview: React.FC<IConnectorOverviewProps> = ({
 									</strong>
 
 									<ClayIcon
-										className='ml-1'
-										symbol='shortcut'
+										className="ml-1"
+										symbol="shortcut"
 									/>
 								</ClayLink>
 							</Text>
@@ -284,9 +288,9 @@ const ConnectorOverview: React.FC<IConnectorOverviewProps> = ({
 
 						<ClayButton
 							aria-label={Liferay.Language.get('generate-token')}
-							displayType='primary'
+							displayType="primary"
 							onClick={handleGenerateToken}
-							size='sm'
+							size="sm"
 						>
 							{Liferay.Language.get('generate-token')}
 						</ClayButton>
@@ -299,12 +303,12 @@ const ConnectorOverview: React.FC<IConnectorOverviewProps> = ({
 							aria-label={Liferay.Language.get(
 								'disconnect-data-source'
 							)}
-							displayType='danger'
+							displayType="danger"
 							onClick={handleDisconnect}
 							outline
-							size='sm'
+							size="sm"
 						>
-							<ClayIcon className='mr-2' symbol='logout' />
+							<ClayIcon className="mr-2" symbol="logout" />
 
 							{Liferay.Language.get('disconnect-data-source')}
 						</ClayButton>
@@ -343,14 +347,14 @@ interface IConnectorStatusListProps {
 }
 
 const ConnectorStatusList: React.FC<IConnectorStatusListProps> = ({
-	entries
+	entries,
 }) => (
-	<ClayList className='mb-0 mt-3'>
+	<ClayList className="mb-0 mt-3">
 		{entries.map(
 			({bold, icon, iconDisplayType, secondaryText, title}, index) => (
 				<ClayList.Item flex key={index}>
 					<ClayList.ItemField>
-						<ClaySticker displayType='unstyled'>
+						<ClaySticker displayType="unstyled">
 							<ClayIcon
 								className={
 									iconDisplayType === 'success'
@@ -373,7 +377,7 @@ const ConnectorStatusList: React.FC<IConnectorStatusListProps> = ({
 							{title}
 						</ClayList.ItemTitle>
 
-						<ClayList.ItemText className='text-secondary'>
+						<ClayList.ItemText className="text-secondary">
 							{secondaryText}
 						</ClayList.ItemText>
 					</ClayList.ItemField>
@@ -397,7 +401,7 @@ const getAvailableDataAlertStorageKey = (
 const ConnectorEntityList: React.FC<IConnectorEntityListProps> = ({
 	config,
 	dataSource,
-	groupId
+	groupId,
 }) => {
 	const dataSourceId = dataSource.id ?? '';
 
@@ -429,13 +433,14 @@ const ConnectorEntityList: React.FC<IConnectorEntityListProps> = ({
 
 		if (kind === 'syncing') {
 			setSyncingAlertDismissed(true);
-		} else {
+		}
+		else {
 			setPreviouslySyncedAlertDismissed(true);
 		}
 	};
 
 	const countResponse = useRequest({
-		dataSourceFn: async params => {
+		dataSourceFn: async (params) => {
 			const entries = await Promise.all(
 				config.entities.map(async ({entity, fetchCount}) => {
 					if (!fetchCount) {
@@ -445,11 +450,12 @@ const ConnectorEntityList: React.FC<IConnectorEntityListProps> = ({
 					try {
 						const count = await fetchCount({
 							groupId: params.groupId,
-							id: params.id!
+							id: params.id!,
 						});
 
 						return [entity, count ?? 0] as const;
-					} catch (error) {
+					}
+					catch (error) {
 						return [entity, 0] as const;
 					}
 				})
@@ -457,7 +463,7 @@ const ConnectorEntityList: React.FC<IConnectorEntityListProps> = ({
 
 			return Object.fromEntries(entries);
 		},
-		variables: {groupId, id: dataSource.id}
+		variables: {groupId, id: dataSource.id},
 	});
 
 	const counts = (countResponse.data ?? {}) as {
@@ -499,13 +505,13 @@ const ConnectorEntityList: React.FC<IConnectorEntityListProps> = ({
 
 	return (
 		<div>
-			<div className='mb-4'>
+			<div className="mb-4">
 				<Card.SubHeader
 					title={Liferay.Language.get('connection-status')}
 				/>
 
 				<ClayAlert
-					className='mt-3'
+					className="mt-3"
 					displayType={connectionStatusAlert.displayType}
 				>
 					{connectionStatusAlert.message}

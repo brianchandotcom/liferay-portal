@@ -18,7 +18,7 @@ describe('Account Membership', () => {
 		industry: 'Manufacturing',
 		lastActivityDate: '2021-12-01T00:00:00.000Z',
 		numberOfEmployees: '500',
-		state: 'California'
+		state: 'California',
 	};
 
 	it('should render the snapshot', () => {
@@ -64,7 +64,7 @@ describe('Account Membership', () => {
 				<AccountMembership
 					accountData={fromJS({
 						...mockData,
-						currencyCode: null
+						currencyCode: null,
 					})}
 				/>
 			)

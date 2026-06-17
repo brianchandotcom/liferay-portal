@@ -12,7 +12,7 @@ const StepList: React.FC<IStepListProps> = ({
 	className,
 	hideBullets = false,
 	secondaryInfo,
-	steps = []
+	steps = [],
 }) => (
 	<div
 		className={getCN(

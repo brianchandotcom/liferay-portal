@@ -5,7 +5,7 @@ import DocumentTitle from 'shared/components/DocumentTitle';
 import getCN from 'classnames';
 import MaintenanceAlert from 'shared/components/MaintenanceAlert';
 import NotificationAlertList, {
-	useNotificationsAPI
+	useNotificationsAPI,
 } from 'shared/components/NotificationAlertList';
 import React from 'react';
 import TextTruncate from 'shared/components/TextTruncate';
@@ -22,7 +22,7 @@ import {useStore} from 'react-redux';
 function getSidebarSections({
 	currentUser,
 	groupId,
-	recommendationsEnabled
+	recommendationsEnabled,
 }: {
 	currentUser: User;
 	groupId: string;
@@ -36,44 +36,44 @@ function getSidebarSections({
 					label: Liferay.Language.get('apis'),
 					route: Routes.SETTINGS_APIS_TOKEN_LIST,
 					url: toRoute(Routes.SETTINGS_APIS_TOKEN_LIST, {
-						groupId
-					})
+						groupId,
+					}),
 				},
 				{
 					icon: 'definitions',
 					label: Liferay.Language.get('definitions'),
 					route: Routes.SETTINGS_DEFINITIONS,
-					url: toRoute(Routes.SETTINGS_DEFINITIONS, {groupId})
+					url: toRoute(Routes.SETTINGS_DEFINITIONS, {groupId}),
 				},
 				{
 					icon: 'data_privacy_lock',
 					label: Liferay.Language.get('data-control-&-privacy'),
 					route: Routes.SETTINGS_DATA_PRIVACY,
-					url: toRoute(Routes.SETTINGS_DATA_PRIVACY, {groupId})
+					url: toRoute(Routes.SETTINGS_DATA_PRIVACY, {groupId}),
 				},
 				{
 					icon: 'faro_data_source',
 					label: Liferay.Language.get('data-sources'),
 					route: Routes.SETTINGS_DATA_SOURCE_LIST,
 					url: toRoute(Routes.SETTINGS_DATA_SOURCE_LIST, {
-						groupId
-					})
+						groupId,
+					}),
 				},
 				recommendationsEnabled && {
 					icon: 'ac_star',
 					label: Liferay.Language.get('recommendations'),
 					route: Routes.SETTINGS_RECOMMENDATIONS,
 					url: toRoute(Routes.SETTINGS_RECOMMENDATIONS, {
-						groupId
-					})
-				}
+						groupId,
+					}),
+				},
 			].filter(Boolean) as Array<{
 				icon: string;
 				label: string;
 				route: string;
 				url: string;
 			}>,
-			label: Liferay.Language.get('workspace-data')
+			label: Liferay.Language.get('workspace-data'),
 		},
 		{
 			items: [
@@ -82,43 +82,43 @@ function getSidebarSections({
 					label: Liferay.Language.get('user-management'),
 					route: Routes.SETTINGS_USERS,
 					url: toRoute(Routes.SETTINGS_USERS, {
-						groupId
-					})
+						groupId,
+					}),
 				},
 				{
 					icon: 'ac_page',
 					label: Liferay.Language.get('properties'),
 					route: Routes.SETTINGS_CHANNELS,
 					url: toRoute(Routes.SETTINGS_CHANNELS, {
-						groupId
-					})
+						groupId,
+					}),
 				},
 				{
 					icon: 'usage',
 					label: Liferay.Language.get('subscription-&-usage'),
 					route: Routes.SETTINGS_USAGE,
-					url: toRoute(Routes.SETTINGS_USAGE, {groupId})
+					url: toRoute(Routes.SETTINGS_USAGE, {groupId}),
 				},
 				{
 					icon: 'cog',
 					label: Liferay.Language.get('workspace'),
 					route: Routes.SETTINGS_WORKSPACE,
-					url: toRoute(Routes.SETTINGS_WORKSPACE, {groupId})
+					url: toRoute(Routes.SETTINGS_WORKSPACE, {groupId}),
 				},
 				DEVELOPER_MODE && {
 					icon: 'flag-full',
 					label: 'Feature Flags',
 					route: Routes.SETTINGS_FEATURE_FLAGS,
-					url: toRoute(Routes.SETTINGS_FEATURE_FLAGS, {groupId})
-				}
+					url: toRoute(Routes.SETTINGS_FEATURE_FLAGS, {groupId}),
+				},
 			].filter(Boolean) as Array<{
 				icon: string;
 				label: string;
 				route: string;
 				url: string;
 			}>,
-			label: Liferay.Language.get('workspace-settings')
-		}
+			label: Liferay.Language.get('workspace-settings'),
+		},
 	];
 }
 
@@ -143,7 +143,7 @@ const SettingsBasePage: React.FC<ISettingsBasePageProps> = ({
 	pageActionsDisplayLimit,
 	pageDescription,
 	pageTitle,
-	subTitle
+	subTitle,
 }) => {
 	const {groupId = ''} = useParams<{groupId: string}>();
 	const location = useLocation();
@@ -156,48 +156,48 @@ const SettingsBasePage: React.FC<ISettingsBasePageProps> = ({
 		.getIn(['projects', groupId, 'data', 'recommendationsEnabled'], false);
 
 	return (
-		<div className='settings-root'>
+		<div className="settings-root">
 			<Toolbar
 				backURL={{
 					label: Liferay.Language.get('settings'),
 					url: toRoute(Routes.WORKSPACE_WITH_ID, {
-						groupId
-					})
+						groupId,
+					}),
 				}}
 			/>
 
-			<div className='content-wrapper'>
-				<nav className='section-side settings-side-bar'>
+			<div className="content-wrapper">
+				<nav className="section-side settings-side-bar">
 					{getSidebarSections({
 						currentUser,
 						groupId,
-						recommendationsEnabled
+						recommendationsEnabled,
 					}).map(({items, label}, sectionIndex) => (
 						<div key={sectionIndex}>
 							{label && (
-								<h5 className='section-title'>{label}</h5>
+								<h5 className="section-title">{label}</h5>
 							)}
 
-							<ul className='nav'>
+							<ul className="nav">
 								{items.map(({icon, label, route, url}) => (
 									<li
 										className={getCN('item', {
 											active: !!matchPath(
 												location.pathname,
 												{
-													path: route
+													path: route,
 												}
-											)
+											),
 										})}
 										key={url}
 									>
 										<ClayLink
-											className='button-root'
+											className="button-root"
 											href={url}
 										>
-											<span className='icon-wrapper'>
+											<span className="icon-wrapper">
 												<ClayIcon
-													className='icon-root'
+													className="icon-root"
 													symbol={icon}
 												/>
 											</span>
@@ -211,7 +211,7 @@ const SettingsBasePage: React.FC<ISettingsBasePageProps> = ({
 					))}
 				</nav>
 
-				<div className='content section-main'>
+				<div className="content section-main">
 					<div
 						className={getCN('settings-base-page-root', className)}
 					>
@@ -237,13 +237,13 @@ const SettingsBasePage: React.FC<ISettingsBasePageProps> = ({
 							!!pageActions.length) && (
 							<div
 								className={getCN('content-header', {
-									['has-page-actions']: !!pageActions.length
+									['has-page-actions']: !!pageActions.length,
 								})}
 							>
-								<div className='header-text'>
+								<div className="header-text">
 									{pageTitle && (
-										<div className='d-flex'>
-											<h3 className='title-text text-truncate'>
+										<div className="d-flex">
+											<h3 className="title-text text-truncate">
 												<TextTruncate
 													title={pageTitle}
 												/>
@@ -251,7 +251,7 @@ const SettingsBasePage: React.FC<ISettingsBasePageProps> = ({
 
 											{subTitle && (
 												<TextTruncate
-													className='subtitle-text ml-2'
+													className="subtitle-text ml-2"
 													title={subTitle}
 												/>
 											)}
@@ -259,13 +259,13 @@ const SettingsBasePage: React.FC<ISettingsBasePageProps> = ({
 									)}
 
 									{pageDescription && (
-										<div className='description'>
+										<div className="description">
 											{pageDescription}
 										</div>
 									)}
 								</div>
 
-								<div className='page-actions-container'>
+								<div className="page-actions-container">
 									<PageActions
 										actions={pageActions}
 										actionsDisplayLimit={

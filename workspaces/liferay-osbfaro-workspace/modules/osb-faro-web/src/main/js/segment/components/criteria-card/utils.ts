@@ -9,7 +9,7 @@ import {
 	isUnknown,
 	PropertyTypes,
 	RelationalOperators,
-	SUPPORTED_OPERATORS_MAP
+	SUPPORTED_OPERATORS_MAP,
 } from 'segment/segment-editor/dynamic/utils/constants';
 
 export function getOperatorLabel(
@@ -83,7 +83,8 @@ export function maybeFormatToKnownType(
 
 	if (operatorName === RelationalOperators.EQ && valueNull) {
 		return isUnknown;
-	} else if (operatorName === RelationalOperators.NE && valueNull) {
+	}
+	else if (operatorName === RelationalOperators.NE && valueNull) {
 		return isKnown;
 	}
 

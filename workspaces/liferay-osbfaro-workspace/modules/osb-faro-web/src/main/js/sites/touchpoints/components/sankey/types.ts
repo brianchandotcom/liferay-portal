@@ -1,10 +1,10 @@
 export enum Type {
 	Previous = 'previous',
-	Following = 'following'
+	Following = 'following',
 }
 
 export enum TitleKey {
 	Direct = 'direct',
 	DropOffs = 'drop-offs',
-	Others = 'others'
+	Others = 'others',
 }

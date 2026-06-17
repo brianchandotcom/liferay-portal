@@ -9,7 +9,7 @@ export const actionTypes = {
 	...createActionTypes('fetch', 'project'),
 	...createActionTypes('fetch', 'projects'),
 	...createActionTypes('fetch', 'project_via_corp_project_uuid'),
-	...createActionTypes('update', 'project')
+	...createActionTypes('update', 'project'),
 };
 
 export function createProject(data) {
@@ -22,11 +22,11 @@ export function createProject(data) {
 				types: [
 					actionTypes.CREATE_PROJECT_REQUEST,
 					actionTypes.CREATE_PROJECT_SUCCESS,
-					actionTypes.CREATE_PROJECT_FAILURE
-				]
-			}
+					actionTypes.CREATE_PROJECT_FAILURE,
+				],
+			},
 		},
-		type: 'NO_OP'
+		type: 'NO_OP',
 	};
 }
 
@@ -40,11 +40,11 @@ export function configureProject(data) {
 				types: [
 					actionTypes.CONFIGURE_PROJECT_REQUEST,
 					actionTypes.CONFIGURE_PROJECT_SUCCESS,
-					actionTypes.CONFIGURE_PROJECT_FAILURE
-				]
-			}
+					actionTypes.CONFIGURE_PROJECT_FAILURE,
+				],
+			},
 		},
-		type: 'NO_OP'
+		type: 'NO_OP',
 	};
 }
 
@@ -58,11 +58,11 @@ export function createTrialProject(data) {
 				types: [
 					actionTypes.CREATE_PROJECT_REQUEST,
 					actionTypes.CREATE_PROJECT_SUCCESS,
-					actionTypes.CREATE_PROJECT_FAILURE
-				]
-			}
+					actionTypes.CREATE_PROJECT_FAILURE,
+				],
+			},
 		},
-		type: 'NO_OP'
+		type: 'NO_OP',
 	};
 }
 
@@ -76,14 +76,14 @@ export function fetchProject({groupId}) {
 				types: [
 					actionTypes.FETCH_PROJECT_REQUEST,
 					actionTypes.FETCH_PROJECT_SUCCESS,
-					actionTypes.FETCH_PROJECT_FAILURE
-				]
-			}
+					actionTypes.FETCH_PROJECT_FAILURE,
+				],
+			},
 		},
 		payload: {
-			id: groupId
+			id: groupId,
 		},
-		type: 'NO_OP'
+		type: 'NO_OP',
 	};
 }
 
@@ -96,11 +96,11 @@ export function fetchProjects() {
 				types: [
 					actionTypes.FETCH_PROJECTS_REQUEST,
 					actionTypes.FETCH_PROJECTS_SUCCESS,
-					actionTypes.FETCH_PROJECTS_FAILURE
-				]
-			}
+					actionTypes.FETCH_PROJECTS_FAILURE,
+				],
+			},
 		},
-		type: 'NO_OP'
+		type: 'NO_OP',
 	};
 }
 
@@ -114,14 +114,14 @@ export function fetchProjectViaCorpProjectUuid({corpProjectUuid}) {
 				types: [
 					actionTypes.FETCH_PROJECT_VIA_CORP_PROJECT_UUID_REQUEST,
 					actionTypes.FETCH_PROJECT_VIA_CORP_PROJECT_UUID_SUCCESS,
-					actionTypes.FETCH_PROJECT_VIA_CORP_PROJECT_UUID_FAILURE
-				]
-			}
+					actionTypes.FETCH_PROJECT_VIA_CORP_PROJECT_UUID_FAILURE,
+				],
+			},
 		},
 		payload: {
-			id: corpProjectUuid
+			id: corpProjectUuid,
 		},
-		type: 'NO_OP'
+		type: 'NO_OP',
 	};
 }
 
@@ -131,7 +131,7 @@ export const updateProject = ({
 	groupId,
 	incidentReportEmailAddresses,
 	name,
-	timeZoneId
+	timeZoneId,
 }) => ({
 	meta: {
 		[CALL_API]: {
@@ -141,21 +141,21 @@ export const updateProject = ({
 				groupId,
 				incidentReportEmailAddresses,
 				name,
-				timeZoneId
+				timeZoneId,
 			},
 			requestFn: API.projects.update,
 			schema: project(groupId),
 			types: [
 				actionTypes.UPDATE_PROJECT_REQUEST,
 				actionTypes.UPDATE_PROJECT_SUCCESS,
-				actionTypes.UPDATE_PROJECT_FAILURE
-			]
+				actionTypes.UPDATE_PROJECT_FAILURE,
+			],
 		},
 		newId: friendlyURL,
-		prevId: groupId
+		prevId: groupId,
 	},
 	payload: {
-		id: groupId
+		id: groupId,
 	},
-	type: 'NO_OP'
+	type: 'NO_OP',
 });

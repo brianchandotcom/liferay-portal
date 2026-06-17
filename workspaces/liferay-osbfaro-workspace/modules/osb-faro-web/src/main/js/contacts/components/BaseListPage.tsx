@@ -3,10 +3,10 @@ import BasePage from 'shared/components/base-page';
 import Card from 'shared/components/Card';
 import ClayLink from '@clayui/link';
 import EmbeddedAlertList, {
-	IEmbeddedAlertListProps
+	IEmbeddedAlertListProps,
 } from 'shared/components/EmbeddedAlertList';
 import NoResultsDisplay, {
-	INoResultsDisplayProps
+	INoResultsDisplayProps,
 } from 'shared/components/NoResultsDisplay';
 import React from 'react';
 import SearchableEntityTable from 'shared/components/SearchableEntityTable';
@@ -70,8 +70,8 @@ const BaseListPage: React.FC<IBaseListPageProps> = ({
 	orderByOptions = [
 		{
 			label: Liferay.Language.get('name'),
-			value: NAME
-		}
+			value: NAME,
+		},
 	],
 	orderIOMap,
 	page,
@@ -95,11 +95,11 @@ const BaseListPage: React.FC<IBaseListPageProps> = ({
 	const ConnectDataSourceButton = () => (
 		<ClayLink
 			button
-			className='button-root'
-			displayType='primary'
+			className="button-root"
+			displayType="primary"
 			href={toRoute(Routes.SETTINGS_DATA_SOURCE_LIST, {
 				channelId,
-				groupId
+				groupId,
 			})}
 		>
 			{Liferay.Language.get('connect-data-source')}
@@ -116,12 +116,13 @@ const BaseListPage: React.FC<IBaseListPageProps> = ({
 					icon={{
 						border: false,
 						size: Sizes.XXXLarge,
-						symbol: 'ac_no_results_found'
+						symbol: 'ac_no_results_found',
 					}}
 					title={Liferay.Language.get('there-are-no-results-found')}
 				/>
 			);
-		} else {
+		}
+		else {
 			return (
 				<NoResultsDisplay
 					description={get(noResultsConfig, 'description')}
@@ -140,8 +141,8 @@ const BaseListPage: React.FC<IBaseListPageProps> = ({
 					breadcrumbs.getHome({
 						channelId,
 						groupId,
-						label: selectedChannel && selectedChannel.name
-					})
+						label: selectedChannel && selectedChannel.name,
+					}),
 				]}
 				groupId={groupId}
 			>
@@ -175,12 +176,12 @@ const BaseListPage: React.FC<IBaseListPageProps> = ({
 											)}
 
 											<ClayLink
-												className='d-block mb-3'
+												className="d-block mb-3"
 												href={
 													URLConstants.DataSourceConnection
 												}
-												key='DOCUMENTATION'
-												target='_blank'
+												key="DOCUMENTATION"
+												target="_blank"
 											>
 												{Liferay.Language.get(
 													'access-our-documentation-to-learn-more'

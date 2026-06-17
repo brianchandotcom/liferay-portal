@@ -16,7 +16,7 @@ export default class EditorDateInput extends React.Component<IEditorDateInputPro
 	handleDateChange(value: string) {
 		this.props.onChange({
 			type: PropertyTypes.Date,
-			value
+			value,
 		});
 	}
 
@@ -27,19 +27,19 @@ export default class EditorDateInput extends React.Component<IEditorDateInputPro
 			displayValue,
 			operatorRenderer: OperatorDropdown,
 			property: {entityName},
-			value
+			value,
 		} = this.props;
 
 		const date = moment(value, INPUT_DATE_FORMAT).format(INPUT_DATE_FORMAT);
 
 		return (
-			<div className='criteria-statement'>
+			<div className="criteria-statement">
 				<Form.Group autoFit>
-					<Form.GroupItem className='entity-name' label shrink>
+					<Form.GroupItem className="entity-name" label shrink>
 						{entityName}
 					</Form.GroupItem>
 
-					<Form.GroupItem className='display-value' label shrink>
+					<Form.GroupItem className="display-value" label shrink>
 						{displayValue}
 					</Form.GroupItem>
 

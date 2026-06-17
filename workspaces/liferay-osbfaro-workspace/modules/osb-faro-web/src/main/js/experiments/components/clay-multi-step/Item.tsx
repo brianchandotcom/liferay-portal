@@ -22,24 +22,24 @@ const ClayMultiStepItem: React.FC<ClayMultiStepItemIProps> = ({
 	showIndicatorLabel,
 	status,
 	stepNumber,
-	title
+	title,
 }) => {
 	const mainClassName = getCN(status, 'multi-step-item', {
-		'multi-step-item-expand': !lastChild
+		'multi-step-item-expand': !lastChild,
 	});
 
 	return (
 		<li className={mainClassName}>
-			{title && <div className='multi-step-title'>{title}</div>}
-			{!lastChild && <div className='multi-step-divider'></div>}
-			<div className='multi-step-indicator'>
+			{title && <div className="multi-step-title">{title}</div>}
+			{!lastChild && <div className="multi-step-divider"></div>}
+			<div className="multi-step-indicator">
 				{showIndicatorLabel && (
-					<div className='multi-step-indicator-label'>
+					<div className="multi-step-indicator-label">
 						{stepNumber}
 					</div>
 				)}
 				<ClayLink
-					className='multi-step-icon'
+					className="multi-step-icon"
 					data-multi-step-icon={stepNumber}
 					href={`#${stepNumber}`}
 				>

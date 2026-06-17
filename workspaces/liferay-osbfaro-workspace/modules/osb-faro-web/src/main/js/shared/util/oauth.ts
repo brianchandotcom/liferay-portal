@@ -8,7 +8,7 @@ export const OAUTH_ERROR_CODES = [
 	'invalid_grant',
 	'invalid_request',
 	'unauthorized_client',
-	'unsupported_grant_type'
+	'unsupported_grant_type',
 ];
 
 /**
@@ -37,7 +37,7 @@ const DEFAULT_TIMEOUT = 15 * 60 * 1000;
  */
 export const EVENT_TYPES = {
 	AC_RECEIVE_AUTH_CODE: 'AC_RECEIVE_AUTH_CODE',
-	AC_RECEIVE_OAUTH_TOKEN: 'AC_RECEIVE_OAUTH_TOKEN'
+	AC_RECEIVE_OAUTH_TOKEN: 'AC_RECEIVE_OAUTH_TOKEN',
 };
 
 /**
@@ -48,7 +48,7 @@ export enum ERROR_TYPES {
 	OTHER = 'OTHER',
 	TIMEOUT = 'TIMEOUT',
 	WINDOW_BLOCKED = 'WINDOW_BLOCKED',
-	WINDOW_CLOSED = 'WINDOW_CLOSED'
+	WINDOW_CLOSED = 'WINDOW_CLOSED',
 }
 
 function createError(message: string, type: ERROR_TYPES) {
@@ -95,7 +95,7 @@ export function isOAuthErrorString(error: string): boolean {
 export function openOAuthWindow({
 	authWindow,
 	timeout = DEFAULT_TIMEOUT,
-	url
+	url,
 }: {
 	authWindow: typeof window;
 	timeout?: number;
@@ -196,12 +196,13 @@ export function emitError({message}: {message: string}) {
 		opener.postMessage(
 			{
 				message,
-				type: ERROR_TYPES.AC_RECEIVE_CALLBACK_ERROR
+				type: ERROR_TYPES.AC_RECEIVE_CALLBACK_ERROR,
 			},
 			location.origin
 		);
 	}
 }
+
 /**
  * OAuth 1 Flow
  * Emits the token as an event on the window. Should be
@@ -210,7 +211,7 @@ export function emitError({message}: {message: string}) {
  */
 export function emitToken({
 	token,
-	verifier
+	verifier,
 }: {
 	token: string;
 	verifier: string;
@@ -256,7 +257,7 @@ export function getTempCredentials({
 	consumerSecret,
 	groupId,
 	timeout,
-	type
+	type,
 }: {
 	authWindow: typeof window;
 	baseUrl: string;
@@ -283,7 +284,7 @@ export function getTempCredentials({
 			consumerKey,
 			consumerSecret,
 			groupId,
-			type
+			type,
 		})
 		.catch(() => {
 			if (authWindow) {
@@ -295,17 +296,17 @@ export function getTempCredentials({
 				ERROR_TYPES.OTHER
 			);
 		})
-		.then(response =>
+		.then((response) =>
 			openOAuthWindow({
 				authWindow,
 				timeout,
-				url: `${response.oAuthAuthorizationURL}&prompt=consent`
+				url: `${response.oAuthAuthorizationURL}&prompt=consent`,
 			}).then(({code, token, verifier}) => ({
 				...response,
 				oAuthCallbackURL: callbackUrl,
 				oAuthCode: code,
 				oAuthToken: token,
-				oAuthVerifier: verifier
+				oAuthVerifier: verifier,
 			}))
 		);
 }
@@ -319,7 +320,7 @@ export function getTempCredentials({
  */
 export function getOAuthWindowErrorMessage({
 	message,
-	type
+	type,
 }: {
 	message: string;
 	type: ERROR_TYPES;

@@ -1,5 +1,5 @@
 import getLocationsMapper, {
-	getLocationsMapperCountries
+	getLocationsMapperCountries,
 } from 'cerebro-shared/hocs/mappers/locations';
 import URLConstants from 'shared/util/url-constants';
 import {GEOLOCATION_FRAGMENT} from 'shared/queries/fragments';
@@ -47,7 +47,7 @@ const TouchpointLocationsQuery = gql`
 const withTouchpointLocations = () =>
 	graphql(
 		TouchpointLocationsQuery,
-		getLocationsMapper(result => result.page.viewsMetric)
+		getLocationsMapper((result) => result.page.viewsMetric)
 	);
 
 /**
@@ -57,7 +57,7 @@ const withTouchpointLocations = () =>
 const withTouchpointsLocationsCountries = () =>
 	graphql(
 		TouchpointLocationsQuery,
-		getLocationsMapperCountries(result => result.page.viewsMetric)
+		getLocationsMapperCountries((result) => result.page.viewsMetric)
 	);
 
 export default withLocationsCard(
@@ -69,6 +69,8 @@ export default withLocationsCard(
 		),
 		documentationUrl: URLConstants.SitesDashboardPagesViewsByLocation,
 		reportContainer: ReportContainer.ViewsByLocationCard,
-		title: Liferay.Language.get('there-are-no-views-on-the-selected-period')
+		title: Liferay.Language.get(
+			'there-are-no-views-on-the-selected-period'
+		),
 	}
 );

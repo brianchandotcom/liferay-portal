@@ -17,26 +17,26 @@ const InterestDetailsPage: React.FC<IInterestDetailsProps> = ({router}) => {
 	const rangeSelectors = useQueryRangeSelectors();
 
 	return (
-		<div className='sites-dashboard-interest-details-root'>
-			<div className='row'>
-				<div className='col-xl-12'>
-					<div className='back-button-root mb-2'>
+		<div className="sites-dashboard-interest-details-root">
+			<div className="row">
+				<div className="col-xl-12">
+					<div className="back-button-root mb-2">
 						<ClayLink
 							borderless
 							button
-							displayType='secondary'
+							displayType="secondary"
 							href={setUriQueryValues(
 								pickBy({...rangeSelectors}),
 
 								toRoute(Routes.SITES_INTERESTS, {
 									channelId,
-									groupId
+									groupId,
 								})
 							)}
 						>
 							<ClayIcon
-								className='icon-root mr-2'
-								symbol='angle-left-small'
+								className="icon-root mr-2"
+								symbol="angle-left-small"
 							/>
 
 							{Liferay.Language.get('back-to-interests')}
@@ -44,7 +44,7 @@ const InterestDetailsPage: React.FC<IInterestDetailsProps> = ({router}) => {
 					</div>
 
 					<InterestDetails
-						className='sites-interest-details-root'
+						className="sites-interest-details-root"
 						router={router}
 					/>
 				</div>

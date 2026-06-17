@@ -13,13 +13,13 @@ const withRangeKey = <P extends WithRangeKeyProps>(
 	const defaultRangeSelectors = {
 		rangeEnd: null,
 		rangeKey: RangeKeyTimeRanges.Last30Days,
-		rangeStart: null
+		rangeStart: null,
 	};
 
 	return ({rangeSelectors: initialRangeSelectors, ...otherProps}) => {
 		const [rangeSelectors, setRangeSelectors] = useState({
 			...defaultRangeSelectors,
-			...initialRangeSelectors
+			...initialRangeSelectors,
 		});
 
 		return (

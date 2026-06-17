@@ -12,7 +12,7 @@ interface IPercentOfCellProps extends React.HTMLAttributes<HTMLElement> {
 const PercentOfCell: React.FC<IPercentOfCellProps> = ({
 	compareToPrevious = false,
 	events = [],
-	totalValue
+	totalValue,
 }) => {
 	const isComparingEvent = events.length > 1;
 	const isComparingSegment = get(events[0], 'breakdownItems', []).length > 1;
@@ -23,7 +23,7 @@ const PercentOfCell: React.FC<IPercentOfCellProps> = ({
 
 	return (
 		<>
-			<ul className='percentage-column'>
+			<ul className="percentage-column">
 				{data.map(({value}, i) => (
 					<li key={i}>{`${round(
 						getPercentage(value, totalValue),
@@ -33,7 +33,7 @@ const PercentOfCell: React.FC<IPercentOfCellProps> = ({
 			</ul>
 
 			{isComparingSegment && isComparingEvent && (
-				<ul className='percentage-column'>
+				<ul className="percentage-column">
 					{getItems(
 						events[1].breakdownItems ?? [],
 						compareToPrevious
@@ -59,12 +59,12 @@ const getItems = (
 
 	events.forEach(({previousValue = 0, value}) => {
 		data.push({
-			value
+			value,
 		});
 
 		if (compareToPrevious) {
 			data.push({
-				value: previousValue
+				value: previousValue,
 			});
 		}
 	});

@@ -4,7 +4,7 @@ import {Criterion} from '../../../utils/types';
 import {DataTypes} from 'event-analysis/utils/types';
 import {
 	FunctionalOperators,
-	RelationalOperators
+	RelationalOperators,
 } from '../../../utils/constants';
 import {getDefaultAttributeValue, getOperatorOptions} from './utils';
 import {Option, Picker} from '@clayui/core';
@@ -18,11 +18,11 @@ interface IOperatorSelectProps {
 const OperatorSelect: React.FC<IOperatorSelectProps> = ({
 	dataType,
 	onChange,
-	operatorName
+	operatorName,
 }) => {
 	if (dataType === DataTypes.Boolean) {
 		return (
-			<Form.GroupItem className='conjunction ml-1 mr-1' label shrink>
+			<Form.GroupItem className="conjunction ml-1 mr-1" label shrink>
 				{Liferay.Language.get('is')}
 			</Form.GroupItem>
 		);
@@ -31,17 +31,17 @@ const OperatorSelect: React.FC<IOperatorSelectProps> = ({
 	return (
 		<Form.GroupItem shrink>
 			<Picker
-				className='operator-input'
+				className="operator-input"
 				items={
 					getOperatorOptions(dataType) as {
 						label: string;
 						value: string;
 					}[]
 				}
-				onSelectionChange={newOperatorName => {
+				onSelectionChange={(newOperatorName) => {
 					let criterion: Criterion = {
 						operatorName:
-							newOperatorName as unknown as Criterion['operatorName']
+							newOperatorName as unknown as Criterion['operatorName'],
 					};
 
 					if (
@@ -57,7 +57,7 @@ const OperatorSelect: React.FC<IOperatorSelectProps> = ({
 								newOperatorName as
 									| FunctionalOperators
 									| RelationalOperators
-							)
+							),
 						};
 					}
 

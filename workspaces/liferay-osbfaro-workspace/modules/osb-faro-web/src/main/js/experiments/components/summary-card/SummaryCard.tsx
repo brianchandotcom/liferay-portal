@@ -21,7 +21,7 @@ const Component: Record<
 	[Status.Running]: SummaryRunningCard as React.FC<any>,
 	[Status.FinishedNoWinner]: SummaryNoWinnerCard as React.FC<any>,
 	[Status.Terminated]: SummaryTerminatedCard as React.FC<any>,
-	[Status.FinishedWinner]: SummaryWinnerCard as React.FC<any>
+	[Status.FinishedWinner]: SummaryWinnerCard as React.FC<any>,
 };
 
 export const SummaryCard = ({experiment}: {experiment: IExperiment}) => {

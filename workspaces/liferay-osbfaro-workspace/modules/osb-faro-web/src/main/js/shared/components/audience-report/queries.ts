@@ -22,7 +22,7 @@ const AudienceReportFragment = gql`
 
 export const PageAudienceReportQuery = ({
 	metricName,
-	name
+	name,
 }: {
 	metricName: string;
 	name: Name;
@@ -60,7 +60,7 @@ export const PageAudienceReportQuery = ({
 
 export const AssetAudienceReportQuery = ({
 	metricName,
-	name
+	name,
 }: {
 	metricName: string;
 	name: Name;

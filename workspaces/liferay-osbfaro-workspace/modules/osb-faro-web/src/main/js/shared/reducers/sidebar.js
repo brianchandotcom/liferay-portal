@@ -7,7 +7,7 @@ const actionHandlers = {
 		const {collapsed, currentUserId} = payload;
 
 		return state.set(String(currentUserId), collapsed);
-	}
+	},
 };
 
 export default createReducer(new Map(), actionHandlers);

@@ -3,7 +3,7 @@ import {
 	getFilters,
 	hasCategoryFilters,
 	hasSearch,
-	isClearFilterVisible
+	isClearFilterVisible,
 } from '../filter';
 import {range} from 'lodash';
 
@@ -12,64 +12,64 @@ describe('Filter Utils', () => {
 		it('should return all filters with default value of "Any" as a fallback when filters is empty', () => {
 			expect(getFilters()).toEqual({
 				devices: 'Any',
-				location: 'Any'
+				location: 'Any',
 			});
 		});
 
 		it('should map filters from key:array to key:string', () => {
 			const filters = {
 				devices: ['Desktop'],
-				location: ['Brazil']
+				location: ['Brazil'],
 			};
 
 			expect(getFilters(filters)).toEqual({
 				devices: 'Desktop',
-				location: 'Brazil'
+				location: 'Brazil',
 			});
 		});
 
 		it('should set a default value of "Any" for the location filter if no value was given', () => {
 			const filters = {
-				devices: ['Desktop']
+				devices: ['Desktop'],
 			};
 
 			expect(getFilters(filters)).toEqual({
 				devices: 'Desktop',
-				location: 'Any'
+				location: 'Any',
 			});
 		});
 
 		it('should set a default value of "Any" for the devices filter if no value was given', () => {
 			const filters = {
-				location: ['Brazil']
+				location: ['Brazil'],
 			};
 
 			expect(getFilters(filters)).toEqual({
 				devices: 'Any',
-				location: 'Brazil'
+				location: 'Brazil',
 			});
 		});
 
 		it('should return all filters with default value of "Any" as a fallback when filter keys are empty', () => {
 			const filters = {
 				devices: [],
-				location: []
+				location: [],
 			};
 
 			expect(getFilters(filters)).toEqual({
 				devices: 'Any',
-				location: 'Any'
+				location: 'Any',
 			});
 		});
 
 		it('should set default value of "Any" for all filters if the filter object passed contains no matching keys', () => {
 			const filters = {
-				others: []
+				others: [],
 			};
 
 			expect(getFilters(filters)).toEqual({
 				devices: 'Any',
-				location: 'Any'
+				location: 'Any',
 			});
 		});
 	});
@@ -80,7 +80,7 @@ describe('Filter Utils', () => {
 				getFilterItem(
 					[
 						{metrics: 1000, valueKey: 'Foo'},
-						{metrics: 500, valueKey: 'Bar'}
+						{metrics: 500, valueKey: 'Bar'},
 					],
 					'devices'
 				)
@@ -92,19 +92,19 @@ describe('Filter Utils', () => {
 						checked: false,
 						inputType: 'radio',
 						label: 'Bar',
-						value: ''
+						value: '',
 					},
 					{
 						category: 'devices',
 						checked: false,
 						inputType: 'radio',
 						label: 'Foo',
-						value: ''
-					}
+						value: '',
+					},
 				],
 				label: 'Devices',
 				name: 'Devices',
-				value: '2'
+				value: '2',
 			});
 		});
 	});
@@ -115,7 +115,7 @@ describe('Filter Utils', () => {
 				hasCategoryFilters(
 					{
 						bar: [],
-						foo: []
+						foo: [],
 					},
 					'categoryName'
 				)
@@ -128,7 +128,7 @@ describe('Filter Utils', () => {
 					{
 						bar: [],
 						categoryName: 'foo',
-						foo: []
+						foo: [],
 					},
 					'categoryName'
 				)
@@ -155,7 +155,7 @@ describe('Filter Utils', () => {
 			expect(
 				isClearFilterVisible({
 					bar: [],
-					foo: []
+					foo: [],
 				})
 			).toBeFalsy();
 		});
@@ -163,7 +163,7 @@ describe('Filter Utils', () => {
 		it('should return false if it contains only one filter', () => {
 			expect(
 				isClearFilterVisible({
-					Devices: ['Desktop']
+					Devices: ['Desktop'],
 				})
 			).toBeFalsy();
 		});
@@ -172,7 +172,7 @@ describe('Filter Utils', () => {
 			expect(
 				isClearFilterVisible({
 					Devices: ['Desktop'],
-					Location: []
+					Location: [],
 				})
 			).toBeFalsy();
 		});
@@ -181,7 +181,7 @@ describe('Filter Utils', () => {
 			expect(
 				isClearFilterVisible({
 					Devices: ['Desktop'],
-					Location: ['Brazil']
+					Location: ['Brazil'],
 				})
 			).toBeTruthy();
 		});

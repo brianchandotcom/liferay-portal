@@ -12,7 +12,7 @@ import {
 	ResponsiveContainer,
 	Sector,
 	Text,
-	Tooltip
+	Tooltip,
 } from 'recharts';
 import {Text as ClayText} from '@clayui/core';
 import {Dataset} from './types';
@@ -38,7 +38,7 @@ const ActiveShape: React.FC<IActiveShapeProps> = ({
 	fill,
 	innerRadius,
 	outerRadius,
-	startAngle
+	startAngle,
 }) => (
 	<g>
 		<Sector
@@ -70,7 +70,7 @@ const BarLabel: React.FC<IBarLabelProps> = ({
 	isEmpty,
 	midAngle,
 	outerRadius,
-	percent
+	percent,
 }) => {
 	const RADIAN = Math.PI / 180;
 
@@ -85,9 +85,9 @@ const BarLabel: React.FC<IBarLabelProps> = ({
 					fill: 'black',
 					font: AXIS.font,
 					fontSize: '1rem',
-					fontWeight: 600
+					fontWeight: 600,
 				}}
-				textAnchor='middle'
+				textAnchor="middle"
 				x={x}
 				y={y}
 			>
@@ -111,13 +111,13 @@ interface ITooltipContentProps {
 const TooltipContent: React.FC<ITooltipContentProps> = ({
 	active,
 	isEmpty,
-	payload
+	payload,
 }) => {
 	if (!isEmpty && active && !!payload.length) {
 		const {count, label} = get(payload, [0, 'payload'], {});
 
 		return (
-			<div className='bb-tooltip-container' style={{position: 'static'}}>
+			<div className="bb-tooltip-container" style={{position: 'static'}}>
 				<ChartTooltip
 					rows={[
 						{
@@ -132,10 +132,10 @@ const TooltipContent: React.FC<ITooltipContentProps> = ({
 
 											{` ${label}`}
 										</span>
-									)
-								}
-							]
-						}
+									),
+								},
+							],
+						},
 					]}
 				/>
 			</div>
@@ -153,7 +153,7 @@ const AudienceReportDonut: React.FC<IAudienceReportDonutProps> = ({
 	data = [],
 	empty: {message: emptyMessage, show: isEmpty = false},
 	height = 360,
-	total = 0
+	total = 0,
 }) => {
 	const [hoverIndex, setHoverIndex] = useState<number>(-1);
 
@@ -166,7 +166,7 @@ const AudienceReportDonut: React.FC<IAudienceReportDonutProps> = ({
 	};
 
 	return (
-		<div className='audience-report-chart-donut'>
+		<div className="audience-report-chart-donut">
 			<ResponsiveContainer height={height}>
 				<PieChart>
 					<Tooltip
@@ -179,7 +179,7 @@ const AudienceReportDonut: React.FC<IAudienceReportDonutProps> = ({
 						formatter={(_, {payload: {label}}) => {
 							if (isEmpty) {
 								return (
-									<div className='text-center pl-4 pr-4'>
+									<div className="text-center pl-4 pr-4">
 										{emptyMessage}
 									</div>
 								);
@@ -187,8 +187,8 @@ const AudienceReportDonut: React.FC<IAudienceReportDonutProps> = ({
 
 							return (
 								<ClayText
-									className='legend-item'
-									color='secondary'
+									className="legend-item"
+									color="secondary"
 									size={3}
 								>
 									{label}
@@ -196,11 +196,11 @@ const AudienceReportDonut: React.FC<IAudienceReportDonutProps> = ({
 							);
 						}}
 						iconSize={isEmpty ? 0 : 12}
-						layout='vertical'
+						layout="vertical"
 						onBlur={() => {}}
 						onMouseMove={handleSetHoverIndex}
 						onMouseOut={handleResetHoverIndex}
-						verticalAlign='bottom'
+						verticalAlign="bottom"
 					/>
 
 					<Pie
@@ -216,33 +216,33 @@ const AudienceReportDonut: React.FC<IAudienceReportDonutProps> = ({
 										{
 											color: EMPTY_CHART_COLOR,
 											count: 1,
-											label: 'empty'
-										}
-								  ]
+											label: 'empty',
+										},
+									]
 								: data
 						}
-						dataKey='count'
+						dataKey="count"
 						endAngle={-270}
-						innerRadius='50%'
+						innerRadius="50%"
 						isAnimationActive={false}
 						label={(props: IBarLabelProps) => (
 							<BarLabel {...props} isEmpty={isEmpty} />
 						)}
 						labelLine={false}
-						legendType='circle'
+						legendType="circle"
 						onBlur={() => {}}
 						onMouseMove={handleSetHoverIndex}
 						onMouseOut={handleResetHoverIndex}
-						outerRadius='90%'
+						outerRadius="90%"
 						startAngle={90}
 					>
-						<Label position='center' value={toFixedPoint(total)} />
+						<Label position="center" value={toFixedPoint(total)} />
 
 						{isEmpty ? (
 							<Cell
 								fill={EMPTY_CHART_COLOR}
 								fillOpacity={1}
-								key='cell-empty'
+								key="cell-empty"
 								strokeOpacity={1}
 							/>
 						) : (

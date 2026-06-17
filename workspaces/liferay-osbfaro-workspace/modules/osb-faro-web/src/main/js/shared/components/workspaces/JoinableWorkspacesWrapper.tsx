@@ -9,12 +9,12 @@ interface IJoinableWorkspacesWrapperProps
 const JoinableWorkspacesWrapper: React.FC<IJoinableWorkspacesWrapperProps> = ({
 	children,
 	details,
-	title
+	title,
 }) => (
-	<div className='join-container'>
-		<div className='title-container'>
-			<h2 className='title'>{title}</h2>
-			<div className='details-container'>{details}</div>
+	<div className="join-container">
+		<div className="title-container">
+			<h2 className="title">{title}</h2>
+			<div className="details-container">{details}</div>
 		</div>
 		{children}
 	</div>

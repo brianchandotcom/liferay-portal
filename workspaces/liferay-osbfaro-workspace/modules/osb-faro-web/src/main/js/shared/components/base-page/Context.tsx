@@ -6,10 +6,10 @@ const Context: React.Context<IBasePageContext> = React.createContext({
 	filters: {},
 	router: {
 		params: {
-			groupId: ''
+			groupId: '',
 		},
-		query: {}
-	}
+		query: {},
+	},
 } as IBasePageContext);
 
 Context.displayName = 'BasePageContext';

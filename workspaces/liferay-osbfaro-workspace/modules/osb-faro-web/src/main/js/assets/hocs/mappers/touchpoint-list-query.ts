@@ -17,11 +17,11 @@ const mapResultToProps = safeResultToProps(
 			assetPages &&
 			assetPages.map(({assetId, assetTitle}: AssetPage) => ({
 				title: assetTitle ? assetTitle : assetId,
-				touchpoint: assetId
+				touchpoint: assetId,
 			}));
 
 		return {
-			items
+			items,
 		};
 	}
 );
@@ -42,15 +42,15 @@ const mapPropsToOptions = ({
 	assetType,
 	filters,
 	rangeSelectors,
-	router: {params}
+	router: {params},
 }: IMapPropsToOptionsArgs) => {
 	const {variables} = getVariables({filters, params, rangeSelectors});
 
 	return {
 		variables: {
 			...variables,
-			assetType: assetType.toUpperCase()
-		}
+			assetType: assetType.toUpperCase(),
+		},
 	};
 };
 

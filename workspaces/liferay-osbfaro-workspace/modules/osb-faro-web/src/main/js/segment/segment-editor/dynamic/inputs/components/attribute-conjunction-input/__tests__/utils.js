@@ -3,7 +3,7 @@ import {DataTypes} from 'event-analysis/utils/types';
 import {
 	FunctionalOperators,
 	NotOperators,
-	RelationalOperators
+	RelationalOperators,
 } from '../../../../utils/constants';
 
 describe('Utils', () => {
@@ -28,7 +28,7 @@ describe('Utils', () => {
 			({dataType, label, option}) => {
 				expect(UTILS.createOption(option, dataType)).toEqual({
 					label,
-					value: option
+					value: option,
 				});
 			}
 		);

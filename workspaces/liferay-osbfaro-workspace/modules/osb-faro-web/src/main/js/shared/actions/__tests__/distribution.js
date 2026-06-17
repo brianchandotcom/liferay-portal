@@ -1,6 +1,6 @@
 import {
 	fetchDistribution,
-	fetchIndividualsDistribution
+	fetchIndividualsDistribution,
 } from '../distributions';
 import {isFSA} from 'flux-standard-action';
 

@@ -10,7 +10,7 @@ import {
 	DeleteBreakdown,
 	EditBreakdown,
 	MoveBreakdown,
-	withAttributesConsumer
+	withAttributesConsumer,
 } from '../context/attributes';
 import {Align} from '@clayui/drop-down';
 import {Attributes, Breakdowns, Filters} from 'event-analysis/utils/types';
@@ -40,10 +40,10 @@ export const AttributeBreakdownSection: React.FC<
 	deleteBreakdown,
 	editBreakdown,
 	eventId,
-	moveBreakdown
+	moveBreakdown,
 }) => {
 	const disabledIds = breakdownOrder.map(
-		breakdownId => breakdowns[breakdownId].attributeId
+		(breakdownId) => breakdowns[breakdownId].attributeId
 	);
 
 	const uneditableIds = Object.keys(attributes);
@@ -55,15 +55,15 @@ export const AttributeBreakdownSection: React.FC<
 	};
 
 	return (
-		<div className='attribute-breakdown-section-root d-flex align-items-center'>
-			<div className='section-header'>
+		<div className="attribute-breakdown-section-root d-flex align-items-center">
+			<div className="section-header">
 				{Liferay.Language.get('breakdown')}
 			</div>
 
 			{!!eventId && (
-				<div className='attribute-container d-flex align-items-center justify-content-between'>
+				<div className="attribute-container d-flex align-items-center justify-content-between">
 					<DndProvider backend={HTML5Backend}>
-						<div className='attribute-list d-flex align-items-center'>
+						<div className="attribute-list d-flex align-items-center">
 							{breakdownOrder.map((id, i) => (
 								<AttributeBreakdownChip
 									attribute={
@@ -93,13 +93,13 @@ export const AttributeBreakdownSection: React.FC<
 								<ClayButton
 									aria-label={Liferay.Language.get('add')}
 									borderless
-									className='button-root add-attribute'
-									displayType='secondary'
-									size='sm'
+									className="button-root add-attribute"
+									displayType="secondary"
+									size="sm"
 								>
 									<ClayIcon
-										className='icon-root'
-										symbol='plus'
+										className="icon-root"
+										symbol="plus"
 									/>
 								</ClayButton>
 							}

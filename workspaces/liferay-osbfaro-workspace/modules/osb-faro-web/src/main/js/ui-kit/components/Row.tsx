@@ -14,7 +14,7 @@ const Row: React.FC<IRowProps> = ({
 	<div
 		{...otherProps}
 		className={getCN('kit-row-root', className, {
-			['d-flex flex-wrap']: flex
+			['d-flex flex-wrap']: flex,
 		})}
 	>
 		{children}

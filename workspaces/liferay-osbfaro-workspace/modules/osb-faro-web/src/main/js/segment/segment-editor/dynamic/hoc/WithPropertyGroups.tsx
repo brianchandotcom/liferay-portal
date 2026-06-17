@@ -8,19 +8,19 @@ import {
 	convertFieldMappingToAccountProperty,
 	convertFieldMappingToIndividualProperty,
 	convertFieldMappingToOrganizationProperty,
-	createInterestProperty
+	createInterestProperty,
 } from '../utils/utils';
 import {EventTypes} from 'event-analysis/utils/types';
 import {
 	FieldContexts,
 	FieldOwnerTypes,
-	SegmentTypes
+	SegmentTypes,
 } from 'shared/util/constants';
 import {
 	INDIVIDUAL_PROPERTIES,
 	ORGANIZATION_PROPERTIES,
 	SESSION_PROPERTIES,
-	WEB_BEHAVIORS
+	WEB_BEHAVIORS,
 } from '../utils/properties';
 import {List} from 'immutable';
 import {NAME} from 'shared/util/pagination';
@@ -33,7 +33,7 @@ const MAX_DELTA = 500;
 const fetchPropertyGroups = ({
 	channelId,
 	groupId,
-	type
+	type,
 }: {
 	channelId: string;
 	groupId: string;
@@ -44,27 +44,27 @@ const fetchPropertyGroups = ({
 			context: FieldContexts.Demographics,
 			delta: MAX_DELTA,
 			groupId,
-			ownerType: FieldOwnerTypes.Individual
+			ownerType: FieldOwnerTypes.Individual,
 		}),
 		API.fieldMappings.search({
 			context: FieldContexts.Custom,
 			delta: MAX_DELTA,
 			groupId,
-			ownerType: FieldOwnerTypes.Individual
+			ownerType: FieldOwnerTypes.Individual,
 		}),
 		API.fieldMappings.search({
 			channelId,
 			context: FieldContexts.Account,
 			delta: MAX_DELTA,
 			groupId,
-			ownerType: FieldOwnerTypes.Account
+			ownerType: FieldOwnerTypes.Account,
 		}),
 		Promise.resolve(ORGANIZATION_PROPERTIES),
 		API.fieldMappings.search({
 			context: FieldContexts.Custom,
 			delta: MAX_DELTA,
 			groupId,
-			ownerType: FieldOwnerTypes.Organization
+			ownerType: FieldOwnerTypes.Organization,
 		}),
 		client.query({
 			fetchPolicy: 'network-only',
@@ -76,20 +76,20 @@ const fetchPropertyGroups = ({
 				size: MAX_DELTA,
 				sort: {
 					column: NAME,
-					type: OrderByDirections.Ascending
-				}
-			}
+					type: OrderByDirections.Ascending,
+				},
+			},
 		}),
 		Promise.resolve(WEB_BEHAVIORS),
 		type === SegmentTypes.Batch
 			? API.interests.searchKeywords({
 					channelId,
 					delta: MAX_DELTA,
-					groupId
-			  })
+					groupId,
+				})
 			: Promise.resolve({items: []}),
 		Promise.resolve(SESSION_PROPERTIES),
-		Promise.resolve({items: [], totalCount: 0})
+		Promise.resolve({items: [], totalCount: 0}),
 	]);
 
 const mapResultToProps = (
@@ -102,7 +102,7 @@ const mapResultToProps = (
 		eventProperties,
 		webBehaviors,
 		interestKeywords,
-		sessionProperties
+		sessionProperties,
 	]: any[],
 	{type}: {type: SegmentTypes}
 ) => {
@@ -115,8 +115,8 @@ const mapResultToProps = (
 		new PropertySubgroup({
 			properties: List(
 				individualDemographicProperties.concat(INDIVIDUAL_PROPERTIES)
-			)
-		})
+			),
+		}),
 	]);
 
 	individualSubgroupsIList = individualSubgroupsIList.push(
@@ -126,7 +126,7 @@ const mapResultToProps = (
 				individualCustomMappings.items.map(
 					convertFieldMappingToIndividualProperty
 				)
-			)
+			),
 		})
 	);
 
@@ -140,7 +140,7 @@ const mapResultToProps = (
 						new PropertySubgroup({
 							label: Liferay.Language.get('default-events'),
 
-							properties: webBehaviors
+							properties: webBehaviors,
 						}),
 
 						new PropertySubgroup({
@@ -149,16 +149,16 @@ const mapResultToProps = (
 								eventProperties?.data?.eventDefinitions?.eventDefinitions?.map(
 									convertEventToProperty
 								)
-							)
-						})
+							),
+						}),
 					].filter(Boolean)
-				)
+				),
 			}),
 			type === SegmentTypes.Batch &&
 				new PropertyGroup({
 					label: Liferay.Language.get('individual'),
 					propertyKey: FieldOwnerTypes.Individual,
-					propertySubgroups: individualSubgroupsIList
+					propertySubgroups: individualSubgroupsIList,
 				}),
 			type === SegmentTypes.Batch &&
 				new PropertyGroup({
@@ -170,9 +170,9 @@ const mapResultToProps = (
 								accountMappings.items.map(
 									convertFieldMappingToAccountProperty
 								)
-							)
-						})
-					])
+							),
+						}),
+					]),
 				}),
 			type === SegmentTypes.Batch &&
 				new PropertyGroup({
@@ -184,9 +184,9 @@ const mapResultToProps = (
 								interestKeywords.items.map(
 									createInterestProperty
 								)
-							)
-						})
-					])
+							),
+						}),
+					]),
 				}),
 			type === SegmentTypes.Batch &&
 				new PropertyGroup({
@@ -194,26 +194,26 @@ const mapResultToProps = (
 					propertyKey: 'session',
 					propertySubgroups: List([
 						new PropertySubgroup({
-							properties: List(sessionProperties)
-						})
-					])
+							properties: List(sessionProperties),
+						}),
+					]),
 				}),
 			type === SegmentTypes.Batch &&
 				new PropertyGroup({
 					label: Liferay.Language.get('vocabularies-and-categories'),
 					propertyKey: 'vocabulary',
 					propertySubgroups: List([
-						new PropertySubgroup({properties: List()})
-					])
+						new PropertySubgroup({properties: List()}),
+					]),
 				}),
 			type === SegmentTypes.Batch &&
 				new PropertyGroup({
 					label: Liferay.Language.get('tags'),
 					propertyKey: 'tag',
 					propertySubgroups: List([
-						new PropertySubgroup({properties: List()})
-					])
-				})
+						new PropertySubgroup({properties: List()}),
+					]),
+				}),
 		].filter(Boolean) as PropertyGroup[]
 	);
 
@@ -229,15 +229,15 @@ const mapResultToProps = (
 						organizationCustomMappings.items.map(
 							convertFieldMappingToOrganizationProperty
 						)
-					)
-				})
-			])
+					),
+				}),
+			]),
 		});
 
 		return {
 			propertyGroupsIList: propertyGroupsIList.push(
 				organizationPropertyGroup
-			)
+			),
 		};
 	}
 

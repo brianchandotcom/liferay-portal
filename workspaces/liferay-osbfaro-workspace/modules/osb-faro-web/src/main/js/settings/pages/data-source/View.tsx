@@ -14,7 +14,7 @@ import {withRouter} from 'react-router-dom';
 const PAGE_MAP: {[type: string]: ComponentType<any>} = {
 	[DataSourceTypes.Csv]: CSV as ComponentType<any>,
 	[DataSourceTypes.Liferay]: LiferayOverview as ComponentType<any>,
-	[DataSourceTypes.Salesforce]: SalesforceOverview as ComponentType<any>
+	[DataSourceTypes.Salesforce]: SalesforceOverview as ComponentType<any>,
 };
 
 interface IViewProps {
@@ -24,7 +24,7 @@ interface IViewProps {
 
 export class View extends React.Component<IViewProps> {
 	static propTypes = {
-		dataSource: PropTypes.instanceOf(DataSource).isRequired
+		dataSource: PropTypes.instanceOf(DataSource).isRequired,
 	};
 
 	render() {

@@ -17,12 +17,12 @@ const InputModal: React.FC<IInputModalProps> = ({
 	onClose,
 	onSubmit = noop,
 	placeholder,
-	title
+	title,
 }) => {
 	const _inputRef = useRef<any>();
 
 	return (
-		<Modal className={className} size='sm'>
+		<Modal className={className} size="sm">
 			<Modal.Header onClose={onClose} title={title} />
 
 			<Modal.Body>
@@ -31,16 +31,16 @@ const InputModal: React.FC<IInputModalProps> = ({
 
 			<Modal.Footer>
 				<ClayButton
-					className='button-root'
-					displayType='secondary'
+					className="button-root"
+					displayType="secondary"
 					onClick={onClose}
 				>
 					{Liferay.Language.get('cancel')}
 				</ClayButton>
 
 				<ClayButton
-					className='button-root'
-					displayType='secondary'
+					className="button-root"
+					displayType="secondary"
 					onClick={() =>
 						onSubmit(
 							_inputRef?.current?._elementRef?.current?.value

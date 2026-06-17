@@ -18,7 +18,7 @@ const FormRadioGroup: React.FC<IFormRadioGroupProps> = ({
 	form,
 	inline = false,
 	label,
-	onChange
+	onChange,
 }) => {
 	const {name, value: checked} = field;
 
@@ -52,5 +52,5 @@ const FormRadioGroup: React.FC<IFormRadioGroupProps> = ({
 
 export default Object.assign(FormRadioGroup, {
 	Option: RadioGroup.Option,
-	Subsection: RadioGroup.Subsection
+	Subsection: RadioGroup.Subsection,
 });

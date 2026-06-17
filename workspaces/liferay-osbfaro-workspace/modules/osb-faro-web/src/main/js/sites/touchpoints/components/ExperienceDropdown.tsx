@@ -14,7 +14,7 @@ interface IExperienceItem {
 
 const ALL_EXPERIENCES_ITEM: IExperienceItem = {
 	id: null,
-	name: Liferay.Language.get('all-experiences')
+	name: Liferay.Language.get('all-experiences'),
 };
 
 interface IExperienceDropdownProps {
@@ -32,17 +32,17 @@ const ExperienceDropdown: React.FC<IExperienceDropdownProps> = ({onChange}) => {
 			canonicalUrl: touchpoint!,
 			channelId: channelId!,
 			groupId: groupId!,
-			pageTitle: title!
-		}
+			pageTitle: title!,
+		},
 	});
 
 	const displayItems = useMemo(() => {
 		const apiItems: IExperienceItem[] = Array.isArray(data) ? data : [];
 
-		return [ALL_EXPERIENCES_ITEM, ...apiItems].map(item => ({
+		return [ALL_EXPERIENCES_ITEM, ...apiItems].map((item) => ({
 			...item,
 			displayName: truncateText(item.name, 35, null),
-			id: item.id === null ? 'null' : String(item.id)
+			id: item.id === null ? 'null' : String(item.id),
 		}));
 	}, [data]);
 
@@ -54,12 +54,12 @@ const ExperienceDropdown: React.FC<IExperienceDropdownProps> = ({onChange}) => {
 
 	return (
 		<ClayTooltipProvider>
-			<div className='experience-dropdown'>
+			<div className="experience-dropdown">
 				<Picker
 					aria-label={Liferay.Language.get('all-experiences')}
-					className='border-light form-control-sm'
+					className="border-light form-control-sm"
 					items={displayItems}
-					onSelectionChange={key =>
+					onSelectionChange={(key) =>
 						handleSelectionChange(String(key))
 					}
 					searchable
@@ -68,7 +68,7 @@ const ExperienceDropdown: React.FC<IExperienceDropdownProps> = ({onChange}) => {
 					{(item: IExperienceItem) => (
 						<Option key={String(item.id)} textValue={item.name}>
 							<div
-								className='w-100'
+								className="w-100"
 								title={
 									item.name.length > 35
 										? item.name

@@ -11,7 +11,7 @@ const Events: React.FC<IEventsProps> = ({groupId}) => (
 	<BasePage
 		breadcrumbItems={[
 			getDefinitions({groupId}),
-			{active: true, label: Liferay.Language.get('events')}
+			{active: true, label: Liferay.Language.get('events')},
 		]}
 		pageDescription={Liferay.Language.get(
 			'this-is-the-data-model-of-events-sent-to-analytics-cloud'

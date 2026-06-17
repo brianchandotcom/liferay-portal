@@ -6,14 +6,14 @@ import {createOrderIOMap, NAME} from 'shared/util/pagination';
 import {EntityType} from '../context/referencedObjects';
 import {
 	getMapResultToProps,
-	mapPropsToOptions
+	mapPropsToOptions,
 } from '../mappers/dxp-entity-bag-mapper';
 import {IPagination} from 'shared/types';
 import {ISegmentEditorInputBase} from '../utils/types';
 import {OrderedMap} from 'immutable';
 
 const QUERY_MAP = {
-	userId: DXPUsersQuery
+	userId: DXPUsersQuery,
 };
 
 export const ENTITY_MAP = {
@@ -21,21 +21,21 @@ export const ENTITY_MAP = {
 	roleIds: EntityType.Roles,
 	teamIds: EntityType.Teams,
 	userGroupIds: EntityType.UserGroups,
-	userId: EntityType.Users
+	userId: EntityType.Users,
 };
 
 const LABEL_MAP = {
 	groupIds: Liferay.Language.get('site-memberships'),
 	roleIds: Liferay.Language.get('roles'),
 	teamIds: Liferay.Language.get('teams'),
-	userGroupIds: Liferay.Language.get('user-groups')
+	userGroupIds: Liferay.Language.get('user-groups'),
 };
 
 const nameCol = {
 	accessor: 'name',
 	className: 'table-cell-expand',
 	label: Liferay.Language.get('name'),
-	title: true
+	title: true,
 };
 
 const PROPERTY_COLUMNS_MAP = {
@@ -44,9 +44,9 @@ const PROPERTY_COLUMNS_MAP = {
 		{
 			accessor: 'screenName',
 			className: 'table-cell-expand',
-			label: Liferay.Language.get('screen-name')
-		}
-	]
+			label: Liferay.Language.get('screen-name'),
+		},
+	],
 };
 
 interface IIndividualSelectProps extends ISegmentEditorInputBase, IPagination {
@@ -79,16 +79,17 @@ const IndividualSelectInput: React.FC<IIndividualSelectProps> = ({
 		if (items.size === 1) {
 			onChange({
 				valid: true,
-				value: entity.id
+				value: entity.id,
 			});
-		} else {
+		}
+		else {
 			onChange(
 				items
 					.valueSeq()
 					.toArray()
 					.map(({id}) => ({
 						valid: true,
-						value: id
+						value: id,
 					}))
 			);
 		}
@@ -97,7 +98,7 @@ const IndividualSelectInput: React.FC<IIndividualSelectProps> = ({
 	return (
 		<SelectEntityInput
 			channelId={channelId}
-			className='individual-select-input-root'
+			className="individual-select-input-root"
 			columns={
 				PROPERTY_COLUMNS_MAP[
 					propertyName as keyof typeof PROPERTY_COLUMNS_MAP
@@ -110,7 +111,7 @@ const IndividualSelectInput: React.FC<IIndividualSelectProps> = ({
 					QUERY_MAP[propertyName as keyof typeof QUERY_MAP] ||
 					getDXPEntitiesQuery(graphqlEntityType),
 				mapPropsToOptions,
-				mapResultToProps: getMapResultToProps(graphqlEntityType)
+				mapResultToProps: getMapResultToProps(graphqlEntityType),
 			}}
 			initialOrderIOMap={createOrderIOMap(NAME)}
 			onItemsChange={handleItemsChange}
@@ -118,8 +119,8 @@ const IndividualSelectInput: React.FC<IIndividualSelectProps> = ({
 			orderByOptions={[
 				{
 					label: Liferay.Language.get('name'),
-					value: NAME
-				}
+					value: NAME,
+				},
 			]}
 			property={property}
 			valid={valid}

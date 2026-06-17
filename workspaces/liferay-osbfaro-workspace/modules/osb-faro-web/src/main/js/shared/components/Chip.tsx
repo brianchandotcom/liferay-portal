@@ -23,11 +23,11 @@ const Chip = React.forwardRef<HTMLDivElement, IChipProps>(
 
 			<ClayButton
 				aria-label={Liferay.Language.get('close')}
-				className='button-root remove-button'
-				displayType='unstyled'
+				className="button-root remove-button"
+				displayType="unstyled"
 				onClick={onCloseClick}
 			>
-				<ClayIcon className='icon-root' symbol={iconSymbol} />
+				<ClayIcon className="icon-root" symbol={iconSymbol} />
 			</ClayButton>
 		</div>
 	)

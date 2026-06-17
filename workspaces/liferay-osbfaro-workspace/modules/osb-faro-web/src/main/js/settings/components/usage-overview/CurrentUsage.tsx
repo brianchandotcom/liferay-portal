@@ -19,7 +19,7 @@ export const CurrentUsage = ({
 	items,
 	legendText,
 	limit,
-	percentageText
+	percentageText,
 }: ICurrentUsageProps) => {
 	const percentage = toRounded(
 		limit > 0 ? (count / limit >= 1 ? 100 : (count / limit) * 100) : 0
@@ -27,15 +27,15 @@ export const CurrentUsage = ({
 
 	return (
 		<>
-			<div className='d-flex justify-content-between mb-1'>
-				<Text color='secondary' size={3}>
+			<div className="d-flex justify-content-between mb-1">
+				<Text color="secondary" size={3}>
 					{Liferay.Language.get('current-usage').toUpperCase()}
 				</Text>
 
-				<Text color='secondary' size={3}>
+				<Text color="secondary" size={3}>
 					{`${sub(Liferay.Language.get('x-of-x'), [
 						count.toLocaleString(),
-						limit.toLocaleString()
+						limit.toLocaleString(),
 					])} - ${sub(percentageText(percentage), [percentage])}`}
 				</Text>
 			</div>
@@ -46,7 +46,7 @@ export const CurrentUsage = ({
 				total={limit}
 			/>
 
-			<Text color='secondary' size={3}>
+			<Text color="secondary" size={3}>
 				{legendText}
 			</Text>
 		</>

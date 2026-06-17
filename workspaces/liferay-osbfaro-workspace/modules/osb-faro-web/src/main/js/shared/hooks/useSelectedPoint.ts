@@ -14,6 +14,6 @@ export function useSelectedPoint(): {
 			selectedPoint !== undefined &&
 			isFinite(selectedPoint),
 		onPointSelect,
-		selectedPoint
+		selectedPoint,
 	};
 }

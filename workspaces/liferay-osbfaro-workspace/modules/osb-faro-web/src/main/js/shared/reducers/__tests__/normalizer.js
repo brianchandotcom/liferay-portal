@@ -5,7 +5,7 @@ import {
 	mockCSVDataSource,
 	mockIndividual,
 	mockProject,
-	mockSegment
+	mockSegment,
 } from 'test/data';
 
 describe('Normalizer Reducer', () => {
@@ -17,9 +17,9 @@ describe('Normalizer Reducer', () => {
 					dataSources: {2: mockCSVDataSource(2)},
 					individuals: {3: mockIndividual(3)},
 					projects: {15: mockProject(15)},
-					segments: {4: mockSegment(4)}
-				}
-			}
+					segments: {4: mockSegment(4)},
+				},
+			},
 		};
 
 		const state = reducer(new Map(), action);

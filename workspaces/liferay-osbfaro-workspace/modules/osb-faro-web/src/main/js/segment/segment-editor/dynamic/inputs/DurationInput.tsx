@@ -34,19 +34,19 @@ export default class SegmentDurationInput extends React.Component<ISegmentDurati
 			property: {entityName},
 			touched,
 			valid,
-			value
+			value,
 		} = this.props;
 
 		const showError = !valid && touched;
 
 		return (
-			<div className='criteria-statement'>
+			<div className="criteria-statement">
 				<Form.Group autoFit>
-					<Form.GroupItem className='entity-name' label shrink>
+					<Form.GroupItem className="entity-name" label shrink>
 						{entityName}
 					</Form.GroupItem>
 
-					<Form.GroupItem className='display-value' label shrink>
+					<Form.GroupItem className="display-value" label shrink>
 						{displayValue}
 					</Form.GroupItem>
 

@@ -19,37 +19,37 @@ export const TrendItem: React.FC<ITrendItemProps> = ({
 	change,
 	info,
 	title,
-	total
+	total,
 }) => {
 	const finiteChange = isFinite(change);
 
 	return (
-		<div className='trend-item-root' key={title}>
-			<div className='trend-item-title d-flex justify-content-between'>
-				<div className='card-title'>{title}</div>
+		<div className="trend-item-root" key={title}>
+			<div className="trend-item-title d-flex justify-content-between">
+				<div className="card-title">{title}</div>
 
 				{info && <InfoPopover {...info} />}
 			</div>
 
-			<div className='d-flex align-items-center flex-grow-1 justify-content-center'>
-				<div className='total'>{total.toLocaleString()}</div>
+			<div className="d-flex align-items-center flex-grow-1 justify-content-center">
+				<div className="total">{total.toLocaleString()}</div>
 			</div>
 
 			{!!total && (
-				<div className='change description'>
+				<div className="change description">
 					{sub(
 						Liferay.Language.get('x-vs-last-30-days'),
 						[
 							<span
 								className={getCN({
 									decrease: change < 0 && finiteChange,
-									increase: change > 0 && finiteChange
+									increase: change > 0 && finiteChange,
 								})}
-								key='CHANGE'
+								key="CHANGE"
 							>
 								{finiteChange && !!change && (
 									<ClayIcon
-										className='icon-root'
+										className="icon-root"
 										symbol={
 											change > 0
 												? 'caret-top'
@@ -63,7 +63,7 @@ export const TrendItem: React.FC<ITrendItemProps> = ({
 										? `${formatChange(change)}%`
 										: '--'}
 								</b>
-							</span>
+							</span>,
 						],
 						false
 					)}
@@ -74,7 +74,7 @@ export const TrendItem: React.FC<ITrendItemProps> = ({
 };
 
 const TypeTrend: React.FC<{items: ITrendItemProps[]}> = ({items}) => (
-	<div className='type-trend-root'>
+	<div className="type-trend-root">
 		{items.map((item, i) => (
 			<TrendItem {...item} key={i} />
 		))}
@@ -82,7 +82,7 @@ const TypeTrend: React.FC<{items: ITrendItemProps[]}> = ({items}) => (
 );
 
 TypeTrend.defaultProps = {
-	items: []
+	items: [],
 };
 
 export default TypeTrend;

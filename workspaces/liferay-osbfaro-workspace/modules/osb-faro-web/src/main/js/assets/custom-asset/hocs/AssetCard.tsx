@@ -16,8 +16,8 @@ import {withLoading} from 'shared/hoc';
 const CHARTS = {
 	line: {
 		component: MetricChart,
-		mapper: getMetricsMapper
-	}
+		mapper: getMetricsMapper,
+	},
 };
 
 interface IAssetComponent extends IChartProps {
@@ -45,7 +45,7 @@ const Chart: React.FC<IChartProps> = ({
 	onRemoveAsset,
 	panel: {chartType},
 	rangeSelectors,
-	showPrevious
+	showPrevious,
 }) => {
 	const ChartComponent = (CHARTS as any)[chartType].component;
 
@@ -59,16 +59,16 @@ const Chart: React.FC<IChartProps> = ({
 				rangeSelectors={rangeSelectors}
 			/>
 
-			<div className='d-flex justify-content-end'>
+			<div className="d-flex justify-content-end">
 				<ClayButton
 					aria-label={Liferay.Language.get('delete')}
 					borderless
-					className='button-root'
-					displayType='secondary'
+					className="button-root"
+					displayType="secondary"
 					onClick={() => onRemoveAsset(id)}
-					size='sm'
+					size="sm"
 				>
-					<ClayIcon className='icon-root' symbol='trash' />
+					<ClayIcon className="icon-root" symbol="trash" />
 				</ClayButton>
 			</div>
 		</>
@@ -113,7 +113,7 @@ const AssetCard: React.FC<IAssetCardProps> = ({
 	label,
 	legacyDropdownRangeKey,
 	onRemoveAsset,
-	panel
+	panel,
 }) => {
 	const AssetComponent = compose(
 		graphql(itemQuery, getMapper(panel)),

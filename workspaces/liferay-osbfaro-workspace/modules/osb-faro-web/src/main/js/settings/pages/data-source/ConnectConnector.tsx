@@ -15,7 +15,7 @@ const buildSteps = (config: ConnectorConfig): Step[] => [
 			<ConnectorAuthStep {...props} config={config} />
 		),
 		description: config.languages.connectDescription,
-		title: config.languages.connectTitle
+		title: config.languages.connectTitle,
 	},
 	{
 		content: (props: any) => (
@@ -26,7 +26,7 @@ const buildSteps = (config: ConnectorConfig): Step[] => [
 						alertType: Alert.Types.Success,
 						message: Liferay.Language.get(
 							'the-data-source-setup-has-finished'
-						)
+						),
 					});
 				}}
 				updateDataSourceFn={(params: {[key: string]: any}) =>
@@ -40,8 +40,8 @@ const buildSteps = (config: ConnectorConfig): Step[] => [
 		description: Liferay.Language.get(
 			'properties-allow-you-to-aggregate-data-on-your-users,-sites-and-dxp-commerce-channels.-individuals-data-will-be-available-in-any-property-they-are-assigned-to'
 		),
-		title: Liferay.Language.get('assign-individuals-data-to-properties')
-	}
+		title: Liferay.Language.get('assign-individuals-data-to-properties'),
+	},
 ];
 
 const ConnectConnector = () => {

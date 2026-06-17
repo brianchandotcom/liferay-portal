@@ -12,15 +12,15 @@ jest.unmock('react-dom');
 jest.mock('react-router-dom', () => ({
 	...jest.requireActual('react-router-dom'),
 	useLocation: () => ({
-		search: '?rangeKey=30'
+		search: '?rangeKey=30',
 	}),
 	useParams: () => ({
 		channelId: '456',
 		groupId: '123',
 		query: {
-			rangeKey: '30'
-		}
-	})
+			rangeKey: '30',
+		},
+	}),
 }));
 
 describe('Sites Dashboard InterestDetails', () => {
@@ -30,10 +30,10 @@ describe('Sites Dashboard InterestDetails', () => {
 				<StaticRouter>
 					<ChannelContext.Provider value={mockChannelContext()}>
 						<InterestDetails
-							channelName='Test Channel'
+							channelName="Test Channel"
 							router={{
 								params: {channelId: '456', groupId: '123'},
-								query: {rangeKey: '30'}
+								query: {rangeKey: '30'},
 							}}
 						/>
 					</ChannelContext.Provider>

@@ -13,9 +13,9 @@ const InfoCardPopover: React.FC<IInfoCardPopoverProps> = ({
 	dataType,
 	description,
 	name,
-	onEditClick
+	onEditClick,
 }) => (
-	<div className='info-card-popover-root'>
+	<div className="info-card-popover-root">
 		<FilterInfo
 			dataType={dataType}
 			description={description}

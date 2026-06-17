@@ -39,7 +39,7 @@ const ConfirmationModal: React.FC<IConfirmationModalProps> = ({
 		<Modal
 			{...otherProps}
 			className={getCN('confirmation-modal-root', className, {
-				[modalVariant]: modalVariant
+				[modalVariant]: modalVariant,
 			})}
 		>
 			<Modal.Header
@@ -52,15 +52,15 @@ const ConfirmationModal: React.FC<IConfirmationModalProps> = ({
 
 			<Modal.Footer>
 				<ClayButton
-					className='button-root'
-					displayType='secondary'
+					className="button-root"
+					displayType="secondary"
 					onClick={onClose}
 				>
 					{cancelMessage}
 				</ClayButton>
 
 				<ClayButton
-					className='button-root'
+					className="button-root"
 					displayType={submitButtonDisplay}
 					onClick={() => {
 						setSubmitting(true);
@@ -77,7 +77,8 @@ const ConfirmationModal: React.FC<IConfirmationModalProps> = ({
 								.catch(() => {
 									setSubmitting(false);
 								});
-						} else {
+						}
+						else {
 							setSubmitting(false);
 
 							closeAfterSubmit && onClose();

@@ -27,7 +27,7 @@ const ListItem: React.FC<IListItemProps> = ({
 	onClick,
 	onEditClick,
 	onOptionsClick,
-	showInfoCard = true
+	showInfoCard = true,
 }) => {
 	const _overlayRef = useRef<any>();
 
@@ -35,7 +35,7 @@ const ListItem: React.FC<IListItemProps> = ({
 
 	return (
 		<Overlay
-			alignment='leftCenter'
+			alignment="leftCenter"
 			hideDelay={200}
 			ref={_overlayRef}
 			showDelay={200}
@@ -44,15 +44,15 @@ const ListItem: React.FC<IListItemProps> = ({
 			<ClayDropdown.Item
 				className={getCN('d-flex justify-content-between', {
 					active,
-					disabled
+					disabled,
 				})}
 				key={id}
 			>
 				<ClayButton
 					block
-					className='button-root dropdown-item-primary-button'
+					className="button-root dropdown-item-primary-button"
 					disabled={disabled}
-					displayType='unstyled'
+					displayType="unstyled"
 					onClick={() => {
 						if (_overlayRef && _overlayRef.current) {
 							_overlayRef.current.hideOverlay();
@@ -62,9 +62,9 @@ const ListItem: React.FC<IListItemProps> = ({
 					}}
 				>
 					{isAttribute(item as Attribute) && (
-						<div className='sticker'>
+						<div className="sticker">
 							<ClayIcon
-								className='icon-root'
+								className="icon-root"
 								symbol={
 									DATA_TYPE_ICONS_MAP[
 										(item as Attribute).dataType
@@ -81,9 +81,9 @@ const ListItem: React.FC<IListItemProps> = ({
 					<ClayButton
 						aria-label={Liferay.Language.get('control-panel')}
 						borderless
-						className='button-root options-button'
+						className="button-root options-button"
 						disabled={disabled}
-						displayType='secondary'
+						displayType="secondary"
 						onClick={() => {
 							if (_overlayRef && _overlayRef.current) {
 								_overlayRef.current.hideOverlay();
@@ -91,11 +91,11 @@ const ListItem: React.FC<IListItemProps> = ({
 
 							onOptionsClick(item);
 						}}
-						size='sm'
+						size="sm"
 					>
 						<ClayIcon
-							className='icon-root'
-							symbol='control-panel'
+							className="icon-root"
+							symbol="control-panel"
 						/>
 					</ClayButton>
 				)}
@@ -118,7 +118,7 @@ const ListItem: React.FC<IListItemProps> = ({
 									}
 
 									onEditClick();
-							  }
+								}
 							: undefined
 					}
 				/>

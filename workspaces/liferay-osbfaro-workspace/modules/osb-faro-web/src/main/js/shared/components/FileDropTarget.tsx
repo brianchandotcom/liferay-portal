@@ -1,4 +1,3 @@
-import autobind from 'autobind-decorator';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import DropTarget, {TYPES} from 'shared/components/DropTarget';
@@ -150,7 +149,14 @@ export class FileDropTarget extends React.Component<IFileDropTargetProps> {
 		file: null,
 	};
 
-	private _uploader: any;
+	constructor(props: IFileDropTargetProps) {
+		super(props);
+		this.handleCancel = this.handleCancel.bind(this);
+		this.handleFileDrop = this.handleFileDrop.bind(this);
+		this.handleFileProgress = this.handleFileProgress.bind(this);
+		this.handleFileSelector = this.handleFileSelector.bind(this);
+		this.handleUploadError = this.handleUploadError.bind(this);
+	}
 
 	componentDidMount() {
 		const {fileTypes, uploadURL, useJaxRS} = this.props;
@@ -164,7 +170,8 @@ export class FileDropTarget extends React.Component<IFileDropTargetProps> {
 		}).render();
 	}
 
-	@autobind
+	private _uploader: any;
+
 	handleCancel() {
 		const {onChange} = this.props;
 
@@ -177,12 +184,10 @@ export class FileDropTarget extends React.Component<IFileDropTargetProps> {
 		}
 	}
 
-	@autobind
 	handleFileDrop(data: any) {
 		this._uploader.addFiles(data.files);
 	}
 
-	@autobind
 	handleFileProgress(updatedFile: any) {
 		const {
 			props: {onChange},
@@ -201,12 +206,10 @@ export class FileDropTarget extends React.Component<IFileDropTargetProps> {
 		}
 	}
 
-	@autobind
 	handleFileSelector() {
 		this._uploader.openDialog();
 	}
 
-	@autobind
 	handleUploadError(error: any) {
 		const {addAlert} = this.props;
 

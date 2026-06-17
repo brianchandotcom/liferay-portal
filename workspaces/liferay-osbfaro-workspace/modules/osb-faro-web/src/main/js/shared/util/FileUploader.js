@@ -1,4 +1,3 @@
-import autobind from 'autobind-decorator';
 import FaroConstants from './constants';
 import {get, noop, uniqueId} from 'lodash';
 
@@ -36,6 +35,7 @@ export default class FileUploader {
 		this.onError = config.onError || noop;
 		this.uploadURL = config.uploadURL;
 		this.useJaxRS = config.useJaxRS;
+		this.addFiles = this.addFiles.bind(this);
 	}
 
 	render() {
@@ -81,7 +81,6 @@ export default class FileUploader {
 	 * @param {FileList|File|Event|Array<File>} files - A file, any
 	 * array-like container of files, or an Event object from a file input.
 	 */
-	@autobind
 	addFiles(files) {
 		files = normalizeFiles(files);
 

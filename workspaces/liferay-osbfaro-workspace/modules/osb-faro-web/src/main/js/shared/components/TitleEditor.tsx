@@ -1,4 +1,3 @@
-import autobind from 'autobind-decorator';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
@@ -27,9 +26,17 @@ export class TitleEditor extends React.Component<
 		editing: false,
 	};
 
+	constructor(props: ITitleEditorProps) {
+		super(props);
+		this.handleBlur = this.handleBlur.bind(this);
+		this.handleEdit = this.handleEdit.bind(this);
+		this.handleKeyDown = this.handleKeyDown.bind(this);
+		this.handleKeyDownEdit = this.handleKeyDownEdit.bind(this);
+		this.editing = this.editing.bind(this);
+	}
+
 	private _titleInput = createRef<HTMLInputElement>();
 
-	@autobind
 	handleBlur(event: React.FocusEvent<HTMLInputElement>) {
 		const {onBlur} = this.props;
 
@@ -40,7 +47,6 @@ export class TitleEditor extends React.Component<
 		}
 	}
 
-	@autobind
 	handleEdit(event: React.MouseEvent | React.KeyboardEvent) {
 		event.preventDefault();
 
@@ -50,14 +56,12 @@ export class TitleEditor extends React.Component<
 		}
 	}
 
-	@autobind
 	handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
 		if (event.keyCode === ENTER && this._titleInput.current) {
 			this._titleInput.current.blur();
 		}
 	}
 
-	@autobind
 	handleKeyDownEdit(event: React.KeyboardEvent<HTMLSpanElement>) {
 		event.preventDefault();
 
@@ -66,7 +70,6 @@ export class TitleEditor extends React.Component<
 		}
 	}
 
-	@autobind
 	editing() {
 		this.setState(
 			{

@@ -322,8 +322,7 @@ public class ClusterPluginCacheReplicationTest implements Serializable {
 
 		mainAttributes.put(Attributes.Name.MANIFEST_VERSION, "1.0");
 		mainAttributes.putValue("Bundle-ManifestVersion", "2");
-		mainAttributes.putValue(
-			"Bundle-SymbolicName", _BUNDLE_SYMBOLIC_NAME);
+		mainAttributes.putValue("Bundle-SymbolicName", _BUNDLE_SYMBOLIC_NAME);
 		mainAttributes.putValue("Bundle-Version", _BUNDLE_VERSION);
 
 		ByteArrayOutputStream byteArrayOutputStream =
@@ -334,8 +333,7 @@ public class ClusterPluginCacheReplicationTest implements Serializable {
 
 			jarOutputStream.putNextEntry(
 				new JarEntry(
-					StringUtil.replace(_CLASS_NAME, '.', '/') +
-						".class"));
+					StringUtil.replace(_CLASS_NAME, '.', '/') + ".class"));
 
 			byte[] classBytes = _generateSampleClassBytes();
 

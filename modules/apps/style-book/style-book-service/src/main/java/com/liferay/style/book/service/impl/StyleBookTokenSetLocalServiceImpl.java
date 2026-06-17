@@ -61,16 +61,6 @@ public class StyleBookTokenSetLocalServiceImpl
 				counterLocalService.increment(
 					StyleBookTokenSet.class.getName()));
 
-		String uuid = serviceContext.getUuid();
-
-		if (Validator.isNotNull(uuid)) {
-			styleBookTokenSet.setUuid(uuid);
-		}
-
-		if (Validator.isNull(externalReferenceCode)) {
-			externalReferenceCode = styleBookTokenSet.getUuid();
-		}
-
 		styleBookTokenSet.setExternalReferenceCode(externalReferenceCode);
 
 		StyleBookEntry styleBookEntry =

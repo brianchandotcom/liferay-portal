@@ -919,3 +919,48 @@ test(
 		}
 	}
 );
+
+test(
+	'A hidden custom event is still found in the custom events list',
+	{tag: '@LRAC-10235'},
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
+		const eventName = 'hidden' + getRandomString();
+
+		await createCustomEvent({apiHelpers, channelId: channel.id, eventName});
+
+		await navigateToACSettingsViaURL({
+			acPage: ACPage.definitionsEventsCustomPage,
+			page,
+			projectID: project.groupId,
+		});
+
+		// Hide the custom event from its row quick action
+
+		await searchCustomEventList(page, eventName);
+
+		await page.getByRole('row', {name: eventName}).hover();
+
+		await page
+			.getByRole('row', {name: eventName})
+			.getByRole('button', {name: 'Set to Hide'})
+			.click();
+
+		await page
+			.locator('.confirmation-modal-root')
+			.getByRole('button', {exact: true, name: 'Hide'})
+			.click();
+
+		// Searching for the hidden event still finds it, now exposing the
+		// Set to Show action that marks it as hidden
+
+		await searchCustomEventList(page, eventName);
+
+		await page.getByRole('row', {name: eventName}).hover();
+
+		await expect(
+			page
+				.getByRole('row', {name: eventName})
+				.getByRole('button', {name: 'Set to Show'})
+		).toBeVisible();
+	}
+);

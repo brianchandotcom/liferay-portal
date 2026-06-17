@@ -65,12 +65,13 @@ public class HeapDumpCloudUploader {
 			return;
 		}
 
-		LocalDateTime now = LocalDateTime.now(ZoneOffset.UTC);
+		LocalDateTime currentLocalDateTime = LocalDateTime.now(ZoneOffset.UTC);
 
-		String yearMonth = now.format(DateTimeFormatter.ofPattern("yyyy-MM"));
+		String currentYearMonth = currentLocalDateTime.format(
+			DateTimeFormatter.ofPattern("yyyy-MM"));
 
 		String s3Key = JenkinsResultsParserUtil.combine(
-			heapDumpsBasePath, "/", yearMonth, "/", _masterHostname, "/",
+			heapDumpsBasePath, "/", currentYearMonth, "/", _masterHostname, "/",
 			_jobName, "/", _buildNumber, "/", _phase, "/", _slaveHostname,
 			".hprof.gz");
 
@@ -155,23 +156,23 @@ public class HeapDumpCloudUploader {
 	}
 
 	private boolean _isThrottled(String heapDumpsS3Path, File hprofFile) {
-		long lastModifiedMillis;
+		long newestS3ObjectLastModified;
 
 		try {
-			lastModifiedMillis = CloudBucketUtil.getNewestS3ObjectLastModified(
-				heapDumpsS3Path);
+			newestS3ObjectLastModified =
+				CloudBucketUtil.getNewestS3ObjectLastModified(heapDumpsS3Path);
 		}
 		catch (IOException | TimeoutException exception) {
 			return false;
 		}
 
-		if (lastModifiedMillis == Long.MIN_VALUE) {
+		if (newestS3ObjectLastModified == Long.MIN_VALUE) {
 			return false;
 		}
 
 		long elapsedMillis =
 			JenkinsResultsParserUtil.getCurrentTimeMillis() -
-				lastModifiedMillis;
+				newestS3ObjectLastModified;
 
 		long minutesAgo = elapsedMillis / (60 * 1000);
 

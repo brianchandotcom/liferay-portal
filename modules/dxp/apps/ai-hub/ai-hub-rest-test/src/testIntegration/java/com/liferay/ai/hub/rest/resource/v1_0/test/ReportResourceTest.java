@@ -155,8 +155,7 @@ public class ReportResourceTest extends BaseReportResourceTestCase {
 						() -> HashMapBuilder.<String, Object>put(
 							"active", true
 						).put(
-							"externalReferenceCode",
-							externalReferenceCode
+							"externalReferenceCode", externalReferenceCode
 						).put(
 							"r_accountToAIHubChatbots_accountEntryId",
 							_accountEntry.getAccountEntryId()

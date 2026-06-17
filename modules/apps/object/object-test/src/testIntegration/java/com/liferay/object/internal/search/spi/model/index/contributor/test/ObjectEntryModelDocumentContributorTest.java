@@ -182,6 +182,12 @@ public class ObjectEntryModelDocumentContributorTest {
 			_addModifiableSystemObjectDefinition(
 				false, "a" + RandomTestUtil.randomString());
 
+		ModelDocumentContributor<ObjectEntry>
+			objectEntryModelDocumentContributor =
+				_getObjectEntryModelDocumentContributor(objectDefinition);
+
+		Document document = new DocumentImpl();
+
 		Date displayDate = new Date();
 
 		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
@@ -189,12 +195,6 @@ public class ObjectEntryModelDocumentContributorTest {
 			HashMapBuilder.<String, Serializable>put(
 				Field.DISPLAY_DATE, displayDate
 			).build());
-
-		Document document = new DocumentImpl();
-
-		ModelDocumentContributor<ObjectEntry>
-			objectEntryModelDocumentContributor =
-				_getObjectEntryModelDocumentContributor(objectDefinition);
 
 		objectEntryModelDocumentContributor.contribute(document, objectEntry);
 
@@ -205,12 +205,19 @@ public class ObjectEntryModelDocumentContributorTest {
 			field.getValue());
 	}
 
+	@FeatureFlag("LPD-17564")
 	@Test
 	public void testContributeWithLocalizedFields() throws Exception {
 		String objectFieldName = "a" + RandomTestUtil.randomString();
 
 		ObjectDefinition objectDefinition =
 			_addModifiableSystemObjectDefinition(true, objectFieldName);
+
+		ModelDocumentContributor<ObjectEntry>
+			objectEntryModelDocumentContributor =
+				_getObjectEntryModelDocumentContributor(objectDefinition);
+
+		Document document = new DocumentImpl();
 
 		String englishObjectFieldValue = RandomTestUtil.randomString();
 		String portugueseObjectFieldValue =
@@ -229,12 +236,6 @@ public class ObjectEntryModelDocumentContributorTest {
 				).build()
 			).build());
 
-		Document document = new DocumentImpl();
-
-		ModelDocumentContributor<ObjectEntry>
-			objectEntryModelDocumentContributor =
-				_getObjectEntryModelDocumentContributor(objectDefinition);
-
 		objectEntryModelDocumentContributor.contribute(document, objectEntry);
 
 		_assertObjectEntryContentField(
@@ -249,12 +250,19 @@ public class ObjectEntryModelDocumentContributorTest {
 		Assert.assertNull(document.getField("objectEntryContent"));
 	}
 
+	@FeatureFlag("LPD-17564")
 	@Test
 	public void testContributeWithNonlocalizedFields() throws Exception {
 		String objectFieldName = "a" + RandomTestUtil.randomString();
 
 		ObjectDefinition objectDefinition =
 			_addModifiableSystemObjectDefinition(false, objectFieldName);
+
+		ModelDocumentContributor<ObjectEntry>
+			objectEntryModelDocumentContributor =
+				_getObjectEntryModelDocumentContributor(objectDefinition);
+
+		Document document = new DocumentImpl();
 
 		String objectFieldValue = RandomTestUtil.randomString();
 
@@ -263,12 +271,6 @@ public class ObjectEntryModelDocumentContributorTest {
 			HashMapBuilder.<String, Serializable>put(
 				objectFieldName, objectFieldValue
 			).build());
-
-		Document document = new DocumentImpl();
-
-		ModelDocumentContributor<ObjectEntry>
-			objectEntryModelDocumentContributor =
-				_getObjectEntryModelDocumentContributor(objectDefinition);
 
 		objectEntryModelDocumentContributor.contribute(document, objectEntry);
 

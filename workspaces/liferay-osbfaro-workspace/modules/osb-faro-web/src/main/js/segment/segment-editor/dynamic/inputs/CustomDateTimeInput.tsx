@@ -1,4 +1,3 @@
-import autobind from 'autobind-decorator';
 import DateTimeInput from './DateTimeInput';
 import Form from 'shared/components/form';
 import React from 'react';
@@ -15,7 +14,13 @@ import {PropertyTypes, SUPPORTED_OPERATORS_MAP} from '../utils/constants';
 const DATE_TIME_OPERATORS = SUPPORTED_OPERATORS_MAP[PropertyTypes.DateTime];
 
 export default class CustomDateTimeInput extends React.Component<ISegmentEditorCustomInputBase> {
-	@autobind
+	constructor(props: ISegmentEditorCustomInputBase) {
+		super(props);
+		this.handleDateChange = this.handleDateChange.bind(this);
+		this.handleOperatorChange = this.handleOperatorChange.bind(this);
+		this.renderOperatorDropdown = this.renderOperatorDropdown.bind(this);
+	}
+
 	handleDateChange(newDate: Criterion | Criterion[]) {
 		const {onChange, value} = this.props;
 
@@ -26,14 +31,12 @@ export default class CustomDateTimeInput extends React.Component<ISegmentEditorC
 		onChange({value: setCompleteDate(value, newValue)});
 	}
 
-	@autobind
 	handleOperatorChange(newValue: React.Key) {
 		const {onChange, value} = this.props;
 
 		onChange({value: setOperator(value, 0, newValue)});
 	}
 
-	@autobind
 	renderOperatorDropdown() {
 		const {value} = this.props;
 

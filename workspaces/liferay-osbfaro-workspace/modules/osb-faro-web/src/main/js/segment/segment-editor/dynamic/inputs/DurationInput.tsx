@@ -1,4 +1,3 @@
-import autobind from 'autobind-decorator';
 import DurationInput from 'shared/components/DurationInput';
 import Form from 'shared/components/form';
 import getCN from 'classnames';
@@ -13,14 +12,18 @@ interface ISegmentDurationInputProps extends ISegmentEditorInputBase {
 }
 
 export default class SegmentDurationInput extends React.Component<ISegmentDurationInputProps> {
-	@autobind
+	constructor(props: ISegmentDurationInputProps) {
+		super(props);
+		this.handleBlur = this.handleBlur.bind(this);
+		this.handleChange = this.handleChange.bind(this);
+	}
+
 	handleBlur() {
 		const {onChange, value} = this.props;
 
 		onChange({touched: true, valid: isValid(value)});
 	}
 
-	@autobind
 	handleChange(value: string | number) {
 		const {onChange} = this.props;
 

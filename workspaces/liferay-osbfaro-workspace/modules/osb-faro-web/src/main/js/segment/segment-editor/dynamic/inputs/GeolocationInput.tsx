@@ -1,5 +1,4 @@
 import * as API from 'shared/api';
-import autobind from 'autobind-decorator';
 import AutocompleteInput from 'shared/components/AutocompleteInput';
 import ClayButton from '@clayui/button';
 import DateFilterConjunctionInput from './components/DateFilterConjunctionInput';
@@ -263,6 +262,13 @@ export default class GeolocationInput extends React.Component<
 			editCity: !!getLocationTypeValue(value, CITY),
 			editRegion: !!getLocationTypeValue(value, REGION),
 		};
+
+		this.handleConjunctionChange = this.handleConjunctionChange.bind(this);
+		this.handleCountryBlur = this.handleCountryBlur.bind(this);
+		this.handleLocationOnBlur = this.handleLocationOnBlur.bind(this);
+		this.handleLocationTypeChange =
+			this.handleLocationTypeChange.bind(this);
+		this.handleOperatorChange = this.handleOperatorChange.bind(this);
 	}
 
 	getConjunctionDateFilterIMap(value: CustomValue) {
@@ -281,7 +287,6 @@ export default class GeolocationInput extends React.Component<
 		return {propertyName: 'completeDate'};
 	}
 
-	@autobind
 	handleConjunctionChange(criterion: any) {
 		const {onChange, touched, valid, value} = this.props;
 
@@ -297,7 +302,6 @@ export default class GeolocationInput extends React.Component<
 		});
 	}
 
-	@autobind
 	handleCountryBlur() {
 		const {onChange, touched, valid, value} = this.props;
 
@@ -310,7 +314,6 @@ export default class GeolocationInput extends React.Component<
 		});
 	}
 
-	@autobind
 	handleLocationOnBlur(locationType: string) {
 		const {onChange, value} = this.props;
 
@@ -325,7 +328,6 @@ export default class GeolocationInput extends React.Component<
 		}
 	}
 
-	@autobind
 	handleLocationTypeChange(inputValue: string, locationType: string) {
 		const {onChange, valid, value} = this.props;
 
@@ -346,7 +348,6 @@ export default class GeolocationInput extends React.Component<
 		onChange(params);
 	}
 
-	@autobind
 	handleOperatorChange(newValue: React.Key) {
 		const {onChange, value} = this.props;
 

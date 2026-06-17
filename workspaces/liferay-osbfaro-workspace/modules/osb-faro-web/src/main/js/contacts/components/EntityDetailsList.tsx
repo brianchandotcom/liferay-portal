@@ -1,4 +1,3 @@
-import autobind from 'autobind-decorator';
 import Card from 'shared/components/Card';
 import Checkbox from 'shared/components/Checkbox';
 import getCN from 'classnames';
@@ -33,17 +32,20 @@ export default class EntityDetailsList extends React.Component<IEntityDetailsLis
 		hideBlanks: false,
 	};
 
-	_detailsData: any;
-	_knownCount: any;
-
 	constructor(props: IEntityDetailsListProps) {
 		super(props);
 
 		this.getDetailsData();
 		this.getKnownCount();
+
+		this.filterDetails = this.filterDetails.bind(this);
+		this.handleToggleBlankRows = this.handleToggleBlankRows.bind(this);
+		this.renderNav = this.renderNav.bind(this);
 	}
 
-	@autobind
+	_detailsData: any;
+	_knownCount: any;
+
 	filterDetails({
 		hideBlanks,
 		query = '',
@@ -113,14 +115,12 @@ export default class EntityDetailsList extends React.Component<IEntityDetailsLis
 		).size;
 	}
 
-	@autobind
 	handleToggleBlankRows(event: React.ChangeEvent<HTMLInputElement>) {
 		this.setState({
 			hideBlanks: event.target.checked,
 		});
 	}
 
-	@autobind
 	renderNav() {
 		const {hideBlanks} = this.state;
 

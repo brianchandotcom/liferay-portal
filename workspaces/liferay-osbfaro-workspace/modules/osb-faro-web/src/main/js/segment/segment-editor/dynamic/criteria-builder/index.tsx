@@ -1,4 +1,3 @@
-import autobind from 'autobind-decorator';
 import ClearAllButton from './ClearAllButton';
 import CriteriaGroup from './CriteriaGroup';
 import React from 'react';
@@ -19,6 +18,12 @@ interface ICriteriaBuilderProps {
 }
 
 class CriteriaBuilder extends React.Component<ICriteriaBuilderProps> {
+	constructor(props: ICriteriaBuilderProps) {
+		super(props);
+		this.handleCriteriaChange = this.handleCriteriaChange.bind(this);
+		this.handleClearAll = this.handleClearAll.bind(this);
+		this.handleCriterionMove = this.handleCriterionMove.bind(this);
+	}
 
 	/**
 	 * Cleans criteria items by performing the following:
@@ -83,14 +88,12 @@ class CriteriaBuilder extends React.Component<ICriteriaBuilderProps> {
 	 * Cleans and updates the criteria with the newer criteria.
 	 * @param {Object} newCriteria The criteria with the most recent changes.
 	 */
-	@autobind
 	handleCriteriaChange(newCriteria: Criteria): void {
 		const items = this.cleanCriteriaMapItems([newCriteria], true);
 
 		this.props.onChange(items[items.length - 1]);
 	}
 
-	@autobind
 	handleClearAll(): void {
 		this.props.onChange(wrapInCriteriaGroup([]));
 	}
@@ -99,7 +102,6 @@ class CriteriaBuilder extends React.Component<ICriteriaBuilderProps> {
 	 * Moves the criterion to the specified index by removing and adding, and
 	 * updates the criteria.
 	 */
-	@autobind
 	handleCriterionMove(
 		startGroupId: string,
 		startIndex: number,

@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.seo.studio.web.internal.constants.SEOStudioFDSNames;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -64,7 +65,10 @@ public class ViewOnPageInsightDetailsDisplayContext {
 		return StringBundler.concat(
 			"/o/seo-studio/insight-types/by-external-reference-code/",
 			URLCodec.encodeURL(_getObjectEntryExternalReferenceCode(), true),
-			"/seoStudioInsightTypeToScanInsights?nestedFields=",
+			"/seoStudioInsightTypeToScanInsights?filter=",
+			URLCodec.encodeURL(
+				"state eq " + WorkflowConstants.STATUS_PENDING, true),
+			"&nestedFields=",
 			URLCodec.encodeURL(
 				"r_seoStudioPageToSEOStudioScanInsights_seoStudioPage", true));
 	}

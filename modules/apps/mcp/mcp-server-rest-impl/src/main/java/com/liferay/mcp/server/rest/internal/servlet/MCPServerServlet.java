@@ -156,7 +156,8 @@ public class MCPServerServlet extends HttpServlet {
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		String authorization = httpServletRequest.getHeader("Authorization");
+		String authorization = httpServletRequest.getHeader(
+			HttpHeaders.AUTHORIZATION);
 
 		if (Validator.isBlank(authorization)) {
 			_sendUnauthenticatedChallenge(
@@ -165,28 +166,22 @@ public class MCPServerServlet extends HttpServlet {
 			return false;
 		}
 
-		String trimmedAuthorization = authorization.trim();
+		authorization = authorization.trim();
 
-		int spaceIndex = trimmedAuthorization.indexOf(' ');
-
-		if ((spaceIndex == -1) ||
-			!StringUtil.equalsIgnoreCase(
-				trimmedAuthorization.substring(0, spaceIndex), "Bearer")) {
-
+		if (!StringUtil.startsWith(authorization, "Bearer ")) {
 			_sendInvalidTokenChallenge(
-				httpServletRequest, httpServletResponse,
-				"Authorization header is not a Bearer token");
+				"Authorization header is not a Bearer token",
+				httpServletRequest, httpServletResponse);
 
 			return false;
 		}
 
-		String accessToken = trimmedAuthorization.substring(
-			spaceIndex + 1
-		).trim();
+		String accessTokenContent = authorization.substring("Bearer ".length());
 
 		OAuth2Authorization oAuth2Authorization =
 			_oAuth2AuthorizationLocalService.
-				fetchOAuth2AuthorizationByAccessTokenContent(accessToken);
+				fetchOAuth2AuthorizationByAccessTokenContent(
+					accessTokenContent);
 
 		if ((oAuth2Authorization == null) ||
 			(oAuth2Authorization.getCompanyId() != companyId) ||
@@ -194,8 +189,8 @@ public class MCPServerServlet extends HttpServlet {
 				equals(oAuth2Authorization.getAccessTokenContent())) {
 
 			_sendInvalidTokenChallenge(
-				httpServletRequest, httpServletResponse,
-				"Access token is unknown or revoked");
+				"Access token is unknown or revoked", httpServletRequest,
+				httpServletResponse);
 
 			return false;
 		}
@@ -207,22 +202,22 @@ public class MCPServerServlet extends HttpServlet {
 			(expirationDate.getTime() < System.currentTimeMillis())) {
 
 			_sendInvalidTokenChallenge(
-				httpServletRequest, httpServletResponse,
-				"Access token has expired");
+				"Access token has expired", httpServletRequest,
+				httpServletResponse);
 
 			return false;
 		}
 
-		String mcpResourceURI =
-			_portal.getPortalURL(httpServletRequest) +
-				_portal.getPathContext() + MCPServerConstants.MCP_PATH;
+		String mcpResourceURI = StringBundler.concat(
+			_portal.getPortalURL(httpServletRequest), _portal.getPathContext(),
+			Portal.PATH_MODULE, MCPServerConstants.MCP_PATH);
 
 		List<String> audiences = oAuth2Authorization.getAudiencesList();
 
 		if ((audiences == null) || !audiences.contains(mcpResourceURI)) {
 			_sendInvalidTokenChallenge(
-				httpServletRequest, httpServletResponse,
-				"Access token is not bound to this MCP server");
+				"Access token is not bound to this MCP server",
+				httpServletRequest, httpServletResponse);
 
 			return false;
 		}
@@ -534,8 +529,8 @@ public class MCPServerServlet extends HttpServlet {
 	}
 
 	private void _sendInvalidTokenChallenge(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, String description)
+			String description, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
 		httpServletResponse.setHeader(
@@ -543,7 +538,7 @@ public class MCPServerServlet extends HttpServlet {
 			StringBundler.concat(
 				"Bearer realm=\"mcp\", resource_metadata=\"",
 				_portal.getPortalURL(httpServletRequest),
-				_portal.getPathContext(),
+				_portal.getPathContext(), Portal.PATH_MODULE,
 				MCPServerConstants.WELL_KNOWN_PROTECTED_RESOURCE_PATH, "\", ",
 				"error=\"invalid_token\", error_description=\"", description,
 				"\""));
@@ -560,7 +555,7 @@ public class MCPServerServlet extends HttpServlet {
 			StringBundler.concat(
 				"Bearer realm=\"mcp\", resource_metadata=\"",
 				_portal.getPortalURL(httpServletRequest),
-				_portal.getPathContext(),
+				_portal.getPathContext(), Portal.PATH_MODULE,
 				MCPServerConstants.WELL_KNOWN_PROTECTED_RESOURCE_PATH, "\""));
 		httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 	}

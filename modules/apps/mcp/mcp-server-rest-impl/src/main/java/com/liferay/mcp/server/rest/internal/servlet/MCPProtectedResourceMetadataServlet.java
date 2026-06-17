@@ -7,9 +7,10 @@ package com.liferay.mcp.server.rest.internal.servlet;
 
 import com.liferay.mcp.server.rest.internal.constants.MCPServerConstants;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
+import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Portal;
 
@@ -19,7 +20,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -38,34 +40,68 @@ import org.osgi.service.component.annotations.Reference;
 public class MCPProtectedResourceMetadataServlet extends HttpServlet {
 
 	@Override
-	protected void doGet(
+	protected void service(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		String portalURL =
-			_portal.getPortalURL(httpServletRequest) + _portal.getPathContext();
+		if (!FeatureFlagManagerUtil.isEnabled(
+				_portal.getCompanyId(httpServletRequest), "LPD-63415")) {
 
-		String resource = portalURL + MCPServerConstants.MCP_PATH;
+			httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND);
 
-		JSONObject metadataJSONObject = JSONUtil.put(
-			"authorization_servers", JSONUtil.putAll(portalURL)
-		).put(
-			"bearer_methods_supported", JSONUtil.putAll("header")
-		).put(
-			"resource", resource
-		).put(
-			"resource_name", "Liferay MCP Server"
-		);
+			return;
+		}
+
+		httpServletResponse.setHeader(
+			"Access-Control-Allow-Headers", "Authorization, Content-Type");
+		httpServletResponse.setHeader(
+			"Access-Control-Allow-Methods", "GET, HEAD, OPTIONS");
+		httpServletResponse.setHeader("Access-Control-Allow-Origin", "*");
+		httpServletResponse.setHeader("Access-Control-Max-Age", "300");
+
+		String method = httpServletRequest.getMethod();
+
+		if (Objects.equals(method, "OPTIONS")) {
+			httpServletResponse.setStatus(HttpServletResponse.SC_NO_CONTENT);
+
+			return;
+		}
+
+		if (!Objects.equals(method, "GET") && !Objects.equals(method, "HEAD")) {
+			httpServletResponse.setHeader("Allow", "GET, HEAD, OPTIONS");
+			httpServletResponse.sendError(
+				HttpServletResponse.SC_METHOD_NOT_ALLOWED);
+
+			return;
+		}
 
 		httpServletResponse.setCharacterEncoding(StringPool.UTF8);
 		httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
 		httpServletResponse.setHeader(
 			HttpHeaders.CACHE_CONTROL, "public, max-age=300");
+		httpServletResponse.setStatus(HttpServletResponse.SC_OK);
 
-		PrintWriter printWriter = httpServletResponse.getWriter();
+		if (Objects.equals(method, "GET")) {
+			String portalURL =
+				_portal.getPortalURL(httpServletRequest) +
+					_portal.getPathContext();
 
-		printWriter.write(metadataJSONObject.toString());
+			ServletResponseUtil.write(
+				httpServletResponse,
+				JSONUtil.put(
+					"authorization_servers", JSONUtil.putAll(portalURL)
+				).put(
+					"bearer_methods_supported", JSONUtil.putAll("header")
+				).put(
+					"resource",
+					portalURL + Portal.PATH_MODULE + MCPServerConstants.MCP_PATH
+				).put(
+					"resource_name", "Liferay MCP Server"
+				).toString());
+		}
+
+		httpServletResponse.flushBuffer();
 	}
 
 	@Reference

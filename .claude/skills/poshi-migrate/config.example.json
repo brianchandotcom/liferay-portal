@@ -1,7 +1,5 @@
 {
 	"componentPlaywrightModules": {},
 	"defaultComponentName": "",
-	"patternsReference": "modules/test/playwright/tests/layout-content-page-editor-web",
-	"playwrightTestsRoot": "modules/test/playwright/tests",
-	"poshiTestsRoot": "portal-web/test/functional/com/liferay/portalweb/tests/enduser"
+	"patternsReference": "modules/test/playwright/tests/layout-content-page-editor-web"
 }

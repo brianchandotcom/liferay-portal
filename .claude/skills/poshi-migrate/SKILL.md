@@ -54,7 +54,13 @@ Use the chosen file path as the input for the feasibility phase onwards.
 
 ### Configuration
 
-`config.json` lives at `.claude/skills/poshi-migrate/config.json` but is intentionally not committed to the repository — each developer maintains their own. A `config.example.json` sits next to it with the suggested defaults; copy it and personalize when the defaults do not fit.
+Two repository roots are fixed, not configurable, and are referred to by these names throughout the skill:
+
+- **poshiTestsRoot** — `portal-web/test/functional/com/liferay/portalweb/tests/enduser`, the root searched for Poshi `.testcase` files.
+
+- **playwrightTestsRoot** — `modules/test/playwright/tests`, the root for Playwright specs; the shared `helpers`, `fixtures`, and `utils` folders sit beside it at `playwrightTestsRoot/..`.
+
+The remaining settings live in `config.json` at `.claude/skills/poshi-migrate/config.json`, which is intentionally not committed to the repository — each developer maintains their own. A `config.example.json` sits next to it with the suggested defaults; copy it and personalize when the defaults do not fit.
 
 Resolve configuration in this order:
 
@@ -69,10 +75,6 @@ The keys are:
 - **defaultComponentName**: the last `@component-name` the user chose interactively, suggested as the default on subsequent runs when `${ARGUMENTS}` is empty. The argument resolver prompts the user with the full list from `test.properties` and remembers the choice from then on. Unset by default.
 
 - **patternsReference**: the Playwright folder used as the style reference. Defaults to `modules/test/playwright/tests/layout-content-page-editor-web`.
-
-- **playwrightTestsRoot**: the root for Playwright specs. Defaults to `modules/test/playwright/tests`.
-
-- **poshiTestsRoot**: the root for Poshi `.testcase` files. Defaults to `portal-web/test/functional/com/liferay/portalweb/tests/enduser`.
 
 After resolving the values, show them to the user via `AskUserQuestion` and offer to keep them or override any value for this run. Persist overrides only when the user explicitly asks (write `config.json`, never modify `config.example.json`).
 

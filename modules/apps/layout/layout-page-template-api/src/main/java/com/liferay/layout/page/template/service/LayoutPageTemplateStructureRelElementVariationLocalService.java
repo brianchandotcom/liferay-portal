@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.transaction.Isolation;
@@ -32,6 +33,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -77,6 +80,15 @@ public interface LayoutPageTemplateStructureRelElementVariationLocalService
 		addLayoutPageTemplateStructureRelElementVariation(
 			LayoutPageTemplateStructureRelElementVariation
 				layoutPageTemplateStructureRelElementVariation);
+
+	public LayoutPageTemplateStructureRelElementVariation
+			addLayoutPageTemplateStructureRelElementVariation(
+				String externalReferenceCode, long userId, long groupId,
+				String audienceEntryERC, Map<Locale, String> hideMap,
+				Map<Locale, String> htmlMap, Map<Locale, String> jsMap,
+				String name, long plid, String segmentsExperienceERC,
+				String targetElement, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	 * Creates a new layout page template structure rel element variation with the primary key. Does not add the layout page template structure rel element variation to the database.
@@ -374,4 +386,4 @@ public interface LayoutPageTemplateStructureRelElementVariationLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2099815468
+// LIFERAY-SERVICE-BUILDER-HASH:-1714001311

@@ -1,0 +1,29 @@
+{
+	"editorType": "richText",
+	"externalReferenceCode": "L_DSR_INVITE_MEMBER_EMAIL_NOTIFICATION_TEMPLATE",
+	"name": "Digital Sales Room Invite Member",
+	"name_i18n": {
+		"en_US": "Digital Sales Room Invite Member"
+	},
+	"recipientType": "email",
+	"recipients": [
+		{
+			"bcc": "",
+			"cc": "",
+			"from": "admin@liferay.com",
+			"fromName": {
+				"en_US": "Digital Sales Room"
+			},
+			"singleRecipient": true,
+			"to": {
+				"en_US": "[%TO%]"
+			}
+		}
+	],
+	"subject": {
+		"en_US": "Digital Sales Room: [%DIGITAL_SALES_ROOM_NAME%]"
+	},
+	"system": false,
+	"type": "email",
+	"typeLabel": "Email"
+}

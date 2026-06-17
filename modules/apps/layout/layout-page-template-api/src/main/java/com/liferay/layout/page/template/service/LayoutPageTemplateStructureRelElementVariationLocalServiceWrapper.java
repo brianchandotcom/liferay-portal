@@ -56,6 +56,25 @@ public class LayoutPageTemplateStructureRelElementVariationLocalServiceWrapper
 				layoutPageTemplateStructureRelElementVariation);
 	}
 
+	@Override
+	public LayoutPageTemplateStructureRelElementVariation
+			addLayoutPageTemplateStructureRelElementVariation(
+				String externalReferenceCode, long userId, long groupId,
+				String audienceEntryERC,
+				java.util.Map<java.util.Locale, String> hideMap,
+				java.util.Map<java.util.Locale, String> htmlMap,
+				java.util.Map<java.util.Locale, String> jsMap, String name,
+				long plid, String segmentsExperienceERC, String targetElement,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutPageTemplateStructureRelElementVariationLocalService.
+			addLayoutPageTemplateStructureRelElementVariation(
+				externalReferenceCode, userId, groupId, audienceEntryERC,
+				hideMap, htmlMap, jsMap, name, plid, segmentsExperienceERC,
+				targetElement, serviceContext);
+	}
+
 	/**
 	 * Creates a new layout page template structure rel element variation with the primary key. Does not add the layout page template structure rel element variation to the database.
 	 *
@@ -525,4 +544,4 @@ public class LayoutPageTemplateStructureRelElementVariationLocalServiceWrapper
 		_layoutPageTemplateStructureRelElementVariationLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1476151159
+// LIFERAY-SERVICE-BUILDER-HASH:272965427

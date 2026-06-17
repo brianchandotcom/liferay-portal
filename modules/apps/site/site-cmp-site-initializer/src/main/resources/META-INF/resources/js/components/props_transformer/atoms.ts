@@ -7,6 +7,7 @@ import {IFDSState} from '@liferay/frontend-data-set-web';
 import {State} from '@liferay/frontend-js-state-web';
 
 export const CMP_TASKS_FDS_ATOM_ID = 'cmpTasksFDSAtom';
+export const CMP_WORKFLOW_TASKS_FDS_ATOM_ID = 'cmpWorkflowTasksFDSAtom';
 
 const cmpTasksFDSAtom = State.atom<IFDSState>(CMP_TASKS_FDS_ATOM_ID, {
 	filters: [],
@@ -15,4 +16,14 @@ const cmpTasksFDSAtom = State.atom<IFDSState>(CMP_TASKS_FDS_ATOM_ID, {
 	},
 });
 
-export {cmpTasksFDSAtom};
+const cmpWorkflowTasksFDSAtom = State.atom<IFDSState>(
+	CMP_WORKFLOW_TASKS_FDS_ATOM_ID,
+	{
+		filters: [],
+		search: {
+			query: '',
+		},
+	}
+);
+
+export {cmpTasksFDSAtom, cmpWorkflowTasksFDSAtom};

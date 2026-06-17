@@ -19,7 +19,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	property = "service.ranking:Integer=-1", service = QuotaManager.class
 )
-public class DummyQuotaManagerImpl implements QuotaManager {
+public class DummyQuotaManager implements QuotaManager {
 
 	@Override
 	public void addQuotas(long accountEntryId, long companyId, long userId) {

@@ -285,7 +285,12 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 
 		LayoutSetBranch layoutSetBranch = _getLayoutSetBranch(layoutSet);
 
+		String previousLayoutSetPrototypeUuid = null;
+
 		if (layoutSetBranch == null) {
+			previousLayoutSetPrototypeUuid =
+				layoutSet.getLayoutSetPrototypeUuid();
+
 			if (Validator.isNull(layoutSetPrototypeUuid)) {
 				layoutSetPrototypeUuid = layoutSet.getLayoutSetPrototypeUuid();
 			}
@@ -302,6 +307,9 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 			layoutSet = layoutSetPersistence.update(layoutSet);
 		}
 		else {
+			previousLayoutSetPrototypeUuid =
+				layoutSetBranch.getLayoutSetPrototypeUuid();
+
 			if (Validator.isNull(layoutSetPrototypeUuid)) {
 				layoutSetPrototypeUuid =
 					layoutSetBranch.getLayoutSetPrototypeUuid();
@@ -321,9 +329,6 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 
 			_layoutSetBranchPersistence.update(layoutSetBranch);
 		}
-
-		String previousLayoutSetPrototypeUuid =
-			layoutSet.getLayoutSetPrototypeUuid();
 
 		if (!layoutSetPrototypeLinkEnabled ||
 			Validator.isNotNull(previousLayoutSetPrototypeUuid) ||

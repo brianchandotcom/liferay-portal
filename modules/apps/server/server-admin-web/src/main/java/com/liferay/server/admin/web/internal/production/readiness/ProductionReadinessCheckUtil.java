@@ -61,10 +61,25 @@ public class ProductionReadinessCheckUtil {
 	private static ProductionReadinessResult _checkBetaLanguages() {
 		List<String> betaLocales = List.of(PropsValues.LOCALES_BETA);
 
-		return _getLanguagesProductionReadinessResult(
-			"languages-beta",
-			ListUtil.filter(
-				List.of(PropsValues.LOCALES_ENABLED), betaLocales::contains));
+		List<String> enabledBetaLocales = ListUtil.filter(
+			List.of(PropsValues.LOCALES_ENABLED), betaLocales::contains);
+
+		String enabledBetaLocalesString = StringUtil.merge(enabledBetaLocales);
+
+		ProductionReadinessResult.Builder builder =
+			ProductionReadinessResult.builder(
+				_CATEGORY_PORTAL_PROPERTIES_CONFIGURATION, "languages-beta"
+			).currentValue(
+				enabledBetaLocalesString
+			).messageParameters(
+				enabledBetaLocalesString
+			);
+
+		if (enabledBetaLocales.isEmpty()) {
+			return builder.pass();
+		}
+
+		return builder.fail();
 	}
 
 	private static ProductionReadinessResult _checkCounterIncrement() {
@@ -80,11 +95,11 @@ public class ProductionReadinessCheckUtil {
 				PropsKeys.COUNTER_INCREMENT + ">=" + _MIN_COUNTER_INCREMENT
 			);
 
-		if (counterIncrement < _MIN_COUNTER_INCREMENT) {
-			return builder.fail();
+		if (counterIncrement >= _MIN_COUNTER_INCREMENT) {
+			return builder.pass();
 		}
 
-		return builder.pass();
+		return builder.fail();
 	}
 
 	private static ProductionReadinessResult _checkDatabaseConfiguration() {
@@ -124,15 +139,15 @@ public class ProductionReadinessCheckUtil {
 				"dl-image-preview-dpi"
 			).currentValue(
 				String.valueOf(dpi)
+			).recommendedValue(
+				String.valueOf(_MAX_DL_IMAGE_PREVIEW_DPI)
 			);
 
-		if (dpi > _MAX_DL_IMAGE_PREVIEW_DPI) {
-			return builder.recommendedValue(
-				String.valueOf(_MAX_DL_IMAGE_PREVIEW_DPI)
-			).fail();
+		if (dpi <= _MAX_DL_IMAGE_PREVIEW_DPI) {
+			return builder.pass();
 		}
 
-		return builder.pass();
+		return builder.fail();
 	}
 
 	private static ProductionReadinessResult _checkDLPreviewForking() {
@@ -165,17 +180,18 @@ public class ProductionReadinessCheckUtil {
 		ProductionReadinessResult.Builder builder =
 			ProductionReadinessResult.builder(
 				_CATEGORY_JVM_AND_INFRASTRUCTURE_VALIDATION,
-				"explicit-gc-disabled");
+				"explicit-gc-disabled"
+			).currentValue(
+				disabled ? "-XX:+DisableExplicitGC" : StringPool.BLANK
+			).recommendedValue(
+				"-XX:+DisableExplicitGC"
+			);
 
 		if (disabled) {
-			return builder.currentValue(
-				"-XX:+DisableExplicitGC"
-			).pass();
+			return builder.pass();
 		}
 
-		return builder.recommendedValue(
-			"-XX:+DisableExplicitGC"
-		).fail();
+		return builder.fail();
 	}
 
 	private static ProductionReadinessResult _checkFileStoreImplementation() {
@@ -187,15 +203,15 @@ public class ProductionReadinessCheckUtil {
 				"file-store-implementation"
 			).currentValue(
 				dlStoreImpl
+			).recommendedValue(
+				StringUtil.merge(_recommendedDLStoreImplClassNames)
 			);
 
 		if (_recommendedDLStoreImplClassNames.contains(dlStoreImpl)) {
 			return builder.pass();
 		}
 
-		return builder.recommendedValue(
-			StringUtil.merge(_recommendedDLStoreImplClassNames)
-		).fail();
+		return builder.fail();
 	}
 
 	private static ProductionReadinessResult _checkGarbageCollectorType() {
@@ -341,8 +357,8 @@ public class ProductionReadinessCheckUtil {
 			if (configLargePageSize != osHugePageSize) {
 				return builder.currentValue(
 					StringBundler.concat(
-						"-XX:LargePageSizeInBytes = ", largePageSizeArgument,
-						", OS's huge page size = ",
+						"-XX:LargePageSizeInBytes=", largePageSizeArgument,
+						", OS HugePageSize=",
 						_toUnit(osHugePageSize, _BYTES_PER_KILOBYTE), "KB")
 				).messageKeySuffix(
 					"size-mismatch"
@@ -358,12 +374,10 @@ public class ProductionReadinessCheckUtil {
 	private static ProductionReadinessResult _checkJMXConfigurationDisabled() {
 		RuntimeMXBean runtimeMXBean = ManagementFactory.getRuntimeMXBean();
 
-		boolean jmxEnabled = false;
-		String enabledArgument = null;
+		String enabledArgument = StringPool.BLANK;
 
 		for (String inputArgument : runtimeMXBean.getInputArguments()) {
 			if (inputArgument.startsWith("-Dcom.sun.management.jmxremote")) {
-				jmxEnabled = true;
 				enabledArgument = inputArgument;
 
 				break;
@@ -373,15 +387,16 @@ public class ProductionReadinessCheckUtil {
 		ProductionReadinessResult.Builder builder =
 			ProductionReadinessResult.builder(
 				_CATEGORY_JVM_AND_INFRASTRUCTURE_VALIDATION,
-				"jmx-configuration-disabled");
+				"jmx-configuration-disabled"
+			).currentValue(
+				enabledArgument
+			);
 
-		if (jmxEnabled) {
-			return builder.currentValue(
-				"JMX Configuration has been enabled (" + enabledArgument + ")"
-			).fail();
+		if (Validator.isNull(enabledArgument)) {
+			return builder.pass();
 		}
 
-		return builder.pass();
+		return builder.fail();
 	}
 
 	private static ProductionReadinessResult _checkJSPEngineSettings() {
@@ -439,18 +454,10 @@ public class ProductionReadinessCheckUtil {
 				}
 			}
 
-			if ((development == null) || (mappedFile == null)) {
-				return ProductionReadinessResult.builder(
-					_CATEGORY_JVM_AND_INFRASTRUCTURE_VALIDATION,
-					"jsp-engine-settings"
-				).currentValue(
-					StringBundler.concat(
-						"development=", (development == null) || development,
-						", mappedfile=", (mappedFile == null) || mappedFile)
-				).recommendedValue(
-					"development=false, mappedfile=false"
-				).fail();
-			}
+			boolean developmentEnabled = GetterUtil.getBoolean(
+				development, true);
+
+			boolean mappedFileEnabled = GetterUtil.getBoolean(mappedFile, true);
 
 			ProductionReadinessResult.Builder builder =
 				ProductionReadinessResult.builder(
@@ -458,13 +465,13 @@ public class ProductionReadinessCheckUtil {
 					"jsp-engine-settings"
 				).currentValue(
 					StringBundler.concat(
-						"development=", development, ", mappedfile=",
-						mappedFile)
+						"development=", developmentEnabled, ", mappedfile=",
+						mappedFileEnabled)
 				).recommendedValue(
 					"development=false, mappedfile=false"
 				);
 
-			if (!development && !mappedFile) {
+			if (!developmentEnabled && !mappedFileEnabled) {
 				return builder.pass();
 			}
 
@@ -493,11 +500,11 @@ public class ProductionReadinessCheckUtil {
 				PropsKeys.DIRECT_SERVLET_CONTEXT_RELOAD + "=false"
 			);
 
-		if (directServletContextReload) {
-			return builder.fail();
+		if (!directServletContextReload) {
+			return builder.pass();
 		}
 
-		return builder.pass();
+		return builder.fail();
 	}
 
 	private static ProductionReadinessResult _checkPasswordEncryption() {
@@ -522,23 +529,23 @@ public class ProductionReadinessCheckUtil {
 	}
 
 	private static ProductionReadinessResult _checkPortalDeveloperProperties() {
+		boolean included = ArrayUtil.contains(
+			PropsUtil.getArray("include-and-override"),
+			"portal-developer.properties");
+
 		ProductionReadinessResult.Builder builder =
 			ProductionReadinessResult.builder(
 				_CATEGORY_PORTAL_PROPERTIES_CONFIGURATION,
-				"portal-developer-properties");
+				"portal-developer-properties"
+			).currentValue(
+				included ? "portal-developer.properties" : StringPool.BLANK
+			);
 
-		if (ArrayUtil.contains(
-				PropsUtil.getArray("include-and-override"),
-				"portal-developer.properties")) {
-
-			return builder.currentValue(
-				"portal-developer.properties"
-			).fail();
+		if (!included) {
+			return builder.pass();
 		}
 
-		return builder.currentValue(
-			StringPool.BLANK
-		).pass();
+		return builder.fail();
 	}
 
 	private static ProductionReadinessResult _checkPreventDiagnosticOverhead() {
@@ -552,15 +559,16 @@ public class ProductionReadinessCheckUtil {
 		ProductionReadinessResult.Builder builder =
 			ProductionReadinessResult.builder(
 				_CATEGORY_JVM_AND_INFRASTRUCTURE_VALIDATION,
-				"prevent-diagnostic-overhead");
+				"prevent-diagnostic-overhead"
+			).currentValue(
+				unlocked ? "-XX:+UnlockDiagnosticVMOptions" : StringPool.BLANK
+			);
 
-		if (unlocked) {
-			return builder.currentValue(
-				"-XX:+UnlockDiagnosticVMOptions"
-			).fail();
+		if (!unlocked) {
+			return builder.pass();
 		}
 
-		return builder.pass();
+		return builder.fail();
 	}
 
 	private static ProductionReadinessResult _checkSidecarDetection() {
@@ -589,38 +597,32 @@ public class ProductionReadinessCheckUtil {
 	private static ProductionReadinessResult _checkUnusedLanguages() {
 		List<String> enabledLocales = List.of(PropsValues.LOCALES_ENABLED);
 
-		return _getLanguagesProductionReadinessResult(
-			"languages-unused",
-			ListUtil.filter(
-				List.of(PropsValues.LOCALES),
-				locale -> !enabledLocales.contains(locale)));
+		List<String> unusedLocales = ListUtil.filter(
+			List.of(PropsValues.LOCALES),
+			locale -> !enabledLocales.contains(locale));
+
+		String unusedLocalesString = StringUtil.merge(unusedLocales);
+
+		ProductionReadinessResult.Builder builder =
+			ProductionReadinessResult.builder(
+				_CATEGORY_PORTAL_PROPERTIES_CONFIGURATION, "languages-unused"
+			).currentValue(
+				unusedLocalesString
+			).messageParameters(
+				unusedLocalesString
+			);
+
+		if (unusedLocales.isEmpty()) {
+			return builder.pass();
+		}
+
+		return builder.fail();
 	}
 
 	private static MemoryUsage _getHeapMemoryUsage() {
 		MemoryMXBean memoryMXBean = ManagementFactory.getMemoryMXBean();
 
 		return memoryMXBean.getHeapMemoryUsage();
-	}
-
-	private static ProductionReadinessResult
-		_getLanguagesProductionReadinessResult(
-			String key, List<String> locales) {
-
-		ProductionReadinessResult.Builder builder =
-			ProductionReadinessResult.builder(
-				_CATEGORY_PORTAL_PROPERTIES_CONFIGURATION, key);
-
-		if (locales.isEmpty()) {
-			return builder.pass();
-		}
-
-		String localesString = StringUtil.merge(locales);
-
-		return builder.currentValue(
-			localesString
-		).messageParameters(
-			localesString
-		).fail();
 	}
 
 	private static long _getOSHugePageSize() {

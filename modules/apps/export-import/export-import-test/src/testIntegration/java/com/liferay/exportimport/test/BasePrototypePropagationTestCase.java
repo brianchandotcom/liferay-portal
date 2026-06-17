@@ -253,7 +253,6 @@ public abstract class BasePrototypePropagationTestCase {
 
 	protected Layout propagateChanges(Layout layout) throws Exception {
 		MergeLayoutPrototypesThreadLocal.clearMergeComplete();
-		MergeLayoutPrototypesThreadLocal.setSkipMerge(false);
 
 		_sites.mergeLayoutPrototypeLayout(layout);
 

@@ -531,12 +531,6 @@ public class SitesImpl implements Sites {
 	public void mergeLayoutSetPrototypeLayouts(Group group, LayoutSet layoutSet)
 		throws Exception {
 
-		if (MergeLayoutPrototypesThreadLocal.isSkipMerge()) {
-			return;
-		}
-
-		MergeLayoutPrototypesThreadLocal.setSkipMerge(true);
-
 		layoutSet = _layoutSetLocalService.fetchLayoutSet(
 			layoutSet.getLayoutSetId());
 

@@ -164,7 +164,6 @@ public class LayoutLayoutSetPrototypeLayoutERCUpgradeProcessTest
 				_layoutSetPrototype);
 
 		MergeLayoutPrototypesThreadLocal.clearMergeComplete();
-		MergeLayoutPrototypesThreadLocal.setSkipMerge(false);
 
 		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
 			_group.getGroupId(), false);

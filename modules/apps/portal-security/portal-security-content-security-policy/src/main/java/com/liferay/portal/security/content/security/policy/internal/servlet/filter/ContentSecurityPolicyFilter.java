@@ -9,6 +9,7 @@ import com.liferay.portal.configuration.module.configuration.ConfigurationProvid
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -70,7 +71,8 @@ public class ContentSecurityPolicyFilter extends BasePortalFilter {
 		if (!contentSecurityPolicyConfiguration.enabled() ||
 			Validator.isNull(contentSecurityPolicyConfiguration.policy()) ||
 			_isExcludedURIPath(
-				contentSecurityPolicyConfiguration, httpServletRequest)) {
+				contentSecurityPolicyConfiguration, httpServletRequest) ||
+			_isLayoutModeEdit(httpServletRequest)) {
 
 			return false;
 		}
@@ -150,6 +152,25 @@ public class ContentSecurityPolicyFilter extends BasePortalFilter {
 
 				return true;
 			}
+		}
+
+		return false;
+	}
+
+	private boolean _isLayoutModeEdit(HttpServletRequest httpServletRequest) {
+
+		// CSP breaks the layout editor, which uses eval and inline styles via
+		// CKEditor. Require an authenticated user so the policy cannot be
+		// disabled on a public page.
+
+		if (!Constants.EDIT.equals(
+				httpServletRequest.getParameter("p_l_mode"))) {
+
+			return false;
+		}
+
+		if (httpServletRequest.getRemoteUser() != null) {
+			return true;
 		}
 
 		return false;

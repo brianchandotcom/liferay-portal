@@ -14,7 +14,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 
 import java.io.Serializable;
@@ -69,54 +68,20 @@ public class VariablesUtil {
 		return value;
 	}
 
-	public static void applyOutputVariables(
-			JSONArray outputVariablesJSONArray, String responseBody,
-			Map<String, Serializable> workflowContext)
-		throws Exception {
+	public static void applyOutputVariable(
+		Map<String, String> kaleoNodeSettingValues, String value,
+		Map<String, Serializable> workflowContext) {
 
-		if ((outputVariablesJSONArray == null) ||
-			(outputVariablesJSONArray.length() == 0)) {
+		JSONArray jsonArray = getVariablesJSONArray(
+			"outputVariables", kaleoNodeSettingValues);
 
+		if ((jsonArray == null) || (jsonArray.length() == 0)) {
 			return;
 		}
 
-		JSONObject responseJSONObject = null;
+		JSONObject jsonObject = jsonArray.getJSONObject(0);
 
-		for (int i = 0; i < outputVariablesJSONArray.length(); i++) {
-			JSONObject outputVariableJSONObject =
-				outputVariablesJSONArray.getJSONObject(i);
-
-			String name = outputVariableJSONObject.getString("name");
-
-			String path = outputVariableJSONObject.getString("path");
-
-			if (Validator.isNull(path)) {
-				workflowContext.put(name, responseBody);
-
-				continue;
-			}
-
-			if (responseJSONObject == null) {
-				responseJSONObject = JSONFactoryUtil.createJSONObject(
-					responseBody);
-			}
-
-			if (path.startsWith("output.")) {
-				path = path.substring("output.".length());
-			}
-
-			Object value = responseJSONObject.get(path);
-
-			if (value instanceof JSONArray || value instanceof JSONObject) {
-				workflowContext.put(name, value.toString());
-			}
-			else if (value instanceof Serializable) {
-				workflowContext.put(name, (Serializable)value);
-			}
-			else if (value != null) {
-				workflowContext.put(name, String.valueOf(value));
-			}
-		}
+		workflowContext.put(jsonObject.getString("name"), value);
 	}
 
 	public static JSONArray getVariablesJSONArray(

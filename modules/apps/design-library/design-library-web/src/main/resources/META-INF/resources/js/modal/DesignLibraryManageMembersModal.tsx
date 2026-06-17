@@ -136,7 +136,7 @@ export default function DesignLibraryManageMembersModal({
 
 								<p className="c-m-0 text-3 text-secondary">
 									{Liferay.Language.get(
-										'add-members-to-this-space'
+										'add-members-to-this-design-library'
 									)}
 								</p>
 							</div>

@@ -9,16 +9,16 @@ tests:
         set:
             backup.enabled: false
     -   asserts:
-            -   hasDocuments:
-                    count: 1
-            -   isKind:
-                    of: CronWorkflow
             -   equal:
                     path: metadata.name
                     value: backup-cleanup-cron-workflow
             -   equal:
                     path: spec.schedules[0]
                     value: 0 2 * * *
+            -   hasDocuments:
+                    count: 1
+            -   isKind:
+                    of: CronWorkflow
         it: should render the cleanup CronWorkflow with its schedule when backups are enabled
         set:
             backup.enabled: true

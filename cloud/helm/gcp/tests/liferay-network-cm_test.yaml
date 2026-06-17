@@ -3,11 +3,11 @@ templates:
     -   templates/liferay-network-cm.yaml
 tests:
     -   asserts:
-            -   isKind:
-                    of: ConfigMap
             -   equal:
                     path: metadata.name
                     value: liferay-network
+            -   isKind:
+                    of: ConfigMap
             -   isNullOrEmpty:
                     path: data
         it: should create an empty liferay-network ConfigMap when no hostnames are configured

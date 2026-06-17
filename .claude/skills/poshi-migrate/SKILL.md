@@ -254,7 +254,7 @@ The plan must be exhaustive: every `test` from Phase 1 appears in either the **F
 
 After `ExitPlanMode` returns the user's approval, execute the plan in this order:
 
-1. **Drop cleanup commits** first. For every test classified as **Drop** in earlier phases, remove the `test` block from the source `.testcase` file (delete the file when it ends up empty), run `/format-source` on every changed file, and commit. The commit message must name the spec that already covers the test or the contract change that retired it. One commit per drop, or per group of drops sharing a single cause.
+1. **Drop cleanup commits** first. For every test classified as **Drop** in earlier phases, remove the `test` block from the source `.testcase` file (delete the file when it ends up empty), and commit. The commit message must name the spec that already covers the test or the contract change that retired it. One commit per drop, or per group of drops sharing a single cause.
 
 1. **New helper, util, or fixture commits**, one per artifact. Verify the artifact does not already exist by scanning `<playwrightTestsRoot>/../{helpers,fixtures,utils}` before creating it.
 
@@ -264,9 +264,7 @@ After `ExitPlanMode` returns the user's approval, execute the plan in this order
 
 	1. Removes the migrated `test` blocks from the `.testcase` file. When the file ends up empty after the removals, delete the file in the same commit.
 
-	1. Runs `/format-source` on every changed file before staging.
-
-	1. Uses `/commit` to write the commit message.
+	1. Commits the change.
 
 When implementing each layer, follow the rules below.
 
@@ -347,15 +345,13 @@ When the migration requires a new artifact under `<playwrightTestsRoot>/../{help
 
 ##### Tagging
 
-Every migrated test carries `{tag: '@<TICKET>'}` where `<TICKET>` is the LPS or LPD identifier recovered in Phase 1. Consolidations carry every ticket they cover: `tag: ['@<TICKET-A>', '@<TICKET-B>']`.
+Tag every migrated test with the LPS or LPD ticket recovered in Phase 1. Consolidations carry every ticket they cover.
 
 When the Poshi test has no ticket in its `@description` block and no LPS or LPD ticket surfaces from `git log --grep`, the migrated test goes without a tag. Do not invent a placeholder.
 
 #### Jest
 
 1. Place the new test under `<module-root>/test`, mirroring the path of the source file under test.
-
-1. Run with `cd <module-root> && yarn test <relative-path>`.
 
 1. Mock only what the JavaScript module under test cannot exercise directly. Avoid mocking the portal runtime — if you need it, the test belongs in Playwright or integration.
 
@@ -365,15 +361,11 @@ When the Poshi test has no ticket in its `@description` block and no LPS or LPD 
 
 1. Place the new test under `<module-root>/src/test/java`, in the same package as the class under test.
 
-1. Run with `cd <module-root> && <gradlew> test --tests <TestClassName>`.
-
 1. The test must not require the portal runtime, services, or persistence.
 
 #### Java Integration
 
 1. Place the new test under `<module-root>/src/testIntegration/java`, in the same package as the class under test.
-
-1. Run with `cd <module-root> && <gradlew> testIntegration --tests <TestClassName>`.
 
 1. Follow the team conventions for Liferay integration tests: auto-cleanup via test rules and annotations rather than `@After` or manual deletion, `@FeatureFlags` per method when needed, trigger artifacts through real listeners.
 
@@ -385,13 +377,7 @@ When the Poshi test has no ticket in its `@description` block and no LPS or LPD 
 
 Tests against the runtime are not done until they pass against a live backend.
 
-For Playwright, run from the repo root:
-
-```bash
-cd modules/test/playwright && yarn test <relative-spec-path>
-```
-
-For JUnit and Jest, use the commands listed in the per-layer sections above.
+Run each layer with its standard test command; for Playwright, the flake check below shows the invocation.
 
 When a spec fails, follow the protocol below before claiming the migration done. Never `xfail`, comment out, or weaken an assertion to land the commit.
 

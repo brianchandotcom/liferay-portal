@@ -5,9 +5,11 @@
 
 package com.liferay.document.library.internal.search.spi.model.query.contributor;
 
+import com.liferay.document.library.constants.DLFolderSearchConstants;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.search.spi.model.query.contributor.ModelPreFilterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchSettings;
 
@@ -29,13 +31,20 @@ public class DLFolderModelPreFilterContributor
 		BooleanFilter booleanFilter, ModelSearchSettings modelSearchSettings,
 		SearchContext searchContext) {
 
-		addHiddenFilter(booleanFilter);
+		addHiddenFilter(booleanFilter, searchContext);
 		addWorkflowStatusFilter(
 			booleanFilter, modelSearchSettings, searchContext);
 	}
 
-	protected void addHiddenFilter(BooleanFilter booleanFilter) {
-		booleanFilter.addRequiredTerm(Field.HIDDEN, false);
+	protected void addHiddenFilter(
+		BooleanFilter booleanFilter, SearchContext searchContext) {
+
+		if (!GetterUtil.getBoolean(
+				searchContext.getAttribute(
+					DLFolderSearchConstants.SHOW_HIDDEN))) {
+
+			booleanFilter.addRequiredTerm(Field.HIDDEN, false);
+		}
 	}
 
 	protected void addWorkflowStatusFilter(

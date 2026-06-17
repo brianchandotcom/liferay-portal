@@ -70,7 +70,9 @@ public class GitRepositoryBuildAdapter extends BuildAdapter {
 	}
 
 	private String _getGitResult(Project project, final Object... args) {
-		final ByteArrayOutputStream byteArrayOutputStream =
+		final ByteArrayOutputStream errorByteArrayOutputStream =
+			new ByteArrayOutputStream();
+		final ByteArrayOutputStream standardByteArrayOutputStream =
 			new ByteArrayOutputStream();
 
 		project.exec(
@@ -79,14 +81,25 @@ public class GitRepositoryBuildAdapter extends BuildAdapter {
 				@Override
 				public void execute(ExecSpec execSpec) {
 					execSpec.args(args);
+					execSpec.setErrorOutput(errorByteArrayOutputStream);
 					execSpec.setExecutable("git");
 					execSpec.setIgnoreExitValue(true);
-					execSpec.setStandardOutput(byteArrayOutputStream);
+					execSpec.setStandardOutput(standardByteArrayOutputStream);
 				}
 
 			});
 
-		String result = byteArrayOutputStream.toString();
+		String errorString = errorByteArrayOutputStream.toString();
+
+		if (!errorString.isEmpty()) {
+			String lowerCaseErrorString = errorString.toLowerCase();
+
+			if (!lowerCaseErrorString.contains("not a git repository")) {
+				_logger.error(errorString);
+			}
+		}
+
+		String result = standardByteArrayOutputStream.toString();
 
 		return result.trim();
 	}

@@ -40,6 +40,16 @@ export default async function formatSourceFile(filePath, skip, options) {
 
 	try {
 		switch (path.extname(filePath)) {
+			case '.graphql': {
+				if (!skip.prettier) {
+					transformedContent = await formatWithPrettier(
+						transformedContent,
+						filePath
+					);
+				}
+				break;
+			}
+
 			case '.jsp':
 			case '.jspf': {
 				if (!skip.prettier) {

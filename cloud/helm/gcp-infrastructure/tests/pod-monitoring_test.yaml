@@ -17,17 +17,17 @@ tests:
                     path: /metrics
                     port: 9999
     -   asserts:
-            -   isKind:
-                    of: PodMonitoring
-            -   equal:
-                    path: spec.endpoints[0].port
-                    value: 19001
             -   equal:
                     path: spec.endpoints[0].interval
                     value: 1m
             -   equal:
+                    path: spec.endpoints[0].port
+                    value: 19001
+            -   equal:
                     path: spec.selector.matchLabels["app.kubernetes.io/name"]
                     value: envoy
+            -   isKind:
+                    of: PodMonitoring
         documentSelector:
             path: metadata.name
             value: envoy
@@ -55,11 +55,11 @@ tests:
         it: should render one PodMonitoring per configured instance
     -   asserts:
             -   equal:
-                    path: spec.endpoints[0].port
-                    value: 9999
-            -   equal:
                     path: spec.endpoints[0].interval
                     value: 30s
+            -   equal:
+                    path: spec.endpoints[0].port
+                    value: 9999
             -   equal:
                     path: spec.selector.matchLabels.app
                     value: custom-app

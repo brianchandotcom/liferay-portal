@@ -6,6 +6,7 @@
 import {sub} from 'frontend-js-web';
 
 import {
+	PreviewPortletDataHandlerBoolean,
 	PreviewPortletDataHandlerControl,
 	PreviewPortletDataHandlerSection,
 } from '../types/portletDataHandler';
@@ -93,6 +94,94 @@ export function getInitialSelections(
 	);
 }
 
+export function getSectionPreviewPortletDataHandlers(
+	section: PreviewPortletDataHandlerSection,
+	{lookAndFeelEnabled = false}: {lookAndFeelEnabled?: boolean} = {}
+): PreviewPortletDataHandlerBoolean[] {
+	const previewPortletDataHandlers =
+		section.previewPortletDataHandlers.map<PreviewPortletDataHandlerBoolean>(
+			(handler) => ({...handler, type: 'Boolean'})
+		);
+
+	if (!(lookAndFeelEnabled && section.name === SITE_BUILDER_SECTION_KEY)) {
+		return previewPortletDataHandlers;
+	}
+
+	return [
+		...previewPortletDataHandlers,
+		{
+			label: Liferay.Language.get('look-and-feel'),
+			name: 'lookAndFeel',
+			previewPortletDataHandlerControls: [
+				{
+					label: Liferay.Language.get('theme-settings'),
+					name: 'themeSettings',
+					type: 'Boolean',
+				},
+				{
+					label: Liferay.Language.get('logo'),
+					name: 'logo',
+					type: 'Boolean',
+				},
+				{
+					label: Liferay.Language.get('site-pages-settings'),
+					name: 'sitePagesSettings',
+					type: 'Boolean',
+				},
+				{
+					label: Liferay.Language.get('site-template-settings'),
+					name: 'siteTemplateSettings',
+					type: 'Boolean',
+				},
+			],
+			type: 'Boolean',
+		},
+	];
+}
+
+export function getInitialSectionSelection(
+	section: PreviewPortletDataHandlerSection,
+	{
+		commentsAndRatingsEnabled = false,
+		lookAndFeelEnabled = false,
+	}: {commentsAndRatingsEnabled?: boolean; lookAndFeelEnabled?: boolean} = {}
+): Record<string, HandlerSelection> {
+	const selection = getInitialSelections(
+		getSectionPreviewPortletDataHandlers(section, {lookAndFeelEnabled})
+	);
+
+	if (commentsAndRatingsEnabled && section.name === CONTENT_SECTION_KEY) {
+		selection.commentsAndRatings = {comments: true, ratings: true};
+	}
+
+	return selection;
+}
+
+export function getInitialContentSelection(
+	sections: PreviewPortletDataHandlerSection[],
+	{
+		commentsAndRatingsEnabled = false,
+		lookAndFeelEnabled = false,
+		showDeletions = false,
+	}: {
+		commentsAndRatingsEnabled?: boolean;
+		lookAndFeelEnabled?: boolean;
+		showDeletions?: boolean;
+	} = {}
+): ContentSelection {
+	return Object.fromEntries(
+		getVisibleSections(sections, {lookAndFeelEnabled, showDeletions}).map(
+			(section) => [
+				section.name,
+				getInitialSectionSelection(section, {
+					commentsAndRatingsEnabled,
+					lookAndFeelEnabled,
+				}),
+			]
+		)
+	);
+}
+
 export function updateSelection<V>(
 	current: Record<string, V>,
 	key: string,
@@ -144,6 +233,26 @@ export function withSiteBuilderSection(
 			previewPortletDataHandlers: [],
 		},
 	];
+}
+
+export function getVisibleSections(
+	sections: PreviewPortletDataHandlerSection[],
+	{
+		lookAndFeelEnabled = false,
+		showDeletions = false,
+	}: {lookAndFeelEnabled?: boolean; showDeletions?: boolean} = {}
+): PreviewPortletDataHandlerSection[] {
+	const filteredSections = sections.filter(
+		(section) =>
+			showDeletions || !!section.additionCount || !section.deletionCount
+	);
+
+	return lookAndFeelEnabled
+		? withSiteBuilderSection(
+				filteredSections,
+				Liferay.Language.get('category.site_administration.build')
+			)
+		: filteredSections;
 }
 
 export function toProcessRequestFlags(

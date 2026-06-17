@@ -4,11 +4,12 @@
  */
 
 import {useField, useFormikContext} from 'formik';
-import React from 'react';
+import React, {useEffect} from 'react';
 
 import {PageTreeModalConfiguration} from '../../../pages/export/components/PageTreeModal';
 import {ExportImportProcess} from '../../../types/exportImportProcess';
 import {PreviewPortletDataHandlerSection} from '../../../types/portletDataHandler';
+import {getInitialContentSelection} from '../../../utils/contentSelection';
 import ContentSelector, {
 	ContentSelection,
 } from '../content_selector/ContentSelector';
@@ -34,7 +35,26 @@ export function FormikFieldContentSelector({
 }: FormikFieldContentSelectorProps) {
 	const [field, meta, helpers] = useField<ContentSelection | undefined>(name);
 	const [{value: deletions}] = useField<boolean | undefined>('deletions');
-	const {setFieldTouched} = useFormikContext();
+	const {setFieldTouched, setFieldValue} = useFormikContext();
+
+	const showDeletions = !!deletions;
+
+	const shouldSeed =
+		!!sections.length && field.value === undefined && !meta.touched;
+
+	const seededContentSelection = shouldSeed
+		? getInitialContentSelection(sections, {
+				commentsAndRatingsEnabled,
+				lookAndFeelEnabled,
+				showDeletions,
+			})
+		: undefined;
+
+	useEffect(() => {
+		if (seededContentSelection) {
+			setFieldValue(name, seededContentSelection);
+		}
+	}, [name, seededContentSelection, setFieldValue]);
 
 	return (
 		<ContentSelector
@@ -50,8 +70,8 @@ export function FormikFieldContentSelector({
 			pageTreeModalConfiguration={pageTreeModalConfiguration}
 			process={process}
 			sections={sections}
-			showDeletions={!!deletions}
-			value={field.value}
+			showDeletions={showDeletions}
+			value={field.value ?? seededContentSelection}
 		/>
 	);
 }

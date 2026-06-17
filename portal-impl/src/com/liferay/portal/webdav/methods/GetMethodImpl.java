@@ -9,6 +9,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.webdav.Resource;
 import com.liferay.portal.kernel.webdav.WebDAVException;
@@ -19,6 +21,8 @@ import com.liferay.portal.kernel.webdav.methods.Method;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.InputStream;
+
+import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan
@@ -47,25 +51,24 @@ public class GetMethodImpl implements Method {
 			}
 
 			if (inputStream != null) {
-				String contentType = resource.getContentType();
-				String fileName = resource.getDisplayName();
-
-				HttpServletResponse httpServletResponse =
-					webDAVRequest.getHttpServletResponse();
-
 				try {
-					if (_isBrowserExecutableContentType(contentType)) {
+					if (_browserExecutableContentTypes.contains(
+							StringUtil.toLowerCase(
+								resource.getContentType()))) {
+
 						ServletResponseUtil.sendFile(
 							webDAVRequest.getHttpServletRequest(),
-							httpServletResponse, fileName, inputStream,
-							resource.getSize(), contentType,
+							webDAVRequest.getHttpServletResponse(),
+							resource.getDisplayName(), inputStream,
+							resource.getSize(), resource.getContentType(),
 							HttpHeaders.CONTENT_DISPOSITION_ATTACHMENT);
 					}
 					else {
 						ServletResponseUtil.sendFileWithRangeHeader(
 							webDAVRequest.getHttpServletRequest(),
-							httpServletResponse, fileName, inputStream,
-							resource.getSize(), contentType);
+							webDAVRequest.getHttpServletResponse(),
+							resource.getDisplayName(), inputStream,
+							resource.getSize(), resource.getContentType());
 					}
 				}
 				catch (Exception exception) {
@@ -84,25 +87,12 @@ public class GetMethodImpl implements Method {
 		}
 	}
 
-	private boolean _isBrowserExecutableContentType(String contentType) {
-		if (contentType == null) {
-			return false;
-		}
-
-		String lowerCaseContentType = StringUtil.toLowerCase(contentType);
-
-		if (lowerCaseContentType.startsWith("application/javascript") ||
-			lowerCaseContentType.startsWith("application/xhtml+xml") ||
-			lowerCaseContentType.startsWith("image/svg+xml") ||
-			lowerCaseContentType.startsWith("text/html") ||
-			lowerCaseContentType.startsWith("text/javascript")) {
-
-			return true;
-		}
-
-		return false;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(GetMethodImpl.class);
+
+	private static final Set<String> _browserExecutableContentTypes =
+		SetUtil.fromArray(
+			ContentTypes.APPLICATION_JAVASCRIPT, ContentTypes.IMAGE_SVG_XML,
+			ContentTypes.TEXT_HTML, ContentTypes.TEXT_JAVASCRIPT,
+			"application/xhtml+xml");
 
 }

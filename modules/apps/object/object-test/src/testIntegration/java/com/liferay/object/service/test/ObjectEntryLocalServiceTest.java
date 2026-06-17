@@ -141,6 +141,7 @@ import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.expression.Predicate;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.audit.AuditMessage;
@@ -1968,20 +1969,11 @@ public class ObjectEntryLocalServiceTest {
 	public void testAddObjectEntryWithEmailAddressObjectField()
 		throws Exception {
 
-		String objectFieldName = "a" + RandomTestUtil.randomString();
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition();
 
-		ObjectDefinition objectDefinition = _publishCustomObjectDefinition(
-			Collections.singletonList(
-				new EmailAddressObjectFieldBuilder(
-				).labelMap(
-					RandomTestUtil.randomLocaleStringMap()
-				).name(
-					objectFieldName
-				).userId(
-					TestPropsValues.getUserId()
-				).build()));
-
-		String blockedDomain = "@blocked.com";
+		String blockedDomain =
+			CharPool.AT + RandomTestUtil.randomString() + ".com";
 
 		ObjectField objectField = ObjectFieldUtil.addCustomObjectField(
 			new EmailAddressObjectFieldBuilder(
@@ -2012,56 +2004,52 @@ public class ObjectEntryLocalServiceTest {
 		AssertUtils.assertFailure(
 			ObjectEntryValuesException.BlockedEmailAddressDomain.class,
 			StringBundler.concat(
-				"The email address domain \"", blockedDomain,
+				"The email address domain \"",
+				StringUtil.toLowerCase(blockedDomain),
 				"\" is blocked for object field \"", objectField.getName(),
 				"\""),
 			() -> _addObjectEntry(
 				objectDefinition,
 				HashMapBuilder.<String, Serializable>put(
-					objectField.getName(), "user" + blockedDomain
+					objectField.getName(),
+					RandomTestUtil.randomString() + blockedDomain
 				).build(),
 				ServiceContextTestUtil.getServiceContext()));
 
-		String emailPrefix = RandomTestUtil.randomString();
+		String invalidEmailAddress = RandomTestUtil.randomString();
 
 		AssertUtils.assertFailure(
 			ObjectEntryValuesException.InvalidEmailAddress.class,
 			StringBundler.concat(
-				"The email address \"", emailPrefix,
-				"\" is invalid for object field \"", objectFieldName, "\""),
+				"The email address \"", invalidEmailAddress,
+				"\" is invalid for object field \"", objectField.getName(),
+				"\""),
 			() -> _addObjectEntry(
 				objectDefinition,
 				HashMapBuilder.<String, Serializable>put(
-					objectFieldName, emailPrefix
+					objectField.getName(), invalidEmailAddress
 				).build(),
 				ServiceContextTestUtil.getServiceContext()));
 
-		_addObjectEntry(
-			objectDefinition,
-			HashMapBuilder.<String, Serializable>put(
-				objectField.getName(), "user@example.com"
-			).build(),
-			ServiceContextTestUtil.getServiceContext());
+		String emailAddress = _getRandomEmailAddress();
+
+		_testAddObjectEntry(
+			StringUtil.toLowerCase(emailAddress), objectField.getName(),
+			objectDefinition, emailAddress);
 
 		AssertUtils.assertFailure(
 			ObjectEntryValuesException.UniqueValueConstraintViolation.class,
-			String.format(
-				"Unique value constraint violation for %s.%s with value %s",
-				objectField.getDBTableName(), objectField.getDBColumnName(),
-				"user@example.com"),
+			StringBundler.concat(
+				"Unique value constraint violation for ",
+				objectField.getDBTableName(), StringPool.PERIOD,
+				objectField.getDBColumnName(), " with value ",
+				StringUtil.toLowerCase(emailAddress)),
 			() -> _addObjectEntry(
 				objectDefinition,
 				HashMapBuilder.<String, Serializable>put(
-					objectField.getName(), "User@Example.com"
+					objectField.getName(), emailAddress
 				).build(),
 				ServiceContextTestUtil.getServiceContext()));
-
-		_testAddObjectEntry("", objectFieldName, objectDefinition, "");
-		_testAddObjectEntry(
-			StringUtil.toLowerCase(emailPrefix) + "@example.com",
-			objectFieldName, objectDefinition, emailPrefix + "@EXAMPLE.COM");
-
-		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 	}
 
 	@Test
@@ -7565,29 +7553,27 @@ public class ObjectEntryLocalServiceTest {
 	public void testUpdateObjectEntryWithEmailAddressObjectField()
 		throws Exception {
 
-		String objectFieldName = "a" + RandomTestUtil.randomString();
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition();
 
-		ObjectDefinition objectDefinition = _publishCustomObjectDefinition(
-			Collections.singletonList(
-				new EmailAddressObjectFieldBuilder(
-				).labelMap(
-					LocalizedMapUtil.getLocalizedMap(
-						RandomTestUtil.randomString())
-				).name(
-					objectFieldName
-				).userId(
-					TestPropsValues.getUserId()
-				).build()));
+		ObjectField objectField = ObjectFieldUtil.addCustomObjectField(
+			new EmailAddressObjectFieldBuilder(
+			).labelMap(
+				RandomTestUtil.randomLocaleStringMap()
+			).name(
+				"a" + RandomTestUtil.randomString()
+			).objectDefinitionId(
+				objectDefinition.getObjectDefinitionId()
+			).userId(
+				TestPropsValues.getUserId()
+			).build());
 
 		ObjectEntry objectEntry = _addObjectEntry(
 			objectDefinition,
 			HashMapBuilder.<String, Serializable>put(
-				objectFieldName, RandomTestUtil.randomString() + "@example.com"
+				objectField.getName(), _getRandomEmailAddress()
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
-
-		long objectEntryFolderId = objectEntry.getObjectEntryFolderId();
-		long objectEntryId = objectEntry.getObjectEntryId();
 
 		String invalidEmailAddress = RandomTestUtil.randomString();
 
@@ -7595,26 +7581,21 @@ public class ObjectEntryLocalServiceTest {
 			ObjectEntryValuesException.InvalidEmailAddress.class,
 			StringBundler.concat(
 				"The email address \"", invalidEmailAddress,
-				"\" is invalid for object field \"", objectFieldName, "\""),
+				"\" is invalid for object field \"", objectField.getName(),
+				"\""),
 			() -> _objectEntryLocalService.updateObjectEntry(
-				TestPropsValues.getUserId(), objectEntryId, objectEntryFolderId,
+				TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+				objectEntry.getObjectEntryFolderId(),
 				HashMapBuilder.<String, Serializable>put(
-					objectFieldName, invalidEmailAddress
+					objectField.getName(), invalidEmailAddress
 				).build(),
 				ServiceContextTestUtil.getServiceContext()));
 
-		objectEntry = _objectEntryLocalService.updateObjectEntry(
-			TestPropsValues.getUserId(), objectEntryId, objectEntryFolderId,
-			HashMapBuilder.<String, Serializable>put(
-				objectFieldName, "UPDATED@EXAMPLE.COM"
-			).build(),
-			ServiceContextTestUtil.getServiceContext());
+		String emailAddress = _getRandomEmailAddress();
 
-		Assert.assertEquals(
-			"updated@example.com",
-			MapUtil.getString(objectEntry.getValues(), objectFieldName));
-
-		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
+		_testUpdateObjectEntry(
+			StringUtil.toLowerCase(emailAddress), objectField.getName(),
+			objectEntry, emailAddress);
 	}
 
 	@Test
@@ -8940,6 +8921,12 @@ public class ObjectEntryLocalServiceTest {
 		return ": Invalid transformation format:";
 	}
 
+	private String _getRandomEmailAddress() {
+		return StringBundler.concat(
+			RandomTestUtil.randomString(), CharPool.AT,
+			RandomTestUtil.randomString(), ".com");
+	}
+
 	private Map<String, Serializable> _getValuesFromCacheField(
 			ObjectEntry objectEntry)
 		throws Exception {
@@ -9054,9 +9041,9 @@ public class ObjectEntryLocalServiceTest {
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
 
-		Map<String, Serializable> values = objectEntry.getValues();
-
-		Assert.assertEquals(expectedValue, values.get(fieldName));
+		Assert.assertEquals(
+			expectedValue,
+			MapUtil.getString(objectEntry.getValues(), fieldName));
 	}
 
 	private void _testAddObjectEntryAsDraft() throws Exception {
@@ -10132,6 +10119,24 @@ public class ObjectEntryLocalServiceTest {
 		}
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
+	}
+
+	private void _testUpdateObjectEntry(
+			String expectedValue, String fieldName, ObjectEntry objectEntry,
+			String value)
+		throws Exception {
+
+		objectEntry = _objectEntryLocalService.updateObjectEntry(
+			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+			objectEntry.getObjectEntryFolderId(),
+			HashMapBuilder.<String, Serializable>put(
+				fieldName, value
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertEquals(
+			expectedValue,
+			MapUtil.getString(objectEntry.getValues(), fieldName));
 	}
 
 	private void _testUpdateObjectEntryExternalReferenceCode()

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -107,14 +108,17 @@ public class EmailAddressObjectFieldBusinessType
 			List<ObjectFieldSetting> objectFieldSettings)
 		throws PortalException {
 
-		Set<String> normalizedSettingNames = SetUtil.fromArray(
-			ObjectFieldSettingConstants.NAME_AUTOCOMPLETE_DOMAINS,
-			ObjectFieldSettingConstants.NAME_BLOCKED_DOMAINS,
-			ObjectFieldSettingConstants.NAME_DEFAULT_VALUE);
-
 		for (ObjectFieldSetting objectFieldSetting : objectFieldSettings) {
-			if (normalizedSettingNames.contains(objectFieldSetting.getName()) &&
-				Validator.isNotNull(objectFieldSetting.getValue())) {
+			if (Validator.isNull(objectFieldSetting.getValue())) {
+				continue;
+			}
+
+			if (objectFieldSetting.compareName(
+					ObjectFieldSettingConstants.NAME_AUTOCOMPLETE_DOMAINS) ||
+				objectFieldSetting.compareName(
+					ObjectFieldSettingConstants.NAME_BLOCKED_DOMAINS) ||
+				objectFieldSetting.compareName(
+					ObjectFieldSettingConstants.NAME_DEFAULT_VALUE)) {
 
 				objectFieldSetting.setValue(
 					StringUtil.toLowerCase(objectFieldSetting.getValue()));
@@ -136,7 +140,7 @@ public class EmailAddressObjectFieldBusinessType
 		_validateEmailAddress(
 			ObjectFieldSettingUtil.getValue(
 				ObjectFieldSettingConstants.NAME_BLOCKED_DOMAINS, objectField),
-			objectField, value);
+			value, objectField);
 
 		return StringUtil.toLowerCase(value);
 	}
@@ -160,7 +164,6 @@ public class EmailAddressObjectFieldBusinessType
 			objectField.getName(),
 			ObjectFieldSettingConstants.NAME_UNIQUE_VALUES,
 			objectFieldSettingsValues);
-
 		_validateEmailAddressDomains(
 			objectField.getName(),
 			ObjectFieldSettingConstants.NAME_BLOCKED_DOMAINS,
@@ -190,7 +193,7 @@ public class EmailAddressObjectFieldBusinessType
 			Map<String, String> objectFieldSettingsValuesMap)
 		throws PortalException {
 
-		if (objectFieldSettingsValuesMap.isEmpty()) {
+		if (MapUtil.isEmpty(objectFieldSettingsValuesMap)) {
 			return;
 		}
 
@@ -208,7 +211,7 @@ public class EmailAddressObjectFieldBusinessType
 			_validateEmailAddress(
 				objectFieldSettingsValuesMap.get(
 					ObjectFieldSettingConstants.NAME_BLOCKED_DOMAINS),
-				objectField, defaultValue);
+				defaultValue, objectField);
 		}
 		catch (ObjectEntryValuesException objectEntryValuesException) {
 			throw new ObjectFieldSettingValueException.InvalidValue(
@@ -218,50 +221,37 @@ public class EmailAddressObjectFieldBusinessType
 		}
 	}
 
-	private boolean _isBlockedDomain(
-		String blockedDomains, String normalizedEmailAddress) {
+	private void _validateEmailAddress(
+			String blockedDomains, String emailAddress, ObjectField objectField)
+		throws PortalException {
 
-		if (Validator.isNull(blockedDomains)) {
-			return false;
-		}
+		String normalizedEmailAddress = StringUtil.toLowerCase(emailAddress);
 
-		String domain = normalizedEmailAddress.substring(
-			normalizedEmailAddress.lastIndexOf(CharPool.AT));
+		int index = normalizedEmailAddress.lastIndexOf(CharPool.AT);
 
-		for (String blockedDomain :
-				StringUtil.split(blockedDomains, CharPool.COMMA)) {
+		if (index > 0) {
+			String domain = normalizedEmailAddress.substring(index);
 
-			if (StringUtil.equalsIgnoreCase(domain, blockedDomain.trim())) {
-				return true;
+			for (String blockedDomain : StringUtil.split(blockedDomains)) {
+				if (StringUtil.equalsIgnoreCase(domain, blockedDomain.trim())) {
+					throw new ObjectEntryValuesException.
+						BlockedEmailAddressDomain(
+							domain, objectField.getName());
+				}
 			}
 		}
 
-		return false;
-	}
-
-	private void _validateEmailAddress(
-			String blockedDomains, ObjectField objectField, String value)
-		throws PortalException {
-
 		int maxLength = DynamicObjectDefinitionTableUtil.getMaxLength(
 			objectField.getBusinessType());
-		String normalizedValue = StringUtil.toLowerCase(value);
 
-		if (normalizedValue.length() > maxLength) {
+		if (normalizedEmailAddress.length() > maxLength) {
 			throw new ObjectEntryValuesException.ExceedsTextMaxLength(
 				maxLength, objectField.getName());
 		}
 
-		if (!Validator.isEmailAddress(normalizedValue)) {
+		if (!Validator.isEmailAddress(normalizedEmailAddress)) {
 			throw new ObjectEntryValuesException.InvalidEmailAddress(
-				value, objectField.getName());
-		}
-
-		if (_isBlockedDomain(blockedDomains, normalizedValue)) {
-			throw new ObjectEntryValuesException.BlockedEmailAddressDomain(
-				normalizedValue.substring(
-					normalizedValue.lastIndexOf(CharPool.AT)),
-				objectField.getName());
+				emailAddress, objectField.getName());
 		}
 	}
 
@@ -270,23 +260,18 @@ public class EmailAddressObjectFieldBusinessType
 			Map<String, String> objectFieldSettingsValues)
 		throws PortalException {
 
-		String value = objectFieldSettingsValues.get(objectFieldSettingName);
+		for (String domain :
+				StringUtil.split(
+					objectFieldSettingsValues.get(objectFieldSettingName))) {
 
-		if (Validator.isNull(value)) {
-			return;
-		}
-
-		for (String domain : StringUtil.split(value, CharPool.COMMA)) {
-			String trimmedDomain = domain.trim();
-
-			String normalizedDomain = StringUtil.toLowerCase(trimmedDomain);
+			String normalizedDomain = StringUtil.toLowerCase(domain.trim());
 
 			if (!StringUtil.startsWith(normalizedDomain, CharPool.AT) ||
 				!Validator.isDomain(
 					StringUtil.extractLast(normalizedDomain, CharPool.AT))) {
 
 				throw new ObjectFieldSettingValueException.InvalidValue(
-					objectFieldName, objectFieldSettingName, trimmedDomain);
+					objectFieldName, objectFieldSettingName, domain.trim());
 			}
 		}
 	}

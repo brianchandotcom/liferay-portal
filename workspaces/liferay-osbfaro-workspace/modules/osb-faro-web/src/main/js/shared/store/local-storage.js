@@ -6,9 +6,10 @@ export function loadState() {
 			maintenanceSeen: JSON.parse(
 				atob(localStorage.getItem('maintenanceSeen'))
 			),
-			sidebar: JSON.parse(atob(localStorage.getItem('sidebar')))
+			sidebar: JSON.parse(atob(localStorage.getItem('sidebar'))),
 		});
-	} catch (err) {
+	}
+	catch (err) {
 		return undefined;
 	}
 }
@@ -24,5 +25,6 @@ export function saveState(state) {
 			'sidebar',
 			btoa(JSON.stringify(state.get('sidebar')))
 		);
-	} catch (err) {}
+	}
+	catch (err) {}
 }

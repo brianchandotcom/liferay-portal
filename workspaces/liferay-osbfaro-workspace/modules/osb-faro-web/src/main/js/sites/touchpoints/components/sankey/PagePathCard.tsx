@@ -11,7 +11,7 @@ import {EmptySankey} from './EmptySankey';
 import {
 	getSafeDecodedURIComponent,
 	getSafeRangeSelectors,
-	getSafeTouchpoint
+	getSafeTouchpoint,
 } from 'shared/util/util';
 import {RangeSelectors} from 'shared/types';
 import {SANKEY_WIDTH, SECONDARY_NODE_COLOR} from './utils';
@@ -37,7 +37,7 @@ function getTitle(key: TitleKey, type: Type) {
 		[TitleKey.Others]:
 			type === Type.Previous
 				? Liferay.Language.get('other-referrals')
-				: Liferay.Language.get('other-pages')
+				: Liferay.Language.get('other-pages'),
 	};
 
 	return langs[key] || key;
@@ -62,7 +62,7 @@ function formatData({pagePath}: {pagePath: pagePathNode}) {
 				name: getTitle(title, type),
 				type,
 				url: canonicalUrl,
-				views
+				views,
 			}));
 
 	const mainNode = {
@@ -70,7 +70,7 @@ function formatData({pagePath}: {pagePath: pagePathNode}) {
 		main: true,
 		name: pagePath.title,
 		url: pagePath.canonicalUrl,
-		views: pagePath.views
+		views: pagePath.views,
 	};
 
 	const previousNodes = formatNodes(
@@ -86,14 +86,14 @@ function formatData({pagePath}: {pagePath: pagePathNode}) {
 	const links = [...previousNodes, ...followingNodes].map((link, index) => ({
 		source: link.type === Type.Previous ? index + 1 : 0,
 		target: link.type === Type.Previous ? 0 : index + 1,
-		value: link.views
+		value: link.views,
 	}));
 
 	const nodes = [mainNode, ...previousNodes, ...followingNodes];
 
 	return {
 		links,
-		nodes
+		nodes,
 	};
 }
 
@@ -104,7 +104,7 @@ interface IPagePathCardProps {
 
 const PagePathCard: React.FC<IPagePathCardProps> = ({
 	rangeSelectors,
-	selectedSegment
+	selectedSegment,
 }) => {
 	const cardRef = useRef(null);
 	const {channelId, title, touchpoint} = useParams<{
@@ -118,10 +118,10 @@ const PagePathCard: React.FC<IPagePathCardProps> = ({
 			channelId,
 			title: getSafeDecodedURIComponent(title ?? ''),
 			...(selectedSegment?.id && {
-				segmentId: selectedSegment.id
+				segmentId: selectedSegment.id,
 			}),
-			...getSafeRangeSelectors(rangeSelectors)
-		}
+			...getSafeRangeSelectors(rangeSelectors),
+		},
 	});
 
 	const formattedData = data ? formatData(data) : {links: [], nodes: []};
@@ -139,7 +139,7 @@ const PagePathCard: React.FC<IPagePathCardProps> = ({
 			</Card.Header>
 
 			<div ref={cardRef}>
-				<Card.Body className='d-flex align-items-center justify-content-center'>
+				<Card.Body className="d-flex align-items-center justify-content-center">
 					<StatesRenderer
 						empty={emptyState}
 						error={!!error}
@@ -170,7 +170,7 @@ const PagePathCard: React.FC<IPagePathCardProps> = ({
 								/>
 
 								<NoResultsDisplay
-									className='mt-4'
+									className="mt-4"
 									description={
 										<>
 											{Liferay.Language.get(
@@ -178,12 +178,12 @@ const PagePathCard: React.FC<IPagePathCardProps> = ({
 											)}
 
 											<ClayLink
-												className='d-block mb-3'
+												className="d-block mb-3"
 												href={
 													URLConstants.SitesDashboardPagesPath
 												}
-												key='DOCUMENTATION'
-												target='_blank'
+												key="DOCUMENTATION"
+												target="_blank"
 											>
 												{Liferay.Language.get(
 													'learn-more-about-path'

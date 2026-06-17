@@ -1,7 +1,7 @@
 import {mapResultToProps} from '../sites-dashboard-query';
 
 const mockData = {
-	dataSources: [{foo: 'foo'}]
+	dataSources: [{foo: 'foo'}],
 };
 
 describe('Sites Dashboard Query Mapper', () => {

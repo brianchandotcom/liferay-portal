@@ -15,7 +15,7 @@ import {
 	getOperator,
 	getPropertyValue,
 	removeItemsByIndex,
-	setPropertyValue
+	setPropertyValue,
 } from '../utils/custom-inputs';
 import {ISegmentEditorCustomInputBase} from '../utils/types';
 import {isNull} from 'lodash';
@@ -49,7 +49,7 @@ export function createLocationTypeEntry(
 	return Map({
 		operatorName: selectedOperator,
 		propertyName: `context/${locationType}`,
-		value
+		value,
 	});
 }
 
@@ -99,11 +99,11 @@ export function setLocationTypeValue(
 
 	return locationTypeIndex > -1
 		? setPropertyValue(valueIMap, 'value', locationTypeIndex, newValue)
-		: (valueIMap.updateIn(['criterionGroup', 'items'], iList =>
+		: (valueIMap.updateIn(['criterionGroup', 'items'], (iList) =>
 				iList.push(
 					createLocationTypeEntry(locationType, newValue, valueIMap)
 				)
-		  ) as CustomValue);
+			) as CustomValue);
 }
 
 /**
@@ -117,7 +117,7 @@ export function updateLocationOperators(
 	newOperator: string
 ): CustomValue {
 	const locationPropertyNames = [COUNTRY, REGION, CITY].map(
-		name => `context/${name}`
+		(name) => `context/${name}`
 	);
 
 	return valueIMap.updateIn(['criterionGroup', 'items'], (iList: any) =>
@@ -135,18 +135,18 @@ export function updateLocationOperators(
 
 function fetchCountries({
 	channelId,
-	groupId
+	groupId,
 }: {
 	channelId?: string;
 	groupId?: string;
 }): (query?: string) => Promise<string[]> {
-	return query =>
+	return (query) =>
 		API.session
 			.fetchFieldValues({
 				channelId,
 				fieldName: `context/${COUNTRY}`,
 				groupId: groupId!,
-				query
+				query,
 			})
 			.then(({items}) => items);
 }
@@ -154,7 +154,7 @@ function fetchCountries({
 function fetchRegions({
 	channelId,
 	groupId,
-	valueIMap
+	valueIMap,
 }: {
 	channelId?: string;
 	groupId?: string;
@@ -168,14 +168,14 @@ function fetchRegions({
 		filter = [...filter, `context/${COUNTRY} eq '${countryInputValue}'`];
 	}
 
-	return query =>
+	return (query) =>
 		API.session
 			.fetchFieldValues({
 				channelId,
 				fieldName: `context/${REGION}`,
 				filter: filter.join(' and '),
 				groupId: groupId!,
-				query
+				query,
 			})
 			.then(({items}) => items);
 }
@@ -183,7 +183,7 @@ function fetchRegions({
 function fetchCities({
 	channelId,
 	groupId,
-	valueIMap
+	valueIMap,
 }: {
 	channelId?: string;
 	groupId?: string;
@@ -202,14 +202,14 @@ function fetchCities({
 		filter = [...filter, `context/${REGION} eq '${regionInputValue}'`];
 	}
 
-	return query =>
+	return (query) =>
 		API.session
 			.fetchFieldValues({
 				channelId,
 				fieldName: `context/${CITY}`,
 				filter: filter.join(' and '),
 				groupId: groupId!,
-				query
+				query,
 			})
 			.then(({items}) => items);
 }
@@ -237,8 +237,8 @@ const ButtonInputTrigger: React.FC<IButtonInputTriggerProps> = ({
 		<AutocompleteInput value={value} {...otherProps} />
 	) : (
 		<ClayButton
-			className='button-root'
-			displayType='secondary'
+			className="button-root"
+			displayType="secondary"
 			onClick={onClick}
 		>
 			{label}
@@ -261,7 +261,7 @@ export default class GeolocationInput extends React.Component<
 
 		this.state = {
 			editCity: !!getLocationTypeValue(value, CITY),
-			editRegion: !!getLocationTypeValue(value, REGION)
+			editRegion: !!getLocationTypeValue(value, REGION),
 		};
 	}
 
@@ -293,7 +293,7 @@ export default class GeolocationInput extends React.Component<
 				: value.mergeIn(
 						['criterionGroup', 'items', 1],
 						fromJS(criterion)
-				  )
+					),
 		});
 	}
 
@@ -305,8 +305,8 @@ export default class GeolocationInput extends React.Component<
 			touched: {...touched, country: true},
 			valid: {
 				...valid,
-				country: isValid(getLocationTypeValue(value, COUNTRY))
-			}
+				country: isValid(getLocationTypeValue(value, COUNTRY)),
+			},
 		});
 	}
 
@@ -320,7 +320,7 @@ export default class GeolocationInput extends React.Component<
 			const criterionIndex = getLocationTypeIndex(value, locationType);
 
 			onChange({
-				value: removeItemsByIndex(value, [criterionIndex])
+				value: removeItemsByIndex(value, [criterionIndex]),
 			});
 		}
 	}
@@ -333,13 +333,13 @@ export default class GeolocationInput extends React.Component<
 			value: Map<any, any>;
 			valid?: {country: boolean; dateFilter: boolean};
 		} = {
-			value: setLocationTypeValue(value, locationType, inputValue)
+			value: setLocationTypeValue(value, locationType, inputValue),
 		};
 
 		if (locationType === COUNTRY) {
 			params = {
 				...params,
-				valid: {...valid, country: isValid(inputValue)}
+				valid: {...valid, country: isValid(inputValue)},
 			};
 		}
 
@@ -362,9 +362,9 @@ export default class GeolocationInput extends React.Component<
 				property: {entityName},
 				touched,
 				valid,
-				value
+				value,
 			},
-			state: {editCity, editRegion}
+			state: {editCity, editRegion},
 		} = this;
 
 		const cityInputValue = getLocationTypeValue(value, CITY);
@@ -373,19 +373,19 @@ export default class GeolocationInput extends React.Component<
 		const conjunctionCriterion = this.getConjunctionDateFilterIMap(value);
 
 		return (
-			<div className='criteria-statement geolocation-input'>
+			<div className="criteria-statement geolocation-input">
 				<Form.Group autoFit>
-					<Form.GroupItem className='entity-name' label shrink>
+					<Form.GroupItem className="entity-name" label shrink>
 						{entityName}
 					</Form.GroupItem>
 
-					<Form.GroupItem className='display-value' label shrink>
+					<Form.GroupItem className="display-value" label shrink>
 						{displayValue}
 					</Form.GroupItem>
 
 					<Form.GroupItem shrink>
 						<Picker
-							className='operator-input'
+							className="operator-input"
 							items={GEOLOCATION_OPTIONS}
 							onSelectionChange={this.handleOperatorChange}
 							selectedKey={getOperator(
@@ -402,11 +402,11 @@ export default class GeolocationInput extends React.Component<
 					<Form.GroupItem shrink>
 						<AutocompleteInput
 							className={getCN({
-								'has-error': !valid && touched
+								'has-error': !valid && touched,
 							})}
 							dataSourceFn={fetchCountries({channelId, groupId})}
 							onBlur={this.handleCountryBlur}
-							onChange={value =>
+							onChange={(value) =>
 								this.handleLocationTypeChange(value, COUNTRY)
 							}
 							placeholder={Liferay.Language.get('country')}
@@ -416,16 +416,16 @@ export default class GeolocationInput extends React.Component<
 
 					<Form.GroupItem shrink>
 						<ButtonInputTrigger
-							className='region'
+							className="region"
 							dataSourceFn={fetchRegions({
 								channelId,
 								groupId,
-								valueIMap: value
+								valueIMap: value,
 							})}
 							editing={editRegion || !!regionInputValue.length}
 							label={Liferay.Language.get('add-region')}
 							onBlur={() => this.handleLocationOnBlur(REGION)}
-							onChange={value =>
+							onChange={(value) =>
 								this.handleLocationTypeChange(value, REGION)
 							}
 							onClick={() => this.setState({editRegion: true})}
@@ -436,16 +436,16 @@ export default class GeolocationInput extends React.Component<
 
 					<Form.GroupItem shrink>
 						<ButtonInputTrigger
-							className='city'
+							className="city"
 							dataSourceFn={fetchCities({
 								channelId,
 								groupId,
-								valueIMap: value
+								valueIMap: value,
 							})}
 							editing={editCity || !!cityInputValue.length}
 							label={Liferay.Language.get('add-city')}
 							onBlur={() => this.handleLocationOnBlur(CITY)}
-							onChange={value =>
+							onChange={(value) =>
 								this.handleLocationTypeChange(value, CITY)
 							}
 							onClick={() => this.setState({editCity: true})}

@@ -6,7 +6,7 @@ import {
 	toLocale,
 	toRounded,
 	toThousands,
-	undoThousands
+	undoThousands,
 } from '../numbers';
 
 describe('toLocale', () => {

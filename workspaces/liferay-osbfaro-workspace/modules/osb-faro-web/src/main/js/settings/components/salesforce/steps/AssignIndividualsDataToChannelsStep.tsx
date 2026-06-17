@@ -31,7 +31,7 @@ const AssignIndividualsDataToPropertiesStep = ({
 	onPrev,
 	onSubmit,
 	open,
-	updateDataSourceFn
+	updateDataSourceFn,
 }: IAssignIndividualsDataToPropertiesStepProps) => {
 	const history = useHistory();
 	const {groupId = ''} = useParams<{groupId: string}>();
@@ -60,7 +60,7 @@ const AssignIndividualsDataToPropertiesStep = ({
 
 	return (
 		<ClayForm
-			onSubmit={async event => {
+			onSubmit={async (event) => {
 				event.preventDefault();
 
 				if (!dataSource) {
@@ -72,14 +72,14 @@ const AssignIndividualsDataToPropertiesStep = ({
 
 					const updatedDataSource = {
 						channelsConfiguration: {
-							channels: selectedItems.map(channelId => ({
+							channels: selectedItems.map((channelId) => ({
 								channelId,
-								enabled: true
+								enabled: true,
 							})),
-							enableAllChannels: allChannelsSelected
+							enableAllChannels: allChannelsSelected,
 						},
 						groupId,
-						id: dataSource.id
+						id: dataSource.id,
 					} as any;
 
 					await updateDataSourceFn(updatedDataSource);
@@ -89,28 +89,30 @@ const AssignIndividualsDataToPropertiesStep = ({
 					history.push(
 						toRoute(Routes.SETTINGS_DATA_SOURCE, {
 							groupId,
-							id: dataSource.id
+							id: dataSource.id,
 						})
 					);
-				} catch (error) {
+				}
+				catch (error) {
 					addAlert({
 						alertType: Alert.Types.Error,
 						message: Liferay.Language.get(
 							'there-was-an-error-processing-your-request.-try-again.-if-the-problem-persists,-please-contact-support'
-						)
+						),
 					});
-				} finally {
+				}
+				finally {
 					setLoading(false);
 				}
 			}}
 		>
 			<div
 				className={getCN({
-					'opacity-50': allChannelsSelected
+					'opacity-50': allChannelsSelected,
 				})}
 			>
-				<div className='mb-2'>
-					<Text size={2} weight='semi-bold'>
+				<div className="mb-2">
+					<Text size={2} weight="semi-bold">
 						{Liferay.Language.get(
 							'select-properties'
 						).toUpperCase()}
@@ -120,10 +122,10 @@ const AssignIndividualsDataToPropertiesStep = ({
 				<ClayList>
 					<ClayList.Item flex>
 						<ClayList.ItemField>
-							<ClaySticker displayType='unstyled'>
+							<ClaySticker displayType="unstyled">
 								<ClayIcon
-									className='text-secondary'
-									symbol='nodes'
+									className="text-secondary"
+									symbol="nodes"
 								/>
 							</ClaySticker>
 						</ClayList.ItemField>
@@ -134,10 +136,10 @@ const AssignIndividualsDataToPropertiesStep = ({
 									selectedItems.length === 1
 										? Liferay.Language.get(
 												'x-property-selected'
-										  )
+											)
 										: Liferay.Language.get(
 												'x-properties-selected'
-										  ),
+											),
 									[selectedItems.length]
 								)}
 							</ClayList.ItemTitle>
@@ -146,16 +148,16 @@ const AssignIndividualsDataToPropertiesStep = ({
 						<ClayList.ItemField>
 							<ClayButton
 								disabled={allChannelsSelected}
-								displayType='secondary'
+								displayType="secondary"
 								onClick={() => {
 									open(modalTypes.SELECT_CHANNELS_MODAL, {
 										groupId,
 										initialItems: selectedItems,
 										onClose: close,
-										onSelect: setSelectedItems
+										onSelect: setSelectedItems,
 									});
 								}}
-								size='sm'
+								size="sm"
 							>
 								{Liferay.Language.get('select')}
 							</ClayButton>
@@ -164,18 +166,18 @@ const AssignIndividualsDataToPropertiesStep = ({
 				</ClayList>
 			</div>
 
-			<div className='d-flex'>
+			<div className="d-flex">
 				<ClayCheckbox
 					checked={allChannelsSelected}
-					id='checkAllChannels'
+					id="checkAllChannels"
 					inline
 					onChange={() =>
 						setAllChannelsSelected(!allChannelsSelected)
 					}
 				/>
 
-				<label className='ml-2' htmlFor='checkAllChannels'>
-					<Text size={3} weight='normal'>
+				<label className="ml-2" htmlFor="checkAllChannels">
+					<Text size={3} weight="normal">
 						{Liferay.Language.get(
 							'make-individual-data-from-this-data-source-available-in-all-properties,-including-those-not-yet-created'
 						)}

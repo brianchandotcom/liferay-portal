@@ -11,7 +11,7 @@ import {
 	validateMinValue,
 	validatePattern,
 	validateProtocol,
-	validateRequired
+	validateRequired,
 } from '../validators';
 
 describe('toPromise', () => {
@@ -277,7 +277,7 @@ describe('composeValidators', () => {
 describe('validateExternalReferenceCode', () => {
 	it.each(['', '   '])(
 		'returns required error for empty value %p',
-		async value => {
+		async (value) => {
 			await expect(validateExternalReferenceCode(value)).resolves.toBe(
 				'Required'
 			);
@@ -286,7 +286,7 @@ describe('validateExternalReferenceCode', () => {
 
 	it.each(['Invalid Code', 'has spaces', 'UPPER', 'with@symbol', 'a/b'])(
 		'returns slug error for invalid value %p',
-		async value => {
+		async (value) => {
 			await expect(validateExternalReferenceCode(value)).resolves.toBe(
 				'ERC must contain only lowercase letters, numbers, hyphens, and underscores.'
 			);
@@ -297,8 +297,8 @@ describe('validateExternalReferenceCode', () => {
 		'vip-users',
 		'vip_users_2026',
 		'abc123',
-		'3010f20f-98bd-4910-2a30-97716addddb5'
-	])('accepts valid slug %p', async value => {
+		'3010f20f-98bd-4910-2a30-97716addddb5',
+	])('accepts valid slug %p', async (value) => {
 		await expect(validateExternalReferenceCode(value)).resolves.toBe('');
 	});
 });

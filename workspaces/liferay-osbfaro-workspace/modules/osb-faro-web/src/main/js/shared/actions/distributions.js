@@ -7,7 +7,7 @@ export const INDIVIDUALS_DASHBOARD_DISTRUBTIONS_KEY = 'individualsDashboard';
 
 export const actionTypes = {
 	...createActionTypes('fetch', 'distribution'),
-	...createActionTypes('fetch', 'individuals_distribution')
+	...createActionTypes('fetch', 'individuals_distribution'),
 };
 
 export function fetchDistribution(data) {
@@ -20,16 +20,16 @@ export function fetchDistribution(data) {
 				types: [
 					actionTypes.FETCH_DISTRIBUTION_REQUEST,
 					actionTypes.FETCH_DISTRIBUTION_SUCCESS,
-					actionTypes.FETCH_DISTRIBUTION_FAILURE
-				]
+					actionTypes.FETCH_DISTRIBUTION_FAILURE,
+				],
 			},
 			fieldMappingFieldName: data.fieldMappingFieldName,
-			individualSegmentId: data.individualSegmentId
+			individualSegmentId: data.individualSegmentId,
 		},
 		payload: {
-			id: data.individualSegmentId
+			id: data.individualSegmentId,
 		},
-		type: 'NO_OP'
+		type: 'NO_OP',
 	};
 }
 
@@ -45,14 +45,14 @@ export function fetchIndividualsDistribution(data) {
 				types: [
 					actionTypes.FETCH_DISTRIBUTION_REQUEST,
 					actionTypes.FETCH_DISTRIBUTION_SUCCESS,
-					actionTypes.FETCH_DISTRIBUTION_FAILURE
-				]
+					actionTypes.FETCH_DISTRIBUTION_FAILURE,
+				],
 			},
-			fieldMappingFieldName: data.fieldMappingFieldName
+			fieldMappingFieldName: data.fieldMappingFieldName,
 		},
 		payload: {
-			id: INDIVIDUALS_DASHBOARD_DISTRUBTIONS_KEY
+			id: INDIVIDUALS_DASHBOARD_DISTRUBTIONS_KEY,
 		},
-		type: 'NO_OP'
+		type: 'NO_OP',
 	};
 }

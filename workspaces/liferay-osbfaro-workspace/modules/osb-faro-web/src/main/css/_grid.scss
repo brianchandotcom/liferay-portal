@@ -26,7 +26,8 @@
 }
 
 @media screen and (max-width: $gridMaxPageWidth + ($pagePadding * 2) + $sidebarOpenWidth) {
-	.grid-root, .grid-root.grid-thirds {
+	.grid-root,
+	.grid-root.grid-thirds {
 		grid-template-columns: repeat($maxGridItemsMd, 1fr);
 
 		.grid-item {
@@ -40,7 +41,8 @@
 }
 
 @media screen and (max-width: $gridMaxPageWidthLg + ($pagePadding * 2) + $sidebarOpenWidth) {
-	.grid-root, .grid-root.grid-thirds {
+	.grid-root,
+	.grid-root.grid-thirds {
 		grid-template-columns: repeat($maxGridItemsSm, 1fr);
 
 		.grid-item {

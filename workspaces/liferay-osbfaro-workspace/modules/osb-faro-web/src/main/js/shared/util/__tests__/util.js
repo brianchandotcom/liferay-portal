@@ -11,7 +11,7 @@ import {
 	isBlank,
 	isEllipisActive,
 	normalizeRangeSelectors,
-	truncateText
+	truncateText,
 } from '../util';
 
 describe('util', () => {
@@ -170,8 +170,8 @@ describe('util', () => {
 			const event = {
 				target: {
 					offsetWidth: 100,
-					scrollWidth: 200
-				}
+					scrollWidth: 200,
+				},
 			};
 
 			expect(isEllipisActive(event)).toBeTruthy();

@@ -16,13 +16,13 @@ describe('RemoteData', () => {
 
 			expect(remoteData).toBeInstanceOf(RemoteData);
 
-			remoteData.data.map(item => expect(isArray(item)).toBe(true));
+			remoteData.data.map((item) => expect(isArray(item)).toBe(true));
 		});
 
 		it('should return a RemoteData with loading as true if any RemoteDatas are loading', () => {
 			const remoteDatas = [
 				new RemoteData({data: [], loading: true}),
-				new RemoteData({data: [], loading: false})
+				new RemoteData({data: [], loading: false}),
 			];
 
 			const remoteData = remoteDataFromList(remoteDatas);
@@ -33,7 +33,7 @@ describe('RemoteData', () => {
 		it('should return a RemoteData with error as true if any RemoteDatas have an error', () => {
 			const remoteDatas = [
 				new RemoteData({data: [], error: true}),
-				new RemoteData({data: [], error: false})
+				new RemoteData({data: [], error: false}),
 			];
 
 			const remoteData = remoteDataFromList(remoteDatas);

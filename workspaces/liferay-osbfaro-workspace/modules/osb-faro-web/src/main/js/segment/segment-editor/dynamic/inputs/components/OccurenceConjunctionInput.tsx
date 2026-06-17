@@ -31,22 +31,22 @@ const OccurenceConjunctionInput: React.FC<IOccurenceConjunctionInputProps> = ({
 	operatorName,
 	touched,
 	valid,
-	value
+	value,
 }) => (
 	<>
 		<Form.GroupItem shrink>
 			<Picker
-				className='operator-input'
+				className="operator-input"
 				items={OCCURENCE_OPTIONS.map(({key, label}) => ({
 					label,
-					value: key
+					value: key,
 				}))}
-				onSelectionChange={value => {
+				onSelectionChange={(value) => {
 					onChange({
 						criterion: {
 							operatorName:
-								value as unknown as Criterion['operatorName']
-						}
+								value as unknown as Criterion['operatorName'],
+						},
 					});
 				}}
 				selectedKey={operatorName}
@@ -57,24 +57,24 @@ const OccurenceConjunctionInput: React.FC<IOccurenceConjunctionInputProps> = ({
 
 		<Form.GroupItem
 			className={getCN({
-				'has-error': !valid && touched
+				'has-error': !valid && touched,
 			})}
 			shrink
 		>
 			<Input
-				className='number-input'
-				data-testid='occurence-count-input'
-				min='0'
+				className="number-input"
+				data-testid="occurence-count-input"
+				min="0"
 				onBlur={({
-					target: {value}
+					target: {value},
 				}: React.FocusEvent<HTMLInputElement>) => {
 					onChange({
 						touched: true,
-						valid: isValidOccurenceCount(value)
+						valid: isValidOccurenceCount(value),
 					});
 				}}
 				onChange={({
-					target: {value}
+					target: {value},
 				}: React.ChangeEvent<HTMLInputElement>) => {
 					let numberVal: string | number = '';
 
@@ -85,15 +85,15 @@ const OccurenceConjunctionInput: React.FC<IOccurenceConjunctionInputProps> = ({
 					onChange({
 						criterion: {value: numberVal},
 						touched: true,
-						valid: isValidOccurenceCount(numberVal)
+						valid: isValidOccurenceCount(numberVal),
 					});
 				}}
-				type='number'
+				type="number"
 				value={value}
 			/>
 		</Form.GroupItem>
 
-		<Form.GroupItem className='unit' label shrink>
+		<Form.GroupItem className="unit" label shrink>
 			{Liferay.Language.get('times')}
 		</Form.GroupItem>
 	</>

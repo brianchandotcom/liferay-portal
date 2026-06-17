@@ -5,7 +5,7 @@ import {
 	createConnector,
 	fetchConnectorEntityCount,
 	generateConnectorToken,
-	updateConnector
+	updateConnector,
 } from '../connector';
 
 describe('Connector API', () => {
@@ -19,10 +19,10 @@ describe('Connector API', () => {
 				credentials: {
 					privateKey: 'token',
 					publicKey: '',
-					type: 'Token'
+					type: 'Token',
 				},
 				groupId: '23',
-				name: 'Demandbase'
+				name: 'Demandbase',
 			});
 
 			expect(sendRequest).toHaveBeenCalledWith({
@@ -30,12 +30,12 @@ describe('Connector API', () => {
 					credentials: {
 						privateKey: 'token',
 						publicKey: '',
-						type: 'Token'
+						type: 'Token',
 					},
-					name: 'Demandbase'
+					name: 'Demandbase',
 				},
 				method: 'POST',
-				path: 'contacts/23/data_source/demandbase'
+				path: 'contacts/23/data_source/demandbase',
 			});
 		});
 
@@ -44,15 +44,15 @@ describe('Connector API', () => {
 				credentials: {
 					privateKey: 'token',
 					publicKey: '',
-					type: 'Token'
+					type: 'Token',
 				},
 				groupId: '99',
-				name: 'HubSpot'
+				name: 'HubSpot',
 			});
 
 			expect(sendRequest).toHaveBeenCalledWith(
 				expect.objectContaining({
-					path: 'contacts/99/data_source/hubspot'
+					path: 'contacts/99/data_source/hubspot',
 				})
 			);
 		});
@@ -64,16 +64,16 @@ describe('Connector API', () => {
 				credentials: {privateKey: 'tok'},
 				groupId: '23',
 				id: '5',
-				name: 'Demandbase'
+				name: 'Demandbase',
 			});
 
 			expect(sendRequest).toHaveBeenCalledWith({
 				data: {
 					credentials: {privateKey: 'tok'},
-					name: 'Demandbase'
+					name: 'Demandbase',
 				},
 				method: 'PATCH',
-				path: 'contacts/23/data_source/5/demandbase'
+				path: 'contacts/23/data_source/5/demandbase',
 			});
 		});
 	});
@@ -82,24 +82,24 @@ describe('Connector API', () => {
 		it('builds the count path from the data source id and entity name', () => {
 			fetchConnectorEntityCount('accounts', {
 				groupId: '23',
-				id: '7'
+				id: '7',
 			});
 
 			expect(sendRequest).toHaveBeenCalledWith({
 				method: 'GET',
-				path: 'contacts/23/data-source-metrics/7/accounts_count'
+				path: 'contacts/23/data-source-metrics/7/accounts_count',
 			});
 		});
 
 		it('works for arbitrary entity names', () => {
 			fetchConnectorEntityCount('events', {
 				groupId: '23',
-				id: '7'
+				id: '7',
 			});
 
 			expect(sendRequest).toHaveBeenCalledWith(
 				expect.objectContaining({
-					path: 'contacts/23/data-source-metrics/7/events_count'
+					path: 'contacts/23/data-source-metrics/7/events_count',
 				})
 			);
 		});
@@ -111,7 +111,7 @@ describe('Connector API', () => {
 
 			expect(sendRequest).toHaveBeenCalledWith({
 				method: 'POST',
-				path: 'main/23/oauth2/tokens/new?type=demandbase'
+				path: 'main/23/oauth2/tokens/new?type=demandbase',
 			});
 		});
 
@@ -120,7 +120,7 @@ describe('Connector API', () => {
 
 			expect(sendRequest).toHaveBeenCalledWith(
 				expect.objectContaining({
-					path: expect.not.stringContaining('expiresIn')
+					path: expect.not.stringContaining('expiresIn'),
 				})
 			);
 		});

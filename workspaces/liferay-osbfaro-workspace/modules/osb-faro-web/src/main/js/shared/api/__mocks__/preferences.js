@@ -2,9 +2,9 @@ export const addDistributionTab = jest.fn(() =>
 	Promise.resolve({
 		distributionCardTabPreferencesMap: {
 			tab1: {context: 'demographics', id: 'tab1', title: 'Tab 1'},
-			tab2: {context: 'demographics', id: 'tab2', title: 'Tab 2'}
+			tab2: {context: 'demographics', id: 'tab2', title: 'Tab 2'},
 		},
-		order: ['tab1', 'tab2']
+		order: ['tab1', 'tab2'],
 	})
 );
 
@@ -15,9 +15,9 @@ export const removeDistributionTab = jest.fn(() =>
 export const fetchDistributionTabs = jest.fn(() =>
 	Promise.resolve({
 		distributionCardTabPreferencesMap: {
-			tab1: {context: 'demographics', id: 'tab1', title: 'Tab 1'}
+			tab1: {context: 'demographics', id: 'tab1', title: 'Tab 1'},
 		},
-		order: ['tab1']
+		order: ['tab1'],
 	})
 );
 

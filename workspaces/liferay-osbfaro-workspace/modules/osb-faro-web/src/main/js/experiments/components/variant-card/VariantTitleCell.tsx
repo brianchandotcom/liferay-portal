@@ -18,9 +18,9 @@ const VariantTitle: React.FC<IVariantTitleProps> = ({labels = [], title}) => {
 		setShowPopover(isEllipisActive(event));
 
 	return (
-		<td className='table-cell-expanded'>
+		<td className="table-cell-expanded">
 			<div
-				className='h5 mb-1 text-truncate variant-title'
+				className="h5 mb-1 text-truncate variant-title"
 				onBlur={handleMouseOut}
 				onFocus={handleMouseOver}
 				onMouseOut={handleMouseOut}

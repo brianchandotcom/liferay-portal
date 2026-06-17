@@ -13,7 +13,7 @@ import {
 	JOB_RUN_DATA_PERIODS_LIST,
 	JOB_RUN_DATA_PERIODS_RANGE_KEY_MAP,
 	JobParameter,
-	JobProperty
+	JobProperty,
 } from 'settings/recommendations/utils/utils';
 import {get} from 'lodash';
 import {JobRunDataPeriods} from 'shared/util/constants';
@@ -30,14 +30,14 @@ interface IManuallyRetrainModelModalProps {
 const ManuallyRetrainModelModal: React.FC<IManuallyRetrainModelModalProps> = ({
 	job,
 	onClose,
-	onSubmit
+	onSubmit,
 }) => {
 	const {data, loading} = useQuery(
 		RecommendationJobRunsMonthlyStatisticsQuery,
 		{
 			variables: {
-				jobId: get(job, 'id')
-			}
+				jobId: get(job, 'id'),
+			},
 		}
 	);
 
@@ -64,14 +64,14 @@ const ManuallyRetrainModelModal: React.FC<IManuallyRetrainModelModalProps> = ({
 					rangeKey:
 						JOB_RUN_DATA_PERIODS_RANGE_KEY_MAP[JobRunDataPeriod],
 					size: 0,
-					start: 0
-				}
+					start: 0,
+				},
 			})
 			.then(
 				({
 					data: {
-						activities: {total}
-					}
+						activities: {total},
+					},
 				}) => {
 					if (total < ACTIVITIES_THRESHOLD) {
 						error = Liferay.Language.get(
@@ -91,7 +91,7 @@ const ManuallyRetrainModelModal: React.FC<IManuallyRetrainModelModalProps> = ({
 	);
 
 	return (
-		<Modal className='manually-retrain-model-modal-root'>
+		<Modal className="manually-retrain-model-modal-root">
 			<Modal.Header
 				onClose={onClose}
 				title={Liferay.Language.get('manually-retrain-model')}
@@ -104,7 +104,7 @@ const ManuallyRetrainModelModal: React.FC<IManuallyRetrainModelModalProps> = ({
 				{({handleSubmit}) => (
 					<Form.Form>
 						<Modal.Body>
-							<div className='description'>
+							<div className="description">
 								{Liferay.Language.get(
 									'select-an-interaction-period-for-the-selected-items'
 								)}
@@ -116,7 +116,7 @@ const ManuallyRetrainModelModal: React.FC<IManuallyRetrainModelModalProps> = ({
 										label={Liferay.Language.get(
 											'select-interaction-period'
 										)}
-										name='runDataPeriod'
+										name="runDataPeriod"
 										validate={validateActivitiesCount}
 									>
 										{JOB_RUN_DATA_PERIODS_LIST.map(
@@ -133,17 +133,17 @@ const ManuallyRetrainModelModal: React.FC<IManuallyRetrainModelModalProps> = ({
 								</Form.GroupItem>
 							</Form.Group>
 
-							<div className='training-allowance'>
-								<div className='title'>
+							<div className="training-allowance">
+								<div className="title">
 									{Liferay.Language.get(
 										'monthly-training-allowance'
 									)}
 								</div>
 
-								<div className='d-flex'>
+								<div className="d-flex">
 									{`${Liferay.Language.get('scheduled')}:`}
 
-									<span className='count'>
+									<span className="count">
 										{loading ? (
 											<Loading align={Align.Right} />
 										) : (
@@ -151,7 +151,7 @@ const ManuallyRetrainModelModal: React.FC<IManuallyRetrainModelModalProps> = ({
 												data,
 												[
 													'jobRunsMonthlyStatistics',
-													'scheduledJobRuns'
+													'scheduledJobRuns',
 												],
 												0
 											)
@@ -159,10 +159,10 @@ const ManuallyRetrainModelModal: React.FC<IManuallyRetrainModelModalProps> = ({
 									</span>
 								</div>
 
-								<div className='d-flex'>
+								<div className="d-flex">
 									{`${Liferay.Language.get('remaining')}:`}
 
-									<span className='count'>
+									<span className="count">
 										{loading ? (
 											<Loading align={Align.Right} />
 										) : (
@@ -175,17 +175,17 @@ const ManuallyRetrainModelModal: React.FC<IManuallyRetrainModelModalProps> = ({
 
 						<Modal.Footer>
 							<ClayButton
-								className='button-root'
-								displayType='secondary'
+								className="button-root"
+								displayType="secondary"
 								onClick={() => onClose()}
 							>
 								{Liferay.Language.get('cancel')}
 							</ClayButton>
 
 							<ClayButton
-								className='button-root'
+								className="button-root"
 								disabled={availableJobRuns <= 0}
-								displayType='primary'
+								displayType="primary"
 								onClick={() => handleSubmit()}
 							>
 								{Liferay.Language.get('retrain')}

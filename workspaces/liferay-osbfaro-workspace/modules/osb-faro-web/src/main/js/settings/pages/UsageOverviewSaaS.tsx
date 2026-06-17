@@ -31,70 +31,70 @@ export const UsageOverviewSaaS = () => {
 				displayType: 'primary',
 				href: 'https://support.liferay.com/',
 				icon: {
-					symbol: 'shortcut'
+					symbol: 'shortcut',
 				},
 				label: Liferay.Language.get('go-to-customer-portal'),
-				target: '_blank'
-			}
+				target: '_blank',
+			},
 		];
 	}
 
 	const cardTitles = [
 		Liferay.Language.get('number-of-sites'),
 		Liferay.Language.get('authenticated-logins-malus'),
-		Liferay.Language.get('anonymous-page-views-apv')
+		Liferay.Language.get('anonymous-page-views-apv'),
 	];
 
 	const resources: Array<Resource> = [
 		{
 			capacity: Liferay.Language.get('extension-capacity'),
-			measurement: 'RAM'
+			measurement: 'RAM',
 		},
 		{
 			capacity: Liferay.Language.get('extension-capacity'),
-			measurement: 'vCPU'
+			measurement: 'vCPU',
 		},
 		{
 			capacity: Liferay.Language.get('storage-capacity'),
-			measurement: ''
-		}
+			measurement: '',
+		},
 	];
 
 	return (
 		<BasePage
-			key='UsageOverview'
+			key="UsageOverview"
 			pageActions={pageActions}
 			pageDescription={Liferay.Language.get(
 				'saas-plan-usage-is-determined-by-malus-and-apvs'
 			)}
 			pageTitle={Liferay.Language.get('subscription-&-usage')}
 		>
-			<div className='saas-banner p-5 sm:p-8 md:p-10 xl:p-4'>
-				<div className='text-white'>
-					<h2 className='title'>
+			<div className="saas-banner p-5 sm:p-8 md:p-10 xl:p-4">
+				<div className="text-white">
+					<h2 className="title">
 						{Liferay.Language.get('view-your-saas-project-metrics')}
 					</h2>
-					<p className='w-50 d-flex mb-0'>
+					<p className="w-50 d-flex mb-0">
 						{Liferay.Language.get('as-a-saas-customer-description')}
 					</p>
 				</div>
 			</div>
-			<div className='gradient-opaque mt-5'>
-				<div className='mt-2'>
-					<div className='w-100'>
-						<h2 className='title'>
+			<div className="gradient-opaque mt-5">
+				<div className="mt-2">
+					<div className="w-100">
+						<h2 className="title">
 							{Liferay.Language.get('sites-and-users')}
 						</h2>
 					</div>
 					<ClayLayout.Row>
-						{cardTitles.map(title => (
+						{cardTitles.map((title) => (
 							<GenericBarsCard cardTitle={title} key={title} />
 						))}
 					</ClayLayout.Row>
 				</div>
-				<div className='mt-2'>
-					<div className='w-100'>
-						<h2 className='title'>
+				<div className="mt-2">
+					<div className="w-100">
+						<h2 className="title">
 							{Liferay.Language.get('resource-usage')}
 						</h2>
 					</div>

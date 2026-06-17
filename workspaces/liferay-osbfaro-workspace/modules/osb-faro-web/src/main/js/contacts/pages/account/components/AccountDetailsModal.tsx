@@ -28,7 +28,7 @@ interface IAccountDetailsModalProps {
 const AccountDetailsModal: React.FC<IAccountDetailsModalProps> = ({
 	accountId,
 	accountName,
-	onClose
+	onClose,
 }) => {
 	const {channelId, groupId} = useParams<{
 		channelId: string;
@@ -38,23 +38,23 @@ const AccountDetailsModal: React.FC<IAccountDetailsModalProps> = ({
 
 	const {data, loading} = useRequest({
 		dataSourceFn: API.accounts.fetchDetails,
-		variables: {accountId, channelId, groupId}
+		variables: {accountId, channelId, groupId},
 	});
 
 	const items: IAccountDetailsField[] = data?.items ?? [];
 
 	return (
-		<ClayModal observer={observer} size='lg'>
+		<ClayModal observer={observer} size="lg">
 			<ClayModal.Header>
 				{sub(Liferay.Language.get('xs-attributes'), [
-					accountName ?? ''
+					accountName ?? '',
 				])}
 			</ClayModal.Header>
 
-			<ClayModal.Body className='px-0'>
+			<ClayModal.Body className="px-0">
 				{loading ? (
 					<div
-						className='align-items-center d-flex justify-content-center'
+						className="align-items-center d-flex justify-content-center"
 						style={{minHeight: 400}}
 					>
 						<Loading center={false} />
@@ -64,18 +64,18 @@ const AccountDetailsModal: React.FC<IAccountDetailsModalProps> = ({
 						customDataRenderers={{
 							attributeNameAndValueRenderer: ({
 								itemData,
-								value
+								value,
 							}: {
 								itemData: {value?: string};
 								value: string;
 							}) =>
 								columns.attributeNameAndValue({
 									attributeName: value,
-									value: itemData.value ?? ''
+									value: itemData.value ?? '',
 								}),
 							dataSourceRenderer: ({
 								itemData,
-								value
+								value,
 							}: {
 								itemData: {dataSourceId?: string};
 								value: string;
@@ -84,16 +84,16 @@ const AccountDetailsModal: React.FC<IAccountDetailsModalProps> = ({
 									channelId,
 									groupId,
 									itemData: {
-										id: itemData.dataSourceId ?? ''
+										id: itemData.dataSourceId ?? '',
 									},
 									route: Routes.SETTINGS_DATA_SOURCE,
-									value
+									value,
 								}),
 							lastModifiedRenderer: ({value}: {value: string}) =>
 								columns.dateRenderer({
 									itemData: {},
-									value
-								})
+									value,
+								}),
 						}}
 						id={FDS_ID}
 						items={items}
@@ -121,13 +121,13 @@ const AccountDetailsModal: React.FC<IAccountDetailsModalProps> = ({
 												'attribute-name'
 											)} | ${Liferay.Language.get(
 												'value'
-											)}`
+											)}`,
 										},
 										{
 											fieldName: 'sourceName',
 											label: Liferay.Language.get(
 												'source-name'
-											)
+											),
 										},
 										{
 											contentRenderer:
@@ -135,7 +135,7 @@ const AccountDetailsModal: React.FC<IAccountDetailsModalProps> = ({
 											fieldName: 'dataSourceName',
 											label: Liferay.Language.get(
 												'data-source'
-											)
+											),
 										},
 										{
 											contentRenderer:
@@ -143,12 +143,12 @@ const AccountDetailsModal: React.FC<IAccountDetailsModalProps> = ({
 											fieldName: 'modifiedDate',
 											label: Liferay.Language.get(
 												'last-modified'
-											)
-										}
-									]
+											),
+										},
+									],
 								},
-								thumbnail: 'table'
-							}
+								thumbnail: 'table',
+							},
 						]}
 					/>
 				)}

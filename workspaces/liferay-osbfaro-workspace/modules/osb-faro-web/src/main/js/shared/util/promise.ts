@@ -9,7 +9,7 @@
 export function sequence(fns: Array<(value: any) => Promise<any>>) {
 	return (value?: any) =>
 		fns.reduce(
-			(result, fn) => result.then(err => err || fn(value)),
+			(result, fn) => result.then((err) => err || fn(value)),
 			Promise.resolve<any>(undefined)
 		);
 }

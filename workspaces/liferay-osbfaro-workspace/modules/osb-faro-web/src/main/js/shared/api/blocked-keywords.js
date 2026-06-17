@@ -5,7 +5,7 @@ function delete$({groupId, ids}) {
 	return sendRequest({
 		data: {ids},
 		method: 'DELETE',
-		path: `main/${groupId}/blocked_keywords`
+		path: `main/${groupId}/blocked_keywords`,
 	});
 }
 export {delete$ as delete};
@@ -20,10 +20,10 @@ export function search({delta, groupId, orderIOMap, page, query}) {
 			cur: page,
 			delta,
 			orderByFields,
-			query
+			query,
 		},
 		method: 'GET',
-		path: `main/${groupId}/blocked_keywords`
+		path: `main/${groupId}/blocked_keywords`,
 	});
 }
 
@@ -31,6 +31,6 @@ export function insertMany({groupId, keywords}) {
 	return sendRequest({
 		data: {keywords},
 		method: 'POST',
-		path: `main/${groupId}/blocked_keywords`
+		path: `main/${groupId}/blocked_keywords`,
 	});
 }

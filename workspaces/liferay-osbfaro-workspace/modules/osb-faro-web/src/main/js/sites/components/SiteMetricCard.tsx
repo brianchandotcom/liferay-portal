@@ -1,5 +1,5 @@
 import MetricBaseCard, {
-	IGenericMetricBaseCardProps
+	IGenericMetricBaseCardProps,
 } from 'shared/components/metric-card/MetricBaseCard';
 import React from 'react';
 import {
@@ -7,26 +7,26 @@ import {
 	CompositeMetric,
 	Metric,
 	SessionDurationMetric,
-	SessionsPerVisitorMetric
+	SessionsPerVisitorMetric,
 } from 'shared/components/metric-card/metrics';
 import {getSiteMetricsChartData} from 'shared/components/metric-card/util';
 import {ReportContainer} from 'shared/components/download-report/DownloadPDFReport';
 import {
 	SitesMetricQuery,
-	SitesTabsQuery
+	SitesTabsQuery,
 } from 'shared/components/metric-card/queries';
 import {useParams} from 'react-router-dom';
 
 type TChartData = typeof getSiteMetricsChartData;
 
-const SitesMetricCard: React.FC<IGenericMetricBaseCardProps> = props => {
+const SitesMetricCard: React.FC<IGenericMetricBaseCardProps> = (props) => {
 	const {channelId} = useParams();
 
 	const metrics: Metric[] = [
 		CompositeMetric,
 		SessionsPerVisitorMetric,
 		SessionDurationMetric,
-		BounceRateMetric
+		BounceRateMetric,
 	];
 
 	return (
@@ -37,12 +37,12 @@ const SitesMetricCard: React.FC<IGenericMetricBaseCardProps> = props => {
 			queries={{
 				MetricQuery: SitesMetricQuery,
 				name: 'site',
-				TabsQuery: SitesTabsQuery
+				TabsQuery: SitesTabsQuery,
 			}}
 			reportContainer={ReportContainer.SiteActivityCard}
-			variables={commonVariables => ({
+			variables={(commonVariables) => ({
 				...commonVariables,
-				channelId
+				channelId,
 			})}
 		/>
 	);

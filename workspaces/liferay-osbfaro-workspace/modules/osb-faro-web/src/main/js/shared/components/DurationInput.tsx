@@ -14,7 +14,7 @@ interface IDurationInputProps {
 const DurationInput: React.FC<IDurationInputProps> = ({
 	onBlur,
 	onChange,
-	value = ''
+	value = '',
 }) => {
 	const [duration, setDuration] = useState(
 		isNumber(value) ? formatTime(value as number) : ''
@@ -22,11 +22,11 @@ const DurationInput: React.FC<IDurationInputProps> = ({
 
 	return (
 		<MaskedInput
-			autoComplete='off'
-			className='number-input'
-			data-testid='duration-input'
+			autoComplete="off"
+			className="number-input"
+			data-testid="duration-input"
 			mask={DURATION_MASK}
-			name='value'
+			name="value"
 			onBlur={onBlur}
 			onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
 				const {value} = event.target;
@@ -40,9 +40,9 @@ const DurationInput: React.FC<IDurationInputProps> = ({
 							: 0
 					);
 			}}
-			placeholder='HH:MM:SS'
+			placeholder="HH:MM:SS"
 			required
-			type='string'
+			type="string"
 			value={duration}
 		/>
 	);

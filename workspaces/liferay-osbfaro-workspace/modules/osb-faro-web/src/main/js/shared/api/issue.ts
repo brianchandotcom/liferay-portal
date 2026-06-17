@@ -4,7 +4,7 @@ export const create = ({
 	currentUrl,
 	description,
 	groupId,
-	title
+	title,
 }: {
 	currentUrl: string;
 	description: string;
@@ -14,5 +14,5 @@ export const create = ({
 	sendRequest({
 		data: {currentUrl, description, title},
 		method: 'POST',
-		path: `main/${groupId}/issue`
+		path: `main/${groupId}/issue`,
 	});

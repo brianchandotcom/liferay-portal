@@ -14,7 +14,7 @@ const MembershipChart = withRequest(
 	API.individualSegment.fetchMembershipChangesAggregations,
 	mapGrowthHistory,
 	{
-		page: false
+		page: false,
 	}
 )((props: any) => <SegmentGrowthChart {...props} />);
 
@@ -29,17 +29,17 @@ const SegmentProfileCard: React.FC<ISegmentProfileCardProps> = ({
 	channelId,
 	groupId,
 	id,
-	segment: {anonymousIndividualCount, knownIndividualCount}
+	segment: {anonymousIndividualCount, knownIndividualCount},
 }) => (
 	<Card
-		className='segment-profile-card-root'
+		className="segment-profile-card-root"
 		reportContainer={ReportContainer.SegmentMembershipCard}
 	>
-		<Card.Header className='align-items-center d-flex justify-content-between'>
+		<Card.Header className="align-items-center d-flex justify-content-between">
 			<Card.Title>
 				{Liferay.Language.get('segment-membership-trend')}
 			</Card.Title>
-			<span className='text-secondary text-uppercase'>
+			<span className="text-secondary text-uppercase">
 				<strong>{Liferay.Language.get('last-30-days')}</strong>
 			</span>
 		</Card.Header>
@@ -51,7 +51,7 @@ const SegmentProfileCard: React.FC<ISegmentProfileCardProps> = ({
 				id={id}
 				individualCounts={{
 					anonymousCount: anonymousIndividualCount,
-					knownCount: knownIndividualCount
+					knownCount: knownIndividualCount,
 				}}
 			/>
 		</Card.Body>
@@ -60,20 +60,20 @@ const SegmentProfileCard: React.FC<ISegmentProfileCardProps> = ({
 			<ClayLink
 				borderless
 				button
-				className='button-root'
-				displayType='secondary'
+				className="button-root"
+				displayType="secondary"
 				href={toRoute(Routes.CONTACTS_SEGMENT_MEMBERSHIP, {
 					channelId,
 					groupId,
-					id
+					id,
 				})}
 				small
 			>
 				{Liferay.Language.get('view-members')}
 
 				<ClayIcon
-					className='icon-root ml-2'
-					symbol='angle-right-small'
+					className="icon-root ml-2"
+					symbol="angle-right-small"
 				/>
 			</ClayLink>
 		</Card.Footer>

@@ -2,12 +2,12 @@ import React from 'react';
 import {CustomValue} from 'shared/util/records';
 import {
 	getOperator,
-	getPropertyValue
+	getPropertyValue,
 } from 'segment/segment-editor/dynamic/utils/custom-inputs';
 import {
 	getOperatorLabel,
 	maybeFormatToKnownType,
-	maybeFormatValue
+	maybeFormatValue,
 } from '../utils';
 import {IDisplayComponentProps} from '../types';
 import {isOfKnownType} from 'segment/segment-editor/dynamic/utils/utils';
@@ -15,7 +15,7 @@ import {isOfKnownType} from 'segment/segment-editor/dynamic/utils/utils';
 const AccountDisplay: React.FC<IDisplayComponentProps> = ({
 	criterion,
 	property,
-	timeZoneId
+	timeZoneId,
 }) => {
 	const valueIMap = criterion.value as CustomValue;
 

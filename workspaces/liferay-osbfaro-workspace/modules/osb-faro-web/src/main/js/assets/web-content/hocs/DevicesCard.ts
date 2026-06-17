@@ -70,5 +70,5 @@ export default withDevicesCard(withWebContentDevices, {
 	),
 	documentationUrl: URLConstants.SitesDashboardWebContentViewsByTechnology,
 	reportContainer: ReportContainer.ViewsByTechnologyCard,
-	title: Liferay.Language.get('there-are-no-views-on-the-selected-period')
+	title: Liferay.Language.get('there-are-no-views-on-the-selected-period'),
 });

@@ -42,9 +42,9 @@ const BundleRouter = ({
 						router={{
 							params: {
 								...params,
-								touchpoint: matchedPath?.params.touchpoint
+								touchpoint: matchedPath?.params.touchpoint,
 							},
-							query
+							query,
 						}}
 						{...componentProps}
 					/>

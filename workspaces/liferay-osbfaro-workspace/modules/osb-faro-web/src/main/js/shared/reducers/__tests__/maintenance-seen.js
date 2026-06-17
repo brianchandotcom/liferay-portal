@@ -17,16 +17,16 @@ describe('Maintenance Seen Reducer', () => {
 			payload: {
 				currentUserId,
 				groupId,
-				stateStartDate
+				stateStartDate,
 			},
-			type: actionTypes.SET_MAINTENANCE_SEEN
+			type: actionTypes.SET_MAINTENANCE_SEEN,
 		};
 
 		const state = reducer(new Map(), action);
 
 		expect(state).toEqual(
 			new Map({
-				[`${groupId}-${currentUserId}`]: stateStartDate
+				[`${groupId}-${currentUserId}`]: stateStartDate,
 			})
 		);
 	});

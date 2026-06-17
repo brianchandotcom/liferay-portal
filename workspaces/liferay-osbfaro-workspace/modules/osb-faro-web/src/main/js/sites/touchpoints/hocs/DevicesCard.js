@@ -50,7 +50,7 @@ const TouchpointDevicesQuery = gql`
 const withTouchpointDevices = () =>
 	graphql(
 		TouchpointDevicesQuery,
-		getDevicesMapper(result => result.page.viewsMetric)
+		getDevicesMapper((result) => result.page.viewsMetric)
 	);
 
 export default withDevicesCard(withTouchpointDevices, {
@@ -59,5 +59,5 @@ export default withDevicesCard(withTouchpointDevices, {
 	),
 	documentationUrl: URLConstants.SitesDashboardPagesViewsByTechnology,
 	reportContainer: ReportContainer.ViewsByTechnologyCard,
-	title: Liferay.Language.get('there-are-no-views-on-the-selected-period')
+	title: Liferay.Language.get('there-are-no-views-on-the-selected-period'),
 });

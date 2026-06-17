@@ -2,7 +2,7 @@ import {
 	Breakdown,
 	BreakdownDataItem,
 	CalculationTypes,
-	Filter
+	Filter,
 } from '../utils/types';
 import {gql} from '@apollo/client';
 

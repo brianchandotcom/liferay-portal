@@ -5,61 +5,61 @@ const context = {
 		params: {
 			assetId: 'formId',
 			title: 'AssetTitle',
-			touchpoint: 'Any'
-		}
-	}
+			touchpoint: 'Any',
+		},
+	},
 };
 
 const data = {
 	assetPages: [
 		{
 			assetId: 'https://www.liferay.com/digital-experience-platform',
-			assetTitle: ''
+			assetTitle: '',
 		},
 		{
 			assetId: 'https://www.liferay.com/product/features/assets',
-			assetTitle: ''
+			assetTitle: '',
 		},
 		{
 			assetId: 'https://www.liferay.com/company/gartner/thank-you',
-			assetTitle: ''
+			assetTitle: '',
 		},
 		{
 			assetId:
 				'https://www.liferay.com/resource?folderId=13811&title=Digital+Experience+Platforms+-+Designed+for+Digital+Transformation',
-			assetTitle: 'https://www.liferay.com/company/gartner/thank-you'
+			assetTitle: 'https://www.liferay.com/company/gartner/thank-you',
 		},
 		{
 			assetId:
 				'https://www.liferay.com/resource?folderId=1645493&title=Advanced+Liferay+Architecture',
-			assetTitle: 'https://www.liferay.com/company/gartner/thank-you'
+			assetTitle: 'https://www.liferay.com/company/gartner/thank-you',
 		},
 		{
 			assetId:
 				'https://www.liferay.com/resource?folderId=3292406&title=Enterprise+Subscription+Benefits',
-			assetTitle: 'https://www.liferay.com/company/gartner/thank-you'
+			assetTitle: 'https://www.liferay.com/company/gartner/thank-you',
 		},
 		{
 			assetId:
 				'https://www.liferay.com/resource?folderId=13811&title=Three+Key+Strategies+for+Consistent+Customer+Experiences',
-			assetTitle: 'https://www.liferay.com/company/gartner/thank-you'
+			assetTitle: 'https://www.liferay.com/company/gartner/thank-you',
 		},
 		{
 			assetId:
 				'https://www.liferay.com/resource?folderId=13811&title=Portal+Best+Practices',
-			assetTitle: 'https://www.liferay.com/company/gartner/thank-you'
+			assetTitle: 'https://www.liferay.com/company/gartner/thank-you',
 		},
 		{
 			assetId:
 				'https://www.liferay.com/resource?folderId=13811&title=The+Evolving+Value+of+a+Portal',
-			assetTitle: 'https://www.liferay.com/company/gartner/thank-you'
+			assetTitle: 'https://www.liferay.com/company/gartner/thank-you',
 		},
 		{
 			assetId:
 				'https://www.liferay.com/resource?folderId=1646951&title=Four+Types+of+Portals+That+Solve+Enterprise+Problems',
-			assetTitle: 'https://www.liferay.com/company/gartner/thank-you'
-		}
-	]
+			assetTitle: 'https://www.liferay.com/company/gartner/thank-you',
+		},
+	],
 };
 
 describe('TouchpointsListQuery Mappers', () => {
@@ -72,55 +72,55 @@ describe('TouchpointsListQuery Mappers', () => {
 				{
 					title: 'https://www.liferay.com/digital-experience-platform',
 					touchpoint:
-						'https://www.liferay.com/digital-experience-platform'
+						'https://www.liferay.com/digital-experience-platform',
 				},
 				{
 					title: 'https://www.liferay.com/product/features/assets',
 					touchpoint:
-						'https://www.liferay.com/product/features/assets'
+						'https://www.liferay.com/product/features/assets',
 				},
 				{
 					title: 'https://www.liferay.com/company/gartner/thank-you',
 					touchpoint:
-						'https://www.liferay.com/company/gartner/thank-you'
+						'https://www.liferay.com/company/gartner/thank-you',
 				},
 				{
 					title: 'https://www.liferay.com/company/gartner/thank-you',
 					touchpoint:
-						'https://www.liferay.com/resource?folderId=13811&title=Digital+Experience+Platforms+-+Designed+for+Digital+Transformation'
+						'https://www.liferay.com/resource?folderId=13811&title=Digital+Experience+Platforms+-+Designed+for+Digital+Transformation',
 				},
 				{
 					title: 'https://www.liferay.com/company/gartner/thank-you',
 					touchpoint:
-						'https://www.liferay.com/resource?folderId=1645493&title=Advanced+Liferay+Architecture'
+						'https://www.liferay.com/resource?folderId=1645493&title=Advanced+Liferay+Architecture',
 				},
 				{
 					title: 'https://www.liferay.com/company/gartner/thank-you',
 					touchpoint:
-						'https://www.liferay.com/resource?folderId=3292406&title=Enterprise+Subscription+Benefits'
+						'https://www.liferay.com/resource?folderId=3292406&title=Enterprise+Subscription+Benefits',
 				},
 				{
 					title: 'https://www.liferay.com/company/gartner/thank-you',
 					touchpoint:
-						'https://www.liferay.com/resource?folderId=13811&title=Three+Key+Strategies+for+Consistent+Customer+Experiences'
+						'https://www.liferay.com/resource?folderId=13811&title=Three+Key+Strategies+for+Consistent+Customer+Experiences',
 				},
 				{
 					title: 'https://www.liferay.com/company/gartner/thank-you',
 					touchpoint:
-						'https://www.liferay.com/resource?folderId=13811&title=Portal+Best+Practices'
+						'https://www.liferay.com/resource?folderId=13811&title=Portal+Best+Practices',
 				},
 				{
 					title: 'https://www.liferay.com/company/gartner/thank-you',
 					touchpoint:
-						'https://www.liferay.com/resource?folderId=13811&title=The+Evolving+Value+of+a+Portal'
+						'https://www.liferay.com/resource?folderId=13811&title=The+Evolving+Value+of+a+Portal',
 				},
 				{
 					title: 'https://www.liferay.com/company/gartner/thank-you',
 					touchpoint:
-						'https://www.liferay.com/resource?folderId=1646951&title=Four+Types+of+Portals+That+Solve+Enterprise+Problems'
-				}
+						'https://www.liferay.com/resource?folderId=1646951&title=Four+Types+of+Portals+That+Solve+Enterprise+Problems',
+				},
 			],
-			loading: false
+			loading: false,
 		});
 	});
 
@@ -129,7 +129,7 @@ describe('TouchpointsListQuery Mappers', () => {
 			assetType: 'forms',
 			filters: {},
 			rangeSelectors: {rangeKey: '7'},
-			router: context.router
+			router: context.router,
 		});
 
 		expect(options).toEqual({
@@ -142,8 +142,8 @@ describe('TouchpointsListQuery Mappers', () => {
 				rangeKey: 7,
 				rangeStart: null,
 				title: 'AssetTitle',
-				touchpoint: null
-			}
+				touchpoint: null,
+			},
 		});
 	});
 });

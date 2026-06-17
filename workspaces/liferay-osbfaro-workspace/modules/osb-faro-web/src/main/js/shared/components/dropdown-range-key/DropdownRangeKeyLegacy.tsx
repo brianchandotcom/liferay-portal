@@ -14,13 +14,13 @@ export const DropdownRangeKeyLegacy = ({
 	onClickSeeMore,
 	onClickShowDatePicker,
 	seeMore,
-	selectedItem
+	selectedItem,
 }: IDropdownRangeKeyLegacyProps) => (
 	<>
 		{!seeMore && (
 			<ClayDropDown.Item
-				className='c-pointer'
-				key='SEE_MORE'
+				className="c-pointer"
+				key="SEE_MORE"
 				onClick={onClickSeeMore}
 			>
 				{Liferay.Language.get('more-preset-periods')}
@@ -31,12 +31,12 @@ export const DropdownRangeKeyLegacy = ({
 
 		<ClayDropDown.Item
 			className={getCN('c-pointer', {
-				active: selectedItem?.value === 'CUSTOM'
+				active: selectedItem?.value === 'CUSTOM',
 			})}
-			key='CUSTOM'
+			key="CUSTOM"
 			onClick={onClickShowDatePicker}
 		>
-			<ClayText size={3} weight='semi-bold'>
+			<ClayText size={3} weight="semi-bold">
 				{Liferay.Language.get('custom-range')}
 			</ClayText>
 		</ClayDropDown.Item>

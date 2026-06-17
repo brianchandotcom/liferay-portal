@@ -5,7 +5,7 @@ import {round} from 'lodash';
 export enum Displays {
 	Danger = 'danger',
 	Primary = 'primary',
-	Warning = 'warning'
+	Warning = 'warning',
 }
 
 export enum Sizes {
@@ -13,7 +13,7 @@ export enum Sizes {
 	Sm = 'sm',
 	Md = 'md',
 	Lg = 'lg',
-	Default = 'default'
+	Default = 'default',
 }
 
 interface IMetricBarProps extends React.HTMLAttributes<HTMLElement> {
@@ -31,11 +31,11 @@ const MetricBar: React.FC<IMetricBarProps> = ({
 	className,
 	display,
 	percent = 0,
-	size = Sizes.Default
+	size = Sizes.Default,
 }) => {
 	const barClasses = getCN('bar', barClassName, {
 		[`bar-${display}`]: display,
-		[`bar-${size}`]: size
+		[`bar-${size}`]: size,
 	});
 
 	return (
@@ -46,7 +46,7 @@ const MetricBar: React.FC<IMetricBarProps> = ({
 			/>
 
 			{children && (
-				<div className='info-wrapper align-items-center d-flex justify-content-between'>
+				<div className="info-wrapper align-items-center d-flex justify-content-between">
 					{children}
 				</div>
 			)}

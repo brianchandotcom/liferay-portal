@@ -23,7 +23,7 @@ const ERROR_LANG_MAP = {
 	),
 	[ERROR_TYPES.UPLOAD_FAILURE]: Liferay.Language.get(
 		'an-unexpected-error-occurred-while-uploading-your-file'
-	)
+	),
 };
 
 export const getFileSizeLabel = (value: number): string => {
@@ -34,12 +34,12 @@ export const getFileSizeLabel = (value: number): string => {
 
 	if (kbSize < 1000) {
 		return sub(Liferay.Language.get('x-kb'), [
-			kbSize.toLocaleString()
+			kbSize.toLocaleString(),
 		]) as string;
 	}
 
 	return sub(Liferay.Language.get('x-mb'), [
-		round(value / mb, 1).toLocaleString()
+		round(value / mb, 1).toLocaleString(),
 	]) as string;
 };
 
@@ -60,16 +60,16 @@ const getFileStatusIcon = (file: File) => {
 		if (error) {
 			return (
 				<ClayIcon
-					className='failure-invert icon-root'
-					symbol='exclamation-full'
+					className="failure-invert icon-root"
+					symbol="exclamation-full"
 				/>
 			);
 		}
 
 		return (
 			<ClayIcon
-				className='icon-root success-invert'
-				symbol='check-circle-full'
+				className="icon-root success-invert"
+				symbol="check-circle-full"
 			/>
 		);
 	}
@@ -86,25 +86,25 @@ export const FileItem: React.FC<IFileItemProps> = ({file, onCancel}) => {
 	const error = file && file.status && file.status >= 400;
 
 	return (
-		<div className='file-item'>
-			<div className='d-flex flex-row align-items-center justify-content-between'>
+		<div className="file-item">
+			<div className="d-flex flex-row align-items-center justify-content-between">
 				<div>
 					<div
 						className={getCN('file-name d-flex', {
-							completed: file.completed
+							completed: file.completed,
 						})}
 					>
 						<TextTruncate title={file.name}>
 							{file.name}
 						</TextTruncate>
 
-						<div className='status-wrapper'>
+						<div className="status-wrapper">
 							{getFileStatusIcon(file)}
 						</div>
 					</div>
 
 					{error && (
-						<div className='error-message'>
+						<div className="error-message">
 							{Liferay.Language.get(
 								'there-was-an-error-uploading-this-file.-please-remove-and-try-again'
 							)}
@@ -112,18 +112,18 @@ export const FileItem: React.FC<IFileItemProps> = ({file, onCancel}) => {
 					)}
 				</div>
 
-				<div className='d-flex align-items-center'>
+				<div className="d-flex align-items-center">
 					{file && file.completed && !error && !!file.size && (
-						<div className='file-size'>
+						<div className="file-size">
 							{getFileSizeLabel(file.size)}
 						</div>
 					)}
 
 					<ClayButton
-						className='button-root'
-						displayType='link'
+						className="button-root"
+						displayType="link"
 						onClick={onCancel}
-						size='sm'
+						size="sm"
 					>
 						{Liferay.Language.get('remove')}
 					</ClayButton>
@@ -147,7 +147,7 @@ interface IFileDropTargetProps extends PropsFromRedux {
 
 export class FileDropTarget extends React.Component<IFileDropTargetProps> {
 	state: {file: File | null} = {
-		file: null
+		file: null,
 	};
 
 	private _uploader: any;
@@ -160,7 +160,7 @@ export class FileDropTarget extends React.Component<IFileDropTargetProps> {
 			onChange: this.handleFileProgress,
 			onError: this.handleUploadError,
 			uploadURL,
-			useJaxRS
+			useJaxRS,
 		}).render();
 	}
 
@@ -186,12 +186,12 @@ export class FileDropTarget extends React.Component<IFileDropTargetProps> {
 	handleFileProgress(updatedFile: any) {
 		const {
 			props: {onChange},
-			state: {file}
+			state: {file},
 		} = this;
 
 		const newFile: File = {
 			...(file as object),
-			...updatedFile
+			...updatedFile,
 		} as File;
 
 		this.setState({file: newFile});
@@ -212,20 +212,20 @@ export class FileDropTarget extends React.Component<IFileDropTargetProps> {
 
 		addAlert({
 			alertType: Alert.Types.Warning,
-			message: ERROR_LANG_MAP[error as keyof typeof ERROR_LANG_MAP]
+			message: ERROR_LANG_MAP[error as keyof typeof ERROR_LANG_MAP],
 		});
 	}
 
 	render() {
 		const {
 			props: {className},
-			state: {file}
+			state: {file},
 		} = this;
 
 		return (
 			<div className={getCN('file-drop-target-root', className)}>
 				{file ? (
-					<div className='uploaded-file'>
+					<div className="uploaded-file">
 						<FileItem file={file} onCancel={this.handleCancel} />
 					</div>
 				) : (
@@ -237,10 +237,10 @@ export class FileDropTarget extends React.Component<IFileDropTargetProps> {
 						targetType={[TYPES.FILE]}
 					>
 						<ClayButton
-							className='button-root'
-							displayType='secondary'
+							className="button-root"
+							displayType="secondary"
 							onClick={this.handleFileSelector}
-							size='sm'
+							size="sm"
 						>
 							{Liferay.Language.get('select-file')}
 						</ClayButton>

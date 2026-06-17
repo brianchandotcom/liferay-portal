@@ -15,7 +15,7 @@ const COOKIE = process.env.FARO_COOKIE || '';
 module.exports = merge(common.config, {
 	devServer: {
 		client: {
-			overlay: false
+			overlay: false,
 		},
 		host: '0.0.0.0',
 		port: 3000,
@@ -25,9 +25,9 @@ module.exports = merge(common.config, {
 				onProxyReq: createOnProxyReq(COOKIE),
 				onProxyRes: createOnProxyRes(TARGET),
 				selfHandleResponse: true,
-				target: TARGET
-			}
-		}
+				target: TARGET,
+			},
+		},
 	},
 	devtool: 'eval-source-map',
 	mode: 'development',
@@ -36,17 +36,17 @@ module.exports = merge(common.config, {
 			{
 				include: common.include,
 				loader: 'liferay-lang-key-dev-loader',
-				test: /\.(js|ts)x?$/
-			}
-		]
+				test: /\.(js|ts)x?$/,
+			},
+		],
 	},
 	output: {
 		chunkFilename: '[name].[chunkhash:8].js',
-		publicPath: common.PUBLIC_PATH
+		publicPath: common.PUBLIC_PATH,
 	},
 	plugins: [
 		new webpack.DefinePlugin({
-			FARO_DEV_MODE: true
-		})
-	]
+			FARO_DEV_MODE: true,
+		}),
+	],
 });

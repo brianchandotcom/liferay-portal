@@ -56,29 +56,31 @@ const renderInput: React.FC<RenderInputProps> = ({
 		if (text.position === 'prepend') {
 			return (
 				<Input.Group>
-					<Input.GroupItem position='prepend' shrink>
+					<Input.GroupItem position="prepend" shrink>
 						<Input.Text>{text.content}</Input.Text>
 					</Input.GroupItem>
 
-					<Input.GroupItem position='append'>
+					<Input.GroupItem position="append">
 						<InputList {...props} />
 					</Input.GroupItem>
 				</Input.Group>
 			);
-		} else {
+		}
+		else {
 			return (
 				<Input.Group>
-					<Input.GroupItem position='prepend'>
+					<Input.GroupItem position="prepend">
 						<InputList {...props} />
 					</Input.GroupItem>
 
-					<Input.GroupItem position='append' shrink>
+					<Input.GroupItem position="append" shrink>
 						<Input.Text>{text.content}</Input.Text>
 					</Input.GroupItem>
 				</Input.Group>
 			);
 		}
-	} else if (!isEmpty(inset)) {
+	}
+	else if (!isEmpty(inset)) {
 		return (
 			<Input.Group>
 				<Input.GroupItem>
@@ -90,7 +92,8 @@ const renderInput: React.FC<RenderInputProps> = ({
 				</Input.GroupItem>
 			</Input.Group>
 		);
-	} else if (contentAfter) {
+	}
+	else if (contentAfter) {
 		return (
 			<Input.Group>
 				<InputList {...props} />
@@ -98,7 +101,8 @@ const renderInput: React.FC<RenderInputProps> = ({
 				<Input.GroupItem shrink>{contentAfter}</Input.GroupItem>
 			</Input.Group>
 		);
-	} else {
+	}
+	else {
 		return <InputList {...props} />;
 	}
 };
@@ -138,7 +142,8 @@ const FormInputList: React.FC<IInputListProps> = ({
 	useEffect(() => {
 		if (inputValue) {
 			setFieldTouched(name);
-		} else {
+		}
+		else {
 			setFieldError(name, '');
 		}
 	}, [inputValue]);
@@ -148,7 +153,7 @@ const FormInputList: React.FC<IInputListProps> = ({
 	const classes = getCN(className, {
 		'form-inline-group': inline,
 		'has-error': isTouched && hasError,
-		'has-success': isTouched && !hasError
+		'has-success': isTouched && !hasError,
 	});
 
 	const onValidationFail = () => setFieldError(name, errorMessage);
@@ -162,12 +167,12 @@ const FormInputList: React.FC<IInputListProps> = ({
 			)}
 
 			{secondaryInfo && (
-				<Label className='font-weight-normal' htmlFor={name}>
+				<Label className="font-weight-normal" htmlFor={name}>
 					<p>{secondaryInfo}</p>
 				</Label>
 			)}
 
-			<div className='input-group'>
+			<div className="input-group">
 				{renderInput({
 					contentAfter,
 					inputValue: inputValue || '',
@@ -179,7 +184,7 @@ const FormInputList: React.FC<IInputListProps> = ({
 					text,
 					validateOnBlur: true,
 					validationFn,
-					...otherProps
+					...otherProps,
 				})}
 			</div>
 

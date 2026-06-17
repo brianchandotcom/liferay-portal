@@ -17,12 +17,13 @@ jest.mock('react-router-dom', () => ({
 	...jest.requireActual('react-router-dom'),
 	useParams: () => ({
 		channelId: '123',
-		groupId: '23'
-	})
+		groupId: '23',
+	}),
 }));
 
 describe('Individuals List', () => {
 	beforeEach(() => {
+
 		// @ts-ignore
 		API.individuals.fetchFieldValues.mockReturnValue(
 			Promise.resolve({items: ['United States', 'Canada']})
@@ -30,6 +31,7 @@ describe('Individuals List', () => {
 	});
 
 	it('renders', async () => {
+
 		// @ts-ignore
 		API.individuals.search.mockReturnValue(
 			Promise.resolve({
@@ -45,8 +47,8 @@ describe('Individuals List', () => {
 						profileType: 'KNOWN',
 						properties: {
 							country: 'United States',
-							email: 'test@liferay.com'
-						}
+							email: 'test@liferay.com',
+						},
 					},
 					{
 						accountName: 'Liferay',
@@ -59,8 +61,8 @@ describe('Individuals List', () => {
 						profileType: 'KNOWN',
 						properties: {
 							country: 'Canada',
-							email: 'john.doe@liferay.com'
-						}
+							email: 'john.doe@liferay.com',
+						},
 					},
 					{
 						activitiesCount: 3,
@@ -70,10 +72,10 @@ describe('Individuals List', () => {
 						lastActivityDate: 1769697160365,
 						name: 'AC-79742349',
 						profileType: 'ANONYMOUS',
-						properties: {}
-					}
+						properties: {},
+					},
 				],
-				total: 3
+				total: 3,
 			})
 		);
 
@@ -92,6 +94,7 @@ describe('Individuals List', () => {
 	});
 
 	it('renders empty state when no individuals are synced', async () => {
+
 		// @ts-ignore
 		API.individuals.search.mockReturnValue(
 			Promise.resolve({items: [], total: 0})
@@ -121,6 +124,7 @@ describe('Individuals List', () => {
 	});
 
 	it('passes Last 30 Days as the default range key to the search API', async () => {
+
 		// @ts-ignore
 		API.individuals.search.mockReturnValue(
 			Promise.resolve({items: [], total: 0})
@@ -141,7 +145,7 @@ describe('Individuals List', () => {
 			expect.objectContaining({
 				rangeEnd: null,
 				rangeKey: 30,
-				rangeStart: null
+				rangeStart: null,
 			})
 		);
 	});
@@ -156,7 +160,7 @@ describe('Individuals List', () => {
 			.mockReturnValue({
 				delta: 20,
 				filterBy: Map({
-					activeUsers: Set([RangeKeyTimeRanges.Last7Days])
+					activeUsers: Set([RangeKeyTimeRanges.Last7Days]),
 				}) as any,
 				onDeltaChange: jest.fn(),
 				onFilterByChange: jest.fn(),
@@ -166,7 +170,7 @@ describe('Individuals List', () => {
 				orderIOMap: createOrderIOMap(NAME),
 				page: 1,
 				query: '',
-				resetPage: jest.fn()
+				resetPage: jest.fn(),
 			});
 
 		const history = createMemoryHistory();
@@ -181,7 +185,7 @@ describe('Individuals List', () => {
 
 		expect(API.individuals.search as jest.Mock).toHaveBeenCalledWith(
 			expect.objectContaining({
-				rangeKey: 7
+				rangeKey: 7,
 			})
 		);
 
@@ -198,7 +202,7 @@ describe('Individuals List', () => {
 			.mockReturnValue({
 				delta: 20,
 				filterBy: Map({
-					activeUsers: Set([])
+					activeUsers: Set([]),
 				}) as any,
 				onDeltaChange: jest.fn(),
 				onFilterByChange: jest.fn(),
@@ -208,7 +212,7 @@ describe('Individuals List', () => {
 				orderIOMap: createOrderIOMap(NAME),
 				page: 1,
 				query: '',
-				resetPage: jest.fn()
+				resetPage: jest.fn(),
 			});
 
 		const history = createMemoryHistory();
@@ -223,7 +227,7 @@ describe('Individuals List', () => {
 
 		expect(API.individuals.search as jest.Mock).toHaveBeenCalledWith(
 			expect.objectContaining({
-				rangeKey: null
+				rangeKey: null,
 			})
 		);
 

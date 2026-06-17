@@ -11,11 +11,13 @@ export const useIncidentAlert = () => {
 				const response = await fetchPreferences();
 
 				setData(response.preferences || {incidentAlertEnabled: false});
-			} catch (error) {
+			}
+			catch (error) {
 				throw new Error(
 					`Failed to fetch incident alert status: ${error}`
 				);
-			} finally {
+			}
+			finally {
 				setLoading(false);
 			}
 		};
@@ -26,6 +28,6 @@ export const useIncidentAlert = () => {
 	return {
 		data,
 		loading,
-		onClose: () => setData({incidentAlertEnabled: false})
+		onClose: () => setData({incidentAlertEnabled: false}),
 	};
 };

@@ -17,7 +17,7 @@ export function isAboveMaxRange(date, maxRange) {
 		moment
 			.duration({
 				from: date.start,
-				to: date.end
+				to: date.end,
 			})
 			.asDays() > maxRange
 	);
@@ -67,7 +67,7 @@ export function isInRange(dateOrRange, date) {
 export function isRange(value) {
 	return conformsTo(value, {
 		end: isMomentOrNil,
-		start: isMomentOrNil
+		start: isMomentOrNil,
 	});
 }
 
@@ -86,7 +86,7 @@ export function updateRange(range, date) {
 	if (!range.start) {
 		return {
 			...range,
-			start: date
+			start: date,
 		};
 	}
 
@@ -94,12 +94,13 @@ export function updateRange(range, date) {
 		if (date.isSameOrAfter(range.start)) {
 			return {
 				...range,
-				end: date
+				end: date,
 			};
-		} else {
+		}
+		else {
 			return {
 				end: range.start,
-				start: date
+				start: date,
 			};
 		}
 	}
@@ -110,6 +111,6 @@ export function updateRange(range, date) {
 
 	return {
 		end: null,
-		start: date
+		start: date,
 	};
 }

@@ -12,7 +12,7 @@ const FILTER_CONFIG: {
 	op: string;
 }[] = [
 	{field: 'countryFilter', fieldName: 'country', op: 'eq'},
-	{field: 'industryFilter', fieldName: 'industry', op: 'eq'}
+	{field: 'industryFilter', fieldName: 'industry', op: 'eq'},
 ];
 
 export const buildQueryString = (values: ILifecycleFilterValues): string =>

@@ -23,12 +23,12 @@ interface IBarComparisonTableProps extends React.HTMLAttributes<HTMLElement> {
 const BarComparisonTable: React.FC<IBarComparisonTableProps> = ({
 	event: {displayName, name},
 	isComparingSegment,
-	items = []
+	items = [],
 }) => (
-	<table className='table'>
+	<table className="table">
 		<thead>
 			<tr>
-				<th className='table-head-title table-column-event-name'>
+				<th className="table-head-title table-column-event-name">
 					<TextTruncate
 						title={
 							!isComparingSegment
@@ -38,7 +38,7 @@ const BarComparisonTable: React.FC<IBarComparisonTableProps> = ({
 					/>
 				</th>
 
-				<th className='table-head-title'>
+				<th className="table-head-title">
 					{Liferay.Language.get('total-events')}
 				</th>
 			</tr>
@@ -47,17 +47,17 @@ const BarComparisonTable: React.FC<IBarComparisonTableProps> = ({
 		<tbody>
 			{items.map(({isPreviousValue, name, percent, style, value}, i) => (
 				<tr key={i}>
-					<td className='table-column-event-name'>
+					<td className="table-column-event-name">
 						<TextTruncate title={name} />
 					</td>
 					<td>
 						<MetricBar
 							barClassName={getCN('mr-2', {
 								['bar-zero']: value === 0,
-								lines: isPreviousValue
+								lines: isPreviousValue,
 							})}
 							barStyle={style}
-							className='breakdown-table-bar'
+							className="breakdown-table-bar"
 							display={Displays.Primary}
 							percent={percent}
 							size={Sizes.Default}
@@ -65,7 +65,7 @@ const BarComparisonTable: React.FC<IBarComparisonTableProps> = ({
 							<span>
 								{Number(value).toLocaleString(undefined, {
 									maximumFractionDigits: 2,
-									minimumFractionDigits: 0
+									minimumFractionDigits: 0,
 								})}
 							</span>
 						</MetricBar>

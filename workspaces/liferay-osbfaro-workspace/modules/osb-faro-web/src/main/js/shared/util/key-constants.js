@@ -25,7 +25,7 @@ export function onKey(keyCode) {
 				if (event && event.keyCode === keyCode) {
 					wrappedFn.call(this, event);
 				}
-			}
+			},
 		};
 	};
 }

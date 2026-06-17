@@ -7,11 +7,11 @@ import {DropTargetMonitor, useDrag, useDrop} from 'react-dnd';
 
 const HOVER_TYPES = {
 	BOTTOM: 'bottom',
-	TOP: 'top'
+	TOP: 'top',
 };
 
 const ITEM_TYPES = {
-	ROW: 'row'
+	ROW: 'row',
 };
 
 export type Column = Omit<React.ComponentProps<typeof Cell>, 'data'> & {
@@ -37,7 +37,7 @@ const Row: React.FC<IRowProps> = ({
 	data,
 	draggable = true,
 	index,
-	onMove
+	onMove,
 }) => {
 	const _itemRef = useRef<HTMLTableRowElement>(null);
 
@@ -54,7 +54,7 @@ const Row: React.FC<IRowProps> = ({
 		},
 		collect: (monitor: DropTargetMonitor) => ({
 			canDrop: monitor.canDrop(),
-			isOver: monitor.isOver()
+			isOver: monitor.isOver(),
 		}),
 		drop: (item: DragItem) => {
 			const {index: dragIndex} = item;
@@ -69,7 +69,8 @@ const Row: React.FC<IRowProps> = ({
 
 			if (insertAbove) {
 				dropIndex = index - 1;
-			} else if (insertBelow) {
+			}
+			else if (insertBelow) {
 				dropIndex = index + 1;
 			}
 
@@ -100,23 +101,25 @@ const Row: React.FC<IRowProps> = ({
 
 				if (destIndex === dragIndex) {
 					setHoverPosition(null);
-				} else if (hoverAbove) {
+				}
+				else if (hoverAbove) {
 					setHoverPosition(HOVER_TYPES.TOP);
-				} else {
+				}
+				else {
 					setHoverPosition(HOVER_TYPES.BOTTOM);
 				}
 			}
-		}
+		},
 	});
 
 	const [{isDragging}, drag, preview] = useDrag({
 		collect: (monitor: any) => ({
-			isDragging: monitor.isDragging()
+			isDragging: monitor.isDragging(),
 		}),
 		item: {
 			index,
-			type: ITEM_TYPES.ROW
-		}
+			type: ITEM_TYPES.ROW,
+		},
 	});
 
 	useEffect(() => {
@@ -127,14 +130,14 @@ const Row: React.FC<IRowProps> = ({
 		<ClayTable.Row
 			className={getCN('table-row', {
 				dragging: isDragging,
-				[`hover-${hoverPosition}`]: isOver && canDrop && hoverPosition
+				[`hover-${hoverPosition}`]: isOver && canDrop && hoverPosition,
 			})}
 			ref={_itemRef}
 		>
 			<ClayTable.Cell>
 				{draggable && (
-					<div className='drag-handle' ref={drag}>
-						<ClayIcon className='icon-root' symbol='drag' />
+					<div className="drag-handle" ref={drag}>
+						<ClayIcon className="icon-root" symbol="drag" />
 					</div>
 				)}
 			</ClayTable.Cell>
@@ -146,7 +149,7 @@ const Row: React.FC<IRowProps> = ({
 						cellRenderer,
 						cellRendererProps,
 						className,
-						dataFormatter
+						dataFormatter,
 					},
 					i
 				) => (

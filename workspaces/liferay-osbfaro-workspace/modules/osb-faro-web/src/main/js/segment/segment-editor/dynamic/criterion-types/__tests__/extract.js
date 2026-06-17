@@ -10,7 +10,7 @@ function makeFilterCriterion({
 	nameProperty,
 	nameValue,
 	operatorName,
-	propertyName
+	propertyName,
 }) {
 	const items = [];
 
@@ -18,7 +18,7 @@ function makeFilterCriterion({
 		items.push({
 			operatorName: 'eq',
 			propertyName: idProperty,
-			value: idValue
+			value: idValue,
 		});
 	}
 
@@ -26,7 +26,7 @@ function makeFilterCriterion({
 		items.push({
 			operatorName: 'eq',
 			propertyName: nameProperty,
-			value: nameValue
+			value: nameValue,
 		});
 	}
 
@@ -36,9 +36,9 @@ function makeFilterCriterion({
 		value: fromJS({
 			criterionGroup: {
 				conjunctionName: 'and',
-				items
-			}
-		})
+				items,
+			},
+		}),
 	};
 }
 
@@ -53,7 +53,7 @@ describe('criterion-types/extractRemoteCriterionEntries', () => {
 			idProperty: 'name',
 			idValue: 'foo',
 			operatorName: 'eq',
-			propertyName: 'firstName'
+			propertyName: 'firstName',
 		});
 
 		expect(extractRemoteCriterionEntries(criterion)).toEqual([]);
@@ -66,15 +66,15 @@ describe('criterion-types/extractRemoteCriterionEntries', () => {
 			nameProperty: 'vocabularies/name',
 			nameValue: 'My Vocabulary',
 			operatorName: CustomFunctionOperators.VocabulariesFilter,
-			propertyName: 'vocab-id'
+			propertyName: 'vocab-id',
 		});
 
 		expect(extractRemoteCriterionEntries(criterion)).toEqual([
 			{
 				criterionType: vocabularyCriterionType,
 				id: 'vocab-id',
-				name: 'My Vocabulary'
-			}
+				name: 'My Vocabulary',
+			},
 		]);
 	});
 
@@ -85,15 +85,15 @@ describe('criterion-types/extractRemoteCriterionEntries', () => {
 			nameProperty: 'vocabularies/name',
 			nameValue: 'My Vocabulary',
 			operatorName: NotOperators.NotVocabulariesFilter,
-			propertyName: 'vocab-id'
+			propertyName: 'vocab-id',
 		});
 
 		expect(extractRemoteCriterionEntries(criterion)).toEqual([
 			{
 				criterionType: vocabularyCriterionType,
 				id: 'vocab-id',
-				name: 'My Vocabulary'
-			}
+				name: 'My Vocabulary',
+			},
 		]);
 	});
 
@@ -104,11 +104,11 @@ describe('criterion-types/extractRemoteCriterionEntries', () => {
 			nameProperty: 'tags/name',
 			nameValue: 'My Tag',
 			operatorName: CustomFunctionOperators.TagsFilter,
-			propertyName: 'tag-id'
+			propertyName: 'tag-id',
 		});
 
 		expect(extractRemoteCriterionEntries(criterion)).toEqual([
-			{criterionType: tagCriterionType, id: 'tag-id', name: 'My Tag'}
+			{criterionType: tagCriterionType, id: 'tag-id', name: 'My Tag'},
 		]);
 	});
 
@@ -119,26 +119,26 @@ describe('criterion-types/extractRemoteCriterionEntries', () => {
 			nameProperty: 'tags/name',
 			nameValue: 'My Tag',
 			operatorName: NotOperators.NotTagsFilter,
-			propertyName: 'tag-id'
+			propertyName: 'tag-id',
 		});
 
 		expect(extractRemoteCriterionEntries(criterion)).toEqual([
-			{criterionType: tagCriterionType, id: 'tag-id', name: 'My Tag'}
+			{criterionType: tagCriterionType, id: 'tag-id', name: 'My Tag'},
 		]);
 	});
 
 	it('should fall back to propertyName when the name item is missing', () => {
 		const criterion = makeFilterCriterion({
 			operatorName: CustomFunctionOperators.VocabulariesFilter,
-			propertyName: 'vocab-id-fallback'
+			propertyName: 'vocab-id-fallback',
 		});
 
 		expect(extractRemoteCriterionEntries(criterion)).toEqual([
 			{
 				criterionType: vocabularyCriterionType,
 				id: 'vocab-id-fallback',
-				name: 'vocab-id-fallback'
-			}
+				name: 'vocab-id-fallback',
+			},
 		]);
 	});
 
@@ -149,7 +149,7 @@ describe('criterion-types/extractRemoteCriterionEntries', () => {
 			nameProperty: 'vocabularies/name',
 			nameValue: 'My Vocabulary',
 			operatorName: CustomFunctionOperators.VocabulariesFilter,
-			propertyName: 'vocab-id'
+			propertyName: 'vocab-id',
 		});
 
 		const tag = makeFilterCriterion({
@@ -158,30 +158,30 @@ describe('criterion-types/extractRemoteCriterionEntries', () => {
 			nameProperty: 'tags/name',
 			nameValue: 'My Tag',
 			operatorName: CustomFunctionOperators.TagsFilter,
-			propertyName: 'tag-id'
+			propertyName: 'tag-id',
 		});
 
 		const nonRemote = makeFilterCriterion({
 			operatorName: 'eq',
-			propertyName: 'firstName'
+			propertyName: 'firstName',
 		});
 
 		const mixed = {
 			items: [
 				vocab,
 				{
-					items: [tag, nonRemote]
-				}
-			]
+					items: [tag, nonRemote],
+				},
+			],
 		};
 
 		expect(extractRemoteCriterionEntries(mixed)).toEqual([
 			{
 				criterionType: vocabularyCriterionType,
 				id: 'vocab-id',
-				name: 'My Vocabulary'
+				name: 'My Vocabulary',
 			},
-			{criterionType: tagCriterionType, id: 'tag-id', name: 'My Tag'}
+			{criterionType: tagCriterionType, id: 'tag-id', name: 'My Tag'},
 		]);
 	});
 });

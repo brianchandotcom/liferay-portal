@@ -5,7 +5,7 @@ import {Map} from 'immutable';
 
 const actionHandlers = {
 	[actionTypes.FETCH_DISTRIBUTION_REQUEST]: handleLoading,
-	[actionTypes.FETCH_DISTRIBUTION_FAILURE]: handleError
+	[actionTypes.FETCH_DISTRIBUTION_FAILURE]: handleError,
 };
 
 export default createReducer(new Map(), actionHandlers);

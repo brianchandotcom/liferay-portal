@@ -19,12 +19,12 @@ import URLConstants from 'shared/util/url-constants';
 import UserCell from 'shared/components/table/cell-components/UserCell';
 import {
 	ActionType,
-	UnassignedSegmentsContext
+	UnassignedSegmentsContext,
 } from 'shared/context/unassignedSegments';
 import {
 	ActionTypes,
 	useSelectionContext,
-	withSelectionProvider
+	withSelectionProvider,
 } from 'shared/context/selection';
 import {addAlert} from 'shared/actions/alerts';
 import {Alert, FilterByType} from 'shared/types';
@@ -43,7 +43,7 @@ import {
 	SEGMENTS,
 	setUriQueryValue,
 	toRoute,
-	USER_NAME
+	USER_NAME,
 } from 'shared/util/router';
 import {DateCell} from 'shared/components/table/cell-components';
 import {ENABLE_REAL_TIME_SEGMENTS} from 'shared/util/feature-flags';
@@ -52,7 +52,7 @@ import {formatDateToTimeZone} from 'shared/util/date';
 import {
 	getDefaultSortOrder,
 	NAME,
-	paginationDefaults
+	paginationDefaults,
 } from 'shared/util/pagination';
 import {Link} from 'react-router-dom';
 import {OrderedMap} from 'immutable';
@@ -85,7 +85,7 @@ function fetchDisabledSegments(
 		delta: 1,
 		groupId,
 		orderIOMap,
-		state: SegmentStates.Disabled
+		state: SegmentStates.Disabled,
 	});
 }
 
@@ -101,7 +101,7 @@ interface IListProps extends PropsFromRedux {
 
 const SEGMENT_TYPES_LABEL_MAP = {
 	[SegmentTypes.Batch]: Liferay.Language.get('batch'),
-	[SegmentTypes.RealTime]: Liferay.Language.get('real-time')
+	[SegmentTypes.RealTime]: Liferay.Language.get('real-time'),
 };
 
 const FILTER_BY_OPTIONS = [
@@ -111,41 +111,41 @@ const FILTER_BY_OPTIONS = [
 		values: [
 			{
 				label: SEGMENT_TYPES_LABEL_MAP[SegmentTypes.Batch],
-				value: SegmentTypes.Batch
+				value: SegmentTypes.Batch,
 			},
 			{
 				label: SEGMENT_TYPES_LABEL_MAP[SegmentTypes.RealTime],
-				value: SegmentTypes.RealTime
-			}
-		]
-	}
+				value: SegmentTypes.RealTime,
+			},
+		],
+	},
 ];
 
 const ORDER_BY_OPTIONS = [
 	{
 		label: Liferay.Language.get('name'),
-		value: NAME
+		value: NAME,
 	},
 	{
 		label: Liferay.Language.get('type'),
-		value: SEGMENT_TYPE
+		value: SEGMENT_TYPE,
 	},
 	{
 		label: Liferay.Language.get('segment-membership'),
-		value: INDIVIDUAL_COUNT
+		value: INDIVIDUAL_COUNT,
 	},
 	{
 		label: Liferay.Language.get('modified'),
-		value: DATE_MODIFIED
+		value: DATE_MODIFIED,
 	},
 	{
 		label: Liferay.Language.get('last-modified-by'),
-		value: USER_NAME
+		value: USER_NAME,
 	},
 	{
 		label: Liferay.Language.get('last-membership-update'),
-		value: LAST_MEMBERSHIP_UPDATE_DATE
-	}
+		value: LAST_MEMBERSHIP_UPDATE_DATE,
+	},
 ];
 
 export const List: React.FC<IListProps> = ({
@@ -154,7 +154,7 @@ export const List: React.FC<IListProps> = ({
 	close,
 	groupId,
 	history,
-	open
+	open,
 }) => {
 	const currentUser = useCurrentUser();
 	const {selectedChannel} = useChannelContext();
@@ -166,7 +166,7 @@ export const List: React.FC<IListProps> = ({
 		initialDelta: paginationDefaults.delta,
 		initialOrderIOMap: createOrderIOMap(NAME, getDefaultSortOrder(NAME)),
 		initialPage: paginationDefaults.page,
-		initialQuery: paginationDefaults.query
+		initialQuery: paginationDefaults.query,
 	});
 
 	const [alerts, setAlerts] = useState([]);
@@ -175,7 +175,7 @@ export const List: React.FC<IListProps> = ({
 	const {
 		showUnassignedAlert,
 		unassignedSegments,
-		unassignedSegmentsDispatch
+		unassignedSegmentsDispatch,
 	} = useContext(UnassignedSegmentsContext);
 
 	useEffect(() => {
@@ -203,27 +203,27 @@ export const List: React.FC<IListProps> = ({
 			query,
 			segmentTypes: selectedSegmentTypes.length
 				? selectedSegmentTypes
-				: undefined
-		}
+				: undefined,
+		},
 	});
 
 	const {
 		data: usageData = [],
 		loading: usageLoading,
-		refetch: refetchUsage
+		refetch: refetchUsage,
 	} = useRequest({
 		dataSourceFn: API.projects.fetchFeatureUsages,
-		variables: {groupId}
+		variables: {groupId},
 	});
 
 	const isBatchDisabled = useLimitReached({
 		data: usageData,
-		featureName: FeatureName.Batch
+		featureName: FeatureName.Batch,
 	});
 
 	const realTimeLimitReached = useLimitReached({
 		data: usageData,
-		featureName: FeatureName.RealTime
+		featureName: FeatureName.RealTime,
 	});
 
 	const isRealTimeDisabled =
@@ -282,7 +282,7 @@ export const List: React.FC<IListProps> = ({
 			...alerts,
 			showUnassignedAlert &&
 				unassignedSegments.length &&
-				handleUnassignedSegmentsAlert()
+				handleUnassignedSegmentsAlert(),
 		].filter(Boolean);
 
 	const handleDisabledSegmentsAlert = () => [
@@ -293,7 +293,7 @@ export const List: React.FC<IListProps> = ({
 				),
 				[
 					<Link
-						key='DISABLED_SEGMENTS'
+						key="DISABLED_SEGMENTS"
 						to={setUriQueryValue(
 							window.location.href,
 							SEGMENT_STATE,
@@ -301,13 +301,13 @@ export const List: React.FC<IListProps> = ({
 						)}
 					>
 						{Liferay.Language.get('view-disabled-segments')}
-					</Link>
+					</Link>,
 				],
 				false
 			),
 			onClose: () => setAlerts(() => []),
-			...ALERT_CONFIG_MAP[AlertTypes.Warning]
-		}
+			...ALERT_CONFIG_MAP[AlertTypes.Warning],
+		},
 	];
 
 	const handleUnassignedSegmentsAlert = () => {
@@ -316,7 +316,7 @@ export const List: React.FC<IListProps> = ({
 				modalTypes.UNASSIGNED_SEGMENTS_MODAL,
 				{
 					groupId,
-					onClose: close
+					onClose: close,
 				},
 				{closeOnBlur: false}
 			);
@@ -329,29 +329,29 @@ export const List: React.FC<IListProps> = ({
 				),
 				[
 					<ClayButton
-						className='button-root p-0'
-						displayType='unstyled'
-						key='UNASSIGNED_SEGMENTS'
+						className="button-root p-0"
+						displayType="unstyled"
+						key="UNASSIGNED_SEGMENTS"
 						onClick={openModal}
 						small
 					>
 						{Liferay.Language.get('view-unassigned-segments')}
-					</ClayButton>
+					</ClayButton>,
 				],
 				false
 			),
 			onClose: () =>
 				unassignedSegmentsDispatch?.({
-					type: ActionType.updateShowAlert
+					type: ActionType.updateShowAlert,
 				}),
-			...ALERT_CONFIG_MAP[AlertTypes.Warning]
+			...ALERT_CONFIG_MAP[AlertTypes.Warning],
 		};
 	};
 
 	const handleDeleteSegments = ({
 		ids,
 		items,
-		name = undefined
+		name = undefined,
 	}: {
 		ids: string[];
 		items: unknown[];
@@ -363,26 +363,26 @@ export const List: React.FC<IListProps> = ({
 			confirmation: isMultiple
 				? Liferay.Language.get(
 						'are-you-sure-you-want-to-delete-the-selected-segments'
-				  )
+					)
 				: Liferay.Language.get(
 						'are-you-sure-you-want-to-delete-this-segment'
-				  ),
+					),
 			subtitle: isMultiple
 				? Liferay.Language.get(
 						'you-will-lose-all-data-related-to-these-segments.-you-will-not-be-able-to-undo-this-operation'
-				  )
+					)
 				: Liferay.Language.get(
 						'you-will-lose-all-data-related-to-this-segment.-you-will-not-be-able-to-undo-this-operation'
-				  ),
+					),
 			title: isMultiple
 				? Liferay.Language.get('delete-segments')
-				: sub(Liferay.Language.get('deleting-x'), [name])
+				: sub(Liferay.Language.get('deleting-x'), [name]),
 		};
 
 		open(modalTypes.CONFIRMATION_MODAL, {
 			message: (
 				<div>
-					<div className='h4 text-secondary'>
+					<div className="h4 text-secondary">
 						{MODAL_MESSAGES.confirmation}
 					</div>
 
@@ -395,7 +395,7 @@ export const List: React.FC<IListProps> = ({
 				API.individualSegment
 					.delete({
 						groupId,
-						ids
+						ids,
 					})
 					.then(() => {
 						_tableRef?.current?.reload();
@@ -404,7 +404,7 @@ export const List: React.FC<IListProps> = ({
 							alertType: Alert.Types.Success,
 							message: Liferay.Language.get(
 								'the-segment-has-been-deleted'
-							)
+							),
 						});
 
 						if (items.length === 1 && page !== 1) {
@@ -424,19 +424,19 @@ export const List: React.FC<IListProps> = ({
 					.catch(() => {
 						addAlert({
 							alertType: Alert.Types.Error,
-							message: Liferay.Language.get('error')
+							message: Liferay.Language.get('error'),
 						});
 					}),
 			submitButtonDisplay: 'warning',
 			submitMessage: Liferay.Language.get('delete'),
 			title: MODAL_MESSAGES.title,
-			titleIcon: 'warning-full'
+			titleIcon: 'warning-full',
 		});
 	};
 
 	const renderRowActions = ({
 		data: {id, name},
-		items
+		items,
 	}: {
 		data: {id: string; name: string};
 		items: unknown[];
@@ -447,27 +447,27 @@ export const List: React.FC<IListProps> = ({
 					channelId,
 					groupId,
 					id,
-					type: SEGMENTS
+					type: SEGMENTS,
 				}),
 				iconSymbol: 'view',
-				label: Liferay.Language.get('view')
+				label: Liferay.Language.get('view'),
 			},
 			{
 				href: toRoute(Routes.CONTACTS_SEGMENT_EDIT, {
 					channelId,
 					groupId,
 					id,
-					type: SEGMENTS
+					type: SEGMENTS,
 				}),
 				iconSymbol: 'pencil',
-				label: Liferay.Language.get('edit')
+				label: Liferay.Language.get('edit'),
 			},
 			{
 				className: 'text-danger',
 				iconSymbol: 'trash',
 				label: Liferay.Language.get('delete'),
-				onClick: () => handleDeleteSegments({ids: [id], items, name})
-			}
+				onClick: () => handleDeleteSegments({ids: [id], items, name}),
+			},
 		];
 
 		const actions = commonActions.map(
@@ -476,7 +476,7 @@ export const List: React.FC<IListProps> = ({
 				href,
 				iconSymbol,
 				label,
-				onClick
+				onClick,
 			})
 		);
 		return <RowActions actions={actions} quickActions={commonActions} />;
@@ -489,7 +489,7 @@ export const List: React.FC<IListProps> = ({
 			return (
 				<Nav>
 					<Nav.Item>
-						<div className='d-flex align-items-center'>
+						<div className="d-flex align-items-center">
 							{ENABLE_REAL_TIME_SEGMENTS ? (
 								<ClayDropDown
 									alignmentPosition={Align.BottomRight}
@@ -499,20 +499,20 @@ export const List: React.FC<IListProps> = ({
 												pageActionsLabel &&
 												Liferay.Language.get('menu')
 											}
-											className='button-root p-2 rounded-lg'
+											className="button-root p-2 rounded-lg"
 											disabled={
 												error ||
 												loading ||
 												allActionsDisabled
 											}
-											displayType='primary'
-											size='sm'
+											displayType="primary"
+											size="sm"
 										>
 											<>
 												<span>{pageActionsLabel}</span>
 												<ClayIcon
-													className='icon-root ml-2'
-													symbol='caret-bottom'
+													className="icon-root ml-2"
+													symbol="caret-bottom"
 												/>
 											</>
 										</ClayButton>
@@ -520,15 +520,15 @@ export const List: React.FC<IListProps> = ({
 								>
 									{usageDropDownMessage && (
 										<div
-											className='alert alert-fluid alert-info'
-											role='alert'
+											className="alert alert-fluid alert-info"
+											role="alert"
 										>
 											{usageDropDownMessage}
 										</div>
 									)}
 
 									<ClayDropDown.Item
-										data-testid='batch-segment-dropdown-item'
+										data-testid="batch-segment-dropdown-item"
 										disabled={
 											usageLoading || isBatchDisabled
 										}
@@ -541,14 +541,14 @@ export const List: React.FC<IListProps> = ({
 										)}
 									>
 										<ClayIcon
-											className='mr-2'
-											symbol='diagram'
+											className="mr-2"
+											symbol="diagram"
 										/>
 										{Liferay.Language.get('batch')}
 									</ClayDropDown.Item>
 
 									<ClayDropDown.Item
-										data-testid='real-time-segment-dropdown-item'
+										data-testid="real-time-segment-dropdown-item"
 										disabled={
 											usageLoading || isRealTimeDisabled
 										}
@@ -561,8 +561,8 @@ export const List: React.FC<IListProps> = ({
 										)}
 									>
 										<ClayIcon
-											className='mr-2'
-											symbol='bolt'
+											className="mr-2"
+											symbol="bolt"
 										/>
 										{Liferay.Language.get('real-time')}
 									</ClayDropDown.Item>
@@ -570,12 +570,12 @@ export const List: React.FC<IListProps> = ({
 							) : (
 								<ClayButton
 									aria-label={pageActionsLabel}
-									className='button-root p-2 rounded-lg'
-									data-testid='batch-segment-button'
+									className="button-root p-2 rounded-lg"
+									data-testid="batch-segment-button"
 									disabled={
 										error || loading || isBatchDisabled
 									}
-									displayType='primary'
+									displayType="primary"
 									onClick={() =>
 										history.push(
 											setUriQueryValues(
@@ -587,7 +587,7 @@ export const List: React.FC<IListProps> = ({
 											)
 										)
 									}
-									size='sm'
+									size="sm"
 								>
 									{pageActionsLabel}
 								</ClayButton>
@@ -596,15 +596,15 @@ export const List: React.FC<IListProps> = ({
 							{usageMessage && (
 								<ClayButton
 									borderless
-									className='ml-2'
-									data-tooltip-align='right'
-									displayType='unstyled'
-									size='sm'
+									className="ml-2"
+									data-tooltip-align="right"
+									displayType="unstyled"
+									size="sm"
 									title={usageMessage}
 								>
 									<ClayIcon
-										className='text-secondary'
-										symbol='exclamation-full'
+										className="text-secondary"
+										symbol="exclamation-full"
 									/>
 								</ClayButton>
 							)}
@@ -617,21 +617,21 @@ export const List: React.FC<IListProps> = ({
 			<Nav>
 				<ClayButton
 					borderless
-					className='button-root text-danger'
-					displayType='primary'
+					className="button-root text-danger"
+					displayType="primary"
 					onClick={() => {
 						handleDeleteSegments({
-							ids: selectedItems.map(item => item.id).toArray(),
+							ids: selectedItems.map((item) => item.id).toArray(),
 							items: selectedItems.toArray(),
 							name:
 								selectedItems.size === 1
 									? selectedItems.first().name
-									: undefined
+									: undefined,
 						});
 					}}
 					outline
 				>
-					<ClayIcon className='icon-root mr-2' symbol='trash' />
+					<ClayIcon className="icon-root mr-2" symbol="trash" />
 					<span>{Liferay.Language.get('delete')}</span>
 				</ClayButton>
 			</Nav>
@@ -640,7 +640,7 @@ export const List: React.FC<IListProps> = ({
 
 	return (
 		<BasePage
-			className='segment-list-root'
+			className="segment-list-root"
 			documentTitle={Liferay.Language.get('segments')}
 		>
 			<BasePage.Header
@@ -648,8 +648,8 @@ export const List: React.FC<IListProps> = ({
 					breadcrumbs.getHome({
 						channelId,
 						groupId,
-						label: selectedChannel && selectedChannel.name
-					})
+						label: selectedChannel && selectedChannel.name,
+					}),
 				]}
 				groupId={groupId}
 			>
@@ -670,7 +670,7 @@ export const List: React.FC<IListProps> = ({
 					<Card.Body noPadding>
 						<CrossPageSelect
 							alerts={getAlerts()}
-							className='segment-list-root'
+							className="segment-list-root"
 							columns={[
 								{
 									accessor: 'name',
@@ -681,12 +681,12 @@ export const List: React.FC<IListProps> = ({
 												channelId,
 												groupId,
 												id: data.id,
-												type: SEGMENTS
-											})
+												type: SEGMENTS,
+											}),
 									},
 									className: 'table-cell-expand',
 									label: Liferay.Language.get('segment-name'),
-									title: true
+									title: true,
 								},
 								{
 									accessor: 'segmentType',
@@ -703,7 +703,7 @@ export const List: React.FC<IListProps> = ({
 											REAL_TIME:
 												Liferay.Language.get(
 													'real-time'
-												)
+												),
 										};
 
 										return (
@@ -722,14 +722,14 @@ export const List: React.FC<IListProps> = ({
 											</td>
 										);
 									},
-									label: Liferay.Language.get('type')
+									label: Liferay.Language.get('type'),
 								},
 								{
 									accessor: 'individualCount',
 									cellRenderer: ToThousandsCell,
 									label: Liferay.Language.get(
 										'segment-membership'
-									)
+									),
 								},
 								{
 									accessor: 'lastMembershipUpdateDate',
@@ -738,19 +738,19 @@ export const List: React.FC<IListProps> = ({
 										dateFormatter: (
 											date: string | number
 										) => formatDateToTimeZone(date, 'lll'),
-										datePath: 'lastMembershipUpdateDate'
+										datePath: 'lastMembershipUpdateDate',
 									},
 									className: 'table-column-text-start',
 									label: Liferay.Language.get(
 										'last-membership-update'
-									)
+									),
 								},
 								{
 									accessor: 'userName',
 									cellRenderer: UserCell,
 									label: Liferay.Language.get(
 										'last-modified-by'
-									)
+									),
 								},
 								{
 									accessor: 'dateModified',
@@ -759,11 +759,13 @@ export const List: React.FC<IListProps> = ({
 										dateFormatter: (
 											date: string | number
 										) => formatDateToTimeZone(date, 'll'),
-										datePath: 'dateModified'
+										datePath: 'dateModified',
 									},
 									className: 'table-column-text-start',
-									label: Liferay.Language.get('modified-date')
-								}
+									label: Liferay.Language.get(
+										'modified-date'
+									),
+								},
 							]}
 							currentUser={currentUser}
 							delta={delta}
@@ -781,12 +783,12 @@ export const List: React.FC<IListProps> = ({
 											)}
 
 											<ClayLink
-												className='d-block mb-3'
+												className="d-block mb-3"
 												href={
 													URLConstants.SegmentsDocumentationLink
 												}
-												key='DOCUMENTATION'
-												target='_blank'
+												key="DOCUMENTATION"
+												target="_blank"
 											>
 												{Liferay.Language.get(
 													'access-our-documentation-to-learn-more'
@@ -797,7 +799,7 @@ export const List: React.FC<IListProps> = ({
 									icon={{
 										border: false,
 										size: Sizes.XXXLarge,
-										symbol: 'ac_satellite'
+										symbol: 'ac_satellite',
 									}}
 									title={Liferay.Language.get(
 										'there-are-no-segments-found'

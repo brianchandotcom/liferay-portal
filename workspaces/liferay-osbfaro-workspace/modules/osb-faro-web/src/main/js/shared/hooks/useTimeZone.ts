@@ -5,7 +5,7 @@ import {useSelector} from 'react-redux';
 export const useTimeZone = (initialGroupId?: string): ITimeZone => {
 	const {groupId} = useParams();
 
-	const value = useSelector<any, any>(state =>
+	const value = useSelector<any, any>((state) =>
 		state.getIn(['projects', initialGroupId || groupId, 'data', 'timeZone'])
 	);
 

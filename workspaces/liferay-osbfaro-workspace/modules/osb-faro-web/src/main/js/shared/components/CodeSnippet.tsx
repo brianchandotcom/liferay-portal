@@ -15,15 +15,15 @@ const CodeSnippet: React.FC<ICodeSnippet> = ({codeLines}) => {
 	const displayedCode = getDisplayedCode(codeLines);
 
 	return (
-		<div className='code-snippet-root'>
+		<div className="code-snippet-root">
 			<CopyButton
 				buttonText={Liferay.Language.get('copy')}
-				className='copy-button'
-				displayType='secondary'
+				className="copy-button"
+				displayType="secondary"
 				text={displayedCode}
 			/>
 
-			<code className='code-container'>{displayedCode}</code>
+			<code className="code-container">{displayedCode}</code>
 		</div>
 	);
 };

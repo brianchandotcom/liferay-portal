@@ -3,7 +3,7 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import Constants from 'shared/util/constants';
 import FilterAndOrder, {
-	getFilterAndOrderLabel
+	getFilterAndOrderLabel,
 } from 'shared/components/FilterAndOrder';
 import FilterTags from './FilterTags';
 import getCN from 'classnames';
@@ -99,19 +99,19 @@ const Toolbar: React.FC<IToolbarProps> = ({
 	showCheckbox = true,
 	showFilterAndOrder = true,
 	showSearch = true,
-	total = 0
+	total = 0,
 }) => {
 	const history = useHistory();
 
 	const itemsSelected = selectEntirePage || selectEntirePageIndeterminate;
 
 	const activeFilters = filterBy.some(
-		values => !!values && values.some(Boolean)
+		(values) => !!values && values.some(Boolean)
 	);
 
 	const classes = getCN({
 		disabled,
-		'items-selected': itemsSelected
+		'items-selected': itemsSelected,
 	});
 
 	const handleCheckboxChange = (
@@ -130,7 +130,8 @@ const Toolbar: React.FC<IToolbarProps> = ({
 
 			onFilterByChange &&
 				onFilterByChange(emptyFilterBy as unknown as FilterByType);
-		} else {
+		}
+		else {
 			history.push(
 				setUriFilterValues(
 					emptyFilterBy as unknown as Parameters<
@@ -145,7 +146,8 @@ const Toolbar: React.FC<IToolbarProps> = ({
 	const handleFilterByChange = (value: FilterByType) => {
 		if (onFilterByChange) {
 			onFilterByChange(value);
-		} else {
+		}
+		else {
 			history.push(
 				setUriFilterValues(
 					value as unknown as Parameters<
@@ -164,13 +166,14 @@ const Toolbar: React.FC<IToolbarProps> = ({
 					values.has(value) ? values.delete(value) : values
 				)
 			);
-		} else {
+		}
+		else {
 			history.push(
 				setUriQueryValues(
 					{
 						[field]:
 							filterBy.get(field)?.delete(value).toArray() ?? [],
-						page: defaultPage
+						page: defaultPage,
 					},
 					window.location.href
 				)
@@ -186,17 +189,18 @@ const Toolbar: React.FC<IToolbarProps> = ({
 				OrderedMap({
 					[field]: new OrderParams({
 						field,
-						sortOrder
-					})
+						sortOrder,
+					}),
 				})
 			);
-		} else {
+		}
+		else {
 			history.push(
 				setUriQueryValues(
 					{
 						field,
 						page: defaultPage,
-						sortOrder
+						sortOrder,
 					},
 					window.location.href
 				)
@@ -210,19 +214,19 @@ const Toolbar: React.FC<IToolbarProps> = ({
 			: history.push(
 					setUriQueryValues({
 						page: defaultPage,
-						query
+						query,
 					})
-			  );
+				);
 	};
 
 	const renderFilterAndOrder = () => {
 		if (itemsSelected) {
 			return (
 				onSelectAll && (
-					<Nav.Item key='SELECT_ALL'>
+					<Nav.Item key="SELECT_ALL">
 						<ClayButton
-							className='button-root nav-btn'
-							displayType='unstyled'
+							className="button-root nav-btn"
+							displayType="unstyled"
 							onClick={onSelectAll}
 						>
 							{Liferay.Language.get('select-all')}
@@ -230,7 +234,8 @@ const Toolbar: React.FC<IToolbarProps> = ({
 					</Nav.Item>
 				)
 			);
-		} else if (showFilterAndOrder && orderIOMap) {
+		}
+		else if (showFilterAndOrder && orderIOMap) {
 			const {field} = orderIOMap.first();
 
 			return (
@@ -249,18 +254,18 @@ const Toolbar: React.FC<IToolbarProps> = ({
 								trigger={
 									<ClayButton
 										borderless
-										className='d-flex align-items-center'
-										displayType='secondary'
-										size='sm'
+										className="d-flex align-items-center"
+										displayType="secondary"
+										size="sm"
 									>
 										{getFilterAndOrderLabel({
 											filterByOptions,
-											orderByOptions
+											orderByOptions,
 										})}
 
 										<ClayIcon
-											className='ml-2 mt-0'
-											symbol='caret-bottom'
+											className="ml-2 mt-0"
+											symbol="caret-bottom"
 										/>
 									</ClayButton>
 								}
@@ -281,12 +286,12 @@ const Toolbar: React.FC<IToolbarProps> = ({
 					expand
 					managementBar
 				>
-					<Nav className='front-nav'>
+					<Nav className="front-nav">
 						{showCheckbox && (
 							<Nav.Item>
 								<Checkbox
 									checked={selectEntirePage}
-									data-testid='select-all-checkbox'
+									data-testid="select-all-checkbox"
 									disabled={disabled || loading || !total}
 									indeterminate={
 										selectEntirePageIndeterminate
@@ -300,11 +305,11 @@ const Toolbar: React.FC<IToolbarProps> = ({
 					</Nav>
 
 					{(!itemsSelected || alwaysShowSearch) && showSearch && (
-						<div className='navbar-form navbar-form-autofit mx-2'>
+						<div className="navbar-form navbar-form-autofit mx-2">
 							<SearchInput
 								autoFocus={autoFocus}
 								className={getCN('search', {
-									disabled: disabled || disableSearch
+									disabled: disabled || disableSearch,
 								})}
 								disabled={disabled || disableSearch}
 								maxLength={maxLength}
@@ -325,7 +330,7 @@ const Toolbar: React.FC<IToolbarProps> = ({
 				(itemsSelected && renderViewSelectedToggle)) && (
 				<SubnavTbar>
 					{renderViewSelectedToggle && itemsSelected && (
-						<SubnavTbar.Item className='view-selected-link-container'>
+						<SubnavTbar.Item className="view-selected-link-container">
 							{renderViewSelectedToggle()}
 						</SubnavTbar.Item>
 					)}
@@ -340,14 +345,14 @@ const Toolbar: React.FC<IToolbarProps> = ({
 										false,
 										[
 											total.toLocaleString(),
-											<b key='QUERY_TERM'>{query}</b>
+											<b key="QUERY_TERM">{query}</b>,
 										]
-								  )
+									)
 								: getPluralMessage(
 										Liferay.Language.get('x-result-for'),
 										Liferay.Language.get('x-results-for'),
 										total
-								  )}
+									)}
 						</SubnavTbar.Item>
 					)}
 
@@ -357,14 +362,14 @@ const Toolbar: React.FC<IToolbarProps> = ({
 							.map((valuesISet, field) =>
 								(valuesISet ?? Set<string>())
 									.filter(Boolean)
-									.map(fieldValue => ({
+									.map((fieldValue) => ({
 										field,
 										label: getFilterLabel(
 											field ?? '',
 											fieldValue,
 											filterByOptions
 										),
-										value: fieldValue
+										value: fieldValue,
 									}))
 							)
 							.flatten()
@@ -374,11 +379,11 @@ const Toolbar: React.FC<IToolbarProps> = ({
 					{(query || activeFilters) && (
 						<SubnavTbar.Item>
 							<ClayButton
-								className='button-root'
-								displayType='link'
-								key='FILTER_CLEAR'
+								className="button-root"
+								displayType="link"
+								key="FILTER_CLEAR"
 								onClick={handleClearAllFilters}
-								size='sm'
+								size="sm"
 							>
 								{Liferay.Language.get('clear')}
 							</ClayButton>

@@ -20,7 +20,7 @@ const InfoItem = ({
 	className,
 	icon,
 	label,
-	value
+	value,
 }: {
 	className?: string;
 	icon?: string;
@@ -29,19 +29,19 @@ const InfoItem = ({
 }) => (
 	<div className={classNames(className, 'align-items-start d-flex mb-2')}>
 		<Sticker
-			className='flex-shrink-0 mr-3'
-			displayType='unstyled'
-			size='lg'
+			className="flex-shrink-0 mr-3"
+			displayType="unstyled"
+			size="lg"
 		>
-			{icon && <Icon className='text-secondary' symbol={icon} />}
+			{icon && <Icon className="text-secondary" symbol={icon} />}
 		</Sticker>
 
-		<div className='d-flex flex-column mt-1'>
-			<Text color='secondary' size={3}>
+		<div className="d-flex flex-column mt-1">
+			<Text color="secondary" size={3}>
 				{label}
 			</Text>
 			<span
-				className='font-weight-semi-bold text-break text-dark'
+				className="font-weight-semi-bold text-break text-dark"
 				style={{wordBreak: 'break-all'}}
 			>
 				{value}
@@ -61,22 +61,22 @@ export const GeneralInfoSection: React.FC<IGeneralInfoSectionProps> = ({
 	config,
 	getValue,
 	languageMap,
-	loading
+	loading,
 }) => (
-	<div className='general-info mb-4'>
-		<div className='row g-3'>
-			{config.map(section => (
+	<div className="general-info mb-4">
+		<div className="row g-3">
+			{config.map((section) => (
 				<div className={section.columnClass} key={section.title}>
-					<Card className='h-100 p-2'>
-						<Card.Title className='pt-2 px-2 text-uppercase'>
+					<Card className="h-100 p-2">
+						<Card.Title className="pt-2 px-2 text-uppercase">
 							<Text size={4}>{section.title}</Text>
 						</Card.Title>
-						<Card.Body className='pb-0 px-2'>
+						<Card.Body className="pb-0 px-2">
 							{loading ? (
 								<Loading />
 							) : (
-								<div className='g-2 row'>
-									{section.items.map(item => {
+								<div className="g-2 row">
+									{section.items.map((item) => {
 										const rawValue = getValue(item.key);
 
 										const displayValue = rawValue || '-';

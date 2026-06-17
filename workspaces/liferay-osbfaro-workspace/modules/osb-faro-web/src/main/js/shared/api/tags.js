@@ -5,12 +5,12 @@ export function search({
 	groupId,
 	keywords = '',
 	page = 1,
-	pageSize = 12
+	pageSize = 12,
 }) {
 	return sendRequest({
 		data: {channelId, keywords, page, pageSize},
 		method: 'GET',
-		path: `contacts/${groupId}/asset-summary-tags`
+		path: `contacts/${groupId}/asset-summary-tags`,
 	});
 }
 
@@ -18,7 +18,7 @@ export function fetchAccountTopTags({
 	accountId,
 	channelId,
 	groupId,
-	selectedMetric
+	selectedMetric,
 }) {
 	return sendRequest({
 		data: {
@@ -26,9 +26,9 @@ export function fetchAccountTopTags({
 			channelId,
 			pageSize: 5,
 			selectedMetric,
-			sort: `${selectedMetric},desc`
+			sort: `${selectedMetric},desc`,
 		},
 		method: 'GET',
-		path: `contacts/${groupId}/asset-summary-tags`
+		path: `contacts/${groupId}/asset-summary-tags`,
 	});
 }

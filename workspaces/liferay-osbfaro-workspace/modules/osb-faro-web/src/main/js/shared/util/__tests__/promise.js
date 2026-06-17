@@ -10,10 +10,10 @@ describe('sequence', () => {
 		const response = sequence([
 			() => Promise.resolve(''),
 			() => Promise.resolve(errorVal),
-			secondValidator
+			secondValidator,
 		])();
 
-		return response.then(result => {
+		return response.then((result) => {
 			expect(result).toBe(errorVal);
 		});
 	});
@@ -23,7 +23,7 @@ describe('sequence', () => {
 
 		const response = sequence([
 			() => Promise.resolve(''),
-			() => Promise.resolve('')
+			() => Promise.resolve(''),
 		])();
 
 		return expect(response).resolves.toBeFalsy();

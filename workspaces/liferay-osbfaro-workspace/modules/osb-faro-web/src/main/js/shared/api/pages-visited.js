@@ -4,18 +4,18 @@ import sendRequest from 'shared/util/request';
 import {
 	buildOrderByFields,
 	createOrderIOMap,
-	TITLE
+	TITLE,
 } from 'shared/util/pagination';
 import {PAGES} from 'shared/util/router';
 
 const {
-	pagination: {cur: DEFAULT_PAGE, delta: DEFAULT_DELTA}
+	pagination: {cur: DEFAULT_PAGE, delta: DEFAULT_DELTA},
 } = Constants;
 
 export const INTERVALS_MAP = {
 	[TimeIntervals.Day]: 1,
 	[TimeIntervals.Month]: 30,
-	[TimeIntervals.Week]: 7
+	[TimeIntervals.Week]: 7,
 };
 
 export function search(params) {
@@ -31,7 +31,7 @@ export function search(params) {
 		intervalInitDate,
 		orderIOMap = createOrderIOMap(TITLE),
 		page = DEFAULT_PAGE,
-		query = ''
+		query = '',
 	} = params;
 
 	const orderParams = orderIOMap.first();
@@ -52,9 +52,9 @@ export function search(params) {
 			interestName,
 			orderByFields,
 			query,
-			startDate: intervalInitDate
+			startDate: intervalInitDate,
 		},
 		method: 'GET',
-		path: `contacts/${groupId}/pages_visited`
+		path: `contacts/${groupId}/pages_visited`,
 	});
 }

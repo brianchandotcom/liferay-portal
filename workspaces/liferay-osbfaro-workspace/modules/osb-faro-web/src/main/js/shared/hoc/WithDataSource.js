@@ -8,14 +8,14 @@ export default withAction(
 	{
 		errorPageProps: ({groupId}) => ({
 			href: toRoute(Routes.SETTINGS_DATA_SOURCE_LIST, {
-				groupId
+				groupId,
 			}),
 			linkLabel: Liferay.Language.get('go-to-data-sources'),
 			message: Liferay.Language.get(
 				'the-data-source-you-are-looking-for-does-not-exist'
 			),
-			subtitle: Liferay.Language.get('data-source-not-found')
+			subtitle: Liferay.Language.get('data-source-not-found'),
 		}),
-		propName: 'dataSource'
+		propName: 'dataSource',
 	}
 );

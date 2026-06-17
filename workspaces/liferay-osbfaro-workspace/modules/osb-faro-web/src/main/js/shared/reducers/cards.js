@@ -8,8 +8,8 @@ const actionHandlers = {
 		const {
 			meta: {contactsEntityId},
 			payload: {
-				result: {contactsCardData, contactsCardTemplate}
-			}
+				result: {contactsCardData, contactsCardTemplate},
+			},
 		} = action;
 
 		return state.mergeIn(
@@ -21,7 +21,7 @@ const actionHandlers = {
 		state.mergeIn(
 			[meta.contactsEntityId],
 			fromJS(payload.result.contactsCardData)
-		)
+		),
 };
 
 export default createReducer(new Map(), actionHandlers);

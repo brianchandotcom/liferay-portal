@@ -18,7 +18,7 @@ const DefaultComponent = () => (
 				cache={
 					new InMemoryCache({
 						addTypename: false,
-						freezeResults: false
+						freezeResults: false,
 					})
 				}
 				mocks={[mockTimeRangeReq(), mockPreferenceReq()]}

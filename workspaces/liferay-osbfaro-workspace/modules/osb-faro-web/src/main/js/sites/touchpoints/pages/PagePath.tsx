@@ -8,8 +8,8 @@ interface ITouchpointPathPageProps {
 }
 
 const TouchpointPathPage = (props: ITouchpointPathPageProps) => (
-	<div className='row'>
-		<div className='col-sm-12'>
+	<div className="row">
+		<div className="col-sm-12">
 			<PagePathCard {...props} />
 		</div>
 	</div>

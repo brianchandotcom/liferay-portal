@@ -1,5 +1,5 @@
 import getLocationsMapper, {
-	getLocationsMapperCountries
+	getLocationsMapperCountries,
 } from 'cerebro-shared/hocs/mappers/locations';
 import URLConstants from 'shared/util/url-constants';
 import {GEOLOCATION_FRAGMENT} from 'shared/queries/fragments';
@@ -44,6 +44,7 @@ const GEOLOCATION_QUERY = gql`
 
 	${GEOLOCATION_FRAGMENT}
 `;
+
 /**
  * HOC
  * @description Blogs Locations
@@ -51,7 +52,7 @@ const GEOLOCATION_QUERY = gql`
 const withBlogsLocations = () =>
 	graphql(
 		GEOLOCATION_QUERY,
-		getLocationsMapper(result => result.blog.viewsMetric)
+		getLocationsMapper((result) => result.blog.viewsMetric)
 	);
 
 /**
@@ -61,7 +62,7 @@ const withBlogsLocations = () =>
 const withBlogsLocationsCountries = () =>
 	graphql(
 		GEOLOCATION_QUERY,
-		getLocationsMapperCountries(result => result.blog.viewsMetric)
+		getLocationsMapperCountries((result) => result.blog.viewsMetric)
 	);
 
 export default withLocationsCard(
@@ -73,6 +74,8 @@ export default withLocationsCard(
 		),
 		documentationUrl: URLConstants.SitesDashboardBlogsViewsByLocation,
 		reportContainer: ReportContainer.ViewsByLocationCard,
-		title: Liferay.Language.get('there-are-no-views-on-the-selected-period')
+		title: Liferay.Language.get(
+			'there-are-no-views-on-the-selected-period'
+		),
 	}
 );

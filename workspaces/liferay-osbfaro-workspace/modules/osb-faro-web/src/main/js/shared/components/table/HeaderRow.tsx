@@ -22,7 +22,7 @@ const HeaderRow: React.FC<IHeaderRowProps> = ({
 	onSortOrderChange,
 	orderIOMap = OrderedMap<string, OrderParams>(),
 	showCheckbox,
-	showInlineRowActions
+	showInlineRowActions,
 }) => (
 	<thead>
 		<tr className={className}>
@@ -34,7 +34,7 @@ const HeaderRow: React.FC<IHeaderRowProps> = ({
 					className,
 					headProps = {},
 					label,
-					sortable
+					sortable,
 				} = column;
 
 				const field = getFieldNameFromAccessor(accessor);

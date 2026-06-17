@@ -3,7 +3,7 @@ import {TrendClassification} from 'segment/types';
 export enum AccountMetricType {
 	Active = 'activeCount',
 	New = 'newCount',
-	Total = 'totalCount'
+	Total = 'totalCount',
 }
 
 export interface IAccountMetric extends Metric {

@@ -27,9 +27,9 @@ const fetchIndividualDetails = ({groupId, id}: {groupId: string; id: string}) =>
 						...fieldMapping,
 						sourceName: `[${Liferay.Language.get(
 							'custom-field'
-						)}] ${fieldMapping.sourceName}`
+						)}] ${fieldMapping.sourceName}`,
 					},
-					...others
+					...others,
 				];
 			});
 

@@ -21,7 +21,9 @@ const ClayMultiStep: React.FC<ClayMultiStepIProps> & {
 	showIndicatorLabel = true,
 	...otherProps
 }) => {
-	const filteredChildren = React.Children.toArray(children).filter(c => !!c);
+	const filteredChildren = React.Children.toArray(children).filter(
+		(c) => !!c
+	);
 
 	return (
 		<ol
@@ -37,7 +39,7 @@ const ClayMultiStep: React.FC<ClayMultiStepIProps> & {
 					showIndicatorLabel,
 					status: getStatus(stepNumber, current),
 					stepNumber: `${stepNumber + 1}`,
-					...child.props
+					...child.props,
 				};
 
 				return cloneElement(child, childProps);

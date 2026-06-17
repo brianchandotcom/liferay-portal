@@ -8,7 +8,7 @@ describe('Segment Mappers', () => {
 				addedIndividualsCount: 1,
 				individualsCount: 2,
 				intervalInitDate: data.getTimestamp(),
-				removedIndividualsCount: 3
+				removedIndividualsCount: 3,
 			};
 
 			const mockAPIResponse = [mockGrowthAggregation];
@@ -22,9 +22,9 @@ describe('Segment Mappers', () => {
 								mockGrowthAggregation.intervalInitDate,
 							removed:
 								mockGrowthAggregation.removedIndividualsCount,
-							value: mockGrowthAggregation.individualsCount
-						})
-					])
+							value: mockGrowthAggregation.individualsCount,
+						}),
+					]),
 				})
 			);
 		});

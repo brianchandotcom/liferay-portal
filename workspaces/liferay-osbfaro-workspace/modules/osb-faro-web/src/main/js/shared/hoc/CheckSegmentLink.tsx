@@ -34,7 +34,7 @@ const checkSegmentLink =
 				location.pathname,
 				{
 					exact: true,
-					path: Routes.CONTACTS_SEGMENT
+					path: Routes.CONTACTS_SEGMENT,
 				}
 			);
 
@@ -50,11 +50,11 @@ const checkSegmentLink =
 							toRoute(Routes.CONTACTS_SEGMENT, {
 								channelId,
 								groupId,
-								id
+								id,
 							})
 						);
 					})
-					.catch(err => {
+					.catch((err) => {
 						setLoading(false);
 						setError(err);
 					});

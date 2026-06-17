@@ -10,14 +10,14 @@ import StringFilter from './StringFilter';
 import {
 	AddFilter,
 	EditFilter,
-	withAttributesConsumer
+	withAttributesConsumer,
 } from '../../../context/attributes';
 import {
 	Attribute,
 	AttributeOwnerTypes,
 	DataTypes,
 	Filter,
-	Filters
+	Filters,
 } from 'event-analysis/utils/types';
 
 const FILTERS_MAP = {
@@ -25,7 +25,7 @@ const FILTERS_MAP = {
 	[DataTypes.Date]: DateFilter,
 	[DataTypes.Duration]: DurationFilter,
 	[DataTypes.Number]: NumberFilter,
-	[DataTypes.String]: StringFilter
+	[DataTypes.String]: StringFilter,
 };
 
 interface IFilterOptionsProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -51,14 +51,14 @@ const FilterOptions: React.FC<IFilterOptionsProps> = ({
 	filters,
 	onActiveChange,
 	onAttributeChange,
-	onEditClick
+	onEditClick,
 }) => {
 	const {
 		dataType,
 		description,
 		displayName,
 		id: attributeId,
-		name
+		name,
 	} = attribute;
 
 	const FilterBody = FILTERS_MAP[dataType];
@@ -70,12 +70,13 @@ const FilterOptions: React.FC<IFilterOptionsProps> = ({
 			editFilter({
 				attribute,
 				filter: newFilter,
-				id: filterId
+				id: filterId,
 			});
-		} else {
+		}
+		else {
 			addFilter({
 				attribute,
-				filter: newFilter
+				filter: newFilter,
 			});
 		}
 
@@ -85,17 +86,17 @@ const FilterOptions: React.FC<IFilterOptionsProps> = ({
 	};
 
 	return (
-		<div className='attribute-options'>
-			<div className='options-header'>
+		<div className="attribute-options">
+			<div className="options-header">
 				<ClayButton
-					className='button-root back-to-attributes-button'
-					displayType='unstyled'
+					className="button-root back-to-attributes-button"
+					displayType="unstyled"
 					onClick={() => onAttributeChange(undefined)}
-					size='sm'
+					size="sm"
 				>
 					<ClayIcon
-						className='icon-root mr-2'
-						symbol='angle-left-small'
+						className="icon-root mr-2"
+						symbol="angle-left-small"
 					/>
 
 					{Liferay.Language.get('back-to-attributes')}

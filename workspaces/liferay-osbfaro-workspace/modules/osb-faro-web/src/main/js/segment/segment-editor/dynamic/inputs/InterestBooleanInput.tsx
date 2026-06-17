@@ -12,26 +12,26 @@ export default class InterestBooleanInput extends React.Component<ISegmentEditor
 		const {onChange, value} = this.props;
 
 		onChange({
-			value: setPropertyValue(value, 'value', 1, newValue)
+			value: setPropertyValue(value, 'value', 1, newValue),
 		});
 	}
 
 	render() {
 		const {
 			property: {entityName},
-			value
+			value,
 		} = this.props;
 
 		return (
-			<div className='criteria-statement'>
+			<div className="criteria-statement">
 				<Form.Group autoFit>
-					<Form.GroupItem className='entity-name' label shrink>
+					<Form.GroupItem className="entity-name" label shrink>
 						{entityName}
 					</Form.GroupItem>
 
 					<Form.GroupItem shrink>
 						<Picker
-							className='criterion-input'
+							className="criterion-input"
 							items={INTEREST_BOOLEAN_OPTIONS}
 							onSelectionChange={this.handleChange}
 							selectedKey={getPropertyValue(value, 'value', 1)}
@@ -42,11 +42,11 @@ export default class InterestBooleanInput extends React.Component<ISegmentEditor
 						</Picker>
 					</Form.GroupItem>
 
-					<Form.GroupItem className='operator' label shrink>
+					<Form.GroupItem className="operator" label shrink>
 						{Liferay.Language.get('interested-in').toLowerCase()}
 					</Form.GroupItem>
 
-					<Form.GroupItem className='display-value' label shrink>
+					<Form.GroupItem className="display-value" label shrink>
 						{getPropertyValue(value, 'value', 0)}
 					</Form.GroupItem>
 				</Form.Group>

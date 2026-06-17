@@ -8,7 +8,7 @@ import SelectEntityFromModal from './components/SelectEntityFromModal';
 import {
 	ACTIVITY_KEY,
 	FunctionalOperators,
-	RelationalOperators
+	RelationalOperators,
 } from '../utils/constants';
 import {activityAssetsListColumns} from 'shared/util/table-columns';
 import {AssetNames, SegmentTypes} from 'shared/util/constants';
@@ -17,7 +17,7 @@ import {Criterion, ISegmentEditorCustomInputBase} from '../utils/types';
 import {CustomValue} from 'shared/util/records';
 import {
 	EntityType,
-	ReferencedObjectsContext
+	ReferencedObjectsContext,
 } from '../context/referencedObjects';
 import {fromJS, Map} from 'immutable';
 import {get} from 'lodash';
@@ -25,7 +25,7 @@ import {
 	getFilterCriterionIMap,
 	getIndexFromPropertyName,
 	getPropertyValue,
-	setPropertyValue
+	setPropertyValue,
 } from '../utils/custom-inputs';
 import {getSafeDecodedURIComponent} from 'shared/util/util';
 import {isBoolean, isNil, isNull} from 'lodash';
@@ -36,16 +36,16 @@ export const AssetItem: React.FC<{
 	dataSourceAssetPK?: string;
 	name: string;
 }> = ({dataSourceAssetPK = '', name}) => (
-	<div className='asset-display-root' title={dataSourceAssetPK}>
-		<div className='asset-name text-truncate'>{name}</div>
+	<div className="asset-display-root" title={dataSourceAssetPK}>
+		<div className="asset-name text-truncate">{name}</div>
 
 		{!!dataSourceAssetPK && (
 			<div
 				data-tooltip
-				data-tooltip-align='top'
+				data-tooltip-align="top"
 				title={getSafeDecodedURIComponent(dataSourceAssetPK)}
 			>
-				<div className='asset-url text-secondary text-truncate'>
+				<div className="asset-url text-secondary text-truncate">
 					{getSafeDecodedURIComponent(dataSourceAssetPK)}
 				</div>
 			</div>
@@ -56,16 +56,16 @@ export const AssetItem: React.FC<{
 const ASSET_MODAL_CONFIG_MAP = {
 	[AssetNames.CommentPosted]: {
 		columns: [activityAssetsListColumns.commentCount],
-		label: Liferay.Language.get('comments')
+		label: Liferay.Language.get('comments'),
 	},
 	[AssetNames.DocumentDownloaded]: {
 		columns: [activityAssetsListColumns.downloadCount],
-		label: Liferay.Language.get('downloads')
+		label: Liferay.Language.get('downloads'),
 	},
 	[AssetNames.FormSubmitted]: {
 		columns: [activityAssetsListColumns.submissionCount],
-		label: Liferay.Language.get('submissions')
-	}
+		label: Liferay.Language.get('submissions'),
+	},
 };
 
 type Asset = {
@@ -104,7 +104,7 @@ export class BehaviorInput extends React.Component<IBehaviorInputProps> {
 	componentDidUpdate() {
 		const {
 			id,
-			valid: {asset, dateFilter, occurenceCount}
+			valid: {asset, dateFilter, occurenceCount},
 		} = this.props;
 
 		this.validateAsset();
@@ -121,7 +121,7 @@ export class BehaviorInput extends React.Component<IBehaviorInputProps> {
 		const {
 			channelId,
 			groupId,
-			property: {entityType, name}
+			property: {entityType, name},
 		} = this.props;
 
 		return API.activities.searchAssets({
@@ -132,7 +132,7 @@ export class BehaviorInput extends React.Component<IBehaviorInputProps> {
 			eventId: name,
 			groupId,
 			orderIOMap,
-			query
+			query,
 		});
 	}
 
@@ -144,7 +144,7 @@ export class BehaviorInput extends React.Component<IBehaviorInputProps> {
 
 	getAssetFromContext(): Asset | undefined {
 		const {
-			context: {referencedEntities}
+			context: {referencedEntities},
 		} = this;
 
 		const reference = referencedEntities.getIn([
@@ -153,7 +153,7 @@ export class BehaviorInput extends React.Component<IBehaviorInputProps> {
 				this.getAssetId(),
 				referencedEntities,
 				EntityType.Assets
-			)
+			),
 		]);
 
 		return reference && reference.toJS();
@@ -186,7 +186,7 @@ export class BehaviorInput extends React.Component<IBehaviorInputProps> {
 	handleAssetSelect(items: import('immutable').OrderedMap<string, any>) {
 		const {
 			context: {addEntities, addEntity},
-			props: {onChange, touched, valid, value}
+			props: {onChange, touched, valid, value},
 		} = this;
 
 		const asset = items.first();
@@ -203,12 +203,13 @@ export class BehaviorInput extends React.Component<IBehaviorInputProps> {
 					'value',
 					propertyIndex,
 					this.createActivityKey(asset)
-				)
+				),
 			});
-		} else {
+		}
+		else {
 			addEntities?.({
 				entityType: EntityType.Assets,
-				payload: items.map(Map).valueSeq().toArray()
+				payload: items.map(Map).valueSeq().toArray(),
 			});
 
 			onChange(
@@ -222,7 +223,7 @@ export class BehaviorInput extends React.Component<IBehaviorInputProps> {
 							'value',
 							propertyIndex,
 							this.createActivityKey(assetItem)
-						)
+						),
 					}))
 					.toArray()
 			);
@@ -241,7 +242,7 @@ export class BehaviorInput extends React.Component<IBehaviorInputProps> {
 				: value.mergeIn(
 						['criterionGroup', 'items', 1],
 						fromJS(criterion)
-				  )
+					),
 		});
 	}
 
@@ -249,7 +250,7 @@ export class BehaviorInput extends React.Component<IBehaviorInputProps> {
 	handleOccurenceConjunctionChange({
 		criterion,
 		touched: occurenceCountTouched,
-		valid: occurenceCountValid
+		valid: occurenceCountValid,
 	}: {
 		criterion?: Criterion;
 		touched?: boolean;
@@ -259,7 +260,7 @@ export class BehaviorInput extends React.Component<IBehaviorInputProps> {
 
 		let params: {touched?: Touched; valid?: Valid; value?: CustomValue} = {
 			touched,
-			valid
+			valid,
 		};
 
 		if (criterion?.operatorName) {
@@ -268,29 +269,30 @@ export class BehaviorInput extends React.Component<IBehaviorInputProps> {
 				value: valueIMap.mergeIn(
 					['operator'],
 					criterion.operatorName
-				) as CustomValue
+				) as CustomValue,
 			};
-		} else if (!isNil(criterion?.value)) {
+		}
+		else if (!isNil(criterion?.value)) {
 			params = {
 				...params,
 				value: valueIMap.mergeIn(
 					['value'],
 					criterion.value
-				) as CustomValue
+				) as CustomValue,
 			};
 		}
 
 		if (isBoolean(occurenceCountTouched)) {
 			params = {
 				...params,
-				touched: {...touched, occurenceCount: occurenceCountTouched}
+				touched: {...touched, occurenceCount: occurenceCountTouched},
 			};
 		}
 
 		if (isBoolean(occurenceCountValid)) {
 			params = {
 				...params,
-				valid: {...valid, occurenceCount: occurenceCountValid}
+				valid: {...valid, occurenceCount: occurenceCountValid},
 			};
 		}
 
@@ -302,7 +304,7 @@ export class BehaviorInput extends React.Component<IBehaviorInputProps> {
 
 		onChange({
 			touched: {...touched, asset: true},
-			valid: {...valid, asset: false}
+			valid: {...valid, asset: false},
 		});
 	}
 
@@ -323,12 +325,12 @@ export class BehaviorInput extends React.Component<IBehaviorInputProps> {
 			segmentType,
 			touched,
 			valid,
-			value
+			value,
 		} = this.props;
 
 		const {
 			columns = [activityAssetsListColumns.viewCount],
-			label = Liferay.Language.get('views')
+			label = Liferay.Language.get('views'),
 		}: {columns?: any; label?: any} = get(
 			ASSET_MODAL_CONFIG_MAP,
 			property.name,
@@ -341,22 +343,22 @@ export class BehaviorInput extends React.Component<IBehaviorInputProps> {
 		).toJS();
 
 		return (
-			<div className='criteria-statement'>
+			<div className="criteria-statement">
 				<Form.Group autoFit>
-					<Form.GroupItem className='entity-name' label shrink>
+					<Form.GroupItem className="entity-name" label shrink>
 						{property.entityName}
 					</Form.GroupItem>
 
 					<OperatorDropdown />
 
-					<Form.GroupItem className='display-value' label shrink>
+					<Form.GroupItem className="display-value" label shrink>
 						<b>{displayValue}</b>
 					</Form.GroupItem>
 
 					<SelectEntityFromModal
 						columns={[
 							activityAssetsListColumns.nameUrl,
-							...columns
+							...columns,
 						]}
 						dataSourceFn={
 							this.assetsDataFn as (params: {
@@ -367,15 +369,15 @@ export class BehaviorInput extends React.Component<IBehaviorInputProps> {
 						error={touched.asset && !valid.asset}
 						groupId={groupId}
 						initialOrderIOMap={createOrderIOMap(COUNT)}
-						noResultsIcon='web-content'
+						noResultsIcon="web-content"
 						onSubmit={this.handleAssetSelect}
 						orderByOptions={[
 							{
 								label,
-								value: COUNT
-							}
+								value: COUNT,
+							},
 						]}
-						renderEntity={asset => (
+						renderEntity={(asset) => (
 							<AssetItem {...asset} title={label} />
 						)}
 						title={property.label}

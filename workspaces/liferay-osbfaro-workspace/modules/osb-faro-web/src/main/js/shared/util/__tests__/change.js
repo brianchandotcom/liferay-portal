@@ -2,7 +2,7 @@ import {
 	formatChange,
 	getFinitePercentChange,
 	getNetChange,
-	getSafeChange
+	getSafeChange,
 } from '../change';
 
 describe('change', () => {

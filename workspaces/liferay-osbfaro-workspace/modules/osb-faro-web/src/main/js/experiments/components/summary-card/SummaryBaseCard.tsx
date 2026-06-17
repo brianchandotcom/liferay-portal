@@ -17,16 +17,16 @@ const Footer: React.FC<React.HTMLAttributes<HTMLElement>> = ({children}) => (
 
 const Header = ({
 	Description,
-	title
+	title,
 }: {
 	Description?: React.ComponentType;
 	title: React.ReactNode;
 }) => (
 	<Card.Header>
-		<SummaryTitle className='mb-2' label={title} />
+		<SummaryTitle className="mb-2" label={title} />
 
 		{Description && (
-			<span className='font-size-sm font-weight-normal'>
+			<span className="font-size-sm font-weight-normal">
 				<Description />
 			</span>
 		)}
@@ -42,7 +42,7 @@ export const SummaryBaseCard: React.FC<SummaryBaseCardIProps> & {
 		className={getCN(
 			'analytics-summary-card analytics-summary-card-status',
 			{
-				[` analytics-summary-card-status-${status}`]: status
+				[` analytics-summary-card-status-${status}`]: status,
 			}
 		)}
 	>

@@ -10,7 +10,7 @@ import {
 	ResponsiveContainer,
 	Tooltip as TooltipRechart,
 	XAxis,
-	YAxis
+	YAxis,
 } from 'recharts';
 import {CHART_COLOR_NAMES} from 'shared/util/charts';
 import {CONTROL_COLOR} from '../util/constants';
@@ -35,7 +35,7 @@ interface IComposedChartProps {
 export const ComposedChart = ({
 	Tooltip,
 	chartType = 'line',
-	data: initialData
+	data: initialData,
 }: IComposedChartProps) => {
 	const {controlLabel, data, format, intervals, variantLabel} = initialData;
 
@@ -50,6 +50,7 @@ export const ComposedChart = ({
 	let customIntervals = intervals;
 
 	// Shorten intervals of tickX
+
 	if (intervals.length >= 12) {
 		customIntervals = getShortIntervals(intervals);
 	}
@@ -57,7 +58,7 @@ export const ComposedChart = ({
 	const groupedData = data
 		.map((item: Record<string, any>) => [
 			item['data_control'],
-			item['data_variant']
+			item['data_variant'],
 		])
 		.flat();
 
@@ -66,80 +67,80 @@ export const ComposedChart = ({
 			<ComposedChartRecharts data={data} height={320}>
 				<CartesianGrid
 					stroke={AXIS.gridStroke}
-					strokeDasharray='3 3'
+					strokeDasharray="3 3"
 					vertical={false}
 				/>
 
 				<XAxis
 					axisLine={{stroke: AXIS.borderStroke}}
-					dataKey='key'
-					interval='preserveStart'
-					tickFormatter={date =>
+					dataKey="key"
+					interval="preserveStart"
+					tickFormatter={(date) =>
 						d3.utcFormat('%b %-d')(getDate(date))
 					}
 					tickLine={false}
 					ticks={customIntervals}
-					type='category'
+					type="category"
 				/>
 
 				<XAxis
 					axisLine={{stroke: AXIS.borderStroke}}
-					dataKey='key'
-					interval='preserveStart'
-					orientation='top'
+					dataKey="key"
+					interval="preserveStart"
+					orientation="top"
 					stroke={AXIS.gridStroke}
 					tick={false}
 					tickLine={false}
 					ticks={customIntervals}
-					xAxisId='top'
+					xAxisId="top"
 				/>
 
 				<YAxis
 					axisLine={{stroke: AXIS.borderStroke}}
 					stroke={AXIS.gridStroke}
-					tick={getAxisTickText('y', value => format(value))}
+					tick={getAxisTickText('y', (value) => format(value))}
 					tickLine={false}
 					ticks={getAxisMeasuresFromData(groupedData).intervals}
-					type='number'
+					type="number"
 				/>
 
 				<YAxis
 					axisLine={{
-						stroke: AXIS.borderStroke
+						stroke: AXIS.borderStroke,
 					}}
-					orientation='right'
+					orientation="right"
 					stroke={AXIS.gridStroke}
 					tick={false}
 					tickLine={false}
 					width={12}
-					yAxisId='right'
+					yAxisId="right"
 				/>
 
 				{chartType === 'line' && (
 					<>
 						<Line
 							animationDuration={ANIMATION_DURATION.line}
-							dataKey='data_control'
+							dataKey="data_control"
 							dot={false}
 							fill={CONTROL_COLOR}
-							legendType='circle'
+							legendType="circle"
 							name={controlLabel}
 							stroke={CONTROL_COLOR}
 							strokeOpacity={getStrokeOpacity('data_control')}
-							strokeWidth='2'
+							strokeWidth="2"
 						/>
 
 						{variantLabel && (
 							<Line
 								animationDuration={ANIMATION_DURATION.line}
-								dataKey='data_variant'
+								dataKey="data_variant"
 								dot={false}
 								fill={CHART_BLUE}
-								legendType='circle'
+								legendType="circle"
 								name={variantLabel}
 								stroke={CHART_BLUE}
 								strokeOpacity={getStrokeOpacity('data_variant')}
-								strokeWidth='2'
+								strokeWidth="2"
 							/>
 						)}
 					</>
@@ -149,29 +150,29 @@ export const ComposedChart = ({
 					<>
 						<Area
 							animationDuration={ANIMATION_DURATION.line}
-							dataKey='data_control'
+							dataKey="data_control"
 							dot={false}
 							fill={CONTROL_COLOR}
 							fillOpacity={getFillOpacity('data_control')}
-							legendType='circle'
+							legendType="circle"
 							name={controlLabel}
 							stroke={CONTROL_COLOR}
 							strokeOpacity={getStrokeOpacity('data_control')}
-							strokeWidth='2'
+							strokeWidth="2"
 						/>
 
 						{variantLabel && (
 							<Area
 								animationDuration={ANIMATION_DURATION.line}
-								dataKey='data_variant'
+								dataKey="data_variant"
 								dot={false}
 								fill={CHART_BLUE}
 								fillOpacity={getFillOpacity('data_variant')}
-								legendType='circle'
+								legendType="circle"
 								name={variantLabel}
 								stroke={CHART_BLUE}
 								strokeOpacity={getStrokeOpacity('data_variant')}
-								strokeWidth='2'
+								strokeWidth="2"
 							/>
 						)}
 					</>
@@ -188,17 +189,17 @@ export const ComposedChart = ({
 				/>
 
 				<Legend
-					align='right'
+					align="right"
 					iconSize={8}
 					onMouseEnter={
 						(({dataKey}: {dataKey: string}) =>
 							setHoverLegend(dataKey)) as any
 					}
 					onMouseLeave={() => setHoverLegend(null)}
-					verticalAlign='bottom'
+					verticalAlign="bottom"
 					wrapperStyle={{
 						fontSize: '14px',
-						lineHeight: '20px'
+						lineHeight: '20px',
 					}}
 				/>
 			</ComposedChartRecharts>

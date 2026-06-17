@@ -7,7 +7,7 @@ import {Text} from '@clayui/core';
 import {
 	toPromise,
 	validateMaxLength,
-	validateRequired
+	validateRequired,
 } from 'shared/util/validators';
 import {validateUniqueName} from 'shared/util/data-sources';
 
@@ -28,13 +28,13 @@ const DataSourceEditableTitle = ({
 	editable,
 	groupId,
 	label,
-	onUpdateName
+	onUpdateName,
 }: IDataSourceEditableTitleProps) => {
 	const cachedNameValues = useRef(new Map());
 
 	const handleUpdateName = useCallback(onUpdateName, [
 		groupId,
-		dataSource.id
+		dataSource.id,
 	]);
 
 	const handleValidate = useCallback(
@@ -44,7 +44,8 @@ const DataSourceEditableTitle = ({
 			if (value !== dataSource.name) {
 				if (cachedNameValues.current.has(value)) {
 					error = cachedNameValues.current.get(value);
-				} else {
+				}
+				else {
 					error = validateUniqueName({groupId, value});
 
 					cachedNameValues.current.set(value, error);
@@ -57,9 +58,9 @@ const DataSourceEditableTitle = ({
 	);
 
 	return (
-		<div className='mb-5'>
+		<div className="mb-5">
 			<ClayLabel
-				className='mb-2'
+				className="mb-2"
 				displayType={
 					displayType as
 						| 'secondary'
@@ -77,20 +78,20 @@ const DataSourceEditableTitle = ({
 			<InputWithEditToggle
 				editable={!!editable}
 				inputWidth={30}
-				name='dataSourceName'
-				onSubmit={name => toPromise(handleUpdateName(name))}
+				name="dataSourceName"
+				onSubmit={(name) => toPromise(handleUpdateName(name))}
 				required
 				validate={sequence([
 					validateRequired,
 					validateMaxLength(75),
-					handleValidate
+					handleValidate,
 				])}
 				value={dataSource.name || ''}
 			/>
 
 			{description && (
-				<div className='mt-1'>
-					<Text color='secondary' size={2}>
+				<div className="mt-1">
+					<Text color="secondary" size={2}>
 						{description}
 					</Text>
 				</div>

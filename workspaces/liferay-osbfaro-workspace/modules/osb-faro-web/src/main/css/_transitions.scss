@@ -30,7 +30,9 @@ $slideUpLength: 8px;
 .transition-attribute-carousel-left-enter-active {
 	max-height: 400px;
 	transform: translateX(0);
-	transition: transform 250ms ease-in-out, max-height 250ms ease-in-out;
+	transition:
+		transform 250ms ease-in-out,
+		max-height 250ms ease-in-out;
 }
 
 .transition-attribute-carousel-left-exit {
@@ -42,7 +44,9 @@ $slideUpLength: 8px;
 .transition-attribute-carousel-left-exit-active {
 	max-height: 0px;
 	transform: translateX(0);
-	transition: transform 250ms ease-in-out, max-height 250ms ease-in-out;
+	transition:
+		transform 250ms ease-in-out,
+		max-height 250ms ease-in-out;
 }
 
 /* ---------- Carousel right ---------- */
@@ -56,7 +60,9 @@ $slideUpLength: 8px;
 .transition-attribute-carousel-right-enter-active {
 	max-height: 700px;
 	transform: translateX(0);
-	transition: transform 250ms ease-in-out, max-height 250ms ease-in-out;
+	transition:
+		transform 250ms ease-in-out,
+		max-height 250ms ease-in-out;
 }
 
 .transition-attribute-carousel-right-exit {
@@ -68,7 +74,9 @@ $slideUpLength: 8px;
 .transition-attribute-carousel-right-exit-active {
 	max-height: 0px;
 	transform: translateX(-200%);
-	transition: transform 250ms ease-in-out, max-height 250ms ease-in-out;
+	transition:
+		transform 250ms ease-in-out,
+		max-height 250ms ease-in-out;
 }
 
 /* ---------- Carousel slide in out right ---------- */
@@ -147,7 +155,8 @@ $slideUpLength: 8px;
 .transition-slide-up-enter.transition-slide-up-enter-active {
 	opacity: 1;
 	transform: translateY(0);
-	transition: opacity $slideUpDuration ease-in,
+	transition:
+		opacity $slideUpDuration ease-in,
 		transform $slideUpDuration ease-in;
 }
 
@@ -159,6 +168,7 @@ $slideUpLength: 8px;
 .transition-slide-up-exit.transition-slide-up-exit-active {
 	opacity: 0;
 	transform: translateY($slideUpLength);
-	transition: opacity $slideUpDuration ease-in,
+	transition:
+		opacity $slideUpDuration ease-in,
 		transform $slideUpDuration ease-in;
 }

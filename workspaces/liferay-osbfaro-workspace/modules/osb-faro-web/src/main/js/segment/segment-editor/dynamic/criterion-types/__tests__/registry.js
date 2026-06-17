@@ -9,7 +9,7 @@ import {
 	getRemoteCriterionTypeByOperator,
 	getRemoteCriterionTypeByPropertyKey,
 	isRemoteCriterionOperator,
-	REMOTE_CRITERION_TYPES
+	REMOTE_CRITERION_TYPES,
 } from '../registry';
 import {tagCriterionType} from '../tagCriterionType';
 import {vocabularyCriterionType} from '../vocabularyCriterionType';

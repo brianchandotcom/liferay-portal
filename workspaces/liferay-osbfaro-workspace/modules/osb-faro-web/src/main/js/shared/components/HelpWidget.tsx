@@ -15,7 +15,7 @@ const getDropdownItems = ({
 	close,
 	groupId,
 	open,
-	showModal
+	showModal,
 }: {
 	close: Modal.close;
 	groupId: string;
@@ -28,20 +28,20 @@ const getDropdownItems = ({
 				onClick: () => {
 					open(modalTypes.HELP_WIDGET_MODAL, {
 						groupId,
-						onClose: close
+						onClose: close,
 					});
-				}
-		  }
+				},
+			}
 		: {
 				href: URLConstants.TicketPageLink,
 				label: Liferay.Language.get('report-an-issue'),
-				target: '_blank'
-		  },
+				target: '_blank',
+			},
 	{
 		href: URLConstants.DocumentationLink,
 		label: Liferay.Language.get('help-center'),
-		target: '_blank'
-	}
+		target: '_blank',
+	},
 ];
 
 const connector = connect(
@@ -49,7 +49,7 @@ const connector = connect(
 		faroSubscriptionIMap: store.getIn(
 			['projects', groupId, 'data', 'faroSubscription'],
 			Map()
-		)
+		),
 	}),
 	{close, open}
 );
@@ -64,29 +64,29 @@ const HelpWidget: React.FC<IHelpWidgetProps> = ({
 	close,
 	faroSubscriptionIMap,
 	groupId,
-	open
+	open,
 }) => {
 	const basicTier =
 		faroSubscriptionIMap.get('name') === (PLANS as any).basic.name;
 
 	return (
-		<div className='help-widget-root'>
+		<div className="help-widget-root">
 			<ClayDropDown
 				alignmentPosition={Align.TopLeft}
 				menuElementAttrs={{
-					className: 'help-dropdown-root'
+					className: 'help-dropdown-root',
 				}}
 				trigger={
 					<ClayButton
 						aria-label={Liferay.Language.get('help')}
 						borderless
-						className='button-root help-button'
-						displayType='info'
-						size='sm'
+						className="button-root help-button"
+						displayType="info"
+						size="sm"
 					>
 						<ClayIcon
-							className='icon-root'
-							symbol='ac_question_mark'
+							className="icon-root"
+							symbol="ac_question_mark"
 						/>
 					</ClayButton>
 				}
@@ -95,12 +95,12 @@ const HelpWidget: React.FC<IHelpWidgetProps> = ({
 					close,
 					groupId,
 					open,
-					showModal: basicTier
+					showModal: basicTier,
 				}).map(({href, label, onClick, target}, index) => (
 					<ClayDropDown.Item key={index}>
 						{href ? (
 							<ClayLink
-								className='btn btn-unstyled w-100'
+								className="btn btn-unstyled w-100"
 								href={href}
 								onClick={onClick}
 								target={target}
@@ -109,7 +109,7 @@ const HelpWidget: React.FC<IHelpWidgetProps> = ({
 							</ClayLink>
 						) : (
 							<ClayButton
-								displayType='unstyled'
+								displayType="unstyled"
 								onClick={onClick}
 							>
 								{label}

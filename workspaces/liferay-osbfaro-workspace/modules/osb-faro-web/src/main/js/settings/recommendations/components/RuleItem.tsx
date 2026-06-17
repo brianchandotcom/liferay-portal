@@ -13,7 +13,7 @@ const RuleItem: React.FC<IRuleItemProps> = ({name, value}) => {
 	const exactMatch = exactMatchSign === '=';
 
 	return (
-		<div className='rule-item-root d-flex align-items-baseline'>
+		<div className="rule-item-root d-flex align-items-baseline">
 			<b>
 				{`${
 					RULE_NAME_LABEL_MAP[
@@ -24,7 +24,7 @@ const RuleItem: React.FC<IRuleItemProps> = ({name, value}) => {
 
 			{metadataTag && <MetadataTag value={metadataTag} />}
 
-			<span className='rule-value'>
+			<span className="rule-value">
 				{exactMatch ? `"${rule}"` : rule}
 			</span>
 		</div>

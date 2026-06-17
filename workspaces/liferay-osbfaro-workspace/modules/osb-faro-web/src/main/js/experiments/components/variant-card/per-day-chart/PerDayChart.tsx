@@ -25,7 +25,7 @@ const formatData = (experiment: IPerDayExperiment) => {
 	const metricUnit = getMetricUnit(experiment.goal?.metric as MetricName);
 	const format = (value: number) => formatYAxis(metricUnit)(value);
 
-	experiment.metricsHistogram.forEach(metric => {
+	experiment.metricsHistogram.forEach((metric) => {
 		const control = metric.variantMetrics[0];
 		const variant = metric.variantMetrics[1];
 
@@ -39,16 +39,16 @@ const formatData = (experiment: IPerDayExperiment) => {
 					improvement:
 						control.improvement && format(control.improvement),
 					low: format(control.confidenceInterval[0]),
-					median: format(control.median)
+					median: format(control.median),
 				},
 				variant: {
 					high: format(variant.confidenceInterval[1]),
 					improvement:
 						variant.improvement && format(variant.improvement),
 					low: format(variant.confidenceInterval[0]),
-					median: format(variant.median)
-				}
-			}
+					median: format(variant.median),
+				},
+			},
 		});
 
 		intervals.push(metric.processedDate);
@@ -59,13 +59,13 @@ const formatData = (experiment: IPerDayExperiment) => {
 		data: chartData,
 		format: formatYAxis(metricUnit),
 		intervals,
-		variantLabel: experiment.dxpVariants[1].dxpVariantName
+		variantLabel: experiment.dxpVariants[1].dxpVariantName,
 	};
 };
 
 export const PerDayChart = ({experiment}: {experiment: IPerDayExperiment}) => (
 	<ComposedChart
-		chartType='area'
+		chartType="area"
 		data={formatData(experiment)}
 		Tooltip={Tooltip}
 	/>

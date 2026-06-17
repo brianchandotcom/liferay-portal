@@ -37,17 +37,17 @@ const SearchableEntitiesTableModal: React.FC<
 		onQueryChange,
 		orderIOMap,
 		page,
-		query
+		query,
 	} = useStatefulPagination(undefined, {
 		initialDelta,
-		initialOrderIOMap
+		initialOrderIOMap,
 	});
 
 	return (
 		<Modal className={className} size={size}>
 			<Modal.Header onClose={onClose} title={title} />
 
-			<Modal.Body className='p-0'>
+			<Modal.Body className="p-0">
 				<SearchableEntityTable
 					{...otherProps}
 					autoFocusSearch
@@ -64,8 +64,8 @@ const SearchableEntitiesTableModal: React.FC<
 
 			<Modal.Footer>
 				<ClayButton
-					className='button-root'
-					displayType='primary'
+					className="button-root"
+					displayType="primary"
 					onClick={onClose}
 				>
 					{Liferay.Language.get('done')}

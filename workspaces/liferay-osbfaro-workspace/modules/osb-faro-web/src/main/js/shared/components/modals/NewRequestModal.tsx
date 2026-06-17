@@ -23,14 +23,14 @@ const AUTOCOMPLETE_DELTA = 5;
 
 enum SubjectIdType {
 	ByEmail = 'email',
-	ByFile = 'file'
+	ByFile = 'file',
 }
 
 const getCheckboxLabel = (title: string, subtitle: string): React.ReactNode => (
-	<span className='checkbox-label'>
+	<span className="checkbox-label">
 		{title}
 
-		<span className='text-secondary'>{` - ${subtitle}`}</span>
+		<span className="text-secondary">{` - ${subtitle}`}</span>
 	</span>
 );
 
@@ -47,7 +47,7 @@ interface INewRequestModalProps {
 const NewRequestModal: React.FC<INewRequestModalProps> = ({
 	groupId,
 	onClose,
-	onSubmit
+	onSubmit,
 }) => {
 	const [items, setItems] = useState<{label: string; value: string}[]>([]);
 	const [fileName, setFileName] = useState<string | null>(null);
@@ -67,20 +67,20 @@ const NewRequestModal: React.FC<INewRequestModalProps> = ({
 					? `contains(demographics/email/value, '${debouncedEmail}')`
 					: '',
 				groupId,
-				page
+				page,
 			});
 
 			setItems(
 				items.map(
 					({
 						id,
-						properties: {email}
+						properties: {email},
 					}: {
 						id: string;
 						properties: {email: string};
 					}) => ({
 						label: email,
-						value: id
+						value: id,
 					})
 				)
 			);
@@ -127,7 +127,8 @@ const NewRequestModal: React.FC<INewRequestModalProps> = ({
 			const fileUploaded = completed && status !== 500;
 
 			setFileName(fileUploaded ? response ?? null : null);
-		} else {
+		}
+		else {
 			setFileName(null);
 		}
 	};
@@ -136,7 +137,7 @@ const NewRequestModal: React.FC<INewRequestModalProps> = ({
 		accessRequest,
 		deleteRequest,
 		subjectIdType,
-		suppressRequest
+		suppressRequest,
 	}: FormikValues) => {
 		let types: string[] = [];
 
@@ -155,12 +156,13 @@ const NewRequestModal: React.FC<INewRequestModalProps> = ({
 		if (subjectIdType === SubjectIdType.ByEmail) {
 			onSubmit({
 				emailAddresses: emails.map(({label}) => label),
-				types
+				types,
 			});
-		} else {
+		}
+		else {
 			onSubmit({
 				fileName: fileName ?? undefined,
-				types
+				types,
 			});
 		}
 	};
@@ -174,8 +176,8 @@ const NewRequestModal: React.FC<INewRequestModalProps> = ({
 			const {
 				setFieldValue,
 				state: {
-					values: {deleteRequest}
-				}
+					values: {deleteRequest},
+				},
 			} = _formRef.current;
 
 			if (!deleteRequest) {
@@ -188,7 +190,7 @@ const NewRequestModal: React.FC<INewRequestModalProps> = ({
 		accessRequest,
 		deleteRequest,
 		subjectIdType,
-		suppressRequest
+		suppressRequest,
 	}: FormikValues): boolean => {
 		const requests = accessRequest || deleteRequest || suppressRequest;
 
@@ -200,7 +202,7 @@ const NewRequestModal: React.FC<INewRequestModalProps> = ({
 	};
 
 	return (
-		<Modal className='new-request-modal-root'>
+		<Modal className="new-request-modal-root">
 			<Modal.Header
 				onClose={onClose}
 				title={Liferay.Language.get('new-request')}
@@ -211,7 +213,7 @@ const NewRequestModal: React.FC<INewRequestModalProps> = ({
 					accessRequest: false,
 					deleteRequest: false,
 					subjectIdType: SubjectIdType.ByEmail,
-					suppressRequest: false
+					suppressRequest: false,
 				}}
 				innerRef={_formRef as any}
 				onSubmit={handleSubmit}
@@ -219,14 +221,14 @@ const NewRequestModal: React.FC<INewRequestModalProps> = ({
 				{({handleSubmit, isSubmitting, values}) => (
 					<Form.Form onSubmit={handleSubmit}>
 						<Modal.Body>
-							<p className='text-secondary'>
+							<p className="text-secondary">
 								{Liferay.Language.get(
 									'new-requests-will-be-added-to-the-queue-and-you-will-be-notified-once-the-job-has-completed-running'
 								)}
 							</p>
 
 							<Form.Group>
-								<div className='h4'>
+								<div className="h4">
 									{Liferay.Language.get('job-type')}
 								</div>
 
@@ -239,9 +241,9 @@ const NewRequestModal: React.FC<INewRequestModalProps> = ({
 												'creates-downloadable-file-of-all-the-data-collected-related-to-a-user'
 											)
 										)}
-										name='accessRequest'
+										name="accessRequest"
 										onChange={handleAccessClick}
-										value='accessRequest'
+										value="accessRequest"
 									/>
 								</Form.GroupItem>
 
@@ -253,9 +255,9 @@ const NewRequestModal: React.FC<INewRequestModalProps> = ({
 												'delete-users-pii-and-add-them-to-the-suppression-list'
 											)
 										)}
-										name='deleteRequest'
+										name="deleteRequest"
 										onChange={handleDeleteClick}
-										value='deleteRequest'
+										value="deleteRequest"
 									/>
 								</Form.GroupItem>
 
@@ -268,20 +270,20 @@ const NewRequestModal: React.FC<INewRequestModalProps> = ({
 												'suppress-identity-resolution-of-users-based-on-their-email'
 											)
 										)}
-										name='suppressRequest'
+										name="suppressRequest"
 										onChange={handleSuppressClick}
-										value='suppressRequest'
+										value="suppressRequest"
 									/>
 								</Form.GroupItem>
 							</Form.Group>
 
 							<Form.Group>
-								<div className='h4'>
+								<div className="h4">
 									{Liferay.Language.get('data-subject-id')}
 								</div>
 
 								<Form.GroupItem>
-									<Form.RadioGroup name='subjectIdType'>
+									<Form.RadioGroup name="subjectIdType">
 										<Form.RadioGroup.Option
 											key={SubjectIdType.ByEmail}
 											label={Liferay.Language.get(
@@ -322,7 +324,7 @@ const NewRequestModal: React.FC<INewRequestModalProps> = ({
 											className={getCN({
 												hide:
 													values.subjectIdType ===
-													SubjectIdType.ByEmail
+													SubjectIdType.ByEmail,
 											})}
 										>
 											<div>
@@ -332,23 +334,24 @@ const NewRequestModal: React.FC<INewRequestModalProps> = ({
 													uploadURL={`/o/proxy/download/data-control-tasks?projectGroupId=${groupId}`}
 												/>
 
-												<div className='example-file-text text-secondary'>
+												<div className="example-file-text text-secondary">
 													{sub(
 														Liferay.Language.get(
 															'please-upload-files-in-csv-format.-a-sample-file-can-be-found-x'
 														),
 														[
 															<ClayLink
-																download='example_user_request.csv'
+																download="example_user_request.csv"
+
 																// @ts-ignore
 																externalLink
 																href={`data:text/octet-stream;charset=utf-8,${SAMPLE_CSV}`}
-																key='EXAMPLE_FILE'
+																key="EXAMPLE_FILE"
 															>
 																{Liferay.Language.get(
 																	'here'
 																).toLowerCase()}
-															</ClayLink>
+															</ClayLink>,
 														],
 														false
 													)}
@@ -362,18 +365,18 @@ const NewRequestModal: React.FC<INewRequestModalProps> = ({
 
 						<Modal.Footer>
 							<ClayButton
-								className='button-root'
-								displayType='secondary'
+								className="button-root"
+								displayType="secondary"
 								onClick={onClose}
 							>
 								{Liferay.Language.get('cancel')}
 							</ClayButton>
 
 							<ClayButton
-								className='button-root'
+								className="button-root"
 								disabled={!isValid(values)}
-								displayType='primary'
-								type='submit'
+								displayType="primary"
+								type="submit"
 							>
 								{isSubmitting && <Loading align={Align.Left} />}
 

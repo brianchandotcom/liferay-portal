@@ -9,7 +9,7 @@ interface IOrderParams {
 export default class OrderParams
 	extends Record({
 		field: null,
-		sortOrder: null
+		sortOrder: null,
 	})
 	implements IOrderParams
 {

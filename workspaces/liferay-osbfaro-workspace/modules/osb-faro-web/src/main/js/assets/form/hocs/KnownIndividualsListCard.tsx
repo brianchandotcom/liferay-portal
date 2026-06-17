@@ -8,12 +8,12 @@ import {
 	compose,
 	withBaseResults,
 	withQueryPagination,
-	withQueryRangeSelectors
+	withQueryRangeSelectors,
 } from 'shared/hoc';
 import {
 	createOrderIOMap,
 	NAME,
-	SUBMISSIONS_METRIC
+	SUBMISSIONS_METRIC,
 } from 'shared/util/pagination';
 import {graphql} from '@apollo/client/react/hoc';
 import {metricsListColumns} from 'shared/util/table-columns';
@@ -24,16 +24,16 @@ import {Sizes} from 'shared/util/constants';
 const withData = () =>
 	graphql(
 		knownIndividualsListAssetQuery('form', SUBMISSIONS_METRIC),
-		getMetricsMapper(result => ({
+		getMetricsMapper((result) => ({
 			items: result.form.submissionsMetric.individuals.individuals,
-			total: result.form.submissionsMetric.individuals.total
+			total: result.form.submissionsMetric.individuals.total,
 		}))
 	);
 
 const TableWithData = withBaseResults(withData, {
 	emptyDescription: (
 		<>
-			<span className='mr-1'>
+			<span className="mr-1">
 				{Liferay.Language.get(
 					'check-back-later-to-verify-if-data-has-been-received-from-your-data-sources,-or-you-can-try-a-different-date-range'
 				)}
@@ -41,8 +41,8 @@ const TableWithData = withBaseResults(withData, {
 
 			<ClayLink
 				href={URLConstants.IndividualsDashboardDocumentation}
-				key='DOCUMENTATION'
-				target='_blank'
+				key="DOCUMENTATION"
+				target="_blank"
 			>
 				{Liferay.Language.get('learn-more-about-individuals')}
 			</ClayLink>
@@ -51,24 +51,24 @@ const TableWithData = withBaseResults(withData, {
 	emptyIcon: {
 		border: false,
 		size: Sizes.XXXLarge,
-		symbol: 'ac_satellite'
+		symbol: 'ac_satellite',
 	},
 	emptyTitle: Liferay.Language.get('there-are-no-individuals-found'),
 	getColumns: ({
 		router: {
-			params: {channelId, groupId}
-		}
+			params: {channelId, groupId},
+		},
 	}: {
 		router: {params: {channelId: string; groupId: string}};
 	}) => [
 		metricsListColumns.getNameEmail({
 			channelId,
 			groupId,
-			route: Routes.CONTACTS_INDIVIDUAL
-		})
+			route: Routes.CONTACTS_INDIVIDUAL,
+		}),
 	],
 	legacyDropdownRangeKey: false,
-	rowIdentifier: 'id'
+	rowIdentifier: 'id',
 });
 
 interface IKnownIndividualsListCardProps {
@@ -85,7 +85,7 @@ const KnownIndividualsListCard = ({
 	);
 
 	return (
-		<Card className='known-individuals-root' pageDisplay>
+		<Card className="known-individuals-root" pageDisplay>
 			<TableWithData
 				{...otherProps}
 				onRangeSelectorsChange={setRangeSelectors}

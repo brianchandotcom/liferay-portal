@@ -15,18 +15,18 @@ const DEVICE_ICONS_MAP = {
 		color: Colors.MainLighten65,
 		id: 'anyIcon',
 		symbol: 'devices',
-		title: Liferay.Language.get('unknown-device')
+		title: Liferay.Language.get('unknown-device'),
 	},
 	desktop: {symbol: 'desktop', title: Liferay.Language.get('desktop')},
 	mobile: {symbol: 'mobile-portrait', title: Liferay.Language.get('mobile')},
 	smartphone: {
 		symbol: 'mobile-portrait',
-		title: Liferay.Language.get('mobile')
+		title: Liferay.Language.get('mobile'),
 	},
 	tablet: {
 		symbol: 'tablet-landscape',
-		title: Liferay.Language.get('tablet')
-	}
+		title: Liferay.Language.get('tablet'),
+	},
 };
 
 const LIFERAY_DXP_APPLICATION_IDS = new Set([
@@ -39,7 +39,7 @@ const LIFERAY_DXP_APPLICATION_IDS = new Set([
 	'ObjectEntry',
 	'Page',
 	'Ratings',
-	'WebContent'
+	'WebContent',
 ]);
 
 const normalizeApplicationId = (applicationId: string): string =>
@@ -88,9 +88,9 @@ const TimelineItem: FC<ITimelineItemProps> = ({
 		title,
 		totalEvents,
 		url,
-		userAgent
+		userAgent,
 	},
-	timeZoneId
+	timeZoneId,
 }) => {
 	const [expanded, setExpanded] = useState<boolean>(initialExpanded);
 	const expandable = !!attributes;
@@ -99,11 +99,11 @@ const TimelineItem: FC<ITimelineItemProps> = ({
 		<li
 			className={getCN('timeline-item', className, {
 				expanded,
-				header
+				header,
 			})}
 		>
-			<div className='timeline-panel'>
-				<div className='timeline-panel-body'>
+			<div className="timeline-panel">
+				<div className="timeline-panel-body">
 					{!header && (
 						<TimelineElement
 							endTime={endTime}
@@ -123,7 +123,7 @@ const TimelineItem: FC<ITimelineItemProps> = ({
 							className={getCN(
 								'timeline-panel-body-content-text',
 								{
-									header: !title
+									header: !title,
 								}
 							)}
 							description={description}
@@ -146,7 +146,7 @@ const TimelineItem: FC<ITimelineItemProps> = ({
 
 						{!header && (
 							<ClayIcon
-								className='icon-root'
+								className="icon-root"
 								symbol={expanded ? 'caret-top' : 'caret-bottom'}
 							/>
 						)}
@@ -186,12 +186,12 @@ const TimelinePanelBody: FC<{
 				onClick: toggleExpand,
 				onKeyPress: toggleExpand,
 				role: 'button',
-				tabIndex: 0
-		  }
+				tabIndex: 0,
+			}
 		: {};
 
 	const bodyClasses = getCN('timeline-panel-body-content', {
-		selectable: expandable
+		selectable: expandable,
 	});
 
 	return (
@@ -214,14 +214,14 @@ const TimelinePanelBodyContentDetails: FC<{
 	const isWebhook = userAgent?.toLowerCase().includes('webhook');
 
 	return (
-		<div className='timeline-panel-body-content-details'>
-			<div className='align-items-center d-flex icon-group'>
+		<div className="timeline-panel-body-content-details">
+			<div className="align-items-center d-flex icon-group">
 				{applicationId && (
 					<div>
 						<ClayLabel
 							className={getCN('label-lg mr-5', {
 								'label-info': !isWebhook,
-								'label-success': isWebhook
+								'label-success': isWebhook,
 							})}
 							displayType={isWebhook ? 'success' : 'info'}
 						>
@@ -233,25 +233,25 @@ const TimelinePanelBodyContentDetails: FC<{
 						</ClayLabel>
 
 						<ClayIcon
-							className='icon-root text-secondary'
+							className="icon-root text-secondary"
 							fontSize={16}
-							symbol='click'
+							symbol="click"
 						/>
 					</div>
 				)}
 
-				<span className='font-weight-semibold item-count text-secondary'>
+				<span className="font-weight-semibold item-count text-secondary">
 					{itemCount}
 				</span>
 
 				<span
-					className='device-icon mr-6'
+					className="device-icon mr-6"
 					data-tooltip
-					data-tooltip-align='bottom'
+					data-tooltip-align="bottom"
 					title={`${deviceIconTitle}\n${browserName}`}
 				>
 					<ClayIcon
-						className='icon-root text-secondary'
+						className="icon-root text-secondary"
 						{...otherIconAttributes}
 					/>
 				</span>
@@ -275,32 +275,32 @@ const TimelinePanelBodyContentText: FC<{
 	return (
 		<div className={className}>
 			{url ? (
-				<span className='text-truncate'>
-					<Link className='title' to={url}>
+				<span className="text-truncate">
+					<Link className="title" to={url}>
 						{eventTitle}
 					</Link>
 				</span>
 			) : (
-				<span className='title'>{eventTitle}</span>
+				<span className="title">{eventTitle}</span>
 			)}
 
 			{header && (
 				<>
 					<ClayIcon
-						className='event-icon icon-root'
-						symbol='ac_event_icon'
+						className="event-icon icon-root"
+						symbol="ac_event_icon"
 					/>
 
-					<span className='item-count'>{totalEvents}</span>
+					<span className="item-count">{totalEvents}</span>
 				</>
 			)}
 
 			{subtitle && (
 				<ClayLink
-					className='d-inline-block subtitle'
+					className="d-inline-block subtitle"
 					href={subtitle}
-					rel='noopener noreferrer'
-					target='_blank'
+					rel="noopener noreferrer"
+					target="_blank"
 				>
 					<TextTruncate title={subtitle} />
 				</ClayLink>
@@ -334,7 +334,7 @@ const TimelineElement: FC<{
 
 	return (
 		<>
-			<div className='timeline-line' />
+			<div className="timeline-line" />
 
 			<div
 				className={getCN('timeline-increment', {
@@ -343,13 +343,13 @@ const TimelineElement: FC<{
 						!userAgent?.toLowerCase().includes('webhook'),
 					'timeline-increment-webhook':
 						isSession &&
-						userAgent?.toLowerCase().includes('webhook')
+						userAgent?.toLowerCase().includes('webhook'),
 				})}
 			>
-				<Sticker circle display='point' size='lg' />
+				<Sticker circle display="point" size="lg" />
 
 				{time && (
-					<div className='timeline-item-label timeline-time-label label-root'>
+					<div className="timeline-item-label timeline-time-label label-root">
 						{timeRange}
 					</div>
 				)}
@@ -359,10 +359,10 @@ const TimelineElement: FC<{
 };
 
 const TimelineItemAttributes: FC<{payload: Record<string, unknown>}> = ({
-	payload
+	payload,
 }) => (
-	<div className='timeline-panel-body-content'>
-		<code className='attributes-payload'>
+	<div className="timeline-panel-body-content">
+		<code className="attributes-payload">
 			{JSON.stringify(payload, null, 2)}
 		</code>
 	</div>
@@ -383,15 +383,15 @@ const VerticalTimeline: FC<IVerticalTimelineProps> = ({
 	items = [],
 	loading = false,
 	nested = false,
-	timeZoneId
+	timeZoneId,
 }) =>
 	loading ? (
 		<Loading />
 	) : (
-		<div className='vertical-timeline-root'>
+		<div className="vertical-timeline-root">
 			<ul
 				className={getCN('timeline', 'timeline-center', {
-					'timeline-nested': nested
+					'timeline-nested': nested,
 				})}
 			>
 				{items.map((item, i) => (

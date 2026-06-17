@@ -6,7 +6,7 @@ import {useDisconnectDataSource} from '../utils';
 jest.unmock('react-dom');
 
 jest.mock('shared/api/data-source', () => ({
-	disconnect: jest.fn(() => Promise.resolve({}))
+	disconnect: jest.fn(() => Promise.resolve({})),
 }));
 
 interface RunFlowOptions {
@@ -16,7 +16,7 @@ interface RunFlowOptions {
 
 const runDisconnectFlow = async ({
 	beforeSubmit,
-	onSubmit = () => Promise.resolve()
+	onSubmit = () => Promise.resolve(),
 }: RunFlowOptions = {}) => {
 	const open = jest.fn();
 	const close = jest.fn();
@@ -32,7 +32,7 @@ const runDisconnectFlow = async ({
 			groupId: '23',
 			id: 'ds-1',
 			onSubmit,
-			open
+			open,
 		});
 
 		handleDisconnect = hook.handleDisconnect;

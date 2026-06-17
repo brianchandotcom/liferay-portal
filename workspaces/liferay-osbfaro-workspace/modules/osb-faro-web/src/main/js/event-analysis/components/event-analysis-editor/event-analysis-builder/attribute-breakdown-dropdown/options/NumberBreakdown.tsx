@@ -2,7 +2,7 @@ import ClayButton from '@clayui/button';
 import Form, {
 	validateGreaterThanZero,
 	validateIsInteger,
-	validateRequired
+	validateRequired,
 } from 'shared/components/form';
 import React from 'react';
 import {createNumberBreakdown} from 'event-analysis/utils/utils';
@@ -17,7 +17,7 @@ const NumberBreakdown: React.FC<IBreakdownProps> = ({
 	breakdown,
 	description,
 	displayName,
-	onSubmit
+	onSubmit,
 }) => {
 	const getInitialValues = () => {
 		if (breakdown) {
@@ -27,7 +27,7 @@ const NumberBreakdown: React.FC<IBreakdownProps> = ({
 		}
 
 		return {
-			binSize: DEFAULT_NUMBER_BIN
+			binSize: DEFAULT_NUMBER_BIN,
 		};
 	};
 
@@ -43,40 +43,40 @@ const NumberBreakdown: React.FC<IBreakdownProps> = ({
 						attributeType: attributeOwnerType,
 						binSize: Number(binSize),
 						description,
-						displayName
+						displayName,
 					})
 				);
 			}}
 		>
 			{({handleSubmit, isValid}) => (
 				<Form.Form onSubmit={handleSubmit}>
-					<div className='options-body'>
+					<div className="options-body">
 						<Form.Group autoFit>
 							<Form.GroupItem>
 								<Form.Input
 									label={Liferay.Language.get(
 										'group-numbers-by'
 									)}
-									name='binSize'
-									step='any'
-									type='number'
+									name="binSize"
+									step="any"
+									type="number"
 									validate={sequence([
 										validateRequired,
 										validateGreaterThanZero,
-										validateIsInteger
+										validateIsInteger,
 									])}
 								/>
 							</Form.GroupItem>
 						</Form.Group>
 					</div>
 
-					<div className='options-footer'>
+					<div className="options-footer">
 						<ClayButton
 							block
-							className='button-root'
+							className="button-root"
 							disabled={!isValid}
-							displayType='primary'
-							type='submit'
+							displayType="primary"
+							type="submit"
 						>
 							{Liferay.Language.get('apply')}
 						</ClayButton>

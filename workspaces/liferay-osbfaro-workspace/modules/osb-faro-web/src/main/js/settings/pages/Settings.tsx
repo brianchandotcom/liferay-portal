@@ -30,6 +30,7 @@ const DataSourceEdit = lazy(
 const DataSourceOnboarding = lazy(
 	() =>
 		import(
+
 			/* webpackChunkName: "DataSourceEdit" */ './data-source/Onboarding'
 		)
 );
@@ -39,6 +40,7 @@ const DataSourceList = lazy(
 const DeleteDataSource = lazy(
 	() =>
 		import(
+
 			/* webpackChunkName: "DeleteDataSource" */ './data-source/Delete'
 		) as any
 );
@@ -54,6 +56,7 @@ const Definitions = lazy(
 const ChannelList = lazy(
 	() =>
 		import(
+
 			/* webpackChunkName: "ChannelList" */ '../channels/pages/ChannelList'
 		)
 );
@@ -67,6 +70,7 @@ const ChannelView = lazy(
 const RecommendationList = lazy(
 	() =>
 		import(
+
 			/* webpackChunkName: "RecommendationList" */ '../recommendations/pages/Recommendations'
 		)
 );
@@ -74,6 +78,7 @@ const RecommendationList = lazy(
 const RecommendationCreateItemSimilarity = lazy(
 	() =>
 		import(
+
 			/* webpackChunkName: "RecommendationCreateItemSimilarity" */ '../recommendations/pages/CreateItemSimilarity'
 		)
 );
@@ -81,6 +86,7 @@ const RecommendationCreateItemSimilarity = lazy(
 const RecommendationEdit = lazy(
 	() =>
 		import(
+
 			/* webpackChunkName: "RecommendationEdit" */ '../recommendations/pages/Edit'
 		)
 );
@@ -88,6 +94,7 @@ const RecommendationEdit = lazy(
 const RecommendationView = lazy(
 	() =>
 		import(
+
 			/* webpackChunkName: "RecommendationView" */ '../recommendations/pages/View'
 		)
 );
@@ -105,6 +112,7 @@ const UsageOverview = lazy(
 const UsageOverviewSaaS = lazy(
 	() =>
 		import(
+
 			/* webpackChunkName: "UsageOverviewSaaS" */ './UsageOverviewSaaS'
 		)
 );
@@ -206,7 +214,7 @@ export const Settings = () => {
 				<BundleRouter data={Apis} path={Routes.SETTINGS_APIS} />
 
 				{recommendationsEnabled && (
-					<Fragment key='RECOMMENDATIONS'>
+					<Fragment key="RECOMMENDATIONS">
 						<BundleRouter
 							data={RecommendationList}
 							destructured={false}

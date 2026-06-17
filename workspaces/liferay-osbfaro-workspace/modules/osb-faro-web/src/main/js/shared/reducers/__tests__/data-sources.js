@@ -13,9 +13,9 @@ describe('data-sources', () => {
 
 		const action = {
 			payload: {
-				id
+				id,
 			},
-			type: actionTypes.FETCH_DATA_SOURCE_REQUEST
+			type: actionTypes.FETCH_DATA_SOURCE_REQUEST,
 		};
 
 		expect(getResult(action, id)).toMatchObject(new RemoteData());
@@ -26,9 +26,9 @@ describe('data-sources', () => {
 
 		const action = {
 			payload: {
-				id
+				id,
 			},
-			type: actionTypes.FETCH_DATA_SOURCE_FAILURE
+			type: actionTypes.FETCH_DATA_SOURCE_FAILURE,
 		};
 
 		expect(getResult(action, id)).toMatchObject(
@@ -42,9 +42,9 @@ describe('data-sources', () => {
 		const action = {
 			meta: {id},
 			payload: {
-				id
+				id,
 			},
-			type: actionTypes.DELETE_DATA_SOURCE_SUCCESS
+			type: actionTypes.DELETE_DATA_SOURCE_SUCCESS,
 		};
 
 		expect(getResult(action, id, new Map({[id]: {id}}))).toBeFalsy();

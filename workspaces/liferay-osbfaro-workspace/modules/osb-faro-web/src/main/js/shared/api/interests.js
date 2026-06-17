@@ -1,6 +1,6 @@
 import Constants, {
 	OrderByDirections,
-	TimeIntervals
+	TimeIntervals,
 } from 'shared/util/constants';
 import sendRequest from 'shared/util/request';
 import {
@@ -9,11 +9,11 @@ import {
 	INDIVIDUAL_COUNT,
 	INTERESTS,
 	NAME,
-	SCORE
+	SCORE,
 } from 'shared/util/pagination';
 
 const {
-	pagination: {cur: DEFAULT_PAGE, delta: DEFAULT_DELTA, orderDescending}
+	pagination: {cur: DEFAULT_PAGE, delta: DEFAULT_DELTA, orderDescending},
 } = Constants;
 
 const DEFAULT_MAX = 30;
@@ -23,8 +23,8 @@ export function fetch(params) {
 	return search({
 		...params,
 		orderByFields: [
-			{fieldName: NAME, orderBy: orderDescending, system: true}
-		]
+			{fieldName: NAME, orderBy: orderDescending, system: true},
+		],
 	}).then(({items}) => {
 		if (items && items.length) {
 			return items[0];
@@ -45,7 +45,7 @@ export function search(params) {
 		name,
 		orderIOMap = createOrderIOMap(SCORE, OrderByDirections.Descending),
 		page = DEFAULT_PAGE,
-		query = ''
+		query = '',
 	} = params;
 
 	const orderParams = orderIOMap.first();
@@ -62,10 +62,10 @@ export function search(params) {
 			max,
 			name,
 			orderByFields,
-			query
+			query,
 		},
 		method: 'GET',
-		path: `contacts/${groupId}/interest`
+		path: `contacts/${groupId}/interest`,
 	});
 }
 
@@ -77,10 +77,10 @@ export function searchKeywords(params) {
 			channelId,
 			cur: page,
 			delta,
-			query
+			query,
 		},
 		method: 'GET',
-		path: `contacts/${groupId}/interest/keywords`
+		path: `contacts/${groupId}/interest/keywords`,
 	});
 }
 export function searchKeywordAggregations(params) {
@@ -91,7 +91,7 @@ export function searchKeywordAggregations(params) {
 		groupId,
 		orderIOMap = createOrderIOMap(INDIVIDUAL_COUNT),
 		page = DEFAULT_PAGE,
-		query = ''
+		query = '',
 	} = params;
 
 	const orderParams = orderIOMap.first();
@@ -105,9 +105,9 @@ export function searchKeywordAggregations(params) {
 			cur: page,
 			delta,
 			orderByFields,
-			query
+			query,
 		},
 		method: 'GET',
-		path: `contacts/${groupId}/interest/keywords/aggregations`
+		path: `contacts/${groupId}/interest/keywords/aggregations`,
 	});
 }

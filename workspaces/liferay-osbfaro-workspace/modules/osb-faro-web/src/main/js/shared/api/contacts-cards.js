@@ -5,16 +5,16 @@ export function preview(params) {
 		contactsCardTemplateSettings = {},
 		contactsCardTemplateType,
 		contactsEntityId,
-		groupId
+		groupId,
 	} = params;
 
 	return sendRequest({
 		data: {
 			contactsCardTemplateSettings,
 			contactsCardTemplateType,
-			contactsEntityId
+			contactsEntityId,
 		},
 		method: 'GET',
-		path: `contacts/${groupId}/contacts_card/preview`
+		path: `contacts/${groupId}/contacts_card/preview`,
 	});
 }

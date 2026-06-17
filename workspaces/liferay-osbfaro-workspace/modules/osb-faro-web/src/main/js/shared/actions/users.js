@@ -4,7 +4,7 @@ import {createActionTypes} from 'redux-toolbox';
 import {user} from '../middleware/schema';
 
 export const actionTypes = {
-	...createActionTypes('fetch', 'current_user')
+	...createActionTypes('fetch', 'current_user'),
 };
 
 export function fetchCurrentUser(groupId) {
@@ -17,10 +17,10 @@ export function fetchCurrentUser(groupId) {
 				types: [
 					actionTypes.FETCH_CURRENT_USER_REQUEST,
 					actionTypes.FETCH_CURRENT_USER_SUCCESS,
-					actionTypes.FETCH_CURRENT_USER_FAILURE
-				]
-			}
+					actionTypes.FETCH_CURRENT_USER_FAILURE,
+				],
+			},
 		},
-		type: 'NO_OP'
+		type: 'NO_OP',
 	};
 }

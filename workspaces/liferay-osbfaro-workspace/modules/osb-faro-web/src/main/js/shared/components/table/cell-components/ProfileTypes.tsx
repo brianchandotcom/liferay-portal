@@ -11,12 +11,12 @@ interface IMembershipChanges {
 
 const PROFILE_TYPE_LABEL_MAP: Record<ProfileTypes, string> = {
 	ANONYMOUS: Liferay.Language.get('anonymous'),
-	KNOWN: Liferay.Language.get('known')
+	KNOWN: Liferay.Language.get('known'),
 };
 
 const ProfileType: React.FC<IMembershipChanges> = ({
 	className,
-	data: {profileType}
+	data: {profileType},
 }) => (
 	<td className={getCN('text-capitalize', className)}>
 		{PROFILE_TYPE_LABEL_MAP[profileType]}

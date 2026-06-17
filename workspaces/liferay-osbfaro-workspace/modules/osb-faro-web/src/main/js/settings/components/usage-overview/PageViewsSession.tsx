@@ -29,7 +29,7 @@ export const PageViewsSession = ({currentPlan}: IPageViewsSessionProps) => {
 							moment(currentPlan.startDate),
 							CUSTOM_DATE_FORMAT,
 							timeZoneId
-						)
+						),
 					]
 				) as string
 			}
@@ -45,8 +45,8 @@ export const PageViewsSession = ({currentPlan}: IPageViewsSessionProps) => {
 							]
 						],
 						label: Liferay.Language.get('page-views'),
-						value: count
-					}
+						value: count,
+					},
 				}}
 				legendText={sub(
 					Liferay.Language.get('x-page-views-are-available'),

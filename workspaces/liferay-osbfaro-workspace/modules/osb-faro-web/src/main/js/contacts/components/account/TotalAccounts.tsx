@@ -5,7 +5,7 @@ import React from 'react';
 import {
 	AccountMetricType,
 	IAccountMetric,
-	Metric
+	Metric,
 } from '../../pages/account/utils/types';
 import {sub} from 'shared/util/lang';
 import {toThousands} from 'shared/util/numbers';
@@ -28,14 +28,14 @@ const TotalAccounts = ({groupId}: {groupId: string}) => {
 		dataSourceFn: API.accounts.fetchMetrics,
 		variables: {
 			channelId,
-			groupId
-		}
+			groupId,
+		},
 	});
 
 	const metrics = data as IAccountMetric[] | undefined;
 
 	const getMetric = (metricType: AccountMetricType) =>
-		metrics?.find(metric => metric.metricType === metricType);
+		metrics?.find((metric) => metric.metricType === metricType);
 
 	const renderTrendLabel = (percentageNode: React.ReactNode) =>
 		sub(

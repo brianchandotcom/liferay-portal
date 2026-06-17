@@ -1,6 +1,6 @@
 import * as d3 from 'd3';
 import ChartTooltip, {
-	IChartTooltipProps
+	IChartTooltipProps,
 } from 'shared/components/chart-tooltip';
 import React from 'react';
 import {Alignments, Weights} from 'shared/components/chart-tooltip';
@@ -21,22 +21,22 @@ const formatTooltip = (dataPoint: any[]): IChartTooltipProps => {
 						getDateUtil(control.payload.key)
 					)}`,
 					weight: Weights.Semibold,
-					width: 180
+					width: 180,
 				},
 				{
 					align: Alignments.Right,
 					label: Liferay.Language.get('test-sessions'),
 					weight: Weights.Semibold,
-					width: 100
+					width: 100,
 				},
 				{
 					align: Alignments.Right,
 					label: Liferay.Language.get('traffic-split'),
 					weight: Weights.Semibold,
-					width: 100
-				}
-			]
-		}
+					width: 100,
+				},
+			],
+		},
 	];
 
 	const rows = [
@@ -45,64 +45,68 @@ const formatTooltip = (dataPoint: any[]): IChartTooltipProps => {
 				{
 					color: control.color,
 					label: control.name,
-					weight: Weights.Semibold
+					weight: Weights.Semibold,
 				},
 				{
 					align: Alignments.Right,
-					label: toThousandsABTesting(control.payload['data_control'])
+					label: toThousandsABTesting(
+						control.payload['data_control']
+					),
 				},
 				{
 					align: Alignments.Right,
-					label: `${control.payload['data_control_traffic_split']}%`
-				}
-			]
+					label: `${control.payload['data_control_traffic_split']}%`,
+				},
+			],
 		},
 		{
 			columns: [
 				{
 					color: variant.color,
 					label: variant.name,
-					weight: Weights.Semibold
+					weight: Weights.Semibold,
 				},
 				{
 					align: Alignments.Right,
-					label: toThousandsABTesting(variant.payload['data_variant'])
+					label: toThousandsABTesting(
+						variant.payload['data_variant']
+					),
 				},
 				{
 					align: Alignments.Right,
-					label: `${variant.payload['data_variant_traffic_split']}%`
-				}
-			]
+					label: `${variant.payload['data_variant_traffic_split']}%`,
+				},
+			],
 		},
 		{
 			columns: [
 				{
 					label: Liferay.Language.get('total'),
-					weight: Weights.Semibold
+					weight: Weights.Semibold,
 				},
 				{
 					align: Alignments.Right,
 					label: toThousandsABTesting(
 						variant.payload['data_control'] +
 							variant.payload['data_variant']
-					)
+					),
 				},
 				{
 					align: Alignments.Right,
 					label: `${
 						variant.payload['data_control_traffic_split'] +
 						variant.payload['data_variant_traffic_split']
-					}%`
-				}
-			]
-		}
+					}%`,
+				},
+			],
+		},
 	];
 
 	return {header, rows};
 };
 
 export const Tooltip = ({dataPoint}: {dataPoint: any[]}) => (
-	<div className='bb-tooltip-container position-static'>
+	<div className="bb-tooltip-container position-static">
 		<ChartTooltip {...formatTooltip(dataPoint)} />
 	</div>
 );

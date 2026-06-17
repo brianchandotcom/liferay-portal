@@ -45,14 +45,14 @@ export function getTitle(
 
 const SyncedStripe: React.FC<ISyncedStripeProps> = ({
 	channelsSyncedCount,
-	sitesSyncedCount
+	sitesSyncedCount,
 }) => (
 	<div
 		className={getCN('sites-synced-stripe-root', {
-			empty: !sitesSyncedCount && !channelsSyncedCount
+			empty: !sitesSyncedCount && !channelsSyncedCount,
 		})}
 	>
-		<div className='title d-flex align-items-center'>
+		<div className="title d-flex align-items-center">
 			{getTitle(sitesSyncedCount, channelsSyncedCount)}
 		</div>
 
@@ -62,11 +62,11 @@ const SyncedStripe: React.FC<ISyncedStripeProps> = ({
 					'manage-sites-synced-to-this-property-by-going-to-x-in-your-dxp-instance'
 				),
 				[
-					<b key='INSTANCE_SETTINGS'>
+					<b key="INSTANCE_SETTINGS">
 						{Liferay.Language.get(
 							'instance-settings-analytics-cloud'
 						)}
-					</b>
+					</b>,
 				],
 				false
 			)}

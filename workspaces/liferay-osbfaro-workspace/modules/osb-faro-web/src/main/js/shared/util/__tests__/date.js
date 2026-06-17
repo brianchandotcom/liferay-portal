@@ -11,7 +11,7 @@ import {
 	getFirstDate,
 	getISODate,
 	getLastDate,
-	toUnix
+	toUnix,
 } from '../date';
 
 describe('date', () => {
@@ -91,6 +91,7 @@ describe('date', () => {
 	});
 
 	expect.extend({
+
 		/**
 		 * To Equal Without Type
 		 * @param {string} received
@@ -102,15 +103,16 @@ describe('date', () => {
 				return {
 					message: () =>
 						`expected ${received} not to equal ${argument}`,
-					pass: true
-				};
-			} else {
-				return {
-					message: () => `expected ${received} to equal ${argument}`,
-					pass: false
+					pass: true,
 				};
 			}
-		}
+			else {
+				return {
+					message: () => `expected ${received} to equal ${argument}`,
+					pass: false,
+				};
+			}
+		},
 	});
 
 	describe('getDateRangeLabel', () => {
@@ -118,7 +120,7 @@ describe('date', () => {
 			const dates = [
 				{intervalInitDate: data.getTimestamp(-2)},
 				{intervalInitDate: data.getTimestamp(-1)},
-				{intervalInitDate: data.getTimestamp()}
+				{intervalInitDate: data.getTimestamp()},
 			];
 
 			expect(

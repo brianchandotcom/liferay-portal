@@ -9,19 +9,19 @@ const DEFAULT_STAGE_ITEMS = [
 	{id: '9990', stageType: LifecycleStages.AWARE},
 	{id: '9991', stageType: LifecycleStages.ENGAGED},
 	{id: '9992', stageType: LifecycleStages.PIPELINE},
-	{id: '9993', stageType: LifecycleStages.AT_RISK}
+	{id: '9993', stageType: LifecycleStages.AT_RISK},
 ];
 
 jest.unmock('react-dom');
 
 jest.mock('shared/api', () => ({
 	accounts: {
-		fetchLifecycleStageFieldValues: jest.fn()
-	}
+		fetchLifecycleStageFieldValues: jest.fn(),
+	},
 }));
 
 jest.mock('shared/hooks/useRequest', () => ({
-	useRequest: jest.fn()
+	useRequest: jest.fn(),
 }));
 
 const mockedUseRequest = useRequest as jest.Mock;
@@ -29,7 +29,7 @@ const mockedUseRequest = useRequest as jest.Mock;
 const mockStages = (items: typeof DEFAULT_STAGE_ITEMS | undefined) => {
 	mockedUseRequest.mockReturnValue({
 		data: items ? {items} : undefined,
-		loading: false
+		loading: false,
 	});
 };
 
@@ -59,7 +59,7 @@ jest.mock('@liferay/frontend-data-set-web', () => ({
 		apiURL,
 		customDataRenderers,
 		filters,
-		id
+		id,
 	}: {
 		apiURL: string;
 		customDataRenderers: FakeCustomDataRenderers;
@@ -70,8 +70,8 @@ jest.mock('@liferay/frontend-data-set-web', () => ({
 		lastCustomDataRenderers = customDataRenderers;
 		lastFilters = filters;
 
-		return <div data-testid='fds-component' id={id} />;
-	}
+		return <div data-testid="fds-component" id={id} />;
+	},
 }));
 
 describe('AccountsDataSet', () => {
@@ -87,7 +87,7 @@ describe('AccountsDataSet', () => {
 
 	it('should render the FrontendDataSet with id "accounts-list-dataset"', () => {
 		render(
-			<AccountsDataSet apiURL='fake-url' channelId='123' groupId='23' />
+			<AccountsDataSet apiURL="fake-url" channelId="123" groupId="23" />
 		);
 
 		expect(screen.getByTestId('fds-component')).toHaveAttribute(
@@ -98,7 +98,7 @@ describe('AccountsDataSet', () => {
 
 	it('should pass the apiURL directly to FrontendDataSet without appending range params', () => {
 		render(
-			<AccountsDataSet apiURL='fake-url' channelId='123' groupId='23' />
+			<AccountsDataSet apiURL="fake-url" channelId="123" groupId="23" />
 		);
 
 		expect(lastApiURL).toBe('fake-url');
@@ -106,31 +106,31 @@ describe('AccountsDataSet', () => {
 
 	it('should preload the rangeKey filter with Last 30 Days by default', () => {
 		render(
-			<AccountsDataSet apiURL='fake-url' channelId='123' groupId='23' />
+			<AccountsDataSet apiURL="fake-url" channelId="123" groupId="23" />
 		);
 
-		const rangeKeyFilter = lastFilters?.find(f => f.id === 'rangeKey');
+		const rangeKeyFilter = lastFilters?.find((f) => f.id === 'rangeKey');
 
 		expect(rangeKeyFilter?.preloadedData).toEqual({
 			exclude: false,
 			selectedItems: [
 				{
 					label: 'Last 30 days',
-					value: RangeKeyTimeRanges.Last30Days
-				}
-			]
+					value: RangeKeyTimeRanges.Last30Days,
+				},
+			],
 		});
 	});
 
 	it('should include all 8 time range options in the rangeKey filter', () => {
 		render(
-			<AccountsDataSet apiURL='fake-url' channelId='123' groupId='23' />
+			<AccountsDataSet apiURL="fake-url" channelId="123" groupId="23" />
 		);
 
-		const rangeKeyFilter = lastFilters?.find(f => f.id === 'rangeKey');
+		const rangeKeyFilter = lastFilters?.find((f) => f.id === 'rangeKey');
 
 		expect(rangeKeyFilter?.items).toHaveLength(8);
-		expect(rangeKeyFilter?.items?.map(i => i.value)).toEqual([
+		expect(rangeKeyFilter?.items?.map((i) => i.value)).toEqual([
 			RangeKeyTimeRanges.Last24Hours,
 			RangeKeyTimeRanges.Yesterday,
 			RangeKeyTimeRanges.Last7Days,
@@ -138,17 +138,17 @@ describe('AccountsDataSet', () => {
 			RangeKeyTimeRanges.Last30Days,
 			RangeKeyTimeRanges.Last90Days,
 			RangeKeyTimeRanges.Last180Days,
-			RangeKeyTimeRanges.LastYear
+			RangeKeyTimeRanges.LastYear,
 		]);
 	});
 
 	it('should leave country and industry filters without preloadedData when no props are passed', () => {
 		render(
-			<AccountsDataSet apiURL='fake-url' channelId='123' groupId='23' />
+			<AccountsDataSet apiURL="fake-url" channelId="123" groupId="23" />
 		);
 
-		const countryFilter = lastFilters?.find(f => f.id === 'country');
-		const industryFilter = lastFilters?.find(f => f.id === 'industry');
+		const countryFilter = lastFilters?.find((f) => f.id === 'country');
+		const industryFilter = lastFilters?.find((f) => f.id === 'industry');
 
 		expect(countryFilter?.preloadedData).toBeUndefined();
 		expect(industryFilter?.preloadedData).toBeUndefined();
@@ -156,11 +156,11 @@ describe('AccountsDataSet', () => {
 
 	it('should omit the lifecycleStatus filter when accountLifecycleId is not provided', () => {
 		render(
-			<AccountsDataSet apiURL='fake-url' channelId='123' groupId='23' />
+			<AccountsDataSet apiURL="fake-url" channelId="123" groupId="23" />
 		);
 
 		const lifecycleStatusFilter = lastFilters?.find(
-			f => f.id === 'lifecycleStatus'
+			(f) => f.id === 'lifecycleStatus'
 		);
 
 		expect(lifecycleStatusFilter).toBeUndefined();
@@ -169,79 +169,79 @@ describe('AccountsDataSet', () => {
 	it('should preload the country filter when countryFilter prop is provided', () => {
 		render(
 			<AccountsDataSet
-				apiURL='fake-url'
-				channelId='123'
-				countryFilter='US'
-				groupId='23'
+				apiURL="fake-url"
+				channelId="123"
+				countryFilter="US"
+				groupId="23"
 			/>
 		);
 
-		const countryFilter = lastFilters?.find(f => f.id === 'country');
+		const countryFilter = lastFilters?.find((f) => f.id === 'country');
 
 		expect(countryFilter?.preloadedData).toEqual({
 			exclude: false,
-			selectedItems: [{label: 'US', value: 'US'}]
+			selectedItems: [{label: 'US', value: 'US'}],
 		});
 	});
 
 	it('should preload the industry filter when industryFilter prop is provided', () => {
 		render(
 			<AccountsDataSet
-				apiURL='fake-url'
-				channelId='123'
-				groupId='23'
-				industryFilter='Tech'
+				apiURL="fake-url"
+				channelId="123"
+				groupId="23"
+				industryFilter="Tech"
 			/>
 		);
 
-		const industryFilter = lastFilters?.find(f => f.id === 'industry');
+		const industryFilter = lastFilters?.find((f) => f.id === 'industry');
 
 		expect(industryFilter?.preloadedData).toEqual({
 			exclude: false,
-			selectedItems: [{label: 'Tech', value: 'Tech'}]
+			selectedItems: [{label: 'Tech', value: 'Tech'}],
 		});
 	});
 
 	it('should build the lifecycleStatus items from the fetched stages with localized labels', () => {
 		render(
 			<AccountsDataSet
-				accountLifecycleId='al-1'
-				apiURL='fake-url'
-				channelId='123'
-				groupId='23'
+				accountLifecycleId="al-1"
+				apiURL="fake-url"
+				channelId="123"
+				groupId="23"
 			/>
 		);
 
 		const lifecycleStatusFilter = lastFilters?.find(
-			f => f.id === 'lifecycleStatus'
+			(f) => f.id === 'lifecycleStatus'
 		);
 
 		expect(lifecycleStatusFilter?.items).toEqual([
 			{label: 'Aware', value: '9990'},
 			{label: 'Engaged', value: '9991'},
 			{label: 'Pipeline', value: '9992'},
-			{label: 'At Risk', value: '9993'}
+			{label: 'At Risk', value: '9993'},
 		]);
 	});
 
 	it('should preload the lifecycleStatus filter with the stage id and localized label when lifecycleStageFilter prop is provided', () => {
 		render(
 			<AccountsDataSet
-				accountLifecycleId='al-1'
-				apiURL='fake-url'
-				channelId='123'
-				groupId='23'
+				accountLifecycleId="al-1"
+				apiURL="fake-url"
+				channelId="123"
+				groupId="23"
 				lifecycleStageFilter={LifecycleStages.AT_RISK}
 			/>
 		);
 
 		const lifecycleStatusFilter = lastFilters?.find(
-			f => f.id === 'lifecycleStatus'
+			(f) => f.id === 'lifecycleStatus'
 		);
 
 		expect(lifecycleStatusFilter?.preloadedData).toEqual({
 			exclude: false,
-			selectedItems: [{label: 'At Risk', value: '9993'}]
+			selectedItems: [{label: 'At Risk', value: '9993'}],
 		});
 	});
 
@@ -250,16 +250,16 @@ describe('AccountsDataSet', () => {
 
 		render(
 			<AccountsDataSet
-				accountLifecycleId='al-1'
-				apiURL='fake-url'
-				channelId='123'
-				groupId='23'
+				accountLifecycleId="al-1"
+				apiURL="fake-url"
+				channelId="123"
+				groupId="23"
 				lifecycleStageFilter={LifecycleStages.AT_RISK}
 			/>
 		);
 
 		const lifecycleStatusFilter = lastFilters?.find(
-			f => f.id === 'lifecycleStatus'
+			(f) => f.id === 'lifecycleStatus'
 		);
 
 		expect(lifecycleStatusFilter?.preloadedData).toBeUndefined();
@@ -267,13 +267,13 @@ describe('AccountsDataSet', () => {
 
 	it('should render the account name link with channelId in the href', () => {
 		render(
-			<AccountsDataSet apiURL='fake-url' channelId='123' groupId='23' />
+			<AccountsDataSet apiURL="fake-url" channelId="123" groupId="23" />
 		);
 
 		const {container} = render(
 			lastCustomDataRenderers!.accountNameRenderer({
 				itemData: {id: 'abc'},
-				value: 'Acme Corp'
+				value: 'Acme Corp',
 			})
 		);
 

@@ -37,7 +37,7 @@ export default class Project
 		state: null,
 		stateStartDate: null,
 		timeZone: new TimeZone(),
-		userId: null
+		userId: null,
 	})
 	implements IProject
 {

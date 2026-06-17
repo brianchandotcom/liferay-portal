@@ -4,16 +4,16 @@ import {vocabularyCriterionType} from './vocabularyCriterionType';
 
 export const REMOTE_CRITERION_TYPES: ReadonlyArray<RemoteCriterionType> = [
 	vocabularyCriterionType,
-	tagCriterionType
+	tagCriterionType,
 ];
 
 const BY_PROPERTY_KEY: ReadonlyMap<string, RemoteCriterionType> = new Map(
-	REMOTE_CRITERION_TYPES.map(ct => [ct.propertyKey, ct])
+	REMOTE_CRITERION_TYPES.map((ct) => [ct.propertyKey, ct])
 );
 
 const BY_OPERATOR: ReadonlyMap<string, RemoteCriterionType> = new Map(
-	REMOTE_CRITERION_TYPES.flatMap(ct =>
-		Array.from(ct.operators, op => [op as string, ct] as const)
+	REMOTE_CRITERION_TYPES.flatMap((ct) =>
+		Array.from(ct.operators, (op) => [op as string, ct] as const)
 	)
 );
 

@@ -8,7 +8,7 @@ import Table, {Column} from 'shared/components/table';
 import {
 	ACTION_TYPES,
 	useSelectionContext,
-	withSelectionProvider
+	withSelectionProvider,
 } from 'shared/context/selection';
 import {fromJS, List} from 'immutable';
 import {sub} from 'shared/util/lang';
@@ -40,7 +40,7 @@ const BatchActionModal: React.FC<IBatchActionModalProps> = ({
 	items = [],
 	onClose,
 	onSave,
-	title = ''
+	title = '',
 }) => {
 	const [itemsIList, setItemsIList] = useState<List<any>>(fromJS(items));
 	const [selectedKey, setSelectedKey] = useState(optionsLabel);
@@ -55,7 +55,7 @@ const BatchActionModal: React.FC<IBatchActionModalProps> = ({
 
 	const handleEdits = (newVal: string) => {
 		setItemsIList(
-			itemsIList.map(itemIMap =>
+			itemsIList.map((itemIMap) =>
 				selectedItemsIOMap.has(itemIMap.get('id'))
 					? itemIMap.set(editableAttr, newVal)
 					: itemIMap
@@ -71,7 +71,7 @@ const BatchActionModal: React.FC<IBatchActionModalProps> = ({
 	const handleSave = () => {
 		onSave({
 			edits: {[editableAttr]: selectedKey},
-			ids: selectedItemsIOMap.keySeq().toArray()
+			ids: selectedItemsIOMap.keySeq().toArray(),
 		}).then(onClose);
 	};
 
@@ -82,10 +82,10 @@ const BatchActionModal: React.FC<IBatchActionModalProps> = ({
 				'scroll-container',
 				'batch-action-modal-root',
 				{
-					'fit-content': fitContent
+					'fit-content': fitContent,
 				}
 			)}
-			size='lg'
+			size="lg"
 		>
 			<Modal.Header onClose={onClose} title={title} />
 
@@ -95,21 +95,21 @@ const BatchActionModal: React.FC<IBatchActionModalProps> = ({
 						closeOnClick
 						trigger={
 							<ClayButton
-								className='button-root'
-								displayType='secondary'
+								className="button-root"
+								displayType="secondary"
 							>
 								<span>{selectedKey}</span>
 
 								<ClayIcon
-									className='icon-root ml-2'
-									symbol='caret-bottom'
+									className="icon-root ml-2"
+									symbol="caret-bottom"
 								/>
 							</ClayButton>
 						}
 					>
-						{options.map(option => (
+						{options.map((option) => (
 							<ClayDropDown.Item
-								className='set-max-zindex'
+								className="set-max-zindex"
 								key={option.value}
 								onClick={() => handleEdits(option.value)}
 							>
@@ -118,13 +118,13 @@ const BatchActionModal: React.FC<IBatchActionModalProps> = ({
 						))}
 					</ClayDropDown>
 
-					<p className='text-secondary'>
+					<p className="text-secondary">
 						{sub(
 							actionCountString,
 							[
-								<b key='selectedCount'>
+								<b key="selectedCount">
 									{selectedItemsIOMap.size}
-								</b>
+								</b>,
 							],
 							false
 						)}
@@ -135,7 +135,7 @@ const BatchActionModal: React.FC<IBatchActionModalProps> = ({
 					columns={columns}
 					items={itemsIList.toJS()}
 					onSelectItemsChange={handleItemsChange}
-					rowIdentifier='id'
+					rowIdentifier="id"
 					selectedItemsIOMap={selectedItemsIOMap}
 					showCheckbox
 				/>
@@ -143,20 +143,20 @@ const BatchActionModal: React.FC<IBatchActionModalProps> = ({
 
 			<Modal.Footer>
 				<ClayButton
-					className='button-root'
-					displayType='secondary'
+					className="button-root"
+					displayType="secondary"
 					onClick={onClose}
 				>
 					{Liferay.Language.get('cancel')}
 				</ClayButton>
 
 				<ClayButton
-					className='button-root'
+					className="button-root"
 					disabled={
 						selectedKey === optionsLabel ||
 						selectedItemsIOMap.isEmpty()
 					}
-					displayType='primary'
+					displayType="primary"
 					onClick={handleSave}
 				>
 					{Liferay.Language.get('save')}

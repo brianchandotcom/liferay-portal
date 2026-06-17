@@ -7,6 +7,7 @@ import React, {useState} from 'react';
 import {COMMA, ENTER} from 'shared/util/key-constants';
 
 //	regex to validate words with accents and avoid special characters
+
 const KEYWORD_VALIDATOR_REGEX = /[\w\u00C0-\u00ff]+/;
 
 interface IInterestTopicsModalProps {
@@ -40,7 +41,7 @@ const InterestTopicsModal: React.FC<IInterestTopicsModalProps> = ({
 		<Modal
 			{...otherProps}
 			className={getCN('invite-users-modal-root', className)}
-			size='lg'
+			size="lg"
 		>
 			<Modal.Header
 				onClose={onClose}
@@ -65,7 +66,7 @@ const InterestTopicsModal: React.FC<IInterestTopicsModalProps> = ({
 						validationFn={validateKeyword}
 					/>
 				</Input.Group>
-				<div className='description form-text'>
+				<div className="description form-text">
 					{Liferay.Language.get(
 						'use-comma-or-enter-to-add-several-keywords'
 					)}
@@ -74,17 +75,17 @@ const InterestTopicsModal: React.FC<IInterestTopicsModalProps> = ({
 
 			<Modal.Footer>
 				<ClayButton
-					className='button-root'
-					displayType='secondary'
+					className="button-root"
+					displayType="secondary"
 					onClick={onClose}
 				>
 					{Liferay.Language.get('cancel')}
 				</ClayButton>
 
 				<ClayButton
-					className='button-root'
+					className="button-root"
 					disabled={!inputValue && !keywords.length}
-					displayType='primary'
+					displayType="primary"
 					onClick={handleSubmit}
 				>
 					{Liferay.Language.get('send')}

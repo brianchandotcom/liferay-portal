@@ -10,7 +10,7 @@ import {withFilterComponent} from 'shared/hoc/Filter';
 const withObjectEntryFilter = () =>
 	graphql(
 		globalFilterAssetQuery('ObjectEntry', 'viewsMetric'),
-		getFiltersMapper(result => result.objectEntry.viewsMetric)
+		getFiltersMapper((result) => result.objectEntry.viewsMetric)
 	);
 
 export default withFilterComponent(withObjectEntryFilter);

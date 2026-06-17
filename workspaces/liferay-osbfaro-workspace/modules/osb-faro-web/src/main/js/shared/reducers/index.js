@@ -40,6 +40,6 @@ export default composeReducers(
 		projects,
 		segments,
 		sidebar,
-		users
+		users,
 	})
 );

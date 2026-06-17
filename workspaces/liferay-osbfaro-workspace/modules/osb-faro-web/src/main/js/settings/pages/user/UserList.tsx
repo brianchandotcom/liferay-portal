@@ -10,7 +10,7 @@ import UserActionsRenderer from '../../components/user-list/UserActionsRenderer'
 import {
 	ActionTypes,
 	useSelectionContext,
-	withSelectionProvider
+	withSelectionProvider,
 } from 'shared/context/selection';
 import {addAlert} from 'shared/actions/alerts';
 import {Alert} from 'shared/types';
@@ -22,7 +22,7 @@ import {
 	EMAIL_ADDRESS,
 	NAME,
 	ROLE_NAME,
-	STATUS
+	STATUS,
 } from 'shared/util/pagination';
 import {getDisplayRole, getPluralMessage, sub} from 'shared/util/lang';
 import {UNAUTHORIZED_ACCESS} from 'shared/util/request';
@@ -32,9 +32,9 @@ import {useRequest} from 'shared/hooks/useRequest';
 import {UserRoleNames, UserStatuses} from 'shared/util/constants';
 
 const userRoleOptions = [UserRoleNames.Member, UserRoleNames.Administrator].map(
-	role => ({
+	(role) => ({
 		label: getDisplayRole(role),
-		value: role
+		value: role,
 	})
 );
 
@@ -52,12 +52,12 @@ const UserList: React.FC<IUserListProps> = ({
 	close,
 	currentUser,
 	groupId,
-	open
+	open,
 }) => {
 	const {selectedItems, selectionDispatch} = useSelectionContext();
 
 	const {delta, filterBy, orderIOMap, page, query} = useQueryPagination({
-		initialOrderIOMap: createOrderIOMap(NAME)
+		initialOrderIOMap: createOrderIOMap(NAME),
 	});
 
 	const {data, error, loading, refetch} = useRequest({
@@ -68,8 +68,8 @@ const UserList: React.FC<IUserListProps> = ({
 			orderIOMap,
 			page,
 			query,
-			status: [UserStatuses.Approved, UserStatuses.Pending]
-		}
+			status: [UserStatuses.Approved, UserStatuses.Pending],
+		},
 	});
 
 	const handleActions = () => {
@@ -79,7 +79,7 @@ const UserList: React.FC<IUserListProps> = ({
 					'changing-permissions-for-x-users'
 				),
 				options: userRoleOptions,
-				optionsLabel: Liferay.Language.get('select-permission')
+				optionsLabel: Liferay.Language.get('select-permission'),
 			},
 			columns: [
 				{
@@ -87,39 +87,39 @@ const UserList: React.FC<IUserListProps> = ({
 					className: 'table-cell-expand',
 					label: Liferay.Language.get('name'),
 					sortable: false,
-					title: true
+					title: true,
 				},
 				{
 					accessor: 'emailAddress',
 					label: Liferay.Language.get('email'),
-					sortable: false
+					sortable: false,
 				},
 				{
 					accessor: 'status',
 					cellRenderer: StatusRenderer,
 					label: Liferay.Language.get('status'),
-					sortable: false
+					sortable: false,
 				},
 				{
 					accessor: 'roleName',
 					cellRenderer: RoleRenderer,
 					label: Liferay.Language.get('permission'),
-					sortable: false
-				}
+					sortable: false,
+				},
 			],
 			editableAttr: 'roleName',
 			fitContent: true,
 			items: selectedItems.toArray(),
 			onClose: close,
 			onSave: handleUserSave,
-			title: Liferay.Language.get('edit-permissions-for-selected-users')
+			title: Liferay.Language.get('edit-permissions-for-selected-users'),
 		});
 	};
 
 	const handleInviteModal = () => {
 		open(modalTypes.INVITE_USERS_MODAL, {
 			onClose: close,
-			onSubmit: handleUserInvite
+			onSubmit: handleUserInvite,
 		});
 	};
 
@@ -130,7 +130,7 @@ const UserList: React.FC<IUserListProps> = ({
 				Liferay.Language.get('are-you-sure-you-want-to-delete-x-users'),
 				ids.length,
 				false,
-				[<b key='confirmDeleteCount'>{ids.length}</b>]
+				[<b key="confirmDeleteCount">{ids.length}</b>]
 			),
 			modalVariant: 'modal-warning',
 			onClose: close,
@@ -138,9 +138,9 @@ const UserList: React.FC<IUserListProps> = ({
 				API.user
 					.delete({
 						groupId,
-						ids
+						ids,
 					})
-					.then(data => {
+					.then((data) => {
 						addAlert({
 							alertType: Alert.Types.Success,
 							message: getPluralMessage(
@@ -150,39 +150,39 @@ const UserList: React.FC<IUserListProps> = ({
 								),
 								data?.length,
 								false,
-								[<b key='deleteCount'>{data?.length}</b>]
-							)
+								[<b key="deleteCount">{data?.length}</b>]
+							),
 						});
 
 						selectionDispatch?.({type: ActionTypes.ClearAll});
 
 						refetch?.();
 					})
-					.catch(err =>
+					.catch((err) =>
 						addAlert({
 							alertType: Alert.Types.Error,
 							message:
 								err.message === UNAUTHORIZED_ACCESS
 									? Liferay.Language.get(
 											'unauthorized-access'
-									  )
+										)
 									: Liferay.Language.get('error'),
-							timeout: false
+							timeout: false,
 						})
 					),
 			submitButtonDisplay: 'warning',
 			title: Liferay.Language.get('delete-user'),
-			titleIcon: 'warning-full'
+			titleIcon: 'warning-full',
 		});
 	};
 
 	const handleUserInvite = (emailAddresses: string[]) =>
 		API.user
 			.inviteMany({emailAddresses, groupId, roleName: 'Site Member'})
-			.then(response => {
+			.then((response) => {
 				addAlert({
 					alertType: Alert.Types.Success,
-					message: Liferay.Language.get('invitations-have-been-sent')
+					message: Liferay.Language.get('invitations-have-been-sent'),
 				});
 
 				refetch?.();
@@ -194,13 +194,13 @@ const UserList: React.FC<IUserListProps> = ({
 			.catch(() => {
 				addAlert({
 					alertType: Alert.Types.Error,
-					message: Liferay.Language.get('error')
+					message: Liferay.Language.get('error'),
 				});
 			});
 
 	const handleUserSave = ({
 		edits,
-		ids
+		ids,
 	}: {
 		edits: {[key: string]: any};
 		ids: string[];
@@ -211,29 +211,29 @@ const UserList: React.FC<IUserListProps> = ({
 				ids: string[];
 				roleName: string;
 			})
-			.then(data => {
+			.then((data) => {
 				addAlert({
 					alertType: Alert.Types.Success,
 					message: sub(
 						Liferay.Language.get(
 							'permissions-have-been-changed-for-x-users'
 						),
-						[<b key='changedCount'>{data.length}</b>],
+						[<b key="changedCount">{data.length}</b>],
 						false
-					)
+					),
 				});
 
 				selectionDispatch?.({type: ActionTypes.ClearAll});
 
 				refetch?.();
 			})
-			.catch(err =>
+			.catch((err) =>
 				addAlert({
 					alertType: Alert.Types.Error,
 					message:
 						err.message === UNAUTHORIZED_ACCESS
 							? Liferay.Language.get('unauthorized-access')
-							: Liferay.Language.get('error')
+							: Liferay.Language.get('error'),
 				})
 			);
 
@@ -253,7 +253,7 @@ const UserList: React.FC<IUserListProps> = ({
 		editing,
 		edits,
 		itemsSelected,
-		rowEvents
+		rowEvents,
 	}: {
 		data: any;
 		editing: boolean;
@@ -261,6 +261,7 @@ const UserList: React.FC<IUserListProps> = ({
 		itemsSelected: boolean;
 		rowEvents: {[key: string]: any};
 	}) => (
+
 		/* eslint-disable react/jsx-handler-names */
 		<UserActionsRenderer
 			currentUserId={currentUser.id}
@@ -272,6 +273,7 @@ const UserList: React.FC<IUserListProps> = ({
 			onUserDelete={handleUserDelete}
 			onUserSave={handleUserSave}
 		/>
+
 		/* eslint-enable react/jsx-handler-names */
 	);
 
@@ -281,8 +283,8 @@ const UserList: React.FC<IUserListProps> = ({
 				<Nav>
 					<Nav.Item>
 						<ClayButton
-							className='button-root nav-btn p-2'
-							displayType='primary'
+							className="button-root nav-btn p-2"
+							displayType="primary"
 							onClick={handleInviteModal}
 						>
 							{Liferay.Language.get('invite-users')}
@@ -296,8 +298,8 @@ const UserList: React.FC<IUserListProps> = ({
 			<Nav>
 				<ClayButton
 					borderless
-					className='button-root'
-					displayType='secondary'
+					className="button-root"
+					displayType="secondary"
 					onClick={handleActions}
 					outline
 				>
@@ -307,14 +309,14 @@ const UserList: React.FC<IUserListProps> = ({
 				<ClayButton
 					aria-label={Liferay.Language.get('delete')}
 					borderless
-					className='button-root'
-					displayType='secondary'
+					className="button-root"
+					displayType="secondary"
 					onClick={() =>
 						handleUserDelete(selectedItems.keySeq().toArray())
 					}
 					outline
 				>
-					<ClayIcon className='icon-root' symbol='trash' />
+					<ClayIcon className="icon-root" symbol="trash" />
 				</ClayButton>
 			</Nav>
 		);
@@ -330,30 +332,30 @@ const UserList: React.FC<IUserListProps> = ({
 					accessor: 'name',
 					className: 'table-cell-expand',
 					label: Liferay.Language.get('name'),
-					title: true
+					title: true,
 				},
 				{
 					accessor: 'emailAddress',
-					label: Liferay.Language.get('email')
+					label: Liferay.Language.get('email'),
 				},
 				{
 					accessor: 'status',
 					cellRenderer: StatusRenderer,
-					label: Liferay.Language.get('status')
+					label: Liferay.Language.get('status'),
 				},
 				{
 					accessor: 'roleName',
 					cellRenderer: RoleRenderer,
 					cellRendererProps: {
-						options: userRoleOptions
+						options: userRoleOptions,
 					},
 					editable: true,
-					label: Liferay.Language.get('permission')
-				}
+					label: Liferay.Language.get('permission'),
+				},
 			]}
 			delta={delta}
 			emptyTitle={sub(Liferay.Language.get('there-are-no-x-found'), [
-				Liferay.Language.get('users')
+				Liferay.Language.get('users'),
 			])}
 			entityLabel={Liferay.Language.get('users')}
 			error={error}
@@ -363,20 +365,20 @@ const UserList: React.FC<IUserListProps> = ({
 			orderByOptions={[
 				{
 					label: Liferay.Language.get('name'),
-					value: NAME
+					value: NAME,
 				},
 				{
 					label: Liferay.Language.get('email'),
-					value: EMAIL_ADDRESS
+					value: EMAIL_ADDRESS,
 				},
 				{
 					label: Liferay.Language.get('permission'),
-					value: ROLE_NAME
+					value: ROLE_NAME,
 				},
 				{
 					label: Liferay.Language.get('status'),
-					value: STATUS
-				}
+					value: STATUS,
+				},
 			]}
 			orderIOMap={orderIOMap}
 			page={page}

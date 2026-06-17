@@ -18,7 +18,7 @@ import {useDataSources} from 'shared/context/dataSources';
 import {useParams} from 'react-router-dom';
 
 const {
-	pagination: {cur}
+	pagination: {cur},
 } = Constants;
 
 const MAX_DELTA = 500;
@@ -40,10 +40,12 @@ const Overview = () => {
 				delta: MAX_DELTA,
 				groupId,
 				page: cur,
-				query: ''
+				query: '',
 			})
 			.then(({items}: {items: unknown[]}) => {
-				setDataSources(items.map(item => new DataSource(fromJS(item))));
+				setDataSources(
+					items.map((item) => new DataSource(fromJS(item)))
+				);
 			});
 	}, []);
 
@@ -56,16 +58,16 @@ const Overview = () => {
 							{authorized
 								? Liferay.Language.get(
 										'connect-a-data-source-with-sites-data'
-								  )
+									)
 								: Liferay.Language.get(
 										'please-contact-your-workspace-administrator-to-add-data-sources'
-								  )}
+									)}
 
 							<ClayLink
-								className='d-block mb-3'
+								className="d-block mb-3"
 								href={URLConstants.DataSourceConnection}
-								key='DOCUMENTATION'
-								target='_blank'
+								key="DOCUMENTATION"
+								target="_blank"
 							>
 								{Liferay.Language.get(
 									'access-our-documentation-to-learn-more'
@@ -75,12 +77,12 @@ const Overview = () => {
 							{authorized && (
 								<ClayLink
 									button
-									className='button-root'
-									displayType='primary'
+									className="button-root"
+									displayType="primary"
 									href={toRoute(
 										Routes.SETTINGS_DATA_SOURCE_LIST,
 										{
-											groupId
+											groupId,
 										}
 									)}
 								>
@@ -98,33 +100,33 @@ const Overview = () => {
 				/>
 
 				<StatesRenderer.Success>
-					<div className='individuals-dashboard-overview-root overview-root'>
-						<div className='row'>
-							<div className='col-xl-8'>
+					<div className="individuals-dashboard-overview-root overview-root">
+						<div className="row">
+							<div className="col-xl-8">
 								<TypeTrendCard />
 							</div>
 
-							<div className='col-xl-4'>
+							<div className="col-xl-4">
 								<EnrichedProfilesCard
 									dataSources={dataSources ?? []}
 								/>
 							</div>
 						</div>
 
-						<div className='row'>
-							<div className='col-xl-12'>
+						<div className="row">
+							<div className="col-xl-12">
 								<ActiveIndividualsCard />
 							</div>
 						</div>
 
-						<div className='row'>
-							<div className='col-xl-12'>
+						<div className="row">
+							<div className="col-xl-12">
 								<InterestsCard />
 							</div>
 						</div>
 
-						<div className='row'>
-							<div className='col-xl-12'>
+						<div className="row">
+							<div className="col-xl-12">
 								<DistributionCard
 									showAddDataSource={
 										!!dataSources && !dataSources.length

@@ -14,8 +14,8 @@ const defaultMock = {
 		variables: {
 			size: 1,
 			sort: {column: 'createDate', type: OrderByDirections.Descending},
-			type: DataSourceTypes.Liferay
-		}
+			type: DataSourceTypes.Liferay,
+		},
 	},
 	result: {
 		data: {
@@ -23,16 +23,16 @@ const defaultMock = {
 				{
 					contactsSyncDetails: {selected: true},
 					id: '123',
-					sitesSyncDetails: {selected: false}
-				}
-			]
-		}
-	}
+					sitesSyncDetails: {selected: false},
+				},
+			],
+		},
+	},
 };
 
 const Wrapper = ({
 	children,
-	mocks = [defaultMock]
+	mocks = [defaultMock],
 }: {
 	children: React.ReactNode;
 	mocks?: MockedResponse[];

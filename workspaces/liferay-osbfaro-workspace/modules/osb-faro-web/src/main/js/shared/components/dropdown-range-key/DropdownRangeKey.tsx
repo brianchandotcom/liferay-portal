@@ -32,7 +32,7 @@ export const DropdownRangeKey: React.FC<DropdownRangeKeyIProps> = ({
 	legacy,
 	onRangeSelectorChange,
 	rangeKeys,
-	rangeSelectors
+	rangeSelectors,
 }) => {
 	const {data, error, loading} = useQuery<Data>(TimeRangeQuery);
 

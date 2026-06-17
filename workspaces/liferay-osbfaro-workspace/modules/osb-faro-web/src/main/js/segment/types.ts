@@ -10,7 +10,7 @@ export enum MetricNames {
 	AverageSegmentMembershipDurationMetric = 'averageSegmentMembershipDurationMetric',
 	EntryRateMetric = 'entryRateMetric',
 	ExitRateMetric = 'exitRate',
-	TotalMembersMetric = 'totalMembersMetric'
+	TotalMembersMetric = 'totalMembersMetric',
 }
 
 export const METRICS_TEXT: Record<MetricNames, string> = {
@@ -25,7 +25,7 @@ export const METRICS_TEXT: Record<MetricNames, string> = {
 	),
 	[MetricNames.TotalMembersMetric]: Liferay.Language.get(
 		'this-is-the-total-number-of-individuals-included-in-this-segment,-whether-known-or-anonymous'
-	)
+	),
 };
 
 export const METRICS_TITLES: Record<MetricNames, string> = {
@@ -34,7 +34,7 @@ export const METRICS_TITLES: Record<MetricNames, string> = {
 	),
 	[MetricNames.EntryRateMetric]: Liferay.Language.get('entry-rate'),
 	[MetricNames.ExitRateMetric]: Liferay.Language.get('exit-rate'),
-	[MetricNames.TotalMembersMetric]: Liferay.Language.get('total-members')
+	[MetricNames.TotalMembersMetric]: Liferay.Language.get('total-members'),
 };
 
 export type TotalMembersMetric = Metric & {
@@ -49,5 +49,5 @@ export type Trend = {
 export enum TrendClassification {
 	Negative = 'NEGATIVE',
 	Neutral = 'NEUTRAL',
-	Positive = 'POSITIVE'
+	Positive = 'POSITIVE',
 }

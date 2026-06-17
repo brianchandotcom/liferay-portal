@@ -25,12 +25,12 @@ describe('store', () => {
 
 	it('should clear the store to its initial state', () => {
 		const action = {
-			type: actionTypes.CLEAR_STORE
+			type: actionTypes.CLEAR_STORE,
 		};
 
 		const state = reducer(
 			new Map({
-				segment: new Map({123: new Map()})
+				segment: new Map({123: new Map()}),
 			}),
 			action
 		);

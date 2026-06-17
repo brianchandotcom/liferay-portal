@@ -9,7 +9,7 @@ import {deletePropertyFromObject} from 'shared/util/object';
 import {
 	EventAnalysisData,
 	EventAnalysisQuery,
-	EventAnalysisVariables
+	EventAnalysisVariables,
 } from '../queries/EventAnalysisQuery';
 import {normalizeRangeSelectors} from 'shared/util/util';
 import {Routes, toRoute} from 'shared/util/router';
@@ -23,7 +23,7 @@ function normalizeItems<T extends {id: string; __typename?: string}>(
 	return data.reduce(
 		(acc, item) => ({
 			...acc,
-			[item.id]: deletePropertyFromObject('__typename', item)
+			[item.id]: deletePropertyFromObject('__typename', item),
 		}),
 		{}
 	);
@@ -33,9 +33,9 @@ function getItemsWithUniqueId<T>(
 	items: T[],
 	key: string
 ): Array<T & {id: string}> {
-	return items.map(item => ({
+	return items.map((item) => ({
 		...item,
-		id: uniqueId(key)
+		id: uniqueId(key),
 	}));
 }
 
@@ -51,7 +51,7 @@ const Edit: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 	const {
 		channelId,
 		groupId,
-		id: eventAnalysisId = ''
+		id: eventAnalysisId = '',
 	} = useParams<{
 		channelId: string;
 		groupId: string;
@@ -63,8 +63,8 @@ const Edit: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 	>(EventAnalysisQuery, {
 		fetchPolicy: 'network-only',
 		variables: {
-			eventAnalysisId
-		}
+			eventAnalysisId,
+		},
 	});
 
 	const initialAttributesState = useMemo(() => {
@@ -73,8 +73,8 @@ const Edit: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 				eventAnalysis: {
 					eventAnalysisBreakdowns,
 					eventAnalysisFilters,
-					referencedObjects: {eventAttributeDefinitions}
-				}
+					referencedObjects: {eventAttributeDefinitions},
+				},
 			} = data;
 
 			const breakdowns: BreakdownWithId[] =
@@ -94,18 +94,18 @@ const Edit: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 				breakdownOrder: breakdowns.map(({id}) => id),
 				breakdowns: normalizeItems<BreakdownWithId>(breakdowns),
 				filterOrder: filters.map(({id}) => id),
-				filters: normalizeItems<FilterWithId>(filters)
+				filters: normalizeItems<FilterWithId>(filters),
 			};
 
 			return attributesState;
 		}
 	}, [
 		data?.eventAnalysis?.eventAnalysisBreakdowns,
-		data?.eventAnalysis?.eventAnalysisFilters
+		data?.eventAnalysis?.eventAnalysisFilters,
 	]);
 
 	if (loading) {
-		return <Loading key='LOADING' />;
+		return <Loading key="LOADING" />;
 	}
 
 	if (error) {
@@ -113,7 +113,7 @@ const Edit: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 			<ErrorPage
 				href={toRoute(Routes.EVENT_ANALYSIS, {
 					channelId,
-					groupId
+					groupId,
 				})}
 				linkLabel={Liferay.Language.get('go-to-event-analysis')}
 				message={Liferay.Language.get(
@@ -131,8 +131,8 @@ const Edit: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 			rangeEnd,
 			rangeKey,
 			rangeStart,
-			referencedObjects: {eventDefinition}
-		}
+			referencedObjects: {eventDefinition},
+		},
 	} = data!;
 
 	return (
@@ -144,7 +144,7 @@ const Edit: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 				rangeSelectors={normalizeRangeSelectors({
 					rangeEnd,
 					rangeKey,
-					rangeStart
+					rangeStart,
 				})}
 			/>
 		</AttributesProvider>

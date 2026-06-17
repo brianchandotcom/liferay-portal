@@ -9,177 +9,177 @@ const data = {
 						metrics: [
 							{
 								value: 2065.0,
-								valueKey: 'Windows'
+								valueKey: 'Windows',
 							},
 							{
 								value: 995.0,
-								valueKey: 'macOS'
+								valueKey: 'macOS',
 							},
 							{
 								value: 136.0,
-								valueKey: 'Linux'
+								valueKey: 'Linux',
 							},
 							{
 								value: 107.0,
-								valueKey: 'Mac OS X'
+								valueKey: 'Mac OS X',
 							},
 							{
 								value: 53.0,
-								valueKey: 'Ubuntu'
+								valueKey: 'Ubuntu',
 							},
 							{
 								value: 3.0,
-								valueKey: 'ChromeOS'
+								valueKey: 'ChromeOS',
 							},
 							{
 								value: 2.0,
-								valueKey: 'Fedora'
+								valueKey: 'Fedora',
 							},
 							{
 								value: 1.0,
-								valueKey: 'Unknown'
-							}
+								valueKey: 'Unknown',
+							},
 						],
 						value: 3362.0,
-						valueKey: 'Desktop'
+						valueKey: 'Desktop',
 					},
 					{
 						metrics: [
 							{
 								value: 151.0,
-								valueKey: 'Android'
+								valueKey: 'Android',
 							},
 							{
 								value: 61.0,
-								valueKey: 'iOS'
+								valueKey: 'iOS',
 							},
 							{
 								value: 9.0,
-								valueKey: 'Unknown'
+								valueKey: 'Unknown',
 							},
 							{
 								value: 8.0,
-								valueKey: 'FreeBSD'
+								valueKey: 'FreeBSD',
 							},
 							{
 								value: 1.0,
-								valueKey: 'Windows Phone'
-							}
+								valueKey: 'Windows Phone',
+							},
 						],
 						value: 230.0,
-						valueKey: 'SmartPhone'
+						valueKey: 'SmartPhone',
 					},
 					{
 						metrics: [
 							{
 								value: 67.0,
-								valueKey: 'iOS'
+								valueKey: 'iOS',
 							},
 							{
 								value: 12.0,
-								valueKey: 'Android'
-							}
+								valueKey: 'Android',
+							},
 						],
 						value: 79.0,
-						valueKey: 'Tablet'
-					}
+						valueKey: 'Tablet',
+					},
 				],
 				geolocation: [
 					{
 						metrics: [
 							{
 								value: 100,
-								valueKey: 'Unknown'
+								valueKey: 'Unknown',
 							},
 							{
 								value: 100,
-								valueKey: 'Pernambuco'
+								valueKey: 'Pernambuco',
 							},
 							{
 								value: 100,
-								valueKey: 'Sao Paulo'
+								valueKey: 'Sao Paulo',
 							},
 							{
 								value: 100,
-								valueKey: 'Parana'
+								valueKey: 'Parana',
 							},
 							{
 								value: 100,
-								valueKey: 'Rio Grande do Sul'
-							}
+								valueKey: 'Rio Grande do Sul',
+							},
 						],
 						value: 100,
-						valueKey: 'Brazil'
+						valueKey: 'Brazil',
 					},
 					{
 						metrics: [
 							{
 								value: 100,
-								valueKey: 'Unknown'
+								valueKey: 'Unknown',
 							},
 							{
 								value: 100,
-								valueKey: 'Catalonia'
+								valueKey: 'Catalonia',
 							},
 							{
 								value: 100,
-								valueKey: 'Madrid'
+								valueKey: 'Madrid',
 							},
 							{
 								value: 100,
-								valueKey: 'Andalucia'
+								valueKey: 'Andalucia',
 							},
 							{
 								value: 100,
-								valueKey: 'Castilla y Leon'
+								valueKey: 'Castilla y Leon',
 							},
 							{
 								value: 100,
-								valueKey: 'Others'
-							}
+								valueKey: 'Others',
+							},
 						],
 						value: 100,
-						valueKey: 'Spain'
+						valueKey: 'Spain',
 					},
 					{
 						metrics: [
 							{
 								value: 100,
-								valueKey: 'California'
+								valueKey: 'California',
 							},
 							{
 								value: 100,
-								valueKey: 'Unknown'
+								valueKey: 'Unknown',
 							},
 							{
 								value: 100,
-								valueKey: 'Georgia'
+								valueKey: 'Georgia',
 							},
 							{
 								value: 100,
-								valueKey: 'New Jersey'
+								valueKey: 'New Jersey',
 							},
 							{
 								value: 100,
-								valueKey: 'Florida'
+								valueKey: 'Florida',
 							},
 							{
 								value: 100,
-								valueKey: 'Others'
-							}
+								valueKey: 'Others',
+							},
 						],
 						value: 100,
-						valueKey: 'United States'
-					}
-				]
-			}
-		}
-	}
+						valueKey: 'United States',
+					},
+				],
+			},
+		},
+	},
 };
 
 describe('Shared HOCs Mappers - Filter', () => {
 	it('should map filter information', () => {
-		const mapper = getFiltersMapper(result => result.forms.submissions);
+		const mapper = getFiltersMapper((result) => result.forms.submissions);
 
 		const result = mapper.props(data);
 
@@ -194,26 +194,26 @@ describe('Shared HOCs Mappers - Filter', () => {
 							checked: false,
 							inputType: 'radio',
 							label: 'Desktop',
-							value: '8'
+							value: '8',
 						},
 						{
 							category: 'devices',
 							checked: false,
 							inputType: 'radio',
 							label: 'SmartPhone',
-							value: '5'
+							value: '5',
 						},
 						{
 							category: 'devices',
 							checked: false,
 							inputType: 'radio',
 							label: 'Tablet',
-							value: '2'
-						}
+							value: '2',
+						},
 					],
 					label: 'Devices',
 					name: 'Devices',
-					value: '3'
+					value: '3',
 				},
 				{
 					hasSearch: false,
@@ -223,29 +223,29 @@ describe('Shared HOCs Mappers - Filter', () => {
 							checked: false,
 							inputType: 'radio',
 							label: 'Brazil',
-							value: '5'
+							value: '5',
 						},
 						{
 							category: 'location',
 							checked: false,
 							inputType: 'radio',
 							label: 'Spain',
-							value: '6'
+							value: '6',
 						},
 						{
 							category: 'location',
 							checked: false,
 							inputType: 'radio',
 							label: 'United States',
-							value: '6'
-						}
+							value: '6',
+						},
 					],
 					label: 'Location',
 					name: 'Location',
-					value: '3'
-				}
+					value: '3',
+				},
 			],
-			loading: false
+			loading: false,
 		});
 	});
 });

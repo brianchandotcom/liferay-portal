@@ -10,7 +10,10 @@ import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
+import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.db.DBResourceUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -25,7 +28,9 @@ import java.sql.ResultSet;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -146,31 +151,45 @@ public class CounterDataCleanupPreupgradeProcess
 		tableNames.remove(dbInspector.normalizeName("Counter"));
 		tableNames.removeAll(excludedTableNames);
 
+		Map<String, Long> maxValues = new ConcurrentHashMap<>();
+
+		processConcurrently(
+			tableNames.toArray(new String[0]),
+			tableName -> {
+				if (!dbInspector.isObjectTable(tableName) &&
+					!_liferayTableNames.contains(tableName)) {
+
+					return;
+				}
+
+				String columnName =
+					DataCleanupPreupgradeProcessUtil.getPrimaryKeyColumnName(
+						connection, dbInspector, tableName);
+
+				if ((columnName == null) ||
+					!dbInspector.isNumeric(tableName, columnName)) {
+
+					return;
+				}
+
+				long maxValue = _getMaxValue(
+					columnName, dbInspector, tableName);
+
+				if (maxValue > 0) {
+					maxValues.put(tableName, maxValue);
+				}
+			},
+			"Unable to compute the maximum primary key value");
+
 		long latestCounterValue = 0L;
 		String maxValueTableName = null;
 
-		for (String tableName : tableNames) {
-			if (!dbInspector.isObjectTable(tableName) &&
-				!_liferayTableNames.contains(tableName)) {
-
-				continue;
-			}
-
-			String columnName =
-				DataCleanupPreupgradeProcessUtil.getPrimaryKeyColumnName(
-					connection, dbInspector, tableName);
-
-			if ((columnName == null) ||
-				!dbInspector.isNumeric(tableName, columnName)) {
-
-				continue;
-			}
-
-			long maxValue = _getMaxValue(columnName, dbInspector, tableName);
+		for (Map.Entry<String, Long> entry : maxValues.entrySet()) {
+			long maxValue = entry.getValue();
 
 			if (maxValue > latestCounterValue) {
 				latestCounterValue = maxValue;
-				maxValueTableName = tableName;
+				maxValueTableName = entry.getKey();
 			}
 		}
 
@@ -301,34 +320,25 @@ public class CounterDataCleanupPreupgradeProcess
 		throws Exception {
 
 		if (!dbInspector.isNumeric(tableName, columnName)) {
-			long maxValue = 0;
+			DB db = DBManagerUtil.getDB();
+
+			String sql = _getMaxValueSQL(columnName, db.getDBType(), tableName);
 
 			try (PreparedStatement preparedStatement =
-					connection.prepareStatement(
-						StringBundler.concat(
-							"select ", columnName, " from ", tableName));
+					connection.prepareStatement(sql);
 
 				ResultSet resultSet = preparedStatement.executeQuery()) {
 
-				while (resultSet.next()) {
-					String value = resultSet.getString(columnName);
+				if (resultSet.next()) {
+					long maxValue = resultSet.getLong(columnName);
 
-					try {
-						long valueLong = Long.parseLong(value);
-
-						if (valueLong > maxValue) {
-							maxValue = valueLong;
-						}
-					}
-					catch (NumberFormatException numberFormatException) {
-						if (_log.isDebugEnabled()) {
-							_log.debug(numberFormatException);
-						}
+					if (!resultSet.wasNull()) {
+						return maxValue;
 					}
 				}
 			}
 
-			return maxValue;
+			return 0L;
 		}
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
@@ -344,6 +354,46 @@ public class CounterDataCleanupPreupgradeProcess
 		}
 
 		return 0L;
+	}
+
+	private String _getMaxValueSQL(
+		String columnName, DBType dbType, String tableName) {
+
+		if (dbType == DBType.DB2) {
+			return StringBundler.concat(
+				"select max(cast(", columnName, " as bigint)) as ", columnName,
+				" from ", tableName, " where regexp_like(", columnName,
+				", '^[0-9]{1,18}$')");
+		}
+
+		if ((dbType == DBType.MARIADB) || (dbType == DBType.MYSQL)) {
+			return StringBundler.concat(
+				"select max(cast(", columnName, " as unsigned)) as ",
+				columnName, " from ", tableName, " where ", columnName,
+				" regexp '^[0-9]{1,18}$'");
+		}
+
+		if (dbType == DBType.ORACLE) {
+			return StringBundler.concat(
+				"select max(to_number(", columnName, ")) as ", columnName,
+				" from ", tableName, " where regexp_like(", columnName,
+				", '^[0-9]{1,18}$')");
+		}
+
+		if (dbType == DBType.POSTGRESQL) {
+			return StringBundler.concat(
+				"select max(cast(", columnName, " as bigint)) as ", columnName,
+				" from ", tableName, " where ", columnName,
+				" ~ '^[0-9]{1,18}$'");
+		}
+
+		if (dbType == DBType.SQLSERVER) {
+			return StringBundler.concat(
+				"select max(try_cast(", columnName, " as bigint)) as ",
+				columnName, " from ", tableName);
+		}
+
+		return null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

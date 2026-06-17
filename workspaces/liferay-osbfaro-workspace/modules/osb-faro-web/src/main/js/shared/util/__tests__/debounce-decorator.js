@@ -1,6 +1,5 @@
 jest.unmock('lodash/debounce');
 
-import autobind from 'autobind-decorator';
 import debounce from '../debounce-decorator';
 import {times} from 'lodash';
 
@@ -69,7 +68,6 @@ describe('debounce-decorator', () => {
 			}
 
 			@debounce(750)
-			@autobind
 			foo() {
 				this._callback();
 			}
@@ -101,7 +99,6 @@ describe('debounce-decorator', () => {
 			}
 
 			@debounce(750)
-			@autobind
 			foo() {
 				this._callback();
 			}

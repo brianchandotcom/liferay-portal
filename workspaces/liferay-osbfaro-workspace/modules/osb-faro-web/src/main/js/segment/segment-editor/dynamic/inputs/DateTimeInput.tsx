@@ -1,4 +1,3 @@
-import autobind from 'autobind-decorator';
 import DateInput from 'shared/components/DateInput';
 import Form from 'shared/components/form';
 import React from 'react';
@@ -15,7 +14,11 @@ interface IDateTimeInputProps extends ISegmentEditorInputBase {
 }
 
 export default class DateTimeInput extends React.Component<IDateTimeInputProps> {
-	@autobind
+	constructor(props: IDateTimeInputProps) {
+		super(props);
+		this.handleDateChange = this.handleDateChange.bind(this);
+	}
+
 	handleDateChange(value: string) {
 		this.props.onChange({
 			type: PropertyTypes.Date,

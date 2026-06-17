@@ -1,5 +1,4 @@
 import * as API from 'shared/api';
-import autobind from 'autobind-decorator';
 import AutocompleteInput from 'shared/components/AutocompleteInput';
 import Form from 'shared/components/form';
 import getCN from 'classnames';
@@ -16,7 +15,13 @@ interface IStringInputProps extends ISegmentEditorInputBase {
 }
 
 export default class StringInput extends React.Component<IStringInputProps> {
-	@autobind
+	constructor(props: IStringInputProps) {
+		super(props);
+		this.fieldValuesDataSourceFn = this.fieldValuesDataSourceFn.bind(this);
+		this.handleBlur = this.handleBlur.bind(this);
+		this.handleChange = this.handleChange.bind(this);
+	}
+
 	fieldValuesDataSourceFn() {
 		const {
 			channelId,
@@ -35,14 +40,12 @@ export default class StringInput extends React.Component<IStringInputProps> {
 			.then(({items}) => items);
 	}
 
-	@autobind
 	handleBlur() {
 		const {onChange, value} = this.props;
 
 		onChange({touched: true, valid: isValid(value)});
 	}
 
-	@autobind
 	handleChange(value: string | React.Key) {
 		this.props.onChange({valid: isValid(value), value: String(value)});
 	}

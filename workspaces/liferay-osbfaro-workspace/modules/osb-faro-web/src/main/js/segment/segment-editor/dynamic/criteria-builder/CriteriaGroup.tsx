@@ -1,5 +1,4 @@
 import Alert from '@clayui/alert';
-import autobind from 'autobind-decorator';
 import ClayIcon from '@clayui/icon';
 import Conjunction from './Conjunction';
 import CriteriaRow from './CriteriaRow';
@@ -103,17 +102,20 @@ class CriteriaGroup extends React.Component<ICriteriaGroupProps> {
 		root: false,
 	};
 
-	private NestedCriteriaGroupWithDrag: React.ComponentType<any>;
-
 	constructor(props: ICriteriaGroupProps) {
 		super(props);
 
 		this.NestedCriteriaGroupWithDrag = withDragSource(
 			CriteriaGroup
 		) as React.ComponentType<any>;
+
+		this.handleConjunctionClick = this.handleConjunctionClick.bind(this);
+		this.handleCriterionAdd = this.handleCriterionAdd.bind(this);
+		this.handleCriterionDelete = this.handleCriterionDelete.bind(this);
 	}
 
-	@autobind
+	private NestedCriteriaGroupWithDrag: React.ComponentType<any>;
+
 	handleConjunctionClick(event: React.MouseEvent) {
 		event.preventDefault();
 
@@ -143,7 +145,6 @@ class CriteriaGroup extends React.Component<ICriteriaGroupProps> {
 	 * @param {object} criterion The criterion that will be added.
 	 * @memberof CriteriaGroup
 	 */
-	@autobind
 	handleCriterionAdd(index: number, criterion: Criterion) {
 		const {criteria, onChange, root} = this.props;
 
@@ -209,7 +210,6 @@ class CriteriaGroup extends React.Component<ICriteriaGroupProps> {
 		};
 	}
 
-	@autobind
 	handleCriterionDelete(index: number) {
 		const {criteria, onChange} = this.props;
 

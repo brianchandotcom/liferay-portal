@@ -1,5 +1,4 @@
 import * as API from 'shared/api';
-import autobind from 'autobind-decorator';
 import CustomDateInput from './CustomDateInput';
 import CustomNumberInput from './CustomNumberInput';
 import CustomStringInput from './CustomStringInput';
@@ -14,7 +13,11 @@ interface IAccountInputProps extends ISegmentEditorCustomInputBase {
 }
 
 export default class AccountInput extends React.Component<IAccountInputProps> {
-	@autobind
+	constructor(props: IAccountInputProps) {
+		super(props);
+		this.fieldValuesDataSourceFn = this.fieldValuesDataSourceFn.bind(this);
+	}
+
 	fieldValuesDataSourceFn(): Promise<string[]> {
 		const {
 			channelId,

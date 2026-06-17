@@ -1,15 +1,13 @@
 import * as API from 'shared/api';
-import autobind from 'autobind-decorator';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
-import debounce from 'shared/util/debounce-decorator';
+import {debounce} from 'lodash';
 import Form, {validateRequired} from 'shared/components/form';
 import InfoPopover from 'shared/components/InfoPopover';
 import Loading from 'shared/components/Loading';
 import React from 'react';
 import TitleEditor from 'shared/components/TitleEditor';
-import {autoCancel, hasRequest} from 'shared/util/request-decorator';
 import {close, modalTypes, open} from 'shared/actions/modals';
 import {connect} from 'react-redux';
 import {createOrderIOMap, NAME} from 'shared/util/pagination';
@@ -42,13 +40,18 @@ interface IToolbarState {
 	membersCount: number;
 }
 
-@hasRequest
 export class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
 	state = {
 		countLoading: true,
 		criteriaValid: false,
 		membersCount: 0,
 	};
+
+	constructor(props: IToolbarProps) {
+		super(props);
+		this.fetchMembers = this.fetchMembers.bind(this);
+		this.handlePreviewClick = this.handlePreviewClick.bind(this);
+	}
 
 	componentDidMount() {
 		this.setState(
@@ -79,21 +82,7 @@ export class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
 		this.getMembersCount.cancel();
 	}
 
-	@autoCancel
-	@autobind
-	fetchMembers(params: Record<string, any>) {
-		const {channelId, criteriaString, groupId} = this.props;
-
-		return API.individuals.search({
-			channelId,
-			filter: criteriaString,
-			groupId,
-			...params,
-		});
-	}
-
-	@debounce(400)
-	getMembersCount() {
+	getMembersCount = debounce((): void => {
 		const {
 			props: {criteria, includeAnonymousUsers},
 			state: {criteriaValid},
@@ -107,19 +96,29 @@ export class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
 		}
 
 		if (criteriaValid) {
-			return this.fetchMembers({delta: 0, includeAnonymousUsers})
-				.then(({total}) =>
+			this.fetchMembers({delta: 0, includeAnonymousUsers})
+				.then(({total}: {total: number}) =>
 					this.setState({countLoading: false, membersCount: total})
 				)
-				.catch((err) => {
+				.catch((err: any) => {
 					if (!err.IS_CANCELLATION_ERROR) {
 						this.setState({countLoading: false});
 					}
 				});
 		}
+	}, 400);
+
+	fetchMembers(params: Record<string, any>) {
+		const {channelId, criteriaString, groupId} = this.props;
+
+		return API.individuals.search({
+			channelId,
+			filter: criteriaString,
+			groupId,
+			...params,
+		});
 	}
 
-	@autobind
 	handlePreviewClick() {
 		const {close, open} = this.props;
 

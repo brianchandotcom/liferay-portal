@@ -1,5 +1,4 @@
 import AccountInput from '../inputs/AccountInput';
-import autobind from 'autobind-decorator';
 import BehaviorInput from '../inputs/BehaviorInput';
 import BooleanInput from '../inputs/BooleanInput';
 import ClayIcon from '@clayui/icon';
@@ -257,6 +256,12 @@ class CriteriaRow extends React.Component<
 			selectedProperty,
 			supportedOperators,
 		};
+
+		this.handleDelete = this.handleDelete.bind(this);
+		this.handleDuplicate = this.handleDuplicate.bind(this);
+		this.handleOperatorChange = this.handleOperatorChange.bind(this);
+		this.handleTypedInputChange = this.handleTypedInputChange.bind(this);
+		this.renderOperator = this.renderOperator.bind(this);
 	}
 
 	componentDidUpdate(prevProps: ICriteriaRowProps) {
@@ -331,7 +336,6 @@ class CriteriaRow extends React.Component<
 		return value;
 	}
 
-	@autobind
 	handleDelete(event: React.MouseEvent) {
 		event.preventDefault();
 
@@ -340,7 +344,6 @@ class CriteriaRow extends React.Component<
 		onDelete(index);
 	}
 
-	@autobind
 	handleDuplicate(event: React.MouseEvent) {
 		event.preventDefault();
 
@@ -349,7 +352,6 @@ class CriteriaRow extends React.Component<
 		onAdd(index + 1, {...criterion, rowId: generateRowId()});
 	}
 
-	@autobind
 	handleOperatorChange(value: string) {
 		const {
 			props: {criterion, onChange},
@@ -381,7 +383,6 @@ class CriteriaRow extends React.Component<
 	 * @param {Array|object} value The properties or list of objects with
 	 * properties to update.
 	 */
-	@autobind
 	handleTypedInputChange(value: any) {
 		const {criterion, onChange} = this.props;
 
@@ -402,7 +403,6 @@ class CriteriaRow extends React.Component<
 		}
 	}
 
-	@autobind
 	renderOperator() {
 		const {supportedOperators} = this.state;
 

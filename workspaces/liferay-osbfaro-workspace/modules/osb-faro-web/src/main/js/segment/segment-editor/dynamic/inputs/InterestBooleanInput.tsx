@@ -1,4 +1,3 @@
-import autobind from 'autobind-decorator';
 import Form from 'shared/components/form';
 import React from 'react';
 import {getPropertyValue, setPropertyValue} from '../utils/custom-inputs';
@@ -7,7 +6,11 @@ import {ISegmentEditorCustomInputBase} from '../utils/types';
 import {Option, Picker} from '@clayui/core';
 
 export default class InterestBooleanInput extends React.Component<ISegmentEditorCustomInputBase> {
-	@autobind
+	constructor(props: ISegmentEditorCustomInputBase) {
+		super(props);
+		this.handleChange = this.handleChange.bind(this);
+	}
+
 	handleChange(newValue: React.Key) {
 		const {onChange, value} = this.props;
 

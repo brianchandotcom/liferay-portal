@@ -133,7 +133,7 @@ public class PortalWorkspaceGitRepository extends BaseWorkspaceGitRepository {
 	}
 
 	public void setUpPortalProfile() {
-		String setupProfileDXPBranchNamesString;
+		String setupProfileDXPBranchNamesString = null;
 
 		try {
 			setupProfileDXPBranchNamesString =

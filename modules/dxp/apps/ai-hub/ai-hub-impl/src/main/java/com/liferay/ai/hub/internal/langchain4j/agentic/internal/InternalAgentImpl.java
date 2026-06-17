@@ -31,7 +31,6 @@ import dev.langchain4j.agentic.planner.AgentArgument;
 import dev.langchain4j.agentic.planner.AgentInstance;
 import dev.langchain4j.agentic.planner.AgenticSystemTopology;
 
-import java.io.Closeable;
 import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
@@ -83,8 +82,12 @@ public class InternalAgentImpl implements InternalAgent, InvocationHandler {
 	}
 
 	public Object invoke(Map<String, ?> inputObjects) {
-		try (Closeable closeable = _quotaManager.checkConcurrentRequests(
-				_agentContext.getUserId())) {
+		boolean invoked = false;
+		String permit = null;
+
+		try {
+			permit = _quotaManager.acquireAgentInstancePermit(
+				_agentContext.getUserId());
 
 			Company company = CompanyLocalServiceUtil.getCompany(
 				_agentContext.getCompanyId());
@@ -95,6 +98,8 @@ public class InternalAgentImpl implements InternalAgent, InvocationHandler {
 					_agentContext.getServiceContext()
 				).put(
 					"agentDefinitionExternalReferenceCode", _name
+				).put(
+					"agentInstancePermit", permit
 				).put(
 					"instructionDefinitionScope",
 					_agentContext.getInstructionDefinitionScope()
@@ -156,6 +161,8 @@ public class InternalAgentImpl implements InternalAgent, InvocationHandler {
 			MessageBusUtil.sendMessage(
 				AIHubDestinationNames.AI_HUB_AGENT_INSTANCE, message);
 
+			invoked = true;
+
 			if (async()) {
 				return workflowInstance.getWorkflowInstanceId();
 			}
@@ -167,6 +174,11 @@ public class InternalAgentImpl implements InternalAgent, InvocationHandler {
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);
+		}
+		finally {
+			if (!invoked && (permit != null)) {
+				_quotaManager.releaseAgentInstancePermit(permit);
+			}
 		}
 	}
 

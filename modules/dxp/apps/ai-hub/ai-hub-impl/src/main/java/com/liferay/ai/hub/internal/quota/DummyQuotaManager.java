@@ -9,8 +9,6 @@ import com.liferay.ai.hub.quota.QuotaManager;
 import com.liferay.ai.hub.quota.Usage;
 import com.liferay.portal.kernel.exception.PortalException;
 
-import java.io.Closeable;
-
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -22,19 +20,22 @@ import org.osgi.service.component.annotations.Component;
 public class DummyQuotaManager implements QuotaManager {
 
 	@Override
+	public String acquireAgentInstancePermit(long userId)
+		throws PortalException {
+
+		return null;
+	}
+
+	@Override
 	public void addQuotas(long accountEntryId, long companyId, long userId) {
 	}
 
 	@Override
-	public Closeable checkConcurrentRequests(long userId)
-		throws PortalException {
-
-		return () -> {
-		};
+	public void checkTokensUsage(long companyId, long userId) {
 	}
 
 	@Override
-	public void checkTokensUsage(long companyId, long userId) {
+	public void releaseAgentInstancePermit(String permit) {
 	}
 
 	@Override

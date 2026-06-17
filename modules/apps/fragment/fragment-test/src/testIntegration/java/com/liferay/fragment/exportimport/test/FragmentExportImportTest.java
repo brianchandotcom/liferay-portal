@@ -12,9 +12,11 @@ import com.liferay.exportimport.test.util.lar.BasePortletExportImportTestCase;
 import com.liferay.fragment.configuration.FragmentServiceConfiguration;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.constants.FragmentPortletKeys;
+import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
@@ -31,6 +33,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
@@ -53,6 +56,7 @@ import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -231,6 +235,24 @@ public class FragmentExportImportTest extends BasePortletExportImportTestCase {
 	}
 
 	@Test
+	@TestInfo("LPD-93455")
+	public void testExportImportPortletWithValidation() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group, TestPropsValues.getUserId());
+
+		FragmentEntry fragmentEntry = _addFragmentEntry(
+			_fragmentCollectionLocalService.addFragmentCollection(
+				null, TestPropsValues.getUserId(),
+				serviceContext.getScopeGroupId(), RandomTestUtil.randomString(),
+				StringPool.BLANK, serviceContext),
+			"<h1>Sample</h1>", serviceContext);
+
+		_testExportImportPortletWithValidationWithFragmentEntryContentException(
+			_updateFragmentEntry(fragmentEntry, "${"));
+	}
+
+	@Test
 	public void testImportUpdateFragmentEntryWithPropagationEnabled()
 		throws Exception {
 
@@ -345,10 +367,38 @@ public class FragmentExportImportTest extends BasePortletExportImportTestCase {
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 
+	private FragmentEntry _addFragmentEntry(
+			FragmentCollection fragmentCollection, String html,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		return _fragmentEntryLocalService.addFragmentEntry(
+			null, TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
+			fragmentCollection.getFragmentCollectionId(), null,
+			RandomTestUtil.randomString(), StringPool.BLANK, html,
+			StringPool.BLANK, false, StringPool.BLANK, null, 0, false, false,
+			FragmentConstants.TYPE_COMPONENT, null,
+			WorkflowConstants.STATUS_APPROVED, serviceContext);
+	}
+
 	private void _assertContains(String text, String... strings) {
 		for (String string : strings) {
 			Assert.assertTrue(string, string.contains(text));
 		}
+	}
+
+	private void _assertFragmentEntryContentException(Exception exception) {
+		Throwable throwable = exception;
+
+		while (throwable != null) {
+			if (throwable instanceof FragmentEntryContentException) {
+				return;
+			}
+
+			throwable = throwable.getCause();
+		}
+
+		throw new AssertionError(exception);
 	}
 
 	private String _getLayoutContent(Layout layout, Locale locale)
@@ -369,6 +419,42 @@ public class FragmentExportImportTest extends BasePortletExportImportTestCase {
 		}
 	}
 
+	private void
+		_testExportImportPortletWithValidationWithFragmentEntryContentException(
+			FragmentEntry fragmentEntry) {
+
+		String expectedHTML = null;
+
+		FragmentEntry importedGroupFragmentEntry =
+			_fragmentEntryLocalService.fetchFragmentEntryByUuidAndGroupId(
+				fragmentEntry.getUuid(), importedGroup.getGroupId());
+
+		if (importedGroupFragmentEntry != null) {
+			expectedHTML = importedGroupFragmentEntry.getHtml();
+		}
+
+		try {
+			exportImportPortlet(FragmentPortletKeys.FRAGMENT, false);
+
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			_assertFragmentEntryContentException(exception);
+		}
+
+		importedGroupFragmentEntry =
+			_fragmentEntryLocalService.fetchFragmentEntryByUuidAndGroupId(
+				fragmentEntry.getUuid(), importedGroup.getGroupId());
+
+		if (expectedHTML == null) {
+			Assert.assertNull(importedGroupFragmentEntry);
+
+			return;
+		}
+
+		Assert.assertEquals(expectedHTML, importedGroupFragmentEntry.getHtml());
+	}
+
 	private FragmentEntry _updateFragmentEntry(FragmentEntry fragmentEntry)
 		throws Exception {
 
@@ -380,6 +466,35 @@ public class FragmentExportImportTest extends BasePortletExportImportTestCase {
 			fragmentEntry.getConfiguration(), fragmentEntry.getIcon(),
 			fragmentEntry.getPreviewFileEntryId(), fragmentEntry.isReadOnly(),
 			fragmentEntry.getTypeOptions(), fragmentEntry.getStatus());
+	}
+
+	private FragmentEntry _updateFragmentEntry(
+			FragmentEntry fragmentEntry, String html)
+		throws Exception {
+
+		try (AutoCloseable autoCloseable =
+				new CompanyConfigurationTemporarySwapper(
+					_group.getCompanyId(),
+					"com.liferay.fragment.entry.processor.freemarker." +
+						"internal.configuration." +
+							"FreeMarkerFragmentEntryProcessorConfiguration",
+					HashMapDictionaryBuilder.<String, Object>put(
+						"enable.freemarker", false
+					).build())) {
+
+			fragmentEntry.setHtml(html);
+
+			fragmentEntry = _fragmentEntryLocalService.updateFragmentEntry(
+				fragmentEntry);
+
+			ThreadLocal<Set<String>> validHTMLs =
+				ReflectionTestUtil.getFieldValue(
+					_fragmentEntryProcessorRegistry, "_validHTMLs");
+
+			validHTMLs.remove();
+
+			return fragmentEntry;
+		}
 	}
 
 	private static final String _HTML = StringBundler.concat(
@@ -403,6 +518,9 @@ public class FragmentExportImportTest extends BasePortletExportImportTestCase {
 
 	@Inject
 	private FragmentEntryLocalService _fragmentEntryLocalService;
+
+	@Inject
+	private FragmentEntryProcessorRegistry _fragmentEntryProcessorRegistry;
 
 	@Inject(filter = "jakarta.portlet.name=" + FragmentPortletKeys.FRAGMENT)
 	private PortletDataHandler _fragmentPortletDataHandler;

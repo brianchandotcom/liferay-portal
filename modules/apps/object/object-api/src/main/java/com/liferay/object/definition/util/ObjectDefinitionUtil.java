@@ -261,8 +261,6 @@ public class ObjectDefinitionUtil {
 		).put(
 			"DSRRoom", "/digital-sales-room/rooms"
 		).put(
-			"DSRTemplate", "/digital-sales-room/templates"
-		).put(
 			"FunctionalCookieEntry", "/functional-cookies-entries"
 		).put(
 			"KnowledgeBase", "/cms/knowledge-bases"

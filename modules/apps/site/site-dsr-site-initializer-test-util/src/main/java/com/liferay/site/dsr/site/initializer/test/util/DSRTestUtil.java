@@ -5,7 +5,6 @@
 
 package com.liferay.site.dsr.site.initializer.test.util;
 
-import com.liferay.batch.engine.test.util.BatchEngineTestUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -29,7 +28,7 @@ import com.liferay.site.initializer.SiteInitializerRegistry;
  */
 public class DSRTestUtil {
 
-	public static Group getOrAddGroup(Class<?> clazz) throws Exception {
+	public static Group getOrAddGroup() throws Exception {
 		Group group = GroupLocalServiceUtil.fetchGroup(
 			TestPropsValues.getCompanyId(), GroupConstants.DSR);
 
@@ -78,17 +77,6 @@ public class DSRTestUtil {
 						_BUNDLE_SYMBOLIC_NAME);
 
 				siteInitializer.initialize(group.getGroupId());
-
-				BatchEngineTestUtil.processBatchEngineUnits(
-					_BUNDLE_SYMBOLIC_NAME, clazz,
-					new String[] {
-						"." + _BUNDLE_SYMBOLIC_NAME +
-							".internal.batch.01.object.folder",
-						"." + _BUNDLE_SYMBOLIC_NAME +
-							".internal.batch.02.object.definition",
-						"." + _BUNDLE_SYMBOLIC_NAME +
-							".internal.batch.03.notification.template"
-					});
 			}
 		}
 		finally {

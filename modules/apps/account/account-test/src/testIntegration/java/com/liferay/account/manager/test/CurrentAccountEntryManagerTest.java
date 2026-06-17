@@ -17,11 +17,14 @@ import com.liferay.account.service.test.util.AccountEntryArgs;
 import com.liferay.account.service.test.util.AccountEntryTestUtil;
 import com.liferay.account.settings.AccountEntryGroupSettings;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserConstants;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
@@ -152,6 +155,17 @@ public class CurrentAccountEntryManagerTest {
 				TestPropsValues.getCompanyId()),
 			_currentAccountEntryManager.getCurrentAccountEntry(
 				_group.getGroupId(), UserConstants.USER_ID_DEFAULT));
+
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					CompanyConstants.SYSTEM)) {
+
+			Assert.assertEquals(
+				_accountEntryLocalService.getGuestAccountEntry(
+					TestPropsValues.getCompanyId()),
+				_currentAccountEntryManager.getCurrentAccountEntry(
+					_group.getGroupId(), UserConstants.USER_ID_DEFAULT));
+		}
 	}
 
 	@Test

@@ -49,8 +49,14 @@ public class KeyManagerProfileOrchestratorImpl
 			return null;
 		}
 
-		KeyManagerProfile keyManagerProfile = serviceTrackerMap.getService(
-			keyManagerGlobalConfiguration.activeProfileId());
+		String activeProfileId =
+			keyManagerGlobalConfiguration.activeProfileId();
+
+		KeyManagerProfile keyManagerProfile = null;
+
+		if (activeProfileId != null) {
+			keyManagerProfile = serviceTrackerMap.getService(activeProfileId);
+		}
 
 		if (keyManagerProfile == null) {
 			keyManagerProfile = serviceTrackerMap.getService(
@@ -121,17 +127,18 @@ public class KeyManagerProfileOrchestratorImpl
 	}
 
 	private void _bootstrap(KeyManagerProfile keyManagerProfile) {
-		KeyManagerGlobalConfiguration keyManagerGlobalConfiguration =
-			_keyManagerGlobalConfiguration;
-
-		if ((keyManagerProfile == null) ||
-			(keyManagerGlobalConfiguration == null)) {
-
+		if (keyManagerProfile == null) {
 			return;
 		}
 
-		String activeProfileId =
-			keyManagerGlobalConfiguration.activeProfileId();
+		KeyManagerProfile activeKeyManagerProfile =
+			getActiveKeyManagerProfile();
+
+		if (activeKeyManagerProfile == null) {
+			return;
+		}
+
+		String activeProfileId = activeKeyManagerProfile.getProfileId();
 
 		if (!Objects.equals(
 				activeProfileId, keyManagerProfile.getProfileId())) {

@@ -66,7 +66,7 @@ public class StyleBookEntryProviderUtilTest {
 		StyleBookEntry styleBookEntry = _addStyleBookEntry(_group.getGroupId());
 
 		StyleBookEntry depotEntryStyleBookEntry =
-			_getDepotEntryStyleBookEntry();
+			_addDepotEntryStyleBookEntry();
 
 		List<StyleBookEntry> styleBookEntries =
 			StyleBookEntryProviderUtil.getStyleBookEntries(
@@ -91,7 +91,7 @@ public class StyleBookEntryProviderUtilTest {
 		StyleBookEntry styleBookEntry = _addStyleBookEntry(_group.getGroupId());
 
 		StyleBookEntry depotEntryStyleBookEntry =
-			_getDepotEntryStyleBookEntry();
+			_addDepotEntryStyleBookEntry();
 
 		List<StyleBookEntry> styleBookEntries =
 			StyleBookEntryProviderUtil.getStyleBookEntries(
@@ -146,14 +146,7 @@ public class StyleBookEntryProviderUtilTest {
 			null, RandomTestUtil.randomString(), RandomTestUtil.randomString());
 	}
 
-	private StyleBookEntry _addStyleBookEntry(long groupId) throws Exception {
-		return _styleBookEntryLocalService.addStyleBookEntry(
-			RandomTestUtil.randomString(), TestPropsValues.getUserId(), groupId,
-			false, null, RandomTestUtil.randomString(), null,
-			RandomTestUtil.randomString(), null);
-	}
-
-	private StyleBookEntry _getDepotEntryStyleBookEntry() throws Exception {
+	private StyleBookEntry _addDepotEntryStyleBookEntry() throws Exception {
 		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(),
@@ -166,6 +159,13 @@ public class StyleBookEntryProviderUtilTest {
 			depotEntry.getDepotEntryId(), _group.getGroupId());
 
 		return _addStyleBookEntry(depotEntryGroup.getGroupId());
+	}
+
+	private StyleBookEntry _addStyleBookEntry(long groupId) throws Exception {
+		return _styleBookEntryLocalService.addStyleBookEntry(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(), groupId,
+			false, null, RandomTestUtil.randomString(), null,
+			RandomTestUtil.randomString(), null);
 	}
 
 	private void _testGetStyleBookEntry(

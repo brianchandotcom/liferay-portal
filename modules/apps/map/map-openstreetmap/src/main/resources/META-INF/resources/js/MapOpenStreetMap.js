@@ -15,6 +15,14 @@ import OpenStreetMapMarker from './OpenStreetMapMarker';
 
 const defaultTileURI = '//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 
+L.Icon.Default.imagePath = `${Liferay.ThemeDisplay.getPathContext()}/o/map-openstreetmap/images/`;
+
+L.Icon.Default.mergeOptions({
+	iconRetinaUrl: 'marker_icon_2x.png',
+	iconUrl: 'marker_icon.png',
+	shadowUrl: 'marker_shadow.png',
+});
+
 /**
  * MapOpenStreetMap
  * @review

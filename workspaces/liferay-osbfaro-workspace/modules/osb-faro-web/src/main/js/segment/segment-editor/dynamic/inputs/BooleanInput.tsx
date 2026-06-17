@@ -1,4 +1,3 @@
-import autobind from 'autobind-decorator';
 import Form from 'shared/components/form';
 import React from 'react';
 import {BOOLEAN_OPTIONS} from '../utils/constants';
@@ -14,7 +13,11 @@ interface IBooleanInputProps {
 	value: string;
 }
 export default class BooleanInput extends React.Component<IBooleanInputProps> {
-	@autobind
+	constructor(props: IBooleanInputProps) {
+		super(props);
+		this.handleChange = this.handleChange.bind(this);
+	}
+
 	handleChange(value: React.Key) {
 		this.props.onChange({value});
 	}

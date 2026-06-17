@@ -1,4 +1,3 @@
-import autobind from 'autobind-decorator';
 import getCN from 'classnames';
 import HelpBlock from 'shared/components/form/HelpBlock';
 import Input from '../Input';
@@ -106,7 +105,11 @@ export default class FormInput extends React.Component<IFormInputProps> {
 		width: PropTypes.number,
 	};
 
-	@autobind
+	constructor(props: IFormInputProps) {
+		super(props);
+		this.handleChange = this.handleChange.bind(this);
+	}
+
 	handleChange(event: React.ChangeEvent<HTMLInputElement>) {
 		const {
 			field: {name},

@@ -39,15 +39,10 @@ const Checkbox: React.FC<ICheckboxProps> = ({
 
 	return (
 
-		// We are disabling the following rules as we don't actually want
-		// this elment to be explicitly interactable. It only serves to
-		// stop the propagation of the event to prevent the row from being
-		// select.
+		// This wrapper only stops click propagation (to prevent row
+		// selection); it is intentionally not an interactive control.
 
-		/* eslint-disable jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */
 		<div className={classes} onClick={handleEventPropagation}>
-
-			{/* eslint-enable jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
 			<label>
 				<input
 					{...otherProps}

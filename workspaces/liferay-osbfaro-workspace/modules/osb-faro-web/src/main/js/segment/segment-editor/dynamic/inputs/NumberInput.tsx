@@ -1,4 +1,3 @@
-import autobind from 'autobind-decorator';
 import Form from 'shared/components/form';
 import getCN from 'classnames';
 import Input from 'shared/components/Input';
@@ -14,14 +13,18 @@ interface INumberInputProps extends ISegmentEditorInputBase {
 }
 
 export default class NumberInput extends React.Component<INumberInputProps> {
-	@autobind
+	constructor(props: INumberInputProps) {
+		super(props);
+		this.handleBlur = this.handleBlur.bind(this);
+		this.handleChange = this.handleChange.bind(this);
+	}
+
 	handleBlur() {
 		const {onChange, value} = this.props;
 
 		onChange({touched: true, valid: isValid(value)});
 	}
 
-	@autobind
 	handleChange(event: React.ChangeEvent<HTMLInputElement>) {
 		const {value} = event.target;
 

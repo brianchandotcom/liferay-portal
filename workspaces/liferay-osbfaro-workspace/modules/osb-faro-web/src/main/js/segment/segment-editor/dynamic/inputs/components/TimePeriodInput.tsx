@@ -1,4 +1,3 @@
-import autobind from 'autobind-decorator';
 import React from 'react';
 import {Option, Picker} from '@clayui/core';
 import {TIME_PERIOD_OPTIONS} from '../../utils/constants';
@@ -9,7 +8,11 @@ interface ITimePeriodInputProps {
 }
 
 export default class TimePeriodInput extends React.Component<ITimePeriodInputProps> {
-	@autobind
+	constructor(props: ITimePeriodInputProps) {
+		super(props);
+		this.handleTimePeriodChange = this.handleTimePeriodChange.bind(this);
+	}
+
 	handleTimePeriodChange(value: React.Key) {
 		const {onChange} = this.props;
 

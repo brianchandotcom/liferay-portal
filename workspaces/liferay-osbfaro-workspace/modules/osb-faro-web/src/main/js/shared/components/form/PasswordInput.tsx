@@ -1,4 +1,3 @@
-import autobind from 'autobind-decorator';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import Form from 'shared/components/form';
@@ -30,7 +29,12 @@ export default class PasswordInput extends React.Component<
 		showPassword: false,
 	};
 
-	@autobind
+	constructor(props: IPasswordInputProps) {
+		super(props);
+		this.handleShowPasswordToggle =
+			this.handleShowPasswordToggle.bind(this);
+	}
+
 	handleShowPasswordToggle() {
 		this.setState({
 			showPassword: !this.state.showPassword,

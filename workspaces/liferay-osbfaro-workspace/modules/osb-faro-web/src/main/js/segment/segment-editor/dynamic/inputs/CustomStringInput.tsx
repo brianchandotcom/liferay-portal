@@ -1,4 +1,3 @@
-import autobind from 'autobind-decorator';
 import AutocompleteInput from 'shared/components/AutocompleteInput';
 import Form from 'shared/components/form';
 import getCN from 'classnames';
@@ -31,6 +30,13 @@ export default class CustomStringInput extends React.Component<ICustomStringInpu
 		autocomplete: true,
 	};
 
+	constructor(props: ICustomStringInputProps) {
+		super(props);
+		this.handleBlur = this.handleBlur.bind(this);
+		this.handleOperatorChange = this.handleOperatorChange.bind(this);
+		this.handleValueChange = this.handleValueChange.bind(this);
+	}
+
 	getSelectedOperatorKey() {
 		const criterionIMap = this.props.value.getIn(
 			['criterionGroup', 'items', 0],
@@ -54,7 +60,6 @@ export default class CustomStringInput extends React.Component<ICustomStringInpu
 		return TEXT_OPERATORS.find(({key}) => key === operatorKey)?.key;
 	}
 
-	@autobind
 	handleBlur() {
 		const {onChange, value: valueIMap} = this.props;
 
@@ -65,7 +70,6 @@ export default class CustomStringInput extends React.Component<ICustomStringInpu
 		});
 	}
 
-	@autobind
 	handleOperatorChange(operator: React.Key) {
 		const {onChange, value: valueIMap} = this.props;
 
@@ -94,7 +98,6 @@ export default class CustomStringInput extends React.Component<ICustomStringInpu
 		});
 	}
 
-	@autobind
 	handleValueChange(value: React.Key) {
 		const {onChange, value: valueIMap} = this.props;
 

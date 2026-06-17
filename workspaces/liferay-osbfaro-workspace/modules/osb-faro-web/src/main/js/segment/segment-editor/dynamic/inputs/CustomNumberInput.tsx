@@ -1,4 +1,3 @@
-import autobind from 'autobind-decorator';
 import Form from 'shared/components/form';
 import getCN from 'classnames';
 import Input from 'shared/components/Input';
@@ -24,6 +23,13 @@ interface ICustomNumberInputProps extends ISegmentEditorCustomInputBase {
 }
 
 export default class CustomNumberInput extends React.Component<ICustomNumberInputProps> {
+	constructor(props: ICustomNumberInputProps) {
+		super(props);
+		this.handleBlur = this.handleBlur.bind(this);
+		this.handleOperatorChange = this.handleOperatorChange.bind(this);
+		this.handleValueChange = this.handleValueChange.bind(this);
+	}
+
 	getSelectedOperatorKey() {
 		const criterionIMap = this.props.value.getIn(
 			['criterionGroup', 'items', 0],
@@ -47,7 +53,6 @@ export default class CustomNumberInput extends React.Component<ICustomNumberInpu
 		return NUMBER_OPERATORS.find(({key}) => key === operatorKey)?.key;
 	}
 
-	@autobind
 	handleBlur() {
 		const {onChange, value} = this.props;
 
@@ -58,7 +63,6 @@ export default class CustomNumberInput extends React.Component<ICustomNumberInpu
 		});
 	}
 
-	@autobind
 	handleOperatorChange(operator: React.Key) {
 		const {onChange, value: valueIMap} = this.props;
 
@@ -87,7 +91,6 @@ export default class CustomNumberInput extends React.Component<ICustomNumberInpu
 		});
 	}
 
-	@autobind
 	handleValueChange(event: React.ChangeEvent<HTMLInputElement>) {
 		const {value} = event.target;
 

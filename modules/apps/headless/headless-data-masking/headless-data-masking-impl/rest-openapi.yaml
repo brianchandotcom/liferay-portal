@@ -6,11 +6,11 @@ components:
             properties:
                 detectionRegex:
                     description:
-                        The regex that identifies the substring(s) to be masked. Compiled by java.util.regex.Pattern on the server, so semantics match what the production redaction pipeline will see at runtime &mdash; not what a client-side JavaScript regex engine would produce.
+                        The regex that identifies the substring(s) to be masked. Compiled by java.util.regex.Pattern on the server, so semantics match what the production redaction pipeline will see at runtime &mdash; not what a client side JavaScript regex engine would produce.
                     type: string
                 replacementRegex:
                     description:
-                        Optional. When set, each detection match is further processed by this regex against the matched substring; useful for partial-redaction styles like "keep the last 4 digits" or "/24 CIDR truncation". When unset, the entire detection match is replaced by replacementValue.
+                        Optional. When set, each detection match is further processed by this regex against the matched substring; useful for partial redaction styles like "keep the last 4 digits" or "/24 CIDR truncation". When unset, the entire detection match is replaced by replacementValue.
                     type: string
                 replacementValue:
                     description:
@@ -51,7 +51,7 @@ paths:
     "/data-masks/preview":
         post:
             description:
-                Compile a candidate data mask and apply it to sample text, returning a preview of the redacted output and any compile/apply error. Used by the admin UI preview card so the regex is evaluated by the same java.util.regex.Pattern engine that runs in production &mdash; eliminating JavaScript-vs-Java regex divergence as a source of false-positive validation.
+                Compile a candidate data mask and apply it to sample text, returning a preview of the redacted output and any compile/apply error. Used by the admin UI preview card so the regex is evaluated by the same java.util.regex.Pattern engine that runs in production &mdash; eliminating JavaScript vs Java regex divergence as a source of false positive validation.
             operationId: previewDataMask
             requestBody:
                 content:

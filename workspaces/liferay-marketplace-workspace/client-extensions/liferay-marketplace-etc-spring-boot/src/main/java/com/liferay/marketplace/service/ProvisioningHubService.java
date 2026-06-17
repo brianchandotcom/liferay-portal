@@ -133,9 +133,6 @@ public class ProvisioningHubService extends BaseService {
 
 		Map<String, String> properties = koroneikiAccount.getProperties();
 
-		com.liferay.headless.commerce.admin.order.client.dto.v1_0.Account
-			account = order.getAccount();
-
 		JSONObject aiHubJSONObject = _aiHubService.provision(
 			new JSONObject(
 			).put(
@@ -161,6 +158,9 @@ public class ProvisioningHubService extends BaseService {
 		if (aiHubJSONObject == null) {
 			return;
 		}
+
+		com.liferay.headless.commerce.admin.order.client.dto.v1_0.Account
+			account = order.getAccount();
 
 		_marketplaceService.putAIHubApplication(
 			"AI-HUB-" + order.getAccountExternalReferenceCode(),

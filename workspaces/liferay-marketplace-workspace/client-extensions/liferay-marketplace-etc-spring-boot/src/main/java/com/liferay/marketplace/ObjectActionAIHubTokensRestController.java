@@ -78,7 +78,8 @@ public class ObjectActionAIHubTokensRestController extends BaseRestController {
 		if (aiHubApplicationJSONObject == null) {
 			if (_log.isInfoEnabled()) {
 				_log.info(
-					"AI Hub application not found for order " + order.getId());
+					"AI Hub application was not found for order " +
+						order.getId());
 			}
 
 			return;

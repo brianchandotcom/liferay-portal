@@ -33,20 +33,19 @@ public class JakartaTransformSourceProcessorTest
 
 	@Test
 	public void testGradleJakartaTransform() throws Exception {
-		test("jakartatransform/JakartaTransform.testgradle");
+		_testJakartaTransformDependenciesFile(
+			null, "jakartatransform/JakartaTransform.testgradle");
 
-		_jakartaTransformDependenciesFilePath =
+		_testJakartaTransformDependenciesFile(
 			"src/test/resources/com/liferay/source/formatter/dependencies" +
-				"/jakartatransform/jakarta-transform-dependencies.txt";
-
-		test(
+				"/jakartatransform/jakarta-transform-dependencies.txt",
 			"jakartatransform/JakartaTransformExternalDependencies.testgradle");
 
-		_testInvalidDependenciesFile(
+		_testInvalidJakartaTransformDependenciesFile(
 			"/jakarta-transform-dependencies-does-not-exist.txt",
 			"Unable to read file");
 
-		_testInvalidDependenciesFile(
+		_testInvalidJakartaTransformDependenciesFile(
 			"src/test/resources/com/liferay/source/formatter/dependencies" +
 				"/jakartatransform/jakarta-transform-dependencies-invalid.txt",
 			"Invalid line");
@@ -85,15 +84,14 @@ public class JakartaTransformSourceProcessorTest
 		return sourceFormatterArgs;
 	}
 
-	private void _testInvalidDependenciesFile(
+	private void _testInvalidJakartaTransformDependenciesFile(
 			String jakartaTransformDependenciesFilePath, String expectedMessage)
 		throws Exception {
 
-		_jakartaTransformDependenciesFilePath =
-			jakartaTransformDependenciesFilePath;
-
 		try {
-			test("jakartatransform/JakartaTransform.testgradle");
+			_testJakartaTransformDependenciesFile(
+				jakartaTransformDependenciesFilePath,
+				"jakartatransform/JakartaTransform.testgradle");
 
 			Assert.fail();
 		}
@@ -110,6 +108,16 @@ public class JakartaTransformSourceProcessorTest
 
 			Assert.assertTrue(message.contains(expectedMessage));
 		}
+	}
+
+	private void _testJakartaTransformDependenciesFile(
+			String jakartaTransformDependenciesFilePath, String testFileName)
+		throws Exception {
+
+		_jakartaTransformDependenciesFilePath =
+			jakartaTransformDependenciesFilePath;
+
+		test(testFileName);
 	}
 
 	private String _jakartaTransformDependenciesFilePath;

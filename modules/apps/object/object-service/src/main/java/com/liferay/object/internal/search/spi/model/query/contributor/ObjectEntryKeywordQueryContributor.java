@@ -129,8 +129,6 @@ public class ObjectEntryKeywordQueryContributor
 			}
 		}
 
-		QueryConfig queryConfig = searchContext.getQueryConfig();
-
 		Locale defaultLocale = LocaleUtil.fromLanguageId(
 			_objectDefinition.getDefaultLanguageId());
 
@@ -151,8 +149,8 @@ public class ObjectEntryKeywordQueryContributor
 				searchContext.getLocale(), "objectEntryTitle");
 		}
 
-		_addLocalizedHighlightFieldNames(
-			defaultLocale, queryConfig, searchContext);
+		_addHighlightFieldNames(
+			defaultLocale, searchContext.getQueryConfig(), searchContext);
 
 		if (StringUtil.startsWith(keywords, CharPool.QUOTE) &&
 			StringUtil.endsWith(keywords, CharPool.QUOTE)) {
@@ -238,7 +236,7 @@ public class ObjectEntryKeywordQueryContributor
 		}
 	}
 
-	private void _addLocalizedHighlightFieldNames(
+	private void _addHighlightFieldNames(
 		Locale defaultLocale, QueryConfig queryConfig,
 		SearchContext searchContext) {
 
@@ -342,13 +340,13 @@ public class ObjectEntryKeywordQueryContributor
 
 		Set<String> configuredInnerHitsNames =
 			(Set<String>)searchContext.getAttribute(
-				_CONFIGURED_INNER_HITS_NAMES);
+				"objectEntryConfiguredInnerHitsNames");
 
 		if (configuredInnerHitsNames == null) {
 			configuredInnerHitsNames = new HashSet<>();
 
 			searchContext.setAttribute(
-				_CONFIGURED_INNER_HITS_NAMES,
+				"objectEntryConfiguredInnerHitsNames",
 				(Serializable)configuredInnerHitsNames);
 		}
 
@@ -357,10 +355,12 @@ public class ObjectEntryKeywordQueryContributor
 		}
 
 		QueryConfig nestedQueryConfig = nestedQuery.getQueryConfig();
-		QueryConfig queryConfig = searchContext.getQueryConfig();
 
 		nestedQueryConfig.setHighlightEnabled(true);
 		nestedQueryConfig.setHighlightFieldNames(highlightFieldNames);
+
+		QueryConfig queryConfig = searchContext.getQueryConfig();
+
 		nestedQueryConfig.setHighlightFragmentSize(
 			queryConfig.getHighlightFragmentSize());
 		nestedQueryConfig.setHighlightRequireFieldMatch(
@@ -449,10 +449,10 @@ public class ObjectEntryKeywordQueryContributor
 					 ObjectFieldConstants.DB_TYPE_STRING)) {
 
 			if (objectField.isLocalized()) {
+				BooleanQuery localizedNestedBooleanQuery = new BooleanQuery();
+
 				String[] localizedFieldNames = _getLocalizedNestedFieldNames(
 					defaultLocale, searchContext);
-
-				BooleanQuery localizedNestedBooleanQuery = new BooleanQuery();
 
 				for (String localizedFieldName : localizedFieldNames) {
 					localizedNestedBooleanQuery.add(
@@ -469,11 +469,11 @@ public class ObjectEntryKeywordQueryContributor
 				highlightFieldNames = localizedFieldNames;
 			}
 			else {
+				BooleanQuery localizedNestedBooleanQuery = new BooleanQuery();
+
 				String[] localizedFieldNames =
 					_searchLocalizationHelper.getLocalizedFieldNames(
 						new String[] {"nestedFieldArray.value"}, searchContext);
-
-				BooleanQuery localizedNestedBooleanQuery = new BooleanQuery();
 
 				for (String localizedFieldName : localizedFieldNames) {
 					localizedNestedBooleanQuery.add(
@@ -734,9 +734,6 @@ public class ObjectEntryKeywordQueryContributor
 
 		return keywordTokenizer.tokenize(keywords);
 	}
-
-	private static final String _CONFIGURED_INNER_HITS_NAMES =
-		"objectEntryConfiguredInnerHitsNames";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectEntryKeywordQueryContributor.class);

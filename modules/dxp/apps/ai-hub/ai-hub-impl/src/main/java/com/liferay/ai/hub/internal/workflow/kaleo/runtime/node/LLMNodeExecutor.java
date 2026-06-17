@@ -24,9 +24,7 @@ import com.liferay.ai.hub.rest.resource.v1_0.util.SseUtil;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyInheritableThreadLocalCallable;
@@ -254,14 +252,8 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 		Map<String, Serializable> workflowContext =
 			executionContext.getWorkflowContext();
 
-		JSONArray jsonArray = VariablesUtil.getVariablesJSONArray(
-			"outputVariables", kaleoNodeSettingValues);
-
-		if ((jsonArray != null) && (jsonArray.length() > 0)) {
-			JSONObject jsonObject = jsonArray.getJSONObject(0);
-
-			workflowContext.put(jsonObject.getString("name"), aiMessage.text());
-		}
+		VariablesUtil.applyOutputVariable(
+			kaleoNodeSettingValues, aiMessage.text(), workflowContext);
 
 		workflowContext.put("output", aiMessage.text());
 

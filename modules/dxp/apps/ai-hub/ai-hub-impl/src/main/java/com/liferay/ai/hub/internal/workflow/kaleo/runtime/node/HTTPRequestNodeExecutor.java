@@ -126,10 +126,8 @@ public class HTTPRequestNodeExecutor extends BaseNodeExecutor {
 						response.getResponseCode()));
 			}
 
-			VariablesUtil.applyOutputVariables(
-				VariablesUtil.getVariablesJSONArray(
-					"outputVariables", kaleoNodeSettingValues),
-				responseBody, workflowContext);
+			VariablesUtil.applyOutputVariable(
+				kaleoNodeSettingValues, responseBody, workflowContext);
 		}
 		catch (Exception exception) {
 			if (exception instanceof PortalException portalException) {

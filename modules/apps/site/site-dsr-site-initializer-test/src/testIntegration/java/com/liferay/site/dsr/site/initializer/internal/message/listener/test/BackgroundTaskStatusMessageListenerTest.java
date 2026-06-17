@@ -57,8 +57,7 @@ public class BackgroundTaskStatusMessageListenerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		DSRTestUtil.getOrAddGroup(
-			BackgroundTaskStatusMessageListenerTest.class);
+		DSRTestUtil.getOrAddGroup();
 
 		_accountEntry = _accountEntryLocalService.addAccountEntry(
 			StringPool.BLANK, TestPropsValues.getUserId(), 0,

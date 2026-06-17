@@ -82,7 +82,7 @@ public class DLFileEntryModelListenerTest {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
 			RandomTestUtil.randomString() + "@liferay.com", null, null,
 			"business", 1, ServiceContextTestUtil.getServiceContext());
-		_group = DSRTestUtil.getOrAddGroup(DLFileEntryModelListenerTest.class);
+		_group = DSRTestUtil.getOrAddGroup();
 		_objectDefinition =
 			_objectDefinitionLocalService.
 				getObjectDefinitionByExternalReferenceCode(

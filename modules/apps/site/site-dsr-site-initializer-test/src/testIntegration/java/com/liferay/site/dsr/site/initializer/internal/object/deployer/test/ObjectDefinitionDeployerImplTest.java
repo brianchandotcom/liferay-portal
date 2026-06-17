@@ -81,7 +81,7 @@ public class ObjectDefinitionDeployerImplTest {
 
 	@Before
 	public void setUp() throws Exception {
-		DSRTestUtil.getOrAddGroup(ObjectDefinitionDeployerImplTest.class);
+		DSRTestUtil.getOrAddGroup();
 
 		AccountEntry accountEntry = _accountEntryLocalService.addAccountEntry(
 			StringPool.BLANK, TestPropsValues.getUserId(), 0,

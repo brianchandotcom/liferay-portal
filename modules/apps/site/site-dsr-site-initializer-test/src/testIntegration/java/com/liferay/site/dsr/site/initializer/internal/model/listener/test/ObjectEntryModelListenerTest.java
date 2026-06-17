@@ -105,7 +105,7 @@ public class ObjectEntryModelListenerTest {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
 			RandomTestUtil.randomString() + "@liferay.com", null, null,
 			"business", 1, ServiceContextTestUtil.getServiceContext());
-		_group = DSRTestUtil.getOrAddGroup(ObjectEntryModelListenerTest.class);
+		_group = DSRTestUtil.getOrAddGroup();
 		_objectDefinition =
 			_objectDefinitionLocalService.
 				getObjectDefinitionByExternalReferenceCode(

@@ -101,6 +101,10 @@ if (buildUserPropertiesFile.exists()) {
 allprojects {
 	repositories {
 		maven {
+			url new File(rootProject.projectDir, "../../.m2")
+		}
+
+		maven {
 			url new File(rootProject.projectDir, "../../.m2-tmp")
 		}
 
@@ -128,6 +132,7 @@ subprojects {
 	}
 
 	tasks.withType(Test) {
+		jvmArgs "--add-opens=java.base/java.lang.invoke=ALL-UNNAMED"
 		maxHeapSize = "4096m"
 	}
 }

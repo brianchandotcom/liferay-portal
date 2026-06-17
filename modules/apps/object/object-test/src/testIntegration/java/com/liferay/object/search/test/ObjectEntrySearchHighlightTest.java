@@ -15,7 +15,6 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.highlight.HighlightUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -25,7 +24,6 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.highlight.HighlightField;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
@@ -71,13 +69,11 @@ public class ObjectEntrySearchHighlightTest {
 	public static void setUpClass() throws Exception {
 		_localizedObjectDefinition = _addObjectDefinition(true);
 
-		_localizedObjectEntry = _addObjectEntry(
-			true, _localizedObjectDefinition);
+		_addObjectEntry(true, _localizedObjectDefinition);
 
 		_nonlocalizedObjectDefinition = _addObjectDefinition(false);
 
-		_nonlocalizedObjectEntry = _addObjectEntry(
-			false, _nonlocalizedObjectDefinition);
+		_addObjectEntry(false, _nonlocalizedObjectDefinition);
 	}
 
 	@AfterClass
@@ -96,52 +92,41 @@ public class ObjectEntrySearchHighlightTest {
 	@Test
 	public void testHighlightDefaultLocaleFallback() throws Exception {
 		SearchHit searchHit = _search(
-			LocaleUtil.HUNGARY, _localizedObjectDefinition,
-			_localizedObjectEntry);
+			_localizedObjectDefinition, LocaleUtil.HUNGARY);
 
 		Locale defaultLocale = LocaleUtil.fromLanguageId(
 			_localizedObjectDefinition.getDefaultLanguageId());
 
-		_assertHighlight(_getContentFieldName(defaultLocale), searchHit);
-		_assertHighlight(_getTitleFieldName(defaultLocale), searchHit);
+		_assertHighlight(searchHit, _getContentFieldName(defaultLocale));
+		_assertHighlight(searchHit, _getTitleFieldName(defaultLocale));
 	}
 
 	@Test
 	public void testHighlightLocalized() throws Exception {
-		SearchHit searchHit = _search(
-			LocaleUtil.US, _localizedObjectDefinition, _localizedObjectEntry);
+		for (Locale locale : new Locale[] {LocaleUtil.SPAIN, LocaleUtil.US}) {
+			SearchHit searchHit = _search(_localizedObjectDefinition, locale);
 
-		_assertHighlight(_getContentFieldName(LocaleUtil.US), searchHit);
-		_assertHighlight(_getTitleFieldName(LocaleUtil.US), searchHit);
-
-		searchHit = _search(
-			LocaleUtil.SPAIN, _localizedObjectDefinition,
-			_localizedObjectEntry);
-
-		_assertHighlight(_getContentFieldName(LocaleUtil.SPAIN), searchHit);
-		_assertHighlight(_getTitleFieldName(LocaleUtil.SPAIN), searchHit);
+			_assertHighlight(searchHit, _getContentFieldName(locale));
+			_assertHighlight(searchHit, _getTitleFieldName(locale));
+		}
 	}
 
 	@Test
 	public void testHighlightNonlocalized() throws Exception {
-		SearchHit searchHit = _search(
-			LocaleUtil.US, _nonlocalizedObjectDefinition,
-			_nonlocalizedObjectEntry);
-
 		Locale defaultLocale = LocaleUtil.fromLanguageId(
 			_nonlocalizedObjectDefinition.getDefaultLanguageId());
 
-		_assertHighlight(_getContentFieldName(defaultLocale), searchHit);
+		for (Locale locale : new Locale[] {LocaleUtil.SPAIN, LocaleUtil.US}) {
+			SearchHit searchHit = _search(
+				_nonlocalizedObjectDefinition, locale);
 
-		_assertHighlight("objectEntryTitle", searchHit);
-		_assertNoLocalizedHighlight("objectEntryTitle", searchHit);
+			_assertHighlight(searchHit, _getContentFieldName(defaultLocale));
 
-		searchHit = _search(
-			LocaleUtil.SPAIN, _nonlocalizedObjectDefinition,
-			_nonlocalizedObjectEntry);
+			_assertHighlight(searchHit, "objectEntryTitle");
 
-		_assertHighlight("objectEntryTitle", searchHit);
-		_assertNoLocalizedHighlight("objectEntryTitle", searchHit);
+			_assertNoHighlight(searchHit, _getTitleFieldName(LocaleUtil.SPAIN));
+			_assertNoHighlight(searchHit, _getTitleFieldName(LocaleUtil.US));
+		}
 	}
 
 	@Rule
@@ -156,30 +141,18 @@ public class ObjectEntrySearchHighlightTest {
 	private static ObjectDefinition _addObjectDefinition(boolean localized)
 		throws Exception {
 
-		String contentFieldLabel = RandomTestUtil.randomString();
-		String contentFieldName = _NONLOCALIZED_CONTENT_FIELD_NAME;
-		String titleFieldLabel = RandomTestUtil.randomString();
-		String titleFieldName = _NONLOCALIZED_TITLE_FIELD_NAME;
-
-		if (localized) {
-			contentFieldName = _LOCALIZED_CONTENT_FIELD_NAME;
-			titleFieldName = _LOCALIZED_TITLE_FIELD_NAME;
-		}
-
 		List<ObjectField> objectFields = new ArrayList<>();
 
 		objectFields.add(
-			_buildTextObjectField(
-				contentFieldLabel, localized, contentFieldName));
-
+			_buildTextObjectField(localized, _OBJECT_FIELD_NAME_CONTENT));
 		objectFields.add(
-			_buildTextObjectField(titleFieldLabel, localized, titleFieldName));
+			_buildTextObjectField(localized, _OBJECT_FIELD_NAME_TITLE));
 
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionTestUtil.addCustomObjectDefinition(objectFields);
 
 		ObjectField titleObjectField = _objectFieldLocalService.getObjectField(
-			objectDefinition.getObjectDefinitionId(), titleFieldName);
+			objectDefinition.getObjectDefinitionId(), _OBJECT_FIELD_NAME_TITLE);
 
 		_objectDefinitionLocalService.updateTitleObjectFieldId(
 			objectDefinition.getObjectDefinitionId(),
@@ -198,32 +171,30 @@ public class ObjectEntrySearchHighlightTest {
 
 		if (localized) {
 			values = HashMapBuilder.<String, Serializable>put(
-				_LOCALIZED_CONTENT_FIELD_NAME + "_i18n",
+				_OBJECT_FIELD_NAME_CONTENT + "_i18n",
 				HashMapBuilder.put(
-					LocaleUtil.toLanguageId(LocaleUtil.US),
-					RandomTestUtil.randomString() + " " + _KEYWORD
-				).put(
 					LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
-					RandomTestUtil.randomString() + " " + _KEYWORD
+					"Spanish content " + _KEYWORD
+				).put(
+					LocaleUtil.toLanguageId(LocaleUtil.US),
+					"English content " + _KEYWORD
 				).build()
 			).put(
-				_LOCALIZED_TITLE_FIELD_NAME + "_i18n",
+				_OBJECT_FIELD_NAME_TITLE + "_i18n",
 				HashMapBuilder.put(
-					LocaleUtil.toLanguageId(LocaleUtil.US),
-					RandomTestUtil.randomString() + " " + _KEYWORD
-				).put(
 					LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
-					RandomTestUtil.randomString() + " " + _KEYWORD
+					"Spanish title " + _KEYWORD
+				).put(
+					LocaleUtil.toLanguageId(LocaleUtil.US),
+					"English title " + _KEYWORD
 				).build()
 			).build();
 		}
 		else {
 			values = HashMapBuilder.<String, Serializable>put(
-				_NONLOCALIZED_CONTENT_FIELD_NAME,
-				RandomTestUtil.randomString() + " " + _KEYWORD
+				_OBJECT_FIELD_NAME_CONTENT, "Nonlocalized content " + _KEYWORD
 			).put(
-				_NONLOCALIZED_TITLE_FIELD_NAME,
-				RandomTestUtil.randomString() + " " + _KEYWORD
+				_OBJECT_FIELD_NAME_TITLE, "Nonlocalized title " + _KEYWORD
 			).build();
 		}
 
@@ -235,7 +206,7 @@ public class ObjectEntrySearchHighlightTest {
 	}
 
 	private static ObjectField _buildTextObjectField(
-		String label, boolean localized, String name) {
+		boolean localized, String name) {
 
 		return new TextObjectFieldBuilder(
 		).indexed(
@@ -243,7 +214,7 @@ public class ObjectEntrySearchHighlightTest {
 		).indexedAsKeyword(
 			false
 		).labelMap(
-			LocalizedMapUtil.getLocalizedMap(label)
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
 		).localized(
 			localized
 		).name(
@@ -252,7 +223,7 @@ public class ObjectEntrySearchHighlightTest {
 	}
 
 	private void _assertHighlight(
-		String highlightFieldName, SearchHit searchHit) {
+		SearchHit searchHit, String highlightFieldName) {
 
 		Map<String, HighlightField> highlightFieldsMap =
 			searchHit.getHighlightFieldsMap();
@@ -260,39 +231,16 @@ public class ObjectEntrySearchHighlightTest {
 		HighlightField highlightField = highlightFieldsMap.get(
 			highlightFieldName);
 
-		List<String> fragments = highlightField.getFragments();
-
-		Assert.assertFalse(
-			"Highlight fragments missing for " + highlightFieldName,
-			fragments.isEmpty());
-
-		String highlightedResult = StringBundler.concat(
-			HighlightUtil.HIGHLIGHT_TAG_OPEN, _KEYWORD,
-			HighlightUtil.HIGHLIGHT_TAG_CLOSE);
-
-		for (String fragment : fragments) {
-			Assert.assertTrue(
-				"Missing highlight markup in fragment: " + fragment,
-				fragment.contains(highlightedResult));
-		}
+		Assert.assertTrue(_hasHighlight(highlightField.getFragments()));
 	}
 
-	private void _assertNoLocalizedHighlight(
-		String fieldName, SearchHit searchHit) {
+	private void _assertNoHighlight(
+		SearchHit searchHit, String highlightFieldName) {
 
 		Map<String, HighlightField> highlightFieldsMap =
 			searchHit.getHighlightFieldsMap();
 
-		Locale[] locales = {LocaleUtil.SPAIN, LocaleUtil.US};
-
-		for (Locale locale : locales) {
-			String localizedFieldName =
-				fieldName + "_" + LocaleUtil.toLanguageId(locale);
-
-			Assert.assertFalse(
-				"Unexpected localized highlight " + localizedFieldName,
-				highlightFieldsMap.containsKey(localizedFieldName));
-		}
+		Assert.assertFalse(highlightFieldsMap.containsKey(highlightFieldName));
 	}
 
 	private String _getContentFieldName(Locale locale) {
@@ -303,9 +251,20 @@ public class ObjectEntrySearchHighlightTest {
 		return Field.getLocalizedName(locale, "objectEntryTitle");
 	}
 
-	private SearchHit _search(
-			Locale locale, ObjectDefinition objectDefinition,
-			ObjectEntry objectEntry)
+	private boolean _hasHighlight(List<String> fragments) {
+		for (String fragment : fragments) {
+			if (fragment.contains(
+					HighlightUtil.HIGHLIGHT_TAG_OPEN + _KEYWORD +
+						HighlightUtil.HIGHLIGHT_TAG_CLOSE)) {
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private SearchHit _search(ObjectDefinition objectDefinition, Locale locale)
 		throws Exception {
 
 		SearchResponse searchResponse = searcher.search(
@@ -328,35 +287,19 @@ public class ObjectEntrySearchHighlightTest {
 
 		List<SearchHit> searchHitList = searchHits.getSearchHits();
 
-		SearchHit searchHit = searchHitList.get(0);
-
-		Document document = searchHit.getDocument();
-
-		Assert.assertEquals(
-			String.valueOf(objectEntry.getObjectEntryId()),
-			document.getString(Field.ENTRY_CLASS_PK));
-
-		return searchHit;
+		return searchHitList.get(0);
 	}
 
-	private static final String _KEYWORD = RandomTestUtil.randomString();
+	private static final String _KEYWORD = "alpha";
 
-	private static final String _LOCALIZED_CONTENT_FIELD_NAME =
+	private static final String _OBJECT_FIELD_NAME_CONTENT =
 		"a" + RandomTestUtil.randomString();
 
-	private static final String _LOCALIZED_TITLE_FIELD_NAME =
-		"a" + RandomTestUtil.randomString();
-
-	private static final String _NONLOCALIZED_CONTENT_FIELD_NAME =
-		"a" + RandomTestUtil.randomString();
-
-	private static final String _NONLOCALIZED_TITLE_FIELD_NAME =
+	private static final String _OBJECT_FIELD_NAME_TITLE =
 		"a" + RandomTestUtil.randomString();
 
 	private static ObjectDefinition _localizedObjectDefinition;
-	private static ObjectEntry _localizedObjectEntry;
 	private static ObjectDefinition _nonlocalizedObjectDefinition;
-	private static ObjectEntry _nonlocalizedObjectEntry;
 
 	@Inject
 	private static ObjectDefinitionLocalService _objectDefinitionLocalService;

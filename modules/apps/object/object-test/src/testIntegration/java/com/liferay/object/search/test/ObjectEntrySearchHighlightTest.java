@@ -70,10 +70,12 @@ public class ObjectEntrySearchHighlightTest {
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		_localizedObjectDefinition = _addObjectDefinition(true);
-		_nonlocalizedObjectDefinition = _addObjectDefinition(false);
 
 		_localizedObjectEntry = _addObjectEntry(
 			true, _localizedObjectDefinition);
+
+		_nonlocalizedObjectDefinition = _addObjectDefinition(false);
+
 		_nonlocalizedObjectEntry = _addObjectEntry(
 			false, _nonlocalizedObjectDefinition);
 	}

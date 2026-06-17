@@ -68,7 +68,7 @@ public class RoomResourceTest extends BaseRoomResourceTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
-		DSRTestUtil.getOrAddGroup(RoomResourceTest.class);
+		DSRTestUtil.getOrAddGroup();
 
 		_accountEntry = _accountEntryLocalService.addAccountEntry(
 			StringPool.BLANK, TestPropsValues.getUserId(), 0,

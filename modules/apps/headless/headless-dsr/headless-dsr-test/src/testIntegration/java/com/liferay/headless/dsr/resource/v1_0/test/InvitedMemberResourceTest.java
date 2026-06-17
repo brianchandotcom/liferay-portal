@@ -60,7 +60,7 @@ public class InvitedMemberResourceTest
 	public void setUp() throws Exception {
 		super.setUp();
 
-		DSRTestUtil.getOrAddGroup(InvitedMemberResourceTest.class);
+		DSRTestUtil.getOrAddGroup();
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.

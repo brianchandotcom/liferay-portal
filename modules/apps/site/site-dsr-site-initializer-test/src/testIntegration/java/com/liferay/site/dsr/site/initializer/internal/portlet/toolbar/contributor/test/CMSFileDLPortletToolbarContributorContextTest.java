@@ -89,8 +89,7 @@ public class CMSFileDLPortletToolbarContributorContextTest {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
 			RandomTestUtil.randomString() + "@liferay.com", null, null,
 			"business", 1, ServiceContextTestUtil.getServiceContext());
-		_group = DSRTestUtil.getOrAddGroup(
-			CMSFileDLPortletToolbarContributorContextTest.class);
+		_group = DSRTestUtil.getOrAddGroup();
 		_objectDefinition =
 			_objectDefinitionLocalService.
 				getObjectDefinitionByExternalReferenceCode(

@@ -73,7 +73,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
-		DSRTestUtil.getOrAddGroup(UserAccountResourceTest.class);
+		DSRTestUtil.getOrAddGroup();
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext();

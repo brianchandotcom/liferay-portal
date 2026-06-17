@@ -67,7 +67,7 @@ public class InviteMemberMVCRenderCommandTest {
 
 	@Before
 	public void setUp() throws Exception {
-		DSRTestUtil.getOrAddGroup(InviteMemberMVCActionCommandTest.class);
+		DSRTestUtil.getOrAddGroup();
 	}
 
 	@Test

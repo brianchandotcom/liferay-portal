@@ -117,7 +117,12 @@ public class JakartaTransformSourceProcessorTest
 		_jakartaTransformDependenciesFilePath =
 			jakartaTransformDependenciesFilePath;
 
-		test(testFileName);
+		try {
+			test(testFileName);
+		}
+		finally {
+			_jakartaTransformDependenciesFilePath = null;
+		}
 	}
 
 	private String _jakartaTransformDependenciesFilePath;

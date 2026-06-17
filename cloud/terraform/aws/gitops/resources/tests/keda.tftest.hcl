@@ -71,18 +71,18 @@ run "should_create_the_amp_read_policy_and_sa_annotation_when_keda_is_enabled" {
 	}
 
 	assert {
-		condition=length(aws_iam_role_policy.keda_amp_read) == 1 && aws_iam_role_policy.keda_amp_read[0].name == "liferay-test-eks-keda-amp-read-policy"
-		error_message="Enabling KEDA must create the AMP read policy."
+		condition=aws_iam_role_policy.keda_amp_read[0].name == "liferay-test-eks-keda-amp-read-policy" && length(aws_iam_role_policy.keda_amp_read) == 1
+		error_message="Enabling KEDA must create the AMP read policy"
 	}
 
 	assert {
 		condition=jsondecode(aws_iam_role_policy.keda_amp_read[0].policy).Statement[0].Resource == "arn:aws:aps:us-east-1:123456789012:workspace/*"
-		error_message="The KEDA AMP read policy must be scoped to Prometheus workspaces in the deployment account and region."
+		error_message="The KEDA AMP read policy must be scoped to Prometheus workspaces in the deployment account and region"
 	}
 
 	assert {
-		condition=length(kubernetes_annotations.keda_operator_sa) == 1 && kubernetes_annotations.keda_operator_sa[0].metadata[0].name == "keda-operator"
-		error_message="Enabling KEDA must annotate the keda-operator service account for IRSA."
+		condition=kubernetes_annotations.keda_operator_sa[0].metadata[0].name == "keda-operator" && length(kubernetes_annotations.keda_operator_sa) == 1
+		error_message="Enabling KEDA must annotate the keda-operator service account for IRSA"
 	}
 }
 
@@ -94,18 +94,18 @@ run "should_create_the_irsa_role_when_keda_is_enabled" {
 	}
 
 	assert {
-		condition=length(aws_iam_role.keda) == 1 && aws_iam_role.keda[0].name == "liferay-test-eks-keda-irsa"
-		error_message="Enabling KEDA must create the KEDA IRSA role named after the cluster."
-	}
-
-	assert {
-		condition=jsondecode(aws_iam_role.keda[0].assume_role_policy).Statement[0].Principal.Federated == "arn:aws:iam::123456789012:oidc-provider/oidc.eks.us-east-1.amazonaws.com/id/EXAMPLE"
-		error_message="The KEDA trust policy must use the constructed OIDC provider ARN."
+		condition=aws_iam_role.keda[0].name == "liferay-test-eks-keda-irsa" && length(aws_iam_role.keda) == 1
+		error_message="Enabling KEDA must create the KEDA IRSA role named after the cluster"
 	}
 
 	assert {
 		condition=jsondecode(aws_iam_role.keda[0].assume_role_policy).Statement[0].Condition.StringEquals["oidc.eks.us-east-1.amazonaws.com/id/EXAMPLE:sub"] == "system:serviceaccount:keda-system:keda-operator"
-		error_message="The KEDA trust policy must scope to the keda-operator service account."
+		error_message="The KEDA trust policy must scope to the keda-operator service account"
+	}
+
+	assert {
+		condition=jsondecode(aws_iam_role.keda[0].assume_role_policy).Statement[0].Principal.Federated == "arn:aws:iam::123456789012:oidc-provider/oidc.eks.us-east-1.amazonaws.com/id/EXAMPLE"
+		error_message="The KEDA trust policy must use the constructed OIDC provider ARN"
 	}
 }
 
@@ -114,11 +114,11 @@ run "should_disable_keda_by_default" {
 
 	assert {
 		condition=length(aws_iam_role.keda) == 0 && length(aws_iam_role_policy.keda_amp_read) == 0
-		error_message="No KEDA IAM resources should exist when keda_enabled is false."
+		error_message="No KEDA IAM resources should exist when keda_enabled is false"
 	}
 
 	assert {
 		condition=length(kubernetes_annotations.keda_operator_sa) == 0
-		error_message="No KEDA service account annotation should exist when keda_enabled is false."
+		error_message="No KEDA service account annotation should exist when keda_enabled is false"
 	}
 }

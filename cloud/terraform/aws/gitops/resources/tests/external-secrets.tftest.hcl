@@ -67,28 +67,28 @@ run "should_create_the_secret_store_with_the_default_provider" {
 	command=plan
 
 	assert {
+		condition=aws_iam_role.secret_store_role[0].name == "liferay-test-eks-secret-store" && length(aws_iam_role.secret_store_role) == 1
+		error_message="The default provider must create the secret store IRSA role named after the cluster"
+	}
+
+	assert {
 		condition=kubernetes_cluster_role.eso_secret_writer.metadata[0].name == "eso-cluster-secret-writer"
-		error_message="The External Secrets writer ClusterRole must be named eso-cluster-secret-writer."
+		error_message="The External Secrets writer ClusterRole must be named eso-cluster-secret-writer"
 	}
 
 	assert {
 		condition=kubernetes_manifest.secret_store.manifest.metadata.name == "liferay-test-secret-store"
-		error_message="The ClusterSecretStore name must be derived from deployment_name."
+		error_message="The ClusterSecretStore name must be derived from deployment_name"
 	}
 
 	assert {
 		condition=kubernetes_manifest.secret_store.manifest.spec.provider.aws.service == "SecretsManager"
-		error_message="The default ClusterSecretStore must use the AWS Secrets Manager provider."
-	}
-
-	assert {
-		condition=length(aws_iam_role.secret_store_role) == 1 && aws_iam_role.secret_store_role[0].name == "liferay-test-eks-secret-store"
-		error_message="The default provider must create the secret store IRSA role named after the cluster."
+		error_message="The default ClusterSecretStore must use the AWS Secrets Manager provider"
 	}
 
 	assert {
 		condition=length(aws_iam_policy.secret_store_policy) == 1 && length(kubernetes_service_account.secret_store_sa) == 1
-		error_message="The default provider must create the secret store policy and service account."
+		error_message="The default provider must create the secret store policy and service account"
 	}
 }
 
@@ -103,12 +103,12 @@ run "should_create_the_sso_external_secret_when_enabled" {
 
 	assert {
 		condition=length(kubernetes_manifest.argocd_sso_saml_external_secret) == 1
-		error_message="Enabling SAML SSO must create the customer-idp-saml ExternalSecret."
+		error_message="Enabling SAML SSO must create the customer-idp-saml ExternalSecret"
 	}
 
 	assert {
 		condition=length(kubernetes_manifest.argocd_sso_saml_external_secret[0].manifest.spec.data) == 4
-		error_message="The SAML SSO ExternalSecret must map caData, entityIssuer, redirectURI, and ssoURL."
+		error_message="The SAML SSO ExternalSecret must map caData, entityIssuer, redirectURI, and ssoURL"
 	}
 }
 
@@ -133,13 +133,13 @@ run "should_disable_default_irsa_for_a_custom_secret_store_provider" {
 	}
 
 	assert {
-		condition=length(aws_iam_role.secret_store_role) == 0 && length(aws_iam_policy.secret_store_policy) == 0 && length(kubernetes_service_account.secret_store_sa) == 0
-		error_message="Supplying a custom secret store provider must disable the default IRSA resources."
+		condition=kubernetes_manifest.secret_store.manifest.spec.provider.aws.service == "SecretsManager"
+		error_message="The ClusterSecretStore must still be created from the custom provider HCL"
 	}
 
 	assert {
-		condition=kubernetes_manifest.secret_store.manifest.spec.provider.aws.service == "SecretsManager"
-		error_message="The ClusterSecretStore must still be created from the custom provider HCL."
+		condition=length(aws_iam_policy.secret_store_policy) == 0 && length(aws_iam_role.secret_store_role) == 0 && length(kubernetes_service_account.secret_store_sa) == 0
+		error_message="Supplying a custom secret store provider must disable the default IRSA resources"
 	}
 }
 
@@ -148,6 +148,6 @@ run "should_not_create_the_sso_external_secret_by_default" {
 
 	assert {
 		condition=length(kubernetes_manifest.argocd_sso_saml_external_secret) == 0
-		error_message="No SAML SSO ExternalSecret should exist when SAML SSO is disabled."
+		error_message="No SAML SSO ExternalSecret should exist when SAML SSO is disabled"
 	}
 }

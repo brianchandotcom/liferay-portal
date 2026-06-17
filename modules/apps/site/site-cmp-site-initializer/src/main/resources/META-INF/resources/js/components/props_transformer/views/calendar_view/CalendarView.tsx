@@ -39,6 +39,7 @@ export default function CalendarView({items}: CalendarViewProps) {
 	const {onInfoPanelToggleButtonClick} = useContext(FrontendDataSetContext);
 
 	const calendarRef = useRef<FullCalendar>(null);
+	const calendarViewRef = useRef<HTMLDivElement>(null);
 
 	const [datePickerExpanded, setDatePickerExpanded] = useState(false);
 	const [datePickerValue, setDatePickerValue] = useState('');
@@ -100,8 +101,29 @@ export default function CalendarView({items}: CalendarViewProps) {
 		};
 	}, []);
 
+	// Properly resize the calendar width when the unscheduled tasks panel is
+	// opened or closed. FullCalendar caches its layout and only recomputes on a
+	// window resize, so its width can go stale. Watch the container instead and
+	// recompute on every width change.
+
+	useEffect(() => {
+		const element = calendarViewRef.current;
+
+		if (!element) {
+			return;
+		}
+
+		const resizeObserver = new ResizeObserver(() => {
+			calendarRef.current?.getApi().updateSize();
+		});
+
+		resizeObserver.observe(element);
+
+		return () => resizeObserver.disconnect();
+	}, []);
+
 	return (
-		<div className="lfr__calendar-view">
+		<div className="lfr__calendar-view" ref={calendarViewRef}>
 			<ClayLayout.Row className="lfr__calendar-view-toolbar">
 				<ClayLayout.Col
 					className="lfr__calendar-view-toolbar-start"

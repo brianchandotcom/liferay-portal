@@ -195,10 +195,11 @@ public class ViewWorkflowTasksSectionDisplayContextTest
 			FDSEntityFieldTypes.STRING, "cmpAssignTo", "assignee",
 			fdsFilters.get(0));
 		assertFDSFilter(
-			FDSEntityFieldTypes.DATE_TIME, "cmpDueDate", "due-date",
+			FDSEntityFieldTypes.DATE_TIME, "dueDate", "due-date",
 			fdsFilters.get(1));
 		assertFDSFilter(
-			FDSEntityFieldTypes.STRING, "cmpState", "state", fdsFilters.get(2));
+			FDSEntityFieldTypes.BOOLEAN, "completed", "status",
+			fdsFilters.get(2));
 	}
 
 	@Override

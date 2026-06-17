@@ -200,9 +200,9 @@ Run every step without asking for confirmation, including the commits.
 
 ## Editing REST Builder Itself
 
-Use this workflow when editing the REST Builder generator itself — the shared FreeMarker templates in `modules/util/portal-tools-rest-builder/src/main/resources/com/liferay/portal/tools/rest/builder/dependencies` and the Java that drives them — rather than the artifacts of any single bundle.
+Use this workflow when editing the REST Builder generator itself — the FreeMarker templates in `modules/util/portal-tools-rest-builder/src/main/resources/com/liferay/portal/tools/rest/builder/dependencies` and the Java that drives them — rather than the artifacts of any single bundle.
 
-`buildREST` reads these files from the local repository, not from the REST Builder artifact published to Maven, so a change to a shared template or generator class takes effect on the next `buildREST` run with no need to rebuild or republish the tool. Because a shared file feeds every generated module, that change affects all of them.
+`buildREST` reads the generator's source from the local repository, not from the REST Builder artifact published to Maven, so a change to a template or generator class takes effect on the next `buildREST` run with no need to rebuild or republish the tool. Because the generator produces every module, a change to it affects all of them.
 
 The dummy `portal-tools-rest-builder-test-impl` module acts as the generator's test bed: its `rest-openapi.yaml` is meant to cover each generator feature, so the regenerated Java becomes the visible record of what the change produces.
 

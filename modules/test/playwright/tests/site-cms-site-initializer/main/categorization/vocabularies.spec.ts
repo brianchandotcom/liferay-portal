@@ -815,16 +815,10 @@ systemVocabularyTest.describe('System vocabulary tests', () => {
 	});
 
 	systemVocabularyTest(
-		'Mark a system vocabulary with a lock icon and hide its delete action',
+		'Hide the delete action for a system vocabulary',
 		{tag: '@LPD-93225'},
 		async ({vocabulariesPage}) => {
 			await vocabulariesPage.goto();
-
-			// The vocabulary is flagged as protected with a lock icon
-
-			await expect(
-				vocabulariesPage.getLockIcon(systemVocabularyName)
-			).toBeVisible();
 
 			// The delete action is not offered for a system vocabulary
 

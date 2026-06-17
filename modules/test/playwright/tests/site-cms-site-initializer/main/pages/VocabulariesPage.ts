@@ -29,10 +29,6 @@ export class VocabulariesPage {
 		return this.dataSetFragmentPage.getRow(filter);
 	}
 
-	getLockIcon(name: string) {
-		return this.getItem(name).getByLabel('System vocabulary');
-	}
-
 	async clickCategoriesLink(name: string) {
 		await this.getItem(name).locator('a[href*="view-categories"]').click();
 	}

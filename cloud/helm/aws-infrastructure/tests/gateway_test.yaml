@@ -62,14 +62,14 @@ tests:
             gateway.className: eg
             gateway.name: liferay-gateway
     -   asserts:
-            -   isKind:
-                    of: ClientTrafficPolicy
             -   equal:
                     path: metadata.name
                     value: liferay-gateway-attachment
             -   equal:
                     path: spec.targetRefs[0].name
                     value: liferay-gateway
+            -   isKind:
+                    of: ClientTrafficPolicy
         documentSelector:
             path: kind
             value: ClientTrafficPolicy

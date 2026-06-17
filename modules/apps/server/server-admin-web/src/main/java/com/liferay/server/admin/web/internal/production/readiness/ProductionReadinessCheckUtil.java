@@ -572,23 +572,28 @@ public class ProductionReadinessCheckUtil {
 	}
 
 	private static ProductionReadinessResult _checkSidecarDetection() {
-		ProductionReadinessResult.Builder builder =
-			ProductionReadinessResult.builder(
-				"search-engine-connectivity-validation", "sidecar-detection");
+		boolean productionModeEnabled = false;
 
 		try {
 			ElasticsearchConfiguration elasticsearchConfiguration =
 				ConfigurationProviderUtil.getSystemConfiguration(
 					ElasticsearchConfiguration.class);
 
-			if (elasticsearchConfiguration.productionModeEnabled()) {
-				return builder.pass();
-			}
+			productionModeEnabled =
+				elasticsearchConfiguration.productionModeEnabled();
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(exception);
 			}
+		}
+
+		ProductionReadinessResult.Builder builder =
+			ProductionReadinessResult.builder(
+				"search-engine-connectivity-validation", "sidecar-detection");
+
+		if (productionModeEnabled) {
+			return builder.pass();
 		}
 
 		return builder.fail();

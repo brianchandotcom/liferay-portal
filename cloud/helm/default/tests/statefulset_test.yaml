@@ -1,8 +1,8 @@
-suite: statefulset
+suite: StatefulSet
 templates:
-    -   templates/workloads.yaml
     -   templates/configmap.yaml
     -   templates/liferay-init-scripts-cm.yaml
+    -   templates/workloads.yaml
 tests:
     -   asserts:
             -   contains:
@@ -25,14 +25,14 @@ tests:
             -   contains:
                     any: true
                     content:
-                        name: FOO
-                        value: bar
+                        name: BAZ
+                        value: qux
                     path: spec.template.spec.containers[0].env
             -   contains:
                     any: true
                     content:
-                        name: BAZ
-                        value: qux
+                        name: FOO
+                        value: bar
                     path: spec.template.spec.containers[0].env
         documentSelector:
             path: kind
@@ -41,19 +41,19 @@ tests:
         it: should append every custom environment variable through the customEnv loop
         set:
             customEnv.x-liferay-extra:
-                -   name: FOO
-                    value: bar
                 -   name: BAZ
                     value: qux
+                -   name: FOO
+                    value: bar
     -   asserts:
             -   equal:
                     path: metadata.name
                     value: my-portal
             -   equal:
-                    path: spec.template.spec.containers[0].name
+                    path: spec.serviceName
                     value: my-portal
             -   equal:
-                    path: spec.serviceName
+                    path: spec.template.spec.containers[0].name
                     value: my-portal
         documentSelector:
             path: kind
@@ -84,11 +84,11 @@ tests:
         set:
             replicaCount: 3
     -   asserts:
-            -   isKind:
-                    of: StatefulSet
             -   equal:
                     path: spec.replicas
                     value: 3
+            -   isKind:
+                    of: StatefulSet
         documentSelector:
             path: kind
             skipEmptyTemplates: true

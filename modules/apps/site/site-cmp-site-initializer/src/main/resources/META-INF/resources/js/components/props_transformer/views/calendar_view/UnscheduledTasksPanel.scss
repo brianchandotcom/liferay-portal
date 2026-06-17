@@ -1,3 +1,11 @@
+// The shared CMS `.fds-info-panel` rule offsets the panel by the breadcrumb
+// height alone. The project tasks views nest the FDS inside a tab navigation,
+// which adds a row above the table, so without accounting for it the panel is
+// left with a gap at its top. Pull it up by the tab navigation height as well.
+
+$cms-breadcrumb-height: 72px;
+$cms-tab-navigation-height: 48px;
+
 .lfr__cmp-unscheduled-tasks-panel {
 	&-search {
 		margin-bottom: 1rem;
@@ -9,5 +17,20 @@
 		.list-group-item {
 			align-items: center;
 		}
+	}
+}
+
+.component-tabs {
+	.lfr-tooltip-scope
+		+ .cms-section
+		.fds-info-panel:has(.lfr__cmp-unscheduled-tasks-panel),
+	.lfr-tooltip-scope
+		+ .table-root
+		.fds-info-panel:has(.lfr__cmp-unscheduled-tasks-panel) {
+		top: -($cms-breadcrumb-height + $cms-tab-navigation-height);
+	}
+
+	button.nav-link-monospaced:has(.lexicon-icon-info-circle-open) {
+		display: none;
 	}
 }

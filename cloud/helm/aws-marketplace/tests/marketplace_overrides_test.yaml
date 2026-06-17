@@ -1,4 +1,4 @@
-suite: marketplace overrides
+suite: Marketplace Overrides
 templates:
     -   charts/liferay-aws/charts/liferay-default/templates/configmap.yaml
     -   charts/liferay-aws/charts/liferay-default/templates/liferay-init-scripts-cm.yaml

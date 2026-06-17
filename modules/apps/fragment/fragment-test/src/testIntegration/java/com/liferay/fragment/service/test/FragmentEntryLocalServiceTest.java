@@ -146,39 +146,34 @@ public class FragmentEntryLocalServiceTest {
 	public void testGetFragmentEntriesByUuidAndCompanyId() throws Exception {
 		Group group = GroupTestUtil.addGroup();
 
-		try {
-			FragmentEntry fragmentEntry1 =
-				FragmentEntryTestUtil.addFragmentEntry(
-					_fragmentCollection.getFragmentCollectionId(),
-					RandomTestUtil.randomString());
+		FragmentEntry fragmentEntry1 = FragmentEntryTestUtil.addFragmentEntry(
+			_fragmentCollection.getFragmentCollectionId(),
+			RandomTestUtil.randomString());
 
-			List<FragmentEntry> fragmentEntries1 =
-				_fragmentEntryLocalService.getFragmentEntriesByUuidAndCompanyId(
-					fragmentEntry1.getUuid(), _group.getCompanyId());
+		List<FragmentEntry> fragmentEntries1 =
+			_fragmentEntryLocalService.getFragmentEntriesByUuidAndCompanyId(
+				fragmentEntry1.getUuid(), _group.getCompanyId());
 
-			Assert.assertEquals(
-				fragmentEntries1.toString(), 1, fragmentEntries1.size());
-			Assert.assertEquals(fragmentEntry1, fragmentEntries1.get(0));
+		Assert.assertEquals(
+			fragmentEntries1.toString(), 1, fragmentEntries1.size());
+		Assert.assertEquals(fragmentEntry1, fragmentEntries1.get(0));
 
-			FragmentCollection fragmentCollection =
-				FragmentTestUtil.addFragmentCollection(group.getGroupId());
+		FragmentCollection fragmentCollection =
+			FragmentTestUtil.addFragmentCollection(group.getGroupId());
 
-			FragmentEntry fragmentEntry2 =
-				FragmentEntryTestUtil.addFragmentEntry(
-					fragmentCollection.getFragmentCollectionId(),
-					RandomTestUtil.randomString());
+		FragmentEntry fragmentEntry2 = FragmentEntryTestUtil.addFragmentEntry(
+			fragmentCollection.getFragmentCollectionId(),
+			RandomTestUtil.randomString());
 
-			List<FragmentEntry> fragmentEntries2 =
-				_fragmentEntryLocalService.getFragmentEntriesByUuidAndCompanyId(
-					fragmentEntry2.getUuid(), group.getCompanyId());
+		List<FragmentEntry> fragmentEntries2 =
+			_fragmentEntryLocalService.getFragmentEntriesByUuidAndCompanyId(
+				fragmentEntry2.getUuid(), group.getCompanyId());
 
-			Assert.assertEquals(
-				fragmentEntries2.toString(), 1, fragmentEntries2.size());
-			Assert.assertEquals(fragmentEntry2, fragmentEntries2.get(0));
-		}
-		finally {
-			GroupLocalServiceUtil.deleteGroup(group);
-		}
+		Assert.assertEquals(
+			fragmentEntries2.toString(), 1, fragmentEntries2.size());
+		Assert.assertEquals(fragmentEntry2, fragmentEntries2.get(0));
+
+		GroupLocalServiceUtil.deleteGroup(group);
 	}
 
 	@Test

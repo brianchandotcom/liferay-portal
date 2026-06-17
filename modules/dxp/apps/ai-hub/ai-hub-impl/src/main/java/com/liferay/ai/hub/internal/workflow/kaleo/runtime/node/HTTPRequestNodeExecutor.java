@@ -76,9 +76,6 @@ public class HTTPRequestNodeExecutor extends BaseNodeExecutor {
 			executionContext.getWorkflowContext();
 
 		try {
-			String url = VariablesUtil.applyInputVariables(
-				executionContext, "url", kaleoNodeSettingValues);
-
 			KaleoInstanceToken kaleoInstanceToken =
 				executionContext.getKaleoInstanceToken();
 
@@ -103,7 +100,9 @@ public class HTTPRequestNodeExecutor extends BaseNodeExecutor {
 					requestBody, ContentTypes.APPLICATION_JSON, "UTF-8");
 			}
 
-			options.setLocation(url);
+			options.setLocation(
+				VariablesUtil.applyInputVariables(
+					executionContext, "url", kaleoNodeSettingValues));
 			options.setMethod(
 				Http.Method.valueOf(
 					GetterUtil.getString(

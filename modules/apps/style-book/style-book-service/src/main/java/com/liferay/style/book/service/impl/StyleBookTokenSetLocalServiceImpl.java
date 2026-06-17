@@ -56,11 +56,10 @@ public class StyleBookTokenSetLocalServiceImpl
 			user.getCompanyId(), frontendTokenCategoryName, name,
 			styleBookEntryId, themeId);
 
-		long styleBookTokenSetId = counterLocalService.increment(
-			StyleBookTokenSet.class.getName());
-
 		StyleBookTokenSet styleBookTokenSet =
-			styleBookTokenSetPersistence.create(styleBookTokenSetId);
+			styleBookTokenSetPersistence.create(
+				counterLocalService.increment(
+					StyleBookTokenSet.class.getName()));
 
 		String uuid = serviceContext.getUuid();
 

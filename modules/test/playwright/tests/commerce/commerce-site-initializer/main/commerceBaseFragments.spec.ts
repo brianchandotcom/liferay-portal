@@ -13,6 +13,7 @@ import {loginTest} from '../../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../../fixtures/pageEditorPagesTest';
 import {systemSettingsPageTest} from '../../../../fixtures/systemSettingsPageTest';
 import {liferayConfig} from '../../../../liferay.config';
+import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
 import {getRandomInt} from '../../../../utils/getRandomInt';
 import getRandomString from '../../../../utils/getRandomString';
 import performLogin, {performLogout} from '../../../../utils/performLogin';
@@ -35,35 +36,86 @@ export const test = mergeTests(
 
 test(
 	'Commerce Classic Header main fragment is correctly displayed',
-	{tag: ['@LPD-23780']},
-	async ({apiHelpers, page, pageEditorPage}) => {
-		test.setTimeout(120000);
+	{tag: ['@LPD-23780', '@LPD-94883']},
+	async ({
+		apiHelpers,
+		commerceThemeClassicCatalogPage,
+		page,
+		pageEditorPage,
+	}) => {
+		test.setTimeout(180000);
 
 		const {site} = await classicCommerceSetUp(
 			apiHelpers,
 			`classic-commerce`
 		);
 
-		await page.goto(`/web${site.friendlyUrlPath}?p_l_mode=edit`, {
-			waitUntil: 'networkidle',
+		await test.step('Publish the Commerce Classic Master and verify the header fragments are displayed', async () => {
+			await page.goto(`/web${site.friendlyUrlPath}?p_l_mode=edit`, {
+				waitUntil: 'networkidle',
+			});
+
+			await pageEditorPage.goToSidebarTab('Page Design Options');
+
+			await page.getByLabel('Commerce Classic Master').click();
+			await page.getByLabel('Publish', {exact: true}).click();
+
+			await expect(
+				page.locator(
+					'.lfr-layout-structure-item-commerce-account-selector-fragments-account-selector-fragment'
+				)
+			).toBeVisible();
+			await expect(
+				page.locator(
+					'.lfr-layout-structure-item-commerce-cart-fragments-mini-cart'
+				)
+			).toBeVisible();
+			await expect(
+				page.locator('header .portlet-search-bar')
+			).toBeVisible();
 		});
 
-		await pageEditorPage.goToSidebarTab('Page Design Options');
+		await test.step('The account selector order list refreshes when a new order is created', async () => {
+			await apiHelpers.headlessAdminUser.postAccount({
+				name: getRandomString(),
+				type: 'business',
+			});
 
-		await page.getByLabel('Commerce Classic Master').click();
-		await page.getByLabel('Publish', {exact: true}).click();
+			await page.goto(`/web${site.friendlyUrlPath}/catalog`, {
+				waitUntil: 'networkidle',
+			});
 
-		await expect(
-			page.locator(
-				'.lfr-layout-structure-item-commerce-account-selector-fragments-account-selector-fragment'
-			)
-		).toBeVisible();
-		await expect(
-			page.locator(
-				'.lfr-layout-structure-item-commerce-cart-fragments-mini-cart'
-			)
-		).toBeVisible();
-		await expect(page.locator('header .portlet-search-bar')).toBeVisible();
+			await commerceThemeClassicCatalogPage
+				.productCardAddToCartButton('Wear Sensors')
+				.click();
+
+			await page.waitForLoadState('networkidle');
+
+			const triggerOrderId = page.locator(
+				'.btn-account-selector .order-id'
+			);
+
+			await expect(triggerOrderId).toBeVisible();
+
+			const orderId = await triggerOrderId.innerText();
+
+			const accountSelectorDropdownMenu = page.locator(
+				'[id$="-account-selector-dropdown-menu"]'
+			);
+
+			await clickAndExpectToBeVisible({
+				target: accountSelectorDropdownMenu,
+				trigger: page.locator('.account-selector-cta-container'),
+			});
+
+			await expect(
+				accountSelectorDropdownMenu
+					.locator(
+						'.lfr-layout-structure-item-com-liferay-commerce-fragment-internal-renderer-pendingaccountordersdatasetfragmentrenderer'
+					)
+					.getByText(orderId)
+			).toBeVisible();
+		});
 	}
 );
 

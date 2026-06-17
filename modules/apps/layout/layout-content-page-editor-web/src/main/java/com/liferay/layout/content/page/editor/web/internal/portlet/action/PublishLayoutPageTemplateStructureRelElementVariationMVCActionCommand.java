@@ -14,7 +14,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -34,8 +34,9 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = MVCActionCommand.class
 )
-public class PublishLayoutPageTemplateStructureRelElementVariationMVCActionCommand
-	extends BaseContentPageEditorTransactionalMVCActionCommand {
+public class
+	PublishLayoutPageTemplateStructureRelElementVariationMVCActionCommand
+		extends BaseContentPageEditorTransactionalMVCActionCommand {
 
 	@Override
 	protected JSONObject doTransactionalCommand(
@@ -54,11 +55,9 @@ public class PublishLayoutPageTemplateStructureRelElementVariationMVCActionComma
 					addLayoutPageTemplateStructureRelElementVariation(
 						null, themeDisplay.getScopeGroupId(),
 						ParamUtil.getString(actionRequest, "audienceEntryERC"),
-						LocalizationUtil.getLocalizationMap(
-							actionRequest, "hide"),
-						LocalizationUtil.getLocalizationMap(
-							actionRequest, "html"),
-						LocalizationUtil.getLocalizationMap(actionRequest, "js"),
+						_localization.getLocalizationMap(actionRequest, "hide"),
+						_localization.getLocalizationMap(actionRequest, "html"),
+						_localization.getLocalizationMap(actionRequest, "js"),
 						ParamUtil.getString(actionRequest, "name"),
 						ParamUtil.getLong(
 							actionRequest, "plid", themeDisplay.getPlid()),
@@ -81,5 +80,8 @@ public class PublishLayoutPageTemplateStructureRelElementVariationMVCActionComma
 	@Reference
 	private LayoutPageTemplateStructureRelElementVariationService
 		_layoutPageTemplateStructureRelElementVariationService;
+
+	@Reference
+	private Localization _localization;
 
 }

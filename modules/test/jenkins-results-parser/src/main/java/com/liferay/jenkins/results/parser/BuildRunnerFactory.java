@@ -83,13 +83,6 @@ public class BuildRunnerFactory {
 			buildRunner = new QAWebsitesControllerBuildRunner(buildData);
 		}
 
-		if ((buildRunner == null) &&
-			jobName.startsWith("test-results-consistency-report-controller")) {
-
-			buildRunner = new TestResultsConsistencyReportControllerBuildRunner(
-				(BaseBuildData)buildData);
-		}
-
 		if ((buildRunner == null) && jobName.contains("-batch")) {
 			buildRunner = new DefaultPortalBatchBuildRunner(
 				(PortalBatchBuildData)buildData);

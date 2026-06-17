@@ -17,7 +17,8 @@
 	},
 	"modifiable": true,
 	"name": "DSRRoom",
-	"objectActions": [],
+	"objectActions": [
+	],
 	"objectDefinitionSettings": [
 		{
 			"name": "visible",
@@ -148,7 +149,8 @@
 		}
 	],
 	"objectFolderExternalReferenceCode": "L_DSR_STRUCTURES",
-	"objectRelationships": [],
+	"objectRelationships": [
+	],
 	"panelCategoryKey": "",
 	"pluralLabel": {
 		"en_US": "Rooms"

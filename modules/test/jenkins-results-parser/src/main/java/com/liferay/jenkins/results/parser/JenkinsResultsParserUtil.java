@@ -13,6 +13,8 @@ import com.liferay.poshi.core.pql.PQLEntityFactory;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -564,8 +566,11 @@ public class JenkinsResultsParserUtil {
 			long timeout, String... commands)
 		throws IOException, TimeoutException {
 
-		return Shell.doExecute(
-			baseDir, exitOnFirstFail, printCommands, timeout, commands);
+		Shell.ExecutionResult executionResult = Shell.execute(
+			new Shell.ExecutionRequest(
+				baseDir, exitOnFirstFail, printCommands, timeout, commands));
+
+		return _toProcess(executionResult);
 	}
 
 	public static Process executeBashCommands(File baseDir, String... commands)
@@ -7213,6 +7218,10 @@ public class JenkinsResultsParserUtil {
 		return true;
 	}
 
+	private static Process _toProcess(Shell.ExecutionResult executionResult) {
+		return new ExecutionResultProcess(executionResult);
+	}
+
 	private static final long _BYTES_GIGA = 1024 * 1024 * 1024;
 
 	private static final long _BYTES_KILO = 1024;
@@ -7374,6 +7383,49 @@ public class JenkinsResultsParserUtil {
 		}
 		catch (Exception exception) {
 		}
+	}
+
+	private static class ExecutionResultProcess extends Process {
+
+		@Override
+		public void destroy() {
+		}
+
+		@Override
+		public int exitValue() {
+			return _executionResult.getExitValue();
+		}
+
+		@Override
+		public InputStream getErrorStream() {
+			String standardError = _executionResult.getStandardError();
+
+			return new ByteArrayInputStream(standardError.getBytes());
+		}
+
+		@Override
+		public InputStream getInputStream() {
+			String standardOut = _executionResult.getStandardOut();
+
+			return new ByteArrayInputStream(standardOut.getBytes());
+		}
+
+		@Override
+		public OutputStream getOutputStream() {
+			return new ByteArrayOutputStream();
+		}
+
+		@Override
+		public int waitFor() {
+			return _executionResult.getExitValue();
+		}
+
+		private ExecutionResultProcess(Shell.ExecutionResult executionResult) {
+			_executionResult = executionResult;
+		}
+
+		private final Shell.ExecutionResult _executionResult;
+
 	}
 
 }

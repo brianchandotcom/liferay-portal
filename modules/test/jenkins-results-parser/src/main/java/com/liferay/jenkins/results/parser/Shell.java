@@ -16,10 +16,93 @@ import java.util.concurrent.TimeoutException;
  */
 public class Shell {
 
-	protected static Process doExecute(
-			File baseDir, boolean exitOnFirstFail, boolean printCommands,
-			long timeout, String... commands)
+	public static ExecutionResult execute(ExecutionRequest executionRequest)
 		throws IOException, TimeoutException {
+
+		return _shell.doExecute(executionRequest);
+	}
+
+	public static void setInstance(Shell shell) {
+		_shell = shell;
+	}
+
+	public static class ExecutionRequest {
+
+		public ExecutionRequest(
+			File baseDir, boolean exitOnFirstFail, boolean printCommands,
+			long timeout, String... commands) {
+
+			_baseDir = baseDir;
+			_exitOnFirstFail = exitOnFirstFail;
+			_printCommands = printCommands;
+			_timeout = timeout;
+			_commands = commands;
+		}
+
+		public File getBaseDir() {
+			return _baseDir;
+		}
+
+		public String[] getCommands() {
+			return _commands;
+		}
+
+		public long getTimeout() {
+			return _timeout;
+		}
+
+		public boolean isExitOnFirstFail() {
+			return _exitOnFirstFail;
+		}
+
+		public boolean isPrintCommands() {
+			return _printCommands;
+		}
+
+		private final File _baseDir;
+		private final String[] _commands;
+		private final boolean _exitOnFirstFail;
+		private final boolean _printCommands;
+		private final long _timeout;
+
+	}
+
+	public static class ExecutionResult {
+
+		public ExecutionResult(
+			int exitValue, String standardError, String standardOut) {
+
+			_exitValue = exitValue;
+			_standardError = standardError;
+			_standardOut = standardOut;
+		}
+
+		public int getExitValue() {
+			return _exitValue;
+		}
+
+		public String getStandardError() {
+			return _standardError;
+		}
+
+		public String getStandardOut() {
+			return _standardOut;
+		}
+
+		private final int _exitValue;
+		private final String _standardError;
+		private final String _standardOut;
+
+	}
+
+	protected ExecutionResult doExecute(ExecutionRequest executionRequest)
+		throws IOException, TimeoutException {
+
+		File baseDir = executionRequest.getBaseDir();
+		String[] commands = executionRequest.getCommands();
+		boolean exitOnFirstFail = executionRequest.isExitOnFirstFail();
+		boolean printCommands = executionRequest.isPrintCommands();
+		long timeout = executionRequest.getTimeout();
 
 		if (printCommands) {
 			System.out.print("Executing commands: ");
@@ -131,21 +214,23 @@ public class Shell {
 			}
 		}
 
+		String standardError = JenkinsResultsParserUtil.readInputStream(
+			process.getErrorStream(), true);
+
+		String standardOut = JenkinsResultsParserUtil.readInputStream(
+			process.getInputStream(), true);
+
 		if (JenkinsResultsParserUtil.debug) {
-			System.out.println(
-				"Output stream: " +
-					JenkinsResultsParserUtil.readInputStream(
-						process.getInputStream(), true));
+			System.out.println("Output stream: " + standardOut);
 		}
 
 		if (JenkinsResultsParserUtil.debug && (returnCode != 0)) {
-			System.out.println(
-				"Error stream: " +
-					JenkinsResultsParserUtil.readInputStream(
-						process.getErrorStream(), true));
+			System.out.println("Error stream: " + standardError);
 		}
 
-		return process;
+		return new ExecutionResult(returnCode, standardError, standardOut);
 	}
+
+	private static volatile Shell _shell = new Shell();
 
 }

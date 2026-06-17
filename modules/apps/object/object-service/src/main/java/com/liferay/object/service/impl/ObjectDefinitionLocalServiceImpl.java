@@ -11,6 +11,8 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.batch.engine.thread.local.BatchEngineThreadLocal;
 import com.liferay.depot.constants.DepotRolesConstants;
+import com.liferay.depot.service.DepotEntryGroupRelLocalService;
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.exportimport.kernel.empty.model.EmptyModelManager;
 import com.liferay.exportimport.kernel.empty.model.EmptyModelManagerUtil;
@@ -1084,6 +1086,7 @@ public class ObjectDefinitionLocalServiceImpl
 				_accountEntryLocalService,
 				_accountEntryOrganizationRelLocalService,
 				_assetEntryLocalService, _bundleContext,
+				_depotEntryGroupRelLocalService, _depotEntryLocalService,
 				_dlFileEntryLocalService, _groupLocalService,
 				_kaleoDefinitionLocalService, _listTypeLocalService,
 				_objectActionLocalService, objectDefinitionLocalService,
@@ -4062,6 +4065,12 @@ public class ObjectDefinitionLocalServiceImpl
 
 	@Reference
 	private CurrentConnection _currentConnection;
+
+	@Reference
+	private DepotEntryGroupRelLocalService _depotEntryGroupRelLocalService;
+
+	@Reference
+	private DepotEntryLocalService _depotEntryLocalService;
 
 	@Reference
 	private DLFileEntryLocalService _dlFileEntryLocalService;

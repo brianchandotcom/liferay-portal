@@ -9,7 +9,12 @@ import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.model.DepotEntryGroupRel;
+import com.liferay.depot.service.DepotEntryGroupRelLocalService;
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.internal.security.permission.util.ObjectEntryPermissionUtil;
@@ -45,6 +50,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Supplier;
@@ -60,6 +66,8 @@ public class ObjectEntryModelResourcePermission
 		AccountEntryLocalService accountEntryLocalService,
 		AccountEntryOrganizationRelLocalService
 			accountEntryOrganizationRelLocalService,
+		DepotEntryGroupRelLocalService depotEntryGroupRelLocalService,
+		DepotEntryLocalService depotEntryLocalService,
 		GroupLocalService groupLocalService, String modelName,
 		ObjectActionLocalService objectActionLocalService,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
@@ -74,6 +82,8 @@ public class ObjectEntryModelResourcePermission
 		_accountEntryLocalService = accountEntryLocalService;
 		_accountEntryOrganizationRelLocalService =
 			accountEntryOrganizationRelLocalService;
+		_depotEntryGroupRelLocalService = depotEntryGroupRelLocalService;
+		_depotEntryLocalService = depotEntryLocalService;
 		_groupLocalService = groupLocalService;
 		_modelName = modelName;
 		_objectActionLocalService = objectActionLocalService;
@@ -168,9 +178,8 @@ public class ObjectEntryModelResourcePermission
 		}
 
 		if (user.isGuestUser()) {
-			return permissionChecker.hasPermission(
-				objectEntry.getGroupId(), objectDefinition.getClassName(),
-				objectEntry.getHeadObjectEntryId(), actionId);
+			return _hasPermission(
+				actionId, objectDefinition, objectEntry, permissionChecker);
 		}
 
 		if (permissionChecker.hasOwnerPermission(
@@ -178,9 +187,8 @@ public class ObjectEntryModelResourcePermission
 				objectDefinition.getClassName(),
 				objectEntry.getHeadObjectEntryId(), objectEntry.getUserId(),
 				actionId) ||
-			permissionChecker.hasPermission(
-				objectEntry.getGroupId(), objectDefinition.getClassName(),
-				objectEntry.getHeadObjectEntryId(), actionId)) {
+			_hasPermission(
+				actionId, objectDefinition, objectEntry, permissionChecker)) {
 
 			return true;
 		}
@@ -300,6 +308,48 @@ public class ObjectEntryModelResourcePermission
 		return false;
 	}
 
+	private boolean _hasPermission(
+			String actionId, ObjectDefinition objectDefinition,
+			ObjectEntry objectEntry, PermissionChecker permissionChecker)
+		throws PortalException {
+
+		if (permissionChecker.hasPermission(
+				objectEntry.getGroupId(), objectDefinition.getClassName(),
+				objectEntry.getHeadObjectEntryId(), actionId)) {
+
+			return true;
+		}
+
+		if (!Objects.equals(
+				objectDefinition.getScope(),
+				ObjectDefinitionConstants.SCOPE_DEPOT)) {
+
+			return false;
+		}
+
+		DepotEntry depotEntry = _depotEntryLocalService.fetchGroupDepotEntry(
+			objectEntry.getGroupId());
+
+		if (depotEntry == null) {
+			return false;
+		}
+
+		List<DepotEntryGroupRel> depotEntryGroupRels =
+			_depotEntryGroupRelLocalService.getDepotEntryGroupRels(depotEntry);
+
+		for (DepotEntryGroupRel depotEntryGroupRel : depotEntryGroupRels) {
+			if (permissionChecker.hasPermission(
+					depotEntryGroupRel.getToGroupId(),
+					objectDefinition.getClassName(),
+					objectEntry.getHeadObjectEntryId(), actionId)) {
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private boolean _isObjectActionName(
 		String actionId, long objectDefinitionId) {
 
@@ -364,6 +414,9 @@ public class ObjectEntryModelResourcePermission
 	private final AccountEntryLocalService _accountEntryLocalService;
 	private final AccountEntryOrganizationRelLocalService
 		_accountEntryOrganizationRelLocalService;
+	private final DepotEntryGroupRelLocalService
+		_depotEntryGroupRelLocalService;
+	private final DepotEntryLocalService _depotEntryLocalService;
 	private final GroupLocalService _groupLocalService;
 	private final String _modelName;
 	private final ObjectActionLocalService _objectActionLocalService;

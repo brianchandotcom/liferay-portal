@@ -98,13 +98,9 @@ public class Shell {
 	protected ExecutionResult doExecute(ExecutionRequest executionRequest)
 		throws IOException, TimeoutException {
 
-		File baseDir = executionRequest.getBaseDir();
 		String[] commands = executionRequest.getCommands();
-		boolean exitOnFirstFail = executionRequest.isExitOnFirstFail();
-		boolean printCommands = executionRequest.isPrintCommands();
-		long timeout = executionRequest.getTimeout();
 
-		if (printCommands) {
+		if (executionRequest.isPrintCommands()) {
 			System.out.print("Executing commands: ");
 
 			for (String command : commands) {
@@ -125,7 +121,7 @@ public class Shell {
 
 		String commandTerminator = ";";
 
-		if (exitOnFirstFail) {
+		if (executionRequest.isExitOnFirstFail()) {
 			commandTerminator = "&&";
 		}
 
@@ -154,9 +150,13 @@ public class Shell {
 
 		ProcessBuilder processBuilder = new ProcessBuilder(bashCommands);
 
+		File baseDir = executionRequest.getBaseDir();
+
 		processBuilder.directory(baseDir.getAbsoluteFile());
 
 		Process process = new BufferedProcess(processBuilder.start());
+
+		long timeout = executionRequest.getTimeout();
 
 		Thread currentThread = Thread.currentThread();
 		long duration = 0;

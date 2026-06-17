@@ -3845,3 +3845,67 @@ test(
 		await expect(customEvent).toHaveCount(0);
 	}
 );
+
+test(
+	'Custom events are listed in alphabetical order in the Event Analysis picker',
+	{tag: '@LRAC-10311'},
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
+		const token = getRandomString();
+
+		// Seed in an order that differs from the alphabetical order
+
+		const names = [`m${token}`, `a${token}`, `z${token}`];
+
+		for (const name of names) {
+			await apiHelpers.jsonWebServicesOSBAsah.createEvents([
+				{
+					applicationId: 'CustomEvent',
+					canonicalUrl: 'https://www.liferay.com',
+					channelId: channel.id,
+					eventDate: new Date().toISOString(),
+					eventId: name,
+					title: 'Liferay',
+					userId: '1',
+				},
+			]);
+
+			await apiHelpers.jsonWebServicesOSBAsah.createEventDefinition([
+				{
+					applicationId: 'CustomEvent',
+					displayName: name,
+					name,
+					type: 'CUSTOM',
+				},
+			]);
+		}
+
+		await navigateToACPageViaURL({
+			acPage: ACPage.eventAnalysisPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await page.getByRole('link', {name: 'Create Analysis'}).click();
+
+		await page.getByLabel('Add').click();
+
+		await page
+			.locator('.card-tab')
+			.filter({hasText: 'Custom'})
+			.first()
+			.click();
+
+		// The three seeded events render alphabetically regardless of seed order
+
+		const seededMenuItems = page
+			.getByRole('menuitem')
+			.filter({hasText: token});
+
+		await expect(seededMenuItems).toHaveText([
+			`a${token}`,
+			`m${token}`,
+			`z${token}`,
+		]);
+	}
+);

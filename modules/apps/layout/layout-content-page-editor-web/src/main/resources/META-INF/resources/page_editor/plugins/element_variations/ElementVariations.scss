@@ -1,0 +1,11 @@
+.element-variations {
+	height: calc(100vh - var(--control-menu-container-height, 0px));
+
+	&__content {
+		min-height: 0;
+	}
+
+	&__sidebar {
+		width: 320px;
+	}
+}

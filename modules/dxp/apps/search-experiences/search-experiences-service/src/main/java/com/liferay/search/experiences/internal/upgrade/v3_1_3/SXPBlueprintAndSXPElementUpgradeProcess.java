@@ -251,7 +251,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 	private boolean _upgradeLegacyFieldMappings(
 		JSONArray elementInstanceJSONArray) {
 
-		boolean changed = false;
+		boolean modified = false;
 
 		for (int i = 0; i < elementInstanceJSONArray.length(); i++) {
 			JSONObject elementDefinitionJSONObject =
@@ -264,11 +264,11 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 			}
 
 			if (_upgradeLegacyFieldMappings(elementDefinitionJSONObject)) {
-				changed = true;
+				modified = true;
 			}
 		}
 
-		return changed;
+		return modified;
 	}
 
 	private boolean _upgradeLegacyFieldMappings(
@@ -282,7 +282,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 			return false;
 		}
 
-		boolean changed = false;
+		boolean modified = false;
 
 		for (int i = 0; i < fieldSetsJSONArray.length(); i++) {
 			JSONObject fieldSetJSONObject = fieldSetsJSONArray.getJSONObject(i);
@@ -319,7 +319,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 						"fieldMappings"
 					);
 
-					changed = true;
+					modified = true;
 
 					continue;
 				}
@@ -333,13 +333,13 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 
 						fieldMappingJSONObject.remove("label");
 
-						changed = true;
+						modified = true;
 					}
 				}
 			}
 		}
 
-		return changed;
+		return modified;
 	}
 
 	private void _upgradeSXPBlueprint(
@@ -359,19 +359,19 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 			JSONArray elementInstanceJSONArray = _jsonFactory.createJSONArray(
 				elementInstancesJSON);
 
-			boolean changed = _upgradeLegacyFieldMappings(
+			boolean modified = _upgradeLegacyFieldMappings(
 				elementInstanceJSONArray);
 
 			if (_hasLimitSearchToTheseSites(elementInstanceJSONArray)) {
 				elementInstancesJSON = _fixElementInstancesJSON(
 					elementInstanceJSONArray);
-				changed = true;
+				modified = true;
 			}
-			else if (changed) {
+			else if (modified) {
 				elementInstancesJSON = elementInstanceJSONArray.toString();
 			}
 
-			if (!changed) {
+			if (!modified) {
 				return;
 			}
 

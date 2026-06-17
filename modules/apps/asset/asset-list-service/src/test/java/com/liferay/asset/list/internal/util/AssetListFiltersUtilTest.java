@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.search.MatchAllQuery;
 import com.liferay.portal.kernel.search.MatchQuery;
 import com.liferay.portal.kernel.search.NestedQuery;
 import com.liferay.portal.kernel.search.Query;
+import com.liferay.portal.kernel.search.QueryTerm;
 import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.TermRangeQuery;
 import com.liferay.portal.kernel.search.WildcardQuery;
@@ -674,9 +675,9 @@ public class AssetListFiltersUtilTest {
 
 		Assert.assertTrue(rowIndex < rowBooleanClauses.size());
 
-		NestedQuery nestedQuery = (NestedQuery)rowBooleanClauses.get(
-			rowIndex
-		).getClause();
+		BooleanClause<Query> rowBooleanClause = rowBooleanClauses.get(rowIndex);
+
+		NestedQuery nestedQuery = (NestedQuery)rowBooleanClause.getClause();
 
 		Assert.assertEquals("nestedFieldArray", nestedQuery.getPath());
 
@@ -688,49 +689,45 @@ public class AssetListFiltersUtilTest {
 		Assert.assertEquals(
 			innerBooleanClauses.toString(), 3, innerBooleanClauses.size());
 
-		TermQuery fieldNameTermQuery = (TermQuery)innerBooleanClauses.get(
-			0
-		).getClause();
+		BooleanClause<Query> fieldNameBooleanClause = innerBooleanClauses.get(
+			0);
+
+		TermQuery fieldNameTermQuery =
+			(TermQuery)fieldNameBooleanClause.getClause();
+
+		QueryTerm fieldNameQueryTerm = fieldNameTermQuery.getQueryTerm();
 
 		Assert.assertEquals(
-			"nestedFieldArray.fieldName",
-			fieldNameTermQuery.getQueryTerm(
-			).getField());
-		Assert.assertEquals(
-			propertyName,
-			fieldNameTermQuery.getQueryTerm(
-			).getValue());
+			"nestedFieldArray.fieldName", fieldNameQueryTerm.getField());
+		Assert.assertEquals(propertyName, fieldNameQueryTerm.getValue());
 
 		Assert.assertEquals(
 			BooleanClauseOccur.MUST,
-			innerBooleanClauses.get(
-				0
-			).getBooleanClauseOccur());
+			fieldNameBooleanClause.getBooleanClauseOccur());
 
-		TermQuery valueFieldNameTermQuery = (TermQuery)innerBooleanClauses.get(
-			1
-		).getClause();
+		BooleanClause<Query> valueFieldNameBooleanClause =
+			innerBooleanClauses.get(1);
+
+		TermQuery valueFieldNameTermQuery =
+			(TermQuery)valueFieldNameBooleanClause.getClause();
+
+		QueryTerm valueFieldNameQueryTerm =
+			valueFieldNameTermQuery.getQueryTerm();
 
 		Assert.assertEquals(
 			"nestedFieldArray.valueFieldName",
-			valueFieldNameTermQuery.getQueryTerm(
-			).getField());
+			valueFieldNameQueryTerm.getField());
 
 		Assert.assertEquals(
 			BooleanClauseOccur.MUST,
-			innerBooleanClauses.get(
-				1
-			).getBooleanClauseOccur());
+			valueFieldNameBooleanClause.getBooleanClauseOccur());
+
+		BooleanClause<Query> valueBooleanClause = innerBooleanClauses.get(2);
 
 		Assert.assertEquals(
-			expectedValueOccur,
-			innerBooleanClauses.get(
-				2
-			).getBooleanClauseOccur());
+			expectedValueOccur, valueBooleanClause.getBooleanClauseOccur());
 
-		return innerBooleanClauses.get(
-			2
-		).getClause();
+		return valueBooleanClause.getClause();
 	}
 
 	private void _assertPicklistBooleanQuery(
@@ -748,17 +745,14 @@ public class AssetListFiltersUtilTest {
 			innerBooleanClauses.size());
 
 		for (int i = 0; i < expectedValues.length; i++) {
+			BooleanClause<Query> booleanClause = innerBooleanClauses.get(i);
+
 			Assert.assertEquals(
-				expectedInnerOccur,
-				innerBooleanClauses.get(
-					i
-				).getBooleanClauseOccur());
+				expectedInnerOccur, booleanClause.getBooleanClauseOccur());
 
 			_assertTermQuery(
 				"nestedFieldArray.value_keyword", expectedValues[i],
-				innerBooleanClauses.get(
-					i
-				).getClause());
+				booleanClause.getClause());
 		}
 	}
 
@@ -769,14 +763,10 @@ public class AssetListFiltersUtilTest {
 
 		TermQuery termQuery = (TermQuery)query;
 
-		Assert.assertEquals(
-			expectedField,
-			termQuery.getQueryTerm(
-			).getField());
-		Assert.assertEquals(
-			expectedValue,
-			termQuery.getQueryTerm(
-			).getValue());
+		QueryTerm queryTerm = termQuery.getQueryTerm();
+
+		Assert.assertEquals(expectedField, queryTerm.getField());
+		Assert.assertEquals(expectedValue, queryTerm.getValue());
 	}
 
 	private void _assertTermRangeQuery(
@@ -804,14 +794,10 @@ public class AssetListFiltersUtilTest {
 
 		WildcardQuery wildcardQuery = (WildcardQuery)query;
 
-		Assert.assertEquals(
-			expectedField,
-			wildcardQuery.getQueryTerm(
-			).getField());
-		Assert.assertEquals(
-			expectedValue,
-			wildcardQuery.getQueryTerm(
-			).getValue());
+		QueryTerm queryTerm = wildcardQuery.getQueryTerm();
+
+		Assert.assertEquals(expectedField, queryTerm.getField());
+		Assert.assertEquals(expectedValue, queryTerm.getValue());
 	}
 
 	private JSONObject _buildCommonFieldFilter(
@@ -897,10 +883,10 @@ public class AssetListFiltersUtilTest {
 		BooleanQuery outerBooleanQuery =
 			(BooleanQuery)booleanClauses[0].getClause();
 
-		BooleanClause<Query> rowBooleanClause = outerBooleanQuery.clauses(
-		).get(
-			0
-		);
+		List<BooleanClause<Query>> rowBooleanClauses =
+			outerBooleanQuery.clauses();
+
+		BooleanClause<Query> rowBooleanClause = rowBooleanClauses.get(0);
 
 		Assert.assertEquals(
 			BooleanClauseOccur.MUST, rowBooleanClause.getBooleanClauseOccur());
@@ -914,25 +900,23 @@ public class AssetListFiltersUtilTest {
 		Assert.assertEquals(
 			negatedBooleanClauses.toString(), 2, negatedBooleanClauses.size());
 
+		BooleanClause<Query> matchAllBooleanClause = negatedBooleanClauses.get(
+			0);
+
 		Assert.assertTrue(
-			negatedBooleanClauses.get(
-				0
-			).getClause() instanceof MatchAllQuery);
+			matchAllBooleanClause.getClause() instanceof MatchAllQuery);
 		Assert.assertEquals(
 			BooleanClauseOccur.MUST,
-			negatedBooleanClauses.get(
-				0
-			).getBooleanClauseOccur());
+			matchAllBooleanClause.getBooleanClauseOccur());
+
+		BooleanClause<Query> negatedBooleanClause = negatedBooleanClauses.get(
+			1);
 
 		Assert.assertEquals(
 			BooleanClauseOccur.MUST_NOT,
-			negatedBooleanClauses.get(
-				1
-			).getBooleanClauseOccur());
+			negatedBooleanClause.getBooleanClauseOccur());
 
-		return negatedBooleanClauses.get(
-			1
-		).getClause();
+		return negatedBooleanClause.getClause();
 	}
 
 	private Query _runAndAssertNestedRow(

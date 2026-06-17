@@ -200,16 +200,26 @@ Run every step without asking for confirmation, including the commits.
 
 ## Editing REST Builder Itself
 
-The generator's own source lives under `modules/util/portal-tools-rest-builder`. This covers the FreeMarker templates in `src/main/resources/com/liferay/portal/tools/rest/builder/dependencies` and the Java that drives them — the shared files that produce every generated module rather than the artifacts of any single bundle.
+Use this workflow when editing the REST Builder generator itself — the shared FreeMarker templates in `modules/util/portal-tools-rest-builder/src/main/resources/com/liferay/portal/tools/rest/builder/dependencies` and the Java that drives them — rather than the artifacts of any single bundle.
 
-`buildREST` reads these files from the local repository, not from the REST Builder artifact published to Maven. A change to a shared template or generator class therefore takes effect on the next `buildREST` run, with no need to rebuild or republish the tool.
+`buildREST` reads these files from the local repository, not from the REST Builder artifact published to Maven, so a change to a shared template or generator class takes effect on the next `buildREST` run with no need to rebuild or republish the tool. Because a shared file feeds every generated module, that change affects all of them, and the regenerated output of every module must be committed so it stays consistent with the new generator.
 
-Because a shared file feeds every generated module, a change to one affects all of them. After editing any shared REST Builder file, regenerate every REST Builder module so the committed output stays consistent with the new generator. Run:
+Every generator change must be exercised by the dummy `portal-tools-rest-builder-test-impl` module, which acts as the generator's test bed: its `rest-openapi.yaml` is meant to cover each generator feature, so the regenerated Java becomes the visible record of what the change produces. When the regenerated output shows no difference, the existing cases do not cover the new behavior — add a case to the module's `rest-openapi.yaml` that does (for example, a schema carrying a description but no required properties to cover description generation).
 
-```bash
-(cd "${REPO_ROOT}/portal-impl" && ant build-rests)
-```
+### Workflow
 
-Keep the regenerated output in its own commit, separate from the generator edit that motivated it. Title that commit `<TICKET> BuildREST` (for example, `LPD-XXXXX BuildREST`) so the mechanical regeneration stays distinct from the hand-written change and reviewers can skip past it.
+Run every step without asking for confirmation, including the commits.
 
-Every generator change must be exercised by the dummy `portal-tools-rest-builder-test-impl` module, which acts as the generator's test bed: its `rest-openapi.yaml` is meant to cover each generator feature, so the regenerated Java becomes the visible record of what the change produces. After running `buildREST` over that module, confirm the regenerated output reflects the change. When the output shows no difference, the existing cases do not cover the new behavior — add a case to the module's `rest-openapi.yaml` that does (for example, a schema carrying a description but no required properties to cover description generation), then regenerate so the change is represented and committed.
+1. Commit the hand-written generator change, including any new `portal-tools-rest-builder-test-impl` `rest-openapi.yaml` case needed to cover it.
+
+1. Regenerate every REST Builder module by running:
+
+	```bash
+	(cd "${REPO_ROOT}/portal-impl" && ant build-rests)
+	```
+
+1. Confirm the regenerated output reflects the change, especially under `portal-tools-rest-builder-test-impl`.
+
+1. Commit the regenerated output on its own, titled `<TICKET> BuildREST` (for example, `LPD-XXXXX BuildREST`), so the mechanical regeneration stays distinct from the hand-written change and reviewers can skip past it.
+
+1. Continue with the work.

@@ -120,13 +120,14 @@ public class HTTPRequestNodeExecutor extends BaseNodeExecutor {
 
 			Http.Response response = options.getResponse();
 
-			int responseCode = response.getResponseCode();
+			if ((response.getResponseCode() < 200) ||
+				(response.getResponseCode() >= 300)) {
 
-			if ((responseCode < 200) || (responseCode >= 300)) {
 				throw new PortalException(
 					StringBundler.concat(
-						"HTTP call node \"", currentKaleoNode.getName(),
-						"\" failed with response code ", responseCode));
+						"HTTP request node \"", currentKaleoNode.getName(),
+						"\" failed with response code ",
+						response.getResponseCode()));
 			}
 
 			VariablesUtil.applyOutputVariables(
@@ -147,15 +148,11 @@ public class HTTPRequestNodeExecutor extends BaseNodeExecutor {
 					sseEventSinkKey);
 			}
 
-			if (exception instanceof PortalException) {
-				throw (PortalException)exception;
+			if (exception instanceof PortalException portalException) {
+				throw portalException;
 			}
 
-			throw new PortalException(
-				StringBundler.concat(
-					"Unable to execute HTTP call node \"",
-					currentKaleoNode.getName(), "\""),
-				exception);
+			throw new PortalException(exception);
 		}
 	}
 

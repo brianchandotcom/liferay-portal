@@ -25,6 +25,22 @@
 			"name": "MCPServerProfileDataMask",
 			"objectFields": [
 				{
+					"DBType": "String",
+					"businessType": "Text",
+					"defaultValue": "null",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Data Mask"
+					},
+					"name": "dataMaskExternalReferenceCode",
+					"required": true,
+					"state": false,
+					"system": true,
+					"type": "String"
+				},
+				{
 					"DBType": "Clob",
 					"businessType": "LongText",
 					"defaultValue": "null",
@@ -66,22 +82,6 @@
 						"en_US": "MCP Server Profile External Reference Code"
 					},
 					"name": "mcpServerProfileExternalReferenceCode",
-					"required": true,
-					"state": false,
-					"system": true,
-					"type": "String"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"defaultValue": "null",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "en_US",
-					"label": {
-						"en_US": "Data Mask"
-					},
-					"name": "dataMaskExternalReferenceCode",
 					"required": true,
 					"state": false,
 					"system": true,

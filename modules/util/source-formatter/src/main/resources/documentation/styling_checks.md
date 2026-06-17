@@ -60,6 +60,7 @@ HTMLWhitespaceCheck | .html or .path | Finds missing and unnecessary whitespace 
 InstanceofOrderCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl, or .vm | Check the order of `instanceof` calls. |
 JSONBatchEngineDataFileCheck | .ipynb, .json, or .npmbridgerc | Remove elements in `*.batch-engine-data.json` files. |
 JSONCommerceCatalogFileCheck | .ipynb, .json, or .npmbridgerc | Sorts `*.options.json`, `*.products.json`, and `*.products.specifications.json` files. |
+JSONObjectDefinitionFileCheck | .ipynb, .json, or .npmbridgerc | Enforces consistent ordering of `objectFields` in `*-object-definition.json` and `*object-definition.batch-engine-data.json` files (non-relationship fields first, followed by relationship fields, both sorted alphabetically by `name`). |
 JSONPageFileCheck | .ipynb, .json, or .npmbridgerc | Sorts by `roleName` in `page.json` files. |
 JSONPortletResponseUtilCheck | .java | Checks if `JSONPortletResponseUtil.writeJSON ` should come before method calling `hideDefaultSuccessMessage`. |
 JSONReplacementsFileCheck | .ipynb, .json, or .npmbridgerc | Sorts by `issueKey`, `from` and `to` in `replacements.json` file. |

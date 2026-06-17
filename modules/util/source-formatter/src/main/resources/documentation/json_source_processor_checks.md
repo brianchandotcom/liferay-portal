@@ -5,6 +5,7 @@ Check | Category | Description
 JSONBatchEngineDataFileCheck | [Styling](styling_checks.md#styling-checks) | Remove elements in `*.batch-engine-data.json` files. |
 JSONCommerceCatalogFileCheck | [Styling](styling_checks.md#styling-checks) | Sorts `*.options.json`, `*.products.json`, and `*.products.specifications.json` files. |
 [JSONDeprecatedPackagesCheck](check/json_deprecated_packages_check.md#jsondeprecatedpackagescheck) | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Finds incorrect use of deprecated packages in `package.json` files. |
+JSONObjectDefinitionFileCheck | [Styling](styling_checks.md#styling-checks) | Enforces consistent ordering of `objectFields` in `*-object-definition.json` and `*object-definition.batch-engine-data.json` files (non-relationship fields first, followed by relationship fields, both sorted alphabetically by `name`). |
 JSONPackageJSONBNDVersionCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Checks the version for dependencies in `package.json` files. |
 JSONPackageJSONCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Checks content of `package.json` files. |
 JSONPackageJSONDependencyVersionCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Checks the version for dependencies in `package.json` files. |

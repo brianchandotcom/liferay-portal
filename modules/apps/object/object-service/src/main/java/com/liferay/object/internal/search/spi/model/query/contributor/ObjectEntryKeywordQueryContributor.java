@@ -342,13 +342,13 @@ public class ObjectEntryKeywordQueryContributor
 
 		Set<String> configuredInnerHitsNames =
 			(Set<String>)searchContext.getAttribute(
-				_CONFIGURED_INNER_HITS_NAMES);
+				"objectEntryConfiguredInnerHitsNames");
 
 		if (configuredInnerHitsNames == null) {
 			configuredInnerHitsNames = new HashSet<>();
 
 			searchContext.setAttribute(
-				_CONFIGURED_INNER_HITS_NAMES,
+				"objectEntryConfiguredInnerHitsNames",
 				(Serializable)configuredInnerHitsNames);
 		}
 
@@ -357,10 +357,12 @@ public class ObjectEntryKeywordQueryContributor
 		}
 
 		QueryConfig nestedQueryConfig = nestedQuery.getQueryConfig();
-		QueryConfig queryConfig = searchContext.getQueryConfig();
 
 		nestedQueryConfig.setHighlightEnabled(true);
 		nestedQueryConfig.setHighlightFieldNames(highlightFieldNames);
+
+		QueryConfig queryConfig = searchContext.getQueryConfig();
+
 		nestedQueryConfig.setHighlightFragmentSize(
 			queryConfig.getHighlightFragmentSize());
 		nestedQueryConfig.setHighlightRequireFieldMatch(
@@ -734,9 +736,6 @@ public class ObjectEntryKeywordQueryContributor
 
 		return keywordTokenizer.tokenize(keywords);
 	}
-
-	private static final String _CONFIGURED_INNER_HITS_NAMES =
-		"objectEntryConfiguredInnerHitsNames";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectEntryKeywordQueryContributor.class);

@@ -236,14 +236,15 @@ public class ObjectEntryKeywordQueryContributorTest {
 
 		String spainLocalizedFieldName = Field.getLocalizedName(
 			LocaleUtil.SPAIN, "nestedFieldArray.value");
-		String usLocalizedFieldName = Field.getLocalizedName(
-			LocaleUtil.US, "nestedFieldArray.value");
 
 		Assert.assertTrue(
 			StringBundler.concat(
 				"Expected ", matchQueryFields, " to contain ",
 				spainLocalizedFieldName),
 			matchQueryFields.contains(spainLocalizedFieldName));
+
+		String usLocalizedFieldName = Field.getLocalizedName(
+			LocaleUtil.US, "nestedFieldArray.value");
 
 		Assert.assertTrue(
 			StringBundler.concat(

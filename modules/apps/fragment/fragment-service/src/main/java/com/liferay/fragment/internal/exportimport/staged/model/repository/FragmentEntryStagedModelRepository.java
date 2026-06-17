@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -52,6 +53,13 @@ public class FragmentEntryStagedModelRepository
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			fragmentEntry);
+
+		ServiceContext currentServiceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if (currentServiceContext != null) {
+			serviceContext.setRequest(currentServiceContext.getRequest());
+		}
 
 		if (portletDataContext.isDataStrategyMirror()) {
 			serviceContext.setUuid(fragmentEntry.getUuid());

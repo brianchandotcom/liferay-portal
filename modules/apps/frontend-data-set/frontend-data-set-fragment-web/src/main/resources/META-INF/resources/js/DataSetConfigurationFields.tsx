@@ -13,6 +13,7 @@ import {IDataSet} from '@liferay/frontend-data-set-admin-web';
 import {useId} from 'frontend-js-components-web';
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 
+import './DataSetConfigurationFields.scss';
 import DataSetSelector from './components/DataSetSelector';
 import EntitySelectorRow from './components/EntitySelectorRow';
 import LiteralInput from './components/LiteralInput';
@@ -291,9 +292,9 @@ export default function DataSetConfigurationFields({
 									>
 										{selectedTokenKey ? (
 											<>
-												<span>{`{${selectedTokenKey}}`}</span>
+												<span className="data-set-token-name text-truncate">{`{${selectedTokenKey}}`}</span>
 
-												<span className="align-items-center d-flex">
+												<span className="align-items-center d-flex data-set-token-status">
 													<ClayLabel
 														className="text-uppercase"
 														displayType={
@@ -344,6 +345,7 @@ export default function DataSetConfigurationFields({
 												active={
 													key === selectedTokenKey
 												}
+												className="p-2"
 												key={key}
 												onClick={() => {
 													setSelectedTokenKey(key);
@@ -353,10 +355,10 @@ export default function DataSetConfigurationFields({
 												}}
 											>
 												<span className="align-items-center d-flex justify-content-between">
-													<span>{`{${key}}`}</span>
+													<span className="data-set-token-name text-truncate">{`{${key}}`}</span>
 
 													<ClayLabel
-														className="ml-2 text-uppercase"
+														className="data-set-token-status ml-2 mt-0 text-uppercase"
 														displayType={
 															mapped
 																? 'success'

@@ -51,16 +51,16 @@ public class StyleBookEntryProviderUtil {
 
 		StyleBookEntry styleBookEntry = null;
 
-		Long itemGroupId = ScopeUtil.getItemGroupId(
+		Long groupId = ScopeUtil.getItemGroupId(
 			layout.getCompanyId(), layout.getStyleBookEntryScopeERC(),
 			layout.getGroupId());
 
-		if (itemGroupId != null) {
+		if (groupId != null) {
 			styleBookEntry =
 				StyleBookEntryLocalServiceUtil.
 					fetchStyleBookEntryByExternalReferenceCode(
 						layout.getStyleBookEntryERC(),
-						StagingUtil.getLiveGroupId(itemGroupId));
+						StagingUtil.getLiveGroupId(groupId));
 		}
 
 		if ((styleBookEntry == null) && _log.isWarnEnabled()) {

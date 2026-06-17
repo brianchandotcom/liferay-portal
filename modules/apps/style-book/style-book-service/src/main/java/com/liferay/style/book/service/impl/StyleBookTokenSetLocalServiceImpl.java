@@ -44,13 +44,12 @@ public class StyleBookTokenSetLocalServiceImpl
 
 	@Override
 	public StyleBookTokenSet addStyleBookTokenSet(
-			String externalReferenceCode, String description,
+			String externalReferenceCode, long userId, String description,
 			String frontendTokenCategoryName, String name,
-			long styleBookEntryId, String themeId,
-			ServiceContext serviceContext)
+			long styleBookEntryId, String themeId)
 		throws PortalException {
 
-		User user = _userLocalService.getUser(serviceContext.getUserId());
+		User user = _userLocalService.getUser(long userId);
 
 		_validate(
 			user.getCompanyId(), frontendTokenCategoryName, name,

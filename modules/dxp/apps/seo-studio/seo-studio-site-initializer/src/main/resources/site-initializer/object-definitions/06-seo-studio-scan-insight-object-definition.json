@@ -129,62 +129,19 @@
 			"type": "String"
 		},
 		{
-			"DBType": "String",
-			"businessType": "Picklist",
-			"defaultValue": "open",
+			"DBType": "Long",
+			"businessType": "LongInteger",
+			"defaultValue": "1",
 			"externalReferenceCode": "STATE",
 			"indexed": true,
-			"indexedAsKeyword": true,
 			"label": {
 				"en_US": "State"
 			},
-			"listTypeDefinitionExternalReferenceCode": "L_SEO_STUDIO_SCAN_INSIGHT_STATES",
 			"name": "state",
-			"objectFieldSettings": [
-				{
-					"name": "stateFlow",
-					"value": {
-						"objectStates": [
-							{
-								"key": "dismissed",
-								"objectStateTransitions": [
-								]
-							},
-							{
-								"key": "open",
-								"objectStateTransitions": [
-									{
-										"key": "dismissed"
-									},
-									{
-										"key": "resolved"
-									}
-								]
-							},
-							{
-								"key": "recurred",
-								"objectStateTransitions": [
-									{
-										"key": "resolved"
-									}
-								]
-							},
-							{
-								"key": "resolved",
-								"objectStateTransitions": [
-									{
-										"key": "recurred"
-									}
-								]
-							}
-						]
-					}
-				}
-			],
 			"required": true,
-			"state": true,
+			"state": false,
 			"system": true,
-			"type": "String"
+			"type": "Long"
 		},
 		{
 			"DBType": "Long",

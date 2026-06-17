@@ -30,7 +30,9 @@ public class RESTClientHttpServletRequestWrapperAuthVerifier
 
 	@Override
 	public String getAuthType() {
-		return RESTClientHttpServletRequestWrapper.class.getName();
+		Class<?> clazz = getClass();
+
+		return clazz.getSimpleName();
 	}
 
 	@Override

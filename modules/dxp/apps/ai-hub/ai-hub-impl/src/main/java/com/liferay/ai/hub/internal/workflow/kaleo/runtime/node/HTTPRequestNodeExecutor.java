@@ -16,7 +16,6 @@ import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.workflow.kaleo.definition.NodeType;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
@@ -111,9 +110,8 @@ public class HTTPRequestNodeExecutor extends BaseNodeExecutor {
 			options.setLocation(url);
 			options.setMethod(
 				Http.Method.valueOf(
-					StringUtil.toUpperCase(
-						GetterUtil.getString(
-							kaleoNodeSettingValues.get("httpMethod"), "GET"))));
+					GetterUtil.getString(
+						kaleoNodeSettingValues.get("httpMethod"))));
 			options.setTimeout(
 				GetterUtil.getInteger(
 					kaleoNodeSettingValues.get("timeout"), 10000));

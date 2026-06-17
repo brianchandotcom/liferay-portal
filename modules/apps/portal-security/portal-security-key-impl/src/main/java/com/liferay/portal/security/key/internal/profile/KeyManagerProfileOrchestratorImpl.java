@@ -39,7 +39,6 @@ public class KeyManagerProfileOrchestratorImpl
 	public KeyManagerProfile getActiveKeyManagerProfile() {
 		KeyManagerGlobalConfiguration keyManagerGlobalConfiguration =
 			_keyManagerGlobalConfiguration;
-
 		ServiceTrackerMap<String, KeyManagerProfile> serviceTrackerMap =
 			_serviceTrackerMap;
 
@@ -49,8 +48,13 @@ public class KeyManagerProfileOrchestratorImpl
 			return null;
 		}
 
-		KeyManagerProfile keyManagerProfile = serviceTrackerMap.getService(
-			keyManagerGlobalConfiguration.activeProfileId());
+		String activeProfileId =
+			keyManagerGlobalConfiguration.activeProfileId();
+		KeyManagerProfile keyManagerProfile = null;
+
+		if (activeProfileId != null) {
+			keyManagerProfile = serviceTrackerMap.getService(activeProfileId);
+		}
 
 		if (keyManagerProfile == null) {
 			keyManagerProfile = serviceTrackerMap.getService(
@@ -79,7 +83,7 @@ public class KeyManagerProfileOrchestratorImpl
 					String key, KeyManagerProfile keyManagerProfile,
 					KeyManagerProfile content) {
 
-					_bootstrap(keyManagerProfile);
+					_init(keyManagerProfile);
 				}
 
 				@Override
@@ -94,22 +98,24 @@ public class KeyManagerProfileOrchestratorImpl
 							_lastBootstrappedProfileId = null;
 						}
 					}
+
+					_init(getActiveKeyManagerProfile());
 				}
 
 			});
 
-		_bootstrap(getActiveKeyManagerProfile());
+		_init(getActiveKeyManagerProfile());
 	}
 
 	@Deactivate
 	protected void deactivate() {
+		_keyManagerGlobalConfiguration = null;
+
 		if (_serviceTrackerMap != null) {
 			_serviceTrackerMap.close();
 
 			_serviceTrackerMap = null;
 		}
-
-		_keyManagerGlobalConfiguration = null;
 	}
 
 	@Modified
@@ -117,21 +123,22 @@ public class KeyManagerProfileOrchestratorImpl
 		_keyManagerGlobalConfiguration = ConfigurableUtil.createConfigurable(
 			KeyManagerGlobalConfiguration.class, properties);
 
-		_bootstrap(getActiveKeyManagerProfile());
+		_init(getActiveKeyManagerProfile());
 	}
 
-	private void _bootstrap(KeyManagerProfile keyManagerProfile) {
-		KeyManagerGlobalConfiguration keyManagerGlobalConfiguration =
-			_keyManagerGlobalConfiguration;
-
-		if ((keyManagerProfile == null) ||
-			(keyManagerGlobalConfiguration == null)) {
-
+	private void _init(KeyManagerProfile keyManagerProfile) {
+		if (keyManagerProfile == null) {
 			return;
 		}
 
-		String activeProfileId =
-			keyManagerGlobalConfiguration.activeProfileId();
+		KeyManagerProfile activeKeyManagerProfile =
+			getActiveKeyManagerProfile();
+
+		if (activeKeyManagerProfile == null) {
+			return;
+		}
+
+		String activeProfileId = activeKeyManagerProfile.getProfileId();
 
 		if (!Objects.equals(
 				activeProfileId, keyManagerProfile.getProfileId())) {

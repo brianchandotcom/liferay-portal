@@ -44,9 +44,6 @@ const parseJSONValue = (value) => {
 };
 
 const setupMapOpenStreetMaps = (callback) => {
-	Leaflet.Icon.Default.imagePath =
-		'https://npmcdn.com/leaflet@1.7.1/dist/images/';
-
 	if (!window['L']) {
 		window['L'] = Leaflet;
 	}

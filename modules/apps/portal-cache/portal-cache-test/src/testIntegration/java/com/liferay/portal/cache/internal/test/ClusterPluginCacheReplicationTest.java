@@ -270,7 +270,7 @@ public class ClusterPluginCacheReplicationTest implements Serializable {
 	}
 
 	private byte[] _generateSampleClassBytes() {
-		String internalName = StringUtil.replace(_SAMPLE_CLASS_NAME, '.', '/');
+		String internalName = StringUtil.replace(_CLASS_NAME, '.', '/');
 
 		ClassWriter classWriter = new ClassWriter(ClassWriter.COMPUTE_FRAMES);
 
@@ -323,8 +323,8 @@ public class ClusterPluginCacheReplicationTest implements Serializable {
 		mainAttributes.put(Attributes.Name.MANIFEST_VERSION, "1.0");
 		mainAttributes.putValue("Bundle-ManifestVersion", "2");
 		mainAttributes.putValue(
-			"Bundle-SymbolicName", _SAMPLE_BUNDLE_SYMBOLIC_NAME);
-		mainAttributes.putValue("Bundle-Version", _SAMPLE_BUNDLE_VERSION);
+			"Bundle-SymbolicName", _BUNDLE_SYMBOLIC_NAME);
+		mainAttributes.putValue("Bundle-Version", _BUNDLE_VERSION);
 
 		ByteArrayOutputStream byteArrayOutputStream =
 			new ByteArrayOutputStream();
@@ -334,7 +334,7 @@ public class ClusterPluginCacheReplicationTest implements Serializable {
 
 			jarOutputStream.putNextEntry(
 				new JarEntry(
-					StringUtil.replace(_SAMPLE_CLASS_NAME, '.', '/') +
+					StringUtil.replace(_CLASS_NAME, '.', '/') +
 						".class"));
 
 			byte[] classBytes = _generateSampleClassBytes();
@@ -352,7 +352,7 @@ public class ClusterPluginCacheReplicationTest implements Serializable {
 					SystemBundleUtil.getBundleContext();
 
 				Bundle bundle = bundleContext.installBundle(
-					_SAMPLE_BUNDLE_SYMBOLIC_NAME,
+					_BUNDLE_SYMBOLIC_NAME,
 					new ByteArrayInputStream(bundleBytes));
 
 				bundle.start();
@@ -363,21 +363,21 @@ public class ClusterPluginCacheReplicationTest implements Serializable {
 
 	private Serializable _newSampleValue(String value) throws Exception {
 		ClassLoader classLoader = ClassLoaderPool.getClassLoader(
-			_SAMPLE_BUNDLE_SYMBOLIC_NAME + "_" + _SAMPLE_BUNDLE_VERSION);
+			_BUNDLE_SYMBOLIC_NAME + "_" + _BUNDLE_VERSION);
 
-		Class<?> clazz = classLoader.loadClass(_SAMPLE_CLASS_NAME);
+		Class<?> clazz = classLoader.loadClass(_CLASS_NAME);
 
 		Constructor<?> constructor = clazz.getConstructor(String.class);
 
 		return (Serializable)constructor.newInstance(value);
 	}
 
-	private static final String _SAMPLE_BUNDLE_SYMBOLIC_NAME =
+	private static final String _BUNDLE_SYMBOLIC_NAME =
 		"com.liferay.portal.cluster.multiple.sample.web";
 
-	private static final String _SAMPLE_BUNDLE_VERSION = "1.0.0";
+	private static final String _BUNDLE_VERSION = "1.0.0";
 
-	private static final String _SAMPLE_CLASS_NAME =
+	private static final String _CLASS_NAME =
 		"com.liferay.portal.cluster.multiple.sample.web.internal." +
 			"ClusterSampleClass";
 

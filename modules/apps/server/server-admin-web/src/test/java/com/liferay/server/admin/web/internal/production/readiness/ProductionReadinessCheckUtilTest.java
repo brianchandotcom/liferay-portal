@@ -48,7 +48,7 @@ import org.mockito.Mockito;
 /**
  * @author Lily Chi
  */
-public class ProductionReadinessRuleUtilTest {
+public class ProductionReadinessCheckUtilTest {
 
 	@ClassRule
 	@Rule
@@ -135,7 +135,7 @@ public class ProductionReadinessRuleUtilTest {
 			_stubMBeanServerMaxThreads(managementFactoryMockedStatic, 200);
 
 			Collection<ProductionReadinessResult> productionReadinessResults =
-				ProductionReadinessRuleUtil.check();
+				ProductionReadinessCheckUtil.check();
 
 			Assert.assertFalse(productionReadinessResults.isEmpty());
 
@@ -160,7 +160,7 @@ public class ProductionReadinessRuleUtilTest {
 
 			ProductionReadinessResult productionReadinessResult =
 				ReflectionTestUtil.invoke(
-					ProductionReadinessRuleUtil.class, "_checkBetaLanguages",
+					ProductionReadinessCheckUtil.class, "_checkBetaLanguages",
 					new Class<?>[0]);
 
 			Assert.assertFalse(productionReadinessResult.isPass());
@@ -183,7 +183,7 @@ public class ProductionReadinessRuleUtilTest {
 
 			ProductionReadinessResult productionReadinessResult =
 				ReflectionTestUtil.invoke(
-					ProductionReadinessRuleUtil.class, "_checkBetaLanguages",
+					ProductionReadinessCheckUtil.class, "_checkBetaLanguages",
 					new Class<?>[0]);
 
 			Assert.assertTrue(productionReadinessResult.isPass());
@@ -205,8 +205,8 @@ public class ProductionReadinessRuleUtilTest {
 
 			ProductionReadinessResult productionReadinessResult =
 				ReflectionTestUtil.invoke(
-					ProductionReadinessRuleUtil.class, "_checkCounterIncrement",
-					new Class<?>[0]);
+					ProductionReadinessCheckUtil.class,
+					"_checkCounterIncrement", new Class<?>[0]);
 
 			Assert.assertFalse(productionReadinessResult.isPass());
 			Assert.assertEquals(
@@ -229,8 +229,8 @@ public class ProductionReadinessRuleUtilTest {
 
 			ProductionReadinessResult productionReadinessResult =
 				ReflectionTestUtil.invoke(
-					ProductionReadinessRuleUtil.class, "_checkCounterIncrement",
-					new Class<?>[0]);
+					ProductionReadinessCheckUtil.class,
+					"_checkCounterIncrement", new Class<?>[0]);
 
 			Assert.assertTrue(productionReadinessResult.isPass());
 			Assert.assertEquals(
@@ -255,7 +255,7 @@ public class ProductionReadinessRuleUtilTest {
 
 			ProductionReadinessResult productionReadinessResult =
 				ReflectionTestUtil.invoke(
-					ProductionReadinessRuleUtil.class,
+					ProductionReadinessCheckUtil.class,
 					"_checkDatabaseConfiguration", new Class<?>[0]);
 
 			Assert.assertFalse(productionReadinessResult.isPass());
@@ -281,7 +281,7 @@ public class ProductionReadinessRuleUtilTest {
 
 			ProductionReadinessResult productionReadinessResult =
 				ReflectionTestUtil.invoke(
-					ProductionReadinessRuleUtil.class,
+					ProductionReadinessCheckUtil.class,
 					"_checkDatabaseConfiguration", new Class<?>[0]);
 
 			Assert.assertNull(productionReadinessResult);
@@ -305,7 +305,7 @@ public class ProductionReadinessRuleUtilTest {
 
 			ProductionReadinessResult productionReadinessResult =
 				ReflectionTestUtil.invoke(
-					ProductionReadinessRuleUtil.class,
+					ProductionReadinessCheckUtil.class,
 					"_checkDatabaseConfiguration", new Class<?>[0]);
 
 			Assert.assertTrue(productionReadinessResult.isPass());
@@ -323,7 +323,7 @@ public class ProductionReadinessRuleUtilTest {
 
 			ProductionReadinessResult productionReadinessResult =
 				ReflectionTestUtil.invoke(
-					ProductionReadinessRuleUtil.class,
+					ProductionReadinessCheckUtil.class,
 					"_checkDLImagePreviewDPI", new Class<?>[0]);
 
 			Assert.assertFalse(productionReadinessResult.isPass());
@@ -343,7 +343,7 @@ public class ProductionReadinessRuleUtilTest {
 
 			ProductionReadinessResult productionReadinessResult =
 				ReflectionTestUtil.invoke(
-					ProductionReadinessRuleUtil.class,
+					ProductionReadinessCheckUtil.class,
 					"_checkDLImagePreviewDPI", new Class<?>[0]);
 
 			Assert.assertTrue(productionReadinessResult.isPass());
@@ -361,8 +361,8 @@ public class ProductionReadinessRuleUtilTest {
 
 			ProductionReadinessResult productionReadinessResult =
 				ReflectionTestUtil.invoke(
-					ProductionReadinessRuleUtil.class, "_checkDLPreviewForking",
-					new Class<?>[0]);
+					ProductionReadinessCheckUtil.class,
+					"_checkDLPreviewForking", new Class<?>[0]);
 
 			Assert.assertFalse(productionReadinessResult.isPass());
 			Assert.assertEquals(
@@ -379,8 +379,8 @@ public class ProductionReadinessRuleUtilTest {
 
 			ProductionReadinessResult productionReadinessResult =
 				ReflectionTestUtil.invoke(
-					ProductionReadinessRuleUtil.class, "_checkDLPreviewForking",
-					new Class<?>[0]);
+					ProductionReadinessCheckUtil.class,
+					"_checkDLPreviewForking", new Class<?>[0]);
 
 			Assert.assertTrue(productionReadinessResult.isPass());
 			Assert.assertEquals(
@@ -398,7 +398,7 @@ public class ProductionReadinessRuleUtilTest {
 
 			ProductionReadinessResult productionReadinessResult =
 				ReflectionTestUtil.invoke(
-					ProductionReadinessRuleUtil.class,
+					ProductionReadinessCheckUtil.class,
 					"_checkExplicitGCDisabled", new Class<?>[0]);
 
 			Assert.assertFalse(productionReadinessResult.isPass());
@@ -421,7 +421,7 @@ public class ProductionReadinessRuleUtilTest {
 
 			ProductionReadinessResult productionReadinessResult =
 				ReflectionTestUtil.invoke(
-					ProductionReadinessRuleUtil.class,
+					ProductionReadinessCheckUtil.class,
 					"_checkExplicitGCDisabled", new Class<?>[0]);
 
 			Assert.assertTrue(productionReadinessResult.isPass());
@@ -439,7 +439,7 @@ public class ProductionReadinessRuleUtilTest {
 
 			ProductionReadinessResult productionReadinessResult =
 				ReflectionTestUtil.invoke(
-					ProductionReadinessRuleUtil.class,
+					ProductionReadinessCheckUtil.class,
 					"_checkFileStoreImplementation", new Class<?>[0]);
 
 			Assert.assertFalse(productionReadinessResult.isPass());
@@ -466,7 +466,7 @@ public class ProductionReadinessRuleUtilTest {
 
 				ProductionReadinessResult productionReadinessResult =
 					ReflectionTestUtil.invoke(
-						ProductionReadinessRuleUtil.class,
+						ProductionReadinessCheckUtil.class,
 						"_checkFileStoreImplementation", new Class<?>[0]);
 
 				Assert.assertTrue(
@@ -500,7 +500,7 @@ public class ProductionReadinessRuleUtilTest {
 
 			ProductionReadinessResult productionReadinessResult =
 				ReflectionTestUtil.invoke(
-					ProductionReadinessRuleUtil.class,
+					ProductionReadinessCheckUtil.class,
 					"_checkGarbageCollectorType", new Class<?>[0]);
 
 			Assert.assertFalse(productionReadinessResult.isPass());
@@ -531,7 +531,7 @@ public class ProductionReadinessRuleUtilTest {
 
 			ProductionReadinessResult productionReadinessResult =
 				ReflectionTestUtil.invoke(
-					ProductionReadinessRuleUtil.class,
+					ProductionReadinessCheckUtil.class,
 					"_checkGarbageCollectorType", new Class<?>[0]);
 
 			Assert.assertTrue(productionReadinessResult.isPass());
@@ -551,7 +551,7 @@ public class ProductionReadinessRuleUtilTest {
 
 			ProductionReadinessResult productionReadinessResult =
 				ReflectionTestUtil.invoke(
-					ProductionReadinessRuleUtil.class,
+					ProductionReadinessCheckUtil.class,
 					"_checkHeapAllocationConsistency", new Class<?>[0]);
 
 			Assert.assertFalse(productionReadinessResult.isPass());
@@ -572,7 +572,7 @@ public class ProductionReadinessRuleUtilTest {
 
 			ProductionReadinessResult productionReadinessResult =
 				ReflectionTestUtil.invoke(
-					ProductionReadinessRuleUtil.class,
+					ProductionReadinessCheckUtil.class,
 					"_checkHeapAllocationConsistency", new Class<?>[0]);
 
 			Assert.assertTrue(productionReadinessResult.isPass());
@@ -594,7 +594,7 @@ public class ProductionReadinessRuleUtilTest {
 
 			ProductionReadinessResult productionReadinessResult =
 				ReflectionTestUtil.invoke(
-					ProductionReadinessRuleUtil.class,
+					ProductionReadinessCheckUtil.class,
 					"_checkHeapSizeUpperLimit", new Class<?>[0]);
 
 			Assert.assertFalse(productionReadinessResult.isPass());
@@ -615,7 +615,7 @@ public class ProductionReadinessRuleUtilTest {
 
 			ProductionReadinessResult productionReadinessResult =
 				ReflectionTestUtil.invoke(
-					ProductionReadinessRuleUtil.class,
+					ProductionReadinessCheckUtil.class,
 					"_checkHeapSizeUpperLimit", new Class<?>[0]);
 
 			Assert.assertTrue(productionReadinessResult.isPass());
@@ -648,7 +648,7 @@ public class ProductionReadinessRuleUtilTest {
 
 			ProductionReadinessResult productionReadinessResult =
 				ReflectionTestUtil.invoke(
-					ProductionReadinessRuleUtil.class,
+					ProductionReadinessCheckUtil.class,
 					"_checkHugePagesConfiguration", new Class<?>[0]);
 
 			Assert.assertTrue(productionReadinessResult.isPass());
@@ -672,7 +672,7 @@ public class ProductionReadinessRuleUtilTest {
 
 			ProductionReadinessResult productionReadinessResult =
 				ReflectionTestUtil.invoke(
-					ProductionReadinessRuleUtil.class,
+					ProductionReadinessCheckUtil.class,
 					"_checkHugePagesConfiguration", new Class<?>[0]);
 
 			Assert.assertFalse(productionReadinessResult.isPass());
@@ -695,7 +695,7 @@ public class ProductionReadinessRuleUtilTest {
 
 			ProductionReadinessResult productionReadinessResult =
 				ReflectionTestUtil.invoke(
-					ProductionReadinessRuleUtil.class,
+					ProductionReadinessCheckUtil.class,
 					"_checkHugePagesConfiguration", new Class<?>[0]);
 
 			Assert.assertFalse(productionReadinessResult.isPass());
@@ -718,7 +718,7 @@ public class ProductionReadinessRuleUtilTest {
 
 			ProductionReadinessResult productionReadinessResult =
 				ReflectionTestUtil.invoke(
-					ProductionReadinessRuleUtil.class,
+					ProductionReadinessCheckUtil.class,
 					"_checkHugePagesConfiguration", new Class<?>[0]);
 
 			Assert.assertTrue(productionReadinessResult.isPass());
@@ -739,7 +739,7 @@ public class ProductionReadinessRuleUtilTest {
 
 			ProductionReadinessResult productionReadinessResult =
 				ReflectionTestUtil.invoke(
-					ProductionReadinessRuleUtil.class,
+					ProductionReadinessCheckUtil.class,
 					"_checkJMXConfigurationDisabled", new Class<?>[0]);
 
 			Assert.assertFalse(productionReadinessResult.isPass());
@@ -765,7 +765,7 @@ public class ProductionReadinessRuleUtilTest {
 
 			ProductionReadinessResult productionReadinessResult =
 				ReflectionTestUtil.invoke(
-					ProductionReadinessRuleUtil.class,
+					ProductionReadinessCheckUtil.class,
 					"_checkJMXConfigurationDisabled", new Class<?>[0]);
 
 			Assert.assertTrue(productionReadinessResult.isPass());
@@ -821,7 +821,7 @@ public class ProductionReadinessRuleUtilTest {
 
 			ProductionReadinessResult productionReadinessResult =
 				ReflectionTestUtil.invoke(
-					ProductionReadinessRuleUtil.class,
+					ProductionReadinessCheckUtil.class,
 					"_checkJSPEngineSettings", new Class<?>[0]);
 
 			Assert.assertFalse(productionReadinessResult.isPass());
@@ -853,7 +853,7 @@ public class ProductionReadinessRuleUtilTest {
 
 			ProductionReadinessResult productionReadinessResult =
 				ReflectionTestUtil.invoke(
-					ProductionReadinessRuleUtil.class,
+					ProductionReadinessCheckUtil.class,
 					"_checkJSPEngineSettings", new Class<?>[0]);
 
 			Assert.assertNull(productionReadinessResult);
@@ -877,7 +877,7 @@ public class ProductionReadinessRuleUtilTest {
 
 			ProductionReadinessResult productionReadinessResult =
 				ReflectionTestUtil.invoke(
-					ProductionReadinessRuleUtil.class,
+					ProductionReadinessCheckUtil.class,
 					"_checkJSPEngineSettings", new Class<?>[0]);
 
 			Assert.assertNull(productionReadinessResult);
@@ -930,7 +930,7 @@ public class ProductionReadinessRuleUtilTest {
 
 			ProductionReadinessResult productionReadinessResult =
 				ReflectionTestUtil.invoke(
-					ProductionReadinessRuleUtil.class,
+					ProductionReadinessCheckUtil.class,
 					"_checkJSPEngineSettings", new Class<?>[0]);
 
 			Assert.assertTrue(productionReadinessResult.isPass());
@@ -956,7 +956,7 @@ public class ProductionReadinessRuleUtilTest {
 
 			ProductionReadinessResult productionReadinessResult =
 				ReflectionTestUtil.invoke(
-					ProductionReadinessRuleUtil.class, "_checkJSPReloading",
+					ProductionReadinessCheckUtil.class, "_checkJSPReloading",
 					new Class<?>[0]);
 
 			Assert.assertFalse(productionReadinessResult.isPass());
@@ -978,7 +978,7 @@ public class ProductionReadinessRuleUtilTest {
 
 			ProductionReadinessResult productionReadinessResult =
 				ReflectionTestUtil.invoke(
-					ProductionReadinessRuleUtil.class, "_checkJSPReloading",
+					ProductionReadinessCheckUtil.class, "_checkJSPReloading",
 					new Class<?>[0]);
 
 			Assert.assertTrue(productionReadinessResult.isPass());
@@ -1020,7 +1020,7 @@ public class ProductionReadinessRuleUtilTest {
 
 			ProductionReadinessResult productionReadinessResult =
 				ReflectionTestUtil.invoke(
-					ProductionReadinessRuleUtil.class,
+					ProductionReadinessCheckUtil.class,
 					"_checkPortalDeveloperProperties", new Class<?>[0]);
 
 			Assert.assertFalse(productionReadinessResult.isPass());
@@ -1043,7 +1043,7 @@ public class ProductionReadinessRuleUtilTest {
 
 			ProductionReadinessResult productionReadinessResult =
 				ReflectionTestUtil.invoke(
-					ProductionReadinessRuleUtil.class,
+					ProductionReadinessCheckUtil.class,
 					"_checkPortalDeveloperProperties", new Class<?>[0]);
 
 			Assert.assertTrue(productionReadinessResult.isPass());
@@ -1064,7 +1064,7 @@ public class ProductionReadinessRuleUtilTest {
 
 			ProductionReadinessResult productionReadinessResult =
 				ReflectionTestUtil.invoke(
-					ProductionReadinessRuleUtil.class,
+					ProductionReadinessCheckUtil.class,
 					"_checkPreventDiagnosticOverhead", new Class<?>[0]);
 
 			Assert.assertFalse(productionReadinessResult.isPass());
@@ -1084,7 +1084,7 @@ public class ProductionReadinessRuleUtilTest {
 
 			ProductionReadinessResult productionReadinessResult =
 				ReflectionTestUtil.invoke(
-					ProductionReadinessRuleUtil.class,
+					ProductionReadinessCheckUtil.class,
 					"_checkPreventDiagnosticOverhead", new Class<?>[0]);
 
 			Assert.assertTrue(productionReadinessResult.isPass());
@@ -1120,8 +1120,8 @@ public class ProductionReadinessRuleUtilTest {
 
 			ProductionReadinessResult productionReadinessResult =
 				ReflectionTestUtil.invoke(
-					ProductionReadinessRuleUtil.class, "_checkSidecarDetection",
-					new Class<?>[0]);
+					ProductionReadinessCheckUtil.class,
+					"_checkSidecarDetection", new Class<?>[0]);
 
 			Assert.assertFalse(productionReadinessResult.isPass());
 			Assert.assertEquals(
@@ -1155,8 +1155,8 @@ public class ProductionReadinessRuleUtilTest {
 
 			ProductionReadinessResult productionReadinessResult =
 				ReflectionTestUtil.invoke(
-					ProductionReadinessRuleUtil.class, "_checkSidecarDetection",
-					new Class<?>[0]);
+					ProductionReadinessCheckUtil.class,
+					"_checkSidecarDetection", new Class<?>[0]);
 
 			Assert.assertTrue(productionReadinessResult.isPass());
 			Assert.assertEquals(
@@ -1181,8 +1181,8 @@ public class ProductionReadinessRuleUtilTest {
 
 			ProductionReadinessResult productionReadinessResult =
 				ReflectionTestUtil.invoke(
-					ProductionReadinessRuleUtil.class, "_checkSidecarDetection",
-					new Class<?>[0]);
+					ProductionReadinessCheckUtil.class,
+					"_checkSidecarDetection", new Class<?>[0]);
 
 			Assert.assertFalse(productionReadinessResult.isPass());
 			Assert.assertEquals(
@@ -1203,7 +1203,7 @@ public class ProductionReadinessRuleUtilTest {
 
 			ProductionReadinessResult productionReadinessResult =
 				ReflectionTestUtil.invoke(
-					ProductionReadinessRuleUtil.class, "_checkUnusedLanguages",
+					ProductionReadinessCheckUtil.class, "_checkUnusedLanguages",
 					new Class<?>[0]);
 
 			Assert.assertFalse(productionReadinessResult.isPass());
@@ -1226,7 +1226,7 @@ public class ProductionReadinessRuleUtilTest {
 
 			ProductionReadinessResult productionReadinessResult =
 				ReflectionTestUtil.invoke(
-					ProductionReadinessRuleUtil.class, "_checkUnusedLanguages",
+					ProductionReadinessCheckUtil.class, "_checkUnusedLanguages",
 					new Class<?>[0]);
 
 			Assert.assertTrue(productionReadinessResult.isPass());
@@ -1314,7 +1314,7 @@ public class ProductionReadinessRuleUtilTest {
 
 			ProductionReadinessResult productionReadinessResult =
 				ReflectionTestUtil.invoke(
-					ProductionReadinessRuleUtil.class,
+					ProductionReadinessCheckUtil.class,
 					"_checkPasswordEncryption", new Class<?>[0]);
 
 			Assert.assertEquals(
@@ -1328,13 +1328,13 @@ public class ProductionReadinessRuleUtilTest {
 
 	private boolean _invokeIsStrongerThanPBKDF2(String algorithm) {
 		return ReflectionTestUtil.invoke(
-			ProductionReadinessRuleUtil.class, "_isStrongerAlgorithm",
+			ProductionReadinessCheckUtil.class, "_isStrongerAlgorithm",
 			new Class<?>[] {String.class}, algorithm);
 	}
 
 	private long _invokeParseSize(String sizeStr) {
 		return ReflectionTestUtil.invoke(
-			ProductionReadinessRuleUtil.class, "_parseSize",
+			ProductionReadinessCheckUtil.class, "_parseSize",
 			new Class<?>[] {String.class}, sizeStr);
 	}
 

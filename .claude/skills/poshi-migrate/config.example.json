@@ -1,7 +1,7 @@
 {
-	"componentPlaywrightModules": {
+	"componentNamePlaywrightModules": {
 		"portal-analytics-cloud": ["analytics-settings-web", "analytics-web"]
 	},
 	"defaultComponentName": "portal-analytics-cloud",
-	"patternsReference": "modules/test/playwright/tests/analytics-settings-web"
+	"referencePlaywrightModulePath": "modules/test/playwright/tests/analytics-settings-web"
 }

@@ -64,6 +64,9 @@ public class SearchResultEntityModel implements EntityModel {
 				"dateReview",
 				locale -> Field.getSortableFieldName("reviewDate"),
 				locale -> "reviewDate"),
+			new DateTimeEntityField(
+				"dueDate", locale -> Field.getSortableFieldName("dueDate"),
+				locale -> "dueDate"),
 			new IntegerEntityField(
 				"cmpProjectManagerUserId", locale -> "cmpProjectManagerUserId"),
 			new IntegerEntityField(

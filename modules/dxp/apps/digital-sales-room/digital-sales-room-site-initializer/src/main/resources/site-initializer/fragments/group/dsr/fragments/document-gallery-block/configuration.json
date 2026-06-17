@@ -1,0 +1,40 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"label": "document-1",
+					"name": "document1",
+					"type": "itemSelector",
+					"typeOptions": {
+						"itemType": "com.liferay.portal.kernel.repository.model.FileEntry"
+					}
+				},
+				{
+					"label": "document-2",
+					"name": "document2",
+					"type": "itemSelector",
+					"typeOptions": {
+						"itemType": "com.liferay.portal.kernel.repository.model.FileEntry"
+					}
+				},
+				{
+					"label": "document-3",
+					"name": "document3",
+					"type": "itemSelector",
+					"typeOptions": {
+						"itemType": "com.liferay.portal.kernel.repository.model.FileEntry"
+					}
+				},
+				{
+					"label": "document-4",
+					"name": "document4",
+					"type": "itemSelector",
+					"typeOptions": {
+						"itemType": "com.liferay.portal.kernel.repository.model.FileEntry"
+					}
+				}
+			]
+		}
+	]
+}

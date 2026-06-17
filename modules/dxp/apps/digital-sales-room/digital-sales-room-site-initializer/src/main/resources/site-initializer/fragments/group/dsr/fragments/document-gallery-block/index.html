@@ -1,0 +1,55 @@
+[#macro renderDocumentCard document]
+	[#assign extension = (document.getString("extension"))!"" /]
+	[#assign extension = extension?lower_case /]
+
+	[#assign documentURL = themeDisplay.getPathContext() + "/documents/" + document.getLong("repositoryId")?c + "/" + document.getLong("folderId")?c + "/" + document.getString("fileName")?url("UTF-8") + "/" + document.getString("uuid")?url("UTF-8") /]
+
+	<a class="dsr-document-card" href="${documentURL}" rel="noopener" target="_blank">
+		<span class="dsr-document-preview">
+			<span class="dsr-document-badge">${extension?upper_case}</span>
+
+			<span class="dsr-document-icon">
+				[@clay["icon"] symbol="document" /]
+			</span>
+		</span>
+		<span class="dsr-document-footer">
+			<span class="dsr-document-title">${document.getString("title")}</span>
+		</span>
+	</a>
+[/#macro]
+
+[#assign documents = [
+	configuration.document1,
+	configuration.document2,
+	configuration.document3,
+	configuration.document4
+] /]
+
+[#assign hasDocuments = false /]
+
+[#list documents as document]
+	[#if document.getLong("classPK") > 0]
+		[#assign hasDocuments = true /]
+		[#break]
+	[/#if]
+[/#list]
+
+<div class="clearfix component-paragraph dsr-document-gallery-block-component text-break">
+	<div data-lfr-editable-id="element-text" data-lfr-editable-type="rich-text">
+		<h2 class="mb-4">DOCUMENTS</h2>
+	</div>
+
+	[#if hasDocuments]
+		<div class="d-flex dsr-document-gallery flex-wrap">
+			[#list documents as document]
+				[#if document.getLong("classPK") > 0]
+					[@renderDocumentCard document=document /]
+				[/#if]
+			[/#list]
+		</div>
+	[#elseif layoutMode == "edit"]
+		<div class="dsr-document-gallery-empty text-center">
+			Select up to four documents in the fragment configuration.
+		</div>
+	[/#if]
+</div>

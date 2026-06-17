@@ -15,9 +15,6 @@ import './WorkflowTasksOverview.scss';
 
 const CONTAINER_CLASS_NAME = 'lfr-cmp__workflow-tasks-overview-container';
 
-const WORKFLOW_TASKS_URL =
-	'/o/headless-admin-workflow/v1.0/workflow-tasks?pageSize=1';
-
 function StatCard({
 	count,
 	icon,
@@ -44,20 +41,26 @@ function StatCard({
 	);
 }
 
-export default function WorkflowTasksOverview() {
+export default function WorkflowTasksOverview({
+	filterURL,
+}: {
+	filterURL?: string;
+}) {
 	const [completedCount, setCompletedCount] = useState(0);
 	const [loading, setLoading] = useState(true);
 	const [pendingCount, setPendingCount] = useState(0);
 
 	const fetchCounts = useCallback(async () => {
+		if (!filterURL) {
+			setLoading(false);
+
+			return;
+		}
+
 		setLoading(true);
 
 		const fetchWorkflowCount = (completed: boolean) =>
-			fetch(WORKFLOW_TASKS_URL, {
-				body: JSON.stringify({completed}),
-				headers: {'Content-Type': 'application/json'},
-				method: 'POST',
-			})
+			fetch(`${filterURL} and completed eq ${completed}&pageSize=1`)
 				.then((response) => {
 					if (!response.ok) {
 						throw new Error();
@@ -83,7 +86,7 @@ export default function WorkflowTasksOverview() {
 		finally {
 			setLoading(false);
 		}
-	}, []);
+	}, [filterURL]);
 
 	useEffect(() => {
 		fetchCounts();

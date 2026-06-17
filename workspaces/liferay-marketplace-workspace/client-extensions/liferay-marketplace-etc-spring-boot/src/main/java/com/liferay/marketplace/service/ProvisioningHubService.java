@@ -182,7 +182,7 @@ public class ProvisioningHubService extends BaseService {
 		_marketplaceService.completeOrder(
 			HashMapBuilder.put(
 				"order-metadata",
-				MarketplaceUtil.getOrderMetadata(
+				MarketplaceUtil.getOrderMetadataJSONObject(
 					order
 				).put(
 					"aiHub", aiHubJSONObject
@@ -247,7 +247,7 @@ public class ProvisioningHubService extends BaseService {
 		_marketplaceService.completeOrder(
 			HashMapBuilder.put(
 				"order-metadata",
-				MarketplaceUtil.getOrderMetadata(
+				MarketplaceUtil.getOrderMetadataJSONObject(
 					order
 				).put(
 					"analyticsProject", new JSONObject(analyticsProject)

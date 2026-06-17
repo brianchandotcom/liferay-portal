@@ -300,7 +300,7 @@ public class MarketplaceUtil {
 		return null;
 	}
 
-	public static JSONObject getOrderMetadata(Order order) {
+	public static JSONObject getOrderMetadataJSONObject(Order order) {
 		Map<String, String> customFields =
 			(Map<String, String>)order.getCustomFields();
 

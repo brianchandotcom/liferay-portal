@@ -223,7 +223,7 @@ public class ProvisioningRestController extends BaseRestController {
 		_marketplaceService.completeOrder(
 			HashMapBuilder.put(
 				"order-metadata",
-				MarketplaceUtil.getOrderMetadata(
+				MarketplaceUtil.getOrderMetadataJSONObject(
 					order
 				).put(
 					"analyticsProject", analyticsProjectJSONObject

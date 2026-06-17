@@ -190,7 +190,7 @@ public class SalesforceOpportunity {
 	}
 
 	private String _getPrimaryContactEmailAddress() {
-		JSONObject orderMetadataJSONObject = MarketplaceUtil.getOrderMetadata(
+		JSONObject orderMetadataJSONObject = MarketplaceUtil.getOrderMetadataJSONObject(
 			_order);
 
 		if (Objects.equals(
@@ -226,7 +226,7 @@ public class SalesforceOpportunity {
 	}
 
 	private JSONObject _getProjectJSONObject() {
-		JSONObject orderMetadataJSONObject = MarketplaceUtil.getOrderMetadata(
+		JSONObject orderMetadataJSONObject = MarketplaceUtil.getOrderMetadataJSONObject(
 			_order);
 
 		JSONObject projectJSONObject = new JSONObject(
@@ -238,7 +238,7 @@ public class SalesforceOpportunity {
 		if (Objects.equals(
 				_order.getOrderTypeExternalReferenceCode(), "AI_HUB")) {
 
-			MarketplaceUtil.getOrderMetadata(_order);
+			MarketplaceUtil.getOrderMetadataJSONObject(_order);
 
 			JSONObject aiHubFormJSONObject =
 				orderMetadataJSONObject.getJSONObject("aiHubForm");

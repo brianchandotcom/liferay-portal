@@ -149,7 +149,7 @@ public class ObjectActionProductPurchaseRestController
 	}
 
 	private String _getExchangeRate(Order order) {
-		JSONObject orderMetadataJSONObject = MarketplaceUtil.getOrderMetadata(
+		JSONObject orderMetadataJSONObject = MarketplaceUtil.getOrderMetadataJSONObject(
 			order);
 
 		if (!Objects.equals(order.getCurrencyCode(), "USD") ||
@@ -476,7 +476,7 @@ public class ObjectActionProductPurchaseRestController
 			return;
 		}
 
-		JSONObject orderMetadataJSONObject = MarketplaceUtil.getOrderMetadata(
+		JSONObject orderMetadataJSONObject = MarketplaceUtil.getOrderMetadataJSONObject(
 			order);
 
 		if (_koroneikiService.hasEntitlement(
@@ -518,7 +518,7 @@ public class ObjectActionProductPurchaseRestController
 			return;
 		}
 
-		JSONObject orderMetadataJSONObject = MarketplaceUtil.getOrderMetadata(
+		JSONObject orderMetadataJSONObject = MarketplaceUtil.getOrderMetadataJSONObject(
 			order);
 
 		_marketplaceService.updateOrder(

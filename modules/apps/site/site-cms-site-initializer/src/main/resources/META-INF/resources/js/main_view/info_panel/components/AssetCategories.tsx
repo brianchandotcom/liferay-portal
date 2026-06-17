@@ -7,7 +7,7 @@ import ClayForm from '@clayui/form';
 import Label from '@clayui/label';
 import ClayPanel from '@clayui/panel';
 import {ItemSelector} from '@liferay/frontend-js-item-selector-web';
-import React, {useCallback, useMemo, useState} from 'react';
+import React, {useCallback, useId, useMemo, useState} from 'react';
 
 import ErrorFeedback from '../../../common/components/forms/ErrorFeedback';
 import {
@@ -37,6 +37,8 @@ const AssetCategories = ({
 	updateObjectEntry: (object: EntryCategorizationDTO) => void | Promise<void>;
 }) => {
 	const [value, setValue] = useState('');
+
+	const feedbackId = useId();
 
 	const apiURL = useMemo(() => {
 		const {
@@ -181,6 +183,7 @@ const AssetCategories = ({
 				>
 					<ItemSelector<any>
 						apiURL={apiURL}
+						aria-describedby={errorMessage ? feedbackId : undefined}
 						disabled={!hasUpdatePermission}
 						estimateSize={49}
 						items={selectedCategories}
@@ -226,6 +229,12 @@ const AssetCategories = ({
 							</ItemSelector.Item>
 						)}
 					</ItemSelector>
+
+					{errorMessage && (
+						<ClayForm.FeedbackGroup id={feedbackId} role="alert">
+							<ErrorFeedback message={errorMessage} />
+						</ClayForm.FeedbackGroup>
+					)}
 				</div>
 
 				{groupedTaxonomies.taxonomyVocabularies &&

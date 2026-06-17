@@ -6,16 +6,21 @@
 import {test} from '@playwright/test';
 
 import {DSRAnalyticsPage} from '../pages/site-dsr-site-initializer/DSRAnalyticsPage';
+import {DigitalSalesRoomSettingsPage} from '../pages/site-dsr-site-initializer/DigitalSalesRoomSettingsPage';
 import {DigitalSalesRoomUsersPage} from '../pages/site-dsr-site-initializer/DigitalSalesRoomUsersPage';
 import {DigitalSalesRoomsPage} from '../pages/site-dsr-site-initializer/DigitalSalesRoomsPage';
 import {EditDigitalSalesRoomPage} from '../pages/site-dsr-site-initializer/EditDigitalSalesRoomPage';
 
 const digitalSalesRoomPagesTest = test.extend<{
+	digitalSalesRoomSettingsPage: DigitalSalesRoomSettingsPage;
 	digitalSalesRoomUsersPage: DigitalSalesRoomUsersPage;
 	digitalSalesRoomsPage: DigitalSalesRoomsPage;
 	dsrAnalyticsPage: DSRAnalyticsPage;
 	editDigitalSalesRoomPage: EditDigitalSalesRoomPage;
 }>({
+	digitalSalesRoomSettingsPage: async ({page}, use) => {
+		await use(new DigitalSalesRoomSettingsPage(page));
+	},
 	digitalSalesRoomUsersPage: async ({page}, use) => {
 		await use(new DigitalSalesRoomUsersPage(page));
 	},

@@ -120,6 +120,73 @@ test(
 );
 
 test(
+	'Update a digital sales room name, ERC and friendly URL from settings',
+	{tag: '@LPD-94454'},
+	async ({
+		apiHelpers,
+		digitalSalesRoomSettingsPage,
+		digitalSalesRoomsPage,
+		editDigitalSalesRoomPage,
+		page,
+	}) => {
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			type: 'business',
+		});
+
+		const roomName = `A${getRandomInt()}`;
+		const updatedExternalReferenceCode = `erc${getRandomInt()}`;
+		const updatedFriendlyURL = `furl${getRandomInt()}`;
+		const updatedName = `B${getRandomInt()}`;
+
+		await digitalSalesRoomsPage.goToRoomsPage();
+
+		await expect(
+			digitalSalesRoomsPage.digitalSalesRoomsTable.searchInput
+		).toBeVisible();
+
+		await digitalSalesRoomsPage.digitalSalesRoomsTable.newButton.click();
+
+		await editDigitalSalesRoomPage.addDigitalSalesRoom({
+			accountName: account.name,
+			roomName,
+		});
+
+		await digitalSalesRoomsPage.goToRoomsPage();
+
+		await digitalSalesRoomsPage.clickRowActionsMenuItem(
+			roomName,
+			digitalSalesRoomsPage.settingsMenuItem
+		);
+
+		await expect(digitalSalesRoomSettingsPage.nameInput).toBeVisible();
+
+		await digitalSalesRoomSettingsPage.updateRoomSettings({
+			externalReferenceCode: updatedExternalReferenceCode,
+			friendlyURL: updatedFriendlyURL,
+			name: updatedName,
+		});
+
+		await waitForAlert(page);
+
+		await digitalSalesRoomsPage.clickRowActionsMenuItem(
+			updatedName,
+			digitalSalesRoomsPage.settingsMenuItem
+		);
+
+		await expect(
+			digitalSalesRoomSettingsPage.externalReferenceCodeInput
+		).toHaveValue(updatedExternalReferenceCode);
+		await expect(
+			digitalSalesRoomSettingsPage.friendlyURLInput
+		).toHaveValue(updatedFriendlyURL);
+		await expect(digitalSalesRoomSettingsPage.nameInput).toHaveValue(
+			updatedName
+		);
+		await expect(digitalSalesRoomSettingsPage.siteIdValue).toBeVisible();
+	}
+);
+
+test(
 	'Edit a digital sales room',
 	{tag: '@LPD-69528'},
 	async ({

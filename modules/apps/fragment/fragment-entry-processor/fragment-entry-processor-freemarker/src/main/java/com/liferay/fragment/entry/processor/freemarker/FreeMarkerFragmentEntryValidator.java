@@ -63,8 +63,7 @@ public class FreeMarkerFragmentEntryValidator
 					CompanyThreadLocal.getCompanyId());
 
 		if (!freeMarkerFragmentEntryProcessorConfiguration.enable() ||
-			!_isFreeMarkerTemplate(html) ||
-			ExportImportThreadLocal.isImportInProcess()) {
+			!_isFreeMarkerTemplate(html)) {
 
 			return;
 		}
@@ -134,6 +133,10 @@ public class FreeMarkerFragmentEntryValidator
 
 			template.prepare(httpServletRequest);
 
+			if (ExportImportThreadLocal.isImportInProcess()) {
+				template.put("restClient", new DummyRESTClient());
+			}
+
 			template.processTemplate(new DummyWriter());
 		}
 		catch (TemplateException templateException) {
@@ -144,6 +147,14 @@ public class FreeMarkerFragmentEntryValidator
 			httpServletRequest.setAttribute(
 				WebKeys.AUI_SCRIPT_DATA, scriptData);
 		}
+	}
+
+	public static class DummyRESTClient {
+
+		public Object get(String path) {
+			return Collections.emptyMap();
+		}
+
 	}
 
 	private String _getMessage(

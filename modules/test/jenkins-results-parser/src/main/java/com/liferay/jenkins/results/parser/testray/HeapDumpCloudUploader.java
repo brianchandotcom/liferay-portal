@@ -52,10 +52,10 @@ public class HeapDumpCloudUploader {
 			return;
 		}
 
-		String heapDumpsBasePath = JenkinsResultsParserUtil.combine(
+		String heapDumpsS3Path = JenkinsResultsParserUtil.combine(
 			"s3://", s3BucketName, "/heap-dumps");
 
-		if (_isThrottled(heapDumpsBasePath, hprofFile)) {
+		if (_isThrottled(heapDumpsS3Path, hprofFile)) {
 			return;
 		}
 
@@ -71,7 +71,7 @@ public class HeapDumpCloudUploader {
 			DateTimeFormatter.ofPattern("yyyy-MM"));
 
 		String s3Key = JenkinsResultsParserUtil.combine(
-			heapDumpsBasePath, "/", currentYearMonth, "/", _masterHostname, "/",
+			heapDumpsS3Path, "/", currentYearMonth, "/", _masterHostname, "/",
 			_jobName, "/", _buildNumber, "/", _phase, "/", _slaveHostname,
 			".hprof.gz");
 

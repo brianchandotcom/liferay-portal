@@ -180,21 +180,24 @@ public class AssetListAssetEntryProviderFiltersTest {
 	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-74731"))
 	@Test
 	public void testCommonFieldFiltersMatchAcrossAssetTypes() throws Exception {
+		String title = RandomTestUtil.randomString();
+
 		ObjectEntry objectEntry = _addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
-				"title", "crossfilter"
+				"title", title
 			).build());
 
 		JournalArticle journalArticle = JournalTestUtil.addArticle(
 			_group.getGroupId(),
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, 0, "crossfilter",
-			StringPool.BLANK, "content", LocaleUtil.US, false, true,
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, 0, title,
+			StringPool.BLANK, RandomTestUtil.randomString(), LocaleUtil.US,
+			false, true,
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId()));
 
 		List<Long> actualClassPKs = _getFilteredClassPKs(
 			_buildFiltersJSONArray(
-				_commonFieldFilter("contains", "title", "crossfilter")));
+				_commonFieldFilter("contains", "title", title)));
 
 		Assert.assertEquals(
 			actualClassPKs.toString(), 2, actualClassPKs.size());
@@ -339,7 +342,6 @@ public class AssetListAssetEntryProviderFiltersTest {
 		JSONArray actualJSONArray = (JSONArray)assetEntryQuery.getAttribute(
 			"filters");
 
-		Assert.assertNotNull(actualJSONArray);
 		Assert.assertEquals(
 			actualJSONArray.toString(), 2, actualJSONArray.length());
 
@@ -741,11 +743,14 @@ public class AssetListAssetEntryProviderFiltersTest {
 		);
 	}
 
-	private static final String _LIST_TYPE_ENTRY_KEY_1 = "key1";
+	private static final String _LIST_TYPE_ENTRY_KEY_1 =
+		RandomTestUtil.randomString();
 
-	private static final String _LIST_TYPE_ENTRY_KEY_2 = "key2";
+	private static final String _LIST_TYPE_ENTRY_KEY_2 =
+		RandomTestUtil.randomString();
 
-	private static final String _LIST_TYPE_ENTRY_KEY_3 = "key3";
+	private static final String _LIST_TYPE_ENTRY_KEY_3 =
+		RandomTestUtil.randomString();
 
 	@Inject
 	private AssetListAssetEntryProvider _assetListAssetEntryProvider;

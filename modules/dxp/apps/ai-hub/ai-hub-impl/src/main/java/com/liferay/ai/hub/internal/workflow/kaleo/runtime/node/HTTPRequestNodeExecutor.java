@@ -5,6 +5,7 @@
 
 package com.liferay.ai.hub.internal.workflow.kaleo.runtime.node;
 
+import com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util.KaleoNodeSettingUtil;
 import com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util.VariablesUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.encryptor.EncryptorUtil;
@@ -19,17 +20,14 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.workflow.kaleo.definition.NodeType;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
-import com.liferay.portal.workflow.kaleo.model.KaleoNodeSetting;
 import com.liferay.portal.workflow.kaleo.model.KaleoTransition;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.graph.PathElement;
 import com.liferay.portal.workflow.kaleo.runtime.node.BaseNodeExecutor;
 import com.liferay.portal.workflow.kaleo.runtime.node.NodeExecutor;
-import com.liferay.portal.workflow.kaleo.service.KaleoNodeSettingLocalService;
 
 import java.io.Serializable;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -61,16 +59,9 @@ public class HTTPRequestNodeExecutor extends BaseNodeExecutor {
 			List<PathElement> remainingPathElements)
 		throws PortalException {
 
-		Map<String, String> kaleoNodeSettingValues = new HashMap<>();
-
-		List<KaleoNodeSetting> kaleoNodeSettings =
-			_kaleoNodeSettingLocalService.getKaleoNodeSettings(
+		Map<String, String> kaleoNodeSettingValues =
+			KaleoNodeSettingUtil.getKaleoNodeSettingValuesMap(
 				currentKaleoNode.getKaleoNodeId());
-
-		for (KaleoNodeSetting kaleoNodeSetting : kaleoNodeSettings) {
-			kaleoNodeSettingValues.put(
-				kaleoNodeSetting.getName(), kaleoNodeSetting.getValue());
-		}
 
 		Map<String, Serializable> workflowContext =
 			executionContext.getWorkflowContext();
@@ -94,10 +85,10 @@ public class HTTPRequestNodeExecutor extends BaseNodeExecutor {
 				executionContext, "requestBody", kaleoNodeSettingValues, true);
 
 			if (Validator.isNotNull(requestBody)) {
-				options.addHeader(
-					HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
 				options.setBody(
 					requestBody, ContentTypes.APPLICATION_JSON, "UTF-8");
+				options.addHeader(
+					HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
 			}
 
 			options.setLocation(
@@ -167,8 +158,5 @@ public class HTTPRequestNodeExecutor extends BaseNodeExecutor {
 
 	@Reference
 	private Http _http;
-
-	@Reference
-	private KaleoNodeSettingLocalService _kaleoNodeSettingLocalService;
 
 }

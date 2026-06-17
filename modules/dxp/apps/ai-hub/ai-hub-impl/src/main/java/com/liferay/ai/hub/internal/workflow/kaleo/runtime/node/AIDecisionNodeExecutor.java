@@ -13,6 +13,7 @@ import com.liferay.ai.hub.internal.langchain4j.observability.api.listener.Output
 import com.liferay.ai.hub.internal.mcp.tool.provider.MCPToolProviderUtil;
 import com.liferay.ai.hub.internal.model.VertexAiGeminiUtil;
 import com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util.GuardrailsUtil;
+import com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util.KaleoNodeSettingUtil;
 import com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util.MessageUtil;
 import com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util.PromptUtil;
 import com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util.QuotaUtil;
@@ -39,13 +40,11 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.workflow.kaleo.definition.NodeType;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
-import com.liferay.portal.workflow.kaleo.model.KaleoNodeSetting;
 import com.liferay.portal.workflow.kaleo.model.KaleoTransition;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.graph.PathElement;
 import com.liferay.portal.workflow.kaleo.runtime.node.BaseNodeExecutor;
 import com.liferay.portal.workflow.kaleo.runtime.node.NodeExecutor;
-import com.liferay.portal.workflow.kaleo.service.KaleoNodeSettingLocalService;
 
 import dev.langchain4j.agent.tool.P;
 import dev.langchain4j.agent.tool.Tool;
@@ -57,7 +56,6 @@ import dev.langchain4j.model.vertexai.gemini.VertexAiGeminiStreamingChatModel;
 import java.io.Serializable;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
@@ -151,17 +149,6 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 		KaleoInstanceToken kaleoInstanceToken =
 			executionContext.getKaleoInstanceToken();
 
-		Map<String, String> kaleoNodeSettingValues = new HashMap<>();
-
-		List<KaleoNodeSetting> kaleoNodeSettings =
-			_kaleoNodeSettingLocalService.getKaleoNodeSettings(
-				currentKaleoNode.getKaleoNodeId());
-
-		for (KaleoNodeSetting kaleoNodeSetting : kaleoNodeSettings) {
-			kaleoNodeSettingValues.put(
-				kaleoNodeSetting.getName(), kaleoNodeSetting.getValue());
-		}
-
 		ServiceContext serviceContext = executionContext.getServiceContext();
 
 		Map<String, Serializable> workflowContext =
@@ -174,6 +161,10 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 
 			return;
 		}
+
+		Map<String, String> kaleoNodeSettingValues =
+			KaleoNodeSettingUtil.getKaleoNodeSettingValuesMap(
+				currentKaleoNode.getKaleoNodeId());
 
 		String prompt = PromptUtil.composePrompt(
 			kaleoInstanceToken.getCompanyId(), _dtoConverterRegistry,
@@ -295,9 +286,6 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 
 	@Reference
 	private JSONFactory _jsonFactory;
-
-	@Reference
-	private KaleoNodeSettingLocalService _kaleoNodeSettingLocalService;
 
 	@Reference
 	private ModelArmorHandler _modelArmorHandler;

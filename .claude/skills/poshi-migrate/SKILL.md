@@ -70,11 +70,11 @@ Resolve configuration in this order:
 
 The keys are:
 
-- **componentPlaywrightModules**: a mapping from `@component-name` to the list of Playwright modules under `playwrightTestsRoot` that own its existing specs. The inventory phase scans these modules to detect tests that already cover, or partially cover, the Poshi tests being migrated, and asks the user which modules to scan when the mapping for the source `@component-name` is missing. Defaults to `{}` (empty).
+- **componentNamePlaywrightModules**: a mapping from `@component-name` to the list of Playwright modules under `playwrightTestsRoot` that own its existing specs. The inventory phase scans these modules to detect tests that already cover, or partially cover, the Poshi tests being migrated, and asks the user which modules to scan when the mapping for the source `@component-name` is missing. Defaults to `{}` (empty).
 
 - **defaultComponentName**: the last `@component-name` the user chose interactively, suggested as the default on subsequent runs when `${ARGUMENTS}` is empty. The argument resolver prompts the user with the full list from `test.properties` and remembers the choice from then on. Unset by default.
 
-- **patternsReference**: the Playwright folder used as the style reference. Defaults to `modules/test/playwright/tests/layout-content-page-editor-web`.
+- **referencePlaywrightModulePath**: the Playwright module folder read as the style reference. Defaults to `modules/test/playwright/tests/layout-content-page-editor-web`.
 
 After resolving the values, show them to the user via `AskUserQuestion` and offer to keep them or override any value for this run. Persist overrides only when the user explicitly asks (write `config.json`, never modify `config.example.json`).
 
@@ -112,7 +112,7 @@ When a test is **Skip**, propose what the missing endpoint should look like (HTT
 
 1. Read the `.testcase` file. Capture the `setUp`, `tearDown`, and every `test <Name>` block with its `@description`, `@priority`, and the macros or helper calls it invokes.
 
-1. Scan the Playwright modules listed in `componentPlaywrightModules` for the source `@component-name`. For every Poshi `test` not already marked **Skip** in the feasibility phase, classify the existing coverage as one of:
+1. Scan the Playwright modules listed in `componentNamePlaywrightModules` for the source `@component-name`. For every Poshi `test` not already marked **Skip** in the feasibility phase, classify the existing coverage as one of:
 
 	- **Already covered** — an existing spec exercises the same behavior end to end. Record the spec path. The test becomes **Drop** in the plan; it does not become a migration.
 
@@ -132,7 +132,7 @@ When a test is **Skip**, propose what the missing endpoint should look like (HTT
 
 	This is the most fragile part of the workflow; expect to iterate on the heuristic as false positives and false negatives surface. When the signals disagree, default to **Partially covered** and let the user resolve the call in the plan.
 
-	When `componentPlaywrightModules` does not list the source `@component-name`, ask the user which Playwright modules to scan before continuing. Do not skip this step.
+	When `componentNamePlaywrightModules` does not list the source `@component-name`, ask the user which Playwright modules to scan before continuing. Do not skip this step.
 
 1. For every test whose `@description` references an LPS or LPD ticket, recover the original code change and use its diff as the primary signal for the layer decision. From the repo root:
 
@@ -264,7 +264,7 @@ When implementing each layer, follow the rules below.
 
 Follow `.claude/rules/playwright.md` for the general conventions (layout, spec placement, anatomy, page classes, locators, setup, cleanup, flake-proofing utilities, feature flags). Do not duplicate or restate those rules here — read the file and apply it.
 
-Read at least one spec from the configured `patternsReference` folder before writing the first migrated spec to internalize the local idiom.
+Read at least one spec from the configured `referencePlaywrightModulePath` folder before writing the first migrated spec to internalize the local idiom.
 
 The subsections below cover decisions that are specific to migrating from Poshi.
 
@@ -323,7 +323,7 @@ When the underlying connection is company-wide or otherwise non-isolated, force 
 
 Map Poshi setup actions to API helpers:
 
-- **Content page** (Poshi `JSONLayout.addLayout` or UI page creation) → `apiHelpers.headlessDelivery.createSitePage`. Pass a `pageDefinition` from the patternsReference utilities when fragments are needed.
+- **Content page** (Poshi `JSONLayout.addLayout` or UI page creation) → `apiHelpers.headlessDelivery.createSitePage`. Pass a `pageDefinition` from the referencePlaywrightModulePath utilities when fragments are needed.
 
 - **Mid-test login** (Poshi `User.logoutPG` plus `User.loginPG`) → `performLogout` followed by `performLogin` from `utils/performLogin`. Use a fresh user when the test mutates a per-user preference that would leak across runs.
 

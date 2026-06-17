@@ -1,0 +1,96 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+.dsr-document-gallery-block-component {
+	padding-bottom: 5rem;
+}
+
+.dsr-document-gallery-block-component h2::after {
+	border-bottom: 4px solid var(--primary, #0B5FFF);
+	content: '';
+	display: inline-block;
+	margin: 0 0 0 0.3rem;
+	width: 1.5rem;
+}
+
+.dsr-document-gallery-block-component .dsr-document-gallery {
+	gap: 1rem;
+}
+
+.dsr-document-gallery-block-component .dsr-document-card {
+	background-color: #fff;
+	border: 1px solid rgba(0, 0, 0, 0.1);
+	border-radius: 0.75rem;
+	color: var(--body-color, #1C1C24);
+	display: flex;
+	flex: 1 1 0;
+	flex-direction: column;
+	min-width: 14rem;
+	overflow: hidden;
+	text-decoration: none;
+	transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.dsr-document-gallery-block-component .dsr-document-card:hover {
+	box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.12);
+	color: var(--body-color, #1C1C24);
+	text-decoration: none;
+	transform: translateY(-0.25rem);
+}
+
+.dsr-document-gallery-block-component .dsr-document-preview {
+	align-items: center;
+	background-color: #DCDEE6;
+	display: flex;
+	flex-grow: 1;
+	justify-content: center;
+	min-height: 12rem;
+	position: relative;
+}
+
+.dsr-document-gallery-block-component .dsr-document-badge {
+	background-color: var(--primary, #0B5FFF);
+	border-radius: 0.375rem;
+	color: #fff;
+	font-size: 0.6875rem;
+	font-weight: 700;
+	letter-spacing: 0.05em;
+	padding: 0.25rem 0.5rem;
+	position: absolute;
+	right: 1rem;
+	text-transform: uppercase;
+	top: 1rem;
+}
+
+.dsr-document-gallery-block-component .dsr-document-icon {
+	color: #717890;
+	display: flex;
+}
+
+.dsr-document-gallery-block-component .dsr-document-icon svg {
+	height: 3.25rem;
+	width: 3.25rem;
+}
+
+.dsr-document-gallery-block-component .dsr-document-footer {
+	background-color: #fff;
+	padding: 1.25rem 1.5rem;
+}
+
+.dsr-document-gallery-block-component .dsr-document-title {
+	display: -webkit-box;
+	font-weight: 600;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+	overflow: hidden;
+	word-break: break-word;
+}
+
+.dsr-document-gallery-block-component .dsr-document-gallery-empty {
+	border: 1px dashed rgba(0, 0, 0, 0.125);
+	border-radius: 1.25rem;
+	color: var(--secondary, #6B7280);
+	padding: 3rem 1.5rem;
+}

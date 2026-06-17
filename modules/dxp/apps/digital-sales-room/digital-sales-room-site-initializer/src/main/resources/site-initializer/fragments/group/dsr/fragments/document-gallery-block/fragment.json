@@ -1,0 +1,9 @@
+{
+	"configurationPath": "configuration.json",
+	"cssPath": "index.css",
+	"htmlPath": "index.html",
+	"icon": "document",
+	"jsPath": "index.js",
+	"name": "Document Gallery Block",
+	"type": "component"
+}

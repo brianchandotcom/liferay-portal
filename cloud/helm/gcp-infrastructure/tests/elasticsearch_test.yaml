@@ -32,8 +32,6 @@ tests:
         set:
             search.elasticsearch.name: custom-es
     -   asserts:
-            -   isKind:
-                    of: Elasticsearch
             -   equal:
                     path: metadata.name
                     value: my-release-es
@@ -41,11 +39,13 @@ tests:
                     path: metadata.namespace
                     value: my-namespace-elasticsearch
             -   equal:
-                    path: spec.version
-                    value: 8.19.11
-            -   equal:
                     path: spec.nodeSets[0].count
                     value: 1
+            -   equal:
+                    path: spec.version
+                    value: 8.19.11
+            -   isKind:
+                    of: Elasticsearch
         documentSelector:
             path: kind
             value: Elasticsearch
@@ -57,11 +57,11 @@ tests:
         set:
             search.elasticsearch.enabled: false
     -   asserts:
-            -   isKind:
-                    of: Namespace
             -   equal:
                     path: metadata.name
                     value: my-namespace-elasticsearch
+            -   isKind:
+                    of: Namespace
         documentSelector:
             path: kind
             value: Namespace

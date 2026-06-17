@@ -24,7 +24,7 @@ const AttributeBreakdownChip: React.FC<{
 	onCloseClick,
 	onEditSubmit,
 	onMove,
-	uneditableIds
+	uneditableIds,
 }) => {
 	const [label, value] = getBreakdownDisplay(
 		attribute,
@@ -37,7 +37,7 @@ const AttributeBreakdownChip: React.FC<{
 		...attribute,
 		dataType,
 		description,
-		displayName
+		displayName,
 	};
 
 	return (

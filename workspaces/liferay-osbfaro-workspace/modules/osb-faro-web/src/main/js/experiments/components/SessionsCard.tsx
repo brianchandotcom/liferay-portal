@@ -2,7 +2,7 @@ import * as d3 from 'd3';
 import Card from 'shared/components/Card';
 import ChartTooltip, {
 	Alignments,
-	Weights
+	Weights,
 } from 'shared/components/chart-tooltip';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
@@ -17,7 +17,7 @@ import {toThousandsABTesting} from 'experiments/util/experiments';
 
 enum SessionView {
 	Total = 'total',
-	PerVariant = 'per-variant'
+	PerVariant = 'per-variant',
 }
 
 const TotalSessionsTooltip = ({dataPoint}: {dataPoint: any[]}) => {
@@ -29,14 +29,14 @@ const TotalSessionsTooltip = ({dataPoint}: {dataPoint: any[]}) => {
 						getDate(dataPoint[0].payload.key)
 					),
 					weight: Weights.Semibold,
-					width: 100
+					width: 100,
 				},
 				{
 					label: Liferay.Language.get('sessions'),
-					weight: Weights.Semibold
-				}
-			]
-		}
+					weight: Weights.Semibold,
+				},
+			],
+		},
 	];
 
 	const rows = [
@@ -44,18 +44,18 @@ const TotalSessionsTooltip = ({dataPoint}: {dataPoint: any[]}) => {
 			columns: [
 				{
 					color: dataPoint[0].color,
-					label: dataPoint[0].name
+					label: dataPoint[0].name,
 				},
 				{
 					align: Alignments.Right,
-					label: toThousandsABTesting(dataPoint[0].value)
-				}
-			]
-		}
+					label: toThousandsABTesting(dataPoint[0].value),
+				},
+			],
+		},
 	];
 
 	return (
-		<div className='bb-tooltip-container position-static'>
+		<div className="bb-tooltip-container position-static">
 			<ChartTooltip header={header} rows={rows} />
 		</div>
 	);
@@ -71,14 +71,14 @@ const PerVariantTooltip = ({dataPoint}: {dataPoint: any[]}) => {
 				{
 					label: d3.utcFormat('%b %-d')(getDate(control.payload.key)),
 					weight: Weights.Semibold,
-					width: 80
+					width: 80,
 				},
 				{
 					label: Liferay.Language.get('sessions'),
-					weight: Weights.Semibold
-				}
-			]
-		}
+					weight: Weights.Semibold,
+				},
+			],
+		},
 	];
 
 	const rows = [
@@ -86,32 +86,32 @@ const PerVariantTooltip = ({dataPoint}: {dataPoint: any[]}) => {
 			columns: [
 				{
 					color: control.color,
-					label: control.name
+					label: control.name,
 				},
 				{
 					align: Alignments.Right,
-					label: toThousandsABTesting(control.value)
-				}
-			]
+					label: toThousandsABTesting(control.value),
+				},
+			],
 		},
 		{
 			columns: variant
 				? [
 						{
 							color: dataPoint[1].color,
-							label: dataPoint[1].name
+							label: dataPoint[1].name,
 						},
 						{
 							align: Alignments.Right,
-							label: toThousandsABTesting(dataPoint[1].value)
-						}
-				  ]
-				: []
-		}
+							label: toThousandsABTesting(dataPoint[1].value),
+						},
+					]
+				: [],
+		},
 	];
 
 	return (
-		<div className='bb-tooltip-container position-static'>
+		<div className="bb-tooltip-container position-static">
 			<ChartTooltip header={header} rows={rows} />
 		</div>
 	);
@@ -126,6 +126,7 @@ interface IExperimentWithHistogram {
 }
 
 const formatTotalSessionsData = (experiment: IExperimentWithHistogram) => {
+
 	// eslint-disable-next-line camelcase
 	const chartData: Array<{data_control: number; key: string | number}> = [];
 	const control = experiment.dxpVariants[0];
@@ -135,7 +136,7 @@ const formatTotalSessionsData = (experiment: IExperimentWithHistogram) => {
 		chartData.push({
 			data_control:
 				session.value + variant.sessionsHistogram?.[index]?.value || 0,
-			key: session.key
+			key: session.key,
 		});
 	});
 
@@ -144,16 +145,18 @@ const formatTotalSessionsData = (experiment: IExperimentWithHistogram) => {
 			controlLabel: Liferay.Language.get('total'),
 			data: chartData,
 			format: getAxisFormatter('number'),
-			intervals: control.sessionsHistogram.map(({key}) => key)
+			intervals: control.sessionsHistogram.map(({key}) => key),
 		},
-		Tooltip: TotalSessionsTooltip
+		Tooltip: TotalSessionsTooltip,
 	};
 };
 
 const formatPerVariantsData = (experiment: IExperimentWithHistogram) => {
 	const chartData: Array<{
+
 		// eslint-disable-next-line camelcase
 		data_control: number;
+
 		// eslint-disable-next-line camelcase
 		data_variant: number;
 		key: string | number;
@@ -165,7 +168,7 @@ const formatPerVariantsData = (experiment: IExperimentWithHistogram) => {
 		chartData.push({
 			data_control: session.value,
 			data_variant: variant.sessionsHistogram?.[index]?.value || 0,
-			key: session.key
+			key: session.key,
 		});
 	});
 
@@ -175,9 +178,9 @@ const formatPerVariantsData = (experiment: IExperimentWithHistogram) => {
 			data: chartData,
 			format: getAxisFormatter('number'),
 			intervals: control.sessionsHistogram.map(({key}) => key),
-			variantLabel: variant.dxpVariantName
+			variantLabel: variant.dxpVariantName,
 		},
-		Tooltip: PerVariantTooltip
+		Tooltip: PerVariantTooltip,
 	};
 };
 
@@ -193,7 +196,7 @@ const formatData = (
 };
 
 export const SessionsCard = ({
-	experiment
+	experiment,
 }: {
 	experiment: IExperimentWithHistogram;
 }) => {
@@ -202,22 +205,22 @@ export const SessionsCard = ({
 	);
 
 	return (
-		<Card className='analytics-session-card' minHeight={405}>
-			<Card.Header className='align-items-center d-flex justify-content-between'>
+		<Card className="analytics-session-card" minHeight={405}>
+			<Card.Header className="align-items-center d-flex justify-content-between">
 				<Card.Title>{Liferay.Language.get('test-sessions')}</Card.Title>
 
 				<ClayButton.Group>
 					<ClayButton
 						className={getCN('button-root', {
-							active: sessionView === SessionView.Total
+							active: sessionView === SessionView.Total,
 						})}
-						displayType='secondary'
+						displayType="secondary"
 						onClick={() => setSessionView(SessionView.Total)}
-						size='sm'
+						size="sm"
 					>
 						<ClayIcon
-							className='icon-root mr-2'
-							symbol='session_single_chart'
+							className="icon-root mr-2"
+							symbol="session_single_chart"
 						/>
 
 						{Liferay.Language.get('total')}
@@ -225,15 +228,15 @@ export const SessionsCard = ({
 
 					<ClayButton
 						className={getCN('button-root', {
-							active: sessionView === SessionView.PerVariant
+							active: sessionView === SessionView.PerVariant,
 						})}
-						displayType='secondary'
+						displayType="secondary"
 						onClick={() => setSessionView(SessionView.PerVariant)}
-						size='sm'
+						size="sm"
 					>
 						<ClayIcon
-							className='icon-root mr-2'
-							symbol='session_multiple_chart'
+							className="icon-root mr-2"
+							symbol="session_multiple_chart"
 						/>
 
 						{Liferay.Language.get('per-variant')}
@@ -250,7 +253,7 @@ export const SessionsCard = ({
 						icon={{
 							border: false,
 							size: Sizes.XLarge,
-							symbol: 'ac_chart'
+							symbol: 'ac_chart',
 						}}
 						title={Liferay.Language.get(
 							'we-are-currently-collecting-data'

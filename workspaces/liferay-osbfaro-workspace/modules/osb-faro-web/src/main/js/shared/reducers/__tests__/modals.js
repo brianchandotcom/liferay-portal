@@ -12,11 +12,11 @@ describe('Modals Reducer', () => {
 			payload: {
 				closeOnBlur: true,
 				props: {
-					foo: 'bar'
+					foo: 'bar',
 				},
-				type: 'MyModal'
+				type: 'MyModal',
 			},
-			type: actionTypes.OPEN_MODAL
+			type: actionTypes.OPEN_MODAL,
 		};
 
 		const state = reducer(new List(), action);
@@ -26,10 +26,10 @@ describe('Modals Reducer', () => {
 				new Map({
 					closeOnBlur: true,
 					props: new Map({
-						foo: 'bar'
+						foo: 'bar',
 					}),
-					type: 'MyModal'
-				})
+					type: 'MyModal',
+				}),
 			])
 		);
 	});
@@ -40,10 +40,10 @@ describe('Modals Reducer', () => {
 				closeOnBlur: true,
 				name: 'MyModal',
 				props: {
-					foo: Set.of(1)
-				}
+					foo: Set.of(1),
+				},
 			},
-			type: actionTypes.OPEN_MODAL
+			type: actionTypes.OPEN_MODAL,
 		};
 
 		const state = reducer(new List(), action);
@@ -55,16 +55,16 @@ describe('Modals Reducer', () => {
 		const intitialState = fromJS([
 			{
 				name: 'Foo',
-				props: {}
+				props: {},
 			},
 			{
 				name: 'Bar',
-				props: {}
-			}
+				props: {},
+			},
 		]);
 
 		const action = {
-			type: actionTypes.CLOSE_MODAL
+			type: actionTypes.CLOSE_MODAL,
 		};
 
 		const state = reducer(intitialState, action);
@@ -73,8 +73,8 @@ describe('Modals Reducer', () => {
 			fromJS([
 				{
 					name: 'Foo',
-					props: {}
-				}
+					props: {},
+				},
 			])
 		);
 	});
@@ -83,16 +83,16 @@ describe('Modals Reducer', () => {
 		const intitialState = fromJS([
 			{
 				name: 'Foo',
-				props: {}
+				props: {},
 			},
 			{
 				name: 'Bar',
-				props: {}
-			}
+				props: {},
+			},
 		]);
 
 		const action = {
-			type: actionTypes.CLOSE_ALL_MODALS
+			type: actionTypes.CLOSE_ALL_MODALS,
 		};
 
 		const state = reducer(intitialState, action);

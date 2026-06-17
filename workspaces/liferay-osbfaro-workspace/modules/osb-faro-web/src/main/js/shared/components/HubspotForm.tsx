@@ -13,7 +13,7 @@ const mockJQuery: () => void = () => {
 
 			return {
 				change: () => {},
-				trigger: () => {}
+				trigger: () => {},
 			};
 		});
 };
@@ -29,10 +29,12 @@ const loadScript: () => HTMLElement = () => {
 	return script;
 };
 
-const createForm: (props: React.HTMLAttributes<HTMLElement>) => void = props =>
+const createForm: (props: React.HTMLAttributes<HTMLElement>) => void = (
+	props
+) =>
 	(window as any).hbspt.forms.create({
 		...props,
-		target: `#${HUBSPOT_ID}`
+		target: `#${HUBSPOT_ID}`,
 	});
 
 interface IHubspotFormProps extends React.HTMLAttributes<HTMLElement> {
@@ -45,14 +47,15 @@ interface IHubspotFormProps extends React.HTMLAttributes<HTMLElement> {
 	submitButtonClass?: string;
 }
 
-const HubspotForm: React.FC<IHubspotFormProps> = props => {
+const HubspotForm: React.FC<IHubspotFormProps> = (props) => {
 	if (!(window as any).hbspt) {
 		const script = loadScript();
 
 		script.onload = () => {
 			createForm(props);
 		};
-	} else {
+	}
+	else {
 		createForm(props);
 	}
 

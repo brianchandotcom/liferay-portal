@@ -21,7 +21,7 @@ export enum CSVType {
 	Journal = 'journal',
 	Membership = 'membership',
 	Page = 'page',
-	SearchTerms = 'search-terms'
+	SearchTerms = 'search-terms',
 }
 
 export function useDownloadCSV({
@@ -29,7 +29,7 @@ export function useDownloadCSV({
 	assetType,
 	individualId,
 	segmentId,
-	type
+	type,
 }: {
 	assetId?: string;
 	assetType?: string;
@@ -54,7 +54,8 @@ export function useDownloadCSV({
 			url += '&rangeKey=CUSTOM';
 			url += `&fromDate=${formatDate(rangeSelectors.rangeStart ?? '')}`;
 			url += `&toDate=${formatDate(rangeSelectors.rangeEnd ?? '')}`;
-		} else {
+		}
+		else {
 			url += `&rangeKey=${rangeSelectors.rangeKey}`;
 		}
 
@@ -72,10 +73,10 @@ export function useDownloadCSV({
 									INDIVIDUALS
 								)
 							)
-					  )
+						)
 					: null,
 			query,
-			segmentId
+			segmentId,
 		};
 
 		Object.entries(optionalParams).forEach(([key, value]) => {
@@ -104,7 +105,7 @@ export const useMutationObserver = () => {
 			attributes: true,
 			characterData: true,
 			childList: true,
-			subtree: true
+			subtree: true,
 		});
 
 		return () => observer.disconnect();

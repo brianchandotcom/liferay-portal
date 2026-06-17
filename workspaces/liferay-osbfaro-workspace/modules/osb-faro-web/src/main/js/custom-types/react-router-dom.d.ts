@@ -13,7 +13,7 @@ declare module 'react-router-dom' {
 		Params extends Record<string, string | undefined> = Record<
 			string,
 			string | undefined
-		>
+		>,
 	>(): Params;
 
 	interface BrowserRouterProps {

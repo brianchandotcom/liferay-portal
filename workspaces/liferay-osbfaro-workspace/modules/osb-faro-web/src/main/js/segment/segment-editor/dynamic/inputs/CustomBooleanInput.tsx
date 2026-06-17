@@ -9,7 +9,7 @@ const CustomBooleanInput: React.FC<ISegmentEditorCustomInputBase> = ({
 	onChange,
 	operatorRenderer,
 	property,
-	value: valueIMap
+	value: valueIMap,
 }) => {
 	const handleChange = ({value}: {value: React.Key}) =>
 		onChange({value: setPropertyValue(valueIMap, 'value', 0, value)});

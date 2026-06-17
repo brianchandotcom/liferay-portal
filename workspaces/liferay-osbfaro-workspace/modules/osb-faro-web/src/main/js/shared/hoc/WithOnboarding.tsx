@@ -50,7 +50,7 @@ const withOnboarding = (
 					if (triggerCondition) {
 						open(modalTypes.ONBOARDING_MODAL, {
 							groupId,
-							onClose: close
+							onClose: close,
 						});
 						setOnboardingTriggered();
 					}

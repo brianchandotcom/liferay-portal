@@ -19,6 +19,7 @@ interface ICriteriaBuilderProps {
 }
 
 class CriteriaBuilder extends React.Component<ICriteriaBuilderProps> {
+
 	/**
 	 * Cleans criteria items by performing the following:
 	 * 1. Remove any groups with no items.
@@ -32,10 +33,10 @@ class CriteriaBuilder extends React.Component<ICriteriaBuilderProps> {
 		root?: boolean
 	): Criteria[] {
 		const criteria = criteriaItems
-			.filter(criteria =>
+			.filter((criteria) =>
 				isCriterionGroup(criteria) ? criteria.items.length : true
 			)
-			.map(item => {
+			.map((item) => {
 				let cleanedItem: Criteria = item;
 
 				if (isCriterionGroup(item)) {
@@ -48,8 +49,8 @@ class CriteriaBuilder extends React.Component<ICriteriaBuilderProps> {
 										...item,
 										items: this.cleanCriteriaMapItems(
 											item.items
-										)
-								  }
+										),
+									}
 								: {
 										conjunctionName:
 											soloItem.conjunctionName,
@@ -57,15 +58,17 @@ class CriteriaBuilder extends React.Component<ICriteriaBuilderProps> {
 											soloItem.criteriaGroupId,
 										items: this.cleanCriteriaMapItems(
 											soloItem.items
-										)
-								  };
-						} else {
+										),
+									};
+						}
+						else {
 							cleanedItem = root ? item : soloItem;
 						}
-					} else {
+					}
+					else {
 						cleanedItem = {
 							...item,
-							items: this.cleanCriteriaMapItems(item.items)
+							items: this.cleanCriteriaMapItems(item.items),
 						};
 					}
 				}
@@ -156,7 +159,7 @@ class CriteriaBuilder extends React.Component<ICriteriaBuilderProps> {
 
 		return {
 			...criteria,
-			items: updatedCriteriaItems.map(item =>
+			items: updatedCriteriaItems.map((item) =>
 				isCriterionGroup(item) && !!item.items.length
 					? this.searchAndUpdateCriteria(
 							item,
@@ -166,9 +169,9 @@ class CriteriaBuilder extends React.Component<ICriteriaBuilderProps> {
 							destIndex,
 							addCriterion,
 							replace
-					  )
+						)
 					: item
-			)
+			),
 		};
 	}
 
@@ -179,7 +182,7 @@ class CriteriaBuilder extends React.Component<ICriteriaBuilderProps> {
 		const showClearAll = (criteria?.items?.length ?? 0) > 1;
 
 		return (
-			<div className='criteria-builder-root'>
+			<div className="criteria-builder-root">
 				<CriteriaGroup
 					channelId={channelId}
 					criteria={criteria}

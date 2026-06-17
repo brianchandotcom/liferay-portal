@@ -28,7 +28,7 @@ interface ISiteMetricsDataRow {
 export const mapPropsToOptions = ({
 	channelId,
 	interval,
-	rangeSelectors
+	rangeSelectors,
 }: {
 	channelId: string;
 	interval: Interval;
@@ -37,13 +37,13 @@ export const mapPropsToOptions = ({
 	variables: {
 		channelId,
 		interval,
-		...getSafeRangeSelectors(rangeSelectors)
-	}
+		...getSafeRangeSelectors(rangeSelectors),
+	},
 });
 
 export const mapResultToProps = safeResultToProps(
 	({
-		site: {anonymousVisitorsMetric, knownVisitorsMetric, visitorsMetric}
+		site: {anonymousVisitorsMetric, knownVisitorsMetric, visitorsMetric},
 	}: ISiteMetricsResult) => ({
 		data: anonymousVisitorsMetric.histogram.metrics.reduce<
 			ISiteMetricsDataRow[]
@@ -55,8 +55,8 @@ export const mapResultToProps = safeResultToProps(
 					intervalInitDate: moment.utc(key).valueOf(),
 					knownVisitors:
 						knownVisitorsMetric.histogram.metrics[i].value,
-					visitors: visitorsMetric.histogram.metrics[i].value
-				}
+					visitors: visitorsMetric.histogram.metrics[i].value,
+				},
 			],
 			[]
 		),
@@ -67,8 +67,8 @@ export const mapResultToProps = safeResultToProps(
 					.split('/')
 					.map((valueKeyHalf: string) =>
 						moment.utc(valueKeyHalf).valueOf()
-					)
+					),
 			])
-		)
+		),
 	})
 );

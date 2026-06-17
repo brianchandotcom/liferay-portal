@@ -3,7 +3,7 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import Form, {
 	validateMaxLength,
-	validateRequired
+	validateRequired,
 } from 'shared/components/form';
 import Loading, {Align} from 'shared/components/Loading';
 import PreferenceMutation from 'settings/data-privacy/queries/PreferenceMutation';
@@ -48,11 +48,11 @@ const renderAddButton = (
 			<ClayButton
 				aria-label={Liferay.Language.get('add')}
 				borderless
-				className='button-root ml-1'
-				displayType='secondary'
+				className="button-root ml-1"
+				displayType="secondary"
 				{...props}
 			>
-				<ClayIcon className='icon-root' symbol='plus' />
+				<ClayIcon className="icon-root" symbol="plus" />
 			</ClayButton>
 		);
 	}
@@ -68,16 +68,16 @@ export const SearchCard: React.FC<ISearchCardProps> = ({
 	close,
 	groupId,
 	history,
-	open
+	open,
 }) => {
 	const currentUser = useCurrentUser();
 	const {
 		data: searchQueryStringsData,
 		error,
-		loading
+		loading,
 	} = useQuery(PreferenceQuery, {
 		fetchPolicy: 'no-cache',
-		variables: {key: SEARCH_QUERY_STRINGS_KEY}
+		variables: {key: SEARCH_QUERY_STRINGS_KEY},
 	});
 
 	const [updatePreference] = useMutation(PreferenceMutation);
@@ -92,7 +92,7 @@ export const SearchCard: React.FC<ISearchCardProps> = ({
 			: [];
 
 	const handleSubmit = ({
-		queryStringList
+		queryStringList,
 	}: {
 		queryStringList: string[];
 	}): void => {
@@ -103,15 +103,15 @@ export const SearchCard: React.FC<ISearchCardProps> = ({
 		updatePreference({
 			variables: {
 				key: SEARCH_QUERY_STRINGS_KEY,
-				value: JSON.stringify(searchQueryStrings)
-			}
+				value: JSON.stringify(searchQueryStrings),
+			},
 		})
 			.then(() => {
 				addAlert({
 					alertType: Alert.Types.Success,
 					message: Liferay.Language.get(
 						'search-query-definition-has-been-saved'
-					)
+					),
 				});
 
 				history.push(toRoute(Routes.SETTINGS_DEFINITIONS, {groupId}));
@@ -121,7 +121,7 @@ export const SearchCard: React.FC<ISearchCardProps> = ({
 
 				addAlert({
 					alertType: Alert.Types.Error,
-					message: Liferay.Language.get('error')
+					message: Liferay.Language.get('error'),
 				});
 			});
 	};
@@ -143,8 +143,8 @@ export const SearchCard: React.FC<ISearchCardProps> = ({
 					submitButtonDisplay: 'warning',
 					submitMessage: Liferay.Language.get('exit'),
 					title: Liferay.Language.get('exit-without-saving'),
-					titleIcon: 'warning-full'
-			  })
+					titleIcon: 'warning-full',
+				})
 			: history.push(toRoute(Routes.SETTINGS_DEFINITIONS, {groupId}));
 	};
 
@@ -159,17 +159,17 @@ export const SearchCard: React.FC<ISearchCardProps> = ({
 	};
 
 	return (
-		<Card className='query-card-root'>
-			<Card.Header className='mb-1'>
+		<Card className="query-card-root">
+			<Card.Header className="mb-1">
 				<Card.Title>{Liferay.Language.get('query-string')}</Card.Title>
 			</Card.Header>
 
 			<Card.Body>
 				<WrapSafeResults
-					className='flex-grow-1'
+					className="flex-grow-1"
 					error={error}
 					errorProps={{
-						className: 'flex-grow-1'
+						className: 'flex-grow-1',
 					}}
 					loading={loading}
 					page={false}
@@ -177,7 +177,7 @@ export const SearchCard: React.FC<ISearchCardProps> = ({
 				>
 					<Form
 						initialValues={{
-							queryStringList: getQueryStringListInitialValue()
+							queryStringList: getQueryStringListInitialValue(),
 						}}
 						innerRef={_formRef as any}
 						onSubmit={handleSubmit}
@@ -189,19 +189,19 @@ export const SearchCard: React.FC<ISearchCardProps> = ({
 							setFieldTouched,
 							setFieldValue,
 							touched,
-							values
+							values,
 						}) => (
 							<Form.Form onSubmit={handleSubmit}>
 								<FieldArray
-									name='queryStringList'
-									render={arrayHelpers => (
+									name="queryStringList"
+									render={(arrayHelpers) => (
 										<>
-											<div className='form-inline mb-3'>
+											<div className="form-inline mb-3">
 												<Form.Input
-													className='query-input'
+													className="query-input"
 													disabled
-													name='defaultQueryString'
-													value='q'
+													name="defaultQueryString"
+													value="q"
 												/>
 
 												{renderAddButton(
@@ -213,7 +213,7 @@ export const SearchCard: React.FC<ISearchCardProps> = ({
 														onClick: () =>
 															arrayHelpers.push(
 																''
-															)
+															),
 													}
 												)}
 											</div>
@@ -221,11 +221,11 @@ export const SearchCard: React.FC<ISearchCardProps> = ({
 											{values.queryStringList.map(
 												(queryString, index) => (
 													<div
-														className='form-inline mb-3'
+														className="form-inline mb-3"
 														key={index}
 													>
 														<Form.Input
-															className='query-input'
+															className="query-input"
 															disabled={
 																!authorized
 															}
@@ -242,7 +242,7 @@ export const SearchCard: React.FC<ISearchCardProps> = ({
 																validateRequired,
 																validateMaxLength(
 																	QUERY_STRING_SIZE_LIMIT
-																)
+																),
 															])}
 														/>
 														{authorized && (
@@ -251,11 +251,11 @@ export const SearchCard: React.FC<ISearchCardProps> = ({
 																	'delete'
 																)}
 																borderless
-																className='button-root ml-1'
+																className="button-root ml-1"
 																disabled={
 																	isSubmitting
 																}
-																displayType='secondary'
+																displayType="secondary"
 																onClick={() =>
 																	arrayHelpers.remove(
 																		index
@@ -263,8 +263,8 @@ export const SearchCard: React.FC<ISearchCardProps> = ({
 																}
 															>
 																<ClayIcon
-																	className='icon-root'
-																	symbol='trash'
+																	className="icon-root"
+																	symbol="trash"
 																/>
 															</ClayButton>
 														)}
@@ -280,7 +280,7 @@ export const SearchCard: React.FC<ISearchCardProps> = ({
 																onClick: () =>
 																	arrayHelpers.push(
 																		''
-																	)
+																	),
 															},
 															index
 														)}
@@ -292,12 +292,12 @@ export const SearchCard: React.FC<ISearchCardProps> = ({
 								/>
 
 								{authorized && (
-									<div className='mt-4'>
+									<div className="mt-4">
 										<ClayButton
-											className='button-root'
+											className="button-root"
 											disabled={!isValid}
-											displayType='primary'
-											type='submit'
+											displayType="primary"
+											type="submit"
 										>
 											{isSubmitting && (
 												<Loading align={Align.Left} />
@@ -307,8 +307,8 @@ export const SearchCard: React.FC<ISearchCardProps> = ({
 										</ClayButton>
 
 										<ClayButton
-											className='button-root ml-4'
-											displayType='secondary'
+											className="button-root ml-4"
+											displayType="secondary"
 											onClick={() =>
 												handleCancel(touched)
 											}

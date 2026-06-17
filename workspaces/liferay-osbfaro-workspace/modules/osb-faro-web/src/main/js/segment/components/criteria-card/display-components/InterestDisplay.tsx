@@ -8,7 +8,7 @@ import {maybeFormatValue} from '../utils';
 const InterestDisplay: React.FC<IDisplayComponentProps> = ({
 	criterion,
 	property,
-	timeZoneId
+	timeZoneId,
 }) => {
 	const valueIMap = criterion.value as CustomValue;
 

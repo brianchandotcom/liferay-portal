@@ -6,12 +6,12 @@ export function search({
 	keywords = '',
 	page = 1,
 	pageSize = 20,
-	vocabularyId = ''
+	vocabularyId = '',
 }) {
 	return sendRequest({
 		data: {channelId, keywords, page, pageSize, vocabularyId},
 		method: 'GET',
-		path: `contacts/${groupId}/asset-summary-categories`
+		path: `contacts/${groupId}/asset-summary-categories`,
 	});
 }
 
@@ -19,7 +19,7 @@ export function fetchAccountTopCategories({
 	accountId,
 	channelId,
 	groupId,
-	selectedMetric
+	selectedMetric,
 }) {
 	return sendRequest({
 		data: {
@@ -27,9 +27,9 @@ export function fetchAccountTopCategories({
 			channelId,
 			pageSize: 5,
 			selectedMetric,
-			sort: `${selectedMetric},desc`
+			sort: `${selectedMetric},desc`,
 		},
 		method: 'GET',
-		path: `contacts/${groupId}/asset-summary-categories`
+		path: `contacts/${groupId}/asset-summary-categories`,
 	});
 }

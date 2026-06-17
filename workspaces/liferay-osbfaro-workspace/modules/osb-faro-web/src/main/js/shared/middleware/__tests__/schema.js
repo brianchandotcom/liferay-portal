@@ -5,14 +5,14 @@ import {
 	individual,
 	individuals,
 	segment,
-	segments
+	segments,
 } from 'shared/middleware/schema';
 import {EntityTypes} from 'shared/util/constants';
 import {
 	mockIndividual,
 	mockLayout,
 	mockLiferayDataSource,
-	mockSegment
+	mockSegment,
 } from 'test/data';
 import {normalize} from 'normalizr';
 
@@ -28,12 +28,12 @@ describe('Schema', () => {
 					foo: {
 						data: expect.objectContaining({
 							id: 'foo',
-							name: 'Foo Bar'
-						})
-					}
-				}
+							name: 'Foo Bar',
+						}),
+					},
+				},
 			},
-			result: 'foo'
+			result: 'foo',
 		});
 	});
 
@@ -46,14 +46,14 @@ describe('Schema', () => {
 			entities: {
 				individuals: {
 					bar: {
-						data: expect.objectContaining({id: 'bar'})
+						data: expect.objectContaining({id: 'bar'}),
 					},
 					foo: {
-						data: expect.objectContaining({id: 'foo'})
-					}
-				}
+						data: expect.objectContaining({id: 'foo'}),
+					},
+				},
 			},
-			result: ['foo', 'bar']
+			result: ['foo', 'bar'],
 		});
 	});
 
@@ -67,12 +67,12 @@ describe('Schema', () => {
 				segments: {
 					foo: {
 						data: expect.objectContaining({
-							id: 'foo'
-						})
-					}
-				}
+							id: 'foo',
+						}),
+					},
+				},
 			},
-			result: 'foo'
+			result: 'foo',
 		});
 	});
 
@@ -85,14 +85,14 @@ describe('Schema', () => {
 			entities: {
 				segments: {
 					bar: {
-						data: expect.objectContaining({id: 'bar'})
+						data: expect.objectContaining({id: 'bar'}),
 					},
 					foo: {
-						data: expect.objectContaining({id: 'foo'})
-					}
-				}
+						data: expect.objectContaining({id: 'foo'}),
+					},
+				},
 			},
-			result: ['foo', 'bar']
+			result: ['foo', 'bar'],
 		});
 	});
 
@@ -103,10 +103,10 @@ describe('Schema', () => {
 			entities: {
 				dataSources: {
 					2: {
-						data: payload
-					}
-				}
-			}
+						data: payload,
+					},
+				},
+			},
 		});
 	});
 
@@ -124,14 +124,14 @@ describe('Schema', () => {
 					individuals: expect.any(Object),
 					layouts: {
 						1: {
-							data: expect.objectContaining({id: 1})
-						}
-					}
+							data: expect.objectContaining({id: 1}),
+						},
+					},
 				},
 				result: expect.objectContaining({
 					contactsLayoutTemplate: 1,
-					faroEntity: expect.any(String)
-				})
+					faroEntity: expect.any(String),
+				}),
 			});
 		});
 
@@ -147,15 +147,15 @@ describe('Schema', () => {
 				entities: {
 					layouts: {
 						2: {
-							data: expect.objectContaining({id: 2})
-						}
+							data: expect.objectContaining({id: 2}),
+						},
 					},
-					segments: expect.any(Object)
+					segments: expect.any(Object),
 				},
 				result: expect.objectContaining({
 					contactsLayoutTemplate: 2,
-					faroEntity: expect.any(String)
-				})
+					faroEntity: expect.any(String),
+				}),
 			});
 		});
 	});
@@ -168,10 +168,10 @@ describe('Schema', () => {
 				entities: {
 					distributions: {
 						3: {
-							data: payload
-						}
-					}
-				}
+							data: payload,
+						},
+					},
+				},
 			});
 		});
 	});

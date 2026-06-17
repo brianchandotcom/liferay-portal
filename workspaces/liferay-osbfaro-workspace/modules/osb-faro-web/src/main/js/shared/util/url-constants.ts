@@ -71,7 +71,7 @@ enum URLConstants {
 	VisitorBehaviorBlogsLink = 'https://learn.liferay.com/w/dxp/personalization/analytics-cloud/touchpoints/assets-analytics/blogs-analytics#visitor-behavior',
 	VisitorBehaviorDocumentsAndMediaLink = 'https://learn.liferay.com/w/dxp/personalization/analytics-cloud/touchpoints/assets-analytics/documents-and-media-analytics#visitor-behavior',
 	VisitorBehaviorFormsLink = 'https://learn.liferay.com/w/dxp/personalization/analytics-cloud/touchpoints/assets-analytics/forms-analytics#visitor-behavior',
-	VisitorBehaviorWebContentLink = 'https://learn.liferay.com/w/dxp/personalization/analytics-cloud/touchpoints/assets-analytics/web-content-analytics#visitor-behavior'
+	VisitorBehaviorWebContentLink = 'https://learn.liferay.com/w/dxp/personalization/analytics-cloud/touchpoints/assets-analytics/web-content-analytics#visitor-behavior',
 }
 
 export const ApisPath = '/api/reports';

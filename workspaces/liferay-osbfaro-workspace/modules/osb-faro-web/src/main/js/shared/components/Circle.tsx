@@ -10,14 +10,14 @@ const Circle: React.FC<ICircleProps> = ({
 	children,
 	className,
 	color,
-	size = 8
+	size = 8,
 }) => (
 	<span
 		className={getCN('circle', className)}
 		style={{
 			backgroundColor: color,
 			height: `${size}px`,
-			width: `${size}px`
+			width: `${size}px`,
 		}}
 	>
 		{children}

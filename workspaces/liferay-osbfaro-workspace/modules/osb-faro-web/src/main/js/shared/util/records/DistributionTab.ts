@@ -16,7 +16,7 @@ export default class DistributionTab
 		numberOfBins: null,
 		propertyId: null,
 		propertyType: null,
-		title: ''
+		title: '',
 	})
 	implements IDistributionTab
 {

@@ -15,7 +15,7 @@ const ActivityStreamCardHeader: React.FC<BaseCardHeaderDefaultIProps> = ({
 	onRangeSelectorsChange,
 	rangeSelectors,
 	showInterval,
-	showRangeKey = true
+	showRangeKey = true,
 }) => {
 	const handleRangeSelectorsChange = useCallback((newVal: any) => {
 		onRangeSelectorsChange && onRangeSelectorsChange(newVal);
@@ -31,20 +31,20 @@ const ActivityStreamCardHeader: React.FC<BaseCardHeaderDefaultIProps> = ({
 	);
 
 	return (
-		<Card.Header className='align-items-center d-flex justify-content-between'>
-			<div className='min-w-0'>
+		<Card.Header className="align-items-center d-flex justify-content-between">
+			<div className="min-w-0">
 				<Card.Title>{label}</Card.Title>
 
-				<Text color='secondary' size={4}>
+				<Text color="secondary" size={4}>
 					{description}
 				</Text>
 			</div>
 
-			<div className='d-flex flex-shrink-0'>
+			<div className="d-flex flex-shrink-0">
 				{showInterval && (
 					<IntervalSelector
 						activeInterval={interval}
-						className='mr-3'
+						className="mr-3"
 						disabled={isHourlyRangeKey(rangeSelectors.rangeKey)}
 						onChange={handleChangeInterval}
 					/>

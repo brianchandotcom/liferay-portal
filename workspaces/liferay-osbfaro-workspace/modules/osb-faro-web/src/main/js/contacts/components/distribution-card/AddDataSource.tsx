@@ -20,12 +20,12 @@ const AddDataSource: React.FC<IAddDataSourceProps> = ({groupId}) => (
 					'convert-and-enrich-anonymous-individuals-to-known-individuals-with-attributes-from-another-data-source'
 				)}
 				primary
-				title=''
+				title=""
 			>
 				<ClayLink
 					button
-					className='button-root'
-					displayType='primary'
+					className="button-root"
+					displayType="primary"
 					href={toRoute(Routes.SETTINGS_DATA_SOURCE_LIST, {groupId})}
 				>
 					{Liferay.Language.get('add-data-source')}

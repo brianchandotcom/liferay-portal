@@ -13,7 +13,7 @@ import {
 	createOrderIOMap,
 	JOB_TITLE,
 	LAST_ACTIVITY_DATE,
-	NAME
+	NAME,
 } from 'shared/util/pagination';
 import {addAlert} from 'shared/actions/alerts';
 import {close, open} from 'shared/actions/modals';
@@ -47,15 +47,15 @@ const KnownIndividuals: React.FC<IKnownIndividualsProps> = () => {
 	const {channelId, groupId} = useParams();
 
 	const {delta, orderIOMap, page, query} = useQueryPagination({
-		initialOrderIOMap: createOrderIOMap(NAME)
+		initialOrderIOMap: createOrderIOMap(NAME),
 	});
 
 	const {data: dataSourceData, loading: dataSourceLoading} = useRequest({
 		dataSourceFn: API.dataSource.search,
 		variables: {
 			delta: 1,
-			groupId
-		}
+			groupId,
+		},
 	});
 
 	const dataSourceStates = useDataSources();
@@ -70,10 +70,10 @@ const KnownIndividuals: React.FC<IKnownIndividualsProps> = () => {
 		const createDataSourceButton = (
 			<ClayLink
 				button
-				className='button-root'
-				displayType='primary'
+				className="button-root"
+				displayType="primary"
 				href={toRoute(Routes.SETTINGS_DATA_SOURCE_LIST, {
-					groupId
+					groupId,
 				})}
 			>
 				{Liferay.Language.get('connect-data-source')}
@@ -83,20 +83,21 @@ const KnownIndividuals: React.FC<IKnownIndividualsProps> = () => {
 		if (dataSourceLoading || isNil(dataSourceData?.total)) {
 			return (
 				<NoResultsDisplay>
-					<Loading key='LOADING' />
+					<Loading key="LOADING" />
 				</NoResultsDisplay>
 			);
-		} else if (dataSourceData?.total === 0) {
+		}
+		else if (dataSourceData?.total === 0) {
 			return (
 				<NoResultsDisplay
 					description={
 						authorized
 							? Liferay.Language.get(
 									'connect-a-data-source-with-people-data'
-							  )
+								)
 							: Liferay.Language.get(
 									'please-contact-your-site-administrator-to-add-people-data-sources'
-							  )
+								)
 					}
 					primary
 					title={Liferay.Language.get('no-data-sources-connected')}
@@ -104,7 +105,8 @@ const KnownIndividuals: React.FC<IKnownIndividualsProps> = () => {
 					{authorized ? createDataSourceButton : undefined}
 				</NoResultsDisplay>
 			);
-		} else {
+		}
+		else {
 			return (
 				<NoResultsDisplay
 					description={
@@ -112,16 +114,16 @@ const KnownIndividuals: React.FC<IKnownIndividualsProps> = () => {
 							{authorized
 								? Liferay.Language.get(
 										'connect-a-data-source-with-people-data'
-								  )
+									)
 								: Liferay.Language.get(
 										'please-contact-your-site-administrator-to-add-people-data-sources'
-								  )}
+									)}
 
 							<ClayLink
-								className='d-block mb-3'
+								className="d-block mb-3"
 								href={URLConstants.DataSourceConnection}
-								key='DOCUMENTATION'
-								target='_blank'
+								key="DOCUMENTATION"
+								target="_blank"
 							>
 								{Liferay.Language.get(
 									'access-our-documentation-to-learn-more'
@@ -131,12 +133,12 @@ const KnownIndividuals: React.FC<IKnownIndividualsProps> = () => {
 							{authorized && (
 								<ClayLink
 									button
-									className='button-root'
-									displayType='primary'
+									className="button-root"
+									displayType="primary"
 									href={toRoute(
 										Routes.SETTINGS_DATA_SOURCE_LIST,
 										{
-											groupId
+											groupId,
 										}
 									)}
 								>
@@ -150,7 +152,7 @@ const KnownIndividuals: React.FC<IKnownIndividualsProps> = () => {
 					icon={{
 						border: false,
 						size: Sizes.XXXLarge,
-						symbol: 'ac_satellite'
+						symbol: 'ac_satellite',
 					}}
 					primary
 					title={Liferay.Language.get(
@@ -170,8 +172,8 @@ const KnownIndividuals: React.FC<IKnownIndividualsProps> = () => {
 			orderIOMap,
 			page,
 			profileTypes: [ProfileTypes.KNOWN],
-			query
-		}
+			query,
+		},
 	});
 
 	return (
@@ -183,16 +185,16 @@ const KnownIndividuals: React.FC<IKnownIndividualsProps> = () => {
 							{authorized
 								? Liferay.Language.get(
 										'connect-a-data-source-to-get-started'
-								  )
+									)
 								: Liferay.Language.get(
 										'please-contact-your-workspace-administrator-to-add-data-sources'
-								  )}
+									)}
 
 							<ClayLink
-								className='d-block mb-3'
+								className="d-block mb-3"
 								href={URLConstants.DataSourceConnection}
-								key='DOCUMENTATION'
-								target='_blank'
+								key="DOCUMENTATION"
+								target="_blank"
 							>
 								{Liferay.Language.get(
 									'access-our-documentation-to-learn-more'
@@ -202,12 +204,12 @@ const KnownIndividuals: React.FC<IKnownIndividualsProps> = () => {
 							{authorized && (
 								<ClayLink
 									button
-									className='button-root'
-									displayType='primary'
+									className="button-root"
+									displayType="primary"
 									href={toRoute(
 										Routes.SETTINGS_DATA_SOURCE_LIST,
 										{
-											groupId
+											groupId,
 										}
 									)}
 								>
@@ -223,19 +225,19 @@ const KnownIndividuals: React.FC<IKnownIndividualsProps> = () => {
 				/>
 
 				<StatesRenderer.Success>
-					<div className='individuals-dashboard-known-individuals-root'>
+					<div className="individuals-dashboard-known-individuals-root">
 						<Card pageDisplay>
 							<CrossPageSelect
 								columns={[
 									individualsListColumns.getNameEmail({
 										channelId,
-										groupId
+										groupId,
 									}),
 									individualsListColumns.jobTitle,
 									individualsListColumns.activitiesCount,
 									individualsListColumns.getLastActivityDate(
 										timeZoneId
-									)
+									),
 								]}
 								currentUser={currentUser}
 								delta={delta}
@@ -249,26 +251,26 @@ const KnownIndividuals: React.FC<IKnownIndividualsProps> = () => {
 								orderByOptions={[
 									{
 										label: Liferay.Language.get('name'),
-										value: NAME
+										value: NAME,
 									},
 									{
 										label: Liferay.Language.get(
 											'job-title'
 										),
-										value: JOB_TITLE
+										value: JOB_TITLE,
 									},
 									{
 										label: Liferay.Language.get(
 											'total-activities'
 										),
-										value: ACTIVITIES_COUNT
+										value: ACTIVITIES_COUNT,
 									},
 									{
 										label: Liferay.Language.get(
 											'last-activity'
 										),
-										value: LAST_ACTIVITY_DATE
-									}
+										value: LAST_ACTIVITY_DATE,
+									},
 								]}
 								orderIOMap={orderIOMap}
 								page={page}

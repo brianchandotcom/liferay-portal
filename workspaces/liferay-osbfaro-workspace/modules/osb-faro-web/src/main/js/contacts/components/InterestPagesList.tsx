@@ -5,7 +5,7 @@ import {
 	createOrderIOMap,
 	TITLE,
 	UNIQUE_VISITS_COUNT,
-	URL
+	URL,
 } from 'shared/util/pagination';
 import {pagesListColumns} from 'shared/util/table-columns';
 import {Routes} from 'shared/util/router';
@@ -14,12 +14,12 @@ import {useQueryPagination} from 'shared/hooks/useQueryPagination';
 const PAGES_ORDER_BY_OPTIONS = [
 	{
 		label: Liferay.Language.get('page-title'),
-		value: TITLE
+		value: TITLE,
 	},
 	{
 		label: Liferay.Language.get('url'),
-		value: URL
-	}
+		value: URL,
+	},
 ];
 
 interface IInterestPages {
@@ -37,7 +37,7 @@ const ActivePagesList: React.FC<IInterestPages> = ({
 	...otherProps
 }) => {
 	const {delta, orderIOMap, page, query} = useQueryPagination({
-		initialOrderIOMap: createOrderIOMap(UNIQUE_VISITS_COUNT)
+		initialOrderIOMap: createOrderIOMap(UNIQUE_VISITS_COUNT),
 	});
 
 	return (
@@ -47,18 +47,18 @@ const ActivePagesList: React.FC<IInterestPages> = ({
 				pagesListColumns.getTitleUrl({
 					channelId,
 					groupId,
-					route: Routes.SITES_TOUCHPOINTS_OVERVIEW
+					route: Routes.SITES_TOUCHPOINTS_OVERVIEW,
 				}),
 				pagesListColumns.url,
-				pagesListColumns.viewCount
+				pagesListColumns.viewCount,
 			]}
 			delta={delta}
 			orderByOptions={[
 				...PAGES_ORDER_BY_OPTIONS,
 				{
 					label: Liferay.Language.get('views'),
-					value: UNIQUE_VISITS_COUNT
-				}
+					value: UNIQUE_VISITS_COUNT,
+				},
 			]}
 			orderIOMap={orderIOMap}
 			page={page}
@@ -72,7 +72,7 @@ const InactivePagesList: React.FC<IInterestPages> = ({
 	...otherProps
 }) => {
 	const {delta, orderIOMap, page, query} = useQueryPagination({
-		initialOrderIOMap: createOrderIOMap(URL)
+		initialOrderIOMap: createOrderIOMap(URL),
 	});
 
 	return (
@@ -82,10 +82,10 @@ const InactivePagesList: React.FC<IInterestPages> = ({
 				pagesListColumns.getTitleUrl({
 					channelId,
 					groupId,
-					route: Routes.SITES_TOUCHPOINTS_OVERVIEW
+					route: Routes.SITES_TOUCHPOINTS_OVERVIEW,
 				}),
 				pagesListColumns.url,
-				pagesListColumns.inactiveViewCount
+				pagesListColumns.inactiveViewCount,
 			]}
 			delta={delta}
 			orderByOptions={PAGES_ORDER_BY_OPTIONS}

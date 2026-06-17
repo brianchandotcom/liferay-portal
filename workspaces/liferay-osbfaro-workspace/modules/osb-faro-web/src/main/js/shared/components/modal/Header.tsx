@@ -16,19 +16,19 @@ const Header: React.FC<IHeaderProps> = ({
 	className,
 	iconSymbol,
 	onClose,
-	title
+	title,
 }) => (
 	<div
 		className={getCN('modal-header', className, {
 			border,
-			'has-title': title
+			'has-title': title,
 		})}
 	>
 		{title && (
-			<div className='h4 modal-title'>
+			<div className="h4 modal-title">
 				{iconSymbol && (
 					<ClayIcon
-						className='icon-root modal-title-indicator'
+						className="icon-root modal-title-indicator"
 						symbol={iconSymbol}
 					/>
 				)}
@@ -40,11 +40,11 @@ const Header: React.FC<IHeaderProps> = ({
 		{!!onClose && (
 			<ClayButton
 				aria-label={Liferay.Language.get('close')}
-				className='button-root close'
-				displayType='secondary'
+				className="button-root close"
+				displayType="secondary"
 				onClick={onClose}
 			>
-				<ClayIcon className='icon-root' symbol='times' />
+				<ClayIcon className="icon-root" symbol="times" />
 			</ClayButton>
 		)}
 	</div>

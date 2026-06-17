@@ -5,7 +5,7 @@ import React, {useEffect} from 'react';
 import {
 	ACTION_TYPES,
 	useSelectionContext,
-	withSelectionProvider
+	withSelectionProvider,
 } from 'shared/context/selection';
 import {Columns, IPagination} from 'shared/types';
 import {DocumentNode, QueryHookOptions, useQuery} from '@apollo/client';
@@ -64,7 +64,7 @@ const SearchableTableModalGraphql: React.FC<
 		onQueryChange,
 		orderIOMap,
 		page,
-		query
+		query,
 	} = useStatefulPagination(undefined, {initialDelta, initialOrderIOMap});
 
 	const {data, error, loading} = useQuery(
@@ -80,7 +80,7 @@ const SearchableTableModalGraphql: React.FC<
 			selectionDispatch?.({type: ACTION_TYPES.clearAll});
 			selectionDispatch?.({
 				payload: {items: selectedItems},
-				type: ACTION_TYPES.add
+				type: ACTION_TYPES.add,
 			});
 		}
 	}, []);
@@ -89,15 +89,15 @@ const SearchableTableModalGraphql: React.FC<
 
 	const {empty, items, total} = safeResultToProps(mapResultToProps)({
 		data: {error, loading, ...data},
-		ownProps: {}
+		ownProps: {},
 	});
 
 	return (
-		<Modal className={className} size='lg'>
+		<Modal className={className} size="lg">
 			<Modal.Header onClose={onClose} title={title} />
 
-			<Modal.Body className='p-0'>
-				<div className='text-secondary'>{instruction}</div>
+			<Modal.Body className="p-0">
+				<div className="text-secondary">{instruction}</div>
 
 				<CrossPageSelect
 					{...otherProps}
@@ -121,17 +121,17 @@ const SearchableTableModalGraphql: React.FC<
 
 			<Modal.Footer>
 				<ClayButton
-					className='button-root'
-					displayType='secondary'
+					className="button-root"
+					displayType="secondary"
 					onClick={onClose}
 				>
 					{Liferay.Language.get('cancel')}
 				</ClayButton>
 
 				<ClayButton
-					className='button-root'
+					className="button-root"
 					disabled={requireSelection && !contextSelectedItems.size}
-					displayType='primary'
+					displayType="primary"
 					onClick={handleSubmit}
 				>
 					{submitMessage}

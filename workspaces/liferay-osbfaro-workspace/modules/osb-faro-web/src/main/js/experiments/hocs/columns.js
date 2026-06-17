@@ -18,12 +18,12 @@ const ExperimentListTitle = ({id, title, touchpoint}) => {
 
 	const url = getUrl(Routes.TESTS_OVERVIEW, {
 		params: {channelId, groupId, id},
-		query: {}
+		query: {},
 	});
 
 	return (
-		<td className='table-cell-expand'>
-			<Link className='table-title' to={url}>
+		<td className="table-cell-expand">
+			<Link className="table-title" to={url}>
 				<TextTruncate title={title || touchpoint}>
 					{title || '-'}
 				</TextTruncate>
@@ -32,14 +32,14 @@ const ExperimentListTitle = ({id, title, touchpoint}) => {
 	);
 };
 
-export default timeZoneId => [
+export default (timeZoneId) => [
 	{
 		accessor: 'name',
 		cellRenderer: ({data: {id, name, pageURL}}) => (
 			<ExperimentListTitle id={id} title={name} touchpoint={pageURL} />
 		),
 		className: 'table-cell-expand',
-		label: Liferay.Language.get('name')
+		label: Liferay.Language.get('name'),
 	},
 	{
 		accessor: 'pageURL',
@@ -51,42 +51,43 @@ export default timeZoneId => [
 		),
 		className: 'table-cell-expand',
 		label: Liferay.Language.get('url').toUpperCase(),
-		width: '300px'
+		width: '300px',
 	},
 	{
 		accessor: 'status',
-		dataFormatter: value => (
+		dataFormatter: (value) => (
 			<Label
-				className='experiment-status'
+				className="experiment-status"
 				display={getStatusColor(value)}
-				key='status'
-				size='lg'
+				key="status"
+				size="lg"
 			>
 				{getStatusName(value)}
 			</Label>
 		),
-		label: Liferay.Language.get('status')
+		label: Liferay.Language.get('status'),
 	},
 	{
 		accessor: 'type',
-		dataFormatter: value => (value === 'AB' ? 'A/B' : value),
-		label: Liferay.Language.get('type')
+		dataFormatter: (value) => (value === 'AB' ? 'A/B' : value),
+		label: Liferay.Language.get('type'),
 	},
 	{
 		accessor: 'createDate',
 		cellRenderer: DateCell,
 		cellRendererProps: {
-			dateFormatter: date => formatDateToTimeZone(date, 'll', timeZoneId),
-			datePath: 'createDate'
+			dateFormatter: (date) =>
+				formatDateToTimeZone(date, 'll', timeZoneId),
+			datePath: 'createDate',
 		},
 		className: 'table-column-text-end',
-		label: Liferay.Language.get('created')
+		label: Liferay.Language.get('created'),
 	},
 	{
 		accessor: 'modifiedDate',
 		cellRenderer: DateCell,
 		cellRendererProps: {
-			dateFormatter: modifiedDate => {
+			dateFormatter: (modifiedDate) => {
 				if (!isNil(modifiedDate)) {
 					const timeZonedDate = applyTimeZone(
 						modifiedDate,
@@ -100,9 +101,9 @@ export default timeZoneId => [
 						: moment.utc(modifiedDate).fromNow();
 				}
 			},
-			datePath: 'modifiedDate'
+			datePath: 'modifiedDate',
 		},
 		className: 'table-column-text-end',
-		label: Liferay.Language.get('last-modified')
-	}
+		label: Liferay.Language.get('last-modified'),
+	},
 ];

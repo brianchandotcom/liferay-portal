@@ -120,7 +120,8 @@ $c: '.channels-menu';
 				display: inline-block;
 				font-size: $fontSizeSmall;
 				padding: 10px 32px;
-				transition: background-color 0.15s ease-out,
+				transition:
+					background-color 0.15s ease-out,
 					color 0.15s ease-out;
 				width: 100%;
 

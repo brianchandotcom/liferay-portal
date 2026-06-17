@@ -20,7 +20,7 @@ describe('User', () => {
 		expect(
 			user.hasPermission([
 				UserRoleNames.Administrator,
-				UserRoleNames.Owner
+				UserRoleNames.Owner,
 			])
 		).toBe(false);
 
@@ -28,7 +28,7 @@ describe('User', () => {
 			user.hasPermission([
 				UserRoleNames.Administrator,
 				UserRoleNames.Member,
-				UserRoleNames.Owner
+				UserRoleNames.Owner,
 			])
 		).toBe(true);
 

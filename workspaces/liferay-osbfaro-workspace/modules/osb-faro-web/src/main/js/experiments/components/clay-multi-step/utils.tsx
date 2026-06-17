@@ -3,7 +3,8 @@ export const getStatus = (stepNumber: number, current: number) => {
 
 	if (stepNumber === current) {
 		status = 'active';
-	} else if (stepNumber < current) {
+	}
+	else if (stepNumber < current) {
 		status = 'complete';
 	}
 

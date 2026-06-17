@@ -25,7 +25,7 @@ const formatData = (experiment: IExperimentWithHistogram) => {
 			data_control_traffic_split: control.trafficSplit,
 			data_variant: variant.sessionsHistogram[index].value,
 			data_variant_traffic_split: variant.trafficSplit,
-			key: session.key
+			key: session.key,
 		});
 	});
 
@@ -34,13 +34,13 @@ const formatData = (experiment: IExperimentWithHistogram) => {
 		data: chartData,
 		format: getAxisFormatter('number'),
 		intervals: control.sessionsHistogram.map(({key}) => key),
-		variantLabel: variant.dxpVariantName
+		variantLabel: variant.dxpVariantName,
 	};
 };
 
 const TestTraffic = ({experiment}: {experiment: IExperimentWithHistogram}) => (
-	<Card className='analytics-session-card' minHeight={405}>
-		<Card.Header className='align-items-center d-flex justify-content-between'>
+	<Card className="analytics-session-card" minHeight={405}>
+		<Card.Header className="align-items-center d-flex justify-content-between">
 			<Card.Title>{Liferay.Language.get('test-traffic')}</Card.Title>
 		</Card.Header>
 
@@ -53,7 +53,7 @@ const TestTraffic = ({experiment}: {experiment: IExperimentWithHistogram}) => (
 					icon={{
 						border: false,
 						size: Sizes.XLarge,
-						symbol: 'ac_chart'
+						symbol: 'ac_chart',
 					}}
 					title={Liferay.Language.get(
 						'we-are-currently-collecting-data'

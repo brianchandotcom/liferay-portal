@@ -13,7 +13,7 @@ import {useHistory} from 'react-router-dom';
 
 export enum ReportType {
 	CSV = 'CSV',
-	PDF = 'PDF'
+	PDF = 'PDF',
 }
 
 interface IDownloadReportModal {
@@ -41,7 +41,7 @@ export const DownloadReportModal: React.FC<IDownloadReportModal> = ({
 	onSubmit,
 	rangeSelectors: initialRangeSelectors,
 	showDateRange = true,
-	type
+	type,
 }) => {
 	const history = useHistory();
 	const [openAlert, setOpenAlert] = useState(true);
@@ -53,7 +53,7 @@ export const DownloadReportModal: React.FC<IDownloadReportModal> = ({
 	return (
 		<ClayModal observer={observer}>
 			<ClayForm>
-				<div className='modal-content'>
+				<div className="modal-content">
 					<ClayModal.Header>
 						{Liferay.Language.get('download-reports')}
 					</ClayModal.Header>
@@ -62,7 +62,7 @@ export const DownloadReportModal: React.FC<IDownloadReportModal> = ({
 						<ClayAlert
 							onClose={() => setOpenAlert(false)}
 							title={Liferay.Language.get('info')}
-							variant='stripe'
+							variant="stripe"
 						>
 							{infoMessage}
 						</ClayAlert>
@@ -70,8 +70,8 @@ export const DownloadReportModal: React.FC<IDownloadReportModal> = ({
 
 					<ClayModal.Body>
 						{showDateRange && (
-							<ClayForm.Group className='mb-0'>
-								<label htmlFor='timeRange'>
+							<ClayForm.Group className="mb-0">
+								<label htmlFor="timeRange">
 									{Liferay.Language.get('date-range')}
 								</label>
 
@@ -95,15 +95,15 @@ export const DownloadReportModal: React.FC<IDownloadReportModal> = ({
 						last={
 							<ClayButton.Group spaced>
 								<ClayButton
-									data-testid='cancel'
-									displayType='secondary'
+									data-testid="cancel"
+									displayType="secondary"
 									onClick={onClose}
 								>
 									{Liferay.Language.get('cancel')}
 								</ClayButton>
 
 								<ClayButton
-									data-testid='submit'
+									data-testid="submit"
 									disabled={disabled || submitDisabled}
 									onClick={() => {
 										setSubmitDisabled(true);
@@ -120,7 +120,7 @@ export const DownloadReportModal: React.FC<IDownloadReportModal> = ({
 												setUriQueryValues(
 													pickBy({
 														downloadReport: true,
-														...rangeSelectors
+														...rangeSelectors,
 													})
 												)
 											);
@@ -145,9 +145,10 @@ export const DownloadReportModal: React.FC<IDownloadReportModal> = ({
 												attributes: true,
 												characterData: true,
 												childList: true,
-												subtree: true
+												subtree: true,
 											});
-										} else {
+										}
+										else {
 											onSubmit();
 										}
 									}}

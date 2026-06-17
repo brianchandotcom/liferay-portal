@@ -9,7 +9,7 @@ import {EmptyStateLink, EmptyStateText} from '../AssetAppearsOnCard';
 import {
 	mockAssetAppearsOnReq,
 	mockPreferenceReq,
-	mockTimeRangeReq
+	mockTimeRangeReq,
 } from 'test/graphql-data';
 import {MockedProvider} from '@apollo/client/testing';
 import {Provider} from 'react-redux';
@@ -26,10 +26,10 @@ jest.mock('react-router-dom', () => ({
 		channelId: '123',
 		groupId: '456',
 		query: {
-			rangeKey: RangeKeyTimeRanges.Last30Days
+			rangeKey: RangeKeyTimeRanges.Last30Days,
 		},
-		title: 'Blog Title'
-	})
+		title: 'Blog Title',
+	}),
 }));
 
 const WrappedComponent = ({
@@ -37,7 +37,7 @@ const WrappedComponent = ({
 	assetType,
 	empty = false,
 	emptyStateLink,
-	emptyStateText
+	emptyStateText,
 }: {
 	accessors: Accessor[];
 	assetType: AssetTypes;
@@ -55,10 +55,10 @@ const WrappedComponent = ({
 						mockAssetAppearsOnReq(
 							{
 								assetType: assetType.toUpperCase(),
-								selectedMetrics: accessors
+								selectedMetrics: accessors,
 							},
 							empty
-						)
+						),
 					]}
 				>
 					<AssetAppearsOnCard
@@ -112,7 +112,7 @@ describe('AssetAppearsOnCard', () => {
 			<WrappedComponent
 				accessors={[
 					Accessor.DownloadsMetric,
-					Accessor.ImpressionMadeMetric
+					Accessor.ImpressionMadeMetric,
 				]}
 				assetType={AssetTypes.Document}
 				emptyStateLink={EmptyStateLink.Document}

@@ -10,19 +10,19 @@ interface IUsageMetricProps {
 export const UsageMetric: React.FC<IUsageMetricProps> = ({
 	children,
 	description,
-	title
+	title,
 }) => (
 	<>
-		<Text color='secondary' size={3} weight='semi-bold'>
+		<Text color="secondary" size={3} weight="semi-bold">
 			{title.toUpperCase()}
 		</Text>
 
-		<hr className='my-2' />
+		<hr className="my-2" />
 
-		<Text color='secondary' size={3}>
+		<Text color="secondary" size={3}>
 			{description}
 		</Text>
 
-		<div className='mt-3'>{children}</div>
+		<div className="mt-3">{children}</div>
 	</>
 );

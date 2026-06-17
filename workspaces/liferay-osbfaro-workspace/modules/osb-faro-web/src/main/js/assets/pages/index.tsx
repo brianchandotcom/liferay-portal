@@ -24,6 +24,7 @@ const BlogsList = lazy(
 const DocumentsAndMediaList = lazy(
 	() =>
 		import(
+
 			/* webpackChunkName: "DocumentsAndMediaList" */ './DocumentsAndMediaList'
 		)
 );
@@ -40,23 +41,23 @@ const NAV_ITEMS = [
 	{
 		exact: true,
 		label: Liferay.Language.get('blogs'),
-		route: Routes.ASSETS_BLOGS
+		route: Routes.ASSETS_BLOGS,
 	},
 	{
 		exact: true,
 		label: Liferay.Language.get('documents-and-media'),
-		route: Routes.ASSETS_DOCUMENTS_AND_MEDIA
+		route: Routes.ASSETS_DOCUMENTS_AND_MEDIA,
 	},
 	{
 		exact: true,
 		label: Liferay.Language.get('forms'),
-		route: Routes.ASSETS_FORMS
+		route: Routes.ASSETS_FORMS,
 	},
 	{
 		exact: true,
 		label: Liferay.Language.get('web-content'),
-		route: Routes.ASSETS_WEB_CONTENT
-	}
+		route: Routes.ASSETS_WEB_CONTENT,
+	},
 ];
 
 interface IAssetsProps extends React.HTMLAttributes<HTMLElement> {
@@ -85,8 +86,8 @@ const Assets: React.FC<IAssetsProps> = ({className, router}) => {
 					breadcrumbs.getHome({
 						channelId,
 						groupId,
-						label: selectedChannel?.name
-					})
+						label: selectedChannel?.name,
+					}),
 				]}
 				groupId={groupId}
 			>
@@ -101,7 +102,7 @@ const Assets: React.FC<IAssetsProps> = ({className, router}) => {
 			</BasePage.Header>
 			{getMatchedRoute(NAV_ITEMS) === Routes.ASSETS_BLOGS && (
 				<BasePage.SubHeader>
-					<div className='d-flex justify-content-end w-100'>
+					<div className="d-flex justify-content-end w-100">
 						<DownloadCSVReport
 							disabled={!!dataSourceStates.empty}
 							type={CSVType.Blog}
@@ -113,7 +114,7 @@ const Assets: React.FC<IAssetsProps> = ({className, router}) => {
 			{getMatchedRoute(NAV_ITEMS) ===
 				Routes.ASSETS_DOCUMENTS_AND_MEDIA && (
 				<BasePage.SubHeader>
-					<div className='d-flex justify-content-end w-100'>
+					<div className="d-flex justify-content-end w-100">
 						<DownloadCSVReport
 							disabled={!!dataSourceStates.empty}
 							type={CSVType.Document}
@@ -126,7 +127,7 @@ const Assets: React.FC<IAssetsProps> = ({className, router}) => {
 			)}
 			{getMatchedRoute(NAV_ITEMS) === Routes.ASSETS_FORMS && (
 				<BasePage.SubHeader>
-					<div className='d-flex justify-content-end w-100'>
+					<div className="d-flex justify-content-end w-100">
 						<DownloadCSVReport
 							disabled={!!dataSourceStates.empty}
 							type={CSVType.Form}
@@ -137,7 +138,7 @@ const Assets: React.FC<IAssetsProps> = ({className, router}) => {
 			)}
 			{getMatchedRoute(NAV_ITEMS) === Routes.ASSETS_WEB_CONTENT && (
 				<BasePage.SubHeader>
-					<div className='d-flex justify-content-end w-100'>
+					<div className="d-flex justify-content-end w-100">
 						<DownloadCSVReport
 							disabled={!!dataSourceStates.empty}
 							type={CSVType.Journal}
@@ -150,7 +151,7 @@ const Assets: React.FC<IAssetsProps> = ({className, router}) => {
 				<BasePage.Context.Provider
 					value={{
 						filters: {},
-						router
+						router,
 					}}
 				>
 					<Suspense fallback={<Loading />}>
@@ -161,18 +162,18 @@ const Assets: React.FC<IAssetsProps> = ({className, router}) => {
 										{authorized
 											? Liferay.Language.get(
 													'connect-a-data-source-with-sites-data'
-											  )
+												)
 											: Liferay.Language.get(
 													'please-contact-your-workspace-administrator-to-add-data-sources'
-											  )}
+												)}
 
 										<ClayLink
-											className='d-block mb-3'
+											className="d-block mb-3"
 											href={
 												URLConstants.DataSourceConnection
 											}
-											key='DOCUMENTATION'
-											target='_blank'
+											key="DOCUMENTATION"
+											target="_blank"
 										>
 											{Liferay.Language.get(
 												'access-our-documentation-to-learn-more'
@@ -182,12 +183,12 @@ const Assets: React.FC<IAssetsProps> = ({className, router}) => {
 										{authorized && (
 											<ClayLink
 												button
-												className='button-root'
-												displayType='primary'
+												className="button-root"
+												displayType="primary"
 												href={toRoute(
 													Routes.SETTINGS_DATA_SOURCE_LIST,
 													{
-														groupId
+														groupId,
 													}
 												)}
 											>

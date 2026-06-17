@@ -34,7 +34,7 @@ export default class DataSource
 		state: null,
 		status: null,
 		type: 1,
-		url: null
+		url: null,
 	})
 	implements IDataSource
 {

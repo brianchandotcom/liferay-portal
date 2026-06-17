@@ -28,7 +28,7 @@ import TagInput from '../inputs/TagInput';
 import VocabularyInput from '../inputs/VocabularyInput';
 import {
 	AddProperty,
-	withReferencedObjectsConsumer
+	withReferencedObjectsConsumer,
 } from '../context/referencedObjects';
 import {compose} from 'redux';
 import {
@@ -36,7 +36,7 @@ import {
 	isKnown,
 	isUnknown,
 	PropertyTypes,
-	RelationalOperators
+	RelationalOperators,
 } from '../utils/constants';
 import {connect, ConnectedProps} from 'react-redux';
 import {
@@ -45,7 +45,7 @@ import {
 	ConnectDropTarget,
 	DragSource as dragSource,
 	DropTarget as dropTarget,
-	DropTargetMonitor
+	DropTargetMonitor,
 } from 'react-dnd';
 import {
 	createNewGroup,
@@ -53,7 +53,7 @@ import {
 	generateRowId,
 	getSupportedOperatorsFromType,
 	isOfKnownType,
-	isValid
+	isValid,
 } from '../utils/utils';
 import {Criterion, CriterionGroup, OnMove, Operator} from '../utils/types';
 import {DragTypes} from '../utils/drag-types';
@@ -75,7 +75,7 @@ const canDrop = (
 	{
 		criteriaGroupId: destGroupId,
 		disabled,
-		index: destIndex
+		index: destIndex,
 	}: {
 		criteriaGroupId: string;
 		disabled?: boolean;
@@ -106,7 +106,7 @@ const drop = (
 		index: destIndex,
 		onChange,
 		onMove,
-		sequential
+		sequential,
 	}: {
 		addProperty: AddProperty;
 		criteriaGroupId: string;
@@ -122,7 +122,7 @@ const drop = (
 		criteriaGroupId: startGroupId,
 		criterion: droppedCriterion,
 		index: startIndex,
-		property
+		property,
 	} = monitor.getItem();
 
 	const {
@@ -133,7 +133,7 @@ const drop = (
 		touched,
 		type,
 		valid,
-		value
+		value,
 	} = droppedCriterion;
 
 	if (property) {
@@ -150,7 +150,7 @@ const drop = (
 		rowId: rowId || generateRowId(),
 		touched,
 		valid,
-		value: droppedCriterionValue
+		value: droppedCriterionValue,
 	} as Criterion;
 
 	const itemType = monitor.getItemType();
@@ -162,7 +162,8 @@ const drop = (
 
 	if (itemType === DragTypes.Property) {
 		onChange(newGroup);
-	} else if (itemType === DragTypes.CriteriaRow) {
+	}
+	else if (itemType === DragTypes.CriteriaRow) {
 		onMove(
 			startGroupId,
 			startIndex,
@@ -183,7 +184,7 @@ const drop = (
 function beginDrag({
 	criteriaGroupId,
 	criterion,
-	index
+	index,
 }: {
 	criteriaGroupId: string;
 	criterion: Criterion;
@@ -198,8 +199,8 @@ const connector = connect((store: RootState, {groupId}: {groupId: string}) => ({
 		groupId,
 		'data',
 		'timeZone',
-		'timeZoneId'
-	])
+		'timeZoneId',
+	]),
 }));
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
@@ -240,7 +241,7 @@ class CriteriaRow extends React.Component<
 	ICriteriaRowState
 > {
 	static defaultProps = {
-		criterion: {}
+		criterion: {},
 	};
 
 	constructor(props: ICriteriaRowProps) {
@@ -254,7 +255,7 @@ class CriteriaRow extends React.Component<
 
 		this.state = {
 			selectedProperty,
-			supportedOperators
+			supportedOperators,
 		};
 	}
 
@@ -272,7 +273,7 @@ class CriteriaRow extends React.Component<
 					selectedProperty,
 					supportedOperators: getSupportedOperatorsFromType(
 						String(selectedProperty.type)
-					)
+					),
 				});
 			}
 		}
@@ -281,9 +282,9 @@ class CriteriaRow extends React.Component<
 	getSelectedOperator() {
 		const {
 			props: {
-				criterion: {operatorName, value}
+				criterion: {operatorName, value},
 			},
-			state: {supportedOperators}
+			state: {supportedOperators},
 		} = this;
 
 		let operatorKey: Criterion['operatorName'] | 'is-known' | 'is-unknown' =
@@ -293,7 +294,8 @@ class CriteriaRow extends React.Component<
 
 		if (operatorName === RelationalOperators.EQ && valueNull) {
 			operatorKey = isUnknown;
-		} else if (operatorName === RelationalOperators.NE && valueNull) {
+		}
+		else if (operatorName === RelationalOperators.NE && valueNull) {
 			operatorKey = isKnown;
 		}
 
@@ -305,14 +307,14 @@ class CriteriaRow extends React.Component<
 			selectedOperator || {
 				key: operatorKey,
 				label: operatorKey,
-				name: operatorName
+				name: operatorName,
 			}
 		);
 	}
 
 	getSelectedProperty() {
 		const {
-			props: {criterion, referencedProperties}
+			props: {criterion, referencedProperties},
 		} = this;
 
 		return findPropertyByCriterion(criterion, referencedProperties);
@@ -321,7 +323,8 @@ class CriteriaRow extends React.Component<
 	getValue(value: any, key: string) {
 		if (isOfKnownType(key)) {
 			return null;
-		} else if (value === null) {
+		}
+		else if (value === null) {
 			return '';
 		}
 
@@ -350,7 +353,7 @@ class CriteriaRow extends React.Component<
 	handleOperatorChange(value: string) {
 		const {
 			props: {criterion, onChange},
-			state: {supportedOperators}
+			state: {supportedOperators},
 		} = this;
 
 		const newVal = this.getValue(criterion.value, value);
@@ -366,7 +369,7 @@ class CriteriaRow extends React.Component<
 			operatorName: supportedOperators.find(({key}) => key === value)
 				?.name,
 			value: newVal,
-			...params
+			...params,
 		} as unknown as Criterion);
 	}
 
@@ -386,14 +389,15 @@ class CriteriaRow extends React.Component<
 			const items = value.map((item, i) => ({
 				...criterion,
 				...item,
-				rowId: i === 0 ? criterion.rowId : generateRowId()
+				rowId: i === 0 ? criterion.rowId : generateRowId(),
 			}));
 
 			onChange(items);
-		} else {
+		}
+		else {
 			onChange({
 				...criterion,
-				...value
+				...value,
 			});
 		}
 	}
@@ -407,15 +411,15 @@ class CriteriaRow extends React.Component<
 		const singleOption = supportedOperators.length === 1;
 
 		return (
-			<Form.GroupItem className='operator' label={singleOption} shrink>
+			<Form.GroupItem className="operator" label={singleOption} shrink>
 				{singleOption ? (
 					supportedOperators[0].label
 				) : (
 					<Picker
-						className='criterion-input operator-input'
+						className="criterion-input operator-input"
 						items={supportedOperators.map(({key, label}) => ({
 							label,
-							value: key
+							value: key,
 						}))}
 						onSelectionChange={
 							this.handleOperatorChange as (
@@ -436,7 +440,7 @@ class CriteriaRow extends React.Component<
 	renderValueInput() {
 		const {
 			props: {channelId, criterion, groupId, id, segmentType, timeZoneId},
-			state: {selectedProperty}
+			state: {selectedProperty},
 		} = this;
 
 		const {label, options, type} = selectedProperty ?? ({} as Property);
@@ -466,7 +470,7 @@ class CriteriaRow extends React.Component<
 			[PropertyTypes.SessionNumber]: SessionInput,
 			[PropertyTypes.SessionText]: SessionInput,
 			[PropertyTypes.Text]: StringInput,
-			[PropertyTypes.Tag]: TagInput
+			[PropertyTypes.Tag]: TagInput,
 		};
 
 		const InputComponent: React.ElementType =
@@ -502,14 +506,14 @@ class CriteriaRow extends React.Component<
 				connectDropTarget,
 				dragging,
 				hover,
-				stepNumber
+				stepNumber,
 			},
-			state: {selectedProperty}
+			state: {selectedProperty},
 		} = this;
 
 		const classes = getCN('criterion-row-root', {
 			'dnd-drag': dragging,
-			'dnd-hover': hover && canDrop
+			'dnd-hover': hover && canDrop,
 		});
 
 		return connectDropTarget(
@@ -523,19 +527,19 @@ class CriteriaRow extends React.Component<
 						)}`}
 					/>
 
-					<div className='edit-container'>
+					<div className="edit-container">
 						{connectDragSource(
-							<div className='drag-icon'>
-								<ClayIcon className='icon-root' symbol='drag' />
+							<div className="drag-icon">
+								<ClayIcon className="icon-root" symbol="drag" />
 							</div>
 						)}
 
 						{stepNumber !== undefined && (
 							<ClaySticker
-								className='mr-4'
-								displayType='secondary'
-								shape='circle'
-								size='sm'
+								className="mr-4"
+								displayType="secondary"
+								shape="circle"
+								size="sm"
 							>
 								{stepNumber}
 							</ClaySticker>
@@ -544,26 +548,26 @@ class CriteriaRow extends React.Component<
 						{selectedProperty ? (
 							this.renderValueInput()
 						) : (
-							<div className='non-existent-property-message'>
+							<div className="non-existent-property-message">
 								{Liferay.Language.get(
 									'attribute-no-longer-exists'
 								)}
 							</div>
 						)}
 
-						<div className='actions'>
+						<div className="actions">
 							<RowActions
 								actions={[
 									{
 										label: Liferay.Language.get(
 											'duplicate'
 										),
-										onClick: this.handleDuplicate
+										onClick: this.handleDuplicate,
 									},
 									{
 										label: Liferay.Language.get('delete'),
-										onClick: this.handleDelete
-									}
+										onClick: this.handleDelete,
+									},
 								]}
 							/>
 						</div>
@@ -577,12 +581,12 @@ class CriteriaRow extends React.Component<
 const CriteriaRowWithDrag = dragSource(
 	DragTypes.CriteriaRow,
 	{
-		beginDrag
+		beginDrag,
 	},
 	(connect, monitor) => ({
 		connectDragPreview: connect.dragPreview(),
 		connectDragSource: connect.dragSource(),
-		dragging: monitor.isDragging()
+		dragging: monitor.isDragging(),
 	})
 )(CriteriaRow);
 
@@ -593,12 +597,12 @@ export default compose<any>(
 		acceptedDragTypes,
 		{
 			canDrop,
-			drop
+			drop,
 		},
 		(connect, monitor) => ({
 			canDrop: monitor.canDrop(),
 			connectDropTarget: connect.dropTarget(),
-			hover: monitor.isOver()
+			hover: monitor.isOver(),
 		})
 	)
 )(CriteriaRowWithDrag);

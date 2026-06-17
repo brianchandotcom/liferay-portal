@@ -5,11 +5,11 @@ import {
 	columns,
 	FrontendDataSet,
 	pagination,
-	rangeSelectors
+	rangeSelectors,
 } from 'shared/components/FrontendDataSet';
 import {
 	LifecycleStages,
-	lifecycleStagesLabelMap
+	lifecycleStagesLabelMap,
 } from 'contacts/pages/account/utils/constants';
 import {RangeKeyTimeRanges} from 'shared/util/constants';
 import {Routes} from 'shared/util/router';
@@ -35,8 +35,8 @@ const buildSelectionPreloadedData = (value?: string, label?: string) =>
 	value
 		? {
 				exclude: false,
-				selectedItems: [{label: label ?? value, value}]
-		  }
+				selectedItems: [{label: label ?? value, value}],
+			}
 		: undefined;
 
 const AccountsDataSet: React.FC<IAccountsDataSetProps> = ({
@@ -46,7 +46,7 @@ const AccountsDataSet: React.FC<IAccountsDataSetProps> = ({
 	countryFilter,
 	groupId,
 	industryFilter,
-	lifecycleStageFilter
+	lifecycleStageFilter,
 }) => {
 	const {data: lifecycleStageFieldValues} = useRequest({
 		dataSourceFn: API.accounts.fetchLifecycleStageFieldValues,
@@ -54,8 +54,8 @@ const AccountsDataSet: React.FC<IAccountsDataSetProps> = ({
 		variables: {
 			accountLifecycleId,
 			channelId,
-			groupId
-		}
+			groupId,
+		},
 	});
 
 	const lifecycleStages: ILifecycleStageFieldValue[] =
@@ -63,13 +63,13 @@ const AccountsDataSet: React.FC<IAccountsDataSetProps> = ({
 
 	const lifecycleStageItems = lifecycleStages.map(({id, stageType}) => ({
 		label: lifecycleStagesLabelMap[stageType].label,
-		value: id
+		value: id,
 	}));
 
 	const preloadedLifecycleStage = lifecycleStageFilter
 		? lifecycleStages.find(
 				({stageType}) => stageType === lifecycleStageFilter
-		  )
+			)
 		: undefined;
 
 	return (
@@ -78,7 +78,7 @@ const AccountsDataSet: React.FC<IAccountsDataSetProps> = ({
 				apiURL={apiURL}
 				customDataRenderers={{
 					accountLifecycleStageRenderer: ({
-						value
+						value,
 					}: {
 						value: LifecycleStages;
 					}) =>
@@ -86,11 +86,11 @@ const AccountsDataSet: React.FC<IAccountsDataSetProps> = ({
 						columns.cmsLabelRenderer({
 							displayType:
 								lifecycleStagesLabelMap[value].displayType,
-							label: lifecycleStagesLabelMap[value].label
+							label: lifecycleStagesLabelMap[value].label,
 						}),
 					accountNameRenderer: ({
 						itemData,
-						value
+						value,
 					}: {
 						itemData: {id: string | number};
 						value: string;
@@ -100,20 +100,20 @@ const AccountsDataSet: React.FC<IAccountsDataSetProps> = ({
 							groupId,
 							itemData,
 							route: Routes.CONTACTS_ACCOUNT,
-							value
+							value,
 						}),
 					annualRevenueRenderer: ({value}: {value: number}) => (
 						<div>{toThousands(value)}</div>
 					),
 					dateRenderer: ({value}: {value: string}) =>
-						columns.dateRenderer({itemData: {}, value})
+						columns.dateRenderer({itemData: {}, value}),
 				}}
 				emptyState={{
 					description: Liferay.Language.get(
 						'no-accounts-were-synced-from-the-connected-data-sources'
 					),
 					image: '/states/satellite.svg',
-					title: Liferay.Language.get('no-accounts-found')
+					title: Liferay.Language.get('no-accounts-found'),
 				}}
 				filters={[
 					{
@@ -125,7 +125,7 @@ const AccountsDataSet: React.FC<IAccountsDataSetProps> = ({
 							RangeKeyTimeRanges.Last30Days,
 							Liferay.Language.get('last-30-days')
 						),
-						type: 'selection'
+						type: 'selection',
 					},
 					...(accountLifecycleId
 						? [
@@ -139,12 +139,12 @@ const AccountsDataSet: React.FC<IAccountsDataSetProps> = ({
 										lifecycleStageFilter
 											? lifecycleStagesLabelMap[
 													lifecycleStageFilter
-											  ].label
+												].label
 											: undefined
 									),
-									type: 'selection' as const
-								}
-						  ]
+									type: 'selection' as const,
+								},
+							]
 						: []),
 					{
 						apiURL: `/o/faro/contacts/${groupId}/account/fds_field_values?channelId=${channelId}&fieldMappingFieldName=industry`,
@@ -156,7 +156,7 @@ const AccountsDataSet: React.FC<IAccountsDataSetProps> = ({
 						multiple: true,
 						preloadedData:
 							buildSelectionPreloadedData(industryFilter),
-						type: 'selection'
+						type: 'selection',
 					},
 					{
 						apiURL: `/o/faro/contacts/${groupId}/account/fds_field_values?channelId=${channelId}&fieldMappingFieldName=country`,
@@ -168,15 +168,15 @@ const AccountsDataSet: React.FC<IAccountsDataSetProps> = ({
 						multiple: true,
 						preloadedData:
 							buildSelectionPreloadedData(countryFilter),
-						type: 'selection'
-					}
+						type: 'selection',
+					},
 				]}
-				id='accounts-list-dataset'
+				id="accounts-list-dataset"
 				key={[
 					countryFilter,
 					industryFilter,
 					lifecycleStageFilter,
-					lifecycleStages.length
+					lifecycleStages.length,
 				].join()}
 				pagination={pagination}
 				showPagination
@@ -186,8 +186,8 @@ const AccountsDataSet: React.FC<IAccountsDataSetProps> = ({
 						active: true,
 						direction: 'asc',
 						key: 'accountName',
-						label: Liferay.Language.get('account')
-					}
+						label: Liferay.Language.get('account'),
+					},
 				]}
 				views={[
 					{
@@ -202,12 +202,12 @@ const AccountsDataSet: React.FC<IAccountsDataSetProps> = ({
 									fieldName: 'accountName',
 									label: Liferay.Language.get('account'),
 									sortable: true,
-									truncate: true
+									truncate: true,
 								},
 								{
 									fieldName: 'industry',
 									label: Liferay.Language.get('industry'),
-									sortable: true
+									sortable: true,
 								},
 								{
 									contentRenderer:
@@ -216,7 +216,7 @@ const AccountsDataSet: React.FC<IAccountsDataSetProps> = ({
 									label: Liferay.Language.get(
 										'lifecycle-stage'
 									),
-									sortable: true
+									sortable: true,
 								},
 								{
 									contentRenderer: 'annualRevenueRenderer',
@@ -224,18 +224,18 @@ const AccountsDataSet: React.FC<IAccountsDataSetProps> = ({
 									label: Liferay.Language.get(
 										'annual-revenue'
 									),
-									sortable: true
+									sortable: true,
 								},
 								{
 									fieldName: 'country',
 									label: Liferay.Language.get('country'),
-									sortable: true
+									sortable: true,
 								},
 								{
 									contentRenderer: 'dateRenderer',
 									fieldName: 'lastActive',
 									label: Liferay.Language.get('last-active'),
-									sortable: true
+									sortable: true,
 								},
 								{
 									contentRenderer: 'dateRenderer',
@@ -243,12 +243,12 @@ const AccountsDataSet: React.FC<IAccountsDataSetProps> = ({
 									label: Liferay.Language.get(
 										'last-enriched'
 									),
-									sortable: true
-								}
-							]
+									sortable: true,
+								},
+							],
 						},
-						thumbnail: 'table'
-					}
+						thumbnail: 'table',
+					},
 				]}
 			/>
 		</Card>

@@ -4,7 +4,7 @@ import {PropertyTypes} from '../constants';
 const createIndividualProperty = ({
 	label,
 	name,
-	type
+	type,
 }: {
 	label: string;
 	name: string;
@@ -15,35 +15,35 @@ const createIndividualProperty = ({
 		label,
 		name,
 		propertyKey: 'individual',
-		type
+		type,
 	});
 
 const INDIVIDUAL_PROPERTIES = [
 	{
 		label: Liferay.Language.get('site-membership'),
 		name: 'groupIds',
-		type: PropertyTypes.SelectText
+		type: PropertyTypes.SelectText,
 	},
 	{
 		label: Liferay.Language.get('role'),
 		name: 'roleIds',
-		type: PropertyTypes.SelectText
+		type: PropertyTypes.SelectText,
 	},
 	{
 		label: Liferay.Language.get('team'),
 		name: 'teamIds',
-		type: PropertyTypes.SelectText
+		type: PropertyTypes.SelectText,
 	},
 	{
 		label: Liferay.Language.get('user-group'),
 		name: 'userGroupIds',
-		type: PropertyTypes.SelectText
+		type: PropertyTypes.SelectText,
 	},
 	{
 		label: Liferay.Language.get('dxp-user'),
 		name: 'userId',
-		type: PropertyTypes.SelectText
-	}
+		type: PropertyTypes.SelectText,
+	},
 ].map(createIndividualProperty);
 
 export default INDIVIDUAL_PROPERTIES;

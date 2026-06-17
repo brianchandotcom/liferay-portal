@@ -6,18 +6,18 @@ jest.unmock('react-dom');
 
 jest.mock('react-router-dom', () => ({
 	...jest.requireActual('react-router-dom'),
-	useParams: () => ({id: 'acc-123'})
+	useParams: () => ({id: 'acc-123'}),
 }));
 
 jest.mock('../AccountDetailsModal', () => ({
 	__esModule: true,
 	default: ({onClose}: {onClose: () => void}) => (
-		<div data-testid='account-details-modal'>
-			<button onClick={onClose} type='button'>
+		<div data-testid="account-details-modal">
+			<button onClick={onClose} type="button">
 				{'close'}
 			</button>
 		</div>
-	)
+	),
 }));
 
 const mockAccount = {
@@ -26,7 +26,7 @@ const mockAccount = {
 	id: 'acc-123',
 	industry: 'Technology',
 	numberOfEmployees: 250,
-	website: 'https://acme.com'
+	website: 'https://acme.com',
 };
 
 describe('AccountInfo', () => {
@@ -65,7 +65,7 @@ describe('AccountInfo', () => {
 			render(<AccountInfo account={mockAccount} />);
 
 			const link = screen.getByRole('link', {
-				name: /https:\/\/acme\.com/
+				name: /https:\/\/acme\.com/,
 			});
 
 			expect(link).toHaveAttribute('href', 'https://acme.com');

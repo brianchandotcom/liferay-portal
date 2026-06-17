@@ -1,5 +1,5 @@
 import getLocationsMapper, {
-	getLocationsMapperCountries
+	getLocationsMapperCountries,
 } from 'cerebro-shared/hocs/mappers/locations';
 import SessionLocationsQuery from 'shared/queries/SessionLocationsQuery';
 import URLConstants from 'shared/util/url-constants';
@@ -14,7 +14,7 @@ import {withLocationsCard} from 'cerebro-shared/hocs/LocationsCard';
 const withSiteLocations = () =>
 	graphql(
 		SessionLocationsQuery,
-		getLocationsMapper(result => result.site.sessionsMetric)
+		getLocationsMapper((result) => result.site.sessionsMetric)
 	);
 
 /**
@@ -24,7 +24,7 @@ const withSiteLocations = () =>
 const withSiteLocationsCountries = () =>
 	graphql(
 		SessionLocationsQuery,
-		getLocationsMapperCountries(result => result.site.sessionsMetric)
+		getLocationsMapperCountries((result) => result.site.sessionsMetric)
 	);
 
 export default withLocationsCard(
@@ -38,6 +38,6 @@ export default withLocationsCard(
 		reportContainer: ReportContainer.SessionsByLocationCard,
 		title: Liferay.Language.get(
 			'there-are-no-sessions-on-the-selected-period'
-		)
+		),
 	}
 );

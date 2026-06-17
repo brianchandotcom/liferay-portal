@@ -5,7 +5,7 @@ import {individual} from '../middleware/schema';
 
 export const actionTypes = {
 	...createActionTypes('fetch', 'associated_segments'),
-	...createActionTypes('fetch', 'individual')
+	...createActionTypes('fetch', 'individual'),
 };
 
 export function fetchIndividual({channelId, groupId, individualId}) {
@@ -18,13 +18,13 @@ export function fetchIndividual({channelId, groupId, individualId}) {
 				types: [
 					actionTypes.FETCH_INDIVIDUAL_REQUEST,
 					actionTypes.FETCH_INDIVIDUAL_SUCCESS,
-					actionTypes.FETCH_INDIVIDUAL_FAILURE
-				]
-			}
+					actionTypes.FETCH_INDIVIDUAL_FAILURE,
+				],
+			},
 		},
 		payload: {
-			id: individualId
+			id: individualId,
 		},
-		type: 'NO_OP'
+		type: 'NO_OP',
 	};
 }

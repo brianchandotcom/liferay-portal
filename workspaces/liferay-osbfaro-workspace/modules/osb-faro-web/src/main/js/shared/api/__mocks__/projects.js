@@ -11,20 +11,20 @@ export const fetchAvailableTimeZones = jest.fn(() =>
 		new TimeZone({
 			country: 'UTC',
 			displayTimeZone: '(UTC) UTC',
-			timezoneValue: 'UTC'
+			timezoneValue: 'UTC',
 		}),
 
 		new TimeZone({
 			country: 'Brazil',
 			displayTimeZone: 'UTC -03:00 Brasilia Time (America/Recife)',
-			timezoneValue: 'America/Recife'
+			timezoneValue: 'America/Recife',
 		}),
 
 		new TimeZone({
 			country: 'Chile',
 			displayTimeZone: 'UTC -03:00 Chile Time (America/Santiago)',
-			timezoneValue: 'America/Santiago'
-		})
+			timezoneValue: 'America/Santiago',
+		}),
 	])
 );
 
@@ -33,7 +33,7 @@ export const fetchProjectViaCorpProjectUuid = jest.fn(() =>
 );
 
 export const fetchMany = jest.fn(() =>
-	Promise.resolve(range(3).map(i => data.mockProject(i)))
+	Promise.resolve(range(3).map((i) => data.mockProject(i)))
 );
 
 export const search = jest.fn(() =>

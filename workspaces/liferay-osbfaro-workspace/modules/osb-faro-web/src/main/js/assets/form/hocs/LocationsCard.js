@@ -1,5 +1,5 @@
 import getLocationsMapper, {
-	getLocationsMapperCountries
+	getLocationsMapperCountries,
 } from 'cerebro-shared/hocs/mappers/locations';
 import URLConstants from 'shared/util/url-constants';
 import {GEOLOCATION_FRAGMENT} from 'shared/queries/fragments';
@@ -47,7 +47,7 @@ const GEOLOCATION_QUERY = gql`
 const withFormsLocations = () =>
 	graphql(
 		GEOLOCATION_QUERY,
-		getLocationsMapper(result => result.form.submissionsMetric)
+		getLocationsMapper((result) => result.form.submissionsMetric)
 	);
 
 /**
@@ -57,7 +57,7 @@ const withFormsLocations = () =>
 const withFormsLocationsCountries = () =>
 	graphql(
 		GEOLOCATION_QUERY,
-		getLocationsMapperCountries(result => result.form.submissionsMetric)
+		getLocationsMapperCountries((result) => result.form.submissionsMetric)
 	);
 
 export default withLocationsCard(
@@ -71,6 +71,6 @@ export default withLocationsCard(
 		reportContainer: ReportContainer.SubmissionsByLocationCard,
 		title: Liferay.Language.get(
 			'there-are-no-submissions-on-the-selected-period'
-		)
+		),
 	}
 );

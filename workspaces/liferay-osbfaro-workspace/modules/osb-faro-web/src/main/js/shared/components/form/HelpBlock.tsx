@@ -11,7 +11,7 @@ const HelpBlock: React.FC<React.ComponentProps<typeof ErrorMessage>> = ({
 	return (
 		<ErrorMessage
 			{...otherProps}
-			render={message => <div className={classes}>{message}</div>}
+			render={(message) => <div className={classes}>{message}</div>}
 		/>
 	);
 };

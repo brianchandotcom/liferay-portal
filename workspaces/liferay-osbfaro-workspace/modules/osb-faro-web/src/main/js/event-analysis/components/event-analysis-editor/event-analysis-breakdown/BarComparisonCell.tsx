@@ -1,5 +1,5 @@
 import BarComparisonTable, {
-	BarComparisonTableItems
+	BarComparisonTableItems,
 } from './BarComparisonTable';
 import React from 'react';
 import {BreakdownDataItem, Event} from 'event-analysis/utils/types';
@@ -7,7 +7,7 @@ import {get} from 'lodash';
 
 enum BAR_COMPARISON_COLORS {
 	Blue = 'blue',
-	Green = 'green'
+	Green = 'green',
 }
 
 const EMPTY_BAR_COLOR = '#CDCED9';
@@ -22,23 +22,23 @@ const MAP_COLORS: Record<
 	blue: [
 		{
 			current: '#187FFF',
-			previous: '#97C5FF'
+			previous: '#97C5FF',
 		},
 		{
 			current: '#4B9BFF',
-			previous: '#97C5FF'
-		}
+			previous: '#97C5FF',
+		},
 	],
 	green: [
 		{
 			current: '#31BE88',
-			previous: '#8DE2C1'
+			previous: '#8DE2C1',
 		},
 		{
 			current: '#3CCD95',
-			previous: '#8DE2C1'
-		}
-	]
+			previous: '#8DE2C1',
+		},
+	],
 };
 
 interface IBarComparisonCellProps extends React.HTMLAttributes<HTMLElement> {
@@ -52,7 +52,7 @@ const BarComparisonCell: React.FC<IBarComparisonCellProps> = ({
 	compareToPrevious = false,
 	event,
 	events = [],
-	topValue
+	topValue,
 }) => {
 	const isComparingSegment = get(events[0], 'breakdownItems', []).length > 1;
 
@@ -64,7 +64,7 @@ const BarComparisonCell: React.FC<IBarComparisonCellProps> = ({
 	);
 
 	return (
-		<div className='table-responsive table-root bar-comparison-root'>
+		<div className="table-responsive table-root bar-comparison-root">
 			{sections.map((items, i) => (
 				<BarComparisonTable
 					event={event}
@@ -92,7 +92,7 @@ const getSections = (
 		{
 			name,
 			previousValue = 0,
-			value
+			value,
 		}: {name: string; previousValue?: number; value: number},
 		color: BAR_COMPARISON_COLORS,
 		index: number
@@ -105,9 +105,9 @@ const getSections = (
 				'background-color':
 					value > 0
 						? MAP_COLORS[color][index].current
-						: EMPTY_BAR_COLOR
+						: EMPTY_BAR_COLOR,
 			},
-			value
+			value,
 		});
 
 		if (compareToPrevious) {
@@ -119,9 +119,9 @@ const getSections = (
 					'background-color':
 						previousValue > 0
 							? MAP_COLORS[color][index].previous
-							: EMPTY_BAR_COLOR
+							: EMPTY_BAR_COLOR,
 				},
-				value: previousValue
+				value: previousValue,
 			});
 		}
 	};
@@ -139,7 +139,8 @@ const getSections = (
 			(event.breakdownItems ?? []).forEach((item, i) => {
 				addToData(item, color, i);
 			});
-		} else {
+		}
+		else {
 			addToData(event, color, i);
 		}
 	});

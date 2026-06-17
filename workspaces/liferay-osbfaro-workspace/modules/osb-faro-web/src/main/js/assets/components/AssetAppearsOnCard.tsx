@@ -12,7 +12,7 @@ import {AssetTypes} from 'shared/util/constants';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import {
 	getSafeDecodedURIComponent,
-	getSafeRangeSelectors
+	getSafeRangeSelectors,
 } from 'shared/util/util';
 import {getUrl} from 'shared/util/urls';
 import {metricsListColumns} from 'shared/util/table-columns';
@@ -29,7 +29,7 @@ export enum Accessor {
 	DownloadsMetric = 'downloadsMetric',
 	ImpressionMadeMetric = 'impressionMadeMetric',
 	SubmissionsMetric = 'submissionsMetric',
-	ViewsMetric = 'viewsMetric'
+	ViewsMetric = 'viewsMetric',
 }
 
 export enum EmptyStateLink {
@@ -37,7 +37,7 @@ export enum EmptyStateLink {
 	Document = URLConstants.AssetsAppearsDocumentsAndMediaOnDocumentation,
 	Form = URLConstants.AssetsAppearsFormsOnDocumentation,
 	Journal = URLConstants.AssetsAppearsWebContentOnDocumentation,
-	ObjectEntry = URLConstants.AssetsCustomAssetsListDocumentation
+	ObjectEntry = URLConstants.AssetsCustomAssetsListDocumentation,
 }
 
 export const EmptyStateText = {
@@ -45,8 +45,9 @@ export const EmptyStateText = {
 	Document: Liferay.Language.get('learn-more-about-documents-and-media'),
 	Form: Liferay.Language.get('learn-more-about-forms'),
 	Journal: Liferay.Language.get('learn-more-about-web-content'),
-	ObjectEntry: Liferay.Language.get('learn-more-about-assets')
+	ObjectEntry: Liferay.Language.get('learn-more-about-assets'),
 } as const;
+
 // eslint-disable-next-line no-redeclare
 export type EmptyStateText =
 	(typeof EmptyStateText)[keyof typeof EmptyStateText];
@@ -62,7 +63,7 @@ export const AssetAppearsOnCard: React.FC<IAssetAppearsOnCardProps> = ({
 	accessors,
 	assetType,
 	emptyStateLink,
-	emptyStateText
+	emptyStateText,
 }) => (
 	<BaseCard
 		label={Liferay.Language.get('asset-appears-on')}
@@ -87,13 +88,13 @@ const AssetAppearsOnStateRenderer = ({
 	assetType,
 	emptyStateLink,
 	emptyStateText,
-	rangeSelectors
+	rangeSelectors,
 }: any) => {
 	const {assetId, channelId, title} = useParams();
 	const [pagination, setPagination] = useState({
 		page: cur,
 		size: delta,
-		start: (cur - 1) * delta
+		start: (cur - 1) * delta,
 	});
 
 	const {data, error, loading} = useQuery(AssetAppearsOnQuery, {
@@ -107,11 +108,11 @@ const AssetAppearsOnStateRenderer = ({
 			selectedMetrics: accessors,
 			...(assetType !== AssetTypes.ObjectEntry && {
 				channelId,
-				title: getSafeDecodedURIComponent(title as string)
+				title: getSafeDecodedURIComponent(title as string),
 			}),
 			...pagination,
-			...getSafeRangeSelectors(rangeSelectors)
-		}
+			...getSafeRangeSelectors(rangeSelectors),
+		},
 	});
 
 	return (
@@ -124,7 +125,7 @@ const AssetAppearsOnStateRenderer = ({
 			<StatesRenderer.Empty
 				description={
 					<>
-						<span className='mr-1'>
+						<span className="mr-1">
 							{Liferay.Language.get(
 								'check-back-later-to-verify-if-data-has-been-received-from-your-data-sources'
 							)}
@@ -132,8 +133,8 @@ const AssetAppearsOnStateRenderer = ({
 
 						<ClayLink
 							href={emptyStateLink}
-							key='DOCUMENTATION'
-							target='_blank'
+							key="DOCUMENTATION"
+							target="_blank"
 						>
 							{emptyStateText}
 						</ClayLink>
@@ -168,7 +169,7 @@ const formatItems = (data: any) =>
 				acc[name] = value;
 
 				return acc;
-			}, {})
+			}, {}),
 		})
 	);
 
@@ -176,7 +177,7 @@ const AssetApperarsOnContentCard = ({
 	accessors,
 	data,
 	onPaginationChange,
-	pagination
+	pagination,
 }: any) => {
 	const {channelId, groupId} = useParams();
 	const rangeSelectors = useQueryRangeSelectors();
@@ -186,12 +187,12 @@ const AssetApperarsOnContentCard = ({
 	return (
 		<>
 			<Table
-				className='mb-3 table-hover'
+				className="mb-3 table-hover"
 				columns={getTableColumns({
 					accessors,
 					channelId,
 					groupId,
-					rangeSelectors
+					rangeSelectors,
 				})}
 				items={items}
 				rowIdentifier={['touchpoint', 'title']}
@@ -200,16 +201,16 @@ const AssetApperarsOnContentCard = ({
 			<ClayPaginationBarWithBasicItems
 				active={pagination.page}
 				activeDelta={pagination.size}
-				className='px-3 pb-2'
-				deltas={deltaValues.map(delta => ({label: delta}))}
-				onActiveChange={page =>
+				className="px-3 pb-2"
+				deltas={deltaValues.map((delta) => ({label: delta}))}
+				onActiveChange={(page) =>
 					onPaginationChange({
 						...pagination,
 						page,
-						start: (page - 1) * pagination.size
+						start: (page - 1) * pagination.size,
 					})
 				}
-				onDeltaChange={size =>
+				onDeltaChange={(size) =>
 					onPaginationChange({...pagination, size})
 				}
 				totalItems={data?.assetPages.total}
@@ -222,7 +223,7 @@ const getTableColumns = ({
 	accessors,
 	channelId,
 	groupId,
-	rangeSelectors
+	rangeSelectors,
 }: any) => {
 	const generateURL = ({title, touchpoint}: any) => {
 		const router = {
@@ -230,11 +231,11 @@ const getTableColumns = ({
 				channelId,
 				groupId,
 				title,
-				touchpoint: encodeURIComponent(touchpoint)
+				touchpoint: encodeURIComponent(touchpoint),
 			},
 			query: {
-				...pickBy(rangeSelectors)
-			}
+				...pickBy(rangeSelectors),
+			},
 		};
 
 		return getUrl(Routes.SITES_TOUCHPOINTS_OVERVIEW, router);
@@ -247,9 +248,9 @@ const getTableColumns = ({
 				const url = generateURL(data);
 
 				return (
-					<td className='table-cell-expand'>
+					<td className="table-cell-expand">
 						<ClayLink
-							className='font-weight-semibold text-truncate-inline text-dark'
+							className="font-weight-semibold text-truncate-inline text-dark"
 							href={url}
 						>
 							<TextTruncate title={data.title} />
@@ -260,18 +261,19 @@ const getTableColumns = ({
 			className: 'table-cell-expand',
 			label: Liferay.Language.get('page-name'),
 			sortable: false,
-			title: true
+			title: true,
 		},
 		{
 			accessor: 'url',
 			cellRenderer: ({data}: any) => (
-				<td className='table-cell-expand'>
+				<td className="table-cell-expand">
 					<ClayLink
-						className='text-secondary text-truncate-inline'
+						className="text-secondary text-truncate-inline"
+
 						// @ts-ignore
 						externalLink
 						href={data.touchpoint}
-						target='_blank'
+						target="_blank"
 					>
 						<TextTruncate title={data.touchpoint} />
 					</ClayLink>
@@ -279,12 +281,12 @@ const getTableColumns = ({
 			),
 			className: 'table-cell-expand',
 			label: Liferay.Language.get('canonical-url'),
-			sortable: false
+			sortable: false,
 		},
 		...accessors.map((accessor: Accessor) => ({
 			...metricsListColumns[accessor],
-			sortable: false
-		}))
+			sortable: false,
+		})),
 	];
 
 	return tableColumns;

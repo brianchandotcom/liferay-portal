@@ -11,9 +11,9 @@ interface IEventAnalysisBuilderProps {
 
 const EventAnalysisBuilder: React.FC<IEventAnalysisBuilderProps> = ({
 	event,
-	onEventChange
+	onEventChange,
 }) => (
-	<div className='event-analysis-builder-root d-flex flex-column'>
+	<div className="event-analysis-builder-root d-flex flex-column">
 		<EventSection event={event} onEventChange={onEventChange} />
 
 		<AttributeBreakdownSection eventId={event?.id} />

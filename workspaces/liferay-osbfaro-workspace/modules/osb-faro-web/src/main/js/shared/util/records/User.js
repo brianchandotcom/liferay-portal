@@ -11,7 +11,7 @@ export default class User extends (new Record({
 	roleName: null,
 	screenName: '',
 	status: UserStatuses.Approved,
-	userId: null
+	userId: null,
 })) {
 	constructor(params = {}) {
 		super(params);

@@ -6,7 +6,7 @@ import {formatDateToTimeZone} from 'shared/util/date';
 import {
 	INPUT_DATE_TIME_FORMAT,
 	INPUT_DISPLAY_DATE_TIME_FORMAT,
-	PropertyTypes
+	PropertyTypes,
 } from '../utils/constants';
 import {ISegmentEditorInputBase} from '../utils/types';
 
@@ -19,7 +19,7 @@ export default class DateTimeInput extends React.Component<IDateTimeInputProps> 
 	handleDateChange(value: string) {
 		this.props.onChange({
 			type: PropertyTypes.Date,
-			value: formatDateToTimeZone(value, undefined, 'UTC')
+			value: formatDateToTimeZone(value, undefined, 'UTC'),
 		});
 	}
 
@@ -30,7 +30,7 @@ export default class DateTimeInput extends React.Component<IDateTimeInputProps> 
 			operatorRenderer: OperatorDropdown,
 			property: {entityName},
 			timeZoneId,
-			value
+			value,
 		} = this.props;
 
 		const date = formatDateToTimeZone(
@@ -40,13 +40,13 @@ export default class DateTimeInput extends React.Component<IDateTimeInputProps> 
 		);
 
 		return (
-			<div className='criteria-statement'>
+			<div className="criteria-statement">
 				<Form.Group autoFit>
-					<Form.GroupItem className='entity-name' label shrink>
+					<Form.GroupItem className="entity-name" label shrink>
 						{entityName}
 					</Form.GroupItem>
 
-					<Form.GroupItem className='display-value' label shrink>
+					<Form.GroupItem className="display-value" label shrink>
 						{displayValue}
 					</Form.GroupItem>
 

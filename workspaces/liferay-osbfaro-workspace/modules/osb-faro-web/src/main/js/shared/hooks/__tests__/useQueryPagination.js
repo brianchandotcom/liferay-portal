@@ -26,7 +26,7 @@ const DefaultComponent = ({delta, orderIOMap, page, query}) => {
 const WrapperComponent = ({children, queryString = ''}) => (
 	<MemoryRouter
 		initialEntries={[
-			`/workspace/23/321321/contacts/accounts/123123/interests/test${queryString}`
+			`/workspace/23/321321/contacts/accounts/123123/interests/test${queryString}`,
 		]}
 	>
 		{children}
@@ -40,7 +40,7 @@ describe('useQueryPagination', () => {
 				initialDelta: 6,
 				initialOrderIOMap: createOrderIOMap('initial orderIOMap'),
 				initialPage: 13,
-				initialQuery: 'initial query'
+				initialQuery: 'initial query',
 			});
 
 			return <DefaultComponent {...queryPaginationParams} />;
@@ -63,14 +63,14 @@ describe('useQueryPagination', () => {
 				initialDelta: 6,
 				initialOrderIOMap: createOrderIOMap('initial orderIOMap'),
 				initialPage: 13,
-				initialQuery: 'initial query'
+				initialQuery: 'initial query',
 			});
 
 			return <DefaultComponent {...queryPaginationParams} />;
 		};
 
 		const {container} = render(
-			<WrapperComponent queryString='?delta=5&field=name&sortOrder=DESC&query=meow&page=1'>
+			<WrapperComponent queryString="?delta=5&field=name&sortOrder=DESC&query=meow&page=1">
 				<TestComponent />
 			</WrapperComponent>
 		);

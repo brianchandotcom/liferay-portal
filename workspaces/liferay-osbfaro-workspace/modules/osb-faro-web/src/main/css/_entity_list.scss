@@ -13,12 +13,14 @@
 		}
 	}
 
-	.list-group-item, .list-group-header {
+	.list-group-item,
+	.list-group-header {
 		border-left-width: 0;
 		border-radius: 0;
 		border-right-width: 0;
 
-		.list-group-link, .secondary-info {
+		.list-group-link,
+		.secondary-info {
 			overflow: hidden;
 			text-overflow: ellipsis;
 			white-space: nowrap;

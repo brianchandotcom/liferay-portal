@@ -15,7 +15,7 @@ const ErrorDisplay: FC<IErrorDisplayProps> = ({
 	className,
 	message = Liferay.Language.get('an-unexpected-error-occurred'),
 	onReload,
-	spacer = false
+	spacer = false,
 }) => (
 	<NoResultsDisplay
 		className={getCN(
@@ -28,8 +28,8 @@ const ErrorDisplay: FC<IErrorDisplayProps> = ({
 	>
 		{onReload && (
 			<ClayButton
-				className='button-root'
-				displayType='secondary'
+				className="button-root"
+				displayType="secondary"
 				onClick={() => onReload()}
 			>
 				{buttonLabel}

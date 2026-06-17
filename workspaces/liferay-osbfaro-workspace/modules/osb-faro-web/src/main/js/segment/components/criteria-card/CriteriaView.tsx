@@ -16,7 +16,7 @@ interface ICriteriaViewProps extends React.HTMLAttributes<HTMLDivElement> {
 const CONJUNCTION_MAP: Record<string, string> = {
 	[ConjunctionKey.And]: Liferay.Language.get('and'),
 	[ConjunctionKey.Or]: Liferay.Language.get('or'),
-	[ConjunctionKey.Then]: Liferay.Language.get('then')
+	[ConjunctionKey.Then]: Liferay.Language.get('then'),
 };
 
 const CriteriaView: React.FC<ICriteriaViewProps> = ({
@@ -24,7 +24,7 @@ const CriteriaView: React.FC<ICriteriaViewProps> = ({
 	forwardedRef,
 	segmentType,
 	sequential,
-	timeZoneId
+	timeZoneId,
 }) => {
 	const {referencedProperties} = useContext(ReferencedObjectsContext);
 
@@ -43,7 +43,7 @@ const CriteriaView: React.FC<ICriteriaViewProps> = ({
 			: CONJUNCTION_MAP[conjunctionName];
 
 		return (
-			<div className='criteria-group' key={criteriaGroupId}>
+			<div className="criteria-group" key={criteriaGroupId}>
 				{items.map((criterion: any, index: number) => {
 					const content = criterion.items
 						? renderCriteriaGroup(criterion, depth + 1)
@@ -52,12 +52,12 @@ const CriteriaView: React.FC<ICriteriaViewProps> = ({
 					return (
 						<Fragment key={index}>
 							{index !== 0 && (
-								<div className='conjunction'>{conjunction}</div>
+								<div className="conjunction">{conjunction}</div>
 							)}
 
 							{isSequentialTopLevel ? (
-								<div className='criteria-step'>
-									<span className='criteria-step-number mr-2'>
+								<div className="criteria-step">
+									<span className="criteria-step-number mr-2">
 										{index + 1}
 									</span>
 
@@ -80,7 +80,7 @@ const CriteriaView: React.FC<ICriteriaViewProps> = ({
 		);
 
 		return (
-			<div className='criteria-row'>
+			<div className="criteria-row">
 				{property ? (
 					<DisplayComponent
 						criterion={criterion}
@@ -89,7 +89,7 @@ const CriteriaView: React.FC<ICriteriaViewProps> = ({
 						timeZoneId={timeZoneId}
 					/>
 				) : (
-					<b className='undefined-property'>
+					<b className="undefined-property">
 						{Liferay.Language.get('attribute-no-longer-exists')}
 					</b>
 				)}
@@ -98,7 +98,7 @@ const CriteriaView: React.FC<ICriteriaViewProps> = ({
 	};
 
 	return (
-		<div className='criteria-view-root pt-2' ref={forwardedRef}>
+		<div className="criteria-view-root pt-2" ref={forwardedRef}>
 			{renderCriteriaGroup(criteria, 0)}
 		</div>
 	);

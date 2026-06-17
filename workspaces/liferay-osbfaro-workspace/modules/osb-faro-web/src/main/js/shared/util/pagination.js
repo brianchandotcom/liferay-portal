@@ -9,7 +9,7 @@ const {
 	cur: defaultCur,
 	delta: defaultDelta,
 	orderAscending,
-	orderDescending
+	orderDescending,
 } = FaroConstants.pagination;
 
 export const ABANDONMENTS_METRIC = 'abandonmentsMetric';
@@ -100,14 +100,14 @@ const INVERTED_SORT_FIELDS = [
 	TOTAL_ACTIVITIES,
 	UNIQUE_VISITS_COUNT,
 	VIEWS_METRIC,
-	VISITORS_METRIC
+	VISITORS_METRIC,
 ];
 
 export const paginationDefaults = {
 	delta: defaultDelta,
 	filterBy: new Map(),
 	page: defaultCur,
-	query: ''
+	query: '',
 };
 
 export const paginationConfig = {
@@ -115,7 +115,7 @@ export const paginationConfig = {
 	filterBy: PropTypes.instanceOf(Map),
 	orderIOMap: PropTypes.instanceOf(OrderedMap),
 	page: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-	query: PropTypes.string
+	query: PropTypes.string,
 };
 
 export const ACCESSOR_TO_FIELD_MAP = {
@@ -126,7 +126,7 @@ export const ACCESSOR_TO_FIELD_MAP = {
 	['properties.location']: LOCATION,
 	['properties.totalActivities']: TOTAL_ACTIVITIES,
 	userName: USER_NAME,
-	viewCount: UNIQUE_VISITS_COUNT
+	viewCount: UNIQUE_VISITS_COUNT,
 };
 
 export const getFieldNameFromAccessor = (accessor = '') =>
@@ -142,32 +142,37 @@ const SYSTEM_FIELDS = [
 	INDIVIDUAL_EMAIL,
 	LAST_ACTIVITY_DATE,
 	OPERATION,
-	USER_NAME
+	USER_NAME,
 ];
 
 export function buildOrderByFields({field, sortOrder}, entityType) {
 	if (entityType === INDIVIDUALS && field === NAME) {
-		return [GIVEN_NAME, FAMILY_NAME].map(columnAccessor =>
+		return [GIVEN_NAME, FAMILY_NAME].map((columnAccessor) =>
 			createOrderByField(columnAccessor, sortOrder)
 		);
-	} else if (entityType === SEGMENTS && field === NAME) {
+	}
+	else if (entityType === SEGMENTS && field === NAME) {
 		return [createOrderByField(NAME, sortOrder, true)];
-	} else if (entityType === ACCOUNTS && field === NAME) {
+	}
+	else if (entityType === ACCOUNTS && field === NAME) {
 		return [createOrderByField(ACCOUNT_NAME, sortOrder)];
-	} else if (entityType === USERS && field === NAME) {
-		return [FIRST_NAME, LAST_NAME].map(columnAccessor =>
+	}
+	else if (entityType === USERS && field === NAME) {
+		return [FIRST_NAME, LAST_NAME].map((columnAccessor) =>
 			createOrderByField(columnAccessor, sortOrder)
 		);
-	} else if (entityType === INTERESTS && field === NAME) {
+	}
+	else if (entityType === INTERESTS && field === NAME) {
 		return [createOrderByField(field, sortOrder, true)];
-	} else {
+	}
+	else {
 		return [createOrderByField(field, sortOrder)];
 	}
 }
 
 const ORDER_BY_DIRECTIONS_MAP = {
 	[OrderByDirections.Ascending]: orderAscending,
-	[OrderByDirections.Descending]: orderDescending
+	[OrderByDirections.Descending]: orderDescending,
 };
 
 export function createOrderByField(field, sortOrder, system) {
@@ -176,21 +181,22 @@ export function createOrderByField(field, sortOrder, system) {
 	return {
 		fieldName: field,
 		orderBy,
-		system: system || SYSTEM_FIELDS.includes(field)
+		system: system || SYSTEM_FIELDS.includes(field),
 	};
 }
 
-export const getDefaultSortOrder = fieldName =>
+export const getDefaultSortOrder = (fieldName) =>
 	INVERTED_SORT_FIELDS.includes(fieldName)
 		? OrderByDirections.Descending
 		: OrderByDirections.Ascending;
 
-export const invertSortOrder = currentSortOrder => {
+export const invertSortOrder = (currentSortOrder) => {
 	if (currentSortOrder) {
 		return currentSortOrder === OrderByDirections.Ascending
 			? OrderByDirections.Descending
 			: OrderByDirections.Ascending;
-	} else {
+	}
+	else {
 		return OrderByDirections.Ascending;
 	}
 };
@@ -199,17 +205,17 @@ export const createOrderIOMap = (field, sortOrder) =>
 	OrderedMap({
 		[field]: new OrderParams({
 			field,
-			sortOrder: sortOrder || getDefaultSortOrder(field)
-		})
+			sortOrder: sortOrder || getDefaultSortOrder(field),
+		}),
 	});
 
-export const getSortFromOrderIOMap = orderIOMap => {
+export const getSortFromOrderIOMap = (orderIOMap) => {
 	if (orderIOMap) {
 		const {field, sortOrder} = orderIOMap.first();
 
 		return {
 			column: field,
-			type: sortOrder
+			type: sortOrder,
 		};
 	}
 };
@@ -218,10 +224,10 @@ export const getGraphQLVariablesFromPagination = ({
 	delta,
 	orderIOMap,
 	page,
-	query
+	query,
 }) => ({
 	keywords: query,
 	size: delta,
 	sort: getSortFromOrderIOMap(orderIOMap),
-	start: (page - 1) * delta
+	start: (page - 1) * delta,
 });

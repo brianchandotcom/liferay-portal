@@ -4,7 +4,7 @@ import React from 'react';
 import {
 	createDateBreakdown,
 	DATE_GROUPING_LABELS_MAP,
-	DATE_GROUPING_OPTIONS
+	DATE_GROUPING_OPTIONS,
 } from 'event-analysis/utils/utils';
 import {DateGroupings, IBreakdownProps} from 'event-analysis/utils/types';
 
@@ -14,19 +14,19 @@ const DateBreakdown: React.FC<IBreakdownProps> = ({
 	breakdown,
 	description,
 	displayName,
-	onSubmit
+	onSubmit,
 }) => {
 	const getInitialValues = () => {
 		if (breakdown) {
 			const {dateGrouping} = breakdown;
 
 			return {
-				dateGrouping: dateGrouping ?? DateGroupings.Month
+				dateGrouping: dateGrouping ?? DateGroupings.Month,
 			};
 		}
 
 		return {
-			dateGrouping: DateGroupings.Month
+			dateGrouping: DateGroupings.Month,
 		};
 	};
 
@@ -42,25 +42,25 @@ const DateBreakdown: React.FC<IBreakdownProps> = ({
 						attributeType: attributeOwnerType,
 						dateGrouping,
 						description,
-						displayName
+						displayName,
 					})
 				);
 			}}
 		>
 			{({handleSubmit, isValid}) => (
 				<Form.Form onSubmit={handleSubmit}>
-					<div className='options-body'>
+					<div className="options-body">
 						<Form.Group autoFit>
 							<Form.GroupItem>
 								<Form.Select
 									label={Liferay.Language.get(
 										'group-dates-by'
 									)}
-									name='dateGrouping'
-									type='string'
+									name="dateGrouping"
+									type="string"
 									validate={validateRequired}
 								>
-									{DATE_GROUPING_OPTIONS.map(value => (
+									{DATE_GROUPING_OPTIONS.map((value) => (
 										<Form.Select.Item
 											key={value}
 											value={value}
@@ -73,13 +73,13 @@ const DateBreakdown: React.FC<IBreakdownProps> = ({
 						</Form.Group>
 					</div>
 
-					<div className='options-footer'>
+					<div className="options-footer">
 						<ClayButton
 							block
-							className='button-root'
+							className="button-root"
 							disabled={!isValid}
-							displayType='primary'
-							type='submit'
+							displayType="primary"
+							type="submit"
 						>
 							{Liferay.Language.get('apply')}
 						</ClayButton>

@@ -11,33 +11,33 @@ const mockMenus = (): Menus => ({
 			items: [
 				{
 					childMenuId: 'language',
-					label: 'Language'
+					label: 'Language',
 				},
 				{
 					externalLink: true,
 					label: 'Link 1',
-					url: '/link-1'
+					url: '/link-1',
 				},
 				{
 					label: 'Link 2',
-					url: '/link-externo-2'
-				}
+					url: '/link-externo-2',
+				},
 			],
-			subheaderLabel: 'test@test.com'
-		}
+			subheaderLabel: 'test@test.com',
+		},
 	],
 	language: [
 		{
 			items: [
 				{
-					label: 'English'
+					label: 'English',
 				},
 				{
-					label: 'Japanese'
-				}
-			]
-		}
-	]
+					label: 'Japanese',
+				},
+			],
+		},
+	],
 });
 
 const Wrapper = ({children}: {children: React.ReactNode}) => (
@@ -51,9 +51,9 @@ describe('UserDropdown', () => {
 		const {container} = render(
 			<Wrapper>
 				<UserDropdown
-					initialActiveMenu='base'
+					initialActiveMenu="base"
 					menus={mockMenus()}
-					userName='Test Test'
+					userName="Test Test"
 				/>
 			</Wrapper>
 		);
@@ -65,9 +65,9 @@ describe('UserDropdown', () => {
 		const {container} = render(
 			<Wrapper>
 				<UserDropdown
-					initialActiveMenu='base'
+					initialActiveMenu="base"
 					menus={mockMenus()}
-					userName='Test Test'
+					userName="Test Test"
 				/>
 			</Wrapper>
 		);
@@ -84,9 +84,9 @@ describe('UserDropdown', () => {
 		const {container} = render(
 			<Wrapper>
 				<UserDropdown
-					initialActiveMenu='base'
+					initialActiveMenu="base"
 					menus={mockMenus()}
-					userName='Test Test'
+					userName="Test Test"
 				/>
 			</Wrapper>
 		);
@@ -111,9 +111,9 @@ describe('UserDropdown', () => {
 		const {container} = render(
 			<Wrapper>
 				<UserDropdown
-					initialActiveMenu='base'
+					initialActiveMenu="base"
 					menus={mockMenus()}
-					userName='Test Test'
+					userName="Test Test"
 				/>
 			</Wrapper>
 		);
@@ -147,9 +147,9 @@ describe('UserDropdown', () => {
 		const {container} = render(
 			<Wrapper>
 				<UserDropdown
-					initialActiveMenu='base'
+					initialActiveMenu="base"
 					menus={mockMenus()}
-					userName='Test Test'
+					userName="Test Test"
 				/>
 			</Wrapper>
 		);
@@ -169,6 +169,7 @@ describe('UserDropdown', () => {
 		expect(screen.getByText('English')).toBeInTheDocument();
 
 		// Close
+
 		fireEvent.click(toggleButton!);
 
 		act(() => {
@@ -176,6 +177,7 @@ describe('UserDropdown', () => {
 		});
 
 		// Open again
+
 		fireEvent.click(toggleButton!);
 
 		act(() => {

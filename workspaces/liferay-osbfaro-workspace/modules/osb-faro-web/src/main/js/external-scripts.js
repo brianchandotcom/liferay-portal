@@ -15,10 +15,11 @@ import {Pendo} from 'shared/util/pendo';
 const pendo = new Pendo();
 
 const scripts = [
+
 	/* Pendo */
 	{
-		innerHTML: pendo.script
-	}
+		innerHTML: pendo.script,
+	},
 ];
 
 /**

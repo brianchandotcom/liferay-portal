@@ -12,17 +12,17 @@ describe('ContextualInformation', () => {
 		country: 'Australia',
 		deviceType: 'Desktop',
 		region: 'AEST',
-		timezoneOffset: '-03:00'
+		timezoneOffset: '-03:00',
 	};
 
 	it('should render the snapshot', () => {
 		const {container} = render(
 			<ContextualInformation
-				contactId='contact-1'
+				contactId="contact-1"
 				contextData={fromJS(mockContext)}
-				email='test@example.com'
-				userId='123456'
-				uuid='12345'
+				email="test@example.com"
+				userId="123456"
+				uuid="12345"
 			/>
 		);
 		expect(container).toMatchSnapshot();
@@ -40,8 +40,8 @@ describe('ContextualInformation', () => {
 		const {getByText} = render(
 			<ContextualInformation
 				contextData={fromJS({})}
-				email='test@example.com'
-				uuid='1234-abcde-67890'
+				email="test@example.com"
+				uuid="1234-abcde-67890"
 			/>
 		);
 

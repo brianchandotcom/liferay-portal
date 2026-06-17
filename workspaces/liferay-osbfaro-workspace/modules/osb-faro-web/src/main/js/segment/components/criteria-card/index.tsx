@@ -26,7 +26,7 @@ const CriteriaCard: React.FC<ICriteriaCardProps> = ({
 	includeAnonymousUsers,
 	segmentType,
 	sequential,
-	timeZoneId
+	timeZoneId,
 }) => {
 	const _criteriaViewRef = React.createRef<HTMLDivElement>();
 
@@ -60,25 +60,25 @@ const CriteriaCard: React.FC<ICriteriaCardProps> = ({
 
 	return (
 		<Panel
-			className='card-root'
+			className="card-root"
 			collapsable
 			defaultExpanded
 			displayTitle={
-				<Panel.Title className='card-title'>
+				<Panel.Title className="card-title">
 					{Liferay.Language.get('segment-criteria')}
 				</Panel.Title>
 			}
 			id={ReportContainer.SegmentCriteriaCard}
 		>
-			<Panel.Body className='criteria-card-root'>
+			<Panel.Body className="criteria-card-root">
 				{includeAnonymousUsers && (
-					<Label display='info' size='lg' uppercase>
+					<Label display="info" size="lg" uppercase>
 						{Liferay.Language.get('includes-anonymous-individuals')}
 					</Label>
 				)}
 
 				{segmentType === SegmentTypes.RealTime && sequential && (
-					<Label display='info' size='lg' uppercase>
+					<Label display="info" size="lg" uppercase>
 						{Liferay.Language.get('sequential-events')}
 					</Label>
 				)}

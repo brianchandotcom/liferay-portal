@@ -14,7 +14,7 @@ import {useParams} from 'react-router-dom';
 export enum Frequency {
 	Daily = 'daily',
 	Monthly = 'monthly',
-	Weekly = 'weekly'
+	Weekly = 'weekly',
 }
 
 export type Report = {
@@ -32,7 +32,7 @@ interface IEmailReportsProps
 const connector = connect(null, {
 	addAlert,
 	close,
-	open
+	open,
 });
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
@@ -43,7 +43,7 @@ const EmailReports: React.FC<IEmailReportsProps> = ({
 	className,
 	close,
 	open,
-	sitesSynced = false
+	sitesSynced = false,
 }) => {
 	const {groupId} = useParams();
 	const [report, setReport] = useState<Report | null>(null);
@@ -55,11 +55,11 @@ const EmailReports: React.FC<IEmailReportsProps> = ({
 				setReport(
 					reports?.[channelId] ?? {
 						enabled: false,
-						frequency: Frequency.Monthly
+						frequency: Frequency.Monthly,
 					}
 				)
 			)
-			.catch(e => {
+			.catch((e) => {
 				console.error(e); // eslint-disable-line no-console
 			});
 	}, [channelId, groupId]);
@@ -74,18 +74,18 @@ const EmailReports: React.FC<IEmailReportsProps> = ({
 					alertType: Alert.Types.Success,
 					message: Liferay.Language.get(
 						'changes-to-email-reports-saved'
-					)
+					),
 				});
 
 				setReport(report);
 			})
-			.catch(e => {
+			.catch((e) => {
 				console.error(e); // eslint-disable-line no-console
 
 				addAlert({
 					alertType: Alert.Types.Error,
 					message: Liferay.Language.get('error'),
-					timeout: false
+					timeout: false,
 				});
 			});
 	};
@@ -96,12 +96,12 @@ const EmailReports: React.FC<IEmailReportsProps> = ({
 				Liferay.Language.get('email-reports-x'),
 				[
 					!report ? (
-						<Loading align={Align.Left} key='LOADING' />
+						<Loading align={Align.Left} key="LOADING" />
 					) : report.enabled ? (
 						Liferay.Language.get('enabled')
 					) : (
 						Liferay.Language.get('disabled')
-					)
+					),
 				],
 				false
 			)}
@@ -110,9 +110,9 @@ const EmailReports: React.FC<IEmailReportsProps> = ({
 				<ClayButton
 					aria-label={Liferay.Language.get('configure-email-reports')}
 					borderless
-					className='button-root'
+					className="button-root"
 					disabled={!sitesSynced}
-					displayType='unstyled'
+					displayType="unstyled"
 					onClick={() => {
 						if (!sitesSynced) {
 							return;
@@ -121,18 +121,18 @@ const EmailReports: React.FC<IEmailReportsProps> = ({
 						open(modalTypes.EDIT_EMAIL_REPORTS, {
 							onCancel: close,
 							onSave: handleSaveReport,
-							report
+							report,
 						});
 					}}
-					size='sm'
+					size="sm"
 				>
 					<span
-						className='ml-2 p-2'
+						className="ml-2 p-2"
 						data-tooltip
-						data-tooltip-align='top'
+						data-tooltip-align="top"
 						title={Liferay.Language.get('configure-email-reports')}
 					>
-						<ClayIcon className='icon-root' symbol='cog' />
+						<ClayIcon className="icon-root" symbol="cog" />
 					</span>
 				</ClayButton>
 			)}

@@ -1,6 +1,6 @@
 import ChartTooltip, {
 	Alignments,
-	Weights
+	Weights,
 } from 'shared/components/chart-tooltip';
 import React, {FC} from 'react';
 import {Column} from 'shared/components/chart-tooltip/types';
@@ -12,14 +12,14 @@ const Y_AXIS_WIDTH = 30;
 
 export const ANIMATION_DURATION = {
 	bar: 800,
-	line: 1000
+	line: 1000,
 };
 
 export const AXIS = {
 	borderStroke: '#E7E7ED',
 	font: '14px "Source Sans Pro", "Source Sans, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
 	gridStroke: '#E7E7ED',
-	textColor: '#6B6C7E'
+	textColor: '#6B6C7E',
 };
 
 export const BAR_COLORS = {
@@ -27,14 +27,14 @@ export const BAR_COLORS = {
 		default: '#4B9BFF',
 		hover: '#318DFF',
 		notSelected: '#97C5FF',
-		selected: '#0071FD'
+		selected: '#0071FD',
 	},
 	orange: {
 		default: '#FFB46E',
 		hover: '#FFA754',
 		notSelected: '#FFCEA1',
-		selected: '#FF8C21'
-	}
+		selected: '#FF8C21',
+	},
 };
 
 export interface ChartTooltipRow {
@@ -67,23 +67,22 @@ type AxisTickProps = {
 export const getAxisTickText =
 	(
 		axis = 'x',
-		formatter: (val: number | string) => string | number = val => val
+		formatter: (val: number | string) => string | number = (val) => val
 	) =>
-	({payload: {offset, value}, textAnchor, x, y}: AxisTickProps) =>
-		(
-			<Text
-				style={{
-					fill: AXIS.textColor,
-					font: AXIS.font,
-					fontSize: '0.75rem'
-				}}
-				textAnchor={textAnchor}
-				x={x}
-				y={axis === 'y' ? y + offset : y}
-			>
-				{formatter(value)}
-			</Text>
-		);
+	({payload: {offset, value}, textAnchor, x, y}: AxisTickProps) => (
+		<Text
+			style={{
+				fill: AXIS.textColor,
+				font: AXIS.font,
+				fontSize: '0.75rem',
+			}}
+			textAnchor={textAnchor}
+			x={x}
+			y={axis === 'y' ? y + offset : y}
+		>
+			{formatter(value)}
+		</Text>
+	);
 
 interface IRechartsTooltipProps extends React.HTMLAttributes<HTMLElement> {
 	dateTitle?: string;
@@ -97,9 +96,9 @@ interface IRechartsTooltipProps extends React.HTMLAttributes<HTMLElement> {
 export const RechartsTooltip: FC<IRechartsTooltipProps> = ({
 	dateTitle,
 	rows,
-	title
+	title,
 }) => (
-	<div className='bb-tooltip-container' style={{position: 'static'}}>
+	<div className="bb-tooltip-container" style={{position: 'static'}}>
 		<ChartTooltip
 			header={[
 				{
@@ -107,30 +106,30 @@ export const RechartsTooltip: FC<IRechartsTooltipProps> = ({
 						{
 							label: title ?? '',
 							weight: Weights.Semibold,
-							width: 150
+							width: 150,
 						},
 						{
 							align: Alignments.Right,
 							label: dateTitle ?? '',
 							weight: Weights.Semibold,
-							width: 55
-						}
-					]
-				}
+							width: 55,
+						},
+					],
+				},
 			]}
 			rows={rows.map(({className, label, value}) => ({
 				columns: [
 					{
 						className,
 						label,
-						weight: 'normal'
+						weight: 'normal',
 					},
 					{
 						align: 'right',
 						label: value,
-						weight: 'semibold'
-					}
-				] as Column[]
+						weight: 'semibold',
+					},
+				] as Column[],
 			}))}
 		/>
 	</div>

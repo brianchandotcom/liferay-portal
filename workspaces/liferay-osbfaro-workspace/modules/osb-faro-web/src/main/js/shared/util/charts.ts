@@ -10,7 +10,7 @@ import {RangeKeyTimeRanges} from 'shared/util/constants';
 import {
 	toDuration as toDurationRaw,
 	toRounded,
-	toThousands
+	toThousands,
 } from 'shared/util/numbers';
 
 const toDuration = toDurationRaw as (
@@ -31,7 +31,7 @@ export enum MetricValueType {
 	Number = 'number',
 	Percentage = 'percentage',
 	Time = 'time',
-	Ratings = 'ratings'
+	Ratings = 'ratings',
 }
 
 export const CHART_COLORS = [
@@ -43,7 +43,7 @@ export const CHART_COLORS = [
 	'#9CE269',
 	'#B077FF',
 	'#FFD76E',
-	'#5FC8FF'
+	'#5FC8FF',
 ];
 
 export const CHART_COLOR_NAMES = {
@@ -62,7 +62,7 @@ export const CHART_COLOR_NAMES = {
 	stark: '#4B9BFF',
 	starkD2: '#187FFF',
 	starkL2: '#7EB7FF',
-	starkL4: '#B1D4FF'
+	starkL4: '#B1D4FF',
 };
 
 export const Colors = {
@@ -84,12 +84,12 @@ export const Colors = {
 		'#9CE268',
 		'#B077FF',
 		'#FFD76E',
-		'#5FC8FF'
+		'#5FC8FF',
 	],
 	positive: '#287D3C',
 	primary: '#4B9BFF',
 	secondary: '#CCCCCC',
-	warning: '#B95000'
+	warning: '#B95000',
 };
 
 export const dateRangeFormatter = (
@@ -97,7 +97,9 @@ export const dateRangeFormatter = (
 	dateEnd: Date,
 	withYear: boolean = false
 ): string => {
+
 	// TODO: Add timezone param
+
 	const dayFormat = d3.utcFormat('%-d');
 	const dayMonthFormat = d3.utcFormat('%b %-d');
 	const dayMonthYearFormat = d3.utcFormat('%Y %b %-d');
@@ -126,7 +128,9 @@ export const formatTooltipDate = (
 		rangeKey === RangeKeyTimeRanges.Last24Hours ||
 		rangeKey === RangeKeyTimeRanges.Yesterday
 	) {
+
 		// display hours for Last 24 hours and yesterday
+
 		return moment.utc(date).format('MMM D, h A');
 	}
 
@@ -139,7 +143,9 @@ export const formatXAxisDate = (
 	interval: Interval,
 	dateKeysIMap: Map<number, [number, number | null]>
 ) => {
+
 	// display date and month
+
 	let formatter = d3.utcFormat('%b %-d');
 	const monthFormat = d3.utcFormat('%b');
 
@@ -156,9 +162,11 @@ export const formatXAxisDate = (
 		case RangeKeyTimeRanges.Last180Days:
 		case RangeKeyTimeRanges.LastYear:
 			if (interval === INTERVAL_KEY_MAP.week) {
+
 				// display date range
 
 				// TODO: Add timezone param
+
 				return dateRangeFormatter(
 					new Date(dateStart),
 					new Date(dateEnd ?? dateStart),
@@ -166,13 +174,17 @@ export const formatXAxisDate = (
 				);
 			}
 			if (interval === INTERVAL_KEY_MAP.month) {
+
 				// display month
+
 				return monthFormat(new Date(dateStart));
 			}
 			break;
 		case RangeKeyTimeRanges.Last24Hours:
 		case RangeKeyTimeRanges.Yesterday:
+
 			// display hours
+
 			formatter = d3.utcFormat('%-I %p');
 			break;
 		default:
@@ -191,7 +203,8 @@ export const formatXAxisDate = (
 export const getAxisFormatter = (type: string): ((value: number) => string) => {
 	if (type === 'percentage') {
 		return (value: number) => `${toRounded(value * 100)}%`;
-	} else if (type === 'time') {
+	}
+	else if (type === 'time') {
 		return (value: number) => {
 			const displayMilliseconds =
 				value < 2e3 && value !== 1000 ? 'S[ms]' : '';
@@ -200,7 +213,8 @@ export const getAxisFormatter = (type: string): ((value: number) => string) => {
 
 			return toDuration(value, format);
 		};
-	} else if (type == 'ratings') {
+	}
+	else if (type == 'ratings') {
 		return (value: number) => `${(value * 10).toFixed(2)}`;
 	}
 
@@ -231,6 +245,7 @@ export const getAxisMeasures = (value: number) => {
 	const intervalValue = maxValue / intervalCount;
 
 	// avoid extra intervals
+
 	for (let i = 0; i < intervalCount; i++) {
 		let tempMaxValue = intervalValue * (i + 1);
 		if (tempMaxValue % 1 !== 0) {
@@ -254,7 +269,7 @@ export const getAxisMeasures = (value: number) => {
 		intervalCount,
 		intervals,
 		intervalValue,
-		maxValue
+		maxValue,
 	};
 };
 
@@ -279,9 +294,11 @@ export const getBarColor = (
 ): string => {
 	if (selectedPoint === currentBarIndex) {
 		return BAR_COLORS[color].selected;
-	} else if (currentBarIndex === hoverIndex) {
+	}
+	else if (currentBarIndex === hoverIndex) {
 		return BAR_COLORS[color].hover;
-	} else if (isNumber(selectedPoint)) {
+	}
+	else if (isNumber(selectedPoint)) {
 		return BAR_COLORS[color].notSelected;
 	}
 
@@ -323,7 +340,8 @@ export const getDateTitle = (
 			new Date(endDate ?? startDate),
 			true
 		);
-	} else if (interval === INTERVAL_KEY_MAP.month) {
+	}
+	else if (interval === INTERVAL_KEY_MAP.month) {
 		return moment.utc(startDate).format('YYYY MMM');
 	}
 
@@ -353,7 +371,7 @@ export const getIntervals = (
 
 		const validTimeInterval = [
 			RangeKeyTimeRanges.Last24Hours,
-			RangeKeyTimeRanges.Yesterday
+			RangeKeyTimeRanges.Yesterday,
 		].includes(rangeKey)
 			? INTERVAL_KEY_MAP.day
 			: timeInterval;
@@ -401,7 +419,7 @@ export const getLocationsData = (
 			id: valueKey,
 			name: valueKey,
 			total: value,
-			value: `${toRounded((value / total) * 100)}`
+			value: `${toRounded((value / total) * 100)}`,
 		})
 	);
 
@@ -409,7 +427,8 @@ export const getLocationsData = (
 
 	if (location === 'Any') {
 		othersLabel = Liferay.Language.get('other-countries');
-	} else {
+	}
+	else {
 		othersLabel = Liferay.Language.get('other-regions');
 	}
 
@@ -429,7 +448,7 @@ export const getLocationsData = (
 			id: 'others',
 			name: othersLabel,
 			total: totalOthers,
-			value: `${toRounded((totalOthers / total) * 100)}`
+			value: `${toRounded((totalOthers / total) * 100)}`,
 		});
 	}
 
@@ -445,13 +464,17 @@ export const getMetricFormatter = (
 ): ((value: number) => string) => {
 	if (type === 'number') {
 		return (value: number) => `${toThousands(value)}`;
-	} else if (type === 'percentage') {
+	}
+	else if (type === 'percentage') {
 		return (value: number) => `${toRounded(value * 100)}%`;
-	} else if (type === 'time') {
+	}
+	else if (type === 'time') {
 		return (value: number) => toDuration(value);
-	} else if (type == 'ratings') {
+	}
+	else if (type == 'ratings') {
 		return (value: number) => `${(value * 10).toFixed(2)}/10`;
-	} else {
+	}
+	else {
 		return (value: number) => String(value);
 	}
 };

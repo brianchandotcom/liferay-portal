@@ -13,7 +13,7 @@ function queryStringToObject(initialQueryString: string): any {
 	const params = queryString.split('&');
 	const query: {[key: string]: string} = {};
 
-	params.forEach(param => {
+	params.forEach((param) => {
 		const [key, value] = param.split('=');
 		query[key] = decodeQueryParam(value);
 	});
@@ -22,6 +22,7 @@ function queryStringToObject(initialQueryString: string): any {
 }
 
 // TODO: Remove this once we upgrade to react-router-dom v6
+
 export function useQueryParams() {
 	const {search} = useLocation();
 

@@ -3,7 +3,7 @@ import {createActionTypes} from 'redux-toolbox';
 import {getCardSchema} from '../middleware/schema';
 
 export const actionTypes = {
-	...createActionTypes('fetch', 'card')
+	...createActionTypes('fetch', 'card'),
 };
 
 export function fetchCard({
@@ -11,7 +11,7 @@ export function fetchCard({
 	contactsCardTemplateSettings = {},
 	contactsEntityId,
 	contactsEntityType,
-	groupId
+	groupId,
 }) {
 	return {
 		meta: {
@@ -20,7 +20,7 @@ export function fetchCard({
 					contactsCardTemplateId,
 					contactsCardTemplateSettings,
 					contactsEntityId,
-					contactsEntityType
+					contactsEntityType,
 				},
 				method: 'GET',
 				path: `contacts/${groupId}/contacts_card`,
@@ -28,12 +28,12 @@ export function fetchCard({
 				types: [
 					actionTypes.FETCH_CARD_REQUEST,
 					actionTypes.FETCH_CARD_SUCCESS,
-					actionTypes.FETCH_CARD_FAILURE
-				]
+					actionTypes.FETCH_CARD_FAILURE,
+				],
 			},
 			contactsEntityId,
-			type: contactsEntityType
+			type: contactsEntityType,
 		},
-		type: 'NO_OP'
+		type: 'NO_OP',
 	};
 }

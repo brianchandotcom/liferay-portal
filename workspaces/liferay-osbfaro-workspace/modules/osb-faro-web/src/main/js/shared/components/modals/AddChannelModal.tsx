@@ -2,7 +2,7 @@ import ClayButton from '@clayui/button';
 import Form, {
 	validateMaxLength,
 	validateMinLength,
-	validateRequired
+	validateRequired,
 } from 'shared/components/form';
 import Loading, {Align} from 'shared/components/Loading';
 import Modal from 'shared/components/modal';
@@ -17,12 +17,12 @@ interface IAddChannelModalProps {
 
 const AddChannelModal: React.FC<IAddChannelModalProps> = ({
 	onClose,
-	onSubmit
+	onSubmit,
 }) => (
-	<Modal className='add-channel-modal'>
+	<Modal className="add-channel-modal">
 		<Form
 			initialValues={{
-				name: ''
+				name: '',
 			}}
 			onSubmit={onSubmit}
 		>
@@ -37,29 +37,29 @@ const AddChannelModal: React.FC<IAddChannelModalProps> = ({
 						<Form.Input
 							autoFocus
 							label={Liferay.Language.get('property-name')}
-							name='name'
+							name="name"
 							validate={sequence([
 								validateRequired,
 								validateMaxLength(65),
-								validateMinLength(3)
+								validateMinLength(3),
 							])}
 						/>
 					</Modal.Body>
 
 					<Modal.Footer>
 						<ClayButton
-							className='button-root'
-							displayType='secondary'
+							className="button-root"
+							displayType="secondary"
 							onClick={onClose}
 						>
 							{Liferay.Language.get('cancel')}
 						</ClayButton>
 
 						<ClayButton
-							className='button-root'
+							className="button-root"
 							disabled={isSubmitting || !isValid}
-							displayType='primary'
-							type='submit'
+							displayType="primary"
+							type="submit"
 						>
 							{isSubmitting && <Loading align={Align.Left} />}
 

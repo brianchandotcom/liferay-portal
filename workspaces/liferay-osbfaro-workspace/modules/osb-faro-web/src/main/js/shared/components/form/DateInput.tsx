@@ -33,7 +33,7 @@ const FormDateInput: React.FC<IFormDateInputProps> = ({
 	required = false,
 	showRetentionPeriod = true,
 	usePortal = true,
-	width
+	width,
 }) => {
 	const {name, value} = field;
 
@@ -49,7 +49,7 @@ const FormDateInput: React.FC<IFormDateInputProps> = ({
 	const classes = getCN('form-date-input-root', className, {
 		'form-inline-group': inline,
 		'has-error': error && touched,
-		'has-success': !error && touched
+		'has-success': !error && touched,
 	});
 
 	const style = isNumber(width)

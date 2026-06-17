@@ -22,7 +22,7 @@ export default class StringInput extends React.Component<IStringInputProps> {
 			channelId,
 			groupId,
 			property: {id},
-			value
+			value,
 		} = this.props;
 
 		return API.individuals
@@ -30,7 +30,7 @@ export default class StringInput extends React.Component<IStringInputProps> {
 				channelId,
 				fieldMappingFieldName: id,
 				groupId,
-				query: value
+				query: value,
 			})
 			.then(({items}) => items);
 	}
@@ -55,19 +55,19 @@ export default class StringInput extends React.Component<IStringInputProps> {
 			property: {entityName, options = []},
 			touched,
 			valid,
-			value
+			value,
 		} = this.props;
 
 		const showError = !valid && touched;
 
 		return (
-			<div className='criteria-statement'>
+			<div className="criteria-statement">
 				<Form.Group autoFit>
-					<Form.GroupItem className='entity-name' label shrink>
+					<Form.GroupItem className="entity-name" label shrink>
 						{entityName}
 					</Form.GroupItem>
 
-					<Form.GroupItem className='display-value' label shrink>
+					<Form.GroupItem className="display-value" label shrink>
 						{displayValue}
 					</Form.GroupItem>
 
@@ -78,9 +78,9 @@ export default class StringInput extends React.Component<IStringInputProps> {
 							{options.length === 0 ? (
 								<AutocompleteInput
 									className={getCN(className, {
-										'has-error': showError
+										'has-error': showError,
 									})}
-									data-testid='value-input'
+									data-testid="value-input"
 									dataSourceFn={this.fieldValuesDataSourceFn}
 									onBlur={this.handleBlur}
 									onChange={this.handleChange}
@@ -89,13 +89,13 @@ export default class StringInput extends React.Component<IStringInputProps> {
 							) : (
 								<Picker
 									className={getCN({
-										'has-error': showError
+										'has-error': showError,
 									})}
-									data-testid='value-select'
+									data-testid="value-select"
 									items={
 										options.map(({label, value}) => ({
 											label,
-											value
+											value,
 										})) as {label: string; value: string}[]
 									}
 									onBlur={this.handleBlur}

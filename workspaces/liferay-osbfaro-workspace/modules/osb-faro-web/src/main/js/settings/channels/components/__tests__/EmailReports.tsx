@@ -12,18 +12,20 @@ jest.unmock('react-dom');
 jest.mock('react-router-dom', () => ({
 	...jest.requireActual('react-router-dom'),
 	useParams: () => ({
-		groupId: '2000'
-	})
+		groupId: '2000',
+	}),
 }));
 
 const WrappedComponent = ({reports, ...otherProps}: any) => {
+
 	// @ts-ignore
 	API.preferences.fetchEmailReport = jest.fn(() => Promise.resolve(reports));
 
 	return (
+
 		// @ts-ignore
 		<Provider store={mockStore()}>
-			<EmailReports channelId='1234' {...otherProps} />
+			<EmailReports channelId="1234" {...otherProps} />
 		</Provider>
 	);
 };
@@ -53,7 +55,7 @@ describe('EmailReports', () => {
 		const {container, getByText} = render(
 			<WrappedComponent
 				reports={{
-					1234: {enabled: false}
+					1234: {enabled: false},
 				}}
 			/>
 		);
@@ -67,7 +69,7 @@ describe('EmailReports', () => {
 		const {container, getByText} = render(
 			<WrappedComponent
 				reports={{
-					1234: {enabled: true}
+					1234: {enabled: true},
 				}}
 			/>
 		);

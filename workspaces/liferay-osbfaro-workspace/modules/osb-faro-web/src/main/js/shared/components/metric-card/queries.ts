@@ -2,7 +2,7 @@ import gql from 'graphql-tag';
 import {Metric} from './metrics';
 import {
 	METRIC_HISTOGRAM_FRAGMENT,
-	METRIC_TABS_FRAGMENT
+	METRIC_TABS_FRAGMENT,
 } from 'shared/queries/fragments';
 
 const capitalize = (str: string): string =>

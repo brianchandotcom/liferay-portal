@@ -11,7 +11,7 @@ import {
 	isUnknown,
 	PropertyTypes,
 	RelationalOperators,
-	SUPPORTED_OPERATORS_MAP
+	SUPPORTED_OPERATORS_MAP,
 } from '../utils/constants';
 import {isOfKnownType, isValid} from '../utils/utils';
 import {Map} from 'immutable';
@@ -28,7 +28,7 @@ export interface ICustomStringInputProps extends ISegmentEditorCustomInputBase {
 
 export default class CustomStringInput extends React.Component<ICustomStringInputProps> {
 	static defaultProps = {
-		autocomplete: true
+		autocomplete: true,
 	};
 
 	getSelectedOperatorKey() {
@@ -46,7 +46,8 @@ export default class CustomStringInput extends React.Component<ICustomStringInpu
 
 		if (operatorName === RelationalOperators.EQ && valueNull) {
 			operatorKey = isUnknown;
-		} else if (operatorName === RelationalOperators.NE && valueNull) {
+		}
+		else if (operatorName === RelationalOperators.NE && valueNull) {
 			operatorKey = isKnown;
 		}
 
@@ -60,7 +61,7 @@ export default class CustomStringInput extends React.Component<ICustomStringInpu
 		onChange({
 			touched: true,
 			valid: isValid(getPropertyValue(valueIMap, 'value', 0)),
-			value: valueIMap
+			value: valueIMap,
 		});
 	}
 
@@ -80,7 +81,8 @@ export default class CustomStringInput extends React.Component<ICustomStringInpu
 				['criterionGroup', 'items', 0, 'value'],
 				null
 			);
-		} else if (getPropertyValue(valueIMap, 'value', 0) === null) {
+		}
+		else if (getPropertyValue(valueIMap, 'value', 0) === null) {
 			newVal = newVal.setIn(['criterionGroup', 'items', 0, 'value'], '');
 		}
 
@@ -88,7 +90,7 @@ export default class CustomStringInput extends React.Component<ICustomStringInpu
 			valid: isValid(
 				newVal.getIn(['criterionGroup', 'items', 0, 'value'])
 			),
-			value: newVal
+			value: newVal,
 		});
 	}
 
@@ -101,7 +103,7 @@ export default class CustomStringInput extends React.Component<ICustomStringInpu
 			value: valueIMap.setIn(
 				['criterionGroup', 'items', 0, 'value'],
 				value
-			)
+			),
 		});
 	}
 
@@ -114,7 +116,7 @@ export default class CustomStringInput extends React.Component<ICustomStringInpu
 			property: {entityName, options = []},
 			touched,
 			valid,
-			value: valueIMap
+			value: valueIMap,
 		} = this.props;
 
 		const value = getPropertyValue(valueIMap, 'value', 0);
@@ -126,20 +128,20 @@ export default class CustomStringInput extends React.Component<ICustomStringInpu
 
 		const sharedInputProps = {
 			className: getCN(className, {
-				'has-error': showError
+				'has-error': showError,
 			}),
 			onBlur: this.handleBlur,
-			value
+			value,
 		};
 
 		return (
-			<div className='criteria-statement'>
+			<div className="criteria-statement">
 				<Form.Group autoFit>
-					<Form.GroupItem className='entity-name' label shrink>
+					<Form.GroupItem className="entity-name" label shrink>
 						{entityName}
 					</Form.GroupItem>
 
-					<Form.GroupItem className='display-value' label shrink>
+					<Form.GroupItem className="display-value" label shrink>
 						{displayValue}
 					</Form.GroupItem>
 
@@ -148,7 +150,7 @@ export default class CustomStringInput extends React.Component<ICustomStringInpu
 							items={
 								TEXT_OPERATORS.map(({key, label}) => ({
 									key,
-									label
+									label,
 								})) as {label: string; key: string}[]
 							}
 							onSelectionChange={this.handleOperatorChange}
@@ -172,7 +174,7 @@ export default class CustomStringInput extends React.Component<ICustomStringInpu
 								) : (
 									<Input
 										{...sharedInputProps}
-										autoComplete='nope'
+										autoComplete="nope"
 										onChange={(
 											event: React.ChangeEvent<HTMLInputElement>
 										) => {
@@ -187,7 +189,7 @@ export default class CustomStringInput extends React.Component<ICustomStringInpu
 									items={
 										options.map(({label, value}) => ({
 											label,
-											value
+											value,
 										})) as {label: string; value: string}[]
 									}
 									onBlur={this.handleBlur}

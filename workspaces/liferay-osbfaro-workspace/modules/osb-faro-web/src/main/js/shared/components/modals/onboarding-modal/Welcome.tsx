@@ -14,16 +14,17 @@ const Welcome: React.FC<IWelcomeProps> = ({onClose, onNext}) => (
 		<Modal.Header onClose={onClose} />
 
 		<Modal.Body>
-			{/* TODO: LRAC-7427 Adjust SVGs with Linear Gradients */}
-			<div className='icon analytics-onboarding-welcome-usage-icon' />
 
-			<div className='text-center'>
-				<Text size={10} weight='bold'>
+			{/* TODO: LRAC-7427 Adjust SVGs with Linear Gradients */}
+			<div className="icon analytics-onboarding-welcome-usage-icon" />
+
+			<div className="text-center">
+				<Text size={10} weight="bold">
 					{Liferay.Language.get('welcome-to-analytics-cloud')}
 				</Text>
 
 				<p>
-					<Text color='secondary' size={6}>
+					<Text color="secondary" size={6}>
 						{Liferay.Language.get(
 							'just-a-few-more-steps-to-set-up-your-workspace'
 						)}
@@ -32,11 +33,11 @@ const Welcome: React.FC<IWelcomeProps> = ({onClose, onNext}) => (
 			</div>
 		</Modal.Body>
 
-		<Modal.Footer className='d-flex justify-content-center'>
+		<Modal.Footer className="d-flex justify-content-center">
 			<ClayButton
 				autoFocus
-				className='button-root'
-				displayType='primary'
+				className="button-root"
+				displayType="primary"
 				onClick={() => onNext()}
 			>
 				{Liferay.Language.get('next')}

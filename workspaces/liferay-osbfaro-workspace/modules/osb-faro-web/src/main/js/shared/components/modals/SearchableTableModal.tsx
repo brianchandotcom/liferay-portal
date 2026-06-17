@@ -5,7 +5,7 @@ import React, {useEffect} from 'react';
 import {
 	ActionTypes,
 	useSelectionContext,
-	withSelectionProvider
+	withSelectionProvider,
 } from 'shared/context/selection';
 import {Column} from 'shared/components/table';
 import {FilterByType} from 'shared/types';
@@ -60,7 +60,7 @@ const SearchableTableModal: React.FC<ISearchableTableModalProps> = ({
 	orderByOptions,
 	requireSelection = true,
 	submitMessage = Liferay.Language.get('submit'),
-	title = Liferay.Language.get('select-items')
+	title = Liferay.Language.get('select-items'),
 }) => {
 	const {selectedItems, selectionDispatch} = useSelectionContext();
 
@@ -74,13 +74,13 @@ const SearchableTableModal: React.FC<ISearchableTableModalProps> = ({
 		onQueryChange,
 		orderIOMap,
 		page,
-		query
+		query,
 	} = useStatefulPagination(undefined, {
 		initialDelta,
 		initialFilterBy,
 		initialOrderIOMap,
 		initialPage,
-		initialQuery
+		initialQuery,
 	});
 
 	useEffect(() => {
@@ -88,7 +88,7 @@ const SearchableTableModal: React.FC<ISearchableTableModalProps> = ({
 			selectionDispatch?.({type: ActionTypes.ClearAll});
 			selectionDispatch?.({
 				payload: {items: initialSelectedItems},
-				type: ActionTypes.Add
+				type: ActionTypes.Add,
 			});
 		}
 	}, []);
@@ -101,16 +101,16 @@ const SearchableTableModal: React.FC<ISearchableTableModalProps> = ({
 			filterBy,
 			orderIOMap,
 			page,
-			query
-		}
+			query,
+		},
 	});
 
 	return (
-		<Modal className={className} size='lg'>
+		<Modal className={className} size="lg">
 			<Modal.Header onClose={onClose} title={title} />
 
-			<Modal.Body className='p-0'>
-				<div className='text-secondary'>{instruction}</div>
+			<Modal.Body className="p-0">
+				<div className="text-secondary">{instruction}</div>
 
 				<CrossPageSelect
 					autoFocusSearch
@@ -133,7 +133,7 @@ const SearchableTableModal: React.FC<ISearchableTableModalProps> = ({
 					page={page}
 					pageDisplay={false}
 					query={query}
-					rowIdentifier='id'
+					rowIdentifier="id"
 					selectedItems={selectedItems.map(({id}) => id)}
 					selectedItemsIOMap={selectedItems}
 					showCheckbox
@@ -143,17 +143,17 @@ const SearchableTableModal: React.FC<ISearchableTableModalProps> = ({
 
 			<Modal.Footer>
 				<ClayButton
-					className='button-root'
-					displayType='secondary'
+					className="button-root"
+					displayType="secondary"
 					onClick={onClose}
 				>
 					{Liferay.Language.get('cancel')}
 				</ClayButton>
 
 				<ClayButton
-					className='button-root'
+					className="button-root"
 					disabled={requireSelection && !selectedItems.size}
-					displayType='primary'
+					displayType="primary"
 					onClick={() => onSubmit(selectedItems, refetch)}
 				>
 					{submitMessage}

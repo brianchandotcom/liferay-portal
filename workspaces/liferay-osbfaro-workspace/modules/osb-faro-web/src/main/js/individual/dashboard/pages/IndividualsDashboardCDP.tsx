@@ -14,7 +14,7 @@ const IndividualsDashboardCDP = () => {
 
 	return (
 		<BasePage
-			className='individuals-dashboard-root'
+			className="individuals-dashboard-root"
 			documentTitle={Liferay.Language.get('individuals')}
 		>
 			<BasePage.Header
@@ -22,11 +22,11 @@ const IndividualsDashboardCDP = () => {
 					breadcrumbs.getHome({
 						channelId,
 						groupId,
-						label: selectedChannel && selectedChannel.name
+						label: selectedChannel && selectedChannel.name,
 					}),
 					breadcrumbs.getEntityName({
-						label: Liferay.Language.get('individuals')
-					})
+						label: Liferay.Language.get('individuals'),
+					}),
 				]}
 				groupId={groupId}
 			>

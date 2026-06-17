@@ -3,7 +3,7 @@ import {
 	Breakdown,
 	CalculationTypes,
 	Event,
-	Filter
+	Filter,
 } from 'event-analysis/utils/types';
 import {gql} from '@apollo/client';
 import {RawRangeSelectors, Sort} from 'shared/types';

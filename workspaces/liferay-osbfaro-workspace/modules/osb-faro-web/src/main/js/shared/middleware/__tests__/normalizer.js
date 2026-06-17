@@ -10,10 +10,10 @@ describe('Normalizer Middleware', () => {
 		const action = {
 			meta: {schema: new schema.Entity('account')},
 			payload: account,
-			type: 'SUCCESS'
+			type: 'SUCCESS',
 		};
 
-		const normalized = normalizer()(val => val)(action);
+		const normalized = normalizer()((val) => val)(action);
 
 		const {entities, result} = normalized.payload;
 

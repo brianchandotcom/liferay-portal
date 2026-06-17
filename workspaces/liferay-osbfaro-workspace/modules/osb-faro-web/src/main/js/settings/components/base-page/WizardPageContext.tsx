@@ -15,14 +15,14 @@ interface IWizardPageContext {
 const WizardPageContext = createContext<IWizardPageContext>({
 	dataSource: null,
 	loadingContext: false,
-	refetchDataSource: () => {}
+	refetchDataSource: () => {},
 });
 
 async function fetchDataSource({
 	dataSourceId,
 	groupId,
 	setDataSource,
-	setLoading
+	setLoading,
 }: {
 	dataSourceId: string;
 	groupId: string;
@@ -34,18 +34,20 @@ async function fetchDataSource({
 	try {
 		const dataSource = await fetch({
 			groupId,
-			id: dataSourceId
+			id: dataSourceId,
 		});
 
 		setDataSource(new DataSource(dataSource));
-	} catch (error) {
+	}
+	catch (error) {
 		addAlert({
 			alertType: Alert.Types.Error,
 			message: Liferay.Language.get(
 				'there-was-an-error-processing-your-request.-try-again.-if-the-problem-persists-please-contact-support'
-			)
+			),
 		});
-	} finally {
+	}
+	finally {
 		setLoading(false);
 	}
 }
@@ -64,7 +66,7 @@ export const WizardPageProvider = ({children}: {children: React.ReactNode}) => {
 				dataSourceId,
 				groupId,
 				setDataSource,
-				setLoading
+				setLoading,
 			});
 		}
 	}, [groupId, dataSourceId]);
@@ -74,14 +76,14 @@ export const WizardPageProvider = ({children}: {children: React.ReactNode}) => {
 			value={{
 				dataSource,
 				loadingContext: loading,
-				refetchDataSource: dataSourceId => {
+				refetchDataSource: (dataSourceId) => {
 					fetchDataSource({
 						dataSourceId,
 						groupId,
 						setDataSource,
-						setLoading
+						setLoading,
 					});
-				}
+				},
 			}}
 		>
 			{children}

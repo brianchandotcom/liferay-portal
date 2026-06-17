@@ -117,7 +117,8 @@ $height: 40px;
 		background-color: $lightBackground;
 	}
 
-	&-items, &-item {
+	&-items,
+	&-item {
 		list-style: none;
 		margin: 0;
 		padding: 0;
@@ -200,7 +201,7 @@ $height: 40px;
 
 			&:before {
 				border-left: 1px dashed $mainLighten65;
-				content: "";
+				content: '';
 				height: 100%;
 				left: 1px;
 				margin: auto;

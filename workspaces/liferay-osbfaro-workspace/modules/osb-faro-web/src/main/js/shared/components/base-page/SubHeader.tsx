@@ -9,19 +9,19 @@ interface ISubHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
 const SubHeader: React.FC<ISubHeaderProps> = ({
 	children,
 	className,
-	fluid = false
+	fluid = false,
 }) => {
 	if (fluid) {
 		return (
 			<div className={getCN('sub-header-root', className)}>
-				<div className='mx-5'>{children}</div>
+				<div className="mx-5">{children}</div>
 			</div>
 		);
 	}
 
 	return (
 		<div className={getCN('sub-header-root', className)}>
-			<Row className='header-container'>{children}</Row>
+			<Row className="header-container">{children}</Row>
 		</div>
 	);
 };

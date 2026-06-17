@@ -19,7 +19,7 @@ export const routingFn = ({projects}: {projects: any[]}) => {
 		return getSingleProjectRoute(basicProjects[0]);
 	}
 
-	if (!basicProjects.some(basicProject => !basicProject.get('groupId'))) {
+	if (!basicProjects.some((basicProject) => !basicProject.get('groupId'))) {
 		return setUriQueryValue(
 			toRoute(Routes.WORKSPACES),
 			'allBasicConfigured',
@@ -45,22 +45,22 @@ const SelectWorkspaceAccount = () => {
 	}
 
 	return (
-		<div className='select-account-root'>
+		<div className="select-account-root">
 			<WorkspacesBasePage
 				details={[
-					<p key='SELECT'>
+					<p key="SELECT">
 						{sub(
 							Liferay.Language.get(
 								'weve-found-multiple-accounts-associated-with-x-.-you-can-have-one-basic-tier-workspace-of-analytics-cloud-per-account.-please-associate-this-analytics-cloud-workspace-to-an-account'
 							),
 							[
-								<b key='emailAddress'>
+								<b key="emailAddress">
 									{currentUser.emailAddress}
-								</b>
+								</b>,
 							],
 							false
 						)}
-					</p>
+					</p>,
 				]}
 				title={Liferay.Language.get('select-account')}
 			>

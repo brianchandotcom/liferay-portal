@@ -4,12 +4,12 @@ import React from 'react';
 import {getPropertyValue} from '../utils/custom-inputs';
 import {ICustomStringInputProps} from './CustomStringInput';
 
-const OrganizationTextInput: React.FC<ICustomStringInputProps> = props => {
+const OrganizationTextInput: React.FC<ICustomStringInputProps> = (props) => {
 	const {
 		channelId,
 		groupId,
 		property: {id},
-		value
+		value,
 	} = props;
 
 	const fieldValuesDataSourceFn = () =>
@@ -18,7 +18,7 @@ const OrganizationTextInput: React.FC<ICustomStringInputProps> = props => {
 				channelId,
 				fieldMappingFieldName: id,
 				groupId,
-				query: getPropertyValue(value, 'value', 0)
+				query: getPropertyValue(value, 'value', 0),
 			})
 			.then(({items}) => items);
 	return (

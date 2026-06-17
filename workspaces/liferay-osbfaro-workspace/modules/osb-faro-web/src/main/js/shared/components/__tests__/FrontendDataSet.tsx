@@ -4,13 +4,13 @@ import {
 	render,
 	renderHook,
 	screen,
-	waitFor
+	waitFor,
 } from '@testing-library/react';
 import {
 	columns,
 	EConfigInURLBehavior,
 	FrontendDataSet,
-	useSnapshots
+	useSnapshots,
 } from '../FrontendDataSet';
 import {Routes} from 'shared/util/router';
 
@@ -23,8 +23,8 @@ jest.mock('@liferay/frontend-data-set-web', () => ({
 	FrontendDataSet: (props: {[key: string]: unknown; id: string}) => {
 		lastProps = props;
 
-		return <div data-testid='base-fds' id={props.id} />;
-	}
+		return <div data-testid="base-fds" id={props.id} />;
+	},
 }));
 
 const mockFetch = (items: unknown[]) => {
@@ -59,7 +59,7 @@ describe('columns.nameAndLinkRenderer', () => {
 				groupId: '23',
 				itemData: {id: 'abc'},
 				route: Routes.CONTACTS_ACCOUNT,
-				value: 'Acme Corp'
+				value: 'Acme Corp',
 			})
 		);
 
@@ -76,7 +76,7 @@ describe('columns.nameAndLinkRenderer', () => {
 				groupId: '23',
 				itemData: {id: 'abc'},
 				route: Routes.CONTACTS_ACCOUNT,
-				value: 'Acme Corp'
+				value: 'Acme Corp',
 			})
 		);
 
@@ -90,7 +90,7 @@ describe('columns.nameAndLinkRenderer', () => {
 				groupId: '23',
 				itemData: {id: 'abc'},
 				route: Routes.CONTACTS_ACCOUNT,
-				value: ''
+				value: '',
 			})
 		);
 
@@ -116,8 +116,8 @@ describe('useSnapshots', () => {
 			{
 				externalReferenceCode: 'erc-1',
 				label: 'My View',
-				viewConfig: '{"filters":[]}'
-			}
+				viewConfig: '{"filters":[]}',
+			},
 		]);
 
 		const {result} = renderHook(() =>
@@ -132,10 +132,10 @@ describe('useSnapshots', () => {
 						{
 							configuration: '{"filters":[]}',
 							erc: 'erc-1',
-							label: 'My View'
-						}
-					]
-				}
+							label: 'My View',
+						},
+					],
+				},
 			])
 		);
 	});
@@ -178,7 +178,7 @@ describe('useSnapshots', () => {
 describe('FrontendDataSet (snapshots wrapper)', () => {
 	describe('when snapshotsEnabled is not set', () => {
 		it('should render the base FrontendDataSet directly with the given props', () => {
-			render(<FrontendDataSet id='assetTable' views={[]} />);
+			render(<FrontendDataSet id="assetTable" views={[]} />);
 
 			expect(screen.getByTestId('base-fds')).toHaveAttribute(
 				'id',
@@ -191,7 +191,7 @@ describe('FrontendDataSet (snapshots wrapper)', () => {
 
 			const fetch = mockFetch([]);
 
-			render(<FrontendDataSet id='assetTable' views={[]} />);
+			render(<FrontendDataSet id="assetTable" views={[]} />);
 
 			expect(fetch).not.toHaveBeenCalled();
 			expect(lastProps?.snapshotsEnabled).toBe(false);
@@ -203,11 +203,11 @@ describe('FrontendDataSet (snapshots wrapper)', () => {
 
 		it('should render the loading indicator while the snapshots are still loading', () => {
 			Liferay.Util = {
-				fetch: jest.fn(() => new Promise(() => {}))
+				fetch: jest.fn(() => new Promise(() => {})),
 			} as unknown as typeof Liferay.Util;
 
 			const {container} = render(
-				<FrontendDataSet id='assetTable' snapshotsEnabled views={[]} />
+				<FrontendDataSet id="assetTable" snapshotsEnabled views={[]} />
 			);
 
 			expect(
@@ -220,7 +220,7 @@ describe('FrontendDataSet (snapshots wrapper)', () => {
 			mockFetch([]);
 
 			render(
-				<FrontendDataSet id='assetTable' snapshotsEnabled views={[]} />
+				<FrontendDataSet id="assetTable" snapshotsEnabled views={[]} />
 			);
 
 			await waitFor(() =>
@@ -233,7 +233,7 @@ describe('FrontendDataSet (snapshots wrapper)', () => {
 
 	describe('configInURLBehavior', () => {
 		it('should default configInURLBehavior to OFF when it is not provided', () => {
-			render(<FrontendDataSet id='assetTable' views={[]} />);
+			render(<FrontendDataSet id="assetTable" views={[]} />);
 
 			expect(lastProps?.configInURLBehavior).toBe(
 				EConfigInURLBehavior.OFF
@@ -244,7 +244,7 @@ describe('FrontendDataSet (snapshots wrapper)', () => {
 			render(
 				<FrontendDataSet
 					configInURLBehavior={EConfigInURLBehavior.PUSH}
-					id='assetTable'
+					id="assetTable"
 					views={[]}
 				/>
 			);

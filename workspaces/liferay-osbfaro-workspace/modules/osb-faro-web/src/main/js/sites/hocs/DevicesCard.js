@@ -12,7 +12,7 @@ import {withDevicesCard} from 'shared/hoc/DevicesCard';
 const withSiteDevices = () =>
 	graphql(
 		SiteDevicesQuery,
-		getDevicesMapper(result => result.site.sessionsMetric)
+		getDevicesMapper((result) => result.site.sessionsMetric)
 	);
 
 export default withDevicesCard(withSiteDevices, {
@@ -21,5 +21,5 @@ export default withDevicesCard(withSiteDevices, {
 	),
 	documentationUrl: URLConstants.SitesDashboardPagesSessionsByTechnology,
 	reportContainer: ReportContainer.SessionTechnologyCard,
-	title: Liferay.Language.get('there-are-no-sessions-on-the-selected-period')
+	title: Liferay.Language.get('there-are-no-sessions-on-the-selected-period'),
 });

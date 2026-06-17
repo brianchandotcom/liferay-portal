@@ -12,12 +12,12 @@ import {
 	FIRST_ACTIVITY_DATE,
 	LAST_ACTIVITY_DATE,
 	NAME,
-	PROFILE_TYPE
+	PROFILE_TYPE,
 } from 'shared/util/pagination';
 import {
 	Conjunctions,
 	ProfileTypes,
-	RelationalOperators
+	RelationalOperators,
 } from 'segment/segment-editor/dynamic/utils/constants';
 import {FilterByType, FilterInputType, FilterOptionType} from 'shared/types';
 import {IndividualsListCDPColumns} from 'shared/util/table-columns';
@@ -30,28 +30,28 @@ import {useStatefulPagination} from 'shared/hooks/useStatefulPagination';
 const ORDER_BY_OPTIONS = [
 	{
 		label: Liferay.Language.get('name'),
-		value: NAME
+		value: NAME,
 	},
 	{
 		label: Liferay.Language.get('account-name'),
-		value: ACCOUNT_NAME
+		value: ACCOUNT_NAME,
 	},
 	{
 		label: Liferay.Language.get('country'),
-		value: COUNTRY
+		value: COUNTRY,
 	},
 	{
 		label: Liferay.Language.get('first-seen'),
-		value: FIRST_ACTIVITY_DATE
+		value: FIRST_ACTIVITY_DATE,
 	},
 	{
 		label: Liferay.Language.get('last-active'),
-		value: LAST_ACTIVITY_DATE
+		value: LAST_ACTIVITY_DATE,
 	},
 	{
 		label: Liferay.Language.get('profile-type'),
-		value: PROFILE_TYPE
-	}
+		value: PROFILE_TYPE,
+	},
 ];
 
 const DEFAULT_FILTER_BY_OPTIONS: FilterOptionType[] = [
@@ -62,37 +62,37 @@ const DEFAULT_FILTER_BY_OPTIONS: FilterOptionType[] = [
 		values: [
 			{
 				label: Liferay.Language.get('last-24-hours'),
-				value: RangeKeyTimeRanges.Last24Hours
+				value: RangeKeyTimeRanges.Last24Hours,
 			},
 			{
 				label: Liferay.Language.get('yesterday'),
-				value: RangeKeyTimeRanges.Yesterday
+				value: RangeKeyTimeRanges.Yesterday,
 			},
 			{
 				label: Liferay.Language.get('last-seven-days'),
-				value: RangeKeyTimeRanges.Last7Days
+				value: RangeKeyTimeRanges.Last7Days,
 			},
 			{
 				label: Liferay.Language.get('last-28-days'),
-				value: RangeKeyTimeRanges.Last28Days
+				value: RangeKeyTimeRanges.Last28Days,
 			},
 			{
 				label: Liferay.Language.get('last-30-days'),
-				value: RangeKeyTimeRanges.Last30Days
+				value: RangeKeyTimeRanges.Last30Days,
 			},
 			{
 				label: Liferay.Language.get('last-90-days'),
-				value: RangeKeyTimeRanges.Last90Days
+				value: RangeKeyTimeRanges.Last90Days,
 			},
 			{
 				label: Liferay.Language.get('last-180-days'),
-				value: RangeKeyTimeRanges.Last180Days
+				value: RangeKeyTimeRanges.Last180Days,
 			},
 			{
 				label: Liferay.Language.get('last-year'),
-				value: RangeKeyTimeRanges.LastYear
-			}
-		]
+				value: RangeKeyTimeRanges.LastYear,
+			},
+		],
 	},
 	{
 		key: 'profileTypes',
@@ -100,14 +100,14 @@ const DEFAULT_FILTER_BY_OPTIONS: FilterOptionType[] = [
 		values: [
 			{
 				label: Liferay.Language.get('known'),
-				value: ProfileTypes.KNOWN
+				value: ProfileTypes.KNOWN,
 			},
 			{
 				label: Liferay.Language.get('anonymous'),
-				value: ProfileTypes.ANONYMOUS
-			}
-		]
-	}
+				value: ProfileTypes.ANONYMOUS,
+			},
+		],
+	},
 ];
 
 function transformCountriesInQueryString(countries: string[]) {
@@ -117,7 +117,7 @@ function transformCountriesInQueryString(countries: string[]) {
 
 	return countries
 		.map(
-			country =>
+			(country) =>
 				`(demographics/country/value ${RelationalOperators.EQ} '${country}')`
 		)
 		.join(Conjunctions.Or);
@@ -131,9 +131,9 @@ const IndividualsList: React.FC = () => {
 
 	const paginationParams = useStatefulPagination(undefined, {
 		initialFilterBy: Map({
-			activeUsers: Set([RangeKeyTimeRanges.Last30Days])
+			activeUsers: Set([RangeKeyTimeRanges.Last30Days]),
 		}) as FilterByType,
-		initialOrderIOMap: createOrderIOMap(NAME)
+		initialOrderIOMap: createOrderIOMap(NAME),
 	});
 
 	const {data: countriesData, loading: countriesLoading} = useRequest({
@@ -141,8 +141,8 @@ const IndividualsList: React.FC = () => {
 		variables: {
 			channelId,
 			fieldMappingFieldName: 'country',
-			groupId
-		}
+			groupId,
+		},
 	});
 
 	const FILTER_BY_OPTIONS: FilterOptionType[] = useMemo(() => {
@@ -155,10 +155,10 @@ const IndividualsList: React.FC = () => {
 					label: Liferay.Language.get('country'),
 					values: countries.map((country: string) => ({
 						label: country,
-						value: country
-					}))
+						value: country,
+					})),
 				},
-				...DEFAULT_FILTER_BY_OPTIONS
+				...DEFAULT_FILTER_BY_OPTIONS,
 			];
 		}
 
@@ -175,7 +175,7 @@ const IndividualsList: React.FC = () => {
 			paginationParams.filterBy.get('countries')?.toArray()
 		),
 		profileTypes:
-			paginationParams.filterBy.get('profileTypes')?.toArray() || []
+			paginationParams.filterBy.get('profileTypes')?.toArray() || [],
 	};
 
 	const renderNoResults = () => (
@@ -187,10 +187,10 @@ const IndividualsList: React.FC = () => {
 					)}
 
 					<ClayLink
-						className='d-block mb-3'
+						className="d-block mb-3"
 						href={URLConstants.DataSourceConnection}
-						key='DOCUMENTATION'
-						target='_blank'
+						key="DOCUMENTATION"
+						target="_blank"
 					>
 						{Liferay.Language.get(
 							'access-our-documentation-to-learn-more'
@@ -201,7 +201,7 @@ const IndividualsList: React.FC = () => {
 			icon={{
 				border: false,
 				size: Sizes.XXXLarge,
-				symbol: 'ac_satellite'
+				symbol: 'ac_satellite',
 			}}
 			spacer
 			title={Liferay.Language.get(
@@ -212,23 +212,23 @@ const IndividualsList: React.FC = () => {
 
 	return (
 		<Card>
-			<Card.Title className='card-header'>
+			<Card.Title className="card-header">
 				{Liferay.Language.get('individual-profiles')}
 			</Card.Title>
-			<Card.Body className='no-padding'>
-				<div className='individuals-dashboard-known-individuals-root'>
+			<Card.Body className="no-padding">
+				<div className="individuals-dashboard-known-individuals-root">
 					<SearchableEntityTable
 						{...paginationParams}
 						columns={[
 							IndividualsListCDPColumns.getNameEmail({
 								channelId,
-								groupId
+								groupId,
 							}),
 							IndividualsListCDPColumns.accountNames,
 							IndividualsListCDPColumns.country,
 							IndividualsListCDPColumns.firstSeen,
 							IndividualsListCDPColumns.lastActive,
-							IndividualsListCDPColumns.profileType
+							IndividualsListCDPColumns.profileType,
 						]}
 						dataSourceFn={API.individuals.search}
 						dataSourceParams={{
@@ -240,13 +240,13 @@ const IndividualsList: React.FC = () => {
 								: undefined,
 							rangeEnd: null,
 							rangeKey,
-							rangeStart: null
+							rangeStart: null,
 						}}
 						filterByOptions={FILTER_BY_OPTIONS}
-						key='individuals-list-table'
+						key="individuals-list-table"
 						noResultsRenderer={renderNoResults}
 						orderByOptions={ORDER_BY_OPTIONS}
-						rowIdentifier='id'
+						rowIdentifier="id"
 					/>
 				</div>
 			</Card.Body>

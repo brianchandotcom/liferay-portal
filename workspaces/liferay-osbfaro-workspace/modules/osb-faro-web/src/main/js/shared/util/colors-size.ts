@@ -28,7 +28,7 @@ export enum Colors {
 	WarningLighten60 = 'warningLighten60',
 	Info = 'info',
 	InfoLighten28 = 'infoLighten28',
-	InfoLighten53 = 'infoLighten53'
+	InfoLighten53 = 'infoLighten53',
 }
 
 export type Size = 'sm' | 'md' | 'lg' | 'xl' | 'xxl' | 'xxxl';

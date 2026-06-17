@@ -26,18 +26,18 @@ const ProfileCard: React.FC<IProfileCardProps> = ({tabId, ...props}) => {
 		onQueryChange,
 		page,
 		query,
-		resetPage
+		resetPage,
 	} = useStatefulPagination(undefined, {
-		initialDelta: DEFAULT_SESSIONS_DELTA
+		initialDelta: DEFAULT_SESSIONS_DELTA,
 	});
 
 	return (
 		<>
 			<BaseCard
-				className='individual-profile-card-root page-display'
+				className="individual-profile-card-root page-display"
 				headerProps={{
 					showRangeKey: false,
-					tabId
+					tabId,
 				}}
 				label={Liferay.Language.get('individual-events')}
 				legacyDropdownRangeKey={false}
@@ -47,7 +47,7 @@ const ProfileCard: React.FC<IProfileCardProps> = ({tabId, ...props}) => {
 					interval,
 					onChangeInterval,
 					onRangeSelectorsChange,
-					rangeSelectors
+					rangeSelectors,
 				}) => (
 					<ProfileCardWithData
 						{...props}
@@ -56,7 +56,7 @@ const ProfileCard: React.FC<IProfileCardProps> = ({tabId, ...props}) => {
 						onChangeInterval={onChangeInterval}
 						onDeltaChange={onDeltaChange}
 						onPageChange={onPageChange}
-						onQueryChange={query => {
+						onQueryChange={(query) => {
 							history.push(
 								setUriQueryValues(
 									pickBy({query}),
@@ -69,7 +69,7 @@ const ProfileCard: React.FC<IProfileCardProps> = ({tabId, ...props}) => {
 
 							onQueryChange(query);
 						}}
-						onRangeSelectorsChange={rangeSelectors => {
+						onRangeSelectorsChange={(rangeSelectors) => {
 							history.push(
 								setUriQueryValues(
 									pickBy(rangeSelectors),

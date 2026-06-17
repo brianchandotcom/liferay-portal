@@ -19,17 +19,17 @@ const DndTable: React.FC<IDndTableProps> = ({
 	columns,
 	items,
 	onItemsChange,
-	rowIdentifier = 'id'
+	rowIdentifier = 'id',
 }) => {
 	const handleMove: (from: number, to: number) => void = flow([
 		curry(moveItem)(items),
-		onItemsChange
+		onItemsChange,
 	]);
 
 	return (
-		<div className=' dnd-table-root'>
+		<div className=" dnd-table-root">
 			<DndProvider backend={HTML5Backend}>
-				<ClayTable className='dnd-table-root'>
+				<ClayTable className="dnd-table-root">
 					<ClayTable.Head>
 						<ClayTable.Row>
 							<ClayTable.Cell headingCell />

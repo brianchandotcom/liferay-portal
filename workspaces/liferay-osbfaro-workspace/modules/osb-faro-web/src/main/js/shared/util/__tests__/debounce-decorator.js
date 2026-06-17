@@ -17,7 +17,7 @@ describe('debounce-decorator', () => {
 		expect(typeof debounce(250)).toBe('function');
 	});
 
-	it('should debounce the class method', done => {
+	it('should debounce the class method', (done) => {
 		expect.assertions(3);
 
 		class TestDebounce {
@@ -60,7 +60,7 @@ describe('debounce-decorator', () => {
 		expect(a.foo).not.toEqual(b.foo);
 	});
 
-	it('should debounce a function that has been autobind', done => {
+	it('should debounce a function that has been autobind', (done) => {
 		expect.assertions(3);
 
 		class TestDebounce {
@@ -92,7 +92,7 @@ describe('debounce-decorator', () => {
 		}, 1000);
 	});
 
-	it('should continually debounce a function that has been autobind', done => {
+	it('should continually debounce a function that has been autobind', (done) => {
 		expect.assertions(3);
 
 		class TestDebounce {

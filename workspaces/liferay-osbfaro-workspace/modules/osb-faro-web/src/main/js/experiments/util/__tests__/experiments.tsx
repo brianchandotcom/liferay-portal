@@ -9,7 +9,7 @@ import {
 	getStatusName,
 	getTicks,
 	getVariantLabels,
-	toThousandsABTesting
+	toThousandsABTesting,
 } from '../experiments';
 
 const mockBestVariant = {
@@ -18,7 +18,7 @@ const mockBestVariant = {
 	dxpVariantId: 'DEFAULT',
 	dxpVariantName: 'Control',
 	trafficSplit: 50,
-	uniqueVisitors: 1000
+	uniqueVisitors: 1000,
 };
 
 describe('getStatusColor', () => {
@@ -149,7 +149,7 @@ describe('getVariantLabels', () => {
 			getVariantLabels({
 				bestVariant: mockBestVariant,
 				dxpVariantId: 'DEFAULT',
-				status: 'RUNNING'
+				status: 'RUNNING',
 			})
 		).toEqual([{status: 'success', value: 'Current Best'}]);
 
@@ -158,7 +158,7 @@ describe('getVariantLabels', () => {
 				bestVariant: mockBestVariant,
 				dxpVariantId: 'DEFAULT',
 				status: 'FINISHED_WINNER',
-				winnerDXPVariantId: 'DEFAULT'
+				winnerDXPVariantId: 'DEFAULT',
 			})
 		).toEqual([{status: 'success', value: 'Winner'}]);
 
@@ -167,7 +167,7 @@ describe('getVariantLabels', () => {
 				bestVariant: mockBestVariant,
 				dxpVariantId: 'DEFAULT',
 				publishedDXPVariantId: 'DEFAULT',
-				status: 'TERMINATED'
+				status: 'TERMINATED',
 			})
 		).toEqual([{status: 'info', value: 'Published'}]);
 
@@ -177,18 +177,18 @@ describe('getVariantLabels', () => {
 				dxpVariantId: 'DEFAULT',
 				publishedDXPVariantId: 'DEFAULT',
 				status: 'FINISHED_WINNER',
-				winnerDXPVariantId: 'DEFAULT'
+				winnerDXPVariantId: 'DEFAULT',
 			})
 		).toEqual([
 			{status: 'success', value: 'Winner'},
-			{status: 'info', value: 'Published'}
+			{status: 'info', value: 'Published'},
 		]);
 	});
 	it('should return an empty array', () => {
 		expect(
 			getVariantLabels({
 				dxpVariantId: 'DEFAULT',
-				status: 'RUNNING'
+				status: 'RUNNING',
 			})
 		).toEqual([]);
 
@@ -198,7 +198,7 @@ describe('getVariantLabels', () => {
 				dxpVariantId: 'DEFAULT',
 				publishedDXPVariantId: undefined,
 				status: 'FINISHED_NO_WINNER',
-				winnerDXPVariantId: undefined
+				winnerDXPVariantId: undefined,
 			})
 		).toEqual([]);
 
@@ -208,7 +208,7 @@ describe('getVariantLabels', () => {
 				dxpVariantId: 'DEFAULT',
 				publishedDXPVariantId: undefined,
 				status: 'TERMINATED',
-				winnerDXPVariantId: undefined
+				winnerDXPVariantId: undefined,
 			})
 		).toEqual([]);
 	});

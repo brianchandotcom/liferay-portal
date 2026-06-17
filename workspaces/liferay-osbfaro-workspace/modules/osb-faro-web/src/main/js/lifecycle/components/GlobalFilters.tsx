@@ -3,7 +3,7 @@ import IndustryFilter from './IndustryFilter';
 import React from 'react';
 
 const GlobalFilters = () => (
-	<div className='d-flex'>
+	<div className="d-flex">
 		<IndustryFilter />
 
 		<CountryFilter />

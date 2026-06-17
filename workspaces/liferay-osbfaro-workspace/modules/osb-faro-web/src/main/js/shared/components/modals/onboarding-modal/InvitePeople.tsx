@@ -30,7 +30,7 @@ const InvitePeople: React.FC<IInvitePeopleProps> = ({
 	dxpConnected,
 	groupId,
 	onClose,
-	onNext
+	onNext,
 }) => {
 	const [emails, setEmails] = useState([]);
 	const [inputValue, setInputValue] = useState('');
@@ -48,7 +48,7 @@ const InvitePeople: React.FC<IInvitePeopleProps> = ({
 				.inviteMany({
 					emailAddresses: emails,
 					groupId,
-					roleName: UserRoleNames.Member
+					roleName: UserRoleNames.Member,
 				})
 				.then(() => {
 					setLoading(false);
@@ -60,7 +60,7 @@ const InvitePeople: React.FC<IInvitePeopleProps> = ({
 						message: Liferay.Language.get(
 							'unable-to-send-request.-please-try-again-later'
 						),
-						timeout: false
+						timeout: false,
 					});
 
 					setLoading(false);
@@ -73,22 +73,23 @@ const InvitePeople: React.FC<IInvitePeopleProps> = ({
 			<Modal.Header onClose={onClose} />
 
 			<Modal.Body>
-				{/* TODO: LRAC-7427 Adjust SVGs with Linear Gradients */}
-				<div className='analytics-invite-user-icon icon' />
 
-				<div className='text-center mb-4'>
-					<Text size={10} weight='bold'>
+				{/* TODO: LRAC-7427 Adjust SVGs with Linear Gradients */}
+				<div className="analytics-invite-user-icon icon" />
+
+				<div className="text-center mb-4">
+					<Text size={10} weight="bold">
 						{sent
 							? Liferay.Language.get('your-invite-was-sent')
 							: Liferay.Language.get(
 									'invite-people-to-workspace'
-							  )}
+								)}
 					</Text>
 				</div>
 
 				{sent ? (
-					<div className='text-center'>
-						<Text color='secondary' size={6}>
+					<div className="text-center">
+						<Text color="secondary" size={6}>
 							{Liferay.Language.get(
 								'you-can-see-the-new-members-invitation-status-and-role-permissions-under-user-management-in-settings'
 							)}
@@ -96,14 +97,14 @@ const InvitePeople: React.FC<IInvitePeopleProps> = ({
 					</div>
 				) : (
 					<div>
-						<div className='mb-2'>
+						<div className="mb-2">
 							<Label>
-								<Text size={6} weight='bold'>
+								<Text size={6} weight="bold">
 									{Liferay.Language.get('add-other-members')}
 								</Text>
 
 								<InfoPopover
-									className='ml-2'
+									className="ml-2"
 									content={Liferay.Language.get(
 										'each-users-role-can-be-set-under-user-management-in-settings'
 									)}
@@ -119,7 +120,7 @@ const InvitePeople: React.FC<IInvitePeopleProps> = ({
 								<InputList
 									errorAttr={{
 										className: 'has-warning',
-										icon: {display: Display.Warning}
+										icon: {display: Display.Warning},
 									}}
 									errorMessage={Liferay.Language.get(
 										'please-enter-a-valid-email-address'
@@ -139,8 +140,8 @@ const InvitePeople: React.FC<IInvitePeopleProps> = ({
 							</Input.GroupItem>
 						</Input.Group>
 
-						<div className='mt-1'>
-							<Text color='secondary' size={3}>
+						<div className="mt-1">
+							<Text color="secondary" size={3}>
 								{Liferay.Language.get(
 									'enter-email-addresses-separated-by-spaces-or-commas'
 								)}
@@ -152,21 +153,21 @@ const InvitePeople: React.FC<IInvitePeopleProps> = ({
 
 			<Modal.Footer>
 				<ClayButton
-					className='button-root'
+					className="button-root"
 					disabled={sent}
-					displayType='secondary'
+					displayType="secondary"
 					onClick={dxpConnected ? () => onNext() : onClose}
 				>
 					{Liferay.Language.get('skip')}
 				</ClayButton>
 
 				<ClayButton
-					className='button-root ml-2'
+					className="button-root ml-2"
 					disabled={
 						(!inputValue && !emails.length) ||
 						(!!inputValue && !validateEmail(inputValue))
 					}
-					displayType='primary'
+					displayType="primary"
 					onClick={
 						sent
 							? dxpConnected

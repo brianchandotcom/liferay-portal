@@ -5,25 +5,25 @@ import {noop} from 'lodash';
 
 const TestModal: React.FC<{onClose: () => void; title: string}> = ({
 	onClose = noop,
-	title = 'Modal'
+	title = 'Modal',
 }) => (
 	<Modal>
 		<Modal.Header onClose={() => onClose} title={title} />
 
 		<Modal.Body inlineScroller>
-			<div className='h4'>{'Modal Body'}</div>
+			<div className="h4">{'Modal Body'}</div>
 		</Modal.Body>
 
 		<Modal.Footer>
 			<ClayButton
-				className='button-root'
-				displayType='secondary'
+				className="button-root"
+				displayType="secondary"
 				onClick={() => onClose}
 			>
 				{'Cancel'}
 			</ClayButton>
 
-			<ClayButton className='button-root' displayType='primary'>
+			<ClayButton className="button-root" displayType="primary">
 				{'Submit'}
 			</ClayButton>
 		</Modal.Footer>

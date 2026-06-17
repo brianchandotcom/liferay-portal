@@ -10,7 +10,7 @@ import {compose} from 'redux';
 import {
 	createOrderIOMap,
 	getSortFromOrderIOMap,
-	TITLE
+	TITLE,
 } from 'shared/util/pagination';
 import {EXCLUDE, INCLUDE} from 'settings/recommendations/utils/utils';
 import {isArray, isString} from 'lodash';
@@ -19,7 +19,7 @@ import {useStatefulPagination} from 'shared/hooks/useStatefulPagination';
 import {withEmpty, withPaginationBar} from 'shared/hoc';
 
 const {
-	pagination: {cur: defaultPage}
+	pagination: {cur: defaultPage},
 } = Constants;
 
 interface INewRuleModalProps {
@@ -34,14 +34,16 @@ const NewRuleModal: React.FC<INewRuleModalProps> = ({onClose, onSubmit}) => {
 		onOrderIOMapChange,
 		onPageChange,
 		orderIOMap,
-		page
+		page,
 	} = useStatefulPagination(undefined, {
-		initialOrderIOMap: createOrderIOMap(TITLE)
+		initialOrderIOMap: createOrderIOMap(TITLE),
 	});
 	const [initialRender, setInitialRender] = useState(true);
 	const [metadata, setMetadata] = useState('');
 	const [stringMatch, setStringMatch] = useState('');
+
 	// TODO: LRAC-6335 Re-enable Exact Match checkbox
+
 	const [exactMatch] = useState(false);
 	const [includeExclude, setIncludeExclude] = useState(INCLUDE);
 
@@ -52,7 +54,7 @@ const NewRuleModal: React.FC<INewRuleModalProps> = ({onClose, onSubmit}) => {
 	const [getPageAssets, {data, loading}] = useLazyQuery(
 		RecommendationPageAssetsQuery,
 		{
-			fetchPolicy: 'network-only'
+			fetchPolicy: 'network-only',
 		}
 	);
 
@@ -66,13 +68,13 @@ const NewRuleModal: React.FC<INewRuleModalProps> = ({onClose, onSubmit}) => {
 				propertyFilters: [
 					{
 						filter,
-						negate: false
-					}
+						negate: false,
+					},
 				],
 				size: delta,
 				sort: getSortFromOrderIOMap(orderIOMap),
-				start: (page - 1) * delta
-			}
+				start: (page - 1) * delta,
+			},
 		});
 	};
 
@@ -85,7 +87,8 @@ const NewRuleModal: React.FC<INewRuleModalProps> = ({onClose, onSubmit}) => {
 	const handleFindMatches = (): void => {
 		if (page !== defaultPage) {
 			onPageChange(defaultPage);
-		} else {
+		}
+		else {
 			fetchPageAssets();
 		}
 	};
@@ -96,7 +99,7 @@ const NewRuleModal: React.FC<INewRuleModalProps> = ({onClose, onSubmit}) => {
 	)(Table);
 
 	return (
-		<Modal className='new-rule-modal-root' size='lg'>
+		<Modal className="new-rule-modal-root" size="lg">
 			<Modal.Header
 				onClose={onClose}
 				title={Liferay.Language.get('new-rule')}
@@ -107,7 +110,7 @@ const NewRuleModal: React.FC<INewRuleModalProps> = ({onClose, onSubmit}) => {
 					<RadioGroup
 						checked={includeExclude}
 						inline
-						name='includeExclude'
+						name="includeExclude"
 						onChange={setIncludeExclude}
 					>
 						<RadioGroup.Option
@@ -125,16 +128,16 @@ const NewRuleModal: React.FC<INewRuleModalProps> = ({onClose, onSubmit}) => {
 				</div>
 
 				<div>
-					<div className='strings-matching-input-container'>
-						<span className='strings-matching-title'>
+					<div className="strings-matching-input-container">
+						<span className="strings-matching-title">
 							{Liferay.Language.get('string-match')}
 						</span>
 
 						<span>{`(${Liferay.Language.get('regex-only')})`}</span>
 
-						<div className='d-flex'>
+						<div className="d-flex">
 							<StringMatchInput
-								className='flex-grow-1'
+								className="flex-grow-1"
 								focusOnInit={!initialRender}
 								metadata={metadata}
 								onEnterClick={handleFindMatches}
@@ -143,11 +146,11 @@ const NewRuleModal: React.FC<INewRuleModalProps> = ({onClose, onSubmit}) => {
 								stringMatch={stringMatch}
 							/>
 
-							<div className='find-matches-button-container d-flex flex-column justify-content-center'>
+							<div className="find-matches-button-container d-flex flex-column justify-content-center">
 								<ClayButton
-									className='button-root'
+									className="button-root"
 									disabled={!stringMatch || !metadata}
-									displayType='secondary'
+									displayType="secondary"
 									onClick={handleFindMatches}
 								>
 									{Liferay.Language.get('find-matches')}
@@ -179,12 +182,12 @@ const NewRuleModal: React.FC<INewRuleModalProps> = ({onClose, onSubmit}) => {
 				</div>
 
 				{(loading || data) && (
-					<div className='results'>
-						<div className='title'>
+					<div className="results">
+						<div className="title">
 							{Liferay.Language.get('matched-items')}
 						</div>
 
-						<div className='secondary-info'>
+						<div className="secondary-info">
 							{Liferay.Language.get(
 								'item-sets-can-vary-per-period-depending-on-interactions.-metadata-matches-pages-with-at-least-one-view-event'
 							)}
@@ -196,7 +199,7 @@ const NewRuleModal: React.FC<INewRuleModalProps> = ({onClose, onSubmit}) => {
 									accessor: 'title',
 									className:
 										'table-cell-expand text-truncate',
-									label: Liferay.Language.get('page-name')
+									label: Liferay.Language.get('page-name'),
 								},
 								{
 									accessor: metadata ? metadata : 'url',
@@ -205,11 +208,12 @@ const NewRuleModal: React.FC<INewRuleModalProps> = ({onClose, onSubmit}) => {
 									dataFormatter: (val: unknown) => {
 										if (isString(val)) {
 											return val;
-										} else if (isArray(val)) {
+										}
+										else if (isArray(val)) {
 											return val
 												.map(
 													({
-														value
+														value,
 													}: {
 														value: string;
 													}) => value
@@ -218,8 +222,8 @@ const NewRuleModal: React.FC<INewRuleModalProps> = ({onClose, onSubmit}) => {
 										}
 									},
 									label: metadata ? metadata : 'url',
-									sortable: false
-								}
+									sortable: false,
+								},
 							]}
 							delta={delta}
 							items={data ? data.pageAssets.pageAssets : []}
@@ -237,21 +241,21 @@ const NewRuleModal: React.FC<INewRuleModalProps> = ({onClose, onSubmit}) => {
 
 			<Modal.Footer>
 				<ClayButton
-					className='button-root'
-					displayType='secondary'
+					className="button-root"
+					displayType="secondary"
 					onClick={onClose}
 				>
 					{Liferay.Language.get('cancel')}
 				</ClayButton>
 
 				<ClayButton
-					className='button-root'
+					className="button-root"
 					disabled={!stringMatch || !metadata}
 					onClick={() =>
 						onSubmit({
 							id: `${includeExclude} - ${filter}`,
 							name: includeExclude,
-							value: filter
+							value: filter,
 						})
 					}
 				>

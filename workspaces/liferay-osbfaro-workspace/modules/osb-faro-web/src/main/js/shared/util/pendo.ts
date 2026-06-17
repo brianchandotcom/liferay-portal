@@ -6,17 +6,17 @@ export class Pendo {
 		const data = {
 			account: {
 				...(project.corpProjectUuid && {
-					id: project.corpProjectUuid
+					id: project.corpProjectUuid,
 				}),
 				name: project.corpProjectName,
-				planLevel: project.faroSubscription.get('name')
+				planLevel: project.faroSubscription.get('name'),
 			},
 			visitor: {
 				email: currentUser.emailAddress,
 				full_name: currentUser.name,
 				id: currentUser.id,
-				role: currentUser.roleName
-			}
+				role: currentUser.roleName,
+			},
 		};
 
 		if (pendo?.isReady?.()) {

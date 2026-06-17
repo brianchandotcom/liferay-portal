@@ -11,110 +11,110 @@ const data = {
 					metrics: [
 						{
 							value: 100,
-							valueKey: 'Unknown'
+							valueKey: 'Unknown',
 						},
 						{
 							value: 100,
-							valueKey: 'Pernambuco'
+							valueKey: 'Pernambuco',
 						},
 						{
 							value: 100,
-							valueKey: 'Sao Paulo'
+							valueKey: 'Sao Paulo',
 						},
 						{
 							value: 100,
-							valueKey: 'Parana'
+							valueKey: 'Parana',
 						},
 						{
 							value: 100,
-							valueKey: 'Rio Grande do Sul'
-						}
+							valueKey: 'Rio Grande do Sul',
+						},
 					],
 					value: 100,
-					valueKey: 'Brazil'
+					valueKey: 'Brazil',
 				},
 				{
 					metrics: [
 						{
 							value: 100,
-							valueKey: 'Unknown'
+							valueKey: 'Unknown',
 						},
 						{
 							value: 100,
-							valueKey: 'Catalonia'
+							valueKey: 'Catalonia',
 						},
 						{
 							value: 100,
-							valueKey: 'Madrid'
+							valueKey: 'Madrid',
 						},
 						{
 							value: 100,
-							valueKey: 'Andalucia'
+							valueKey: 'Andalucia',
 						},
 						{
 							value: 100,
-							valueKey: 'Castilla y Leon'
+							valueKey: 'Castilla y Leon',
 						},
 						{
 							value: 100,
-							valueKey: 'Others'
-						}
+							valueKey: 'Others',
+						},
 					],
 					value: 100,
-					valueKey: 'Spain'
+					valueKey: 'Spain',
 				},
 				{
 					metrics: [
 						{
 							value: 100,
-							valueKey: 'California'
+							valueKey: 'California',
 						},
 						{
 							value: 100,
-							valueKey: 'Unknown'
+							valueKey: 'Unknown',
 						},
 						{
 							value: 100,
-							valueKey: 'Georgia'
+							valueKey: 'Georgia',
 						},
 						{
 							value: 100,
-							valueKey: 'New Jersey'
+							valueKey: 'New Jersey',
 						},
 						{
 							value: 100,
-							valueKey: 'Florida'
+							valueKey: 'Florida',
 						},
 						{
 							value: 100,
-							valueKey: 'Others'
-						}
+							valueKey: 'Others',
+						},
 					],
 					value: 100,
-					valueKey: 'United States'
-				}
-			]
-		}
-	}
+					valueKey: 'United States',
+				},
+			],
+		},
+	},
 };
 
 describe('Shared HOCs Mappers - Locations', () => {
 	it('should map locations information', () => {
 		const mapper = getLocationsMapper(
-			result => result.form.submissionsMetric
+			(result) => result.form.submissionsMetric
 		);
 
 		const propsResult = mapper.props(
 			{
 				data,
 				ownProps: {
-					rangeSelectors: {rangeKey: '0'}
-				}
+					rangeSelectors: {rangeKey: '0'},
+				},
 			},
 			{
 				filters: {
-					location: ['Any']
-				}
+					location: ['Any'],
+				},
 			}
 		);
 
@@ -126,43 +126,43 @@ describe('Shared HOCs Mappers - Locations', () => {
 						id: 'Brazil',
 						name: 'Brazil',
 						total: 100,
-						value: '33.3'
+						value: '33.3',
 					},
 					{
 						group: 'Spain',
 						id: 'Spain',
 						name: 'Spain',
 						total: 100,
-						value: '33.3'
+						value: '33.3',
 					},
 					{
 						group: 'United States',
 						id: 'United States',
 						name: 'United States',
 						total: 100,
-						value: '33.3'
-					}
+						value: '33.3',
+					},
 				],
-				total: 3
+				total: 3,
 			},
 			error: null,
 			loading: false,
 			rangeEnd: null,
 			rangeKey: 0,
-			rangeStart: null
+			rangeStart: null,
 		});
 
 		const optionsResult = mapper.options({
 			filters: {
-				location: ['Any']
+				location: ['Any'],
 			},
 			rangeSelectors: {rangeKey: '0'},
 			router: {
 				params: {
 					assetId: ASSET_ID,
-					touchpoint: TOUCHPOINT
-				}
-			}
+					touchpoint: TOUCHPOINT,
+				},
+			},
 		});
 
 		expect(optionsResult).toEqual({
@@ -174,27 +174,27 @@ describe('Shared HOCs Mappers - Locations', () => {
 				rangeKey: 0,
 				rangeStart: null,
 				title: '',
-				touchpoint: null
-			}
+				touchpoint: null,
+			},
 		});
 	});
 
 	it('should map locations information with region Brazil', () => {
 		const mapper = getLocationsMapper(
-			result => result.form.submissionsMetric
+			(result) => result.form.submissionsMetric
 		);
 
 		const propsResult = mapper.props(
 			{
 				data,
 				ownProps: {
-					rangeSelectors: {rangeKey: '0'}
-				}
+					rangeSelectors: {rangeKey: '0'},
+				},
 			},
 			{
 				filters: {
-					location: ['Brazil']
-				}
+					location: ['Brazil'],
+				},
 			}
 		);
 
@@ -206,57 +206,57 @@ describe('Shared HOCs Mappers - Locations', () => {
 						id: 'Unknown',
 						name: 'Unknown',
 						total: 100,
-						value: '20'
+						value: '20',
 					},
 					{
 						group: 'Pernambuco',
 						id: 'Pernambuco',
 						name: 'Pernambuco',
 						total: 100,
-						value: '20'
+						value: '20',
 					},
 					{
 						group: 'Sao Paulo',
 						id: 'Sao Paulo',
 						name: 'Sao Paulo',
 						total: 100,
-						value: '20'
+						value: '20',
 					},
 					{
 						group: 'Parana',
 						id: 'Parana',
 						name: 'Parana',
 						total: 100,
-						value: '20'
+						value: '20',
 					},
 					{
 						group: 'Rio Grande do Sul',
 						id: 'Rio Grande do Sul',
 						name: 'Rio Grande do Sul',
 						total: 100,
-						value: '20'
-					}
+						value: '20',
+					},
 				],
-				total: 5
+				total: 5,
 			},
 			error: null,
 			loading: false,
 			rangeEnd: null,
 			rangeKey: 0,
-			rangeStart: null
+			rangeStart: null,
 		});
 
 		const optionsResult = mapper.options({
 			filters: {
-				location: ['Brazil']
+				location: ['Brazil'],
 			},
 			rangeSelectors: {rangeKey: '0'},
 			router: {
 				params: {
 					assetId: ASSET_ID,
-					touchpoint: TOUCHPOINT
-				}
-			}
+					touchpoint: TOUCHPOINT,
+				},
+			},
 		});
 
 		expect(optionsResult).toEqual({
@@ -268,14 +268,14 @@ describe('Shared HOCs Mappers - Locations', () => {
 				rangeKey: 0,
 				rangeStart: null,
 				title: '',
-				touchpoint: null
-			}
+				touchpoint: null,
+			},
 		});
 	});
 
 	it('should map locations information without geolocation', () => {
 		const mapper = getLocationsMapper(
-			result => result.form.submissionsMetric
+			(result) => result.form.submissionsMetric
 		);
 
 		const propsResult = mapper.props(
@@ -283,31 +283,31 @@ describe('Shared HOCs Mappers - Locations', () => {
 				data: {
 					form: {
 						submissionsMetric: {
-							geolocation: []
-						}
-					}
+							geolocation: [],
+						},
+					},
 				},
 				ownProps: {
-					rangeSelectors: {rangeKey: '0'}
-				}
+					rangeSelectors: {rangeKey: '0'},
+				},
 			},
 			{
 				filters: {
-					location: ['Any']
-				}
+					location: ['Any'],
+				},
 			}
 		);
 
 		expect(propsResult).toMatchObject({
 			data: {
 				geolocation: [],
-				total: 0
+				total: 0,
 			},
 			error: null,
 			loading: false,
 			rangeEnd: null,
 			rangeKey: 0,
-			rangeStart: null
+			rangeStart: null,
 		});
 	});
 });
@@ -315,20 +315,20 @@ describe('Shared HOCs Mappers - Locations', () => {
 describe('Shared HOCs Mappers - Locations Countries', () => {
 	it('should return countries information', () => {
 		const mapper = getLocationsMapperCountries(
-			result => result.form.submissionsMetric
+			(result) => result.form.submissionsMetric
 		);
 
 		const propsResult = mapper.props(
 			{
 				data,
 				ownProps: {
-					rangeSelectors: {rangeKey: '0'}
-				}
+					rangeSelectors: {rangeKey: '0'},
+				},
 			},
 			{
 				filters: {
-					location: ['Any']
-				}
+					location: ['Any'],
+				},
 			}
 		);
 
@@ -340,40 +340,40 @@ describe('Shared HOCs Mappers - Locations Countries', () => {
 						id: 'Brazil',
 						name: 'Brazil',
 						total: 100,
-						value: '33.3'
+						value: '33.3',
 					},
 					{
 						group: 'Spain',
 						id: 'Spain',
 						name: 'Spain',
 						total: 100,
-						value: '33.3'
+						value: '33.3',
 					},
 					{
 						group: 'United States',
 						id: 'United States',
 						name: 'United States',
 						total: 100,
-						value: '33.3'
-					}
+						value: '33.3',
+					},
 				],
-				total: 3
+				total: 3,
 			},
 			error: null,
-			loading: false
+			loading: false,
 		});
 
 		const optionsResult = mapper.options({
 			filters: {
-				location: ['Any']
+				location: ['Any'],
 			},
 			rangeSelectors: {rangeKey: '0'},
 			router: {
 				params: {
 					assetId: ASSET_ID,
-					touchpoint: TOUCHPOINT
-				}
-			}
+					touchpoint: TOUCHPOINT,
+				},
+			},
 		});
 
 		expect(optionsResult).toEqual({
@@ -385,27 +385,27 @@ describe('Shared HOCs Mappers - Locations Countries', () => {
 				rangeKey: 0,
 				rangeStart: null,
 				title: '',
-				touchpoint: null
-			}
+				touchpoint: null,
+			},
 		});
 	});
 
 	it('should return countries information indepent if Brazil is selected', () => {
 		const mapper = getLocationsMapperCountries(
-			result => result.form.submissionsMetric
+			(result) => result.form.submissionsMetric
 		);
 
 		const propsResult = mapper.props(
 			{
 				data,
 				ownProps: {
-					rangeSelectors: {rangeKey: '0'}
-				}
+					rangeSelectors: {rangeKey: '0'},
+				},
 			},
 			{
 				filters: {
-					location: ['Brazil']
-				}
+					location: ['Brazil'],
+				},
 			}
 		);
 
@@ -417,40 +417,40 @@ describe('Shared HOCs Mappers - Locations Countries', () => {
 						id: 'Brazil',
 						name: 'Brazil',
 						total: 100,
-						value: '33.3'
+						value: '33.3',
 					},
 					{
 						group: 'Spain',
 						id: 'Spain',
 						name: 'Spain',
 						total: 100,
-						value: '33.3'
+						value: '33.3',
 					},
 					{
 						group: 'United States',
 						id: 'United States',
 						name: 'United States',
 						total: 100,
-						value: '33.3'
-					}
+						value: '33.3',
+					},
 				],
-				total: 3
+				total: 3,
 			},
 			error: null,
-			loading: false
+			loading: false,
 		});
 
 		const optionsResult = mapper.options({
 			filters: {
-				location: ['Brazil']
+				location: ['Brazil'],
 			},
 			rangeSelectors: {rangeKey: '0'},
 			router: {
 				params: {
 					assetId: ASSET_ID,
-					touchpoint: TOUCHPOINT
-				}
-			}
+					touchpoint: TOUCHPOINT,
+				},
+			},
 		});
 
 		expect(optionsResult).toEqual({
@@ -462,8 +462,8 @@ describe('Shared HOCs Mappers - Locations Countries', () => {
 				rangeKey: 0,
 				rangeStart: null,
 				title: '',
-				touchpoint: null
-			}
+				touchpoint: null,
+			},
 		});
 	});
 });

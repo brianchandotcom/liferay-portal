@@ -24,7 +24,7 @@ export const getVariableDefinitions = (
 		(acc, {variableDefinitions}) => {
 			variableDefinitions.forEach(({variable}) => {
 				const {
-					name: {value}
+					name: {value},
 				} = variable;
 
 				acc[value] = true;

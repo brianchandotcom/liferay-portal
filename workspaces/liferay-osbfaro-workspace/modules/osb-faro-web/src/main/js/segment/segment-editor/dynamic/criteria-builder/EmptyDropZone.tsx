@@ -3,13 +3,13 @@ import getCN from 'classnames';
 import React, {Component} from 'react';
 import {
 	AddProperty,
-	withReferencedObjectsConsumer
+	withReferencedObjectsConsumer,
 } from '../context/referencedObjects';
 import {compose} from 'redux';
 import {
 	ConnectDropTarget,
 	DropTarget as dropTarget,
-	DropTargetMonitor
+	DropTargetMonitor,
 } from 'react-dnd';
 import {DragTypes} from '../utils/drag-types';
 import {OnCriterionAdd} from '../utils/types';
@@ -30,7 +30,7 @@ const canDrop = (): boolean => true;
 const drop = (
 	{
 		addProperty,
-		onCriterionAdd
+		onCriterionAdd,
 	}: {
 		addProperty: AddProperty;
 		onCriterionAdd: OnCriterionAdd;
@@ -61,20 +61,20 @@ class EmptyDropZone extends Component<IEmptyDropZone> {
 
 		const targetClasses = getCN('empty-drop-zone-target', {
 			'dnd-hover': canDrop && hover,
-			'enable-sequential-segment': sequential
+			'enable-sequential-segment': sequential,
 		});
 
 		return (
-			<div className='empty-drop-zone-root'>
+			<div className="empty-drop-zone-root">
 				{connectDropTarget(
 					<div className={targetClasses}>
-						<div className='empty-drop-zone-indicator' />
+						<div className="empty-drop-zone-indicator" />
 
-						<div className='empty-drop-zone-message'>
+						<div className="empty-drop-zone-message">
 							<div>
 								<ClayIcon
-									className='icon-root icon-size-md mr-3'
-									symbol='ac_rule'
+									className="icon-root icon-size-md mr-3"
+									symbol="ac_rule"
 								/>
 
 								<Text size={4}>
@@ -87,8 +87,8 @@ class EmptyDropZone extends Component<IEmptyDropZone> {
 							{!sequential && (
 								<div>
 									<ClayIcon
-										className='icon-root icon-size-md mr-3'
-										symbol='ac_group'
+										className="icon-root icon-size-md mr-3"
+										symbol="ac_group"
 									/>
 
 									<Text size={4}>
@@ -112,12 +112,12 @@ export default compose<React.ComponentType<any>>(
 		DragTypes.Property,
 		{
 			canDrop,
-			drop
+			drop,
 		},
 		(connect, monitor) => ({
 			canDrop: monitor.canDrop(),
 			connectDropTarget: connect.dropTarget(),
-			hover: monitor.isOver()
+			hover: monitor.isOver(),
 		})
 	)
 )(EmptyDropZone);

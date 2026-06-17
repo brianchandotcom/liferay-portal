@@ -11,7 +11,8 @@ $c: '.analytics-statistics-card';
 		font-size: $font-size-md;
 	}
 
-	#{$c}-percentage, #{$c}-total {
+	#{$c}-percentage,
+	#{$c}-total {
 		text-align: center;
 		width: 100%;
 	}

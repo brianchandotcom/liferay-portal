@@ -1,5 +1,5 @@
 import CommerceIncompleteOrdersQuery, {
-	CommerceIncompleteOrdersData
+	CommerceIncompleteOrdersData,
 } from 'commerce/queries/IncompleteOrdersQuery';
 import CommerceMetricCard from './CommerceMetricCard';
 import React from 'react';

@@ -8,7 +8,7 @@ describe('Card', () => {
 	afterEach(cleanup);
 
 	it('renders', () => {
-		render(<Card title='Card Title'>{'Card Content'}</Card>);
+		render(<Card title="Card Title">{'Card Content'}</Card>);
 
 		expect(screen.getByText('Card Title')).toBeInTheDocument();
 		expect(screen.getByText('Card Content')).toBeInTheDocument();
@@ -16,8 +16,8 @@ describe('Card', () => {
 
 	it('renders Card.SubHeader', () => {
 		render(
-			<Card title='Card Title'>
-				<Card.SubHeader title='Card SubHeader Title' />
+			<Card title="Card Title">
+				<Card.SubHeader title="Card SubHeader Title" />
 
 				{'Card Content'}
 			</Card>

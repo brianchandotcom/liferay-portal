@@ -36,7 +36,8 @@
 
 		&:not(:last-child) {
 			&.previous-step {
-				.circle:after, .circle:before {
+				.circle:after,
+				.circle:before {
 					background: $mainLighten28;
 				}
 			}

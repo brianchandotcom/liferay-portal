@@ -10,7 +10,7 @@ export function buildLanguages(displayName: string): Languages {
 			[displayName]
 		) as string,
 		connectTitle: sub(Liferay.Language.get('connect-x'), [
-			displayName
+			displayName,
 		]) as string,
 		endpointHelper: sub(
 			Liferay.Language.get(
@@ -25,6 +25,6 @@ export function buildLanguages(displayName: string): Languages {
 		tokenLabel: sub(
 			Liferay.Language.get('copy-this-token-to-your-x-instance'),
 			[displayName]
-		) as string
+		) as string,
 	};
 }

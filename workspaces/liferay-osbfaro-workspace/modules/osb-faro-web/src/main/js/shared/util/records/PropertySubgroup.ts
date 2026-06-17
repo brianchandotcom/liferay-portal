@@ -9,7 +9,7 @@ interface IPropertySubgroup {
 export default class PropertySubgroup
 	extends Record({
 		label: '',
-		properties: List()
+		properties: List(),
 	})
 	implements IPropertySubgroup
 {

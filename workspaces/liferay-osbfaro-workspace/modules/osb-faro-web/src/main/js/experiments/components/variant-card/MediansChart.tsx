@@ -5,7 +5,7 @@ import {
 	getLegendData,
 	getMedianGraphData,
 	getMetricUnit,
-	mergedVariants
+	mergedVariants,
 } from 'experiments/util/experiments';
 import {IExperiment} from '../summary-card/types';
 import {MetricName} from 'experiments/util/types';
@@ -19,7 +19,7 @@ export const MediansChart = ({experiment}: {experiment: IExperiment}) => {
 	const metricUnit = getMetricUnit(goal?.metric as MetricName);
 	const mediansData = getMedianGraphData({
 		dxpVariants: variants,
-		metricUnit
+		metricUnit,
 	});
 
 	return (
@@ -27,9 +27,9 @@ export const MediansChart = ({experiment}: {experiment: IExperiment}) => {
 			<HTMLBarChart {...(mediansData as unknown as IHTMLBarChartProps)} />
 
 			<Legend
-				data={getLegendData(variants).map(item => ({
+				data={getLegendData(variants).map((item) => ({
 					...item,
-					color: item.color ?? ''
+					color: item.color ?? '',
 				}))}
 			/>
 		</>

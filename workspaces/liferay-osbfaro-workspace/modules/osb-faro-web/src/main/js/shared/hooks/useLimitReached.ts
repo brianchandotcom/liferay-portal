@@ -1,12 +1,12 @@
 export enum FeatureName {
 	Batch = 'batch',
 	RealTime = 'real time',
-	EventAnalysis = 'event analysis'
+	EventAnalysis = 'event analysis',
 }
 
 export const useLimitReached = ({
 	data = [],
-	featureName
+	featureName,
 }: {
 	data?: Array<{
 		type?: string;
@@ -17,7 +17,7 @@ export const useLimitReached = ({
 	featureName: FeatureName;
 }) => {
 	const usage = data?.find(
-		item =>
+		(item) =>
 			(item['type'] || item['name'] || '').toLowerCase() ===
 			featureName.toLowerCase()
 	);

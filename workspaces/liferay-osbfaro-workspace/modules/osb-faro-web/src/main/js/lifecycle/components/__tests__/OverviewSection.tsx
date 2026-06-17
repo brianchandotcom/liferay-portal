@@ -13,9 +13,9 @@ const buildMetric = (
 	metricType,
 	trend: {
 		percentage: 0,
-		trendClassification: TrendClassification.Neutral
+		trendClassification: TrendClassification.Neutral,
 	},
-	value
+	value,
 });
 
 describe('OverviewSection', () => {
@@ -40,7 +40,7 @@ describe('OverviewSection', () => {
 		const metrics = [
 			buildMetric(OverviewMetricType.NewPipeline, 11),
 			buildMetric(OverviewMetricType.Stalled, 22),
-			buildMetric(OverviewMetricType.AtRisk, 33)
+			buildMetric(OverviewMetricType.AtRisk, 33),
 		];
 
 		const {getByText} = render(<OverviewSection metrics={metrics} />);

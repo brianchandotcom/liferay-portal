@@ -14,16 +14,16 @@ describe('Sidebar Reducer', () => {
 		const action = {
 			payload: {
 				collapsed,
-				currentUserId
+				currentUserId,
 			},
-			type: actionTypes.COLLAPSE_SIDEBAR
+			type: actionTypes.COLLAPSE_SIDEBAR,
 		};
 
 		const state = reducer(new Map(), action);
 
 		expect(state).toEqual(
 			new Map({
-				[currentUserId]: collapsed
+				[currentUserId]: collapsed,
 			})
 		);
 	});

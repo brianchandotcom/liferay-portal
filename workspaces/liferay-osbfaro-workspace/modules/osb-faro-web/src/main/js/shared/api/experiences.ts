@@ -4,7 +4,7 @@ export function fetchPageExperience({
 	canonicalUrl,
 	channelId,
 	groupId,
-	pageTitle
+	pageTitle,
 }: {
 	canonicalUrl: string;
 	channelId: string;
@@ -13,6 +13,6 @@ export function fetchPageExperience({
 }) {
 	return sendRequest({
 		method: 'GET',
-		path: `main/${groupId}/page-experiences?canonicalUrl=${canonicalUrl}&pageTitle=${pageTitle}&channelId=${channelId}`
+		path: `main/${groupId}/page-experiences?canonicalUrl=${canonicalUrl}&pageTitle=${pageTitle}&channelId=${channelId}`,
 	});
 }

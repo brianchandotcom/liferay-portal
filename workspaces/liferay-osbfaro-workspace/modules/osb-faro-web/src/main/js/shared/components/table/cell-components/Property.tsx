@@ -12,12 +12,12 @@ interface IPropertyCellProps {
 
 const PropertyCell: React.FC<IPropertyCellProps> = ({
 	className,
-	data: {name, value}
+	data: {name, value},
 }) => (
 	<td className={getCN('property-cell', className)}>
-		<div className='name'>{name}</div>
+		<div className="name">{name}</div>
 
-		<div className='table-title'>{getSafeDisplayValue(value)}</div>
+		<div className="table-title">{getSafeDisplayValue(value)}</div>
 	</td>
 );
 

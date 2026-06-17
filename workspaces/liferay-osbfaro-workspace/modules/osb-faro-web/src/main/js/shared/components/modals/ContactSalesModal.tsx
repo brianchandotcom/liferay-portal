@@ -20,7 +20,7 @@ interface IContactSalesModalProps
 
 const ContactSalesModal: React.FC<IContactSalesModalProps> = ({
 	addAlert,
-	onClose
+	onClose,
 }) => (
 	<Modal>
 		<Modal.Header
@@ -30,20 +30,20 @@ const ContactSalesModal: React.FC<IContactSalesModalProps> = ({
 
 		<Modal.Body>
 			<HubspotForm
-				css=''
-				cssClass='hs-form-container'
-				cssRequired=''
+				css=""
+				cssClass="hs-form-container"
+				cssRequired=""
 				formId={FORM_ID}
 				onFormSubmitted={() => {
 					addAlert({
 						alertType: Alert.Types.Success,
-						message: Liferay.Language.get('success')
+						message: Liferay.Language.get('success'),
 					});
 
 					onClose();
 				}}
 				portalId={PORTAL_ID}
-				submitButtonClass='btn btn-block btn-primary'
+				submitButtonClass="btn btn-block btn-primary"
 			/>
 		</Modal.Body>
 	</Modal>

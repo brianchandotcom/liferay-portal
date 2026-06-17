@@ -34,7 +34,7 @@ describe('array utils', () => {
 				'cream cheese',
 				'muffins',
 				'bagels',
-				'toast'
+				'toast',
 			]);
 
 			expect(result).not.toBe(original);

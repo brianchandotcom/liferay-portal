@@ -8,7 +8,7 @@ module.exports = {
 		browser: true,
 		es6: true,
 		jest: true,
-		node: true
+		node: true,
 	},
 	globals: {
 		analytics: true,
@@ -17,7 +17,7 @@ module.exports = {
 		FARO_PENDO_API_KEY: true,
 		IncrementalDOM: true,
 		Liferay: true,
-		pendo: true
+		pendo: true,
 	},
 	parser: '@typescript-eslint/parser',
 	parserOptions: {
@@ -25,16 +25,12 @@ module.exports = {
 			allowImportExportEverywhere: true,
 			experimentalObjectRestSpread: true,
 			jsx: true,
-			legacyDecorators: true
+			legacyDecorators: true,
 		},
 		ecmaVersion: 2022,
-		sourceType: 'module'
+		sourceType: 'module',
 	},
-	plugins: [
-		'@typescript-eslint',
-		'react',
-		'sort-destructure-keys'
-	],
+	plugins: ['@typescript-eslint', 'react', 'sort-destructure-keys'],
 	root: true,
 	rules: {
 		'@typescript-eslint/no-unused-vars': [
@@ -42,8 +38,8 @@ module.exports = {
 			{
 				args: 'after-used',
 				ignoreRestSiblings: false,
-				vars: 'all'
-			}
+				vars: 'all',
+			},
 		],
 		'arrow-body-style': [2, 'as-needed'],
 		'comma-dangle': 0,
@@ -52,8 +48,8 @@ module.exports = {
 		'new-cap': [
 			2,
 			{
-				capIsNew: false
-			}
+				capIsNew: false,
+			},
 		],
 		'no-console': 2,
 		'no-import-assign': 0,
@@ -71,8 +67,8 @@ module.exports = {
 			2,
 			{
 				children: 'ignore',
-				props: 'never'
-			}
+				props: 'never',
+			},
 		],
 		'react/jsx-fragments': [2, 'syntax'],
 		'react/jsx-handler-names': 2,
@@ -81,8 +77,8 @@ module.exports = {
 		'react/jsx-sort-props': [
 			2,
 			{
-				ignoreCase: true
-			}
+				ignoreCase: true,
+			},
 		],
 		'react/jsx-uses-react': 2,
 		'react/jsx-uses-vars': 2,
@@ -90,7 +86,7 @@ module.exports = {
 			2,
 			{
 				groups: {
-					rendering: ['/^render.+$/', 'render']
+					rendering: ['/^render.+$/', 'render'],
 				},
 				order: [
 					'static-variables',
@@ -105,9 +101,9 @@ module.exports = {
 					'constructor',
 					'lifecycle',
 					'everything-else',
-					'render'
-				]
-			}
+					'render',
+				],
+			},
 		],
 		'require-jsdoc': 0,
 		'sort-destructure-keys/sort-destructure-keys': 2,
@@ -115,15 +111,15 @@ module.exports = {
 			2,
 			'asc',
 			{
-				caseSensitive: false
-			}
+				caseSensitive: false,
+			},
 		],
 		'sort-vars': 2,
-		'valid-jsdoc': 0
+		'valid-jsdoc': 0,
 	},
 	settings: {
 		react: {
-			version: 'detect'
-		}
-	}
+			version: 'detect',
+		},
+	},
 };

@@ -8,7 +8,7 @@ import {User} from 'shared/util/records';
  * To get currentUser, you can use WithCurrentUser (for HOC) or useCurrentUser (for HOOK).
  */
 export const useFetchCurrentUser = (initialGroupId: string = '0') => {
-	const currentUser = useSelector<any, any>(state =>
+	const currentUser = useSelector<any, any>((state) =>
 		state.get('currentUser')
 	);
 	const error = currentUser.get('error');
@@ -31,7 +31,7 @@ export const useFetchCurrentUser = (initialGroupId: string = '0') => {
 	return {
 		data,
 		error,
-		loading
+		loading,
 	};
 };
 
@@ -39,10 +39,10 @@ export const useFetchCurrentUser = (initialGroupId: string = '0') => {
  * Get currentUser from redux store.
  */
 export const useCurrentUser = (): User => {
-	const currentUserId = useSelector<any, any>(state =>
+	const currentUserId = useSelector<any, any>((state) =>
 		state.getIn(['currentUser', 'data'])
 	);
-	const data: User = useSelector<any, any>(state =>
+	const data: User = useSelector<any, any>((state) =>
 		state.getIn(['users', currentUserId, 'data'])
 	);
 
@@ -51,7 +51,7 @@ export const useCurrentUser = (): User => {
 		id: '',
 		name: '',
 		roleName: '',
-		status: 1
+		status: 1,
 	});
 
 	return data || newUser;

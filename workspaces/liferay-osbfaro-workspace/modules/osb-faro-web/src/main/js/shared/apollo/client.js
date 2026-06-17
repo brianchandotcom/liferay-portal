@@ -37,8 +37,8 @@ const client = new ApolloClient({
 	connectToDevTools: FARO_DEV_MODE,
 	defaultOptions: {
 		watchQuery: {
-			notifyOnNetworkStatusChange: true
-		}
+			notifyOnNetworkStatusChange: true,
+		},
 	},
 	link: from([
 		onError(({operation}) => {
@@ -51,21 +51,24 @@ const client = new ApolloClient({
 		new HttpLink({
 			credentials: 'same-origin',
 			fetch: fetchWithGroupId,
-			uri: '/o/cerebro/graphql'
-		})
+			uri: '/o/cerebro/graphql',
+		}),
 	]),
 
 	resolvers: {
+
 		/**
 		 * Queries must render only in the dev mode to avoid
 		 * add unnecessary code in the final bundle
 		 */
-		Query: DEVELOPER_MODE ? resolvers : {}
-	}
+		Query: DEVELOPER_MODE ? resolvers : {},
+	},
 });
 
 if (DEVELOPER_MODE) {
+
 	// Adds messages only in a dev environment
+
 	loadDevMessages();
 	loadErrorMessages();
 }

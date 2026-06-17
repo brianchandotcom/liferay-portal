@@ -31,52 +31,52 @@ const thumbChartItems = [
 		text: Liferay.Language.get(
 			'not-possible-to-change-the-visualization-type'
 		),
-		value: 'line'
-	}
+		value: 'line',
+	},
 ];
 
 const FormAddReport: React.FC<IFormAddReport> = ({
 	onBlurReport,
 	onChangeReport,
 	onInputReport,
-	onSelectThumbReport
+	onSelectThumbReport,
 }) => (
-	<div className='w-100'>
-		<div className='row'>
-			<div className='col-sm-4'>
-				<div className='form-group'>
-					<label htmlFor='reportNameInput'>
+	<div className="w-100">
+		<div className="row">
+			<div className="col-sm-4">
+				<div className="form-group">
+					<label htmlFor="reportNameInput">
 						{Liferay.Language.get('report-name')}
 					</label>
 
 					<input
-						className='form-control'
-						id='reportNameInput'
+						className="form-control"
+						id="reportNameInput"
 						maxLength={90}
 						onInput={onInputReport}
 						placeholder={Liferay.Language.get(
 							'enter-a-name-for-this-report'
 						)}
-						type='text'
+						type="text"
 					/>
 				</div>
 			</div>
 		</div>
 
-		<div className='row'>
-			<div className='col-sm-4'>
-				<div className='form-group'>
-					<label htmlFor='metricSelector'>
+		<div className="row">
+			<div className="col-sm-4">
+				<div className="form-group">
+					<label htmlFor="metricSelector">
 						{Liferay.Language.get('metric')}
 					</label>
 
 					<select
-						className='form-control'
-						id='metricSelector'
+						className="form-control"
+						id="metricSelector"
 						onBlur={onBlurReport}
 						onChange={onChangeReport}
 					>
-						<option value=''>
+						<option value="">
 							{Liferay.Language.get('select-a-metric')}
 						</option>
 
@@ -94,9 +94,9 @@ const FormAddReport: React.FC<IFormAddReport> = ({
 			</div>
 		</div>
 
-		<div className='row'>
-			<div className='col-sm-12'>
-				<div className='form-group'>
+		<div className="row">
+			<div className="col-sm-12">
+				<div className="form-group">
 					<label>{Liferay.Language.get('visualization')}</label>
 
 					<Thumbs
@@ -111,7 +111,7 @@ const FormAddReport: React.FC<IFormAddReport> = ({
 
 const AddReport: React.FC<IAddReportProps> = ({
 	isEmptyDashboard = false,
-	onGetReport
+	onGetReport,
 }) => {
 	const [displayFormAddReport, setDisplayFormAddReport] =
 		useState<boolean>(false);
@@ -119,13 +119,13 @@ const AddReport: React.FC<IAddReportProps> = ({
 	const [report, setReport] = useState<Report>({
 		chartType: '',
 		metric: '',
-		title: ''
+		title: '',
 	});
 
 	useEffect(() => {
 		setIsEnableToSave(true);
 
-		(Object.keys(report) as (keyof Report)[]).forEach(key => {
+		(Object.keys(report) as (keyof Report)[]).forEach((key) => {
 			if (isEmpty(report[key])) {
 				setIsEnableToSave(false);
 
@@ -140,7 +140,7 @@ const AddReport: React.FC<IAddReportProps> = ({
 		setReport({
 			chartType: '',
 			metric: '',
-			title: ''
+			title: '',
 		});
 	};
 
@@ -157,26 +157,26 @@ const AddReport: React.FC<IAddReportProps> = ({
 	const handleChangeReportTitle = ({target}: any): void => {
 		setReport({
 			...report,
-			title: target.value.trim().slice(0, 90)
+			title: target.value.trim().slice(0, 90),
 		});
 	};
 
 	const handleChangeSelectMetric = ({target}: any): void => {
 		setReport({
 			...report,
-			metric: target.value
+			metric: target.value,
 		});
 	};
 
 	const handleGetSelectedChartType = ({value}: any): void => {
 		setReport({
 			...report,
-			chartType: value
+			chartType: value,
 		});
 	};
 
 	const classnames = getCN('analytics-add-report', {
-		'analytics-add-report-empty-dashboard': isEmptyDashboard
+		'analytics-add-report-empty-dashboard': isEmptyDashboard,
 	});
 
 	return (
@@ -198,7 +198,7 @@ const AddReport: React.FC<IAddReportProps> = ({
 					</Card.Body>
 					<Card.Footer>
 						<ClayButton
-							className='button-root mr-4'
+							className="button-root mr-4"
 							disabled={!isEnableToSave}
 							onClick={
 								isEnableToSave
@@ -210,8 +210,8 @@ const AddReport: React.FC<IAddReportProps> = ({
 						</ClayButton>
 
 						<ClayButton
-							className='button-root'
-							displayType='secondary'
+							className="button-root"
+							displayType="secondary"
 							onClick={handleClickCancelReport}
 						>
 							{Liferay.Language.get('cancel')}
@@ -219,10 +219,10 @@ const AddReport: React.FC<IAddReportProps> = ({
 					</Card.Footer>
 				</>
 			) : (
-				<div className='analytics-add-report-button'>
+				<div className="analytics-add-report-button">
 					<ClayButton
-						className='button-root'
-						displayType='secondary'
+						className="button-root"
+						displayType="secondary"
 						onClick={handleClickAddReport}
 					>
 						{Liferay.Language.get('add-report')}

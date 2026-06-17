@@ -19,7 +19,7 @@ export function remoteDataFromList(remoteDatas) {
 export default class RemoteData extends (new Record({
 	data: null,
 	error: false,
-	loading: true
+	loading: true,
 })) {
 	constructor(params = {}) {
 		super(params);

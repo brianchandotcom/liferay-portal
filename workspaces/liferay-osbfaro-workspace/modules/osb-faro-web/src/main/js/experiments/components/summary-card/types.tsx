@@ -5,7 +5,7 @@ export enum Status {
 	FinishedWinner = 'finished_winner',
 	Running = 'running',
 	Scheduled = 'scheduled',
-	Terminated = 'terminated'
+	Terminated = 'terminated',
 }
 
 export interface IExperimentVariant {

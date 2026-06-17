@@ -4,7 +4,7 @@ import React from 'react';
 import {
 	columns,
 	FrontendDataSet,
-	pagination
+	pagination,
 } from 'shared/components/FrontendDataSet';
 import {Routes} from 'shared/util/router';
 import {Text} from '@clayui/core';
@@ -17,7 +17,7 @@ interface IAccountIndividualsProps {
 }
 
 const AccountIndividuals: React.FC<IAccountIndividualsProps> = ({
-	className
+	className,
 }) => {
 	const {channelId, groupId, id} = useParams<{
 		channelId: string;
@@ -27,33 +27,33 @@ const AccountIndividuals: React.FC<IAccountIndividualsProps> = ({
 
 	return (
 		<Card className={classNames(className)} minHeight={300}>
-			<Card.Title className='mt-3 mx-3'>
-				<Text size={4} weight='semi-bold'>
-					<span className='text-uppercase'>
+			<Card.Title className="mt-3 mx-3">
+				<Text size={4} weight="semi-bold">
+					<span className="text-uppercase">
 						{Liferay.Language.get('account-individuals')}
 					</span>
 				</Text>
 			</Card.Title>
 			<Card.Body noPadding>
-				<div className='mt-1 mx-3'>
-					<Text color='secondary' size={3}>
+				<div className="mt-1 mx-3">
+					<Text color="secondary" size={3}>
 						{Liferay.Language.get(
 							'lists-all-individuals-associated-with-this-account'
 						)}
 					</Text>
 				</div>
-				<div className='mt-3'>
+				<div className="mt-3">
 					<FrontendDataSet
 						apiURL={`/o/faro/contacts/${groupId}/account/${id}/individuals?channelId=${channelId}`}
 						customDataRenderers={{
 							department: ({
-								itemData
+								itemData,
 							}: {
 								itemData: {properties?: {department?: string}};
 							}) => itemData.properties?.department ?? '',
 							individualNameRenderer: ({
 								itemData,
-								value
+								value,
 							}: {
 								itemData: {id: string | number};
 								value: string;
@@ -63,15 +63,15 @@ const AccountIndividuals: React.FC<IAccountIndividualsProps> = ({
 									groupId,
 									itemData,
 									route: Routes.CONTACTS_INDIVIDUAL,
-									value
+									value,
 								}),
 							jobTitle: ({
-								itemData
+								itemData,
 							}: {
 								itemData: {properties?: {jobTitle?: string}};
 							}) => itemData.properties?.jobTitle ?? '',
 							lastActiveRenderer: ({value}: {value: string}) =>
-								columns.dateRenderer({itemData: {}, value})
+								columns.dateRenderer({itemData: {}, value}),
 						}}
 						id={FDS_ID}
 						pagination={pagination}
@@ -91,7 +91,7 @@ const AccountIndividuals: React.FC<IAccountIndividualsProps> = ({
 											label: Liferay.Language.get(
 												'individual-name'
 											),
-											sortable: true
+											sortable: true,
 										},
 										{
 											contentRenderer: 'department',
@@ -99,7 +99,7 @@ const AccountIndividuals: React.FC<IAccountIndividualsProps> = ({
 											label: Liferay.Language.get(
 												'department'
 											),
-											sortable: true
+											sortable: true,
 										},
 										{
 											contentRenderer: 'jobTitle',
@@ -107,7 +107,7 @@ const AccountIndividuals: React.FC<IAccountIndividualsProps> = ({
 											label: Liferay.Language.get(
 												'job-title'
 											),
-											sortable: true
+											sortable: true,
 										},
 										{
 											contentRenderer:
@@ -116,12 +116,12 @@ const AccountIndividuals: React.FC<IAccountIndividualsProps> = ({
 											label: Liferay.Language.get(
 												'last-active'
 											),
-											sortable: true
-										}
-									]
+											sortable: true,
+										},
+									],
 								},
-								thumbnail: 'table'
-							}
+								thumbnail: 'table',
+							},
 						]}
 					/>
 				</div>

@@ -10,15 +10,15 @@ describe('GeneralInfoSection', () => {
 			columnClass: 'col-md-12',
 			items: [
 				{className: 'name-class', icon: 'user', key: 'userName'},
-				{className: 'email-class', icon: 'mail', key: 'userEmail'}
+				{className: 'email-class', icon: 'mail', key: 'userEmail'},
 			],
-			title: 'User Profile'
-		}
+			title: 'User Profile',
+		},
 	];
 
 	const mockLanguageMap = {
 		userEmail: 'Email Address',
-		userName: 'Full Name'
+		userName: 'Full Name',
 	};
 
 	it('should render', () => {
@@ -34,7 +34,7 @@ describe('GeneralInfoSection', () => {
 	});
 
 	it('should display values returned by the getValue function', () => {
-		const mockGetValue = jest.fn(key => {
+		const mockGetValue = jest.fn((key) => {
 			if (key === 'userName') return 'John Doe';
 			return 'john@example.com';
 		});
@@ -55,7 +55,7 @@ describe('GeneralInfoSection', () => {
 	});
 
 	it('should display a dash "-" when getValue returns a falsy value', () => {
-		const mockGetValue = jest.fn(key => {
+		const mockGetValue = jest.fn((key) => {
 			if (key === 'userName') return 'John Doe';
 			return undefined;
 		});
@@ -89,18 +89,18 @@ describe('GeneralInfoSection', () => {
 			{
 				columnClass: 'section-1-column',
 				items: [{className: 'item-1', icon: 'user', key: 'name'}],
-				title: 'Primary Info'
+				title: 'Primary Info',
 			},
 			{
 				columnClass: 'section-2-column',
 				items: [{className: 'item-2', icon: 'phone', key: 'phone'}],
-				title: 'Secondary Info'
-			}
+				title: 'Secondary Info',
+			},
 		];
 
 		const languageMap = {
 			name: 'Name Label',
-			phone: 'Phone Label'
+			phone: 'Phone Label',
 		};
 
 		const mockGetValue = jest.fn((key: string) => {

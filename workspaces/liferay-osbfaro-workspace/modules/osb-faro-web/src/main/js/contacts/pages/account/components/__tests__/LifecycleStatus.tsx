@@ -8,20 +8,20 @@ jest.unmock('react-dom');
 
 jest.mock('shared/api', () => ({
 	accounts: {
-		fetchLifecycleStatus: jest.fn()
+		fetchLifecycleStatus: jest.fn(),
 	},
 	lifecycle: {
-		fetchAccountLifecycles: jest.fn()
-	}
+		fetchAccountLifecycles: jest.fn(),
+	},
 }));
 
 jest.mock('shared/hooks/useRequest', () => ({
-	useRequest: jest.fn()
+	useRequest: jest.fn(),
 }));
 
 jest.mock('react-router-dom', () => ({
 	...jest.requireActual('react-router-dom'),
-	useParams: () => ({groupId: '23', id: 'acc-1'})
+	useParams: () => ({groupId: '23', id: 'acc-1'}),
 }));
 
 const mockedUseRequest = useRequest as jest.Mock;
@@ -33,37 +33,37 @@ const DEFAULT_STATUS = {
 			endDate: '2026-01-16T00:00:00.000Z',
 			id: 'als-aware',
 			stageType: LifecycleStages.AWARE,
-			startDate: '2026-01-04T00:00:00.000Z'
+			startDate: '2026-01-04T00:00:00.000Z',
 		},
 		{
 			displayOrder: 1,
 			id: 'als-engaged',
 			stageType: LifecycleStages.ENGAGED,
-			startDate: '2026-01-16T00:00:00.000Z'
+			startDate: '2026-01-16T00:00:00.000Z',
 		},
 		{
 			displayOrder: 2,
 			id: 'als-pipeline',
-			stageType: LifecycleStages.PIPELINE
+			stageType: LifecycleStages.PIPELINE,
 		},
 		{
 			displayOrder: 3,
 			id: 'als-onboarding',
-			stageType: LifecycleStages.ONBOARDING
+			stageType: LifecycleStages.ONBOARDING,
 		},
 		{
 			displayOrder: 4,
 			id: 'als-established',
-			stageType: LifecycleStages.ESTABLISHED
+			stageType: LifecycleStages.ESTABLISHED,
 		},
 		{
 			displayOrder: 5,
 			id: 'als-at-risk',
-			stageType: LifecycleStages.AT_RISK
-		}
+			stageType: LifecycleStages.AT_RISK,
+		},
 	],
 	id: 'al-1',
-	name: 'Default Lifecycle'
+	name: 'Default Lifecycle',
 };
 
 const useRequestImpl =
@@ -71,7 +71,7 @@ const useRequestImpl =
 		lifecyclesData,
 		lifecyclesLoading = false,
 		statusData,
-		statusLoading = false
+		statusLoading = false,
 	}: {
 		lifecyclesData?: Array<{accountId: string; id: string}>;
 		lifecyclesLoading?: boolean;
@@ -86,7 +86,7 @@ const useRequestImpl =
 jest.mock('@clayui/multi-step-nav', () => {
 	const MultiStepNav = ({
 		children,
-		className
+		className,
 	}: {
 		children: React.ReactNode;
 		className?: string;
@@ -95,7 +95,7 @@ jest.mock('@clayui/multi-step-nav', () => {
 	MultiStepNav.Item = ({
 		active,
 		children,
-		state
+		state,
 	}: {
 		active?: boolean;
 		children: React.ReactNode;
@@ -114,7 +114,7 @@ jest.mock('@clayui/multi-step-nav', () => {
 
 	MultiStepNav.Indicator = ({
 		label,
-		subTitle
+		subTitle,
 	}: {
 		label?: React.ReactText;
 		subTitle?: React.ReactText;
@@ -134,7 +134,7 @@ describe('LifecycleStatus', () => {
 		mockedUseRequest.mockImplementation(
 			useRequestImpl({
 				lifecyclesData: [{accountId: 'acc-1', id: 'al-1'}],
-				statusData: DEFAULT_STATUS
+				statusData: DEFAULT_STATUS,
 			})
 		);
 	});
@@ -272,18 +272,18 @@ describe('LifecycleStatus', () => {
 							{
 								displayOrder: 0,
 								id: 'als-aware',
-								stageType: LifecycleStages.AWARE
+								stageType: LifecycleStages.AWARE,
 							},
 							{
 								displayOrder: 1,
 								id: 'als-at-risk',
 								stageType: LifecycleStages.AT_RISK,
-								startDate: '2026-02-01T00:00:00.000Z'
-							}
+								startDate: '2026-02-01T00:00:00.000Z',
+							},
 						],
 						id: 'al-1',
-						name: 'Default Lifecycle'
-					}
+						name: 'Default Lifecycle',
+					},
 				})
 			);
 
@@ -308,12 +308,12 @@ describe('LifecycleStatus', () => {
 							{
 								displayOrder: 0,
 								id: 'als-aware',
-								stageType: LifecycleStages.AWARE
-							}
+								stageType: LifecycleStages.AWARE,
+							},
 						],
 						id: 'al-1',
-						name: 'Default Lifecycle'
-					}
+						name: 'Default Lifecycle',
+					},
 				})
 			);
 
@@ -337,38 +337,38 @@ describe('LifecycleStatus', () => {
 								endDate: '2026-03-01T00:00:00.000Z',
 								id: 'als-aware',
 								stageType: LifecycleStages.AWARE,
-								startDate: '2026-02-01T00:00:00.000Z'
+								startDate: '2026-02-01T00:00:00.000Z',
 							},
 							{
 								displayOrder: 1,
 								id: 'als-engaged',
 								stageType: LifecycleStages.ENGAGED,
-								startDate: '2026-03-01T00:00:00.000Z'
+								startDate: '2026-03-01T00:00:00.000Z',
 							},
 							{
 								displayOrder: 2,
 								id: 'als-pipeline',
-								stageType: LifecycleStages.PIPELINE
+								stageType: LifecycleStages.PIPELINE,
 							},
 							{
 								displayOrder: 3,
 								id: 'als-onboarding',
-								stageType: LifecycleStages.ONBOARDING
+								stageType: LifecycleStages.ONBOARDING,
 							},
 							{
 								displayOrder: 4,
 								id: 'als-established',
-								stageType: LifecycleStages.ESTABLISHED
+								stageType: LifecycleStages.ESTABLISHED,
 							},
 							{
 								displayOrder: 5,
 								id: 'als-at-risk',
-								stageType: LifecycleStages.AT_RISK
-							}
+								stageType: LifecycleStages.AT_RISK,
+							},
 						],
 						id: 'al-1',
-						name: 'Default Lifecycle'
-					}
+						name: 'Default Lifecycle',
+					},
 				})
 			);
 
@@ -414,8 +414,8 @@ describe('LifecycleStatus', () => {
 					statusData: {
 						accountLifecycleStageStatuses: [],
 						id: 'al-1',
-						name: 'Default Lifecycle'
-					}
+						name: 'Default Lifecycle',
+					},
 				})
 			);
 
@@ -447,7 +447,7 @@ describe('LifecycleStatus', () => {
 			mockedUseRequest.mockImplementation(
 				useRequestImpl({
 					lifecyclesData: [{accountId: 'acc-1', id: 'al-1'}],
-					statusLoading: true
+					statusLoading: true,
 				})
 			);
 
@@ -465,7 +465,7 @@ describe('LifecycleStatus', () => {
 			mockedUseRequest.mockImplementation(
 				useRequestImpl({
 					lifecyclesData: [],
-					statusLoading: true
+					statusLoading: true,
 				})
 			);
 

@@ -7,7 +7,7 @@ import {MockedProvider} from '@apollo/client/testing';
 import {
 	mockPreferenceReq,
 	mockSitesTopPagesReq,
-	mockTimeRangeReq
+	mockTimeRangeReq,
 } from 'test/graphql-data';
 import {Provider} from 'react-redux';
 import {RangeKeyTimeRanges} from 'shared/util/constants';
@@ -21,12 +21,12 @@ const MOCK_CONTEXT = {
 	router: {
 		params: {
 			channelId: '123',
-			groupId: '456'
+			groupId: '456',
 		},
 		query: {
-			rangeKey: RangeKeyTimeRanges.Last30Days
-		}
-	}
+			rangeKey: RangeKeyTimeRanges.Last30Days,
+		},
+	},
 };
 
 const DefaultComponent = () => (
@@ -38,15 +38,15 @@ const DefaultComponent = () => (
 					mocks={[
 						mockTimeRangeReq(),
 						mockPreferenceReq(),
-						mockSitesTopPagesReq()
+						mockSitesTopPagesReq(),
 					]}
 				>
 					<TopPagesCard
 						footer={{
 							href: 'link-to-the-next-page',
-							label: 'view pages'
+							label: 'view pages',
 						}}
-						label='card label'
+						label="card label"
 					/>
 				</MockedProvider>
 			</MemoryRouter>

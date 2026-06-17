@@ -33,7 +33,7 @@ const SearchableList: React.FC<ISearchableListProps> = ({
 	query,
 	showInfoCard,
 	showOptionsCondition = () => false,
-	uneditableIds
+	uneditableIds,
 }) => {
 	const filteredItems = items.filter(({displayName, name}) =>
 		(displayName || name)
@@ -47,7 +47,7 @@ const SearchableList: React.FC<ISearchableListProps> = ({
 	return (
 		<>
 			<ClayDropdown.Search
-				formProps={{onSubmit: e => e.preventDefault()}}
+				formProps={{onSubmit: (e) => e.preventDefault()}}
 				onChange={onQueryChange}
 				placeholder={Liferay.Language.get('search')}
 				value={query}
@@ -56,20 +56,20 @@ const SearchableList: React.FC<ISearchableListProps> = ({
 			{noResults && <NoResultsDisplay spacer />}
 
 			{!noResults && (
-				<ClayDropdown.ItemList className='base-dropdown-list'>
-					{filteredItems.map(item => {
+				<ClayDropdown.ItemList className="base-dropdown-list">
+					{filteredItems.map((item) => {
 						const active = activeId === item.id;
 
 						const disabled =
 							disabledIds &&
 							disabledIds.some(
-								id => id === item.id && id !== activeId
+								(id) => id === item.id && id !== activeId
 							);
 
 						const editable =
 							!(
 								uneditableIds &&
-								uneditableIds.some(id => id === item.id)
+								uneditableIds.some((id) => id === item.id)
 							) && !active;
 
 						return (

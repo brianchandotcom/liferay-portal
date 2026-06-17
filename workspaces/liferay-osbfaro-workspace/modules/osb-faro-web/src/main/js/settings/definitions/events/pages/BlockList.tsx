@@ -14,11 +14,11 @@ const BlockList: React.FC<IBlockListProps> = ({groupId, ...otherProps}) => (
 			getDefinitions({groupId}),
 			{
 				href: toRoute(Routes.SETTINGS_DEFINITIONS_EVENTS_CUSTOM, {
-					groupId
+					groupId,
 				}),
-				label: Liferay.Language.get('events')
+				label: Liferay.Language.get('events'),
 			},
-			{active: true, label: Liferay.Language.get('block-list')}
+			{active: true, label: Liferay.Language.get('block-list')},
 		]}
 		pageDescription={Liferay.Language.get(
 			'blocked-events-are-not-processed-by-analytics-cloud'

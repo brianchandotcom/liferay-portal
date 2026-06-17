@@ -28,26 +28,26 @@ const ProfileCardCDP: React.FC<IProfileCardCDP> = ({tabId, ...props}) => {
 		onQueryChange,
 		page,
 		query,
-		resetPage
+		resetPage,
 	} = useStatefulPagination(undefined, {
-		initialDelta: DEFAULT_SESSIONS_DELTA
+		initialDelta: DEFAULT_SESSIONS_DELTA,
 	});
 
 	return (
 		<>
 			<SectionHeader
-				icon='analytics'
+				icon="analytics"
 				title={Liferay.Language.get('interaction-history')}
 			/>
 
 			<BaseCard
-				className='individual-profile-card-root page-display'
+				className="individual-profile-card-root page-display"
 				description={Liferay.Language.get(
 					'displays-a-chronological-timeline-of-events-within-the-selected-timeframe-including-session-context'
 				)}
 				headerProps={{
 					showRangeKey: true,
-					tabId
+					tabId,
 				}}
 				label={Liferay.Language.get('individual-events')}
 				legacyDropdownRangeKey={false}
@@ -57,7 +57,7 @@ const ProfileCardCDP: React.FC<IProfileCardCDP> = ({tabId, ...props}) => {
 					interval,
 					onChangeInterval,
 					onRangeSelectorsChange,
-					rangeSelectors
+					rangeSelectors,
 				}) => (
 					<ProfileCardWithDataCDP
 						{...props}
@@ -66,7 +66,7 @@ const ProfileCardCDP: React.FC<IProfileCardCDP> = ({tabId, ...props}) => {
 						onChangeInterval={onChangeInterval}
 						onDeltaChange={onDeltaChange}
 						onPageChange={onPageChange}
-						onQueryChange={query => {
+						onQueryChange={(query) => {
 							history.push(
 								setUriQueryValues(
 									pickBy({query}),
@@ -79,7 +79,7 @@ const ProfileCardCDP: React.FC<IProfileCardCDP> = ({tabId, ...props}) => {
 
 							onQueryChange(query);
 						}}
-						onRangeSelectorsChange={rangeSelectors => {
+						onRangeSelectorsChange={(rangeSelectors) => {
 							history.push(
 								setUriQueryValues(
 									pickBy(rangeSelectors),

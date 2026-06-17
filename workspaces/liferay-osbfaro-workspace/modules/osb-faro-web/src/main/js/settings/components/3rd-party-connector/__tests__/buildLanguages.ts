@@ -10,7 +10,7 @@ describe('buildLanguages', () => {
 				'connectTitle',
 				'endpointHelper',
 				'endpointLabel',
-				'tokenLabel'
+				'tokenLabel',
 			].sort()
 		);
 	});
@@ -33,7 +33,7 @@ describe('buildLanguages', () => {
 	it('returns string values for every key', () => {
 		const languages = buildLanguages('Acme');
 
-		Object.values(languages).forEach(value => {
+		Object.values(languages).forEach((value) => {
 			expect(typeof value).toBe('string');
 		});
 	});

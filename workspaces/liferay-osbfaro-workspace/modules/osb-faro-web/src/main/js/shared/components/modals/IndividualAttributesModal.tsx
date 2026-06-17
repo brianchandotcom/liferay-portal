@@ -19,23 +19,23 @@ const IndividualAttributesModal: React.FC<
 		<Modal.Header onClose={onClose} title={fieldName} />
 
 		<Modal.Body>
-			<div className='h5'>{Liferay.Language.get('data-sources')}</div>
+			<div className="h5">{Liferay.Language.get('data-sources')}</div>
 
 			<Table
 				columns={[
 					{
 						accessor: 'dataSourceName',
 						label: Liferay.Language.get('source'),
-						sortable: false
+						sortable: false,
 					},
 					{
 						accessor: 'dataSourceFieldName',
 						label: Liferay.Language.get('attribute[noun]'),
-						sortable: false
-					}
+						sortable: false,
+					},
 				]}
 				items={dataSources}
-				rowIdentifier='dataSourceName'
+				rowIdentifier="dataSourceName"
 			/>
 		</Modal.Body>
 	</Modal>

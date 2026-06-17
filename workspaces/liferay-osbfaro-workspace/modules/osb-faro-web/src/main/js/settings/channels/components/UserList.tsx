@@ -44,15 +44,15 @@ const UserListNav: React.FC<{
 		<Nav.Item>
 			{selectedItems.size ? (
 				<ClayButton
-					className='button-root nav-btn'
-					displayType='secondary'
+					className="button-root nav-btn"
+					displayType="secondary"
 					onClick={() => onRemoveUser(selectedItems)}
 				>
 					{
 						<>
 							<ClayIcon
-								className='icon-root mr-2 remove-users'
-								symbol='times'
+								className="icon-root mr-2 remove-users"
+								symbol="times"
 							/>
 							{Liferay.Language.get('remove')}
 						</>
@@ -60,8 +60,8 @@ const UserListNav: React.FC<{
 				</ClayButton>
 			) : (
 				<ClayButton
-					className='button-root nav-btn px-3'
-					displayType='primary'
+					className="button-root nav-btn px-3"
+					displayType="primary"
 					onClick={onAddUser}
 				>
 					{Liferay.Language.get('add-user')}
@@ -77,8 +77,8 @@ const connector = connect(
 			groupId,
 			'data',
 			'timeZone',
-			'timeZoneId'
-		])
+			'timeZoneId',
+		]),
 	}),
 	{addAlert, close, open}
 );
@@ -104,7 +104,7 @@ const UserList: React.FC<IUserListProps> = ({
 	...otherProps
 }) => {
 	const {delta, orderIOMap, page, query} = useQueryPagination({
-		initialOrderIOMap: createOrderIOMap(NAME)
+		initialOrderIOMap: createOrderIOMap(NAME),
 	});
 
 	const {data, error, loading, refetch} = useRequest({
@@ -115,8 +115,8 @@ const UserList: React.FC<IUserListProps> = ({
 			groupId,
 			orderIOMap,
 			page,
-			query
-		}
+			query,
+		},
 	});
 
 	const getEmailOrCount = (users: User[]): number => {
@@ -135,7 +135,7 @@ const UserList: React.FC<IUserListProps> = ({
 			open(modalTypes.CONFIRMATION_MODAL, {
 				closeAfterSubmit: false,
 				message: (
-					<div className='text-secondary'>
+					<div className="text-secondary">
 						{
 							getPluralMessage(
 								Liferay.Language.get(
@@ -158,7 +158,7 @@ const UserList: React.FC<IUserListProps> = ({
 						.deleteUsers({
 							channelId: id,
 							groupId,
-							userIds
+							userIds,
 						})
 						.then(() => {
 							if (clearAll) {
@@ -179,7 +179,7 @@ const UserList: React.FC<IUserListProps> = ({
 									userIds.length,
 									true,
 									[getEmailOrCount(users), propertyName]
-								) as string
+								) as string,
 							});
 
 							close();
@@ -198,7 +198,7 @@ const UserList: React.FC<IUserListProps> = ({
 									true,
 									[getEmailOrCount(users), propertyName]
 								) as string,
-								timeout: false
+								timeout: false,
 							});
 						});
 				},
@@ -206,7 +206,7 @@ const UserList: React.FC<IUserListProps> = ({
 				submitButtonDisplay: 'warning',
 				submitMessage: Liferay.Language.get('remove'),
 				title: Liferay.Language.get('remove-user'),
-				titleIcon: 'warning-full'
+				titleIcon: 'warning-full',
 			});
 		};
 
@@ -214,13 +214,13 @@ const UserList: React.FC<IUserListProps> = ({
 		open(modalTypes.SEARCHABLE_TABLE_MODAL, {
 			columns: [
 				usersListColumns.nameEmailAddress,
-				usersListColumns.getLastLoginDate(timeZoneId)
+				usersListColumns.getLastLoginDate(timeZoneId),
 			],
 			dataSourceFn: ({
 				delta,
 				orderIOMap,
 				page,
-				query
+				query,
 			}: {
 				[key: string]: any;
 			}) =>
@@ -231,7 +231,7 @@ const UserList: React.FC<IUserListProps> = ({
 					groupId,
 					orderIOMap,
 					page,
-					query
+					query,
 				}),
 			entityLabel: Liferay.Language.get('users'),
 			initialOrderIOMap: createOrderIOMap(NAME),
@@ -261,7 +261,7 @@ const UserList: React.FC<IUserListProps> = ({
 					.addUsers({
 						channelId: id,
 						groupId,
-						userIds
+						userIds,
 					})
 					.then(() => {
 						refetch();
@@ -278,7 +278,7 @@ const UserList: React.FC<IUserListProps> = ({
 								userIds.length,
 								true,
 								[getEmailOrCount(users), propertyName]
-							) as string
+							) as string,
 						});
 
 						close();
@@ -297,12 +297,12 @@ const UserList: React.FC<IUserListProps> = ({
 								true,
 								[getEmailOrCount(users), propertyName]
 							) as string,
-							timeout: false
+							timeout: false,
 						});
 					});
 			},
 			requireSelection: true,
-			title: propertyName
+			title: propertyName,
 		});
 	};
 
@@ -310,7 +310,7 @@ const UserList: React.FC<IUserListProps> = ({
 		open(modalTypes.CONFIRMATION_MODAL, {
 			closeAfterSubmit: false,
 			message: (
-				<div className='text-secondary'>
+				<div className="text-secondary">
 					{Liferay.Language.get(
 						'property-permissions-have-changed-without-any-users-selected.-do-you-want-to-close-the-modal-without-adding-users'
 					)}
@@ -326,7 +326,7 @@ const UserList: React.FC<IUserListProps> = ({
 			submitButtonDisplay: 'warning',
 			submitMessage: Liferay.Language.get('close'),
 			title: Liferay.Language.get('no-users-in-property'),
-			titleIcon: 'warning-full'
+			titleIcon: 'warning-full',
 		});
 	};
 
@@ -341,7 +341,7 @@ const UserList: React.FC<IUserListProps> = ({
 			noResultsRenderer: (
 				<NoResultsDisplay
 					description={
-						<span className='text-secondary'>
+						<span className="text-secondary">
 							{Liferay.Language.get(
 								'add-users-to-give-them-access-to-this-property'
 							)}
@@ -350,7 +350,7 @@ const UserList: React.FC<IUserListProps> = ({
 					icon={{
 						border: false,
 						size: Sizes.XXXLarge,
-						symbol: 'ac_satellite'
+						symbol: 'ac_satellite',
 					}}
 					primary
 					spacer
@@ -360,14 +360,16 @@ const UserList: React.FC<IUserListProps> = ({
 			orderIOMap,
 			pageDisplay: true,
 			rowIdentifier: 'id',
-			total: get(data, 'total')
+			total: get(data, 'total'),
 		};
 
 		if (loading) {
 			return <Loading />;
-		} else if (error) {
+		}
+		else if (error) {
 			return <ErrorDisplay onReload={refetch} spacer />;
-		} else if (authorized) {
+		}
+		else if (authorized) {
 			return (
 				<SelectionProvider>
 					<CrossPageSelect
@@ -379,7 +381,7 @@ const UserList: React.FC<IUserListProps> = ({
 								onClick: () =>
 									getRemoveUserModalFn()(
 										OrderedMap({[data.userId]: data})
-									)
+									),
 							};
 
 							return authorized ? (
@@ -388,8 +390,8 @@ const UserList: React.FC<IUserListProps> = ({
 									quickActions={[
 										{
 											iconSymbol: 'times',
-											...rowAction
-										}
+											...rowAction,
+										},
 									]}
 								/>
 							) : null;
@@ -421,8 +423,11 @@ const UserList: React.FC<IUserListProps> = ({
 					</CrossPageSelect>
 				</SelectionProvider>
 			);
-		} else {
+		}
+		else {
+
 			// TODO: Can we just use shoCheckbox isntead of this?
+
 			return <ListComponent {...sharedProps} />;
 		}
 	};

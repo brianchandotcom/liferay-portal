@@ -9,7 +9,7 @@ import {Attributes, Breakdowns, Filters} from 'event-analysis/utils/types';
 import {
 	DeleteFilter,
 	MoveFilter,
-	withAttributesConsumer
+	withAttributesConsumer,
 } from '../context/attributes';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 
@@ -30,20 +30,20 @@ export const AttributeFilterSection: React.FC<IAttributeFilterSectionProps> = ({
 	eventId,
 	filterOrder,
 	filters,
-	moveFilter
+	moveFilter,
 }) => {
 	const uneditableIds = Object.keys(attributes);
 
 	return (
-		<div className='attribute-filter-section-root d-flex align-items-center'>
-			<div className='section-header'>
+		<div className="attribute-filter-section-root d-flex align-items-center">
+			<div className="section-header">
 				{Liferay.Language.get('filter')}
 			</div>
 
 			{!!eventId && (
-				<div className='attribute-container d-flex align-items-center justify-content-between'>
+				<div className="attribute-container d-flex align-items-center justify-content-between">
 					<DndProvider backend={HTML5Backend}>
-						<div className='attribute-list d-flex align-items-center'>
+						<div className="attribute-list d-flex align-items-center">
 							{filterOrder.map((id, i) => (
 								<AttributeFilterChip
 									attribute={
@@ -68,11 +68,11 @@ export const AttributeFilterSection: React.FC<IAttributeFilterSectionProps> = ({
 							<ClayButton
 								aria-label={Liferay.Language.get('add')}
 								borderless
-								className='button-root add-attribute'
-								displayType='secondary'
-								size='sm'
+								className="button-root add-attribute"
+								displayType="secondary"
+								size="sm"
 							>
-								<ClayIcon className='icon-root' symbol='plus' />
+								<ClayIcon className="icon-root" symbol="plus" />
 							</ClayButton>
 						}
 						uneditableIds={uneditableIds}

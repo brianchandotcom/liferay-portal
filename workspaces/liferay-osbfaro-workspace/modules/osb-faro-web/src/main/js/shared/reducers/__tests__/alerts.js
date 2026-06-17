@@ -16,9 +16,9 @@ describe('Alerts Reducer', () => {
 			payload: {
 				alertType: 'error',
 				id,
-				message
+				message,
 			},
-			type: actionTypes.ADD_ALERT
+			type: actionTypes.ADD_ALERT,
 		};
 
 		const state = reducer(new OrderedMap(), action);
@@ -36,17 +36,17 @@ describe('Alerts Reducer', () => {
 		const action = {
 			payload: {
 				alertType: 'confirmation',
-				id
+				id,
 			},
-			type: actionTypes.UPDATE_ALERT
+			type: actionTypes.UPDATE_ALERT,
 		};
 
 		const prevState = new OrderedMap({
 			[id]: new Map({
 				alertType: 'pending',
 				id,
-				message
-			})
+				message,
+			}),
 		});
 
 		const newState = reducer(prevState, action);
@@ -60,15 +60,15 @@ describe('Alerts Reducer', () => {
 
 		const action = {
 			payload: {id},
-			type: actionTypes.REMOVE_ALERT
+			type: actionTypes.REMOVE_ALERT,
 		};
 
 		const prevState = new OrderedMap({
 			[id]: new Map({
 				alertType: 'error',
 				id,
-				message
-			})
+				message,
+			}),
 		});
 
 		const newState = reducer(prevState, action);

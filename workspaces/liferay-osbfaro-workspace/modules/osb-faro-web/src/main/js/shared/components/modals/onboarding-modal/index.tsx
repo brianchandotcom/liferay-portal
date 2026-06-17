@@ -11,7 +11,7 @@ const MODAL_SCREENS = [
 	ConfigureWorkspace,
 	ConnectDXP,
 	InvitePeople,
-	ReadyToGo
+	ReadyToGo,
 ];
 
 interface IOnboardingModalProps {
@@ -21,7 +21,7 @@ interface IOnboardingModalProps {
 
 const OnboardingModal: React.FC<IOnboardingModalProps> = ({
 	groupId,
-	onClose
+	onClose,
 }) => {
 	const [dxpConnected, setDxpConnected] = useState(false);
 	const [step, setStep] = useState(0);
@@ -29,7 +29,7 @@ const OnboardingModal: React.FC<IOnboardingModalProps> = ({
 	const ScreenComponent = MODAL_SCREENS[step];
 
 	return (
-		<Modal className='onboarding-modal-root'>
+		<Modal className="onboarding-modal-root">
 			<ScreenComponent
 				dxpConnected={dxpConnected}
 				groupId={groupId}

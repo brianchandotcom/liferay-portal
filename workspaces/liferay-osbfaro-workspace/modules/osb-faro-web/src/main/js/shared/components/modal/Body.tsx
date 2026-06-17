@@ -8,11 +8,11 @@ interface IBodyProps extends React.HTMLAttributes<HTMLDivElement> {
 const Body: React.FC<IBodyProps> = ({
 	children,
 	className,
-	inlineScroller = false
+	inlineScroller = false,
 }) => (
 	<div
 		className={getCN('modal-body', className, {
-			'inline-scroller': inlineScroller
+			'inline-scroller': inlineScroller,
 		})}
 	>
 		{children}

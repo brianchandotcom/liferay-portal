@@ -7,7 +7,7 @@ import {
 	mockAssetMetricReq,
 	mockAssetTabsReq,
 	mockPreferenceReq,
-	mockTimeRangeReq
+	mockTimeRangeReq,
 } from 'test/graphql-data';
 import {MockedProvider} from '@apollo/client/testing';
 import {RangeKeyTimeRanges, THIRTEEN_MONTHS} from 'shared/util/constants';
@@ -24,11 +24,11 @@ jest.mock('react-router-dom', () => ({
 		channelId: '456',
 		groupId: '2000',
 		query: {
-			rangeKey: RangeKeyTimeRanges.Last30Days
+			rangeKey: RangeKeyTimeRanges.Last30Days,
 		},
 		title: 'My awesome asset',
-		touchpoint: 'https://liferay.com'
-	})
+		touchpoint: 'https://liferay.com',
+	}),
 }));
 
 /**
@@ -50,7 +50,7 @@ jest.mock('recharts', () => {
 			<OriginalModule.Tooltip {...props} active>
 				{children}
 			</OriginalModule.Tooltip>
-		)
+		),
 	};
 });
 
@@ -66,14 +66,14 @@ const WrappedComponent = ({empty = false}) => (
 					mockAssetTabsReq({
 						metrics: [ViewsMetric],
 						name: NAME,
-						rangeKey: Number(RangeKeyTimeRanges.Last30Days)
+						rangeKey: Number(RangeKeyTimeRanges.Last30Days),
 					}),
 					mockAssetMetricReq({
 						empty,
 						metricName: ViewsMetric.name,
 						queryName: NAME,
-						rangeKey: Number(RangeKeyTimeRanges.Last30Days)
-					})
+						rangeKey: Number(RangeKeyTimeRanges.Last30Days),
+					}),
 				]}
 			>
 				<WebContentMetricCard

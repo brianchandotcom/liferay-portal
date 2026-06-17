@@ -13,11 +13,11 @@ export default function debounceDecorate(...args) {
 				Object.defineProperty(this, key, {
 					get() {
 						return debounceFn;
-					}
+					},
 				});
 
 				return debounceFn;
-			}
+			},
 		};
 	};
 }

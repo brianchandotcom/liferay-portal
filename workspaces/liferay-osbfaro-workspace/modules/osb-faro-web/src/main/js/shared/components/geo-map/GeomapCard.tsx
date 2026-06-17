@@ -65,7 +65,7 @@ const List = ({countries, features, onSelectCountry}: IListProps) => {
 	};
 
 	return (
-		<table className='analytics-geomap-table'>
+		<table className="analytics-geomap-table">
 			<tbody>
 				{countries
 					.filter(
@@ -77,7 +77,7 @@ const List = ({countries, features, onSelectCountry}: IListProps) => {
 							getCN(classes, {
 								['lighten-item']:
 									hoverList !== null && hoverList !== index,
-								['text-l-secondary']: value.id === OTHERS
+								['text-l-secondary']: value.id === OTHERS,
 							});
 
 						return (
@@ -106,7 +106,7 @@ const List = ({countries, features, onSelectCountry}: IListProps) => {
 								<td className={classNames('text-right')}>
 									{toThousands(value.total)}
 
-									<span className='percentage font-weight-semibold'>{`${value.value}%`}</span>
+									<span className="percentage font-weight-semibold">{`${value.value}%`}</span>
 								</td>
 							</tr>
 						);
@@ -132,10 +132,10 @@ const mergeData = (countries: ICountry[]) => {
 				properties: {
 					...feature.properties,
 					total: country?.total ?? 0,
-					value: country?.value ?? 0
-				}
+					value: country?.value ?? 0,
+				},
 			};
-		})
+		}),
 	};
 };
 
@@ -146,14 +146,14 @@ interface ITooltipProps {
 
 const Tooltip = ({metricLabel, payload}: ITooltipProps) => (
 	<>
-		<div className='arrow' />
+		<div className="arrow" />
 
-		<div className='popover-header'>
+		<div className="popover-header">
 			{geoMapLangKey[payload.properties.name]}
 		</div>
 
-		<div className='d-flex justify-content-between popover-body'>
-			<div className='mr-4'>
+		<div className="d-flex justify-content-between popover-body">
+			<div className="mr-4">
 				{payload.properties.total} <span>{metricLabel}</span>
 			</div>
 
@@ -253,10 +253,12 @@ export const GeomapCard = ({data, metricLabel}: IGeomapCardProps) => {
 			const {height, width} = tooltipNode.getBoundingClientRect();
 
 			const tooltipProps = {
+
 				// @ts-ignore
 				left: d3.event.layerX - (width / 2 + 5),
+
 				// @ts-ignore
-				top: d3.event.layerY - (height + 20)
+				top: d3.event.layerY - (height + 20),
 			};
 
 			tooltip
@@ -295,17 +297,17 @@ export const GeomapCard = ({data, metricLabel}: IGeomapCardProps) => {
 	}, [selectedCountry]);
 
 	return (
-		<div className='analytics-geomap'>
+		<div className="analytics-geomap">
 			<div style={{height: 232, width: 350}}>
 				<GeomapChart
 					color={{
 						empty: Colors.mapEmpty,
 						range: {
 							max: Colors.mapMax,
-							min: Colors.mapMin
+							min: Colors.mapMin,
 						},
 						selected: Colors.mapSelected,
-						value: 'total'
+						value: 'total',
 					}}
 					data={{...mergedData, type: 'geo-map'}}
 					ref={chartRef}

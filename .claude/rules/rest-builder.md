@@ -17,7 +17,7 @@ Every generated Java file is tagged `@Generated("")` — do not hand-edit anythi
 
 ## Editing REST Builder Itself
 
-The generator's own source lives under `modules/util/portal-tools-rest-builder`. This covers the FreeMarker templates in `src/main/resources/com/liferay/portal/tools/rest/builder/dependencies` (such as `dto.ftl`) and the Java that drives them — the shared files that produce every generated module rather than the artifacts of any single bundle.
+The generator's own source lives under `modules/util/portal-tools-rest-builder`. This covers the FreeMarker templates in `src/main/resources/com/liferay/portal/tools/rest/builder/dependencies` and the Java that drives them — the shared files that produce every generated module rather than the artifacts of any single bundle.
 
 `buildREST` reads these files from the local repository, not from the REST Builder artifact published to Maven. A change to a shared template or generator class therefore takes effect on the next `buildREST` run, with no need to rebuild or republish the tool.
 

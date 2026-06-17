@@ -248,6 +248,50 @@ public class CounterDataCleanupPreupgradeProcessTest
 	}
 
 	@Test
+	public void testUpgradeDLFileEntrySpecificCounterFilters()
+		throws Exception {
+
+		long fileEntryId1 = CounterLocalServiceUtil.increment();
+		long fileEntryId2 = CounterLocalServiceUtil.increment();
+		long fileEntryId3 = CounterLocalServiceUtil.increment();
+		long name =
+			CounterLocalServiceUtil.getCurrentId(DLFileEntry.class.getName()) +
+				100;
+
+		_test(
+			(UnsafeRunnable<Exception>)() -> runSQL(
+				StringBundler.concat(
+					"delete from DLFileEntry where fileEntryId in (",
+					fileEntryId1, ", ", fileEntryId2, ", ", fileEntryId3, ")")),
+			(UnsafeRunnable<Exception>)() -> {
+				runSQL(
+					StringBundler.concat(
+						"insert into DLFileEntry (mvccVersion, ",
+						"ctCollectionId, fileEntryId, name) values (0, 0,",
+						fileEntryId1, ", '", name, "')"));
+				runSQL(
+					StringBundler.concat(
+						"insert into DLFileEntry (mvccVersion, ",
+						"ctCollectionId, fileEntryId, name) values (0, 0,",
+						fileEntryId2, ", 'non-numeric')"));
+				runSQL(
+					StringBundler.concat(
+						"insert into DLFileEntry (mvccVersion, ",
+						"ctCollectionId, fileEntryId, name) values (0, 0,",
+						fileEntryId3, ", '99999999999999999999')"));
+			},
+			(UnsafeConsumer<List<String>, Exception>)messages -> {
+				Assert.assertEquals(messages.toString(), 1, messages.size());
+				Assert.assertTrue(
+					messages.toString(),
+					messages.contains(
+						StringBundler.concat(
+							"Counter ", DLFileEntry.class.getName(),
+							" has been reset to value ", name)));
+			});
+	}
+
+	@Test
 	public void testUpgradeKernelCounter() throws Exception {
 		long roleId =
 			CounterLocalServiceUtil.getCurrentId(Counter.class.getName()) +

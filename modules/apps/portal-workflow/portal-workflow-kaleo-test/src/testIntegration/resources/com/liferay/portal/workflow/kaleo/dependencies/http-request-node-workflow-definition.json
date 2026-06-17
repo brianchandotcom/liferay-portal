@@ -141,7 +141,7 @@
 						"[",
 						"    {",
 						"        \"name\": \"siteRequestBody\",",
-						"        \"type\": \"string\"",
+						"        \"type\": \"json\"",
 						"    }",
 						"]"
 					],
@@ -152,7 +152,7 @@
 						"[",
 						"    {",
 						"        \"name\": \"siteResponseBody\",",
-						"        \"type\": \"string\"",
+						"        \"type\": \"json\"",
 						"    }",
 						"]"
 					],

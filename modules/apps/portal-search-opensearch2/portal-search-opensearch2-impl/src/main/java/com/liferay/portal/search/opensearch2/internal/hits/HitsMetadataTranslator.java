@@ -126,14 +126,14 @@ public class HitsMetadataTranslator {
 			}
 		}
 
-		Map<String, InnerHitsResult> innerHits = hit.innerHits();
+		Map<String, InnerHitsResult> innerHitsResults = hit.innerHits();
 
-		if (MapUtil.isEmpty(innerHits)) {
+		if (MapUtil.isEmpty(innerHitsResults)) {
 			return;
 		}
 
-		for (InnerHitsResult innerHitsResult : innerHits.values()) {
-			HitsMetadata<JsonData> hitsMetadata = innerHitsResult.hits();
+		for (InnerHitsResult innerHitsResult : innerHitsResults.values()) {
+			HitsMetadata<JsonData> hitsMetadata = innerHitsResults.hits();
 
 			if ((hitsMetadata == null) ||
 				ListUtil.isEmpty(hitsMetadata.hits())) {

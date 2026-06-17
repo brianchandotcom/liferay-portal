@@ -1,4 +1,4 @@
-suite: horizontal pod autoscaler
+suite: HorizontalPodAutoscaler
 templates:
     -   templates/horizontalpodautoscaler.yaml
 tests:
@@ -41,16 +41,16 @@ tests:
             autoscaling.hpa.minReplicas: 3
             autoscaling.type: hpa
     -   asserts:
-            -   hasDocuments:
-                    count: 1
-            -   isKind:
-                    of: HorizontalPodAutoscaler
             -   equal:
                     path: spec.scaleTargetRef.kind
                     value: StatefulSet
             -   equal:
                     path: spec.scaleTargetRef.name
                     value: liferay-default
+            -   hasDocuments:
+                    count: 1
+            -   isKind:
+                    of: HorizontalPodAutoscaler
         it: should render the HorizontalPodAutoscaler when autoscaling is enabled with type hpa
         set:
             autoscaling.enabled: true

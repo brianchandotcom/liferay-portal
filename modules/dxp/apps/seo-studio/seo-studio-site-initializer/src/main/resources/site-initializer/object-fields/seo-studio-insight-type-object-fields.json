@@ -18,6 +18,18 @@
 				{
 					"name": "function",
 					"value": "COUNT"
+				},
+				{
+					"name": "filters",
+					"value": [
+						{
+							"filterBy": "state",
+							"filterType": "eq",
+							"json": {
+								"eq": 1
+							}
+						}
+					]
 				}
 			],
 			"readOnly": "true",

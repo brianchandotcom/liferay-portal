@@ -246,7 +246,7 @@ After `ExitPlanMode` returns the user's approval, execute the plan in this order
 
 1. **Drop cleanup commits** first. For every test classified as **Drop** in earlier phases, remove the `test` block from the source `.testcase` file (delete the file when it ends up empty), and commit. The commit message must name the spec that already covers the test or the contract change that retired it. One commit per drop, or per group of drops sharing a single cause.
 
-1. **New helper, util, or fixture commits**, one per artifact. Verify the artifact does not already exist by scanning `<playwrightTestsRoot>/../{helpers,fixtures,utils}` before creating it.
+1. **New helper, util, or fixture commits**, one per artifact, following the New Helpers, Utils, Fixtures rules below.
 
 1. **Migration commits**, one per row in the routing table or per consolidation group. Each commit:
 

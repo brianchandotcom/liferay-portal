@@ -1,7 +1,10 @@
 mock_provider "aws" {
 	mock_data "aws_iam_policy_document" {
 		defaults={
-			json="{\"Version\":\"2012-10-17\",\"Statement\":[]}"
+			json=jsonencode({
+				Statement=[]
+				Version="2012-10-17"
+			})
 		}
 	}
 	mock_resource "aws_iam_policy" {
@@ -15,13 +18,19 @@ mock_provider "kubernetes" {}
 
 override_data {
 	target=data.aws_caller_identity.current
-	values={ account_id="123456789012" }
+	values={
+		account_id="123456789012"
+	}
 }
 
 override_data {
 	target=data.aws_eks_cluster.cluster
 	values={
-		identity=[{ oidc=[{ issuer="https://oidc.eks.us-east-1.amazonaws.com/id/EXAMPLE" }] }]
+		identity=[{
+			oidc=[{
+				issuer="https://oidc.eks.us-east-1.amazonaws.com/id/EXAMPLE"
+			}]
+		}]
 		vpc_config=[{
 			cluster_security_group_id="sg-0123456789abcdef0"
 			endpoint_private_access=true
@@ -35,23 +44,141 @@ override_data {
 }
 
 override_data {
-	target=data.aws_vpc.current
-	values={ cidr_block="10.0.0.0/16" }
-}
-
-override_data {
-	target=data.aws_subnets.private
-	values={ ids=["subnet-aaa", "subnet-bbb"] }
-}
-
-override_data {
 	target=data.aws_iam_role.envoy_proxy_role
-	values={ arn="arn:aws:iam::123456789012:role/liferay-test-envoy-proxy" }
+	values={
+		arn="arn:aws:iam::123456789012:role/liferay-test-envoy-proxy"
+	}
 }
 
 override_data {
 	target=data.aws_iam_role.liferay_irsa
-	values={ arn="arn:aws:iam::123456789012:role/liferay-test-irsa", id="liferay-test-irsa" }
+	values={
+		arn="arn:aws:iam::123456789012:role/liferay-test-irsa"
+		id="liferay-test-irsa"
+	}
+}
+
+override_data {
+	target=data.aws_subnets.private
+	values={
+		ids=["subnet-aaa", "subnet-bbb"]
+	}
+}
+
+override_data {
+	target=data.aws_vpc.current
+	values={
+		cidr_block="10.0.0.0/16"
+	}
+}
+
+run "should_create_an_http_gateway_for_a_hostname_only" {
+	assert {
+		condition=kubernetes_manifest.argocd_httproute[0].manifest.spec.parentRefs[0].sectionName == "http"
+		error_message="Without TLS the HTTPRoute must attach to the http listener"
+	}
+
+	assert {
+		condition=length(kubernetes_manifest.argocd_gateway) == 1
+		error_message="A hostname must create the ArgoCD Gateway"
+	}
+
+	assert {
+		condition=length(kubernetes_manifest.argocd_gateway[0].manifest.spec.listeners) == 1
+		error_message="Without TLS the Gateway must expose only the HTTP listener"
+	}
+
+	assert {
+		condition=length(kubernetes_manifest.argocd_https_redirect) == 0 && length(kubernetes_manifest.argocd_server_tls_external_secret) == 0
+		error_message="Without a TLS secret there must be no HTTPS redirect or TLS ExternalSecret"
+	}
+
+	command=plan
+
+	variables {
+		argocd_domain_config={
+			hostname="argocd.example.com"
+		}
+	}
+}
+
+run "should_enable_https_and_prefix_the_tls_secret_name" {
+	assert {
+		condition=kubernetes_manifest.argocd_server_tls_external_secret[0].manifest.spec.dataFrom[0].extract.key == "liferay/certificates/argocd-cert"
+		error_message="A bare TLS secret name must be prefixed with liferay/certificates/"
+	}
+
+	assert {
+		condition=length(kubernetes_manifest.argocd_gateway[0].manifest.spec.listeners) == 2
+		error_message="A TLS secret must add the HTTPS listener to the Gateway"
+	}
+
+	assert {
+		condition=length(kubernetes_manifest.argocd_https_redirect) == 1
+		error_message="Enabling TLS must create the HTTP to HTTPS redirect route"
+	}
+
+	command=plan
+
+	variables {
+		argocd_domain_config={
+			hostname="argocd.example.com"
+			tls_external_secret_name="argocd-cert"
+		}
+	}
+}
+
+run "should_extend_source_ranges_with_additional_cidrs" {
+	assert {
+		condition=kubernetes_manifest.argocd_gateway_proxy_config.manifest.spec.provider.kubernetes.envoyService.annotations["service.beta.kubernetes.io/load-balancer-source-ranges"] == "10.0.0.0/16,192.168.0.0/24"
+		error_message="The argocd_source_ranges local must append additional allowed CIDR blocks to the VPC CIDR"
+	}
+
+	command=plan
+
+	variables {
+		argocd_additional_allowed_cidr_blocks=["192.168.0.0/24"]
+	}
+}
+
+run "should_not_accept_an_invalid_argocd_cidr" {
+	command=plan
+
+	expect_failures=[var.argocd_additional_allowed_cidr_blocks]
+
+	variables {
+		argocd_additional_allowed_cidr_blocks=["not-a-cidr"]
+	}
+}
+
+run "should_not_create_a_gateway_without_a_hostname" {
+	assert {
+		condition=kubernetes_manifest.argocd_gateway_proxy_config.manifest.spec.provider.kubernetes.envoyService.annotations["service.beta.kubernetes.io/load-balancer-source-ranges"] == "10.0.0.0/16"
+		error_message="Default load balancer source ranges must be the VPC CIDR only"
+	}
+
+	assert {
+		condition=length(kubernetes_manifest.argocd_gateway) == 0 && length(kubernetes_manifest.argocd_httproute) == 0
+		error_message="No Gateway or HTTPRoute should be created when no hostname is configured"
+	}
+
+	command=plan
+}
+
+run "should_not_double_prefix_an_already_prefixed_tls_secret" {
+	assert {
+		condition=kubernetes_manifest.argocd_server_tls_external_secret[0].manifest.spec.dataFrom[0].extract.key == "liferay/certificates/argocd-cert"
+		error_message="An already prefixed TLS secret name must not be prefixed again"
+	}
+
+	command=plan
+
+	variables {
+		argocd_domain_config={
+			hostname="argocd.example.com"
+			tls_external_secret_name="liferay/certificates/argocd-cert"
+		}
+	}
 }
 
 variables {
@@ -61,113 +188,4 @@ variables {
 	liferay_git_repo_url="https://github.com/example/liferay-gitops.git"
 	liferay_helm_chart_version="0.4.20"
 	region="us-east-1"
-}
-
-run "should_create_an_http_gateway_for_a_hostname_only" {
-	command=plan
-
-	variables {
-		argocd_domain_config={
-			hostname="argocd.example.com"
-		}
-	}
-
-	assert {
-		condition=length(kubernetes_manifest.argocd_gateway) == 1
-		error_message="A hostname must create the ArgoCD Gateway."
-	}
-
-	assert {
-		condition=length(kubernetes_manifest.argocd_gateway[0].manifest.spec.listeners) == 1
-		error_message="Without TLS the Gateway must expose only the HTTP listener."
-	}
-
-	assert {
-		condition=length(kubernetes_manifest.argocd_https_redirect) == 0 && length(kubernetes_manifest.argocd_server_tls_external_secret) == 0
-		error_message="Without a TLS secret there must be no HTTPS redirect or TLS ExternalSecret."
-	}
-
-	assert {
-		condition=kubernetes_manifest.argocd_httproute[0].manifest.spec.parentRefs[0].sectionName == "http"
-		error_message="Without TLS the HTTPRoute must attach to the http listener."
-	}
-}
-
-run "should_enable_https_and_prefix_the_tls_secret_name" {
-	command=plan
-
-	variables {
-		argocd_domain_config={
-			hostname="argocd.example.com"
-			tls_external_secret_name="argocd-cert"
-		}
-	}
-
-	assert {
-		condition=length(kubernetes_manifest.argocd_gateway[0].manifest.spec.listeners) == 2
-		error_message="A TLS secret must add the HTTPS listener to the Gateway."
-	}
-
-	assert {
-		condition=length(kubernetes_manifest.argocd_https_redirect) == 1
-		error_message="Enabling TLS must create the HTTP-to-HTTPS redirect route."
-	}
-
-	assert {
-		condition=kubernetes_manifest.argocd_server_tls_external_secret[0].manifest.spec.dataFrom[0].extract.key == "liferay/certificates/argocd-cert"
-		error_message="A bare TLS secret name must be prefixed with liferay/certificates/."
-	}
-}
-
-run "should_extend_source_ranges_with_additional_cidrs" {
-	command=plan
-
-	variables {
-		argocd_additional_allowed_cidr_blocks=["192.168.0.0/24"]
-	}
-
-	assert {
-		condition=kubernetes_manifest.argocd_gateway_proxy_config.manifest.spec.provider.kubernetes.envoyService.annotations["service.beta.kubernetes.io/load-balancer-source-ranges"] == "10.0.0.0/16,192.168.0.0/24"
-		error_message="argocd_source_ranges must append additional allowed CIDR blocks to the VPC CIDR."
-	}
-}
-
-run "should_not_accept_an_invalid_argocd_cidr" {
-	command=plan
-
-	variables {
-		argocd_additional_allowed_cidr_blocks=["not-a-cidr"]
-	}
-
-	expect_failures=[var.argocd_additional_allowed_cidr_blocks]
-}
-
-run "should_not_create_a_gateway_without_a_hostname" {
-	command=plan
-
-	assert {
-		condition=length(kubernetes_manifest.argocd_gateway) == 0 && length(kubernetes_manifest.argocd_httproute) == 0
-		error_message="No Gateway or HTTPRoute should be created when no hostname is configured."
-	}
-
-	assert {
-		condition=kubernetes_manifest.argocd_gateway_proxy_config.manifest.spec.provider.kubernetes.envoyService.annotations["service.beta.kubernetes.io/load-balancer-source-ranges"] == "10.0.0.0/16"
-		error_message="Default load balancer source ranges must be the VPC CIDR only."
-	}
-}
-
-run "should_not_double_prefix_an_already_prefixed_tls_secret" {
-	command=plan
-
-	variables {
-		argocd_domain_config={
-			hostname="argocd.example.com"
-			tls_external_secret_name="liferay/certificates/argocd-cert"
-		}
-	}
-
-	assert {
-		condition=kubernetes_manifest.argocd_server_tls_external_secret[0].manifest.spec.dataFrom[0].extract.key == "liferay/certificates/argocd-cert"
-		error_message="An already-prefixed TLS secret name must not be prefixed again."
-	}
 }

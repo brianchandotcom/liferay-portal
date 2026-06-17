@@ -217,8 +217,6 @@ Use this workflow when editing the REST Builder generator itself, rather than th
 
 `buildREST` reads the generator's source from the local repository, not from the REST Builder artifact published to Maven, so a change to a template or generator class takes effect on the next `buildREST` run with no need to rebuild or republish the tool. Because the generator produces every module, a change to it affects all of them.
 
-The dummy `portal-tools-rest-builder-test-impl` module acts as the generator's test bed: its `rest-openapi.yaml` is meant to cover each generator feature, so the regenerated Java becomes the visible record of what the change produces. The matching integration tests live in `modules/util/portal-tools-rest-builder-test-test/src/testIntegration/java`, where each resource has a `<Tag>ResourceTest` that exercises the generated code at runtime.
-
 ### Workflow
 
 Run every step without asking for confirmation, including the commits.
@@ -227,10 +225,10 @@ Run every step without asking for confirmation, including the commits.
 
 1. Run REST Builder globally to regenerate every module.
 
-1. Confirm the regenerated output reflects the change, especially under `portal-tools-rest-builder-test-impl`. When the test bed shows no difference, the existing cases do not cover the new behavior — add a case to its `rest-openapi.yaml` that does (for example, a schema carrying a description but no required properties to cover description generation), commit it, and regenerate again.
+1. Confirm the regenerated output reflects the change, especially under `portal-tools-rest-builder-test-impl` — the dummy module that acts as the generator's test bed, whose `rest-openapi.yaml` is meant to cover each generator feature so the regenerated Java is the visible record of what the change produces. When the test bed shows no difference, the existing cases do not cover the new behavior — add a case to its `rest-openapi.yaml` that does (for example, a schema carrying a description but no required properties to cover description generation), commit it, and regenerate again.
 
 1. Commit the regenerated output of every module so it stays consistent with the new generator, on its own commit titled `<TICKET> BuildREST` (for example, `LPD-XXXXX BuildREST`), so the mechanical regeneration stays distinct from the hand-written change and reviewers can skip past it.
 
-1. Cover the new feature or fix with a test. Extend the matching `<Tag>ResourceTest` under `portal-tools-rest-builder-test-test` (or add one), run `<gradlew> testIntegration` from that module, and commit the test once it passes.
+1. Cover the new feature or fix with a test. The matching integration tests live in `modules/util/portal-tools-rest-builder-test-test/src/testIntegration/java`, where each resource has a `<Tag>ResourceTest` that exercises the generated code at runtime; extend the matching one (or add it), run `<gradlew> testIntegration` from that module, and commit the test once it passes.
 
 1. Continue with the work.

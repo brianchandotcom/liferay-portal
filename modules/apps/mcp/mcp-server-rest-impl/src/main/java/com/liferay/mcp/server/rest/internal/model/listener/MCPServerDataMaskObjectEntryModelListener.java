@@ -80,7 +80,7 @@ public class MCPServerDataMaskObjectEntryModelListener
 					HashMapBuilder.<String, Serializable>putAll(
 						values
 					).put(
-						"deleteReason", "Mask deleted."
+						"deleteReason", "Data mask deleted."
 					).build();
 
 				_objectEntryLocalService.updateObjectEntry(

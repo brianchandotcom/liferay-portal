@@ -410,10 +410,6 @@ public class SitesImpl implements Sites {
 			return;
 		}
 
-		if (!layout.isPortletLayoutPageTemplateEntryLinkActive()) {
-			return;
-		}
-
 		Group group = layout.getGroup();
 
 		if (group.isLayoutPrototype() || group.hasStagingGroup()) {

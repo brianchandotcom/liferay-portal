@@ -21,13 +21,11 @@ The generator's own source lives under `modules/util/portal-tools-rest-builder`.
 
 `buildREST` reads these files from the local repository, not from the REST Builder artifact published to Maven. A change to a shared template or generator class therefore takes effect on the next `buildREST` run, with no need to rebuild or republish the tool.
 
-Because a shared file feeds every generated module, a change to one affects all of them. After editing any shared REST Builder file, regenerate every REST Builder module so the committed output stays consistent with the new generator. Run `<gradlew> buildREST` from each of these roots:
+Because a shared file feeds every generated module, a change to one affects all of them. After editing any shared REST Builder file, regenerate every REST Builder module so the committed output stays consistent with the new generator. Run:
 
-1. `modules/apps`
-
-1. `modules/dxp/apps`
-
-1. `modules/util/portal-tools-rest-builder-test-impl`
+```bash
+(cd "${REPO_ROOT}/portal-impl" && ant build-rests)
+```
 
 Keep the regenerated output in its own commit, separate from the generator edit that motivated it. Title that commit `<TICKET> BuildREST` (for example, `LPD-XXXXX BuildREST`) so the mechanical regeneration stays distinct from the hand-written change and reviewers can skip past it.
 

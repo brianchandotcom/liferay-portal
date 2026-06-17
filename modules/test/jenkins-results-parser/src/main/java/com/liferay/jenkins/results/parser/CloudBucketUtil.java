@@ -236,13 +236,15 @@ public class CloudBucketUtil {
 		}
 	}
 
-	public static long getNewestS3ObjectLastModified(String s3DirPath)
+	public static long getNewestS3ObjectLastModified(String s3ObjectPath)
 		throws IOException, TimeoutException {
 
-		Matcher s3ObjectPathMatcher = _s3ObjectPathPattern.matcher(s3DirPath);
+		Matcher s3ObjectPathMatcher = _s3ObjectPathPattern.matcher(
+			s3ObjectPath);
 
 		if (!s3ObjectPathMatcher.find()) {
-			throw new RuntimeException("Invalid S3 object path: " + s3DirPath);
+			throw new RuntimeException(
+				"Invalid S3 object path: " + s3ObjectPath);
 		}
 
 		Process process = JenkinsResultsParserUtil.executeBashCommands(

@@ -254,6 +254,8 @@ public class FragmentExportImportTest extends BasePortletExportImportTestCase {
 			_updateFragmentEntry(fragmentEntry, _getRESTClientHTML()));
 		_testExportImportPortletWithValidationWithFragmentEntryContentException(
 			_updateFragmentEntry(fragmentEntry, "${"));
+		_testExportImportPortletWithValidation(
+			_updateFragmentEntry(fragmentEntry, _getRESTClientHTML()));
 	}
 
 	@Test

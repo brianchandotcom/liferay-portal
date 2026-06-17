@@ -1,15 +1,15 @@
 suite: marketplace overrides
 templates:
-    -   charts/liferay-aws/charts/liferay-default/templates/workloads.yaml
     -   charts/liferay-aws/charts/liferay-default/templates/configmap.yaml
     -   charts/liferay-aws/charts/liferay-default/templates/liferay-init-scripts-cm.yaml
+    -   charts/liferay-aws/charts/liferay-default/templates/workloads.yaml
 tests:
     -   asserts:
-            -   isKind:
-                    of: StatefulSet
             -   equal:
                     path: spec.template.spec.containers[0].image
                     value: 709825985650.dkr.ecr.us-east-1.amazonaws.com/liferay/dxp:2025.q1.17-lts-slim
+            -   isKind:
+                    of: StatefulSet
         documentSelector:
             path: kind
             skipEmptyTemplates: true

@@ -286,7 +286,7 @@ public class MarketplaceUtil {
 		return localeMap.get("en_US");
 	}
 
-	public static String getExternalLinkValue(
+	public static String getEntityId(
 		ExternalLink[] externalLinks, String domain, String entityName) {
 
 		for (ExternalLink externalLink : externalLinks) {

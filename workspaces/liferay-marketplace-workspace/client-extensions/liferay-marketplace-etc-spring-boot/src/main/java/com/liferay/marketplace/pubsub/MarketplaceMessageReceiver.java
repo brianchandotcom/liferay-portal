@@ -270,7 +270,7 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 				koroneikiAccount)
 		throws Exception {
 
-		String project = MarketplaceUtil.getExternalLinkValue(
+		String project = MarketplaceUtil.getEntityId(
 			koroneikiAccount.getExternalLinks(), "salesforce", "project");
 
 		if (project != null) {
@@ -336,7 +336,7 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 			_log.info("Processing product purchase create " + productPurchase);
 		}
 
-		String opportunityId = MarketplaceUtil.getExternalLinkValue(
+		String opportunityId = MarketplaceUtil.getEntityId(
 			productPurchase.getExternalLinks(), "salesforce", "opportunity");
 
 		if (opportunityId == null) {

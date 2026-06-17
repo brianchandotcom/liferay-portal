@@ -188,7 +188,7 @@ public class ProvisioningHubService extends BaseService {
 					"aiHub", aiHubJSONObject
 				).put(
 					"salesforceProjectId",
-					MarketplaceUtil.getExternalLinkValue(
+					MarketplaceUtil.getEntityId(
 						koroneikiAccount.getExternalLinks(), "salesforce",
 						"project")
 				).toString()

@@ -25,11 +25,10 @@ public class KeyReferenceTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
-	@Test(expected = IllegalArgumentException.class)
-	public void testConstructorRejectsClosingCurlyBraceInProviderId() {
-		new KeyReference(
-			RandomTestUtil.randomString(), "pro}vider",
-			KeyReference.Type.CRYPTO);
+	@Test
+	public void testConstructorRejectsInvalidProviderId() {
+		_testConstructorRejectsInvalidProviderId("pro:vider");
+		_testConstructorRejectsInvalidProviderId("pro}vider");
 	}
 
 	@Test
@@ -63,14 +62,42 @@ public class KeyReferenceTest {
 		String identifier = RandomTestUtil.randomString();
 		String providerId = RandomTestUtil.randomString();
 
-		KeyReference keyReference = new KeyReference(
+		KeyReference cryptoKeyReference = new KeyReference(
 			identifier, providerId, KeyReference.Type.CRYPTO);
 
 		Assert.assertEquals(
 			StringBundler.concat(
 				"{identifier=", identifier, ", providerId=", providerId,
 				", type=keyRef}"),
-			keyReference.toString());
+			cryptoKeyReference.toString());
+
+		KeyReference secretKeyReference = new KeyReference(
+			identifier, providerId, KeyReference.Type.SECRET);
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				"{identifier=", identifier, ", providerId=", providerId,
+				", type=secretRef}"),
+			secretKeyReference.toString());
+	}
+
+	private KeyReference.Type _randomType() {
+		if (RandomTestUtil.randomBoolean()) {
+			return KeyReference.Type.CRYPTO;
+		}
+
+		return KeyReference.Type.SECRET;
+	}
+
+	private void _testConstructorRejectsInvalidProviderId(String providerId) {
+		try {
+			new KeyReference(
+				RandomTestUtil.randomString(), providerId, _randomType());
+
+			Assert.fail();
+		}
+		catch (IllegalArgumentException illegalArgumentException) {
+		}
 	}
 
 }

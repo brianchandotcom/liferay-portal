@@ -92,6 +92,40 @@ public class SegmentsExperienceLocalServiceImpl
 			typeSettingsUnicodeProperties, serviceContext);
 	}
 
+	/**
+	 * Adds a segments experience to a page, generating its key automatically.
+	 *
+	 * <p>
+	 * The supplied priority is compacted with the priorities of the other
+	 * experiences on the page so the priority of the returned segments
+	 * experience may differ from the value supplied. See {@link
+	 * #addSegmentsExperience(String, long, long, String, String, String, long,
+	 * Map, int, boolean, UnicodeProperties, ServiceContext)} for the full
+	 * priority-compaction contract.
+	 * </p>
+	 *
+	 * @param  externalReferenceCode the segments experience's external reference
+	 *         code
+	 * @param  userId the primary key of the user
+	 * @param  groupId the primary key of the group
+	 * @param  segmentsEntryERC the external reference code of the segments entry
+	 *         the experience is associated with
+	 * @param  segmentsEntryScopeERC the external reference code of the segments
+	 *         entry's scope
+	 * @param  plid the primary key of the layout
+	 * @param  nameMap the segments experience's locales and localized names
+	 * @param  priority the requested priority within the page. It must be unique
+	 *         among the page's experiences, but it is compacted, so the
+	 *         persisted value may differ.
+	 * @param  active whether the segments experience is active
+	 * @param  typeSettingsUnicodeProperties the segments experience's type
+	 *         settings
+	 * @param  serviceContext the service context to be applied. Can set the
+	 *         UUID, creation date, modification date, guest permissions, and
+	 *         group permissions for the segments experience.
+	 * @return the segments experience
+	 * @throws PortalException if a portal exception occurred
+	 */
 	@Override
 	public SegmentsExperience addSegmentsExperience(
 			String externalReferenceCode, long userId, long groupId,
@@ -108,6 +142,46 @@ public class SegmentsExperienceLocalServiceImpl
 			priority, active, typeSettingsUnicodeProperties, serviceContext);
 	}
 
+	/**
+	 * Adds a segments experience to a page and compacts the priorities of every
+	 * experience on that page.
+	 *
+	 * <p>
+	 * The supplied priority must be unique within the page but it is not
+	 * persisted verbatim. After the experience is created, the service renumbers
+	 * the priorities of all the experiences on the page into sequential values
+	 * (1, 2, 3, ... for active experiences and -1, -2, -3, ... for inactive
+	 * experiences), mirroring {@link #updateSegmentsExperiencePriority(long,
+	 * long, int)} and {@link #deleteSegmentsExperience(SegmentsExperience)}. The
+	 * priority of the returned segments experience as well as the priorities of
+	 * the other experiences on the same page, may therefore differ from the
+	 * value supplied.
+	 * </p>
+	 *
+	 * @param  externalReferenceCode the segments experience's external reference
+	 *         code
+	 * @param  userId the primary key of the user
+	 * @param  groupId the primary key of the group
+	 * @param  segmentsEntryERC the external reference code of the segments entry
+	 *         the experience is associated with
+	 * @param  segmentsEntryScopeERC the external reference code of the segments
+	 *         entry's scope
+	 * @param  segmentsExperienceKey the key that identifies the segments
+	 *         experience
+	 * @param  plid the primary key of the layout
+	 * @param  nameMap the segments experience's locales and localized names
+	 * @param  priority the requested priority within the page. It must be unique
+	 *         among the page's experiences, but it is compacted as described
+	 *         above, so the persisted value may differ.
+	 * @param  active whether the segments experience is active
+	 * @param  typeSettingsUnicodeProperties the segments experience's type
+	 *         settings
+	 * @param  serviceContext the service context to be applied. Can set the
+	 *         UUID, creation date, modification date, guest permissions, and
+	 *         group permissions for the segments experience.
+	 * @return the segments experience
+	 * @throws PortalException if a portal exception occurred
+	 */
 	@Override
 	public SegmentsExperience addSegmentsExperience(
 			String externalReferenceCode, long userId, long groupId,
@@ -230,6 +304,20 @@ public class SegmentsExperienceLocalServiceImpl
 		}
 	}
 
+	/**
+	 * Deletes the segments experience with the primary key and compacts the
+	 * priorities of the remaining experiences on the page.
+	 *
+	 * <p>
+	 * See {@link #deleteSegmentsExperience(SegmentsExperience)} for the full
+	 * priority-compaction contract.
+	 * </p>
+	 *
+	 * @param  segmentsExperienceId the primary key of the segments experience
+	 * @return the deleted segments experience
+	 * @throws PortalException if a segments experience with the primary key
+	 *         could not be found
+	 */
 	@Override
 	public SegmentsExperience deleteSegmentsExperience(
 			long segmentsExperienceId)
@@ -243,6 +331,26 @@ public class SegmentsExperienceLocalServiceImpl
 			segmentsExperience);
 	}
 
+	/**
+	 * Deletes a segments experience and compacts the priorities of the
+	 * remaining experiences on the page.
+	 *
+	 * <p>
+	 * After the experience is removed, the service renumbers the priorities of
+	 * the experiences left on the page into sequential values (1, 2, 3, ... for
+	 * active experiences and -1, -2, -3, ... for inactive experiences) so their
+	 * priorities may differ from the values previously returned. This matches
+	 * the compaction performed by {@link #addSegmentsExperience(String, long,
+	 * long, String, String, String, long, Map, int, boolean, UnicodeProperties,
+	 * ServiceContext)} and {@link #updateSegmentsExperiencePriority(long, long,
+	 * int)}. Compaction is skipped when the experience is removed as part of a
+	 * group deletion.
+	 * </p>
+	 *
+	 * @param  segmentsExperience the segments experience
+	 * @return the deleted segments experience
+	 * @throws PortalException if a portal exception occurred
+	 */
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public SegmentsExperience deleteSegmentsExperience(
@@ -289,6 +397,22 @@ public class SegmentsExperienceLocalServiceImpl
 		return segmentsExperience;
 	}
 
+	/**
+	 * Deletes the segments experience with the external reference code and
+	 * compacts the priorities of the remaining experiences on the page.
+	 *
+	 * <p>
+	 * See {@link #deleteSegmentsExperience(SegmentsExperience)} for the full
+	 * priority-compaction contract.
+	 * </p>
+	 *
+	 * @param  externalReferenceCode the external reference code of the segments
+	 *         experience
+	 * @param  groupId the primary key of the group
+	 * @return the deleted segments experience
+	 * @throws PortalException if a segments experience with the external
+	 *         reference code could not be found
+	 */
 	@Override
 	public SegmentsExperience deleteSegmentsExperience(
 			String externalReferenceCode, long groupId)
@@ -549,6 +673,34 @@ public class SegmentsExperienceLocalServiceImpl
 		return segmentsExperiencePersistence.update(segmentsExperience);
 	}
 
+	/**
+	 * Updates the priority of a segments experience and compacts the priorities
+	 * of every experience on the page.
+	 *
+	 * <p>
+	 * If another experience already holds <code>newPriority</code>, the two
+	 * experiences swap priorities; otherwise the experience is simply moved to
+	 * <code>newPriority</code>. A <code>newPriority</code> of <code>0</code>
+	 * deactivates an active experience and activates an inactive one. After the
+	 * move, the service renumbers the priorities of all the experiences on the
+	 * page into sequential values (1, 2, 3, ... for active experiences and -1,
+	 * -2, -3, ... for inactive experiences) so the priority of the returned
+	 * segments experience as well as the priorities of the other experiences on
+	 * the same page, may differ from <code>newPriority</code>. This matches the
+	 * compaction performed by {@link #addSegmentsExperience(String, long, long,
+	 * String, String, String, long, Map, int, boolean, UnicodeProperties,
+	 * ServiceContext)} and {@link
+	 * #deleteSegmentsExperience(SegmentsExperience)}.
+	 * </p>
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  segmentsExperienceId the primary key of the segments experience
+	 * @param  newPriority the requested priority within the page. Use
+	 *         <code>0</code> to toggle the experience between active and
+	 *         inactive.
+	 * @return the updated segments experience
+	 * @throws PortalException if a portal exception occurred
+	 */
 	@Override
 	public SegmentsExperience updateSegmentsExperiencePriority(
 			long userId, long segmentsExperienceId, int newPriority)

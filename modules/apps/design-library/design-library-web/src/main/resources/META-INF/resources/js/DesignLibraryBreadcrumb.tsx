@@ -6,13 +6,14 @@
 import ClayBreadcrumb from '@clayui/breadcrumb';
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown, {ClayDropDownWithItems} from '@clayui/drop-down';
-import {openModal} from 'frontend-js-components-web';
-import {navigate, sub} from 'frontend-js-web';
+import {navigate} from 'frontend-js-web';
 import React, {ComponentProps} from 'react';
 
-import DesignLibraryConnectedSitesModal from './modal/DesignLibraryConnectedSitesModal';
-import DesignLibraryManageMembersModal from './modal/DesignLibraryManageMembersModal';
-import confirmAndDeleteEntryAction from './props_transformer/actions/confirmAndDeleteEntryAction';
+import {
+	confirmDeleteDesignLibrary,
+	openConnectedSitesModal,
+	openManageMembersModal,
+} from './actions/breadcrumbActions';
 
 type ActionTarget = 'connected-sites' | 'delete' | 'manage-members';
 
@@ -42,47 +43,15 @@ function ActionDropdownItem({
 	const handleClick = () => {
 		const actions: Record<ActionTarget, () => void> = {
 			'connected-sites': () => {
-				openModal({
-					contentComponent: () =>
-						DesignLibraryConnectedSitesModal({
-							externalReferenceCode,
-						}),
-					size: 'md',
-				});
+				openConnectedSitesModal({externalReferenceCode});
 			},
 
 			'delete': () => {
-				confirmAndDeleteEntryAction({
-					bodyHTML: `
-						<p>${Liferay.Language.get('delete-design-library-confirmation-body-main')}</p>
-						<p>${Liferay.Language.get('delete-design-library-confirmation-body-warning')}</p>
-					`,
-					deleteAction: {
-						href,
-						method: 'DELETE',
-					},
-					redirect,
-					successMessage: sub(
-						Liferay.Language.get('x-was-successfully-deleted'),
-						`<strong>${Liferay.Util.escapeHTML(descriptiveName)}</strong>`
-					),
-					title: sub(
-						Liferay.Language.get(
-							'delete-design-library-confirmation-title'
-						),
-						descriptiveName
-					),
-				});
+				confirmDeleteDesignLibrary({descriptiveName, href, redirect});
 			},
 
 			'manage-members': () => {
-				openModal({
-					contentComponent: () =>
-						DesignLibraryManageMembersModal({
-							externalReferenceCode,
-						}),
-					size: 'lg',
-				});
+				openManageMembersModal({externalReferenceCode});
 			},
 		};
 

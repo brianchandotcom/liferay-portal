@@ -933,12 +933,12 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 			new TextObjectFieldBuilder(
 			).userId(
 				TestPropsValues.getUserId()
-			).objectDefinitionId(
-				objectDefinition.getObjectDefinitionId()
 			).labelMap(
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
 			).name(
 				"A" + RandomTestUtil.randomString()
+			).objectDefinitionId(
+				objectDefinition.getObjectDefinitionId()
 			).build());
 
 		Product product = productResource.postProduct(randomProduct());

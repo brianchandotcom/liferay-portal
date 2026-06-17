@@ -78,7 +78,7 @@ public class CIForwardProcessor {
 			}
 
 			if (!_isForwardEligible()) {
-				_pullRequest.addComment(_getUnsuccessfulCommentBody());
+				_pullRequest.addComment(getUnsuccessfulCommentBody());
 
 				return;
 			}
@@ -221,7 +221,7 @@ public class CIForwardProcessor {
 		}
 		catch (Exception exception) {
 			try {
-				_pullRequest.addComment(_getUnsuccessfulCommentBody());
+				_pullRequest.addComment(getUnsuccessfulCommentBody());
 			}
 			catch (IOException ioException) {
 				throw new RuntimeException(
@@ -250,6 +250,69 @@ public class CIForwardProcessor {
 			_getSuccessCommentBody(forwardedPullRequestURL));
 		_pullRequest.copyLabelsToPullRequest(forwardedPullRequest);
 		_pullRequest.copyStatusesToPullRequest(forwardedPullRequest);
+	}
+
+	public String getUnsuccessfulCommentBody() throws IOException {
+		StringBuilder sb = new StringBuilder();
+
+		List<String> incompleteRequiredCompletedTestSuiteNames =
+			_getIncompleteRequiredCompletedTestSuiteNames();
+
+		if (!incompleteRequiredCompletedTestSuiteNames.isEmpty()) {
+			sb.append("Not all required test suite(s) completed:\n");
+
+			for (String requiredCompletedTestSuiteName :
+					_getRequiredCompletedTestSuiteNames()) {
+
+				sb.append("`");
+				sb.append(requiredCompletedTestSuiteName);
+				sb.append("`\n");
+			}
+		}
+
+		List<String> failedRequiredPassingTestSuiteNames =
+			_getFailedRequiredPassingTestSuiteNames();
+
+		if (!failedRequiredPassingTestSuiteNames.isEmpty()) {
+			sb.append("Not all required test suite(s) passed:\n");
+
+			for (String requiredPassingTestSuiteName :
+					_getRequiredPassingTestSuiteNames()) {
+
+				sb.append("`");
+				sb.append(requiredPassingTestSuiteName);
+				sb.append("`");
+
+				if (requiredPassingTestSuiteName.equals("pr-check") &&
+					failedRequiredPassingTestSuiteNames.contains("pr-check")) {
+
+					sb.append(" - ");
+					sb.append(_getPRCheckMessage());
+				}
+
+				if (requiredPassingTestSuiteName.equals("stable")) {
+					sb.append(" - If you believe that the stable test ");
+					sb.append("failures were caused by flaky tests, please ");
+					sb.append("contact QA for confirmation and rerun the ");
+					sb.append("test.");
+				}
+
+				sb.append("\n");
+			}
+		}
+
+		sb.append("\nPull request will not be forwarded to ");
+		sb.append("`");
+		sb.append(_recipientUsername);
+		sb.append("`.\n");
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(_consoleLogURL)) {
+			sb.append("[Console](");
+			sb.append(_consoleLogURL);
+			sb.append(")\n");
+		}
+
+		return sb.toString();
 	}
 
 	private PullRequest.Comment _findMostRecentTestResultComment(
@@ -718,69 +781,6 @@ public class CIForwardProcessor {
 		Collections.sort(filteredComments);
 
 		return filteredComments;
-	}
-
-	private String _getUnsuccessfulCommentBody() throws IOException {
-		StringBuilder sb = new StringBuilder();
-
-		List<String> incompleteRequiredCompletedTestSuiteNames =
-			_getIncompleteRequiredCompletedTestSuiteNames();
-
-		if (!incompleteRequiredCompletedTestSuiteNames.isEmpty()) {
-			sb.append("Not all required test suite(s) completed:\n");
-
-			for (String requiredCompletedTestSuiteName :
-					_getRequiredCompletedTestSuiteNames()) {
-
-				sb.append("`");
-				sb.append(requiredCompletedTestSuiteName);
-				sb.append("`\n");
-			}
-		}
-
-		List<String> failedRequiredPassingTestSuiteNames =
-			_getFailedRequiredPassingTestSuiteNames();
-
-		if (!failedRequiredPassingTestSuiteNames.isEmpty()) {
-			sb.append("Not all required test suite(s) passed:\n");
-
-			for (String requiredPassingTestSuiteName :
-					_getRequiredPassingTestSuiteNames()) {
-
-				sb.append("`");
-				sb.append(requiredPassingTestSuiteName);
-				sb.append("`");
-
-				if (requiredPassingTestSuiteName.equals("pr-check") &&
-					failedRequiredPassingTestSuiteNames.contains("pr-check")) {
-
-					sb.append(" - ");
-					sb.append(_getPRCheckMessage());
-				}
-
-				if (requiredPassingTestSuiteName.equals("stable")) {
-					sb.append(" - If you believe that the stable test ");
-					sb.append("failures were caused by flaky tests, please ");
-					sb.append("contact QA for confirmation and rerun the ");
-					sb.append("test.");
-				}
-
-				sb.append("\n");
-			}
-		}
-
-		sb.append("\nPull request will not be forwarded to ");
-		sb.append("`");
-		sb.append(_recipientUsername);
-		sb.append("`.\n");
-
-		if (JenkinsResultsParserUtil.isNullOrEmpty(_consoleLogURL)) {
-			sb.append("[Console](");
-			sb.append(_consoleLogURL);
-			sb.append(")\n");
-		}
-
-		return sb.toString();
 	}
 
 	private boolean _hasMergeConflict() {

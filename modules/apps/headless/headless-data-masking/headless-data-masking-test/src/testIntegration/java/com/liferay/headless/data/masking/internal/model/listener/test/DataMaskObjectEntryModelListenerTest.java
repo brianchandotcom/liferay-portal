@@ -69,7 +69,7 @@ public class DataMaskObjectEntryModelListenerTest {
 		catch (Exception exception) {
 			Assert.assertThat(
 				exception.getMessage(),
-				CoreMatchers.containsString("system data masks"));
+				CoreMatchers.containsString(_SYSTEM_DATA_MASKS_MESSAGE));
 		}
 
 		BatchEngineUnitThreadLocal.setFileName(_DATA_MASKING_BATCH_FILE_NAME);
@@ -119,7 +119,7 @@ public class DataMaskObjectEntryModelListenerTest {
 		catch (Exception exception) {
 			Assert.assertThat(
 				exception.getMessage(),
-				CoreMatchers.containsString("system data masks"));
+				CoreMatchers.containsString(_SYSTEM_DATA_MASKS_MESSAGE));
 		}
 
 		Assert.assertNotNull(
@@ -155,7 +155,7 @@ public class DataMaskObjectEntryModelListenerTest {
 		catch (Exception exception) {
 			Assert.assertThat(
 				exception.getMessage(),
-				CoreMatchers.containsString("system data masks"));
+				CoreMatchers.containsString(_SYSTEM_DATA_MASKS_MESSAGE));
 		}
 
 		BatchEngineUnitThreadLocal.setFileName(_FOREIGN_BATCH_FILE_NAME);
@@ -168,7 +168,7 @@ public class DataMaskObjectEntryModelListenerTest {
 		catch (Exception exception) {
 			Assert.assertThat(
 				exception.getMessage(),
-				CoreMatchers.containsString("system data masks"));
+				CoreMatchers.containsString(_SYSTEM_DATA_MASKS_MESSAGE));
 		}
 		finally {
 			BatchEngineUnitThreadLocal.setFileName(StringPool.BLANK);
@@ -275,6 +275,9 @@ public class DataMaskObjectEntryModelListenerTest {
 
 	private static final String _FOREIGN_BATCH_FILE_NAME =
 		"com.liferay.example.impl_1.0.0 [2]";
+
+	private static final String _SYSTEM_DATA_MASKS_MESSAGE =
+		"system data masks";
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

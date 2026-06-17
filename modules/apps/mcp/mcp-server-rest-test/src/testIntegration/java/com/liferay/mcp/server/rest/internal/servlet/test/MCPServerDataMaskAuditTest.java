@@ -394,7 +394,7 @@ public class MCPServerDataMaskAuditTest {
 					customMaskObjectEntry.getObjectEntryId(), 1);
 
 			MCPServerDataMaskTestUtil.removeProfileDataMask(
-				profileDataMaskObjectEntry, "Removed by test.");
+				profileDataMaskObjectEntry, _DELETE_REASON);
 
 			List<AuditEvent> updateAuditEvents = _getAuditEvents(
 				profileDataMaskObjectEntry, EventTypes.UPDATE);
@@ -415,7 +415,7 @@ public class MCPServerDataMaskAuditTest {
 			Assert.assertNotNull(
 				additionalInfoJSONObject.toString(), attributeJSONObject);
 			Assert.assertEquals(
-				"Removed by test.", attributeJSONObject.getString("newValue"));
+				_DELETE_REASON, attributeJSONObject.getString("newValue"));
 
 			List<AuditEvent> deleteAuditEvents = _getAuditEvents(
 				profileDataMaskObjectEntry, EventTypes.DELETE);
@@ -475,6 +475,8 @@ public class MCPServerDataMaskAuditTest {
 
 		return Collections.emptyList();
 	}
+
+	private static final String _DELETE_REASON = "Removed by test.";
 
 	@Inject
 	private AuditEventLocalService _auditEventLocalService;

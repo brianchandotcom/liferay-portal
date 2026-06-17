@@ -41,10 +41,10 @@ tests:
         it: should append every custom environment variable through the customEnv loop
         set:
             customEnv.x-liferay-extra:
-                -   name: FOO
-                    value: bar
                 -   name: BAZ
                     value: qux
+                -   name: FOO
+                    value: bar
     -   asserts:
             -   equal:
                     path: metadata.name

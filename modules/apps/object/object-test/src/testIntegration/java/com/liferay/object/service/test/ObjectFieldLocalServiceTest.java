@@ -73,6 +73,7 @@ import com.liferay.object.service.ObjectFilterLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.test.util.ObjectFieldTestUtil;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DBInspector;
@@ -2526,7 +2527,9 @@ public class ObjectFieldLocalServiceTest {
 
 		// Business type email address
 
-		defaultValue = "USER@LIFERAY.COM";
+		defaultValue = StringBundler.concat(
+			RandomTestUtil.randomString(), CharPool.AT,
+			RandomTestUtil.randomString(), ".com");
 
 		ObjectField emailAddressObjectField = _addCustomObjectField(
 			new EmailAddressObjectFieldBuilder(
@@ -2570,6 +2573,9 @@ public class ObjectFieldLocalServiceTest {
 					).build())
 			).build());
 
+		_assertObjectEntryDefaultValue(
+			StringUtil.toLowerCase(defaultValue), emailAddressObjectField,
+			new HashMap<>());
 		_assertObjectFieldSettingsValues(
 			emailAddressObjectField.getObjectFieldId(),
 			HashMapBuilder.put(
@@ -2583,14 +2589,11 @@ public class ObjectFieldLocalServiceTest {
 				"@example.com,@test.com"
 			).put(
 				ObjectFieldSettingConstants.NAME_DEFAULT_VALUE,
-				"user@liferay.com"
+				StringUtil.toLowerCase(defaultValue)
 			).put(
 				ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE,
 				ObjectFieldSettingConstants.VALUE_INPUT_AS_VALUE
 			).build());
-
-		_assertObjectEntryDefaultValue(
-			"user@liferay.com", emailAddressObjectField, new HashMap<>());
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 

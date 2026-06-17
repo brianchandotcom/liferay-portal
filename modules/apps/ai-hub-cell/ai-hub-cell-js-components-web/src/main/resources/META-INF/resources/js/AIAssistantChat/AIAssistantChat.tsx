@@ -94,7 +94,7 @@ const AIAssistantChat: React.FC<AIAssistantChatProps> = ({
 	useEffect(() => {
 		getContextRef.current = getContext;
 		instructionDefinitionScopeRef.current = instructionDefinitionScope;
-	});
+	}, [getContext, instructionDefinitionScope]);
 
 	const sendMessage = useCallback((text: string) => {
 		if (!text.trim()) {

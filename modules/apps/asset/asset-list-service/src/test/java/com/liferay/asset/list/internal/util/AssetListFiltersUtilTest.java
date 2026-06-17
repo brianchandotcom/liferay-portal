@@ -142,7 +142,10 @@ public class AssetListFiltersUtilTest {
 		BooleanClause[] booleanClauses =
 			AssetListFiltersUtil.getFiltersBooleanClauses(
 				_COMPANY_ID,
-				JSONUtil.putAll(_buildCommonFieldFilter("eq", "bogus", "x")),
+				JSONUtil.putAll(
+					_buildCommonFieldFilter(
+						"eq", RandomTestUtil.randomString(),
+						RandomTestUtil.randomString())),
 				LocaleUtil.US);
 
 		Assert.assertEquals(

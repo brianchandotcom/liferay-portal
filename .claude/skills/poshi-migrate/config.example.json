@@ -1,5 +1,7 @@
 {
-	"componentPlaywrightModules": {},
-	"defaultComponentName": "",
-	"patternsReference": "modules/test/playwright/tests/layout-content-page-editor-web"
+	"componentPlaywrightModules": {
+		"portal-analytics-cloud": ["analytics-settings-web", "analytics-web"]
+	},
+	"defaultComponentName": "portal-analytics-cloud",
+	"patternsReference": "modules/test/playwright/tests/analytics-settings-web"
 }

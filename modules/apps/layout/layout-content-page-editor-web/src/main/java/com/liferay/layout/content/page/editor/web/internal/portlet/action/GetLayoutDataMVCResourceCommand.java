@@ -26,9 +26,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import jakarta.portlet.ResourceRequest;
 import jakarta.portlet.ResourceResponse;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -54,26 +51,19 @@ public class GetLayoutDataMVCResourceCommand extends BaseMVCResourceCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long segmentsExperienceId = ParamUtil.getLong(
-			resourceRequest, "segmentsExperienceId");
-
 		LayoutStructure layoutStructure =
 			LayoutStructureUtil.getLayoutStructure(
 				themeDisplay.getScopeGroupId(), themeDisplay.getPlid(),
-				segmentsExperienceId);
+				ParamUtil.getLong(resourceRequest, "segmentsExperienceId"));
 
 		JSONObject fragmentEntryLinksJSONObject =
 			_jsonFactory.createJSONObject();
 
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-			resourceRequest);
-		HttpServletResponse httpServletResponse =
-			_portal.getHttpServletResponse(resourceResponse);
-
 		List<FragmentEntryLink> fragmentEntryLinks =
 			_fragmentEntryLinkLocalService.
 				getFragmentEntryLinksBySegmentsExperienceId(
-					themeDisplay.getScopeGroupId(), segmentsExperienceId,
+					themeDisplay.getScopeGroupId(),
+					ParamUtil.getLong(resourceRequest, "segmentsExperienceId"),
 					themeDisplay.getPlid());
 
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
@@ -81,7 +71,9 @@ public class GetLayoutDataMVCResourceCommand extends BaseMVCResourceCommand {
 				String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
 				_fragmentEntryLinkManager.getFragmentEntryLinkJSONObject(
 					new DefaultFragmentRendererContext(fragmentEntryLink),
-					fragmentEntryLink, httpServletRequest, httpServletResponse,
+					fragmentEntryLink,
+					_portal.getHttpServletRequest(resourceRequest),
+					_portal.getHttpServletResponse(resourceResponse),
 					layoutStructure));
 		}
 

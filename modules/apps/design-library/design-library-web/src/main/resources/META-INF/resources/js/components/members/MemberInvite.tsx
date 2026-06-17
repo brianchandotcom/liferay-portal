@@ -20,6 +20,19 @@ const ENDPOINTS: Record<MemberType, string> = {
 	userGroup: `/o/headless-admin-user/v1.0/user-groups`,
 };
 
+function getUserGroupLabel(item: AutocompleteItem) {
+	return `${item.name} ${sub(
+		Liferay.Language.get('x-members'),
+		String(item.usersCount ?? 0)
+	)}`;
+}
+
+function getUserLabel(item: AutocompleteItem) {
+	return item.emailAddress
+		? `${item.name} (${item.emailAddress})`
+		: item.name;
+}
+
 export default function MemberInvite({
 	externalReferenceCode,
 	members,
@@ -163,18 +176,18 @@ export default function MemberInvite({
 									'enter-name-or-email'
 								)}
 							>
-								{(item: AutocompleteItem) =>
-									type === 'user' ? (
-										<ItemSelector.Item
-											className="align-items-center d-flex"
-											key={item.id}
-											textValue={item.name}
+								{(item: AutocompleteItem) => (
+									<ItemSelector.Item
+										className="align-items-center d-flex"
+										key={item.id}
+										textValue={item.name}
+									>
+										<ClaySticker
+											displayType="primary"
+											shape="circle"
+											size="sm"
 										>
-											<ClaySticker
-												displayType="primary"
-												shape="circle"
-												size="sm"
-											>
+											{type === 'user' ? (
 												<ClaySticker.Image
 													alt={item.name}
 													src={
@@ -182,43 +195,18 @@ export default function MemberInvite({
 														`${Liferay.ThemeDisplay.getPathContext() || ''}/image/user_portrait`
 													}
 												/>
-											</ClaySticker>
-
-											<span className="ml-2 text-truncate">
-												{item.name}{' '}
-
-												{item.emailAddress
-													? `(${item.emailAddress})`
-													: ''}
-											</span>
-										</ItemSelector.Item>
-									) : (
-										<ItemSelector.Item
-											className="align-items-center d-flex"
-											key={item.id}
-											textValue={item.name}
-										>
-											<ClaySticker
-												displayType="primary"
-												shape="circle"
-												size="sm"
-											>
+											) : (
 												<ClayIcon symbol="users" />
-											</ClaySticker>
+											)}
+										</ClaySticker>
 
-											<span className="ml-2 text-truncate">
-												{item.name}{' '}
-
-												{sub(
-													Liferay.Language.get(
-														'x-members'
-													),
-													String(item.usersCount ?? 0)
-												)}
-											</span>
-										</ItemSelector.Item>
-									)
-								}
+										<span className="ml-2 text-truncate">
+											{type === 'user'
+												? getUserLabel(item)
+												: getUserGroupLabel(item)}
+										</span>
+									</ItemSelector.Item>
+								)}
 							</ItemSelector>
 						</ClayInput.GroupItem>
 					</ClayInput.Group>

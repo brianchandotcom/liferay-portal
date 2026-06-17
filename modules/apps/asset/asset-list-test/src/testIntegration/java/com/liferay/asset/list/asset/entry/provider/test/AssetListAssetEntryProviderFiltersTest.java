@@ -547,7 +547,8 @@ public class AssetListAssetEntryProviderFiltersTest {
 			objectEntry2);
 	}
 
-	private AssetListEntry _addDynamicAssetListEntryWithFilters(String filters)
+	private AssetListEntry _addDynamicAssetListEntryWithFilters(
+			String filtersJSON)
 		throws Exception {
 
 		AssetListEntry assetListEntry = AssetListTestUtil.addAssetListEntry(
@@ -562,9 +563,9 @@ public class AssetListAssetEntryProviderFiltersTest {
 					_portal.getClassNameId(_objectDefinition.getClassName()))
 			);
 
-		if (filters != null) {
+		if (filtersJSON != null) {
 			unicodePropertiesWrapper = unicodePropertiesWrapper.put(
-				"filters", filters);
+				"filters", filtersJSON);
 		}
 
 		UnicodeProperties typeSettingsUnicodeProperties =

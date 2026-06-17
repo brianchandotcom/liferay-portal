@@ -169,10 +169,12 @@ function SideNavigation({
 						url={siteAdministrationItemSelectorUrl}
 					/>
 
-					<SideNavigationColorSchemeButton
-						colorScheme={colorScheme}
-						colorSchemeSessionKey={colorSchemeSessionKey}
-					/>
+					{Liferay.FeatureFlags['LPD-57922'] && (
+						<SideNavigationColorSchemeButton
+							colorScheme={colorScheme}
+							colorSchemeSessionKey={colorSchemeSessionKey}
+						/>
+					)}
 				</SidePanel.Title>
 			</SidePanel.Header>
 

@@ -74,6 +74,7 @@ type BaseScheduleData = {
 
 export type CategorizationFields = {
 	assetCategoryIds: {
+		error?: string;
 		serverValue: string;
 		value: IAssetObjectEntry['taxonomyCategoryBriefs'];
 	};
@@ -92,10 +93,9 @@ export type ScheduleFields = {
 	reviewDate: ScheduleFieldData;
 };
 
-export type UpdateCategorizationProps = [
-	keyof CategorizationFields,
-	CategorizationFields[keyof CategorizationFields],
-];
+export type UpdateCategorizationProps = {
+	[K in keyof CategorizationFields]: [K, Partial<CategorizationFields[K]>];
+}[keyof CategorizationFields];
 
 export type UpdateScheduleProps = BaseScheduleData & {
 	name: keyof ScheduleFields;
@@ -161,7 +161,9 @@ export default function ContentEditorSidePanel(props: Props) {
 	const onUpdateCategorization = useCallback(
 		([name, value]: UpdateCategorizationProps) => {
 			setCategorizationFields((fields) =>
-				fields ? {...fields, [name]: value} : fields
+				fields
+					? {...fields, [name]: {...fields[name], ...value}}
+					: fields
 			);
 		},
 		[]
@@ -312,10 +314,13 @@ export default function ContentEditorSidePanel(props: Props) {
 
 function SidePanel(props: SidePanelProps) {
 	const buttonRef = useRef<HTMLButtonElement>(null);
-	const [hasCategoriesError, setHasCategoriesError] =
-		useState<boolean>(false);
 	const [hasError, setHasError] = useState<boolean>(false);
 	const [panel, setPanel] = useState<React.Key | null>(null);
+
+	const showErrorInPanel = useCallback((panelId: React.Key) => {
+		setPanel(panelId);
+		setHasError(true);
+	}, []);
 
 	useEffect(() => {
 		const validateScheduleFields = ({event}: {event: MouseEvent}) => {
@@ -326,8 +331,7 @@ function SidePanel(props: SidePanelProps) {
 			if (hasError) {
 				event.preventDefault();
 
-				setPanel('schedule');
-				setHasError(true);
+				showErrorInPanel('schedule');
 			}
 		};
 
@@ -336,9 +340,22 @@ function SidePanel(props: SidePanelProps) {
 		return () => {
 			Liferay.detach(EVENT_VALIDATE_FORM, validateScheduleFields);
 		};
-	}, [props.scheduleFields]);
+	}, [props.scheduleFields, showErrorInPanel]);
+
+	const {onUpdateCategorization} = props;
 
 	useEffect(() => {
+		if (
+			props.categorizationFields?.assetCategoryIds?.error &&
+			props.requiredVocabularyIds &&
+			!hasMissingRequiredVocabulary(
+				props.categorizationFields,
+				props.requiredVocabularyIds
+			)
+		) {
+			onUpdateCategorization(['assetCategoryIds', {error: ''}]);
+		}
+
 		const validateCategorizationFields = ({event}: {event: MouseEvent}) => {
 			if (props.requiredVocabularyIds === null) {
 				event.preventDefault();
@@ -346,28 +363,24 @@ function SidePanel(props: SidePanelProps) {
 				return;
 			}
 
-			if (!props.requiredVocabularyIds.length) {
-				return;
-			}
-
-			const selectedVocabularyIds = new Set(
-				(props.categorizationFields?.assetCategoryIds?.value || []).map(
-					({embeddedTaxonomyCategory}) =>
-						embeddedTaxonomyCategory?.taxonomyVocabularyId
+			if (
+				hasMissingRequiredVocabulary(
+					props.categorizationFields,
+					props.requiredVocabularyIds
 				)
-			);
-
-			const hasMissingRequiredVocabulary =
-				props.requiredVocabularyIds.some(
-					(id) => !selectedVocabularyIds.has(id)
-				);
-
-			if (hasMissingRequiredVocabulary) {
+			) {
 				event.preventDefault();
 
-				setPanel('categorization');
-				setHasCategoriesError(true);
-				setHasError(true);
+				onUpdateCategorization([
+					'assetCategoryIds',
+					{
+						error: Liferay.Language.get(
+							'please-enter-at-least-one-category-for-all-mandatory-vocabularies'
+						),
+					},
+				]);
+
+				showErrorInPanel('categorization');
 			}
 		};
 
@@ -376,7 +389,12 @@ function SidePanel(props: SidePanelProps) {
 		return () => {
 			Liferay.detach(EVENT_VALIDATE_FORM, validateCategorizationFields);
 		};
-	}, [props.categorizationFields, props.requiredVocabularyIds]);
+	}, [
+		onUpdateCategorization,
+		props.categorizationFields,
+		props.requiredVocabularyIds,
+		showErrorInPanel,
+	]);
 
 	useEffect(() => {
 		if (hasError) {
@@ -384,16 +402,6 @@ function SidePanel(props: SidePanelProps) {
 			setHasError(false);
 		}
 	}, [hasError]);
-
-	useEffect(() => {
-		if (
-			hasCategoriesError &&
-			(props.categorizationFields?.assetCategoryIds?.value?.length || 0) >
-				0
-		) {
-			setHasCategoriesError(false);
-		}
-	}, [hasCategoriesError, props.categorizationFields]);
 
 	return (
 		<VerticalBar
@@ -440,14 +448,7 @@ function SidePanel(props: SidePanelProps) {
 								</div>
 							</div>
 
-							{item.id === 'categorization' ? (
-								<CategorizationPanel
-									{...props}
-									hasCategoriesError={hasCategoriesError}
-								/>
-							) : (
-								<Component {...props} />
-							)}
+							<Component {...props} />
 						</VerticalBar.Panel>
 					);
 				}}
@@ -537,4 +538,18 @@ function SubscribeButton({
 			title={title}
 		/>
 	);
+}
+
+function hasMissingRequiredVocabulary(
+	categorizationFields: CategorizationFields | null,
+	requiredVocabularyIds: number[]
+) {
+	const selectedVocabularyIds = new Set(
+		(categorizationFields?.assetCategoryIds?.value || []).map(
+			({embeddedTaxonomyCategory}) =>
+				embeddedTaxonomyCategory?.taxonomyVocabularyId
+		)
+	);
+
+	return requiredVocabularyIds.some((id) => !selectedVocabularyIds.has(id));
 }

@@ -18,7 +18,6 @@ export default function CategorizationPanel({
 	categorizationFields,
 	cmsGroupId,
 	contentAPIURL,
-	hasCategoriesError = false,
 	hasUpdatePermission,
 	onUpdateCategorization,
 }: {
@@ -27,7 +26,6 @@ export default function CategorizationPanel({
 	categorizationFields: CategorizationFields | null;
 	cmsGroupId: number | string;
 	contentAPIURL: string;
-	hasCategoriesError?: boolean;
 	hasUpdatePermission: boolean;
 	onUpdateCategorization: (props: UpdateCategorizationProps) => void;
 }) {
@@ -57,6 +55,9 @@ export default function CategorizationPanel({
 		<div className="px-3">
 			<AssetCategorization
 				assetLibraryId={assetLibraryId}
+				categoriesErrorMessage={
+					categorizationFields?.assetCategoryIds?.error
+				}
 				categorization={{
 					keywords: categorizationFields?.assetTagNames?.value || [],
 					systemProperties: {
@@ -69,7 +70,6 @@ export default function CategorizationPanel({
 				}}
 				cmsGroupId={cmsGroupId}
 				getObjectEntryURL={contentAPIURL}
-				hasCategoriesError={hasCategoriesError}
 				hasUpdatePermission={hasUpdatePermission}
 				inputSize="sm"
 				onUpdateCategorization={updateCategorization}

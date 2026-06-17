@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 
 import java.io.Serializable;
@@ -44,6 +45,10 @@ public class VariablesUtil {
 			kaleoNodeSettingValues, executionContext.getWorkflowContext());
 
 		String value = kaleoNodeSettingValues.get(kaleoNodeSettingName);
+
+		if (Validator.isBlank(value)) {
+			return null;
+		}
 
 		for (Map.Entry<String, String> entry : inputVariables.entrySet()) {
 			String variableValue = entry.getValue();

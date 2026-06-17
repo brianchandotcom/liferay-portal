@@ -6,7 +6,6 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
-import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -338,8 +337,6 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 		}
 
 		try {
-			MergeLayoutPrototypesThreadLocal.setSkipMerge(false);
-
 			Sites sites = _sitesSnapshot.get();
 
 			sites.mergeLayoutSetPrototypeLayouts(

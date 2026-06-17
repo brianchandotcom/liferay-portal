@@ -16,6 +16,18 @@
 					"value": "seoStudioInsightTypeToScanInsights"
 				},
 				{
+					"name": "filters",
+					"value": [
+						{
+							"filterBy": "state",
+							"filterType": "eq",
+							"json": {
+								"eq": 1
+							}
+						}
+					]
+				},
+				{
 					"name": "function",
 					"value": "COUNT"
 				}

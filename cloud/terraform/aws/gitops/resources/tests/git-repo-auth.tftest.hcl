@@ -67,13 +67,13 @@ run "should_create_a_single_credentials_secret_for_a_shared_repo" {
 	command=plan
 
 	assert {
-		condition=length(kubernetes_manifest.git_repo_credentials_external_secret) == 1
-		error_message="A shared infrastructure/Liferay repo URL must yield a single git credentials ExternalSecret."
+		condition=contains(keys(kubernetes_manifest.git_repo_credentials_external_secret), "liferay")
+		error_message="The single credentials secret must be keyed \"liferay\""
 	}
 
 	assert {
-		condition=contains(keys(kubernetes_manifest.git_repo_credentials_external_secret), "liferay")
-		error_message="The single credentials secret must be keyed \"liferay\"."
+		condition=length(kubernetes_manifest.git_repo_credentials_external_secret) == 1
+		error_message="A shared infrastructure/Liferay repo URL must yield a single git credentials ExternalSecret"
 	}
 }
 
@@ -90,13 +90,13 @@ run "should_create_two_credentials_secrets_for_separate_repos" {
 	}
 
 	assert {
-		condition=length(kubernetes_manifest.git_repo_credentials_external_secret) == 2
-		error_message="A distinct infrastructure repo URL must yield infrastructure and Liferay credentials secrets."
+		condition=contains(keys(kubernetes_manifest.git_repo_credentials_external_secret), "infrastructure") && contains(keys(kubernetes_manifest.git_repo_credentials_external_secret), "liferay")
+		error_message="Both \"infrastructure\" and \"liferay\" credentials secrets must be created"
 	}
 
 	assert {
-		condition=contains(keys(kubernetes_manifest.git_repo_credentials_external_secret), "infrastructure") && contains(keys(kubernetes_manifest.git_repo_credentials_external_secret), "liferay")
-		error_message="Both \"infrastructure\" and \"liferay\" credentials secrets must be created."
+		condition=length(kubernetes_manifest.git_repo_credentials_external_secret) == 2
+		error_message="A distinct infrastructure repo URL must yield infrastructure and Liferay credentials secrets"
 	}
 }
 
@@ -112,10 +112,10 @@ run "should_map_the_private_key_for_ssh_auth" {
 	}
 
 	assert {
-		condition=length([
+		condition=kubernetes_manifest.git_repo_credentials_external_secret["liferay"].manifest.spec.data[0].secretKey == "ssh_private_key" && length([
 			for d in kubernetes_manifest.git_repo_credentials_external_secret["liferay"].manifest.spec.data : d.secretKey
-		]) == 1 && kubernetes_manifest.git_repo_credentials_external_secret["liferay"].manifest.spec.data[0].secretKey == "ssh_private_key"
-		error_message="SSH auth must map a single ssh_private_key secret key."
+		]) == 1
+		error_message="SSH auth must map a single ssh_private_key secret key"
 	}
 }
 
@@ -123,19 +123,19 @@ run "should_map_username_and_password_for_https_auth" {
 	command=plan
 
 	assert {
-		condition=length([
+		condition=contains([
 			for d in kubernetes_manifest.git_repo_credentials_external_secret["liferay"].manifest.spec.data : d.secretKey
-		]) == 2
-		error_message="HTTPS auth must map exactly two secret keys."
+		], "password") && contains([
+			for d in kubernetes_manifest.git_repo_credentials_external_secret["liferay"].manifest.spec.data : d.secretKey
+		], "username")
+		error_message="HTTPS auth must map both username and password secret keys"
 	}
 
 	assert {
-		condition=contains([
+		condition=length([
 			for d in kubernetes_manifest.git_repo_credentials_external_secret["liferay"].manifest.spec.data : d.secretKey
-		], "username") && contains([
-			for d in kubernetes_manifest.git_repo_credentials_external_secret["liferay"].manifest.spec.data : d.secretKey
-		], "password")
-		error_message="HTTPS auth must map both username and password secret keys."
+		]) == 2
+		error_message="HTTPS auth must map exactly two secret keys"
 	}
 }
 

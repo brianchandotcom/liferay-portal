@@ -73,23 +73,23 @@ run "should_create_an_http_gateway_for_a_hostname_only" {
 	}
 
 	assert {
+		condition=kubernetes_manifest.argocd_httproute[0].manifest.spec.parentRefs[0].sectionName == "http"
+		error_message="Without TLS the HTTPRoute must attach to the http listener"
+	}
+
+	assert {
 		condition=length(kubernetes_manifest.argocd_gateway) == 1
-		error_message="A hostname must create the ArgoCD Gateway."
+		error_message="A hostname must create the ArgoCD Gateway"
 	}
 
 	assert {
 		condition=length(kubernetes_manifest.argocd_gateway[0].manifest.spec.listeners) == 1
-		error_message="Without TLS the Gateway must expose only the HTTP listener."
+		error_message="Without TLS the Gateway must expose only the HTTP listener"
 	}
 
 	assert {
 		condition=length(kubernetes_manifest.argocd_https_redirect) == 0 && length(kubernetes_manifest.argocd_server_tls_external_secret) == 0
-		error_message="Without a TLS secret there must be no HTTPS redirect or TLS ExternalSecret."
-	}
-
-	assert {
-		condition=kubernetes_manifest.argocd_httproute[0].manifest.spec.parentRefs[0].sectionName == "http"
-		error_message="Without TLS the HTTPRoute must attach to the http listener."
+		error_message="Without a TLS secret there must be no HTTPS redirect or TLS ExternalSecret"
 	}
 }
 
@@ -104,18 +104,18 @@ run "should_enable_https_and_prefix_the_tls_secret_name" {
 	}
 
 	assert {
+		condition=kubernetes_manifest.argocd_server_tls_external_secret[0].manifest.spec.dataFrom[0].extract.key == "liferay/certificates/argocd-cert"
+		error_message="A bare TLS secret name must be prefixed with liferay/certificates/"
+	}
+
+	assert {
 		condition=length(kubernetes_manifest.argocd_gateway[0].manifest.spec.listeners) == 2
-		error_message="A TLS secret must add the HTTPS listener to the Gateway."
+		error_message="A TLS secret must add the HTTPS listener to the Gateway"
 	}
 
 	assert {
 		condition=length(kubernetes_manifest.argocd_https_redirect) == 1
-		error_message="Enabling TLS must create the HTTP-to-HTTPS redirect route."
-	}
-
-	assert {
-		condition=kubernetes_manifest.argocd_server_tls_external_secret[0].manifest.spec.dataFrom[0].extract.key == "liferay/certificates/argocd-cert"
-		error_message="A bare TLS secret name must be prefixed with liferay/certificates/."
+		error_message="Enabling TLS must create the HTTP to HTTPS redirect route"
 	}
 }
 
@@ -128,7 +128,7 @@ run "should_extend_source_ranges_with_additional_cidrs" {
 
 	assert {
 		condition=kubernetes_manifest.argocd_gateway_proxy_config.manifest.spec.provider.kubernetes.envoyService.annotations["service.beta.kubernetes.io/load-balancer-source-ranges"] == "10.0.0.0/16,192.168.0.0/24"
-		error_message="argocd_source_ranges must append additional allowed CIDR blocks to the VPC CIDR."
+		error_message="The argocd_source_ranges local must append additional allowed CIDR blocks to the VPC CIDR"
 	}
 }
 
@@ -146,13 +146,13 @@ run "should_not_create_a_gateway_without_a_hostname" {
 	command=plan
 
 	assert {
-		condition=length(kubernetes_manifest.argocd_gateway) == 0 && length(kubernetes_manifest.argocd_httproute) == 0
-		error_message="No Gateway or HTTPRoute should be created when no hostname is configured."
+		condition=kubernetes_manifest.argocd_gateway_proxy_config.manifest.spec.provider.kubernetes.envoyService.annotations["service.beta.kubernetes.io/load-balancer-source-ranges"] == "10.0.0.0/16"
+		error_message="Default load balancer source ranges must be the VPC CIDR only"
 	}
 
 	assert {
-		condition=kubernetes_manifest.argocd_gateway_proxy_config.manifest.spec.provider.kubernetes.envoyService.annotations["service.beta.kubernetes.io/load-balancer-source-ranges"] == "10.0.0.0/16"
-		error_message="Default load balancer source ranges must be the VPC CIDR only."
+		condition=length(kubernetes_manifest.argocd_gateway) == 0 && length(kubernetes_manifest.argocd_httproute) == 0
+		error_message="No Gateway or HTTPRoute should be created when no hostname is configured"
 	}
 }
 
@@ -168,6 +168,6 @@ run "should_not_double_prefix_an_already_prefixed_tls_secret" {
 
 	assert {
 		condition=kubernetes_manifest.argocd_server_tls_external_secret[0].manifest.spec.dataFrom[0].extract.key == "liferay/certificates/argocd-cert"
-		error_message="An already-prefixed TLS secret name must not be prefixed again."
+		error_message="An already prefixed TLS secret name must not be prefixed again"
 	}
 }

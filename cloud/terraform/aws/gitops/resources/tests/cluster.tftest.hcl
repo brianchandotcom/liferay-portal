@@ -67,23 +67,23 @@ run "should_compute_cluster_identity_locals" {
 	command=plan
 
 	assert {
-		condition=local.cluster_name == "liferay-test-eks"
-		error_message="local.cluster_name must be \"<deployment_name>-eks\"."
-	}
-
-	assert {
-		condition=local.oidc_provider == "oidc.eks.us-east-1.amazonaws.com/id/EXAMPLE"
-		error_message="local.oidc_provider must strip the https:// scheme from the EKS OIDC issuer."
-	}
-
-	assert {
 		condition=local.account_id == "123456789012"
-		error_message="local.account_id must come from the caller identity."
+		error_message="local.account_id must come from the caller identity"
+	}
+
+	assert {
+		condition=local.cluster_name == "liferay-test-eks"
+		error_message="local.cluster_name must be \"<deployment_name>-eks\""
 	}
 
 	assert {
 		condition=local.liferay_service_account_role_name == "liferay-test-irsa"
-		error_message="local.liferay_service_account_role_name must be derived from deployment_name."
+		error_message="local.liferay_service_account_role_name must be derived from deployment_name"
+	}
+
+	assert {
+		condition=local.oidc_provider == "oidc.eks.us-east-1.amazonaws.com/id/EXAMPLE"
+		error_message="local.oidc_provider must strip the https:// scheme from the EKS OIDC issuer"
 	}
 }
 

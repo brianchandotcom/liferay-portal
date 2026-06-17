@@ -57,7 +57,7 @@ public class DataMaskPreviewRequest implements Serializable {
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The regex that identifies the substring(s) to be masked. Compiled by java.util.regex.Pattern on the server, so semantics match what the production redaction pipeline will see at runtime &mdash; not what a client-side JavaScript regex engine would produce."
+		description = "The regex that identifies the substring(s) to be masked. Compiled by java.util.regex.Pattern on the server, so semantics match what the production redaction pipeline will see at runtime &mdash; not what a client side JavaScript regex engine would produce."
 	)
 	public String getDetectionRegex() {
 		if (_detectionRegexSupplier != null) {
@@ -93,7 +93,7 @@ public class DataMaskPreviewRequest implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "The regex that identifies the substring(s) to be masked. Compiled by java.util.regex.Pattern on the server, so semantics match what the production redaction pipeline will see at runtime &mdash; not what a client-side JavaScript regex engine would produce."
+		description = "The regex that identifies the substring(s) to be masked. Compiled by java.util.regex.Pattern on the server, so semantics match what the production redaction pipeline will see at runtime &mdash; not what a client side JavaScript regex engine would produce."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotEmpty
@@ -103,7 +103,7 @@ public class DataMaskPreviewRequest implements Serializable {
 	private Supplier<String> _detectionRegexSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Optional. When set, each detection match is further processed by this regex against the matched substring; useful for partial-redaction styles like \"keep the last 4 digits\" or \"/24 CIDR truncation\". When unset, the entire detection match is replaced by replacementValue."
+		description = "Optional. When set, each detection match is further processed by this regex against the matched substring; useful for partial redaction styles like \"keep the last 4 digits\" or \"/24 CIDR truncation\". When unset, the entire detection match is replaced by replacementValue."
 	)
 	public String getReplacementRegex() {
 		if (_replacementRegexSupplier != null) {
@@ -139,7 +139,7 @@ public class DataMaskPreviewRequest implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "Optional. When set, each detection match is further processed by this regex against the matched substring; useful for partial-redaction styles like \"keep the last 4 digits\" or \"/24 CIDR truncation\". When unset, the entire detection match is replaced by replacementValue."
+		description = "Optional. When set, each detection match is further processed by this regex against the matched substring; useful for partial redaction styles like \"keep the last 4 digits\" or \"/24 CIDR truncation\". When unset, the entire detection match is replaced by replacementValue."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String replacementRegex;
@@ -432,4 +432,4 @@ public class DataMaskPreviewRequest implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:49122344
+// LIFERAY-REST-BUILDER-HASH:946193198

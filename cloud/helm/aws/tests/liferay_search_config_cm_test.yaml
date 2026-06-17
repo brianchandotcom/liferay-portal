@@ -1,4 +1,4 @@
-suite: search config configmap
+suite: Search Config ConfigMap
 templates:
     -   templates/liferay-search-config-cm.yaml
 tests:

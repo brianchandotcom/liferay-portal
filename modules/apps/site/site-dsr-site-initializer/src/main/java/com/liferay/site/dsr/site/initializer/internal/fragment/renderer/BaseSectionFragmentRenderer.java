@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import jakarta.servlet.http.HttpServletRequest;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -59,11 +57,6 @@ public abstract class BaseSectionFragmentRenderer implements FragmentRenderer {
 			return FragmentRenderer.super.getConfigurationJSONObject(
 				fragmentRendererContext);
 		}
-	}
-
-	@Override
-	public boolean isSelectable(HttpServletRequest httpServletRequest) {
-		return true;
 	}
 
 	protected String getConfigurationPath() {

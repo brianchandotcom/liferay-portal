@@ -198,6 +198,15 @@ export class DataTablePage {
 			page.getByTitle(`Select View, Currently Selected: ${status}`);
 	}
 
+	async changeFilter(option: string) {
+		await clickAndExpectToBeVisible({
+			target: this.filterMenuItem(option),
+			trigger: this.filterButton,
+		});
+
+		await this.filterMenuItem(option).click({force: true});
+	}
+
 	async changeView(view: string) {
 		if (view === 'List') {
 			await clickAndExpectToBeVisible({

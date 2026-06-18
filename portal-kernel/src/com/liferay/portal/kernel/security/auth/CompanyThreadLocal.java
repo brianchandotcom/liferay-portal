@@ -5,7 +5,6 @@
 
 package com.liferay.portal.kernel.security.auth;
 
-import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
@@ -105,19 +104,6 @@ public class CompanyThreadLocal {
 		}
 
 		return companyId;
-	}
-
-	public static long incrementSystemCounter() {
-		long originalCompanyId = getCompanyId();
-
-		_companyId.set(CompanyConstants.SYSTEM);
-
-		try {
-			return CounterLocalServiceUtil.increment();
-		}
-		finally {
-			_companyId.set(originalCompanyId);
-		}
 	}
 
 	public static boolean isInitializingPortalInstance() {

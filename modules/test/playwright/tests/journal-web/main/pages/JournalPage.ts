@@ -199,10 +199,23 @@ export class JournalPage {
 	}
 
 	async changeView(viewName: string) {
+		const selectViewButton = this.page.getByLabel(
+			'Select View, Currently Selected: '
+		);
+
+		await expect(selectViewButton).toBeVisible();
+
+		const currentViewLabel =
+			await selectViewButton.getAttribute('aria-label');
+
+		if (currentViewLabel?.endsWith(`: ${viewName}`)) {
+			return;
+		}
+
 		await clickAndExpectToBeVisible({
 			autoClick: true,
 			target: this.page.getByRole('menuitem', {name: viewName}),
-			trigger: this.page.getByLabel('Select View, Currently Selected: '),
+			trigger: selectViewButton,
 		});
 	}
 

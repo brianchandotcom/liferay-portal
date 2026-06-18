@@ -50,7 +50,7 @@ public class TestPropertiesPQLValidationTest {
 			throw new RuntimeException("Unable to find portal directory");
 		}
 
-		List<String> errors = new ArrayList<>();
+		List<String> errorMessages = new ArrayList<>();
 
 		Files.walkFileTree(
 			portalDir.toPath(),
@@ -118,7 +118,7 @@ public class TestPropertiesPQLValidationTest {
 							JenkinsResultsParserUtil.validatePQL(pql, file);
 						}
 						catch (RuntimeException runtimeException) {
-							errors.add(
+							errorMessages.add(
 								"Invalid PQL in property " + propertyName +
 									": " + runtimeException.getMessage());
 						}
@@ -136,13 +136,13 @@ public class TestPropertiesPQLValidationTest {
 
 			});
 
-		Collections.sort(errors);
+		Collections.sort(errorMessages);
 
-		for (String error : errors) {
-			System.out.println(error);
+		for (String errorMessage : errorMessages) {
+			System.out.println(errorMessage);
 		}
 
-		Assert.assertTrue(errors.isEmpty());
+		Assert.assertTrue(errorMessages.isEmpty());
 	}
 
 }

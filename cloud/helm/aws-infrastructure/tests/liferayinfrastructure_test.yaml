@@ -16,13 +16,13 @@ tests:
                     count: 1
             -   isKind:
                     of: LiferayInfrastructure
-        it: should name the LiferayInfrastructure after the release
+        it: names the LiferayInfrastructure after the release
         set:
             enabled: true
     -   asserts:
             -   hasDocuments:
                     count: 0
-        it: should omit the LiferayInfrastructure when the chart is disabled
+        it: omits the LiferayInfrastructure when the chart is disabled
         set:
             enabled: false
     -   asserts:
@@ -35,7 +35,7 @@ tests:
             -   equal:
                     path: spec.region
                     value: us-east-1
-        it: should propagate the environment, project, and region into the spec
+        it: propagates the environment, project, and region into the spec
         set:
             environmentId: env-123
             projectId: proj-456
@@ -44,11 +44,11 @@ tests:
             -   equal:
                     path: spec.search.elasticsearch.enabled
                     value: false
-        it: should reflect the disabled Elasticsearch search engine by default
+        it: reflects the disabled Elasticsearch search engine by default
     -   asserts:
             -   equal:
                     path: spec.search.elasticsearch.enabled
                     value: true
-        it: should reflect the enabled Elasticsearch search engine when toggled on
+        it: reflects the enabled Elasticsearch search engine when toggled on
         set:
             search.elasticsearch.enabled: true

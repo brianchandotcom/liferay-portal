@@ -6,7 +6,7 @@ tests:
             -   equal:
                     path: data.LIFERAY_OPENSEARCH_ENABLED
                     value: "false"
-        it: should disable OpenSearch through the environment when the engine is elasticsearch
+        it: disables OpenSearch through the environment when the engine is elasticsearch
         set:
             liferay-default.portalBundleDenyList: []
             liferay-default.search.engine: elasticsearch
@@ -16,6 +16,6 @@ tests:
                     value: "true"
             -   isKind:
                     of: ConfigMap
-        it: should enable OpenSearch through the environment when the engine is opensearch
+        it: enables OpenSearch through the environment when the engine is opensearch
         set:
             liferay-default.search.engine: opensearch

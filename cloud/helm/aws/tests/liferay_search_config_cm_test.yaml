@@ -9,7 +9,7 @@ tests:
             -   matchRegex:
                     path: data["com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config"]
                     pattern: "\"com.example.b\""
-        it: should append the portal bundle deny list entries through the loop
+        it: appends the portal bundle deny list entries through the loop
         set:
             liferay-default.portalBundleDenyList:
                 -   com.example.a
@@ -22,7 +22,7 @@ tests:
             -   matchRegex:
                     path: data["com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config"]
                     pattern: com.liferay.portal.search.learning.to.rank.api
-        it: should blacklist the Elasticsearch bundles through the loop when the engine is opensearch
+        it: blacklists the Elasticsearch bundles through the loop when the engine is opensearch
         set:
             liferay-default.search.engine: opensearch
     -   asserts:
@@ -32,7 +32,7 @@ tests:
             -   matchRegex:
                     path: data["com.liferay.portal.search.elasticsearch8.configuration.ElasticsearchConfiguration.config"]
                     pattern: productionModeEnabled=B"true"
-        it: should render the Elasticsearch configuration when the engine is elasticsearch
+        it: renders the Elasticsearch configuration when the engine is elasticsearch
         set:
             liferay-default.portalBundleDenyList: []
             liferay-default.search.engine: elasticsearch
@@ -45,6 +45,6 @@ tests:
             -   matchRegex:
                     path: data["com.liferay.portal.search.opensearch2.configuration.OpenSearchConnectionConfiguration-REMOTE.config"]
                     pattern: active=B"true"
-        it: should render the OpenSearch configuration when the engine is opensearch
+        it: renders the OpenSearch configuration when the engine is opensearch
         set:
             liferay-default.search.engine: opensearch

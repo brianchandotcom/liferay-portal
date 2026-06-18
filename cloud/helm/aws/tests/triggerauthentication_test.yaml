@@ -8,6 +8,6 @@ tests:
                     value: aws
             -   isKind:
                     of: TriggerAuthentication
-        it: should render TriggerAuthentication with podIdentity.provider=aws when autoscaling is enabled
+        it: renders TriggerAuthentication with podIdentity.provider=aws when autoscaling is enabled
         set:
             liferay-default.autoscaling.enabled: true

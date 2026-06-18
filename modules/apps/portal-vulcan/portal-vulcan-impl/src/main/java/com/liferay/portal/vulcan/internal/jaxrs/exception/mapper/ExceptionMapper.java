@@ -98,6 +98,12 @@ public class ExceptionMapper extends BaseExceptionMapper<Exception> {
 			return Response.Status.CONFLICT;
 		}
 
+		if (com.liferay.portal.vulcan.problem.Problem.Status.METHOD_NOT_ALLOWED.
+				equals(status)) {
+
+			return Response.Status.METHOD_NOT_ALLOWED;
+		}
+
 		if (com.liferay.portal.vulcan.problem.Problem.Status.NOT_FOUND.equals(
 				status)) {
 

@@ -7,6 +7,7 @@ import {Page, expect} from '@playwright/test';
 
 import {ApiHelpers} from '../../../../helpers/ApiHelpers';
 import {liferayConfig} from '../../../../liferay.config';
+import {clickAndExpectToBeHidden} from '../../../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
 import {PORTLET_URLS} from '../../../../utils/portletUrls';
 import {waitForAlert} from '../../../../utils/waitForAlert';
@@ -98,6 +99,8 @@ export async function enableCommerceChannel({
 	const commerceChannelSwitchButton = channel.locator('.toggle-switch-check');
 
 	await commerceChannelSwitchButton.click();
+
+	await expect(channel.locator('td:nth-child(2)')).not.toHaveText('-');
 }
 
 export async function expectPropertyColumn({
@@ -125,12 +128,28 @@ export async function findChannel({
 	channelName: string;
 	page: Page;
 }): Promise<any> {
-	await page.getByRole('textbox', {name: 'Search'}).first().fill(channelName);
+	const searchInput = page.getByRole('textbox', {name: 'Search'}).first();
 
-	await clickAndExpectToBeVisible({
-		target: page.getByRole('cell', {name: channelName}),
-		trigger: page.getByRole('button', {name: 'Search'}).first(),
-	});
+	const clearButton = page.getByRole('button', {name: 'Clear'}).first();
+
+	if (await clearButton.isVisible()) {
+		await searchInput.clear();
+
+		await clickAndExpectToBeHidden({
+			target: clearButton,
+			trigger: clearButton,
+		});
+	}
+
+	await searchInput.fill(channelName);
+
+	await page.getByRole('button', {name: 'Search'}).first().click();
+
+	await expect(page.locator('table.table tbody tr')).toHaveCount(1);
+
+	await expect(
+		page.getByRole('cell', {exact: true, name: channelName})
+	).toBeVisible();
 
 	return page.locator('table.table tbody tr:first-child');
 }

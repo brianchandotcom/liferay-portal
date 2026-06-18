@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -218,17 +219,30 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 				tokenResolutionsJSONObject, externalReferenceCode,
 				httpServletRequest);
 
-			if (fragmentRendererContext.isEditMode() && hasTokens) {
-				_writeAutoResolvableTokenNames(
-					fragmentEntryLink, externalReferenceCode,
-					httpServletRequest);
+			String componentId = externalReferenceCode;
 
-				if (!resolved) {
+			if (fragmentRendererContext.isEditMode()) {
+
+				componentId = StringBundler.concat(
+					componentId, "-",
+					fragmentEntryLink.getFragmentEntryLinkId());
+
+				if (hasTokens) {
+					_writeAutoResolvableTokenNames(
+						fragmentEntryLink, externalReferenceCode,
+						httpServletRequest);
+				}
+
+				_writeDestroyPreviousComponentScript(
+					componentId, fragmentEntryLink, httpServletRequest,
+					printWriter);
+
+				if (hasTokens && !resolved) {
 					_reactRenderer.renderReact(
 						new ComponentDescriptor(
 							"{UnresolvedDataSetPreview} from " +
 								"frontend-data-set-fragment-web",
-							null, null, true),
+							componentId, null, true),
 						HashMapBuilder.<String, Object>put(
 							"apiURL",
 							_fdsRenderer.getFDSAPIURL(
@@ -258,8 +272,7 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 							return null;
 						}
 					).build(),
-					fragmentRendererContext.getFragmentElementId(),
-					externalReferenceCode, httpServletRequest,
+					componentId, externalReferenceCode, httpServletRequest,
 					httpServletResponse, true, null, printWriter);
 
 				printWriter.write("</div>");
@@ -513,6 +526,28 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 
 		configurationJSONObject.put(
 			"autoResolvableTokenNames", jsonArray.toString());
+	}
+
+	private void _writeDestroyPreviousComponentScript(
+			String componentId, FragmentEntryLink fragmentEntryLink,
+			HttpServletRequest httpServletRequest, PrintWriter printWriter)
+		throws IOException {
+
+		ScriptData scriptData = new ScriptData();
+
+		scriptData.append(
+			_portal.getPortletId(httpServletRequest),
+			StringUtil.replace(
+				StringUtil.read(
+					getClass(), "dependencies/destroy_previous_component.js"),
+				new String[] {"[$COMPONENT_ID$]", "[$FRAGMENT_ENTRY_LINK_ID$]"},
+				new String[] {
+					HtmlUtil.escapeJS(componentId),
+					String.valueOf(fragmentEntryLink.getFragmentEntryLinkId())
+				}),
+			null, ScriptData.ModulesType.ES6);
+
+		scriptData.writeTo(printWriter);
 	}
 
 	private static final String _MAPPING_MODE_AUTO_RESOLVED = "auto-resolved";

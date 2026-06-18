@@ -475,14 +475,22 @@ public class WorkflowDefinitionManagerTest extends BaseWorkflowManagerTestCase {
 				_createWorkflowNodeSetting(
 					"inputVariables",
 					JSONUtil.put(
-						JSONUtil.put("name", "input")
+						JSONUtil.put(
+							"name", "input"
+						).put(
+							"type", "string"
+						)
 					).toString()),
 				_createWorkflowNodeSetting(
 					"javaDelegate", "com.example.Converter#convert"),
 				_createWorkflowNodeSetting(
 					"outputVariables",
 					JSONUtil.put(
-						JSONUtil.put("name", "output")
+						JSONUtil.put(
+							"name", "output"
+						).put(
+							"type", "string"
+						)
 					).toString())),
 			workflowNode.getWorkflowNodeSettings());
 	}

@@ -49,6 +49,7 @@ public class OAuthClientPRLocalMetadataServiceImpl
 			addOAuthClientPRLocalMetadata(getUserId(), metadataJSON);
 	}
 
+	@Override
 	public OAuthClientPRLocalMetadata addOAuthClientPRLocalMetadata(
 			String externalReferenceCode, String[] authorizationServers,
 			String[] bearerMethodsSupported, boolean localWellKnownEnabled,
@@ -275,6 +276,7 @@ public class OAuthClientPRLocalMetadataServiceImpl
 				oAuthClientPRLocalMetadataId, metadataJSON);
 	}
 
+	@Override
 	public OAuthClientPRLocalMetadata updateOAuthClientPRLocalMetadata(
 			long oAuthClientPRLocalMetadataId, String[] authorizationServers,
 			String[] bearerMethodsSupported, boolean localWellKnownEnabled,

@@ -65,6 +65,7 @@ public class OAuthClientPRLocalMetadataLocalServiceImpl
 				metadataJSONObject.getJSONArray("scopes_supported")));
 	}
 
+	@Override
 	public OAuthClientPRLocalMetadata addOAuthClientPRLocalMetadata(
 			String externalReferenceCode, long userId,
 			String[] authorizationServers, String[] bearerMethodsSupported,
@@ -258,6 +259,7 @@ public class OAuthClientPRLocalMetadataLocalServiceImpl
 				metadataJSONObject.getJSONArray("scopes_supported")));
 	}
 
+	@Override
 	public OAuthClientPRLocalMetadata updateOAuthClientPRLocalMetadata(
 			long oAuthClientPRLocalMetadataId, String[] authorizationServers,
 			String[] bearerMethodsSupported, boolean localWellKnownEnabled,

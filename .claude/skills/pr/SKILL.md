@@ -9,7 +9,7 @@ name: pr
 
 # Create a Pull Request
 
-Create a GitHub PR for the current branch, transition the linked Jira ticket to review, and record the PR URL on that ticket.
+Create a GitHub PR for the current branch, transition the linked Jira tickets to review, and record the PR URL on those tickets.
 
 ## Preconditions
 
@@ -76,6 +76,7 @@ The body follows this format, with one `browse` link per ticket in the set:
 
 ```markdown
 https://liferay.atlassian.net/browse/TICKET-ID
+https://liferay.atlassian.net/browse/OTHER-TICKET-ID
 
 ## What Is Being Fixed
 

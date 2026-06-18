@@ -355,6 +355,266 @@ jobs:
             chart_name: liferay-gcp-infrastructure-provider
             image_tag_suffix: ${{needs.set-up-variables.outputs.image_tag_suffix}}
             working_directory: ./cloud/helm/gcp-infrastructure-provider
+    record-release:
+        if: ${{!cancelled() && !failure() && needs.approve-release.result == 'success'}}
+        needs:
+            -   approve-release
+            -   promote-rc-aws
+            -   promote-rc-aws-infrastructure
+            -   promote-rc-aws-infrastructure-provider
+            -   promote-rc-bootstrap-aws
+            -   promote-rc-bootstrap-gcp
+            -   promote-rc-default
+            -   promote-rc-gcp
+            -   promote-rc-gcp-infrastructure
+            -   promote-rc-gcp-infrastructure-provider
+            -   publish-aws-marketplace
+            -   push-rc-aws
+            -   push-rc-aws-infrastructure
+            -   push-rc-aws-infrastructure-provider
+            -   push-rc-bootstrap-aws
+            -   push-rc-bootstrap-gcp
+            -   push-rc-default
+            -   push-rc-gcp
+            -   push-rc-gcp-infrastructure
+            -   push-rc-gcp-infrastructure-provider
+        permissions:
+            contents: write
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Checkout code
+                uses: actions/checkout@v4
+                with:
+                    fetch-depth: 1
+                    filter: tree:0
+                    show-progress: false
+                    sparse-checkout: .github
+            -   env:
+                    BOOTSTRAP_SHA256_aws: ${{needs.promote-rc-bootstrap-aws.outputs.sha256}}
+                    BOOTSTRAP_SHA256_gcp: ${{needs.promote-rc-bootstrap-gcp.outputs.sha256}}
+                    BOOTSTRAP_VERSION_aws: ${{needs.push-rc-bootstrap-aws.outputs.version}}
+                    BOOTSTRAP_VERSION_gcp: ${{needs.push-rc-bootstrap-gcp.outputs.version}}
+                    DIGEST_liferay_aws: ${{needs.promote-rc-aws.outputs.image_digest}}
+                    DIGEST_liferay_aws_infrastructure: ${{needs.promote-rc-aws-infrastructure.outputs.image_digest}}
+                    DIGEST_liferay_aws_infrastructure_provider: ${{needs.promote-rc-aws-infrastructure-provider.outputs.image_digest}}
+                    DIGEST_liferay_default: ${{needs.promote-rc-default.outputs.image_digest}}
+                    DIGEST_liferay_gcp: ${{needs.promote-rc-gcp.outputs.image_digest}}
+                    DIGEST_liferay_gcp_infrastructure: ${{needs.promote-rc-gcp-infrastructure.outputs.image_digest}}
+                    DIGEST_liferay_gcp_infrastructure_provider: ${{needs.promote-rc-gcp-infrastructure-provider.outputs.image_digest}}
+                    VERSION_liferay_aws: ${{needs.push-rc-aws.outputs.chart_version}}
+                    VERSION_liferay_aws_infrastructure: ${{needs.push-rc-aws-infrastructure.outputs.chart_version}}
+                    VERSION_liferay_aws_infrastructure_provider: ${{needs.push-rc-aws-infrastructure-provider.outputs.chart_version}}
+                    VERSION_liferay_default: ${{needs.push-rc-default.outputs.chart_version}}
+                    VERSION_liferay_gcp: ${{needs.push-rc-gcp.outputs.chart_version}}
+                    VERSION_liferay_gcp_infrastructure: ${{needs.push-rc-gcp-infrastructure.outputs.chart_version}}
+                    VERSION_liferay_gcp_infrastructure_provider: ${{needs.push-rc-gcp-infrastructure-provider.outputs.chart_version}}
+                name: Record the release
+                run: |
+                    set -o errexit
+                    set -o nounset
+                    set -o pipefail
+
+                    function main {
+                        git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+                        git config user.name "github-actions[bot]"
+
+                        git \
+                            fetch \
+                            --filter=tree:0 \
+                            --no-tags \
+                            --shallow-since="3 months ago" \
+                            https://github.com/brianchandotcom/liferay-portal \
+                            "+refs/heads/master:refs/remotes/brianchandotcom/master"
+
+                        git \
+                            fetch \
+                            --filter=tree:0 \
+                            --no-tags \
+                            --shallow-since="3 months ago" \
+                            origin \
+                            "+refs/heads/${GITHUB_REF_NAME}:refs/remotes/origin/${GITHUB_REF_NAME}"
+
+                        git \
+                            fetch \
+                            --no-tags \
+                            origin \
+                            "+refs/heads/releases:refs/remotes/origin/releases" || true
+
+                        local base_commit
+
+                        base_commit=$(git merge-base brianchandotcom/master "${GITHUB_SHA}")
+
+                        local previous_base_commit=""
+
+                        if git rev-parse --quiet --verify origin/releases > /dev/null
+                        then
+                            local previous_release_id
+
+                            previous_release_id=$( \
+                                git ls-tree --full-tree --name-only -r origin/releases -- releases \
+                                | { grep --extended-regexp '/manifest\.json$' || true; } \
+                                | sed -e 's#releases/##' -e 's#/manifest.json##' \
+                                | sort \
+                                | tail --lines 1)
+
+                            if [[ -n "${previous_release_id}" ]]
+                            then
+                                previous_base_commit=$( \
+                                    git \
+                                        show \
+                                        "origin/releases:releases/${previous_release_id}/manifest.json" \
+                                    | jq --raw-output '.base_commit // empty')
+                            fi
+                        fi
+
+                        if [[ -n "${previous_base_commit}" ]] && \
+                            ! git merge-base --is-ancestor "${previous_base_commit}" "${base_commit}" 2> /dev/null
+                        then
+                            git \
+                                fetch \
+                                --filter=tree:0 \
+                                --no-tags \
+                                --unshallow \
+                                https://github.com/brianchandotcom/liferay-portal \
+                                "+refs/heads/master:refs/remotes/brianchandotcom/master" || true
+                        fi
+
+                        local included_lcd_tickets="[]"
+
+                        if [[ -n "${previous_base_commit}" ]]
+                        then
+                            included_lcd_tickets=$( \
+                                git log --format='%s' "${previous_base_commit}..${base_commit}" \
+                                | { grep --extended-regexp --only-matching 'LCD-[0-9]+' || true; } \
+                                | sort --unique \
+                                | jq --raw-input --slurp 'split("\n") | map(select(length > 0))')
+                        fi
+
+                        local chart
+                        local charts="{}"
+
+                        for chart in \
+                            liferay-aws \
+                            liferay-aws-infrastructure \
+                            liferay-aws-infrastructure-provider \
+                            liferay-default \
+                            liferay-gcp \
+                            liferay-gcp-infrastructure \
+                            liferay-gcp-infrastructure-provider
+                        do
+                            local digest_key="DIGEST_${chart//-/_}"
+                            local version_key="VERSION_${chart//-/_}"
+
+                            local digest="${!digest_key:-}"
+
+                            [[ -n "${digest}" ]] || continue
+
+                            charts=$( \
+                                echo \
+                                    "${charts}" \
+                                    | jq \
+                                        --arg c "${chart}" \
+                                        --arg d "${digest}" \
+                                        --arg v "${!version_key:-}" \
+                                        '.[$c] = {digest: $d, version: $v}')
+                        done
+
+                        local bootstraps="{}"
+                        local provider
+
+                        for provider in aws gcp
+                        do
+                            local sha256_key="BOOTSTRAP_SHA256_${provider}"
+                            local version_key="BOOTSTRAP_VERSION_${provider}"
+
+                            local sha256="${!sha256_key:-}"
+
+                            [[ -n "${sha256}" ]] || continue
+
+                            bootstraps=$( \
+                                echo \
+                                    "${bootstraps}" \
+                                    | jq \
+                                        --arg p "${provider}" \
+                                        --arg s "${sha256}" \
+                                        --arg v "${!version_key:-}" \
+                                        '.[$p] = {sha256: $s, version: $v}')
+                        done
+
+                        local release_id
+
+                        release_id="release-$(date --utc +%Y-%m-%dT%H-%M-%SZ)"
+
+                        local release_ticket
+
+                        release_ticket=$( \
+                            echo \
+                                "${GITHUB_REF_NAME}" \
+                                | grep --extended-regexp --only-matching 'LCD-[0-9]+')
+
+                        jq \
+                            --arg base_commit "${base_commit}" \
+                            --arg release_id "${release_id}" \
+                            --arg release_ticket "${release_ticket}" \
+                            --arg source_branch "${GITHUB_REF_NAME}" \
+                            --argjson bootstraps "${bootstraps}" \
+                            --argjson charts "${charts}" \
+                            --argjson included_lcd_tickets "${included_lcd_tickets}" \
+                            --null-input \
+                            '{
+                                base_commit: $base_commit,
+                                bootstraps: $bootstraps,
+                                charts: $charts,
+                                included_lcd_tickets: $included_lcd_tickets,
+                                release_id: $release_id,
+                                release_ticket: $release_ticket,
+                                source_branch: $source_branch
+                            }' > /tmp/manifest.json
+
+                        local parent=""
+
+                        export GIT_INDEX_FILE=/tmp/release-index
+
+                        rm --force "${GIT_INDEX_FILE}"
+
+                        if git rev-parse --quiet --verify origin/releases > /dev/null
+                        then
+                            git read-tree origin/releases
+
+                            parent=$(git rev-parse origin/releases)
+                        else
+                            git read-tree --empty
+                        fi
+
+                        local manifest_blob
+
+                        manifest_blob=$(git hash-object -w /tmp/manifest.json)
+
+                        git \
+                            update-index \
+                            --add \
+                            --cacheinfo "100644,${manifest_blob},releases/${release_id}/manifest.json"
+
+                        local tree
+
+                        tree=$(git write-tree)
+
+                        local commit
+
+                        if [[ -n "${parent}" ]]
+                        then
+                            commit=$(git commit-tree "${tree}" -m "Record ${release_id} (${release_ticket})" -p "${parent}")
+                        else
+                            commit=$(git commit-tree "${tree}" -m "Record ${release_id} (${release_ticket})")
+                        fi
+
+                        unset GIT_INDEX_FILE
+
+                        git push origin "${commit}:refs/heads/releases"
+                    }
+
+                    main "${@}"
     set-up-variables:
         if: github.repository == 'cloudnative-team/liferay-portal'
         outputs:
@@ -370,52 +630,6 @@ jobs:
 
                     function main {
                         echo "image_tag_suffix=-g${GITHUB_SHA::7}" >> ${GITHUB_OUTPUT}
-                    }
-
-                    main "${@}"
-    tag-release:
-        if: ${{!cancelled() && !failure() && needs.approve-release.result == 'success'}}
-        needs:
-            -   approve-release
-            -   promote-rc-aws
-            -   promote-rc-aws-infrastructure
-            -   promote-rc-aws-infrastructure-provider
-            -   promote-rc-bootstrap-aws
-            -   promote-rc-bootstrap-gcp
-            -   promote-rc-default
-            -   promote-rc-gcp
-            -   promote-rc-gcp-infrastructure
-            -   promote-rc-gcp-infrastructure-provider
-            -   publish-aws-marketplace
-        permissions:
-            contents: write
-        runs-on: ubuntu-latest
-        steps:
-            -   name: Checkout code
-                uses: actions/checkout@v4
-                with:
-                    fetch-depth: 1
-                    filter: tree:0
-                    show-progress: false
-                    sparse-checkout: .github
-            -   name: Tag the release
-                run: |
-                    set -o errexit
-                    set -o nounset
-                    set -o pipefail
-
-                    function main {
-                        git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-                        git config user.name "github-actions[bot]"
-
-                        local release_git_tag
-
-                        release_git_tag="release-$(date --utc +%F)"
-
-                        git tag --annotate "${release_git_tag}" --message "Release ${release_git_tag} from ${GITHUB_REF_NAME}"
-
-                        git push origin "${release_git_tag}"
                     }
 
                     main "${@}"

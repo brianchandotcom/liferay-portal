@@ -1,6 +1,6 @@
 {
 	"className": "com.liferay.portal.search.web.internal.category.facet.portlet.CategoryFacetPortlet",
-	"ddmTemplateKey": "LO_SOLUTIONS_VOCABULARY_FACETS",
+	"ddmTemplateKey": "SOLUTIONS_VOCABULARY_FACETS",
 	"name": "Solutions Vocabulary Facets",
 	"resourceClassName": "com.liferay.portlet.display.template.PortletDisplayTemplate"
 }

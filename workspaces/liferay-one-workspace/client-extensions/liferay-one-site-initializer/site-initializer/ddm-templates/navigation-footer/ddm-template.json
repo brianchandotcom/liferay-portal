@@ -1,0 +1,6 @@
+{
+	"className": "com.liferay.portal.kernel.theme.NavItem",
+	"ddmTemplateKey": "NAVIGATION_FOOTER",
+	"name": "Navigation Footer",
+	"resourceClassName": "com.liferay.portlet.display.template.PortletDisplayTemplate"
+}

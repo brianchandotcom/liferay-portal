@@ -221,12 +221,12 @@ public class ObjectEntryInfoItemFieldValuesUpdaterTest
 		String ptValue = RandomTestUtil.randomString();
 		String childTextValue = RandomTestUtil.randomString();
 
-		String externalReferenceCode = StringUtil.randomId();
-
-		String namespace = ObjectEntryInfoItemUtil.getInfoFieldNamespace(
-			childObjectDefinition, objectRelationship);
-
 		try {
+			String externalReferenceCode = StringUtil.randomId();
+
+			String namespace = ObjectEntryInfoItemUtil.getInfoFieldNamespace(
+				childObjectDefinition, objectRelationship);
+
 			_updateFromInfoItemFieldValues(
 				InfoItemFieldValues.builder(
 				).infoFieldValue(

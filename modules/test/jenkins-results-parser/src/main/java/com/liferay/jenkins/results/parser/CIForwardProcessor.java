@@ -622,11 +622,9 @@ public class CIForwardProcessor {
 			return _getTestSuiteStatusLine(
 				":x:",
 				JenkinsResultsParserUtil.combine(
-					"The `pr-check` failed on the current commit. Fix the ",
-					"reported problems and push, then rerun the `/pr-check` ",
-					"Claude Code skill and publish the result with ",
-					"`/pr-check-publish` before commenting `ci:forward` ",
-					"again."),
+					"`pr-check` failed. Fix the failures and push, then rerun ",
+					"the `/pr-check` Claude Code skill and publish the result ",
+					"with `/pr-check-publish`."),
 				"pr-check");
 		}
 
@@ -634,9 +632,9 @@ public class CIForwardProcessor {
 			return _getTestSuiteStatusLine(
 				":warning:",
 				JenkinsResultsParserUtil.combine(
-					"This pull request has a skipped `pr-check`. Please send ",
-					"this pull request manually using the `/pr` Claude Code ",
-					"skill."),
+					"Pull requests with a skipped `pr-check` may not be ",
+					"forwarded. Please send this pull request manually using ",
+					"the `/pr` Claude Code skill."),
 				"pr-check");
 		}
 
@@ -646,9 +644,9 @@ public class CIForwardProcessor {
 			return _getTestSuiteStatusLine(
 				":warning:",
 				JenkinsResultsParserUtil.combine(
-					"The `pr-check` result is for a different commit. Please ",
-					"rerun the `/pr-check` Claude Code skill and publish the ",
-					"result with `/pr-check-publish` on the current commit."),
+					"The `pr-check` result does not match the current head ",
+					"commit. Please rerun the `/pr-check` Claude Code skill ",
+					"and publish the result with `/pr-check-publish`."),
 				"pr-check");
 		}
 
@@ -814,7 +812,7 @@ public class CIForwardProcessor {
 
 				sb.append(
 					_getTestSuiteStatusLine(
-						":warning:", "Not completed",
+						":warning:", "Not Completed",
 						requiredCompletedTestSuiteName));
 
 				continue;
@@ -868,8 +866,7 @@ public class CIForwardProcessor {
 					JenkinsResultsParserUtil.combine(
 						"This test suite failed. Fix the failures and push, ",
 						"then rerun the `/pr-check` Claude Code skill and ",
-						"publish the result with `/pr-check-publish` on the ",
-						"new commit before commenting `ci:forward` again."),
+						"publish the result with `/pr-check-publish`."),
 					requiredPassingTestSuiteName));
 		}
 

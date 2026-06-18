@@ -34,7 +34,7 @@ export class QuestionsPage {
 			.fill(questionBody);
 		await fillAndClickOutside(
 			this.page,
-			this.page.getByLabel('Tags', {exact: true}),
+			this.page.getByRole('combobox', {name: 'Tags'}),
 			tagName
 		);
 		await this.page.getByLabel('Source').click();
@@ -88,7 +88,7 @@ export class QuestionsPage {
 			.fill(questionBody);
 		await this.page.getByLabel('Source').click();
 
-		const tagsInput = this.page.getByLabel('Tags', {exact: true});
+		const tagsInput = this.page.getByRole('combobox', {name: 'Tags'});
 
 		for (const tagName of tagNames) {
 			await tagsInput.fill(tagName);

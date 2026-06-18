@@ -2,14 +2,9 @@
 	max-width: 296px;
 }
 
-.main-button {
-  font-size: 18px;
-  height: 48px;
-}
-
 .modal-body {
 	border: none !important;
-	padding: 0 24px 8px !important;
+	padding: 0 var(--spacer-4) var(--spacer-2) !important;
 }
 
 .modal-content {
@@ -34,11 +29,11 @@
 
 .modal-header {
 	border: none !important;
-	margin: 24px !important;
+	margin: var(--spacer-4) !important;
 	padding: 0 !important;
 }
 
 .modal-header h1 {
 	font-size: 30px !important;
-	font-weight: 700 !important;
+	font-weight: var(--font-weight-bold) !important;
 }

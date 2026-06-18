@@ -1,0 +1,14 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"label": "Channel ID",
+					"name": "channelId",
+					"type": "text"
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,16 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "NAVIGATION_FOOTER",
+					"description": "Footer Navigation DDM Template Key",
+					"label": "Footer Navigation DDM Template Key",
+					"name": "footerNavigationDDMTemplateKey",
+					"type": "text"
+				}
+			]
+		}
+	]
+}

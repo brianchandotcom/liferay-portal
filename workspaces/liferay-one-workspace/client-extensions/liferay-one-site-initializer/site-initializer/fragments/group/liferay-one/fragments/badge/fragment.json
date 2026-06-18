@@ -1,0 +1,8 @@
+{
+	"configurationPath": "configuration.json",
+	"htmlPath": "index.html",
+	"icon": "code",
+	"jsPath": "index.js",
+	"name": "Badge",
+	"type": "component"
+}

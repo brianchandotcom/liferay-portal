@@ -1,0 +1,8 @@
+{
+	"configurationPath": "configuration.json",
+	"cssPath": "index.css",
+	"htmlPath": "index.html",
+	"icon": "grid",
+	"name": "Marketplace Category Nav",
+	"type": "component"
+}

@@ -1,0 +1,20 @@
+[#assign appCategories = configuration.appCategories?eval_json]
+
+<div class="d-flex flex-column marketplace-categories">
+	<div class="font-weight-semi-bold marketplace-categories-title text-uppercase">
+		${configuration.sectionTitle}
+	</div>
+
+	[#if appCategories?has_content]
+		<div class="d-flex flex-wrap marketplace-categories-list">
+			[#list appCategories as category]
+				<a class="align-items-center d-inline-flex justify-content-center marketplace-category-button text-decoration-none text-nowrap" href="/web/one/marketplace/applications?Category=${category.id?url('UTF-8')}" target="_self">
+					<span class="align-items-center d-inline-flex justify-content-center marketplace-category-icon" style="--category-color:${category.color};">
+						[@clay["icon"] symbol="${category.icon}" /]
+					</span>
+					<span class="font-weight-semi-bold marketplace-category-name">${category.name}</span>
+				</a>
+			[/#list]
+		</div>
+	[/#if]
+</div>

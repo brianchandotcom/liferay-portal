@@ -1,0 +1,29 @@
+.one-conditional-wrapper-edit {
+	border: 1px dashed color-mix(in srgb, var(--color-action-primary-hover) 30%, transparent);
+	border-radius: 6px;
+	padding: 4px;
+	position: relative;
+}
+
+.one-conditional-wrapper-edit::before {
+	background: color-mix(in srgb, var(--color-action-primary-hover) 8%, transparent);
+	border-radius: 4px;
+	color: var(--color-action-primary-hover);
+	content: attr(data-edit-label);
+	font-size: 10px;
+	font-weight: var(--font-weight-semi-bold);
+	left: 4px;
+	letter-spacing: 0.5px;
+	padding: 2px 6px;
+	position: absolute;
+	text-transform: uppercase;
+	top: -10px;
+}
+
+.one-conditional-wrapper-in-role.one-conditional-wrapper-edit::before {
+	content: "In Role";
+}
+
+.one-conditional-wrapper-out-of-role.one-conditional-wrapper-edit::before {
+	content: "Out of Role";
+}

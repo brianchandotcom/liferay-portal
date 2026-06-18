@@ -1,0 +1,39 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "/web/one/home",
+					"label": "Home Link",
+					"name": "homeLink",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "/web/one/home",
+					"label": "Parent Link",
+					"name": "parentLink",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": true,
+					"description": "Show the parent breadcrumb segment between Home and the current page.",
+					"label": "Show Breadcrumb Parent",
+					"name": "showBreadcrumbParent",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": true,
+					"description": "Show the subtitle below the title.",
+					"label": "Show Subtitle",
+					"name": "showSubtitle",
+					"type": "checkbox"
+				}
+			],
+			"label": "Hero Banner"
+		}
+	]
+}

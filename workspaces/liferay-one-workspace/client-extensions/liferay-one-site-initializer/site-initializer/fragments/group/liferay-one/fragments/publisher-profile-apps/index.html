@@ -1,0 +1,69 @@
+[#assign publisherName = "" /]
+
+[#assign infoItem = request.getAttribute("INFO_ITEM")! /]
+
+[#if infoItem?has_content]
+	[#attempt]
+		[#assign publisherName = (infoItem.getValues()["publisherName"])!"" /]
+	[#recover]
+	[/#attempt]
+[/#if]
+
+[#assign channelId = "" /]
+
+[#if configuration.channelId?has_content]
+	[#assign channelId = configuration.channelId /]
+[#else]
+	[#attempt]
+		[#assign channel = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels") /]
+
+		[#if channel?has_content && (channel.items)?has_content]
+			[#assign siteChannels = channel.items?filter(siteChannel -> siteChannel.siteGroupId == themeDisplay.getSiteGroupId()) /]
+
+			[#if siteChannels?has_content]
+				[#assign channelId = siteChannels[0].id /]
+			[/#if]
+		[/#if]
+	[#recover]
+	[/#attempt]
+[/#if]
+
+[#function getPublisherName product]
+	[#if product.productSpecifications?has_content]
+		[#local specification = product.productSpecifications?filter(productSpecification ->
+			stringUtil.equals(productSpecification.specificationKey, "publisher-name")) /]
+
+		[#if specification?has_content]
+			[#return specification?first.value!"" /]
+		[/#if]
+	[/#if]
+
+	[#return "" /]
+[/#function]
+
+<div class="publisher-profile-apps-fragment">
+	[#if publisherName?has_content && channelId?has_content]
+		[#assign response = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels/${channelId}/products?accountId=-1&nestedFields=productSpecifications&pageSize=100") /]
+		[#assign publisherProducts = (response.items![])?filter(product -> getPublisherName(product) == publisherName) /]
+
+		[#if publisherProducts?has_content]
+			<h4 class="font-weight-semi-bold mb-3 mt-5">
+				${languageUtil.get(locale, "apps", "Apps")} (${publisherProducts?size})
+			</h4>
+
+			<div class="d-flex flex-row flex-wrap publisher-profile-apps">
+				[#list publisherProducts as product]
+					<a class="d-flex flex-column mb-0 one-card position-relative publisher-profile-app-card text-dark text-decoration-none" href="/web/one/p/${product.slug}" target="_self">
+						<div class="align-items-center d-flex flex-row">
+							<div class="image-container mr-3 rounded">
+								<img alt="${product.name}" class="publisher-profile-app-image" draggable="false" height="48" src="${((product.urlImage!'')?replace('https://', 'http://'))?js_string}" width="48" />
+							</div>
+
+							<div class="font-weight-semi-bold publisher-profile-app-name">${product.name}</div>
+						</div>
+					</a>
+				[/#list]
+			</div>
+		[/#if]
+	[/#if]
+</div>

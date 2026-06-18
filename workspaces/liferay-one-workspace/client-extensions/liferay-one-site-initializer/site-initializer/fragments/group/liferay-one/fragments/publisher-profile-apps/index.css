@@ -1,0 +1,22 @@
+.publisher-profile-apps-fragment .publisher-profile-apps {
+	gap: var(--spacer-3);
+}
+
+.publisher-profile-apps-fragment .publisher-profile-app-card {
+	flex: 0 1 calc(50% - var(--spacer-3));
+	min-width: 240px;
+	padding: var(--spacer-3);
+}
+
+.publisher-profile-apps-fragment .publisher-profile-app-image {
+	border-radius: 8px;
+	object-fit: cover;
+}
+
+.publisher-profile-apps-fragment .publisher-profile-app-name {
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+	display: -webkit-box;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}

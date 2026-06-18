@@ -28,7 +28,7 @@
 			[/#if]
 		</div>
 
-		<p class="font-weight-semi-bold mt-1 text-danger[#if !input.errorMessage?has_content] d-none[/#if]" id="${fragmentElementId}-error-message">
+		<p class="font-weight-semi-bold mt-1 text-3 text-danger[#if !input.errorMessage?has_content] d-none[/#if]" id="${fragmentElementId}-error-message">
 			[@clay["icon"] symbol="info-circle" /]
 
 			<span data-required-error="${languageUtil.get(locale, 'this-field-is-required')}" id="${fragmentElementId}-error-message-text" role="status">

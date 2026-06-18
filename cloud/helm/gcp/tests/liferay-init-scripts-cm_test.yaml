@@ -8,4 +8,4 @@ tests:
                     value: liferay-init-scripts-gcp
             -   isKind:
                     of: ConfigMap
-        it: creates a ConfigMap named liferay-init-scripts-gcp
+        it: Creates a ConfigMap named liferay-init-scripts-gcp

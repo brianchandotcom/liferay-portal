@@ -6863,8 +6863,11 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals(0, baseModelSearchResult.getLength());
 	}
 
+	@FeatureFlag("LPD-17564")
 	@Test
 	public void testUpdateAsset() throws Exception {
+		_objectDefinition = _updateEnableObjectEntryDraft(_objectDefinition);
+
 		ObjectField objectField = _objectFieldLocalService.getObjectField(
 			_objectDefinition.getObjectDefinitionId(), "emailAddressRequired");
 
@@ -6872,22 +6875,48 @@ public class ObjectEntryLocalServiceTest {
 			_objectDefinition.getObjectDefinitionId(),
 			objectField.getObjectFieldId());
 
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
+
 		ObjectEntry objectEntry = _addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
+				"displayDate", new Date()
+			).put(
 				"emailAddressRequired", "john@liferay.com"
+			).put(
+				"expirationDate",
+				new Date(System.currentTimeMillis() + Time.DAY)
+			).put(
+				"listTypeEntryKeyRequired", "listTypeEntryKey1"
+			).build(),
+			serviceContext);
+
+		_assertAssetEntry(
+			objectEntry.getExpirationDate(), null, "john@liferay.com",
+			objectEntry);
+
+		objectEntry = _addObjectEntry(
+			HashMapBuilder.<String, Serializable>put(
+				"displayDate", new Date()
+			).put(
+				"emailAddressRequired", "john@liferay.com"
+			).put(
+				"expirationDate",
+				new Date(System.currentTimeMillis() + Time.DAY)
 			).put(
 				"listTypeEntryKeyRequired", "listTypeEntryKey1"
 			).build());
 
-		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-			_objectDefinition.getClassName(), objectEntry.getObjectEntryId());
-
-		Assert.assertEquals("john@liferay.com", assetEntry.getTitle());
+		_assertAssetEntry(
+			objectEntry.getExpirationDate(), objectEntry.getDisplayDate(),
+			"john@liferay.com", objectEntry);
 
 		objectField = _addCustomObjectField(
 			new TextObjectFieldBuilder(
 			).labelMap(
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+				RandomTestUtil.randomLocaleStringMap()
 			).localized(
 				true
 			).name(
@@ -6916,13 +6945,11 @@ public class ObjectEntryLocalServiceTest {
 				(Serializable)localizedValues
 			).build());
 
-		assetEntry = _assetEntryLocalService.fetchEntry(
-			_objectDefinition.getClassName(), objectEntry.getObjectEntryId());
-
-		Assert.assertEquals(
+		_assertAssetEntry(
+			null, null,
 			_localization.getXml(
 				localizedValues, objectEntry.getDefaultLanguageId(), "title"),
-			assetEntry.getTitle());
+			objectEntry);
 	}
 
 	@Test
@@ -8321,7 +8348,14 @@ public class ObjectEntryLocalServiceTest {
 		throws Exception {
 
 		return _addObjectEntry(
-			0, _objectDefinition.getObjectDefinitionId(), values);
+			values, ServiceContextTestUtil.getServiceContext());
+	}
+
+	private ObjectEntry _addObjectEntry(
+			Map<String, Serializable> values, ServiceContext serviceContext)
+		throws Exception {
+
+		return _addObjectEntry(_objectDefinition, values, serviceContext);
 	}
 
 	private ObjectEntry _addObjectEntry(
@@ -8429,6 +8463,20 @@ public class ObjectEntryLocalServiceTest {
 			TempFileEntryUtil.getTempFileName(title + ".txt"),
 			FileUtil.createTempFile(DLTestUtil.randomTextFileBytes()),
 			ContentTypes.TEXT_PLAIN);
+	}
+
+	private void _assertAssetEntry(
+			Date expectedExpirationDate, Date expectedPublishDate,
+			String expectedTitle, ObjectEntry objectEntry)
+		throws Exception {
+
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+			objectEntry.getModelClassName(), objectEntry.getObjectEntryId());
+
+		Assert.assertEquals(
+			expectedExpirationDate, assetEntry.getExpirationDate());
+		Assert.assertEquals(expectedPublishDate, assetEntry.getPublishDate());
+		Assert.assertEquals(expectedTitle, assetEntry.getTitle());
 	}
 
 	private void _assertAuditMessage(

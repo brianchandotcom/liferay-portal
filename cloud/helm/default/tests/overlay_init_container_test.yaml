@@ -22,10 +22,10 @@ tests:
     -   asserts:
             -   matchRegex:
                     path: spec.template.spec.initContainers[?(@.name=="liferay-overlay")].command[2]
-                    pattern: osgi[^/]
+                    pattern: osgi/configs
             -   matchRegex:
                     path: spec.template.spec.initContainers[?(@.name=="liferay-overlay")].command[2]
-                    pattern: osgi/configs
+                    pattern: osgi[^/]
         documentSelector:
             path: kind
             skipEmptyTemplates: true
@@ -33,10 +33,10 @@ tests:
         it: Generates a sync command for each copy block
         set:
             overlay.copy:
-                -   from: overlay-build-1/osgi/*
-                    into: osgi
                 -   from: overlay-build-1/configs/*.config
                     into: osgi/configs
+                -   from: overlay-build-1/osgi/*
+                    into: osgi
             overlay.enabled: true
     -   asserts:
             -   contains:

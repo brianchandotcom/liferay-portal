@@ -13,7 +13,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.security.key.internal.profile.configuration.KeyManagerGlobalConfiguration;
 import com.liferay.portal.security.key.spi.profile.KeyManagerProfile;
-import com.liferay.portal.security.key.spi.profile.KeyManagerProfileOrchestrator;
+import com.liferay.portal.security.key.spi.profile.KeyManagerProfileRegistry;
 
 import java.util.Map;
 import java.util.Objects;
@@ -30,10 +30,10 @@ import org.osgi.service.component.annotations.Modified;
  */
 @Component(
 	configurationPid = "com.liferay.portal.security.key.internal.profile.configuration.KeyManagerGlobalConfiguration",
-	service = KeyManagerProfileOrchestrator.class
+	service = KeyManagerProfileRegistry.class
 )
-public class KeyManagerProfileOrchestratorImpl
-	implements KeyManagerProfileOrchestrator {
+public class KeyManagerProfileRegistryImpl
+	implements KeyManagerProfileRegistry {
 
 	@Override
 	public KeyManagerProfile getActiveKeyManagerProfile() {
@@ -93,7 +93,7 @@ public class KeyManagerProfileOrchestratorImpl
 					String key, KeyManagerProfile keyManagerProfile,
 					KeyManagerProfile content) {
 
-					synchronized (KeyManagerProfileOrchestratorImpl.this) {
+					synchronized (KeyManagerProfileRegistryImpl.this) {
 						if (Objects.equals(_lastBootstrappedProfileId, key)) {
 							_lastBootstrappedProfileId = null;
 						}
@@ -178,7 +178,7 @@ public class KeyManagerProfileOrchestratorImpl
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		KeyManagerProfileOrchestratorImpl.class);
+		KeyManagerProfileRegistryImpl.class);
 
 	private volatile KeyManagerGlobalConfiguration
 		_keyManagerGlobalConfiguration;

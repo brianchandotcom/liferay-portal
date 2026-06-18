@@ -105,16 +105,14 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 			return;
 		}
 
+		AtomicReference<ChatResponse> chatResponseAtomicReference =
+			new AtomicReference<>();
 		Map<String, String> kaleoNodeSettingValues =
 			KaleoNodeSettingUtil.getKaleoNodeSettingValuesMap(
 				currentKaleoNode.getKaleoNodeId());
-
 		VertexAiGeminiStreamingChatModel vertexAiGeminiStreamingChatModel =
 			VertexAiGeminiUtil.createVertexAiGeminiStreamingChatModel(
 				_quotaManager, serviceContext);
-
-		AtomicReference<ChatResponse> chatResponseAtomicReference =
-			new AtomicReference<>();
 
 		String prompt = PromptUtil.composePrompt(
 			kaleoInstanceToken.getCompanyId(), _dtoConverterRegistry,

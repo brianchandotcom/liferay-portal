@@ -468,7 +468,6 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 
 		httpRequestNode.setLabelMap(
 			_parseLabels(httpRequestElement.element("labels")));
-
 		httpRequestNode.setMetadata(
 			httpRequestElement.elementTextTrim("metadata"));
 

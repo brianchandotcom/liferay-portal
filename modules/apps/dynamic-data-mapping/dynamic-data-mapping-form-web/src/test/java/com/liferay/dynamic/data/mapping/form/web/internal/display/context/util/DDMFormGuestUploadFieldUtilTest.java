@@ -10,28 +10,24 @@ import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
-import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.impl.DDMStructureImpl;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalService;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.portal.json.JSONFactoryImpl;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Dictionary;
+import java.util.HashMap;
 import java.util.Hashtable;
-import java.util.List;
+import java.util.Map;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -94,14 +90,15 @@ public class DDMFormGuestUploadFieldUtilTest {
 
 	@After
 	public void tearDown() {
-		_ddmFormInstanceRecords = new ArrayList<>();
+		_ddmFormInstanceRecordsCountMap.clear();
 	}
 
 	@Test
 	public void testGuestUserAnsweringForFifthTime() throws Exception {
 		_addUploadField(true);
 
-		_addDDMFormInstanceRecords(_IP_ADDRESS_1, _MAXIMUM_SUBMISSIONS - 1);
+		_addDDMFormInstanceRecordsCount(
+			_MAXIMUM_SUBMISSIONS - 1, _IP_ADDRESS_1);
 
 		Assert.assertFalse(
 			DDMFormGuestUploadFieldUtil.isMaximumSubmissionLimitReached(
@@ -114,7 +111,7 @@ public class DDMFormGuestUploadFieldUtilTest {
 	public void testGuestUserAnsweringForSixthTime() throws Exception {
 		_addUploadField(true);
 
-		_addDDMFormInstanceRecords(_IP_ADDRESS_1, _MAXIMUM_SUBMISSIONS);
+		_addDDMFormInstanceRecordsCount(_MAXIMUM_SUBMISSIONS, _IP_ADDRESS_1);
 
 		Assert.assertTrue(
 			DDMFormGuestUploadFieldUtil.isMaximumSubmissionLimitReached(
@@ -129,8 +126,9 @@ public class DDMFormGuestUploadFieldUtilTest {
 
 		_addUploadField(true);
 
-		_addDDMFormInstanceRecords(_IP_ADDRESS_1, 1);
-		_addDDMFormInstanceRecords(_IP_ADDRESS_2, _MAXIMUM_SUBMISSIONS - 1);
+		_addDDMFormInstanceRecordsCount(1, _IP_ADDRESS_1);
+		_addDDMFormInstanceRecordsCount(
+			_MAXIMUM_SUBMISSIONS - 1, _IP_ADDRESS_2);
 
 		Assert.assertFalse(
 			DDMFormGuestUploadFieldUtil.isMaximumSubmissionLimitReached(
@@ -143,7 +141,7 @@ public class DDMFormGuestUploadFieldUtilTest {
 				_mockHttpServletRequest(_IP_ADDRESS_2, false),
 				_MAXIMUM_SUBMISSIONS));
 
-		_addDDMFormInstanceRecords(_IP_ADDRESS_2, 1);
+		_addDDMFormInstanceRecordsCount(1, _IP_ADDRESS_2);
 
 		Assert.assertFalse(
 			DDMFormGuestUploadFieldUtil.isMaximumSubmissionLimitReached(
@@ -204,27 +202,15 @@ public class DDMFormGuestUploadFieldUtilTest {
 
 	protected static final JSONFactory jsonFactory = new JSONFactoryImpl();
 
-	private void _addDDMFormInstanceRecords(String ipAddress, int size) {
-		DDMFormInstanceRecord ddmFormInstanceRecord = Mockito.mock(
-			DDMFormInstanceRecord.class);
+	private void _addDDMFormInstanceRecordsCount(int count, String ipAddress) {
+		int ddmFormInstanceRecordsCount = _ddmFormInstanceRecordsCountMap.merge(
+			ipAddress, count, Integer::sum);
 
 		Mockito.when(
-			ddmFormInstanceRecord.getIpAddress()
+			_ddmFormInstanceRecordLocalService.getFormInstanceRecordsCount(
+				_DDM_FORM_INSTANCE_ID, ipAddress)
 		).thenReturn(
-			ipAddress
-		);
-
-		_ddmFormInstanceRecords.addAll(
-			Collections.nCopies(size, ddmFormInstanceRecord));
-
-		Mockito.when(
-			_ddmFormInstanceRecordLocalService.getFormInstanceRecords(
-				Mockito.eq(_DDM_FORM_INSTANCE_ID),
-				Mockito.eq(WorkflowConstants.STATUS_ANY),
-				Mockito.eq(QueryUtil.ALL_POS), Mockito.eq(QueryUtil.ALL_POS),
-				Mockito.eq(null))
-		).thenReturn(
-			_ddmFormInstanceRecords
+			ddmFormInstanceRecordsCount
 		);
 	}
 
@@ -310,7 +296,7 @@ public class DDMFormGuestUploadFieldUtilTest {
 	private static final MockedStatic<FrameworkUtil>
 		_frameworkUtilMockedStatic = Mockito.mockStatic(FrameworkUtil.class);
 
-	private List<DDMFormInstanceRecord> _ddmFormInstanceRecords =
-		new ArrayList<>();
+	private final Map<String, Integer> _ddmFormInstanceRecordsCountMap =
+		new HashMap<>();
 
 }

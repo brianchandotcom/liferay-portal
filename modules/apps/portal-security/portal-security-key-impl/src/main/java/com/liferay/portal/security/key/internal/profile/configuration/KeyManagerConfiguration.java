@@ -15,11 +15,10 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(category = "key-manager")
 @Meta.OCD(
-	id = "com.liferay.portal.security.key.internal.profile.configuration.KeyManagerGlobalConfiguration",
-	localization = "content/Language",
-	name = "key-manager-global-configuration-name"
+	id = "com.liferay.portal.security.key.internal.profile.configuration.KeyManagerConfiguration",
+	localization = "content/Language", name = "key-manager-configuration-name"
 )
-public interface KeyManagerGlobalConfiguration {
+public interface KeyManagerConfiguration {
 
 	@Meta.AD(deflt = "custom", name = "active-profile-id", required = false)
 	public String activeProfileId();

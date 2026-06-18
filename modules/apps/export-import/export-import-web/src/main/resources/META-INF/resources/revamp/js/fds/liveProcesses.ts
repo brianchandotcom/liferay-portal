@@ -17,24 +17,22 @@ export interface Process {
 	};
 }
 
-const listenersByProcessId = new Map<number, Set<() => void>>();
-const processesById = new Map<number, Process>();
+const listeners = new Map<number, Set<() => void>>();
+const processes = new Map<number, Process>();
 
 export function getLiveProcess(processId: number): Process | undefined {
-	return processesById.get(processId);
+	return processes.get(processId);
 }
 
 export function publishLiveProcess(process: Process) {
-	processesById.set(process.id, process);
+	processes.set(process.id, process);
 
-	listenersByProcessId
-		.get(process.id)
-		?.forEach((listener: () => void) => listener());
+	listeners.get(process.id)?.forEach((listener: () => void) => listener());
 }
 
 export function useLiveProcess(processId?: number): Process | undefined {
 	const [process, setProcess] = useState(
-		processId ? processesById.get(processId) : undefined
+		processId ? processes.get(processId) : undefined
 	);
 
 	useEffect(() => {
@@ -42,19 +40,19 @@ export function useLiveProcess(processId?: number): Process | undefined {
 			return;
 		}
 
-		setProcess(processesById.get(processId));
+		setProcess(processes.get(processId));
 
-		const listeners =
-			listenersByProcessId.get(processId) ?? new Set<() => void>();
+		const processListeners =
+			listeners.get(processId) ?? new Set<() => void>();
 
-		listenersByProcessId.set(processId, listeners);
+		listeners.set(processId, processListeners);
 
-		const listener = () => setProcess(processesById.get(processId));
+		const listener = () => setProcess(processes.get(processId));
 
-		listeners.add(listener);
+		processListeners.add(listener);
 
 		return () => {
-			listeners.delete(listener);
+			processListeners.delete(listener);
 		};
 	}, [processId]);
 

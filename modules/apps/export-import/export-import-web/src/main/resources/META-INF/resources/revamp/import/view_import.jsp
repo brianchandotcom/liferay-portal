@@ -22,7 +22,7 @@ if (liveGroup == null) {
 	liveGroupId = groupId;
 }
 
-ExportImportProcessesDisplayContext exportImportProcessesDisplayContext = new ExportImportProcessesDisplayContext(request, liferayPortletResponse, liveGroup, liveGroupId, privateLayout, stagingGroupHelper);
+ExportImportProcessesDisplayContext exportImportProcessesDisplayContext = new ExportImportProcessesDisplayContext(liveGroup, liveGroupId, request, liferayPortletResponse, privateLayout, stagingGroupHelper);
 
 String title = exportImportProcessesDisplayContext.getImportTitle();
 

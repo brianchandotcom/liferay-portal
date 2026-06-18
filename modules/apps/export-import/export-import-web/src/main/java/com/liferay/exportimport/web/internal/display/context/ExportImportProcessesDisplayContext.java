@@ -42,15 +42,14 @@ import java.util.List;
 public class ExportImportProcessesDisplayContext {
 
 	public ExportImportProcessesDisplayContext(
-		HttpServletRequest httpServletRequest,
-		LiferayPortletResponse liferayPortletResponse, Group group,
-		long groupId, boolean privateLayout,
+		Group group, long groupId, HttpServletRequest httpServletRequest,
+		LiferayPortletResponse liferayPortletResponse, boolean privateLayout,
 		StagingGroupHelper stagingGroupHelper) {
 
-		_httpServletRequest = httpServletRequest;
-		_liferayPortletResponse = liferayPortletResponse;
 		_group = group;
 		_groupId = groupId;
+		_httpServletRequest = httpServletRequest;
+		_liferayPortletResponse = liferayPortletResponse;
 		_privateLayout = privateLayout;
 		_stagingGroupHelper = stagingGroupHelper;
 

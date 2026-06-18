@@ -15,7 +15,7 @@ if (liveGroup == null) {
 	liveGroupId = groupId;
 }
 
-ExportImportPreviewDisplayContext exportImportPreviewDisplayContext = new ExportImportPreviewDisplayContext("/export_import/view_export_layouts", request, liferayPortletResponse, group, groupId, liveGroupId, privateLayout, stagingGroupHelper);
+ExportImportPreviewDisplayContext exportImportPreviewDisplayContext = new ExportImportPreviewDisplayContext("/export_import/view_export_layouts", group, groupId, request, liferayPortletResponse, liveGroupId, privateLayout, stagingGroupHelper);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(exportImportPreviewDisplayContext.getBackURL());

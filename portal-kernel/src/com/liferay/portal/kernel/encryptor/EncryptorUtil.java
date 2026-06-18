@@ -8,6 +8,7 @@ package com.liferay.portal.kernel.encryptor;
 import com.liferay.portal.kernel.module.service.Snapshot;
 
 import java.security.Key;
+import java.security.spec.AlgorithmParameterSpec;
 
 /**
  * @author Julius Lee
@@ -30,6 +31,17 @@ public class EncryptorUtil {
 		return encryptor.decryptUnencodedAsBytes(key, encryptedBytes);
 	}
 
+	public static byte[] decryptUnencodedAsBytes(
+			Key key, byte[] encryptedBytes, String transformation,
+			AlgorithmParameterSpec algorithmParameterSpec)
+		throws EncryptorException {
+
+		Encryptor encryptor = _encryptorSnapshot.get();
+
+		return encryptor.decryptUnencodedAsBytes(
+			key, encryptedBytes, transformation, algorithmParameterSpec);
+	}
+
 	public static Key deserializeKey(String base64String) {
 		Encryptor encryptor = _encryptorSnapshot.get();
 
@@ -50,6 +62,17 @@ public class EncryptorUtil {
 		Encryptor encryptor = _encryptorSnapshot.get();
 
 		return encryptor.encryptUnencoded(key, plainBytes);
+	}
+
+	public static byte[] encryptUnencoded(
+			Key key, byte[] plainBytes, String transformation,
+			AlgorithmParameterSpec algorithmParameterSpec)
+		throws EncryptorException {
+
+		Encryptor encryptor = _encryptorSnapshot.get();
+
+		return encryptor.encryptUnencoded(
+			key, plainBytes, transformation, algorithmParameterSpec);
 	}
 
 	public static byte[] encryptUnencoded(Key key, String plainText)

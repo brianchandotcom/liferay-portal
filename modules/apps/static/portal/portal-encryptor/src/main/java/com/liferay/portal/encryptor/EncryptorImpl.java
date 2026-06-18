@@ -10,21 +10,26 @@ import com.liferay.portal.kernel.encryptor.Encryptor;
 import com.liferay.portal.kernel.encryptor.EncryptorException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.SecureRandomUtil;
+import com.liferay.portal.kernel.security.fips.FIPSModeUtil;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.security.Key;
-import java.security.SecureRandom;
+import java.security.spec.AlgorithmParameterSpec;
 
+import java.util.Arrays;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
+import javax.crypto.spec.GCMParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 import org.osgi.service.component.annotations.Component;
@@ -59,13 +64,26 @@ public class EncryptorImpl implements Encryptor {
 	public byte[] decryptUnencodedAsBytes(Key key, byte[] encryptedBytes)
 		throws EncryptorException {
 
-		String algorithm = key.getAlgorithm();
-
-		String cacheKey = algorithm + StringPool.POUND + key.toString();
-
-		Cipher cipher = _decryptCipherMap.get(cacheKey);
+		if (PropsValues.FIPS_ENABLED) {
+			try {
+				return _decryptGCM(key, encryptedBytes);
+			}
+			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Falling back to legacy decryption after GCM failure",
+						exception);
+				}
+			}
+		}
 
 		try {
+			String algorithm = key.getAlgorithm();
+
+			String cacheKey = algorithm + StringPool.POUND + key;
+
+			Cipher cipher = _decryptCipherMap.get(cacheKey);
+
 			if (cipher == null) {
 				cipher = Cipher.getInstance(algorithm);
 
@@ -84,10 +102,34 @@ public class EncryptorImpl implements Encryptor {
 	}
 
 	@Override
+	public byte[] decryptUnencodedAsBytes(
+			Key key, byte[] encryptedBytes, String transformation,
+			AlgorithmParameterSpec algorithmParameterSpec)
+		throws EncryptorException {
+
+		try {
+			Cipher cipher = Cipher.getInstance(transformation);
+
+			cipher.init(Cipher.DECRYPT_MODE, key, algorithmParameterSpec);
+
+			return cipher.doFinal(encryptedBytes);
+		}
+		catch (Exception exception) {
+			throw new EncryptorException(exception);
+		}
+	}
+
+	@Override
 	public Key deserializeKey(String base64String) {
+		if (!FIPSModeUtil.isAllowedAlgorithm(KEY_ALGORITHM)) {
+			throw new SecurityException(
+				"Algorithm \"" + KEY_ALGORITHM +
+					"\" is not allowed in FIPS mode");
+		}
+
 		byte[] bytes = Base64.decode(base64String);
 
-		return new SecretKeySpec(bytes, EncryptorImpl.KEY_ALGORITHM);
+		return new SecretKeySpec(bytes, KEY_ALGORITHM);
 	}
 
 	@Override
@@ -109,13 +151,17 @@ public class EncryptorImpl implements Encryptor {
 	public byte[] encryptUnencoded(Key key, byte[] plainBytes)
 		throws EncryptorException {
 
-		String algorithm = key.getAlgorithm();
-
-		String cacheKey = algorithm + StringPool.POUND + key.toString();
-
-		Cipher cipher = _encryptCipherMap.get(cacheKey);
+		if (PropsValues.FIPS_ENABLED) {
+			return _encryptGCM(key, plainBytes);
+		}
 
 		try {
+			String algorithm = key.getAlgorithm();
+
+			String cacheKey = algorithm + StringPool.POUND + key;
+
+			Cipher cipher = _encryptCipherMap.get(cacheKey);
+
 			if (cipher == null) {
 				cipher = Cipher.getInstance(algorithm);
 
@@ -127,6 +173,24 @@ public class EncryptorImpl implements Encryptor {
 			synchronized (cipher) {
 				return cipher.doFinal(plainBytes);
 			}
+		}
+		catch (Exception exception) {
+			throw new EncryptorException(exception);
+		}
+	}
+
+	@Override
+	public byte[] encryptUnencoded(
+			Key key, byte[] plainBytes, String transformation,
+			AlgorithmParameterSpec algorithmParameterSpec)
+		throws EncryptorException {
+
+		try {
+			Cipher cipher = Cipher.getInstance(transformation);
+
+			cipher.init(Cipher.ENCRYPT_MODE, key, algorithmParameterSpec);
+
+			return cipher.doFinal(plainBytes);
 		}
 		catch (Exception exception) {
 			throw new EncryptorException(exception);
@@ -149,12 +213,33 @@ public class EncryptorImpl implements Encryptor {
 
 	@Override
 	public Key generateKey() throws EncryptorException {
+		if (!FIPSModeUtil.isAllowedAlgorithm(KEY_ALGORITHM)) {
+			throw new SecurityException(
+				"Algorithm \"" + KEY_ALGORITHM +
+					"\" is not allowed in FIPS mode");
+		}
+
 		return _generateKey(KEY_ALGORITHM);
 	}
 
 	@Override
 	public String serializeKey(Key key) {
 		return Base64.encode(key.getEncoded());
+	}
+
+	private byte[] _decryptGCM(Key key, byte[] encryptedBytes)
+		throws EncryptorException {
+
+		byte[] cipherBytes = Arrays.copyOfRange(
+			encryptedBytes, _GCM_INITIALIZATION_VECTOR_LENGTH,
+			encryptedBytes.length);
+
+		byte[] initializationVector = Arrays.copyOfRange(
+			encryptedBytes, 0, _GCM_INITIALIZATION_VECTOR_LENGTH);
+
+		return decryptUnencodedAsBytes(
+			key, cipherBytes, _AES_GCM_NOPADDING,
+			new GCMParameterSpec(_GCM_TAG_LENGTH_BITS, initializationVector));
 	}
 
 	private String _decryptUnencodedAsString(Key key, byte[] encryptedBytes)
@@ -171,11 +256,39 @@ public class EncryptorImpl implements Encryptor {
 		}
 	}
 
+	private byte[] _encryptGCM(Key key, byte[] plainBytes)
+		throws EncryptorException {
+
+		byte[] initializationVector =
+			new byte[_GCM_INITIALIZATION_VECTOR_LENGTH];
+
+		for (int i = 0; i < initializationVector.length; i++) {
+			initializationVector[i] = SecureRandomUtil.nextByte();
+		}
+
+		byte[] cipherBytes = encryptUnencoded(
+			key, plainBytes, _AES_GCM_NOPADDING,
+			new GCMParameterSpec(_GCM_TAG_LENGTH_BITS, initializationVector));
+
+		byte[] encryptedBytes =
+			new byte[initializationVector.length + cipherBytes.length];
+
+		System.arraycopy(
+			initializationVector, 0, encryptedBytes, 0,
+			initializationVector.length);
+		System.arraycopy(
+			cipherBytes, 0, encryptedBytes, initializationVector.length,
+			cipherBytes.length);
+
+		return encryptedBytes;
+	}
+
 	private Key _generateKey(String algorithm) throws EncryptorException {
 		try {
 			KeyGenerator keyGenerator = KeyGenerator.getInstance(algorithm);
 
-			keyGenerator.init(KEY_SIZE, new SecureRandom());
+			keyGenerator.init(
+				PropsValues.FIPS_ENABLED ? _AES_KEY_SIZE : KEY_SIZE);
 
 			return keyGenerator.generateKey();
 		}
@@ -183,6 +296,14 @@ public class EncryptorImpl implements Encryptor {
 			throw new EncryptorException(exception);
 		}
 	}
+
+	private static final String _AES_GCM_NOPADDING = "AES/GCM/NoPadding";
+
+	private static final int _AES_KEY_SIZE = 256;
+
+	private static final int _GCM_INITIALIZATION_VECTOR_LENGTH = 12;
+
+	private static final int _GCM_TAG_LENGTH_BITS = 128;
 
 	private static final Log _log = LogFactoryUtil.getLog(EncryptorImpl.class);
 

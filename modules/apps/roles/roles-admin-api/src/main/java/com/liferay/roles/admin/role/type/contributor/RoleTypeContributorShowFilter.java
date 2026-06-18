@@ -14,8 +14,8 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 public interface RoleTypeContributorShowFilter {
 
 	public boolean isShow(
-			RoleTypeContributor roleTypeContributor,
-			PermissionChecker permissionChecker)
+			PermissionChecker permissionChecker,
+			RoleTypeContributor roleTypeContributor)
 		throws PortalException;
 
 }

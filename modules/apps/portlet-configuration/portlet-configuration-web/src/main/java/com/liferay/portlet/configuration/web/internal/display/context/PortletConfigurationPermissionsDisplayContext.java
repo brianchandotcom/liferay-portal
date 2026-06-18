@@ -530,24 +530,18 @@ public class PortletConfigurationPermissionsDisplayContext {
 	}
 
 	public int[] getRoleTypes() {
-		PermissionChecker permissionChecker =
-			_themeDisplay.getPermissionChecker();
+		return ArrayUtil.filter(
+			_getRoleTypes(),
+			roleType -> {
+				RoleTypeContributor roleTypeContributor =
+					_roleTypeContributorProvider.getRoleTypeContributor(
+						roleType);
 
-		List<Integer> roleTypes = new ArrayList<>();
-
-		for (int roleType : _getRoleTypes()) {
-			RoleTypeContributor roleTypeContributor =
-				_roleTypeContributorProvider.getRoleTypeContributor(roleType);
-
-			if ((roleTypeContributor == null) ||
-				RoleTypeContributorShowFilterRegistryUtil.isShow(
-					roleTypeContributor, permissionChecker)) {
-
-				roleTypes.add(roleType);
-			}
-		}
-
-		return ArrayUtil.toIntArray(roleTypes);
+				return (roleTypeContributor == null) ||
+					   RoleTypeContributorShowFilterRegistryUtil.isShow(
+						   _themeDisplay.getPermissionChecker(),
+						   roleTypeContributor);
+			});
 	}
 
 	public String getSearchActionURL() throws Exception {

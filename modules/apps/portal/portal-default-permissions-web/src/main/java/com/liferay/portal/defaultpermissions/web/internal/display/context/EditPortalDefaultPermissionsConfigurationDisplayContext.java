@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletQName;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
@@ -48,7 +47,6 @@ import jakarta.portlet.RenderRequest;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -339,24 +337,18 @@ public class EditPortalDefaultPermissionsConfigurationDisplayContext {
 	}
 
 	private int[] _filterRoleTypes(int[] roleTypes) {
-		PermissionChecker permissionChecker =
-			_themeDisplay.getPermissionChecker();
+		return ArrayUtil.filter(
+			roleTypes,
+			roleType -> {
+				RoleTypeContributor roleTypeContributor =
+					_roleTypeContributorProvider.getRoleTypeContributor(
+						roleType);
 
-		List<Integer> roleTypesList = new ArrayList<>();
-
-		for (int roleType : roleTypes) {
-			RoleTypeContributor roleTypeContributor =
-				_roleTypeContributorProvider.getRoleTypeContributor(roleType);
-
-			if ((roleTypeContributor != null) &&
-				RoleTypeContributorShowFilterRegistryUtil.isShow(
-					roleTypeContributor, permissionChecker)) {
-
-				roleTypesList.add(roleType);
-			}
-		}
-
-		return ArrayUtil.toIntArray(roleTypesList);
+				return (roleTypeContributor == null) ||
+					   RoleTypeContributorShowFilterRegistryUtil.isShow(
+						   _themeDisplay.getPermissionChecker(),
+						   roleTypeContributor);
+			});
 	}
 
 	private Map<String, String[]> _getDefaultPermissions() {

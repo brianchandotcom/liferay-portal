@@ -46,7 +46,7 @@ components:
             name: forecastStartDate
             required: false
             schema:
-                format: date
+                format: date-time
                 type: string
             style: form
         historyLengthQueryParam:
@@ -307,7 +307,7 @@ components:
                     description:
                         Date the rule was materialised by the download executor, in ISO 8601 (yyyy-MM-dd).
                     example: 2017-07-21
-                    format: date
+                    format: date-time
                     type: string
                 jobId:
                     description:
@@ -353,7 +353,7 @@ components:
                     description:
                         Date the order was created, in ISO 8601 (yyyy-MM-dd). Read-only.
                     example: 2017-07-21
-                    format: date
+                    format: date-time
                     readOnly: true
                     type: string
                 currencyCode:
@@ -384,14 +384,14 @@ components:
                     description:
                         Date the order was last modified, in ISO 8601 (yyyy-MM-dd). Read-only.
                     example: 2017-08-21
-                    format: date
+                    format: date-time
                     readOnly: true
                     type: string
                 orderDate:
                     description:
                         Date the order was placed by the buyer, in ISO 8601 (yyyy-MM-dd). Distinct from the create date when the order was imported.
                     example: 2017-07-21
-                    format: date
+                    format: date-time
                     type: string
                 orderItems:
                     description:
@@ -467,7 +467,7 @@ components:
                     description:
                         Date the order line was created, in ISO 8601 (yyyy-MM-dd). Read-only.
                     example: 2017-07-21
-                    format: date
+                    format: date-time
                     readOnly: true
                     type: string
                 customFields:
@@ -500,7 +500,7 @@ components:
                     description:
                         Date the order line was last modified, in ISO 8601 (yyyy-MM-dd). Read-only.
                     example: 2017-07-21
-                    format: date
+                    format: date-time
                     readOnly: true
                     type: string
                 name:
@@ -593,7 +593,7 @@ components:
                     description:
                         Date the product was created, in ISO 8601 (yyyy-MM-dd). Read-only.
                     example: 2017-07-21
-                    format: date
+                    format: date-time
                     readOnly: true
                     type: string
                 customFields:
@@ -618,13 +618,13 @@ components:
                     description:
                         Date from which the product is visible on the storefront, in ISO 8601 (yyyy-MM-dd).
                     example: 2017-07-21
-                    format: date
+                    format: date-time
                     type: string
                 expirationDate:
                     description:
                         Date from which the product is no longer visible on the storefront, in ISO 8601 (yyyy-MM-dd).
                     example: 2017-08-21
-                    format: date
+                    format: date-time
                     type: string
                 externalReferenceCode:
                     description:
@@ -673,7 +673,7 @@ components:
                     description:
                         Date the product was last modified, in ISO 8601 (yyyy-MM-dd). Read-only.
                     example: 2017-08-21
-                    format: date
+                    format: date-time
                     readOnly: true
                     type: string
                 name:
@@ -803,7 +803,7 @@ components:
                     description:
                         Date the recommendation was materialised by the download executor, in ISO 8601 (yyyy-MM-dd).
                     example: 2017-07-21
-                    format: date
+                    format: date-time
                     type: string
                 jobId:
                     description:
@@ -843,7 +843,7 @@ components:
                     description:
                         Date the recommendation was materialised by the download executor, in ISO 8601 (yyyy-MM-dd).
                     example: 2017-07-21
-                    format: date
+                    format: date-time
                     type: string
                 jobId:
                     description:
@@ -960,13 +960,13 @@ components:
                     description:
                         Date from which the SKU is visible on the storefront, in ISO 8601 (yyyy-MM-dd).
                     example: 2017-07-21
-                    format: date
+                    format: date-time
                     type: string
                 expirationDate:
                     description:
                         Date from which the SKU is no longer visible on the storefront, in ISO 8601 (yyyy-MM-dd).
                     example: 2017-08-21
-                    format: date
+                    format: date-time
                     type: string
                 externalReferenceCode:
                     description:
@@ -1072,7 +1072,7 @@ components:
                     description:
                         Date the recommendation was materialised by the download executor, in ISO 8601 (yyyy-MM-dd).
                     example: 2017-07-21
-                    format: date
+                    format: date-time
                     type: string
                 jobId:
                     description:

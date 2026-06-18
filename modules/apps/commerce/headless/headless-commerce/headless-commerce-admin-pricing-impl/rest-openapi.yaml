@@ -39,6 +39,16 @@ components:
                 minimum: 0
                 type: integer
             style: simple
+        nestedFieldsQueryParam:
+            in: query
+            description:
+                Comma-separated list of nested fields to embed in each returned resource. Each value names a relationship exposed on the resource; when omitted, those relationships are not expanded inline.
+            explode: true
+            name: nestedFields
+            required: false
+            schema:
+                type: string
+            style: form
         pageQueryParam:
             in: query
             description:
@@ -140,13 +150,13 @@ components:
                     description:
                         Date and time at which the discount becomes eligible for cart evaluation. Accepted in the request locale and time zone, normalized to the portal's time zone, and compared against the current server clock at price calculation time.
                     example: 2025-01-01
-                    format: date
+                    format: date-time
                     type: string
                 expirationDate:
                     description:
                         Date and time after which the discount stops applying. Ignored when `neverExpire` is true; accepted in the request locale and time zone and normalized to the portal's time zone.
                     example: 2099-12-31
-                    format: date
+                    format: date-time
                     type: string
                 externalReferenceCode:
                     description:
@@ -534,13 +544,13 @@ components:
                     description:
                         Date and time at which the price list becomes eligible for price resolution. Accepted in the request locale and time zone, normalized to the portal's time zone.
                     example: 2025-01-01
-                    format: date
+                    format: date-time
                     type: string
                 expirationDate:
                     description:
                         Date and time after which the price list stops applying. Ignored when `neverExpire` is true; accepted in the request locale and time zone.
                     example: 2099-12-31
-                    format: date
+                    format: date-time
                     type: string
                 externalReferenceCode:
                     description:
@@ -1133,6 +1143,7 @@ paths:
                 Lists active discount entries scoped to the current company. Delegates to the service with Pagination. No OData filter or sort surface is exposed; results follow the service default ordering.
             operationId: getDiscountsPage
             parameters:
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
                 -   $ref: "#/components/parameters/pageQueryParam"
                 -   $ref: "#/components/parameters/pageSizeQueryParam"
             responses:
@@ -1309,6 +1320,7 @@ paths:
             operationId: getDiscountByExternalReferenceCode
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             responses:
                 200:
                     content:
@@ -1694,6 +1706,7 @@ paths:
             operationId: getDiscountByExternalReferenceCodeDiscountCategoriesPage
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
                 -   $ref: "#/components/parameters/pageQueryParam"
                 -   $ref: "#/components/parameters/pageSizeQueryParam"
             responses:
@@ -1839,6 +1852,7 @@ paths:
             operationId: getDiscountByExternalReferenceCodeDiscountProductsPage
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
                 -   $ref: "#/components/parameters/pageQueryParam"
                 -   $ref: "#/components/parameters/pageSizeQueryParam"
             responses:
@@ -2017,6 +2031,7 @@ paths:
             operationId: getDiscount
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             responses:
                 200:
                     content:
@@ -2314,6 +2329,7 @@ paths:
             operationId: getDiscountIdDiscountCategoriesPage
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
                 -   $ref: "#/components/parameters/pageQueryParam"
                 -   $ref: "#/components/parameters/pageSizeQueryParam"
             responses:
@@ -2459,6 +2475,7 @@ paths:
             operationId: getDiscountIdDiscountProductsPage
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
                 -   $ref: "#/components/parameters/pageQueryParam"
                 -   $ref: "#/components/parameters/pageSizeQueryParam"
             responses:
@@ -2785,6 +2802,7 @@ paths:
             operationId: getPriceEntryByExternalReferenceCode
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             responses:
                 200:
                     content:
@@ -3118,6 +3136,7 @@ paths:
             operationId: getPriceEntry
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             responses:
                 200:
                     content:
@@ -3452,6 +3471,7 @@ paths:
             operationId: getPriceListsPage
             parameters:
                 -   $ref: "#/components/parameters/filterQueryParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
                 -   $ref: "#/components/parameters/pageQueryParam"
                 -   $ref: "#/components/parameters/pageSizeQueryParam"
                 -   $ref: "#/components/parameters/sortQueryParam"
@@ -3629,6 +3649,7 @@ paths:
             operationId: getPriceListByExternalReferenceCode
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             responses:
                 200:
                     content:
@@ -3859,6 +3880,7 @@ paths:
             operationId: getPriceListByExternalReferenceCodePriceEntriesPage
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
                 -   $ref: "#/components/parameters/pageQueryParam"
                 -   $ref: "#/components/parameters/pageSizeQueryParam"
             responses:
@@ -4202,6 +4224,7 @@ paths:
             operationId: getPriceList
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             responses:
                 200:
                     content:
@@ -4344,6 +4367,7 @@ paths:
             operationId: getPriceListIdPriceEntriesPage
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
                 -   $ref: "#/components/parameters/pageQueryParam"
                 -   $ref: "#/components/parameters/pageSizeQueryParam"
             responses:

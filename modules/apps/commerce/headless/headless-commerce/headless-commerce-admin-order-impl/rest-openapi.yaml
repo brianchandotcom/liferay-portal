@@ -68,6 +68,16 @@ components:
                 minimum: 0
                 type: integer
             style: simple
+        nestedFieldsQueryParam:
+            in: query
+            description:
+                Comma-separated list of nested fields to embed in each returned resource. Each value names a relationship exposed on the resource; when omitted, those relationships are not expanded inline.
+            explode: true
+            name: nestedFields
+            required: false
+            schema:
+                type: string
+            style: form
         orderIdPathParam:
             in: path
             description:
@@ -616,7 +626,7 @@ components:
                     description:
                         Creation date for the order. Read-only; set by the service when the record is first persisted.
                     example: 2017-07-21
-                    format: date
+                    format: date-time
                     type: string
                 creatorEmailAddress:
                     description:
@@ -688,13 +698,13 @@ components:
                     description:
                         Date of the most recent price recalculation on the order. Read-only.
                     example: 2017-07-21
-                    format: date
+                    format: date-time
                     type: string
                 modifiedDate:
                     description:
                         Last-modification date for the order. Read-only.
                     example: 2017-08-21
-                    format: date
+                    format: date-time
                     type: string
                 name:
                     description:
@@ -705,7 +715,7 @@ components:
                     description:
                         Date the order was placed. May differ from the creation date when the order is imported from another system.
                     example: 2017-07-21
-                    format: date
+                    format: date-time
                     type: string
                 orderItems:
                     description:
@@ -788,7 +798,7 @@ components:
                     description:
                         Buyer-requested delivery date.
                     example: 2017-07-21
-                    format: date
+                    format: date-time
                     type: string
                 shippable:
                     description:
@@ -1468,7 +1478,7 @@ components:
                     description:
                         Buyer-requested delivery date for this line item.
                     example: 2017-07-21
-                    format: date
+                    format: date-time
                     type: string
                 shippable:
                     description:
@@ -1652,7 +1662,7 @@ components:
                     description:
                         Creation date for the rule. Read-only.
                     example: 2017-07-21
-                    format: date
+                    format: date-time
                     type: string
                 description:
                     description:
@@ -1663,13 +1673,13 @@ components:
                     description:
                         Date the rule becomes active.
                     example: 2017-07-21
-                    format: date
+                    format: date-time
                     type: string
                 expirationDate:
                     description:
                         Date the rule expires and stops applying.
                     example: 2017-08-21
-                    format: date
+                    format: date-time
                     type: string
                 externalReferenceCode:
                     description:
@@ -1987,7 +1997,7 @@ components:
                     description:
                         Date the order type becomes active.
                     example: 2017-07-21
-                    format: date
+                    format: date-time
                     type: string
                 displayOrder:
                     description:
@@ -2000,7 +2010,7 @@ components:
                     description:
                         Date the order type expires.
                     example: 2017-08-21
-                    format: date
+                    format: date-time
                     type: string
                 externalReferenceCode:
                     description:
@@ -2227,7 +2237,7 @@ components:
                     description:
                         Creation date for the term. Read-only.
                     example: 2017-07-21
-                    format: date
+                    format: date-time
                     type: string
                 description:
                     additionalProperties:
@@ -2243,13 +2253,13 @@ components:
                     description:
                         Date the term becomes active.
                     example: 2017-07-21
-                    format: date
+                    format: date-time
                     type: string
                 expirationDate:
                     description:
                         Date the term expires.
                     example: 2017-08-21
-                    format: date
+                    format: date-time
                     type: string
                 externalReferenceCode:
                     description:
@@ -2924,6 +2934,7 @@ paths:
             operationId: getOrderRuleOrderTypeOrderType
             parameters:
             -   $ref: "#/components/parameters/orderRuleOrderTypeIdPathParam"
+            -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             responses:
                 200:
                     content:
@@ -2988,6 +2999,7 @@ paths:
             operationId: getOrderRulesPage
             parameters:
             -   $ref: "#/components/parameters/filterQueryParam"
+            -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             -   $ref: "#/components/parameters/pageQueryParam"
             -   $ref: "#/components/parameters/pageSizeQueryParam"
             -   $ref: "#/components/parameters/searchQueryParam"
@@ -3157,6 +3169,7 @@ paths:
             operationId: getOrderRuleByExternalReferenceCode
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
+            -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             responses:
                 200:
                     content:
@@ -3530,6 +3543,7 @@ paths:
             operationId: getOrderRuleByExternalReferenceCodeOrderRuleAccountsPage
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
+            -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             -   $ref: "#/components/parameters/pageQueryParam"
             -   $ref: "#/components/parameters/pageSizeQueryParam"
             responses:
@@ -3675,6 +3689,7 @@ paths:
             operationId: getOrderRuleByExternalReferenceCodeOrderRuleChannelsPage
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
+            -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             -   $ref: "#/components/parameters/pageQueryParam"
             -   $ref: "#/components/parameters/pageSizeQueryParam"
             responses:
@@ -3820,6 +3835,7 @@ paths:
             operationId: getOrderRuleByExternalReferenceCodeOrderRuleOrderTypesPage
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
+            -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             -   $ref: "#/components/parameters/pageQueryParam"
             -   $ref: "#/components/parameters/pageSizeQueryParam"
             responses:
@@ -3997,6 +4013,7 @@ paths:
                 Gets an OrderRule by ID. Backed by the matching commerce service method on the target resource.
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
+            -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             responses:
                 200:
                     content:
@@ -4292,6 +4309,7 @@ paths:
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
             -   $ref: "#/components/parameters/filterQueryParam"
+            -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             -   $ref: "#/components/parameters/pageQueryParam"
             -   $ref: "#/components/parameters/pageSizeQueryParam"
             -   $ref: "#/components/parameters/searchQueryParam"
@@ -4438,6 +4456,7 @@ paths:
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
             -   $ref: "#/components/parameters/filterQueryParam"
+            -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             -   $ref: "#/components/parameters/pageQueryParam"
             -   $ref: "#/components/parameters/pageSizeQueryParam"
             -   $ref: "#/components/parameters/searchQueryParam"
@@ -4585,6 +4604,7 @@ paths:
             operationId: getOrderRuleIdOrderRuleOrderTypesPage
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
+            -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             -   $ref: "#/components/parameters/pageQueryParam"
             -   $ref: "#/components/parameters/pageSizeQueryParam"
             -   $ref: "#/components/parameters/searchQueryParam"
@@ -4830,6 +4850,7 @@ paths:
             operationId: getOrderTypesPage
             parameters:
             -   $ref: "#/components/parameters/filterQueryParam"
+            -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             -   $ref: "#/components/parameters/pageQueryParam"
             -   $ref: "#/components/parameters/pageSizeQueryParam"
             -   $ref: "#/components/parameters/searchQueryParam"
@@ -5002,6 +5023,7 @@ paths:
             operationId: getOrderTypeByExternalReferenceCode
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
+            -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             responses:
                 200:
                     content:
@@ -5236,6 +5258,7 @@ paths:
             operationId: getOrderTypeByExternalReferenceCodeOrderTypeChannelsPage
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
+            -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             -   $ref: "#/components/parameters/pageQueryParam"
             -   $ref: "#/components/parameters/pageSizeQueryParam"
             responses:
@@ -5415,6 +5438,7 @@ paths:
             operationId: getOrderType
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
+            -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             responses:
                 200:
                     content:
@@ -5564,6 +5588,7 @@ paths:
             operationId: getOrderTypeIdOrderTypeChannelsPage
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
+            -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             -   $ref: "#/components/parameters/pageQueryParam"
             -   $ref: "#/components/parameters/pageSizeQueryParam"
             -   $ref: "#/components/parameters/searchQueryParam"
@@ -5710,6 +5735,7 @@ paths:
                 Gets a list of Order Items. Backed by the matching commerce service method on the target resource.
             parameters:
             -   $ref: "#/components/parameters/filterQueryParam"
+            -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             -   $ref: "#/components/parameters/pageQueryParam"
             -   $ref: "#/components/parameters/pageSizeQueryParam"
             -   $ref: "#/components/parameters/searchQueryParam"
@@ -5802,6 +5828,7 @@ paths:
             operationId: getOrderItemByExternalReferenceCode
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
+            -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             responses:
                 200:
                     content:
@@ -6062,6 +6089,7 @@ paths:
             operationId: getOrderItem
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
+            -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             responses:
                 200:
                     content:
@@ -6703,6 +6731,7 @@ paths:
             operationId: getOrdersPage
             parameters:
             -   $ref: "#/components/parameters/filterQueryParam"
+            -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             -   $ref: "#/components/parameters/pageQueryParam"
             -   $ref: "#/components/parameters/pageSizeQueryParam"
             -   $ref: "#/components/parameters/searchQueryParam"
@@ -6874,6 +6903,7 @@ paths:
             operationId: getOrderByExternalReferenceCode
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
+            -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             responses:
                 200:
                     content:
@@ -7504,6 +7534,7 @@ paths:
             operationId: getOrderByExternalReferenceCodeOrderItemsPage
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
+            -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             -   $ref: "#/components/parameters/pageQueryParam"
             -   $ref: "#/components/parameters/pageSizeQueryParam"
             responses:
@@ -7975,6 +8006,7 @@ paths:
             operationId: getOrder
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
+            -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             responses:
                 200:
                     content:
@@ -8401,6 +8433,7 @@ paths:
             operationId: getOrderIdOrderItemsPage
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
+            -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             -   $ref: "#/components/parameters/pageQueryParam"
             -   $ref: "#/components/parameters/pageSizeQueryParam"
             responses:
@@ -9169,6 +9202,7 @@ paths:
             operationId: getTermOrderTypeOrderType
             parameters:
             -   $ref: "#/components/parameters/termOrderTypeIdPathParam"
+            -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             responses:
                 200:
                     content:
@@ -9233,6 +9267,7 @@ paths:
             operationId: getTermsPage
             parameters:
             -   $ref: "#/components/parameters/filterQueryParam"
+            -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             -   $ref: "#/components/parameters/pageQueryParam"
             -   $ref: "#/components/parameters/pageSizeQueryParam"
             -   $ref: "#/components/parameters/searchQueryParam"
@@ -9402,6 +9437,7 @@ paths:
             operationId: getTermByExternalReferenceCode
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
+            -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             responses:
                 200:
                     content:
@@ -9630,6 +9666,7 @@ paths:
             operationId: getTermByExternalReferenceCodeTermOrderTypesPage
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
+            -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             -   $ref: "#/components/parameters/pageQueryParam"
             -   $ref: "#/components/parameters/pageSizeQueryParam"
             responses:
@@ -9807,6 +9844,7 @@ paths:
                 Gets a Term by ID. Backed by the matching commerce service method on the target resource.
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
+            -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             responses:
                 200:
                     content:
@@ -9955,6 +9993,7 @@ paths:
             operationId: getTermIdTermOrderTypesPage
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
+            -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             -   $ref: "#/components/parameters/pageQueryParam"
             -   $ref: "#/components/parameters/pageSizeQueryParam"
             -   $ref: "#/components/parameters/searchQueryParam"

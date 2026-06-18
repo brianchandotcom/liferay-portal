@@ -101,6 +101,16 @@ components:
             required: false
             schema:
                 type: string
+        nestedFieldsQueryParam:
+            in: query
+            description:
+                Comma-separated list of nested fields to embed in each returned resource. Each value names a relationship exposed on the resource; when omitted, those relationships are not expanded inline.
+            explode: true
+            name: nestedFields
+            required: false
+            schema:
+                type: string
+            style: form
         pageFormQueryParam:
             in: query
             description:
@@ -460,7 +470,7 @@ components:
                     description:
                         Creation date of the order. ISO 8601 date. Read-only; sortable and filterable via the OData query parameter.
                     example: 2017-07-21
-                    format: date
+                    format: date-time
                     readOnly: true
                     type: string
                 currencyCode:
@@ -506,14 +516,14 @@ components:
                     description:
                         Date the order's pricing was last recalculated. ISO 8601 date. Read-only.
                     example: 2017-07-21
-                    format: date
+                    format: date-time
                     readOnly: true
                     type: string
                 modifiedDate:
                     description:
                         Last modification date of the order. ISO 8601 date. Read-only; sortable and filterable via the OData query parameter.
                     example: 2017-07-21
-                    format: date
+                    format: date-time
                     readOnly: true
                     type: string
                 name:
@@ -625,7 +635,7 @@ components:
                     description:
                         Date the buyer requested the order to be delivered. ISO 8601 date. Read-only; sortable and filterable via the OData query parameter.
                     example: 2017-07-21
-                    format: date
+                    format: date-time
                     readOnly: true
                     type: string
                 shipments:
@@ -968,7 +978,7 @@ components:
                     description:
                         Buyer-requested delivery date for the line item. ISO 8601 date. Read-only.
                     example: 2017-07-21
-                    format: date
+                    format: date-time
                     readOnly: true
                     type: string
                 settings:
@@ -1075,21 +1085,21 @@ components:
                     description:
                         Creation date of the shipment. ISO 8601 date. Read-only.
                     example: 2017-07-21
-                    format: date
+                    format: date-time
                     readOnly: true
                     type: string
                 estimatedDeliveryDate:
                     description:
                         Expected delivery date of the shipment (mapped from the underlying expectedDate). ISO 8601 date. Read-only.
                     example: 2017-07-25
-                    format: date
+                    format: date-time
                     readOnly: true
                     type: string
                 estimatedShippingDate:
                     description:
                         Expected ship-out date of the shipment (mapped from the underlying shippingDate). ISO 8601 date. Read-only.
                     example: 2017-07-22
-                    format: date
+                    format: date-time
                     readOnly: true
                     type: string
                 externalReferenceCode:
@@ -1110,7 +1120,7 @@ components:
                     description:
                         Last modification date of the shipment. ISO 8601 date. Read-only.
                     example: 2017-07-22
-                    format: date
+                    format: date-time
                     readOnly: true
                     type: string
                 orderId:
@@ -1335,14 +1345,14 @@ components:
                     description:
                         Creation date of the shipment. ISO 8601 date. Read-only; sortable and filterable via the OData query parameter.
                     example: 2017-07-21
-                    format: date
+                    format: date-time
                     readOnly: true
                     type: string
                 expectedDate:
                     description:
                         Expected delivery date of the shipment. ISO 8601 date. Read-only; sortable and filterable via the OData query parameter.
                     example: 2017-07-25
-                    format: date
+                    format: date-time
                     readOnly: true
                     type: string
                 externalReferenceCode:
@@ -1370,7 +1380,7 @@ components:
                     description:
                         Last modification date of the shipment. ISO 8601 date. Read-only.
                     example: 2017-07-22
-                    format: date
+                    format: date-time
                     readOnly: true
                     type: string
                 oneLineAddress:
@@ -1408,7 +1418,7 @@ components:
                     description:
                         Date the shipment was dispatched. ISO 8601 date. Read-only; sortable and filterable via the OData query parameter.
                     example: 2017-07-22
-                    format: date
+                    format: date-time
                     readOnly: true
                     type: string
                 shippingMethodId:
@@ -1891,6 +1901,7 @@ paths:
                 -   $ref: "#/components/parameters/accountExternalReferenceCodePathParam"
                 -   $ref: "#/components/parameters/channelExternalReferenceCodePathParam"
                 -   $ref: "#/components/parameters/filterQueryParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
                 -   $ref: "#/components/parameters/pageQueryParam"
                 -   $ref: "#/components/parameters/pageSizeQueryParam"
                 -   $ref: "#/components/parameters/searchQueryParam"
@@ -1949,6 +1960,7 @@ paths:
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
                 -   $ref: "#/components/parameters/filterQueryParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
                 -   $ref: "#/components/parameters/pageQueryParam"
                 -   $ref: "#/components/parameters/pageSizeQueryParam"
                 -   $ref: "#/components/parameters/searchQueryParam"
@@ -2007,6 +2019,7 @@ paths:
                 -   $ref: "#/components/parameters/accountIdPathParam"
                 -   $ref: "#/components/parameters/channelIdPathParam"
                 -   $ref: "#/components/parameters/filterQueryParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
                 -   $ref: "#/components/parameters/pageQueryParam"
                 -   $ref: "#/components/parameters/pageSizeQueryParam"
                 -   $ref: "#/components/parameters/searchQueryParam"
@@ -2065,6 +2078,7 @@ paths:
             parameters:
                 -   $ref: "#/components/parameters/channelIdPathParam"
                 -   $ref: "#/components/parameters/filterQueryParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
                 -   $ref: "#/components/parameters/pageQueryParam"
                 -   $ref: "#/components/parameters/pageSizeQueryParam"
                 -   $ref: "#/components/parameters/searchQueryParam"
@@ -2472,6 +2486,7 @@ paths:
             operationId: getPlacedOrderByExternalReferenceCode
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             responses:
                 200:
                     content:
@@ -3298,6 +3313,7 @@ paths:
                 Returns a single placed order addressed by id. The order must not be OPEN; if it is, 404 is returned.
             parameters:
                 -   $ref: "#/components/parameters/placedOrderIdPathParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             responses:
                 200:
                     content:

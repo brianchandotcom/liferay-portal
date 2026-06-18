@@ -105,3 +105,62 @@ test(
 		});
 	}
 );
+
+test(
+	'A page stops sending pageViewed events once its site is desynced from the channel',
+	{
+		tag: '@LRAC-13010',
+	},
+	async ({analyticsChannel: channel, apiHelpers, page, project, site}) => {
+		await syncAnalyticsCloudViaAPI({
+			apiHelpers,
+			channel,
+			project,
+			siteId: Number(site.id),
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([
+				getFragmentDefinition({
+					id: getRandomString(),
+					key: 'BASIC_COMPONENT-heading',
+				}),
+			]),
+			siteId: site.id,
+			title: 'MyPage',
+		});
+
+		const pagePath = `/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`;
+
+		const capturedEvents = captureAnalyticsEvents(page);
+
+		const pageViewedCount = () =>
+			capturedEvents.filter((event) => event.eventId === 'pageViewed')
+				.length;
+
+		await test.step('The synced site sends a pageViewed event', async () => {
+			await page.goto(pagePath);
+
+			await expect.poll(() => pageViewedCount()).toBeGreaterThan(0);
+		});
+
+		await test.step('Desyncing the site stops the pageViewed events', async () => {
+			await apiHelpers.analyticsSettingsRest.syncSitesToChannel(
+				channel.id,
+				[]
+			);
+
+			const countBeforeReload = pageViewedCount();
+
+			await page.goto(pagePath);
+
+			await page.waitForLoadState('networkidle');
+
+			// Give the analytics client time to send before asserting it did not
+
+			await page.waitForTimeout(3000);
+
+			expect(pageViewedCount()).toBe(countBeforeReload);
+		});
+	}
+);

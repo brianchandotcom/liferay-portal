@@ -12,6 +12,12 @@ tests:
                         name: ES_SETTING_ONE
                         value: one
                     path: spec.nodeSets[0].podTemplate.spec.containers[0].env
+            -   contains:
+                    any: true
+                    content:
+                        name: ES_SETTING_TWO
+                        value: two
+                    path: spec.nodeSets[0].podTemplate.spec.containers[0].env
         documentSelector:
             path: kind
             value: Elasticsearch
@@ -21,6 +27,8 @@ tests:
                 x-extra:
                     -   name: ES_SETTING_ONE
                         value: one
+                    -   name: ES_SETTING_TWO
+                        value: two
     -   asserts:
             -   equal:
                     path: metadata.name

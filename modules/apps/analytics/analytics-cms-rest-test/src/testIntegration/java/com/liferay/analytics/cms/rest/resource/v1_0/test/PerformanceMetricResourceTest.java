@@ -239,9 +239,9 @@ public class PerformanceMetricResourceTest
 	private static class RecordingMockHttp extends MockHttp {
 
 		public RecordingMockHttp(
-			Map<String, UnsafeSupplier<String, Exception>> unsafeSuppliers) {
+			Map<String, UnsafeSupplier<String, Exception>> unsafeSuppliersMap) {
 
-			super(unsafeSuppliers);
+			super(unsafeSuppliersMap);
 		}
 
 		public String getLocation() {

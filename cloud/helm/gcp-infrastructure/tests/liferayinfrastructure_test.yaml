@@ -9,7 +9,7 @@ tests:
             -   equal:
                     path: spec.database.rootPasswordSecretName
                     value: my-release-db-root-password
-        it: should derive the database root password secret name from the release
+        it: derives the database root password secret name from the release
         set:
             enabled: true
     -   asserts:
@@ -23,13 +23,13 @@ tests:
                     count: 1
             -   isKind:
                     of: LiferayInfrastructure
-        it: should name the LiferayInfrastructure after the release
+        it: names the LiferayInfrastructure after the release
         set:
             enabled: true
     -   asserts:
             -   hasDocuments:
                     count: 0
-        it: should omit the LiferayInfrastructure when the chart is disabled
+        it: omits the LiferayInfrastructure when the chart is disabled
         set:
             enabled: false
     -   asserts:
@@ -39,7 +39,7 @@ tests:
             -   equal:
                     path: spec.commonTags.project_id
                     value: proj-456
-        it: should propagate the environment and project identifiers into the common tags
+        it: propagates the environment and project identifiers into the common tags
         set:
             environmentId: env-123
             projectId: proj-456
@@ -47,6 +47,6 @@ tests:
             -   equal:
                     path: spec.backup.enabled
                     value: true
-        it: should reflect an enabled backup configuration
+        it: reflects an enabled backup configuration
         set:
             backup.enabled: true

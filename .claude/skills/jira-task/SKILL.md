@@ -26,7 +26,7 @@ Request any missing details from the user:
 
 The LPD project requires the following fields. Apply these defaults unless the user specifies otherwise:
 
-- **Component**: Infer from the code area. Fetch the LPD project components and select the one whose name best matches the relevant area or keyword.
+- **Component**: Infer from the code area. Fetch the LPD project components and select the one whose name matches the relevant area or keyword.
 - **Issue Type**: `Task` (ID: `10002`).
 
 Note: Unlike bugs, tasks do not require the Affects Version or Cross Cutting Properties fields.

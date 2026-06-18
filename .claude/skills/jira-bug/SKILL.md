@@ -29,7 +29,7 @@ Request any missing details from the user:
 The LPD project requires the following fields. Apply these defaults unless the user specifies otherwise:
 
 - **Affects Version**: `Master` (ID: `16660`).
-- **Component**: Infer from the code area. Fetch the LPD project components and select the one whose name best matches the relevant area or keyword.
+- **Component**: Infer from the code area. Fetch the LPD project components and select the one whose name matches the relevant area or keyword.
 - **Cross Cutting Properties** (`customfield_10979`): `None` (ID: `14468`).
 
 ## Create the Ticket

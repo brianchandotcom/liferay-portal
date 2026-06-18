@@ -11,7 +11,7 @@
 		"noEmit": true,
 		"paths": {
 			"@liferay/frontend-data-set-web/api": [
-				"./node_modules/@liferay/js-api/data-set/connection"
+				"./node_modules/@liferay/js-api/data-set"
 			]
 		},
 		"skipLibCheck": true,

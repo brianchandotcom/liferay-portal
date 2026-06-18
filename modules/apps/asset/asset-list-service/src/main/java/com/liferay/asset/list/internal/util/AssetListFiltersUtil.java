@@ -453,7 +453,7 @@ public class AssetListFiltersUtil {
 		String subfield = _getSubfield(locale, objectField);
 
 		Query valueQuery = _toValueQuery(
-			jsonObject, subfield, operatorName, value, objectField);
+			jsonObject, objectField, operatorName, subfield, value);
 
 		if (valueQuery == null) {
 			return null;
@@ -509,8 +509,8 @@ public class AssetListFiltersUtil {
 	}
 
 	private static Query _toRangeQuery(
-		JSONObject filterJSONObject, String subfield, String operatorName,
-		ObjectField objectField) {
+		JSONObject filterJSONObject, ObjectField objectField,
+		String operatorName, String subfield) {
 
 		boolean dateSubfield = subfield.endsWith(".value_date");
 
@@ -548,14 +548,6 @@ public class AssetListFiltersUtil {
 			return null;
 		}
 
-		if (operatorName.equals("gt")) {
-			String lowerTerm =
-				dateSubfield ? _normalizeDateValue(value, dateTime, true) :
-					value;
-
-			return new TermRangeQuery(subfield, lowerTerm, null, false, false);
-		}
-
 		if (operatorName.equals("ge")) {
 			String lowerTerm =
 				dateSubfield ? _normalizeDateValue(value, dateTime, false) :
@@ -564,12 +556,12 @@ public class AssetListFiltersUtil {
 			return new TermRangeQuery(subfield, lowerTerm, null, true, false);
 		}
 
-		if (operatorName.equals("lt")) {
-			String upperTerm =
-				dateSubfield ? _normalizeDateValue(value, dateTime, false) :
+		if (operatorName.equals("gt")) {
+			String lowerTerm =
+				dateSubfield ? _normalizeDateValue(value, dateTime, true) :
 					value;
 
-			return new TermRangeQuery(subfield, null, upperTerm, false, false);
+			return new TermRangeQuery(subfield, lowerTerm, null, false, false);
 		}
 
 		if (operatorName.equals("le")) {
@@ -580,12 +572,20 @@ public class AssetListFiltersUtil {
 			return new TermRangeQuery(subfield, null, upperTerm, false, true);
 		}
 
+		if (operatorName.equals("lt")) {
+			String upperTerm =
+				dateSubfield ? _normalizeDateValue(value, dateTime, false) :
+					value;
+
+			return new TermRangeQuery(subfield, null, upperTerm, false, false);
+		}
+
 		return null;
 	}
 
 	private static Query _toValueQuery(
-		JSONObject filterJSONObject, String subfield, String operatorName,
-		String value, ObjectField objectField) {
+		JSONObject filterJSONObject, ObjectField objectField,
+		String operatorName, String subfield, String value) {
 
 		if (operatorName.equals("contains") ||
 			operatorName.equals("not-contains")) {
@@ -607,7 +607,7 @@ public class AssetListFiltersUtil {
 			operatorName.equals("lt")) {
 
 			return _toRangeQuery(
-				filterJSONObject, subfield, operatorName, objectField);
+				filterJSONObject, objectField, operatorName, subfield);
 		}
 
 		if (subfield.endsWith(".value_date") &&

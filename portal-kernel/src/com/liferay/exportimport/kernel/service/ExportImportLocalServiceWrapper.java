@@ -274,6 +274,18 @@ public class ExportImportLocalServiceWrapper
 	}
 
 	@Override
+	public long mergeLayoutSetPrototypeInBackground(
+			long userId, long groupId,
+			com.liferay.exportimport.kernel.model.ExportImportConfiguration
+				exportImportConfiguration,
+			java.util.Map<String, java.io.Serializable> taskContextMap)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _exportImportLocalService.mergeLayoutSetPrototypeInBackground(
+			userId, groupId, exportImportConfiguration, taskContextMap);
+	}
+
+	@Override
 	public com.liferay.exportimport.kernel.lar.MissingReferences
 			validateImportLayoutsFile(
 				com.liferay.exportimport.kernel.model.ExportImportConfiguration
@@ -336,4 +348,4 @@ public class ExportImportLocalServiceWrapper
 	private ExportImportLocalService _exportImportLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-315991513
+// LIFERAY-SERVICE-BUILDER-HASH:-1501359481

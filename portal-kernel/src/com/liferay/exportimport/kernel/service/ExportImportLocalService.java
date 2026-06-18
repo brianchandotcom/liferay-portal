@@ -16,6 +16,9 @@ import com.liferay.portal.kernel.transaction.Transactional;
 
 import java.io.File;
 import java.io.InputStream;
+import java.io.Serializable;
+
+import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -169,6 +172,13 @@ public interface ExportImportLocalService extends BaseLocalService {
 		throws PortalException;
 
 	@CTAware
+	public long mergeLayoutSetPrototypeInBackground(
+			long userId, long groupId,
+			ExportImportConfiguration exportImportConfiguration,
+			Map<String, Serializable> taskContextMap)
+		throws PortalException;
+
+	@CTAware
 	public MissingReferences validateImportLayoutsFile(
 			ExportImportConfiguration exportImportConfiguration, File file)
 		throws PortalException;
@@ -191,4 +201,4 @@ public interface ExportImportLocalService extends BaseLocalService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-211553404
+// LIFERAY-SERVICE-BUILDER-HASH:-21893740

@@ -368,21 +368,9 @@ public class ScanCodeCloudBucket {
 
 	private Storage _getStorage() {
 		try {
-			Storage storage = _getBucketStorage(
-				JenkinsResultsParserUtil.getBuildProperty(
-					"google.application.crendential.file[scancode]"));
-
-			if (storage != null) {
-				return storage;
-			}
-		}
-		catch (Exception exception) {
-		}
-
-		try {
 			return _getBucketStorage(
 				JenkinsResultsParserUtil.getBuildProperty(
-					"scancode.credentials.file"));
+					"google.application.crendential.file[scancode]"));
 		}
 		catch (Exception exception) {
 			exception.printStackTrace();

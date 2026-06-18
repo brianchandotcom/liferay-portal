@@ -1,0 +1,676 @@
+[
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_ANNOUNCEMENTS#]",
+		"columnName": "Menu Item Description",
+		"data": {
+			"en_US": "Stay updated on portal changes and news.",
+			"es_ES": "Mantente al día sobre los cambios y novedades del portal.",
+			"ja_JP": "ポータルの変更とニュースの最新情報を入手します。",
+			"pt_BR": "Fique por dentro das mudanças e novidades do portal."
+		}
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_ANNOUNCEMENTS#]",
+		"columnName": "Menu Item Image URL",
+		"data": {
+			"en_US": "/documents/d/one/announcements-svg",
+			"es_ES": "/documents/d/one/announcements-svg",
+			"ja_JP": "/documents/d/one/announcements-svg",
+			"pt_BR": "/documents/d/one/announcements-svg"
+		}
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_ANNOUNCEMENTS#]",
+		"columnName": "Menu Item Type",
+		"data": "Image"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_BUSINESS_EVENTS#]",
+		"columnName": "Menu Item Description",
+		"data": {
+			"en_US": "Record your upcoming business events.",
+			"es_ES": "Registra tus próximos eventos de negocio.",
+			"ja_JP": "今後のビジネスイベントを記録します。",
+			"pt_BR": "Registre seus próximos eventos de negócio."
+		}
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_BUSINESS_EVENTS#]",
+		"columnName": "Menu Item Image URL",
+		"data": {
+			"en_US": "/documents/d/one/business_events-svg",
+			"es_ES": "/documents/d/one/business_events-svg",
+			"ja_JP": "/documents/d/one/business_events-svg",
+			"pt_BR": "/documents/d/one/business_events-svg"
+		}
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_BUSINESS_EVENTS#]",
+		"columnName": "Menu Item Type",
+		"data": "Image"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_LEARN_NAVIGATE#]",
+		"columnName": "Submenu Child Columns",
+		"data": "1"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_LEARN_NAVIGATE#]",
+		"columnName": "Submenu Column Span",
+		"data": "4"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_STAY_UPDATED#]",
+		"columnName": "Submenu Child Columns",
+		"data": "1"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_STAY_UPDATED#]",
+		"columnName": "Submenu Column Span",
+		"data": "4"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_SUPPORT#]",
+		"columnName": "Submenu Child Columns",
+		"data": "1"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_SUPPORT#]",
+		"columnName": "Submenu Column Span",
+		"data": "4"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_CUSTOMER_PORTAL_HELP#]",
+		"columnName": "Menu Item Description",
+		"data": {
+			"en_US": "Get assistance with using the Liferay Customer Portal.",
+			"es_ES": "Obtén ayuda para usar el Liferay Customer Portal.",
+			"ja_JP": "Liferay Customer Portalの利用に関するサポートをご案内します。",
+			"pt_BR": "Obtenha ajuda para usar o Liferay Customer Portal."
+		}
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_CUSTOMER_PORTAL_HELP#]",
+		"columnName": "Menu Item Image URL",
+		"data": {
+			"en_US": "/documents/d/one/customer_portal_help-svg",
+			"es_ES": "/documents/d/one/customer_portal_help-svg",
+			"ja_JP": "/documents/d/one/customer_portal_help-svg",
+			"pt_BR": "/documents/d/one/customer_portal_help-svg"
+		}
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_CUSTOMER_PORTAL_HELP#]",
+		"columnName": "Menu Item Type",
+		"data": "Image"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_DOWNLOADS#]",
+		"columnName": "Menu Item Description",
+		"data": {
+			"en_US": "Get fix packs, service packs, and security fixes.",
+			"es_ES": "Obtén fix packs, service packs y correcciones de seguridad.",
+			"ja_JP": "フィックスパック、サービスパック、セキュリティ修正を入手します。",
+			"pt_BR": "Obtenha fix packs, service packs e correções de segurança."
+		}
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_DOWNLOADS#]",
+		"columnName": "Menu Item Image URL",
+		"data": {
+			"en_US": "/documents/d/one/downloads-svg",
+			"es_ES": "/documents/d/one/downloads-svg",
+			"ja_JP": "/documents/d/one/downloads-svg",
+			"pt_BR": "/documents/d/one/downloads-svg"
+		}
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_DOWNLOADS#]",
+		"columnName": "Menu Item Type",
+		"data": "Image"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_LIFERAY_LEARN#]",
+		"columnName": "Menu Item Description",
+		"data": {
+			"en_US": "Access official Liferay documentation and guides.",
+			"es_ES": "Accede a la documentación y las guías oficiales de Liferay.",
+			"ja_JP": "Liferayの公式ドキュメントとガイドにアクセスします。",
+			"pt_BR": "Acesse a documentação e os guias oficiais da Liferay."
+		}
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_LIFERAY_LEARN#]",
+		"columnName": "Menu Item Image URL",
+		"data": {
+			"en_US": "/documents/d/one/liferay_learn-svg",
+			"es_ES": "/documents/d/one/liferay_learn-svg",
+			"ja_JP": "/documents/d/one/liferay_learn-svg",
+			"pt_BR": "/documents/d/one/liferay_learn-svg"
+		}
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_LIFERAY_LEARN#]",
+		"columnName": "Menu Item Type",
+		"data": "Image"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_MY_TICKETS#]",
+		"columnName": "Menu Item Description",
+		"data": {
+			"en_US": "Track open and closed support requests.",
+			"es_ES": "Haz seguimiento de las solicitudes de soporte abiertas y cerradas.",
+			"ja_JP": "未対応および対応済みのサポートリクエストを追跡します。",
+			"pt_BR": "Acompanhe as solicitações de suporte abertas e fechadas."
+		}
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_MY_TICKETS#]",
+		"columnName": "Menu Item Image URL",
+		"data": {
+			"en_US": "/documents/d/one/my_tickets-svg",
+			"es_ES": "/documents/d/one/my_tickets-svg",
+			"ja_JP": "/documents/d/one/my_tickets-svg",
+			"pt_BR": "/documents/d/one/my_tickets-svg"
+		}
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_MY_TICKETS#]",
+		"columnName": "Menu Item Type",
+		"data": "Image"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_POLICIES#]",
+		"columnName": "Menu Item Description",
+		"data": {
+			"en_US": "Review Liferay support terms.",
+			"es_ES": "Consulta los términos de soporte de Liferay.",
+			"ja_JP": "Liferayのサポート規約をご確認ください。",
+			"pt_BR": "Consulte os termos de suporte da Liferay."
+		}
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_POLICIES#]",
+		"columnName": "Menu Item Image URL",
+		"data": {
+			"en_US": "/documents/d/one/support_policies-svg",
+			"es_ES": "/documents/d/one/support_policies-svg",
+			"ja_JP": "/documents/d/one/support_policies-svg",
+			"pt_BR": "/documents/d/one/support_policies-svg"
+		}
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_POLICIES#]",
+		"columnName": "Menu Item Type",
+		"data": "Image"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_RELEASE_NOTES#]",
+		"columnName": "Menu Item Description",
+		"data": {
+			"en_US": "See the latest DXP and cloud release changes.",
+			"es_ES": "Consulta los últimos cambios de las versiones de DXP y cloud.",
+			"ja_JP": "DXPおよびクラウドの最新リリースの変更点をご確認ください。",
+			"pt_BR": "Veja as últimas alterações das versões do DXP e cloud."
+		}
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_RELEASE_NOTES#]",
+		"columnName": "Menu Item Image URL",
+		"data": {
+			"en_US": "/documents/d/one/release_notes-svg",
+			"es_ES": "/documents/d/one/release_notes-svg",
+			"ja_JP": "/documents/d/one/release_notes-svg",
+			"pt_BR": "/documents/d/one/release_notes-svg"
+		}
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_RELEASE_NOTES#]",
+		"columnName": "Menu Item Type",
+		"data": "Image"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_SECURITY_VULNERABILITIES#]",
+		"columnName": "Menu Item Description",
+		"data": {
+			"en_US": "Find information and fixes for known vulnerabilities.",
+			"es_ES": "Información y correcciones para vulnerabilidades conocidas.",
+			"ja_JP": "既知の脆弱性に関する情報と修正。",
+			"pt_BR": "Informações e correções para vulnerabilidades conhecidas."
+		}
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_SECURITY_VULNERABILITIES#]",
+		"columnName": "Menu Item Image URL",
+		"data": {
+			"en_US": "/documents/d/one/security_vulnerabilities-svg",
+			"es_ES": "/documents/d/one/security_vulnerabilities-svg",
+			"ja_JP": "/documents/d/one/security_vulnerabilities-svg",
+			"pt_BR": "/documents/d/one/security_vulnerabilities-svg"
+		}
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_SECURITY_VULNERABILITIES#]",
+		"columnName": "Menu Item Type",
+		"data": "Image"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_SUBMIT_REQUEST#]",
+		"columnName": "Menu Item Description",
+		"data": {
+			"en_US": "Need help? Log an issue or ask a question.",
+			"es_ES": "¿Necesitas ayuda? Registra una incidencia o haz una pregunta.",
+			"ja_JP": "お困りですか？問題を報告するか、質問してください。",
+			"pt_BR": "Precisa de ajuda? Registre um problema ou faça uma pergunta."
+		}
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_SUBMIT_REQUEST#]",
+		"columnName": "Menu Item Image URL",
+		"data": {
+			"en_US": "/documents/d/one/submit_a_request-svg",
+			"es_ES": "/documents/d/one/submit_a_request-svg",
+			"ja_JP": "/documents/d/one/submit_a_request-svg",
+			"pt_BR": "/documents/d/one/submit_a_request-svg"
+		}
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_SUBMIT_REQUEST#]",
+		"columnName": "Menu Item Type",
+		"data": "Image"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_TICKETS_ATTACHMENTS#]",
+		"columnName": "Menu Item Description",
+		"data": {
+			"en_US": "Manage your attachments uploaded via the large file uploader.",
+			"es_ES": "Gestiona los archivos adjuntos subidos a través del cargador de archivos grandes.",
+			"ja_JP": "大容量ファイルアップローダーでアップロードされた添付ファイルを管理します。",
+			"pt_BR": "Gerencie seus anexos enviados pelo carregador de arquivos grandes."
+		}
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_TICKETS_ATTACHMENTS#]",
+		"columnName": "Menu Item Image URL",
+		"data": {
+			"en_US": "/documents/d/one/tickets_attachments-svg",
+			"es_ES": "/documents/d/one/tickets_attachments-svg",
+			"ja_JP": "/documents/d/one/tickets_attachments-svg",
+			"pt_BR": "/documents/d/one/tickets_attachments-svg"
+		}
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_TICKETS_ATTACHMENTS#]",
+		"columnName": "Menu Item Type",
+		"data": "Image"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_MARKETPLACE_LANDING_PAGE#]",
+		"columnName": "Submenu Child Columns",
+		"data": "1"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_MARKETPLACE_LANDING_PAGE#]",
+		"columnName": "Submenu Column Span",
+		"data": "3"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_MARKETPLACE_CATALOGS#]",
+		"columnName": "Submenu Child Columns",
+		"data": "3"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_MARKETPLACE_CATALOGS#]",
+		"columnName": "Submenu Column Span",
+		"data": "9"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_MY_ACCOUNT_PROJECT_AND_ORDERS#]",
+		"columnName": "Submenu Child Columns",
+		"data": "1"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_MY_ACCOUNT_PROJECT_AND_ORDERS#]",
+		"columnName": "Submenu Column Span",
+		"data": "6"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_MY_ACCOUNT_ACCOUNT_AND_MEMBERS#]",
+		"columnName": "Submenu Child Columns",
+		"data": "1"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_MY_ACCOUNT_ACCOUNT_AND_MEMBERS#]",
+		"columnName": "Submenu Column Span",
+		"data": "6"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_MARKETPLACE_OVERVIEW#]",
+		"columnName": "Menu Item Description",
+		"data": {
+			"en_US": "Discover what is new in Marketplace.",
+			"es_ES": "Discover what is new in Marketplace.",
+			"ja_JP": "Discover what is new in Marketplace.",
+			"pt_BR": "Discover what is new in Marketplace."
+		}
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_MARKETPLACE_OVERVIEW#]",
+		"columnName": "Menu Item Image URL",
+		"data": {
+			"en_US": "/documents/d/one/marketplace_overview_icon-svg",
+			"es_ES": "/documents/d/one/marketplace_overview_icon-svg",
+			"ja_JP": "/documents/d/one/marketplace_overview_icon-svg",
+			"pt_BR": "/documents/d/one/marketplace_overview_icon-svg"
+		}
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_MARKETPLACE_OVERVIEW#]",
+		"columnName": "Menu Item Type",
+		"data": "Image"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_MARKETPLACE_PRODUCTS_CATALOG#]",
+		"columnName": "Menu Item Description",
+		"data": {
+			"en_US": "Explore official Liferay products and free tiers.",
+			"es_ES": "Explore official Liferay products and free tiers.",
+			"ja_JP": "Explore official Liferay products and free tiers.",
+			"pt_BR": "Explore official Liferay products and free tiers."
+		}
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_MARKETPLACE_PRODUCTS_CATALOG#]",
+		"columnName": "Menu Item Image URL",
+		"data": {
+			"en_US": "/documents/d/one/products_catalog-svg",
+			"es_ES": "/documents/d/one/products_catalog-svg",
+			"ja_JP": "/documents/d/one/products_catalog-svg",
+			"pt_BR": "/documents/d/one/products_catalog-svg"
+		}
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_MARKETPLACE_PRODUCTS_CATALOG#]",
+		"columnName": "Menu Item Type",
+		"data": "Image"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_MARKETPLACE_APPLICATIONS_CATALOG#]",
+		"columnName": "Menu Item Description",
+		"data": {
+			"en_US": "Browse and filter compatible Liferay apps.",
+			"es_ES": "Browse and filter compatible Liferay apps.",
+			"ja_JP": "Browse and filter compatible Liferay apps.",
+			"pt_BR": "Browse and filter compatible Liferay apps."
+		}
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_MARKETPLACE_APPLICATIONS_CATALOG#]",
+		"columnName": "Menu Item Image URL",
+		"data": {
+			"en_US": "/documents/d/one/applications_catalog-svg",
+			"es_ES": "/documents/d/one/applications_catalog-svg",
+			"ja_JP": "/documents/d/one/applications_catalog-svg",
+			"pt_BR": "/documents/d/one/applications_catalog-svg"
+		}
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_MARKETPLACE_APPLICATIONS_CATALOG#]",
+		"columnName": "Menu Item Type",
+		"data": "Image"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_MARKETPLACE_SOLUTIONS_CATALOG#]",
+		"columnName": "Menu Item Description",
+		"data": {
+			"en_US": "Find partner built solutions for your industry.",
+			"es_ES": "Find partner built solutions for your industry.",
+			"ja_JP": "Find partner built solutions for your industry.",
+			"pt_BR": "Find partner built solutions for your industry."
+		}
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_MARKETPLACE_SOLUTIONS_CATALOG#]",
+		"columnName": "Menu Item Image URL",
+		"data": {
+			"en_US": "/documents/d/one/solutions_catalog-svg",
+			"es_ES": "/documents/d/one/solutions_catalog-svg",
+			"ja_JP": "/documents/d/one/solutions_catalog-svg",
+			"pt_BR": "/documents/d/one/solutions_catalog-svg"
+		}
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_MARKETPLACE_SOLUTIONS_CATALOG#]",
+		"columnName": "Menu Item Type",
+		"data": "Image"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_MY_ACCOUNT_PROJECTS#]",
+		"columnName": "Menu Item Image URL",
+		"data": {
+			"en_US": "/documents/d/one/projects-svg",
+			"es_ES": "/documents/d/one/projects-svg",
+			"ja_JP": "/documents/d/one/projects-svg",
+			"pt_BR": "/documents/d/one/projects-svg"
+		}
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_MY_ACCOUNT_PROJECTS#]",
+		"columnName": "Menu Item Description",
+		"data": {
+			"en_US": "View and manage your projects and licences.",
+			"es_ES": "View and manage your projects and licences.",
+			"ja_JP": "View and manage your projects and licences.",
+			"pt_BR": "View and manage your projects and licences."
+		}
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_MY_ACCOUNT_PROJECTS#]",
+		"columnName": "Menu Item Type",
+		"data": "Image"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_MY_ACCOUNT_ORDERS#]",
+		"columnName": "Menu Item Image URL",
+		"data": {
+			"en_US": "/documents/d/one/orders-svg",
+			"es_ES": "/documents/d/one/orders-svg",
+			"ja_JP": "/documents/d/one/orders-svg",
+			"pt_BR": "/documents/d/one/orders-svg"
+		}
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_MY_ACCOUNT_ORDERS#]",
+		"columnName": "Menu Item Description",
+		"data": {
+			"en_US": "Track your one off and historical purchases.",
+			"es_ES": "Track your one off and historical purchases.",
+			"ja_JP": "Track your one off and historical purchases.",
+			"pt_BR": "Track your one off and historical purchases."
+		}
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_MY_ACCOUNT_ORDERS#]",
+		"columnName": "Menu Item Type",
+		"data": "Image"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_MY_ACCOUNT_ACCOUNT_DETAILS#]",
+		"columnName": "Menu Item Image URL",
+		"data": {
+			"en_US": "/documents/d/one/account_details-svg",
+			"es_ES": "/documents/d/one/account_details-svg",
+			"ja_JP": "/documents/d/one/account_details-svg",
+			"pt_BR": "/documents/d/one/account_details-svg"
+		}
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_MY_ACCOUNT_ACCOUNT_DETAILS#]",
+		"columnName": "Menu Item Description",
+		"data": {
+			"en_US": "Update your organizations and contact information.",
+			"es_ES": "Update your organizations and contact information.",
+			"ja_JP": "Update your organizations and contact information.",
+			"pt_BR": "Update your organizations and contact information."
+		}
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_MY_ACCOUNT_ACCOUNT_DETAILS#]",
+		"columnName": "Menu Item Type",
+		"data": "Image"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_MY_ACCOUNT_ACCOUNT_MEMBERS#]",
+		"columnName": "Menu Item Image URL",
+		"data": {
+			"en_US": "/documents/d/one/account_members-svg",
+			"es_ES": "/documents/d/one/account_members-svg",
+			"ja_JP": "/documents/d/one/account_members-svg",
+			"pt_BR": "/documents/d/one/account_members-svg"
+		}
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_MY_ACCOUNT_ACCOUNT_MEMBERS#]",
+		"columnName": "Menu Item Description",
+		"data": {
+			"en_US": "Manage account members, roles, and support access.",
+			"es_ES": "Manage account members, roles, and support access.",
+			"ja_JP": "Manage account members, roles, and support access.",
+			"pt_BR": "Manage account members, roles, and support access."
+		}
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_MY_ACCOUNT_ACCOUNT_MEMBERS#]",
+		"columnName": "Menu Item Type",
+		"data": "Image"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_MY_ACCOUNT_PUBLISHER_DASHBOARD#]",
+		"columnName": "Menu Item Description",
+		"data": {
+			"en_US": "Manage and publish your apps and solutions.",
+			"es_ES": "Manage and publish your apps and solutions.",
+			"ja_JP": "Manage and publish your apps and solutions.",
+			"pt_BR": "Manage and publish your apps and solutions."
+		}
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_MY_ACCOUNT_PUBLISHER_DASHBOARD#]",
+		"columnName": "Menu Item Image URL",
+		"data": {
+			"en_US": "/documents/d/one/publisher_dashboard-svg",
+			"es_ES": "/documents/d/one/publisher_dashboard-svg",
+			"ja_JP": "/documents/d/one/publisher_dashboard-svg",
+			"pt_BR": "/documents/d/one/publisher_dashboard-svg"
+		}
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_MY_ACCOUNT_PUBLISHER_DASHBOARD#]",
+		"columnName": "Menu Item Type",
+		"data": "Image"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SITES_COMMUNITY#]",
+		"columnName": "Menu Item Icon",
+		"data": "community"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SITES_CUSTOMER_PORTAL#]",
+		"columnName": "Menu Item Icon",
+		"data": "customer-portal"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SITES_LIFERAY_COM#]",
+		"columnName": "Menu Item Icon",
+		"data": "liferay"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SITES_LIFERAY_LEARN#]",
+		"columnName": "Menu Item Icon",
+		"data": "liferay-learn"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SITES_PARTNER_PORTAL#]",
+		"columnName": "Menu Item Icon",
+		"data": "partner-portal"
+	}
+]

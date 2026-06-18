@@ -1,0 +1,1063 @@
+{
+	"masterPage": {
+		"key": "liferay-one"
+	},
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"indexed": true,
+					"layout": {
+						"widthType": "Fluid"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"gutters": false,
+							"indexed": true,
+							"modulesPerRow": 1,
+							"numberOfColumns": 1
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"size": 12
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "hero-banner",
+												"siteKey": "[$GROUP_KEY$]"
+											},
+											"fragmentConfig": {
+												"homeLink": "/web/one/home",
+												"parentLink": "/web/one/support/customer-portal-help"
+											},
+											"fragmentFields": [
+												{
+													"id": "backgroundImage",
+													"value": {
+														"backgroundFragmentImage": {
+															"url": {
+																"mapping": {
+																	"fieldKey": "FileEntry_previewImage",
+																	"itemReference": {
+																		"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																		"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/hero_banner_gradient_bubbles.png#]"
+																	}
+																}
+															}
+														}
+													}
+												},
+												{
+													"id": "breadcrumb-current",
+													"value": {
+														"text": {
+															"value_i18n": {
+																"en_US": "Customer Portal Help"
+															}
+														}
+													}
+												},
+												{
+													"id": "breadcrumb-parent",
+													"value": {
+														"text": {
+															"value_i18n": {
+																"en_US": "Support"
+															}
+														}
+													}
+												},
+												{
+													"id": "subtitle",
+													"value": {
+														"text": {
+															"value_i18n": {
+																"en_US": "Expand Liferay's portfolio through apps from our partner and developer ecosystems to enhance your digital transformation."
+															}
+														}
+													}
+												},
+												{
+													"id": "title",
+													"value": {
+														"text": {
+															"value_i18n": {
+																"en_US": "Customer Portal Help"
+															}
+														}
+													}
+												}
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "Column"
+							}
+						],
+						"type": "Row"
+					}
+				],
+				"type": "Section"
+			},
+			{
+				"definition": {
+					"indexed": true,
+					"layout": {
+						"paddingBottom": 4,
+						"paddingTop": 4,
+						"widthType": "Fixed"
+					},
+					"name": "Help Topics"
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"customCSS": ".[$FRAGMENT_CLASS$] > .row {\n\talign-items: stretch !important;\n\trow-gap: 24px;\n}",
+							"gutters": true,
+							"indexed": true,
+							"modulesPerRow": 3,
+							"numberOfColumns": 6,
+							"reverseOrder": false,
+							"rowViewports": [
+								{
+									"id": "landscapeMobile",
+									"rowViewportDefinition": {
+										"modulesPerRow": 1
+									}
+								},
+								{
+									"id": "portraitMobile",
+									"rowViewportDefinition": {
+										"modulesPerRow": 1
+									}
+								},
+								{
+									"id": "tablet",
+									"rowViewportDefinition": {
+									}
+								}
+							]
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "tablet"
+										}
+									],
+									"size": 4
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"cssClasses": [
+												"card",
+												"h-100"
+											],
+											"fragmentLink": {
+												"href": {
+													"value_i18n": {
+														"en_US": "/web/one/support/getting-started"
+													}
+												}
+											},
+											"fragmentStyle": {
+												"paddingBottom": "4",
+												"paddingLeft": "4",
+												"paddingRight": "4",
+												"paddingTop": "4"
+											},
+											"indexed": true,
+											"layout": {
+												"align": "Start",
+												"contentDisplay": "FlexColumn"
+											}
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "BASIC_COMPONENT-image"
+													},
+													"fragmentFields": [
+														{
+															"id": "image-square",
+															"value": {
+																"fragmentImage": {
+																	"url": {
+																		"mapping": {
+																			"fieldKey": "FileEntry_previewImage",
+																			"itemReference": {
+																				"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																				"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/customer_portal_help.svg#]"
+																			}
+																		}
+																	}
+																},
+																"fragmentLink": {
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"height": "32px",
+														"marginBottom": "3",
+														"width": "32px"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "BASIC_COMPONENT-heading"
+													},
+													"fragmentConfig": {
+														"headingLevel": "h5"
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {
+																},
+																"text": {
+																	"value_i18n": {
+																		"en_US": "Getting Started"
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"marginBottom": "2",
+														"marginTop": "0"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"cssClasses": [
+														"small",
+														"text-secondary"
+													],
+													"fragment": {
+														"key": "BASIC_COMPONENT-paragraph"
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {
+																},
+																"text": {
+																	"value_i18n": {
+																		"en_US": "First steps and essential guidance for administrators, new users, and partners."
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"marginBottom": "0"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "Section"
+									}
+								],
+								"type": "Column"
+							},
+							{
+								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "tablet"
+										}
+									],
+									"size": 4
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"cssClasses": [
+												"card",
+												"h-100"
+											],
+											"fragmentLink": {
+												"href": {
+													"value_i18n": {
+														"en_US": "#"
+													}
+												}
+											},
+											"fragmentStyle": {
+												"paddingBottom": "4",
+												"paddingLeft": "4",
+												"paddingRight": "4",
+												"paddingTop": "4"
+											},
+											"indexed": true,
+											"layout": {
+												"align": "Start",
+												"contentDisplay": "FlexColumn"
+											}
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "BASIC_COMPONENT-image"
+													},
+													"fragmentFields": [
+														{
+															"id": "image-square",
+															"value": {
+																"fragmentImage": {
+																	"url": {
+																		"mapping": {
+																			"fieldKey": "FileEntry_previewImage",
+																			"itemReference": {
+																				"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																				"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/account_members.svg#]"
+																			}
+																		}
+																	}
+																},
+																"fragmentLink": {
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"height": "32px",
+														"marginBottom": "3",
+														"width": "32px"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "BASIC_COMPONENT-heading"
+													},
+													"fragmentConfig": {
+														"headingLevel": "h5"
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {
+																},
+																"text": {
+																	"value_i18n": {
+																		"en_US": "Administration"
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"marginBottom": "2",
+														"marginTop": "0"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"cssClasses": [
+														"small",
+														"text-secondary"
+													],
+													"fragment": {
+														"key": "BASIC_COMPONENT-paragraph"
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {
+																},
+																"text": {
+																	"value_i18n": {
+																		"en_US": "Learn more about project administration within the Customer Portal."
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"marginBottom": "0"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "Section"
+									}
+								],
+								"type": "Column"
+							},
+							{
+								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "tablet"
+										}
+									],
+									"size": 4
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"cssClasses": [
+												"card",
+												"h-100"
+											],
+											"fragmentLink": {
+												"href": {
+													"value_i18n": {
+														"en_US": "https://learn.liferay.com"
+													}
+												}
+											},
+											"fragmentStyle": {
+												"paddingBottom": "4",
+												"paddingLeft": "4",
+												"paddingRight": "4",
+												"paddingTop": "4"
+											},
+											"indexed": true,
+											"layout": {
+												"align": "Start",
+												"contentDisplay": "FlexColumn"
+											}
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "BASIC_COMPONENT-image"
+													},
+													"fragmentFields": [
+														{
+															"id": "image-square",
+															"value": {
+																"fragmentImage": {
+																	"url": {
+																		"mapping": {
+																			"fieldKey": "FileEntry_previewImage",
+																			"itemReference": {
+																				"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																				"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/submit_a_request.svg#]"
+																			}
+																		}
+																	}
+																},
+																"fragmentLink": {
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"height": "32px",
+														"marginBottom": "3",
+														"width": "32px"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "BASIC_COMPONENT-heading"
+													},
+													"fragmentConfig": {
+														"headingLevel": "h5"
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {
+																},
+																"text": {
+																	"value_i18n": {
+																		"en_US": "Activation"
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"marginBottom": "2",
+														"marginTop": "0"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"cssClasses": [
+														"small",
+														"text-secondary"
+													],
+													"fragment": {
+														"key": "BASIC_COMPONENT-paragraph"
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {
+																},
+																"text": {
+																	"value_i18n": {
+																		"en_US": "Activate your Liferay SaaS, Liferay PaaS, or Liferay Self-Hosted instance."
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"marginBottom": "0"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "Section"
+									}
+								],
+								"type": "Column"
+							},
+							{
+								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "tablet"
+										}
+									],
+									"size": 4
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"cssClasses": [
+												"card",
+												"h-100"
+											],
+											"fragmentLink": {
+												"href": {
+													"value_i18n": {
+														"en_US": "#"
+													}
+												}
+											},
+											"fragmentStyle": {
+												"paddingBottom": "4",
+												"paddingLeft": "4",
+												"paddingRight": "4",
+												"paddingTop": "4"
+											},
+											"indexed": true,
+											"layout": {
+												"align": "Start",
+												"contentDisplay": "FlexColumn"
+											}
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "BASIC_COMPONENT-image"
+													},
+													"fragmentFields": [
+														{
+															"id": "image-square",
+															"value": {
+																"fragmentImage": {
+																	"url": {
+																		"mapping": {
+																			"fieldKey": "FileEntry_previewImage",
+																			"itemReference": {
+																				"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																				"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/marketplace_overview_icon.svg#]"
+																			}
+																		}
+																	}
+																},
+																"fragmentLink": {
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"height": "32px",
+														"marginBottom": "3",
+														"width": "32px"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "BASIC_COMPONENT-heading"
+													},
+													"fragmentConfig": {
+														"headingLevel": "h5"
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {
+																},
+																"text": {
+																	"value_i18n": {
+																		"en_US": "Overview"
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"marginBottom": "2",
+														"marginTop": "0"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"cssClasses": [
+														"small",
+														"text-secondary"
+													],
+													"fragment": {
+														"key": "BASIC_COMPONENT-paragraph"
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {
+																},
+																"text": {
+																	"value_i18n": {
+																		"en_US": "The essential guide to Liferay Customer Portal."
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"marginBottom": "0"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "Section"
+									}
+								],
+								"type": "Column"
+							},
+							{
+								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "tablet"
+										}
+									],
+									"size": 4
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"cssClasses": [
+												"card",
+												"h-100"
+											],
+											"fragmentLink": {
+												"href": {
+													"value_i18n": {
+														"en_US": "https://learn.liferay.com"
+													}
+												}
+											},
+											"fragmentStyle": {
+												"paddingBottom": "4",
+												"paddingLeft": "4",
+												"paddingRight": "4",
+												"paddingTop": "4"
+											},
+											"indexed": true,
+											"layout": {
+												"align": "Start",
+												"contentDisplay": "FlexColumn"
+											}
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "BASIC_COMPONENT-image"
+													},
+													"fragmentFields": [
+														{
+															"id": "image-square",
+															"value": {
+																"fragmentImage": {
+																	"url": {
+																		"mapping": {
+																			"fieldKey": "FileEntry_previewImage",
+																			"itemReference": {
+																				"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																				"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/release_notes.svg#]"
+																			}
+																		}
+																	}
+																},
+																"fragmentLink": {
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"height": "32px",
+														"marginBottom": "3",
+														"width": "32px"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "BASIC_COMPONENT-heading"
+													},
+													"fragmentConfig": {
+														"headingLevel": "h5"
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {
+																},
+																"text": {
+																	"value_i18n": {
+																		"en_US": "DXP Activation"
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"marginBottom": "2",
+														"marginTop": "0"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"cssClasses": [
+														"small",
+														"text-secondary"
+													],
+													"fragment": {
+														"key": "BASIC_COMPONENT-paragraph"
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {
+																},
+																"text": {
+																	"value_i18n": {
+																		"en_US": "Details about Liferay DXP activation key usage and details."
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"marginBottom": "0"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "Section"
+									}
+								],
+								"type": "Column"
+							},
+							{
+								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "tablet"
+										}
+									],
+									"size": 4
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"cssClasses": [
+												"card",
+												"h-100"
+											],
+											"fragmentLink": {
+												"href": {
+													"value_i18n": {
+														"en_US": "/web/one/my-account/#/team-members"
+													}
+												}
+											},
+											"fragmentStyle": {
+												"paddingBottom": "4",
+												"paddingLeft": "4",
+												"paddingRight": "4",
+												"paddingTop": "4"
+											},
+											"indexed": true,
+											"layout": {
+												"align": "Start",
+												"contentDisplay": "FlexColumn"
+											}
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "BASIC_COMPONENT-image"
+													},
+													"fragmentFields": [
+														{
+															"id": "image-square",
+															"value": {
+																"fragmentImage": {
+																	"url": {
+																		"mapping": {
+																			"fieldKey": "FileEntry_previewImage",
+																			"itemReference": {
+																				"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																				"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/account_details.svg#]"
+																			}
+																		}
+																	}
+																},
+																"fragmentLink": {
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"height": "32px",
+														"marginBottom": "3",
+														"width": "32px"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "BASIC_COMPONENT-heading"
+													},
+													"fragmentConfig": {
+														"headingLevel": "h5"
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {
+																},
+																"text": {
+																	"value_i18n": {
+																		"en_US": "Team Members"
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"marginBottom": "2",
+														"marginTop": "0"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"cssClasses": [
+														"small",
+														"text-secondary"
+													],
+													"fragment": {
+														"key": "BASIC_COMPONENT-paragraph"
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {
+																},
+																"text": {
+																	"value_i18n": {
+																		"en_US": "Learn more about roles, support cases and Incident Contacts."
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"marginBottom": "0"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "Section"
+									}
+								],
+								"type": "Column"
+							}
+						],
+						"type": "Row"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "liferay-one"
+		}
+	}
+}

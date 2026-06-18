@@ -1,0 +1,70 @@
+{
+	"object-entries": [
+		{
+			"accountName": "",
+			"active": false,
+			"customExpirationDate": "2026-06-11T00:00:00Z",
+			"domains": "stellarluna.net",
+			"externalReferenceCode": "C_LICENSE_KEY_BASIC_TIER",
+			"licenseName": "Basic Tier Key",
+			"licenseType": "production",
+			"name": "Basic Tier Key",
+			"productName": "Liferay DXP",
+			"r_accountEntryToLicenseKey_accountEntryERC": "ACCNT-006",
+			"startDate": "2025-06-11T00:00:00Z"
+		},
+		{
+			"accountName": "",
+			"active": true,
+			"customExpirationDate": "2027-08-09T00:00:00Z",
+			"domains": "enterprise.example.com",
+			"externalReferenceCode": "C_LICENSE_KEY_EP_PRODUCTION",
+			"licenseName": "Production Key",
+			"licenseType": "production",
+			"name": "Production Key",
+			"productName": "Liferay DXP",
+			"r_accountEntryToLicenseKey_accountEntryERC": "ACCNT-010",
+			"startDate": "2026-08-09T00:00:00Z"
+		},
+		{
+			"accountName": "",
+			"active": true,
+			"customExpirationDate": "2029-02-20T00:00:00Z",
+			"domains": "serenitygardens.io",
+			"externalReferenceCode": "C_LICENSE_KEY_FOUNDATION",
+			"licenseName": "Foundation Key",
+			"licenseType": "production",
+			"name": "Foundation Key",
+			"productName": "Liferay DXP",
+			"r_accountEntryToLicenseKey_accountEntryERC": "ACCNT-006",
+			"startDate": "2028-02-20T00:00:00Z"
+		},
+		{
+			"accountName": "",
+			"active": true,
+			"customExpirationDate": "2029-01-12T00:00:00Z",
+			"domains": "bravekiwi.com",
+			"externalReferenceCode": "C_LICENSE_KEY_MAIN_INSTANCE",
+			"licenseName": "Main Instance Key",
+			"licenseType": "production",
+			"name": "Main Instance Key",
+			"productName": "Liferay DXP",
+			"r_accountEntryToLicenseKey_accountEntryERC": "ACCNT-006",
+			"startDate": "2028-01-12T00:00:00Z"
+		},
+		{
+			"accountName": "",
+			"active": true,
+			"customExpirationDate": "2028-02-27T00:00:00Z",
+			"domains": "phoenixtech.org",
+			"externalReferenceCode": "C_LICENSE_KEY_PRIMARY",
+			"licenseName": "Primary Key",
+			"licenseType": "production",
+			"name": "Primary Key",
+			"productName": "Liferay DXP",
+			"r_accountEntryToLicenseKey_accountEntryERC": "ACCNT-006",
+			"startDate": "2027-02-27T00:00:00Z"
+		}
+	],
+	"objectDefinitionName": "LicenseKey"
+}

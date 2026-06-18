@@ -1,6 +1,7 @@
 {
 	"articleId": "WEB-CONTENT-ANNOUNCEMENT-02",
 	"assetCategoryERCs": [
+		"T_AC_EVENTS",
 		"T_AC_ONLINE"
 	],
 	"ddmStructureKey": "ANNOUNCEMENT",

@@ -1,0 +1,50 @@
+{
+	"object-entries": [
+		{
+			"active": true,
+			"defaultQuantity": 1,
+			"displayName": "Liferay AI Hub",
+			"externalReferenceCode": "C_ENT_DEF_AIHUB",
+			"grantType": "fixed",
+			"name": "licenseGeneration",
+			"unit": "boolean"
+		},
+		{
+			"active": true,
+			"defaultQuantity": 1,
+			"displayName": "Content Marketing Platform",
+			"externalReferenceCode": "C_ENT_DEF_CONTENT_MARKETING",
+			"grantType": "fixed",
+			"name": "licenseGeneration",
+			"unit": "boolean"
+		},
+		{
+			"active": true,
+			"defaultQuantity": 1,
+			"displayName": "Liferay Data Platform",
+			"externalReferenceCode": "C_ENT_DEF_DATA_PLATFORM",
+			"grantType": "fixed",
+			"name": "licenseGeneration",
+			"unit": "boolean"
+		},
+		{
+			"active": true,
+			"defaultQuantity": 1,
+			"displayName": "Digital Sales Room",
+			"externalReferenceCode": "C_ENT_DEF_DSR",
+			"grantType": "fixed",
+			"name": "licenseGeneration",
+			"unit": "boolean"
+		},
+		{
+			"active": true,
+			"defaultQuantity": 1,
+			"displayName": "Liferay DXP",
+			"externalReferenceCode": "C_ENT_DEF_DXP",
+			"grantType": "fixed",
+			"name": "licenseGeneration",
+			"unit": "boolean"
+		}
+	],
+	"objectDefinitionName": "EntitlementDefinition"
+}

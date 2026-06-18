@@ -1,0 +1,7 @@
+{
+	"dependencies": [
+		"liferayonebatch",
+		"liferayonecustomelement",
+		"liferayoneglobalcss"
+	]
+}

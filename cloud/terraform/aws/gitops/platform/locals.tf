@@ -18,5 +18,8 @@ locals {
 			type="RuntimeDefault"
 		}
 	}
+	karpenter_pod_annotations={
+		"karpenter.sh/do-not-disrupt"="30m"
+	}
 	terraform_manager_name="liferay-cloud-native-terraform"
 }

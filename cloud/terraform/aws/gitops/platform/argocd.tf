@@ -90,6 +90,7 @@ resource "helm_release" "argocd" {
 					networkPolicy={
 						create=true
 					}
+					podAnnotations=local.karpenter_pod_annotations
 				}
 				installCRDs=true
 				notifications={

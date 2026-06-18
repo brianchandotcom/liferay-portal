@@ -11,6 +11,7 @@ resource "helm_release" "argo_workflows" {
 		yamlencode(
 			{
 				controller={
+					podAnnotations=local.karpenter_pod_annotations
 					resources={
 						limits={
 							memory="512Mi"
@@ -22,6 +23,7 @@ resource "helm_release" "argo_workflows" {
 					}
 				}
 				server={
+					podAnnotations=local.karpenter_pod_annotations
 					resources={
 						limits={
 							memory="256Mi"

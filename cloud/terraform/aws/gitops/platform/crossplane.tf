@@ -9,6 +9,7 @@ resource "helm_release" "crossplane" {
 	values=[
 		yamlencode(
 			{
+				customAnnotations=local.karpenter_pod_annotations
 				podSecurityContextCrossplane=local.default_crossplane_pod_security_context
 				podSecurityContextRBACManager=local.default_crossplane_pod_security_context
 				resourcesCrossplane={

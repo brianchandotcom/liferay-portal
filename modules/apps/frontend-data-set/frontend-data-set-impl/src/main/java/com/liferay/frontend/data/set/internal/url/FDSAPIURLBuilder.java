@@ -170,9 +170,7 @@ public class FDSAPIURLBuilder {
 			}
 		}
 
-		// Interpolate using registered resolvers. Resolvers offer no way to
-		// skip a token, so nullified tokens are masked while the resolver
-		// runs and restored afterwards
+		// Interpolate using registered resolvers
 
 		FDSAPIURLResolver fdsAPIURLResolver =
 			_fdsAPIURLResolverRegistry.getFDSAPIURLResolver(

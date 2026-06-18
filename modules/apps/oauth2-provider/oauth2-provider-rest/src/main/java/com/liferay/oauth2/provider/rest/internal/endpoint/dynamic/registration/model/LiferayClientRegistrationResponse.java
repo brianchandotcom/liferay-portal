@@ -39,7 +39,7 @@ public class LiferayClientRegistrationResponse
 		return responseTypes;
 	}
 
-	public List<String> getScope() {
+	public String getScope() {
 		return scope;
 	}
 
@@ -75,7 +75,7 @@ public class LiferayClientRegistrationResponse
 		this.responseTypes = responseTypes;
 	}
 
-	public void setScope(List<String> scope) {
+	public void setScope(String scope) {
 		this.scope = scope;
 	}
 
@@ -93,7 +93,7 @@ public class LiferayClientRegistrationResponse
 	protected String logoUri;
 	protected List<String> redirectUris;
 	protected String responseTypes;
-	protected List<String> scope;
+	protected String scope;
 	protected String softwareId;
 	protected String tosUri;
 

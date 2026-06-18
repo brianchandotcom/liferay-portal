@@ -9,6 +9,7 @@ import com.liferay.oauth2.provider.rest.internal.endpoint.dynamic.registration.m
 import com.liferay.oauth2.provider.rest.internal.endpoint.dynamic.registration.model.LiferayClientRegistrationResponse;
 import com.liferay.oauth2.provider.rest.internal.endpoint.util.OAuth2ErrorUtil;
 import com.liferay.oauth2.provider.util.OAuth2SecureRandomGenerator;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -245,7 +246,7 @@ public class LiferayDynamicRegistrationService
 
 		if (ListUtil.isNotEmpty(client.getRegisteredScopes())) {
 			liferayClientRegistrationResponse.setScope(
-				client.getRegisteredScopes());
+				String.join(StringPool.SPACE, client.getRegisteredScopes()));
 		}
 
 		if (properties.get("software_id") != null) {

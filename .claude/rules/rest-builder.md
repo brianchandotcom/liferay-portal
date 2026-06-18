@@ -215,7 +215,7 @@ Use this workflow when editing the REST Builder generator itself, rather than th
 - `src/main/java/com/liferay/portal/tools/rest/builder` — the Java that drives generation.
 - `src/main/resources/com/liferay/portal/tools/rest/builder/dependencies` — the FreeMarker templates.
 
-`buildREST` reads the generator's source from the local repository, not from the REST Builder artifact published to Maven, so a change to a template or generator class takes effect on the next `buildREST` run with no need to rebuild or republish the tool. Because the generator produces every module, a change to it affects all of them.
+`buildREST` reads the generator's source from the local repository, not from the REST Builder artifact published to Maven, so a change to a template or generator class takes effect on the next `buildREST` run with no need to rebuild or republish the tool.
 
 ### Workflow
 

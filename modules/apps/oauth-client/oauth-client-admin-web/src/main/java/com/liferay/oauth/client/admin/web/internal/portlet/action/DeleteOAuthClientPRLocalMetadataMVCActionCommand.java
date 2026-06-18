@@ -7,20 +7,13 @@ package com.liferay.oauth.client.admin.web.internal.portlet.action;
 
 import com.liferay.oauth.client.constants.OAuthClientAdminPortletKeys;
 import com.liferay.oauth.client.persistence.service.OAuthClientPRLocalMetadataService;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import jakarta.portlet.ActionRequest;
 import jakarta.portlet.ActionResponse;
-import jakarta.portlet.PortletException;
-
-import java.io.IOException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -36,64 +29,45 @@ import org.osgi.service.component.annotations.Reference;
 	service = MVCActionCommand.class
 )
 public class DeleteOAuthClientPRLocalMetadataMVCActionCommand
-	implements MVCActionCommand {
+	extends BaseTransactionalMVCActionCommand {
 
 	@Override
-	public boolean processAction(
+	protected void doTransactionalCommand(
 			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws PortletException {
+		throws Exception {
 
-		try {
-			long oAuthClientPRLocalMetadataId = ParamUtil.getLong(
-				actionRequest, "oAuthClientPRLocalMetadataId");
+		long[] deleteOAuthClientPRLocalMetadataIds = null;
 
-			long[] oAuthClientPRLocalMetadataIds = null;
+		long oAuthClientPRLocalMetadataId = ParamUtil.getLong(
+			actionRequest, "oAuthClientPRLocalMetadataId");
 
-			if (oAuthClientPRLocalMetadataId > 0) {
-				oAuthClientPRLocalMetadataIds = new long[] {
-					oAuthClientPRLocalMetadataId
-				};
-			}
-			else {
-				oAuthClientPRLocalMetadataIds = StringUtil.split(
-					ParamUtil.getString(
-						actionRequest, "oAuthClientPRLocalMetadataIds"),
-					0L);
-			}
-
-			for (long id : oAuthClientPRLocalMetadataIds) {
-				_oAuthClientPRLocalMetadataService.
-					deleteOAuthClientPRLocalMetadata(id);
-			}
+		if (oAuthClientPRLocalMetadataId > 0) {
+			deleteOAuthClientPRLocalMetadataIds = new long[] {
+				oAuthClientPRLocalMetadataId
+			};
 		}
-		catch (PortalException portalException) {
-			if (_log.isInfoEnabled()) {
-				_log.info(portalException);
-			}
+		else {
+			deleteOAuthClientPRLocalMetadataIds = ParamUtil.getLongValues(
+				actionRequest, "oAuthClientPRLocalMetadataIds");
+		}
 
-			SessionErrors.add(actionRequest, portalException.getClass());
+		for (long deleteOAuthClientPRLocalMetadataId :
+				deleteOAuthClientPRLocalMetadataIds) {
+
+			_oAuthClientPRLocalMetadataService.deleteOAuthClientPRLocalMetadata(
+				deleteOAuthClientPRLocalMetadataId);
 		}
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 
-		try {
-			if (Validator.isNotNull(redirect)) {
-				actionResponse.sendRedirect(redirect);
-			}
-			else {
-				actionResponse.setRenderParameter(
-					"navigation", "oauth-client-pr-local-metadata");
-			}
+		if (Validator.isNotNull(redirect)) {
+			sendRedirect(actionRequest, actionResponse, redirect);
 		}
-		catch (IOException ioException) {
-			throw new PortletException(ioException);
+		else {
+			actionResponse.setRenderParameter(
+				"navigation", "oauth-client-pr-local-metadata");
 		}
-
-		return true;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DeleteOAuthClientPRLocalMetadataMVCActionCommand.class);
 
 	@Reference
 	private OAuthClientPRLocalMetadataService

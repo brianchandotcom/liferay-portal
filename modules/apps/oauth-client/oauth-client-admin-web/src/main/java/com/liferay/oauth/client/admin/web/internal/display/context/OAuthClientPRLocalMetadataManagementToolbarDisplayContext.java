@@ -100,7 +100,7 @@ public class OAuthClientPRLocalMetadataManagementToolbarDisplayContext
 			HashMapBuilder.put(
 				"createDate", "createDate"
 			).put(
-				"protectedResourceURI", "resource"
+				"protectedResourceURI", "protectedResourceURI"
 			).build());
 	}
 

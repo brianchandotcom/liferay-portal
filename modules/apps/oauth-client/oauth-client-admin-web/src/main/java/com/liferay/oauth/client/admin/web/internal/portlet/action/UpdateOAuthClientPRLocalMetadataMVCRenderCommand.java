@@ -5,6 +5,7 @@
 
 package com.liferay.oauth.client.admin.web.internal.portlet.action;
 
+import com.liferay.oauth.client.admin.web.internal.constants.OAuthClientWebKeys;
 import com.liferay.oauth.client.constants.OAuthClientAdminPortletKeys;
 import com.liferay.oauth.client.persistence.model.OAuthClientPRLocalMetadata;
 import com.liferay.oauth.client.persistence.service.OAuthClientPRLocalMetadataService;
@@ -58,7 +59,7 @@ public class UpdateOAuthClientPRLocalMetadataMVCRenderCommand
 		long oAuthClientPRLocalMetadataId = ParamUtil.getLong(
 			renderRequest, "oAuthClientPRLocalMetadataId");
 
-		if (!(oAuthClientPRLocalMetadataId > 0)) {
+		if (oAuthClientPRLocalMetadataId <= 0) {
 			return;
 		}
 
@@ -84,20 +85,21 @@ public class UpdateOAuthClientPRLocalMetadataMVCRenderCommand
 			metadataJSON);
 
 		renderRequest.setAttribute(
-			"authorizationServers",
+			OAuthClientWebKeys.AUTHORIZATION_SERVERS,
 			StringUtil.merge(
 				JSONUtil.toStringArray(
 					metadataJSONObject.getJSONArray("authorization_servers"))));
 		renderRequest.setAttribute(
-			"bearerMethodsSupported",
+			OAuthClientWebKeys.BEARER_METHODS_SUPPORTED,
 			StringUtil.merge(
 				JSONUtil.toStringArray(
 					metadataJSONObject.getJSONArray(
 						"bearer_methods_supported"))));
 		renderRequest.setAttribute(
-			"resourceName", metadataJSONObject.getString("resource_name"));
+			OAuthClientWebKeys.RESOURCE_NAME,
+			metadataJSONObject.getString("resource_name"));
 		renderRequest.setAttribute(
-			"scopesSupported",
+			OAuthClientWebKeys.SCOPES_SUPPORTED,
 			StringUtil.merge(
 				JSONUtil.toStringArray(
 					metadataJSONObject.getJSONArray("scopes_supported"))));

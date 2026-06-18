@@ -165,6 +165,11 @@ public abstract class BaseChannelAccountResourceImpl
 				name = "externalReferenceCode"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
+				description = "Comma-separated list of nested fields to embed in each returned resource. Each value names a relationship exposed on the resource; when omitted, those relationships are not expanded inline.",
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "nestedFields"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
 				description = "1-based page number for paginated responses. Defaults to 1.",
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "page"
@@ -218,6 +223,11 @@ public abstract class BaseChannelAccountResourceImpl
 				description = "OData v4 filter expression that narrows the result set. Supported fields depend on the endpoint and are sourced from the matching entity model; see the per-resource list operation description for specifics. For example, filter=externalReferenceCode eq 'AB-34098-789-N'.",
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "filter"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				description = "Comma-separated list of nested fields to embed in each returned resource. Each value names a relationship exposed on the resource; when omitted, those relationships are not expanded inline.",
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "nestedFields"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				description = "1-based page number for paginated responses. Defaults to 1.",
@@ -1060,4 +1070,4 @@ public abstract class BaseChannelAccountResourceImpl
 		LogFactoryUtil.getLog(BaseChannelAccountResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:668586911
+// LIFERAY-REST-BUILDER-HASH:-679622541

@@ -196,6 +196,11 @@ public abstract class BaseShipmentResourceImpl
 				description = "Internal numeric identifier of the target shipment. Counterpart to the `by-externalReferenceCode` path variant; identifiers are server-assigned and stable across the shipment's lifetime.",
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
 				name = "shipmentId"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				description = "Comma-separated list of nested relationships to embed in each returned shipment. Supported values are shipmentItems and shippingAddress; when omitted, those relationships are not expanded inline.",
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "nestedFields"
 			)
 		}
 	)
@@ -230,6 +235,11 @@ public abstract class BaseShipmentResourceImpl
 				description = "External reference code that addresses the target resource on the `by-externalReferenceCode` paths. The code is the integration-supplied idempotency key, unique within the resource scope; PUT against this path is upsert (create when absent, replace when present).",
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
 				name = "externalReferenceCode"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				description = "Comma-separated list of nested relationships to embed in each returned shipment. Supported values are shipmentItems and shippingAddress; when omitted, those relationships are not expanded inline.",
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "nestedFields"
 			)
 		}
 	)
@@ -266,6 +276,11 @@ public abstract class BaseShipmentResourceImpl
 				description = "OData v4 filter expression that narrows the result set. The supported fields are those exposed by the matching Liferay entity model for shipment (typically createDate, modifiedDate, status, and the shipment identifiers). Example -- filter=status eq 2.",
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "filter"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				description = "Comma-separated list of nested relationships to embed in each returned shipment. Supported values are shipmentItems and shippingAddress; when omitted, those relationships are not expanded inline.",
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "nestedFields"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				description = "One-based page index. Combined with pageSize to paginate the result set; defaults to 1 when omitted.",
@@ -1627,4 +1642,4 @@ public abstract class BaseShipmentResourceImpl
 		LogFactoryUtil.getLog(BaseShipmentResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:-212032286
+// LIFERAY-REST-BUILDER-HASH:-517897245

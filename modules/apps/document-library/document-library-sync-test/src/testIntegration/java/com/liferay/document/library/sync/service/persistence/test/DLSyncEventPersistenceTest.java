@@ -123,7 +123,9 @@ public class DLSyncEventPersistenceTest {
 
 		newDLSyncEvent.setTypePK(RandomTestUtil.nextLong());
 
-		_dlSyncEvents.add(_persistence.update(newDLSyncEvent));
+		newDLSyncEvent = _persistence.update(newDLSyncEvent);
+
+		_dlSyncEvents.add(newDLSyncEvent);
 
 		DLSyncEvent existingDLSyncEvent = _persistence.findByPrimaryKey(
 			newDLSyncEvent.getPrimaryKey());
@@ -479,4 +481,4 @@ public class DLSyncEventPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:161736360
+// LIFERAY-SERVICE-BUILDER-HASH:-1277682018

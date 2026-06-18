@@ -126,8 +126,10 @@ public class AssetVocabularyGroupRelPersistenceTest {
 
 		newAssetVocabularyGroupRel.setVocabularyId(RandomTestUtil.nextLong());
 
-		_assetVocabularyGroupRels.add(
-			_persistence.update(newAssetVocabularyGroupRel));
+		newAssetVocabularyGroupRel = _persistence.update(
+			newAssetVocabularyGroupRel);
+
+		_assetVocabularyGroupRels.add(newAssetVocabularyGroupRel);
 
 		AssetVocabularyGroupRel existingAssetVocabularyGroupRel =
 			_persistence.findByPrimaryKey(
@@ -586,4 +588,4 @@ public class AssetVocabularyGroupRelPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-29615145
+// LIFERAY-SERVICE-BUILDER-HASH:1480852625

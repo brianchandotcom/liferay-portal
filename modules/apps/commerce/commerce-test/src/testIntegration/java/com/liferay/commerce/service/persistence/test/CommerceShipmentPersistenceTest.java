@@ -157,7 +157,9 @@ public class CommerceShipmentPersistenceTest {
 
 		newCommerceShipment.setStatus(RandomTestUtil.nextInt());
 
-		_commerceShipments.add(_persistence.update(newCommerceShipment));
+		newCommerceShipment = _persistence.update(newCommerceShipment);
+
+		_commerceShipments.add(newCommerceShipment);
 
 		CommerceShipment existingCommerceShipment =
 			_persistence.findByPrimaryKey(newCommerceShipment.getPrimaryKey());
@@ -726,4 +728,4 @@ public class CommerceShipmentPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1743796270
+// LIFERAY-SERVICE-BUILDER-HASH:-1258339584

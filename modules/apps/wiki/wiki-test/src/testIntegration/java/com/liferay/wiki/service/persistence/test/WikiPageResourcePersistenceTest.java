@@ -124,7 +124,9 @@ public class WikiPageResourcePersistenceTest {
 
 		newWikiPageResource.setTitle(RandomTestUtil.randomString());
 
-		_wikiPageResources.add(_persistence.update(newWikiPageResource));
+		newWikiPageResource = _persistence.update(newWikiPageResource);
+
+		_wikiPageResources.add(newWikiPageResource);
 
 		WikiPageResource existingWikiPageResource =
 			_persistence.findByPrimaryKey(newWikiPageResource.getPrimaryKey());
@@ -536,4 +538,4 @@ public class WikiPageResourcePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1227280426
+// LIFERAY-SERVICE-BUILDER-HASH:-49912664

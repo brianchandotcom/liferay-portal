@@ -124,7 +124,9 @@ public class UserTrackerPersistenceTest {
 
 		newUserTracker.setUserAgent(RandomTestUtil.randomString());
 
-		_userTrackers.add(_persistence.update(newUserTracker));
+		newUserTracker = _persistence.update(newUserTracker);
+
+		_userTrackers.add(newUserTracker);
 
 		UserTracker existingUserTracker = _persistence.findByPrimaryKey(
 			newUserTracker.getPrimaryKey());
@@ -446,4 +448,4 @@ public class UserTrackerPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:565581973
+// LIFERAY-SERVICE-BUILDER-HASH:1343026823

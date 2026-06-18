@@ -136,7 +136,9 @@ public class DDMContentPersistenceTest {
 
 		newDDMContent.setData(RandomTestUtil.randomString());
 
-		_ddmContents.add(_persistence.update(newDDMContent));
+		newDDMContent = _persistence.update(newDDMContent);
+
+		_ddmContents.add(newDDMContent);
 
 		DDMContent existingDDMContent = _persistence.findByPrimaryKey(
 			newDDMContent.getPrimaryKey());
@@ -552,4 +554,4 @@ public class DDMContentPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2130882613
+// LIFERAY-SERVICE-BUILDER-HASH:-828389301

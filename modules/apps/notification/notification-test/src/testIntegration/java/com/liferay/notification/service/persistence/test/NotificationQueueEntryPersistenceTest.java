@@ -145,8 +145,10 @@ public class NotificationQueueEntryPersistenceTest {
 
 		newNotificationQueueEntry.setStatus(RandomTestUtil.nextInt());
 
-		_notificationQueueEntries.add(
-			_persistence.update(newNotificationQueueEntry));
+		newNotificationQueueEntry = _persistence.update(
+			newNotificationQueueEntry);
+
+		_notificationQueueEntries.add(newNotificationQueueEntry);
 
 		NotificationQueueEntry existingNotificationQueueEntry =
 			_persistence.findByPrimaryKey(
@@ -556,4 +558,4 @@ public class NotificationQueueEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2139472783
+// LIFERAY-SERVICE-BUILDER-HASH:-2060431417

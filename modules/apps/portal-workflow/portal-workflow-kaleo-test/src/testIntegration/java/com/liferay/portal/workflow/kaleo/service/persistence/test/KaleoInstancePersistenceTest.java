@@ -150,7 +150,9 @@ public class KaleoInstancePersistenceTest {
 
 		newKaleoInstance.setWorkflowContext(RandomTestUtil.randomString());
 
-		_kaleoInstances.add(_persistence.update(newKaleoInstance));
+		newKaleoInstance = _persistence.update(newKaleoInstance);
+
+		_kaleoInstances.add(newKaleoInstance);
 
 		KaleoInstance existingKaleoInstance = _persistence.findByPrimaryKey(
 			newKaleoInstance.getPrimaryKey());
@@ -650,4 +652,4 @@ public class KaleoInstancePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1269012157
+// LIFERAY-SERVICE-BUILDER-HASH:218049073

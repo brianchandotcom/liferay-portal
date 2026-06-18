@@ -122,7 +122,9 @@ public class ExpandoRowPersistenceTest {
 
 		newExpandoRow.setClassPK(RandomTestUtil.nextLong());
 
-		_expandoRows.add(_persistence.update(newExpandoRow));
+		newExpandoRow = _persistence.update(newExpandoRow);
+
+		_expandoRows.add(newExpandoRow);
 
 		ExpandoRow existingExpandoRow = _persistence.findByPrimaryKey(
 			newExpandoRow.getPrimaryKey());
@@ -489,4 +491,4 @@ public class ExpandoRowPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:119363143
+// LIFERAY-SERVICE-BUILDER-HASH:-1771448455

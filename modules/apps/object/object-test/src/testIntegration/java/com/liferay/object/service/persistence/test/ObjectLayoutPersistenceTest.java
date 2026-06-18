@@ -129,7 +129,9 @@ public class ObjectLayoutPersistenceTest {
 
 		newObjectLayout.setName(RandomTestUtil.randomString());
 
-		_objectLayouts.add(_persistence.update(newObjectLayout));
+		newObjectLayout = _persistence.update(newObjectLayout);
+
+		_objectLayouts.add(newObjectLayout);
 
 		ObjectLayout existingObjectLayout = _persistence.findByPrimaryKey(
 			newObjectLayout.getPrimaryKey());
@@ -483,4 +485,4 @@ public class ObjectLayoutPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2138422500
+// LIFERAY-SERVICE-BUILDER-HASH:-1809303522

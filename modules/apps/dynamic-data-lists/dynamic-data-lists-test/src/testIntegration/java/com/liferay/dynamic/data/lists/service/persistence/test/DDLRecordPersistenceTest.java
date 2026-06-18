@@ -150,7 +150,9 @@ public class DDLRecordPersistenceTest {
 
 		newDDLRecord.setLastPublishDate(RandomTestUtil.nextDate());
 
-		_ddlRecords.add(_persistence.update(newDDLRecord));
+		newDDLRecord = _persistence.update(newDDLRecord);
+
+		_ddlRecords.add(newDDLRecord);
 
 		DDLRecord existingDDLRecord = _persistence.findByPrimaryKey(
 			newDDLRecord.getPrimaryKey());
@@ -624,4 +626,4 @@ public class DDLRecordPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1743098212
+// LIFERAY-SERVICE-BUILDER-HASH:-941593998

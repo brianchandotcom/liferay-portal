@@ -133,7 +133,9 @@ public class DDMFieldPersistenceTest {
 
 		newDDMField.setPriority(RandomTestUtil.nextInt());
 
-		_ddmFields.add(_persistence.update(newDDMField));
+		newDDMField = _persistence.update(newDDMField);
+
+		_ddmFields.add(newDDMField);
 
 		DDMField existingDDMField = _persistence.findByPrimaryKey(
 			newDDMField.getPrimaryKey());
@@ -537,4 +539,4 @@ public class DDMFieldPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-15222539
+// LIFERAY-SERVICE-BUILDER-HASH:657708727

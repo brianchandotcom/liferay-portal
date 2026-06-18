@@ -151,8 +151,10 @@ public class CommerceShippingFixedOptionPersistenceTest {
 
 		newCommerceShippingFixedOption.setPriority(RandomTestUtil.nextDouble());
 
-		_commerceShippingFixedOptions.add(
-			_persistence.update(newCommerceShippingFixedOption));
+		newCommerceShippingFixedOption = _persistence.update(
+			newCommerceShippingFixedOption);
+
+		_commerceShippingFixedOptions.add(newCommerceShippingFixedOption);
 
 		CommerceShippingFixedOption existingCommerceShippingFixedOption =
 			_persistence.findByPrimaryKey(
@@ -626,4 +628,4 @@ public class CommerceShippingFixedOptionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1696335475
+// LIFERAY-SERVICE-BUILDER-HASH:1942775341

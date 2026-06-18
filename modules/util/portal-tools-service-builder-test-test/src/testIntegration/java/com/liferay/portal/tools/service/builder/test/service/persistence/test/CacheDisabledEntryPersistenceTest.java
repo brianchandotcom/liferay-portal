@@ -117,7 +117,9 @@ public class CacheDisabledEntryPersistenceTest {
 
 		newCacheDisabledEntry.setName(RandomTestUtil.randomString());
 
-		_cacheDisabledEntries.add(_persistence.update(newCacheDisabledEntry));
+		newCacheDisabledEntry = _persistence.update(newCacheDisabledEntry);
+
+		_cacheDisabledEntries.add(newCacheDisabledEntry);
 
 		CacheDisabledEntry existingCacheDisabledEntry =
 			_persistence.findByPrimaryKey(
@@ -470,4 +472,4 @@ public class CacheDisabledEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1767181964
+// LIFERAY-SERVICE-BUILDER-HASH:-1703943154

@@ -141,7 +141,9 @@ public class SystemEventPersistenceTest {
 
 		newSystemEvent.setExtraData(RandomTestUtil.randomString());
 
-		_systemEvents.add(_persistence.update(newSystemEvent));
+		newSystemEvent = _persistence.update(newSystemEvent);
+
+		_systemEvents.add(newSystemEvent);
 
 		SystemEvent existingSystemEvent = _persistence.findByPrimaryKey(
 			newSystemEvent.getPrimaryKey());
@@ -513,4 +515,4 @@ public class SystemEventPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1024370352
+// LIFERAY-SERVICE-BUILDER-HASH:1568244586

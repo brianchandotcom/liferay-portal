@@ -139,7 +139,9 @@ public class PatcherFixPackPersistenceTest {
 
 		newPatcherFixPack.setStatus(RandomTestUtil.nextInt());
 
-		_patcherFixPacks.add(_persistence.update(newPatcherFixPack));
+		newPatcherFixPack = _persistence.update(newPatcherFixPack);
+
+		_patcherFixPacks.add(newPatcherFixPack);
 
 		PatcherFixPack existingPatcherFixPack = _persistence.findByPrimaryKey(
 			newPatcherFixPack.getPrimaryKey());
@@ -650,4 +652,4 @@ public class PatcherFixPackPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1597246823
+// LIFERAY-SERVICE-BUILDER-HASH:-851539007

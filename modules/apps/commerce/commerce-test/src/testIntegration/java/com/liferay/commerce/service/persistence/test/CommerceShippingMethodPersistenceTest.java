@@ -147,8 +147,10 @@ public class CommerceShippingMethodPersistenceTest {
 		newCommerceShippingMethod.setTypeSettings(
 			RandomTestUtil.randomString());
 
-		_commerceShippingMethods.add(
-			_persistence.update(newCommerceShippingMethod));
+		newCommerceShippingMethod = _persistence.update(
+			newCommerceShippingMethod);
+
+		_commerceShippingMethods.add(newCommerceShippingMethod);
 
 		CommerceShippingMethod existingCommerceShippingMethod =
 			_persistence.findByPrimaryKey(
@@ -619,4 +621,4 @@ public class CommerceShippingMethodPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-968831448
+// LIFERAY-SERVICE-BUILDER-HASH:-1806077212

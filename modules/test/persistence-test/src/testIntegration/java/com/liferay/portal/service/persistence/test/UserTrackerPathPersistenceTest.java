@@ -118,7 +118,9 @@ public class UserTrackerPathPersistenceTest {
 
 		newUserTrackerPath.setPathDate(RandomTestUtil.nextDate());
 
-		_userTrackerPaths.add(_persistence.update(newUserTrackerPath));
+		newUserTrackerPath = _persistence.update(newUserTrackerPath);
+
+		_userTrackerPaths.add(newUserTrackerPath);
 
 		UserTrackerPath existingUserTrackerPath = _persistence.findByPrimaryKey(
 			newUserTrackerPath.getPrimaryKey());
@@ -418,4 +420,4 @@ public class UserTrackerPathPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1881816478
+// LIFERAY-SERVICE-BUILDER-HASH:-519655772

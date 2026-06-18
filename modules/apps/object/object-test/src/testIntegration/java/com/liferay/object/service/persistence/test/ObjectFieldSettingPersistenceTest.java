@@ -132,7 +132,9 @@ public class ObjectFieldSettingPersistenceTest {
 
 		newObjectFieldSetting.setValue(RandomTestUtil.randomString());
 
-		_objectFieldSettings.add(_persistence.update(newObjectFieldSetting));
+		newObjectFieldSetting = _persistence.update(newObjectFieldSetting);
+
+		_objectFieldSettings.add(newObjectFieldSetting);
 
 		ObjectFieldSetting existingObjectFieldSetting =
 			_persistence.findByPrimaryKey(
@@ -562,4 +564,4 @@ public class ObjectFieldSettingPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1121242215
+// LIFERAY-SERVICE-BUILDER-HASH:543232313

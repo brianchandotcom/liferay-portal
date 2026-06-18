@@ -151,7 +151,9 @@ public class OrganizationPersistenceTest {
 
 		newOrganization.setStatus(RandomTestUtil.nextInt());
 
-		_organizations.add(_persistence.update(newOrganization));
+		newOrganization = _persistence.update(newOrganization);
+
+		_organizations.add(newOrganization);
 
 		Organization existingOrganization = _persistence.findByPrimaryKey(
 			newOrganization.getPrimaryKey());
@@ -707,4 +709,4 @@ public class OrganizationPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1571694958
+// LIFERAY-SERVICE-BUILDER-HASH:-2096060988

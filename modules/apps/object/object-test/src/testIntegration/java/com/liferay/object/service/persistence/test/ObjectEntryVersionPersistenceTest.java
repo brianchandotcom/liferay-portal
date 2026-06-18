@@ -149,7 +149,9 @@ public class ObjectEntryVersionPersistenceTest {
 
 		newObjectEntryVersion.setStatusDate(RandomTestUtil.nextDate());
 
-		_objectEntryVersions.add(_persistence.update(newObjectEntryVersion));
+		newObjectEntryVersion = _persistence.update(newObjectEntryVersion);
+
+		_objectEntryVersions.add(newObjectEntryVersion);
 
 		ObjectEntryVersion existingObjectEntryVersion =
 			_persistence.findByPrimaryKey(
@@ -645,4 +647,4 @@ public class ObjectEntryVersionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:121637586
+// LIFERAY-SERVICE-BUILDER-HASH:-638064700

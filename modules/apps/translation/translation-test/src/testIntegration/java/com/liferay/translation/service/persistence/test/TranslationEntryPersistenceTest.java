@@ -147,7 +147,9 @@ public class TranslationEntryPersistenceTest {
 
 		newTranslationEntry.setStatusDate(RandomTestUtil.nextDate());
 
-		_translationEntries.add(_persistence.update(newTranslationEntry));
+		newTranslationEntry = _persistence.update(newTranslationEntry);
+
+		_translationEntries.add(newTranslationEntry);
 
 		TranslationEntry existingTranslationEntry =
 			_persistence.findByPrimaryKey(newTranslationEntry.getPrimaryKey());
@@ -636,4 +638,4 @@ public class TranslationEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-577750310
+// LIFERAY-SERVICE-BUILDER-HASH:164542002

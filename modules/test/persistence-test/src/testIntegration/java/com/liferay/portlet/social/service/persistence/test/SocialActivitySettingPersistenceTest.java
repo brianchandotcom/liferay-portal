@@ -129,8 +129,10 @@ public class SocialActivitySettingPersistenceTest {
 
 		newSocialActivitySetting.setValue(RandomTestUtil.randomString());
 
-		_socialActivitySettings.add(
-			_persistence.update(newSocialActivitySetting));
+		newSocialActivitySetting = _persistence.update(
+			newSocialActivitySetting);
+
+		_socialActivitySettings.add(newSocialActivitySetting);
 
 		SocialActivitySetting existingSocialActivitySetting =
 			_persistence.findByPrimaryKey(
@@ -586,4 +588,4 @@ public class SocialActivitySettingPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1079801953
+// LIFERAY-SERVICE-BUILDER-HASH:424809707

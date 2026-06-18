@@ -140,7 +140,9 @@ public class CSDiagramSettingPersistenceTest {
 
 		newCSDiagramSetting.setType(RandomTestUtil.randomString());
 
-		_csDiagramSettings.add(_persistence.update(newCSDiagramSetting));
+		newCSDiagramSetting = _persistence.update(newCSDiagramSetting);
+
+		_csDiagramSettings.add(newCSDiagramSetting);
 
 		CSDiagramSetting existingCSDiagramSetting =
 			_persistence.findByPrimaryKey(newCSDiagramSetting.getPrimaryKey());
@@ -561,4 +563,4 @@ public class CSDiagramSettingPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1085767864
+// LIFERAY-SERVICE-BUILDER-HASH:1532356934

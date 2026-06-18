@@ -129,7 +129,9 @@ public class PatcherTicketHintPersistenceTest {
 
 		newPatcherTicketHint.setScript(RandomTestUtil.randomString());
 
-		_patcherTicketHints.add(_persistence.update(newPatcherTicketHint));
+		newPatcherTicketHint = _persistence.update(newPatcherTicketHint);
+
+		_patcherTicketHints.add(newPatcherTicketHint);
 
 		PatcherTicketHint existingPatcherTicketHint =
 			_persistence.findByPrimaryKey(newPatcherTicketHint.getPrimaryKey());
@@ -511,4 +513,4 @@ public class PatcherTicketHintPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1230783569
+// LIFERAY-SERVICE-BUILDER-HASH:691676855

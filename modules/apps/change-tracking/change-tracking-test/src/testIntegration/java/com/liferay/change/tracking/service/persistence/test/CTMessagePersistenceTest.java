@@ -116,7 +116,9 @@ public class CTMessagePersistenceTest {
 
 		newCTMessage.setMessageContent(RandomTestUtil.randomString());
 
-		_ctMessages.add(_persistence.update(newCTMessage));
+		newCTMessage = _persistence.update(newCTMessage);
+
+		_ctMessages.add(newCTMessage);
 
 		CTMessage existingCTMessage = _persistence.findByPrimaryKey(
 			newCTMessage.getPrimaryKey());
@@ -401,4 +403,4 @@ public class CTMessagePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:399048231
+// LIFERAY-SERVICE-BUILDER-HASH:-1850277895

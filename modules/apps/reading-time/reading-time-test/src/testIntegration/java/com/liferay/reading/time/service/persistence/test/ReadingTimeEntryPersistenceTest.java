@@ -131,7 +131,9 @@ public class ReadingTimeEntryPersistenceTest {
 
 		newReadingTimeEntry.setReadingTime(RandomTestUtil.nextLong());
 
-		_readingTimeEntries.add(_persistence.update(newReadingTimeEntry));
+		newReadingTimeEntry = _persistence.update(newReadingTimeEntry);
+
+		_readingTimeEntries.add(newReadingTimeEntry);
 
 		ReadingTimeEntry existingReadingTimeEntry =
 			_persistence.findByPrimaryKey(newReadingTimeEntry.getPrimaryKey());
@@ -568,4 +570,4 @@ public class ReadingTimeEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1382223790
+// LIFERAY-SERVICE-BUILDER-HASH:736700506

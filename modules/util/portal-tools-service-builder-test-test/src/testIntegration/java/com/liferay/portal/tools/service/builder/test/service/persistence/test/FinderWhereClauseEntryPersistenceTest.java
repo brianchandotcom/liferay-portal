@@ -119,8 +119,10 @@ public class FinderWhereClauseEntryPersistenceTest {
 
 		newFinderWhereClauseEntry.setNickname(RandomTestUtil.randomString());
 
-		_finderWhereClauseEntries.add(
-			_persistence.update(newFinderWhereClauseEntry));
+		newFinderWhereClauseEntry = _persistence.update(
+			newFinderWhereClauseEntry);
+
+		_finderWhereClauseEntries.add(newFinderWhereClauseEntry);
 
 		FinderWhereClauseEntry existingFinderWhereClauseEntry =
 			_persistence.findByPrimaryKey(
@@ -437,4 +439,4 @@ public class FinderWhereClauseEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-950684756
+// LIFERAY-SERVICE-BUILDER-HASH:1693639358

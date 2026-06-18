@@ -145,8 +145,10 @@ public class AssetDisplayPageEntryPersistenceTest {
 
 		newAssetDisplayPageEntry.setPlid(RandomTestUtil.nextLong());
 
-		_assetDisplayPageEntries.add(
-			_persistence.update(newAssetDisplayPageEntry));
+		newAssetDisplayPageEntry = _persistence.update(
+			newAssetDisplayPageEntry);
+
+		_assetDisplayPageEntries.add(newAssetDisplayPageEntry);
 
 		AssetDisplayPageEntry existingAssetDisplayPageEntry =
 			_persistence.findByPrimaryKey(
@@ -663,4 +665,4 @@ public class AssetDisplayPageEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:810024056
+// LIFERAY-SERVICE-BUILDER-HASH:1934513584

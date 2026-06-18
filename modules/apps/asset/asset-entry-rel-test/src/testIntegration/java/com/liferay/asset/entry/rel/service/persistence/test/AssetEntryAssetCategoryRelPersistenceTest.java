@@ -130,8 +130,10 @@ public class AssetEntryAssetCategoryRelPersistenceTest {
 
 		newAssetEntryAssetCategoryRel.setPriority(RandomTestUtil.nextInt());
 
-		_assetEntryAssetCategoryRels.add(
-			_persistence.update(newAssetEntryAssetCategoryRel));
+		newAssetEntryAssetCategoryRel = _persistence.update(
+			newAssetEntryAssetCategoryRel);
+
+		_assetEntryAssetCategoryRels.add(newAssetEntryAssetCategoryRel);
 
 		AssetEntryAssetCategoryRel existingAssetEntryAssetCategoryRel =
 			_persistence.findByPrimaryKey(
@@ -564,4 +566,4 @@ public class AssetEntryAssetCategoryRelPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1622280082
+// LIFERAY-SERVICE-BUILDER-HASH:-1809647120

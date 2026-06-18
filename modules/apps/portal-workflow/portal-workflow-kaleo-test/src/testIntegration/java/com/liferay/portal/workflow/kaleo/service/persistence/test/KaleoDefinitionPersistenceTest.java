@@ -150,7 +150,9 @@ public class KaleoDefinitionPersistenceTest {
 
 		newKaleoDefinition.setStatus(RandomTestUtil.nextInt());
 
-		_kaleoDefinitions.add(_persistence.update(newKaleoDefinition));
+		newKaleoDefinition = _persistence.update(newKaleoDefinition);
+
+		_kaleoDefinitions.add(newKaleoDefinition);
 
 		KaleoDefinition existingKaleoDefinition = _persistence.findByPrimaryKey(
 			newKaleoDefinition.getPrimaryKey());
@@ -758,4 +760,4 @@ public class KaleoDefinitionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1227469039
+// LIFERAY-SERVICE-BUILDER-HASH:1056764011

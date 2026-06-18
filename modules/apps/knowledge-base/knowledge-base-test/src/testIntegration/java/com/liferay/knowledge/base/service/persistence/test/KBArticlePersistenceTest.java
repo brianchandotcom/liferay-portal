@@ -178,7 +178,9 @@ public class KBArticlePersistenceTest {
 
 		newKBArticle.setStatusDate(RandomTestUtil.nextDate());
 
-		_kbArticles.add(_persistence.update(newKBArticle));
+		newKBArticle = _persistence.update(newKBArticle);
+
+		_kbArticles.add(newKBArticle);
 
 		KBArticle existingKBArticle = _persistence.findByPrimaryKey(
 			newKBArticle.getPrimaryKey());
@@ -1425,4 +1427,4 @@ public class KBArticlePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:27657254
+// LIFERAY-SERVICE-BUILDER-HASH:-1874403056

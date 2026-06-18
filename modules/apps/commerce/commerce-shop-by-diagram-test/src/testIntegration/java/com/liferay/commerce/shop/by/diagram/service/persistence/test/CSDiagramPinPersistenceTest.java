@@ -133,7 +133,9 @@ public class CSDiagramPinPersistenceTest {
 
 		newCSDiagramPin.setSequence(RandomTestUtil.randomString());
 
-		_csDiagramPins.add(_persistence.update(newCSDiagramPin));
+		newCSDiagramPin = _persistence.update(newCSDiagramPin);
+
+		_csDiagramPins.add(newCSDiagramPin);
 
 		CSDiagramPin existingCSDiagramPin = _persistence.findByPrimaryKey(
 			newCSDiagramPin.getPrimaryKey());
@@ -460,4 +462,4 @@ public class CSDiagramPinPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:544705412
+// LIFERAY-SERVICE-BUILDER-HASH:1983853136

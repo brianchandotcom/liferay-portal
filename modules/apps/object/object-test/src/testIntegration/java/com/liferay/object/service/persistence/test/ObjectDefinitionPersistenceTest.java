@@ -209,7 +209,9 @@ public class ObjectDefinitionPersistenceTest {
 
 		newObjectDefinition.setStatus(RandomTestUtil.nextInt());
 
-		_objectDefinitions.add(_persistence.update(newObjectDefinition));
+		newObjectDefinition = _persistence.update(newObjectDefinition);
+
+		_objectDefinitions.add(newObjectDefinition);
 
 		ObjectDefinition existingObjectDefinition =
 			_persistence.findByPrimaryKey(newObjectDefinition.getPrimaryKey());
@@ -986,4 +988,4 @@ public class ObjectDefinitionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-794946629
+// LIFERAY-SERVICE-BUILDER-HASH:1833221191

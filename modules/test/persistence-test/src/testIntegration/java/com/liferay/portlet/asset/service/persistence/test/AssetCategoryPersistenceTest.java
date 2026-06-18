@@ -152,7 +152,9 @@ public class AssetCategoryPersistenceTest {
 
 		newAssetCategory.setStatus(RandomTestUtil.nextInt());
 
-		_assetCategories.add(_persistence.update(newAssetCategory));
+		newAssetCategory = _persistence.update(newAssetCategory);
+
+		_assetCategories.add(newAssetCategory);
 
 		AssetCategory existingAssetCategory = _persistence.findByPrimaryKey(
 			newAssetCategory.getPrimaryKey());
@@ -793,4 +795,4 @@ public class AssetCategoryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1092293275
+// LIFERAY-SERVICE-BUILDER-HASH:1772366963

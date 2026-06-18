@@ -136,7 +136,9 @@ public class LayoutSEOSitePersistenceTest {
 		newLayoutSEOSite.setOpenGraphImageFileEntryId(
 			RandomTestUtil.nextLong());
 
-		_layoutSEOSites.add(_persistence.update(newLayoutSEOSite));
+		newLayoutSEOSite = _persistence.update(newLayoutSEOSite);
+
+		_layoutSEOSites.add(newLayoutSEOSite);
 
 		LayoutSEOSite existingLayoutSEOSite = _persistence.findByPrimaryKey(
 			newLayoutSEOSite.getPrimaryKey());
@@ -565,4 +567,4 @@ public class LayoutSEOSitePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1684684861
+// LIFERAY-SERVICE-BUILDER-HASH:-1294938591

@@ -146,7 +146,9 @@ public class SharingEntryPersistenceTest {
 
 		newSharingEntry.setExpirationDate(RandomTestUtil.nextDate());
 
-		_sharingEntries.add(_persistence.update(newSharingEntry));
+		newSharingEntry = _persistence.update(newSharingEntry);
+
+		_sharingEntries.add(newSharingEntry);
 
 		SharingEntry existingSharingEntry = _persistence.findByPrimaryKey(
 			newSharingEntry.getPrimaryKey());
@@ -730,4 +732,4 @@ public class SharingEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-69881419
+// LIFERAY-SERVICE-BUILDER-HASH:482754459

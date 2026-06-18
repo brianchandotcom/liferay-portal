@@ -146,8 +146,10 @@ public class ExportImportConfigurationPersistenceTest {
 
 		newExportImportConfiguration.setStatusDate(RandomTestUtil.nextDate());
 
-		_exportImportConfigurations.add(
-			_persistence.update(newExportImportConfiguration));
+		newExportImportConfiguration = _persistence.update(
+			newExportImportConfiguration);
+
+		_exportImportConfigurations.add(newExportImportConfiguration);
 
 		ExportImportConfiguration existingExportImportConfiguration =
 			_persistence.findByPrimaryKey(
@@ -579,4 +581,4 @@ public class ExportImportConfigurationPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1076931003
+// LIFERAY-SERVICE-BUILDER-HASH:15955273

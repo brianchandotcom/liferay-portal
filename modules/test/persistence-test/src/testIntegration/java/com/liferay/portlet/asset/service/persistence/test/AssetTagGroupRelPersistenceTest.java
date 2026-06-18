@@ -121,7 +121,9 @@ public class AssetTagGroupRelPersistenceTest {
 
 		newAssetTagGroupRel.setTagId(RandomTestUtil.nextLong());
 
-		_assetTagGroupRels.add(_persistence.update(newAssetTagGroupRel));
+		newAssetTagGroupRel = _persistence.update(newAssetTagGroupRel);
+
+		_assetTagGroupRels.add(newAssetTagGroupRel);
 
 		AssetTagGroupRel existingAssetTagGroupRel =
 			_persistence.findByPrimaryKey(newAssetTagGroupRel.getPrimaryKey());
@@ -545,4 +547,4 @@ public class AssetTagGroupRelPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:442770993
+// LIFERAY-SERVICE-BUILDER-HASH:1332078337

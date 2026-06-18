@@ -126,8 +126,10 @@ public class JournalArticleResourcePersistenceTest {
 
 		newJournalArticleResource.setArticleId(RandomTestUtil.randomString());
 
-		_journalArticleResources.add(
-			_persistence.update(newJournalArticleResource));
+		newJournalArticleResource = _persistence.update(
+			newJournalArticleResource);
+
+		_journalArticleResources.add(newJournalArticleResource);
 
 		JournalArticleResource existingJournalArticleResource =
 			_persistence.findByPrimaryKey(
@@ -574,4 +576,4 @@ public class JournalArticleResourcePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-49596262
+// LIFERAY-SERVICE-BUILDER-HASH:-16012004

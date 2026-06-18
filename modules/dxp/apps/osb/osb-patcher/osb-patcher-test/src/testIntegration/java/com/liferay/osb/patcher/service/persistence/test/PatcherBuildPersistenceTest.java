@@ -192,7 +192,9 @@ public class PatcherBuildPersistenceTest {
 
 		newPatcherBuild.setStatusDate(RandomTestUtil.nextDate());
 
-		_patcherBuilds.add(_persistence.update(newPatcherBuild));
+		newPatcherBuild = _persistence.update(newPatcherBuild);
+
+		_patcherBuilds.add(newPatcherBuild);
 
 		PatcherBuild existingPatcherBuild = _persistence.findByPrimaryKey(
 			newPatcherBuild.getPrimaryKey());
@@ -859,4 +861,4 @@ public class PatcherBuildPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2142285808
+// LIFERAY-SERVICE-BUILDER-HASH:1067061418

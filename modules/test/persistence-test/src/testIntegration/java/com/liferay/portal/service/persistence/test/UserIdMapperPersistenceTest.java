@@ -121,7 +121,9 @@ public class UserIdMapperPersistenceTest {
 
 		newUserIdMapper.setExternalUserId(RandomTestUtil.randomString());
 
-		_userIdMappers.add(_persistence.update(newUserIdMapper));
+		newUserIdMapper = _persistence.update(newUserIdMapper);
+
+		_userIdMappers.add(newUserIdMapper);
 
 		UserIdMapper existingUserIdMapper = _persistence.findByPrimaryKey(
 			newUserIdMapper.getPrimaryKey());
@@ -514,4 +516,4 @@ public class UserIdMapperPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1975635750
+// LIFERAY-SERVICE-BUILDER-HASH:-594981296

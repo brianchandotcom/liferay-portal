@@ -168,8 +168,10 @@ public class CommerceShippingFixedOptionRelPersistenceTest {
 
 		newCommerceShippingFixedOptionRel.setZip(RandomTestUtil.randomString());
 
-		_commerceShippingFixedOptionRels.add(
-			_persistence.update(newCommerceShippingFixedOptionRel));
+		newCommerceShippingFixedOptionRel = _persistence.update(
+			newCommerceShippingFixedOptionRel);
+
+		_commerceShippingFixedOptionRels.add(newCommerceShippingFixedOptionRel);
 
 		CommerceShippingFixedOptionRel existingCommerceShippingFixedOptionRel =
 			_persistence.findByPrimaryKey(
@@ -622,4 +624,4 @@ public class CommerceShippingFixedOptionRelPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-840010402
+// LIFERAY-SERVICE-BUILDER-HASH:-235724732

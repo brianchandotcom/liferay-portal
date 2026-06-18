@@ -139,7 +139,9 @@ public class KBTemplatePersistenceTest {
 
 		newKBTemplate.setLastPublishDate(RandomTestUtil.nextDate());
 
-		_kbTemplates.add(_persistence.update(newKBTemplate));
+		newKBTemplate = _persistence.update(newKBTemplate);
+
+		_kbTemplates.add(newKBTemplate);
 
 		KBTemplate existingKBTemplate = _persistence.findByPrimaryKey(
 			newKBTemplate.getPrimaryKey());
@@ -576,4 +578,4 @@ public class KBTemplatePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1571837088
+// LIFERAY-SERVICE-BUILDER-HASH:1091453738

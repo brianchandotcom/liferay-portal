@@ -148,8 +148,11 @@ public class CommerceShippingFixedOptionQualifierPersistenceTest {
 		newCommerceShippingFixedOptionQualifier.
 			setCommerceShippingFixedOptionId(RandomTestUtil.nextLong());
 
+		newCommerceShippingFixedOptionQualifier = _persistence.update(
+			newCommerceShippingFixedOptionQualifier);
+
 		_commerceShippingFixedOptionQualifiers.add(
-			_persistence.update(newCommerceShippingFixedOptionQualifier));
+			newCommerceShippingFixedOptionQualifier);
 
 		CommerceShippingFixedOptionQualifier
 			existingCommerceShippingFixedOptionQualifier =
@@ -658,4 +661,4 @@ public class CommerceShippingFixedOptionQualifierPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1675178037
+// LIFERAY-SERVICE-BUILDER-HASH:-1598144071

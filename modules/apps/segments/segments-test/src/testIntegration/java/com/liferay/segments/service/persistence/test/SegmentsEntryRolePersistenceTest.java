@@ -130,7 +130,9 @@ public class SegmentsEntryRolePersistenceTest {
 
 		newSegmentsEntryRole.setRoleId(RandomTestUtil.nextLong());
 
-		_segmentsEntryRoles.add(_persistence.update(newSegmentsEntryRole));
+		newSegmentsEntryRole = _persistence.update(newSegmentsEntryRole);
+
+		_segmentsEntryRoles.add(newSegmentsEntryRole);
 
 		SegmentsEntryRole existingSegmentsEntryRole =
 			_persistence.findByPrimaryKey(newSegmentsEntryRole.getPrimaryKey());
@@ -537,4 +539,4 @@ public class SegmentsEntryRolePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:753778487
+// LIFERAY-SERVICE-BUILDER-HASH:-2089390819

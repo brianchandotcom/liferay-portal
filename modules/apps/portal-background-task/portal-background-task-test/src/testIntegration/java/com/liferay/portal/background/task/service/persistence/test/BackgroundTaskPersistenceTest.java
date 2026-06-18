@@ -143,7 +143,9 @@ public class BackgroundTaskPersistenceTest {
 
 		newBackgroundTask.setStatusMessage(RandomTestUtil.randomString());
 
-		_backgroundTasks.add(_persistence.update(newBackgroundTask));
+		newBackgroundTask = _persistence.update(newBackgroundTask);
+
+		_backgroundTasks.add(newBackgroundTask);
 
 		BackgroundTask existingBackgroundTask = _persistence.findByPrimaryKey(
 			newBackgroundTask.getPrimaryKey());
@@ -637,4 +639,4 @@ public class BackgroundTaskPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:368672381
+// LIFERAY-SERVICE-BUILDER-HASH:-510098229

@@ -136,7 +136,9 @@ public class SAPEntryPersistenceTest {
 
 		newSAPEntry.setTitle(RandomTestUtil.randomString());
 
-		_sapEntries.add(_persistence.update(newSAPEntry));
+		newSAPEntry = _persistence.update(newSAPEntry);
+
+		_sapEntries.add(newSAPEntry);
 
 		SAPEntry existingSAPEntry = _persistence.findByPrimaryKey(
 			newSAPEntry.getPrimaryKey());
@@ -549,4 +551,4 @@ public class SAPEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1954610735
+// LIFERAY-SERVICE-BUILDER-HASH:-806284371

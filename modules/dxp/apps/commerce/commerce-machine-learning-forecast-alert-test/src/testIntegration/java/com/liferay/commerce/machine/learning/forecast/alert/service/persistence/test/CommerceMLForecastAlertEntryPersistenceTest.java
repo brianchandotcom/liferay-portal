@@ -150,8 +150,10 @@ public class CommerceMLForecastAlertEntryPersistenceTest {
 
 		newCommerceMLForecastAlertEntry.setStatus(RandomTestUtil.nextInt());
 
-		_commerceMLForecastAlertEntries.add(
-			_persistence.update(newCommerceMLForecastAlertEntry));
+		newCommerceMLForecastAlertEntry = _persistence.update(
+			newCommerceMLForecastAlertEntry);
+
+		_commerceMLForecastAlertEntries.add(newCommerceMLForecastAlertEntry);
 
 		CommerceMLForecastAlertEntry existingCommerceMLForecastAlertEntry =
 			_persistence.findByPrimaryKey(
@@ -690,4 +692,4 @@ public class CommerceMLForecastAlertEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-505970838
+// LIFERAY-SERVICE-BUILDER-HASH:1601129870

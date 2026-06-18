@@ -177,7 +177,9 @@ public class CalendarBookingPersistenceTest {
 
 		newCalendarBooking.setStatusDate(RandomTestUtil.nextDate());
 
-		_calendarBookings.add(_persistence.update(newCalendarBooking));
+		newCalendarBooking = _persistence.update(newCalendarBooking);
+
+		_calendarBookings.add(newCalendarBooking);
 
 		CalendarBooking existingCalendarBooking = _persistence.findByPrimaryKey(
 			newCalendarBooking.getPrimaryKey());
@@ -832,4 +834,4 @@ public class CalendarBookingPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:429243781
+// LIFERAY-SERVICE-BUILDER-HASH:-1533980789

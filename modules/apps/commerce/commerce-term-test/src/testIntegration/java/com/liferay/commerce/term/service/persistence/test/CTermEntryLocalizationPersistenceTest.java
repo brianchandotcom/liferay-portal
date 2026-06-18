@@ -124,8 +124,10 @@ public class CTermEntryLocalizationPersistenceTest {
 
 		newCTermEntryLocalization.setLabel(RandomTestUtil.randomString());
 
-		_cTermEntryLocalizations.add(
-			_persistence.update(newCTermEntryLocalization));
+		newCTermEntryLocalization = _persistence.update(
+			newCTermEntryLocalization);
+
+		_cTermEntryLocalizations.add(newCTermEntryLocalization);
 
 		CTermEntryLocalization existingCTermEntryLocalization =
 			_persistence.findByPrimaryKey(
@@ -512,4 +514,4 @@ public class CTermEntryLocalizationPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1814043332
+// LIFERAY-SERVICE-BUILDER-HASH:218239652

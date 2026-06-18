@@ -163,7 +163,9 @@ public class AccountEntryPersistenceTest {
 
 		newAccountEntry.setStatusDate(RandomTestUtil.nextDate());
 
-		_accountEntries.add(_persistence.update(newAccountEntry));
+		newAccountEntry = _persistence.update(newAccountEntry);
+
+		_accountEntries.add(newAccountEntry);
 
 		AccountEntry existingAccountEntry = _persistence.findByPrimaryKey(
 			newAccountEntry.getPrimaryKey());
@@ -687,4 +689,4 @@ public class AccountEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:155718757
+// LIFERAY-SERVICE-BUILDER-HASH:-483620059

@@ -121,7 +121,9 @@ public class PluginSettingPersistenceTest {
 
 		newPluginSetting.setActive(RandomTestUtil.randomBoolean());
 
-		_pluginSettings.add(_persistence.update(newPluginSetting));
+		newPluginSetting = _persistence.update(newPluginSetting);
+
+		_pluginSettings.add(newPluginSetting);
 
 		PluginSetting existingPluginSetting = _persistence.findByPrimaryKey(
 			newPluginSetting.getPrimaryKey());
@@ -500,4 +502,4 @@ public class PluginSettingPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1335297849
+// LIFERAY-SERVICE-BUILDER-HASH:365344405

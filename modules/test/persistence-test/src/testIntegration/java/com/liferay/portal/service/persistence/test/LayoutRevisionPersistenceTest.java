@@ -164,7 +164,9 @@ public class LayoutRevisionPersistenceTest {
 
 		newLayoutRevision.setStatusDate(RandomTestUtil.nextDate());
 
-		_layoutRevisions.add(_persistence.update(newLayoutRevision));
+		newLayoutRevision = _persistence.update(newLayoutRevision);
+
+		_layoutRevisions.add(newLayoutRevision);
 
 		LayoutRevision existingLayoutRevision = _persistence.findByPrimaryKey(
 			newLayoutRevision.getPrimaryKey());
@@ -676,4 +678,4 @@ public class LayoutRevisionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1700939741
+// LIFERAY-SERVICE-BUILDER-HASH:928311025

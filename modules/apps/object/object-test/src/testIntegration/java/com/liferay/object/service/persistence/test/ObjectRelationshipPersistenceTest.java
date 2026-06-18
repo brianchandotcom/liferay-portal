@@ -154,7 +154,9 @@ public class ObjectRelationshipPersistenceTest {
 
 		newObjectRelationship.setType(RandomTestUtil.randomString());
 
-		_objectRelationships.add(_persistence.update(newObjectRelationship));
+		newObjectRelationship = _persistence.update(newObjectRelationship);
+
+		_objectRelationships.add(newObjectRelationship);
 
 		ObjectRelationship existingObjectRelationship =
 			_persistence.findByPrimaryKey(
@@ -843,4 +845,4 @@ public class ObjectRelationshipPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1339717317
+// LIFERAY-SERVICE-BUILDER-HASH:854761371

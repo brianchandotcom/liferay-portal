@@ -192,8 +192,10 @@ public class CommerceSubscriptionEntryPersistenceTest {
 		newCommerceSubscriptionEntry.setDeliveryStartDate(
 			RandomTestUtil.nextDate());
 
-		_commerceSubscriptionEntries.add(
-			_persistence.update(newCommerceSubscriptionEntry));
+		newCommerceSubscriptionEntry = _persistence.update(
+			newCommerceSubscriptionEntry);
+
+		_commerceSubscriptionEntries.add(newCommerceSubscriptionEntry);
 
 		CommerceSubscriptionEntry existingCommerceSubscriptionEntry =
 			_persistence.findByPrimaryKey(
@@ -868,4 +870,4 @@ public class CommerceSubscriptionEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1326973393
+// LIFERAY-SERVICE-BUILDER-HASH:-1220152617

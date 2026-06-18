@@ -152,8 +152,10 @@ public class ExportImportReportEntryPersistenceTest {
 
 		newExportImportReportEntry.setStatus(RandomTestUtil.nextInt());
 
-		_exportImportReportEntries.add(
-			_persistence.update(newExportImportReportEntry));
+		newExportImportReportEntry = _persistence.update(
+			newExportImportReportEntry);
+
+		_exportImportReportEntries.add(newExportImportReportEntry);
 
 		ExportImportReportEntry existingExportImportReportEntry =
 			_persistence.findByPrimaryKey(
@@ -648,4 +650,4 @@ public class ExportImportReportEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1400082856
+// LIFERAY-SERVICE-BUILDER-HASH:-1768262800

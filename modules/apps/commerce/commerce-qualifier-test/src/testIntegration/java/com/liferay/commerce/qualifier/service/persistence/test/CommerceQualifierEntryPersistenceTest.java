@@ -144,8 +144,10 @@ public class CommerceQualifierEntryPersistenceTest {
 		newCommerceQualifierEntry.setTargetCommerceQualifierMetadataKey(
 			RandomTestUtil.randomString());
 
-		_commerceQualifierEntries.add(
-			_persistence.update(newCommerceQualifierEntry));
+		newCommerceQualifierEntry = _persistence.update(
+			newCommerceQualifierEntry);
+
+		_commerceQualifierEntries.add(newCommerceQualifierEntry);
 
 		CommerceQualifierEntry existingCommerceQualifierEntry =
 			_persistence.findByPrimaryKey(
@@ -635,4 +637,4 @@ public class CommerceQualifierEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:559081500
+// LIFERAY-SERVICE-BUILDER-HASH:-1025084400

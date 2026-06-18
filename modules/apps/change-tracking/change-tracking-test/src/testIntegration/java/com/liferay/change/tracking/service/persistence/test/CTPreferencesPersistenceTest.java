@@ -122,7 +122,9 @@ public class CTPreferencesPersistenceTest {
 
 		newCTPreferences.setConfirmationEnabled(RandomTestUtil.randomBoolean());
 
-		_ctPreferenceses.add(_persistence.update(newCTPreferences));
+		newCTPreferences = _persistence.update(newCTPreferences);
+
+		_ctPreferenceses.add(newCTPreferences);
 
 		CTPreferences existingCTPreferences = _persistence.findByPrimaryKey(
 			newCTPreferences.getPrimaryKey());
@@ -503,4 +505,4 @@ public class CTPreferencesPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:309989222
+// LIFERAY-SERVICE-BUILDER-HASH:-852589490

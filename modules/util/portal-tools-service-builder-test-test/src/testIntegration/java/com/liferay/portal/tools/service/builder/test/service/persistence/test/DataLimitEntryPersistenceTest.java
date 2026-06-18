@@ -122,7 +122,9 @@ public class DataLimitEntryPersistenceTest {
 
 		newDataLimitEntry.setModifiedDate(RandomTestUtil.nextDate());
 
-		_dataLimitEntries.add(_persistence.update(newDataLimitEntry));
+		newDataLimitEntry = _persistence.update(newDataLimitEntry);
+
+		_dataLimitEntries.add(newDataLimitEntry);
 
 		DataLimitEntry existingDataLimitEntry = _persistence.findByPrimaryKey(
 			newDataLimitEntry.getPrimaryKey());
@@ -416,4 +418,4 @@ public class DataLimitEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-864464582
+// LIFERAY-SERVICE-BUILDER-HASH:-571641246

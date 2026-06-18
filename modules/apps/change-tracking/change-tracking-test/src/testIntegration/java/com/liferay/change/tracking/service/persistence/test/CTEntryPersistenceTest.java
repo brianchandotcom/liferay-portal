@@ -136,7 +136,9 @@ public class CTEntryPersistenceTest {
 
 		newCTEntry.setChangeType(RandomTestUtil.nextInt());
 
-		_ctEntries.add(_persistence.update(newCTEntry));
+		newCTEntry = _persistence.update(newCTEntry);
+
+		_ctEntries.add(newCTEntry);
 
 		CTEntry existingCTEntry = _persistence.findByPrimaryKey(
 			newCTEntry.getPrimaryKey());
@@ -616,4 +618,4 @@ public class CTEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:755834548
+// LIFERAY-SERVICE-BUILDER-HASH:-1221765012

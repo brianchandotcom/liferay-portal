@@ -135,7 +135,9 @@ public class TrashEntryPersistenceTest {
 
 		newTrashEntry.setStatus(RandomTestUtil.nextInt());
 
-		_trashEntries.add(_persistence.update(newTrashEntry));
+		newTrashEntry = _persistence.update(newTrashEntry);
+
+		_trashEntries.add(newTrashEntry);
 
 		TrashEntry existingTrashEntry = _persistence.findByPrimaryKey(
 			newTrashEntry.getPrimaryKey());
@@ -554,4 +556,4 @@ public class TrashEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-194174156
+// LIFERAY-SERVICE-BUILDER-HASH:496176178

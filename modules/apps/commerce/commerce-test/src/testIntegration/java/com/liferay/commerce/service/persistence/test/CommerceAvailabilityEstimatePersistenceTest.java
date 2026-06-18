@@ -140,8 +140,10 @@ public class CommerceAvailabilityEstimatePersistenceTest {
 		newCommerceAvailabilityEstimate.setLastPublishDate(
 			RandomTestUtil.nextDate());
 
-		_commerceAvailabilityEstimates.add(
-			_persistence.update(newCommerceAvailabilityEstimate));
+		newCommerceAvailabilityEstimate = _persistence.update(
+			newCommerceAvailabilityEstimate);
+
+		_commerceAvailabilityEstimates.add(newCommerceAvailabilityEstimate);
 
 		CommerceAvailabilityEstimate existingCommerceAvailabilityEstimate =
 			_persistence.findByPrimaryKey(
@@ -538,4 +540,4 @@ public class CommerceAvailabilityEstimatePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-582756727
+// LIFERAY-SERVICE-BUILDER-HASH:-1002093147

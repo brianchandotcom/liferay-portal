@@ -142,7 +142,9 @@ public class KaleoConditionPersistenceTest {
 		newKaleoCondition.setScriptRequiredContexts(
 			RandomTestUtil.randomString());
 
-		_kaleoConditions.add(_persistence.update(newKaleoCondition));
+		newKaleoCondition = _persistence.update(newKaleoCondition);
+
+		_kaleoConditions.add(newKaleoCondition);
 
 		KaleoCondition existingKaleoCondition = _persistence.findByPrimaryKey(
 			newKaleoCondition.getPrimaryKey());
@@ -560,4 +562,4 @@ public class KaleoConditionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:960690956
+// LIFERAY-SERVICE-BUILDER-HASH:-865471702

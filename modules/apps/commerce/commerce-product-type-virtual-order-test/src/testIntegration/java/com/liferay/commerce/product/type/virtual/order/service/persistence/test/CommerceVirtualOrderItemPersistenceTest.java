@@ -149,8 +149,10 @@ public class CommerceVirtualOrderItemPersistenceTest {
 
 		newCommerceVirtualOrderItem.setEndDate(RandomTestUtil.nextDate());
 
-		_commerceVirtualOrderItems.add(
-			_persistence.update(newCommerceVirtualOrderItem));
+		newCommerceVirtualOrderItem = _persistence.update(
+			newCommerceVirtualOrderItem);
+
+		_commerceVirtualOrderItems.add(newCommerceVirtualOrderItem);
 
 		CommerceVirtualOrderItem existingCommerceVirtualOrderItem =
 			_persistence.findByPrimaryKey(
@@ -646,4 +648,4 @@ public class CommerceVirtualOrderItemPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1076564031
+// LIFERAY-SERVICE-BUILDER-HASH:-988058295

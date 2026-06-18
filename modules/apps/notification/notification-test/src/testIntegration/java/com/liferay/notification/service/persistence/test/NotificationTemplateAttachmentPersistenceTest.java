@@ -126,8 +126,10 @@ public class NotificationTemplateAttachmentPersistenceTest {
 		newNotificationTemplateAttachment.setObjectFieldId(
 			RandomTestUtil.nextLong());
 
-		_notificationTemplateAttachments.add(
-			_persistence.update(newNotificationTemplateAttachment));
+		newNotificationTemplateAttachment = _persistence.update(
+			newNotificationTemplateAttachment);
+
+		_notificationTemplateAttachments.add(newNotificationTemplateAttachment);
 
 		NotificationTemplateAttachment existingNotificationTemplateAttachment =
 			_persistence.findByPrimaryKey(
@@ -552,4 +554,4 @@ public class NotificationTemplateAttachmentPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-297706517
+// LIFERAY-SERVICE-BUILDER-HASH:-1586337421

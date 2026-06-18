@@ -131,7 +131,9 @@ public class AudiencesEntryPersistenceTest {
 
 		newAudiencesEntry.setName(RandomTestUtil.randomString());
 
-		_audiencesEntries.add(_persistence.update(newAudiencesEntry));
+		newAudiencesEntry = _persistence.update(newAudiencesEntry);
+
+		_audiencesEntries.add(newAudiencesEntry);
 
 		AudiencesEntry existingAudiencesEntry = _persistence.findByPrimaryKey(
 			newAudiencesEntry.getPrimaryKey());
@@ -552,4 +554,4 @@ public class AudiencesEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-600224529
+// LIFERAY-SERVICE-BUILDER-HASH:1067092027

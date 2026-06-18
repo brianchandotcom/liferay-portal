@@ -134,8 +134,9 @@ public class CommerceDiscountRulePersistenceTest {
 
 		newCommerceDiscountRule.setTypeSettings(RandomTestUtil.randomString());
 
-		_commerceDiscountRules.add(
-			_persistence.update(newCommerceDiscountRule));
+		newCommerceDiscountRule = _persistence.update(newCommerceDiscountRule);
+
+		_commerceDiscountRules.add(newCommerceDiscountRule);
 
 		CommerceDiscountRule existingCommerceDiscountRule =
 			_persistence.findByPrimaryKey(
@@ -487,4 +488,4 @@ public class CommerceDiscountRulePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1913512738
+// LIFERAY-SERVICE-BUILDER-HASH:927228666

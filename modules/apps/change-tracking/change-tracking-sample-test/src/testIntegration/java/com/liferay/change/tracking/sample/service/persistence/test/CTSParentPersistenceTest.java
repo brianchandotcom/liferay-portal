@@ -119,7 +119,9 @@ public class CTSParentPersistenceTest {
 
 		newCTSParent.setName(RandomTestUtil.randomString());
 
-		_ctsParents.add(_persistence.update(newCTSParent));
+		newCTSParent = _persistence.update(newCTSParent);
+
+		_ctsParents.add(newCTSParent);
 
 		CTSParent existingCTSParent = _persistence.findByPrimaryKey(
 			newCTSParent.getPrimaryKey());
@@ -417,4 +419,4 @@ public class CTSParentPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2142548034
+// LIFERAY-SERVICE-BUILDER-HASH:-750146600

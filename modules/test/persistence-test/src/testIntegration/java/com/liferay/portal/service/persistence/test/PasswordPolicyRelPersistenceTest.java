@@ -120,7 +120,9 @@ public class PasswordPolicyRelPersistenceTest {
 
 		newPasswordPolicyRel.setClassPK(RandomTestUtil.nextLong());
 
-		_passwordPolicyRels.add(_persistence.update(newPasswordPolicyRel));
+		newPasswordPolicyRel = _persistence.update(newPasswordPolicyRel);
+
+		_passwordPolicyRels.add(newPasswordPolicyRel);
 
 		PasswordPolicyRel existingPasswordPolicyRel =
 			_persistence.findByPrimaryKey(newPasswordPolicyRel.getPrimaryKey());
@@ -499,4 +501,4 @@ public class PasswordPolicyRelPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1459375928
+// LIFERAY-SERVICE-BUILDER-HASH:-1664627170

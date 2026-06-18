@@ -155,8 +155,11 @@ public class SegmentsExperienceAudienceEntryRelPersistenceTest {
 		newSegmentsExperienceAudienceEntryRel.setSegmentsExperienceERC(
 			RandomTestUtil.randomString());
 
+		newSegmentsExperienceAudienceEntryRel = _persistence.update(
+			newSegmentsExperienceAudienceEntryRel);
+
 		_segmentsExperienceAudienceEntryRels.add(
-			_persistence.update(newSegmentsExperienceAudienceEntryRel));
+			newSegmentsExperienceAudienceEntryRel);
 
 		SegmentsExperienceAudienceEntryRel
 			existingSegmentsExperienceAudienceEntryRel =
@@ -695,4 +698,4 @@ public class SegmentsExperienceAudienceEntryRelPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1160698662
+// LIFERAY-SERVICE-BUILDER-HASH:654716268

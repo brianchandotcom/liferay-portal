@@ -131,7 +131,9 @@ public class BatchPlannerPolicyPersistenceTest {
 
 		newBatchPlannerPolicy.setValue(RandomTestUtil.randomString());
 
-		_batchPlannerPolicies.add(_persistence.update(newBatchPlannerPolicy));
+		newBatchPlannerPolicy = _persistence.update(newBatchPlannerPolicy);
+
+		_batchPlannerPolicies.add(newBatchPlannerPolicy);
 
 		BatchPlannerPolicy existingBatchPlannerPolicy =
 			_persistence.findByPrimaryKey(
@@ -538,4 +540,4 @@ public class BatchPlannerPolicyPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:127108274
+// LIFERAY-SERVICE-BUILDER-HASH:-712855344

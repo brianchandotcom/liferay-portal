@@ -120,7 +120,7 @@ Response shape drives the generated return type. Two cases are worth knowing:
 - `application/json` with `{type: array, items: {$ref: ...}}` → `Page<DTO>`.
 - `application/json` with `$ref` → the DTO.
 
-For anything else, run `buildREST` and read the signature on the generated `Base<Tag>ResourceImpl`.
+For anything else, run REST Builder and read the signature on the generated `Base<Tag>ResourceImpl`.
 
 #### `<name>-rest-client/bnd.bnd`
 
@@ -176,7 +176,7 @@ Run every step without asking for confirmation, including the commits.
 
 1. Commit the hand-written files.
 
-1. Run `<gradlew> buildREST` from the impl module.
+1. Run REST Builder.
 
 1. Commit the changes the tool produces or rewrites.
 
@@ -192,13 +192,21 @@ Run every step without asking for confirmation, including the commits.
 
 1. Commit the hand-written YAML files.
 
-1. Run `<gradlew> buildREST` from the impl module.
+1. Run REST Builder.
 
 1. Commit the changes the tool produces or rewrites.
 
 1. Continue with the work.
 
-## Running REST Builder Globally
+## Running REST Builder
+
+Both entry points automatically pick up the latest generator code, so any change to the generator source under `modules/util/portal-tools-rest-builder` takes effect on the next run without an extra install step.
+
+### A Single Module
+
+Run `<gradlew> buildREST` from the impl module to regenerate that module alone.
+
+### Every Module
 
 To regenerate every REST Builder module in one pass, run `ant build-rests` from `portal-impl`:
 
@@ -222,6 +230,6 @@ Run every step without asking for confirmation, including the commits.
 
 1. Regenerate `modules/util/portal-tools-rest-builder-test-impl` module as per the "Editing an Existing API" section. The test should now pass.
 
-1. Run REST Builder globally to regenerate every module. It will automatically pick up the new generator code.
+1. Run REST Builder for every module.
 
 1. Commit the regenerated output.

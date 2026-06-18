@@ -1,0 +1,42 @@
+[#assign
+	displayMode = configuration.displayMode!"both"
+	editMode = (layoutMode!"") == "edit"
+	roles = (configuration.roles!"User")?trim
+]
+
+[#assign hasRequiredRole = false]
+
+[#attempt]
+	[#assign myUserAccount = restClient.get("/headless-admin-user/v1.0/my-user-account?fields=roleBriefs")]
+	[#assign userRoleNames = (myUserAccount.roleBriefs![])?map(roleBrief -> roleBrief.name)]
+	[#assign requiredRoleNames = roles?split(",")?map(roleName -> roleName?trim)]
+	[#assign hasRequiredRole = requiredRoleNames?filter(roleName -> userRoleNames?seq_contains(roleName))?has_content]
+[#recover]
+[/#attempt]
+
+[#assign
+	showInRole = editMode || hasRequiredRole
+	showOutOfRole = editMode || !hasRequiredRole
+]
+
+[#if displayMode == "both"]
+	[#if showInRole]
+		<div class="one-conditional-wrapper one-conditional-wrapper-in-role${editMode?then(' one-conditional-wrapper-edit', '')}">
+			<lfr-drop-zone data-lfr-drop-zone-id="0" data-lfr-priority="0"></lfr-drop-zone>
+		</div>
+	[/#if]
+
+	[#if showOutOfRole]
+		<div class="one-conditional-wrapper one-conditional-wrapper-out-of-role${editMode?then(' one-conditional-wrapper-edit', '')}">
+			<lfr-drop-zone data-lfr-drop-zone-id="1" data-lfr-priority="1"></lfr-drop-zone>
+		</div>
+	[/#if]
+[#elseif displayMode == "inRoleOnly" && showInRole]
+	<div class="one-conditional-wrapper one-conditional-wrapper-in-role${editMode?then(' one-conditional-wrapper-edit', '')}">
+		<lfr-drop-zone data-lfr-drop-zone-id="2" data-lfr-priority="0"></lfr-drop-zone>
+	</div>
+[#elseif displayMode == "outOfRoleOnly" && showOutOfRole]
+	<div class="one-conditional-wrapper one-conditional-wrapper-out-of-role${editMode?then(' one-conditional-wrapper-edit', '')}">
+		<lfr-drop-zone data-lfr-drop-zone-id="3" data-lfr-priority="0"></lfr-drop-zone>
+	</div>
+[/#if]

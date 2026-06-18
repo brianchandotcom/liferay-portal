@@ -1,0 +1,56 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": true,
+					"description": "Show Site Name",
+					"label": "Show Site Name",
+					"name": "showSiteName",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": true,
+					"description": "Show Account Menu",
+					"label": "Show Account Menu",
+					"name": "showAccountMenu",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": true,
+					"description": "Show Language Menu",
+					"label": "Show Language Menu",
+					"name": "showLanguageMenu",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": true,
+					"description": "Show Search",
+					"label": "Show Search",
+					"name": "showSearch",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "NAVIGATION_PRIMARY",
+					"description": "Primary Navigation DDM Template Key",
+					"label": "Primary Navigation DDM Template Key",
+					"name": "primaryNavigationDDMTemplateKey",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "NAVIGATION_SITES",
+					"description": "Sites Navigation DDM Template Key",
+					"label": "Sites Navigation DDM Template Key",
+					"name": "sitesNavigationDDMTemplateKey",
+					"type": "text"
+				}
+			]
+		}
+	]
+}

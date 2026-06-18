@@ -1,0 +1,45 @@
+.lo-hero-banner {
+	background-color: var(--white);
+	background-position: right top;
+	background-repeat: no-repeat;
+	background-size: auto 100% !important;
+	min-height: 272px;
+}
+
+.lo-hero-banner .lo-hero-banner-breadcrumb {
+	color: var(--color-neutral-7);
+	font-size: 13px;
+	gap: var(--spacer-1);
+	line-height: 16px;
+}
+
+.lo-hero-banner .lo-hero-banner-breadcrumb a {
+	color: var(--color-neutral-7);
+	text-decoration: none;
+}
+
+.lo-hero-banner .lo-hero-banner-breadcrumb a:hover {
+	text-decoration: underline;
+}
+
+.lo-hero-banner .lo-hero-banner-content {
+	gap: 32px;
+	z-index: 1;
+}
+
+.lo-hero-banner .lo-hero-banner-subtitle {
+	color: var(--color-neutral-8);
+	font-size: 21px;
+	line-height: 32px;
+}
+
+.lo-hero-banner .lo-hero-banner-text {
+	gap: var(--spacer-3);
+	max-width: 740px;
+}
+
+.lo-hero-banner .lo-hero-banner-title {
+	color: var(--color-neutral-10);
+	font-size: 49px;
+	line-height: 56px;
+}

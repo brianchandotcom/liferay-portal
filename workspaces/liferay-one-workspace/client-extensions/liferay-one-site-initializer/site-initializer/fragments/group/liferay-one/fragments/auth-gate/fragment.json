@@ -1,9 +1,0 @@
-{
-	"configurationPath": "configuration.json",
-	"cssPath": "index.css",
-	"htmlPath": "index.html",
-	"icon": "password-policies",
-	"jsPath": "index.js",
-	"name": "Auth Gate",
-	"type": "component"
-}

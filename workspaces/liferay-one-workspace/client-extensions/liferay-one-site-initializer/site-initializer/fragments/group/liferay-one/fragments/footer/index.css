@@ -1,0 +1,54 @@
+.liferay-one-footer {
+	background-color: var(--color-neutral-1);
+}
+
+.liferay-one-footer .brand-logo {
+	height: 24px;
+	width: 24px;
+}
+
+.liferay-one-footer .brand-name {
+	color: var(--color-neutral-10);
+	font-size: 1.125rem;
+}
+
+.liferay-one-footer .contact-container {
+	color: var(--color-neutral-10);
+}
+
+.liferay-one-footer .footer-copyright {
+	font-size: 11px;
+}
+
+.liferay-one-footer .footer-navigation {
+	flex: 5;
+	font-size: 16px;
+}
+
+.liferay-one-footer .footer-navigation:last-child h3 {
+	white-space: nowrap;
+}
+
+.liferay-one-footer .liferay-link {
+	color: var(--color-brand-primary);
+}
+
+.liferay-one-footer .social-icons {
+	gap: 1rem;
+}
+
+.liferay-one-footer .social-icons li img {
+	height: 18px;
+	width: 18px;
+}
+
+.liferay-one-footer a {
+	color: var(--color-neutral-9);
+}
+
+.liferay-one-footer h3 {
+	color: var(--color-brand-primary-darken-4);
+	font-size: 1.125rem;
+	font-weight: var(--font-weight-semi-bold);
+	margin-bottom: var(--spacer-3);
+}

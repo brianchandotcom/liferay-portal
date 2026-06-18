@@ -22,8 +22,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
-import java.util.concurrent.Future;
-import java.util.concurrent.ThreadPoolExecutor;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -35,77 +33,24 @@ public class TestPropertiesPQLValidationTest {
 
 	@Test
 	public void testValidatePQL() throws Exception {
-		List<File> testPropertiesFiles = _findTestPropertiesFiles(
-			_getPortalDir());
+		File portalDir = JenkinsResultsParserUtil.getCanonicalFile(
+			new File("."));
 
-		List<String> errors = Collections.synchronizedList(new ArrayList<>());
-		List<Future<?>> futures = new ArrayList<>();
+		while (portalDir != null) {
+			File buildTestXMLFile = new File(portalDir, "build-test.xml");
 
-		Runtime runtime = Runtime.getRuntime();
-
-		ThreadPoolExecutor threadPoolExecutor =
-			JenkinsResultsParserUtil.getNewThreadPoolExecutor(
-				runtime.availableProcessors(), true);
-
-		for (File testPropertiesFile : testPropertiesFiles) {
-			Properties properties = new Properties();
-
-			try (InputStream inputStream = new FileInputStream(
-					testPropertiesFile)) {
-
-				properties.load(inputStream);
+			if (buildTestXMLFile.exists()) {
+				break;
 			}
 
-			for (String propertyName : properties.stringPropertyNames()) {
-				if (!propertyName.startsWith("test.batch.run.property.query")) {
-					continue;
-				}
-
-				String propertyValue = properties.getProperty(propertyName);
-
-				String pql = propertyValue.trim();
-
-				if (pql.contains("${")) {
-					continue;
-				}
-
-				futures.add(
-					threadPoolExecutor.submit(
-						() -> {
-							try {
-								JenkinsResultsParserUtil.validatePQL(
-									pql, testPropertiesFile);
-							}
-							catch (RuntimeException runtimeException) {
-								errors.add(
-									"Invalid PQL in property " + propertyName +
-										": " + runtimeException.getMessage());
-							}
-						}));
-			}
+			portalDir = portalDir.getParentFile();
 		}
 
-		threadPoolExecutor.shutdown();
-
-		System.out.println("Validating " + futures.size() + " PQL values");
-
-		for (Future<?> future : futures) {
-			future.get();
+		if (portalDir == null) {
+			throw new RuntimeException("Unable to find portal directory");
 		}
 
-		Collections.sort(errors);
-
-		for (String error : errors) {
-			System.out.println(error);
-		}
-
-		Assert.assertTrue(errors.isEmpty());
-	}
-
-	private List<File> _findTestPropertiesFiles(File portalDir)
-		throws Exception {
-
-		List<File> testPropertiesFiles = new ArrayList<>();
+		List<String> errors = new ArrayList<>();
 
 		Files.walkFileTree(
 			portalDir.toPath(),
@@ -113,11 +58,11 @@ public class TestPropertiesPQLValidationTest {
 
 				@Override
 				public FileVisitResult preVisitDirectory(
-					Path dir, BasicFileAttributes basicFileAttributes) {
+					Path path, BasicFileAttributes basicFileAttributes) {
 
-					File dirFile = dir.toFile();
+					File dir = path.toFile();
 
-					String dirName = dirFile.getName();
+					String dirName = dir.getName();
 
 					if (dirName.equals("build") || dirName.equals("bundles") ||
 						dirName.equals("classes") ||
@@ -134,14 +79,49 @@ public class TestPropertiesPQLValidationTest {
 
 				@Override
 				public FileVisitResult visitFile(
-					Path file, BasicFileAttributes basicFileAttributes) {
+						Path path, BasicFileAttributes basicFileAttributes)
+					throws IOException {
 
-					File visitedFile = file.toFile();
+					File file = path.toFile();
 
-					String fileName = visitedFile.getName();
+					String fileName = file.getName();
 
-					if (fileName.equals("test.properties")) {
-						testPropertiesFiles.add(file.toFile());
+					if (!fileName.equals("test.properties")) {
+						return FileVisitResult.CONTINUE;
+					}
+
+					Properties properties = new Properties();
+
+					try (InputStream inputStream = new FileInputStream(file)) {
+						properties.load(inputStream);
+					}
+
+					for (String propertyName :
+							properties.stringPropertyNames()) {
+
+						if (!propertyName.startsWith(
+								"test.batch.run.property.query")) {
+
+							continue;
+						}
+
+						String propertyValue = properties.getProperty(
+							propertyName);
+
+						String pql = propertyValue.trim();
+
+						if (pql.contains("${")) {
+							continue;
+						}
+
+						try {
+							JenkinsResultsParserUtil.validatePQL(pql, file);
+						}
+						catch (RuntimeException runtimeException) {
+							errors.add(
+								"Invalid PQL in property " + propertyName +
+									": " + runtimeException.getMessage());
+						}
 					}
 
 					return FileVisitResult.CONTINUE;
@@ -149,30 +129,20 @@ public class TestPropertiesPQLValidationTest {
 
 				@Override
 				public FileVisitResult visitFileFailed(
-					Path file, IOException ioException) {
+					Path path, IOException ioException) {
 
 					return FileVisitResult.CONTINUE;
 				}
 
 			});
 
-		return testPropertiesFiles;
-	}
+		Collections.sort(errors);
 
-	private File _getPortalDir() {
-		File dir = JenkinsResultsParserUtil.getCanonicalFile(new File("."));
-
-		while (dir != null) {
-			File buildTestXMLFile = new File(dir, "build-test.xml");
-
-			if (buildTestXMLFile.exists()) {
-				return dir;
-			}
-
-			dir = dir.getParentFile();
+		for (String error : errors) {
+			System.out.println(error);
 		}
 
-		throw new RuntimeException("Unable to find portal directory");
+		Assert.assertTrue(errors.isEmpty());
 	}
 
 }

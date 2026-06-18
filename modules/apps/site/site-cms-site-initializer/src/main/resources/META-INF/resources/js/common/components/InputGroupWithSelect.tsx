@@ -5,7 +5,8 @@
 
 import '../../../css/components/InputGroupWithSelect.scss';
 
-import ClayForm, {ClayInput, ClaySelectWithOption} from '@clayui/form';
+import {Option, Picker} from '@clayui/core';
+import ClayForm, {ClayInput} from '@clayui/form';
 import classNames from 'classnames';
 import React, {useId} from 'react';
 
@@ -18,6 +19,31 @@ export interface InputGroupWithSelectProps {
 	selectValue: string;
 }
 
+const SelectTrigger = React.forwardRef(
+	(
+		{
+			id,
+			label,
+			...otherProps
+		}: {
+			id: string;
+			label: string;
+		},
+		ref: React.Ref<HTMLButtonElement>
+	) => {
+		return (
+			<button
+				{...otherProps}
+				className="btn font-weight-semi-bold form-control form-control-select form-control-select-secondary rounded-left"
+				id={id}
+				ref={ref}
+			>
+				{label}
+			</button>
+		);
+	}
+);
+
 export function InputGroupWithSelect({
 	children,
 	className,
@@ -27,6 +53,10 @@ export function InputGroupWithSelect({
 	selectValue,
 }: InputGroupWithSelectProps) {
 	const selectId = useId();
+
+	const selectedOption = options.find(
+		(option) => option.value === selectValue
+	);
 
 	return (
 		<ClayForm.Group
@@ -40,15 +70,20 @@ export function InputGroupWithSelect({
 
 			<ClayInput.Group>
 				<ClayInput.GroupItem prepend shrink>
-					<ClaySelectWithOption
-						className="font-weight-semi-bold form-control form-control-select-secondary rounded-left"
+					<Picker
+						as={SelectTrigger}
 						id={selectId}
-						onChange={(event) => {
-							onSelectChange?.(event.target.value);
+						items={options}
+						label={selectedOption?.label ?? ''}
+						onSelectionChange={(key: React.Key) => {
+							onSelectChange?.(key as string);
 						}}
-						options={options}
-						value={selectValue}
-					/>
+						selectedKey={selectValue}
+					>
+						{(item: {label: string; value: string}) => (
+							<Option key={item.value}>{item.label}</Option>
+						)}
+					</Picker>
 				</ClayInput.GroupItem>
 
 				<ClayInput.GroupItem append>{children}</ClayInput.GroupItem>

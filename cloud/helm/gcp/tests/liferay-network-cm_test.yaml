@@ -10,7 +10,7 @@ tests:
                     of: ConfigMap
             -   isNullOrEmpty:
                     path: data
-        it: creates an empty liferay-network ConfigMap when no hostnames are configured
+        it: Creates an empty liferay-network ConfigMap when no hostnames are configured
         set:
             liferay-default.network.enabled: true
             liferay-default.network.hostnames: []
@@ -21,7 +21,7 @@ tests:
             -   equal:
                     path: data["LIFERAY_COMPANY_PERIOD_DEFAULT_PERIOD_WEB_PERIOD_ID"]
                     value: a.example.com
-        it: derives the default virtual host from the first configured hostname
+        it: Derives the default virtual host from the first configured hostname
         set:
             liferay-default.network.enabled: true
             liferay-default.network.hostnames:
@@ -31,7 +31,7 @@ tests:
             -   equal:
                     path: data["LIFERAY_VIRTUAL_PERIOD_HOSTS_PERIOD_VALID_PERIOD_HOSTS"]
                     value: a.example.com,b.example.com,localhost,${env.POD_IP}
-        it: joins every configured hostname into the valid hosts list
+        it: Joins every configured hostname into the valid hosts list
         set:
             liferay-default.network.enabled: true
             liferay-default.network.hostnames:
@@ -40,6 +40,6 @@ tests:
     -   asserts:
             -   hasDocuments:
                     count: 0
-        it: omits the ConfigMap when networking is disabled
+        it: Omits the ConfigMap when networking is disabled
         set:
             liferay-default.network.enabled: false

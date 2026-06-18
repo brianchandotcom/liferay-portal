@@ -219,8 +219,7 @@ export function ConfigurationContainer({
 				/>
 			</ClayForm.Group>
 
-			{Liferay.FeatureFlags['LPD-69877'] &&
-				isRootDescendantNode &&
+			{isRootDescendantNode &&
 				(() => {
 					const allowStandaloneObjectEntry =
 						(getSettingValue(

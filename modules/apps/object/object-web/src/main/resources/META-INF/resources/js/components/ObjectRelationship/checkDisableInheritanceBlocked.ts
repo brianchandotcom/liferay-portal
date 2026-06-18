@@ -11,17 +11,13 @@ import {getSettingValue} from '../../utils/objectDefinitionSettings';
  * Returns true if disabling inheritance would orphan child entries.
  *
  * We iterate the parent-nested route because the child endpoint is
- * hidden under LPD-69877 strict mode and `rootObjectEntryId` is not
- * filterable on the headless layer. Parent listing defaults to
- * `pageSize=20`; beyond that, BE rejects on save (LPD-87998).
+ * hidden in strict mode and `rootObjectEntryId` is not filterable on
+ * the headless layer. Parent listing defaults to `pageSize=20`; beyond
+ * that, BE rejects on save (LPD-87998).
  */
 export async function checkDisableInheritanceBlocked(
 	values: Partial<ObjectRelationship>
 ): Promise<boolean> {
-	if (!Liferay.FeatureFlags['LPD-69877']) {
-		return false;
-	}
-
 	if (!values.id || values.type !== 'oneToMany') {
 		return false;
 	}

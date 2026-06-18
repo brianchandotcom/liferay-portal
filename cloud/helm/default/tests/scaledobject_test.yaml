@@ -1,6 +1,6 @@
 suite: KEDA ScaledObject
 templates:
-    -   templates/scaledobject.yaml
+    -   scaledobject.yaml
 tests:
     -   asserts:
             -   lengthEqual:

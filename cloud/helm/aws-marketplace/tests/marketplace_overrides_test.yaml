@@ -1,8 +1,8 @@
 suite: Marketplace Overrides
 templates:
-    -   charts/liferay-aws/charts/liferay-default/templates/configmap.yaml
-    -   charts/liferay-aws/charts/liferay-default/templates/liferay-init-scripts-cm.yaml
-    -   charts/liferay-aws/charts/liferay-default/templates/workloads.yaml
+    -   configmap.yaml
+    -   liferay-init-scripts-cm.yaml
+    -   workloads.yaml
 tests:
     -   asserts:
             -   equal:

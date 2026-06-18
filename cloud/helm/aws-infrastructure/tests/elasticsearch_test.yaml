@@ -3,7 +3,7 @@ release:
     namespace: my-namespace
 suite: Elasticsearch
 templates:
-    -   templates/elasticsearch.yaml
+    -   elasticsearch.yaml
 tests:
     -   asserts:
             -   contains:

@@ -83,6 +83,8 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -577,20 +579,55 @@ public class SitesImpl implements Sites {
 					"import, or staging process is in progress");
 		}
 
-		User user = _userLocalService.getUser(userId);
+		List<LayoutSet> mergeableLayoutSets = new ArrayList<>();
 
 		for (LayoutSet layoutSet :
 				_layoutSetLocalService.getLayoutSetsByLayoutSetPrototypeUuid(
 					layoutSetPrototype.getUuid())) {
 
-			if (!isLayoutSetMergeable(layoutSet)) {
-				continue;
+			if (isLayoutSetMergeable(layoutSet)) {
+				mergeableLayoutSets.add(layoutSet);
 			}
+		}
 
-			_exportImportLocalService.mergeLayoutSetPrototypeInBackground(
-				user.getUserId(), layoutSet.getGroupId(),
-				_buildExportImportConfiguration(
-					layoutSet, layoutSetPrototype, user));
+		Map<Long, ExportImportConfiguration> exportImportConfigurations =
+			new HashMap<>();
+
+		User user = _userLocalService.getUser(userId);
+
+		for (Iterator<LayoutSet> iterator = mergeableLayoutSets.iterator();
+			 iterator.hasNext();) {
+
+			LayoutSet layoutSet = iterator.next();
+
+			try {
+				exportImportConfigurations.put(
+					layoutSet.getLayoutSetId(),
+					_buildExportImportConfiguration(
+						layoutSet, layoutSetPrototype, user));
+			}
+			catch (PortalException portalException) {
+				_log.error(
+					"Unable to add draft export-import configuration for " +
+						"layout set " + layoutSet.getLayoutSetId(),
+					portalException);
+
+				iterator.remove();
+			}
+		}
+
+		for (LayoutSet layoutSet : mergeableLayoutSets) {
+			try {
+				_exportImportLocalService.mergeLayoutSetPrototypeInBackground(
+					userId, layoutSet.getGroupId(),
+					exportImportConfigurations.get(layoutSet.getLayoutSetId()));
+			}
+			catch (Exception exception) {
+				_log.error(
+					"Unable to start site template merge for layout set " +
+						layoutSet.getLayoutSetId(),
+					exception);
+			}
 		}
 	}
 
@@ -1006,7 +1043,7 @@ public class SitesImpl implements Sites {
 	private ExportImportConfiguration _buildExportImportConfiguration(
 			LayoutSet layoutSet, LayoutSetPrototype layoutSetPrototype,
 			User user)
-		throws Exception {
+		throws PortalException {
 
 		UnicodeProperties settingsUnicodeProperties =
 			layoutSet.getSettingsProperties();

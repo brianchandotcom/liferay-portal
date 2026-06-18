@@ -210,12 +210,9 @@ A single JVM scans every module directly via `RESTBuilder`, which is faster than
 
 ## Editing REST Builder Itself
 
-Use this workflow when editing the REST Builder generator itself, rather than the artifacts of any single bundle. The generator's source lives under `modules/util/portal-tools-rest-builder`, split across two folders:
+Use this workflow when editing the REST Builder generator itself, rather than the artifacts of any single bundle. The generator's source lives under `modules/util/portal-tools-rest-builder`.
 
-- `src/main/java/com/liferay/portal/tools/rest/builder` — the Java that drives generation.
-- `src/main/resources/com/liferay/portal/tools/rest/builder/dependencies` — the FreeMarker templates.
-
-`buildREST` reads the generator's source from the local repository, not from the REST Builder artifact published to Maven, so a change to a template or generator class takes effect on the next `buildREST` run with no need to rebuild or republish the tool.
+`buildREST` reads the generator's source from the local repository, not from the REST Builder artifact published to Maven, so a change there takes effect on the next `buildREST` run with no need to rebuild or republish the tool.
 
 ### Workflow
 

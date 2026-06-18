@@ -1,0 +1,59 @@
+{
+	"configuration": {
+		"className": "com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"onErrorFail": "false",
+			"taskItemDelegateName": "DEFAULT",
+			"updateStrategy": "PARTIAL_UPDATE"
+		}
+	},
+	"items": [
+		{
+			"accountEntryRestricted": true,
+			"accountEntryRestrictedObjectFieldName": "r_accountEntryToAccountNote_accountEntryId",
+			"externalReferenceCode": "C_ACCOUNT_NOTE"
+		},
+		{
+			"accountEntryRestricted": true,
+			"accountEntryRestrictedObjectFieldName": "r_accountEntryToContract_accountEntryId",
+			"externalReferenceCode": "C_CONTRACT"
+		},
+		{
+			"accountEntryRestricted": true,
+			"accountEntryRestrictedObjectFieldName": "r_accountEntryToEntitlement_accountEntryId",
+			"externalReferenceCode": "C_ENTITLEMENT"
+		},
+		{
+			"accountEntryRestricted": true,
+			"accountEntryRestrictedObjectFieldName": "r_accountEntryToOAuth2DxpAuthorization_accountEntryId",
+			"externalReferenceCode": "C_OAUTH2_DXP_AUTHORIZATION"
+		},
+		{
+			"accountEntryRestricted": true,
+			"accountEntryRestrictedObjectFieldName": "r_accountEntryToProject_accountEntryId",
+			"externalReferenceCode": "C_PROJECT"
+		},
+		{
+			"accountEntryRestricted": true,
+			"accountEntryRestrictedObjectFieldName": "r_accountEntryToProjectMembership_accountEntryId",
+			"externalReferenceCode": "C_PROJECT_MEMBERSHIP"
+		},
+		{
+			"accountEntryRestricted": true,
+			"accountEntryRestrictedObjectFieldName": "r_accountEntryToPublisherAsset_accountEntryId",
+			"externalReferenceCode": "C_PUBLISHER_ASSET"
+		},
+		{
+			"accountEntryRestricted": true,
+			"accountEntryRestrictedObjectFieldName": "r_accountEntryToTicketAttachment_accountEntryId",
+			"externalReferenceCode": "C_TICKET_ATTACHMENT"
+		},
+		{
+			"accountEntryRestricted": true,
+			"accountEntryRestrictedObjectFieldName": "r_accountEntryToTrialExtensionRequest_accountEntryId",
+			"externalReferenceCode": "C_TRIAL_EXTENSION_REQUEST"
+		}
+	]
+}

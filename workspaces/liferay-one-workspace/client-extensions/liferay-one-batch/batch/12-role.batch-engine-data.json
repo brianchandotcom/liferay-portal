@@ -1,0 +1,209 @@
+{
+	"configuration": {
+		"className": "com.liferay.headless.admin.user.dto.v1_0.Role",
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"onErrorFail": "false",
+			"taskItemDelegateName": "DEFAULT",
+			"updateStrategy": "PARTIAL_UPDATE"
+		}
+	},
+	"items": [
+		{
+			"externalReferenceCode": "C_ACCOUNT_REQUESTER",
+			"name": "Account Requester",
+			"roleType": "account"
+		},
+		{
+			"externalReferenceCode": "C_ACCOUNT_SOLUTION_PUBLISHER",
+			"name": "Account Solution Publisher",
+			"roleType": "account"
+		},
+		{
+			"externalReferenceCode": "C_ANALYTICS_CLOUD_OWNER",
+			"name": "Analytics Cloud Owner",
+			"roleType": "account"
+		},
+		{
+			"externalReferenceCode": "C_ARTICLE_ADMIN",
+			"name": "Article Administrator",
+			"roleType": "site"
+		},
+		{
+			"externalReferenceCode": "C_CLOUD_NATIVE_CONTACT",
+			"name": "Cloud Native Contact",
+			"roleType": "account"
+		},
+		{
+			"externalReferenceCode": "C_CRITICAL_INCIDENT_CONTACT",
+			"name": "Critical Incident Contact",
+			"roleType": "account"
+		},
+		{
+			"externalReferenceCode": "C_CUSTOMER_EXPERIENCE_MANAGER",
+			"name": "Customer Experience Manager",
+			"roleType": "account"
+		},
+		{
+			"externalReferenceCode": "C_DASHBOARD_VIEWER",
+			"name": "Dashboard Viewer",
+			"roleType": "regular"
+		},
+		{
+			"externalReferenceCode": "C_DATA_BREACH_CONTACT",
+			"name": "Data Breach Contact",
+			"roleType": "account"
+		},
+		{
+			"externalReferenceCode": "C_DOCUMENTATION_ADMIN",
+			"name": "Documentation Administrator",
+			"roleType": "site"
+		},
+		{
+			"externalReferenceCode": "C_FINANCE_ADMIN",
+			"name": "Finance Administrator",
+			"roleType": "regular"
+		},
+		{
+			"externalReferenceCode": "C_LDP_ADMIN",
+			"name": "LDP Administrator",
+			"roleType": "account"
+		},
+		{
+			"externalReferenceCode": "C_LIFERAY_SALES",
+			"name": "Liferay Sales",
+			"roleType": "account"
+		},
+		{
+			"externalReferenceCode": "C_LIFERAY_STAFF",
+			"name": "Liferay Staff",
+			"roleType": "regular"
+		},
+		{
+			"externalReferenceCode": "C_MARKETPLACE_PUBLISHER",
+			"name": "Marketplace Publisher",
+			"roleType": "regular"
+		},
+		{
+			"externalReferenceCode": "C_MEMBER",
+			"name": "Member",
+			"roleType": "account"
+		},
+		{
+			"externalReferenceCode": "C_PARTNER_MANAGER",
+			"name": "Partner Manager",
+			"roleType": "account"
+		},
+		{
+			"externalReferenceCode": "C_PARTNER_MARKETING_USER",
+			"name": "Partner Marketing User",
+			"roleType": "account"
+		},
+		{
+			"externalReferenceCode": "C_PARTNER_MEMBER",
+			"name": "Partner Member",
+			"roleType": "account"
+		},
+		{
+			"externalReferenceCode": "C_PARTNER_SALES_USER",
+			"name": "Partner Sales User",
+			"roleType": "account"
+		},
+		{
+			"externalReferenceCode": "C_PARTNER_TECHNICAL_USER",
+			"name": "Partner Technical User",
+			"roleType": "account"
+		},
+		{
+			"externalReferenceCode": "C_PRIMARY_CONTACT",
+			"name": "Primary Contact",
+			"roleType": "account"
+		},
+		{
+			"externalReferenceCode": "C_PROVISIONING_ADMIN",
+			"name": "Provisioning Administrator",
+			"roleType": "regular"
+		},
+		{
+			"externalReferenceCode": "C_PROVISIONING_CONTACT_WORKER",
+			"name": "Provisioning Contact Worker",
+			"roleType": "regular"
+		},
+		{
+			"externalReferenceCode": "C_PROVISIONING_MEMBER",
+			"name": "Provisioning Member",
+			"roleType": "regular"
+		},
+		{
+			"externalReferenceCode": "C_PROVISIONING_SUBSCRIPTION_WORKER",
+			"name": "Provisioning Subscription Worker",
+			"roleType": "regular"
+		},
+		{
+			"externalReferenceCode": "C_PROVISIONING_WATCHER",
+			"name": "Provisioning Watcher",
+			"roleType": "regular"
+		},
+		{
+			"externalReferenceCode": "C_PROVISIONING_WORKER",
+			"name": "Provisioning Worker",
+			"roleType": "regular"
+		},
+		{
+			"externalReferenceCode": "C_SECONDARY_CONTACT",
+			"name": "Secondary Contact",
+			"roleType": "account"
+		},
+		{
+			"externalReferenceCode": "C_SECURITY_INCIDENT_CONTACT",
+			"name": "Security Incident Contact",
+			"roleType": "account"
+		},
+		{
+			"externalReferenceCode": "C_SOLUTION_ARCHITECT",
+			"name": "Solution Architect",
+			"roleType": "account"
+		},
+		{
+			"externalReferenceCode": "C_SSA",
+			"name": "SSA",
+			"roleType": "regular"
+		},
+		{
+			"externalReferenceCode": "C_SSA_ADMIN",
+			"name": "SSA Administrator",
+			"roleType": "account"
+		},
+		{
+			"externalReferenceCode": "C_SSA_USER",
+			"name": "SSA User",
+			"roleType": "account"
+		},
+		{
+			"externalReferenceCode": "C_SUPPORT_ADMIN",
+			"name": "Support Administrator",
+			"roleType": "account"
+		},
+		{
+			"externalReferenceCode": "L_ACCOUNT_ADMINISTRATOR",
+			"name": "Account Administrator",
+			"roleType": "account"
+		},
+		{
+			"externalReferenceCode": "L_ACCOUNT_MEMBER",
+			"name": "Account Member",
+			"roleType": "account"
+		},
+		{
+			"externalReferenceCode": "L_ACCOUNT_SUPPLIER",
+			"name": "Account Supplier",
+			"roleType": "account"
+		},
+		{
+			"externalReferenceCode": "L_SITE_CONTENT_REVIEWER",
+			"name": "Site Content Reviewer",
+			"roleType": "site"
+		}
+	]
+}

@@ -50,14 +50,29 @@ public class ExternalEmbeddingEligibilityTest {
 			externalEmbeddingEligibility.getReason());
 	}
 
-	@Test(expected = IllegalArgumentException.class)
-	public void testUnavailableWithEmptyReason() {
-		ExternalEmbeddingEligibility.unavailable("");
-	}
+	@Test
+	public void testUnavailableWithInvalidReason() {
+		try {
+			ExternalEmbeddingEligibility.unavailable(null);
 
-	@Test(expected = IllegalArgumentException.class)
-	public void testUnavailableWithNullReason() {
-		ExternalEmbeddingEligibility.unavailable(null);
+			Assert.fail();
+		}
+		catch (IllegalArgumentException illegalArgumentException) {
+			Assert.assertEquals(
+				"Reason is null or empty",
+				illegalArgumentException.getMessage());
+		}
+
+		try {
+			ExternalEmbeddingEligibility.unavailable("");
+
+			Assert.fail();
+		}
+		catch (IllegalArgumentException illegalArgumentException) {
+			Assert.assertEquals(
+				"Reason is null or empty",
+				illegalArgumentException.getMessage());
+		}
 	}
 
 	private static final String _MISSING_DXP_ENTERPRISE_REASON =

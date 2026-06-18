@@ -51,6 +51,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.rule.FeatureFlag;
@@ -149,25 +150,28 @@ public class AssetListAssetEntryProviderFiltersTest {
 	public void testGetAssetEntriesInfoPageWithCommonFieldFilters()
 		throws Exception {
 
+		String title1 = RandomTestUtil.randomString();
+
 		ObjectEntry objectEntry1 = _addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
-				"title", "alpha"
+				"title", title1
 			).build());
+
 		ObjectEntry objectEntry2 = _addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
-				"title", "beta"
+				"title", RandomTestUtil.randomString()
 			).build());
 
 		_assertFilteredClassPKs(
-			_buildFiltersJSONArray(_commonFieldFilter("eq", "title", "alpha")),
+			_buildFiltersJSONArray(_commonFieldFilter("eq", "title", title1)),
 			objectEntry1);
 		_assertFilteredClassPKs(
 			_buildFiltersJSONArray(
-				_commonFieldFilter("contains", "title", "alpha")),
+				_commonFieldFilter("contains", "title", title1)),
 			objectEntry1);
 		_assertFilteredClassPKs(
 			_buildFiltersJSONArray(
-				_commonFieldFilter("not-contains", "title", "alpha")),
+				_commonFieldFilter("not-contains", "title", title1)),
 			objectEntry2);
 
 		_assertFilteredClassPKs(
@@ -253,30 +257,37 @@ public class AssetListAssetEntryProviderFiltersTest {
 	public void testGetAssetEntriesInfoPageWithEqualityFilters()
 		throws Exception {
 
+		int priority = RandomTestUtil.randomInt();
+
+		String title = StringUtil.toLowerCase(RandomTestUtil.randomString());
+
 		ObjectEntry objectEntry1 = _addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
-				"priority", 1
+				"priority", RandomTestUtil.randomInt()
 			).put(
-				"title", "alpha"
+				"title", title
 			).build());
+
 		ObjectEntry objectEntry2 = _addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
-				"priority", 2
+				"priority", priority
 			).put(
-				"title", "beta"
+				"title", RandomTestUtil.randomString()
 			).build());
 
 		_assertFilteredClassPKs(
-			_buildFiltersJSONArray(_filter("eq", "title", "alpha")),
+			_buildFiltersJSONArray(_filter("eq", "title", title)),
 			objectEntry1);
 		_assertFilteredClassPKs(
-			_buildFiltersJSONArray(_filter("not-eq", "title", "alpha")),
+			_buildFiltersJSONArray(_filter("not-eq", "title", title)),
 			objectEntry2);
 		_assertFilteredClassPKs(
-			_buildFiltersJSONArray(_filter("eq", "priority", "2")),
+			_buildFiltersJSONArray(
+				_filter("eq", "priority", String.valueOf(priority))),
 			objectEntry2);
 		_assertFilteredClassPKs(
-			_buildFiltersJSONArray(_filter("not-eq", "priority", "2")),
+			_buildFiltersJSONArray(
+				_filter("not-eq", "priority", String.valueOf(priority))),
 			objectEntry1);
 	}
 
@@ -285,22 +296,25 @@ public class AssetListAssetEntryProviderFiltersTest {
 	public void testGetAssetEntriesInfoPageWithKeywordTextContainsFilters()
 		throws Exception {
 
+		String keyword = RandomTestUtil.randomString();
+
 		ObjectEntry objectEntry1 = _addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
-				"learnDocumentation", "I like alpha"
+				"learnDocumentation", keyword
 			).build());
+
 		ObjectEntry objectEntry2 = _addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
-				"learnDocumentation", "other content"
+				"learnDocumentation", RandomTestUtil.randomString()
 			).build());
 
 		_assertFilteredClassPKs(
 			_buildFiltersJSONArray(
-				_filter("contains", "learnDocumentation", "alpha")),
+				_filter("contains", "learnDocumentation", keyword)),
 			objectEntry1);
 		_assertFilteredClassPKs(
 			_buildFiltersJSONArray(
-				_filter("not-contains", "learnDocumentation", "alpha")),
+				_filter("not-contains", "learnDocumentation", keyword)),
 			objectEntry2);
 	}
 
@@ -309,31 +323,34 @@ public class AssetListAssetEntryProviderFiltersTest {
 	public void testGetAssetEntriesInfoPageWithMultipleFiltersJoinedWithMust()
 		throws Exception {
 
+		String matchTitle = RandomTestUtil.randomString();
+		int priority = RandomTestUtil.randomInt();
+
 		ObjectEntry objectEntry1 = _addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
-				"priority", 5
+				"priority", priority
 			).put(
-				"title", "match"
+				"title", matchTitle
 			).build());
 
 		_addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
-				"priority", 1
+				"priority", RandomTestUtil.randomInt()
 			).put(
-				"title", "match"
+				"title", matchTitle
 			).build());
 
 		_addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
-				"priority", 5
+				"priority", priority
 			).put(
-				"title", "other"
+				"title", RandomTestUtil.randomString()
 			).build());
 
 		_assertFilteredClassPKs(
 			_buildFiltersJSONArray(
-				_filter("contains", "title", "match"),
-				_filter("eq", "priority", "5")),
+				_filter("contains", "title", matchTitle),
+				_filter("eq", "priority", String.valueOf(priority))),
 			objectEntry1);
 	}
 
@@ -342,36 +359,46 @@ public class AssetListAssetEntryProviderFiltersTest {
 	public void testGetAssetEntriesInfoPageWithNumericRangeFilters()
 		throws Exception {
 
+		int priority2 = RandomTestUtil.randomInt(101, 200);
+		int priority3 = RandomTestUtil.randomInt(201, 300);
+
 		ObjectEntry objectEntry1 = _addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
-				"priority", 1
+				"priority", RandomTestUtil.randomInt(1, 100)
 			).build());
 
 		ObjectEntry objectEntry2 = _addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
-				"priority", 5
+				"priority", priority2
 			).build());
 		ObjectEntry objectEntry3 = _addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
-				"priority", 10
+				"priority", priority3
 			).build());
 
 		_assertFilteredClassPKs(
-			_buildFiltersJSONArray(_filter("gt", "priority", "5")),
+			_buildFiltersJSONArray(
+				_filter("gt", "priority", String.valueOf(priority2))),
 			objectEntry3);
 		_assertFilteredClassPKs(
-			_buildFiltersJSONArray(_filter("ge", "priority", "5")),
+			_buildFiltersJSONArray(
+				_filter("ge", "priority", String.valueOf(priority2))),
 			objectEntry2, objectEntry3);
 
 		_assertFilteredClassPKs(
-			_buildFiltersJSONArray(_filter("lt", "priority", "5")),
+			_buildFiltersJSONArray(
+				_filter("lt", "priority", String.valueOf(priority2))),
 			objectEntry1);
 		_assertFilteredClassPKs(
-			_buildFiltersJSONArray(_filter("le", "priority", "5")),
+			_buildFiltersJSONArray(
+				_filter("le", "priority", String.valueOf(priority2))),
 			objectEntry1, objectEntry2);
 		_assertFilteredClassPKs(
 			_buildFiltersJSONArray(
-				_filter("between", "priority", JSONUtil.putAll("4", "11"))),
+				_filter(
+					"between", "priority",
+					JSONUtil.putAll(
+						String.valueOf(priority2), String.valueOf(priority3)))),
 			objectEntry2, objectEntry3);
 	}
 
@@ -438,20 +465,23 @@ public class AssetListAssetEntryProviderFiltersTest {
 	public void testGetAssetEntriesInfoPageWithTextContainsFilters()
 		throws Exception {
 
+		String title = RandomTestUtil.randomString();
+
 		ObjectEntry objectEntry1 = _addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
-				"title", "liferay platform"
+				"title", title
 			).build());
+
 		ObjectEntry objectEntry2 = _addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
-				"title", "other content"
+				"title", RandomTestUtil.randomString()
 			).build());
 
 		_assertFilteredClassPKs(
-			_buildFiltersJSONArray(_filter("contains", "title", "liferay")),
+			_buildFiltersJSONArray(_filter("contains", "title", title)),
 			objectEntry1);
 		_assertFilteredClassPKs(
-			_buildFiltersJSONArray(_filter("not-contains", "title", "liferay")),
+			_buildFiltersJSONArray(_filter("not-contains", "title", title)),
 			objectEntry2);
 	}
 
@@ -469,7 +499,7 @@ public class AssetListAssetEntryProviderFiltersTest {
 			).put(
 				"propertyName", "title"
 			).put(
-				"value", "keyword"
+				"value", RandomTestUtil.randomString()
 			));
 
 		AssetListEntry assetListEntry = _addDynamicAssetListEntryWithFilters(
@@ -488,6 +518,9 @@ public class AssetListAssetEntryProviderFiltersTest {
 	public void testGetAssetEntryQueryWithFiltersWhenFeatureFlagEnabled()
 		throws Exception {
 
+		String propertyName = RandomTestUtil.randomString();
+		String value = RandomTestUtil.randomString();
+
 		JSONArray filtersJSONArray = JSONUtil.putAll(
 			JSONUtil.put(
 				"classNameId",
@@ -497,9 +530,9 @@ public class AssetListAssetEntryProviderFiltersTest {
 			).put(
 				"operatorName", "contains"
 			).put(
-				"propertyName", "title"
+				"propertyName", propertyName
 			).put(
-				"value", "keyword"
+				"value", value
 			),
 			JSONUtil.put(
 				"classNameId",
@@ -509,9 +542,9 @@ public class AssetListAssetEntryProviderFiltersTest {
 			).put(
 				"operatorName", "eq"
 			).put(
-				"propertyName", "priority"
+				"propertyName", RandomTestUtil.randomString()
 			).put(
-				"value", "1"
+				"value", String.valueOf(RandomTestUtil.randomInt())
 			));
 
 		AssetListEntry assetListEntry = _addDynamicAssetListEntryWithFilters(
@@ -530,8 +563,8 @@ public class AssetListAssetEntryProviderFiltersTest {
 
 		JSONObject jsonObject = actualJSONArray.getJSONObject(0);
 
-		Assert.assertEquals("title", jsonObject.getString("propertyName"));
-		Assert.assertEquals("keyword", jsonObject.getString("value"));
+		Assert.assertEquals(propertyName, jsonObject.getString("propertyName"));
+		Assert.assertEquals(value, jsonObject.getString("value"));
 		Assert.assertEquals(
 			_portal.getClassNameId(_objectDefinition.getClassName()),
 			jsonObject.getLong("classNameId"));

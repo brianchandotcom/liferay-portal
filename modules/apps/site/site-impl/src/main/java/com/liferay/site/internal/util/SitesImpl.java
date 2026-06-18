@@ -568,11 +568,29 @@ public class SitesImpl implements Sites {
 			LayoutSetPrototype layoutSetPrototype, long userId)
 		throws Exception {
 
+		if (ExportImportThreadLocal.isExportInProcess() ||
+			ExportImportThreadLocal.isImportInProcess() ||
+			ExportImportThreadLocal.isStagingInProcess()) {
+
+			throw new IllegalStateException(
+				"The site template merge cannot start while an export, " +
+					"import, or staging process is in progress");
+		}
+
+		User user = _userLocalService.getUser(userId);
+
 		for (LayoutSet layoutSet :
 				_layoutSetLocalService.getLayoutSetsByLayoutSetPrototypeUuid(
 					layoutSetPrototype.getUuid())) {
 
-			mergeLayoutSetPrototypeLayouts(layoutSet);
+			if (!isLayoutSetMergeable(layoutSet)) {
+				continue;
+			}
+
+			_exportImportLocalService.mergeLayoutSetPrototypeInBackground(
+				user.getUserId(), layoutSet.getGroupId(),
+				_buildExportImportConfiguration(
+					layoutSet, layoutSetPrototype, user));
 		}
 	}
 

@@ -9,7 +9,6 @@ import com.liferay.frontend.js.audiences.AudiencesDefinitionProvider;
 import com.liferay.frontend.js.audiences.ElementVariationsProvider;
 import com.liferay.frontend.js.audiences.web.internal.util.BootstrapJavaScriptUtil;
 import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.frontend.hashed.files.HashedFilesUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -18,6 +17,7 @@ import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import jakarta.servlet.Servlet;
 import jakarta.servlet.http.HttpServlet;
@@ -90,6 +90,12 @@ public class FrontendJSAudiencesWebServlet extends HttpServlet {
 			HttpServletResponse httpServletResponse, String[] parts)
 		throws IOException {
 
+		if (parts.length != 2) {
+			httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
+
+			return;
+		}
+
 		KeyValuePair keyValuePair =
 			_audiencesDefinitionProvider.getAudiencesDefinition(
 				_portal.getCompanyId(httpServletRequest));
@@ -100,15 +106,11 @@ public class FrontendJSAudiencesWebServlet extends HttpServlet {
 			return;
 		}
 
-		String requestHash = HashedFilesUtil.getHash(parts[parts.length - 1]);
+		String requestHash = HashedFilesUtil.getHash(parts[1]);
 
 		if (!Objects.equals(keyValuePair.getKey(), requestHash)) {
-			httpServletResponse.sendRedirect(
-				StringBundler.concat(
-					HashedFilesUtil.replaceHash(
-						httpServletRequest.getRequestURI(),
-						keyValuePair.getKey()),
-					StringPool.QUESTION, httpServletRequest.getQueryString()));
+			_sendRedirect(
+				httpServletRequest, httpServletResponse, keyValuePair.getKey());
 
 			return;
 		}
@@ -127,16 +129,18 @@ public class FrontendJSAudiencesWebServlet extends HttpServlet {
 			HttpServletResponse httpServletResponse, String[] parts)
 		throws IOException {
 
+		if (parts.length != 2) {
+			httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
+
+			return;
+		}
+
 		String hash = BootstrapJavaScriptUtil.getHash();
 
-		String requestHash = HashedFilesUtil.getHash(parts[parts.length - 1]);
+		String requestHash = HashedFilesUtil.getHash(parts[1]);
 
 		if (!Objects.equals(hash, requestHash)) {
-			httpServletResponse.sendRedirect(
-				StringBundler.concat(
-					HashedFilesUtil.replaceHash(
-						httpServletRequest.getRequestURI(), hash),
-					StringPool.QUESTION, httpServletRequest.getQueryString()));
+			_sendRedirect(httpServletRequest, httpServletResponse, hash);
 
 			return;
 		}
@@ -169,6 +173,12 @@ public class FrontendJSAudiencesWebServlet extends HttpServlet {
 			HttpServletResponse httpServletResponse, String[] parts)
 		throws IOException {
 
+		if (parts.length != 3) {
+			httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
+
+			return;
+		}
+
 		Long plid = _parsePlid(parts[1]);
 
 		if (plid == null) {
@@ -186,15 +196,11 @@ public class FrontendJSAudiencesWebServlet extends HttpServlet {
 			return;
 		}
 
-		String requestHash = HashedFilesUtil.getHash(parts[parts.length - 1]);
+		String requestHash = HashedFilesUtil.getHash(parts[2]);
 
 		if (!Objects.equals(keyValuePair.getKey(), requestHash)) {
-			httpServletResponse.sendRedirect(
-				StringBundler.concat(
-					HashedFilesUtil.replaceHash(
-						httpServletRequest.getRequestURI(),
-						keyValuePair.getKey()),
-					StringPool.QUESTION, httpServletRequest.getQueryString()));
+			_sendRedirect(
+				httpServletRequest, httpServletResponse, keyValuePair.getKey());
 
 			return;
 		}
@@ -206,6 +212,27 @@ public class FrontendJSAudiencesWebServlet extends HttpServlet {
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
 		printWriter.print(keyValuePair.getValue());
+	}
+
+	private void _sendRedirect(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String hash)
+		throws IOException {
+
+		StringBuilder url = new StringBuilder();
+
+		url.append(
+			HashedFilesUtil.replaceHash(
+				httpServletRequest.getRequestURI(), hash));
+
+		String queryString = httpServletRequest.getQueryString();
+
+		if (!Validator.isBlank(queryString)) {
+			url.append(StringPool.QUESTION);
+			url.append(queryString);
+		}
+
+		httpServletResponse.sendRedirect(url.toString());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

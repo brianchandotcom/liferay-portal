@@ -54,8 +54,6 @@ public class FrontendJSAudiencesWebTopHeadDynamicInclude
 			_audiencesDefinitionProvider.getAudiencesDefinition(companyId);
 
 		if (audiencesDefinitionKeyValuePair == null) {
-			httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
-
 			return;
 		}
 
@@ -68,8 +66,6 @@ public class FrontendJSAudiencesWebTopHeadDynamicInclude
 				themeDisplay.getPlid());
 
 		if (elementVariationsKeyValuePair == null) {
-			httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
-
 			return;
 		}
 

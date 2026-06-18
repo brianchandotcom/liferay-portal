@@ -22,7 +22,7 @@ public class ShellTest extends com.liferay.jenkins.results.parser.Test {
 		Shell shell = mockShell();
 
 		Mockito.doReturn(
-			new Shell.ExecutionResult(0, "standard error", "standard output")
+			new Shell.ExecutionResult(0, _STANDARD_ERROR, _STANDARD_OUT)
 		).when(
 			shell
 		).doExecute(
@@ -35,11 +35,15 @@ public class ShellTest extends com.liferay.jenkins.results.parser.Test {
 		Assert.assertEquals(0, process.exitValue());
 		Assert.assertEquals(0, process.waitFor());
 		Assert.assertEquals(
-			"standard output",
+			_STANDARD_OUT,
 			JenkinsResultsParserUtil.readInputStream(process.getInputStream()));
 		Assert.assertEquals(
-			"standard error",
+			_STANDARD_ERROR,
 			JenkinsResultsParserUtil.readInputStream(process.getErrorStream()));
 	}
+
+	private static final String _STANDARD_ERROR = "standard error";
+
+	private static final String _STANDARD_OUT = "standard output";
 
 }

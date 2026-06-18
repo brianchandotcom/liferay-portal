@@ -160,8 +160,8 @@ public class Shell {
 
 		Thread currentThread = Thread.currentThread();
 		long duration = 0;
-		long start = System.currentTimeMillis();
 		int returnCode = -1;
+		long start = System.currentTimeMillis();
 
 		while (true) {
 			try {

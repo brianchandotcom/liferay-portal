@@ -327,7 +327,7 @@ public class DBPartitionUtil {
 		return true;
 	}
 
-	public static long incrementSystemCounter() {
+	public static long incrementCounter() {
 		if (!PropsValues.DATABASE_PARTITION_ENABLED) {
 			return CounterLocalServiceUtil.increment();
 		}

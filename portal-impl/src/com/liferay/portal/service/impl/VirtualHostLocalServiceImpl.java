@@ -208,7 +208,7 @@ public class VirtualHostLocalServiceImpl
 			}
 
 			if (virtualHost == null) {
-				long virtualHostId = DBPartitionUtil.incrementSystemCounter();
+				long virtualHostId = DBPartitionUtil.incrementCounter();
 
 				virtualHost = virtualHostPersistence.create(virtualHostId);
 

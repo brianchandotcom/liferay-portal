@@ -558,7 +558,7 @@ public class SitesImpl implements Sites {
 
 		ExportImportConfiguration exportImportConfiguration =
 			_buildExportImportConfiguration(
-				layoutSet, layoutSetPrototype, user);
+				true, layoutSet, layoutSetPrototype, user);
 
 		_exportImportLocalService.mergeLayoutSetPrototypeInBackground(
 			user.getUserId(), layoutSet.getGroupId(),
@@ -604,7 +604,7 @@ public class SitesImpl implements Sites {
 				exportImportConfigurations.put(
 					layoutSet.getLayoutSetId(),
 					_buildExportImportConfiguration(
-						layoutSet, layoutSetPrototype, user));
+						false, layoutSet, layoutSetPrototype, user));
 			}
 			catch (PortalException portalException) {
 				_log.error(
@@ -769,19 +769,22 @@ public class SitesImpl implements Sites {
 	}
 
 	protected Map<String, String[]> getLayoutSetPrototypesParameters(
-		boolean importData) {
+		boolean firstMerge) {
 
-		Map<String, String[]> parameterMap = LinkedHashMapBuilder.put(
+		return LinkedHashMapBuilder.put(
+			PortletDataHandlerKeys.DATA_STRATEGY,
+			new String[] {PortletDataHandlerKeys.DATA_STRATEGY_MIRROR}
+		).put(
 			PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS,
 			new String[] {Boolean.FALSE.toString()}
 		).put(
 			PortletDataHandlerKeys.DELETE_PORTLET_DATA,
 			new String[] {Boolean.FALSE.toString()}
 		).put(
-			PortletDataHandlerKeys.IGNORE_LAST_PUBLISH_DATE,
+			PortletDataHandlerKeys.FAVICON,
 			new String[] {Boolean.TRUE.toString()}
 		).put(
-			PortletDataHandlerKeys.LAYOUT_SET_SETTINGS,
+			PortletDataHandlerKeys.IGNORE_LAST_PUBLISH_DATE,
 			new String[] {Boolean.TRUE.toString()}
 		).put(
 			PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_LINK_ENABLED,
@@ -790,19 +793,30 @@ public class SitesImpl implements Sites {
 			PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_SETTINGS,
 			new String[] {Boolean.TRUE.toString()}
 		).put(
+			PortletDataHandlerKeys.LAYOUT_SET_SETTINGS,
+			new String[] {Boolean.TRUE.toString()}
+		).put(
 			PortletDataHandlerKeys.LAYOUTS_IMPORT_MODE,
 			new String[] {
 				PortletDataHandlerKeys.
 					LAYOUTS_IMPORT_MODE_CREATED_FROM_PROTOTYPE
 			}
 		).put(
+			PortletDataHandlerKeys.LOGO, new String[] {Boolean.TRUE.toString()}
+		).put(
 			PortletDataHandlerKeys.PERMISSIONS,
-			new String[] {Boolean.TRUE.toString()}
+			new String[] {String.valueOf(firstMerge)}
 		).put(
 			PortletDataHandlerKeys.PORTLET_CONFIGURATION,
 			new String[] {Boolean.TRUE.toString()}
 		).put(
 			PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL,
+			new String[] {Boolean.TRUE.toString()}
+		).put(
+			PortletDataHandlerKeys.PORTLET_DATA,
+			new String[] {Boolean.TRUE.toString()}
+		).put(
+			PortletDataHandlerKeys.PORTLET_DATA_ALL,
 			new String[] {Boolean.TRUE.toString()}
 		).put(
 			PortletDataHandlerKeys.PORTLET_SETUP_ALL,
@@ -817,55 +831,6 @@ public class SitesImpl implements Sites {
 			PortletDataHandlerKeys.USER_ID_STRATEGY,
 			new String[] {UserIdStrategy.CURRENT_USER_ID}
 		).build();
-
-		if (importData) {
-			parameterMap.put(
-				PortletDataHandlerKeys.DATA_STRATEGY,
-				new String[] {PortletDataHandlerKeys.DATA_STRATEGY_MIRROR});
-			parameterMap.put(
-				PortletDataHandlerKeys.FAVICON,
-				new String[] {Boolean.TRUE.toString()});
-			parameterMap.put(
-				PortletDataHandlerKeys.LOGO,
-				new String[] {Boolean.TRUE.toString()});
-			parameterMap.put(
-				PortletDataHandlerKeys.PORTLET_DATA,
-				new String[] {Boolean.TRUE.toString()});
-			parameterMap.put(
-				PortletDataHandlerKeys.PORTLET_DATA_ALL,
-				new String[] {Boolean.TRUE.toString()});
-		}
-		else {
-			parameterMap.put(
-				PortletDataHandlerKeys.DELETE_LAYOUTS,
-				new String[] {Boolean.TRUE.toString()});
-			parameterMap.put(
-				PortletDataHandlerKeys.DELETIONS,
-				new String[] {Boolean.TRUE.toString()});
-			parameterMap.put(
-				PortletDataHandlerKeys.FAVICON,
-				new String[] {Boolean.FALSE.toString()});
-
-			if (PropsValues.LAYOUT_SET_PROTOTYPE_PROPAGATE_LOGO) {
-				parameterMap.put(
-					PortletDataHandlerKeys.LOGO,
-					new String[] {Boolean.TRUE.toString()});
-			}
-			else {
-				parameterMap.put(
-					PortletDataHandlerKeys.LOGO,
-					new String[] {Boolean.FALSE.toString()});
-			}
-
-			parameterMap.put(
-				PortletDataHandlerKeys.PORTLET_DATA,
-				new String[] {Boolean.FALSE.toString()});
-			parameterMap.put(
-				PortletDataHandlerKeys.PORTLET_DATA_ALL,
-				new String[] {Boolean.FALSE.toString()});
-		}
-
-		return parameterMap;
 	}
 
 	protected void importLayoutSetPrototype(
@@ -1041,35 +1006,16 @@ public class SitesImpl implements Sites {
 	}
 
 	private ExportImportConfiguration _buildExportImportConfiguration(
-			LayoutSet layoutSet, LayoutSetPrototype layoutSetPrototype,
-			User user)
+			boolean firstMerge, LayoutSet layoutSet,
+			LayoutSetPrototype layoutSetPrototype, User user)
 		throws PortalException {
 
-		UnicodeProperties settingsUnicodeProperties =
-			layoutSet.getSettingsProperties();
-
-		boolean importData = true;
-
-		long lastMergeTime = GetterUtil.getLong(
-			settingsUnicodeProperties.getProperty(LAST_MERGE_TIME));
-		long lastResetTime = GetterUtil.getLong(
-			settingsUnicodeProperties.getProperty(LAST_RESET_TIME));
-
-		if ((lastMergeTime > 0) || (lastResetTime > 0)) {
-			importData = false;
-		}
-
 		Map<String, String[]> parameterMap = getLayoutSetPrototypesParameters(
-			importData);
+			firstMerge);
 
 		parameterMap.put(
 			PortletDataHandlerKeys.LAYOUT_SET_PRIVATE_LAYOUT,
 			new String[] {String.valueOf(layoutSet.isPrivateLayout())});
-		parameterMap.put(
-			"importData", new String[] {String.valueOf(importData)});
-		parameterMap.put(
-			"lastMergeVersion",
-			new String[] {String.valueOf(layoutSetPrototype.getMvccVersion())});
 		parameterMap.put(
 			"layoutSetId",
 			new String[] {String.valueOf(layoutSet.getLayoutSetId())});

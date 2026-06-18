@@ -52,6 +52,7 @@ public class OAuthClientASLocalMetadataServiceImpl
 				getUserId(), metadataJSON, wellKnownURISuffix);
 	}
 
+	@Override
 	public OAuthClientASLocalMetadata addOAuthClientASLocalMetadata(
 			String externalReferenceCode, String authorizationEndpoint,
 			String issuer, String jwksURI, boolean localWellKnownEnabled,
@@ -284,6 +285,7 @@ public class OAuthClientASLocalMetadataServiceImpl
 				oAuthClientASLocalMetadataId, metadataJSON, wellKnownURISuffix);
 	}
 
+	@Override
 	public OAuthClientASLocalMetadata updateOAuthClientASLocalMetadata(
 			long oAuthClientASLocalMetadataId, String authorizationEndpoint,
 			String issuer, String jwksURI, boolean localWellKnownEnabled,

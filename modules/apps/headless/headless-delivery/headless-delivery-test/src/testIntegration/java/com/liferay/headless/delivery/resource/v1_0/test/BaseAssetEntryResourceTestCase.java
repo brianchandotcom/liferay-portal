@@ -605,6 +605,10 @@ public abstract class BaseAssetEntryResourceTestCase {
 	protected void assertValid(AssetEntry assetEntry) throws Exception {
 		boolean valid = true;
 
+		if (assetEntry.getDateModified() == null) {
+			valid = false;
+		}
+
 		if (assetEntry.getAssetEntryId() == null) {
 			valid = false;
 		}
@@ -652,6 +656,14 @@ public abstract class BaseAssetEntryResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("creator", additionalAssertFieldName)) {
+				if (assetEntry.getCreator() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (assetEntry.getDescription() == null) {
 					valid = false;
@@ -664,6 +676,14 @@ public abstract class BaseAssetEntryResourceTestCase {
 					"groupDescriptiveName", additionalAssertFieldName)) {
 
 				if (assetEntry.getGroupDescriptiveName() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("status", additionalAssertFieldName)) {
+				if (assetEntry.getStatus() == null) {
 					valid = false;
 				}
 
@@ -850,6 +870,27 @@ public abstract class BaseAssetEntryResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("creator", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						assetEntry1.getCreator(), assetEntry2.getCreator())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("dateModified", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						assetEntry1.getDateModified(),
+						assetEntry2.getDateModified())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						assetEntry1.getDescription(),
@@ -867,6 +908,16 @@ public abstract class BaseAssetEntryResourceTestCase {
 				if (!Objects.deepEquals(
 						assetEntry1.getGroupDescriptiveName(),
 						assetEntry2.getGroupDescriptiveName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("status", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						assetEntry1.getStatus(), assetEntry2.getStatus())) {
 
 					return false;
 				}
@@ -1098,6 +1149,40 @@ public abstract class BaseAssetEntryResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("creator")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("dateModified")) {
+			if (operator.equals("between")) {
+				Date date = assetEntry.getDateModified();
+
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+				sb.append(" gt ");
+				sb.append(_format.format(date.getTime() - (2 * Time.SECOND)));
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(_format.format(date.getTime() + (2 * Time.SECOND)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(_format.format(assetEntry.getDateModified()));
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("description")) {
 			Object object = assetEntry.getDescription();
 
@@ -1186,6 +1271,12 @@ public abstract class BaseAssetEntryResourceTestCase {
 				sb.append(value);
 				sb.append("'");
 			}
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("status")) {
+			sb.append(String.valueOf(assetEntry.getStatus()));
 
 			return sb.toString();
 		}
@@ -1290,10 +1381,12 @@ public abstract class BaseAssetEntryResourceTestCase {
 					RandomTestUtil.randomString());
 				classNameId = RandomTestUtil.randomLong();
 				classPK = RandomTestUtil.randomLong();
+				dateModified = RandomTestUtil.nextDate();
 				description = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				groupDescriptiveName = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				status = RandomTestUtil.randomInt();
 				title = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}
 		};
@@ -1519,4 +1612,4 @@ public abstract class BaseAssetEntryResourceTestCase {
 		_assetEntryResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2131418963
+// LIFERAY-REST-BUILDER-HASH:459243281

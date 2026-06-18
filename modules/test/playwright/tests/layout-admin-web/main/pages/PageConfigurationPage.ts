@@ -68,6 +68,21 @@ export class PageConfigurationPage {
 		);
 	}
 
+	private async selectLanguage(toggle: Locator, option: Locator) {
+		await clickAndExpectToBeVisible({target: option, trigger: toggle});
+
+		const isActive = await option.evaluate((element) =>
+			element.classList.contains('active')
+		);
+
+		if (isActive) {
+			await toggle.click();
+		}
+		else {
+			await option.click();
+		}
+	}
+
 	async selectMasterLayout(name: string) {
 		await this.page.getByLabel('Change Master').click();
 
@@ -89,27 +104,22 @@ export class PageConfigurationPage {
 	}
 
 	async setFriendlyURL(friendlyURL: string, language: 'spanish' | 'english') {
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: this.page.getByRole('menuitem', {name: language}),
-			trigger: this.page
-				.getByLabel('Current translation')
-				.nth(1)
-				.locator('..'),
-		});
+		const toggle = this.page
+			.getByLabel('Current translation')
+			.nth(1)
+			.locator('..');
+
+		await this.selectLanguage(
+			toggle,
+			this.page.getByRole('menuitem', {name: language})
+		);
 
 		await this.friendlyURL.fill(friendlyURL);
 
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: this.page
-				.getByRole('menuitem')
-				.filter({hasText: 'default'}),
-			trigger: this.page
-				.getByLabel('Current translation')
-				.nth(1)
-				.locator('..'),
-		});
+		await this.selectLanguage(
+			toggle,
+			this.page.getByRole('menuitem').filter({hasText: 'default'})
+		);
 
 		await this.save();
 	}

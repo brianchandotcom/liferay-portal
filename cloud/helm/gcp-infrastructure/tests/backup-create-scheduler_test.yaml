@@ -1,6 +1,6 @@
 suite: Backup Create Scheduler CronWorkflow
 templates:
-    -   templates/backup-create-scheduler.yaml
+    -   backup-create-scheduler.yaml
 tests:
     -   asserts:
             -   hasDocuments:

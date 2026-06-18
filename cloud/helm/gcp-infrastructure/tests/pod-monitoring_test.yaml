@@ -3,7 +3,7 @@ release:
     namespace: my-namespace
 suite: PodMonitoring
 templates:
-    -   templates/pod-monitoring.yaml
+    -   pod-monitoring.yaml
 tests:
     -   asserts:
             -   hasDocuments:

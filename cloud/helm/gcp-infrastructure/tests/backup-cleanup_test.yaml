@@ -1,6 +1,6 @@
 suite: Backup Cleanup CronWorkflow
 templates:
-    -   templates/backup-cleanup.yaml
+    -   backup-cleanup.yaml
 tests:
     -   asserts:
             -   hasDocuments:

@@ -9,6 +9,8 @@ import com.liferay.commerce.service.CommerceAvailabilityEstimateService;
 import com.liferay.headless.commerce.admin.site.setting.dto.v1_0.AvailabilityEstimate;
 import com.liferay.headless.commerce.admin.site.setting.internal.mapper.v1_0.util.DTOMapperUtil;
 import com.liferay.headless.commerce.admin.site.setting.resource.v1_0.AvailabilityEstimateResource;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 
 import jakarta.ws.rs.core.Response;
 
@@ -43,6 +45,32 @@ public class AvailabilityEstimateResourceImpl
 		return DTOMapperUtil.modelToDTO(
 			_commerceAvailabilityEstimateService.
 				getCommerceAvailabilityEstimate(id));
+	}
+
+	@Override
+	public Page<AvailabilityEstimate>
+		getCommerceAdminSiteSettingGroupAvailabilityEstimatePage(
+			Long groupId, Pagination pagination) {
+
+		throw new UnsupportedOperationException(
+			"This operation is not supported");
+	}
+
+	@Override
+	public AvailabilityEstimate
+		postCommerceAdminSiteSettingGroupAvailabilityEstimate(
+			Long groupId, AvailabilityEstimate availabilityEstimate) {
+
+		throw new UnsupportedOperationException(
+			"This operation is not supported");
+	}
+
+	@Override
+	public Response putAvailabilityEstimate(
+		Long id, AvailabilityEstimate availabilityEstimate) {
+
+		throw new UnsupportedOperationException(
+			"This operation is not supported");
 	}
 
 	@Reference

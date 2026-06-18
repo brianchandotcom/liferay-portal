@@ -351,6 +351,16 @@ public class DefaultBuildUpdater extends BaseBuildUpdater {
 
 		Build build = getBuild();
 
+		Build parentBuild = build.getParentBuild();
+
+		if (parentBuild != null) {
+			String parentBuildURL = parentBuild.getBuildURL();
+
+			if (!JenkinsResultsParserUtil.isNullOrEmpty(parentBuildURL)) {
+				build.setParameterValue("PARENT_BUILD_URL", parentBuildURL);
+			}
+		}
+
 		Map<String, String> buildParameters = new HashMap<>(
 			build.getParameters());
 

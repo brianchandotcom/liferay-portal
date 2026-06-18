@@ -495,6 +495,254 @@ test(
 );
 
 test(
+	'Channels and sites can be paginated in the assign property modal',
+	{
+		tag: '@LRAC-12580',
+	},
+	async ({analyticsChannel: channel, apiHelpers, page, project, site}) => {
+		const channelToken = 'pgchan' + getRandomString();
+		const siteToken = 'pgsite' + getRandomString();
+
+		const commerceChannels = [];
+		const sites = [];
+
+		// Six of each, isolated by a unique token, so the modal search yields a
+		// deterministic six entries regardless of other data in the instance
+
+		for (let i = 0; i < 6; i++) {
+			commerceChannels.push(
+				await apiHelpers.headlessCommerceAdminChannel.postChannel({
+					name: `${channelToken}${i}`,
+					siteGroupId: site.id,
+				})
+			);
+
+			sites.push(
+				await apiHelpers.headlessAdminSite.postSite({
+					name: `${siteToken}${i}`,
+				})
+			);
+		}
+
+		try {
+			await syncAnalyticsCloud({
+				apiHelpers,
+				channel,
+				page,
+				project,
+				siteName: site.name,
+			});
+
+			await goToSettingsStep({page, stepName: 'Properties'});
+
+			await enableCommerceChannel({channelName: channel.name, page});
+
+			await openAssignModal(page, channel.name);
+
+			for (const {searchToken, tabName} of [
+				{searchToken: channelToken, tabName: 'Channel'},
+				{searchToken: siteToken, tabName: 'Sites'},
+			]) {
+				await page.getByRole('tab', {name: tabName}).click();
+
+				const activePane = page.locator('.modal .tab-pane.active');
+
+				// Wait for the clicked tab's pane to settle before interacting,
+				// otherwise the previous pane is still the active one
+
+				await expect(
+					activePane.getByText(
+						`${tabName === 'Channel' ? 'Channels' : 'Sites'} can only be assigned to a single property`
+					)
+				).toBeVisible();
+
+				const resultsMessage = activePane.locator(
+					'.pagination-results'
+				);
+
+				await expect(resultsMessage).toBeVisible();
+
+				const searchField = activePane.getByPlaceholder('Search');
+
+				await searchField.fill(searchToken);
+
+				await searchField.press('Enter');
+
+				await expect(resultsMessage).toHaveText(
+					'Showing 1 to 6 of 6 entries.'
+				);
+
+				// Reduce the page size so the six entries span two pages
+
+				await activePane.getByLabel('Items Per Page').click();
+
+				await page
+					.locator('.dropdown-menu.show')
+					.getByText('5', {exact: true})
+					.click();
+
+				await expect(resultsMessage).toHaveText(
+					'Showing 1 to 5 of 6 entries.'
+				);
+
+				await expect(activePane.locator('tbody tr')).toHaveCount(5);
+
+				await activePane.getByLabel('Go to page, 2').click();
+
+				await expect(resultsMessage).toHaveText(
+					'Showing 6 to 6 of 6 entries.'
+				);
+
+				await expect(activePane.locator('tbody tr')).toHaveCount(1);
+			}
+		}
+		finally {
+			for (const commerceChannel of commerceChannels) {
+				await apiHelpers.headlessCommerceAdminChannel
+					.deleteChannel(commerceChannel.id)
+					.catch(() => {});
+			}
+
+			for (const createdSite of sites) {
+				await apiHelpers.headlessAdminSite
+					.deleteSite(createdSite.externalReferenceCode)
+					.catch(() => {});
+			}
+		}
+	}
+);
+
+test(
+	'Channels and sites can be sorted by name in the assign property modal',
+	{
+		tag: '@LRAC-12581',
+	},
+	async ({analyticsChannel: channel, apiHelpers, page, project, site}) => {
+		const channelToken = 'pgsortc' + getRandomString();
+		const siteToken = 'pgsorts' + getRandomString();
+
+		const commerceChannels = [];
+		const sites = [];
+
+		// Create out of order so the assertion proves the sort, not the
+		// creation order
+
+		for (const suffix of ['c', 'a', 'b']) {
+			commerceChannels.push(
+				await apiHelpers.headlessCommerceAdminChannel.postChannel({
+					name: `${channelToken}${suffix}`,
+					siteGroupId: site.id,
+				})
+			);
+
+			sites.push(
+				await apiHelpers.headlessAdminSite.postSite({
+					name: `${siteToken}${suffix}`,
+				})
+			);
+		}
+
+		try {
+			await syncAnalyticsCloud({
+				apiHelpers,
+				channel,
+				page,
+				project,
+				siteName: site.name,
+			});
+
+			await goToSettingsStep({page, stepName: 'Properties'});
+
+			await enableCommerceChannel({channelName: channel.name, page});
+
+			await openAssignModal(page, channel.name);
+
+			for (const {orderBy, searchToken, tabName} of [
+				{
+					orderBy: 'Channel Name',
+					searchToken: channelToken,
+					tabName: 'Channel',
+				},
+				{
+					orderBy: 'Site Name',
+					searchToken: siteToken,
+					tabName: 'Sites',
+				},
+			]) {
+				await page.getByRole('tab', {name: tabName}).click();
+
+				const activePane = page.locator('.modal .tab-pane.active');
+
+				await expect(
+					activePane.getByText(
+						`${tabName === 'Channel' ? 'Channels' : 'Sites'} can only be assigned to a single property`
+					)
+				).toBeVisible();
+
+				const searchField = activePane.getByPlaceholder('Search');
+
+				await searchField.fill(searchToken);
+
+				await searchField.press('Enter');
+
+				await expect(
+					activePane.locator('.pagination-results')
+				).toHaveText('Showing 1 to 3 of 3 entries.');
+
+				// Order by the name column
+
+				await activePane
+					.getByRole('button', {name: 'Filter and Order'})
+					.click();
+
+				await page
+					.locator('.dropdown-menu.show')
+					.getByText(orderBy, {exact: true})
+					.click();
+
+				const readOrder = () =>
+					activePane
+						.locator('tbody tr')
+						.evaluateAll((rows) =>
+							rows.map((row) => row.dataset.testid)
+						);
+
+				const ascending = ['a', 'b', 'c'].map(
+					(suffix) => `${searchToken}${suffix}`
+				);
+
+				const descending = [...ascending].reverse();
+
+				const order = await readOrder();
+
+				expect([ascending, descending]).toContainEqual(order);
+
+				// Toggling the sort direction reverses the list
+
+				await activePane.getByLabel('sort').click();
+
+				await expect
+					.poll(() => readOrder())
+					.toEqual([...order].reverse());
+			}
+		}
+		finally {
+			for (const commerceChannel of commerceChannels) {
+				await apiHelpers.headlessCommerceAdminChannel
+					.deleteChannel(commerceChannel.id)
+					.catch(() => {});
+			}
+
+			for (const createdSite of sites) {
+				await apiHelpers.headlessAdminSite
+					.deleteSite(createdSite.externalReferenceCode)
+					.catch(() => {});
+			}
+		}
+	}
+);
+
+test(
 	'Assigned channels and sites are counted on the property after syncing',
 	{
 		tag: '@LRAC-12574',

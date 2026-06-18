@@ -1,16 +1,16 @@
 ---
 
 argument-hint: "<component-name-or-testcase-path>"
-description: Migrate a Liferay Poshi .testcase file to its modern test layer (Playwright, Jest, JUnit unit, Java integration). Routes each test to the right layer, consolidates compatible tests at write-time, and follows existing Playwright patterns from a configurable reference folder. Use when the user asks to migrate, port, or convert a Poshi .testcase to Playwright, Jest, or JUnit.
+description: Migrate a Liferay Poshi .testcase file to its modern test layer (Playwright, Jest, JUnit unit, Java integration). Routes each test to the right layer, consolidates compatible tests at write time, and follows existing Playwright patterns from a configurable reference folder. Use when the user asks to migrate, port, or convert a Poshi .testcase to Playwright, Jest, or JUnit.
 name: poshi-migrate
 
 ---
 
 # Migrate Poshi Tests
 
-A playbook for migrating a Poshi `.testcase` file to the appropriate modern test layer. Each test is routed to **Playwright**, **Jest**, **JUnit unit**, or **Java integration** based on what it actually validates. Compatible Playwright tests sharing setup may be consolidated into a single test at write-time.
+A playbook for migrating a Poshi `.testcase` file to the appropriate modern test layer. Each test is routed to **Playwright**, **Jest**, **JUnit unit**, or **Java integration** based on what it actually validates. Compatible Playwright tests sharing setup may be consolidated into a single test at write time.
 
-This skill assumes the Poshi suite has already been triaged and shrunk if needed (`/poshi-shrink`). It does not run a Poshi-side consolidation pass — consolidation happens only when writing the modern test, and only when the merged form is clearly cleaner than separate tests.
+This skill assumes the Poshi suite has already been triaged and shrunk if needed (`/poshi-shrink`). It does not run a Poshi side consolidation pass — consolidation happens only when writing the modern test, and only when the merged form is clearly cleaner than separate tests.
 
 ## Preconditions
 
@@ -24,13 +24,13 @@ The working tree must be clean. Abort and ask the user to commit or stash first 
 
 1. A `@component-name` value. Scan the Poshi tests root for `.testcase` files whose `@component-name` matches, list them with their test counts, and ask the user to pick one.
 
-1. An absolute or repo-relative path to a single `.testcase` file. Use it directly.
+1. An absolute or repo relative path to a single `.testcase` file. Use it directly.
 
 When `${ARGUMENTS}` is empty, resolve both the `@component-name` and the `.testcase` file interactively in two steps.
 
 #### Resolve @component-name
 
-1. Read the root `test.properties` file at the repository root. Parse the `component.names=...` property, which is multi-line and uses `\` continuations with comma-separated values. Strip whitespace and trailing backslashes; the result is a flat list of component identifiers (`portal-acceptance`, `portal-analytics-cloud`, `portal-bpm`, …).
+1. Read the root `test.properties` file at the repository root. Parse the `component.names=...` property, which is multiline and uses `\` continuations with comma separated values. Strip whitespace and trailing backslashes; the result is a flat list of component identifiers (`portal-acceptance`, `portal-analytics-cloud`, `portal-bpm`, …).
 
 1. Read `config.json` (when it exists) and check for `defaultComponentName`.
 
@@ -44,11 +44,11 @@ When `${ARGUMENTS}` is empty, resolve both the `@component-name` and the `.testc
 
 #### Resolve the .testcase File
 
-1. Search `${poshiTestsRoot}` recursively for `.testcase` files containing the line `@component-name = "${chosenComponent}"`. Capture, for each match, the repo-relative path and the test count (number of `test <Name> {` blocks).
+1. Search `${poshiTestsRoot}` recursively for `.testcase` files containing the line `@component-name = "${chosenComponent}"`. Capture, for each match, the repo relative path and the test count (number of `test <Name> {` blocks).
 
-1. Sort the matches alphabetically by repo-relative path.
+1. Sort the matches alphabetically by repo relative path.
 
-1. Present the first 20 matches to the user as plain text with `<index>. <relative-path> (<N> tests)`. Append a final option such as `0. Type a repo-relative path (not in the list)`. Ask the user to either pick an index or type a repo-relative path manually (for files nested under a different root or not yet committed). Validate that the entered path resolves to an existing `.testcase` file before continuing.
+1. Present the first 20 matches to the user as plain text with `<index>. <relative-path> (<N> tests)`. Append a final option such as `0. Type a repo relative path (not in the list)`. Ask the user to either pick an index or type a repo relative path manually (for files nested under a different root or not yet committed). Validate that the entered path resolves to an existing `.testcase` file before continuing.
 
 Use the chosen file path as the input for the feasibility phase onwards.
 
@@ -90,7 +90,7 @@ For each `test`, scan the body and every macro it transitively calls. Flag the t
 
 - **Synthetic events on a backend ingestion pipeline.** The test produces signals through real UI interactions (page visits, asset views, submissions) and waits for a flush job to surface them in the destination system. Without an API to seed those events directly, the migration cannot run in the Playwright budget.
 
-- **Multi-user sign-out / sign-in flows.** The test asserts behavior under a different identity using a chain of `logoutPG` / `loginPG` calls, often relying on seed users that are not isolated per run.
+- **Multiuser sign out / sign in flows.** The test asserts behavior under a different identity using a chain of `logoutPG` / `loginPG` calls, often relying on seed users that are not isolated per run.
 
 - **Fresh tenants, workspaces, or instances created during the test.** The test provisions a new top-level container (workspace, virtual instance, isolated portal) as part of its setup, which the existing fixtures do not provision.
 
@@ -100,7 +100,7 @@ For each `test`, scan the body and every macro it transitively calls. Flag the t
 
 Output of this phase, per test:
 
-| Classification | Meaning | Inventory Follow-Up |
+| Classification | Meaning | Inventory Follow Up |
 | --- | --- | --- |
 | **Migrate** | No blockers, or the only blockers are addressable by an API helper that already exists or that the migration will add. | Route to a layer in the inventory phase. |
 | **Skip** | Blocked on a feature the modern test layer cannot reproduce today and that needs an API endpoint that does not exist yet. | Document the blocker and leave the test in the `.testcase`. Surface it in the plan so the team can prioritize the endpoint. |
@@ -187,7 +187,7 @@ Build the plan with `EnterPlanMode`. Format:
 
 | Test | LPS/LPD | Status | Covered By | Action |
 | --- | --- | --- | --- | --- |
-| `<TestName>` | `<TICKET>` | Already covered / Partially covered / Not covered | `<repo-relative spec path or —>` | Drop / Extend `<spec>` / Migrate |
+| `<TestName>` | `<TICKET>` | Already covered / Partially covered / Not covered | `<repo relative spec path or —>` | Drop / Extend `<spec>` / Migrate |
 
 When every test is **Not covered**, write `None — no overlap with existing Playwright specs`.
 
@@ -197,7 +197,7 @@ Only includes tests classified as **Migrate** or **Partially covered** in earlie
 
 | Test | LPS/LPD | Layer | Destination | Notes |
 | --- | --- | --- | --- | --- |
-| `<TestName>` | `<TICKET>` | Playwright / Jest / JUnit unit / Java integration | `<repo-relative path>` | <Consolidates with X / extends `<spec>` / new fixture needed / etc> |
+| `<TestName>` | `<TICKET>` | Playwright / Jest / JUnit unit / Java integration | `<repo relative path>` | <Consolidates with X / extends `<spec>` / new fixture needed / etc> |
 
 ## Consolidations (Playwright)
 
@@ -262,13 +262,13 @@ When implementing each layer, follow the rules below.
 
 #### Playwright
 
-Follow `.claude/rules/playwright.md` for the general conventions (layout, spec placement, anatomy, page classes, locators, setup, cleanup, flake-proofing utilities, feature flags). Do not duplicate or restate those rules here — read the file and apply it.
+Follow `.claude/rules/playwright.md` for the general conventions (layout, spec placement, anatomy, page classes, locators, setup, cleanup, flake proofing utilities, feature flags). Do not duplicate or restate those rules here — read the file and apply it.
 
 Read at least one spec from the configured `referencePlaywrightModulePath` folder before writing the first migrated spec to internalize the local idiom.
 
 The subsections below cover decisions that are specific to migrating from Poshi.
 
-##### API-First Setup Substitution
+##### API First Setup Substitution
 
 When the Poshi `setUp` drives a UI flow (wizard, OAuth, sync between two services, signing in as another user, populating a configuration page), the migration must replace it with an API call. Climb the decision tree top-down, stopping at the first level that applies:
 
@@ -276,7 +276,7 @@ When the Poshi `setUp` drives a UI flow (wizard, OAuth, sync between two service
 
 1. **No helper, but a backend endpoint exists.** When the product exposes a REST resource, a JSON web service, a headless endpoint, or a GraphQL mutation that performs the same effect as the UI flow, write a new helper in `<playwrightTestsRoot>/../helpers/<X>ApiHelper.ts` (or extend the existing one), register it on `ApiHelpers`, and consume it from the spec. Ship the helper in its own commit before the migration commit that uses it. Source the URL, payload shape, headers, and any envelope encoding from the backend code that owns the endpoint, not from a guess — wrong payloads typically surface as 500 errors with non-obvious messages.
 
-1. **No endpoint either.** Stop. Propose to the team adding the headless / JSON-web-services / REST endpoint that would unblock the test. Document the proposed contract (HTTP verb, path, payload, response shape) and what UI flow it replaces, then mark the test as **Skip** in the plan and return to the caller. Do not improvise UI workarounds — clicking through the wizard from the spec piles up flake and rots the moment the UI changes.
+1. **No endpoint either.** Stop. Propose to the team adding the headless / JSON web services / REST endpoint that would unblock the test. Document the proposed contract (HTTP verb, path, payload, response shape) and what UI flow it replaces, then mark the test as **Skip** in the plan and return to the caller. Do not improvise UI workarounds — clicking through the wizard from the spec piles up flake and rots the moment the UI changes.
 
 Validate every new helper end-to-end against the running backend (`yarn test` on a one-test spike spec) before committing it. The connection envelope, payload shape, and headers must match what the backend expects.
 
@@ -288,7 +288,7 @@ Two patterns work:
 
 1. **API reset in `test.beforeEach`.** Call the same REST / GraphQL mutation the UI uses to wipe the setting. Source the mutation name and shape from the frontend code that drives the UI.
 
-1. **Filter by dynamic state instead of hardcoded identifiers.** When the system creates entities with auto-incrementing names or environment-specific suffixes, do not assert on the name. Find the entity by its current state (status badge, "active" flag, freshly created flag) and read the name back from there.
+1. **Filter by dynamic state instead of hardcoded identifiers.** When the system creates entities with autoincrementing names or environment specific suffixes, do not assert on the name. Find the entity by its current state (status badge, "active" flag, freshly created flag) and read the name back from there.
 
 ##### Cascading Fixtures
 
@@ -296,8 +296,8 @@ When a migration needs site + user + connection between two services, compose ex
 
 ```typescript
 import {mergeTests} from '@playwright/test';
-import {isolatedFooTest} from './isolatedFooTest';
 import {isolatedBarTest} from './isolatedBarTest';
+import {isolatedFooTest} from './isolatedFooTest';
 
 const test = mergeTests(isolatedFooTest, isolatedBarTest);
 
@@ -317,7 +317,7 @@ const isolatedSyncedFooBarTest = test.extend<{
 });
 ```
 
-When the underlying connection is company-wide or otherwise non-isolated, force `workers: 1` and document the constraint in the fixture's doc comment.
+When the underlying connection is company wide or otherwise non-isolated, force `workers: 1` and document the constraint in the fixture's doc comment.
 
 ##### Setup Mappings
 
@@ -325,9 +325,9 @@ Map Poshi setup actions to API helpers:
 
 - **Content page** (Poshi `JSONLayout.addLayout` or UI page creation) → `apiHelpers.headlessDelivery.createSitePage`. Pass a `pageDefinition` from the referencePlaywrightModulePath utilities when fragments are needed.
 
-- **Mid-test login** (Poshi `User.logoutPG` plus `User.loginPG`) → `performLogout` followed by `performLogin` from `utils/performLogin`. Use a fresh user when the test mutates a per-user preference that would leak across runs.
+- **Midtest login** (Poshi `User.logoutPG` plus `User.loginPG`) → `performLogout` followed by `performLogin` from `utils/performLogin`. Use a fresh user when the test mutates a per-user preference that would leak across runs.
 
-- **Site** (Poshi `JSONGroup.addGroup` or `Site.add`) → `apiHelpers.headlessAdminSite.postSite`. Prefer the `isolatedSiteTest` fixture, which provides a `site` with auto-cleanup.
+- **Site** (Poshi `JSONGroup.addGroup` or `Site.add`) → `apiHelpers.headlessAdminSite.postSite`. Prefer the `isolatedSiteTest` fixture, which provides a `site` with autocleanup.
 
 - **User** (Poshi `JSONUser.addUser`) → `apiHelpers.headlessAdminUser.postUserAccount`, then `assignUserToSite` with the role from `getRoleByName('Site Administrator')`. Register the user in `userData` so `performLogin` can sign in as that user.
 
@@ -359,7 +359,7 @@ When the Poshi test has no ticket in its `@description` block and no LPS or LPD 
 
 1. Place the new test under `<module-root>/src/testIntegration/java`, in the same package as the class under test.
 
-1. Follow the team conventions for Liferay integration tests: auto-cleanup via test rules and annotations rather than `@After` or manual deletion, `@FeatureFlags` per method when needed, trigger artifacts through real listeners.
+1. Follow the team conventions for Liferay integration tests: autocleanup via test rules and annotations rather than `@After` or manual deletion, `@FeatureFlags` per method when needed, trigger artifacts through real listeners.
 
 1. Reuse `*TestUtil` classes for fixtures.
 
@@ -383,13 +383,13 @@ Before retrying, gather the artifacts and decide:
 
 	- **UI changed.** The assertion no longer matches the product contract. Drop the test (commit explaining the new behavior) or rewrite the assertion if the new behavior is still valuable.
 
-	- **Framework race.** The locator resolves correctly but the page is mid-render. Replace fixed waits with auto-retrying expectations (`expect(...).toHaveText`, `expect(...).toBeEnabled`) or use the existing wait helpers from `<playwrightTestsRoot>/../utils`.
+	- **Framework race.** The locator resolves correctly but the page is mid render. Replace fixed waits with autoretrying expectations (`expect(...).toHaveText`, `expect(...).toBeEnabled`) or use the existing wait helpers from `<playwrightTestsRoot>/../utils`.
 
-	- **Stale identifier.** The test assumes an environment-specific value (auto-incrementing name, seed user). Read the value from the current page state instead.
+	- **Stale identifier.** The test assumes an environment specific value (autoincrementing name, seed user). Read the value from the current page state instead.
 
 	- **Real contract change.** The product behavior differs from what the Poshi test specified. Bring it to the feature owner before changing the assertion.
 
-	- **Missing API.** The setup landed but a downstream assertion fails because a state the Poshi test took for granted (synced data, populated metrics) is not seeded by the API path. Re-evaluate the test as **Skip** in the plan and surface the missing endpoint.
+	- **Missing API.** The setup landed but a downstream assertion fails because a state the Poshi test took for granted (synced data, populated metrics) is not seeded by the API path. Reevaluate the test as **Skip** in the plan and surface the missing endpoint.
 
 #### Flake Check (Playwright Only)
 
@@ -407,7 +407,7 @@ After the last commit, report:
 
 - The source `.testcase` (deleted or surviving with a tail of remaining tests).
 
-- The list of new files added, by layer, with their repo-relative paths and the LPS or LPD ticket they cover.
+- The list of new files added, by layer, with their repo relative paths and the LPS or LPD ticket they cover.
 
 - The list of new helpers, utils, or fixtures introduced, with one line each describing what they expose.
 

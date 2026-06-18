@@ -105,3 +105,87 @@ test("Site Map multi column layout template should respect the 'Include Root in 
 		).toBeVisible();
 	});
 });
+
+test('Can remove the Root Page in Site Map widget configuration', async ({
+	apiHelpers,
+	page,
+	pageEditorPage,
+	pagesAdminPage,
+	site,
+}) => {
+	const childLayoutName = getRandomString();
+	const rootLayoutName = getRandomString();
+	const widgetId = getRandomString();
+
+	let rootLayout: Layout;
+
+	await test.step('Create a page with a Site Map Widget and its child page', async () => {
+		rootLayout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([
+				getWidgetDefinition({
+					id: widgetId,
+					widgetConfig: {
+						displayDepth: '0',
+						displayStyle:
+							'ddmTemplate_SITE-MAP-MULTI-COLUMN-LAYOUT-FTL',
+					},
+					widgetName:
+						'com_liferay_site_navigation_site_map_web_portlet_SiteNavigationSiteMapPortlet',
+				}),
+			]),
+			siteId: site.id,
+			title: rootLayoutName,
+		});
+
+		await pagesAdminPage.goto(site.friendlyUrlPath);
+		await pagesAdminPage.createNewPage({
+			name: childLayoutName,
+			parent: rootLayoutName,
+		});
+	});
+
+	await test.step('Set a Root Page in the Site Map Widget configuration', async () => {
+		await pageEditorPage.goto(rootLayout, site.friendlyUrlPath);
+		await pageEditorPage.goToWidgetConfiguration(widgetId);
+
+		const configurationIframe = page.frameLocator(
+			'iframe[title="Configuration"]'
+		);
+
+		await configurationIframe.getByRole('button', {name: 'Select'}).click();
+
+		const selectRootPageIframe = configurationIframe.frameLocator('iframe');
+
+		const rootLayoutTreeItem = selectRootPageIframe.locator(
+			'.treeview-link',
+			{hasText: rootLayoutName}
+		);
+
+		await expect(rootLayoutTreeItem).toBeVisible();
+
+		await rootLayoutTreeItem.click();
+
+		await configurationIframe.getByRole('button', {name: 'Save'}).click();
+
+		await expect(
+			configurationIframe.getByText('Include Root in Tree')
+		).toBeVisible();
+	});
+
+	await test.step('Clear the Root Page and verify it is removed', async () => {
+		const configurationIframe = page.frameLocator(
+			'iframe[title="Configuration"]'
+		);
+
+		await configurationIframe.getByRole('button', {name: 'Remove'}).click();
+
+		await configurationIframe.getByRole('button', {name: 'Save'}).click();
+
+		await expect(
+			configurationIframe.getByText('Include Root in Tree')
+		).toBeHidden();
+		await expect(
+			configurationIframe.getByText(rootLayoutName)
+		).toBeHidden();
+	});
+});

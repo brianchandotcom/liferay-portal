@@ -115,6 +115,7 @@ import {config as lockedItemsWebConfig} from './tests/locked-items-web/main/conf
 import {config as loginWebMainCaptchaEnableConfig} from './tests/login-web/main-captcha-enable/config';
 import {config as loginWebConfig} from './tests/login-web/main/config';
 import {config as loginWebSetupAdminConfig} from './tests/login-web/setup-admin/config';
+import {config as mapsConfig} from './tests/maps/main/config';
 import {config as marketplaceAppManagerWebConfig} from './tests/marketplace-app-manager-web/main/config';
 import {config as messageBoardsWebConfig} from './tests/message-boards-web/main/config';
 import {config as multifactorAuthenticationConfig} from './tests/multi-factor-authentication-timebased-otp-web/main/config';
@@ -346,6 +347,7 @@ export default defineConfig({
 		loginWebConfig,
 		loginWebMainCaptchaEnableConfig,
 		loginWebSetupAdminConfig,
+		mapsConfig,
 		marketplaceAppManagerWebConfig,
 		marketplaceConfig,
 		messageBoardsWebConfig,

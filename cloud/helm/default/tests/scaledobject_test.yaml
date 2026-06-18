@@ -11,7 +11,7 @@ tests:
                     content:
                         type: cpu
                     path: spec.triggers
-        it: should drop a trigger flagged as disabled in the loop
+        it: drops a trigger flagged as disabled in the loop
         set:
             autoscaling.enabled: true
             autoscaling.keda.triggers.cpu-usage-percent.enabled: false
@@ -20,7 +20,7 @@ tests:
             -   lengthEqual:
                     count: 4
                     path: spec.triggers
-        it: should emit one trigger for each entry in the default triggers map
+        it: emits one trigger for each entry in the default triggers map
         set:
             autoscaling.enabled: true
             autoscaling.type: keda
@@ -28,7 +28,7 @@ tests:
             -   equal:
                     path: spec.triggers[1].metadata.serverAddress
                     value: http://prometheus.example.com
-        it: should inject the resolved Prometheus server address into prometheus triggers
+        it: injects the resolved Prometheus server address into prometheus triggers
         set:
             autoscaling.enabled: true
             autoscaling.keda.prometheusServerAddress: http://prometheus.example.com
@@ -37,7 +37,7 @@ tests:
             -   lengthEqual:
                     count: 6
                     path: spec.triggers
-        it: should merge custom triggers into the default triggers
+        it: merges custom triggers into the default triggers
         set:
             autoscaling.enabled: true
             autoscaling.keda.customTriggers:
@@ -57,7 +57,7 @@ tests:
             -   equal:
                     path: spec.scaleTargetRef.name
                     value: my-portal
-        it: should name the ScaledObject after the chart name override
+        it: names the ScaledObject after the chart name override
         set:
             autoscaling.enabled: true
             autoscaling.type: keda
@@ -65,13 +65,13 @@ tests:
     -   asserts:
             -   hasDocuments:
                     count: 0
-        it: should omit the ScaledObject when autoscaling is disabled
+        it: omits the ScaledObject when autoscaling is disabled
         set:
             autoscaling.enabled: false
     -   asserts:
             -   hasDocuments:
                     count: 0
-        it: should omit the ScaledObject when the autoscaling type is hpa
+        it: omits the ScaledObject when the autoscaling type is hpa
         set:
             autoscaling.enabled: true
             autoscaling.type: hpa
@@ -83,7 +83,7 @@ tests:
                     count: 1
             -   isKind:
                     of: ScaledObject
-        it: should render the ScaledObject when autoscaling is enabled with type keda
+        it: renders the ScaledObject when autoscaling is enabled with type keda
         set:
             autoscaling.enabled: true
             autoscaling.type: keda

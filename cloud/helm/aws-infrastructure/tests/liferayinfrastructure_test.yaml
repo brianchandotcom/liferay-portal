@@ -3,7 +3,7 @@ release:
     namespace: my-namespace
 suite: LiferayInfrastructure
 templates:
-    -   templates/liferayinfrastructure.yaml
+    -   liferayinfrastructure.yaml
 tests:
     -   asserts:
             -   equal:

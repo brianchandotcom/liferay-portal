@@ -1,6 +1,6 @@
 suite: ConfigMap
 templates:
-    -   templates/configmap.yaml
+    -   configmap.yaml
 tests:
     -   asserts:
             -   isKind:

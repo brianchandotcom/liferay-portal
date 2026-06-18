@@ -1,6 +1,6 @@
 suite: Gateway
 templates:
-    -   templates/gateway.yaml
+    -   gateway.yaml
 tests:
     -   asserts:
             -   lengthEqual:

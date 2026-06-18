@@ -1,6 +1,6 @@
 suite: Search Env ConfigMap
 templates:
-    -   templates/liferay-search-env-cm.yaml
+    -   liferay-search-env-cm.yaml
 tests:
     -   asserts:
             -   equal:

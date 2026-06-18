@@ -1,6 +1,6 @@
 suite: Search Config ConfigMap
 templates:
-    -   templates/liferay-search-config-cm.yaml
+    -   liferay-search-config-cm.yaml
 tests:
     -   asserts:
             -   matchRegex:

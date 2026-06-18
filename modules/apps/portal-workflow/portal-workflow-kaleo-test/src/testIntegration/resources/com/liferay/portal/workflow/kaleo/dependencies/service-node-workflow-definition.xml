@@ -25,11 +25,11 @@
 			</label>
 		</labels>
 		<input-variables>
-			<![CDATA[[{"name":"input"}]]]>
+			<![CDATA[[{"name":"input","type":"string"}]]]>
 		</input-variables>
 		<java-delegate>com.example.Converter#convert</java-delegate>
 		<output-variables>
-			<![CDATA[[{"name":"output"}]]]>
+			<![CDATA[[{"name":"output","type":"string"}]]]>
 		</output-variables>
 		<transitions>
 			<transition>

@@ -7,8 +7,12 @@ package com.liferay.portal.osgi.web.wab.generator.internal.artifact;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
 import java.io.IOException;
@@ -72,6 +76,10 @@ public class ArtifactURLUtil {
 
 		if (fileExtension.equals("zip") && _isClientExtensionZip(path)) {
 			symbolicName = getClientExtensionSymbolicName(path);
+
+			try (ZipFile zipFile = new ZipFile(path)) {
+				contextName = _readClientExtensionWebContextPath(zipFile);
+			}
 		}
 
 		if (contextName == null) {
@@ -107,6 +115,41 @@ public class ArtifactURLUtil {
 		}
 
 		return false;
+	}
+
+	private static String _readClientExtensionWebContextPath(ZipFile zipFile)
+		throws Exception {
+
+		Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
+
+		while (enumeration.hasMoreElements()) {
+			ZipEntry zipEntry = enumeration.nextElement();
+
+			String name = zipEntry.getName();
+
+			if ((name.indexOf(CharPool.SLASH) != -1) ||
+				!name.endsWith(".client-extension-config.json")) {
+
+				continue;
+			}
+
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				StringUtil.read(zipFile.getInputStream(zipEntry)));
+
+			for (String key : jsonObject.keySet()) {
+				JSONObject configurationJSONObject = jsonObject.getJSONObject(
+					key);
+
+				String webContextPath = configurationJSONObject.getString(
+					"webContextPath");
+
+				if (Validator.isNotNull(webContextPath)) {
+					return webContextPath.substring(1);
+				}
+			}
+		}
+
+		return null;
 	}
 
 	private static String _readServletContextName(ZipFile zipFile)

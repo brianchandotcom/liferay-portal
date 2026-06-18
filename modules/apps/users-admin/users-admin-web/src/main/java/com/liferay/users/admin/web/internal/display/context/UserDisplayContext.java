@@ -429,7 +429,7 @@ public class UserDisplayContext {
 		}
 
 		return RoleTypeContributorShowFilterRegistryUtil.isShow(
-			roleTypeContributor, _permissionChecker);
+			_permissionChecker, roleTypeContributor);
 	}
 
 	private static final Snapshot<RoleTypeContributorProvider>

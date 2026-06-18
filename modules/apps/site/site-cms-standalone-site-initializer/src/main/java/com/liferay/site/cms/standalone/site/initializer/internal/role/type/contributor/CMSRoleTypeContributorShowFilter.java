@@ -21,8 +21,8 @@ public class CMSRoleTypeContributorShowFilter
 
 	@Override
 	public boolean isShow(
-		RoleTypeContributor roleTypeContributor,
-		PermissionChecker permissionChecker) {
+		PermissionChecker permissionChecker,
+		RoleTypeContributor roleTypeContributor) {
 
 		if ((roleTypeContributor.getType() == RoleConstants.TYPE_ACCOUNT) ||
 			(roleTypeContributor.getType() == RoleConstants.TYPE_SITE)) {

@@ -63,7 +63,7 @@ OAuthClientPRLocalMetadataManagementToolbarDisplayContext oAuthClientPRLocalMeta
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand"
 					href="<%= editURL %>"
-					name="oauth-client-pr-local-metadata-resource"
+					name="resource"
 					property="protectedResourceURI"
 				/>
 

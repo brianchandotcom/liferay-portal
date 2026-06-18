@@ -21,7 +21,6 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 import java.util.Properties;
 import java.util.concurrent.Future;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -141,7 +140,7 @@ public class TestPropertiesPQLValidationTest {
 
 					String fileName = visitedFile.getName();
 
-					if (Objects.equals(fileName, "test.properties")) {
+					if (fileName.equals("test.properties")) {
 						testPropertiesFiles.add(file.toFile());
 					}
 

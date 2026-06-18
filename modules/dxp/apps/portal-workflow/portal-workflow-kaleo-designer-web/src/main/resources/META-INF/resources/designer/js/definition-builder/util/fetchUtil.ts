@@ -78,7 +78,7 @@ export function retrieveRoleById(roleId: number) {
 
 export function retrieveRoles() {
 	return fetch(
-		`${window.location.origin}${contextUrl}${userBaseURL}/roles?restrictFields=rolePermissions&pageSize=-1`,
+		`${window.location.origin}${contextUrl}${userBaseURL}/roles?fields=id,name,roleType&pageSize=-1`,
 		{
 			headers: HEADERS,
 			method: 'GET',

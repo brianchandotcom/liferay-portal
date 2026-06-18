@@ -52,8 +52,8 @@ export default function BaseRole({
 			setLoading(true);
 
 			const params = new URLSearchParams({
+				fields: 'id,name,roleType',
 				pageSize: '-1',
-				restrictedFields: 'rolePermissions',
 			});
 
 			const response = await fetch(

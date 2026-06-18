@@ -568,7 +568,7 @@ public class JenkinsResultsParserUtil {
 
 		Shell.ExecutionResult executionResult = Shell.execute(
 			new Shell.ExecutionRequest(
-				baseDir, exitOnFirstFail, printCommands, timeout, commands));
+				baseDir, commands, exitOnFirstFail, printCommands, timeout));
 
 		return new ExecutionResultProcess(executionResult);
 	}

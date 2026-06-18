@@ -24,6 +24,16 @@ components:
             schema:
                 type: string
             style: form
+        nestedFieldsQueryParam:
+            in: query
+            description:
+                Comma-separated list of nested fields to embed in each returned resource. Each value names a relationship exposed on the resource; when omitted, those relationships are not expanded inline.
+            explode: true
+            name: nestedFields
+            required: false
+            schema:
+                type: string
+            style: form
         pageQueryParam:
             in: query
             description:
@@ -159,7 +169,7 @@ components:
                     description:
                         Creation timestamp in ISO 8601. Read-only; set when the shipment is first persisted.
                     example: 2017-07-21T19:30:00Z
-                    format: date
+                    format: date-time
                     readOnly: true
                     type: string
                 customFields:
@@ -172,7 +182,7 @@ components:
                     description:
                         Estimated delivery date in ISO 8601. Supplied by the fulfillment operator; updatable until the shipment is delivered.
                     example: 2017-07-21T19:30:00Z
-                    format: date
+                    format: date-time
                     type: string
                 externalReferenceCode:
                     description:
@@ -191,7 +201,7 @@ components:
                     description:
                         Timestamp of the most recent update in ISO 8601. Read-only; refreshed on every persisted change.
                     example: 2017-07-21T19:30:00Z
-                    format: date
+                    format: date-time
                     readOnly: true
                     type: string
                 orderExternalReferenceCode:
@@ -227,7 +237,7 @@ components:
                     description:
                         Date the parcel was handed over to the carrier, in ISO 8601. Typically set when the shipment transitions to shipped.
                     example: 2017-07-21T19:30:00Z
-                    format: date
+                    format: date-time
                     type: string
                 shippingMethodId:
                     description:
@@ -281,7 +291,7 @@ components:
                     description:
                         Creation timestamp in ISO 8601. Read-only; set when the picked-line row is first persisted.
                     example: 2017-07-21T19:30:00Z
-                    format: date
+                    format: date-time
                     readOnly: true
                     type: string
                 externalReferenceCode:
@@ -301,7 +311,7 @@ components:
                     description:
                         Timestamp of the most recent update in ISO 8601. Read-only; refreshed on every persisted change.
                     example: 2017-07-21T19:30:00Z
-                    format: date
+                    format: date-time
                     readOnly: true
                     type: string
                 orderItemExternalReferenceCode:
@@ -848,6 +858,7 @@ paths:
             operationId: getShipmentsPage
             parameters:
                 -   $ref: "#/components/parameters/filterQueryParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
                 -   $ref: "#/components/parameters/pageQueryParam"
                 -   $ref: "#/components/parameters/pageSizeQueryParam"
                 -   $ref: "#/components/parameters/searchQueryParam"
@@ -1018,6 +1029,7 @@ paths:
                 Returns the shipment identified by external reference code. Resolves the row against the current company scope; raises a not-found error (404) when the ERC is unknown.
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             responses:
                 200:
                     content:
@@ -1861,6 +1873,7 @@ paths:
             operationId: getShipment
             parameters:
                 -   $ref: "#/components/parameters/shipmentIdPathParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             responses:
                 200:
                     content:

@@ -238,6 +238,8 @@ public class PatcherBuildLocalServiceImpl
 						"the-build-process-was-skipped-because-a-pre-" +
 							"existing-hotfix-was-used-original-build-id-x",
 						existingPatcherBuild.getPatcherBuildId()));
+				patcherBuild.setSourceName(
+					existingPatcherBuild.getSourceName());
 			}
 		}
 

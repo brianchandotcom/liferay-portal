@@ -42,12 +42,14 @@ alerting:
         db-cpu-reserved-cores-gcp:
             cloudProvider: gcp
             expr: |
-                sum by (environment_id, database_id) (
+                sum by (environment_id, database_id, data_plane) (
                     label_replace(
                         label_replace(
-                            cloudsql_googleapis_com:database_cpu_reserved_cores,
-                            "environment_id", "$1", "metadata_user_environment_id", "(.+)"),
-                        "database_id", "$1", "metadata_system_name", ".*-db-(.*)")
+                            label_replace(
+                                cloudsql_googleapis_com:database_cpu_reserved_cores,
+                                "environment_id", "liferay-$1", "database_id", "[^:]*:(.+)-infra-db-instance-(?:blue|green)$"),
+                            "data_plane", "$1", "database_id", ".*-(blue|green)$"),
+                        "database_id", "$1", "database_id", "[^:]*:(.+)-(?:blue|green)$")
                 )
             record: liferay:db_cpu_reserved_cores
         db-cpu-used-cores-aws:
@@ -70,12 +72,14 @@ alerting:
         db-cpu-used-cores-gcp:
             cloudProvider: gcp
             expr: |
-                sum by (environment_id, database_id) (
+                sum by (environment_id, database_id, data_plane) (
                     label_replace(
                         label_replace(
-                            rate(cloudsql_googleapis_com:database_cpu_usage_time[5m]),
-                            "environment_id", "$1", "metadata_user_environment_id", "(.+)"),
-                        "database_id", "$1", "metadata_system_name", ".*-db-(.*)")
+                            label_replace(
+                                rate(cloudsql_googleapis_com:database_cpu_usage_time[5m]),
+                                "environment_id", "liferay-$1", "database_id", "[^:]*:(.+)-infra-db-instance-(?:blue|green)$"),
+                            "data_plane", "$1", "database_id", ".*-(blue|green)$"),
+                        "database_id", "$1", "database_id", "[^:]*:(.+)-(?:blue|green)$")
                 )
             record: liferay:db_cpu_used_cores
         db-cpu-utilization-percent-aws:
@@ -99,16 +103,14 @@ alerting:
         db-cpu-utilization-percent-gcp:
             cloudProvider: gcp
             expr: |
-                sum by (environment_id, database_id) (
+                sum by (environment_id, database_id, data_plane) (
                     label_replace(
                         label_replace(
-                            rate(cloudsql_googleapis_com:database_cpu_usage_time[5m])
-                            /
-                            on(metadata_user_environment_id, metadata_system_name, db_name)
-                            cloudsql_googleapis_com:database_cpu_reserved_cores
-                            * 100,
-                            "environment_id", "$1", "metadata_user_environment_id", "(.+)"),
-                        "database_id", "$1", "metadata_system_name", ".*-db-(.*)")
+                            label_replace(
+                                cloudsql_googleapis_com:database_cpu_utilization * 100,
+                                "environment_id", "liferay-$1", "database_id", "[^:]*:(.+)-infra-db-instance-(?:blue|green)$"),
+                            "data_plane", "$1", "database_id", ".*-(blue|green)$"),
+                        "database_id", "$1", "database_id", "[^:]*:(.+)-(?:blue|green)$")
                 )
             record: liferay:db_cpu_utilization_percent
         db-disk-total-bytes-aws:
@@ -130,12 +132,14 @@ alerting:
         db-disk-total-bytes-gcp:
             cloudProvider: gcp
             expr: |
-                sum by (environment_id, database_id) (
+                sum by (environment_id, database_id, data_plane) (
                     label_replace(
                         label_replace(
-                            cloudsql_googleapis_com:database_disk_quota,
-                            "environment_id", "$1", "metadata_user_environment_id", "(.+)"),
-                        "database_id", "$1", "metadata_system_name", ".*-db-(.*)")
+                            label_replace(
+                                cloudsql_googleapis_com:database_disk_quota,
+                                "environment_id", "liferay-$1", "database_id", "[^:]*:(.+)-infra-db-instance-(?:blue|green)$"),
+                            "data_plane", "$1", "database_id", ".*-(blue|green)$"),
+                        "database_id", "$1", "database_id", "[^:]*:(.+)-(?:blue|green)$")
                 )
             record: liferay:db_disk_total_bytes
         db-disk-used-bytes-aws:
@@ -158,12 +162,14 @@ alerting:
         db-disk-used-bytes-gcp:
             cloudProvider: gcp
             expr: |
-                sum by (environment_id, database_id) (
+                sum by (environment_id, database_id, data_plane) (
                     label_replace(
                         label_replace(
-                            cloudsql_googleapis_com:database_disk_bytes_used,
-                            "environment_id", "$1", "metadata_user_environment_id", "(.+)"),
-                        "database_id", "$1", "metadata_system_name", ".*-db-(.*)")
+                            label_replace(
+                                cloudsql_googleapis_com:database_disk_bytes_used,
+                                "environment_id", "liferay-$1", "database_id", "[^:]*:(.+)-infra-db-instance-(?:blue|green)$"),
+                            "data_plane", "$1", "database_id", ".*-(blue|green)$"),
+                        "database_id", "$1", "database_id", "[^:]*:(.+)-(?:blue|green)$")
                 )
             record: liferay:db_disk_used_bytes
         db-instance-state-aws:
@@ -185,12 +191,14 @@ alerting:
         db-instance-state-gcp:
             cloudProvider: gcp
             expr: |
-                sum by (environment_id, database_id, state) (
+                sum by (environment_id, database_id, data_plane, state) (
                     label_replace(
                         label_replace(
-                            last_over_time(cloudsql_googleapis_com:database_instance_state[5m]) > 0,
-                            "environment_id", "$1", "metadata_user_environment_id", "(.+)"),
-                        "database_id", "$1", "metadata_system_name", ".*-db-(.*)")
+                            label_replace(
+                                last_over_time(cloudsql_googleapis_com:database_instance_state[5m]) > 0,
+                                "environment_id", "liferay-$1", "database_id", "[^:]*:(.+)-infra-db-instance-(?:blue|green)$"),
+                            "data_plane", "$1", "database_id", ".*-(blue|green)$"),
+                        "database_id", "$1", "database_id", "[^:]*:(.+)-(?:blue|green)$")
                 )
             record: liferay:db_instance_state
         db-memory-total-bytes-aws:
@@ -211,12 +219,14 @@ alerting:
         db-memory-total-bytes-gcp:
             cloudProvider: gcp
             expr: |
-                sum by (environment_id, database_id) (
+                sum by (environment_id, database_id, data_plane) (
                     label_replace(
                         label_replace(
-                            cloudsql_googleapis_com:database_memory_quota,
-                            "environment_id", "$1", "metadata_user_environment_id", "(.+)"),
-                        "database_id", "$1", "metadata_system_name", ".*-db-(.*)")
+                            label_replace(
+                                cloudsql_googleapis_com:database_memory_quota,
+                                "environment_id", "liferay-$1", "database_id", "[^:]*:(.+)-infra-db-instance-(?:blue|green)$"),
+                            "data_plane", "$1", "database_id", ".*-(blue|green)$"),
+                        "database_id", "$1", "database_id", "[^:]*:(.+)-(?:blue|green)$")
                 )
             record: liferay:db_memory_total_bytes
         db-memory-used-bytes-aws:
@@ -239,12 +249,14 @@ alerting:
         db-memory-used-bytes-gcp:
             cloudProvider: gcp
             expr: |
-                sum by (environment_id, database_id) (
+                sum by (environment_id, database_id, data_plane) (
                     label_replace(
                         label_replace(
-                            cloudsql_googleapis_com:database_memory_usage,
-                            "environment_id", "$1", "metadata_user_environment_id", "(.+)"),
-                        "database_id", "$1", "metadata_system_name", ".*-db-(.*)")
+                            label_replace(
+                                cloudsql_googleapis_com:database_memory_usage,
+                                "environment_id", "liferay-$1", "database_id", "[^:]*:(.+)-infra-db-instance-(?:blue|green)$"),
+                            "data_plane", "$1", "database_id", ".*-(blue|green)$"),
+                        "database_id", "$1", "database_id", "[^:]*:(.+)-(?:blue|green)$")
                 )
             record: liferay:db_memory_used_bytes
         rds-memory-bytes-aws:

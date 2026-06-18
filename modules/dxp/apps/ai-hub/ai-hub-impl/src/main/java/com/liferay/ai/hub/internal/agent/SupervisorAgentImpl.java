@@ -193,7 +193,7 @@ public class SupervisorAgentImpl implements SupervisorAgent {
 			SseUtil.send(
 				_language.get(
 					dtoConverterContext.getLocale(),
-					"you-have-exceeded-your-token-quota"),
+					"you-have-exceeded-your-quota"),
 				"Chat Message Sent", null, agentContext.getSseEventSinkKey());
 
 			return;

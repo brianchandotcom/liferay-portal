@@ -9,6 +9,8 @@ import com.liferay.commerce.product.service.CPTaxCategoryService;
 import com.liferay.headless.commerce.admin.site.setting.dto.v1_0.TaxCategory;
 import com.liferay.headless.commerce.admin.site.setting.internal.mapper.v1_0.util.DTOMapperUtil;
 import com.liferay.headless.commerce.admin.site.setting.resource.v1_0.TaxCategoryResource;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 
 import jakarta.ws.rs.core.Response;
 
@@ -35,9 +37,31 @@ public class TaxCategoryResourceImpl extends BaseTaxCategoryResourceImpl {
 	}
 
 	@Override
+	public Page<TaxCategory> getCommerceAdminSiteSettingGroupTaxCategoryPage(
+		Long groupId, Pagination pagination) {
+
+		throw new UnsupportedOperationException(
+			"This operation is not supported");
+	}
+
+	@Override
 	public TaxCategory getTaxCategory(Long id) throws Exception {
 		return DTOMapperUtil.modelToDTO(
 			_cpTaxCategoryService.getCPTaxCategory(id));
+	}
+
+	@Override
+	public TaxCategory postCommerceAdminSiteSettingGroupTaxCategory(
+		Long groupId, TaxCategory taxCategory) {
+
+		throw new UnsupportedOperationException(
+			"This operation is not supported");
+	}
+
+	@Override
+	public Response putTaxCategory(Long id, TaxCategory taxCategory) {
+		throw new UnsupportedOperationException(
+			"This operation is not supported");
 	}
 
 	@Reference

@@ -9,6 +9,8 @@ import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseService;
 import com.liferay.headless.commerce.admin.site.setting.dto.v1_0.Warehouse;
 import com.liferay.headless.commerce.admin.site.setting.internal.mapper.v1_0.util.DTOMapperUtil;
 import com.liferay.headless.commerce.admin.site.setting.resource.v1_0.WarehouseResource;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 
 import jakarta.ws.rs.core.Response;
 
@@ -35,10 +37,32 @@ public class WarehouseResourceImpl extends BaseWarehouseResourceImpl {
 	}
 
 	@Override
+	public Page<Warehouse> getCommerceAdminSiteSettingGroupWarehousePage(
+		Long groupId, Boolean active, Pagination pagination) {
+
+		throw new UnsupportedOperationException(
+			"This operation is not supported");
+	}
+
+	@Override
 	public Warehouse getWarehouse(Long id) throws Exception {
 		return DTOMapperUtil.modelToDTO(
 			_commerceInventoryWarehouseService.getCommerceInventoryWarehouse(
 				id));
+	}
+
+	@Override
+	public Warehouse postCommerceAdminSiteSettingGroupWarehouse(
+		Long groupId, Warehouse warehouse) {
+
+		throw new UnsupportedOperationException(
+			"This operation is not supported");
+	}
+
+	@Override
+	public Response putWarehouse(Long id, Warehouse warehouse) {
+		throw new UnsupportedOperationException(
+			"This operation is not supported");
 	}
 
 	@Reference

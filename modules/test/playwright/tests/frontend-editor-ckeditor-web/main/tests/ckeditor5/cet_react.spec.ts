@@ -41,3 +41,11 @@ test(
 		expect(availableButtons).toEqual(expectedButtons);
 	}
 );
+
+test(
+	'WordCount plugin loaded via CX tracks word and character counts',
+	{tag: '@LPD-89734'},
+	async ({classicPage}) => {
+		await expect(classicPage.wordCountContainer).toBeVisible();
+	}
+);

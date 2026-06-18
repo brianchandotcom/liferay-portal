@@ -1,15 +1,14 @@
 assemble:
     -   from: build
         into: static
-liferay-sample-editor-config-contributor:
+liferay-sample-editor-config-contributor-1:
     editorConfigKeys:
         -   description
         -   fragmentEntryLinkRichTextEditor
         -   sampleAlloyEditor
         -   sampleClassicEditor
         -   sampleLegacyEditor
-        -   sampleReactCKEditor5ClassicEditor
         -   sampleReactClassicEditor
-    name: Liferay Sample Editor Config Contributor
+    name: Liferay Sample Editor Config Contributor 1
     type: editorConfigContributor
     url: index.js

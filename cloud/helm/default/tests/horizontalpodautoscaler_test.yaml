@@ -1,6 +1,6 @@
 suite: HorizontalPodAutoscaler
 templates:
-    -   templates/horizontalpodautoscaler.yaml
+    -   horizontalpodautoscaler.yaml
 tests:
     -   asserts:
             -   equal:

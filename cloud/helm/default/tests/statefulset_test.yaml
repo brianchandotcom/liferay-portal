@@ -1,8 +1,8 @@
 suite: StatefulSet
 templates:
-    -   templates/configmap.yaml
-    -   templates/liferay-init-scripts-cm.yaml
-    -   templates/workloads.yaml
+    -   configmap.yaml
+    -   liferay-init-scripts-cm.yaml
+    -   workloads.yaml
 tests:
     -   asserts:
             -   contains:

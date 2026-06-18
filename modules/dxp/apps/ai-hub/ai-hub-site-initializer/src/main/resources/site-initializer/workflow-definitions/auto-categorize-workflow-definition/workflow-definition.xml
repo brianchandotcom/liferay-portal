@@ -28,11 +28,11 @@
 			<![CDATA[
 [
 	{
-		"name": "content",
+		"name": "candidateCategories",
 		"type": "string"
 	},
 	{
-		"name": "candidateCategories",
+		"name": "content",
 		"type": "string"
 	},
 	{

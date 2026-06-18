@@ -107,51 +107,6 @@ public class ClusterLicenseTest extends BaseLicenseTestCase {
 	}
 
 	@Test
-	public void testClusterCanRecoverByShuttingDownLicensedNode()
-		throws Exception {
-
-		TomcatNode tomcatNode1 = _startTomcatNode(true);
-
-		tomcatNode1.syncExecute(this::_testFreeTierLicense);
-
-		Future<String> messageFuture1 = _testConsoleMessageListener.register(
-			tomcatNode1.getNodeId(), _CONSOLE_KEY_LICENSED_NODE,
-			_CONSOLE_KEY_NODE_EXCEEDED);
-
-		TomcatNode tomcatNode2 = _startTomcatNode(
-			false,
-			_getClusterExecutable(
-				tomcatNode1.syncExecute(this::_getTimeStamp)));
-
-		Future<String> messageFuture2 = _testConsoleMessageListener.register(
-			tomcatNode2.getNodeId(), _CONSOLE_KEY_TEMPORARY_NODE_MANUAL,
-			_CONSOLE_KEY_NODE_EXCEEDED);
-
-		tomcatNode2.syncExecute(this::_testFreeTierLicense);
-
-		_testConsoleMessageListener.assertMessageListened(messageFuture1);
-		_testConsoleMessageListener.assertMessageListened(messageFuture2);
-
-		try {
-			tomcatNode2.wait(_NODE_SHUTDOWN_MINUTES, TimeUnit.MINUTES);
-
-			Assert.fail();
-		}
-		catch (Exception exception) {
-			Assert.assertTrue(exception instanceof TimeoutException);
-		}
-
-		messageFuture2 = _testConsoleMessageListener.register(
-			tomcatNode2.getNodeId(), _CONSOLE_KEY_FINISHED_SHUTDOWN);
-
-		tomcatNode1.stop();
-
-		_testConsoleMessageListener.assertMessageListened(messageFuture2);
-
-		tomcatNode2.syncExecute(this::_assertPortalLicenseRegistered);
-	}
-
-	@Test
 	public void testEnterpriseLicense() throws Exception {
 		TomcatNode tomcatNode1 = _startTomcatNode(true);
 
@@ -266,6 +221,49 @@ public class ClusterLicenseTest extends BaseLicenseTestCase {
 		tomcatNode5.wait(_NODE_SHUTDOWN_MINUTES, TimeUnit.MINUTES);
 
 		_testConsoleMessageListener.assertMessageListened(messageFuture1);
+	}
+
+	@Test
+	public void testFreeTierLicenseWithLicensedNodeShutdown() throws Exception {
+		TomcatNode tomcatNode1 = _startTomcatNode(true);
+
+		tomcatNode1.syncExecute(this::_testFreeTierLicense);
+
+		Future<String> messageFuture1 = _testConsoleMessageListener.register(
+			tomcatNode1.getNodeId(), _CONSOLE_KEY_LICENSED_NODE,
+			_CONSOLE_KEY_NODE_EXCEEDED);
+
+		TomcatNode tomcatNode2 = _startTomcatNode(
+			false,
+			_getClusterExecutable(
+				tomcatNode1.syncExecute(this::_getTimeStamp)));
+
+		Future<String> messageFuture2 = _testConsoleMessageListener.register(
+			tomcatNode2.getNodeId(), _CONSOLE_KEY_TEMPORARY_NODE_MANUAL,
+			_CONSOLE_KEY_NODE_EXCEEDED);
+
+		tomcatNode2.syncExecute(this::_testFreeTierLicense);
+
+		_testConsoleMessageListener.assertMessageListened(messageFuture1);
+		_testConsoleMessageListener.assertMessageListened(messageFuture2);
+
+		try {
+			tomcatNode2.wait(_NODE_SHUTDOWN_MINUTES, TimeUnit.MINUTES);
+
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			Assert.assertTrue(exception instanceof TimeoutException);
+		}
+
+		messageFuture2 = _testConsoleMessageListener.register(
+			tomcatNode2.getNodeId(), _CONSOLE_KEY_FINISHED_SHUTDOWN);
+
+		tomcatNode1.stop();
+
+		_testConsoleMessageListener.assertMessageListened(messageFuture2);
+
+		tomcatNode2.syncExecute(this::_assertPortalLicenseRegistered);
 	}
 
 	@Test

@@ -146,14 +146,16 @@ public class KubernetesJobService {
 	}
 
 	private Job _loadJobTemplate() {
-		try (InputStream inputStream = getClass().getResourceAsStream(
-				"/crawler-job-template.yaml")) {
+		Class<?> clazz = getClass();
+
+		try (InputStream inputStream = clazz.getResourceAsStream(
+				"crawler-job-template.yaml")) {
 
 			return Serialization.unmarshal(inputStream, Job.class);
 		}
 		catch (IOException ioException) {
 			throw new IllegalStateException(
-				"Unable to load \"/crawler-job-template.yaml\"", ioException);
+				"Unable to load \"crawler-job-template.yaml\"", ioException);
 		}
 	}
 

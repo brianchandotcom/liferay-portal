@@ -457,6 +457,72 @@ public interface DDMFormInstanceRecordPersistence
 	public int countByF_F(long formInstanceId, String formInstanceVersion);
 
 	/**
+	 * Returns an ordered range of all the ddm form instance records where formInstanceId = &#63; and ipAddress = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceRecordModelImpl</code>.
+	 * </p>
+	 *
+	 * @param formInstanceId the form instance ID
+	 * @param ipAddress the ip address
+	 * @param start the lower bound of the range of ddm form instance records
+	 * @param end the upper bound of the range of ddm form instance records (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching ddm form instance records
+	 */
+	public java.util.List<DDMFormInstanceRecord> findByF_I(
+		long formInstanceId, String ipAddress, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DDMFormInstanceRecord>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first ddm form instance record in the ordered set where formInstanceId = &#63; and ipAddress = &#63;.
+	 *
+	 * @param formInstanceId the form instance ID
+	 * @param ipAddress the ip address
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching ddm form instance record
+	 * @throws NoSuchFormInstanceRecordException if a matching ddm form instance record could not be found
+	 */
+	public DDMFormInstanceRecord findByF_I_First(
+			long formInstanceId, String ipAddress,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<DDMFormInstanceRecord> orderByComparator)
+		throws NoSuchFormInstanceRecordException;
+
+	/**
+	 * Returns the first ddm form instance record in the ordered set where formInstanceId = &#63; and ipAddress = &#63;.
+	 *
+	 * @param formInstanceId the form instance ID
+	 * @param ipAddress the ip address
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching ddm form instance record, or <code>null</code> if a matching ddm form instance record could not be found
+	 */
+	public DDMFormInstanceRecord fetchByF_I_First(
+		long formInstanceId, String ipAddress,
+		com.liferay.portal.kernel.util.OrderByComparator<DDMFormInstanceRecord>
+			orderByComparator);
+
+	/**
+	 * Removes all the ddm form instance records where formInstanceId = &#63; and ipAddress = &#63; from the database.
+	 *
+	 * @param formInstanceId the form instance ID
+	 * @param ipAddress the ip address
+	 */
+	public void removeByF_I(long formInstanceId, String ipAddress);
+
+	/**
+	 * Returns the number of ddm form instance records where formInstanceId = &#63; and ipAddress = &#63;.
+	 *
+	 * @param formInstanceId the form instance ID
+	 * @param ipAddress the ip address
+	 * @return the number of matching ddm form instance records
+	 */
+	public int countByF_I(long formInstanceId, String ipAddress);
+
+	/**
 	 * Creates a new ddm form instance record with the primary key. Does not add the ddm form instance record to the database.
 	 *
 	 * @param formInstanceRecordId the primary key for the new ddm form instance record
@@ -844,5 +910,63 @@ public interface DDMFormInstanceRecordPersistence
 			true);
 	}
 
+	/**
+	 * Returns all the ddm form instance records where formInstanceId = &#63; and ipAddress = &#63;.
+	 *
+	 * @param formInstanceId the form instance ID
+	 * @param ipAddress the ip address
+	 * @return the matching ddm form instance records
+	 */
+	public default java.util.List<DDMFormInstanceRecord> findByF_I(
+		long formInstanceId, String ipAddress) {
+
+		return findByF_I(
+			formInstanceId, ipAddress,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the ddm form instance records where formInstanceId = &#63; and ipAddress = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceRecordModelImpl</code>.
+	 * </p>
+	 *
+	 * @param formInstanceId the form instance ID
+	 * @param ipAddress the ip address
+	 * @param start the lower bound of the range of ddm form instance records
+	 * @param end the upper bound of the range of ddm form instance records (not inclusive)
+	 * @return the range of matching ddm form instance records
+	 */
+	public default java.util.List<DDMFormInstanceRecord> findByF_I(
+		long formInstanceId, String ipAddress, int start, int end) {
+
+		return findByF_I(formInstanceId, ipAddress, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the ddm form instance records where formInstanceId = &#63; and ipAddress = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceRecordModelImpl</code>.
+	 * </p>
+	 *
+	 * @param formInstanceId the form instance ID
+	 * @param ipAddress the ip address
+	 * @param start the lower bound of the range of ddm form instance records
+	 * @param end the upper bound of the range of ddm form instance records (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching ddm form instance records
+	 */
+	public default java.util.List<DDMFormInstanceRecord> findByF_I(
+		long formInstanceId, String ipAddress, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DDMFormInstanceRecord>
+			orderByComparator) {
+
+		return findByF_I(
+			formInstanceId, ipAddress, start, end, orderByComparator, true);
+	}
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:81216796
+// LIFERAY-SERVICE-BUILDER-HASH:218622664

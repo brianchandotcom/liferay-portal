@@ -1,0 +1,21 @@
+{
+	"object-entries": [
+		{
+			"externalReferenceCode": "PSS_LIFERAY_SUPPLIER_Q4_2025",
+			"paidBy": "Test Test",
+			"paidDate": "2026-01-15T12:00:00Z",
+			"paymentStatus": "paid",
+			"publisherName": "Liferay Supplier Account",
+			"quarter": "Q4 2025",
+			"r_accountEntryToPublisher_accountEntryERC": "ACCNT-020"
+		},
+		{
+			"externalReferenceCode": "PSS_TEST_SUPPLIER_Q1_2026",
+			"paymentStatus": "unpaid",
+			"publisherName": "Test Supplier Account",
+			"quarter": "Q1 2026",
+			"r_accountEntryToPublisher_accountEntryERC": "ACCNT-021"
+		}
+	],
+	"objectDefinitionName": "PublisherSalesSummary"
+}

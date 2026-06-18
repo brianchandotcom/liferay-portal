@@ -1,0 +1,64 @@
+{
+	"availableLanguageIds": [
+		"en_US"
+	],
+	"contentType": "journal",
+	"dataDefinitionFields": [
+		{
+			"customProperties": {
+				"dataType": "string"
+			},
+			"defaultValue": {
+				"en_US": ""
+			},
+			"fieldType": "rich_text",
+			"indexType": "text",
+			"label": {
+				"en_US": "Content"
+			},
+			"localizable": true,
+			"name": "content",
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			}
+		}
+	],
+	"dataDefinitionKey": "ANNOUNCEMENT",
+	"defaultDataLayout": {
+		"dataLayoutPages": [
+			{
+				"dataLayoutRows": [
+					{
+						"dataLayoutColumns": [
+							{
+								"columnSize": 12,
+								"fieldNames": [
+									"content"
+								]
+							}
+						]
+					}
+				],
+				"title": {
+					"en_US": ""
+				}
+			}
+		],
+		"name": {
+			"en_US": "Announcement"
+		},
+		"paginationMode": "single-page"
+	},
+	"defaultLanguageId": "en_US",
+	"description": {
+		"en_US": ""
+	},
+	"name": {
+		"en_US": "Announcement"
+	},
+	"storageType": "default"
+}

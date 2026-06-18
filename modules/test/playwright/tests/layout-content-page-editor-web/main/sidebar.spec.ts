@@ -1028,6 +1028,13 @@ test.describe('Fragments Panel', () => {
 			await page.getByLabel(`Add ${fragmentName}`).focus();
 
 			await page.keyboard.press('Enter');
+
+			// Wait for the keyboard movement to start before committing it
+
+			await expect(
+				page.locator('.page-editor__keyboard-movement-preview__content')
+			).toBeVisible();
+
 			await page.keyboard.press('Enter');
 
 			await expect(

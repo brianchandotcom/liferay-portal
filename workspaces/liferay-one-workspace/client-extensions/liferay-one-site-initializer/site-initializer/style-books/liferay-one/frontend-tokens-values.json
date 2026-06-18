@@ -377,7 +377,15 @@
 	},
 	"containerMaxXl": {
 		"cssVariableMapping": "container-max-xl",
-		"value": "1600px"
+		"value": "1280px"
+	},
+	"contentGutter": {
+		"cssVariableMapping": "content-gutter",
+		"value": "1.5rem"
+	},
+	"contentMaxWidth": {
+		"cssVariableMapping": "content-max-width",
+		"value": "1280px"
 	},
 	"display4Size": {
 		"cssVariableMapping": "display4-size",

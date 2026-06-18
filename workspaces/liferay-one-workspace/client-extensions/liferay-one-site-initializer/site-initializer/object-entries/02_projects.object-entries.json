@@ -1,0 +1,115 @@
+{
+	"object-entries": [
+		{
+			"externalReferenceCode": "PRJCT-001",
+			"name": "Omni Project",
+			"r_accountEntryToProject_accountEntryERC": "ACCNT-001"
+		},
+		{
+			"externalReferenceCode": "PRJCT-001-2",
+			"name": "Omni Project 2",
+			"r_accountEntryToProject_accountEntryERC": "ACCNT-001"
+		},
+		{
+			"externalReferenceCode": "PRJCT-002",
+			"name": "SaaS Experience Project",
+			"r_accountEntryToProject_accountEntryERC": "ACCNT-002"
+		},
+		{
+			"externalReferenceCode": "PRJCT-003",
+			"name": "SaaS Legacy Project",
+			"r_accountEntryToProject_accountEntryERC": "ACCNT-003"
+		},
+		{
+			"externalReferenceCode": "PRJCT-004",
+			"name": "PaaS Experience Project",
+			"r_accountEntryToProject_accountEntryERC": "ACCNT-004"
+		},
+		{
+			"externalReferenceCode": "PRJCT-005",
+			"name": "PaaS Legacy Project",
+			"r_accountEntryToProject_accountEntryERC": "ACCNT-005"
+		},
+		{
+			"externalReferenceCode": "PRJCT-006",
+			"name": "DXP Project",
+			"r_accountEntryToProject_accountEntryERC": "ACCNT-006"
+		},
+		{
+			"externalReferenceCode": "PRJCT-007",
+			"name": "Cloud Native Project",
+			"r_accountEntryToProject_accountEntryERC": "ACCNT-007"
+		},
+		{
+			"externalReferenceCode": "PRJCT-008",
+			"name": "Business Plan Project",
+			"r_accountEntryToProject_accountEntryERC": "ACCNT-008"
+		},
+		{
+			"externalReferenceCode": "PRJCT-009",
+			"name": "Pro Plan Project",
+			"r_accountEntryToProject_accountEntryERC": "ACCNT-009"
+		},
+		{
+			"externalReferenceCode": "PRJCT-010",
+			"name": "Enterprise Plan Project",
+			"r_accountEntryToProject_accountEntryERC": "ACCNT-010"
+		},
+		{
+			"externalReferenceCode": "PRJCT-011",
+			"name": "Self-Hosted Project",
+			"r_accountEntryToProject_accountEntryERC": "ACCNT-011"
+		},
+		{
+			"externalReferenceCode": "PRJCT-012",
+			"name": "Commerce Project",
+			"r_accountEntryToProject_accountEntryERC": "ACCNT-012"
+		},
+		{
+			"externalReferenceCode": "PRJCT-013",
+			"name": "Analytics Cloud Project",
+			"r_accountEntryToProject_accountEntryERC": "ACCNT-013"
+		},
+		{
+			"externalReferenceCode": "PRJCT-014",
+			"name": "Enterprise Search Project",
+			"r_accountEntryToProject_accountEntryERC": "ACCNT-014"
+		},
+		{
+			"externalReferenceCode": "PRJCT-015",
+			"name": "Portal Project",
+			"r_accountEntryToProject_accountEntryERC": "ACCNT-015"
+		},
+		{
+			"externalReferenceCode": "PRJCT-016",
+			"name": "Partner Project",
+			"r_accountEntryToProject_accountEntryERC": "ACCNT-016"
+		},
+		{
+			"externalReferenceCode": "PRJCT-017",
+			"name": "Partner FLS Project",
+			"r_accountEntryToProject_accountEntryERC": "ACCNT-017"
+		},
+		{
+			"externalReferenceCode": "PRJCT-018",
+			"name": "Partner OEM Project",
+			"r_accountEntryToProject_accountEntryERC": "ACCNT-018"
+		},
+		{
+			"externalReferenceCode": "PRJCT-019",
+			"name": "EWSA Project",
+			"r_accountEntryToProject_accountEntryERC": "ACCNT-019"
+		},
+		{
+			"externalReferenceCode": "PRJCT-020",
+			"name": "Liferay Supplier Project",
+			"r_accountEntryToProject_accountEntryERC": "ACCNT-020"
+		},
+		{
+			"externalReferenceCode": "PRJCT-021",
+			"name": "Test Supplier Project",
+			"r_accountEntryToProject_accountEntryERC": "ACCNT-021"
+		}
+	],
+	"objectDefinitionName": "Project"
+}

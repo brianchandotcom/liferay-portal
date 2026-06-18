@@ -1,0 +1,81 @@
+[
+	{
+		"ddmFormFieldTypeName": "radio",
+		"description": "Apps that are not DXP or Cloud can be licensed using this base type.",
+		"externalReferenceCode": "LO_OPTION_BASE_LICENSE_USAGE",
+		"facetable": false,
+		"fieldType": "radio",
+		"key": "base-license-usage-type",
+		"name": "Base License Usage Type",
+		"required": true,
+		"skuContributor": true,
+		"values": [
+			{
+				"externalReferenceCode": "LO_OPTION_BASE_LICENSE_USAGE_DEVELOPER",
+				"key": "developer",
+				"name": "Developer",
+				"priority": 0
+			},
+			{
+				"externalReferenceCode": "LO_OPTION_BASE_LICENSE_USAGE_STANDARD",
+				"key": "standard",
+				"name": "Standard",
+				"priority": 1
+			}
+		]
+	},
+	{
+		"ddmFormFieldTypeName": "radio",
+		"description": "Apps that run on Liferay Cloud can be licensed using this type.",
+		"externalReferenceCode": "LO_OPTION_CLOUD_LICENSE_USAGE",
+		"facetable": false,
+		"key": "cloud-license-usage-type",
+		"name": "Cloud License Usage Type",
+		"required": true,
+		"skuContributor": true,
+		"values": [
+			{
+				"externalReferenceCode": "LO_OPTION_CLOUD_LICENSE_USAGE_STANDARD",
+				"key": "standard",
+				"name": "Standard",
+				"priority": 0
+			},
+			{
+				"externalReferenceCode": "LO_OPTION_CLOUD_LICENSE_USAGE_TRIAL",
+				"key": "trial",
+				"name": "Trial",
+				"priority": 1
+			}
+		]
+	},
+	{
+		"ddmFormFieldTypeName": "radio",
+		"description": "Apps built for Liferay DXP can be licensed using this type.",
+		"externalReferenceCode": "LO_OPTION_DXP_LICENSE_USAGE",
+		"facetable": false,
+		"key": "dxp-license-usage-type",
+		"name": "DXP License Usage Type",
+		"required": true,
+		"skuContributor": true,
+		"values": [
+			{
+				"externalReferenceCode": "LO_OPTION_DXP_LICENSE_USAGE_DEVELOPER",
+				"key": "developer",
+				"name": "Developer",
+				"priority": 0
+			},
+			{
+				"externalReferenceCode": "LO_OPTION_DXP_LICENSE_USAGE_STANDARD",
+				"key": "standard",
+				"name": "Standard",
+				"priority": 1
+			},
+			{
+				"externalReferenceCode": "LO_OPTION_DXP_LICENSE_USAGE_TRIAL",
+				"key": "trial",
+				"name": "Trial",
+				"priority": 2
+			}
+		]
+	}
+]

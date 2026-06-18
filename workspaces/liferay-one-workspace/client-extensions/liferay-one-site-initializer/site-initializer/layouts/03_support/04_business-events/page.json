@@ -1,0 +1,11 @@
+{
+	"friendlyURL": "/support/business-events",
+	"hidden": false,
+	"name": "Business Events",
+	"name_i18n": {
+		"en_US": "Business Events"
+	},
+	"private": false,
+	"system": false,
+	"type": "Content"
+}

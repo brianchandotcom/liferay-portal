@@ -9,6 +9,7 @@ import {ApiHelpers, DataApiHelpers} from './ApiHelpers';
 export type PageData = {
 	author?: string;
 	pageURL: string;
+	state?: number;
 	title?: string;
 	type?: string;
 };
@@ -39,6 +40,23 @@ export class SEOStudioApiHelper {
 		this.basePath = 'seo-studio/';
 	}
 
+	async addPages(
+		scan: Scan,
+		insightTypeId: number,
+		pages: PageData[]
+	): Promise<void> {
+		for (const page of pages) {
+			const seoStudioPage = await this._postPage(scan, page);
+
+			await this._postScanInsight(
+				scan,
+				insightTypeId,
+				seoStudioPage.id,
+				page.state
+			);
+		}
+	}
+
 	async createInsights(
 		scan: Scan,
 		insightTypes: InsightType[]
@@ -56,20 +74,15 @@ export class SEOStudioApiHelper {
 				id: insightType.id,
 			});
 
-			for (const pageInput of insightTypeInput.pageURLs) {
-				const pageData: PageData =
+			await this.addPages(
+				scan,
+				insightType.id,
+				insightTypeInput.pageURLs.map((pageInput) =>
 					typeof pageInput === 'string'
 						? {pageURL: pageInput}
-						: pageInput;
-
-				const seoStudioPage = await this._postPage(scan, pageData);
-
-				await this._postScanInsight(
-					scan,
-					insightType.id,
-					seoStudioPage.id
-				);
-			}
+						: pageInput
+				)
+			);
 		}
 
 		return createdInsightTypes;
@@ -188,7 +201,8 @@ export class SEOStudioApiHelper {
 	private async _postScanInsight(
 		scan: Scan,
 		insightTypeId: number,
-		pageId: number
+		pageId: number,
+		state?: number
 	) {
 		return this.apiHelpers.post(this._url('scan-insights'), {
 			data: {
@@ -200,6 +214,7 @@ export class SEOStudioApiHelper {
 				r_seoStudioPageToSEOStudioScanInsights_seoStudioPageId: pageId,
 				r_seoStudioScanToSEOStudioScanInsights_seoStudioScanId:
 					scan.scanId,
+				...(state === undefined ? {} : {state}),
 			},
 			failOnStatusCode: true,
 		});

@@ -26,7 +26,7 @@ const MemberCell: React.FC<IMemberCellProps> = ({className, data, routeFn}) => {
 
 	return (
 		<td className={getCN('name-cell-root', className)}>
-			<div className="text-dark">
+			<div className="text-dark text-truncate">
 				<Text size={3} weight="semi-bold">
 					{routeFn ? (
 						<Link className="text-dark" href={routeFn({data})}>
@@ -38,9 +38,11 @@ const MemberCell: React.FC<IMemberCellProps> = ({className, data, routeFn}) => {
 				</Text>
 			</div>
 			{!anonymous && (
-				<Text color="secondary" size={3}>
-					{resolvedEmail}
-				</Text>
+				<div className="text-truncate">
+					<Text color="secondary" size={3}>
+						{resolvedEmail}
+					</Text>
+				</div>
 			)}
 		</td>
 	);

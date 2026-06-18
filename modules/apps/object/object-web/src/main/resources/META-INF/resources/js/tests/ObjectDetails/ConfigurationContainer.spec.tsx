@@ -38,7 +38,7 @@ const TOGGLES_DISABLED_FOR_SYSTEM_UNMODIFIABLE = ALL_TOGGLES.filter(
 describe('The ConfigurationContainer', () => {
 	beforeEach(() => {
 		global.Liferay = {
-			FeatureFlags: {'LPD-17564': true, 'LPD-69877': true},
+			FeatureFlags: {'LPD-17564': true},
 			Language: {
 				get: jest.fn((key) => key),
 			},

@@ -1324,7 +1324,8 @@ public class PatcherBuildUtil {
 	public static void savePatcherBuild(
 			User user, PatcherBuild parentPatcherBuild,
 			Map<Long, List<Long>> patcherProjectVersionIdPatcherFixIdsMap,
-			boolean mergeOnly, String accountEntryCode)
+			boolean mergeOnly, String accountEntryCode,
+			boolean useExistingHotfix)
 		throws Exception {
 
 		saveParentPatcherBuild(
@@ -1352,7 +1353,8 @@ public class PatcherBuildUtil {
 					parentPatcherBuild, entry.getValue(), entry.getKey());
 			}
 
-			updatePatcherBuildFixes(user, patcherBuild, entry.getValue());
+			updatePatcherBuildFixes(
+				user, patcherBuild, entry.getValue(), useExistingHotfix);
 		}
 
 		List<BaseModel<?>> sendToJenkinsBaseModels =
@@ -1380,6 +1382,17 @@ public class PatcherBuildUtil {
 	public static void savePatcherBuild(
 			User user, PatcherBuild patcherBuild, String accountEntryCode,
 			String supportTicket, boolean smokeTestOnly, boolean mergeOnly)
+		throws Exception {
+
+		savePatcherBuild(
+			user, patcherBuild, accountEntryCode, supportTicket, smokeTestOnly,
+			mergeOnly, false);
+	}
+
+	public static void savePatcherBuild(
+			User user, PatcherBuild patcherBuild, String accountEntryCode,
+			String supportTicket, boolean smokeTestOnly, boolean mergeOnly,
+			boolean useExistingHotfix)
 		throws Exception {
 
 		patcherBuild.setSupportTicket(supportTicket);
@@ -1420,7 +1433,7 @@ public class PatcherBuildUtil {
 
 		savePatcherBuild(
 			user, patcherBuild, patcherProjectVersionIdPatcherFixIdsMap,
-			mergeOnly, accountEntryCode);
+			mergeOnly, accountEntryCode, useExistingHotfix);
 
 		reindexRelatedModels(patcherBuild);
 	}
@@ -1515,6 +1528,14 @@ public class PatcherBuildUtil {
 			User user, PatcherBuild patcherBuild, List<Long> patcherFixIds)
 		throws Exception {
 
+		updatePatcherBuildFixes(user, patcherBuild, patcherFixIds, false);
+	}
+
+	public static void updatePatcherBuildFixes(
+			User user, PatcherBuild patcherBuild, List<Long> patcherFixIds,
+			boolean useExistingHotfix)
+		throws Exception {
+
 		PatcherFixLocalServiceUtil.clearPatcherBuildPatcherFixes(
 			patcherBuild.getPatcherBuildId());
 
@@ -1528,7 +1549,9 @@ public class PatcherBuildUtil {
 
 			patcherBuild.setPatcherFixId(patcherFixIds.get(0));
 
-			updatePatcherBuildStatusMergeComplete(user, patcherBuild);
+			if (!useExistingHotfix) {
+				updatePatcherBuildStatusMergeComplete(user, patcherBuild);
+			}
 
 			return;
 		}

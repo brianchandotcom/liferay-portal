@@ -72,18 +72,21 @@ public class AddBuildsMVCActionCommand extends BaseMVCActionCommand {
 
 		patcherBuildValidator.validateAdd();
 
+		boolean useExistingHotfix = ParamUtil.getBoolean(
+			actionRequest, "useExistingHotfix");
+
 		PatcherBuild patcherBuild =
 			_patcherBuildLocalService.preparePatcherBuild(
 				themeDisplay.getUserId(), patcherProductVersionId,
 				patcherProjectVersionId, accountEntryCode, type,
-				themeDisplay.getLocale(), patcherBuildName,
-				ParamUtil.getBoolean(actionRequest, "useExistingHotfix"));
+				themeDisplay.getLocale(), patcherBuildName, useExistingHotfix);
 
 		PatcherBuildUtil.savePatcherBuild(
 			themeDisplay.getUser(), patcherBuild, accountEntryCode,
 			supportTicket,
 			ParamUtil.getBoolean(actionRequest, "smokeTestOnly", true),
-			ParamUtil.getBoolean(actionRequest, "mergeOnly"));
+			ParamUtil.getBoolean(actionRequest, "mergeOnly"),
+			useExistingHotfix);
 
 		sendRedirect(
 			actionRequest, actionResponse,

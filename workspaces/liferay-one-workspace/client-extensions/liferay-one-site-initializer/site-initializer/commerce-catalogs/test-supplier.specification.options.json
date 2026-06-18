@@ -1,7 +1,7 @@
 [
 	{
 		"categoryKey": "app-support-and-help",
-		"description": "URL for the API Documentation",
+		"description": "This is the URL for the API documentation.",
 		"facetable": false,
 		"key": "app-api-reference-url",
 		"title": "App API Reference URL"
@@ -50,35 +50,35 @@
 	},
 	{
 		"categoryKey": "product-metadata",
-		"description": "Latest Liferay Version Supported",
+		"description": "This is the latest Liferay version supported.",
 		"facetable": false,
 		"key": "current-requirements",
 		"title": "Current Requirements"
 	},
 	{
 		"categoryKey": "product-metadata",
-		"description": "Developer Name",
+		"description": "This is the developer name.",
 		"facetable": true,
 		"key": "developer-name",
 		"title": "Developer Name"
 	},
 	{
 		"categoryKey": "pricing-licensing-terms",
-		"description": "Latest version for the app or solution.",
+		"description": "This is the latest version for the app or solution.",
 		"facetable": false,
 		"key": "latest-version",
 		"title": "Latest Version"
 	},
 	{
 		"categoryKey": "pricing-licensing-terms",
-		"description": "Length of the trial",
+		"description": "This is the length of the trial.",
 		"facetable": false,
 		"key": "license-term",
 		"title": "License Term"
 	},
 	{
 		"categoryKey": "pricing-licensing-terms",
-		"description": "License Type",
+		"description": "This is the license type.",
 		"facetable": false,
 		"key": "license-type",
 		"title": "License Type"
@@ -99,21 +99,21 @@
 	},
 	{
 		"categoryKey": "product-metadata",
-		"description": "Compatible Liferay Release Version",
+		"description": "This is the compatible Liferay release version.",
 		"facetable": true,
 		"key": "liferay-version",
 		"title": "Liferay Version"
 	},
 	{
 		"categoryKey": "pricing-licensing-terms",
-		"description": "Lifetime license offered?",
+		"description": "This indicates whether a lifetime license is offered.",
 		"facetable": false,
 		"key": "lifetime-license",
 		"title": "Lifetime License"
 	},
 	{
 		"categoryKey": "resource-requirements",
-		"description": "Number of CPUs to Resource Requirements",
+		"description": "This is the number of CPUs for the resource requirements.",
 		"facetable": true,
 		"key": "number-of-cpus",
 		"title": "Number of CPUs"
@@ -127,35 +127,35 @@
 	},
 	{
 		"categoryKey": "product-metadata",
-		"description": "Past Versions this product has worked with",
+		"description": "These are the past versions this product has worked with.",
 		"facetable": false,
 		"key": "past-versions-work-with",
 		"title": "Past Versions Work With"
 	},
 	{
 		"categoryKey": "pricing-licensing-terms",
-		"description": "Whether the app is Free, Paid or Bundled",
+		"description": "This indicates whether the app is free, paid, or bundled.",
 		"facetable": true,
 		"key": "price-model",
 		"title": "Price Model"
 	},
 	{
 		"categoryKey": "product-metadata",
-		"description": "Total number of downloads for this product",
+		"description": "This is the total number of downloads for this product.",
 		"facetable": false,
 		"key": "product-downloads",
 		"title": "Product Downloads"
 	},
 	{
 		"categoryKey": "product-metadata",
-		"description": "General notes about the app or solution.",
+		"description": "These are general notes about the app or solution.",
 		"facetable": false,
 		"key": "product-notes",
 		"title": "Product Notes"
 	},
 	{
 		"categoryKey": "product-metadata",
-		"description": "Name of the primary app publisher",
+		"description": "This is the name of the primary app publisher.",
 		"facetable": false,
 		"key": "publisher-name",
 		"title": "Publisher Name"
@@ -169,91 +169,91 @@
 	},
 	{
 		"categoryKey": "resource-requirements",
-		"description": "RAM in GB to Resource Requirements",
+		"description": "This is the RAM in GB for the resource requirements.",
 		"facetable": true,
 		"key": "ram-in-gb",
 		"title": "RAM in GB"
 	},
 	{
 		"categoryKey": "solution-metadata",
-		"description": "Solution company description",
+		"description": "This is the solution company description.",
 		"facetable": true,
 		"key": "solution-company-description",
 		"title": "Solution Company Description"
 	},
 	{
 		"categoryKey": "solution-metadata",
-		"description": "Solution company email",
+		"description": "This is the solution company email.",
 		"facetable": true,
 		"key": "solution-company-email",
 		"title": "Solution Company Email"
 	},
 	{
 		"categoryKey": "solution-metadata",
-		"description": "Solution company phone",
+		"description": "This is the solution company phone.",
 		"facetable": true,
 		"key": "solution-company-phone",
 		"title": "Solution Company Phone"
 	},
 	{
 		"categoryKey": "solution-metadata",
-		"description": "Solution company website",
+		"description": "This is the solution company website.",
 		"facetable": true,
 		"key": "solution-company-website",
 		"title": "Solution Company Website"
 	},
 	{
 		"categoryKey": "solution-metadata",
-		"description": "Solution contact email",
+		"description": "This is the solution contact email.",
 		"facetable": true,
 		"key": "solution-contact-email",
 		"title": "Solution Contact Email"
 	},
 	{
 		"categoryKey": "solution-metadata",
-		"description": "Solution details blocks",
+		"description": "These are the solution details blocks.",
 		"facetable": true,
 		"key": "solution-details-blocks",
 		"title": "Solution Details Blocks"
 	},
 	{
 		"categoryKey": "solution-metadata",
-		"description": "Solution header description",
+		"description": "This is the solution header description.",
 		"facetable": true,
 		"key": "solution-header-description",
 		"title": "Solution Header Description"
 	},
 	{
 		"categoryKey": "solution-metadata",
-		"description": "Solution header title",
+		"description": "This is the solution header title.",
 		"facetable": true,
 		"key": "solution-header-title",
 		"title": "Solution Header Title"
 	},
 	{
 		"categoryKey": "solution-metadata",
-		"description": "Solution header video description",
+		"description": "This is the solution header video description.",
 		"facetable": true,
 		"key": "solution-header-video-description",
 		"title": "Solution Header Video Description"
 	},
 	{
 		"categoryKey": "solution-metadata",
-		"description": "Solution header video url",
+		"description": "This is the solution header video URL.",
 		"facetable": true,
 		"key": "solution-header-video-url",
 		"title": "Solution Header Video URL"
 	},
 	{
 		"categoryKey": "solution-metadata",
-		"description": "Solution header title",
+		"description": "This is the solution type.",
 		"facetable": false,
 		"key": "solution-type",
 		"title": "Solution Type"
 	},
 	{
 		"categoryKey": "app-support-and-help",
-		"description": "URL of source code",
+		"description": "This is the URL of the source code.",
 		"facetable": false,
 		"key": "source-code-url",
 		"title": "Source Code URL"

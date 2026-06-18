@@ -44,4 +44,32 @@ describe('IndividualProfileRoutes', () => {
 
 		expect(container).toMatchSnapshot();
 	});
+
+	it('renders the individual name at the top of the page', () => {
+		window.location = {pathname: '/'};
+
+		const individual = data.getImmutableMock(
+			Individual,
+			data.mockIndividual
+		);
+
+		const {container} = render(
+			<Provider store={mockStore()}>
+				<ChannelContext.Provider value={mockChannelContext()}>
+					<DataSourcesProvider groupId={defaultProps.groupId}>
+						<BrowserRouter>
+							<IndividualProfileRoutes
+								{...defaultProps}
+								individual={individual}
+							/>
+						</BrowserRouter>
+					</DataSourcesProvider>
+				</ChannelContext.Provider>
+			</Provider>
+		);
+
+		expect(container.querySelector('h1.title')).toHaveTextContent(
+			individual.name
+		);
+	});
 });

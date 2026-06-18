@@ -4,7 +4,7 @@
 
 - portal-core changed: `portal-impl/**`, `portal-kernel/**`, `portal-test/**`, `portal-web/**`, `support-tomcat/**`, `util-bridges/**`, `util-java/**`, `util-slf4j/**`, `util-taglib/**`. Mandatory in this case — no Gradle deploy path covers these sources.
 
-	A portal-core change consisting solely of `*.properties` files — for example, a feature-flag line added to `portal-impl/src/portal.properties` — does not fire this validation. Properties carry no compilable source, and they remain covered by Source Format and Structural Smoke.
+	A portal-core change of only `*.properties` files does not fire this validation. `ant all` gives no signal for them, and **Source Format** covers them instead.
 
 - OR the deploy set is large enough that one full build is cheaper than per-module deploys. Compare:
 

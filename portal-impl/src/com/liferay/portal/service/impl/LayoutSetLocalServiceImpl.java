@@ -339,8 +339,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 		try {
 			Sites sites = _sitesSnapshot.get();
 
-			sites.mergeLayoutSetPrototypeLayouts(
-				_groupPersistence.findByPrimaryKey(groupId), layoutSet);
+			sites.mergeLayoutSetPrototypeLayouts(layoutSet);
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {

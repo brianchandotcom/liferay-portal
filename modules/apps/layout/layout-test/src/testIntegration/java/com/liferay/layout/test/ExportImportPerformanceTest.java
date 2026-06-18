@@ -292,8 +292,7 @@ public class ExportImportPerformanceTest {
 		try (Closeable closeable = new PerformanceTimer(_logFilePath, 1000)) {
 			MergeLayoutPrototypesThreadLocal.clearMergeComplete();
 
-			_sites.mergeLayoutSetPrototypeLayouts(
-				_group, _group.getPublicLayoutSet());
+			_sites.mergeLayoutSetPrototypeLayouts(_group.getPublicLayoutSet());
 		}
 	}
 

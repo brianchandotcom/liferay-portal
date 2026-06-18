@@ -619,7 +619,7 @@ public class LayoutFriendlyURLTest {
 			Group group, LayoutSet layoutSet, Layout layoutSetPrototypeLayout)
 		throws Exception {
 
-		_sites.mergeLayoutSetPrototypeLayouts(group, layoutSet);
+		_sites.mergeLayoutSetPrototypeLayouts(layoutSet);
 
 		Layout groupLayout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
 			layoutSetPrototypeLayout.getUuid(), group.getGroupId(),

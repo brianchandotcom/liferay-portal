@@ -578,6 +578,72 @@ test(
 );
 
 test(
+	'A custom event attribute shows its sample data and data type, and a display name over 255 characters is rejected',
+	{tag: '@LRAC-10011'},
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
+		const attributes = [
+			{dataType: 'STRING', name: 'category', value: 'wetsuit'},
+			{dataType: 'NUMBER', name: 'price', value: '259.95'},
+			{
+				dataType: 'DATE',
+				name: 'birthdate',
+				value: '2021-11-25T14:36:30.685Z',
+			},
+			{dataType: 'BOOLEAN', name: 'like', value: 'true'},
+		];
+
+		await createCustomEvent({
+			apiHelpers,
+			attributes,
+			channelId: channel.id,
+			eventName: 'event' + getRandomString(),
+		});
+
+		async function openAttribute(attributeName: string) {
+			await navigateToACSettingsViaURL({
+				acPage: ACPage.eventAttributesPage,
+				page,
+				projectID: project.groupId,
+			});
+
+			await page
+				.getByRole('link', {exact: true, name: 'Attributes'})
+				.click();
+
+			await page.getByPlaceholder('Search').fill(attributeName);
+
+			await page.keyboard.press('Enter');
+
+			await page
+				.getByRole('link', {exact: true, name: attributeName})
+				.click();
+		}
+
+		// Each attribute shows its ingested sample value and its data type
+
+		for (const {dataType, name, value} of attributes) {
+			await openAttribute(name);
+
+			await expect(page.getByText(value, {exact: true})).toBeVisible();
+
+			await expect(page.getByText(dataType, {exact: true})).toBeVisible();
+		}
+
+		// A display name longer than 255 characters is rejected
+
+		await openAttribute('category');
+
+		await page.getByRole('button', {name: 'Edit'}).click();
+
+		await page.getByLabel('Display Name').fill('a'.repeat(256));
+
+		await page.getByLabel('Display Name').blur();
+
+		await expect(page.getByText('Exceeds maximum length.')).toBeVisible();
+	}
+);
+
+test(
 	'Global attributes can be searched and an unknown name yields no results',
 	{tag: '@LRAC-10217'},
 	async ({page, project}) => {

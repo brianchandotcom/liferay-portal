@@ -49,6 +49,16 @@ public class LayoutPageTemplateStructureRelElementVariationServiceImpl
 				targetElement, serviceContext);
 	}
 
+	public void deleteLayoutPageTemplateStructureRelElementVariations(long plid)
+		throws PortalException {
+
+		_layoutModelResourcePermission.check(
+			getPermissionChecker(), plid, ActionKeys.UPDATE);
+
+		layoutPageTemplateStructureRelElementVariationLocalService.
+			deleteLayoutPageTemplateStructureRelElementVariations(plid);
+	}
+
 	@Reference(
 		target = "(model.class.name=com.liferay.portal.kernel.model.Layout)"
 	)

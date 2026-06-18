@@ -77,6 +77,13 @@ public class LayoutPageTemplateStructureRelElementVariationLocalServiceImpl
 			layoutPageTemplateStructureRelElementVariation);
 	}
 
+	public void deleteLayoutPageTemplateStructureRelElementVariations(
+		long plid) {
+
+		layoutPageTemplateStructureRelElementVariationPersistence.removeByPlid(
+			plid);
+	}
+
 	@Reference
 	private UserLocalService _userLocalService;
 

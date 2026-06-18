@@ -21,7 +21,7 @@
 			</p>
 		[/#if]
 
-		<p class="font-weight-semi-bold mt-1 text-danger[#if !input.errorMessage?has_content] sr-only[/#if]" id="${fragmentElementId}-text-input-error">
+		<p class="font-weight-semi-bold mt-1 text-3 text-danger[#if !input.errorMessage?has_content] sr-only[/#if]" id="${fragmentElementId}-text-input-error">
 			[@clay["icon"] symbol="info-circle" /]
 
 			<span data-length-feedback="${languageUtil.get(locale, "maximum-number-of-characters-exceeded")}" data-valid-feedback="${languageUtil.get(locale, "current-text-length-is-valid")}" id="${fragmentElementId}-text-input-error-message" role="alert">

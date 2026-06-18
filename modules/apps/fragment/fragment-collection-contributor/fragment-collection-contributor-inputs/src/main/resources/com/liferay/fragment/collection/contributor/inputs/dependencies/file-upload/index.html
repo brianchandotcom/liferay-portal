@@ -46,7 +46,7 @@
 			</div>
 		[/#if]
 
-		<p class="font-weight-semi-bold mt-1 text-danger[#if !input.errorMessage?has_content] sr-only[/#if]" id="${fragmentElementId}-file-upload-error">
+		<p class="font-weight-semi-bold mt-1 text-3 text-danger[#if !input.errorMessage?has_content] sr-only[/#if]" id="${fragmentElementId}-file-upload-error">
 			[@clay["icon"] symbol="info-circle" /]
 
 			<span data-file-size-feedback="${languageUtil.format(locale, "please-enter-a-file-with-a-valid-file-size-no-larger-than-x-mb", input.attributes.maxFileSize!"")}" id="${fragmentElementId}-file-upload-error-message" role="alert">

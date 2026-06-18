@@ -45,8 +45,7 @@ public class CustomFacetPortletPreferencesImplTest {
 			new CustomFacetPortletPreferencesImpl(portletPreferences);
 
 		Assert.assertEquals(
-			"userName",
-			seoPortletPreferences.getSEOParameterName());
+			"userName", seoPortletPreferences.getSEOParameterName());
 	}
 
 	@Test
@@ -65,8 +64,7 @@ public class CustomFacetPortletPreferencesImplTest {
 			new CustomFacetPortletPreferencesImpl(portletPreferences);
 
 		Assert.assertEquals(
-			"customParameter",
-			seoPortletPreferences.getSEOParameterName());
+			"customParameter", seoPortletPreferences.getSEOParameterName());
 	}
 
 	private void _mockValue(

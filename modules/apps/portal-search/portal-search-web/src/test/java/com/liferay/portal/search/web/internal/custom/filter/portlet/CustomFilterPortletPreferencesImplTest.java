@@ -45,8 +45,7 @@ public class CustomFilterPortletPreferencesImplTest {
 			new CustomFilterPortletPreferencesImpl(portletPreferences);
 
 		Assert.assertEquals(
-			"modified",
-			seoPortletPreferences.getSEOParameterName());
+			"modified", seoPortletPreferences.getSEOParameterName());
 	}
 
 	@Test
@@ -65,8 +64,7 @@ public class CustomFilterPortletPreferencesImplTest {
 			new CustomFilterPortletPreferencesImpl(portletPreferences);
 
 		Assert.assertEquals(
-			"customParameter",
-			seoPortletPreferences.getSEOParameterName());
+			"customParameter", seoPortletPreferences.getSEOParameterName());
 	}
 
 	private void _mockValue(

@@ -3,6 +3,8 @@ defaults:
         shell: bash
 jobs:
     promote:
+        outputs:
+            sha256: ${{steps.promote.outputs.sha256}}
         permissions:
             contents: read
             id-token: write
@@ -26,6 +28,7 @@ jobs:
                     project_id: ${{vars.GCP_PROJECT_ID_EXTERNAL_PRODUCTION}}
             -   env:
                     BOOTSTRAP_STORAGE_PATH_PRODUCTION: ${{vars.BOOTSTRAP_STORAGE_PATH_PRODUCTION}}
+                id: promote
                 name: Promote bootstrap tarball
                 run: |
                     set -o errexit
@@ -64,6 +67,12 @@ jobs:
                                 cp \
                                 "/tmp/${destination_object_basename}.sha256" \
                                 "${BOOTSTRAP_STORAGE_PATH_PRODUCTION}/liferay-${{inputs.provider}}-bootstrap/${destination_object_basename}.sha256"
+
+                        local sha256
+
+                        sha256=$(cut --delimiter=' ' --fields=1 < "/tmp/${destination_object_basename}.sha256")
+
+                        echo "sha256=${sha256}" >> ${GITHUB_OUTPUT}
                     }
 
                     main "${@}"
@@ -76,6 +85,9 @@ on:
             source_object_name:
                 required: true
                 type: string
+        outputs:
+            sha256:
+                value: ${{jobs.promote.outputs.sha256}}
 permissions:
     contents: read
     id-token: write

@@ -13,11 +13,20 @@ public class OAuthClientWebKeys {
 	public static final String AUTHORIZATION_ENDPOINT =
 		"AUTHORIZATION_ENDPOINT";
 
+	public static final String AUTHORIZATION_SERVERS = "AUTHORIZATION_SERVERS";
+
+	public static final String BEARER_METHODS_SUPPORTED =
+		"BEARER_METHODS_SUPPORTED";
+
 	public static final String EXPANDO_COLUMNS = "EXPANDO_COLUMNS";
 
 	public static final String JWKS_URI = "JWKS_URI";
 
 	public static final String REGISTRATION_ENDPOINT = "REGISTRATION_ENDPOINT";
+
+	public static final String RESOURCE_NAME = "RESOURCE_NAME";
+
+	public static final String SCOPES_SUPPORTED = "SCOPES_SUPPORTED";
 
 	public static final String SUPPORTED_GRANT_TYPES = "SUPPORTED_GRANT_TYPES";
 

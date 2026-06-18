@@ -8,12 +8,8 @@ package com.liferay.portal.osgi.web.wab.generator.internal.artifact;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.File;
-import java.io.FileOutputStream;
 
 import java.nio.file.Files;
-
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -42,7 +38,7 @@ public class WarArtifactUrlTransformerTest {
 
 		File file = temporaryFolder.newFile("clientextension.zip");
 
-		_zipDirToFile(dir, file);
+		ZipTestUtil.zipDirToFile(dir, file);
 
 		WarArtifactUrlTransformer warArtifactUrlTransformer =
 			new WarArtifactUrlTransformer();
@@ -62,24 +58,6 @@ public class WarArtifactUrlTransformerTest {
 
 		Assert.assertFalse(
 			warArtifactUrlTransformer.canTransformURL(clientExtensionZipFile));
-	}
-
-	private void _zipDirToFile(File dir, File zipFile) throws Exception {
-		try (ZipOutputStream zipOutputStream = new ZipOutputStream(
-				new FileOutputStream(zipFile))) {
-
-			for (File file : dir.listFiles()) {
-				ZipEntry zipEntry = new ZipEntry(file.getName());
-
-				zipOutputStream.putNextEntry(zipEntry);
-
-				byte[] bytes = Files.readAllBytes(file.toPath());
-
-				zipOutputStream.write(bytes, 0, bytes.length);
-
-				zipOutputStream.closeEntry();
-			}
-		}
 	}
 
 }

@@ -62,13 +62,13 @@
 							</div>
 
 							<#if capabilities?has_content>
-								<ul class="list-unstyled mb-0">
+								<ul class="card-bullet-list list-unstyled mb-0">
 									<#list capabilities as tag>
 										<#if tag?trim?has_content>
 											<li class="card-bullet-item d-flex align-items-start small">
-												<span class="card-bullet-icon d-flex align-items-center flex-shrink-0 justify-content-center">
+												<span class="card-bullet-icon d-flex align-items-center flex-shrink-0 justify-content-center text-primary">
 													<svg fill="none" height="14" viewBox="0 0 14 14" width="14" xmlns="http://www.w3.org/2000/svg">
-														<path d="M2.5 7L5.5 10L11.5 4" stroke="#0B5FFF" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" />
+														<path d="M2.5 7L5.5 10L11.5 4" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" />
 													</svg>
 												</span>
 												<span>${tag}</span>

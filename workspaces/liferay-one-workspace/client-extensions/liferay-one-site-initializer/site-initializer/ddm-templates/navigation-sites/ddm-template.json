@@ -1,6 +1,6 @@
 {
 	"className": "com.liferay.portal.kernel.theme.NavItem",
-	"ddmTemplateKey": "LO_SIDE_NAV",
-	"name": "Liferay One Side Nav",
+	"ddmTemplateKey": "NAVIGATION_SITES",
+	"name": "Navigation Sites",
 	"resourceClassName": "com.liferay.portlet.display.template.PortletDisplayTemplate"
 }

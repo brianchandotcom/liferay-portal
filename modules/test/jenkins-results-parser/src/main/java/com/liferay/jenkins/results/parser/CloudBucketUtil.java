@@ -304,6 +304,9 @@ public class CloudBucketUtil {
 
 		sb.append("gcloud storage sign-url ");
 		sb.append(url);
+		sb.append(" --duration=");
+		sb.append(duration);
+		sb.append("m");
 
 		String authenticationCommand = null;
 
@@ -335,10 +338,6 @@ public class CloudBucketUtil {
 						"serviceAccount"));
 			}
 		}
-
-		sb.append(" --duration=");
-		sb.append(duration);
-		sb.append("m");
 
 		try {
 			Process process = JenkinsResultsParserUtil.executeBashCommands(

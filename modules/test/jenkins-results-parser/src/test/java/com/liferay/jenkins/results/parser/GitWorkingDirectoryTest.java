@@ -29,11 +29,11 @@ public class GitWorkingDirectoryTest
 		Shell shell = mockShell();
 
 		setShellCommandOutput(
-			shell, "git remote -v",
+			"git remote -v", shell,
 			"upstream\tgit@github.com:liferay/liferay-portal.git (fetch)\n" +
 				"upstream\tgit@github.com:liferay/liferay-portal.git (push)\n");
 
-		setShellCommandOutput(shell, "git rev-parse master", _LOCAL_BRANCH_SHA);
+		setShellCommandOutput("git rev-parse master", shell, _LOCAL_BRANCH_SHA);
 
 		GitWorkingDirectory gitWorkingDirectory =
 			GitWorkingDirectoryFactory.newGitWorkingDirectory(

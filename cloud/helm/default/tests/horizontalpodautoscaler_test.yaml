@@ -9,7 +9,7 @@ tests:
             -   equal:
                     path: spec.scaleTargetRef.name
                     value: my-portal
-        it: should name the HorizontalPodAutoscaler after the chart name override
+        it: Names the HorizontalPodAutoscaler after the chart name override
         set:
             autoscaling.enabled: true
             autoscaling.type: hpa
@@ -17,13 +17,13 @@ tests:
     -   asserts:
             -   hasDocuments:
                     count: 0
-        it: should omit the HorizontalPodAutoscaler when autoscaling is disabled
+        it: Omits the HorizontalPodAutoscaler when autoscaling is disabled
         set:
             autoscaling.enabled: false
     -   asserts:
             -   hasDocuments:
                     count: 0
-        it: should omit the HorizontalPodAutoscaler when the autoscaling type is keda
+        it: Omits the HorizontalPodAutoscaler when the autoscaling type is keda
         set:
             autoscaling.enabled: true
             autoscaling.type: keda
@@ -34,7 +34,7 @@ tests:
             -   equal:
                     path: spec.minReplicas
                     value: 3
-        it: should reflect the configured replica bounds
+        it: Reflects the configured replica bounds
         set:
             autoscaling.enabled: true
             autoscaling.hpa.maxReplicas: 7
@@ -51,7 +51,7 @@ tests:
                     count: 1
             -   isKind:
                     of: HorizontalPodAutoscaler
-        it: should render the HorizontalPodAutoscaler when autoscaling is enabled with type hpa
+        it: Renders the HorizontalPodAutoscaler when autoscaling is enabled with type hpa
         set:
             autoscaling.enabled: true
             autoscaling.type: hpa

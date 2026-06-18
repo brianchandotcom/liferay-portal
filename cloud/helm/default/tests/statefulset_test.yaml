@@ -15,7 +15,7 @@ tests:
             path: kind
             skipEmptyTemplates: true
             value: StatefulSet
-        it: should append custom container ports through the customPorts loop
+        it: Appends custom container ports through the customPorts loop
         set:
             customPorts.x-liferay-metrics:
                 -   containerPort: 9999
@@ -38,7 +38,7 @@ tests:
             path: kind
             skipEmptyTemplates: true
             value: StatefulSet
-        it: should append every custom environment variable through the customEnv loop
+        it: Appends every custom environment variable through the customEnv loop
         set:
             customEnv.x-liferay-extra:
                 -   name: BAZ
@@ -59,7 +59,7 @@ tests:
             path: kind
             skipEmptyTemplates: true
             value: StatefulSet
-        it: should name the StatefulSet and its container after the chart name override
+        it: Names the StatefulSet and its container after the chart name override
         set:
             nameOverride: my-portal
     -   asserts:
@@ -69,7 +69,7 @@ tests:
             path: kind
             skipEmptyTemplates: true
             value: StatefulSet
-        it: should omit the replica count so the autoscaler owns it when autoscaling is enabled
+        it: Omits the replica count so the autoscaler owns it when autoscaling is enabled
         set:
             autoscaling.enabled: true
     -   asserts:
@@ -80,7 +80,7 @@ tests:
             path: kind
             skipEmptyTemplates: true
             value: StatefulSet
-        it: should reflect the configured replica count
+        it: Reflects the configured replica count
         set:
             replicaCount: 3
     -   asserts:
@@ -93,7 +93,7 @@ tests:
             path: kind
             skipEmptyTemplates: true
             value: StatefulSet
-        it: should render a StatefulSet with the configured replica count when autoscaling is disabled
+        it: Renders a StatefulSet with the configured replica count when autoscaling is disabled
         set:
             autoscaling.enabled: false
             replicaCount: 3

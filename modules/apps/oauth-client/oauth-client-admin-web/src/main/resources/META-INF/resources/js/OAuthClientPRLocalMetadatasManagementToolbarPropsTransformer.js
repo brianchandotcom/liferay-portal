@@ -4,7 +4,7 @@
  */
 
 import {openConfirmModal} from 'frontend-js-components-web';
-import {postForm} from 'frontend-js-web';
+import {getCheckedCheckboxes, postForm} from 'frontend-js-web';
 
 export default function propsTransformer({
 	additionalProps: {deleteOAuthClientPRLocalMetadataURL},
@@ -26,13 +26,10 @@ export default function propsTransformer({
 							);
 
 							if (form) {
-								const ids = Array.from(
-									document.querySelectorAll(
-										`input[name="${portletNamespace}rowIds"]:checked`
-									)
-								)
-									.map((input) => input.value)
-									.join(',');
+								const ids = getCheckedCheckboxes(
+									form,
+									`${portletNamespace}allRowIds`
+								);
 
 								postForm(form, {
 									data: {

@@ -491,6 +491,30 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 		String externalReferenceCode, FragmentEntryLink fragmentEntryLink,
 		HttpServletRequest httpServletRequest) {
 
+		JSONObject editableValuesJSONObject =
+			fragmentEntryLink.getEditableValuesJSONObject();
+
+		if (editableValuesJSONObject == null) {
+			editableValuesJSONObject = _jsonFactory.createJSONObject();
+
+			fragmentEntryLink.setEditableValues(
+				editableValuesJSONObject.toString());
+		}
+
+		JSONObject configurationJSONObject =
+			editableValuesJSONObject.getJSONObject(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
+
+		if (configurationJSONObject == null) {
+			configurationJSONObject = _jsonFactory.createJSONObject();
+
+			editableValuesJSONObject.put(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+				configurationJSONObject);
+		}
+
 		Set<String> autoResolvableTokenNames = _getAutoResolvableTokenNames(
 			externalReferenceCode, httpServletRequest);
 
@@ -498,30 +522,6 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 			JSONArray jsonArray = JSONUtil.toJSONArray(
 				autoResolvableTokenNames,
 				autoResolvableTokenName -> autoResolvableTokenName);
-
-			JSONObject editableValuesJSONObject =
-				fragmentEntryLink.getEditableValuesJSONObject();
-
-			if (editableValuesJSONObject == null) {
-				editableValuesJSONObject = _jsonFactory.createJSONObject();
-
-				fragmentEntryLink.setEditableValues(
-					editableValuesJSONObject.toString());
-			}
-
-			JSONObject configurationJSONObject =
-				editableValuesJSONObject.getJSONObject(
-					FragmentEntryProcessorConstants.
-						KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
-
-			if (configurationJSONObject == null) {
-				configurationJSONObject = _jsonFactory.createJSONObject();
-
-				editableValuesJSONObject.put(
-					FragmentEntryProcessorConstants.
-						KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
-					configurationJSONObject);
-			}
 
 			configurationJSONObject.put(
 				"autoResolvableTokenNames", jsonArray.toString());

@@ -616,6 +616,103 @@ test(
 );
 
 test(
+	'A global attribute description can be set and its display name renamed',
+	{tag: '@LRAC-10212'},
+	async ({page, project}) => {
+		const globalAttributeName = 'pageTitle';
+
+		async function openGlobalAttribute() {
+			await navigateToACSettingsViaURL({
+				acPage: ACPage.definitionsEventAttributesGlobalPage,
+				page,
+				projectID: project.groupId,
+			});
+
+			await page
+				.getByRole('link', {exact: true, name: globalAttributeName})
+				.click();
+
+			await page.getByRole('button', {name: 'Edit'}).click();
+		}
+
+		try {
+
+			// The default global attributes are listed
+
+			await navigateToACSettingsViaURL({
+				acPage: ACPage.definitionsEventAttributesGlobalPage,
+				page,
+				projectID: project.groupId,
+			});
+
+			for (const defaultGlobalAttribute of [
+				'canonicalUrl',
+				'pageDescription',
+				'pageKeywords',
+				'pageTitle',
+				'referrer',
+				'url',
+			]) {
+				await expect(
+					page.getByRole('link', {
+						exact: true,
+						name: defaultGlobalAttribute,
+					})
+				).toBeVisible();
+			}
+
+			// A description can be set and it appears in the list
+
+			const description = `${globalAttributeName} Description`;
+
+			await openGlobalAttribute();
+
+			await page.getByLabel('Description').fill(description);
+
+			await saveAttributeEditor(page);
+
+			await navigateToACSettingsViaURL({
+				acPage: ACPage.definitionsEventAttributesGlobalPage,
+				page,
+				projectID: project.groupId,
+			});
+
+			await expect(page.getByText(description)).toBeVisible();
+
+			// The display name can be renamed
+
+			const displayName = `${globalAttributeName} Display Name`;
+
+			await openGlobalAttribute();
+
+			await page.getByLabel('Display Name').fill(displayName);
+
+			await saveAttributeEditor(page);
+
+			await navigateToACSettingsViaURL({
+				acPage: ACPage.definitionsEventAttributesGlobalPage,
+				page,
+				projectID: project.groupId,
+			});
+
+			await expect(page.getByText(displayName)).toBeVisible();
+		}
+		finally {
+
+			// Restore the shared project-level attribute to its defaults
+
+			await openGlobalAttribute();
+
+			await page.getByLabel('Display Name').fill(globalAttributeName);
+
+			await page.getByLabel('Description').fill('');
+
+			await saveAttributeEditor(page);
+		}
+	}
+);
+
+test(
 	'Certain default events are hidden by default',
 	{tag: '@LRAC-10222'},
 	async ({page, project}) => {

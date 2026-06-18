@@ -137,6 +137,10 @@ public abstract class BaseTopLevelBuildReport
 
 	@Override
 	public TestrayCloudObject getBuildReportTestrayCloudObject() {
+		if (!TestrayCloudBucket.hasGoogleApplicationCredentials()) {
+			return null;
+		}
+
 		JenkinsMaster jenkinsMaster = getJenkinsMaster();
 
 		TestrayCloudBucket testrayCloudBucket =

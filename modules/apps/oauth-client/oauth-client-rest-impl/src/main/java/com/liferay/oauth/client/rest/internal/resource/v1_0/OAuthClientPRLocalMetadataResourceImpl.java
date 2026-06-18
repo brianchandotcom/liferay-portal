@@ -115,11 +115,34 @@ public class OAuthClientPRLocalMetadataResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
+		String metadataJSON = oAuthClientPRLocalMetadata.getMetadataJSON();
+
+		if (Validator.isNull(metadataJSON)) {
+			throw new IllegalArgumentException("Metadata JSON is required");
+		}
+
+		JSONObject metadataJSONObject = _jsonFactory.createJSONObject(
+			metadataJSON);
+
 		com.liferay.oauth.client.persistence.model.OAuthClientPRLocalMetadata
 			serviceBuilderOAuthClientPRLocalMetadata =
-				OAuthClientPRLocalMetadataUtil.addOAuthClientPRLocalMetadata(
-					oAuthClientPRLocalMetadata,
-					_oAuthClientPRLocalMetadataService);
+				_oAuthClientPRLocalMetadataService.
+					addOAuthClientPRLocalMetadata(
+						oAuthClientPRLocalMetadata.getExternalReferenceCode(),
+						JSONUtil.toStringArray(
+							metadataJSONObject.getJSONArray(
+								"authorization_servers")),
+						JSONUtil.toStringArray(
+							metadataJSONObject.getJSONArray(
+								"bearer_methods_supported")),
+						GetterUtil.getBoolean(
+							oAuthClientPRLocalMetadata.
+								getLocalWellKnownEnabled()),
+						oAuthClientPRLocalMetadata.getProtectedResourceURI(),
+						metadataJSONObject.getString("resource_name"),
+						JSONUtil.toStringArray(
+							metadataJSONObject.getJSONArray(
+								"scopes_supported")));
 
 		return OAuthClientPRLocalMetadataUtil.toOAuthClientPRLocalMetadata(
 			_portal, serviceBuilderOAuthClientPRLocalMetadata,

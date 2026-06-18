@@ -14,6 +14,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import org.json.JSONArray;
@@ -613,6 +614,22 @@ public class CIForwardProcessor {
 	}
 
 	private String _getPRCheckStatusLine() {
+		String state = _getSenderSHAStatusState("pr-check");
+
+		if (Objects.equals(state, "error") ||
+			Objects.equals(state, "failure")) {
+
+			return _getTestSuiteStatusLine(
+				":x:",
+				JenkinsResultsParserUtil.combine(
+					"The `pr-check` failed on the current commit. Fix the ",
+					"reported problems and push, then rerun the `/pr-check` ",
+					"Claude Code skill and publish the result with ",
+					"`/pr-check-publish` before commenting `ci:forward` ",
+					"again."),
+				"pr-check");
+		}
+
 		if (_pullRequest.hasLabel("pr-check - skipped")) {
 			return _getTestSuiteStatusLine(
 				":warning:",
@@ -675,6 +692,31 @@ public class CIForwardProcessor {
 		}
 
 		return sb.toString();
+	}
+
+	private String _getSenderSHAStatusState(String statusContext) {
+		JSONObject statusJSONObject =
+			_pullRequest.getSenderSHAStatusJSONObject();
+
+		if (statusJSONObject == null) {
+			return null;
+		}
+
+		JSONArray statusesJSONArray = statusJSONObject.optJSONArray("statuses");
+
+		if (statusesJSONArray == null) {
+			return null;
+		}
+
+		for (int i = 0; i < statusesJSONArray.length(); i++) {
+			JSONObject statusesJSONObject = statusesJSONArray.getJSONObject(i);
+
+			if (statusContext.equals(statusesJSONObject.getString("context"))) {
+				return statusesJSONObject.getString("state");
+			}
+		}
+
+		return null;
 	}
 
 	private String _getSuccessCommentBody(String forwardedPullRequestURL) {
@@ -912,36 +954,8 @@ public class CIForwardProcessor {
 	}
 
 	private boolean _hasPassingStatus(String statusContext) {
-		JSONObject statusJSONObject =
-			_pullRequest.getSenderSHAStatusJSONObject();
-
-		if (statusJSONObject == null) {
-			return false;
-		}
-
-		JSONArray statusesJSONArray = statusJSONObject.optJSONArray("statuses");
-
-		if (statusesJSONArray == null) {
-			return false;
-		}
-
-		for (int i = 0; i < statusesJSONArray.length(); i++) {
-			JSONObject statusesJSONObject = statusesJSONArray.getJSONObject(i);
-
-			String context = statusesJSONObject.getString("context");
-
-			if (!context.equals(statusContext)) {
-				continue;
-			}
-
-			String state = statusesJSONObject.getString("state");
-
-			if (state.equals("success")) {
-				return true;
-			}
-		}
-
-		return false;
+		return Objects.equals(
+			_getSenderSHAStatusState(statusContext), "success");
 	}
 
 	private boolean _isForwardEligible() throws IOException {

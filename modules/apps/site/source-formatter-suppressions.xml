@@ -5,4 +5,7 @@
 		<suppress checks="PersistenceCallCheck" files="site-memberships-test/src/testIntegration/java/com/liferay/site/memberships/service/persistence/test/UserGroupGroupRoleFinderTest\.java" />
 		<suppress checks="PersistenceCallCheck" files="site-test/src/testIntegration/java/com/liferay/site/service/persistence/test/GroupFinderTest\.java" />
 	</checkstyle>
+	<source-check>
+		<suppress checks="JavaUpgradeVersionCheck" files="site-cms-site-initializer/src/main/java/com/liferay/site/cms/site/initializer/internal/upgrade/registry/SiteCMSSiteInitializerUpgradeStepRegistrator\.java" />
+	</source-check>
 </suppressions>

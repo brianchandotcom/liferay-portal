@@ -8,7 +8,7 @@ package com.liferay.portal.security.key.internal.profile;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.security.key.internal.profile.configuration.KeyManagerGlobalConfiguration;
+import com.liferay.portal.security.key.internal.profile.configuration.KeyManagerConfiguration;
 import com.liferay.portal.security.key.spi.profile.KeyManagerProfile;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -25,7 +25,7 @@ import org.mockito.MockitoAnnotations;
 /**
  * @author Christopher Kian
  */
-public class KeyManagerProfileOrchestratorImplTest {
+public class KeyManagerProfileRegistryImplTest {
 
 	@ClassRule
 	@Rule
@@ -36,8 +36,7 @@ public class KeyManagerProfileOrchestratorImplTest {
 	public void setUp() {
 		MockitoAnnotations.openMocks(this);
 
-		_keyManagerProfileOrchestratorImpl =
-			new KeyManagerProfileOrchestratorImpl();
+		_keyManagerProfileRegistryImpl = new KeyManagerProfileRegistryImpl();
 
 		_setActiveProfileId(CustomKeyManagerProfile.PROFILE_ID);
 		_setServiceTrackerMap(_serviceTrackerMap);
@@ -58,19 +57,18 @@ public class KeyManagerProfileOrchestratorImplTest {
 	}
 
 	private void _setActiveProfileId(String activeProfileId) {
-		KeyManagerGlobalConfiguration keyManagerGlobalConfiguration =
-			() -> activeProfileId;
+		KeyManagerConfiguration keyManagerConfiguration = () -> activeProfileId;
 
 		ReflectionTestUtil.setFieldValue(
-			_keyManagerProfileOrchestratorImpl,
-			"_keyManagerGlobalConfiguration", keyManagerGlobalConfiguration);
+			_keyManagerProfileRegistryImpl, "_keyManagerConfiguration",
+			keyManagerConfiguration);
 	}
 
 	private void _setServiceTrackerMap(
 		ServiceTrackerMap<String, KeyManagerProfile> serviceTrackerMap) {
 
 		ReflectionTestUtil.setFieldValue(
-			_keyManagerProfileOrchestratorImpl, "_serviceTrackerMap",
+			_keyManagerProfileRegistryImpl, "_serviceTrackerMap",
 			serviceTrackerMap);
 	}
 
@@ -85,7 +83,7 @@ public class KeyManagerProfileOrchestratorImplTest {
 
 		Assert.assertSame(
 			_keyManagerProfile,
-			_keyManagerProfileOrchestratorImpl.getActiveKeyManagerProfile());
+			_keyManagerProfileRegistryImpl.getActiveKeyManagerProfile());
 	}
 
 	private void _testInit(
@@ -121,7 +119,7 @@ public class KeyManagerProfileOrchestratorImplTest {
 
 		for (int i = 0; i < invocationCount; i++) {
 			ReflectionTestUtil.invoke(
-				_keyManagerProfileOrchestratorImpl, "_init",
+				_keyManagerProfileRegistryImpl, "_init",
 				new Class<?>[] {KeyManagerProfile.class}, keyManagerProfile);
 		}
 
@@ -133,8 +131,7 @@ public class KeyManagerProfileOrchestratorImplTest {
 	@Mock
 	private KeyManagerProfile _keyManagerProfile;
 
-	private KeyManagerProfileOrchestratorImpl
-		_keyManagerProfileOrchestratorImpl;
+	private KeyManagerProfileRegistryImpl _keyManagerProfileRegistryImpl;
 
 	@Mock
 	private ServiceTrackerMap<String, KeyManagerProfile> _serviceTrackerMap;

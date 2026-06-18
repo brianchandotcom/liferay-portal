@@ -139,7 +139,9 @@ public class AppPersistenceTest {
 
 		newApp.setRequired(RandomTestUtil.randomBoolean());
 
-		_apps.add(_persistence.update(newApp));
+		newApp = _persistence.update(newApp);
+
+		_apps.add(newApp);
 
 		App existingApp = _persistence.findByPrimaryKey(newApp.getPrimaryKey());
 
@@ -532,4 +534,4 @@ public class AppPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1110166851
+// LIFERAY-SERVICE-BUILDER-HASH:325545887

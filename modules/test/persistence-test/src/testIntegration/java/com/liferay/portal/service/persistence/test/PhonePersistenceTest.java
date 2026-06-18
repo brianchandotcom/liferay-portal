@@ -141,7 +141,9 @@ public class PhonePersistenceTest {
 
 		newPhone.setPrimary(RandomTestUtil.randomBoolean());
 
-		_phones.add(_persistence.update(newPhone));
+		newPhone = _persistence.update(newPhone);
+
+		_phones.add(newPhone);
 
 		Phone existingPhone = _persistence.findByPrimaryKey(
 			newPhone.getPrimaryKey());
@@ -598,4 +600,4 @@ public class PhonePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:681114712
+// LIFERAY-SERVICE-BUILDER-HASH:154667146

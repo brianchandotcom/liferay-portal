@@ -165,7 +165,9 @@ public class DLFolderPersistenceTest {
 
 		newDLFolder.setStatusDate(RandomTestUtil.nextDate());
 
-		_dlFolders.add(_persistence.update(newDLFolder));
+		newDLFolder = _persistence.update(newDLFolder);
+
+		_dlFolders.add(newDLFolder);
 
 		DLFolder existingDLFolder = _persistence.findByPrimaryKey(
 			newDLFolder.getPrimaryKey());
@@ -875,4 +877,4 @@ public class DLFolderPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:381315565
+// LIFERAY-SERVICE-BUILDER-HASH:908869569

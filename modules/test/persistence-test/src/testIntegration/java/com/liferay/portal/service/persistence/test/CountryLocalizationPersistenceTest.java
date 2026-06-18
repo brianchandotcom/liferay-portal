@@ -120,7 +120,9 @@ public class CountryLocalizationPersistenceTest {
 
 		newCountryLocalization.setTitle(RandomTestUtil.randomString());
 
-		_countryLocalizations.add(_persistence.update(newCountryLocalization));
+		newCountryLocalization = _persistence.update(newCountryLocalization);
+
+		_countryLocalizations.add(newCountryLocalization);
 
 		CountryLocalization existingCountryLocalization =
 			_persistence.findByPrimaryKey(
@@ -488,4 +490,4 @@ public class CountryLocalizationPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1241633222
+// LIFERAY-SERVICE-BUILDER-HASH:1214360092

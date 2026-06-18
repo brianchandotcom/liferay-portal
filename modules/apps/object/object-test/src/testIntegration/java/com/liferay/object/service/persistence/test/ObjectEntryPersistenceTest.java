@@ -159,7 +159,9 @@ public class ObjectEntryPersistenceTest {
 
 		newObjectEntry.setStatusDate(RandomTestUtil.nextDate());
 
-		_objectEntries.add(_persistence.update(newObjectEntry));
+		newObjectEntry = _persistence.update(newObjectEntry);
+
+		_objectEntries.add(newObjectEntry);
 
 		ObjectEntry existingObjectEntry = _persistence.findByPrimaryKey(
 			newObjectEntry.getPrimaryKey());
@@ -751,4 +753,4 @@ public class ObjectEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-870346184
+// LIFERAY-SERVICE-BUILDER-HASH:1461355312

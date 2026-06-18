@@ -170,8 +170,10 @@ public class KaleoTimerInstanceTokenPersistenceTest {
 		newKaleoTimerInstanceToken.setWorkflowContext(
 			RandomTestUtil.randomString());
 
-		_kaleoTimerInstanceTokens.add(
-			_persistence.update(newKaleoTimerInstanceToken));
+		newKaleoTimerInstanceToken = _persistence.update(
+			newKaleoTimerInstanceToken);
+
+		_kaleoTimerInstanceTokens.add(newKaleoTimerInstanceToken);
 
 		KaleoTimerInstanceToken existingKaleoTimerInstanceToken =
 			_persistence.findByPrimaryKey(
@@ -700,4 +702,4 @@ public class KaleoTimerInstanceTokenPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-653635333
+// LIFERAY-SERVICE-BUILDER-HASH:-2017891503

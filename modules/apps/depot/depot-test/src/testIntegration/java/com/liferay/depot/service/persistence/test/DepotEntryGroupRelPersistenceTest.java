@@ -143,7 +143,9 @@ public class DepotEntryGroupRelPersistenceTest {
 
 		newDepotEntryGroupRel.setLastPublishDate(RandomTestUtil.nextDate());
 
-		_depotEntryGroupRels.add(_persistence.update(newDepotEntryGroupRel));
+		newDepotEntryGroupRel = _persistence.update(newDepotEntryGroupRel);
+
+		_depotEntryGroupRels.add(newDepotEntryGroupRel);
 
 		DepotEntryGroupRel existingDepotEntryGroupRel =
 			_persistence.findByPrimaryKey(
@@ -652,4 +654,4 @@ public class DepotEntryGroupRelPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-415501817
+// LIFERAY-SERVICE-BUILDER-HASH:-248444641

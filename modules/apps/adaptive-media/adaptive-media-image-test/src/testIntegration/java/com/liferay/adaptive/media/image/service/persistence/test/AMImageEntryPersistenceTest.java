@@ -136,7 +136,9 @@ public class AMImageEntryPersistenceTest {
 
 		newAMImageEntry.setSize(RandomTestUtil.nextLong());
 
-		_amImageEntries.add(_persistence.update(newAMImageEntry));
+		newAMImageEntry = _persistence.update(newAMImageEntry);
+
+		_amImageEntries.add(newAMImageEntry);
 
 		AMImageEntry existingAMImageEntry = _persistence.findByPrimaryKey(
 			newAMImageEntry.getPrimaryKey());
@@ -607,4 +609,4 @@ public class AMImageEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:472388157
+// LIFERAY-SERVICE-BUILDER-HASH:1920985673

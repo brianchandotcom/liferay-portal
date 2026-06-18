@@ -132,7 +132,9 @@ public class LayoutPrototypePersistenceTest {
 
 		newLayoutPrototype.setActive(RandomTestUtil.randomBoolean());
 
-		_layoutPrototypes.add(_persistence.update(newLayoutPrototype));
+		newLayoutPrototype = _persistence.update(newLayoutPrototype);
+
+		_layoutPrototypes.add(newLayoutPrototype);
 
 		LayoutPrototype existingLayoutPrototype = _persistence.findByPrimaryKey(
 			newLayoutPrototype.getPrimaryKey());
@@ -492,4 +494,4 @@ public class LayoutPrototypePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1202409578
+// LIFERAY-SERVICE-BUILDER-HASH:784335536

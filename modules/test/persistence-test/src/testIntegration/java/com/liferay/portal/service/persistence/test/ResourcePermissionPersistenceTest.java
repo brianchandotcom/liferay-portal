@@ -132,7 +132,9 @@ public class ResourcePermissionPersistenceTest {
 
 		newResourcePermission.setViewActionId(RandomTestUtil.randomBoolean());
 
-		_resourcePermissions.add(_persistence.update(newResourcePermission));
+		newResourcePermission = _persistence.update(newResourcePermission);
+
+		_resourcePermissions.add(newResourcePermission);
 
 		ResourcePermission existingResourcePermission =
 			_persistence.findByPrimaryKey(
@@ -676,4 +678,4 @@ public class ResourcePermissionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-684360868
+// LIFERAY-SERVICE-BUILDER-HASH:1445748346

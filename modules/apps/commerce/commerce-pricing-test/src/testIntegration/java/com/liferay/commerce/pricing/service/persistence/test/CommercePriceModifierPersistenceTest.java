@@ -171,8 +171,10 @@ public class CommercePriceModifierPersistenceTest {
 
 		newCommercePriceModifier.setStatusDate(RandomTestUtil.nextDate());
 
-		_commercePriceModifiers.add(
-			_persistence.update(newCommercePriceModifier));
+		newCommercePriceModifier = _persistence.update(
+			newCommercePriceModifier);
+
+		_commercePriceModifiers.add(newCommercePriceModifier);
 
 		CommercePriceModifier existingCommercePriceModifier =
 			_persistence.findByPrimaryKey(
@@ -819,4 +821,4 @@ public class CommercePriceModifierPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:875760643
+// LIFERAY-SERVICE-BUILDER-HASH:-1341899791

@@ -139,7 +139,9 @@ public class EmailAddressPersistenceTest {
 
 		newEmailAddress.setPrimary(RandomTestUtil.randomBoolean());
 
-		_emailAddresses.add(_persistence.update(newEmailAddress));
+		newEmailAddress = _persistence.update(newEmailAddress);
+
+		_emailAddresses.add(newEmailAddress);
 
 		EmailAddress existingEmailAddress = _persistence.findByPrimaryKey(
 			newEmailAddress.getPrimaryKey());
@@ -621,4 +623,4 @@ public class EmailAddressPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1198575697
+// LIFERAY-SERVICE-BUILDER-HASH:1872360413

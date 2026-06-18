@@ -159,7 +159,9 @@ public class LayoutSEOEntryPersistenceTest {
 
 		newLayoutSEOEntry.setLastPublishDate(RandomTestUtil.nextDate());
 
-		_layoutSEOEntries.add(_persistence.update(newLayoutSEOEntry));
+		newLayoutSEOEntry = _persistence.update(newLayoutSEOEntry);
+
+		_layoutSEOEntries.add(newLayoutSEOEntry);
 
 		LayoutSEOEntry existingLayoutSEOEntry = _persistence.findByPrimaryKey(
 			newLayoutSEOEntry.getPrimaryKey());
@@ -654,4 +656,4 @@ public class LayoutSEOEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:906125614
+// LIFERAY-SERVICE-BUILDER-HASH:-390273782

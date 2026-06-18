@@ -165,7 +165,9 @@ public class AssetEntryPersistenceTest {
 
 		newAssetEntry.setPriority(RandomTestUtil.nextDouble());
 
-		_assetEntries.add(_persistence.update(newAssetEntry));
+		newAssetEntry = _persistence.update(newAssetEntry);
+
+		_assetEntries.add(newAssetEntry);
 
 		AssetEntry existingAssetEntry = _persistence.findByPrimaryKey(
 			newAssetEntry.getPrimaryKey());
@@ -715,4 +717,4 @@ public class AssetEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1461604554
+// LIFERAY-SERVICE-BUILDER-HASH:-1031356828

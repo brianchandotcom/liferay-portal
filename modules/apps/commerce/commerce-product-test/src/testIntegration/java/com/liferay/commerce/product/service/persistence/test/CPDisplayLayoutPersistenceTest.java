@@ -138,7 +138,9 @@ public class CPDisplayLayoutPersistenceTest {
 
 		newCPDisplayLayout.setLayoutUuid(RandomTestUtil.randomString());
 
-		_cpDisplayLayouts.add(_persistence.update(newCPDisplayLayout));
+		newCPDisplayLayout = _persistence.update(newCPDisplayLayout);
+
+		_cpDisplayLayouts.add(newCPDisplayLayout);
 
 		CPDisplayLayout existingCPDisplayLayout = _persistence.findByPrimaryKey(
 			newCPDisplayLayout.getPrimaryKey());
@@ -647,4 +649,4 @@ public class CPDisplayLayoutPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1506747234
+// LIFERAY-SERVICE-BUILDER-HASH:1537012600

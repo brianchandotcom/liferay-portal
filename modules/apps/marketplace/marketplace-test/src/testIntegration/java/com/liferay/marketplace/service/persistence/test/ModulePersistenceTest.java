@@ -124,7 +124,9 @@ public class ModulePersistenceTest {
 
 		newModule.setContextName(RandomTestUtil.randomString());
 
-		_modules.add(_persistence.update(newModule));
+		newModule = _persistence.update(newModule);
+
+		_modules.add(newModule);
 
 		Module existingModule = _persistence.findByPrimaryKey(
 			newModule.getPrimaryKey());
@@ -528,4 +530,4 @@ public class ModulePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:489448110
+// LIFERAY-SERVICE-BUILDER-HASH:-1901173778

@@ -159,7 +159,9 @@ public class GroupPersistenceTest {
 
 		newGroup.setActive(RandomTestUtil.randomBoolean());
 
-		_groups.add(_persistence.update(newGroup));
+		newGroup = _persistence.update(newGroup);
+
+		_groups.add(newGroup);
 
 		Group existingGroup = _persistence.findByPrimaryKey(
 			newGroup.getPrimaryKey());
@@ -942,4 +944,4 @@ public class GroupPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1579496523
+// LIFERAY-SERVICE-BUILDER-HASH:-927173515

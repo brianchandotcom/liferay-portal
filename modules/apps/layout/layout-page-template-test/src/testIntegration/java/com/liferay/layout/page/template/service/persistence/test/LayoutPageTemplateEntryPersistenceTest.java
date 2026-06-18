@@ -183,8 +183,10 @@ public class LayoutPageTemplateEntryPersistenceTest {
 
 		newLayoutPageTemplateEntry.setStatusDate(RandomTestUtil.nextDate());
 
-		_layoutPageTemplateEntries.add(
-			_persistence.update(newLayoutPageTemplateEntry));
+		newLayoutPageTemplateEntry = _persistence.update(
+			newLayoutPageTemplateEntry);
+
+		_layoutPageTemplateEntries.add(newLayoutPageTemplateEntry);
 
 		LayoutPageTemplateEntry existingLayoutPageTemplateEntry =
 			_persistence.findByPrimaryKey(
@@ -1110,4 +1112,4 @@ public class LayoutPageTemplateEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:935717341
+// LIFERAY-SERVICE-BUILDER-HASH:162554197

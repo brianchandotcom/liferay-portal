@@ -123,7 +123,9 @@ public class DDMTemplateLinkPersistenceTest {
 
 		newDDMTemplateLink.setTemplateId(RandomTestUtil.nextLong());
 
-		_ddmTemplateLinks.add(_persistence.update(newDDMTemplateLink));
+		newDDMTemplateLink = _persistence.update(newDDMTemplateLink);
+
+		_ddmTemplateLinks.add(newDDMTemplateLink);
 
 		DDMTemplateLink existingDDMTemplateLink = _persistence.findByPrimaryKey(
 			newDDMTemplateLink.getPrimaryKey());
@@ -499,4 +501,4 @@ public class DDMTemplateLinkPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:787213417
+// LIFERAY-SERVICE-BUILDER-HASH:-483966005

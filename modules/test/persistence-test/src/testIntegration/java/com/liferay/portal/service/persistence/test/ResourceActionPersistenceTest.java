@@ -117,7 +117,9 @@ public class ResourceActionPersistenceTest {
 
 		newResourceAction.setBitwiseValue(RandomTestUtil.nextLong());
 
-		_resourceActions.add(_persistence.update(newResourceAction));
+		newResourceAction = _persistence.update(newResourceAction);
+
+		_resourceActions.add(newResourceAction);
 
 		ResourceAction existingResourceAction = _persistence.findByPrimaryKey(
 			newResourceAction.getPrimaryKey());
@@ -484,4 +486,4 @@ public class ResourceActionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:350308162
+// LIFERAY-SERVICE-BUILDER-HASH:224705682

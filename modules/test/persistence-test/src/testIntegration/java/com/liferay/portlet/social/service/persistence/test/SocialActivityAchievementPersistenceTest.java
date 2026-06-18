@@ -132,8 +132,10 @@ public class SocialActivityAchievementPersistenceTest {
 		newSocialActivityAchievement.setFirstInGroup(
 			RandomTestUtil.randomBoolean());
 
-		_socialActivityAchievements.add(
-			_persistence.update(newSocialActivityAchievement));
+		newSocialActivityAchievement = _persistence.update(
+			newSocialActivityAchievement);
+
+		_socialActivityAchievements.add(newSocialActivityAchievement);
 
 		SocialActivityAchievement existingSocialActivityAchievement =
 			_persistence.findByPrimaryKey(
@@ -607,4 +609,4 @@ public class SocialActivityAchievementPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1379318758
+// LIFERAY-SERVICE-BUILDER-HASH:820155648

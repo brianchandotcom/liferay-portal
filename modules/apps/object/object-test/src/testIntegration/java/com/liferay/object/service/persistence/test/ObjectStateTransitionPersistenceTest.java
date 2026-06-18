@@ -136,8 +136,10 @@ public class ObjectStateTransitionPersistenceTest {
 		newObjectStateTransition.setTargetObjectStateId(
 			RandomTestUtil.nextLong());
 
-		_objectStateTransitions.add(
-			_persistence.update(newObjectStateTransition));
+		newObjectStateTransition = _persistence.update(
+			newObjectStateTransition);
+
+		_objectStateTransitions.add(newObjectStateTransition);
 
 		ObjectStateTransition existingObjectStateTransition =
 			_persistence.findByPrimaryKey(
@@ -526,4 +528,4 @@ public class ObjectStateTransitionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1825455828
+// LIFERAY-SERVICE-BUILDER-HASH:-989519734

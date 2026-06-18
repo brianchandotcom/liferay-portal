@@ -149,7 +149,9 @@ public class CPMeasurementUnitPersistenceTest {
 
 		newCPMeasurementUnit.setLastPublishDate(RandomTestUtil.nextDate());
 
-		_cpMeasurementUnits.add(_persistence.update(newCPMeasurementUnit));
+		newCPMeasurementUnit = _persistence.update(newCPMeasurementUnit);
+
+		_cpMeasurementUnits.add(newCPMeasurementUnit);
 
 		CPMeasurementUnit existingCPMeasurementUnit =
 			_persistence.findByPrimaryKey(newCPMeasurementUnit.getPrimaryKey());
@@ -690,4 +692,4 @@ public class CPMeasurementUnitPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:909240315
+// LIFERAY-SERVICE-BUILDER-HASH:-1374295531

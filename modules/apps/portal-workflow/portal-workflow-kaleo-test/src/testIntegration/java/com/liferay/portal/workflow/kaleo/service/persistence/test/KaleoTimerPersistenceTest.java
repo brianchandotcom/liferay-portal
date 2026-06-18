@@ -149,7 +149,9 @@ public class KaleoTimerPersistenceTest {
 
 		newKaleoTimer.setRecurrenceScale(RandomTestUtil.randomString());
 
-		_kaleoTimers.add(_persistence.update(newKaleoTimer));
+		newKaleoTimer = _persistence.update(newKaleoTimer);
+
+		_kaleoTimers.add(newKaleoTimer);
 
 		KaleoTimer existingKaleoTimer = _persistence.findByPrimaryKey(
 			newKaleoTimer.getPrimaryKey());
@@ -532,4 +534,4 @@ public class KaleoTimerPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1460301357
+// LIFERAY-SERVICE-BUILDER-HASH:-1250126303

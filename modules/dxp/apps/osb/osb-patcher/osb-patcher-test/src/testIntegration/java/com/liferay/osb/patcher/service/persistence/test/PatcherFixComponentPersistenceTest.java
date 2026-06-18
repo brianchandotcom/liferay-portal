@@ -127,7 +127,9 @@ public class PatcherFixComponentPersistenceTest {
 
 		newPatcherFixComponent.setName(RandomTestUtil.randomString());
 
-		_patcherFixComponents.add(_persistence.update(newPatcherFixComponent));
+		newPatcherFixComponent = _persistence.update(newPatcherFixComponent);
+
+		_patcherFixComponents.add(newPatcherFixComponent);
 
 		PatcherFixComponent existingPatcherFixComponent =
 			_persistence.findByPrimaryKey(
@@ -517,4 +519,4 @@ public class PatcherFixComponentPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:385024362
+// LIFERAY-SERVICE-BUILDER-HASH:-1354508772

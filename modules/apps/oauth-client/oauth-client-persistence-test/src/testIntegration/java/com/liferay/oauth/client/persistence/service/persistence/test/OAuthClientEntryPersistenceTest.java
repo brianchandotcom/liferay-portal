@@ -152,7 +152,9 @@ public class OAuthClientEntryPersistenceTest {
 		newOAuthClientEntry.setTokenRequestParametersJSON(
 			RandomTestUtil.randomString());
 
-		_oAuthClientEntries.add(_persistence.update(newOAuthClientEntry));
+		newOAuthClientEntry = _persistence.update(newOAuthClientEntry);
+
+		_oAuthClientEntries.add(newOAuthClientEntry);
 
 		OAuthClientEntry existingOAuthClientEntry =
 			_persistence.findByPrimaryKey(newOAuthClientEntry.getPrimaryKey());
@@ -677,4 +679,4 @@ public class OAuthClientEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1126482045
+// LIFERAY-SERVICE-BUILDER-HASH:-1335506431

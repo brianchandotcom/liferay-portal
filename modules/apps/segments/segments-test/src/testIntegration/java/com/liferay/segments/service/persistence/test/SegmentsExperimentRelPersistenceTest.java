@@ -140,8 +140,10 @@ public class SegmentsExperimentRelPersistenceTest {
 
 		newSegmentsExperimentRel.setSplit(RandomTestUtil.nextDouble());
 
-		_segmentsExperimentRels.add(
-			_persistence.update(newSegmentsExperimentRel));
+		newSegmentsExperimentRel = _persistence.update(
+			newSegmentsExperimentRel);
+
+		_segmentsExperimentRels.add(newSegmentsExperimentRel);
 
 		SegmentsExperimentRel existingSegmentsExperimentRel =
 			_persistence.findByPrimaryKey(
@@ -589,4 +591,4 @@ public class SegmentsExperimentRelPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1645833203
+// LIFERAY-SERVICE-BUILDER-HASH:-335183991

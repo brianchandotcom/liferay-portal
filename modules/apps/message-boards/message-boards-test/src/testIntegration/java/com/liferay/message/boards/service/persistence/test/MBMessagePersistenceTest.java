@@ -177,7 +177,9 @@ public class MBMessagePersistenceTest {
 
 		newMBMessage.setStatusDate(RandomTestUtil.nextDate());
 
-		_mbMessages.add(_persistence.update(newMBMessage));
+		newMBMessage = _persistence.update(newMBMessage);
+
+		_mbMessages.add(newMBMessage);
 
 		MBMessage existingMBMessage = _persistence.findByPrimaryKey(
 			newMBMessage.getPrimaryKey());
@@ -981,4 +983,4 @@ public class MBMessagePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:662127088
+// LIFERAY-SERVICE-BUILDER-HASH:1489612658

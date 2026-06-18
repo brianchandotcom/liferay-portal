@@ -156,8 +156,10 @@ public class LayoutUtilityPageEntryPersistenceTest {
 
 		newLayoutUtilityPageEntry.setLastPublishDate(RandomTestUtil.nextDate());
 
-		_layoutUtilityPageEntries.add(
-			_persistence.update(newLayoutUtilityPageEntry));
+		newLayoutUtilityPageEntry = _persistence.update(
+			newLayoutUtilityPageEntry);
+
+		_layoutUtilityPageEntries.add(newLayoutUtilityPageEntry);
 
 		LayoutUtilityPageEntry existingLayoutUtilityPageEntry =
 			_persistence.findByPrimaryKey(
@@ -803,4 +805,4 @@ public class LayoutUtilityPageEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1550664389
+// LIFERAY-SERVICE-BUILDER-HASH:607144157

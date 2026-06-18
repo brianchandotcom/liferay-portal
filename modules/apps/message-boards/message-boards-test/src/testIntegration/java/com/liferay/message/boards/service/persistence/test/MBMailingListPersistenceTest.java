@@ -165,7 +165,9 @@ public class MBMailingListPersistenceTest {
 
 		newMBMailingList.setActive(RandomTestUtil.randomBoolean());
 
-		_mbMailingLists.add(_persistence.update(newMBMailingList));
+		newMBMailingList = _persistence.update(newMBMailingList);
+
+		_mbMailingLists.add(newMBMailingList);
 
 		MBMailingList existingMBMailingList = _persistence.findByPrimaryKey(
 			newMBMailingList.getPrimaryKey());
@@ -685,4 +687,4 @@ public class MBMailingListPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1829980528
+// LIFERAY-SERVICE-BUILDER-HASH:1808532294

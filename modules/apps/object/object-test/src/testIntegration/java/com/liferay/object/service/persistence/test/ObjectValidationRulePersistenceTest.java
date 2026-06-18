@@ -149,8 +149,9 @@ public class ObjectValidationRulePersistenceTest {
 
 		newObjectValidationRule.setSystem(RandomTestUtil.randomBoolean());
 
-		_objectValidationRules.add(
-			_persistence.update(newObjectValidationRule));
+		newObjectValidationRule = _persistence.update(newObjectValidationRule);
+
+		_objectValidationRules.add(newObjectValidationRule);
 
 		ObjectValidationRule existingObjectValidationRule =
 			_persistence.findByPrimaryKey(
@@ -672,4 +673,4 @@ public class ObjectValidationRulePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1360324934
+// LIFERAY-SERVICE-BUILDER-HASH:-1853167914

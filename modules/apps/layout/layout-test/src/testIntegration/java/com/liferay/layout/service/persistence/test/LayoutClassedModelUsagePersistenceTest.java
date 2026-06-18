@@ -149,8 +149,10 @@ public class LayoutClassedModelUsagePersistenceTest {
 		newLayoutClassedModelUsage.setLastPublishDate(
 			RandomTestUtil.nextDate());
 
-		_layoutClassedModelUsages.add(
-			_persistence.update(newLayoutClassedModelUsage));
+		newLayoutClassedModelUsage = _persistence.update(
+			newLayoutClassedModelUsage);
+
+		_layoutClassedModelUsages.add(newLayoutClassedModelUsage);
 
 		LayoutClassedModelUsage existingLayoutClassedModelUsage =
 			_persistence.findByPrimaryKey(
@@ -752,4 +754,4 @@ public class LayoutClassedModelUsagePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:81202932
+// LIFERAY-SERVICE-BUILDER-HASH:-640082554

@@ -125,7 +125,9 @@ public class AnnouncementsFlagPersistenceTest {
 
 		newAnnouncementsFlag.setValue(RandomTestUtil.nextInt());
 
-		_announcementsFlags.add(_persistence.update(newAnnouncementsFlag));
+		newAnnouncementsFlag = _persistence.update(newAnnouncementsFlag);
+
+		_announcementsFlags.add(newAnnouncementsFlag);
 
 		AnnouncementsFlag existingAnnouncementsFlag =
 			_persistence.findByPrimaryKey(newAnnouncementsFlag.getPrimaryKey());
@@ -518,4 +520,4 @@ public class AnnouncementsFlagPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:459064112
+// LIFERAY-SERVICE-BUILDER-HASH:-759314858

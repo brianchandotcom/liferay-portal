@@ -152,7 +152,9 @@ public class WikiNodePersistenceTest {
 
 		newWikiNode.setStatusDate(RandomTestUtil.nextDate());
 
-		_wikiNodes.add(_persistence.update(newWikiNode));
+		newWikiNode = _persistence.update(newWikiNode);
+
+		_wikiNodes.add(newWikiNode);
 
 		WikiNode existingWikiNode = _persistence.findByPrimaryKey(
 			newWikiNode.getPrimaryKey());
@@ -691,4 +693,4 @@ public class WikiNodePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-67456849
+// LIFERAY-SERVICE-BUILDER-HASH:-1706430213

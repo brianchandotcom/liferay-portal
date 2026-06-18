@@ -146,7 +146,9 @@ public class RegionPersistenceTest {
 
 		newRegion.setStatus(RandomTestUtil.nextInt());
 
-		_regions.add(_persistence.update(newRegion));
+		newRegion = _persistence.update(newRegion);
+
+		_regions.add(newRegion);
 
 		Region existingRegion = _persistence.findByPrimaryKey(
 			newRegion.getPrimaryKey());
@@ -618,4 +620,4 @@ public class RegionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1012712458
+// LIFERAY-SERVICE-BUILDER-HASH:-1580964058

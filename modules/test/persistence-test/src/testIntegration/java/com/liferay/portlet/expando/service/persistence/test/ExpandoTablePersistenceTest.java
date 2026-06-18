@@ -119,7 +119,9 @@ public class ExpandoTablePersistenceTest {
 
 		newExpandoTable.setName(RandomTestUtil.randomString());
 
-		_expandoTables.add(_persistence.update(newExpandoTable));
+		newExpandoTable = _persistence.update(newExpandoTable);
+
+		_expandoTables.add(newExpandoTable);
 
 		ExpandoTable existingExpandoTable = _persistence.findByPrimaryKey(
 			newExpandoTable.getPrimaryKey());
@@ -490,4 +492,4 @@ public class ExpandoTablePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1527221249
+// LIFERAY-SERVICE-BUILDER-HASH:-360019419

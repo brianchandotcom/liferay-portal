@@ -116,7 +116,9 @@ public class PatcherFixRelPersistenceTest {
 
 		newPatcherFixRel.setParentPatcherFixId(RandomTestUtil.nextLong());
 
-		_patcherFixRels.add(_persistence.update(newPatcherFixRel));
+		newPatcherFixRel = _persistence.update(newPatcherFixRel);
+
+		_patcherFixRels.add(newPatcherFixRel);
 
 		PatcherFixRel existingPatcherFixRel = _persistence.findByPrimaryKey(
 			newPatcherFixRel.getPrimaryKey());
@@ -417,4 +419,4 @@ public class PatcherFixRelPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1059481946
+// LIFERAY-SERVICE-BUILDER-HASH:-1726004644

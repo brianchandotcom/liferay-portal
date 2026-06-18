@@ -119,7 +119,9 @@ public class RedundantIndexEntryPersistenceTest {
 
 		newRedundantIndexEntry.setName(RandomTestUtil.randomString());
 
-		_redundantIndexEntries.add(_persistence.update(newRedundantIndexEntry));
+		newRedundantIndexEntry = _persistence.update(newRedundantIndexEntry);
+
+		_redundantIndexEntries.add(newRedundantIndexEntry);
 
 		RedundantIndexEntry existingRedundantIndexEntry =
 			_persistence.findByPrimaryKey(
@@ -488,4 +490,4 @@ public class RedundantIndexEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1729841088
+// LIFERAY-SERVICE-BUILDER-HASH:-761136072

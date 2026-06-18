@@ -170,7 +170,9 @@ public class AddressPersistenceTest {
 
 		newAddress.setStatus(RandomTestUtil.nextInt());
 
-		_addresses.add(_persistence.update(newAddress));
+		newAddress = _persistence.update(newAddress);
+
+		_addresses.add(newAddress);
 
 		Address existingAddress = _persistence.findByPrimaryKey(
 			newAddress.getPrimaryKey());
@@ -744,4 +746,4 @@ public class AddressPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-144217117
+// LIFERAY-SERVICE-BUILDER-HASH:1751152363

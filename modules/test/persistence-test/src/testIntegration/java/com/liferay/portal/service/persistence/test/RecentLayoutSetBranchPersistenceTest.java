@@ -126,8 +126,10 @@ public class RecentLayoutSetBranchPersistenceTest {
 
 		newRecentLayoutSetBranch.setLayoutSetId(RandomTestUtil.nextLong());
 
-		_recentLayoutSetBranchs.add(
-			_persistence.update(newRecentLayoutSetBranch));
+		newRecentLayoutSetBranch = _persistence.update(
+			newRecentLayoutSetBranch);
+
+		_recentLayoutSetBranchs.add(newRecentLayoutSetBranch);
 
 		RecentLayoutSetBranch existingRecentLayoutSetBranch =
 			_persistence.findByPrimaryKey(
@@ -551,4 +553,4 @@ public class RecentLayoutSetBranchPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-29352895
+// LIFERAY-SERVICE-BUILDER-HASH:287685079

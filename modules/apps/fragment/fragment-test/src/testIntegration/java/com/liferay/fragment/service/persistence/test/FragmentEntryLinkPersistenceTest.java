@@ -174,7 +174,9 @@ public class FragmentEntryLinkPersistenceTest {
 
 		newFragmentEntryLink.setLastPublishDate(RandomTestUtil.nextDate());
 
-		_fragmentEntryLinks.add(_persistence.update(newFragmentEntryLink));
+		newFragmentEntryLink = _persistence.update(newFragmentEntryLink);
+
+		_fragmentEntryLinks.add(newFragmentEntryLink);
 
 		FragmentEntryLink existingFragmentEntryLink =
 			_persistence.findByPrimaryKey(newFragmentEntryLink.getPrimaryKey());
@@ -944,4 +946,4 @@ public class FragmentEntryLinkPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1452771044
+// LIFERAY-SERVICE-BUILDER-HASH:111929934

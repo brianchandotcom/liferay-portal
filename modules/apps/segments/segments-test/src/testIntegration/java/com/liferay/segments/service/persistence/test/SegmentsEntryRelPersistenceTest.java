@@ -133,7 +133,9 @@ public class SegmentsEntryRelPersistenceTest {
 
 		newSegmentsEntryRel.setClassPK(RandomTestUtil.nextLong());
 
-		_segmentsEntryRels.add(_persistence.update(newSegmentsEntryRel));
+		newSegmentsEntryRel = _persistence.update(newSegmentsEntryRel);
+
+		_segmentsEntryRels.add(newSegmentsEntryRel);
 
 		SegmentsEntryRel existingSegmentsEntryRel =
 			_persistence.findByPrimaryKey(newSegmentsEntryRel.getPrimaryKey());
@@ -563,4 +565,4 @@ public class SegmentsEntryRelPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1499810454
+// LIFERAY-SERVICE-BUILDER-HASH:1491048524

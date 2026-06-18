@@ -139,7 +139,9 @@ public class UserGroupPersistenceTest {
 
 		newUserGroup.setStatus(RandomTestUtil.nextInt());
 
-		_userGroups.add(_persistence.update(newUserGroup));
+		newUserGroup = _persistence.update(newUserGroup);
+
+		_userGroups.add(newUserGroup);
 
 		UserGroup existingUserGroup = _persistence.findByPrimaryKey(
 			newUserGroup.getPrimaryKey());
@@ -627,4 +629,4 @@ public class UserGroupPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:636628432
+// LIFERAY-SERVICE-BUILDER-HASH:1322531418

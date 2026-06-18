@@ -132,8 +132,10 @@ public class PermissionCheckFinderEntryPersistenceTest {
 
 		newPermissionCheckFinderEntry.setType(RandomTestUtil.randomString());
 
-		_permissionCheckFinderEntries.add(
-			_persistence.update(newPermissionCheckFinderEntry));
+		newPermissionCheckFinderEntry = _persistence.update(
+			newPermissionCheckFinderEntry);
+
+		_permissionCheckFinderEntries.add(newPermissionCheckFinderEntry);
 
 		PermissionCheckFinderEntry existingPermissionCheckFinderEntry =
 			_persistence.findByPrimaryKey(
@@ -511,4 +513,4 @@ public class PermissionCheckFinderEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:445797325
+// LIFERAY-SERVICE-BUILDER-HASH:770858273

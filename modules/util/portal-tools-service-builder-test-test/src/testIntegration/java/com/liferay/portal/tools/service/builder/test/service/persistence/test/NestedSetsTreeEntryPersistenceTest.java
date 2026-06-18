@@ -121,7 +121,9 @@ public class NestedSetsTreeEntryPersistenceTest {
 		newNestedSetsTreeEntry.setRightNestedSetsTreeEntryId(
 			RandomTestUtil.nextLong());
 
-		_nestedSetsTreeEntries.add(_persistence.update(newNestedSetsTreeEntry));
+		newNestedSetsTreeEntry = _persistence.update(newNestedSetsTreeEntry);
+
+		_nestedSetsTreeEntries.add(newNestedSetsTreeEntry);
 
 		NestedSetsTreeEntry existingNestedSetsTreeEntry =
 			_persistence.findByPrimaryKey(
@@ -753,4 +755,4 @@ public class NestedSetsTreeEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-378117342
+// LIFERAY-SERVICE-BUILDER-HASH:-1480070982

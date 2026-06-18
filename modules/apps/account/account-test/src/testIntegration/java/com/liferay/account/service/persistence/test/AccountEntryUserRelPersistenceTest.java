@@ -120,7 +120,9 @@ public class AccountEntryUserRelPersistenceTest {
 
 		newAccountEntryUserRel.setAccountUserId(RandomTestUtil.nextLong());
 
-		_accountEntryUserRels.add(_persistence.update(newAccountEntryUserRel));
+		newAccountEntryUserRel = _persistence.update(newAccountEntryUserRel);
+
+		_accountEntryUserRels.add(newAccountEntryUserRel);
 
 		AccountEntryUserRel existingAccountEntryUserRel =
 			_persistence.findByPrimaryKey(
@@ -511,4 +513,4 @@ public class AccountEntryUserRelPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-93209310
+// LIFERAY-SERVICE-BUILDER-HASH:-1944329820

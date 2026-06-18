@@ -128,7 +128,9 @@ public class ExpandoColumnPersistenceTest {
 
 		newExpandoColumn.setTypeSettings(RandomTestUtil.randomString());
 
-		_expandoColumns.add(_persistence.update(newExpandoColumn));
+		newExpandoColumn = _persistence.update(newExpandoColumn);
+
+		_expandoColumns.add(newExpandoColumn);
 
 		ExpandoColumn existingExpandoColumn = _persistence.findByPrimaryKey(
 			newExpandoColumn.getPrimaryKey());
@@ -521,4 +523,4 @@ public class ExpandoColumnPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1507663156
+// LIFERAY-SERVICE-BUILDER-HASH:2074061614

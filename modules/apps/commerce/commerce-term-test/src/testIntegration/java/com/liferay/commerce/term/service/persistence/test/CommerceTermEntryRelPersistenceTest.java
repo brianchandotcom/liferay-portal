@@ -134,8 +134,9 @@ public class CommerceTermEntryRelPersistenceTest {
 		newCommerceTermEntryRel.setCommerceTermEntryId(
 			RandomTestUtil.nextLong());
 
-		_commerceTermEntryRels.add(
-			_persistence.update(newCommerceTermEntryRel));
+		newCommerceTermEntryRel = _persistence.update(newCommerceTermEntryRel);
+
+		_commerceTermEntryRels.add(newCommerceTermEntryRel);
 
 		CommerceTermEntryRel existingCommerceTermEntryRel =
 			_persistence.findByPrimaryKey(
@@ -573,4 +574,4 @@ public class CommerceTermEntryRelPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1630406544
+// LIFERAY-SERVICE-BUILDER-HASH:-284860596

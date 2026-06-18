@@ -133,7 +133,9 @@ public class LockPersistenceTest {
 
 		newLock.setExpirationDate(RandomTestUtil.nextDate());
 
-		_locks.add(_persistence.update(newLock));
+		newLock = _persistence.update(newLock);
+
+		_locks.add(newLock);
 
 		Lock existingLock = _persistence.findByPrimaryKey(
 			newLock.getPrimaryKey());
@@ -547,4 +549,4 @@ public class LockPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1149602251
+// LIFERAY-SERVICE-BUILDER-HASH:910464179

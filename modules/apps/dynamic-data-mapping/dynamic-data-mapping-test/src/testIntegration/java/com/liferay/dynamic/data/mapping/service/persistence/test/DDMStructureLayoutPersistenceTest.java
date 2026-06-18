@@ -144,7 +144,9 @@ public class DDMStructureLayoutPersistenceTest {
 
 		newDDMStructureLayout.setDefinition(RandomTestUtil.randomString());
 
-		_ddmStructureLayouts.add(_persistence.update(newDDMStructureLayout));
+		newDDMStructureLayout = _persistence.update(newDDMStructureLayout);
+
+		_ddmStructureLayouts.add(newDDMStructureLayout);
 
 		DDMStructureLayout existingDDMStructureLayout =
 			_persistence.findByPrimaryKey(
@@ -662,4 +664,4 @@ public class DDMStructureLayoutPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-391161287
+// LIFERAY-SERVICE-BUILDER-HASH:-231210191

@@ -132,7 +132,9 @@ public class ReleasePersistenceTest {
 
 		newRelease.setTestString(RandomTestUtil.randomString());
 
-		_releases.add(_persistence.update(newRelease));
+		newRelease = _persistence.update(newRelease);
+
+		_releases.add(newRelease);
 
 		Release existingRelease = _persistence.findByPrimaryKey(
 			newRelease.getPrimaryKey());
@@ -502,4 +504,4 @@ public class ReleasePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1358282218
+// LIFERAY-SERVICE-BUILDER-HASH:327841356

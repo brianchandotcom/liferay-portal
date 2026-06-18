@@ -152,8 +152,9 @@ public class NotificationTemplatePersistenceTest {
 
 		newNotificationTemplate.setType(RandomTestUtil.randomString());
 
-		_notificationTemplates.add(
-			_persistence.update(newNotificationTemplate));
+		newNotificationTemplate = _persistence.update(newNotificationTemplate);
+
+		_notificationTemplates.add(newNotificationTemplate);
 
 		NotificationTemplate existingNotificationTemplate =
 			_persistence.findByPrimaryKey(
@@ -664,4 +665,4 @@ public class NotificationTemplatePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:143195910
+// LIFERAY-SERVICE-BUILDER-HASH:1298978744

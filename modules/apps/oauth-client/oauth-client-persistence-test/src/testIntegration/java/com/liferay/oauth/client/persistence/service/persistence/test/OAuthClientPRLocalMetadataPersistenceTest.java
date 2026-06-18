@@ -149,8 +149,10 @@ public class OAuthClientPRLocalMetadataPersistenceTest {
 		newOAuthClientPRLocalMetadata.setProtectedResourceURI(
 			RandomTestUtil.randomString());
 
-		_oAuthClientPRLocalMetadatas.add(
-			_persistence.update(newOAuthClientPRLocalMetadata));
+		newOAuthClientPRLocalMetadata = _persistence.update(
+			newOAuthClientPRLocalMetadata);
+
+		_oAuthClientPRLocalMetadatas.add(newOAuthClientPRLocalMetadata);
 
 		OAuthClientPRLocalMetadata existingOAuthClientPRLocalMetadata =
 			_persistence.findByPrimaryKey(
@@ -716,4 +718,4 @@ public class OAuthClientPRLocalMetadataPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1023229233
+// LIFERAY-SERVICE-BUILDER-HASH:1497845597

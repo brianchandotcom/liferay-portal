@@ -150,8 +150,10 @@ public class CommerceTaxFixedRateAddressRelPersistenceTest {
 
 		newCommerceTaxFixedRateAddressRel.setRate(RandomTestUtil.nextDouble());
 
-		_commerceTaxFixedRateAddressRels.add(
-			_persistence.update(newCommerceTaxFixedRateAddressRel));
+		newCommerceTaxFixedRateAddressRel = _persistence.update(
+			newCommerceTaxFixedRateAddressRel);
+
+		_commerceTaxFixedRateAddressRels.add(newCommerceTaxFixedRateAddressRel);
 
 		CommerceTaxFixedRateAddressRel existingCommerceTaxFixedRateAddressRel =
 			_persistence.findByPrimaryKey(
@@ -565,4 +567,4 @@ public class CommerceTaxFixedRateAddressRelPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-600543453
+// LIFERAY-SERVICE-BUILDER-HASH:596740637

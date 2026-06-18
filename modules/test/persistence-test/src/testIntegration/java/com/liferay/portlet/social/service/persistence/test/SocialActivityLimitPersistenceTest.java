@@ -132,7 +132,9 @@ public class SocialActivityLimitPersistenceTest {
 
 		newSocialActivityLimit.setValue(RandomTestUtil.randomString());
 
-		_socialActivityLimits.add(_persistence.update(newSocialActivityLimit));
+		newSocialActivityLimit = _persistence.update(newSocialActivityLimit);
+
+		_socialActivityLimits.add(newSocialActivityLimit);
 
 		SocialActivityLimit existingSocialActivityLimit =
 			_persistence.findByPrimaryKey(
@@ -583,4 +585,4 @@ public class SocialActivityLimitPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-82437639
+// LIFERAY-SERVICE-BUILDER-HASH:-750468785

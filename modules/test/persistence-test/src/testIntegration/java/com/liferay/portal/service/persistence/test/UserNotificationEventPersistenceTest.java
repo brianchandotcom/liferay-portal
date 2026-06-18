@@ -136,8 +136,10 @@ public class UserNotificationEventPersistenceTest {
 
 		newUserNotificationEvent.setArchived(RandomTestUtil.randomBoolean());
 
-		_userNotificationEvents.add(
-			_persistence.update(newUserNotificationEvent));
+		newUserNotificationEvent = _persistence.update(
+			newUserNotificationEvent);
+
+		_userNotificationEvents.add(newUserNotificationEvent);
 
 		UserNotificationEvent existingUserNotificationEvent =
 			_persistence.findByPrimaryKey(
@@ -697,4 +699,4 @@ public class UserNotificationEventPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1542298135
+// LIFERAY-SERVICE-BUILDER-HASH:938821427

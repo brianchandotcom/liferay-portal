@@ -135,7 +135,9 @@ public class SamlSpSessionPersistenceTest {
 
 		newSamlSpSession.setTerminated(RandomTestUtil.randomBoolean());
 
-		_samlSpSessions.add(_persistence.update(newSamlSpSession));
+		newSamlSpSession = _persistence.update(newSamlSpSession);
+
+		_samlSpSessions.add(newSamlSpSession);
 
 		SamlSpSession existingSamlSpSession = _persistence.findByPrimaryKey(
 			newSamlSpSession.getPrimaryKey());
@@ -557,4 +559,4 @@ public class SamlSpSessionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1629144930
+// LIFERAY-SERVICE-BUILDER-HASH:-756478840

@@ -133,7 +133,9 @@ public class FriendlyURLEntryPersistenceTest {
 
 		newFriendlyURLEntry.setClassPK(RandomTestUtil.nextLong());
 
-		_friendlyURLEntries.add(_persistence.update(newFriendlyURLEntry));
+		newFriendlyURLEntry = _persistence.update(newFriendlyURLEntry);
+
+		_friendlyURLEntries.add(newFriendlyURLEntry);
 
 		FriendlyURLEntry existingFriendlyURLEntry =
 			_persistence.findByPrimaryKey(newFriendlyURLEntry.getPrimaryKey());
@@ -576,4 +578,4 @@ public class FriendlyURLEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1855169770
+// LIFERAY-SERVICE-BUILDER-HASH:-1611995680

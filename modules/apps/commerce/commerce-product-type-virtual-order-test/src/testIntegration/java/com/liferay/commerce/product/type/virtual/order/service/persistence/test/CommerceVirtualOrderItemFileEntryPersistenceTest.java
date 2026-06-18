@@ -157,8 +157,11 @@ public class CommerceVirtualOrderItemFileEntryPersistenceTest {
 		newCommerceVirtualOrderItemFileEntry.setVersion(
 			RandomTestUtil.randomString());
 
+		newCommerceVirtualOrderItemFileEntry = _persistence.update(
+			newCommerceVirtualOrderItemFileEntry);
+
 		_commerceVirtualOrderItemFileEntries.add(
-			_persistence.update(newCommerceVirtualOrderItemFileEntry));
+			newCommerceVirtualOrderItemFileEntry);
 
 		CommerceVirtualOrderItemFileEntry
 			existingCommerceVirtualOrderItemFileEntry =
@@ -679,4 +682,4 @@ public class CommerceVirtualOrderItemFileEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:807186447
+// LIFERAY-SERVICE-BUILDER-HASH:-2117508729

@@ -141,7 +141,9 @@ public class KBCommentPersistenceTest {
 
 		newKBComment.setStatus(RandomTestUtil.nextInt());
 
-		_kbComments.add(_persistence.update(newKBComment));
+		newKBComment = _persistence.update(newKBComment);
+
+		_kbComments.add(newKBComment);
 
 		KBComment existingKBComment = _persistence.findByPrimaryKey(
 			newKBComment.getPrimaryKey());
@@ -615,4 +617,4 @@ public class KBCommentPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-292167881
+// LIFERAY-SERVICE-BUILDER-HASH:109227869

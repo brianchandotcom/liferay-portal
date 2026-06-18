@@ -118,7 +118,9 @@ public class PasswordTrackerPersistenceTest {
 
 		newPasswordTracker.setPassword(RandomTestUtil.randomString());
 
-		_passwordTrackers.add(_persistence.update(newPasswordTracker));
+		newPasswordTracker = _persistence.update(newPasswordTracker);
+
+		_passwordTrackers.add(newPasswordTracker);
 
 		PasswordTracker existingPasswordTracker = _persistence.findByPrimaryKey(
 			newPasswordTracker.getPrimaryKey());
@@ -419,4 +421,4 @@ public class PasswordTrackerPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-627050296
+// LIFERAY-SERVICE-BUILDER-HASH:999081530

@@ -119,7 +119,9 @@ public class RegionLocalizationPersistenceTest {
 
 		newRegionLocalization.setTitle(RandomTestUtil.randomString());
 
-		_regionLocalizations.add(_persistence.update(newRegionLocalization));
+		newRegionLocalization = _persistence.update(newRegionLocalization);
+
+		_regionLocalizations.add(newRegionLocalization);
 
 		RegionLocalization existingRegionLocalization =
 			_persistence.findByPrimaryKey(
@@ -482,4 +484,4 @@ public class RegionLocalizationPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1944369806
+// LIFERAY-SERVICE-BUILDER-HASH:-476112908

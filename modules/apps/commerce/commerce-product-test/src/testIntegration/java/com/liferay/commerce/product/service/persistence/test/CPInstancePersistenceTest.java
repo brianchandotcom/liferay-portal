@@ -221,7 +221,9 @@ public class CPInstancePersistenceTest {
 
 		newCPInstance.setStatusDate(RandomTestUtil.nextDate());
 
-		_cpInstances.add(_persistence.update(newCPInstance));
+		newCPInstance = _persistence.update(newCPInstance);
+
+		_cpInstances.add(newCPInstance);
 
 		CPInstance existingCPInstance = _persistence.findByPrimaryKey(
 			newCPInstance.getPrimaryKey());
@@ -994,4 +996,4 @@ public class CPInstancePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-257291756
+// LIFERAY-SERVICE-BUILDER-HASH:1160124224

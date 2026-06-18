@@ -123,7 +123,9 @@ public class CTProcessPersistenceTest {
 
 		newCTProcess.setType(RandomTestUtil.nextInt());
 
-		_ctProcesses.add(_persistence.update(newCTProcess));
+		newCTProcess = _persistence.update(newCTProcess);
+
+		_ctProcesses.add(newCTProcess);
 
 		CTProcess existingCTProcess = _persistence.findByPrimaryKey(
 			newCTProcess.getPrimaryKey());
@@ -437,4 +439,4 @@ public class CTProcessPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1688814695
+// LIFERAY-SERVICE-BUILDER-HASH:-1749344047

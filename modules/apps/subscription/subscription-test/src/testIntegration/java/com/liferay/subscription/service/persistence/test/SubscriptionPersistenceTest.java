@@ -133,7 +133,9 @@ public class SubscriptionPersistenceTest {
 
 		newSubscription.setFrequency(RandomTestUtil.randomString());
 
-		_subscriptions.add(_persistence.update(newSubscription));
+		newSubscription = _persistence.update(newSubscription);
+
+		_subscriptions.add(newSubscription);
 
 		Subscription existingSubscription = _persistence.findByPrimaryKey(
 			newSubscription.getPrimaryKey());
@@ -589,4 +591,4 @@ public class SubscriptionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-261312952
+// LIFERAY-SERVICE-BUILDER-HASH:-1914057814

@@ -139,7 +139,9 @@ public class LayoutFriendlyURLPersistenceTest {
 
 		newLayoutFriendlyURL.setLastPublishDate(RandomTestUtil.nextDate());
 
-		_layoutFriendlyURLs.add(_persistence.update(newLayoutFriendlyURL));
+		newLayoutFriendlyURL = _persistence.update(newLayoutFriendlyURL);
+
+		_layoutFriendlyURLs.add(newLayoutFriendlyURL);
 
 		LayoutFriendlyURL existingLayoutFriendlyURL =
 			_persistence.findByPrimaryKey(newLayoutFriendlyURL.getPrimaryKey());
@@ -688,4 +690,4 @@ public class LayoutFriendlyURLPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1804800521
+// LIFERAY-SERVICE-BUILDER-HASH:-498516565

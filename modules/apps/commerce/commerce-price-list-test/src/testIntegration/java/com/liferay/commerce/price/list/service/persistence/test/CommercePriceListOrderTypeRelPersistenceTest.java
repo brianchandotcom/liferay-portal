@@ -149,8 +149,10 @@ public class CommercePriceListOrderTypeRelPersistenceTest {
 		newCommercePriceListOrderTypeRel.setLastPublishDate(
 			RandomTestUtil.nextDate());
 
-		_commercePriceListOrderTypeRels.add(
-			_persistence.update(newCommercePriceListOrderTypeRel));
+		newCommercePriceListOrderTypeRel = _persistence.update(
+			newCommercePriceListOrderTypeRel);
+
+		_commercePriceListOrderTypeRels.add(newCommercePriceListOrderTypeRel);
 
 		CommercePriceListOrderTypeRel existingCommercePriceListOrderTypeRel =
 			_persistence.findByPrimaryKey(
@@ -648,4 +650,4 @@ public class CommercePriceListOrderTypeRelPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-207562914
+// LIFERAY-SERVICE-BUILDER-HASH:958336300

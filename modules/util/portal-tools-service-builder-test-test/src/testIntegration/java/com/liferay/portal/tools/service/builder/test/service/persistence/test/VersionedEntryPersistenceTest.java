@@ -119,7 +119,9 @@ public class VersionedEntryPersistenceTest {
 
 		newVersionedEntry.setGroupId(RandomTestUtil.nextLong());
 
-		_versionedEntries.add(_persistence.update(newVersionedEntry));
+		newVersionedEntry = _persistence.update(newVersionedEntry);
+
+		_versionedEntries.add(newVersionedEntry);
 
 		VersionedEntry existingVersionedEntry = _persistence.findByPrimaryKey(
 			newVersionedEntry.getPrimaryKey());
@@ -480,4 +482,4 @@ public class VersionedEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:654524484
+// LIFERAY-SERVICE-BUILDER-HASH:-569055808

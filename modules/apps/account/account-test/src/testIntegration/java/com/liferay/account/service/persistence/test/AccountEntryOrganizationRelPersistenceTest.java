@@ -125,8 +125,10 @@ public class AccountEntryOrganizationRelPersistenceTest {
 		newAccountEntryOrganizationRel.setOrganizationId(
 			RandomTestUtil.nextLong());
 
-		_accountEntryOrganizationRels.add(
-			_persistence.update(newAccountEntryOrganizationRel));
+		newAccountEntryOrganizationRel = _persistence.update(
+			newAccountEntryOrganizationRel);
+
+		_accountEntryOrganizationRels.add(newAccountEntryOrganizationRel);
 
 		AccountEntryOrganizationRel existingAccountEntryOrganizationRel =
 			_persistence.findByPrimaryKey(
@@ -553,4 +555,4 @@ public class AccountEntryOrganizationRelPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1404053440
+// LIFERAY-SERVICE-BUILDER-HASH:1281538462

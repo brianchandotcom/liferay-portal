@@ -147,7 +147,9 @@ public class CalendarPersistenceTest {
 
 		newCalendar.setLastPublishDate(RandomTestUtil.nextDate());
 
-		_calendars.add(_persistence.update(newCalendar));
+		newCalendar = _persistence.update(newCalendar);
+
+		_calendars.add(newCalendar);
 
 		Calendar existingCalendar = _persistence.findByPrimaryKey(
 			newCalendar.getPrimaryKey());
@@ -593,4 +595,4 @@ public class CalendarPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:423707358
+// LIFERAY-SERVICE-BUILDER-HASH:-545665790

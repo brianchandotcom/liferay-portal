@@ -159,8 +159,10 @@ public class DDMFormInstanceRecordVersionPersistenceTest {
 		newDDMFormInstanceRecordVersion.setStatusDate(
 			RandomTestUtil.nextDate());
 
-		_ddmFormInstanceRecordVersions.add(
-			_persistence.update(newDDMFormInstanceRecordVersion));
+		newDDMFormInstanceRecordVersion = _persistence.update(
+			newDDMFormInstanceRecordVersion);
+
+		_ddmFormInstanceRecordVersions.add(newDDMFormInstanceRecordVersion);
 
 		DDMFormInstanceRecordVersion existingDDMFormInstanceRecordVersion =
 			_persistence.findByPrimaryKey(
@@ -691,4 +693,4 @@ public class DDMFormInstanceRecordVersionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1649565129
+// LIFERAY-SERVICE-BUILDER-HASH:1839766323

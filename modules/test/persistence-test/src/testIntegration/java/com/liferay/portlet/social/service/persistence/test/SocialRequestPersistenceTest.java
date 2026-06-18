@@ -137,7 +137,9 @@ public class SocialRequestPersistenceTest {
 
 		newSocialRequest.setStatus(RandomTestUtil.nextInt());
 
-		_socialRequests.add(_persistence.update(newSocialRequest));
+		newSocialRequest = _persistence.update(newSocialRequest);
+
+		_socialRequests.add(newSocialRequest);
 
 		SocialRequest existingSocialRequest = _persistence.findByPrimaryKey(
 			newSocialRequest.getPrimaryKey());
@@ -658,4 +660,4 @@ public class SocialRequestPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1783005333
+// LIFERAY-SERVICE-BUILDER-HASH:1136392361

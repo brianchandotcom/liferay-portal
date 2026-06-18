@@ -129,8 +129,10 @@ public class DDMDataProviderInstanceLinkPersistenceTest {
 		newDDMDataProviderInstanceLink.setStructureId(
 			RandomTestUtil.nextLong());
 
-		_ddmDataProviderInstanceLinks.add(
-			_persistence.update(newDDMDataProviderInstanceLink));
+		newDDMDataProviderInstanceLink = _persistence.update(
+			newDDMDataProviderInstanceLink);
+
+		_ddmDataProviderInstanceLinks.add(newDDMDataProviderInstanceLink);
 
 		DDMDataProviderInstanceLink existingDDMDataProviderInstanceLink =
 			_persistence.findByPrimaryKey(
@@ -562,4 +564,4 @@ public class DDMDataProviderInstanceLinkPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1132176362
+// LIFERAY-SERVICE-BUILDER-HASH:-1641794036

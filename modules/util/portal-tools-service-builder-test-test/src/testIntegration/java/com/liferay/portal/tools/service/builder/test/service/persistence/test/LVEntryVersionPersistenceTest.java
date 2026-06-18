@@ -126,7 +126,9 @@ public class LVEntryVersionPersistenceTest {
 
 		newLVEntryVersion.setUniqueGroupKey(RandomTestUtil.randomString());
 
-		_lvEntryVersions.add(_persistence.update(newLVEntryVersion));
+		newLVEntryVersion = _persistence.update(newLVEntryVersion);
+
+		_lvEntryVersions.add(newLVEntryVersion);
 
 		LVEntryVersion existingLVEntryVersion = _persistence.findByPrimaryKey(
 			newLVEntryVersion.getPrimaryKey());
@@ -606,4 +608,4 @@ public class LVEntryVersionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1912919665
+// LIFERAY-SERVICE-BUILDER-HASH:-1338181335

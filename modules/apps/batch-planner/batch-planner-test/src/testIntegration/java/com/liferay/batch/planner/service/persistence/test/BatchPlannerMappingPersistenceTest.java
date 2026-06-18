@@ -141,7 +141,9 @@ public class BatchPlannerMappingPersistenceTest {
 
 		newBatchPlannerMapping.setScript(RandomTestUtil.randomString());
 
-		_batchPlannerMappings.add(_persistence.update(newBatchPlannerMapping));
+		newBatchPlannerMapping = _persistence.update(newBatchPlannerMapping);
+
+		_batchPlannerMappings.add(newBatchPlannerMapping);
 
 		BatchPlannerMapping existingBatchPlannerMapping =
 			_persistence.findByPrimaryKey(
@@ -574,4 +576,4 @@ public class BatchPlannerMappingPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:483536262
+// LIFERAY-SERVICE-BUILDER-HASH:1919057240

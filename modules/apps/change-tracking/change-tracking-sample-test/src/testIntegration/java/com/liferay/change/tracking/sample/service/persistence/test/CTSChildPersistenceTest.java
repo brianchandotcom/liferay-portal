@@ -123,7 +123,9 @@ public class CTSChildPersistenceTest {
 
 		newCTSChild.setName(RandomTestUtil.randomString());
 
-		_ctsChilds.add(_persistence.update(newCTSChild));
+		newCTSChild = _persistence.update(newCTSChild);
+
+		_ctsChilds.add(newCTSChild);
 
 		CTSChild existingCTSChild = _persistence.findByPrimaryKey(
 			newCTSChild.getPrimaryKey());
@@ -436,4 +438,4 @@ public class CTSChildPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:498185963
+// LIFERAY-SERVICE-BUILDER-HASH:306775951

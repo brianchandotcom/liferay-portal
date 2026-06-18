@@ -131,7 +131,9 @@ public class AssetLinkPersistenceTest {
 
 		newAssetLink.setWeight(RandomTestUtil.nextInt());
 
-		_assetLinks.add(_persistence.update(newAssetLink));
+		newAssetLink = _persistence.update(newAssetLink);
+
+		_assetLinks.add(newAssetLink);
 
 		AssetLink existingAssetLink = _persistence.findByPrimaryKey(
 			newAssetLink.getPrimaryKey());
@@ -544,4 +546,4 @@ public class AssetLinkPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1631290713
+// LIFERAY-SERVICE-BUILDER-HASH:-2107619579

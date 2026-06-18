@@ -144,8 +144,10 @@ public class CommerceTaxCategoryMappingPersistenceTest {
 		newCommerceTaxCategoryMapping.setCPTaxCategoryId(
 			RandomTestUtil.nextLong());
 
-		_commerceTaxCategoryMappings.add(
-			_persistence.update(newCommerceTaxCategoryMapping));
+		newCommerceTaxCategoryMapping = _persistence.update(
+			newCommerceTaxCategoryMapping);
+
+		_commerceTaxCategoryMappings.add(newCommerceTaxCategoryMapping);
 
 		CommerceTaxCategoryMapping existingCommerceTaxCategoryMapping =
 			_persistence.findByPrimaryKey(
@@ -688,4 +690,4 @@ public class CommerceTaxCategoryMappingPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-953409804
+// LIFERAY-SERVICE-BUILDER-HASH:-1543232884

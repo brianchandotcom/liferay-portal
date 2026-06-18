@@ -148,8 +148,10 @@ public class WorkflowDefinitionLinkPersistenceTest {
 		newWorkflowDefinitionLink.setWorkflowDefinitionVersion(
 			RandomTestUtil.nextInt());
 
-		_workflowDefinitionLinks.add(
-			_persistence.update(newWorkflowDefinitionLink));
+		newWorkflowDefinitionLink = _persistence.update(
+			newWorkflowDefinitionLink);
+
+		_workflowDefinitionLinks.add(newWorkflowDefinitionLink);
 
 		WorkflowDefinitionLink existingWorkflowDefinitionLink =
 			_persistence.findByPrimaryKey(
@@ -735,4 +737,4 @@ public class WorkflowDefinitionLinkPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1878975933
+// LIFERAY-SERVICE-BUILDER-HASH:-281089987

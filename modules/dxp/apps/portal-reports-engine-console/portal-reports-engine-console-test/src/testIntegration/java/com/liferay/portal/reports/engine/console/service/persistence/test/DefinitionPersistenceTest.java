@@ -144,7 +144,9 @@ public class DefinitionPersistenceTest {
 
 		newDefinition.setLastPublishDate(RandomTestUtil.nextDate());
 
-		_definitions.add(_persistence.update(newDefinition));
+		newDefinition = _persistence.update(newDefinition);
+
+		_definitions.add(newDefinition);
 
 		Definition existingDefinition = _persistence.findByPrimaryKey(
 			newDefinition.getPrimaryKey());
@@ -595,4 +597,4 @@ public class DefinitionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1815942517
+// LIFERAY-SERVICE-BUILDER-HASH:1868170343

@@ -137,7 +137,9 @@ public class MBDiscussionPersistenceTest {
 
 		newMBDiscussion.setLastPublishDate(RandomTestUtil.nextDate());
 
-		_mbDiscussions.add(_persistence.update(newMBDiscussion));
+		newMBDiscussion = _persistence.update(newMBDiscussion);
+
+		_mbDiscussions.add(newMBDiscussion);
 
 		MBDiscussion existingMBDiscussion = _persistence.findByPrimaryKey(
 			newMBDiscussion.getPrimaryKey());
@@ -586,4 +588,4 @@ public class MBDiscussionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-952029459
+// LIFERAY-SERVICE-BUILDER-HASH:447314127

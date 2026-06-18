@@ -138,7 +138,9 @@ public class LazyBlobEntryPersistenceTest {
 
 		newLazyBlobEntry.setBlob2(newBlob2Blob);
 
-		_lazyBlobEntries.add(_persistence.update(newLazyBlobEntry));
+		newLazyBlobEntry = _persistence.update(newLazyBlobEntry);
+
+		_lazyBlobEntries.add(newLazyBlobEntry);
 
 		LazyBlobEntry existingLazyBlobEntry = _persistence.findByPrimaryKey(
 			newLazyBlobEntry.getPrimaryKey());
@@ -526,4 +528,4 @@ public class LazyBlobEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-428178084
+// LIFERAY-SERVICE-BUILDER-HASH:1591886676

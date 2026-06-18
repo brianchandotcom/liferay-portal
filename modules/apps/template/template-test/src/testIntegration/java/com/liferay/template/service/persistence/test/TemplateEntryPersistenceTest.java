@@ -142,7 +142,9 @@ public class TemplateEntryPersistenceTest {
 
 		newTemplateEntry.setLastPublishDate(RandomTestUtil.nextDate());
 
-		_templateEntries.add(_persistence.update(newTemplateEntry));
+		newTemplateEntry = _persistence.update(newTemplateEntry);
+
+		_templateEntries.add(newTemplateEntry);
 
 		TemplateEntry existingTemplateEntry = _persistence.findByPrimaryKey(
 			newTemplateEntry.getPrimaryKey());
@@ -660,4 +662,4 @@ public class TemplateEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2011807626
+// LIFERAY-SERVICE-BUILDER-HASH:1365928798

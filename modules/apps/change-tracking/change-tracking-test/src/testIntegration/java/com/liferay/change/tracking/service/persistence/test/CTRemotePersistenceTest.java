@@ -129,7 +129,9 @@ public class CTRemotePersistenceTest {
 
 		newCTRemote.setClientSecret(RandomTestUtil.randomString());
 
-		_ctRemotes.add(_persistence.update(newCTRemote));
+		newCTRemote = _persistence.update(newCTRemote);
+
+		_ctRemotes.add(newCTRemote);
 
 		CTRemote existingCTRemote = _persistence.findByPrimaryKey(
 			newCTRemote.getPrimaryKey());
@@ -436,4 +438,4 @@ public class CTRemotePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:267356283
+// LIFERAY-SERVICE-BUILDER-HASH:368071653

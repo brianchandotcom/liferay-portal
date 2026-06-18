@@ -768,10 +768,7 @@ public class CTSContentPersistenceImpl
 				session.save(ctsContent);
 			}
 			else {
-				session.evict(
-					CTSContentImpl.class, ctsContent.getPrimaryKeyObj());
-
-				session.saveOrUpdate(ctsContent);
+				ctsContent = (CTSContent)session.merge(ctsContent);
 			}
 
 			session.flush();
@@ -1178,4 +1175,4 @@ public class CTSContentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-33702926
+// LIFERAY-SERVICE-BUILDER-HASH:-371585043

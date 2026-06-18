@@ -5,6 +5,7 @@ jobs:
     push:
         outputs:
             object_name: ${{steps.vars.outputs.object_name}}
+            version: ${{steps.vars.outputs.version}}
         runs-on: ubuntu-latest
         steps:
             -   name: Checkout code
@@ -39,7 +40,7 @@ jobs:
 
                         local version
 
-                        version=$(jq --raw-output ".\"liferay-${provider}-bootstrap\"" ./cloud/scripts/versions.json)
+                        version=$(jq --raw-output --arg key "liferay-${provider}-bootstrap" '.[$key]' ./cloud/scripts/versions.json)
 
                         local object_basename="liferay-${provider}-bootstrap-${version}.tar.gz"
 
@@ -49,6 +50,7 @@ jobs:
 
                         echo "OBJECT_NAME=${object_name}" >> ${GITHUB_ENV}
                         echo "object_name=${object_name}" >> ${GITHUB_OUTPUT}
+                        echo "version=${version}" >> ${GITHUB_OUTPUT}
                     }
 
                     main "${@}"
@@ -115,6 +117,8 @@ on:
         outputs:
             object_name:
                 value: ${{jobs.push.outputs.object_name}}
+            version:
+                value: ${{jobs.push.outputs.version}}
 permissions:
     contents: read
     id-token: write

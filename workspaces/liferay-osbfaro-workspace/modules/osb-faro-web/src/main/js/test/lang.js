@@ -18,7 +18,8 @@ const AC_LANG_PATH = path.resolve(
 );
 
 const DXP_LANG_PATH = path.resolve(
-	'../../../../../',
+	'../../../../',
+	'modules',
 	'apps',
 	'portal-language',
 	'portal-language-lang',

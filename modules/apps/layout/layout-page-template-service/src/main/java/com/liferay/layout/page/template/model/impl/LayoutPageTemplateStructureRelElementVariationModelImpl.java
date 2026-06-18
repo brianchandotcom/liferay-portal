@@ -59,6 +59,7 @@ import java.util.function.Function;
  * @see LayoutPageTemplateStructureRelElementVariationImpl
  * @generated
  */
+@JSON(strict = true)
 public class LayoutPageTemplateStructureRelElementVariationModelImpl
 	extends BaseModelImpl<LayoutPageTemplateStructureRelElementVariation>
 	implements LayoutPageTemplateStructureRelElementVariationModel {
@@ -513,6 +514,7 @@ public class LayoutPageTemplateStructureRelElementVariationModelImpl
 
 	}
 
+	@JSON
 	@Override
 	public long getMvccVersion() {
 		return _mvccVersion;
@@ -527,6 +529,7 @@ public class LayoutPageTemplateStructureRelElementVariationModelImpl
 		_mvccVersion = mvccVersion;
 	}
 
+	@JSON
 	@Override
 	public long getCtCollectionId() {
 		return _ctCollectionId;
@@ -541,6 +544,7 @@ public class LayoutPageTemplateStructureRelElementVariationModelImpl
 		_ctCollectionId = ctCollectionId;
 	}
 
+	@JSON
 	@Override
 	public String getUuid() {
 		if (_uuid == null) {
@@ -569,6 +573,7 @@ public class LayoutPageTemplateStructureRelElementVariationModelImpl
 		return getColumnOriginalValue("uuid_");
 	}
 
+	@JSON
 	@Override
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCode == null) {
@@ -597,6 +602,7 @@ public class LayoutPageTemplateStructureRelElementVariationModelImpl
 		return getColumnOriginalValue("externalReferenceCode");
 	}
 
+	@JSON
 	@Override
 	public long getLayoutPageTemplateStructureRelElementVariationId() {
 		return _layoutPageTemplateStructureRelElementVariationId;
@@ -614,6 +620,7 @@ public class LayoutPageTemplateStructureRelElementVariationModelImpl
 			layoutPageTemplateStructureRelElementVariationId;
 	}
 
+	@JSON
 	@Override
 	public long getGroupId() {
 		return _groupId;
@@ -637,6 +644,7 @@ public class LayoutPageTemplateStructureRelElementVariationModelImpl
 		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
+	@JSON
 	@Override
 	public long getCompanyId() {
 		return _companyId;
@@ -661,6 +669,7 @@ public class LayoutPageTemplateStructureRelElementVariationModelImpl
 			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
+	@JSON
 	@Override
 	public long getUserId() {
 		return _userId;
@@ -691,6 +700,7 @@ public class LayoutPageTemplateStructureRelElementVariationModelImpl
 	public void setUserUuid(String userUuid) {
 	}
 
+	@JSON
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
@@ -710,6 +720,7 @@ public class LayoutPageTemplateStructureRelElementVariationModelImpl
 		_userName = userName;
 	}
 
+	@JSON
 	@Override
 	public Date getCreateDate() {
 		return _createDate;
@@ -724,6 +735,7 @@ public class LayoutPageTemplateStructureRelElementVariationModelImpl
 		_createDate = createDate;
 	}
 
+	@JSON
 	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
@@ -744,6 +756,7 @@ public class LayoutPageTemplateStructureRelElementVariationModelImpl
 		_modifiedDate = modifiedDate;
 	}
 
+	@JSON
 	@Override
 	public String getAudienceEntryERC() {
 		if (_audienceEntryERC == null) {
@@ -763,6 +776,7 @@ public class LayoutPageTemplateStructureRelElementVariationModelImpl
 		_audienceEntryERC = audienceEntryERC;
 	}
 
+	@JSON
 	@Override
 	public String getHide() {
 		if (_hide == null) {
@@ -869,6 +883,7 @@ public class LayoutPageTemplateStructureRelElementVariationModelImpl
 				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
+	@JSON
 	@Override
 	public String getHtml() {
 		if (_html == null) {
@@ -975,6 +990,7 @@ public class LayoutPageTemplateStructureRelElementVariationModelImpl
 				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
+	@JSON
 	@Override
 	public String getJs() {
 		if (_js == null) {
@@ -1079,6 +1095,7 @@ public class LayoutPageTemplateStructureRelElementVariationModelImpl
 				jsMap, getJs(), "Js", LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
+	@JSON
 	@Override
 	public String getName() {
 		if (_name == null) {
@@ -1098,6 +1115,7 @@ public class LayoutPageTemplateStructureRelElementVariationModelImpl
 		_name = name;
 	}
 
+	@JSON
 	@Override
 	public long getPlid() {
 		return _plid;
@@ -1121,6 +1139,7 @@ public class LayoutPageTemplateStructureRelElementVariationModelImpl
 		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("plid"));
 	}
 
+	@JSON
 	@Override
 	public String getSegmentsExperienceERC() {
 		if (_segmentsExperienceERC == null) {
@@ -1149,6 +1168,7 @@ public class LayoutPageTemplateStructureRelElementVariationModelImpl
 		return getColumnOriginalValue("segmentsExperienceERC");
 	}
 
+	@JSON
 	@Override
 	public String getTargetElement() {
 		if (_targetElement == null) {
@@ -1902,4 +1922,4 @@ public class LayoutPageTemplateStructureRelElementVariationModelImpl
 	private LayoutPageTemplateStructureRelElementVariation _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:45207097
+// LIFERAY-SERVICE-BUILDER-HASH:170474274

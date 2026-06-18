@@ -207,102 +207,13 @@ public class JournalArticleInfoItemFieldValuesUpdaterTest {
 	public void testUpdateJournalArticleFromInfoItemFieldValuesPreservesEmptyIntermediateRepeatableField()
 		throws Exception {
 
-		JournalArticle journalArticle = _getRepeatableHtmlJournalArticle();
+		_testUpdateJournalArticleFromInfoItemFieldValuesPreservesEmptyIntermediateRepeatableField(
+			_getRepeatableHtmlJournalArticle(),
+			"test-journal-repeatable-html-empty-v12.xlf", "RichText");
 
-		_translationEntryLocalService.addOrUpdateTranslationEntry(
-			_group.getGroupId(), JournalArticle.class.getName(),
-			journalArticle.getResourcePrimKey(),
-			StringUtil.replace(
-				TranslationTestUtil.readFileToString(
-					"test-journal-repeatable-html-empty-v12.xlf"),
-				"[$JOURNAL_ARTICLE_ID$]",
-				String.valueOf(journalArticle.getResourcePrimKey())),
-			"application/xliff+xml", LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-
-		journalArticle = _journalArticleLocalService.fetchLatestArticle(
-			journalArticle.getResourcePrimKey());
-
-		DDMFormValues ddmFormValues = journalArticle.getDDMFormValues();
-
-		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
-			ddmFormValues.getDDMFormFieldValuesMap(true);
-
-		List<DDMFormFieldValue> ddmFormFieldValues = ddmFormFieldValuesMap.get(
-			"RichText");
-
-		Assert.assertEquals(
-			ddmFormFieldValues.toString(), 3, ddmFormFieldValues.size());
-
-		DDMFormFieldValue ddmFormFieldValue0 = ddmFormFieldValues.get(0);
-
-		Value value0 = ddmFormFieldValue0.getValue();
-
-		Assert.assertEquals("Valor A", value0.getString(LocaleUtil.SPAIN));
-
-		DDMFormFieldValue ddmFormFieldValue1 = ddmFormFieldValues.get(1);
-
-		Value value1 = ddmFormFieldValue1.getValue();
-
-		Assert.assertEquals(
-			StringPool.BLANK, value1.getString(LocaleUtil.SPAIN));
-
-		DDMFormFieldValue ddmFormFieldValue2 = ddmFormFieldValues.get(2);
-
-		Value value2 = ddmFormFieldValue2.getValue();
-
-		Assert.assertEquals("Valor C", value2.getString(LocaleUtil.SPAIN));
-	}
-
-	@Test
-	public void testUpdateJournalArticleFromInfoItemFieldValuesPreservesEmptyIntermediateRepeatableTextField()
-		throws Exception {
-
-		JournalArticle journalArticle = _getRepeatableTextJournalArticle();
-
-		_translationEntryLocalService.addOrUpdateTranslationEntry(
-			_group.getGroupId(), JournalArticle.class.getName(),
-			journalArticle.getResourcePrimKey(),
-			StringUtil.replace(
-				TranslationTestUtil.readFileToString(
-					"test-journal-repeatable-text-empty-v12.xlf"),
-				"[$JOURNAL_ARTICLE_ID$]",
-				String.valueOf(journalArticle.getResourcePrimKey())),
-			"application/xliff+xml", LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-
-		journalArticle = _journalArticleLocalService.fetchLatestArticle(
-			journalArticle.getResourcePrimKey());
-
-		DDMFormValues ddmFormValues = journalArticle.getDDMFormValues();
-
-		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
-			ddmFormValues.getDDMFormFieldValuesMap(true);
-
-		List<DDMFormFieldValue> ddmFormFieldValues = ddmFormFieldValuesMap.get(
-			"TextField");
-
-		Assert.assertEquals(
-			ddmFormFieldValues.toString(), 3, ddmFormFieldValues.size());
-
-		DDMFormFieldValue ddmFormFieldValue0 = ddmFormFieldValues.get(0);
-
-		Value value0 = ddmFormFieldValue0.getValue();
-
-		Assert.assertEquals("Valor A", value0.getString(LocaleUtil.SPAIN));
-
-		DDMFormFieldValue ddmFormFieldValue1 = ddmFormFieldValues.get(1);
-
-		Value value1 = ddmFormFieldValue1.getValue();
-
-		Assert.assertEquals(
-			StringPool.BLANK, value1.getString(LocaleUtil.SPAIN));
-
-		DDMFormFieldValue ddmFormFieldValue2 = ddmFormFieldValues.get(2);
-
-		Value value2 = ddmFormFieldValue2.getValue();
-
-		Assert.assertEquals("Valor C", value2.getString(LocaleUtil.SPAIN));
+		_testUpdateJournalArticleFromInfoItemFieldValuesPreservesEmptyIntermediateRepeatableField(
+			_getRepeatableTextJournalArticle(),
+			"test-journal-repeatable-text-empty-v12.xlf", "TextField");
 	}
 
 	@Test
@@ -608,6 +519,56 @@ public class JournalArticleInfoItemFieldValuesUpdaterTest {
 			TranslationTestUtil.readFileToString(
 				"test-journal-content-repeatable-text-three-fields.xml"),
 			ddmStructure.getStructureKey(), null);
+	}
+
+	private void
+			_testUpdateJournalArticleFromInfoItemFieldValuesPreservesEmptyIntermediateRepeatableField(
+				JournalArticle journalArticle, String xliffFileName,
+				String ddmFormFieldName)
+		throws Exception {
+
+		_translationEntryLocalService.addOrUpdateTranslationEntry(
+			_group.getGroupId(), JournalArticle.class.getName(),
+			journalArticle.getResourcePrimKey(),
+			StringUtil.replace(
+				TranslationTestUtil.readFileToString(xliffFileName),
+				"[$JOURNAL_ARTICLE_ID$]",
+				String.valueOf(journalArticle.getResourcePrimKey())),
+			"application/xliff+xml", LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		journalArticle = _journalArticleLocalService.fetchLatestArticle(
+			journalArticle.getResourcePrimKey());
+
+		DDMFormValues ddmFormValues = journalArticle.getDDMFormValues();
+
+		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
+			ddmFormValues.getDDMFormFieldValuesMap(true);
+
+		List<DDMFormFieldValue> ddmFormFieldValues = ddmFormFieldValuesMap.get(
+			ddmFormFieldName);
+
+		Assert.assertEquals(
+			ddmFormFieldValues.toString(), 3, ddmFormFieldValues.size());
+
+		DDMFormFieldValue ddmFormFieldValue0 = ddmFormFieldValues.get(0);
+
+		Value value0 = ddmFormFieldValue0.getValue();
+
+		Assert.assertEquals("Valor A", value0.getString(LocaleUtil.SPAIN));
+
+		DDMFormFieldValue ddmFormFieldValue1 = ddmFormFieldValues.get(1);
+
+		Value value1 = ddmFormFieldValue1.getValue();
+
+		Assert.assertEquals(
+			StringPool.BLANK, value1.getString(LocaleUtil.SPAIN));
+
+		DDMFormFieldValue ddmFormFieldValue2 = ddmFormFieldValues.get(2);
+
+		Value value2 = ddmFormFieldValue2.getValue();
+
+		Assert.assertEquals("Valor C", value2.getString(LocaleUtil.SPAIN));
 	}
 
 	private static String _originalName;

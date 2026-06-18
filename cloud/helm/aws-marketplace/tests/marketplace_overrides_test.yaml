@@ -14,7 +14,7 @@ tests:
             path: kind
             skipEmptyTemplates: true
             value: StatefulSet
-        it: deploys the AWS Marketplace ECR image by default
+        it: Deploys the AWS Marketplace ECR image by default
     -   asserts:
             -   equal:
                     path: spec.template.spec.containers[0].image
@@ -23,7 +23,7 @@ tests:
             path: kind
             skipEmptyTemplates: true
             value: StatefulSet
-        it: honors an overridden image tag
+        it: Honors an overridden image tag
         set:
             liferay-aws.liferay-default.image.tag: 2025.q2.0
     -   asserts:
@@ -34,4 +34,4 @@ tests:
             path: kind
             skipEmptyTemplates: true
             value: StatefulSet
-        it: labels the StatefulSet with the liferay-aws-marketplace origin
+        it: Labels the StatefulSet with the liferay-aws-marketplace origin

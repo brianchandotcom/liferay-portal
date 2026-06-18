@@ -5,9 +5,12 @@
 
 package com.liferay.portal.osgi.web.wab.generator.internal.artifact;
 
+import com.liferay.portal.json.JSONFactoryImpl;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 import java.net.URI;
@@ -15,7 +18,12 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLStreamHandler;
 
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+
 import java.util.Objects;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -39,6 +47,10 @@ public class ArtifactURLUtilTest {
 
 	@BeforeClass
 	public static void setUpClass() {
+		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
+
+		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
+
 		URL.setURLStreamHandlerFactory(
 			protocol -> {
 				if (!Objects.equals(protocol, "webbundle")) {
@@ -98,6 +110,38 @@ public class ArtifactURLUtilTest {
 	}
 
 	@Test
+	public void testClientExtensionURLWithVersionUsesConfigWebContextPath()
+		throws Exception {
+
+		File dir = temporaryFolder.newFolder();
+
+		File configFile = new File(
+			dir, "liferay-sample-global-js.client-extension-config.json");
+
+		String json =
+			"{\"sample\": {\"webContextPath\": \"/liferay-sample-global-js\"}}";
+
+		Files.write(configFile.toPath(), json.getBytes(StandardCharsets.UTF_8));
+
+		File file = temporaryFolder.newFile(
+			"liferay-sample-global-js-1.0.0-SNAPSHOT.zip");
+
+		_zipDirToFile(dir, file);
+
+		URI uri = file.toURI();
+
+		URL url = ArtifactURLUtil.transform(uri.toURL());
+
+		String query = url.getQuery();
+
+		Assert.assertTrue(
+			query.contains("Web-ContextPath=/liferay-sample-global-js&"));
+		Assert.assertFalse(
+			query.contains(
+				"Web-ContextPath=/liferay-sample-global-js-1.0.0-SNAPSHOT"));
+	}
+
+	@Test
 	public void testWarURLContainsExpectedSymbolicName() throws Exception {
 		String uriString = _getURIString(
 			"dependencies/classic-theme.autodeployed.war");
@@ -119,6 +163,24 @@ public class ArtifactURLUtilTest {
 		URI uri = url.toURI();
 
 		return uri.toASCIIString();
+	}
+
+	private void _zipDirToFile(File dir, File zipFile) throws Exception {
+		try (ZipOutputStream zipOutputStream = new ZipOutputStream(
+				new FileOutputStream(zipFile))) {
+
+			for (File file : dir.listFiles()) {
+				ZipEntry zipEntry = new ZipEntry(file.getName());
+
+				zipOutputStream.putNextEntry(zipEntry);
+
+				byte[] bytes = Files.readAllBytes(file.toPath());
+
+				zipOutputStream.write(bytes, 0, bytes.length);
+
+				zipOutputStream.closeEntry();
+			}
+		}
 	}
 
 }

@@ -26,6 +26,8 @@ export class TasksPage {
 		previousMonthButton: Locator;
 		title: Locator;
 		todayButton: Locator;
+		unscheduledTasksButton: Locator;
+		unscheduledTasksPanel: Locator;
 		viewOption: Locator;
 	};
 	readonly dataSetFragmentPage: DataSetPage;
@@ -70,6 +72,10 @@ export class TasksPage {
 			}),
 			title: page.getByTestId('calendarTitle'),
 			todayButton: page.getByRole('button', {name: 'Today'}),
+			unscheduledTasksButton: page.getByText(/\d+ Unscheduled Tasks/),
+			unscheduledTasksPanel: page.getByTestId(
+				'calendarUnscheduledTasksPanel'
+			),
 			viewOption: page.getByRole('option', {name: 'Calendar'}),
 		};
 		this.dataSetFragmentPage = new DataSetPage(page);

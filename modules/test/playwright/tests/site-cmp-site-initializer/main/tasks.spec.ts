@@ -539,7 +539,7 @@ test(
 );
 
 test(
-	'Calendar view shows tasks by due date and navigates between months',
+	'Calendar view properly displays tasks',
 	{tag: ['@LPD-69885']},
 	async ({apiHelpers, page, projectPage, projectsPage, tasksPage}) => {
 		const now = new Date();
@@ -566,7 +566,9 @@ test(
 			(_, index) => `${taskTitleBase}-${index}`
 		);
 
-		await test.step('Create three tasks on the same due date', async () => {
+		const unscheduledTaskTitle = `${taskTitleBase}-unscheduled`;
+
+		await test.step('Create three tasks on the same due date and one without a due date', async () => {
 			for (const title of taskTitles) {
 				await apiHelpers.objectEntry.postObjectEntry(
 					{
@@ -578,6 +580,15 @@ test(
 					project.scopeKey
 				);
 			}
+
+			await apiHelpers.objectEntry.postObjectEntry(
+				{
+					r_cmpProjectToCMPTasks_c_cmpProjectId: project.id,
+					title: unscheduledTaskTitle,
+				},
+				cmpTask,
+				project.scopeKey
+			);
 		});
 
 		const {calendarView} = tasksPage;
@@ -687,6 +698,29 @@ test(
 					exact: true,
 				})
 			).toBeVisible();
+		});
+
+		await test.step('The unscheduled tasks button shows the count', async () => {
+			await expect(calendarView.unscheduledTasksButton).toBeVisible();
+
+			await expect(calendarView.unscheduledTasksButton).toContainText(
+				/\d+ Unscheduled Tasks/
+			);
+		});
+
+		await test.step('Opening the panel lists every unscheduled task', async () => {
+			await clickAndExpectToBeVisible({
+				target: calendarView.unscheduledTasksPanel,
+				trigger: calendarView.unscheduledTasksButton,
+			});
+
+			for (const taskName of [...taskNames, unscheduledTaskTitle]) {
+				await expect(
+					calendarView.unscheduledTasksPanel.getByText(taskName, {
+						exact: true,
+					})
+				).toBeVisible();
+			}
 		});
 	}
 );

@@ -42,11 +42,11 @@ public class TestPropertiesPQLValidationTest {
 		List<String> errors = Collections.synchronizedList(new ArrayList<>());
 		List<Future<?>> futures = new ArrayList<>();
 
+		Runtime runtime = Runtime.getRuntime();
+
 		ThreadPoolExecutor threadPoolExecutor =
 			JenkinsResultsParserUtil.getNewThreadPoolExecutor(
-				Runtime.getRuntime(
-				).availableProcessors(),
-				true);
+				runtime.availableProcessors(), true);
 
 		for (File testPropertiesFile : testPropertiesFiles) {
 			Properties properties = new Properties();
@@ -62,11 +62,11 @@ public class TestPropertiesPQLValidationTest {
 					continue;
 				}
 
-				String value = properties.getProperty(
-					propertyName
-				).trim();
+				String propertyValue = properties.getProperty(propertyName);
 
-				if (value.contains("${")) {
+				String pql = propertyValue.trim();
+
+				if (pql.contains("${")) {
 					continue;
 				}
 
@@ -75,13 +75,12 @@ public class TestPropertiesPQLValidationTest {
 						() -> {
 							try {
 								JenkinsResultsParserUtil.validatePQL(
-									value, testPropertiesFile);
+									pql, testPropertiesFile);
 							}
 							catch (RuntimeException runtimeException) {
 								errors.add(
-									"Invalid PQL in property `" + propertyName +
-										"` in " + testPropertiesFile + ": " +
-											runtimeException.getMessage());
+									"Invalid PQL in property " + propertyName +
+										": " + runtimeException.getMessage());
 							}
 						}));
 			}
@@ -89,18 +88,19 @@ public class TestPropertiesPQLValidationTest {
 
 		threadPoolExecutor.shutdown();
 
-		System.out.println(
-			"Validating " + futures.size() +
-				" test.batch.run.property.query PQL values across " +
-					testPropertiesFiles.size() + " test.properties files");
+		System.out.println("Validating " + futures.size() + " PQL values");
 
 		for (Future<?> future : futures) {
 			future.get();
 		}
 
-		Assert.assertTrue(
-			"Found invalid PQL:\n" + String.join("\n", errors),
-			errors.isEmpty());
+		Collections.sort(errors);
+
+		for (String error : errors) {
+			System.out.println(error);
+		}
+
+		Assert.assertTrue(errors.isEmpty());
 	}
 
 	private List<File> _findTestPropertiesFiles(File portalDir)
@@ -116,8 +116,9 @@ public class TestPropertiesPQLValidationTest {
 				public FileVisitResult preVisitDirectory(
 					Path dir, BasicFileAttributes basicFileAttributes) {
 
-					String dirName = dir.getFileName(
-					).toString();
+					File dirFile = dir.toFile();
+
+					String dirName = dirFile.getName();
 
 					if (dirName.equals("build") || dirName.equals("bundles") ||
 						dirName.equals("classes") ||
@@ -136,11 +137,11 @@ public class TestPropertiesPQLValidationTest {
 				public FileVisitResult visitFile(
 					Path file, BasicFileAttributes basicFileAttributes) {
 
-					if (Objects.equals(
-							file.getFileName(
-							).toString(),
-							"test.properties")) {
+					File visitedFile = file.toFile();
 
+					String fileName = visitedFile.getName();
+
+					if (Objects.equals(fileName, "test.properties")) {
 						testPropertiesFiles.add(file.toFile());
 					}
 
@@ -163,7 +164,9 @@ public class TestPropertiesPQLValidationTest {
 		File dir = JenkinsResultsParserUtil.getCanonicalFile(new File("."));
 
 		while (dir != null) {
-			if (Objects.equals(dir.getName(), "liferay-portal")) {
+			File releasePropertiesFile = new File(dir, "release.properties");
+
+			if (releasePropertiesFile.exists()) {
 				return dir;
 			}
 

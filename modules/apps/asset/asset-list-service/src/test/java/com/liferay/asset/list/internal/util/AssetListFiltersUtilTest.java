@@ -1055,7 +1055,7 @@ public class AssetListFiltersUtilTest {
 		Mockito.when(
 			objectField.getListTypeDefinitionId()
 		).thenReturn(
-			_LIST_TYPE_DEFINITION_ID
+			RandomTestUtil.randomLong()
 		);
 
 		Mockito.when(
@@ -1072,9 +1072,6 @@ public class AssetListFiltersUtilTest {
 	private static final long _CLASS_TYPE_ID = RandomTestUtil.randomLong();
 
 	private static final long _COMPANY_ID = RandomTestUtil.randomLong();
-
-	private static final long _LIST_TYPE_DEFINITION_ID =
-		RandomTestUtil.randomLong();
 
 	private static final MockedStatic<ObjectDefinitionLocalServiceUtil>
 		_objectDefinitionLocalServiceUtilMockedStatic =

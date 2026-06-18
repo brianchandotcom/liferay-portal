@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.model.LayoutSetPrototype;
 
 import java.io.Serializable;
 
@@ -92,6 +93,10 @@ public interface Sites {
 	public void mergeLayoutPrototypeLayout(Layout layout) throws Exception;
 
 	public void mergeLayoutSetPrototypeLayouts(Group group, LayoutSet layoutSet)
+		throws Exception;
+
+	public void mergeLayoutSetPrototypeLayouts(
+			LayoutSetPrototype layoutSetPrototype, long userId)
 		throws Exception;
 
 	public void updateLayoutSetPrototypesLinks(

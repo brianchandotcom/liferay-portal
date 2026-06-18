@@ -132,17 +132,17 @@ public class ImportPreviewResourceTest
 					).build()));
 
 		ObjectDefinition objectDefinition = _publishObjectDefinitionWithEntries(
-			ObjectDefinitionConstants.SCOPE_DEPOT,
-			testDepotEntryGroup.getGroupId());
+			testDepotEntryGroup.getGroupId(),
+			ObjectDefinitionConstants.SCOPE_DEPOT);
 
 		try {
 			_testPostImportPreviewWithObjectEntries(
+				testDepotEntryGroup.getGroupId(), objectDefinition,
 				file -> importPreviewResource.postAssetLibraryImportPreview(
 					testDepotEntryGroup.getExternalReferenceCode(), null,
 					HashMapBuilder.put(
 						"file", file
-					).build()),
-				testDepotEntryGroup.getGroupId(), objectDefinition);
+					).build()));
 		}
 		finally {
 			_objectDefinitionLocalService.deleteObjectDefinition(
@@ -155,8 +155,8 @@ public class ImportPreviewResourceTest
 	@Test
 	public void testPostAssetLibraryPortletImportPreview() throws Exception {
 		ObjectDefinition objectDefinition = _publishObjectDefinitionWithEntries(
-			ObjectDefinitionConstants.SCOPE_DEPOT,
-			testDepotEntryGroup.getGroupId());
+			testDepotEntryGroup.getGroupId(),
+			ObjectDefinitionConstants.SCOPE_DEPOT);
 
 		Layout layout = LayoutTestUtil.addTypePortletLayout(
 			testDepotEntryGroup);
@@ -190,15 +190,15 @@ public class ImportPreviewResourceTest
 							).build()));
 
 			_testPostPortletImportPreviewWithObjectEntries(
+				testDepotEntryGroup.getGroupId(), objectDefinition,
+				layout.getPlid(),
 				file ->
 					importPreviewResource.postAssetLibraryPortletImportPreview(
 						testDepotEntryGroup.getExternalReferenceCode(),
 						portletId, layout.getPlid(), null,
 						HashMapBuilder.put(
 							"file", file
-						).build()),
-				testDepotEntryGroup.getGroupId(), layout.getPlid(),
-				objectDefinition);
+						).build()));
 		}
 		finally {
 			_objectDefinitionLocalService.deleteObjectDefinition(
@@ -228,17 +228,17 @@ public class ImportPreviewResourceTest
 				).build()));
 
 		ObjectDefinition objectDefinition = _publishObjectDefinitionWithEntries(
-			ObjectDefinitionConstants.SCOPE_COMPANY,
-			GroupConstants.DEFAULT_PARENT_GROUP_ID);
+			GroupConstants.DEFAULT_PARENT_GROUP_ID,
+			ObjectDefinitionConstants.SCOPE_COMPANY);
 
 		try {
 			_testPostImportPreviewWithObjectEntries(
+				group.getGroupId(), objectDefinition,
 				file -> importPreviewResource.postImportPreview(
 					null,
 					HashMapBuilder.put(
 						"file", file
-					).build()),
-				group.getGroupId(), objectDefinition);
+					).build()));
 		}
 		finally {
 			_objectDefinitionLocalService.deleteObjectDefinition(
@@ -265,16 +265,16 @@ public class ImportPreviewResourceTest
 				).build()));
 
 		ObjectDefinition objectDefinition = _publishObjectDefinitionWithEntries(
-			ObjectDefinitionConstants.SCOPE_SITE, testGroup.getGroupId());
+			testGroup.getGroupId(), ObjectDefinitionConstants.SCOPE_SITE);
 
 		try {
 			_testPostImportPreviewWithObjectEntries(
+				testGroup.getGroupId(), objectDefinition,
 				file -> importPreviewResource.postSiteImportPreview(
 					testGroup.getExternalReferenceCode(), null,
 					HashMapBuilder.put(
 						"file", file
-					).build()),
-				testGroup.getGroupId(), objectDefinition);
+					).build()));
 		}
 		finally {
 			_objectDefinitionLocalService.deleteObjectDefinition(
@@ -286,7 +286,7 @@ public class ImportPreviewResourceTest
 	@Test
 	public void testPostSitePortletImportPreview() throws Exception {
 		ObjectDefinition objectDefinition = _publishObjectDefinitionWithEntries(
-			ObjectDefinitionConstants.SCOPE_SITE, testGroup.getGroupId());
+			testGroup.getGroupId(), ObjectDefinitionConstants.SCOPE_SITE);
 
 		Layout layout = LayoutTestUtil.addTypePortletLayout(testGroup);
 
@@ -317,13 +317,13 @@ public class ImportPreviewResourceTest
 							).build()));
 
 			_testPostPortletImportPreviewWithObjectEntries(
+				testGroup.getGroupId(), objectDefinition, layout.getPlid(),
 				file -> importPreviewResource.postSitePortletImportPreview(
 					testGroup.getExternalReferenceCode(), portletId,
 					layout.getPlid(), null,
 					HashMapBuilder.put(
 						"file", file
-					).build()),
-				testGroup.getGroupId(), layout.getPlid(), objectDefinition);
+					).build()));
 		}
 		finally {
 			_objectDefinitionLocalService.deleteObjectDefinition(
@@ -332,7 +332,7 @@ public class ImportPreviewResourceTest
 	}
 
 	private void _addObjectEntry(
-			ObjectDefinition objectDefinition, long groupId)
+			long groupId, ObjectDefinition objectDefinition)
 		throws Exception {
 
 		_objectEntryLocalService.addObjectEntry(
@@ -430,7 +430,7 @@ public class ImportPreviewResourceTest
 	}
 
 	private ObjectDefinition _publishObjectDefinitionWithEntries(
-			String scope, long groupId)
+			long groupId, String scope)
 		throws Exception {
 
 		ObjectDefinition objectDefinition =
@@ -451,7 +451,7 @@ public class ImportPreviewResourceTest
 				StringPool.TRUE);
 		}
 
-		_addObjectEntry(objectDefinition, groupId);
+		_addObjectEntry(groupId, objectDefinition);
 
 		return objectDefinition;
 	}
@@ -478,8 +478,8 @@ public class ImportPreviewResourceTest
 	}
 
 	private void _testPostImportPreviewWithObjectEntries(
-			UnsafeFunction<File, ImportPreview, Exception> unsafeFunction,
-			long groupId, ObjectDefinition objectDefinition)
+			long groupId, ObjectDefinition objectDefinition,
+			UnsafeFunction<File, ImportPreview, Exception> unsafeFunction)
 		throws Exception {
 
 		ImportPreview importPreview = unsafeFunction.apply(
@@ -492,8 +492,8 @@ public class ImportPreviewResourceTest
 	}
 
 	private void _testPostPortletImportPreviewWithObjectEntries(
-			UnsafeFunction<File, ImportPreview, Exception> unsafeFunction,
-			long groupId, long plid, ObjectDefinition objectDefinition)
+			long groupId, ObjectDefinition objectDefinition, long plid,
+			UnsafeFunction<File, ImportPreview, Exception> unsafeFunction)
 		throws Exception {
 
 		ImportPreview importPreview = unsafeFunction.apply(

@@ -163,10 +163,10 @@ public class ExportProcessResourceTest
 				_backgroundTaskLocalService.getBackgroundTask(
 					exportProcess.getId());
 
-			FileEntry fileEntry = backgroundTask.getAttachmentsFileEntries(
-			).get(
-				0
-			);
+			List<FileEntry> fileEntries =
+				backgroundTask.getAttachmentsFileEntries();
+
+			FileEntry fileEntry = fileEntries.get(0);
 
 			Assert.assertEquals(
 				exportProcess.getName() + ".lar", fileEntry.getTitle());
@@ -383,21 +383,21 @@ public class ExportProcessResourceTest
 	protected ExportProcess testBatchEngineDeleteImportTask_addExportProcess()
 		throws Exception {
 
-		return _addExportProcess(_getCompanyGroupId(), randomExportProcess());
+		return _addExportProcess(randomExportProcess(), _getCompanyGroupId());
 	}
 
 	@Override
 	protected ExportProcess testDeleteExportProcess_addExportProcess()
 		throws Exception {
 
-		return _addExportProcess(_getCompanyGroupId(), randomExportProcess());
+		return _addExportProcess(randomExportProcess(), _getCompanyGroupId());
 	}
 
 	@Override
 	protected ExportProcess testDeleteExportProcessBatch_addExportProcess()
 		throws Exception {
 
-		return _addExportProcess(_getCompanyGroupId(), randomExportProcess());
+		return _addExportProcess(randomExportProcess(), _getCompanyGroupId());
 	}
 
 	@Override
@@ -408,8 +408,8 @@ public class ExportProcessResourceTest
 		throws Exception {
 
 		return _addExportProcess(
-			_getGroupId(assetLibraryExternalReferenceCode),
-			randomExportProcess());
+			randomExportProcess(),
+			_getGroupId(assetLibraryExternalReferenceCode));
 	}
 
 	@Override
@@ -455,7 +455,7 @@ public class ExportProcessResourceTest
 	protected ExportProcess testGetExportProcess_addExportProcess()
 		throws Exception {
 
-		return _addExportProcess(_getCompanyGroupId(), randomExportProcess());
+		return _addExportProcess(randomExportProcess(), _getCompanyGroupId());
 	}
 
 	@Override
@@ -463,7 +463,7 @@ public class ExportProcessResourceTest
 			ExportProcess exportProcess)
 		throws Exception {
 
-		return _addExportProcess(_getCompanyGroupId(), randomExportProcess());
+		return _addExportProcess(randomExportProcess(), _getCompanyGroupId());
 	}
 
 	@Override
@@ -493,7 +493,7 @@ public class ExportProcessResourceTest
 		throws Exception {
 
 		return _addExportProcess(
-			_getGroupId(siteExternalReferenceCode), randomExportProcess());
+			randomExportProcess(), _getGroupId(siteExternalReferenceCode));
 	}
 
 	@Override
@@ -539,11 +539,11 @@ public class ExportProcessResourceTest
 			ExportProcess exportProcess)
 		throws Exception {
 
-		return _addExportProcess(_getCompanyGroupId(), randomExportProcess());
+		return _addExportProcess(randomExportProcess(), _getCompanyGroupId());
 	}
 
 	private ExportProcess _addExportProcess(
-			long groupId, ExportProcess exportProcess)
+			ExportProcess exportProcess, long groupId)
 		throws Exception {
 
 		return _addExportProcess(

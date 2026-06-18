@@ -400,11 +400,10 @@ public class ObjectEntryInfoItemFormProviderTest {
 			_objectRelationshipLocalService.getObjectRelationship(
 				edge.getObjectRelationshipId());
 
-		InfoForm parentInfoForm = _getInfoForm(_objectDefinitionA);
+		InfoForm infoForm = _getInfoForm(_objectDefinitionA);
 
-		InfoFieldSet infoFieldSet =
-			(InfoFieldSet)parentInfoForm.getInfoFieldSetEntry(
-				_objectDefinitionA.getName());
+		InfoFieldSet infoFieldSet = (InfoFieldSet)infoForm.getInfoFieldSetEntry(
+			_objectDefinitionA.getName());
 
 		InfoFieldSet relationshipInfoFieldSet =
 			(InfoFieldSet)infoFieldSet.getInfoFieldSetEntry(

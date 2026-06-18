@@ -342,7 +342,7 @@ public class WorkflowDefinitionManagerTest extends BaseWorkflowManagerTestCase {
 						JSONUtil.put(
 							"name", "siteRequestBody"
 						).put(
-							"type", "string"
+							"type", "json"
 						)
 					).toString()),
 				_createWorkflowNodeSetting(
@@ -351,7 +351,7 @@ public class WorkflowDefinitionManagerTest extends BaseWorkflowManagerTestCase {
 						JSONUtil.put(
 							"name", "siteResponseBody"
 						).put(
-							"type", "string"
+							"type", "json"
 						)
 					).toString()),
 				_createWorkflowNodeSetting(
@@ -844,7 +844,7 @@ public class WorkflowDefinitionManagerTest extends BaseWorkflowManagerTestCase {
 			WorkflowNodeSetting expectedWorkflowNodeSetting =
 				expectedWorkflowNodeSettings.get(i);
 			WorkflowNodeSetting actualWorkflowNodeSetting =
-				expectedWorkflowNodeSettings.get(i);
+				actualWorkflowNodeSettings.get(i);
 
 			Assert.assertEquals(
 				expectedWorkflowNodeSetting.getName(),
@@ -886,7 +886,7 @@ public class WorkflowDefinitionManagerTest extends BaseWorkflowManagerTestCase {
 			new DefaultWorkflowNodeSetting();
 
 		defaultWorkflowNodeSetting.setName(name);
-		defaultWorkflowNodeSetting.setName(value);
+		defaultWorkflowNodeSetting.setValue(value);
 
 		return defaultWorkflowNodeSetting;
 	}

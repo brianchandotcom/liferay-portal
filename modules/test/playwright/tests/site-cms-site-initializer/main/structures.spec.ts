@@ -732,13 +732,13 @@ test(
 );
 
 test(
-	'Basic Web Content usages list includes assets that use the structure',
-	{tag: '@LPD-89302'},
+	'View Usages lists the assets using the structure and deletes them with the CMS confirmation modal',
+	{tag: ['@LPD-89302', '@LPD-89560']},
 	async ({apiHelpers, page, structuresPage}) => {
 		const applicationName = 'cms/basic-web-contents';
 		const title = `Content ${getRandomString()}`;
 
-		const objectEntry = await apiHelpers.objectEntry.postObjectEntry(
+		await apiHelpers.objectEntry.postObjectEntry(
 			{
 				objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
 				title,
@@ -747,53 +747,22 @@ test(
 			'Default'
 		);
 
-		try {
-			await structuresPage.goto();
+		// Open the usages list of the structure
 
-			await structuresPage.execItemAction({
-				action: 'View Usages',
-				filter: 'Basic Web Content',
-			});
+		await structuresPage.goto();
 
+		await structuresPage.execItemAction({
+			action: 'View Usages',
+			filter: 'Basic Web Content',
+		});
+
+		await test.step('Usages list includes the asset', async () => {
 			await page.locator('.fds').waitFor();
 
 			await expect(page.getByRole('row', {name: title})).toBeVisible();
-		}
-		finally {
-			await apiHelpers.objectEntry.deleteObjectEntry(
-				applicationName,
-				String(objectEntry.id)
-			);
-		}
-	}
-);
+		});
 
-test(
-	'View Usages delete action opens the CMS confirmation modal instead of a native confirm dialog',
-	{tag: '@LPD-89560'},
-	async ({apiHelpers, page, structuresPage}) => {
-		const applicationName = 'cms/basic-web-contents';
-		const title = `Content ${getRandomString()}`;
-
-		const objectEntry = await apiHelpers.objectEntry.postObjectEntry(
-			{
-				objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
-				title,
-			},
-			applicationName,
-			'Default'
-		);
-
-		try {
-
-			// Open the usages list of the structure
-
-			await structuresPage.goto();
-
-			await structuresPage.execItemAction({
-				action: 'View Usages',
-				filter: 'Basic Web Content',
-			});
+		await test.step('Delete shows the CMS confirmation modal', async () => {
 
 			// Open the delete action of the usage entry
 
@@ -819,13 +788,7 @@ test(
 			await waitForAlert(page, `${title} was successfully deleted`, {
 				type: 'success',
 			});
-		}
-		finally {
-			await apiHelpers.objectEntry.deleteObjectEntry(
-				applicationName,
-				String(objectEntry.id)
-			);
-		}
+		});
 	}
 );
 

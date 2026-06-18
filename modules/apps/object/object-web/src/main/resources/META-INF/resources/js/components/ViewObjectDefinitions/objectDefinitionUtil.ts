@@ -370,6 +370,23 @@ interface GetObjectFolderActionsProps {
 	setShowModal: (value: SetStateAction<ShowObjectDefinitionsModals>) => void;
 }
 
+export function getObjectDefinitionsFilter(
+	objectFolderExternalReferenceCode: string,
+	showHiddenObjects: boolean
+): string {
+	const filterParts: string[] = [];
+
+	if (!showHiddenObjects) {
+		filterParts.push('hidden eq false');
+	}
+
+	filterParts.push(
+		`objectFolderExternalReferenceCode eq '${objectFolderExternalReferenceCode}'`
+	);
+
+	return filterParts.join(' and ');
+}
+
 export function getObjectFolderActions({
 	actions,
 	baseResourceURL,

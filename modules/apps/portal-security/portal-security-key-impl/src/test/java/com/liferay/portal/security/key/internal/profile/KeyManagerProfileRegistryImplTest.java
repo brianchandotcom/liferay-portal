@@ -25,7 +25,7 @@ import org.mockito.MockitoAnnotations;
 /**
  * @author Christopher Kian
  */
-public class KeyManagerProfileOrchestratorImplTest {
+public class KeyManagerProfileRegistryImplTest {
 
 	@ClassRule
 	@Rule
@@ -36,8 +36,7 @@ public class KeyManagerProfileOrchestratorImplTest {
 	public void setUp() {
 		MockitoAnnotations.openMocks(this);
 
-		_keyManagerProfileOrchestratorImpl =
-			new KeyManagerProfileOrchestratorImpl();
+		_keyManagerProfileRegistryImpl = new KeyManagerProfileRegistryImpl();
 
 		_setActiveProfileId(CustomKeyManagerProfile.PROFILE_ID);
 		_setServiceTrackerMap(_serviceTrackerMap);
@@ -62,15 +61,15 @@ public class KeyManagerProfileOrchestratorImplTest {
 			() -> activeProfileId;
 
 		ReflectionTestUtil.setFieldValue(
-			_keyManagerProfileOrchestratorImpl,
-			"_keyManagerGlobalConfiguration", keyManagerGlobalConfiguration);
+			_keyManagerProfileRegistryImpl, "_keyManagerGlobalConfiguration",
+			keyManagerGlobalConfiguration);
 	}
 
 	private void _setServiceTrackerMap(
 		ServiceTrackerMap<String, KeyManagerProfile> serviceTrackerMap) {
 
 		ReflectionTestUtil.setFieldValue(
-			_keyManagerProfileOrchestratorImpl, "_serviceTrackerMap",
+			_keyManagerProfileRegistryImpl, "_serviceTrackerMap",
 			serviceTrackerMap);
 	}
 
@@ -85,7 +84,7 @@ public class KeyManagerProfileOrchestratorImplTest {
 
 		Assert.assertSame(
 			_keyManagerProfile,
-			_keyManagerProfileOrchestratorImpl.getActiveKeyManagerProfile());
+			_keyManagerProfileRegistryImpl.getActiveKeyManagerProfile());
 	}
 
 	private void _testInit(
@@ -121,7 +120,7 @@ public class KeyManagerProfileOrchestratorImplTest {
 
 		for (int i = 0; i < invocationCount; i++) {
 			ReflectionTestUtil.invoke(
-				_keyManagerProfileOrchestratorImpl, "_init",
+				_keyManagerProfileRegistryImpl, "_init",
 				new Class<?>[] {KeyManagerProfile.class}, keyManagerProfile);
 		}
 
@@ -133,8 +132,7 @@ public class KeyManagerProfileOrchestratorImplTest {
 	@Mock
 	private KeyManagerProfile _keyManagerProfile;
 
-	private KeyManagerProfileOrchestratorImpl
-		_keyManagerProfileOrchestratorImpl;
+	private KeyManagerProfileRegistryImpl _keyManagerProfileRegistryImpl;
 
 	@Mock
 	private ServiceTrackerMap<String, KeyManagerProfile> _serviceTrackerMap;

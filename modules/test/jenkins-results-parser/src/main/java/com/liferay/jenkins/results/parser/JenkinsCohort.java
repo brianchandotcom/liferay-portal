@@ -539,7 +539,11 @@ public class JenkinsCohort {
 	private void _addNodeData(
 		JSONObject jsonObject, int recordCount, String key, long value) {
 
-		JSONArray jsonArray = jsonObject.optJSONArray(key, new JSONArray());
+		JSONArray jsonArray = jsonObject.optJSONArray(key);
+
+		if (jsonArray == null) {
+			jsonArray = new JSONArray();
+		}
 
 		while (jsonArray.length() < recordCount) {
 			jsonArray.put(0);

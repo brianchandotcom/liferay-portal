@@ -320,6 +320,10 @@ public abstract class SecretsUtil {
 				JenkinsResultsParserUtil.combine(
 					"/v1/vaults/", _vault.getId(), "/items/", getId()));
 
+			if (itemJSONObject == null) {
+				return;
+			}
+
 			JSONArray fieldsJSONArray = itemJSONObject.getJSONArray("fields");
 
 			_itemFields = new ArrayList<>(fieldsJSONArray.length());
@@ -361,8 +365,11 @@ public abstract class SecretsUtil {
 				}
 			}
 
-			JSONArray filesJSONArray = itemJSONObject.optJSONArray(
-				"files", new JSONArray());
+			JSONArray filesJSONArray = itemJSONObject.optJSONArray("files");
+
+			if (filesJSONArray == null) {
+				filesJSONArray = new JSONArray();
+			}
 
 			_itemFiles = new ArrayList<>(filesJSONArray.length());
 

@@ -14,6 +14,7 @@ interface Field {
 	displayStyle?: 'singleline' | 'multiline';
 	fieldType?:
 		| 'document_library'
+		| 'geolocation'
 		| 'image'
 		| 'journal_article'
 		| 'numeric'
@@ -54,7 +55,10 @@ export default function getDataStructureDefinition({
 
 				let indexType: DefinitionField['indexType'] = 'keyword';
 
-				if (fieldType === 'numeric') {
+				if (fieldType === 'geolocation') {
+					delete customProperties.displayStyle;
+				}
+				else if (fieldType === 'numeric') {
 					customProperties.dataType = dataType || 'integer';
 
 					delete customProperties.displayStyle;

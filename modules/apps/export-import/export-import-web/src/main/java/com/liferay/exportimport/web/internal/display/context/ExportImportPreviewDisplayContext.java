@@ -32,16 +32,16 @@ import java.nio.charset.StandardCharsets;
 public class ExportImportPreviewDisplayContext {
 
 	public ExportImportPreviewDisplayContext(
-		String backMVCRenderCommandName, HttpServletRequest httpServletRequest,
-		LiferayPortletResponse liferayPortletResponse, Group group,
-		long groupId, long liveGroupId, boolean privateLayout,
-		StagingGroupHelper stagingGroupHelper) {
+		String backMVCRenderCommandName, Group group, long groupId,
+		HttpServletRequest httpServletRequest,
+		LiferayPortletResponse liferayPortletResponse, long liveGroupId,
+		boolean privateLayout, StagingGroupHelper stagingGroupHelper) {
 
 		_backMVCRenderCommandName = backMVCRenderCommandName;
-		_httpServletRequest = httpServletRequest;
-		_liferayPortletResponse = liferayPortletResponse;
 		_group = group;
 		_groupId = groupId;
+		_httpServletRequest = httpServletRequest;
+		_liferayPortletResponse = liferayPortletResponse;
 		_liveGroupId = liveGroupId;
 		_privateLayout = privateLayout;
 		_stagingGroupHelper = stagingGroupHelper;

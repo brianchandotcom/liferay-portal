@@ -100,7 +100,6 @@ const ActivityStreamCard: React.FC<IActivityStreamCardProps> = ({
 		items: activityHistory,
 		loading,
 		refetch,
-		total: totalSessions,
 	} = mapListResultsToProps(metricResponse, ({eventMetric}) => ({
 		items: eventMetric.totalEventsMetric.histogram.metrics?.map(
 			({key, value}, index: number) => ({
@@ -112,7 +111,6 @@ const ActivityStreamCard: React.FC<IActivityStreamCardProps> = ({
 					].value,
 			})
 		),
-		total: eventMetric.totalSessionsMetric?.value,
 	}));
 
 	const trendResponse = useQuery<
@@ -224,10 +222,7 @@ const ActivityStreamCard: React.FC<IActivityStreamCardProps> = ({
 		? getDateRangeLabelFromDate(selectedIntervalInitDate, interval)
 		: getDateRangeLabel(activityHistory, interval, 'intervalInitDate');
 
-	const totalItems =
-		selectedPoint !== undefined
-			? activityHistory[selectedPoint]?.totalSessions ?? 0
-			: totalSessions ?? 0;
+	const totalItems = sessionsData?.totalEventsMetric?.value ?? 0;
 
 	return (
 		<WrapSafeResults

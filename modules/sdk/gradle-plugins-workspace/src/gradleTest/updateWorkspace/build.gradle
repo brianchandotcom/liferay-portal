@@ -1,7 +1,9 @@
 task runGradleTest
 
-dependencies {
-	evergreen files("evergreen.zip")
+repositories {
+	maven {
+		url "repo"
+	}
 }
 
 runGradleTest {

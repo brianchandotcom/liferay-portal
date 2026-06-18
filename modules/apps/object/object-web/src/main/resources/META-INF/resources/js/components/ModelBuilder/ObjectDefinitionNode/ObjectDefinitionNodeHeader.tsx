@@ -106,7 +106,6 @@ export default function ObjectDefinitionNodeHeader({
 									}
 								)}
 								title={
-									Liferay.FeatureFlags['LPD-69877'] &&
 									isRootDescendantNode
 										? allowStandaloneObjectEntry
 											? Liferay.Language.get(
@@ -125,18 +124,17 @@ export default function ObjectDefinitionNodeHeader({
 											? Liferay.Language.get('inherited')
 											: Liferay.Language.get('standard')}
 
-									{Liferay.FeatureFlags['LPD-69877'] &&
-										isRootDescendantNode && (
-											<ClayIcon
-												aria-hidden="true"
-												className="c-ml-1"
-												symbol={
-													allowStandaloneObjectEntry
-														? 'unlock'
-														: 'lock'
-												}
-											/>
-										)}
+									{isRootDescendantNode && (
+										<ClayIcon
+											aria-hidden="true"
+											className="c-ml-1"
+											symbol={
+												allowStandaloneObjectEntry
+													? 'unlock'
+													: 'lock'
+											}
+										/>
+									)}
 								</span>
 							</ClayLabel>
 						</ClayTooltipProvider>

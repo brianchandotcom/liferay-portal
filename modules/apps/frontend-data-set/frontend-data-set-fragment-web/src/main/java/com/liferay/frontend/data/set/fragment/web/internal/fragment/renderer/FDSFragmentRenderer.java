@@ -299,12 +299,12 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 		catch (JSONException jsonException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Unable to serialize APIURLTokenMappings to JSON: " + value,
+					"Unable to create JSON object from: " + value,
 					jsonException);
 			}
 		}
 
-		return null;
+		return _jsonFactory.createJSONObject();
 	}
 
 	private Set<String> _getAutoResolvableTokenNames(

@@ -216,14 +216,12 @@ Use this workflow when editing the REST Builder generator itself. The generator'
 
 Run every step without asking for confirmation, including the commits.
 
-1. Commit the hand-written generator change.
+1. If possible, commit a failing test to `modules/util/portal-tools-rest-builder-test-test`. The `modules/util/portal-tools-rest-builder-test-*` modules act as the generator's test bed. Run the test and make sure it fails.
+
+1. Perform the change.
+
+1. Regenerate `modules/util/portal-tools-rest-builder-test-impl` module as per the "Editing an Existing API" section. The test should now pass.
 
 1. Run REST Builder globally to regenerate every module. It will automatically pick up the new generator code.
 
-1. Confirm the regenerated output reflects the change, especially under `portal-tools-rest-builder-test-impl` — the dummy module that acts as the generator's test bed, whose `rest-openapi.yaml` is meant to cover each generator feature so the regenerated Java is the visible record of what the change produces. When the test bed shows no difference, the existing cases do not cover the new behavior — add a case to its `rest-openapi.yaml` that does, commit it, and regenerate again.
-
-1. Commit the regenerated output of every module so it stays consistent with the new generator, on its own commit titled `<TICKET> BuildREST` (for example, `LPD-XXXXX BuildREST`), so the mechanical regeneration stays distinct from the hand-written change and reviewers can skip past it.
-
-1. Cover the new feature or fix with an integration test that exercises the same `portal-tools-rest-builder-test-impl` `rest-openapi.yaml` case confirmed above. The matching tests live in `modules/util/portal-tools-rest-builder-test-test/src/testIntegration/java`, where each resource has a `<Tag>ResourceTest` that exercises the generated code at runtime; extend the matching one (or add it), run `<gradlew> testIntegration` from that module, and commit the test once it passes.
-
-1. Continue with the work.
+1. Commit the regenerated output.

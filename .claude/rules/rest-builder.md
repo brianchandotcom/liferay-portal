@@ -230,6 +230,6 @@ Run every step without asking for confirmation, including the commits.
 
 1. Regenerate `modules/util/portal-tools-rest-builder-test-impl` module as per the "Editing an Existing API" section. The test should now pass.
 
-1. Run REST Builder for every module.
+1. Run REST Builder for every module, as described in the "Every Module" section.
 
 1. Commit the regenerated output.

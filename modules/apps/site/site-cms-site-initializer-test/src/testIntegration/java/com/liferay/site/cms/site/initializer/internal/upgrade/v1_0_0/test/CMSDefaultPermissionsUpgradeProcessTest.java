@@ -110,7 +110,6 @@ public class CMSDefaultPermissionsUpgradeProcessTest {
 		_runUpgrade();
 
 		Assert.assertNotNull(_fetchDepotEntryObjectEntry());
-
 		Assert.assertNotNull(_fetchObjectEntry(objectEntryFolder));
 	}
 

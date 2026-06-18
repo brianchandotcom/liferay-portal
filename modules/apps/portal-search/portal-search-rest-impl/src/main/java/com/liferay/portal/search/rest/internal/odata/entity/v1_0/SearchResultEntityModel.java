@@ -6,7 +6,9 @@
 package com.liferay.portal.search.rest.internal.odata.entity.v1_0;
 
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.odata.entity.BooleanEntityField;
 import com.liferay.portal.odata.entity.CollectionEntityField;
 import com.liferay.portal.odata.entity.DateTimeEntityField;
@@ -63,6 +65,11 @@ public class SearchResultEntityModel implements EntityModel {
 				"dateReview",
 				locale -> Field.getSortableFieldName("reviewDate"),
 				locale -> "reviewDate"),
+			new EntityField(
+				"classNameId", EntityField.Type.INTEGER,
+				locale -> Field.ENTRY_CLASS_NAME,
+				locale -> Field.ENTRY_CLASS_NAME,
+				value -> PortalUtil.getClassName(GetterUtil.getLong(value))),
 			new IntegerEntityField(
 				"cmpProjectManagerUserId", locale -> "cmpProjectManagerUserId"),
 			new IntegerEntityField(

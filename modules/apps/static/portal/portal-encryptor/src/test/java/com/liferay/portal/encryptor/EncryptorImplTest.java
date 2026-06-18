@@ -5,7 +5,10 @@
 
 package com.liferay.portal.encryptor;
 
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.encryptor.Encryptor;
+import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.security.Key;
@@ -26,19 +29,60 @@ public class EncryptorImplTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void testKeySerialization() throws Exception {
+	public void testDecrypt() throws Exception {
 		Encryptor encryptor = new EncryptorImpl();
 
 		Key key = encryptor.generateKey();
 
-		String encryptedString = encryptor.encrypt(key, "Hello World!");
+		String encryptedString = encryptor.encrypt(key, _PLAIN_TEXT);
+
+		try (SafeCloseable safeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"FIPS_ENABLED", true)) {
+
+			Assert.assertEquals(
+				_PLAIN_TEXT, encryptor.decrypt(key, encryptedString));
+		}
+	}
+
+	@Test
+	public void testEncrypt() throws Exception {
+		try (SafeCloseable safeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"FIPS_ENABLED", true)) {
+
+			Encryptor encryptor = new EncryptorImpl();
+
+			Key key = encryptor.generateKey();
+
+			String encryptedString1 = encryptor.encrypt(key, _PLAIN_TEXT);
+			String encryptedString2 = encryptor.encrypt(key, _PLAIN_TEXT);
+
+			Assert.assertNotEquals(encryptedString1, encryptedString2);
+
+			Assert.assertEquals(
+				_PLAIN_TEXT, encryptor.decrypt(key, encryptedString1));
+			Assert.assertEquals(
+				_PLAIN_TEXT, encryptor.decrypt(key, encryptedString2));
+		}
+	}
+
+	@Test
+	public void testSerializeKey() throws Exception {
+		Encryptor encryptor = new EncryptorImpl();
+
+		Key key = encryptor.generateKey();
+
+		String encryptedString = encryptor.encrypt(key, _PLAIN_TEXT);
 
 		String serializedKey = encryptor.serializeKey(key);
 
 		key = encryptor.deserializeKey(serializedKey);
 
 		Assert.assertEquals(
-			"Hello World!", encryptor.decrypt(key, encryptedString));
+			_PLAIN_TEXT, encryptor.decrypt(key, encryptedString));
 	}
+
+	private static final String _PLAIN_TEXT = RandomTestUtil.randomString();
 
 }

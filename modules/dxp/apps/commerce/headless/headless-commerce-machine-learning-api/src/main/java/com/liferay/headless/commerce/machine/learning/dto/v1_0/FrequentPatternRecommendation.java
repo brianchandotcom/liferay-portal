@@ -153,7 +153,7 @@ public class FrequentPatternRecommendation implements Serializable {
 	private Supplier<Long> _antecedentIdsLengthSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Date the rule was materialised by the download executor, in ISO 8601 (yyyy-MM-dd).",
+		description = "Timestamp when the rule was materialised by the download executor, in ISO 8601.",
 		example = "2017-07-21"
 	)
 	public Date getCreateDate() {
@@ -190,7 +190,7 @@ public class FrequentPatternRecommendation implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "Date the rule was materialised by the download executor, in ISO 8601 (yyyy-MM-dd)."
+		description = "Timestamp when the rule was materialised by the download executor, in ISO 8601."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date createDate;
@@ -558,4 +558,4 @@ public class FrequentPatternRecommendation implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1395301633
+// LIFERAY-REST-BUILDER-HASH:-972810345

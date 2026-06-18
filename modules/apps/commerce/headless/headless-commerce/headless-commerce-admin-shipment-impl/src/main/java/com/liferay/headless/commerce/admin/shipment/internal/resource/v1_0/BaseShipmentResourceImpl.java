@@ -198,7 +198,7 @@ public abstract class BaseShipmentResourceImpl
 				name = "shipmentId"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
-				description = "Comma-separated list of nested relationships to embed in each returned shipment. Supported values are shipmentItems and shippingAddress; when omitted, those relationships are not expanded inline.",
+				description = "Comma-separated list of nested fields to embed in each returned resource. Each value names a relationship exposed on the resource; when omitted, those relationships are not expanded inline.",
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "nestedFields"
 			)
@@ -237,7 +237,7 @@ public abstract class BaseShipmentResourceImpl
 				name = "externalReferenceCode"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
-				description = "Comma-separated list of nested relationships to embed in each returned shipment. Supported values are shipmentItems and shippingAddress; when omitted, those relationships are not expanded inline.",
+				description = "Comma-separated list of nested fields to embed in each returned resource. Each value names a relationship exposed on the resource; when omitted, those relationships are not expanded inline.",
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "nestedFields"
 			)
@@ -278,7 +278,7 @@ public abstract class BaseShipmentResourceImpl
 				name = "filter"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
-				description = "Comma-separated list of nested relationships to embed in each returned shipment. Supported values are shipmentItems and shippingAddress; when omitted, those relationships are not expanded inline.",
+				description = "Comma-separated list of nested fields to embed in each returned resource. Each value names a relationship exposed on the resource; when omitted, those relationships are not expanded inline.",
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "nestedFields"
 			),
@@ -1642,4 +1642,4 @@ public abstract class BaseShipmentResourceImpl
 		LogFactoryUtil.getLog(BaseShipmentResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:-517897245
+// LIFERAY-REST-BUILDER-HASH:-1458277831

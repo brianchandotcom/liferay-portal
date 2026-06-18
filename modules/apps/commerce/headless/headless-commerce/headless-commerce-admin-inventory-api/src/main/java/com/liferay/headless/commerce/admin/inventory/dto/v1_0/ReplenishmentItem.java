@@ -61,7 +61,7 @@ public class ReplenishmentItem implements Serializable {
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Date the planned restock becomes available, in ISO 8601 date format (YYYY-MM-DD). Optional -- a missing value is allowed.",
+		description = "Date the planned restock becomes available, in ISO 8601 date-time format. Optional -- a missing value is allowed.",
 		example = "2017-07-21"
 	)
 	public Date getAvailabilityDate() {
@@ -98,7 +98,7 @@ public class ReplenishmentItem implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "Date the planned restock becomes available, in ISO 8601 date format (YYYY-MM-DD). Optional -- a missing value is allowed."
+		description = "Date the planned restock becomes available, in ISO 8601 date-time format. Optional -- a missing value is allowed."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date availabilityDate;
@@ -610,4 +610,4 @@ public class ReplenishmentItem implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-968544640
+// LIFERAY-REST-BUILDER-HASH:-1475491110

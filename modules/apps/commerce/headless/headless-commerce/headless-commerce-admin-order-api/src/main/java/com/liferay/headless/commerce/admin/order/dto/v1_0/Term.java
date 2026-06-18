@@ -155,7 +155,7 @@ public class Term implements Serializable {
 	private Supplier<Boolean> _activeSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Creation date for the term. Read-only.",
+		description = "Creation timestamp for the term. Read-only.",
 		example = "2017-07-21"
 	)
 	public Date getCreateDate() {
@@ -191,7 +191,7 @@ public class Term implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "Creation date for the term. Read-only.")
+	@GraphQLField(description = "Creation timestamp for the term. Read-only.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date createDate;
 
@@ -247,7 +247,8 @@ public class Term implements Serializable {
 	private Supplier<Map<String, String>> _descriptionSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Date the term becomes active.", example = "2017-07-21"
+		description = "Date and time the term becomes active.",
+		example = "2017-07-21"
 	)
 	public Date getDisplayDate() {
 		if (_displayDateSupplier != null) {
@@ -282,7 +283,7 @@ public class Term implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "Date the term becomes active.")
+	@GraphQLField(description = "Date and time the term becomes active.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date displayDate;
 
@@ -290,7 +291,7 @@ public class Term implements Serializable {
 	private Supplier<Date> _displayDateSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Date the term expires.", example = "2017-08-21"
+		description = "Date and time the term expires.", example = "2017-08-21"
 	)
 	public Date getExpirationDate() {
 		if (_expirationDateSupplier != null) {
@@ -325,7 +326,7 @@ public class Term implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "Date the term expires.")
+	@GraphQLField(description = "Date and time the term expires.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date expirationDate;
 
@@ -1208,4 +1209,4 @@ public class Term implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1987773526
+// LIFERAY-REST-BUILDER-HASH:-1001595252

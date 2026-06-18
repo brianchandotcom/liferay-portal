@@ -670,7 +670,7 @@ public class Order implements Serializable {
 	private Supplier<String> _couponCodeSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Creation date for the order. Read-only; set by the service when the record is first persisted.",
+		description = "Creation timestamp for the order. Read-only; set by the service when the record is first persisted.",
 		example = "2017-07-21"
 	)
 	public Date getCreateDate() {
@@ -707,7 +707,7 @@ public class Order implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "Creation date for the order. Read-only; set by the service when the record is first persisted."
+		description = "Creation timestamp for the order. Read-only; set by the service when the record is first persisted."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date createDate;
@@ -1235,7 +1235,7 @@ public class Order implements Serializable {
 	private Supplier<Long> _idSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Date of the most recent price recalculation on the order. Read-only.",
+		description = "Timestamp of the most recent price recalculation on the order. Read-only.",
 		example = "2017-07-21"
 	)
 	public Date getLastPriceUpdateDate() {
@@ -1272,7 +1272,7 @@ public class Order implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "Date of the most recent price recalculation on the order. Read-only."
+		description = "Timestamp of the most recent price recalculation on the order. Read-only."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date lastPriceUpdateDate;
@@ -1281,7 +1281,7 @@ public class Order implements Serializable {
 	private Supplier<Date> _lastPriceUpdateDateSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Last-modification date for the order. Read-only.",
+		description = "Last modification timestamp for the order. Read-only.",
 		example = "2017-08-21"
 	)
 	public Date getModifiedDate() {
@@ -1318,7 +1318,7 @@ public class Order implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "Last-modification date for the order. Read-only."
+		description = "Last modification timestamp for the order. Read-only."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date modifiedDate;
@@ -1371,7 +1371,7 @@ public class Order implements Serializable {
 	private Supplier<String> _nameSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Date the order was placed. May differ from the creation date when the order is imported from another system.",
+		description = "Date and time the order was placed. May differ from the creation date when the order is imported from another system.",
 		example = "2017-07-21"
 	)
 	public Date getOrderDate() {
@@ -1408,7 +1408,7 @@ public class Order implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "Date the order was placed. May differ from the creation date when the order is imported from another system."
+		description = "Date and time the order was placed. May differ from the creation date when the order is imported from another system."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date orderDate;
@@ -2067,7 +2067,8 @@ public class Order implements Serializable {
 	private Supplier<String> _purchaseOrderNumberSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Buyer-requested delivery date.", example = "2017-07-21"
+		description = "Buyer-requested delivery date and time.",
+		example = "2017-07-21"
 	)
 	public Date getRequestedDeliveryDate() {
 		if (_requestedDeliveryDateSupplier != null) {
@@ -2102,7 +2103,7 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "Buyer-requested delivery date.")
+	@GraphQLField(description = "Buyer-requested delivery date and time.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date requestedDeliveryDate;
 
@@ -7214,4 +7215,4 @@ public class Order implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:4104708
+// LIFERAY-REST-BUILDER-HASH:-924542556

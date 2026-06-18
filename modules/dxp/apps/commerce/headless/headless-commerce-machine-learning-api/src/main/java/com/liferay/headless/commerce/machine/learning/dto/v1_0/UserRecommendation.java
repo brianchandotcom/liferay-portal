@@ -105,7 +105,7 @@ public class UserRecommendation implements Serializable {
 	private Supplier<Long[]> _assetCategoryIdsSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Date the recommendation was materialised by the download executor, in ISO 8601 (yyyy-MM-dd).",
+		description = "Timestamp when the recommendation was materialised by the download executor, in ISO 8601.",
 		example = "2017-07-21"
 	)
 	public Date getCreateDate() {
@@ -142,7 +142,7 @@ public class UserRecommendation implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "Date the recommendation was materialised by the download executor, in ISO 8601 (yyyy-MM-dd)."
+		description = "Timestamp when the recommendation was materialised by the download executor, in ISO 8601."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date createDate;
@@ -610,4 +610,4 @@ public class UserRecommendation implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1871535107
+// LIFERAY-REST-BUILDER-HASH:-149063373

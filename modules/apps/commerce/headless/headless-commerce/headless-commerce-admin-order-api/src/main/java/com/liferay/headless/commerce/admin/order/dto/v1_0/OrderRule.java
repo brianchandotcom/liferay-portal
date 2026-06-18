@@ -201,7 +201,7 @@ public class OrderRule implements Serializable {
 	private Supplier<String> _authorSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Creation date for the rule. Read-only.",
+		description = "Creation timestamp for the rule. Read-only.",
 		example = "2017-07-21"
 	)
 	public Date getCreateDate() {
@@ -237,7 +237,7 @@ public class OrderRule implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "Creation date for the rule. Read-only.")
+	@GraphQLField(description = "Creation timestamp for the rule. Read-only.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date createDate;
 
@@ -291,7 +291,8 @@ public class OrderRule implements Serializable {
 	private Supplier<String> _descriptionSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Date the rule becomes active.", example = "2017-07-21"
+		description = "Date and time the rule becomes active.",
+		example = "2017-07-21"
 	)
 	public Date getDisplayDate() {
 		if (_displayDateSupplier != null) {
@@ -326,7 +327,7 @@ public class OrderRule implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "Date the rule becomes active.")
+	@GraphQLField(description = "Date and time the rule becomes active.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date displayDate;
 
@@ -334,7 +335,7 @@ public class OrderRule implements Serializable {
 	private Supplier<Date> _displayDateSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Date the rule expires and stops applying.",
+		description = "Date and time the rule expires and stops applying.",
 		example = "2017-08-21"
 	)
 	public Date getExpirationDate() {
@@ -370,7 +371,9 @@ public class OrderRule implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "Date the rule expires and stops applying.")
+	@GraphQLField(
+		description = "Date and time the rule expires and stops applying."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date expirationDate;
 
@@ -1364,4 +1367,4 @@ public class OrderRule implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2033255313
+// LIFERAY-REST-BUILDER-HASH:-1925216783

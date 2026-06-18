@@ -258,7 +258,7 @@ public class Sku implements Serializable {
 	private Supplier<Boolean> _discontinuedSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Date on which the SKU was marked discontinued; accepted in the request locale and time zone and normalized to the portal's time zone.",
+		description = "Date and time on which the SKU was marked discontinued; accepted in the request locale and time zone and normalized to the portal's time zone.",
 		example = "2017-07-21"
 	)
 	public Date getDiscontinuedDate() {
@@ -295,7 +295,7 @@ public class Sku implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "Date on which the SKU was marked discontinued; accepted in the request locale and time zone and normalized to the portal's time zone."
+		description = "Date and time on which the SKU was marked discontinued; accepted in the request locale and time zone and normalized to the portal's time zone."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date discontinuedDate;
@@ -2209,4 +2209,4 @@ public class Sku implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1588692532
+// LIFERAY-REST-BUILDER-HASH:-1713681316

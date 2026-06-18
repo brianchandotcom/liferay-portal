@@ -1708,7 +1708,7 @@ public class OrderItem implements Serializable {
 	private Supplier<Long> _replacedSkuIdSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Buyer-requested delivery date for this line item.",
+		description = "Buyer-requested delivery date and time for this line item.",
 		example = "2017-07-21"
 	)
 	public Date getRequestedDeliveryDate() {
@@ -1745,7 +1745,7 @@ public class OrderItem implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "Buyer-requested delivery date for this line item."
+		description = "Buyer-requested delivery date and time for this line item."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date requestedDeliveryDate;
@@ -3280,4 +3280,4 @@ public class OrderItem implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:610605162
+// LIFERAY-REST-BUILDER-HASH:210045872

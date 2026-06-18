@@ -157,7 +157,7 @@ public class Product implements Serializable {
 	private Supplier<Long[]> _categoryIdsSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Date the product was created, in ISO 8601 (yyyy-MM-dd). Read-only.",
+		description = "Timestamp when the product was created, in ISO 8601. Read-only.",
 		example = "2017-07-21"
 	)
 	public Date getCreateDate() {
@@ -194,7 +194,7 @@ public class Product implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "Date the product was created, in ISO 8601 (yyyy-MM-dd). Read-only."
+		description = "Timestamp when the product was created, in ISO 8601. Read-only."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date createDate;
@@ -298,7 +298,7 @@ public class Product implements Serializable {
 	private Supplier<Map<String, String>> _descriptionSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Date from which the product is visible on the storefront, in ISO 8601 (yyyy-MM-dd).",
+		description = "Date and time from which the product is visible on the storefront, in ISO 8601.",
 		example = "2017-07-21"
 	)
 	public Date getDisplayDate() {
@@ -335,7 +335,7 @@ public class Product implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "Date from which the product is visible on the storefront, in ISO 8601 (yyyy-MM-dd)."
+		description = "Date and time from which the product is visible on the storefront, in ISO 8601."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date displayDate;
@@ -344,7 +344,7 @@ public class Product implements Serializable {
 	private Supplier<Date> _displayDateSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Date from which the product is no longer visible on the storefront, in ISO 8601 (yyyy-MM-dd).",
+		description = "Date and time from which the product is no longer visible on the storefront, in ISO 8601.",
 		example = "2017-08-21"
 	)
 	public Date getExpirationDate() {
@@ -381,7 +381,7 @@ public class Product implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "Date from which the product is no longer visible on the storefront, in ISO 8601 (yyyy-MM-dd)."
+		description = "Date and time from which the product is no longer visible on the storefront, in ISO 8601."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date expirationDate;
@@ -625,7 +625,7 @@ public class Product implements Serializable {
 	private Supplier<Map<String, String>> _metaTitleSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Date the product was last modified, in ISO 8601 (yyyy-MM-dd). Read-only.",
+		description = "Timestamp when the product was last modified, in ISO 8601. Read-only.",
 		example = "2017-08-21"
 	)
 	public Date getModifiedDate() {
@@ -662,7 +662,7 @@ public class Product implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "Date the product was last modified, in ISO 8601 (yyyy-MM-dd). Read-only."
+		description = "Timestamp when the product was last modified, in ISO 8601. Read-only."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date modifiedDate;
@@ -1688,4 +1688,4 @@ public class Product implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:451880765
+// LIFERAY-REST-BUILDER-HASH:1748905761

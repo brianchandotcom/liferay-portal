@@ -66,7 +66,7 @@ SelectLayoutPageTemplateEntryDisplayContext selectLayoutPageTemplateEntryDisplay
 													<%= HtmlUtil.escape(selectBasicTemplatesNavigationCard.getTitle()) %>
 
 													<clay:badge
-														cssClass="c-ml-1 c-pl-0 text-uppercase"
+														cssClass="c-ml-1 text-uppercase"
 														displayType="warning"
 														label='<%= LanguageUtil.get(request, "deprecated") %>'
 														translucent="<%= true %>"

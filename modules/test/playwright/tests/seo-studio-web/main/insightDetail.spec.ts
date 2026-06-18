@@ -9,6 +9,7 @@ import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {InsightType, PageData, Scan} from '../../../helpers/SEOStudioApiHelper';
+import getRandomString from '../../../utils/getRandomString';
 import {seoStudioPagesTest} from './fixtures/seoStudioPagesTest';
 import {seoStudioSiteTest} from './fixtures/seoStudioSiteTest';
 
@@ -20,6 +21,7 @@ const test = mergeTests(
 	seoStudioSiteTest
 );
 
+let insightType: InsightType;
 let insightTypeInput: InsightType & {pageURLs: PageData[]};
 let scan: Scan;
 
@@ -46,9 +48,11 @@ test.beforeEach(async ({apiHelpers, onPagePage, seoStudioSite}) => {
 		severity: 'critical',
 	};
 
-	scan = await apiHelpers.seoStudio.createScan('full');
+	scan = await apiHelpers.seoStudio.createScan('crawler');
 
-	await apiHelpers.seoStudio.createInsights(scan, [insightTypeInput]);
+	[insightType] = await apiHelpers.seoStudio.createInsights(scan, [
+		insightTypeInput,
+	]);
 
 	await onPagePage.goto(seoStudioSite.friendlyUrlPath);
 });
@@ -117,5 +121,56 @@ test(
 		await insightDetailPage.onPageBreadcrumbLink.click();
 
 		await expect(onPagePage.onPageHeading).toBeVisible();
+	}
+);
+
+test(
+	'Lists only pending pages and excludes fixed pages from the affected pages table and count',
+	{tag: '@LPD-95129'},
+	async ({
+		apiHelpers,
+		insightDetailPage,
+		onPagePage,
+		page,
+		seoStudioSite,
+	}) => {
+		const fixedPages: PageData[] = [
+			{
+				author: getRandomString(),
+				pageURL: `https://example.com/${getRandomString()}`,
+				state: 0,
+				title: 'FixedOne',
+				type: getRandomString(),
+			},
+		];
+
+		await apiHelpers.seoStudio.addPages(scan, insightType.id, fixedPages);
+
+		await onPagePage.goto(seoStudioSite.friendlyUrlPath);
+
+		await onPagePage.selectInsight(insightTypeInput.name);
+
+		await expect(insightDetailPage.affectedPagesHeading).toContainText(
+			`(${insightTypeInput.pageURLs.length})`
+		);
+
+		await expect(
+			page.getByRole('heading', {
+				level: 2,
+				name: `${insightTypeInput.name} from ${insightTypeInput.pageURLs.length} pages`,
+			})
+		).toBeVisible();
+
+		for (const pageInput of insightTypeInput.pageURLs) {
+			await expect(
+				insightDetailPage.getAffectedPageRow(pageInput.title)
+			).toBeVisible();
+		}
+
+		for (const pageInput of fixedPages) {
+			await expect(
+				insightDetailPage.getAffectedPageRow(pageInput.title)
+			).not.toBeVisible();
+		}
 	}
 );

@@ -88,7 +88,7 @@ public class OAuth2WellKnownProtectedResourceMetadataFilter extends BaseFilter {
 		}
 
 		OAuthClientPRLocalMetadata oAuthClientPRLocalMetadata =
-			_resolveOAuthClientPRLocalMetadata(
+			_fetchOAuthClientPRLocalMetadata(
 				CompanyThreadLocal.getCompanyId(), httpServletRequest);
 
 		if ((oAuthClientPRLocalMetadata == null) ||
@@ -114,7 +114,7 @@ public class OAuth2WellKnownProtectedResourceMetadataFilter extends BaseFilter {
 		httpServletResponse.flushBuffer();
 	}
 
-	private OAuthClientPRLocalMetadata _resolveOAuthClientPRLocalMetadata(
+	private OAuthClientPRLocalMetadata _fetchOAuthClientPRLocalMetadata(
 		long companyId, HttpServletRequest httpServletRequest) {
 
 		String requestURI = httpServletRequest.getRequestURI();

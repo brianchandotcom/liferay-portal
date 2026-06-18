@@ -77,7 +77,6 @@ import com.liferay.portal.configuration.module.configuration.ConfigurationProvid
 import com.liferay.portal.db.partition.util.DBPartitionUtil;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.comment.DiscussionPermission;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -334,9 +333,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				BaseObjectEntryResourceImpl.class.getMethods(),
 				objectScopeProvider);
 
-			if (FeatureFlagManagerUtil.isEnabled(
-					objectDefinition.getCompanyId(), "LPD-69877") &&
-				!objectDefinition.isAllowStandaloneObjectEntry() &&
+			if (!objectDefinition.isAllowStandaloneObjectEntry() &&
 				objectDefinition.isRootDescendantNode()) {
 
 				excludedOperationIds.addAll(_objectEntryCRUDOperationIds);

@@ -3600,9 +3600,7 @@ public class ObjectDefinitionLocalServiceImpl
 			Map<String, String> objectDefinitionSettingsValuesMap)
 		throws PortalException {
 
-		if (FeatureFlagManagerUtil.isEnabled(
-				objectDefinition.getCompanyId(), "LPD-69877") &&
-			!BatchEngineThreadLocal.isBatchImportInProcess() &&
+		if (!BatchEngineThreadLocal.isBatchImportInProcess() &&
 			objectDefinition.isRootDescendantNode() &&
 			!objectDefinitionSettingsValuesMap.containsKey(
 				ObjectDefinitionSettingConstants.
@@ -3678,9 +3676,7 @@ public class ObjectDefinitionLocalServiceImpl
 					continue;
 				}
 
-				if (FeatureFlagManagerUtil.isEnabled(
-						objectDefinition.getCompanyId(), "LPD-69877") &&
-					objectDefinition.isAllowStandaloneObjectEntry() &&
+				if (objectDefinition.isAllowStandaloneObjectEntry() &&
 					objectDefinition.isApproved() &&
 					Objects.equals(allowStandaloneObjectEntry, "false")) {
 

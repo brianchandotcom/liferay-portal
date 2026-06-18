@@ -40,7 +40,7 @@ if (Validator.isNotNull(portletResource)) {
 
 ObjectDefinition objectDefinition = null;
 
-if (FeatureFlagManagerUtil.isEnabled(company.getCompanyId(), "LPD-69877") && Validator.isNotNull(portletResource)) {
+if (Validator.isNotNull(portletResource)) {
 	String className = portletResource;
 
 	if (portletResource.startsWith(ObjectPortletKeys.OBJECT_DEFINITIONS + StringPool.UNDERLINE)) {

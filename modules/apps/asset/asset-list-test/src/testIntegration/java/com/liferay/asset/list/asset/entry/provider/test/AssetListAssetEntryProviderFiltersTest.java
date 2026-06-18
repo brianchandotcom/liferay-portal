@@ -541,7 +541,7 @@ public class AssetListAssetEntryProviderFiltersTest {
 	@Test
 	public void testGetAssetEntryQueryWithInvalidFilters() throws Exception {
 		AssetListEntry assetListEntry = _addDynamicAssetListEntryWithFilters(
-			"not-a-json-array");
+			RandomTestUtil.randomString());
 
 		AssetEntryQuery assetEntryQuery =
 			_assetListAssetEntryProvider.getAssetEntryQuery(

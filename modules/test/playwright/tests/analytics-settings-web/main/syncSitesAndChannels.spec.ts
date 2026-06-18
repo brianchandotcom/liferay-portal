@@ -282,6 +282,101 @@ test(
 );
 
 test(
+	'A site and a commerce channel assigned to one property are unavailable to another property',
+	{
+		tag: '@LRAC-12577',
+	},
+	async ({analyticsChannel: channel, apiHelpers, page, project, site}) => {
+		const propertyB = await apiHelpers.jsonWebServicesOSBFaro.createChannel(
+			'propertyB' + getRandomString(),
+			project.groupId
+		);
+
+		const commerceChannel =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				name: 'commerce' + getRandomString(),
+				siteGroupId: site.id,
+			});
+
+		try {
+			await syncAnalyticsCloud({
+				apiHelpers,
+				channel,
+				page,
+				project,
+				siteName: site.name,
+			});
+
+			await goToSettingsStep({page, stepName: 'Properties'});
+
+			// Confirm the second property (an AC channel) surfaces as an
+			// assignable DXP property before relying on it
+
+			await page
+				.getByRole('textbox', {name: 'Search'})
+				.first()
+				.fill(propertyB.name);
+
+			await page.getByRole('button', {name: 'Search'}).first().click();
+
+			await expect(
+				page.getByRole('cell', {name: propertyB.name})
+			).toBeVisible();
+
+			// Assign the commerce channel to the first property (the site is
+			// already synced to it by syncAnalyticsCloud)
+
+			await enableCommerceChannel({channelName: channel.name, page});
+
+			await syncCommerce({
+				channelName: channel.name,
+				commerceChannelName: commerceChannel.name,
+				page,
+			});
+
+			// Open the second property's assign modal with commerce enabled
+
+			await enableCommerceChannel({channelName: propertyB.name, page});
+
+			await openAssignModal(page, propertyB.name);
+
+			// The channel already used by the first property cannot be selected
+
+			await page.getByRole('tab', {name: 'Channel'}).click();
+
+			await searchAssignModal(page, commerceChannel.name);
+
+			await expect(
+				page.locator(
+					`.modal .tab-pane.active tr[data-testid="${commerceChannel.name}"] input[type="checkbox"]`
+				)
+			).toBeDisabled();
+
+			// The site already used by the first property cannot be selected
+
+			await page.getByRole('tab', {name: 'Sites'}).click();
+
+			await searchAssignModal(page, site.name);
+
+			await expect(
+				page.locator(
+					`.modal .tab-pane.active tr[data-testid="${site.name}"] input[type="checkbox"]`
+				)
+			).toBeDisabled();
+		}
+		finally {
+			await apiHelpers.headlessCommerceAdminChannel
+				.deleteChannel(commerceChannel.id)
+				.catch(() => {});
+
+			await apiHelpers.jsonWebServicesOSBFaro
+				.deleteChannel(`[${propertyB.id}]`, project.groupId)
+				.catch(() => {});
+		}
+	}
+);
+
+test(
 	'Assigned channels and sites are counted on the property after syncing',
 	{
 		tag: '@LRAC-12574',

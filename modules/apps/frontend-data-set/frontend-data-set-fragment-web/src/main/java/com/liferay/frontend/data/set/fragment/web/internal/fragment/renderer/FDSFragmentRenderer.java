@@ -222,7 +222,6 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 			String componentId = externalReferenceCode;
 
 			if (fragmentRendererContext.isEditMode()) {
-
 				componentId = StringBundler.concat(
 					componentId, "-",
 					fragmentEntryLink.getFragmentEntryLinkId());

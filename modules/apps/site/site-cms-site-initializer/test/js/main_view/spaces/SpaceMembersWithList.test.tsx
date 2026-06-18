@@ -205,9 +205,12 @@ describe('SpaceMembersWithList', () => {
 	it('lists user groups from a space', async () => {
 		render(<SpaceMembersWithList {...props} />);
 
-		await userEvent.selectOptions(
-			screen.getByRole('combobox', {name: 'add-people-to-collaborate'}),
-			SelectOptions.GROUPS
+		await userEvent.click(
+			screen.getByRole('combobox', {name: 'add-people-to-collaborate'})
+		);
+
+		await userEvent.click(
+			screen.getByRole('option', {name: SelectOptions.GROUPS})
 		);
 
 		const userGroupsList = screen.getByLabelText('who-has-access');
@@ -264,9 +267,12 @@ describe('SpaceMembersWithList', () => {
 			screen.getByText('add-members-to-this-space')
 		).toBeInTheDocument();
 
-		await userEvent.selectOptions(
-			screen.getByRole('combobox', {name: 'add-people-to-collaborate'}),
-			SelectOptions.GROUPS
+		await userEvent.click(
+			screen.getByRole('combobox', {name: 'add-people-to-collaborate'})
+		);
+
+		await userEvent.click(
+			screen.getByRole('option', {name: SelectOptions.GROUPS})
 		);
 
 		expect(screen.getByText('no-members-yet')).toBeInTheDocument();
@@ -307,11 +313,14 @@ describe('SpaceMembersWithList', () => {
 	it('excludes added group members from the autocomplete list', async () => {
 		render(<SpaceMembersWithList {...props} />);
 
-		await userEvent.selectOptions(
+		await userEvent.click(
 			screen.getByRole('combobox', {
 				name: 'add-people-to-collaborate',
-			}),
-			SelectOptions.GROUPS
+			})
+		);
+
+		await userEvent.click(
+			screen.getByRole('option', {name: SelectOptions.GROUPS})
 		);
 
 		const input = screen.getByPlaceholderText('enter-name-or-email');
@@ -417,11 +426,14 @@ describe('SpaceMembersWithList', () => {
 		it('calls updateMemberRoles when a role for user group is changed', async () => {
 			render(<SpaceMembersWithList {...props} />);
 
-			await userEvent.selectOptions(
+			await userEvent.click(
 				screen.getByRole('combobox', {
 					name: 'add-people-to-collaborate',
-				}),
-				SelectOptions.GROUPS
+				})
+			);
+
+			await userEvent.click(
+				screen.getByRole('option', {name: SelectOptions.GROUPS})
 			);
 
 			const groupItem = await screen.findByText(testUserGroups[0].name);

@@ -78,6 +78,8 @@ describe('SearcheableSpaceMembersList', () => {
 	});
 
 	it('calls onSelectChange when the select value is changed', async () => {
+		jest.useRealTimers();
+
 		const onSelectChange = jest.fn();
 
 		render(
@@ -88,11 +90,11 @@ describe('SearcheableSpaceMembersList', () => {
 			/>
 		);
 
-		const select = screen.getByRole('combobox');
+		await userEvent.click(screen.getByRole('combobox'));
 
-		await userEvent.selectOptions(select, SelectOptions.GROUPS, {
-			delay: null,
-		});
+		await userEvent.click(
+			screen.getByRole('option', {name: SelectOptions.GROUPS})
+		);
 
 		expect(onSelectChange).toHaveBeenCalledWith(SelectOptions.GROUPS);
 		expect(onSelectChange).toHaveBeenCalledTimes(1);

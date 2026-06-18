@@ -119,9 +119,16 @@ export class SpaceSummaryPage {
 
 		const dialog = this.page.getByRole('dialog');
 
-		await dialog
+		await this.page
 			.getByLabel('Add People to Collaborate', {exact: true})
-			.selectOption(type);
+			.click();
+
+		await this.page
+			.getByRole('option', {
+				exact: true,
+				name: type === 'groups' ? 'Groups' : 'Users',
+			})
+			.click();
 
 		const input = dialog.getByPlaceholder('Enter name or email.', {
 			exact: true,
@@ -150,9 +157,17 @@ export class SpaceSummaryPage {
 		await this.viewAllMembersLink.click();
 
 		await this.page.getByRole('dialog').waitFor();
+
 		await this.page
 			.getByLabel('Add People to Collaborate', {exact: true})
-			.selectOption(type);
+			.click();
+
+		await this.page
+			.getByRole('option', {
+				exact: true,
+				name: type === 'groups' ? 'Groups' : 'Users',
+			})
+			.click();
 
 		await this.page
 			.locator('li')
@@ -210,9 +225,11 @@ export class SpaceSummaryPage {
 	async connectSite(siteName: string) {
 		await this.openConnectSitesDialog();
 
+		await this.page.getByLabel('Sites', {exact: true}).click();
+
 		await this.page
-			.getByLabel('Sites', {exact: true})
-			.selectOption('sites');
+			.getByRole('option', {exact: true, name: 'Sites'})
+			.click();
 
 		await this.page
 			.getByPlaceholder('Select a Site', {exact: true})
@@ -233,9 +250,11 @@ export class SpaceSummaryPage {
 	async connectSiteTemplate(siteTemplateName: string) {
 		await this.openConnectSitesDialog();
 
+		await this.page.getByLabel('Sites', {exact: true}).click();
+
 		await this.page
-			.getByLabel('Sites', {exact: true})
-			.selectOption('site-templates');
+			.getByRole('option', {exact: true, name: 'Site Templates'})
+			.click();
 
 		await this.page
 			.getByPlaceholder('Select a Site Template', {exact: true})

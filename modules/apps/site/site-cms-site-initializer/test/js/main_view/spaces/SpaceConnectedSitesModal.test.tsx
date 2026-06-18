@@ -564,9 +564,10 @@ describe('SpaceConnectedSitesModal', () => {
 				`${mockConnectedSiteTemplate.descriptiveName} (site-template)`
 			);
 
-			await userEvent.selectOptions(
-				screen.getByLabelText('sites'),
-				'site-templates'
+			await userEvent.click(screen.getByLabelText('sites'));
+
+			await userEvent.click(
+				screen.getByRole('option', {name: 'site-templates'})
 			);
 
 			await userEvent.click(
@@ -596,9 +597,10 @@ describe('SpaceConnectedSitesModal', () => {
 				screen.getByPlaceholderText('select-a-site')
 			).toBeInTheDocument();
 
-			await userEvent.selectOptions(
-				screen.getByLabelText('sites'),
-				'site-templates'
+			await userEvent.click(screen.getByLabelText('sites'));
+
+			await userEvent.click(
+				screen.getByRole('option', {name: 'site-templates'})
 			);
 
 			expect(
@@ -638,9 +640,10 @@ describe('SpaceConnectedSitesModal', () => {
 			renderComponent();
 			await waitForComponentRendering();
 
-			await userEvent.selectOptions(
-				screen.getByLabelText('sites'),
-				'site-templates'
+			await userEvent.click(screen.getByLabelText('sites'));
+
+			await userEvent.click(
+				screen.getByRole('option', {name: 'site-templates'})
 			);
 
 			await userEvent.click(
@@ -704,9 +707,10 @@ describe('SpaceConnectedSitesModal', () => {
 			renderComponent();
 			await waitForComponentRendering();
 
-			await userEvent.selectOptions(
-				screen.getByLabelText('sites'),
-				'site-templates'
+			await userEvent.click(screen.getByLabelText('sites'));
+
+			await userEvent.click(
+				screen.getByRole('option', {name: 'site-templates'})
 			);
 
 			await userEvent.click(
@@ -766,9 +770,10 @@ describe('SpaceConnectedSitesModal', () => {
 				)
 			).toBeInTheDocument();
 
-			await userEvent.selectOptions(
-				screen.getByLabelText('sites'),
-				'site-templates'
+			await userEvent.click(screen.getByLabelText('sites'));
+
+			await userEvent.click(
+				screen.getByRole('option', {name: 'site-templates'})
 			);
 
 			await userEvent.click(

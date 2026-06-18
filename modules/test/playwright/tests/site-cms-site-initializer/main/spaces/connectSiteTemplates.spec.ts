@@ -292,9 +292,11 @@ test(
 
 		await spaceSummaryPage.openConnectedSitesModal();
 
+		await page.getByLabel('Sites', {exact: true}).click();
+
 		await page
-			.getByLabel('Sites', {exact: true})
-			.selectOption('site-templates');
+			.getByRole('option', {exact: true, name: 'Site Templates'})
+			.click();
 
 		const siteTemplateAutocomplete = page.getByPlaceholder(
 			'Select a Site Template',
@@ -329,7 +331,9 @@ test(
 			page.getByRole('option', {exact: true, name: connectedTemplateName})
 		).toHaveCount(0);
 
-		await page.getByLabel('Sites', {exact: true}).selectOption('sites');
+		await page.getByLabel('Sites', {exact: true}).click();
+
+		await page.getByRole('option', {exact: true, name: 'Sites'}).click();
 
 		await page.getByPlaceholder('Select a Site', {exact: true}).click();
 

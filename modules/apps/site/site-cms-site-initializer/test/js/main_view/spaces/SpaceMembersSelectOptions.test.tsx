@@ -59,9 +59,10 @@ describe('SpaceMembersSelectOptions', () => {
 
 		expect(onSelectChange).not.toHaveBeenCalled();
 
-		await userEvent.selectOptions(
-			screen.getByRole('combobox', {name: label}),
-			SelectOptions.GROUPS
+		await userEvent.click(screen.getByRole('combobox', {name: label}));
+
+		await userEvent.click(
+			screen.getByRole('option', {name: SelectOptions.GROUPS})
 		);
 
 		expect(onSelectChange).toHaveBeenCalledTimes(1);

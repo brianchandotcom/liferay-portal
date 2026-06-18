@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 
 import java.net.URL;
@@ -74,11 +73,12 @@ public class ArtifactURLUtil {
 
 		String symbolicName = getSymbolicName(path);
 
-		if (fileExtension.equals("zip") && _isClientExtensionZip(path)) {
-			symbolicName = getClientExtensionSymbolicName(path);
+		if (fileExtension.equals("zip")) {
+			JSONObject jsonObject = _getClientExtensionConfigJSONObject(path);
 
-			try (ZipFile zipFile = new ZipFile(path)) {
-				contextName = _readClientExtensionWebContextPath(zipFile);
+			if (jsonObject != null) {
+				symbolicName = getClientExtensionSymbolicName(path);
+				contextName = _getWebContextPath(jsonObject);
 			}
 		}
 
@@ -94,7 +94,7 @@ public class ArtifactURLUtil {
 				"&fileExtension=", fileExtension, "&protocol=file"));
 	}
 
-	private static boolean _isClientExtensionZip(String path) {
+	private static JSONObject _getClientExtensionConfigJSONObject(String path) {
 		try (ZipFile zipFile = new ZipFile(path)) {
 			Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
 
@@ -103,49 +103,30 @@ public class ArtifactURLUtil {
 
 				String name = zipEntry.getName();
 
-				if (name.endsWith(".client-extension-config.json") &&
-					(name.indexOf("/") == -1)) {
+				if ((name.indexOf(CharPool.SLASH) == -1) &&
+					name.endsWith(".client-extension-config.json")) {
 
-					return true;
+					return JSONFactoryUtil.createJSONObject(
+						StringUtil.read(zipFile.getInputStream(zipEntry)));
 				}
 			}
 		}
-		catch (IOException ioException) {
-			_log.error("Path " + path + " is not a valid ZIP", ioException);
+		catch (Exception exception) {
+			_log.error("Path " + path + " is not a valid ZIP", exception);
 		}
 
-		return false;
+		return null;
 	}
 
-	private static String _readClientExtensionWebContextPath(ZipFile zipFile)
-		throws Exception {
+	private static String _getWebContextPath(JSONObject jsonObject) {
+		for (String key : jsonObject.keySet()) {
+			JSONObject configurationJSONObject = jsonObject.getJSONObject(key);
 
-		Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
+			String webContextPath = configurationJSONObject.getString(
+				"webContextPath");
 
-		while (enumeration.hasMoreElements()) {
-			ZipEntry zipEntry = enumeration.nextElement();
-
-			String name = zipEntry.getName();
-
-			if ((name.indexOf(CharPool.SLASH) != -1) ||
-				!name.endsWith(".client-extension-config.json")) {
-
-				continue;
-			}
-
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				StringUtil.read(zipFile.getInputStream(zipEntry)));
-
-			for (String key : jsonObject.keySet()) {
-				JSONObject configurationJSONObject = jsonObject.getJSONObject(
-					key);
-
-				String webContextPath = configurationJSONObject.getString(
-					"webContextPath");
-
-				if (Validator.isNotNull(webContextPath)) {
-					return webContextPath.substring(1);
-				}
+			if (Validator.isNotNull(webContextPath)) {
+				return webContextPath.substring(1);
 			}
 		}
 

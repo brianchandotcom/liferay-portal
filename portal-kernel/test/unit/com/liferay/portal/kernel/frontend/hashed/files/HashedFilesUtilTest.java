@@ -47,6 +47,13 @@ public class HashedFilesUtilTest {
 	}
 
 	@Test
+	public void testComputeHash() {
+		Assert.assertEquals(
+			"vsPzX7N3HnQ",
+			HashedFilesUtil.computeHash("En un lugar de la Mancha..."));
+	}
+
+	@Test
 	public void testContainsHash() {
 		String hash = RandomTestUtil.randomString(8);
 
@@ -78,6 +85,17 @@ public class HashedFilesUtilTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void testRemoveHashWithIncorrectURI() {
 		HashedFilesUtil.removeHash("/css/main.css");
+	}
+
+	@Test
+	public void testReplaceHash() {
+		String hash = RandomTestUtil.randomString(8);
+		String newHash = RandomTestUtil.randomString(8);
+
+		Assert.assertEquals(
+			"/css/main.(" + newHash + ").css",
+			HashedFilesUtil.replaceHash(
+				"/css/main.(" + hash + ").css", newHash));
 	}
 
 }

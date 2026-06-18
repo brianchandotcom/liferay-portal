@@ -294,12 +294,6 @@ public class CloudBucketUtil {
 			return null;
 		}
 
-		JSONObject jsonObject = JenkinsResultsParserUtil.createJSONObject(
-			JenkinsResultsParserUtil.read(new File(file)));
-
-		String serviceAccountImpersonationURL = jsonObject.optString(
-			"service_account_impersonation_url");
-
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("gcloud storage sign-url ");
@@ -307,6 +301,12 @@ public class CloudBucketUtil {
 		sb.append(" --duration=");
 		sb.append(duration);
 		sb.append("m");
+
+		JSONObject jsonObject = JenkinsResultsParserUtil.createJSONObject(
+			JenkinsResultsParserUtil.read(new File(file)));
+
+		String serviceAccountImpersonationURL = jsonObject.optString(
+			"service_account_impersonation_url");
 
 		String authenticationCommand = null;
 

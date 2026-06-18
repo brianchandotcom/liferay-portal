@@ -88,25 +88,32 @@ public class EditVIESAccountEntryValidatorConfigurationMVCActionCommandTest {
 			MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 				new MockLiferayPortletActionRequest();
 
-			int checkInterval = RandomTestUtil.randomInt();
-			String[] countries = {
-				RandomTestUtil.randomString(), RandomTestUtil.randomString()
-			};
-			String viesEndpointURL =
-				"https://" + RandomTestUtil.randomString() + ".com";
-
 			mockLiferayPortletActionRequest.setAttribute(
 				WebKeys.PORTLET_ID,
 				ConfigurationAdminPortletKeys.INSTANCE_SETTINGS);
 			mockLiferayPortletActionRequest.setAttribute(
 				WebKeys.THEME_DISPLAY, _getThemeDisplay());
+
+			int checkInterval = RandomTestUtil.randomInt();
+
 			mockLiferayPortletActionRequest.setParameter(
 				"checkInterval", String.valueOf(checkInterval));
+
+			String[] countries = {
+				RandomTestUtil.randomString(), RandomTestUtil.randomString()
+			};
+
 			mockLiferayPortletActionRequest.setParameter(
 				"countries", StringUtil.merge(countries, StringPool.COMMA));
+
 			mockLiferayPortletActionRequest.setParameter("enabled", "true");
+
+			String viesEndpointURL =
+				"https://" + RandomTestUtil.randomString() + ".com";
+
 			mockLiferayPortletActionRequest.setParameter(
 				"viesEndpointURL", viesEndpointURL);
+
 			mockLiferayPortletActionRequest.setPortletSession(
 				new MockPortletSession());
 

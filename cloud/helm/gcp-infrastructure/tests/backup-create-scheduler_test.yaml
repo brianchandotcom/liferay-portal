@@ -5,13 +5,13 @@ tests:
     -   asserts:
             -   hasDocuments:
                     count: 0
-        it: omits the scheduler CronWorkflow when backups are disabled
+        it: Omits the scheduler CronWorkflow when backups are disabled
         set:
             backup.enabled: false
     -   asserts:
             -   hasDocuments:
                     count: 0
-        it: omits the scheduler CronWorkflow when no backup schedule is set
+        it: Omits the scheduler CronWorkflow when no backup schedule is set
         set:
             backup.enabled: true
             backup.schedule: ""
@@ -26,6 +26,6 @@ tests:
                     count: 1
             -   isKind:
                     of: CronWorkflow
-        it: renders the scheduler CronWorkflow with the configured schedule when backups are enabled
+        it: Renders the scheduler CronWorkflow with the configured schedule when backups are enabled
         set:
             backup.enabled: true

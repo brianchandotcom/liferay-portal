@@ -145,13 +145,16 @@ public class CounterDataCleanupPreupgradeProcess
 			List<String> excludedTableNames)
 		throws Exception {
 
+		long latestCounterValue = 0L;
+		String maxValueTableName = null;
+
+		Map<String, Long> maxValues = new ConcurrentHashMap<>();
+
 		List<String> tableNames = dbInspector.getTableNames(null);
 
 		tableNames.remove(dbInspector.normalizeName("Company"));
 		tableNames.remove(dbInspector.normalizeName("Counter"));
 		tableNames.removeAll(excludedTableNames);
-
-		Map<String, Long> maxValues = new ConcurrentHashMap<>();
 
 		processConcurrently(
 			tableNames.toArray(new String[0]),
@@ -180,9 +183,6 @@ public class CounterDataCleanupPreupgradeProcess
 				}
 			},
 			"Unable to compute the maximum primary key value");
-
-		long latestCounterValue = 0L;
-		String maxValueTableName = null;
 
 		for (Map.Entry<String, Long> entry : maxValues.entrySet()) {
 			long maxValue = entry.getValue();
@@ -224,7 +224,7 @@ public class CounterDataCleanupPreupgradeProcess
 		throws Exception {
 
 		if (!dbInspector.hasTable("Layout")) {
-			_log.error("Table Layout does not exist");
+			_log.error("The Layout table does not exist");
 
 			return;
 		}

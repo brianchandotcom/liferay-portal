@@ -106,8 +106,12 @@ public class ArtifactURLUtil {
 				if ((name.indexOf(CharPool.SLASH) == -1) &&
 					name.endsWith(".client-extension-config.json")) {
 
-					return JSONFactoryUtil.createJSONObject(
-						StringUtil.read(zipFile.getInputStream(zipEntry)));
+					try (InputStream inputStream = zipFile.getInputStream(
+							zipEntry)) {
+
+						return JSONFactoryUtil.createJSONObject(
+							StringUtil.read(inputStream));
+					}
 				}
 			}
 		}

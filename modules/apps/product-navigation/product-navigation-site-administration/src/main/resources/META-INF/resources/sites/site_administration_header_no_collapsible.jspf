@@ -87,7 +87,7 @@
 			<clay:button
 				aria-label='<%= LanguageUtil.get(request, "close") %>'
 				borderless="<%= true %>"
-				cssClass="lfr-portal-tooltip sidenav-close"
+				cssClass='<%= "close lfr-portal-tooltip sidenav-close" + (FeatureFlagManagerUtil.isEnabled("LPD-57922") ? " sr-only sr-only-focusable" : "") %>'
 				displayType="secondary"
 				icon="times"
 				monospaced="<%= true %>"

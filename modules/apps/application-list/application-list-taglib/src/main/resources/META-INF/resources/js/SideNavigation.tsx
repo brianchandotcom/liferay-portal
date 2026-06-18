@@ -137,6 +137,11 @@ function SideNavigation({
 		>
 			<SidePanel.Header
 				className="c-mt-2 c-mx-1 c-px-2"
+				closeButtonProps={
+					Liferay.FeatureFlags['LPD-57922']
+						? {className: 'sr-only sr-only-focusable'}
+						: undefined
+				}
 				data-qa-id="sideNavigationHeader"
 				messages={{
 					backAriaLabel: Liferay.Language.get('go-back'),

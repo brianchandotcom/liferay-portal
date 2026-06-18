@@ -486,9 +486,9 @@ public class AssetListFiltersUtil {
 			return null;
 		}
 
-		BooleanClauseOccur booleanClauseOccur = BooleanClauseOccur.SHOULD;
-
 		String quantifier = filterJSONObject.getString("quantifier");
+
+		BooleanClauseOccur booleanClauseOccur = BooleanClauseOccur.SHOULD;
 
 		if (Objects.equals(quantifier, "all")) {
 			booleanClauseOccur = BooleanClauseOccur.MUST;

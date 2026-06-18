@@ -139,7 +139,6 @@ import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -2047,11 +2046,7 @@ public class BatchEnginePortletDataHandlerTest {
 		_testIsConfigurationEnabled(true);
 	}
 
-	@FeatureFlags(
-		featureFlags = {
-			@FeatureFlag(value = "LPD-34594"), @FeatureFlag(value = "LPD-69877")
-		}
-	)
+	@FeatureFlag("LPD-34594")
 	@Test
 	public void testIsHiddenWithObjectDefinitionHierarchy() throws Exception {
 

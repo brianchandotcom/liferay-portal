@@ -89,7 +89,6 @@ import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 import com.liferay.portal.test.rule.FeatureFlag;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -126,11 +125,7 @@ import org.osgi.framework.ServiceRegistration;
 /**
  * @author Brian Wing Shun Chan
  */
-@FeatureFlags(
-	featureFlags = {
-		@FeatureFlag(value = "LPD-34594"), @FeatureFlag(value = "LPD-69877")
-	}
-)
+@FeatureFlag("LPD-34594")
 @RunWith(Arquillian.class)
 public class ObjectRelationshipLocalServiceTest {
 

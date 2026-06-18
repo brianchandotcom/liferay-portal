@@ -1723,7 +1723,7 @@
 							"indexed": true,
 							"layout": {
 							},
-							"name": "What's New on Marketplace"
+							"name": "What Is New on Marketplace"
 						},
 						"pageElements": [
 							{
@@ -1736,8 +1736,8 @@
 										"cardSize": "large",
 										"hideRatingInfo": true,
 										"pageSize": "4",
-										"sectionDescription": "Fragments and client extensions to foster your productivity",
-										"sectionTitle": "What's New on Marketplace",
+										"sectionDescription": "Fragments and client extensions to foster your productivity.",
+										"sectionTitle": "What Is New on Marketplace",
 										"specificationFilterValue": "true"
 									},
 									"indexed": true

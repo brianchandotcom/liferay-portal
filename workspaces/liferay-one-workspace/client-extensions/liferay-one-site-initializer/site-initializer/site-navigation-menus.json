@@ -209,7 +209,7 @@
 								},
 								"type": "url",
 								"url": "/web/one/my-account",
-								"useNewTab": "false"
+								"useNewTab": false
 							},
 							{
 								"externalReferenceCode": "LO_NAV_MY_ACCOUNT_ORDERS",
@@ -218,7 +218,7 @@
 								},
 								"type": "url",
 								"url": "/web/one/my-account/#/orders",
-								"useNewTab": "false"
+								"useNewTab": false
 							}
 						],
 						"name_i18n": {
@@ -237,7 +237,7 @@
 								},
 								"type": "url",
 								"url": "/web/one/my-account/#/account-details",
-								"useNewTab": "false"
+								"useNewTab": false
 							},
 							{
 								"externalReferenceCode": "LO_NAV_MY_ACCOUNT_ACCOUNT_MEMBERS",
@@ -246,7 +246,7 @@
 								},
 								"type": "url",
 								"url": "/web/one/my-account/#/account-members",
-								"useNewTab": "false"
+								"useNewTab": false
 							},
 							{
 								"externalReferenceCode": "LO_NAV_MY_ACCOUNT_PUBLISHER_DASHBOARD",
@@ -255,7 +255,7 @@
 								},
 								"type": "url",
 								"url": "/web/one/my-account/publisher-dashboard",
-								"useNewTab": "false"
+								"useNewTab": false
 							}
 						],
 						"name_i18n": {
@@ -523,7 +523,6 @@
 			},
 			{
 				"externalReferenceCode": "LO_NAV_ADMIN",
-				"name": "Admin",
 				"name_i18n": {
 					"en_US": "Admin"
 				},

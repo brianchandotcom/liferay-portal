@@ -264,7 +264,7 @@
 		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_SUPPORT_SECURITY_VULNERABILITIES#]",
 		"columnName": "Menu Item Description",
 		"data": {
-			"en_US": "Information and fixes for known vulnerabilities.",
+			"en_US": "Find information and fixes for known vulnerabilities.",
 			"es_ES": "Información y correcciones para vulnerabilidades conocidas.",
 			"ja_JP": "既知の脆弱性に関する情報と修正。",
 			"pt_BR": "Informações e correções para vulnerabilidades conhecidas."
@@ -506,6 +506,17 @@
 	{
 		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
 		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_MY_ACCOUNT_PROJECTS#]",
+		"columnName": "Menu Item Description",
+		"data": {
+			"en_US": "View and manage your projects and licenses.",
+			"es_ES": "View and manage your projects and licenses.",
+			"ja_JP": "View and manage your projects and licenses.",
+			"pt_BR": "View and manage your projects and licenses."
+		}
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_MY_ACCOUNT_PROJECTS#]",
 		"columnName": "Menu Item Image URL",
 		"data": {
 			"en_US": "/documents/d/one/projects-svg",
@@ -517,30 +528,8 @@
 	{
 		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
 		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_MY_ACCOUNT_PROJECTS#]",
-		"columnName": "Menu Item Description",
-		"data": {
-			"en_US": "View and manage your projects and licences.",
-			"es_ES": "View and manage your projects and licences.",
-			"ja_JP": "View and manage your projects and licences.",
-			"pt_BR": "View and manage your projects and licences."
-		}
-	},
-	{
-		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
-		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_MY_ACCOUNT_PROJECTS#]",
 		"columnName": "Menu Item Type",
 		"data": "Image"
-	},
-	{
-		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
-		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_MY_ACCOUNT_ORDERS#]",
-		"columnName": "Menu Item Image URL",
-		"data": {
-			"en_US": "/documents/d/one/orders-svg",
-			"es_ES": "/documents/d/one/orders-svg",
-			"ja_JP": "/documents/d/one/orders-svg",
-			"pt_BR": "/documents/d/one/orders-svg"
-		}
 	},
 	{
 		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
@@ -556,8 +545,30 @@
 	{
 		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
 		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_MY_ACCOUNT_ORDERS#]",
+		"columnName": "Menu Item Image URL",
+		"data": {
+			"en_US": "/documents/d/one/orders-svg",
+			"es_ES": "/documents/d/one/orders-svg",
+			"ja_JP": "/documents/d/one/orders-svg",
+			"pt_BR": "/documents/d/one/orders-svg"
+		}
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_MY_ACCOUNT_ORDERS#]",
 		"columnName": "Menu Item Type",
 		"data": "Image"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_MY_ACCOUNT_ACCOUNT_DETAILS#]",
+		"columnName": "Menu Item Description",
+		"data": {
+			"en_US": "Update your organizations and contact information.",
+			"es_ES": "Update your organizations and contact information.",
+			"ja_JP": "Update your organizations and contact information.",
+			"pt_BR": "Update your organizations and contact information."
+		}
 	},
 	{
 		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
@@ -573,30 +584,8 @@
 	{
 		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
 		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_MY_ACCOUNT_ACCOUNT_DETAILS#]",
-		"columnName": "Menu Item Description",
-		"data": {
-			"en_US": "Update your organisations and contact information.",
-			"es_ES": "Update your organisations and contact information.",
-			"ja_JP": "Update your organisations and contact information.",
-			"pt_BR": "Update your organisations and contact information."
-		}
-	},
-	{
-		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
-		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_MY_ACCOUNT_ACCOUNT_DETAILS#]",
 		"columnName": "Menu Item Type",
 		"data": "Image"
-	},
-	{
-		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
-		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_MY_ACCOUNT_ACCOUNT_MEMBERS#]",
-		"columnName": "Menu Item Image URL",
-		"data": {
-			"en_US": "/documents/d/one/account_members-svg",
-			"es_ES": "/documents/d/one/account_members-svg",
-			"ja_JP": "/documents/d/one/account_members-svg",
-			"pt_BR": "/documents/d/one/account_members-svg"
-		}
 	},
 	{
 		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
@@ -607,6 +596,17 @@
 			"es_ES": "Manage account members, roles, and support access.",
 			"ja_JP": "Manage account members, roles, and support access.",
 			"pt_BR": "Manage account members, roles, and support access."
+		}
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LO_NAV_MY_ACCOUNT_ACCOUNT_MEMBERS#]",
+		"columnName": "Menu Item Image URL",
+		"data": {
+			"en_US": "/documents/d/one/account_members-svg",
+			"es_ES": "/documents/d/one/account_members-svg",
+			"ja_JP": "/documents/d/one/account_members-svg",
+			"pt_BR": "/documents/d/one/account_members-svg"
 		}
 	},
 	{

@@ -894,7 +894,7 @@ public class CartItem implements Serializable {
 	private Supplier<Long> _replacedSkuIdSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Item-specific requested delivery date in ISO 8601 (date only). Overrides the cart-level requested delivery date when set.",
+		description = "Item-specific requested delivery date in ISO 8601. Overrides the cart-level requested delivery date when set.",
 		example = "2017-07-21"
 	)
 	public Date getRequestedDeliveryDate() {
@@ -931,7 +931,7 @@ public class CartItem implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "Item-specific requested delivery date in ISO 8601 (date only). Overrides the cart-level requested delivery date when set."
+		description = "Item-specific requested delivery date in ISO 8601. Overrides the cart-level requested delivery date when set."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date requestedDeliveryDate;
@@ -2003,4 +2003,4 @@ public class CartItem implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:361124608
+// LIFERAY-REST-BUILDER-HASH:-784320928

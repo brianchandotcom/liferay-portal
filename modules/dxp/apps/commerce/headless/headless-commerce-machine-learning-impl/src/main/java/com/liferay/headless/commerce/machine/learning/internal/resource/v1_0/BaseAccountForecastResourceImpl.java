@@ -88,7 +88,7 @@ public abstract class BaseAccountForecastResourceImpl
 				name = "forecastLength"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
-				description = "Anchor date for the forecast window in ISO 8601 date format (yyyy-MM-dd). Defaults to the current server date when omitted. The response covers historyLength months before this date and forecastLength months from this date forward.",
+				description = "Anchor date for the forecast window in ISO 8601 date-time format. Defaults to the current server date when omitted. The response covers historyLength months before this date and forecastLength months from this date forward.",
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "forecastStartDate"
 			),
@@ -798,4 +798,4 @@ public abstract class BaseAccountForecastResourceImpl
 		LogFactoryUtil.getLog(BaseAccountForecastResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:-874808222
+// LIFERAY-REST-BUILDER-HASH:1306935253

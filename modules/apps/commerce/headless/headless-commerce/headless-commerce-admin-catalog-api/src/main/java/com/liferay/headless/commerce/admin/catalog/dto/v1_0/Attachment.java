@@ -297,7 +297,7 @@ public class Attachment implements Serializable {
 		_customFieldsSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Date when the attachment becomes visible. ISO 8601 date (yyyy-MM-dd) interpreted in the request user's time zone. When the value lies in the future the attachment is persisted as scheduled instead of draft or approved.",
+		description = "Date when the attachment becomes visible. ISO 8601 date interpreted in the request user's time zone. When the value lies in the future the attachment is persisted as scheduled instead of draft or approved.",
 		example = "2017-07-21"
 	)
 	public Date getDisplayDate() {
@@ -334,7 +334,7 @@ public class Attachment implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "Date when the attachment becomes visible. ISO 8601 date (yyyy-MM-dd) interpreted in the request user's time zone. When the value lies in the future the attachment is persisted as scheduled instead of draft or approved."
+		description = "Date when the attachment becomes visible. ISO 8601 date interpreted in the request user's time zone. When the value lies in the future the attachment is persisted as scheduled instead of draft or approved."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date displayDate;
@@ -1427,4 +1427,4 @@ public class Attachment implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1236340267
+// LIFERAY-REST-BUILDER-HASH:1921920019

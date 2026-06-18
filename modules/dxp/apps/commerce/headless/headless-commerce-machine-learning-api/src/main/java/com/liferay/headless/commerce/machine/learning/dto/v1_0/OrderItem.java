@@ -108,7 +108,7 @@ public class OrderItem implements Serializable {
 	private Supplier<Long> _cpDefinitionIdSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Date the order line was created, in ISO 8601 (yyyy-MM-dd). Read-only.",
+		description = "Date the order line was created, in ISO 8601. Read-only.",
 		example = "2017-07-21"
 	)
 	public Date getCreateDate() {
@@ -145,7 +145,7 @@ public class OrderItem implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "Date the order line was created, in ISO 8601 (yyyy-MM-dd). Read-only."
+		description = "Date the order line was created, in ISO 8601. Read-only."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date createDate;
@@ -338,7 +338,7 @@ public class OrderItem implements Serializable {
 	private Supplier<Long> _idSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Date the order line was last modified, in ISO 8601 (yyyy-MM-dd). Read-only.",
+		description = "Date the order line was last modified, in ISO 8601. Read-only.",
 		example = "2017-07-21"
 	)
 	public Date getModifiedDate() {
@@ -375,7 +375,7 @@ public class OrderItem implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "Date the order line was last modified, in ISO 8601 (yyyy-MM-dd). Read-only."
+		description = "Date the order line was last modified, in ISO 8601. Read-only."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date modifiedDate;
@@ -1206,4 +1206,4 @@ public class OrderItem implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-492781431
+// LIFERAY-REST-BUILDER-HASH:940813265

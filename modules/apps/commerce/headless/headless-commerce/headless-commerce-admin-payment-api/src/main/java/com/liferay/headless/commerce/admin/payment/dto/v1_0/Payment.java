@@ -433,7 +433,7 @@ public class Payment implements Serializable {
 	private Supplier<String> _commentSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Creation date of the payment in ISO 8601 (yyyy-MM-dd). Read-only; set when the record is first persisted. Sortable via the OData query parameter.",
+		description = "Creation date of the payment in ISO 8601. Read-only; set when the record is first persisted. Sortable via the OData query parameter.",
 		example = "2017-07-21"
 	)
 	public Date getCreateDate() {
@@ -470,7 +470,7 @@ public class Payment implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "Creation date of the payment in ISO 8601 (yyyy-MM-dd). Read-only; set when the record is first persisted. Sortable via the OData query parameter."
+		description = "Creation date of the payment in ISO 8601. Read-only; set when the record is first persisted. Sortable via the OData query parameter."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date createDate;
@@ -2016,4 +2016,4 @@ public class Payment implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1649476370
+// LIFERAY-REST-BUILDER-HASH:-207110782

@@ -578,6 +578,44 @@ test(
 );
 
 test(
+	'Global attributes can be searched and an unknown name yields no results',
+	{tag: '@LRAC-10217'},
+	async ({page, project}) => {
+		await navigateToACSettingsViaURL({
+			acPage: ACPage.definitionsEventAttributesGlobalPage,
+			page,
+			projectID: project.groupId,
+		});
+
+		// Every default global attribute is found by its name
+
+		for (const globalAttribute of [
+			'canonicalUrl',
+			'pageDescription',
+			'pageTitle',
+		]) {
+			await page.getByPlaceholder('Search').fill(globalAttribute);
+
+			await page.keyboard.press('Enter');
+
+			await expect(
+				page.getByRole('link', {exact: true, name: globalAttribute})
+			).toBeVisible();
+		}
+
+		// A name that matches no global attribute yields the empty state
+
+		await page.getByPlaceholder('Search').fill('acqa');
+
+		await page.keyboard.press('Enter');
+
+		await expect(
+			page.getByText('There are no results found.')
+		).toBeVisible();
+	}
+);
+
+test(
 	'Certain default events are hidden by default',
 	{tag: '@LRAC-10222'},
 	async ({page, project}) => {

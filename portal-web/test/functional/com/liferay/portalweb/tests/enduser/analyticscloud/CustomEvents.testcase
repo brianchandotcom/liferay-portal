@@ -226,55 +226,6 @@ definition {
 		}
 	}
 
-	@description = "Feature ID: LRAC-4265 | Automation ID: LRAC-10217 | Test Summary: Search for global attribute"
-	@priority = 4
-	test SearchForGlobalAttribute {
-		var globalAttributesList = "canonicalUrl,pageDescription,pageTitle";
-
-		task ("Fill fields and create custom event") {
-			var customEventName = ACCustomEvents.generateCustomEventName();
-
-			ACCustomEvents.createCustomEvent(
-				attributesName = ${attributesNameList},
-				customEventName = ${customEventName},
-				timeToSendCustomEvent = 1);
-		}
-
-		task ("Close sessions") {
-			ACUtils.closeAllSessionsAndWait();
-		}
-
-		task ("Switch the property in AC") {
-			ACUtils.launchAC();
-
-			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
-		}
-
-		task ("Navigation to global attributes tab") {
-			ACNavigation.goToSettings();
-
-			ACSettings.goToDefinitions();
-
-			ACSettings.goToEventAttributes();
-
-			ACSettings.goToGlobalAttributes();
-		}
-
-		task ("Search for the name of the global attributes and verify that it was found") {
-			for (var globalAttribute : list ${globalAttributesList}) {
-				ACUtils.searchBar(searchItem = ${globalAttribute});
-
-				ACUtils.viewNameList(nameList = ${globalAttribute});
-			}
-		}
-
-		task ("Search for the name of attribute that doesn't exist and verify that it didn't find anything") {
-			ACUtils.searchBar(searchItem = "acqa");
-
-			ACUtils.viewNoResultsMessage(noResultMessage = "There are no results found.");
-		}
-	}
-
 	@description = "Feature ID: LRAC-4265 | Automation ID: LRAC-10011 | Test Summary: Attributes shown in AC"
 	@priority = 5
 	test ViewCustomEventAttributesAndManageDescriptionRenameAndType {

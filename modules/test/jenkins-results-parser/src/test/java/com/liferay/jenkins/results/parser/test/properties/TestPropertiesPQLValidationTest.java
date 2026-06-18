@@ -110,8 +110,7 @@ public class TestPropertiesPQLValidationTest {
 
 						String pql = propertyValue.trim();
 
-						pql = pql.replaceAll(
-							"\\$\\{[^}]+\\}", "(portal.acceptance == true)");
+						pql = pql.replaceAll("\\$\\{[^}]+\\}", "(1 == 1)");
 
 						try {
 							JenkinsResultsParserUtil.validatePQL(pql, file);

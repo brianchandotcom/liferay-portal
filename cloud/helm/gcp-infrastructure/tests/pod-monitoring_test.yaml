@@ -8,7 +8,7 @@ tests:
     -   asserts:
             -   hasDocuments:
                     count: 3
-        it: should add a custom instance to the loop alongside the defaults
+        it: adds a custom instance to the loop alongside the defaults
         set:
             podMonitoring.instances:
                 custom:
@@ -31,7 +31,7 @@ tests:
         documentSelector:
             path: metadata.name
             value: envoy
-        it: should configure the envoy PodMonitoring endpoint and selector
+        it: configures the envoy PodMonitoring endpoint and selector
     -   asserts:
             -   equal:
                     path: spec.endpoints[0].port
@@ -42,17 +42,17 @@ tests:
         documentSelector:
             path: metadata.name
             value: liferay
-        it: should configure the liferay PodMonitoring endpoint and selector
+        it: configures the liferay PodMonitoring endpoint and selector
     -   asserts:
             -   hasDocuments:
                     count: 0
-        it: should omit the PodMonitoring resources when the chart is disabled
+        it: omits the PodMonitoring resources when the chart is disabled
         set:
             enabled: false
     -   asserts:
             -   hasDocuments:
                     count: 2
-        it: should render one PodMonitoring per configured instance
+        it: renders one PodMonitoring per configured instance
     -   asserts:
             -   equal:
                     path: spec.endpoints[0].interval
@@ -66,7 +66,7 @@ tests:
         documentSelector:
             path: metadata.name
             value: custom
-        it: should render the custom instance with the configured port and global interval
+        it: renders the custom instance with the configured port and global interval
         set:
             podMonitoring.instances:
                 custom:

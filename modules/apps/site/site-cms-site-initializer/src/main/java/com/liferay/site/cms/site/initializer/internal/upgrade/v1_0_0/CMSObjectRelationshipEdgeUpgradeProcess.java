@@ -61,8 +61,7 @@ public class CMSObjectRelationshipEdgeUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		_companyLocalService.forEachCompanyId(
-			companyId -> _upgradeCompany(companyId));
+		_companyLocalService.forEachCompanyId(this::_upgradeCompany);
 	}
 
 	private void _checkMaxDepth(List<ObjectDefinition> objectDefinitionPath)

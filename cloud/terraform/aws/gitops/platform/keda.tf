@@ -5,5 +5,44 @@ resource "helm_release" "keda" {
 	name="keda"
 	namespace=var.keda_namespace
 	repository="https://kedacore.github.io/charts"
+	values=[
+		yamlencode(
+			{
+				podAnnotations={
+					keda=local.karpenter_pod_annotations
+					metricsAdapter=local.karpenter_pod_annotations
+					webhooks=local.karpenter_pod_annotations
+				}
+				resources={
+					metricServer={
+						limits={
+							memory="512Mi"
+						}
+						requests={
+							cpu="15m"
+							memory="128Mi"
+						}
+					}
+					operator={
+						limits={
+							memory="512Mi"
+						}
+						requests={
+							cpu="15m"
+							memory="128Mi"
+						}
+					}
+					webhooks={
+						limits={
+							memory="256Mi"
+						}
+						requests={
+							cpu="15m"
+							memory="128Mi"
+						}
+					}
+				}
+			}),
+	]
 	version=var.keda_helm_chart_version
 }

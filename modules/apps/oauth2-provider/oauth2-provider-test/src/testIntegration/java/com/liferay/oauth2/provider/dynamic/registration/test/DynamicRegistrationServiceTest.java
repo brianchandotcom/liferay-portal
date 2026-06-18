@@ -11,6 +11,8 @@ import com.liferay.oauth2.provider.client.test.BaseTestPreparatorBundleActivator
 import com.liferay.oauth2.provider.constants.OAuth2ApplicationConstants;
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
@@ -21,6 +23,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -127,8 +130,12 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 		).put(
 			"redirect_uris",
 			new String[] {
-				"https://client.example.org/callback",
-				"https://client.example.org/callback2"
+				StringBundler.concat(
+					Http.HTTPS_WITH_SLASH, RandomTestUtil.randomString(),
+					StringPool.SLASH, RandomTestUtil.randomString()),
+				StringBundler.concat(
+					Http.HTTPS_WITH_SLASH, RandomTestUtil.randomString(),
+					StringPool.SLASH, RandomTestUtil.randomString())
 			}
 		).put(
 			"scope", scope
@@ -219,8 +226,14 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 				).put(
 					"redirect_uris",
 					new String[] {
-						"https://client.example.org/callback",
-						"https://client.example.org/callback2"
+						StringBundler.concat(
+							Http.HTTPS_WITH_SLASH,
+							RandomTestUtil.randomString(), StringPool.SLASH,
+							RandomTestUtil.randomString()),
+						StringBundler.concat(
+							Http.HTTPS_WITH_SLASH,
+							RandomTestUtil.randomString(), StringPool.SLASH,
+							RandomTestUtil.randomString())
 					}
 				).put(
 					"scope", "Liferay.Headless.Admin.Site.everything"

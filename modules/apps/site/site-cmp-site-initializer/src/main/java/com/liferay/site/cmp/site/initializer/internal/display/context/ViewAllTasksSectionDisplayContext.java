@@ -7,6 +7,7 @@ package com.liferay.site.cmp.site.initializer.internal.display.context;
 
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItemBuilder;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItemList;
@@ -23,6 +24,7 @@ import com.liferay.portal.kernel.service.RoleService;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
+import com.liferay.site.cmp.site.initializer.internal.frontend.data.set.filter.TaskTypeFDSFilter;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -88,6 +90,16 @@ public class ViewAllTasksSectionDisplayContext
 			).build(
 				"other-actions"
 			));
+	}
+
+	@Override
+	public List<FDSFilter> getFDSFilters() {
+		List<FDSFilter> fdsFilters = super.getFDSFilters();
+
+		fdsFilters.add(
+			new TaskTypeFDSFilter(classNameLocalService, objectDefinition));
+
+		return fdsFilters;
 	}
 
 }

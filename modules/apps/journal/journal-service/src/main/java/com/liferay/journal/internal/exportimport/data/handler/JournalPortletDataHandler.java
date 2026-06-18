@@ -479,7 +479,8 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 
 			Map<String, String> postProcessArticleUuids =
 				(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
-					JournalArticle.class + ".postProcessArticleUuid");
+					JournalArticle.class +
+						ExportImportConstants.POST_PROCESS_ENTRY_UUID);
 
 			Collection<String> articleModelPaths =
 				postProcessArticleUuids.values();

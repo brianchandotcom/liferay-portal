@@ -410,12 +410,12 @@ public class ClusterLicenseTest extends BaseLicenseTestCase {
 	private String _encryptLicenseProperties(Map<String, String> properties)
 		throws Exception {
 
-		Method encryptMethod = null;
-
 		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
 
 		Class<?> clazz = classLoader.loadClass(
 			getProperty("key.generator.class"));
+
+		Method encryptMethod = null;
 
 		for (Method method : clazz.getDeclaredMethods()) {
 			Class<?>[] parameterTypes = method.getParameterTypes();

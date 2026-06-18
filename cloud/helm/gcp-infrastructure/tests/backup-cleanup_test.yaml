@@ -1,4 +1,4 @@
-suite: backup cleanup CronWorkflow
+suite: Backup Cleanup CronWorkflow
 templates:
     -   templates/backup-cleanup.yaml
 tests:

@@ -33,19 +33,20 @@ public class GitWorkingDirectoryTest
 			"upstream\tgit@github.com:liferay/liferay-portal.git (fetch)\n" +
 				"upstream\tgit@github.com:liferay/liferay-portal.git (push)\n");
 
-		setShellCommandOutput(
-			shell, "git rev-parse master", "abcdef1234567890");
+		setShellCommandOutput(shell, "git rev-parse master", _LOCAL_BRANCH_SHA);
 
 		GitWorkingDirectory gitWorkingDirectory =
 			GitWorkingDirectoryFactory.newGitWorkingDirectory(
 				"master", gitRepositoryDir, "liferay-portal");
 
 		Assert.assertEquals(
-			"abcdef1234567890",
+			_LOCAL_BRANCH_SHA,
 			gitWorkingDirectory.getLocalGitBranchSHA("master"));
 	}
 
 	@Rule
 	public TemporaryFolder temporaryFolder = new TemporaryFolder();
+
+	private static final String _LOCAL_BRANCH_SHA = "abcdef1234567890";
 
 }

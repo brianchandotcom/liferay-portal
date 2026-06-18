@@ -7,7 +7,6 @@ package com.liferay.frontend.js.web.internal.hashed.files;
 
 import com.liferay.frontend.js.web.internal.configuration.FrontendCachingConfiguration;
 import com.liferay.frontend.js.web.internal.util.FrontendJSWebUtil;
-import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.frontend.hashed.files.CachingStrategy;
@@ -15,8 +14,6 @@ import com.liferay.portal.kernel.frontend.hashed.files.HashedFilesRegistry;
 import com.liferay.portal.kernel.frontend.hashed.files.HashedFilesUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.Base64;
-import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -336,22 +333,7 @@ public class HashedFilesRegistryImpl implements HashedFilesRegistry {
 
 		String hashesString = StringUtil.merge(hashesList, StringPool.PIPE);
 
-		byte[] hash = DigesterUtil.digestRaw(DigesterUtil.MD5, hashesString);
-
-		byte[] truncatedHash = new byte[8];
-
-		System.arraycopy(hash, 0, truncatedHash, 0, truncatedHash.length);
-
-		String encodedTruncatedHash = Base64.encode(truncatedHash);
-
-		encodedTruncatedHash = StringUtil.replace(
-			encodedTruncatedHash, CharPool.PLUS, CharPool.DOLLAR);
-		encodedTruncatedHash = StringUtil.replace(
-			encodedTruncatedHash, CharPool.SLASH, CharPool.AT);
-		encodedTruncatedHash = StringUtil.removeSubstring(
-			encodedTruncatedHash, StringPool.EQUAL);
-
-		return encodedTruncatedHash;
+		return HashedFilesUtil.computeHash(hashesString);
 	}
 
 	private void _lazyActivate() {

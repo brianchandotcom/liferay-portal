@@ -31,6 +31,7 @@ spec:
             annotations:
                 checksum/config: {{ include (print .root.Template.BasePath "/configmap.yaml") .root | sha256sum }}
                 checksum/init-scripts: {{ include (print .root.Template.BasePath "/liferay-init-scripts-cm.yaml") .root | sha256sum }}
+                checksum/network: {{ include (print .root.Template.BasePath "/liferay-network-cm.yaml") .root | sha256sum }}
                 {{- with .statefulset.annotations }}
                 {{- toYaml . | nindent 16 }}
                 {{- end }}
@@ -55,8 +56,12 @@ spec:
                         {{- end }}
                         {{- end }}
                     {{- end }}
-                    {{- if or .statefulset.envFrom .statefulset.customEnvFrom }}
+                    {{- $networkEnvFrom := and (eq .name "") .statefulset.network .statefulset.network.enabled .statefulset.network.hostnames }}
+                    {{- if or .statefulset.envFrom .statefulset.customEnvFrom $networkEnvFrom }}
                     envFrom:
+                        {{- if $networkEnvFrom }}
+                        {{- list (dict "configMapRef" (dict "name" (printf "%s-network" (include "liferay.name" .root)))) | toYaml | nindent 22 }}
+                        {{- end }}
                         {{- with .statefulset.envFrom }}
                         {{- toYaml . | nindent 22 }}
                         {{- end }}

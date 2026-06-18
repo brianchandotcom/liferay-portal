@@ -53,8 +53,6 @@ liferay-default:
                 value: "true"
     customEnvFrom:
         x-liferay-gcp:
-            -   configMapRef:
-                    name: liferay-network
             -   secretRef:
                     name: search-connection-details
             -   secretRef:

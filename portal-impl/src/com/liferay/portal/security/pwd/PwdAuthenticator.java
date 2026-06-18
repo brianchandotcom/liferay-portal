@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.exception.PwdEncryptorException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.fips.FIPSModeUtil;
 import com.liferay.portal.kernel.security.pwd.PasswordEncryptorUtil;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -41,9 +42,16 @@ public class PwdAuthenticator {
 		else if (GetterUtil.getBoolean(
 					PropsUtil.get(PropsKeys.AUTH_MAC_ALLOW))) {
 
+			String algorithm = PropsUtil.get(PropsKeys.AUTH_MAC_ALGORITHM);
+
+			if (!FIPSModeUtil.isAllowedAlgorithm(algorithm)) {
+				throw new SecurityException(
+					"Algorithm \"" + algorithm +
+						"\" is not allowed in FIPS mode");
+			}
+
 			try {
-				MessageDigest digester = MessageDigest.getInstance(
-					PropsUtil.get(PropsKeys.AUTH_MAC_ALGORITHM));
+				MessageDigest digester = MessageDigest.getInstance(algorithm);
 
 				digester.update(login.getBytes(StringPool.UTF8));
 

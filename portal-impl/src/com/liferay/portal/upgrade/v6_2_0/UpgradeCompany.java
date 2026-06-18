@@ -6,6 +6,7 @@
 package com.liferay.portal.upgrade.v6_2_0;
 
 import com.liferay.portal.kernel.encryptor.EncryptorUtil;
+import com.liferay.portal.kernel.security.fips.FIPSModeUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -27,9 +28,13 @@ public class UpgradeCompany extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		String keyAlgorithm = _KEY_ALGORITHM;
+		if (!FIPSModeUtil.isAllowedAlgorithm(_KEY_ALGORITHM)) {
+			throw new SecurityException(
+				"Algorithm \"" + _KEY_ALGORITHM +
+					"\" is not allowed in FIPS mode");
+		}
 
-		if (keyAlgorithm.equals("DES")) {
+		if (_KEY_ALGORITHM.equals("DES")) {
 			return;
 		}
 

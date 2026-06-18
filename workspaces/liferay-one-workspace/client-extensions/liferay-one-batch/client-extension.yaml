@@ -11,6 +11,7 @@ liferay-one-batch-oahs:
     name: Liferay One Batch OAuth Application Headless Server
     scopes:
         -   c_project.everything
+        -   c_projectmembership.everything
         -   c_property.everything
         -   Liferay.Headless.Admin.List.Type.everything
         -   Liferay.Headless.Admin.User.everything

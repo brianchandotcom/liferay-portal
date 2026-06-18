@@ -102,7 +102,7 @@ public class Mutation {
 	}
 
 	@GraphQLField(
-		description = "Stub endpoint for creating an AvailabilityEstimate under the supplied site (groupId). Calls -- none; returns 200 with an empty AvailabilityEstimate payload without invoking CommerceAvailabilityEstimateService, so no record is persisted."
+		description = "Unimplemented endpoint for creating an AvailabilityEstimate under the supplied site (groupId). Calls -- none; throws UnsupportedOperationException without invoking CommerceAvailabilityEstimateService, so every request is rejected with a 400 Bad Request and no record is persisted."
 	)
 	public AvailabilityEstimate
 			createCommerceAdminSiteSettingGroupAvailabilityEstimate(
@@ -121,7 +121,7 @@ public class Mutation {
 	}
 
 	@GraphQLField(
-		description = "Stub endpoint for replacing an AvailabilityEstimate identified by id. Calls -- none; returns 200 with an empty body without invoking CommerceAvailabilityEstimateService, so the addressed record is not changed."
+		description = "Unimplemented endpoint for replacing an AvailabilityEstimate identified by id. Calls -- none; throws UnsupportedOperationException without invoking CommerceAvailabilityEstimateService, so every request is rejected with a 400 Bad Request and the addressed record is not changed."
 	)
 	public Response updateAvailabilityEstimate(
 			@GraphQLName("id") Long id,
@@ -354,7 +354,7 @@ public class Mutation {
 	}
 
 	@GraphQLField(
-		description = "Stub endpoint for creating a TaxCategory under the supplied site (groupId). Calls -- none; returns 200 with an empty TaxCategory payload without invoking CPTaxCategoryService, so no record is persisted."
+		description = "Unimplemented endpoint for creating a TaxCategory under the supplied site (groupId). Calls -- none; throws UnsupportedOperationException without invoking CPTaxCategoryService, so every request is rejected with a 400 Bad Request and no record is persisted."
 	)
 	public TaxCategory createCommerceAdminSiteSettingGroupTaxCategory(
 			@GraphQLName("groupId") Long groupId,
@@ -371,7 +371,7 @@ public class Mutation {
 	}
 
 	@GraphQLField(
-		description = "Stub endpoint for replacing a TaxCategory identified by id. Calls -- none; returns 200 with an empty body without invoking CPTaxCategoryService, so the addressed record is not changed."
+		description = "Unimplemented endpoint for replacing a TaxCategory identified by id. Calls -- none; throws UnsupportedOperationException without invoking CPTaxCategoryService, so every request is rejected with a 400 Bad Request and the addressed record is not changed."
 	)
 	public Response updateTaxCategory(
 			@GraphQLName("id") Long id,
@@ -424,7 +424,7 @@ public class Mutation {
 	}
 
 	@GraphQLField(
-		description = "Stub endpoint for creating a Warehouse under the supplied site (groupId). Calls -- none; returns 200 with an empty Warehouse payload without invoking CommerceInventoryWarehouseService, so no record is persisted. For Warehouse writes that persist, including stock levels and per-account/group/channel scoping, use the inventory administration API."
+		description = "Unimplemented endpoint for creating a Warehouse under the supplied site (groupId). Calls -- none; throws UnsupportedOperationException without invoking CommerceInventoryWarehouseService, so every request is rejected with a 400 Bad Request and no record is persisted. For Warehouse writes that persist, including stock levels and per-account/group/channel scoping, use the inventory administration API."
 	)
 	public Warehouse createCommerceAdminSiteSettingGroupWarehouse(
 			@GraphQLName("groupId") Long groupId,
@@ -440,7 +440,7 @@ public class Mutation {
 	}
 
 	@GraphQLField(
-		description = "Stub endpoint for replacing a Warehouse identified by id. Calls -- none; returns 200 with an empty body without invoking CommerceInventoryWarehouseService, so the addressed record is not changed. For Warehouse writes that persist, use the inventory administration API."
+		description = "Unimplemented endpoint for replacing a Warehouse identified by id. Calls -- none; throws UnsupportedOperationException without invoking CommerceInventoryWarehouseService, so every request is rejected with a 400 Bad Request and the addressed record is not changed. For Warehouse writes that persist, use the inventory administration API."
 	)
 	public Response updateWarehouse(
 			@GraphQLName("id") Long id,
@@ -615,4 +615,4 @@ public class Mutation {
 		_vulcanBatchEngineImportTaskResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-974567718
+// LIFERAY-REST-BUILDER-HASH:-486471891

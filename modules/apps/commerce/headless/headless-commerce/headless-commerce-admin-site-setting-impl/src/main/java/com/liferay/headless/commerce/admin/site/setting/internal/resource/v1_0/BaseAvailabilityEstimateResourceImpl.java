@@ -255,7 +255,7 @@ public abstract class BaseAvailabilityEstimateResourceImpl
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-site-setting/v1.0/commerceAdminSiteSetting/{groupId}/availabilityEstimate' -d $'{"priority": ___, "title": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Stub endpoint for creating an AvailabilityEstimate under the supplied site (groupId). Calls -- none; returns 200 with an empty AvailabilityEstimate payload without invoking CommerceAvailabilityEstimateService, so no record is persisted."
+		description = "Unimplemented endpoint for creating an AvailabilityEstimate under the supplied site (groupId). Calls -- none; throws UnsupportedOperationException without invoking CommerceAvailabilityEstimateService, so every request is rejected with a 400 Bad Request and no record is persisted."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -298,7 +298,7 @@ public abstract class BaseAvailabilityEstimateResourceImpl
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-commerce-admin-site-setting/v1.0/availabilityEstimate/{id}' -d $'{"priority": ___, "title": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Stub endpoint for replacing an AvailabilityEstimate identified by id. Calls -- none; returns 200 with an empty body without invoking CommerceAvailabilityEstimateService, so the addressed record is not changed."
+		description = "Unimplemented endpoint for replacing an AvailabilityEstimate identified by id. Calls -- none; throws UnsupportedOperationException without invoking CommerceAvailabilityEstimateService, so every request is rejected with a 400 Bad Request and the addressed record is not changed."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -1105,4 +1105,4 @@ public abstract class BaseAvailabilityEstimateResourceImpl
 		LogFactoryUtil.getLog(BaseAvailabilityEstimateResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:1983690877
+// LIFERAY-REST-BUILDER-HASH:118259518

@@ -224,7 +224,7 @@
 					"externalReferenceCode": "USER_TO_CMP_PROJECT_MANAGER",
 					"indexed": true,
 					"label": {
-						"en_US": "User to Project Manager"
+						"en_US": "User to CMP Project Manager"
 					},
 					"name": "r_userToCMPProjectManager_userId",
 					"objectDefinitionExternalReferenceCode1": "L_USER",
@@ -248,7 +248,7 @@
 					"externalReferenceCode": "USER_TO_CMP_PROJECT_SPONSOR",
 					"indexed": true,
 					"label": {
-						"en_US": "User to Project Sponsor"
+						"en_US": "User to CMP Project Sponsor"
 					},
 					"name": "r_userToCMPProjectSponsor_userId",
 					"objectDefinitionExternalReferenceCode1": "L_USER",
@@ -274,7 +274,7 @@
 					"edge": false,
 					"externalReferenceCode": "L_CMP_PROJECT_TO_L_CMP_TASKS",
 					"label": {
-						"en_US": "Project to Tasks"
+						"en_US": "CMP Project to CMP Tasks"
 					},
 					"name": "cmpProjectToCMPTasks",
 					"objectDefinitionExternalReferenceCode1": "L_CMP_PROJECT",
@@ -290,7 +290,7 @@
 						"indexed": true,
 						"indexedAsKeyword": false,
 						"label": {
-							"en_US": "Project to Tasks"
+							"en_US": "CMP Project to CMP Tasks"
 						},
 						"name": "r_cmpProjectToCMPTasks_c_cmpProjectId",
 						"objectFieldSettings": [

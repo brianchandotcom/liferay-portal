@@ -403,6 +403,11 @@ public class ObjectEntryWrapper
 		return model.getPrimaryKey();
 	}
 
+	@Override
+	public Date getPublishDate() {
+		return model.getPublishDate();
+	}
+
 	/**
 	 * Returns the review date of this object entry.
 	 *
@@ -1007,4 +1012,4 @@ public class ObjectEntryWrapper
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-375848396
+// LIFERAY-SERVICE-BUILDER-HASH:-536486699

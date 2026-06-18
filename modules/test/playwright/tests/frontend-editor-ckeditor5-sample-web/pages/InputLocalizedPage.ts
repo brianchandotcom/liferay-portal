@@ -60,24 +60,20 @@ export class InputLocalizedPage {
 	 * verifies the language button reflects the new locale.
 	 *
 	 * The dropdown menu is a portal aligned to its trigger. When the trigger
-	 * sits low on the page the menu opens below the viewport fold, so clicking
-	 * an option forces a page scroll that realigns the menu; on a slow CI
-	 * machine the menu shifts in the gap between Playwright computing the click
-	 * point and dispatching the event, and the click lands off the option
-	 * without committing the selection. Scrolling the trigger up first lets the
-	 * menu open fully on-screen, so the option click needs no scroll and lands
-	 * cleanly. The open/click/verify flow is still retried as a unit as a
-	 * safety net.
+	 * sits low on the page the menu opens below the viewport fold (and clay
+	 * may flip it above the trigger), so a normal click forces Playwright to
+	 * scroll, which realigns the portal menu; the synthesized click then lands
+	 * off the moving option and never fires its onClick, leaving the locale
+	 * unchanged. Dispatching the click event directly on the option triggers
+	 * the same React handler without depending on the option's on-screen
+	 * position, so the selection commits regardless of where the menu opens.
+	 * The open/select/verify flow is retried as a unit as a safety net.
 	 */
 	async switchLanguage(
 		languageButton: Locator,
 		option: Locator,
 		expectedLanguageId: string
 	) {
-		await languageButton.evaluate((element) =>
-			element.scrollIntoView({block: 'start'})
-		);
-
 		await expect(async () => {
 			const expanded = await languageButton.getAttribute('aria-expanded');
 
@@ -85,7 +81,9 @@ export class InputLocalizedPage {
 				await languageButton.click({timeout: 1000});
 			}
 
-			await option.click({timeout: 1000});
+			await expect(option).toBeVisible({timeout: 1000});
+
+			await option.dispatchEvent('click');
 
 			await expect(languageButton).toContainText(expectedLanguageId, {
 				timeout: 1000,

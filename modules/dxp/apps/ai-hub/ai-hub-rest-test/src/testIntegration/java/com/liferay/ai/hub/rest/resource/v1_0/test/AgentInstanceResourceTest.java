@@ -27,6 +27,7 @@ import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.test.util.ObjectRelationshipTestUtil;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.encryptor.EncryptorUtil;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -83,8 +84,10 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -106,6 +109,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 
 /**
  * @author Feliphe Marinho
+ * @author Iliyan Peychev
  */
 @FeatureFlags(
 	featureFlags = {
@@ -295,7 +299,12 @@ public class AgentInstanceResourceTest
 		_testPostAgentInstance();
 		_testPostAgentInstanceWithTypeAIDecisionNodeWithToolWorkflowDefinition();
 		_testPostAgentInstanceWithTypeAIDecisionNodeWorkflowDefinition();
+		_testPostAgentInstanceWithTypeAutoCategorizeAbstains();
+		_testPostAgentInstanceWithTypeAutoCategorizeDefaultsCount();
+		_testPostAgentInstanceWithTypeAutoCategorizeMatches();
 		_testPostAgentInstanceWithTypeFixSpellingAndGrammarWithInstruction();
+		_testPostAgentInstanceWithTypeGenerateTagsProposesNewTags();
+		_testPostAgentInstanceWithTypeGenerateTagsReusesExistingTags();
 		_testPostAgentInstanceWithTypeLLMNodeWithRAGWorkflowDefinition();
 		_testPostAgentInstanceWithTypeLLMNodeWithRAGWorkflowDefinitionWithRestrictedUser();
 		_testPostAgentInstanceWithTypeLLMNodeWithToolWorkflowDefinition();
@@ -384,6 +393,14 @@ public class AgentInstanceResourceTest
 		}
 	}
 
+	private long _nextCandidateId(Set<Long> candidateIds) {
+		long id = RandomTestUtil.randomLong();
+
+		candidateIds.add(id);
+
+		return id;
+	}
+
 	private JSONObject _postAgentInstance(
 			String agentDefinitionExternalReferenceCode, String inputText,
 			String inputVariable, String sseEventSinkKey)
@@ -432,6 +449,124 @@ public class AgentInstanceResourceTest
 			agentDefinitionExternalReferenceCode, inputText, inputVariable,
 			instructionDefinitionScope, TokenTestUtil.postToken(),
 			sseEventSinkKey);
+	}
+
+	private String _postAutoCategorize(JSONObject contextJSONObject)
+		throws Exception {
+
+		CountDownLatch countDownLatch = new CountDownLatch(4);
+
+		List<String> lines = new ArrayList<>();
+
+		JSONObject tokenJSONObject = TokenTestUtil.postToken();
+
+		HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"agentDefinitionExternalReferenceCode", "L_AUTO_CATEGORIZE"
+			).put(
+				"context", contextJSONObject
+			).put(
+				"sseEventSinkKey",
+				SseEventSourceTestUtil.open(
+					List.of(countDownLatch), lines, "agent-instances/subscribe")
+			).toString(),
+			"ai-hub/v1.0/agent-instances",
+			HashMapBuilder.put(
+				"Authorization",
+				"Bearer " + tokenJSONObject.getString("accessToken")
+			).put(
+				"Liferay-AI-Hub-Cell-On-Behalf-Of",
+				tokenJSONObject.getString("userToken")
+			).build(),
+			Http.Method.POST);
+
+		Assert.assertTrue(countDownLatch.await(30, TimeUnit.SECONDS));
+
+		Assert.assertEquals(lines.toString(), 4, lines.size());
+		Assert.assertEquals("event: L_AUTO_CATEGORIZE", lines.get(2));
+
+		JSONObject outputJSONObject = _jsonFactory.createJSONObject(
+			StringUtil.removeSubstring(lines.get(3), "data: "));
+
+		SseUtil.closeAll();
+
+		return outputJSONObject.getString("data");
+	}
+
+	private String _postAutoCategorize(
+			String content, JSONArray candidateCategoriesJSONArray)
+		throws Exception {
+
+		return _postAutoCategorize(
+			JSONUtil.put(
+				"candidateCategories", candidateCategoriesJSONArray.toString()
+			).put(
+				"content", content
+			));
+	}
+
+	private String _postAutoCategorize(
+			String content, JSONArray candidateCategoriesJSONArray, int count)
+		throws Exception {
+
+		return _postAutoCategorize(
+			JSONUtil.put(
+				"candidateCategories", candidateCategoriesJSONArray.toString()
+			).put(
+				"content", content
+			).put(
+				"count", String.valueOf(count)
+			));
+	}
+
+	private String _postGenerateTags(
+			String content, JSONArray existingTagsJSONArray, int count)
+		throws Exception {
+
+		CountDownLatch countDownLatch = new CountDownLatch(4);
+
+		List<String> lines = new ArrayList<>();
+
+		JSONObject tokenJSONObject = TokenTestUtil.postToken();
+
+		HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"agentDefinitionExternalReferenceCode", "L_GENERATE_TAGS"
+			).put(
+				"context",
+				JSONUtil.put(
+					"content", content
+				).put(
+					"count", String.valueOf(count)
+				).put(
+					"existingTags", existingTagsJSONArray.toString()
+				)
+			).put(
+				"sseEventSinkKey",
+				SseEventSourceTestUtil.open(
+					List.of(countDownLatch), lines, "agent-instances/subscribe")
+			).toString(),
+			"ai-hub/v1.0/agent-instances",
+			HashMapBuilder.put(
+				"Authorization",
+				"Bearer " + tokenJSONObject.getString("accessToken")
+			).put(
+				"Liferay-AI-Hub-Cell-On-Behalf-Of",
+				tokenJSONObject.getString("userToken")
+			).build(),
+			Http.Method.POST);
+
+		Assert.assertTrue(countDownLatch.await(30, TimeUnit.SECONDS));
+
+		Assert.assertEquals(lines.toString(), 4, lines.size());
+		Assert.assertEquals("event: L_GENERATE_TAGS", lines.get(2));
+
+		JSONObject outputJSONObject = _jsonFactory.createJSONObject(
+			StringUtil.removeSubstring(lines.get(3), "data: "));
+
+		SseUtil.closeAll();
+
+		return outputJSONObject.getString("data");
 	}
 
 	private void _testPostAgentInstance() throws Exception {
@@ -540,6 +675,134 @@ public class AgentInstanceResourceTest
 
 				return null;
 			});
+	}
+
+	private void _testPostAgentInstanceWithTypeAutoCategorizeAbstains()
+		throws Exception {
+
+		Set<Long> candidateIds = new HashSet<>();
+
+		JSONArray candidateCategoriesJSONArray = JSONUtil.putAll(
+			JSONUtil.put(
+				"id", _nextCandidateId(candidateIds)
+			).put(
+				"name", "Astrophysics"
+			),
+			JSONUtil.put(
+				"id", _nextCandidateId(candidateIds)
+			).put(
+				"name", "Marine Biology"
+			),
+			JSONUtil.put(
+				"id", _nextCandidateId(candidateIds)
+			).put(
+				"name", "Medieval History"
+			));
+
+		String dataString = _postAutoCategorize(
+			"How to change a flat tire on a bicycle in five quick steps.",
+			candidateCategoriesJSONArray, 3);
+
+		_assertContains(dataString, "suggestions");
+
+		Assert.assertEquals(
+			dataString, 0, StringUtil.count(dataString, "confidence"));
+		Assert.assertFalse(dataString, dataString.contains("Astrophysics"));
+		Assert.assertFalse(dataString, dataString.contains("Marine Biology"));
+		Assert.assertFalse(dataString, dataString.contains("Medieval History"));
+	}
+
+	private void _testPostAgentInstanceWithTypeAutoCategorizeDefaultsCount()
+		throws Exception {
+
+		Set<Long> candidateIds = new HashSet<>();
+
+		JSONArray candidateCategoriesJSONArray = JSONUtil.putAll(
+			JSONUtil.put(
+				"id", _nextCandidateId(candidateIds)
+			).put(
+				"name", "Technology"
+			),
+			JSONUtil.put(
+				"id", _nextCandidateId(candidateIds)
+			).put(
+				"name", "Cooking"
+			),
+			JSONUtil.put(
+				"id", _nextCandidateId(candidateIds)
+			).put(
+				"name", "Sports"
+			),
+			JSONUtil.put(
+				"id", _nextCandidateId(candidateIds)
+			).put(
+				"name", "Science"
+			),
+			JSONUtil.put(
+				"id", _nextCandidateId(candidateIds)
+			).put(
+				"name", "Health"
+			),
+			JSONUtil.put(
+				"id", _nextCandidateId(candidateIds)
+			).put(
+				"name", "Travel"
+			));
+
+		String dataString = _postAutoCategorize(
+			"A balanced diet and regular exercise improve your health, while " +
+				"new wearable technology helps athletes track their training " +
+					"during every sport.",
+			candidateCategoriesJSONArray);
+
+		_assertContains(dataString, "suggestions");
+
+		Assert.assertTrue(
+			dataString, StringUtil.count(dataString, "confidence") <= 3);
+	}
+
+	private void _testPostAgentInstanceWithTypeAutoCategorizeMatches()
+		throws Exception {
+
+		Set<Long> candidateIds = new HashSet<>();
+
+		long technologyId = _nextCandidateId(candidateIds);
+
+		JSONArray candidateCategoriesJSONArray = JSONUtil.putAll(
+			JSONUtil.put(
+				"id", technologyId
+			).put(
+				"name", "Technology"
+			),
+			JSONUtil.put(
+				"id", _nextCandidateId(candidateIds)
+			).put(
+				"name", "Cooking"
+			),
+			JSONUtil.put(
+				"id", _nextCandidateId(candidateIds)
+			).put(
+				"name", "Sports"
+			),
+			JSONUtil.put(
+				"id", _nextCandidateId(candidateIds)
+			).put(
+				"name", "Travel"
+			));
+
+		int count = 2;
+
+		String dataString = _postAutoCategorize(
+			"Our new smartphone ships with a faster processor, a larger " +
+				"display, and an upgraded camera powered by machine learning.",
+			candidateCategoriesJSONArray, count);
+
+		_assertContains(
+			dataString, "Technology", "confidence", "suggestions",
+			String.valueOf(technologyId));
+
+		Assert.assertTrue(
+			dataString, StringUtil.count(dataString, "confidence") <= count);
 	}
 
 	private void _testPostAgentInstanceWithTypeFixSpellingAndGrammarWithInstruction()
@@ -659,6 +922,62 @@ public class AgentInstanceResourceTest
 			});
 
 		SseUtil.closeAll();
+	}
+
+	private void _testPostAgentInstanceWithTypeGenerateTagsProposesNewTags()
+		throws Exception {
+
+		JSONArray existingTagsJSONArray = JSONUtil.putAll(
+			"gardening", "cooking", "home improvement");
+
+		int count = 5;
+
+		String dataString = _postGenerateTags(
+			"This guide covers training a new puppy, choosing the right " +
+				"leash, and scheduling veterinary checkups for your dog.",
+			existingTagsJSONArray, count);
+
+		_assertContains(
+			dataString, "confidence", "isNew", "suggestions", "true");
+
+		String lowerCaseDataString = StringUtil.toLowerCase(dataString);
+
+		Assert.assertFalse(
+			dataString, lowerCaseDataString.contains("gardening"));
+		Assert.assertFalse(
+			dataString, lowerCaseDataString.contains("home improvement"));
+
+		Assert.assertTrue(
+			dataString, StringUtil.count(dataString, "confidence") <= count);
+	}
+
+	private void _testPostAgentInstanceWithTypeGenerateTagsReusesExistingTags()
+		throws Exception {
+
+		JSONArray existingTagsJSONArray = JSONUtil.putAll(
+			"machine learning", "neural networks", "data science");
+
+		int count = 5;
+
+		String dataString = _postGenerateTags(
+			"This article explains how neural networks are trained for " +
+				"machine learning tasks and why data science teams rely on " +
+					"them for prediction.",
+			existingTagsJSONArray, count);
+
+		_assertContains(
+			dataString, "confidence", "false", "isNew", "suggestions");
+
+		String lowerCaseDataString = StringUtil.toLowerCase(dataString);
+
+		Assert.assertTrue(
+			dataString,
+			lowerCaseDataString.contains("data science") ||
+			lowerCaseDataString.contains("machine learning") ||
+			lowerCaseDataString.contains("neural networks"));
+
+		Assert.assertTrue(
+			dataString, StringUtil.count(dataString, "confidence") <= count);
 	}
 
 	private void _testPostAgentInstanceWithTypeLLMNodeWithRAGWorkflowDefinition()

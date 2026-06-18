@@ -32,11 +32,11 @@
 		"type": "string"
 	},
 	{
-		"name": "existingTags",
+		"name": "count",
 		"type": "string"
 	},
 	{
-		"name": "count",
+		"name": "existingTags",
 		"type": "string"
 	}
 ]

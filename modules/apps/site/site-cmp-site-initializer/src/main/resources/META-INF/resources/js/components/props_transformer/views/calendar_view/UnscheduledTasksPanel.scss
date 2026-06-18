@@ -7,8 +7,15 @@ $cms-breadcrumb-height: 72px;
 $cms-tab-navigation-height: 48px;
 
 .lfr__cmp-unscheduled-tasks-panel {
-	&-search {
-		margin-bottom: 1rem;
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
+	min-height: 0;
+
+	.sidebar-body {
+		display: flex;
+		flex-direction: column;
+		min-height: 0;
 	}
 
 	&-list {
@@ -17,6 +24,11 @@ $cms-tab-navigation-height: 48px;
 		.list-group-item {
 			align-items: center;
 		}
+	}
+
+	&-search {
+		flex-shrink: 0;
+		margin-bottom: 1rem;
 	}
 }
 

@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {SidePanel} from '@clayui/core';
 import ClayEmptyState from '@clayui/empty-state';
 import {ClayInput} from '@clayui/form';
@@ -66,7 +67,11 @@ export default function UnscheduledTasksPanel() {
 						/>
 
 						<ClayInput.GroupInsetItem after tag="span">
-							<ClayIcon symbol="search" />
+							<ClayButtonWithIcon
+								aria-label={Liferay.Language.get('search')}
+								displayType="unstyled"
+								symbol="search"
+							/>
 						</ClayInput.GroupInsetItem>
 					</ClayInput.GroupItem>
 				</ClayInput.Group>
@@ -98,10 +103,22 @@ export default function UnscheduledTasksPanel() {
 					</ClayList>
 				) : (
 					<ClayEmptyState
-						description=""
+						description={Liferay.Language.get(
+							'review-your-search-and-try-again'
+						)}
+						imgSrc={`${Liferay.ThemeDisplay.getPathThemeImages()}/states/search_state.svg`}
+						imgSrcReducedMotion={`${Liferay.ThemeDisplay.getPathThemeImages()}/states/search_state_reduced_motion.svg`}
 						small
-						title={Liferay.Language.get('no-unscheduled-tasks')}
-					/>
+						title={Liferay.Language.get('no-results-found')}
+					>
+						<ClayButton
+							displayType="secondary"
+							onClick={() => setQuery('')}
+							size="sm"
+						>
+							{Liferay.Language.get('clear-search')}
+						</ClayButton>
+					</ClayEmptyState>
 				)}
 			</SidePanel.Body>
 		</div>

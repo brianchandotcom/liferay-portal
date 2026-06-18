@@ -55,7 +55,7 @@ test(
 			.fill(getRandomString());
 		await page.getByLabel('Source').click();
 
-		const tagsInput = page.getByLabel('Tags', {exact: true});
+		const tagsInput = page.getByRole('combobox', {name: 'Tags'});
 
 		for (let i = 0; i < 5; i++) {
 			await tagsInput.fill(getRandomString());
@@ -369,7 +369,7 @@ test(
 			.fill(getRandomString());
 		await page.getByLabel('Source').click();
 
-		const tagsInput = page.getByLabel('Tags', {exact: true});
+		const tagsInput = page.getByRole('combobox', {name: 'Tags'});
 
 		await tagsInput.fill('<script>alert(123);</script>');
 		await tagsInput.press('Enter');

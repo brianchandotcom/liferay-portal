@@ -97,7 +97,7 @@ test(
 
 		// The user can unsubscribe from the tag
 
-		await page.locator('.navbar').getByText('Tags', {exact: true}).click();
+		await page.locator('a').filter({hasText: 'Tags'}).click();
 
 		await page.getByLabel('Subscribed', {exact: true}).click();
 

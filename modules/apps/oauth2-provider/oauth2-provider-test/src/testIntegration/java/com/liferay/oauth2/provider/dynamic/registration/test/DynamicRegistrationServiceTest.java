@@ -113,6 +113,10 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 
 		String clientName = RandomTestUtil.randomString();
 
+		String scope =
+			"Liferay.Headless.Admin.Site.everything " +
+				"Liferay.Headless.Admin.User.everything";
+
 		JSONObject jsonObject = JSONUtil.put(
 			"client_name", clientName
 		).put(
@@ -127,7 +131,7 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 				"https://client.example.org/callback2"
 			}
 		).put(
-			"scope", "Liferay.Headless.Admin.Site.everything"
+			"scope", scope
 		);
 
 		response = invocationBuilder.method(
@@ -150,6 +154,7 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 
 		Assert.assertEquals(
 			clientName, responseJSONObject.getString("client_name"));
+		Assert.assertEquals(scope, responseJSONObject.getString("scope"));
 
 		String clientId = responseJSONObject.getString(
 			OAuthConstants.CLIENT_ID);

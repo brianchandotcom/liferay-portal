@@ -2,6 +2,10 @@
 
 This is Liferay Portal's main source code repository.
 
+## Code Style
+
+Follow the canonical code style rules in `pr-reviewer/rules` when writing, modifying, or reviewing code. Each numbered file states one rule with its rationale, and `pr-reviewer/STYLE.md` records the philosophy and the matters of taste behind them.
+
 ## High-Level Architecture
 
 ### Portal Core (Ant Based)

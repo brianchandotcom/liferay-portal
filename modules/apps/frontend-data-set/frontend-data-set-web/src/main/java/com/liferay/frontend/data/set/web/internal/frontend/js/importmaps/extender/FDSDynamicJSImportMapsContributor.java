@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Antonio Ortega
  */
 @Component(service = DynamicJSImportMapsContributor.class)
-public class FDSConnectionDynamicJSImportMapsContributor
+public class FDSDynamicJSImportMapsContributor
 	implements DynamicJSImportMapsContributor {
 
 	@Override

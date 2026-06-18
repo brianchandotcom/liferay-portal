@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -63,10 +64,11 @@ public class CTPreferencesServiceTest {
 
 	@Test
 	public void testCheckoutCTCollectionWithViewPermission() throws Exception {
-		RoleTestUtil.addResourcePermission(
-			_role, CTCollection.class.getName(),
+		ResourcePermissionLocalServiceUtil.setResourcePermissions(
+			_role.getCompanyId(), CTCollection.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL,
-			String.valueOf(_ctCollection.getCtCollectionId()), ActionKeys.VIEW);
+			String.valueOf(_ctCollection.getCtCollectionId()),
+			_role.getRoleId(), new String[] {ActionKeys.VIEW});
 
 		UserTestUtil.setUser(_user);
 

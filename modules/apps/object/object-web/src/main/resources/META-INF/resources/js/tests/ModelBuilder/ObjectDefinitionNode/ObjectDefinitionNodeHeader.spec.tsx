@@ -47,12 +47,10 @@ const baseProps = {
 describe('Object Definition Node Header', () => {
 	afterAll(() => {
 		window.Liferay.FeatureFlags['LPD-34594'] = false;
-		window.Liferay.FeatureFlags['LPD-69877'] = false;
 	});
 
 	beforeAll(() => {
 		window.Liferay.FeatureFlags['LPD-34594'] = true;
-		window.Liferay.FeatureFlags['LPD-69877'] = true;
 	});
 
 	it('has root object label when it is a parent', () => {

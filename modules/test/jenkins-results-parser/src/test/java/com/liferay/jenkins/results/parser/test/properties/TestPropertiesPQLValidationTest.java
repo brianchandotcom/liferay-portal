@@ -163,9 +163,9 @@ public class TestPropertiesPQLValidationTest {
 		File dir = JenkinsResultsParserUtil.getCanonicalFile(new File("."));
 
 		while (dir != null) {
-			File releasePropertiesFile = new File(dir, "release.properties");
+			File buildTestXMLFile = new File(dir, "build-test.xml");
 
-			if (releasePropertiesFile.exists()) {
+			if (buildTestXMLFile.exists()) {
 				return dir;
 			}
 

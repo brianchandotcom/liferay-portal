@@ -2,6 +2,7 @@
 definition {
 
 	property browser.chrome.version = "139.0";
+	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.suite.search.engine = "elasticsearch8,opensearch2";
 	property portal.upstream = "true";
@@ -728,8 +729,6 @@ definition {
 
 	@priority = 4
 	test PinAndHideResultsWithAliases {
-		property portal.acceptance = "true";
-
 		JSONWebcontent.addWebContent(
 			content = "WC WC",
 			groupName = "Guest",

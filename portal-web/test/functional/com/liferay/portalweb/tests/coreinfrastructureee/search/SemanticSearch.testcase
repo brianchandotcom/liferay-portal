@@ -4,6 +4,7 @@ definition {
 	property browser.chrome.version = "139.0";
 	property custom.properties = "feature.flag.LPD-35013=false";
 	property osgi.modules.includes = "wiki";
+	property portal.acceptance = "true";
 	property portal.release = "false";
 	property portal.suite.search.engine = "elasticsearch8,opensearch2";
 	property portal.upstream = "true";
@@ -32,6 +33,7 @@ definition {
 	@priority = 3
 	test AssertBlacklistedTextEmbeddingProvidersAreUnavailable {
 		property custom.properties = "feature.flag.LPD-35013=true${line.separator}feature.flag.LPS-122920=true";
+		property portal.acceptance = "quarantine";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -406,6 +408,7 @@ definition {
 	test AssertTxtaiWithTextEmbeddingElementAffectsBlueprintPreview {
 		property custom.properties = "feature.flag.LPD-35013=true${line.separator}feature.flag.LPS-122920=true";
 		property custom.system.properties = "liferay.mode=test";
+		property portal.acceptance = "quarantine";
 		property txtai.enabled = "true";
 
 		JSONWebcontent.addWebContent(
@@ -847,6 +850,7 @@ definition {
 	@priority = 3
 	test ViewTxtaiSystemSettingsTestConfiguration {
 		property custom.properties = "feature.flag.LPD-35013=true${line.separator}feature.flag.LPS-122920=true";
+		property portal.acceptance = "quarantine";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 		property txtai.enabled = "true";

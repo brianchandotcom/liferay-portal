@@ -5,6 +5,7 @@ definition {
 	property elasticsearch.ccr.enabled = "true";
 	property elasticsearch.multiple.connections = "true";
 	property minimum.slave.ram = "24";
+	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.suite.search.engine = "elasticsearch8,opensearch2";
 	property portal.upstream = "true";
@@ -98,6 +99,7 @@ definition {
 
 	@priority = 3
 	test BreakWorkflowSLA {
+		property portal.acceptance = "quarantine";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -570,6 +572,7 @@ definition {
 	test Smoke {
 		property app.server.bundles.size = "1";
 		property cluster.enabled = "true";
+		property portal.acceptance = "quarantine";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 

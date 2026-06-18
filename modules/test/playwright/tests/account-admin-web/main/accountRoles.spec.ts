@@ -739,9 +739,9 @@ test(
 		await expect(async () => {
 			await rolesPage.rolesTable.search(role.name);
 
-			await expect(
-				rolesPage.rolesTable.cell(role.name)
-			).toBeVisible({timeout: 5000});
+			await expect(rolesPage.rolesTable.cell(role.name)).toBeVisible({
+				timeout: 5000,
+			});
 		}).toPass({timeout: 30000});
 
 		await (await rolesPage.rolesTable.cellLink(role.name)).click();
@@ -907,9 +907,9 @@ test(
 		await expect(async () => {
 			await rolesPage.rolesTable.search(role.name);
 
-			await expect(
-				rolesPage.rolesTable.cell(role.name)
-			).toBeVisible({timeout: 5000});
+			await expect(rolesPage.rolesTable.cell(role.name)).toBeVisible({
+				timeout: 5000,
+			});
 		}).toPass({timeout: 30000});
 
 		await (await rolesPage.rolesTable.cellLink(role.name)).click();

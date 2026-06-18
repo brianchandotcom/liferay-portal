@@ -5,7 +5,7 @@ tests:
     -   asserts:
             -   hasDocuments:
                     count: 0
-        it: should omit the cleanup CronWorkflow when backups are disabled
+        it: omits the cleanup CronWorkflow when backups are disabled
         set:
             backup.enabled: false
     -   asserts:
@@ -19,6 +19,6 @@ tests:
                     count: 1
             -   isKind:
                     of: CronWorkflow
-        it: should render the cleanup CronWorkflow with its schedule when backups are enabled
+        it: renders the cleanup CronWorkflow with its schedule when backups are enabled
         set:
             backup.enabled: true

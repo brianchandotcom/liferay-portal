@@ -163,10 +163,10 @@ public class ExportProcessResourceTest
 				_backgroundTaskLocalService.getBackgroundTask(
 					exportProcess.getId());
 
-			FileEntry fileEntry = backgroundTask.getAttachmentsFileEntries(
-			).get(
-				0
-			);
+			List<FileEntry> fileEntries =
+				backgroundTask.getAttachmentsFileEntries();
+
+			FileEntry fileEntry = fileEntries.get(0);
 
 			Assert.assertEquals(
 				exportProcess.getName() + ".lar", fileEntry.getTitle());

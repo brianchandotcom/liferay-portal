@@ -144,6 +144,8 @@ public class ImportProcessResourceTest
 
 		try {
 			_testPostImportProcessWithObjectDefinition(
+				() -> _exportLayoutAsFile(testDepotEntryGroup.getGroupId()),
+				objectDefinition, testDepotEntryGroup.getGroupId(),
 				file -> _importPreviewResource.postAssetLibraryImportPreview(
 					testDepotEntryGroup.getExternalReferenceCode(), null,
 					HashMapBuilder.put(
@@ -152,9 +154,7 @@ public class ImportProcessResourceTest
 				importProcessRequest ->
 					importProcessResource.postAssetLibraryImportProcess(
 						testDepotEntryGroup.getExternalReferenceCode(),
-						importProcessRequest),
-				() -> _exportLayoutAsFile(testDepotEntryGroup.getGroupId()),
-				testDepotEntryGroup.getGroupId(), objectDefinition);
+						importProcessRequest));
 		}
 		finally {
 			_objectDefinitionLocalService.deleteObjectDefinition(
@@ -162,6 +162,7 @@ public class ImportProcessResourceTest
 		}
 
 		_testPostImportProcessWithPreviewForOtherGroup(
+			testGroup.getGroupId(),
 			file -> _importPreviewResource.postSiteImportPreview(
 				testGroup.getExternalReferenceCode(), null,
 				HashMapBuilder.put(
@@ -170,9 +171,9 @@ public class ImportProcessResourceTest
 			importProcessRequest ->
 				importProcessResource.postAssetLibraryImportProcessHttpResponse(
 					testDepotEntryGroup.getExternalReferenceCode(),
-					importProcessRequest),
-			testGroup.getGroupId());
+					importProcessRequest));
 		_testPostImportProcessWithSettings(
+			testDepotEntryGroup.getGroupId(),
 			file -> _importPreviewResource.postAssetLibraryImportPreview(
 				testDepotEntryGroup.getExternalReferenceCode(), null,
 				HashMapBuilder.put(
@@ -181,8 +182,7 @@ public class ImportProcessResourceTest
 			importProcessRequest ->
 				importProcessResource.postAssetLibraryImportProcess(
 					testDepotEntryGroup.getExternalReferenceCode(),
-					importProcessRequest),
-			testDepotEntryGroup.getGroupId());
+					importProcessRequest));
 		_testPostImportProcessWithoutPreview(
 			importProcessRequest ->
 				importProcessResource.postAssetLibraryImportProcessHttpResponse(
@@ -214,6 +214,10 @@ public class ImportProcessResourceTest
 						new ImportProcessRequest()));
 
 			_testPostImportProcessWithObjectDefinition(
+				() -> _exportPortletAsFile(
+					testDepotEntryGroup.getGroupId(), layout.getPlid(),
+					portletId),
+				objectDefinition, testDepotEntryGroup.getGroupId(),
 				file ->
 					_importPreviewResource.postAssetLibraryPortletImportPreview(
 						testDepotEntryGroup.getExternalReferenceCode(),
@@ -224,11 +228,7 @@ public class ImportProcessResourceTest
 				importProcessRequest ->
 					importProcessResource.postAssetLibraryPortletImportProcess(
 						testDepotEntryGroup.getExternalReferenceCode(),
-						portletId, layout.getPlid(), importProcessRequest),
-				() -> _exportPortletAsFile(
-					testDepotEntryGroup.getGroupId(), layout.getPlid(),
-					portletId),
-				testDepotEntryGroup.getGroupId(), objectDefinition);
+						portletId, layout.getPlid(), importProcessRequest));
 		}
 		finally {
 			_objectDefinitionLocalService.deleteObjectDefinition(
@@ -252,14 +252,14 @@ public class ImportProcessResourceTest
 
 		try {
 			_testPostImportProcessWithObjectDefinition(
+				() -> _exportLayoutAsFile(companyGroup.getGroupId()),
+				objectDefinition, GroupConstants.DEFAULT_PARENT_GROUP_ID,
 				file -> _importPreviewResource.postImportPreview(
 					null,
 					HashMapBuilder.put(
 						"file", file
 					).build()),
-				importProcessResource::postImportProcess,
-				() -> _exportLayoutAsFile(companyGroup.getGroupId()),
-				GroupConstants.DEFAULT_PARENT_GROUP_ID, objectDefinition);
+				importProcessResource::postImportProcess);
 		}
 		finally {
 			_objectDefinitionLocalService.deleteObjectDefinition(
@@ -267,21 +267,21 @@ public class ImportProcessResourceTest
 		}
 
 		_testPostImportProcessWithPreviewForOtherGroup(
+			testGroup.getGroupId(),
 			file -> _importPreviewResource.postSiteImportPreview(
 				testGroup.getExternalReferenceCode(), null,
 				HashMapBuilder.put(
 					"file", file
 				).build()),
-			importProcessResource::postImportProcessHttpResponse,
-			testGroup.getGroupId());
+			importProcessResource::postImportProcessHttpResponse);
 		_testPostImportProcessWithSettings(
+			companyGroup.getGroupId(),
 			file -> _importPreviewResource.postImportPreview(
 				null,
 				HashMapBuilder.put(
 					"file", file
 				).build()),
-			importProcessResource::postImportProcess,
-			companyGroup.getGroupId());
+			importProcessResource::postImportProcess);
 		_testPostImportProcessWithoutPreview(
 			importProcessResource::postImportProcessHttpResponse);
 	}
@@ -300,19 +300,20 @@ public class ImportProcessResourceTest
 			ObjectDefinitionConstants.SCOPE_SITE);
 
 		_testPostImportProcessWithObjectDefinition(
+			() -> _exportLayoutAsFile(testGroup.getGroupId()), objectDefinition,
+			testGroup.getGroupId(),
 			file -> _importPreviewResource.postSiteImportPreview(
 				testGroup.getExternalReferenceCode(), null,
 				HashMapBuilder.put(
 					"file", file
 				).build()),
 			importProcessRequest -> importProcessResource.postSiteImportProcess(
-				testGroup.getExternalReferenceCode(), importProcessRequest),
-			() -> _exportLayoutAsFile(testGroup.getGroupId()),
-			testGroup.getGroupId(), objectDefinition);
+				testGroup.getExternalReferenceCode(), importProcessRequest));
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 
 		_testPostImportProcessWithPreviewForOtherGroup(
+			testDepotEntryGroup.getGroupId(),
 			file -> _importPreviewResource.postAssetLibraryImportPreview(
 				testDepotEntryGroup.getExternalReferenceCode(), null,
 				HashMapBuilder.put(
@@ -320,17 +321,17 @@ public class ImportProcessResourceTest
 				).build()),
 			importProcessRequest ->
 				importProcessResource.postSiteImportProcessHttpResponse(
-					testGroup.getExternalReferenceCode(), importProcessRequest),
-			testDepotEntryGroup.getGroupId());
+					testGroup.getExternalReferenceCode(),
+					importProcessRequest));
 		_testPostImportProcessWithSettings(
+			testGroup.getGroupId(),
 			file -> _importPreviewResource.postSiteImportPreview(
 				testGroup.getExternalReferenceCode(), null,
 				HashMapBuilder.put(
 					"file", file
 				).build()),
 			importProcessRequest -> importProcessResource.postSiteImportProcess(
-				testGroup.getExternalReferenceCode(), importProcessRequest),
-			testGroup.getGroupId());
+				testGroup.getExternalReferenceCode(), importProcessRequest));
 		_testPostImportProcessWithoutPreview(
 			importProcessRequest ->
 				importProcessResource.postSiteImportProcessHttpResponse(
@@ -359,6 +360,9 @@ public class ImportProcessResourceTest
 					layout.getPlid(), new ImportProcessRequest()));
 
 			_testPostImportProcessWithObjectDefinition(
+				() -> _exportPortletAsFile(
+					testGroup.getGroupId(), layout.getPlid(), portletId),
+				objectDefinition, testGroup.getGroupId(),
 				file -> _importPreviewResource.postSitePortletImportPreview(
 					testGroup.getExternalReferenceCode(), portletId,
 					layout.getPlid(), null,
@@ -368,10 +372,7 @@ public class ImportProcessResourceTest
 				importProcessRequest ->
 					importProcessResource.postSitePortletImportProcess(
 						testGroup.getExternalReferenceCode(), portletId,
-						layout.getPlid(), importProcessRequest),
-				() -> _exportPortletAsFile(
-					testGroup.getGroupId(), layout.getPlid(), portletId),
-				testGroup.getGroupId(), objectDefinition);
+						layout.getPlid(), importProcessRequest));
 		}
 		finally {
 			_objectDefinitionLocalService.deleteObjectDefinition(
@@ -687,12 +688,12 @@ public class ImportProcessResourceTest
 	}
 
 	private void _testPostImportProcessWithObjectDefinition(
+			UnsafeSupplier<File, Exception> exportFileUnsafeSupplier,
+			ObjectDefinition objectDefinition, long objectEntryGroupId,
 			UnsafeFunction<File, ImportPreview, Exception>
 				postImportPreviewUnsafeFunction,
 			UnsafeFunction<ImportProcessRequest, ImportProcess, Exception>
-				postImportProcessUnsafeFunction,
-			UnsafeSupplier<File, Exception> exportFileUnsafeSupplier,
-			long objectEntryGroupId, ObjectDefinition objectDefinition)
+				postImportProcessUnsafeFunction)
 		throws Exception {
 
 		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
@@ -760,12 +761,12 @@ public class ImportProcessResourceTest
 	}
 
 	private void _testPostImportProcessWithPreviewForOtherGroup(
+			long exportImportGroupId,
 			UnsafeFunction<File, ImportPreview, Exception>
 				postImportPreviewUnsafeFunction,
 			UnsafeFunction
 				<ImportProcessRequest, HttpInvoker.HttpResponse, Exception>
-					postImportProcessUnsafeFunction,
-			long exportImportGroupId)
+					postImportProcessUnsafeFunction)
 		throws Exception {
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
@@ -789,11 +790,11 @@ public class ImportProcessResourceTest
 	}
 
 	private void _testPostImportProcessWithSettings(
+			long exportImportGroupId,
 			UnsafeFunction<File, ImportPreview, Exception>
 				postImportPreviewUnsafeFunction,
 			UnsafeFunction<ImportProcessRequest, ImportProcess, Exception>
-				postImportProcessUnsafeFunction,
-			long exportImportGroupId)
+				postImportProcessUnsafeFunction)
 		throws Exception {
 
 		File file = _exportLayoutAsFile(exportImportGroupId);

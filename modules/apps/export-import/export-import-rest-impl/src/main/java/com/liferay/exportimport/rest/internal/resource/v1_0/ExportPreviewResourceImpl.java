@@ -55,7 +55,7 @@ public class ExportPreviewResourceImpl extends BaseExportPreviewResourceImpl {
 		Group group = _getAssetLibraryGroup(assetLibraryExternalReferenceCode);
 
 		return _getExportPreview(
-			endDate, group.getGroupId(), last, 0, false, null, range,
+			endDate, group.getGroupId(), last, 0, null, false, range,
 			startDate);
 	}
 
@@ -68,8 +68,8 @@ public class ExportPreviewResourceImpl extends BaseExportPreviewResourceImpl {
 		Group group = _getAssetLibraryGroup(assetLibraryExternalReferenceCode);
 
 		return _getExportPreview(
-			endDate, group.getGroupId(), last, GetterUtil.getLong(plid), false,
-			portletId, range, startDate);
+			endDate, group.getGroupId(), last, GetterUtil.getLong(plid),
+			portletId, false, range, startDate);
 	}
 
 	@Override
@@ -85,7 +85,7 @@ public class ExportPreviewResourceImpl extends BaseExportPreviewResourceImpl {
 		}
 
 		return _getExportPreview(
-			endDate, group.getGroupId(), last, 0, false, null, range,
+			endDate, group.getGroupId(), last, 0, null, false, range,
 			startDate);
 	}
 
@@ -98,7 +98,7 @@ public class ExportPreviewResourceImpl extends BaseExportPreviewResourceImpl {
 		Group group = _getSiteGroup(siteExternalReferenceCode);
 
 		return _getExportPreview(
-			endDate, group.getGroupId(), last, 0, false, null, range,
+			endDate, group.getGroupId(), last, 0, null, false, range,
 			startDate);
 	}
 
@@ -111,8 +111,8 @@ public class ExportPreviewResourceImpl extends BaseExportPreviewResourceImpl {
 		Group group = _getSiteGroup(siteExternalReferenceCode);
 
 		return _getExportPreview(
-			endDate, group.getGroupId(), last, GetterUtil.getLong(plid), false,
-			portletId, range, startDate);
+			endDate, group.getGroupId(), last, GetterUtil.getLong(plid),
+			portletId, false, range, startDate);
 	}
 
 	private Group _getAssetLibraryGroup(String externalReferenceCode) {
@@ -128,7 +128,7 @@ public class ExportPreviewResourceImpl extends BaseExportPreviewResourceImpl {
 
 	private ExportPreview _getExportPreview(
 			Date endDate, long groupId, Integer last, long plid,
-			boolean privateLayout, String portletId, String range,
+			String portletId, boolean privateLayout, String range,
 			Date startDate)
 		throws Exception {
 

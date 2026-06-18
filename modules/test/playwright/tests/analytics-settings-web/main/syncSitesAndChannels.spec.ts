@@ -377,6 +377,124 @@ test(
 );
 
 test(
+	'Commerce can be enabled with its own channel and site on two different properties',
+	{
+		tag: '@LRAC-12576',
+	},
+	async ({analyticsChannel: channel, apiHelpers, page, project, site}) => {
+		const propertyB = await apiHelpers.jsonWebServicesOSBFaro.createChannel(
+			'propertyB' + getRandomString(),
+			project.groupId
+		);
+
+		const commerceChannelA =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				name: 'commerceA' + getRandomString(),
+				siteGroupId: site.id,
+			});
+
+		const siteB = await apiHelpers.headlessAdminSite.postSite({
+			name: 'siteB' + getRandomString(),
+		});
+
+		const commerceChannelB =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				name: 'commerceB' + getRandomString(),
+				siteGroupId: siteB.id,
+			});
+
+		try {
+			await syncAnalyticsCloud({
+				apiHelpers,
+				channel,
+				page,
+				project,
+				siteName: site.name,
+			});
+
+			await goToSettingsStep({page, stepName: 'Properties'});
+
+			// The list needs to settle before the property rows can be acted on
+
+			await page
+				.getByRole('textbox', {name: 'Search'})
+				.first()
+				.fill(propertyB.name);
+
+			await page.getByRole('button', {name: 'Search'}).first().click();
+
+			await expect(
+				page.getByRole('cell', {name: propertyB.name})
+			).toBeVisible();
+
+			// First property: enable commerce and assign its own channel (the
+			// site is already synced by syncAnalyticsCloud)
+
+			await enableCommerceChannel({channelName: channel.name, page});
+
+			await syncCommerce({
+				channelName: channel.name,
+				commerceChannelName: commerceChannelA.name,
+				page,
+			});
+
+			// Second property: assign its own site and commerce channel
+
+			await toggleSiteSync({
+				channelName: propertyB.name,
+				page,
+				siteName: siteB.name,
+			});
+
+			await enableCommerceChannel({channelName: propertyB.name, page});
+
+			await syncCommerce({
+				channelName: propertyB.name,
+				commerceChannelName: commerceChannelB.name,
+				page,
+			});
+
+			// Each property counts exactly one channel and one site
+
+			for (const propertyName of [channel.name, propertyB.name]) {
+				await expectPropertyColumn({
+					channelName: propertyName,
+					expectedValue: '1',
+					index: PROPERTY_COMMERCE_CHANNEL_COLUMN_INDEX,
+					page,
+				});
+
+				await expectPropertyColumn({
+					channelName: propertyName,
+					expectedValue: '1',
+					index: PROPERTY_SITE_COLUMN_INDEX,
+					page,
+				});
+			}
+		}
+		finally {
+			for (const commerceChannel of [
+				commerceChannelA,
+				commerceChannelB,
+			]) {
+				await apiHelpers.headlessCommerceAdminChannel.deleteChannel(
+					commerceChannel.id
+				);
+			}
+
+			await apiHelpers.headlessAdminSite.deleteSite(
+				siteB.externalReferenceCode
+			);
+
+			await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
+				`[${propertyB.id}]`,
+				project.groupId
+			);
+		}
+	}
+);
+
+test(
 	'Assigned channels and sites are counted on the property after syncing',
 	{
 		tag: '@LRAC-12574',

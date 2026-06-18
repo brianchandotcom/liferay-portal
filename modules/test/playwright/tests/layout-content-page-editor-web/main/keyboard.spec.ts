@@ -578,7 +578,7 @@ test(
 
 		// Check drag preview label
 
-		expect(
+		await expect(
 			page.locator('.page-editor__keyboard-movement-preview__content')
 		).toHaveText('2 Items');
 

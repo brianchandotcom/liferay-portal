@@ -34,6 +34,12 @@ spec:
     selector:
         matchLabels:
             app.kubernetes.io/managed-by: envoy-gateway
+    targetLabels:
+        fromPod:
+            -   from: gateway.envoyproxy.io/owning-gateway-name
+                to: gateway
+            -   from: gateway.envoyproxy.io/owning-gateway-namespace
+                to: gateway_namespace
 ---
 {{- end }}
 {{- if $scrape.kubeStateMetrics.enabled }}

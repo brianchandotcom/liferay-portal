@@ -7,7 +7,7 @@ import '@testing-library/jest-dom';
 import {fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
-import UnscheduledTasksPanel from '../../js/components/props_transformer/views/calendar_view/UnscheduledTasksPanel';
+import UnscheduledTasksPanel from '../../js/components/props_transformer/views/calendar_view/components/UnscheduledTasksPanel';
 import {ITaskObjectEntry} from '../../js/utils/types';
 
 let mockUnscheduledTasks: ITaskObjectEntry[] = [];

@@ -7,7 +7,7 @@ import '@testing-library/jest-dom';
 import {render} from '@testing-library/react';
 import React from 'react';
 
-import CalendarTaskCard from '../../js/components/props_transformer/views/calendar_view/CalendarTaskCard';
+import CalendarTaskCard from '../../js/components/props_transformer/views/calendar_view/components/CalendarTaskCard';
 import {ITaskObjectEntry} from '../../js/utils/types';
 
 jest.mock('@liferay/object-dynamic-data-mapping-form-field-type', () => ({

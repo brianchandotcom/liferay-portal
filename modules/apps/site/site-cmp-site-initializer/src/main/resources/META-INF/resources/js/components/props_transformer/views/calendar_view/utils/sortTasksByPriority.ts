@@ -5,8 +5,8 @@
 
 import {Immutable} from '@liferay/frontend-js-state-web';
 
-import isOverdue from '../../../../utils/isOverdue';
-import {ITaskObjectEntry} from '../../../../utils/types';
+import isOverdue from '../../../../../utils/isOverdue';
+import {ITaskObjectEntry} from '../../../../../utils/types';
 
 const OVERDUE_PRIORITY = 0;
 

@@ -17,9 +17,9 @@ import React, {useContext, useEffect, useMemo, useRef, useState} from 'react';
 
 import {ITask, ITaskObjectEntry} from '../../../../utils/types';
 import {UPDATE_TASKS_QUICK_FILTER_VISIBILITY} from '../../../task/TasksQuickFilters';
-import CalendarMoreLinkPopover from './CalendarMoreLinkPopover';
-import CalendarTaskCard from './CalendarTaskCard';
-import {unscheduledTasksAtom} from './unscheduledTasksAtom';
+import CalendarMoreLinkPopover from './components/CalendarMoreLinkPopover';
+import CalendarTaskCard from './components/CalendarTaskCard';
+import {unscheduledTasksAtom} from './utils/unscheduledTasksAtom';
 
 import './CalendarView.scss';
 

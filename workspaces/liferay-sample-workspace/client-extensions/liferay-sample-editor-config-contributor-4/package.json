@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"@liferay/js-api": "link:../../../../../liferay-frontend-projects/projects/js-toolkit/packages/js-api"
+		"@liferay/js-api": "0.8.0"
 	},
 	"description": "Liferay Sample Editor Config Contributor CKEditor 5 Style",
 	"devDependencies": {

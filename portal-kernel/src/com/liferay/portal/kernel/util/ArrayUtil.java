@@ -1459,6 +1459,8 @@ public class ArrayUtil {
 			return array;
 		}
 
+		array = Arrays.copyOf(array, array.length);
+
 		Arrays.sort(array);
 
 		int index = 0;
@@ -1484,6 +1486,8 @@ public class ArrayUtil {
 		if (array.length < 2) {
 			return array;
 		}
+
+		array = Arrays.copyOf(array, array.length);
 
 		Arrays.sort(array);
 
@@ -1511,6 +1515,8 @@ public class ArrayUtil {
 			return array;
 		}
 
+		array = Arrays.copyOf(array, array.length);
+
 		Arrays.sort(array);
 
 		int index = 0;
@@ -1536,6 +1542,8 @@ public class ArrayUtil {
 		if (array.length < 2) {
 			return array;
 		}
+
+		array = Arrays.copyOf(array, array.length);
 
 		Arrays.sort(array);
 
@@ -1563,6 +1571,8 @@ public class ArrayUtil {
 			return array;
 		}
 
+		array = Arrays.copyOf(array, array.length);
+
 		Arrays.sort(array);
 
 		int index = 0;
@@ -1589,6 +1599,8 @@ public class ArrayUtil {
 			return array;
 		}
 
+		array = Arrays.copyOf(array, array.length);
+
 		Arrays.sort(array);
 
 		int index = 0;
@@ -1614,6 +1626,8 @@ public class ArrayUtil {
 		if (array.length < 2) {
 			return array;
 		}
+
+		array = Arrays.copyOf(array, array.length);
 
 		Arrays.sort(array, Comparator.nullsLast(Comparator.naturalOrder()));
 

@@ -968,7 +968,7 @@ public class AgentInstanceResourceTest
 				List.of(
 					lines.get(3), lines.get(5), lines.get(7), lines.get(9))) {
 
-			if (line.contains("You have exceeded your token quota")) {
+			if (line.contains("You have exceeded your quota")) {
 				count++;
 			}
 		}

@@ -113,6 +113,89 @@
 			"objectRelationships": [
 			],
 			"system": true
+		},
+		{
+			"externalReferenceCode": "L_COMMERCE_PRODUCT_DEFINITION",
+			"name": "CPDefinition",
+			"objectFields": [
+				{
+					"DBType": "Boolean",
+					"businessType": "Boolean",
+					"defaultValue": "false",
+					"externalReferenceCode": "L_COMMERCE_PRODUCT_DEFINITION_IS_PRIMARY",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Is Primary"
+					},
+					"name": "isPrimary",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Boolean"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "L_COMMERCE_PRODUCT_DEFINITION_LICENSE_KEY_PRODUCT_VERSION",
+					"indexed": true,
+					"indexedAsKeyword": true,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "License Key Product Version"
+					},
+					"name": "licenseKeyProductVersion",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "L_COMMERCE_PRODUCT_DEFINITION_METRIC_COVERAGE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Metric Coverage"
+					},
+					"name": "metricCoverage",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Picklist",
+					"externalReferenceCode": "L_COMMERCE_PRODUCT_DEFINITION_PRODUCT_FAMILY",
+					"indexed": true,
+					"indexedAsKeyword": true,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Product Family"
+					},
+					"listTypeDefinitionExternalReferenceCode": "LT_PRODUCT_FAMILY",
+					"name": "productFamily",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				}
+			],
+			"objectRelationships": [
+			],
+			"system": true
 		}
 	]
 }

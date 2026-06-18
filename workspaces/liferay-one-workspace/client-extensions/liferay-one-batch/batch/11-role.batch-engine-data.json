@@ -1,0 +1,209 @@
+{
+	"configuration": {
+		"className": "com.liferay.headless.admin.user.dto.v1_0.Role",
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"onErrorFail": "false",
+			"taskItemDelegateName": "DEFAULT",
+			"updateStrategy": "PARTIAL_UPDATE"
+		}
+	},
+	"items": [
+		{
+			"externalReferenceCode": "L_ACCOUNT_ADMINISTRATOR",
+			"name": "Account Administrator",
+			"roleType": "account"
+		},
+		{
+			"externalReferenceCode": "L_ACCOUNT_MEMBER",
+			"name": "Account Member",
+			"roleType": "account"
+		},
+		{
+			"externalReferenceCode": "ROLE_ACCOUNT_REQUESTER",
+			"name": "Account Requester",
+			"roleType": "account"
+		},
+		{
+			"externalReferenceCode": "ROLE_ACCOUNT_SOLUTION_PUBLISHER",
+			"name": "Account Solution Publisher",
+			"roleType": "account"
+		},
+		{
+			"externalReferenceCode": "L_ACCOUNT_SUPPLIER",
+			"name": "Account Supplier",
+			"roleType": "account"
+		},
+		{
+			"externalReferenceCode": "ROLE_ANALYTICS_CLOUD_OWNER",
+			"name": "Analytics Cloud Owner",
+			"roleType": "account"
+		},
+		{
+			"externalReferenceCode": "ROLE_ARTICLE_ADMIN",
+			"name": "Article Administrator",
+			"roleType": "site"
+		},
+		{
+			"externalReferenceCode": "ROLE_CLOUD_NATIVE_CONTACT",
+			"name": "Cloud Native Contact",
+			"roleType": "account"
+		},
+		{
+			"externalReferenceCode": "ROLE_CRITICAL_INCIDENT_CONTACT",
+			"name": "Critical Incident Contact",
+			"roleType": "account"
+		},
+		{
+			"externalReferenceCode": "ROLE_CUSTOMER_EXPERIENCE_MANAGER",
+			"name": "Customer Experience Manager",
+			"roleType": "account"
+		},
+		{
+			"externalReferenceCode": "ROLE_DASHBOARD_VIEWER",
+			"name": "Dashboard Viewer",
+			"roleType": "regular"
+		},
+		{
+			"externalReferenceCode": "ROLE_DATA_BREACH_CONTACT",
+			"name": "Data Breach Contact",
+			"roleType": "account"
+		},
+		{
+			"externalReferenceCode": "ROLE_DOCUMENTATION_ADMIN",
+			"name": "Documentation Administrator",
+			"roleType": "site"
+		},
+		{
+			"externalReferenceCode": "ROLE_FINANCE_ADMIN",
+			"name": "Finance Administrator",
+			"roleType": "regular"
+		},
+		{
+			"externalReferenceCode": "ROLE_LDP_ADMIN",
+			"name": "LDP Administrator",
+			"roleType": "account"
+		},
+		{
+			"externalReferenceCode": "ROLE_LIFERAY_SALES",
+			"name": "Liferay Sales",
+			"roleType": "account"
+		},
+		{
+			"externalReferenceCode": "ROLE_LIFERAY_STAFF",
+			"name": "Liferay Staff",
+			"roleType": "regular"
+		},
+		{
+			"externalReferenceCode": "ROLE_MARKETPLACE_PUBLISHER",
+			"name": "Marketplace Publisher",
+			"roleType": "regular"
+		},
+		{
+			"externalReferenceCode": "ROLE_MEMBER",
+			"name": "Member",
+			"roleType": "account"
+		},
+		{
+			"externalReferenceCode": "ROLE_PARTNER_MANAGER",
+			"name": "Partner Manager",
+			"roleType": "account"
+		},
+		{
+			"externalReferenceCode": "ROLE_PARTNER_MARKETING_USER",
+			"name": "Partner Marketing User",
+			"roleType": "account"
+		},
+		{
+			"externalReferenceCode": "ROLE_PARTNER_MEMBER",
+			"name": "Partner Member",
+			"roleType": "account"
+		},
+		{
+			"externalReferenceCode": "ROLE_PARTNER_SALES_USER",
+			"name": "Partner Sales User",
+			"roleType": "account"
+		},
+		{
+			"externalReferenceCode": "ROLE_PARTNER_TECHNICAL_USER",
+			"name": "Partner Technical User",
+			"roleType": "account"
+		},
+		{
+			"externalReferenceCode": "ROLE_PRIMARY_CONTACT",
+			"name": "Primary Contact",
+			"roleType": "account"
+		},
+		{
+			"externalReferenceCode": "ROLE_PROVISIONING_ADMIN",
+			"name": "Provisioning Administrator",
+			"roleType": "regular"
+		},
+		{
+			"externalReferenceCode": "ROLE_PROVISIONING_CONTACT_WORKER",
+			"name": "Provisioning Contact Worker",
+			"roleType": "regular"
+		},
+		{
+			"externalReferenceCode": "ROLE_PROVISIONING_MEMBER",
+			"name": "Provisioning Member",
+			"roleType": "regular"
+		},
+		{
+			"externalReferenceCode": "ROLE_PROVISIONING_SUBSCRIPTION_WORKER",
+			"name": "Provisioning Subscription Worker",
+			"roleType": "regular"
+		},
+		{
+			"externalReferenceCode": "ROLE_PROVISIONING_WATCHER",
+			"name": "Provisioning Watcher",
+			"roleType": "regular"
+		},
+		{
+			"externalReferenceCode": "ROLE_PROVISIONING_WORKER",
+			"name": "Provisioning Worker",
+			"roleType": "regular"
+		},
+		{
+			"externalReferenceCode": "ROLE_SECONDARY_CONTACT",
+			"name": "Secondary Contact",
+			"roleType": "account"
+		},
+		{
+			"externalReferenceCode": "ROLE_SECURITY_INCIDENT_CONTACT",
+			"name": "Security Incident Contact",
+			"roleType": "account"
+		},
+		{
+			"externalReferenceCode": "L_SITE_CONTENT_REVIEWER",
+			"name": "Site Content Reviewer",
+			"roleType": "site"
+		},
+		{
+			"externalReferenceCode": "ROLE_SOLUTION_ARCHITECT",
+			"name": "Solution Architect",
+			"roleType": "account"
+		},
+		{
+			"externalReferenceCode": "ROLE_SSA",
+			"name": "SSA",
+			"roleType": "regular"
+		},
+		{
+			"externalReferenceCode": "ROLE_SSA_ADMIN",
+			"name": "SSA Administrator",
+			"roleType": "account"
+		},
+		{
+			"externalReferenceCode": "ROLE_SSA_USER",
+			"name": "SSA User",
+			"roleType": "account"
+		},
+		{
+			"externalReferenceCode": "ROLE_SUPPORT_ADMIN",
+			"name": "Support Administrator",
+			"roleType": "account"
+		}
+	]
+}

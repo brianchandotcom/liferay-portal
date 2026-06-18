@@ -80,6 +80,63 @@ describe('IndividualProfileCard', () => {
 		expect(getByPlaceholderText('Search')).toBeInTheDocument();
 	});
 
+	it('shows the no-results message when an activity search returns nothing', async () => {
+		const noMatch = 'no-matching-activity';
+
+		const emptySessions = mockSessions({keywords: noMatch, rangeKey: 30});
+
+		emptySessions.result = {
+			data: {
+				eventsByUserSessions: {
+					__typename: 'EventsByUserSession',
+					totalEvents: 0,
+					userSessions: [],
+				},
+			},
+		};
+
+		const {getByText} = render(
+			<DefaultComponent>
+				<MockedProvider
+					mocks={[
+						mockEventMetrics({keywords: noMatch, rangeKey: 30}),
+						mockTimeRangeReq(),
+						mockPreferenceReq(),
+						emptySessions,
+					]}
+				>
+					<IndividualProfileCard
+						channelId="123123"
+						delta={50}
+						entity={new Individual(mockIndividual())}
+						groupId="123"
+						interval="D"
+						onChangeInterval={jest.fn()}
+						onDeltaChange={jest.fn()}
+						onPageChange={jest.fn()}
+						onQueryChange={jest.fn()}
+						onRangeSelectorsChange={jest.fn()}
+						page={1}
+						query={noMatch}
+						rangeSelectors={{
+							rangeEnd: '',
+							rangeKey: RangeKeyTimeRanges.Last30Days,
+							rangeStart: '',
+						}}
+						resetPage={jest.fn()}
+						tabId=""
+					/>
+				</MockedProvider>
+			</DefaultComponent>
+		);
+
+		await waitForLoadingToBeRemoved(document.body);
+
+		jest.runAllTimers();
+
+		expect(getByText('There are no results found.')).toBeInTheDocument();
+	});
+
 	it('should clear search input when clear button is clicked', async () => {
 		const {container, getByPlaceholderText, getByText} = render(
 			<DefaultComponent>

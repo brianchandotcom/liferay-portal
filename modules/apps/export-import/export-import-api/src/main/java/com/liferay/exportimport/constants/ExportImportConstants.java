@@ -12,6 +12,9 @@ public class ExportImportConstants {
 
 	public static final String EXPORT_IMPORT_SCHEMA_VERSION = "4.0.0";
 
+	public static final String POST_PROCESS_ENTRY_UUID =
+		".postProcessEntryUuid";
+
 	public static final String SECTION_KEY_CONTENT =
 		"category.site_administration.content";
 

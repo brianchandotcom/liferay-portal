@@ -623,6 +623,14 @@ public class JenkinsResultsParserUtil {
 	public static String executeJenkinsScript(
 		String jenkinsMasterName, String script, boolean rawResponse) {
 
+		return executeJenkinsScript(
+			jenkinsMasterName, script, rawResponse, _MILLIS_TIMEOUT_DEFAULT);
+	}
+
+	public static String executeJenkinsScript(
+		String jenkinsMasterName, String script, boolean rawResponse,
+		int timeout) {
+
 		Matcher matcher = _test1MasterNamePattern.matcher(jenkinsMasterName);
 
 		try {
@@ -646,6 +654,9 @@ public class JenkinsResultsParserUtil {
 
 			HttpURLConnection httpURLConnection =
 				(HttpURLConnection)urlObject.openConnection();
+
+			httpURLConnection.setConnectTimeout(timeout);
+			httpURLConnection.setReadTimeout(timeout);
 
 			httpURLConnection.setDoOutput(true);
 			httpURLConnection.setRequestMethod("POST");
@@ -3606,6 +3617,15 @@ public class JenkinsResultsParserUtil {
 		JenkinsMaster jenkinsMaster, String jenkinsJobName,
 		Map<String, String> buildParameters) {
 
+		return invokeJenkinsBuild(
+			jenkinsMaster, jenkinsJobName, buildParameters,
+			_MILLIS_TIMEOUT_DEFAULT);
+	}
+
+	public static long invokeJenkinsBuild(
+		JenkinsMaster jenkinsMaster, String jenkinsJobName,
+		Map<String, String> buildParameters, int timeout) {
+
 		StringBuilder sb = new StringBuilder();
 
 		sb.append(jenkinsMaster.getRemoteURL());
@@ -3636,6 +3656,9 @@ public class JenkinsResultsParserUtil {
 
 			HttpURLConnection httpURLConnection =
 				(HttpURLConnection)urlObject.openConnection();
+
+			httpURLConnection.setConnectTimeout(timeout);
+			httpURLConnection.setReadTimeout(timeout);
 
 			HTTPAuthorization httpAuthorization =
 				_getJenkinsHTTPAuthorization();

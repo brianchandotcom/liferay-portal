@@ -173,6 +173,10 @@ discovery.relabel "envoy_pods" {
         target_label = "namespace"
     }
     rule {
+        source_labels = ["__meta_kubernetes_pod_label_gateway_envoyproxy_io_owning_gateway_namespace"]
+        target_label = "gateway_namespace"
+    }
+    rule {
         source_labels = ["__meta_kubernetes_pod_label_gateway_envoyproxy_io_owning_gateway_name"]
         target_label = "gateway"
     }

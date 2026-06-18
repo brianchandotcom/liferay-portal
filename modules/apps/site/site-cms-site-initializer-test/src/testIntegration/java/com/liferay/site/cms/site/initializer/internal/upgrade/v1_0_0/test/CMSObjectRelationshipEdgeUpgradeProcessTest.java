@@ -512,19 +512,19 @@ public class CMSObjectRelationshipEdgeUpgradeProcessTest {
 			boolean featureFlagEnabled)
 		throws Exception {
 
-		ObjectDefinition firstObjectDefinition = _addCMSObjectDefinition();
-		ObjectDefinition secondObjectDefinition = _addCMSObjectDefinition();
-		ObjectDefinition thirdObjectDefinition = _addCMSObjectDefinition();
-		ObjectDefinition fourthObjectDefinition = _addCMSObjectDefinition();
+		ObjectDefinition objectDefinition1 = _addCMSObjectDefinition();
+		ObjectDefinition objectDefinition2 = _addCMSObjectDefinition();
+		ObjectDefinition objectDefinition3 = _addCMSObjectDefinition();
+		ObjectDefinition objectDefinition4 = _addCMSObjectDefinition();
 
-		ObjectRelationship firstObjectRelationship = _addObjectRelationship(
-			secondObjectDefinition, firstObjectDefinition);
-		ObjectRelationship secondObjectRelationship = _addObjectRelationship(
-			thirdObjectDefinition, firstObjectDefinition);
-		ObjectRelationship thirdObjectRelationship = _addObjectRelationship(
-			fourthObjectDefinition, secondObjectDefinition);
-		ObjectRelationship fourthObjectRelationship = _addObjectRelationship(
-			fourthObjectDefinition, thirdObjectDefinition);
+		ObjectRelationship objectRelationship1 = _addObjectRelationship(
+			objectDefinition2, objectDefinition1);
+		ObjectRelationship objectRelationship2 = _addObjectRelationship(
+			objectDefinition3, objectDefinition1);
+		ObjectRelationship objectRelationship3 = _addObjectRelationship(
+			objectDefinition4, objectDefinition2);
+		ObjectRelationship objectRelationship4 = _addObjectRelationship(
+			objectDefinition4, objectDefinition3);
 
 		PropsUtil.set(
 			FeatureFlagConstants.getKey("LPD-34594"),
@@ -538,23 +538,19 @@ public class CMSObjectRelationshipEdgeUpgradeProcessTest {
 		}
 
 		_assertObjectRelationshipEdge(
-			true, firstObjectRelationship.getObjectRelationshipId());
+			true, objectRelationship1.getObjectRelationshipId());
 		_assertObjectRelationshipEdge(
-			true, secondObjectRelationship.getObjectRelationshipId());
+			true, objectRelationship2.getObjectRelationshipId());
 		_assertObjectRelationshipEdge(
-			true, thirdObjectRelationship.getObjectRelationshipId());
+			true, objectRelationship3.getObjectRelationshipId());
 		_assertObjectRelationshipEdge(
-			true, fourthObjectRelationship.getObjectRelationshipId());
+			true, objectRelationship4.getObjectRelationshipId());
 
-		long firstObjectDefinitionId =
-			firstObjectDefinition.getObjectDefinitionId();
+		long objectDefinitionId1 = objectDefinition1.getObjectDefinitionId();
 
-		_assertRootObjectDefinitionIds(
-			firstObjectDefinitionId, secondObjectDefinition);
-		_assertRootObjectDefinitionIds(
-			firstObjectDefinitionId, thirdObjectDefinition);
-		_assertRootObjectDefinitionIds(
-			firstObjectDefinitionId, fourthObjectDefinition);
+		_assertRootObjectDefinitionIds(objectDefinitionId1, objectDefinition2);
+		_assertRootObjectDefinitionIds(objectDefinitionId1, objectDefinition3);
+		_assertRootObjectDefinitionIds(objectDefinitionId1, objectDefinition4);
 	}
 
 	private static final String _CLASS_NAME =

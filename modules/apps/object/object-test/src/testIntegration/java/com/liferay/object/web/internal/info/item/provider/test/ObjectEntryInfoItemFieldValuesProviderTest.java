@@ -514,11 +514,10 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 				infoItemFieldValuesProvider.getInfoItemFieldValues(
 					childObjectEntry);
 
-			InfoFieldValue<Object> childTitleInfoFieldValue =
+			InfoFieldValue<Object> infoFieldValue =
 				infoItemFieldValues.getInfoFieldValue("childTitle");
 
-			Assert.assertEquals(
-				childTitleValue, childTitleInfoFieldValue.getValue());
+			Assert.assertEquals(childTitleValue, infoFieldValue.getValue());
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();

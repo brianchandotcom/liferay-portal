@@ -125,6 +125,16 @@ components:
                 minimum: 0
                 type: integer
             style: simple
+        nestedFieldsQueryParam:
+            in: query
+            description:
+                Comma-separated list of nested fields to embed in each returned resource. Each value names a relationship exposed on the resource; when omitted, those relationships are not expanded inline.
+            explode: true
+            name: nestedFields
+            required: false
+            schema:
+                type: string
+            style: form
         pageQueryParam:
             in: query
             description:
@@ -400,15 +410,15 @@ components:
                     type: array
                 displayDate:
                     description:
-                        Date when the attachment becomes visible. ISO 8601 date (yyyy-MM-dd) interpreted in the request user's time zone. When the value lies in the future the attachment is persisted as scheduled instead of draft or approved.
-                    example: 2017-07-21
-                    format: date
+                        Date and time when the attachment becomes visible. ISO 8601 date-time interpreted in the request user's time zone. When the value lies in the future the attachment is persisted as scheduled instead of draft or approved.
+                    example: 2017-07-21T19:30:00Z
+                    format: date-time
                     type: string
                 expirationDate:
                     description:
-                        Date when the attachment is hidden. ISO 8601 date in the user's time zone; must be in the future and after `displayDate`. When this date has already passed the attachment is persisted as expired. Ignored when `neverExpire` is true.
-                    example: 2017-08-21
-                    format: date
+                        Date and time when the attachment is hidden. ISO 8601 date-time in the user's time zone; must be in the future and after `displayDate`. When this date has already passed the attachment is persisted as expired. Ignored when `neverExpire` is true.
+                    example: 2017-08-21T19:30:00Z
+                    format: date-time
                     type: string
                 externalReferenceCode:
                     description:
@@ -520,15 +530,15 @@ components:
                     type: array
                 displayDate:
                     description:
-                        ISO 8601 date controlling visibility start, interpreted in the request user's time zone. A future date causes the attachment to be persisted as scheduled.
-                    example: 2017-07-21
-                    format: date
+                        ISO 8601 date-time controlling visibility start, interpreted in the request user's time zone. A future date causes the attachment to be persisted as scheduled.
+                    example: 2017-07-21T19:30:00Z
+                    format: date-time
                     type: string
                 expirationDate:
                     description:
-                        ISO 8601 date controlling visibility end. Defaults to one month after the display date when omitted; rejected when in the past or earlier than the display date.
-                    example: 2017-08-21
-                    format: date
+                        ISO 8601 date-time controlling visibility end. Defaults to one month after the display date when omitted; rejected when in the past or earlier than the display date.
+                    example: 2017-08-21T19:30:00Z
+                    format: date-time
                     type: string
                 externalReferenceCode:
                     description:
@@ -619,15 +629,15 @@ components:
                     type: array
                 displayDate:
                     description:
-                        ISO 8601 date controlling visibility start, interpreted in the request user's time zone. A future value causes the attachment to be persisted as scheduled.
-                    example: 2017-07-21
-                    format: date
+                        ISO 8601 date-time controlling visibility start, interpreted in the request user's time zone. A future value causes the attachment to be persisted as scheduled.
+                    example: 2017-07-21T19:30:00Z
+                    format: date-time
                     type: string
                 expirationDate:
                     description:
-                        ISO 8601 date controlling visibility end. Defaults to the display date plus one month when omitted; rejected when in the past or earlier than the display date.
-                    example: 2017-08-21
-                    format: date
+                        ISO 8601 date-time controlling visibility end. Defaults to the display date plus one month when omitted; rejected when in the past or earlier than the display date.
+                    example: 2017-08-21T19:30:00Z
+                    format: date-time
                     type: string
                 externalReferenceCode:
                     description:
@@ -1160,14 +1170,14 @@ components:
                     description:
                         ISO 8601 timestamp captured when the definition was first persisted; read-only.
                     example: 2017-07-21T19:30:00Z
-                    format: date
+                    format: date-time
                     readOnly: true
                     type: string
                 dateModified:
                     description:
                         ISO 8601 timestamp captured on the latest update; read-only.
                     example: 2017-07-21T19:30:00Z
-                    format: date
+                    format: date-time
                     readOnly: true
                     type: string
                 externalReferenceCode:
@@ -1631,8 +1641,8 @@ components:
                 createDate:
                     description:
                         Creation timestamp of the product row; filterable and sortable via the OData query parameter.
-                    example: 2017-07-21
-                    format: date
+                    example: 2017-07-21T19:30:00Z
+                    format: date-time
                     type: string
                 customFields:
                     description:
@@ -1659,9 +1669,9 @@ components:
                     $ref: "#/components/schemas/Diagram"
                 displayDate:
                     description:
-                        ISO 8601 date from which the product becomes visible; must not be after `expirationDate` or the request is rejected.
-                    example: 2017-07-21
-                    format: date
+                        ISO 8601 date-time from which the product becomes visible; must not be after `expirationDate` or the request is rejected.
+                    example: 2017-07-21T19:30:00Z
+                    format: date-time
                     type: string
                 expando:
                     additionalProperties: true
@@ -1670,9 +1680,9 @@ components:
                     type: object
                 expirationDate:
                     description:
-                        ISO 8601 date when the product is hidden from the catalog; ignored when `neverExpire` is true (default).
-                    example: 2017-08-21
-                    format: date
+                        ISO 8601 date-time when the product is hidden from the catalog; ignored when `neverExpire` is true (default).
+                    example: 2017-08-21T19:30:00Z
+                    format: date-time
                     type: string
                 externalReferenceCode:
                     description:
@@ -1738,8 +1748,8 @@ components:
                 modifiedDate:
                     description:
                         Last modification timestamp of the product row, refreshed on every update; filterable and sortable via the OData query parameter.
-                    example: 2017-08-21
-                    format: date
+                    example: 2017-08-21T19:30:00Z
+                    format: date-time
                     type: string
                 name:
                     additionalProperties:
@@ -2144,8 +2154,8 @@ components:
                 createDate:
                     description:
                         Timestamp when the configuration list was created; set by the service on persist; read-only.
-                    example: 2017-07-21
-                    format: date
+                    example: 2017-07-21T19:30:00Z
+                    format: date-time
                     type: string
                 customFields:
                     description:
@@ -2155,15 +2165,15 @@ components:
                     type: array
                 displayDate:
                     description:
-                        Date at which the configuration list becomes effective; interpreted in the requesting user's time zone; rejected when invalid.
-                    example: 2017-07-21
-                    format: date
+                        Date and time at which the configuration list becomes effective; interpreted in the requesting user's time zone; rejected when invalid.
+                    example: 2017-07-21T19:30:00Z
+                    format: date-time
                     type: string
                 expirationDate:
                     description:
-                        Date after which the configuration list is no longer effective; ignored when `neverExpire` is true; rejected when invalid.
-                    example: 2017-08-21
-                    format: date
+                        Date and time after which the configuration list is no longer effective; ignored when `neverExpire` is true; rejected when invalid.
+                    example: 2017-08-21T19:30:00Z
+                    format: date-time
                     type: string
                 externalReferenceCode:
                     description:
@@ -3203,21 +3213,21 @@ components:
                     type: boolean
                 discontinuedDate:
                     description:
-                        Date on which the SKU was marked discontinued; accepted in the request locale and time zone and normalized to the portal's time zone.
-                    example: 2017-07-21
-                    format: date
+                        Date and time on which the SKU was marked discontinued; accepted in the request locale and time zone and normalized to the portal's time zone.
+                    example: 2017-07-21T19:30:00Z
+                    format: date-time
                     type: string
                 displayDate:
                     description:
                         Date and time from which the SKU becomes visible; accepted in the request locale and time zone, normalized to the portal's time zone, and indexed for sorting.
-                    example: 2017-07-21
-                    format: date
+                    example: 2017-07-21T19:30:00Z
+                    format: date-time
                     type: string
                 expirationDate:
                     description:
                         Date and time after which the SKU is considered expired; accepted in the request locale and time zone and ignored when `neverExpire` is true.
-                    example: 2017-08-21
-                    format: date
+                    example: 2017-08-21T19:30:00Z
+                    format: date-time
                     type: string
                 externalReferenceCode:
                     description:
@@ -6540,6 +6550,7 @@ paths:
             operationId: getOptionsPage
             parameters:
                 -   $ref: "#/components/parameters/filterQueryParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
                 -   $ref: "#/components/parameters/pageQueryParam"
                 -   $ref: "#/components/parameters/pageSizeQueryParam"
                 -   $ref: "#/components/parameters/searchQueryParam"
@@ -6718,6 +6729,7 @@ paths:
             operationId: getOptionByExternalReferenceCode
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             responses:
                 200:
                     content:
@@ -7138,6 +7150,7 @@ paths:
             operationId: getOption
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             responses:
                 200:
                     content:
@@ -12288,6 +12301,7 @@ paths:
             operationId: getProductsPage
             parameters:
                 -   $ref: "#/components/parameters/filterQueryParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
                 -   $ref: "#/components/parameters/pageQueryParam"
                 -   $ref: "#/components/parameters/pageSizeQueryParam"
                 -   $ref: "#/components/parameters/searchQueryParam"
@@ -12457,6 +12471,7 @@ paths:
             operationId: getProductByExternalReferenceCode
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             responses:
                 200:
                     content:
@@ -13076,6 +13091,7 @@ paths:
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
                 -   $ref: "#/components/parameters/versionPathParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             responses:
                 200:
                     content:
@@ -15342,6 +15358,7 @@ paths:
             operationId: getProductByExternalReferenceCodeSkusPage
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
                 -   $ref: "#/components/parameters/pageQueryParam"
                 -   $ref: "#/components/parameters/pageSizeQueryParam"
             responses:
@@ -15805,6 +15822,7 @@ paths:
             operationId: getProduct
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             responses:
                 200:
                     content:
@@ -16336,6 +16354,7 @@ paths:
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
                 -   $ref: "#/components/parameters/versionPathParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             responses:
                 200:
                     content:
@@ -18662,6 +18681,7 @@ paths:
             operationId: getProductIdSkusPage
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
                 -   $ref: "#/components/parameters/pageQueryParam"
                 -   $ref: "#/components/parameters/pageSizeQueryParam"
             responses:
@@ -19658,6 +19678,7 @@ paths:
             operationId: getSkusPage
             parameters:
                 -   $ref: "#/components/parameters/filterQueryParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
                 -   $ref: "#/components/parameters/pageQueryParam"
                 -   $ref: "#/components/parameters/pageSizeQueryParam"
                 -   $ref: "#/components/parameters/searchQueryParam"
@@ -19753,6 +19774,7 @@ paths:
             operationId: getSkuByExternalReferenceCode
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             responses:
                 200:
                     content:
@@ -20306,6 +20328,7 @@ paths:
             operationId: getSku
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             responses:
                 200:
                     content:
@@ -21544,6 +21567,7 @@ paths:
             operationId: getUnitOfMeasureSkusPage
             parameters:
                 -   $ref: "#/components/parameters/filterQueryParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
                 -   $ref: "#/components/parameters/pageQueryParam"
                 -   $ref: "#/components/parameters/pageSizeQueryParam"
                 -   $ref: "#/components/parameters/searchQueryParam"

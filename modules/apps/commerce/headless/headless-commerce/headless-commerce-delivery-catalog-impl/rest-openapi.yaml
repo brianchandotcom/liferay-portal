@@ -91,6 +91,16 @@ components:
                 minLength: 1
                 type: string
             style: simple
+        nestedFieldsQueryParam:
+            in: query
+            description:
+                Comma-separated list of nested fields to embed in each returned resource. Each value names a relationship exposed on the resource; when omitted, those relationships are not expanded inline.
+            explode: true
+            name: nestedFields
+            required: false
+            schema:
+                type: string
+            style: form
         pageQueryParam:
             in: query
             description:
@@ -458,15 +468,15 @@ components:
                     type: array
                 displayDate:
                     description:
-                        Date from which the attachment becomes visible to storefront callers, in ISO 8601 (date only). Optional; absent means visible immediately.
-                    example: 2017-07-21
-                    format: date
+                        Date and time from which the attachment becomes visible to storefront callers, in ISO 8601. Optional; absent means visible immediately.
+                    example: 2017-07-21T19:30:00Z
+                    format: date-time
                     type: string
                 expirationDate:
                     description:
-                        Date after which the attachment is no longer visible to storefront callers, in ISO 8601 (date only). Ignored when neverExpire is true.
-                    example: 2017-08-21
-                    format: date
+                        Date and time after which the attachment is no longer visible to storefront callers, in ISO 8601. Ignored when neverExpire is true.
+                    example: 2017-08-21T19:30:00Z
+                    format: date-time
                     type: string
                 externalReferenceCode:
                     description:
@@ -1102,8 +1112,8 @@ components:
                 createDate:
                     description:
                         Product creation timestamp in ISO 8601 (UTC). Filterable and sortable via the OData query parameters.
-                    example: 2017-07-21
-                    format: date
+                    example: 2017-07-21T19:30:00Z
+                    format: date-time
                     type: string
                 customFields:
                     description:
@@ -1166,8 +1176,8 @@ components:
                 modifiedDate:
                     description:
                         Timestamp of the last product modification in ISO 8601 (UTC). Filterable and sortable via the OData query parameters.
-                    example: 2017-08-21
-                    format: date
+                    example: 2017-08-21T19:30:00Z
+                    format: date-time
                     type: string
                 multipleOrderQuantity:
                     description:
@@ -1727,15 +1737,15 @@ components:
                     type: boolean
                 discontinuedDate:
                     description:
-                        Date the SKU was marked discontinued, in ISO 8601 (date only).
-                    example: 2017-07-21
-                    format: date
+                        Date and time the SKU was marked discontinued, in ISO 8601.
+                    example: 2017-07-21T19:30:00Z
+                    format: date-time
                     type: string
                 displayDate:
                     description:
-                        Date from which the SKU becomes visible to buyers, in ISO 8601 (date only).
-                    example: 2017-07-21
-                    format: date
+                        Date and time from which the SKU becomes visible to buyers, in ISO 8601.
+                    example: 2017-07-21T19:30:00Z
+                    format: date-time
                     type: string
                 displayDiscountLevels:
                     description:
@@ -1744,9 +1754,9 @@ components:
                     type: boolean
                 expirationDate:
                     description:
-                        Date after which the SKU is no longer visible to buyers, in ISO 8601 (date only). Ignored when neverExpire is true.
-                    example: 2017-08-21
-                    format: date
+                        Date and time after which the SKU is no longer visible to buyers, in ISO 8601. Ignored when neverExpire is true.
+                    example: 2017-08-21T19:30:00Z
+                    format: date-time
                     type: string
                 externalReferenceCode:
                     description:
@@ -2898,6 +2908,7 @@ paths:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
                 -   $ref: "#/components/parameters/accountIdQueryParam"
                 -   $ref: "#/components/parameters/currencyCodeQueryParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
                 -   $ref: "#/components/parameters/pageQueryParam"
                 -   $ref: "#/components/parameters/pageSizeQueryParam"
             responses:
@@ -3242,6 +3253,7 @@ paths:
                 -   $ref: "#/components/parameters/channelIdPathParam"
                 -   $ref: "#/components/parameters/accountIdQueryParam"
                 -   $ref: "#/components/parameters/filterQueryParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
                 -   $ref: "#/components/parameters/pageQueryParam"
                 -   $ref: "#/components/parameters/pageSizeQueryParam"
                 -   $ref: "#/components/parameters/searchQueryParam"
@@ -3303,6 +3315,7 @@ paths:
                 -   $ref: "#/components/parameters/channelIdPathParam"
                 -   $ref: "#/components/parameters/friendlyUrlPathPathParam"
                 -   $ref: "#/components/parameters/accountIdQueryParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             responses:
                 200:
                     content:
@@ -3366,6 +3379,7 @@ paths:
                 -   $ref: "#/components/parameters/channelIdPathParam"
                 -   $ref: "#/components/parameters/productIdPathParam"
                 -   $ref: "#/components/parameters/accountIdQueryParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             responses:
                 200:
                     content:
@@ -4428,6 +4442,7 @@ paths:
                 -   $ref: "#/components/parameters/channelIdPathParam"
                 -   $ref: "#/components/parameters/accountIdQueryParam"
                 -   $ref: "#/components/parameters/currencyCodeQueryParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
                 -   $ref: "#/components/parameters/pageQueryParam"
                 -   $ref: "#/components/parameters/pageSizeQueryParam"
             responses:
@@ -4723,6 +4738,7 @@ paths:
             operationId: getWishList
             parameters:
                 -   $ref: "#/components/parameters/wishListIdPathParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             responses:
                 200:
                     content:

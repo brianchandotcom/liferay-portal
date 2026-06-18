@@ -41,12 +41,12 @@ components:
         forecastStartDateQueryParam:
             in: query
             description:
-                Anchor date for the forecast window in ISO 8601 date format (yyyy-MM-dd). Defaults to the current server date when omitted. The response covers historyLength months before this date and forecastLength months from this date forward.
+                Anchor date for the forecast window in ISO 8601 date-time format. Defaults to the current server date when omitted. The response covers historyLength months before this date and forecastLength months from this date forward.
             explode: true
             name: forecastStartDate
             required: false
             schema:
-                format: date
+                format: date-time
                 type: string
             style: form
         historyLengthQueryParam:
@@ -305,9 +305,9 @@ components:
                     type: integer
                 createDate:
                     description:
-                        Date the rule was materialised by the download executor, in ISO 8601 (yyyy-MM-dd).
-                    example: 2017-07-21
-                    format: date
+                        Timestamp when the rule was materialised by the download executor, in ISO 8601.
+                    example: 2017-07-21T00:00:00Z
+                    format: date-time
                     type: string
                 jobId:
                     description:
@@ -351,9 +351,9 @@ components:
                     type: integer
                 createDate:
                     description:
-                        Date the order was created, in ISO 8601 (yyyy-MM-dd). Read-only.
-                    example: 2017-07-21
-                    format: date
+                        Timestamp when the order was created, in ISO 8601. Read-only.
+                    example: 2017-07-21T00:00:00Z
+                    format: date-time
                     readOnly: true
                     type: string
                 currencyCode:
@@ -382,16 +382,16 @@ components:
                     type: integer
                 modifiedDate:
                     description:
-                        Date the order was last modified, in ISO 8601 (yyyy-MM-dd). Read-only.
-                    example: 2017-08-21
-                    format: date
+                        Timestamp when the order was last modified, in ISO 8601. Read-only.
+                    example: 2017-08-21T00:00:00Z
+                    format: date-time
                     readOnly: true
                     type: string
                 orderDate:
                     description:
-                        Date the order was placed by the buyer, in ISO 8601 (yyyy-MM-dd). Distinct from the create date when the order was imported.
-                    example: 2017-07-21
-                    format: date
+                        Date and time the order was placed by the buyer, in ISO 8601. Distinct from the create date when the order was imported.
+                    example: 2017-07-21T00:00:00Z
+                    format: date-time
                     type: string
                 orderItems:
                     description:
@@ -465,9 +465,9 @@ components:
                     type: integer
                 createDate:
                     description:
-                        Date the order line was created, in ISO 8601 (yyyy-MM-dd). Read-only.
-                    example: 2017-07-21
-                    format: date
+                        Timestamp when the order line was created, in ISO 8601. Read-only.
+                    example: 2017-07-21T00:00:00Z
+                    format: date-time
                     readOnly: true
                     type: string
                 customFields:
@@ -498,9 +498,9 @@ components:
                     type: integer
                 modifiedDate:
                     description:
-                        Date the order line was last modified, in ISO 8601 (yyyy-MM-dd). Read-only.
-                    example: 2017-07-21
-                    format: date
+                        Timestamp when the order line was last modified, in ISO 8601. Read-only.
+                    example: 2017-07-21T00:00:00Z
+                    format: date-time
                     readOnly: true
                     type: string
                 name:
@@ -591,9 +591,9 @@ components:
                     type: array
                 createDate:
                     description:
-                        Date the product was created, in ISO 8601 (yyyy-MM-dd). Read-only.
-                    example: 2017-07-21
-                    format: date
+                        Timestamp when the product was created, in ISO 8601. Read-only.
+                    example: 2017-07-21T00:00:00Z
+                    format: date-time
                     readOnly: true
                     type: string
                 customFields:
@@ -616,15 +616,15 @@ components:
                     type: object
                 displayDate:
                     description:
-                        Date from which the product is visible on the storefront, in ISO 8601 (yyyy-MM-dd).
-                    example: 2017-07-21
-                    format: date
+                        Date and time from which the product is visible on the storefront, in ISO 8601.
+                    example: 2017-07-21T00:00:00Z
+                    format: date-time
                     type: string
                 expirationDate:
                     description:
-                        Date from which the product is no longer visible on the storefront, in ISO 8601 (yyyy-MM-dd).
-                    example: 2017-08-21
-                    format: date
+                        Date and time from which the product is no longer visible on the storefront, in ISO 8601.
+                    example: 2017-08-21T00:00:00Z
+                    format: date-time
                     type: string
                 externalReferenceCode:
                     description:
@@ -671,9 +671,9 @@ components:
                     type: object
                 modifiedDate:
                     description:
-                        Date the product was last modified, in ISO 8601 (yyyy-MM-dd). Read-only.
-                    example: 2017-08-21
-                    format: date
+                        Timestamp when the product was last modified, in ISO 8601. Read-only.
+                    example: 2017-08-21T00:00:00Z
+                    format: date-time
                     readOnly: true
                     type: string
                 name:
@@ -801,9 +801,9 @@ components:
             properties:
                 createDate:
                     description:
-                        Date the recommendation was materialised by the download executor, in ISO 8601 (yyyy-MM-dd).
-                    example: 2017-07-21
-                    format: date
+                        Timestamp when the recommendation was materialised by the download executor, in ISO 8601.
+                    example: 2017-07-21T00:00:00Z
+                    format: date-time
                     type: string
                 jobId:
                     description:
@@ -841,9 +841,9 @@ components:
             properties:
                 createDate:
                     description:
-                        Date the recommendation was materialised by the download executor, in ISO 8601 (yyyy-MM-dd).
-                    example: 2017-07-21
-                    format: date
+                        Timestamp when the recommendation was materialised by the download executor, in ISO 8601.
+                    example: 2017-07-21T00:00:00Z
+                    format: date-time
                     type: string
                 jobId:
                     description:
@@ -958,15 +958,15 @@ components:
                     type: boolean
                 displayDate:
                     description:
-                        Date from which the SKU is visible on the storefront, in ISO 8601 (yyyy-MM-dd).
-                    example: 2017-07-21
-                    format: date
+                        Date and time from which the SKU is visible on the storefront, in ISO 8601.
+                    example: 2017-07-21T00:00:00Z
+                    format: date-time
                     type: string
                 expirationDate:
                     description:
-                        Date from which the SKU is no longer visible on the storefront, in ISO 8601 (yyyy-MM-dd).
-                    example: 2017-08-21
-                    format: date
+                        Date and time from which the SKU is no longer visible on the storefront, in ISO 8601.
+                    example: 2017-08-21T00:00:00Z
+                    format: date-time
                     type: string
                 externalReferenceCode:
                     description:
@@ -1070,9 +1070,9 @@ components:
                     type: array
                 createDate:
                     description:
-                        Date the recommendation was materialised by the download executor, in ISO 8601 (yyyy-MM-dd).
-                    example: 2017-07-21
-                    format: date
+                        Timestamp when the recommendation was materialised by the download executor, in ISO 8601.
+                    example: 2017-07-21T00:00:00Z
+                    format: date-time
                     type: string
                 jobId:
                     description:

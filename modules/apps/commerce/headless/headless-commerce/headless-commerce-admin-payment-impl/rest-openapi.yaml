@@ -170,9 +170,9 @@ components:
                     type: string
                 createDate:
                     description:
-                        Creation date of the payment in ISO 8601 (yyyy-MM-dd). Read-only; set when the record is first persisted. Sortable via the OData query parameter.
-                    example: 2017-07-21
-                    format: date
+                        Creation timestamp of the payment in ISO 8601. Read-only; set when the record is first persisted. Sortable via the OData query parameter.
+                    example: 2017-07-21T19:30:00Z
+                    format: date-time
                     readOnly: true
                     type: string
                 currencyCode:

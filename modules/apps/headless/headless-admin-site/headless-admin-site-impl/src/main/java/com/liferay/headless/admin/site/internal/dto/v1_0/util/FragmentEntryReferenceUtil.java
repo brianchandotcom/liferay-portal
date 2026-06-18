@@ -67,7 +67,7 @@ public class FragmentEntryReferenceUtil {
 
 			if (fragmentEntry == null) {
 				LogUtil.logOptionalReference(
-					fragmentItemExternalReference.getClassName(),
+					FragmentEntry.class.getName(),
 					fragmentItemExternalReference.getExternalReferenceCode(),
 					fragmentItemExternalReference.getScope(), scopeGroupId);
 			}

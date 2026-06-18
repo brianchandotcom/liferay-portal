@@ -210,9 +210,7 @@ A single JVM scans every module directly via `RESTBuilder`, which is faster than
 
 ## Editing REST Builder Itself
 
-Use this workflow when editing the REST Builder generator itself, rather than the artifacts of any single bundle. The generator's source lives under `modules/util/portal-tools-rest-builder`.
-
-`buildREST` reads the generator's source from the local repository, not from the REST Builder artifact published to Maven, so a change there takes effect on the next `buildREST` run with no need to rebuild or republish the tool.
+Use this workflow when editing the REST Builder generator itself. The generator's source lives under `modules/util/portal-tools-rest-builder`.
 
 ### Workflow
 
@@ -220,7 +218,7 @@ Run every step without asking for confirmation, including the commits.
 
 1. Commit the hand-written generator change.
 
-1. Run REST Builder globally to regenerate every module.
+1. Run REST Builder globally to regenerate every module. It will automatically pick up the new generator code.
 
 1. Confirm the regenerated output reflects the change, especially under `portal-tools-rest-builder-test-impl` — the dummy module that acts as the generator's test bed, whose `rest-openapi.yaml` is meant to cover each generator feature so the regenerated Java is the visible record of what the change produces. When the test bed shows no difference, the existing cases do not cover the new behavior — add a case to its `rest-openapi.yaml` that does, commit it, and regenerate again.
 

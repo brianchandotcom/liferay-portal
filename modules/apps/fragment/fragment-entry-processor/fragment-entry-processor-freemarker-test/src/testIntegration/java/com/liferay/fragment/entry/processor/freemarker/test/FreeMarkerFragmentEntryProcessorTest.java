@@ -135,9 +135,9 @@ public class FreeMarkerFragmentEntryProcessorTest {
 	public void testAddFragmentEntryWithDynamicDataDuringImport()
 		throws Exception {
 
-		try {
-			ExportImportThreadLocal.setLayoutImportInProcess(true);
+		ExportImportThreadLocal.setLayoutImportInProcess(true);
 
+		try {
 			Assert.assertNotNull(
 				_addFragmentEntry(
 					"fragment_entry_with_rest_client_data.html", null));

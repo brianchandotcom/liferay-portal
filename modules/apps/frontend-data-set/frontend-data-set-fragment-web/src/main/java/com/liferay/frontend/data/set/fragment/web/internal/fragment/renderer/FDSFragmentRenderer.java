@@ -529,7 +529,7 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Failed to write autoresolvable token names", exception);
+					"Unable to write autoresolvable token names", exception);
 			}
 		}
 	}

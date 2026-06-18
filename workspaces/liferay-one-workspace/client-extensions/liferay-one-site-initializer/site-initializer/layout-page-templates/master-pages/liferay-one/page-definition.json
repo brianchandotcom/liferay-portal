@@ -268,7 +268,7 @@
 												"definition": {
 													"widgetInstance": {
 														"widgetConfig": {
-															"displayStyle": "ddmTemplate_LANGUAGE-SELECTOR",
+															"displayStyle": "ddmTemplate_LANGUAGE_SELECTOR",
 															"displayStyleGroupId": "[$GROUP_ID$]"
 														},
 														"widgetName": "com_liferay_site_navigation_language_web_portlet_SiteNavigationLanguagePortlet"

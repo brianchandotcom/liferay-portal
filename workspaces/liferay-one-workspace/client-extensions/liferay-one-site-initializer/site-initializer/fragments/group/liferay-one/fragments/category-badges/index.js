@@ -4,12 +4,8 @@
  */
 
 (function () {
-	const container = fragmentElement.querySelector(
-		'.category-badges'
-	);
-	const source = fragmentElement.querySelector(
-		'.category-badges-source'
-	);
+	const container = fragmentElement.querySelector('.category-badges');
+	const source = fragmentElement.querySelector('.category-badges-source');
 
 	if (!container || !source) {
 		return;

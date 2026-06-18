@@ -41,7 +41,7 @@
 	type = getSpecificationValue("type")?lower_case
 >
 <@section title = languageUtil.get(locale, "developer")>
-	<a class = "bg-neutral-8" href = "/applications?publisherName=${developerName}">
+	<a href = "/applications?publisherName=${developerName}">
 		${developerName}
 	</a>
 </@section>
@@ -126,7 +126,7 @@
 		</#list>
 
 		<#if standardSku.price?? && standardSku.price.price?eval gt 0>
-			<div class="bg-neutral-8">${standardSku.price.priceFormatted!""}</div>
+			<div>${standardSku.price.priceFormatted!""}</div>
 		<#else>
 			${languageUtil.get(locale, "free", "Free")}
 		</#if>

@@ -27,7 +27,7 @@ The current Git branch must contain the commits ready to ship.
 
 ### Jira Tickets
 
-A branch may span more than one ticket. Resolve the **ticket set** — every ticket the PR touches. All tickets are transitioned, given the PR URL, and listed in the PR body. The PR title is prefixed with the branch-name ticket, or the first ticket in the set when the branch name carries none.
+A branch may span more than one ticket. Resolve the **ticket set** — every ticket the PR touches.
 
 The ticket key follows the pattern `LPD-12345`, `LCD-12345`, `LRCI-1234`, and similar forms (uppercase letters, hyphen, digits).
 

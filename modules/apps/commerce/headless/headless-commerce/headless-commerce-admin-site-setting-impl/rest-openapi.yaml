@@ -3,7 +3,7 @@ components:
         activeQueryParam:
             in: query
             description:
-                Boolean flag intended to restrict a Warehouse list to entities whose `active` flag matches the supplied value. Accepted by getCommerceAdminSiteSettingGroupWarehousePage but currently has no observable effect because that operation is a stub returning an empty Page.
+                Boolean flag intended to restrict a Warehouse list to entities whose `active` flag matches the supplied value. Accepted by getCommerceAdminSiteSettingGroupWarehousePage but never read because that operation is unimplemented and rejects every request with a 400 Bad Request.
             explode: true
             name: active
             required: false
@@ -447,7 +447,7 @@ components:
             type: object
 info:
     description:
-        "Back-office administration of Liferay Commerce site-setting entities: warehouse definitions, tax categories, measurement units, and availability estimates. All four entities are company-scoped on the server, although warehouse, tax category, and availability estimate paths still accept a Liferay site identifier (`groupId`) as a compatibility wire field. Used by store-launch wizards and admin dashboards. Primary entities: AvailabilityEstimate (restock-time windows shown on out-of-stock items), TaxCategory (groupings for tax treatment), Warehouse (warehouse definition; stock levels and per-account/group/channel scoping live in the admin-inventory API), and MeasurementUnit (units of measure used by SKUs and shipping rules). Stub endpoints: the POST and PUT operations under /commerceAdminSiteSetting/<groupId>/* and on the AvailabilityEstimate, TaxCategory, and Warehouse by-id paths are scaffolding stubs that return an empty body without invoking the underlying service; to persist availability estimates, tax categories, or warehouse records, drive the back-end services directly or use the sibling admin APIs. Common workflows: Set up measurement units -- (1) POST /measurement-units (or PUT /measurement-units/by-key/<key>) to create each unit, setting primary=true for the base unit of each type (Dimensions, Weight, Unit); (2) GET /measurement-units/by-type/<measurementUnitType> to confirm the units of a given type before enabling a channel. -- Manage warehouse definitions -- this API only reads (GET /warehouse/<id>) and deletes (DELETE /warehouse/<id>) warehouse definitions; the POST and PUT operations here are non-persisting stubs, so per-SKU stock, replenishment, and account/group/channel scoping are administered through the admin-inventory API. A Java client JAR is available for use with the group ID 'com.liferay', artifact ID 'com.liferay.headless.commerce.admin.site.setting.client', and version '4.0.43'."
+        "Back-office administration of Liferay Commerce site-setting entities: warehouse definitions, tax categories, measurement units, and availability estimates. All four entities are company-scoped on the server, although warehouse, tax category, and availability estimate paths still accept a Liferay site identifier (`groupId`) as a compatibility wire field. Used by store-launch wizards and admin dashboards. Primary entities: AvailabilityEstimate (restock-time windows shown on out-of-stock items), TaxCategory (groupings for tax treatment), Warehouse (warehouse definition; stock levels and per-account/group/channel scoping live in the admin-inventory API), and MeasurementUnit (units of measure used by SKUs and shipping rules). Unimplemented endpoints: the list (GET) and create (POST) operations under /commerceAdminSiteSetting/<groupId>/* and the replace (PUT) operations on the AvailabilityEstimate, TaxCategory, and Warehouse by-id paths are not implemented and reject every request with a 400 Bad Request without invoking the underlying service; to persist availability estimates, tax categories, or warehouse records, drive the back-end services directly or use the sibling admin APIs. Common workflows: Set up measurement units -- (1) POST /measurement-units (or PUT /measurement-units/by-key/<key>) to create each unit, setting primary=true for the base unit of each type (Dimensions, Weight, Unit); (2) GET /measurement-units/by-type/<measurementUnitType> to confirm the units of a given type before enabling a channel. -- Manage warehouse definitions -- this API only fetches single records (GET /warehouse/<id>) and deletes (DELETE /warehouse/<id>) warehouse definitions; the list (GET), create (POST), and replace (PUT) operations here are not implemented and reject every request with a 400 Bad Request, so per-SKU stock, replenishment, and account/group/channel scoping are administered through the admin-inventory API. A Java client JAR is available for use with the group ID 'com.liferay', artifact ID 'com.liferay.headless.commerce.admin.site.setting.client', and version '4.0.43'."
     license:
         name: Apache 2.0
         url: http://www.apache.org/licenses/LICENSE-2.0.html
@@ -554,7 +554,7 @@ paths:
                 -   AvailabilityEstimate
         put:
             description:
-                Stub endpoint for replacing an AvailabilityEstimate identified by id. Calls -- none; returns 200 with an empty body without invoking CommerceAvailabilityEstimateService, so the addressed record is not changed.
+                Unimplemented endpoint for replacing an AvailabilityEstimate identified by id. Calls -- none; throws UnsupportedOperationException without invoking CommerceAvailabilityEstimateService, so every request is rejected with a 400 Bad Request and the addressed record is not changed.
             operationId: putAvailabilityEstimate
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
@@ -568,12 +568,6 @@ paths:
                             $ref: "#/components/schemas/AvailabilityEstimate"
                 required: true
             responses:
-                202:
-                    description:
-                        Accepted - Async
-                204:
-                    description:
-                        No content
                 400:
                     description:
                         Invalid input
@@ -597,36 +591,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The authenticated user lacks permission for the requested action on this AvailabilityEstimate.
-                404:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The specified resource was not found
-                409:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The supplied body conflicts with the current state of the AvailabilityEstimate.
-                422:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        Domain validation failed (for example, missing required title or out-of-range priority).
                 500:
                     content:
                         application/json:
@@ -643,7 +607,7 @@ paths:
     /commerceAdminSiteSetting/{groupId}/availabilityEstimate:
         get:
             description:
-                Stub endpoint for listing AvailabilityEstimate records under the supplied site (groupId). Calls -- none; returns an empty page without invoking CommerceAvailabilityEstimateService. The page and pageSize query parameters are accepted but ignored and have no effect on the response.
+                Unimplemented endpoint for listing AvailabilityEstimate records under the supplied site (groupId). Calls -- none; throws UnsupportedOperationException without invoking CommerceAvailabilityEstimateService, so every request is rejected with a 400 Bad Request and no records are returned.
             operationId: getCommerceAdminSiteSettingGroupAvailabilityEstimatePage
             parameters:
                 -   $ref: "#/components/parameters/groupIdPathParam"
@@ -664,6 +628,9 @@ paths:
                                 type: array
                     description:
                         Successful operation
+                400:
+                    description:
+                        Invalid input
                 401:
                     content:
                         application/json:
@@ -674,7 +641,7 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-                404:
+                403:
                     content:
                         application/json:
                             schema:
@@ -683,7 +650,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The specified resource was not found
+                        The authenticated user lacks permission for the requested action.
                 500:
                     content:
                         application/json:
@@ -699,7 +666,7 @@ paths:
                 -   AvailabilityEstimate
         post:
             description:
-                Stub endpoint for creating an AvailabilityEstimate under the supplied site (groupId). Calls -- none; returns 200 with an empty AvailabilityEstimate payload without invoking CommerceAvailabilityEstimateService, so no record is persisted.
+                Unimplemented endpoint for creating an AvailabilityEstimate under the supplied site (groupId). Calls -- none; throws UnsupportedOperationException without invoking CommerceAvailabilityEstimateService, so every request is rejected with a 400 Bad Request and no record is persisted.
             operationId: postCommerceAdminSiteSettingGroupAvailabilityEstimate
             parameters:
                 -   $ref: "#/components/parameters/groupIdPathParam"
@@ -723,12 +690,6 @@ paths:
                                 $ref: "#/components/schemas/AvailabilityEstimate"
                     description:
                         Created
-                202:
-                    description:
-                        Accepted - Async
-                204:
-                    description:
-                        No content
                 400:
                     description:
                         Invalid input
@@ -752,36 +713,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The authenticated user lacks permission for the requested action on this AvailabilityEstimate.
-                404:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The specified resource was not found
-                409:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The supplied body conflicts with an existing AvailabilityEstimate.
-                422:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        Domain validation failed (for example, missing required title or out-of-range priority).
                 500:
                     content:
                         application/json:
@@ -798,7 +729,7 @@ paths:
     /commerceAdminSiteSetting/{groupId}/taxCategory:
         get:
             description:
-                Stub endpoint for listing TaxCategory records under the supplied site (groupId). Calls -- none; returns an empty page without invoking CPTaxCategoryService. The page and pageSize query parameters are accepted but ignored and have no effect on the response.
+                Unimplemented endpoint for listing TaxCategory records under the supplied site (groupId). Calls -- none; throws UnsupportedOperationException without invoking CPTaxCategoryService, so every request is rejected with a 400 Bad Request and no records are returned.
             operationId: getCommerceAdminSiteSettingGroupTaxCategoryPage
             parameters:
                 -   $ref: "#/components/parameters/groupIdPathParam"
@@ -819,6 +750,9 @@ paths:
                                 type: array
                     description:
                         Successful operation
+                400:
+                    description:
+                        Invalid input
                 401:
                     content:
                         application/json:
@@ -829,7 +763,7 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-                404:
+                403:
                     content:
                         application/json:
                             schema:
@@ -838,7 +772,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The specified resource was not found
+                        The authenticated user lacks permission for the requested action.
                 500:
                     content:
                         application/json:
@@ -854,7 +788,7 @@ paths:
                 -   TaxCategory
         post:
             description:
-                Stub endpoint for creating a TaxCategory under the supplied site (groupId). Calls -- none; returns 200 with an empty TaxCategory payload without invoking CPTaxCategoryService, so no record is persisted.
+                Unimplemented endpoint for creating a TaxCategory under the supplied site (groupId). Calls -- none; throws UnsupportedOperationException without invoking CPTaxCategoryService, so every request is rejected with a 400 Bad Request and no record is persisted.
             operationId: postCommerceAdminSiteSettingGroupTaxCategory
             parameters:
                 -   $ref: "#/components/parameters/groupIdPathParam"
@@ -878,12 +812,6 @@ paths:
                                 $ref: "#/components/schemas/TaxCategory"
                     description:
                         Created
-                202:
-                    description:
-                        Accepted - Async
-                204:
-                    description:
-                        No content
                 400:
                     description:
                         Invalid input
@@ -907,36 +835,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The authenticated user lacks permission for the requested action on this TaxCategory.
-                404:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The specified resource was not found
-                409:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The supplied body conflicts with an existing TaxCategory.
-                422:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        Domain validation failed (for example, missing required name).
                 500:
                     content:
                         application/json:
@@ -953,7 +851,7 @@ paths:
     /commerceAdminSiteSetting/{groupId}/warehouse:
         get:
             description:
-                Stub endpoint for listing Warehouse records under the supplied site (groupId). Calls -- none; returns an empty page without invoking CommerceInventoryWarehouseService. The active, page, and pageSize query parameters are accepted but ignored and have no effect on the response. For Warehouse list semantics that persist, use the inventory administration API.
+                Unimplemented endpoint for listing Warehouse records under the supplied site (groupId). Calls -- none; throws UnsupportedOperationException without invoking CommerceInventoryWarehouseService, so every request is rejected with a 400 Bad Request and no records are returned. For Warehouse list semantics that persist, use the inventory administration API.
             operationId: getCommerceAdminSiteSettingGroupWarehousePage
             parameters:
                 -   $ref: "#/components/parameters/groupIdPathParam"
@@ -975,6 +873,9 @@ paths:
                                 type: array
                     description:
                         Successful operation
+                400:
+                    description:
+                        Invalid input
                 401:
                     content:
                         application/json:
@@ -985,7 +886,7 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         Authentication information is missing or invalid
-                404:
+                403:
                     content:
                         application/json:
                             schema:
@@ -994,7 +895,7 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
                     description:
-                        The specified resource was not found
+                        The authenticated user lacks permission for the requested action.
                 500:
                     content:
                         application/json:
@@ -1010,7 +911,7 @@ paths:
                 -   Warehouse
         post:
             description:
-                Stub endpoint for creating a Warehouse under the supplied site (groupId). Calls -- none; returns 200 with an empty Warehouse payload without invoking CommerceInventoryWarehouseService, so no record is persisted. For Warehouse writes that persist, including stock levels and per-account/group/channel scoping, use the inventory administration API.
+                Unimplemented endpoint for creating a Warehouse under the supplied site (groupId). Calls -- none; throws UnsupportedOperationException without invoking CommerceInventoryWarehouseService, so every request is rejected with a 400 Bad Request and no record is persisted. For Warehouse writes that persist, including stock levels and per-account/group/channel scoping, use the inventory administration API.
             operationId: postCommerceAdminSiteSettingGroupWarehouse
             parameters:
                 -   $ref: "#/components/parameters/groupIdPathParam"
@@ -1034,12 +935,6 @@ paths:
                                 $ref: "#/components/schemas/Warehouse"
                     description:
                         Created
-                202:
-                    description:
-                        Accepted - Async
-                204:
-                    description:
-                        No content
                 400:
                     description:
                         Invalid input
@@ -1063,36 +958,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The authenticated user lacks permission for the requested action on this Warehouse.
-                404:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The specified resource was not found
-                409:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The supplied body conflicts with an existing Warehouse.
-                422:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        Domain validation failed (for example, missing required commerceCountryId or name).
                 500:
                     content:
                         application/json:
@@ -1191,12 +1056,6 @@ paths:
                                 $ref: "#/components/schemas/MeasurementUnit"
                     description:
                         Created
-                202:
-                    description:
-                        Accepted - Async
-                204:
-                    description:
-                        No content
                 400:
                     description:
                         Invalid input
@@ -1377,12 +1236,6 @@ paths:
                             $ref: "#/components/schemas/MeasurementUnit"
                 required: true
             responses:
-                202:
-                    description:
-                        Accepted - Async
-                204:
-                    description:
-                        No content
                 400:
                     description:
                         Invalid input
@@ -1475,12 +1328,6 @@ paths:
                                 $ref: "#/components/schemas/MeasurementUnit"
                     description:
                         Created
-                202:
-                    description:
-                        Accepted - Async
-                204:
-                    description:
-                        No content
                 400:
                     description:
                         Invalid input
@@ -1661,12 +1508,6 @@ paths:
                             $ref: "#/components/schemas/MeasurementUnit"
                 required: true
             responses:
-                202:
-                    description:
-                        Accepted - Async
-                204:
-                    description:
-                        No content
                 400:
                     description:
                         Invalid input
@@ -1908,12 +1749,6 @@ paths:
                             $ref: "#/components/schemas/MeasurementUnit"
                 required: true
             responses:
-                202:
-                    description:
-                        Accepted - Async
-                204:
-                    description:
-                        No content
                 400:
                     description:
                         Invalid input
@@ -2079,7 +1914,7 @@ paths:
                 -   TaxCategory
         put:
             description:
-                Stub endpoint for replacing a TaxCategory identified by id. Calls -- none; returns 200 with an empty body without invoking CPTaxCategoryService, so the addressed record is not changed.
+                Unimplemented endpoint for replacing a TaxCategory identified by id. Calls -- none; throws UnsupportedOperationException without invoking CPTaxCategoryService, so every request is rejected with a 400 Bad Request and the addressed record is not changed.
             operationId: putTaxCategory
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
@@ -2093,12 +1928,6 @@ paths:
                             $ref: "#/components/schemas/TaxCategory"
                 required: true
             responses:
-                202:
-                    description:
-                        Accepted - Async
-                204:
-                    description:
-                        No content
                 400:
                     description:
                         Invalid input
@@ -2122,36 +1951,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The authenticated user lacks permission for the requested action on this TaxCategory.
-                404:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The specified resource was not found
-                409:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The supplied body conflicts with the current state of the TaxCategory.
-                422:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        Domain validation failed (for example, missing required name).
                 500:
                     content:
                         application/json:
@@ -2264,7 +2063,7 @@ paths:
                 -   Warehouse
         put:
             description:
-                Stub endpoint for replacing a Warehouse identified by id. Calls -- none; returns 200 with an empty body without invoking CommerceInventoryWarehouseService, so the addressed record is not changed. For Warehouse writes that persist, use the inventory administration API.
+                Unimplemented endpoint for replacing a Warehouse identified by id. Calls -- none; throws UnsupportedOperationException without invoking CommerceInventoryWarehouseService, so every request is rejected with a 400 Bad Request and the addressed record is not changed. For Warehouse writes that persist, use the inventory administration API.
             operationId: putWarehouse
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
@@ -2278,12 +2077,6 @@ paths:
                             $ref: "#/components/schemas/Warehouse"
                 required: true
             responses:
-                202:
-                    description:
-                        Accepted - Async
-                204:
-                    description:
-                        No content
                 400:
                     description:
                         Invalid input
@@ -2307,36 +2100,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         The authenticated user lacks permission for the requested action on this Warehouse.
-                404:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The specified resource was not found
-                409:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        The supplied body conflicts with the current state of the Warehouse.
-                422:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                    description:
-                        Domain validation failed (for example, missing required commerceCountryId or name).
                 500:
                     content:
                         application/json:

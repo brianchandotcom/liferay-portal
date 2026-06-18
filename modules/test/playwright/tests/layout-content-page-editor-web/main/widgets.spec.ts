@@ -506,13 +506,17 @@ test(
 
 		// Check the label in the dropdown at the Product Menu
 
-		await productMenuPage.openProductMenuButton.click();
-
-		await productMenuPage.contentAndDataButton.click();
+		await productMenuPage.openProductMenuIfClosed();
 
 		// Open the dropdown to select the scope
 
 		const dropdownButton = page.getByLabel('Choose Scope');
+
+		await clickAndExpectToBeVisible({
+			target: dropdownButton,
+			timeout: 5000,
+			trigger: productMenuPage.contentAndDataButton,
+		});
 
 		const dropdownOption = page
 			.locator('.dropdown-menu')

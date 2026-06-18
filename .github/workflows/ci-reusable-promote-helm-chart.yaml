@@ -3,6 +3,8 @@ defaults:
         shell: bash
 jobs:
     promote:
+        outputs:
+            image_digest: ${{steps.promote.outputs.image_digest}}
         permissions:
             contents: read
             id-token: write
@@ -24,6 +26,7 @@ jobs:
                 uses: oras-project/setup-oras@v1
             -   env:
                     HELM_CHART_REGISTRY_PRODUCTION: ${{vars.HELM_CHART_REGISTRY_PRODUCTION}}
+                id: promote
                 name: Promote Helm chart
                 run: |
                     set -o errexit
@@ -31,13 +34,30 @@ jobs:
                     set -o pipefail
 
                     function main {
-                        oras cp \
+                        local target_image_ref="${HELM_CHART_REGISTRY_PRODUCTION}/${{inputs.chart_name}}:${{inputs.chart_version}}"
+
+                        oras \
+                            cp \
                             --from-password "${{steps.auth_nonproduction.outputs.auth_token}}" \
                             --from-username oauth2accesstoken \
                             --to-password "${{steps.auth_production.outputs.auth_token}}" \
                             --to-username oauth2accesstoken \
                             "${{inputs.source_image_ref}}" \
-                            "${HELM_CHART_REGISTRY_PRODUCTION}/${{inputs.chart_name}}:${{inputs.chart_version}}"
+                            "${target_image_ref}"
+
+                        local image_digest
+
+                        image_digest=$( \
+                            oras \
+                                manifest \
+                                fetch \
+                                --descriptor \
+                                --password "${{steps.auth_production.outputs.auth_token}}" \
+                                --username oauth2accesstoken \
+                                "${target_image_ref}" \
+                                | jq --raw-output '.digest')
+
+                        echo "image_digest=${image_digest}" >> ${GITHUB_OUTPUT}
                     }
 
                     main "${@}"
@@ -53,6 +73,9 @@ on:
             source_image_ref:
                 required: true
                 type: string
+        outputs:
+            image_digest:
+                value: ${{jobs.promote.outputs.image_digest}}
 permissions:
     contents: read
     id-token: write

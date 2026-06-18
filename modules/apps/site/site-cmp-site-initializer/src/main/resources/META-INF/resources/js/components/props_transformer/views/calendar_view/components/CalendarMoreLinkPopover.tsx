@@ -8,10 +8,10 @@ import {Immutable} from '@liferay/frontend-js-state-web';
 import {AssigneeAvatar} from '@liferay/object-dynamic-data-mapping-form-field-type';
 import React from 'react';
 
-import isOverdue from '../../../../utils/isOverdue';
-import {ITaskObjectEntry} from '../../../../utils/types';
-import StateLabel from '../../../StateLabel';
-import sortTasksByPriority from './sortTasksByPriority';
+import isOverdue from '../../../../../utils/isOverdue';
+import {ITaskObjectEntry} from '../../../../../utils/types';
+import StateLabel from '../../../../StateLabel';
+import sortTasksByPriority from '../utils/sortTasksByPriority';
 
 import './CalendarMoreLinkPopover.scss';
 

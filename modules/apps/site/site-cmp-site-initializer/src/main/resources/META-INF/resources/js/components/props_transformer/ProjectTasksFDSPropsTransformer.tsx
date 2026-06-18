@@ -34,7 +34,7 @@ import ACTIONS from './actions/creationMenuActions';
 import {cmpTasksFDSAtom} from './atoms';
 import AssigneeRenderer from './cell_renderers/AssigneeRenderer';
 import CalendarView from './views/calendar_view/CalendarView';
-import UnscheduledTasksPanel from './views/calendar_view/UnscheduledTasksPanel';
+import UnscheduledTasksPanel from './views/calendar_view/components/UnscheduledTasksPanel';
 import KanbanView from './views/kanban_view/KanbanView';
 
 export default function ProjectTasksFDSPropsTransformer({

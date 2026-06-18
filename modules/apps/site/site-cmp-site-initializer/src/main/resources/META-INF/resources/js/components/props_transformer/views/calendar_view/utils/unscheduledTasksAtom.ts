@@ -5,7 +5,7 @@
 
 import {State} from '@liferay/frontend-js-state-web';
 
-import {ITaskObjectEntry} from '../../../../utils/types';
+import {ITaskObjectEntry} from '../../../../../utils/types';
 
 export const CMP_UNSCHEDULED_TASKS_ATOM_ID = 'cmpUnscheduledTasks';
 

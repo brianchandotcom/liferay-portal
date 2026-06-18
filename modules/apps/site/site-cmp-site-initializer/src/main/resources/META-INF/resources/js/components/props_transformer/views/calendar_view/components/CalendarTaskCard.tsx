@@ -8,8 +8,8 @@ import {AssigneeAvatar} from '@liferay/object-dynamic-data-mapping-form-field-ty
 import classNames from 'classnames';
 import React from 'react';
 
-import isOverdue from '../../../../utils/isOverdue';
-import {ITaskObjectEntry} from '../../../../utils/types';
+import isOverdue from '../../../../../utils/isOverdue';
+import {ITaskObjectEntry} from '../../../../../utils/types';
 
 import './CalendarTaskCard.scss';
 

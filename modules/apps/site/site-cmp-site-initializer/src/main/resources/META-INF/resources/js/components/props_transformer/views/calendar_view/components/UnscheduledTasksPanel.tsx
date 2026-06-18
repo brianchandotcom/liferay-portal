@@ -13,10 +13,10 @@ import {useLiferayState} from '@liferay/frontend-js-state-web/react';
 import {AssigneeAvatar} from '@liferay/object-dynamic-data-mapping-form-field-type';
 import React, {useMemo, useState} from 'react';
 
-import {ITaskObjectEntry} from '../../../../utils/types';
-import StateLabel from '../../../StateLabel';
-import sortTasksByPriority from './sortTasksByPriority';
-import {unscheduledTasksAtom} from './unscheduledTasksAtom';
+import {ITaskObjectEntry} from '../../../../../utils/types';
+import StateLabel from '../../../../StateLabel';
+import sortTasksByPriority from '../utils/sortTasksByPriority';
+import {unscheduledTasksAtom} from '../utils/unscheduledTasksAtom';
 
 import './UnscheduledTasksPanel.scss';
 

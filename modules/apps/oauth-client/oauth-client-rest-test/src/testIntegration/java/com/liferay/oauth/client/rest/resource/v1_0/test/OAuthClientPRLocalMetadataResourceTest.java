@@ -37,11 +37,12 @@ public class OAuthClientPRLocalMetadataResourceTest
 					"https://" +
 						StringUtil.toLowerCase(RandomTestUtil.randomString()))
 			).put(
-				"bearer_methods_supported", JSONUtil.put("header")
+				"bearer_methods_supported",
+				JSONUtil.put(RandomTestUtil.randomString())
 			).put(
 				"resource_name", RandomTestUtil.randomString()
 			).put(
-				"scopes_supported", JSONUtil.put("read")
+				"scopes_supported", JSONUtil.put(RandomTestUtil.randomString())
 			).toString());
 		oAuthClientPRLocalMetadata.setProtectedResourceURI(
 			"https://" + StringUtil.toLowerCase(RandomTestUtil.randomString()));

@@ -118,7 +118,7 @@ public class OAuthClientPRLocalMetadataResourceImpl
 		com.liferay.oauth.client.persistence.model.OAuthClientPRLocalMetadata
 			serviceBuilderOAuthClientPRLocalMetadata =
 				OAuthClientPRLocalMetadataUtil.addOAuthClientPRLocalMetadata(
-					_jsonFactory, oAuthClientPRLocalMetadata,
+					oAuthClientPRLocalMetadata,
 					_oAuthClientPRLocalMetadataService);
 
 		return OAuthClientPRLocalMetadataUtil.toOAuthClientPRLocalMetadata(

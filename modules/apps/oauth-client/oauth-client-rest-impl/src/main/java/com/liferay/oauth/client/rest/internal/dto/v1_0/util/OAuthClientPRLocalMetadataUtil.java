@@ -8,7 +8,7 @@ package com.liferay.oauth.client.rest.internal.dto.v1_0.util;
 import com.liferay.headless.delivery.dto.v1_0.util.CreatorUtil;
 import com.liferay.oauth.client.persistence.service.OAuthClientPRLocalMetadataService;
 import com.liferay.oauth.client.rest.dto.v1_0.OAuthClientPRLocalMetadata;
-import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.User;
@@ -24,7 +24,6 @@ public class OAuthClientPRLocalMetadataUtil {
 	public static
 		com.liferay.oauth.client.persistence.model.OAuthClientPRLocalMetadata
 				addOAuthClientPRLocalMetadata(
-					JSONFactory jsonFactory,
 					OAuthClientPRLocalMetadata oAuthClientPRLocalMetadata,
 					OAuthClientPRLocalMetadataService
 						oAuthClientPRLocalMetadataService)
@@ -36,7 +35,7 @@ public class OAuthClientPRLocalMetadataUtil {
 			throw new IllegalArgumentException("Metadata JSON is required");
 		}
 
-		JSONObject metadataJSONObject = jsonFactory.createJSONObject(
+		JSONObject metadataJSONObject = JSONFactoryUtil.createJSONObject(
 			metadataJSON);
 
 		return oAuthClientPRLocalMetadataService.addOAuthClientPRLocalMetadata(

@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -343,12 +344,12 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 		JSONObject apiURLTokenMappingsJSONObject, String externalReferenceCode,
 		HttpServletRequest httpServletRequest) {
 
+		JSONObject tokenResolutionsJSONObject = _jsonFactory.createJSONObject();
+
 		Set<String> autoResolvableTokenNames = _getAutoResolvableTokenNames(
 			externalReferenceCode, httpServletRequest);
 		Set<String> tokenNames = _getTokenNames(
 			externalReferenceCode, httpServletRequest);
-
-		JSONObject tokenResolutionsJSONObject = _jsonFactory.createJSONObject();
 
 		for (String tokenName : tokenNames) {
 			String tokenValue = _getTokenValue(
@@ -493,38 +494,44 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 		Set<String> autoResolvableTokenNames = _getAutoResolvableTokenNames(
 			externalReferenceCode, httpServletRequest);
 
-		JSONArray jsonArray = _jsonFactory.createJSONArray();
+		try {
+			JSONArray jsonArray = JSONUtil.toJSONArray(
+				autoResolvableTokenNames,
+				autoResolvableTokenName -> autoResolvableTokenName);
 
-		for (String autoResolvableTokenName : autoResolvableTokenNames) {
-			jsonArray.put(autoResolvableTokenName);
+			JSONObject editableValuesJSONObject =
+				fragmentEntryLink.getEditableValuesJSONObject();
+
+			if (editableValuesJSONObject == null) {
+				editableValuesJSONObject = _jsonFactory.createJSONObject();
+
+				fragmentEntryLink.setEditableValues(
+					editableValuesJSONObject.toString());
+			}
+
+			JSONObject configurationJSONObject =
+				editableValuesJSONObject.getJSONObject(
+					FragmentEntryProcessorConstants.
+						KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
+
+			if (configurationJSONObject == null) {
+				configurationJSONObject = _jsonFactory.createJSONObject();
+
+				editableValuesJSONObject.put(
+					FragmentEntryProcessorConstants.
+						KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+					configurationJSONObject);
+			}
+
+			configurationJSONObject.put(
+				"autoResolvableTokenNames", jsonArray.toString());
 		}
-
-		JSONObject editableValuesJSONObject =
-			fragmentEntryLink.getEditableValuesJSONObject();
-
-		if (editableValuesJSONObject == null) {
-			editableValuesJSONObject = _jsonFactory.createJSONObject();
-
-			fragmentEntryLink.setEditableValues(
-				editableValuesJSONObject.toString());
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Failed to write auto-resolvable token names", exception);
+			}
 		}
-
-		JSONObject configurationJSONObject =
-			editableValuesJSONObject.getJSONObject(
-				FragmentEntryProcessorConstants.
-					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
-
-		if (configurationJSONObject == null) {
-			configurationJSONObject = _jsonFactory.createJSONObject();
-
-			editableValuesJSONObject.put(
-				FragmentEntryProcessorConstants.
-					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
-				configurationJSONObject);
-		}
-
-		configurationJSONObject.put(
-			"autoResolvableTokenNames", jsonArray.toString());
 	}
 
 	private void _writeDestroyPreviousComponentScript(

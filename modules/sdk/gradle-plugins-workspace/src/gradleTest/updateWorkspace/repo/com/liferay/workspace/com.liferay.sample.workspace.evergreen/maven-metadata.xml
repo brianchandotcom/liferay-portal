@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<metadata>
+	<groupId>com.liferay.workspace</groupId>
+	<artifactId>com.liferay.sample.workspace.evergreen</artifactId>
+	<versioning>
+		<release>99999999.9999</release>
+		<versions>
+			<version>99999999.9999</version>
+		</versions>
+	</versioning>
+</metadata>

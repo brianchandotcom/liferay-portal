@@ -74,7 +74,9 @@ import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.artifacts.DependencySet;
+import org.gradle.api.artifacts.dsl.DependencyHandler;
 import org.gradle.api.execution.TaskExecutionGraph;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.DirectoryProperty;
@@ -154,8 +156,6 @@ public class RootProjectConfigurator implements Plugin<Project> {
 	public static final String DOCKER_GROUP = "docker";
 
 	public static final String DOWNLOAD_BUNDLE_TASK_NAME = "downloadBundle";
-
-	public static final String EVERGREEN_CONFIGURATION_NAME = "evergreen";
 
 	public static final String INIT_BUNDLE_TASK_NAME = "initBundle";
 
@@ -250,9 +250,6 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		Configuration providedModulesConfiguration =
 			_addConfigurationProvidedModules(project);
 
-		Configuration evergreenConfiguration = _addConfigurationEvergreen(
-			project);
-
 		TargetPlatformRootProjectConfigurator.INSTANCE.apply(project);
 
 		_addTaskCreateToken(project);
@@ -291,7 +288,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		_configureTaskUpgradeSourceCode(
 			upgradeSourceCodeTask, workspaceExtension);
 
-		_addTaskUpdateWorkspace(project, evergreenConfiguration);
+		_addTaskUpdateWorkspace(project);
 
 		_addTaskUpgradeJakarta(project);
 	}
@@ -327,28 +324,6 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		return configuration;
 	}
 
-	private Configuration _addConfigurationEvergreen(final Project project) {
-		Configuration configuration = GradleUtil.addConfiguration(
-			project, EVERGREEN_CONFIGURATION_NAME);
-
-		configuration.defaultDependencies(
-			new Action<DependencySet>() {
-
-				@Override
-				public void execute(DependencySet dependencySet) {
-					_addDependenciesEvergreen(project);
-				}
-
-			});
-
-		configuration.setDescription(
-			"Configures the evergreen AI agent rules files for this project.");
-		configuration.setTransitive(false);
-		configuration.setVisible(false);
-
-		return configuration;
-	}
-
 	private Configuration _addConfigurationProvidedModules(Project project) {
 		Configuration configuration = GradleUtil.addConfiguration(
 			project, PROVIDED_MODULES_CONFIGURATION_NAME);
@@ -365,12 +340,6 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		GradleUtil.addDependency(
 			project, BUNDLE_SUPPORT_CONFIGURATION_NAME, "com.liferay",
 			"com.liferay.portal.tools.bundle.support", "latest.release");
-	}
-
-	private void _addDependenciesEvergreen(Project project) {
-		GradleUtil.addDependency(
-			project, EVERGREEN_CONFIGURATION_NAME, "com.liferay.workspace",
-			"com.liferay.sample.workspace.evergreen", "latest.release");
 	}
 
 	private void _addDockerTasks(
@@ -1562,9 +1531,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		return dockerStopContainer;
 	}
 
-	private Task _addTaskUpdateWorkspace(
-		final Project project, final Configuration evergreenConfiguration) {
-
+	private Task _addTaskUpdateWorkspace(final Project project) {
 		Task task = GradleUtil.addTask(
 			project, UPDATE_WORKSPACE_TASK_NAME, DefaultTask.class);
 
@@ -1573,6 +1540,21 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 				@Override
 				public void execute(Task task) {
+					ConfigurationContainer configurationContainer =
+						project.getConfigurations();
+
+					DependencyHandler dependencyHandler =
+						project.getDependencies();
+
+					Configuration configuration =
+						configurationContainer.detachedConfiguration(
+							dependencyHandler.create(
+								"com.liferay.workspace:" +
+									"com.liferay.sample.workspace.evergreen:" +
+										"latest.release"));
+
+					configuration.setTransitive(false);
+
 					project.copy(
 						new Action<CopySpec>() {
 
@@ -1580,8 +1562,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 							public void execute(CopySpec copySpec) {
 								copySpec.from(
 									project.zipTree(
-										evergreenConfiguration.
-											getSingleFile()));
+										configuration.getSingleFile()));
 								copySpec.into(project.getProjectDir());
 							}
 

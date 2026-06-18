@@ -14,7 +14,7 @@ tests:
             path: kind
             skipEmptyTemplates: true
             value: StatefulSet
-        it: adds the overlay init container when the overlay is enabled
+        it: Adds the overlay init container when the overlay is enabled
         set:
             overlay.copy:
                 -   into: /dest
@@ -30,7 +30,7 @@ tests:
             path: kind
             skipEmptyTemplates: true
             value: StatefulSet
-        it: generates a sync command for each copy block
+        it: Generates a sync command for each copy block
         set:
             overlay.copy:
                 -   from: overlay-build-1/osgi/*
@@ -50,7 +50,7 @@ tests:
             path: kind
             skipEmptyTemplates: true
             value: StatefulSet
-        it: mounts the overlay sync script from the configured init scripts volume
+        it: Mounts the overlay sync script from the configured init scripts volume
         set:
             overlay.copy:
                 -   into: /dest
@@ -66,7 +66,7 @@ tests:
             path: kind
             skipEmptyTemplates: true
             value: StatefulSet
-        it: omits the overlay init container when the overlay is disabled
+        it: Omits the overlay init container when the overlay is disabled
         set:
             overlay.enabled: false
     -   asserts:
@@ -77,7 +77,7 @@ tests:
             path: kind
             skipEmptyTemplates: true
             value: StatefulSet
-        it: uses the overridden overlay image
+        it: Uses the overridden overlay image
         set:
             overlay.copy:
                 -   into: /dest
@@ -92,7 +92,7 @@ tests:
             path: kind
             skipEmptyTemplates: true
             value: StatefulSet
-        it: uses the rclone overlay image by default
+        it: Uses the rclone overlay image by default
         set:
             overlay.copy:
                 -   into: /dest

@@ -241,6 +241,24 @@
 			</xs:complexContent>
 		</xs:complexType>
 	</xs:element>
+	<xs:element name="http-request">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="abstract-workflow-node-complex-type">
+					<xs:sequence>
+						<xs:element minOccurs="0" ref="labels" />
+						<xs:element minOccurs="0" name="http-method" type="xs:string" />
+						<xs:element minOccurs="0" name="input-variables" type="xs:string" />
+						<xs:element minOccurs="0" name="output-variables" type="xs:string" />
+						<xs:element minOccurs="0" name="request-body" type="xs:string" />
+						<xs:element minOccurs="0" name="timeout" type="xs:int" />
+						<xs:element ref="transitions" />
+						<xs:element name="url" type="xs:string" />
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
 	<xs:element name="join">
 		<xs:complexType>
 			<xs:complexContent>
@@ -278,24 +296,6 @@
 					</xs:complexType>
 				</xs:element>
 			</xs:sequence>
-		</xs:complexType>
-	</xs:element>
-	<xs:element name="http-request">
-		<xs:complexType>
-			<xs:complexContent>
-				<xs:extension base="abstract-workflow-node-complex-type">
-					<xs:sequence>
-						<xs:element minOccurs="0" ref="labels" />
-						<xs:element minOccurs="0" name="http-method" type="xs:string" />
-						<xs:element minOccurs="0" name="input-variables" type="xs:string" />
-						<xs:element minOccurs="0" name="output-variables" type="xs:string" />
-						<xs:element minOccurs="0" name="request-body" type="xs:string" />
-						<xs:element minOccurs="0" name="timeout" type="xs:int" />
-						<xs:element ref="transitions" />
-						<xs:element name="url" type="xs:string" />
-					</xs:sequence>
-				</xs:extension>
-			</xs:complexContent>
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="llm">

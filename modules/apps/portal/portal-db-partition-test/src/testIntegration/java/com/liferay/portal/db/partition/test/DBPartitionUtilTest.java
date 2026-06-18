@@ -556,15 +556,14 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 	}
 
 	@Test
-	public void testIncrementSystemCounter() throws Exception {
-		long count = DBPartitionUtil.incrementSystemCounter();
+	public void testIncrementCounter() throws Exception {
+		long count = DBPartitionUtil.incrementCounter();
 
 		try (SafeCloseable safeCloseable =
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					COMPANY_IDS[0])) {
 
-			Assert.assertEquals(
-				count + 1, DBPartitionUtil.incrementSystemCounter());
+			Assert.assertEquals(count + 1, DBPartitionUtil.incrementCounter());
 
 			Assert.assertEquals(
 				Long.valueOf(COMPANY_IDS[0]),

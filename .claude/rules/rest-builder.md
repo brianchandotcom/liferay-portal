@@ -200,7 +200,7 @@ Run every step without asking for confirmation, including the commits.
 
 ## Running REST Builder
 
-Both entry points automatically pick up the latest generator code, so any change to the generator source under `modules/util/portal-tools-rest-builder` takes effect on the next run without an extra install step.
+Both entry points pick up the latest generator code automatically, so any change to the generator source under `modules/util/portal-tools-rest-builder` takes effect on the next run.
 
 ### A Single Module
 

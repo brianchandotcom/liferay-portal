@@ -66,7 +66,7 @@ Push the current branch to the user's remote when it has not been pushed yet or 
 
 ### Pull Request
 
-The title is concise (under 72 characters) and prefixed with the title ticket (the branch-name ticket, or the first ticket in the set):
+The title is concise (under 72 characters) and prefixed with the key of the first ticket in the set:
 
 ```
 LPD-83847 Fix OutOfMemoryError during batch engine import

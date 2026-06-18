@@ -5,6 +5,7 @@ definition {
 	property custom.properties = "feature.flag.LPD-35013=false";
 	property minimum.slave.ram = "24";
 	property osgi.modules.includes = "wiki";
+	property portal.acceptance = "true";
 	property portal.release = "false";
 	property portal.suite.search.engine = "elasticsearch8,opensearch2";
 	property portal.upstream = "true";
@@ -90,7 +91,6 @@ definition {
 	test AddElementToQueryBuilder {
 		property environment.acceptance = "true";
 		property operating.system.types = "alpine,amazonlinux,centos,debian,fedora,orcllinux,osx,redhat,rockylinux,solaris,suse,ubuntu,windows";
-		property portal.acceptance = "true";
 
 		Blueprints.openBlueprintsAdmin();
 
@@ -1264,6 +1264,8 @@ definition {
 
 	@priority = 3
 	test CopyElementJSONViaBlueprintsQueryBuilder {
+		property portal.acceptance = "quarantine";
+
 		Blueprints.openBlueprintsAdmin();
 
 		Blueprints.createBlueprint(title = "Test Blueprint");
@@ -1287,6 +1289,8 @@ definition {
 
 	@priority = 3
 	test CopyElementJSONViaEditElementPreview {
+		property portal.acceptance = "quarantine";
+
 		Blueprints.openBlueprintsAdmin();
 
 		Blueprints.gotoElement(
@@ -1311,6 +1315,8 @@ definition {
 	@description = "This is a use case for LPS-165923."
 	@priority = 3
 	test CopyRawRequestViaBlueprintsPreview {
+		property portal.acceptance = "quarantine";
+
 		Blueprints.openBlueprintsAdmin();
 
 		Blueprints.createBlueprint(title = "Test Blueprint");
@@ -1330,6 +1336,8 @@ definition {
 
 	@priority = 3
 	test CopyRawResponseViaBlueprintsPreview {
+		property portal.acceptance = "quarantine";
+
 		Blueprints.openBlueprintsAdmin();
 
 		Blueprints.createBlueprint(title = "Test Blueprint");
@@ -1349,6 +1357,8 @@ definition {
 
 	@priority = 3
 	test CopyScoreExplanationViaBlueprintsPreview {
+		property portal.acceptance = "quarantine";
+
 		Blueprints.openBlueprintsAdmin();
 
 		Blueprints.createBlueprint(title = "Test Blueprint");
@@ -1762,6 +1772,8 @@ definition {
 
 	@priority = 3
 	test ExportImportBlueprint {
+		property portal.acceptance = "quarantine";
+
 		Blueprints.openBlueprintsAdmin();
 
 		Blueprints.createBlueprint(title = "Test Blueprint");
@@ -2408,6 +2420,8 @@ definition {
 	@description = "This is a use case for LPS-143567."
 	@priority = 3
 	test SaveAndEditCustomJSONElement {
+		property portal.acceptance = "quarantine";
+
 		JSONWebcontent.addWebContent(
 			content = "",
 			groupName = "Guest",
@@ -2501,6 +2515,8 @@ definition {
 
 	@priority = 3
 	test SearchBlueprintsAdminTable {
+		property portal.acceptance = "quarantine";
+
 		Blueprints.openBlueprintsAdmin();
 
 		Blueprints.createBlueprint(
@@ -2559,6 +2575,8 @@ definition {
 
 	@priority = 3
 	test SearchViaBlueprintsPreview {
+		property portal.acceptance = "quarantine";
+
 		Blueprints.openBlueprintsAdmin();
 
 		Blueprints.createBlueprint(title = "Test Blueprint");
@@ -2572,6 +2590,8 @@ definition {
 
 	@priority = 3
 	test SearchViaBlueprintsPreviewWithNoResults {
+		property portal.acceptance = "quarantine";
+
 		Blueprints.openBlueprintsAdmin();
 
 		Blueprints.createBlueprint(title = "Test Blueprint");
@@ -2583,6 +2603,8 @@ definition {
 
 	@priority = 3
 	test SearchWithCopiedBlueprint {
+		property portal.acceptance = "quarantine";
+
 		JSONBlog.addEntry(
 			entryContent = "",
 			entryTitle = "apple apple apple");
@@ -2631,6 +2653,8 @@ definition {
 
 	@priority = 3
 	test SearchWithCopiedOOTBElement {
+		property portal.acceptance = "quarantine";
+
 		JSONWebcontent.addWebContent(
 			content = "",
 			groupName = "Guest",
@@ -2682,6 +2706,8 @@ definition {
 
 	@priority = 3
 	test SearchWithSelectedAssetType {
+		property portal.acceptance = "quarantine";
+
 		JSONWebcontent.addWebContent(
 			content = "",
 			groupName = "Guest",
@@ -3495,6 +3521,8 @@ definition {
 
 	@priority = 3
 	test ViewClauseContributorsFilterAndSort {
+		property portal.acceptance = "quarantine";
+
 		Blueprints.openBlueprintsAdmin();
 
 		Blueprints.createBlueprint(title = "Test Blueprint");
@@ -3698,6 +3726,8 @@ definition {
 
 	@priority = 3
 	test ViewClauseContributorsUI {
+		property portal.acceptance = "quarantine";
+
 		Blueprints.openBlueprintsAdmin();
 
 		Blueprints.createBlueprint(title = "Test Blueprint");
@@ -3844,6 +3874,8 @@ definition {
 
 	@priority = 3
 	test ViewCopiedBlueprintContent {
+		property portal.acceptance = "quarantine";
+
 		Blueprints.openBlueprintsAdmin();
 
 		Blueprints.createBlueprint(title = "Test Blueprint");
@@ -4059,6 +4091,8 @@ definition {
 
 	@priority = 3
 	test ViewCustomElementsJSONValidation {
+		property portal.acceptance = "quarantine";
+
 		Blueprints.openBlueprintsAdmin();
 
 		Navigator.gotoNavItem(navItem = "Elements");

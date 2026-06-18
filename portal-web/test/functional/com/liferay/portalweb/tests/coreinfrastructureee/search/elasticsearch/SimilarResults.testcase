@@ -4,6 +4,7 @@ definition {
 	property browser.chrome.version = "139.0";
 	property custom.properties = "feature.flag.LPD-35013=false";
 	property osgi.modules.includes = "wiki";
+	property portal.acceptance = "true";
 	property portal.release = "false";
 	property portal.suite.search.engine = "elasticsearch8,opensearch2";
 	property portal.upstream = "true";

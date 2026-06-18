@@ -10,7 +10,6 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 
 import java.net.URI;
@@ -22,8 +21,6 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 
 import java.util.Objects;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -126,7 +123,7 @@ public class ArtifactURLUtilTest {
 		File file = temporaryFolder.newFile(
 			"liferay-sample-global-js-1.0.0-SNAPSHOT.zip");
 
-		_zipDirToFile(dir, file);
+		ZipTestUtil.zipDirToFile(dir, file);
 
 		URI uri = file.toURI();
 
@@ -163,24 +160,6 @@ public class ArtifactURLUtilTest {
 		URI uri = url.toURI();
 
 		return uri.toASCIIString();
-	}
-
-	private void _zipDirToFile(File dir, File zipFile) throws Exception {
-		try (ZipOutputStream zipOutputStream = new ZipOutputStream(
-				new FileOutputStream(zipFile))) {
-
-			for (File file : dir.listFiles()) {
-				ZipEntry zipEntry = new ZipEntry(file.getName());
-
-				zipOutputStream.putNextEntry(zipEntry);
-
-				byte[] bytes = Files.readAllBytes(file.toPath());
-
-				zipOutputStream.write(bytes, 0, bytes.length);
-
-				zipOutputStream.closeEntry();
-			}
-		}
 	}
 
 }

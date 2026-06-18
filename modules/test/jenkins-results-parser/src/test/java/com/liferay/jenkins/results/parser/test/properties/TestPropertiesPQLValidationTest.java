@@ -105,8 +105,9 @@ public class TestPropertiesPQLValidationTest {
 							continue;
 						}
 
-						String propertyValue = properties.getProperty(
-							propertyName);
+						String propertyValue =
+							JenkinsResultsParserUtil.getProperty(
+								properties, propertyName);
 
 						String pql = propertyValue.trim();
 

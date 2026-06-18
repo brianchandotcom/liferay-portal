@@ -552,8 +552,15 @@ public class SitesImpl implements Sites {
 					layoutSet.getLayoutSetPrototypeUuid(),
 					layoutSet.getCompanyId());
 
-		mergeLayoutSetPrototypeLayoutsInBackground(
-			layoutSetPrototype, layoutSet);
+		User user = _userLocalService.getDefaultUser(layoutSet.getCompanyId());
+
+		ExportImportConfiguration exportImportConfiguration =
+			_buildExportImportConfiguration(
+				layoutSet, layoutSetPrototype, user);
+
+		_exportImportLocalService.mergeLayoutSetPrototypeInBackground(
+			user.getUserId(), layoutSet.getGroupId(),
+			exportImportConfiguration);
 	}
 
 	@Override
@@ -880,79 +887,6 @@ public class SitesImpl implements Sites {
 			user.getUserId(), exportImportConfiguration, file);
 	}
 
-	protected void mergeLayoutSetPrototypeLayoutsInBackground(
-			LayoutSetPrototype layoutSetPrototype, LayoutSet layoutSet)
-		throws PortalException {
-
-		UnicodeProperties settingsUnicodeProperties =
-			layoutSet.getSettingsProperties();
-
-		boolean importData = true;
-
-		long lastMergeTime = GetterUtil.getLong(
-			settingsUnicodeProperties.getProperty(LAST_MERGE_TIME));
-		long lastResetTime = GetterUtil.getLong(
-			settingsUnicodeProperties.getProperty(LAST_RESET_TIME));
-
-		if ((lastMergeTime > 0) || (lastResetTime > 0)) {
-			importData = false;
-		}
-
-		Map<String, String[]> parameterMap = getLayoutSetPrototypesParameters(
-			importData);
-
-		parameterMap.put(
-			PortletDataHandlerKeys.LAYOUT_SET_PRIVATE_LAYOUT,
-			new String[] {String.valueOf(layoutSet.isPrivateLayout())});
-		parameterMap.put(
-			"importData", new String[] {String.valueOf(importData)});
-		parameterMap.put(
-			"lastMergeVersion",
-			new String[] {String.valueOf(layoutSetPrototype.getMvccVersion())});
-		parameterMap.put(
-			"layoutSetId",
-			new String[] {String.valueOf(layoutSet.getLayoutSetId())});
-		parameterMap.put(
-			"layoutSetPrototypeId",
-			new String[] {
-				String.valueOf(layoutSetPrototype.getLayoutSetPrototypeId())
-			});
-
-		User user = _userLocalService.getDefaultUser(layoutSet.getCompanyId());
-
-		List<Layout> layoutSetPrototypeLayouts = _layoutLocalService.getLayouts(
-			layoutSetPrototype.getGroupId(), true);
-
-		Map<String, Serializable> exportLayoutSettingsMap =
-			ExportImportConfigurationSettingsMapFactoryUtil.
-				buildExportLayoutSettingsMap(
-					user, layoutSetPrototype.getGroupId(), true,
-					_exportImportHelper.getLayoutIds(layoutSetPrototypeLayouts),
-					parameterMap);
-
-		ExportImportConfiguration exportImportConfiguration = null;
-
-		try {
-			exportImportConfiguration =
-				_exportImportConfigurationLocalService.
-					addDraftExportImportConfiguration(
-						user.getUserId(),
-						ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
-						exportLayoutSettingsMap);
-		}
-		catch (PortalException portalException) {
-			_log.error(
-				"Unable to add draft export-import configuration",
-				portalException);
-
-			return;
-		}
-
-		_exportImportLocalService.mergeLayoutSetPrototypeInBackground(
-			user.getUserId(), layoutSet.getGroupId(),
-			exportImportConfiguration);
-	}
-
 	protected void updateLayoutSetPrototypeLink(
 			long groupId, boolean privateLayout, long layoutSetPrototypeId,
 			boolean layoutSetPrototypeLinkEnabled)
@@ -1049,6 +983,62 @@ public class SitesImpl implements Sites {
 		}
 
 		return owner;
+	}
+
+	private ExportImportConfiguration _buildExportImportConfiguration(
+			LayoutSet layoutSet, LayoutSetPrototype layoutSetPrototype,
+			User user)
+		throws Exception {
+
+		UnicodeProperties settingsUnicodeProperties =
+			layoutSet.getSettingsProperties();
+
+		boolean importData = true;
+
+		long lastMergeTime = GetterUtil.getLong(
+			settingsUnicodeProperties.getProperty(LAST_MERGE_TIME));
+		long lastResetTime = GetterUtil.getLong(
+			settingsUnicodeProperties.getProperty(LAST_RESET_TIME));
+
+		if ((lastMergeTime > 0) || (lastResetTime > 0)) {
+			importData = false;
+		}
+
+		Map<String, String[]> parameterMap = getLayoutSetPrototypesParameters(
+			importData);
+
+		parameterMap.put(
+			PortletDataHandlerKeys.LAYOUT_SET_PRIVATE_LAYOUT,
+			new String[] {String.valueOf(layoutSet.isPrivateLayout())});
+		parameterMap.put(
+			"importData", new String[] {String.valueOf(importData)});
+		parameterMap.put(
+			"lastMergeVersion",
+			new String[] {String.valueOf(layoutSetPrototype.getMvccVersion())});
+		parameterMap.put(
+			"layoutSetId",
+			new String[] {String.valueOf(layoutSet.getLayoutSetId())});
+		parameterMap.put(
+			"layoutSetPrototypeId",
+			new String[] {
+				String.valueOf(layoutSetPrototype.getLayoutSetPrototypeId())
+			});
+
+		List<Layout> layoutSetPrototypeLayouts = _layoutLocalService.getLayouts(
+			layoutSetPrototype.getGroupId(), true);
+
+		Map<String, Serializable> exportLayoutSettingsMap =
+			ExportImportConfigurationSettingsMapFactoryUtil.
+				buildExportLayoutSettingsMap(
+					user, layoutSetPrototype.getGroupId(), true,
+					_exportImportHelper.getLayoutIds(layoutSetPrototypeLayouts),
+					parameterMap);
+
+		return _exportImportConfigurationLocalService.
+			addDraftExportImportConfiguration(
+				user.getUserId(),
+				ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
+				exportLayoutSettingsMap);
 	}
 
 	private void _releaseLock(String className, long classPK, String owner) {

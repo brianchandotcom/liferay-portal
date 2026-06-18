@@ -31,6 +31,10 @@
 		}
 	}
 
+	tr.table-active td a {
+		color: $gray-900;
+	}
+
 	table {
 		table-layout: auto !important;
 

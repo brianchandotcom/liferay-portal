@@ -24,6 +24,7 @@ type DefinitionField = {
 	defaultValue: {[keys: string]: string};
 	fieldType:
 		| 'document_library'
+		| 'geolocation'
 		| 'image'
 		| 'journal_article'
 		| 'numeric'

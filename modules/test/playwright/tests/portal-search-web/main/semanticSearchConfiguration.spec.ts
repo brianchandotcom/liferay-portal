@@ -46,7 +46,7 @@ testWithBYOLLMEnabled(
 		await expect(
 			semanticSearchConfigurationPage.bringYourOwnLLMCapabilityAlert
 		).toContainText(
-			'Bring your own LLM via Elasticsearch Inference Endpoints is unavailable.'
+			'Bring your own LLM via Elasticsearch inference endpoints is unavailable.'
 		);
 
 		await expect(

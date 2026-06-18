@@ -449,6 +449,27 @@ public class FragmentExportImportTest extends BasePortletExportImportTestCase {
 		return fragmentEntry;
 	}
 
+	private void _testExportImportPortletWithValidationWithFragmentEntryContentException() {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.exportimport.internal.lifecycle." +
+					"LoggerExportImportLifecycleListener",
+				LoggerTestUtil.ERROR)) {
+
+			try {
+				exportImportPortlet(FragmentPortletKeys.FRAGMENT, false);
+
+				Assert.fail();
+			}
+			catch (Exception exception) {
+				_assertFragmentEntryContentException(exception);
+			}
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertFalse(logEntries.toString(), logEntries.isEmpty());
+		}
+	}
+
 	private void
 		_testExportImportPortletWithValidationWithFragmentEntryContentException(
 			FragmentEntry fragmentEntry) {
@@ -463,14 +484,7 @@ public class FragmentExportImportTest extends BasePortletExportImportTestCase {
 			expectedHTML = importedGroupFragmentEntry.getHtml();
 		}
 
-		try {
-			exportImportPortlet(FragmentPortletKeys.FRAGMENT, false);
-
-			Assert.fail();
-		}
-		catch (Exception exception) {
-			_assertFragmentEntryContentException(exception);
-		}
+		_testExportImportPortletWithValidationWithFragmentEntryContentException();
 
 		importedGroupFragmentEntry =
 			_fragmentEntryLocalService.fetchFragmentEntryByUuidAndGroupId(

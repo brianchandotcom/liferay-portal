@@ -2435,7 +2435,8 @@ public class ObjectEntryLocalServiceImpl
 		else {
 			_assetEntryLocalService.updateEntry(
 				objectDefinition.getClassName(), objectEntry.getObjectEntryId(),
-				null, null, true, objectEntry.isApproved());
+				objectEntry.getPublishDate(), objectEntry.getExpirationDate(),
+				true, objectEntry.isApproved());
 		}
 
 		_reindex(objectEntry);
@@ -6922,9 +6923,10 @@ public class ObjectEntryLocalServiceImpl
 				objectEntry.getCreateDate(), objectEntry.getModifiedDate(),
 				objectDefinition.getClassName(), objectEntry.getObjectEntryId(),
 				objectEntry.getUuid(), 0, assetCategoryIds, assetTagNames, true,
-				objectEntry.isApproved(), null, null, null, null, mimeType,
-				title, String.valueOf(objectEntry.getObjectEntryId()), null,
-				null, null, 0, 0, priority, serviceContext);
+				objectEntry.isApproved(), null, null,
+				objectEntry.getPublishDate(), objectEntry.getExpirationDate(),
+				mimeType, title, String.valueOf(objectEntry.getObjectEntryId()),
+				null, null, null, 0, 0, priority, serviceContext);
 
 			if (assetLinkEntryIds != null) {
 				_assetLinkLocalService.updateLinks(

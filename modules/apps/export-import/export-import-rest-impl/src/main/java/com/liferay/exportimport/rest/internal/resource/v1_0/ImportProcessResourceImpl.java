@@ -92,7 +92,7 @@ public class ImportProcessResourceImpl extends BaseImportProcessResourceImpl {
 		Group group = _getAssetLibraryGroup(assetLibraryExternalReferenceCode);
 
 		return _getImportProcessesPage(
-			creatorId, group.getGroupId(), null, pagination, search, sorts,
+			creatorId, group.getGroupId(), pagination, null, search, sorts,
 			status);
 	}
 
@@ -106,7 +106,7 @@ public class ImportProcessResourceImpl extends BaseImportProcessResourceImpl {
 		Group group = _getAssetLibraryGroup(assetLibraryExternalReferenceCode);
 
 		return _getImportProcessesPage(
-			creatorId, group.getGroupId(), portletId, pagination, search, sorts,
+			creatorId, group.getGroupId(), pagination, portletId, search, sorts,
 			status);
 	}
 
@@ -132,7 +132,7 @@ public class ImportProcessResourceImpl extends BaseImportProcessResourceImpl {
 		throws Exception {
 
 		return _getImportProcessesPage(
-			creatorId, _getCompanyGroupId(), null, pagination, search, sorts,
+			creatorId, _getCompanyGroupId(), pagination, null, search, sorts,
 			status);
 	}
 
@@ -166,7 +166,7 @@ public class ImportProcessResourceImpl extends BaseImportProcessResourceImpl {
 		Group group = _getSiteGroup(siteExternalReferenceCode);
 
 		return _getImportProcessesPage(
-			creatorId, group.getGroupId(), null, pagination, search, sorts,
+			creatorId, group.getGroupId(), pagination, null, search, sorts,
 			status);
 	}
 
@@ -179,7 +179,7 @@ public class ImportProcessResourceImpl extends BaseImportProcessResourceImpl {
 		Group group = _getSiteGroup(siteExternalReferenceCode);
 
 		return _getImportProcessesPage(
-			creatorId, group.getGroupId(), portletId, pagination, search, sorts,
+			creatorId, group.getGroupId(), pagination, portletId, search, sorts,
 			status);
 	}
 
@@ -202,7 +202,7 @@ public class ImportProcessResourceImpl extends BaseImportProcessResourceImpl {
 
 		return _postPortletImportProcess(
 			_getAssetLibraryGroup(assetLibraryExternalReferenceCode),
-			GetterUtil.getLong(plid), portletId, importProcessRequest);
+			importProcessRequest, GetterUtil.getLong(plid), portletId);
 	}
 
 	@Override
@@ -237,8 +237,8 @@ public class ImportProcessResourceImpl extends BaseImportProcessResourceImpl {
 		throws Exception {
 
 		return _postPortletImportProcess(
-			_getSiteGroup(siteExternalReferenceCode), GetterUtil.getLong(plid),
-			portletId, importProcessRequest);
+			_getSiteGroup(siteExternalReferenceCode), importProcessRequest,
+			GetterUtil.getLong(plid), portletId);
 	}
 
 	private Group _getAssetLibraryGroup(String externalReferenceCode) {
@@ -326,8 +326,8 @@ public class ImportProcessResourceImpl extends BaseImportProcessResourceImpl {
 	}
 
 	private Page<ImportProcess> _getImportProcessesPage(
-			Long creatorId, long groupId, String portletId,
-			Pagination pagination, String search, Sort[] sorts, Integer status)
+			Long creatorId, long groupId, Pagination pagination,
+			String portletId, String search, Sort[] sorts, Integer status)
 		throws Exception {
 
 		return Page.of(
@@ -376,14 +376,14 @@ public class ImportProcessResourceImpl extends BaseImportProcessResourceImpl {
 
 		FileEntry fileEntry = _getImportTempFileEntry(groupId);
 
-		Map<String, String[]> parameterMap = ParameterMapUtil.toParameterMap(
-			importProcessRequest, false);
-
 		String name = importProcessRequest.getName();
 
 		if (Validator.isBlank(name)) {
 			name = fileEntry.getFileName();
 		}
+
+		Map<String, String[]> parameterMap = ParameterMapUtil.toParameterMap(
+			importProcessRequest, false);
 
 		Map<String, Serializable> settingsMap =
 			_exportImportConfigurationSettingsMapFactory.
@@ -415,8 +415,8 @@ public class ImportProcessResourceImpl extends BaseImportProcessResourceImpl {
 	}
 
 	private ImportProcess _postPortletImportProcess(
-			Group group, long plid, String portletId,
-			ImportProcessRequest importProcessRequest)
+			Group group, ImportProcessRequest importProcessRequest, long plid,
+			String portletId)
 		throws Exception {
 
 		long groupId = group.getGroupId();
@@ -426,14 +426,14 @@ public class ImportProcessResourceImpl extends BaseImportProcessResourceImpl {
 
 		FileEntry fileEntry = _getImportTempFileEntry(groupId);
 
-		Map<String, String[]> parameterMap = ParameterMapUtil.toParameterMap(
-			importProcessRequest, true);
-
 		String name = importProcessRequest.getName();
 
 		if (Validator.isBlank(name)) {
 			name = fileEntry.getFileName();
 		}
+
+		Map<String, String[]> parameterMap = ParameterMapUtil.toParameterMap(
+			importProcessRequest, true);
 
 		Map<String, Serializable> settingsMap =
 			_exportImportConfigurationSettingsMapFactory.

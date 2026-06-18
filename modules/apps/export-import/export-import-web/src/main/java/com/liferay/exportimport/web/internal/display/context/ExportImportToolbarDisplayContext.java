@@ -21,13 +21,11 @@ import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.display.context.GroupDisplayContextHelper;
 
 import jakarta.portlet.PortletURL;
@@ -56,9 +54,6 @@ public class ExportImportToolbarDisplayContext {
 
 		_portletNamespace = PortalUtil.getPortletNamespace(
 			portlet.getRootPortletId());
-
-		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
 	}
 
 	public List<DropdownItem> getActionDropdownItems() {
@@ -420,6 +415,5 @@ public class ExportImportToolbarDisplayContext {
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _orderByType;
 	private final String _portletNamespace;
-	private final ThemeDisplay _themeDisplay;
 
 }

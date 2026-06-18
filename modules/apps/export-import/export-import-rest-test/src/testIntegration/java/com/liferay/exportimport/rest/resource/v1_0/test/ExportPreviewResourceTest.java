@@ -80,13 +80,13 @@ public class ExportPreviewResourceTest
 		super.setUp();
 
 		_companyObjectDefinition = _publishObjectDefinitionWithEntries(
-			ObjectDefinitionConstants.SCOPE_COMPANY,
-			GroupConstants.DEFAULT_PARENT_GROUP_ID);
+			GroupConstants.DEFAULT_PARENT_GROUP_ID,
+			ObjectDefinitionConstants.SCOPE_COMPANY);
 		_depotObjectDefinition = _publishObjectDefinitionWithEntries(
-			ObjectDefinitionConstants.SCOPE_DEPOT,
-			testDepotEntryGroup.getGroupId());
+			testDepotEntryGroup.getGroupId(),
+			ObjectDefinitionConstants.SCOPE_DEPOT);
 		_siteObjectDefinition = _publishObjectDefinitionWithEntries(
-			ObjectDefinitionConstants.SCOPE_SITE, testGroup.getGroupId());
+			testGroup.getGroupId(), ObjectDefinitionConstants.SCOPE_SITE);
 
 		String password = RandomTestUtil.randomString();
 
@@ -129,12 +129,12 @@ public class ExportPreviewResourceTest
 				null, null));
 
 		_testGetExportPreviewWithDateFilter(
+			_depotObjectDefinition,
 			testDateFilter ->
 				exportPreviewResource.getAssetLibraryExportPreview(
 					testDepotEntryGroup.getExternalReferenceCode(),
 					testDateFilter.getEndDate(), testDateFilter.getLast(),
-					testDateFilter.getRange(), testDateFilter.getStartDate()),
-			_depotObjectDefinition);
+					testDateFilter.getRange(), testDateFilter.getStartDate()));
 		_testGetExportPreviewWithDifferentScope(
 			exportPreviewResource.getAssetLibraryExportPreview(
 				testDepotEntryGroup.getExternalReferenceCode(), null, null,
@@ -156,12 +156,12 @@ public class ExportPreviewResourceTest
 					null, null, 0L, null, null));
 
 		_testGetExportPreviewWithDateFilter(
+			_depotObjectDefinition,
 			testDateFilter ->
 				exportPreviewResource.getAssetLibraryPortletExportPreview(
 					testDepotEntryGroup.getExternalReferenceCode(), portletId,
 					testDateFilter.getEndDate(), testDateFilter.getLast(), 0L,
-					testDateFilter.getRange(), testDateFilter.getStartDate()),
-			_depotObjectDefinition);
+					testDateFilter.getRange(), testDateFilter.getStartDate()));
 
 		long plid = _addLayoutWithPortlet(testDepotEntryGroup, portletId);
 
@@ -181,10 +181,10 @@ public class ExportPreviewResourceTest
 				null, null, null, null));
 
 		_testGetExportPreviewWithDateFilter(
+			_companyObjectDefinition,
 			testDateFilter -> exportPreviewResource.getExportPreview(
 				testDateFilter.getEndDate(), testDateFilter.getLast(),
-				testDateFilter.getRange(), testDateFilter.getStartDate()),
-			_companyObjectDefinition);
+				testDateFilter.getRange(), testDateFilter.getStartDate()));
 		_testGetExportPreviewWithDifferentScope(
 			exportPreviewResource.getExportPreview(null, null, null, null),
 			_depotObjectDefinition, _siteObjectDefinition);
@@ -199,11 +199,11 @@ public class ExportPreviewResourceTest
 				testGroup.getExternalReferenceCode(), null, null, null, null));
 
 		_testGetExportPreviewWithDateFilter(
+			_siteObjectDefinition,
 			testDateFilter -> exportPreviewResource.getSiteExportPreview(
 				testGroup.getExternalReferenceCode(),
 				testDateFilter.getEndDate(), testDateFilter.getLast(),
-				testDateFilter.getRange(), testDateFilter.getStartDate()),
-			_siteObjectDefinition);
+				testDateFilter.getRange(), testDateFilter.getStartDate()));
 		_testGetExportPreviewWithDifferentScope(
 			exportPreviewResource.getSiteExportPreview(
 				testGroup.getExternalReferenceCode(), null, null, null, null),
@@ -222,11 +222,11 @@ public class ExportPreviewResourceTest
 				null, null));
 
 		_testGetExportPreviewWithDateFilter(
+			_siteObjectDefinition,
 			testDateFilter -> exportPreviewResource.getSitePortletExportPreview(
 				testGroup.getExternalReferenceCode(), portletId,
 				testDateFilter.getEndDate(), testDateFilter.getLast(), 0L,
-				testDateFilter.getRange(), testDateFilter.getStartDate()),
-			_siteObjectDefinition);
+				testDateFilter.getRange(), testDateFilter.getStartDate()));
 
 		long plid = _addLayoutWithPortlet(testGroup, portletId);
 
@@ -253,7 +253,7 @@ public class ExportPreviewResourceTest
 	}
 
 	private void _addObjectEntry(
-			ObjectDefinition objectDefinition, long groupId, Date modifiedDate)
+			long groupId, Date modifiedDate, ObjectDefinition objectDefinition)
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -308,7 +308,7 @@ public class ExportPreviewResourceTest
 	}
 
 	private ObjectDefinition _publishObjectDefinitionWithEntries(
-			String scope, long groupId)
+			long groupId, String scope)
 		throws Exception {
 
 		ObjectDefinition objectDefinition =
@@ -329,18 +329,18 @@ public class ExportPreviewResourceTest
 				StringPool.TRUE);
 		}
 
-		_addObjectEntry(objectDefinition, groupId, new Date());
+		_addObjectEntry(groupId, new Date(), objectDefinition);
 		_addObjectEntry(
-			objectDefinition, groupId,
-			new Date(System.currentTimeMillis() - (25 * Time.HOUR)));
+			groupId, new Date(System.currentTimeMillis() - (25 * Time.HOUR)),
+			objectDefinition);
 
 		return objectDefinition;
 	}
 
 	private void _testGetExportPreviewWithDateFilter(
+			ObjectDefinition objectDefinition,
 			UnsafeFunction<TestDateFilter, ExportPreview, Exception>
-				unsafeFunction,
-			ObjectDefinition objectDefinition)
+				unsafeFunction)
 		throws Exception {
 
 		long now = System.currentTimeMillis();
@@ -364,23 +364,23 @@ public class ExportPreviewResourceTest
 			_getAdditionCount(
 				unsafeFunction.apply(
 					TestDateFilter.dateRange(
-						new Date(now - Time.HOUR), new Date(now))),
+						new Date(now), new Date(now - Time.HOUR))),
 				portletId));
 		Assert.assertEquals(
 			1L,
 			_getAdditionCount(
 				unsafeFunction.apply(
 					TestDateFilter.dateRange(
-						new Date(now - (26 * Time.HOUR)),
-						new Date(now - (24 * Time.HOUR)))),
+						new Date(now - (24 * Time.HOUR)),
+						new Date(now - (26 * Time.HOUR)))),
 				portletId));
 		Assert.assertEquals(
 			0L,
 			_getAdditionCount(
 				unsafeFunction.apply(
 					TestDateFilter.dateRange(
-						new Date(now - (3 * Time.DAY)),
-						new Date(now - (2 * Time.DAY)))),
+						new Date(now - (2 * Time.DAY)),
+						new Date(now - (3 * Time.DAY)))),
 				portletId));
 	}
 
@@ -455,7 +455,7 @@ public class ExportPreviewResourceTest
 			return new TestDateFilter(null, null, null, null);
 		}
 
-		public static TestDateFilter dateRange(Date startDate, Date endDate) {
+		public static TestDateFilter dateRange(Date endDate, Date startDate) {
 			return new TestDateFilter(endDate, null, "dateRange", startDate);
 		}
 

@@ -14,7 +14,7 @@ tests:
             -   matchRegex:
                     path: data["portal-cloud.properties"]
                     pattern: "\"com.example.c\""
-        it: should add every entry of the bundle deny list through the loop
+        it: adds every entry of the bundle deny list through the loop
         set:
             portalBundleDenyList:
                 -   com.example.a
@@ -23,14 +23,14 @@ tests:
     -   asserts:
             -   notExists:
                     path: data["portal-cloud.properties"]
-        it: should drop the default data when configmap defaults are overridden
+        it: drops the default data when configmap defaults are overridden
         set:
             configmap.overrideDefaults: true
     -   asserts:
             -   matchRegex:
                     path: data["portal-cloud.properties"]
                     pattern: cluster.link.enabled=true
-        it: should enable the cluster link properties when autoscaling is enabled
+        it: enables the cluster link properties when autoscaling is enabled
         set:
             autoscaling.enabled: true
             replicaCount: 1
@@ -38,7 +38,7 @@ tests:
             -   matchRegex:
                     path: data["portal-cloud.properties"]
                     pattern: cluster.link.enabled=true
-        it: should enable the cluster link properties when more than one replica is requested
+        it: enables the cluster link properties when more than one replica is requested
         set:
             autoscaling.enabled: false
             replicaCount: 2
@@ -46,14 +46,14 @@ tests:
             -   equal:
                     path: metadata.name
                     value: my-portal
-        it: should name the ConfigMap after the chart name override
+        it: names the ConfigMap after the chart name override
         set:
             nameOverride: my-portal
     -   asserts:
             -   notMatchRegex:
                     path: data["portal-cloud.properties"]
                     pattern: cluster.link.enabled=true
-        it: should omit the cluster link properties for a single replica
+        it: omits the cluster link properties for a single replica
         set:
             autoscaling.enabled: false
             replicaCount: 1

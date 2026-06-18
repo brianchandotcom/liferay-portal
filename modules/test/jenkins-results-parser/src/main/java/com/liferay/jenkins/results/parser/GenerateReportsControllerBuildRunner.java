@@ -236,6 +236,10 @@ public class GenerateReportsControllerBuildRunner
 	}
 
 	private void _invoke(Map<String, String> invocationParameters) {
+		BuildData buildData = getBuildData();
+
+		invocationParameters.put("PARENT_BUILD_URL", buildData.getBuildURL());
+
 		Properties buildProperties = null;
 
 		try {

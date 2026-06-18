@@ -356,12 +356,6 @@ public class ElasticsearchSearchEngineInformation
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to query the Elasticsearch \"_license\" API: " +
-						exception.getMessage());
-			}
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(
 					"Unable to query the Elasticsearch \"_license\" API",
 					exception);
 			}
@@ -467,12 +461,6 @@ public class ElasticsearchSearchEngineInformation
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to query the Elasticsearch \"_inference\" API: " +
-						exception.getMessage());
-			}
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(
 					"Unable to query the Elasticsearch \"_inference\" API",
 					exception);
 			}

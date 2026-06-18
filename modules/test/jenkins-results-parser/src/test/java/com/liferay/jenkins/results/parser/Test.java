@@ -342,7 +342,7 @@ public class Test {
 			shell
 		).doExecute(
 			Mockito.argThat(
-				executionRequest -> _matchesCommand(executionRequest, command))
+				executionRequest -> _hasCommand(executionRequest, command))
 		);
 	}
 
@@ -391,7 +391,7 @@ public class Test {
 	protected ExpectedMessageGenerator expectedMessageGenerator;
 	protected Map<String, TestSample> testSamples = new HashMap<>();
 
-	private boolean _matchesCommand(
+	private boolean _hasCommand(
 		Shell.ExecutionRequest executionRequest, String command) {
 
 		if (executionRequest == null) {

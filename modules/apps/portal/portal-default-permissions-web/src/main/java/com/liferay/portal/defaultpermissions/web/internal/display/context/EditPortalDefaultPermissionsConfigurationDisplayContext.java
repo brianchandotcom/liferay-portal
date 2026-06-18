@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletQName;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
@@ -339,18 +338,16 @@ public class EditPortalDefaultPermissionsConfigurationDisplayContext {
 	}
 
 	private int[] _filterRoleTypes(int[] roleTypes) {
-		PermissionChecker permissionChecker =
-			_themeDisplay.getPermissionChecker();
-
 		List<Integer> roleTypesList = new ArrayList<>();
 
 		for (int roleType : roleTypes) {
 			RoleTypeContributor roleTypeContributor =
 				_roleTypeContributorProvider.getRoleTypeContributor(roleType);
 
-			if ((roleTypeContributor != null) &&
+			if ((roleTypeContributor == null) ||
 				RoleTypeContributorShowFilterRegistryUtil.isShow(
-					roleTypeContributor, permissionChecker)) {
+					_themeDisplay.getPermissionChecker(),
+					roleTypeContributor)) {
 
 				roleTypesList.add(roleType);
 			}

@@ -530,9 +530,6 @@ public class PortletConfigurationPermissionsDisplayContext {
 	}
 
 	public int[] getRoleTypes() {
-		PermissionChecker permissionChecker =
-			_themeDisplay.getPermissionChecker();
-
 		List<Integer> roleTypes = new ArrayList<>();
 
 		for (int roleType : _getRoleTypes()) {
@@ -541,7 +538,8 @@ public class PortletConfigurationPermissionsDisplayContext {
 
 			if ((roleTypeContributor == null) ||
 				RoleTypeContributorShowFilterRegistryUtil.isShow(
-					roleTypeContributor, permissionChecker)) {
+					_themeDisplay.getPermissionChecker(),
+					roleTypeContributor)) {
 
 				roleTypes.add(roleType);
 			}

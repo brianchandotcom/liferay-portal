@@ -555,9 +555,6 @@ public class RolesAdminPortlet extends MVCPortlet {
 	protected void checkPermissions(PortletRequest portletRequest)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		long roleId = ParamUtil.getLong(portletRequest, "roleId");
 		int roleType = ParamUtil.getInteger(
 			portletRequest, "roleType", RoleConstants.TYPE_REGULAR);
@@ -571,9 +568,12 @@ public class RolesAdminPortlet extends MVCPortlet {
 		RoleTypeContributor roleTypeContributor =
 			_roleTypeContributorProvider.getRoleTypeContributor(roleType);
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		if ((roleTypeContributor == null) ||
 			!RoleTypeContributorShowFilterRegistryUtil.isShow(
-				roleTypeContributor, themeDisplay.getPermissionChecker())) {
+				themeDisplay.getPermissionChecker(), roleTypeContributor)) {
 
 			throw new PrincipalException();
 		}
@@ -749,14 +749,14 @@ public class RolesAdminPortlet extends MVCPortlet {
 			RolesAdminWebKeys.ROLE_TYPES,
 			ListUtil.filter(
 				_roleTypeContributorProvider.getRoleTypeContributors(),
-				curRoleTypeContributor -> {
-					if (curRoleTypeContributor == null) {
+				roleTypeContributor -> {
+					if (roleTypeContributor == null) {
 						return false;
 					}
 
 					return RoleTypeContributorShowFilterRegistryUtil.isShow(
-						curRoleTypeContributor,
-						themeDisplay.getPermissionChecker());
+						themeDisplay.getPermissionChecker(),
+						roleTypeContributor);
 				}));
 
 		String mvcPath = ParamUtil.getString(portletRequest, "mvcPath");

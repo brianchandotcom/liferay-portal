@@ -21,15 +21,15 @@ import org.osgi.framework.FrameworkUtil;
 public class RoleTypeContributorShowFilterRegistryUtil {
 
 	public static boolean isShow(
-		RoleTypeContributor roleTypeContributor,
-		PermissionChecker permissionChecker) {
+		PermissionChecker permissionChecker,
+		RoleTypeContributor roleTypeContributor) {
 
 		for (RoleTypeContributorShowFilter roleTypeContributorShowFilter :
 				_serviceTrackerList) {
 
 			try {
 				if (!roleTypeContributorShowFilter.isShow(
-						roleTypeContributor, permissionChecker)) {
+						permissionChecker, roleTypeContributor)) {
 
 					return false;
 				}

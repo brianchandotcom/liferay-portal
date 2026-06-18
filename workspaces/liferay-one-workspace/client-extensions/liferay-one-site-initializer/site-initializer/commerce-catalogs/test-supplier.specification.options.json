@@ -1,0 +1,289 @@
+[
+	{
+		"categoryKey": "app-support-and-help",
+		"description": "URL for the API Documentation",
+		"facetable": false,
+		"key": "app-api-reference-url",
+		"title": "App API Reference URL"
+	},
+	{
+		"categoryKey": "app-support-and-help",
+		"description": "",
+		"facetable": false,
+		"key": "app-documentation-url",
+		"title": "App Documentation URL"
+	},
+	{
+		"categoryKey": "product-metadata",
+		"description": "",
+		"facetable": false,
+		"key": "app-entry-uuid",
+		"title": "App Entry UUID"
+	},
+	{
+		"categoryKey": "app-support-and-help",
+		"description": "",
+		"facetable": false,
+		"key": "app-installation-guide-url",
+		"title": "App Installation Guide URL"
+	},
+	{
+		"categoryKey": "product-metadata",
+		"description": "",
+		"facetable": false,
+		"key": "app-storefront-video-description",
+		"title": "App Storefront Video Description"
+	},
+	{
+		"categoryKey": "product-metadata",
+		"description": "",
+		"facetable": false,
+		"key": "app-storefront-video-url",
+		"title": "App Storefront Video URL"
+	},
+	{
+		"categoryKey": "app-support-and-help",
+		"description": "",
+		"facetable": false,
+		"key": "app-usage-terms-url",
+		"title": "App Usage Terms URL"
+	},
+	{
+		"categoryKey": "product-metadata",
+		"description": "Latest Liferay Version Supported",
+		"facetable": false,
+		"key": "current-requirements",
+		"title": "Current Requirements"
+	},
+	{
+		"categoryKey": "product-metadata",
+		"description": "Developer Name",
+		"facetable": true,
+		"key": "developer-name",
+		"title": "Developer Name"
+	},
+	{
+		"categoryKey": "pricing-licensing-terms",
+		"description": "Latest version for the app or solution.",
+		"facetable": false,
+		"key": "latest-version",
+		"title": "Latest Version"
+	},
+	{
+		"categoryKey": "pricing-licensing-terms",
+		"description": "Length of the trial",
+		"facetable": false,
+		"key": "license-term",
+		"title": "License Term"
+	},
+	{
+		"categoryKey": "pricing-licensing-terms",
+		"description": "License Type",
+		"facetable": false,
+		"key": "license-type",
+		"title": "License Type"
+	},
+	{
+		"categoryKey": "product-metadata",
+		"description": "",
+		"facetable": true,
+		"key": "liferay-products-capabilities",
+		"title": "Liferay Products Capabilities"
+	},
+	{
+		"categoryKey": "product-metadata",
+		"description": "",
+		"facetable": true,
+		"key": "liferay-products-categories",
+		"title": "Liferay Products Categories"
+	},
+	{
+		"categoryKey": "product-metadata",
+		"description": "Compatible Liferay Release Version",
+		"facetable": true,
+		"key": "liferay-version",
+		"title": "Liferay Version"
+	},
+	{
+		"categoryKey": "pricing-licensing-terms",
+		"description": "Lifetime license offered?",
+		"facetable": false,
+		"key": "lifetime-license",
+		"title": "Lifetime License"
+	},
+	{
+		"categoryKey": "resource-requirements",
+		"description": "Number of CPUs to Resource Requirements",
+		"facetable": true,
+		"key": "number-of-cpus",
+		"title": "Number of CPUs"
+	},
+	{
+		"categoryKey": "product-metadata",
+		"description": "",
+		"facetable": true,
+		"key": "our-selection",
+		"title": "Our Selection"
+	},
+	{
+		"categoryKey": "product-metadata",
+		"description": "Past Versions this product has worked with",
+		"facetable": false,
+		"key": "past-versions-work-with",
+		"title": "Past Versions Work With"
+	},
+	{
+		"categoryKey": "pricing-licensing-terms",
+		"description": "Whether the app is Free, Paid or Bundled",
+		"facetable": true,
+		"key": "price-model",
+		"title": "Price Model"
+	},
+	{
+		"categoryKey": "product-metadata",
+		"description": "Total number of downloads for this product",
+		"facetable": false,
+		"key": "product-downloads",
+		"title": "Product Downloads"
+	},
+	{
+		"categoryKey": "product-metadata",
+		"description": "General notes about the app or solution.",
+		"facetable": false,
+		"key": "product-notes",
+		"title": "Product Notes"
+	},
+	{
+		"categoryKey": "product-metadata",
+		"description": "Name of the primary app publisher",
+		"facetable": false,
+		"key": "publisher-name",
+		"title": "Publisher Name"
+	},
+	{
+		"categoryKey": "app-support-and-help",
+		"description": "",
+		"facetable": false,
+		"key": "publisher-web-site-url",
+		"title": "Publisher Web site URL"
+	},
+	{
+		"categoryKey": "resource-requirements",
+		"description": "RAM in GB to Resource Requirements",
+		"facetable": true,
+		"key": "ram-in-gb",
+		"title": "RAM in GB"
+	},
+	{
+		"categoryKey": "solution-metadata",
+		"description": "Solution company description",
+		"facetable": true,
+		"key": "solution-company-description",
+		"title": "Solution Company Description"
+	},
+	{
+		"categoryKey": "solution-metadata",
+		"description": "Solution company email",
+		"facetable": true,
+		"key": "solution-company-email",
+		"title": "Solution Company Email"
+	},
+	{
+		"categoryKey": "solution-metadata",
+		"description": "Solution company phone",
+		"facetable": true,
+		"key": "solution-company-phone",
+		"title": "Solution Company Phone"
+	},
+	{
+		"categoryKey": "solution-metadata",
+		"description": "Solution company website",
+		"facetable": true,
+		"key": "solution-company-website",
+		"title": "Solution Company Website"
+	},
+	{
+		"categoryKey": "solution-metadata",
+		"description": "Solution contact email",
+		"facetable": true,
+		"key": "solution-contact-email",
+		"title": "Solution Contact Email"
+	},
+	{
+		"categoryKey": "solution-metadata",
+		"description": "Solution details blocks",
+		"facetable": true,
+		"key": "solution-details-blocks",
+		"title": "Solution Details Blocks"
+	},
+	{
+		"categoryKey": "solution-metadata",
+		"description": "Solution header description",
+		"facetable": true,
+		"key": "solution-header-description",
+		"title": "Solution Header Description"
+	},
+	{
+		"categoryKey": "solution-metadata",
+		"description": "Solution header title",
+		"facetable": true,
+		"key": "solution-header-title",
+		"title": "Solution Header Title"
+	},
+	{
+		"categoryKey": "solution-metadata",
+		"description": "Solution header video description",
+		"facetable": true,
+		"key": "solution-header-video-description",
+		"title": "Solution Header Video Description"
+	},
+	{
+		"categoryKey": "solution-metadata",
+		"description": "Solution header video url",
+		"facetable": true,
+		"key": "solution-header-video-url",
+		"title": "Solution Header Video URL"
+	},
+	{
+		"categoryKey": "solution-metadata",
+		"description": "Solution header title",
+		"facetable": false,
+		"key": "solution-type",
+		"title": "Solution Type"
+	},
+	{
+		"categoryKey": "app-support-and-help",
+		"description": "URL of source code",
+		"facetable": false,
+		"key": "source-code-url",
+		"title": "Source Code URL"
+	},
+	{
+		"categoryKey": "app-support-and-help",
+		"description": "",
+		"facetable": false,
+		"key": "support-email-address",
+		"title": "Support Email Address"
+	},
+	{
+		"categoryKey": "app-support-and-help",
+		"description": "",
+		"facetable": false,
+		"key": "support-phone",
+		"title": "Support Phone"
+	},
+	{
+		"categoryKey": "app-support-and-help",
+		"description": "",
+		"facetable": false,
+		"key": "support-url",
+		"title": "Support URL"
+	},
+	{
+		"categoryKey": "product-metadata",
+		"description": "",
+		"facetable": true,
+		"key": "type",
+		"title": "Type"
+	}
+]

@@ -1,7 +1,8 @@
 {
 	"articleId": "WEB-CONTENT-ANNOUNCEMENT-03",
 	"assetCategoryERCs": [
-		"T_AC_COMMUNITY"
+		"T_AC_COMMUNITY",
+		"T_AC_EVENTS"
 	],
 	"ddmStructureKey": "ANNOUNCEMENT",
 	"folder": "Announcements",

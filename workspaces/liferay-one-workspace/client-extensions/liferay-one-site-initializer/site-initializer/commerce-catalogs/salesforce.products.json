@@ -1,0 +1,318 @@
+[
+	{
+		"categories": [
+			"liferay-product"
+		],
+		"description": "Bring generative AI to your digital experiences with prebuilt assistants, search, and content tools.",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "PRDCT-AI-HUB",
+		"images": [
+			"sample-marketplace-app.png"
+		],
+		"name": "Liferay AI Hub",
+		"options": [
+			{
+				"key": "base-license-usage-type",
+				"values": [
+					"standard"
+				]
+			}
+		],
+		"price": 0,
+		"sku": "PRDCT-AI-HUB",
+		"specificationOptions": [
+			{
+				"key": "app-documentation-url",
+				"value": "https://learn.liferay.com"
+			},
+			{
+				"key": "app-usage-terms-url",
+				"value": "https://www.liferay.com/legal/customer-agreements"
+			},
+			{
+				"key": "developer-name",
+				"value": "Liferay"
+			},
+			{
+				"key": "liferay-products-capabilities",
+				"value": "Generative AI-powered search"
+			},
+			{
+				"key": "liferay-products-capabilities",
+				"value": "Prebuilt AI assistants and copilots"
+			},
+			{
+				"key": "liferay-products-capabilities",
+				"value": "Smart content and translation tools"
+			},
+			{
+				"key": "liferay-products-categories",
+				"value": "Artificial Intelligence"
+			},
+			{
+				"key": "our-selection",
+				"value": "true"
+			},
+			{
+				"key": "price-model",
+				"value": "Bundled"
+			},
+			{
+				"key": "publisher-name",
+				"value": "Liferay"
+			},
+			{
+				"key": "publisher-web-site-url",
+				"value": "https://www.liferay.com"
+			},
+			{
+				"key": "support-email-address",
+				"value": "support@liferay.com"
+			},
+			{
+				"key": "support-phone",
+				"value": "+1 877 437 3329"
+			},
+			{
+				"key": "support-url",
+				"value": "https://www.liferay.com/support"
+			}
+		]
+	},
+	{
+		"categories": [
+			"liferay-product"
+		],
+		"description": "Run smarter campaigns from one place: plan, manage, and deliver personalized marketing at scale.",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "PRDCT-CONTENT-MARKETING",
+		"images": [
+			"sample-marketplace-app.png"
+		],
+		"name": "Content Marketing Platform",
+		"options": [
+			{
+				"key": "base-license-usage-type",
+				"values": [
+					"standard"
+				]
+			}
+		],
+		"price": 0,
+		"sku": "PRDCT-CONTENT-MARKETING",
+		"specificationOptions": [
+			{
+				"key": "app-documentation-url",
+				"value": "https://learn.liferay.com"
+			},
+			{
+				"key": "app-usage-terms-url",
+				"value": "https://www.liferay.com/legal/customer-agreements"
+			},
+			{
+				"key": "developer-name",
+				"value": "Liferay"
+			},
+			{
+				"key": "liferay-products-capabilities",
+				"value": "Campaign planning and management"
+			},
+			{
+				"key": "liferay-products-capabilities",
+				"value": "Multichannel campaign delivery"
+			},
+			{
+				"key": "liferay-products-capabilities",
+				"value": "Personalized content at scale"
+			},
+			{
+				"key": "liferay-products-categories",
+				"value": "Marketing"
+			},
+			{
+				"key": "price-model",
+				"value": "Paid"
+			},
+			{
+				"key": "publisher-name",
+				"value": "Liferay"
+			},
+			{
+				"key": "publisher-web-site-url",
+				"value": "https://www.liferay.com"
+			},
+			{
+				"key": "support-email-address",
+				"value": "support@liferay.com"
+			},
+			{
+				"key": "support-phone",
+				"value": "+1 877 437 3329"
+			},
+			{
+				"key": "support-url",
+				"value": "https://www.liferay.com/support"
+			}
+		]
+	},
+	{
+		"categories": [
+			"liferay-product"
+		],
+		"description": "Turn customer data into personalized experiences with a unified, real-time view of every customer.",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "PRDCT-DATA-PLATFORM",
+		"images": [
+			"sample-marketplace-app.png"
+		],
+		"name": "Liferay Data Platform",
+		"options": [
+			{
+				"key": "base-license-usage-type",
+				"values": [
+					"standard"
+				]
+			}
+		],
+		"price": 0,
+		"sku": "PRDCT-DATA-PLATFORM",
+		"specificationOptions": [
+			{
+				"key": "app-documentation-url",
+				"value": "https://learn.liferay.com"
+			},
+			{
+				"key": "app-usage-terms-url",
+				"value": "https://www.liferay.com/legal/customer-agreements"
+			},
+			{
+				"key": "developer-name",
+				"value": "Liferay"
+			},
+			{
+				"key": "liferay-products-capabilities",
+				"value": "Personalized customer experiences"
+			},
+			{
+				"key": "liferay-products-capabilities",
+				"value": "Real-time data activation"
+			},
+			{
+				"key": "liferay-products-capabilities",
+				"value": "Unified customer profiles"
+			},
+			{
+				"key": "liferay-products-categories",
+				"value": "Customer Data"
+			},
+			{
+				"key": "our-selection",
+				"value": "true"
+			},
+			{
+				"key": "price-model",
+				"value": "Paid"
+			},
+			{
+				"key": "publisher-name",
+				"value": "Liferay"
+			},
+			{
+				"key": "publisher-web-site-url",
+				"value": "https://www.liferay.com"
+			},
+			{
+				"key": "support-email-address",
+				"value": "support@liferay.com"
+			},
+			{
+				"key": "support-phone",
+				"value": "+1 877 437 3329"
+			},
+			{
+				"key": "support-url",
+				"value": "https://www.liferay.com/support"
+			}
+		]
+	},
+	{
+		"categories": [
+			"liferay-product"
+		],
+		"description": "Close deals faster with a secure, collaborative space built for modern B2B sales.",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "PRDCT-DSR",
+		"images": [
+			"sample-marketplace-app.png"
+		],
+		"name": "Digital Sales Room",
+		"options": [
+			{
+				"key": "base-license-usage-type",
+				"values": [
+					"standard"
+				]
+			}
+		],
+		"price": 0,
+		"sku": "PRDCT-DSR",
+		"specificationOptions": [
+			{
+				"key": "app-documentation-url",
+				"value": "https://learn.liferay.com"
+			},
+			{
+				"key": "app-usage-terms-url",
+				"value": "https://www.liferay.com/legal/customer-agreements"
+			},
+			{
+				"key": "developer-name",
+				"value": "Liferay"
+			},
+			{
+				"key": "liferay-products-capabilities",
+				"value": "Centralized deal content"
+			},
+			{
+				"key": "liferay-products-capabilities",
+				"value": "Engagement tracking and insights"
+			},
+			{
+				"key": "liferay-products-capabilities",
+				"value": "Secure buyer and seller collaboration"
+			},
+			{
+				"key": "liferay-products-categories",
+				"value": "Sales"
+			},
+			{
+				"key": "price-model",
+				"value": "Paid"
+			},
+			{
+				"key": "publisher-name",
+				"value": "Liferay"
+			},
+			{
+				"key": "publisher-web-site-url",
+				"value": "https://www.liferay.com"
+			},
+			{
+				"key": "support-email-address",
+				"value": "support@liferay.com"
+			},
+			{
+				"key": "support-phone",
+				"value": "+1 877 437 3329"
+			},
+			{
+				"key": "support-url",
+				"value": "https://www.liferay.com/support"
+			}
+		]
+	}
+]

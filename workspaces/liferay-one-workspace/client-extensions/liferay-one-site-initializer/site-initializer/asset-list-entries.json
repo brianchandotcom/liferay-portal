@@ -1,6 +1,6 @@
 [
 	{
-		"assetEntrySubtypeId": "[$DDM_STRUCTURE_ID:ANNOUNCEMENT$]",
+		"assetEntrySubtypeId": "[$DATA_DEFINITION_ID:ANNOUNCEMENT$]",
 		"title": "Announcements",
 		"unicodeProperties": {
 			"anyClassType": "anyClassTypeJournalArticleAssetRendererFactory",

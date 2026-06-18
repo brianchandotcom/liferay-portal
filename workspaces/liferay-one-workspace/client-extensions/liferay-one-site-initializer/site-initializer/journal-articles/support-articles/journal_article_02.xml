@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US" version="1.0">
+	<dynamic-element field-reference="content" index-type="text" instance-id="lo0b0002" name="content" type="rich_text">
+		<dynamic-content language-id="en_US">
+			<![CDATA[<p>Every support ticket is assigned a severity level that reflects its business impact. Severity 1 covers production outages with no workaround, Severity 2 covers major functionality that is impaired, and Severity 3 and 4 cover minor issues and general questions. Choosing the correct severity when opening a ticket helps our support engineers prioritize work and meet the response targets defined in your service level agreement.</p>]]>
+		</dynamic-content>
+	</dynamic-element>
+</root>

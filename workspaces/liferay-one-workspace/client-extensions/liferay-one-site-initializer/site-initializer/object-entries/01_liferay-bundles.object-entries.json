@@ -1,0 +1,20 @@
+{
+	"object-entries": [
+		{
+			"bundleLink": "https://releases.liferay.com/dxp/2025.q4/",
+			"bundleName": "DXP 2025.Q4",
+			"externalReferenceCode": "C_LIFERAY_BUNDLE_2025_Q4"
+		},
+		{
+			"bundleLink": "https://releases.liferay.com/dxp/2026.q1-lts/",
+			"bundleName": "DXP 2026.Q1 LTS",
+			"externalReferenceCode": "C_LIFERAY_BUNDLE_2026_Q1_LTS"
+		},
+		{
+			"bundleLink": "https://releases.liferay.com/dxp/2026.q2-lts/",
+			"bundleName": "DXP 2026.Q2 LTS",
+			"externalReferenceCode": "C_LIFERAY_BUNDLE_2026_Q2_LTS"
+		}
+	],
+	"objectDefinitionName": "LiferayBundle"
+}

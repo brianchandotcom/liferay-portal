@@ -31,13 +31,12 @@ public class SpacesComponentSectionFragmentRendererTest {
 
 	@Test
 	public void testIsSelectable() {
-		Assert.assertTrue(
-			_spacesComponentSectionFragmentRenderer.isSelectable(
-				_getMockHttpServletRequest(true)));
-
 		Assert.assertFalse(
 			_spacesComponentSectionFragmentRenderer.isSelectable(
 				_getMockHttpServletRequest(false)));
+		Assert.assertTrue(
+			_spacesComponentSectionFragmentRenderer.isSelectable(
+				_getMockHttpServletRequest(true)));
 	}
 
 	private MockHttpServletRequest _getMockHttpServletRequest(boolean cms) {

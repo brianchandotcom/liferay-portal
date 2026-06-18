@@ -14,7 +14,6 @@ import com.liferay.portal.kernel.exception.RequiredLayoutSetPrototypeException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
@@ -139,13 +138,11 @@ public class LayoutSetPrototypePortlet extends MVCPortlet {
 		try {
 			Sites sites = _sitesSnapshot.get();
 
-			for (LayoutSet layoutSet :
-					layoutSetLocalService.getLayoutSetsByLayoutSetPrototypeUuid(
-						layoutSetPrototype.getUuid())) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-				sites.mergeLayoutSetPrototypeLayouts(
-					layoutSet.getGroup(), layoutSet);
-			}
+			sites.mergeLayoutSetPrototypeLayouts(
+				layoutSetPrototype, themeDisplay.getUserId());
 
 			Locale locale = _getLocale(actionRequest);
 

@@ -231,7 +231,6 @@ public class PageSpecificationResourceTest
 			LayoutPageTemplateEntryTestUtil.
 				getMasterLayoutPageTemplateEntryLayout(serviceContext),
 			serviceContext);
-
 		_testGetSitePageSpecificationWithStyleBookEntryScopeERC(serviceContext);
 	}
 

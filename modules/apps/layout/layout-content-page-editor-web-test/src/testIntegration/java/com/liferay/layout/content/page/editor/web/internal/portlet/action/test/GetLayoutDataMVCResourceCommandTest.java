@@ -226,7 +226,6 @@ public class GetLayoutDataMVCResourceCommandTest {
 			ContentLayoutTestUtil.getThemeDisplay(
 				_companyLocalService.fetchCompany(_group.getCompanyId()),
 				_group, _layout));
-
 		mockLiferayResourceRequest.setParameter(
 			"segmentsExperienceId", String.valueOf(segmentsExperienceId));
 

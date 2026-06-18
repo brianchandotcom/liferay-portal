@@ -333,7 +333,7 @@ public class Test {
 	}
 
 	protected void setShellCommandOutput(
-			Shell shell, String command, String standardOut)
+			String command, Shell shell, String standardOut)
 		throws Exception {
 
 		Mockito.doReturn(
@@ -342,7 +342,7 @@ public class Test {
 			shell
 		).doExecute(
 			Mockito.argThat(
-				executionRequest -> _hasCommand(executionRequest, command))
+				executionRequest -> _hasCommand(command, executionRequest))
 		);
 	}
 
@@ -392,7 +392,7 @@ public class Test {
 	protected Map<String, TestSample> testSamples = new HashMap<>();
 
 	private boolean _hasCommand(
-		Shell.ExecutionRequest executionRequest, String command) {
+		String command, Shell.ExecutionRequest executionRequest) {
 
 		if (executionRequest == null) {
 			return false;

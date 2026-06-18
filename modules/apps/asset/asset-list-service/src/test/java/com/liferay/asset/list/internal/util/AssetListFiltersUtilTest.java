@@ -276,12 +276,12 @@ public class AssetListFiltersUtilTest {
 				BooleanClauseOccur.MUST_NOT,
 				_buildFilter("not-eq", "title", "keyword"), "title"));
 
-		ObjectField localizedSubtitle = _setUpObjectField(
+		ObjectField subtitleObjectField = _setUpObjectField(
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 			ObjectFieldConstants.DB_TYPE_STRING, "subtitle");
 
 		Mockito.when(
-			localizedSubtitle.isLocalized()
+			subtitleObjectField.isLocalized()
 		).thenReturn(
 			true
 		);

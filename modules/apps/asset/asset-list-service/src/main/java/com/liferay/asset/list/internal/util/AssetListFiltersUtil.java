@@ -486,12 +486,12 @@ public class AssetListFiltersUtil {
 			return null;
 		}
 
-		BooleanClauseOccur innerOccur = BooleanClauseOccur.SHOULD;
+		BooleanClauseOccur booleanClauseOccur = BooleanClauseOccur.SHOULD;
 
 		String quantifier = filterJSONObject.getString("quantifier");
 
 		if (Objects.equals(quantifier, "all")) {
-			innerOccur = BooleanClauseOccur.MUST;
+			booleanClauseOccur = BooleanClauseOccur.MUST;
 		}
 
 		BooleanQuery booleanQuery = new BooleanQuery();
@@ -502,7 +502,8 @@ public class AssetListFiltersUtil {
 			String value = StringUtil.toLowerCase(
 				itemJSONObject.getString("value"));
 
-			booleanQuery.add(new TermQuery(subfield, value), innerOccur);
+			booleanQuery.add(
+				new TermQuery(subfield, value), booleanClauseOccur);
 		}
 
 		return booleanQuery;

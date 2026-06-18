@@ -176,7 +176,7 @@ public class LayoutLayoutSetPrototypeLayoutERCUpgradeProcessTest
 
 		layoutSet = _layoutSetLocalService.updateLayoutSet(layoutSet);
 
-		_sites.mergeLayoutSetPrototypeLayouts(_group, layoutSet);
+		_sites.mergeLayoutSetPrototypeLayouts(layoutSet);
 	}
 
 	@Inject

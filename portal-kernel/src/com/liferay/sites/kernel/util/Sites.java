@@ -87,12 +87,12 @@ public interface Sites {
 	public void copyPortletSetups(Layout sourceLayout, Layout targetLayout)
 		throws Exception;
 
-	public boolean isLayoutSetMergeable(Group group, LayoutSet layoutSet)
+	public boolean isLayoutSetMergeable(LayoutSet layoutSet)
 		throws PortalException;
 
 	public void mergeLayoutPrototypeLayout(Layout layout) throws Exception;
 
-	public void mergeLayoutSetPrototypeLayouts(Group group, LayoutSet layoutSet)
+	public void mergeLayoutSetPrototypeLayouts(LayoutSet layoutSet)
 		throws Exception;
 
 	public void mergeLayoutSetPrototypeLayouts(

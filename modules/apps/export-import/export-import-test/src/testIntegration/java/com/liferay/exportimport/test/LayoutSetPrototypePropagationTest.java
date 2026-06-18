@@ -165,7 +165,7 @@ public class LayoutSetPrototypePropagationTest
 			LayoutSetPrototypeLocalServiceUtil.updateLayoutSetPrototype(
 				_layoutSetPrototype);
 
-		Assert.assertTrue(_sites.isLayoutSetMergeable(group, layoutSet));
+		Assert.assertTrue(_sites.isLayoutSetMergeable(layoutSet));
 
 		settingsUnicodeProperties = layoutSet.getSettingsProperties();
 
@@ -181,7 +181,7 @@ public class LayoutSetPrototypePropagationTest
 
 		Assert.assertFalse(
 			_sites.isLayoutSetMergeable(
-				group, LayoutSetLocalServiceUtil.updateLayoutSet(layoutSet)));
+				LayoutSetLocalServiceUtil.updateLayoutSet(layoutSet)));
 	}
 
 	@Test
@@ -768,7 +768,7 @@ public class LayoutSetPrototypePropagationTest
 				false, true);
 
 			_sites.mergeLayoutSetPrototypeLayouts(
-				testGroup, testGroup.getPrivateLayoutSet());
+				testGroup.getPrivateLayoutSet());
 
 			LayoutSet publicLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
 				testGroup.getGroupId(), false);
@@ -836,7 +836,7 @@ public class LayoutSetPrototypePropagationTest
 				true, false);
 
 			_sites.mergeLayoutSetPrototypeLayouts(
-				testGroup, testGroup.getPublicLayoutSet());
+				testGroup.getPublicLayoutSet());
 
 			publicLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
 				testGroup.getGroupId(), false);
@@ -1171,7 +1171,7 @@ public class LayoutSetPrototypePropagationTest
 
 		layoutSet = LayoutSetLocalServiceUtil.updateLayoutSet(layoutSet);
 
-		_sites.mergeLayoutSetPrototypeLayouts(group, layoutSet);
+		_sites.mergeLayoutSetPrototypeLayouts(layoutSet);
 
 		Thread.sleep(2000);
 

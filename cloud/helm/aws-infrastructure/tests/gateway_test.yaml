@@ -9,7 +9,7 @@ tests:
         documentSelector:
             path: kind
             value: Gateway
-        it: adds one listener per endpoint plus the implicit http listener
+        it: Adds one listener per endpoint plus the implicit http listener
         set:
             enabled: true
             endpoints:
@@ -34,7 +34,7 @@ tests:
         documentSelector:
             path: kind
             value: Gateway
-        it: adds the implicit http listener when no endpoints are configured
+        it: Adds the implicit http listener when no endpoints are configured
         set:
             enabled: true
             gateway.className: eg
@@ -49,7 +49,7 @@ tests:
         documentSelector:
             path: kind
             value: Gateway
-        it: builds certificate references from the endpoint external secret names
+        it: Builds certificate references from the endpoint external secret names
         set:
             enabled: true
             endpoints:
@@ -73,7 +73,7 @@ tests:
         documentSelector:
             path: kind
             value: ClientTrafficPolicy
-        it: names the ClientTrafficPolicy after the gateway with an attachment suffix
+        it: Names the ClientTrafficPolicy after the gateway with an attachment suffix
         set:
             enabled: true
             gateway.className: eg
@@ -81,13 +81,13 @@ tests:
     -   asserts:
             -   hasDocuments:
                     count: 0
-        it: omits the gateway resources when no gateway class and name are configured
+        it: Omits the gateway resources when no gateway class and name are configured
         set:
             enabled: true
     -   asserts:
             -   hasDocuments:
                     count: 2
-        it: renders both a ClientTrafficPolicy and a Gateway when configured
+        it: Renders both a ClientTrafficPolicy and a Gateway when configured
         set:
             enabled: true
             gateway.className: eg

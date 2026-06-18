@@ -164,10 +164,7 @@ export function useGeolocation({
 		if (mapRef.current) {
 			onChangeRef.current?.removeListener();
 
-			onChangeRef.current = mapRef.current.on(
-				'positionChange',
-				onChange
-			);
+			onChangeRef.current = mapRef.current.on('positionChange', onChange);
 		}
 	}, [onChange]);
 

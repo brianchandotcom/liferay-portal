@@ -12,7 +12,7 @@ long mfaEmailOTPFailedAttemptsRetryTimeout = GetterUtil.getLong(request.getAttri
 %>
 
 <c:if test="<%= mfaEmailOTPFailedAttemptsRetryTimeout > 0 %>">
-	<div class="alert alert-danger">
+	<div class="alert alert-danger" id="<portlet:namespace />maximumAllowedAttemptsError">
 		<liferay-ui:message arguments="<%= mfaEmailOTPFailedAttemptsRetryTimeout %>" key="maximum-allowed-attempts-error" translateArguments="<%= false %>" />
 	</div>
 </c:if>
@@ -47,6 +47,8 @@ long mfaEmailOTPFailedAttemptsRetryTimeout = GetterUtil.getLong(request.getAttri
 
 	var countdown;
 
+	var failedAttemptsRetryCountdown;
+
 	var messageContainer = A.one('#<portlet:namespace />messageContainer');
 
 	var sendEmailButton = A.one('#<portlet:namespace />sendEmailButton');
@@ -54,6 +56,8 @@ long mfaEmailOTPFailedAttemptsRetryTimeout = GetterUtil.getLong(request.getAttri
 	var submitEmailButton = A.one('#<portlet:namespace />submitEmailButton');
 
 	var originalButtonText = sendEmailButton.text();
+
+	var originalSubmitButtonText = submitEmailButton.text();
 
 	var previousSetTime =
 		<%= GetterUtil.getLong(request.getAttribute(MFAEmailOTPWebKeys.MFA_EMAIL_OTP_SET_AT_TIME)) %>;
@@ -67,8 +71,8 @@ long mfaEmailOTPFailedAttemptsRetryTimeout = GetterUtil.getLong(request.getAttri
 		}, interval);
 	}
 
-	function <portlet:namespace />setResendCountdown(resendDuration) {
-		if (resendDuration < 1) {
+	function <portlet:namespace />setResendCountdown(remainingTime) {
+		if (remainingTime < 1) {
 			sendEmailButton.text(originalButtonText);
 
 			sendEmailButton.removeAttribute('disabled');
@@ -80,7 +84,7 @@ long mfaEmailOTPFailedAttemptsRetryTimeout = GetterUtil.getLong(request.getAttri
 			);
 		}
 		else {
-			sendEmailButton.text(resendDuration);
+			sendEmailButton.text(remainingTime);
 		}
 	}
 
@@ -100,29 +104,38 @@ long mfaEmailOTPFailedAttemptsRetryTimeout = GetterUtil.getLong(request.getAttri
 		);
 	}
 
+	function <portlet:namespace />setFailedAttemptsRetryCountdown(remainingTime) {
+		if (remainingTime < 1) {
+			var maximumAllowedAttemptsError = A.one(
+				'#<portlet:namespace />maximumAllowedAttemptsError'
+			);
+
+			if (maximumAllowedAttemptsError) {
+				maximumAllowedAttemptsError.remove();
+			}
+
+			sendEmailButton.removeAttribute('disabled');
+
+			submitEmailButton.text(originalSubmitButtonText);
+
+			submitEmailButton.removeAttribute('disabled');
+
+			clearInterval(failedAttemptsRetryCountdown);
+		}
+		else {
+			submitEmailButton.text(remainingTime);
+		}
+	}
+
 	if (failedAttemptsRetryTimeout > 0) {
 		sendEmailButton.setAttribute('disabled', 'disabled');
 		submitEmailButton.setAttribute('disabled', 'disabled');
 
-		var originalSubmitButtonText = submitEmailButton.text();
-
-		setInterval(() => {
-			--failedAttemptsRetryTimeout;
-			{
-				if (failedAttemptsRetryTimeout < 1) {
-					sendEmailButton.removeAttribute('disabled');
-
-					submitEmailButton.text(originalSubmitButtonText);
-
-					submitEmailButton.removeAttribute('disabled');
-
-					clearInterval(failedAttemptsRetryTimeout);
-				}
-				else {
-					submitEmailButton.text(failedAttemptsRetryTimeout);
-				}
-			}
-		}, 1000);
+		failedAttemptsRetryCountdown = <portlet:namespace />createCountdown(
+			<portlet:namespace />setFailedAttemptsRetryCountdown,
+			failedAttemptsRetryTimeout,
+			1000
+		);
 	}
 
 	A.one('#<portlet:namespace />sendEmailButton').on('click', (event) => {

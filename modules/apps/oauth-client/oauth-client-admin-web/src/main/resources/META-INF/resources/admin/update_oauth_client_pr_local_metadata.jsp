@@ -48,18 +48,18 @@ renderResponse.setTitle((oAuthClientPRLocalMetadata == null) ? LanguageUtil.get(
 				</liferay-ui:error>
 
 				<aui:fieldset label="general">
-					<aui:input helpMessage="oauth-client-pr-local-metadata-resource-help" label="oauth-client-pr-local-metadata-resource" name="protectedResourceURI" required="<%= true %>" type="text" />
+					<aui:input helpMessage="oauth-client-pr-local-metadata-resource-help" label="resource" name="protectedResourceURI" required="<%= true %>" type="text" />
 
-					<aui:input label="oauth-client-pr-local-metadata-resource-name" name="resourceName" type="text" value='<%= request.getAttribute("resourceName") %>' />
+					<aui:input label="resource-name" name="resourceName" type="text" value="<%= request.getAttribute(OAuthClientWebKeys.RESOURCE_NAME) %>" />
 
-					<aui:input helpMessage="oauth-client-pr-local-metadata-authorization-servers-help" label="oauth-client-pr-local-metadata-authorization-servers" name="authorizationServers" required="<%= true %>" type="text" value='<%= request.getAttribute("authorizationServers") %>' />
+					<aui:input helpMessage="oauth-client-pr-local-metadata-authorization-servers-help" label="oauth-client-pr-local-metadata-authorization-servers" name="authorizationServers" required="<%= true %>" type="text" value="<%= request.getAttribute(OAuthClientWebKeys.AUTHORIZATION_SERVERS) %>" />
 
-					<aui:input helpMessage="oauth-client-pr-local-metadata-bearer-methods-supported-help" label="oauth-client-pr-local-metadata-bearer-methods-supported" name="bearerMethodsSupported" type="text" value='<%= (request.getAttribute("bearerMethodsSupported") != null) ? request.getAttribute("bearerMethodsSupported") : "header" %>' />
+					<aui:input helpMessage="oauth-client-pr-local-metadata-bearer-methods-supported-help" label="oauth-client-pr-local-metadata-bearer-methods-supported" name="bearerMethodsSupported" type="text" value='<%= (request.getAttribute(OAuthClientWebKeys.BEARER_METHODS_SUPPORTED) != null) ? request.getAttribute(OAuthClientWebKeys.BEARER_METHODS_SUPPORTED) : "header" %>' />
 
-					<aui:input helpMessage="oauth-client-pr-local-metadata-scopes-supported-help" label="oauth-client-pr-local-metadata-scopes-supported" name="scopesSupported" type="text" value='<%= request.getAttribute("scopesSupported") %>' />
+					<aui:input helpMessage="oauth-client-pr-local-metadata-scopes-supported-help" label="oauth-client-pr-local-metadata-scopes-supported" name="scopesSupported" type="text" value="<%= request.getAttribute(OAuthClientWebKeys.SCOPES_SUPPORTED) %>" />
 				</aui:fieldset>
 
-				<aui:fieldset label="oauth-client-pr-local-metadata-publishing">
+				<aui:fieldset label="publishing">
 					<aui:input checked="<%= (oAuthClientPRLocalMetadata != null) ? oAuthClientPRLocalMetadata.getLocalWellKnownEnabled() : false %>" label="enable" name="localWellKnownEnabled" type="checkbox" />
 
 					<aui:input helpMessage="oauth-client-pr-local-well-known-uri-help" label="oauth-client-pr-local-well-known-uri" name="localWellKnownURI" readonly="true" type="text" value="<%= (oAuthClientPRLocalMetadata != null) ? oAuthClientPRLocalMetadata.getLocalWellKnownURI() : StringPool.BLANK %>" />

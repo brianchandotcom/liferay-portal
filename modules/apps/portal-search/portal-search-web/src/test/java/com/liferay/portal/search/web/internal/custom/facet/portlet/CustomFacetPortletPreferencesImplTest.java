@@ -7,6 +7,7 @@ package com.liferay.portal.search.web.internal.custom.facet.portlet;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.search.web.internal.seo.SEOPortletPreferences;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import jakarta.portlet.PortletPreferences;
@@ -40,12 +41,12 @@ public class CustomFacetPortletPreferencesImplTest {
 			CustomFacetPortletPreferences.PREFERENCE_KEY_PARAMETER_NAME,
 			portletPreferences, StringPool.BLANK);
 
-		CustomFacetPortletPreferencesImpl customFacetPortletPreferencesImpl =
+		SEOPortletPreferences seoPortletPreferences =
 			new CustomFacetPortletPreferencesImpl(portletPreferences);
 
 		Assert.assertEquals(
 			"userName",
-			customFacetPortletPreferencesImpl.getSEOParameterName());
+			seoPortletPreferences.getSEOParameterName());
 	}
 
 	@Test
@@ -60,12 +61,12 @@ public class CustomFacetPortletPreferencesImplTest {
 			CustomFacetPortletPreferences.PREFERENCE_KEY_PARAMETER_NAME,
 			portletPreferences, "customParameter");
 
-		CustomFacetPortletPreferencesImpl customFacetPortletPreferencesImpl =
+		SEOPortletPreferences seoPortletPreferences =
 			new CustomFacetPortletPreferencesImpl(portletPreferences);
 
 		Assert.assertEquals(
 			"customParameter",
-			customFacetPortletPreferencesImpl.getSEOParameterName());
+			seoPortletPreferences.getSEOParameterName());
 	}
 
 	private void _mockValue(

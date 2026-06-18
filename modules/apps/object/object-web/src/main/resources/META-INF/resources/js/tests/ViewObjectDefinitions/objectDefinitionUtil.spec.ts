@@ -3,7 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {canCreateInObjectFolder} from '../../components/ViewObjectDefinitions/objectDefinitionUtil';
+import {
+	canCreateInObjectFolder,
+	getObjectDefinitionsFilter,
+} from '../../components/ViewObjectDefinitions/objectDefinitionUtil';
 
 describe('canCreateInObjectFolder', () => {
 	it('returns false when no folder is selected', () => {
@@ -22,5 +25,19 @@ describe('canCreateInObjectFolder', () => {
 				externalReferenceCode: 'L_CMS_CONTENT_STRUCTURES',
 			})
 		).toBe(false);
+	});
+});
+
+describe('getObjectDefinitionsFilter', () => {
+	it('includes hidden eq false filter when showHiddenObjects is false', () => {
+		expect(getObjectDefinitionsFilter('DEFAULT', false)).toBe(
+			"hidden eq false and objectFolderExternalReferenceCode eq 'DEFAULT'"
+		);
+	});
+
+	it('omits hidden eq false filter when showHiddenObjects is true', () => {
+		expect(getObjectDefinitionsFilter('DEFAULT', true)).toBe(
+			"objectFolderExternalReferenceCode eq 'DEFAULT'"
+		);
 	});
 });

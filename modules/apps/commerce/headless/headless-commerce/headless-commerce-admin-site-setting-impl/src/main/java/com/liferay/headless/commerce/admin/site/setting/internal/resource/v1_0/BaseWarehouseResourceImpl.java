@@ -157,7 +157,7 @@ public abstract class BaseWarehouseResourceImpl
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-site-setting/v1.0/commerceAdminSiteSetting/{groupId}/warehouse'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Stub endpoint for listing Warehouse records under the supplied site (groupId). Calls -- none; returns an empty page without invoking CommerceInventoryWarehouseService. The active, page, and pageSize query parameters are accepted but ignored and have no effect on the response. For Warehouse list semantics that persist, use the inventory administration API."
+		description = "Unimplemented endpoint for listing Warehouse records under the supplied site (groupId). Calls -- none; throws UnsupportedOperationException without invoking CommerceInventoryWarehouseService, so every request is rejected with a 400 Bad Request and no records are returned. For Warehouse list semantics that persist, use the inventory administration API."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -167,7 +167,7 @@ public abstract class BaseWarehouseResourceImpl
 				name = "groupId"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
-				description = "Boolean flag intended to restrict a Warehouse list to entities whose `active` flag matches the supplied value. Accepted by getCommerceAdminSiteSettingGroupWarehousePage but currently has no observable effect because that operation is a stub returning an empty Page.",
+				description = "Boolean flag intended to restrict a Warehouse list to entities whose `active` flag matches the supplied value. Accepted by getCommerceAdminSiteSettingGroupWarehousePage but never read because that operation is unimplemented and rejects every request with a 400 Bad Request.",
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "active"
 			),
@@ -244,7 +244,7 @@ public abstract class BaseWarehouseResourceImpl
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-site-setting/v1.0/commerceAdminSiteSetting/{groupId}/warehouse' -d $'{"active": ___, "city": ___, "commerceCountryId": ___, "commerceRegionId": ___, "description": ___, "latitude": ___, "longitude": ___, "mvccVersion": ___, "name": ___, "primary": ___, "street1": ___, "street2": ___, "street3": ___, "zip": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Stub endpoint for creating a Warehouse under the supplied site (groupId). Calls -- none; returns 200 with an empty Warehouse payload without invoking CommerceInventoryWarehouseService, so no record is persisted. For Warehouse writes that persist, including stock levels and per-account/group/channel scoping, use the inventory administration API."
+		description = "Unimplemented endpoint for creating a Warehouse under the supplied site (groupId). Calls -- none; throws UnsupportedOperationException without invoking CommerceInventoryWarehouseService, so every request is rejected with a 400 Bad Request and no record is persisted. For Warehouse writes that persist, including stock levels and per-account/group/channel scoping, use the inventory administration API."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -280,7 +280,7 @@ public abstract class BaseWarehouseResourceImpl
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-commerce-admin-site-setting/v1.0/warehouse/{id}' -d $'{"active": ___, "city": ___, "commerceCountryId": ___, "commerceRegionId": ___, "description": ___, "latitude": ___, "longitude": ___, "mvccVersion": ___, "name": ___, "primary": ___, "street1": ___, "street2": ___, "street3": ___, "zip": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Stub endpoint for replacing a Warehouse identified by id. Calls -- none; returns 200 with an empty body without invoking CommerceInventoryWarehouseService, so the addressed record is not changed. For Warehouse writes that persist, use the inventory administration API."
+		description = "Unimplemented endpoint for replacing a Warehouse identified by id. Calls -- none; throws UnsupportedOperationException without invoking CommerceInventoryWarehouseService, so every request is rejected with a 400 Bad Request and the addressed record is not changed. For Warehouse writes that persist, use the inventory administration API."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -1068,4 +1068,4 @@ public abstract class BaseWarehouseResourceImpl
 		LogFactoryUtil.getLog(BaseWarehouseResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1702080553
+// LIFERAY-REST-BUILDER-HASH:-1597888608

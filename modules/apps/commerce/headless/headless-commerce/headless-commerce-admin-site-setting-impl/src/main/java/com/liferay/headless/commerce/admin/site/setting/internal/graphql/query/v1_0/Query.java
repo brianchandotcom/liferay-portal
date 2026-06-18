@@ -100,7 +100,7 @@ public class Query {
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {commerceAdminSettingGroupAvailabilityEstimate(groupId: ___, page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
-		description = "Stub endpoint for listing AvailabilityEstimate records under the supplied site (groupId). Calls -- none; returns an empty page without invoking CommerceAvailabilityEstimateService. The page and pageSize query parameters are accepted but ignored and have no effect on the response."
+		description = "Unimplemented endpoint for listing AvailabilityEstimate records under the supplied site (groupId). Calls -- none; throws UnsupportedOperationException without invoking CommerceAvailabilityEstimateService, so every request is rejected with a 400 Bad Request and no records are returned."
 	)
 	public AvailabilityEstimatePage
 			commerceAdminSettingGroupAvailabilityEstimate(
@@ -233,7 +233,7 @@ public class Query {
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {commerceAdminSettingGroupTaxCategory(groupId: ___, page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
-		description = "Stub endpoint for listing TaxCategory records under the supplied site (groupId). Calls -- none; returns an empty page without invoking CPTaxCategoryService. The page and pageSize query parameters are accepted but ignored and have no effect on the response."
+		description = "Unimplemented endpoint for listing TaxCategory records under the supplied site (groupId). Calls -- none; throws UnsupportedOperationException without invoking CPTaxCategoryService, so every request is rejected with a 400 Bad Request and no records are returned."
 	)
 	public TaxCategoryPage commerceAdminSettingGroupTaxCategory(
 			@GraphQLName("groupId") Long groupId,
@@ -273,7 +273,7 @@ public class Query {
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {commerceAdminSettingGroupWarehouse(active: ___, groupId: ___, page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
-		description = "Stub endpoint for listing Warehouse records under the supplied site (groupId). Calls -- none; returns an empty page without invoking CommerceInventoryWarehouseService. The active, page, and pageSize query parameters are accepted but ignored and have no effect on the response. For Warehouse list semantics that persist, use the inventory administration API."
+		description = "Unimplemented endpoint for listing Warehouse records under the supplied site (groupId). Calls -- none; throws UnsupportedOperationException without invoking CommerceInventoryWarehouseService, so every request is rejected with a 400 Bad Request and no records are returned. For Warehouse list semantics that persist, use the inventory administration API."
 	)
 	public WarehousePage commerceAdminSettingGroupWarehouse(
 			@GraphQLName("groupId") Long groupId,
@@ -557,4 +557,4 @@ public class Query {
 	private com.liferay.portal.kernel.model.User _user;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-56913589
+// LIFERAY-REST-BUILDER-HASH:-104213659

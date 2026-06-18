@@ -237,7 +237,7 @@ env:
     -   name: LIFERAY_TOMCAT_SESSION_REPLICATION_ENABLED
         value: "true"
     -   name: LIFERAY_VIRTUAL_PERIOD_HOSTS_PERIOD_IGNORE_PERIOD_HOSTS
-        value: 127.0.0.1,localhost,${env:POD_IP}
+        value: 127.0.0.1,localhost,${env.POD_IP}
     -   name: POD_APP
         valueFrom:
             fieldRef:

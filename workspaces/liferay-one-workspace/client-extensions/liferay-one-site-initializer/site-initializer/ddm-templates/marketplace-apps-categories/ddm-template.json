@@ -2,6 +2,6 @@
 	"className": "com.liferay.template.model.TemplateEntry",
 	"ddmTemplateKey": "LO_MARKETPLACE_APPS_CATEGORIES",
 	"infoItemClassName": "com.liferay.commerce.product.model.CPDefinition",
-	"name": "lo_marketplace_apps_categories",
+	"name": "Marketplace Apps Categories",
 	"resourceClassName": "com.liferay.template.model.TemplateEntry"
 }

@@ -47,8 +47,8 @@
 				/>
 
 				<#list entries?sort_by("displayName") as entry>
-					<#if optionsCount lte 5 || isExpanded>
-						<li class="color-neutral-2 <#if optionsCount gte 5 && !isExpanded>d-none</#if> facet-value py-1">
+					<#if optionsCount lte 10 || isExpanded>
+						<li class="color-neutral-2 <#if optionsCount gte 10 && !isExpanded>d-none</#if> facet-value py-1">
 							<div class="custom-checkbox custom-control font-weight-normal">
 								<label class="facet-checkbox-label" for="${namespace}_term_${entry.getDisplayName()}">
 									<input
@@ -80,7 +80,7 @@
 					<#assign optionsCount++ />
 				</#list>
 
-				<#if optionsCount gt 5 && !isExpanded>
+				<#if optionsCount gt 10 && !isExpanded>
 					<button
 						class="btn-unstyled mt-4 view-all-btn"
 						id="${cpSpecificationOptionsSearchFacetDisplayContext.getParameterName() + 'facetAssetCategoriesViewAll'}"

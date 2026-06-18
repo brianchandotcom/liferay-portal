@@ -129,7 +129,7 @@
 			"externalReferenceCode": "ACCOUNT_TO_DSR_ROOMS",
 			"indexed": true,
 			"label": {
-				"en_US": "Account"
+				"en_US": "Account to DSR Rooms"
 			},
 			"name": "r_accountToDSRRooms_accountEntryId",
 			"objectDefinitionExternalReferenceCode1": "L_ACCOUNT",

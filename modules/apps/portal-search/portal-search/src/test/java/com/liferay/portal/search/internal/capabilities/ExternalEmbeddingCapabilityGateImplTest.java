@@ -7,6 +7,7 @@ package com.liferay.portal.search.internal.capabilities;
 
 import com.liferay.portal.kernel.license.util.LicenseManager;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.capabilities.ExternalEmbeddingEligibility;
 import com.liferay.portal.search.engine.SearchEngineInformation;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -94,7 +95,7 @@ public class ExternalEmbeddingCapabilityGateImplTest {
 		Mockito.when(
 			_searchEngineInformation.getVendorString()
 		).thenReturn(
-			"OpenSearch"
+			RandomTestUtil.randomString()
 		);
 
 		_assertUnavailable(

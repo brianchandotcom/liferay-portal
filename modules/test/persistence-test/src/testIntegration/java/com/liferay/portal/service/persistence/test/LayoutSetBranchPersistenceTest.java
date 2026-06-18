@@ -152,7 +152,9 @@ public class LayoutSetBranchPersistenceTest {
 		newLayoutSetBranch.setLayoutSetPrototypeLinkEnabled(
 			RandomTestUtil.randomBoolean());
 
-		_layoutSetBranchs.add(_persistence.update(newLayoutSetBranch));
+		newLayoutSetBranch = _persistence.update(newLayoutSetBranch);
+
+		_layoutSetBranchs.add(newLayoutSetBranch);
 
 		LayoutSetBranch existingLayoutSetBranch = _persistence.findByPrimaryKey(
 			newLayoutSetBranch.getPrimaryKey());
@@ -643,4 +645,4 @@ public class LayoutSetBranchPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:710768332
+// LIFERAY-SERVICE-BUILDER-HASH:1152544426

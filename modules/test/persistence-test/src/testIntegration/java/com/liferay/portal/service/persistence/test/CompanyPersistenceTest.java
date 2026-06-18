@@ -154,7 +154,9 @@ public class CompanyPersistenceTest {
 
 		newCompany.setIndexNameNext(RandomTestUtil.randomString());
 
-		_companies.add(_persistence.update(newCompany));
+		newCompany = _persistence.update(newCompany);
+
+		_companies.add(newCompany);
 
 		Company existingCompany = _persistence.findByPrimaryKey(
 			newCompany.getPrimaryKey());
@@ -570,4 +572,4 @@ public class CompanyPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1665334733
+// LIFERAY-SERVICE-BUILDER-HASH:-1071339307

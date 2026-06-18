@@ -158,8 +158,10 @@ public class CommercePaymentMethodGroupRelPersistenceTest {
 		newCommercePaymentMethodGroupRel.setTypeSettings(
 			RandomTestUtil.randomString());
 
-		_commercePaymentMethodGroupRels.add(
-			_persistence.update(newCommercePaymentMethodGroupRel));
+		newCommercePaymentMethodGroupRel = _persistence.update(
+			newCommercePaymentMethodGroupRel);
+
+		_commercePaymentMethodGroupRels.add(newCommercePaymentMethodGroupRel);
 
 		CommercePaymentMethodGroupRel existingCommercePaymentMethodGroupRel =
 			_persistence.findByPrimaryKey(
@@ -676,4 +678,4 @@ public class CommercePaymentMethodGroupRelPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:445946739
+// LIFERAY-SERVICE-BUILDER-HASH:1884356129

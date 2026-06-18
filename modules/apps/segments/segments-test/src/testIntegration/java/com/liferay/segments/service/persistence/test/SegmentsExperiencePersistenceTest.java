@@ -159,7 +159,9 @@ public class SegmentsExperiencePersistenceTest {
 
 		newSegmentsExperience.setLastPublishDate(RandomTestUtil.nextDate());
 
-		_segmentsExperiences.add(_persistence.update(newSegmentsExperience));
+		newSegmentsExperience = _persistence.update(newSegmentsExperience);
+
+		_segmentsExperiences.add(newSegmentsExperience);
 
 		SegmentsExperience existingSegmentsExperience =
 			_persistence.findByPrimaryKey(
@@ -862,4 +864,4 @@ public class SegmentsExperiencePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1462912712
+// LIFERAY-SERVICE-BUILDER-HASH:543106300

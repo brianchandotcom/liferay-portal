@@ -150,7 +150,9 @@ public class KaleoInstanceTokenPersistenceTest {
 
 		newKaleoInstanceToken.setCompletionDate(RandomTestUtil.nextDate());
 
-		_kaleoInstanceTokens.add(_persistence.update(newKaleoInstanceToken));
+		newKaleoInstanceToken = _persistence.update(newKaleoInstanceToken);
+
+		_kaleoInstanceTokens.add(newKaleoInstanceToken);
 
 		KaleoInstanceToken existingKaleoInstanceToken =
 			_persistence.findByPrimaryKey(
@@ -567,4 +569,4 @@ public class KaleoInstanceTokenPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:478906127
+// LIFERAY-SERVICE-BUILDER-HASH:544838431

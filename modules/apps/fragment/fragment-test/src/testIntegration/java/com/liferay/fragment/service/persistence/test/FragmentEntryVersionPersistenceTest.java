@@ -180,8 +180,9 @@ public class FragmentEntryVersionPersistenceTest {
 
 		newFragmentEntryVersion.setStatusDate(RandomTestUtil.nextDate());
 
-		_fragmentEntryVersions.add(
-			_persistence.update(newFragmentEntryVersion));
+		newFragmentEntryVersion = _persistence.update(newFragmentEntryVersion);
+
+		_fragmentEntryVersions.add(newFragmentEntryVersion);
 
 		FragmentEntryVersion existingFragmentEntryVersion =
 			_persistence.findByPrimaryKey(
@@ -965,4 +966,4 @@ public class FragmentEntryVersionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-121370568
+// LIFERAY-SERVICE-BUILDER-HASH:-1989936988

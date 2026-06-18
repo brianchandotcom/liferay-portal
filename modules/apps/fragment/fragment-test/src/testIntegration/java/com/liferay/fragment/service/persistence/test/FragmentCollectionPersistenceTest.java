@@ -145,7 +145,9 @@ public class FragmentCollectionPersistenceTest {
 
 		newFragmentCollection.setLastPublishDate(RandomTestUtil.nextDate());
 
-		_fragmentCollections.add(_persistence.update(newFragmentCollection));
+		newFragmentCollection = _persistence.update(newFragmentCollection);
+
+		_fragmentCollections.add(newFragmentCollection);
 
 		FragmentCollection existingFragmentCollection =
 			_persistence.findByPrimaryKey(
@@ -722,4 +724,4 @@ public class FragmentCollectionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-532373346
+// LIFERAY-SERVICE-BUILDER-HASH:-1344627558

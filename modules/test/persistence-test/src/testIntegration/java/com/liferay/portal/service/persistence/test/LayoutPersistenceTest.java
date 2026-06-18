@@ -211,7 +211,9 @@ public class LayoutPersistenceTest {
 
 		newLayout.setStatusDate(RandomTestUtil.nextDate());
 
-		_layouts.add(_persistence.update(newLayout));
+		newLayout = _persistence.update(newLayout);
+
+		_layouts.add(newLayout);
 
 		Layout existingLayout = _persistence.findByPrimaryKey(
 			newLayout.getPrimaryKey());
@@ -1099,4 +1101,4 @@ public class LayoutPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:267421252
+// LIFERAY-SERVICE-BUILDER-HASH:-914034432

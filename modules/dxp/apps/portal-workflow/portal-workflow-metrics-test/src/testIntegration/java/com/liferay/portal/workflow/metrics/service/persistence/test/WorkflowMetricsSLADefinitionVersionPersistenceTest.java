@@ -192,8 +192,11 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceTest {
 		newWorkflowMetricsSLADefinitionVersion.setStatusDate(
 			RandomTestUtil.nextDate());
 
+		newWorkflowMetricsSLADefinitionVersion = _persistence.update(
+			newWorkflowMetricsSLADefinitionVersion);
+
 		_workflowMetricsSLADefinitionVersions.add(
-			_persistence.update(newWorkflowMetricsSLADefinitionVersion));
+			newWorkflowMetricsSLADefinitionVersion);
 
 		WorkflowMetricsSLADefinitionVersion
 			existingWorkflowMetricsSLADefinitionVersion =
@@ -819,4 +822,4 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-705606509
+// LIFERAY-SERVICE-BUILDER-HASH:-586958223

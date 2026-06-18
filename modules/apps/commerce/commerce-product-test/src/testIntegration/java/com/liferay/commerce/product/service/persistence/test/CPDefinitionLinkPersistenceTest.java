@@ -152,7 +152,9 @@ public class CPDefinitionLinkPersistenceTest {
 
 		newCPDefinitionLink.setStatusDate(RandomTestUtil.nextDate());
 
-		_cpDefinitionLinks.add(_persistence.update(newCPDefinitionLink));
+		newCPDefinitionLink = _persistence.update(newCPDefinitionLink);
+
+		_cpDefinitionLinks.add(newCPDefinitionLink);
 
 		CPDefinitionLink existingCPDefinitionLink =
 			_persistence.findByPrimaryKey(newCPDefinitionLink.getPrimaryKey());
@@ -729,4 +731,4 @@ public class CPDefinitionLinkPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:842658885
+// LIFERAY-SERVICE-BUILDER-HASH:-1352959647

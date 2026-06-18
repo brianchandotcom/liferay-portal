@@ -134,7 +134,9 @@ public class ChangesetEntryPersistenceTest {
 
 		newChangesetEntry.setClassPK(RandomTestUtil.nextLong());
 
-		_changesetEntries.add(_persistence.update(newChangesetEntry));
+		newChangesetEntry = _persistence.update(newChangesetEntry);
+
+		_changesetEntries.add(newChangesetEntry);
 
 		ChangesetEntry existingChangesetEntry = _persistence.findByPrimaryKey(
 			newChangesetEntry.getPrimaryKey());
@@ -596,4 +598,4 @@ public class ChangesetEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-13073512
+// LIFERAY-SERVICE-BUILDER-HASH:-155169094

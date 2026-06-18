@@ -160,7 +160,9 @@ public class MBThreadPersistenceTest {
 
 		newMBThread.setStatusDate(RandomTestUtil.nextDate());
 
-		_mbThreads.add(_persistence.update(newMBThread));
+		newMBThread = _persistence.update(newMBThread);
+
+		_mbThreads.add(newMBThread);
 
 		MBThread existingMBThread = _persistence.findByPrimaryKey(
 			newMBThread.getPrimaryKey());
@@ -757,4 +759,4 @@ public class MBThreadPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-153543262
+// LIFERAY-SERVICE-BUILDER-HASH:266197960

@@ -156,7 +156,9 @@ public class SamlIdpSpConnectionPersistenceTest {
 
 		newSamlIdpSpConnection.setNameIdFormat(RandomTestUtil.randomString());
 
-		_samlIdpSpConnections.add(_persistence.update(newSamlIdpSpConnection));
+		newSamlIdpSpConnection = _persistence.update(newSamlIdpSpConnection);
+
+		_samlIdpSpConnections.add(newSamlIdpSpConnection);
 
 		SamlIdpSpConnection existingSamlIdpSpConnection =
 			_persistence.findByPrimaryKey(
@@ -623,4 +625,4 @@ public class SamlIdpSpConnectionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1370592331
+// LIFERAY-SERVICE-BUILDER-HASH:-2127855473

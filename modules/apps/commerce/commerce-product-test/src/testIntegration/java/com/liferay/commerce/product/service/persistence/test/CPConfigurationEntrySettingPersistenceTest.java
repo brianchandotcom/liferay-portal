@@ -144,8 +144,10 @@ public class CPConfigurationEntrySettingPersistenceTest {
 
 		newCPConfigurationEntrySetting.setValue(RandomTestUtil.randomString());
 
-		_cpConfigurationEntrySettings.add(
-			_persistence.update(newCPConfigurationEntrySetting));
+		newCPConfigurationEntrySetting = _persistence.update(
+			newCPConfigurationEntrySetting);
+
+		_cpConfigurationEntrySettings.add(newCPConfigurationEntrySetting);
 
 		CPConfigurationEntrySetting existingCPConfigurationEntrySetting =
 			_persistence.findByPrimaryKey(
@@ -650,4 +652,4 @@ public class CPConfigurationEntrySettingPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1604652921
+// LIFERAY-SERVICE-BUILDER-HASH:1152965699

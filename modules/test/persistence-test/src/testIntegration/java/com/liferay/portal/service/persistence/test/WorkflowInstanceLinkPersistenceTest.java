@@ -137,8 +137,9 @@ public class WorkflowInstanceLinkPersistenceTest {
 		newWorkflowInstanceLink.setWorkflowInstanceId(
 			RandomTestUtil.nextLong());
 
-		_workflowInstanceLinks.add(
-			_persistence.update(newWorkflowInstanceLink));
+		newWorkflowInstanceLink = _persistence.update(newWorkflowInstanceLink);
+
+		_workflowInstanceLinks.add(newWorkflowInstanceLink);
 
 		WorkflowInstanceLink existingWorkflowInstanceLink =
 			_persistence.findByPrimaryKey(
@@ -586,4 +587,4 @@ public class WorkflowInstanceLinkPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1152101887
+// LIFERAY-SERVICE-BUILDER-HASH:-932931013

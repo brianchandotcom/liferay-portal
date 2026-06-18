@@ -117,7 +117,9 @@ public class BrowserTrackerPersistenceTest {
 
 		newBrowserTracker.setBrowserKey(RandomTestUtil.nextLong());
 
-		_browserTrackers.add(_persistence.update(newBrowserTracker));
+		newBrowserTracker = _persistence.update(newBrowserTracker);
+
+		_browserTrackers.add(newBrowserTracker);
 
 		BrowserTracker existingBrowserTracker = _persistence.findByPrimaryKey(
 			newBrowserTracker.getPrimaryKey());
@@ -468,4 +470,4 @@ public class BrowserTrackerPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1323403636
+// LIFERAY-SERVICE-BUILDER-HASH:-2093663700

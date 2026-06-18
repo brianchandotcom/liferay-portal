@@ -138,7 +138,9 @@ public class AccountGroupPersistenceTest {
 
 		newAccountGroup.setStatus(RandomTestUtil.nextInt());
 
-		_accountGroups.add(_persistence.update(newAccountGroup));
+		newAccountGroup = _persistence.update(newAccountGroup);
+
+		_accountGroups.add(newAccountGroup);
 
 		AccountGroup existingAccountGroup = _persistence.findByPrimaryKey(
 			newAccountGroup.getPrimaryKey());
@@ -621,4 +623,4 @@ public class AccountGroupPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1679047707
+// LIFERAY-SERVICE-BUILDER-HASH:-1722076007

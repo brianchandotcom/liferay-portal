@@ -113,7 +113,9 @@ public class ClassNamePersistenceTest {
 
 		newClassName.setValue(RandomTestUtil.randomString());
 
-		_classNames.add(_persistence.update(newClassName));
+		newClassName = _persistence.update(newClassName);
+
+		_classNames.add(newClassName);
 
 		ClassName existingClassName = _persistence.findByPrimaryKey(
 			newClassName.getPrimaryKey());
@@ -448,4 +450,4 @@ public class ClassNamePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1146046931
+// LIFERAY-SERVICE-BUILDER-HASH:-550688839

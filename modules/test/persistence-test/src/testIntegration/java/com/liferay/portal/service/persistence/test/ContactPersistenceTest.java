@@ -162,7 +162,9 @@ public class ContactPersistenceTest {
 
 		newContact.setHoursOfOperation(RandomTestUtil.randomString());
 
-		_contacts.add(_persistence.update(newContact));
+		newContact = _persistence.update(newContact);
+
+		_contacts.add(newContact);
 
 		Contact existingContact = _persistence.findByPrimaryKey(
 			newContact.getPrimaryKey());
@@ -568,4 +570,4 @@ public class ContactPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:58426899
+// LIFERAY-SERVICE-BUILDER-HASH:-660844007

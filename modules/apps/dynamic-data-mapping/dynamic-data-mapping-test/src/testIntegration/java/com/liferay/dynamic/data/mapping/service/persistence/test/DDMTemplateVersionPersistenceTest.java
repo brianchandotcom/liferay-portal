@@ -152,7 +152,9 @@ public class DDMTemplateVersionPersistenceTest {
 
 		newDDMTemplateVersion.setStatusDate(RandomTestUtil.nextDate());
 
-		_ddmTemplateVersions.add(_persistence.update(newDDMTemplateVersion));
+		newDDMTemplateVersion = _persistence.update(newDDMTemplateVersion);
+
+		_ddmTemplateVersions.add(newDDMTemplateVersion);
 
 		DDMTemplateVersion existingDDMTemplateVersion =
 			_persistence.findByPrimaryKey(
@@ -615,4 +617,4 @@ public class DDMTemplateVersionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-676193987
+// LIFERAY-SERVICE-BUILDER-HASH:515471795

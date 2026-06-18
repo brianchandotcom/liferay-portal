@@ -127,7 +127,9 @@ public class PatcherAccountPersistenceTest {
 
 		newPatcherAccount.setAccountEntryCode(RandomTestUtil.randomString());
 
-		_patcherAccounts.add(_persistence.update(newPatcherAccount));
+		newPatcherAccount = _persistence.update(newPatcherAccount);
+
+		_patcherAccounts.add(newPatcherAccount);
 
 		PatcherAccount existingPatcherAccount = _persistence.findByPrimaryKey(
 			newPatcherAccount.getPrimaryKey());
@@ -518,4 +520,4 @@ public class PatcherAccountPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:362765202
+// LIFERAY-SERVICE-BUILDER-HASH:-1838020886

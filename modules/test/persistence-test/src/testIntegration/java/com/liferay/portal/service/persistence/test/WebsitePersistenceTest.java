@@ -139,7 +139,9 @@ public class WebsitePersistenceTest {
 
 		newWebsite.setLastPublishDate(RandomTestUtil.nextDate());
 
-		_websites.add(_persistence.update(newWebsite));
+		newWebsite = _persistence.update(newWebsite);
+
+		_websites.add(newWebsite);
 
 		Website existingWebsite = _persistence.findByPrimaryKey(
 			newWebsite.getPrimaryKey());
@@ -601,4 +603,4 @@ public class WebsitePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1042254785
+// LIFERAY-SERVICE-BUILDER-HASH:759185851

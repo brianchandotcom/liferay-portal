@@ -160,7 +160,9 @@ public class CPConfigurationListPersistenceTest {
 
 		newCPConfigurationList.setStatusDate(RandomTestUtil.nextDate());
 
-		_cpConfigurationLists.add(_persistence.update(newCPConfigurationList));
+		newCPConfigurationList = _persistence.update(newCPConfigurationList);
+
+		_cpConfigurationLists.add(newCPConfigurationList);
 
 		CPConfigurationList existingCPConfigurationList =
 			_persistence.findByPrimaryKey(
@@ -774,4 +776,4 @@ public class CPConfigurationListPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1545274059
+// LIFERAY-SERVICE-BUILDER-HASH:1290832319

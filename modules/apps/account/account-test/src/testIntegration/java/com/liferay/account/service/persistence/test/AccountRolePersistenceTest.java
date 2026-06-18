@@ -121,7 +121,9 @@ public class AccountRolePersistenceTest {
 
 		newAccountRole.setRoleId(RandomTestUtil.nextLong());
 
-		_accountRoles.add(_persistence.update(newAccountRole));
+		newAccountRole = _persistence.update(newAccountRole);
+
+		_accountRoles.add(newAccountRole);
 
 		AccountRole existingAccountRole = _persistence.findByPrimaryKey(
 			newAccountRole.getPrimaryKey());
@@ -546,4 +548,4 @@ public class AccountRolePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1901311082
+// LIFERAY-SERVICE-BUILDER-HASH:-1383680644

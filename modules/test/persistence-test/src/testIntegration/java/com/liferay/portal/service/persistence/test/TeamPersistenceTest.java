@@ -138,7 +138,9 @@ public class TeamPersistenceTest {
 
 		newTeam.setLastPublishDate(RandomTestUtil.nextDate());
 
-		_teams.add(_persistence.update(newTeam));
+		newTeam = _persistence.update(newTeam);
+
+		_teams.add(newTeam);
 
 		Team existingTeam = _persistence.findByPrimaryKey(
 			newTeam.getPrimaryKey());
@@ -580,4 +582,4 @@ public class TeamPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:378161091
+// LIFERAY-SERVICE-BUILDER-HASH:611739429

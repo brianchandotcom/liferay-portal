@@ -144,7 +144,9 @@ public class BatchPlannerPlanPersistenceTest {
 
 		newBatchPlannerPlan.setStatus(RandomTestUtil.nextInt());
 
-		_batchPlannerPlans.add(_persistence.update(newBatchPlannerPlan));
+		newBatchPlannerPlan = _persistence.update(newBatchPlannerPlan);
+
+		_batchPlannerPlans.add(newBatchPlannerPlan);
 
 		BatchPlannerPlan existingBatchPlannerPlan =
 			_persistence.findByPrimaryKey(newBatchPlannerPlan.getPrimaryKey());
@@ -551,4 +553,4 @@ public class BatchPlannerPlanPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-818781041
+// LIFERAY-SERVICE-BUILDER-HASH:2091624505

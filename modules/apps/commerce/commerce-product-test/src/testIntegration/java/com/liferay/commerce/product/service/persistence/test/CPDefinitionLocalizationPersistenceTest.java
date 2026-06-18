@@ -143,8 +143,10 @@ public class CPDefinitionLocalizationPersistenceTest {
 		newCPDefinitionLocalization.setShortDescription(
 			RandomTestUtil.randomString());
 
-		_cpDefinitionLocalizations.add(
-			_persistence.update(newCPDefinitionLocalization));
+		newCPDefinitionLocalization = _persistence.update(
+			newCPDefinitionLocalization);
+
+		_cpDefinitionLocalizations.add(newCPDefinitionLocalization);
 
 		CPDefinitionLocalization existingCPDefinitionLocalization =
 			_persistence.findByPrimaryKey(
@@ -568,4 +570,4 @@ public class CPDefinitionLocalizationPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-70112456
+// LIFERAY-SERVICE-BUILDER-HASH:111763230

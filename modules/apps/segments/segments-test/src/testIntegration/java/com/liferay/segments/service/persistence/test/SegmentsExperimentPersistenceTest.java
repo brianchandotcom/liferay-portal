@@ -152,7 +152,9 @@ public class SegmentsExperimentPersistenceTest {
 
 		newSegmentsExperiment.setStatus(RandomTestUtil.nextInt());
 
-		_segmentsExperiments.add(_persistence.update(newSegmentsExperiment));
+		newSegmentsExperiment = _persistence.update(newSegmentsExperiment);
+
+		_segmentsExperiments.add(newSegmentsExperiment);
 
 		SegmentsExperiment existingSegmentsExperiment =
 			_persistence.findByPrimaryKey(
@@ -698,4 +700,4 @@ public class SegmentsExperimentPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:475662220
+// LIFERAY-SERVICE-BUILDER-HASH:-196525270

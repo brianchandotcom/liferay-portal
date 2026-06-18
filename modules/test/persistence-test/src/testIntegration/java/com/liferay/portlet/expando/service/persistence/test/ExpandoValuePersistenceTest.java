@@ -127,7 +127,9 @@ public class ExpandoValuePersistenceTest {
 
 		newExpandoValue.setData(RandomTestUtil.randomString());
 
-		_expandoValues.add(_persistence.update(newExpandoValue));
+		newExpandoValue = _persistence.update(newExpandoValue);
+
+		_expandoValues.add(newExpandoValue);
 
 		ExpandoValue existingExpandoValue = _persistence.findByPrimaryKey(
 			newExpandoValue.getPrimaryKey());
@@ -587,4 +589,4 @@ public class ExpandoValuePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:596951059
+// LIFERAY-SERVICE-BUILDER-HASH:472206067

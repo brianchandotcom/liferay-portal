@@ -124,8 +124,10 @@ public class UndefinedDefaultOrderEntryPersistenceTest {
 
 		newUndefinedDefaultOrderEntry.setName(RandomTestUtil.randomString());
 
-		_undefinedDefaultOrderEntries.add(
-			_persistence.update(newUndefinedDefaultOrderEntry));
+		newUndefinedDefaultOrderEntry = _persistence.update(
+			newUndefinedDefaultOrderEntry);
+
+		_undefinedDefaultOrderEntries.add(newUndefinedDefaultOrderEntry);
 
 		UndefinedDefaultOrderEntry existingUndefinedDefaultOrderEntry =
 			_persistence.findByPrimaryKey(
@@ -531,4 +533,4 @@ public class UndefinedDefaultOrderEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1869389462
+// LIFERAY-SERVICE-BUILDER-HASH:1763178422

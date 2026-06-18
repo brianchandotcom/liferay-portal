@@ -157,7 +157,9 @@ public class JournalFolderPersistenceTest {
 
 		newJournalFolder.setStatusDate(RandomTestUtil.nextDate());
 
-		_journalFolders.add(_persistence.update(newJournalFolder));
+		newJournalFolder = _persistence.update(newJournalFolder);
+
+		_journalFolders.add(newJournalFolder);
 
 		JournalFolder existingJournalFolder = _persistence.findByPrimaryKey(
 			newJournalFolder.getPrimaryKey());
@@ -777,4 +779,4 @@ public class JournalFolderPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1096745805
+// LIFERAY-SERVICE-BUILDER-HASH:1513745375

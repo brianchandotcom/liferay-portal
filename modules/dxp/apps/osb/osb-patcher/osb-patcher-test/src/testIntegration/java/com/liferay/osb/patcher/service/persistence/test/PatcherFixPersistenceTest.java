@@ -168,7 +168,9 @@ public class PatcherFixPersistenceTest {
 
 		newPatcherFix.setStatusDate(RandomTestUtil.nextDate());
 
-		_patcherFixes.add(_persistence.update(newPatcherFix));
+		newPatcherFix = _persistence.update(newPatcherFix);
+
+		_patcherFixes.add(newPatcherFix);
 
 		PatcherFix existingPatcherFix = _persistence.findByPrimaryKey(
 			newPatcherFix.getPrimaryKey());
@@ -663,4 +665,4 @@ public class PatcherFixPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-12522961
+// LIFERAY-SERVICE-BUILDER-HASH:1802317357

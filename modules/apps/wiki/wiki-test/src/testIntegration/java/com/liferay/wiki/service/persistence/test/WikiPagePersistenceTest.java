@@ -164,7 +164,9 @@ public class WikiPagePersistenceTest {
 
 		newWikiPage.setStatusDate(RandomTestUtil.nextDate());
 
-		_wikiPages.add(_persistence.update(newWikiPage));
+		newWikiPage = _persistence.update(newWikiPage);
+
+		_wikiPages.add(newWikiPage);
 
 		WikiPage existingWikiPage = _persistence.findByPrimaryKey(
 			newWikiPage.getPrimaryKey());
@@ -1001,4 +1003,4 @@ public class WikiPagePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-297660656
+// LIFERAY-SERVICE-BUILDER-HASH:22655094

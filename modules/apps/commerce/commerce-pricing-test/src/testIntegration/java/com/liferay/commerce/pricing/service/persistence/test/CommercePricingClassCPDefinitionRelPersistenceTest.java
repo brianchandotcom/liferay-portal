@@ -146,8 +146,11 @@ public class CommercePricingClassCPDefinitionRelPersistenceTest {
 		newCommercePricingClassCPDefinitionRel.setCPDefinitionId(
 			RandomTestUtil.nextLong());
 
+		newCommercePricingClassCPDefinitionRel = _persistence.update(
+			newCommercePricingClassCPDefinitionRel);
+
 		_commercePricingClassCPDefinitionRels.add(
-			_persistence.update(newCommercePricingClassCPDefinitionRel));
+			newCommercePricingClassCPDefinitionRel);
 
 		CommercePricingClassCPDefinitionRel
 			existingCommercePricingClassCPDefinitionRel =
@@ -645,4 +648,4 @@ public class CommercePricingClassCPDefinitionRelPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:579655111
+// LIFERAY-SERVICE-BUILDER-HASH:-1098504803

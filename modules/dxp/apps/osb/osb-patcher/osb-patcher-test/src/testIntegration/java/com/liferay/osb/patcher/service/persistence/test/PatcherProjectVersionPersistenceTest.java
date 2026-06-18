@@ -149,8 +149,10 @@ public class PatcherProjectVersionPersistenceTest {
 		newPatcherProjectVersion.setRepositoryName(
 			RandomTestUtil.randomString());
 
-		_patcherProjectVersions.add(
-			_persistence.update(newPatcherProjectVersion));
+		newPatcherProjectVersion = _persistence.update(
+			newPatcherProjectVersion);
+
+		_patcherProjectVersions.add(newPatcherProjectVersion);
 
 		PatcherProjectVersion existingPatcherProjectVersion =
 			_persistence.findByPrimaryKey(
@@ -648,4 +650,4 @@ public class PatcherProjectVersionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1087106044
+// LIFERAY-SERVICE-BUILDER-HASH:725493006

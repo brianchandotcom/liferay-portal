@@ -160,7 +160,9 @@ public class DDMStructurePersistenceTest {
 
 		newDDMStructure.setLastPublishDate(RandomTestUtil.nextDate());
 
-		_ddmStructures.add(_persistence.update(newDDMStructure));
+		newDDMStructure = _persistence.update(newDDMStructure);
+
+		_ddmStructures.add(newDDMStructure);
 
 		DDMStructure existingDDMStructure = _persistence.findByPrimaryKey(
 			newDDMStructure.getPrimaryKey());
@@ -785,4 +787,4 @@ public class DDMStructurePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1020970209
+// LIFERAY-SERVICE-BUILDER-HASH:1746414699

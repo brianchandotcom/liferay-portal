@@ -146,7 +146,9 @@ public class CPOptionPersistenceTest {
 
 		newCPOption.setLastPublishDate(RandomTestUtil.nextDate());
 
-		_cpOptions.add(_persistence.update(newCPOption));
+		newCPOption = _persistence.update(newCPOption);
+
+		_cpOptions.add(newCPOption);
 
 		CPOption existingCPOption = _persistence.findByPrimaryKey(
 			newCPOption.getPrimaryKey());
@@ -616,4 +618,4 @@ public class CPOptionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-683981256
+// LIFERAY-SERVICE-BUILDER-HASH:-83335836

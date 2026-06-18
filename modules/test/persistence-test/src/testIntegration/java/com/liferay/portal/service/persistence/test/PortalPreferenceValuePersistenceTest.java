@@ -130,8 +130,10 @@ public class PortalPreferenceValuePersistenceTest {
 
 		newPortalPreferenceValue.setSmallValue(RandomTestUtil.randomString());
 
-		_portalPreferenceValues.add(
-			_persistence.update(newPortalPreferenceValue));
+		newPortalPreferenceValue = _persistence.update(
+			newPortalPreferenceValue);
+
+		_portalPreferenceValues.add(newPortalPreferenceValue);
 
 		PortalPreferenceValue existingPortalPreferenceValue =
 			_persistence.findByPrimaryKey(
@@ -598,4 +600,4 @@ public class PortalPreferenceValuePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:271486473
+// LIFERAY-SERVICE-BUILDER-HASH:433008743

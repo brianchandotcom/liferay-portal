@@ -131,8 +131,9 @@ public class JournalContentSearchPersistenceTest {
 
 		newJournalContentSearch.setArticleId(RandomTestUtil.randomString());
 
-		_journalContentSearchs.add(
-			_persistence.update(newJournalContentSearch));
+		newJournalContentSearch = _persistence.update(newJournalContentSearch);
+
+		_journalContentSearchs.add(newJournalContentSearch);
 
 		JournalContentSearch existingJournalContentSearch =
 			_persistence.findByPrimaryKey(
@@ -634,4 +635,4 @@ public class JournalContentSearchPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1604920215
+// LIFERAY-SERVICE-BUILDER-HASH:-911491163

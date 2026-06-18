@@ -147,8 +147,10 @@ public class CommercePriceListChannelRelPersistenceTest {
 		newCommercePriceListChannelRel.setLastPublishDate(
 			RandomTestUtil.nextDate());
 
-		_commercePriceListChannelRels.add(
-			_persistence.update(newCommercePriceListChannelRel));
+		newCommercePriceListChannelRel = _persistence.update(
+			newCommercePriceListChannelRel);
+
+		_commercePriceListChannelRels.add(newCommercePriceListChannelRel);
 
 		CommercePriceListChannelRel existingCommercePriceListChannelRel =
 			_persistence.findByPrimaryKey(
@@ -637,4 +639,4 @@ public class CommercePriceListChannelRelPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:535914748
+// LIFERAY-SERVICE-BUILDER-HASH:894732922

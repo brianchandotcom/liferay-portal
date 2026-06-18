@@ -154,7 +154,9 @@ public class KaleoActionPersistenceTest {
 
 		newKaleoAction.setStatus(RandomTestUtil.nextInt());
 
-		_kaleoActions.add(_persistence.update(newKaleoAction));
+		newKaleoAction = _persistence.update(newKaleoAction);
+
+		_kaleoActions.add(newKaleoAction);
 
 		KaleoAction existingKaleoAction = _persistence.findByPrimaryKey(
 			newKaleoAction.getPrimaryKey());
@@ -564,4 +566,4 @@ public class KaleoActionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1958458401
+// LIFERAY-SERVICE-BUILDER-HASH:628697203

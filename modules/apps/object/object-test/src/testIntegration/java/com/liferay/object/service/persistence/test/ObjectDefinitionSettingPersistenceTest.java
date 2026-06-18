@@ -137,8 +137,10 @@ public class ObjectDefinitionSettingPersistenceTest {
 
 		newObjectDefinitionSetting.setValue(RandomTestUtil.randomString());
 
-		_objectDefinitionSettings.add(
-			_persistence.update(newObjectDefinitionSetting));
+		newObjectDefinitionSetting = _persistence.update(
+			newObjectDefinitionSetting);
+
+		_objectDefinitionSettings.add(newObjectDefinitionSetting);
 
 		ObjectDefinitionSetting existingObjectDefinitionSetting =
 			_persistence.findByPrimaryKey(
@@ -614,4 +616,4 @@ public class ObjectDefinitionSettingPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1228074539
+// LIFERAY-SERVICE-BUILDER-HASH:-1989435165

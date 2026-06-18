@@ -138,7 +138,9 @@ public class CommerceTaxMethodPersistenceTest {
 
 		newCommerceTaxMethod.setTypeSettings(RandomTestUtil.randomString());
 
-		_commerceTaxMethods.add(_persistence.update(newCommerceTaxMethod));
+		newCommerceTaxMethod = _persistence.update(newCommerceTaxMethod);
+
+		_commerceTaxMethods.add(newCommerceTaxMethod);
 
 		CommerceTaxMethod existingCommerceTaxMethod =
 			_persistence.findByPrimaryKey(newCommerceTaxMethod.getPrimaryKey());
@@ -568,4 +570,4 @@ public class CommerceTaxMethodPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:293614677
+// LIFERAY-SERVICE-BUILDER-HASH:240740727

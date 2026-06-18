@@ -130,7 +130,9 @@ public class COREntryRelPersistenceTest {
 
 		newCOREntryRel.setCOREntryId(RandomTestUtil.nextLong());
 
-		_corEntryRels.add(_persistence.update(newCOREntryRel));
+		newCOREntryRel = _persistence.update(newCOREntryRel);
+
+		_corEntryRels.add(newCOREntryRel);
 
 		COREntryRel existingCOREntryRel = _persistence.findByPrimaryKey(
 			newCOREntryRel.getPrimaryKey());
@@ -526,4 +528,4 @@ public class COREntryRelPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:693830459
+// LIFERAY-SERVICE-BUILDER-HASH:221157037

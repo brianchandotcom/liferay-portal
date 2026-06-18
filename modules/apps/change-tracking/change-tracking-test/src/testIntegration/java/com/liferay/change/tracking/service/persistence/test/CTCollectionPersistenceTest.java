@@ -144,7 +144,9 @@ public class CTCollectionPersistenceTest {
 
 		newCTCollection.setStatusDate(RandomTestUtil.nextDate());
 
-		_ctCollections.add(_persistence.update(newCTCollection));
+		newCTCollection = _persistence.update(newCTCollection);
+
+		_ctCollections.add(newCTCollection);
 
 		CTCollection existingCTCollection = _persistence.findByPrimaryKey(
 			newCTCollection.getPrimaryKey());
@@ -635,4 +637,4 @@ public class CTCollectionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:57568160
+// LIFERAY-SERVICE-BUILDER-HASH:-76312410

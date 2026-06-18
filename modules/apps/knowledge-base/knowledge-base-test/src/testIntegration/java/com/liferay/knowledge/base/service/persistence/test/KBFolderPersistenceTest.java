@@ -150,7 +150,9 @@ public class KBFolderPersistenceTest {
 
 		newKBFolder.setStatusDate(RandomTestUtil.nextDate());
 
-		_kbFolders.add(_persistence.update(newKBFolder));
+		newKBFolder = _persistence.update(newKBFolder);
+
+		_kbFolders.add(newKBFolder);
 
 		KBFolder existingKBFolder = _persistence.findByPrimaryKey(
 			newKBFolder.getPrimaryKey());
@@ -701,4 +703,4 @@ public class KBFolderPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:58883098
+// LIFERAY-SERVICE-BUILDER-HASH:-999790360

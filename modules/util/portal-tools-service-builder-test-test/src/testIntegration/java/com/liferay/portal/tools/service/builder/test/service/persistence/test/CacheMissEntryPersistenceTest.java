@@ -113,7 +113,9 @@ public class CacheMissEntryPersistenceTest {
 
 		newCacheMissEntry.setCtCollectionId(RandomTestUtil.nextLong());
 
-		_cacheMissEntries.add(_persistence.update(newCacheMissEntry));
+		newCacheMissEntry = _persistence.update(newCacheMissEntry);
+
+		_cacheMissEntries.add(newCacheMissEntry);
 
 		CacheMissEntry existingCacheMissEntry = _persistence.findByPrimaryKey(
 			newCacheMissEntry.getPrimaryKey());
@@ -390,4 +392,4 @@ public class CacheMissEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1734332678
+// LIFERAY-SERVICE-BUILDER-HASH:1143607712

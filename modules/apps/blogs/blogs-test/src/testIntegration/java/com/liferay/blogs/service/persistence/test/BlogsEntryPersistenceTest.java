@@ -178,7 +178,9 @@ public class BlogsEntryPersistenceTest {
 
 		newBlogsEntry.setStatusDate(RandomTestUtil.nextDate());
 
-		_blogsEntries.add(_persistence.update(newBlogsEntry));
+		newBlogsEntry = _persistence.update(newBlogsEntry);
+
+		_blogsEntries.add(newBlogsEntry);
 
 		BlogsEntry existingBlogsEntry = _persistence.findByPrimaryKey(
 			newBlogsEntry.getPrimaryKey());
@@ -960,4 +962,4 @@ public class BlogsEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1681858075
+// LIFERAY-SERVICE-BUILDER-HASH:-663227059

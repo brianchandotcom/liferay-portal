@@ -127,7 +127,9 @@ public class ERCCompanyEntryPersistenceTest {
 
 		newERCCompanyEntry.setColumn1(RandomTestUtil.nextInt());
 
-		_ercCompanyEntries.add(_persistence.update(newERCCompanyEntry));
+		newERCCompanyEntry = _persistence.update(newERCCompanyEntry);
+
+		_ercCompanyEntries.add(newERCCompanyEntry);
 
 		ERCCompanyEntry existingERCCompanyEntry = _persistence.findByPrimaryKey(
 			newERCCompanyEntry.getPrimaryKey());
@@ -540,4 +542,4 @@ public class ERCCompanyEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1306570582
+// LIFERAY-SERVICE-BUILDER-HASH:-1827410722

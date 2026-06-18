@@ -130,7 +130,9 @@ public class EagerBlobEntryPersistenceTest {
 
 		newEagerBlobEntry.setBlob(newBlobBlob);
 
-		_eagerBlobEntries.add(_persistence.update(newEagerBlobEntry));
+		newEagerBlobEntry = _persistence.update(newEagerBlobEntry);
+
+		_eagerBlobEntries.add(newEagerBlobEntry);
 
 		Session session = _persistence.openSession();
 
@@ -509,4 +511,4 @@ public class EagerBlobEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-707172627
+// LIFERAY-SERVICE-BUILDER-HASH:-816442755

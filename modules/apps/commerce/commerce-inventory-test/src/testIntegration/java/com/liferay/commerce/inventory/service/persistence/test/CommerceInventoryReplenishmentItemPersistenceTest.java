@@ -162,8 +162,11 @@ public class CommerceInventoryReplenishmentItemPersistenceTest {
 		newCommerceInventoryReplenishmentItem.setUnitOfMeasureKey(
 			RandomTestUtil.randomString());
 
+		newCommerceInventoryReplenishmentItem = _persistence.update(
+			newCommerceInventoryReplenishmentItem);
+
 		_commerceInventoryReplenishmentItems.add(
-			_persistence.update(newCommerceInventoryReplenishmentItem));
+			newCommerceInventoryReplenishmentItem);
 
 		CommerceInventoryReplenishmentItem
 			existingCommerceInventoryReplenishmentItem =
@@ -755,4 +758,4 @@ public class CommerceInventoryReplenishmentItemPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:877313816
+// LIFERAY-SERVICE-BUILDER-HASH:161930988

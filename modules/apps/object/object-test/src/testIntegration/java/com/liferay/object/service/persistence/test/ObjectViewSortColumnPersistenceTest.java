@@ -133,8 +133,9 @@ public class ObjectViewSortColumnPersistenceTest {
 
 		newObjectViewSortColumn.setSortOrder(RandomTestUtil.randomString());
 
-		_objectViewSortColumns.add(
-			_persistence.update(newObjectViewSortColumn));
+		newObjectViewSortColumn = _persistence.update(newObjectViewSortColumn);
+
+		_objectViewSortColumns.add(newObjectViewSortColumn);
 
 		ObjectViewSortColumn existingObjectViewSortColumn =
 			_persistence.findByPrimaryKey(
@@ -492,4 +493,4 @@ public class ObjectViewSortColumnPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:27500422
+// LIFERAY-SERVICE-BUILDER-HASH:-961752338

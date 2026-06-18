@@ -124,7 +124,9 @@ public class ObjectLayoutRowPersistenceTest {
 
 		newObjectLayoutRow.setPriority(RandomTestUtil.nextInt());
 
-		_objectLayoutRows.add(_persistence.update(newObjectLayoutRow));
+		newObjectLayoutRow = _persistence.update(newObjectLayoutRow);
+
+		_objectLayoutRows.add(newObjectLayoutRow);
 
 		ObjectLayoutRow existingObjectLayoutRow = _persistence.findByPrimaryKey(
 			newObjectLayoutRow.getPrimaryKey());
@@ -439,4 +441,4 @@ public class ObjectLayoutRowPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2069761661
+// LIFERAY-SERVICE-BUILDER-HASH:322944545

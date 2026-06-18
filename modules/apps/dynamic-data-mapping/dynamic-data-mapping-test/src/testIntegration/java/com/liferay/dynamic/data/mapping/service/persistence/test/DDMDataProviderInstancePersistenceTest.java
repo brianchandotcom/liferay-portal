@@ -151,8 +151,10 @@ public class DDMDataProviderInstancePersistenceTest {
 		newDDMDataProviderInstance.setLastPublishDate(
 			RandomTestUtil.nextDate());
 
-		_ddmDataProviderInstances.add(
-			_persistence.update(newDDMDataProviderInstance));
+		newDDMDataProviderInstance = _persistence.update(
+			newDDMDataProviderInstance);
+
+		_ddmDataProviderInstances.add(newDDMDataProviderInstance);
 
 		DDMDataProviderInstance existingDDMDataProviderInstance =
 			_persistence.findByPrimaryKey(
@@ -668,4 +670,4 @@ public class DDMDataProviderInstancePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:702113152
+// LIFERAY-SERVICE-BUILDER-HASH:-39555662

@@ -144,8 +144,11 @@ public class CommerceDiscountCommerceAccountGroupRelPersistenceTest {
 		newCommerceDiscountCommerceAccountGroupRel.setCommerceAccountGroupId(
 			RandomTestUtil.nextLong());
 
+		newCommerceDiscountCommerceAccountGroupRel = _persistence.update(
+			newCommerceDiscountCommerceAccountGroupRel);
+
 		_commerceDiscountCommerceAccountGroupRels.add(
-			_persistence.update(newCommerceDiscountCommerceAccountGroupRel));
+			newCommerceDiscountCommerceAccountGroupRel);
 
 		CommerceDiscountCommerceAccountGroupRel
 			existingCommerceDiscountCommerceAccountGroupRel =
@@ -648,4 +651,4 @@ public class CommerceDiscountCommerceAccountGroupRelPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:634237317
+// LIFERAY-SERVICE-BUILDER-HASH:-304284353

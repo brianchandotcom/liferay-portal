@@ -121,7 +121,9 @@ public class KaleoProcessLinkPersistenceTest {
 
 		newKaleoProcessLink.setDDMTemplateId(RandomTestUtil.nextLong());
 
-		_kaleoProcessLinks.add(_persistence.update(newKaleoProcessLink));
+		newKaleoProcessLink = _persistence.update(newKaleoProcessLink);
+
+		_kaleoProcessLinks.add(newKaleoProcessLink);
 
 		KaleoProcessLink existingKaleoProcessLink =
 			_persistence.findByPrimaryKey(newKaleoProcessLink.getPrimaryKey());
@@ -494,4 +496,4 @@ public class KaleoProcessLinkPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1847896201
+// LIFERAY-SERVICE-BUILDER-HASH:-1591684145

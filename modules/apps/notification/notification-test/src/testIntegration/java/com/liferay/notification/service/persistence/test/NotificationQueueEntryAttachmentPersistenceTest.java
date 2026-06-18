@@ -126,8 +126,11 @@ public class NotificationQueueEntryAttachmentPersistenceTest {
 		newNotificationQueueEntryAttachment.setNotificationQueueEntryId(
 			RandomTestUtil.nextLong());
 
+		newNotificationQueueEntryAttachment = _persistence.update(
+			newNotificationQueueEntryAttachment);
+
 		_notificationQueueEntryAttachments.add(
-			_persistence.update(newNotificationQueueEntryAttachment));
+			newNotificationQueueEntryAttachment);
 
 		NotificationQueueEntryAttachment
 			existingNotificationQueueEntryAttachment =
@@ -483,4 +486,4 @@ public class NotificationQueueEntryAttachmentPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:8881233
+// LIFERAY-SERVICE-BUILDER-HASH:229843851

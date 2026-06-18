@@ -124,7 +124,9 @@ public class DepotEntryPinPersistenceTest {
 
 		newDepotEntryPin.setDepotEntryId(RandomTestUtil.nextLong());
 
-		_depotEntryPins.add(_persistence.update(newDepotEntryPin));
+		newDepotEntryPin = _persistence.update(newDepotEntryPin);
+
+		_depotEntryPins.add(newDepotEntryPin);
 
 		DepotEntryPin existingDepotEntryPin = _persistence.findByPrimaryKey(
 			newDepotEntryPin.getPrimaryKey());
@@ -546,4 +548,4 @@ public class DepotEntryPinPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2080075779
+// LIFERAY-SERVICE-BUILDER-HASH:-1760724621

@@ -175,8 +175,9 @@ public class CommercePaymentEntryPersistenceTest {
 
 		newCommercePaymentEntry.setType(RandomTestUtil.nextInt());
 
-		_commercePaymentEntries.add(
-			_persistence.update(newCommercePaymentEntry));
+		newCommercePaymentEntry = _persistence.update(newCommercePaymentEntry);
+
+		_commercePaymentEntries.add(newCommercePaymentEntry);
 
 		CommercePaymentEntry existingCommercePaymentEntry =
 			_persistence.findByPrimaryKey(
@@ -748,4 +749,4 @@ public class CommercePaymentEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1050102034
+// LIFERAY-SERVICE-BUILDER-HASH:-1291654818

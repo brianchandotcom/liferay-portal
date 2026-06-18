@@ -140,8 +140,9 @@ public class CommerceWishListItemPersistenceTest {
 
 		newCommerceWishListItem.setJson(RandomTestUtil.randomString());
 
-		_commerceWishListItems.add(
-			_persistence.update(newCommerceWishListItem));
+		newCommerceWishListItem = _persistence.update(newCommerceWishListItem);
+
+		_commerceWishListItems.add(newCommerceWishListItem);
 
 		CommerceWishListItem existingCommerceWishListItem =
 			_persistence.findByPrimaryKey(
@@ -616,4 +617,4 @@ public class CommerceWishListItemPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:143664923
+// LIFERAY-SERVICE-BUILDER-HASH:1661026957

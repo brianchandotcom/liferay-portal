@@ -140,8 +140,10 @@ public class LayoutPageTemplateStructurePersistenceTest {
 
 		newLayoutPageTemplateStructure.setPlid(RandomTestUtil.nextLong());
 
-		_layoutPageTemplateStructures.add(
-			_persistence.update(newLayoutPageTemplateStructure));
+		newLayoutPageTemplateStructure = _persistence.update(
+			newLayoutPageTemplateStructure);
+
+		_layoutPageTemplateStructures.add(newLayoutPageTemplateStructure);
 
 		LayoutPageTemplateStructure existingLayoutPageTemplateStructure =
 			_persistence.findByPrimaryKey(
@@ -634,4 +636,4 @@ public class LayoutPageTemplateStructurePersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:855393349
+// LIFERAY-SERVICE-BUILDER-HASH:-1240419073

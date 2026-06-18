@@ -133,8 +133,10 @@ public class RedirectNotFoundEntryPersistenceTest {
 
 		newRedirectNotFoundEntry.setUrl(RandomTestUtil.randomString());
 
-		_redirectNotFoundEntries.add(
-			_persistence.update(newRedirectNotFoundEntry));
+		newRedirectNotFoundEntry = _persistence.update(
+			newRedirectNotFoundEntry);
+
+		_redirectNotFoundEntries.add(newRedirectNotFoundEntry);
 
 		RedirectNotFoundEntry existingRedirectNotFoundEntry =
 			_persistence.findByPrimaryKey(
@@ -564,4 +566,4 @@ public class RedirectNotFoundEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1512499754
+// LIFERAY-SERVICE-BUILDER-HASH:888531954

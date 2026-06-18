@@ -131,8 +131,9 @@ public class AssetAutoTaggerEntryPersistenceTest {
 
 		newAssetAutoTaggerEntry.setAssetTagId(RandomTestUtil.nextLong());
 
-		_assetAutoTaggerEntries.add(
-			_persistence.update(newAssetAutoTaggerEntry));
+		newAssetAutoTaggerEntry = _persistence.update(newAssetAutoTaggerEntry);
+
+		_assetAutoTaggerEntries.add(newAssetAutoTaggerEntry);
 
 		AssetAutoTaggerEntry existingAssetAutoTaggerEntry =
 			_persistence.findByPrimaryKey(
@@ -560,4 +561,4 @@ public class AssetAutoTaggerEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:328063073
+// LIFERAY-SERVICE-BUILDER-HASH:754453545

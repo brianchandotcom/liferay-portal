@@ -141,7 +141,9 @@ public class LayoutSetPersistenceTest {
 		newLayoutSet.setLayoutSetPrototypeLinkEnabled(
 			RandomTestUtil.randomBoolean());
 
-		_layoutSets.add(_persistence.update(newLayoutSet));
+		newLayoutSet = _persistence.update(newLayoutSet);
+
+		_layoutSets.add(newLayoutSet);
 
 		LayoutSet existingLayoutSet = _persistence.findByPrimaryKey(
 			newLayoutSet.getPrimaryKey());
@@ -577,4 +579,4 @@ public class LayoutSetPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:247259149
+// LIFERAY-SERVICE-BUILDER-HASH:-140773389

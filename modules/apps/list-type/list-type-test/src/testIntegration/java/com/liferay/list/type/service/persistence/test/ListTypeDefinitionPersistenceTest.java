@@ -136,7 +136,9 @@ public class ListTypeDefinitionPersistenceTest {
 
 		newListTypeDefinition.setStatus(RandomTestUtil.nextInt());
 
-		_listTypeDefinitions.add(_persistence.update(newListTypeDefinition));
+		newListTypeDefinition = _persistence.update(newListTypeDefinition);
+
+		_listTypeDefinitions.add(newListTypeDefinition);
 
 		ListTypeDefinition existingListTypeDefinition =
 			_persistence.findByPrimaryKey(
@@ -596,4 +598,4 @@ public class ListTypeDefinitionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1784447139
+// LIFERAY-SERVICE-BUILDER-HASH:1129550753

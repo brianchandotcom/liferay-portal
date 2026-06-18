@@ -141,8 +141,10 @@ public class CommerceInventoryAuditPersistenceTest {
 		newCommerceInventoryAudit.setUnitOfMeasureKey(
 			RandomTestUtil.randomString());
 
-		_commerceInventoryAudits.add(
-			_persistence.update(newCommerceInventoryAudit));
+		newCommerceInventoryAudit = _persistence.update(
+			newCommerceInventoryAudit);
+
+		_commerceInventoryAudits.add(newCommerceInventoryAudit);
 
 		CommerceInventoryAudit existingCommerceInventoryAudit =
 			_persistence.findByPrimaryKey(
@@ -517,4 +519,4 @@ public class CommerceInventoryAuditPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:186242202
+// LIFERAY-SERVICE-BUILDER-HASH:-1190988874

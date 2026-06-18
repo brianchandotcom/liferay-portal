@@ -171,8 +171,10 @@ public class CPDefinitionVirtualSettingPersistenceTest {
 		newCPDefinitionVirtualSetting.setLastPublishDate(
 			RandomTestUtil.nextDate());
 
-		_cpDefinitionVirtualSettings.add(
-			_persistence.update(newCPDefinitionVirtualSetting));
+		newCPDefinitionVirtualSetting = _persistence.update(
+			newCPDefinitionVirtualSetting);
+
+		_cpDefinitionVirtualSettings.add(newCPDefinitionVirtualSetting);
 
 		CPDefinitionVirtualSetting existingCPDefinitionVirtualSetting =
 			_persistence.findByPrimaryKey(
@@ -723,4 +725,4 @@ public class CPDefinitionVirtualSettingPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-39156261
+// LIFERAY-SERVICE-BUILDER-HASH:1037519849

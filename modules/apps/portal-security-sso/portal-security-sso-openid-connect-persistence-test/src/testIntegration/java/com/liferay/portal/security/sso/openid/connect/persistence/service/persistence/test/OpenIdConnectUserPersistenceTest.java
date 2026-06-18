@@ -125,7 +125,9 @@ public class OpenIdConnectUserPersistenceTest {
 
 		newOpenIdConnectUser.setSubject(RandomTestUtil.randomString());
 
-		_openIdConnectUsers.add(_persistence.update(newOpenIdConnectUser));
+		newOpenIdConnectUser = _persistence.update(newOpenIdConnectUser);
+
+		_openIdConnectUsers.add(newOpenIdConnectUser);
 
 		OpenIdConnectUser existingOpenIdConnectUser =
 			_persistence.findByPrimaryKey(newOpenIdConnectUser.getPrimaryKey());
@@ -516,4 +518,4 @@ public class OpenIdConnectUserPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-173142039
+// LIFERAY-SERVICE-BUILDER-HASH:-221259537

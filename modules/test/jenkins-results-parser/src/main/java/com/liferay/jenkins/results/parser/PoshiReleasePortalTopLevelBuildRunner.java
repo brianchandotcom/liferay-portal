@@ -263,6 +263,8 @@ public class PoshiReleasePortalTopLevelBuildRunner
 				_getGitHubBranchUsername("JENKINS_GITHUB_URL"));
 			invocationParameters.put(
 				"JENKINS_TOP_LEVEL_BUILD_URL", buildData.getBuildURL());
+			invocationParameters.put(
+				"PARENT_BUILD_URL", buildData.getBuildURL());
 
 			PullRequest pullRequest = entry.getValue();
 

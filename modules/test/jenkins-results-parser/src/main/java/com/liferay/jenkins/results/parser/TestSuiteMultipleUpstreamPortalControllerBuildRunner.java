@@ -92,6 +92,8 @@ public class TestSuiteMultipleUpstreamPortalControllerBuildRunner
 			invocationParameters.put(
 				"JENKINS_GITHUB_BRANCH_USERNAME",
 				buildData.getJenkinsGitHubUsername());
+			invocationParameters.put(
+				"PARENT_BUILD_URL", buildData.getBuildURL());
 			invocationParameters.put("PORTAL_GIT_COMMIT", portalBranchSHA);
 			invocationParameters.put(
 				"PORTAL_GITHUB_URL", buildData.getPortalGitHubURL());

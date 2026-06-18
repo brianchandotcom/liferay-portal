@@ -130,6 +130,7 @@ public class QAWebsitesControllerBuildRunner
 		invocationParameters.put(
 			"JENKINS_GITHUB_BRANCH_USERNAME",
 			_getGitHubBranchUsername("JENKINS_GITHUB_URL"));
+		invocationParameters.put("PARENT_BUILD_URL", buildData.getBuildURL());
 		invocationParameters.put(
 			"TEST_QA_WEBSITES_BRANCH_NAME",
 			_getGitHubBranchName("QA_WEBSITES_GITHUB_URL"));

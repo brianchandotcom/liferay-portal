@@ -342,10 +342,7 @@ public class LazyBlobEntryPersistenceImpl
 				session.save(lazyBlobEntry);
 			}
 			else {
-				session.evict(
-					LazyBlobEntryImpl.class, lazyBlobEntry.getPrimaryKeyObj());
-
-				session.saveOrUpdate(lazyBlobEntry);
+				lazyBlobEntry = (LazyBlobEntry)session.merge(lazyBlobEntry);
 			}
 
 			session.flush();
@@ -532,4 +529,4 @@ public class LazyBlobEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2132809462
+// LIFERAY-SERVICE-BUILDER-HASH:-1428404629

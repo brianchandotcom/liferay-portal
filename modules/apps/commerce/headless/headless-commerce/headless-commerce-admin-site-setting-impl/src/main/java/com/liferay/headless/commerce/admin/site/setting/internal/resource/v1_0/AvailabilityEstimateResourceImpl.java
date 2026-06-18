@@ -45,6 +45,23 @@ public class AvailabilityEstimateResourceImpl
 				getCommerceAvailabilityEstimate(id));
 	}
 
+	@Override
+	public AvailabilityEstimate
+		postCommerceAdminSiteSettingGroupAvailabilityEstimate(
+			Long groupId, AvailabilityEstimate availabilityEstimate) {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Override
+	public Response putAvailabilityEstimate(
+		Long id, AvailabilityEstimate availabilityEstimate) {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	@Reference
 	private CommerceAvailabilityEstimateService
 		_commerceAvailabilityEstimateService;

@@ -40,6 +40,20 @@ public class TaxCategoryResourceImpl extends BaseTaxCategoryResourceImpl {
 			_cpTaxCategoryService.getCPTaxCategory(id));
 	}
 
+	@Override
+	public TaxCategory postCommerceAdminSiteSettingGroupTaxCategory(
+		Long groupId, TaxCategory taxCategory) {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Override
+	public Response putTaxCategory(Long id, TaxCategory taxCategory) {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	@Reference
 	private CPTaxCategoryService _cpTaxCategoryService;
 

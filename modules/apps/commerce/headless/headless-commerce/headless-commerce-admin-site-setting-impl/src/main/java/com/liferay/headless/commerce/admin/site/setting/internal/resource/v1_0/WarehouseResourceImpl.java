@@ -41,6 +41,20 @@ public class WarehouseResourceImpl extends BaseWarehouseResourceImpl {
 				id));
 	}
 
+	@Override
+	public Warehouse postCommerceAdminSiteSettingGroupWarehouse(
+		Long groupId, Warehouse warehouse) {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Override
+	public Response putWarehouse(Long id, Warehouse warehouse) {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	@Reference
 	private CommerceInventoryWarehouseService
 		_commerceInventoryWarehouseService;

@@ -10,7 +10,10 @@ import {act, fireEvent, render, screen, within} from '@testing-library/react';
 import React from 'react';
 
 import {loadingElement} from '../../../utils/__tests__/helpers';
-import {fetchPropertiesResponse} from '../../../utils/__tests__/mocks';
+import {
+	fetchPropertiesResponse,
+	fetchTableDataResponse,
+} from '../../../utils/__tests__/mocks';
 import Properties from '../Properties';
 
 describe('Properties', () => {
@@ -45,6 +48,22 @@ describe('Properties', () => {
 			screen.getByRole('columnheader', {
 				name: /commerce/i,
 			})
+		).toBeInTheDocument();
+	});
+
+	it('renders the empty state when there are no properties', async () => {
+		fetch.mockResponse(JSON.stringify(fetchTableDataResponse([])));
+
+		render(<Properties />);
+
+		await loadingElement();
+
+		expect(
+			screen.getByText(/create-a-property-to-add-sites-and-channels/i)
+		).toBeInTheDocument();
+
+		expect(
+			screen.getByRole('button', {name: /^new-property$/i})
 		).toBeInTheDocument();
 	});
 

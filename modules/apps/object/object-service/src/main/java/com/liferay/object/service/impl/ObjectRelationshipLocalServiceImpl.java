@@ -1698,9 +1698,7 @@ public class ObjectRelationshipLocalServiceImpl
 						"disable-inheritance-x-(x-object-entries)");
 			}
 
-			if (FeatureFlagManagerUtil.isEnabled(
-					objectDefinition2.getCompanyId(), "LPD-69877") &&
-				!objectDefinition2.isAllowStandaloneObjectEntry() &&
+			if (!objectDefinition2.isAllowStandaloneObjectEntry() &&
 				objectDefinition2.isApproved() &&
 				objectDefinition2.isRootDescendantNode()) {
 

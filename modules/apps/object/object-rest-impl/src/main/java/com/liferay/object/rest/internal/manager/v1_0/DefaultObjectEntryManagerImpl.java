@@ -1979,9 +1979,7 @@ public class DefaultObjectEntryManagerImpl
 			ObjectDefinition objectDefinition, Map<String, Serializable> values)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled(
-				objectDefinition.getCompanyId(), "LPD-69877") ||
-			objectDefinition.isAllowStandaloneObjectEntry() ||
+		if (objectDefinition.isAllowStandaloneObjectEntry() ||
 			!objectDefinition.isRootDescendantNode()) {
 
 			return;

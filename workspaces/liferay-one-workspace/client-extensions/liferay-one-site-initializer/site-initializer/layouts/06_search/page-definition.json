@@ -215,7 +215,7 @@
 											},
 											"widgetInstance": {
 												"widgetConfig": {
-													"displayStyle": "ddmTemplate_LO_APPS_VOCABULARY_FACETS",
+													"displayStyle": "ddmTemplate_APPS_VOCABULARY_FACETS",
 													"displayStyleGroupId": "[$GROUP_ID$]",
 													"frequenciesVisible": "true",
 													"frequencyThreshold": "1",
@@ -291,7 +291,7 @@
 										"definition": {
 											"widgetInstance": {
 												"widgetConfig": {
-													"displayStyle": "ddmTemplate_LO_SEARCH_RESULTS",
+													"displayStyle": "ddmTemplate_SEARCH_RESULTS",
 													"displayStyleGroupId": "[$GROUP_ID$]",
 													"paginationDelta": "10",
 													"paginationDeltaParameterName": "delta",

@@ -27,8 +27,8 @@
 
 	categories = product.categories![]
 
-	marketplaceAppCategories = categories?filter(category -> category.vocabulary?upper_case?replace(" ", "-", "r") == "MARKETPLACE-APP-CATEGORY")
-	marketplaceCategory = categories?filter(category -> category.vocabulary?upper_case?replace(" ", "-", "r") == "MARKETPLACE-CATEGORY")?first!""
+	marketplaceAppCategories = categories?filter(category -> stringUtil.equals(category.vocabulary?upper_case?replace(" ", "-", "r"), "MARKETPLACE-APP-CATEGORY"))
+	marketplaceCategory = categories?filter(category -> stringUtil.equals(category.vocabulary?upper_case?replace(" ", "-", "r"), "MARKETPLACE-CATEGORY"))?first!""
 />
 
 <div class="app-container color-neutral-3 d-flex flex-wrap font-size-paragraph-small justify-content-between w-100">
@@ -40,7 +40,7 @@
 				<div></div>
 			<#else>
 				<a class="text-decoration-none text-reset" href="/applications?marketplaceCategory=${marketplaceCategory.name?url}">
-					<span class="app-type-badge ${badgeType} d-flex align-items-center bg-neutral-8 border-radius-small mb-1 mr-2 px-3 rounded-lg" title="${marketplaceCategory.name}">
+					<span class="align-items-center app-type-badge border-radius-small d-flex mb-1 mr-2 px-3 rounded-lg ${badgeType}" title="${marketplaceCategory.name}">
 						${marketplaceCategory.name}
 					</span>
 				</a>
@@ -58,7 +58,7 @@
 
 			<#list marketplaceAppCategories as marketplaceAppCategory>
 				<a class="text-decoration-none text-reset" href="/applications?marketplaceAppCategory=${marketplaceAppCategory.name?url}">
-					<span class="app-category bg-neutral-8 border-radius-small mb-1 mr-2 px-3 rounded-lg" title="${marketplaceAppCategory.name}">
+					<span class="app-category border-radius-small mb-1 mr-2 px-3 rounded-lg" title="${marketplaceAppCategory.name}">
 						${marketplaceAppCategory.name}
 					</span>
 				</a>

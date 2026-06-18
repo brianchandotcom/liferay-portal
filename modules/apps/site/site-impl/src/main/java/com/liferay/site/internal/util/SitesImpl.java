@@ -7,7 +7,6 @@ package com.liferay.site.internal.util;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
-import com.liferay.exportimport.kernel.background.task.BackgroundTaskExecutorNames;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactoryUtil;
 import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.lar.ExportImportHelper;
@@ -22,13 +21,8 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.background.task.util.comparator.BackgroundTaskCreateDateComparator;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
-import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.change.tracking.CTTransactionException;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.lock.LockManagerUtil;
@@ -70,7 +64,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PropsValues;
@@ -887,75 +880,9 @@ public class SitesImpl implements Sites {
 			user.getUserId(), exportImportConfiguration, file);
 	}
 
-	protected boolean isLayoutSetPrototypeMergeBackgroundTaskExists(
-			LayoutSetPrototype layoutSetPrototype, LayoutSet layoutSet)
-		throws PortalException {
-
-		List<BackgroundTask> incompleteBackgroundTasks =
-			_backgroundTaskManager.getBackgroundTasks(
-				layoutSet.getGroupId(),
-				BackgroundTaskExecutorNames.
-					LAYOUT_SET_PROTOTYPE_MERGE_BACKGROUND_TASK_EXECUTOR,
-				false, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				BackgroundTaskCreateDateComparator.getInstance(false));
-
-		for (BackgroundTask incompleteBackgroundTask :
-				incompleteBackgroundTasks) {
-
-			long exportImportConfigurationId = MapUtil.getLong(
-				incompleteBackgroundTask.getTaskContextMap(),
-				"exportImportConfigurationId");
-
-			ExportImportConfiguration exportImportConfiguration =
-				_exportImportConfigurationLocalService.
-					fetchExportImportConfiguration(exportImportConfigurationId);
-
-			if (exportImportConfiguration != null) {
-				Map<String, Serializable> settingsMap =
-					exportImportConfiguration.getSettingsMap();
-
-				Map<String, String[]> parameterMap =
-					(Map<String, String[]>)settingsMap.get("parameterMap");
-
-				long layoutSetId = MapUtil.getLong(parameterMap, "layoutSetId");
-
-				if (layoutSetId == layoutSet.getLayoutSetId()) {
-					if (incompleteBackgroundTask.getStatus() !=
-							BackgroundTaskConstants.STATUS_IN_PROGRESS) {
-
-						return true;
-					}
-
-					long lastMergeVersion = MapUtil.getLong(
-						parameterMap, "lastMergeVersion");
-
-					if (lastMergeVersion ==
-							layoutSetPrototype.getMvccVersion()) {
-
-						return true;
-					}
-				}
-			}
-		}
-
-		return false;
-	}
-
 	protected void mergeLayoutSetPrototypeLayoutsInBackground(
 			LayoutSetPrototype layoutSetPrototype, LayoutSet layoutSet)
 		throws PortalException {
-
-		if (isLayoutSetPrototypeMergeBackgroundTaskExists(
-				layoutSetPrototype, layoutSet)) {
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Layout set prototype merge is in progress for layout " +
-						"set " + layoutSet.getLayoutSetId());
-			}
-
-			return;
-		}
 
 		UnicodeProperties settingsUnicodeProperties =
 			layoutSet.getSettingsProperties();
@@ -1192,9 +1119,6 @@ public class SitesImpl implements Sites {
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
-
-	@Reference
-	private BackgroundTaskManager _backgroundTaskManager;
 
 	@Reference
 	private ExportImportConfigurationLocalService

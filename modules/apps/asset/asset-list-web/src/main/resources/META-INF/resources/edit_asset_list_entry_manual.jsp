@@ -117,7 +117,7 @@ AssetListEntry assetListEntry = assetListDisplayContext.getAssetListEntry();
 										HashMapBuilder.<String, Object>put(
 											"assetEntryTypes", editAssetListDisplayContext.getAssetEntryTypesJSONArray()
 										).put(
-											"groupIds", editAssetListDisplayContext.getConnectedGroupIds()
+											"groupIds", editAssetListDisplayContext.getConnectedGroupIdsString()
 										).build()
 									%>'
 									aria-label='<%= LanguageUtil.get(request, "select-items") %>'

@@ -235,7 +235,7 @@ public class GetLayoutDataMVCResourceCommandTest {
 	private boolean _hasFragmentEntryLink(
 		FragmentEntryLink fragmentEntryLink, JSONObject itemsJSONObject) {
 
-		String fragmentEntryLinkId = String.valueOf(
+		String fragmentEntryLinkIdString = String.valueOf(
 			fragmentEntryLink.getFragmentEntryLinkId());
 
 		for (String itemId : itemsJSONObject.keySet()) {
@@ -248,7 +248,7 @@ public class GetLayoutDataMVCResourceCommandTest {
 				continue;
 			}
 
-			if (fragmentEntryLinkId.equals(
+			if (fragmentEntryLinkIdString.equals(
 					configJSONObject.getString("fragmentEntryLinkId"))) {
 
 				return true;

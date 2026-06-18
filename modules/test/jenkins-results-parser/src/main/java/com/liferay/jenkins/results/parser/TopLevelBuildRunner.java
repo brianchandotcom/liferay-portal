@@ -327,6 +327,9 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 			throw new RuntimeException(ioException);
 		}
 
+		invocationParameters.put(
+			"PARENT_BUILD_URL", _topLevelBuild.getBuildURL());
+
 		StringBuilder sb = new StringBuilder();
 
 		sb.append(getBaseInvocationURL(cohortName, jobName));

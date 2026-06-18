@@ -55,7 +55,7 @@ public class ExportPreviewResourceImpl extends BaseExportPreviewResourceImpl {
 		Group group = _getAssetLibraryGroup(assetLibraryExternalReferenceCode);
 
 		return _getExportPreview(
-			endDate, group.getGroupId(), last, 0, false, null, range,
+			endDate, group.getGroupId(), last, 0, null, false, range,
 			startDate);
 	}
 
@@ -68,8 +68,8 @@ public class ExportPreviewResourceImpl extends BaseExportPreviewResourceImpl {
 		Group group = _getAssetLibraryGroup(assetLibraryExternalReferenceCode);
 
 		return _getExportPreview(
-			endDate, group.getGroupId(), last, GetterUtil.getLong(plid), false,
-			portletId, range, startDate);
+			endDate, group.getGroupId(), last, GetterUtil.getLong(plid),
+			portletId, false, range, startDate);
 	}
 
 	@Override
@@ -85,7 +85,7 @@ public class ExportPreviewResourceImpl extends BaseExportPreviewResourceImpl {
 		}
 
 		return _getExportPreview(
-			endDate, group.getGroupId(), last, 0, false, null, range,
+			endDate, group.getGroupId(), last, 0, null, false, range,
 			startDate);
 	}
 
@@ -98,7 +98,7 @@ public class ExportPreviewResourceImpl extends BaseExportPreviewResourceImpl {
 		Group group = _getSiteGroup(siteExternalReferenceCode);
 
 		return _getExportPreview(
-			endDate, group.getGroupId(), last, 0, false, null, range,
+			endDate, group.getGroupId(), last, 0, null, false, range,
 			startDate);
 	}
 
@@ -111,8 +111,8 @@ public class ExportPreviewResourceImpl extends BaseExportPreviewResourceImpl {
 		Group group = _getSiteGroup(siteExternalReferenceCode);
 
 		return _getExportPreview(
-			endDate, group.getGroupId(), last, GetterUtil.getLong(plid), false,
-			portletId, range, startDate);
+			endDate, group.getGroupId(), last, GetterUtil.getLong(plid),
+			portletId, false, range, startDate);
 	}
 
 	private Group _getAssetLibraryGroup(String externalReferenceCode) {
@@ -128,20 +128,15 @@ public class ExportPreviewResourceImpl extends BaseExportPreviewResourceImpl {
 
 	private ExportPreview _getExportPreview(
 			Date endDate, long groupId, Integer last, long plid,
-			boolean privateLayout, String portletId, String range,
+			String portletId, boolean privateLayout, String range,
 			Date startDate)
 		throws Exception {
 
 		PermissionUtil.checkExportPermission(
 			contextCompany.getCompanyId(), groupId);
 
-		DateRange dateRange = DateRangeUtil.toDateRange(
-			endDate, last, range, startDate);
-
-		Locale locale = contextAcceptLanguage.getPreferredLocale();
-
 		Map<String, List<PreviewPortletDataHandler>>
-			previewPortletDataHandlers = new LinkedHashMap<>();
+			previewPortletDataHandlersMap = new LinkedHashMap<>();
 
 		boolean portletScoped = !Validator.isBlank(portletId);
 
@@ -156,6 +151,11 @@ public class ExportPreviewResourceImpl extends BaseExportPreviewResourceImpl {
 			portlets = _exportImportHelper.getExportablePortlets(
 				contextCompany.getCompanyId(), false, groupId);
 		}
+
+		DateRange dateRange = DateRangeUtil.toDateRange(
+			endDate, last, range, startDate);
+
+		Locale locale = contextAcceptLanguage.getPreferredLocale();
 
 		for (Portlet portlet : portlets) {
 			PortletDataHandler portletDataHandler =
@@ -177,7 +177,7 @@ public class ExportPreviewResourceImpl extends BaseExportPreviewResourceImpl {
 				portletDataContext.getManifestSummary(), portlet,
 				portletDataHandler,
 				PortletDataHandler::getExportPortletDataHandlerControls,
-				portletScoped, previewPortletDataHandlers);
+				portletScoped, previewPortletDataHandlersMap);
 
 			if (portletScoped) {
 				PreviewPortletDataHandlerUtil.
@@ -187,7 +187,7 @@ public class ExportPreviewResourceImpl extends BaseExportPreviewResourceImpl {
 							getExportConfigurationPortletDataHandlerControls(
 								contextCompany.getCompanyId(), groupId, portlet,
 								plid, privateLayout),
-						previewPortletDataHandlers);
+						previewPortletDataHandlersMap);
 			}
 		}
 
@@ -195,15 +195,15 @@ public class ExportPreviewResourceImpl extends BaseExportPreviewResourceImpl {
 			{
 				setAdditionCount(
 					() -> PreviewPortletDataHandlerUtil.getAdditionCount(
-						previewPortletDataHandlers));
+						previewPortletDataHandlersMap));
 				setDeletionCount(
 					() -> PreviewPortletDataHandlerUtil.getDeletionCount(
-						previewPortletDataHandlers));
+						previewPortletDataHandlersMap));
 				setPreviewPortletDataHandlerSections(
 					() ->
 						PreviewPortletDataHandlerUtil.
 							toPreviewPortletDataHandlerSections(
-								locale, previewPortletDataHandlers));
+								locale, previewPortletDataHandlersMap));
 			}
 		};
 	}

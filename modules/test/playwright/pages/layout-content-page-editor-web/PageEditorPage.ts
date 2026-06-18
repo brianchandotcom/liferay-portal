@@ -877,7 +877,8 @@ export class PageEditorPage {
 
 		await this.page.mouse.down();
 
-		// Nudge the pointer so Chromium starts the native HTML5 drag
+		// Move the pointer slightly while pressed so Chromium starts the
+		// native HTML5 drag
 
 		await this.page.mouse.move(
 			sourceBox.x + sourceBox.width / 2,
@@ -903,14 +904,17 @@ export class PageEditorPage {
 					? /drag-over-bottom/
 					: /drag-over-top/;
 
-		const jiggleY = position === 'top' ? y + 4 : y - 4;
+		const approachY = position === 'top' ? y + 4 : y - 4;
 
-		// Move over the target until the drop indicator appears
+		// Move over the target until the drop indicator appears. Each pass
+		// moves to a nearby point first and then to the real drop point, so
+		// the pointer position always changes and Chromium keeps firing
+		// dragover events.
 
 		await expect(async () => {
 			await this.page.mouse.move(
 				targetBox.x + targetBox.width / 2,
-				targetBox.y + jiggleY,
+				targetBox.y + approachY,
 				{steps: 5}
 			);
 

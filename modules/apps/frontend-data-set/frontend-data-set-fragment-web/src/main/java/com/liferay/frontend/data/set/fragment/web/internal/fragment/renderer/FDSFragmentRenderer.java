@@ -216,8 +216,8 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 					externalReferenceCode, httpServletRequest);
 
 			boolean resolved = _isResolved(
-				tokenResolutionsJSONObject, externalReferenceCode,
-				httpServletRequest);
+				externalReferenceCode, httpServletRequest,
+				tokenResolutionsJSONObject);
 
 			String componentId = externalReferenceCode;
 
@@ -228,7 +228,7 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 
 				if (hasTokens) {
 					_writeAutoResolvableTokenNames(
-						fragmentEntryLink, externalReferenceCode,
+						externalReferenceCode, fragmentEntryLink,
 						httpServletRequest);
 				}
 
@@ -401,8 +401,8 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 			return null;
 		}
 
-		if (Objects.equals(mappingMode, _MAPPING_MODE_CONTEXT)) {
-			return _resolveContextValue(httpServletRequest, fieldId);
+		if (Objects.equals(mappingMode, "context")) {
+			return _resolveContextValue(fieldId, httpServletRequest);
 		}
 
 		if (Objects.equals(fieldId, "externalReferenceCode")) {
@@ -442,19 +442,19 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 	}
 
 	private boolean _isResolved(
-		JSONObject tokenValuesJSONObject, String externalReferenceCode,
-		HttpServletRequest httpServletRequest) {
+		String externalReferenceCode, HttpServletRequest httpServletRequest,
+		JSONObject tokenResolutionsJSONObject) {
 
 		Matcher matcher = _pattern.matcher(
 			_fdsRenderer.getFDSAPIURL(
 				externalReferenceCode, httpServletRequest, true,
-				tokenValuesJSONObject));
+				tokenResolutionsJSONObject));
 
 		return !matcher.find();
 	}
 
 	private String _resolveContextValue(
-		HttpServletRequest httpServletRequest, String fieldId) {
+		String fieldId, HttpServletRequest httpServletRequest) {
 
 		InfoItemReference infoItemReference =
 			(InfoItemReference)httpServletRequest.getAttribute(
@@ -487,7 +487,7 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 	}
 
 	private void _writeAutoResolvableTokenNames(
-		FragmentEntryLink fragmentEntryLink, String externalReferenceCode,
+		String externalReferenceCode, FragmentEntryLink fragmentEntryLink,
 		HttpServletRequest httpServletRequest) {
 
 		Set<String> autoResolvableTokenNames = _getAutoResolvableTokenNames(
@@ -550,8 +550,6 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 	}
 
 	private static final String _MAPPING_MODE_AUTO_RESOLVED = "auto-resolved";
-
-	private static final String _MAPPING_MODE_CONTEXT = "context";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FDSFragmentRenderer.class);

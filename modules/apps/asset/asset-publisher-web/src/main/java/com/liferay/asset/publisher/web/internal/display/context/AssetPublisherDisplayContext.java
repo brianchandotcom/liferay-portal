@@ -438,33 +438,28 @@ public class AssetPublisherDisplayContext {
 		return _assetEntryResults;
 	}
 
-	public JSONArray getAssetEntryTypesJSONArray() {
-		JSONArray assetEntryTypesJSONArray = JSONFactoryUtil.createJSONArray();
-
+	public JSONArray getAssetEntryTypesJSONArray() throws Exception {
 		List<AssetRendererFactory<?>> assetRendererFactories = ListUtil.sort(
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactories(
 				_themeDisplay.getCompanyId()),
 			new AssetRendererFactoryTypeNameComparator(
 				_themeDisplay.getLocale()));
 
-		for (AssetRendererFactory<?> assetRendererFactory :
-				assetRendererFactories) {
+		return JSONUtil.toJSONArray(
+			assetRendererFactories,
+			assetRendererFactory -> {
+				if (!assetRendererFactory.isSelectable()) {
+					return null;
+				}
 
-			if (!assetRendererFactory.isSelectable()) {
-				continue;
-			}
-
-			assetEntryTypesJSONArray.put(
-				JSONUtil.put(
+				return JSONUtil.put(
 					"classNameId",
 					_portal.getClassNameId(assetRendererFactory.getClassName())
 				).put(
 					"label",
 					assetRendererFactory.getTypeName(_themeDisplay.getLocale())
-				));
-		}
-
-		return assetEntryTypesJSONArray;
+				);
+			});
 	}
 
 	public String getAssetLinkBehavior() {
@@ -774,7 +769,9 @@ public class AssetPublisherDisplayContext {
 		return _compilerTagNames;
 	}
 
-	public String getConnectedGroupIds(long groupId) throws PortalException {
+	public String getConnectedGroupIdsString(long groupId)
+		throws PortalException {
+
 		return StringUtil.merge(
 			SiteConnectedGroupGroupProviderUtil.
 				getCurrentAndAncestorSiteAndDepotGroupIds(

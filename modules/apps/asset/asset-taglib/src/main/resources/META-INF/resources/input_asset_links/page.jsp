@@ -20,7 +20,7 @@
 		HashMapBuilder.<String, Object>put(
 			"assetEntryTypes", inputAssetLinksDisplayContext.getAssetEntryTypesJSONArray()
 		).put(
-			"groupIds", inputAssetLinksDisplayContext.getConnectedGroupIds()
+			"groupIds", inputAssetLinksDisplayContext.getConnectedGroupIdsString()
 		).put(
 			"refererClassNameId", inputAssetLinksDisplayContext.getRefererClassNameId()
 		).put(

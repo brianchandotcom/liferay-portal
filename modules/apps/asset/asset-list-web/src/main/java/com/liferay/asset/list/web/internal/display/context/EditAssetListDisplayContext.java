@@ -153,8 +153,6 @@ public class EditAssetListDisplayContext {
 	}
 
 	public JSONArray getAssetEntryTypesJSONArray() throws Exception {
-		JSONArray assetEntryTypesJSONArray = JSONFactoryUtil.createJSONArray();
-
 		AssetListEntry assetListEntry = getAssetListEntry();
 
 		UnicodeProperties unicodeProperties = UnicodePropertiesBuilder.create(
@@ -171,38 +169,38 @@ public class EditAssetListDisplayContext {
 			classNameIds = _getDefaultClassNameIds();
 		}
 
-		for (long classNameId : classNameIds) {
-			AssetRendererFactory<?> assetRendererFactory =
-				AssetRendererFactoryRegistryUtil.
-					getAssetRendererFactoryByClassNameId(classNameId);
+		return JSONUtil.toJSONArray(
+			ArrayUtil.toArray(classNameIds),
+			classNameId -> {
+				AssetRendererFactory<?> assetRendererFactory =
+					AssetRendererFactoryRegistryUtil.
+						getAssetRendererFactoryByClassNameId(classNameId);
 
-			if ((assetRendererFactory == null) ||
-				!assetRendererFactory.isActive(_themeDisplay.getCompanyId()) ||
-				!assetRendererFactory.isSelectable()) {
+				if ((assetRendererFactory == null) ||
+					!assetRendererFactory.isActive(
+						_themeDisplay.getCompanyId()) ||
+					!assetRendererFactory.isSelectable()) {
 
-				continue;
-			}
+					return null;
+				}
 
-			if (!Objects.equals(
-					assetListEntry.getAssetEntryType(),
-					AssetEntry.class.getName()) &&
-				!Objects.equals(
-					assetListEntry.getAssetEntryType(),
-					assetRendererFactory.getClassName())) {
+				if (!Objects.equals(
+						assetListEntry.getAssetEntryType(),
+						AssetEntry.class.getName()) &&
+					!Objects.equals(
+						assetListEntry.getAssetEntryType(),
+						assetRendererFactory.getClassName())) {
 
-				continue;
-			}
+					return null;
+				}
 
-			assetEntryTypesJSONArray.put(
-				JSONUtil.put(
+				return JSONUtil.put(
 					"classNameId", classNameId
 				).put(
 					"label",
 					assetRendererFactory.getTypeName(_themeDisplay.getLocale())
-				));
-		}
-
-		return assetEntryTypesJSONArray;
+				);
+			});
 	}
 
 	public AssetListEntry getAssetListEntry() {
@@ -638,7 +636,7 @@ public class EditAssetListDisplayContext {
 			unicodeProperties, className, availableClassTypeIds);
 	}
 
-	public String getConnectedGroupIds() throws PortalException {
+	public String getConnectedGroupIdsString() throws PortalException {
 		return StringUtil.merge(
 			SiteConnectedGroupGroupProviderUtil.
 				getCurrentAndAncestorSiteAndDepotGroupIds(

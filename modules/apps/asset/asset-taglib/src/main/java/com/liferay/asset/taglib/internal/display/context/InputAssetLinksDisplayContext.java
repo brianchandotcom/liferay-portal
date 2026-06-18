@@ -19,7 +19,6 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -78,9 +77,7 @@ public class InputAssetLinksDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public JSONArray getAssetEntryTypesJSONArray() {
-		JSONArray assetEntryTypesJSONArray = JSONFactoryUtil.createJSONArray();
-
+	public JSONArray getAssetEntryTypesJSONArray() throws Exception {
 		AssetRendererFactory<?> baseAssetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
 				_className);
@@ -92,29 +89,26 @@ public class InputAssetLinksDisplayContext {
 			_themeDisplay.getScopeGroupId(),
 			baseAssetRendererFactory.getPortletId());
 
-		for (AssetRendererFactory<?> assetRendererFactory :
-				getAssetRendererFactories()) {
+		return JSONUtil.toJSONArray(
+			getAssetRendererFactories(),
+			assetRendererFactory -> {
+				boolean assetStaged = stagingGroupHelper.isStagedPortlet(
+					_themeDisplay.getScopeGroupId(),
+					assetRendererFactory.getPortletId());
 
-			boolean assetStaged = stagingGroupHelper.isStagedPortlet(
-				_themeDisplay.getScopeGroupId(),
-				assetRendererFactory.getPortletId());
+				if (!baseAssetStaged && assetStaged) {
+					return null;
+				}
 
-			if (!baseAssetStaged && assetStaged) {
-				continue;
-			}
-
-			assetEntryTypesJSONArray.put(
-				JSONUtil.put(
+				return JSONUtil.put(
 					"classNameId",
 					PortalUtil.getClassNameId(
 						assetRendererFactory.getClassName())
 				).put(
 					"label",
 					assetRendererFactory.getTypeName(_themeDisplay.getLocale())
-				));
-		}
-
-		return assetEntryTypesJSONArray;
+				);
+			});
 	}
 
 	public AssetEntry getAssetLinkEntry(AssetLink assetLink)
@@ -186,7 +180,7 @@ public class InputAssetLinksDisplayContext {
 		return assetType;
 	}
 
-	public String getConnectedGroupIds() throws PortalException {
+	public String getConnectedGroupIdsString() throws PortalException {
 		return StringUtil.merge(
 			SiteConnectedGroupGroupProviderUtil.
 				getCurrentAndAncestorSiteAndDepotGroupIds(

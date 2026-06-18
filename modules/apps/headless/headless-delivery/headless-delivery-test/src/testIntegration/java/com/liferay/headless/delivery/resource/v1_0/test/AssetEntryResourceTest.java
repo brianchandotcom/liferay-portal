@@ -114,7 +114,6 @@ public class AssetEntryResourceTest extends BaseAssetEntryResourceTestCase {
 			}
 		}
 
-		Assert.assertNotNull(assetEntry);
 		Assert.assertNotNull(assetEntry.getCreator());
 		Assert.assertNotNull(assetEntry.getDateModified());
 		Assert.assertEquals(

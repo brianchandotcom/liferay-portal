@@ -14,11 +14,11 @@ function main {
 		exit 1
 	fi
 
-	mkdir --parents /tmp/pr-reviewer
+	mkdir --parents output
 
 	local pr_subdir
 
-	for pr_subdir in /tmp/pr-reviewer/*
+	for pr_subdir in output/*
 	do
 		if [ -d ${pr_subdir} ] && _is_older_than ${pr_subdir} $((3 * 24 * 3600))
 		then
@@ -43,7 +43,7 @@ function main {
 		pr_number=${2:-}
 	fi
 
-	local pr_dir=/tmp/pr-reviewer/${pr_number}
+	local pr_dir=output/${pr_number}
 
 	if [[ ${command} == check ]]
 	then
@@ -58,7 +58,7 @@ function main {
 
 				for pr_number in $(gh api --paginate "repos/${_REPO}/pulls?state=open" | jq --raw-output ".[].number")
 				do
-					pr_dir=/tmp/pr-reviewer/${pr_number}
+					pr_dir=output/${pr_number}
 
 					_check_pr
 
@@ -99,7 +99,7 @@ function main {
 			fi
 		done
 
-		for pr_subdir in /tmp/pr-reviewer/*
+		for pr_subdir in output/*
 		do
 			if [ -d ${pr_subdir}/.lock ]
 			then
@@ -113,7 +113,7 @@ function main {
 
 		for ref in $(git for-each-ref --format="%(refname)" refs/pr-reviewer/ 2> /dev/null)
 		do
-			if [ ! -d /tmp/pr-reviewer/${ref#refs/pr-reviewer/} ]
+			if [ ! -d output/${ref#refs/pr-reviewer/} ]
 			then
 				echo "Removing orphan Git reference ${ref}."
 
@@ -212,7 +212,7 @@ function _check_pr {
 
 		conflicts=$(git merge-tree --name-only --write-tree origin/${base_ref} refs/pr-reviewer/${pr_number} 2> /dev/null | sed --quiet "2,/^$/{/^$/!p}" | head --lines=30) || true
 
-		if [[ -n ${conflicts} ]]
+		if [[ ! -z ${conflicts} ]]
 		then
 			echo "${conflicts}" | sed "s/^/    /"
 		fi
@@ -289,6 +289,26 @@ function _check_pr {
 		return 0
 	fi
 
+	if [[ $(echo "${automatic_code_review_json}" | jq "all(.failure_type)") == true ]]
+	then
+		local body="${at_usernames}"$'\n\n'"The automated review could not be completed. Resend this PR to try again."
+
+		echo ""
+		echo "${body}"
+		echo ""
+
+		if ! ${dry_run}
+		then
+			gh pr comment ${pr_number} \
+				--body "${body}"$'\n\n'"#bchan-bot-pr-review" \
+				--repo ${_REPO}
+
+			touch ${pr_dir}/.reviewed
+		fi
+
+		return 0
+	fi
+
 	local body="${at_usernames}"$'\n\n'"There is $(_get_indefinite_article_for_number "${max_chance}") ${max_chance}% chance that Brian will reject this PR."
 
 	for ((index = 0; index < models_count; index++))
@@ -306,7 +326,7 @@ function _check_pr {
 		local seconds=$(echo "${automatic_code_review_json}" | jq --raw-output ".[${index}].seconds // 0")
 		local violations=$(echo "${automatic_code_review_json}" | jq --raw-output ".[${index}].violations[]" | sed "s/^/- /")
 
-		if [[ -n ${body} ]]
+		if [[ ! -z ${body} ]]
 		then
 			body+=$'\n\n'
 		fi
@@ -397,84 +417,92 @@ function _check_pr_mergeability {
 	return 1
 }
 
+function _classify_failure {
+	local raw=${1}
+	local response=${2}
+
+	if [[ $(echo "${raw}" | jq --raw-output ".is_error // false" 2> /dev/null) == true ]]
+	then
+		echo api_error
+	elif [[ -z ${response} ]]
+	then
+		echo empty
+	elif echo "${response}" | grep --quiet '"chance"'
+	then
+		echo malformed_json
+	else
+		echo no_verdict
+	fi
+}
+
 function _extract_last_json_block {
-	awk '
-		BEGIN {
-			brace_depth = 0
-			current_block = ""
-			inside_string = 0
-			last_block = ""
-			next_char_is_escaped = 0
-		}
+	local candidate result=""
+	local text=$(cat)
+
+	while IFS= read -r -d "" candidate
+	do
+		if echo "${candidate}" | jq --exit-status 'objects | has("chance")' > /dev/null 2>&1
+		then
+			result=${candidate}
+		fi
+	done < <(printf "%s" "${text}" | awk '
 		{
-			if (brace_depth > 0) {
-				current_block = current_block "\n"
-			}
-
-			line_length = length($0)
-
-			for (position = 1; position <= line_length; position++) {
-				character = substr($0, position, 1)
-
-				if (inside_string) {
-					if (brace_depth > 0) {
-						current_block = current_block character
-					}
-
-					if (next_char_is_escaped) {
-						next_char_is_escaped = 0
-					}
-					else if (character == "\\") {
-						next_char_is_escaped = 1
-					}
-					else if (character == "\"") {
-						inside_string = 0
-					}
-
-					continue
-				}
-
-				if (character == "\"") {
-					inside_string = 1
-
-					if (brace_depth > 0) {
-						current_block = current_block character
-					}
-
-					continue
-				}
-
-				if (character == "{") {
-					if (brace_depth == 0) {
-						current_block = ""
-					}
-
-					brace_depth = brace_depth + 1
-					current_block = current_block character
-
-					continue
-				}
-
-				if (character == "}") {
-					brace_depth = brace_depth - 1
-					current_block = current_block character
-
-					if (brace_depth == 0) {
-						last_block = current_block
-					}
-
-					continue
-				}
-
-				if (brace_depth > 0) {
-					current_block = current_block character
-				}
-			}
+			data = data $0 "\n"
 		}
+
 		END {
-			print last_block
+			data_length = length(data)
+
+			for (start_index = 1; start_index <= data_length; start_index++) {
+				if (substr(data, start_index, 1) != "{") {
+					continue
+				}
+
+				brace_depth = 0
+				inside_string = 0
+				is_escaped = 0
+
+				for (scan_index = start_index; scan_index <= data_length; scan_index++) {
+					character = substr(data, scan_index, 1)
+
+					if (inside_string) {
+						if (is_escaped) {
+							is_escaped = 0
+						}
+						else if (character == "\\") {
+							is_escaped = 1
+						}
+						else if (character == "\"") {
+							inside_string = 0
+						}
+
+						continue
+					}
+
+					if (character == "\"") {
+						inside_string = 1
+					}
+					else if (character == "{") {
+						brace_depth = brace_depth + 1
+					}
+					else if (character == "}") {
+						brace_depth = brace_depth - 1
+
+						if (brace_depth == 0) {
+							printf "%s%c", substr(data, start_index, scan_index - start_index + 1), 0
+
+							break
+						}
+					}
+				}
+			}
 		}
-	'
+	')
+
+	if [[ ! -z ${result} ]]
+	then
+		echo "${result}"
+	fi
 }
 
 function _fetch_pr {
@@ -520,7 +548,7 @@ function _get_automatic_code_review_json {
 
 	local from_commit=$(git merge-base master refs/pr-reviewer/${pr_number} 2> /dev/null)
 
-	if [[ -n ${from_commit} ]]
+	if [[ ! -z ${from_commit} ]]
 	then
 		diff_range="${from_commit}..refs/pr-reviewer/${pr_number}"
 	fi
@@ -550,7 +578,13 @@ function _get_automatic_code_review_json {
 			split(name_only_suffixes, name_only_list, " ")
 		}
 		/^diff --git / {
-			file = substr($3, 3)
+
+			#
+			# Match the b/ destination, not the a/ source, since a rename makes the two
+			# differ and generated_files holds the destination reported by --name-only
+			#
+
+			file = substr($4, 3)
 
 			skip = index(generated_files, "|" file "|") > 0
 			name_only = 0
@@ -698,7 +732,7 @@ function _review_in_sandbox {
 			--ro-bind "$(pwd)/rules" /review/rules \
 			--ro-bind "$(pwd)/sandbox-bin" /review/sandbox-bin \
 			--ro-bind /home/me/dev/projects/liferay-portal /review/liferay-portal \
-			--ro-bind ${pr_dir}/pr.diff /review/pr.diff \
+			--ro-bind "$(pwd)/${pr_dir}/pr.diff" /review/pr.diff \
 			--ro-bind /etc /etc \
 			--ro-bind /usr /usr \
 			--setenv HOME /home/me \
@@ -718,6 +752,44 @@ function _review_in_sandbox {
 			--unshare-pid \
 			--unshare-uts \
 			"$@"
+}
+
+function _salvage_chance {
+	grep --extended-regexp --only-matching "chance[*\"]*[[:space:]]*:[[:space:]]*[0-9]+" | tail --lines=1 | grep --extended-regexp --only-matching "[0-9]+$"
+}
+
+function _salvage_violations {
+	local text=$(cat)
+
+	#
+	# A reply that fails to parse often keeps the model's analysis as readable
+	# prose above the JSON verdict, which is more useful than the mangled verdict
+	#
+
+	if printf "%s" "${text}" | grep --extended-regexp --quiet "^[[:space:]]*\{.*\"chance\""
+	then
+		local prose=$(printf "%s" "${text}" | sed --regexp-extended "/^[[:space:]]*\{.*\"chance\"/,\$d")
+
+		if [[ ! -z ${prose//[[:space:]]/} ]]
+		then
+			printf "%s\n" "${prose}"
+
+			return
+		fi
+	fi
+
+	local region=$(printf "%s" "${text}" | grep --extended-regexp --only-matching "\"violations\"[[:space:]]*:[[:space:]]*\[.*\]" | tail --lines=1)
+
+	if [[ ! -z ${region} ]]
+	then
+		region=${region#*\[}
+
+		echo "${region%\]}"
+
+		return
+	fi
+
+	printf "%s" "${text}" | sed --regexp-extended --quiet "/[*\"]*violations[*\"]*[[:space:]]*:/,\$p" | tail --lines=+2 | sed "/./,\$!d"
 }
 
 function _update_points {
@@ -765,9 +837,11 @@ For any claim about where a line sits in the diff (between X and Y, after X, bef
 
 Flag every rule violation you find. When confidence in a flag is partial, still include it and append `verify against <source>` so the human can confirm — do not drop the catch.
 
+Generated files are the one exception where you do drop the catch. A file whose contents include an `@generated` marker — Service Builder output such as model, persistence, and `*PersistenceTest` classes — is machine generated and never edited by hand, so it is out of scope: never flag a violation inside it, not even with a `verify against` note.
+
 When a violation is a mechanical formatting or layout suggestion that SourceFormatter also governs (collapsing or expanding a boolean return or a ternary, method chaining, line wrapping, whitespace, blank lines, import order, or the ordering of members, parameters, or declarations), append the sentence "SourceFormatter is authoritative: if applying this suggestion fails SourceFormatter, ignore it." to that violation description. Do not add this sentence to correctness, naming, test, or prose violations.
 
-Output ONLY valid JSON, with no Markdown code fence and no surrounding prose: {"chance": <0-100>, "violations": ["one description per violation"]} where chance is your confidence that Brian Chan would close this PR for these violations.'
+Output ONLY valid JSON, with no Markdown code fence and no surrounding prose: {"chance": <0-100>, "violations": ["one description per violation"]} where chance is your confidence that Brian Chan would close this PR for these violations. Do not use double quote characters inside a violation string; quote code, rule names, and phrases with backticks or single quotes instead. Make sure the result parses as JSON: escape every special character so the object is valid. Your entire reply must be the raw JSON object and nothing else: no introductory sentence, and no Markdown such as **bold**, headings, horizontal rules, or numbered lists.'
 	local input_tokens=0
 	local output_tokens=0
 	local raw
@@ -819,18 +893,45 @@ Output ONLY valid JSON, with no Markdown code fence and no surrounding prose: {"
 		--argjson input_tokens "${input_tokens}" \
 		--argjson output_tokens "${output_tokens}" \
 		--argjson seconds "$(($(date +%s) - seconds))" \
-		--slurp "(.[-1] // empty) | {chance: (.chance // 0), input_tokens: \$input_tokens, output_tokens: \$output_tokens, seconds: \$seconds, violations: (.violations // [])}" 2> /dev/null) && [[ -n ${model_json} ]]
+		--slurp "(.[-1] // empty) | {chance: (.chance // 0), input_tokens: \$input_tokens, output_tokens: \$output_tokens, seconds: \$seconds, violations: (.violations // [])}" 2> /dev/null) && [[ ! -z ${model_json} ]]
 	then
 		echo "${model_json}" > "${pr_dir}/${model}.json"
 	else
-		echo "${model} failed after $(($(date +%s) - seconds))s: $(echo "${response}" | tr "\n" " " | head --bytes=300)" >&2
+		local chance=$(echo "${response}" | _salvage_chance)
 
-		jq --null-input \
-			--arg error "${response}" \
-			--argjson input_tokens "${input_tokens}" \
-			--argjson output_tokens "${output_tokens}" \
-			--argjson seconds "$(($(date +%s) - seconds))" \
-			"{chance: 0, error: \$error, input_tokens: \$input_tokens, output_tokens: \$output_tokens, seconds: \$seconds, violations: []}" > "${pr_dir}/${model}.json"
+		if [[ ! -z ${chance} ]]
+		then
+			local violations=$(echo "${response}" | _salvage_violations)
+
+			if [[ -z ${violations} ]]
+			then
+				violations="No violations were recovered."
+			fi
+
+			echo "${model} salvaged chance ${chance} from a malformed reply after $(($(date +%s) - seconds))s." >&2
+
+			jq \
+				--arg violations "(recovered from a malformed reply) ${violations}" \
+				--argjson chance "${chance}" \
+				--argjson input_tokens "${input_tokens}" \
+				--argjson output_tokens "${output_tokens}" \
+				--argjson seconds "$(($(date +%s) - seconds))" \
+				--null-input \
+				'{chance: $chance, input_tokens: $input_tokens, output_tokens: $output_tokens, salvaged: true, seconds: $seconds, violations: [$violations]}' > "${pr_dir}/${model}.json"
+		else
+			local failure_type=$(_classify_failure "${raw}" "${response}")
+
+			echo "${model} failed (${failure_type}) after $(($(date +%s) - seconds))s: $(echo "${response}" | tr "\n" " " | head --bytes=300)" >&2
+
+			jq \
+				--arg error "${response}" \
+				--arg failure_type "${failure_type}" \
+				--argjson input_tokens "${input_tokens}" \
+				--argjson output_tokens "${output_tokens}" \
+				--argjson seconds "$(($(date +%s) - seconds))" \
+				--null-input \
+				"{chance: 0, error: \$error, failure_type: \$failure_type, input_tokens: \$input_tokens, output_tokens: \$output_tokens, seconds: \$seconds, violations: []}" > "${pr_dir}/${model}.json"
+		fi
 	fi
 }
 
@@ -841,6 +942,9 @@ _IGNORED_SUFFIXES="css js jsx lock lockfile macro path scss snap testcase ts tsx
 _MODELS=(sonnet-4.6)
 _NAME_ONLY_SUFFIXES="bmp gif ico jpeg jpg png svg webp"
 _REPO=brianchandotcom/liferay-portal
-_REVIEW_TIMEOUT_MINUTES=20
+_REVIEW_TIMEOUT_MINUTES=40
 
-main "${@}"
+if [[ ${BASH_SOURCE[0]} == "${0}" ]]
+then
+	main "${@}"
+fi

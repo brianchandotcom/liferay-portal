@@ -5,8 +5,11 @@
 
 package com.liferay.portal.kernel.frontend.hashed.files;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
-import com.liferay.petra.string.StringUtil;
+import com.liferay.portal.kernel.util.Base64;
+import com.liferay.portal.kernel.util.DigesterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author Iván Zaera Avellón
@@ -48,6 +51,25 @@ public class HashedFilesUtil {
 		return uri.substring(0, i) + suffix + uri.substring(i);
 	}
 
+	public static String computeHash(String content) {
+		byte[] hash = DigesterUtil.digestRaw(DigesterUtil.MD5, content);
+
+		byte[] truncatedHash = new byte[8];
+
+		System.arraycopy(hash, 0, truncatedHash, 0, truncatedHash.length);
+
+		String encodedTruncatedHash = Base64.encode(truncatedHash);
+
+		encodedTruncatedHash = StringUtil.replace(
+			encodedTruncatedHash, CharPool.PLUS, CharPool.DOLLAR);
+		encodedTruncatedHash = StringUtil.replace(
+			encodedTruncatedHash, CharPool.SLASH, CharPool.AT);
+		encodedTruncatedHash = StringUtil.removeSubstring(
+			encodedTruncatedHash, StringPool.EQUAL);
+
+		return encodedTruncatedHash;
+	}
+
 	public static boolean containsHash(String uri) {
 		if ((uri.lastIndexOf(".(") == -1) || (uri.lastIndexOf(").") == -1)) {
 			return false;
@@ -81,6 +103,18 @@ public class HashedFilesUtil {
 		}
 
 		return StringUtil.replace(uri, ".(" + hash + ").", ".");
+	}
+
+	public static String replaceHash(String uri, String hash) {
+		String oldHash = getHash(uri);
+
+		if (oldHash == null) {
+			throw new IllegalArgumentException(
+				"URI does not contain hash: " + uri);
+		}
+
+		return StringUtil.replace(
+			uri, ".(" + oldHash + ").", ".(" + hash + ").");
 	}
 
 }

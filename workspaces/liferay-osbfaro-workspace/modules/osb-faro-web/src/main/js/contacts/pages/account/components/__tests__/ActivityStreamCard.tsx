@@ -71,6 +71,24 @@ describe('ActivityStreamCard', () => {
 		expect(getByText('Jane Doe')).toBeInTheDocument();
 	});
 
+	it('drives pagination from the activity stream event total, not the session count', async () => {
+		const {container} = render(
+			<Wrapper
+				mocks={[
+					mockAccountEventMetricsReq(),
+					mockAccountEventsTrendReq(),
+					mockAccountUserSessionsReq({totalEvents: 186}),
+				]}
+			/>
+		);
+
+		await waitForLoadingToBeRemoved(container);
+
+		expect(
+			container.querySelector('.pagination-results')
+		).toHaveTextContent('186');
+	});
+
 	it('renders the empty state when the histogram has no events', async () => {
 		const {container, getByText} = render(
 			<Wrapper

@@ -15,7 +15,7 @@ tests:
         documentSelector:
             path: kind
             value: Elasticsearch
-        it: appends every custom env entry through the loop
+        it: Appends every custom env entry through the loop
         set:
             search.elasticsearch.customEnv:
                 x-extra:
@@ -28,7 +28,7 @@ tests:
         documentSelector:
             path: kind
             value: Elasticsearch
-        it: names the Elasticsearch resource after the configured name override
+        it: Names the Elasticsearch resource after the configured name override
         set:
             search.elasticsearch.name: custom-es
     -   asserts:
@@ -49,11 +49,11 @@ tests:
         documentSelector:
             path: kind
             value: Elasticsearch
-        it: names the Elasticsearch resource after the release and dedicated namespace
+        it: Names the Elasticsearch resource after the release and dedicated namespace
     -   asserts:
             -   hasDocuments:
                     count: 0
-        it: omits the Elasticsearch resources when search is disabled
+        it: Omits the Elasticsearch resources when search is disabled
         set:
             search.elasticsearch.enabled: false
     -   asserts:
@@ -65,8 +65,8 @@ tests:
         documentSelector:
             path: kind
             value: Namespace
-        it: provisions the dedicated Elasticsearch namespace
+        it: Provisions the dedicated Elasticsearch namespace
     -   asserts:
             -   hasDocuments:
                     count: 2
-        it: renders both the Elasticsearch resource and its namespace by default
+        it: Renders both the Elasticsearch resource and its namespace by default

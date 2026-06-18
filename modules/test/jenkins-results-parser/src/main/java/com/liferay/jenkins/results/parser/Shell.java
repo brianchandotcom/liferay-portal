@@ -29,14 +29,14 @@ public class Shell {
 	public static class ExecutionRequest {
 
 		public ExecutionRequest(
-			File baseDir, boolean exitOnFirstFail, boolean printCommands,
-			long timeout, String... commands) {
+			File baseDir, String[] commands, boolean exitOnFirstFail,
+			boolean printCommands, long timeout) {
 
 			_baseDir = baseDir;
+			_commands = commands;
 			_exitOnFirstFail = exitOnFirstFail;
 			_printCommands = printCommands;
 			_timeout = timeout;
-			_commands = commands;
 		}
 
 		public File getBaseDir() {

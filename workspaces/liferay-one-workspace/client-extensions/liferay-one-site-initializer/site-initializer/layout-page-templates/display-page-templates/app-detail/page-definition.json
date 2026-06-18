@@ -97,7 +97,7 @@
 																		},
 																		"text": {
 																			"mapping": {
-																				"fieldKey": "ddmTemplate__ddmTemplate_[$TEMPLATE_ENTRY_ID:lo_marketplace_apps_icon$]",
+																				"fieldKey": "ddmTemplate__ddmTemplate_[$TEMPLATE_ENTRY_ID:Marketplace Apps Icon$]",
 																				"itemReference": {
 																					"contextSource": "DisplayPageItem"
 																				}
@@ -213,7 +213,7 @@
 																					"value": {
 																						"html": {
 																							"mapping": {
-																								"fieldKey": "ddmTemplate__ddmTemplate_[$TEMPLATE_ENTRY_ID:lo_marketplace_apps_categories$]",
+																								"fieldKey": "ddmTemplate__ddmTemplate_[$TEMPLATE_ENTRY_ID:Marketplace Apps Categories$]",
 																								"itemReference": {
 																									"contextSource": "DisplayPageItem"
 																								}
@@ -391,7 +391,7 @@
 																				},
 																				"text": {
 																					"mapping": {
-																						"fieldKey": "ddmTemplate__ddmTemplate_[$TEMPLATE_ENTRY_ID:lo_marketplace_app_image_gallery$]",
+																						"fieldKey": "ddmTemplate__ddmTemplate_[$TEMPLATE_ENTRY_ID:Marketplace App Image Gallery$]",
 																						"itemReference": {
 																							"contextSource": "DisplayPageItem"
 																						}
@@ -433,7 +433,7 @@
 																						},
 																						"text": {
 																							"mapping": {
-																								"fieldKey": "ddmTemplate__ddmTemplate_[$TEMPLATE_ENTRY_ID:lo_marketplace_app_details_body$]",
+																								"fieldKey": "ddmTemplate__ddmTemplate_[$TEMPLATE_ENTRY_ID:Marketplace App Details Body$]",
 																								"itemReference": {
 																									"contextSource": "DisplayPageItem"
 																								}
@@ -540,7 +540,7 @@
 																				},
 																				"text": {
 																					"mapping": {
-																						"fieldKey": "ddmTemplate__ddmTemplate_[$TEMPLATE_ENTRY_ID:lo_marketplace_app_details_sidebar$]",
+																						"fieldKey": "ddmTemplate__ddmTemplate_[$TEMPLATE_ENTRY_ID:Marketplace App Details Sidebar$]",
 																						"itemReference": {
 																							"contextSource": "DisplayPageItem"
 																						}

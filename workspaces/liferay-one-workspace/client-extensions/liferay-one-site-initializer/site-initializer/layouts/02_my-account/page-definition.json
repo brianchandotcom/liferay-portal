@@ -6,14 +6,26 @@
 		"pageElements": [
 			{
 				"definition": {
-					"widgetInstance": {
-						"widgetConfig": {
-							"properties": "route=my-account"
-						},
-						"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_[$COMPANY_ID$]_LXC_liferay_one_custom_element"
+					"indexed": true,
+					"layout": {
+						"contentDisplay": "Block",
+						"widthType": "Fixed"
 					}
 				},
-				"type": "Widget"
+				"pageElements": [
+					{
+						"definition": {
+							"widgetInstance": {
+								"widgetConfig": {
+									"properties": "route=my-account"
+								},
+								"widgetName": "[$CLIENT_EXTENSION_ENTRY_ERC:LXC:liferay-one-custom-element$]"
+							}
+						},
+						"type": "Widget"
+					}
+				],
+				"type": "Section"
 			}
 		],
 		"type": "Root"

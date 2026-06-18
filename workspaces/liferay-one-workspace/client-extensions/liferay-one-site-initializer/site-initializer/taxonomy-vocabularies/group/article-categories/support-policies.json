@@ -1,0 +1,18 @@
+{
+	"description": "Support Policies",
+	"description_i18n": {
+		"en_US": "Support Policies",
+		"es_ES": "Políticas de Soporte",
+		"ja_JP": "サポートポリシー",
+		"pt_BR": "Políticas de Suporte"
+	},
+	"externalReferenceCode": "T_AC_SUPPORT_POLICIES",
+	"name": "Support Policies",
+	"name_i18n": {
+		"en_US": "Support Policies",
+		"es_ES": "Políticas de Soporte",
+		"ja_JP": "サポートポリシー",
+		"pt_BR": "Políticas de Suporte"
+	},
+	"viewableBy": "Anyone"
+}

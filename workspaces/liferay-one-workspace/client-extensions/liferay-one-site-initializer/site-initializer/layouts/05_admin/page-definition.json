@@ -6,10 +6,9 @@
 		"pageElements": [
 			{
 				"definition": {
-					"cssClass": "container-fluid container-fluid-max-xl",
 					"indexed": true,
 					"layout": {
-						"widthType": "Fluid"
+						"widthType": "Fixed"
 					}
 				},
 				"pageElements": [

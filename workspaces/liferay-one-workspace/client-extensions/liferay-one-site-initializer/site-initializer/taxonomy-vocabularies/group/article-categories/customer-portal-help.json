@@ -1,0 +1,18 @@
+{
+	"description": "Customer Portal Help",
+	"description_i18n": {
+		"en_US": "Customer Portal Help",
+		"es_ES": "Ayuda del Portal del Cliente",
+		"ja_JP": "カスタマーポータルヘルプ",
+		"pt_BR": "Ajuda do Portal do Cliente"
+	},
+	"externalReferenceCode": "T_AC_CUSTOMER_PORTAL_HELP",
+	"name": "Customer Portal Help",
+	"name_i18n": {
+		"en_US": "Customer Portal Help",
+		"es_ES": "Ayuda del Portal del Cliente",
+		"ja_JP": "カスタマーポータルヘルプ",
+		"pt_BR": "Ajuda do Portal do Cliente"
+	},
+	"viewableBy": "Anyone"
+}

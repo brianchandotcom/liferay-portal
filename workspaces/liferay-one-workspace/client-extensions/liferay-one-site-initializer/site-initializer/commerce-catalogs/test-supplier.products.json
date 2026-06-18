@@ -1,0 +1,315 @@
+[
+	{
+		"categories": [
+			"app"
+		],
+		"description": "A sample application used to validate the Test Supplier catalog and the marketplace publishing flow.",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "PRDCT-TEST-APP",
+		"images": [
+			"sample-marketplace-app.png"
+		],
+		"name": "Test App",
+		"options": [
+			{
+				"key": "base-license-usage-type",
+				"values": [
+					"standard"
+				]
+			}
+		],
+		"price": 0,
+		"sku": "PRDCT-TEST-APP",
+		"specificationOptions": [
+			{
+				"key": "app-documentation-url",
+				"value": "https://docs.testsupplier.com"
+			},
+			{
+				"key": "developer-name",
+				"value": "Test Supplier"
+			},
+			{
+				"key": "liferay-version",
+				"value": "7.4"
+			},
+			{
+				"key": "price-model",
+				"value": "Free"
+			},
+			{
+				"key": "publisher-name",
+				"value": "Test Supplier"
+			},
+			{
+				"key": "publisher-web-site-url",
+				"value": "https://www.testsupplier.com"
+			},
+			{
+				"key": "support-email-address",
+				"value": "support@testsupplier.com"
+			},
+			{
+				"key": "support-url",
+				"value": "https://support.testsupplier.com"
+			},
+			{
+				"key": "type",
+				"value": "client-extension"
+			}
+		]
+	},
+	{
+		"categories": [
+			"solution"
+		],
+		"description": "A prebuilt CRM integration solution that connects Liferay DXP to leading customer relationship management platforms.",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "PRDCT-TEST-CRM-ACCELERATOR",
+		"images": [
+			"sample-marketplace-app.png"
+		],
+		"name": "Test Supplier CRM Accelerator",
+		"options": [
+			{
+				"key": "base-license-usage-type",
+				"values": [
+					"standard"
+				]
+			}
+		],
+		"price": 0,
+		"sku": "PRDCT-TEST-CRM-ACCELERATOR",
+		"specificationOptions": [
+			{
+				"key": "developer-name",
+				"value": "Test Supplier"
+			},
+			{
+				"key": "price-model",
+				"value": "Free"
+			},
+			{
+				"key": "publisher-name",
+				"value": "Test Supplier"
+			},
+			{
+				"key": "solution-company-description",
+				"value": "Test Supplier builds sample apps and solutions used to validate the Liferay Marketplace publishing flow."
+			},
+			{
+				"key": "solution-company-email",
+				"value": "info@testsupplier.com"
+			},
+			{
+				"key": "solution-company-website",
+				"value": "https://www.testsupplier.com"
+			},
+			{
+				"key": "solution-contact-email",
+				"value": "sales@testsupplier.com"
+			},
+			{
+				"key": "solution-header-description",
+				"value": "Connect Liferay DXP to your CRM in minutes with a prebuilt, configurable accelerator."
+			},
+			{
+				"key": "solution-header-title",
+				"value": "Test Supplier CRM Accelerator"
+			},
+			{
+				"key": "solution-type",
+				"value": "Experience Management"
+			}
+		]
+	},
+	{
+		"categories": [
+			"solution"
+		],
+		"description": "A turnkey partner portal solution built on Liferay DXP for onboarding, enablement, and deal registration.",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "PRDCT-TEST-PARTNER-PORTAL",
+		"images": [
+			"sample-marketplace-app.png"
+		],
+		"name": "Test Supplier Partner Portal",
+		"options": [
+			{
+				"key": "base-license-usage-type",
+				"values": [
+					"standard"
+				]
+			}
+		],
+		"price": 0,
+		"sku": "PRDCT-TEST-PARTNER-PORTAL",
+		"specificationOptions": [
+			{
+				"key": "developer-name",
+				"value": "Test Supplier"
+			},
+			{
+				"key": "price-model",
+				"value": "Free"
+			},
+			{
+				"key": "publisher-name",
+				"value": "Test Supplier"
+			},
+			{
+				"key": "solution-company-description",
+				"value": "Test Supplier builds sample apps and solutions used to validate the Liferay Marketplace publishing flow."
+			},
+			{
+				"key": "solution-company-email",
+				"value": "info@testsupplier.com"
+			},
+			{
+				"key": "solution-company-website",
+				"value": "https://www.testsupplier.com"
+			},
+			{
+				"key": "solution-contact-email",
+				"value": "sales@testsupplier.com"
+			},
+			{
+				"key": "solution-header-description",
+				"value": "Launch a fully featured partner portal on Liferay DXP without starting from scratch."
+			},
+			{
+				"key": "solution-header-title",
+				"value": "Test Supplier Partner Portal"
+			},
+			{
+				"key": "solution-type",
+				"value": "Experience Management"
+			}
+		]
+	},
+	{
+		"categories": [
+			"app"
+		],
+		"description": "Push Liferay notifications to Slack channels in real time with a configurable client extension.",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "PRDCT-TEST-SLACK-CONNECTOR",
+		"images": [
+			"sample-marketplace-app.png"
+		],
+		"name": "Test Supplier Slack Connector",
+		"options": [
+			{
+				"key": "base-license-usage-type",
+				"values": [
+					"standard"
+				]
+			}
+		],
+		"price": 0,
+		"sku": "PRDCT-TEST-SLACK-CONNECTOR",
+		"specificationOptions": [
+			{
+				"key": "app-documentation-url",
+				"value": "https://docs.testsupplier.com/slack-connector"
+			},
+			{
+				"key": "developer-name",
+				"value": "Test Supplier"
+			},
+			{
+				"key": "liferay-version",
+				"value": "7.4"
+			},
+			{
+				"key": "price-model",
+				"value": "Free"
+			},
+			{
+				"key": "publisher-name",
+				"value": "Test Supplier"
+			},
+			{
+				"key": "publisher-web-site-url",
+				"value": "https://www.testsupplier.com"
+			},
+			{
+				"key": "support-email-address",
+				"value": "support@testsupplier.com"
+			},
+			{
+				"key": "support-url",
+				"value": "https://support.testsupplier.com"
+			},
+			{
+				"key": "type",
+				"value": "client-extension"
+			}
+		]
+	},
+	{
+		"categories": [
+			"app"
+		],
+		"description": "A collection of responsive, accessible themes for Liferay sites.",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "PRDCT-TEST-THEME-PACK",
+		"images": [
+			"sample-marketplace-app.png"
+		],
+		"name": "Test Supplier Theme Pack",
+		"options": [
+			{
+				"key": "base-license-usage-type",
+				"values": [
+					"standard"
+				]
+			}
+		],
+		"price": 0,
+		"sku": "PRDCT-TEST-THEME-PACK",
+		"specificationOptions": [
+			{
+				"key": "app-documentation-url",
+				"value": "https://docs.testsupplier.com/theme-pack"
+			},
+			{
+				"key": "developer-name",
+				"value": "Test Supplier"
+			},
+			{
+				"key": "liferay-version",
+				"value": "7.4"
+			},
+			{
+				"key": "price-model",
+				"value": "Free"
+			},
+			{
+				"key": "publisher-name",
+				"value": "Test Supplier"
+			},
+			{
+				"key": "publisher-web-site-url",
+				"value": "https://www.testsupplier.com"
+			},
+			{
+				"key": "support-email-address",
+				"value": "support@testsupplier.com"
+			},
+			{
+				"key": "support-url",
+				"value": "https://support.testsupplier.com"
+			},
+			{
+				"key": "type",
+				"value": "low-code-configuration"
+			}
+		]
+	}
+]

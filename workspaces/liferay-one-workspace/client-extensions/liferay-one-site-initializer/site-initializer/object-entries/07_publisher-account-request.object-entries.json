@@ -1,0 +1,49 @@
+{
+	"object-entries": [
+		{
+			"emailAddress": "dana@databridge.io",
+			"externalReferenceCode": "PAR_DATABRIDGE",
+			"firstName": "Dana",
+			"intlCode": "+1",
+			"lastName": "Rivera",
+			"phoneNumber": "5125550142",
+			"publisherType": "solutionPublisher",
+			"requestDescription": "DataBridge Solutions would like to publish data integration solutions on the marketplace.",
+			"requestStatus": "inProgress"
+		},
+		{
+			"emailAddress": "marco@formflowlabs.com",
+			"externalReferenceCode": "PAR_FORMFLOW",
+			"firstName": "Marco",
+			"intlCode": "+1",
+			"lastName": "Bianchi",
+			"phoneNumber": "5125550188",
+			"publisherType": "appPublisher",
+			"requestDescription": "FormFlow Labs requests publisher access to distribute form building applications.",
+			"requestStatus": "open"
+		},
+		{
+			"emailAddress": "jane@acmeapps.com",
+			"externalReferenceCode": "PAR_JANE_ACME",
+			"firstName": "Jane",
+			"intlCode": "+1",
+			"lastName": "Doe",
+			"phoneNumber": "5125550110",
+			"publisherType": "appPublisher",
+			"requestDescription": "Acme Apps Inc. is requesting publisher access to list its productivity apps.",
+			"requestStatus": "open"
+		},
+		{
+			"emailAddress": "priya@nimbusworks.dev",
+			"externalReferenceCode": "PAR_NIMBUS",
+			"firstName": "Priya",
+			"intlCode": "+44",
+			"lastName": "Sharma",
+			"phoneNumber": "2079460205",
+			"publisherType": "appPublisher, solutionPublisher",
+			"requestDescription": "NimbusWorks wants to publish both apps and solutions targeting cloud native deployments.",
+			"requestStatus": "open"
+		}
+	],
+	"objectDefinitionName": "PublisherAccountRequest"
+}

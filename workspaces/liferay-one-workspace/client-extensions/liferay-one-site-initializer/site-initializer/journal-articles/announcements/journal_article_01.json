@@ -1,8 +1,9 @@
 {
 	"articleId": "WEB-CONTENT-ANNOUNCEMENT-01",
 	"assetCategoryERCs": [
-		"T_AC_ONLINE",
-		"T_AC_COMMUNITY"
+		"T_AC_COMMUNITY",
+		"T_AC_CUSTOMER_PORTAL_UPDATES",
+		"T_AC_ONLINE"
 	],
 	"ddmStructureKey": "ANNOUNCEMENT",
 	"folder": "Announcements",

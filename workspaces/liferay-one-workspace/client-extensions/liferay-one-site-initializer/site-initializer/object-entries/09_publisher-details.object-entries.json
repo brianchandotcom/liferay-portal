@@ -1,0 +1,35 @@
+{
+	"object-entries": [
+		{
+			"description": "Liferay builds the digital experience platform that powers portals, websites, and commerce for organizations worldwide.",
+			"email": "info@liferay.com",
+			"externalReferenceCode": "PUBDET-LIFERAY",
+			"fullName": "Liferay",
+			"location": "1400 Montefino Ave, Diamond Bar, CA 91765, USA",
+			"phone": "+1 877 437 3329",
+			"publisherName": "Liferay",
+			"role": "Marketplace Publisher",
+			"salesEmail": "sales@liferay.com",
+			"showContactForm": true,
+			"showOnHomePage": true,
+			"supportEmail": "support@liferay.com",
+			"websiteURL": "https://www.liferay.com"
+		},
+		{
+			"description": "Liferay, Inc. publishes first party apps and solutions that extend the Liferay platform.",
+			"email": "info@liferay.com",
+			"externalReferenceCode": "PUBDET-LIFERAY-INC",
+			"fullName": "Liferay, Inc.",
+			"location": "1400 Montefino Ave, Diamond Bar, CA 91765, USA",
+			"phone": "+1 877 437 3329",
+			"publisherName": "Liferay, Inc.",
+			"role": "Marketplace Publisher",
+			"salesEmail": "sales@liferay.com",
+			"showContactForm": true,
+			"showOnHomePage": true,
+			"supportEmail": "support@liferay.com",
+			"websiteURL": "https://www.liferay.com"
+		}
+	],
+	"objectDefinitionName": "PublisherDetails"
+}

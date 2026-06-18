@@ -1,0 +1,464 @@
+{
+	"masterPage": {
+		"key": "liferay-one"
+	},
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"indexed": true,
+					"layout": {
+						"widthType": "Fluid"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"gutters": false,
+							"indexed": true,
+							"modulesPerRow": 1,
+							"numberOfColumns": 1
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"size": 12
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "hero-banner",
+												"siteKey": "[$GROUP_KEY$]"
+											},
+											"fragmentConfig": {
+												"homeLink": "/web/one/home",
+												"parentLink": "/web/one/marketplace",
+												"showBreadcrumbParent": false,
+												"showSubtitle": false
+											},
+											"fragmentFields": [
+												{
+													"id": "backgroundImage",
+													"value": {
+														"backgroundFragmentImage": {
+															"url": {
+																"mapping": {
+																	"fieldKey": "FileEntry_previewImage",
+																	"itemReference": {
+																		"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																		"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/hero_banner_gradient_bubbles.png#]"
+																	}
+																}
+															}
+														}
+													}
+												},
+												{
+													"id": "breadcrumb-current",
+													"value": {
+														"text": {
+															"value_i18n": {
+																"en_US": "Marketplace"
+															}
+														}
+													}
+												},
+												{
+													"id": "title",
+													"value": {
+														"text": {
+															"value_i18n": {
+																"en_US": "Browse Liferay's Marketplace"
+															}
+														}
+													}
+												}
+											],
+											"indexed": true
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragmentDropZoneId": "0"
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "marketplace-category-nav",
+																"siteKey": "[$GROUP_KEY$]"
+															},
+															"fragmentConfig": {
+															},
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "FragmentDropZone"
+											}
+										],
+										"type": "Fragment"
+									}
+								],
+								"type": "Column"
+							}
+						],
+						"type": "Row"
+					}
+				],
+				"type": "Section"
+			},
+			{
+				"definition": {
+					"indexed": true,
+					"layout": {
+						"widthType": "Fixed"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragmentStyle": {
+								"paddingBottom": "4",
+								"paddingTop": "5"
+							},
+							"indexed": true,
+							"layout": {
+							},
+							"name": "What Is New"
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "home-apps-display",
+										"siteKey": "[$GROUP_KEY$]"
+									},
+									"fragmentConfig": {
+										"cardSize": "large",
+										"hideRatingInfo": true,
+										"pageSize": "4",
+										"sectionDescription": "The latest features and extensions are growing the Marketplace ecosystem.",
+										"sectionTitle": "What Is New",
+										"specificationFilterValue": "true"
+									},
+									"indexed": true
+								},
+								"type": "Fragment"
+							}
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"fragmentStyle": {
+								"paddingBottom": "4",
+								"paddingTop": "4"
+							},
+							"indexed": true,
+							"layout": {
+							},
+							"name": "Highlights"
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "home-apps-display",
+										"siteKey": "[$GROUP_KEY$]"
+									},
+									"fragmentConfig": {
+										"cardSize": "large",
+										"hideRatingInfo": true,
+										"pageSize": "4",
+										"sectionDescription": "Handpicked apps and extensions curated to help you get the most out of Liferay.",
+										"sectionTitle": "Highlights",
+										"specificationFilterValue": "true"
+									},
+									"indexed": true
+								},
+								"type": "Fragment"
+							}
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"fragmentStyle": {
+								"paddingBottom": "4",
+								"paddingTop": "4"
+							},
+							"indexed": true,
+							"layout": {
+							},
+							"name": "Most Popular"
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "home-apps-display",
+										"siteKey": "[$GROUP_KEY$]"
+									},
+									"fragmentConfig": {
+										"cardSize": "large",
+										"hideRatingInfo": true,
+										"pageSize": "4",
+										"sectionDescription": "Explore the most popular apps chosen by businesses worldwide to power their digital experiences.",
+										"sectionTitle": "Most Popular",
+										"specificationFilterValue": "true"
+									},
+									"indexed": true
+								},
+								"type": "Fragment"
+							}
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"fragmentStyle": {
+								"paddingBottom": "5",
+								"paddingTop": "4"
+							},
+							"indexed": true,
+							"layout": {
+							},
+							"name": "Publisher Spotlight"
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "BASIC_COMPONENT-heading"
+									},
+									"fragmentConfig": {
+										"headingLevel": "h2"
+									},
+									"fragmentFields": [
+										{
+											"id": "element-text",
+											"value": {
+												"fragmentLink": {
+												},
+												"text": {
+													"value_i18n": {
+														"en_US": "Publisher Spotlight"
+													}
+												}
+											}
+										}
+									],
+									"fragmentStyle": {
+										"marginBottom": "1"
+									},
+									"indexed": true
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "BASIC_COMPONENT-paragraph"
+									},
+									"fragmentConfig": {
+									},
+									"fragmentFields": [
+										{
+											"id": "element-text",
+											"value": {
+												"fragmentLink": {
+												},
+												"text": {
+													"value_i18n": {
+														"en_US": "Engineers and bold extenders keeping the Liferay ecosystem thriving."
+													}
+												}
+											}
+										}
+									],
+									"fragmentStyle": {
+										"marginBottom": "4",
+										"textColor": "colorNeutral6"
+									},
+									"indexed": true
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"collectionConfig": {
+										"collectionReference": {
+											"className": "[$OBJECT_DEFINITION_CLASS_NAME:PublisherDetails$]"
+										},
+										"collectionType": "CollectionProvider"
+									},
+									"collectionViewports": [
+										{
+											"collectionViewportDefinition": {
+												"numberOfColumns": 1
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"collectionViewportDefinition": {
+												"numberOfColumns": 1
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"collectionViewportDefinition": {
+												"numberOfColumns": 2
+											},
+											"id": "tablet"
+										}
+									],
+									"displayAllItems": false,
+									"displayAllPages": false,
+									"emptyCollectionConfig": {
+										"displayMessage": true
+									},
+									"indexed": true,
+									"listItemStyle": "",
+									"listStyle": "",
+									"numberOfColumns": 4,
+									"numberOfItems": 4,
+									"numberOfItemsPerPage": 4,
+									"numberOfPages": 1,
+									"paginationType": "None",
+									"showAllItems": false,
+									"templateKey": ""
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"collectionItemConfig": {
+											}
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"cssClasses": [
+														"one-card"
+													],
+													"fragmentLink": {
+														"href": {
+															"mapping": {
+																"fieldKey": "displayPageURL",
+																"itemReference": {
+																	"contextSource": "CollectionItem"
+																}
+															}
+														}
+													},
+													"fragmentStyle": {
+														"marginBottom": "3",
+														"marginLeft": "1",
+														"marginRight": "1",
+														"marginTop": "1",
+														"paddingBottom": "4",
+														"paddingLeft": "4",
+														"paddingRight": "4",
+														"paddingTop": "4"
+													},
+													"indexed": true,
+													"layout": {
+														"align": "middle",
+														"contentDisplay": "FlexRow"
+													}
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"customCSS": ".[$FRAGMENT_CLASS$] img {\n\tborder-radius: 50%;\n\theight: 56px;\n\tobject-fit: cover;\n\twidth: 56px;\n}",
+															"fragment": {
+																"key": "BASIC_COMPONENT-image"
+															},
+															"fragmentConfig": {
+																"imageSize": "w-100"
+															},
+															"fragmentFields": [
+																{
+																	"id": "image-square",
+																	"value": {
+																		"fragmentImage": {
+																			"url": {
+																				"mapping": {
+																					"fieldKey": "publisherProfileImageURL",
+																					"itemReference": {
+																						"contextSource": "CollectionItem"
+																					}
+																				}
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"height": "56px",
+																"marginRight": "3",
+																"maxWidth": "56px",
+																"width": "56px"
+															},
+															"indexed": true
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "BASIC_COMPONENT-heading"
+															},
+															"fragmentConfig": {
+																"headingLevel": "h5"
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"mapping": {
+																				"fieldKey": "publisherName",
+																				"itemReference": {
+																					"contextSource": "CollectionItem"
+																				}
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"marginBottom": "0"
+															},
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "Section"
+											}
+										],
+										"type": "CollectionItem"
+									}
+								],
+								"type": "Collection"
+							}
+						],
+						"type": "Section"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "liferay-one"
+		}
+	}
+}

@@ -1,0 +1,18 @@
+{
+	"description": "Customer Portal Updates",
+	"description_i18n": {
+		"en_US": "Customer Portal Updates",
+		"es_ES": "Actualizaciones del Portal del Cliente",
+		"ja_JP": "カスタマーポータルの更新",
+		"pt_BR": "Atualizações do Portal do Cliente"
+	},
+	"externalReferenceCode": "T_AC_CUSTOMER_PORTAL_UPDATES",
+	"name": "Customer Portal Updates",
+	"name_i18n": {
+		"en_US": "Customer Portal Updates",
+		"es_ES": "Actualizaciones del Portal del Cliente",
+		"ja_JP": "カスタマーポータルの更新",
+		"pt_BR": "Atualizações do Portal do Cliente"
+	},
+	"viewableBy": "Anyone"
+}

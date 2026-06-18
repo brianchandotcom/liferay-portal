@@ -1,0 +1,343 @@
+[
+	{
+		"categories": [
+			"liferay-product"
+		],
+		"description": "Discover, learn, and test CMS, DAM, Commerce, Sites, Low Code, and more.",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "PRDCT-DXP",
+		"images": [
+			"sample-marketplace-app.png"
+		],
+		"name": "Liferay DXP - Free Tier",
+		"options": [
+			{
+				"key": "base-license-usage-type",
+				"values": [
+					"standard"
+				]
+			}
+		],
+		"price": 0,
+		"sku": "PRDCT-DXP",
+		"specificationOptions": [
+			{
+				"key": "app-documentation-url",
+				"value": "https://learn.liferay.com"
+			},
+			{
+				"key": "app-usage-terms-url",
+				"value": "https://www.liferay.com/legal/customer-agreements"
+			},
+			{
+				"key": "developer-name",
+				"value": "Liferay"
+			},
+			{
+				"key": "liferay-products-capabilities",
+				"value": "Create personalized content and experiences"
+			},
+			{
+				"key": "liferay-products-capabilities",
+				"value": "Prototype portals, websites, and intranets"
+			},
+			{
+				"key": "liferay-products-capabilities",
+				"value": "Test B2B and B2C commerce tools"
+			},
+			{
+				"key": "liferay-products-categories",
+				"value": "Platform"
+			},
+			{
+				"key": "price-model",
+				"value": "Free"
+			},
+			{
+				"key": "publisher-name",
+				"value": "Liferay"
+			},
+			{
+				"key": "publisher-web-site-url",
+				"value": "https://www.liferay.com"
+			},
+			{
+				"key": "support-email-address",
+				"value": "support@liferay.com"
+			},
+			{
+				"key": "support-phone",
+				"value": "+1 877 437 3329"
+			},
+			{
+				"key": "support-url",
+				"value": "https://www.liferay.com/support"
+			},
+			{
+				"key": "type",
+				"value": "dxp"
+			}
+		]
+	},
+	{
+		"categories": [
+			"app"
+		],
+		"description": "Integrate Liferay DXP with OpenSearch 2, an open source search engine offering lexical search, vector search, and enterprise grade scalability.",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "PRDCT-OPENSEARCH",
+		"images": [
+			"sample-marketplace-app.png"
+		],
+		"name": "Liferay Connector to OpenSearch 2",
+		"options": [
+			{
+				"key": "base-license-usage-type",
+				"values": [
+					"standard"
+				]
+			}
+		],
+		"price": 0,
+		"sku": "PRDCT-OPENSEARCH",
+		"specificationOptions": [
+			{
+				"key": "app-documentation-url",
+				"value": "https://learn.liferay.com"
+			},
+			{
+				"key": "app-usage-terms-url",
+				"value": "https://www.liferay.com/legal/customer-agreements"
+			},
+			{
+				"key": "developer-name",
+				"value": "Liferay, Inc."
+			},
+			{
+				"key": "our-selection",
+				"value": "true"
+			},
+			{
+				"key": "price-model",
+				"value": "Free"
+			},
+			{
+				"key": "publisher-name",
+				"value": "Liferay, Inc."
+			},
+			{
+				"key": "publisher-web-site-url",
+				"value": "https://www.liferay.com"
+			},
+			{
+				"key": "support-email-address",
+				"value": "support@liferay.com"
+			},
+			{
+				"key": "support-phone",
+				"value": "+1 877 437 3329"
+			},
+			{
+				"key": "support-url",
+				"value": "https://www.liferay.com/support"
+			}
+		]
+	},
+	{
+		"categories": [
+			"app"
+		],
+		"description": "Enable PunchOut catalog functionality in Liferay Commerce to transact with procurement systems such as SAP Ariba, Coupa, and Jaggaer.",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "PRDCT-PUNCHOUT",
+		"images": [
+			"sample-marketplace-app.png"
+		],
+		"name": "Liferay Commerce Connector to PunchOut2Go",
+		"options": [
+			{
+				"key": "base-license-usage-type",
+				"values": [
+					"standard"
+				]
+			}
+		],
+		"price": 0,
+		"sku": "PRDCT-PUNCHOUT",
+		"specificationOptions": [
+			{
+				"key": "app-documentation-url",
+				"value": "https://learn.liferay.com"
+			},
+			{
+				"key": "app-usage-terms-url",
+				"value": "https://www.liferay.com/legal/customer-agreements"
+			},
+			{
+				"key": "developer-name",
+				"value": "Liferay, Inc."
+			},
+			{
+				"key": "price-model",
+				"value": "Paid"
+			},
+			{
+				"key": "publisher-name",
+				"value": "Liferay, Inc."
+			},
+			{
+				"key": "publisher-web-site-url",
+				"value": "https://www.liferay.com"
+			},
+			{
+				"key": "support-email-address",
+				"value": "support@liferay.com"
+			},
+			{
+				"key": "support-phone",
+				"value": "+1 877 437 3329"
+			},
+			{
+				"key": "support-url",
+				"value": "https://www.liferay.com/support"
+			}
+		]
+	},
+	{
+		"categories": [
+			"solution"
+		],
+		"description": "Take a journey through our exclusive example Liferay SaaS solution to see how easy it is to use Liferay's low code and no code capabilities to build exactly what you need for your business.",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "PRDCT-TRIAL",
+		"images": [
+			"sample-marketplace-app.png"
+		],
+		"name": "Liferay Prebuilt 7 Day Trial",
+		"options": [
+			{
+				"key": "base-license-usage-type",
+				"values": [
+					"standard"
+				]
+			}
+		],
+		"price": 0,
+		"sku": "PRDCT-TRIAL",
+		"specificationOptions": [
+			{
+				"key": "developer-name",
+				"value": "Liferay, Inc."
+			},
+			{
+				"key": "our-selection",
+				"value": "true"
+			},
+			{
+				"key": "price-model",
+				"value": "Free"
+			},
+			{
+				"key": "publisher-name",
+				"value": "Liferay, Inc."
+			},
+			{
+				"key": "solution-company-description",
+				"value": "Liferay makes software that helps companies create digital experiences on web, mobile, and connected devices."
+			},
+			{
+				"key": "solution-company-email",
+				"value": "info@liferay.com"
+			},
+			{
+				"key": "solution-company-phone",
+				"value": "+1-877-LIFERAY"
+			},
+			{
+				"key": "solution-company-website",
+				"value": "https://www.liferay.com"
+			},
+			{
+				"key": "solution-contact-email",
+				"value": "info@liferay.com"
+			},
+			{
+				"key": "solution-header-description",
+				"value": "Take a journey through our exclusive example Liferay SaaS solution to see how easy it is to use Liferay's low code and no code capabilities to build exactly what you need for your business."
+			},
+			{
+				"key": "solution-header-title",
+				"value": "Liferay Prebuilt 7 Day Trial"
+			},
+			{
+				"key": "solution-type",
+				"value": "Experience Management"
+			}
+		]
+	},
+	{
+		"categories": [
+			"app"
+		],
+		"description": "Add Zendesk chat to any Liferay site without code to expand your customer service capabilities.",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "PRDCT-ZENDESK",
+		"images": [
+			"sample-marketplace-app.png"
+		],
+		"name": "Liferay Click to Chat Integration for Zendesk",
+		"options": [
+			{
+				"key": "base-license-usage-type",
+				"values": [
+					"standard"
+				]
+			}
+		],
+		"price": 0,
+		"sku": "PRDCT-ZENDESK",
+		"specificationOptions": [
+			{
+				"key": "app-documentation-url",
+				"value": "https://learn.liferay.com"
+			},
+			{
+				"key": "app-usage-terms-url",
+				"value": "https://www.liferay.com/legal/customer-agreements"
+			},
+			{
+				"key": "developer-name",
+				"value": "Liferay, Inc."
+			},
+			{
+				"key": "price-model",
+				"value": "Bundled"
+			},
+			{
+				"key": "publisher-name",
+				"value": "Liferay, Inc."
+			},
+			{
+				"key": "publisher-web-site-url",
+				"value": "https://www.liferay.com"
+			},
+			{
+				"key": "support-email-address",
+				"value": "support@liferay.com"
+			},
+			{
+				"key": "support-phone",
+				"value": "+1 877 437 3329"
+			},
+			{
+				"key": "support-url",
+				"value": "https://www.liferay.com/support"
+			}
+		]
+	}
+]

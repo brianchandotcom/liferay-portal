@@ -3,7 +3,7 @@
 <root available-locales="en_US" default-locale="en_US" version="1.0">
 	<dynamic-element field-reference="content" index-type="text" instance-id="lo0b0001" name="content" type="rich_text">
 		<dynamic-content language-id="en_US">
-			<![CDATA[<p>Liferay's standard support service level agreement defines target response times based on the severity of each reported issue. Critical production down incidents receive the fastest response, while lower-severity questions are handled during regular business hours. Response times, coverage windows, and escalation paths vary by subscription tier; consult your subscription agreement for the commitments that apply to your organization.</p>]]>
+			<![CDATA[<p>Liferay's standard support service level agreement defines target response times based on the severity of each reported issue. Critical production down incidents receive the fastest response, while lower severity questions are handled during regular business hours. Response times, coverage windows, and escalation paths vary by subscription tier; consult your subscription agreement for the commitments that apply to your organization.</p>]]>
 		</dynamic-content>
 	</dynamic-element>
 </root>

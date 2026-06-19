@@ -102,20 +102,12 @@ test(
 			trigger: page.getByLabel('Select Animals'),
 		});
 
-		const iframe = page.frameLocator('iframe[title="Select Animals"]');
+		const selectAnimalsModal = page.getByRole('dialog');
 
-		await iframe
-			.locator('li')
-			.filter({hasText: 'Cats'})
-			.getByRole('checkbox')
-			.check();
-		await iframe
-			.locator('li')
-			.filter({hasText: 'Dogs'})
-			.getByRole('checkbox')
-			.check();
+		await selectAnimalsModal.getByRole('treeitem', {name: 'Cats'}).click();
+		await selectAnimalsModal.getByRole('treeitem', {name: 'Dogs'}).click();
 
-		await page.getByRole('button', {name: 'Done'}).click();
+		await selectAnimalsModal.getByRole('button', {name: 'Done'}).click();
 
 		await page.locator('input[name="ObjectField_lemonSize"]').fill('Small');
 

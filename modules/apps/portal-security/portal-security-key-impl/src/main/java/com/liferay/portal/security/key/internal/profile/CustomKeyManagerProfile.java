@@ -28,10 +28,6 @@ public class CustomKeyManagerProfile implements KeyManagerProfile {
 	public static final String PROFILE_ID = "custom";
 
 	@Override
-	public void bootstrap() throws Exception {
-	}
-
-	@Override
 	public String getCompanyDEKProviderId() {
 		return _keyManagerCustomProfileConfiguration.companyDEKProviderId();
 	}
@@ -64,6 +60,10 @@ public class CustomKeyManagerProfile implements KeyManagerProfile {
 	@Override
 	public String getSystemSecretProviderId() {
 		return _keyManagerCustomProfileConfiguration.systemSecretProviderId();
+	}
+
+	@Override
+	public void initialize() throws Exception {
 	}
 
 	@Activate

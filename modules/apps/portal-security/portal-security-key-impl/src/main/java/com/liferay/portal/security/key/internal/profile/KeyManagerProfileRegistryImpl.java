@@ -91,8 +91,8 @@ public class KeyManagerProfileRegistryImpl
 					KeyManagerProfile content) {
 
 					synchronized (KeyManagerProfileRegistryImpl.this) {
-						if (Objects.equals(_lastBootstrappedProfileId, key)) {
-							_lastBootstrappedProfileId = null;
+						if (Objects.equals(_lastInitializedProfileId, key)) {
+							_lastInitializedProfileId = null;
 						}
 					}
 
@@ -144,33 +144,26 @@ public class KeyManagerProfileRegistryImpl
 		}
 
 		synchronized (this) {
-			if (Objects.equals(_lastBootstrappedProfileId, activeProfileId)) {
+			if (Objects.equals(_lastInitializedProfileId, activeProfileId)) {
 				return;
 			}
 
-			_lastBootstrappedProfileId = activeProfileId;
-		}
-
-		try {
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					"Bootstrapping Key Manager profile: " + activeProfileId);
-			}
-
-			keyManagerProfile.bootstrap();
-		}
-		catch (Exception exception) {
-			synchronized (this) {
-				if (Objects.equals(
-						_lastBootstrappedProfileId, activeProfileId)) {
-
-					_lastBootstrappedProfileId = null;
+			try {
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Initializing Key Manager profile: " + activeProfileId);
 				}
-			}
 
-			_log.error(
-				"Unable to bootstrap Key Manager profile: " + activeProfileId,
-				exception);
+				keyManagerProfile.initialize();
+
+				_lastInitializedProfileId = activeProfileId;
+			}
+			catch (Exception exception) {
+				_log.error(
+					"Unable to initialize Key Manager profile: " +
+						activeProfileId,
+					exception);
+			}
 		}
 	}
 
@@ -178,7 +171,7 @@ public class KeyManagerProfileRegistryImpl
 		KeyManagerProfileRegistryImpl.class);
 
 	private volatile KeyManagerConfiguration _keyManagerConfiguration;
-	private volatile String _lastBootstrappedProfileId;
+	private volatile String _lastInitializedProfileId;
 	private volatile ServiceTrackerMap<String, KeyManagerProfile>
 		_serviceTrackerMap;
 

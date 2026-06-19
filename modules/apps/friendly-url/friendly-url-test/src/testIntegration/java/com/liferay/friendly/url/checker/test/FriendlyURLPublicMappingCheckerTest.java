@@ -14,11 +14,13 @@ import com.liferay.layout.friendly.url.LayoutFriendlyURLEntryHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -38,6 +40,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -60,9 +63,21 @@ public class FriendlyURLPublicMappingCheckerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_defaultGroup = _groupLocalService.fetchGroup(
+		_originalVirtualHostsDefaultSiteName =
+			ReflectionTestUtil.getAndSetFieldValue(
+				PropsValues.class, "VIRTUAL_HOSTS_DEFAULT_SITE_NAME",
+				GroupConstants.GUEST);
+
+		_defaultGroup = _groupLocalService.getGroup(
 			TestPropsValues.getCompanyId(),
 			PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME);
+	}
+
+	@After
+	public void tearDown() {
+		ReflectionTestUtil.setFieldValue(
+			PropsValues.class, "VIRTUAL_HOSTS_DEFAULT_SITE_NAME",
+			_originalVirtualHostsDefaultSiteName);
 	}
 
 	@Test
@@ -314,6 +329,8 @@ public class FriendlyURLPublicMappingCheckerTest {
 
 	@DeleteAfterTestRun
 	private final List<Layout> _layouts = new ArrayList<>();
+
+	private String _originalVirtualHostsDefaultSiteName;
 
 	@Inject
 	private SiteFriendlyURLLocalService _siteFriendlyURLLocalService;

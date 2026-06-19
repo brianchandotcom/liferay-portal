@@ -60,6 +60,12 @@
 		}
 	}
 
+	&.http-request-node {
+		.node-icon svg {
+			fill: #0b5fff;
+		}
+	}
+
 	&.join-node,
 	&.join-xor-node {
 		.node-icon svg {

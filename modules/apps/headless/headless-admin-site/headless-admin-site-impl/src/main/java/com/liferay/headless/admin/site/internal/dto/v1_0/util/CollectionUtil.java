@@ -288,7 +288,9 @@ public class CollectionUtil {
 				InfoItemFormVariationsProvider.class, className);
 
 		if (infoItemFormVariationsProvider == null) {
-			LogUtil.logOptionalReference(itemExternalReference, scopeGroupId);
+			LogUtil.logOptionalReference(
+				className, itemExternalReference.getExternalReferenceCode(),
+				itemExternalReference.getScope(), scopeGroupId);
 
 			return null;
 		}

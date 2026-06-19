@@ -24,6 +24,8 @@ Locate the counterpart spec by parallel name: `Foo.tsx` → `Foo.test.tsx` or `F
 
 **Lockfile changes.** When `package-lock.json` or `yarn.lock` is in the diff, run the module's full Jest suite regardless of size — parallel-name lookup yields nothing for a lockfile, and a transitive-dependency pin can affect any code path that touches the runtime, so the blast radius is the whole module.
 
+**Test directory changes.** When any file under a module's `test`, `tests`, or `__tests__` directory changes — not only `*.test.*` or `*.spec.*` files — run the full Jest suite, since a stray fixture caught by the `jest.testMatch` glob fails the run on its own.
+
 **Deletion handling.** A deleted JS or TS file has no parallel-name counterpart to run, but its consumers can still break. Two layered checks:
 
 1. **Consumer search.** For each deleted file, grep the surrounding module for `import` statements that reference the deleted basename or relative path. For every consumer found, queue the consumer's parallel-name spec (and the consumer's spec itself when it is the consumer). This catches direct-import breakage where a surviving spec imports a now-deleted source.

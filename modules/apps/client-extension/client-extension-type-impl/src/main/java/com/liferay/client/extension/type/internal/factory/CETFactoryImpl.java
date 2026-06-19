@@ -135,7 +135,7 @@ public class CETFactoryImpl implements CETFactory {
 			status = clientExtensionEntry.getStatus();
 			typeSettingsUnicodeProperties = UnicodePropertiesBuilder.create(
 				true
-			).load(
+			).fastLoad(
 				clientExtensionEntry.getTypeSettings()
 			).build();
 		}

@@ -4,7 +4,13 @@
  */
 
 import '@testing-library/jest-dom';
-import {cleanup, render, screen, waitFor} from '@testing-library/react';
+import {
+	cleanup,
+	fireEvent,
+	render,
+	screen,
+	waitFor,
+} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
@@ -28,6 +34,7 @@ jest.mock(
 			deleteRoomUserAccount: jest.fn(),
 			getRoomInvitedMembers: jest.fn(),
 			getRoomUserAccounts: jest.fn(),
+			updateRoomInvitedMember: jest.fn(),
 			updateRoomUserAccount: jest.fn(),
 		},
 	})
@@ -70,6 +77,8 @@ describe('RoomShare', () => {
 		(RoomService.getRoomUserAccounts as jest.Mock).mockResolvedValue(
 			mockUsers
 		);
+
+		(RoomService.updateRoomInvitedMember as jest.Mock).mockResolvedValue({});
 
 		(RoomService.updateRoomUserAccount as jest.Mock).mockImplementation(
 			(roomId, userId, data) => {
@@ -202,7 +211,19 @@ describe('RoomShare', () => {
 		});
 	});
 
-	it('changes role for a user', async () => {
+	it('changes role for a user while preserving the expiration date', async () => {
+		const membershipExpirationDate = new Date(
+			Date.now() + 365 * 24 * 60 * 60 * 1000
+		).toISOString();
+
+		(RoomService.getRoomUserAccounts as jest.Mock).mockResolvedValue([
+			...mockUsers.slice(0, 2),
+			{
+				...mockUsers[2],
+				membershipExpirationDate,
+			},
+		]);
+
 		renderComponent({
 			roomId: 10,
 		});
@@ -238,6 +259,7 @@ describe('RoomShare', () => {
 				10,
 				3,
 				{
+					membershipExpirationDate,
 					roleKey: 'DSR Contributor',
 				}
 			);
@@ -339,15 +361,19 @@ describe('RoomShare', () => {
 	});
 
 	it('displays user initials when no image is available', async () => {
-		renderComponent({
+		const {container} = renderComponent({
 			roomId: 10,
 		});
 
 		await waitFor(() => {
-			expect(screen.getByText('J')).toBeInTheDocument();
-			expect(screen.getByText('R')).toBeInTheDocument();
-			expect(screen.getByText('W')).toBeInTheDocument();
+			expect(screen.getByText('John Doe')).toBeInTheDocument();
 		});
+
+		const initials = Array.from(
+			container.querySelectorAll('.sticker-user-icon')
+		).map((sticker) => sticker.textContent);
+
+		expect(initials).toEqual(['J', 'R', 'W']);
 	});
 
 	it('shows users count in the header', async () => {
@@ -477,5 +503,233 @@ describe('RoomShare', () => {
 		expect(
 			invitedUserRow?.querySelector('.dropdown-toggle')
 		).not.toBeNull();
+	});
+
+	it('displays no-expiration for a user without an expiration date', async () => {
+		renderComponent({
+			roomId: 10,
+		});
+
+		await waitFor(() => {
+			expect(screen.getByText('Win Doe')).toBeInTheDocument();
+		});
+
+		const userRow = screen.getByText('Win Doe').closest('.user-row');
+
+		expect(userRow?.textContent).toContain('no-expiration');
+	});
+
+	it('displays the expiration label in warning or info style depending on whether it is expiring soon', async () => {
+		const expiringSoonDate = new Date(
+			Date.now() + 3 * 24 * 60 * 60 * 1000
+		).toISOString();
+		const notExpiringSoonDate = new Date(
+			Date.now() + 365 * 24 * 60 * 60 * 1000
+		).toISOString();
+
+		(RoomService.getRoomUserAccounts as jest.Mock).mockResolvedValue([
+			mockUsers[0],
+			{
+				...mockUsers[1],
+				membershipExpirationDate: expiringSoonDate,
+			},
+			{
+				...mockUsers[2],
+				membershipExpirationDate: notExpiringSoonDate,
+			},
+		]);
+
+		renderComponent({
+			roomId: 10,
+		});
+
+		await waitFor(() => {
+			expect(screen.getByText('Win Doe')).toBeInTheDocument();
+		});
+
+		const expiringSoonRow = screen.getByText('Ran Doe').closest('.user-row');
+
+		expect(expiringSoonRow?.querySelector('.label-warning')).not.toBeNull();
+		expect(
+			expiringSoonRow?.querySelector('.lexicon-icon-warning-full')
+		).not.toBeNull();
+		expect(expiringSoonRow?.querySelector('.label-info')).toBeNull();
+
+		const notExpiringSoonRow = screen
+			.getByText('Win Doe')
+			.closest('.user-row');
+
+		expect(notExpiringSoonRow?.querySelector('.label-info')).not.toBeNull();
+		expect(notExpiringSoonRow?.querySelector('.label-warning')).toBeNull();
+		expect(
+			notExpiringSoonRow?.querySelector('.lexicon-icon-warning-full')
+		).toBeNull();
+		expect(
+			screen.getByText(
+				new Date(notExpiringSoonDate).toLocaleDateString('en-US', {
+					day: 'numeric',
+					month: 'short',
+					year: 'numeric',
+				})
+			)
+		).toBeInTheDocument();
+	});
+
+	it('updates the expiration date while preserving the role', async () => {
+		const membershipExpirationDate = new Date(
+			Date.now() + 365 * 24 * 60 * 60 * 1000
+		).toISOString();
+
+		(RoomService.getRoomUserAccounts as jest.Mock).mockResolvedValue([
+			...mockUsers.slice(0, 2),
+			{
+				...mockUsers[2],
+				membershipExpirationDate,
+			},
+		]);
+
+		const {container} = renderComponent({
+			roomId: 10,
+		});
+
+		await waitFor(() => {
+			expect(screen.getByText('Win Doe')).toBeInTheDocument();
+		});
+
+		await userEvent.click(
+			container.querySelector(
+				'[data-testid="editExpiration_3"]'
+			) as HTMLButtonElement
+		);
+
+		await userEvent.click(
+			container.querySelector(
+				'[data-testid="confirmExpiration_3"]'
+			) as HTMLButtonElement
+		);
+
+		await waitFor(() => {
+			expect(RoomService.updateRoomUserAccount).toHaveBeenCalledWith(
+				10,
+				3,
+				expect.objectContaining({
+					membershipExpirationDate: expect.any(String),
+					roleKey: 'Site Member',
+				})
+			);
+		});
+	});
+
+	it('shows the expiration warning banner when a membership is expiring soon', async () => {
+		const membershipExpirationDate = new Date(
+			Date.now() + 3 * 24 * 60 * 60 * 1000
+		).toISOString();
+
+		(RoomService.getRoomUserAccounts as jest.Mock).mockResolvedValue([
+			...mockUsers.slice(0, 2),
+			{
+				...mockUsers[2],
+				membershipExpirationDate,
+			},
+		]);
+
+		const {container} = renderComponent({
+			roomId: 10,
+		});
+
+		await waitFor(() => {
+			expect(screen.getByText('Win Doe')).toBeInTheDocument();
+		});
+
+		const alert = container.querySelector('.alert');
+
+		expect(alert).toBeInTheDocument();
+		expect(alert?.textContent).toContain('has-access-expiring-within');
+	});
+
+	it('invites a user with an expiration date', async () => {
+		const {container} = renderComponent({
+			roomId: 10,
+		});
+
+		await waitFor(() => {
+			expect(screen.getByText('John Doe')).toBeInTheDocument();
+		});
+
+		fireEvent.change(
+			container.querySelector(
+				'input[placeholder="YYYY-MM-DD"]'
+			) as HTMLInputElement,
+			{
+				target: {value: '2030-01-15'},
+			}
+		);
+
+		const emailInput = container.querySelector(
+			'[data-testid="emailAddressesInput"]'
+		) as HTMLInputElement;
+		await userEvent.type(emailInput, 'newuser@liferay.com,');
+
+		await userEvent.click(
+			container.querySelector(
+				'[data-testid="inviteButton"]'
+			) as HTMLButtonElement
+		);
+
+		await waitFor(() => {
+			expect(RoomService.addRoomUserAccount).toHaveBeenCalledWith(
+				10,
+				expect.objectContaining({
+					emailAddress: 'newuser@liferay.com',
+					membershipExpirationDate: expect.any(String),
+					roleKey: 'Site Member',
+				})
+			);
+		});
+	});
+
+	it('updates an invited member expiration date using updateRoomInvitedMember', async () => {
+		const membershipExpirationDate = new Date(
+			Date.now() + 365 * 24 * 60 * 60 * 1000
+		).toISOString();
+
+		(RoomService.getRoomInvitedMembers as jest.Mock).mockResolvedValue([
+			{
+				emailAddress: 'invited@example.com',
+				id: 10,
+				membershipExpirationDate,
+				ownerId: 999,
+			},
+		]);
+
+		const {container} = renderComponent({
+			roomId: 10,
+		});
+
+		await waitFor(() => {
+			expect(screen.getByText('invited@example.com')).toBeInTheDocument();
+		});
+
+		await userEvent.click(
+			container.querySelector(
+				'[data-testid="editExpiration_10"]'
+			) as HTMLButtonElement
+		);
+
+		await userEvent.click(
+			container.querySelector(
+				'[data-testid="confirmExpiration_10"]'
+			) as HTMLButtonElement
+		);
+
+		await waitFor(() => {
+			expect(RoomService.updateRoomInvitedMember).toHaveBeenCalledWith(
+				10,
+				10,
+				expect.objectContaining({
+					membershipExpirationDate: expect.any(String),
+				})
+			);
+		});
 	});
 });

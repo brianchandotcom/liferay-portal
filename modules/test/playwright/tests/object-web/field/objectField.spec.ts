@@ -31,7 +31,6 @@ const test = mergeTests(
 	dataApiHelpersTest,
 	featureFlagsTest({
 		'LPD-70673': {enabled: true}, // Email Address field
-		'LPD-83570': {enabled: true}, // Phone Number field
 	}),
 	loginTest(),
 	objectPagesTest

@@ -2929,7 +2929,6 @@ public class ObjectEntryLocalServiceTest {
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 	}
 
-	@FeatureFlag("LPD-83570")
 	@Test
 	public void testAddObjectEntryWithLocalizedPhoneNumberObjectField()
 		throws Exception {
@@ -3680,7 +3679,6 @@ public class ObjectEntryLocalServiceTest {
 		_assertCount(10);
 	}
 
-	@FeatureFlag("LPD-83570")
 	@Test
 	public void testAddObjectEntryWithPhoneNumberObjectField()
 		throws Exception {
@@ -7748,7 +7746,6 @@ public class ObjectEntryLocalServiceTest {
 		}
 	}
 
-	@FeatureFlag("LPD-83570")
 	@Test
 	public void testUpdateObjectEntryWithPhoneNumberObjectField()
 		throws Exception {

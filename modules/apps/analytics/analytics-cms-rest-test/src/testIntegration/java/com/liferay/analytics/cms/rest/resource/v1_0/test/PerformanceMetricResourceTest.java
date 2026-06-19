@@ -15,6 +15,7 @@ import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -36,6 +37,12 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import jakarta.ws.rs.BadRequestException;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.StreamingOutput;
+
+import java.io.ByteArrayOutputStream;
+
+import java.time.LocalDate;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -82,6 +89,18 @@ public class PerformanceMetricResourceTest
 			"location", "downloadsMetric",
 			"/api/1.0/asset-metric/objectEntry/geolocation");
 		_testGetPerformanceMetricWithInvalidMetricType();
+	}
+
+	@Override
+	@Test
+	public void testGetPerformanceMetricExport() throws Exception {
+		_testGetPerformanceMetricExport(
+			"categories", "viewsMetric",
+			"/api/1.0/asset-metric/objectEntry/categories/export");
+		_testGetPerformanceMetricExport(
+			"location", "downloadsMetric",
+			"/api/1.0/asset-metric/objectEntry/geolocation/export");
+		_testGetPerformanceMetricExportWithInvalidMetricType();
 	}
 
 	private DepotEntry _addDepotEntry() throws Exception {
@@ -207,6 +226,92 @@ public class PerformanceMetricResourceTest
 
 		_assertMetric(metrics[0], value1, valueKey1);
 		_assertMetric(metrics[1], value2, valueKey2);
+	}
+
+	private void _testGetPerformanceMetricExport(
+			String groupBy, String metricType, String path)
+		throws Exception {
+
+		long dataSourceId = RandomTestUtil.nextLong();
+
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						testCompany.getCompanyId(),
+						AnalyticsConfiguration.class.getName(),
+						HashMapDictionaryBuilder.<String, Object>put(
+							"liferayAnalyticsDataSourceId", dataSourceId
+						).put(
+							"liferayAnalyticsEnableAllGroupIds", true
+						).put(
+							"liferayAnalyticsFaroBackendSecuritySignature",
+							RandomTestUtil.randomString()
+						).put(
+							"liferayAnalyticsFaroBackendURL",
+							"http://" + RandomTestUtil.randomString()
+						).build())) {
+
+			String value = RandomTestUtil.randomString();
+
+			RecordingMockHttp recordingMockHttp = new RecordingMockHttp(
+				Collections.singletonMap(path, () -> value));
+
+			ReflectionTestUtil.setFieldValue(
+				_performanceMetricResource, "_http", recordingMockHttp);
+
+			int rangeKey = RandomTestUtil.nextInt();
+
+			Response response =
+				_performanceMetricResource.getPerformanceMetricExport(
+					TransformUtil.transformToArray(
+						_depotEntries, DepotEntry::getDepotEntryId, Long.class),
+					groupBy, metricType, rangeKey);
+
+			Assert.assertEquals(
+				StringBundler.concat(
+					"attachment; filename=performance-metric-",
+					StringUtil.toLowerCase(groupBy), "-", LocalDate.now(),
+					".csv"),
+				response.getHeaderString("Content-Disposition"));
+
+			StreamingOutput streamingOutput =
+				(StreamingOutput)response.getEntity();
+
+			ByteArrayOutputStream byteArrayOutputStream =
+				new ByteArrayOutputStream();
+
+			streamingOutput.write(byteArrayOutputStream);
+
+			Assert.assertEquals(value, byteArrayOutputStream.toString());
+
+			String location = recordingMockHttp.getLocation();
+
+			_assertParameter(
+				metricType, "assetSummaryMetricTypeString", location);
+			_assertParameter(
+				String.valueOf(dataSourceId), "dataSourceId", location);
+			_assertParameter(
+				StringUtil.merge(
+					TransformUtil.transformToArray(
+						_depotEntries, DepotEntry::getGroupId, Long.class),
+					StringPool.COMMA),
+				"groupIds", location);
+			_assertParameter(String.valueOf(rangeKey), "rangeKey", location);
+		}
+		finally {
+			ReflectionTestUtil.setFieldValue(
+				_performanceMetricResource, "_http", _http);
+		}
+	}
+
+	private void _testGetPerformanceMetricExportWithInvalidMetricType() {
+		Assert.assertThrows(
+			BadRequestException.class,
+			() -> _performanceMetricResource.getPerformanceMetricExport(
+				TransformUtil.transformToArray(
+					_depotEntries, DepotEntry::getDepotEntryId, Long.class),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.nextInt()));
 	}
 
 	private void _testGetPerformanceMetricWithInvalidMetricType() {

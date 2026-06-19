@@ -113,6 +113,7 @@ const FrontendDataSetContent = ({
 	currentURL,
 	customDataRenderers,
 	customRenderers,
+	dataSetSnapshotStartupViewERC = null,
 	defaultSelectedItems,
 	emptyState,
 	filters: initialFilters,
@@ -532,6 +533,15 @@ const FrontendDataSetContent = ({
 		];
 	};
 
+	const hasURLState = () =>
+		Boolean(
+			getView() ||
+				getDelta() ||
+				getActiveSorts()?.length ||
+				getFilters()?.length ||
+				getSearchParam()
+		);
+
 	const getInitialViewsState = () => {
 		const defaultSnapshot: any = {
 			modifiedFields: {},
@@ -614,8 +624,10 @@ const FrontendDataSetContent = ({
 			})),
 		}));
 
-		return {
+		const initialViewsState: any = {
 			activeView,
+			dataSetSnapshotStartupViewERC:
+				dataSetSnapshotStartupViewERC ?? null,
 			defaultSnapshot,
 			groupedFilters,
 			modifiedFields: {},
@@ -627,6 +639,22 @@ const FrontendDataSetContent = ({
 			views,
 			visibleFieldNames: initialVisibleFieldNames,
 		};
+
+		const dataSetSnapshotStartupView =
+			dataSetSnapshotStartupViewERC &&
+			(parsedSnapshots ?? [])
+				.flatMap((group: ISnapshots) => group.items)
+				.find(
+					(snapshot: ISnapshot) =>
+						snapshot.erc === dataSetSnapshotStartupViewERC
+				);
+
+		if (dataSetSnapshotStartupView && hasURLState()) {
+			initialViewsState.activeSnapshotERC = dataSetSnapshotStartupViewERC;
+			initialViewsState.snapshotUpdated = true;
+		}
+
+		return initialViewsState;
 	};
 
 	const [viewsState, viewsDispatch] = useThunk(
@@ -1848,6 +1876,42 @@ const FrontendDataSetContent = ({
 			});
 		}
 	};
+
+	const handleSnapshotChangeRef = useRef(handleSnapshotChange);
+	const hasURLStateRef = useRef(hasURLState);
+	const dataSetSnapshotStartupViewAppliedRef = useRef(false);
+
+	handleSnapshotChangeRef.current = handleSnapshotChange;
+	hasURLStateRef.current = hasURLState;
+
+	useEffect(() => {
+		if (
+			dataSetSnapshotStartupViewAppliedRef.current ||
+			!globalFDSStateInitialized ||
+			!dataSetSnapshotStartupViewERC
+		) {
+			return;
+		}
+
+		dataSetSnapshotStartupViewAppliedRef.current = true;
+
+		const dataSetSnapshotStartupView = (viewsState.snapshots ?? [])
+			.flatMap((group: ISnapshots) => group.items)
+			.find(
+				(snapshot: ISnapshot) =>
+					snapshot.erc === dataSetSnapshotStartupViewERC
+			);
+
+		if (!dataSetSnapshotStartupView || hasURLStateRef.current()) {
+			return;
+		}
+
+		handleSnapshotChangeRef.current({
+			defaultSnapshot: viewsState.defaultSnapshot,
+			snapshots: viewsState.snapshots,
+			value: dataSetSnapshotStartupViewERC,
+		});
+	}, [globalFDSStateInitialized, dataSetSnapshotStartupViewERC, viewsState]);
 
 	function toggleItemInlineEdit(itemKey: any) {
 		setItemsChanges(({[itemKey]: foundItem, ...itemsChanges}) => {

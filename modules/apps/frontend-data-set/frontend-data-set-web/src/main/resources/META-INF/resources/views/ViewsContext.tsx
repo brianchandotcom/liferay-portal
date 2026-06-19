@@ -8,6 +8,7 @@ import {createContext} from 'react';
 export interface IViewsContext {
 	activeSnapshotERC: null | string;
 	activeView: any;
+	dataSetSnapshotStartupViewERC: null | string;
 	defaultSnapshot?: any;
 	groupedFilters: Array<any>;
 	modifiedFields: any;
@@ -45,6 +46,7 @@ const ViewsContext = createContext<[IViewsContext, any]>([
 	{
 		activeSnapshotERC: null,
 		activeView: null,
+		dataSetSnapshotStartupViewERC: null,
 		groupedFilters: [],
 		modifiedFields: {},
 		paginationDelta: null,

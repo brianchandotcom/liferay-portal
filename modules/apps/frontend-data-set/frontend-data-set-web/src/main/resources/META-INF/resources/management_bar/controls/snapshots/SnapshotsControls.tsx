@@ -8,6 +8,7 @@ import {Option, Picker} from '@clayui/core';
 import ClayDropDown from '@clayui/drop-down';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import ClayLabel from '@clayui/label';
 import ClayModal from '@clayui/modal';
 import {
 	ManagementToolbar,
@@ -199,6 +200,7 @@ const SnapshotsControls = () => {
 		{
 			activeSnapshotERC,
 			activeView,
+			dataSetSnapshotStartupViewERC,
 			defaultSnapshot,
 			paginationDelta,
 			snapshotUpdated,
@@ -472,6 +474,57 @@ const SnapshotsControls = () => {
 			});
 	};
 
+	const setDataSetSnapshotStartupView = () => {
+		if (!activeSnapshot) {
+			return;
+		}
+
+		const dataSetSnapshotStartupViewPreferenceERC = `${Liferay.ThemeDisplay.getUserId()}_${fdsName}`;
+
+		fetch(
+			`/o/data-set-admin/snapshot-user-preferences/by-external-reference-code/${encodeURIComponent(
+				dataSetSnapshotStartupViewPreferenceERC
+			)}`,
+			{
+				body: JSON.stringify({
+					dataSetSnapshotStartupViewERC: activeSnapshot.erc,
+					externalReferenceCode:
+						dataSetSnapshotStartupViewPreferenceERC,
+					fdsName,
+				}),
+				headers: DEFAULT_FETCH_HEADERS,
+				method: 'PUT',
+			}
+		)
+			.then((response) => {
+				if (!response.ok) {
+					return Promise.reject(new Error());
+				}
+
+				openToast({
+					message: Liferay.Language.get(
+						'the-user-view-was-set-as-startup'
+					),
+					type: 'success',
+				});
+
+				viewsDispatch({
+					type: EViewsActionTypes.SET_DATA_SET_SNAPSHOT_STARTUP_VIEW,
+					value: {
+						dataSetSnapshotStartupViewERC: activeSnapshot.erc,
+					},
+				});
+			})
+			.catch(() => {
+				openToast({
+					message: Liferay.Language.get(
+						'an-unexpected-error-occurred'
+					),
+					type: 'danger',
+				});
+			});
+	};
+
 	const openDeleteSnapshotModal = ({snapshotERC}: {snapshotERC: string}) => {
 		openModal({
 			bodyHTML: Liferay.Language.get(
@@ -536,8 +589,24 @@ const SnapshotsControls = () => {
 							items={group.items}
 						>
 							{(snapshot: ISnapshot) => (
-								<Option key={snapshot.erc}>
+								<Option
+									key={snapshot.erc}
+									textValue={snapshot.label}
+								>
 									{snapshot.label}
+
+									{snapshot.erc ===
+										dataSetSnapshotStartupViewERC && (
+										<ClayLabel
+											aria-hidden="true"
+											className="ml-2"
+											displayType="info"
+										>
+											{Liferay.Language.get(
+												'startup-view'
+											)}
+										</ClayLabel>
+									)}
 								</Option>
 							)}
 						</ClayDropDown.Group>
@@ -585,6 +654,23 @@ const SnapshotsControls = () => {
 						>
 							{Liferay.Language.get('save-view-as')}
 						</ClayDropDown.Item>
+
+						{activeSnapshotERC &&
+							activeSnapshotERC !==
+								dataSetSnapshotStartupViewERC && (
+								<ClayDropDown.Item
+									onClick={() => {
+										setDataSetSnapshotStartupView();
+
+										setActionsDropdownActive(false);
+									}}
+									symbolLeft="star"
+								>
+									{Liferay.Language.get(
+										'set-as-startup-view'
+									)}
+								</ClayDropDown.Item>
+							)}
 
 						{activeSnapshotERC && isActiveSnapshotOwned && (
 							<>

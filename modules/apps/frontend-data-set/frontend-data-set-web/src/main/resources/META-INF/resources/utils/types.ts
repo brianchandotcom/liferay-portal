@@ -342,6 +342,7 @@ export interface IFrontendDataSetProps {
 		listSection?: Array<IInternalRenderer>;
 		tableCell?: Array<TRenderer>;
 	};
+	dataSetSnapshotStartupViewERC?: null | string;
 	defaultSelectedItems?: any[];
 	emptyState?: IEmptyStateConfiguration;
 	enableInlineAddModeSetting?: {

@@ -30,7 +30,9 @@ public class SubtypeUtil {
 				InfoItemFormVariationsProvider.class, className);
 
 		if (infoItemFormVariationsProvider == null) {
-			LogUtil.logOptionalReference(itemExternalReference, groupId);
+			LogUtil.logOptionalReference(
+				className, itemExternalReference.getExternalReferenceCode(),
+				itemExternalReference.getScope(), groupId);
 
 			return itemExternalReference.getExternalReferenceCode();
 		}

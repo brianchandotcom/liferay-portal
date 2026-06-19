@@ -41,12 +41,14 @@ Create `site-initializer/layouts/<NN-page-name>/page.json`. The `NN` prefix cont
 
 ```json
 {
-  "friendlyURL": "/<page-url-slug>",
-  "name": "<Page Name>",
-  "name_i18n": {"en_US": "<Page Name>"},
-  "type": "Content",
-  "hidden": false,
-  "private": false
+	"friendlyURL": "/<page-url-slug>",
+	"hidden": false,
+	"name": "<Page Name>",
+	"name_i18n": {
+		"en_US": "<Page Name>"
+	},
+	"private": false,
+	"type": "Content"
 }
 ```
 
@@ -56,21 +58,21 @@ Compose the layout in `site-initializer/layouts/<NN-page-name>/page-definition.j
 
 ```json
 {
-  "pageElement": {
-    "pageElements": [
-      {
-        "definition": {
-          "fragment": {
-            "key": "<fragment-name>",
-            "siteKey": "[$GROUP_KEY$]"
-          }
-        },
-        "type": "Fragment"
-      }
-    ],
-    "type": "Root"
-  },
-  "version": "1.0"
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragment": {
+						"key": "<fragment-name>",
+						"siteKey": "[$GROUP_KEY$]"
+					}
+				},
+				"type": "Fragment"
+			}
+		],
+		"type": "Root"
+	},
+	"version": "1.0"
 }
 ```
 
@@ -130,7 +132,7 @@ Compose it in `page-definition.json` (see the `Collection` / `CollectionItem` el
    ]
    ```
 
-### Mapping limits — denormalize into display fields
+### Mapping Limits — Denormalize Into Display Fields
 
 Field mapping renders the raw stored value and cannot transform it. In particular:
 
@@ -369,7 +371,7 @@ A successful PUT response code is not a reliable success signal — verify by is
 
 **`type` vs `pageType` — field names differ by API.** `headless-delivery` uses `pageType` (plain string). `headless-admin-site` uses `type` (enum: `ContentPage`, `WidgetPage`, etc.). Using `type` against the delivery API returns `400 - The property "type" is not defined in SitePage`.
 
-**`FragmentReference` uses a non-standard discriminator.** Every other polymorphic schema in `headless-admin-site` uses `type`. `FragmentReference` is the exception — it uses `fragmentReferenceType`. Using `"type": "DefaultFragmentReference"` returns `400 InvalidTypeIdException: missing type id property 'fragmentReferenceType'`.
+**`FragmentReference` uses a nonstandard discriminator.** Every other polymorphic schema in `headless-admin-site` uses `type`. `FragmentReference` is the exception — it uses `fragmentReferenceType`. Using `"type": "DefaultFragmentReference"` returns `400 InvalidTypeIdException: missing type id property 'fragmentReferenceType'`.
 
 **`position` is required despite the spec marking it optional.** Omitting `position` from a page-element POST returns `500 NullPointerException`. Always include `"position": 0` (or the intended 0-based index).
 

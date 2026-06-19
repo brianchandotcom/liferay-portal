@@ -8,7 +8,7 @@ A site initializer is a client extension of type `siteInitializer`. When deploye
 
 The site-initializer CET tree is the **single source of truth** for the site. Build the site by triggering the initializer, then iterate by editing the source tree and applying each change by the cheapest reliable path. Always edit the source files first; never hand-edit the live site as the authoritative copy.
 
-| Change type | How to apply it | Re-provision the site? |
+| Change Type | How to Apply It | Reprovision the Site? |
 | --- | --- | --- |
 | Theme / design | Deploy the `themeCSS` CET (`blade gw deploy`) | No |
 | Object definition or data | `object-admin` API + batch import | No |
@@ -102,23 +102,23 @@ Files under `batch/` are named `<NN-entity-name>.batch-engine-data.json`. The `N
 
 ```json
 {
-  "configuration": {
-    "className": "com.liferay.headless.admin.list.type.dto.v1_0.ListTypeDefinition",
-    "multiCompany": true,
-    "parameters": {
-      "containsHeaders": "true",
-      "createStrategy": "UPSERT",
-      "importStrategy": "ON_ERROR_FAIL",
-      "updateStrategy": "UPDATE"
-    },
-    "taskItemDelegateName": "DEFAULT"
-  },
-  "items": [
-    {
-      "externalReferenceCode": "<ERC>",
-      ...
-    }
-  ]
+	"configuration": {
+		"className": "com.liferay.headless.admin.list.type.dto.v1_0.ListTypeDefinition",
+		"multiCompany": true,
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"importStrategy": "ON_ERROR_FAIL",
+			"updateStrategy": "UPDATE"
+		},
+		"taskItemDelegateName": "DEFAULT"
+	},
+	"items": [
+		{
+			"externalReferenceCode": "<ERC>",
+			...
+		}
+	]
 }
 ```
 
@@ -144,22 +144,24 @@ Common `className` values:
 
 ```json
 {
-  "friendlyURL": "/home",
-  "hidden": false,
-  "name": "Home",
-  "name_i18n": {
-    "en_US": "Home"
-  },
-  "permissions": [
-    {
-      "actionIds": ["VIEW"],
-      "roleName": "Guest",
-      "scope": 4
-    }
-  ],
-  "private": false,
-  "system": false,
-  "type": "Content"
+	"friendlyURL": "/home",
+	"hidden": false,
+	"name": "Home",
+	"name_i18n": {
+		"en_US": "Home"
+	},
+	"permissions": [
+		{
+			"actionIds": [
+				"VIEW"
+			],
+			"roleName": "Guest",
+			"scope": 4
+		}
+	],
+	"private": false,
+	"system": false,
+	"type": "Content"
 }
 ```
 
@@ -171,11 +173,12 @@ Mirrors the `pageDefinition` field of the Headless Admin Site page API. Minimum 
 
 ```json
 {
-  "pageElement": {
-    "pageElements": [],
-    "type": "Root"
-  },
-  "version": "1.0"
+	"pageElement": {
+		"pageElements": [
+		],
+		"type": "Root"
+	},
+	"version": "1.0"
 }
 ```
 
@@ -183,13 +186,13 @@ Add fragment elements under `pageElements` to compose the layout. Each fragment 
 
 ```json
 {
-  "definition": {
-    "fragment": {
-      "key": "<fragment-name>",
-      "siteKey": "[$GROUP_KEY$]"
-    }
-  },
-  "type": "Fragment"
+	"definition": {
+		"fragment": {
+			"key": "<fragment-name>",
+			"siteKey": "[$GROUP_KEY$]"
+		}
+	},
+	"type": "Fragment"
 }
 ```
 
@@ -203,29 +206,30 @@ The master `page-definition.json` holds the persistent header/footer fragments p
 
 ```json
 {
-  "pageElement": {
-    "pageElements": [
-      {
-        "definition": {
-          "fragment": {
-            "key": "<header-fragment-name>",
-            "siteKey": "[$GROUP_KEY$]"
-          }
-        },
-        "type": "Fragment"
-      },
-      {
-        "definition": {
-          "fragmentSettings": {
-            "unallowedFragments": []
-          }
-        },
-        "type": "DropZone"
-      }
-    ],
-    "type": "Root"
-  },
-  "version": 1.1
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragment": {
+						"key": "<header-fragment-name>",
+						"siteKey": "[$GROUP_KEY$]"
+					}
+				},
+				"type": "Fragment"
+			},
+			{
+				"definition": {
+					"fragmentSettings": {
+						"unallowedFragments": [
+						]
+					}
+				},
+				"type": "DropZone"
+			}
+		],
+		"type": "Root"
+	},
+	"version": 1.1
 }
 ```
 
@@ -233,16 +237,17 @@ A page selects its master through its **own** `page-definition.json`, in a top-l
 
 ```json
 {
-  "pageElement": {
-    "pageElements": [ /* this page's content */ ],
-    "type": "Root"
-  },
-  "settings": {
-    "masterPage": {
-      "key": "<master-name>"
-    }
-  },
-  "version": 1.1
+	"pageElement": {
+		"pageElements": [
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "<master-name>"
+		}
+	},
+	"version": 1.1
 }
 ```
 
@@ -252,8 +257,8 @@ Controls navigation menu visibility and theme assignment for the public (non-pri
 
 ```json
 {
-  "themeId": "classic_WAR_classictheme",
-  "colorSchemeId": "01"
+	"colorSchemeId": "01",
+	"themeId": "classic_WAR_classictheme"
 }
 ```
 

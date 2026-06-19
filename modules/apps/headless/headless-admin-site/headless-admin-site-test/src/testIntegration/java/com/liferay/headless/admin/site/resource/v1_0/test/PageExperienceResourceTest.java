@@ -461,7 +461,7 @@ public class PageExperienceResourceTest
 				pageExperience1.getExternalReferenceCode(),
 				new PageExperience() {
 					{
-						setPriority(100);
+						setPriority(RandomTestUtil.randomInt(100, 199));
 					}
 				});
 
@@ -547,8 +547,9 @@ public class PageExperienceResourceTest
 		PageExperience activePageExperience1 =
 			testPostSitePageSpecificationPageExperience_addPageExperience(
 				PageExperiencesTestUtil.getPageExperience(
-					draftLayout.getExternalReferenceCode(), 100,
-					testGroup.getGroupId(), null));
+					draftLayout.getExternalReferenceCode(),
+					RandomTestUtil.randomInt(100, 199), testGroup.getGroupId(),
+					null));
 
 		Assert.assertEquals(
 			Integer.valueOf(1), activePageExperience1.getPriority());
@@ -556,8 +557,9 @@ public class PageExperienceResourceTest
 		PageExperience activePageExperience2 =
 			testPostSitePageSpecificationPageExperience_addPageExperience(
 				PageExperiencesTestUtil.getPageExperience(
-					draftLayout.getExternalReferenceCode(), 50,
-					testGroup.getGroupId(), null));
+					draftLayout.getExternalReferenceCode(),
+					RandomTestUtil.randomInt(50, 99), testGroup.getGroupId(),
+					null));
 
 		Assert.assertEquals(
 			Integer.valueOf(2), activePageExperience2.getPriority());
@@ -565,8 +567,9 @@ public class PageExperienceResourceTest
 		PageExperience inactivePageExperience =
 			testPostSitePageSpecificationPageExperience_addPageExperience(
 				PageExperiencesTestUtil.getPageExperience(
-					draftLayout.getExternalReferenceCode(), -100,
-					testGroup.getGroupId(), null));
+					draftLayout.getExternalReferenceCode(),
+					-RandomTestUtil.randomInt(100, 199), testGroup.getGroupId(),
+					null));
 
 		Assert.assertEquals(
 			Integer.valueOf(-1), inactivePageExperience.getPriority());
@@ -592,7 +595,7 @@ public class PageExperienceResourceTest
 		PageExperience pageExperience2 = _addPageExperience(2);
 		PageExperience pageExperience3 = _addPageExperience(3);
 
-		pageExperience1.setPriority(100);
+		pageExperience1.setPriority(RandomTestUtil.randomInt(100, 199));
 
 		PageExperience putSitePageExperience =
 			pageExperienceResource.putSitePageExperience(

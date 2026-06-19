@@ -11,25 +11,25 @@ const AGENT_DEFINITION_BASE_URI = '/o/ai-hub/agent-definitions';
 
 const AGENT_DEFINITION_BY_ERC_URI = `${AGENT_DEFINITION_BASE_URI}/by-external-reference-code/`;
 
-async function deleteAgentDefinitionToContentRetrievers(
+async function disassociateAgentDefinitionFromContentRetriever(
 	agentDefinitionERC: string,
 	contentRetrieverERC: string
 ) {
 	return fetch(
 		`${AGENT_DEFINITION_BY_ERC_URI}${agentDefinitionERC}` +
-			`/agentDefinitionsToContentRetrievers/${contentRetrieverERC}`,
-		{method: 'DELETE'}
+			`/agentDefinitionsToContentRetrievers/${contentRetrieverERC}/disassociate`,
+		{method: 'POST'}
 	);
 }
 
-async function deleteAgentDefinitionToGuardrails(
+async function disassociateAgentDefinitionFromGuardrail(
 	agentDefinitionERC: string,
 	guardrailERC: string
 ) {
 	return fetch(
 		`${AGENT_DEFINITION_BY_ERC_URI}${agentDefinitionERC}` +
-			`/aiHubAgentDefinitionsToAIHubGuardrails/${guardrailERC}`,
-		{method: 'DELETE'}
+			`/aiHubAgentDefinitionsToAIHubGuardrails/${guardrailERC}/disassociate`,
+		{method: 'POST'}
 	);
 }
 
@@ -109,8 +109,8 @@ async function putAgentDefinitionToGuardrails(
 }
 
 export {
-	deleteAgentDefinitionToContentRetrievers,
-	deleteAgentDefinitionToGuardrails,
+	disassociateAgentDefinitionFromContentRetriever,
+	disassociateAgentDefinitionFromGuardrail,
 	getAgentDefinition,
 	getAgentDefinitions,
 	postAgentDefinition,

@@ -20,7 +20,7 @@ import './ChatbotForm.scss';
 import {getAgentDefinitions} from '../agent_definition_form/services/AgentDefinitionService';
 import Toolbar from '../components/ToolBar';
 import {
-	deleteChatbotAgentDefinitionRelationship,
+	disassociateChatbotFromAgentDefinition,
 	getChatbot,
 	postChatbot,
 	putChatbot,
@@ -314,7 +314,7 @@ export default function ChatbotForm({
 
 			await Promise.all(
 				removedAgents.map((agent) =>
-					deleteChatbotAgentDefinitionRelationship(
+					disassociateChatbotFromAgentDefinition(
 						chatbotExternalReferenceCode,
 						agent.externalReferenceCode
 					)

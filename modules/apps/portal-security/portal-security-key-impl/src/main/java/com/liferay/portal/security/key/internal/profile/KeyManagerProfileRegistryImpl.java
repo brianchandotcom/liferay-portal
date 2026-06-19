@@ -11,7 +11,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapListene
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.security.key.internal.profile.configuration.KeyManagerGlobalConfiguration;
+import com.liferay.portal.security.key.internal.profile.configuration.KeyManagerConfiguration;
 import com.liferay.portal.security.key.spi.profile.KeyManagerProfile;
 import com.liferay.portal.security.key.spi.profile.KeyManagerProfileRegistry;
 
@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Modified;
  * @author Christopher Kian
  */
 @Component(
-	configurationPid = "com.liferay.portal.security.key.internal.profile.configuration.KeyManagerGlobalConfiguration",
+	configurationPid = "com.liferay.portal.security.key.internal.profile.configuration.KeyManagerConfiguration",
 	service = KeyManagerProfileRegistry.class
 )
 public class KeyManagerProfileRegistryImpl
@@ -37,19 +37,16 @@ public class KeyManagerProfileRegistryImpl
 
 	@Override
 	public KeyManagerProfile getActiveKeyManagerProfile() {
-		KeyManagerGlobalConfiguration keyManagerGlobalConfiguration =
-			_keyManagerGlobalConfiguration;
+		KeyManagerConfiguration keyManagerConfiguration =
+			_keyManagerConfiguration;
 		ServiceTrackerMap<String, KeyManagerProfile> serviceTrackerMap =
 			_serviceTrackerMap;
 
-		if ((keyManagerGlobalConfiguration == null) ||
-			(serviceTrackerMap == null)) {
-
+		if ((keyManagerConfiguration == null) || (serviceTrackerMap == null)) {
 			return null;
 		}
 
-		String activeProfileId =
-			keyManagerGlobalConfiguration.activeProfileId();
+		String activeProfileId = keyManagerConfiguration.activeProfileId();
 		KeyManagerProfile keyManagerProfile = null;
 
 		if (activeProfileId != null) {
@@ -68,8 +65,8 @@ public class KeyManagerProfileRegistryImpl
 	protected void activate(
 		BundleContext bundleContext, Map<String, Object> properties) {
 
-		_keyManagerGlobalConfiguration = ConfigurableUtil.createConfigurable(
-			KeyManagerGlobalConfiguration.class, properties);
+		_keyManagerConfiguration = ConfigurableUtil.createConfigurable(
+			KeyManagerConfiguration.class, properties);
 
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, KeyManagerProfile.class, "keymanager.profile.id",
@@ -109,7 +106,7 @@ public class KeyManagerProfileRegistryImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_keyManagerGlobalConfiguration = null;
+		_keyManagerConfiguration = null;
 
 		if (_serviceTrackerMap != null) {
 			_serviceTrackerMap.close();
@@ -120,8 +117,8 @@ public class KeyManagerProfileRegistryImpl
 
 	@Modified
 	protected void modified(Map<String, Object> properties) {
-		_keyManagerGlobalConfiguration = ConfigurableUtil.createConfigurable(
-			KeyManagerGlobalConfiguration.class, properties);
+		_keyManagerConfiguration = ConfigurableUtil.createConfigurable(
+			KeyManagerConfiguration.class, properties);
 
 		_init(getActiveKeyManagerProfile());
 	}
@@ -180,8 +177,7 @@ public class KeyManagerProfileRegistryImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		KeyManagerProfileRegistryImpl.class);
 
-	private volatile KeyManagerGlobalConfiguration
-		_keyManagerGlobalConfiguration;
+	private volatile KeyManagerConfiguration _keyManagerConfiguration;
 	private volatile String _lastBootstrappedProfileId;
 	private volatile ServiceTrackerMap<String, KeyManagerProfile>
 		_serviceTrackerMap;

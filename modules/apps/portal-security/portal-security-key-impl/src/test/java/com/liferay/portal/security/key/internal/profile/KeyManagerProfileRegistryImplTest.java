@@ -8,7 +8,7 @@ package com.liferay.portal.security.key.internal.profile;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.security.key.internal.profile.configuration.KeyManagerGlobalConfiguration;
+import com.liferay.portal.security.key.internal.profile.configuration.KeyManagerConfiguration;
 import com.liferay.portal.security.key.spi.profile.KeyManagerProfile;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -57,12 +57,11 @@ public class KeyManagerProfileRegistryImplTest {
 	}
 
 	private void _setActiveProfileId(String activeProfileId) {
-		KeyManagerGlobalConfiguration keyManagerGlobalConfiguration =
-			() -> activeProfileId;
+		KeyManagerConfiguration keyManagerConfiguration = () -> activeProfileId;
 
 		ReflectionTestUtil.setFieldValue(
-			_keyManagerProfileRegistryImpl, "_keyManagerGlobalConfiguration",
-			keyManagerGlobalConfiguration);
+			_keyManagerProfileRegistryImpl, "_keyManagerConfiguration",
+			keyManagerConfiguration);
 	}
 
 	private void _setServiceTrackerMap(

@@ -47,8 +47,8 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 import org.junit.Assert;
@@ -117,14 +117,8 @@ public class ObjectEntryModelDocumentContributorTest {
 				).build()
 			).build());
 
-		Document document = new DocumentImpl();
-
-		ModelDocumentContributor<ObjectEntry>
-			objectEntryModelDocumentContributor =
-				_getObjectEntryModelDocumentContributor(
-					modifiableSystemObjectDefinition);
-
-		objectEntryModelDocumentContributor.contribute(document, objectEntry);
+		Document document = _getDocument(
+			modifiableSystemObjectDefinition, objectEntry);
 
 		Field field = document.getField(Field.DISPLAY_DATE);
 
@@ -275,7 +269,7 @@ public class ObjectEntryModelDocumentContributorTest {
 			ObjectDefinitionTestUtil.publishObjectDefinition();
 
 		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
-			objectDefinition, new HashMap<String, Serializable>());
+			objectDefinition, Collections.emptyMap());
 
 		ObjectEntryFolder objectEntryFolder =
 			_objectEntryFolderLocalService.addObjectEntryFolder(

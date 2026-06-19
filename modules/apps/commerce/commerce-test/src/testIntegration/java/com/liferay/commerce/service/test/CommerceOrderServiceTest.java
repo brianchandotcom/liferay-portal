@@ -6,7 +6,11 @@
 package com.liferay.commerce.service.test;
 
 import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.model.AccountEntry;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.commerce.account.test.util.CommerceAccountTestUtil;
+import com.liferay.commerce.constants.CommerceOrderActionKeys;
+import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
 import com.liferay.commerce.model.CommerceOrder;
@@ -14,10 +18,21 @@ import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.test.util.CommerceTestUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.test.context.ContextUserReplace;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -61,6 +76,97 @@ public class CommerceOrderServiceTest {
 	}
 
 	@Test
+	public void testAddCommerceOrder() throws Exception {
+		Role role = RoleTestUtil.addRole(
+			RandomTestUtil.randomString(), RoleConstants.TYPE_REGULAR);
+		User user1 = UserTestUtil.addUser();
+
+		_roleLocalService.addUserRole(user1.getUserId(), role);
+
+		AccountEntry businessAccountEntry =
+			CommerceAccountTestUtil.addBusinessAccountEntry(
+				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+				null,
+				ServiceContextTestUtil.getServiceContext(
+					TestPropsValues.getGroupId()));
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user1, PermissionCheckerFactoryUtil.create(user1))) {
+
+			_commerceOrderService.addCommerceOrder(
+				_commerceChannel.getGroupId(),
+				businessAccountEntry.getAccountEntryId(),
+				_commerceCurrency.getCode(), 0);
+
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			_assertMessage(
+				CommerceOrderActionKeys.ADD_COMMERCE_ORDER,
+				exception.getMessage(), user1.getUserId());
+		}
+
+		RoleTestUtil.addResourcePermission(
+			role, CommerceOrderConstants.RESOURCE_NAME,
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(TestPropsValues.getCompanyId()),
+			CommerceOrderActionKeys.ADD_COMMERCE_ORDER);
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user1, PermissionCheckerFactoryUtil.create(user1))) {
+
+			_commerceOrderService.addCommerceOrder(
+				_commerceChannel.getGroupId(),
+				businessAccountEntry.getAccountEntryId(),
+				_commerceCurrency.getCode(), 0);
+		}
+
+		User user2 = UserTestUtil.addUser();
+
+		AccountEntry personAccountEntry =
+			CommerceAccountTestUtil.getPersonAccountEntry(user2.getUserId());
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user1, PermissionCheckerFactoryUtil.create(user1))) {
+
+			_commerceOrderService.addCommerceOrder(
+				_commerceChannel.getGroupId(),
+				personAccountEntry.getAccountEntryId(),
+				_commerceCurrency.getCode(), 0);
+
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			_assertMessage(
+				ActionKeys.UPDATE, exception.getMessage(), user1.getUserId());
+		}
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user2, PermissionCheckerFactoryUtil.create(user2))) {
+
+			_commerceOrderService.addCommerceOrder(
+				_commerceChannel.getGroupId(),
+				personAccountEntry.getAccountEntryId(),
+				_commerceCurrency.getCode(), 0);
+		}
+
+		RoleTestUtil.addResourcePermission(
+			role, CommerceOrderConstants.RESOURCE_NAME,
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(TestPropsValues.getCompanyId()),
+			CommerceOrderActionKeys.MANAGE_ALL_ACCOUNTS);
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user1, PermissionCheckerFactoryUtil.create(user1))) {
+
+			_commerceOrderService.addCommerceOrder(
+				_commerceChannel.getGroupId(),
+				personAccountEntry.getAccountEntryId(),
+				_commerceCurrency.getCode(), 0);
+		}
+	}
+
+	@Test
 	public void testDeleteCommerceOrder() throws Exception {
 		CommerceOrder commerceOrder =
 			_commerceOrderLocalService.addCommerceOrder(
@@ -68,14 +174,20 @@ public class CommerceOrderServiceTest {
 				AccountConstants.ACCOUNT_ENTRY_ID_GUEST,
 				_commerceCurrency.getCode(), 0);
 
-		UserTestUtil.setUser(UserTestUtil.addCompanyAdminUser(_company));
+		User user = UserTestUtil.addCompanyAdminUser(_company);
 
-		Assert.assertThrows(
-			PrincipalException.class,
-			() -> _commerceOrderService.deleteCommerceOrder(
-				commerceOrder.getCommerceOrderId()));
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user, PermissionCheckerFactoryUtil.create(user))) {
 
-		UserTestUtil.setUser(TestPropsValues.getUser());
+			_commerceOrderService.deleteCommerceOrder(
+				commerceOrder.getCommerceOrderId());
+
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			_assertMessage(
+				ActionKeys.DELETE, exception.getMessage(), user.getUserId());
+		}
 
 		_commerceOrderService.deleteCommerceOrder(
 			commerceOrder.getCommerceOrderId());
@@ -83,17 +195,31 @@ public class CommerceOrderServiceTest {
 
 	@Test
 	public void testGetCommerceOrder() throws Exception {
-		UserTestUtil.setUser(UserTestUtil.addCompanyAdminUser(_company));
+		User user = UserTestUtil.addCompanyAdminUser(_company);
 
-		Assert.assertThrows(
-			PrincipalException.class,
-			() -> _commerceOrderService.getCommerceOrder(
-				_commerceOrder.getCommerceOrderId()));
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user, PermissionCheckerFactoryUtil.create(user))) {
 
-		UserTestUtil.setUser(TestPropsValues.getUser());
+			_commerceOrderService.getCommerceOrder(
+				_commerceOrder.getCommerceOrderId());
+
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			_assertMessage(
+				ActionKeys.VIEW, exception.getMessage(), user.getUserId());
+		}
 
 		_commerceOrderService.getCommerceOrder(
 			_commerceOrder.getCommerceOrderId());
+	}
+
+	private void _assertMessage(String actionId, String message, long userId) {
+		Assert.assertTrue(
+			message.contains(
+				StringBundler.concat(
+					"User ", userId, " must have ", actionId,
+					" permission for")));
 	}
 
 	private static CommerceChannel _commerceChannel;
@@ -107,5 +233,8 @@ public class CommerceOrderServiceTest {
 
 	@Inject
 	private CommerceOrderService _commerceOrderService;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
 
 }

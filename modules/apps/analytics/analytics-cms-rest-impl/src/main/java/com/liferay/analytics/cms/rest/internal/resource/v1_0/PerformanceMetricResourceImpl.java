@@ -10,11 +10,19 @@ import com.liferay.analytics.cms.rest.internal.client.AnalyticsCloudClient;
 import com.liferay.analytics.cms.rest.internal.depot.entry.util.DepotEntryUtil;
 import com.liferay.analytics.cms.rest.resource.v1_0.PerformanceMetricResource;
 import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
+import com.liferay.petra.io.StreamUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.license.util.LicenseManagerUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import jakarta.ws.rs.BadRequestException;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.StreamingOutput;
+
+import java.io.InputStream;
+
+import java.time.LocalDate;
 
 import java.util.Arrays;
 
@@ -53,6 +61,40 @@ public class PerformanceMetricResourceImpl
 			_analyticsSettingsManager.getAnalyticsConfiguration(
 				contextCompany.getCompanyId()),
 			Arrays.asList(groupIds), metricType, _getPath(groupBy), rangeKey);
+	}
+
+	@Override
+	public Response getPerformanceMetricExport(
+			Long[] depotEntryIds, String groupBy, String metricType,
+			Integer rangeKey)
+		throws Exception {
+
+		LicenseManagerUtil.checkFreeTier();
+
+		_validateMetricType(metricType);
+
+		Long[] groupIds = DepotEntryUtil.getGroupIds(
+			DepotEntryUtil.getDepotEntries(
+				contextCompany.getCompanyId(), depotEntryIds));
+
+		AnalyticsCloudClient analyticsCloudClient = new AnalyticsCloudClient(
+			_http);
+
+		InputStream inputStream = analyticsCloudClient.getInputStream(
+			_analyticsSettingsManager.getAnalyticsConfiguration(
+				contextCompany.getCompanyId()),
+			null, Arrays.asList(groupIds), metricType,
+			_getPath(groupBy) + "/export", rangeKey, null);
+
+		return Response.ok(
+			(StreamingOutput)outputStream -> StreamUtil.transfer(
+				inputStream, outputStream)
+		).header(
+			"Content-Disposition",
+			StringBundler.concat(
+				"attachment; filename=performance-metric-",
+				StringUtil.toLowerCase(groupBy), "-", LocalDate.now(), ".csv")
+		).build();
 	}
 
 	private String _getPath(String groupBy) {

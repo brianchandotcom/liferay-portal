@@ -188,9 +188,21 @@ public class CETManagerImpl implements CETManager {
 	private List<CET> _getCETs(long companyId, String keywords, String type)
 		throws PortalException {
 
+		List<ClientExtensionEntry> clientExtensionEntries = null;
+
+		if (Validator.isNotNull(type)) {
+			clientExtensionEntries =
+				_clientExtensionEntryLocalService.getClientExtensionEntries(
+					companyId, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		}
+		else {
+			clientExtensionEntries =
+				_clientExtensionEntryLocalService.getClientExtensionEntries(
+					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		}
+
 		List<CET> cets = TransformUtil.transform(
-			_clientExtensionEntryLocalService.getClientExtensionEntries(
-				companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+			clientExtensionEntries,
 			clientExtensionEntry -> {
 				try {
 					CET cet = _getCET(clientExtensionEntry);

@@ -217,7 +217,10 @@ Filtering `Date` or `DateTime` fields via OData (`eq`, `ge`, `le`) consistently 
 Picklist values in API responses are objects:
 
 ```json
-{ "key": "DRAFT", "name": "Draft" }
+{
+	"key": "DRAFT",
+	"name": "Draft"
+}
 ```
 
 Always destructure before use: `const key = entry.status?.key || ''`. Rendering `entry.status` directly outputs `[object Object]`.
@@ -294,17 +297,22 @@ my-batch-oauth-server:
 
 ```json
 {
-  "configuration": {
-    "className": "com.liferay.object.admin.rest.dto.v1_0.ObjectFolder",
-    "parameters": { "createStrategy": "UPSERT", "updateStrategy": "UPDATE" }
-  },
-  "items": [
-    {
-      "name": "MyFolder",
-      "label": { "en_US": "My Custom Folder" },
-      "externalReferenceCode": "MY_FOLDER_ERC"
-    }
-  ]
+	"configuration": {
+		"className": "com.liferay.object.admin.rest.dto.v1_0.ObjectFolder",
+		"parameters": {
+			"createStrategy": "UPSERT",
+			"updateStrategy": "UPDATE"
+		}
+	},
+	"items": [
+		{
+			"externalReferenceCode": "MY_FOLDER_ERC",
+			"label": {
+				"en_US": "My Custom Folder"
+			},
+			"name": "MyFolder"
+		}
+	]
 }
 ```
 
@@ -312,31 +320,41 @@ my-batch-oauth-server:
 
 ```json
 {
-  "configuration": {
-    "className": "com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
-    "parameters": { "createStrategy": "UPSERT", "updateStrategy": "UPDATE" }
-  },
-  "items": [
-    {
-      "name": "MyObject",
-      "label": { "en_US": "My Object" },
-      "externalReferenceCode": "MY_OBJECT_ERC",
-      "objectFolderExternalReferenceCode": "MY_FOLDER_ERC",
-      "scope": "company",
-      "status": { "code": 0, "label": "approved" },
-      "enableCategorization": true,
-      "objectFields": [
-        {
-          "name": "myField",
-          "label": { "en_US": "My Field" },
-          "businessType": "Text",
-          "indexed": true,
-          "indexedAsKeyword": true,
-          "required": false
-        }
-      ]
-    }
-  ]
+	"configuration": {
+		"className": "com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
+		"parameters": {
+			"createStrategy": "UPSERT",
+			"updateStrategy": "UPDATE"
+		}
+	},
+	"items": [
+		{
+			"enableCategorization": true,
+			"externalReferenceCode": "MY_OBJECT_ERC",
+			"label": {
+				"en_US": "My Object"
+			},
+			"name": "MyObject",
+			"objectFields": [
+				{
+					"businessType": "Text",
+					"indexed": true,
+					"indexedAsKeyword": true,
+					"label": {
+						"en_US": "My Field"
+					},
+					"name": "myField",
+					"required": false
+				}
+			],
+			"objectFolderExternalReferenceCode": "MY_FOLDER_ERC",
+			"scope": "company",
+			"status": {
+				"code": 0,
+				"label": "approved"
+			}
+		}
+	]
 }
 ```
 
@@ -346,23 +364,25 @@ my-batch-oauth-server:
 
 ```json
 {
-  "configuration": {
-    "className": "com.liferay.object.rest.dto.v1_0.ObjectEntry",
-    "parameters": {
-      "taskItemDelegateName": "C_MyObject",
-      "createStrategy": "UPSERT"
-    }
-  },
-  "items": [
-    {
-      "externalReferenceCode": "ENTRY-001",
-      "assetCategoryIds": [12345],
-      "values": {
-        "myField": "value",
-        "timestamp": "2024-03-27T10:00:00Z"
-      }
-    }
-  ]
+	"configuration": {
+		"className": "com.liferay.object.rest.dto.v1_0.ObjectEntry",
+		"parameters": {
+			"createStrategy": "UPSERT",
+			"taskItemDelegateName": "C_MyObject"
+		}
+	},
+	"items": [
+		{
+			"assetCategoryIds": [
+				12345
+			],
+			"externalReferenceCode": "ENTRY-001",
+			"values": {
+				"myField": "value",
+				"timestamp": "2024-03-27T10:00:00Z"
+			}
+		}
+	]
 }
 ```
 

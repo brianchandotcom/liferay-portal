@@ -41,12 +41,14 @@ Create `site-initializer/layouts/<NN-page-name>/page.json`. The `NN` prefix cont
 
 ```json
 {
-  "friendlyURL": "/<page-url-slug>",
-  "name": "<Page Name>",
-  "name_i18n": {"en_US": "<Page Name>"},
-  "type": "Content",
-  "hidden": false,
-  "private": false
+	"friendlyURL": "/<page-url-slug>",
+	"hidden": false,
+	"name": "<Page Name>",
+	"name_i18n": {
+		"en_US": "<Page Name>"
+	},
+	"private": false,
+	"type": "Content"
 }
 ```
 
@@ -56,21 +58,21 @@ Compose the layout in `site-initializer/layouts/<NN-page-name>/page-definition.j
 
 ```json
 {
-  "pageElement": {
-    "pageElements": [
-      {
-        "definition": {
-          "fragment": {
-            "key": "<fragment-name>",
-            "siteKey": "[$GROUP_KEY$]"
-          }
-        },
-        "type": "Fragment"
-      }
-    ],
-    "type": "Root"
-  },
-  "version": "1.0"
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragment": {
+						"key": "<fragment-name>",
+						"siteKey": "[$GROUP_KEY$]"
+					}
+				},
+				"type": "Fragment"
+			}
+		],
+		"type": "Root"
+	},
+	"version": "1.0"
 }
 ```
 

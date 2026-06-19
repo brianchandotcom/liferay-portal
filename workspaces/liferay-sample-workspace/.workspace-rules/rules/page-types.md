@@ -45,11 +45,12 @@ Minimal `pageDefinition` for an empty content page:
 
 ```json
 {
-  "pageElement": {
-    "pageElements": [],
-    "type": "Root"
-  },
-  "version": "1.0"
+	"pageElement": {
+		"pageElements": [
+		],
+		"type": "Root"
+	},
+	"version": "1.0"
 }
 ```
 

@@ -167,8 +167,8 @@ When creating user accounts through the Headless Admin User API, explicitly clea
 
 ```json
 {
-  "agreedToTermsOfUse": true,
-  "passwordReset": false
+	"agreedToTermsOfUse": true,
+	"passwordReset": false
 }
 ```
 

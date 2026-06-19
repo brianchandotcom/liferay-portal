@@ -739,10 +739,10 @@ public class AnalyticsCloudClient {
 		JsonNode pageJsonNode = jsonNode.get("page");
 
 		if (pageJsonNode != null) {
-			JsonNode totalPagesJsonNode = pageJsonNode.get("totalPages");
+			JsonNode lastPageJsonNode = pageJsonNode.get("totalPages");
 
-			if (totalPagesJsonNode != null) {
-				performanceTopAsset.setLastPage(totalPagesJsonNode::asLong);
+			if (lastPageJsonNode != null) {
+				performanceTopAsset.setLastPage(lastPageJsonNode::asLong);
 			}
 
 			JsonNode pageNumberJsonNode = pageJsonNode.get("number");
@@ -757,11 +757,10 @@ public class AnalyticsCloudClient {
 				performanceTopAsset.setPageSize(pageSizeJsonNode::asLong);
 			}
 
-			JsonNode totalElementsJsonNode = pageJsonNode.get("totalElements");
+			JsonNode totalCountJsonNode = pageJsonNode.get("totalElements");
 
-			if (totalElementsJsonNode != null) {
-				performanceTopAsset.setTotalCount(
-					totalElementsJsonNode::asLong);
+			if (totalCountJsonNode != null) {
+				performanceTopAsset.setTotalCount(totalCountJsonNode::asLong);
 			}
 		}
 
@@ -805,16 +804,16 @@ public class AnalyticsCloudClient {
 		performanceTopAssetItem.setImpressions(
 			() -> _getMetricValue(jsonNode, "impressionsMetric"));
 
-		JsonNode assetTypeJsonNode = jsonNode.get("assetType");
+		JsonNode mimeTypeJsonNode = jsonNode.get("assetType");
 
-		if (assetTypeJsonNode != null) {
-			performanceTopAssetItem.setMimeType(assetTypeJsonNode::asText);
+		if (mimeTypeJsonNode != null) {
+			performanceTopAssetItem.setMimeType(mimeTypeJsonNode::asText);
 		}
 
-		JsonNode assetTitleJsonNode = jsonNode.get("assetTitle");
+		JsonNode titleJsonNode = jsonNode.get("assetTitle");
 
-		if (assetTitleJsonNode != null) {
-			performanceTopAssetItem.setTitle(assetTitleJsonNode::asText);
+		if (titleJsonNode != null) {
+			performanceTopAssetItem.setTitle(titleJsonNode::asText);
 		}
 
 		JsonNode engagementMetricJsonNode = jsonNode.get("engagementMetric");

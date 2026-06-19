@@ -1291,6 +1291,14 @@ public class ObjectEntryRelatedObjectsResourceTest {
 	}
 
 	@Test
+	public void testPostByExternalReferenceCodeCurrentExternalReferenceCodeObjectRelationshipNameRelatedExternalReferenceCodeDisassociate()
+		throws Exception {
+
+		_testDisassociateRelatedModels(
+			_objectDefinition1, _objectDefinition2, null);
+	}
+
+	@Test
 	public void testPostCustomObjectEntryWithInvalidNestedSystemObjectEntries()
 		throws Exception {
 
@@ -1432,6 +1440,41 @@ public class ObjectEntryRelatedObjectsResourceTest {
 		Assert.assertEquals(
 			objectFieldValue2,
 			relatedObjectEntryJSONObject.get(_OBJECT_FIELD_NAME_2));
+	}
+
+	@Test
+	public void testPostScopeScopeKeyByExternalReferenceCodeCurrentExternalReferenceCodeObjectRelationshipNameRelatedExternalReferenceCodeDisassociate()
+		throws Exception {
+
+		ObjectDefinition objectDefinition1 =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				List.of(
+					new TextObjectFieldBuilder(
+					).labelMap(
+						RandomTestUtil.randomLocaleStringMap()
+					).name(
+						_OBJECT_FIELD_NAME_1
+					).build()),
+				ObjectDefinitionConstants.SCOPE_SITE);
+
+		_objectDefinitions.add(objectDefinition1);
+
+		ObjectDefinition objectDefinition2 =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				List.of(
+					new TextObjectFieldBuilder(
+					).labelMap(
+						RandomTestUtil.randomLocaleStringMap()
+					).name(
+						_OBJECT_FIELD_NAME_1
+					).build()),
+				ObjectDefinitionConstants.SCOPE_SITE);
+
+		_objectDefinitions.add(objectDefinition2);
+
+		_testDisassociateRelatedModels(
+			objectDefinition1, objectDefinition2,
+			String.valueOf(TestPropsValues.getGroupId()));
 	}
 
 	@Test
@@ -2305,6 +2348,77 @@ public class ObjectEntryRelatedObjectsResourceTest {
 		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
 
 		Assert.assertEquals(1, itemsJSONArray.length());
+	}
+
+	private void _testDisassociateRelatedModels(
+			ObjectDefinition objectDefinition1,
+			ObjectDefinition objectDefinition2, String scopeKey)
+		throws Exception {
+
+		ObjectEntry objectEntry1 = ObjectEntryTestUtil.addObjectEntry(
+			objectDefinition1, _OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1);
+		ObjectEntry objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
+			objectDefinition2, _OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2);
+		ObjectEntry objectEntry3 = ObjectEntryTestUtil.addObjectEntry(
+			objectDefinition2, _OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2);
+
+		ObjectRelationship objectRelationship = _addObjectRelationship(
+			objectDefinition1, objectDefinition2,
+			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+
+		ObjectRelationshipTestUtil.relateObjectEntries(
+			objectEntry1.getPrimaryKey(), objectEntry2.getPrimaryKey(),
+			objectRelationship, TestPropsValues.getUserId());
+		ObjectRelationshipTestUtil.relateObjectEntries(
+			objectEntry1.getPrimaryKey(), objectEntry3.getPrimaryKey(),
+			objectRelationship, TestPropsValues.getUserId());
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			null,
+			_getEndpoint(
+				objectRelationship.getName(), objectDefinition1,
+				objectEntry1.getObjectEntryId()),
+			Http.Method.GET);
+
+		JSONArray jsonArray = jsonObject.getJSONArray("items");
+
+		Assert.assertEquals(jsonArray.toString(), 2, jsonArray.length());
+
+		_assertEquals(objectEntry2, jsonArray.getJSONObject(0));
+		_assertEquals(objectEntry3, jsonArray.getJSONObject(1));
+
+		String endpoint = StringBundler.concat(
+			"/by-external-reference-code/",
+			objectEntry1.getExternalReferenceCode(), StringPool.SLASH,
+			objectRelationship.getName(), StringPool.SLASH,
+			objectEntry2.getExternalReferenceCode(), "/disassociate");
+
+		if (scopeKey == null) {
+			Assert.assertEquals(
+				204,
+				HTTPTestUtil.invokeToHttpCode(
+					null, objectDefinition1.getRESTContextPath() + endpoint,
+					Http.Method.POST));
+		}
+		else {
+			Assert.assertEquals(
+				204,
+				HTTPTestUtil.invokeToHttpCode(
+					null,
+					StringBundler.concat(
+						objectDefinition1.getRESTContextPath(), "/scopes/",
+						scopeKey, endpoint),
+					Http.Method.POST));
+		}
+
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
+			null,
+			_getEndpoint(
+				objectRelationship.getName(), objectDefinition1,
+				objectEntry1.getObjectEntryId()),
+			Http.Method.GET);
+
+		_assertEquals(objectEntry3, jsonObject.getJSONArray("items"));
 	}
 
 	private void _testPostCustomObjectEntryWithInvalidNestedSystemObjectEntries(

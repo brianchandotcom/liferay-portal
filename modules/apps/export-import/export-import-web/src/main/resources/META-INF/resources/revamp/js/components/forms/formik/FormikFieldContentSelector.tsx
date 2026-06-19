@@ -9,7 +9,7 @@ import React, {useEffect} from 'react';
 import {PageTreeModalConfiguration} from '../../../pages/export/components/PageTreeModal';
 import {ExportImportProcess} from '../../../types/exportImportProcess';
 import {PreviewPortletDataHandlerSection} from '../../../types/portletDataHandler';
-import {getInitialContentSelection} from '../../../utils/contentSelection';
+import {getFullDataSelection} from '../../../utils/contentSelection';
 import ContentSelector, {
 	ContentSelection,
 } from '../content_selector/ContentSelector';
@@ -43,7 +43,7 @@ export function FormikFieldContentSelector({
 		!!sections.length && field.value === undefined && !meta.touched;
 
 	const seededContentSelection = shouldSeed
-		? getInitialContentSelection(sections, {
+		? getFullDataSelection(sections, {
 				commentsAndRatingsEnabled,
 				lookAndFeelEnabled,
 				showDeletions,

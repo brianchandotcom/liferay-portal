@@ -68,7 +68,7 @@ export function isSelected(
 	);
 }
 
-export function getInitialSelection(
+export function getHandlerSelection(
 	entry: PreviewPortletDataHandlerControl
 ): HandlerSelection {
 	if (entry.name === LAYOUT_SET_LAYOUTS_PORTLET_DATA_KEY) {
@@ -83,14 +83,14 @@ export function getInitialSelection(
 		return true;
 	}
 
-	return getInitialSelections(entry.previewPortletDataHandlerControls);
+	return getHandlerSelections(entry.previewPortletDataHandlerControls);
 }
 
-export function getInitialSelections(
+export function getHandlerSelections(
 	controls: PreviewPortletDataHandlerControl[]
 ): Record<string, HandlerSelection> {
 	return Object.fromEntries(
-		controls.map((control) => [control.name, getInitialSelection(control)])
+		controls.map((control) => [control.name, getHandlerSelection(control)])
 	);
 }
 
@@ -139,14 +139,14 @@ export function getSectionPreviewPortletDataHandlers(
 	];
 }
 
-export function getInitialSectionSelection(
+export function getSectionSelection(
 	section: PreviewPortletDataHandlerSection,
 	{
 		commentsAndRatingsEnabled = false,
 		lookAndFeelEnabled = false,
 	}: {commentsAndRatingsEnabled?: boolean; lookAndFeelEnabled?: boolean} = {}
 ): Record<string, HandlerSelection> {
-	const selection = getInitialSelections(
+	const selection = getHandlerSelections(
 		getSectionPreviewPortletDataHandlers(section, {lookAndFeelEnabled})
 	);
 
@@ -157,7 +157,7 @@ export function getInitialSectionSelection(
 	return selection;
 }
 
-export function getInitialContentSelection(
+export function getFullDataSelection(
 	sections: PreviewPortletDataHandlerSection[],
 	{
 		commentsAndRatingsEnabled = false,
@@ -173,7 +173,7 @@ export function getInitialContentSelection(
 		getVisibleSections(sections, {lookAndFeelEnabled, showDeletions}).map(
 			(section) => [
 				section.name,
-				getInitialSectionSelection(section, {
+				getSectionSelection(section, {
 					commentsAndRatingsEnabled,
 					lookAndFeelEnabled,
 				}),

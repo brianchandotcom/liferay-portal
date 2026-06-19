@@ -7,10 +7,12 @@ package com.liferay.oauth2.provider.rest.internal.endpoint.dynamic.registration;
 
 import com.liferay.oauth2.provider.rest.internal.endpoint.liferay.LiferayOAuthDataProvider;
 import com.liferay.petra.concurrent.DCLSingleton;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.Portal;
 
 import java.util.Map;
 
@@ -68,6 +70,11 @@ public class LiferayDynamicRegistrationServiceRegistrator {
 									setClientProvider(
 										_liferayOAuthDataProvider);
 								liferayDynamicRegistrationService.
+									setConfigurationProvider(
+										_configurationProvider);
+								liferayDynamicRegistrationService.setPortal(
+									_portal);
+								liferayDynamicRegistrationService.
 									setSupportRegistrationAccessTokens(true);
 
 								return liferayDynamicRegistrationService;
@@ -101,11 +108,17 @@ public class LiferayDynamicRegistrationServiceRegistrator {
 		}
 	}
 
+	@Reference
+	private ConfigurationProvider _configurationProvider;
+
 	private final DCLSingleton<LiferayDynamicRegistrationService>
 		_liferayDynamicRegistrationServiceDCLSingleton = new DCLSingleton<>();
 
 	@Reference
 	private LiferayOAuthDataProvider _liferayOAuthDataProvider;
+
+	@Reference
+	private Portal _portal;
 
 	private volatile ServiceRegistration<Object> _serviceRegistration;
 

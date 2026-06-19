@@ -47,8 +47,8 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 import org.junit.Assert;
@@ -117,14 +117,8 @@ public class ObjectEntryModelDocumentContributorTest {
 				).build()
 			).build());
 
-		Document document = new DocumentImpl();
-
-		ModelDocumentContributor<ObjectEntry>
-			objectEntryModelDocumentContributor =
-				_getObjectEntryModelDocumentContributor(
-					modifiableSystemObjectDefinition);
-
-		objectEntryModelDocumentContributor.contribute(document, objectEntry);
+		Document document = _getDocument(
+			modifiableSystemObjectDefinition, objectEntry);
 
 		Field field = document.getField(Field.DISPLAY_DATE);
 
@@ -186,10 +180,6 @@ public class ObjectEntryModelDocumentContributorTest {
 		objectDefinition = _objectDefinitionLocalService.getObjectDefinition(
 			objectDefinition.getObjectDefinitionId());
 
-		ModelDocumentContributor<ObjectEntry>
-			objectEntryModelDocumentContributor =
-				_getObjectEntryModelDocumentContributor(objectDefinition);
-
 		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
 		long roleClassNameId = _classNameLocalService.getClassNameId(
@@ -207,10 +197,7 @@ public class ObjectEntryModelDocumentContributorTest {
 				).build()
 			).build());
 
-		Document roleDocument = new DocumentImpl();
-
-		objectEntryModelDocumentContributor.contribute(
-			roleDocument, roleObjectEntry);
+		Document roleDocument = _getDocument(objectDefinition, roleObjectEntry);
 
 		Field roleField = roleDocument.getField("objectEntryContent");
 
@@ -245,10 +232,7 @@ public class ObjectEntryModelDocumentContributorTest {
 				).build()
 			).build());
 
-		Document userDocument = new DocumentImpl();
-
-		objectEntryModelDocumentContributor.contribute(
-			userDocument, userObjectEntry);
+		Document userDocument = _getDocument(objectDefinition, userObjectEntry);
 
 		Field userField = userDocument.getField("objectEntryContent");
 
@@ -275,7 +259,7 @@ public class ObjectEntryModelDocumentContributorTest {
 			ObjectDefinitionTestUtil.publishObjectDefinition();
 
 		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
-			objectDefinition, new HashMap<String, Serializable>());
+			objectDefinition, Collections.emptyMap());
 
 		ObjectEntryFolder objectEntryFolder =
 			_objectEntryFolderLocalService.addObjectEntryFolder(

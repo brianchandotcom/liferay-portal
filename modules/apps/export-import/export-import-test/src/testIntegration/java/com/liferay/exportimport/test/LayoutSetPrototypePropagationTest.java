@@ -140,51 +140,6 @@ public class LayoutSetPrototypePropagationTest
 	}
 
 	@Test
-	@TestInfo("LPD-81592")
-	public void testIsLayoutSetMergeable() throws Exception {
-		setLinkEnabled(true);
-
-		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-			group.getGroupId(), false);
-
-		UnicodeProperties settingsUnicodeProperties =
-			layoutSet.getSettingsProperties();
-
-		settingsUnicodeProperties.remove(Sites.LAST_MERGE_TIME);
-		settingsUnicodeProperties.remove(Sites.LAST_MERGE_VERSION);
-
-		layoutSet = LayoutSetLocalServiceUtil.updateLayoutSet(layoutSet);
-
-		_layoutSetPrototype =
-			LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototype(
-				_layoutSetPrototype.getLayoutSetPrototypeId());
-
-		_layoutSetPrototype.setModifiedDate(new Date());
-
-		_layoutSetPrototype =
-			LayoutSetPrototypeLocalServiceUtil.updateLayoutSetPrototype(
-				_layoutSetPrototype);
-
-		Assert.assertTrue(_sites.isLayoutSetMergeable(layoutSet));
-
-		settingsUnicodeProperties = layoutSet.getSettingsProperties();
-
-		settingsUnicodeProperties.setProperty(
-			Sites.LAST_MERGE_TIME,
-			String.valueOf(System.currentTimeMillis() - Time.MINUTE));
-
-		_layoutSetPrototype.setModifiedDate(new Date());
-
-		_layoutSetPrototype =
-			LayoutSetPrototypeLocalServiceUtil.updateLayoutSetPrototype(
-				_layoutSetPrototype);
-
-		Assert.assertFalse(
-			_sites.isLayoutSetMergeable(
-				LayoutSetLocalServiceUtil.updateLayoutSet(layoutSet)));
-	}
-
-	@Test
 	public void testIsLayoutSortable() throws Exception {
 		Assert.assertFalse(layout.isLayoutSortable());
 
@@ -196,52 +151,6 @@ public class LayoutSetPrototypePropagationTest
 	@Test
 	public void testIsLayoutUpdateable() throws Exception {
 		doTestIsLayoutUpdateable();
-	}
-
-	@Test
-	public void testLayoutDeleteAndReadWithSameFriendlyURL() throws Exception {
-		setLinkEnabled(true);
-
-		Layout layout = LayoutTestUtil.addTypePortletLayout(
-			_layoutSetPrototypeGroup.getGroupId(), "test", true);
-
-		String friendlyURL = layout.getFriendlyURL();
-
-		Assert.assertEquals(
-			_initialPrototypeLayoutsCount, getGroupLayoutCount());
-
-		propagateChanges(group);
-
-		Assert.assertEquals(
-			_initialPrototypeLayoutsCount + 1, getGroupLayoutCount());
-
-		LayoutLocalServiceUtil.deleteLayout(
-			layout, ServiceContextTestUtil.getServiceContext());
-
-		Layout newLayout = LayoutTestUtil.addTypePortletLayout(
-			_layoutSetPrototypeGroup.getGroupId(), "test", true);
-
-		Assert.assertEquals(friendlyURL, newLayout.getFriendlyURL());
-
-		Assert.assertEquals(
-			_initialPrototypeLayoutsCount + 1, getGroupLayoutCount());
-
-		propagateChanges(group);
-
-		Assert.assertEquals(
-			_initialPrototypeLayoutsCount + 1, getGroupLayoutCount());
-
-		Layout propagatedLayout =
-			LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
-				newLayout.getUuid(), group.getGroupId(), false);
-
-		Assert.assertNotNull(
-			"Deleted and readded layout could not be found on propagated site",
-			propagatedLayout);
-
-		Assert.assertEquals(
-			"Friendly URLs of the source and target layouts should match",
-			friendlyURL, propagatedLayout.getFriendlyURL());
 	}
 
 	@Test

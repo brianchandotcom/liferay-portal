@@ -9,13 +9,16 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.model.ClientExtensionEntryRel;
 import com.liferay.client.extension.service.ClientExtensionEntryRelLocalService;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.layout.set.model.adapter.StagedLayoutSet;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.StagedModel;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -29,8 +32,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -44,6 +49,51 @@ public class ClientExtensionEntryRelStagedModelDataHandlerTest
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Test
+	@TestInfo("LPD-95403")
+	public void testImportKeepsClientExtensionEntryRelMissingFromSourceGroup()
+		throws Exception {
+
+		LayoutSet layoutSet = stagingGroup.getPublicLayoutSet();
+
+		ClientExtensionEntryRel clientExtensionEntryRel =
+			_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
+				TestPropsValues.getUserId(), stagingGroup.getGroupId(),
+				_portal.getClassNameId(LayoutSet.class),
+				layoutSet.getLayoutSetId(), RandomTestUtil.randomString(),
+				ClientExtensionEntryConstants.TYPE_THEME_FAVICON,
+				StringPool.BLANK,
+				ServiceContextTestUtil.getServiceContext(
+					stagingGroup.getGroupId()));
+
+		StagedLayoutSet stagedLayoutSet = ModelAdapterUtil.adapt(
+			layoutSet, LayoutSet.class, StagedLayoutSet.class);
+
+		initExport();
+
+		StagedModelDataHandlerUtil.exportStagedModel(
+			portletDataContext, stagedLayoutSet);
+
+		_clientExtensionEntryRelLocalService.deleteClientExtensionEntryRel(
+			clientExtensionEntryRel);
+
+		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, readExportedStagedModel(stagedLayoutSet));
+		}
+
+		LayoutSet liveLayoutSet = liveGroup.getPublicLayoutSet();
+
+		List<ClientExtensionEntryRel> clientExtensionEntryRels =
+			_clientExtensionEntryRelLocalService.getClientExtensionEntryRels(
+				_portal.getClassNameId(LayoutSet.class),
+				liveLayoutSet.getLayoutSetId());
+
+		Assert.assertEquals(
+			clientExtensionEntryRels.toString(), 1,
+			clientExtensionEntryRels.size());
+	}
 
 	@Override
 	protected Map<String, List<StagedModel>> addDependentStagedModelsMap(

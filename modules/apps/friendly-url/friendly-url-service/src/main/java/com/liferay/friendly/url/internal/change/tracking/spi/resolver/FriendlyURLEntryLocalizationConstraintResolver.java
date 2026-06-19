@@ -5,10 +5,13 @@
 
 package com.liferay.friendly.url.internal.change.tracking.spi.resolver;
 
+import com.liferay.change.tracking.configuration.CTSettingsConfiguration;
 import com.liferay.change.tracking.spi.resolver.ConstraintResolver;
 import com.liferay.change.tracking.spi.resolver.context.ConstraintResolverContext;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
+import com.liferay.layout.friendly.url.LayoutFriendlyURLEntryHelper;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
@@ -37,7 +40,12 @@ public class FriendlyURLEntryLocalizationConstraintResolver
 
 	@Override
 	public String getResolutionDescriptionKey() {
-		return "duplicate-friendly-url-entry-localization-was-renamed";
+		if (_resolved) {
+			return "duplicate-friendly-url-entry-localization-was-renamed";
+		}
+
+		return "duplicate-friendly-url-entry-localization-was-not-" +
+			"automatically-resolved";
 	}
 
 	@Override
@@ -61,6 +69,32 @@ public class FriendlyURLEntryLocalizationConstraintResolver
 		FriendlyURLEntryLocalization friendlyURLEntryLocalization =
 			constraintResolverContext.getSourceCTModel();
 
+		CTSettingsConfiguration ctSettingsConfiguration =
+			_configurationProvider.getCompanyConfiguration(
+				CTSettingsConfiguration.class,
+				friendlyURLEntryLocalization.getCompanyId());
+
+		if (!ctSettingsConfiguration.
+				automaticFriendlyURLConflictResolutionEnabled()) {
+
+			_resolved = false;
+
+			return;
+		}
+
+		if ((friendlyURLEntryLocalization.getClassNameId() ==
+				_layoutFriendlyURLEntryHelper.getClassNameId(false)) ||
+			(friendlyURLEntryLocalization.getClassNameId() ==
+				_layoutFriendlyURLEntryHelper.getClassNameId(true))) {
+
+			_friendlyURLEntryLocalService.deleteFriendlyURLLocalizationEntry(
+				friendlyURLEntryLocalization);
+
+			_resolved = true;
+
+			return;
+		}
+
 		String uniqueUrlTitle = constraintResolverContext.getInTarget(
 			() -> _friendlyURLEntryLocalService.getUniqueUrlTitle(
 				friendlyURLEntryLocalization.getGroupId(),
@@ -74,9 +108,19 @@ public class FriendlyURLEntryLocalizationConstraintResolver
 
 		_friendlyURLEntryLocalService.updateFriendlyURLLocalization(
 			friendlyURLEntryLocalization);
+
+		_resolved = true;
 	}
 
 	@Reference
+	private ConfigurationProvider _configurationProvider;
+
+	@Reference
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
+
+	@Reference
+	private LayoutFriendlyURLEntryHelper _layoutFriendlyURLEntryHelper;
+
+	private boolean _resolved;
 
 }

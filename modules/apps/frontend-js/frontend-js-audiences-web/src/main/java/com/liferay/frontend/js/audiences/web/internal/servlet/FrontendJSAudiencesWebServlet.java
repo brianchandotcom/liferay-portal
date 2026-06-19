@@ -9,6 +9,7 @@ import com.liferay.frontend.js.audiences.AudiencesDefinitionProvider;
 import com.liferay.frontend.js.audiences.ElementVariationsProvider;
 import com.liferay.frontend.js.audiences.web.internal.util.BootstrapJavaScriptUtil;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.frontend.hashed.files.HashedFilesUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -96,11 +97,11 @@ public class FrontendJSAudiencesWebServlet extends HttpServlet {
 			return;
 		}
 
-		KeyValuePair keyValuePair =
+		KeyValuePair audiencesDefinition =
 			_audiencesDefinitionProvider.getAudiencesDefinition(
 				_portal.getCompanyId(httpServletRequest));
 
-		if (keyValuePair == null) {
+		if (audiencesDefinition == null) {
 			httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
 
 			return;
@@ -108,9 +109,10 @@ public class FrontendJSAudiencesWebServlet extends HttpServlet {
 
 		String requestHash = HashedFilesUtil.getHash(parts[1]);
 
-		if (!Objects.equals(keyValuePair.getKey(), requestHash)) {
+		if (!Objects.equals(audiencesDefinition.getKey(), requestHash)) {
 			_sendRedirect(
-				httpServletRequest, httpServletResponse, keyValuePair.getKey());
+				httpServletRequest, httpServletResponse,
+				audiencesDefinition.getKey());
 
 			return;
 		}
@@ -121,7 +123,7 @@ public class FrontendJSAudiencesWebServlet extends HttpServlet {
 
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
-		printWriter.print(keyValuePair.getValue());
+		printWriter.print(audiencesDefinition.getValue());
 	}
 
 	private void _sendBootstrapJavaScript(
@@ -145,12 +147,6 @@ public class FrontendJSAudiencesWebServlet extends HttpServlet {
 			return;
 		}
 
-		httpServletResponse.setContentType("application/javascript");
-		httpServletResponse.setHeader(
-			HttpHeaders.CACHE_CONTROL, "immutable, max-age=31536000, public");
-
-		PrintWriter printWriter = httpServletResponse.getWriter();
-
 		Long plid = _parsePlid(httpServletRequest.getParameter("plid"));
 
 		if (plid == null) {
@@ -158,6 +154,12 @@ public class FrontendJSAudiencesWebServlet extends HttpServlet {
 
 			return;
 		}
+
+		httpServletResponse.setContentType("application/javascript");
+		httpServletResponse.setHeader(
+			HttpHeaders.CACHE_CONTROL, "immutable, max-age=31536000, public");
+
+		PrintWriter printWriter = httpServletResponse.getWriter();
 
 		printWriter.print(
 			BootstrapJavaScriptUtil.getJavaScript(
@@ -187,10 +189,10 @@ public class FrontendJSAudiencesWebServlet extends HttpServlet {
 			return;
 		}
 
-		KeyValuePair keyValuePair =
+		KeyValuePair elementVariations =
 			_elementVariationsProvider.getElementVariations(plid);
 
-		if (keyValuePair == null) {
+		if (elementVariations == null) {
 			httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
 
 			return;
@@ -198,9 +200,10 @@ public class FrontendJSAudiencesWebServlet extends HttpServlet {
 
 		String requestHash = HashedFilesUtil.getHash(parts[2]);
 
-		if (!Objects.equals(keyValuePair.getKey(), requestHash)) {
+		if (!Objects.equals(elementVariations.getKey(), requestHash)) {
 			_sendRedirect(
-				httpServletRequest, httpServletResponse, keyValuePair.getKey());
+				httpServletRequest, httpServletResponse,
+				elementVariations.getKey());
 
 			return;
 		}
@@ -211,7 +214,7 @@ public class FrontendJSAudiencesWebServlet extends HttpServlet {
 
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
-		printWriter.print(keyValuePair.getValue());
+		printWriter.print(elementVariations.getValue());
 	}
 
 	private void _sendRedirect(
@@ -219,20 +222,20 @@ public class FrontendJSAudiencesWebServlet extends HttpServlet {
 			HttpServletResponse httpServletResponse, String hash)
 		throws IOException {
 
-		StringBuilder url = new StringBuilder();
+		StringBundler sb = new StringBundler(3);
 
-		url.append(
+		sb.append(
 			HashedFilesUtil.replaceHash(
 				httpServletRequest.getRequestURI(), hash));
 
 		String queryString = httpServletRequest.getQueryString();
 
 		if (!Validator.isBlank(queryString)) {
-			url.append(StringPool.QUESTION);
-			url.append(queryString);
+			sb.append(StringPool.QUESTION);
+			sb.append(queryString);
 		}
 
-		httpServletResponse.sendRedirect(url.toString());
+		httpServletResponse.sendRedirect(sb.toString());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

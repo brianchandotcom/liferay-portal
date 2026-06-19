@@ -9,6 +9,9 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.io.IOException;
+import java.io.InvalidObjectException;
+import java.io.ObjectInputStream;
 import java.io.Serializable;
 
 /**
@@ -103,6 +106,31 @@ public class KeyReference implements Serializable {
 
 		CRYPTO, SECRET
 
+	}
+
+	private void readObject(ObjectInputStream objectInputStream)
+		throws ClassNotFoundException, IOException {
+
+		objectInputStream.defaultReadObject();
+
+		if (Validator.isNull(_identifier)) {
+			throw new InvalidObjectException("Identifier is null");
+		}
+
+		if (Validator.isNull(_providerId)) {
+			throw new InvalidObjectException("Provider ID is null");
+		}
+
+		if ((_providerId.indexOf(CharPool.CLOSE_CURLY_BRACE) >= 0) ||
+			(_providerId.indexOf(CharPool.COLON) >= 0)) {
+
+			throw new InvalidObjectException(
+				"Provider ID must not contain colons or a closing curly brace");
+		}
+
+		if (_type == null) {
+			throw new InvalidObjectException("Type is null");
+		}
 	}
 
 	private static final long serialVersionUID = 1L;

@@ -11,8 +11,6 @@ package com.liferay.portal.security.key.spi.profile;
  */
 public interface KeyManagerProfile {
 
-	public void bootstrap() throws Exception;
-
 	public String getCompanyDEKProviderId();
 
 	public String getCompanyKEKProviderId();
@@ -26,5 +24,7 @@ public interface KeyManagerProfile {
 	public String getSystemKEKProviderId();
 
 	public String getSystemSecretProviderId();
+
+	public void initialize() throws Exception;
 
 }

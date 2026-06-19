@@ -1,3 +1,4 @@
+import * as API from 'shared/api';
 import * as data from 'test/data';
 import React from 'react';
 import SegmentGrowthWithList, {
@@ -42,6 +43,41 @@ describe('SegmentGrowthWithList', () => {
 		await waitForLoadingToBeRemoved(container);
 
 		expect(screen.getByText('Known Members')).toBeInTheDocument();
+	});
+
+	it('requests only known members when the segment excludes anonymous users', async () => {
+		const {container} = render(
+			<MemoryRouter
+				initialEntries={[
+					'/workspace/23/123123/contacts/segments/321321/membership'
+				]}
+			>
+				<Route path={Routes.CONTACTS_SEGMENT_MEMBERSHIP}>
+					<SegmentGrowthWithList
+						channelId='123'
+						data={[
+							{
+								added: 1,
+								modifiedDate: data.getTimestamp(),
+								removed: 3
+							}
+						]}
+						groupId='23'
+						id='3'
+						includeAnonymousUsers={false}
+						onPointSelect={jest.fn()}
+					/>
+				</Route>
+			</MemoryRouter>
+		);
+
+		jest.runAllTimers();
+
+		await waitForLoadingToBeRemoved(container);
+
+		expect(API.individuals.search).toHaveBeenCalledWith(
+			expect.objectContaining({profileTypes: ['KNOWN']})
+		);
 	});
 });
 

@@ -144,7 +144,7 @@ public class PageExperienceResourceTest
 		postPageExperience.setName_i18n(
 			Collections.singletonMap("en-US", RandomTestUtil.randomString()));
 
-		PageExperience pathPageExperience =
+		PageExperience patchSitePageExperience =
 			pageExperienceResource.patchSitePageExperience(
 				testGroup.getExternalReferenceCode(),
 				postPageExperience.getExternalReferenceCode(),
@@ -154,8 +154,8 @@ public class PageExperienceResourceTest
 					}
 				});
 
-		assertEquals(postPageExperience, pathPageExperience);
-		assertValid(pathPageExperience);
+		assertEquals(postPageExperience, patchSitePageExperience);
+		assertValid(patchSitePageExperience);
 
 		_testPatchSitePageExperienceWithPriority();
 
@@ -455,7 +455,7 @@ public class PageExperienceResourceTest
 		PageExperience pageExperience2 = _addPageExperience(2);
 		PageExperience pageExperience3 = _addPageExperience(3);
 
-		PageExperience patchedPageExperience =
+		PageExperience patchSitePageExperience1 =
 			pageExperienceResource.patchSitePageExperience(
 				testGroup.getExternalReferenceCode(),
 				pageExperience1.getExternalReferenceCode(),
@@ -466,7 +466,7 @@ public class PageExperienceResourceTest
 				});
 
 		Assert.assertEquals(
-			Integer.valueOf(3), patchedPageExperience.getPriority());
+			Integer.valueOf(3), patchSitePageExperience1.getPriority());
 
 		_assertPageExperiencePriority(
 			1, pageExperience2.getExternalReferenceCode());
@@ -475,7 +475,7 @@ public class PageExperienceResourceTest
 		_assertPageExperiencePriority(
 			3, pageExperience1.getExternalReferenceCode());
 
-		PageExperience swappedPageExperience =
+		PageExperience patchSitePageExperience2 =
 			pageExperienceResource.patchSitePageExperience(
 				testGroup.getExternalReferenceCode(),
 				pageExperience2.getExternalReferenceCode(),
@@ -486,7 +486,7 @@ public class PageExperienceResourceTest
 				});
 
 		Assert.assertEquals(
-			Integer.valueOf(2), swappedPageExperience.getPriority());
+			Integer.valueOf(2), patchSitePageExperience2.getPriority());
 
 		_assertPageExperiencePriority(
 			1, pageExperience3.getExternalReferenceCode());

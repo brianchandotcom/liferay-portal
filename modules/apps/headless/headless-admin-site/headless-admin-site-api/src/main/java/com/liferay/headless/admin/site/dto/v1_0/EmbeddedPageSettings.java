@@ -291,4 +291,4 @@ public class EmbeddedPageSettings extends PageSettings implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1251404326
+// LIFERAY-REST-BUILDER-HASH:-1947918218

@@ -417,4 +417,4 @@ public class AuditEvent implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:541536183
+// LIFERAY-REST-BUILDER-HASH:-768474533

@@ -292,4 +292,4 @@ public class AssignStructureDefaultWorkflowBulkSelectionAction
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-859555290
+// LIFERAY-REST-BUILDER-HASH:-971459966

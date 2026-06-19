@@ -25,6 +25,8 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
@@ -127,8 +129,17 @@ public class SortConfiguration implements Serializable {
 
 			sb.append("\"sorts\": ");
 
-			if (sorts instanceof Map) {
+			if (sorts instanceof Collection) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray((Collection<?>)sorts));
+			}
+			else if (sorts instanceof Map) {
 				sb.append(JSONFactoryUtil.createJSONObject((Map<?, ?>)sorts));
+			}
+			else if (sorts instanceof Object[]) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray(
+						Arrays.asList((Object[])sorts)));
 			}
 			else if (sorts instanceof String) {
 				sb.append("\"");
@@ -241,4 +252,4 @@ public class SortConfiguration implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:988379543
+// LIFERAY-REST-BUILDER-HASH:-1388126503

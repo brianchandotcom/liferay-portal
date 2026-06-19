@@ -28,6 +28,8 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
@@ -333,9 +335,19 @@ public class FormConfig implements Serializable {
 
 			sb.append("\"formReference\": ");
 
-			if (formReference instanceof Map) {
+			if (formReference instanceof Collection) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray(
+						(Collection<?>)formReference));
+			}
+			else if (formReference instanceof Map) {
 				sb.append(
 					JSONFactoryUtil.createJSONObject((Map<?, ?>)formReference));
+			}
+			else if (formReference instanceof Object[]) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray(
+						Arrays.asList((Object[])formReference)));
 			}
 			else if (formReference instanceof String) {
 				sb.append("\"");
@@ -356,10 +368,20 @@ public class FormConfig implements Serializable {
 
 			sb.append("\"formSuccessSubmissionResult\": ");
 
-			if (formSuccessSubmissionResult instanceof Map) {
+			if (formSuccessSubmissionResult instanceof Collection) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray(
+						(Collection<?>)formSuccessSubmissionResult));
+			}
+			else if (formSuccessSubmissionResult instanceof Map) {
 				sb.append(
 					JSONFactoryUtil.createJSONObject(
 						(Map<?, ?>)formSuccessSubmissionResult));
+			}
+			else if (formSuccessSubmissionResult instanceof Object[]) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray(
+						Arrays.asList((Object[])formSuccessSubmissionResult)));
 			}
 			else if (formSuccessSubmissionResult instanceof String) {
 				sb.append("\"");
@@ -548,4 +570,4 @@ public class FormConfig implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:305330512
+// LIFERAY-REST-BUILDER-HASH:-697862190

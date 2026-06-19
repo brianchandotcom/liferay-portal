@@ -288,4 +288,4 @@ public class Credential implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-687634063
+// LIFERAY-REST-BUILDER-HASH:-785723563

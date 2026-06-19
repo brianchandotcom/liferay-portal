@@ -282,4 +282,4 @@ public class SearchIndex implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1529251640
+// LIFERAY-REST-BUILDER-HASH:1028725676

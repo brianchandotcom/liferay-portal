@@ -350,4 +350,4 @@ public class DataLayoutPage implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1483835937
+// LIFERAY-REST-BUILDER-HASH:1592370939

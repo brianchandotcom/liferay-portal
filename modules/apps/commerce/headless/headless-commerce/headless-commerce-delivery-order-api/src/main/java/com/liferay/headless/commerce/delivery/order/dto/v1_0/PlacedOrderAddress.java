@@ -1383,4 +1383,4 @@ public class PlacedOrderAddress implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1700523805
+// LIFERAY-REST-BUILDER-HASH:2140769855

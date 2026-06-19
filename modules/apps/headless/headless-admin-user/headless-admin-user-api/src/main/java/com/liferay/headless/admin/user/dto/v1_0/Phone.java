@@ -526,4 +526,4 @@ public class Phone implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1771371886
+// LIFERAY-REST-BUILDER-HASH:-1741108690

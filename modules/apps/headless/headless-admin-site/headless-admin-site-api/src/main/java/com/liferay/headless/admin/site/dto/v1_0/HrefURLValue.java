@@ -243,4 +243,4 @@ public class HrefURLValue extends URLValue implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:480655308
+// LIFERAY-REST-BUILDER-HASH:253967472

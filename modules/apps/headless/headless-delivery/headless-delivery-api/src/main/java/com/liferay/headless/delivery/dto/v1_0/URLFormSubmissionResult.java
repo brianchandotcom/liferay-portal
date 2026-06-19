@@ -240,4 +240,4 @@ public class URLFormSubmissionResult implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1757900519
+// LIFERAY-REST-BUILDER-HASH:-525685941

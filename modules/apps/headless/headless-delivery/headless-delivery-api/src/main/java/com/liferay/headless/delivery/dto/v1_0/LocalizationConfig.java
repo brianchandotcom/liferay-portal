@@ -354,4 +354,4 @@ public class LocalizationConfig implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2063098595
+// LIFERAY-REST-BUILDER-HASH:353765561

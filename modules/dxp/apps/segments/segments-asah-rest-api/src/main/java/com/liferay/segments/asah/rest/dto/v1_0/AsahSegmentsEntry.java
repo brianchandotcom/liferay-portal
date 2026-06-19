@@ -403,4 +403,4 @@ public class AsahSegmentsEntry implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1821747599
+// LIFERAY-REST-BUILDER-HASH:-353062955

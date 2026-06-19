@@ -28,6 +28,8 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
@@ -303,9 +305,19 @@ public class Parameter implements Serializable {
 
 			sb.append("\"defaultValue\": ");
 
-			if (defaultValue instanceof Map) {
+			if (defaultValue instanceof Collection) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray(
+						(Collection<?>)defaultValue));
+			}
+			else if (defaultValue instanceof Map) {
 				sb.append(
 					JSONFactoryUtil.createJSONObject((Map<?, ?>)defaultValue));
+			}
+			else if (defaultValue instanceof Object[]) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray(
+						Arrays.asList((Object[])defaultValue)));
 			}
 			else if (defaultValue instanceof String) {
 				sb.append("\"");
@@ -342,8 +354,16 @@ public class Parameter implements Serializable {
 
 			sb.append("\"max\": ");
 
-			if (max instanceof Map) {
+			if (max instanceof Collection) {
+				sb.append(JSONFactoryUtil.createJSONArray((Collection<?>)max));
+			}
+			else if (max instanceof Map) {
 				sb.append(JSONFactoryUtil.createJSONObject((Map<?, ?>)max));
+			}
+			else if (max instanceof Object[]) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray(
+						Arrays.asList((Object[])max)));
 			}
 			else if (max instanceof String) {
 				sb.append("\"");
@@ -364,8 +384,16 @@ public class Parameter implements Serializable {
 
 			sb.append("\"min\": ");
 
-			if (min instanceof Map) {
+			if (min instanceof Collection) {
+				sb.append(JSONFactoryUtil.createJSONArray((Collection<?>)min));
+			}
+			else if (min instanceof Map) {
 				sb.append(JSONFactoryUtil.createJSONObject((Map<?, ?>)min));
+			}
+			else if (min instanceof Object[]) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray(
+						Arrays.asList((Object[])min)));
 			}
 			else if (min instanceof String) {
 				sb.append("\"");
@@ -533,4 +561,4 @@ public class Parameter implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1300563579
+// LIFERAY-REST-BUILDER-HASH:856471741

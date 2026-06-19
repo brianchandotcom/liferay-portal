@@ -25,6 +25,8 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
@@ -171,8 +173,17 @@ public class MarginAndPaddingConfig implements Serializable {
 
 			sb.append("\"margin\": ");
 
-			if (margin instanceof Map) {
+			if (margin instanceof Collection) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray((Collection<?>)margin));
+			}
+			else if (margin instanceof Map) {
 				sb.append(JSONFactoryUtil.createJSONObject((Map<?, ?>)margin));
+			}
+			else if (margin instanceof Object[]) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray(
+						Arrays.asList((Object[])margin)));
 			}
 			else if (margin instanceof String) {
 				sb.append("\"");
@@ -193,8 +204,17 @@ public class MarginAndPaddingConfig implements Serializable {
 
 			sb.append("\"padding\": ");
 
-			if (padding instanceof Map) {
+			if (padding instanceof Collection) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray((Collection<?>)padding));
+			}
+			else if (padding instanceof Map) {
 				sb.append(JSONFactoryUtil.createJSONObject((Map<?, ?>)padding));
+			}
+			else if (padding instanceof Object[]) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray(
+						Arrays.asList((Object[])padding)));
 			}
 			else if (padding instanceof String) {
 				sb.append("\"");
@@ -307,4 +327,4 @@ public class MarginAndPaddingConfig implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:405469039
+// LIFERAY-REST-BUILDER-HASH:1185459071

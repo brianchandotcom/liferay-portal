@@ -1181,4 +1181,4 @@ public class SXPElement implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2114331265
+// LIFERAY-REST-BUILDER-HASH:255968795

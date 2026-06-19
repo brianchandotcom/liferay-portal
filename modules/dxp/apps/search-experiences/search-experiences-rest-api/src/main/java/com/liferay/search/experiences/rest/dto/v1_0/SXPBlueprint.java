@@ -1097,4 +1097,4 @@ public class SXPBlueprint implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-466522261
+// LIFERAY-REST-BUILDER-HASH:-1915535353

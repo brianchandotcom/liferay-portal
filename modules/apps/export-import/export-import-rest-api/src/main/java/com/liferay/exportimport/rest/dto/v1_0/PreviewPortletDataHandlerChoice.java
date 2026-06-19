@@ -360,4 +360,4 @@ public class PreviewPortletDataHandlerChoice
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1237436499
+// LIFERAY-REST-BUILDER-HASH:2121962513

@@ -1006,4 +1006,4 @@ public class DispatchTrigger implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:865989316
+// LIFERAY-REST-BUILDER-HASH:1648326944

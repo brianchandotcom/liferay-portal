@@ -28,6 +28,8 @@ import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
@@ -378,9 +380,18 @@ public class Subscription implements Serializable {
 
 			sb.append("\"contentId\": ");
 
-			if (contentId instanceof Map) {
+			if (contentId instanceof Collection) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray((Collection<?>)contentId));
+			}
+			else if (contentId instanceof Map) {
 				sb.append(
 					JSONFactoryUtil.createJSONObject((Map<?, ?>)contentId));
+			}
+			else if (contentId instanceof Object[]) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray(
+						Arrays.asList((Object[])contentId)));
 			}
 			else if (contentId instanceof String) {
 				sb.append("\"");
@@ -581,4 +592,4 @@ public class Subscription implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-179821977
+// LIFERAY-REST-BUILDER-HASH:2047655243

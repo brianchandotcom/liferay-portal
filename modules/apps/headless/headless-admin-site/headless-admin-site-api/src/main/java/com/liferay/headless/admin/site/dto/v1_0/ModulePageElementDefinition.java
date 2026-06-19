@@ -270,4 +270,4 @@ public class ModulePageElementDefinition
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1388493133
+// LIFERAY-REST-BUILDER-HASH:254085719

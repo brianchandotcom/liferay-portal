@@ -741,4 +741,4 @@ public class WarehouseItem implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1142186297
+// LIFERAY-REST-BUILDER-HASH:-125927765

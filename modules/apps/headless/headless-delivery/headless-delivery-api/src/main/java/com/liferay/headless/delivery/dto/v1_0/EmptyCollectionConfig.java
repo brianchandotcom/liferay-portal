@@ -294,4 +294,4 @@ public class EmptyCollectionConfig implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1222843822
+// LIFERAY-REST-BUILDER-HASH:468316874

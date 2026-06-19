@@ -367,4 +367,4 @@ public class FragmentImageConfiguration implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-697303505
+// LIFERAY-REST-BUILDER-HASH:1296462923

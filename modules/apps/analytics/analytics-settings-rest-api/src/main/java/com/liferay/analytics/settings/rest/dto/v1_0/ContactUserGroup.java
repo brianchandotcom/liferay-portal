@@ -333,4 +333,4 @@ public class ContactUserGroup implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1031639091
+// LIFERAY-REST-BUILDER-HASH:-1144874319

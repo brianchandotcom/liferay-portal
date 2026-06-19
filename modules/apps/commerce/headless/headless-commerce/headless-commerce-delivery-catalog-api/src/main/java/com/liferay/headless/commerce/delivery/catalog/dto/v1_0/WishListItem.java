@@ -596,4 +596,4 @@ public class WishListItem implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:479956565
+// LIFERAY-REST-BUILDER-HASH:-672547783

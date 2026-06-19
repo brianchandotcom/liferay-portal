@@ -532,4 +532,4 @@ public class CompanyTestEntity implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1972517333
+// LIFERAY-REST-BUILDER-HASH:1503248015

@@ -1028,4 +1028,4 @@ public class FileEntry implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:318285768
+// LIFERAY-REST-BUILDER-HASH:-1630414420

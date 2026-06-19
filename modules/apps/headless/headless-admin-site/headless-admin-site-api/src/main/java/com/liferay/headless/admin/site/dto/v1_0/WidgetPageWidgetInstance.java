@@ -866,4 +866,4 @@ public abstract class WidgetPageWidgetInstance implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:867487925
+// LIFERAY-REST-BUILDER-HASH:1951954897

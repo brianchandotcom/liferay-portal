@@ -301,4 +301,4 @@ public class LowStockAction implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1430450473
+// LIFERAY-REST-BUILDER-HASH:1471310669

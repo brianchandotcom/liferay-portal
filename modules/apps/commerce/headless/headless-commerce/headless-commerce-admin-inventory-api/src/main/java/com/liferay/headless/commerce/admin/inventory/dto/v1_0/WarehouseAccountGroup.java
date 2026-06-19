@@ -614,4 +614,4 @@ public class WarehouseAccountGroup implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2072239249
+// LIFERAY-REST-BUILDER-HASH:-2122274677

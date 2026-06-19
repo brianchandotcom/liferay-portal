@@ -25,6 +25,8 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
@@ -664,8 +666,17 @@ public class Settings implements Serializable {
 
 			sb.append("\"favIcon\": ");
 
-			if (favIcon instanceof Map) {
+			if (favIcon instanceof Collection) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray((Collection<?>)favIcon));
+			}
+			else if (favIcon instanceof Map) {
 				sb.append(JSONFactoryUtil.createJSONObject((Map<?, ?>)favIcon));
+			}
+			else if (favIcon instanceof Object[]) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray(
+						Arrays.asList((Object[])favIcon)));
 			}
 			else if (favIcon instanceof String) {
 				sb.append("\"");
@@ -800,9 +811,19 @@ public class Settings implements Serializable {
 
 			sb.append("\"themeSettings\": ");
 
-			if (themeSettings instanceof Map) {
+			if (themeSettings instanceof Collection) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray(
+						(Collection<?>)themeSettings));
+			}
+			else if (themeSettings instanceof Map) {
 				sb.append(
 					JSONFactoryUtil.createJSONObject((Map<?, ?>)themeSettings));
+			}
+			else if (themeSettings instanceof Object[]) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray(
+						Arrays.asList((Object[])themeSettings)));
 			}
 			else if (themeSettings instanceof String) {
 				sb.append("\"");
@@ -928,4 +949,4 @@ public class Settings implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1395146107
+// LIFERAY-REST-BUILDER-HASH:-22701585

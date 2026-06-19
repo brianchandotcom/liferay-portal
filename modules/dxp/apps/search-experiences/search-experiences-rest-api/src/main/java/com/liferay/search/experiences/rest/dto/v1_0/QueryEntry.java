@@ -475,4 +475,4 @@ public class QueryEntry implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:636117096
+// LIFERAY-REST-BUILDER-HASH:832660228

@@ -232,4 +232,4 @@ public class SearchableAssetName implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1792043885
+// LIFERAY-REST-BUILDER-HASH:-691706615

@@ -1283,4 +1283,4 @@ public class Task implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-838713730
+// LIFERAY-REST-BUILDER-HASH:-1663332062

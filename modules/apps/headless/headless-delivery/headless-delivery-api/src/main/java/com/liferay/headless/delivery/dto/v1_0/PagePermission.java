@@ -305,4 +305,4 @@ public class PagePermission implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1233519996
+// LIFERAY-REST-BUILDER-HASH:640333976

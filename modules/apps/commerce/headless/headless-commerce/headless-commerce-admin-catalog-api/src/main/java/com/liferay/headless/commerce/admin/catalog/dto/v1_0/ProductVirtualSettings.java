@@ -1155,4 +1155,4 @@ public class ProductVirtualSettings implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1444670841
+// LIFERAY-REST-BUILDER-HASH:-879409237

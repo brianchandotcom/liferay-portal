@@ -527,4 +527,4 @@ public class AgentInstance implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:356891339
+// LIFERAY-REST-BUILDER-HASH:1041246383

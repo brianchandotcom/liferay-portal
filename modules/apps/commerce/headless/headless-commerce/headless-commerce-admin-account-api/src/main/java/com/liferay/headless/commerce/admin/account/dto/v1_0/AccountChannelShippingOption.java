@@ -794,4 +794,4 @@ public class AccountChannelShippingOption implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1112041075
+// LIFERAY-REST-BUILDER-HASH:7815887

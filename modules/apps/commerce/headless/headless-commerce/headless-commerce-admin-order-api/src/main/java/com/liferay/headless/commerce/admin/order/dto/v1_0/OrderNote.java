@@ -791,4 +791,4 @@ public class OrderNote implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-328128628
+// LIFERAY-REST-BUILDER-HASH:-11921680

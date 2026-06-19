@@ -400,4 +400,4 @@ public class EventEntry implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-423131580
+// LIFERAY-REST-BUILDER-HASH:1105549288

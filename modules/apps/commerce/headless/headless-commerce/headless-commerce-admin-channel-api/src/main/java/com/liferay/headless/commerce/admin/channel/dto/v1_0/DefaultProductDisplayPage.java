@@ -306,4 +306,4 @@ public class DefaultProductDisplayPage implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:2047485368
+// LIFERAY-REST-BUILDER-HASH:1142123540

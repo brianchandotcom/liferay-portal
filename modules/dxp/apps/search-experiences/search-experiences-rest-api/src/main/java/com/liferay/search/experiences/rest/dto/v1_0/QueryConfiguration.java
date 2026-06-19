@@ -293,4 +293,4 @@ public class QueryConfiguration implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:825269315
+// LIFERAY-REST-BUILDER-HASH:-1497413593

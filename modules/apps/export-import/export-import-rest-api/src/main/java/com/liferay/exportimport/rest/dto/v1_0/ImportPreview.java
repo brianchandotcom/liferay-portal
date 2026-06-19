@@ -587,4 +587,4 @@ public class ImportPreview implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:535476161
+// LIFERAY-REST-BUILDER-HASH:1503217189

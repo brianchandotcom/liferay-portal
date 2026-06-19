@@ -600,4 +600,4 @@ public class TermOrderType implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1668149064
+// LIFERAY-REST-BUILDER-HASH:688252628

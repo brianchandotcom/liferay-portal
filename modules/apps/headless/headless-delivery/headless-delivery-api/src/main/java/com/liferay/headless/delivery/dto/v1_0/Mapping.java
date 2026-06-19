@@ -25,6 +25,8 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
@@ -193,9 +195,19 @@ public class Mapping implements Serializable {
 
 			sb.append("\"itemReference\": ");
 
-			if (itemReference instanceof Map) {
+			if (itemReference instanceof Collection) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray(
+						(Collection<?>)itemReference));
+			}
+			else if (itemReference instanceof Map) {
 				sb.append(
 					JSONFactoryUtil.createJSONObject((Map<?, ?>)itemReference));
+			}
+			else if (itemReference instanceof Object[]) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray(
+						Arrays.asList((Object[])itemReference)));
 			}
 			else if (itemReference instanceof String) {
 				sb.append("\"");
@@ -308,4 +320,4 @@ public class Mapping implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-96778331
+// LIFERAY-REST-BUILDER-HASH:424758273

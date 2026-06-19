@@ -258,4 +258,4 @@ public class MappedBackgroundImageValue
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1312364585
+// LIFERAY-REST-BUILDER-HASH:-1834591629

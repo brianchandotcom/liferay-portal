@@ -25,6 +25,8 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
@@ -294,8 +296,17 @@ public class Rescore implements Serializable {
 
 			sb.append("\"query\": ");
 
-			if (query instanceof Map) {
+			if (query instanceof Collection) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray((Collection<?>)query));
+			}
+			else if (query instanceof Map) {
 				sb.append(JSONFactoryUtil.createJSONObject((Map<?, ?>)query));
+			}
+			else if (query instanceof Object[]) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray(
+						Arrays.asList((Object[])query)));
 			}
 			else if (query instanceof String) {
 				sb.append("\"");
@@ -316,9 +327,19 @@ public class Rescore implements Serializable {
 
 			sb.append("\"queryWeight\": ");
 
-			if (queryWeight instanceof Map) {
+			if (queryWeight instanceof Collection) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray(
+						(Collection<?>)queryWeight));
+			}
+			else if (queryWeight instanceof Map) {
 				sb.append(
 					JSONFactoryUtil.createJSONObject((Map<?, ?>)queryWeight));
+			}
+			else if (queryWeight instanceof Object[]) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray(
+						Arrays.asList((Object[])queryWeight)));
 			}
 			else if (queryWeight instanceof String) {
 				sb.append("\"");
@@ -339,10 +360,20 @@ public class Rescore implements Serializable {
 
 			sb.append("\"rescoreQueryWeight\": ");
 
-			if (rescoreQueryWeight instanceof Map) {
+			if (rescoreQueryWeight instanceof Collection) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray(
+						(Collection<?>)rescoreQueryWeight));
+			}
+			else if (rescoreQueryWeight instanceof Map) {
 				sb.append(
 					JSONFactoryUtil.createJSONObject(
 						(Map<?, ?>)rescoreQueryWeight));
+			}
+			else if (rescoreQueryWeight instanceof Object[]) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray(
+						Arrays.asList((Object[])rescoreQueryWeight)));
 			}
 			else if (rescoreQueryWeight instanceof String) {
 				sb.append("\"");
@@ -379,9 +410,18 @@ public class Rescore implements Serializable {
 
 			sb.append("\"windowSize\": ");
 
-			if (windowSize instanceof Map) {
+			if (windowSize instanceof Collection) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray((Collection<?>)windowSize));
+			}
+			else if (windowSize instanceof Map) {
 				sb.append(
 					JSONFactoryUtil.createJSONObject((Map<?, ?>)windowSize));
+			}
+			else if (windowSize instanceof Object[]) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray(
+						Arrays.asList((Object[])windowSize)));
 			}
 			else if (windowSize instanceof String) {
 				sb.append("\"");
@@ -494,4 +534,4 @@ public class Rescore implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1041462363
+// LIFERAY-REST-BUILDER-HASH:-1526226383

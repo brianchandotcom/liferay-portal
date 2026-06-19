@@ -25,6 +25,8 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
@@ -214,9 +216,18 @@ public class SuggestionsContributorResults implements Serializable {
 
 			sb.append("\"attributes\": ");
 
-			if (attributes instanceof Map) {
+			if (attributes instanceof Collection) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray((Collection<?>)attributes));
+			}
+			else if (attributes instanceof Map) {
 				sb.append(
 					JSONFactoryUtil.createJSONObject((Map<?, ?>)attributes));
+			}
+			else if (attributes instanceof Object[]) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray(
+						Arrays.asList((Object[])attributes)));
 			}
 			else if (attributes instanceof String) {
 				sb.append("\"");
@@ -367,4 +378,4 @@ public class SuggestionsContributorResults implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1993260954
+// LIFERAY-REST-BUILDER-HASH:784331730

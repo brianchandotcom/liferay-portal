@@ -936,4 +936,4 @@ public class WikiNode implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:751490795
+// LIFERAY-REST-BUILDER-HASH:1088965199

@@ -339,4 +339,4 @@ public class HistogramMetric implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2068546214
+// LIFERAY-REST-BUILDER-HASH:-1003553794

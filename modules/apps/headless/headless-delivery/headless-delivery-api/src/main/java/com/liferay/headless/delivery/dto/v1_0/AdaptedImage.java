@@ -526,4 +526,4 @@ public class AdaptedImage implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1937027321
+// LIFERAY-REST-BUILDER-HASH:-771550173

@@ -1003,4 +1003,4 @@ public class PageMetric implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1076864350
+// LIFERAY-REST-BUILDER-HASH:1480901446

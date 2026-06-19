@@ -403,4 +403,4 @@ public class Histogram implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:2135335532
+// LIFERAY-REST-BUILDER-HASH:546289808

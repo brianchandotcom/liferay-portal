@@ -567,4 +567,4 @@ public class RolePermission implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1983794497
+// LIFERAY-REST-BUILDER-HASH:1568783517

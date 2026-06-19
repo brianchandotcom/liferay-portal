@@ -25,6 +25,8 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
@@ -221,9 +223,18 @@ public class TargetCollectionDisplayFragmentConfigurationFieldValue
 
 			sb.append("\"value_i18n\": ");
 
-			if (value_i18n instanceof Map) {
+			if (value_i18n instanceof Collection) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray((Collection<?>)value_i18n));
+			}
+			else if (value_i18n instanceof Map) {
 				sb.append(
 					JSONFactoryUtil.createJSONObject((Map<?, ?>)value_i18n));
+			}
+			else if (value_i18n instanceof Object[]) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray(
+						Arrays.asList((Object[])value_i18n)));
 			}
 			else if (value_i18n instanceof String) {
 				sb.append("\"");
@@ -350,4 +361,4 @@ public class TargetCollectionDisplayFragmentConfigurationFieldValue
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-356055963
+// LIFERAY-REST-BUILDER-HASH:-1071388693

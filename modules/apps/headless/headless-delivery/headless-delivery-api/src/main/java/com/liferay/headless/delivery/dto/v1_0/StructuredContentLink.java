@@ -418,4 +418,4 @@ public class StructuredContentLink implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1971618865
+// LIFERAY-REST-BUILDER-HASH:897312589

@@ -231,4 +231,4 @@ public class Chat implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:846249965
+// LIFERAY-REST-BUILDER-HASH:-584789303

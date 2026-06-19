@@ -25,6 +25,8 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
@@ -412,10 +414,20 @@ public class TaxonomyCategoryBrief implements Serializable {
 
 			sb.append("\"embeddedTaxonomyCategory\": ");
 
-			if (embeddedTaxonomyCategory instanceof Map) {
+			if (embeddedTaxonomyCategory instanceof Collection) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray(
+						(Collection<?>)embeddedTaxonomyCategory));
+			}
+			else if (embeddedTaxonomyCategory instanceof Map) {
 				sb.append(
 					JSONFactoryUtil.createJSONObject(
 						(Map<?, ?>)embeddedTaxonomyCategory));
+			}
+			else if (embeddedTaxonomyCategory instanceof Object[]) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray(
+						Arrays.asList((Object[])embeddedTaxonomyCategory)));
 			}
 			else if (embeddedTaxonomyCategory instanceof String) {
 				sb.append("\"");
@@ -616,4 +628,4 @@ public class TaxonomyCategoryBrief implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-85362479
+// LIFERAY-REST-BUILDER-HASH:464083293

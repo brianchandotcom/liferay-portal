@@ -409,4 +409,4 @@ public class OpenGraphSettings implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-100326543
+// LIFERAY-REST-BUILDER-HASH:-845142827

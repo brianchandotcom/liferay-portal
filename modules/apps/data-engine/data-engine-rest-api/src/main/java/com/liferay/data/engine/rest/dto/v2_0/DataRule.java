@@ -415,4 +415,4 @@ public class DataRule implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-644373829
+// LIFERAY-REST-BUILDER-HASH:-120545249

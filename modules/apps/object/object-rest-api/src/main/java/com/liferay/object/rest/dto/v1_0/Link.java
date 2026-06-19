@@ -286,4 +286,4 @@ public class Link implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1242963373
+// LIFERAY-REST-BUILDER-HASH:-675001015

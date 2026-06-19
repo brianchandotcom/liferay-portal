@@ -552,4 +552,4 @@ public class CategoryDisplayPage implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1627760601
+// LIFERAY-REST-BUILDER-HASH:1141128701

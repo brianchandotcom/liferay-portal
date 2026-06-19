@@ -231,4 +231,4 @@ public class Exists implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:62354022
+// LIFERAY-REST-BUILDER-HASH:-255705782

@@ -466,4 +466,4 @@ public class EmailAddress implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1550073018
+// LIFERAY-REST-BUILDER-HASH:-1071148642

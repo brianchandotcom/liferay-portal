@@ -288,4 +288,4 @@ public class Organization implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-721953964
+// LIFERAY-REST-BUILDER-HASH:599388792

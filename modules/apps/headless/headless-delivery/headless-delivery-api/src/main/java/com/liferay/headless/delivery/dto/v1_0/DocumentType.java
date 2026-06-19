@@ -545,4 +545,4 @@ public class DocumentType implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-87642634
+// LIFERAY-REST-BUILDER-HASH:-544876966

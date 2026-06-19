@@ -307,4 +307,4 @@ public class DefaultCategoryDisplayPage implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2113884675
+// LIFERAY-REST-BUILDER-HASH:1246235937

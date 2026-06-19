@@ -1175,4 +1175,4 @@ public class SharedAsset implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1261993543
+// LIFERAY-REST-BUILDER-HASH:1491423467

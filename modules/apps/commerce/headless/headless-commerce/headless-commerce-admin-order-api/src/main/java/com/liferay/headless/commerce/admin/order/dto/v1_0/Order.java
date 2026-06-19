@@ -7214,4 +7214,4 @@ public class Order implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:4104708
+// LIFERAY-REST-BUILDER-HASH:-1403266712

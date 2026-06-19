@@ -406,4 +406,4 @@ public class ParentTaxonomyCategory implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1922984541
+// LIFERAY-REST-BUILDER-HASH:973013369

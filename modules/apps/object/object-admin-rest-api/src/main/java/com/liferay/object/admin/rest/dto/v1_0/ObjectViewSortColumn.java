@@ -448,4 +448,4 @@ public class ObjectViewSortColumn implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1839830139
+// LIFERAY-REST-BUILDER-HASH:393045289

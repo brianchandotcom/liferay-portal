@@ -7,7 +7,6 @@ package com.liferay.search.experiences.rest.dto.v1_0;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.petra.function.UnsafeSupplier;
@@ -38,7 +37,6 @@ import java.util.function.Supplier;
 @Generated("")
 @GraphQLName("FieldMapping")
 @JsonFilter("Liferay.Vulcan")
-@JsonIgnoreProperties(ignoreUnknown = true)
 @XmlRootElement(name = "FieldMapping")
 public class FieldMapping implements Serializable {
 
@@ -344,4 +342,4 @@ public class FieldMapping implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-837841743
+// LIFERAY-REST-BUILDER-HASH:-256411499

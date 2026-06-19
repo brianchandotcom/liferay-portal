@@ -390,4 +390,4 @@ public class SiteVisitorBehaviorMetric implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:262739637
+// LIFERAY-REST-BUILDER-HASH:2019971473

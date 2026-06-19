@@ -1435,4 +1435,4 @@ public class Instance implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:942110388
+// LIFERAY-REST-BUILDER-HASH:-1634530472

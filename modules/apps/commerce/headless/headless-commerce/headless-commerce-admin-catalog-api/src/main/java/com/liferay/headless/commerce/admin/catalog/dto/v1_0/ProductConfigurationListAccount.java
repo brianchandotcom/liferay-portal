@@ -629,4 +629,4 @@ public class ProductConfigurationListAccount implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-577565884
+// LIFERAY-REST-BUILDER-HASH:216072992

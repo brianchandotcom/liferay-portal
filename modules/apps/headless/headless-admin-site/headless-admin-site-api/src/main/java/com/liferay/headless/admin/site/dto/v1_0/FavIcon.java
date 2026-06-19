@@ -312,4 +312,4 @@ public abstract class FavIcon implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:803789985
+// LIFERAY-REST-BUILDER-HASH:1259609725

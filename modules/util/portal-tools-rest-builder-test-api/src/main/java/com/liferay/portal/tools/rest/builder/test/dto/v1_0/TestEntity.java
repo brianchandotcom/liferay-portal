@@ -985,4 +985,4 @@ public abstract class TestEntity implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:2122153770
+// LIFERAY-REST-BUILDER-HASH:1856437254

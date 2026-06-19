@@ -341,4 +341,4 @@ public class ListEntry implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1360986546
+// LIFERAY-REST-BUILDER-HASH:-417944754

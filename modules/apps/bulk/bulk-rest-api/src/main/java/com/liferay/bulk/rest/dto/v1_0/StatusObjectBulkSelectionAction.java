@@ -284,4 +284,4 @@ public class StatusObjectBulkSelectionAction
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2055518697
+// LIFERAY-REST-BUILDER-HASH:1903815539

@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -57,6 +57,73 @@ public abstract class BaseFDSSerializer {
 			restEndpoint, restSchema);
 	}
 
+	protected String serializeDataSetSnapshotStartupViewERC(
+			String fdsName, HttpServletRequest httpServletRequest,
+			ObjectDefinitionLocalService objectDefinitionLocalService,
+			ObjectEntryManagerRegistry objectEntryManagerRegistry)
+		throws Exception {
+
+		ObjectEntryThreadLocal.setSkipObjectEntryResourcePermission(true);
+
+		try {
+			long companyId = portal.getCompanyId(httpServletRequest);
+
+			ObjectDefinition objectDefinition =
+				objectDefinitionLocalService.
+					fetchObjectDefinitionByExternalReferenceCode(
+						"L_DATA_SET_SNAPSHOT_USER_PREFERENCE", companyId);
+
+			if (objectDefinition == null) {
+				return null;
+			}
+
+			ObjectEntryManager objectEntryManager =
+				DefaultObjectEntryManagerProvider.provide(
+					objectEntryManagerRegistry.getObjectEntryManager(
+						objectDefinition.getCompanyId(),
+						objectDefinition.getStorageType()));
+
+			Page<ObjectEntry> page = objectEntryManager.getObjectEntries(
+				companyId, objectDefinition, null, null,
+				new DefaultDTOConverterContext(
+					false, null, null, null, null,
+					LocaleUtil.getMostRelevantLocale(), null, null),
+				StringBundler.concat(
+					"(creatorId eq ", portal.getUserId(httpServletRequest),
+					" and fdsName eq '",
+					StringUtil.replace(fdsName, '\'', "''"), "')"),
+				null, null, null);
+
+			for (ObjectEntry objectEntry : page.getItems()) {
+				Map<String, Object> properties = objectEntry.getProperties();
+
+				Object dataSetSnapshotStartupViewERC = properties.get(
+					"dataSetSnapshotStartupViewERC");
+
+				if (Validator.isNull(dataSetSnapshotStartupViewERC)) {
+					return null;
+				}
+
+				return String.valueOf(dataSetSnapshotStartupViewERC);
+			}
+
+			return null;
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to serialize the data set snapshot startup view " +
+						"ERC",
+					exception);
+			}
+
+			return null;
+		}
+		finally {
+			ObjectEntryThreadLocal.setSkipObjectEntryResourcePermission(false);
+		}
+	}
+
 	protected JSONArray serializeSnapshots(
 			String fdsName, HttpServletRequest httpServletRequest,
 			ObjectDefinitionLocalService objectDefinitionLocalService,
@@ -69,7 +136,7 @@ public abstract class BaseFDSSerializer {
 			List<ObjectEntry> ownedObjectEntries = new ArrayList<>();
 			List<ObjectEntry> sharedObjectEntries = new ArrayList<>();
 
-			long companyId = PortalUtil.getCompanyId(httpServletRequest);
+			long companyId = portal.getCompanyId(httpServletRequest);
 
 			ObjectDefinition objectDefinition =
 				objectDefinitionLocalService.
@@ -82,7 +149,7 @@ public abstract class BaseFDSSerializer {
 						objectDefinition.getCompanyId(),
 						objectDefinition.getStorageType()));
 
-			long userId = PortalUtil.getUserId(httpServletRequest);
+			long userId = portal.getUserId(httpServletRequest);
 
 			Set<Long> sharingEntriesClassPKs = _getSharingEntriesClassPKs(
 				classNameLocalService.getClassNameId(
@@ -113,8 +180,7 @@ public abstract class BaseFDSSerializer {
 					"items", _toJSONArray(ownedObjectEntries)
 				).put(
 					"label",
-					language.get(
-						PortalUtil.getLocale(httpServletRequest), "owned")
+					language.get(portal.getLocale(httpServletRequest), "owned")
 				));
 
 			if (!sharedObjectEntries.isEmpty()) {
@@ -126,7 +192,7 @@ public abstract class BaseFDSSerializer {
 					).put(
 						"label",
 						language.get(
-							PortalUtil.getLocale(httpServletRequest),
+							portal.getLocale(httpServletRequest),
 							"shared-with-me")
 					));
 			}
@@ -153,6 +219,9 @@ public abstract class BaseFDSSerializer {
 
 	@Reference
 	protected Language language;
+
+	@Reference
+	protected Portal portal;
 
 	@Reference
 	protected SharingEntryLocalService sharingEntryLocalService;

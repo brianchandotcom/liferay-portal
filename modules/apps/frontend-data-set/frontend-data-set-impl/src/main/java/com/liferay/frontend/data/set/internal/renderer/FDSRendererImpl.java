@@ -187,6 +187,17 @@ public class FDSRendererImpl implements FDSRenderer {
 				).put(
 					"currentURL", _portal.getCurrentURL(httpServletRequest)
 				).put(
+					"dataSetSnapshotStartupViewERC",
+					() -> {
+						if (!snapshotsEnabled) {
+							return null;
+						}
+
+						return fdsSerializer.
+							serializeDataSetSnapshotStartupViewERC(
+								fdsName, httpServletRequest);
+					}
+				).put(
 					"filters",
 					() -> {
 						JSONArray filtersJSONArray =

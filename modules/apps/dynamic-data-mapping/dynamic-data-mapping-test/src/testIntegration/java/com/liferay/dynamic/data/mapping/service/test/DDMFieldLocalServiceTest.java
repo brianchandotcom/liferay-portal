@@ -83,9 +83,9 @@ public class DDMFieldLocalServiceTest {
 
 	@Test
 	public void testGetDDMFormValues() throws Exception {
-		Locale locale = LocaleUtil.getSiteDefault();
-
 		DDMForm ddmForm = new DDMForm();
+
+		Locale locale = LocaleUtil.getSiteDefault();
 
 		ddmForm.setAvailableLocales(Collections.singleton(locale));
 		ddmForm.setDefaultLocale(locale);

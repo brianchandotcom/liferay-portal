@@ -25,6 +25,13 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface CTSettingsConfiguration {
 
 	@Meta.AD(
+		deflt = "false",
+		description = "automatic-friendly-url-conflict-resolution-description",
+		name = "automatic-friendly-url-conflict-resolution", required = false
+	)
+	public boolean automaticFriendlyURLConflictResolution();
+
+	@Meta.AD(
 		deflt = "false", description = "clean-up-cts-content-data-description",
 		name = "clean-up-cts-content-data", required = false
 	)

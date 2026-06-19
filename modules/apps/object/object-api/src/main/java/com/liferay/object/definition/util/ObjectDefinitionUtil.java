@@ -262,6 +262,9 @@ public class ObjectDefinitionUtil {
 		).put(
 			"DataSetSnapshot", "/data-set-admin/snapshots"
 		).put(
+			"DataSetSnapshotStartupView",
+			"/data-set-admin/snapshot-startup-views"
+		).put(
 			"DataSetSort", "/data-set-admin/sorts"
 		).put(
 			"DataSetTableSection", "/data-set-admin/table-sections"

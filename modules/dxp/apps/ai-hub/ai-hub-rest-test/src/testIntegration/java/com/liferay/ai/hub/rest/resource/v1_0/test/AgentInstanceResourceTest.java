@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -84,10 +85,8 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -299,12 +298,9 @@ public class AgentInstanceResourceTest
 		_testPostAgentInstance();
 		_testPostAgentInstanceWithTypeAIDecisionNodeWithToolWorkflowDefinition();
 		_testPostAgentInstanceWithTypeAIDecisionNodeWorkflowDefinition();
-		_testPostAgentInstanceWithTypeAutoCategorizeAbstains();
-		_testPostAgentInstanceWithTypeAutoCategorizeDefaultsCount();
-		_testPostAgentInstanceWithTypeAutoCategorizeMatches();
+		_testPostAgentInstanceWithTypeAutoCategorize();
 		_testPostAgentInstanceWithTypeFixSpellingAndGrammarWithInstruction();
-		_testPostAgentInstanceWithTypeGenerateTagsProposesNewTags();
-		_testPostAgentInstanceWithTypeGenerateTagsReusesExistingTags();
+		_testPostAgentInstanceWithTypeGenerateTags();
 		_testPostAgentInstanceWithTypeLLMNodeWithRAGWorkflowDefinition();
 		_testPostAgentInstanceWithTypeLLMNodeWithRAGWorkflowDefinitionWithRestrictedUser();
 		_testPostAgentInstanceWithTypeLLMNodeWithToolWorkflowDefinition();
@@ -393,12 +389,19 @@ public class AgentInstanceResourceTest
 		}
 	}
 
-	private long _nextCandidateId(Set<Long> candidateIds) {
-		long id = RandomTestUtil.randomLong();
+	private String _createCandidateCategories(String... names) {
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
-		candidateIds.add(id);
+		for (String name : names) {
+			jsonArray.put(
+				JSONUtil.put(
+					"id", RandomTestUtil.randomLong()
+				).put(
+					"name", name
+				));
+		}
 
-		return id;
+		return jsonArray.toString();
 	}
 
 	private JSONObject _postAgentInstance(
@@ -451,7 +454,8 @@ public class AgentInstanceResourceTest
 			sseEventSinkKey);
 	}
 
-	private String _postAutoCategorize(JSONObject contextJSONObject)
+	private String _postAndAwaitAgentInstance(
+			String agentDefinitionExternalReferenceCode, JSONObject jsonObject)
 		throws Exception {
 
 		CountDownLatch countDownLatch = new CountDownLatch(4);
@@ -462,9 +466,10 @@ public class AgentInstanceResourceTest
 
 		HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
-				"agentDefinitionExternalReferenceCode", "L_AUTO_CATEGORIZE"
+				"agentDefinitionExternalReferenceCode",
+				agentDefinitionExternalReferenceCode
 			).put(
-				"context", contextJSONObject
+				"context", jsonObject
 			).put(
 				"sseEventSinkKey",
 				SseEventSourceTestUtil.open(
@@ -483,83 +488,11 @@ public class AgentInstanceResourceTest
 		Assert.assertTrue(countDownLatch.await(30, TimeUnit.SECONDS));
 
 		Assert.assertEquals(lines.toString(), 4, lines.size());
-		Assert.assertEquals("event: L_AUTO_CATEGORIZE", lines.get(2));
 
-		JSONObject outputJSONObject = _jsonFactory.createJSONObject(
-			StringUtil.removeSubstring(lines.get(3), "data: "));
+		String line = lines.get(2);
 
-		SseUtil.closeAll();
-
-		return outputJSONObject.getString("data");
-	}
-
-	private String _postAutoCategorize(
-			String content, JSONArray candidateCategoriesJSONArray)
-		throws Exception {
-
-		return _postAutoCategorize(
-			JSONUtil.put(
-				"candidateCategories", candidateCategoriesJSONArray.toString()
-			).put(
-				"content", content
-			));
-	}
-
-	private String _postAutoCategorize(
-			String content, JSONArray candidateCategoriesJSONArray, int count)
-		throws Exception {
-
-		return _postAutoCategorize(
-			JSONUtil.put(
-				"candidateCategories", candidateCategoriesJSONArray.toString()
-			).put(
-				"content", content
-			).put(
-				"count", String.valueOf(count)
-			));
-	}
-
-	private String _postGenerateTags(
-			String content, JSONArray existingTagsJSONArray, int count)
-		throws Exception {
-
-		CountDownLatch countDownLatch = new CountDownLatch(4);
-
-		List<String> lines = new ArrayList<>();
-
-		JSONObject tokenJSONObject = TokenTestUtil.postToken();
-
-		HTTPTestUtil.invokeToJSONObject(
-			JSONUtil.put(
-				"agentDefinitionExternalReferenceCode", "L_GENERATE_TAGS"
-			).put(
-				"context",
-				JSONUtil.put(
-					"content", content
-				).put(
-					"count", String.valueOf(count)
-				).put(
-					"existingTags", existingTagsJSONArray.toString()
-				)
-			).put(
-				"sseEventSinkKey",
-				SseEventSourceTestUtil.open(
-					List.of(countDownLatch), lines, "agent-instances/subscribe")
-			).toString(),
-			"ai-hub/v1.0/agent-instances",
-			HashMapBuilder.put(
-				"Authorization",
-				"Bearer " + tokenJSONObject.getString("accessToken")
-			).put(
-				"Liferay-AI-Hub-Cell-On-Behalf-Of",
-				tokenJSONObject.getString("userToken")
-			).build(),
-			Http.Method.POST);
-
-		Assert.assertTrue(countDownLatch.await(30, TimeUnit.SECONDS));
-
-		Assert.assertEquals(lines.toString(), 4, lines.size());
-		Assert.assertEquals("event: L_GENERATE_TAGS", lines.get(2));
+		Assert.assertTrue(
+			line, line.contains(agentDefinitionExternalReferenceCode));
 
 		JSONObject outputJSONObject = _jsonFactory.createJSONObject(
 			StringUtil.removeSubstring(lines.get(3), "data: "));
@@ -677,132 +610,72 @@ public class AgentInstanceResourceTest
 			});
 	}
 
-	private void _testPostAgentInstanceWithTypeAutoCategorizeAbstains()
+	private void _testPostAgentInstanceWithTypeAutoCategorize()
 		throws Exception {
 
-		Set<Long> candidateIds = new HashSet<>();
+		// Abstains
 
-		JSONArray candidateCategoriesJSONArray = JSONUtil.putAll(
+		String data = _postAndAwaitAgentInstance(
+			"L_AUTO_CATEGORIZE",
 			JSONUtil.put(
-				"id", _nextCandidateId(candidateIds)
+				"candidateCategories",
+				_createCandidateCategories(
+					"Astrophysics", "Marine Biology", "Medieval History")
 			).put(
-				"name", "Astrophysics"
-			),
-			JSONUtil.put(
-				"id", _nextCandidateId(candidateIds)
+				"content",
+				"How to change a flat tire on a bicycle in five quick steps."
 			).put(
-				"name", "Marine Biology"
-			),
-			JSONUtil.put(
-				"id", _nextCandidateId(candidateIds)
-			).put(
-				"name", "Medieval History"
+				"count", "3"
 			));
 
-		String dataString = _postAutoCategorize(
-			"How to change a flat tire on a bicycle in five quick steps.",
-			candidateCategoriesJSONArray, 3);
+		Assert.assertFalse(data, data.contains("Astrophysics"));
+		Assert.assertFalse(data, data.contains("Marine Biology"));
+		Assert.assertFalse(data, data.contains("Medieval History"));
+		Assert.assertTrue(data, data.contains("suggestions"));
+		Assert.assertEquals(data, 0, StringUtil.count(data, "confidence"));
 
-		_assertContains(dataString, "suggestions");
+		// Default count
 
-		Assert.assertEquals(
-			dataString, 0, StringUtil.count(dataString, "confidence"));
-		Assert.assertFalse(dataString, dataString.contains("Astrophysics"));
-		Assert.assertFalse(dataString, dataString.contains("Marine Biology"));
-		Assert.assertFalse(dataString, dataString.contains("Medieval History"));
-	}
-
-	private void _testPostAgentInstanceWithTypeAutoCategorizeDefaultsCount()
-		throws Exception {
-
-		Set<Long> candidateIds = new HashSet<>();
-
-		JSONArray candidateCategoriesJSONArray = JSONUtil.putAll(
+		data = _postAndAwaitAgentInstance(
+			"L_AUTO_CATEGORIZE",
 			JSONUtil.put(
-				"id", _nextCandidateId(candidateIds)
+				"candidateCategories",
+				_createCandidateCategories(
+					"Cooking", "Health", "Sports", "Science", "Technology",
+					"Travel")
 			).put(
-				"name", "Technology"
-			),
-			JSONUtil.put(
-				"id", _nextCandidateId(candidateIds)
-			).put(
-				"name", "Cooking"
-			),
-			JSONUtil.put(
-				"id", _nextCandidateId(candidateIds)
-			).put(
-				"name", "Sports"
-			),
-			JSONUtil.put(
-				"id", _nextCandidateId(candidateIds)
-			).put(
-				"name", "Science"
-			),
-			JSONUtil.put(
-				"id", _nextCandidateId(candidateIds)
-			).put(
-				"name", "Health"
-			),
-			JSONUtil.put(
-				"id", _nextCandidateId(candidateIds)
-			).put(
-				"name", "Travel"
+				"content",
+				"A balanced diet and regular exercise improve your health, " +
+					"while new wearable technology helps athletes track " +
+						"their training during every sport."
 			));
-
-		String dataString = _postAutoCategorize(
-			"A balanced diet and regular exercise improve your health, while " +
-				"new wearable technology helps athletes track their training " +
-					"during every sport.",
-			candidateCategoriesJSONArray);
-
-		_assertContains(dataString, "suggestions");
-
-		Assert.assertTrue(
-			dataString, StringUtil.count(dataString, "confidence") <= 3);
-	}
-
-	private void _testPostAgentInstanceWithTypeAutoCategorizeMatches()
-		throws Exception {
-
-		Set<Long> candidateIds = new HashSet<>();
-
-		long technologyId = _nextCandidateId(candidateIds);
-
-		JSONArray candidateCategoriesJSONArray = JSONUtil.putAll(
-			JSONUtil.put(
-				"id", technologyId
-			).put(
-				"name", "Technology"
-			),
-			JSONUtil.put(
-				"id", _nextCandidateId(candidateIds)
-			).put(
-				"name", "Cooking"
-			),
-			JSONUtil.put(
-				"id", _nextCandidateId(candidateIds)
-			).put(
-				"name", "Sports"
-			),
-			JSONUtil.put(
-				"id", _nextCandidateId(candidateIds)
-			).put(
-				"name", "Travel"
-			));
-
-		int count = 2;
-
-		String dataString = _postAutoCategorize(
-			"Our new smartphone ships with a faster processor, a larger " +
-				"display, and an upgraded camera powered by machine learning.",
-			candidateCategoriesJSONArray, count);
 
 		_assertContains(
-			dataString, "Technology", "confidence", "suggestions",
-			String.valueOf(technologyId));
+			data, "confidence", "Health", "suggestions", "Sports",
+			"Technology");
 
-		Assert.assertTrue(
-			dataString, StringUtil.count(dataString, "confidence") <= count);
+		Assert.assertTrue(data, StringUtil.count(data, "confidence") <= 3);
+
+		// Matches
+
+		data = _postAndAwaitAgentInstance(
+			"L_AUTO_CATEGORIZE",
+			JSONUtil.put(
+				"candidateCategories",
+				_createCandidateCategories(
+					"Cooking", "Sports", "Technology", "Travel")
+			).put(
+				"content",
+				"Our new smartphone ships with a faster processor, a larger " +
+					"display, and an upgraded camera powered by machine " +
+						"learning."
+			).put(
+				"count", "2"
+			));
+
+		_assertContains(data, "confidence", "suggestions", "Technology");
+
+		Assert.assertTrue(data, StringUtil.count(data, "confidence") <= 2);
 	}
 
 	private void _testPostAgentInstanceWithTypeFixSpellingAndGrammarWithInstruction()
@@ -924,60 +797,57 @@ public class AgentInstanceResourceTest
 		SseUtil.closeAll();
 	}
 
-	private void _testPostAgentInstanceWithTypeGenerateTagsProposesNewTags()
-		throws Exception {
+	private void _testPostAgentInstanceWithTypeGenerateTags() throws Exception {
 
-		JSONArray existingTagsJSONArray = JSONUtil.putAll(
-			"gardening", "cooking", "home improvement");
+		// Propose new tags
 
-		int count = 5;
+		String data = _postAndAwaitAgentInstance(
+			"L_GENERATE_TAGS",
+			JSONUtil.put(
+				"content",
+				"This guide covers training a new puppy, choosing the right " +
+					"leash, and scheduling veterinary checkups for your dog."
+			).put(
+				"count", "5"
+			).put(
+				"existingTags",
+				JSONUtil.putAll(
+					"gardening", "cooking", "home improvement"
+				).toString()
+			));
 
-		String dataString = _postGenerateTags(
-			"This guide covers training a new puppy, choosing the right " +
-				"leash, and scheduling veterinary checkups for your dog.",
-			existingTagsJSONArray, count);
+		_assertContains(data, "confidence", "isNew", "suggestions", "true");
 
-		_assertContains(
-			dataString, "confidence", "isNew", "suggestions", "true");
+		AssertUtils.assertEqualsIgnoreCase("gardening", data);
+		AssertUtils.assertEqualsIgnoreCase("home improvement", data);
 
-		String lowerCaseDataString = StringUtil.toLowerCase(dataString);
+		Assert.assertTrue(data, StringUtil.count(data, "confidence") <= 5);
 
-		Assert.assertFalse(
-			dataString, lowerCaseDataString.contains("gardening"));
-		Assert.assertFalse(
-			dataString, lowerCaseDataString.contains("home improvement"));
+		// Reuse existing tags
 
-		Assert.assertTrue(
-			dataString, StringUtil.count(dataString, "confidence") <= count);
-	}
+		data = _postAndAwaitAgentInstance(
+			"L_GENERATE_TAGS",
+			JSONUtil.put(
+				"content",
+				"This article explains how neural networks are trained for " +
+					"machine learning tasks and why data science teams rely " +
+						"on them for prediction."
+			).put(
+				"count", "5"
+			).put(
+				"existingTags",
+				JSONUtil.putAll(
+					"machine learning", "neural networks", "data science"
+				).toString()
+			));
 
-	private void _testPostAgentInstanceWithTypeGenerateTagsReusesExistingTags()
-		throws Exception {
+		_assertContains(data, "confidence", "false", "isNew", "suggestions");
 
-		JSONArray existingTagsJSONArray = JSONUtil.putAll(
-			"machine learning", "neural networks", "data science");
+		AssertUtils.assertEqualsIgnoreCase("data science", data);
+		AssertUtils.assertEqualsIgnoreCase("machine learning", data);
+		AssertUtils.assertEqualsIgnoreCase("neural networks", data);
 
-		int count = 5;
-
-		String dataString = _postGenerateTags(
-			"This article explains how neural networks are trained for " +
-				"machine learning tasks and why data science teams rely on " +
-					"them for prediction.",
-			existingTagsJSONArray, count);
-
-		_assertContains(
-			dataString, "confidence", "false", "isNew", "suggestions");
-
-		String lowerCaseDataString = StringUtil.toLowerCase(dataString);
-
-		Assert.assertTrue(
-			dataString,
-			lowerCaseDataString.contains("data science") ||
-			lowerCaseDataString.contains("machine learning") ||
-			lowerCaseDataString.contains("neural networks"));
-
-		Assert.assertTrue(
-			dataString, StringUtil.count(dataString, "confidence") <= count);
+		Assert.assertTrue(data, StringUtil.count(data, "confidence") <= 5);
 	}
 
 	private void _testPostAgentInstanceWithTypeLLMNodeWithRAGWorkflowDefinition()

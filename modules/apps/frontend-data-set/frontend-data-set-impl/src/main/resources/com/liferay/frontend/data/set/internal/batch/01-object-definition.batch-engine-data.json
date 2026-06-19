@@ -1757,6 +1757,59 @@
 				"code": 0
 			},
 			"system": true
+		},
+		{
+			"className": "com.liferay.object.model.ObjectDefinition#U1P7",
+			"externalReferenceCode": "L_DATA_SET_SNAPSHOT_USER_PREFERENCE",
+			"label": {
+				"en_US": "Data Set Snapshot User Preference"
+			},
+			"modifiable": true,
+			"name": "DataSetSnapshotUserPreference",
+			"objectFields": [
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "FDS_NAME",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "FDS Name"
+					},
+					"localized": false,
+					"name": "fdsName",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "Clob"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "SNAPSHOT_STARTUP_VIEW_ERC",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Snapshot Startup View ERC"
+					},
+					"localized": false,
+					"name": "snapshotStartupViewERC",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String"
+				}
+			],
+			"panelCategoryKey": "",
+			"pluralLabel": {
+				"en_US": "Data Set Snapshot User Preferences"
+			},
+			"portlet": false,
+			"scope": "company",
+			"status": {
+				"code": 0
+			},
+			"system": true
 		}
 	]
 }

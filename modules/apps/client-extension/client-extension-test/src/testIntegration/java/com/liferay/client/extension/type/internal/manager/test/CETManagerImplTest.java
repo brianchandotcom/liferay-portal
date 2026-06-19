@@ -73,27 +73,20 @@ public class CETManagerImplTest {
 			ClientExtensionEntryConstants.TYPE_GLOBAL_CSS,
 			"http://example.com/a.css");
 
-		try {
-			CET cet1 = _cetManager.getCET(
-				TestPropsValues.getCompanyId(),
-				clientExtensionEntry.getExternalReferenceCode());
+		CET cet1 = _cetManager.getCET(
+			TestPropsValues.getCompanyId(),
+			clientExtensionEntry.getExternalReferenceCode());
 
-			CET cet2 = _cetManager.getCET(
-				TestPropsValues.getCompanyId(),
-				clientExtensionEntry.getExternalReferenceCode());
+		CET cet2 = _cetManager.getCET(
+			TestPropsValues.getCompanyId(),
+			clientExtensionEntry.getExternalReferenceCode());
 
-			Assert.assertNotNull(cet1);
-			Assert.assertSame(cet1, cet2);
+		Assert.assertNotNull(cet1);
+		Assert.assertSame(cet1, cet2);
 
-			GlobalCSSCET globalCSSCET = (GlobalCSSCET)cet1;
+		GlobalCSSCET globalCSSCET = (GlobalCSSCET)cet1;
 
-			Assert.assertEquals(
-				"http://example.com/a.css", globalCSSCET.getURL());
-		}
-		finally {
-			_clientExtensionEntryLocalService.deleteClientExtensionEntry(
-				clientExtensionEntry);
-		}
+		Assert.assertEquals("http://example.com/a.css", globalCSSCET.getURL());
 	}
 
 	@Test
@@ -102,37 +95,30 @@ public class CETManagerImplTest {
 			ClientExtensionEntryConstants.TYPE_GLOBAL_CSS,
 			"http://example.com/a.css");
 
-		try {
-			CET cet1 = _cetManager.getCET(
-				TestPropsValues.getCompanyId(),
-				clientExtensionEntry.getExternalReferenceCode());
+		CET cet1 = _cetManager.getCET(
+			TestPropsValues.getCompanyId(),
+			clientExtensionEntry.getExternalReferenceCode());
 
-			clientExtensionEntry.setTypeSettings(
-				UnicodePropertiesBuilder.create(
-					true
-				).put(
-					"url", "http://example.com/b.css"
-				).buildString());
+		clientExtensionEntry.setTypeSettings(
+			UnicodePropertiesBuilder.create(
+				true
+			).put(
+				"url", "http://example.com/b.css"
+			).buildString());
 
-			clientExtensionEntry =
-				_clientExtensionEntryLocalService.updateClientExtensionEntry(
-					clientExtensionEntry);
-
-			CET cet2 = _cetManager.getCET(
-				TestPropsValues.getCompanyId(),
-				clientExtensionEntry.getExternalReferenceCode());
-
-			Assert.assertNotSame(cet1, cet2);
-
-			GlobalCSSCET globalCSSCET = (GlobalCSSCET)cet2;
-
-			Assert.assertEquals(
-				"http://example.com/b.css", globalCSSCET.getURL());
-		}
-		finally {
-			_clientExtensionEntryLocalService.deleteClientExtensionEntry(
+		clientExtensionEntry =
+			_clientExtensionEntryLocalService.updateClientExtensionEntry(
 				clientExtensionEntry);
-		}
+
+		CET cet2 = _cetManager.getCET(
+			TestPropsValues.getCompanyId(),
+			clientExtensionEntry.getExternalReferenceCode());
+
+		Assert.assertNotSame(cet1, cet2);
+
+		GlobalCSSCET globalCSSCET = (GlobalCSSCET)cet2;
+
+		Assert.assertEquals("http://example.com/b.css", globalCSSCET.getURL());
 	}
 
 	@Test
@@ -146,39 +132,29 @@ public class CETManagerImplTest {
 				ClientExtensionEntryConstants.TYPE_GLOBAL_JS,
 				"http://example.com/a.js");
 
-		try {
-			List<CET> cets = _cetManager.getCETs(
-				TestPropsValues.getCompanyId(), null,
-				ClientExtensionEntryConstants.TYPE_GLOBAL_CSS,
-				Pagination.of(1, 200), null);
+		List<CET> cets = _cetManager.getCETs(
+			TestPropsValues.getCompanyId(), null,
+			ClientExtensionEntryConstants.TYPE_GLOBAL_CSS,
+			Pagination.of(1, 200), null);
 
-			boolean containsGlobalCSS = false;
+		boolean containsGlobalCSS = false;
 
-			for (CET cet : cets) {
-				Assert.assertEquals(
-					ClientExtensionEntryConstants.TYPE_GLOBAL_CSS,
-					cet.getType());
-				Assert.assertNotEquals(
-					globalJSClientExtensionEntry.getExternalReferenceCode(),
-					cet.getExternalReferenceCode());
+		for (CET cet : cets) {
+			Assert.assertEquals(
+				ClientExtensionEntryConstants.TYPE_GLOBAL_CSS, cet.getType());
+			Assert.assertNotEquals(
+				globalJSClientExtensionEntry.getExternalReferenceCode(),
+				cet.getExternalReferenceCode());
 
-				if (Objects.equals(
-						globalCSSClientExtensionEntry.
-							getExternalReferenceCode(),
-						cet.getExternalReferenceCode())) {
+			if (Objects.equals(
+					globalCSSClientExtensionEntry.getExternalReferenceCode(),
+					cet.getExternalReferenceCode())) {
 
-					containsGlobalCSS = true;
-				}
+				containsGlobalCSS = true;
 			}
+		}
 
-			Assert.assertTrue(containsGlobalCSS);
-		}
-		finally {
-			_clientExtensionEntryLocalService.deleteClientExtensionEntry(
-				globalCSSClientExtensionEntry);
-			_clientExtensionEntryLocalService.deleteClientExtensionEntry(
-				globalJSClientExtensionEntry);
-		}
+		Assert.assertTrue(containsGlobalCSS);
 	}
 
 	@Rule

@@ -15,6 +15,8 @@ import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.RetryAcceptor;
+import com.liferay.portal.kernel.service.SQLStateAcceptor;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -22,11 +24,14 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -104,18 +109,14 @@ public class OrphanReferencesDataCleanupUtil {
 			ResultSet resultSet = preparedStatement1.executeQuery()) {
 
 			if (!readOnly) {
-				try (PreparedStatement preparedStatement2 =
-						connection.prepareStatement(
-							StringBundler.concat(
-								"delete ",
-								aliasNeeded ?
-									(_SOURCE_TABLE_ALIAS + StringPool.SPACE) :
-										"",
-								"from ", sourceTableName, StringPool.SPACE,
-								_SOURCE_TABLE_ALIAS, whereClause))) {
-
-					preparedStatement2.execute();
-				}
+				_executeDelete(
+					connection,
+					StringBundler.concat(
+						"delete ",
+						aliasNeeded ? (_SOURCE_TABLE_ALIAS + StringPool.SPACE) :
+							"",
+						"from ", sourceTableName, StringPool.SPACE,
+						_SOURCE_TABLE_ALIAS, whereClause));
 			}
 
 			if (!_log.isInfoEnabled()) {
@@ -222,6 +223,50 @@ public class OrphanReferencesDataCleanupUtil {
 
 		return StringUtil.replace(
 			whereClause, "[$SOURCE_TABLE_ALIAS$]", _SOURCE_TABLE_ALIAS);
+	}
+
+	private static void _executeDelete(Connection connection, String deleteSQL)
+		throws Exception {
+
+		int retryCount = 0;
+
+		while (true) {
+			try (PreparedStatement preparedStatement =
+					connection.prepareStatement(deleteSQL)) {
+
+				preparedStatement.executeUpdate();
+
+				return;
+			}
+			catch (SQLException sqlException) {
+				if ((retryCount >= _DELETE_MAX_DEADLOCK_RETRIES) ||
+					!_retryAcceptor.acceptException(
+						sqlException, _deadlockProperties)) {
+
+					throw sqlException;
+				}
+
+				retryCount++;
+
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Retrying delete after a database deadlock: " +
+							deleteSQL,
+						sqlException);
+				}
+
+				try {
+					Thread.sleep(_DELETE_DEADLOCK_RETRY_WAIT * retryCount);
+				}
+				catch (InterruptedException interruptedException) {
+					Thread currentThread = Thread.currentThread();
+
+					currentThread.interrupt();
+
+					throw interruptedException;
+				}
+			}
+		}
 	}
 
 	private static Set<String> _getFirstIndexColumnNames(
@@ -416,15 +461,24 @@ public class OrphanReferencesDataCleanupUtil {
 		return sb.toString();
 	}
 
+	private static final int _DELETE_DEADLOCK_RETRY_WAIT = 500;
+
+	private static final int _DELETE_MAX_DEADLOCK_RETRIES = 3;
+
 	private static final String _SOURCE_TABLE_ALIAS = "s";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		OrphanReferencesDataCleanupUtil.class);
 
+	private static final Map<String, String> _deadlockProperties =
+		Collections.singletonMap(
+			SQLStateAcceptor.SQLSTATE,
+			SQLStateAcceptor.SQLSTATE_TRANSACTION_ROLLBACK);
 	private static final List<String> _excludedTableNames = new ArrayList<>(
 		Arrays.asList(
 			"Audit_AuditEvent", "CyrusUser", "CyrusVirtual", "SystemEvent"));
 	private static final List<String> _normalizedExcludedTableNames =
 		new ArrayList<>();
+	private static final RetryAcceptor _retryAcceptor = new SQLStateAcceptor();
 
 }

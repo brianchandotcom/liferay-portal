@@ -354,6 +354,29 @@ public class ObjectEntryRelatedObjectsResourceImpl
 	}
 
 	@Override
+	public void
+			postByExternalReferenceCodeCurrentExternalReferenceCodeObjectRelationshipNameRelatedExternalReferenceCodeDisassociate(
+				String currentExternalReferenceCode,
+				String objectRelationshipName,
+				String relatedExternalReferenceCode)
+		throws Exception {
+
+		DefaultObjectEntryManager defaultObjectEntryManager =
+			DefaultObjectEntryManagerProvider.provide(
+				_objectEntryManagerRegistry.getObjectEntryManager(
+					_objectDefinition.getCompanyId(),
+					_objectDefinition.getStorageType()));
+
+		defaultObjectEntryManager.disassociateRelatedModel(
+			_getDTOConverterContext(null), currentExternalReferenceCode,
+			_objectDefinition,
+			_objectRelationshipLocalService.getObjectRelationship(
+				_objectDefinition.getObjectDefinitionId(),
+				objectRelationshipName),
+			relatedExternalReferenceCode, null);
+	}
+
+	@Override
 	public Object postByExternalReferenceCodeObjectEntryObjectRelationshipName(
 			String currentExternalReferenceCode, ObjectEntry objectEntry,
 			String objectRelationshipName)
@@ -391,6 +414,29 @@ public class ObjectEntryRelatedObjectsResourceImpl
 			_objectRelationshipLocalService.getObjectRelationship(
 				_objectDefinition.getObjectDefinitionId(),
 				objectRelationshipName));
+	}
+
+	@Override
+	public void
+			postScopeScopeKeyByExternalReferenceCodeCurrentExternalReferenceCodeObjectRelationshipNameRelatedExternalReferenceCodeDisassociate(
+				String scopeKey, String currentExternalReferenceCode,
+				String objectRelationshipName,
+				String relatedExternalReferenceCode)
+		throws Exception {
+
+		DefaultObjectEntryManager defaultObjectEntryManager =
+			DefaultObjectEntryManagerProvider.provide(
+				_objectEntryManagerRegistry.getObjectEntryManager(
+					_objectDefinition.getCompanyId(),
+					_objectDefinition.getStorageType()));
+
+		defaultObjectEntryManager.disassociateRelatedModel(
+			_getDTOConverterContext(null), currentExternalReferenceCode,
+			_objectDefinition,
+			_objectRelationshipLocalService.getObjectRelationship(
+				_objectDefinition.getObjectDefinitionId(),
+				objectRelationshipName),
+			relatedExternalReferenceCode, scopeKey);
 	}
 
 	@Override

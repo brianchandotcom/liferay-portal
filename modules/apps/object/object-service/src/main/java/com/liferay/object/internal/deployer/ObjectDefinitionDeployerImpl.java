@@ -594,6 +594,10 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				Collections.emptyList());
 		}
 
+		if ((objectRelationships != null) && objectRelationships.isEmpty()) {
+			return;
+		}
+
 		_objectRelationshipLocalService.
 			registerObjectRelationshipsRelatedInfoCollectionProviders(
 				objectDefinition, _objectDefinitionLocalService,

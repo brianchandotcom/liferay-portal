@@ -10,6 +10,11 @@ import ActionsSummary from './actions/ActionsSummary';
 import Assignments from './assignments/Assignments';
 import AssignmentsSummary from './assignments/AssignmentsSummary';
 import SourceCode from './assignments/SourceCode';
+import Authentication from './http-request/Authentication';
+import ConnectionTimeout from './http-request/ConnectionTimeout';
+import HTTPEndpoint from './http-request/HTTPEndpoint';
+import Payload from './http-request/Payload';
+import Variables from './http-request/Variables';
 import Notifications from './notifications/Notifications';
 import NotificationsSummary from './notifications/NotificationsSummary';
 import PromptSummary from './prompt/PromptSummary';
@@ -24,10 +29,14 @@ const sectionComponents = {
 	actionsSummary: ActionsSummary,
 	assignments: Assignments,
 	assignmentsSummary: AssignmentsSummary,
+	authentication: Authentication,
+	connectionTimeout: ConnectionTimeout,
 	edgeInformation: EdgeInformation,
+	httpEndpoint: HTTPEndpoint,
 	nodeInformation: NodeInformation,
 	notifications: Notifications,
 	notificationsSummary: NotificationsSummary,
+	payload: Payload,
 	promptSummary: PromptSummary,
 	ragSummary: RAGSummary,
 	sourceCode: SourceCode,
@@ -35,6 +44,7 @@ const sectionComponents = {
 	timers: Timers,
 	timersSummary: TimersSummary,
 	toolsSummary: ToolsSummary,
+	variables: Variables,
 };
 
 export default sectionComponents;

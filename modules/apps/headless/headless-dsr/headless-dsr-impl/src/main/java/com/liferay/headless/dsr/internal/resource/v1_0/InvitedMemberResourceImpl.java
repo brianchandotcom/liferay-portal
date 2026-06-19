@@ -32,6 +32,7 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.site.dsr.site.initializer.constants.DSRTicketConstants;
 
+import java.util.Date;
 import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
@@ -108,14 +109,29 @@ public class InvitedMemberResourceImpl extends BaseInvitedMemberResourceImpl {
 				MapUtil.getLong(objectEntry.getValues(), "siteId")),
 			objectEntry, invitedMemberId);
 
-		if (invitedMember.getRoleKey() == null) {
+		if ((invitedMember.getMembershipExpirationDate() == null) &&
+			(invitedMember.getRoleKey() == null)) {
+
 			return _toInvitedMember(ticket);
 		}
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject(
 			ticket.getExtraInfo());
 
-		jsonObject.put("roleKey", invitedMember.getRoleKey());
+		if (invitedMember.getMembershipExpirationDate() != null) {
+			Date membershipExpirationDate =
+				invitedMember.getMembershipExpirationDate();
+
+			jsonObject.put(
+				"membershipExpirationDate", membershipExpirationDate.getTime());
+		}
+		else {
+			jsonObject.remove("membershipExpirationDate");
+		}
+
+		if (invitedMember.getRoleKey() != null) {
+			jsonObject.put("roleKey", invitedMember.getRoleKey());
+		}
 
 		ticket.setExtraInfo(jsonObject.toString());
 

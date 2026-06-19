@@ -8,6 +8,7 @@ package com.liferay.headless.dsr.internal.resource.v1_0;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.headless.dsr.dto.v1_0.UserAccount;
 import com.liferay.headless.dsr.internal.dto.v1_0.converter.UserAccountDTOConverterContext;
+import com.liferay.headless.dsr.internal.util.TicketUtil;
 import com.liferay.headless.dsr.resource.v1_0.UserAccountResource;
 import com.liferay.login.web.constants.LoginPortletKeys;
 import com.liferay.notification.context.NotificationContextBuilder;
@@ -23,6 +24,7 @@ import com.liferay.portal.events.ServicePreAction;
 import com.liferay.portal.events.ThemeServicePreAction;
 import com.liferay.portal.kernel.exception.RoleAssignmentException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
@@ -105,6 +107,8 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 			new long[] {userAccountId}, group.getGroupId());
 
 		_userLocalService.deleteGroupUser(group.getGroupId(), userAccountId);
+
+		_addOrUpdateExpireMembershipTicket(group, null, userAccountId);
 	}
 
 	@Override
@@ -168,6 +172,9 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 				new long[] {role.getRoleId()});
 		}
 
+		_addOrUpdateExpireMembershipTicket(
+			group, userAccount.getMembershipExpirationDate(), user.getUserId());
+
 		return _toUserAccount(group.getGroupId(), user);
 	}
 
@@ -209,6 +216,8 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 				{
 					setEmailAddress(userAccount::getEmailAddress);
 					setId(ticket::getTicketId);
+					setMembershipExpirationDate(
+						userAccount::getMembershipExpirationDate);
 					setRoleKey(userAccount::getRoleKey);
 				}
 			};
@@ -241,6 +250,9 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 		LiveUsers.joinGroup(
 			group.getCompanyId(), group.getGroupId(), user.getUserId());
 
+		_addOrUpdateExpireMembershipTicket(
+			group, userAccount.getMembershipExpirationDate(), user.getUserId());
+
 		return _toUserAccount(group.getGroupId(), user);
 	}
 
@@ -256,6 +268,18 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 				"accountEntryId", accountEntryId
 			).put(
 				"emailAddress", userAccount.getEmailAddress()
+			).put(
+				"membershipExpirationDate",
+				() -> {
+					Date membershipExpirationDate =
+						userAccount.getMembershipExpirationDate();
+
+					if (membershipExpirationDate == null) {
+						return null;
+					}
+
+					return membershipExpirationDate.getTime();
+				}
 			).put(
 				"ownerId", contextUser.getUserId()
 			).put(
@@ -321,6 +345,36 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 			).build());
 
 		return ticket;
+	}
+
+	private Ticket _addOrUpdateExpireMembershipTicket(
+			Group group, Date membershipExpirationDate, long userId)
+		throws Exception {
+
+		Ticket ticket = TicketUtil.fetchExpireMembershipTicket(
+			group.getGroupId(), _jsonFactory, _ticketLocalService, userId);
+
+		if (membershipExpirationDate == null) {
+			if (ticket != null) {
+				_ticketLocalService.deleteTicket(ticket);
+			}
+
+			return null;
+		}
+
+		if (ticket != null) {
+			ticket.setExpirationDate(membershipExpirationDate);
+
+			return _ticketLocalService.updateTicket(ticket);
+		}
+
+		return _ticketLocalService.addTicket(
+			group.getCompanyId(), Group.class.getName(), group.getGroupId(),
+			DSRTicketConstants.TYPE_EXPIRE_MEMBERSHIP, null,
+			JSONUtil.put(
+				"userId", userId
+			).toString(),
+			membershipExpirationDate, new ServiceContext());
 	}
 
 	private Group _getGroup(long roomId) throws Exception {
@@ -411,6 +465,9 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 
 	@Reference
 	private GroupService _groupService;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private NotificationTemplateLocalService _notificationTemplateLocalService;

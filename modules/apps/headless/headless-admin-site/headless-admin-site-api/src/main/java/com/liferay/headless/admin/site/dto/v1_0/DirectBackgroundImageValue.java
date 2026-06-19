@@ -255,4 +255,4 @@ public class DirectBackgroundImageValue
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-447719525
+// LIFERAY-REST-BUILDER-HASH:1208214583

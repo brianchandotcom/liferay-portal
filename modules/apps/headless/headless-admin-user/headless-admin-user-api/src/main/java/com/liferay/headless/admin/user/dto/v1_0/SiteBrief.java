@@ -586,4 +586,4 @@ public class SiteBrief implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:178555747
+// LIFERAY-REST-BUILDER-HASH:-399102977

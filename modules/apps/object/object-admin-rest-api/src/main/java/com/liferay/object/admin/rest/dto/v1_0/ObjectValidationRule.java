@@ -1145,4 +1145,4 @@ public class ObjectValidationRule implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1038175794
+// LIFERAY-REST-BUILDER-HASH:817924210

@@ -216,4 +216,4 @@ public class ResetAssetPermissionAction
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-526356719
+// LIFERAY-REST-BUILDER-HASH:-988676435

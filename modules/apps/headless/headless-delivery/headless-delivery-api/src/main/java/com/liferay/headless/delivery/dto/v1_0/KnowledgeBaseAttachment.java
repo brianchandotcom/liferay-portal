@@ -646,4 +646,4 @@ public class KnowledgeBaseAttachment implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1430863704
+// LIFERAY-REST-BUILDER-HASH:-951775116

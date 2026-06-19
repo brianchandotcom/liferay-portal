@@ -351,4 +351,4 @@ public class ColorPaletteValue implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:924416011
+// LIFERAY-REST-BUILDER-HASH:584839087

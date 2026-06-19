@@ -352,4 +352,4 @@ public class ValidationError implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:769763591
+// LIFERAY-REST-BUILDER-HASH:-1498464541

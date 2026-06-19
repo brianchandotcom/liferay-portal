@@ -753,4 +753,4 @@ public class OAuthClientASLocalMetadata implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-821171162
+// LIFERAY-REST-BUILDER-HASH:-685173110

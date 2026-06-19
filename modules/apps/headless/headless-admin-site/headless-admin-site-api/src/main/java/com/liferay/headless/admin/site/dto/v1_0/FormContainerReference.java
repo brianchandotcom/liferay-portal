@@ -315,4 +315,4 @@ public abstract class FormContainerReference implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1442333865
+// LIFERAY-REST-BUILDER-HASH:-2089837235

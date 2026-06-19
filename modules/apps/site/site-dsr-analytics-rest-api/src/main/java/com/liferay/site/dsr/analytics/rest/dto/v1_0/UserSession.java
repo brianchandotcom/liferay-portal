@@ -298,4 +298,4 @@ public class UserSession implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:172018964
+// LIFERAY-REST-BUILDER-HASH:-269565256

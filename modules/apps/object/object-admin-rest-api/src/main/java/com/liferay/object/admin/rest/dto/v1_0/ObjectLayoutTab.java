@@ -516,4 +516,4 @@ public class ObjectLayoutTab implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:239349843
+// LIFERAY-REST-BUILDER-HASH:593164591

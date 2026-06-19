@@ -347,4 +347,4 @@ public class ObjectLayoutRow implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-663009968
+// LIFERAY-REST-BUILDER-HASH:-189200852

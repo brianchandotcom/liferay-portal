@@ -1011,4 +1011,4 @@ public class Plan implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1549645213
+// LIFERAY-REST-BUILDER-HASH:-1020321729

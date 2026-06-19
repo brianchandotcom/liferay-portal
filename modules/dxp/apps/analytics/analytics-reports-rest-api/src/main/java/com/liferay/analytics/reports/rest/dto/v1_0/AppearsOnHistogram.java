@@ -460,4 +460,4 @@ public class AppearsOnHistogram implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1736806064
+// LIFERAY-REST-BUILDER-HASH:1309872180

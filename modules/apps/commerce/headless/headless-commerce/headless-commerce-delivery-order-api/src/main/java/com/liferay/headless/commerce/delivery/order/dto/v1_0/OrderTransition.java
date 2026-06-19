@@ -538,4 +538,4 @@ public class OrderTransition implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1584692011
+// LIFERAY-REST-BUILDER-HASH:1027985329

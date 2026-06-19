@@ -864,4 +864,4 @@ public class NotificationQueueEntry implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-459204374
+// LIFERAY-REST-BUILDER-HASH:1666214094

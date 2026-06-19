@@ -25,6 +25,8 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
@@ -519,8 +521,16 @@ public class TypeOptions implements Serializable {
 
 			sb.append("\"max\": ");
 
-			if (max instanceof Map) {
+			if (max instanceof Collection) {
+				sb.append(JSONFactoryUtil.createJSONArray((Collection<?>)max));
+			}
+			else if (max instanceof Map) {
 				sb.append(JSONFactoryUtil.createJSONObject((Map<?, ?>)max));
+			}
+			else if (max instanceof Object[]) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray(
+						Arrays.asList((Object[])max)));
 			}
 			else if (max instanceof String) {
 				sb.append("\"");
@@ -541,8 +551,16 @@ public class TypeOptions implements Serializable {
 
 			sb.append("\"min\": ");
 
-			if (min instanceof Map) {
+			if (min instanceof Collection) {
+				sb.append(JSONFactoryUtil.createJSONArray((Collection<?>)min));
+			}
+			else if (min instanceof Map) {
 				sb.append(JSONFactoryUtil.createJSONObject((Map<?, ?>)min));
+			}
+			else if (min instanceof Object[]) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray(
+						Arrays.asList((Object[])min)));
 			}
 			else if (min instanceof String) {
 				sb.append("\"");
@@ -609,8 +627,16 @@ public class TypeOptions implements Serializable {
 
 			sb.append("\"step\": ");
 
-			if (step instanceof Map) {
+			if (step instanceof Collection) {
+				sb.append(JSONFactoryUtil.createJSONArray((Collection<?>)step));
+			}
+			else if (step instanceof Map) {
 				sb.append(JSONFactoryUtil.createJSONObject((Map<?, ?>)step));
+			}
+			else if (step instanceof Object[]) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray(
+						Arrays.asList((Object[])step)));
 			}
 			else if (step instanceof String) {
 				sb.append("\"");
@@ -755,4 +781,4 @@ public class TypeOptions implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-77256134
+// LIFERAY-REST-BUILDER-HASH:-1800513748

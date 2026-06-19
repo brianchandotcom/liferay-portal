@@ -694,4 +694,4 @@ public class Settings implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1071187148
+// LIFERAY-REST-BUILDER-HASH:1973496856

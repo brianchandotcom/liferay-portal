@@ -503,4 +503,4 @@ public class GoogleAnalyticsConfiguration implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1547793435
+// LIFERAY-REST-BUILDER-HASH:-570186505

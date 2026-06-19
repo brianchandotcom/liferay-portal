@@ -1116,4 +1116,4 @@ public class Attribute implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1550057446
+// LIFERAY-REST-BUILDER-HASH:502592074

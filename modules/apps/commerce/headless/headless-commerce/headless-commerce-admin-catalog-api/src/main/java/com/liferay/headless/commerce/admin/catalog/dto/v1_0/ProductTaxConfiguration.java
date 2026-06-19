@@ -361,4 +361,4 @@ public class ProductTaxConfiguration implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-955474157
+// LIFERAY-REST-BUILDER-HASH:1511246903

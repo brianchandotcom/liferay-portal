@@ -308,4 +308,4 @@ public class FragmentImageClassPKReference implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:774802240
+// LIFERAY-REST-BUILDER-HASH:1705864612

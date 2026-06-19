@@ -256,4 +256,4 @@ public class MappedFragmentImageValue
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-304839316
+// LIFERAY-REST-BUILDER-HASH:1646323016

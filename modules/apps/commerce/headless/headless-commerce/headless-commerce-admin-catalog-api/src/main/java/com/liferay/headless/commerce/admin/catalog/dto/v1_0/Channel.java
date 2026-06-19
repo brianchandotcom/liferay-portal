@@ -536,4 +536,4 @@ public class Channel implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2093632206
+// LIFERAY-REST-BUILDER-HASH:-1361695530

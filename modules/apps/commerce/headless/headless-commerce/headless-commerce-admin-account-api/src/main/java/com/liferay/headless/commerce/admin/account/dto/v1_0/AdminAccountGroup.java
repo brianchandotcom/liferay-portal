@@ -485,4 +485,4 @@ public class AdminAccountGroup implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1047777552
+// LIFERAY-REST-BUILDER-HASH:1964827156

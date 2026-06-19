@@ -261,4 +261,4 @@ public class DefaultFragmentReference
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1139568661
+// LIFERAY-REST-BUILDER-HASH:-284692175

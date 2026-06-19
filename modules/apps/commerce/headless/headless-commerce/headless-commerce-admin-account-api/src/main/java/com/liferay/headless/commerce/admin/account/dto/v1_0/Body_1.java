@@ -239,4 +239,4 @@ public class Body_1 implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:649955723
+// LIFERAY-REST-BUILDER-HASH:1736387247

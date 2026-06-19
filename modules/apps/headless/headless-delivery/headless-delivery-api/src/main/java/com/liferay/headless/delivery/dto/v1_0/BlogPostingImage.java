@@ -761,4 +761,4 @@ public class BlogPostingImage implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1971968893
+// LIFERAY-REST-BUILDER-HASH:206140575

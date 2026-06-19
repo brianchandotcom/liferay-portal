@@ -1044,4 +1044,4 @@ public class DocumentMetadataSet implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:534196636
+// LIFERAY-REST-BUILDER-HASH:578258880

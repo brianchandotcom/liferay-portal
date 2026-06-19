@@ -456,4 +456,4 @@ public class DefaultPermissionObjectBulkSelectionAction
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-922991101
+// LIFERAY-REST-BUILDER-HASH:586275935

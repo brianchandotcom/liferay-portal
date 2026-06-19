@@ -231,4 +231,4 @@ public class DataSourceToken implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:954505319
+// LIFERAY-REST-BUILDER-HASH:-1158786045

@@ -468,4 +468,4 @@ public class PreviewPortletDataHandlerSection implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1095898237
+// LIFERAY-REST-BUILDER-HASH:-1953642599

@@ -333,4 +333,4 @@ public class SelectionScope implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:574992138
+// LIFERAY-REST-BUILDER-HASH:-1546278930

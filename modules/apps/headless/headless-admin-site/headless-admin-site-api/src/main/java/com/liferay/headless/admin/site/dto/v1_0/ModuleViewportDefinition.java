@@ -232,4 +232,4 @@ public class ModuleViewportDefinition implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1946518674
+// LIFERAY-REST-BUILDER-HASH:-1756888978

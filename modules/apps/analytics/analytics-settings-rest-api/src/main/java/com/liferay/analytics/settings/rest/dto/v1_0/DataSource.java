@@ -357,4 +357,4 @@ public class DataSource implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-447295372
+// LIFERAY-REST-BUILDER-HASH:1683061336

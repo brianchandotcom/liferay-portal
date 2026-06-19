@@ -250,4 +250,4 @@ public class FragmentSettingsAllowed implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1639293910
+// LIFERAY-REST-BUILDER-HASH:1393911794

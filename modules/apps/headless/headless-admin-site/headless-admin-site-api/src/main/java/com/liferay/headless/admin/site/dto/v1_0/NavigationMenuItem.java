@@ -29,6 +29,8 @@ import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
@@ -994,10 +996,20 @@ public class NavigationMenuItem implements Serializable {
 
 			sb.append("\"navigationMenuItemSettings\": ");
 
-			if (navigationMenuItemSettings instanceof Map) {
+			if (navigationMenuItemSettings instanceof Collection) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray(
+						(Collection<?>)navigationMenuItemSettings));
+			}
+			else if (navigationMenuItemSettings instanceof Map) {
 				sb.append(
 					JSONFactoryUtil.createJSONObject(
 						(Map<?, ?>)navigationMenuItemSettings));
+			}
+			else if (navigationMenuItemSettings instanceof Object[]) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray(
+						Arrays.asList((Object[])navigationMenuItemSettings)));
 			}
 			else if (navigationMenuItemSettings instanceof String) {
 				sb.append("\"");
@@ -1172,4 +1184,4 @@ public class NavigationMenuItem implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-961341572
+// LIFERAY-REST-BUILDER-HASH:424613016

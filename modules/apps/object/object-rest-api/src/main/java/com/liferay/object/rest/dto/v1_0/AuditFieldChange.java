@@ -25,6 +25,8 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
@@ -224,9 +226,18 @@ public class AuditFieldChange implements Serializable {
 
 			sb.append("\"newValue\": ");
 
-			if (newValue instanceof Map) {
+			if (newValue instanceof Collection) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray((Collection<?>)newValue));
+			}
+			else if (newValue instanceof Map) {
 				sb.append(
 					JSONFactoryUtil.createJSONObject((Map<?, ?>)newValue));
+			}
+			else if (newValue instanceof Object[]) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray(
+						Arrays.asList((Object[])newValue)));
 			}
 			else if (newValue instanceof String) {
 				sb.append("\"");
@@ -247,9 +258,18 @@ public class AuditFieldChange implements Serializable {
 
 			sb.append("\"oldValue\": ");
 
-			if (oldValue instanceof Map) {
+			if (oldValue instanceof Collection) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray((Collection<?>)oldValue));
+			}
+			else if (oldValue instanceof Map) {
 				sb.append(
 					JSONFactoryUtil.createJSONObject((Map<?, ?>)oldValue));
+			}
+			else if (oldValue instanceof Object[]) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray(
+						Arrays.asList((Object[])oldValue)));
 			}
 			else if (oldValue instanceof String) {
 				sb.append("\"");
@@ -362,4 +382,4 @@ public class AuditFieldChange implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:300786808
+// LIFERAY-REST-BUILDER-HASH:565254382

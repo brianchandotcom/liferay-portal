@@ -452,4 +452,4 @@ public class FormFieldValue implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:159040946
+// LIFERAY-REST-BUILDER-HASH:822753998

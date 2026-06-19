@@ -240,4 +240,4 @@ public class Events implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1105816332
+// LIFERAY-REST-BUILDER-HASH:-1863945040

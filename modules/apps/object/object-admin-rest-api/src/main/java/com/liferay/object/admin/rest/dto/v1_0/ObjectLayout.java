@@ -692,4 +692,4 @@ public class ObjectLayout implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2102825558
+// LIFERAY-REST-BUILDER-HASH:-1299618226

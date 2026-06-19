@@ -397,4 +397,4 @@ public class MultipartTestEntity implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-897821957
+// LIFERAY-REST-BUILDER-HASH:-1208454121

@@ -422,4 +422,4 @@ public class AvailabilityEstimate implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1172773691
+// LIFERAY-REST-BUILDER-HASH:-955861727

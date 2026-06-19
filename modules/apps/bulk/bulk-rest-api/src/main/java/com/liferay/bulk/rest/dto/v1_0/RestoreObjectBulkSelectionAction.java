@@ -222,4 +222,4 @@ public class RestoreObjectBulkSelectionAction
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:285634325
+// LIFERAY-REST-BUILDER-HASH:29479793

@@ -688,4 +688,4 @@ public class ContentRetriever implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1913927775
+// LIFERAY-REST-BUILDER-HASH:365141571

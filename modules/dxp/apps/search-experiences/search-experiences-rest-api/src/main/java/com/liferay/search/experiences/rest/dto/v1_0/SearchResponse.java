@@ -25,6 +25,8 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
@@ -503,8 +505,17 @@ public class SearchResponse implements Serializable {
 
 			sb.append("\"request\": ");
 
-			if (request instanceof Map) {
+			if (request instanceof Collection) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray((Collection<?>)request));
+			}
+			else if (request instanceof Map) {
 				sb.append(JSONFactoryUtil.createJSONObject((Map<?, ?>)request));
+			}
+			else if (request instanceof Object[]) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray(
+						Arrays.asList((Object[])request)));
 			}
 			else if (request instanceof String) {
 				sb.append("\"");
@@ -541,9 +552,18 @@ public class SearchResponse implements Serializable {
 
 			sb.append("\"response\": ");
 
-			if (response instanceof Map) {
+			if (response instanceof Collection) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray((Collection<?>)response));
+			}
+			else if (response instanceof Map) {
 				sb.append(
 					JSONFactoryUtil.createJSONObject((Map<?, ?>)response));
+			}
+			else if (response instanceof Object[]) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray(
+						Arrays.asList((Object[])response)));
 			}
 			else if (response instanceof String) {
 				sb.append("\"");
@@ -696,4 +716,4 @@ public class SearchResponse implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1165286462
+// LIFERAY-REST-BUILDER-HASH:-1943144320

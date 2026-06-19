@@ -282,4 +282,4 @@ public class SiteScope implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:992498200
+// LIFERAY-REST-BUILDER-HASH:-268309060

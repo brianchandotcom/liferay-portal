@@ -391,4 +391,4 @@ public class ObjectViewColumn implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-980240272
+// LIFERAY-REST-BUILDER-HASH:-1590554548

@@ -244,4 +244,4 @@ public class DocumentField implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:171806964
+// LIFERAY-REST-BUILDER-HASH:-253172264

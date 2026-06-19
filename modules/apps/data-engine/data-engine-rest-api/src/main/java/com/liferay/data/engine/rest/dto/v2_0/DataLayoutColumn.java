@@ -294,4 +294,4 @@ public class DataLayoutColumn implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1700532621
+// LIFERAY-REST-BUILDER-HASH:923800561

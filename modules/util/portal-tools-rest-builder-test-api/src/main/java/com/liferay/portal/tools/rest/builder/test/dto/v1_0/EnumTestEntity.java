@@ -286,4 +286,4 @@ public class EnumTestEntity implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:547438557
+// LIFERAY-REST-BUILDER-HASH:-1888419199

@@ -25,6 +25,8 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
@@ -211,9 +213,19 @@ public class BorderStylesConfig implements Serializable {
 
 			sb.append("\"borderColor\": ");
 
-			if (borderColor instanceof Map) {
+			if (borderColor instanceof Collection) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray(
+						(Collection<?>)borderColor));
+			}
+			else if (borderColor instanceof Map) {
 				sb.append(
 					JSONFactoryUtil.createJSONObject((Map<?, ?>)borderColor));
+			}
+			else if (borderColor instanceof Object[]) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray(
+						Arrays.asList((Object[])borderColor)));
 			}
 			else if (borderColor instanceof String) {
 				sb.append("\"");
@@ -234,9 +246,19 @@ public class BorderStylesConfig implements Serializable {
 
 			sb.append("\"borderStyle\": ");
 
-			if (borderStyle instanceof Map) {
+			if (borderStyle instanceof Collection) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray(
+						(Collection<?>)borderStyle));
+			}
+			else if (borderStyle instanceof Map) {
 				sb.append(
 					JSONFactoryUtil.createJSONObject((Map<?, ?>)borderStyle));
+			}
+			else if (borderStyle instanceof Object[]) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray(
+						Arrays.asList((Object[])borderStyle)));
 			}
 			else if (borderStyle instanceof String) {
 				sb.append("\"");
@@ -257,9 +279,19 @@ public class BorderStylesConfig implements Serializable {
 
 			sb.append("\"borderWidth\": ");
 
-			if (borderWidth instanceof Map) {
+			if (borderWidth instanceof Collection) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray(
+						(Collection<?>)borderWidth));
+			}
+			else if (borderWidth instanceof Map) {
 				sb.append(
 					JSONFactoryUtil.createJSONObject((Map<?, ?>)borderWidth));
+			}
+			else if (borderWidth instanceof Object[]) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray(
+						Arrays.asList((Object[])borderWidth)));
 			}
 			else if (borderWidth instanceof String) {
 				sb.append("\"");
@@ -372,4 +404,4 @@ public class BorderStylesConfig implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-44632682
+// LIFERAY-REST-BUILDER-HASH:-2027689706

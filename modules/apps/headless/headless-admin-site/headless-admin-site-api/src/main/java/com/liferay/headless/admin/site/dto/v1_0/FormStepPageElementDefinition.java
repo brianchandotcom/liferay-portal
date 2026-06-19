@@ -194,4 +194,4 @@ public class FormStepPageElementDefinition
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:976195784
+// LIFERAY-REST-BUILDER-HASH:-657438356

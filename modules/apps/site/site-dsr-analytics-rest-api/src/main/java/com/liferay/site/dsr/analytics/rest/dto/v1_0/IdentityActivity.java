@@ -280,4 +280,4 @@ public class IdentityActivity implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1865540735
+// LIFERAY-REST-BUILDER-HASH:-2079587291

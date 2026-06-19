@@ -670,4 +670,4 @@ public class SamlProvider implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-795440204
+// LIFERAY-REST-BUILDER-HASH:648592344

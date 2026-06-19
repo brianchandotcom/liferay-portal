@@ -25,6 +25,8 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
@@ -307,8 +309,17 @@ public class ContentSetElement implements Serializable {
 
 			sb.append("\"content\": ");
 
-			if (content instanceof Map) {
+			if (content instanceof Collection) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray((Collection<?>)content));
+			}
+			else if (content instanceof Map) {
 				sb.append(JSONFactoryUtil.createJSONObject((Map<?, ?>)content));
+			}
+			else if (content instanceof Object[]) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray(
+						Arrays.asList((Object[])content)));
 			}
 			else if (content instanceof String) {
 				sb.append("\"");
@@ -477,4 +488,4 @@ public class ContentSetElement implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-81488369
+// LIFERAY-REST-BUILDER-HASH:-749452907

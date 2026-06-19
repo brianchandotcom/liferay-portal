@@ -462,4 +462,4 @@ public class DSRecipientViewDefinition implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:133551656
+// LIFERAY-REST-BUILDER-HASH:-79335420

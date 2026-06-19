@@ -25,6 +25,8 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
@@ -648,8 +650,17 @@ public class Clause implements Serializable {
 
 			sb.append("\"query\": ");
 
-			if (query instanceof Map) {
+			if (query instanceof Collection) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray((Collection<?>)query));
+			}
+			else if (query instanceof Map) {
 				sb.append(JSONFactoryUtil.createJSONObject((Map<?, ?>)query));
+			}
+			else if (query instanceof Object[]) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray(
+						Arrays.asList((Object[])query)));
 			}
 			else if (query instanceof String) {
 				sb.append("\"");
@@ -794,4 +805,4 @@ public class Clause implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:234030055
+// LIFERAY-REST-BUILDER-HASH:1134395499

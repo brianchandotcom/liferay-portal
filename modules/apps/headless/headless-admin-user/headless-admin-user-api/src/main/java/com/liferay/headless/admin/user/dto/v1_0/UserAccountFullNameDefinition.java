@@ -267,4 +267,4 @@ public class UserAccountFullNameDefinition implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1765191442
+// LIFERAY-REST-BUILDER-HASH:1347538230

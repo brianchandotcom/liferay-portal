@@ -395,4 +395,4 @@ public class PerformanceOverviewMetric implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:457759237
+// LIFERAY-REST-BUILDER-HASH:1497734049

@@ -314,4 +314,4 @@ public class NestedWidgetSection implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:980966427
+// LIFERAY-REST-BUILDER-HASH:-263365441

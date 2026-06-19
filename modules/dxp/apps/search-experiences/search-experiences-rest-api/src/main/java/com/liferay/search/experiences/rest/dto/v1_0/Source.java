@@ -361,4 +361,4 @@ public class Source implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1431281181
+// LIFERAY-REST-BUILDER-HASH:-910527033

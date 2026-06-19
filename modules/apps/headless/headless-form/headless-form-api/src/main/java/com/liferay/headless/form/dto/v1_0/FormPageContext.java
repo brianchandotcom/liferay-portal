@@ -359,4 +359,4 @@ public class FormPageContext implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-962948705
+// LIFERAY-REST-BUILDER-HASH:1973015995

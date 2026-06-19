@@ -558,4 +558,4 @@ public class FrequentPatternRecommendation implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1395301633
+// LIFERAY-REST-BUILDER-HASH:-2027642523

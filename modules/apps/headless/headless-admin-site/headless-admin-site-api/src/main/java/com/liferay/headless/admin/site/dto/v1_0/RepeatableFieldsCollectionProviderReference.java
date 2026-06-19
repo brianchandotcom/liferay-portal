@@ -382,4 +382,4 @@ public class RepeatableFieldsCollectionProviderReference
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-921415644
+// LIFERAY-REST-BUILDER-HASH:1872902152

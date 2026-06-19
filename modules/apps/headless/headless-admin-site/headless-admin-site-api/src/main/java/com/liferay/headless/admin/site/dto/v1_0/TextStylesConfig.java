@@ -886,4 +886,4 @@ public class TextStylesConfig implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:416958571
+// LIFERAY-REST-BUILDER-HASH:-1208283065

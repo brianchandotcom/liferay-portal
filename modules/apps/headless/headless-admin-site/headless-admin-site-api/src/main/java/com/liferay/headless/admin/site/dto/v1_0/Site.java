@@ -2175,4 +2175,4 @@ public class Site implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-789553312
+// LIFERAY-REST-BUILDER-HASH:-224588996

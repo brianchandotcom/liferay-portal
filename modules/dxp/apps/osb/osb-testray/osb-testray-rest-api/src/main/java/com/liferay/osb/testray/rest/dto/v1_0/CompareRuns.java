@@ -25,6 +25,8 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
@@ -196,8 +198,17 @@ public class CompareRuns implements Serializable {
 
 			sb.append("\"values\": ");
 
-			if (values instanceof Map) {
+			if (values instanceof Collection) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray((Collection<?>)values));
+			}
+			else if (values instanceof Map) {
 				sb.append(JSONFactoryUtil.createJSONObject((Map<?, ?>)values));
+			}
+			else if (values instanceof Object[]) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray(
+						Arrays.asList((Object[])values)));
 			}
 			else if (values instanceof String) {
 				sb.append("\"");
@@ -310,4 +321,4 @@ public class CompareRuns implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-430633048
+// LIFERAY-REST-BUILDER-HASH:1569934542

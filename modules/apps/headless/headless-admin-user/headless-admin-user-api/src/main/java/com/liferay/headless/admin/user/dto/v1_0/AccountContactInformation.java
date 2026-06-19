@@ -805,4 +805,4 @@ public class AccountContactInformation implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:50469934
+// LIFERAY-REST-BUILDER-HASH:-47216494

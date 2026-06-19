@@ -655,4 +655,4 @@ public class ERCScopedTestEntity implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1115908275
+// LIFERAY-REST-BUILDER-HASH:904170263

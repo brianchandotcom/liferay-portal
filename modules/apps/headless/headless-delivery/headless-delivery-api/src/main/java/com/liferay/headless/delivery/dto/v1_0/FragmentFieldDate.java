@@ -25,6 +25,8 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
@@ -177,8 +179,16 @@ public class FragmentFieldDate implements Serializable {
 
 			sb.append("\"date\": ");
 
-			if (date instanceof Map) {
+			if (date instanceof Collection) {
+				sb.append(JSONFactoryUtil.createJSONArray((Collection<?>)date));
+			}
+			else if (date instanceof Map) {
 				sb.append(JSONFactoryUtil.createJSONObject((Map<?, ?>)date));
+			}
+			else if (date instanceof Object[]) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray(
+						Arrays.asList((Object[])date)));
 			}
 			else if (date instanceof String) {
 				sb.append("\"");
@@ -199,9 +209,18 @@ public class FragmentFieldDate implements Serializable {
 
 			sb.append("\"dateFormat\": ");
 
-			if (dateFormat instanceof Map) {
+			if (dateFormat instanceof Collection) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray((Collection<?>)dateFormat));
+			}
+			else if (dateFormat instanceof Map) {
 				sb.append(
 					JSONFactoryUtil.createJSONObject((Map<?, ?>)dateFormat));
+			}
+			else if (dateFormat instanceof Object[]) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray(
+						Arrays.asList((Object[])dateFormat)));
 			}
 			else if (dateFormat instanceof String) {
 				sb.append("\"");
@@ -314,4 +333,4 @@ public class FragmentFieldDate implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1225996883
+// LIFERAY-REST-BUILDER-HASH:370671099

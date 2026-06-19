@@ -258,4 +258,4 @@ public class DirectFragmentImageValue
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1694984749
+// LIFERAY-REST-BUILDER-HASH:2053258449

@@ -294,4 +294,4 @@ public class Workspace implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:290253126
+// LIFERAY-REST-BUILDER-HASH:151028202

@@ -227,4 +227,4 @@ public class Etag implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:584715326
+// LIFERAY-REST-BUILDER-HASH:-864476510

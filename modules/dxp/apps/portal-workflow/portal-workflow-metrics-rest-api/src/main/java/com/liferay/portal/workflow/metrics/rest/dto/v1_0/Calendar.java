@@ -344,4 +344,4 @@ public class Calendar implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-402767637
+// LIFERAY-REST-BUILDER-HASH:2038044871

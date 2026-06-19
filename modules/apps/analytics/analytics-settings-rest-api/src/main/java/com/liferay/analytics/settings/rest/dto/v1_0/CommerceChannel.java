@@ -394,4 +394,4 @@ public class CommerceChannel implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:144081181
+// LIFERAY-REST-BUILDER-HASH:432650497

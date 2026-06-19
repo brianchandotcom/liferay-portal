@@ -677,4 +677,4 @@ public class FormFieldContext implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1446144962
+// LIFERAY-REST-BUILDER-HASH:102456482

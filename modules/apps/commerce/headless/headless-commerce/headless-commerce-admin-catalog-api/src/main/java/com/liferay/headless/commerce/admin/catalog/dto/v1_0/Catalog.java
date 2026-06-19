@@ -789,4 +789,4 @@ public class Catalog implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-754685340
+// LIFERAY-REST-BUILDER-HASH:254849984

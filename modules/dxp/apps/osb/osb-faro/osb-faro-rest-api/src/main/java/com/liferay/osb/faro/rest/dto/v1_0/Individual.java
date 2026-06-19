@@ -31,6 +31,8 @@ import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
@@ -623,9 +625,19 @@ public class Individual implements Serializable {
 
 			sb.append("\"demographics\": ");
 
-			if (demographics instanceof Map) {
+			if (demographics instanceof Collection) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray(
+						(Collection<?>)demographics));
+			}
+			else if (demographics instanceof Map) {
 				sb.append(
 					JSONFactoryUtil.createJSONObject((Map<?, ?>)demographics));
+			}
+			else if (demographics instanceof Object[]) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray(
+						Arrays.asList((Object[])demographics)));
 			}
 			else if (demographics instanceof String) {
 				sb.append("\"");
@@ -854,4 +866,4 @@ public class Individual implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:136120986
+// LIFERAY-REST-BUILDER-HASH:499529180

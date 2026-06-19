@@ -284,4 +284,4 @@ public class Strategy implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1411700132
+// LIFERAY-REST-BUILDER-HASH:1554666040

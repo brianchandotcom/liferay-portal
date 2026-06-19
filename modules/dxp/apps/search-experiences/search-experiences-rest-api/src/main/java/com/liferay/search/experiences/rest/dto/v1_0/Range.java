@@ -25,6 +25,8 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
@@ -343,8 +345,16 @@ public class Range implements Serializable {
 
 			sb.append("\"gt\": ");
 
-			if (gt instanceof Map) {
+			if (gt instanceof Collection) {
+				sb.append(JSONFactoryUtil.createJSONArray((Collection<?>)gt));
+			}
+			else if (gt instanceof Map) {
 				sb.append(JSONFactoryUtil.createJSONObject((Map<?, ?>)gt));
+			}
+			else if (gt instanceof Object[]) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray(
+						Arrays.asList((Object[])gt)));
 			}
 			else if (gt instanceof String) {
 				sb.append("\"");
@@ -365,8 +375,16 @@ public class Range implements Serializable {
 
 			sb.append("\"gte\": ");
 
-			if (gte instanceof Map) {
+			if (gte instanceof Collection) {
+				sb.append(JSONFactoryUtil.createJSONArray((Collection<?>)gte));
+			}
+			else if (gte instanceof Map) {
 				sb.append(JSONFactoryUtil.createJSONObject((Map<?, ?>)gte));
+			}
+			else if (gte instanceof Object[]) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray(
+						Arrays.asList((Object[])gte)));
 			}
 			else if (gte instanceof String) {
 				sb.append("\"");
@@ -387,8 +405,16 @@ public class Range implements Serializable {
 
 			sb.append("\"lt\": ");
 
-			if (lt instanceof Map) {
+			if (lt instanceof Collection) {
+				sb.append(JSONFactoryUtil.createJSONArray((Collection<?>)lt));
+			}
+			else if (lt instanceof Map) {
 				sb.append(JSONFactoryUtil.createJSONObject((Map<?, ?>)lt));
+			}
+			else if (lt instanceof Object[]) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray(
+						Arrays.asList((Object[])lt)));
 			}
 			else if (lt instanceof String) {
 				sb.append("\"");
@@ -409,8 +435,16 @@ public class Range implements Serializable {
 
 			sb.append("\"lte\": ");
 
-			if (lte instanceof Map) {
+			if (lte instanceof Collection) {
+				sb.append(JSONFactoryUtil.createJSONArray((Collection<?>)lte));
+			}
+			else if (lte instanceof Map) {
 				sb.append(JSONFactoryUtil.createJSONObject((Map<?, ?>)lte));
+			}
+			else if (lte instanceof Object[]) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray(
+						Arrays.asList((Object[])lte)));
 			}
 			else if (lte instanceof String) {
 				sb.append("\"");
@@ -539,4 +573,4 @@ public class Range implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-871990687
+// LIFERAY-REST-BUILDER-HASH:982867013

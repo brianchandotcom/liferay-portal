@@ -920,4 +920,4 @@ public class AssetEntity implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-460381096
+// LIFERAY-REST-BUILDER-HASH:-450234060

@@ -222,4 +222,4 @@ public class DuplicateObjectBulkSelectionAction
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:418241694
+// LIFERAY-REST-BUILDER-HASH:-1986640390

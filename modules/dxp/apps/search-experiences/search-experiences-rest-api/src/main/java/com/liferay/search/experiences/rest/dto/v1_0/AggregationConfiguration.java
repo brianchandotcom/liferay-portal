@@ -25,6 +25,8 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
@@ -127,8 +129,16 @@ public class AggregationConfiguration implements Serializable {
 
 			sb.append("\"aggs\": ");
 
-			if (aggs instanceof Map) {
+			if (aggs instanceof Collection) {
+				sb.append(JSONFactoryUtil.createJSONArray((Collection<?>)aggs));
+			}
+			else if (aggs instanceof Map) {
 				sb.append(JSONFactoryUtil.createJSONObject((Map<?, ?>)aggs));
+			}
+			else if (aggs instanceof Object[]) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray(
+						Arrays.asList((Object[])aggs)));
 			}
 			else if (aggs instanceof String) {
 				sb.append("\"");
@@ -241,4 +251,4 @@ public class AggregationConfiguration implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1946414607
+// LIFERAY-REST-BUILDER-HASH:-1732964899

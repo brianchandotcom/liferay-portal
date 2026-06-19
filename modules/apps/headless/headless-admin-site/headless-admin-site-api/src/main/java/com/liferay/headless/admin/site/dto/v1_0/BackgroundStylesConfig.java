@@ -233,4 +233,4 @@ public class BackgroundStylesConfig implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-24733019
+// LIFERAY-REST-BUILDER-HASH:1553653121

@@ -403,4 +403,4 @@ public class FormStepContainerPageElementDefinition
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1168380895
+// LIFERAY-REST-BUILDER-HASH:436945027

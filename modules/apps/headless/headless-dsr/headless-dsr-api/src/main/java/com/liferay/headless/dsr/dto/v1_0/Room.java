@@ -453,4 +453,4 @@ public class Room implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:393804324
+// LIFERAY-REST-BUILDER-HASH:-1080660152

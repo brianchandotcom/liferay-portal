@@ -25,6 +25,8 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
@@ -189,8 +191,16 @@ public class FragmentFieldText implements Serializable {
 
 			sb.append("\"text\": ");
 
-			if (text instanceof Map) {
+			if (text instanceof Collection) {
+				sb.append(JSONFactoryUtil.createJSONArray((Collection<?>)text));
+			}
+			else if (text instanceof Map) {
 				sb.append(JSONFactoryUtil.createJSONObject((Map<?, ?>)text));
+			}
+			else if (text instanceof Object[]) {
+				sb.append(
+					JSONFactoryUtil.createJSONArray(
+						Arrays.asList((Object[])text)));
 			}
 			else if (text instanceof String) {
 				sb.append("\"");
@@ -303,4 +313,4 @@ public class FragmentFieldText implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:125167087
+// LIFERAY-REST-BUILDER-HASH:1950172363

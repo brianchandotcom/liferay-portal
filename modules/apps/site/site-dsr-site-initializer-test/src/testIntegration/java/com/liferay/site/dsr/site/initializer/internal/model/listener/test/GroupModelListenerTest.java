@@ -122,11 +122,11 @@ public class GroupModelListenerTest {
 
 		Ticket ticket1 = _ticketLocalService.addTicket(
 			group.getCompanyId(), Group.class.getName(), group.getGroupId(),
-			DSRTicketConstants.TYPE_INVITE_MEMBER, null, null, null,
+			DSRTicketConstants.TYPE_EXPIRE_MEMBERSHIP, null, null, null,
 			ServiceContextTestUtil.getServiceContext());
 		Ticket ticket2 = _ticketLocalService.addTicket(
 			group.getCompanyId(), Group.class.getName(), group.getGroupId(),
-			DSRTicketConstants.TYPE_EXPIRE_MEMBERSHIP, null, null, null,
+			DSRTicketConstants.TYPE_INVITE_MEMBER, null, null, null,
 			ServiceContextTestUtil.getServiceContext());
 
 		_groupLocalService.deleteGroup(group);

@@ -290,9 +290,10 @@ public class CETFactoryImpl implements CETFactory {
 			if (cetImplFactory.isURLCETPropertyName(name)) {
 				value = _transformURL(baseURL, value);
 
-				value = StringUtil.replace(
-					value, StringPool.APOSTROPHE, "&#39;");
-				value = StringUtil.replace(value, StringPool.QUOTE, "&#34;");
+				value = com.liferay.portal.kernel.util.StringUtil.replace(
+					value, CharPool.APOSTROPHE, "&#39;");
+				value = com.liferay.portal.kernel.util.StringUtil.replace(
+					value, CharPool.QUOTE, "&#34;");
 			}
 
 			transformedUnicodeProperties.put(name, value);

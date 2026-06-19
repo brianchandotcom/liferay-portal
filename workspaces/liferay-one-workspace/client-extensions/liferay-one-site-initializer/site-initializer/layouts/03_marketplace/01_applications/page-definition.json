@@ -199,7 +199,7 @@
 											},
 											"widgetInstance": {
 												"widgetConfig": {
-													"displayStyle": "ddmTemplate_LO_APPS_VOCABULARY_FACETS",
+													"displayStyle": "ddmTemplate_APPS_VOCABULARY_FACETS",
 													"displayStyleGroupId": "[$GROUP_ID$]",
 													"frequenciesVisible": "true",
 													"frequencyThreshold": "1",
@@ -221,7 +221,7 @@
 											},
 											"widgetInstance": {
 												"widgetConfig": {
-													"displayStyle": "ddmTemplate_LO_APPS_VOCABULARY_FACETS",
+													"displayStyle": "ddmTemplate_APPS_VOCABULARY_FACETS",
 													"displayStyleGroupId": "[$GROUP_ID$]",
 													"frequenciesVisible": "true",
 													"frequencyThreshold": "1",
@@ -245,7 +245,7 @@
 											},
 											"widgetInstance": {
 												"widgetConfig": {
-													"displayStyle": "ddmTemplate_LO_APPS_VOCABULARY_FACETS",
+													"displayStyle": "ddmTemplate_APPS_VOCABULARY_FACETS",
 													"displayStyleGroupId": "[$GROUP_ID$]",
 													"frequenciesVisible": "true",
 													"frequencyThreshold": "1",
@@ -268,7 +268,7 @@
 											},
 											"widgetInstance": {
 												"widgetConfig": {
-													"displayStyle": "ddmTemplate_LO_APPS_VOCABULARY_FACETS",
+													"displayStyle": "ddmTemplate_APPS_VOCABULARY_FACETS",
 													"displayStyleGroupId": "[$GROUP_ID$]",
 													"frequenciesVisible": "true",
 													"frequencyThreshold": "1",
@@ -292,7 +292,7 @@
 											},
 											"widgetInstance": {
 												"widgetConfig": {
-													"displayStyle": "ddmTemplate_LO_APPS_VOCABULARY_FACETS",
+													"displayStyle": "ddmTemplate_APPS_VOCABULARY_FACETS",
 													"displayStyleGroupId": "[$GROUP_ID$]",
 													"frequenciesVisible": "true",
 													"frequencyThreshold": "1",
@@ -310,7 +310,7 @@
 										"definition": {
 											"widgetInstance": {
 												"widgetConfig": {
-													"displayStyle": "ddmTemplate_LO_MARKETPLACE_SPECIFICATIONS_FACET",
+													"displayStyle": "ddmTemplate_MARKETPLACE_SPECIFICATIONS_FACET",
 													"displayStyleGroupId": "[$GROUP_ID$]",
 													"frequenciesVisible": "true",
 													"frequencyThreshold": "1",
@@ -379,7 +379,7 @@
 													"widgetInstance": {
 														"widgetConfig": {
 															"cpContentListRendererKey": "list-default",
-															"displayStyle": "ddmTemplate_LO_APPS_SEARCH_RESULTS_COUNT",
+															"displayStyle": "ddmTemplate_APPS_SEARCH_RESULTS_COUNT",
 															"displayStyleGroupId": "[$GROUP_ID$]",
 															"grouped--cpTypeListEntryRendererKey": "list-entry-default",
 															"paginate": "false",
@@ -401,7 +401,7 @@
 													},
 													"widgetInstance": {
 														"widgetConfig": {
-															"displayStyle": "ddmTemplate_LO_MARKETPLACE_APPS_SORT",
+															"displayStyle": "ddmTemplate_MARKETPLACE_APPS_SORT",
 															"displayStyleGroupId": "[$GROUP_ID$]",
 															"fields": "[{\"field\": \"\", \"label\": \"relevance\"}, {\"field\": \"createDate-\", \"label\": \"Date Created (Newest First)\"}, {\"field\": \"createDate+\", \"label\": \"Date Created (Oldest first)\"}]"
 														},
@@ -419,7 +419,7 @@
 												"widgetConfig": {
 													"cpContentListRendererKey": "list-default",
 													"displayInDocumentForm": "false",
-													"displayStyle": "ddmTemplate_LO_APPS_SEARCH_RESULTS",
+													"displayStyle": "ddmTemplate_APPS_SEARCH_RESULTS",
 													"displayStyleGroupId": "[$GROUP_ID$]",
 													"federatedSearchKey": "",
 													"fieldsToDisplay": "",

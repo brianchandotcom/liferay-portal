@@ -1,6 +1,6 @@
 {
 	"className": "com.liferay.commerce.product.content.search.web.internal.portlet.CPSearchResultsPortlet",
-	"ddmTemplateKey": "LO_APPS_SEARCH_RESULTS_COUNT",
+	"ddmTemplateKey": "APPS_SEARCH_RESULTS_COUNT",
 	"name": "Apps Search Results Count",
 	"resourceClassName": "com.liferay.portlet.display.template.PortletDisplayTemplate"
 }

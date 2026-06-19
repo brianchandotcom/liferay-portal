@@ -1,6 +1,6 @@
 {
 	"className": "com.liferay.template.model.TemplateEntry",
-	"ddmTemplateKey": "LO_MARKETPLACE_APP_IMAGE_GALLERY",
+	"ddmTemplateKey": "MARKETPLACE_APP_IMAGE_GALLERY",
 	"infoItemClassName": "com.liferay.commerce.product.model.CPDefinition",
 	"name": "Marketplace App Image Gallery",
 	"resourceClassName": "com.liferay.template.model.TemplateEntry"

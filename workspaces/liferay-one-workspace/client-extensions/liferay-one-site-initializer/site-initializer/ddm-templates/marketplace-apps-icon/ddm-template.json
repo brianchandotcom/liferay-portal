@@ -1,6 +1,6 @@
 {
 	"className": "com.liferay.template.model.TemplateEntry",
-	"ddmTemplateKey": "LO_MARKETPLACE_APPS_ICON",
+	"ddmTemplateKey": "MARKETPLACE_APPS_ICON",
 	"infoItemClassName": "com.liferay.commerce.product.model.CPDefinition",
 	"name": "Marketplace Apps Icon",
 	"resourceClassName": "com.liferay.template.model.TemplateEntry"

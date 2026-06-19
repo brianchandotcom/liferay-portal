@@ -1,6 +1,6 @@
 {
 	"className": "com.liferay.template.model.TemplateEntry",
-	"ddmTemplateKey": "LO_MARKETPLACE_APP_DETAILS_SIDEBAR",
+	"ddmTemplateKey": "MARKETPLACE_APP_DETAILS_SIDEBAR",
 	"infoItemClassName": "com.liferay.commerce.product.model.CPDefinition",
 	"name": "Marketplace App Details Sidebar",
 	"resourceClassName": "com.liferay.template.model.TemplateEntry"

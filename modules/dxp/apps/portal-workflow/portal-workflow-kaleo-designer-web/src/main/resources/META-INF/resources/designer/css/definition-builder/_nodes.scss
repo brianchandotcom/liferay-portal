@@ -97,10 +97,6 @@
 	}
 }
 
-.node.selected {
-	border: 2px solid #80acff;
-}
-
 .node-handle-area {
 	height: 110px;
 	left: -18px;
@@ -120,4 +116,8 @@
 			z-index: -1;
 		}
 	}
+}
+
+.node.selected {
+	border: 2px solid #80acff;
 }

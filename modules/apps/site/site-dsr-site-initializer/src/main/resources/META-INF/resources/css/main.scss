@@ -121,6 +121,16 @@
 	}
 }
 
+.dsr-expiration-date-picker input {
+	text-align: right;
+	width: 8rem;
+}
+
+.dsr-expiration-label .label-item {
+	align-items: center;
+	flex-direction: row;
+}
+
 .dsr-site-role-input {
 	.dsr-site-role-trigger-button {
 		background-color: transparent;

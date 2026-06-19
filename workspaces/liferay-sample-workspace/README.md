@@ -86,6 +86,10 @@ For `liferay-sample-etc-cron` and `liferay-sample-etc-spring-boot` the third typ
 
 	Build a JavaScript function to add the CKEditor 5 WordCount plugin.
 
+- *liferay-sample-editor-config-contributor-3*
+
+	Add a custom Timestamp button to CKEditor 5 as an example of a customer-style plugin implementation without portal dependencies.
+
 - *liferay-sample-etc-cron*
 
 	Use Spring Boot and OAuth (server to server) to read from and write to Liferay in timed intervals.

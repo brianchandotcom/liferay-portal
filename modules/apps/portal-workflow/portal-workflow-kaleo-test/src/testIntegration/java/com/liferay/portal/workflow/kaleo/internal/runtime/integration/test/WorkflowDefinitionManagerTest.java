@@ -35,6 +35,8 @@ import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
 import java.io.Closeable;
 import java.io.InputStream;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import org.junit.Assert;
@@ -901,11 +903,17 @@ public class WorkflowDefinitionManagerTest extends BaseWorkflowManagerTestCase {
 			expectedWorkflowNodeSettings.size(),
 			actualWorkflowNodeSettings.size());
 
-		for (int i = 0; i < actualWorkflowNodeSettings.size(); i++) {
+		List<WorkflowNodeSetting> sortedActualWorkflowNodeSettings =
+			new ArrayList<>(actualWorkflowNodeSettings);
+
+		sortedActualWorkflowNodeSettings.sort(
+			Comparator.comparing(WorkflowNodeSetting::getName));
+
+		for (int i = 0; i < sortedActualWorkflowNodeSettings.size(); i++) {
 			WorkflowNodeSetting expectedWorkflowNodeSetting =
 				expectedWorkflowNodeSettings.get(i);
 			WorkflowNodeSetting actualWorkflowNodeSetting =
-				actualWorkflowNodeSettings.get(i);
+				sortedActualWorkflowNodeSettings.get(i);
 
 			Assert.assertEquals(
 				expectedWorkflowNodeSetting.getName(),

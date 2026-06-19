@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsValues;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -85,11 +86,14 @@ public class FriendlyURLPublicMappingCheckerTest {
 		throws Exception {
 
 		String defaultLocaleFriendlyURL =
-			StringPool.SLASH + RandomTestUtil.randomString();
+			StringPool.SLASH +
+				StringUtil.toLowerCase(RandomTestUtil.randomString());
 		String nondefaultGroupFriendlyURL =
-			StringPool.SLASH + RandomTestUtil.randomString();
+			StringPool.SLASH +
+				StringUtil.toLowerCase(RandomTestUtil.randomString());
 		String nondefaultLocaleFriendlyURL =
-			StringPool.SLASH + RandomTestUtil.randomString();
+			StringPool.SLASH +
+				StringUtil.toLowerCase(RandomTestUtil.randomString());
 
 		Group group1 = _addGroup();
 

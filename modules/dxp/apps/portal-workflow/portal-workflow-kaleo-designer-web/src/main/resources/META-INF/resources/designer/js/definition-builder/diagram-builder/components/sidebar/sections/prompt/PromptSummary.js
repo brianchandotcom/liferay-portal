@@ -5,48 +5,14 @@
 
 import ClayForm, {ClayInput} from '@clayui/form';
 import PropTypes from 'prop-types';
-import React, {useContext, useMemo} from 'react';
+import React, {useContext} from 'react';
 
 import {DiagramBuilderContext} from '../../../../DiagramBuilderContext';
-import {
-	formatVariablesForTextarea,
-	parseVariablesInput,
-} from '../../../../util/parseVariables';
 import SidebarPanel from '../../SidebarPanel';
+import InputOutputVariables from '../shared-components/InputOutputVariables';
 
 const PromptSummary = () => {
 	const {selectedItem, setSelectedItem} = useContext(DiagramBuilderContext);
-
-	const inputVariablesValue = useMemo(
-		() => formatVariablesForTextarea(selectedItem?.data?.inputVariables),
-		[selectedItem]
-	);
-
-	const outputVariablesValue = useMemo(
-		() => formatVariablesForTextarea(selectedItem?.data?.outputVariables),
-		[selectedItem]
-	);
-
-	const handleVariablesChange =
-		(field) =>
-		({target}) => {
-			if (!selectedItem) {
-				return;
-			}
-
-			const text = target.value;
-			const parsed = parseVariablesInput(text);
-
-			const updatedItem = {
-				...selectedItem,
-				data: {
-					...selectedItem.data,
-					[field]: parsed,
-				},
-			};
-
-			setSelectedItem(updatedItem);
-		};
 
 	return (
 		<SidebarPanel panelTitle={Liferay.Language.get('prompt')}>
@@ -67,33 +33,7 @@ const PromptSummary = () => {
 					value={selectedItem?.data.prompt ?? ''}
 				/>
 
-				<label className="mt-4" htmlFor="inputVariables">
-					{Liferay.Language.get('input-variables')}
-				</label>
-
-				<ClayInput
-					className="mt-2"
-					component="textarea"
-					id="inputVariables"
-					onChange={handleVariablesChange('inputVariables')}
-					placeholder='[{"name":"tone", "type":"string"}]'
-					type="text"
-					value={inputVariablesValue}
-				/>
-
-				<label className="mt-4" htmlFor="outputVariables">
-					{Liferay.Language.get('output-variables')}
-				</label>
-
-				<ClayInput
-					className="mt-2"
-					component="textarea"
-					id="outputVariables"
-					onChange={handleVariablesChange('outputVariables')}
-					placeholder='[{"name":"tone", "type":"string"}]'
-					type="text"
-					value={outputVariablesValue}
-				/>
+				<InputOutputVariables />
 
 				<label className="mt-4" htmlFor="userMessage">
 					{Liferay.Language.get('user-message')}

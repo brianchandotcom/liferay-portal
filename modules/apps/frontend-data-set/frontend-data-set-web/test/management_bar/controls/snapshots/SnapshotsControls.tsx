@@ -37,14 +37,20 @@ const mockFDSContext = {
 const ownedSnapshot = {erc: 'owned-erc', id: 1, label: 'Owned View'};
 const sharedSnapshot = {erc: 'shared-erc', id: 2, label: 'Shared View'};
 
-const renderSnapshotsControls = (viewsState: any) =>
+const renderSnapshotsControls = (
+	viewsState: any,
+	viewsDispatch: jest.Mock = jest.fn()
+) => {
 	render(
 		<FrontendDataSetContext.Provider value={mockFDSContext as any}>
-			<ViewsContext.Provider value={[viewsState, jest.fn()] as any}>
+			<ViewsContext.Provider value={[viewsState, viewsDispatch] as any}>
 				<SnapshotsControls />
 			</ViewsContext.Provider>
 		</FrontendDataSetContext.Provider>
 	);
+
+	return {viewsDispatch};
+};
 
 const openActionsDropdown = async () => {
 	await userEvent.click(
@@ -70,6 +76,7 @@ describe('SnapshotsControls action gating', () => {
 				snapshotUpdated: false,
 				snapshots: [{headerVisible: false, items: [ownedSnapshot]}],
 				sorts: [],
+				startupViewDataSetSnapshotERC: null,
 				visibleFieldNames: {},
 			});
 		});
@@ -102,6 +109,7 @@ describe('SnapshotsControls action gating', () => {
 					},
 				],
 				sorts: [],
+				startupViewDataSetSnapshotERC: null,
 				visibleFieldNames: {},
 			});
 		});

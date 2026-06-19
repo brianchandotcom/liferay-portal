@@ -310,7 +310,7 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 	private Set<String> _getAutoResolvableTokenNames(
 		String externalReferenceCode, HttpServletRequest httpServletRequest) {
 
-		Set<String> autoResolvableTokenNames = _getTokenNames(
+		Set<String> tokenNames = _getTokenNames(
 			externalReferenceCode, httpServletRequest);
 
 		Matcher matcher = _pattern.matcher(
@@ -318,10 +318,10 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 				externalReferenceCode, httpServletRequest, true, null));
 
 		while (matcher.find()) {
-			autoResolvableTokenNames.remove(matcher.group(1));
+			tokenNames.remove(matcher.group(1));
 		}
 
-		return autoResolvableTokenNames;
+		return tokenNames;
 	}
 
 	private Set<String> _getTokenNames(

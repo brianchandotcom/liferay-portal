@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -223,7 +224,7 @@ public class FDSAPIURLBuilderTest {
 
 		serviceRegistration1 = _registerFDSAPIURLResolver(
 			"/app", "schema", new String[] {"{foo}", "{userId}"},
-			new String[] {"bar", "54321"});
+			new String[] {"bar", RandomTestUtil.randomString()});
 
 		Assert.assertEquals(
 			"/o/app/{foo}/endpoint",

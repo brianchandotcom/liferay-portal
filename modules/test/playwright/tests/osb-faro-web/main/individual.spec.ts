@@ -945,3 +945,67 @@ test(
 		}
 	}
 );
+
+test(
+	'Synced contacts appear in the Known Individuals list',
+	{
+		tag: '@LRAC-12659',
+	},
+	async ({
+		analyticsChannel: channel,
+		apiHelpers,
+		dxpSyncedAnalyticsChannel,
+		page,
+		project,
+	}) => {
+		const {dataSourceId} = dxpSyncedAnalyticsChannel;
+
+		const runId = getRandomString();
+
+		const individuals = [
+			{...generateIndividual({name: 'dxp' + runId}), dataSourceId},
+			{...generateIndividual({name: 'lxc' + runId}), dataSourceId},
+		];
+
+		const date = new Date();
+
+		await createIndividuals({apiHelpers, individuals});
+
+		await apiHelpers.jsonWebServicesOSBAsah.createEvents(
+			individuals.map((individual) => ({
+				applicationId: 'Page',
+				canonicalUrl: 'https://www.liferay.com',
+				channelId: channel.id,
+				dataSourceId,
+				eventDate: date.toISOString(),
+				eventId: 'pageViewed',
+				title: 'pageViewed',
+				userId: individual.id,
+			}))
+		);
+
+		await navigateToACPageViaURL({
+			acPage: ACPage.individualPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await page.getByRole('link', {name: 'Known Individuals'}).click();
+
+		// Both synced contacts surface in the Known Individuals list
+
+		for (const individual of individuals) {
+			await expect(async () => {
+				await page
+					.getByPlaceholder('Search')
+					.first()
+					.fill(individual.name);
+
+				await expect(
+					page.getByRole('link', {name: individual.name}).first()
+				).toBeVisible({timeout: 3000});
+			}).toPass({timeout: 30000});
+		}
+	}
+);

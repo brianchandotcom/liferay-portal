@@ -296,29 +296,31 @@ public class StagedLayoutSetStagedModelDataHandler
 	}
 
 	private void _deleteUnnecessaryClientExtensionEntryRels(
-		StagedLayoutSet stagedLayoutSet,
+		List<Element> clientExtensionEntryRelsElements,
 		StagedLayoutSet importedStagedLayoutSet) {
+
+		Set<String> importedUuids = new HashSet<>();
+
+		for (Element clientExtensionEntryRelsElement :
+				clientExtensionEntryRelsElements) {
+
+			importedUuids.add(
+				clientExtensionEntryRelsElement.attributeValue("uuid"));
+		}
 
 		LayoutSet importedLayoutSet = importedStagedLayoutSet.getLayoutSet();
 
-		List<ClientExtensionEntryRel> importedClientExtensionEntryRels =
+		List<ClientExtensionEntryRel> clientExtensionEntryRels =
 			_clientExtensionEntryRelLocalService.getClientExtensionEntryRels(
 				_portal.getClassNameId(LayoutSet.class),
 				importedLayoutSet.getLayoutSetId());
 
-		for (ClientExtensionEntryRel importedClientExtensionEntryRel :
-				importedClientExtensionEntryRels) {
+		for (ClientExtensionEntryRel clientExtensionEntryRel :
+				clientExtensionEntryRels) {
 
-			ClientExtensionEntryRel stagedClientExtensionEntryRel =
+			if (!importedUuids.contains(clientExtensionEntryRel.getUuid())) {
 				_clientExtensionEntryRelLocalService.
-					fetchClientExtensionEntryRelByUuidAndGroupId(
-						importedClientExtensionEntryRel.getUuid(),
-						stagedLayoutSet.getGroupId());
-
-			if (stagedClientExtensionEntryRel == null) {
-				_clientExtensionEntryRelLocalService.
-					deleteClientExtensionEntryRel(
-						importedClientExtensionEntryRel);
+					deleteClientExtensionEntryRel(clientExtensionEntryRel);
 			}
 		}
 	}
@@ -563,12 +565,12 @@ public class StagedLayoutSetStagedModelDataHandler
 			StagedLayoutSet importedStagedLayoutSet)
 		throws Exception {
 
-		_deleteUnnecessaryClientExtensionEntryRels(
-			stagedLayoutSet, importedStagedLayoutSet);
-
 		List<Element> clientExtensionEntryRelsElements =
 			portletDataContext.getReferenceDataElements(
 				stagedLayoutSet, ClientExtensionEntryRel.class);
+
+		_deleteUnnecessaryClientExtensionEntryRels(
+			clientExtensionEntryRelsElements, importedStagedLayoutSet);
 
 		for (Element clientExtensionEntryRelsElement :
 				clientExtensionEntryRelsElements) {

@@ -1056,9 +1056,9 @@ paths:
                                 $ref: "#/components/schemas/ExportPreview"
             tags: ["ExportPreview"]
     "/export-processes":
-        description:
-            Retrieves all the layout export process entries.
         get:
+            description:
+                Retrieves all the layout export process entries.
             operationId: getExportProcessesPage
             parameters:
                 -   in: query
@@ -1270,9 +1270,9 @@ paths:
                                 $ref: "#/components/schemas/ImportPreview"
             tags: ["ImportPreview"]
     "/import-processes":
-        description:
-            Retrieves all the layout import process entries.
         get:
+            description:
+                Retrieves all the layout import process entries.
             operationId: getImportProcessesPage
             parameters:
                 -   in: query
@@ -1552,9 +1552,9 @@ paths:
                                 $ref: "#/components/schemas/ExportPreview"
             tags: ["ExportPreview"]
     "/sites/{siteExternalReferenceCode}/export-processes":
-        description:
-            Retrieves the layout export process entries for the specified site.
         get:
+            description:
+                Retrieves the layout export process entries for the specified site.
             operationId: getSiteExportProcessesPage
             parameters:
                 -   in: path
@@ -1668,9 +1668,9 @@ paths:
                                 $ref: "#/components/schemas/ImportPreview"
             tags: ["ImportPreview"]
     "/sites/{siteExternalReferenceCode}/import-processes":
-        description:
-            Retrieves the layout import process entries for the specified site.
         get:
+            description:
+                Retrieves the layout import process entries for the specified site.
             operationId: getSiteImportProcessesPage
             parameters:
                 -   in: path

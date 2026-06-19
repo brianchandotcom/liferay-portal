@@ -85,6 +85,14 @@ export function getModalInfo(itemType: string) {
 			title: Liferay.Language.get('delete-fork-node'),
 		};
 	}
+	if (itemType === 'http-request') {
+		return {
+			message: Liferay.Language.get(
+				'are-you-sure-you-want-to-delete-the-selected-http-request-node'
+			),
+			title: Liferay.Language.get('delete-http-request-node'),
+		};
+	}
 	if (itemType === 'join') {
 		return {
 			message: Liferay.Language.get(

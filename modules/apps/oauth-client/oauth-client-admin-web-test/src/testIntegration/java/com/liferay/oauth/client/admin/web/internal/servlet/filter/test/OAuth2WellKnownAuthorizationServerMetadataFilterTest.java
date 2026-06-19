@@ -130,8 +130,8 @@ public class OAuth2WellKnownAuthorizationServerMetadataFilterTest {
 		httpResponse = _send(urlString, "OPTIONS");
 
 		_assertHeader(
-			"Authorization, Content-Type", "Access-Control-Allow-Headers",
-			httpResponse.headers());
+			"Authorization, Content-Type, MCP-Protocol-Version",
+			"Access-Control-Allow-Headers", httpResponse.headers());
 		_assertHeader(
 			"GET, HEAD, OPTIONS", "Access-Control-Allow-Methods",
 			httpResponse.headers());

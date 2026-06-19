@@ -9,19 +9,31 @@ import com.liferay.oauth2.provider.constants.OAuth2ApplicationConstants;
 import com.liferay.oauth2.provider.constants.OAuth2ProviderActionKeys;
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.model.OAuth2Authorization;
+import com.liferay.oauth2.provider.rest.internal.configuration.DynamicRegistrationConfiguration;
+import com.liferay.oauth2.provider.rest.internal.constants.OAuth2ProviderRESTWebKeys;
+import com.liferay.oauth2.provider.rest.internal.endpoint.constants.OAuth2ProviderRESTEndpointConstants;
+import com.liferay.oauth2.provider.rest.internal.endpoint.util.OAuth2ErrorUtil;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
 import com.liferay.oauth2.provider.service.OAuth2AuthorizationLocalService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.audit.AuditMessage;
+import com.liferay.portal.kernel.audit.AuditRouterUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserConstants;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.ProtectedPrincipal;
+import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -44,6 +56,8 @@ import jakarta.ws.rs.ext.Provider;
 import java.security.Principal;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.cxf.jaxrs.utils.ExceptionUtils;
@@ -59,6 +73,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jorge García Jiménez
+ * @author Rafael Praxedes
  */
 @Component(
 	property = {
@@ -87,9 +102,9 @@ public class DynamicRegistrationServiceContainerRequestFilter
 		HttpServletRequest httpServletRequest = (HttpServletRequest)message.get(
 			AbstractHTTPDestination.HTTP_REQUEST);
 
-		if (!FeatureFlagManagerUtil.isEnabled(
-				_portal.getCompanyId(httpServletRequest), "LPD-63416")) {
+		long companyId = _portal.getCompanyId(httpServletRequest);
 
+		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-63416")) {
 			containerRequestContext.abortWith(
 				Response.status(
 					Response.Status.NOT_FOUND
@@ -98,83 +113,30 @@ public class DynamicRegistrationServiceContainerRequestFilter
 			return;
 		}
 
+		boolean authenticatedRegistration = StringUtil.startsWith(
+			httpServletRequest.getHeader("Authorization"), "Bearer ");
+
 		User user = null;
 
 		try {
-			JwtToken jwtToken = _getJwtToken(httpServletRequest);
+			if (!authenticatedRegistration &&
+				StringUtil.equalsIgnoreCase(
+					httpServletRequest.getMethod(), "POST")) {
 
-			long currentTime = TimeUnit.SECONDS.convert(
-				System.currentTimeMillis(), TimeUnit.MILLISECONDS);
-			long expirationTime = GetterUtil.getLong(jwtToken.getClaim("exp"));
+				user = _authorizeOpenRegistration(
+					companyId, httpServletRequest);
 
-			if (currentTime > expirationTime) {
-				throw ExceptionUtils.toNotAuthorizedException(null, null);
-			}
-
-			user = _userLocalService.getUser(
-				GetterUtil.getLong(jwtToken.getClaim("sub")));
-
-			OAuth2Application oAuth2Application = null;
-
-			if (!Validator.isBlank(
-					GetterUtil.getString(jwtToken.getClaim("client_id")))) {
-
-				oAuth2Application =
-					_oAuth2ApplicationLocalService.fetchOAuth2Application(
-						user.getCompanyId(),
-						GetterUtil.getString(jwtToken.getClaim("client_id")));
+				httpServletRequest.setAttribute(
+					OAuth2ProviderRESTWebKeys.DYNAMIC_REGISTRATION_OPEN,
+					Boolean.TRUE);
 			}
 			else {
-				oAuth2Application =
-					_oAuth2ApplicationLocalService.fetchOAuth2Application(
-						GetterUtil.getLong(
-							jwtToken.getClaim("application_id")));
-			}
+				httpServletRequest.setAttribute(
+					OAuth2ProviderRESTWebKeys.DYNAMIC_REGISTRATION_CLIENT_HOST,
+					_normalizeHost(_getClientHost(httpServletRequest, false)));
 
-			PermissionChecker permissionChecker =
-				_permissionCheckerFactory.create(user);
-
-			if ((oAuth2Application == null) ||
-				!_oAuth2ApplicationModelResourcePermission.contains(
-					permissionChecker, oAuth2Application,
-					OAuth2ProviderActionKeys.REGISTER_APPLICATION)) {
-
-				throw ExceptionUtils.toNotAuthorizedException(null, null);
-			}
-
-			String method = httpServletRequest.getMethod();
-
-			if (StringUtil.equalsIgnoreCase(method, "DELETE") &&
-				!_oAuth2ApplicationModelResourcePermission.contains(
-					permissionChecker, oAuth2Application, ActionKeys.DELETE)) {
-
-				throw ExceptionUtils.toNotAuthorizedException(null, null);
-			}
-
-			if (StringUtil.equalsIgnoreCase(method, "PUT") &&
-				!_oAuth2ApplicationModelResourcePermission.contains(
-					permissionChecker, oAuth2Application, ActionKeys.UPDATE)) {
-
-				throw ExceptionUtils.toNotAuthorizedException(null, null);
-			}
-
-			boolean dynamicRegistrator = StringUtil.equalsIgnoreCase(
-				OAuth2ApplicationConstants.NAME_DYNAMIC_REGISTRATOR,
-				oAuth2Application.getName());
-
-			if (StringUtil.equalsIgnoreCase(method, "POST") &&
-				!dynamicRegistrator) {
-
-				throw ExceptionUtils.toNotAuthorizedException(null, null);
-			}
-
-			String clientId = _getClientId(httpServletRequest);
-
-			if (Validator.isNotNull(clientId) && !dynamicRegistrator &&
-				!StringUtil.equalsIgnoreCase(
-					clientId, oAuth2Application.getClientId())) {
-
-				throw ExceptionUtils.toNotAuthorizedException(null, null);
+				user = _authorize(
+					httpServletRequest, httpServletRequest.getMethod());
 			}
 		}
 		catch (WebApplicationException webApplicationException) {
@@ -189,38 +151,255 @@ public class DynamicRegistrationServiceContainerRequestFilter
 				_log.debug(exception);
 			}
 
-			throw ExceptionUtils.toNotAuthorizedException(null, null);
-		}
+			_auditAuthorizationFailure(
+				authenticatedRegistration,
+				GetterUtil.getString(
+					httpServletRequest.getAttribute(
+						OAuth2ProviderRESTWebKeys.
+							DYNAMIC_REGISTRATION_CLIENT_HOST),
+					_normalizeHost(_getClientHost(httpServletRequest, false))),
+				companyId, httpServletRequest);
 
-		try {
-			if (!user.isGuestUser()) {
-				long userId = user.getUserId();
-
-				containerRequestContext.setSecurityContext(
-					new PortalCXFSecurityContext() {
-
-						@Override
-						public Principal getUserPrincipal() {
-							return new ProtectedPrincipal(
-								String.valueOf(userId));
-						}
-
-						@Override
-						public boolean isSecure() {
-							return _portal.isSecure(httpServletRequest);
-						}
-
-					});
+			if (authenticatedRegistration) {
+				throw ExceptionUtils.toNotAuthorizedException(null, null);
 			}
-		}
-		catch (Exception exception) {
-			_log.error("Unable to resolve authenticated user", exception);
 
-			containerRequestContext.abortWith(
+			throw new WebApplicationException(
 				Response.status(
 					Response.Status.INTERNAL_SERVER_ERROR
 				).build());
 		}
+
+		_setSecurityContext(containerRequestContext, httpServletRequest, user);
+	}
+
+	private void _auditAuthorizationFailure(
+		boolean authenticatedRegistration, String clientHost, long companyId,
+		HttpServletRequest httpServletRequest) {
+
+		if (authenticatedRegistration) {
+			_auditFailure(
+				clientHost, companyId,
+				OAuth2ProviderRESTEndpointConstants.ERROR_INVALID_TOKEN,
+				"Bearer token authorization failed", httpServletRequest,
+				OAuth2ProviderRESTEndpointConstants.
+					DYNAMIC_REGISTRATION_MODE_AUTHENTICATED);
+
+			return;
+		}
+
+		_auditFailure(
+			clientHost, companyId,
+			OAuth2ProviderRESTEndpointConstants.ERROR_SERVER_ERROR,
+			"Open registration authorization failed", httpServletRequest,
+			OAuth2ProviderRESTEndpointConstants.DYNAMIC_REGISTRATION_MODE_OPEN);
+	}
+
+	private void _auditFailure(
+		String clientHost, long companyId, String error,
+		String errorDescription, HttpServletRequest httpServletRequest,
+		String mode) {
+
+		try {
+			AuditRouterUtil.route(
+				new AuditMessage(
+					0, companyId, 0, StringPool.BLANK, null,
+					JSONUtil.put(
+						"clientHost", clientHost
+					).put(
+						"error", error
+					).put(
+						"errorDescription", errorDescription
+					).put(
+						"mode", mode
+					).put(
+						"userAgent",
+						GetterUtil.getString(
+							httpServletRequest.getHeader("User-Agent"))
+					),
+					OAuth2Application.class.getName(), StringPool.BLANK,
+					OAuth2ProviderRESTEndpointConstants.
+						EVENT_TYPE_DYNAMIC_REGISTRATION_REJECT,
+					StringPool.BLANK));
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+		}
+	}
+
+	private User _authorize(
+			HttpServletRequest httpServletRequest, String method)
+		throws Exception {
+
+		JwtToken jwtToken = _getJwtToken(httpServletRequest);
+
+		if (jwtToken == null) {
+			throw ExceptionUtils.toNotAuthorizedException(null, null);
+		}
+
+		long currentTime = TimeUnit.SECONDS.convert(
+			System.currentTimeMillis(), TimeUnit.MILLISECONDS);
+
+		long expirationTime = GetterUtil.getLong(jwtToken.getClaim("exp"));
+
+		if ((expirationTime > 0) && (currentTime > expirationTime)) {
+			throw ExceptionUtils.toNotAuthorizedException(null, null);
+		}
+
+		User user = _userLocalService.getUser(
+			GetterUtil.getLong(jwtToken.getClaim("sub")));
+
+		OAuth2Application oAuth2Application = null;
+
+		String clientId = GetterUtil.getString(jwtToken.getClaim("client_id"));
+
+		if (!Validator.isBlank(clientId)) {
+			oAuth2Application =
+				_oAuth2ApplicationLocalService.fetchOAuth2Application(
+					user.getCompanyId(), clientId);
+		}
+		else {
+			oAuth2Application =
+				_oAuth2ApplicationLocalService.fetchOAuth2Application(
+					GetterUtil.getLong(jwtToken.getClaim("application_id")));
+		}
+
+		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
+			user);
+
+		if ((oAuth2Application == null) ||
+			!_oAuth2ApplicationModelResourcePermission.contains(
+				permissionChecker, oAuth2Application,
+				OAuth2ProviderActionKeys.REGISTER_APPLICATION)) {
+
+			throw ExceptionUtils.toNotAuthorizedException(null, null);
+		}
+
+		String actionId = StringPool.BLANK;
+
+		if (StringUtil.equalsIgnoreCase(method, "DELETE")) {
+			actionId = ActionKeys.DELETE;
+		}
+		else if (StringUtil.equalsIgnoreCase(method, "PUT")) {
+			actionId = ActionKeys.UPDATE;
+		}
+
+		if (Validator.isNotNull(actionId) &&
+			!_oAuth2ApplicationModelResourcePermission.contains(
+				permissionChecker, oAuth2Application, actionId)) {
+
+			throw ExceptionUtils.toNotAuthorizedException(null, null);
+		}
+
+		boolean dynamicRegistrator = StringUtil.equalsIgnoreCase(
+			OAuth2ApplicationConstants.NAME_DYNAMIC_REGISTRATOR,
+			oAuth2Application.getName());
+
+		if (StringUtil.equalsIgnoreCase(method, "POST") &&
+			!dynamicRegistrator) {
+
+			throw ExceptionUtils.toNotAuthorizedException(null, null);
+		}
+
+		clientId = _getClientId(httpServletRequest);
+
+		if (Validator.isNotNull(clientId) && !dynamicRegistrator &&
+			!StringUtil.equalsIgnoreCase(
+				clientId, oAuth2Application.getClientId())) {
+
+			throw ExceptionUtils.toNotAuthorizedException(null, null);
+		}
+
+		return user;
+	}
+
+	private User _authorizeOpenRegistration(
+			long companyId, HttpServletRequest httpServletRequest)
+		throws ConfigurationException {
+
+		DynamicRegistrationConfiguration dynamicRegistrationConfiguration =
+			_getDynamicRegistrationConfiguration(companyId);
+
+		String clientHost = _normalizeHost(
+			_getClientHost(
+				httpServletRequest,
+				dynamicRegistrationConfiguration.trustProxyHeaders()));
+
+		httpServletRequest.setAttribute(
+			OAuth2ProviderRESTWebKeys.DYNAMIC_REGISTRATION_CLIENT_HOST,
+			clientHost);
+
+		if (dynamicRegistrationConfiguration.requireInitialAccessToken()) {
+			_auditFailure(
+				clientHost, companyId,
+				OAuth2ProviderRESTEndpointConstants.ERROR_INVALID_TOKEN,
+				"Initial access token is required", httpServletRequest,
+				OAuth2ProviderRESTEndpointConstants.
+					DYNAMIC_REGISTRATION_MODE_OPEN);
+
+			throw ExceptionUtils.toNotAuthorizedException(null, null);
+		}
+
+		_validateOpenRegistrationHosts(
+			dynamicRegistrationConfiguration.allowedHosts(), clientHost,
+			companyId, httpServletRequest);
+
+		User user = _userLocalService.fetchUserByScreenName(
+			companyId, UserConstants.SCREEN_NAME_DEFAULT_SERVICE_ACCOUNT);
+
+		if ((user == null) || !user.isActive()) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					StringBundler.concat(
+						"The default service account is unavailable for ",
+						"company ", companyId));
+			}
+
+			_auditAuthorizationFailure(
+				false, clientHost, companyId, httpServletRequest);
+
+			throw new WebApplicationException(
+				Response.status(
+					Response.Status.INTERNAL_SERVER_ERROR
+				).build());
+		}
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				StringBundler.concat(
+					"Open dynamic registration accepted for company ",
+					companyId, " from \"", clientHost, "\""));
+		}
+
+		return user;
+	}
+
+	private String _getClientHost(
+		HttpServletRequest httpServletRequest, boolean trustProxyHeaders) {
+
+		if (!trustProxyHeaders) {
+			return httpServletRequest.getRemoteAddr();
+		}
+
+		String forwardedFor = httpServletRequest.getHeader("X-Forwarded-For");
+
+		if (!Validator.isBlank(forwardedFor)) {
+			int index = forwardedFor.indexOf(',');
+
+			if (index >= 0) {
+				forwardedFor = forwardedFor.substring(0, index);
+			}
+
+			forwardedFor = forwardedFor.trim();
+
+			if (!forwardedFor.isEmpty()) {
+				return forwardedFor;
+			}
+		}
+
+		return httpServletRequest.getRemoteAddr();
 	}
 
 	private String _getClientId(HttpServletRequest httpServletRequest) {
@@ -236,9 +415,17 @@ public class DynamicRegistrationServiceContainerRequestFilter
 		return null;
 	}
 
-	private JwtToken _getJwtToken(HttpServletRequest httpServletRequest)
-		throws WebApplicationException {
+	private DynamicRegistrationConfiguration
+			_getDynamicRegistrationConfiguration(long companyId)
+		throws ConfigurationException {
 
+		return _configurationProvider.getConfiguration(
+			DynamicRegistrationConfiguration.class,
+			new CompanyServiceSettingsLocator(
+				companyId, DynamicRegistrationConfiguration.class.getName()));
+	}
+
+	private JwtToken _getJwtToken(HttpServletRequest httpServletRequest) {
 		String authorization = httpServletRequest.getHeader("Authorization");
 
 		if (!StringUtil.startsWith(authorization, "Bearer ")) {
@@ -262,7 +449,11 @@ public class DynamicRegistrationServiceContainerRequestFilter
 			Date accessTokenExpirationDate =
 				oAuth2Authorization.getAccessTokenExpirationDate();
 
-			jwtClaims.setExpiryTime(accessTokenExpirationDate.getTime());
+			if (accessTokenExpirationDate != null) {
+				jwtClaims.setExpiryTime(
+					TimeUnit.MILLISECONDS.toSeconds(
+						accessTokenExpirationDate.getTime()));
+			}
 
 			return new JwtToken(jwtClaims);
 		}
@@ -273,8 +464,118 @@ public class DynamicRegistrationServiceContainerRequestFilter
 		return jwsJwtCompactConsumer.getJwtToken();
 	}
 
+	private String _normalizeHost(String host) {
+		if (Validator.isBlank(host)) {
+			return StringPool.BLANK;
+		}
+
+		String normalizedHost = host.trim();
+
+		if (normalizedHost.startsWith(StringPool.OPEN_BRACKET)) {
+			int index = normalizedHost.indexOf(StringPool.CLOSE_BRACKET);
+
+			if (index > 1) {
+				normalizedHost = normalizedHost.substring(1, index);
+			}
+		}
+		else {
+			int index = normalizedHost.indexOf(StringPool.COLON);
+
+			if ((index > 0) &&
+				(normalizedHost.indexOf(StringPool.COLON, index + 1) < 0)) {
+
+				normalizedHost = normalizedHost.substring(0, index);
+			}
+		}
+
+		return StringUtil.toLowerCase(normalizedHost);
+	}
+
+	private void _setSecurityContext(
+		ContainerRequestContext containerRequestContext,
+		HttpServletRequest httpServletRequest, User user) {
+
+		try {
+			if (user.isGuestUser()) {
+				return;
+			}
+
+			long userId = user.getUserId();
+
+			containerRequestContext.setSecurityContext(
+				new PortalCXFSecurityContext() {
+
+					@Override
+					public Principal getUserPrincipal() {
+						return new ProtectedPrincipal(String.valueOf(userId));
+					}
+
+					@Override
+					public boolean isSecure() {
+						return _portal.isSecure(httpServletRequest);
+					}
+
+				});
+		}
+		catch (Exception exception) {
+			_log.error("Unable to resolve authenticated user", exception);
+
+			containerRequestContext.abortWith(
+				Response.status(
+					Response.Status.INTERNAL_SERVER_ERROR
+				).build());
+		}
+	}
+
+	private void _validateOpenRegistrationHosts(
+		String[] allowedHosts, String clientHost, long companyId,
+		HttpServletRequest httpServletRequest) {
+
+		Set<String> normalizedAllowedHosts = new HashSet<>();
+
+		if (allowedHosts != null) {
+			for (String allowedHost : allowedHosts) {
+				if (Validator.isBlank(allowedHost)) {
+					continue;
+				}
+
+				for (String part : allowedHost.split("\\s+")) {
+					if (Validator.isBlank(part)) {
+						continue;
+					}
+
+					normalizedAllowedHosts.add(_normalizeHost(part));
+				}
+			}
+		}
+
+		if (normalizedAllowedHosts.contains(StringPool.STAR)) {
+			return;
+		}
+
+		if (normalizedAllowedHosts.isEmpty() ||
+			!normalizedAllowedHosts.contains(clientHost)) {
+
+			String message =
+				"OAuth 2 application open registration is not allowed for " +
+					"host: " + clientHost;
+
+			_auditFailure(
+				clientHost, companyId, "access_denied", message,
+				httpServletRequest,
+				OAuth2ProviderRESTEndpointConstants.
+					DYNAMIC_REGISTRATION_MODE_OPEN);
+
+			OAuth2ErrorUtil.reportInvalidRequestError(
+				message, "access_denied", Response.Status.FORBIDDEN);
+		}
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		DynamicRegistrationServiceContainerRequestFilter.class);
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private OAuth2ApplicationLocalService _oAuth2ApplicationLocalService;

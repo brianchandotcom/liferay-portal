@@ -28,6 +28,7 @@ export enum EViewsActionTypes {
 	NOOP = 'NOOP',
 	RENAME_ACTIVE_SNAPSHOT = 'RENAME_ACTIVE_SNAPSHOT',
 	RESET_TO_DEFAULT_SNAPSHOT = 'RESET_TO_DEFAULT_SNAPSHOT',
+	SET_SNAPSHOT_STARTUP_VIEW = 'SET_SNAPSHOT_STARTUP_VIEW',
 	UPDATE_ACTIVE_SNAPSHOT = 'UPDATE_ACTIVE_SNAPSHOT',
 	UPDATE_ACTIVE_VIEW = 'UPDATE_ACTIVE_VIEW',
 	UPDATE_FIELD = 'UPDATE_FIELD',
@@ -107,9 +108,11 @@ const viewsActions: TViewsActions = {
 	[EViewsActionTypes.DELETE_SNAPSHOT]: (state, value) => {
 		const {
 			defaultSnapshot,
+			snapshotStartupViewERC,
 			snapshots,
 		}: {
 			defaultSnapshot: any;
+			snapshotStartupViewERC: null | string;
 			snapshots: Array<ISnapshots>;
 		} = state;
 
@@ -124,6 +127,10 @@ const viewsActions: TViewsActions = {
 			...state,
 			...defaultSnapshot,
 			activeSnapshotERC: null,
+			snapshotStartupViewERC:
+				snapshotStartupViewERC === value.snapshotERC
+					? null
+					: snapshotStartupViewERC,
 			snapshotUpdated: false,
 			snapshots: updatedSnapshots,
 		};
@@ -160,6 +167,10 @@ const viewsActions: TViewsActions = {
 			snapshotUpdated: false,
 		};
 	},
+	[EViewsActionTypes.SET_SNAPSHOT_STARTUP_VIEW]: (state, value) => ({
+		...state,
+		snapshotStartupViewERC: value.snapshotStartupViewERC,
+	}),
 	[EViewsActionTypes.UPDATE_ACTIVE_SNAPSHOT]: (state, value) => {
 		const {defaultSnapshot} = state;
 

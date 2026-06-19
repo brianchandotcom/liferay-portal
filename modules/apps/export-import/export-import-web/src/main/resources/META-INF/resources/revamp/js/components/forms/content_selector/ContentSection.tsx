@@ -19,7 +19,7 @@ import {
 	HandlerSelection,
 	SCROLLABLE_SECTION_NAMES,
 	getSectionPreviewPortletDataHandlers,
-	getInitialSectionSelection,
+	getSectionSelection,
 	getSelectionSummary,
 	isSelected,
 	updateSelection,
@@ -158,7 +158,7 @@ export default function ContentSection({
 					onChange(
 						allSelected
 							? undefined
-							: getInitialSectionSelection(section, {
+							: getSectionSelection(section, {
 									commentsAndRatingsEnabled,
 									lookAndFeelEnabled,
 								})

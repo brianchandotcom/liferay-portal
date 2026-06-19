@@ -14,7 +14,7 @@ import {PreviewPortletDataHandlerControl} from '../../../types/portletDataHandle
 import {
 	HandlerSelection,
 	LAYOUT_SET_LAYOUTS_PORTLET_DATA_KEY,
-	getInitialSelection,
+	getHandlerSelection,
 	getSelectionSummary,
 	isSelected,
 	updateSelection,
@@ -98,7 +98,7 @@ export default function PortletDataControl({
 			? 'font-weight-semi-bold'
 			: 'font-weight-normal',
 		onToggle: () =>
-			onChange(selected ? undefined : getInitialSelection(control)),
+			onChange(selected ? undefined : getHandlerSelection(control)),
 		selected,
 		tags: (
 			<SectionTags

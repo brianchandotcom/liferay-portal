@@ -571,13 +571,6 @@ public class StagedLayoutSetStagedModelDataHandler
 
 		_deleteUnnecessaryClientExtensionEntryRels(
 			clientExtensionEntryRelsElements, importedStagedLayoutSet);
-
-		for (Element clientExtensionEntryRelsElement :
-				clientExtensionEntryRelsElements) {
-
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, clientExtensionEntryRelsElement);
-		}
 	}
 
 	private void _importFaviconFileEntry(

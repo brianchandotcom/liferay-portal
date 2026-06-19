@@ -4,7 +4,6 @@
  */
 
 import ClayAlert from '@clayui/alert';
-import PropTypes from 'prop-types';
 import React from 'react';
 
 import SidebarPanel from '../../SidebarPanel';
@@ -25,10 +24,6 @@ const Authentication = () => {
 			</p>
 		</SidebarPanel>
 	);
-};
-
-Authentication.propTypes = {
-	setContentName: PropTypes.func.isRequired,
 };
 
 export default Authentication;

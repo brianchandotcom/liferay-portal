@@ -4,7 +4,6 @@
  */
 
 import ClayForm from '@clayui/form';
-import PropTypes from 'prop-types';
 import React from 'react';
 
 import SidebarPanel from '../../SidebarPanel';
@@ -18,10 +17,6 @@ const Variables = () => {
 			</ClayForm.Group>
 		</SidebarPanel>
 	);
-};
-
-Variables.propTypes = {
-	setContentName: PropTypes.func.isRequired,
 };
 
 export default Variables;

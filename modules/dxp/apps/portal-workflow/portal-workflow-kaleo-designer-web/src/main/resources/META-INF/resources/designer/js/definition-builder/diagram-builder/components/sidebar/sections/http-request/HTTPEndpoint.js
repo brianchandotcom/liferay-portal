@@ -4,32 +4,16 @@
  */
 
 import ClayForm, {ClayInput, ClaySelect} from '@clayui/form';
-import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
 import {DiagramBuilderContext} from '../../../../DiagramBuilderContext';
 import SidebarPanel from '../../SidebarPanel';
+import {getUpdatedDataItem} from '../utils';
 
 const HTTP_METHODS = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'];
 
 const HTTPEndpoint = () => {
 	const {selectedItem, setSelectedItem} = useContext(DiagramBuilderContext);
-
-	const updateSelectedItem =
-		(field) =>
-		({target}) => {
-			if (!selectedItem) {
-				return;
-			}
-
-			setSelectedItem({
-				...selectedItem,
-				data: {
-					...selectedItem.data,
-					[field]: target.value,
-				},
-			});
-		};
 
 	return (
 		<SidebarPanel panelTitle={Liferay.Language.get('http-endpoint')}>
@@ -41,7 +25,15 @@ const HTTPEndpoint = () => {
 				<ClaySelect
 					aria-label={Liferay.Language.get('http-method')}
 					id="httpMethod"
-					onChange={updateSelectedItem('httpMethod')}
+					onChange={({target}) =>
+						setSelectedItem(
+							getUpdatedDataItem(
+								'httpMethod',
+								selectedItem,
+								target
+							)
+						)
+					}
 					value={selectedItem?.data.httpMethod ?? 'GET'}
 				>
 					{HTTP_METHODS.map((httpMethod) => (
@@ -59,7 +51,11 @@ const HTTPEndpoint = () => {
 
 				<ClayInput
 					id="url"
-					onChange={updateSelectedItem('url')}
+					onChange={({target}) =>
+						setSelectedItem(
+							getUpdatedDataItem('url', selectedItem, target)
+						)
+					}
 					placeholder="https://ai-sandbox.liferay.net/o/ai-hub/v1.0/..."
 					required={true}
 					type="text"
@@ -68,10 +64,6 @@ const HTTPEndpoint = () => {
 			</ClayForm.Group>
 		</SidebarPanel>
 	);
-};
-
-HTTPEndpoint.propTypes = {
-	setContentName: PropTypes.func.isRequired,
 };
 
 export default HTTPEndpoint;

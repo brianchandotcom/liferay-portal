@@ -4,11 +4,11 @@
  */
 
 import ClayForm, {ClayInput} from '@clayui/form';
-import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
 import {DiagramBuilderContext} from '../../../../DiagramBuilderContext';
 import SidebarPanel from '../../SidebarPanel';
+import {getUpdatedDataItem} from '../utils';
 
 const ConnectionTimeout = () => {
 	const {selectedItem, setSelectedItem} = useContext(DiagramBuilderContext);
@@ -23,19 +23,11 @@ const ConnectionTimeout = () => {
 				<ClayInput
 					id="timeout"
 					min="0"
-					onChange={({target}) => {
-						if (!selectedItem) {
-							return;
-						}
-
-						setSelectedItem({
-							...selectedItem,
-							data: {
-								...selectedItem.data,
-								timeout: target.value,
-							},
-						});
-					}}
+					onChange={({target}) =>
+						setSelectedItem(
+							getUpdatedDataItem('timeout', selectedItem, target)
+						)
+					}
 					onWheel={(event) => event.target.blur()}
 					placeholder="1000"
 					step="1"
@@ -45,10 +37,6 @@ const ConnectionTimeout = () => {
 			</ClayForm.Group>
 		</SidebarPanel>
 	);
-};
-
-ConnectionTimeout.propTypes = {
-	setContentName: PropTypes.func.isRequired,
 };
 
 export default ConnectionTimeout;

@@ -29,7 +29,7 @@ If the Liferay MCP server is supported in your DXP version (see `skills/mcp-serv
 
 1. Prompt the user to exit and restart their CLI session.
 
-1. After restarting, verify the MCP server entry appears in your client's server list. A disconnected or failed status is expected — the server isn't running yet. If the entry is absent, re-check the MCP configuration before proceeding.
+1. After restarting, verify the MCP server entry appears in your client's server list. A disconnected or failed status is expected — the server is not running yet. If the entry is absent, re-check the MCP configuration before proceeding.
 
 1. Then continue below to start the Liferay server.
 
@@ -99,7 +99,7 @@ Only fall back to direct REST APIs if MCP has been configured correctly and is s
 
 ## Guiding the User
 
-If the user prompts for setup assistance, guide them through these steps one by one. Do not skip ahead. Explain what you are checking (e.g., "I'm verifying that your Liferay server is up") and wait for processes to complete before writing code.
+If the user prompts for setup assistance, guide them through these steps one by one. Do not skip ahead. Explain what you are checking (e.g., "I am verifying that your Liferay server is up") and wait for processes to complete before writing code.
 
 ## Verification
 

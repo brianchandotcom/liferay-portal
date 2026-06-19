@@ -89,19 +89,19 @@ public class GitRepositoryBuildAdapter extends BuildAdapter {
 
 			});
 
-		String errorString = errorByteArrayOutputStream.toString();
+		String errorOutput = errorByteArrayOutputStream.toString();
 
-		if (!errorString.isEmpty()) {
-			String lowerCaseErrorString = errorString.toLowerCase();
+		if (!errorOutput.isEmpty()) {
+			String lowerCaseErrorOutput = errorOutput.toLowerCase();
 
-			if (!lowerCaseErrorString.contains("not a git repository")) {
-				_logger.error(errorString);
+			if (!lowerCaseErrorOutput.contains("not a git repository")) {
+				_logger.error(errorOutput);
 			}
 		}
 
-		String result = standardByteArrayOutputStream.toString();
+		String standardOutput = standardByteArrayOutputStream.toString();
 
-		return result.trim();
+		return standardOutput.trim();
 	}
 
 	private static final Logger _logger = Logging.getLogger(

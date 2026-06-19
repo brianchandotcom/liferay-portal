@@ -31,9 +31,7 @@ jest.mock(
 jest.mock(
 	'../../../src/main/resources/META-INF/resources/js/chatbot_form/services/ChatbotService',
 	() => ({
-		deleteChatbotAgentDefinitionRelationship: jest
-			.fn()
-			.mockResolvedValue({}),
+		disassociateChatbotFromAgentDefinition: jest.fn().mockResolvedValue({}),
 		getChatbot: (...args: any[]) => mockGetChatbot(...args),
 		postChatbot: (...args: any[]) => mockPostChatbot(...args),
 		putChatbot: (...args: any[]) => mockPutChatbot(...args),

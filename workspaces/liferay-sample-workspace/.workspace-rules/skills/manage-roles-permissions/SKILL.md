@@ -1,7 +1,7 @@
 ---
 
+description: Create roles, assign permissions on objects and pages, and manage site memberships via Headless Admin User and object collaborators APIs. Use when the user asks to add a role, grant permissions, make a page private, or control who can view or edit an object's entries. Requires feature flag LPD-17564 for per entry object permissions.
 name: manage-roles-permissions
-description: Create roles, assign permissions on objects and pages, and manage site memberships via Headless Admin User and object collaborators APIs. Use when the user asks to add a role, grant permissions, make a page private, or control who can view or edit an object's entries. Requires feature flag LPD-17564 for per-entry object permissions.
 
 ---
 
@@ -19,7 +19,7 @@ Create roles and assign the minimum required permissions for objects, pages, and
 
 ## Prerequisites
 
-Feature flag `LPD-17564` is required for the object collaborators API (per-object-definition permissions). Verify via `feature-flags` skill.
+Feature flag `LPD-17564` is required for the object collaborators API (per object definition permissions). Verify via `feature-flags` skill.
 
 ## Workflow
 
@@ -53,6 +53,7 @@ Save the returned `id` as `<role-id>`.
 
 ```bash
 # Assign a user account to a regular role
+
 curl \
 	--request POST \
 	--silent \
@@ -60,7 +61,7 @@ curl \
 	--user "test@liferay.com:test"
 ```
 
-For site-scoped role assignment, use the role-association endpoint scoped to the site (there is **no** `/sites/{id}/site-members` endpoint). The site is addressed by its numeric `<site-id>` here:
+For site scoped role assignment, use the role association endpoint scoped to the site (there is **no** `/sites/{id}/site-members` endpoint). The site is addressed by its numeric `<site-id>` here:
 
 ```bash
 curl \
@@ -72,9 +73,9 @@ curl \
 
 ### 3. Grant Permissions on an Object Definition
 
-Object-level permissions control which roles can create, view, update, or delete entries for that object definition.
+Object level permissions control which roles can create, view, update, or delete entries for that object definition.
 
-> **Verify this endpoint for your version first** (`get-openapi` MCP tool, or `GET /o/object-admin/v1.0/openapi.json`). On current DXP, `permissions` is exposed as a property of the object definition rather than a dedicated `/permissions` sub-resource — the PUT below may 404. If it does, set object permissions in Control Panel → Objects → [Object] → Permissions.
+> **Verify this endpoint for your version first** (`get-openapi` MCP tool, or `GET /o/object-admin/v1.0/openapi.json`). On current DXP, `permissions` is exposed as a property of the object definition rather than a dedicated `/permissions` subresource — the PUT below may 404. If it does, set object permissions in Control Panel → Objects → [Object] → Permissions.
 
 ```bash
 curl \
@@ -103,7 +104,7 @@ Common `actionIds` for object definitions:
 
 ### 4. Grant Permissions on Object Entries (Requires LPD-17564)
 
-Per-entry permissions are managed via the object collaborators API. Ensure `LPD-17564` is enabled before calling.
+Per entry permissions are managed via the object collaborators API. Ensure `LPD-17564` is enabled before calling.
 
 ```bash
 curl \
@@ -133,7 +134,7 @@ Common `actionIds` for object entries:
 
 ### 5. Grant Permissions on a Site Page
 
-Page-level permissions control visibility and edit access.
+Page level permissions control visibility and edit access.
 
 ```bash
 curl \
@@ -162,6 +163,7 @@ To make a page visible only to authenticated users, remove the VIEW permission f
 
 ```bash
 # List roles
+
 curl \
 	--silent \
 	--url "http://localhost:${PORT}/o/headless-admin-user/v1.0/roles" \
@@ -169,6 +171,7 @@ curl \
 	| jq '[.items[] | {id, name, roleType}]'
 
 # Check permissions on an object definition
+
 curl \
 	--silent \
 	--url "http://localhost:${PORT}/o/object-admin/v1.0/object-definitions/<definition-id>/permissions" \
@@ -185,13 +188,13 @@ curl \
 
 ## Creating Users via API — Clear Password and Terms Flags
 
-When creating user accounts through the Headless Admin User API, explicitly clear the password-reset and terms-of-use flags. Otherwise the new user's subsequent REST calls return silent 403s until they complete the password-reset and terms-acceptance prompts through the UI:
+When creating user accounts through the Headless Admin User API, explicitly clear the password reset and terms of use flags. Otherwise the new user's subsequent REST calls return silent 403s until they complete the password reset and terms acceptance prompts through the UI:
 
 ```json
 {
-  "agreedToTermsOfUse": true,
-  "passwordReset": false
+	"agreedToTermsOfUse": true,
+	"passwordReset": false
 }
 ```
 
-Include both fields on the create payload where supported. **Caveat:** `agreedToTermsOfUse` and `passwordReset` are not part of the standard headless `UserAccount` DTO on current DXP — verify against the OpenAPI spec (`get-openapi` MCP tool, or `GET /o/headless-admin-user/v1.0/openapi.json`) before relying on them. The reliable way to avoid the first login 403 trap is the pre-boot bootstrap (`terms.of.use.required=false`, `passwords.default.policy.change.required=false`) covered in `workspace-init`.
+Include both fields on the create payload where supported. **Caveat:** `agreedToTermsOfUse` and `passwordReset` are not part of the standard headless `UserAccount` DTO on current DXP — verify against the OpenAPI spec (`get-openapi` MCP tool, or `GET /o/headless-admin-user/v1.0/openapi.json`) before relying on them. The reliable way to avoid the first login 403 trap is the preboot bootstrap (`terms.of.use.required=false`, `passwords.default.policy.change.required=false`) covered in `workspace-init`.

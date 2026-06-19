@@ -25,19 +25,19 @@ amount > 1000
 (priority == "high") AND (assigneeId != null)
 ```
 
-Consult learn.liferay.com for the full expression-builder reference (search `object validations expression builder`).
+Consult learn.liferay.com for the full expression builder reference (search `object validations expression builder`).
 
 ## Action Executor Types
 
 ### `notification`
 
-Sends an in-app or email notification using a notification template.
+Sends an in app or email notification using a notification template.
 
 Required `parameters`:
 
 ```json
 {
-  "notificationTemplateId": <template-id>
+	"notificationTemplateId": "<template-id>"
 }
 ```
 
@@ -51,10 +51,13 @@ Required `parameters`:
 
 ```json
 {
-  "objectDefinitionId": <target-definition-id>,
-  "predefinedValues": [
-    {"name": "<fieldName>", "value": "<value>"}
-  ]
+	"objectDefinitionId": "<target-definition-id>",
+	"predefinedValues": [
+		{
+			"name": "<fieldName>",
+			"value": "<value>"
+		}
+	]
 }
 ```
 
@@ -66,11 +69,14 @@ Required `parameters`:
 
 ```json
 {
-  "objectDefinitionId": <target-definition-id>,
-  "objectEntryId": "<expression-resolving-to-id>",
-  "predefinedValues": [
-    {"name": "<fieldName>", "value": "<new-value>"}
-  ]
+	"objectDefinitionId": "<target-definition-id>",
+	"objectEntryId": "<expression-resolving-to-id>",
+	"predefinedValues": [
+		{
+			"name": "<fieldName>",
+			"value": "<new-value>"
+		}
+	]
 }
 ```
 
@@ -82,8 +88,8 @@ Required `parameters`:
 
 ```json
 {
-  "secret": "<hmac-secret>",
-  "url": "<https://endpoint.example.com/hook>"
+	"secret": "<hmac-secret>",
+	"url": "<https://endpoint.example.com/hook>"
 }
 ```
 
@@ -97,11 +103,11 @@ Required `parameters`:
 
 ```json
 {
-  "script": "<groovy source>"
+	"script": "<groovy source>"
 }
 ```
 
-**Availability:** self-hosted and Liferay PaaS only. Not available on Liferay SaaS. The script runs in a sandbox; network calls and filesystem access are restricted.
+**Availability:** self hosted and Liferay PaaS only. Not available on Liferay SaaS. The script runs in a sandbox; network calls and filesystem access are restricted.
 
 The entry is available as `objectEntry` in the script binding, and the service locator is available via `PortalUtil`.
 
@@ -113,8 +119,8 @@ Required `parameters`:
 
 ```json
 {
-  "objectActionExecutorKey": "objectAction",
-  "clientExtensionEntryExternalReferenceCode": "<cet-erc>"
+	"clientExtensionEntryExternalReferenceCode": "<cet-erc>",
+	"objectActionExecutorKey": "objectAction"
 }
 ```
 
@@ -126,13 +132,13 @@ Object action definition body:
 
 ```json
 {
-  "active": true,
-  "conditionExpression": "<expression or empty string>",
-  "description": "<optional description>",
-  "label": {"en_US": "<Display Label>"},
-  "name": "<camelCaseName>",
-  "objectActionExecutorKey": "<executor-type>",
-  "objectActionTriggerKey": "<trigger>",
-  "parameters": { ... }
+	"active": true,
+	"conditionExpression": "<expression or empty string>",
+	"description": "<optional description>",
+	"label": {"en_US": "<Display Label>"},
+	"name": "<camelCaseName>",
+	"objectActionExecutorKey": "<executor-type>",
+	"objectActionTriggerKey": "<trigger>",
+	"parameters": { ... }
 }
 ```

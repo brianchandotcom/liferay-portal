@@ -132,35 +132,6 @@ public class SegmentsExperienceLocalServiceTest {
 	}
 
 	@Test
-	@TestInfo("LPD-90839")
-	public void testAddSegmentsExperienceCompactsPriority() throws Exception {
-		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId());
-
-		SegmentsExperience segmentsExperience =
-			_segmentsExperienceLocalService.addSegmentsExperience(
-				null, TestPropsValues.getUserId(), _group.getGroupId(),
-				segmentsEntry.getExternalReferenceCode(), null, _plid,
-				RandomTestUtil.randomLocaleStringMap(),
-				RandomTestUtil.randomInt(100, 199), true,
-				new UnicodeProperties(true),
-				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-
-		Assert.assertEquals(1, segmentsExperience.getPriority());
-
-		segmentsExperience =
-			_segmentsExperienceLocalService.addSegmentsExperience(
-				null, TestPropsValues.getUserId(), _group.getGroupId(),
-				segmentsEntry.getExternalReferenceCode(), null, _plid,
-				RandomTestUtil.randomLocaleStringMap(),
-				-RandomTestUtil.randomInt(100, 199), true,
-				new UnicodeProperties(true),
-				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-
-		Assert.assertEquals(-1, segmentsExperience.getPriority());
-	}
-
-	@Test
 	public void testAddSegmentsExperienceInactive() throws Exception {
 		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
 			_group.getGroupId());
@@ -291,6 +262,37 @@ public class SegmentsExperienceLocalServiceTest {
 			Collections.emptyMap(), RandomTestUtil.randomBoolean(),
 			new UnicodeProperties(true),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+	}
+
+	@Test
+	@TestInfo("LPD-90839")
+	public void testAddSegmentsExperienceWithPriorityCompaction()
+		throws Exception {
+
+		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId());
+
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.addSegmentsExperience(
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
+				segmentsEntry.getExternalReferenceCode(), null, _plid,
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomInt(100, 199), true,
+				new UnicodeProperties(true),
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		Assert.assertEquals(1, segmentsExperience.getPriority());
+
+		segmentsExperience =
+			_segmentsExperienceLocalService.addSegmentsExperience(
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
+				segmentsEntry.getExternalReferenceCode(), null, _plid,
+				RandomTestUtil.randomLocaleStringMap(),
+				-RandomTestUtil.randomInt(100, 199), true,
+				new UnicodeProperties(true),
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		Assert.assertEquals(-1, segmentsExperience.getPriority());
 	}
 
 	@Test

@@ -11,8 +11,8 @@ import {generateExternalReferenceCode} from '../../utils/externalReferenceCode';
 import {required, requiredLocalized, validate} from '../../utils/validations';
 import {DEFAULT_AGENT_DEFINITION} from '../constants';
 import {
-	deleteAgentDefinitionToContentRetrievers,
-	deleteAgentDefinitionToGuardrails,
+	disassociateAgentDefinitionFromContentRetriever,
+	disassociateAgentDefinitionFromGuardrail,
 	getAgentDefinition,
 	postAgentDefinition,
 	putAgentDefinition,
@@ -42,12 +42,12 @@ export function useAgentDefinitionForm({
 	);
 
 	const contentRetrievers = useRelationshipPicker<ContentRetriever>({
-		deleteRelationship: deleteAgentDefinitionToContentRetrievers,
+		deleteRelationship: disassociateAgentDefinitionFromContentRetriever,
 		fetchSourceList: getContentRetrievers,
 		putRelationship: putAgentDefinitionToContentRetrievers,
 	});
 	const guardrails = useRelationshipPicker<Guardrail>({
-		deleteRelationship: deleteAgentDefinitionToGuardrails,
+		deleteRelationship: disassociateAgentDefinitionFromGuardrail,
 		fetchSourceList: getGuardrails,
 		putRelationship: putAgentDefinitionToGuardrails,
 	});

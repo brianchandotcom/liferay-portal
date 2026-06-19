@@ -317,8 +317,9 @@ public class AudiencesEntryPersistenceImpl
 			finderCache, new Object[] {companyId, name});
 	}
 
-	private UniquePersistenceFinder<AudiencesEntry, NoSuchAudiencesEntryException>
-		_uniquePersistenceFinderByERC_C;
+	private UniquePersistenceFinder
+		<AudiencesEntry, NoSuchAudiencesEntryException>
+			_uniquePersistenceFinderByERC_C;
 
 	/**
 	 * Returns the audiences entry where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchAudiencesEntryException</code> if it could not be found.
@@ -435,7 +436,8 @@ public class AudiencesEntryPersistenceImpl
 
 			if (!session.contains(audiencesEntry)) {
 				audiencesEntry = (AudiencesEntry)session.get(
-					AudiencesEntryImpl.class, audiencesEntry.getPrimaryKeyObj());
+					AudiencesEntryImpl.class,
+					audiencesEntry.getPrimaryKeyObj());
 			}
 
 			if (audiencesEntry != null) {
@@ -528,7 +530,8 @@ public class AudiencesEntryPersistenceImpl
 					throw new DuplicateAudiencesEntryExternalReferenceCodeException(
 						"Duplicate audiences entry with external reference code " +
 							audiencesEntry.getExternalReferenceCode() +
-								" and company " + audiencesEntry.getCompanyId());
+								" and company " +
+									audiencesEntry.getCompanyId());
 				}
 			}
 			else {
@@ -539,7 +542,8 @@ public class AudiencesEntryPersistenceImpl
 					throw new DuplicateAudiencesEntryExternalReferenceCodeException(
 						"Duplicate audiences entry with external reference code " +
 							audiencesEntry.getExternalReferenceCode() +
-								" and company " + audiencesEntry.getCompanyId());
+								" and company " +
+									audiencesEntry.getCompanyId());
 				}
 			}
 		}
@@ -554,7 +558,8 @@ public class AudiencesEntryPersistenceImpl
 				audiencesEntry.setCreateDate(date);
 			}
 			else {
-				audiencesEntry.setCreateDate(serviceContext.getCreateDate(date));
+				audiencesEntry.setCreateDate(
+					serviceContext.getCreateDate(date));
 			}
 		}
 
@@ -667,7 +672,8 @@ public class AudiencesEntryPersistenceImpl
 					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 					"countByCompanyId", new String[] {Long.class.getName()},
 					new String[] {"companyId"}, false),
-				_SQL_SELECT_AUDIENCESENTRY_WHERE, _SQL_COUNT_AUDIENCESENTRY_WHERE,
+				_SQL_SELECT_AUDIENCESENTRY_WHERE,
+				_SQL_COUNT_AUDIENCESENTRY_WHERE,
 				AudiencesEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"audiencesEntry.", "companyId", FinderColumn.Type.LONG, "=",
@@ -689,7 +695,8 @@ public class AudiencesEntryPersistenceImpl
 					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_LikeN",
 					new String[] {Long.class.getName(), String.class.getName()},
 					new String[] {"companyId", "name"}, false),
-				_SQL_SELECT_AUDIENCESENTRY_WHERE, _SQL_COUNT_AUDIENCESENTRY_WHERE,
+				_SQL_SELECT_AUDIENCESENTRY_WHERE,
+				_SQL_COUNT_AUDIENCESENTRY_WHERE,
 				AudiencesEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"audiencesEntry.", "companyId", FinderColumn.Type.LONG, "=",
@@ -782,4 +789,4 @@ public class AudiencesEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-435194567
+// LIFERAY-SERVICE-BUILDER-HASH:1997964477

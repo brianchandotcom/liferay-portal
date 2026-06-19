@@ -107,4 +107,4 @@ public class AudiencesEntryServiceUtil {
 			AudiencesEntryServiceUtil.class, AudiencesEntryService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-941878168
+// LIFERAY-SERVICE-BUILDER-HASH:-1016925610

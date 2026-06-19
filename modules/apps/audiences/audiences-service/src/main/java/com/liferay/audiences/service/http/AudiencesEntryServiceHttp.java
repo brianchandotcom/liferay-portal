@@ -83,8 +83,9 @@ public class AudiencesEntryServiceHttp {
 		}
 	}
 
-	public static com.liferay.audiences.model.AudiencesEntry deleteAudiencesEntry(
-			HttpPrincipal httpPrincipal, long audiencesEntryId)
+	public static com.liferay.audiences.model.AudiencesEntry
+			deleteAudiencesEntry(
+				HttpPrincipal httpPrincipal, long audiencesEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -334,9 +335,10 @@ public class AudiencesEntryServiceHttp {
 		}
 	}
 
-	public static com.liferay.audiences.model.AudiencesEntry updateAudiencesEntry(
-			HttpPrincipal httpPrincipal, long audiencesEntryId, String json,
-			String name)
+	public static com.liferay.audiences.model.AudiencesEntry
+			updateAudiencesEntry(
+				HttpPrincipal httpPrincipal, long audiencesEntryId, String json,
+				String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -405,4 +407,4 @@ public class AudiencesEntryServiceHttp {
 		new Class[] {long.class, String.class, String.class};
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1895173987
+// LIFERAY-SERVICE-BUILDER-HASH:1830899090

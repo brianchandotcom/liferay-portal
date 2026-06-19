@@ -66,7 +66,8 @@ public class AudiencesEntryLocalServiceWrapper
 	public com.liferay.audiences.model.AudiencesEntry createAudiencesEntry(
 		long audiencesEntryId) {
 
-		return _audiencesEntryLocalService.createAudiencesEntry(audiencesEntryId);
+		return _audiencesEntryLocalService.createAudiencesEntry(
+			audiencesEntryId);
 	}
 
 	/**
@@ -113,7 +114,8 @@ public class AudiencesEntryLocalServiceWrapper
 			long audiencesEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _audiencesEntryLocalService.deleteAudiencesEntry(audiencesEntryId);
+		return _audiencesEntryLocalService.deleteAudiencesEntry(
+			audiencesEntryId);
 	}
 
 	/**
@@ -234,7 +236,8 @@ public class AudiencesEntryLocalServiceWrapper
 	public com.liferay.audiences.model.AudiencesEntry fetchAudiencesEntry(
 		long audiencesEntryId) {
 
-		return _audiencesEntryLocalService.fetchAudiencesEntry(audiencesEntryId);
+		return _audiencesEntryLocalService.fetchAudiencesEntry(
+			audiencesEntryId);
 	}
 
 	@Override
@@ -277,7 +280,8 @@ public class AudiencesEntryLocalServiceWrapper
 		getAudiencesEntries(
 			long companyId, int start, int end,
 			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.audiences.model.AudiencesEntry> orderByComparator) {
+				<com.liferay.audiences.model.AudiencesEntry>
+					orderByComparator) {
 
 		return _audiencesEntryLocalService.getAudiencesEntries(
 			companyId, start, end, orderByComparator);
@@ -417,4 +421,4 @@ public class AudiencesEntryLocalServiceWrapper
 	private AudiencesEntryLocalService _audiencesEntryLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-958678190
+// LIFERAY-SERVICE-BUILDER-HASH:711059145

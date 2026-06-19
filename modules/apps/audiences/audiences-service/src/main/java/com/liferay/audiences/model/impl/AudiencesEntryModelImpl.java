@@ -277,7 +277,8 @@ public class AudiencesEntryModelImpl
 
 			attributeSetterBiConsumers.put(
 				"mvccVersion",
-				(BiConsumer<AudiencesEntry, Long>)AudiencesEntry::setMvccVersion);
+				(BiConsumer<AudiencesEntry, Long>)
+					AudiencesEntry::setMvccVersion);
 			attributeSetterBiConsumers.put(
 				"externalReferenceCode",
 				(BiConsumer<AudiencesEntry, String>)
@@ -294,10 +295,12 @@ public class AudiencesEntryModelImpl
 				(BiConsumer<AudiencesEntry, Long>)AudiencesEntry::setUserId);
 			attributeSetterBiConsumers.put(
 				"userName",
-				(BiConsumer<AudiencesEntry, String>)AudiencesEntry::setUserName);
+				(BiConsumer<AudiencesEntry, String>)
+					AudiencesEntry::setUserName);
 			attributeSetterBiConsumers.put(
 				"createDate",
-				(BiConsumer<AudiencesEntry, Date>)AudiencesEntry::setCreateDate);
+				(BiConsumer<AudiencesEntry, Date>)
+					AudiencesEntry::setCreateDate);
 			attributeSetterBiConsumers.put(
 				"modifiedDate",
 				(BiConsumer<AudiencesEntry, Date>)
@@ -922,4 +925,4 @@ public class AudiencesEntryModelImpl
 	private AudiencesEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1231800925
+// LIFERAY-SERVICE-BUILDER-HASH:-2018850659

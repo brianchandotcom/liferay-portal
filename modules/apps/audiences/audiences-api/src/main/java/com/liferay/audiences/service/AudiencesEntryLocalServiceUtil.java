@@ -47,7 +47,9 @@ public class AudiencesEntryLocalServiceUtil {
 	 * @param audiencesEntry the audiences entry
 	 * @return the audiences entry that was added
 	 */
-	public static AudiencesEntry addAudiencesEntry(AudiencesEntry audiencesEntry) {
+	public static AudiencesEntry addAudiencesEntry(
+		AudiencesEntry audiencesEntry) {
+
 		return getService().addAudiencesEntry(audiencesEntry);
 	}
 
@@ -353,4 +355,4 @@ public class AudiencesEntryLocalServiceUtil {
 			AudiencesEntryLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1703879626
+// LIFERAY-SERVICE-BUILDER-HASH:-724476987

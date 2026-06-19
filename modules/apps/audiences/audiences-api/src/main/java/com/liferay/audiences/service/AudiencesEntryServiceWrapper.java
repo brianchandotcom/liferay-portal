@@ -125,4 +125,4 @@ public class AudiencesEntryServiceWrapper
 	private AudiencesEntryService _audiencesEntryService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-908842005
+// LIFERAY-SERVICE-BUILDER-HASH:1148478342

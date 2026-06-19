@@ -22,7 +22,8 @@ import java.util.Date;
  */
 public class AudiencesEntryTable extends BaseTable<AudiencesEntryTable> {
 
-	public static final AudiencesEntryTable INSTANCE = new AudiencesEntryTable();
+	public static final AudiencesEntryTable INSTANCE =
+		new AudiencesEntryTable();
 
 	public final Column<AudiencesEntryTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
@@ -53,4 +54,4 @@ public class AudiencesEntryTable extends BaseTable<AudiencesEntryTable> {
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1329907185
+// LIFERAY-SERVICE-BUILDER-HASH:-365873163

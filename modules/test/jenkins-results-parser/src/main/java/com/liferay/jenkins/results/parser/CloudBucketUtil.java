@@ -294,6 +294,9 @@ public class CloudBucketUtil {
 			return null;
 		}
 
+		String authenticationCommand = null;
+		File federatedCredentialFile = null;
+
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("gcloud storage sign-url ");
@@ -307,10 +310,6 @@ public class CloudBucketUtil {
 
 		String serviceAccountImpersonationURL = jsonObject.optString(
 			"service_account_impersonation_url");
-
-		String authenticationCommand = null;
-
-		File federatedCredentialFile = null;
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(
 				serviceAccountImpersonationURL)) {

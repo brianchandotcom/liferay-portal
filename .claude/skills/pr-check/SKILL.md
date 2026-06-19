@@ -44,6 +44,8 @@ The procedure runs in two passes over the validations, in the order below. The o
 
 1. [Module Registration](validations/module-registration.md)
 
+1. [Portlet Title](validations/portlet-title.md)
+
 1. [Full Portal Build](validations/full-portal-build.md)
 
 1. [Per-Module Compile](validations/per-module-compile.md)

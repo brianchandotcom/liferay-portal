@@ -739,6 +739,12 @@ public class AnalyticsCloudClient {
 		JsonNode pageJsonNode = jsonNode.get("page");
 
 		if (pageJsonNode != null) {
+			JsonNode totalPagesJsonNode = pageJsonNode.get("totalPages");
+
+			if (totalPagesJsonNode != null) {
+				performanceTopAsset.setLastPage(totalPagesJsonNode::asLong);
+			}
+
 			JsonNode pageNumberJsonNode = pageJsonNode.get("number");
 
 			if (pageNumberJsonNode != null) {
@@ -756,12 +762,6 @@ public class AnalyticsCloudClient {
 			if (totalElementsJsonNode != null) {
 				performanceTopAsset.setTotalCount(
 					totalElementsJsonNode::asLong);
-			}
-
-			JsonNode totalPagesJsonNode = pageJsonNode.get("totalPages");
-
-			if (totalPagesJsonNode != null) {
-				performanceTopAsset.setLastPage(totalPagesJsonNode::asLong);
 			}
 		}
 

@@ -116,6 +116,7 @@ describe('DLVideoExternalShortcutURLItemSelectorView', () => {
 							value: {
 								html: responseFields.HTML,
 								title: responseFields.TITLE,
+								url: responseFields.URL,
 							},
 						},
 					}

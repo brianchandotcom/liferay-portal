@@ -210,7 +210,6 @@ exports[`SidebarPanelInfoView renders 1`] = `
             innerprops="[object Object]"
           >
             <li
-              aria-controls="clay-dropdown-menu-1"
               aria-expanded="false"
               aria-haspopup="true"
               class="nav-item dropdown-toggle"

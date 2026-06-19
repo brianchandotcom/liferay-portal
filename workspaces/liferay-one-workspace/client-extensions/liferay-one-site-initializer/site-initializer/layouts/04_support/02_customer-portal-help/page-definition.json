@@ -31,7 +31,7 @@
 										"definition": {
 											"widgetInstance": {
 												"widgetConfig": {
-													"displayStyle": "ddmTemplate_SIDE_NAV",
+													"displayStyle": "ddmTemplate_NAVIGATION_SITES",
 													"siteNavigationMenuExternalReferenceCode": "LO_SUPPORT_NAV",
 													"siteNavigationMenuName": "Support Navigation",
 													"siteNavigationMenuType": "-1"

@@ -93,6 +93,9 @@ public interface FDSSerializer {
 	public List<FDSSortItem> serializeSorts(
 		String fdsName, HttpServletRequest httpServletRequest);
 
+	public String serializeStartupViewDataSetSnapshotERC(
+		String fdsName, HttpServletRequest httpServletRequest);
+
 	public JSONArray serializeViews(
 		String fdsName, HttpServletRequest httpServletRequest);
 

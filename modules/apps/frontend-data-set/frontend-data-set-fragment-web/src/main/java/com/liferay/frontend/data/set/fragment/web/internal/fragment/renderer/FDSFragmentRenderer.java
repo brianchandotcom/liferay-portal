@@ -24,6 +24,7 @@ import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManagerProvider;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
@@ -203,6 +204,8 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 				return;
 			}
 
+			String componentId = externalReferenceCode;
+
 			boolean hasTokens = _hasTokens(
 				externalReferenceCode, httpServletRequest);
 
@@ -216,22 +219,20 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 							"apiURLTokenMappings")),
 					externalReferenceCode, httpServletRequest);
 
-			String componentId = externalReferenceCode;
-
 			boolean resolved = _isResolved(
 				externalReferenceCode, httpServletRequest,
 				tokenResolutionsJSONObject);
 
 			if (fragmentRendererContext.isEditMode()) {
-				componentId = StringBundler.concat(
-					componentId, "-",
-					fragmentEntryLink.getFragmentEntryLinkId());
-
 				if (hasTokens) {
 					_writeAutoResolvableTokenNames(
 						externalReferenceCode, fragmentEntryLink,
 						httpServletRequest);
 				}
+
+				componentId = StringBundler.concat(
+					componentId, StringPool.DASH,
+					fragmentEntryLink.getFragmentEntryLinkId());
 
 				_writeDestroyPreviousComponentScript(
 					componentId, fragmentEntryLink, httpServletRequest,

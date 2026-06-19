@@ -11,21 +11,6 @@
 
 <tbody>
 <tr>
-	<td>NAME_LIST</td>
-	<td>//*[contains(@class,'table-title')][normalize-space()='${key_nameList}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PARTIAL_NAME_LIST</td>
-	<td>//div[contains(@class,'table-title')][contains(normalize-space(),'${key_nameList}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>GENERIC_TEXT</td>
-	<td>//*[text()='${key_textValue}']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>GENERIC_TEXT_ORDER</td>
 	<td>xpath=(//*[normalize-space(text())='${key_textValue}'])[${index}]</td>
 	<td></td>
@@ -36,161 +21,161 @@
 	<td></td>
 </tr>
 <tr>
-	<td>TOGGLE_ICON_ON_OFF</td>
-	<td>//*[contains(@data-testid, '${key_toggleType}__${key_boolean}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EDIT_NAME_BUTTON</td>
-	<td>//div[contains(@class,'editor')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAME_FIELD</td>
-	<td>//input[@name='name']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LABEL</td>
-	<td>//label[normalize-space()='${label}']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>LOADING_ANIMATION</td>
 	<td>//span[contains(@class,'loading-animation')]</td>
 	<td></td>
 </tr>
+
+<!-- GENERIC ADD OR CONFIRMATION BUTTON -->
+
 <tr>
-	<td>TABLE_CELL_INFORMATION</td>
-	<td>//a[contains(text(),'${key_nameList}')]//ancestor::tr//td[contains(@class,'table-column-text-end') and text()='${key_numberValue}']</td>
+	<td>AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON</td>
+	<td>//*[contains(@class, 'btn-primary')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>DELETE_BUTTON</td>
-	<td>//*[text()='${key_nameList}']/ancestor::tr//div[@class='quick-action-menu']//button[contains(@title,'Delete')]</td>
+	<td>MODAL_SCREEN</td>
+	<td>//div[contains(@class,'onboarding-base-screen-root')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CLOSE_ONBOARDING_MODAL</td>
+	<td>//button[contains(@class,'close')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FARO_DEMO_WORKSPACE</td>
+	<td>//*[contains(@class, 'workspace-link')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WORKSPACE_NAME</td>
+	<td>//*[contains(@class,'workspace-name')]//span[contains(text(),'${key_workspaceName}')]</td>
 	<td></td>
 </tr>
 
-<!-- CLOSE MODAL -->
+<!-- LOGIN SCREEN FIELDS -->
 
 <tr>
-	<td>MODAL_CLOSE_BUTTON</td>
-	<td>//button[contains(@class, 'close')]</td>
-	<td></td>
-</tr>
-
-<!-- FILTER ORDER -->
-
-<tr>
-	<td>PAGE_SEGMENT_FILTER</td>
-	<td>//button[contains(@class,'dropdown-item') and text()='${key_nameList}']</td>
+	<td>EMAIL_LOGIN_FIELD</td>
+	<td>//input[contains(@id, '_com_liferay_login_web_portlet_LoginPortlet_login')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ORDER_ARROW_BUTTON_ASC</td>
-	<td>//*[contains(@class,'lexicon-icon-order-arrow-up')]//ancestor::a</td>
+	<td>LOGIN_BUTTON</td>
+	<td>//*[contains(@class, 'btn-primary')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ORDER_ARROW_BUTTON_DES</td>
-	<td>//*[contains(@class,'lexicon-icon-order-arrow-down')]//ancestor::a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ORDER_ARROW_TABLE_BUTTON_UP</td>
-	<td>//a[contains(@class, 'text-truncate-inline')]/span[contains(@class, 'inline-item-after')][*[name()='svg'][contains(@class,'lexicon-icon-order-arrow-up')]]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ORDER_ARROW_TABLE_BUTTON_DOWN</td>
-	<td>//a[contains(@class, 'text-truncate-inline')]/span[contains(@class, 'inline-item-after')][*[name()='svg'][contains(@class,'lexicon-icon-order-arrow-down')]]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>GENERIC_ORDER_BUTTON</td>
-	<td>//a[contains(@href,'sortOrder')]//span[text()='${key_columnName}']</td>
+	<td>PASSWORD_LOGIN_FIELD</td>
+	<td>//*[contains(@id, '_com_liferay_login_web_portlet_LoginPortlet_password')]</td>
 	<td></td>
 </tr>
 
-<!-- PAGE_PAGINATION-->
+<!-- SETTINGS -->
 
 <tr>
-	<td>ACTIVE_PAGE</td>
-	<td>//li[@class='page-item active']</td>
+	<td>COPY_TOKEN_BUTTON</td>
+	<td>//button[@aria-label='Click to Copy']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ANY_PAGE</td>
-	<td>//ul[contains(@class,'pagination')]//li[contains(@class,'page-item')]//*[contains(@class,'page-link')][normalize-space(text())='${key_pageNumber}']</td>
+	<td>DXP_DATA_SOURCE_OPTION</td>
+	<td>//button[contains(@class,'dropdown-item') and contains(text(),'Liferay DXP')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>NEXT_PAGES</td>
-	<td>xpath=(//a | //button)[contains(@class, 'page-link')][*[name()='svg'][contains(@class,'lexicon-icon-angle-right')]]</td>
+	<td>SETTINGS_NAVIGATION</td>
+	<td>//*[@class='button-root' and contains(@href,'${key_settingsNavigation}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>PAGINATION_ITEMS_PER_PAGE_SELECT</td>
-	<td>//div[contains(@class,'pagination-items-per-page')]/button[contains(@class,'dropdown-toggle')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PREVIOUS_PAGES</td>
-	<td>xpath=(//a | //button)[contains(@class, 'page-link')][*[name()='svg'][contains(@class,'lexicon-icon-angle-left')]]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>RESULT_MESSAGE</td>
-	<td>//div[@class='pagination-results']</td>
+	<td>SETTINGS_PAGE</td>
+	<td>//h2[text()='Settings']</td>
 	<td></td>
 </tr>
 
-<!-- SEARCH_BAR -->
+<!-- SIDEBAR FIELDS/OPTIONS -->
 
 <tr>
-	<td>CLEAR_SEARCH_BAR_BUTTON</td>
-	<td>//div[contains(@class, 'input-group-item')]//button[contains(@class, 'button-root')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>GENERIC_BUTTON</td>
-	<td>//*[contains(@class,'button-root')and text()='${key_buttonName}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PAGE_TITLE</td>
-	<td>//span[@class='text-truncate'and text()='${key_pageTitle}']</td>
+	<td>GENERIC_SIDEBAR_OPTION</td>
+	<td>//*[contains(@class,'sidebar-item-root')]//*[contains(@href,'${key_sidebarOption}')]</td>
 	<td></td>
 </tr>
 
-<!-- SVG_TIMED_GRAPH -->
+<!-- SYNCS SITES TO PROPERTY SCREEN -->
 
 <tr>
-	<td>SVG_TIMED_GRAPH</td>
-	<td>//*[text()='${key_parentName}']/parent::div/following-sibling::div[contains(@class, 'card-body')]//*[contains(@class, 'recharts-surface')]</td>
+	<td>FIRST_AVAILABLE_PROPERTY</td>
+	<td>//td[@class='table-column-text-start']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>METRIC_VALUE_PERCENTAGE</td>
-	<td>xpath=(//*[contains(@class,'recharts-pie-labels')])[${key_index}]//*[contains(text(),'${key_percentage}')]</td>
+	<td>SECOND_AVAILABLE_PROPERTY</td>
+	<td>//tr[2]/td[@class='table-column-text-start']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>AUDIENCE_TOTAL_METRIC</td>
-	<td>xpath=(//div[@class='audience-report-chart-donut'])[${key_index}]//*[text()='${key_metricValue}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>VIEWER_SEGMENTS_CHART</td>
-	<td>//div[contains(@class,'analytics-bar-chart')]//span[text()='${key_segmentName}']</td>
+	<td>TOGGLE_ICON_ENABLE</td>
+	<td>xpath=(//input[contains(@data-testid,'true')])[${index}]</td>
 	<td></td>
 </tr>
 
-<!-- CLICKABLE -->
+<!-- WORKSPACE LIST SCREEN FIELDS -->
 
 <tr>
-	<td>DROPDOWN_ITEM</td>
-	<td>//div[contains(@class, 'dropdown-menu show')]//*[text()='${key_dropdownItem}']</td>
+	<td>FARO_DEMO_WORKSPACE</td>
+	<td>//*[contains(@class, 'workspace-link')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AC_GENERIC_CHECKBOX</td>
+	<td>//div[contains(@class,'fade show')]//*[contains(@type, 'checkbox')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ANALYTICS_CLOUD_DXP_OPTION</td>
+	<td>//*[contains(@href, 'analytics-cloud-connection')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONNECT_BUTTON</td>
+	<td>//button[@type='button' and text()='Connect']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONNECT_BUTTON_DISABLED</td>
+	<td>//button[@disabled='' and contains(@class,'btn-primary')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISCONNECT_BUTTON</td>
+	<td>//button[@type='button' and text()='Disconnect']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISCONNECT_CONFIRMATION_BUTTON</td>
+	<td>//button[contains(@class,'btn-warning') and text()='Disconnect']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NEW_PROPERTY_NAME</td>
+	<td>//input[@id='inputPropertyName']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SYNC_ANY_PROPERTIES</td>
+	<td>//tr[@data-testid='${key_propertyName}']//button[@role='assign-button']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SYNCED_SITES_SEARCH_FIELD</td>
+	<td>//div[contains(@class,'active')]//input[@aria-label='Search']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOKEN_INPUT_FIELD</td>
+	<td>//input[contains(@id,'inputToken')]</td>
 	<td></td>
 </tr>
 </tbody>

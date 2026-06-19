@@ -1,496 +1,6 @@
 definition {
 
 	@summary = "Default summary"
-	macro addPage(type = null) {
-		if (!(isSet(siteName))) {
-			var siteName = "Site Name";
-		}
-
-		if (!(isSet(layoutName))) {
-			var layoutName = "AC Page";
-		}
-
-		if (!(isSet(type))) {
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = ${layoutName});
-		}
-		else {
-			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
-				layoutName = ${layoutName},
-				type = ${type});
-		}
-	}
-
-	@summary = "Default summary"
-	macro addSiteAndPage(type = null) {
-		if (!(isSet(siteName))) {
-			var siteName = "Site Name";
-		}
-
-		HeadlessSite.addSite(siteName = ${siteName});
-
-		if (!(isSet(layoutName))) {
-			var layoutName = "AC Page";
-		}
-
-		if (!(isSet(type))) {
-			ACUtils.addPage(
-				layoutName = ${layoutName},
-				siteName = ${siteName});
-		}
-		else {
-			ACUtils.addPage(
-				layoutName = ${layoutName},
-				siteName = ${siteName},
-				type = ${type});
-		}
-	}
-
-	@summary = "Default summary"
-	macro addWidgetToPage(widgetName = null) {
-		if (!(isSet(layoutName))) {
-			var layoutName = "AC Page";
-		}
-
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = ${layoutName},
-			widgetName = ${widgetName});
-
-		Navigator.gotoSitePage(
-			pageName = ${layoutName},
-			siteName = "Site Name");
-	}
-
-	@summary = "Default summary"
-	macro assertActiveIndividualChart(visitorLegend = null, startMonth = null, startDay = null, endDay = null, startYear = null, endMonth = null, endYear = null, timeFilter = null) {
-		var key_timeFilter = ${timeFilter};
-
-		if (isSet(visitorLegend)) {
-			var key_visitorLegend = ${visitorLegend};
-
-			MouseOver(locator1 = "ACIndividualsDashboard#VISITORS_LEGEND");
-
-			while ((IsElementNotPresent(locator1 = "ACIndividualsDashboard#ACTIVE_INDIVIDUAL_CHART")) && (maxIterations = "50")) {
-				TestUtils.hardRefresh();
-
-				if (${timeFilter} != "Custom Range") {
-					ACTimeFilter.clickTimeFilterButton();
-
-					if (${timeFilter} == "Last 24 hours") {
-						ACTimeFilter.setLast24Hours();
-					}
-
-					if (${timeFilter} == "Yesterday") {
-						ACTimeFilter.setYesterday();
-					}
-
-					if (${timeFilter} == "Last 7 days") {
-						ACTimeFilter.setLast7Days();
-					}
-
-					if (${timeFilter} == "Last 28 days") {
-						ACTimeFilter.setLast28Days();
-					}
-
-					if (${timeFilter} == "Last 30 days") {
-						ACTimeFilter.setLast30Days();
-					}
-
-					if (${timeFilter} == "Last 90 days") {
-						ACTimeFilter.setLast90Days();
-					}
-
-					if (${timeFilter} == "Last 180 days") {
-						ACTimeFilter.setLast180Days();
-					}
-
-					if (${timeFilter} == "Last Year") {
-						ACTimeFilter.setLastYear();
-					}
-				}
-
-				if (${timeFilter} == "Custom Range") {
-					ACTimeFilter.setCustomRange(
-						endDay = ${endDay},
-						endMonth = ${endMonth},
-						endYear = ${endYear},
-						startDay = ${startDay},
-						startMonth = ${startMonth},
-						startYear = ${startYear});
-				}
-
-				MouseOver(locator1 = "ACIndividualsDashboard#VISITORS_LEGEND");
-			}
-		}
-		else {
-			while ((IsElementNotPresent(locator1 = "ACIndividualsDashboard#ACTIVE_INDIVIDUAL_CHART")) && (maxIterations = "50")) {
-				TestUtils.hardRefresh();
-
-				if (${timeFilter} != "Custom Range") {
-					ACTimeFilter.clickTimeFilterButton();
-
-					if (${timeFilter} == "Last 24 hours") {
-						ACTimeFilter.setLast24Hours();
-					}
-
-					if (${timeFilter} == "Yesterday") {
-						ACTimeFilter.setYesterday();
-					}
-
-					if (${timeFilter} == "Last 7 days") {
-						ACTimeFilter.setLast7Days();
-					}
-
-					if (${timeFilter} == "Last 28 days") {
-						ACTimeFilter.setLast28Days();
-					}
-
-					if (${timeFilter} == "Last 30 days") {
-						ACTimeFilter.setLast30Days();
-					}
-
-					if (${timeFilter} == "Last 90 days") {
-						ACTimeFilter.setLast90Days();
-					}
-
-					if (${timeFilter} == "Last 180 days") {
-						ACTimeFilter.setLast180Days();
-					}
-
-					if (${timeFilter} == "Last Year") {
-						ACTimeFilter.setLastYear();
-					}
-				}
-
-				if (${timeFilter} == "Custom Range") {
-					ACTimeFilter.setCustomRange(
-						endDay = ${endDay},
-						endMonth = ${endMonth},
-						endYear = ${endYear},
-						startDay = ${startDay},
-						startMonth = ${startMonth},
-						startYear = ${startYear});
-				}
-			}
-		}
-
-		AssertElementPresent(locator1 = "ACIndividualsDashboard#ACTIVE_INDIVIDUAL_CHART");
-	}
-
-	@summary = "Default summary"
-	macro assertAudienceCard(index = null, percentageList = null) {
-		var key_index = ${index};
-
-		ACUtils.waitForLoading();
-
-		for (var percentage : list ${percentageList}) {
-			var key_percentage = ${percentage};
-
-			while ((IsElementNotPresent(locator1 = "ACUtils#METRIC_VALUE_PERCENTAGE")) && (maxIterations = "50")) {
-				TestUtils.hardRefresh();
-
-				ACUtils.waitForLoading();
-			}
-
-			AssertTextEquals(
-				locator1 = "ACUtils#METRIC_VALUE_PERCENTAGE",
-				value1 = ${percentage});
-		}
-	}
-
-	@summary = "Default summary"
-	macro assertAudienceCardTotalNumber(index = null,metricValue = null) {
-		var key_index = ${index};
-		var key_metricValue = ${metricValue};
-
-		AssertElementPresent(locator1 = "ACUtils#AUDIENCE_TOTAL_METRIC");
-	}
-
-	@summary = "Default summary"
-	macro assertDataSourceName(dataSourceName = null) {
-		var itemName = ${dataSourceName};
-
-		ACUtils.assertItemsName(itemList = ${itemName});
-	}
-
-	@summary = "Default summary"
-	macro assertDatePattern(date = null, format = null) {
-		if (${format} == "MMM d") {
-			var pattern = "[A-Z][a-z][a-z]\s\d+";
-		}
-
-		if (${format} == "MMM") {
-			var pattern = "[A-Z][a-z][a-z]";
-		}
-
-		if (${format} == "MMM d - d") {
-			var pattern = "[A-Z][a-z][a-z]\s\d+\s-\s\d+";
-		}
-
-		if (${format} == "MMM d - MMM d") {
-			var pattern = "[A-Z][a-z][a-z]\s\d+\s-\s[A-Z][a-z][a-z]\s\d+";
-		}
-
-		if (${format} == "yyyy MMM dd") {
-			var pattern = "\d\d\d\d\s[A-Z][a-z][a-z]\s\d+";
-		}
-
-		var match = StringUtil.matches(${date}, ${pattern});
-
-		if (${match} == "true") {
-			echo("PASSED");
-		}
-		else {
-			fail("The ${date} doesn't follow the expected format ${format}");
-		}
-	}
-
-	@summary = "Default summary"
-	macro assertDropdownItem(menuItem = null) {
-		var key_dropdownItem = ${menuItem};
-
-		AssertTextEquals(
-			locator1 = "ACUtils#DROPDOWN_ITEM",
-			value1 = ${menuItem});
-	}
-
-	@summary = "Default summary"
-	macro assertEventNotPresent(eventId = null, applicationId = null) {
-		var postDataText = ProxyUtil.getHarRecording("$..request..postData..text");
-
-		var actual = JSONUtil.getWithJSONPath("[${postDataText}]", "$..[?(@['applicationId'] == '${applicationId}' && @['eventId'] == '${eventId}')]['eventId']");
-
-		TestUtils.assertEquals(
-			actual = ${actual},
-			expected = "");
-	}
-
-	@summary = "Default summary"
-	macro assertEventPresent(eventId = null, applicationId = null) {
-		var postDataText = ProxyUtil.getHarRecording("$..request..postData..text");
-
-		var actual = JSONUtil.getWithJSONPath("[${postDataText}]", "$..[?(@['applicationId'] == '${applicationId}' && @['eventId'] == '${eventId}')]['eventId']");
-
-		TestUtils.assertPartialEquals(
-			actual = ${actual},
-			expected = ${eventId});
-	}
-
-	@summary = "Default summary"
-	macro assertEventPropertyValue(eventId = null, property = null, applicationId = null, value = null) {
-		var postDataText = ProxyUtil.getHarRecording("$..request..postData..text");
-
-		var actual = JSONUtil.getWithJSONPath("[${postDataText}]", "$..[?(@['applicationId'] == '${applicationId}' && @['eventId'] == '${eventId}')]..${property}");
-
-		TestUtils.assertEquals(
-			actual = ${actual},
-			expected = ${value});
-	}
-
-	@summary = "Default summary"
-	macro assertEventPropertyValueIsPresent(eventId = null, property = null, applicationId = null) {
-		var postDataText = ProxyUtil.getHarRecording("$..request..postData..text");
-
-		var attributeValue = JSONUtil.getWithJSONPath("[${postDataText}]", "$..[?(@['applicationId'] == '${applicationId}' && @['eventId'] == '${eventId}')]..${property}");
-
-		if (${attributeValue} != "null") {
-			echo("PASSED");
-		}
-		else {
-			TestUtils.fail(message = "FAILED: Property '${property}' does not exists");
-		}
-	}
-
-	@summary = "Default summary"
-	macro assertIdentityRequestPropertiesValue(expectedDataSourceId = null) {
-		var actualDataSourceId = ACUtils.getPageRefRequestPropertyValue(
-			pageRef = "identity",
-			property = "dataSourceId");
-
-		TestUtils.assertPartialEquals(
-			actual = ${actualDataSourceId},
-			expected = ${expectedDataSourceId});
-
-		var emailAddressHashed = ACUtils.getPageRefRequestPropertyValue(
-			pageRef = "identity",
-			property = "emailAddressHashed");
-
-		TestUtils.assertNotEquals(
-			actual = ${emailAddressHashed},
-			expected = "");
-
-		var id = ACUtils.getPageRefRequestPropertyValue(
-			pageRef = "identity",
-			property = "id");
-
-		TestUtils.assertNotEquals(
-			actual = ${id},
-			expected = "");
-
-		var userId = ACUtils.getPageRefRequestPropertyValue(
-			pageRef = "identity",
-			property = "userId");
-
-		TestUtils.assertNotEquals(
-			actual = ${userId},
-			expected = "");
-	}
-
-	@summary = "Default summary"
-	macro assertItemsName(itemList = null) {
-		for (var key_itemName : list ${itemList}) {
-			AssertElementPresent(
-				itemName = ${key_itemName},
-				locator1 = "ACSettings#ITEM_ON_LIST");
-		}
-	}
-
-	@summary = "Default summary"
-	macro assertItemsNameNotPresent(itemList = null) {
-		for (var itemName : list ${itemList}) {
-			AssertElementNotPresent(
-				itemName = ${itemName},
-				locator1 = "ACSettings#ITEM_ON_LIST");
-		}
-	}
-
-	@summary = "Default summary"
-	macro assertPageTitle(pageTitle = null) {
-		var key_pageTitle = ${pageTitle};
-
-		AssertTextEquals(
-			locator1 = "ACUtils#PAGE_TITLE",
-			value1 = ${pageTitle});
-	}
-
-	@summary = "Default summary"
-	macro assertPageTitleNotPresent(pageTitle = null) {
-		var key_pageTitle = ${pageTitle};
-
-		AssertElementNotPresent(
-			locator1 = "ACUtils#PAGE_TITLE",
-			value1 = ${pageTitle});
-	}
-
-	@summary = "Default summary"
-	macro assertRequestCommonPropertiesValue(expectedDataSourceId = null, expectedChannelId = null) {
-		var actualChannelId = ACUtils.getRequestCommonPropertyValue(property = "channelId");
-
-		TestUtils.assertEquals(
-			actual = ${actualChannelId},
-			expected = ${expectedChannelId});
-
-		var actualDataSourceId = ACUtils.getRequestCommonPropertyValue(property = "dataSourceId");
-
-		TestUtils.assertEquals(
-			actual = ${actualDataSourceId},
-			expected = ${expectedDataSourceId});
-
-		var id = ACUtils.getRequestCommonPropertyValue(property = "id");
-
-		TestUtils.assertNotEquals(
-			actual = ${id},
-			expected = "");
-
-		var userId = ACUtils.getRequestCommonPropertyValue(property = "userId");
-
-		TestUtils.assertNotEquals(
-			actual = ${userId},
-			expected = "");
-	}
-
-	@summary = "Default summary"
-	macro assertTimePattern(format = null, time = null) {
-		if (${format} == "h tt") {
-			var pattern = "\d+\s[A-Z][A-Z]";
-		}
-
-		var match = StringUtil.regexReplaceFirst(${time}, ${pattern}, "true");
-
-		if (${match} == "true") {
-			echo("PASSED");
-		}
-		else {
-			fail("The ${time} doesn't follow the expected format ${format}");
-		}
-	}
-
-	@summary = "Default summary"
-	macro assertViewerSegmentsCard(segmentNameList) {
-		ACUtils.waitForLoading();
-
-		for (var segmentName : list ${segmentNameList}) {
-			var key_segmentName = ${segmentName};
-
-			while ((IsElementNotPresent(locator1 = "ACUtils#VIEWER_SEGMENTS_CHART")) && (maxIterations = "50")) {
-				TestUtils.hardRefresh();
-
-				ACUtils.waitForLoading();
-			}
-
-			AssertElementPresent(locator1 = "ACUtils#VIEWER_SEGMENTS_CHART");
-		}
-	}
-
-	@summary = "Default summary"
-	macro assertXAxisTimedGraph(parentName = null) {
-		var key_parentName = ${parentName};
-
-		AssertElementPresent(locator1 = "ACUtils#SVG_TIMED_GRAPH");
-	}
-
-	@summary = "Default summary"
-	macro changePagination(itemsPerPage = null) {
-		Click(locator1 = "ACUtils#PAGINATION_ITEMS_PER_PAGE_SELECT");
-
-		MenuItem.click(menuItem = ${itemsPerPage});
-	}
-
-	@summary = "Default summary"
-	macro checkAnyPage(pageNumber = null) {
-		var key_pageNumber = ${pageNumber};
-
-		Click(locator1 = "ACUtils#ANY_PAGE");
-	}
-
-	@summary = "Default summary"
-	macro checkPreviousNextButton() {
-		if (isSet(previousButton)) {
-			Click(locator1 = "ACUtils#PREVIOUS_PAGES");
-		}
-
-		if (isSet(nextButton)) {
-			Click(locator1 = "ACUtils#NEXT_PAGES");
-		}
-	}
-
-	@summary = "Default summary"
-	macro clearLocalStorage() {
-		var javaScript = '''
-		localStorage.clear();
-		''';
-
-		var localStorageItem = selenium.getEval(${javaScript});
-	}
-
-	@summary = "Default summary"
-	macro clearSearchBar() {
-		Click(locator1 = "ACUtils#CLEAR_SEARCH_BAR_BUTTON");
-	}
-
-	@summary = "Default summary"
-	macro clickAnyButton(button = null) {
-		var buttonName = ${button};
-
-		Click(
-			key_buttonName = ${buttonName},
-			locator1 = "ACUtils#GENERIC_BUTTON");
-	}
-
-	@summary = "Default summary"
 	macro clickGenericHyperlink(hyperlinkText = null) {
 		var key_textValue = ${hyperlinkText};
 
@@ -502,354 +12,154 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro clickKebab() {
-		Click(locator1 = "ACSegments#SEGMENT_ELLIPSIS");
-	}
-
-	@summary = "Default summary"
-	macro clickOnDistributionBar() {
-		if (!(isSet(index))) {
-			var index = 1;
-		}
-
-		while (IsElementNotPresent(index = ${index}, locator1 = "ACIndividualsDashboard#INDIVIDUALS_ACTIVITIES_CHART_RECHARTS_BAR")) {
-			TestUtils.hardRefresh();
-
-			ACUtils.waitForChartLoad();
-		}
-
-		Click.clickNoMouseOver(
-			index = ${index},
-			locator1 = "ACIndividualsDashboard#INDIVIDUALS_ACTIVITIES_CHART_RECHARTS_BAR");
-	}
-
-	@summary = "Default summary"
-	macro closeAllSessions() {
-		AntCommands.runCommand("build-test.xml", "clear-redis");
-
-		var analyticsCloudAsahCuratorBatchURL = PropsUtil.get("analytics.cloud.asah.curator.batch.url");
-
-		var cleanCurl = '''
-			${analyticsCloudAsahCuratorBatchURL}/admin/sessions/close \
-				-H 'Content-Type: application/json' \
-				-H 'osb-asah-project-id: osbasah'
-		''';
-
-		com.liferay.poshi.runner.util.JSONCurlUtil.post(${cleanCurl});
-	}
-
-	@summary = "Default summary"
-	macro closeAllSessionsAndWait() {
-		ACUtils.closeAllSessions();
-
-		// It needs a 30 second pause which is the time required for the command to be executed. For more information about pause see LRAC-9518
-
-		Pause(value1 = 30000);
-	}
-
-	@summary = "Default summary"
-	macro closeModal() {
-		Click(locator1 = "ACUtils#MODAL_CLOSE_BUTTON");
-	}
-
-	@summary = "Default summary"
-	macro createBlogsAndAddToPage() {
-		if (!(isSet(layoutName))) {
-			var layoutName = "AC Page";
-		}
-
-		Navigator.gotoSitePage(
-			pageName = ${layoutName},
-			siteName = "Site Name");
-
-		if (IsElementNotPresent(key_portletTitleName = "Blogs", locator1 = "Portlet#SPECIFIC_TITLE")) {
-			ACUtils.addWidgetToPage(
-				layoutName = ${layoutName},
-				widgetName = "Blogs");
-		}
-
-		if (!(isSet(entryTitle))) {
-			var entryTitle = "Blogs AC Title";
-		}
-
-		JSONBlog.addEntry(
-			entryContent = "This is the blog test for AC",
-			entryTitle = ${entryTitle},
-			groupName = "Site Name");
-	}
-
-	@summary = "Default summary"
-	macro createDMAndAddToPage() {
-		if (!(isSet(layoutName))) {
-			var layoutName = "AC Page";
-		}
-
-		Navigator.gotoSitePage(
-			pageName = ${layoutName},
-			siteName = "Site Name");
-
-		if (IsElementNotPresent(key_portletTitleName = "Documents and Media", locator1 = "Portlet#SPECIFIC_TITLE")) {
-			ACUtils.addWidgetToPage(
-				layoutName = ${layoutName},
-				widgetName = "Documents and Media");
-		}
-
-		if (!(isSet(dmDocumentTitle))) {
-			var dmDocumentTitle = "DM AC Title";
-		}
-
-		if (!(isSet(dmDocumentFile))) {
-			var dmDocumentFile = "Document_1.jpg";
-		}
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentTitle = ${dmDocumentTitle},
-			groupName = "Site Name",
-			mimeType = "image/jpeg",
-			sourceFileName = ${dmDocumentFile});
-	}
-
-	@summary = "Default summary"
-	macro createFormAndAddToPage() {
-		if (!(isSet(formAcTitle))) {
-			var formAcTitle = "Created Form Name";
-		}
-
-		if (!(isSet(layoutName))) {
-			var layoutName = "AC Page";
-		}
-
-		ACUtils.addWidgetToPage(
-			layoutName = ${layoutName},
-			widgetName = "Form");
-
-		FormsAdmin.addForm(groupName = "Site Name");
-
-		Form.editName(formTitle = ${formAcTitle});
-
-		Form.addTextField(fieldPositionNumber = 0);
-
-		Form.closeSidebar();
-
-		Button.clickPublish();
-
-		Navigator.gotoSitePage(
-			pageName = ${layoutName},
-			siteName = "Site Name");
-
-		FormPortletNavigator.gotoSelectForm();
-
-		FormPortletConfiguration.selectForm(formTitle = ${formAcTitle});
-
-		PortletEntry.save();
-	}
-
-	@summary = "Default summary"
-	macro createWCAndAddToPage() {
-		if (!(isSet(layoutName))) {
-			var layoutName = "AC Page";
-		}
-
-		if (!(isSet(portletIndex))) {
-			var portletIndex = 1;
-		}
-
-		if (!(isSet(webContentTitle))) {
-			var webContentTitle = "Web Content AC Title";
-		}
-
-		if (!(isSet(webContentContent))) {
-			var webContentContent = "This is the web content test for AC";
-
-			JSONWebcontent.addWebContent(
-				content = ${webContentContent},
-				groupName = "Site Name",
-				title = ${webContentTitle});
-		}
-		else {
-			JSONWebcontent.addWebContent(
-				content = ${webContentContent},
-				groupName = "Site Name",
-				source = "true",
-				title = ${webContentTitle});
-		}
-
-		ACUtils.addWidgetToPage(
-			layoutName = ${layoutName},
-			widgetName = "Web Content Display");
-
-		WebContentDisplayPortlet.selectWebContent(
-			portletIndex = ${portletIndex},
-			webContentTitle = ${webContentTitle});
-
-		Navigator.gotoSitePage(
-			pageName = ${layoutName},
-			siteName = "Site Name");
-	}
-
-	@summary = "Default summary"
-	macro deleteItemFromList(itemName = null) {
-		var key_actionButton = "Delete";
-		var key_nameList = ${itemName};
+	macro clickToAssignSitesAndChannel(propertyName = null) {
+		Click(
+			key_propertyName = ${propertyName},
+			locator1 = "ACUtils#SYNC_ANY_PROPERTIES");
 
 		WaitForPageLoad();
+	}
 
-		ACUtils.searchBar(searchItem = ${itemName});
+	@summary = "Default summary"
+	macro connectAnalyticsCloud(acToken = null, staticExistingSourceToken = null) {
+		ACUtils.disconnectDXPFromAnalyticsCloud();
 
-		MouseOver(locator1 = "ACUtils#NAME_LIST");
+		Click(locator1 = "ACUtils#TOKEN_INPUT_FIELD");
 
-		Click.clickNoMouseOver(locator1 = "ACUtils#DELETE_BUTTON");
+		if (isSet(acToken)) {
+			Type(
+				locator1 = "ACUtils#TOKEN_INPUT_FIELD",
+				value1 = ${acToken});
+		}
+		else if (isSet(staticExistingSourceToken)) {
+			Type(
+				locator1 = "ACUtils#TOKEN_INPUT_FIELD",
+				value1 = ${staticExistingSourceToken});
+		}
+		else {
+			Type.sendKeys(
+				locator1 = "ACUtils#TOKEN_INPUT_FIELD",
+				value1 = "keys=CONTROL,v");
+		}
 
-		ACUtils.clickAnyButton(button = ${key_actionButton});
+		WaitForElementNotPresent(locator1 = "ACUtils#CONNECT_BUTTON_DISABLED");
 
-		ACUtils.clearSearchBar();
+		Click(locator1 = "ACUtils#CONNECT_BUTTON");
+
+		WaitForVisible(
+			key_text = "Next",
+			locator1 = "Button#ANY");
+
+		WaitForElementNotPresent(locator1 = "ACUtils#LOADING_ANIMATION");
+	}
+
+	@summary = "Default summary"
+	macro connectDXPtoAnalyticsCloud() {
+		ACUtils.connectAnalyticsCloud();
+
+		var assignedPropertyName = ACUtils.getAssignedPropertyName();
+
+		ACUtils.syncSites(
+			propertyName = ${assignedPropertyName},
+			siteName = "Guest");
+
+		Click(
+			key_text = "Next",
+			locator1 = "Button#ANY");
+
+		ACUtils.syncContactsAndAccountstData();
+
+		Click(locator1 = "ACUtils#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
+
+		Click(locator1 = "ACUtils#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
+
+		return ${assignedPropertyName};
+	}
+
+	@summary = "Default summary"
+	macro createNewProperty(newPropertyNameList = null) {
+		for (var newPropertyName : list ${newPropertyNameList}) {
+			Click(
+				ariaLabel = "Create a New Property",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
+
+			Type(
+				locator1 = "ACUtils#NEW_PROPERTY_NAME",
+				value1 = ${newPropertyName});
+
+			Click(
+				key_text = "Create",
+				locator1 = "Button#ANY");
+
+			WaitForElementNotPresent(locator1 = "Modal#MODAL_CONTENT");
+		}
+	}
+
+	@summary = "Default summary"
+	macro disconnectDXPFromAnalyticsCloud() {
+		ACUtils.goToInstanceSettingsAC();
+
+		if (IsElementPresent(locator1 = "ACUtils#DISCONNECT_BUTTON")) {
+			ClickNoError(locator1 = "ACUtils#DISCONNECT_BUTTON");
+
+			Click(locator1 = "ACUtils#DISCONNECT_CONFIRMATION_BUTTON");
+		}
 	}
 
 	@summary = "Default summary"
 	macro dismissOnboardingModal() {
-		if (IsElementPresent(locator1 = "ACSettings#MODAL_SCREEN")) {
-			Click(locator1 = "ACSettings#CLOSE_ONBOARDING_MODAL");
+		if (IsElementPresent(locator1 = "ACUtils#MODAL_SCREEN")) {
+			Click(locator1 = "ACUtils#CLOSE_ONBOARDING_MODAL");
 		}
 	}
 
 	@summary = "Default summary"
-	macro executeJSInBrowserConsole(javaScriptCode = null) {
-		var javaScript = ${javaScriptCode};
+	macro getAssignedPropertyName() {
+		WaitForVisible(
+			key_text = "Assign",
+			locator1 = "Button#ANY");
 
-		var javaScriptItem = selenium.getEval(${javaScript});
-	}
+		static var assignedPropertyName = selenium.getText("ACUtils#FIRST_AVAILABLE_PROPERTY");
 
-	@summary = "Default summary"
-	macro getEventPropertyValue(eventId = null, property = null, applicationId = null) {
-		var postDataText = ProxyUtil.getHarRecording("$..request..postData..text");
-
-		var value = JSONUtil.getWithJSONPath("[${postDataText}]", "$..[?(@['applicationId'] == '${applicationId}' && @['eventId'] == '${eventId}')]..${property}");
-
-		return ${value};
-	}
-
-	@summary = "Default summary"
-	macro getGroupId() {
-		var currentURL = Navigator.getCurrentURL();
-
-		var groupId = StringUtil.extractLast(${currentURL}, "workspace/");
-
-		var groupId = StringUtil.extractFirst(${groupId}, "/");
-
-		return ${groupId};
-	}
-
-	@summary = "Default summary"
-	macro getIPAddress() {
-		var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
-
-		var extractedIPAddress = StringUtil.extractFirst(${analyticsCloudURL}, ":8080");
-
-		var extractedIPAddress = StringUtil.extractLast(${extractedIPAddress}, "/");
-
-		return ${extractedIPAddress};
-	}
-
-	@summary = "Default summary"
-	macro getIPCountry() {
-		var curl = '''https://ipinfo.io''';
-
-		var code = JSONCurlUtil.get(${curl}, "$.country");
-
-		if (${code} == "GB") {
-			var country = "United Kingdom";
+		if (${assignedPropertyName} == "Beryl Commerce") {
+			static var assignedPropertyName = selenium.getText("ACUtils#SECOND_AVAILABLE_PROPERTY");
 		}
 
-		if (${code} == "BR") {
-			var country = "Brazil";
-		}
-
-		if (${code} == "US") {
-			var country = "United States";
-		}
-
-		if (${code} == "CN") {
-			var country = "China";
-		}
-
-		if (${code} == "ES") {
-			var country = "Spain";
-		}
-
-		if (${code} == "NZ") {
-			var country = "New Zealand";
-		}
-
-		return ${country};
+		return ${assignedPropertyName};
 	}
 
 	@summary = "Default summary"
-	macro getLocalStorageItem(keyName = null) {
-		var javaScript = '''
-		var localStorageItem = localStorage.getItem('${keyName}');
+	macro goToInstanceSettingsAC() {
+		PortalSettings.openInstanceSettingsAdmin();
 
-		return localStorageItem;
-		''';
-
-		var localStorageItem = selenium.getEval(${javaScript});
-
-		var localStorageItem = StringUtil.replace(${localStorageItem}, "\"", "");
-
-		return ${localStorageItem};
+		Click(locator1 = "ACUtils#ANALYTICS_CLOUD_DXP_OPTION");
 	}
 
 	@summary = "Default summary"
-	macro getPageRefRequestPropertyValue(property = null, pageRef = null) {
-		var postDataText = ProxyUtil.getHarRecording("$..[?(@['pageref'] == '${pageRef}')].request[?(@.method == 'POST' && @.url contains '/${pageRef}')]..text");
-
-		var value = JSONUtil.getWithJSONPath("[${postDataText}]", "$..${property}");
-
-		return ${value};
-	}
-
-	@summary = "Default summary"
-	macro getRequestCommonPropertyValue(property = null) {
-		var postDataText = ProxyUtil.getHarRecording("$..request..postData..text");
-
-		var value = JSONUtil.getWithJSONPath("[${postDataText}]", "$.[-1:]..${property}");
-
-		return ${value};
-	}
-
-	@summary = "Default summary"
-	macro launchAC(password = null, emailList = null, workspaceName = null) {
+	macro launchAC() {
 		var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
 
 		Open(value1 = ${analyticsCloudURL});
 
 		WaitForPageLoad();
 
-		if (!(isSet(emailAddress))) {
-			var emailAddress = "test@liferay.com";
-		}
+		var emailAddress = "test@liferay.com";
 
-		if ((IsElementNotPresent(locator1 = "ACLogin#EMAIL_LOGIN_FIELD")) || (IsElementNotPresent(locator1 = "ACWorkspace#FARO_DEMO_WORKSPACE"))) {
+		if ((IsElementNotPresent(locator1 = "ACUtils#EMAIL_LOGIN_FIELD")) || (IsElementNotPresent(locator1 = "ACUtils#FARO_DEMO_WORKSPACE"))) {
 			Refresh();
 
 			WaitForPageLoad();
 		}
 
-		if (IsElementPresent(locator1 = "ACLogin#EMAIL_LOGIN_FIELD")) {
-			if (!(isSet(password))) {
-				ACLogin.loginAs(emailAddress = ${emailAddress});
-			}
-			else {
-				ACLogin.loginAs(
-					emailAddress = ${emailAddress},
-					password = ${password});
-			}
+		if (IsElementPresent(locator1 = "ACUtils#EMAIL_LOGIN_FIELD")) {
+			ACUtils.loginAs(emailAddress = ${emailAddress});
 		}
 
 		WaitForPageLoad();
 
 		ACUtils.waitForLoading();
 
-		if ((IsElementNotPresent(locator1 = "ACLogin#EMAIL_LOGIN_FIELD")) || (IsElementNotPresent(locator1 = "ACWorkspace#FARO_DEMO_WORKSPACE"))) {
+		if ((IsElementNotPresent(locator1 = "ACUtils#EMAIL_LOGIN_FIELD")) || (IsElementNotPresent(locator1 = "ACUtils#FARO_DEMO_WORKSPACE"))) {
 			Refresh();
 
 			WaitForPageLoad();
@@ -857,27 +167,13 @@ definition {
 			ACUtils.waitForLoading();
 		}
 
-		if (IsElementNotPresent(locator1 = "ACWorkspace#FARO_DEMO_WORKSPACE")) {
-			ACLogin.loginAs(
+		if (IsElementNotPresent(locator1 = "ACUtils#FARO_DEMO_WORKSPACE")) {
+			ACUtils.loginAs(
 				emailAddress = ${emailAddress},
 				password = "test1");
 		}
 
-		if (!(isSet(workspaceName))) {
-			ACWorkspace.openWorkspace();
-		}
-
-		if (isSet(workspaceName)) {
-			if (!(isSet(emailList))) {
-				ACWorkspace.openWorkspace(workspaceName = ${workspaceName});
-			}
-
-			if (isSet(emailList)) {
-				ACWorkspace.createWorkspace(
-					emailList = ${emailList},
-					workspaceName = ${workspaceName});
-			}
-		}
+		ACUtils.openWorkspace();
 	}
 
 	@summary = "Default summary"
@@ -894,513 +190,134 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro launchDXPUI() {
-		Navigator.openURL();
+	macro loginAs(emailAddress = null) {
+		var faroEmailAddress = PropsUtil.get("analytics.cloud.faro.user.login");
 
-		if (!(isSet(userEmailAddress))) {
-			var userEmailAddress = "test@liferay.com";
+		WaitForPageLoad();
+
+		if (${faroEmailAddress} != "null") {
+			var faroPassword = PropsUtil.get("analytics.cloud.faro.password");
+			var emailAddress = ${faroEmailAddress};
+			var password = ${faroPassword};
+		}
+		else if (!(isSet(password))) {
+			var password = PropsUtil.get("default.admin.password");
 		}
 
-		if (IsElementNotPresent(locator1 = "ApplicationsMenu#APPLICATIONS_MENU")) {
-			User.firstLoginUI(
-				password = PropsUtil.get("default.admin.password"),
-				userEmailAddress = ${userEmailAddress});
-		}
+		Click(locator1 = "ACUtils#EMAIL_LOGIN_FIELD");
+
+		Type(
+			locator1 = "ACUtils#EMAIL_LOGIN_FIELD",
+			value1 = ${emailAddress});
+
+		Click(locator1 = "ACUtils#PASSWORD_LOGIN_FIELD");
+
+		Type(
+			locator1 = "ACUtils#PASSWORD_LOGIN_FIELD",
+			value1 = ${password});
+
+		Click(locator1 = "ACUtils#LOGIN_BUTTON");
 	}
 
 	@summary = "Default summary"
-	macro logInPause() {
+	macro openWorkspace(workspaceName = null) {
+		var faroWorkspaceName = PropsUtil.get("analytics.cloud.faro.workspace.name");
 
-		// Pause is necessary because poshi logs in from one user to another quickly. For more information about pause see LRAC-9514
+		if (${faroWorkspaceName} != "null") {
+			var key_workspaceName = ${faroWorkspaceName};
 
-		Pause(value1 = 5000);
-	}
-
-	@summary = "Default summary"
-	macro navigateToSitePage(actionType = null, submitText = null, documentTitleList = null, siteName = null, pageName = null, commentText = null) {
-		for (var documentTitle : list ${documentTitleList}) {
-			Navigator.gotoSitePage(
-				pageName = ${pageName},
-				siteName = ${siteName});
-
-			if (${actionType} == "View WC") {
-				ACUtils.waitForSendingRequest();
-			}
-
-			if (${actionType} == "View Blog") {
-				BlogsNavigator.gotoPG(entryTitle = ${documentTitle});
-
-				ACUtils.waitForSendingRequest();
-			}
-
-			if (${actionType} == "Comment Blog") {
-				BlogsNavigator.gotoPG(entryTitle = ${documentTitle});
-
-				Comments.addPG(entryComment = ${commentText});
-
-				ACUtils.waitForSendingRequest(time = 10000);
-			}
-
-			if (${actionType} == "View DM") {
-				DMNavigator.gotoDocumentPG(dmDocumentTitle = ${documentTitle});
-
-				ACUtils.waitForSendingRequest();
-			}
-
-			if (${actionType} == "Download DM") {
-				DMDocument.downloadPG(dmDocumentTitle = ${documentTitle});
-
-				ACUtils.waitForSendingRequest();
-			}
-
-			if (${actionType} == "Comment DM") {
-				DMNavigator.gotoDocumentPG(dmDocumentTitle = ${documentTitle});
-
-				Comments.addPG(entryComment = ${commentText});
-
-				ACUtils.waitForSendingRequest();
-			}
-
-			if (${actionType} == "View Form") {
-				FormPortlet.waitFormRenderer(text = "Submit");
-
-				ACUtils.waitForSendingRequest();
-			}
-
-			if (${actionType} == "Submit Form") {
-				FormPortlet.waitFormRenderer(text = "Submit");
-
-				FormFields.viewTextLabel(
-					fieldLabel = "Text",
-					fieldName = "Text");
-
-				FormFields.editText(
-					fieldName = "Text",
-					fieldValue = ${submitText});
-
-				FormPortlet.submitLocalizedSuccessfully(buttonName = "Submit");
-
-				ACUtils.waitForSendingRequest();
-			}
+			Click(locator1 = "ACUtils#WORKSPACE_NAME");
 		}
-	}
+		else if (isSet(workspaceName)) {
+			var key_workspaceName = ${workspaceName};
 
-	@summary = "Default summary"
-	macro navigateToSitePageWithUser(actionType = null, commentText = null, submitText = null, emailList = null, documentTitleList = null, siteName = null, pageName = null) {
-		for (var email : list ${emailList}) {
-			User.logoutAndLoginPG(userLoginEmailAddress = ${email});
-
-			ACUtils.navigateToSitePage(
-				actionType = ${actionType},
-				commentText = ${commentText},
-				documentTitleList = ${documentTitleList},
-				pageName = ${pageName},
-				siteName = ${siteName},
-				submitText = ${submitText});
-
-			ACUtils.logInPause();
+			Click(locator1 = "ACUtils#WORKSPACE_NAME");
 		}
-	}
-
-	@summary = "Default summary"
-	macro orderAnyTable(columnName = null) {
-		var key_columnName = ${columnName};
-
-		Click(locator1 = "ACUtils#GENERIC_ORDER_BUTTON");
-	}
-
-	@summary = "Default summary"
-	macro orderArrow() {
-		var type = ${type};
-
-		if (${type} == "descending") {
-			if (IsElementPresent(locator1 = "ACUtils#ORDER_ARROW_BUTTON_ASC")) {
-				Click(locator1 = "ACUtils#ORDER_ARROW_BUTTON_ASC");
-			}
+		else if (!(isSet(workspaceName))) {
+			Click(locator1 = "ACUtils#FARO_DEMO_WORKSPACE");
 		}
 
-		if (${type} == "ascending") {
-			if (IsElementPresent(locator1 = "ACUtils#ORDER_ARROW_BUTTON_DES")) {
-				Click(locator1 = "ACUtils#ORDER_ARROW_BUTTON_DES");
-			}
-		}
+		ACUtils.dismissOnboardingModal();
 	}
 
 	@summary = "Default summary"
-	macro orderTableTitleArrow() {
-		var type = ${type};
+	macro searchACItemInAssignModal(searchItem = null) {
+		Click(locator1 = "ACUtils#SYNCED_SITES_SEARCH_FIELD");
 
-		if (${type} == "down") {
-			if (IsElementPresent(locator1 = "ACUtils#ORDER_ARROW_TABLE_BUTTON_UP")) {
-				Click(locator1 = "ACUtils#ORDER_ARROW_TABLE_BUTTON_UP");
-			}
-		}
+		Type(
+			locator1 = "ACUtils#SYNCED_SITES_SEARCH_FIELD",
+			value1 = ${searchItem});
 
-		if (${type} == "up") {
-			if (IsElementPresent(locator1 = "ACUtils#ORDER_ARROW_TABLE_BUTTON_DOWN")) {
-				Click(locator1 = "ACUtils#ORDER_ARROW_TABLE_BUTTON_DOWN");
-			}
-		}
+		KeyPress(
+			locator1 = "ACUtils#SYNCED_SITES_SEARCH_FIELD",
+			value1 = "\ENTER");
 	}
 
 	@summary = "Default summary"
-	macro restartDockerContainer() {
-		var containerName = ${containerName};
+	macro switchTab(tabName = null) {
+		var key_tab = ${tabName};
 
-		AntCommands.runCommand("build-test.xml", "restart-docker-container -Ddocker.container=${containerName}");
+		Click(locator1 = "Modal#TAB_LINK");
 	}
 
 	@summary = "Default summary"
-	macro saveButton() {
-		Click(locator1 = "Button#SAVE");
+	macro syncContactsAndAccountstData() {
+		if (IsElementPresent(index = 1, locator1 = "ACUtils#TOGGLE_ICON_ENABLE")) {
+			Check.checkToggleSwitch(locator1 = "ACUtils#TOGGLE_ICON");
+		}
+
+		Check.checkToggleSwitch(locator1 = "ACUtils#TOGGLE_ICON");
+	}
+
+	@summary = "Default summary"
+	macro syncSites(newPropertyName = null, siteName = null) {
+		if (isSet(newPropertyName)) {
+			ACUtils.createNewProperty(newPropertyNameList = ${newPropertyName});
+
+			var propertyName = ${newPropertyName};
+		}
+
+		ACUtils.clickToAssignSitesAndChannel(propertyName = ${propertyName});
+
+		ACUtils.switchTab(tabName = "Sites");
+
+		if (isSet(siteName)) {
+			ACUtils.searchACItemInAssignModal(searchItem = ${siteName});
+		}
+
+		Click.clickAtNotVisible(locator1 = "ACUtils#AC_GENERIC_CHECKBOX");
+
+		Click(
+			key_name = "Assign",
+			locator1 = "Button#GENERAL_BUTTON_MODAL_FOOTER");
 
 		Alert.viewSuccessMessage();
 	}
 
 	@summary = "Default summary"
-	macro searchBar(searchItem = null, cardTitle = null) {
-		if (isSet(cardTitle)) {
-			Type(
-				key_cardTitle = ${cardTitle},
-				locator1 = "ACSettings#SEARCH_BAR_IN_SPECIFIC_CARD",
-				value1 = ${searchItem});
+	macro takeTokenFromAnalyticsCloud() {
+		if (IsElementNotPresent(locator1 = "ACUtils#SETTINGS_PAGE")) {
+			var key_sidebarOption = "settings";
 
-			KeyPress(
-				key_cardTitle = ${cardTitle},
-				locator1 = "ACSettings#SEARCH_BAR_IN_SPECIFIC_CARD",
-				value1 = "\ENTER");
-		}
-		else {
-			Type(
-				locator1 = "ACSettings#SEARCH_BAR",
-				value1 = ${searchItem});
+			WaitForVisible(locator1 = "ACUtils#GENERIC_SIDEBAR_OPTION");
 
-			KeyPress(
-				locator1 = "ACSettings#SEARCH_BAR",
-				value1 = "\ENTER");
+			Click(locator1 = "ACUtils#GENERIC_SIDEBAR_OPTION");
 		}
 
-		ACUtils.waitForLoading();
-	}
+		var key_settingsNavigation = "data-source";
 
-	@summary = "Default summary"
-	macro selectGenericOption(optionValue = null) {
-		Select(
-			locator1 = "Select#SELECT",
-			value1 = ${optionValue});
-	}
+		Click(locator1 = "ACUtils#SETTINGS_NAVIGATION");
 
-	@summary = "Default summary"
-	macro setItemName(itemName = null) {
-		WaitForPageLoad();
+		Click(locator1 = "ACUtils#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
 
-		if ((IsElementNotPresent(locator1 = "ACSegments#SEGMENT_LABEL")) || (IsTextNotEqual(locator1 = "ACSegments#SEGMENT_LABEL", value1 = "STATIC SEGMENT"))) {
-			Click(locator1 = "ACUtils#EDIT_NAME_BUTTON");
-		}
+		Click(locator1 = "ACUtils#DXP_DATA_SOURCE_OPTION");
 
-		Type.sendKeys(
-			locator1 = "ACUtils#NAME_FIELD",
-			value1 = ${itemName});
-	}
-
-	@summary = "Default summary"
-	macro setLocalStorageValue(keyValue = null, keyName = null) {
-		var javaScript = '''
-		localStorage.setItem('${keyName}', '${keyValue}');
-		''';
-
-		var localStorageItem = selenium.getEval(${javaScript});
-	}
-
-	@summary = "Default summary"
-	macro tearDownAC() {
-
-		// It is not possible to delete data source after LRAC-13389. This functionality must be returned by a story that has not yet been created
-
-		ACUtils.launchAC();
-
-		ACSettings.deleteAllProperties();
-
-		//ACSettings.deleteAllDataSource();
-
-	}
-
-	@summary = "Default summary"
-	macro tearDownCommerce() {
-		JSONUser.tearDownNonAdminUsers();
-
-		CommerceJSONAccountsAPI._deleteAllCommerceAccounts();
-
-		CommerceJSONAccountGroupsAPI._deleteAllCommerceAccountGroups();
-
-		CommerceJSONOrganizationsAPI._deleteAllOrganizations();
-
-		CommerceJSONChannelsAPI._deleteAllCommerceChannels();
-	}
-
-	@summary = "Default summary"
-	macro tearDownDXP() {
-		ACUtils.launchDXP();
-
-		ACDXPSettings.disconnectDXPFromAnalyticsCloud();
-	}
-
-	@summary = "Default summary"
-	macro viewActivePage(pageNumber) {
-		AssertTextEquals(
-			locator1 = "ACUtils#ACTIVE_PAGE",
-			value1 = ${pageNumber});
-	}
-
-	@summary = "Default summary"
-	macro viewAlertInfo(infoMessage = null) {
-		AssertTextEquals.assertPartialText(
-			locator1 = "Message#ALERT_DISMISSIBLE",
-			value1 = ${infoMessage});
-	}
-
-	@summary = "Default summary"
-	macro viewGenericButton(buttonName = null) {
-		var key_buttonName = ${buttonName};
-
-		AssertElementPresent(locator1 = "ACUtils#GENERIC_BUTTON");
-	}
-
-	@summary = "Default summary"
-	macro viewGenericText(textValueList = null) {
-		for (var textValue : list ${textValueList}) {
-			var key_textValue = ${textValue};
-
-			WaitForPageLoad();
-
-			while ((IsElementNotPresent(locator1 = "ACUtils#GENERIC_TEXT")) && (maxIterations = "50")) {
-				TestUtils.hardRefresh();
-			}
-
-			AssertElementPresent(locator1 = "ACUtils#GENERIC_TEXT");
-		}
-	}
-
-	@summary = "Default summary"
-	macro viewGenericTextInOrder(textValueList = null) {
-		if (!(isSet(index))) {
-			var index = 1;
-		}
-
-		for (var textValue : list ${textValueList}) {
-			var key_textValue = ${textValue};
-
-			WaitForPageLoad();
-
-			while ((IsElementNotPresent(locator1 = "ACUtils#GENERIC_TEXT_ORDER")) && (maxIterations = "50")) {
-				TestUtils.hardRefresh();
-			}
-
-			AssertElementPresent(locator1 = "ACUtils#GENERIC_TEXT_ORDER");
-		}
-	}
-
-	@summary = "Default summary"
-	macro viewNameList(nameList = null) {
-		for (var name : list ${nameList}) {
-			var key_nameList = ${name};
-
-			WaitForPageLoad();
-
-			ACUtils.waitForLoading();
-
-			while ((IsElementNotPresent(locator1 = "ACUtils#NAME_LIST")) && (maxIterations = "50")) {
-				ACSegments.searchSegment(findSegment = ${name});
-
-				ACUtils.clearSearchBar();
-			}
-
-			ACUtils.waitForLoading();
-
-			AssertTextEquals(
-				locator1 = "ACUtils#NAME_LIST",
-				value1 = ${name});
-		}
-	}
-
-	@summary = "Default summary"
-	macro viewNameListInOrder(name = null) {
-		var key_userName = ${name};
-		var index = ${index};
-
-		WaitForPageLoad();
-
-		while ((IsElementNotPresent(locator1 = "ACSegments#ADD_MEMBERS_INDEX_TABLE")) && (maxIterations = "50")) {
-			Refresh();
-		}
-
-		AssertTextEquals(
-			locator1 = "ACSegments#ADD_MEMBERS_INDEX_TABLE",
-			value1 = ${name});
-	}
-
-	@summary = "Default summary"
-	macro viewNameListIsNotPresent(nameList = null) {
-		for (var name : list ${nameList}) {
-			var key_nameList = ${name};
-
-			WaitForPageLoad();
-
-			ACUtils.waitForLoading();
-
-			while ((IsElementPresent(locator1 = "ACUtils#NAME_LIST")) && (maxIterations = "50")) {
-				ACSegments.searchSegment(findSegment = ${name});
-
-				ACUtils.clearSearchBar();
-			}
-
-			ACUtils.waitForLoading();
-
-			AssertElementNotPresent(locator1 = "ACUtils#NAME_LIST");
-		}
-	}
-
-	@summary = "Default summary"
-	macro viewNoResultsMessage(noResultMessage = null) {
-		var key_noResultMessage = ${noResultMessage};
-
-		WaitForPageLoad();
-
-		while ((IsElementNotPresent(locator1 = "ACAssets#NO_RESULTS_CONTENT_MESSAGE")) && (maxIterations = "50")) {
-			TestUtils.hardRefresh();
-		}
-
-		AssertTextEquals(
-			locator1 = "ACAssets#NO_RESULTS_CONTENT_MESSAGE",
-			value1 = ${noResultMessage});
-	}
-
-	@summary = "Default summary"
-	macro viewNoResultsMessageNotPresent(noResultMessage = null) {
-		AssertElementNotPresent(
-			key_noResultMessage = ${noResultMessage},
-			locator1 = "ACAssets#NO_RESULTS_CONTENT_MESSAGE");
-	}
-
-	@summary = "Default summary"
-	macro viewPaginationItemsPerPage(itemsPerPage = null) {
-		AssertTextEquals(
-			locator1 = "ACUtils#PAGINATION_ITEMS_PER_PAGE_SELECT",
-			value1 = "${itemsPerPage} Items");
-	}
-
-	@summary = "Default summary"
-	macro viewPartialNameList(nameList = null) {
-		for (var name : list ${nameList}) {
-			var key_nameList = ${name};
-
-			WaitForPageLoad();
-
-			while ((IsElementNotPresent(locator1 = "ACUtils#NAME_LIST")) && (maxIterations = "50")) {
-				ACSegments.searchSegment(findSegment = ${name});
-
-				ACUtils.clearSearchBar();
-			}
-
-			AssertTextEquals.assertPartialText(
-				locator1 = "ACUtils#PARTIAL_NAME_LIST",
-				value1 = ${name});
-		}
-	}
-
-	@summary = "Default summary"
-	macro viewResultsMessage(results = null) {
-		WaitForElementPresent(locator1 = "ACUtils#RESULT_MESSAGE");
-
-		AssertTextEquals(
-			locator1 = "ACUtils#RESULT_MESSAGE",
-			value1 = ${results});
-	}
-
-	@summary = "Default summary"
-	macro viewResultsPages(pageNumber = null) {
-		var key_pageNumber = ${pageNumber};
-
-		AssertTextEquals(
-			locator1 = "ACUtils#ANY_PAGE",
-			value1 = ${key_pageNumber});
-	}
-
-	@summary = "Default summary"
-	macro viewSearchResultsInfo(searchTerm = null, count = null) {
-		AssertTextEquals(
-			locator1 = "ACIndividualsDashboard#KNOWN_INDIVIDUAL_ATTRIBUTE_SEARCH_INFO",
-			value1 = "${count} Results for ${searchTerm}");
-	}
-
-	@summary = "Default summary"
-	macro viewTableInformation(nameList = null, numberValueList = null) {
-		var list1 = ListUtil.newListFromString(${nameList});
-		var list2 = ListUtil.newListFromString(${numberValueList});
-		var size = ListUtil.size(${list1});
-		var i = 0;
-
-		while (${i} != ${size}) {
-			var key_nameList = ListUtil.get(${list1}, ${i});
-			var key_numberValue = ListUtil.get(${list2}, ${i});
-
-			WaitForPageLoad();
-
-			while ((IsElementNotPresent(locator1 = "ACUtils#TABLE_CELL_INFORMATION")) && (maxIterations = "50")) {
-				TestUtils.hardRefresh();
-			}
-
-			AssertElementPresent(locator1 = "ACUtils#TABLE_CELL_INFORMATION");
-
-			var i = ${i} + 1;
-
-			var i = StringUtil.valueOf(${i});
-		}
-	}
-
-	@summary = "Default summary"
-	macro waitForChartLoad() {
-
-		// The pause is necessary because the bar takes a while to load into the chart. For more information about pause see LRAC-9517
-
-		Pause(value1 = 2000);
-	}
-
-	@summary = "Default summary"
-	macro waitForClearProperty() {
-
-		// This pause is necessary as it takes time for the data to be cleared from the property. See LRAC-11595
-
-		Pause(value1 = 10000);
+		Click(locator1 = "ACUtils#COPY_TOKEN_BUTTON");
 	}
 
 	@summary = "Default summary"
 	macro waitForLoading() {
 		WaitForElementNotPresent(locator1 = "ACUtils#LOADING_ANIMATION");
-	}
-
-	@summary = "Default summary"
-	macro waitForScrollDown() {
-
-		// Pausing is necessary for poshi to scroll down to specific element. For more info see LRAC-11569
-
-		Pause(value1 = 5000);
-	}
-
-	@summary = "Default summary"
-	macro waitForSendingRequest(time = null) {
-		if (isSet(time)) {
-
-			// Pausing for harRecording test for reuse purpose, see LRAC-10600
-
-			Pause(value1 = ${time});
-		}
-		else if (!(isSet(time))) {
-
-			// Pausing for harRecording tests, see LRAC-10600
-
-			Pause(value1 = 5000);
-		}
 	}
 
 }

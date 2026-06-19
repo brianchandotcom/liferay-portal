@@ -26,6 +26,34 @@ describe('normalizeDateFilter', () => {
 		});
 	});
 
+	it('returns only the start date for an open-ended date range', () => {
+		const startDate = '2000-07-27T00:00:00';
+
+		expect(
+			normalizeDateFilter({
+				endDate: '',
+				range: Range.DateRange,
+				startDate,
+			})
+		).toEqual({
+			startDate: new Date(startDate).toISOString(),
+		});
+	});
+
+	it('returns only the end date for an open-ended date range', () => {
+		const endDate = '2000-07-27T00:00:00';
+
+		expect(
+			normalizeDateFilter({
+				endDate,
+				range: Range.DateRange,
+				startDate: '',
+			})
+		).toEqual({
+			endDate: new Date(endDate).toISOString(),
+		});
+	});
+
 	it('resolves the modified last range to absolute dates', () => {
 		const beforeTime = Date.now();
 

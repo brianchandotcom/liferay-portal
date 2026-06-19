@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -638,24 +639,17 @@ public class ExportProcessResourceTest
 					"WebApplicationExceptionMapper",
 				LoggerTestUtil.WARN)) {
 
-			ExportProcessRequest startDateExportProcessRequest =
+			long now = System.currentTimeMillis();
+
+			ExportProcessRequest exportProcessRequest =
 				new ExportProcessRequest();
 
-			startDateExportProcessRequest.setName(
-				RandomTestUtil.randomString());
-			startDateExportProcessRequest.setStartDate(new Date());
+			exportProcessRequest.setEndDate(new Date(now - Time.DAY));
+			exportProcessRequest.setName(RandomTestUtil.randomString());
+			exportProcessRequest.setStartDate(new Date(now));
 
 			assertHttpResponseStatusCode(
-				400, unsafeFunction.apply(startDateExportProcessRequest));
-
-			ExportProcessRequest endDateExportProcessRequest =
-				new ExportProcessRequest();
-
-			endDateExportProcessRequest.setName(RandomTestUtil.randomString());
-			endDateExportProcessRequest.setEndDate(new Date());
-
-			assertHttpResponseStatusCode(
-				400, unsafeFunction.apply(endDateExportProcessRequest));
+				400, unsafeFunction.apply(exportProcessRequest));
 		}
 	}
 

@@ -382,6 +382,19 @@ public class PageExperienceResourceTest
 			pageExperience);
 	}
 
+	private PageExperience _addPageExperience(int priority) throws Exception {
+		PageExperience pageExperience =
+			testPostSitePageSpecificationPageExperience_addPageExperience(
+				PageExperiencesTestUtil.getPageExperience(
+					_draftLayout.getExternalReferenceCode(), priority,
+					testGroup.getGroupId(), null));
+
+		Assert.assertEquals(
+			Integer.valueOf(priority), pageExperience.getPriority());
+
+		return pageExperience;
+	}
+
 	private PageExperience _getPageExperience() throws Exception {
 		PageExperience pageExperience = super.randomPageExperience();
 
@@ -403,25 +416,9 @@ public class PageExperienceResourceTest
 	}
 
 	private void _testDeleteSitePageExperienceWithPriority() throws Exception {
-		PageExperience pageExperience1 =
-			testPostSitePageSpecificationPageExperience_addPageExperience(
-				PageExperiencesTestUtil.getPageExperience(
-					_draftLayout.getExternalReferenceCode(), 1,
-					testGroup.getGroupId(), null));
-		PageExperience pageExperience2 =
-			testPostSitePageSpecificationPageExperience_addPageExperience(
-				PageExperiencesTestUtil.getPageExperience(
-					_draftLayout.getExternalReferenceCode(), 2,
-					testGroup.getGroupId(), null));
-		PageExperience pageExperience3 =
-			testPostSitePageSpecificationPageExperience_addPageExperience(
-				PageExperiencesTestUtil.getPageExperience(
-					_draftLayout.getExternalReferenceCode(), 3,
-					testGroup.getGroupId(), null));
-
-		Assert.assertEquals(Integer.valueOf(1), pageExperience1.getPriority());
-		Assert.assertEquals(Integer.valueOf(2), pageExperience2.getPriority());
-		Assert.assertEquals(Integer.valueOf(3), pageExperience3.getPriority());
+		PageExperience pageExperience1 = _addPageExperience(1);
+		PageExperience pageExperience2 = _addPageExperience(2);
+		PageExperience pageExperience3 = _addPageExperience(3);
 
 		pageExperienceResource.deleteSitePageExperience(
 			testGroup.getExternalReferenceCode(),
@@ -441,25 +438,9 @@ public class PageExperienceResourceTest
 	}
 
 	private void _testPatchSitePageExperienceWithPriority() throws Exception {
-		PageExperience pageExperience1 =
-			testPostSitePageSpecificationPageExperience_addPageExperience(
-				PageExperiencesTestUtil.getPageExperience(
-					_draftLayout.getExternalReferenceCode(), 1,
-					testGroup.getGroupId(), null));
-		PageExperience pageExperience2 =
-			testPostSitePageSpecificationPageExperience_addPageExperience(
-				PageExperiencesTestUtil.getPageExperience(
-					_draftLayout.getExternalReferenceCode(), 2,
-					testGroup.getGroupId(), null));
-		PageExperience pageExperience3 =
-			testPostSitePageSpecificationPageExperience_addPageExperience(
-				PageExperiencesTestUtil.getPageExperience(
-					_draftLayout.getExternalReferenceCode(), 3,
-					testGroup.getGroupId(), null));
-
-		Assert.assertEquals(Integer.valueOf(1), pageExperience1.getPriority());
-		Assert.assertEquals(Integer.valueOf(2), pageExperience2.getPriority());
-		Assert.assertEquals(Integer.valueOf(3), pageExperience3.getPriority());
+		PageExperience pageExperience1 = _addPageExperience(1);
+		PageExperience pageExperience2 = _addPageExperience(2);
+		PageExperience pageExperience3 = _addPageExperience(3);
 
 		pageExperience1.setPriority(100);
 
@@ -595,25 +576,9 @@ public class PageExperienceResourceTest
 	}
 
 	private void _testPutSitePageExperienceWithPriority() throws Exception {
-		PageExperience pageExperience1 =
-			testPostSitePageSpecificationPageExperience_addPageExperience(
-				PageExperiencesTestUtil.getPageExperience(
-					_draftLayout.getExternalReferenceCode(), 1,
-					testGroup.getGroupId(), null));
-		PageExperience pageExperience2 =
-			testPostSitePageSpecificationPageExperience_addPageExperience(
-				PageExperiencesTestUtil.getPageExperience(
-					_draftLayout.getExternalReferenceCode(), 2,
-					testGroup.getGroupId(), null));
-		PageExperience pageExperience3 =
-			testPostSitePageSpecificationPageExperience_addPageExperience(
-				PageExperiencesTestUtil.getPageExperience(
-					_draftLayout.getExternalReferenceCode(), 3,
-					testGroup.getGroupId(), null));
-
-		Assert.assertEquals(Integer.valueOf(1), pageExperience1.getPriority());
-		Assert.assertEquals(Integer.valueOf(2), pageExperience2.getPriority());
-		Assert.assertEquals(Integer.valueOf(3), pageExperience3.getPriority());
+		PageExperience pageExperience1 = _addPageExperience(1);
+		PageExperience pageExperience2 = _addPageExperience(2);
+		PageExperience pageExperience3 = _addPageExperience(3);
 
 		pageExperience1.setPriority(100);
 

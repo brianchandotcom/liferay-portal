@@ -165,7 +165,9 @@ public class AudiencesEntryPersistenceTest {
 			existingAudiencesEntry.getName(), newAudiencesEntry.getName());
 	}
 
-	@Test(expected = DuplicateAudiencesEntryExternalReferenceCodeException.class)
+	@Test(
+		expected = DuplicateAudiencesEntryExternalReferenceCodeException.class
+	)
 	public void testUpdateWithExistingExternalReferenceCode() throws Exception {
 		AudiencesEntry audiencesEntry = addAudiencesEntry();
 
@@ -235,8 +237,8 @@ public class AudiencesEntryPersistenceTest {
 
 	protected OrderByComparator<AudiencesEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"AudiencesEntry", "mvccVersion", true, "externalReferenceCode", true,
-			"audiencesEntryId", true, "companyId", true, "userId", true,
+			"AudiencesEntry", "mvccVersion", true, "externalReferenceCode",
+			true, "audiencesEntryId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true, "name",
 			true);
 	}
@@ -255,7 +257,8 @@ public class AudiencesEntryPersistenceTest {
 	public void testFetchByPrimaryKeyMissing() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
-		AudiencesEntry missingAudiencesEntry = _persistence.fetchByPrimaryKey(pk);
+		AudiencesEntry missingAudiencesEntry = _persistence.fetchByPrimaryKey(
+			pk);
 
 		Assert.assertNull(missingAudiencesEntry);
 	}
@@ -549,4 +552,4 @@ public class AudiencesEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2001438598
+// LIFERAY-SERVICE-BUILDER-HASH:-600224529

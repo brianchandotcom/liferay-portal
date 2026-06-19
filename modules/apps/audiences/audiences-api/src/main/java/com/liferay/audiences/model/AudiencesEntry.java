@@ -48,4 +48,4 @@ public interface AudiencesEntry extends AudiencesEntryModel, PersistedModel {
 		};
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1390815400
+// LIFERAY-SERVICE-BUILDER-HASH:1047756647

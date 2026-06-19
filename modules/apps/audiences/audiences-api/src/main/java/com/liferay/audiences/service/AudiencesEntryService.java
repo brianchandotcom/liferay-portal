@@ -87,4 +87,4 @@ public interface AudiencesEntryService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1972767991
+// LIFERAY-SERVICE-BUILDER-HASH:-927578154

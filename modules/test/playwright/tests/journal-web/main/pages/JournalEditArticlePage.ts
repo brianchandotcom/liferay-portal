@@ -161,21 +161,13 @@ export class JournalEditArticlePage {
 	}
 
 	async clearAllCategories(vocabulary: string) {
-		await this.openFieldSet('Categories', 'categorization');
+		await this.openFieldSet('Categorization', 'categorization');
 
 		await this.page
-			.getByRole('button', {name: `Select ${vocabulary}`})
-			.click();
-
-		const selectVocabularyIframe = this.page.frameLocator(
-			`iframe[title="Select ${vocabulary}"]`
-		);
-
-		await selectVocabularyIframe
+			.locator('.form-group')
+			.filter({has: this.page.getByLabel(vocabulary, {exact: true})})
 			.getByRole('button', {name: 'Clear All'})
 			.click();
-
-		await this.page.getByRole('button', {name: 'Done'}).click();
 	}
 
 	async createAndPublishBasicArticle(title?: string) {
@@ -509,24 +501,27 @@ export class JournalEditArticlePage {
 	}
 
 	async selectCategories(vocabulary: string, categories: string[]) {
-		await this.openFieldSet('Categories', 'categorization');
+		await this.openFieldSet('Categorization', 'categorization');
 
 		await this.page
 			.getByRole('button', {name: `Select ${vocabulary}`})
 			.click();
 
-		const selectVocabularyIframe = this.page.frameLocator(
-			`iframe[title="Select ${vocabulary}"]`
-		);
-
-		categories.forEach((category) => {
-			selectVocabularyIframe
-				.locator('li')
-				.filter({hasText: category})
-				.click();
+		const selectVocabularyModal = this.page.getByRole('dialog', {
+			name: `Select ${vocabulary}`,
 		});
 
-		await this.page.getByRole('button', {name: 'Done'}).click();
+		for (const category of categories) {
+			await expect(async () => {
+				await selectVocabularyModal
+					.locator('li')
+					.filter({hasText: category})
+					.getByRole('checkbox')
+					.check({timeout: 2000});
+			}).toPass({timeout: 10000});
+		}
+
+		await selectVocabularyModal.getByRole('button', {name: 'Done'}).click();
 	}
 
 	async selectSpecificDisplayPage(displayPageName: string) {

@@ -58,11 +58,11 @@ public class GetInfoItemSelectorURLMVCResourceCommand
 		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new InfoItemItemSelectorReturnType());
 
-		PortletURL infoItemSelectorURL = _itemSelector.getItemSelectorURL(
+		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
 			RequestBackedPortletURLFactoryUtil.create(resourceRequest),
 			eventName, itemSelectorCriterion);
 
-		if (infoItemSelectorURL == null) {
+		if (itemSelectorURL == null) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Item Selector returned a null URL for InfoItem criterion");
@@ -79,7 +79,7 @@ public class GetInfoItemSelectorURLMVCResourceCommand
 			JSONUtil.put(
 				"eventName", eventName
 			).put(
-				"url", infoItemSelectorURL.toString()
+				"url", itemSelectorURL.toString()
 			));
 	}
 

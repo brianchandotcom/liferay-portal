@@ -1,13 +1,13 @@
 ---
 
-name: manage-pages
 description: Create and configure site pages, navigation menus, display page templates, page templates, and SEO settings via the Headless Admin Site API. Use when the user asks to create a page, set up navigation, build a display page template for an object, or configure page SEO. Requires feature flag LPD-35443. Maps to "Mastering Liferay Pages and Navigation".
+name: manage-pages
 
 ---
 
 # Manage Pages
 
-Create and wire site pages, navigation menus, and page templates. The reliable path is to **author pages in the site initializer** (`layouts/`) and provision the site from it; live page creation through the Headless Admin Site API is kept only as a fallback. See `rules/site-initializer-format.md` for the source-of-truth and reprovision model.
+Create and wire site pages, navigation menus, and page templates. The reliable path is to **author pages in the site initializer** (`layouts/`) and provision the site from it; live page creation through the Headless Admin Site API is kept only as a fallback. See `rules/site-initializer-format.md` for the source of truth and reprovision model.
 
 ## When to Invoke
 
@@ -26,27 +26,29 @@ Consult `rules/page-types.md` for the full table. Common types:
 
 | Type | Use | API |
 | --- | --- | --- |
-| Content Page | Fragment-based layout | headless-admin-site |
-| Widget Page | Portlet-based (legacy) | headless-admin-site |
+| Content Page | Fragment based layout | headless-admin-site |
+| Widget Page | Portlet based (legacy) | headless-admin-site |
 | Display Page Template | Object/content type landing page | headless-admin-site |
 | Page Template | Reusable page blueprint | headless-admin-site |
 
 ## Authoring Pages in the Site Initializer (Primary)
 
-Pages live in the initializer tree and come into being when the initializer is triggered. This avoids the unreliable live page-creation API and keeps the page definitions in source control.
+Pages live in the initializer tree and come into being when the initializer is triggered. This avoids the unreliable live page creation API and keeps the page definitions in source control.
 
 ### 1. Write `page.json`
 
-Create `site-initializer/layouts/<NN-page-name>/page.json`. The `NN` prefix controls creation order. Set the type, name, friendly URL, and any per-role permissions (see the `page.json` format in `rules/site-initializer-format.md`):
+Create `site-initializer/layouts/<NN-page-name>/page.json`. The `NN` prefix controls creation order. Set the type, name, friendly URL, and any per role permissions (see the `page.json` format in `rules/site-initializer-format.md`):
 
 ```json
 {
-  "friendlyURL": "/<page-url-slug>",
-  "name": "<Page Name>",
-  "name_i18n": {"en_US": "<Page Name>"},
-  "type": "Content",
-  "hidden": false,
-  "private": false
+	"friendlyURL": "/<page-url-slug>",
+	"hidden": false,
+	"name": "<Page Name>",
+	"name_i18n": {
+		"en_US": "<Page Name>"
+	},
+	"private": false,
+	"type": "Content"
 }
 ```
 
@@ -56,37 +58,37 @@ Compose the layout in `site-initializer/layouts/<NN-page-name>/page-definition.j
 
 ```json
 {
-  "pageElement": {
-    "pageElements": [
-      {
-        "definition": {
-          "fragment": {
-            "key": "<fragment-name>",
-            "siteKey": "[$GROUP_KEY$]"
-          }
-        },
-        "type": "Fragment"
-      }
-    ],
-    "type": "Root"
-  },
-  "version": "1.0"
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragment": {
+						"key": "<fragment-name>",
+						"siteKey": "[$GROUP_KEY$]"
+					}
+				},
+				"type": "Fragment"
+			}
+		],
+		"type": "Root"
+	},
+	"version": "1.0"
 }
 ```
 
-The `key` is the fragment's directory name under the collection's `fragments/` folder (e.g. a folder `fragments/group/myco/fragments/hero/` → `"key": "hero"`). The `siteKey` token `[$GROUP_KEY$]` resolves to the current site at provision time and tells the importer the fragment lives in this site's collection (omit `siteKey` only for built-in fragments, which use a combined key like `"key": "BASIC_COMPONENT-paragraph"`). **Do not** use `collectionExternalReferenceCode`/`fragmentEntryKey` here — the site-initializer importer reads `key`/`siteKey` and silently drops any fragment element it cannot resolve, leaving the page blank.
+The `key` is the fragment's directory name under the collection's `fragments/` folder (e.g. a folder `fragments/group/myco/fragments/hero/` → `"key": "hero"`). The `siteKey` token `[$GROUP_KEY$]` resolves to the current site at provision time and tells the importer the fragment lives in this site's collection (omit `siteKey` only for built in fragments, which use a combined key like `"key": "BASIC_COMPONENT-paragraph"`). **Do not** use `collectionExternalReferenceCode`/`fragmentEntryKey` here — the site-initializer importer reads `key`/`siteKey` and silently drops any fragment element it cannot resolve, leaving the page blank.
 
 ### 3. Navigation and SEO
 
-Set site-wide navigation and theme in `site-initializer/layout-set/public/metadata.json`. Per-page SEO metadata lives alongside the page in `page.json`.
+Set sitewide navigation and theme in `site-initializer/layout-set/public/metadata.json`. Per page SEO metadata lives alongside the page in `page.json`.
 
 ### 4. Provision
 
-Trigger (or, for `layouts/` changes on an existing site, reprovision) the site — delete and recreate it from the initializer. See `rules/site-initializer-format.md` for the commands. Because the source tree is current and object data is company-scoped, runtime entries survive the reprovision.
+Trigger (or, for `layouts/` changes on an existing site, reprovision) the site — delete and recreate it from the initializer. See `rules/site-initializer-format.md` for the commands. Because the source tree is current and object data is company scoped, runtime entries survive the reprovision.
 
 ## Display Object Data on a Page
 
-To show a list of object entries on a page, use a **server-side Collection Display**, not a client-side `fetch`. A browser `fetch` to `/o/c/<pluralLabel>/` carries the visitor's cookies, so the headless object API evaluates the request as the Guest user and typically returns **0 items** (Guest lacks entry-level view permission). The Collection element renders on the server with the page's own permission context, so it returns the entries.
+To show a list of object entries on a page, use a **server side Collection Display**, not a client side `fetch`. A browser `fetch` to `/o/c/<pluralLabel>` carries the visitor's cookies, so the headless object API evaluates the request as the Guest user and typically returns **0 items** (Guest lacks entry level view permission). The Collection element renders on the server with the page's own permission context, so it returns the entries.
 
 Compose it in `page-definition.json` (see the `Collection` / `CollectionItem` element types in `rules/page-types.md`):
 
@@ -110,7 +112,7 @@ Compose it in `page-definition.json` (see the `Collection` / `CollectionItem` el
    }
    ```
 
-1. **`CollectionItem` element** — nest one inside the Collection; its child `pageElements` are the per-entry template (typically a custom card fragment from `scaffold-fragment`).
+1. **`CollectionItem` element** — nest one inside the Collection; its child `pageElements` are the per entry template (typically a custom card fragment from `scaffold-fragment`).
 
 1. **Map fragment fields to object fields** — on each editable fragment field, point the mapping at the object field and source it from the current collection item:
 
@@ -122,7 +124,7 @@ Compose it in `page-definition.json` (see the `Collection` / `CollectionItem` el
          "text": {
            "mapping": {
              "fieldKey": "ObjectField_<field>",
-             "itemReference": { "contextSource": "CollectionItem" }
+             "itemReference": {"contextSource": "CollectionItem"}
            }
          }
        }
@@ -130,26 +132,27 @@ Compose it in `page-definition.json` (see the `Collection` / `CollectionItem` el
    ]
    ```
 
-### Mapping limits — denormalize into display fields
+### Mapping Limits — Denormalize Into Display Fields
 
 Field mapping renders the raw stored value and cannot transform it. In particular:
 
-- **`DateTime` values cannot be formatted** through mapping (no date-format option).
-- **Related-object fields cannot be mapped** — you cannot reach across a relationship to display a field from the related entry.
-- **Per-record presentation values** (e.g. a color that varies by entry) cannot be driven from mapping.
+- **`DateTime` values cannot be formatted** through mapping (no date format option).
+- **Related object fields cannot be mapped** — you cannot reach across a relationship to display a field from the related entry.
+- **Per record presentation values** (e.g. a color that varies by entry) cannot be driven from mapping.
 
-The workaround is to **denormalize**: add a plain `Text` display field on the object and populate it with the presentation-ready value, then map that field. For example add `timeLabel` (a preformatted time string instead of the raw `DateTime`) or `speakerName` (the related person's name copied onto the entry), and map `ObjectField_timeLabel` / `ObjectField_speakerName`.
+The workaround is to **denormalize**: add a plain `Text` display field on the object and populate it with the presentation ready value, then map that field. For example add `timeLabel` (a preformatted time string instead of the raw `DateTime`) or `speakerName` (the related person's name copied onto the entry), and map `ObjectField_timeLabel` / `ObjectField_speakerName`.
 
 ## Fallback: Live API
 
 Use the Headless Admin Site API (`/o/headless-admin-site/v1.0`) only when reprovisioning is undesirable and the change is small. This path is unreliable for page **creation** in particular. When the MCP server is available, prefer MCP tool calls over raw curl.
 
-> **Field/path corrections for the examples below** (verify against the OpenAPI spec — `get-openapi` MCP tool, or `GET /o/headless-admin-site/v1.0/openapi.json`). This module addresses sites by **`<site-erc>`** (external reference code), not numeric id, and sub-resources are nested under `/sites/<site-erc>/…` (there is no top-level `/site-pages/{id}`). On the current API the `SitePage` / `DisplayPageTemplate` / `MasterPage` DTOs use **`pageSpecifications`** (not the initializer's `pageDefinition`), `*_i18n` localized maps (`name_i18n`, `friendlyUrlPath_i18n` — `SitePage` has no `title` field), and `DisplayPageTemplate` binds via **`contentTypeReference`** (not flat `contentType`/`contentSubtype`). The illustrative bodies below predate that model — see "Page Specification Workflow (Draft and Publish)" for the verified shape. The `type` enum is **`ContentPage` / `WidgetPage` / `LinkToURLPage` / `EmbeddedPage` / `PageSetPage` / `LinkToPagePage`** (not `content`) — distinct from the site-initializer `page.json` `type` (`Content`/`Portlet`/`URL`/`Embedded`) and `headless-delivery`'s `pageType`. Page-element operations also require flag `LPD-74328`.
+> **Field/path corrections for the examples below** (verify against the OpenAPI spec — `get-openapi` MCP tool, or `GET /o/headless-admin-site/v1.0/openapi.json`). This module addresses sites by **`<site-erc>`** (external reference code), not numeric ID, and subresources are nested under `/sites/<site-erc>/…` (there is no top level `/site-pages/{id}`). On the current API the `SitePage` / `DisplayPageTemplate` / `MasterPage` DTOs use **`pageSpecifications`** (not the initializer's `pageDefinition`), `*_i18n` localized maps (`name_i18n`, `friendlyUrlPath_i18n` — `SitePage` has no `title` field), and `DisplayPageTemplate` binds via **`contentTypeReference`** (not flat `contentType`/`contentSubtype`). The illustrative bodies below predate that model — see "Page Specification Workflow (Draft and Publish)" for the verified shape. The `type` enum is **`ContentPage` / `WidgetPage` / `LinkToURLPage` / `EmbeddedPage` / `PageSetPage` / `LinkToPagePage`** (not `content`) — distinct from the site-initializer `page.json` `type` (`Content`/`Portlet`/`URL`/`Embedded`) and `headless-delivery`'s `pageType`. Page element operations also require flag `LPD-74328`.
 
 ### 1. Ensure the Site Exists
 
 ```bash
 # List sites
+
 curl \
 	--silent \
 	--url "http://localhost:${PORT}/o/headless-admin-site/v1.0/sites" \
@@ -157,7 +160,7 @@ curl \
 	| jq '[.items[] | {externalReferenceCode, name, friendlyUrlPath}]'
 ```
 
-Save the `externalReferenceCode` as `<site-erc>` — `headless-admin-site` addresses sites by ERC, not numeric id. If the target site does not exist, create it:
+Save the `externalReferenceCode` as `<site-erc>` — `headless-admin-site` addresses sites by ERC, not numeric ID. If the target site does not exist, create it:
 
 ```bash
 curl \
@@ -307,6 +310,7 @@ curl \
 
 ```bash
 # List pages
+
 curl \
 	--silent \
 	--url "http://localhost:${PORT}/o/headless-admin-site/v1.0/sites/<site-erc>/site-pages" \
@@ -314,6 +318,7 @@ curl \
 	| jq '[.items[] | {externalReferenceCode, name, friendlyUrlPath, type}]'
 
 # Probe the page URL
+
 curl \
 	--head \
 	--silent \
@@ -334,7 +339,7 @@ Never guess field names or payload shapes from memory or GET responses. Before a
 
        GET /headless-delivery/v1.0/sites/{siteId}/site-pages/{friendlyURL}?nestedFields=pageDefinition
 
-1. For built-in fragment collection keys not present on any existing page, do NOT decompile JARs. Search the [liferay-portal GitHub repository](https://github.com/liferay/liferay-portal) for `fragment.json` under `modules/apps/fragment/` to extract `fragmentEntryKey` and collection keys.
+1. For built in fragment collection keys not present on any existing page, do NOT decompile JARs. Search the [liferay-portal GitHub repository](https://github.com/liferay/liferay-portal) for `fragment.json` under `modules/apps/fragment/` to extract `fragmentEntryKey` and collection keys.
 
 The spec itself has gaps — several fields required at runtime are marked optional. See the gotchas below.
 
@@ -361,7 +366,7 @@ Required fields missing from the OpenAPI spec (omitting any of these causes a se
 - `pageExperiences[]` with at least one entry per spec
 - `name_i18n` on each `pageExperience`
 
-ERC suffixes auto-generated on page creation: draft spec is `{pageERC}-draft`, published experience is `{pageERC}-default`, draft experience is `{pageERC}-draft-default`.
+ERC suffixes autogenerated on page creation: draft spec is `{pageERC}-draft`, published experience is `{pageERC}-default`, draft experience is `{pageERC}-draft-default`.
 
 A successful PUT response code is not a reliable success signal — verify by issuing an HTTP GET on the page URL.
 
@@ -369,13 +374,13 @@ A successful PUT response code is not a reliable success signal — verify by is
 
 **`type` vs `pageType` — field names differ by API.** `headless-delivery` uses `pageType` (plain string). `headless-admin-site` uses `type` (enum: `ContentPage`, `WidgetPage`, etc.). Using `type` against the delivery API returns `400 - The property "type" is not defined in SitePage`.
 
-**`FragmentReference` uses a non-standard discriminator.** Every other polymorphic schema in `headless-admin-site` uses `type`. `FragmentReference` is the exception — it uses `fragmentReferenceType`. Using `"type": "DefaultFragmentReference"` returns `400 InvalidTypeIdException: missing type id property 'fragmentReferenceType'`.
+**`FragmentReference` uses a nonstandard discriminator.** Every other polymorphic schema in `headless-admin-site` uses `type`. `FragmentReference` is the exception — it uses `fragmentReferenceType`. Using `"type": "DefaultFragmentReference"` returns `400 InvalidTypeIdException: missing type id property 'fragmentReferenceType'`.
 
-**`position` is required despite the spec marking it optional.** Omitting `position` from a page-element POST returns `500 NullPointerException`. Always include `"position": 0` (or the intended 0-based index).
+**`position` is required despite the spec marking it optional.** Omitting `position` from a page-element POST returns `500 NullPointerException`. Always include `"position": 0` (or the intended 0 based index).
 
-**`FormContainerConfig.numberOfSteps` is required despite the spec marking it optional.** Same pattern — omitting it returns `500 NullPointerException`. Always include `"numberOfSteps": 1` for a single-step form.
+**`FormContainerConfig.numberOfSteps` is required despite the spec marking it optional.** Same pattern — omitting it returns `500 NullPointerException`. Always include `"numberOfSteps": 1` for a single step form.
 
-**FormFragment elements nest via `parentExternalReferenceCode`.** The page-elements POST endpoint is flat — all elements hit the same endpoint regardless of nesting depth. Parent-child relationships are expressed through `parentExternalReferenceCode`, not nested objects. Key fields for `FormFragment` children:
+**FormFragment elements nest via `parentExternalReferenceCode`.** The page-elements POST endpoint is flat — all elements hit the same endpoint regardless of nesting depth. Parent child relationships are expressed through `parentExternalReferenceCode`, not nested objects. Key fields for `FormFragment` children:
 
 - `fieldKey` — maps to an Object field name (e.g. `"email"`) or `"formButton"` for submit
 - `fragmentInstance.fragmentReference.defaultFragmentKey` — the INPUTS fragment key
@@ -392,7 +397,7 @@ Discriminators for fragment placement:
 - Page element type: `"type": "BasicFragment"` (not `"Fragment"`)
 - Fragment reference: keyed by `"fragmentReferenceType"` (not `"type"`)
 - Custom fragments: `"fragmentReferenceType": "FragmentItemExternalReference"` with `"externalReferenceCode": "<fragmentEntryKey>"` — the fragment entry key IS the ERC
-- Out-of-the-box fragments: `"fragmentReferenceType": "DefaultFragmentReference"` with `defaultFragmentKey` — inlining not required
+- Out of the box fragments: `"fragmentReferenceType": "DefaultFragmentReference"` with `defaultFragmentKey` — inlining not required
 
 ### Fragment Management API Gap
 

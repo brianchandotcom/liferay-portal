@@ -442,12 +442,15 @@ public class PageExperienceResourceTest
 		PageExperience pageExperience2 = _addPageExperience(2);
 		PageExperience pageExperience3 = _addPageExperience(3);
 
-		pageExperience1.setPriority(100);
-
 		PageExperience patchedPageExperience =
 			pageExperienceResource.patchSitePageExperience(
 				testGroup.getExternalReferenceCode(),
-				pageExperience1.getExternalReferenceCode(), pageExperience1);
+				pageExperience1.getExternalReferenceCode(),
+				new PageExperience() {
+					{
+						setPriority(100);
+					}
+				});
 
 		Assert.assertEquals(
 			Integer.valueOf(3), patchedPageExperience.getPriority());
@@ -464,12 +467,15 @@ public class PageExperienceResourceTest
 
 		Assert.assertEquals(Integer.valueOf(2), pageExperience3.getPriority());
 
-		pageExperience2.setPriority(2);
-
 		PageExperience swappedPageExperience =
 			pageExperienceResource.patchSitePageExperience(
 				testGroup.getExternalReferenceCode(),
-				pageExperience2.getExternalReferenceCode(), pageExperience2);
+				pageExperience2.getExternalReferenceCode(),
+				new PageExperience() {
+					{
+						setPriority(2);
+					}
+				});
 
 		Assert.assertEquals(
 			Integer.valueOf(2), swappedPageExperience.getPriority());

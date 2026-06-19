@@ -10,6 +10,7 @@ import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {isolatedDXPSyncedChannelTest} from '../../../fixtures/isolatedDXPSyncedChannelTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
 import {syncAnalyticsCloudViaAPI} from '../../analytics-settings-web/main/utils/analytics-settings';
 import getFragmentDefinition from '../../layout-content-page-editor-web/main/utils/getFragmentDefinition';
@@ -20,9 +21,15 @@ import {
 	viewBreakdownRechartsData,
 } from './utils/distribution';
 import {createIndividuals, generateIndividual} from './utils/individuals';
+import {Nanites, runNanites} from './utils/nanites';
 import {ACPage, navigateToACPageViaURL} from './utils/navigation';
 import {changeTimeFilter} from './utils/time-filter';
-import {viewPaginationResults} from './utils/utils';
+import {
+	selectPaginationItemsPerPage,
+	selectPaginationPageNumber,
+	viewNameListInOrder,
+	viewPaginationResults,
+} from './utils/utils';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -586,6 +593,355 @@ test(
 			'Associated Segments',
 		]) {
 			await expect(page.getByText(cardTitle).first()).toBeVisible();
+		}
+	}
+);
+
+test(
+	'Individual associated segments list paginates',
+	{
+		tag: '@LRAC-9003',
+	},
+	async ({
+		analyticsChannel: channel,
+		apiHelpers,
+		dxpSyncedAnalyticsChannel,
+		page,
+		project,
+	}) => {
+		const {dataSourceId} = dxpSyncedAnalyticsChannel;
+
+		const runId = getRandomString();
+
+		const individual = {
+			...generateIndividual({name: 'seg' + runId}),
+			dataSourceId,
+		};
+
+		const date = new Date();
+
+		await createIndividuals({apiHelpers, individuals: [individual]});
+
+		await apiHelpers.jsonWebServicesOSBAsah.createSessions([
+			{
+				channelId: channel.id,
+				id: individual.id,
+				sessionEnd: date.toISOString(),
+				sessionStart: date.toISOString(),
+				userId: individual.id,
+			},
+		]);
+
+		// The individual belongs to six dynamic segments matching its given name
+
+		const segmentIds = [];
+
+		for (let i = 1; i <= 6; i++) {
+			const segment =
+				await apiHelpers.jsonWebServicesOSBFaro.createIndividualSegment(
+					{
+						channelId: channel.id,
+						filter: `(firstName eq '${individual.name}')`,
+						groupId: project.groupId,
+						name: `Segment ${i} ${runId}`,
+					}
+				);
+
+			segmentIds.push(segment.id);
+		}
+
+		try {
+			await runNanites({
+				apiHelpers,
+				naniteNames: [Nanites.UpdateMembershipsNanite],
+				page,
+			});
+
+			// Open the individual profile Segments tab
+
+			await expect(async () => {
+				await navigateToACPageViaURL({
+					acPage: ACPage.individualPage,
+					channelID: channel.id,
+					page,
+					projectID: project.groupId,
+				});
+
+				await page
+					.getByRole('link', {name: 'Known Individuals'})
+					.click();
+
+				await page
+					.getByPlaceholder('Search')
+					.first()
+					.fill(individual.name);
+
+				await expect(
+					page.getByRole('link', {name: individual.name}).first()
+				).toBeVisible({timeout: 3000});
+			}).toPass({timeout: 6000});
+
+			await page
+				.getByRole('link', {name: individual.name})
+				.first()
+				.click();
+
+			await page.getByRole('link', {name: 'Segments'}).click();
+
+			// All six segments fit on the default page
+
+			await viewPaginationResults({
+				page,
+				paginationResults: 'Showing 1 to 6 of 6 entries.',
+			});
+
+			// Four per page splits the six segments across two pages
+
+			await selectPaginationItemsPerPage({itemsPerPage: '4', page});
+
+			await viewPaginationResults({
+				page,
+				paginationResults: 'Showing 1 to 4 of 6 entries.',
+			});
+
+			await selectPaginationPageNumber({page, paginationPageNumber: '2'});
+
+			await viewPaginationResults({
+				page,
+				paginationResults: 'Showing 5 to 6 of 6 entries.',
+			});
+		}
+		finally {
+			await apiHelpers.jsonWebServicesOSBFaro.deleteIndividualSegments(
+				`[${segmentIds.join(',')}]`,
+				project.groupId
+			);
+		}
+	}
+);
+
+test(
+	'Individual associated segments list can be ordered by name',
+	{
+		tag: '@LRAC-8991',
+	},
+	async ({
+		analyticsChannel: channel,
+		apiHelpers,
+		dxpSyncedAnalyticsChannel,
+		page,
+		project,
+	}) => {
+		const {dataSourceId} = dxpSyncedAnalyticsChannel;
+
+		const runId = getRandomString();
+
+		const individual = {
+			...generateIndividual({name: 'seg' + runId}),
+			dataSourceId,
+		};
+
+		const date = new Date();
+
+		await createIndividuals({apiHelpers, individuals: [individual]});
+
+		await apiHelpers.jsonWebServicesOSBAsah.createSessions([
+			{
+				channelId: channel.id,
+				id: individual.id,
+				sessionEnd: date.toISOString(),
+				sessionStart: date.toISOString(),
+				userId: individual.id,
+			},
+		]);
+
+		// Three dynamic segments matching the individual, named to sort A, B, C
+
+		const segmentNames = [
+			`Segment ${runId} A`,
+			`Segment ${runId} B`,
+			`Segment ${runId} C`,
+		];
+
+		const segmentIds = [];
+
+		for (const name of segmentNames) {
+			const segment =
+				await apiHelpers.jsonWebServicesOSBFaro.createIndividualSegment(
+					{
+						channelId: channel.id,
+						filter: `(firstName eq '${individual.name}')`,
+						groupId: project.groupId,
+						name,
+					}
+				);
+
+			segmentIds.push(segment.id);
+		}
+
+		try {
+			await runNanites({
+				apiHelpers,
+				naniteNames: [Nanites.UpdateMembershipsNanite],
+				page,
+			});
+
+			// Open the individual profile Segments tab
+
+			await expect(async () => {
+				await navigateToACPageViaURL({
+					acPage: ACPage.individualPage,
+					channelID: channel.id,
+					page,
+					projectID: project.groupId,
+				});
+
+				await page
+					.getByRole('link', {name: 'Known Individuals'})
+					.click();
+
+				await page
+					.getByPlaceholder('Search')
+					.first()
+					.fill(individual.name);
+
+				await expect(
+					page.getByRole('link', {name: individual.name}).first()
+				).toBeVisible({timeout: 3000});
+			}).toPass({timeout: 6000});
+
+			await page
+				.getByRole('link', {name: individual.name})
+				.first()
+				.click();
+
+			await page.getByRole('link', {name: 'Segments'}).click();
+
+			// Ordering by name lists the segments alphabetically
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('menuitem', {name: 'Name'}),
+				trigger: page.getByRole('button', {name: 'Order'}),
+			});
+
+			await viewNameListInOrder({itemNames: segmentNames, page});
+		}
+		finally {
+			await apiHelpers.jsonWebServicesOSBFaro.deleteIndividualSegments(
+				`[${segmentIds.join(',')}]`,
+				project.groupId
+			);
+		}
+	}
+);
+
+test(
+	'Individual associated segment can be selected to view its membership',
+	{
+		tag: '@LRAC-8993',
+	},
+	async ({
+		analyticsChannel: channel,
+		apiHelpers,
+		dxpSyncedAnalyticsChannel,
+		page,
+		project,
+	}) => {
+		const {dataSourceId} = dxpSyncedAnalyticsChannel;
+
+		const runId = getRandomString();
+
+		const individual = {
+			...generateIndividual({name: 'seg' + runId}),
+			dataSourceId,
+		};
+
+		const date = new Date();
+
+		await createIndividuals({apiHelpers, individuals: [individual]});
+
+		await apiHelpers.jsonWebServicesOSBAsah.createSessions([
+			{
+				channelId: channel.id,
+				id: individual.id,
+				sessionEnd: date.toISOString(),
+				sessionStart: date.toISOString(),
+				userId: individual.id,
+			},
+		]);
+
+		const segmentNames = [`Segment ${runId} A`, `Segment ${runId} B`];
+
+		const segmentIds = [];
+
+		for (const name of segmentNames) {
+			const segment =
+				await apiHelpers.jsonWebServicesOSBFaro.createIndividualSegment(
+					{
+						channelId: channel.id,
+						filter: `(firstName eq '${individual.name}')`,
+						groupId: project.groupId,
+						name,
+					}
+				);
+
+			segmentIds.push(segment.id);
+		}
+
+		try {
+			await runNanites({
+				apiHelpers,
+				naniteNames: [Nanites.UpdateMembershipsNanite],
+				page,
+			});
+
+			// Open the individual profile Segments tab
+
+			await expect(async () => {
+				await navigateToACPageViaURL({
+					acPage: ACPage.individualPage,
+					channelID: channel.id,
+					page,
+					projectID: project.groupId,
+				});
+
+				await page
+					.getByRole('link', {name: 'Known Individuals'})
+					.click();
+
+				await page
+					.getByPlaceholder('Search')
+					.first()
+					.fill(individual.name);
+
+				await expect(
+					page.getByRole('link', {name: individual.name}).first()
+				).toBeVisible({timeout: 3000});
+			}).toPass({timeout: 6000});
+
+			await page
+				.getByRole('link', {name: individual.name})
+				.first()
+				.click();
+
+			await page.getByRole('link', {name: 'Segments'}).click();
+
+			// Select an associated segment and open its membership
+
+			await page.getByRole('link', {name: segmentNames[1]}).click();
+
+			await page.getByRole('link', {name: 'Membership'}).click();
+
+			await expect(
+				page.getByText(`${individual.name} Smith`).first()
+			).toBeVisible();
+		}
+		finally {
+			await apiHelpers.jsonWebServicesOSBFaro.deleteIndividualSegments(
+				`[${segmentIds.join(',')}]`,
+				project.groupId
+			);
 		}
 	}
 );

@@ -322,13 +322,13 @@ definition {
 		task ("Configure Analytics Cloud") {
 			ACUtils.launchAC();
 
-			ACSettings.takeTokenFromAnalyticsCloud();
+			ACUtils.takeTokenFromAnalyticsCloud();
 
 			TestCase.setUpPortalInstance();
 
 			ACUtils.launchDXP();
 
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Guest");
+			var propertyName = ACUtils.connectDXPtoAnalyticsCloud(siteName = "Guest");
 		}
 
 		task ("Add Web Content Articles to search") {
@@ -419,13 +419,13 @@ definition {
 		task ("Configure Analytics Cloud") {
 			ACUtils.launchAC();
 
-			ACSettings.takeTokenFromAnalyticsCloud();
+			ACUtils.takeTokenFromAnalyticsCloud();
 
 			TestCase.setUpPortalInstance();
 
 			ACUtils.launchDXP();
 
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Guest");
+			var propertyName = ACUtils.connectDXPtoAnalyticsCloud(siteName = "Guest");
 		}
 
 		task ("Create Apple Pie and Apple Strudel Web Contents and translate Apple Strudel") {

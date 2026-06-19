@@ -327,10 +327,10 @@ public class LayoutServiceTest {
 					ctCollection.getCtCollectionId())) {
 
 			String folderName = RandomTestUtil.randomString();
-			String sourceFileName = RandomTestUtil.randomString() + ".lar";
+			String fileName = RandomTestUtil.randomString();
 
 			_layoutService.addTempFileEntry(
-				_group.getGroupId(), folderName, sourceFileName,
+				_group.getGroupId(), folderName, fileName,
 				new ByteArrayInputStream(RandomTestUtil.randomBytes()),
 				ContentTypes.APPLICATION_ZIP);
 
@@ -339,7 +339,7 @@ public class LayoutServiceTest {
 
 			Assert.assertEquals(
 				Arrays.toString(tempFileNames), 1, tempFileNames.length);
-			Assert.assertEquals(sourceFileName, tempFileNames[0]);
+			Assert.assertEquals(fileName, tempFileNames[0]);
 		}
 		finally {
 			_ctCollectionLocalService.deleteCTCollection(ctCollection);

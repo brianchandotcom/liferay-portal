@@ -5,14 +5,17 @@
 
 package com.liferay.portal.kernel.upgrade.data.cleanup;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Luis Ortiz
@@ -23,6 +26,92 @@ public class DataCleanupPreupgradeProcess extends UpgradeProcess {
 		DataCleanupPreupgradeProcess... dataCleanupPreupgradeProcesses) {
 
 		return ListUtil.fromArray(dataCleanupPreupgradeProcesses);
+	}
+
+	public static List<List<DataCleanupPreupgradeProcess>>
+		getLayeredDataCleanupPreupgradeProcesses(
+			Map
+				<DataCleanupPreupgradeProcess,
+				 List<DataCleanupPreupgradeProcess>>
+					dataCleanupPreupgradeProcessesMap) {
+
+		List<List<DataCleanupPreupgradeProcess>>
+			dataCleanupPreupgradeProcessesList = new ArrayList<>();
+		Set<DataCleanupPreupgradeProcess>
+			completedDataCleanupPreupgradeProcesses = new HashSet<>();
+
+		while (completedDataCleanupPreupgradeProcesses.size() !=
+					dataCleanupPreupgradeProcessesMap.size()) {
+
+			List<DataCleanupPreupgradeProcess> dataCleanupPreupgradeProcesses =
+				new ArrayList<>();
+
+			for (Map.Entry
+					<DataCleanupPreupgradeProcess,
+					 List<DataCleanupPreupgradeProcess>> entry :
+						dataCleanupPreupgradeProcessesMap.entrySet()) {
+
+				DataCleanupPreupgradeProcess dataCleanupPreupgradeProcess =
+					entry.getKey();
+
+				if (completedDataCleanupPreupgradeProcesses.contains(
+						dataCleanupPreupgradeProcess) ||
+					!completedDataCleanupPreupgradeProcesses.containsAll(
+						entry.getValue())) {
+
+					continue;
+				}
+
+				dataCleanupPreupgradeProcesses.add(
+					dataCleanupPreupgradeProcess);
+			}
+
+			if (dataCleanupPreupgradeProcesses.isEmpty()) {
+				for (Map.Entry
+						<DataCleanupPreupgradeProcess,
+						 List<DataCleanupPreupgradeProcess>> entry :
+							dataCleanupPreupgradeProcessesMap.entrySet()) {
+
+					if (completedDataCleanupPreupgradeProcesses.contains(
+							entry.getKey())) {
+
+						continue;
+					}
+
+					for (DataCleanupPreupgradeProcess dependency :
+							entry.getValue()) {
+
+						if (!dataCleanupPreupgradeProcessesMap.containsKey(
+								dependency)) {
+
+							DataCleanupPreupgradeProcess
+								dataCleanupPreupgradeProcess = entry.getKey();
+
+							Class<?> dataCleanupPreupgradeProcessClazz =
+								dataCleanupPreupgradeProcess.getClass();
+
+							Class<?> dependencyClazz = dependency.getClass();
+
+							throw new IllegalStateException(
+								StringBundler.concat(
+									"Missing dependency ",
+									dependencyClazz.getName(), " required by ",
+									dataCleanupPreupgradeProcessClazz.
+										getName()));
+						}
+					}
+				}
+
+				throw new IllegalStateException("Circular dependency");
+			}
+
+			completedDataCleanupPreupgradeProcesses.addAll(
+				dataCleanupPreupgradeProcesses);
+			dataCleanupPreupgradeProcessesList.add(
+				dataCleanupPreupgradeProcesses);
+		}
+
+		return dataCleanupPreupgradeProcessesList;
 	}
 
 	public static List<DataCleanupPreupgradeProcess>

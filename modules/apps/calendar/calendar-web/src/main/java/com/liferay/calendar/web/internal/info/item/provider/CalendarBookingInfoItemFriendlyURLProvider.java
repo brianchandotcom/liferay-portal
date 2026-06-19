@@ -8,7 +8,6 @@ package com.liferay.calendar.web.internal.info.item.provider;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.friendly.url.info.item.provider.InfoItemFriendlyURLProvider;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
-import com.liferay.petra.string.StringPool;
 
 import java.util.Collections;
 import java.util.List;
@@ -29,7 +28,7 @@ public class CalendarBookingInfoItemFriendlyURLProvider
 	public String getFriendlyURL(
 		CalendarBooking calendarBooking, String languageId) {
 
-		return StringPool.SLASH + calendarBooking.getCalendarBookingId();
+		return String.valueOf(calendarBooking.getCalendarBookingId());
 	}
 
 	@Override

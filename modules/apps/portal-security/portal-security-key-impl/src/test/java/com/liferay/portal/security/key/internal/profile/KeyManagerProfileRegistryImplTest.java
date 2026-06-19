@@ -56,6 +56,42 @@ public class KeyManagerProfileRegistryImplTest {
 			1, 0);
 	}
 
+	@Test
+	public void testInitResetsAfterFailure() throws Exception {
+		_setActiveProfileId(null);
+
+		KeyManagerProfile keyManagerProfile = Mockito.mock(
+			KeyManagerProfile.class);
+
+		Mockito.when(
+			keyManagerProfile.getProfileId()
+		).thenReturn(
+			CustomKeyManagerProfile.PROFILE_ID
+		);
+
+		Mockito.doThrow(
+			new RuntimeException()
+		).when(
+			keyManagerProfile
+		).initialize();
+
+		Mockito.when(
+			_serviceTrackerMap.getService(CustomKeyManagerProfile.PROFILE_ID)
+		).thenReturn(
+			keyManagerProfile
+		);
+
+		for (int i = 0; i < 2; i++) {
+			ReflectionTestUtil.invoke(
+				_keyManagerProfileRegistryImpl, "_init",
+				new Class<?>[] {KeyManagerProfile.class}, keyManagerProfile);
+		}
+
+		Mockito.verify(
+			keyManagerProfile, Mockito.times(2)
+		).initialize();
+	}
+
 	private void _setActiveProfileId(String activeProfileId) {
 		KeyManagerConfiguration keyManagerConfiguration = () -> activeProfileId;
 
@@ -88,7 +124,7 @@ public class KeyManagerProfileRegistryImplTest {
 
 	private void _testInit(
 			String activeProfileId, String profileId, int invocationCount,
-			int expectedBootstrapCount)
+			int expectedInitializeCount)
 		throws Exception {
 
 		_setActiveProfileId(activeProfileId);
@@ -124,8 +160,8 @@ public class KeyManagerProfileRegistryImplTest {
 		}
 
 		Mockito.verify(
-			keyManagerProfile, Mockito.times(expectedBootstrapCount)
-		).bootstrap();
+			keyManagerProfile, Mockito.times(expectedInitializeCount)
+		).initialize();
 	}
 
 	@Mock

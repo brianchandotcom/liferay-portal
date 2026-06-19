@@ -699,8 +699,6 @@ public class AssetListFiltersUtilTest {
 		List<BooleanClause<Query>> rowBooleanClauses =
 			outerBooleanQuery.clauses();
 
-		Assert.assertTrue(rowIndex < rowBooleanClauses.size());
-
 		BooleanClause<Query> rowBooleanClause = rowBooleanClauses.get(rowIndex);
 
 		NestedQuery nestedQuery = (NestedQuery)rowBooleanClause.getClause();

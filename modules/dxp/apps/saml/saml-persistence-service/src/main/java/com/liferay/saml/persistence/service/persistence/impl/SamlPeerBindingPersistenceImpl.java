@@ -513,7 +513,7 @@ public class SamlPeerBindingPersistenceImpl
 				_SQL_SELECT_SAMLPEERBINDING_WHERE,
 				_SQL_COUNT_SAMLPEERBINDING_WHERE,
 				SamlPeerBindingModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"samlPeerBinding.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, SamlPeerBinding::getCompanyId),
@@ -565,7 +565,7 @@ public class SamlPeerBindingPersistenceImpl
 				_SQL_SELECT_SAMLPEERBINDING_WHERE,
 				_SQL_COUNT_SAMLPEERBINDING_WHERE,
 				SamlPeerBindingModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"samlPeerBinding.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, SamlPeerBinding::getCompanyId),
@@ -643,4 +643,4 @@ public class SamlPeerBindingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1105928676
+// LIFERAY-SERVICE-BUILDER-HASH:-1185844008

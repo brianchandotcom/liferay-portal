@@ -869,7 +869,7 @@ public class UserGroupGroupRolePersistenceImpl
 				_SQL_SELECT_USERGROUPGROUPROLE_WHERE,
 				_SQL_COUNT_USERGROUPGROUPROLE_WHERE,
 				UserGroupGroupRoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"userGroupGroupRole.", "userGroupId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -897,7 +897,7 @@ public class UserGroupGroupRolePersistenceImpl
 				_SQL_SELECT_USERGROUPGROUPROLE_WHERE,
 				_SQL_COUNT_USERGROUPGROUPROLE_WHERE,
 				UserGroupGroupRoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"userGroupGroupRole.", "groupId", FinderColumn.Type.LONG,
 					"=", true, true, UserGroupGroupRole::getGroupId));
@@ -924,7 +924,7 @@ public class UserGroupGroupRolePersistenceImpl
 				_SQL_SELECT_USERGROUPGROUPROLE_WHERE,
 				_SQL_COUNT_USERGROUPGROUPROLE_WHERE,
 				UserGroupGroupRoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"userGroupGroupRole.", "roleId", FinderColumn.Type.LONG,
 					"=", true, true, UserGroupGroupRole::getRoleId));
@@ -950,6 +950,7 @@ public class UserGroupGroupRolePersistenceImpl
 			_SQL_SELECT_USERGROUPGROUPROLE_WHERE,
 			_SQL_COUNT_USERGROUPGROUPROLE_WHERE,
 			UserGroupGroupRoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			"",
 			new FinderColumn<>(
 				"userGroupGroupRole.", "userGroupId", FinderColumn.Type.LONG,
 				"=", true, true, UserGroupGroupRole::getUserGroupId),
@@ -978,6 +979,7 @@ public class UserGroupGroupRolePersistenceImpl
 			_SQL_SELECT_USERGROUPGROUPROLE_WHERE,
 			_SQL_COUNT_USERGROUPGROUPROLE_WHERE,
 			UserGroupGroupRoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			"",
 			new FinderColumn<>(
 				"userGroupGroupRole.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, UserGroupGroupRole::getGroupId),
@@ -1040,4 +1042,4 @@ public class UserGroupGroupRolePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:862525027
+// LIFERAY-SERVICE-BUILDER-HASH:-2081960479

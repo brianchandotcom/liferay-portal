@@ -832,7 +832,7 @@ public class DEDataListViewPersistenceImpl
 				new String[] {String.class.getName()}, new String[] {"uuid_"},
 				0, 1, false, null),
 			_SQL_SELECT_DEDATALISTVIEW_WHERE, _SQL_COUNT_DEDATALISTVIEW_WHERE,
-			DEDataListViewModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			DEDataListViewModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"deDataListView.", "uuid", "uuid_", FinderColumn.Type.STRING,
 				"=", true, true, DEDataListView::getUuid));
@@ -875,6 +875,7 @@ public class DEDataListViewPersistenceImpl
 				_SQL_SELECT_DEDATALISTVIEW_WHERE,
 				_SQL_COUNT_DEDATALISTVIEW_WHERE,
 				DEDataListViewModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"deDataListView.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -907,6 +908,7 @@ public class DEDataListViewPersistenceImpl
 				_SQL_SELECT_DEDATALISTVIEW_WHERE,
 				_SQL_COUNT_DEDATALISTVIEW_WHERE,
 				DEDataListViewModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"deDataListView.", "ddmStructureId", FinderColumn.Type.LONG,
 					"=", true, true, DEDataListView::getDdmStructureId));
@@ -945,6 +947,7 @@ public class DEDataListViewPersistenceImpl
 				_SQL_SELECT_DEDATALISTVIEW_WHERE,
 				_SQL_COUNT_DEDATALISTVIEW_WHERE,
 				DEDataListViewModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"deDataListView.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, DEDataListView::getGroupId),
@@ -1027,4 +1030,4 @@ public class DEDataListViewPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1564433548
+// LIFERAY-SERVICE-BUILDER-HASH:304999604

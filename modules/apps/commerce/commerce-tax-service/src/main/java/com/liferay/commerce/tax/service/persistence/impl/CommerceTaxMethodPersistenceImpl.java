@@ -555,7 +555,7 @@ public class CommerceTaxMethodPersistenceImpl
 				_SQL_SELECT_COMMERCETAXMETHOD_WHERE,
 				_SQL_COUNT_COMMERCETAXMETHOD_WHERE,
 				CommerceTaxMethodModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"commerceTaxMethod.", "groupId", FinderColumn.Type.LONG,
 					"=", true, true, CommerceTaxMethod::getGroupId));
@@ -597,6 +597,7 @@ public class CommerceTaxMethodPersistenceImpl
 			_SQL_SELECT_COMMERCETAXMETHOD_WHERE,
 			_SQL_COUNT_COMMERCETAXMETHOD_WHERE,
 			CommerceTaxMethodModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			"",
 			new FinderColumn<>(
 				"commerceTaxMethod.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, CommerceTaxMethod::getGroupId),
@@ -674,4 +675,4 @@ public class CommerceTaxMethodPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:362947519
+// LIFERAY-SERVICE-BUILDER-HASH:-676084417

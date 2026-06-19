@@ -825,7 +825,7 @@ public class CommerceQualifierEntryPersistenceImpl
 			_SQL_SELECT_COMMERCEQUALIFIERENTRY_WHERE,
 			_SQL_COUNT_COMMERCEQUALIFIERENTRY_WHERE,
 			CommerceQualifierEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"",
+			"", "",
 			new FinderColumn<>(
 				"commerceQualifierEntry.", "sourceClassNameId",
 				FinderColumn.Type.LONG, "=", true, true,
@@ -856,7 +856,7 @@ public class CommerceQualifierEntryPersistenceImpl
 			_SQL_SELECT_COMMERCEQUALIFIERENTRY_WHERE,
 			_SQL_COUNT_COMMERCEQUALIFIERENTRY_WHERE,
 			CommerceQualifierEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"",
+			"", "",
 			new FinderColumn<>(
 				"commerceQualifierEntry.", "targetClassNameId",
 				FinderColumn.Type.LONG, "=", true, true,
@@ -902,7 +902,7 @@ public class CommerceQualifierEntryPersistenceImpl
 			_SQL_SELECT_COMMERCEQUALIFIERENTRY_WHERE,
 			_SQL_COUNT_COMMERCEQUALIFIERENTRY_WHERE,
 			CommerceQualifierEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"",
+			"", "",
 			new FinderColumn<>(
 				"commerceQualifierEntry.", "sourceClassNameId",
 				FinderColumn.Type.LONG, "=", true, true,
@@ -952,7 +952,7 @@ public class CommerceQualifierEntryPersistenceImpl
 			_SQL_SELECT_COMMERCEQUALIFIERENTRY_WHERE,
 			_SQL_COUNT_COMMERCEQUALIFIERENTRY_WHERE,
 			CommerceQualifierEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"",
+			"", "",
 			new FinderColumn<>(
 				"commerceQualifierEntry.", "sourceClassNameId",
 				FinderColumn.Type.LONG, "=", true, true,
@@ -1072,4 +1072,4 @@ public class CommerceQualifierEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:439974295
+// LIFERAY-SERVICE-BUILDER-HASH:-1156071661

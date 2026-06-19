@@ -1213,7 +1213,7 @@ public class JournalContentSearchPersistenceImpl
 				_SQL_SELECT_JOURNALCONTENTSEARCH_WHERE,
 				_SQL_COUNT_JOURNALCONTENTSEARCH_WHERE,
 				JournalContentSearchModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"journalContentSearch.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1241,7 +1241,7 @@ public class JournalContentSearchPersistenceImpl
 				_SQL_SELECT_JOURNALCONTENTSEARCH_WHERE,
 				_SQL_COUNT_JOURNALCONTENTSEARCH_WHERE,
 				JournalContentSearchModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"journalContentSearch.", "portletId",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -1269,7 +1269,7 @@ public class JournalContentSearchPersistenceImpl
 				_SQL_SELECT_JOURNALCONTENTSEARCH_WHERE,
 				_SQL_COUNT_JOURNALCONTENTSEARCH_WHERE,
 				JournalContentSearchModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"journalContentSearch.", "articleId",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -1296,7 +1296,7 @@ public class JournalContentSearchPersistenceImpl
 			_SQL_SELECT_JOURNALCONTENTSEARCH_WHERE,
 			_SQL_COUNT_JOURNALCONTENTSEARCH_WHERE,
 			JournalContentSearchModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"",
+			"", "",
 			new FinderColumn<>(
 				"journalContentSearch.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, JournalContentSearch::getGroupId),
@@ -1326,7 +1326,7 @@ public class JournalContentSearchPersistenceImpl
 			_SQL_SELECT_JOURNALCONTENTSEARCH_WHERE,
 			_SQL_COUNT_JOURNALCONTENTSEARCH_WHERE,
 			JournalContentSearchModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"",
+			"", "",
 			new FinderColumn<>(
 				"journalContentSearch.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, JournalContentSearch::getGroupId),
@@ -1361,7 +1361,7 @@ public class JournalContentSearchPersistenceImpl
 			_SQL_SELECT_JOURNALCONTENTSEARCH_WHERE,
 			_SQL_COUNT_JOURNALCONTENTSEARCH_WHERE,
 			JournalContentSearchModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"",
+			"", "",
 			new FinderColumn<>(
 				"journalContentSearch.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, JournalContentSearch::getGroupId),
@@ -1402,7 +1402,7 @@ public class JournalContentSearchPersistenceImpl
 			_SQL_SELECT_JOURNALCONTENTSEARCH_WHERE,
 			_SQL_COUNT_JOURNALCONTENTSEARCH_WHERE,
 			JournalContentSearchModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"",
+			"", "",
 			new FinderColumn<>(
 				"journalContentSearch.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, JournalContentSearch::getGroupId),
@@ -1452,7 +1452,7 @@ public class JournalContentSearchPersistenceImpl
 				_SQL_SELECT_JOURNALCONTENTSEARCH_WHERE,
 				_SQL_COUNT_JOURNALCONTENTSEARCH_WHERE,
 				JournalContentSearchModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"journalContentSearch.", "groupId", FinderColumn.Type.LONG,
 					"=", true, true, JournalContentSearch::getGroupId),
@@ -1573,4 +1573,4 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1579642320
+// LIFERAY-SERVICE-BUILDER-HASH:-1404460172

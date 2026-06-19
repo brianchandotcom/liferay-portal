@@ -1046,6 +1046,7 @@ public class PatcherAccountPersistenceImpl
 				_SQL_SELECT_PATCHERACCOUNT_WHERE,
 				_SQL_COUNT_PATCHERACCOUNT_WHERE,
 				PatcherAccountModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"patcherAccount.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, PatcherAccount::getCompanyId));
@@ -1083,6 +1084,7 @@ public class PatcherAccountPersistenceImpl
 				_SQL_SELECT_PATCHERACCOUNT_WHERE,
 				_SQL_COUNT_PATCHERACCOUNT_WHERE,
 				PatcherAccountModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"patcherAccount.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, PatcherAccount::getCompanyId),
@@ -1163,4 +1165,4 @@ public class PatcherAccountPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-145255170
+// LIFERAY-SERVICE-BUILDER-HASH:2122231682

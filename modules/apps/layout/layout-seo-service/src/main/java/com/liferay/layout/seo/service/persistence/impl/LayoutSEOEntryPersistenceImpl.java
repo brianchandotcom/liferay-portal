@@ -729,7 +729,7 @@ public class LayoutSEOEntryPersistenceImpl
 				new String[] {String.class.getName()}, new String[] {"uuid_"},
 				0, 1, false, null),
 			_SQL_SELECT_LAYOUTSEOENTRY_WHERE, _SQL_COUNT_LAYOUTSEOENTRY_WHERE,
-			LayoutSEOEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			LayoutSEOEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"layoutSEOEntry.", "uuid", "uuid_", FinderColumn.Type.STRING,
 				"=", true, true, LayoutSEOEntry::getUuid));
@@ -772,6 +772,7 @@ public class LayoutSEOEntryPersistenceImpl
 				_SQL_SELECT_LAYOUTSEOENTRY_WHERE,
 				_SQL_COUNT_LAYOUTSEOENTRY_WHERE,
 				LayoutSEOEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"layoutSEOEntry.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -874,4 +875,4 @@ public class LayoutSEOEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1622064391
+// LIFERAY-SERVICE-BUILDER-HASH:1482731581

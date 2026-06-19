@@ -783,7 +783,7 @@ public class LayoutSetBranchPersistenceImpl
 				_SQL_SELECT_LAYOUTSETBRANCH_WHERE,
 				_SQL_COUNT_LAYOUTSETBRANCH_WHERE,
 				LayoutSetBranchModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"layoutSetBranch.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, LayoutSetBranch::getGroupId));
@@ -814,7 +814,7 @@ public class LayoutSetBranchPersistenceImpl
 				_SQL_SELECT_LAYOUTSETBRANCH_WHERE,
 				_SQL_COUNT_LAYOUTSETBRANCH_WHERE,
 				LayoutSetBranchModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"layoutSetBranch.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, LayoutSetBranch::getGroupId),
@@ -874,7 +874,7 @@ public class LayoutSetBranchPersistenceImpl
 				_SQL_SELECT_LAYOUTSETBRANCH_WHERE,
 				_SQL_COUNT_LAYOUTSETBRANCH_WHERE,
 				LayoutSetBranchModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"layoutSetBranch.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, LayoutSetBranch::getGroupId),
@@ -922,4 +922,4 @@ public class LayoutSetBranchPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:730527811
+// LIFERAY-SERVICE-BUILDER-HASH:116684485

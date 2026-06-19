@@ -525,7 +525,7 @@ public class ExportImportReportEntryPersistenceImpl
 			_SQL_SELECT_EXPORTIMPORTREPORTENTRY_WHERE,
 			_SQL_COUNT_EXPORTIMPORTREPORTENTRY_WHERE,
 			ExportImportReportEntryModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX, "",
+			_ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"exportImportReportEntry.", "companyId", FinderColumn.Type.LONG,
 				"=", true, true, ExportImportReportEntry::getCompanyId),
@@ -647,4 +647,4 @@ public class ExportImportReportEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:303034154
+// LIFERAY-SERVICE-BUILDER-HASH:-390416020

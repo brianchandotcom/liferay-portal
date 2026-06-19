@@ -438,7 +438,7 @@ public class CommercePaymentEntryAuditPersistenceImpl
 				_SQL_SELECT_COMMERCEPAYMENTENTRYAUDIT_WHERE,
 				_SQL_COUNT_COMMERCEPAYMENTENTRYAUDIT_WHERE,
 				CommercePaymentEntryAuditModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"commercePaymentEntryAudit.", "commercePaymentEntryId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -507,4 +507,4 @@ public class CommercePaymentEntryAuditPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1483028564
+// LIFERAY-SERVICE-BUILDER-HASH:-424023722

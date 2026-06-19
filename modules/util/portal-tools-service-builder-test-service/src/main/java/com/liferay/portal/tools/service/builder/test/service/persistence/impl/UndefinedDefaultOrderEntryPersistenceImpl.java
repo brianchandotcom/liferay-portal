@@ -454,7 +454,7 @@ public class UndefinedDefaultOrderEntryPersistenceImpl
 				_SQL_SELECT_UNDEFINEDDEFAULTORDERENTRY_WHERE,
 				_SQL_COUNT_UNDEFINEDDEFAULTORDERENTRY_WHERE,
 				UndefinedDefaultOrderEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"undefinedDefaultOrderEntry.", "name",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -499,4 +499,4 @@ public class UndefinedDefaultOrderEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:299465851
+// LIFERAY-SERVICE-BUILDER-HASH:-1800772487

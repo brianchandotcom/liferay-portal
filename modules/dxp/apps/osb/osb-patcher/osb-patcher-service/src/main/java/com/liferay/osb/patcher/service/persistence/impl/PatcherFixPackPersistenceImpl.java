@@ -2065,6 +2065,7 @@ public class PatcherFixPackPersistenceImpl
 				_SQL_SELECT_PATCHERFIXPACK_WHERE,
 				_SQL_COUNT_PATCHERFIXPACK_WHERE,
 				PatcherFixPackModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"patcherFixPack.", "patcherFixComponentId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2092,6 +2093,7 @@ public class PatcherFixPackPersistenceImpl
 				_SQL_SELECT_PATCHERFIXPACK_WHERE,
 				_SQL_COUNT_PATCHERFIXPACK_WHERE,
 				PatcherFixPackModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"patcherFixPack.", "version", FinderColumn.Type.INTEGER,
 					"=", true, true, PatcherFixPack::getVersion));
@@ -2129,6 +2131,7 @@ public class PatcherFixPackPersistenceImpl
 				_SQL_SELECT_PATCHERFIXPACK_WHERE,
 				_SQL_COUNT_PATCHERFIXPACK_WHERE,
 				PatcherFixPackModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"patcherFixPack.", "patcherFixComponentId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2164,6 +2167,7 @@ public class PatcherFixPackPersistenceImpl
 				_SQL_SELECT_PATCHERFIXPACK_WHERE,
 				_SQL_COUNT_PATCHERFIXPACK_WHERE,
 				PatcherFixPackModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"patcherFixPack.", "patcherFixComponentId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2215,6 +2219,7 @@ public class PatcherFixPackPersistenceImpl
 				_SQL_SELECT_PATCHERFIXPACK_WHERE,
 				_SQL_COUNT_PATCHERFIXPACK_WHERE,
 				PatcherFixPackModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"patcherFixPack.", "patcherProjectVersionId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2256,6 +2261,7 @@ public class PatcherFixPackPersistenceImpl
 				_SQL_SELECT_PATCHERFIXPACK_WHERE,
 				_SQL_COUNT_PATCHERFIXPACK_WHERE,
 				PatcherFixPackModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"patcherFixPack.", "patcherFixComponentId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2301,6 +2307,7 @@ public class PatcherFixPackPersistenceImpl
 				_SQL_SELECT_PATCHERFIXPACK_WHERE,
 				_SQL_COUNT_PATCHERFIXPACK_WHERE,
 				PatcherFixPackModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"patcherFixPack.", "patcherFixComponentId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2417,4 +2424,4 @@ public class PatcherFixPackPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:935922743
+// LIFERAY-SERVICE-BUILDER-HASH:-2002032971

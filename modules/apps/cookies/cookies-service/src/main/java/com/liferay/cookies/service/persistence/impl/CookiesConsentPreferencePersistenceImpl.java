@@ -621,7 +621,7 @@ public class CookiesConsentPreferencePersistenceImpl
 				_SQL_SELECT_COOKIESCONSENTPREFERENCE_WHERE,
 				_SQL_COUNT_COOKIESCONSENTPREFERENCE_WHERE,
 				CookiesConsentPreferenceModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"cookiesConsentPreference.", "userId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -651,7 +651,7 @@ public class CookiesConsentPreferencePersistenceImpl
 				_SQL_SELECT_COOKIESCONSENTPREFERENCE_WHERE,
 				_SQL_COUNT_COOKIESCONSENTPREFERENCE_WHERE,
 				CookiesConsentPreferenceModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"cookiesConsentPreference.", "expirationDate",
 					FinderColumn.Type.DATE, "=", true, true,
@@ -678,7 +678,7 @@ public class CookiesConsentPreferencePersistenceImpl
 			_SQL_SELECT_COOKIESCONSENTPREFERENCE_WHERE,
 			_SQL_COUNT_COOKIESCONSENTPREFERENCE_WHERE,
 			CookiesConsentPreferenceModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX, "",
+			_ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"cookiesConsentPreference.", "userId", FinderColumn.Type.LONG,
 				"=", true, true, CookiesConsentPreference::getUserId),
@@ -775,4 +775,4 @@ public class CookiesConsentPreferencePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1776249660
+// LIFERAY-SERVICE-BUILDER-HASH:1999187338

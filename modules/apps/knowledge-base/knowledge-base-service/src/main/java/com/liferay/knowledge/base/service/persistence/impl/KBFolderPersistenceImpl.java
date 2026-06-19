@@ -1266,7 +1266,7 @@ public class KBFolderPersistenceImpl
 				new String[] {String.class.getName()}, new String[] {"uuid_"},
 				0, 1, false, null),
 			_SQL_SELECT_KBFOLDER_WHERE, _SQL_COUNT_KBFOLDER_WHERE,
-			KBFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			KBFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"kbFolder.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
 				true, true, KBFolder::getUuid));
@@ -1306,7 +1306,7 @@ public class KBFolderPersistenceImpl
 					new String[] {String.class.getName(), Long.class.getName()},
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_KBFOLDER_WHERE, _SQL_COUNT_KBFOLDER_WHERE,
-				KBFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				KBFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"kbFolder.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
 					true, true, KBFolder::getUuid),
@@ -1334,7 +1334,7 @@ public class KBFolderPersistenceImpl
 					"countByCompanyId", new String[] {Long.class.getName()},
 					new String[] {"companyId"}, false),
 				_SQL_SELECT_KBFOLDER_WHERE, _SQL_COUNT_KBFOLDER_WHERE,
-				KBFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				KBFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"kbFolder.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, KBFolder::getCompanyId));
@@ -1359,7 +1359,7 @@ public class KBFolderPersistenceImpl
 					new String[] {Long.class.getName(), Long.class.getName()},
 					new String[] {"groupId", "parentKBFolderId"}, false),
 				_SQL_SELECT_KBFOLDER_WHERE, _SQL_COUNT_KBFOLDER_WHERE,
-				KBFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				KBFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"kbFolder.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, KBFolder::getGroupId),
@@ -1441,7 +1441,7 @@ public class KBFolderPersistenceImpl
 					new String[] {"groupId", "parentKBFolderId", "status"},
 					false),
 				_SQL_SELECT_KBFOLDER_WHERE, _SQL_COUNT_KBFOLDER_WHERE,
-				KBFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				KBFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"kbFolder.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, KBFolder::getGroupId),
@@ -1540,4 +1540,4 @@ public class KBFolderPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1782310815
+// LIFERAY-SERVICE-BUILDER-HASH:732911073

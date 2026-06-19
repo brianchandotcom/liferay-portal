@@ -1091,7 +1091,7 @@ public class LayoutPageTemplateStructureRelElementVariationPersistenceImpl
 			_SQL_COUNT_LAYOUTPAGETEMPLATESTRUCTURERELELEMENTVARIATION_WHERE,
 			LayoutPageTemplateStructureRelElementVariationModelImpl.
 				ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX, "",
+			_ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"layoutPageTemplateStructureRelElementVariation.", "uuid",
 				"uuid_", FinderColumn.Type.STRING, "=", true, true,
@@ -1140,7 +1140,7 @@ public class LayoutPageTemplateStructureRelElementVariationPersistenceImpl
 				_SQL_COUNT_LAYOUTPAGETEMPLATESTRUCTURERELELEMENTVARIATION_WHERE,
 				LayoutPageTemplateStructureRelElementVariationModelImpl.
 					ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"layoutPageTemplateStructureRelElementVariation.", "uuid",
 					"uuid_", FinderColumn.Type.STRING, "=", true, true,
@@ -1177,7 +1177,7 @@ public class LayoutPageTemplateStructureRelElementVariationPersistenceImpl
 				_SQL_COUNT_LAYOUTPAGETEMPLATESTRUCTURERELELEMENTVARIATION_WHERE,
 				LayoutPageTemplateStructureRelElementVariationModelImpl.
 					ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"layoutPageTemplateStructureRelElementVariation.",
 					"segmentsExperienceERC", FinderColumn.Type.STRING, "=",
@@ -1210,7 +1210,7 @@ public class LayoutPageTemplateStructureRelElementVariationPersistenceImpl
 				_SQL_COUNT_LAYOUTPAGETEMPLATESTRUCTURERELELEMENTVARIATION_WHERE,
 				LayoutPageTemplateStructureRelElementVariationModelImpl.
 					ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"layoutPageTemplateStructureRelElementVariation.", "plid",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1324,4 +1324,4 @@ public class LayoutPageTemplateStructureRelElementVariationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:160774125
+// LIFERAY-SERVICE-BUILDER-HASH:-799829271

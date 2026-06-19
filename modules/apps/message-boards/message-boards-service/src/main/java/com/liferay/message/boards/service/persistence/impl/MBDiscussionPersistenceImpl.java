@@ -764,7 +764,7 @@ public class MBDiscussionPersistenceImpl
 				new String[] {String.class.getName()}, new String[] {"uuid_"},
 				0, 1, false, null),
 			_SQL_SELECT_MBDISCUSSION_WHERE, _SQL_COUNT_MBDISCUSSION_WHERE,
-			MBDiscussionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			MBDiscussionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"mbDiscussion.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
 				true, true, MBDiscussion::getUuid));
@@ -806,6 +806,7 @@ public class MBDiscussionPersistenceImpl
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_MBDISCUSSION_WHERE, _SQL_COUNT_MBDISCUSSION_WHERE,
 				MBDiscussionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"mbDiscussion.", "uuid", "uuid_", FinderColumn.Type.STRING,
 					"=", true, true, MBDiscussion::getUuid),
@@ -911,4 +912,4 @@ public class MBDiscussionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:754924334
+// LIFERAY-SERVICE-BUILDER-HASH:1319307378

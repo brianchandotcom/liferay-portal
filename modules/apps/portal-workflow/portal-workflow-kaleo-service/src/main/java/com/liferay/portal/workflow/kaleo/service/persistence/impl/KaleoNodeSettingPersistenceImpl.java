@@ -532,7 +532,7 @@ public class KaleoNodeSettingPersistenceImpl
 				_SQL_SELECT_KALEONODESETTING_WHERE,
 				_SQL_COUNT_KALEONODESETTING_WHERE,
 				KaleoNodeSettingModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"kaleoNodeSetting.", "kaleoNodeId", FinderColumn.Type.LONG,
 					"=", true, true, KaleoNodeSetting::getKaleoNodeId));
@@ -622,4 +622,4 @@ public class KaleoNodeSettingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1599103368
+// LIFERAY-SERVICE-BUILDER-HASH:-1926827274

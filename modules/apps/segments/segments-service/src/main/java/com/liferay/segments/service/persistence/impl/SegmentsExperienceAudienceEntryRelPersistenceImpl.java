@@ -861,7 +861,7 @@ public class SegmentsExperienceAudienceEntryRelPersistenceImpl
 			_SQL_SELECT_SEGMENTSEXPERIENCEAUDIENCEENTRYREL_WHERE,
 			_SQL_COUNT_SEGMENTSEXPERIENCEAUDIENCEENTRYREL_WHERE,
 			SegmentsExperienceAudienceEntryRelModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX, "",
+			_ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"segmentsExperienceAudienceEntryRel.", "uuid", "uuid_",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -908,7 +908,7 @@ public class SegmentsExperienceAudienceEntryRelPersistenceImpl
 				_SQL_SELECT_SEGMENTSEXPERIENCEAUDIENCEENTRYREL_WHERE,
 				_SQL_COUNT_SEGMENTSEXPERIENCEAUDIENCEENTRYREL_WHERE,
 				SegmentsExperienceAudienceEntryRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"segmentsExperienceAudienceEntryRel.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -943,7 +943,7 @@ public class SegmentsExperienceAudienceEntryRelPersistenceImpl
 				_SQL_SELECT_SEGMENTSEXPERIENCEAUDIENCEENTRYREL_WHERE,
 				_SQL_COUNT_SEGMENTSEXPERIENCEAUDIENCEENTRYREL_WHERE,
 				SegmentsExperienceAudienceEntryRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"segmentsExperienceAudienceEntryRel.",
 					"segmentsExperienceERC", FinderColumn.Type.STRING, "=",
@@ -1048,4 +1048,4 @@ public class SegmentsExperienceAudienceEntryRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1876739176
+// LIFERAY-SERVICE-BUILDER-HASH:1600811886

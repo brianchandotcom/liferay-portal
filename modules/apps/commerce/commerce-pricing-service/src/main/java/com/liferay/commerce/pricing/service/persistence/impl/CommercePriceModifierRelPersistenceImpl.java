@@ -752,7 +752,7 @@ public class CommercePriceModifierRelPersistenceImpl
 				_SQL_SELECT_COMMERCEPRICEMODIFIERREL_WHERE,
 				_SQL_COUNT_COMMERCEPRICEMODIFIERREL_WHERE,
 				CommercePriceModifierRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"commercePriceModifierRel.", "commercePriceModifierId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -783,7 +783,7 @@ public class CommercePriceModifierRelPersistenceImpl
 				_SQL_SELECT_COMMERCEPRICEMODIFIERREL_WHERE,
 				_SQL_COUNT_COMMERCEPRICEMODIFIERREL_WHERE,
 				CommercePriceModifierRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"commercePriceModifierRel.", "commercePriceModifierId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -815,7 +815,7 @@ public class CommercePriceModifierRelPersistenceImpl
 				_SQL_SELECT_COMMERCEPRICEMODIFIERREL_WHERE,
 				_SQL_COUNT_COMMERCEPRICEMODIFIERREL_WHERE,
 				CommercePriceModifierRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"commercePriceModifierRel.", "classNameId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -922,4 +922,4 @@ public class CommercePriceModifierRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1400044669
+// LIFERAY-SERVICE-BUILDER-HASH:1774956791

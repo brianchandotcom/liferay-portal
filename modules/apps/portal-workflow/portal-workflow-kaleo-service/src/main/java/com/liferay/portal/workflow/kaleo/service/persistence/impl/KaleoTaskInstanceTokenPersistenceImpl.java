@@ -1013,7 +1013,7 @@ public class KaleoTaskInstanceTokenPersistenceImpl
 				_SQL_SELECT_KALEOTASKINSTANCETOKEN_WHERE,
 				_SQL_COUNT_KALEOTASKINSTANCETOKEN_WHERE,
 				KaleoTaskInstanceTokenModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"kaleoTaskInstanceToken.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1044,7 +1044,7 @@ public class KaleoTaskInstanceTokenPersistenceImpl
 				_SQL_SELECT_KALEOTASKINSTANCETOKEN_WHERE,
 				_SQL_COUNT_KALEOTASKINSTANCETOKEN_WHERE,
 				KaleoTaskInstanceTokenModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"kaleoTaskInstanceToken.", "kaleoDefinitionVersionId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1075,7 +1075,7 @@ public class KaleoTaskInstanceTokenPersistenceImpl
 				_SQL_SELECT_KALEOTASKINSTANCETOKEN_WHERE,
 				_SQL_COUNT_KALEOTASKINSTANCETOKEN_WHERE,
 				KaleoTaskInstanceTokenModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"kaleoTaskInstanceToken.", "kaleoInstanceId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1102,7 +1102,7 @@ public class KaleoTaskInstanceTokenPersistenceImpl
 			_SQL_SELECT_KALEOTASKINSTANCETOKEN_WHERE,
 			_SQL_COUNT_KALEOTASKINSTANCETOKEN_WHERE,
 			KaleoTaskInstanceTokenModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"",
+			"", "",
 			new FinderColumn<>(
 				"kaleoTaskInstanceToken.", "companyId", FinderColumn.Type.LONG,
 				"=", true, true, KaleoTaskInstanceToken::getCompanyId),
@@ -1150,7 +1150,7 @@ public class KaleoTaskInstanceTokenPersistenceImpl
 				_SQL_SELECT_KALEOTASKINSTANCETOKEN_WHERE,
 				_SQL_COUNT_KALEOTASKINSTANCETOKEN_WHERE,
 				KaleoTaskInstanceTokenModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"kaleoTaskInstanceToken.", "className",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -1187,7 +1187,7 @@ public class KaleoTaskInstanceTokenPersistenceImpl
 			_SQL_SELECT_KALEOTASKINSTANCETOKEN_WHERE,
 			_SQL_COUNT_KALEOTASKINSTANCETOKEN_WHERE,
 			KaleoTaskInstanceTokenModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"",
+			"", "",
 			new FinderColumn<>(
 				"kaleoTaskInstanceToken.", "companyId", FinderColumn.Type.LONG,
 				"=", true, true, KaleoTaskInstanceToken::getCompanyId),
@@ -1268,4 +1268,4 @@ public class KaleoTaskInstanceTokenPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1335103360
+// LIFERAY-SERVICE-BUILDER-HASH:582479236

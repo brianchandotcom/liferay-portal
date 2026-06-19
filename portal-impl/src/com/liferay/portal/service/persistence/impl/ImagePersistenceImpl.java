@@ -484,7 +484,7 @@ public class ImagePersistenceImpl
 					new String[] {Integer.class.getName()},
 					new String[] {"size_"}, false),
 				_SQL_SELECT_IMAGE_WHERE, _SQL_COUNT_IMAGE_WHERE,
-				ImageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				ImageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"image.", "size", "size_", FinderColumn.Type.INTEGER, "<",
 					true, true, Image::getSize));
@@ -522,4 +522,4 @@ public class ImagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1038373264
+// LIFERAY-SERVICE-BUILDER-HASH:-1000628302

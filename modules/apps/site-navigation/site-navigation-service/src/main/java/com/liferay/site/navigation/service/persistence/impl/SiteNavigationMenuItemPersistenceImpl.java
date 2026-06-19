@@ -1432,7 +1432,7 @@ public class SiteNavigationMenuItemPersistenceImpl
 			_SQL_SELECT_SITENAVIGATIONMENUITEM_WHERE,
 			_SQL_COUNT_SITENAVIGATIONMENUITEM_WHERE,
 			SiteNavigationMenuItemModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"",
+			"", "",
 			new FinderColumn<>(
 				"siteNavigationMenuItem.", "uuid", "uuid_",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -1477,7 +1477,7 @@ public class SiteNavigationMenuItemPersistenceImpl
 				_SQL_SELECT_SITENAVIGATIONMENUITEM_WHERE,
 				_SQL_COUNT_SITENAVIGATIONMENUITEM_WHERE,
 				SiteNavigationMenuItemModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"siteNavigationMenuItem.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -1509,7 +1509,7 @@ public class SiteNavigationMenuItemPersistenceImpl
 				_SQL_SELECT_SITENAVIGATIONMENUITEM_WHERE,
 				_SQL_COUNT_SITENAVIGATIONMENUITEM_WHERE,
 				SiteNavigationMenuItemModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"siteNavigationMenuItem.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1540,7 +1540,7 @@ public class SiteNavigationMenuItemPersistenceImpl
 				_SQL_SELECT_SITENAVIGATIONMENUITEM_WHERE,
 				_SQL_COUNT_SITENAVIGATIONMENUITEM_WHERE,
 				SiteNavigationMenuItemModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"siteNavigationMenuItem.", "siteNavigationMenuId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1571,7 +1571,7 @@ public class SiteNavigationMenuItemPersistenceImpl
 				_SQL_SELECT_SITENAVIGATIONMENUITEM_WHERE,
 				_SQL_COUNT_SITENAVIGATIONMENUITEM_WHERE,
 				SiteNavigationMenuItemModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"siteNavigationMenuItem.", "parentSiteNavigationMenuItemId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1597,7 +1597,7 @@ public class SiteNavigationMenuItemPersistenceImpl
 			_SQL_SELECT_SITENAVIGATIONMENUITEM_WHERE,
 			_SQL_COUNT_SITENAVIGATIONMENUITEM_WHERE,
 			SiteNavigationMenuItemModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"",
+			"", "",
 			new FinderColumn<>(
 				"siteNavigationMenuItem.", "type", "type_",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -1633,7 +1633,7 @@ public class SiteNavigationMenuItemPersistenceImpl
 			_SQL_SELECT_SITENAVIGATIONMENUITEM_WHERE,
 			_SQL_COUNT_SITENAVIGATIONMENUITEM_WHERE,
 			SiteNavigationMenuItemModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"",
+			"", "",
 			new FinderColumn<>(
 				"siteNavigationMenuItem.", "siteNavigationMenuId",
 				FinderColumn.Type.LONG, "=", true, true,
@@ -1662,7 +1662,7 @@ public class SiteNavigationMenuItemPersistenceImpl
 				_SQL_SELECT_SITENAVIGATIONMENUITEM_WHERE,
 				_SQL_COUNT_SITENAVIGATIONMENUITEM_WHERE,
 				SiteNavigationMenuItemModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"siteNavigationMenuItem.", "siteNavigationMenuId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1761,4 +1761,4 @@ public class SiteNavigationMenuItemPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:61857932
+// LIFERAY-SERVICE-BUILDER-HASH:-1466955200

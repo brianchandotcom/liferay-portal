@@ -647,7 +647,7 @@ public class DDMFormInstanceVersionPersistenceImpl
 				_SQL_SELECT_DDMFORMINSTANCEVERSION_WHERE,
 				_SQL_COUNT_DDMFORMINSTANCEVERSION_WHERE,
 				DDMFormInstanceVersionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"ddmFormInstanceVersion.", "formInstanceId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -691,7 +691,7 @@ public class DDMFormInstanceVersionPersistenceImpl
 			_SQL_SELECT_DDMFORMINSTANCEVERSION_WHERE,
 			_SQL_COUNT_DDMFORMINSTANCEVERSION_WHERE,
 			DDMFormInstanceVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"",
+			"", "",
 			new FinderColumn<>(
 				"ddmFormInstanceVersion.", "formInstanceId",
 				FinderColumn.Type.LONG, "=", true, true,
@@ -772,4 +772,4 @@ public class DDMFormInstanceVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1085314168
+// LIFERAY-SERVICE-BUILDER-HASH:-1872263992

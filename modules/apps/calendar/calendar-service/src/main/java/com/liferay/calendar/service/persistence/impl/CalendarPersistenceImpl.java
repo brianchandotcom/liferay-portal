@@ -912,7 +912,7 @@ public class CalendarPersistenceImpl
 				new String[] {String.class.getName()}, new String[] {"uuid_"},
 				0, 1, false, null),
 			_SQL_SELECT_CALENDAR_WHERE, _SQL_COUNT_CALENDAR_WHERE,
-			CalendarModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			CalendarModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"calendar.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
 				true, true, Calendar::getUuid));
@@ -952,7 +952,7 @@ public class CalendarPersistenceImpl
 					new String[] {String.class.getName(), Long.class.getName()},
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_CALENDAR_WHERE, _SQL_COUNT_CALENDAR_WHERE,
-				CalendarModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				CalendarModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"calendar.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
 					true, true, Calendar::getUuid),
@@ -980,7 +980,7 @@ public class CalendarPersistenceImpl
 					new String[] {Long.class.getName(), Long.class.getName()},
 					new String[] {"groupId", "calendarResourceId"}, false),
 				_SQL_SELECT_CALENDAR_WHERE, _SQL_COUNT_CALENDAR_WHERE,
-				CalendarModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				CalendarModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"calendar.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, Calendar::getGroupId),
@@ -1024,7 +1024,7 @@ public class CalendarPersistenceImpl
 					},
 					false),
 				_SQL_SELECT_CALENDAR_WHERE, _SQL_COUNT_CALENDAR_WHERE,
-				CalendarModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				CalendarModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"calendar.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, Calendar::getGroupId),
@@ -1107,4 +1107,4 @@ public class CalendarPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:750752709
+// LIFERAY-SERVICE-BUILDER-HASH:-1143627895

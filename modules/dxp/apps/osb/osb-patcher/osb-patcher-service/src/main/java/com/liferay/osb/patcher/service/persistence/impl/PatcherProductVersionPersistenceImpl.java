@@ -494,7 +494,7 @@ public class PatcherProductVersionPersistenceImpl
 				_SQL_SELECT_PATCHERPRODUCTVERSION_WHERE,
 				_SQL_COUNT_PATCHERPRODUCTVERSION_WHERE,
 				PatcherProductVersionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"patcherProductVersion.", "fixDeliveryMethod",
 					FinderColumn.Type.INTEGER, "=", true, true,
@@ -577,4 +577,4 @@ public class PatcherProductVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1881319372
+// LIFERAY-SERVICE-BUILDER-HASH:1390266226

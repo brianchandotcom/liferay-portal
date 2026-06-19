@@ -722,7 +722,7 @@ public class ChangesetCollectionPersistenceImpl
 				_SQL_SELECT_CHANGESETCOLLECTION_WHERE,
 				_SQL_COUNT_CHANGESETCOLLECTION_WHERE,
 				ChangesetCollectionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"changesetCollection.", "groupId", FinderColumn.Type.LONG,
 					"=", true, true, ChangesetCollection::getGroupId));
@@ -749,7 +749,7 @@ public class ChangesetCollectionPersistenceImpl
 				_SQL_SELECT_CHANGESETCOLLECTION_WHERE,
 				_SQL_COUNT_CHANGESETCOLLECTION_WHERE,
 				ChangesetCollectionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"changesetCollection.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, ChangesetCollection::getCompanyId));
@@ -775,7 +775,7 @@ public class ChangesetCollectionPersistenceImpl
 			_SQL_SELECT_CHANGESETCOLLECTION_WHERE,
 			_SQL_COUNT_CHANGESETCOLLECTION_WHERE,
 			ChangesetCollectionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"",
+			"", "",
 			new FinderColumn<>(
 				"changesetCollection.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, ChangesetCollection::getGroupId),
@@ -820,7 +820,7 @@ public class ChangesetCollectionPersistenceImpl
 			_SQL_SELECT_CHANGESETCOLLECTION_WHERE,
 			_SQL_COUNT_CHANGESETCOLLECTION_WHERE,
 			ChangesetCollectionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"",
+			"", "",
 			new FinderColumn<>(
 				"changesetCollection.", "companyId", FinderColumn.Type.LONG,
 				"=", true, true, ChangesetCollection::getCompanyId),
@@ -894,4 +894,4 @@ public class ChangesetCollectionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1070974975
+// LIFERAY-SERVICE-BUILDER-HASH:-688432261

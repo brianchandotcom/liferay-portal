@@ -604,7 +604,7 @@ public class RecentLayoutSetBranchPersistenceImpl
 				_SQL_SELECT_RECENTLAYOUTSETBRANCH_WHERE,
 				_SQL_COUNT_RECENTLAYOUTSETBRANCH_WHERE,
 				RecentLayoutSetBranchModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"recentLayoutSetBranch.", "groupId", FinderColumn.Type.LONG,
 					"=", true, true, RecentLayoutSetBranch::getGroupId));
@@ -631,7 +631,7 @@ public class RecentLayoutSetBranchPersistenceImpl
 				_SQL_SELECT_RECENTLAYOUTSETBRANCH_WHERE,
 				_SQL_COUNT_RECENTLAYOUTSETBRANCH_WHERE,
 				RecentLayoutSetBranchModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"recentLayoutSetBranch.", "userId", FinderColumn.Type.LONG,
 					"=", true, true, RecentLayoutSetBranch::getUserId));
@@ -661,7 +661,7 @@ public class RecentLayoutSetBranchPersistenceImpl
 				_SQL_SELECT_RECENTLAYOUTSETBRANCH_WHERE,
 				_SQL_COUNT_RECENTLAYOUTSETBRANCH_WHERE,
 				RecentLayoutSetBranchModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"recentLayoutSetBranch.", "layoutSetBranchId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -716,4 +716,4 @@ public class RecentLayoutSetBranchPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-916046407
+// LIFERAY-SERVICE-BUILDER-HASH:1586590327

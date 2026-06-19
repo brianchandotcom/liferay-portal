@@ -631,6 +631,7 @@ public class MemberRequestPersistenceImpl
 					new String[] {"receiverUserId"}, false),
 				_SQL_SELECT_MEMBERREQUEST_WHERE, _SQL_COUNT_MEMBERREQUEST_WHERE,
 				MemberRequestModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"memberRequest.", "receiverUserId", FinderColumn.Type.LONG,
 					"=", true, true, MemberRequest::getReceiverUserId));
@@ -654,7 +655,7 @@ public class MemberRequestPersistenceImpl
 				new String[] {Long.class.getName(), Integer.class.getName()},
 				new String[] {"receiverUserId", "status"}, false),
 			_SQL_SELECT_MEMBERREQUEST_WHERE, _SQL_COUNT_MEMBERREQUEST_WHERE,
-			MemberRequestModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			MemberRequestModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"memberRequest.", "receiverUserId", FinderColumn.Type.LONG, "=",
 				true, true, MemberRequest::getReceiverUserId),
@@ -753,4 +754,4 @@ public class MemberRequestPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:396987869
+// LIFERAY-SERVICE-BUILDER-HASH:-1075351007

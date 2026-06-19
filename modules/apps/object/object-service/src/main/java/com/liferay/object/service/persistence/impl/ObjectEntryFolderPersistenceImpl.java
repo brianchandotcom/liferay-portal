@@ -1394,6 +1394,7 @@ public class ObjectEntryFolderPersistenceImpl
 			_SQL_SELECT_OBJECTENTRYFOLDER_WHERE,
 			_SQL_COUNT_OBJECTENTRYFOLDER_WHERE,
 			ObjectEntryFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			"",
 			new FinderColumn<>(
 				"objectEntryFolder.", "uuid", "uuid_", FinderColumn.Type.STRING,
 				"=", true, true, ObjectEntryFolder::getUuid));
@@ -1436,7 +1437,7 @@ public class ObjectEntryFolderPersistenceImpl
 				_SQL_SELECT_OBJECTENTRYFOLDER_WHERE,
 				_SQL_COUNT_OBJECTENTRYFOLDER_WHERE,
 				ObjectEntryFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"objectEntryFolder.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -1508,7 +1509,7 @@ public class ObjectEntryFolderPersistenceImpl
 				_SQL_SELECT_OBJECTENTRYFOLDER_WHERE,
 				_SQL_COUNT_OBJECTENTRYFOLDER_WHERE,
 				ObjectEntryFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"objectEntryFolder.", "groupId", FinderColumn.Type.LONG,
 					"=", true, true, ObjectEntryFolder::getGroupId),
@@ -1543,7 +1544,7 @@ public class ObjectEntryFolderPersistenceImpl
 				_SQL_SELECT_OBJECTENTRYFOLDER_WHERE,
 				_SQL_COUNT_OBJECTENTRYFOLDER_WHERE,
 				ObjectEntryFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"objectEntryFolder.", "groupId", FinderColumn.Type.LONG,
 					"=", true, true, ObjectEntryFolder::getGroupId),
@@ -1589,7 +1590,7 @@ public class ObjectEntryFolderPersistenceImpl
 				_SQL_SELECT_OBJECTENTRYFOLDER_WHERE,
 				_SQL_COUNT_OBJECTENTRYFOLDER_WHERE,
 				ObjectEntryFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"objectEntryFolder.", "groupId", FinderColumn.Type.LONG,
 					"=", true, true, ObjectEntryFolder::getGroupId),
@@ -1676,4 +1677,4 @@ public class ObjectEntryFolderPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1638594077
+// LIFERAY-SERVICE-BUILDER-HASH:1503244699

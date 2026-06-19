@@ -609,6 +609,7 @@ public class SamlSpSessionPersistenceImpl
 					new String[] {"samlPeerBindingId"}, false),
 				_SQL_SELECT_SAMLSPSESSION_WHERE, _SQL_COUNT_SAMLSPSESSION_WHERE,
 				SamlSpSessionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"samlSpSession.", "samlPeerBindingId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -659,7 +660,7 @@ public class SamlSpSessionPersistenceImpl
 				new String[] {Long.class.getName(), String.class.getName()},
 				new String[] {"companyId", "sessionIndex"}, 0, 2, false, null),
 			_SQL_SELECT_SAMLSPSESSION_WHERE, _SQL_COUNT_SAMLSPSESSION_WHERE,
-			SamlSpSessionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			SamlSpSessionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"samlSpSession.", "companyId", FinderColumn.Type.LONG, "=",
 				true, true, SamlSpSession::getCompanyId),
@@ -736,4 +737,4 @@ public class SamlSpSessionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1957091738
+// LIFERAY-SERVICE-BUILDER-HASH:550608482

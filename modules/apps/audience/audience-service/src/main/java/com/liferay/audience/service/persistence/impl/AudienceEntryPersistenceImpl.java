@@ -669,6 +669,7 @@ public class AudienceEntryPersistenceImpl
 					new String[] {"companyId"}, false),
 				_SQL_SELECT_AUDIENCEENTRY_WHERE, _SQL_COUNT_AUDIENCEENTRY_WHERE,
 				AudienceEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"audienceEntry.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, AudienceEntry::getCompanyId));
@@ -691,6 +692,7 @@ public class AudienceEntryPersistenceImpl
 					new String[] {"companyId", "name"}, false),
 				_SQL_SELECT_AUDIENCEENTRY_WHERE, _SQL_COUNT_AUDIENCEENTRY_WHERE,
 				AudienceEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"audienceEntry.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, AudienceEntry::getCompanyId),
@@ -782,4 +784,4 @@ public class AudienceEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-435194567
+// LIFERAY-SERVICE-BUILDER-HASH:1232916153

@@ -874,7 +874,7 @@ public class AssetLinkPersistenceImpl
 					"countByEntryId1", new String[] {Long.class.getName()},
 					new String[] {"entryId1"}, false),
 				_SQL_SELECT_ASSETLINK_WHERE, _SQL_COUNT_ASSETLINK_WHERE,
-				AssetLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				AssetLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"assetLink.", "entryId1", FinderColumn.Type.LONG, "=", true,
 					true, AssetLink::getEntryId1));
@@ -899,7 +899,7 @@ public class AssetLinkPersistenceImpl
 					"countByEntryId2", new String[] {Long.class.getName()},
 					new String[] {"entryId2"}, false),
 				_SQL_SELECT_ASSETLINK_WHERE, _SQL_COUNT_ASSETLINK_WHERE,
-				AssetLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				AssetLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"assetLink.", "entryId2", FinderColumn.Type.LONG, "=", true,
 					true, AssetLink::getEntryId2));
@@ -923,7 +923,7 @@ public class AssetLinkPersistenceImpl
 				new String[] {Long.class.getName(), Long.class.getName()},
 				new String[] {"entryId1", "entryId2"}, false),
 			_SQL_SELECT_ASSETLINK_WHERE, _SQL_COUNT_ASSETLINK_WHERE,
-			AssetLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			AssetLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"assetLink.", "entryId1", FinderColumn.Type.LONG, "=", true,
 				true, AssetLink::getEntryId1),
@@ -950,7 +950,7 @@ public class AssetLinkPersistenceImpl
 				new String[] {Long.class.getName(), Integer.class.getName()},
 				new String[] {"entryId1", "type_"}, false),
 			_SQL_SELECT_ASSETLINK_WHERE, _SQL_COUNT_ASSETLINK_WHERE,
-			AssetLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			AssetLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"assetLink.", "entryId1", FinderColumn.Type.LONG, "=", true,
 				true, AssetLink::getEntryId1),
@@ -977,7 +977,7 @@ public class AssetLinkPersistenceImpl
 				new String[] {Long.class.getName(), Integer.class.getName()},
 				new String[] {"entryId2", "type_"}, false),
 			_SQL_SELECT_ASSETLINK_WHERE, _SQL_COUNT_ASSETLINK_WHERE,
-			AssetLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			AssetLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"assetLink.", "entryId2", FinderColumn.Type.LONG, "=", true,
 				true, AssetLink::getEntryId2),
@@ -1079,4 +1079,4 @@ public class AssetLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1245326314
+// LIFERAY-SERVICE-BUILDER-HASH:1976167764

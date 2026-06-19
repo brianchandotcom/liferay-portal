@@ -762,7 +762,7 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 				_SQL_SELECT_KALEOTIMERINSTANCETOKEN_WHERE,
 				_SQL_COUNT_KALEOTIMERINSTANCETOKEN_WHERE,
 				KaleoTimerInstanceTokenModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"kaleoTimerInstanceToken.", "kaleoInstanceId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -812,7 +812,7 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 				_SQL_SELECT_KALEOTIMERINSTANCETOKEN_WHERE,
 				_SQL_COUNT_KALEOTIMERINSTANCETOKEN_WHERE,
 				KaleoTimerInstanceTokenModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"kaleoTimerInstanceToken.", "kaleoInstanceTokenId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -861,7 +861,7 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 				_SQL_SELECT_KALEOTIMERINSTANCETOKEN_WHERE,
 				_SQL_COUNT_KALEOTIMERINSTANCETOKEN_WHERE,
 				KaleoTimerInstanceTokenModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"kaleoTimerInstanceToken.", "kaleoInstanceTokenId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -944,4 +944,4 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1588297604
+// LIFERAY-SERVICE-BUILDER-HASH:-14477630

@@ -871,7 +871,7 @@ public class ModulePersistenceImpl
 				new String[] {String.class.getName()}, new String[] {"uuid_"},
 				0, 1, false, null),
 			_SQL_SELECT_MODULE_WHERE, _SQL_COUNT_MODULE_WHERE,
-			ModuleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			ModuleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"module.", "uuid", "uuid_", FinderColumn.Type.STRING, "=", true,
 				true, Module::getUuid));
@@ -896,7 +896,7 @@ public class ModulePersistenceImpl
 					new String[] {String.class.getName(), Long.class.getName()},
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_MODULE_WHERE, _SQL_COUNT_MODULE_WHERE,
-				ModuleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				ModuleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"module.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
 					true, true, Module::getUuid),
@@ -922,7 +922,7 @@ public class ModulePersistenceImpl
 				new String[] {Long.class.getName()}, new String[] {"appId"},
 				false),
 			_SQL_SELECT_MODULE_WHERE, _SQL_COUNT_MODULE_WHERE,
-			ModuleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			ModuleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"module.", "appId", FinderColumn.Type.LONG, "=", true, true,
 				Module::getAppId));
@@ -950,7 +950,7 @@ public class ModulePersistenceImpl
 					new String[] {String.class.getName()},
 					new String[] {"bundleSymbolicName"}, 0, 1, false, null),
 				_SQL_SELECT_MODULE_WHERE, _SQL_COUNT_MODULE_WHERE,
-				ModuleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				ModuleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"module.", "bundleSymbolicName", FinderColumn.Type.STRING,
 					"=", true, true, Module::getBundleSymbolicName));
@@ -975,7 +975,7 @@ public class ModulePersistenceImpl
 					"countByContextName", new String[] {String.class.getName()},
 					new String[] {"contextName"}, 0, 1, false, null),
 				_SQL_SELECT_MODULE_WHERE, _SQL_COUNT_MODULE_WHERE,
-				ModuleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				ModuleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"module.", "contextName", FinderColumn.Type.STRING, "=",
 					true, true, Module::getContextName));
@@ -999,7 +999,7 @@ public class ModulePersistenceImpl
 				new String[] {Long.class.getName(), String.class.getName()},
 				new String[] {"appId", "contextName"}, 0, 2, false, null),
 			_SQL_SELECT_MODULE_WHERE, _SQL_COUNT_MODULE_WHERE,
-			ModuleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			ModuleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"module.", "appId", FinderColumn.Type.LONG, "=", true, true,
 				Module::getAppId),
@@ -1099,4 +1099,4 @@ public class ModulePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1594390641
+// LIFERAY-SERVICE-BUILDER-HASH:-753121137

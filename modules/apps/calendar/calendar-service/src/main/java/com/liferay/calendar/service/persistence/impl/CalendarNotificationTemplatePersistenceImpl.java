@@ -851,7 +851,7 @@ public class CalendarNotificationTemplatePersistenceImpl
 			_SQL_SELECT_CALENDARNOTIFICATIONTEMPLATE_WHERE,
 			_SQL_COUNT_CALENDARNOTIFICATIONTEMPLATE_WHERE,
 			CalendarNotificationTemplateModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX, "",
+			_ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"calendarNotificationTemplate.", "uuid", "uuid_",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -897,7 +897,7 @@ public class CalendarNotificationTemplatePersistenceImpl
 				_SQL_SELECT_CALENDARNOTIFICATIONTEMPLATE_WHERE,
 				_SQL_COUNT_CALENDARNOTIFICATIONTEMPLATE_WHERE,
 				CalendarNotificationTemplateModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"calendarNotificationTemplate.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -929,7 +929,7 @@ public class CalendarNotificationTemplatePersistenceImpl
 				_SQL_SELECT_CALENDARNOTIFICATIONTEMPLATE_WHERE,
 				_SQL_COUNT_CALENDARNOTIFICATIONTEMPLATE_WHERE,
 				CalendarNotificationTemplateModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"calendarNotificationTemplate.", "calendarId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1038,4 +1038,4 @@ public class CalendarNotificationTemplatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:56568770
+// LIFERAY-SERVICE-BUILDER-HASH:-1136641020

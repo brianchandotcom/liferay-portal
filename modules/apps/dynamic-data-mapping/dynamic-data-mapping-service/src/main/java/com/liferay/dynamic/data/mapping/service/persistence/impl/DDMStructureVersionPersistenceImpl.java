@@ -638,7 +638,7 @@ public class DDMStructureVersionPersistenceImpl
 				_SQL_SELECT_DDMSTRUCTUREVERSION_WHERE,
 				_SQL_COUNT_DDMSTRUCTUREVERSION_WHERE,
 				DDMStructureVersionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"ddmStructureVersion.", "structureId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -681,7 +681,7 @@ public class DDMStructureVersionPersistenceImpl
 			_SQL_SELECT_DDMSTRUCTUREVERSION_WHERE,
 			_SQL_COUNT_DDMSTRUCTUREVERSION_WHERE,
 			DDMStructureVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"",
+			"", "",
 			new FinderColumn<>(
 				"ddmStructureVersion.", "structureId", FinderColumn.Type.LONG,
 				"=", true, true, DDMStructureVersion::getStructureId),
@@ -761,4 +761,4 @@ public class DDMStructureVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1854630218
+// LIFERAY-SERVICE-BUILDER-HASH:588304050

@@ -4818,7 +4818,7 @@ public class GroupPersistenceImpl
 				new String[] {String.class.getName()}, new String[] {"uuid_"},
 				0, 1, false, null),
 			_SQL_SELECT_GROUP__WHERE, _SQL_COUNT_GROUP__WHERE,
-			GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"group_.", "uuid", "uuid_", FinderColumn.Type.STRING, "=", true,
 				true, Group::getUuid));
@@ -4858,7 +4858,7 @@ public class GroupPersistenceImpl
 					new String[] {String.class.getName(), Long.class.getName()},
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_GROUP__WHERE, _SQL_COUNT_GROUP__WHERE,
-				GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"group_.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
 					true, true, Group::getUuid),
@@ -4886,7 +4886,7 @@ public class GroupPersistenceImpl
 					"countByCompanyId", new String[] {Long.class.getName()},
 					new String[] {"companyId"}, false),
 				_SQL_SELECT_GROUP__WHERE, _SQL_COUNT_GROUP__WHERE,
-				GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"group_.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Group::getCompanyId));
@@ -4911,7 +4911,7 @@ public class GroupPersistenceImpl
 					"countByLiveGroupId", new String[] {Long.class.getName()},
 					new String[] {"liveGroupId"}, false),
 				_SQL_SELECT_GROUP__WHERE, _SQL_COUNT_GROUP__WHERE,
-				GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"group_.", "liveGroupId", FinderColumn.Type.LONG, "=", true,
 					true, Group::getLiveGroupId));
@@ -4935,7 +4935,7 @@ public class GroupPersistenceImpl
 				new String[] {Long.class.getName(), Long.class.getName()},
 				new String[] {"companyId", "classNameId"}, false),
 			_SQL_SELECT_GROUP__WHERE, _SQL_COUNT_GROUP__WHERE,
-			GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"group_.", "companyId", FinderColumn.Type.LONG, "=", true, true,
 				Group::getCompanyId),
@@ -4962,7 +4962,7 @@ public class GroupPersistenceImpl
 				new String[] {Long.class.getName(), Long.class.getName()},
 				new String[] {"companyId", "parentGroupId"}, false),
 			_SQL_SELECT_GROUP__WHERE, _SQL_COUNT_GROUP__WHERE,
-			GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"group_.", "companyId", FinderColumn.Type.LONG, "=", true, true,
 				Group::getCompanyId),
@@ -4989,7 +4989,7 @@ public class GroupPersistenceImpl
 				new String[] {Long.class.getName(), String.class.getName()},
 				new String[] {"companyId", "groupKey"}, 0, 2, false, null),
 			_SQL_SELECT_GROUP__WHERE, _SQL_COUNT_GROUP__WHERE,
-			GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"group_.", "companyId", FinderColumn.Type.LONG, "=", true, true,
 				Group::getCompanyId),
@@ -5047,7 +5047,7 @@ public class GroupPersistenceImpl
 				new String[] {Long.class.getName(), Boolean.class.getName()},
 				new String[] {"companyId", "site"}, false),
 			_SQL_SELECT_GROUP__WHERE, _SQL_COUNT_GROUP__WHERE,
-			GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"group_.", "companyId", FinderColumn.Type.LONG, "=", true, true,
 				Group::getCompanyId),
@@ -5074,7 +5074,7 @@ public class GroupPersistenceImpl
 				new String[] {Long.class.getName(), Boolean.class.getName()},
 				new String[] {"companyId", "active_"}, false),
 			_SQL_SELECT_GROUP__WHERE, _SQL_COUNT_GROUP__WHERE,
-			GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"group_.", "companyId", FinderColumn.Type.LONG, "=", true, true,
 				Group::getCompanyId),
@@ -5101,7 +5101,7 @@ public class GroupPersistenceImpl
 				new String[] {Long.class.getName(), Long.class.getName()},
 				new String[] {"classNameId", "classPK"}, false),
 			_SQL_SELECT_GROUP__WHERE, _SQL_COUNT_GROUP__WHERE,
-			GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"group_.", "classNameId", FinderColumn.Type.LONG, "=", true,
 				true, Group::getClassNameId),
@@ -5128,7 +5128,7 @@ public class GroupPersistenceImpl
 				new String[] {Integer.class.getName(), Boolean.class.getName()},
 				new String[] {"type_", "active_"}, false),
 			_SQL_SELECT_GROUP__WHERE, _SQL_COUNT_GROUP__WHERE,
-			GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"group_.", "type", "type_", FinderColumn.Type.INTEGER, "=",
 				true, true, Group::getType),
@@ -5159,7 +5159,7 @@ public class GroupPersistenceImpl
 					new String[] {"groupId", "companyId", "parentGroupId"},
 					false),
 				_SQL_SELECT_GROUP__WHERE, _SQL_COUNT_GROUP__WHERE,
-				GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"group_.", "groupId", FinderColumn.Type.LONG, ">", true,
 					true, Group::getGroupId),
@@ -5220,7 +5220,7 @@ public class GroupPersistenceImpl
 				new String[] {"companyId", "classNameId", "parentGroupId"},
 				false),
 			_SQL_SELECT_GROUP__WHERE, _SQL_COUNT_GROUP__WHERE,
-			GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"group_.", "companyId", FinderColumn.Type.LONG, "=", true, true,
 				Group::getCompanyId),
@@ -5256,7 +5256,7 @@ public class GroupPersistenceImpl
 				},
 				new String[] {"companyId", "classNameId", "site"}, false),
 			_SQL_SELECT_GROUP__WHERE, _SQL_COUNT_GROUP__WHERE,
-			GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"group_.", "companyId", FinderColumn.Type.LONG, "=", true, true,
 				Group::getCompanyId),
@@ -5292,7 +5292,7 @@ public class GroupPersistenceImpl
 				},
 				new String[] {"companyId", "parentGroupId", "site"}, false),
 			_SQL_SELECT_GROUP__WHERE, _SQL_COUNT_GROUP__WHERE,
-			GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"group_.", "companyId", FinderColumn.Type.LONG, "=", true, true,
 				Group::getCompanyId),
@@ -5346,7 +5346,7 @@ public class GroupPersistenceImpl
 					},
 					new String[] {"companyId", "treePath", "site"}, false),
 				_SQL_SELECT_GROUP__WHERE, _SQL_COUNT_GROUP__WHERE,
-				GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"group_.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Group::getCompanyId),
@@ -5378,7 +5378,7 @@ public class GroupPersistenceImpl
 					},
 					new String[] {"companyId", "name", "site"}, false),
 				_SQL_SELECT_GROUP__WHERE, _SQL_COUNT_GROUP__WHERE,
-				GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"group_.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Group::getCompanyId),
@@ -5414,7 +5414,7 @@ public class GroupPersistenceImpl
 				},
 				new String[] {"companyId", "site", "active_"}, false),
 			_SQL_SELECT_GROUP__WHERE, _SQL_COUNT_GROUP__WHERE,
-			GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"group_.", "companyId", FinderColumn.Type.LONG, "=", true, true,
 				Group::getCompanyId),
@@ -5452,7 +5452,7 @@ public class GroupPersistenceImpl
 					},
 					false),
 				_SQL_SELECT_GROUP__WHERE, _SQL_COUNT_GROUP__WHERE,
-				GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"group_.", "groupId", FinderColumn.Type.LONG, ">", true,
 					true, Group::getGroupId),
@@ -5493,7 +5493,7 @@ public class GroupPersistenceImpl
 					},
 					false),
 				_SQL_SELECT_GROUP__WHERE, _SQL_COUNT_GROUP__WHERE,
-				GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"group_.", "groupId", FinderColumn.Type.LONG, ">", true,
 					true, Group::getGroupId),
@@ -5558,7 +5558,7 @@ public class GroupPersistenceImpl
 					new String[] {"companyId", "parentGroupId", "name", "site"},
 					false),
 				_SQL_SELECT_GROUP__WHERE, _SQL_COUNT_GROUP__WHERE,
-				GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"group_.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Group::getCompanyId),
@@ -5608,7 +5608,7 @@ public class GroupPersistenceImpl
 					},
 					false),
 				_SQL_SELECT_GROUP__WHERE, _SQL_COUNT_GROUP__WHERE,
-				GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"group_.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Group::getCompanyId),
@@ -5703,4 +5703,4 @@ public class GroupPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-845703002
+// LIFERAY-SERVICE-BUILDER-HASH:986640938

@@ -629,7 +629,7 @@ public class ContactPersistenceImpl
 					"countByCompanyId", new String[] {Long.class.getName()},
 					new String[] {"companyId"}, false),
 				_SQL_SELECT_CONTACT_WHERE, _SQL_COUNT_CONTACT_WHERE,
-				ContactModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				ContactModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"contact.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Contact::getCompanyId));
@@ -654,7 +654,7 @@ public class ContactPersistenceImpl
 					new String[] {Long.class.getName()},
 					new String[] {"userId"}, false),
 				_SQL_SELECT_CONTACT_WHERE, _SQL_COUNT_CONTACT_WHERE,
-				ContactModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				ContactModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"contact.", "userId", FinderColumn.Type.LONG, "=", true,
 					true, Contact::getUserId));
@@ -678,7 +678,7 @@ public class ContactPersistenceImpl
 				new String[] {Long.class.getName(), Long.class.getName()},
 				new String[] {"companyId", "userId"}, false),
 			_SQL_SELECT_CONTACT_WHERE, _SQL_COUNT_CONTACT_WHERE,
-			ContactModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			ContactModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"contact.", "companyId", FinderColumn.Type.LONG, "=", true,
 				true, Contact::getCompanyId),
@@ -705,7 +705,7 @@ public class ContactPersistenceImpl
 				new String[] {Long.class.getName(), Long.class.getName()},
 				new String[] {"classNameId", "classPK"}, false),
 			_SQL_SELECT_CONTACT_WHERE, _SQL_COUNT_CONTACT_WHERE,
-			ContactModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			ContactModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"contact.", "classNameId", FinderColumn.Type.LONG, "=", true,
 				true, Contact::getClassNameId),
@@ -743,4 +743,4 @@ public class ContactPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:579824670
+// LIFERAY-SERVICE-BUILDER-HASH:1516201310

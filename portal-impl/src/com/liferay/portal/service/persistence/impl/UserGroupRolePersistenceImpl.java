@@ -850,6 +850,7 @@ public class UserGroupRolePersistenceImpl
 					new String[] {"userId"}, false),
 				_SQL_SELECT_USERGROUPROLE_WHERE, _SQL_COUNT_USERGROUPROLE_WHERE,
 				UserGroupRoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"userGroupRole.", "userId", FinderColumn.Type.LONG, "=",
 					true, true, UserGroupRole::getUserId));
@@ -875,6 +876,7 @@ public class UserGroupRolePersistenceImpl
 					new String[] {"groupId"}, false),
 				_SQL_SELECT_USERGROUPROLE_WHERE, _SQL_COUNT_USERGROUPROLE_WHERE,
 				UserGroupRoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"userGroupRole.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, UserGroupRole::getGroupId));
@@ -900,6 +902,7 @@ public class UserGroupRolePersistenceImpl
 					new String[] {"roleId"}, false),
 				_SQL_SELECT_USERGROUPROLE_WHERE, _SQL_COUNT_USERGROUPROLE_WHERE,
 				UserGroupRoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"userGroupRole.", "roleId", FinderColumn.Type.LONG, "=",
 					true, true, UserGroupRole::getRoleId));
@@ -923,7 +926,7 @@ public class UserGroupRolePersistenceImpl
 				new String[] {Long.class.getName(), Long.class.getName()},
 				new String[] {"userId", "groupId"}, false),
 			_SQL_SELECT_USERGROUPROLE_WHERE, _SQL_COUNT_USERGROUPROLE_WHERE,
-			UserGroupRoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			UserGroupRoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"userGroupRole.", "userId", FinderColumn.Type.LONG, "=", true,
 				true, UserGroupRole::getUserId),
@@ -950,7 +953,7 @@ public class UserGroupRolePersistenceImpl
 				new String[] {Long.class.getName(), Long.class.getName()},
 				new String[] {"groupId", "roleId"}, false),
 			_SQL_SELECT_USERGROUPROLE_WHERE, _SQL_COUNT_USERGROUPROLE_WHERE,
-			UserGroupRoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			UserGroupRoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"userGroupRole.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, UserGroupRole::getGroupId),
@@ -1013,4 +1016,4 @@ public class UserGroupRolePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1905152416
+// LIFERAY-SERVICE-BUILDER-HASH:967140258

@@ -566,7 +566,7 @@ public class CommerceTermEntryRelPersistenceImpl
 				_SQL_SELECT_COMMERCETERMENTRYREL_WHERE,
 				_SQL_COUNT_COMMERCETERMENTRYREL_WHERE,
 				CommerceTermEntryRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"commerceTermEntryRel.", "commerceTermEntryId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -593,7 +593,7 @@ public class CommerceTermEntryRelPersistenceImpl
 			_SQL_SELECT_COMMERCETERMENTRYREL_WHERE,
 			_SQL_COUNT_COMMERCETERMENTRYREL_WHERE,
 			CommerceTermEntryRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"",
+			"", "",
 			new FinderColumn<>(
 				"commerceTermEntryRel.", "classNameId", FinderColumn.Type.LONG,
 				"=", true, true, CommerceTermEntryRel::getClassNameId),
@@ -692,4 +692,4 @@ public class CommerceTermEntryRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-331445865
+// LIFERAY-SERVICE-BUILDER-HASH:-82269093

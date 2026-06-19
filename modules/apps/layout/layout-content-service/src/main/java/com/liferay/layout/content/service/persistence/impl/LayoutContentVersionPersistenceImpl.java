@@ -885,7 +885,7 @@ public class LayoutContentVersionPersistenceImpl
 			_SQL_SELECT_LAYOUTCONTENTVERSION_WHERE,
 			_SQL_COUNT_LAYOUTCONTENTVERSION_WHERE,
 			LayoutContentVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"",
+			"", "",
 			new FinderColumn<>(
 				"layoutContentVersion.", "plid", FinderColumn.Type.LONG, "=",
 				true, true, LayoutContentVersion::getPlid));
@@ -911,7 +911,7 @@ public class LayoutContentVersionPersistenceImpl
 			_SQL_SELECT_LAYOUTCONTENTVERSION_WHERE,
 			_SQL_COUNT_LAYOUTCONTENTVERSION_WHERE,
 			LayoutContentVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"",
+			"", "",
 			new FinderColumn<>(
 				"layoutContentVersion.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, LayoutContentVersion::getGroupId),
@@ -940,7 +940,7 @@ public class LayoutContentVersionPersistenceImpl
 			_SQL_SELECT_LAYOUTCONTENTVERSION_WHERE,
 			_SQL_COUNT_LAYOUTCONTENTVERSION_WHERE,
 			LayoutContentVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"",
+			"", "",
 			new FinderColumn<>(
 				"layoutContentVersion.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, LayoutContentVersion::getGroupId),
@@ -985,7 +985,7 @@ public class LayoutContentVersionPersistenceImpl
 			_SQL_SELECT_LAYOUTCONTENTVERSION_WHERE,
 			_SQL_COUNT_LAYOUTCONTENTVERSION_WHERE,
 			LayoutContentVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"",
+			"", "",
 			new FinderColumn<>(
 				"layoutContentVersion.", "plid", FinderColumn.Type.LONG, "=",
 				true, true, LayoutContentVersion::getPlid),
@@ -1080,4 +1080,4 @@ public class LayoutContentVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-691994513
+// LIFERAY-SERVICE-BUILDER-HASH:1309966639

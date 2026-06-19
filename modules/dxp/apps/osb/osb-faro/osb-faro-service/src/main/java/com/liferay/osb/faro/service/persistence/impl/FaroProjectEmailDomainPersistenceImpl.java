@@ -451,7 +451,7 @@ public class FaroProjectEmailDomainPersistenceImpl
 				_SQL_SELECT_FAROPROJECTEMAILDOMAIN_WHERE,
 				_SQL_COUNT_FAROPROJECTEMAILDOMAIN_WHERE,
 				FaroProjectEmailDomainModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"faroProjectEmailDomain.", "groupId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -480,7 +480,7 @@ public class FaroProjectEmailDomainPersistenceImpl
 				_SQL_SELECT_FAROPROJECTEMAILDOMAIN_WHERE,
 				_SQL_COUNT_FAROPROJECTEMAILDOMAIN_WHERE,
 				FaroProjectEmailDomainModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"faroProjectEmailDomain.", "faroProjectId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -549,4 +549,4 @@ public class FaroProjectEmailDomainPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1300026619
+// LIFERAY-SERVICE-BUILDER-HASH:413701573

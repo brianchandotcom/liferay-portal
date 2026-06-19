@@ -1746,7 +1746,7 @@ public class AssetTagPersistenceImpl
 				new String[] {String.class.getName()}, new String[] {"uuid_"},
 				0, 1, false, null),
 			_SQL_SELECT_ASSETTAG_WHERE, _SQL_COUNT_ASSETTAG_WHERE,
-			AssetTagModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			AssetTagModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"assetTag.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
 				true, true, AssetTag::getUuid));
@@ -1786,7 +1786,7 @@ public class AssetTagPersistenceImpl
 					new String[] {String.class.getName(), Long.class.getName()},
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_ASSETTAG_WHERE, _SQL_COUNT_ASSETTAG_WHERE,
-				AssetTagModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				AssetTagModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"assetTag.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
 					true, true, AssetTag::getUuid),
@@ -1814,7 +1814,7 @@ public class AssetTagPersistenceImpl
 					new String[] {Long.class.getName()},
 					new String[] {"groupId"}, false),
 				_SQL_SELECT_ASSETTAG_WHERE, _SQL_COUNT_ASSETTAG_WHERE,
-				AssetTagModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				AssetTagModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new ArrayableFinderColumn<>(
 					"assetTag.", "groupId", FinderColumn.Type.LONG, "=", false,
 					true, true, AssetTag::getGroupId));
@@ -1837,7 +1837,7 @@ public class AssetTagPersistenceImpl
 				new String[] {String.class.getName()}, new String[] {"name"}, 1,
 				1, false, null),
 			_SQL_SELECT_ASSETTAG_WHERE, _SQL_COUNT_ASSETTAG_WHERE,
-			AssetTagModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			AssetTagModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new ArrayableFinderColumn<>(
 				"assetTag.", "name", FinderColumn.Type.STRING, "=", false,
 				false, true, AssetTag::getName));
@@ -1861,7 +1861,7 @@ public class AssetTagPersistenceImpl
 				new String[] {Long.class.getName(), String.class.getName()},
 				new String[] {"groupId", "name"}, 2, 2, false, null),
 			_SQL_SELECT_ASSETTAG_WHERE, _SQL_COUNT_ASSETTAG_WHERE,
-			AssetTagModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			AssetTagModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"assetTag.", "groupId", FinderColumn.Type.LONG, "=", true, true,
 				AssetTag::getGroupId),
@@ -1886,7 +1886,7 @@ public class AssetTagPersistenceImpl
 					new String[] {Long.class.getName(), String.class.getName()},
 					new String[] {"groupId", "name"}, false),
 				_SQL_SELECT_ASSETTAG_WHERE, _SQL_COUNT_ASSETTAG_WHERE,
-				AssetTagModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				AssetTagModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new ArrayableFinderColumn<>(
 					"assetTag.", "groupId", FinderColumn.Type.LONG, "=", false,
 					true, true, AssetTag::getGroupId),
@@ -1954,4 +1954,4 @@ public class AssetTagPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1328301962
+// LIFERAY-SERVICE-BUILDER-HASH:-1287497270

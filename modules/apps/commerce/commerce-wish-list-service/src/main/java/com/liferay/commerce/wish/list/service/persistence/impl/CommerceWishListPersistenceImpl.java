@@ -1071,6 +1071,7 @@ public class CommerceWishListPersistenceImpl
 			_SQL_SELECT_COMMERCEWISHLIST_WHERE,
 			_SQL_COUNT_COMMERCEWISHLIST_WHERE,
 			CommerceWishListModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			"",
 			new FinderColumn<>(
 				"commerceWishList.", "uuid", "uuid_", FinderColumn.Type.STRING,
 				"=", true, true, CommerceWishList::getUuid));
@@ -1113,7 +1114,7 @@ public class CommerceWishListPersistenceImpl
 				_SQL_SELECT_COMMERCEWISHLIST_WHERE,
 				_SQL_COUNT_COMMERCEWISHLIST_WHERE,
 				CommerceWishListModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"commerceWishList.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -1144,7 +1145,7 @@ public class CommerceWishListPersistenceImpl
 				_SQL_SELECT_COMMERCEWISHLIST_WHERE,
 				_SQL_COUNT_COMMERCEWISHLIST_WHERE,
 				CommerceWishListModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"commerceWishList.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, CommerceWishList::getGroupId));
@@ -1171,7 +1172,7 @@ public class CommerceWishListPersistenceImpl
 				_SQL_SELECT_COMMERCEWISHLIST_WHERE,
 				_SQL_COUNT_COMMERCEWISHLIST_WHERE,
 				CommerceWishListModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"commerceWishList.", "userId", FinderColumn.Type.LONG, "=",
 					true, true, CommerceWishList::getUserId));
@@ -1197,6 +1198,7 @@ public class CommerceWishListPersistenceImpl
 			_SQL_SELECT_COMMERCEWISHLIST_WHERE,
 			_SQL_COUNT_COMMERCEWISHLIST_WHERE,
 			CommerceWishListModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			"",
 			new FinderColumn<>(
 				"commerceWishList.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, CommerceWishList::getGroupId),
@@ -1222,6 +1224,7 @@ public class CommerceWishListPersistenceImpl
 			_SQL_SELECT_COMMERCEWISHLIST_WHERE,
 			_SQL_COUNT_COMMERCEWISHLIST_WHERE,
 			CommerceWishListModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			"",
 			new FinderColumn<>(
 				"commerceWishList.", "userId", FinderColumn.Type.LONG, "=",
 				true, true, CommerceWishList::getUserId),
@@ -1256,6 +1259,7 @@ public class CommerceWishListPersistenceImpl
 			_SQL_SELECT_COMMERCEWISHLIST_WHERE,
 			_SQL_COUNT_COMMERCEWISHLIST_WHERE,
 			CommerceWishListModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			"",
 			new FinderColumn<>(
 				"commerceWishList.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, CommerceWishList::getGroupId),
@@ -1336,4 +1340,4 @@ public class CommerceWishListPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2124455153
+// LIFERAY-SERVICE-BUILDER-HASH:-1539610569

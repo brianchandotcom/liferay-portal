@@ -618,7 +618,7 @@ public class CommerceInventoryWarehouseRelPersistenceImpl
 				_SQL_SELECT_COMMERCEINVENTORYWAREHOUSEREL_WHERE,
 				_SQL_COUNT_COMMERCEINVENTORYWAREHOUSEREL_WHERE,
 				CommerceInventoryWarehouseRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"commerceInventoryWarehouseRel.",
 					"commerceInventoryWarehouseId", "CIWarehouseId",
@@ -647,7 +647,7 @@ public class CommerceInventoryWarehouseRelPersistenceImpl
 			_SQL_SELECT_COMMERCEINVENTORYWAREHOUSEREL_WHERE,
 			_SQL_COUNT_COMMERCEINVENTORYWAREHOUSEREL_WHERE,
 			CommerceInventoryWarehouseRelModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX, "",
+			_ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"commerceInventoryWarehouseRel.", "classNameId",
 				FinderColumn.Type.LONG, "=", true, true,
@@ -760,4 +760,4 @@ public class CommerceInventoryWarehouseRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1538668945
+// LIFERAY-SERVICE-BUILDER-HASH:-1867557867

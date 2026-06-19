@@ -943,7 +943,7 @@ public class LockPersistenceImpl
 				new String[] {String.class.getName()}, new String[] {"uuid_"},
 				0, 1, false, null),
 			_SQL_SELECT_LOCK__WHERE, _SQL_COUNT_LOCK__WHERE,
-			LockModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			LockModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"lock_.", "uuid", "uuid_", FinderColumn.Type.STRING, "=", true,
 				true, Lock::getUuid));
@@ -968,7 +968,7 @@ public class LockPersistenceImpl
 					new String[] {String.class.getName(), Long.class.getName()},
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_LOCK__WHERE, _SQL_COUNT_LOCK__WHERE,
-				LockModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				LockModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"lock_.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
 					true, true, Lock::getUuid),
@@ -996,7 +996,7 @@ public class LockPersistenceImpl
 					"countByClassName", new String[] {String.class.getName()},
 					new String[] {"className"}, 0, 1, false, null),
 				_SQL_SELECT_LOCK__WHERE, _SQL_COUNT_LOCK__WHERE,
-				LockModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				LockModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"lock_.", "className", FinderColumn.Type.STRING, "=", true,
 					true, Lock::getClassName));
@@ -1020,7 +1020,7 @@ public class LockPersistenceImpl
 					new String[] {Date.class.getName()},
 					new String[] {"expirationDate"}, false),
 				_SQL_SELECT_LOCK__WHERE, _SQL_COUNT_LOCK__WHERE,
-				LockModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				LockModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"lock_.", "expirationDate", FinderColumn.Type.DATE, "<",
 					true, true, Lock::getExpirationDate));
@@ -1044,7 +1044,7 @@ public class LockPersistenceImpl
 				new String[] {Long.class.getName(), String.class.getName()},
 				new String[] {"companyId", "className"}, 0, 2, false, null),
 			_SQL_SELECT_LOCK__WHERE, _SQL_COUNT_LOCK__WHERE,
-			LockModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			LockModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"lock_.", "companyId", FinderColumn.Type.LONG, "=", true, true,
 				Lock::getCompanyId),
@@ -1095,7 +1095,7 @@ public class LockPersistenceImpl
 				new String[] {"companyId", "userId", "className"}, 0, 4, false,
 				null),
 			_SQL_SELECT_LOCK__WHERE, _SQL_COUNT_LOCK__WHERE,
-			LockModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			LockModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"lock_.", "companyId", FinderColumn.Type.LONG, "=", true, true,
 				Lock::getCompanyId),
@@ -1175,4 +1175,4 @@ public class LockPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1035685303
+// LIFERAY-SERVICE-BUILDER-HASH:1181882637

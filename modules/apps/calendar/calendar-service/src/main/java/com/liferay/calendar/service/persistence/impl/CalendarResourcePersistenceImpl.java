@@ -1442,6 +1442,7 @@ public class CalendarResourcePersistenceImpl
 			_SQL_SELECT_CALENDARRESOURCE_WHERE,
 			_SQL_COUNT_CALENDARRESOURCE_WHERE,
 			CalendarResourceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			"",
 			new FinderColumn<>(
 				"calendarResource.", "uuid", "uuid_", FinderColumn.Type.STRING,
 				"=", true, true, CalendarResource::getUuid));
@@ -1484,7 +1485,7 @@ public class CalendarResourcePersistenceImpl
 				_SQL_SELECT_CALENDARRESOURCE_WHERE,
 				_SQL_COUNT_CALENDARRESOURCE_WHERE,
 				CalendarResourceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"calendarResource.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -1515,7 +1516,7 @@ public class CalendarResourcePersistenceImpl
 				_SQL_SELECT_CALENDARRESOURCE_WHERE,
 				_SQL_COUNT_CALENDARRESOURCE_WHERE,
 				CalendarResourceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"calendarResource.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, CalendarResource::getGroupId));
@@ -1542,7 +1543,7 @@ public class CalendarResourcePersistenceImpl
 				_SQL_SELECT_CALENDARRESOURCE_WHERE,
 				_SQL_COUNT_CALENDARRESOURCE_WHERE,
 				CalendarResourceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"calendarResource.", "active", "active_",
 					FinderColumn.Type.BOOLEAN, "=", true, true,
@@ -1570,7 +1571,7 @@ public class CalendarResourcePersistenceImpl
 				_SQL_SELECT_CALENDARRESOURCE_WHERE,
 				_SQL_COUNT_CALENDARRESOURCE_WHERE,
 				CalendarResourceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new ArrayableFinderColumn<>(
 					"calendarResource.", "groupId", FinderColumn.Type.LONG, "=",
 					false, true, true, CalendarResource::getGroupId),
@@ -1605,7 +1606,7 @@ public class CalendarResourcePersistenceImpl
 				_SQL_SELECT_CALENDARRESOURCE_WHERE,
 				_SQL_COUNT_CALENDARRESOURCE_WHERE,
 				CalendarResourceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"calendarResource.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, CalendarResource::getGroupId),
@@ -1652,7 +1653,7 @@ public class CalendarResourcePersistenceImpl
 				_SQL_SELECT_CALENDARRESOURCE_WHERE,
 				_SQL_COUNT_CALENDARRESOURCE_WHERE,
 				CalendarResourceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"calendarResource.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, CalendarResource::getCompanyId),
@@ -1737,4 +1738,4 @@ public class CalendarResourcePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1312892661
+// LIFERAY-SERVICE-BUILDER-HASH:77397649

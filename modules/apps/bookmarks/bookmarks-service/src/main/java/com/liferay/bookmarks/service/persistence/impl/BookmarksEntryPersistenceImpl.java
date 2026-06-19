@@ -2801,7 +2801,7 @@ public class BookmarksEntryPersistenceImpl
 				new String[] {String.class.getName()}, new String[] {"uuid_"},
 				0, 1, false, null),
 			_SQL_SELECT_BOOKMARKSENTRY_WHERE, _SQL_COUNT_BOOKMARKSENTRY_WHERE,
-			BookmarksEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			BookmarksEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"bookmarksEntry.", "uuid", "uuid_", FinderColumn.Type.STRING,
 				"=", true, true, BookmarksEntry::getUuid));
@@ -2844,6 +2844,7 @@ public class BookmarksEntryPersistenceImpl
 				_SQL_SELECT_BOOKMARKSENTRY_WHERE,
 				_SQL_COUNT_BOOKMARKSENTRY_WHERE,
 				BookmarksEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"bookmarksEntry.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -2874,6 +2875,7 @@ public class BookmarksEntryPersistenceImpl
 				_SQL_SELECT_BOOKMARKSENTRY_WHERE,
 				_SQL_COUNT_BOOKMARKSENTRY_WHERE,
 				BookmarksEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"bookmarksEntry.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, BookmarksEntry::getCompanyId));
@@ -2900,6 +2902,7 @@ public class BookmarksEntryPersistenceImpl
 				_SQL_SELECT_BOOKMARKSENTRY_WHERE,
 				_SQL_COUNT_BOOKMARKSENTRY_WHERE,
 				BookmarksEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"bookmarksEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, BookmarksEntry::getGroupId),
@@ -2933,6 +2936,7 @@ public class BookmarksEntryPersistenceImpl
 				_SQL_SELECT_BOOKMARKSENTRY_WHERE,
 				_SQL_COUNT_BOOKMARKSENTRY_WHERE,
 				BookmarksEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"bookmarksEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, BookmarksEntry::getGroupId),
@@ -2961,6 +2965,7 @@ public class BookmarksEntryPersistenceImpl
 				_SQL_SELECT_BOOKMARKSENTRY_WHERE,
 				_SQL_COUNT_BOOKMARKSENTRY_WHERE,
 				BookmarksEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"bookmarksEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, BookmarksEntry::getGroupId),
@@ -2989,6 +2994,7 @@ public class BookmarksEntryPersistenceImpl
 				_SQL_SELECT_BOOKMARKSENTRY_WHERE,
 				_SQL_COUNT_BOOKMARKSENTRY_WHERE,
 				BookmarksEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"bookmarksEntry.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, BookmarksEntry::getCompanyId),
@@ -3025,6 +3031,7 @@ public class BookmarksEntryPersistenceImpl
 				_SQL_SELECT_BOOKMARKSENTRY_WHERE,
 				_SQL_COUNT_BOOKMARKSENTRY_WHERE,
 				BookmarksEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"bookmarksEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, BookmarksEntry::getGroupId),
@@ -3058,6 +3065,7 @@ public class BookmarksEntryPersistenceImpl
 				_SQL_SELECT_BOOKMARKSENTRY_WHERE,
 				_SQL_COUNT_BOOKMARKSENTRY_WHERE,
 				BookmarksEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"bookmarksEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, BookmarksEntry::getGroupId),
@@ -3097,6 +3105,7 @@ public class BookmarksEntryPersistenceImpl
 				_SQL_SELECT_BOOKMARKSENTRY_WHERE,
 				_SQL_COUNT_BOOKMARKSENTRY_WHERE,
 				BookmarksEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"bookmarksEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, BookmarksEntry::getGroupId),
@@ -3130,6 +3139,7 @@ public class BookmarksEntryPersistenceImpl
 				_SQL_SELECT_BOOKMARKSENTRY_WHERE,
 				_SQL_COUNT_BOOKMARKSENTRY_WHERE,
 				BookmarksEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"bookmarksEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, BookmarksEntry::getGroupId),
@@ -3172,6 +3182,7 @@ public class BookmarksEntryPersistenceImpl
 				_SQL_SELECT_BOOKMARKSENTRY_WHERE,
 				_SQL_COUNT_BOOKMARKSENTRY_WHERE,
 				BookmarksEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"bookmarksEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, BookmarksEntry::getGroupId),
@@ -3257,4 +3268,4 @@ public class BookmarksEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-344601199
+// LIFERAY-SERVICE-BUILDER-HASH:-1090218467

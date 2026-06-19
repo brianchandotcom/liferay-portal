@@ -746,7 +746,7 @@ public class SourcePersistenceImpl
 				new String[] {String.class.getName()}, new String[] {"uuid_"},
 				0, 1, false, null),
 			_SQL_SELECT_SOURCE_WHERE, _SQL_COUNT_SOURCE_WHERE,
-			SourceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			SourceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"source.", "uuid", "uuid_", FinderColumn.Type.STRING, "=", true,
 				true, Source::getUuid));
@@ -786,7 +786,7 @@ public class SourcePersistenceImpl
 					new String[] {String.class.getName(), Long.class.getName()},
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_SOURCE_WHERE, _SQL_COUNT_SOURCE_WHERE,
-				SourceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				SourceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"source.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
 					true, true, Source::getUuid),
@@ -814,7 +814,7 @@ public class SourcePersistenceImpl
 					new String[] {Long.class.getName()},
 					new String[] {"groupId"}, false),
 				_SQL_SELECT_SOURCE_WHERE, _SQL_COUNT_SOURCE_WHERE,
-				SourceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				SourceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"source.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, Source::getGroupId));
@@ -839,7 +839,7 @@ public class SourcePersistenceImpl
 					"countByCompanyId", new String[] {Long.class.getName()},
 					new String[] {"companyId"}, false),
 				_SQL_SELECT_SOURCE_WHERE, _SQL_COUNT_SOURCE_WHERE,
-				SourceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				SourceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"source.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Source::getCompanyId));
@@ -913,4 +913,4 @@ public class SourcePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1098410390
+// LIFERAY-SERVICE-BUILDER-HASH:-508380910

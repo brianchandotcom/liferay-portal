@@ -846,6 +846,7 @@ public class VirtualHostPersistenceImpl
 					new String[] {"companyId"}, false),
 				_SQL_SELECT_VIRTUALHOST_WHERE, _SQL_COUNT_VIRTUALHOST_WHERE,
 				VirtualHostModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"virtualHost.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, VirtualHost::getCompanyId));
@@ -881,7 +882,7 @@ public class VirtualHostPersistenceImpl
 				new String[] {Long.class.getName(), Long.class.getName()},
 				new String[] {"companyId", "layoutSetId"}, false),
 			_SQL_SELECT_VIRTUALHOST_WHERE, _SQL_COUNT_VIRTUALHOST_WHERE,
-			VirtualHostModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			VirtualHostModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"virtualHost.", "companyId", FinderColumn.Type.LONG, "=", true,
 				true, VirtualHost::getCompanyId),
@@ -907,6 +908,7 @@ public class VirtualHostPersistenceImpl
 					new String[] {"layoutSetId", "hostname"}, false),
 				_SQL_SELECT_VIRTUALHOST_WHERE, _SQL_COUNT_VIRTUALHOST_WHERE,
 				VirtualHostModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"virtualHost.", "layoutSetId", FinderColumn.Type.LONG, "!=",
 					true, true, VirtualHost::getLayoutSetId),
@@ -947,4 +949,4 @@ public class VirtualHostPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1219080332
+// LIFERAY-SERVICE-BUILDER-HASH:527412298

@@ -866,7 +866,7 @@ public class KaleoInstanceTokenPersistenceImpl
 				_SQL_SELECT_KALEOINSTANCETOKEN_WHERE,
 				_SQL_COUNT_KALEOINSTANCETOKEN_WHERE,
 				KaleoInstanceTokenModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"kaleoInstanceToken.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, KaleoInstanceToken::getCompanyId));
@@ -896,7 +896,7 @@ public class KaleoInstanceTokenPersistenceImpl
 				_SQL_SELECT_KALEOINSTANCETOKEN_WHERE,
 				_SQL_COUNT_KALEOINSTANCETOKEN_WHERE,
 				KaleoInstanceTokenModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"kaleoInstanceToken.", "kaleoDefinitionVersionId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -927,7 +927,7 @@ public class KaleoInstanceTokenPersistenceImpl
 				_SQL_SELECT_KALEOINSTANCETOKEN_WHERE,
 				_SQL_COUNT_KALEOINSTANCETOKEN_WHERE,
 				KaleoInstanceTokenModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"kaleoInstanceToken.", "kaleoInstanceId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -958,7 +958,7 @@ public class KaleoInstanceTokenPersistenceImpl
 				_SQL_SELECT_KALEOINSTANCETOKEN_WHERE,
 				_SQL_COUNT_KALEOINSTANCETOKEN_WHERE,
 				KaleoInstanceTokenModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"kaleoInstanceToken.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, KaleoInstanceToken::getCompanyId),
@@ -1010,7 +1010,7 @@ public class KaleoInstanceTokenPersistenceImpl
 				_SQL_SELECT_KALEOINSTANCETOKEN_WHERE,
 				_SQL_COUNT_KALEOINSTANCETOKEN_WHERE,
 				KaleoInstanceTokenModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"kaleoInstanceToken.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, KaleoInstanceToken::getCompanyId),
@@ -1089,4 +1089,4 @@ public class KaleoInstanceTokenPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1391056992
+// LIFERAY-SERVICE-BUILDER-HASH:-2042644770

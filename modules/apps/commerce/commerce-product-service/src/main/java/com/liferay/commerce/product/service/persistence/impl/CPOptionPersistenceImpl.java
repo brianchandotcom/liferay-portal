@@ -960,7 +960,7 @@ public class CPOptionPersistenceImpl
 					new String[] {String.class.getName()},
 					new String[] {"uuid_"}, 0, 1, false, null),
 				_SQL_SELECT_CPOPTION_WHERE, _SQL_COUNT_CPOPTION_WHERE,
-				CPOptionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				CPOptionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"cpOption.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
 					true, true, CPOption::getUuid));
@@ -985,7 +985,7 @@ public class CPOptionPersistenceImpl
 					new String[] {String.class.getName(), Long.class.getName()},
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_CPOPTION_WHERE, _SQL_COUNT_CPOPTION_WHERE,
-				CPOptionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				CPOptionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"cpOption.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
 					true, true, CPOption::getUuid),
@@ -1013,7 +1013,7 @@ public class CPOptionPersistenceImpl
 					"countByCompanyId", new String[] {Long.class.getName()},
 					new String[] {"companyId"}, false),
 				_SQL_SELECT_CPOPTION_WHERE, _SQL_COUNT_CPOPTION_WHERE,
-				CPOptionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				CPOptionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"cpOption.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, CPOption::getCompanyId));
@@ -1121,4 +1121,4 @@ public class CPOptionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:601044152
+// LIFERAY-SERVICE-BUILDER-HASH:1746052090

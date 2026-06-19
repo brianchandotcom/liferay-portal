@@ -1265,7 +1265,7 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 			_SQL_SELECT_ASSETLISTENTRYASSETENTRYREL_WHERE,
 			_SQL_COUNT_ASSETLISTENTRYASSETENTRYREL_WHERE,
 			AssetListEntryAssetEntryRelModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX, "",
+			_ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"assetListEntryAssetEntryRel.", "uuid", "uuid_",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -1311,7 +1311,7 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 				_SQL_SELECT_ASSETLISTENTRYASSETENTRYREL_WHERE,
 				_SQL_COUNT_ASSETLISTENTRYASSETENTRYREL_WHERE,
 				AssetListEntryAssetEntryRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"assetListEntryAssetEntryRel.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -1346,7 +1346,7 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 				_SQL_SELECT_ASSETLISTENTRYASSETENTRYREL_WHERE,
 				_SQL_COUNT_ASSETLISTENTRYASSETENTRYREL_WHERE,
 				AssetListEntryAssetEntryRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"assetListEntryAssetEntryRel.", "assetListEntryId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1375,7 +1375,7 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 				_SQL_SELECT_ASSETLISTENTRYASSETENTRYREL_WHERE,
 				_SQL_COUNT_ASSETLISTENTRYASSETENTRYREL_WHERE,
 				AssetListEntryAssetEntryRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"assetListEntryAssetEntryRel.", "assetEntryId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1402,7 +1402,7 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 			_SQL_SELECT_ASSETLISTENTRYASSETENTRYREL_WHERE,
 			_SQL_COUNT_ASSETLISTENTRYASSETENTRYREL_WHERE,
 			AssetListEntryAssetEntryRelModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX, "",
+			_ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"assetListEntryAssetEntryRel.", "assetListEntryId",
 				FinderColumn.Type.LONG, "=", true, true,
@@ -1469,7 +1469,7 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 				_SQL_SELECT_ASSETLISTENTRYASSETENTRYREL_WHERE,
 				_SQL_COUNT_ASSETLISTENTRYASSETENTRYREL_WHERE,
 				AssetListEntryAssetEntryRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"assetListEntryAssetEntryRel.", "assetListEntryId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1556,4 +1556,4 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:460574096
+// LIFERAY-SERVICE-BUILDER-HASH:-412053676

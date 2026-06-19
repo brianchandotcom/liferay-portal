@@ -1251,7 +1251,7 @@ public class OAuthClientPRLocalMetadataPersistenceImpl
 				_SQL_SELECT_OAUTHCLIENTPRLOCALMETADATA_WHERE,
 				_SQL_COUNT_OAUTHCLIENTPRLOCALMETADATA_WHERE,
 				OAuthClientPRLocalMetadataModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"oAuthClientPRLocalMetadata.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -1279,7 +1279,7 @@ public class OAuthClientPRLocalMetadataPersistenceImpl
 				_SQL_SELECT_OAUTHCLIENTPRLOCALMETADATA_WHERE,
 				_SQL_COUNT_OAUTHCLIENTPRLOCALMETADATA_WHERE,
 				OAuthClientPRLocalMetadataModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"oAuthClientPRLocalMetadata.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -1311,7 +1311,7 @@ public class OAuthClientPRLocalMetadataPersistenceImpl
 				_SQL_SELECT_OAUTHCLIENTPRLOCALMETADATA_WHERE,
 				_SQL_COUNT_OAUTHCLIENTPRLOCALMETADATA_WHERE,
 				OAuthClientPRLocalMetadataModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"oAuthClientPRLocalMetadata.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1339,7 +1339,7 @@ public class OAuthClientPRLocalMetadataPersistenceImpl
 				_SQL_SELECT_OAUTHCLIENTPRLOCALMETADATA_WHERE,
 				_SQL_COUNT_OAUTHCLIENTPRLOCALMETADATA_WHERE,
 				OAuthClientPRLocalMetadataModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"oAuthClientPRLocalMetadata.", "userId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1371,7 +1371,7 @@ public class OAuthClientPRLocalMetadataPersistenceImpl
 				_SQL_SELECT_OAUTHCLIENTPRLOCALMETADATA_WHERE,
 				_SQL_COUNT_OAUTHCLIENTPRLOCALMETADATA_WHERE,
 				OAuthClientPRLocalMetadataModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"oAuthClientPRLocalMetadata.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1508,4 +1508,4 @@ public class OAuthClientPRLocalMetadataPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1702970969
+// LIFERAY-SERVICE-BUILDER-HASH:1789245467

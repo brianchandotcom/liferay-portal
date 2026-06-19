@@ -852,7 +852,7 @@ public class ObjectValidationRuleSettingPersistenceImpl
 			_SQL_SELECT_OBJECTVALIDATIONRULESETTING_WHERE,
 			_SQL_COUNT_OBJECTVALIDATIONRULESETTING_WHERE,
 			ObjectValidationRuleSettingModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX, "",
+			_ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"objectValidationRuleSetting.", "uuid", "uuid_",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -880,7 +880,7 @@ public class ObjectValidationRuleSettingPersistenceImpl
 				_SQL_SELECT_OBJECTVALIDATIONRULESETTING_WHERE,
 				_SQL_COUNT_OBJECTVALIDATIONRULESETTING_WHERE,
 				ObjectValidationRuleSettingModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"objectValidationRuleSetting.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -915,7 +915,7 @@ public class ObjectValidationRuleSettingPersistenceImpl
 				_SQL_SELECT_OBJECTVALIDATIONRULESETTING_WHERE,
 				_SQL_COUNT_OBJECTVALIDATIONRULESETTING_WHERE,
 				ObjectValidationRuleSettingModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"objectValidationRuleSetting.", "objectValidationRuleId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -945,7 +945,7 @@ public class ObjectValidationRuleSettingPersistenceImpl
 				_SQL_SELECT_OBJECTVALIDATIONRULESETTING_WHERE,
 				_SQL_COUNT_OBJECTVALIDATIONRULESETTING_WHERE,
 				ObjectValidationRuleSettingModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"objectValidationRuleSetting.", "objectValidationRuleId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1069,4 +1069,4 @@ public class ObjectValidationRuleSettingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-467017358
+// LIFERAY-SERVICE-BUILDER-HASH:1996821486

@@ -786,7 +786,7 @@ public class LVEntryLocalizationVersionPersistenceImpl
 				_SQL_SELECT_LVENTRYLOCALIZATIONVERSION_WHERE,
 				_SQL_COUNT_LVENTRYLOCALIZATIONVERSION_WHERE,
 				LVEntryLocalizationVersionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"lvEntryLocalizationVersion.", "lvEntryLocalizationId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -836,7 +836,7 @@ public class LVEntryLocalizationVersionPersistenceImpl
 				_SQL_SELECT_LVENTRYLOCALIZATIONVERSION_WHERE,
 				_SQL_COUNT_LVENTRYLOCALIZATIONVERSION_WHERE,
 				LVEntryLocalizationVersionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"lvEntryLocalizationVersion.", "lvEntryId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -871,7 +871,7 @@ public class LVEntryLocalizationVersionPersistenceImpl
 				_SQL_SELECT_LVENTRYLOCALIZATIONVERSION_WHERE,
 				_SQL_COUNT_LVENTRYLOCALIZATIONVERSION_WHERE,
 				LVEntryLocalizationVersionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"lvEntryLocalizationVersion.", "lvEntryId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -907,7 +907,7 @@ public class LVEntryLocalizationVersionPersistenceImpl
 				_SQL_SELECT_LVENTRYLOCALIZATIONVERSION_WHERE,
 				_SQL_COUNT_LVENTRYLOCALIZATIONVERSION_WHERE,
 				LVEntryLocalizationVersionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"lvEntryLocalizationVersion.", "lvEntryId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -985,4 +985,4 @@ public class LVEntryLocalizationVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1856261392
+// LIFERAY-SERVICE-BUILDER-HASH:567681744

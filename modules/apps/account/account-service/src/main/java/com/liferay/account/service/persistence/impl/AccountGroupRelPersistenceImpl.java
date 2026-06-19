@@ -648,7 +648,7 @@ public class AccountGroupRelPersistenceImpl
 				_SQL_SELECT_ACCOUNTGROUPREL_WHERE,
 				_SQL_COUNT_ACCOUNTGROUPREL_WHERE,
 				AccountGroupRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"accountGroupRel.", "accountGroupId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -674,6 +674,7 @@ public class AccountGroupRelPersistenceImpl
 				new String[] {"accountGroupId", "classNameId"}, false),
 			_SQL_SELECT_ACCOUNTGROUPREL_WHERE, _SQL_COUNT_ACCOUNTGROUPREL_WHERE,
 			AccountGroupRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			"",
 			new FinderColumn<>(
 				"accountGroupRel.", "accountGroupId", FinderColumn.Type.LONG,
 				"=", true, true, AccountGroupRel::getAccountGroupId),
@@ -701,6 +702,7 @@ public class AccountGroupRelPersistenceImpl
 				new String[] {"classNameId", "classPK"}, false),
 			_SQL_SELECT_ACCOUNTGROUPREL_WHERE, _SQL_COUNT_ACCOUNTGROUPREL_WHERE,
 			AccountGroupRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			"",
 			new FinderColumn<>(
 				"accountGroupRel.", "classNameId", FinderColumn.Type.LONG, "=",
 				true, true, AccountGroupRel::getClassNameId),
@@ -796,4 +798,4 @@ public class AccountGroupRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:407963137
+// LIFERAY-SERVICE-BUILDER-HASH:1975897471

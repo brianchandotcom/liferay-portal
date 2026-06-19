@@ -1362,7 +1362,7 @@ public class PortletPreferencesPersistenceImpl
 				_SQL_SELECT_PORTLETPREFERENCES_WHERE,
 				_SQL_COUNT_PORTLETPREFERENCES_WHERE,
 				PortletPreferencesModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"portletPreferences.", "ownerId", FinderColumn.Type.LONG,
 					"=", true, true, PortletPreferences::getOwnerId));
@@ -1387,6 +1387,7 @@ public class PortletPreferencesPersistenceImpl
 			_SQL_SELECT_PORTLETPREFERENCES_WHERE,
 			_SQL_COUNT_PORTLETPREFERENCES_WHERE,
 			PortletPreferencesModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			"",
 			new FinderColumn<>(
 				"portletPreferences.", "plid", FinderColumn.Type.LONG, "=",
 				true, true, PortletPreferences::getPlid));
@@ -1413,7 +1414,7 @@ public class PortletPreferencesPersistenceImpl
 				_SQL_SELECT_PORTLETPREFERENCES_WHERE,
 				_SQL_COUNT_PORTLETPREFERENCES_WHERE,
 				PortletPreferencesModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"portletPreferences.", "portletId",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -1440,6 +1441,7 @@ public class PortletPreferencesPersistenceImpl
 			_SQL_SELECT_PORTLETPREFERENCES_WHERE,
 			_SQL_COUNT_PORTLETPREFERENCES_WHERE,
 			PortletPreferencesModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			"",
 			new FinderColumn<>(
 				"portletPreferences.", "ownerType", FinderColumn.Type.INTEGER,
 				"=", true, true, PortletPreferences::getOwnerType),
@@ -1468,6 +1470,7 @@ public class PortletPreferencesPersistenceImpl
 			_SQL_SELECT_PORTLETPREFERENCES_WHERE,
 			_SQL_COUNT_PORTLETPREFERENCES_WHERE,
 			PortletPreferencesModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			"",
 			new FinderColumn<>(
 				"portletPreferences.", "plid", FinderColumn.Type.LONG, "=",
 				true, true, PortletPreferences::getPlid),
@@ -1502,6 +1505,7 @@ public class PortletPreferencesPersistenceImpl
 			_SQL_SELECT_PORTLETPREFERENCES_WHERE,
 			_SQL_COUNT_PORTLETPREFERENCES_WHERE,
 			PortletPreferencesModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			"",
 			new FinderColumn<>(
 				"portletPreferences.", "ownerId", FinderColumn.Type.LONG, "=",
 				true, true, PortletPreferences::getOwnerId),
@@ -1543,7 +1547,7 @@ public class PortletPreferencesPersistenceImpl
 				_SQL_SELECT_PORTLETPREFERENCES_WHERE,
 				_SQL_COUNT_PORTLETPREFERENCES_WHERE,
 				PortletPreferencesModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"portletPreferences.", "ownerId", FinderColumn.Type.LONG,
 					"=", true, true, PortletPreferences::getOwnerId),
@@ -1585,6 +1589,7 @@ public class PortletPreferencesPersistenceImpl
 			_SQL_SELECT_PORTLETPREFERENCES_WHERE,
 			_SQL_COUNT_PORTLETPREFERENCES_WHERE,
 			PortletPreferencesModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			"",
 			new FinderColumn<>(
 				"portletPreferences.", "ownerType", FinderColumn.Type.INTEGER,
 				"=", true, true, PortletPreferences::getOwnerType),
@@ -1625,7 +1630,7 @@ public class PortletPreferencesPersistenceImpl
 				_SQL_SELECT_PORTLETPREFERENCES_WHERE,
 				_SQL_COUNT_PORTLETPREFERENCES_WHERE,
 				PortletPreferencesModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"portletPreferences.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, PortletPreferences::getCompanyId),
@@ -1700,4 +1705,4 @@ public class PortletPreferencesPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2097689756
+// LIFERAY-SERVICE-BUILDER-HASH:-1533748894

@@ -676,7 +676,7 @@ public class DLFileVersionPreviewPersistenceImpl
 				_SQL_SELECT_DLFILEVERSIONPREVIEW_WHERE,
 				_SQL_COUNT_DLFILEVERSIONPREVIEW_WHERE,
 				DLFileVersionPreviewModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"dlFileVersionPreview.", "fileEntryId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -705,7 +705,7 @@ public class DLFileVersionPreviewPersistenceImpl
 				_SQL_SELECT_DLFILEVERSIONPREVIEW_WHERE,
 				_SQL_COUNT_DLFILEVERSIONPREVIEW_WHERE,
 				DLFileVersionPreviewModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"dlFileVersionPreview.", "fileVersionId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -822,4 +822,4 @@ public class DLFileVersionPreviewPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1729386321
+// LIFERAY-SERVICE-BUILDER-HASH:675449233

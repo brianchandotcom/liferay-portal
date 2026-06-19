@@ -494,6 +494,7 @@ public class SamlSpMessagePersistenceImpl
 					new String[] {"expirationDate"}, false),
 				_SQL_SELECT_SAMLSPMESSAGE_WHERE, _SQL_COUNT_SAMLSPMESSAGE_WHERE,
 				SamlSpMessageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"samlSpMessage.", "expirationDate", FinderColumn.Type.DATE,
 					"<", true, true, SamlSpMessage::getExpirationDate));
@@ -581,4 +582,4 @@ public class SamlSpMessagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-233453633
+// LIFERAY-SERVICE-BUILDER-HASH:-1630739519

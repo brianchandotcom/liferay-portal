@@ -731,7 +731,7 @@ public class CPDefinitionInventoryPersistenceImpl
 			_SQL_SELECT_CPDEFINITIONINVENTORY_WHERE,
 			_SQL_COUNT_CPDEFINITIONINVENTORY_WHERE,
 			CPDefinitionInventoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"",
+			"", "",
 			new FinderColumn<>(
 				"cpDefinitionInventory.", "uuid", "uuid_",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -776,7 +776,7 @@ public class CPDefinitionInventoryPersistenceImpl
 				_SQL_SELECT_CPDEFINITIONINVENTORY_WHERE,
 				_SQL_COUNT_CPDEFINITIONINVENTORY_WHERE,
 				CPDefinitionInventoryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"cpDefinitionInventory.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -872,4 +872,4 @@ public class CPDefinitionInventoryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-33376399
+// LIFERAY-SERVICE-BUILDER-HASH:2012744365

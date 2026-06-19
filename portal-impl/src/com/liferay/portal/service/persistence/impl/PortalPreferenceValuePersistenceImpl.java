@@ -832,7 +832,7 @@ public class PortalPreferenceValuePersistenceImpl
 				_SQL_SELECT_PORTALPREFERENCEVALUE_WHERE,
 				_SQL_COUNT_PORTALPREFERENCEVALUE_WHERE,
 				PortalPreferenceValueModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new ArrayableFinderColumn<>(
 					"portalPreferenceValue.", "portalPreferencesId",
 					FinderColumn.Type.LONG, "=", false, true, true,
@@ -861,7 +861,7 @@ public class PortalPreferenceValuePersistenceImpl
 			_SQL_SELECT_PORTALPREFERENCEVALUE_WHERE,
 			_SQL_COUNT_PORTALPREFERENCEVALUE_WHERE,
 			PortalPreferenceValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"",
+			"", "",
 			new FinderColumn<>(
 				"portalPreferenceValue.", "portalPreferencesId",
 				FinderColumn.Type.LONG, "=", true, true,
@@ -900,7 +900,7 @@ public class PortalPreferenceValuePersistenceImpl
 			_SQL_SELECT_PORTALPREFERENCEVALUE_WHERE,
 			_SQL_COUNT_PORTALPREFERENCEVALUE_WHERE,
 			PortalPreferenceValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"",
+			"", "",
 			new FinderColumn<>(
 				"portalPreferenceValue.", "portalPreferencesId",
 				FinderColumn.Type.LONG, "=", true, true,
@@ -984,7 +984,7 @@ public class PortalPreferenceValuePersistenceImpl
 				_SQL_SELECT_PORTALPREFERENCEVALUE_WHERE,
 				_SQL_COUNT_PORTALPREFERENCEVALUE_WHERE,
 				PortalPreferenceValueModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"portalPreferenceValue.", "portalPreferencesId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1038,4 +1038,4 @@ public class PortalPreferenceValuePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:402200360
+// LIFERAY-SERVICE-BUILDER-HASH:1306081896

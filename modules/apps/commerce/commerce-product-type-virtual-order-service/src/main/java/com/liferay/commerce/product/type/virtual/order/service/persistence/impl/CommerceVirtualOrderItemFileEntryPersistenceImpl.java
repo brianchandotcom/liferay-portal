@@ -804,7 +804,7 @@ public class CommerceVirtualOrderItemFileEntryPersistenceImpl
 			_SQL_SELECT_COMMERCEVIRTUALORDERITEMFILEENTRY_WHERE,
 			_SQL_COUNT_COMMERCEVIRTUALORDERITEMFILEENTRY_WHERE,
 			CommerceVirtualOrderItemFileEntryModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX, "",
+			_ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"commerceVirtualOrderItemFileEntry.", "uuid", "uuid_",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -850,7 +850,7 @@ public class CommerceVirtualOrderItemFileEntryPersistenceImpl
 				_SQL_SELECT_COMMERCEVIRTUALORDERITEMFILEENTRY_WHERE,
 				_SQL_COUNT_COMMERCEVIRTUALORDERITEMFILEENTRY_WHERE,
 				CommerceVirtualOrderItemFileEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"commerceVirtualOrderItemFileEntry.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -885,7 +885,7 @@ public class CommerceVirtualOrderItemFileEntryPersistenceImpl
 				_SQL_SELECT_COMMERCEVIRTUALORDERITEMFILEENTRY_WHERE,
 				_SQL_COUNT_COMMERCEVIRTUALORDERITEMFILEENTRY_WHERE,
 				CommerceVirtualOrderItemFileEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"commerceVirtualOrderItemFileEntry.",
 					"commerceVirtualOrderItemId", FinderColumn.Type.LONG, "=",
@@ -917,7 +917,7 @@ public class CommerceVirtualOrderItemFileEntryPersistenceImpl
 			_SQL_SELECT_COMMERCEVIRTUALORDERITEMFILEENTRY_WHERE,
 			_SQL_COUNT_COMMERCEVIRTUALORDERITEMFILEENTRY_WHERE,
 			CommerceVirtualOrderItemFileEntryModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX, "",
+			_ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"commerceVirtualOrderItemFileEntry.",
 				"commerceVirtualOrderItemId", FinderColumn.Type.LONG, "=", true,
@@ -1001,4 +1001,4 @@ public class CommerceVirtualOrderItemFileEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1491445225
+// LIFERAY-SERVICE-BUILDER-HASH:-1200172273

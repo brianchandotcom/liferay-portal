@@ -418,7 +418,7 @@ public class PortalPreferencesPersistenceImpl
 				_SQL_SELECT_PORTALPREFERENCES_WHERE,
 				_SQL_COUNT_PORTALPREFERENCES_WHERE,
 				PortalPreferencesModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"portalPreferences.", "ownerType",
 					FinderColumn.Type.INTEGER, "=", true, true,
@@ -472,4 +472,4 @@ public class PortalPreferencesPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1581978601
+// LIFERAY-SERVICE-BUILDER-HASH:1845499755

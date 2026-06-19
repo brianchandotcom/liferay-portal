@@ -867,7 +867,7 @@ public class SAPEntryPersistenceImpl
 					new String[] {String.class.getName()},
 					new String[] {"uuid_"}, 0, 1, false, null),
 				_SQL_SELECT_SAPENTRY_WHERE, _SQL_COUNT_SAPENTRY_WHERE,
-				SAPEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				SAPEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"sapEntry.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
 					true, true, SAPEntry::getUuid));
@@ -892,7 +892,7 @@ public class SAPEntryPersistenceImpl
 					new String[] {String.class.getName(), Long.class.getName()},
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_SAPENTRY_WHERE, _SQL_COUNT_SAPENTRY_WHERE,
-				SAPEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				SAPEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"sapEntry.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
 					true, true, SAPEntry::getUuid),
@@ -920,7 +920,7 @@ public class SAPEntryPersistenceImpl
 					"countByCompanyId", new String[] {Long.class.getName()},
 					new String[] {"companyId"}, false),
 				_SQL_SELECT_SAPENTRY_WHERE, _SQL_COUNT_SAPENTRY_WHERE,
-				SAPEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				SAPEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"sapEntry.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, SAPEntry::getCompanyId));
@@ -949,7 +949,7 @@ public class SAPEntryPersistenceImpl
 					},
 					new String[] {"companyId", "defaultSAPEntry"}, false),
 				_SQL_SELECT_SAPENTRY_WHERE, _SQL_COUNT_SAPENTRY_WHERE,
-				SAPEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				SAPEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"sapEntry.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, SAPEntry::getCompanyId),
@@ -1041,4 +1041,4 @@ public class SAPEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:71588111
+// LIFERAY-SERVICE-BUILDER-HASH:-1724466609

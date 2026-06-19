@@ -2574,7 +2574,7 @@ public class UserGroupPersistenceImpl
 					new String[] {String.class.getName()},
 					new String[] {"uuid_"}, 0, 1, false, null),
 				_SQL_SELECT_USERGROUP_WHERE, _SQL_COUNT_USERGROUP_WHERE,
-				UserGroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				UserGroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"userGroup.", "uuid", "uuid_", FinderColumn.Type.STRING,
 					"=", true, true, UserGroup::getUuid));
@@ -2599,7 +2599,7 @@ public class UserGroupPersistenceImpl
 					new String[] {String.class.getName(), Long.class.getName()},
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_USERGROUP_WHERE, _SQL_COUNT_USERGROUP_WHERE,
-				UserGroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				UserGroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"userGroup.", "uuid", "uuid_", FinderColumn.Type.STRING,
 					"=", true, true, UserGroup::getUuid),
@@ -2627,7 +2627,7 @@ public class UserGroupPersistenceImpl
 					"countByCompanyId", new String[] {Long.class.getName()},
 					new String[] {"companyId"}, false),
 				_SQL_SELECT_USERGROUP_WHERE, _SQL_COUNT_USERGROUP_WHERE,
-				UserGroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				UserGroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"userGroup.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, UserGroup::getCompanyId));
@@ -2652,7 +2652,7 @@ public class UserGroupPersistenceImpl
 					new String[] {Long.class.getName(), Long.class.getName()},
 					new String[] {"companyId", "parentUserGroupId"}, false),
 				_SQL_SELECT_USERGROUP_WHERE, _SQL_COUNT_USERGROUP_WHERE,
-				UserGroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				UserGroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"userGroup.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, UserGroup::getCompanyId),
@@ -2693,7 +2693,7 @@ public class UserGroupPersistenceImpl
 					new String[] {Long.class.getName(), String.class.getName()},
 					new String[] {"companyId", "name"}, false),
 				_SQL_SELECT_USERGROUP_WHERE, _SQL_COUNT_USERGROUP_WHERE,
-				UserGroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				UserGroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"userGroup.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, UserGroup::getCompanyId),
@@ -2728,7 +2728,7 @@ public class UserGroupPersistenceImpl
 					},
 					false),
 				_SQL_SELECT_USERGROUP_WHERE, _SQL_COUNT_USERGROUP_WHERE,
-				UserGroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				UserGroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"userGroup.", "userGroupId", FinderColumn.Type.LONG, ">",
 					true, true, UserGroup::getUserGroupId),
@@ -2813,4 +2813,4 @@ public class UserGroupPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1148000398
+// LIFERAY-SERVICE-BUILDER-HASH:2110518538

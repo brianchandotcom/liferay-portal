@@ -646,6 +646,7 @@ public class CSDiagramSettingPersistenceImpl
 			_SQL_SELECT_CSDIAGRAMSETTING_WHERE,
 			_SQL_COUNT_CSDIAGRAMSETTING_WHERE,
 			CSDiagramSettingModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			"",
 			new FinderColumn<>(
 				"csDiagramSetting.", "uuid", "uuid_", FinderColumn.Type.STRING,
 				"=", true, true, CSDiagramSetting::getUuid));
@@ -672,7 +673,7 @@ public class CSDiagramSettingPersistenceImpl
 				_SQL_SELECT_CSDIAGRAMSETTING_WHERE,
 				_SQL_COUNT_CSDIAGRAMSETTING_WHERE,
 				CSDiagramSettingModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"csDiagramSetting.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -767,4 +768,4 @@ public class CSDiagramSettingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-976701160
+// LIFERAY-SERVICE-BUILDER-HASH:328056024

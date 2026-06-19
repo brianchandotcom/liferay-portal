@@ -878,6 +878,7 @@ public class LayoutLocalizationPersistenceImpl
 			_SQL_SELECT_LAYOUTLOCALIZATION_WHERE,
 			_SQL_COUNT_LAYOUTLOCALIZATION_WHERE,
 			LayoutLocalizationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			"",
 			new FinderColumn<>(
 				"layoutLocalization.", "uuid", "uuid_",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -922,7 +923,7 @@ public class LayoutLocalizationPersistenceImpl
 				_SQL_SELECT_LAYOUTLOCALIZATION_WHERE,
 				_SQL_COUNT_LAYOUTLOCALIZATION_WHERE,
 				LayoutLocalizationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"layoutLocalization.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -951,6 +952,7 @@ public class LayoutLocalizationPersistenceImpl
 			_SQL_SELECT_LAYOUTLOCALIZATION_WHERE,
 			_SQL_COUNT_LAYOUTLOCALIZATION_WHERE,
 			LayoutLocalizationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			"",
 			new FinderColumn<>(
 				"layoutLocalization.", "plid", FinderColumn.Type.LONG, "=",
 				true, true, LayoutLocalization::getPlid));
@@ -1066,4 +1068,4 @@ public class LayoutLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1129945545
+// LIFERAY-SERVICE-BUILDER-HASH:1027222005

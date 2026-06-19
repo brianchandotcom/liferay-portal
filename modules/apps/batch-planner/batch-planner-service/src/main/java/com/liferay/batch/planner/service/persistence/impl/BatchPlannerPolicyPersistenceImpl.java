@@ -459,7 +459,7 @@ public class BatchPlannerPolicyPersistenceImpl
 				_SQL_SELECT_BATCHPLANNERPOLICY_WHERE,
 				_SQL_COUNT_BATCHPLANNERPOLICY_WHERE,
 				BatchPlannerPolicyModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"batchPlannerPolicy.", "batchPlannerPlanId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -548,4 +548,4 @@ public class BatchPlannerPolicyPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1256597918
+// LIFERAY-SERVICE-BUILDER-HASH:-497592800

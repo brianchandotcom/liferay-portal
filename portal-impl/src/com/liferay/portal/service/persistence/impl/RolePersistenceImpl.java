@@ -2710,7 +2710,7 @@ public class RolePersistenceImpl
 					new String[] {String.class.getName()},
 					new String[] {"uuid_"}, 0, 1, false, null),
 				_SQL_SELECT_ROLE__WHERE, _SQL_COUNT_ROLE__WHERE,
-				RoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				RoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"role_.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
 					true, true, Role::getUuid));
@@ -2735,7 +2735,7 @@ public class RolePersistenceImpl
 					new String[] {String.class.getName(), Long.class.getName()},
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_ROLE__WHERE, _SQL_COUNT_ROLE__WHERE,
-				RoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				RoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"role_.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
 					true, true, Role::getUuid),
@@ -2763,7 +2763,7 @@ public class RolePersistenceImpl
 					"countByCompanyId", new String[] {Long.class.getName()},
 					new String[] {"companyId"}, false),
 				_SQL_SELECT_ROLE__WHERE, _SQL_COUNT_ROLE__WHERE,
-				RoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				RoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"role_.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Role::getCompanyId));
@@ -2788,7 +2788,7 @@ public class RolePersistenceImpl
 					new String[] {String.class.getName()},
 					new String[] {"name"}, 0, 1, false, null),
 				_SQL_SELECT_ROLE__WHERE, _SQL_COUNT_ROLE__WHERE,
-				RoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				RoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"role_.", "name", FinderColumn.Type.STRING, "=", true, true,
 					Role::getName));
@@ -2813,7 +2813,7 @@ public class RolePersistenceImpl
 					new String[] {Integer.class.getName()},
 					new String[] {"type_"}, false),
 				_SQL_SELECT_ROLE__WHERE, _SQL_COUNT_ROLE__WHERE,
-				RoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				RoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"role_.", "type", "type_", FinderColumn.Type.INTEGER, "=",
 					true, true, Role::getType));
@@ -2838,7 +2838,7 @@ public class RolePersistenceImpl
 					new String[] {String.class.getName()},
 					new String[] {"subtype"}, 0, 1, false, null),
 				_SQL_SELECT_ROLE__WHERE, _SQL_COUNT_ROLE__WHERE,
-				RoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				RoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"role_.", "subtype", FinderColumn.Type.STRING, "=", true,
 					true, Role::getSubtype));
@@ -2882,7 +2882,7 @@ public class RolePersistenceImpl
 					},
 					new String[] {"companyId", "type_"}, false),
 				_SQL_SELECT_ROLE__WHERE, _SQL_COUNT_ROLE__WHERE,
-				RoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				RoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"role_.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Role::getCompanyId),
@@ -2914,7 +2914,7 @@ public class RolePersistenceImpl
 					},
 					new String[] {"type_", "subtype"}, 0, 2, false, null),
 				_SQL_SELECT_ROLE__WHERE, _SQL_COUNT_ROLE__WHERE,
-				RoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				RoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"role_.", "type", "type_", FinderColumn.Type.INTEGER, "=",
 					true, true, Role::getType),
@@ -2950,7 +2950,7 @@ public class RolePersistenceImpl
 					new String[] {"companyId", "classNameId", "classPK"},
 					false),
 				_SQL_SELECT_ROLE__WHERE, _SQL_COUNT_ROLE__WHERE,
-				RoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				RoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"role_.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Role::getCompanyId),
@@ -3019,7 +3019,7 @@ public class RolePersistenceImpl
 					},
 					false),
 				_SQL_SELECT_ROLE__WHERE, _SQL_COUNT_ROLE__WHERE,
-				RoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				RoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"role_.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Role::getCompanyId),
@@ -3125,4 +3125,4 @@ public class RolePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1280995644
+// LIFERAY-SERVICE-BUILDER-HASH:-1330589844

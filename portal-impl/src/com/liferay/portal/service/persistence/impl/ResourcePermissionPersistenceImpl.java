@@ -2964,6 +2964,7 @@ public class ResourcePermissionPersistenceImpl
 			_SQL_SELECT_RESOURCEPERMISSION_WHERE,
 			_SQL_COUNT_RESOURCEPERMISSION_WHERE,
 			ResourcePermissionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			"",
 			new FinderColumn<>(
 				"resourcePermission.", "name", FinderColumn.Type.STRING, "=",
 				true, true, ResourcePermission::getName));
@@ -2988,6 +2989,7 @@ public class ResourcePermissionPersistenceImpl
 			_SQL_SELECT_RESOURCEPERMISSION_WHERE,
 			_SQL_COUNT_RESOURCEPERMISSION_WHERE,
 			ResourcePermissionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			"",
 			new ArrayableFinderColumn<>(
 				"resourcePermission.", "scope", FinderColumn.Type.INTEGER, "=",
 				false, true, true, ResourcePermission::getScope));
@@ -3014,7 +3016,7 @@ public class ResourcePermissionPersistenceImpl
 				_SQL_SELECT_RESOURCEPERMISSION_WHERE,
 				_SQL_COUNT_RESOURCEPERMISSION_WHERE,
 				ResourcePermissionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"resourcePermission.", "roleId", FinderColumn.Type.LONG,
 					"=", true, true, ResourcePermission::getRoleId));
@@ -3038,7 +3040,7 @@ public class ResourcePermissionPersistenceImpl
 				_SQL_SELECT_RESOURCEPERMISSION_WHERE,
 				_SQL_COUNT_RESOURCEPERMISSION_WHERE,
 				ResourcePermissionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"resourcePermission.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, ResourcePermission::getCompanyId),
@@ -3073,6 +3075,7 @@ public class ResourcePermissionPersistenceImpl
 			_SQL_SELECT_RESOURCEPERMISSION_WHERE,
 			_SQL_COUNT_RESOURCEPERMISSION_WHERE,
 			ResourcePermissionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			"",
 			new FinderColumn<>(
 				"resourcePermission.", "companyId", FinderColumn.Type.LONG, "=",
 				true, true, ResourcePermission::getCompanyId),
@@ -3112,6 +3115,7 @@ public class ResourcePermissionPersistenceImpl
 			_SQL_SELECT_RESOURCEPERMISSION_WHERE,
 			_SQL_COUNT_RESOURCEPERMISSION_WHERE,
 			ResourcePermissionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			"",
 			new FinderColumn<>(
 				"resourcePermission.", "companyId", FinderColumn.Type.LONG, "=",
 				true, true, ResourcePermission::getCompanyId),
@@ -3154,7 +3158,7 @@ public class ResourcePermissionPersistenceImpl
 				_SQL_SELECT_RESOURCEPERMISSION_WHERE,
 				_SQL_COUNT_RESOURCEPERMISSION_WHERE,
 				ResourcePermissionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"resourcePermission.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, ResourcePermission::getCompanyId),
@@ -3200,7 +3204,7 @@ public class ResourcePermissionPersistenceImpl
 				_SQL_SELECT_RESOURCEPERMISSION_WHERE,
 				_SQL_COUNT_RESOURCEPERMISSION_WHERE,
 				ResourcePermissionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"resourcePermission.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, ResourcePermission::getCompanyId),
@@ -3351,4 +3355,4 @@ public class ResourcePermissionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1931213195
+// LIFERAY-SERVICE-BUILDER-HASH:-1965612231

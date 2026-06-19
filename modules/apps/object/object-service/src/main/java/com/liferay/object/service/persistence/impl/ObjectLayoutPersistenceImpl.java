@@ -768,7 +768,7 @@ public class ObjectLayoutPersistenceImpl
 				new String[] {String.class.getName()}, new String[] {"uuid_"},
 				0, 1, false, null),
 			_SQL_SELECT_OBJECTLAYOUT_WHERE, _SQL_COUNT_OBJECTLAYOUT_WHERE,
-			ObjectLayoutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			ObjectLayoutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"objectLayout.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
 				true, true, ObjectLayout::getUuid));
@@ -794,6 +794,7 @@ public class ObjectLayoutPersistenceImpl
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_OBJECTLAYOUT_WHERE, _SQL_COUNT_OBJECTLAYOUT_WHERE,
 				ObjectLayoutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"objectLayout.", "uuid", "uuid_", FinderColumn.Type.STRING,
 					"=", true, true, ObjectLayout::getUuid),
@@ -825,6 +826,7 @@ public class ObjectLayoutPersistenceImpl
 					new String[] {"objectDefinitionId"}, false),
 				_SQL_SELECT_OBJECTLAYOUT_WHERE, _SQL_COUNT_OBJECTLAYOUT_WHERE,
 				ObjectLayoutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"objectLayout.", "objectDefinitionId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -849,7 +851,7 @@ public class ObjectLayoutPersistenceImpl
 				new String[] {Long.class.getName(), Boolean.class.getName()},
 				new String[] {"companyId", "defaultObjectLayout"}, false),
 			_SQL_SELECT_OBJECTLAYOUT_WHERE, _SQL_COUNT_OBJECTLAYOUT_WHERE,
-			ObjectLayoutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			ObjectLayoutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"objectLayout.", "companyId", FinderColumn.Type.LONG, "=", true,
 				true, ObjectLayout::getCompanyId),
@@ -886,6 +888,7 @@ public class ObjectLayoutPersistenceImpl
 					false),
 				_SQL_SELECT_OBJECTLAYOUT_WHERE, _SQL_COUNT_OBJECTLAYOUT_WHERE,
 				ObjectLayoutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"objectLayout.", "objectDefinitionId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -961,4 +964,4 @@ public class ObjectLayoutPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-914999223
+// LIFERAY-SERVICE-BUILDER-HASH:677127111

@@ -760,7 +760,7 @@ public class CommerceDiscountAccountRelPersistenceImpl
 			_SQL_SELECT_COMMERCEDISCOUNTACCOUNTREL_WHERE,
 			_SQL_COUNT_COMMERCEDISCOUNTACCOUNTREL_WHERE,
 			CommerceDiscountAccountRelModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX, "",
+			_ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"commerceDiscountAccountRel.", "uuid", "uuid_",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -788,7 +788,7 @@ public class CommerceDiscountAccountRelPersistenceImpl
 				_SQL_SELECT_COMMERCEDISCOUNTACCOUNTREL_WHERE,
 				_SQL_COUNT_COMMERCEDISCOUNTACCOUNTREL_WHERE,
 				CommerceDiscountAccountRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"commerceDiscountAccountRel.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -823,7 +823,7 @@ public class CommerceDiscountAccountRelPersistenceImpl
 				_SQL_SELECT_COMMERCEDISCOUNTACCOUNTREL_WHERE,
 				_SQL_COUNT_COMMERCEDISCOUNTACCOUNTREL_WHERE,
 				CommerceDiscountAccountRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"commerceDiscountAccountRel.", "commerceAccountId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -854,7 +854,7 @@ public class CommerceDiscountAccountRelPersistenceImpl
 				_SQL_SELECT_COMMERCEDISCOUNTACCOUNTREL_WHERE,
 				_SQL_COUNT_COMMERCEDISCOUNTACCOUNTREL_WHERE,
 				CommerceDiscountAccountRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"commerceDiscountAccountRel.", "commerceDiscountId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -947,4 +947,4 @@ public class CommerceDiscountAccountRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:236694266
+// LIFERAY-SERVICE-BUILDER-HASH:-947902850

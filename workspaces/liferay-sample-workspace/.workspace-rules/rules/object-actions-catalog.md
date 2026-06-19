@@ -37,7 +37,7 @@ Required `parameters`:
 
 ```json
 {
-  "notificationTemplateId": <template-id>
+	"notificationTemplateId": "<template-id>"
 }
 ```
 
@@ -51,10 +51,13 @@ Required `parameters`:
 
 ```json
 {
-  "objectDefinitionId": <target-definition-id>,
-  "predefinedValues": [
-    {"name": "<fieldName>", "value": "<value>"}
-  ]
+	"objectDefinitionId": "<target-definition-id>",
+	"predefinedValues": [
+		{
+			"name": "<fieldName>",
+			"value": "<value>"
+		}
+	]
 }
 ```
 
@@ -66,11 +69,14 @@ Required `parameters`:
 
 ```json
 {
-  "objectDefinitionId": <target-definition-id>,
-  "objectEntryId": "<expression-resolving-to-id>",
-  "predefinedValues": [
-    {"name": "<fieldName>", "value": "<new-value>"}
-  ]
+	"objectDefinitionId": "<target-definition-id>",
+	"objectEntryId": "<expression-resolving-to-id>",
+	"predefinedValues": [
+		{
+			"name": "<fieldName>",
+			"value": "<new-value>"
+		}
+	]
 }
 ```
 
@@ -82,8 +88,8 @@ Required `parameters`:
 
 ```json
 {
-  "secret": "<hmac-secret>",
-  "url": "<https://endpoint.example.com/hook>"
+	"secret": "<hmac-secret>",
+	"url": "<https://endpoint.example.com/hook>"
 }
 ```
 
@@ -97,7 +103,7 @@ Required `parameters`:
 
 ```json
 {
-  "script": "<groovy source>"
+	"script": "<groovy source>"
 }
 ```
 
@@ -113,8 +119,8 @@ Required `parameters`:
 
 ```json
 {
-  "objectActionExecutorKey": "objectAction",
-  "clientExtensionEntryExternalReferenceCode": "<cet-erc>"
+	"clientExtensionEntryExternalReferenceCode": "<cet-erc>",
+	"objectActionExecutorKey": "objectAction"
 }
 ```
 

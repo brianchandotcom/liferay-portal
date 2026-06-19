@@ -144,22 +144,24 @@ Common `className` values:
 
 ```json
 {
-  "friendlyURL": "/home",
-  "hidden": false,
-  "name": "Home",
-  "name_i18n": {
-    "en_US": "Home"
-  },
-  "permissions": [
-    {
-      "actionIds": ["VIEW"],
-      "roleName": "Guest",
-      "scope": 4
-    }
-  ],
-  "private": false,
-  "system": false,
-  "type": "Content"
+	"friendlyURL": "/home",
+	"hidden": false,
+	"name": "Home",
+	"name_i18n": {
+		"en_US": "Home"
+	},
+	"permissions": [
+		{
+			"actionIds": [
+				"VIEW"
+			],
+			"roleName": "Guest",
+			"scope": 4
+		}
+	],
+	"private": false,
+	"system": false,
+	"type": "Content"
 }
 ```
 
@@ -171,11 +173,12 @@ Mirrors the `pageDefinition` field of the Headless Admin Site page API. Minimum 
 
 ```json
 {
-  "pageElement": {
-    "pageElements": [],
-    "type": "Root"
-  },
-  "version": "1.0"
+	"pageElement": {
+		"pageElements": [
+		],
+		"type": "Root"
+	},
+	"version": "1.0"
 }
 ```
 
@@ -183,13 +186,13 @@ Add fragment elements under `pageElements` to compose the layout. Each fragment 
 
 ```json
 {
-  "definition": {
-    "fragment": {
-      "key": "<fragment-name>",
-      "siteKey": "[$GROUP_KEY$]"
-    }
-  },
-  "type": "Fragment"
+	"definition": {
+		"fragment": {
+			"key": "<fragment-name>",
+			"siteKey": "[$GROUP_KEY$]"
+		}
+	},
+	"type": "Fragment"
 }
 ```
 
@@ -203,29 +206,30 @@ The master `page-definition.json` holds the persistent header/footer fragments p
 
 ```json
 {
-  "pageElement": {
-    "pageElements": [
-      {
-        "definition": {
-          "fragment": {
-            "key": "<header-fragment-name>",
-            "siteKey": "[$GROUP_KEY$]"
-          }
-        },
-        "type": "Fragment"
-      },
-      {
-        "definition": {
-          "fragmentSettings": {
-            "unallowedFragments": []
-          }
-        },
-        "type": "DropZone"
-      }
-    ],
-    "type": "Root"
-  },
-  "version": 1.1
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragment": {
+						"key": "<header-fragment-name>",
+						"siteKey": "[$GROUP_KEY$]"
+					}
+				},
+				"type": "Fragment"
+			},
+			{
+				"definition": {
+					"fragmentSettings": {
+						"unallowedFragments": [
+						]
+					}
+				},
+				"type": "DropZone"
+			}
+		],
+		"type": "Root"
+	},
+	"version": 1.1
 }
 ```
 
@@ -233,16 +237,17 @@ A page selects its master through its **own** `page-definition.json`, in a top-l
 
 ```json
 {
-  "pageElement": {
-    "pageElements": [ /* this page's content */ ],
-    "type": "Root"
-  },
-  "settings": {
-    "masterPage": {
-      "key": "<master-name>"
-    }
-  },
-  "version": 1.1
+	"pageElement": {
+		"pageElements": [
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "<master-name>"
+		}
+	},
+	"version": 1.1
 }
 ```
 
@@ -252,8 +257,8 @@ Controls navigation menu visibility and theme assignment for the public (non-pri
 
 ```json
 {
-  "themeId": "classic_WAR_classictheme",
-  "colorSchemeId": "01"
+	"colorSchemeId": "01",
+	"themeId": "classic_WAR_classictheme"
 }
 ```
 

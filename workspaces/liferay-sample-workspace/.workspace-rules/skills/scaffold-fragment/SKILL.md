@@ -53,11 +53,11 @@ Create four files for each fragment:
 
 ```json
 {
-  "cssPath": "index.css",
-  "htmlPath": "index.html",
-  "jsPath": "index.js",
-  "name": "<Fragment Display Name>",
-  "type": "component"
+	"cssPath": "index.css",
+	"htmlPath": "index.html",
+	"jsPath": "index.js",
+	"name": "<Fragment Display Name>",
+	"type": "component"
 }
 ```
 
@@ -109,27 +109,33 @@ Create `configuration.json` to expose configurable options in the Content Page e
 
 ```json
 {
-  "fieldSets": [
-    {
-      "fields": [
-        {
-          "dataType": "string",
-          "defaultValue": "primary",
-          "label": "Button Style",
-          "name": "buttonStyle",
-          "type": "select",
-          "typeOptions": {
-            "validValues": [
-              {"value": "primary"},
-              {"value": "secondary"},
-              {"value": "link"}
-            ]
-          }
-        }
-      ],
-      "label": "Styling"
-    }
-  ]
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "primary",
+					"label": "Button Style",
+					"name": "buttonStyle",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"value": "primary"
+							},
+							{
+								"value": "secondary"
+							},
+							{
+								"value": "link"
+							}
+						]
+					}
+				}
+			],
+			"label": "Styling"
+		}
+	]
 }
 ```
 

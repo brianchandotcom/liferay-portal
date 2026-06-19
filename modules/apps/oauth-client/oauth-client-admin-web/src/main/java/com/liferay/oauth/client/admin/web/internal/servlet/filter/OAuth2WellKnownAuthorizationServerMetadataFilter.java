@@ -65,7 +65,8 @@ public class OAuth2WellKnownAuthorizationServerMetadataFilter
 		throws Exception {
 
 		httpServletResponse.setHeader(
-			"Access-Control-Allow-Headers", "Authorization, Content-Type");
+			"Access-Control-Allow-Headers",
+			"Authorization, Content-Type, MCP-Protocol-Version");
 		httpServletResponse.setHeader(
 			"Access-Control-Allow-Methods", "GET, HEAD, OPTIONS");
 		httpServletResponse.setHeader("Access-Control-Allow-Origin", "*");

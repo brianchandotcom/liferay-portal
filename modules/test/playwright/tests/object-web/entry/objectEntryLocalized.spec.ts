@@ -37,7 +37,6 @@ export const test = mergeTests(
 	editObjectDefinitionPagesTest,
 	featureFlagsTest({
 		'LPD-70673': {enabled: true}, // Email Address field type
-		'LPD-83570': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
 	formsPagesTest,

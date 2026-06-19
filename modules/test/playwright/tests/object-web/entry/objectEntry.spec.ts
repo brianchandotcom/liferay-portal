@@ -64,7 +64,6 @@ const test = mergeTests(
 	editObjectDefinitionPagesTest,
 	featureFlagsTest({
 		'LPD-70673': {enabled: true}, // Email Address field
-		'LPD-83570': {enabled: true}, // Phone Number field
 		'LPS-178052': {enabled: true},
 	}),
 	globalMenuPagesTest,

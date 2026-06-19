@@ -13,6 +13,7 @@ import com.liferay.info.field.RelatedInfoFieldValue;
 import com.liferay.info.field.type.BooleanInfoFieldType;
 import com.liferay.info.field.type.DateInfoFieldType;
 import com.liferay.info.field.type.DateTimeInfoFieldType;
+import com.liferay.info.field.type.EmailInfoFieldType;
 import com.liferay.info.field.type.FileInfoFieldType;
 import com.liferay.info.field.type.FriendlyURLInfoFieldType;
 import com.liferay.info.field.type.HTMLInfoFieldType;
@@ -528,7 +529,8 @@ public class InfoRequestFieldValuesProviderHelper {
 			return GetterUtil.getLong(value);
 		}
 
-		if (infoField.getInfoFieldType() instanceof FileInfoFieldType ||
+		if (infoField.getInfoFieldType() instanceof EmailInfoFieldType ||
+			infoField.getInfoFieldType() instanceof FileInfoFieldType ||
 			infoField.getInfoFieldType() instanceof FriendlyURLInfoFieldType ||
 			infoField.getInfoFieldType() instanceof HTMLInfoFieldType ||
 			infoField.getInfoFieldType() instanceof LongTextInfoFieldType ||

@@ -1,3 +1,8 @@
+.custom-control-label.term-name + .term-count {
+	position: relative;
+	top: -0.25rem;
+}
+
 .product-card {
 	$product-card-gutter: 1rem;
 	$product-card-min-width: 15rem;

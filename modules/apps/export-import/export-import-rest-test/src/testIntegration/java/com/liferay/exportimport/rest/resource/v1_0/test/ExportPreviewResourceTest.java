@@ -346,6 +346,16 @@ public class ExportPreviewResourceTest
 		Assert.assertEquals(
 			1L,
 			_getAdditionCount(
+				unsafeBiFunction.apply(new Date(now - (24 * Time.HOUR)), null),
+				portletId));
+		Assert.assertEquals(
+			1L,
+			_getAdditionCount(
+				unsafeBiFunction.apply(null, new Date(now - (24 * Time.HOUR))),
+				portletId));
+		Assert.assertEquals(
+			1L,
+			_getAdditionCount(
 				unsafeBiFunction.apply(
 					new Date(now - (24 * Time.HOUR)), new Date(now)),
 				portletId));

@@ -13,18 +13,19 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.portlet.data.handler.provider.PortletDataHandlerProvider;
 import com.liferay.exportimport.rest.dto.v1_0.ExportPreview;
 import com.liferay.exportimport.rest.dto.v1_0.PreviewPortletDataHandler;
+import com.liferay.exportimport.rest.internal.util.DateRangeUtil;
 import com.liferay.exportimport.rest.internal.util.PermissionUtil;
 import com.liferay.exportimport.rest.internal.util.PreviewPortletDataHandlerUtil;
 import com.liferay.exportimport.rest.resource.v1_0.ExportPreviewResource;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.service.PortletLocalService;
+import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.staging.StagingGroupHelper;
 
-import jakarta.ws.rs.BadRequestException;
 import jakarta.ws.rs.NotFoundException;
 
 import java.util.Date;
@@ -146,13 +147,15 @@ public class ExportPreviewResourceImpl extends BaseExportPreviewResourceImpl {
 				contextCompany.getCompanyId(), false, groupId);
 		}
 
-		if ((startDate == null) != (endDate == null)) {
-			throw new BadRequestException(
-				"A start date and an end date are required for a date range");
-		}
+		String range = null;
 
-		String range =
-			(startDate == null) ? null : ExportImportDateUtil.RANGE_DATE_RANGE;
+		DateRange dateRange = DateRangeUtil.toDateRange(startDate, endDate);
+
+		if (dateRange != null) {
+			endDate = dateRange.getEndDate();
+			range = ExportImportDateUtil.RANGE_DATE_RANGE;
+			startDate = dateRange.getStartDate();
+		}
 
 		Locale locale = contextAcceptLanguage.getPreferredLocale();
 

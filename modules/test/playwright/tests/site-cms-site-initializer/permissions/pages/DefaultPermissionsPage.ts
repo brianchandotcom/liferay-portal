@@ -37,11 +37,19 @@ export class DefaultPermissionsPage {
 		await expect(this.permissionsModal).toBeVisible();
 
 		for (const permission of permissions) {
-			await this.permissionsModal
-				.getByTestId(
-					`row-checkbox-${permission.role}_${permission.action}`
-				)
-				.check();
+			const checkbox = this.permissionsModal.getByTestId(
+				`row-checkbox-${permission.role}_${permission.action}`
+			);
+
+			// The permissions table can re-render right after the modal opens,
+			// detaching the checkbox mid-click. Retry until the check sticks so
+			// the row re-resolves against the latest render.
+
+			await expect(async () => {
+				await checkbox.check({timeout: 5000});
+
+				await expect(checkbox).toBeChecked({timeout: 5000});
+			}).toPass({timeout: 15000});
 		}
 
 		if (propagate) {

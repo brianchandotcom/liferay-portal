@@ -5,8 +5,9 @@
 
 export default interface SegmentExperience {
 	active: boolean;
-	segmentsEntryName: string;
-	segmentsExperienceId: string;
+	segmentsEntryName?: string;
+	segmentsExperienceERC?: string;
+	segmentsExperienceId?: string;
 	segmentsExperienceName: string;
 	statusLabel: string;
 	url?: string;

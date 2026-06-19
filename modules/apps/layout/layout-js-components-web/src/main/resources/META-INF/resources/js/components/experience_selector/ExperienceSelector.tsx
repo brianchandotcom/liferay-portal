@@ -82,9 +82,12 @@ export default function ExperienceSelector({
 }: ExperienceSelectorProps) {
 	const selectorId = useId();
 
+	const getExperienceKey = (experience: SegmentExperience) =>
+		experience.segmentsExperienceERC ?? experience.segmentsExperienceId;
+
 	const handleExperienceChange = (key: React.Key) => {
 		const newSelectedExperience = segmentsExperiences.find(
-			(experience) => experience.segmentsExperienceId === key
+			(experience) => getExperienceKey(experience) === key
 		);
 
 		if (newSelectedExperience && newSelectedExperience.url) {
@@ -117,34 +120,46 @@ export default function ExperienceSelector({
 				}}
 				onSelectionChange={onChangeExperience || handleExperienceChange}
 				selectedItem={selectedSegmentsExperience}
-				selectedKey={selectedSegmentsExperience.segmentsExperienceId}
+				selectedKey={getExperienceKey(selectedSegmentsExperience)}
 				width={280}
 			>
 				{({
 					active,
 					segmentsEntryName: entryName,
-					segmentsExperienceId: id,
+					segmentsExperienceERC,
+					segmentsExperienceId,
 					segmentsExperienceName: name,
 					statusLabel,
 				}) => (
-					<Option key={id} textValue={name}>
+					<Option
+						key={segmentsExperienceERC ?? segmentsExperienceId}
+						textValue={name}
+					>
 						<Layout.ContentRow>
 							<Layout.ContentCol className="c-pl-0" expand>
 								<span className="sr-only">
-									{`${name} ${Liferay.Language.get(
-										'segment'
-									)}: ${entryName} ${statusLabel}`}
+									{entryName
+										? `${name} ${Liferay.Language.get(
+												'segment'
+											)}: ${entryName} ${statusLabel}`
+										: `${name} ${statusLabel}`}
 								</span>
 
 								<Text aria-hidden size={3} weight="semi-bold">
 									{name}
 								</Text>
 
-								<Text aria-hidden color="secondary" size={3}>
-									{`${Liferay.Language.get(
-										'segment'
-									)}: ${entryName}`}
-								</Text>
+								{entryName ? (
+									<Text
+										aria-hidden
+										color="secondary"
+										size={3}
+									>
+										{`${Liferay.Language.get(
+											'segment'
+										)}: ${entryName}`}
+									</Text>
+								) : null}
 							</Layout.ContentCol>
 
 							<Layout.ContentCol className="c-pr-0">

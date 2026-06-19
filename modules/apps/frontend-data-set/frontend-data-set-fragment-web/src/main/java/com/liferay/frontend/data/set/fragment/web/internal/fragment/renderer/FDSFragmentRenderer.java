@@ -216,11 +216,11 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 							"apiURLTokenMappings")),
 					externalReferenceCode, httpServletRequest);
 
+			String componentId = externalReferenceCode;
+
 			boolean resolved = _isResolved(
 				externalReferenceCode, httpServletRequest,
 				tokenResolutionsJSONObject);
-
-			String componentId = externalReferenceCode;
 
 			if (fragmentRendererContext.isEditMode()) {
 				componentId = StringBundler.concat(

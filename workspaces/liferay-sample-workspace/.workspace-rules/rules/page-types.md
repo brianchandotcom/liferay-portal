@@ -14,7 +14,7 @@ These types appear as pages that visitors can navigate to.
 | Embedded | `embedded` | Iframe pointing to an external URL | headless-admin-site: `POST /sites/{siteExternalReferenceCode}/site-pages` with `"type": "EmbeddedPage"` |
 | Full Page Application | `full_page_application` | Single portlet occupying the entire page | headless-admin-site: `POST /sites/{siteExternalReferenceCode}/site-pages` (no distinct `type` enum value — verify; remaining enum values are `PageSetPage`, `LinkToPagePage`) |
 
-> **Three distinct "type" vocabularies — don't mix them.** The `Key` column above is the internal layout-type key. The **`headless-admin-site` `SitePage.type` enum** is `ContentPage` / `WidgetPage` / `LinkToURLPage` / `EmbeddedPage` / `PageSetPage` / `LinkToPagePage` (shown in the API column). The **site-initializer `page.json` `type`** uses `Content` / `Portlet` / `URL` / `Embedded`. And **`headless-delivery`** uses a separate `pageType` field.
+> **Three distinct "type" vocabularies — do not mix them.** The `Key` column above is the internal layout-type key. The **`headless-admin-site` `SitePage.type` enum** is `ContentPage` / `WidgetPage` / `LinkToURLPage` / `EmbeddedPage` / `PageSetPage` / `LinkToPagePage` (shown in the API column). The **site-initializer `page.json` `type`** uses `Content` / `Portlet` / `URL` / `Embedded`. And **`headless-delivery`** uses a separate `pageType` field.
 
 ## Reusable Template Types
 

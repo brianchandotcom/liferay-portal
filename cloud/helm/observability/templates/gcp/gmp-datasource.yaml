@@ -12,7 +12,7 @@ data:
                 name: {{ .Values.datasource.name | quote }}
                 type: {{ .Values.datasource.type | quote }}
                 uid: {{ include "observability.datasourceUid" . | quote }}
-                url: {{ printf "http://%s-frontend:%v" (include "observability.fullname" .) .Values.frontend.port | quote }}
+                url: {{ printf "http://%s:%v" (printf "%s-frontend" (include "observability.fullname" .) | trunc 63 | trimSuffix "-") .Values.frontend.port | quote }}
 kind: ConfigMap
 metadata:
     labels:

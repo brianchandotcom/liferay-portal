@@ -23,10 +23,16 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
+import com.liferay.exportimport.changeset.Changeset;
+import com.liferay.exportimport.changeset.ChangesetManager;
+import com.liferay.exportimport.changeset.constants.ChangesetPortletKeys;
+import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationParameterMapFactoryUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.UserIdStrategy;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
+import com.liferay.exportimport.kernel.service.StagingLocalServiceUtil;
+import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.exportimport.report.model.ExportImportReportEntry;
 import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
 import com.liferay.exportimport.test.util.lar.BasePortletExportImportTestCase;
@@ -53,10 +59,12 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.DateTestUtil;
@@ -81,6 +89,8 @@ import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.io.Serializable;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -97,6 +107,7 @@ import org.junit.runner.RunWith;
 
 /**
  * @author Juan Fernández
+ * @author Chaitanya Sammetla
  */
 @RunWith(Arquillian.class)
 @Sync(cleanTransaction = true)
@@ -524,6 +535,129 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 				article.getUuid(), importedGroup.getGroupId()));
 	}
 
+	@Test
+	public void testIndividualPublishPreservesCircularArticleReference()
+		throws Exception {
+
+		_liveGroup = GroupTestUtil.addGroup();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_liveGroup.getGroupId());
+
+		Map<String, Serializable> attributes = serviceContext.getAttributes();
+
+		attributes.putAll(
+			ExportImportConfigurationParameterMapFactoryUtil.
+				buildParameterMap());
+
+		StagingLocalServiceUtil.enableLocalStaging(
+			TestPropsValues.getUserId(), _liveGroup, false, false,
+			serviceContext);
+
+		Group stagingGroup = _liveGroup.getStagingGroup();
+
+		Layout stagingLayout = LayoutTestUtil.addTypePortletLayout(
+			stagingGroup);
+
+		StagingUtil.publishLayouts(
+			TestPropsValues.getUserId(), stagingGroup.getGroupId(),
+			_liveGroup.getGroupId(), false,
+			ExportImportConfigurationParameterMapFactoryUtil.
+				buildParameterMap());
+
+		Layout liveLayout = LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
+			stagingLayout.getUuid(), _liveGroup.getGroupId(),
+			stagingLayout.isPrivateLayout());
+
+		DataDefinitionResource dataDefinitionResource =
+			_dataDefinitionResourceFactory.create(
+			).user(
+				TestPropsValues.getUser()
+			).build();
+
+		String dataDefinitionString = _read(
+			"repeatable_journal_article_field_data_definition.json");
+
+		DataDefinition dataDefinition =
+			dataDefinitionResource.postSiteDataDefinitionByContentType(
+				stagingGroup.getGroupId(), "journal",
+				DataDefinition.toDTO(dataDefinitionString));
+
+		String structureKey = dataDefinition.getDataDefinitionKey();
+
+		JournalArticle article1 = JournalTestUtil.addArticleWithXMLContent(
+			stagingGroup.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASS_NAME_ID_DEFAULT,
+			_buildXMLContent("{}"), structureKey, null, LocaleUtil.US);
+
+		JournalArticle article2 = JournalTestUtil.addArticleWithXMLContent(
+			stagingGroup.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASS_NAME_ID_DEFAULT,
+			_buildXMLContent(
+				_getArticleReferenceJSONObject(
+					article1
+				).toString()),
+			structureKey, null, LocaleUtil.US);
+
+		JournalArticle stagingArticle1 = JournalTestUtil.updateArticle(
+			article1, RandomTestUtil.randomString(),
+			_buildXMLContent(
+				_getArticleReferenceJSONObject(
+					article2
+				).toString()));
+
+		StagingUtil.publishPortlet(
+			TestPropsValues.getUserId(), stagingGroup.getGroupId(),
+			_liveGroup.getGroupId(), stagingLayout.getPlid(),
+			liveLayout.getPlid(), JournalPortletKeys.JOURNAL,
+			ExportImportConfigurationParameterMapFactoryUtil.
+				buildParameterMap());
+
+		JournalArticle liveArticle1 =
+			JournalArticleLocalServiceUtil.fetchJournalArticleByUuidAndGroupId(
+				stagingArticle1.getUuid(), _liveGroup.getGroupId());
+
+		JournalArticle liveArticle2 =
+			JournalArticleLocalServiceUtil.fetchJournalArticleByUuidAndGroupId(
+				article2.getUuid(), _liveGroup.getGroupId());
+
+		String liveArticle2ContentString = liveArticle2.getContent();
+
+		Assert.assertTrue(
+			liveArticle2ContentString.contains(
+				"\"classPK\":\"" + liveArticle1.getResourcePrimKey() + "\""));
+
+		Changeset changeset = Changeset.create(
+		).addStagedModel(
+			() -> stagingArticle1
+		).build();
+
+		_changesetManager.addChangeset(changeset);
+
+		Map<String, String[]> parameterMap =
+			ExportImportConfigurationParameterMapFactoryUtil.
+				buildParameterMap();
+
+		parameterMap.put("changesetUuid", new String[] {changeset.getUuid()});
+
+		StagingUtil.publishPortlet(
+			TestPropsValues.getUserId(), stagingGroup.getGroupId(),
+			_liveGroup.getGroupId(), stagingLayout.getPlid(),
+			liveLayout.getPlid(), ChangesetPortletKeys.CHANGESET, parameterMap);
+
+		liveArticle2 =
+			JournalArticleLocalServiceUtil.fetchJournalArticleByUuidAndGroupId(
+				article2.getUuid(), _liveGroup.getGroupId());
+
+		liveArticle2ContentString = liveArticle2.getContent();
+
+		Assert.assertTrue(
+			liveArticle2ContentString.contains(
+				"\"classPK\":\"" + liveArticle1.getResourcePrimKey() + "\""));
+	}
+
 	@Override
 	protected StagedModel addStagedModel(long groupId) throws Exception {
 		return JournalTestUtil.addArticle(
@@ -875,6 +1009,19 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 			string.contains(substring));
 	}
 
+	private String _buildXMLContent(String referenceJSON) {
+		return StringBundler.concat(
+			"<?xml version=\"1.0\"?>",
+			"<root available-locales=\"en_US\" default-locale=\"en_US\" ",
+			"version=\"1.0\">",
+			"<dynamic-element field-reference=\"JournalArticle45391501\" ",
+			"index-type=\"keyword\" instance-id=\"",
+			RandomTestUtil.randomString(),
+			"\" name=\"JournalArticle45391501\" type=\"journal_article\">",
+			"<dynamic-content language-id=\"en_US\"><![CDATA[", referenceJSON,
+			"]]></dynamic-content></dynamic-element></root>");
+	}
+
 	private JSONObject _getArticleReferenceJSONObject(JournalArticle article)
 		throws Exception {
 
@@ -909,6 +1056,9 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
 	@Inject
+	private ChangesetManager _changesetManager;
+
+	@Inject
 	private ConfigurationProvider _configurationProvider;
 
 	@Inject
@@ -932,6 +1082,9 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 
 	@Inject
 	private LayoutService _layoutService;
+
+	@DeleteAfterTestRun
+	private Group _liveGroup;
 
 	@Inject
 	private Portal _portal;

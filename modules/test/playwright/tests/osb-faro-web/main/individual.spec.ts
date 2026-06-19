@@ -508,3 +508,84 @@ test('Active Individuals card is empty for a custom range with no activity', asy
 		page.getByText('There is no data for active individuals.')
 	).toBeVisible();
 });
+
+test(
+	'Individual profile Overview tab shows all of its summary cards',
+	{
+		tag: '@LRAC-8902',
+	},
+	async ({
+		analyticsChannel: channel,
+		apiHelpers,
+		dxpSyncedAnalyticsChannel,
+		page,
+		project,
+	}) => {
+		const {dataSourceId} = dxpSyncedAnalyticsChannel;
+
+		const individual = {
+			...generateIndividual({name: 'cards' + getRandomString()}),
+			dataSourceId,
+		};
+
+		const date = new Date();
+
+		await createIndividuals({apiHelpers, individuals: [individual]});
+
+		await apiHelpers.jsonWebServicesOSBAsah.createEvents([
+			{
+				applicationId: 'Page',
+				canonicalUrl: 'https://www.liferay.com',
+				channelId: channel.id,
+				dataSourceId,
+				eventDate: date.toISOString(),
+				eventId: 'pageViewed',
+				title: 'My Page',
+				userId: individual.id,
+			},
+		]);
+
+		await apiHelpers.jsonWebServicesOSBAsah.createSessions([
+			{
+				channelId: channel.id,
+				id: individual.id,
+				sessionEnd: date.toISOString(),
+				sessionStart: date.toISOString(),
+				userId: individual.id,
+			},
+		]);
+
+		// Open the individual profile from the Known Individuals list
+
+		await navigateToACPageViaURL({
+			acPage: ACPage.individualPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await page.getByRole('link', {name: 'Known Individuals'}).click();
+
+		// Refill the search until the seeded individual surfaces in the list
+
+		await expect(async () => {
+			await page.getByPlaceholder('Search').first().fill(individual.name);
+
+			await expect(
+				page.getByRole('link', {name: individual.name}).first()
+			).toBeVisible({timeout: 3000});
+		}).toPass({timeout: 6000});
+
+		await page.getByRole('link', {name: individual.name}).first().click();
+
+		// The Overview tab lists the individual summary cards
+
+		for (const cardTitle of [
+			'Individual Events',
+			'Current Interests',
+			'Associated Segments',
+		]) {
+			await expect(page.getByText(cardTitle).first()).toBeVisible();
+		}
+	}
+);

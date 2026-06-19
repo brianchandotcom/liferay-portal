@@ -19,6 +19,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -91,6 +92,9 @@ public class RelevantTestSuite {
 				_relevantRuleEngine.getRelevantRuleNames(relevantRules));
 
 		for (RelevantRule relevantRule : relevantRules) {
+			boolean stableRule = Objects.equals(
+				relevantRule.getName(), "stable-rule");
+
 			for (TestBatch testBatch : relevantRule.getTestBatches()) {
 				if (testBatches.contains(testBatch)) {
 					TestBatch existingTestBatch = testBatches.get(
@@ -101,7 +105,7 @@ public class RelevantTestSuite {
 					continue;
 				}
 
-				if (!validTestBatchRegexes.isEmpty() &&
+				if (stableRule ||
 					isValidTestBatch(
 						validTestBatchRegexes, testBatch.getName())) {
 

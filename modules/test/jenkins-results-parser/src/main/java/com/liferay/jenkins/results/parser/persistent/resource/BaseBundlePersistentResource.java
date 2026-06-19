@@ -410,6 +410,7 @@ public abstract class BaseBundlePersistentResource
 		buildParameters.put("AXIS_VARIABLE", _getAxisVariable());
 		buildParameters.put("BUILD_PRIORITY", _BUILD_PRIORITY);
 		buildParameters.put("JOB_VARIANT", _JOB_VARIANT);
+		buildParameters.put("PARENT_BUILD_URL", getCurrentTopLevelBuildURL());
 		buildParameters.put("SLAVE_LABEL", "slave-bundle-builder");
 
 		setProducerQueueId(

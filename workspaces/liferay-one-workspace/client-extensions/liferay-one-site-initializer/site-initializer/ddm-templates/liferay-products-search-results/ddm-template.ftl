@@ -42,7 +42,7 @@
 					/>
 
 					<a class="card d-flex flex-column overflow-hidden text-dark text-decoration-none" href="${cpContentHelper.getFriendlyURL(entry, themeDisplay)}">
-						<div class="card-image-wrapper d-flex align-items-center justify-content-center w-100">
+						<div class="align-items-center card-image-wrapper d-flex justify-content-center w-100">
 							<img alt="${entry.getName()}" class="card-product-image" draggable="false" loading="lazy" src="${productImage}" />
 						</div>
 
@@ -65,7 +65,7 @@
 								<ul class="card-bullet-list list-unstyled mb-0">
 									<#list capabilities as tag>
 										<#if tag?trim?has_content>
-											<li class="card-bullet-item d-flex align-items-start small">
+											<li class="align-items-start card-bullet-item d-flex small">
 												<span class="align-items-center card-bullet-icon d-flex flex-shrink-0 justify-content-center text-primary">
 													<svg fill="none" height="14" viewBox="0 0 14 14" width="14" xmlns="http://www.w3.org/2000/svg">
 														<path d="M2.5 7L5.5 10L11.5 4" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" />

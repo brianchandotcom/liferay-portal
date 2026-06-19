@@ -1,13 +1,13 @@
 ---
 
+description: Set up the Liferay MCP server, manage CLI session restart ordering, and diagnose MCP specific failure modes (transport version switch, connection lifecycle, auth split, 204 false alarms, token limit exceeded). Use when the user asks to enable or set up MCP, when an MCP tool call returns errors, or before performing content/page/object operations where MCP is preferred over raw REST.
 name: mcp-server
-description: Set up the Liferay MCP server, manage CLI-session-restart ordering, and diagnose MCP-specific failure modes (transport version switch, connection lifecycle, auth split, 204 false alarms, token-limit exceeded). Use when the user asks to enable or set up MCP, when an MCP tool call returns errors, or before performing content/page/object operations where MCP is preferred over raw REST.
 
 ---
 
 # Liferay MCP Server
 
-**MCP (Model Context Protocol)** is the AI-agent integration standard that lets AI tools call Liferay APIs directly without manual REST auth setup.
+**MCP (Model Context Protocol)** is the AI agent integration standard that lets AI tools call Liferay APIs directly without manual REST auth setup.
 
 > Available on recent DXP quarterly releases (gated by feature flag `LPD-63311`, marked `beta`). Verify against your DXP version before relying on it.
 
@@ -15,13 +15,13 @@ description: Set up the Liferay MCP server, manage CLI-session-restart ordering,
 
 ### 1. Enable the Feature Flag
 
-Enable `LPD-63311` in the active configuration. Use `skills/feature-flags/SKILL.md` for the per-environment mechanism (Tomcat / Docker prebuilt / Docker custom) and the env-var encoding scheme.
+Enable `LPD-63311` in the active configuration. Use `skills/feature-flags/SKILL.md` for the per environment mechanism (Tomcat / Docker prebuilt / Docker custom) and the env var encoding scheme.
 
 ### 2. Restart the CLI Session
 
-Most CLI-based agents load MCP configuration at startup only and cannot pick up new settings mid-session. Prompt the user to exit and restart their agent session **before starting the Liferay server** — so the restart costs nothing while the server is still down.
+Most CLI based agents load MCP configuration at startup only and cannot pick up new settings midsession. Prompt the user to exit and restart their agent session **before starting the Liferay server** — so the restart costs nothing while the server is still down.
 
-The CLI session restart kills any running Liferay server. If `blade server start` runs before the restart, the restart will tear the server down — forcing a second cold-boot cycle. Liferay cold-boot is several minutes. Complete the CLI restart before running `blade server start`.
+The CLI session restart kills any running Liferay server. If `blade server start` runs before the restart, the restart will tear the server down — forcing a second cold boot cycle. Liferay cold boot is several minutes. Complete the CLI restart before running `blade server start`.
 
 ### 3. Endpoint URL by DXP Version
 
@@ -34,9 +34,9 @@ Basic auth with base64-encoded credentials. Default: `test@liferay.com` / `test`
 
 ### 5. Connection Check
 
-Use your MCP client's built-in connection test. If it returns 401/403, stop and ask the user for updated credentials — do not edit these rule files.
+Use your MCP client's built in connection test. If it returns 401/403, stop and ask the user for updated credentials — do not edit these rule files.
 
-## MCP-First Workflow
+## MCP First Workflow
 
 When MCP is available, always attempt operations via MCP before reaching for headless REST. MCP bypasses the complex auth dance (session cookies, `p_auth`, SAP policies, Basic Auth verifier).
 
@@ -52,9 +52,9 @@ The Liferay MCP server on DXP 2026.Q1 and later requires the **Streamable HTTP**
 
 CLI sessions load MCP server config once at startup. Any change — including initial setup, endpoint URL updates, or auth credential changes — will not be visible until you exit and restart the session. This applies whether the change was made before or during the session.
 
-After restarting, verify the MCP server entry appears in your client's server list before starting Liferay. A disconnected or failed status is expected and acceptable at this point — the server isn't running yet. If the entry is absent entirely, re-check the MCP configuration before proceeding.
+After restarting, verify the MCP server entry appears in your client's server list before starting Liferay. A disconnected or failed status is expected and acceptable at this point — the server is not running yet. If the entry is absent entirely, recheck the MCP configuration before proceeding.
 
-If the server shows as connected but lists zero tools, check whether your agent provides a reconnect or refresh option for MCP servers — this can recover a dropped mid-session connection without a full restart. This does **not** apply to newly added or changed server config — those always require a full restart.
+If the server shows as connected but lists zero tools, check whether your agent provides a reconnect or refresh option for MCP servers — this can recover a dropped midsession connection without a full restart. This does **not** apply to newly added or changed server config — those always require a full restart.
 
 ### 204 No Content Responses Are False Alarms
 
@@ -64,11 +64,11 @@ The MCP `call-http-endpoint` tool throws `MCP error -32603: text must not be nul
 
 **Workaround**: after a 204 MCP error, follow up with a GET to confirm the operation succeeded before assuming failure or retrying.
 
-### Endpoint Discovery with `get-openapi`
+### Endpoint Discovery With `get-openapi`
 
 `get-openapi` enumerates Liferay's headless API surface from the live instance's OpenAPI specs. Use it before answering "is there an endpoint for X?" questions, before debugging a call whose expected behavior is uncertain, or before composing any POST/PATCH payload. The live specs are the source of truth — Liferay's hosted documentation is known to lag, and GET response structure does not equal POST/PATCH request structure.
 
-The spec has known gaps: several fields required at runtime are marked optional (see `manage-pages` → "`headless-admin-site` Schema Gotchas" for the documented exceptions in that API). Treat the spec as the discovery surface, not the final word, and cross-check against the per-skill gotchas when working with `headless-admin-site`, `headless-delivery`, or `object-admin`.
+The spec has known gaps: several fields required at runtime are marked optional (see `manage-pages` → "`headless-admin-site` Schema Gotchas" for the documented exceptions in that API). Treat the spec as the discovery surface, not the final word, and cross check against the per skill gotchas when working with `headless-admin-site`, `headless-delivery`, or `object-admin`.
 
 ### Large OpenAPI Specs Exceed the Token Limit
 
@@ -78,7 +78,7 @@ The spec has known gaps: several fields required at runtime are marked optional 
 
 ### MCP Connection Lifecycle (Server Restart Drops the Connection)
 
-The MCP client connection drops when the Liferay server stops, restarts, or crashes and does NOT auto-reconnect. Recovery requires the user to manually trigger reconnect in their agent — the agent cannot trigger reconnection via Bash, MCP, or any other tool. After any Liferay restart cycle completes, prompt the user to reconnect the MCP server in their agent (each agent has its own reconnect command; e.g., a slash command, a UI button, or a settings refresh) and wait for their reply before making MCP tool calls.
+The MCP client connection drops when the Liferay server stops, restarts, or crashes and does NOT autoreconnect. Recovery requires the user to manually trigger reconnect in their agent — the agent cannot trigger reconnection via Bash, MCP, or any other tool. After any Liferay restart cycle completes, prompt the user to reconnect the MCP server in their agent (each agent has its own reconnect command; e.g., a slash command, a UI button, or a settings refresh) and wait for their reply before making MCP tool calls.
 
 ### MCP/REST Auth Split — Handshake Succeeds Without BasicAuth Verifier
 

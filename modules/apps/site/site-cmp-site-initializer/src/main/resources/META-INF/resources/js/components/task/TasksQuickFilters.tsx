@@ -147,6 +147,8 @@ export default function TasksQuickFilters({projectId}: {projectId?: string}) {
 				if (filter.id === 'cmpDueDate') {
 					const currentDate = new Date();
 
+					currentDate.setDate(currentDate.getDate() - 1);
+
 					return {
 						...filter,
 						active: true,

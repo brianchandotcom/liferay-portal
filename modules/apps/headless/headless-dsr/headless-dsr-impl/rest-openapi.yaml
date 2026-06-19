@@ -9,6 +9,9 @@ components:
                     format: int64
                     readOnly: true
                     type: integer
+                membershipExpirationDate:
+                    format: date-time
+                    type: string
                 ownerId:
                     format: int64
                     readOnly: true
@@ -49,6 +52,9 @@ components:
                     format: int64
                     readOnly: true
                     type: integer
+                membershipExpirationDate:
+                    format: date-time
+                    type: string
                 name:
                     readOnly: true
                     type: string

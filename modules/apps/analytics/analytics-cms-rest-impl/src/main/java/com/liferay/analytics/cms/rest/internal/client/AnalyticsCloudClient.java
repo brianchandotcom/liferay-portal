@@ -45,6 +45,8 @@ import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.io.InputStream;
+
 import java.net.HttpURLConnection;
 
 import java.util.ArrayList;
@@ -68,6 +70,53 @@ public class AnalyticsCloudClient {
 
 		_http = http;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
+	}
+
+	public InputStream getInputStream(
+			AnalyticsConfiguration analyticsConfiguration, String filterString,
+			List<Long> groupIds, String metricType, String path,
+			Integer rangeKey, Sort[] sorts)
+		throws PortalException {
+
+		try {
+			Http.Options options = _getOptions(analyticsConfiguration);
+
+			options.addHeader("Accept", "application/octet-stream, */*");
+
+			options.setLocation(
+				_getLocation(
+					null, analyticsConfiguration.liferayAnalyticsDataSourceId(),
+					null, filterString, null, groupIds,
+					analyticsConfiguration.liferayAnalyticsFaroBackendURL(),
+					metricType, null, null, path, rangeKey, null, null, sorts,
+					null, null));
+
+			InputStream inputStream = _http.URLtoInputStream(options);
+
+			Http.Response response = options.getResponse();
+
+			if (response.getResponseCode() != HttpURLConnection.HTTP_OK) {
+				if (inputStream != null) {
+					inputStream.close();
+				}
+
+				if (_log.isDebugEnabled()) {
+					_log.debug("Response code " + response.getResponseCode());
+				}
+
+				throw new PortalException("Unable to get input stream " + path);
+			}
+
+			return inputStream;
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
+			throw new PortalException(
+				"Unable to get input stream " + path, exception);
+		}
 	}
 
 	public List<ObjectEntryAcquisitionChannel>

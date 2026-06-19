@@ -6,65 +6,43 @@
 import ClayButton from '@clayui/button';
 import {Option, Picker} from '@clayui/core';
 import ClayEmptyState from '@clayui/empty-state';
-import ClayLayout from '@clayui/layout';
-import ClayToolbar from '@clayui/toolbar';
 import {useId} from 'frontend-js-components-web';
-import {navigate} from 'frontend-js-web';
 import React, {useState} from 'react';
 
 import './ElementVariations.scss';
 
-const EXPERIENCES = [{label: Liferay.Language.get('default'), value: '0'}];
+interface Props {
+	audiences: Array<{label: string; value: string}>;
+	experiences: Array<{label: string; value: string}>;
+	languageId: string;
+	plid: number;
+	redirect: string;
+	segmentsExperienceId: number;
+}
 
-const ExperienceTrigger = React.forwardRef(({children, ...otherProps}, ref) => (
-	<ClayButton
-		className="form-control form-control-select form-control-sm text-left"
-		displayType="secondary"
-		ref={ref}
-		{...otherProps}
-	>
-		{children}
-	</ClayButton>
-));
+const ExperienceTrigger = React.forwardRef<HTMLButtonElement, any>(
+	({children, ...otherProps}, ref) => (
+		<ClayButton
+			className="form-control form-control-select form-control-sm text-left"
+			displayType="secondary"
+			ref={ref}
+			{...otherProps}
+		>
+			{children}
+		</ClayButton>
+	)
+);
 
-export default function ElementVariations({redirect}) {
+export default function ElementVariations({experiences}: Props) {
 	const experienceId = useId();
-	const [experienceKey, setExperienceKey] = useState('0');
+	const [experienceKey, setExperienceKey] = useState(
+		experiences[0]?.value ?? ''
+	);
 
 	return (
 		<div className="d-flex element-variations flex-column">
-			<ClayToolbar className="bg-white">
-				<ClayLayout.ContainerFluid size={false}>
-					<ClayToolbar.Nav>
-						<ClayToolbar.Item expand />
-
-						<ClayToolbar.Item>
-							<ClayButton
-								displayType="secondary"
-								onClick={() => navigate(redirect)}
-								size="sm"
-							>
-								{Liferay.Language.get('cancel')}
-							</ClayButton>
-						</ClayToolbar.Item>
-
-						<ClayToolbar.Item>
-							<ClayButton displayType="primary" size="sm">
-								{Liferay.Language.get('publish-variant')}
-							</ClayButton>
-						</ClayToolbar.Item>
-					</ClayToolbar.Nav>
-				</ClayLayout.ContainerFluid>
-			</ClayToolbar>
-
 			<div className="d-flex element-variations__content flex-grow-1">
-				<iframe
-					className="border-0 flex-grow-1 h-100 w-100"
-					src="https://example.com"
-					title={Liferay.Language.get('element-variations')}
-				/>
-
-				<div className="bg-white border-left d-flex element-variations__sidebar flex-column flex-shrink-0">
+				<div className="bg-white border-right d-flex element-variations__sidebar flex-column flex-shrink-0">
 					<div className="border-bottom flex-shrink-0 px-3 py-3">
 						<span className="font-weight-bold">
 							{Liferay.Language.get('element-variations')}
@@ -81,7 +59,7 @@ export default function ElementVariations({redirect}) {
 								aria-label={Liferay.Language.get('experience')}
 								as={ExperienceTrigger}
 								id={experienceId}
-								items={EXPERIENCES}
+								items={experiences}
 								onSelectionChange={(selection) =>
 									setExperienceKey(String(selection))
 								}
@@ -118,6 +96,12 @@ export default function ElementVariations({redirect}) {
 						</div>
 					</div>
 				</div>
+
+				<iframe
+					className="border-0 flex-grow-1 h-100 w-100"
+					src="https://example.com"
+					title={Liferay.Language.get('element-variations')}
+				/>
 			</div>
 		</div>
 	);

@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -84,8 +83,7 @@ public class CMSObjectRelationshipEdgeUpgradeProcess extends UpgradeProcess {
 					ObjectRelationshipConstants.DELETION_TYPE_CASCADE, false)) {
 
 			if (objectRelationship.isSelf() ||
-				!Objects.equals(
-					objectRelationship.getType(),
+				!objectRelationship.compareType(
 					ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
 
 				continue;
@@ -167,8 +165,7 @@ public class CMSObjectRelationshipEdgeUpgradeProcess extends UpgradeProcess {
 					ObjectRelationshipConstants.DELETION_TYPE_CASCADE, false)) {
 
 			if (objectRelationship.isSelf() ||
-				!Objects.equals(
-					objectRelationship.getType(),
+				!objectRelationship.compareType(
 					ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
 
 				continue;

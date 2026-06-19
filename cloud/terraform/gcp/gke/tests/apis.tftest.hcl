@@ -45,7 +45,7 @@ run "should_enable_required_project_apis" {
 	}
 
 	assert {
-		condition=length(google_project_service.apis) == 18
+		condition=length(google_project_service.apis) == 19
 		error_message="All required project APIs must be enabled"
 	}
 

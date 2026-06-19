@@ -6,14 +6,20 @@
 import ClayLabel from '@clayui/label';
 import React from 'react';
 
+enum SEVERITY {
+	HIGH = '3',
+	LOW = '1',
+	MEDIUM = '2',
+}
+
 function getDisplayType(severityKey: string) {
 	switch (severityKey) {
-		case 'critical':
+		case SEVERITY.HIGH:
 			return 'danger';
-		case 'high':
+		case SEVERITY.LOW:
+			return 'secondary';
+		case SEVERITY.MEDIUM:
 			return 'warning';
-		case 'medium':
-			return 'info';
 		default:
 			return 'secondary';
 	}
@@ -33,6 +39,7 @@ export default function ImpactCellRenderer({
 	return (
 		<ClayLabel
 			displayType={getDisplayType(itemData?.severity?.key ?? '')}
+			inverse
 			withClose={false}
 		>
 			{value}

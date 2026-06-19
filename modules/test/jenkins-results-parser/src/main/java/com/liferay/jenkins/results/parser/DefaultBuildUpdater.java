@@ -45,11 +45,20 @@ public class DefaultBuildUpdater extends BaseBuildUpdater {
 	public void reinvoke(Map<String, String> reinvokeBuildParameters) {
 		Build build = getBuild();
 
+		JenkinsMaster currentJenkinsMaster = null;
+
+		Build.Invocation currentInvocation = build.getCurrentInvocation();
+
+		if (currentInvocation != null) {
+			currentJenkinsMaster = currentInvocation.getJenkinsMaster();
+		}
+
 		JenkinsCohort jenkinsCohort = build.getJenkinsCohort();
 
 		JenkinsMaster jenkinsMaster =
 			jenkinsCohort.getMostAvailableJenkinsMaster(
-				build.getInvokedBatchSize(), build.getJobName());
+				currentJenkinsMaster, build.getInvokedBatchSize(),
+				build.getJobName());
 
 		build.setJenkinsMaster(jenkinsMaster);
 

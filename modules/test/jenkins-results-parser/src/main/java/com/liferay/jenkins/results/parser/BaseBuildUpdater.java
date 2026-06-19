@@ -70,24 +70,39 @@ public abstract class BaseBuildUpdater implements BuildUpdater {
 
 	protected void runMissing() {
 		if (isBuildQueued()) {
+			_missingTickCount = 0;
+
 			_build.setStatus("queued");
 
 			return;
 		}
 
 		if (isBuildRunning()) {
+			_missingTickCount = 0;
+
 			_build.setStatus("running");
 
 			return;
 		}
 
 		if (isBuildCompleted()) {
+			_missingTickCount = 0;
+
 			_build.setStatus("completed");
 
 			return;
 		}
 
-		if (!_hasMaximumInvocationCount()) {
+		_missingTickCount++;
+
+		if (_missingTickCount < _getMissingReinvokeTickCount()) {
+			return;
+		}
+
+		if (_missingReinvocationCount < _getMissingMaximumReinvocationCount()) {
+			_missingReinvocationCount++;
+			_missingTickCount = 0;
+
 			_build.reset();
 
 			reinvoke();
@@ -96,6 +111,8 @@ public abstract class BaseBuildUpdater implements BuildUpdater {
 
 			return;
 		}
+
+		_missingTickCount = 0;
 
 		_build.setStatus("reporting");
 	}
@@ -174,6 +191,40 @@ public abstract class BaseBuildUpdater implements BuildUpdater {
 		}
 
 		_build.setStatus("queued");
+	}
+
+	private int _getMissingMaximumReinvocationCount() {
+		try {
+			String missingMaxReinvocationCount =
+				JenkinsResultsParserUtil.getBuildProperty(
+					"build.missing.max.reinvocation.count");
+
+			if (JenkinsResultsParserUtil.isInteger(
+					missingMaxReinvocationCount)) {
+
+				return Integer.parseInt(missingMaxReinvocationCount);
+			}
+		}
+		catch (IOException ioException) {
+		}
+
+		return _MISSING_MAXIMUM_REINVOCATION_COUNT_DEFAULT;
+	}
+
+	private int _getMissingReinvokeTickCount() {
+		try {
+			String missingReinvokeTickCount =
+				JenkinsResultsParserUtil.getBuildProperty(
+					"build.missing.reinvoke.tick.count");
+
+			if (JenkinsResultsParserUtil.isInteger(missingReinvokeTickCount)) {
+				return Integer.parseInt(missingReinvokeTickCount);
+			}
+		}
+		catch (IOException ioException) {
+		}
+
+		return _MISSING_REINVOKE_TICK_COUNT_DEFAULT;
 	}
 
 	private boolean _hasMaximumInvocationCount() {
@@ -405,11 +456,17 @@ public abstract class BaseBuildUpdater implements BuildUpdater {
 		slaveOfflineRule.takeSlaveOffline(build);
 	}
 
+	private static final int _MISSING_MAXIMUM_REINVOCATION_COUNT_DEFAULT = 2;
+
+	private static final int _MISSING_REINVOKE_TICK_COUNT_DEFAULT = 3;
+
 	private static final Pattern _notificationRecipentsPattern =
 		Pattern.compile(
 			"slack:(?:<@)?(?<slack>[\\w-]+)>?|(?<email>[\\w-]+@[\\w.-]+)");
 
 	private final Build _build;
+	private int _missingReinvocationCount;
+	private int _missingTickCount;
 	private final Map<Build.Invocation, ReinvokeRule> _reinvokeRulesMap =
 		new HashMap<>();
 

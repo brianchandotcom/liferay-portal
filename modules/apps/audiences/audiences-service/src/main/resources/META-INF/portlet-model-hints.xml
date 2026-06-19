@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.audiences.model.AudiencesEntry">
+		<field name="mvccVersion" type="long" />
+		<field name="externalReferenceCode" type="String" />
+		<field name="audiencesEntryId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="JSON" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="name" type="String" />
+	</model>
+</model-hints>

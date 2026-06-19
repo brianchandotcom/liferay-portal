@@ -1,0 +1,144 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.audiences.criteria.test;
+
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.audiences.criteria.AudiencesCriteria;
+import com.liferay.audiences.criteria.AudiencesCriteriaProvider;
+import com.liferay.audiences.criteria.AudiencesCriteriaType;
+import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
+import com.liferay.client.extension.model.ClientExtensionEntry;
+import com.liferay.client.extension.service.ClientExtensionEntryLocalService;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+/**
+ * @author Eudaldo Alonso
+ */
+@RunWith(Arquillian.class)
+public class AudiencesCriteriaProviderTest {
+
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
+
+	@Test
+	public void testGetAudiencesCriteriaTypes() throws Exception {
+		List<AudiencesCriteriaType> audiencesCriteriaTypes =
+			_audiencesCriteriaProvider.getAudiencesCriteriaTypes(
+				TestPropsValues.getCompanyId(), LocaleUtil.getDefault());
+
+		AudiencesCriteriaType audiencesCriteriaType =
+			audiencesCriteriaTypes.get(0);
+
+		List<AudiencesCriteria> audiencesCriterias =
+			audiencesCriteriaType.getAudiencesCriterias();
+
+		Assert.assertEquals(
+			audiencesCriterias.toString(), 15, audiencesCriterias.size());
+
+		AudiencesCriteria audiencesCriteria = _getAudiencesCriteria(
+			audiencesCriterias, "url");
+
+		Assert.assertEquals(
+			AudiencesCriteria.Type.STRING, audiencesCriteria.getType());
+	}
+
+	@Test
+	public void testGetAudiencesCriteriaTypesWithCustomAttribute()
+		throws Exception {
+
+		String name = RandomTestUtil.randomString();
+
+		ClientExtensionEntry clientExtensionEntry = _addClientExtensionEntry(
+			name);
+
+		List<AudiencesCriteriaType> audiencesCriteriaTypes =
+			_audiencesCriteriaProvider.getAudiencesCriteriaTypes(
+				TestPropsValues.getCompanyId(), LocaleUtil.getDefault());
+
+		AudiencesCriteriaType audiencesCriteriaType =
+			audiencesCriteriaTypes.get(1);
+
+		List<AudiencesCriteria> audiencesCriterias =
+			audiencesCriteriaType.getAudiencesCriterias();
+
+		Assert.assertEquals(
+			audiencesCriterias.toString(), 1, audiencesCriterias.size());
+
+		AudiencesCriteria audiencesCriteria = _getAudiencesCriteria(
+			audiencesCriterias,
+			"custom:" + clientExtensionEntry.getExternalReferenceCode());
+
+		Assert.assertEquals(name, audiencesCriteria.getLabel());
+		Assert.assertEquals(
+			AudiencesCriteria.Type.STRING, audiencesCriteria.getType());
+	}
+
+	private ClientExtensionEntry _addClientExtensionEntry(String name)
+		throws Exception {
+
+		ClientExtensionEntry clientExtensionEntry =
+			_clientExtensionEntryLocalService.addClientExtensionEntry(
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				StringPool.BLANK,
+				Collections.singletonMap(LocaleUtil.getDefault(), name),
+				StringPool.BLANK, StringPool.BLANK,
+				ClientExtensionEntryConstants.TYPE_AUDIENCES_CUSTOM_ATTRIBUTES,
+				UnicodePropertiesBuilder.create(
+					true
+				).put(
+					"symbols", RandomTestUtil.randomString()
+				).put(
+					"url", "http://" + RandomTestUtil.randomString() + ".com"
+				).buildString());
+
+		_clientExtensionEntries.add(clientExtensionEntry);
+
+		return clientExtensionEntry;
+	}
+
+	private AudiencesCriteria _getAudiencesCriteria(
+		List<AudiencesCriteria> audiencesCriterias, String key) {
+
+		for (AudiencesCriteria audiencesCriteria : audiencesCriterias) {
+			if (key.equals(audiencesCriteria.getKey())) {
+				return audiencesCriteria;
+			}
+		}
+
+		return null;
+	}
+
+	@Inject
+	private AudiencesCriteriaProvider _audiencesCriteriaProvider;
+
+	@DeleteAfterTestRun
+	private final List<ClientExtensionEntry> _clientExtensionEntries =
+		new ArrayList<>();
+
+	@Inject
+	private ClientExtensionEntryLocalService _clientExtensionEntryLocalService;
+
+}

@@ -1,0 +1,19 @@
+import com.liferay.gradle.util.FileUtil
+
+task runGradleTest
+
+runGradleTest {
+	dependsOn ":client-extension:buildClientExtensionZip"
+
+	doLast {
+		Project clientExtensionProject = project(":client-extension")
+
+		assert FileUtil.exists(clientExtensionProject, "build_gradle/liferay-client-extension-build/static/foo.txt")
+
+		FileTree distZipFileTree = zipTree(clientExtensionProject.file("dist/client-extension.zip"))
+
+		assert distZipFileTree.files.find {
+			it.name == "LCP.json"
+		} != null
+	}
+}

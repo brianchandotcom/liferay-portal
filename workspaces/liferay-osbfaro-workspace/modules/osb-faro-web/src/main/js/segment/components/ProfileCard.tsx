@@ -29,7 +29,11 @@ const SegmentProfileCard: React.FC<ISegmentProfileCardProps> = ({
 	channelId,
 	groupId,
 	id,
-	segment: {anonymousIndividualCount, knownIndividualCount},
+	segment: {
+		anonymousIndividualCount,
+		includeAnonymousUsers,
+		knownIndividualCount,
+	},
 }) => (
 	<Card
 		className="segment-profile-card-root"
@@ -49,6 +53,7 @@ const SegmentProfileCard: React.FC<ISegmentProfileCardProps> = ({
 				channelId={channelId}
 				groupId={groupId}
 				id={id}
+				includeAnonymousUsers={includeAnonymousUsers}
 				individualCounts={{
 					anonymousCount: anonymousIndividualCount,
 					knownCount: knownIndividualCount,

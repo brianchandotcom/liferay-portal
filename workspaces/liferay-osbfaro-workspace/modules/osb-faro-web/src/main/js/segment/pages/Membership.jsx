@@ -24,6 +24,7 @@ export const MembershipChart = withRequest(
 			data: PropTypes.array,
 			groupId: PropTypes.string.isRequired,
 			id: PropTypes.string.isRequired,
+			includeAnonymousUsers: PropTypes.bool,
 			individualCounts: PropTypes.shape({
 				anonymousCount: PropTypes.number,
 				knownCount: PropTypes.number
@@ -38,6 +39,7 @@ export const MembershipChart = withRequest(
 				data,
 				groupId,
 				id,
+				includeAnonymousUsers,
 				individualCounts,
 				segmentType,
 				timeZoneId
@@ -49,6 +51,7 @@ export const MembershipChart = withRequest(
 					data={data}
 					groupId={groupId}
 					id={id}
+					includeAnonymousUsers={includeAnonymousUsers}
 					individualCounts={individualCounts}
 					shouldShowMembershipList={
 						segmentType !== SegmentTypes.RealTime
@@ -83,6 +86,7 @@ export default class Membership extends React.Component {
 			segment: {
 				anonymousIndividualCount,
 				id,
+				includeAnonymousUsers,
 				knownIndividualCount,
 				segmentType
 			},
@@ -108,6 +112,7 @@ export default class Membership extends React.Component {
 					channelId={channelId}
 					groupId={groupId}
 					id={id}
+					includeAnonymousUsers={includeAnonymousUsers}
 					individualCounts={{
 						anonymousCount: anonymousIndividualCount,
 						knownCount: knownIndividualCount

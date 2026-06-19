@@ -46,6 +46,7 @@ import {INDIVIDUALS} from 'shared/util/router';
 import {OrderByDirections, RangeKeyTimeRanges} from 'shared/util/constants';
 import {OrderedMap} from 'immutable';
 import {OrderParams} from 'shared/util/records';
+import {ProfileTypes} from 'segment/segment-editor/dynamic/utils/constants';
 import {sub} from 'shared/util/lang';
 import {useStatefulPagination} from 'shared/hooks/useStatefulPagination';
 
@@ -65,6 +66,7 @@ type Data = {
 	modifiedDate: string;
 	orderIOMap: string;
 	page: number;
+	profileTypes?: string[];
 	query: string;
 };
 
@@ -78,7 +80,16 @@ interface CHANGES_AGGREGATION_SHAPE {
 }
 
 const getAllMembers = (data: Data) => {
-	const {channelId, delta, groupId, id, orderIOMap, page, query} = data;
+	const {
+		channelId,
+		delta,
+		groupId,
+		id,
+		orderIOMap,
+		page,
+		profileTypes,
+		query,
+	} = data;
 
 	return API.individuals.search({
 		channelId,
@@ -87,6 +98,7 @@ const getAllMembers = (data: Data) => {
 		individualSegmentId: id,
 		orderIOMap,
 		page,
+		profileTypes,
 		query,
 	});
 };
@@ -110,6 +122,7 @@ interface ISegmentGrowthChartProps {
 	data: Array<any>;
 	hasSelectedPoint: boolean;
 	height?: number;
+	includeAnonymousUsers?: boolean;
 	individualCounts?: {anonymousCount: number; knownCount: number};
 	selectedPoint?: number;
 	onSelectedPointChange?: (selectedPoint: number) => void;
@@ -124,6 +137,7 @@ export const SegmentGrowthChart: React.FC<ISegmentGrowthChartProps> = ({
 	data,
 	hasSelectedPoint,
 	height = 360,
+	includeAnonymousUsers = true,
 	individualCounts = {
 		anonymousCount: 0,
 		knownCount: 0,
@@ -202,24 +216,31 @@ export const SegmentGrowthChart: React.FC<ISegmentGrowthChartProps> = ({
 									</span>
 								),
 							},
-							{
-								className: 'pb-0',
-								label: () => (
-									<span className="text-secondary">
-										{sub(
-											Liferay.Language.get(
-												'x-anonymous-members'
+							...(includeAnonymousUsers
+								? [
+										{
+											className: 'pb-0',
+											label: () => (
+												<span className="text-secondary">
+													{sub(
+														Liferay.Language.get(
+															'x-anonymous-members'
+														),
+														[
+															<b
+																className="mr-1"
+																key="VALUE"
+															>
+																{anonymousCount.toLocaleString()}
+															</b>,
+														],
+														false
+													)}
+												</span>
 											),
-											[
-												<b className="mr-1" key="VALUE">
-													{anonymousCount.toLocaleString()}
-												</b>,
-											],
-											false
-										)}
-									</span>
-								),
-							},
+										},
+									]
+								: []),
 							{
 								label: () => (
 									<span className="text-secondary">
@@ -431,15 +452,19 @@ export const SegmentGrowthChart: React.FC<ISegmentGrowthChartProps> = ({
 								type: 'circle',
 								value: Liferay.Language.get('known-members'),
 							},
-							{
-								color: CHART_ORANGE,
-								count: anonymousCount,
-								dataKey: 'anonymousCount',
-								type: 'circle',
-								value: Liferay.Language.get(
-									'anonymous-members'
-								),
-							},
+							...(includeAnonymousUsers
+								? [
+										{
+											color: CHART_ORANGE,
+											count: anonymousCount,
+											dataKey: 'anonymousCount',
+											type: 'circle',
+											value: Liferay.Language.get(
+												'anonymous-members'
+											),
+										},
+									]
+								: []),
 							{
 								color: CHART_BLACK,
 								count: anonymousCount + knownCount,
@@ -499,24 +524,28 @@ export const SegmentGrowthChart: React.FC<ISegmentGrowthChartProps> = ({
 						}
 					/>
 
-					<ReferenceDot
-						fill={CHART_ORANGE}
-						fillOpacity={legendHoverItem === 'knownCount' ? 0.1 : 1}
-						isFront
-						r={4}
-						stroke="none"
-						x={
-							hasSelectedPoint
-								? data[selectedPoint].modifiedDate
-								: null
-						}
-						y={
-							hasSelectedPoint
-								? data[selectedPoint].knownCount +
-									data[selectedPoint].anonymousCount
-								: null
-						}
-					/>
+					{includeAnonymousUsers && (
+						<ReferenceDot
+							fill={CHART_ORANGE}
+							fillOpacity={
+								legendHoverItem === 'knownCount' ? 0.1 : 1
+							}
+							isFront
+							r={4}
+							stroke="none"
+							x={
+								hasSelectedPoint
+									? data[selectedPoint].modifiedDate
+									: null
+							}
+							y={
+								hasSelectedPoint
+									? data[selectedPoint].knownCount +
+										data[selectedPoint].anonymousCount
+									: null
+							}
+						/>
+					)}
 
 					<Area
 						{...commonAreaChartStyles}
@@ -534,21 +563,23 @@ export const SegmentGrowthChart: React.FC<ISegmentGrowthChartProps> = ({
 						}
 					/>
 
-					<Area
-						{...commonAreaChartStyles}
-						activeDot={{r: 4, stroke: CHART_ORANGE}}
-						dataKey="anonymousCount"
-						fill={CHART_ORANGE}
-						fillOpacity={
-							legendHoverItem === 'knownCount' ? 0.1 : 0.2
-						}
-						isAnimationActive={false}
-						name={Liferay.Language.get('anonymous-members')}
-						stroke={CHART_ORANGE}
-						strokeOpacity={
-							legendHoverItem === 'knownCount' ? 0.2 : 1
-						}
-					/>
+					{includeAnonymousUsers && (
+						<Area
+							{...commonAreaChartStyles}
+							activeDot={{r: 4, stroke: CHART_ORANGE}}
+							dataKey="anonymousCount"
+							fill={CHART_ORANGE}
+							fillOpacity={
+								legendHoverItem === 'knownCount' ? 0.1 : 0.2
+							}
+							isAnimationActive={false}
+							name={Liferay.Language.get('anonymous-members')}
+							stroke={CHART_ORANGE}
+							strokeOpacity={
+								legendHoverItem === 'knownCount' ? 0.2 : 1
+							}
+						/>
+					)}
 				</AreaChart>
 			</ResponsiveContainer>
 		</ComposedChartWithEmptyState>
@@ -568,6 +599,7 @@ interface ISegmentGrowthWithList {
 	groupId: string;
 	hasSelectedPoint: boolean;
 	id: string;
+	includeAnonymousUsers?: boolean;
 	individualCounts?: {anonymousCount: number; knownCount: number};
 	selectedPoint: number;
 	timeZoneId: string;
@@ -580,6 +612,7 @@ const SegmentGrowthWithList: React.FC<ISegmentGrowthWithList> = ({
 	groupId,
 	hasSelectedPoint,
 	id,
+	includeAnonymousUsers,
 	individualCounts,
 	selectedPoint,
 	timeZoneId,
@@ -651,6 +684,7 @@ const SegmentGrowthWithList: React.FC<ISegmentGrowthWithList> = ({
 					data={data}
 					hasSelectedPoint={hasSelectedPoint}
 					height={360}
+					includeAnonymousUsers={includeAnonymousUsers}
 					individualCounts={individualCounts}
 					selectedPoint={selectedPoint}
 				/>
@@ -668,6 +702,9 @@ const SegmentGrowthWithList: React.FC<ISegmentGrowthWithList> = ({
 							groupId,
 							id,
 							modifiedDate,
+							...(includeAnonymousUsers === false
+								? {profileTypes: [ProfileTypes.KNOWN]}
+								: {}),
 						}}
 						entityType={INDIVIDUALS}
 						noResultsRenderer={() => {

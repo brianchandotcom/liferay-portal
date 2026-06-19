@@ -17,6 +17,19 @@ const HEADERS = new Headers({
 	'Content-Type': 'application/json',
 });
 
+async function disassociateChatbotFromAgentDefinition(
+	chatbotERC: string,
+	agentERC: string
+) {
+	return fetch(
+		`${CHATBOT_BY_ERC_URI}${chatbotERC}/agentDefinitionsToChatbots/${agentERC}/disassociate`,
+		{
+			headers: HEADERS,
+			method: 'POST',
+		}
+	);
+}
+
 async function getChatbots() {
 	const response = await fetch(CHATBOT_BASE_URI, {
 		headers: HEADERS,
@@ -84,19 +97,6 @@ async function putChatbot(
 	return response.json();
 }
 
-async function deleteChatbotAgentDefinitionRelationship(
-	chatbotERC: string,
-	agentERC: string
-) {
-	return fetch(
-		`${CHATBOT_BY_ERC_URI}${chatbotERC}/agentDefinitionsToChatbots/${agentERC}`,
-		{
-			headers: HEADERS,
-			method: 'DELETE',
-		}
-	);
-}
-
 async function putChatbotAgentDefinitionRelationship(
 	chatbotERC: string,
 	agentERC: string
@@ -111,7 +111,7 @@ async function putChatbotAgentDefinitionRelationship(
 }
 
 export {
-	deleteChatbotAgentDefinitionRelationship,
+	disassociateChatbotFromAgentDefinition,
 	getChatbot,
 	getChatbots,
 	postChatbot,

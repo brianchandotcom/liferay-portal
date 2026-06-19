@@ -1,7 +1,7 @@
 ---
 
-name: scaffold-fragment
 description: Create a Liferay page fragment — an HTML/CSS/JS building block that marketers drop onto Content Pages. Use when the user asks to create a fragment, build a hero section, or make a reusable page component. Maps to the Frontend Developer Learning Path and "Mastering Liferay Pages and Navigation".
+name: scaffold-fragment
 
 ---
 
@@ -19,8 +19,8 @@ Generate the source files for a Liferay page fragment and deploy it to the runni
 
 | Type | Use Case | Key Feature |
 | --- | --- | --- |
-| Component | General-purpose UI block | `data-lfr-editable` regions, configuration fields |
-| Section | Full-width layout block | Wraps other fragments or sets background |
+| Component | General purpose UI block | `data-lfr-editable` regions, configuration fields |
+| Section | Full width layout block | Wraps other fragments or sets background |
 | Form | Entry form tied to an object | `data-lfr-form-*` attributes |
 | React / Custom Element | Complex interactive widget | Delivered as a custom element CET alongside the fragment |
 
@@ -53,11 +53,11 @@ Create four files for each fragment:
 
 ```json
 {
-  "cssPath": "index.css",
-  "htmlPath": "index.html",
-  "jsPath": "index.js",
-  "name": "<Fragment Display Name>",
-  "type": "component"
+	"cssPath": "index.css",
+	"htmlPath": "index.html",
+	"jsPath": "index.js",
+	"name": "<Fragment Display Name>",
+	"type": "component"
 }
 ```
 
@@ -100,7 +100,8 @@ Editable type values: `rich-text`, `text`, `image`, `link`, `html`, `background-
 ```javascript
 /* Fragment JS — runs once per fragment instance on the page */
 const fragmentElement = fragmentNamespace.element;
-// fragmentElement is the fragment's root DOM element
+
+// FragmentElement is the fragment's root DOM element
 ```
 
 ### 3. Add Configuration Fields (Optional)
@@ -109,27 +110,33 @@ Create `configuration.json` to expose configurable options in the Content Page e
 
 ```json
 {
-  "fieldSets": [
-    {
-      "fields": [
-        {
-          "dataType": "string",
-          "defaultValue": "primary",
-          "label": "Button Style",
-          "name": "buttonStyle",
-          "type": "select",
-          "typeOptions": {
-            "validValues": [
-              {"value": "primary"},
-              {"value": "secondary"},
-              {"value": "link"}
-            ]
-          }
-        }
-      ],
-      "label": "Styling"
-    }
-  ]
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "primary",
+					"label": "Button Style",
+					"name": "buttonStyle",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"value": "primary"
+							},
+							{
+								"value": "secondary"
+							},
+							{
+								"value": "link"
+							}
+						]
+					}
+				}
+			],
+			"label": "Styling"
+		}
+	]
 }
 ```
 
@@ -141,7 +148,7 @@ Access the value in `index.html` with `[configuration.buttonStyle]` or in `index
 The fragment lives in the `siteInitializer` tree and is created when the site is provisioned. Trigger the initializer (see `build-site` Phase 9 and `rules/site-initializer-format.md`); no separate fragment deploy is needed.
 
 **Iterating on a fragment — reprovision from the tree:**
-There is **no stable headless endpoint for importing a fragment collection** into a running site — do not assume a live collection-import call exists; verify the live API surface before relying on any such endpoint (the `get-openapi` MCP tool, or fetch the relevant module's `GET /o/<module>/v1.0/openapi.json` with curl). The portable way to apply a fragment change is to edit the source files in the site-initializer tree and reprovision the site — delete the site, then redeploy the initializer CET so it re-creates the site from the current tree. See `rules/site-initializer-format.md` for the reprovision recipe. Object data is company-scoped and survives the reprovision.
+There is **no stable headless endpoint for importing a fragment collection** into a running site — do not assume a live collection import call exists; verify the live API surface before relying on any such endpoint (the `get-openapi` MCP tool, or fetch the relevant module's `GET /o/<module>/v1.0/openapi.json` with curl). The portable way to apply a fragment change is to edit the source files in the site-initializer tree and reprovision the site — delete the site, then redeploy the initializer CET so it recreates the site from the current tree. See `rules/site-initializer-format.md` for the reprovision recipe. Object data is company scoped and survives the reprovision.
 
 **Alternative — standalone fragment collection CET:**
 
@@ -167,7 +174,7 @@ Check the browser console for JS errors from `index.js`. Check `bundles/logs/lif
 
 ### `fragment.json` Path Keys — Hallucination Warning
 
-Do not use `html` or `css` keys in `fragment.json`. The valid keys are `htmlPath`, `cssPath`, `jsPath`, `configurationPath`, `thumbnailPath`. Using the short forms produces "HTML content must not be empty" or silent file-not-found errors.
+Do not use `html` or `css` keys in `fragment.json`. The valid keys are `htmlPath`, `cssPath`, `jsPath`, `configurationPath`, `thumbnailPath`. Using the short forms produces "HTML content must not be empty" or silent file not found errors.
 
 ### Configuration Field Types — Valid vs. Invalid
 
@@ -213,7 +220,7 @@ To create a container fragment that accepts nested content, use the `<lfr-drop-z
 </div>
 ```
 
-### Edit-Mode Awareness
+### Edit Mode Awareness
 
 Liferay's Page Editor adds the class `has-edit-mode-menu` to `<body>` when a page is open for editing. Use this to reveal elements or disable behaviors that should only be visible to authors.
 
@@ -229,18 +236,20 @@ body.has-edit-mode-menu #wrapper .my-fragment-wrapper .drop-zone-hint {
 }
 ```
 
-**JS — disable animations in edit mode to avoid interfering with drag-and-drop:**
+**JS — disable animations in edit mode to avoid interfering with drag and drop:**
 
 ```javascript
 if (!document.body.classList.contains('has-edit-mode-menu')) {
+
   // Run animation logic only in view mode
+
   initAnimations();
 }
 ```
 
 ### Stylebook Tokens
 
-Always prefer Liferay's CSS variables over hardcoded hex values to ensure site-wide brand consistency.
+Always prefer Liferay's CSS variables over hardcoded hex values to ensure sitewide brand consistency.
 
 - **Core colors**: `var(--primary)`, `var(--secondary)`, `var(--brand-color-1)`, `var(--white)`, `var(--black)`.
 - **Status colors**: `var(--success)`, `var(--info)`, `var(--warning)`, `var(--danger)`.
@@ -263,7 +272,7 @@ ${configuration.myVar!'Default'}
 
 ### Headless Fragment CRUD Is Inconsistent
 
-Headless fragment endpoints are not consistent across DXP versions: there is no portable fragment-collection import endpoint, and per-fragment CRUD (create, update, delete an individual fragment outside a collection) is not consistently available. Verify the live API surface before scripting any fragment workflow (the `get-openapi` MCP tool, or fetch the relevant module's `GET /o/<module>/v1.0/openapi.json` with curl); otherwise use the site initializer tree (reprovision to apply changes) or the portal UI.
+Headless fragment endpoints are not consistent across DXP versions: there is no portable fragment collection import endpoint, and per fragment CRUD (create, update, delete an individual fragment outside a collection) is not consistently available. Verify the live API surface before scripting any fragment workflow (the `get-openapi` MCP tool, or fetch the relevant module's `GET /o/<module>/v1.0/openapi.json` with curl); otherwise use the site initializer tree (reprovision to apply changes) or the portal UI.
 
 ### Programmatic Placement on Pages
 

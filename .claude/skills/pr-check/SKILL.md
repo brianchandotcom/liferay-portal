@@ -68,6 +68,8 @@ The procedure runs in two passes over the validations, in the order below. The o
 
 1. [Java Unit Tests](validations/java-unit-test.md)
 
+1. [PQL Validation](validations/pql-validation.md)
+
 1. [JavaScript Unit Tests](validations/javascript-unit-test.md)
 
 Process each validation in a subagent.

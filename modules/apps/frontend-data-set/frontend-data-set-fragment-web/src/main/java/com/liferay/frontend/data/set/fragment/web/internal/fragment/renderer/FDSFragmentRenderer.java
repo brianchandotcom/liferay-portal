@@ -366,14 +366,10 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 
 				// The user picked a manual mapping and left it empty. Mark the
 				// token with an empty JSON object so the URL builder leaves it
-				// unresolved instead of applying the automatic (resolver / OOTB
-				// default) resolution.
+				// unresolved instead of applying the automatic resolution
 
 				tokenResolutionsJSONObject.put(
 					tokenName, _jsonFactory.createJSONObject());
-			}
-			else {
-				tokenResolutionsJSONObject.remove(tokenName);
 			}
 		}
 

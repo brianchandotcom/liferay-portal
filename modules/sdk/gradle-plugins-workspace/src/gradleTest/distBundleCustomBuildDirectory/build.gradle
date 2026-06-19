@@ -1,0 +1,16 @@
+layout.buildDirectory = "build_gradle"
+
+task runGradleTest
+
+runGradleTest {
+	dependsOn distBundleZip
+
+	doLast {
+		File archiveFile = distBundleZip.archivePath
+
+		assert archiveFile.exists()
+		assert archiveFile.canonicalPath.startsWith(file("build_gradle").canonicalPath)
+
+		assert file("build_gradle/dist/tomcat-9.0.17").exists()
+	}
+}

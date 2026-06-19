@@ -2,26 +2,20 @@
 	"externalReferenceCode": "L_SEO_STUDIO_SCAN_INSIGHT_SEVERITIES",
 	"listTypeEntries": [
 		{
-			"externalReferenceCode": "CRITICAL",
-			"key": "critical",
-			"name": "Critical",
-			"system": true
-		},
-		{
 			"externalReferenceCode": "HIGH",
-			"key": "high",
+			"key": "3",
 			"name": "High",
 			"system": true
 		},
 		{
 			"externalReferenceCode": "LOW",
-			"key": "low",
+			"key": "1",
 			"name": "Low",
 			"system": true
 		},
 		{
 			"externalReferenceCode": "MEDIUM",
-			"key": "medium",
+			"key": "2",
 			"name": "Medium",
 			"system": true
 		}

@@ -124,6 +124,26 @@ public class ObjectEntryInfoItemExceptionRequestHandler {
 		}
 
 		if (exception instanceof
+				ObjectEntryValuesException.BlockedEmailAddressDomain) {
+
+			ObjectEntryValuesException.BlockedEmailAddressDomain
+				objectEntryValuesException =
+					(ObjectEntryValuesException.BlockedEmailAddressDomain)
+						exception;
+
+			String infoFieldUniqueId = _getInfoFieldUniqueId(
+				groupId, infoItemFormProvider, objectDefinition,
+				objectEntryValuesException.getObjectFieldName());
+
+			if (infoFieldUniqueId == null) {
+				throw new InfoFormException();
+			}
+
+			throw new InfoFormValidationException.BlockedEmailAddressDomain(
+				infoFieldUniqueId);
+		}
+
+		if (exception instanceof
 				ObjectEntryValuesException.ExceedsIntegerSize) {
 
 			ObjectEntryValuesException.ExceedsIntegerSize
@@ -234,6 +254,25 @@ public class ObjectEntryInfoItemExceptionRequestHandler {
 
 			throw new InfoFormValidationException.ExceedsMaxLength(
 				infoFieldUniqueId, objectEntryValuesException.getMaxLength());
+		}
+
+		if (exception instanceof
+				ObjectEntryValuesException.InvalidEmailAddress) {
+
+			ObjectEntryValuesException.InvalidEmailAddress
+				objectEntryValuesException =
+					(ObjectEntryValuesException.InvalidEmailAddress)exception;
+
+			String infoFieldUniqueId = _getInfoFieldUniqueId(
+				groupId, infoItemFormProvider, objectDefinition,
+				objectEntryValuesException.getObjectFieldName());
+
+			if (infoFieldUniqueId == null) {
+				throw new InfoFormException();
+			}
+
+			throw new InfoFormValidationException.InvalidEmailAddress(
+				infoFieldUniqueId);
 		}
 
 		if (exception instanceof

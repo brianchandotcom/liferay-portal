@@ -39,6 +39,23 @@ public class InfoFormValidationException extends InfoFormException {
 			locale, "x-an-error-occurred", HtmlUtil.escape(fieldLabel), false);
 	}
 
+	public static class BlockedEmailAddressDomain
+		extends InvalidInfoFieldValue {
+
+		public BlockedEmailAddressDomain(String infoFieldUniqueId) {
+			super(infoFieldUniqueId);
+		}
+
+		@Override
+		public String getLocalizedMessage(Locale locale) {
+			return LanguageUtil.get(
+				locale,
+				"the-email-address-domain-is-not-allowed-enter-an-email-" +
+					"address-with-a-different-domain");
+		}
+
+	}
+
 	public static class CustomValidation extends InfoFormValidationException {
 
 		public CustomValidation(String infoFieldUniqueId, String message) {
@@ -228,6 +245,20 @@ public class InfoFormValidationException extends InfoFormException {
 
 		private final CaptchaException _captchaException;
 		private final long _fragmentEntryLinkId;
+
+	}
+
+	public static class InvalidEmailAddress extends InvalidInfoFieldValue {
+
+		public InvalidEmailAddress(String infoFieldUniqueId) {
+			super(infoFieldUniqueId);
+		}
+
+		@Override
+		public String getLocalizedMessage(Locale locale) {
+			return LanguageUtil.get(
+				locale, "please-enter-a-valid-email-address");
+		}
 
 	}
 

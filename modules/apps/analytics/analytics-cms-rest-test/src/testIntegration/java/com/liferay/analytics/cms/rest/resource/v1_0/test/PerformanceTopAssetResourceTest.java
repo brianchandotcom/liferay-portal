@@ -79,7 +79,7 @@ public class PerformanceTopAssetResourceTest
 						).build())) {
 
 			String assetTitle = RandomTestUtil.randomString();
-			String assetType = "text/html";
+			String assetType = RandomTestUtil.randomString();
 			int downloads = RandomTestUtil.nextInt();
 			double engagement = RandomTestUtil.nextDouble();
 			double engagementTrend = RandomTestUtil.nextDouble();
@@ -204,13 +204,14 @@ public class PerformanceTopAssetResourceTest
 			impressions, performanceTopAssetItem.getImpressions(), 0);
 		Assert.assertEquals(assetType, performanceTopAssetItem.getMimeType());
 		Assert.assertEquals(assetTitle, performanceTopAssetItem.getTitle());
-		Assert.assertEquals(views, performanceTopAssetItem.getViews(), 0);
 
 		Trend trend = performanceTopAssetItem.getTrend();
 
 		Assert.assertEquals(
 			Trend.Classification.POSITIVE, trend.getClassification());
 		Assert.assertEquals(engagementTrend, trend.getPercentage(), 0);
+
+		Assert.assertEquals(views, performanceTopAssetItem.getViews(), 0);
 	}
 
 	private void _assertPerformanceTopAssetURL(

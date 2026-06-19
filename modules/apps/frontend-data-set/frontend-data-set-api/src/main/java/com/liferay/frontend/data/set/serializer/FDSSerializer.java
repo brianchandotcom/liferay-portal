@@ -90,6 +90,9 @@ public interface FDSSerializer {
 	public boolean serializeSnapshotsEnabled(
 		String fdsName, HttpServletRequest httpServletRequest);
 
+	public String serializeSnapshotStartupViewERC(
+		String fdsName, HttpServletRequest httpServletRequest);
+
 	public List<FDSSortItem> serializeSorts(
 		String fdsName, HttpServletRequest httpServletRequest);
 

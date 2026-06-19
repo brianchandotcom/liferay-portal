@@ -342,6 +342,23 @@ public class SystemFDSSerializer
 	}
 
 	@Override
+	public String serializeSnapshotStartupViewERC(
+		String fdsName, HttpServletRequest httpServletRequest) {
+
+		try {
+			return serializeSnapshotStartupViewERC(
+				fdsName, httpServletRequest, _objectDefinitionLocalService,
+				_objectEntryManagerRegistry);
+		}
+		catch (Exception exception) {
+			_log.error(
+				"Unable to serialize the snapshot startup view ERC", exception);
+
+			return null;
+		}
+	}
+
+	@Override
 	public List<FDSSortItem> serializeSorts(
 		String fdsName, HttpServletRequest httpServletRequest) {
 

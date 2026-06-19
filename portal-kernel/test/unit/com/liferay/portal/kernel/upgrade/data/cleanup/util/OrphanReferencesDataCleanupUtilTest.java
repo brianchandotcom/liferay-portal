@@ -6,12 +6,11 @@
 package com.liferay.portal.kernel.upgrade.data.cleanup.util;
 
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-
-import java.util.concurrent.atomic.AtomicInteger;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -30,24 +29,13 @@ public class OrphanReferencesDataCleanupUtilTest {
 
 		Mockito.doThrow(
 			new SQLException(
-				"Constraint violation", _SQLSTATE_CONSTRAINT_VIOLATION)
+				RandomTestUtil.randomString(), _SQLSTATE_CONSTRAINT_VIOLATION)
 		).when(
 			preparedStatement
 		).executeUpdate();
 
-		Connection connection = Mockito.mock(Connection.class);
-
-		Mockito.when(
-			connection.prepareStatement(Mockito.anyString())
-		).thenReturn(
-			preparedStatement
-		);
-
 		try {
-			ReflectionTestUtil.invoke(
-				OrphanReferencesDataCleanupUtil.class, "_executeDelete",
-				new Class<?>[] {Connection.class, String.class}, connection,
-				"delete from foo where bar is null");
+			_invokeExecuteDelete(preparedStatement);
 
 			Assert.fail();
 		}
@@ -68,34 +56,15 @@ public class OrphanReferencesDataCleanupUtilTest {
 		PreparedStatement preparedStatement = Mockito.mock(
 			PreparedStatement.class);
 
-		AtomicInteger callCount = new AtomicInteger();
-
-		Mockito.doAnswer(
-			invocation -> {
-				if (callCount.incrementAndGet() == 1) {
-					throw new SQLException("Deadlock", _SQLSTATE_DEADLOCK);
-				}
-
-				return 0;
-			}
+		Mockito.doThrow(
+			new SQLException(RandomTestUtil.randomString(), _SQLSTATE_DEADLOCK)
+		).doReturn(
+			0
 		).when(
 			preparedStatement
 		).executeUpdate();
 
-		Connection connection = Mockito.mock(Connection.class);
-
-		Mockito.when(
-			connection.prepareStatement(Mockito.anyString())
-		).thenReturn(
-			preparedStatement
-		);
-
-		ReflectionTestUtil.invoke(
-			OrphanReferencesDataCleanupUtil.class, "_executeDelete",
-			new Class<?>[] {Connection.class, String.class}, connection,
-			"delete from foo where bar is null");
-
-		Assert.assertEquals(2, callCount.get());
+		_invokeExecuteDelete(preparedStatement);
 
 		Mockito.verify(
 			preparedStatement, Mockito.times(2)
@@ -108,24 +77,13 @@ public class OrphanReferencesDataCleanupUtilTest {
 			PreparedStatement.class);
 
 		Mockito.doThrow(
-			new SQLException("Deadlock", _SQLSTATE_DEADLOCK)
+			new SQLException(RandomTestUtil.randomString(), _SQLSTATE_DEADLOCK)
 		).when(
 			preparedStatement
 		).executeUpdate();
 
-		Connection connection = Mockito.mock(Connection.class);
-
-		Mockito.when(
-			connection.prepareStatement(Mockito.anyString())
-		).thenReturn(
-			preparedStatement
-		);
-
 		try {
-			ReflectionTestUtil.invoke(
-				OrphanReferencesDataCleanupUtil.class, "_executeDelete",
-				new Class<?>[] {Connection.class, String.class}, connection,
-				"delete from foo where bar is null");
+			_invokeExecuteDelete(preparedStatement);
 
 			Assert.fail();
 		}
@@ -138,11 +96,28 @@ public class OrphanReferencesDataCleanupUtilTest {
 		int expectedAttempts =
 			(int)ReflectionTestUtil.getFieldValue(
 				OrphanReferencesDataCleanupUtil.class,
-				"_DELETE_MAX_DEADLOCK_RETRIES") + 1;
+				"_DELETE_DEADLOCK_MAX_RETRIES") + 1;
 
 		Mockito.verify(
 			preparedStatement, Mockito.times(expectedAttempts)
 		).executeUpdate();
+	}
+
+	private void _invokeExecuteDelete(PreparedStatement preparedStatement)
+		throws Exception {
+
+		Connection connection = Mockito.mock(Connection.class);
+
+		Mockito.when(
+			connection.prepareStatement(Mockito.anyString())
+		).thenReturn(
+			preparedStatement
+		);
+
+		ReflectionTestUtil.invoke(
+			OrphanReferencesDataCleanupUtil.class, "_executeDelete",
+			new Class<?>[] {Connection.class, String.class}, connection,
+			RandomTestUtil.randomString());
 	}
 
 	private static final String _SQLSTATE_CONSTRAINT_VIOLATION = "23000";

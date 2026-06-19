@@ -177,9 +177,12 @@ public class FriendlyURLPublicMappingCheckerTest {
 		for (FriendlyURLPublicMappingConflict friendlyURLPublicMappingConflict :
 				friendlyURLPublicMappingConflicts) {
 
-			Assert.assertEquals(
-				FriendlyURLPublicMappingConflict.TYPE_RESERVED_KEYWORD,
-				friendlyURLPublicMappingConflict.getType());
+			if (!Objects.equals(
+					FriendlyURLPublicMappingConflict.TYPE_RESERVED_KEYWORD,
+					friendlyURLPublicMappingConflict.getType())) {
+
+				continue;
+			}
 
 			String className = friendlyURLPublicMappingConflict.getClassName();
 

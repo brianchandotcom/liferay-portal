@@ -515,6 +515,36 @@ public class DefaultObjectEntryManagerImpl
 	}
 
 	@Override
+	public void disassociateRelatedModel(
+			DTOConverterContext dtoConverterContext,
+			String externalReferenceCode, ObjectDefinition objectDefinition,
+			ObjectRelationship objectRelationship,
+			String relatedExternalReferenceCode, String scopeKey)
+		throws Exception {
+
+		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
+			_objectEntryService.getObjectEntry(
+				externalReferenceCode, getGroupId(objectDefinition, scopeKey),
+				objectDefinition.getObjectDefinitionId());
+
+		ObjectDefinition relatedObjectDefinition =
+			ObjectRelationshipUtil.getRelatedObjectDefinition(
+				objectDefinition, objectRelationship);
+
+		com.liferay.object.model.ObjectEntry serviceBuilderRelatedObjectEntry =
+			_objectEntryService.getObjectEntry(
+				relatedExternalReferenceCode,
+				getGroupId(relatedObjectDefinition, scopeKey),
+				relatedObjectDefinition.getObjectDefinitionId());
+
+		_disassociateRelatedModels(
+			objectDefinition, objectRelationship,
+			serviceBuilderObjectEntry.getObjectEntryId(),
+			new long[] {serviceBuilderRelatedObjectEntry.getObjectEntryId()},
+			relatedObjectDefinition, dtoConverterContext.getUserId());
+	}
+
+	@Override
 	public void disassociateRelatedModels(
 			DTOConverterContext dtoConverterContext,
 			ObjectDefinition objectDefinition,

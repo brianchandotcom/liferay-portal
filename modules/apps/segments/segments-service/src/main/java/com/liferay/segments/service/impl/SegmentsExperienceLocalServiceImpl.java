@@ -101,7 +101,7 @@ public class SegmentsExperienceLocalServiceImpl
 	 * experience may differ from the value supplied. See {@link
 	 * #addSegmentsExperience(String, long, long, String, String, String, long,
 	 * Map, int, boolean, UnicodeProperties, ServiceContext)} for the full
-	 * priority-compaction contract.
+	 * priority compaction contract.
 	 * </p>
 	 *
 	 * @param  externalReferenceCode the segments experience's external reference
@@ -310,7 +310,7 @@ public class SegmentsExperienceLocalServiceImpl
 	 *
 	 * <p>
 	 * See {@link #deleteSegmentsExperience(SegmentsExperience)} for the full
-	 * priority-compaction contract.
+	 * priority compaction contract.
 	 * </p>
 	 *
 	 * @param  segmentsExperienceId the primary key of the segments experience
@@ -403,7 +403,7 @@ public class SegmentsExperienceLocalServiceImpl
 	 *
 	 * <p>
 	 * See {@link #deleteSegmentsExperience(SegmentsExperience)} for the full
-	 * priority-compaction contract.
+	 * priority compaction contract.
 	 * </p>
 	 *
 	 * @param  externalReferenceCode the external reference code of the segments

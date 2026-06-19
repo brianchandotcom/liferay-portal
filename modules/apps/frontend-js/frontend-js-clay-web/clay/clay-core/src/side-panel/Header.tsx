@@ -99,7 +99,9 @@ export function Header({
 						onClick={(event) => {
 							closeButtonProps?.onClick?.(event);
 
-							onOpenChange(false);
+							if (!event.defaultPrevented) {
+								onOpenChange(false);
+							}
 						}}
 						type="button"
 					>

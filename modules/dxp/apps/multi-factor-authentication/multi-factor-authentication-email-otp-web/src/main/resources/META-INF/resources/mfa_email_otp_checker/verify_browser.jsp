@@ -71,41 +71,8 @@ long mfaEmailOTPFailedAttemptsRetryTimeout = GetterUtil.getLong(request.getAttri
 		}, interval);
 	}
 
-	function <portlet:namespace />setResendCountdown(remainingTime) {
-		if (remainingTime < 1) {
-			sendEmailButton.text(originalButtonText);
-
-			sendEmailButton.removeAttribute('disabled');
-
-			clearInterval(countdown);
-
-			messageContainer.html(
-				'<span class="alert alert-success"><liferay-ui:message key="your-otp-has-been-sent-by-email" /></span>'
-			);
-		}
-		else {
-			sendEmailButton.text(remainingTime);
-		}
-	}
-
-	if (
-		elapsedTime > 0 &&
-		elapsedTime < configuredResendDuration &&
-		previousSetTime > 0
-	) {
-		sendEmailButton.setAttribute('disabled', 'disabled');
-
-		var resendDuration = configuredResendDuration - elapsedTime;
-
-		countdown = <portlet:namespace />createCountdown(
-			<portlet:namespace />setResendCountdown,
-			resendDuration,
-			1000
-		);
-	}
-
-	function <portlet:namespace />setFailedAttemptsRetryCountdown(remainingTime) {
-		if (remainingTime < 1) {
+	function <portlet:namespace />setFailedAttemptsRetryCountdown(failedAttemptsRetryTimeout) {
+		if (failedAttemptsRetryTimeout < 1) {
 			var maximumAllowedAttemptsError = A.one(
 				'#<portlet:namespace />maximumAllowedAttemptsError'
 			);
@@ -123,8 +90,41 @@ long mfaEmailOTPFailedAttemptsRetryTimeout = GetterUtil.getLong(request.getAttri
 			clearInterval(failedAttemptsRetryCountdown);
 		}
 		else {
-			submitEmailButton.text(remainingTime);
+			submitEmailButton.text(failedAttemptsRetryTimeout);
 		}
+	}
+
+	function <portlet:namespace />setResendCountdown(resendDuration) {
+		if (resendDuration < 1) {
+			sendEmailButton.text(originalButtonText);
+
+			sendEmailButton.removeAttribute('disabled');
+
+			clearInterval(countdown);
+
+			messageContainer.html(
+				'<span class="alert alert-success"><liferay-ui:message key="your-otp-has-been-sent-by-email" /></span>'
+			);
+		}
+		else {
+			sendEmailButton.text(resendDuration);
+		}
+	}
+
+	if (
+		elapsedTime > 0 &&
+		elapsedTime < configuredResendDuration &&
+		previousSetTime > 0
+	) {
+		sendEmailButton.setAttribute('disabled', 'disabled');
+
+		var resendDuration = configuredResendDuration - elapsedTime;
+
+		countdown = <portlet:namespace />createCountdown(
+			<portlet:namespace />setResendCountdown,
+			resendDuration,
+			1000
+		);
 	}
 
 	if (failedAttemptsRetryTimeout > 0) {

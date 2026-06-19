@@ -214,7 +214,7 @@ public class StagedLayoutSetStagedModelDataHandler
 					portletDataContext, importedStagedLayoutSet);
 		}
 
-		_importClientExtensionEntryRels(
+		_deleteUnnecessaryClientExtensionEntryRels(
 			portletDataContext, stagedLayoutSet, importedStagedLayoutSet);
 		_importLogo(portletDataContext);
 		_importTheme(portletDataContext, stagedLayoutSet);
@@ -296,8 +296,12 @@ public class StagedLayoutSetStagedModelDataHandler
 	}
 
 	private void _deleteUnnecessaryClientExtensionEntryRels(
-		List<Element> clientExtensionEntryRelsElements,
+		PortletDataContext portletDataContext, StagedLayoutSet stagedLayoutSet,
 		StagedLayoutSet importedStagedLayoutSet) {
+
+		List<Element> clientExtensionEntryRelsElements =
+			portletDataContext.getReferenceDataElements(
+				stagedLayoutSet, ClientExtensionEntryRel.class);
 
 		Set<String> importedUuids = new HashSet<>();
 
@@ -557,20 +561,6 @@ public class StagedLayoutSetStagedModelDataHandler
 				layoutElement.attributeValue("layout-parent-layout-id")));
 
 		return actions.contains(Constants.SKIP);
-	}
-
-	private void _importClientExtensionEntryRels(
-			PortletDataContext portletDataContext,
-			StagedLayoutSet stagedLayoutSet,
-			StagedLayoutSet importedStagedLayoutSet)
-		throws Exception {
-
-		List<Element> clientExtensionEntryRelsElements =
-			portletDataContext.getReferenceDataElements(
-				stagedLayoutSet, ClientExtensionEntryRel.class);
-
-		_deleteUnnecessaryClientExtensionEntryRels(
-			clientExtensionEntryRelsElements, importedStagedLayoutSet);
 	}
 
 	private void _importFaviconFileEntry(

@@ -395,6 +395,19 @@ public class PageExperienceResourceTest
 		return pageExperience;
 	}
 
+	private void _assertPageExperiencePriority(
+			int expectedPriority, String pageExperienceExternalReferenceCode)
+		throws Exception {
+
+		PageExperience pageExperience =
+			pageExperienceResource.getSitePageExperience(
+				testGroup.getExternalReferenceCode(),
+				pageExperienceExternalReferenceCode);
+
+		Assert.assertEquals(
+			Integer.valueOf(expectedPriority), pageExperience.getPriority());
+	}
+
 	private PageExperience _getPageExperience() throws Exception {
 		PageExperience pageExperience = super.randomPageExperience();
 
@@ -424,17 +437,10 @@ public class PageExperienceResourceTest
 			testGroup.getExternalReferenceCode(),
 			pageExperience2.getExternalReferenceCode());
 
-		pageExperience1 = pageExperienceResource.getSitePageExperience(
-			testGroup.getExternalReferenceCode(),
-			pageExperience1.getExternalReferenceCode());
-
-		Assert.assertEquals(Integer.valueOf(1), pageExperience1.getPriority());
-
-		pageExperience3 = pageExperienceResource.getSitePageExperience(
-			testGroup.getExternalReferenceCode(),
-			pageExperience3.getExternalReferenceCode());
-
-		Assert.assertEquals(Integer.valueOf(2), pageExperience3.getPriority());
+		_assertPageExperiencePriority(
+			1, pageExperience1.getExternalReferenceCode());
+		_assertPageExperiencePriority(
+			2, pageExperience3.getExternalReferenceCode());
 	}
 
 	private void _testPatchSitePageExperienceWithPriority() throws Exception {
@@ -455,17 +461,12 @@ public class PageExperienceResourceTest
 		Assert.assertEquals(
 			Integer.valueOf(3), patchedPageExperience.getPriority());
 
-		pageExperience2 = pageExperienceResource.getSitePageExperience(
-			testGroup.getExternalReferenceCode(),
-			pageExperience2.getExternalReferenceCode());
-
-		Assert.assertEquals(Integer.valueOf(1), pageExperience2.getPriority());
-
-		pageExperience3 = pageExperienceResource.getSitePageExperience(
-			testGroup.getExternalReferenceCode(),
-			pageExperience3.getExternalReferenceCode());
-
-		Assert.assertEquals(Integer.valueOf(2), pageExperience3.getPriority());
+		_assertPageExperiencePriority(
+			1, pageExperience2.getExternalReferenceCode());
+		_assertPageExperiencePriority(
+			2, pageExperience3.getExternalReferenceCode());
+		_assertPageExperiencePriority(
+			3, pageExperience1.getExternalReferenceCode());
 
 		PageExperience swappedPageExperience =
 			pageExperienceResource.patchSitePageExperience(
@@ -480,18 +481,12 @@ public class PageExperienceResourceTest
 		Assert.assertEquals(
 			Integer.valueOf(2), swappedPageExperience.getPriority());
 
-		pageExperience3 = pageExperienceResource.getSitePageExperience(
-			testGroup.getExternalReferenceCode(),
-			pageExperience3.getExternalReferenceCode());
-
-		Assert.assertEquals(Integer.valueOf(1), pageExperience3.getPriority());
-
-		patchedPageExperience = pageExperienceResource.getSitePageExperience(
-			testGroup.getExternalReferenceCode(),
-			patchedPageExperience.getExternalReferenceCode());
-
-		Assert.assertEquals(
-			Integer.valueOf(3), patchedPageExperience.getPriority());
+		_assertPageExperiencePriority(
+			1, pageExperience3.getExternalReferenceCode());
+		_assertPageExperiencePriority(
+			2, pageExperience2.getExternalReferenceCode());
+		_assertPageExperiencePriority(
+			3, pageExperience1.getExternalReferenceCode());
 	}
 
 	private void _testPostSitePageSpecificationPageExperience(
@@ -596,17 +591,12 @@ public class PageExperienceResourceTest
 		Assert.assertEquals(
 			Integer.valueOf(3), putSitePageExperience.getPriority());
 
-		pageExperience2 = pageExperienceResource.getSitePageExperience(
-			testGroup.getExternalReferenceCode(),
-			pageExperience2.getExternalReferenceCode());
-
-		Assert.assertEquals(Integer.valueOf(1), pageExperience2.getPriority());
-
-		pageExperience3 = pageExperienceResource.getSitePageExperience(
-			testGroup.getExternalReferenceCode(),
-			pageExperience3.getExternalReferenceCode());
-
-		Assert.assertEquals(Integer.valueOf(2), pageExperience3.getPriority());
+		_assertPageExperiencePriority(
+			1, pageExperience2.getExternalReferenceCode());
+		_assertPageExperiencePriority(
+			2, pageExperience3.getExternalReferenceCode());
+		_assertPageExperiencePriority(
+			3, pageExperience1.getExternalReferenceCode());
 	}
 
 	private Layout _draftLayout;

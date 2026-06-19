@@ -140,8 +140,8 @@ public class OpenAPIUtil {
 	}
 
 	private static void _addMultipartParts(
-		JSONObject operationJSONObject, Map<String, Object> properties,
-		List<String> requiredPropertyNames, JSONObject openAPIJSONObject) {
+		JSONObject openAPIJSONObject, JSONObject operationJSONObject,
+		Map<String, Object> properties, List<String> requiredPropertyNames) {
 
 		Map<String, Object> bodySchemaMap =
 			(Map<String, Object>)_getSchemaObject(
@@ -550,8 +550,8 @@ public class OpenAPIUtil {
 		if (operationJSONObject.has("requestBody")) {
 			if (_isMultipartRequest(operationJSONObject)) {
 				_addMultipartParts(
-					operationJSONObject, properties, requiredPropertyNames,
-					openAPIJSONObject);
+					openAPIJSONObject, operationJSONObject, properties,
+					requiredPropertyNames);
 			}
 			else {
 				JSONObject requestBodyJSONObject =

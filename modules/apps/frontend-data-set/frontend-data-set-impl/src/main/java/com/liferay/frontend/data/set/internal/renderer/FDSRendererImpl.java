@@ -280,6 +280,16 @@ public class FDSRendererImpl implements FDSRenderer {
 				).put(
 					"snapshotsEnabled", snapshotsEnabled
 				).put(
+					"snapshotStartupViewERC",
+					() -> {
+						if (!snapshotsEnabled) {
+							return null;
+						}
+
+						return fdsSerializer.serializeSnapshotStartupViewERC(
+							fdsName, httpServletRequest);
+					}
+				).put(
 					"sorts",
 					() -> {
 						List<FDSSortItem> fdsSortItems =

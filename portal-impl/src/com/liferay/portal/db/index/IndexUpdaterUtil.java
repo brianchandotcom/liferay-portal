@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DuplicateUniqueFinderRowsCleaner;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.db.DBResourceUtil;
-import com.liferay.portal.kernel.db.index.IndexUpdater;
 import com.liferay.portal.kernel.dependency.manager.DependencyManagerSyncUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -48,7 +47,6 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleEvent;
 import org.osgi.util.tracker.BundleTracker;
 import org.osgi.util.tracker.BundleTrackerCustomizer;
-import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Ricardo Couso
@@ -134,23 +132,7 @@ public class IndexUpdaterUtil {
 
 							_clearProcessedServletContextNames();
 
-							ServiceTracker<IndexUpdater, IndexUpdater>
-								serviceTracker = new ServiceTracker<>(
-									SystemBundleUtil.getBundleContext(),
-									IndexUpdater.class, null);
-
-							serviceTracker.open();
-
-							try {
-								serviceTracker.waitForService(10000);
-
-								_addIndexUpdaterFutures(serviceTracker);
-
-								_awaitFuturesTermination();
-							}
-							finally {
-								serviceTracker.close();
-							}
+							_awaitFuturesTermination();
 
 							loggingTimer.close();
 
@@ -193,27 +175,6 @@ public class IndexUpdaterUtil {
 			_awaitFuturesTermination();
 
 			loggingTimer.close();
-		}
-	}
-
-	private static void _addIndexUpdaterFutures(
-		ServiceTracker<IndexUpdater, IndexUpdater> serviceTracker) {
-
-		ExecutorService executorService = _getExecutorService();
-
-		Map<?, IndexUpdater> trackedMap = serviceTracker.getTracked();
-
-		for (IndexUpdater indexUpdater : trackedMap.values()) {
-			_futures.add(
-				executorService.submit(
-					() -> {
-						try {
-							indexUpdater.updateIndexes();
-						}
-						catch (Exception exception) {
-							throw new RuntimeException(exception);
-						}
-					}));
 		}
 	}
 

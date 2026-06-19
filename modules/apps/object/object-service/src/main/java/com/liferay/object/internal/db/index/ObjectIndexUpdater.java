@@ -16,37 +16,81 @@ import com.liferay.object.petra.sql.dsl.DynamicObjectRelationshipMappingTableFac
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.sql.dsl.Column;
+import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
-import com.liferay.portal.kernel.db.index.IndexUpdater;
+import com.liferay.portal.kernel.dependency.manager.DependencyManagerSyncUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.sql.Connection;
 
+import java.util.List;
+
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.runtime.ServiceComponentRuntime;
 
 /**
  * @author Yuri Monteiro
  */
-@Component(service = IndexUpdater.class)
-public class ObjectIndexUpdater implements IndexUpdater {
+@Component(service = {})
+public class ObjectIndexUpdater {
 
-	@Override
-	public void updateIndexes() throws Exception {
+	@Activate
+	protected void activate() {
+		if (!PropsValues.DATABASE_INDEXES_UPDATE_ON_STARTUP ||
+			StartupHelperUtil.isDBNew()) {
+
+			return;
+		}
+
+		DependencyManagerSyncUtil.registerSyncCallable(
+			() -> {
+				try {
+					updateIndexes();
+				}
+				catch (Exception exception) {
+					_log.error(
+						"Unable to update object definition indexes",
+						exception);
+				}
+
+				_serviceComponentRuntime.disableComponent(
+					_serviceComponentRuntime.getComponentDescriptionDTO(
+						FrameworkUtil.getBundle(ObjectIndexUpdater.class),
+						ObjectIndexUpdater.class.getName()));
+
+				return null;
+			});
+	}
+
+	protected void updateIndexes() throws Exception {
 		_companyLocalService.forEachCompanyId(
 			companyId -> {
 				try (Connection connection = DataAccess.getConnection()) {
+					List<ObjectDefinition> objectDefinitions =
+						_objectDefinitionLocalService.getObjectDefinitions(
+							companyId, WorkflowConstants.STATUS_APPROVED);
+
+					List<Long> objectDefinitionIds = TransformUtil.transform(
+						objectDefinitions,
+						ObjectDefinition::getObjectDefinitionId);
+
 					for (ObjectDefinition objectDefinition :
-							_objectDefinitionLocalService.getObjectDefinitions(
-								companyId, true,
-								WorkflowConstants.STATUS_APPROVED)) {
+							objectDefinitions) {
 
 						try {
-							_updateIndexes(connection, objectDefinition);
+							_updateIndexes(
+								connection, objectDefinition,
+								objectDefinitionIds);
 						}
 						catch (Exception exception) {
 							_log.error(
@@ -65,7 +109,8 @@ public class ObjectIndexUpdater implements IndexUpdater {
 	}
 
 	private void _updateIndexes(
-			Connection connection, ObjectDefinition objectDefinition)
+			Connection connection, ObjectDefinition objectDefinition,
+			List<Long> objectDefinitionIds)
 		throws Exception {
 
 		for (ObjectRelationship objectRelationship :
@@ -73,12 +118,16 @@ public class ObjectIndexUpdater implements IndexUpdater {
 					objectDefinition.getObjectDefinitionId(), false,
 					ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
 
+			if (!objectDefinitionIds.contains(
+					objectRelationship.getObjectDefinitionId2())) {
+
+				continue;
+			}
+
 			DynamicObjectRelationshipMappingTable
 				dynamicObjectRelationshipMappingTable =
 					DynamicObjectRelationshipMappingTableFactory.create(
 						objectRelationship);
-
-			String dbTableName = objectRelationship.getDBTableName();
 
 			Column<DynamicObjectRelationshipMappingTable, Long>
 				primaryKeyColumn1 =
@@ -86,7 +135,8 @@ public class ObjectIndexUpdater implements IndexUpdater {
 						getPrimaryKeyColumn1();
 
 			ObjectDBManagerUtil.createIndexMetadata(
-				connection, dbTableName, false, primaryKeyColumn1.getName());
+				connection, objectRelationship.getDBTableName(), false,
+				primaryKeyColumn1.getName());
 
 			Column<DynamicObjectRelationshipMappingTable, Long>
 				primaryKeyColumn2 =
@@ -94,11 +144,8 @@ public class ObjectIndexUpdater implements IndexUpdater {
 						getPrimaryKeyColumn2();
 
 			ObjectDBManagerUtil.createIndexMetadata(
-				connection, dbTableName, false, primaryKeyColumn2.getName());
-		}
-
-		if (objectDefinition.isUnmodifiableSystemObject()) {
-			return;
+				connection, objectRelationship.getDBTableName(), false,
+				primaryKeyColumn2.getName());
 		}
 
 		for (ObjectField objectField :
@@ -126,5 +173,13 @@ public class ObjectIndexUpdater implements IndexUpdater {
 
 	@Reference
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;
+
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.object.service)(release.schema.version>=1.0.0))"
+	)
+	private Release _release;
+
+	@Reference
+	private ServiceComponentRuntime _serviceComponentRuntime;
 
 }

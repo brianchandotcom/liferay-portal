@@ -13,9 +13,13 @@ import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.model.Ticket;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.TicketLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.site.dsr.site.initializer.constants.DSRTicketConstants;
 
 import java.io.Serializable;
 
@@ -36,6 +40,16 @@ public class GroupModelListener extends BaseModelListener<Group> {
 
 		try {
 			_onAfterUpdate(originalGroup, group);
+		}
+		catch (Exception exception) {
+			throw new ModelListenerException(exception);
+		}
+	}
+
+	@Override
+	public void onBeforeRemove(Group group) throws ModelListenerException {
+		try {
+			_onBeforeRemove(group);
 		}
 		catch (Exception exception) {
 			throw new ModelListenerException(exception);
@@ -80,10 +94,27 @@ public class GroupModelListener extends BaseModelListener<Group> {
 			new ServiceContext());
 	}
 
+	private void _onBeforeRemove(Group group) throws Exception {
+		for (Ticket ticket :
+				ListUtil.concat(
+					_ticketLocalService.getTickets(
+						Group.class.getName(), group.getGroupId(),
+						DSRTicketConstants.TYPE_EXPIRE_MEMBERSHIP),
+					_ticketLocalService.getTickets(
+						Group.class.getName(), group.getGroupId(),
+						DSRTicketConstants.TYPE_INVITE_MEMBER))) {
+
+			_ticketLocalService.deleteTicket(ticket);
+		}
+	}
+
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Reference
+	private TicketLocalService _ticketLocalService;
 
 }

@@ -10,6 +10,8 @@ package com.liferay.site.dsr.site.initializer.constants;
  */
 public class DSRTicketConstants {
 
+	public static final int TYPE_EXPIRE_MEMBERSHIP = 8;
+
 	public static final int TYPE_INVITE_MEMBER = 6;
 
 }

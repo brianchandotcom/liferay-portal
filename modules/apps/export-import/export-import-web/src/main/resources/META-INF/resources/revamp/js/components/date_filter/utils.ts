@@ -69,9 +69,13 @@ export function normalizeDateFilter(
 	}
 
 	if (dateFilter.range === Range.DateRange) {
+		const {endDate, startDate} = dateFilter;
+
 		return {
-			endDate: new Date(dateFilter.endDate).toISOString(),
-			startDate: new Date(dateFilter.startDate).toISOString(),
+			...(endDate ? {endDate: new Date(endDate).toISOString()} : {}),
+			...(startDate
+				? {startDate: new Date(startDate).toISOString()}
+				: {}),
 		};
 	}
 

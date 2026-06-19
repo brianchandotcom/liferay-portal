@@ -4,11 +4,11 @@
  */
 
 import ClayForm, {ClayInput} from '@clayui/form';
-import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
 import {DiagramBuilderContext} from '../../../../DiagramBuilderContext';
 import SidebarPanel from '../../SidebarPanel';
+import {getUpdatedDataItem} from '../utils';
 
 const Payload = () => {
 	const {selectedItem, setSelectedItem} = useContext(DiagramBuilderContext);
@@ -23,19 +23,15 @@ const Payload = () => {
 				<ClayInput
 					component="textarea"
 					id="requestBody"
-					onChange={({target}) => {
-						if (!selectedItem) {
-							return;
-						}
-
-						setSelectedItem({
-							...selectedItem,
-							data: {
-								...selectedItem.data,
-								requestBody: target.value,
-							},
-						});
-					}}
+					onChange={({target}) =>
+						setSelectedItem(
+							getUpdatedDataItem(
+								'requestBody',
+								selectedItem,
+								target
+							)
+						)
+					}
 					placeholder="{{inputVariable}}"
 					type="text"
 					value={selectedItem?.data.requestBody ?? ''}
@@ -43,10 +39,6 @@ const Payload = () => {
 			</ClayForm.Group>
 		</SidebarPanel>
 	);
-};
-
-Payload.propTypes = {
-	setContentName: PropTypes.func.isRequired,
 };
 
 export default Payload;

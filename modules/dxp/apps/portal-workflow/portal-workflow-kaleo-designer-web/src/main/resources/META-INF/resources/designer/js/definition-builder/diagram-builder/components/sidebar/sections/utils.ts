@@ -56,6 +56,20 @@ export function checkIdErrors(
 	}
 }
 
+export function getUpdatedDataItem(
+	field: string,
+	selectedItem: Node,
+	target: HTMLInputElement
+) {
+	return {
+		...selectedItem,
+		data: {
+			...selectedItem.data,
+			[field]: target.value,
+		},
+	};
+}
+
 export function getUpdatedLabelItem(
 	key: Liferay.Language.Locale,
 	selectedItem: Node,

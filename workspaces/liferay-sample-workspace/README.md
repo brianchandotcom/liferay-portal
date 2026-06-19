@@ -82,7 +82,7 @@ For `liferay-sample-etc-cron` and `liferay-sample-etc-spring-boot` the third typ
 
 	Build a custom element that connects to a given Frontend Data Set.
 
-- *liferay-sample-editor-config-contributor1*
+- *liferay-sample-editor-config-contributor-1*
 
 	Build a JavaScript function to configure CKEditor 4 and AlloyEditor editors.
 

@@ -442,8 +442,14 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 		User user = UserTestUtil.addUser(
 			testCompany, RandomTestUtil.randomString());
 
-		Role role = _roleLocalService.getRole(
+		Role role = _roleLocalService.fetchRole(
 			testCompany.getCompanyId(), roleName);
+
+		if (role == null) {
+			role = _roleLocalService.addRole(
+				null, TestPropsValues.getUserId(), null, 0, roleName, null,
+				null, RoleConstants.TYPE_REGULAR, null, null);
+		}
 
 		_userLocalService.addRoleUser(role.getRoleId(), user.getUserId());
 

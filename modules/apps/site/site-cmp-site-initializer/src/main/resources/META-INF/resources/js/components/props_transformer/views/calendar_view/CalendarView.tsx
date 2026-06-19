@@ -114,7 +114,9 @@ export default function CalendarView({items}: CalendarViewProps) {
 		}
 
 		const resizeObserver = new ResizeObserver(() => {
-			calendarRef.current?.getApi().updateSize();
+			requestAnimationFrame(() => {
+				calendarRef.current?.getApi().updateSize();
+			});
 		});
 
 		resizeObserver.observe(element);

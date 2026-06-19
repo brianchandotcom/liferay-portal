@@ -10,10 +10,19 @@ import com.liferay.analytics.cms.rest.internal.client.AnalyticsCloudClient;
 import com.liferay.analytics.cms.rest.internal.depot.entry.util.DepotEntryUtil;
 import com.liferay.analytics.cms.rest.resource.v1_0.PerformanceTopAssetResource;
 import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
+import com.liferay.petra.io.StreamUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.license.util.LicenseManagerUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.vulcan.pagination.Pagination;
+
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.StreamingOutput;
+
+import java.io.InputStream;
+
+import java.time.LocalDate;
 
 import java.util.Arrays;
 
@@ -51,6 +60,37 @@ public class PerformanceTopAssetResourceImpl
 				contextCompany.getCompanyId()),
 			assetFilterString, Arrays.asList(groupIds), pagination.getPage(),
 			rangeKey, pagination.getPageSize(), sorts);
+	}
+
+	@Override
+	public Response getPerformanceTopAssetExport(
+			String assetFilterString, Long[] depotEntryIds, Integer rangeKey,
+			Sort[] sorts)
+		throws Exception {
+
+		LicenseManagerUtil.checkFreeTier();
+
+		Long[] groupIds = DepotEntryUtil.getGroupIds(
+			DepotEntryUtil.getDepotEntries(
+				contextCompany.getCompanyId(), depotEntryIds));
+
+		AnalyticsCloudClient analyticsCloudClient = new AnalyticsCloudClient(
+			_http);
+
+		InputStream inputStream = analyticsCloudClient.getInputStream(
+			_analyticsSettingsManager.getAnalyticsConfiguration(
+				contextCompany.getCompanyId()),
+			assetFilterString, Arrays.asList(groupIds), null,
+			"/summaries/export", rangeKey, sorts);
+
+		return Response.ok(
+			(StreamingOutput)outputStream -> StreamUtil.transfer(
+				inputStream, outputStream)
+		).header(
+			"Content-Disposition",
+			StringBundler.concat(
+				"attachment; filename=top-assets-", LocalDate.now(), ".csv")
+		).build();
 	}
 
 	@Reference

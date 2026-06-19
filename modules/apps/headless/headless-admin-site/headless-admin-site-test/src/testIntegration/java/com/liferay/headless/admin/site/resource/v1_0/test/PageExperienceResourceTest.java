@@ -533,10 +533,14 @@ public class PageExperienceResourceTest
 	private void _testPostSitePageSpecificationPageExperienceWithPriority()
 		throws Exception {
 
+		Layout layout = LayoutTestUtil.addTypeContentLayout(testGroup);
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
 		PageExperience activePageExperience1 =
 			testPostSitePageSpecificationPageExperience_addPageExperience(
 				PageExperiencesTestUtil.getPageExperience(
-					_draftLayout.getExternalReferenceCode(), 100,
+					draftLayout.getExternalReferenceCode(), 100,
 					testGroup.getGroupId(), null));
 
 		Assert.assertEquals(
@@ -545,7 +549,7 @@ public class PageExperienceResourceTest
 		PageExperience activePageExperience2 =
 			testPostSitePageSpecificationPageExperience_addPageExperience(
 				PageExperiencesTestUtil.getPageExperience(
-					_draftLayout.getExternalReferenceCode(), 50,
+					draftLayout.getExternalReferenceCode(), 50,
 					testGroup.getGroupId(), null));
 
 		Assert.assertEquals(
@@ -554,7 +558,7 @@ public class PageExperienceResourceTest
 		PageExperience inactivePageExperience =
 			testPostSitePageSpecificationPageExperience_addPageExperience(
 				PageExperiencesTestUtil.getPageExperience(
-					_draftLayout.getExternalReferenceCode(), -100,
+					draftLayout.getExternalReferenceCode(), -100,
 					testGroup.getGroupId(), null));
 
 		Assert.assertEquals(

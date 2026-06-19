@@ -451,6 +451,9 @@ public abstract class BaseExportProcessResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/export-import/v1.0/export-processes'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Retrieves all the layout export process entries."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -523,6 +526,9 @@ public abstract class BaseExportProcessResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/export-import/v1.0/sites/{siteExternalReferenceCode}/export-processes'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Retrieves the layout export process entries for the specified site."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -2132,4 +2138,4 @@ public abstract class BaseExportProcessResourceImpl
 		LogFactoryUtil.getLog(BaseExportProcessResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:-835823055
+// LIFERAY-REST-BUILDER-HASH:1524597659

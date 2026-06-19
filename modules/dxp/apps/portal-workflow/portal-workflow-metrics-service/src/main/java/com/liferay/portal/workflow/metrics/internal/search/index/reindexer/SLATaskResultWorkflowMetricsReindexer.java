@@ -79,6 +79,10 @@ public class SLATaskResultWorkflowMetricsReindexer
 			return;
 		}
 
+		WorkflowMetricsIndex.createAllIndexes(
+			_searchCapabilities, searchEngineAdapter, _indexNameBuilder,
+			companyId);
+
 		Date date = null;
 
 		if (_isExecuteSyncReindex(executionMode)) {

@@ -78,6 +78,10 @@ public class NodeWorkflowMetricsReindexer
 			return;
 		}
 
+		WorkflowMetricsIndex.createAllIndexes(
+			_searchCapabilities, _searchEngineAdapter, _indexNameBuilder,
+			companyId);
+
 		Date date = null;
 
 		if (_isExecuteSyncReindex(executionMode)) {

@@ -3,16 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.change.tracking.internal.spi.resolver;
+package com.liferay.layout.internal.change.tracking.spi.resolver;
 
 import com.liferay.change.tracking.spi.resolver.ConstraintResolver;
 import com.liferay.change.tracking.spi.resolver.context.ConstraintResolverContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.LayoutFriendlyURL;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
-
-import java.util.Locale;
-import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -20,29 +16,8 @@ import org.osgi.service.component.annotations.Component;
  * @author David Truong
  */
 @Component(service = ConstraintResolver.class)
-public class LayoutFriendlyURLConstraintResolver
-	implements ConstraintResolver<LayoutFriendlyURL> {
-
-	@Override
-	public String getConflictDescriptionKey() {
-		return "duplicate-friendly-page-url";
-	}
-
-	@Override
-	public Class<LayoutFriendlyURL> getModelClass() {
-		return LayoutFriendlyURL.class;
-	}
-
-	@Override
-	public String getResolutionDescriptionKey() {
-		return "duplicate-friendly-page-url-was-removed";
-	}
-
-	@Override
-	public ResourceBundle getResourceBundle(Locale locale) {
-		return ResourceBundleUtil.getBundle(
-			locale, LayoutFriendlyURLConstraintResolver.class);
-	}
+public class PlidAndLanguageIdLayoutFriendlyURLConstraintResolver
+	extends BaseLayoutFriendlyURLConstraintResolver {
 
 	@Override
 	public String[] getUniqueIndexColumnNames() {
@@ -50,12 +25,17 @@ public class LayoutFriendlyURLConstraintResolver
 	}
 
 	@Override
-	public void resolveConflict(
+	protected void doResolveConflict(
 			ConstraintResolverContext<LayoutFriendlyURL>
 				constraintResolverContext)
 		throws PortalException {
 
 		constraintResolverContext.mergeSourceCTModelIntoTargetCTModel();
+	}
+
+	@Override
+	protected String getAutomaticResolutionDescriptionKey() {
+		return "duplicate-friendly-page-url-was-removed";
 	}
 
 }

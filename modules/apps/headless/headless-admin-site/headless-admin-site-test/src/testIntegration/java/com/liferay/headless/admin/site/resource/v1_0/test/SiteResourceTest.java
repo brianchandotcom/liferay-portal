@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -442,8 +443,7 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 		User user = UserTestUtil.addUser(
 			testCompany, RandomTestUtil.randomString());
 
-		Role role = _roleLocalService.getRole(
-			testCompany.getCompanyId(), roleName);
+		Role role = RoleTestUtil.addRole(roleName, RoleConstants.TYPE_REGULAR);
 
 		_userLocalService.addRoleUser(role.getRoleId(), user.getUserId());
 

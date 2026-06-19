@@ -1,13 +1,13 @@
 ---
 
 name: workspace-init
-description: Bootstrap a Liferay Workspace, download and verify the bundle, set up auth verifiers, and complete first-login bootstrap. Use when the user is starting fresh, when the server appears down or unreachable, when gradle.properties or bundles/ is missing, or when the user asks to set up, initialize, or scaffold a workspace.
+description: Bootstrap a Liferay Workspace, download and verify the bundle, set up auth verifiers, and complete first login bootstrap. Use when the user is starting fresh, when the server appears down or unreachable, when gradle.properties or bundles/ is missing, or when the user asks to set up, initialize, or scaffold a workspace.
 
 ---
 
-# Workspace Init & Pre-Flight Checks
+# Workspace Init & Preflight Checks
 
-Stand up a working Liferay Workspace from zero, or diagnose a workspace that looks uninitialized. Covers `blade init`, bundle download, license setup, BasicAuth verifier, server start, and first-login bootstrap.
+Stand up a working Liferay Workspace from zero, or diagnose a workspace that looks uninitialized. Covers `blade init`, bundle download, license setup, BasicAuth verifier, server start, and first login bootstrap.
 
 > **When to apply this skill:** the user asks for setup help, the server appears down or unreachable, or the workspace looks uninitialized (missing `bundles/`, missing `gradle.properties`). Do not run through all steps for a returning user whose server is already running.
 
@@ -29,7 +29,7 @@ If the Liferay MCP server is supported in your DXP version (see `skills/mcp-serv
 
 1. Prompt the user to exit and restart their CLI session.
 
-1. After restarting, verify the MCP server entry appears in your client's server list. A disconnected or failed status is expected — the server isn't running yet. If the entry is absent, re-check the MCP configuration before proceeding.
+1. After restarting, verify the MCP server entry appears in your client's server list. A disconnected or failed status is expected — the server is not running yet. If the entry is absent, re-check the MCP configuration before proceeding.
 
 1. Then continue below to start the Liferay server.
 
@@ -50,7 +50,7 @@ Skip this block if MCP is not supported in your DXP version.
 
 - **Configuration sync**: if `bundles/portal-ext.properties` differs from `configs/local/`, copy it: `cp configs/local/portal-ext.properties bundles/portal-ext.properties`. (This copy is destructive — see `skills/deploy-and-verify/SKILL.md` for the diff-before-sync rule.)
 
-- **Skip first-login bootstrap (dev only, optional)**: to avoid the mandatory browser login step on a fresh instance, add to `configs/local/portal-ext.properties` before first boot (it will be synced in the next step):
+- **Skip first login bootstrap (dev only, optional)**: to avoid the mandatory browser login step on a fresh instance, add to `configs/local/portal-ext.properties` before first boot (it will be synced in the next step):
 
   ```
   terms.of.use.required=false
@@ -67,8 +67,8 @@ Skip this block if MCP is not supported in your DXP version.
 
 - **Locate compose file**: search the workspace for `docker-compose.yaml` or `docker-compose.yml` — its location varies by project.
 - **Database**: verify the compose file defines a database service (MySQL). Docker has no embedded database; both the database and Liferay containers must be running.
-- **Configuration**: check whether the compose file uses `image:` (pre-built) or `build:` (custom image):
-  - `image: liferay/dxp:...` → configuration is in `liferay.env` (env vars). See `skills/feature-flags/SKILL.md` for the env var encoding.
+- **Configuration**: check whether the compose file uses `image:` (prebuilt) or `build:` (custom image):
+  - `image: liferay/dxp:...` (prebuilt) → configuration is in `liferay.env` (env vars). See `skills/feature-flags/SKILL.md` for the env var encoding.
   - `build: ...` → configuration is baked into the image via `configs/docker/`. Rebuild the image to apply changes.
 - **Initial build**: before the first `docker compose up`, build and output client extensions to the volume-mounted directory: `./gradlew deploy`.
 - **Start**: `docker compose up` (foreground) or `docker compose up --detach` (background). Run from the directory containing the compose file.
@@ -99,7 +99,7 @@ Only fall back to direct REST APIs if MCP has been configured correctly and is s
 
 ## Guiding the User
 
-If the user prompts for setup assistance, guide them through these steps one by one. Do not skip ahead. Explain what you are checking (e.g., "I'm verifying that your Liferay server is up") and wait for processes to complete before writing code.
+If the user prompts for setup assistance, guide them through these steps one by one. Do not skip ahead. Explain what you are checking (e.g., "I am verifying that your Liferay server is up") and wait for processes to complete before writing code.
 
 ## Verification
 

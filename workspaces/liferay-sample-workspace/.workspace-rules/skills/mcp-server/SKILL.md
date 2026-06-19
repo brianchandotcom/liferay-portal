@@ -52,7 +52,7 @@ The Liferay MCP server on DXP 2026.Q1 and later requires the **Streamable HTTP**
 
 CLI sessions load MCP server config once at startup. Any change — including initial setup, endpoint URL updates, or auth credential changes — will not be visible until you exit and restart the session. This applies whether the change was made before or during the session.
 
-After restarting, verify the MCP server entry appears in your client's server list before starting Liferay. A disconnected or failed status is expected and acceptable at this point — the server isn't running yet. If the entry is absent entirely, re-check the MCP configuration before proceeding.
+After restarting, verify the MCP server entry appears in your client's server list before starting Liferay. A disconnected or failed status is expected and acceptable at this point — the server is not running yet. If the entry is absent entirely, re-check the MCP configuration before proceeding.
 
 If the server shows as connected but lists zero tools, check whether your agent provides a reconnect or refresh option for MCP servers — this can recover a dropped mid-session connection without a full restart. This does **not** apply to newly added or changed server config — those always require a full restart.
 

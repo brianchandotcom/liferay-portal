@@ -719,11 +719,50 @@ function serializeDefinition(xmlNamespace, metadata, nodes, transitions) {
 			);
 		}
 
+		if (item.type === 'http-request') {
+			buffer.push(
+				createTagWithEscapedContent(
+					'http-method',
+					item.data.httpMethod || 'GET'
+				)
+			);
+			buffer.push(
+				XMLUtil.create(
+					'input-variables',
+					cdata(jsonStringify(item.data.inputVariables))
+				)
+			);
+			buffer.push(
+				XMLUtil.create(
+					'output-variables',
+					cdata(jsonStringify(item.data.outputVariables))
+				)
+			);
+			buffer.push(
+				XMLUtil.create(
+					'request-body',
+					cdata(item.data.requestBody || '')
+				)
+			);
+
+			if (item.data.timeout) {
+				buffer.push(
+					createTagWithEscapedContent('timeout', item.data.timeout)
+				);
+			}
+		}
+
 		const nodeTransitions = transitions.filter(
 			(transition) => transition.source === name
 		);
 
 		appendXMLTransitions(buffer, nodeTransitions);
+
+		if (item.type === 'http-request') {
+			buffer.push(
+				createTagWithEscapedContent('url', item.data.url || '')
+			);
+		}
 
 		if (item.type === 'llm' || item.type === 'ai-decision') {
 			buffer.push(

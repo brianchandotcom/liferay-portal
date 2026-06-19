@@ -156,6 +156,34 @@ DeserializeUtil.prototype = {
 					data.userMessage = node['user-message'] || '';
 				}
 
+				if (type === 'http-request') {
+					data.httpMethod = node['http-method'] || 'GET';
+
+					data.inputVariables = (() => {
+						try {
+							return JSON.parse(node['input-variables']);
+						}
+						catch (error) {
+							return [];
+						}
+					})();
+
+					data.outputVariables = (() => {
+						try {
+							return JSON.parse(node['output-variables']);
+						}
+						catch (error) {
+							return [];
+						}
+					})();
+
+					data.requestBody = node['request-body'] || '';
+
+					data.timeout = node.timeout || '';
+
+					data.url = node.url || '';
+				}
+
 				data.actions = node.actions?.length && parseActions(node);
 
 				data.notifications =

@@ -141,11 +141,18 @@ public class PageExperienceResourceTest
 			testPostSitePageSpecificationPageExperience_addPageExperience(
 				randomPageExperience());
 
+		postPageExperience.setName_i18n(
+			Collections.singletonMap("en-US", RandomTestUtil.randomString()));
+
 		PageExperience pathPageExperience =
 			pageExperienceResource.patchSitePageExperience(
 				testGroup.getExternalReferenceCode(),
 				postPageExperience.getExternalReferenceCode(),
-				postPageExperience);
+				new PageExperience() {
+					{
+						setName_i18n(postPageExperience::getName_i18n);
+					}
+				});
 
 		assertEquals(postPageExperience, pathPageExperience);
 		assertValid(pathPageExperience);

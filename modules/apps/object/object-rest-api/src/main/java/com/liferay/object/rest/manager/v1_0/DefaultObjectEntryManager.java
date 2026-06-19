@@ -79,6 +79,13 @@ public interface DefaultObjectEntryManager extends ObjectEntryManager {
 			String parentExternalReferenceCode, String scopeKey)
 		throws Exception;
 
+	public void disassociateRelatedModel(
+			DTOConverterContext dtoConverterContext,
+			String externalReferenceCode, ObjectDefinition objectDefinition,
+			ObjectRelationship objectRelationship,
+			String relatedExternalReferenceCode, String scopeKey)
+		throws Exception;
+
 	public void disassociateRelatedModels(
 			DTOConverterContext dtoConverterContext,
 			ObjectDefinition objectDefinition,

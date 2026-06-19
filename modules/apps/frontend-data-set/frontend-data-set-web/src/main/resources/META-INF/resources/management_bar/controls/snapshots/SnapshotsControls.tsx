@@ -7,6 +7,7 @@ import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import ClayLabel from '@clayui/label';
 import ClayModal from '@clayui/modal';
 import {
 	ManagementToolbar,
@@ -205,6 +206,7 @@ const SnapshotsControls = () => {
 			snapshotUpdated,
 			snapshots,
 			sorts,
+			startupViewDataSetSnapshotERC,
 			visibleFieldNames,
 		},
 		viewsDispatch,
@@ -508,6 +510,73 @@ const SnapshotsControls = () => {
 			});
 	};
 
+	const setStartupViewDataSetSnapshot = () => {
+		if (!activeSnapshot) {
+			return;
+		}
+
+		const startupViewERC = `${Liferay.ThemeDisplay.getUserId()}_${fdsName}`;
+
+		const relationshipURL = (dataSetSnapshotERC: string) =>
+			`/o/data-set-admin/snapshots/by-external-reference-code/${encodeURIComponent(
+				dataSetSnapshotERC
+			)}/dataSetSnapshotToStartupViews`;
+
+		const createStartupView = () =>
+			fetch(relationshipURL(activeSnapshot.erc), {
+				body: JSON.stringify({
+					externalReferenceCode: startupViewERC,
+				}),
+				headers: DEFAULT_FETCH_HEADERS,
+				method: 'POST',
+			});
+
+		// The startup view links to its snapshot through an immutable edge
+		// relationship, so pointing it at a different snapshot means deleting
+		// the existing entry and recreating it under the selected snapshot.
+
+		const request = startupViewDataSetSnapshotERC
+			? fetch(
+					`${relationshipURL(
+						startupViewDataSetSnapshotERC
+					)}/${encodeURIComponent(startupViewERC)}`,
+					{
+						headers: DEFAULT_FETCH_HEADERS,
+						method: 'DELETE',
+					}
+				).then(createStartupView)
+			: createStartupView();
+
+		request
+			.then((response) => {
+				if (!response.ok) {
+					return Promise.reject(new Error());
+				}
+
+				openToast({
+					message: Liferay.Language.get(
+						'the-user-view-was-set-as-startup'
+					),
+					type: 'success',
+				});
+
+				viewsDispatch({
+					type: EViewsActionTypes.SET_STARTUP_VIEW_DATA_SET_SNAPSHOT,
+					value: {
+						startupViewDataSetSnapshotERC: activeSnapshot.erc,
+					},
+				});
+			})
+			.catch(() => {
+				openToast({
+					message: Liferay.Language.get(
+						'an-unexpected-error-occurred'
+					),
+					type: 'danger',
+				});
+			});
+	};
+
 	const openDeleteSnapshotModal = ({snapshotERC}: {snapshotERC: string}) => {
 		openModal({
 			bodyHTML: Liferay.Language.get(
@@ -646,6 +715,19 @@ const SnapshotsControls = () => {
 												}
 											>
 												{snapshot.label}
+
+												{snapshot.erc ===
+													startupViewDataSetSnapshotERC && (
+													<ClayLabel
+														aria-hidden="true"
+														className="ml-2"
+														displayType="info"
+													>
+														{Liferay.Language.get(
+															'startup-view'
+														)}
+													</ClayLabel>
+												)}
 											</ClayDropDown.Item>
 										);
 									})}
@@ -700,6 +782,23 @@ const SnapshotsControls = () => {
 						>
 							{Liferay.Language.get('save-view-as')}
 						</ClayDropDown.Item>
+
+						{activeSnapshotERC &&
+							activeSnapshotERC !==
+								startupViewDataSetSnapshotERC && (
+								<ClayDropDown.Item
+									onClick={() => {
+										setStartupViewDataSetSnapshot();
+
+										setActionsDropdownActive(false);
+									}}
+									symbolLeft="star"
+								>
+									{Liferay.Language.get(
+										'set-as-startup-view'
+									)}
+								</ClayDropDown.Item>
+							)}
 
 						{activeSnapshotERC && isActiveSnapshotOwned && (
 							<>

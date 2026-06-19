@@ -15,8 +15,8 @@ import React from 'react';
 
 import AgentDefinitionForm from '../../../src/main/resources/META-INF/resources/js/agent_definition_form/AgentDefinitionForm';
 
-const mockDeleteAgentDefinitionToContentRetrievers = jest.fn();
-const mockDeleteAgentDefinitionToGuardrails = jest.fn();
+const mockDisassociateAgentDefinitionFromContentRetriever = jest.fn();
+const mockDisassociateAgentDefinitionFromGuardrail = jest.fn();
 const mockGetAgentDefinition = jest.fn();
 const mockGetContentRetrievers = jest.fn();
 const mockGetGuardrails = jest.fn();
@@ -31,10 +31,10 @@ const mockPutAgentDefinitionToGuardrails = jest.fn();
 jest.mock(
 	'../../../src/main/resources/META-INF/resources/js/agent_definition_form/services/AgentDefinitionService',
 	() => ({
-		deleteAgentDefinitionToContentRetrievers: (...args: any[]) =>
-			mockDeleteAgentDefinitionToContentRetrievers(...args),
-		deleteAgentDefinitionToGuardrails: (...args: any[]) =>
-			mockDeleteAgentDefinitionToGuardrails(...args),
+		disassociateAgentDefinitionFromContentRetriever: (...args: any[]) =>
+			mockDisassociateAgentDefinitionFromContentRetriever(...args),
+		disassociateAgentDefinitionFromGuardrail: (...args: any[]) =>
+			mockDisassociateAgentDefinitionFromGuardrail(...args),
 		getAgentDefinition: (...args: any[]) => mockGetAgentDefinition(...args),
 		postAgentDefinition: (...args: any[]) =>
 			mockPostAgentDefinition(...args),
@@ -167,8 +167,8 @@ const defaultProps = {
 
 describe('AgentDefinitionForm', () => {
 	beforeEach(() => {
-		mockDeleteAgentDefinitionToContentRetrievers.mockReset();
-		mockDeleteAgentDefinitionToGuardrails.mockReset();
+		mockDisassociateAgentDefinitionFromContentRetriever.mockReset();
+		mockDisassociateAgentDefinitionFromGuardrail.mockReset();
 		mockGetAgentDefinition.mockReset();
 		mockGetContentRetrievers.mockReset();
 		mockGetGuardrails.mockReset();

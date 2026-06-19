@@ -954,15 +954,6 @@ public class ObjectFieldLocalServiceImpl
 			throw new UnsupportedOperationException();
 		}
 
-		if (!FeatureFlagManagerUtil.isEnabled(
-				objectDefinition.getCompanyId(), "LPD-83570") &&
-			Objects.equals(
-				businessType,
-				ObjectFieldConstants.BUSINESS_TYPE_PHONE_NUMBER)) {
-
-			throw new UnsupportedOperationException();
-		}
-
 		if (Validator.isNull(dbTableName)) {
 			dbTableName = objectDefinition.getDBTableName();
 
@@ -1628,15 +1619,6 @@ public class ObjectFieldLocalServiceImpl
 			Objects.equals(
 				businessType,
 				ObjectFieldConstants.BUSINESS_TYPE_EMAIL_ADDRESS)) {
-
-			throw new UnsupportedOperationException();
-		}
-
-		if (!FeatureFlagManagerUtil.isEnabled(
-				oldObjectField.getCompanyId(), "LPD-83570") &&
-			Objects.equals(
-				businessType,
-				ObjectFieldConstants.BUSINESS_TYPE_PHONE_NUMBER)) {
 
 			throw new UnsupportedOperationException();
 		}

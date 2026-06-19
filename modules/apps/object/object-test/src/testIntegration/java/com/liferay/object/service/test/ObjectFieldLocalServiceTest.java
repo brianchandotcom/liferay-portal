@@ -109,7 +109,6 @@ import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.language.override.service.PLOEntryLocalService;
 import com.liferay.portal.test.rule.FeatureFlag;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -1896,9 +1895,7 @@ public class ObjectFieldLocalServiceTest {
 			modifiableSystemObjectDefinition);
 	}
 
-	@FeatureFlags(
-		featureFlags = {@FeatureFlag("LPD-70673"), @FeatureFlag("LPD-83570")}
-	)
+	@FeatureFlag("LPD-70673")
 	@Test
 	public void testObjectFieldSettings() throws Exception {
 

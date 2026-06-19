@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.concurrent.Callable;
@@ -93,11 +94,38 @@ public class JenkinsCohort {
 	public JenkinsMaster getMostAvailableJenkinsMaster(
 		int invokedBatchSize, String jobName) {
 
+		return getMostAvailableJenkinsMaster(null, invokedBatchSize, jobName);
+	}
+
+	public JenkinsMaster getMostAvailableJenkinsMaster(
+		JenkinsMaster excludedJenkinsMaster, int invokedBatchSize,
+		String jobName) {
+
+		List<String> blacklist = new ArrayList<>(_jenkinsMastersBlacklist);
+
+		if (excludedJenkinsMaster != null) {
+			String jenkinsMasterName = excludedJenkinsMaster.getName();
+
+			if (!blacklist.contains(jenkinsMasterName)) {
+				blacklist.add(jenkinsMasterName);
+			}
+
+			List<JenkinsMaster> availableJenkinsMasters =
+				_getAvailableJenkinsMasters(blacklist);
+
+			if (availableJenkinsMasters.isEmpty()) {
+				System.out.println(
+					"Unable to exclude Jenkins master " + jenkinsMasterName);
+
+				blacklist.remove(jenkinsMasterName);
+			}
+		}
+
 		String mostAvailableMasterURL =
 			JenkinsResultsParserUtil.getMostAvailableMasterURL(
 				"http://" + getName() + ".liferay.com",
-				JenkinsResultsParserUtil.join(",", _jenkinsMastersBlacklist),
-				invokedBatchSize, jobName);
+				JenkinsResultsParserUtil.join(",", blacklist), invokedBatchSize,
+				jobName);
 
 		return JenkinsMaster.getInstance(
 			mostAvailableMasterURL.replaceAll("http://(.+)", "$1"));
@@ -615,6 +643,27 @@ public class JenkinsCohort {
 		int buildCount, String buildPercentage) {
 
 		return buildCount + " (" + buildPercentage + ")";
+	}
+
+	private List<JenkinsMaster> _getAvailableJenkinsMasters(
+		List<String> blacklist) {
+
+		Properties buildProperties = null;
+
+		try {
+			buildProperties = JenkinsResultsParserUtil.getBuildProperties(
+				false);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(
+				"Unable to get build properties", ioException);
+		}
+
+		return LoadBalancerUtil.getAvailableJenkinsMasters(
+			JenkinsResultsParserUtil.join(",", blacklist),
+			LoadBalancerUtil.getMasterPrefix(
+				"http://" + getName() + ".liferay.com"),
+			buildProperties, true);
 	}
 
 	private synchronized Map<String, List<AWSFleetCloud>>

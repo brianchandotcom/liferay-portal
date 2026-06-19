@@ -50,10 +50,10 @@ public class FrontendJSAudiencesWebTopHeadDynamicInclude
 			return;
 		}
 
-		KeyValuePair audiencesDefinitionKeyValuePair =
+		KeyValuePair audiencesDefinition =
 			_audiencesDefinitionProvider.getAudiencesDefinition(companyId);
 
-		if (audiencesDefinitionKeyValuePair == null) {
+		if (audiencesDefinition == null) {
 			return;
 		}
 
@@ -61,11 +61,11 @@ public class FrontendJSAudiencesWebTopHeadDynamicInclude
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		KeyValuePair elementVariationsKeyValuePair =
+		KeyValuePair elementVariations =
 			_elementVariationsProvider.getElementVariations(
 				themeDisplay.getPlid());
 
-		if (elementVariationsKeyValuePair == null) {
+		if (elementVariations == null) {
 			return;
 		}
 
@@ -104,9 +104,9 @@ public class FrontendJSAudiencesWebTopHeadDynamicInclude
 		printWriter.print(frontendJSAudiencesConfiguration.enableLog());
 
 		printWriter.print("&audiencesDefinitionHash=");
-		printWriter.print(audiencesDefinitionKeyValuePair.getKey());
+		printWriter.print(audiencesDefinition.getKey());
 		printWriter.print("&elementVariationsHash=");
-		printWriter.print(elementVariationsKeyValuePair.getKey());
+		printWriter.print(elementVariations.getKey());
 		printWriter.print("&plid=");
 		printWriter.print(themeDisplay.getPlid());
 		printWriter.print("\" type=\"module\"></script>");

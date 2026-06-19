@@ -85,7 +85,7 @@ public class SegmentsExperienceLocalServiceWrapper
 	 * experience may differ from the value supplied. See {@link
 	 * #addSegmentsExperience(String, long, long, String, String, String, long,
 	 * Map, int, boolean, UnicodeProperties, ServiceContext)} for the full
-	 * priority-compaction contract.
+	 * priority compaction contract.
 	 * </p>
 	 *
 	 * @param externalReferenceCode the segments experience's external reference
@@ -315,7 +315,7 @@ public class SegmentsExperienceLocalServiceWrapper
 	 *
 	 * <p>
 	 * See {@link #deleteSegmentsExperience(SegmentsExperience)} for the full
-	 * priority-compaction contract.
+	 * priority compaction contract.
 	 * </p>
 	 *
 	 * @param externalReferenceCode the external reference code of the segments
@@ -883,4 +883,4 @@ public class SegmentsExperienceLocalServiceWrapper
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1518698435
+// LIFERAY-SERVICE-BUILDER-HASH:1728503139

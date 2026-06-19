@@ -10,6 +10,8 @@ import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.dsr.client.dto.v1_0.UserAccount;
+import com.liferay.headless.dsr.client.pagination.Page;
+import com.liferay.headless.dsr.client.pagination.Pagination;
 import com.liferay.headless.dsr.client.problem.Problem;
 import com.liferay.headless.dsr.client.resource.v1_0.UserAccountResource;
 import com.liferay.notification.constants.NotificationConstants;
@@ -44,6 +46,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
@@ -52,6 +55,7 @@ import com.liferay.site.dsr.site.initializer.test.util.DSRTestUtil;
 
 import java.io.Serializable;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -135,6 +139,22 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 	@Override
 	@Test
+	public void testDeleteRoomUserAccount() throws Exception {
+		super.testDeleteRoomUserAccount();
+
+		_testDeleteRoomUserAccountWithMembershipExpirationDate();
+	}
+
+	@Override
+	@Test
+	public void testGetRoomUserAccountsPage() throws Exception {
+		super.testGetRoomUserAccountsPage();
+
+		_testGetRoomUserAccountsPageWithMembershipExpirationDate();
+	}
+
+	@Override
+	@Test
 	public void testPatchRoomUserAccount() throws Exception {
 		UserAccount postUserAccount = testPostRoomUserAccount_addUserAccount(
 			randomUserAccount());
@@ -143,13 +163,27 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 			_objectEntry.getObjectEntryId(), postUserAccount.getId(),
 			new UserAccount() {
 				{
+					membershipExpirationDate = new Date(
+						((System.currentTimeMillis() + Time.DAY) / 1000) *
+							1000);
 					roleKey = RoleConstants.SITE_ADMINISTRATOR;
 				}
 			});
 
 		Assert.assertEquals(postUserAccount.getId(), patchUserAccount.getId());
+		Assert.assertNotNull(patchUserAccount.getMembershipExpirationDate());
 		Assert.assertEquals(
 			RoleConstants.SITE_ADMINISTRATOR, patchUserAccount.getRoleKey());
+
+		patchUserAccount = userAccountResource.patchRoomUserAccount(
+			_objectEntry.getObjectEntryId(), postUserAccount.getId(),
+			new UserAccount() {
+				{
+					roleKey = RoleConstants.SITE_ADMINISTRATOR;
+				}
+			});
+
+		Assert.assertNull(patchUserAccount.getMembershipExpirationDate());
 	}
 
 	@Override
@@ -159,6 +193,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 		_testPostRoomUserAccount();
 		_testPostRoomUserAccountSiteMember();
+		_testPostRoomUserAccountWithMembershipExpirationDate();
 	}
 
 	@Override
@@ -187,11 +222,82 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		return _objectEntry.getObjectEntryId();
 	}
 
+	private Ticket _fetchExpireMembershipTicket(long userId) throws Exception {
+		for (Ticket ticket :
+				_ticketLocalService.getTickets(
+					TestPropsValues.getCompanyId(), Group.class.getName(),
+					_getGroupId(_objectEntry),
+					DSRTicketConstants.TYPE_EXPIRE_MEMBERSHIP)) {
+
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
+				ticket.getExtraInfo());
+
+			if (jsonObject.getLong("userId") == userId) {
+				return ticket;
+			}
+		}
+
+		return null;
+	}
+
 	private long _getGroupId(ObjectEntry objectEntry) throws Exception {
 		Group group = _groupLocalService.getGroup(
 			MapUtil.getLong(objectEntry.getValues(), "siteId"));
 
 		return group.getGroupId();
+	}
+
+	private void _testDeleteRoomUserAccountWithMembershipExpirationDate()
+		throws Exception {
+
+		User user = UserTestUtil.addUser();
+
+		Date expirationDate = new Date(
+			((System.currentTimeMillis() + Time.DAY) / 1000) * 1000);
+
+		userAccountResource.postRoomUserAccount(
+			_objectEntry.getObjectEntryId(),
+			new UserAccount() {
+				{
+					emailAddress = user.getEmailAddress();
+					membershipExpirationDate = expirationDate;
+				}
+			});
+
+		userAccountResource.deleteRoomUserAccount(
+			_objectEntry.getObjectEntryId(), user.getUserId());
+
+		Assert.assertNull(_fetchExpireMembershipTicket(user.getUserId()));
+	}
+
+	private void _testGetRoomUserAccountsPageWithMembershipExpirationDate()
+		throws Exception {
+
+		User user = UserTestUtil.addUser();
+
+		Date expirationDate = new Date(
+			((System.currentTimeMillis() + Time.DAY) / 1000) * 1000);
+
+		userAccountResource.postRoomUserAccount(
+			_objectEntry.getObjectEntryId(),
+			new UserAccount() {
+				{
+					emailAddress = user.getEmailAddress();
+					membershipExpirationDate = expirationDate;
+				}
+			});
+
+		Page<UserAccount> page = userAccountResource.getRoomUserAccountsPage(
+			_objectEntry.getObjectEntryId(), Pagination.of(1, 100));
+
+		Assert.assertTrue(
+			ListUtil.exists(
+				ListUtil.fromCollection(page.getItems()),
+				userAccount ->
+					Objects.equals(userAccount.getId(), user.getUserId()) &&
+					Objects.equals(
+						userAccount.getMembershipExpirationDate(),
+						expirationDate)));
 	}
 
 	private void _testPostRoomUserAccount() throws Exception {
@@ -322,6 +428,31 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 			Assert.assertTrue(message, message.contains("Forbidden"));
 		}
+	}
+
+	private void _testPostRoomUserAccountWithMembershipExpirationDate()
+		throws Exception {
+
+		User user = UserTestUtil.addUser();
+
+		Date expirationDate = new Date(
+			((System.currentTimeMillis() + Time.DAY) / 1000) * 1000);
+
+		UserAccount postUserAccount = userAccountResource.postRoomUserAccount(
+			_objectEntry.getObjectEntryId(),
+			new UserAccount() {
+				{
+					emailAddress = user.getEmailAddress();
+					membershipExpirationDate = expirationDate;
+				}
+			});
+
+		Assert.assertEquals(
+			expirationDate, postUserAccount.getMembershipExpirationDate());
+
+		Ticket ticket = _fetchExpireMembershipTicket(user.getUserId());
+
+		Assert.assertEquals(expirationDate, ticket.getExpirationDate());
 	}
 
 	private AccountEntry _accountEntry;

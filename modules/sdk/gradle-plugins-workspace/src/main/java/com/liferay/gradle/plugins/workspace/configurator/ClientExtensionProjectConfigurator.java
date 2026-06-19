@@ -74,7 +74,9 @@ import org.gradle.api.execution.TaskExecutionGraph;
 import org.gradle.api.execution.TaskExecutionListener;
 import org.gradle.api.file.ConfigurableFileCollection;
 import org.gradle.api.file.CopySpec;
+import org.gradle.api.file.Directory;
 import org.gradle.api.file.DirectoryProperty;
+import org.gradle.api.file.ProjectLayout;
 import org.gradle.api.initialization.Settings;
 import org.gradle.api.invocation.Gradle;
 import org.gradle.api.logging.Logger;
@@ -82,6 +84,7 @@ import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.ExtensionAware;
 import org.gradle.api.plugins.PluginManager;
 import org.gradle.api.provider.Property;
+import org.gradle.api.provider.Provider;
 import org.gradle.api.provider.SetProperty;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.Delete;
@@ -720,8 +723,13 @@ public class ClientExtensionProjectConfigurator
 				}
 			});
 
-		File clientExtensionBuildDir = new File(
-			project.getBuildDir(), getClientExtensionBuildDir(project));
+		ProjectLayout projectLayout = project.getLayout();
+
+		DirectoryProperty buildDirectoryProperty =
+			projectLayout.getBuildDirectory();
+
+		Provider<Directory> clientExtensionBuildDirProvider =
+			buildDirectoryProperty.dir(getClientExtensionBuildDir(project));
 
 		assembleClientExtensionTaskProvider.configure(
 			copy -> {
@@ -731,7 +739,7 @@ public class ClientExtensionProjectConfigurator
 					taskInputs.file(clientExtensionYamlFile);
 				}
 
-				copy.into(clientExtensionBuildDir);
+				copy.into(clientExtensionBuildDirProvider);
 
 				copy.doFirst(
 					new Action<Task>() {
@@ -799,7 +807,7 @@ public class ClientExtensionProjectConfigurator
 
 				archiveVersion.set("");
 
-				zip.from(clientExtensionBuildDir);
+				zip.from(clientExtensionBuildDirProvider);
 				zip.include("**/*");
 			});
 
@@ -887,8 +895,12 @@ public class ClientExtensionProjectConfigurator
 				DirectoryProperty destinationDirectoryProperty =
 					zip.getDestinationDirectory();
 
+				Provider<Directory> siteInitializerBuildDirProvider =
+					clientExtensionBuildDirProvider.map(
+						directory -> directory.dir("site-initializer"));
+
 				destinationDirectoryProperty.set(
-					new File(clientExtensionBuildDir, "site-initializer"));
+					siteInitializerBuildDirProvider);
 
 				Property<String> archiveBaseNameProperty =
 					zip.getArchiveBaseName();

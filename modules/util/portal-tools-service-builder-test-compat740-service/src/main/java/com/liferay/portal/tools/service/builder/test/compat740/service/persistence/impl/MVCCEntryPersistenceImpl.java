@@ -410,7 +410,7 @@ public class MVCCEntryPersistenceImpl
 					"countByCompanyId", new String[] {Long.class.getName()},
 					new String[] {"companyId"}, false),
 				_SQL_SELECT_MVCCENTRY_WHERE, _SQL_COUNT_MVCCENTRY_WHERE,
-				MVCCEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				MVCCEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"mvccEntry.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, MVCCEntry::getCompanyId));
@@ -497,4 +497,4 @@ public class MVCCEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1231674212
+// LIFERAY-SERVICE-BUILDER-HASH:-299876002

@@ -75,8 +75,8 @@ LPD-83847 Fix OutOfMemoryError during batch engine import
 The body follows this format, with one `browse` link per ticket in the set:
 
 ```markdown
-https://liferay.atlassian.net/browse/TICKET-ID
-https://liferay.atlassian.net/browse/OTHER-TICKET-ID
+https://liferay.atlassian.net/browse/TICKET-ID-1
+https://liferay.atlassian.net/browse/TICKET-ID-2
 
 ## What Is Being Fixed
 

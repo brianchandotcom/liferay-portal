@@ -14,6 +14,8 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
+import java.util.Date;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -61,6 +63,15 @@ public class InvitedMemberDTOConverter
 			{
 				setEmailAddress(() -> jsonObject.getString("emailAddress"));
 				setId(ticket::getTicketId);
+				setMembershipExpirationDate(
+					() -> {
+						if (jsonObject.isNull("membershipExpirationDate")) {
+							return null;
+						}
+
+						return new Date(
+							jsonObject.getLong("membershipExpirationDate"));
+					});
 				setOwnerId(
 					() -> {
 						if (jsonObject.isNull("ownerId")) {

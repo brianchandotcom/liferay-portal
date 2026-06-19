@@ -64,3 +64,20 @@ test(
 		await expect(timestampButton.locator('svg')).toBeAttached();
 	}
 );
+
+test(
+	'Styles dropdown includes custom style added via client extension',
+	{tag: '@LPD-65979'},
+	async ({classicPage, page}) => {
+		await classicPage.toolbar.container
+			.getByRole('button', {name: 'Styles'})
+			.click();
+
+		await expect(
+			page.getByRole('option', {
+				exact: true,
+				name: 'Featured Content',
+			})
+		).toBeVisible();
+	}
+);

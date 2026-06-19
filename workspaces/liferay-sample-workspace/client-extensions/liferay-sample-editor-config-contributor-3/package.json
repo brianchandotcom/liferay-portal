@@ -12,7 +12,7 @@
 	"main": "./src/index.ts",
 	"name": "@liferay/liferay-sample-editor-config-contributor-3",
 	"scripts": {
-		"build": "esbuild src/index.ts --outdir=build --bundle --format=esm --external:@ckeditor/ckeditor5-core --external:@ckeditor/ckeditor5-ui",
+		"build": "esbuild src/index.ts --outdir=build --bundle --format=esm --external:@ckeditor/*",
 		"start": "PORT=3002 serve --cors",
 		"watch": "tsc --watch"
 	},

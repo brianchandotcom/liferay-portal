@@ -234,7 +234,7 @@ public class AssetListAssetEntryProviderFiltersTest {
 					JSONUtil.putAll("2026-01-01", "2026-03-01"))),
 			objectEntry1);
 
-		ObjectEntry objectEntry3 = _addObjectEntry(
+		ObjectEntry objectEntry2 = _addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
 				"startTime", "2026-01-15 10:30"
 			).build());
@@ -249,7 +249,7 @@ public class AssetListAssetEntryProviderFiltersTest {
 				_filter(
 					"between", "startTime",
 					JSONUtil.putAll("2026-01-15 00:00", "2026-01-15 23:59"))),
-			objectEntry3);
+			objectEntry2);
 	}
 
 	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-74731"))

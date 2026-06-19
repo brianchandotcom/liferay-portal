@@ -10,6 +10,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectFieldLocalServiceUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -88,37 +89,45 @@ public class AssetListFiltersUtilTest {
 
 	@Test
 	public void testGetFiltersBooleanClausesWithCommonFieldOperators() {
+		String priority = String.valueOf(RandomTestUtil.randomDouble());
+		String status = String.valueOf(RandomTestUtil.randomInt());
+		String titleContainsValue = RandomTestUtil.randomString();
+		String titleEqValue = RandomTestUtil.randomString();
+		String userName = RandomTestUtil.randomString();
+		String viewCount = String.valueOf(RandomTestUtil.randomInt());
+
 		_assertMatchQuery(
-			"localized_title_en_US", "Apple",
+			"localized_title_en_US", titleEqValue,
 			_runAndAssertCommonFieldRow(
-				_buildCommonFieldFilter("eq", "title", "Apple")));
+				_buildCommonFieldFilter("eq", "title", titleEqValue)));
 		_assertMatchQuery(
-			"localized_title_en_US", "App",
+			"localized_title_en_US", titleContainsValue,
 			_runAndAssertCommonFieldRow(
-				_buildCommonFieldFilter("contains", "title", "App")));
+				_buildCommonFieldFilter(
+					"contains", "title", titleContainsValue)));
 
 		_assertTermQuery(
-			"userName", "Alice",
+			"userName", userName,
 			_runAndAssertCommonFieldRow(
-				_buildCommonFieldFilter("eq", "userName", "Alice")));
+				_buildCommonFieldFilter("eq", "userName", userName)));
 		_assertWildcardQuery(
-			"userName", "*Alice*",
+			"userName", StringPool.STAR + userName + StringPool.STAR,
 			_runAndAssertNegatedCommonFieldRow(
-				_buildCommonFieldFilter("not-contains", "userName", "Alice")));
+				_buildCommonFieldFilter("not-contains", "userName", userName)));
 
 		_assertTermQuery(
-			"viewCount", "5",
+			"viewCount", viewCount,
 			_runAndAssertCommonFieldRow(
-				_buildCommonFieldFilter("eq", "viewCount", "5")));
+				_buildCommonFieldFilter("eq", "viewCount", viewCount)));
 		_assertTermQuery(
-			"status", "0",
+			"status", status,
 			_runAndAssertNegatedCommonFieldRow(
-				_buildCommonFieldFilter("not-eq", "status", "0")));
+				_buildCommonFieldFilter("not-eq", "status", status)));
 
 		_assertTermRangeQuery(
-			"priority", false, false, "0.5", null,
+			"priority", false, false, priority, null,
 			_runAndAssertCommonFieldRow(
-				_buildCommonFieldFilter("gt", "priority", "0.5")));
+				_buildCommonFieldFilter("gt", "priority", priority)));
 
 		_assertTermRangeQuery(
 			"modified", true, true, "20260115000000", "20260115235959",
@@ -228,53 +237,61 @@ public class AssetListFiltersUtilTest {
 			ObjectFieldConstants.BUSINESS_TYPE_INTEGER,
 			ObjectFieldConstants.DB_TYPE_INTEGER, "viewCount");
 
-		_assertTermQuery(
-			"nestedFieldArray.value_integer", "5",
-			_runAndAssertNestedRow(
-				BooleanClauseOccur.MUST, _buildFilter("eq", "viewCount", "5"),
-				"viewCount"));
+		String viewCount = String.valueOf(RandomTestUtil.randomInt());
 
 		_assertTermQuery(
-			"nestedFieldArray.value_integer", "5",
+			"nestedFieldArray.value_integer", viewCount,
+			_runAndAssertNestedRow(
+				BooleanClauseOccur.MUST,
+				_buildFilter("eq", "viewCount", viewCount), "viewCount"));
+
+		_assertTermQuery(
+			"nestedFieldArray.value_integer", viewCount,
 			_runAndAssertNestedRow(
 				BooleanClauseOccur.MUST_NOT,
-				_buildFilter("not-eq", "viewCount", "5"), "viewCount"));
+				_buildFilter("not-eq", "viewCount", viewCount), "viewCount"));
 
 		_setUpObjectField(
 			ObjectFieldConstants.BUSINESS_TYPE_LONG_INTEGER,
 			ObjectFieldConstants.DB_TYPE_LONG, "externalId");
 
+		String externalId = String.valueOf(RandomTestUtil.randomLong());
+
 		_assertTermQuery(
-			"nestedFieldArray.value_long", "99999",
+			"nestedFieldArray.value_long", externalId,
 			_runAndAssertNestedRow(
 				BooleanClauseOccur.MUST,
-				_buildFilter("eq", "externalId", "99999"), "externalId"));
+				_buildFilter("eq", "externalId", externalId), "externalId"));
 
 		_setUpObjectField(
 			ObjectFieldConstants.BUSINESS_TYPE_DECIMAL,
 			ObjectFieldConstants.DB_TYPE_DOUBLE, "priority");
 
+		String priority = String.valueOf(RandomTestUtil.randomDouble());
+
 		_assertTermQuery(
-			"nestedFieldArray.value_double", "3.14",
+			"nestedFieldArray.value_double", priority,
 			_runAndAssertNestedRow(
-				BooleanClauseOccur.MUST, _buildFilter("eq", "priority", "3.14"),
-				"priority"));
+				BooleanClauseOccur.MUST,
+				_buildFilter("eq", "priority", priority), "priority"));
 
 		_setUpObjectField(
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 			ObjectFieldConstants.DB_TYPE_STRING, "title");
 
+		String title = RandomTestUtil.randomString();
+
 		_assertTermQuery(
-			"nestedFieldArray.value_text", "keyword",
+			"nestedFieldArray.value_text", title,
 			_runAndAssertNestedRow(
-				BooleanClauseOccur.MUST, _buildFilter("eq", "title", "keyword"),
+				BooleanClauseOccur.MUST, _buildFilter("eq", "title", title),
 				"title"));
 
 		_assertTermQuery(
-			"nestedFieldArray.value_text", "keyword",
+			"nestedFieldArray.value_text", title,
 			_runAndAssertNestedRow(
 				BooleanClauseOccur.MUST_NOT,
-				_buildFilter("not-eq", "title", "keyword"), "title"));
+				_buildFilter("not-eq", "title", title), "title"));
 
 		ObjectField subtitleObjectField = _setUpObjectField(
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
@@ -286,11 +303,13 @@ public class AssetListFiltersUtilTest {
 			true
 		);
 
+		String subtitle = RandomTestUtil.randomString();
+
 		_assertTermQuery(
-			"nestedFieldArray.value_en_US", "keyword",
+			"nestedFieldArray.value_en_US", subtitle,
 			_runAndAssertNestedRow(
 				BooleanClauseOccur.MUST,
-				_buildFilter("eq", "subtitle", "keyword"), "subtitle"));
+				_buildFilter("eq", "subtitle", subtitle), "subtitle"));
 	}
 
 	@Test
@@ -350,10 +369,12 @@ public class AssetListFiltersUtilTest {
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 			ObjectFieldConstants.DB_TYPE_STRING, "creator");
 
+		String userName = RandomTestUtil.randomString();
+
 		_assertTermQuery(
-			"userName", "Alice",
+			"userName", userName,
 			_runAndAssertCommonFieldRow(
-				_buildFilter("eq", "creator", "Alice")));
+				_buildFilter("eq", "creator", userName)));
 
 		_setUpMetadataObjectField(
 			ObjectFieldConstants.BUSINESS_TYPE_LONG_INTEGER,
@@ -579,16 +600,18 @@ public class AssetListFiltersUtilTest {
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 			ObjectFieldConstants.DB_TYPE_STRING, "title");
 
+		String title = RandomTestUtil.randomString();
+
 		Query containsQuery = _runAndAssertNestedRow(
-			BooleanClauseOccur.MUST,
-			_buildFilter("contains", "title", "keyword"), "title");
+			BooleanClauseOccur.MUST, _buildFilter("contains", "title", title),
+			"title");
 
 		Assert.assertTrue(
 			containsQuery.toString(), containsQuery instanceof MatchQuery);
 
 		Query notContainsQuery = _runAndAssertNestedRow(
 			BooleanClauseOccur.MUST_NOT,
-			_buildFilter("not-contains", "title", "keyword"), "title");
+			_buildFilter("not-contains", "title", title), "title");
 
 		Assert.assertTrue(
 			notContainsQuery.toString(),
@@ -597,7 +620,7 @@ public class AssetListFiltersUtilTest {
 		Query containsWithQuantifierQuery = _runAndAssertNestedRow(
 			BooleanClauseOccur.MUST,
 			_buildFilter(
-				"contains", "title", "keyword"
+				"contains", "title", title
 			).put(
 				"quantifier", "any"
 			),

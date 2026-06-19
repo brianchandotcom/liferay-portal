@@ -7,8 +7,10 @@ package com.liferay.exportimport.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
+import com.liferay.exportimport.kernel.background.task.BackgroundTaskExecutorNames;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
+import com.liferay.exportimport.test.util.ExportImportTestUtil;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
@@ -24,10 +26,19 @@ import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeCon
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.page.template.test.util.LayoutPageTemplateTestUtil;
+import com.liferay.layout.set.prototype.constants.LayoutSetPrototypePortletKeys;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
+import com.liferay.portal.kernel.backgroundtask.BaseBackgroundTaskExecutor;
+import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
+import com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplay;
 import com.liferay.portal.kernel.exception.LayoutParentLayoutIdException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -43,6 +54,7 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.model.ThemeSetting;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
@@ -50,6 +62,7 @@ import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
@@ -60,6 +73,7 @@ import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -77,6 +91,8 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.impl.ThemeSettingImpl;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -86,8 +102,12 @@ import com.liferay.sites.kernel.util.Sites;
 import jakarta.portlet.PortletPreferences;
 
 import java.util.Date;
+import java.util.Dictionary;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
 import org.junit.Assert;
@@ -100,6 +120,7 @@ import org.junit.runner.RunWith;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Julio Camarero
@@ -385,6 +406,49 @@ public class LayoutSetPrototypePropagationTest
 	}
 
 	@Test
+	public void testLayoutSetPrototypePropagation() throws Exception {
+		long userId = TestPropsValues.getUserId();
+
+		int initialCount = _layoutLocalService.getLayoutsCount(
+			group.getGroupId(), false);
+
+		LayoutTestUtil.addTypePortletLayout(_layoutSetPrototypeGroup, true);
+
+		long timestamp = System.currentTimeMillis();
+
+		propagateChanges(false, group);
+
+		_assertNotification("successful", timestamp, userId);
+
+		Assert.assertEquals(
+			initialCount + 1,
+			_layoutLocalService.getLayoutsCount(group.getGroupId(), false));
+	}
+
+	@Test
+	public void testLayoutSetPrototypePropagationCheckNotification()
+		throws Exception {
+
+		_testLayoutSetPrototypePropagationCheckNotification(
+			"completed-with-errors",
+			_getRandomStatus(
+				BackgroundTaskConstants.STATUS_COMPLETED_WITH_ERRORS,
+				BackgroundTaskConstants.STATUS_SUCCESSFUL),
+			BackgroundTaskConstants.STATUS_COMPLETED_WITH_ERRORS);
+
+		_testLayoutSetPrototypePropagationCheckNotification(
+			"failed",
+			_getRandomStatus(
+				BackgroundTaskConstants.STATUS_COMPLETED_WITH_ERRORS,
+				BackgroundTaskConstants.STATUS_SUCCESSFUL),
+			BackgroundTaskConstants.STATUS_FAILED);
+
+		_testLayoutSetPrototypePropagationCheckNotification(
+			"successful", BackgroundTaskConstants.STATUS_SUCCESSFUL,
+			BackgroundTaskConstants.STATUS_SUCCESSFUL);
+	}
+
+	@Test
 	public void testLayoutSetPrototypePropagationWithExportImportInProcess()
 		throws Exception {
 
@@ -394,6 +458,32 @@ public class LayoutSetPrototypePropagationTest
 			ExportImportThreadLocal::setLayoutImportInProcess);
 		_testLayoutSetPrototypePropagationWithExportImportInProcess(
 			ExportImportThreadLocal::setLayoutStagingInProcess);
+	}
+
+	@Test
+	public void testLayoutSetPrototypePropagationWithLinkDisabled()
+		throws Exception {
+
+		long userId = TestPropsValues.getUserId();
+
+		_sites.updateLayoutSetPrototypesLinks(
+			group, _layoutSetPrototype.getLayoutSetPrototypeId(), 0, false,
+			false);
+
+		int initialCount = _layoutLocalService.getLayoutsCount(
+			group.getGroupId(), false);
+
+		LayoutTestUtil.addTypePortletLayout(_layoutSetPrototypeGroup, true);
+
+		long timestamp = System.currentTimeMillis();
+
+		propagateChanges(false, group);
+
+		_assertNotification("successful", timestamp, userId);
+
+		Assert.assertEquals(
+			initialCount,
+			_layoutLocalService.getLayoutsCount(group.getGroupId(), false));
 	}
 
 	@Test
@@ -1267,6 +1357,67 @@ public class LayoutSetPrototypePropagationTest
 			propagatedLayout.getLayoutSetPrototypeLayoutERC());
 	}
 
+	private void _assertNotification(
+			String expectedResult, long timestamp, long userId)
+		throws Exception {
+
+		ExportImportTestUtil.retryAssert(
+			1, TimeUnit.SECONDS, 5, TimeUnit.SECONDS,
+			() -> {
+				String result = _getLatestMergeNotificationResult(
+					timestamp, userId);
+
+				Assert.assertEquals(expectedResult, result);
+			});
+	}
+
+	private String _getLatestMergeNotificationResult(
+			long timestamp, long userId)
+		throws Exception {
+
+		List<UserNotificationEvent> userNotificationEvents =
+			_userNotificationEventLocalService.getUserNotificationEvents(
+				userId);
+
+		for (int i = userNotificationEvents.size() - 1; i >= 0; i--) {
+			UserNotificationEvent userNotificationEvent =
+				userNotificationEvents.get(i);
+
+			if ((userNotificationEvent.getTimestamp() < timestamp) ||
+				!Objects.equals(
+					userNotificationEvent.getType(),
+					LayoutSetPrototypePortletKeys.LAYOUT_SET_PROTOTYPE)) {
+
+				continue;
+			}
+
+			JSONObject payloadJSONObject = JSONFactoryUtil.createJSONObject(
+				userNotificationEvent.getPayload());
+
+			return payloadJSONObject.getString("result");
+		}
+
+		return null;
+	}
+
+	private int _getRandomStatus(int... statuses) {
+		return statuses[RandomTestUtil.randomInt(0, statuses.length - 1)];
+	}
+
+	private <S> SafeCloseable _registerServiceWithSafeCloseable(
+		Class<S> clazz, Dictionary<String, ?> properties, S service) {
+
+		Bundle bundle = FrameworkUtil.getBundle(
+			LayoutSetPrototypePropagationTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		ServiceRegistration<S> serviceRegistration =
+			bundleContext.registerService(clazz, service, properties);
+
+		return serviceRegistration::unregister;
+	}
+
 	private void _registerTestPortlet(String portletName) {
 		Bundle bundle = FrameworkUtil.getBundle(
 			LayoutSetPrototypePropagationTest.class);
@@ -1313,6 +1464,56 @@ public class LayoutSetPrototypePropagationTest
 				ResourceConstants.SCOPE_INDIVIDUAL,
 				String.valueOf(layout.getPrimaryKey()), role.getRoleId(),
 				ActionKeys.CUSTOMIZE));
+	}
+
+	private void _testLayoutSetPrototypePropagationCheckNotification(
+			String expectedResult, int status1, int status2)
+		throws Exception {
+
+		long userId = TestPropsValues.getUserId();
+
+		Group testGroup = GroupTestUtil.addGroup();
+
+		try {
+			_sites.updateLayoutSetPrototypesLinks(
+				testGroup, _layoutSetPrototype.getLayoutSetPrototypeId(), 0,
+				true, false);
+
+			try (SafeCloseable safeCloseable =
+					_registerServiceWithSafeCloseable(
+						BackgroundTaskExecutor.class,
+						HashMapDictionaryBuilder.<String, Object>put(
+							"background.task.executor.class.name",
+							BackgroundTaskExecutorNames.
+								LAYOUT_SET_PROTOTYPE_MERGE_BACKGROUND_TASK_EXECUTOR
+						).put(
+							"service.ranking", 1000
+						).build(),
+						new TestBackgroundTaskExecutor(
+							HashMapBuilder.put(
+								group.getGroupId(), status1
+							).put(
+								testGroup.getGroupId(), status2
+							).build()))) {
+
+				long timestamp = System.currentTimeMillis();
+
+				try (LogCapture logCapture =
+						LoggerTestUtil.configureLog4JLogger(
+							"com.liferay.portal.background.task.internal." +
+								"messaging.BackgroundTaskMessageListener",
+							LoggerTestUtil.OFF)) {
+
+					_sites.mergeLayoutSetPrototypeLayouts(
+						_layoutSetPrototype, userId);
+
+					_assertNotification(expectedResult, timestamp, userId);
+				}
+			}
+		}
+		finally {
+			GroupLocalServiceUtil.deleteGroup(testGroup);
+		}
 	}
 
 	private void _testLayoutSetPrototypePropagationWithExportImportInProcess(
@@ -1417,5 +1618,45 @@ public class LayoutSetPrototypePropagationTest
 
 	@DeleteAfterTestRun
 	private User _user2;
+
+	@Inject
+	private UserNotificationEventLocalService
+		_userNotificationEventLocalService;
+
+	private static class TestBackgroundTaskExecutor
+		extends BaseBackgroundTaskExecutor {
+
+		public TestBackgroundTaskExecutor(Map<Long, Integer> groupIdStatusMap) {
+			_groupIdStatusMap = groupIdStatusMap;
+		}
+
+		@Override
+		public BackgroundTaskExecutor clone() {
+			return this;
+		}
+
+		@Override
+		public BackgroundTaskResult execute(BackgroundTask backgroundTask) {
+			Integer status = _groupIdStatusMap.getOrDefault(
+				backgroundTask.getGroupId(),
+				BackgroundTaskConstants.STATUS_SUCCESSFUL);
+
+			if (status == BackgroundTaskConstants.STATUS_FAILED) {
+				throw new RuntimeException();
+			}
+
+			return new BackgroundTaskResult(status);
+		}
+
+		@Override
+		public BackgroundTaskDisplay getBackgroundTaskDisplay(
+			BackgroundTask backgroundTask) {
+
+			return null;
+		}
+
+		private final Map<Long, Integer> _groupIdStatusMap;
+
+	}
 
 }

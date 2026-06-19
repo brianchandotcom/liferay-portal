@@ -27,6 +27,8 @@ export {
 	LearnResourcesContext,
 } from './learn_message/LearnMessage';
 
+export {default as ManageMembersModal} from './manage_members_modal/ManageMembersModal';
+
 export {default as ManagementToolbar} from './management_toolbar/ManagementToolbar';
 
 export {default as openAlertModal} from './modal/commands/openAlertModal';

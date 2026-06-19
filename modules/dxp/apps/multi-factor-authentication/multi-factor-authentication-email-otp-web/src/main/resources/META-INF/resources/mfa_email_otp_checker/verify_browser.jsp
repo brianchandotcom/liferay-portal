@@ -45,9 +45,9 @@ long mfaEmailOTPFailedAttemptsRetryTimeout = GetterUtil.getLong(request.getAttri
 
 	var failedAttemptsRetryTimeout = <%= mfaEmailOTPFailedAttemptsRetryTimeout %>;
 
-	var resendCountdown;
-
 	var failedAttemptsRetryCountdown;
+
+	var resendCountdown;
 
 	var messageContainer = A.one('#<portlet:namespace />messageContainer');
 
@@ -71,7 +71,9 @@ long mfaEmailOTPFailedAttemptsRetryTimeout = GetterUtil.getLong(request.getAttri
 		}, interval);
 	}
 
-	function <portlet:namespace />setFailedAttemptsRetryCountdown(failedAttemptsRetryDuration) {
+	function <portlet:namespace />setFailedAttemptsRetryCountdown(
+		failedAttemptsRetryDuration
+	) {
 		if (failedAttemptsRetryDuration < 1) {
 			var maximumAllowedAttemptsError = A.one(
 				'#<portlet:namespace />maximumAllowedAttemptsError'

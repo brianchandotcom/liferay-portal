@@ -33,9 +33,10 @@ public class CollectionPersistenceFinder
 		FinderPath paginatedFindPath, FinderPath unpaginatedFindPath,
 		FinderPath countFinderPath, String sqlSelectWhere, String sqlCountWhere,
 		String defaultOrderByJpql, String orderByEntityAlias, String where,
-		FinderColumn<T>... finderColumns) {
+		String dbWhere, FinderColumn<T>... finderColumns) {
 
-		super(basePersistenceImpl, sqlSelectWhere, where, finderColumns);
+		super(
+			basePersistenceImpl, sqlSelectWhere, where, dbWhere, finderColumns);
 
 		_paginatedFindPath = paginatedFindPath;
 		_unpaginatedFindPath = unpaginatedFindPath;
@@ -247,7 +248,7 @@ public class CollectionPersistenceFinder
 			sb.append(" AND ");
 		}
 
-		if ((where != null) && !where.isEmpty()) {
+		if (!where.isEmpty()) {
 			sb.append(where);
 		}
 		else if (sb.index() > 1) {

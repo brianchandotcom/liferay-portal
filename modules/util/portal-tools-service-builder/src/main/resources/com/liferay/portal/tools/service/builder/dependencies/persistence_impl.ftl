@@ -3207,6 +3207,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 						${entity.name}ModelImpl.ORDER_BY_JPQL,
 						_ENTITY_ALIAS_PREFIX,
 						"${entityFinder.where!}",
+						"${entityFinder.DBWhere!}",
 						<#list entityColumns as entityColumn>
 							<#if entity.hasCompoundPK() && entityColumn.isPrimary()>
 								<#assign columnName = "id." + entityColumn.name />

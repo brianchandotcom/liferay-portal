@@ -43,7 +43,7 @@ test.beforeEach(async ({apiHelpers, onPagePage, seoStudioSite}) => {
 				type: 'Document',
 			},
 		],
-		severity: 'critical',
+		severity: '3',
 	};
 
 	scan = await apiHelpers.seoStudio.createScan('full');

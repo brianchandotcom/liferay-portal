@@ -65,13 +65,13 @@ test(
 					'https://example.com/b',
 					'https://example.com/c',
 				],
-				severity: 'critical',
+				severity: '3',
 			},
 			{
 				category: 'images',
 				name: 'missingAltText',
 				pageURLs: ['https://example.com/d', 'https://example.com/e'],
-				severity: 'medium',
+				severity: '2',
 			},
 			{
 				category: 'urls',
@@ -82,7 +82,7 @@ test(
 					'https://example.com/h',
 					'https://example.com/i',
 				],
-				severity: 'high',
+				severity: '3',
 			},
 		];
 

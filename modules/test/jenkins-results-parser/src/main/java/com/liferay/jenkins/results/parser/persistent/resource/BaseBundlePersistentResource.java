@@ -10,6 +10,7 @@ import com.liferay.jenkins.results.parser.BuildDatabase;
 import com.liferay.jenkins.results.parser.BuildFactory;
 import com.liferay.jenkins.results.parser.Environment;
 import com.liferay.jenkins.results.parser.JenkinsAPIUtil;
+import com.liferay.jenkins.results.parser.JenkinsCohort;
 import com.liferay.jenkins.results.parser.JenkinsMaster;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.SubrepositoryWorkspace;
@@ -26,6 +27,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -296,6 +299,16 @@ public abstract class BaseBundlePersistentResource
 
 			print("WARNING: Unable to find queue item");
 
+			_missingCount++;
+
+			if (_missingCount >= _MAX_MISSING_COUNT) {
+				_missingCount = 0;
+
+				print("Reinvoking bundles after missing queue item");
+
+				start();
+			}
+
 			return;
 		}
 
@@ -366,6 +379,27 @@ public abstract class BaseBundlePersistentResource
 		}
 	}
 
+	private JenkinsCohort _getJenkinsCohort(JenkinsMaster jenkinsMaster) {
+		if (jenkinsMaster != null) {
+			JenkinsCohort jenkinsCohort = jenkinsMaster.getJenkinsCohort();
+
+			if (jenkinsCohort != null) {
+				return jenkinsCohort;
+			}
+		}
+
+		String baseInvocationURL = _getBaseInvocationURL();
+
+		Matcher matcher = _baseInvocationURLPattern.matcher(baseInvocationURL);
+
+		if (!matcher.find()) {
+			throw new RuntimeException(
+				"Unable to determine Jenkins cohort from " + baseInvocationURL);
+		}
+
+		return JenkinsCohort.getInstance(matcher.group("cohortName"));
+	}
+
 	private String _getProducerJobURL() {
 		JenkinsMaster producerJenkinsMaster = getProducerJenkinsMaster();
 
@@ -379,9 +413,14 @@ public abstract class BaseBundlePersistentResource
 	private void _invokeBuild() {
 		setControllerBuildURL(getCurrentTopLevelBuildURL());
 
+		JenkinsMaster currentProducerJenkinsMaster = getProducerJenkinsMaster();
+
+		JenkinsCohort jenkinsCohort = _getJenkinsCohort(
+			currentProducerJenkinsMaster);
+
 		JenkinsMaster producerJenkinsMaster =
-			JenkinsResultsParserUtil.getMostAvailableJenkinsMaster(
-				_getBaseInvocationURL(), 1);
+			jenkinsCohort.getMostAvailableJenkinsMaster(
+				currentProducerJenkinsMaster, 1, _JOB_NAME);
 
 		setProducerJenkinsMaster(producerJenkinsMaster);
 
@@ -559,6 +598,9 @@ public abstract class BaseBundlePersistentResource
 	private static final int _MAX_REDISPATCH_ATTEMPTS = 1;
 
 	private static final long _REDISPATCH_VERIFY_TIME = 1000 * 10;
+
+	private static final Pattern _baseInvocationURLPattern = Pattern.compile(
+		"https?://(?<cohortName>test-\\d+)(\\.liferay\\.com)?");
 
 	private Build _build;
 	private int _failCount;

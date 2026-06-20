@@ -11,7 +11,6 @@ import com.liferay.analytics.cms.rest.dto.v1_0.Trend;
 import com.liferay.analytics.cms.rest.resource.v1_0.PerformanceTopAssetResource;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
@@ -19,7 +18,6 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.util.MockHttp;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Http;
@@ -30,11 +28,8 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
-import java.io.IOException;
-
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -249,28 +244,5 @@ public class PerformanceTopAssetResourceTest
 
 	@Inject
 	private PerformanceTopAssetResource _performanceTopAssetResource;
-
-	private static class RecordingMockHttp extends MockHttp {
-
-		public RecordingMockHttp(
-			Map<String, UnsafeSupplier<String, Exception>> unsafeSuppliers) {
-
-			super(unsafeSuppliers);
-		}
-
-		public String getLocation() {
-			return _location;
-		}
-
-		@Override
-		public String URLtoString(Http.Options options) throws IOException {
-			_location = options.getLocation();
-
-			return super.URLtoString(options);
-		}
-
-		private String _location;
-
-	}
 
 }

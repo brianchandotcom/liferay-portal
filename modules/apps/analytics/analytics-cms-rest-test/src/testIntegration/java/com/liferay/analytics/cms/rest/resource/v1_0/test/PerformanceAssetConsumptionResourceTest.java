@@ -15,7 +15,6 @@ import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
@@ -23,7 +22,6 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.MockHttp;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -45,14 +43,11 @@ import com.liferay.site.cms.site.initializer.test.util.CMSTestUtil;
 
 import jakarta.ws.rs.BadRequestException;
 
-import java.io.IOException;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -390,28 +385,5 @@ public class PerformanceAssetConsumptionResourceTest
 	@Inject
 	private PerformanceAssetConsumptionResource
 		_performanceAssetConsumptionResource;
-
-	private static class RecordingMockHttp extends MockHttp {
-
-		public RecordingMockHttp(
-			Map<String, UnsafeSupplier<String, Exception>> unsafeSuppliers) {
-
-			super(unsafeSuppliers);
-		}
-
-		public String getLocation() {
-			return _location;
-		}
-
-		@Override
-		public String URLtoString(Http.Options options) throws IOException {
-			_location = options.getLocation();
-
-			return super.URLtoString(options);
-		}
-
-		private String _location;
-
-	}
 
 }

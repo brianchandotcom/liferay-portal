@@ -144,7 +144,8 @@ public class ViewFilesSectionDisplayContextTest
 
 	@Override
 	protected String getFilterString() {
-		return "cmsRoot eq true and cmsSection eq 'files'";
+		return "cmsRoot eq true and cmsSection eq 'files' and " +
+			"rootDescendantNode eq false";
 	}
 
 	@Override

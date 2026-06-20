@@ -60,8 +60,6 @@ public class DeleteStructureStrutsActionTest {
 			ObjectDefinitionTestUtil.addCustomObjectDefinition();
 		ObjectDefinition objectDefinition2 =
 			ObjectDefinitionTestUtil.addCustomObjectDefinition();
-		ObjectDefinition objectDefinition3 =
-			ObjectDefinitionTestUtil.addCustomObjectDefinition();
 
 		_objectRelationshipLocalService.addObjectRelationship(
 			null, TestPropsValues.getUserId(),
@@ -71,6 +69,9 @@ public class DeleteStructureStrutsActionTest {
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			StringUtil.randomId(), false,
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
+
+		ObjectDefinition objectDefinition3 =
+			ObjectDefinitionTestUtil.addCustomObjectDefinition();
 
 		_objectRelationshipLocalService.addObjectRelationship(
 			null, TestPropsValues.getUserId(),
@@ -130,8 +131,6 @@ public class DeleteStructureStrutsActionTest {
 			ObjectDefinitionTestUtil.publishObjectDefinition();
 		ObjectDefinition objectDefinition2 =
 			ObjectDefinitionTestUtil.publishObjectDefinition();
-		ObjectDefinition objectDefinition3 =
-			ObjectDefinitionTestUtil.publishObjectDefinition();
 
 		_objectRelationshipLocalService.addObjectRelationship(
 			null, TestPropsValues.getUserId(),
@@ -141,6 +140,9 @@ public class DeleteStructureStrutsActionTest {
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			StringUtil.randomId(), false,
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
+
+		ObjectDefinition objectDefinition3 =
+			ObjectDefinitionTestUtil.publishObjectDefinition();
 
 		_objectRelationshipLocalService.addObjectRelationship(
 			null, TestPropsValues.getUserId(),

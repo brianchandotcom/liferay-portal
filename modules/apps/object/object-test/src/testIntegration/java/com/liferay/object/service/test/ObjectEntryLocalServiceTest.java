@@ -6009,61 +6009,53 @@ public class ObjectEntryLocalServiceTest {
 				"AA", new String[0]
 			).build());
 
-		try {
-			ObjectDefinition rootObjectDefinition =
-				_objectDefinitionLocalService.getObjectDefinition(
-					TestPropsValues.getCompanyId(), "C_A");
+		ObjectDefinition rootObjectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				TestPropsValues.getCompanyId(), "C_A");
 
-			TreeTestUtil.createObjectEntryTree(
-				"1", _objectDefinitionLocalService, _objectEntryLocalService,
-				_objectFieldLocalService, _objectRelationshipLocalService,
-				rootObjectDefinition.getObjectDefinitionId());
+		TreeTestUtil.createObjectEntryTree(
+			"1", _objectDefinitionLocalService, _objectEntryLocalService,
+			_objectFieldLocalService, _objectRelationshipLocalService,
+			rootObjectDefinition.getObjectDefinitionId());
 
-			ObjectDefinition childObjectDefinition =
-				_objectDefinitionLocalService.getObjectDefinition(
-					TestPropsValues.getCompanyId(), "C_AA");
+		ObjectDefinition childObjectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				TestPropsValues.getCompanyId(), "C_AA");
 
-			ObjectEntry childObjectEntry =
-				_objectEntryLocalService.getObjectEntry(
-					"AA1", ObjectDefinitionConstants.GROUP_ID_DEFAULT,
-					childObjectDefinition.getObjectDefinitionId());
+		ObjectEntry childObjectEntry = _objectEntryLocalService.getObjectEntry(
+			"AA1", ObjectDefinitionConstants.GROUP_ID_DEFAULT,
+			childObjectDefinition.getObjectDefinitionId());
 
-			Assert.assertEquals(
-				WorkflowConstants.STATUS_APPROVED,
-				childObjectEntry.getStatus());
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED, childObjectEntry.getStatus());
 
-			ObjectEntry rootObjectEntry =
-				_objectEntryLocalService.getObjectEntry(
-					"A1", ObjectDefinitionConstants.GROUP_ID_DEFAULT,
-					rootObjectDefinition.getObjectDefinitionId());
+		ObjectEntry rootObjectEntry = _objectEntryLocalService.getObjectEntry(
+			"A1", ObjectDefinitionConstants.GROUP_ID_DEFAULT,
+			rootObjectDefinition.getObjectDefinitionId());
 
-			rootObjectEntry = _objectEntryLocalService.moveObjectEntryToTrash(
-				TestPropsValues.getUserId(), rootObjectEntry,
-				ServiceContextTestUtil.getServiceContext());
+		rootObjectEntry = _objectEntryLocalService.moveObjectEntryToTrash(
+			TestPropsValues.getUserId(), rootObjectEntry,
+			ServiceContextTestUtil.getServiceContext());
 
-			childObjectEntry = _objectEntryLocalService.getObjectEntry(
-				childObjectEntry.getObjectEntryId());
+		childObjectEntry = _objectEntryLocalService.getObjectEntry(
+			childObjectEntry.getObjectEntryId());
 
-			Assert.assertEquals(
-				WorkflowConstants.STATUS_IN_TRASH,
-				childObjectEntry.getStatus());
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_IN_TRASH, childObjectEntry.getStatus());
 
-			_objectEntryLocalService.restoreObjectEntryFromTrash(
-				TestPropsValues.getUserId(), rootObjectEntry,
-				ServiceContextTestUtil.getServiceContext());
+		_objectEntryLocalService.restoreObjectEntryFromTrash(
+			TestPropsValues.getUserId(), rootObjectEntry,
+			ServiceContextTestUtil.getServiceContext());
 
-			childObjectEntry = _objectEntryLocalService.getObjectEntry(
-				childObjectEntry.getObjectEntryId());
+		childObjectEntry = _objectEntryLocalService.getObjectEntry(
+			childObjectEntry.getObjectEntryId());
 
-			Assert.assertEquals(
-				WorkflowConstants.STATUS_APPROVED,
-				childObjectEntry.getStatus());
-		}
-		finally {
-			TreeTestUtil.deleteObjectDefinitionHierarchy(
-				_objectDefinitionLocalService, new String[] {"C_A", "C_AA"},
-				_objectEntryLocalService, _objectRelationshipLocalService);
-		}
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED, childObjectEntry.getStatus());
+
+		TreeTestUtil.deleteObjectDefinitionHierarchy(
+			_objectDefinitionLocalService, new String[] {"C_A", "C_AA"},
+			_objectEntryLocalService, _objectRelationshipLocalService);
 	}
 
 	@FeatureFlag("LPD-17564")

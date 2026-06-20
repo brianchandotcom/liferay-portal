@@ -113,6 +113,8 @@ public class ObjectEntryInfoItemFieldValuesUpdaterTest
 	public void testUpdateFromInfoItemFieldValuesWithLocalizedObjectField()
 		throws Exception {
 
+		String enValue = RandomTestUtil.randomString();
+
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionTestUtil.publishObjectDefinition(
 				Collections.singletonList(
@@ -124,8 +126,6 @@ public class ObjectEntryInfoItemFieldValuesUpdaterTest
 					).name(
 						"name"
 					).build()));
-
-		String enValue = RandomTestUtil.randomString();
 
 		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
 			0, objectDefinition.getObjectDefinitionId(),
@@ -175,6 +175,18 @@ public class ObjectEntryInfoItemFieldValuesUpdaterTest
 	public void testUpdateFromInfoItemFieldValuesWithObjectRelationship()
 		throws Exception {
 
+		ObjectDefinition childObjectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.singletonList(
+					new TextObjectFieldBuilder(
+					).labelMap(
+						RandomTestUtil.randomLocaleStringMap()
+					).name(
+						"text"
+					).build()));
+		String childTextValue = RandomTestUtil.randomString();
+		String enValue = RandomTestUtil.randomString();
+		String externalReferenceCode = StringUtil.randomId();
 		ObjectDefinition parentObjectDefinition =
 			ObjectDefinitionTestUtil.publishObjectDefinition(
 				Collections.singletonList(
@@ -186,16 +198,7 @@ public class ObjectEntryInfoItemFieldValuesUpdaterTest
 					).name(
 						"text"
 					).build()));
-
-		ObjectDefinition childObjectDefinition =
-			ObjectDefinitionTestUtil.publishObjectDefinition(
-				Collections.singletonList(
-					new TextObjectFieldBuilder(
-					).labelMap(
-						RandomTestUtil.randomLocaleStringMap()
-					).name(
-						"text"
-					).build()));
+		String ptValue = RandomTestUtil.randomString();
 
 		ObjectRelationship objectRelationship =
 			_objectRelationshipLocalService.addObjectRelationship(
@@ -206,9 +209,6 @@ public class ObjectEntryInfoItemFieldValuesUpdaterTest
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				StringUtil.randomId(), false,
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
-
-		String enValue = RandomTestUtil.randomString();
-
 		ObjectEntry parentObjectEntry = ObjectEntryTestUtil.addObjectEntry(
 			0, parentObjectDefinition.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
@@ -218,109 +218,99 @@ public class ObjectEntryInfoItemFieldValuesUpdaterTest
 				).build()
 			).build());
 
-		String ptValue = RandomTestUtil.randomString();
-		String childTextValue = RandomTestUtil.randomString();
+		String namespace = ObjectEntryInfoItemUtil.getInfoFieldNamespace(
+			childObjectDefinition, objectRelationship);
 
-		try {
-			String externalReferenceCode = StringUtil.randomId();
+		_updateFromInfoItemFieldValues(
+			InfoItemFieldValues.builder(
+			).infoFieldValue(
+				new InfoFieldValue<>(
+					InfoField.builder(
+					).infoFieldType(
+						TextInfoFieldType.INSTANCE
+					).namespace(
+						ObjectField.class.getSimpleName()
+					).name(
+						"text"
+					).localizable(
+						true
+					).build(),
+					InfoLocalizedValue.builder(
+					).value(
+						LocaleUtil.BRAZIL, ptValue
+					).value(
+						LocaleUtil.US, enValue
+					).build())
+			).infoFieldValue(
+				new InfoFieldValue<>(
+					InfoField.builder(
+					).infoFieldType(
+						TextInfoFieldType.INSTANCE
+					).namespace(
+						namespace
+					).name(
+						"text"
+					).build(),
+					new RelatedInfoFieldValue<>(
+						HashMapBuilder.
+							<RelatedInfoFieldValue.
+								RelatedInfoFieldValueIdentifier,
+							 InfoFieldValue<Object>>put(
+								new RelatedInfoFieldValue.
+									RelatedInfoFieldValueIdentifier(
+										externalReferenceCode,
+										parentObjectEntry.
+											getExternalReferenceCode()),
+								new InfoFieldValue<>(
+									InfoField.builder(
+									).infoFieldType(
+										TextInfoFieldType.INSTANCE
+									).namespace(
+										namespace
+									).name(
+										"text"
+									).build(),
+									childTextValue)
+							).build()))
+			).build(),
+			parentObjectDefinition, parentObjectEntry);
 
-			String namespace = ObjectEntryInfoItemUtil.getInfoFieldNamespace(
-				childObjectDefinition, objectRelationship);
+		Map<String, Serializable> values = objectEntryLocalService.getValues(
+			parentObjectEntry.getObjectEntryId());
 
-			_updateFromInfoItemFieldValues(
-				InfoItemFieldValues.builder(
-				).infoFieldValue(
-					new InfoFieldValue<>(
-						InfoField.builder(
-						).infoFieldType(
-							TextInfoFieldType.INSTANCE
-						).namespace(
-							ObjectField.class.getSimpleName()
-						).name(
-							"text"
-						).localizable(
-							true
-						).build(),
-						InfoLocalizedValue.builder(
-						).value(
-							LocaleUtil.BRAZIL, ptValue
-						).value(
-							LocaleUtil.US, enValue
-						).build())
-				).infoFieldValue(
-					new InfoFieldValue<>(
-						InfoField.builder(
-						).infoFieldType(
-							TextInfoFieldType.INSTANCE
-						).namespace(
-							namespace
-						).name(
-							"text"
-						).build(),
-						new RelatedInfoFieldValue<>(
-							HashMapBuilder.
-								<RelatedInfoFieldValue.
-									RelatedInfoFieldValueIdentifier,
-								 InfoFieldValue<Object>>put(
-									new RelatedInfoFieldValue.
-										RelatedInfoFieldValueIdentifier(
-											externalReferenceCode,
-											parentObjectEntry.
-												getExternalReferenceCode()),
-									new InfoFieldValue<>(
-										InfoField.builder(
-										).infoFieldType(
-											TextInfoFieldType.INSTANCE
-										).namespace(
-											namespace
-										).name(
-											"text"
-										).build(),
-										childTextValue)
-								).build()))
-				).build(),
-				parentObjectDefinition, parentObjectEntry);
+		Map<String, Object> localizedValues = (Map<String, Object>)values.get(
+			"text_i18n");
 
-			Map<String, Serializable> values =
-				objectEntryLocalService.getValues(
-					parentObjectEntry.getObjectEntryId());
+		Assert.assertEquals(enValue, localizedValues.get("en_US"));
+		Assert.assertEquals(ptValue, localizedValues.get("pt_BR"));
 
-			Map<String, Object> localizedValues =
-				(Map<String, Object>)values.get("text_i18n");
+		List<ObjectEntry> objectEntries =
+			objectEntryLocalService.getObjectEntries(
+				0, childObjectDefinition.getObjectDefinitionId(),
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-			Assert.assertEquals(enValue, localizedValues.get("en_US"));
-			Assert.assertEquals(ptValue, localizedValues.get("pt_BR"));
+		Assert.assertEquals(objectEntries.toString(), 1, objectEntries.size());
 
-			List<ObjectEntry> objectEntries =
-				objectEntryLocalService.getObjectEntries(
-					0, childObjectDefinition.getObjectDefinitionId(),
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		ObjectEntry childObjectEntry = objectEntries.get(0);
 
-			Assert.assertEquals(
-				objectEntries.toString(), 1, objectEntries.size());
+		Assert.assertEquals(
+			childTextValue,
+			MapUtil.getString(childObjectEntry.getValues(), "text"));
 
-			ObjectEntry childObjectEntry = objectEntries.get(0);
+		objectRelationship =
+			_objectRelationshipLocalService.updateObjectRelationship(
+				objectRelationship.getExternalReferenceCode(),
+				objectRelationship.getObjectRelationshipId(), 0,
+				ObjectRelationshipConstants.DELETION_TYPE_CASCADE, false,
+				objectRelationship.getLabelMap(), null);
 
-			Assert.assertEquals(
-				childTextValue,
-				MapUtil.getString(childObjectEntry.getValues(), "text"));
-		}
-		finally {
-			objectRelationship =
-				_objectRelationshipLocalService.updateObjectRelationship(
-					objectRelationship.getExternalReferenceCode(),
-					objectRelationship.getObjectRelationshipId(), 0,
-					ObjectRelationshipConstants.DELETION_TYPE_CASCADE, false,
-					objectRelationship.getLabelMap(), null);
+		_objectRelationshipLocalService.deleteObjectRelationship(
+			objectRelationship);
 
-			_objectRelationshipLocalService.deleteObjectRelationship(
-				objectRelationship);
-
-			_objectDefinitionLocalService.deleteObjectDefinition(
-				childObjectDefinition);
-			_objectDefinitionLocalService.deleteObjectDefinition(
-				parentObjectDefinition);
-		}
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			childObjectDefinition);
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			parentObjectDefinition);
 	}
 
 	private ObjectDefinition _addCMSObjectDefinition(

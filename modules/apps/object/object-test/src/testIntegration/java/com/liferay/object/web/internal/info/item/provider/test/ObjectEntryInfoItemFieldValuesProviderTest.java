@@ -503,41 +503,37 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 
 		_pushServiceContext(_getThemeDisplay(StringPool.BLANK, "UTC"));
 
-		try {
-			InfoItemFieldValuesProvider<ObjectEntry>
-				infoItemFieldValuesProvider =
-					_infoItemServiceRegistry.getFirstInfoItemService(
-						InfoItemFieldValuesProvider.class,
-						childObjectDefinition.getClassName());
+		InfoItemFieldValuesProvider<ObjectEntry> infoItemFieldValuesProvider =
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemFieldValuesProvider.class,
+				childObjectDefinition.getClassName());
 
-			InfoItemFieldValues infoItemFieldValues =
-				infoItemFieldValuesProvider.getInfoItemFieldValues(
-					childObjectEntry);
+		InfoItemFieldValues infoItemFieldValues =
+			infoItemFieldValuesProvider.getInfoItemFieldValues(
+				childObjectEntry);
 
-			InfoFieldValue<Object> infoFieldValue =
-				infoItemFieldValues.getInfoFieldValue("childTitle");
+		InfoFieldValue<Object> infoFieldValue =
+			infoItemFieldValues.getInfoFieldValue("childTitle");
 
-			Assert.assertEquals(childTitleValue, infoFieldValue.getValue());
-		}
-		finally {
-			ServiceContextThreadLocal.popServiceContext();
+		Assert.assertEquals(childTitleValue, infoFieldValue.getValue());
 
-			objectRelationship =
-				_objectRelationshipLocalService.updateObjectRelationship(
-					objectRelationship.getExternalReferenceCode(),
-					objectRelationship.getObjectRelationshipId(),
-					objectRelationship.getParameterObjectFieldId(),
-					objectRelationship.getDeletionType(), false,
-					objectRelationship.getLabelMap(), null);
+		ServiceContextThreadLocal.popServiceContext();
 
-			_objectRelationshipLocalService.deleteObjectRelationship(
-				objectRelationship);
+		objectRelationship =
+			_objectRelationshipLocalService.updateObjectRelationship(
+				objectRelationship.getExternalReferenceCode(),
+				objectRelationship.getObjectRelationshipId(),
+				objectRelationship.getParameterObjectFieldId(),
+				objectRelationship.getDeletionType(), false,
+				objectRelationship.getLabelMap(), null);
 
-			_objectDefinitionLocalService.deleteObjectDefinition(
-				childObjectDefinition);
-			_objectDefinitionLocalService.deleteObjectDefinition(
-				parentObjectDefinition);
-		}
+		_objectRelationshipLocalService.deleteObjectRelationship(
+			objectRelationship);
+
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			childObjectDefinition);
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			parentObjectDefinition);
 	}
 
 	private ObjectDefinition _addObjectDefinition(

@@ -833,7 +833,7 @@ public class ArrayUtilTest {
 	}
 
 	@Test
-	public void testSoredUnique() {
+	public void testSortedUnique() {
 		byte[] bytes = {2, 3, 1};
 
 		byte[] sortedUniqueBytes = ArrayUtil.sortedUnique(bytes);

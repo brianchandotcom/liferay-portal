@@ -12,6 +12,7 @@ import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.analytics.settings.rest.resource.v1_0.ContactConfigurationResource;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 
@@ -61,7 +62,7 @@ public class ContactConfigurationResourceImpl
 
 		boolean accountsSelected = false;
 
-		if (contactConfiguration.getSyncAllAccounts() ||
+		if (GetterUtil.getBoolean(contactConfiguration.getSyncAllAccounts()) ||
 			ArrayUtil.isNotEmpty(
 				contactConfiguration.getSyncedAccountGroupIds())) {
 
@@ -70,7 +71,7 @@ public class ContactConfigurationResourceImpl
 
 		boolean contactsSelected = false;
 
-		if (contactConfiguration.getSyncAllContacts() ||
+		if (GetterUtil.getBoolean(contactConfiguration.getSyncAllContacts()) ||
 			ArrayUtil.isNotEmpty(
 				contactConfiguration.getSyncedOrganizationIds()) ||
 			ArrayUtil.isNotEmpty(

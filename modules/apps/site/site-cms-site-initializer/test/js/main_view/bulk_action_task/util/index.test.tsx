@@ -106,7 +106,7 @@ describe('Bulk Actions Monitor Utils', () => {
 			);
 
 			expect(taskUrl).toBe(
-				`${Liferay.ThemeDisplay.getPortalURL()}/o/cms/translations?type=ExportTranslationBulkAction&emptySearch=true&filter=cmsRoot+eq+true+and+cmsSection+eq+%27contents%27+and+status+in+%280%2C+2%2C+3%29+and+folderId+eq+123+and+groupIds%2Fany%28g%3Ag+in+%28456%29%29`
+				`${Liferay.ThemeDisplay.getPortalURL()}/o/cms/translations?type=ExportTranslationBulkAction&emptySearch=true&filter=cmsRoot+eq+true+and+cmsSection+eq+%27contents%27+and+rootDescendantNode+eq+false+and+status+in+%280%2C+2%2C+3%29+and+folderId+eq+123+and+groupIds%2Fany%28g%3Ag+in+%28456%29%29`
 			);
 		});
 	});

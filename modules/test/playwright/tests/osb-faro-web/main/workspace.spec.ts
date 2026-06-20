@@ -8,6 +8,8 @@ import {expect, mergeTests} from '@playwright/test';
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
+import getRandomString from '../../../utils/getRandomString';
 import {faroConfig} from './faro.config';
 import {getDefaultProject} from './utils/project';
 
@@ -146,5 +148,69 @@ test(
 		await expect(page.getByText('110,000').first()).toBeVisible();
 
 		await expect(page.getByText('75,000,000').first()).toBeVisible();
+	}
+);
+
+test(
+	'A workspace friendly URL can be set and resolves to the workspace',
+	{
+		tag: '@LRAC-11511',
+	},
+	async ({apiHelpers, page}) => {
+		const friendlyURL = 'faro-' + getRandomString().toLowerCase();
+
+		const projectName = 'My Project ' + getRandomString();
+
+		const project =
+			await apiHelpers.jsonWebServicesOSBFaro.createProject(projectName);
+
+		try {
+			await page.goto(`${faroConfig.environment.baseUrl}`);
+
+			await expect(
+				page.getByRole('heading', {name: 'Your Workspaces'})
+			).toBeVisible();
+
+			await expect(
+				page.getByRole('link', {name: projectName})
+			).toBeVisible();
+
+			await clickAndExpectToBeVisible({
+				target: page.getByText('Welcome to Analytics Cloud'),
+				trigger: page.getByRole('link', {name: projectName}),
+			});
+
+			await page.getByRole('button', {name: 'Next'}).click();
+
+			// Set the friendly URL
+
+			const dialog = page.getByRole('dialog');
+
+			await dialog.getByTestId('friendly-url-input').fill(friendlyURL);
+
+			await page.getByRole('button', {name: 'Next'}).click();
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: dialog.getByRole('button', {name: 'Skip'}),
+				trigger: dialog.getByRole('button', {name: 'Next'}),
+			});
+
+			// The friendly URL resolves to the workspace once the saved friendly
+			// URL has propagated
+
+			await page.goto(
+				`${faroConfig.environment.baseUrl}/workspace/${friendlyURL}/settings/workspace`
+			);
+
+			await expect(
+				page.locator('span').filter({hasText: 'Workspace Settings'})
+			).toBeVisible();
+		}
+		finally {
+			await apiHelpers.jsonWebServicesOSBFaro.deleteProject(
+				Number(project.groupId)
+			);
+		}
 	}
 );

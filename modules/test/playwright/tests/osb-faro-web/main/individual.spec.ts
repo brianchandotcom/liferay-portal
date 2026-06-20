@@ -334,6 +334,85 @@ test(
 );
 
 test(
+	'Total Individuals count reflects a newly ingested known individual',
+	{
+		tag: '@LRAC-8832',
+	},
+	async ({
+		analyticsChannel: channel,
+		apiHelpers,
+		dxpSyncedAnalyticsChannel,
+		page,
+		project,
+	}) => {
+		const {dataSourceId} = dxpSyncedAnalyticsChannel;
+
+		const totalIndividuals = page
+			.locator('.trend-item-root')
+			.filter({hasText: 'Total Individuals'})
+			.locator('.total');
+
+		await navigateToACPageViaURL({
+			acPage: ACPage.individualPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		// The freshly synced channel has no ingested individuals yet
+
+		await expect(totalIndividuals).toHaveText('0');
+
+		// Ingest a single known individual with activity
+
+		const individual = {
+			...generateIndividual({name: 'total' + getRandomString()}),
+			dataSourceId,
+		};
+
+		const date = new Date();
+
+		await createIndividuals({apiHelpers, individuals: [individual]});
+
+		await apiHelpers.jsonWebServicesOSBAsah.createEvents([
+			{
+				applicationId: 'Page',
+				canonicalUrl: 'https://www.liferay.com',
+				channelId: channel.id,
+				dataSourceId,
+				eventDate: date.toISOString(),
+				eventId: 'pageViewed',
+				title: 'My Page',
+				userId: individual.id,
+			},
+		]);
+
+		await apiHelpers.jsonWebServicesOSBAsah.createSessions([
+			{
+				channelId: channel.id,
+				id: individual.id,
+				sessionEnd: date.toISOString(),
+				sessionStart: date.toISOString(),
+				userId: individual.id,
+			},
+		]);
+
+		// Close sessions so the individual's activity is processed into the count
+
+		await apiHelpers.jsonWebServicesOSBAsah.closeSessions();
+
+		// The Total Individuals trend counts the individual once the closed
+		// session is processed
+
+		await expect(async () => {
+			await page.reload();
+
+			await expect(totalIndividuals).toHaveText('1', {timeout: 5000});
+		}).toPass({timeout: 60000});
+	}
+);
+
+test(
 	'The Individuals dashboard overview shows all of its summary cards',
 	{
 		tag: '@LRAC-8903',

@@ -110,6 +110,20 @@ public class CMSObjectRelationshipEdgeUpgradeProcessTest {
 
 	@Test
 	public void testUpgradeObjectDefinitions() throws Exception {
+		ObjectDefinition contentObjectDefinition1 = _addCMSObjectDefinition(
+			_cmsContentStructuresObjectFolder);
+		ObjectDefinition contentObjectDefinition2 = _addCMSObjectDefinition(
+			_cmsContentStructuresObjectFolder);
+
+		ObjectRelationship contentObjectRelationship1 = _addObjectRelationship(
+			contentObjectDefinition2, contentObjectDefinition1);
+
+		ObjectDefinition contentObjectDefinition3 = _addCMSObjectDefinition(
+			_cmsContentStructuresObjectFolder);
+
+		ObjectRelationship contentObjectRelationship2 = _addObjectRelationship(
+			contentObjectDefinition3, contentObjectDefinition2);
+
 		ObjectDefinition customObjectDefinition1 = _addObjectDefinition();
 		ObjectDefinition customObjectDefinition2 = _addObjectDefinition();
 
@@ -135,22 +149,12 @@ public class CMSObjectRelationshipEdgeUpgradeProcessTest {
 		ObjectRelationship fileObjectRelationship2 = _addObjectRelationship(
 			fileObjectDefinition3, fileObjectDefinition2);
 
-		ObjectDefinition objectDefinition1 = _addCMSObjectDefinition(
-			_cmsContentStructuresObjectFolder);
-		ObjectDefinition objectDefinition2 = _addCMSObjectDefinition(
-			_cmsContentStructuresObjectFolder);
-
-		ObjectRelationship objectRelationship1 = _addObjectRelationship(
-			objectDefinition2, objectDefinition1);
-
-		ObjectDefinition objectDefinition3 = _addCMSObjectDefinition(
-			_cmsContentStructuresObjectFolder);
-
-		ObjectRelationship objectRelationship2 = _addObjectRelationship(
-			objectDefinition3, objectDefinition2);
-
 		_runUpgrade();
 
+		_assertObjectRelationshipEdge(
+			true, contentObjectRelationship1.getObjectRelationshipId());
+		_assertObjectRelationshipEdge(
+			true, contentObjectRelationship2.getObjectRelationshipId());
 		_assertObjectRelationshipEdge(
 			false, customObjectRelationship1.getObjectRelationshipId());
 		_assertObjectRelationshipEdge(
@@ -159,10 +163,6 @@ public class CMSObjectRelationshipEdgeUpgradeProcessTest {
 			true, fileObjectRelationship1.getObjectRelationshipId());
 		_assertObjectRelationshipEdge(
 			true, fileObjectRelationship2.getObjectRelationshipId());
-		_assertObjectRelationshipEdge(
-			true, objectRelationship1.getObjectRelationshipId());
-		_assertObjectRelationshipEdge(
-			true, objectRelationship2.getObjectRelationshipId());
 	}
 
 	@Test

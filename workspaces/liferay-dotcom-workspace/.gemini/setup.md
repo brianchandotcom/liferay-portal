@@ -1,0 +1,1 @@
+../.workspace-rules/initial-setup-guide.md

@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.SearchContextTestUtil;
@@ -40,6 +41,7 @@ public class DLFolderModelPreFilterContributorTest {
 	}
 
 	@Test
+	@TestInfo("LPD-95045")
 	public void testContribute() throws Exception {
 		BooleanFilter booleanFilter = new BooleanFilter();
 

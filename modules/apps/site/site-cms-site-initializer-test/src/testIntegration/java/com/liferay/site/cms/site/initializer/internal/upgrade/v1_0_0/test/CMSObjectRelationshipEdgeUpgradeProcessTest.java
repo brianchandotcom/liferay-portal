@@ -110,54 +110,59 @@ public class CMSObjectRelationshipEdgeUpgradeProcessTest {
 
 	@Test
 	public void testUpgradeObjectDefinitions() throws Exception {
-		ObjectDefinition objectDefinition1 = _addCMSObjectDefinition(
-			_cmsContentStructuresObjectFolder);
-		ObjectDefinition objectDefinition2 = _addCMSObjectDefinition(
-			_cmsContentStructuresObjectFolder);
-		ObjectDefinition objectDefinition3 = _addCMSObjectDefinition(
-			_cmsContentStructuresObjectFolder);
+		ObjectDefinition customObjectDefinition1 = _addObjectDefinition();
+		ObjectDefinition customObjectDefinition2 = _addObjectDefinition();
+
+		ObjectRelationship customObjectRelationship1 = _addObjectRelationship(
+			customObjectDefinition2, customObjectDefinition1);
+
+		ObjectDefinition customObjectDefinition3 = _addObjectDefinition();
+
+		ObjectRelationship customObjectRelationship2 = _addObjectRelationship(
+			customObjectDefinition3, customObjectDefinition2);
 
 		ObjectDefinition fileObjectDefinition1 = _addCMSObjectDefinition(
 			_cmsFileTypesObjectFolder);
 		ObjectDefinition fileObjectDefinition2 = _addCMSObjectDefinition(
 			_cmsFileTypesObjectFolder);
-		ObjectDefinition fileObjectDefinition3 = _addCMSObjectDefinition(
-			_cmsFileTypesObjectFolder);
-
-		ObjectDefinition customObjectDefinition1 = _addObjectDefinition();
-		ObjectDefinition customObjectDefinition2 = _addObjectDefinition();
-		ObjectDefinition customObjectDefinition3 = _addObjectDefinition();
-
-		ObjectRelationship objectRelationship1 = _addObjectRelationship(
-			objectDefinition2, objectDefinition1);
-		ObjectRelationship objectRelationship2 = _addObjectRelationship(
-			objectDefinition3, objectDefinition2);
 
 		ObjectRelationship fileObjectRelationship1 = _addObjectRelationship(
 			fileObjectDefinition2, fileObjectDefinition1);
+
+		ObjectDefinition fileObjectDefinition3 = _addCMSObjectDefinition(
+			_cmsFileTypesObjectFolder);
+
 		ObjectRelationship fileObjectRelationship2 = _addObjectRelationship(
 			fileObjectDefinition3, fileObjectDefinition2);
 
-		ObjectRelationship customObjectRelationship1 = _addObjectRelationship(
-			customObjectDefinition2, customObjectDefinition1);
-		ObjectRelationship customObjectRelationship2 = _addObjectRelationship(
-			customObjectDefinition3, customObjectDefinition2);
+		ObjectDefinition objectDefinition1 = _addCMSObjectDefinition(
+			_cmsContentStructuresObjectFolder);
+		ObjectDefinition objectDefinition2 = _addCMSObjectDefinition(
+			_cmsContentStructuresObjectFolder);
+
+		ObjectRelationship objectRelationship1 = _addObjectRelationship(
+			objectDefinition2, objectDefinition1);
+
+		ObjectDefinition objectDefinition3 = _addCMSObjectDefinition(
+			_cmsContentStructuresObjectFolder);
+
+		ObjectRelationship objectRelationship2 = _addObjectRelationship(
+			objectDefinition3, objectDefinition2);
 
 		_runUpgrade();
-
-		_assertObjectRelationshipEdge(
-			true, objectRelationship1.getObjectRelationshipId());
-		_assertObjectRelationshipEdge(
-			true, objectRelationship2.getObjectRelationshipId());
-		_assertObjectRelationshipEdge(
-			true, fileObjectRelationship1.getObjectRelationshipId());
-		_assertObjectRelationshipEdge(
-			true, fileObjectRelationship2.getObjectRelationshipId());
 
 		_assertObjectRelationshipEdge(
 			false, customObjectRelationship1.getObjectRelationshipId());
 		_assertObjectRelationshipEdge(
 			false, customObjectRelationship2.getObjectRelationshipId());
+		_assertObjectRelationshipEdge(
+			true, fileObjectRelationship1.getObjectRelationshipId());
+		_assertObjectRelationshipEdge(
+			true, fileObjectRelationship2.getObjectRelationshipId());
+		_assertObjectRelationshipEdge(
+			true, objectRelationship1.getObjectRelationshipId());
+		_assertObjectRelationshipEdge(
+			true, objectRelationship2.getObjectRelationshipId());
 	}
 
 	@Test

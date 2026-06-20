@@ -255,7 +255,8 @@ public class ViewContentsSectionDisplayContextTest
 
 	@Override
 	protected String getFilterString() {
-		return "cmsRoot eq true and cmsSection eq 'contents'";
+		return "cmsRoot eq true and cmsSection eq 'contents' and " +
+			"rootDescendantNode eq false";
 	}
 
 	@Override

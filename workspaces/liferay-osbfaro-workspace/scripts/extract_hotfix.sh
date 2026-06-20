@@ -5,7 +5,7 @@ cd "$(dirname "${BASH_SOURCE[0]}")"
 source _common.sh
 
 function main {
-	local hotfix_url="${1:-}"
+	local hotfix_url=${1:-}
 
 	if [[ -z ${hotfix_url} ]]
 	then
@@ -17,13 +17,13 @@ function main {
 		exit 0
 	fi
 
-	local hotfix_file
-
-	hotfix_file=$(basename "${hotfix_url%%\?*}")
-
 	mkdir --parents ../build/docker/patching
 
 	cd ../build/docker/patching
+
+	local hotfix_file
+
+	hotfix_file=$(basename "${hotfix_url%%\?*}")
 
 	if [[ -f ${hotfix_file} ]]
 	then

@@ -203,7 +203,7 @@ public class PerformanceTopAssetResourceTest
 
 		RecordingMockHttp recordingMockHttp = _setUpRecordingMockHttp("{}");
 
-		String assetFilter = RandomTestUtil.randomString();
+		String assetFilterString = RandomTestUtil.randomString();
 		int page = RandomTestUtil.nextInt();
 		int pageSize = RandomTestUtil.nextInt();
 		int rangeKey = RandomTestUtil.nextInt();
@@ -214,12 +214,13 @@ public class PerformanceTopAssetResourceTest
 		};
 
 		_performanceTopAssetResource.getPerformanceTopAsset(
-			assetFilter, null, rangeKey, Pagination.of(page, pageSize), sorts);
+			assetFilterString, null, rangeKey, Pagination.of(page, pageSize),
+			sorts);
 
 		String location = recordingMockHttp.getLocation();
 
 		_assertParameter(dataSourceId, "dataSourceId", location);
-		_assertParameter(assetFilter, "filter", location);
+		_assertParameter(assetFilterString, "filter", location);
 		_assertParameter(String.valueOf(page), "page", location);
 		_assertParameter(String.valueOf(rangeKey), "rangeKey", location);
 		_assertParameter(String.valueOf(pageSize), "size", location);

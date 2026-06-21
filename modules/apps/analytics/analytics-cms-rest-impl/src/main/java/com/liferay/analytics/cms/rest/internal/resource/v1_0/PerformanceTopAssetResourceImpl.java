@@ -33,7 +33,7 @@ public class PerformanceTopAssetResourceImpl
 
 	@Override
 	public PerformanceTopAsset getPerformanceTopAsset(
-			String assetFilter, Long[] depotEntryIds, Integer rangeKey,
+			String assetFilterString, Long[] depotEntryIds, Integer rangeKey,
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
@@ -49,7 +49,7 @@ public class PerformanceTopAssetResourceImpl
 		return analyticsCloudClient.getPerformanceTopAsset(
 			_analyticsSettingsManager.getAnalyticsConfiguration(
 				contextCompany.getCompanyId()),
-			assetFilter, Arrays.asList(groupIds), pagination.getPage(),
+			assetFilterString, Arrays.asList(groupIds), pagination.getPage(),
 			rangeKey, pagination.getPageSize(), sorts);
 	}
 

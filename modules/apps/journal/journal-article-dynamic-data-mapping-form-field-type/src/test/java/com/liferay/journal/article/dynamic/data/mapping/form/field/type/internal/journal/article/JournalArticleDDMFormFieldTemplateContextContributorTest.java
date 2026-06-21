@@ -55,7 +55,7 @@ public class JournalArticleDDMFormFieldTemplateContextContributorTest {
 		_testGetValueWithNullValue();
 	}
 
-	private String _invokeGetValue(String value) throws Exception {
+	private String _getValue(String value) throws Exception {
 		return ReflectionTestUtil.invoke(
 			_journalArticleDDMFormFieldTemplateContextContributor, "_getValue",
 			new Class<?>[] {String.class}, value);
@@ -79,7 +79,7 @@ public class JournalArticleDDMFormFieldTemplateContextContributorTest {
 		);
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject(
-			_invokeGetValue(
+			_getValue(
 				JSONUtil.put(
 					"classNameId", RandomTestUtil.randomLong()
 				).put(
@@ -103,7 +103,7 @@ public class JournalArticleDDMFormFieldTemplateContextContributorTest {
 		String title = RandomTestUtil.randomString();
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject(
-			_invokeGetValue(
+			_getValue(
 				JSONUtil.put(
 					"classNameId", RandomTestUtil.randomLong()
 				).put(
@@ -117,7 +117,7 @@ public class JournalArticleDDMFormFieldTemplateContextContributorTest {
 	}
 
 	private void _testGetValueWithNullValue() throws Exception {
-		Assert.assertEquals(StringPool.BLANK, _invokeGetValue(null));
+		Assert.assertEquals(StringPool.BLANK, _getValue(null));
 	}
 
 	private final JournalArticle _journalArticle = Mockito.mock(

@@ -105,7 +105,7 @@ const getDuplicateItemCheckPromise = (item: ItemData, folder: Folder) => {
 };
 
 const getSpaceFoldersURL = (cmsSection: string, scopeId: number) => {
-	return `${window.location.origin}/o/search/v1.0/search?emptySearch=true&entryClassNames=${OBJECT_ENTRY_FOLDER_CLASS_NAME}&filter=((title eq '${cmsSection}' and folderId eq 0) or (cmsRoot eq true and cmsSection eq '${cmsSection}')) and (status in (0, 2, 3))&nestedFields=description,embedded,file.thumbnailURL&scope=${scopeId}`;
+	return `${window.location.origin}/o/search/v1.0/search?emptySearch=true&entryClassNames=${OBJECT_ENTRY_FOLDER_CLASS_NAME}&filter=((title eq '${cmsSection}' and folderId eq 0) or (cmsRoot eq true and cmsSection eq '${cmsSection}' and rootDescendantNode eq false)) and (status in (0, 2, 3))&nestedFields=description,embedded,file.thumbnailURL&scope=${scopeId}`;
 };
 
 const getChildFoldersURL = (folderId: number, scopeId: number) => {

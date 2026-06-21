@@ -114,7 +114,8 @@ public abstract class BaseRelatedAssetsSectionDisplayContext
 		return appendStatus(
 			StringBundler.concat(
 				"(cmsSection eq 'contents' or cmsSection eq 'files') and ",
-				"keywords/any(k:k in (", keywordsFilterString, "))"));
+				"keywords/any(k:k in (", keywordsFilterString,
+				")) and rootDescendantNode eq false"));
 	}
 
 	protected abstract String[] getKeywords();

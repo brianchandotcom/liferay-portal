@@ -121,7 +121,7 @@ public class ViewHomeRecentAssetsSectionDisplayContext
 		return appendStatus(
 			appendGroupIds(
 				"cmsKind eq 'object' and (cmsSection eq 'contents' or " +
-					"cmsSection eq 'files')"));
+					"cmsSection eq 'files') and rootDescendantNode eq false"));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

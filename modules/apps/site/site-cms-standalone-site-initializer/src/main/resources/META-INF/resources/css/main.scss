@@ -1,0 +1,31 @@
+.cms-standalone-login {
+	.cms-control-menu {
+		display: none;
+	}
+
+	.login-container {
+		.panel-body {
+			padding: 0;
+		}
+
+		button[type='submit'] {
+			width: 100%;
+		}
+
+		.taglib-icon-list {
+			display: flex;
+			gap: 1em;
+			justify-content: center;
+
+			li {
+				float: none;
+				font-size: 0.875rem;
+				margin-right: 0;
+			}
+		}
+	}
+
+	.login-form {
+		max-width: 448px;
+	}
+}

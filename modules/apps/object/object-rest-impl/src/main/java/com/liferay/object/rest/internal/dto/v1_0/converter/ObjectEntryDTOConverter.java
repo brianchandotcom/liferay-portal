@@ -748,6 +748,50 @@ public class ObjectEntryDTOConverter
 			String.valueOf(_portal.getSiteDefaultLocale(groupId)));
 	}
 
+	private Comment[] _getNestedComments(
+			ObjectDefinition objectDefinition,
+			com.liferay.object.model.ObjectEntry objectEntry)
+		throws Exception {
+
+		return NestedFieldsSupplier.supply(
+			"systemProperties.comments",
+			nestedFieldNames -> {
+				if ((!Objects.equals(
+						objectDefinition.getScope(),
+						ObjectDefinitionConstants.SCOPE_SITE) &&
+					 !FeatureFlagManagerUtil.isEnabled(
+						 objectDefinition.getCompanyId(), "LPD-43996")) ||
+					!objectDefinition.isEnableComments() ||
+					!_discussionPermission.hasViewPermission(
+						PermissionThreadLocal.getPermissionChecker(),
+						objectDefinition.getCompanyId(),
+						objectEntry.getGroupId(),
+						objectDefinition.getClassName(),
+						objectEntry.getObjectEntryId())) {
+
+					return null;
+				}
+
+				return TransformUtil.transformToArray(
+					_commentManager.getComments(
+						objectDefinition.getClassName(),
+						objectEntry.getObjectEntryId(),
+						WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+						QueryUtil.ALL_POS),
+					comment -> {
+						if (comment.isRoot() &&
+							!LazyReferencingThreadLocal.isEnabled()) {
+
+							return null;
+						}
+
+						return CommentUtil.toComment(
+							comment, _commentManager, PortalUtil.getPortal());
+					},
+					Comment.class);
+			});
+	}
+
 	private Map<String, UnsafeSupplier<Object, Exception>>
 			_getNestedFieldsRelatedProperties(
 				DTOConverterContext dtoConverterContext, long groupId,
@@ -1009,50 +1053,6 @@ public class ObjectEntryDTOConverter
 				setShare(sharingEntry::isShareable);
 			}
 		};
-	}
-
-	private Comment[] _getNestedComments(
-			ObjectDefinition objectDefinition,
-			com.liferay.object.model.ObjectEntry objectEntry)
-		throws Exception {
-
-		return NestedFieldsSupplier.supply(
-			"systemProperties.comments",
-			nestedFieldNames -> {
-				if ((!Objects.equals(
-						objectDefinition.getScope(),
-						ObjectDefinitionConstants.SCOPE_SITE) &&
-					 !FeatureFlagManagerUtil.isEnabled(
-						 objectDefinition.getCompanyId(), "LPD-43996")) ||
-					!objectDefinition.isEnableComments() ||
-					!_discussionPermission.hasViewPermission(
-						PermissionThreadLocal.getPermissionChecker(),
-						objectDefinition.getCompanyId(),
-						objectEntry.getGroupId(),
-						objectDefinition.getClassName(),
-						objectEntry.getObjectEntryId())) {
-
-					return null;
-				}
-
-				return TransformUtil.transformToArray(
-					_commentManager.getComments(
-						objectDefinition.getClassName(),
-						objectEntry.getObjectEntryId(),
-						WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
-						QueryUtil.ALL_POS),
-					comment -> {
-						if (comment.isRoot() &&
-							!LazyReferencingThreadLocal.isEnabled()) {
-
-							return null;
-						}
-
-						return CommentUtil.toComment(
-							comment, _commentManager, PortalUtil.getPortal());
-					},
-					Comment.class);
-			});
 	}
 
 	private ExtendedEntity _toExtendedEntity(

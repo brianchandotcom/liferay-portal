@@ -2092,6 +2092,7 @@ public class DefaultObjectEntryManagerImpl
 		}
 
 		List<ObjectEntryComment> objectEntryComments = null;
+
 		SystemProperties systemProperties = objectEntry.getSystemProperties();
 
 		if ((systemProperties != null) &&

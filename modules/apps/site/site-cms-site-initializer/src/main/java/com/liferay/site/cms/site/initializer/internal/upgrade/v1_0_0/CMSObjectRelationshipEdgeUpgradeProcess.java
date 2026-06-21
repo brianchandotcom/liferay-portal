@@ -74,12 +74,9 @@ public class CMSObjectRelationshipEdgeUpgradeProcess extends UpgradeProcess {
 		ObjectDefinition currentObjectDefinition = objectDefinitionPath.get(
 			objectDefinitionPath.size() - 1);
 
-		long currentObjectDefinitionId =
-			currentObjectDefinition.getObjectDefinitionId();
-
 		for (ObjectRelationship objectRelationship :
 				_objectRelationshipLocalService.getObjectRelationships(
-					currentObjectDefinitionId,
+					currentObjectDefinition.getObjectDefinitionId(),
 					ObjectRelationshipConstants.DELETION_TYPE_CASCADE, false)) {
 
 			if (objectRelationship.isSelf() ||
@@ -111,6 +108,7 @@ public class CMSObjectRelationshipEdgeUpgradeProcess extends UpgradeProcess {
 		throws UpgradeException {
 
 		List<ObjectRelationship> objectRelationships = new ArrayList<>();
+
 		Set<Long> objectDefinitionIds = new HashSet<>();
 
 		for (String externalReferenceCode :

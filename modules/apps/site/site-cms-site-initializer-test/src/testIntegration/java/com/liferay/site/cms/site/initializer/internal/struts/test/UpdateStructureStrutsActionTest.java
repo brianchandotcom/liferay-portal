@@ -200,12 +200,11 @@ public class UpdateStructureStrutsActionTest {
 	private ObjectDefinition _getObjectDefinition(String externalReferenceCode)
 		throws Exception {
 
-		ObjectDefinitionResource.Builder builder =
-			_objectDefinitionResourceFactory.create();
-
-		ObjectDefinitionResource objectDefinitionResource = builder.user(
-			TestPropsValues.getUser()
-		).build();
+		ObjectDefinitionResource objectDefinitionResource =
+			_objectDefinitionResourceFactory.create(
+			).user(
+				TestPropsValues.getUser()
+			).build();
 
 		ObjectDefinition objectDefinition =
 			objectDefinitionResource.getObjectDefinitionByExternalReferenceCode(

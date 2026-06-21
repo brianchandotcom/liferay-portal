@@ -5,35 +5,25 @@
 
 package com.liferay.portal.upgrade.data.cleanup;
 
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.db.index.PrimaryKeyUpdaterUtil;
 import com.liferay.portal.events.StartupHelperUtil;
+import com.liferay.portal.kernel.dao.db.BaseDBProcess;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.upgrade.data.cleanup.DataCleanupPreupgradeProcess;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.LoggingTimer;
-import com.liferay.portal.kernel.util.NamedThreadFactory;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
 
 import java.sql.Connection;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Callable;
-import java.util.concurrent.CompletionService;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorCompletionService;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author Luis Ortiz
@@ -52,136 +42,12 @@ public class DataCleanupPreupgradeProcessSuite {
 		}
 
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			List<List<DataCleanupPreupgradeProcess>> waves =
-				getWavedDataCleanupPreupgradeProcesses();
+			DataCleanupConcurrentExecutor dataCleanupConcurrentExecutor =
+				new DataCleanupConcurrentExecutor();
 
-			int maxWaveSize = 0;
-
-			for (List<DataCleanupPreupgradeProcess> wave : waves) {
-				if (wave.size() > maxWaveSize) {
-					maxWaveSize = wave.size();
-				}
-			}
-
-			ExecutorService executorService = null;
-
-			if (maxWaveSize > 1) {
-				Runtime runtime = Runtime.getRuntime();
-
-				int availableProcessors = runtime.availableProcessors();
-
-				int maximumPoolSize = GetterUtil.getInteger(
-					PropsUtil.get("jdbc.default.maximumPoolSize"));
-
-				int poolSize;
-
-				if (maximumPoolSize > 0) {
-					poolSize = Math.max(
-						1,
-						Math.min(
-							availableProcessors, (int)(0.9 * maximumPoolSize)));
-				}
-				else {
-					poolSize = availableProcessors;
-				}
-
-				executorService = Executors.newFixedThreadPool(
-					Math.min(maxWaveSize, poolSize),
-					new NamedThreadFactory(
-						"data-cleanup-preupgrade-process-wave-thread",
-						Thread.NORM_PRIORITY, null));
-			}
-
-			try {
-				for (List<DataCleanupPreupgradeProcess> wave : waves) {
-					if (wave.size() == 1) {
-						_runProcess(wave.get(0));
-
-						continue;
-					}
-
-					CompletionService<Void> completionService =
-						new ExecutorCompletionService<>(executorService);
-
-					List<Future<Void>> futures = new ArrayList<>();
-
-					for (DataCleanupPreupgradeProcess process : wave) {
-						futures.add(
-							completionService.submit(
-								(Callable<Void>)() -> {
-									_runProcess(process);
-
-									return null;
-								}));
-					}
-
-					for (int i = 0; i < wave.size(); i++) {
-						try {
-							Future<Void> future = completionService.take();
-
-							future.get();
-						}
-						catch (ExecutionException executionException) {
-							for (Future<Void> future : futures) {
-								future.cancel(true);
-							}
-
-							Throwable throwable = executionException.getCause();
-
-							if (throwable instanceof Error) {
-								throw (Error)throwable;
-							}
-
-							if (throwable instanceof InterruptedException) {
-								Thread currentThread = Thread.currentThread();
-
-								currentThread.interrupt();
-							}
-
-							throw throwable instanceof Exception ?
-								(Exception)throwable :
-									new RuntimeException(throwable);
-						}
-						catch (InterruptedException interruptedException) {
-							for (Future<Void> future : futures) {
-								future.cancel(true);
-							}
-
-							Thread currentThread = Thread.currentThread();
-
-							currentThread.interrupt();
-
-							throw interruptedException;
-						}
-					}
-				}
-			}
-			finally {
-				if (executorService != null) {
-					executorService.shutdownNow();
-
-					try {
-						if (!executorService.awaitTermination(
-								10, TimeUnit.SECONDS)) {
-
-							if (_log.isWarnEnabled()) {
-								_log.warn(
-									"Unable to terminate some data cleanup " +
-										"threads gracefully");
-							}
-						}
-					}
-					catch (InterruptedException interruptedException) {
-						if (_log.isDebugEnabled()) {
-							_log.debug(interruptedException);
-						}
-
-						Thread currentThread = Thread.currentThread();
-
-						currentThread.interrupt();
-					}
-				}
-			}
+			dataCleanupConcurrentExecutor._execute(
+				_getWavedDataCleanupPreupgradeProcesses(),
+				this::_runDataCleanupPreupgradeProcess);
 		}
 	}
 
@@ -190,14 +56,6 @@ public class DataCleanupPreupgradeProcessSuite {
 
 		return DataCleanupPreupgradeProcess.
 			getSortedDataCleanupPreupgradeProcesses(
-				_dataCleanupPreupgradeProcessesMap);
-	}
-
-	public List<List<DataCleanupPreupgradeProcess>>
-		getWavedDataCleanupPreupgradeProcesses() {
-
-		return DataCleanupPreupgradeProcess.
-			getWavedDataCleanupPreupgradeProcesses(
 				_dataCleanupPreupgradeProcessesMap);
 	}
 
@@ -397,7 +255,15 @@ public class DataCleanupPreupgradeProcessSuite {
 			).build();
 	}
 
-	private void _runProcess(
+	private List<List<DataCleanupPreupgradeProcess>>
+		_getWavedDataCleanupPreupgradeProcesses() {
+
+		return DataCleanupPreupgradeProcess.
+			getWavedDataCleanupPreupgradeProcesses(
+				_dataCleanupPreupgradeProcessesMap);
+	}
+
+	private void _runDataCleanupPreupgradeProcess(
 			DataCleanupPreupgradeProcess dataCleanupPreupgradeProcess)
 		throws Exception {
 
@@ -430,5 +296,29 @@ public class DataCleanupPreupgradeProcessSuite {
 		<DataCleanupPreupgradeProcess, List<DataCleanupPreupgradeProcess>>
 			_dataCleanupPreupgradeProcessesMap =
 				_createDataCleanupPreupgradeProcessesMap();
+
+	private static class DataCleanupConcurrentExecutor extends BaseDBProcess {
+
+		private void _execute(
+				List<List<DataCleanupPreupgradeProcess>> waves,
+				UnsafeConsumer<DataCleanupPreupgradeProcess, Exception>
+					unsafeConsumer)
+			throws Exception {
+
+			for (List<DataCleanupPreupgradeProcess> wave : waves) {
+				if (wave.size() == 1) {
+					unsafeConsumer.accept(wave.get(0));
+
+					continue;
+				}
+
+				processConcurrently(
+					wave.toArray(new DataCleanupPreupgradeProcess[0]),
+					unsafeConsumer,
+					"Unable to run data cleanup processes concurrently");
+			}
+		}
+
+	}
 
 }

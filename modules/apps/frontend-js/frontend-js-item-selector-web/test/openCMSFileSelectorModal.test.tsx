@@ -105,6 +105,8 @@ describe('openCMSFileSelectorModal', () => {
 
 		expect(firstURL).toContain("(cmsSection eq 'files')");
 
+		expect(firstURL).toContain('(rootDescendantNode eq false)');
+
 		expect(firstURL).not.toContain("cmsKind eq 'object'");
 
 		expect(firstURL).not.toContain('folderId eq ');

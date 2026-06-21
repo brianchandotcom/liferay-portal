@@ -231,13 +231,12 @@ public class JournalArticleInfoItemFieldValuesUpdaterTest {
 			"RichText", journalArticle,
 			"test-journal-repeatable-html-empty-v12.xlf");
 
-		builder =
-			DDMFormDeserializerDeserializeRequest.Builder.newBuilder(
-				TranslationTestUtil.readFileToString(
-					"test-ddm-structure-repeatable-text.json"));
+		builder = DDMFormDeserializerDeserializeRequest.Builder.newBuilder(
+			TranslationTestUtil.readFileToString(
+				"test-ddm-structure-repeatable-text.json"));
 
 		ddmFormDeserializerDeserializeResponse =
-				_ddmFormDeserializer.deserialize(builder.build());
+			_ddmFormDeserializer.deserialize(builder.build());
 
 		ddmStructure = DDMStructureTestUtil.addStructure(
 			_group.getGroupId(), JournalArticle.class.getName(),

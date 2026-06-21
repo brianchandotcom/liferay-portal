@@ -207,11 +207,50 @@ public class JournalArticleInfoItemFieldValuesUpdaterTest {
 	public void testUpdateJournalArticleFromInfoItemFieldValuesPreservesEmptyIntermediateRepeatableField()
 		throws Exception {
 
+		DDMFormDeserializerDeserializeRequest.Builder builder =
+			DDMFormDeserializerDeserializeRequest.Builder.newBuilder(
+				TranslationTestUtil.readFileToString(
+					"test-ddm-structure-repeatable-html.json"));
+
+		DDMFormDeserializerDeserializeResponse
+			ddmFormDeserializerDeserializeResponse =
+				_ddmFormDeserializer.deserialize(builder.build());
+
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+			_group.getGroupId(), JournalArticle.class.getName(),
+			ddmFormDeserializerDeserializeResponse.getDDMForm());
+
+		JournalArticle journalArticle =
+			JournalTestUtil.addArticleWithXMLContent(
+				_group.getGroupId(),
+				TranslationTestUtil.readFileToString(
+					"test-journal-content-repeatable-html-three-fields.xml"),
+				ddmStructure.getStructureKey(), null);
+
 		_testUpdateJournalArticleFromInfoItemFieldValuesPreservesEmptyIntermediateRepeatableField(
-			"RichText", _getRepeatableHtmlJournalArticle(),
+			"RichText", journalArticle,
 			"test-journal-repeatable-html-empty-v12.xlf");
+
+		builder =
+			DDMFormDeserializerDeserializeRequest.Builder.newBuilder(
+				TranslationTestUtil.readFileToString(
+					"test-ddm-structure-repeatable-text.json"));
+
+		ddmFormDeserializerDeserializeResponse =
+				_ddmFormDeserializer.deserialize(builder.build());
+
+		ddmStructure = DDMStructureTestUtil.addStructure(
+			_group.getGroupId(), JournalArticle.class.getName(),
+			ddmFormDeserializerDeserializeResponse.getDDMForm());
+
+		journalArticle = JournalTestUtil.addArticleWithXMLContent(
+			_group.getGroupId(),
+			TranslationTestUtil.readFileToString(
+				"test-journal-content-repeatable-text-three-fields.xml"),
+			ddmStructure.getStructureKey(), null);
+
 		_testUpdateJournalArticleFromInfoItemFieldValuesPreservesEmptyIntermediateRepeatableField(
-			"TextField", _getRepeatableTextJournalArticle(),
+			"TextField", journalArticle,
 			"test-journal-repeatable-text-empty-v12.xlf");
 	}
 
@@ -475,48 +514,6 @@ public class JournalArticleInfoItemFieldValuesUpdaterTest {
 			_group.getGroupId(),
 			TranslationTestUtil.readFileToString(
 				"test-journal-content-one-field.xml"),
-			ddmStructure.getStructureKey(), null);
-	}
-
-	private JournalArticle _getRepeatableHtmlJournalArticle() throws Exception {
-		DDMFormDeserializerDeserializeRequest.Builder builder =
-			DDMFormDeserializerDeserializeRequest.Builder.newBuilder(
-				TranslationTestUtil.readFileToString(
-					"test-ddm-structure-repeatable-html.json"));
-
-		DDMFormDeserializerDeserializeResponse
-			ddmFormDeserializerDeserializeResponse =
-				_ddmFormDeserializer.deserialize(builder.build());
-
-		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
-			_group.getGroupId(), JournalArticle.class.getName(),
-			ddmFormDeserializerDeserializeResponse.getDDMForm());
-
-		return JournalTestUtil.addArticleWithXMLContent(
-			_group.getGroupId(),
-			TranslationTestUtil.readFileToString(
-				"test-journal-content-repeatable-html-three-fields.xml"),
-			ddmStructure.getStructureKey(), null);
-	}
-
-	private JournalArticle _getRepeatableTextJournalArticle() throws Exception {
-		DDMFormDeserializerDeserializeRequest.Builder builder =
-			DDMFormDeserializerDeserializeRequest.Builder.newBuilder(
-				TranslationTestUtil.readFileToString(
-					"test-ddm-structure-repeatable-text.json"));
-
-		DDMFormDeserializerDeserializeResponse
-			ddmFormDeserializerDeserializeResponse =
-				_ddmFormDeserializer.deserialize(builder.build());
-
-		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
-			_group.getGroupId(), JournalArticle.class.getName(),
-			ddmFormDeserializerDeserializeResponse.getDDMForm());
-
-		return JournalTestUtil.addArticleWithXMLContent(
-			_group.getGroupId(),
-			TranslationTestUtil.readFileToString(
-				"test-journal-content-repeatable-text-three-fields.xml"),
 			ddmStructure.getStructureKey(), null);
 	}
 

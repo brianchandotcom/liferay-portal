@@ -17342,6 +17342,8 @@ public class ObjectEntryResourceTest {
 			ObjectDefinition objectDefinition)
 		throws Exception {
 
+		JSONArray jsonArray = null;
+
 		String endpoint = _getEndpoint(objectDefinition, groupId);
 
 		if (nestedFields) {
@@ -17356,7 +17358,6 @@ public class ObjectEntryResourceTest {
 			).toString(),
 			endpoint, Http.Method.POST);
 
-		JSONArray jsonArray = null;
 		JSONObject systemPropertiesJSONObject = jsonObject.getJSONObject(
 			"systemProperties");
 

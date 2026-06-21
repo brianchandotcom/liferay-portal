@@ -11408,7 +11408,7 @@ public class ObjectEntryResourceTest {
 
 	@FeatureFlag("LPD-43996")
 	@Test
-	public void testPostObjectEntryWithObjectFieldNamedComments()
+	public void testPostObjectEntryWithObjectFieldComments()
 		throws Exception {
 
 		ObjectDefinition objectDefinition =

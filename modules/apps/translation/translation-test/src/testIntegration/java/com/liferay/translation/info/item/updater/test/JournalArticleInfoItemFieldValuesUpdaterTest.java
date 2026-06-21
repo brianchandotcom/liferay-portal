@@ -208,12 +208,11 @@ public class JournalArticleInfoItemFieldValuesUpdaterTest {
 		throws Exception {
 
 		_testUpdateJournalArticleFromInfoItemFieldValuesPreservesEmptyIntermediateRepeatableField(
-			_getRepeatableHtmlJournalArticle(),
-			"test-journal-repeatable-html-empty-v12.xlf", "RichText");
-
+			"RichText", _getRepeatableHtmlJournalArticle(),
+			"test-journal-repeatable-html-empty-v12.xlf");
 		_testUpdateJournalArticleFromInfoItemFieldValuesPreservesEmptyIntermediateRepeatableField(
-			_getRepeatableTextJournalArticle(),
-			"test-journal-repeatable-text-empty-v12.xlf", "TextField");
+			"TextField", _getRepeatableTextJournalArticle(),
+			"test-journal-repeatable-text-empty-v12.xlf");
 	}
 
 	@Test
@@ -523,8 +522,8 @@ public class JournalArticleInfoItemFieldValuesUpdaterTest {
 
 	private void
 			_testUpdateJournalArticleFromInfoItemFieldValuesPreservesEmptyIntermediateRepeatableField(
-				JournalArticle journalArticle, String xliffFileName,
-				String ddmFormFieldName)
+				String ddmFormFieldName, JournalArticle journalArticle,
+				String xliffFileName)
 		throws Exception {
 
 		_translationEntryLocalService.addOrUpdateTranslationEntry(

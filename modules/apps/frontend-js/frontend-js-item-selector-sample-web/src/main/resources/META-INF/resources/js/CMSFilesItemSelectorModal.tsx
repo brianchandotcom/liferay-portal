@@ -36,7 +36,7 @@ const BASE_SEARCH_PARAMS = {
 
 const CMS_ROOT_FILES_URL = `${ROOT_URL}?${new URLSearchParams({
 	...BASE_SEARCH_PARAMS,
-	filter: "cmsRoot eq true and cmsSection eq 'files' and status in (0, 2, 3)",
+	filter: "cmsRoot eq true and cmsSection eq 'files' and rootDescendantNode eq false and status in (0, 2, 3)",
 }).toString()}`;
 
 function getCMSChildFolderURL(folderId: string) {

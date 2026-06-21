@@ -100,6 +100,7 @@ public class ClusterLicenseTest extends BaseLicenseTestCase {
 			}
 
 			tomcatNode.stop();
+
 			tomcatNode.destroy();
 
 			iterator.remove();

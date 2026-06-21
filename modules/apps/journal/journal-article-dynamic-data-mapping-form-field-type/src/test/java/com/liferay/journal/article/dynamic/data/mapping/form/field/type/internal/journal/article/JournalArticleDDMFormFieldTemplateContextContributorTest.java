@@ -40,11 +40,9 @@ public class JournalArticleDDMFormFieldTemplateContextContributorTest {
 		ReflectionTestUtil.setFieldValue(
 			_journalArticleDDMFormFieldTemplateContextContributor,
 			"_journalArticleLocalService", _journalArticleLocalService);
-
 		ReflectionTestUtil.setFieldValue(
 			_journalArticleDDMFormFieldTemplateContextContributor,
 			"_jsonFactory", _jsonFactory);
-
 		ReflectionTestUtil.setFieldValue(
 			_journalArticleDDMFormFieldTemplateContextContributor, "_portal",
 			_portal);
@@ -55,16 +53,6 @@ public class JournalArticleDDMFormFieldTemplateContextContributorTest {
 		_testGetValueFetchesLatestArticle();
 		_testGetValueWhenArticleIsDeleted();
 		_testGetValueWithNullValue();
-	}
-
-	private String _createInputJSON(long classPK, String title) {
-		return JSONUtil.put(
-			"classNameId", RandomTestUtil.randomLong()
-		).put(
-			"classPK", classPK
-		).put(
-			"title", title
-		).toString();
 	}
 
 	private String _invokeGetValue(String value) throws Exception {
@@ -92,7 +80,13 @@ public class JournalArticleDDMFormFieldTemplateContextContributorTest {
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject(
 			_invokeGetValue(
-				_createInputJSON(classPK, RandomTestUtil.randomString())));
+				JSONUtil.put(
+					"classNameId", RandomTestUtil.randomLong()
+				).put(
+					"classPK", classPK
+				).put(
+					"title", RandomTestUtil.randomString()
+				).toString()));
 
 		Assert.assertEquals(latestTitle, jsonObject.getString("title"));
 	}
@@ -109,7 +103,14 @@ public class JournalArticleDDMFormFieldTemplateContextContributorTest {
 		String title = RandomTestUtil.randomString();
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject(
-			_invokeGetValue(_createInputJSON(classPK, title)));
+			_invokeGetValue(
+				JSONUtil.put(
+					"classNameId", RandomTestUtil.randomLong()
+				).put(
+					"classPK", classPK
+				).put(
+					"title", title
+				).toString()));
 
 		Assert.assertEquals(classPK, jsonObject.getLong("classPK"));
 		Assert.assertEquals(title, jsonObject.getString("title"));

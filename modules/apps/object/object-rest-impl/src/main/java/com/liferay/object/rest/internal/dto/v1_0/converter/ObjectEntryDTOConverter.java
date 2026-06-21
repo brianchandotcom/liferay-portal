@@ -1011,7 +1011,7 @@ public class ObjectEntryDTOConverter
 		};
 	}
 
-	private Comment[] _toComments(
+	private Comment[] _getNestedComments(
 			ObjectDefinition objectDefinition,
 			com.liferay.object.model.ObjectEntry objectEntry)
 		throws Exception {
@@ -1307,7 +1307,7 @@ public class ObjectEntryDTOConverter
 
 		Group group = _groupLocalService.fetchGroup(groupId);
 
-		Comment[] nestedComments = _toComments(
+		Comment[] nestedComments = _getNestedComments(
 			objectDefinition, serviceBuilderObjectEntry);
 
 		SharingEntry nestedSharingEntry = NestedFieldsSupplier.supply(

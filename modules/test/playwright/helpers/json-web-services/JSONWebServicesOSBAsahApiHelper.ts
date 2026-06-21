@@ -180,6 +180,17 @@ export class JSONWebServicesOSBAsahApiHelper {
 		);
 	}
 
+	async deleteEventDefinitions(names: string[]): Promise<any> {
+		return this.apiHelpers.delete(
+			`${asahConfig.environment.backendUrl}${this.basePath}/event-definitions`,
+			{
+				data: names,
+				failOnStatusCode: true,
+				headers: this.getHeaders(),
+			}
+		);
+	}
+
 	async createIdentities(identities: Identity[]): Promise<any> {
 		return this.apiHelpers.post(
 			`${asahConfig.environment.backendUrl}${this.basePath}/bq-identities`,

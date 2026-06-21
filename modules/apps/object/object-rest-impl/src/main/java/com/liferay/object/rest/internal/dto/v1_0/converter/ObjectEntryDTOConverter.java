@@ -1306,10 +1306,13 @@ public class ObjectEntryDTOConverter
 		throws Exception {
 
 		Group group = _groupLocalService.fetchGroup(groupId);
-
 		Comment[] nestedComments = _getNestedComments(
 			objectDefinition, serviceBuilderObjectEntry);
-
+		ObjectDefinitionBrief nestedObjectDefinitionBrief =
+			NestedFieldsSupplier.supply(
+				"systemProperties.objectDefinitionBrief",
+				nestedField -> _toObjectDefinitionBrief(
+					locale, objectDefinition));
 		SharingEntry nestedSharingEntry = NestedFieldsSupplier.supply(
 			"systemProperties.collaboratorBrief",
 			nestedField -> _sharingEntryLocalService.fetchSharingEntry(
@@ -1317,12 +1320,6 @@ public class ObjectEntryDTOConverter
 				_classNameLocalService.getClassNameId(
 					objectDefinition.getClassName()),
 				objectEntryId));
-
-		ObjectDefinitionBrief nestedObjectDefinitionBrief =
-			NestedFieldsSupplier.supply(
-				"systemProperties.objectDefinitionBrief",
-				nestedField -> _toObjectDefinitionBrief(
-					locale, objectDefinition));
 
 		if (!objectDefinition.isEnableObjectEntryVersioning() &&
 			(group == null) && (nestedComments == null) &&

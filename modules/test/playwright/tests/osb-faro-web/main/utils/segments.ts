@@ -78,13 +78,22 @@ export async function addStaticMember({
 }
 
 export async function createBatchSegment(page: Page) {
-	await clickAndExpectToBeVisible({
-		autoClick: true,
-		target: page.getByRole('menuitem', {name: 'Batch'}),
-		trigger: page
-			.getByRole('button', {name: 'Menu'})
-			.filter({hasText: 'New Segment'}),
-	});
+	const batchSegmentButton = page.getByTestId('batch-segment-button');
+
+	if (await batchSegmentButton.isVisible()) {
+		await expect(batchSegmentButton).not.toBeDisabled();
+
+		await batchSegmentButton.click();
+	}
+	else {
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {name: 'Batch'}),
+			trigger: page
+				.getByRole('button', {name: 'Menu'})
+				.filter({hasText: 'New Segment'}),
+		});
+	}
 }
 
 export async function createDynamicSegment(page: Page) {

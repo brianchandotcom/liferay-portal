@@ -4,38 +4,14 @@
 		"pageElements": [
 			{
 				"definition": {
-					"fragment": {
-						"key": "cms-login",
-						"siteKey": "Guest"
-					},
-					"fragmentConfig": {
-					},
-					"indexed": true
-				},
-				"id": "b8f3d5e1-2c4a-5061-9d7f-3e8c0a1b4d22",
-				"pageElements": [
-					{
-						"definition": {
-							"fragmentDropZoneId": "login"
+					"widgetInstance": {
+						"widgetConfig": {
 						},
-						"id": "c9a4e6f2-3d5b-6172-ae80-4f9d1b2c5e33",
-						"pageElements": [
-							{
-								"definition": {
-									"widgetInstance": {
-										"widgetConfig": {
-										},
-										"widgetName": "com_liferay_login_web_portlet_LoginPortlet"
-									}
-								},
-								"id": "d0b5f7a3-4e6c-7283-bf91-509e2c3d6f44",
-								"type": "Widget"
-							}
-						],
-						"type": "FragmentDropZone"
+						"widgetName": "com_liferay_site_cms_standalone_site_initializer_internal_portlet_CMSLoginPortlet"
 					}
-				],
-				"type": "Fragment"
+				},
+				"id": "e1c6f8b4-5f7d-8394-ca02-61ae2c3d6f55",
+				"type": "Widget"
 			}
 		],
 		"type": "Root"

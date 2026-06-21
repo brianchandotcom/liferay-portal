@@ -100,7 +100,8 @@ public class ViewRelatedAssetsSectionDisplayContext
 									"(cmsSection eq 'contents' or cmsSection ",
 									"eq 'files') and not (keywords/any(k:k in ",
 									"(", getKeywordsFilterString(),
-									"))) and objectDefinitionId gt 0")),
+									"))) and objectDefinitionId gt 0 and ",
+									"rootDescendantNode eq false")),
 							httpServletRequest, null);
 
 					return "/o/search/v1.0/search?" +

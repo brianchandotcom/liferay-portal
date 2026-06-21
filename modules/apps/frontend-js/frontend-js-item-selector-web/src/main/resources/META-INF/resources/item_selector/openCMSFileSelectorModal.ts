@@ -58,7 +58,11 @@ function urlBuilder({
 
 	const scopePredicates = folderId
 		? [`(folderId eq ${folderId})`]
-		: ["(cmsSection eq 'files')", '(cmsRoot eq true)'];
+		: [
+				"(cmsSection eq 'files')",
+				'(cmsRoot eq true)',
+				'(rootDescendantNode eq false)',
+			];
 
 	const filter = [...scopePredicates, '(status in (0, 2, 3))']
 		.concat(filters.filter(Boolean))

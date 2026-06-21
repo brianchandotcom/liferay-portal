@@ -31,7 +31,7 @@ public class ViewAllSectionSystemFDSEntry implements SystemFDSEntry {
 		String filterString = SectionDisplayContextUtil.appendStatus(
 			SectionDisplayContextUtil.appendGroupIds(
 				"cmsKind eq 'object' and (cmsSection eq 'contents' or " +
-					"cmsSection eq 'files')",
+					"cmsSection eq 'files') and rootDescendantNode eq false",
 				httpServletRequest));
 
 		String additionalAPIURLParameters =

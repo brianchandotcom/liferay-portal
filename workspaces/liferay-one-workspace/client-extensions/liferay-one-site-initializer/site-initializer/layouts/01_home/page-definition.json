@@ -1700,7 +1700,7 @@
 										"widgetConfig": {
 											"cpContentListRendererKey": "list-default",
 											"diagram--cpTypeListEntryRendererKey": "list-entry-diagram",
-											"displayStyle": "ddmTemplate_LO_PRODUCTS_SEARCH_RESULTS",
+											"displayStyle": "ddmTemplate_PRODUCTS_SEARCH_RESULTS",
 											"displayStyleGroupId": "[$GROUP_ID$]",
 											"displayStyleGroupKey": "[$GROUP_ID$]",
 											"grouped--cpTypeListEntryRendererKey": "list-entry-default",

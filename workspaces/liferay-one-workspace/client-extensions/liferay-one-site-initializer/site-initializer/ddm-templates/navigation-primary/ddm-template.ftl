@@ -22,11 +22,11 @@
 <#attempt>
 	<#if themeDisplay.isSignedIn()>
 		<#list themeDisplay.getUser().getRoles() as userRole>
-			<#if (userRole.getName() == "Administrator") || (userRole.getName() == "Liferay Staff")>
+			<#if stringUtil.equals(userRole.getName(), "Administrator") || stringUtil.equals(userRole.getName(), "Liferay Staff")>
 				<#assign canBypassMyAccount = true />
 			</#if>
 
-			<#if userRole.getName() == "Marketplace Publisher">
+			<#if stringUtil.equals(userRole.getName(), "Marketplace Publisher")>
 				<#assign hasMarketplacePublisherRole = true />
 			</#if>
 		</#list>
@@ -61,9 +61,9 @@
 <ul class="adt-navigation" data-account-bypass="${canBypassMyAccount?c}">
 	<#if (navigationMenu.navigationMenuItems)??>
 		<#list navigationMenu.navigationMenuItems as navPrimaryItem>
-			<#assign isActiveSection = activeSectionName?has_content && (navPrimaryItem.name == activeSectionName) />
+			<#assign isActiveSection = activeSectionName?has_content && stringUtil.equals(navPrimaryItem.name, activeSectionName) />
 
-			<#if ((navPrimaryItem.name == "My Account") || stringUtil.equals(navPrimaryItem.name, "Admin")) && !themeDisplay.isSignedIn()>
+			<#if (stringUtil.equals(navPrimaryItem.name, "My Account") || stringUtil.equals(navPrimaryItem.name, "Admin")) && !themeDisplay.isSignedIn()>
 			<#elseif (((navPrimaryItem.navigationMenuItems)![])?size > 0)>
 				<div class="adt-nav-item dropdown dropdown-action<#if isActiveSection> selected</#if> w-100">
 					<button
@@ -84,7 +84,7 @@
 					<@renderNavigationDropdown navPrimaryItem />
 				</div>
 			<#else>
-				<a class="adt-nav-item<#if isActiveSection> selected</#if> w-100" href="${(navPrimaryItem.typeSettings.url)!""}"<#if ((navPrimaryItem.typeSettings.useNewTab)!"") == "true"> target="_blank"</#if>>
+				<a class="adt-nav-item<#if isActiveSection> selected</#if> w-100" href="${(navPrimaryItem.typeSettings.url)!""}"<#if stringUtil.equals((navPrimaryItem.typeSettings.useNewTab)!"", "true")> target="_blank"</#if>>
 					<div class="adt-nav-text d-flex pr-3" tabindex="4">
 						<span class="adt-nav-title text-truncate">
 							${navPrimaryItem.name}
@@ -135,7 +135,7 @@
 								preheaderText = getCustomFieldData(navTertiaryItem, "Menu Item Preheader")
 							/>
 
-							<#if !((navTertiaryItem.name == "Publisher Dashboard") && !hasMarketplacePublisherRole)>
+							<#if !(stringUtil.equals(navTertiaryItem.name, "Publisher Dashboard") && !hasMarketplacePublisherRole)>
 								<li class="adt-submenu-item-content ${menuItemType?lower_case}-type grid-column-span-${childColumns}">
 									<a class="adt-submenu-item-link" href="${(navTertiaryItem.typeSettings.url)!""}" tabindex="4">
 										<#if stringUtil.equals(menuItemType, "Image") && imageURL?has_content>

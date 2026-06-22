@@ -970,26 +970,12 @@ test(
 
 		// Open the individual profile from the Known Individuals list
 
-		await navigateToACPageViaURL({
-			acPage: ACPage.individualPage,
+		await openIndividualProfileViaURL({
 			channelID: channel.id,
+			individualId: individual.id,
 			page,
 			projectID: project.groupId,
 		});
-
-		await page.getByRole('link', {name: 'Known Individuals'}).click();
-
-		// Refill the search until the seeded individual surfaces in the list
-
-		await expect(async () => {
-			await page.getByPlaceholder('Search').first().fill(individual.name);
-
-			await expect(
-				page.getByRole('link', {name: individual.name}).first()
-			).toBeVisible({timeout: 3000});
-		}).toPass({timeout: 6000});
-
-		await page.getByRole('link', {name: individual.name}).first().click();
 
 		// The Overview tab lists the individual summary cards
 
@@ -1065,32 +1051,12 @@ test(
 
 			// Open the individual profile Segments tab
 
-			await expect(async () => {
-				await navigateToACPageViaURL({
-					acPage: ACPage.individualPage,
-					channelID: channel.id,
-					page,
-					projectID: project.groupId,
-				});
-
-				await page
-					.getByRole('link', {name: 'Known Individuals'})
-					.click();
-
-				await page
-					.getByPlaceholder('Search')
-					.first()
-					.fill(individual.name);
-
-				await expect(
-					page.getByRole('link', {name: individual.name}).first()
-				).toBeVisible({timeout: 3000});
-			}).toPass({timeout: 6000});
-
-			await page
-				.getByRole('link', {name: individual.name})
-				.first()
-				.click();
+			await openIndividualProfileViaURL({
+				channelID: channel.id,
+				individualId: individual.id,
+				page,
+				projectID: project.groupId,
+			});
 
 			await page.getByRole('link', {name: 'Segments'}).click();
 
@@ -1194,32 +1160,12 @@ test(
 
 			// Open the individual profile Segments tab
 
-			await expect(async () => {
-				await navigateToACPageViaURL({
-					acPage: ACPage.individualPage,
-					channelID: channel.id,
-					page,
-					projectID: project.groupId,
-				});
-
-				await page
-					.getByRole('link', {name: 'Known Individuals'})
-					.click();
-
-				await page
-					.getByPlaceholder('Search')
-					.first()
-					.fill(individual.name);
-
-				await expect(
-					page.getByRole('link', {name: individual.name}).first()
-				).toBeVisible({timeout: 3000});
-			}).toPass({timeout: 6000});
-
-			await page
-				.getByRole('link', {name: individual.name})
-				.first()
-				.click();
+			await openIndividualProfileViaURL({
+				channelID: channel.id,
+				individualId: individual.id,
+				page,
+				projectID: project.groupId,
+			});
 
 			await page.getByRole('link', {name: 'Segments'}).click();
 
@@ -1304,32 +1250,12 @@ test(
 
 			// Open the individual profile Segments tab
 
-			await expect(async () => {
-				await navigateToACPageViaURL({
-					acPage: ACPage.individualPage,
-					channelID: channel.id,
-					page,
-					projectID: project.groupId,
-				});
-
-				await page
-					.getByRole('link', {name: 'Known Individuals'})
-					.click();
-
-				await page
-					.getByPlaceholder('Search')
-					.first()
-					.fill(individual.name);
-
-				await expect(
-					page.getByRole('link', {name: individual.name}).first()
-				).toBeVisible({timeout: 3000});
-			}).toPass({timeout: 6000});
-
-			await page
-				.getByRole('link', {name: individual.name})
-				.first()
-				.click();
+			await openIndividualProfileViaURL({
+				channelID: channel.id,
+				individualId: individual.id,
+				page,
+				projectID: project.groupId,
+			});
 
 			await page.getByRole('link', {name: 'Segments'}).click();
 

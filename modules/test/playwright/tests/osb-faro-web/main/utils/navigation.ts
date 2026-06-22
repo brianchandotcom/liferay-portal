@@ -78,6 +78,22 @@ export async function navigateToACPageViaURL({
 	);
 }
 
+export async function navigateToACIndividualProfileViaURL({
+	channelID,
+	individualId,
+	page,
+	projectID,
+}: {
+	channelID: string;
+	individualId: string;
+	page: Page;
+	projectID: string;
+}) {
+	await page.goto(
+		`${faroConfig.environment.baseUrl}/workspace/${projectID}/${channelID}/contacts/individuals/known-individuals/${individualId}`
+	);
+}
+
 export async function navigateToACSettingsViaURL({
 	acPage,
 	page,

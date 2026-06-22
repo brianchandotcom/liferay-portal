@@ -293,8 +293,9 @@ public class ExportPreviewResourceTest
 		return 0L;
 	}
 
-	private PreviewPortletDataHandlerSection _getSection(
-		ExportPreview exportPreview, String name) {
+	private PreviewPortletDataHandlerSection
+		_getPreviewPortletDataHandlerSection(
+			ExportPreview exportPreview, String name) {
 
 		for (PreviewPortletDataHandlerSection previewPortletDataHandlerSection :
 				exportPreview.getPreviewPortletDataHandlerSections()) {
@@ -398,34 +399,35 @@ public class ExportPreviewResourceTest
 	private void _testGetPortletExportPreview(
 		ExportPreview exportPreview, String portletId) {
 
-		PreviewPortletDataHandlerSection contentSection = _getSection(
-			exportPreview, ExportImportConstants.SECTION_KEY_CONTENT);
+		PreviewPortletDataHandlerSection previewPortletDataHandlerSection =
+			_getPreviewPortletDataHandlerSection(
+				exportPreview, ExportImportConstants.SECTION_KEY_CONTENT);
 
-		PreviewPortletDataHandler[] contentPreviewPortletDataHandlers =
-			contentSection.getPreviewPortletDataHandlers();
+		PreviewPortletDataHandler[] previewPortletDataHandlers =
+			previewPortletDataHandlerSection.getPreviewPortletDataHandlers();
 
 		Assert.assertEquals(
-			Arrays.toString(contentPreviewPortletDataHandlers), 1,
-			contentPreviewPortletDataHandlers.length);
+			Arrays.toString(previewPortletDataHandlers), 1,
+			previewPortletDataHandlers.length);
 		Assert.assertEquals(
 			"PORTLET_DATA_" + portletId,
-			contentPreviewPortletDataHandlers[0].getName());
+			previewPortletDataHandlers[0].getName());
 
-		PreviewPortletDataHandlerSection configurationSection = _getSection(
+		previewPortletDataHandlerSection = _getPreviewPortletDataHandlerSection(
 			exportPreview, ExportImportConstants.SECTION_KEY_CONFIGURATION);
 
-		PreviewPortletDataHandler[] configurationPreviewPortletDataHandlers =
-			configurationSection.getPreviewPortletDataHandlers();
+		previewPortletDataHandlers =
+			previewPortletDataHandlerSection.getPreviewPortletDataHandlers();
 
 		Assert.assertEquals(
-			Arrays.toString(configurationPreviewPortletDataHandlers), 1,
-			configurationPreviewPortletDataHandlers.length);
+			Arrays.toString(previewPortletDataHandlers), 1,
+			previewPortletDataHandlers.length);
 		Assert.assertEquals(
 			"PORTLET_CONFIGURATION_" + portletId,
-			configurationPreviewPortletDataHandlers[0].getName());
+			previewPortletDataHandlers[0].getName());
 		Assert.assertTrue(
 			ArrayUtil.isNotEmpty(
-				configurationPreviewPortletDataHandlers[0].
+				previewPortletDataHandlers[0].
 					getPreviewPortletDataHandlerControls()));
 	}
 

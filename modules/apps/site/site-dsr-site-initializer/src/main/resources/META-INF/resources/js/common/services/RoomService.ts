@@ -221,7 +221,7 @@ async function getRooms(): Promise<{items: IRoomObjectEntry[]}> {
 async function restoreRoom(roomId: number): Promise<IRoomObjectEntry> {
 	const {data, error} = await ApiHelper.patch<IRoomObjectEntry>(
 		{
-			archiveDate: '',
+			archiveDate: null,
 			roomStatus: ROOM_STATUS.ACTIVE,
 		},
 		`${BASE_PATH}/${roomId}`

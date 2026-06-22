@@ -47,7 +47,9 @@ public class FieldTest {
 
 	@Test
 	public void testToStringDefaultValueObjectArray() throws Exception {
-		_testToStringDefaultValue(_createMaps().toArray());
+		List<Map<String, String>> maps = _createMaps();
+
+		_testToStringDefaultValue(maps.toArray());
 	}
 
 	private List<Map<String, String>> _createMaps() {

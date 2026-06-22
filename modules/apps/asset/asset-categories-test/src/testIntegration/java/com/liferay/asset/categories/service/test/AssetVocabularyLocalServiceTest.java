@@ -221,7 +221,7 @@ public class AssetVocabularyLocalServiceTest {
 		AssertUtils.assertFailure(
 			SystemVocabularyException.MustNotModifySystemVocabulary.class,
 			StringBundler.concat(
-				"Only the multi-valued setting of the system vocabulary ",
+				"Only the multivalued setting of the system vocabulary ",
 				vocabulary.getVocabularyId(), " can be modified"),
 			() -> _assetVocabularyLocalService.updateVocabulary(
 				vocabulary.getExternalReferenceCode(),
@@ -237,7 +237,7 @@ public class AssetVocabularyLocalServiceTest {
 		AssertUtils.assertFailure(
 			SystemVocabularyException.MustNotModifySystemVocabulary.class,
 			StringBundler.concat(
-				"Only the multi-valued setting of the system vocabulary ",
+				"Only the multivalued setting of the system vocabulary ",
 				vocabulary.getVocabularyId(), " can be modified"),
 			() -> _assetVocabularyLocalService.updateVocabulary(
 				vocabulary.getExternalReferenceCode(),
@@ -290,7 +290,7 @@ public class AssetVocabularyLocalServiceTest {
 		AssertUtils.assertFailure(
 			SystemVocabularyException.MustNotModifySystemVocabulary.class,
 			StringBundler.concat(
-				"Only the multi-valued setting of the system vocabulary ",
+				"Only the multivalued setting of the system vocabulary ",
 				vocabulary.getVocabularyId(), " can be modified"),
 			() -> _assetVocabularyLocalService.updateVocabulary(
 				vocabulary.getExternalReferenceCode(),

@@ -50,7 +50,7 @@ public class SystemVocabularyException extends PortalException {
 		public MustNotModifySystemVocabulary(long vocabularyId) {
 			super(
 				String.format(
-					"Only the multi-valued setting of the system vocabulary " +
+					"Only the multivalued setting of the system vocabulary " +
 						"%s can be modified",
 					vocabularyId));
 

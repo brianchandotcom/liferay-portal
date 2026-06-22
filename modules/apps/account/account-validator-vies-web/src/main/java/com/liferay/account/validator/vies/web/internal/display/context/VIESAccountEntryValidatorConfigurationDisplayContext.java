@@ -97,14 +97,15 @@ public class VIESAccountEntryValidatorConfigurationDisplayContext {
 			viesAccountEntryValidatorConfiguration =
 				_getVIESAccountEntryValidatorConfiguration();
 
-		String[] countries = viesAccountEntryValidatorConfiguration.countries();
+		String[] countryCodes =
+			viesAccountEntryValidatorConfiguration.countryCodes();
 
 		return ListUtil.sort(
 			TransformUtil.transform(
 				_getCompanyCountries(),
 				country -> {
 					boolean contains = ArrayUtil.contains(
-						countries, country.getA2());
+						countryCodes, country.getA2());
 
 					if (contains == current) {
 						return new KeyValuePair(

@@ -640,7 +640,7 @@ public abstract class BaseDBProcess implements DBProcess {
 						ClassLoader.getSystemClassLoader(),
 						new Class<?>[] {PreparedStatement.class},
 						new BatchCommitInvocationHandler(
-							workerConnection, _transactionalConnections, preparedStatement));
+							workerConnection, preparedStatement));
 				}
 				catch (SQLException sqlException) {
 					throw new RuntimeException(sqlException);
@@ -873,8 +873,7 @@ public abstract class BaseDBProcess implements DBProcess {
 	private final Set<Connection> _transactionalConnections =
 		ConcurrentHashMap.newKeySet();
 
-	private static class BatchCommitInvocationHandler
-		implements InvocationHandler {
+	private class BatchCommitInvocationHandler implements InvocationHandler {
 
 		@Override
 		public Object invoke(Object proxy, Method method, Object[] args)
@@ -902,8 +901,8 @@ public abstract class BaseDBProcess implements DBProcess {
 					_finishTransaction(true);
 				}
 			}
-			else if (methodName.equals("executeBatch") &&
-					 _transaction) {
+			else if (_transaction &&
+					 methodName.equals("executeBatch")) {
 
 				_finishTransaction(true);
 			}
@@ -912,11 +911,9 @@ public abstract class BaseDBProcess implements DBProcess {
 		}
 
 		private BatchCommitInvocationHandler(
-			Connection connection, Set<Connection> ownedConnections,
-			PreparedStatement preparedStatement) {
+			Connection connection, PreparedStatement preparedStatement) {
 
 			_connection = connection;
-			_transactionalConnections = ownedConnections;
 			_preparedStatement = preparedStatement;
 		}
 
@@ -966,7 +963,6 @@ public abstract class BaseDBProcess implements DBProcess {
 			_transaction = true;
 		}
 
-		private final Set<Connection> _transactionalConnections;
 		private final Connection _connection;
 		private int _count;
 		private final PreparedStatement _preparedStatement;

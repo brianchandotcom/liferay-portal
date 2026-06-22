@@ -945,6 +945,18 @@ public abstract class BaseDBProcess implements DBProcess {
 				return;
 			}
 
+			if (_log.isWarnEnabled() && !_connection.getAutoCommit()) {
+				Class<?> clazz = BaseDBProcess.this.getClass();
+
+				Thread currentThread = Thread.currentThread();
+
+				_log.warn(
+					StringBundler.concat(
+						"Worker connection arrived with autoCommit=false in ",
+						clazz.getName(), " on thread ", currentThread.getName(),
+						"; healing on the next flush"));
+			}
+
 			try {
 				_connection.setAutoCommit(false);
 			}

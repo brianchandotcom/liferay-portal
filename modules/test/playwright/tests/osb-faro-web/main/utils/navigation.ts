@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Page} from '@playwright/test';
+import {Page, expect} from '@playwright/test';
 
 import {faroConfig} from '../faro.config';
 import {waitForLoading} from './loading';
@@ -92,6 +92,29 @@ export async function navigateToACIndividualProfileViaURL({
 	await page.goto(
 		`${faroConfig.environment.baseUrl}/workspace/${projectID}/${channelID}/contacts/individuals/known-individuals/${individualId}`
 	);
+}
+
+export async function openIndividualProfileViaURL({
+	channelID,
+	individualId,
+	page,
+	projectID,
+}: {
+	channelID: string;
+	individualId: string;
+	page: Page;
+	projectID: string;
+}) {
+	await navigateToACIndividualProfileViaURL({
+		channelID,
+		individualId,
+		page,
+		projectID,
+	});
+
+	await waitForLoading(page);
+
+	await expect(page.getByText('Individual Events')).toBeVisible();
 }
 
 export async function navigateToACSettingsViaURL({

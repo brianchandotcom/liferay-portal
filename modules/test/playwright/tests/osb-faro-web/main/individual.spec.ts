@@ -13,7 +13,6 @@ import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest
 import {loginTest} from '../../../fixtures/loginTest';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
-import {waitForLoading} from '../../analytics-reports-js-components-web/main/utils/loading';
 import {syncAnalyticsCloudViaAPI} from '../../analytics-settings-web/main/utils/analytics-settings';
 import getFragmentDefinition from '../../layout-content-page-editor-web/main/utils/getFragmentDefinition';
 import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
@@ -26,8 +25,8 @@ import {createIndividuals, generateIndividual} from './utils/individuals';
 import {Nanites, runNanites} from './utils/nanites';
 import {
 	ACPage,
-	navigateToACIndividualProfileViaURL,
 	navigateToACPageViaURL,
+	openIndividualProfileViaURL,
 } from './utils/navigation';
 import {changeTimeFilter} from './utils/time-filter';
 import {
@@ -408,16 +407,12 @@ test(
 			]
 		);
 
-		await navigateToACIndividualProfileViaURL({
+		await openIndividualProfileViaURL({
 			channelID: channel.id,
 			individualId: individual.id,
 			page,
 			projectID: project.groupId,
 		});
-
-		await waitForLoading(page);
-
-		await expect(page.getByText('Individual Events')).toBeVisible();
 
 		await expect(
 			page.getByRole('button', {name: 'pageViewed'})
@@ -524,16 +519,12 @@ test(
 		]);
 
 		await test.step('Open user A and assert only their custom event is listed', async () => {
-			await navigateToACIndividualProfileViaURL({
+			await openIndividualProfileViaURL({
 				channelID: channel.id,
 				individualId: individualA.id,
 				page,
 				projectID: project.groupId,
 			});
-
-			await waitForLoading(page);
-
-			await expect(page.getByText('Individual Events')).toBeVisible();
 
 			// Switch the individual activities chart to the Last 24 hours view
 
@@ -545,16 +536,12 @@ test(
 		});
 
 		await test.step('Open user B and assert only their custom event is listed', async () => {
-			await navigateToACIndividualProfileViaURL({
+			await openIndividualProfileViaURL({
 				channelID: channel.id,
 				individualId: individualB.id,
 				page,
 				projectID: project.groupId,
 			});
-
-			await waitForLoading(page);
-
-			await expect(page.getByText('Individual Events')).toBeVisible();
 
 			// Switch the individual activities chart to the Last 24 hours view
 
@@ -644,18 +631,12 @@ test(
 			},
 		]);
 
-		// Open the individual profile
-
-		await navigateToACIndividualProfileViaURL({
+		await openIndividualProfileViaURL({
 			channelID: channel.id,
 			individualId: individual.id,
 			page,
 			projectID: project.groupId,
 		});
-
-		await waitForLoading(page);
-
-		await expect(page.getByText('Individual Events')).toBeVisible();
 
 		// Switch the individual activities chart to the Last 24 hours view
 

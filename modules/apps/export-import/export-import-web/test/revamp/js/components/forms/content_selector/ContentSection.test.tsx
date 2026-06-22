@@ -8,6 +8,7 @@ import React from 'react';
 
 import ContentSection from '../../../../../../src/main/resources/META-INF/resources/revamp/js/components/forms/content_selector/ContentSection';
 import {PreviewPortletDataHandlerSection} from '../../../../../../src/main/resources/META-INF/resources/revamp/js/types/portletDataHandler';
+import {CONTENT_SECTION_KEY} from '../../../../../../src/main/resources/META-INF/resources/revamp/js/utils/contentSelection';
 
 function makeSection(
 	name: string,
@@ -20,6 +21,21 @@ function makeSection(
 		previewPortletDataHandlers: [{label: 'Handler', name: 'handler'}],
 	};
 }
+
+const contentSection: PreviewPortletDataHandlerSection = {
+	label: CONTENT_SECTION_KEY,
+	name: CONTENT_SECTION_KEY,
+	previewPortletDataHandlers: [
+		{
+			label: 'Handler',
+			name: 'handler',
+			previewPortletDataHandlerControls: [
+				{label: 'Child 1', name: 'child1', type: 'Boolean'},
+				{label: 'Child 2', name: 'child2', type: 'Boolean'},
+			],
+		},
+	],
+};
 
 describe('ContentSection', () => {
 	it('renders a compact scrollable body for sections in COMPACT_SECTION_NAMES', () => {
@@ -65,5 +81,44 @@ describe('ContentSection', () => {
 		expect(queryByText('x-deletion')).not.toBeNull();
 		expect(queryByText('x-items')).toBeNull();
 		expect(queryByText('x-deletions')).toBeNull();
+	});
+
+	it('hides the comments and ratings footer when nothing is selected', () => {
+		const {queryByText} = render(
+			<ContentSection
+				commentsAndRatingsEnabled
+				onChange={jest.fn()}
+				section={contentSection}
+				value={undefined}
+			/>
+		);
+
+		expect(queryByText('comments-and-ratings')).toBeNull();
+	});
+
+	it('shows the comments and ratings footer when a handler is fully selected', () => {
+		const {queryByText} = render(
+			<ContentSection
+				commentsAndRatingsEnabled
+				onChange={jest.fn()}
+				section={contentSection}
+				value={{handler: {child1: true, child2: true}}}
+			/>
+		);
+
+		expect(queryByText('comments-and-ratings')).not.toBeNull();
+	});
+
+	it('shows the comments and ratings footer when a lower-level node is selected', () => {
+		const {queryByText} = render(
+			<ContentSection
+				commentsAndRatingsEnabled
+				onChange={jest.fn()}
+				section={contentSection}
+				value={{handler: {child1: true}}}
+			/>
+		);
+
+		expect(queryByText('comments-and-ratings')).not.toBeNull();
 	});
 });

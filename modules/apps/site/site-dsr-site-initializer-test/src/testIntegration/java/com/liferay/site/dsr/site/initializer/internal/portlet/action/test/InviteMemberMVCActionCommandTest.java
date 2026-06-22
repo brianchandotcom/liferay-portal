@@ -233,10 +233,10 @@ public class InviteMemberMVCActionCommandTest {
 					"siteId"
 				)));
 
-		Date membershipExpirationDate = new Date(
-			((System.currentTimeMillis() + Time.DAY) / 1000) * 1000);
 		String emailAddress = StringUtil.lowerCase(
 			RandomTestUtil.randomString() + "@liferay.com");
+		Date membershipExpirationDate = new Date(
+			((System.currentTimeMillis() + Time.DAY) / 1000) * 1000);
 		Role role = _roleLocalService.getRole(
 			TestPropsValues.getCompanyId(), "Site Administrator");
 

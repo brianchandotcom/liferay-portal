@@ -166,6 +166,37 @@ public class ObjectRelationshipResourceTest
 			randomObjectRelationship.getObjectDefinitionScope2(),
 			postObjectRelationship.getObjectDefinitionScope2());
 		Assert.assertFalse(postObjectRelationship.getObjectDefinitionSystem2());
+
+		ObjectRelationship systemObjectRelationship =
+			randomObjectRelationship();
+
+		String externalReferenceCode =
+			ObjectDefinitionConstants.
+				EXTERNAL_REFERENCE_CODE_PREFIX_SYSTEM_OBJECT_DEFINITION +
+					RandomTestUtil.randomString();
+
+		systemObjectRelationship.setObjectDefinitionExternalReferenceCode2(
+			externalReferenceCode);
+
+		systemObjectRelationship.setObjectDefinitionId2(0L);
+		systemObjectRelationship.setObjectDefinitionModifiable2(() -> null);
+		systemObjectRelationship.setObjectDefinitionScope2(
+			RandomTestUtil.randomString());
+		systemObjectRelationship.setObjectDefinitionSystem2(() -> null);
+
+		ObjectRelationship postSystemObjectRelationship =
+			testPostObjectDefinitionObjectRelationship_addObjectRelationship(
+				systemObjectRelationship);
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					externalReferenceCode, TestPropsValues.getCompanyId());
+
+		Assert.assertTrue(objectDefinition.isSystem());
+
+		Assert.assertTrue(
+			postSystemObjectRelationship.getObjectDefinitionSystem2());
 	}
 
 	@Override

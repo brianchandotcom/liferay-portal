@@ -400,7 +400,34 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 		}
 
 		if (Objects.equals(mappingMode, "context")) {
-			return _resolveContextValue(fieldId, httpServletRequest);
+			InfoItemReference infoItemReference =
+				(InfoItemReference)httpServletRequest.getAttribute(
+					InfoDisplayWebKeys.INFO_ITEM_REFERENCE);
+
+			if (infoItemReference == null) {
+				return null;
+			}
+
+			InfoItemIdentifier infoItemIdentifier =
+				infoItemReference.getInfoItemIdentifier();
+
+			if (Objects.equals(fieldId, "externalReferenceCode") &&
+				(infoItemIdentifier instanceof ERCInfoItemIdentifier)) {
+
+				ERCInfoItemIdentifier ercInfoItemIdentifier =
+					(ERCInfoItemIdentifier)infoItemIdentifier;
+
+				return ercInfoItemIdentifier.getExternalReferenceCode();
+			}
+
+			if (infoItemIdentifier instanceof ClassPKInfoItemIdentifier) {
+				ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+					(ClassPKInfoItemIdentifier)infoItemIdentifier;
+
+				return String.valueOf(classPKInfoItemIdentifier.getClassPK());
+			}
+
+			return null;
 		}
 
 		if (Objects.equals(fieldId, "externalReferenceCode")) {
@@ -449,39 +476,6 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 				tokenResolutionsJSONObject));
 
 		return !matcher.find();
-	}
-
-	private String _resolveContextValue(
-		String fieldId, HttpServletRequest httpServletRequest) {
-
-		InfoItemReference infoItemReference =
-			(InfoItemReference)httpServletRequest.getAttribute(
-				InfoDisplayWebKeys.INFO_ITEM_REFERENCE);
-
-		if (infoItemReference == null) {
-			return null;
-		}
-
-		InfoItemIdentifier infoItemIdentifier =
-			infoItemReference.getInfoItemIdentifier();
-
-		if (Objects.equals(fieldId, "externalReferenceCode") &&
-			(infoItemIdentifier instanceof ERCInfoItemIdentifier)) {
-
-			ERCInfoItemIdentifier ercInfoItemIdentifier =
-				(ERCInfoItemIdentifier)infoItemIdentifier;
-
-			return ercInfoItemIdentifier.getExternalReferenceCode();
-		}
-
-		if (infoItemIdentifier instanceof ClassPKInfoItemIdentifier) {
-			ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
-				(ClassPKInfoItemIdentifier)infoItemIdentifier;
-
-			return String.valueOf(classPKInfoItemIdentifier.getClassPK());
-		}
-
-		return null;
 	}
 
 	private void _writeAutoResolvableTokenNames(

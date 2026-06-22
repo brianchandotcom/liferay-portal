@@ -67,10 +67,10 @@ override_data {
 		cidr_block="10.0.0.0/16"
 	}
 }
-run "should_double_scope_helm_values_for_the_marketplace_chart" {
+run "should_include_required_prefixes_for_the_marketplace_chart_to_gatewayName" {
 	assert {
 		condition=kubernetes_manifest.liferay_applicationset.manifest.spec.template.spec.sources[0].helm.parameters[0].name == "liferay-aws.liferay-default.network.gatewayName"
-		error_message="The marketplace chart must double scope the gatewayName Helm parameter"
+		error_message="The liferay-aws-marketplace chart must include prefixes for both liferay-aws and liferay-default charts to gatewayName Helm parameter"
 	}
 	command=plan
 	variables {
@@ -80,7 +80,7 @@ run "should_double_scope_helm_values_for_the_marketplace_chart" {
 run "should_name_the_appprojects" {
 	assert {
 		condition=kubernetes_manifest.infrastructure_applicationset.manifest.spec.template.spec.project == "liferay-infrastructure"
-		error_message="The infrastructure ApplicationSet template must target the infrastructure project"
+		error_message="The infrastructure ApplicationSet template must target the liferay-infrastructure project"
 	}
 	assert {
 		condition=kubernetes_manifest.infrastructure_appproject.manifest.metadata.name == "liferay-infrastructure"
@@ -88,7 +88,7 @@ run "should_name_the_appprojects" {
 	}
 	assert {
 		condition=kubernetes_manifest.liferay_applicationset.manifest.spec.template.spec.project == "liferay-application"
-		error_message="The Liferay ApplicationSet template must target the Liferay application project"
+		error_message="The Liferay ApplicationSet template must target the liferay-application project"
 	}
 	assert {
 		condition=kubernetes_manifest.liferay_appproject.manifest.metadata.name == "liferay-application"
@@ -116,7 +116,7 @@ run "should_pass_cluster_identity_to_the_provider_application" {
 run "should_scope_liferay_applicationset_helm_values_by_prefix" {
 	assert {
 		condition=kubernetes_manifest.liferay_applicationset.manifest.spec.template.spec.sources[0].helm.parameters[0].name == "liferay-default.network.gatewayName"
-		error_message="The liferay-aws chart must scope the gatewayName Helm parameter under liferay-default"
+		error_message="The liferay-aws chart must include prefix for liferay-default chart at gatewayName Helm parameter"
 	}
 	command=plan
 }

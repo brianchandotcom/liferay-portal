@@ -131,7 +131,6 @@ public class ObjectEntryKeywordQueryContributor
 
 		Locale defaultLocale = LocaleUtil.fromLanguageId(
 			_objectDefinition.getDefaultLanguageId());
-
 		String defaultLocalizedTitleFieldName = null;
 
 		if (Objects.equals(defaultLocale, searchContext.getLocale())) {

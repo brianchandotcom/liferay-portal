@@ -398,7 +398,6 @@ public class ObjectEntryModelDocumentContributor
 
 		document.addText(
 			Field.DEFAULT_LANGUAGE_ID, objectEntry.getDefaultLanguageId());
-
 		document.add(
 			new Field(
 				Field.getSortableFieldName(Field.ENTRY_CLASS_PK),

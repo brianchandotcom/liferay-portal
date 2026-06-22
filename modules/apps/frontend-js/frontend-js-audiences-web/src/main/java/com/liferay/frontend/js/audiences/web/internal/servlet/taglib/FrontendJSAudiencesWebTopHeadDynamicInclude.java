@@ -5,7 +5,9 @@
 
 package com.liferay.frontend.js.audiences.web.internal.servlet.taglib;
 
+import com.liferay.frontend.js.audiences.AudiencesDefinition;
 import com.liferay.frontend.js.audiences.AudiencesDefinitionProvider;
+import com.liferay.frontend.js.audiences.ElementVariations;
 import com.liferay.frontend.js.audiences.ElementVariationsProvider;
 import com.liferay.frontend.js.audiences.web.internal.configuration.FrontendJSAudiencesConfiguration;
 import com.liferay.frontend.js.audiences.web.internal.util.BootstrapJavaScriptUtil;
@@ -15,7 +17,6 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
@@ -50,7 +51,7 @@ public class FrontendJSAudiencesWebTopHeadDynamicInclude
 			return;
 		}
 
-		KeyValuePair audiencesDefinition =
+		AudiencesDefinition audiencesDefinition =
 			_audiencesDefinitionProvider.getAudiencesDefinition(companyId);
 
 		if (audiencesDefinition == null) {
@@ -61,7 +62,7 @@ public class FrontendJSAudiencesWebTopHeadDynamicInclude
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		KeyValuePair elementVariations =
+		ElementVariations elementVariations =
 			_elementVariationsProvider.getElementVariations(
 				themeDisplay.getPlid());
 
@@ -104,9 +105,9 @@ public class FrontendJSAudiencesWebTopHeadDynamicInclude
 		printWriter.print(frontendJSAudiencesConfiguration.enableLog());
 
 		printWriter.print("&audiencesDefinitionHash=");
-		printWriter.print(audiencesDefinition.getKey());
+		printWriter.print(audiencesDefinition.getHash());
 		printWriter.print("&elementVariationsHash=");
-		printWriter.print(elementVariations.getKey());
+		printWriter.print(elementVariations.getHash());
 		printWriter.print("&plid=");
 		printWriter.print(themeDisplay.getPlid());
 		printWriter.print("\" type=\"module\"></script>");

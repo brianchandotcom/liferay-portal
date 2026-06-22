@@ -5,7 +5,9 @@
 
 package com.liferay.frontend.js.audiences.web.internal.servlet;
 
+import com.liferay.frontend.js.audiences.AudiencesDefinition;
 import com.liferay.frontend.js.audiences.AudiencesDefinitionProvider;
+import com.liferay.frontend.js.audiences.ElementVariations;
 import com.liferay.frontend.js.audiences.ElementVariationsProvider;
 import com.liferay.frontend.js.audiences.web.internal.util.BootstrapJavaScriptUtil;
 import com.liferay.petra.string.CharPool;
@@ -15,7 +17,6 @@ import com.liferay.portal.kernel.frontend.hashed.files.HashedFilesUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
-import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -97,7 +98,7 @@ public class FrontendJSAudiencesWebServlet extends HttpServlet {
 			return;
 		}
 
-		KeyValuePair audiencesDefinition =
+		AudiencesDefinition audiencesDefinition =
 			_audiencesDefinitionProvider.getAudiencesDefinition(
 				_portal.getCompanyId(httpServletRequest));
 
@@ -109,10 +110,10 @@ public class FrontendJSAudiencesWebServlet extends HttpServlet {
 
 		String requestHash = HashedFilesUtil.getHash(parts[1]);
 
-		if (!Objects.equals(audiencesDefinition.getKey(), requestHash)) {
+		if (!Objects.equals(audiencesDefinition.getHash(), requestHash)) {
 			_sendRedirect(
 				httpServletRequest, httpServletResponse,
-				audiencesDefinition.getKey());
+				audiencesDefinition.getHash());
 
 			return;
 		}
@@ -123,7 +124,7 @@ public class FrontendJSAudiencesWebServlet extends HttpServlet {
 
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
-		printWriter.print(audiencesDefinition.getValue());
+		printWriter.print(audiencesDefinition.getContent());
 	}
 
 	private void _sendBootstrapJavaScript(
@@ -189,7 +190,7 @@ public class FrontendJSAudiencesWebServlet extends HttpServlet {
 			return;
 		}
 
-		KeyValuePair elementVariations =
+		ElementVariations elementVariations =
 			_elementVariationsProvider.getElementVariations(plid);
 
 		if (elementVariations == null) {
@@ -200,10 +201,10 @@ public class FrontendJSAudiencesWebServlet extends HttpServlet {
 
 		String requestHash = HashedFilesUtil.getHash(parts[2]);
 
-		if (!Objects.equals(elementVariations.getKey(), requestHash)) {
+		if (!Objects.equals(elementVariations.getHash(), requestHash)) {
 			_sendRedirect(
 				httpServletRequest, httpServletResponse,
-				elementVariations.getKey());
+				elementVariations.getHash());
 
 			return;
 		}
@@ -214,7 +215,7 @@ public class FrontendJSAudiencesWebServlet extends HttpServlet {
 
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
-		printWriter.print(elementVariations.getValue());
+		printWriter.print(elementVariations.getContent());
 	}
 
 	private void _sendRedirect(

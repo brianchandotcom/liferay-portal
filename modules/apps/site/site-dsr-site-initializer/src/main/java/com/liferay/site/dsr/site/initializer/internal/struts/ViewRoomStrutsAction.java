@@ -14,7 +14,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
@@ -47,12 +46,15 @@ public class ViewRoomStrutsAction implements StrutsAction {
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 		Group group = _groupLocalService.getGroup(
 			ParamUtil.getLong(httpServletRequest, "siteId"));
 
 		if (!GroupPermissionUtil.contains(
-				PermissionThreadLocal.getPermissionChecker(), group,
-				ActionKeys.VIEW)) {
+				themeDisplay.getPermissionChecker(), group, ActionKeys.VIEW)) {
 
 			SessionErrors.add(
 				httpServletRequest,
@@ -75,10 +77,6 @@ public class ViewRoomStrutsAction implements StrutsAction {
 			return null;
 		}
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		String groupFriendlyURL = _portal.getGroupFriendlyURL(
 			group.getPublicLayoutSet(), themeDisplay, false, false);
 
@@ -91,7 +89,7 @@ public class ViewRoomStrutsAction implements StrutsAction {
 
 			if (roomStatus == WorkflowConstants.STATUS_INACTIVE) {
 				PermissionChecker permissionChecker =
-					PermissionThreadLocal.getPermissionChecker();
+					themeDisplay.getPermissionChecker();
 
 				if (permissionChecker.isCompanyAdmin() ||
 					permissionChecker.isGroupOwner(group.getGroupId())) {

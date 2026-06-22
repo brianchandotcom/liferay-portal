@@ -220,9 +220,7 @@ export default function RoomsFDSPropsTransformer({
 					},
 					status: 'warning',
 					title: sub(
-						Liferay.Language.get(
-							'archive-digital-sales-room-confirmation-title'
-						),
+						Liferay.Language.get('archive-x'),
 						'"' + itemData.name + '"'
 					),
 				});

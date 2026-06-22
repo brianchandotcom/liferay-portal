@@ -111,7 +111,7 @@ public class TaxonomyVocabularyResourceTest
 	public void testDeleteTaxonomyVocabulary() throws Exception {
 		super.testDeleteTaxonomyVocabulary();
 
-		_testDeleteSystemTaxonomyVocabulary();
+		_testDeleteTaxonomyVocabularySystem();
 	}
 
 	@Override
@@ -281,7 +281,7 @@ public class TaxonomyVocabularyResourceTest
 	public void testPatchTaxonomyVocabulary() throws Exception {
 		super.testPatchTaxonomyVocabulary();
 
-		_testPatchSystemTaxonomyVocabularyRename();
+		_testPatchTaxonomyVocabularySystemRename();
 	}
 
 	@Test
@@ -420,7 +420,7 @@ public class TaxonomyVocabularyResourceTest
 		};
 	}
 
-	private void _testDeleteSystemTaxonomyVocabulary() throws Exception {
+	private void _testDeleteTaxonomyVocabularySystem() throws Exception {
 		TaxonomyVocabulary taxonomyVocabulary = randomTaxonomyVocabulary();
 
 		taxonomyVocabulary.setSystem(true);
@@ -647,7 +647,7 @@ public class TaxonomyVocabularyResourceTest
 		Assert.assertNull(getTaxonomyVocabulary.getPermissions());
 	}
 
-	private void _testPatchSystemTaxonomyVocabularyRename() throws Exception {
+	private void _testPatchTaxonomyVocabularySystemRename() throws Exception {
 		TaxonomyVocabulary taxonomyVocabulary = randomTaxonomyVocabulary();
 
 		taxonomyVocabulary.setSystem(true);

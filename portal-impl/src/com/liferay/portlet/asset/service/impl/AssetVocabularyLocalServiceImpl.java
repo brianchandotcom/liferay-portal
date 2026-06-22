@@ -765,10 +765,10 @@ public class AssetVocabularyLocalServiceImpl
 	private boolean _isValidSystemVocabularySettings(
 		String originalSettings, String settings) {
 
-		AssetVocabularySettingsHelper originalAssetVocabularySettingsHelper =
-			new AssetVocabularySettingsHelper(originalSettings);
 		AssetVocabularySettingsHelper assetVocabularySettingsHelper =
 			new AssetVocabularySettingsHelper(settings);
+		AssetVocabularySettingsHelper originalAssetVocabularySettingsHelper =
+			new AssetVocabularySettingsHelper(originalSettings);
 
 		assetVocabularySettingsHelper.setMultiValued(
 			originalAssetVocabularySettingsHelper.isMultiValued());

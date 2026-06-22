@@ -109,14 +109,14 @@ public class JournalArticleImportDDMFormFieldValueTransformer
 				if ((originalArticlePrimaryKey != 0) ||
 					(originalClassPK != 0)) {
 
-					Map<String, String> postProcessEntryUuids =
+					Map<String, String> postProcessStagedModelPaths =
 						(Map<String, String>)
 							_portletDataContext.getNewPrimaryKeysMap(
 								JournalArticle.class +
 									ExportImportConstants.
-										POST_PROCESS_ENTRY_UUID);
+										POST_PROCESS_STAGED_MODEL_PATH);
 
-					postProcessEntryUuids.computeIfAbsent(
+					postProcessStagedModelPaths.computeIfAbsent(
 						_stagedModel.getUuid(),
 						key -> ExportImportPathUtil.getModelPath(_stagedModel));
 				}

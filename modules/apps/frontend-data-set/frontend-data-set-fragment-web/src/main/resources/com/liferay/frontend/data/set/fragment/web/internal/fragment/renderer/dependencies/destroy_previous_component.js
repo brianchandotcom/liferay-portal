@@ -10,22 +10,16 @@
 	const previousComponentId = componentIds['[$FRAGMENT_ENTRY_LINK_ID$]'];
 
 	if (previousComponentId) {
-		const previousComponent = Liferay.component(previousComponentId);
 
-		if (previousComponent) {
+		// The page editor re-renders the fragment by replacing its HTML, which
+		// detaches the previously mounted React container before this script
+		// runs. Unmounting a root whose container is already detached makes
+		// React operate on stale nodes and throw, corrupting the markup the
+		// page editor is still injecting. Drop the registry reference instead,
+		// which releases the component and lets the detached tree be garbage
+		// collected without touching the DOM.
 
-			// Remove the registry entry synchronously so re-registering the
-			// same ID does not warn about a duplicate, then defer the unmount
-			// out of the current React render to avoid the warning "Attempted
-			// to synchronously unmount a root while React was already
-			// rendering".
-
-			Liferay.component(previousComponentId, null);
-
-			if (previousComponent.destroy) {
-				requestAnimationFrame(() => previousComponent.destroy());
-			}
-		}
+		Liferay.component(previousComponentId, null);
 	}
 
 	componentIds['[$FRAGMENT_ENTRY_LINK_ID$]'] = '[$COMPONENT_ID$]';

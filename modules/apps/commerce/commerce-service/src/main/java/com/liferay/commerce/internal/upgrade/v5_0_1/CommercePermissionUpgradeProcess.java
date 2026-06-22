@@ -49,7 +49,7 @@ public class CommercePermissionUpgradeProcess extends UpgradeProcess {
 
 			ResultSet resultSet = statement.executeQuery(
 				StringBundler.concat(
-					"select ResourcePermissionId from ResourcePermission ",
+					"select resourcePermissionId from ResourcePermission ",
 					"where name in ('90', '", _PORTLET_NAME_COMMERCE_DISCOUNT,
 					"', '", _PORTLET_NAME_COMMERCE_PRICE_LIST, "')"))) {
 

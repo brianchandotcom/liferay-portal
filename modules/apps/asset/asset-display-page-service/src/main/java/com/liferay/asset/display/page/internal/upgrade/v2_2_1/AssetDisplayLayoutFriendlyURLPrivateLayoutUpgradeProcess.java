@@ -69,7 +69,7 @@ public class AssetDisplayLayoutFriendlyURLPrivateLayoutUpgradeProcess
 					"LayoutFriendlyURL.privateLayout = ?"));
 			PreparedStatement preparedStatement2 = connection.prepareStatement(
 				StringBundler.concat(
-					"select LayoutFriendlyURL.layoutFriendlyURLid from ",
+					"select LayoutFriendlyURL.layoutFriendlyURLId from ",
 					"LayoutFriendlyURL where LayoutFriendlyURL.groupId = ? ",
 					"and LayoutFriendlyURL.privateLayout = ? and ",
 					"LayoutFriendlyURL.friendlyURL = ? and ",

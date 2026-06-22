@@ -229,8 +229,8 @@ public class SegmentsExperienceUpgradeProcess extends UpgradeProcess {
 		}
 
 		sb.append("segmentsExperienceId = ? and ");
-		sb.append("LayoutPageTemplateStructureId in (select ");
-		sb.append("LayoutPageTemplateStructureId from ");
+		sb.append("layoutPageTemplateStructureId in (select ");
+		sb.append("layoutPageTemplateStructureId from ");
 		sb.append("LayoutPageTemplateStructure where ");
 		sb.append(columnName);
 		sb.append(" = ?)");

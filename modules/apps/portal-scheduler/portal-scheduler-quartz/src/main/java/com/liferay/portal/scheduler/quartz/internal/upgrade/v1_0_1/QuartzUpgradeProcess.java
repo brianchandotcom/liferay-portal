@@ -44,8 +44,9 @@ public class QuartzUpgradeProcess extends UpgradeProcess {
 		Map<String, Long> companyIds = new HashMap<>();
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select job_name, job_data from QUARTZ_JOB_DETAILS where " +
-					"job_name not like '%@%'");
+				"select JOB_NAME, JOB_DATA from QUARTZ_JOB_DETAILS where " +
+					"JOB_NAME not like '%@%'");
+
 
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
@@ -59,13 +60,13 @@ public class QuartzUpgradeProcess extends UpgradeProcess {
 		}
 
 		_updateTables(
-			companyIds, "job_name",
+			companyIds, "JOB_NAME",
 			new String[] {
 				"QUARTZ_FIRED_TRIGGERS", "QUARTZ_JOB_DETAILS", "QUARTZ_TRIGGERS"
 			});
 
 		_updateTables(
-			companyIds, "trigger_name",
+			companyIds, "TRIGGER_NAME",
 			new String[] {
 				"QUARTZ_BLOB_TRIGGERS", "QUARTZ_CRON_TRIGGERS",
 				"QUARTZ_FIRED_TRIGGERS", "QUARTZ_SIMPLE_TRIGGERS",

@@ -98,10 +98,10 @@ public class UpgradeGroup extends UpgradeProcess {
 				SQLTransformer.transform(
 					StringBundler.concat(
 						"select Group_.companyId as companyId, ",
-						"User_.languageid as companyDefaultLanguageId, ",
+						"User_.languageId as companyDefaultLanguageId, ",
 						"groupId, name, typeSettings from Group_ left join ",
 						"User_ on Group_.companyId = User_.companyId where ",
-						"User_.defaultuser = [$TRUE$] and site = [$TRUE$] and ",
+						"User_.defaultUser = [$TRUE$] and site = [$TRUE$] and ",
 						"friendlyURL != '/global'")));
 
 			ResultSet resultSet = preparedStatement1.executeQuery();

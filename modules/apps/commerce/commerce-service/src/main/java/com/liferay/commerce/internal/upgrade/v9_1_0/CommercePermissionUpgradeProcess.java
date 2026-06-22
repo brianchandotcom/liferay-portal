@@ -35,7 +35,7 @@ public class CommercePermissionUpgradeProcess extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		try (Statement statement = connection.createStatement()) {
 			ResultSet resultSet = statement.executeQuery(
-				"select ResourcePermissionId from ResourcePermission where " +
+				"select resourcePermissionId from ResourcePermission where " +
 					"name = 'com.liferay.commerce.account' and scope = 1");
 
 			while (resultSet.next()) {

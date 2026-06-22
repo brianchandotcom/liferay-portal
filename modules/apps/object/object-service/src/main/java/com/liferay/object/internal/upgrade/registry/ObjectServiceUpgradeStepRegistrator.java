@@ -236,7 +236,7 @@ public class ObjectServiceUpgradeStepRegistrator
 		registry.register(
 			"3.23.0", "3.23.1",
 			UpgradeProcessFactory.runSQL(
-				"update ObjectField set indexed = [$TRUE$], indexedAsKeyWord " +
+				"update ObjectField set indexed = [$TRUE$], indexedAsKeyword " +
 					"= [$TRUE$] where indexed = [$FALSE$] and name = 'id' " +
 						"and system_ = [$TRUE$]"));
 

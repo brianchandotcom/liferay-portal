@@ -195,7 +195,7 @@ public class SiteNavigationMenuItemUpgradeProcess extends UpgradeProcess {
 				String sql = StringBundler.concat(
 					"select CProduct.groupId from CProduct inner join ",
 					"CPDefinition on CProduct.CProductId = CPDefinition.",
-					"CProductId where CPDefinition.cpDefinitionId = ",
+					"CProductId where CPDefinition.CPDefinitionId = ",
 					GetterUtil.getLong(
 						typeSettingsUnicodeProperties.getProperty("classPK")));
 

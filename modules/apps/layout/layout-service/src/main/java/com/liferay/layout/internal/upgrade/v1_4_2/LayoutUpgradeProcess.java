@@ -35,23 +35,23 @@ public class LayoutUpgradeProcess extends UpgradeProcess {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement preparedStatement1 = connection.prepareStatement(
 				StringBundler.concat(
-					"select groupId, plid, friendlyUrl from Layout where ",
+					"select groupId, plid, friendlyURL from Layout where ",
 					"privateLayout = ? and (plid IN (select plid from ",
 					"LayoutPageTemplateEntry where type_ = ?) OR (classPK IN (",
 					"select plid from LayoutPageTemplateEntry where type_ = ?",
 					") and classNameId = ?))"));
 			PreparedStatement preparedStatement2 = connection.prepareStatement(
 				"select plid from Layout where privateLayout = ? and groupId " +
-					"= ? and friendlyUrl = ? and plid != ?");
+					"= ? and friendlyURL = ? and plid != ?");
 			PreparedStatement preparedStatement3 =
 				AutoBatchPreparedStatementUtil.autoBatch(
 					connection,
-					"update Layout set uuid_ = ?, friendlyUrl = ? where plid " +
+					"update Layout set uuid_ = ?, friendlyURL = ? where plid " +
 						"= ?");
 			PreparedStatement preparedStatement4 =
 				AutoBatchPreparedStatementUtil.autoBatch(
 					connection,
-					"update LayoutFriendlyURL set friendlyUrl = ? where plid " +
+					"update LayoutFriendlyURL set friendlyURL = ? where plid " +
 						"= ?");
 			PreparedStatement preparedStatement5 =
 				AutoBatchPreparedStatementUtil.autoBatch(

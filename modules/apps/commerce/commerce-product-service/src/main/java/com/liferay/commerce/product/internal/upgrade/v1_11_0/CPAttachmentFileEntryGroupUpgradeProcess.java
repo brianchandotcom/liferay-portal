@@ -102,7 +102,7 @@ public class CPAttachmentFileEntryGroupUpgradeProcess extends UpgradeProcess {
 		try (Statement s = connection.createStatement();
 
 			ResultSet resultSet = s.executeQuery(
-				"select groupId from CPDefinition where cpDefinitionId = " +
+				"select groupId from CPDefinition where CPDefinitionId = " +
 					cpDefinitionId)) {
 
 			if (resultSet.next()) {

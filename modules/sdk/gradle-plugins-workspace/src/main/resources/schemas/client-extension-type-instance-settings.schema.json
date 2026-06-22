@@ -75,6 +75,45 @@
 		},
 		{
 			"properties": {
+				"checkInterval": {
+					"default": 15,
+					"description": "Set the number of days to wait before a VAT number is revalidated against VIES.",
+					"min": 1,
+					"title": "Check Interval",
+					"type": "number"
+				},
+				"countryCodes": {
+					"default": "AT,BE,BG,CY,CZ,DE,DK,EE,ES,FI,FR,GR,HR,HU,IE,IT,LT,LU,LV,MT,NL,PL,PT,RO,SE,SI,SK",
+					"description": "Select the country codes whose VAT numbers are validated against VIES.",
+					"items": {
+						"type": "string"
+					},
+					"title": "Country Codes",
+					"type": "array"
+				},
+				"enabled": {
+					"default": true,
+					"title": "Enabled",
+					"type": "boolean"
+				},
+				"pid": {
+					"const": "com.liferay.account.validator.vies.configuration.VIESAccountEntryValidatorConfiguration",
+					"title": "VIES Account Entry Validator"
+				},
+				"viesEndpointURL": {
+					"default": "https://ec.europa.eu/taxation_customs/vies/rest-api/check-vat-number",
+					"description": "Set the full URL of the DG TAXUD VIES check-vat-number REST endpoint.",
+					"title": "VIES Endpoint URL",
+					"type": "string"
+				}
+			},
+			"required": [
+				"pid"
+			],
+			"title": "VIES Account Entry Validator"
+		},
+		{
+			"properties": {
 				"enabled": {
 					"default": false,
 					"description": "Enable postprocessing of all legacy markup in fragments, web content, and blogs so that Adaptive Media is able to work with it. Enabling this option may impact the performance of your sites.",
@@ -2261,6 +2300,13 @@
 					"description": "Set this to true to index all article versions. Set this to false to index only the last indexable version.",
 					"title": "Index All Article Versions Enabled",
 					"type": "boolean"
+				},
+				"journalArticleCheckLimit": {
+					"default": 100,
+					"description": "Set the maximum number of articles to check.",
+					"min": 1,
+					"title": "Journal Article Check Limit",
+					"type": "number"
 				},
 				"journalArticleExportImportProcessorCacheEnabled": {
 					"default": true,
@@ -4701,6 +4747,32 @@
 			"title": "llms.txt"
 		},
 		{
+			"description": "Control how virtual hosts restrict access to sites.",
+			"properties": {
+				"allowDefaultInstanceURLBypass": {
+					"default": false,
+					"description": "When strict virtual host mode is enabled, still allow access to sites through the default instance URL.",
+					"title": "Allow Default Instance URL Bypass",
+					"type": "boolean"
+				},
+				"pid": {
+					"const": "com.liferay.site.internal.configuration.SiteVirtualHostConfiguration",
+					"description": "Control how virtual hosts restrict access to sites.",
+					"title": "Virtual Host Restrictions"
+				},
+				"strictModeEnabled": {
+					"default": false,
+					"description": "When enabled, a site that has a virtual host is reachable only through that virtual host.",
+					"title": "Strict Virtual Host Mode Enabled",
+					"type": "boolean"
+				}
+			},
+			"required": [
+				"pid"
+			],
+			"title": "Virtual Host Restrictions"
+		},
+		{
 			"properties": {
 				"companySitemapGroupIds": {
 					"default": "",
@@ -4985,6 +5057,7 @@
 			"enum": [
 				"com.liferay.account.configuration.AccountEntryEmailConfiguration",
 				"com.liferay.account.configuration.AccountEntryEmailDomainsConfiguration",
+				"com.liferay.account.validator.vies.configuration.VIESAccountEntryValidatorConfiguration",
 				"com.liferay.adaptive.media.image.content.transformer.backwards.compatibility.internal.configuration.AMBackwardsCompatibilityHtmlContentTransformerConfiguration",
 				"com.liferay.adaptive.media.image.internal.configuration.AMImageCompanyConfiguration",
 				"com.liferay.ai.creator.openai.configuration.AICreatorOpenAICompanyConfiguration",
@@ -5100,6 +5173,7 @@
 				"com.liferay.sharing.internal.configuration.SharingCompanyConfiguration",
 				"com.liferay.site.cms.site.initializer.configuration.BulkActionTaskConfiguration",
 				"com.liferay.site.internal.configuration.LLMSCompanyConfiguration",
+				"com.liferay.site.internal.configuration.SiteVirtualHostConfiguration",
 				"com.liferay.site.internal.configuration.SitemapCompanyConfiguration",
 				"com.liferay.social.activity.internal.configuration.SocialActivityCompanyConfiguration",
 				"com.liferay.staging.configuration.StagingConfiguration",

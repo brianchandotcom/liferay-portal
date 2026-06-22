@@ -19,7 +19,7 @@ VIESAccountEntryValidatorConfigurationDisplayContext viesAccountEntryValidatorCo
 
 <aui:input label="vies-check-interval" min="1" name="checkInterval" type="number" value="<%= viesAccountEntryValidatorConfigurationDisplayContext.getCheckInterval() %>" />
 
-<aui:fieldset label="vies-countries">
+<aui:fieldset label="vies-country-codes">
 	<aui:input name="countries" type="hidden" />
 
 	<liferay-ui:input-move-boxes

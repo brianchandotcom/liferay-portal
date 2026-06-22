@@ -5,10 +5,9 @@
 
 package com.liferay.frontend.js.audiences.web.internal.servlet;
 
-import com.liferay.frontend.js.audiences.AudiencesDefinition;
 import com.liferay.frontend.js.audiences.AudiencesDefinitionProvider;
-import com.liferay.frontend.js.audiences.ElementVariations;
 import com.liferay.frontend.js.audiences.ElementVariationsProvider;
+import com.liferay.frontend.js.audiences.HashedContent;
 import com.liferay.frontend.js.audiences.web.internal.util.BootstrapJavaScriptUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -17,6 +16,7 @@ import com.liferay.portal.kernel.frontend.hashed.files.HashedFilesUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -52,27 +52,77 @@ public class FrontendJSAudiencesWebServlet extends HttpServlet {
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
+		String contentType = null;
+		HashedContent hashedContent = null;
+
 		String[] parts = StringUtil.split(
 			httpServletRequest.getPathInfo(), CharPool.SLASH);
 
-		if (parts.length == 0) {
+		if ((parts.length == 2) && parts[1].startsWith("bootstrap.")) {
+			Long plid = _getPlid(httpServletRequest.getParameter("plid"));
+
+			if (plid != null) {
+				contentType = ContentTypes.APPLICATION_JAVASCRIPT;
+				hashedContent = BootstrapJavaScriptUtil.getHashedContent(
+					httpServletRequest.getParameter("audiencesDefinitionHash"),
+					httpServletRequest.getParameter("elementVariationsHash"),
+					Boolean.parseBoolean(
+						httpServletRequest.getParameter("enableLog")),
+					plid);
+			}
+		}
+		else if ((parts.length == 2) && parts[1].startsWith("definition.")) {
+			contentType = ContentTypes.APPLICATION_JSON;
+			hashedContent = _audiencesDefinitionProvider.getHashedContent(
+				_portal.getCompanyId(httpServletRequest));
+		}
+		else if ((parts.length == 3) && parts[2].startsWith("variations.")) {
+			Long plid = _getPlid(parts[1]);
+
+			if (plid != null) {
+				contentType = ContentTypes.APPLICATION_JAVASCRIPT;
+				hashedContent = _elementVariationsProvider.getHashedContent(
+					plid);
+			}
+		}
+
+		if (hashedContent == null) {
 			httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
+
+			return;
 		}
-		else if (parts[parts.length - 1].startsWith("bootstrap.")) {
-			_sendBootstrapJavaScript(
-				httpServletRequest, httpServletResponse, parts);
+
+		String hash = hashedContent.getHash();
+
+		String requestHash = HashedFilesUtil.getHash(
+			httpServletRequest.getPathInfo());
+
+		if (!Objects.equals(hash, requestHash)) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(
+				HashedFilesUtil.replaceHash(
+					httpServletRequest.getRequestURI(), hash));
+
+			String queryString = httpServletRequest.getQueryString();
+
+			if (!Validator.isBlank(queryString)) {
+				sb.append(StringPool.QUESTION);
+				sb.append(queryString);
+			}
+
+			httpServletResponse.sendRedirect(sb.toString());
+
+			return;
 		}
-		else if (parts[parts.length - 1].startsWith("definition.")) {
-			_sendAudiencesDefinitionJSON(
-				httpServletRequest, httpServletResponse, parts);
-		}
-		else if (parts[parts.length - 1].startsWith("variations.")) {
-			_sendElementVariationsJavaScript(
-				httpServletRequest, httpServletResponse, parts);
-		}
-		else {
-			httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
-		}
+
+		httpServletResponse.setContentType(contentType);
+		httpServletResponse.setHeader(
+			HttpHeaders.CACHE_CONTROL, "immutable, max-age=31536000, public");
+
+		PrintWriter printWriter = httpServletResponse.getWriter();
+
+		printWriter.print(hashedContent.getContent());
 	}
 
 	private Long _getPlid(String plid) {
@@ -85,158 +135,6 @@ public class FrontendJSAudiencesWebServlet extends HttpServlet {
 
 			return null;
 		}
-	}
-
-	private void _sendAudiencesDefinitionJSON(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, String[] parts)
-		throws IOException {
-
-		if (parts.length != 2) {
-			httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
-
-			return;
-		}
-
-		AudiencesDefinition audiencesDefinition =
-			_audiencesDefinitionProvider.getAudiencesDefinition(
-				_portal.getCompanyId(httpServletRequest));
-
-		if (audiencesDefinition == null) {
-			httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
-
-			return;
-		}
-
-		String requestHash = HashedFilesUtil.getHash(parts[1]);
-
-		if (!Objects.equals(audiencesDefinition.getHash(), requestHash)) {
-			_sendRedirect(
-				audiencesDefinition.getHash(), httpServletRequest,
-				httpServletResponse);
-
-			return;
-		}
-
-		httpServletResponse.setContentType("application/json");
-		httpServletResponse.setHeader(
-			HttpHeaders.CACHE_CONTROL, "immutable, max-age=31536000, public");
-
-		PrintWriter printWriter = httpServletResponse.getWriter();
-
-		printWriter.print(audiencesDefinition.getContent());
-	}
-
-	private void _sendBootstrapJavaScript(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, String[] parts)
-		throws IOException {
-
-		if (parts.length != 2) {
-			httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
-
-			return;
-		}
-
-		String hash = BootstrapJavaScriptUtil.getHash();
-
-		String requestHash = HashedFilesUtil.getHash(parts[1]);
-
-		if (!Objects.equals(hash, requestHash)) {
-			_sendRedirect(hash, httpServletRequest, httpServletResponse);
-
-			return;
-		}
-
-		Long plid = _getPlid(httpServletRequest.getParameter("plid"));
-
-		if (plid == null) {
-			httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
-
-			return;
-		}
-
-		httpServletResponse.setContentType("application/javascript");
-		httpServletResponse.setHeader(
-			HttpHeaders.CACHE_CONTROL, "immutable, max-age=31536000, public");
-
-		PrintWriter printWriter = httpServletResponse.getWriter();
-
-		printWriter.print(
-			BootstrapJavaScriptUtil.getJavaScript(
-				httpServletRequest.getParameter("audiencesDefinitionHash"),
-				httpServletRequest.getParameter("elementVariationsHash"),
-				Boolean.parseBoolean(
-					httpServletRequest.getParameter("enableLog")),
-				plid));
-	}
-
-	private void _sendElementVariationsJavaScript(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, String[] parts)
-		throws IOException {
-
-		if (parts.length != 3) {
-			httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
-
-			return;
-		}
-
-		Long plid = _getPlid(parts[1]);
-
-		if (plid == null) {
-			httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
-
-			return;
-		}
-
-		ElementVariations elementVariations =
-			_elementVariationsProvider.getElementVariations(plid);
-
-		if (elementVariations == null) {
-			httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
-
-			return;
-		}
-
-		String requestHash = HashedFilesUtil.getHash(parts[2]);
-
-		if (!Objects.equals(elementVariations.getHash(), requestHash)) {
-			_sendRedirect(
-				elementVariations.getHash(), httpServletRequest,
-				httpServletResponse);
-
-			return;
-		}
-
-		httpServletResponse.setContentType("application/javascript");
-		httpServletResponse.setHeader(
-			HttpHeaders.CACHE_CONTROL, "immutable, max-age=31536000, public");
-
-		PrintWriter printWriter = httpServletResponse.getWriter();
-
-		printWriter.print(elementVariations.getContent());
-	}
-
-	private void _sendRedirect(
-			String hash, HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws IOException {
-
-		StringBundler sb = new StringBundler(3);
-
-		sb.append(
-			HashedFilesUtil.replaceHash(
-				httpServletRequest.getRequestURI(), hash));
-
-		String queryString = httpServletRequest.getQueryString();
-
-		if (!Validator.isBlank(queryString)) {
-			sb.append(StringPool.QUESTION);
-			sb.append(queryString);
-		}
-
-		httpServletResponse.sendRedirect(sb.toString());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

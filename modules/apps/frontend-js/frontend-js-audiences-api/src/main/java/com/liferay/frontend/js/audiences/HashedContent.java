@@ -8,9 +8,9 @@ package com.liferay.frontend.js.audiences;
 /**
  * @author Iván Zaera Avellón
  */
-public class ElementVariations {
+public class HashedContent {
 
-	public ElementVariations(String hash, String content) {
+	public HashedContent(String hash, String content) {
 		_hash = hash;
 		_content = content;
 	}

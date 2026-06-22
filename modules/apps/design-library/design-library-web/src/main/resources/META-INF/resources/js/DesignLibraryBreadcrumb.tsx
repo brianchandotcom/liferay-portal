@@ -20,8 +20,10 @@ type ActionTarget = 'connected-sites' | 'delete' | 'manage-members';
 export interface ActionDropdownItemProps {
 	descriptiveName?: string;
 	externalReferenceCode?: string;
+	hasAssignMembersPermission?: boolean;
 	href?: string;
 	label?: string;
+	ownerId?: string;
 	redirect?: string;
 	target?: string;
 }
@@ -34,8 +36,10 @@ interface DesignLibraryBreadcrumbProps {
 function ActionDropdownItem({
 	descriptiveName = '',
 	externalReferenceCode = '',
+	hasAssignMembersPermission = false,
 	href = '',
 	label,
+	ownerId = '',
 	redirect,
 	target,
 	...props
@@ -51,7 +55,11 @@ function ActionDropdownItem({
 			},
 
 			'manage-members': () => {
-				openManageMembersModal({externalReferenceCode});
+				openManageMembersModal({
+					externalReferenceCode,
+					hasAssignMembersPermission,
+					ownerId,
+				});
 			},
 		};
 

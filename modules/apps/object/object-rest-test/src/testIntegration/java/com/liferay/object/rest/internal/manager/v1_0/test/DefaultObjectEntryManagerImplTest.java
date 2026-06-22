@@ -6152,6 +6152,7 @@ public class DefaultObjectEntryManagerImplTest
 			buildEqualsExpressionFilterString(
 				_objectRelationshipERCObjectFieldName, StringPool.BLANK),
 			unlinkedObjectEntry.getId());
+
 		_testGetObjectEntriesFilterByEmptyRelationshipExternalReferenceCode(
 			buildEqualsExpressionFilterString(
 				_objectRelationshipERCObjectFieldName,
@@ -10723,27 +10724,6 @@ public class DefaultObjectEntryManagerImplTest
 			objectEntries.toString(), size, objectEntries.size());
 	}
 
-	private void _testGetObjectEntriesFilterByEmptyRelationshipExternalReferenceCode(
-			String filterString, Long... expectedObjectEntryIds)
-		throws Exception {
-
-		Page<ObjectEntry> page = getObjectEntries(
-			HashMapBuilder.put(
-				"filter", filterString
-			).build(),
-			null);
-
-		List<Long> actualObjectEntryIds = new ArrayList<>();
-
-		for (ObjectEntry objectEntry : page.getItems()) {
-			actualObjectEntryIds.add(objectEntry.getId());
-		}
-
-		Assert.assertEquals(
-			page.toString(), Arrays.asList(expectedObjectEntryIds),
-			actualObjectEntryIds);
-	}
-
 	private void _assertListEntries(
 		List<ListEntry> listEntries, List<Object> values) {
 
@@ -12486,6 +12466,28 @@ public class DefaultObjectEntryManagerImplTest
 
 		Assert.assertNull(
 			_objectEntryLocalService.fetchObjectEntry(objectEntryAA2.getId()));
+	}
+
+	private void
+			_testGetObjectEntriesFilterByEmptyRelationshipExternalReferenceCode(
+				String filterString, Long... expectedObjectEntryIds)
+		throws Exception {
+
+		Page<ObjectEntry> page = getObjectEntries(
+			HashMapBuilder.put(
+				"filter", filterString
+			).build(),
+			null);
+
+		List<Long> actualObjectEntryIds = new ArrayList<>();
+
+		for (ObjectEntry objectEntry : page.getItems()) {
+			actualObjectEntryIds.add(objectEntry.getId());
+		}
+
+		Assert.assertEquals(
+			page.toString(), Arrays.asList(expectedObjectEntryIds),
+			actualObjectEntryIds);
 	}
 
 	private void _testGetObjectEntriesWithAccountEntryRestricted2(

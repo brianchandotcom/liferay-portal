@@ -89,13 +89,13 @@ public class HashedFilesUtilTest {
 
 	@Test
 	public void testReplaceHash() {
+		String oldHash = RandomTestUtil.randomString(8);
 		String hash = RandomTestUtil.randomString(8);
-		String newHash = RandomTestUtil.randomString(8);
 
 		Assert.assertEquals(
-			"/css/main.(" + newHash + ").css",
+			"/css/main.(" + hash + ").css",
 			HashedFilesUtil.replaceHash(
-				"/css/main.(" + hash + ").css", newHash));
+				"/css/main.(" + oldHash + ").css", hash));
 	}
 
 }

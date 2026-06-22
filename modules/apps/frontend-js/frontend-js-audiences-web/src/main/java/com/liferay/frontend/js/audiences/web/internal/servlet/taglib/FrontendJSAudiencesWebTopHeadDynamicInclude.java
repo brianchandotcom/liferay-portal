@@ -7,15 +7,16 @@ package com.liferay.frontend.js.audiences.web.internal.servlet.taglib;
 
 import com.liferay.frontend.js.audiences.AudiencesDefinitionProvider;
 import com.liferay.frontend.js.audiences.ElementVariationsProvider;
+import com.liferay.frontend.js.audiences.HashedContent;
 import com.liferay.frontend.js.audiences.web.internal.configuration.FrontendJSAudiencesConfiguration;
 import com.liferay.frontend.js.audiences.web.internal.util.BootstrapJavaScriptUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
@@ -50,10 +51,10 @@ public class FrontendJSAudiencesWebTopHeadDynamicInclude
 			return;
 		}
 
-		KeyValuePair audiencesDefinition =
-			_audiencesDefinitionProvider.getAudiencesDefinition(companyId);
+		HashedContent audiencesDefinitionHashedContent =
+			_audiencesDefinitionProvider.getHashedContent(companyId);
 
-		if (audiencesDefinition == null) {
+		if (audiencesDefinitionHashedContent == null) {
 			return;
 		}
 
@@ -61,11 +62,10 @@ public class FrontendJSAudiencesWebTopHeadDynamicInclude
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		KeyValuePair elementVariations =
-			_elementVariationsProvider.getElementVariations(
-				themeDisplay.getPlid());
+		HashedContent elementVariationsHashedContent =
+			_elementVariationsProvider.getHashedContent(themeDisplay.getPlid());
 
-		if (elementVariations == null) {
+		if (elementVariationsHashedContent == null) {
 			return;
 		}
 
@@ -88,7 +88,11 @@ public class FrontendJSAudiencesWebTopHeadDynamicInclude
 
 		printWriter.print("/bootstrap.(");
 		printWriter.print(BootstrapJavaScriptUtil.getHash());
-		printWriter.print(").js?enableLog=");
+		printWriter.print(").js?audiencesDefinitionHash=");
+		printWriter.print(audiencesDefinitionHashedContent.getHash());
+		printWriter.print("&elementVariationsHash=");
+		printWriter.print(elementVariationsHashedContent.getHash());
+		printWriter.print("&enableLog=");
 
 		FrontendJSAudiencesConfiguration frontendJSAudiencesConfiguration;
 
@@ -103,10 +107,6 @@ public class FrontendJSAudiencesWebTopHeadDynamicInclude
 
 		printWriter.print(frontendJSAudiencesConfiguration.enableLog());
 
-		printWriter.print("&audiencesDefinitionHash=");
-		printWriter.print(audiencesDefinition.getKey());
-		printWriter.print("&elementVariationsHash=");
-		printWriter.print(elementVariations.getKey());
 		printWriter.print("&plid=");
 		printWriter.print(themeDisplay.getPlid());
 		printWriter.print("\" type=\"module\"></script>");

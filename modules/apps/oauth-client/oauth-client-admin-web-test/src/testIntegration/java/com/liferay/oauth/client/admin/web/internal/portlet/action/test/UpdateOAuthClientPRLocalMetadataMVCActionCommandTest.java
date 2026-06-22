@@ -183,13 +183,13 @@ public class UpdateOAuthClientPRLocalMetadataMVCActionCommandTest {
 				getOAuthClientPRLocalMetadata(oAuthClientPRLocalMetadataId);
 
 		Assert.assertEquals(
-			updatedProtectedResourceURI,
-			oAuthClientPRLocalMetadata.getProtectedResourceURI());
-		Assert.assertTrue(oAuthClientPRLocalMetadata.isLocalWellKnownEnabled());
-		Assert.assertEquals(
 			updatedProtectedResourceURI +
 				"/.well-known/oauth-protected-resource",
 			oAuthClientPRLocalMetadata.getLocalWellKnownURI());
+		Assert.assertEquals(
+			updatedProtectedResourceURI,
+			oAuthClientPRLocalMetadata.getProtectedResourceURI());
+		Assert.assertTrue(oAuthClientPRLocalMetadata.isLocalWellKnownEnabled());
 
 		JSONObject metadataJSONObject = JSONFactoryUtil.createJSONObject(
 			oAuthClientPRLocalMetadata.getMetadataJSON());

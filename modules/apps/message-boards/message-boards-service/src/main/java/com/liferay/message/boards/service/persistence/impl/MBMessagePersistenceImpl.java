@@ -3905,7 +3905,7 @@ public class MBMessagePersistenceImpl
 				new String[] {String.class.getName()}, new String[] {"uuid_"},
 				0, 1, false, null),
 			_SQL_SELECT_MBMESSAGE_WHERE, _SQL_COUNT_MBMESSAGE_WHERE,
-			MBMessageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			MBMessageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"mbMessage.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
 				true, true, MBMessage::getUuid));
@@ -3945,7 +3945,7 @@ public class MBMessagePersistenceImpl
 					new String[] {String.class.getName(), Long.class.getName()},
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_MBMESSAGE_WHERE, _SQL_COUNT_MBMESSAGE_WHERE,
-				MBMessageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				MBMessageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"mbMessage.", "uuid", "uuid_", FinderColumn.Type.STRING,
 					"=", true, true, MBMessage::getUuid),
@@ -3974,7 +3974,7 @@ public class MBMessagePersistenceImpl
 					new String[] {"groupId"}, false),
 				_SQL_SELECT_MBMESSAGE_WHERE, _SQL_COUNT_MBMESSAGE_WHERE,
 				MBMessageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"mbMessage.categoryId != -1",
+				"mbMessage.categoryId != -1", "mbMessage.categoryId != -1",
 				new FinderColumn<>(
 					"mbMessage.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, MBMessage::getGroupId));
@@ -4000,7 +4000,7 @@ public class MBMessagePersistenceImpl
 					new String[] {"companyId"}, false),
 				_SQL_SELECT_MBMESSAGE_WHERE, _SQL_COUNT_MBMESSAGE_WHERE,
 				MBMessageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"mbMessage.categoryId != -1",
+				"mbMessage.categoryId != -1", "mbMessage.categoryId != -1",
 				new FinderColumn<>(
 					"mbMessage.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, MBMessage::getCompanyId));
@@ -4026,7 +4026,7 @@ public class MBMessagePersistenceImpl
 					new String[] {"userId"}, false),
 				_SQL_SELECT_MBMESSAGE_WHERE, _SQL_COUNT_MBMESSAGE_WHERE,
 				MBMessageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"mbMessage.categoryId != -1",
+				"mbMessage.categoryId != -1", "mbMessage.categoryId != -1",
 				new FinderColumn<>(
 					"mbMessage.", "userId", FinderColumn.Type.LONG, "=", true,
 					true, MBMessage::getUserId));
@@ -4051,7 +4051,7 @@ public class MBMessagePersistenceImpl
 					"countByThreadId", new String[] {Long.class.getName()},
 					new String[] {"threadId"}, false),
 				_SQL_SELECT_MBMESSAGE_WHERE, _SQL_COUNT_MBMESSAGE_WHERE,
-				MBMessageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				MBMessageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"mbMessage.", "threadId", FinderColumn.Type.LONG, "=", true,
 					true, MBMessage::getThreadId));
@@ -4081,6 +4081,7 @@ public class MBMessagePersistenceImpl
 				_SQL_SELECT_MBMESSAGE_WHERE, _SQL_COUNT_MBMESSAGE_WHERE,
 				MBMessageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"mbMessage.parentMessageId != 0",
+				"mbMessage.parentMessageId != 0",
 				new FinderColumn<>(
 					"mbMessage.", "threadId", FinderColumn.Type.LONG, "=", true,
 					true, MBMessage::getThreadId));
@@ -4108,7 +4109,7 @@ public class MBMessagePersistenceImpl
 					new String[] {Long.class.getName()},
 					new String[] {"parentMessageId"}, false),
 				_SQL_SELECT_MBMESSAGE_WHERE, _SQL_COUNT_MBMESSAGE_WHERE,
-				MBMessageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				MBMessageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"mbMessage.", "parentMessageId", FinderColumn.Type.LONG,
 					"=", true, true, MBMessage::getParentMessageId));
@@ -4134,6 +4135,7 @@ public class MBMessagePersistenceImpl
 					new String[] {"groupId", "userId"}, false),
 				_SQL_SELECT_MBMESSAGE_WHERE, _SQL_COUNT_MBMESSAGE_WHERE,
 				MBMessageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"(mbMessage.categoryId != -1) AND (mbMessage.anonymous = [$FALSE$])",
 				"(mbMessage.categoryId != -1) AND (mbMessage.anonymous = [$FALSE$])",
 				new FinderColumn<>(
 					"mbMessage.", "groupId", FinderColumn.Type.LONG, "=", true,
@@ -4162,7 +4164,7 @@ public class MBMessagePersistenceImpl
 					new String[] {Long.class.getName(), Long.class.getName()},
 					new String[] {"groupId", "categoryId"}, false),
 				_SQL_SELECT_MBMESSAGE_WHERE, _SQL_COUNT_MBMESSAGE_WHERE,
-				MBMessageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				MBMessageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"mbMessage.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, MBMessage::getGroupId),
@@ -4211,7 +4213,7 @@ public class MBMessagePersistenceImpl
 					new String[] {"groupId", "status"}, false),
 				_SQL_SELECT_MBMESSAGE_WHERE, _SQL_COUNT_MBMESSAGE_WHERE,
 				MBMessageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"mbMessage.categoryId != -1",
+				"mbMessage.categoryId != -1", "mbMessage.categoryId != -1",
 				new FinderColumn<>(
 					"mbMessage.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, MBMessage::getGroupId),
@@ -4239,7 +4241,7 @@ public class MBMessagePersistenceImpl
 				new String[] {"companyId", "status"}, false),
 			_SQL_SELECT_MBMESSAGE_WHERE, _SQL_COUNT_MBMESSAGE_WHERE,
 			MBMessageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"mbMessage.categoryId != -1",
+			"mbMessage.categoryId != -1", "mbMessage.categoryId != -1",
 			new FinderColumn<>(
 				"mbMessage.", "companyId", FinderColumn.Type.LONG, "=", true,
 				true, MBMessage::getCompanyId),
@@ -4266,7 +4268,7 @@ public class MBMessagePersistenceImpl
 				new String[] {Long.class.getName(), Long.class.getName()},
 				new String[] {"userId", "classNameId"}, false),
 			_SQL_SELECT_MBMESSAGE_WHERE, _SQL_COUNT_MBMESSAGE_WHERE,
-			MBMessageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			MBMessageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"mbMessage.", "userId", FinderColumn.Type.LONG, "=", true, true,
 				MBMessage::getUserId),
@@ -4293,7 +4295,7 @@ public class MBMessagePersistenceImpl
 				new String[] {Long.class.getName(), Long.class.getName()},
 				new String[] {"classNameId", "classPK"}, false),
 			_SQL_SELECT_MBMESSAGE_WHERE, _SQL_COUNT_MBMESSAGE_WHERE,
-			MBMessageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			MBMessageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"mbMessage.", "classNameId", FinderColumn.Type.LONG, "=", true,
 				true, MBMessage::getClassNameId),
@@ -4320,7 +4322,7 @@ public class MBMessagePersistenceImpl
 				new String[] {Long.class.getName(), Long.class.getName()},
 				new String[] {"threadId", "parentMessageId"}, false),
 			_SQL_SELECT_MBMESSAGE_WHERE, _SQL_COUNT_MBMESSAGE_WHERE,
-			MBMessageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			MBMessageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"mbMessage.", "threadId", FinderColumn.Type.LONG, "=", true,
 				true, MBMessage::getThreadId),
@@ -4347,7 +4349,7 @@ public class MBMessagePersistenceImpl
 				new String[] {Long.class.getName(), Boolean.class.getName()},
 				new String[] {"threadId", "answer"}, false),
 			_SQL_SELECT_MBMESSAGE_WHERE, _SQL_COUNT_MBMESSAGE_WHERE,
-			MBMessageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			MBMessageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"mbMessage.", "threadId", FinderColumn.Type.LONG, "=", true,
 				true, MBMessage::getThreadId),
@@ -4374,7 +4376,7 @@ public class MBMessagePersistenceImpl
 				new String[] {Long.class.getName(), Integer.class.getName()},
 				new String[] {"threadId", "status"}, false),
 			_SQL_SELECT_MBMESSAGE_WHERE, _SQL_COUNT_MBMESSAGE_WHERE,
-			MBMessageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			MBMessageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"mbMessage.", "threadId", FinderColumn.Type.LONG, "=", true,
 				true, MBMessage::getThreadId),
@@ -4401,7 +4403,7 @@ public class MBMessagePersistenceImpl
 					},
 					new String[] {"threadId", "status"}, false),
 				_SQL_SELECT_MBMESSAGE_WHERE, _SQL_COUNT_MBMESSAGE_WHERE,
-				MBMessageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				MBMessageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"mbMessage.", "threadId", FinderColumn.Type.LONG, "=", true,
 					true, MBMessage::getThreadId),
@@ -4429,7 +4431,7 @@ public class MBMessagePersistenceImpl
 				new String[] {"threadId", "status"}, false),
 			_SQL_SELECT_MBMESSAGE_WHERE, _SQL_COUNT_MBMESSAGE_WHERE,
 			MBMessageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"mbMessage.parentMessageId != 0",
+			"mbMessage.parentMessageId != 0", "mbMessage.parentMessageId != 0",
 			new FinderColumn<>(
 				"mbMessage.", "threadId", FinderColumn.Type.LONG, "=", true,
 				true, MBMessage::getThreadId),
@@ -4456,7 +4458,7 @@ public class MBMessagePersistenceImpl
 				new String[] {Long.class.getName(), Integer.class.getName()},
 				new String[] {"parentMessageId", "status"}, false),
 			_SQL_SELECT_MBMESSAGE_WHERE, _SQL_COUNT_MBMESSAGE_WHERE,
-			MBMessageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			MBMessageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"mbMessage.", "parentMessageId", FinderColumn.Type.LONG, "=",
 				true, true, MBMessage::getParentMessageId),
@@ -4492,6 +4494,7 @@ public class MBMessagePersistenceImpl
 					new String[] {"groupId", "userId", "status"}, false),
 				_SQL_SELECT_MBMESSAGE_WHERE, _SQL_COUNT_MBMESSAGE_WHERE,
 				MBMessageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"(mbMessage.categoryId != -1) AND (mbMessage.anonymous = [$FALSE$])",
 				"(mbMessage.categoryId != -1) AND (mbMessage.anonymous = [$FALSE$])",
 				new FinderColumn<>(
 					"mbMessage.", "groupId", FinderColumn.Type.LONG, "=", true,
@@ -4530,7 +4533,7 @@ public class MBMessagePersistenceImpl
 					},
 					new String[] {"groupId", "categoryId", "threadId"}, false),
 				_SQL_SELECT_MBMESSAGE_WHERE, _SQL_COUNT_MBMESSAGE_WHERE,
-				MBMessageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				MBMessageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"mbMessage.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, MBMessage::getGroupId),
@@ -4568,7 +4571,7 @@ public class MBMessagePersistenceImpl
 					},
 					new String[] {"groupId", "categoryId", "status"}, false),
 				_SQL_SELECT_MBMESSAGE_WHERE, _SQL_COUNT_MBMESSAGE_WHERE,
-				MBMessageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				MBMessageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"mbMessage.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, MBMessage::getGroupId),
@@ -4604,7 +4607,7 @@ public class MBMessagePersistenceImpl
 				},
 				new String[] {"userId", "classNameId", "classPK"}, false),
 			_SQL_SELECT_MBMESSAGE_WHERE, _SQL_COUNT_MBMESSAGE_WHERE,
-			MBMessageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			MBMessageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"mbMessage.", "userId", FinderColumn.Type.LONG, "=", true, true,
 				MBMessage::getUserId),
@@ -4640,7 +4643,7 @@ public class MBMessagePersistenceImpl
 				},
 				new String[] {"userId", "classNameId", "status"}, false),
 			_SQL_SELECT_MBMESSAGE_WHERE, _SQL_COUNT_MBMESSAGE_WHERE,
-			MBMessageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			MBMessageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"mbMessage.", "userId", FinderColumn.Type.LONG, "=", true, true,
 				MBMessage::getUserId),
@@ -4676,7 +4679,7 @@ public class MBMessagePersistenceImpl
 				},
 				new String[] {"classNameId", "classPK", "status"}, false),
 			_SQL_SELECT_MBMESSAGE_WHERE, _SQL_COUNT_MBMESSAGE_WHERE,
-			MBMessageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			MBMessageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"mbMessage.", "classNameId", FinderColumn.Type.LONG, "=", true,
 				true, MBMessage::getClassNameId),
@@ -4723,7 +4726,7 @@ public class MBMessagePersistenceImpl
 					},
 					false),
 				_SQL_SELECT_MBMESSAGE_WHERE, _SQL_COUNT_MBMESSAGE_WHERE,
-				MBMessageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				MBMessageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"mbMessage.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, MBMessage::getGroupId),
@@ -4773,7 +4776,7 @@ public class MBMessagePersistenceImpl
 					},
 					false),
 				_SQL_SELECT_MBMESSAGE_WHERE, _SQL_COUNT_MBMESSAGE_WHERE,
-				MBMessageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				MBMessageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"mbMessage.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, MBMessage::getGroupId),
@@ -4817,7 +4820,7 @@ public class MBMessagePersistenceImpl
 					new String[] {"userId", "classNameId", "classPK", "status"},
 					false),
 				_SQL_SELECT_MBMESSAGE_WHERE, _SQL_COUNT_MBMESSAGE_WHERE,
-				MBMessageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				MBMessageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"mbMessage.", "userId", FinderColumn.Type.LONG, "=", true,
 					true, MBMessage::getUserId),
@@ -4919,4 +4922,4 @@ public class MBMessagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1342358461
+// LIFERAY-SERVICE-BUILDER-HASH:1243467290

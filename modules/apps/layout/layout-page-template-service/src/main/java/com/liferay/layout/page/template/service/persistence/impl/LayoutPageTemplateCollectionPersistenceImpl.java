@@ -1932,7 +1932,7 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 			_SQL_SELECT_LAYOUTPAGETEMPLATECOLLECTION_WHERE,
 			_SQL_COUNT_LAYOUTPAGETEMPLATECOLLECTION_WHERE,
 			LayoutPageTemplateCollectionModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX, "",
+			_ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"layoutPageTemplateCollection.", "uuid", "uuid_",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -1978,7 +1978,7 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 				_SQL_SELECT_LAYOUTPAGETEMPLATECOLLECTION_WHERE,
 				_SQL_COUNT_LAYOUTPAGETEMPLATECOLLECTION_WHERE,
 				LayoutPageTemplateCollectionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"layoutPageTemplateCollection.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -2010,7 +2010,7 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 				_SQL_SELECT_LAYOUTPAGETEMPLATECOLLECTION_WHERE,
 				_SQL_COUNT_LAYOUTPAGETEMPLATECOLLECTION_WHERE,
 				LayoutPageTemplateCollectionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"layoutPageTemplateCollection.", "groupId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2038,7 +2038,7 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 				_SQL_SELECT_LAYOUTPAGETEMPLATECOLLECTION_WHERE,
 				_SQL_COUNT_LAYOUTPAGETEMPLATECOLLECTION_WHERE,
 				LayoutPageTemplateCollectionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"layoutPageTemplateCollection.", "groupId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2077,7 +2077,7 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 				_SQL_SELECT_LAYOUTPAGETEMPLATECOLLECTION_WHERE,
 				_SQL_COUNT_LAYOUTPAGETEMPLATECOLLECTION_WHERE,
 				LayoutPageTemplateCollectionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"layoutPageTemplateCollection.", "groupId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2119,7 +2119,7 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 				_SQL_SELECT_LAYOUTPAGETEMPLATECOLLECTION_WHERE,
 				_SQL_COUNT_LAYOUTPAGETEMPLATECOLLECTION_WHERE,
 				LayoutPageTemplateCollectionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"layoutPageTemplateCollection.", "groupId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2197,7 +2197,7 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 				_SQL_SELECT_LAYOUTPAGETEMPLATECOLLECTION_WHERE,
 				_SQL_COUNT_LAYOUTPAGETEMPLATECOLLECTION_WHERE,
 				LayoutPageTemplateCollectionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"layoutPageTemplateCollection.", "groupId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2234,7 +2234,7 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 				_SQL_SELECT_LAYOUTPAGETEMPLATECOLLECTION_WHERE,
 				_SQL_COUNT_LAYOUTPAGETEMPLATECOLLECTION_WHERE,
 				LayoutPageTemplateCollectionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"layoutPageTemplateCollection.", "groupId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2379,4 +2379,4 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2025167763
+// LIFERAY-SERVICE-BUILDER-HASH:-1859061749

@@ -981,7 +981,7 @@ public class CommerceNotificationTemplatePersistenceImpl
 			_SQL_SELECT_COMMERCENOTIFICATIONTEMPLATE_WHERE,
 			_SQL_COUNT_COMMERCENOTIFICATIONTEMPLATE_WHERE,
 			CommerceNotificationTemplateModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX, "",
+			_ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"commerceNotificationTemplate.", "uuid", "uuid_",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -1027,7 +1027,7 @@ public class CommerceNotificationTemplatePersistenceImpl
 				_SQL_SELECT_COMMERCENOTIFICATIONTEMPLATE_WHERE,
 				_SQL_COUNT_COMMERCENOTIFICATIONTEMPLATE_WHERE,
 				CommerceNotificationTemplateModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"commerceNotificationTemplate.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -1059,7 +1059,7 @@ public class CommerceNotificationTemplatePersistenceImpl
 				_SQL_SELECT_COMMERCENOTIFICATIONTEMPLATE_WHERE,
 				_SQL_COUNT_COMMERCENOTIFICATIONTEMPLATE_WHERE,
 				CommerceNotificationTemplateModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"commerceNotificationTemplate.", "groupId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1091,7 +1091,7 @@ public class CommerceNotificationTemplatePersistenceImpl
 				_SQL_SELECT_COMMERCENOTIFICATIONTEMPLATE_WHERE,
 				_SQL_COUNT_COMMERCENOTIFICATIONTEMPLATE_WHERE,
 				CommerceNotificationTemplateModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"commerceNotificationTemplate.", "groupId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1132,7 +1132,7 @@ public class CommerceNotificationTemplatePersistenceImpl
 				_SQL_SELECT_COMMERCENOTIFICATIONTEMPLATE_WHERE,
 				_SQL_COUNT_COMMERCENOTIFICATIONTEMPLATE_WHERE,
 				CommerceNotificationTemplateModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"commerceNotificationTemplate.", "groupId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1216,4 +1216,4 @@ public class CommerceNotificationTemplatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:625291742
+// LIFERAY-SERVICE-BUILDER-HASH:542117276

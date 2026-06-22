@@ -610,7 +610,7 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 				_SQL_SELECT_DDMDATAPROVIDERINSTANCELINK_WHERE,
 				_SQL_COUNT_DDMDATAPROVIDERINSTANCELINK_WHERE,
 				DDMDataProviderInstanceLinkModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"ddmDataProviderInstanceLink.", "dataProviderInstanceId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -638,7 +638,7 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 				_SQL_SELECT_DDMDATAPROVIDERINSTANCELINK_WHERE,
 				_SQL_COUNT_DDMDATAPROVIDERINSTANCELINK_WHERE,
 				DDMDataProviderInstanceLinkModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"ddmDataProviderInstanceLink.", "structureId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -732,4 +732,4 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1530077122
+// LIFERAY-SERVICE-BUILDER-HASH:-1082935102

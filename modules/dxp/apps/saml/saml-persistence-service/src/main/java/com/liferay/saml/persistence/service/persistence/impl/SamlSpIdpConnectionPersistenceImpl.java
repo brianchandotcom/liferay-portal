@@ -459,7 +459,7 @@ public class SamlSpIdpConnectionPersistenceImpl
 				_SQL_SELECT_SAMLSPIDPCONNECTION_WHERE,
 				_SQL_COUNT_SAMLSPIDPCONNECTION_WHERE,
 				SamlSpIdpConnectionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"samlSpIdpConnection.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, SamlSpIdpConnection::getCompanyId));
@@ -547,4 +547,4 @@ public class SamlSpIdpConnectionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:419411110
+// LIFERAY-SERVICE-BUILDER-HASH:591539044

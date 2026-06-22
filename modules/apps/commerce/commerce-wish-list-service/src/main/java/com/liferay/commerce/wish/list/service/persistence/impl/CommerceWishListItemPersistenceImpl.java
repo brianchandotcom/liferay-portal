@@ -831,7 +831,7 @@ public class CommerceWishListItemPersistenceImpl
 				_SQL_SELECT_COMMERCEWISHLISTITEM_WHERE,
 				_SQL_COUNT_COMMERCEWISHLISTITEM_WHERE,
 				CommerceWishListItemModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"commerceWishListItem.", "commerceWishListId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -862,7 +862,7 @@ public class CommerceWishListItemPersistenceImpl
 				_SQL_SELECT_COMMERCEWISHLISTITEM_WHERE,
 				_SQL_COUNT_COMMERCEWISHLISTITEM_WHERE,
 				CommerceWishListItemModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"commerceWishListItem.", "CPInstanceUuid",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -890,7 +890,7 @@ public class CommerceWishListItemPersistenceImpl
 				_SQL_SELECT_COMMERCEWISHLISTITEM_WHERE,
 				_SQL_COUNT_COMMERCEWISHLISTITEM_WHERE,
 				CommerceWishListItemModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"commerceWishListItem.", "CProductId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -921,7 +921,7 @@ public class CommerceWishListItemPersistenceImpl
 				_SQL_SELECT_COMMERCEWISHLISTITEM_WHERE,
 				_SQL_COUNT_COMMERCEWISHLISTITEM_WHERE,
 				CommerceWishListItemModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"commerceWishListItem.", "commerceWishListId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -952,7 +952,7 @@ public class CommerceWishListItemPersistenceImpl
 			_SQL_SELECT_COMMERCEWISHLISTITEM_WHERE,
 			_SQL_COUNT_COMMERCEWISHLISTITEM_WHERE,
 			CommerceWishListItemModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"",
+			"", "",
 			new FinderColumn<>(
 				"commerceWishListItem.", "commerceWishListId",
 				FinderColumn.Type.LONG, "=", true, true,
@@ -1054,4 +1054,4 @@ public class CommerceWishListItemPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1015561941
+// LIFERAY-SERVICE-BUILDER-HASH:1640715295

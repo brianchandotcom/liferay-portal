@@ -762,7 +762,7 @@ public class TicketPersistenceImpl
 				},
 				new String[] {"companyId", "classNameId", "classPK"}, false),
 			_SQL_SELECT_TICKET_WHERE, _SQL_COUNT_TICKET_WHERE,
-			TicketModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			TicketModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"ticket.", "companyId", FinderColumn.Type.LONG, "=", true, true,
 				Ticket::getCompanyId),
@@ -802,7 +802,7 @@ public class TicketPersistenceImpl
 					new String[] {"companyId", "type_", "emailAddress"}, 0, 4,
 					false, null),
 				_SQL_SELECT_TICKET_WHERE, _SQL_COUNT_TICKET_WHERE,
-				TicketModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				TicketModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"ticket.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Ticket::getCompanyId),
@@ -838,7 +838,7 @@ public class TicketPersistenceImpl
 				},
 				new String[] {"classNameId", "classPK", "type_"}, false),
 			_SQL_SELECT_TICKET_WHERE, _SQL_COUNT_TICKET_WHERE,
-			TicketModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			TicketModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"ticket.", "classNameId", FinderColumn.Type.LONG, "=", true,
 				true, Ticket::getClassNameId),
@@ -885,7 +885,7 @@ public class TicketPersistenceImpl
 					},
 					false),
 				_SQL_SELECT_TICKET_WHERE, _SQL_COUNT_TICKET_WHERE,
-				TicketModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				TicketModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"ticket.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Ticket::getCompanyId),
@@ -935,4 +935,4 @@ public class TicketPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-254122763
+// LIFERAY-SERVICE-BUILDER-HASH:-24544715

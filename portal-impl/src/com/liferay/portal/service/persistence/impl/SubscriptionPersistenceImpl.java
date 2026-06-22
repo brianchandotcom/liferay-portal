@@ -821,6 +821,7 @@ public class SubscriptionPersistenceImpl
 					new String[] {"userId"}, false),
 				_SQL_SELECT_SUBSCRIPTION_WHERE, _SQL_COUNT_SUBSCRIPTION_WHERE,
 				SubscriptionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"subscription.", "userId", FinderColumn.Type.LONG, "=",
 					true, true, Subscription::getUserId));
@@ -844,7 +845,7 @@ public class SubscriptionPersistenceImpl
 				new String[] {Long.class.getName(), Long.class.getName()},
 				new String[] {"groupId", "userId"}, false),
 			_SQL_SELECT_SUBSCRIPTION_WHERE, _SQL_COUNT_SUBSCRIPTION_WHERE,
-			SubscriptionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			SubscriptionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"subscription.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, Subscription::getGroupId),
@@ -871,7 +872,7 @@ public class SubscriptionPersistenceImpl
 				new String[] {Long.class.getName(), Long.class.getName()},
 				new String[] {"userId", "classNameId"}, false),
 			_SQL_SELECT_SUBSCRIPTION_WHERE, _SQL_COUNT_SUBSCRIPTION_WHERE,
-			SubscriptionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			SubscriptionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"subscription.", "userId", FinderColumn.Type.LONG, "=", true,
 				true, Subscription::getUserId),
@@ -904,7 +905,7 @@ public class SubscriptionPersistenceImpl
 				},
 				new String[] {"companyId", "classNameId", "classPK"}, false),
 			_SQL_SELECT_SUBSCRIPTION_WHERE, _SQL_COUNT_SUBSCRIPTION_WHERE,
-			SubscriptionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			SubscriptionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"subscription.", "companyId", FinderColumn.Type.LONG, "=", true,
 				true, Subscription::getCompanyId),
@@ -952,6 +953,7 @@ public class SubscriptionPersistenceImpl
 					false),
 				_SQL_SELECT_SUBSCRIPTION_WHERE, _SQL_COUNT_SUBSCRIPTION_WHERE,
 				SubscriptionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"subscription.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, Subscription::getCompanyId),
@@ -1024,4 +1026,4 @@ public class SubscriptionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1801270971
+// LIFERAY-SERVICE-BUILDER-HASH:-1579533895

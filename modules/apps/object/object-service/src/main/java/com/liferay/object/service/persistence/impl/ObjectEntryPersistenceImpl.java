@@ -1785,7 +1785,7 @@ public class ObjectEntryPersistenceImpl
 				new String[] {String.class.getName()}, new String[] {"uuid_"},
 				0, 1, false, null),
 			_SQL_SELECT_OBJECTENTRY_WHERE, _SQL_COUNT_OBJECTENTRY_WHERE,
-			ObjectEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			ObjectEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"objectEntry.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
 				true, true, ObjectEntry::getUuid));
@@ -1827,6 +1827,7 @@ public class ObjectEntryPersistenceImpl
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_OBJECTENTRY_WHERE, _SQL_COUNT_OBJECTENTRY_WHERE,
 				ObjectEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"objectEntry.", "uuid", "uuid_", FinderColumn.Type.STRING,
 					"=", true, true, ObjectEntry::getUuid),
@@ -1873,6 +1874,7 @@ public class ObjectEntryPersistenceImpl
 				_SQL_SELECT_OBJECTENTRY_WHERE, _SQL_COUNT_OBJECTENTRY_WHERE,
 				ObjectEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"objectEntry.objectEntryId = objectEntry.headObjectEntryId",
+				"objectEntry.objectEntryId = objectEntry.headObjectEntryId",
 				new FinderColumn<>(
 					"objectEntry.", "objectDefinitionId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1898,6 +1900,7 @@ public class ObjectEntryPersistenceImpl
 				new String[] {"groupId", "objectDefinitionId"}, false),
 			_SQL_SELECT_OBJECTENTRY_WHERE, _SQL_COUNT_OBJECTENTRY_WHERE,
 			ObjectEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			"objectEntry.objectEntryId = objectEntry.headObjectEntryId",
 			"objectEntry.objectEntryId = objectEntry.headObjectEntryId",
 			new FinderColumn<>(
 				"objectEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
@@ -1928,6 +1931,7 @@ public class ObjectEntryPersistenceImpl
 				_SQL_SELECT_OBJECTENTRY_WHERE, _SQL_COUNT_OBJECTENTRY_WHERE,
 				ObjectEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"objectEntry.objectEntryId = objectEntry.headObjectEntryId",
+				"objectEntry.objectEntryId = objectEntry.headObjectEntryId",
 				new FinderColumn<>(
 					"objectEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, ObjectEntry::getGroupId),
@@ -1957,6 +1961,7 @@ public class ObjectEntryPersistenceImpl
 			_SQL_SELECT_OBJECTENTRY_WHERE, _SQL_COUNT_OBJECTENTRY_WHERE,
 			ObjectEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			"objectEntry.objectEntryId = objectEntry.headObjectEntryId",
+			"objectEntry.objectEntryId = objectEntry.headObjectEntryId",
 			new FinderColumn<>(
 				"objectEntry.", "userId", FinderColumn.Type.LONG, "=", true,
 				true, ObjectEntry::getUserId),
@@ -1984,6 +1989,7 @@ public class ObjectEntryPersistenceImpl
 					new String[] {"objectDefinitionId", "status"}, false),
 				_SQL_SELECT_OBJECTENTRY_WHERE, _SQL_COUNT_OBJECTENTRY_WHERE,
 				ObjectEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"objectEntry.objectEntryId = objectEntry.headObjectEntryId",
 				"objectEntry.objectEntryId = objectEntry.headObjectEntryId",
 				new FinderColumn<>(
 					"objectEntry.", "objectDefinitionId",
@@ -2013,6 +2019,7 @@ public class ObjectEntryPersistenceImpl
 					new String[] {"rootObjectEntryId", "status"}, false),
 				_SQL_SELECT_OBJECTENTRY_WHERE, _SQL_COUNT_OBJECTENTRY_WHERE,
 				ObjectEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"objectEntry.objectEntryId = objectEntry.headObjectEntryId",
 				"objectEntry.objectEntryId = objectEntry.headObjectEntryId",
 				new FinderColumn<>(
 					"objectEntry.", "rootObjectEntryId", FinderColumn.Type.LONG,
@@ -2060,6 +2067,7 @@ public class ObjectEntryPersistenceImpl
 				_SQL_SELECT_OBJECTENTRY_WHERE, _SQL_COUNT_OBJECTENTRY_WHERE,
 				ObjectEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"objectEntry.objectEntryId = objectEntry.headObjectEntryId",
+				"objectEntry.objectEntryId = objectEntry.headObjectEntryId",
 				new FinderColumn<>(
 					"objectEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, ObjectEntry::getGroupId),
@@ -2103,6 +2111,7 @@ public class ObjectEntryPersistenceImpl
 				_SQL_SELECT_OBJECTENTRY_WHERE, _SQL_COUNT_OBJECTENTRY_WHERE,
 				ObjectEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"objectEntry.objectEntryId = objectEntry.headObjectEntryId",
+				"objectEntry.objectEntryId = objectEntry.headObjectEntryId",
 				new FinderColumn<>(
 					"objectEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, ObjectEntry::getGroupId),
@@ -2138,6 +2147,7 @@ public class ObjectEntryPersistenceImpl
 					false),
 				_SQL_SELECT_OBJECTENTRY_WHERE, _SQL_COUNT_OBJECTENTRY_WHERE,
 				ObjectEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"objectEntry.objectEntryId = objectEntry.headObjectEntryId",
 				"objectEntry.objectEntryId = objectEntry.headObjectEntryId",
 				new FinderColumn<>(
 					"objectEntry.", "userId", FinderColumn.Type.LONG, "=", true,
@@ -2250,4 +2260,4 @@ public class ObjectEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:971321103
+// LIFERAY-SERVICE-BUILDER-HASH:1295343960

@@ -429,7 +429,7 @@ public class KaleoProcessLinkPersistenceImpl
 				_SQL_SELECT_KALEOPROCESSLINK_WHERE,
 				_SQL_COUNT_KALEOPROCESSLINK_WHERE,
 				KaleoProcessLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"kaleoProcessLink.", "kaleoProcessId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -518,4 +518,4 @@ public class KaleoProcessLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1053407602
+// LIFERAY-SERVICE-BUILDER-HASH:-695589104

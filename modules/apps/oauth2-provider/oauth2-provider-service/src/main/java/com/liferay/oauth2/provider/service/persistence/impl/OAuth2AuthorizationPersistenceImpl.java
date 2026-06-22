@@ -1132,7 +1132,7 @@ public class OAuth2AuthorizationPersistenceImpl
 				_SQL_SELECT_OAUTH2AUTHORIZATION_WHERE,
 				_SQL_COUNT_OAUTH2AUTHORIZATION_WHERE,
 				OAuth2AuthorizationModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"oAuth2Authorization.", "userId", FinderColumn.Type.LONG,
 					"=", true, true, OAuth2Authorization::getUserId));
@@ -1162,7 +1162,7 @@ public class OAuth2AuthorizationPersistenceImpl
 				_SQL_SELECT_OAUTH2AUTHORIZATION_WHERE,
 				_SQL_COUNT_OAUTH2AUTHORIZATION_WHERE,
 				OAuth2AuthorizationModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"oAuth2Authorization.", "oAuth2ApplicationId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1191,7 +1191,7 @@ public class OAuth2AuthorizationPersistenceImpl
 				_SQL_SELECT_OAUTH2AUTHORIZATION_WHERE,
 				_SQL_COUNT_OAUTH2AUTHORIZATION_WHERE,
 				OAuth2AuthorizationModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"oAuth2Authorization.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, OAuth2Authorization::getCompanyId),
@@ -1225,7 +1225,7 @@ public class OAuth2AuthorizationPersistenceImpl
 				_SQL_SELECT_OAUTH2AUTHORIZATION_WHERE,
 				_SQL_COUNT_OAUTH2AUTHORIZATION_WHERE,
 				OAuth2AuthorizationModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"oAuth2Authorization.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, OAuth2Authorization::getCompanyId),
@@ -1270,7 +1270,7 @@ public class OAuth2AuthorizationPersistenceImpl
 			_SQL_SELECT_OAUTH2AUTHORIZATION_WHERE,
 			_SQL_COUNT_OAUTH2AUTHORIZATION_WHERE,
 			OAuth2AuthorizationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"",
+			"", "",
 			new FinderColumn<>(
 				"oAuth2Authorization.", "userId", FinderColumn.Type.LONG, "=",
 				true, true, OAuth2Authorization::getUserId),
@@ -1355,4 +1355,4 @@ public class OAuth2AuthorizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-217571806
+// LIFERAY-SERVICE-BUILDER-HASH:-1282537636

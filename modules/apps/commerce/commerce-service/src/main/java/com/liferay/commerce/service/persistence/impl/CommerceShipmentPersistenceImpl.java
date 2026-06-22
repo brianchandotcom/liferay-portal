@@ -1381,6 +1381,7 @@ public class CommerceShipmentPersistenceImpl
 			_SQL_SELECT_COMMERCESHIPMENT_WHERE,
 			_SQL_COUNT_COMMERCESHIPMENT_WHERE,
 			CommerceShipmentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			"",
 			new FinderColumn<>(
 				"commerceShipment.", "uuid", "uuid_", FinderColumn.Type.STRING,
 				"=", true, true, CommerceShipment::getUuid));
@@ -1423,7 +1424,7 @@ public class CommerceShipmentPersistenceImpl
 				_SQL_SELECT_COMMERCESHIPMENT_WHERE,
 				_SQL_COUNT_COMMERCESHIPMENT_WHERE,
 				CommerceShipmentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"commerceShipment.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -1454,7 +1455,7 @@ public class CommerceShipmentPersistenceImpl
 				_SQL_SELECT_COMMERCESHIPMENT_WHERE,
 				_SQL_COUNT_COMMERCESHIPMENT_WHERE,
 				CommerceShipmentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new ArrayableFinderColumn<>(
 					"commerceShipment.", "groupId", FinderColumn.Type.LONG, "=",
 					false, true, true, CommerceShipment::getGroupId));
@@ -1481,7 +1482,7 @@ public class CommerceShipmentPersistenceImpl
 				_SQL_SELECT_COMMERCESHIPMENT_WHERE,
 				_SQL_COUNT_COMMERCESHIPMENT_WHERE,
 				CommerceShipmentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new ArrayableFinderColumn<>(
 					"commerceShipment.", "groupId", FinderColumn.Type.LONG, "=",
 					false, true, true, CommerceShipment::getGroupId),
@@ -1516,7 +1517,7 @@ public class CommerceShipmentPersistenceImpl
 				_SQL_SELECT_COMMERCESHIPMENT_WHERE,
 				_SQL_COUNT_COMMERCESHIPMENT_WHERE,
 				CommerceShipmentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new ArrayableFinderColumn<>(
 					"commerceShipment.", "groupId", FinderColumn.Type.LONG, "=",
 					false, true, true, CommerceShipment::getGroupId),
@@ -1611,4 +1612,4 @@ public class CommerceShipmentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1467666219
+// LIFERAY-SERVICE-BUILDER-HASH:-50047401

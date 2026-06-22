@@ -698,7 +698,7 @@ public class AppPersistenceImpl
 				new String[] {String.class.getName()}, new String[] {"uuid_"},
 				0, 1, false, null),
 			_SQL_SELECT_APP_WHERE, _SQL_COUNT_APP_WHERE,
-			AppModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			AppModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"app.", "uuid", "uuid_", FinderColumn.Type.STRING, "=", true,
 				true, App::getUuid));
@@ -723,7 +723,7 @@ public class AppPersistenceImpl
 					new String[] {String.class.getName(), Long.class.getName()},
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_APP_WHERE, _SQL_COUNT_APP_WHERE,
-				AppModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				AppModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"app.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
 					true, true, App::getUuid),
@@ -751,7 +751,7 @@ public class AppPersistenceImpl
 					"countByCompanyId", new String[] {Long.class.getName()},
 					new String[] {"companyId"}, false),
 				_SQL_SELECT_APP_WHERE, _SQL_COUNT_APP_WHERE,
-				AppModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				AppModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"app.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, App::getCompanyId));
@@ -787,7 +787,7 @@ public class AppPersistenceImpl
 					"countByCategory", new String[] {String.class.getName()},
 					new String[] {"category"}, 0, 1, false, null),
 				_SQL_SELECT_APP_WHERE, _SQL_COUNT_APP_WHERE,
-				AppModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				AppModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"app.", "category", FinderColumn.Type.STRING, "=", true,
 					true, App::getCategory));
@@ -860,4 +860,4 @@ public class AppPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-143997509
+// LIFERAY-SERVICE-BUILDER-HASH:-413350277

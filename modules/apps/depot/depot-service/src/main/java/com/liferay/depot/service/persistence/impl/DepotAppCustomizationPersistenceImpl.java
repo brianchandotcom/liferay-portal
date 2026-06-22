@@ -577,7 +577,7 @@ public class DepotAppCustomizationPersistenceImpl
 				_SQL_SELECT_DEPOTAPPCUSTOMIZATION_WHERE,
 				_SQL_COUNT_DEPOTAPPCUSTOMIZATION_WHERE,
 				DepotAppCustomizationModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"depotAppCustomization.", "depotEntryId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -686,4 +686,4 @@ public class DepotAppCustomizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:607077591
+// LIFERAY-SERVICE-BUILDER-HASH:1045793497

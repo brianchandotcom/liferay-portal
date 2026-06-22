@@ -1173,7 +1173,7 @@ public class CPConfigurationEntryPersistenceImpl
 			_SQL_SELECT_CPCONFIGURATIONENTRY_WHERE,
 			_SQL_COUNT_CPCONFIGURATIONENTRY_WHERE,
 			CPConfigurationEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"",
+			"", "",
 			new FinderColumn<>(
 				"cpConfigurationEntry.", "uuid", "uuid_",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -1218,7 +1218,7 @@ public class CPConfigurationEntryPersistenceImpl
 				_SQL_SELECT_CPCONFIGURATIONENTRY_WHERE,
 				_SQL_COUNT_CPCONFIGURATIONENTRY_WHERE,
 				CPConfigurationEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"cpConfigurationEntry.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -1250,7 +1250,7 @@ public class CPConfigurationEntryPersistenceImpl
 				_SQL_SELECT_CPCONFIGURATIONENTRY_WHERE,
 				_SQL_COUNT_CPCONFIGURATIONENTRY_WHERE,
 				CPConfigurationEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"cpConfigurationEntry.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1281,7 +1281,7 @@ public class CPConfigurationEntryPersistenceImpl
 				_SQL_SELECT_CPCONFIGURATIONENTRY_WHERE,
 				_SQL_COUNT_CPCONFIGURATIONENTRY_WHERE,
 				CPConfigurationEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"cpConfigurationEntry.", "CPConfigurationListId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1308,7 +1308,7 @@ public class CPConfigurationEntryPersistenceImpl
 			_SQL_SELECT_CPCONFIGURATIONENTRY_WHERE,
 			_SQL_COUNT_CPCONFIGURATIONENTRY_WHERE,
 			CPConfigurationEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"",
+			"", "",
 			new FinderColumn<>(
 				"cpConfigurationEntry.", "classNameId", FinderColumn.Type.LONG,
 				"=", true, true, CPConfigurationEntry::getClassNameId),
@@ -1433,4 +1433,4 @@ public class CPConfigurationEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1813123953
+// LIFERAY-SERVICE-BUILDER-HASH:-2132715597

@@ -1472,7 +1472,7 @@ public class SocialRequestPersistenceImpl
 				new String[] {String.class.getName()}, new String[] {"uuid_"},
 				0, 1, false, null),
 			_SQL_SELECT_SOCIALREQUEST_WHERE, _SQL_COUNT_SOCIALREQUEST_WHERE,
-			SocialRequestModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			SocialRequestModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"socialRequest.", "uuid", "uuid_", FinderColumn.Type.STRING,
 				"=", true, true, SocialRequest::getUuid));
@@ -1514,6 +1514,7 @@ public class SocialRequestPersistenceImpl
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_SOCIALREQUEST_WHERE, _SQL_COUNT_SOCIALREQUEST_WHERE,
 				SocialRequestModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"socialRequest.", "uuid", "uuid_", FinderColumn.Type.STRING,
 					"=", true, true, SocialRequest::getUuid),
@@ -1542,6 +1543,7 @@ public class SocialRequestPersistenceImpl
 					new String[] {"companyId"}, false),
 				_SQL_SELECT_SOCIALREQUEST_WHERE, _SQL_COUNT_SOCIALREQUEST_WHERE,
 				SocialRequestModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"socialRequest.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, SocialRequest::getCompanyId));
@@ -1567,6 +1569,7 @@ public class SocialRequestPersistenceImpl
 					new String[] {"userId"}, false),
 				_SQL_SELECT_SOCIALREQUEST_WHERE, _SQL_COUNT_SOCIALREQUEST_WHERE,
 				SocialRequestModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"socialRequest.", "userId", FinderColumn.Type.LONG, "=",
 					true, true, SocialRequest::getUserId));
@@ -1594,6 +1597,7 @@ public class SocialRequestPersistenceImpl
 					new String[] {"receiverUserId"}, false),
 				_SQL_SELECT_SOCIALREQUEST_WHERE, _SQL_COUNT_SOCIALREQUEST_WHERE,
 				SocialRequestModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"socialRequest.", "receiverUserId", FinderColumn.Type.LONG,
 					"=", true, true, SocialRequest::getReceiverUserId));
@@ -1617,7 +1621,7 @@ public class SocialRequestPersistenceImpl
 				new String[] {Long.class.getName(), Integer.class.getName()},
 				new String[] {"userId", "status"}, false),
 			_SQL_SELECT_SOCIALREQUEST_WHERE, _SQL_COUNT_SOCIALREQUEST_WHERE,
-			SocialRequestModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			SocialRequestModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"socialRequest.", "userId", FinderColumn.Type.LONG, "=", true,
 				true, SocialRequest::getUserId),
@@ -1644,7 +1648,7 @@ public class SocialRequestPersistenceImpl
 				new String[] {Long.class.getName(), Long.class.getName()},
 				new String[] {"classNameId", "classPK"}, false),
 			_SQL_SELECT_SOCIALREQUEST_WHERE, _SQL_COUNT_SOCIALREQUEST_WHERE,
-			SocialRequestModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			SocialRequestModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"socialRequest.", "classNameId", FinderColumn.Type.LONG, "=",
 				true, true, SocialRequest::getClassNameId),
@@ -1671,7 +1675,7 @@ public class SocialRequestPersistenceImpl
 				new String[] {Long.class.getName(), Integer.class.getName()},
 				new String[] {"receiverUserId", "status"}, false),
 			_SQL_SELECT_SOCIALREQUEST_WHERE, _SQL_COUNT_SOCIALREQUEST_WHERE,
-			SocialRequestModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			SocialRequestModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"socialRequest.", "receiverUserId", FinderColumn.Type.LONG, "=",
 				true, true, SocialRequest::getReceiverUserId),
@@ -1754,6 +1758,7 @@ public class SocialRequestPersistenceImpl
 					false),
 				_SQL_SELECT_SOCIALREQUEST_WHERE, _SQL_COUNT_SOCIALREQUEST_WHERE,
 				SocialRequestModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"socialRequest.", "userId", FinderColumn.Type.LONG, "=",
 					true, true, SocialRequest::getUserId),
@@ -1816,6 +1821,7 @@ public class SocialRequestPersistenceImpl
 					false),
 				_SQL_SELECT_SOCIALREQUEST_WHERE, _SQL_COUNT_SOCIALREQUEST_WHERE,
 				SocialRequestModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"socialRequest.", "classNameId", FinderColumn.Type.LONG,
 					"=", true, true, SocialRequest::getClassNameId),
@@ -1869,4 +1875,4 @@ public class SocialRequestPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1709758225
+// LIFERAY-SERVICE-BUILDER-HASH:-1076137613

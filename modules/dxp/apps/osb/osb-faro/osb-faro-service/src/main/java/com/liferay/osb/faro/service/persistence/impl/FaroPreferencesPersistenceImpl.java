@@ -420,7 +420,7 @@ public class FaroPreferencesPersistenceImpl
 				_SQL_SELECT_FAROPREFERENCES_WHERE,
 				_SQL_COUNT_FAROPREFERENCES_WHERE,
 				FaroPreferencesModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"faroPreferences.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, FaroPreferences::getGroupId));
@@ -506,4 +506,4 @@ public class FaroPreferencesPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-784391405
+// LIFERAY-SERVICE-BUILDER-HASH:-452950063

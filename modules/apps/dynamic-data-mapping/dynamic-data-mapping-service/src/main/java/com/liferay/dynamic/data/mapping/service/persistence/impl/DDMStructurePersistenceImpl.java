@@ -2113,7 +2113,7 @@ public class DDMStructurePersistenceImpl
 				new String[] {String.class.getName()}, new String[] {"uuid_"},
 				0, 1, false, null),
 			_SQL_SELECT_DDMSTRUCTURE_WHERE, _SQL_COUNT_DDMSTRUCTURE_WHERE,
-			DDMStructureModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			DDMStructureModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"ddmStructure.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
 				true, true, DDMStructure::getUuid));
@@ -2155,6 +2155,7 @@ public class DDMStructurePersistenceImpl
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_DDMSTRUCTURE_WHERE, _SQL_COUNT_DDMSTRUCTURE_WHERE,
 				DDMStructureModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"ddmStructure.", "uuid", "uuid_", FinderColumn.Type.STRING,
 					"=", true, true, DDMStructure::getUuid),
@@ -2183,6 +2184,7 @@ public class DDMStructurePersistenceImpl
 					new String[] {"groupId"}, false),
 				_SQL_SELECT_DDMSTRUCTURE_WHERE, _SQL_COUNT_DDMSTRUCTURE_WHERE,
 				DDMStructureModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new ArrayableFinderColumn<>(
 					"ddmStructure.", "groupId", FinderColumn.Type.LONG, "=",
 					false, true, true, DDMStructure::getGroupId));
@@ -2211,6 +2213,7 @@ public class DDMStructurePersistenceImpl
 					new String[] {"parentStructureId"}, false),
 				_SQL_SELECT_DDMSTRUCTURE_WHERE, _SQL_COUNT_DDMSTRUCTURE_WHERE,
 				DDMStructureModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"ddmStructure.", "parentStructureId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2239,6 +2242,7 @@ public class DDMStructurePersistenceImpl
 					new String[] {"structureKey"}, 0, 1, false, null),
 				_SQL_SELECT_DDMSTRUCTURE_WHERE, _SQL_COUNT_DDMSTRUCTURE_WHERE,
 				DDMStructureModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"ddmStructure.", "structureKey", FinderColumn.Type.STRING,
 					"=", true, true, DDMStructure::getStructureKey));
@@ -2264,6 +2268,7 @@ public class DDMStructurePersistenceImpl
 					new String[] {"groupId", "parentStructureId"}, false),
 				_SQL_SELECT_DDMSTRUCTURE_WHERE, _SQL_COUNT_DDMSTRUCTURE_WHERE,
 				DDMStructureModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"ddmStructure.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, DDMStructure::getGroupId),
@@ -2293,6 +2298,7 @@ public class DDMStructurePersistenceImpl
 					new String[] {"groupId", "classNameId"}, false),
 				_SQL_SELECT_DDMSTRUCTURE_WHERE, _SQL_COUNT_DDMSTRUCTURE_WHERE,
 				DDMStructureModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new ArrayableFinderColumn<>(
 					"ddmStructure.", "groupId", FinderColumn.Type.LONG, "=",
 					false, true, true, DDMStructure::getGroupId),
@@ -2319,7 +2325,7 @@ public class DDMStructurePersistenceImpl
 				new String[] {Long.class.getName(), Long.class.getName()},
 				new String[] {"companyId", "classNameId"}, false),
 			_SQL_SELECT_DDMSTRUCTURE_WHERE, _SQL_COUNT_DDMSTRUCTURE_WHERE,
-			DDMStructureModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			DDMStructureModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"ddmStructure.", "companyId", FinderColumn.Type.LONG, "=", true,
 				true, DDMStructure::getCompanyId),
@@ -2405,6 +2411,7 @@ public class DDMStructurePersistenceImpl
 					false, null),
 				_SQL_SELECT_DDMSTRUCTURE_WHERE, _SQL_COUNT_DDMSTRUCTURE_WHERE,
 				DDMStructureModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"ddmStructure.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, DDMStructure::getGroupId),
@@ -2452,6 +2459,7 @@ public class DDMStructurePersistenceImpl
 					0, 12, false, null),
 				_SQL_SELECT_DDMSTRUCTURE_WHERE, _SQL_COUNT_DDMSTRUCTURE_WHERE,
 				DDMStructureModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new ArrayableFinderColumn<>(
 					"ddmStructure.", "groupId", FinderColumn.Type.LONG, "=",
 					false, true, true, DDMStructure::getGroupId),
@@ -2537,4 +2545,4 @@ public class DDMStructurePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1493621106
+// LIFERAY-SERVICE-BUILDER-HASH:213358842

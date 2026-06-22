@@ -1343,7 +1343,7 @@ public class AssetListEntryUsagePersistenceImpl
 			_SQL_SELECT_ASSETLISTENTRYUSAGE_WHERE,
 			_SQL_COUNT_ASSETLISTENTRYUSAGE_WHERE,
 			AssetListEntryUsageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"",
+			"", "",
 			new FinderColumn<>(
 				"assetListEntryUsage.", "uuid", "uuid_",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -1388,7 +1388,7 @@ public class AssetListEntryUsagePersistenceImpl
 				_SQL_SELECT_ASSETLISTENTRYUSAGE_WHERE,
 				_SQL_COUNT_ASSETLISTENTRYUSAGE_WHERE,
 				AssetListEntryUsageModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"assetListEntryUsage.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -1417,7 +1417,7 @@ public class AssetListEntryUsagePersistenceImpl
 			_SQL_SELECT_ASSETLISTENTRYUSAGE_WHERE,
 			_SQL_COUNT_ASSETLISTENTRYUSAGE_WHERE,
 			AssetListEntryUsageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"",
+			"", "",
 			new FinderColumn<>(
 				"assetListEntryUsage.", "plid", FinderColumn.Type.LONG, "=",
 				true, true, AssetListEntryUsage::getPlid));
@@ -1443,7 +1443,7 @@ public class AssetListEntryUsagePersistenceImpl
 			_SQL_SELECT_ASSETLISTENTRYUSAGE_WHERE,
 			_SQL_COUNT_ASSETLISTENTRYUSAGE_WHERE,
 			AssetListEntryUsageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"",
+			"", "",
 			new FinderColumn<>(
 				"assetListEntryUsage.", "containerType", FinderColumn.Type.LONG,
 				"=", true, true, AssetListEntryUsage::getContainerType),
@@ -1480,7 +1480,7 @@ public class AssetListEntryUsagePersistenceImpl
 			_SQL_SELECT_ASSETLISTENTRYUSAGE_WHERE,
 			_SQL_COUNT_ASSETLISTENTRYUSAGE_WHERE,
 			AssetListEntryUsageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"",
+			"", "",
 			new FinderColumn<>(
 				"assetListEntryUsage.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, AssetListEntryUsage::getGroupId),
@@ -1520,7 +1520,7 @@ public class AssetListEntryUsagePersistenceImpl
 			_SQL_SELECT_ASSETLISTENTRYUSAGE_WHERE,
 			_SQL_COUNT_ASSETLISTENTRYUSAGE_WHERE,
 			AssetListEntryUsageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"",
+			"", "",
 			new FinderColumn<>(
 				"assetListEntryUsage.", "companyId", FinderColumn.Type.LONG,
 				"=", true, true, AssetListEntryUsage::getCompanyId),
@@ -1563,7 +1563,7 @@ public class AssetListEntryUsagePersistenceImpl
 				_SQL_SELECT_ASSETLISTENTRYUSAGE_WHERE,
 				_SQL_COUNT_ASSETLISTENTRYUSAGE_WHERE,
 				AssetListEntryUsageModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"assetListEntryUsage.", "containerKey",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -1608,7 +1608,7 @@ public class AssetListEntryUsagePersistenceImpl
 				_SQL_SELECT_ASSETLISTENTRYUSAGE_WHERE,
 				_SQL_COUNT_ASSETLISTENTRYUSAGE_WHERE,
 				AssetListEntryUsageModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"assetListEntryUsage.", "groupId", FinderColumn.Type.LONG,
 					"=", true, true, AssetListEntryUsage::getGroupId),
@@ -1737,4 +1737,4 @@ public class AssetListEntryUsagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1549963817
+// LIFERAY-SERVICE-BUILDER-HASH:1708568655

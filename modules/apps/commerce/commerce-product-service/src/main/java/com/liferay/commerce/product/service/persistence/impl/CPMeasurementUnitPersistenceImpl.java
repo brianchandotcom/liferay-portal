@@ -1146,6 +1146,7 @@ public class CPMeasurementUnitPersistenceImpl
 			_SQL_SELECT_CPMEASUREMENTUNIT_WHERE,
 			_SQL_COUNT_CPMEASUREMENTUNIT_WHERE,
 			CPMeasurementUnitModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			"",
 			new FinderColumn<>(
 				"cpMeasurementUnit.", "uuid", "uuid_", FinderColumn.Type.STRING,
 				"=", true, true, CPMeasurementUnit::getUuid));
@@ -1188,7 +1189,7 @@ public class CPMeasurementUnitPersistenceImpl
 				_SQL_SELECT_CPMEASUREMENTUNIT_WHERE,
 				_SQL_COUNT_CPMEASUREMENTUNIT_WHERE,
 				CPMeasurementUnitModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"cpMeasurementUnit.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -1219,7 +1220,7 @@ public class CPMeasurementUnitPersistenceImpl
 				_SQL_SELECT_CPMEASUREMENTUNIT_WHERE,
 				_SQL_COUNT_CPMEASUREMENTUNIT_WHERE,
 				CPMeasurementUnitModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"cpMeasurementUnit.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, CPMeasurementUnit::getCompanyId));
@@ -1261,6 +1262,7 @@ public class CPMeasurementUnitPersistenceImpl
 			_SQL_SELECT_CPMEASUREMENTUNIT_WHERE,
 			_SQL_COUNT_CPMEASUREMENTUNIT_WHERE,
 			CPMeasurementUnitModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			"",
 			new FinderColumn<>(
 				"cpMeasurementUnit.", "companyId", FinderColumn.Type.LONG, "=",
 				true, true, CPMeasurementUnit::getCompanyId),
@@ -1296,6 +1298,7 @@ public class CPMeasurementUnitPersistenceImpl
 			_SQL_SELECT_CPMEASUREMENTUNIT_WHERE,
 			_SQL_COUNT_CPMEASUREMENTUNIT_WHERE,
 			CPMeasurementUnitModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			"",
 			new FinderColumn<>(
 				"cpMeasurementUnit.", "companyId", FinderColumn.Type.LONG, "=",
 				true, true, CPMeasurementUnit::getCompanyId),
@@ -1399,4 +1402,4 @@ public class CPMeasurementUnitPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1865673670
+// LIFERAY-SERVICE-BUILDER-HASH:-2004948612

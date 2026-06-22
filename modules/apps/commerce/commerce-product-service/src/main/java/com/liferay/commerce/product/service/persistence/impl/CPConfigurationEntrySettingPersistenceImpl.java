@@ -836,7 +836,7 @@ public class CPConfigurationEntrySettingPersistenceImpl
 			_SQL_SELECT_CPCONFIGURATIONENTRYSETTING_WHERE,
 			_SQL_COUNT_CPCONFIGURATIONENTRYSETTING_WHERE,
 			CPConfigurationEntrySettingModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX, "",
+			_ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"cpConfigurationEntrySetting.", "uuid", "uuid_",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -882,7 +882,7 @@ public class CPConfigurationEntrySettingPersistenceImpl
 				_SQL_SELECT_CPCONFIGURATIONENTRYSETTING_WHERE,
 				_SQL_COUNT_CPCONFIGURATIONENTRYSETTING_WHERE,
 				CPConfigurationEntrySettingModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"cpConfigurationEntrySetting.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -914,7 +914,7 @@ public class CPConfigurationEntrySettingPersistenceImpl
 				_SQL_SELECT_CPCONFIGURATIONENTRYSETTING_WHERE,
 				_SQL_COUNT_CPCONFIGURATIONENTRYSETTING_WHERE,
 				CPConfigurationEntrySettingModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"cpConfigurationEntrySetting.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1011,4 +1011,4 @@ public class CPConfigurationEntrySettingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:298906535
+// LIFERAY-SERVICE-BUILDER-HASH:-1955226523

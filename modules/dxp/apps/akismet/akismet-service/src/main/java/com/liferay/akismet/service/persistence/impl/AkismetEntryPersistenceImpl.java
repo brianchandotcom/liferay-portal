@@ -499,6 +499,7 @@ public class AkismetEntryPersistenceImpl
 					new String[] {"modifiedDate"}, false),
 				_SQL_SELECT_AKISMETENTRY_WHERE, _SQL_COUNT_AKISMETENTRY_WHERE,
 				AkismetEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"akismetEntry.", "modifiedDate", FinderColumn.Type.DATE,
 					"<", true, true, AkismetEntry::getModifiedDate));
@@ -587,4 +588,4 @@ public class AkismetEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2081125485
+// LIFERAY-SERVICE-BUILDER-HASH:-443214677

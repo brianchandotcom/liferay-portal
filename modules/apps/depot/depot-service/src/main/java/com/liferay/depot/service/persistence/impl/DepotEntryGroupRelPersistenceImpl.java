@@ -1178,6 +1178,7 @@ public class DepotEntryGroupRelPersistenceImpl
 			_SQL_SELECT_DEPOTENTRYGROUPREL_WHERE,
 			_SQL_COUNT_DEPOTENTRYGROUPREL_WHERE,
 			DepotEntryGroupRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			"",
 			new FinderColumn<>(
 				"depotEntryGroupRel.", "uuid", "uuid_",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -1222,7 +1223,7 @@ public class DepotEntryGroupRelPersistenceImpl
 				_SQL_SELECT_DEPOTENTRYGROUPREL_WHERE,
 				_SQL_COUNT_DEPOTENTRYGROUPREL_WHERE,
 				DepotEntryGroupRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"depotEntryGroupRel.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -1254,7 +1255,7 @@ public class DepotEntryGroupRelPersistenceImpl
 				_SQL_SELECT_DEPOTENTRYGROUPREL_WHERE,
 				_SQL_COUNT_DEPOTENTRYGROUPREL_WHERE,
 				DepotEntryGroupRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"depotEntryGroupRel.", "depotEntryId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1282,7 +1283,7 @@ public class DepotEntryGroupRelPersistenceImpl
 				_SQL_SELECT_DEPOTENTRYGROUPREL_WHERE,
 				_SQL_COUNT_DEPOTENTRYGROUPREL_WHERE,
 				DepotEntryGroupRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"depotEntryGroupRel.", "toGroupId", FinderColumn.Type.LONG,
 					"=", true, true, DepotEntryGroupRel::getToGroupId));
@@ -1316,7 +1317,7 @@ public class DepotEntryGroupRelPersistenceImpl
 				_SQL_SELECT_DEPOTENTRYGROUPREL_WHERE,
 				_SQL_COUNT_DEPOTENTRYGROUPREL_WHERE,
 				DepotEntryGroupRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"depotEntryGroupRel.", "ddmStructuresAvailable",
 					FinderColumn.Type.BOOLEAN, "=", true, true,
@@ -1362,6 +1363,7 @@ public class DepotEntryGroupRelPersistenceImpl
 			_SQL_SELECT_DEPOTENTRYGROUPREL_WHERE,
 			_SQL_COUNT_DEPOTENTRYGROUPREL_WHERE,
 			DepotEntryGroupRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			"",
 			new FinderColumn<>(
 				"depotEntryGroupRel.", "searchable", FinderColumn.Type.BOOLEAN,
 				"=", true, true, DepotEntryGroupRel::isSearchable),
@@ -1390,6 +1392,7 @@ public class DepotEntryGroupRelPersistenceImpl
 			_SQL_SELECT_DEPOTENTRYGROUPREL_WHERE,
 			_SQL_COUNT_DEPOTENTRYGROUPREL_WHERE,
 			DepotEntryGroupRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			"",
 			new FinderColumn<>(
 				"depotEntryGroupRel.", "toGroupId", FinderColumn.Type.LONG, "=",
 				true, true, DepotEntryGroupRel::getToGroupId),
@@ -1470,4 +1473,4 @@ public class DepotEntryGroupRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-177739684
+// LIFERAY-SERVICE-BUILDER-HASH:-1274388510

@@ -900,6 +900,7 @@ public class ChangesetEntryPersistenceImpl
 				_SQL_SELECT_CHANGESETENTRY_WHERE,
 				_SQL_COUNT_CHANGESETENTRY_WHERE,
 				ChangesetEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"changesetEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, ChangesetEntry::getGroupId));
@@ -926,6 +927,7 @@ public class ChangesetEntryPersistenceImpl
 				_SQL_SELECT_CHANGESETENTRY_WHERE,
 				_SQL_COUNT_CHANGESETENTRY_WHERE,
 				ChangesetEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"changesetEntry.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, ChangesetEntry::getCompanyId));
@@ -955,6 +957,7 @@ public class ChangesetEntryPersistenceImpl
 				_SQL_SELECT_CHANGESETENTRY_WHERE,
 				_SQL_COUNT_CHANGESETENTRY_WHERE,
 				ChangesetEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"changesetEntry.", "changesetCollectionId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -979,7 +982,7 @@ public class ChangesetEntryPersistenceImpl
 				new String[] {Long.class.getName(), Long.class.getName()},
 				new String[] {"groupId", "classNameId"}, false),
 			_SQL_SELECT_CHANGESETENTRY_WHERE, _SQL_COUNT_CHANGESETENTRY_WHERE,
-			ChangesetEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			ChangesetEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"changesetEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, ChangesetEntry::getGroupId),
@@ -1006,7 +1009,7 @@ public class ChangesetEntryPersistenceImpl
 				new String[] {Long.class.getName(), Long.class.getName()},
 				new String[] {"changesetCollectionId", "classNameId"}, false),
 			_SQL_SELECT_CHANGESETENTRY_WHERE, _SQL_COUNT_CHANGESETENTRY_WHERE,
-			ChangesetEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			ChangesetEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"changesetEntry.", "changesetCollectionId",
 				FinderColumn.Type.LONG, "=", true, true,
@@ -1135,4 +1138,4 @@ public class ChangesetEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:529263345
+// LIFERAY-SERVICE-BUILDER-HASH:889959543

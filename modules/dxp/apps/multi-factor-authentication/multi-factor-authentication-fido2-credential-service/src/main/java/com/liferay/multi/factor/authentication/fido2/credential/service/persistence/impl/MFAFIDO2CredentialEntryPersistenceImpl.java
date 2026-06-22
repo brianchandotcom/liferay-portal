@@ -552,7 +552,7 @@ public class MFAFIDO2CredentialEntryPersistenceImpl
 				_SQL_SELECT_MFAFIDO2CREDENTIALENTRY_WHERE,
 				_SQL_COUNT_MFAFIDO2CREDENTIALENTRY_WHERE,
 				MFAFIDO2CredentialEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"mfafido2CredentialEntry.", "userId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -583,7 +583,7 @@ public class MFAFIDO2CredentialEntryPersistenceImpl
 				_SQL_SELECT_MFAFIDO2CREDENTIALENTRY_WHERE,
 				_SQL_COUNT_MFAFIDO2CREDENTIALENTRY_WHERE,
 				MFAFIDO2CredentialEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"mfafido2CredentialEntry.", "credentialKeyHash",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -672,4 +672,4 @@ public class MFAFIDO2CredentialEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1623881887
+// LIFERAY-SERVICE-BUILDER-HASH:732615517

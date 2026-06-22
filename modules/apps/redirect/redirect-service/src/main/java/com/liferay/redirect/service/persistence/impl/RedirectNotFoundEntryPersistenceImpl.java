@@ -494,7 +494,7 @@ public class RedirectNotFoundEntryPersistenceImpl
 				_SQL_SELECT_REDIRECTNOTFOUNDENTRY_WHERE,
 				_SQL_COUNT_REDIRECTNOTFOUNDENTRY_WHERE,
 				RedirectNotFoundEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"redirectNotFoundEntry.", "groupId", FinderColumn.Type.LONG,
 					"=", true, true, RedirectNotFoundEntry::getGroupId));
@@ -581,4 +581,4 @@ public class RedirectNotFoundEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1573851067
+// LIFERAY-SERVICE-BUILDER-HASH:2112071033

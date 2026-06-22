@@ -575,7 +575,7 @@ public class SamlIdpSsoSessionPersistenceImpl
 				_SQL_SELECT_SAMLIDPSSOSESSION_WHERE,
 				_SQL_COUNT_SAMLIDPSSOSESSION_WHERE,
 				SamlIdpSsoSessionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"samlIdpSsoSession.", "createDate", FinderColumn.Type.DATE,
 					"<", true, true, SamlIdpSsoSession::getCreateDate));
@@ -661,4 +661,4 @@ public class SamlIdpSsoSessionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1138504039
+// LIFERAY-SERVICE-BUILDER-HASH:1827826587

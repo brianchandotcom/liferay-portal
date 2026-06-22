@@ -1563,7 +1563,7 @@ public class TeamPersistenceImpl
 				new String[] {String.class.getName()}, new String[] {"uuid_"},
 				0, 1, false, null),
 			_SQL_SELECT_TEAM_WHERE, _SQL_COUNT_TEAM_WHERE,
-			TeamModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			TeamModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"team.", "uuid", "uuid_", FinderColumn.Type.STRING, "=", true,
 				true, Team::getUuid));
@@ -1603,7 +1603,7 @@ public class TeamPersistenceImpl
 					new String[] {String.class.getName(), Long.class.getName()},
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_TEAM_WHERE, _SQL_COUNT_TEAM_WHERE,
-				TeamModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				TeamModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"team.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
 					true, true, Team::getUuid),
@@ -1631,7 +1631,7 @@ public class TeamPersistenceImpl
 					"countByCompanyId", new String[] {Long.class.getName()},
 					new String[] {"companyId"}, false),
 				_SQL_SELECT_TEAM_WHERE, _SQL_COUNT_TEAM_WHERE,
-				TeamModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				TeamModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"team.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Team::getCompanyId));
@@ -1656,7 +1656,7 @@ public class TeamPersistenceImpl
 					new String[] {Long.class.getName()},
 					new String[] {"groupId"}, false),
 				_SQL_SELECT_TEAM_WHERE, _SQL_COUNT_TEAM_WHERE,
-				TeamModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				TeamModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"team.", "groupId", FinderColumn.Type.LONG, "=", true, true,
 					Team::getGroupId));
@@ -1726,4 +1726,4 @@ public class TeamPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1614253093
+// LIFERAY-SERVICE-BUILDER-HASH:1799035425

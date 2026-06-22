@@ -728,7 +728,7 @@ public class ObjectStatePersistenceImpl
 				new String[] {String.class.getName()}, new String[] {"uuid_"},
 				0, 1, false, null),
 			_SQL_SELECT_OBJECTSTATE_WHERE, _SQL_COUNT_OBJECTSTATE_WHERE,
-			ObjectStateModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			ObjectStateModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"objectState.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
 				true, true, ObjectState::getUuid));
@@ -754,6 +754,7 @@ public class ObjectStatePersistenceImpl
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_OBJECTSTATE_WHERE, _SQL_COUNT_OBJECTSTATE_WHERE,
 				ObjectStateModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"objectState.", "uuid", "uuid_", FinderColumn.Type.STRING,
 					"=", true, true, ObjectState::getUuid),
@@ -785,6 +786,7 @@ public class ObjectStatePersistenceImpl
 					new String[] {"listTypeEntryId"}, false),
 				_SQL_SELECT_OBJECTSTATE_WHERE, _SQL_COUNT_OBJECTSTATE_WHERE,
 				ObjectStateModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"objectState.", "listTypeEntryId", FinderColumn.Type.LONG,
 					"=", true, true, ObjectState::getListTypeEntryId));
@@ -813,6 +815,7 @@ public class ObjectStatePersistenceImpl
 					new String[] {"objectStateFlowId"}, false),
 				_SQL_SELECT_OBJECTSTATE_WHERE, _SQL_COUNT_OBJECTSTATE_WHERE,
 				ObjectStateModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"objectState.", "objectStateFlowId", FinderColumn.Type.LONG,
 					"=", true, true, ObjectState::getObjectStateFlowId));
@@ -902,4 +905,4 @@ public class ObjectStatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:347280874
+// LIFERAY-SERVICE-BUILDER-HASH:353620010

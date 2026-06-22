@@ -1071,7 +1071,7 @@ public class ListTypeEntryPersistenceImpl
 				new String[] {String.class.getName()}, new String[] {"uuid_"},
 				0, 1, false, null),
 			_SQL_SELECT_LISTTYPEENTRY_WHERE, _SQL_COUNT_LISTTYPEENTRY_WHERE,
-			ListTypeEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			ListTypeEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"listTypeEntry.", "uuid", "uuid_", FinderColumn.Type.STRING,
 				"=", true, true, ListTypeEntry::getUuid));
@@ -1097,6 +1097,7 @@ public class ListTypeEntryPersistenceImpl
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_LISTTYPEENTRY_WHERE, _SQL_COUNT_LISTTYPEENTRY_WHERE,
 				ListTypeEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"listTypeEntry.", "uuid", "uuid_", FinderColumn.Type.STRING,
 					"=", true, true, ListTypeEntry::getUuid),
@@ -1128,6 +1129,7 @@ public class ListTypeEntryPersistenceImpl
 					new String[] {"listTypeEntryId"}, false),
 				_SQL_SELECT_LISTTYPEENTRY_WHERE, _SQL_COUNT_LISTTYPEENTRY_WHERE,
 				ListTypeEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new ArrayableFinderColumn<>(
 					"listTypeEntry.", "listTypeEntryId", FinderColumn.Type.LONG,
 					"=", false, true, true, ListTypeEntry::getListTypeEntryId));
@@ -1156,6 +1158,7 @@ public class ListTypeEntryPersistenceImpl
 					new String[] {"listTypeDefinitionId"}, false),
 				_SQL_SELECT_LISTTYPEENTRY_WHERE, _SQL_COUNT_LISTTYPEENTRY_WHERE,
 				ListTypeEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new ArrayableFinderColumn<>(
 					"listTypeEntry.", "listTypeDefinitionId",
 					FinderColumn.Type.LONG, "=", false, true, true,
@@ -1180,7 +1183,7 @@ public class ListTypeEntryPersistenceImpl
 				new String[] {Long.class.getName(), Long.class.getName()},
 				new String[] {"companyId", "userId"}, false),
 			_SQL_SELECT_LISTTYPEENTRY_WHERE, _SQL_COUNT_LISTTYPEENTRY_WHERE,
-			ListTypeEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			ListTypeEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"listTypeEntry.", "companyId", FinderColumn.Type.LONG, "=",
 				true, true, ListTypeEntry::getCompanyId),
@@ -1302,4 +1305,4 @@ public class ListTypeEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1745131439
+// LIFERAY-SERVICE-BUILDER-HASH:-1715313845

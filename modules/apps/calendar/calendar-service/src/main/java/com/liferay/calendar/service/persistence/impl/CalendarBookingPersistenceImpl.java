@@ -1535,6 +1535,7 @@ public class CalendarBookingPersistenceImpl
 				0, 1, false, null),
 			_SQL_SELECT_CALENDARBOOKING_WHERE, _SQL_COUNT_CALENDARBOOKING_WHERE,
 			CalendarBookingModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			"",
 			new FinderColumn<>(
 				"calendarBooking.", "uuid", "uuid_", FinderColumn.Type.STRING,
 				"=", true, true, CalendarBooking::getUuid));
@@ -1577,7 +1578,7 @@ public class CalendarBookingPersistenceImpl
 				_SQL_SELECT_CALENDARBOOKING_WHERE,
 				_SQL_COUNT_CALENDARBOOKING_WHERE,
 				CalendarBookingModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"calendarBooking.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -1608,7 +1609,7 @@ public class CalendarBookingPersistenceImpl
 				_SQL_SELECT_CALENDARBOOKING_WHERE,
 				_SQL_COUNT_CALENDARBOOKING_WHERE,
 				CalendarBookingModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"calendarBooking.", "calendarId", FinderColumn.Type.LONG,
 					"=", true, true, CalendarBooking::getCalendarId));
@@ -1638,7 +1639,7 @@ public class CalendarBookingPersistenceImpl
 				_SQL_SELECT_CALENDARBOOKING_WHERE,
 				_SQL_COUNT_CALENDARBOOKING_WHERE,
 				CalendarBookingModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"calendarBooking.", "calendarResourceId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1669,7 +1670,7 @@ public class CalendarBookingPersistenceImpl
 				_SQL_SELECT_CALENDARBOOKING_WHERE,
 				_SQL_COUNT_CALENDARBOOKING_WHERE,
 				CalendarBookingModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"calendarBooking.", "parentCalendarBookingId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1700,7 +1701,7 @@ public class CalendarBookingPersistenceImpl
 				_SQL_SELECT_CALENDARBOOKING_WHERE,
 				_SQL_COUNT_CALENDARBOOKING_WHERE,
 				CalendarBookingModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"calendarBooking.", "recurringCalendarBookingId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1759,6 +1760,7 @@ public class CalendarBookingPersistenceImpl
 				new String[] {"calendarId", "status"}, false),
 			_SQL_SELECT_CALENDARBOOKING_WHERE, _SQL_COUNT_CALENDARBOOKING_WHERE,
 			CalendarBookingModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			"",
 			new FinderColumn<>(
 				"calendarBooking.", "calendarId", FinderColumn.Type.LONG, "=",
 				true, true, CalendarBooking::getCalendarId),
@@ -1786,6 +1788,7 @@ public class CalendarBookingPersistenceImpl
 				new String[] {"parentCalendarBookingId", "status"}, false),
 			_SQL_SELECT_CALENDARBOOKING_WHERE, _SQL_COUNT_CALENDARBOOKING_WHERE,
 			CalendarBookingModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			"",
 			new FinderColumn<>(
 				"calendarBooking.", "parentCalendarBookingId",
 				FinderColumn.Type.LONG, "=", true, true,
@@ -1883,4 +1886,4 @@ public class CalendarBookingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1914567609
+// LIFERAY-SERVICE-BUILDER-HASH:-1693698819

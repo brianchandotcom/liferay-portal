@@ -1164,7 +1164,7 @@ public class OAuthClientEntryPersistenceImpl
 				_SQL_SELECT_OAUTHCLIENTENTRY_WHERE,
 				_SQL_COUNT_OAUTHCLIENTENTRY_WHERE,
 				OAuthClientEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"oAuthClientEntry.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -1192,7 +1192,7 @@ public class OAuthClientEntryPersistenceImpl
 				_SQL_SELECT_OAUTHCLIENTENTRY_WHERE,
 				_SQL_COUNT_OAUTHCLIENTENTRY_WHERE,
 				OAuthClientEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"oAuthClientEntry.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -1223,7 +1223,7 @@ public class OAuthClientEntryPersistenceImpl
 				_SQL_SELECT_OAUTHCLIENTENTRY_WHERE,
 				_SQL_COUNT_OAUTHCLIENTENTRY_WHERE,
 				OAuthClientEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"oAuthClientEntry.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, OAuthClientEntry::getCompanyId));
@@ -1250,7 +1250,7 @@ public class OAuthClientEntryPersistenceImpl
 				_SQL_SELECT_OAUTHCLIENTENTRY_WHERE,
 				_SQL_COUNT_OAUTHCLIENTENTRY_WHERE,
 				OAuthClientEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"oAuthClientEntry.", "userId", FinderColumn.Type.LONG, "=",
 					true, true, OAuthClientEntry::getUserId));
@@ -1279,7 +1279,7 @@ public class OAuthClientEntryPersistenceImpl
 				_SQL_SELECT_OAUTHCLIENTENTRY_WHERE,
 				_SQL_COUNT_OAUTHCLIENTENTRY_WHERE,
 				OAuthClientEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"oAuthClientEntry.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, OAuthClientEntry::getCompanyId),
@@ -1402,4 +1402,4 @@ public class OAuthClientEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2111483477
+// LIFERAY-SERVICE-BUILDER-HASH:-1692395159

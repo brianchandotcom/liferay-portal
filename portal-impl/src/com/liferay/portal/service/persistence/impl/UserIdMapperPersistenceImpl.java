@@ -490,6 +490,7 @@ public class UserIdMapperPersistenceImpl
 					new String[] {"userId"}, false),
 				_SQL_SELECT_USERIDMAPPER_WHERE, _SQL_COUNT_USERIDMAPPER_WHERE,
 				UserIdMapperModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"userIdMapper.", "userId", FinderColumn.Type.LONG, "=",
 					true, true, UserIdMapper::getUserId));
@@ -562,4 +563,4 @@ public class UserIdMapperPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-838152879
+// LIFERAY-SERVICE-BUILDER-HASH:-1395383341

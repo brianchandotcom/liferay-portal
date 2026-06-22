@@ -2464,7 +2464,7 @@ public class UserNotificationEventPersistenceImpl
 			_SQL_SELECT_USERNOTIFICATIONEVENT_WHERE,
 			_SQL_COUNT_USERNOTIFICATIONEVENT_WHERE,
 			UserNotificationEventModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"",
+			"", "",
 			new FinderColumn<>(
 				"userNotificationEvent.", "uuid", "uuid_",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -2492,7 +2492,7 @@ public class UserNotificationEventPersistenceImpl
 				_SQL_SELECT_USERNOTIFICATIONEVENT_WHERE,
 				_SQL_COUNT_USERNOTIFICATIONEVENT_WHERE,
 				UserNotificationEventModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"userNotificationEvent.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -2524,7 +2524,7 @@ public class UserNotificationEventPersistenceImpl
 				_SQL_SELECT_USERNOTIFICATIONEVENT_WHERE,
 				_SQL_COUNT_USERNOTIFICATIONEVENT_WHERE,
 				UserNotificationEventModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"userNotificationEvent.", "userId", FinderColumn.Type.LONG,
 					"=", true, true, UserNotificationEvent::getUserId));
@@ -2549,7 +2549,7 @@ public class UserNotificationEventPersistenceImpl
 			_SQL_SELECT_USERNOTIFICATIONEVENT_WHERE,
 			_SQL_COUNT_USERNOTIFICATIONEVENT_WHERE,
 			UserNotificationEventModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"",
+			"", "",
 			new FinderColumn<>(
 				"userNotificationEvent.", "type", "type_",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -2576,7 +2576,7 @@ public class UserNotificationEventPersistenceImpl
 			_SQL_SELECT_USERNOTIFICATIONEVENT_WHERE,
 			_SQL_COUNT_USERNOTIFICATIONEVENT_WHERE,
 			UserNotificationEventModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"",
+			"", "",
 			new FinderColumn<>(
 				"userNotificationEvent.", "userId", FinderColumn.Type.LONG, "=",
 				true, true, UserNotificationEvent::getUserId),
@@ -2606,7 +2606,7 @@ public class UserNotificationEventPersistenceImpl
 			_SQL_SELECT_USERNOTIFICATIONEVENT_WHERE,
 			_SQL_COUNT_USERNOTIFICATIONEVENT_WHERE,
 			UserNotificationEventModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"",
+			"", "",
 			new FinderColumn<>(
 				"userNotificationEvent.", "userId", FinderColumn.Type.LONG, "=",
 				true, true, UserNotificationEvent::getUserId),
@@ -2636,7 +2636,7 @@ public class UserNotificationEventPersistenceImpl
 			_SQL_SELECT_USERNOTIFICATIONEVENT_WHERE,
 			_SQL_COUNT_USERNOTIFICATIONEVENT_WHERE,
 			UserNotificationEventModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"",
+			"", "",
 			new FinderColumn<>(
 				"userNotificationEvent.", "userId", FinderColumn.Type.LONG, "=",
 				true, true, UserNotificationEvent::getUserId),
@@ -2674,7 +2674,7 @@ public class UserNotificationEventPersistenceImpl
 				_SQL_SELECT_USERNOTIFICATIONEVENT_WHERE,
 				_SQL_COUNT_USERNOTIFICATIONEVENT_WHERE,
 				UserNotificationEventModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"userNotificationEvent.", "userId", FinderColumn.Type.LONG,
 					"=", true, true, UserNotificationEvent::getUserId),
@@ -2716,7 +2716,7 @@ public class UserNotificationEventPersistenceImpl
 				_SQL_SELECT_USERNOTIFICATIONEVENT_WHERE,
 				_SQL_COUNT_USERNOTIFICATIONEVENT_WHERE,
 				UserNotificationEventModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"userNotificationEvent.", "userId", FinderColumn.Type.LONG,
 					"=", true, true, UserNotificationEvent::getUserId),
@@ -2761,7 +2761,7 @@ public class UserNotificationEventPersistenceImpl
 				_SQL_SELECT_USERNOTIFICATIONEVENT_WHERE,
 				_SQL_COUNT_USERNOTIFICATIONEVENT_WHERE,
 				UserNotificationEventModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"userNotificationEvent.", "userId", FinderColumn.Type.LONG,
 					"=", true, true, UserNotificationEvent::getUserId),
@@ -2801,7 +2801,7 @@ public class UserNotificationEventPersistenceImpl
 			_SQL_SELECT_USERNOTIFICATIONEVENT_WHERE,
 			_SQL_COUNT_USERNOTIFICATIONEVENT_WHERE,
 			UserNotificationEventModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"",
+			"", "",
 			new FinderColumn<>(
 				"userNotificationEvent.", "userId", FinderColumn.Type.LONG, "=",
 				true, true, UserNotificationEvent::getUserId),
@@ -2845,7 +2845,7 @@ public class UserNotificationEventPersistenceImpl
 				_SQL_SELECT_USERNOTIFICATIONEVENT_WHERE,
 				_SQL_COUNT_USERNOTIFICATIONEVENT_WHERE,
 				UserNotificationEventModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"userNotificationEvent.", "userId", FinderColumn.Type.LONG,
 					"=", true, true, UserNotificationEvent::getUserId),
@@ -2883,7 +2883,7 @@ public class UserNotificationEventPersistenceImpl
 				_SQL_SELECT_USERNOTIFICATIONEVENT_WHERE,
 				_SQL_COUNT_USERNOTIFICATIONEVENT_WHERE,
 				UserNotificationEventModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"userNotificationEvent.", "userId", FinderColumn.Type.LONG,
 					"=", true, true, UserNotificationEvent::getUserId),
@@ -2939,7 +2939,7 @@ public class UserNotificationEventPersistenceImpl
 				_SQL_SELECT_USERNOTIFICATIONEVENT_WHERE,
 				_SQL_COUNT_USERNOTIFICATIONEVENT_WHERE,
 				UserNotificationEventModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"userNotificationEvent.", "userId", FinderColumn.Type.LONG,
 					"=", true, true, UserNotificationEvent::getUserId),
@@ -2996,7 +2996,7 @@ public class UserNotificationEventPersistenceImpl
 				_SQL_SELECT_USERNOTIFICATIONEVENT_WHERE,
 				_SQL_COUNT_USERNOTIFICATIONEVENT_WHERE,
 				UserNotificationEventModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"userNotificationEvent.", "userId", FinderColumn.Type.LONG,
 					"=", true, true, UserNotificationEvent::getUserId),
@@ -3052,7 +3052,7 @@ public class UserNotificationEventPersistenceImpl
 				_SQL_SELECT_USERNOTIFICATIONEVENT_WHERE,
 				_SQL_COUNT_USERNOTIFICATIONEVENT_WHERE,
 				UserNotificationEventModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"userNotificationEvent.", "userId", FinderColumn.Type.LONG,
 					"=", true, true, UserNotificationEvent::getUserId),
@@ -3109,7 +3109,7 @@ public class UserNotificationEventPersistenceImpl
 				_SQL_SELECT_USERNOTIFICATIONEVENT_WHERE,
 				_SQL_COUNT_USERNOTIFICATIONEVENT_WHERE,
 				UserNotificationEventModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"userNotificationEvent.", "userId", FinderColumn.Type.LONG,
 					"=", true, true, UserNotificationEvent::getUserId),
@@ -3165,7 +3165,7 @@ public class UserNotificationEventPersistenceImpl
 				_SQL_SELECT_USERNOTIFICATIONEVENT_WHERE,
 				_SQL_COUNT_USERNOTIFICATIONEVENT_WHERE,
 				UserNotificationEventModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"userNotificationEvent.", "userId", FinderColumn.Type.LONG,
 					"=", true, true, UserNotificationEvent::getUserId),
@@ -3228,7 +3228,7 @@ public class UserNotificationEventPersistenceImpl
 				_SQL_SELECT_USERNOTIFICATIONEVENT_WHERE,
 				_SQL_COUNT_USERNOTIFICATIONEVENT_WHERE,
 				UserNotificationEventModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"userNotificationEvent.", "userId", FinderColumn.Type.LONG,
 					"=", true, true, UserNotificationEvent::getUserId),
@@ -3295,7 +3295,7 @@ public class UserNotificationEventPersistenceImpl
 				_SQL_SELECT_USERNOTIFICATIONEVENT_WHERE,
 				_SQL_COUNT_USERNOTIFICATIONEVENT_WHERE,
 				UserNotificationEventModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"userNotificationEvent.", "userId", FinderColumn.Type.LONG,
 					"=", true, true, UserNotificationEvent::getUserId),
@@ -3349,4 +3349,4 @@ public class UserNotificationEventPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:819265420
+// LIFERAY-SERVICE-BUILDER-HASH:-1650691632

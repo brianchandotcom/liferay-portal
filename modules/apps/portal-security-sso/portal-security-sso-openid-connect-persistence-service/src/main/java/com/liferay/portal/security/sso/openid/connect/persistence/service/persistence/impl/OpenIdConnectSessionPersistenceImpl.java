@@ -850,7 +850,7 @@ public class OpenIdConnectSessionPersistenceImpl
 				_SQL_SELECT_OPENIDCONNECTSESSION_WHERE,
 				_SQL_COUNT_OPENIDCONNECTSESSION_WHERE,
 				OpenIdConnectSessionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"openIdConnectSession.", "userId", FinderColumn.Type.LONG,
 					"=", true, true, OpenIdConnectSession::getUserId));
@@ -876,7 +876,7 @@ public class OpenIdConnectSessionPersistenceImpl
 				_SQL_SELECT_OPENIDCONNECTSESSION_WHERE,
 				_SQL_COUNT_OPENIDCONNECTSESSION_WHERE,
 				OpenIdConnectSessionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"openIdConnectSession.", "accessTokenExpirationDate",
 					FinderColumn.Type.DATE, "<", true, true,
@@ -950,7 +950,7 @@ public class OpenIdConnectSessionPersistenceImpl
 			_SQL_SELECT_OPENIDCONNECTSESSION_WHERE,
 			_SQL_COUNT_OPENIDCONNECTSESSION_WHERE,
 			OpenIdConnectSessionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"",
+			"", "",
 			new FinderColumn<>(
 				"openIdConnectSession.", "companyId", FinderColumn.Type.LONG,
 				"=", true, true, OpenIdConnectSession::getCompanyId),
@@ -1053,4 +1053,4 @@ public class OpenIdConnectSessionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-835170189
+// LIFERAY-SERVICE-BUILDER-HASH:-1451111559

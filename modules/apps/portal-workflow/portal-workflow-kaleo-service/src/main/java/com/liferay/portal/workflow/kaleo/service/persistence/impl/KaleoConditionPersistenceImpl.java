@@ -617,6 +617,7 @@ public class KaleoConditionPersistenceImpl
 				_SQL_SELECT_KALEOCONDITION_WHERE,
 				_SQL_COUNT_KALEOCONDITION_WHERE,
 				KaleoConditionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"kaleoCondition.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, KaleoCondition::getCompanyId));
@@ -646,6 +647,7 @@ public class KaleoConditionPersistenceImpl
 				_SQL_SELECT_KALEOCONDITION_WHERE,
 				_SQL_COUNT_KALEOCONDITION_WHERE,
 				KaleoConditionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"kaleoCondition.", "kaleoDefinitionVersionId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -732,4 +734,4 @@ public class KaleoConditionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1197777982
+// LIFERAY-SERVICE-BUILDER-HASH:182352702

@@ -603,7 +603,7 @@ public class KaleoTaskPersistenceImpl
 					"countByCompanyId", new String[] {Long.class.getName()},
 					new String[] {"companyId"}, false),
 				_SQL_SELECT_KALEOTASK_WHERE, _SQL_COUNT_KALEOTASK_WHERE,
-				KaleoTaskModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				KaleoTaskModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"kaleoTask.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, KaleoTask::getCompanyId));
@@ -631,7 +631,7 @@ public class KaleoTaskPersistenceImpl
 					new String[] {Long.class.getName()},
 					new String[] {"kaleoDefinitionVersionId"}, false),
 				_SQL_SELECT_KALEOTASK_WHERE, _SQL_COUNT_KALEOTASK_WHERE,
-				KaleoTaskModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				KaleoTaskModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"kaleoTask.", "kaleoDefinitionVersionId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -718,4 +718,4 @@ public class KaleoTaskPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1078773842
+// LIFERAY-SERVICE-BUILDER-HASH:-475370258

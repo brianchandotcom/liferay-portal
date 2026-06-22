@@ -765,7 +765,7 @@ public class ObjectStateTransitionPersistenceImpl
 			_SQL_SELECT_OBJECTSTATETRANSITION_WHERE,
 			_SQL_COUNT_OBJECTSTATETRANSITION_WHERE,
 			ObjectStateTransitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"",
+			"", "",
 			new FinderColumn<>(
 				"objectStateTransition.", "uuid", "uuid_",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -793,7 +793,7 @@ public class ObjectStateTransitionPersistenceImpl
 				_SQL_SELECT_OBJECTSTATETRANSITION_WHERE,
 				_SQL_COUNT_OBJECTSTATETRANSITION_WHERE,
 				ObjectStateTransitionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"objectStateTransition.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -828,7 +828,7 @@ public class ObjectStateTransitionPersistenceImpl
 				_SQL_SELECT_OBJECTSTATETRANSITION_WHERE,
 				_SQL_COUNT_OBJECTSTATETRANSITION_WHERE,
 				ObjectStateTransitionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"objectStateTransition.", "objectStateFlowId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -859,7 +859,7 @@ public class ObjectStateTransitionPersistenceImpl
 				_SQL_SELECT_OBJECTSTATETRANSITION_WHERE,
 				_SQL_COUNT_OBJECTSTATETRANSITION_WHERE,
 				ObjectStateTransitionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"objectStateTransition.", "sourceObjectStateId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -890,7 +890,7 @@ public class ObjectStateTransitionPersistenceImpl
 				_SQL_SELECT_OBJECTSTATETRANSITION_WHERE,
 				_SQL_COUNT_OBJECTSTATETRANSITION_WHERE,
 				ObjectStateTransitionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"objectStateTransition.", "targetObjectStateId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -962,4 +962,4 @@ public class ObjectStateTransitionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1419859740
+// LIFERAY-SERVICE-BUILDER-HASH:89979550

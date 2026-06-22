@@ -501,7 +501,7 @@ public class CountryLocalizationPersistenceImpl
 				_SQL_SELECT_COUNTRYLOCALIZATION_WHERE,
 				_SQL_COUNT_COUNTRYLOCALIZATION_WHERE,
 				CountryLocalizationModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"countryLocalization.", "countryId", FinderColumn.Type.LONG,
 					"=", true, true, CountryLocalization::getCountryId));
@@ -557,4 +557,4 @@ public class CountryLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1885244676
+// LIFERAY-SERVICE-BUILDER-HASH:-647290690

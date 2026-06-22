@@ -805,7 +805,7 @@ public class MBMailingListPersistenceImpl
 				new String[] {String.class.getName()}, new String[] {"uuid_"},
 				0, 1, false, null),
 			_SQL_SELECT_MBMAILINGLIST_WHERE, _SQL_COUNT_MBMAILINGLIST_WHERE,
-			MBMailingListModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			MBMailingListModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"mbMailingList.", "uuid", "uuid_", FinderColumn.Type.STRING,
 				"=", true, true, MBMailingList::getUuid));
@@ -847,6 +847,7 @@ public class MBMailingListPersistenceImpl
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_MBMAILINGLIST_WHERE, _SQL_COUNT_MBMAILINGLIST_WHERE,
 				MBMailingListModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"mbMailingList.", "uuid", "uuid_", FinderColumn.Type.STRING,
 					"=", true, true, MBMailingList::getUuid),
@@ -875,6 +876,7 @@ public class MBMailingListPersistenceImpl
 					new String[] {"active_"}, false),
 				_SQL_SELECT_MBMAILINGLIST_WHERE, _SQL_COUNT_MBMAILINGLIST_WHERE,
 				MBMailingListModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"mbMailingList.", "active", "active_",
 					FinderColumn.Type.BOOLEAN, "=", true, true,
@@ -967,4 +969,4 @@ public class MBMailingListPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1828019309
+// LIFERAY-SERVICE-BUILDER-HASH:-1544867853

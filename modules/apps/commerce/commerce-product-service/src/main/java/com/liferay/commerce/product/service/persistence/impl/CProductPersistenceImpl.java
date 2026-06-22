@@ -846,7 +846,7 @@ public class CProductPersistenceImpl
 				new String[] {String.class.getName()}, new String[] {"uuid_"},
 				0, 1, false, null),
 			_SQL_SELECT_CPRODUCT_WHERE, _SQL_COUNT_CPRODUCT_WHERE,
-			CProductModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			CProductModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"cProduct.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
 				true, true, CProduct::getUuid));
@@ -886,7 +886,7 @@ public class CProductPersistenceImpl
 					new String[] {String.class.getName(), Long.class.getName()},
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_CPRODUCT_WHERE, _SQL_COUNT_CPRODUCT_WHERE,
-				CProductModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				CProductModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"cProduct.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
 					true, true, CProduct::getUuid),
@@ -914,7 +914,7 @@ public class CProductPersistenceImpl
 					new String[] {Long.class.getName()},
 					new String[] {"groupId"}, false),
 				_SQL_SELECT_CPRODUCT_WHERE, _SQL_COUNT_CPRODUCT_WHERE,
-				CProductModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				CProductModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"cProduct.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, CProduct::getGroupId));
@@ -1007,4 +1007,4 @@ public class CProductPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-999408944
+// LIFERAY-SERVICE-BUILDER-HASH:1118685718

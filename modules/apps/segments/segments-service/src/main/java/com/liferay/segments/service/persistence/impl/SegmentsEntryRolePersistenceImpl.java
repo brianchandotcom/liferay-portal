@@ -621,7 +621,7 @@ public class SegmentsEntryRolePersistenceImpl
 				_SQL_SELECT_SEGMENTSENTRYROLE_WHERE,
 				_SQL_COUNT_SEGMENTSENTRYROLE_WHERE,
 				SegmentsEntryRoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"segmentsEntryRole.", "segmentsEntryId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -649,7 +649,7 @@ public class SegmentsEntryRolePersistenceImpl
 				_SQL_SELECT_SEGMENTSENTRYROLE_WHERE,
 				_SQL_COUNT_SEGMENTSENTRYROLE_WHERE,
 				SegmentsEntryRoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"segmentsEntryRole.", "roleId", FinderColumn.Type.LONG, "=",
 					true, true, SegmentsEntryRole::getRoleId));
@@ -739,4 +739,4 @@ public class SegmentsEntryRolePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1693244190
+// LIFERAY-SERVICE-BUILDER-HASH:302313822

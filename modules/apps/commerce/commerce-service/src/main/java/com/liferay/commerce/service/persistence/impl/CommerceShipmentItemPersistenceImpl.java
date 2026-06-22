@@ -1353,7 +1353,7 @@ public class CommerceShipmentItemPersistenceImpl
 			_SQL_SELECT_COMMERCESHIPMENTITEM_WHERE,
 			_SQL_COUNT_COMMERCESHIPMENTITEM_WHERE,
 			CommerceShipmentItemModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"",
+			"", "",
 			new FinderColumn<>(
 				"commerceShipmentItem.", "uuid", "uuid_",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -1398,7 +1398,7 @@ public class CommerceShipmentItemPersistenceImpl
 				_SQL_SELECT_COMMERCESHIPMENTITEM_WHERE,
 				_SQL_COUNT_COMMERCESHIPMENTITEM_WHERE,
 				CommerceShipmentItemModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"commerceShipmentItem.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -1430,7 +1430,7 @@ public class CommerceShipmentItemPersistenceImpl
 				_SQL_SELECT_COMMERCESHIPMENTITEM_WHERE,
 				_SQL_COUNT_COMMERCESHIPMENTITEM_WHERE,
 				CommerceShipmentItemModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"commerceShipmentItem.", "groupId", FinderColumn.Type.LONG,
 					"=", true, true, CommerceShipmentItem::getGroupId));
@@ -1460,7 +1460,7 @@ public class CommerceShipmentItemPersistenceImpl
 				_SQL_SELECT_COMMERCESHIPMENTITEM_WHERE,
 				_SQL_COUNT_COMMERCESHIPMENTITEM_WHERE,
 				CommerceShipmentItemModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"commerceShipmentItem.", "commerceShipmentId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1491,7 +1491,7 @@ public class CommerceShipmentItemPersistenceImpl
 				_SQL_SELECT_COMMERCESHIPMENTITEM_WHERE,
 				_SQL_COUNT_COMMERCESHIPMENTITEM_WHERE,
 				CommerceShipmentItemModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"commerceShipmentItem.", "commerceOrderItemId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1521,7 +1521,7 @@ public class CommerceShipmentItemPersistenceImpl
 			_SQL_SELECT_COMMERCESHIPMENTITEM_WHERE,
 			_SQL_COUNT_COMMERCESHIPMENTITEM_WHERE,
 			CommerceShipmentItemModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"",
+			"", "",
 			new FinderColumn<>(
 				"commerceShipmentItem.", "commerceShipmentId",
 				FinderColumn.Type.LONG, "=", true, true,
@@ -1592,7 +1592,7 @@ public class CommerceShipmentItemPersistenceImpl
 				_SQL_SELECT_COMMERCESHIPMENTITEM_WHERE,
 				_SQL_COUNT_COMMERCESHIPMENTITEM_WHERE,
 				CommerceShipmentItemModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"commerceShipmentItem.", "commerceShipmentId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1694,4 +1694,4 @@ public class CommerceShipmentItemPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-217303867
+// LIFERAY-SERVICE-BUILDER-HASH:483306379

@@ -600,7 +600,7 @@ public class DDMStructureLinkPersistenceImpl
 				_SQL_SELECT_DDMSTRUCTURELINK_WHERE,
 				_SQL_COUNT_DDMSTRUCTURELINK_WHERE,
 				DDMStructureLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"ddmStructureLink.", "structureId", FinderColumn.Type.LONG,
 					"=", true, true, DDMStructureLink::getStructureId));
@@ -626,6 +626,7 @@ public class DDMStructureLinkPersistenceImpl
 			_SQL_SELECT_DDMSTRUCTURELINK_WHERE,
 			_SQL_COUNT_DDMSTRUCTURELINK_WHERE,
 			DDMStructureLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			"",
 			new FinderColumn<>(
 				"ddmStructureLink.", "classNameId", FinderColumn.Type.LONG, "=",
 				true, true, DDMStructureLink::getClassNameId),
@@ -724,4 +725,4 @@ public class DDMStructureLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:549925164
+// LIFERAY-SERVICE-BUILDER-HASH:-1599843288

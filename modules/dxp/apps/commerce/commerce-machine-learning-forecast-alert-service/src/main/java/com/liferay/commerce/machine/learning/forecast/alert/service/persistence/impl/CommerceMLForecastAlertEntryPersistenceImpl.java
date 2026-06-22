@@ -1489,7 +1489,7 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 			_SQL_SELECT_COMMERCEMLFORECASTALERTENTRY_WHERE,
 			_SQL_COUNT_COMMERCEMLFORECASTALERTENTRY_WHERE,
 			CommerceMLForecastAlertEntryModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX, "",
+			_ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"commerceMLForecastAlertEntry.", "uuid", "uuid_",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -1517,7 +1517,7 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 				_SQL_SELECT_COMMERCEMLFORECASTALERTENTRY_WHERE,
 				_SQL_COUNT_COMMERCEMLFORECASTALERTENTRY_WHERE,
 				CommerceMLForecastAlertEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"commerceMLForecastAlertEntry.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -1584,7 +1584,7 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 			_SQL_SELECT_COMMERCEMLFORECASTALERTENTRY_WHERE,
 			_SQL_COUNT_COMMERCEMLFORECASTALERTENTRY_WHERE,
 			CommerceMLForecastAlertEntryModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX, "",
+			_ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"commerceMLForecastAlertEntry.", "companyId",
 				FinderColumn.Type.LONG, "=", true, true,
@@ -1629,7 +1629,7 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 				_SQL_SELECT_COMMERCEMLFORECASTALERTENTRY_WHERE,
 				_SQL_COUNT_COMMERCEMLFORECASTALERTENTRY_WHERE,
 				CommerceMLForecastAlertEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"commerceMLForecastAlertEntry.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1678,7 +1678,7 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 				_SQL_SELECT_COMMERCEMLFORECASTALERTENTRY_WHERE,
 				_SQL_COUNT_COMMERCEMLFORECASTALERTENTRY_WHERE,
 				CommerceMLForecastAlertEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"commerceMLForecastAlertEntry.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1774,4 +1774,4 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1578784921
+// LIFERAY-SERVICE-BUILDER-HASH:1128080727

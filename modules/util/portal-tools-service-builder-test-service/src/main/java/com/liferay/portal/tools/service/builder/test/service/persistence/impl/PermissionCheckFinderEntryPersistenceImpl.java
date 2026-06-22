@@ -505,7 +505,7 @@ public class PermissionCheckFinderEntryPersistenceImpl
 				_SQL_SELECT_PERMISSIONCHECKFINDERENTRY_WHERE,
 				_SQL_COUNT_PERMISSIONCHECKFINDERENTRY_WHERE,
 				PermissionCheckFinderEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new ArrayableFinderColumn<>(
 					"permissionCheckFinderEntry.", "groupId",
 					FinderColumn.Type.LONG, "=", false, true, true,
@@ -550,4 +550,4 @@ public class PermissionCheckFinderEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1957123506
+// LIFERAY-SERVICE-BUILDER-HASH:-1464679568

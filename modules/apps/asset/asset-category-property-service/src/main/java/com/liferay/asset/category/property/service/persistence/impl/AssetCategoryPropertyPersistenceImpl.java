@@ -883,7 +883,7 @@ public class AssetCategoryPropertyPersistenceImpl
 				_SQL_SELECT_ASSETCATEGORYPROPERTY_WHERE,
 				_SQL_COUNT_ASSETCATEGORYPROPERTY_WHERE,
 				AssetCategoryPropertyModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"assetCategoryProperty.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -911,7 +911,7 @@ public class AssetCategoryPropertyPersistenceImpl
 				_SQL_SELECT_ASSETCATEGORYPROPERTY_WHERE,
 				_SQL_COUNT_ASSETCATEGORYPROPERTY_WHERE,
 				AssetCategoryPropertyModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"assetCategoryProperty.", "categoryId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -938,7 +938,7 @@ public class AssetCategoryPropertyPersistenceImpl
 			_SQL_SELECT_ASSETCATEGORYPROPERTY_WHERE,
 			_SQL_COUNT_ASSETCATEGORYPROPERTY_WHERE,
 			AssetCategoryPropertyModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"",
+			"", "",
 			new FinderColumn<>(
 				"assetCategoryProperty.", "companyId", FinderColumn.Type.LONG,
 				"=", true, true, AssetCategoryProperty::getCompanyId),
@@ -1055,4 +1055,4 @@ public class AssetCategoryPropertyPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-974387628
+// LIFERAY-SERVICE-BUILDER-HASH:-1461961066

@@ -691,7 +691,7 @@ public class CommercePricingClassCPDefinitionRelPersistenceImpl
 				_SQL_SELECT_COMMERCEPRICINGCLASSCPDEFINITIONREL_WHERE,
 				_SQL_COUNT_COMMERCEPRICINGCLASSCPDEFINITIONREL_WHERE,
 				CommercePricingClassCPDefinitionRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"commercePricingClassCPDefinitionRel.",
 					"commercePricingClassId", FinderColumn.Type.LONG, "=", true,
@@ -723,7 +723,7 @@ public class CommercePricingClassCPDefinitionRelPersistenceImpl
 				_SQL_SELECT_COMMERCEPRICINGCLASSCPDEFINITIONREL_WHERE,
 				_SQL_COUNT_COMMERCEPRICINGCLASSCPDEFINITIONREL_WHERE,
 				CommercePricingClassCPDefinitionRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"commercePricingClassCPDefinitionRel.", "CPDefinitionId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -825,4 +825,4 @@ public class CommercePricingClassCPDefinitionRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1421678538
+// LIFERAY-SERVICE-BUILDER-HASH:-1356909686

@@ -561,7 +561,7 @@ public class PortletItemPersistenceImpl
 				new String[] {Long.class.getName(), Long.class.getName()},
 				new String[] {"groupId", "classNameId"}, false),
 			_SQL_SELECT_PORTLETITEM_WHERE, _SQL_COUNT_PORTLETITEM_WHERE,
-			PortletItemModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			PortletItemModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"portletItem.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, PortletItem::getGroupId),
@@ -596,7 +596,7 @@ public class PortletItemPersistenceImpl
 				new String[] {"groupId", "portletId", "classNameId"}, 0, 2,
 				false, null),
 			_SQL_SELECT_PORTLETITEM_WHERE, _SQL_COUNT_PORTLETITEM_WHERE,
-			PortletItemModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			PortletItemModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"portletItem.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, PortletItem::getGroupId),
@@ -667,4 +667,4 @@ public class PortletItemPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-563345122
+// LIFERAY-SERVICE-BUILDER-HASH:-517799910

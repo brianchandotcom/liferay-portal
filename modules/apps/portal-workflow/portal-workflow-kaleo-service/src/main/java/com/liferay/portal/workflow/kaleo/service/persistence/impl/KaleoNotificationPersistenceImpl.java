@@ -759,7 +759,7 @@ public class KaleoNotificationPersistenceImpl
 				_SQL_SELECT_KALEONOTIFICATION_WHERE,
 				_SQL_COUNT_KALEONOTIFICATION_WHERE,
 				KaleoNotificationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"kaleoNotification.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, KaleoNotification::getCompanyId));
@@ -789,7 +789,7 @@ public class KaleoNotificationPersistenceImpl
 				_SQL_SELECT_KALEONOTIFICATION_WHERE,
 				_SQL_COUNT_KALEONOTIFICATION_WHERE,
 				KaleoNotificationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"kaleoNotification.", "kaleoDefinitionVersionId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -820,7 +820,7 @@ public class KaleoNotificationPersistenceImpl
 				_SQL_SELECT_KALEONOTIFICATION_WHERE,
 				_SQL_COUNT_KALEONOTIFICATION_WHERE,
 				KaleoNotificationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"kaleoNotification.", "kaleoClassName",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -856,7 +856,7 @@ public class KaleoNotificationPersistenceImpl
 				_SQL_SELECT_KALEONOTIFICATION_WHERE,
 				_SQL_COUNT_KALEONOTIFICATION_WHERE,
 				KaleoNotificationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"kaleoNotification.", "kaleoClassName",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -932,4 +932,4 @@ public class KaleoNotificationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1766130629
+// LIFERAY-SERVICE-BUILDER-HASH:615803269

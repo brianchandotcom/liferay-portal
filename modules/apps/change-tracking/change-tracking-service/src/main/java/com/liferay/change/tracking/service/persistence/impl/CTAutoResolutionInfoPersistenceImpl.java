@@ -576,7 +576,7 @@ public class CTAutoResolutionInfoPersistenceImpl
 				_SQL_SELECT_CTAUTORESOLUTIONINFO_WHERE,
 				_SQL_COUNT_CTAUTORESOLUTIONINFO_WHERE,
 				CTAutoResolutionInfoModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"ctAutoResolutionInfo.", "ctCollectionId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -626,7 +626,7 @@ public class CTAutoResolutionInfoPersistenceImpl
 				_SQL_SELECT_CTAUTORESOLUTIONINFO_WHERE,
 				_SQL_COUNT_CTAUTORESOLUTIONINFO_WHERE,
 				CTAutoResolutionInfoModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"ctAutoResolutionInfo.", "ctCollectionId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -703,4 +703,4 @@ public class CTAutoResolutionInfoPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2024571075
+// LIFERAY-SERVICE-BUILDER-HASH:-364802621

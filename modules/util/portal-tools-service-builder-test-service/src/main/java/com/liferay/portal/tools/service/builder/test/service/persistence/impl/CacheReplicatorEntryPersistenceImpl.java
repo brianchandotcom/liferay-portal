@@ -413,7 +413,7 @@ public class CacheReplicatorEntryPersistenceImpl
 				_SQL_SELECT_CACHEREPLICATORENTRY_WHERE,
 				_SQL_COUNT_CACHEREPLICATORENTRY_WHERE,
 				CacheReplicatorEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"cacheReplicatorEntry.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -469,4 +469,4 @@ public class CacheReplicatorEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1598035314
+// LIFERAY-SERVICE-BUILDER-HASH:-780669200

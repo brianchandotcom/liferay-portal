@@ -682,7 +682,7 @@ public class ObjectViewSortColumnPersistenceImpl
 			_SQL_SELECT_OBJECTVIEWSORTCOLUMN_WHERE,
 			_SQL_COUNT_OBJECTVIEWSORTCOLUMN_WHERE,
 			ObjectViewSortColumnModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"",
+			"", "",
 			new FinderColumn<>(
 				"objectViewSortColumn.", "uuid", "uuid_",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -710,7 +710,7 @@ public class ObjectViewSortColumnPersistenceImpl
 				_SQL_SELECT_OBJECTVIEWSORTCOLUMN_WHERE,
 				_SQL_COUNT_OBJECTVIEWSORTCOLUMN_WHERE,
 				ObjectViewSortColumnModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"objectViewSortColumn.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -743,7 +743,7 @@ public class ObjectViewSortColumnPersistenceImpl
 				_SQL_SELECT_OBJECTVIEWSORTCOLUMN_WHERE,
 				_SQL_COUNT_OBJECTVIEWSORTCOLUMN_WHERE,
 				ObjectViewSortColumnModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"objectViewSortColumn.", "objectViewId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -773,7 +773,7 @@ public class ObjectViewSortColumnPersistenceImpl
 				_SQL_SELECT_OBJECTVIEWSORTCOLUMN_WHERE,
 				_SQL_COUNT_OBJECTVIEWSORTCOLUMN_WHERE,
 				ObjectViewSortColumnModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"objectViewSortColumn.", "objectViewId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -849,4 +849,4 @@ public class ObjectViewSortColumnPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1789760215
+// LIFERAY-SERVICE-BUILDER-HASH:-1936433961

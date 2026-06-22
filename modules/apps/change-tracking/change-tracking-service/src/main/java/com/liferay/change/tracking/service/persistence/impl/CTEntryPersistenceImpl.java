@@ -1273,7 +1273,7 @@ public class CTEntryPersistenceImpl
 				new String[] {String.class.getName()}, new String[] {"uuid_"},
 				0, 1, false, null),
 			_SQL_SELECT_CTENTRY_WHERE, _SQL_COUNT_CTENTRY_WHERE,
-			CTEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			CTEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"ctEntry.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
 				true, true, CTEntry::getUuid));
@@ -1298,7 +1298,7 @@ public class CTEntryPersistenceImpl
 					new String[] {String.class.getName(), Long.class.getName()},
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_CTENTRY_WHERE, _SQL_COUNT_CTENTRY_WHERE,
-				CTEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				CTEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"ctEntry.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
 					true, true, CTEntry::getUuid),
@@ -1326,7 +1326,7 @@ public class CTEntryPersistenceImpl
 					new String[] {Long.class.getName()},
 					new String[] {"userId"}, false),
 				_SQL_SELECT_CTENTRY_WHERE, _SQL_COUNT_CTENTRY_WHERE,
-				CTEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				CTEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"ctEntry.", "userId", FinderColumn.Type.LONG, "=", true,
 					true, CTEntry::getUserId));
@@ -1353,7 +1353,7 @@ public class CTEntryPersistenceImpl
 					new String[] {Long.class.getName()},
 					new String[] {"ctCollectionId"}, false),
 				_SQL_SELECT_CTENTRY_WHERE, _SQL_COUNT_CTENTRY_WHERE,
-				CTEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				CTEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"ctEntry.", "ctCollectionId", FinderColumn.Type.LONG, "=",
 					true, true, CTEntry::getCtCollectionId));
@@ -1378,7 +1378,7 @@ public class CTEntryPersistenceImpl
 					new String[] {Long.class.getName(), Long.class.getName()},
 					new String[] {"ctCollectionId", "modelClassNameId"}, false),
 				_SQL_SELECT_CTENTRY_WHERE, _SQL_COUNT_CTENTRY_WHERE,
-				CTEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				CTEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"ctEntry.", "ctCollectionId", FinderColumn.Type.LONG, "=",
 					true, true, CTEntry::getCtCollectionId),
@@ -1439,7 +1439,7 @@ public class CTEntryPersistenceImpl
 					},
 					false),
 				_SQL_SELECT_CTENTRY_WHERE, _SQL_COUNT_CTENTRY_WHERE,
-				CTEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				CTEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"ctEntry.", "ctCollectionId", FinderColumn.Type.LONG, "!=",
 					true, true, CTEntry::getCtCollectionId),
@@ -1535,4 +1535,4 @@ public class CTEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:333364410
+// LIFERAY-SERVICE-BUILDER-HASH:1143198454

@@ -529,7 +529,7 @@ public class JournalArticleLocalizationPersistenceImpl
 			_SQL_SELECT_JOURNALARTICLELOCALIZATION_WHERE,
 			_SQL_COUNT_JOURNALARTICLELOCALIZATION_WHERE,
 			JournalArticleLocalizationModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX, "",
+			_ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"journalArticleLocalization.", "companyId",
 				FinderColumn.Type.LONG, "=", true, true,
@@ -634,4 +634,4 @@ public class JournalArticleLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1395423369
+// LIFERAY-SERVICE-BUILDER-HASH:289356789

@@ -558,6 +558,7 @@ public class ObjectStateFlowPersistenceImpl
 				0, 1, false, null),
 			_SQL_SELECT_OBJECTSTATEFLOW_WHERE, _SQL_COUNT_OBJECTSTATEFLOW_WHERE,
 			ObjectStateFlowModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			"",
 			new FinderColumn<>(
 				"objectStateFlow.", "uuid", "uuid_", FinderColumn.Type.STRING,
 				"=", true, true, ObjectStateFlow::getUuid));
@@ -584,7 +585,7 @@ public class ObjectStateFlowPersistenceImpl
 				_SQL_SELECT_OBJECTSTATEFLOW_WHERE,
 				_SQL_COUNT_OBJECTSTATEFLOW_WHERE,
 				ObjectStateFlowModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"objectStateFlow.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -674,4 +675,4 @@ public class ObjectStateFlowPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:352619950
+// LIFERAY-SERVICE-BUILDER-HASH:1801486698

@@ -684,7 +684,7 @@ public class NotificationRecipientSettingPersistenceImpl
 			_SQL_SELECT_NOTIFICATIONRECIPIENTSETTING_WHERE,
 			_SQL_COUNT_NOTIFICATIONRECIPIENTSETTING_WHERE,
 			NotificationRecipientSettingModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX, "",
+			_ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"notificationRecipientSetting.", "uuid", "uuid_",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -712,7 +712,7 @@ public class NotificationRecipientSettingPersistenceImpl
 				_SQL_SELECT_NOTIFICATIONRECIPIENTSETTING_WHERE,
 				_SQL_COUNT_NOTIFICATIONRECIPIENTSETTING_WHERE,
 				NotificationRecipientSettingModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"notificationRecipientSetting.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -747,7 +747,7 @@ public class NotificationRecipientSettingPersistenceImpl
 				_SQL_SELECT_NOTIFICATIONRECIPIENTSETTING_WHERE,
 				_SQL_COUNT_NOTIFICATIONRECIPIENTSETTING_WHERE,
 				NotificationRecipientSettingModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"notificationRecipientSetting.", "notificationRecipientId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -841,4 +841,4 @@ public class NotificationRecipientSettingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1034127723
+// LIFERAY-SERVICE-BUILDER-HASH:-1139896147

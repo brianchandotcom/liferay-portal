@@ -921,7 +921,7 @@ public class TrashEntryPersistenceImpl
 					new String[] {Long.class.getName()},
 					new String[] {"groupId"}, false),
 				_SQL_SELECT_TRASHENTRY_WHERE, _SQL_COUNT_TRASHENTRY_WHERE,
-				TrashEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				TrashEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"trashEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, TrashEntry::getGroupId));
@@ -946,7 +946,7 @@ public class TrashEntryPersistenceImpl
 					"countByCompanyId", new String[] {Long.class.getName()},
 					new String[] {"companyId"}, false),
 				_SQL_SELECT_TRASHENTRY_WHERE, _SQL_COUNT_TRASHENTRY_WHERE,
-				TrashEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				TrashEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"trashEntry.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, TrashEntry::getCompanyId));
@@ -968,7 +968,7 @@ public class TrashEntryPersistenceImpl
 					new String[] {Long.class.getName(), Date.class.getName()},
 					new String[] {"groupId", "createDate"}, false),
 				_SQL_SELECT_TRASHENTRY_WHERE, _SQL_COUNT_TRASHENTRY_WHERE,
-				TrashEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				TrashEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"trashEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, TrashEntry::getGroupId),
@@ -995,7 +995,7 @@ public class TrashEntryPersistenceImpl
 				new String[] {Long.class.getName(), Long.class.getName()},
 				new String[] {"groupId", "classNameId"}, false),
 			_SQL_SELECT_TRASHENTRY_WHERE, _SQL_COUNT_TRASHENTRY_WHERE,
-			TrashEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			TrashEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"trashEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, TrashEntry::getGroupId),
@@ -1022,7 +1022,7 @@ public class TrashEntryPersistenceImpl
 				new String[] {Long.class.getName(), Long.class.getName()},
 				new String[] {"companyId", "classNameId"}, false),
 			_SQL_SELECT_TRASHENTRY_WHERE, _SQL_COUNT_TRASHENTRY_WHERE,
-			TrashEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			TrashEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"trashEntry.", "companyId", FinderColumn.Type.LONG, "=", true,
 				true, TrashEntry::getCompanyId),
@@ -1114,4 +1114,4 @@ public class TrashEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1247687029
+// LIFERAY-SERVICE-BUILDER-HASH:593292091

@@ -1142,6 +1142,7 @@ public class KaleoInstancePersistenceImpl
 					new String[] {"companyId"}, false),
 				_SQL_SELECT_KALEOINSTANCE_WHERE, _SQL_COUNT_KALEOINSTANCE_WHERE,
 				KaleoInstanceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"kaleoInstance.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, KaleoInstance::getCompanyId));
@@ -1170,6 +1171,7 @@ public class KaleoInstancePersistenceImpl
 					new String[] {"kaleoDefinitionVersionId"}, false),
 				_SQL_SELECT_KALEOINSTANCE_WHERE, _SQL_COUNT_KALEOINSTANCE_WHERE,
 				KaleoInstanceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"kaleoInstance.", "kaleoDefinitionVersionId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1194,7 +1196,7 @@ public class KaleoInstancePersistenceImpl
 				new String[] {Long.class.getName(), Long.class.getName()},
 				new String[] {"companyId", "userId"}, false),
 			_SQL_SELECT_KALEOINSTANCE_WHERE, _SQL_COUNT_KALEOINSTANCE_WHERE,
-			KaleoInstanceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			KaleoInstanceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"kaleoInstance.", "companyId", FinderColumn.Type.LONG, "=",
 				true, true, KaleoInstance::getCompanyId),
@@ -1221,7 +1223,7 @@ public class KaleoInstancePersistenceImpl
 				new String[] {Long.class.getName(), Boolean.class.getName()},
 				new String[] {"kaleoDefinitionId", "completed"}, false),
 			_SQL_SELECT_KALEOINSTANCE_WHERE, _SQL_COUNT_KALEOINSTANCE_WHERE,
-			KaleoInstanceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			KaleoInstanceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"kaleoInstance.", "kaleoDefinitionId", FinderColumn.Type.LONG,
 				"=", true, true, KaleoInstance::getKaleoDefinitionId),
@@ -1257,6 +1259,7 @@ public class KaleoInstancePersistenceImpl
 					false),
 				_SQL_SELECT_KALEOINSTANCE_WHERE, _SQL_COUNT_KALEOINSTANCE_WHERE,
 				KaleoInstanceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"kaleoInstance.", "kaleoDefinitionVersionId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1286,6 +1289,7 @@ public class KaleoInstancePersistenceImpl
 					new String[] {"className", "classPK"}, 0, 1, false, null),
 				_SQL_SELECT_KALEOINSTANCE_WHERE, _SQL_COUNT_KALEOINSTANCE_WHERE,
 				KaleoInstanceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"kaleoInstance.", "className", FinderColumn.Type.STRING,
 					"=", true, true, KaleoInstance::getClassName),
@@ -1358,6 +1362,7 @@ public class KaleoInstancePersistenceImpl
 					0, 2, false, null),
 				_SQL_SELECT_KALEOINSTANCE_WHERE, _SQL_COUNT_KALEOINSTANCE_WHERE,
 				KaleoInstanceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"kaleoInstance.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, KaleoInstance::getCompanyId),
@@ -1445,4 +1450,4 @@ public class KaleoInstancePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:249156803
+// LIFERAY-SERVICE-BUILDER-HASH:2068499649

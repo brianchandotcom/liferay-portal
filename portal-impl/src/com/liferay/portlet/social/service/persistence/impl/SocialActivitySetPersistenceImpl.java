@@ -951,7 +951,7 @@ public class SocialActivitySetPersistenceImpl
 				_SQL_SELECT_SOCIALACTIVITYSET_WHERE,
 				_SQL_COUNT_SOCIALACTIVITYSET_WHERE,
 				SocialActivitySetModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"socialActivitySet.", "groupId", FinderColumn.Type.LONG,
 					"=", true, true, SocialActivitySet::getGroupId));
@@ -978,7 +978,7 @@ public class SocialActivitySetPersistenceImpl
 				_SQL_SELECT_SOCIALACTIVITYSET_WHERE,
 				_SQL_COUNT_SOCIALACTIVITYSET_WHERE,
 				SocialActivitySetModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"socialActivitySet.", "userId", FinderColumn.Type.LONG, "=",
 					true, true, SocialActivitySet::getUserId));
@@ -1010,6 +1010,7 @@ public class SocialActivitySetPersistenceImpl
 			_SQL_SELECT_SOCIALACTIVITYSET_WHERE,
 			_SQL_COUNT_SOCIALACTIVITYSET_WHERE,
 			SocialActivitySetModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			"",
 			new FinderColumn<>(
 				"socialActivitySet.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, SocialActivitySet::getGroupId),
@@ -1048,6 +1049,7 @@ public class SocialActivitySetPersistenceImpl
 			_SQL_SELECT_SOCIALACTIVITYSET_WHERE,
 			_SQL_COUNT_SOCIALACTIVITYSET_WHERE,
 			SocialActivitySetModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			"",
 			new FinderColumn<>(
 				"socialActivitySet.", "classNameId", FinderColumn.Type.LONG,
 				"=", true, true, SocialActivitySet::getClassNameId),
@@ -1091,7 +1093,7 @@ public class SocialActivitySetPersistenceImpl
 				_SQL_SELECT_SOCIALACTIVITYSET_WHERE,
 				_SQL_COUNT_SOCIALACTIVITYSET_WHERE,
 				SocialActivitySetModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"socialActivitySet.", "groupId", FinderColumn.Type.LONG,
 					"=", true, true, SocialActivitySet::getGroupId),
@@ -1138,7 +1140,7 @@ public class SocialActivitySetPersistenceImpl
 				_SQL_SELECT_SOCIALACTIVITYSET_WHERE,
 				_SQL_COUNT_SOCIALACTIVITYSET_WHERE,
 				SocialActivitySetModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"socialActivitySet.", "userId", FinderColumn.Type.LONG, "=",
 					true, true, SocialActivitySet::getUserId),
@@ -1186,4 +1188,4 @@ public class SocialActivitySetPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:193019278
+// LIFERAY-SERVICE-BUILDER-HASH:2101314958

@@ -590,6 +590,7 @@ public class FaroChannelPersistenceImpl
 					new String[] {"groupId"}, false),
 				_SQL_SELECT_FAROCHANNEL_WHERE, _SQL_COUNT_FAROCHANNEL_WHERE,
 				FaroChannelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"faroChannel.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, FaroChannel::getGroupId));
@@ -618,6 +619,7 @@ public class FaroChannelPersistenceImpl
 					new String[] {"workspaceGroupId"}, false),
 				_SQL_SELECT_FAROCHANNEL_WHERE, _SQL_COUNT_FAROCHANNEL_WHERE,
 				FaroChannelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"faroChannel.", "workspaceGroupId", FinderColumn.Type.LONG,
 					"=", true, true, FaroChannel::getWorkspaceGroupId));
@@ -641,7 +643,7 @@ public class FaroChannelPersistenceImpl
 				new String[] {Long.class.getName(), Long.class.getName()},
 				new String[] {"groupId", "userId"}, false),
 			_SQL_SELECT_FAROCHANNEL_WHERE, _SQL_COUNT_FAROCHANNEL_WHERE,
-			FaroChannelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			FaroChannelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"faroChannel.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, FaroChannel::getGroupId),
@@ -731,4 +733,4 @@ public class FaroChannelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1676199002
+// LIFERAY-SERVICE-BUILDER-HASH:-1592506916

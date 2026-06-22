@@ -1709,7 +1709,7 @@ public class COREntryPersistenceImpl
 					new String[] {String.class.getName()},
 					new String[] {"uuid_"}, 0, 1, false, null),
 				_SQL_SELECT_CORENTRY_WHERE, _SQL_COUNT_CORENTRY_WHERE,
-				COREntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				COREntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"corEntry.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
 					true, true, COREntry::getUuid));
@@ -1734,7 +1734,7 @@ public class COREntryPersistenceImpl
 					new String[] {String.class.getName(), Long.class.getName()},
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_CORENTRY_WHERE, _SQL_COUNT_CORENTRY_WHERE,
-				COREntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				COREntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"corEntry.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
 					true, true, COREntry::getUuid),
@@ -1766,7 +1766,7 @@ public class COREntryPersistenceImpl
 					},
 					new String[] {"companyId", "active_"}, false),
 				_SQL_SELECT_CORENTRY_WHERE, _SQL_COUNT_CORENTRY_WHERE,
-				COREntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				COREntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"corEntry.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, COREntry::getCompanyId),
@@ -1791,7 +1791,7 @@ public class COREntryPersistenceImpl
 					new String[] {Long.class.getName(), String.class.getName()},
 					new String[] {"companyId", "type_"}, false),
 				_SQL_SELECT_CORENTRY_WHERE, _SQL_COUNT_CORENTRY_WHERE,
-				COREntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				COREntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"corEntry.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, COREntry::getCompanyId),
@@ -1818,7 +1818,7 @@ public class COREntryPersistenceImpl
 					},
 					new String[] {"displayDate", "status"}, false),
 				_SQL_SELECT_CORENTRY_WHERE, _SQL_COUNT_CORENTRY_WHERE,
-				COREntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				COREntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"corEntry.", "displayDate", FinderColumn.Type.DATE, "<",
 					true, true, COREntry::getDisplayDate),
@@ -1845,7 +1845,7 @@ public class COREntryPersistenceImpl
 					},
 					new String[] {"expirationDate", "status"}, false),
 				_SQL_SELECT_CORENTRY_WHERE, _SQL_COUNT_CORENTRY_WHERE,
-				COREntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				COREntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"corEntry.", "expirationDate", FinderColumn.Type.DATE, "<",
 					true, true, COREntry::getExpirationDate),
@@ -1876,7 +1876,7 @@ public class COREntryPersistenceImpl
 					},
 					new String[] {"companyId", "active_", "type_"}, false),
 				_SQL_SELECT_CORENTRY_WHERE, _SQL_COUNT_CORENTRY_WHERE,
-				COREntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				COREntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"corEntry.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, COREntry::getCompanyId),
@@ -1972,4 +1972,4 @@ public class COREntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1796039457
+// LIFERAY-SERVICE-BUILDER-HASH:-994730913

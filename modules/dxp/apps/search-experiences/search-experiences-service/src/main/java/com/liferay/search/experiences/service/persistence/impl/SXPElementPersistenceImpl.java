@@ -1241,7 +1241,7 @@ public class SXPElementPersistenceImpl
 					new String[] {String.class.getName()},
 					new String[] {"uuid_"}, 0, 1, false, null),
 				_SQL_SELECT_SXPELEMENT_WHERE, _SQL_COUNT_SXPELEMENT_WHERE,
-				SXPElementModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				SXPElementModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"sxpElement.", "uuid", "uuid_", FinderColumn.Type.STRING,
 					"=", true, true, SXPElement::getUuid));
@@ -1266,7 +1266,7 @@ public class SXPElementPersistenceImpl
 					new String[] {String.class.getName(), Long.class.getName()},
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_SXPELEMENT_WHERE, _SQL_COUNT_SXPELEMENT_WHERE,
-				SXPElementModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				SXPElementModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"sxpElement.", "uuid", "uuid_", FinderColumn.Type.STRING,
 					"=", true, true, SXPElement::getUuid),
@@ -1294,7 +1294,7 @@ public class SXPElementPersistenceImpl
 					"countByCompanyId", new String[] {Long.class.getName()},
 					new String[] {"companyId"}, false),
 				_SQL_SELECT_SXPELEMENT_WHERE, _SQL_COUNT_SXPELEMENT_WHERE,
-				SXPElementModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				SXPElementModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"sxpElement.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, SXPElement::getCompanyId));
@@ -1323,7 +1323,7 @@ public class SXPElementPersistenceImpl
 					},
 					new String[] {"companyId", "readOnly"}, false),
 				_SQL_SELECT_SXPELEMENT_WHERE, _SQL_COUNT_SXPELEMENT_WHERE,
-				SXPElementModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				SXPElementModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"sxpElement.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, SXPElement::getCompanyId),
@@ -1355,7 +1355,7 @@ public class SXPElementPersistenceImpl
 					},
 					new String[] {"companyId", "type_"}, false),
 				_SQL_SELECT_SXPELEMENT_WHERE, _SQL_COUNT_SXPELEMENT_WHERE,
-				SXPElementModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				SXPElementModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"sxpElement.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, SXPElement::getCompanyId),
@@ -1390,7 +1390,7 @@ public class SXPElementPersistenceImpl
 					},
 					new String[] {"companyId", "type_", "status"}, false),
 				_SQL_SELECT_SXPELEMENT_WHERE, _SQL_COUNT_SXPELEMENT_WHERE,
-				SXPElementModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				SXPElementModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"sxpElement.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, SXPElement::getCompanyId),
@@ -1488,4 +1488,4 @@ public class SXPElementPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:808684812
+// LIFERAY-SERVICE-BUILDER-HASH:-1601658932

@@ -459,7 +459,7 @@ public class UserNotificationDeliveryPersistenceImpl
 				_SQL_SELECT_USERNOTIFICATIONDELIVERY_WHERE,
 				_SQL_COUNT_USERNOTIFICATIONDELIVERY_WHERE,
 				UserNotificationDeliveryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"userNotificationDelivery.", "userId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -538,4 +538,4 @@ public class UserNotificationDeliveryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1495270063
+// LIFERAY-SERVICE-BUILDER-HASH:-1333882161

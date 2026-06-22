@@ -18,24 +18,24 @@ public interface Encryptor {
 	public String decrypt(Key key, String encryptedString)
 		throws EncryptorException;
 
-	public byte[] decryptUnencodedAsBytes(Key key, byte[] encryptedBytes)
+	public byte[] decryptUnencodedAsBytes(
+			AlgorithmParameterSpec algorithmParameterSpec,
+			byte[] encryptedBytes, Key key, String transformation)
 		throws EncryptorException;
 
-	public byte[] decryptUnencodedAsBytes(
-			Key key, byte[] encryptedBytes, String transformation,
-			AlgorithmParameterSpec algorithmParameterSpec)
+	public byte[] decryptUnencodedAsBytes(Key key, byte[] encryptedBytes)
 		throws EncryptorException;
 
 	public Key deserializeKey(String base64String);
 
 	public String encrypt(Key key, String plainText) throws EncryptorException;
 
-	public byte[] encryptUnencoded(Key key, byte[] plainBytes)
+	public byte[] encryptUnencoded(
+			AlgorithmParameterSpec algorithmParameterSpec, Key key,
+			byte[] plainBytes, String transformation)
 		throws EncryptorException;
 
-	public byte[] encryptUnencoded(
-			Key key, byte[] plainBytes, String transformation,
-			AlgorithmParameterSpec algorithmParameterSpec)
+	public byte[] encryptUnencoded(Key key, byte[] plainBytes)
 		throws EncryptorException;
 
 	public byte[] encryptUnencoded(Key key, String plainText)

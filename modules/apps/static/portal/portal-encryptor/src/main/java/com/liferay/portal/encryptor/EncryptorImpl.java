@@ -61,12 +61,30 @@ public class EncryptorImpl implements Encryptor {
 	}
 
 	@Override
+	public byte[] decryptUnencodedAsBytes(
+			AlgorithmParameterSpec algorithmParameterSpec,
+			byte[] encryptedBytes, Key key, String transformation)
+		throws EncryptorException {
+
+		try {
+			Cipher cipher = Cipher.getInstance(transformation);
+
+			cipher.init(Cipher.DECRYPT_MODE, key, algorithmParameterSpec);
+
+			return cipher.doFinal(encryptedBytes);
+		}
+		catch (Exception exception) {
+			throw new EncryptorException(exception);
+		}
+	}
+
+	@Override
 	public byte[] decryptUnencodedAsBytes(Key key, byte[] encryptedBytes)
 		throws EncryptorException {
 
 		if (PropsValues.FIPS_ENABLED) {
 			try {
-				return _decryptGCM(key, encryptedBytes);
+				return _decryptGCM(encryptedBytes, key);
 			}
 			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
@@ -102,24 +120,6 @@ public class EncryptorImpl implements Encryptor {
 	}
 
 	@Override
-	public byte[] decryptUnencodedAsBytes(
-			Key key, byte[] encryptedBytes, String transformation,
-			AlgorithmParameterSpec algorithmParameterSpec)
-		throws EncryptorException {
-
-		try {
-			Cipher cipher = Cipher.getInstance(transformation);
-
-			cipher.init(Cipher.DECRYPT_MODE, key, algorithmParameterSpec);
-
-			return cipher.doFinal(encryptedBytes);
-		}
-		catch (Exception exception) {
-			throw new EncryptorException(exception);
-		}
-	}
-
-	@Override
 	public Key deserializeKey(String base64String) {
 		if (!FIPSModeUtil.isAllowedAlgorithm(KEY_ALGORITHM)) {
 			throw new SecurityException(
@@ -148,6 +148,24 @@ public class EncryptorImpl implements Encryptor {
 	}
 
 	@Override
+	public byte[] encryptUnencoded(
+			AlgorithmParameterSpec algorithmParameterSpec, Key key,
+			byte[] plainBytes, String transformation)
+		throws EncryptorException {
+
+		try {
+			Cipher cipher = Cipher.getInstance(transformation);
+
+			cipher.init(Cipher.ENCRYPT_MODE, key, algorithmParameterSpec);
+
+			return cipher.doFinal(plainBytes);
+		}
+		catch (Exception exception) {
+			throw new EncryptorException(exception);
+		}
+	}
+
+	@Override
 	public byte[] encryptUnencoded(Key key, byte[] plainBytes)
 		throws EncryptorException {
 
@@ -173,24 +191,6 @@ public class EncryptorImpl implements Encryptor {
 			synchronized (cipher) {
 				return cipher.doFinal(plainBytes);
 			}
-		}
-		catch (Exception exception) {
-			throw new EncryptorException(exception);
-		}
-	}
-
-	@Override
-	public byte[] encryptUnencoded(
-			Key key, byte[] plainBytes, String transformation,
-			AlgorithmParameterSpec algorithmParameterSpec)
-		throws EncryptorException {
-
-		try {
-			Cipher cipher = Cipher.getInstance(transformation);
-
-			cipher.init(Cipher.ENCRYPT_MODE, key, algorithmParameterSpec);
-
-			return cipher.doFinal(plainBytes);
 		}
 		catch (Exception exception) {
 			throw new EncryptorException(exception);
@@ -227,7 +227,7 @@ public class EncryptorImpl implements Encryptor {
 		return Base64.encode(key.getEncoded());
 	}
 
-	private byte[] _decryptGCM(Key key, byte[] encryptedBytes)
+	private byte[] _decryptGCM(byte[] encryptedBytes, Key key)
 		throws EncryptorException {
 
 		byte[] cipherBytes = Arrays.copyOfRange(
@@ -238,8 +238,8 @@ public class EncryptorImpl implements Encryptor {
 			encryptedBytes, 0, _GCM_INITIALIZATION_VECTOR_LENGTH);
 
 		return decryptUnencodedAsBytes(
-			key, cipherBytes, _AES_GCM_NOPADDING,
-			new GCMParameterSpec(_GCM_TAG_LENGTH_BITS, initializationVector));
+			new GCMParameterSpec(_GCM_TAG_LENGTH_BITS, initializationVector),
+			cipherBytes, key, _AES_GCM_NOPADDING);
 	}
 
 	private String _decryptUnencodedAsString(Key key, byte[] encryptedBytes)
@@ -267,8 +267,8 @@ public class EncryptorImpl implements Encryptor {
 		}
 
 		byte[] cipherBytes = encryptUnencoded(
-			key, plainBytes, _AES_GCM_NOPADDING,
-			new GCMParameterSpec(_GCM_TAG_LENGTH_BITS, initializationVector));
+			new GCMParameterSpec(_GCM_TAG_LENGTH_BITS, initializationVector),
+			key, plainBytes, _AES_GCM_NOPADDING);
 
 		byte[] encryptedBytes =
 			new byte[initializationVector.length + cipherBytes.length];

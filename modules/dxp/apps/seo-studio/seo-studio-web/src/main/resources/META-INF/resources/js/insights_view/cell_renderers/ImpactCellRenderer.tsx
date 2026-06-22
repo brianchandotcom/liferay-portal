@@ -27,22 +27,22 @@ function getDisplayType(severityKey: string) {
 
 export default function ImpactCellRenderer({
 	itemData,
-	value,
 }: {
-	itemData: {severity?: {key?: string}};
-	value: string;
+	itemData: {severity?: {key?: string; name?: string}};
 }) {
-	if (!value) {
+	const severity = itemData?.severity;
+
+	if (!severity?.name) {
 		return null;
 	}
 
 	return (
 		<ClayLabel
-			displayType={getDisplayType(itemData?.severity?.key ?? '')}
+			displayType={getDisplayType(severity.key ?? '')}
 			inverse
 			withClose={false}
 		>
-			{value}
+			{severity.name}
 		</ClayLabel>
 	);
 }

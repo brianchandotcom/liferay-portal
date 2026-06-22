@@ -18,6 +18,7 @@ export default function InsightsView({
 	emptyState,
 	fdsActionDropdownItems,
 	fdsId,
+	filters,
 	onSelectInsight,
 	views,
 }: {
@@ -25,6 +26,7 @@ export default function InsightsView({
 	emptyState: Record<string, unknown>;
 	fdsActionDropdownItems: any[];
 	fdsId: string;
+	filters: any[];
 	onSelectInsight: (externalReferenceCode: string) => void;
 	views: any[];
 }) {
@@ -63,10 +65,11 @@ export default function InsightsView({
 						],
 					}}
 					emptyState={emptyState}
+					filters={filters}
 					id={fdsId}
 					itemsActions={fdsActionDropdownItems}
 					pagination={{initialDelta: 10}}
-					showManagementBar={false}
+					showManagementBar
 					showPagination
 					showSearch={false}
 					uniformActionsDisplay

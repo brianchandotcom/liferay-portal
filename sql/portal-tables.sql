@@ -203,6 +203,7 @@ create table AssetVocabularyGroupRel (
 	groupId LONG,
 	companyId LONG,
 	vocabularyId LONG,
+	depotEntryType INTEGER,
 	primary key (assetVocabularyGroupRelId, ctCollectionId)
 );
 

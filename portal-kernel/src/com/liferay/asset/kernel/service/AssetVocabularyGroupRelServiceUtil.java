@@ -30,10 +30,11 @@ public class AssetVocabularyGroupRelServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portlet.asset.service.impl.AssetVocabularyGroupRelServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static AssetVocabularyGroupRel addAssetVocabularyGroupRel(
-			long groupId, long vocabularyId)
+			long groupId, long vocabularyId, int depotEntryType)
 		throws PortalException {
 
-		return getService().addAssetVocabularyGroupRel(groupId, vocabularyId);
+		return getService().addAssetVocabularyGroupRel(
+			groupId, vocabularyId, depotEntryType);
 	}
 
 	public static List<AssetVocabularyGroupRel>
@@ -54,10 +55,11 @@ public class AssetVocabularyGroupRelServiceUtil {
 	}
 
 	public static void setAssetVocabularyGroupRels(
-			long vocabularyId, long[] groupIds)
+			long vocabularyId, long[] groupIds, int depotEntryType)
 		throws PortalException {
 
-		getService().setAssetVocabularyGroupRels(vocabularyId, groupIds);
+		getService().setAssetVocabularyGroupRels(
+			vocabularyId, groupIds, depotEntryType);
 	}
 
 	public static AssetVocabularyGroupRelService getService() {
@@ -71,4 +73,4 @@ public class AssetVocabularyGroupRelServiceUtil {
 	private static volatile AssetVocabularyGroupRelService _service;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1340836508
+// LIFERAY-SERVICE-BUILDER-HASH:278641686

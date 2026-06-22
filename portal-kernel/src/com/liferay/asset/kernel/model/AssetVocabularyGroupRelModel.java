@@ -156,6 +156,20 @@ public interface AssetVocabularyGroupRelModel
 	 */
 	public void setVocabularyId(long vocabularyId);
 
+	/**
+	 * Returns the depot entry type of this asset vocabulary group rel.
+	 *
+	 * @return the depot entry type of this asset vocabulary group rel
+	 */
+	public int getDepotEntryType();
+
+	/**
+	 * Sets the depot entry type of this asset vocabulary group rel.
+	 *
+	 * @param depotEntryType the depot entry type of this asset vocabulary group rel
+	 */
+	public void setDepotEntryType(int depotEntryType);
+
 	@Override
 	public AssetVocabularyGroupRel cloneWithOriginalValues();
 
@@ -164,4 +178,4 @@ public interface AssetVocabularyGroupRelModel
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1105584765
+// LIFERAY-SERVICE-BUILDER-HASH:-1888959058

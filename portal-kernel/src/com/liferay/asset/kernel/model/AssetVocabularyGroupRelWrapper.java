@@ -44,6 +44,7 @@ public class AssetVocabularyGroupRelWrapper
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("vocabularyId", getVocabularyId());
+		attributes.put("depotEntryType", getDepotEntryType());
 
 		return attributes;
 	}
@@ -92,6 +93,12 @@ public class AssetVocabularyGroupRelWrapper
 		if (vocabularyId != null) {
 			setVocabularyId(vocabularyId);
 		}
+
+		Integer depotEntryType = (Integer)attributes.get("depotEntryType");
+
+		if (depotEntryType != null) {
+			setDepotEntryType(depotEntryType);
+		}
 	}
 
 	@Override
@@ -127,6 +134,16 @@ public class AssetVocabularyGroupRelWrapper
 	@Override
 	public long getCtCollectionId() {
 		return model.getCtCollectionId();
+	}
+
+	/**
+	 * Returns the depot entry type of this asset vocabulary group rel.
+	 *
+	 * @return the depot entry type of this asset vocabulary group rel
+	 */
+	@Override
+	public int getDepotEntryType() {
+		return model.getDepotEntryType();
 	}
 
 	/**
@@ -215,6 +232,16 @@ public class AssetVocabularyGroupRelWrapper
 	}
 
 	/**
+	 * Sets the depot entry type of this asset vocabulary group rel.
+	 *
+	 * @param depotEntryType the depot entry type of this asset vocabulary group rel
+	 */
+	@Override
+	public void setDepotEntryType(int depotEntryType) {
+		model.setDepotEntryType(depotEntryType);
+	}
+
+	/**
 	 * Sets the group ID of this asset vocabulary group rel.
 	 *
 	 * @param groupId the group ID of this asset vocabulary group rel
@@ -291,4 +318,4 @@ public class AssetVocabularyGroupRelWrapper
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1833640854
+// LIFERAY-SERVICE-BUILDER-HASH:561934020

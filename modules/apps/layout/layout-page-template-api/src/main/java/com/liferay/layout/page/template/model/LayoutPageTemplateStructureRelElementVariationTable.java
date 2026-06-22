@@ -13,7 +13,7 @@ import java.sql.Types;
 import java.util.Date;
 
 /**
- * The table class for the &quot;LPTStructureElementVariation&quot; database table.
+ * The table class for the &quot;LPTSRelElementVariation&quot; database table.
  *
  * @author Brian Wing Shun Chan
  * @see LayoutPageTemplateStructureRelElementVariation
@@ -46,7 +46,7 @@ public class LayoutPageTemplateStructureRelElementVariationTable
 	public final Column
 		<LayoutPageTemplateStructureRelElementVariationTable, Long>
 			layoutPageTemplateStructureRelElementVariationId = createColumn(
-				"lptStructureElementVariationId", Long.class, Types.BIGINT,
+				"lptsRelElementVariationId", Long.class, Types.BIGINT,
 				Column.FLAG_PRIMARY);
 	public final Column
 		<LayoutPageTemplateStructureRelElementVariationTable, Long> groupId =
@@ -110,9 +110,9 @@ public class LayoutPageTemplateStructureRelElementVariationTable
 
 	private LayoutPageTemplateStructureRelElementVariationTable() {
 		super(
-			"LPTStructureElementVariation",
+			"LPTSRelElementVariation",
 			LayoutPageTemplateStructureRelElementVariationTable::new);
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1748724357
+// LIFERAY-SERVICE-BUILDER-HASH:1881588054

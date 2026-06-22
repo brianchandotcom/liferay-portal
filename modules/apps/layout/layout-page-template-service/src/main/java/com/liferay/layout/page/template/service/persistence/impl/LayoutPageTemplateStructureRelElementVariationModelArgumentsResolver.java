@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	property = {
 		"class.name=com.liferay.layout.page.template.model.impl.LayoutPageTemplateStructureRelElementVariationImpl",
-		"table.name=LPTStructureElementVariation"
+		"table.name=LPTSRelElementVariation"
 	},
 	service = ArgumentsResolver.class
 )
@@ -136,4 +136,4 @@ public class
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:199437675
+// LIFERAY-SERVICE-BUILDER-HASH:598019976

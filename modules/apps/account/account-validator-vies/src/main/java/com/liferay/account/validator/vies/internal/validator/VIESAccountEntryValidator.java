@@ -103,7 +103,7 @@ public class VIESAccountEntryValidator implements AccountEntryValidator {
 
 		if ((country == null) ||
 			!ArrayUtil.contains(
-				viesAccountEntryValidatorConfiguration.countries(),
+				viesAccountEntryValidatorConfiguration.countryCodes(),
 				country.getA2())) {
 
 			return null;

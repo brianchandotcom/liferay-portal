@@ -570,46 +570,6 @@ public abstract class BaseDBProcess implements DBProcess {
 		}
 	}
 
-	private Connection _enableTransactionForCurrentThread()
-		throws SQLException {
-
-		Map<Thread, Connection> connectionsMap = _connectionsMaps.get(
-			PropsValues.DATABASE_PARTITION_ENABLED ?
-				CompanyThreadLocal.getCompanyId() : CompanyConstants.SYSTEM);
-
-		if (connectionsMap == null) {
-			return null;
-		}
-
-		Connection workerConnection = connectionsMap.get(
-			Thread.currentThread());
-
-		if (workerConnection == null) {
-			return null;
-		}
-
-		boolean previousAutoCommit = workerConnection.getAutoCommit();
-
-		if (!previousAutoCommit) {
-			return null;
-		}
-
-		if (!_transactionalConnections.add(workerConnection)) {
-			return null;
-		}
-
-		try {
-			workerConnection.setAutoCommit(false);
-		}
-		catch (SQLException sqlException) {
-			_transactionalConnections.remove(workerConnection);
-
-			throw sqlException;
-		}
-
-		return workerConnection;
-	}
-
 	private void _finishAndCloseConnection(Connection connection) {
 		if (_transactionalConnections.remove(connection)) {
 			if (_log.isWarnEnabled()) {
@@ -660,8 +620,18 @@ public abstract class BaseDBProcess implements DBProcess {
 						AutoBatchPreparedStatementUtil.autoBatch(
 							connection, updateSQL);
 
-					Connection workerConnection =
-						_enableTransactionForCurrentThread();
+					Map<Thread, Connection> connectionsMap =
+						_connectionsMaps.get(
+							PropsValues.DATABASE_PARTITION_ENABLED ?
+								CompanyThreadLocal.getCompanyId() :
+									CompanyConstants.SYSTEM);
+
+					if (connectionsMap == null) {
+						return preparedStatement;
+					}
+
+					Connection workerConnection = connectionsMap.get(
+						Thread.currentThread());
 
 					if (workerConnection == null) {
 						return preparedStatement;
@@ -671,7 +641,7 @@ public abstract class BaseDBProcess implements DBProcess {
 						ClassLoader.getSystemClassLoader(),
 						new Class<?>[] {PreparedStatement.class},
 						new BatchCommitInvocationHandler(
-							workerConnection, preparedStatement));
+							workerConnection, _transactionalConnections, preparedStatement));
 				}
 				catch (SQLException sqlException) {
 					throw new RuntimeException(sqlException);
@@ -913,6 +883,12 @@ public abstract class BaseDBProcess implements DBProcess {
 
 			String methodName = method.getName();
 
+			boolean isAddBatch = methodName.equals("addBatch");
+
+			if (isAddBatch && !_transaction) {
+				_startTransaction();
+			}
+
 			Object result;
 
 			try {
@@ -922,32 +898,80 @@ public abstract class BaseDBProcess implements DBProcess {
 				throw invocationTargetException.getCause();
 			}
 
-			if (methodName.equals("addBatch")) {
+			if (isAddBatch) {
 				if (++_count >= PropsValues.HIBERNATE_JDBC_BATCH_SIZE) {
-					_count = 0;
-
-					_connection.commit();
+					_finishTransaction(true);
 				}
 			}
-			else if (methodName.equals("executeBatch") && (_count > 0)) {
-				_count = 0;
+			else if (methodName.equals("executeBatch") &&
+					 _transaction) {
 
-				_connection.commit();
+				_finishTransaction(true);
 			}
 
 			return result;
 		}
 
 		private BatchCommitInvocationHandler(
-			Connection connection, PreparedStatement preparedStatement) {
+			Connection connection, Set<Connection> ownedConnections,
+			PreparedStatement preparedStatement) {
 
 			_connection = connection;
+			_transactionalConnections = ownedConnections;
 			_preparedStatement = preparedStatement;
 		}
 
+		private void _finishTransaction(boolean commit) throws SQLException {
+			_count = 0;
+			_transaction = false;
+
+			_transactionalConnections.remove(_connection);
+
+			try {
+				if (commit) {
+					_connection.commit();
+				}
+				else {
+					_connection.rollback();
+				}
+			}
+			finally {
+				try {
+					_connection.setAutoCommit(true);
+				}
+				catch (SQLException sqlException) {
+					_log.error(
+						"Unable to reset auto-commit to true", sqlException);
+				}
+			}
+		}
+
+		private void _startTransaction() throws SQLException {
+			if (!_connection.getAutoCommit()) {
+				return;
+			}
+
+			if (!_transactionalConnections.add(_connection)) {
+				return;
+			}
+
+			try {
+				_connection.setAutoCommit(false);
+			}
+			catch (SQLException sqlException) {
+				_transactionalConnections.remove(_connection);
+
+				throw sqlException;
+			}
+
+			_transaction = true;
+		}
+
+		private final Set<Connection> _transactionalConnections;
 		private final Connection _connection;
 		private int _count;
 		private final PreparedStatement _preparedStatement;
+		private boolean _transaction;
 
 	}
 

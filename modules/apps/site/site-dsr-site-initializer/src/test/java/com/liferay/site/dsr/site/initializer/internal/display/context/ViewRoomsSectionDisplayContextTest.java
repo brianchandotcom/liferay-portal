@@ -265,7 +265,8 @@ public class ViewRoomsSectionDisplayContextTest {
 				_objectDefinition, Mockito.mock(ObjectEntryService.class));
 
 		Assert.assertEquals(
-			"/o/digital-sales-room/rooms?nestedFields=creator",
+			"/o/digital-sales-room/rooms?nestedFields=creator," +
+				"r_accountToDSRRooms_accountEntryId",
 			viewRoomsSectionDisplayContext.getAPIURL());
 	}
 
@@ -280,8 +281,9 @@ public class ViewRoomsSectionDisplayContextTest {
 				Mockito.mock(ObjectEntryService.class));
 
 		Assert.assertEquals(
-			"/o/digital-sales-room/rooms?nestedFields=creator&pageSize=5&sort" +
-				"=dateModified:desc",
+			"/o/digital-sales-room/rooms?nestedFields=creator," +
+				"r_accountToDSRRooms_accountEntryId&pageSize=5&sort" +
+					"=dateModified:desc",
 			viewRoomsSectionDisplayContext.getAPIURL());
 	}
 

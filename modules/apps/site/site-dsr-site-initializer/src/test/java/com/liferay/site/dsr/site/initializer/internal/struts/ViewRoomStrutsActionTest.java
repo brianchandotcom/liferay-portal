@@ -302,10 +302,10 @@ public class ViewRoomStrutsActionTest {
 			_viewRoomStrutsAction.execute(
 				mockHttpServletRequest, mockHttpServletResponse));
 
-		Assert.assertEquals(302, mockHttpServletResponse.getStatus());
 		Assert.assertEquals(
 			"/web/" + _group.getFriendlyURL(),
 			mockHttpServletResponse.getRedirectedUrl());
+		Assert.assertEquals(302, mockHttpServletResponse.getStatus());
 	}
 
 	private MockHttpServletRequest _getMockHttpServletRequest() {

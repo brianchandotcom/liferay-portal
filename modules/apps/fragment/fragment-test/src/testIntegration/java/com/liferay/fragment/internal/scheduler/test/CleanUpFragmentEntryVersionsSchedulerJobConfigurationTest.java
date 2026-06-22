@@ -53,14 +53,14 @@ public class CleanUpFragmentEntryVersionsSchedulerJobConfigurationTest {
 			FragmentEntryVersionTestUtil.addFragmentEntry(_group.getGroupId());
 
 		FragmentEntryVersionTestUtil.insertFragmentEntryVersions(
-			FragmentEntryVersionConstants.FRAGMENT_ENTRY_VERSIONS_COUNT_MAX +
+			FragmentEntryVersionConstants.MAX_COUNT +
 				RandomTestUtil.randomInt(1, 10),
 			CTConstants.CT_COLLECTION_ID_PRODUCTION, fragmentEntry1);
 
 		long ctCollectionId = RandomTestUtil.randomLong();
 
 		FragmentEntryVersionTestUtil.insertFragmentEntryVersions(
-			FragmentEntryVersionConstants.FRAGMENT_ENTRY_VERSIONS_COUNT_MAX +
+			FragmentEntryVersionConstants.MAX_COUNT +
 				RandomTestUtil.randomInt(1, 10),
 			ctCollectionId, fragmentEntry1);
 
@@ -68,7 +68,7 @@ public class CleanUpFragmentEntryVersionsSchedulerJobConfigurationTest {
 			FragmentEntryVersionTestUtil.addFragmentEntry(_group.getGroupId());
 
 		FragmentEntryVersionTestUtil.insertFragmentEntryVersions(
-			FragmentEntryVersionConstants.FRAGMENT_ENTRY_VERSIONS_COUNT_MAX - 1,
+			FragmentEntryVersionConstants.MAX_COUNT - 1,
 			CTConstants.CT_COLLECTION_ID_PRODUCTION, fragmentEntry2);
 
 		List<Integer> ctCollectionVersions =
@@ -85,20 +85,17 @@ public class CleanUpFragmentEntryVersionsSchedulerJobConfigurationTest {
 		Assert.assertEquals(
 			ctCollectionVersions.subList(
 				ctCollectionVersions.size() -
-					FragmentEntryVersionConstants.
-						FRAGMENT_ENTRY_VERSIONS_COUNT_MAX,
+					FragmentEntryVersionConstants.MAX_COUNT,
 				ctCollectionVersions.size()),
 			FragmentEntryVersionTestUtil.getVersions(
 				ctCollectionId, fragmentEntry1));
 		Assert.assertEquals(
 			versions.subList(
-				versions.size() -
-					FragmentEntryVersionConstants.
-						FRAGMENT_ENTRY_VERSIONS_COUNT_MAX,
+				versions.size() - FragmentEntryVersionConstants.MAX_COUNT,
 				versions.size()),
 			FragmentEntryVersionTestUtil.getVersions(fragmentEntry1));
 		Assert.assertEquals(
-			FragmentEntryVersionConstants.FRAGMENT_ENTRY_VERSIONS_COUNT_MAX,
+			FragmentEntryVersionConstants.MAX_COUNT,
 			FragmentEntryVersionTestUtil.countVersions(
 				CTConstants.CT_COLLECTION_ID_PRODUCTION, fragmentEntry2));
 	}

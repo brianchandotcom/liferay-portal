@@ -69,7 +69,7 @@ test.afterEach(async ({apiHelpers, dataSetManagerApiHelpers}) => {
 /**
  * The data set points to an endpoint with two tokens:
  *
- * - `{siteId}` is automatically resolvable: the backend provides its value.
+ * - `{siteId}` is automatically resolved: the backend provides its value.
  * - `{path}` comes from the additional API URL parameters (a `filter`
  *   expression on `friendlyUrlPath`) and must be mapped manually, which also
  *   makes the resolved value observable in the displayed rows.
@@ -352,7 +352,7 @@ test(
 
 			await expect(
 				dataSetFragmentPage.tokenMappingMappingSelect
-			).toHaveValue('auto-resolved');
+			).toHaveValue('autoResolved');
 		});
 
 		await test.step('Assert that changing the mapping mode unmaps the token and brings the skeleton back', async () => {

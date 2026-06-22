@@ -1,10 +1,12 @@
 mock_provider "aws" {
 	mock_data "aws_iam_policy_document" {
 		defaults={
-			json=jsonencode({
-				Statement=[]
-				Version="2012-10-17"
-			})
+			json=jsonencode(
+				{
+					Statement=[]
+					Version="2012-10-17"
+				}
+			)
 		}
 	}
 	mock_resource "aws_iam_policy" {
@@ -68,7 +70,7 @@ override_data {
 run "should_create_the_amp_read_policy_and_sa_annotation_when_keda_is_enabled" {
 	assert {
 		condition=aws_iam_role_policy.keda_amp_read[0].name == "liferay-test-eks-keda-amp-read-policy" && length(aws_iam_role_policy.keda_amp_read) == 1
-		error_message="Enabling KEDA must create the AMP read policy"
+		error_message="The AMP read policy must be created if KEDA is enabled"
 	}
 	assert {
 		condition=jsondecode(aws_iam_role_policy.keda_amp_read[0].policy).Statement[0].Resource == "arn:aws:aps:us-east-1:123456789012:workspace/*"
@@ -76,7 +78,7 @@ run "should_create_the_amp_read_policy_and_sa_annotation_when_keda_is_enabled" {
 	}
 	assert {
 		condition=kubernetes_annotations.keda_operator_sa[0].metadata[0].name == "keda-operator" && length(kubernetes_annotations.keda_operator_sa) == 1
-		error_message="Enabling KEDA must annotate the keda-operator service account for IRSA"
+		error_message="The keda-operator service account for IRSA must be annotated if KEDA is enabled"
 	}
 	command=plan
 	variables {
@@ -86,7 +88,7 @@ run "should_create_the_amp_read_policy_and_sa_annotation_when_keda_is_enabled" {
 run "should_create_the_irsa_role_when_keda_is_enabled" {
 	assert {
 		condition=aws_iam_role.keda[0].name == "liferay-test-eks-keda-irsa" && length(aws_iam_role.keda) == 1
-		error_message="Enabling KEDA must create the KEDA IRSA role named after the cluster"
+		error_message="The KEDA IRSA role named after the cluster if KEDA is enabled"
 	}
 	assert {
 		condition=jsondecode(aws_iam_role.keda[0].assume_role_policy).Statement[0].Condition.StringEquals["oidc.eks.us-east-1.amazonaws.com/id/EXAMPLE:sub"] == "system:serviceaccount:keda-system:keda-operator"

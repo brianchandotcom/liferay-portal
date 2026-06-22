@@ -1,10 +1,12 @@
 mock_provider "aws" {
 	mock_data "aws_iam_policy_document" {
 		defaults={
-			json=jsonencode({
-				Statement=[]
-				Version="2012-10-17"
-			})
+			json=jsonencode(
+				{
+					Statement=[]
+					Version="2012-10-17"
+				}
+			)
 		}
 	}
 	mock_resource "aws_iam_policy" {
@@ -72,11 +74,11 @@ run "should_configure_crossplane_functions_and_runtime_configs" {
 	}
 	assert {
 		condition=kubernetes_manifest.function_auto_ready_runtime_config.manifest.spec.deploymentTemplate.metadata.annotations["sidecar.opentelemetry.io/inject"] == "false"
-		error_message="Function runtime configs must disable OpenTelemetry sidecar injection"
+		error_message="The Function runtime configs must disable OpenTelemetry sidecar injection"
 	}
 	assert {
 		condition=kubernetes_manifest.function_auto_ready_runtime_config.manifest.spec.deploymentTemplate.spec.template.spec.securityContext.runAsNonRoot == true
-		error_message="Function runtime configs must run as nonroot"
+		error_message="The Function runtime configs must run as nonroot"
 	}
 	assert {
 		condition=kubernetes_manifest.function_go_templating.manifest.spec.package == "xpkg.upbound.io/crossplane-contrib/function-go-templating:v0.11.3"

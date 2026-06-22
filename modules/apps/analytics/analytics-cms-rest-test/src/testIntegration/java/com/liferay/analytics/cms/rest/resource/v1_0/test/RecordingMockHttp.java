@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.test.util.MockHttp;
 import com.liferay.portal.kernel.util.Http;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 import java.util.Map;
 
@@ -26,6 +27,15 @@ public class RecordingMockHttp extends MockHttp {
 
 	public String getLocation() {
 		return _location;
+	}
+
+	@Override
+	public InputStream URLtoInputStream(Http.Options options)
+		throws IOException {
+
+		_location = options.getLocation();
+
+		return super.URLtoInputStream(options);
 	}
 
 	@Override

@@ -655,9 +655,19 @@ gradle.beforeProject {
 			}
 
 			compileTestJava {
-				configurations.compileOnly.allDependencies.withType(ProjectDependency) {
-					if (!it.dependencyProject.name.endsWith("-theme")) {
-						mustRunAfter "${it.dependencyProject.path}:processResources"
+				for (ProjectDependency projectDependency in configurations.compileOnly.allDependencies.withType(ProjectDependency)) {
+					Project dependencyProject = projectDependency.dependencyProject
+
+					if (!dependencyProject.name.endsWith("-theme")) {
+						mustRunAfter "${dependencyProject.path}:processResources"
+					}
+				}
+
+				for (ProjectDependency projectDependency in configurations.testImplementation.allDependencies.withType(ProjectDependency)) {
+					Project dependencyProject = projectDependency.dependencyProject
+
+					if (!dependencyProject.name.endsWith("-theme")) {
+						mustRunAfter "${dependencyProject.path}:processResources"
 					}
 				}
 			}
@@ -1052,21 +1062,25 @@ private boolean _containsProject(
 }
 
 private List<String> _getTestClasses(Task task) {
-	return task.project.gradle.testClasses.collect {
-		String testClass ->
+	List<String> testClasses = []
 
-		if (testClass.startsWith("/modules/")) {
-			String projectPath = task.project.path.replace(':' as char, '/' as char)
+	Project project = task.project
 
-			String javaPath = "/modules" + projectPath + "/src/" + task.name + "/java/"
+	String javaDirName = "src/" + task.name + "/java/"
 
-			if (testClass.startsWith(javaPath)) {
-				testClass = testClass.replace(javaPath, "")
-			}
+	for (String testClass : project.gradle.testClasses) {
+		String testJavaClass = testClass.replace(".class", ".java")
+
+		String javaFileName = javaDirName + testJavaClass
+
+		File javaFile = project.file(javaFileName)
+
+		if (javaFile.exists()) {
+			testClasses.add(testClass)
 		}
-
-		return testClass
 	}
+
+	return testClasses
 }
 
 private boolean _hasTestClasses(Task task, String testClassesDirName) {

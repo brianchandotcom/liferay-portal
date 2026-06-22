@@ -36,7 +36,7 @@ interface IConfigurationField {
 	onValueSelect: (name: string, value: any) => void;
 	values: {
 		apiURLTokenMappings: string;
-		autoResolvableTokenNames: string;
+		autoResolvedTokenNames: string;
 		itemSelector: IDataSet;
 	};
 }
@@ -83,23 +83,21 @@ export default function DataSetConfigurationFields({
 		}
 	}, [tokenKeys, selectedTokenKey]);
 
-	const autoResolvableTokenNames = useMemo(
+	const autoResolvedTokenNames = useMemo(
 		() =>
-			new Set<string>(
-				JSON.parse(values.autoResolvableTokenNames || '[]')
-			),
-		[values.autoResolvableTokenNames]
+			new Set<string>(JSON.parse(values.autoResolvedTokenNames || '[]')),
+		[values.autoResolvedTokenNames]
 	);
 
-	const isCurrentTokenAutoResolvable =
-		autoResolvableTokenNames.has(selectedTokenKey);
+	const isCurrentTokenAutoResolved =
+		autoResolvedTokenNames.has(selectedTokenKey);
 
 	const isTokenMapped = useCallback(
 		(tokenKey: string): boolean => {
 			const mapping = apiURLTokenMappings[tokenKey];
 
 			if (mapping === undefined) {
-				return autoResolvableTokenNames.has(tokenKey);
+				return autoResolvedTokenNames.has(tokenKey);
 			}
 
 			if (typeof mapping === 'string') {
@@ -122,7 +120,7 @@ export default function DataSetConfigurationFields({
 				? !!mapping.externalReferenceCode
 				: !!mapping.classPK;
 		},
-		[apiURLTokenMappings, autoResolvableTokenNames]
+		[apiURLTokenMappings, autoResolvedTokenNames]
 	);
 
 	const isCompleted = useMemo(
@@ -135,10 +133,10 @@ export default function DataSetConfigurationFields({
 	const currentTokenMapping: TokenMapping = useMemo(
 		() =>
 			apiURLTokenMappings[selectedTokenKey] ??
-			(isCurrentTokenAutoResolvable
+			(isCurrentTokenAutoResolved
 				? {mappingMode: EMappingMode.AUTO_RESOLVED}
 				: ''),
-		[apiURLTokenMappings, isCurrentTokenAutoResolvable, selectedTokenKey]
+		[apiURLTokenMappings, isCurrentTokenAutoResolved, selectedTokenKey]
 	);
 
 	const currentMappingMode = getMappingMode(currentTokenMapping);
@@ -164,7 +162,7 @@ export default function DataSetConfigurationFields({
 					},
 				]
 			: []),
-		...(isCurrentTokenAutoResolvable
+		...(isCurrentTokenAutoResolved
 			? [
 					{
 						label: Liferay.Language.get('resolve-automatically'),

@@ -367,27 +367,28 @@ public class ChangesetPortletDataHandler extends BasePortletDataHandler {
 			PortletDataContext portletDataContext)
 		throws Exception {
 
-		Map<String, String> postProcessEntryUuids = new HashMap<>();
-
 		Map<String, Map<?, ?>> newPrimaryKeysMaps =
 			portletDataContext.getNewPrimaryKeysMaps();
+		Map<String, String> postProcessStagedModelPaths = new HashMap<>();
 
 		for (Map.Entry<String, Map<?, ?>> entry :
 				newPrimaryKeysMaps.entrySet()) {
 
 			String key = entry.getKey();
 
-			if (key.endsWith(ExportImportConstants.POST_PROCESS_ENTRY_UUID)) {
-				postProcessEntryUuids.putAll(
+			if (key.endsWith(
+					ExportImportConstants.POST_PROCESS_STAGED_MODEL_PATH)) {
+
+				postProcessStagedModelPaths.putAll(
 					(Map<String, String>)entry.getValue());
 			}
 		}
 
-		if (postProcessEntryUuids.isEmpty()) {
+		if (postProcessStagedModelPaths.isEmpty()) {
 			return;
 		}
 
-		for (String modelPath : postProcessEntryUuids.values()) {
+		for (String modelPath : postProcessStagedModelPaths.values()) {
 			portletDataContext.removePrimaryKey(modelPath);
 		}
 
@@ -397,7 +398,7 @@ public class ChangesetPortletDataHandler extends BasePortletDataHandler {
 			for (Element entityElement : entityElements) {
 				String uuid = entityElement.attributeValue("uuid");
 
-				if (postProcessEntryUuids.remove(uuid) != null) {
+				if (postProcessStagedModelPaths.remove(uuid) != null) {
 					StagedModelDataHandlerUtil.importStagedModel(
 						portletDataContext, entityElement);
 				}

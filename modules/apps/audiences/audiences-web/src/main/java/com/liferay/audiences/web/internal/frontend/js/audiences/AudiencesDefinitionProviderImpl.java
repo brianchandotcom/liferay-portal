@@ -9,6 +9,8 @@ import com.liferay.audiences.model.AudiencesEntry;
 import com.liferay.audiences.service.AudiencesEntryLocalService;
 import com.liferay.frontend.js.audiences.AudiencesDefinition;
 import com.liferay.frontend.js.audiences.AudiencesDefinitionProvider;
+import com.liferay.portal.kernel.cache.MultiVMPool;
+import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.frontend.hashed.files.HashedFilesUtil;
@@ -18,7 +20,9 @@ import com.liferay.portal.kernel.json.JSONUtil;
 
 import java.util.List;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -32,6 +36,13 @@ public class AudiencesDefinitionProviderImpl
 	public AudiencesDefinition getAudiencesDefinition(long companyId) {
 		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-93951")) {
 			return null;
+		}
+
+		AudiencesDefinition audiencesDefinition = _portalCache.get(
+			companyId);
+
+		if (audiencesDefinition != null) {
+			return audiencesDefinition;
 		}
 
 		JSONArray audiencesJSONArray = _jsonFactory.createJSONArray();
@@ -48,7 +59,24 @@ public class AudiencesDefinitionProviderImpl
 			"audiences", audiencesJSONArray
 		).toString();
 
-		return new AudiencesDefinition(HashedFilesUtil.computeHash(json), json);
+		audiencesDefinition = new AudiencesDefinition(
+			HashedFilesUtil.computeHash(json), json);
+
+		_portalCache.put(companyId, audiencesDefinition);
+
+		return audiencesDefinition;
+	}
+
+	@Activate
+	protected void activate() {
+		_portalCache =
+			(PortalCache<Long, AudiencesDefinition>)_multiVMPool.getPortalCache(
+				AudiencesEntry.class.getName());
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_multiVMPool.removePortalCache(AudiencesEntry.class.getName());
 	}
 
 	@Reference
@@ -56,5 +84,10 @@ public class AudiencesDefinitionProviderImpl
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private MultiVMPool _multiVMPool;
+
+	private PortalCache<Long, AudiencesDefinition> _portalCache;
 
 }

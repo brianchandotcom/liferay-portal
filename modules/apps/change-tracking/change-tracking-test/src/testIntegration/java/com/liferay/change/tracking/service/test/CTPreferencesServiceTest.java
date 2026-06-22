@@ -65,8 +65,8 @@ public class CTPreferencesServiceTest {
 	public void testCheckoutCTCollectionWithViewPermission() throws Exception {
 		RoleTestUtil.addResourcePermission(
 			_role, CTCollection.class.getName(),
-			ResourceConstants.SCOPE_INDIVIDUAL,
-			String.valueOf(_ctCollection.getCtCollectionId()), ActionKeys.VIEW);
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(_role.getCompanyId()), ActionKeys.VIEW);
 
 		UserTestUtil.setUser(_user);
 

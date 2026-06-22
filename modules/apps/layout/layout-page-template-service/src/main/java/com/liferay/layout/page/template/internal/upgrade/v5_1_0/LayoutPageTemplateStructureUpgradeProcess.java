@@ -102,49 +102,26 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 				defaultSegmentsExperience.getSegmentsExperienceId();
 		}
 
-		long draftClassPK = 0;
-		long publishedClassPK = 0;
-
-		if (layout.isDraftLayout()) {
-			draftClassPK = layout.getPlid();
-			publishedClassPK = layout.getClassPK();
-		}
-		else {
-			Layout draftLayout = _layoutLocalService.fetchDraftLayout(
-				layout.getPlid());
-
-			if (draftLayout != null) {
-				draftClassPK = draftLayout.getPlid();
-			}
-
-			publishedClassPK = layout.getPlid();
-		}
-
-		_updateFragmentEntryLinks(
-			defaultSegmentsExperienceId, draftClassPK, publishedClassPK);
+		_updateFragmentEntryLinks(defaultSegmentsExperienceId, classPK);
 
 		_updateLayoutPageTemplateStructureRels(
 			defaultSegmentsExperienceId, layoutPageTemplateStructureId);
 
-		_updateSegmentsExperiments(
-			defaultSegmentsExperienceId, draftClassPK, publishedClassPK);
+		_updateSegmentsExperiments(defaultSegmentsExperienceId, classPK);
 
-		_updateSegmentsExperimentRels(
-			defaultSegmentsExperienceId, draftClassPK, publishedClassPK);
+		_updateSegmentsExperimentRels(defaultSegmentsExperienceId, classPK);
 	}
 
 	private void _updateFragmentEntryLinks(
-			long defaultSegmentsExperienceId, long draftPlid,
-			long publishedPlid)
+			long defaultSegmentsExperienceId, long plid)
 		throws Exception {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"update FragmentEntryLink set segmentsExperienceId = ? where " +
-					"segmentsExperienceId = 0 and (plid = ? or plid = ?)")) {
+					"segmentsExperienceId = 0 and plid = ?")) {
 
 			preparedStatement.setLong(1, defaultSegmentsExperienceId);
-			preparedStatement.setLong(2, draftPlid);
-			preparedStatement.setLong(3, publishedPlid);
+			preparedStatement.setLong(2, plid);
 
 			preparedStatement.executeUpdate();
 		}
@@ -168,8 +145,7 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 	}
 
 	private void _updateSegmentsExperimentRels(
-			long defaultSegmentsExperienceId, long draftPlid,
-			long publishedPlid)
+			long defaultSegmentsExperienceId, long plid)
 		throws Exception {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
@@ -178,29 +154,25 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 					"? where segmentsExperienceId = 0 and ",
 					"segmentsExperimentId in (select ",
 					"SegmentsExperiment.segmentsExperimentId from ",
-					"SegmentsExperiment where plid = ? or plid = ?)"))) {
+					"SegmentsExperiment where plid = ?)"))) {
 
 			preparedStatement.setLong(1, defaultSegmentsExperienceId);
-			preparedStatement.setLong(2, draftPlid);
-			preparedStatement.setLong(3, publishedPlid);
+			preparedStatement.setLong(2, plid);
 
 			preparedStatement.executeUpdate();
 		}
 	}
 
 	private void _updateSegmentsExperiments(
-			long defaultSegmentsExperienceId, long draftPlid,
-			long publishedPlid)
+			long defaultSegmentsExperienceId, long plid)
 		throws Exception {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"update SegmentsExperiment set segmentsExperienceId = ? " +
-					"where segmentsExperienceId = 0 and (plid = ? or plid = " +
-						"?)")) {
+					"where segmentsExperienceId = 0 and plid = ?")) {
 
 			preparedStatement.setLong(1, defaultSegmentsExperienceId);
-			preparedStatement.setLong(2, draftPlid);
-			preparedStatement.setLong(3, publishedPlid);
+			preparedStatement.setLong(2, plid);
 
 			preparedStatement.executeUpdate();
 		}

@@ -42,7 +42,7 @@ export function FormikFieldContentSelector({
 	const shouldSeed =
 		!!sections.length && field.value === undefined && !meta.touched;
 
-	const seededContentSelection = shouldSeed
+	const defaultContentSelection = shouldSeed
 		? getFullDataSelection(sections, {
 				commentsAndRatingsEnabled,
 				lookAndFeelEnabled,
@@ -53,14 +53,14 @@ export function FormikFieldContentSelector({
 	const hasSeededRef = useRef(false);
 
 	useEffect(() => {
-		if (hasSeededRef.current || !seededContentSelection) {
+		if (hasSeededRef.current || !defaultContentSelection) {
 			return;
 		}
 
 		hasSeededRef.current = true;
 
-		setFieldValue(name, seededContentSelection);
-	}, [name, seededContentSelection, setFieldValue]);
+		setFieldValue(name, defaultContentSelection);
+	}, [name, defaultContentSelection, setFieldValue]);
 
 	return (
 		<ContentSelector
@@ -77,7 +77,7 @@ export function FormikFieldContentSelector({
 			process={process}
 			sections={sections}
 			showDeletions={showDeletions}
-			value={field.value ?? seededContentSelection}
+			value={field.value ?? defaultContentSelection}
 		/>
 	);
 }

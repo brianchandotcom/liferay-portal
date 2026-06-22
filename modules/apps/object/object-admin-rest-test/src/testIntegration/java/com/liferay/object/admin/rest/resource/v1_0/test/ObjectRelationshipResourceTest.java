@@ -166,6 +166,42 @@ public class ObjectRelationshipResourceTest
 			randomObjectRelationship.getObjectDefinitionScope2(),
 			postObjectRelationship.getObjectDefinitionScope2());
 		Assert.assertFalse(postObjectRelationship.getObjectDefinitionSystem2());
+
+		// LPD-89354: a partner external reference code with the system prefix
+		// and no explicit system flag derives a system stub instead of throwing
+		// MustNotStartWithPrefix.
+
+		ObjectRelationship systemObjectRelationship =
+			randomObjectRelationship();
+
+		String systemExternalReferenceCode =
+			ObjectDefinitionConstants.
+				EXTERNAL_REFERENCE_CODE_PREFIX_SYSTEM_OBJECT_DEFINITION +
+					RandomTestUtil.randomString();
+
+		systemObjectRelationship.setObjectDefinitionExternalReferenceCode2(
+			systemExternalReferenceCode);
+
+		systemObjectRelationship.setObjectDefinitionId2(0L);
+		systemObjectRelationship.setObjectDefinitionModifiable2(() -> null);
+		systemObjectRelationship.setObjectDefinitionScope2(
+			RandomTestUtil.randomString());
+		systemObjectRelationship.setObjectDefinitionSystem2(() -> null);
+
+		ObjectRelationship postSystemObjectRelationship =
+			testPostObjectDefinitionObjectRelationship_addObjectRelationship(
+				systemObjectRelationship);
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					systemExternalReferenceCode,
+					TestPropsValues.getCompanyId());
+
+		Assert.assertTrue(objectDefinition.isSystem());
+
+		Assert.assertTrue(
+			postSystemObjectRelationship.getObjectDefinitionSystem2());
 	}
 
 	@Override

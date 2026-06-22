@@ -57,6 +57,12 @@ public interface LayoutSetService extends BaseService {
 			long groupId, boolean privateLayout, long faviconFileEntryId)
 		throws PortalException;
 
+	public void updateLayoutSetPrototypeLinkEnabled(
+			long groupId, boolean mergeLayoutSetPrototype,
+			boolean privateLayout, boolean layoutSetPrototypeLinkEnabled,
+			String layoutSetPrototypeUuid)
+		throws PortalException;
+
 	/**
 	 * Updates the state of the layout set prototype link.
 	 *
@@ -114,4 +120,4 @@ public interface LayoutSetService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1293614224
+// LIFERAY-SERVICE-BUILDER-HASH:503048618

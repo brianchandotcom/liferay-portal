@@ -335,7 +335,7 @@ public class VIESAccountEntryValidatorTest {
 				VIESAccountEntryValidatorConfiguration.class);
 
 		Mockito.when(
-			viesAccountEntryValidatorConfiguration.countries()
+			viesAccountEntryValidatorConfiguration.countryCodes()
 		).thenReturn(
 			countries
 		);

@@ -1,0 +1,278 @@
+@import 'atlas-variables';
+
+.login-carousel {
+	animation: login-carousel-dots-drift 10s linear infinite;
+	aspect-ratio: 684 / 657;
+	background-color: $gray-200;
+	background-image: radial-gradient($gray-300 1.5px, transparent 1.5px);
+	background-size: 20px 20px;
+	border-radius: 16px;
+
+	// stylelint-disable-next-line property-no-unknown
+	container-type: inline-size;
+	flex: 1 1 400px;
+	max-width: 684px;
+	min-width: 0;
+
+	@media (prefers-reduced-motion: reduce) {
+		animation: none;
+	}
+
+	.c-prefers-reduced-motion & {
+		animation: none;
+	}
+
+	.login-carousel-slide {
+		inset: 0;
+		opacity: 0;
+		pointer-events: none;
+
+		&.is-active {
+			opacity: 1;
+			pointer-events: auto;
+		}
+
+		&.is-out {
+			animation: login-carousel-slide-exit 0.32s ease forwards;
+			pointer-events: none;
+		}
+	}
+
+	.login-carousel-card,
+	.login-carousel-title,
+	.login-carousel-description {
+		opacity: 0;
+	}
+
+	.login-carousel-slide.is-out .login-carousel-card,
+	.login-carousel-slide.is-out .login-carousel-title,
+	.login-carousel-slide.is-out .login-carousel-description {
+		animation: none;
+		opacity: 1;
+	}
+
+	.login-carousel-slide.is-active .login-carousel-card {
+		animation: login-carousel-slide-enter-card 0.65s
+			cubic-bezier(0.16, 1, 0.3, 1) 0s both;
+	}
+
+	.login-carousel-slide.is-active .login-carousel-title {
+		animation: login-carousel-slide-enter-title 0.62s ease-out 0.38s both;
+	}
+
+	.login-carousel-slide.is-active .login-carousel-description {
+		animation: login-carousel-slide-enter-description 0.7s ease-out 0.62s
+			both;
+	}
+
+	.login-carousel-card {
+		height: 100%;
+		left: auto;
+		right: 0;
+		top: 0%;
+		width: 100%;
+	}
+
+	.login-carousel-placeholder {
+		border-radius: 0 0 0 16px;
+		height: 64%;
+		object-fit: cover;
+		object-position: left;
+		position: absolute;
+		right: 0;
+		top: 0;
+		width: 86%;
+	}
+
+	.login-carousel-text {
+		// stylelint-disable-next-line unit-no-unknown
+		bottom: 11cqi;
+		left: 50%;
+		transform: translateX(-50%);
+		width: min(380px, 80%);
+	}
+
+	.login-carousel-title {
+		align-self: center;
+
+		// stylelint-disable-next-line unit-no-unknown
+		font-size: clamp(1rem, 4.1cqi, 1.75rem);
+		line-height: 1.2;
+		max-width: 15ch;
+		text-wrap: balance;
+	}
+
+	.login-carousel-description {
+		// stylelint-disable-next-line unit-no-unknown
+		font-size: clamp(0.8125rem, 2.4cqi, 1rem);
+		text-wrap: pretty;
+	}
+
+	.login-carousel-nav {
+		bottom: 8px;
+		left: 50%;
+		transform: translateX(-50%);
+		z-index: 10;
+	}
+
+	.login-carousel-dot {
+		background: none;
+		height: 24px;
+		margin: 0 -4px;
+		min-width: 0;
+		padding: 0;
+		position: relative;
+		width: 24px;
+
+		&::before {
+			background: $gray-400;
+			border-radius: $rounded-pill;
+			content: '';
+			height: 8px;
+			left: 50%;
+			position: absolute;
+			top: 50%;
+			transform: translate(-50%, -50%);
+			transition:
+				background-color 0.3s ease,
+				width 0.3s ease;
+			width: 12px;
+		}
+
+		@media (prefers-reduced-motion: reduce) {
+			&::before {
+				transition: none;
+			}
+		}
+
+		.c-prefers-reduced-motion &::before {
+			transition: none;
+		}
+
+		&.is-active::before {
+			background: $primary;
+			width: 24px;
+		}
+	}
+
+	.login-carousel-pause {
+		height: 24px;
+		left: calc(100% + 12px);
+		min-width: 0;
+		opacity: 0;
+		padding: 0;
+		top: 56%;
+		transform: translateY(-50%);
+		transition: opacity 0.25s ease;
+		width: 24px;
+
+		@media (prefers-reduced-motion: reduce) {
+			transition: none;
+		}
+
+		.c-prefers-reduced-motion & {
+			transition: none;
+		}
+
+		&.is-paused {
+			opacity: 0.85;
+		}
+	}
+
+	&:hover .login-carousel-pause {
+		opacity: 0.4;
+	}
+
+	.login-carousel-pause:focus-visible,
+	.login-carousel-pause:hover {
+		opacity: 1;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.login-carousel-slide.is-active .login-carousel-card,
+		.login-carousel-slide.is-active .login-carousel-description,
+		.login-carousel-slide.is-active .login-carousel-title {
+			animation: none;
+			opacity: 1;
+		}
+
+		.login-carousel-slide.is-out {
+			animation: none;
+			opacity: 0;
+		}
+	}
+
+	.c-prefers-reduced-motion & {
+		.login-carousel-slide.is-active .login-carousel-card,
+		.login-carousel-slide.is-active .login-carousel-description,
+		.login-carousel-slide.is-active .login-carousel-title {
+			animation: none;
+			opacity: 1;
+		}
+
+		.login-carousel-slide.is-out {
+			animation: none;
+			opacity: 0;
+		}
+	}
+}
+
+@keyframes login-carousel-dots-drift {
+	from {
+		background-position: 0 0;
+	}
+
+	to {
+		background-position: 20px 20px;
+	}
+}
+
+@keyframes login-carousel-slide-enter-card {
+	from {
+		opacity: 0;
+		transform: translateY(-22px);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes login-carousel-slide-enter-title {
+	from {
+		filter: blur(6px);
+		opacity: 0;
+		transform: translateY(-6px);
+	}
+
+	to {
+		filter: blur(0);
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes login-carousel-slide-enter-description {
+	from {
+		filter: blur(3px);
+		opacity: 0;
+	}
+
+	to {
+		filter: blur(0);
+		opacity: 1;
+	}
+}
+
+@keyframes login-carousel-slide-exit {
+	from {
+		opacity: 1;
+		transform: translateY(0) scale(1);
+	}
+
+	to {
+		opacity: 0;
+		transform: translateY(28px) scale(0.94);
+	}
+}

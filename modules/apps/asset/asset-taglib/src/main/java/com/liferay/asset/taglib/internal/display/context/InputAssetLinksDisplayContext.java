@@ -16,7 +16,6 @@ import com.liferay.asset.link.model.AssetLink;
 import com.liferay.asset.link.service.AssetLinkLocalServiceUtil;
 import com.liferay.depot.util.SiteConnectedGroupGroupProviderUtil;
 import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -26,7 +25,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.CollatorUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -39,19 +37,11 @@ import com.liferay.staging.StagingGroupHelper;
 import com.liferay.staging.StagingGroupHelperUtil;
 
 import jakarta.portlet.PortletRequest;
-import jakarta.portlet.PortletResponse;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.jsp.PageContext;
 
-import java.io.Serializable;
-
-import java.text.Collator;
-
-import java.util.Comparator;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
 /**
  * @author José Manuel Navarro
@@ -59,8 +49,6 @@ import java.util.Map;
 public class InputAssetLinksDisplayContext {
 
 	public InputAssetLinksDisplayContext(PageContext pageContext) {
-		_pageContext = pageContext;
-
 		_httpServletRequest = (HttpServletRequest)pageContext.getRequest();
 
 		_assetEntryId = GetterUtil.getLong(
@@ -71,8 +59,6 @@ public class InputAssetLinksDisplayContext {
 				"liferay-asset:input-asset-links:className"));
 		_portletRequest = (PortletRequest)_httpServletRequest.getAttribute(
 			JavaConstants.JAKARTA_PORTLET_REQUEST);
-		_portletResponse = (PortletResponse)_httpServletRequest.getAttribute(
-			JavaConstants.JAKARTA_PORTLET_RESPONSE);
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
@@ -282,33 +268,7 @@ public class InputAssetLinksDisplayContext {
 	private List<AssetLink> _assetLinks;
 	private final String _className;
 	private final HttpServletRequest _httpServletRequest;
-	private final PageContext _pageContext;
 	private final PortletRequest _portletRequest;
-	private final PortletResponse _portletResponse;
 	private final ThemeDisplay _themeDisplay;
-
-	private class SelectorEntriesLabelComparator
-		implements Comparator<Map<String, Object>>, Serializable {
-
-		public SelectorEntriesLabelComparator(Locale locale) {
-			_collator = CollatorUtil.getInstance(locale);
-		}
-
-		@Override
-		public int compare(Map<String, Object> map1, Map<String, Object> map2) {
-			String label1 = StringPool.BLANK;
-			String label2 = StringPool.BLANK;
-
-			if (map1.containsKey("label") && map2.containsKey("label")) {
-				label1 = (String)map1.get("label");
-				label2 = (String)map2.get("label");
-			}
-
-			return _collator.compare(label1, label2);
-		}
-
-		private final Collator _collator;
-
-	}
 
 }

@@ -12,7 +12,6 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -61,10 +60,8 @@ public class DSRDefaultPermissionObjectEntryModelResourcePermissionTest {
 	}
 
 	@Test
-	public void testCheckWhenContainsIsFalseThrowsMustHavePermission()
-		throws Exception {
-
-		_stubInactiveRoom(0L);
+	public void testCheck() throws Exception {
+		_mockRoom(WorkflowConstants.STATUS_INACTIVE, 0L);
 
 		try {
 			_dsrDefaultPermissionObjectEntryModelResourcePermission.check(
@@ -77,8 +74,112 @@ public class DSRDefaultPermissionObjectEntryModelResourcePermissionTest {
 	}
 
 	@Test
-	public void testContainsLongPrimaryKeyWhenObjectEntryIsNullReturnsFalse()
-		throws Exception {
+	public void testContains() throws Exception {
+		_mockRoom(
+			WorkflowConstants.STATUS_INACTIVE, RandomTestUtil.randomLong());
+
+		Assert.assertFalse(
+			_dsrDefaultPermissionObjectEntryModelResourcePermission.contains(
+				_permissionChecker, _objectEntry, ActionKeys.VIEW));
+
+		_mockRoom(WorkflowConstants.STATUS_INACTIVE, 0L);
+
+		Mockito.when(
+			_permissionChecker.isGroupOwner(Mockito.anyLong())
+		).thenReturn(
+			true
+		);
+
+		Assert.assertFalse(
+			_dsrDefaultPermissionObjectEntryModelResourcePermission.contains(
+				_permissionChecker, _objectEntry, ActionKeys.VIEW));
+
+		_mockRoom(
+			WorkflowConstants.STATUS_INACTIVE, RandomTestUtil.randomLong());
+
+		Assert.assertTrue(
+			_dsrDefaultPermissionObjectEntryModelResourcePermission.contains(
+				_permissionChecker, _objectEntry, ActionKeys.VIEW));
+
+		_mockRoom(
+			WorkflowConstants.STATUS_INACTIVE, RandomTestUtil.randomLong());
+
+		Mockito.when(
+			_permissionChecker.isGroupOwner(Mockito.anyLong())
+		).thenReturn(
+			false
+		);
+
+		Mockito.when(
+			_permissionChecker.isCompanyAdmin()
+		).thenReturn(
+			true
+		);
+
+		Assert.assertTrue(
+			_dsrDefaultPermissionObjectEntryModelResourcePermission.contains(
+				_permissionChecker, _objectEntry, ActionKeys.VIEW));
+
+		_mockRoom(
+			WorkflowConstants.STATUS_APPROVED, RandomTestUtil.randomLong());
+
+		Mockito.when(
+			_modelResourcePermission.contains(
+				_permissionChecker, _objectEntry, ActionKeys.UPDATE)
+		).thenReturn(
+			true
+		);
+
+		Assert.assertTrue(
+			_dsrDefaultPermissionObjectEntryModelResourcePermission.contains(
+				_permissionChecker, _objectEntry, ActionKeys.UPDATE));
+
+		long siteId = RandomTestUtil.randomLong();
+
+		_mockRoom(WorkflowConstants.STATUS_APPROVED, siteId);
+
+		Mockito.when(
+			_permissionChecker.isGroupMember(siteId)
+		).thenReturn(
+			true
+		);
+
+		Assert.assertTrue(
+			_dsrDefaultPermissionObjectEntryModelResourcePermission.contains(
+				_permissionChecker, _objectEntry, ActionKeys.VIEW));
+		Assert.assertTrue(
+			_dsrDefaultPermissionObjectEntryModelResourcePermission.contains(
+				_permissionChecker, _objectEntry, ActionKeys.ADD_DISCUSSION));
+
+		_mockRoom(
+			WorkflowConstants.STATUS_APPROVED, RandomTestUtil.randomLong());
+
+		Mockito.when(
+			_permissionChecker.hasPermission(
+				Mockito.anyLong(), Mockito.anyString(), Mockito.anyLong(),
+				Mockito.anyString())
+		).thenReturn(
+			true
+		);
+
+		Assert.assertTrue(
+			_dsrDefaultPermissionObjectEntryModelResourcePermission.contains(
+				_permissionChecker, _objectEntry, ActionKeys.VIEW));
+
+		_mockRoom(
+			WorkflowConstants.STATUS_APPROVED, RandomTestUtil.randomLong());
+
+		Mockito.when(
+			_permissionChecker.hasOwnerPermission(
+				Mockito.anyLong(), Mockito.anyString(), Mockito.anyLong(),
+				Mockito.anyLong(), Mockito.anyString())
+		).thenReturn(
+			true
+		);
+
+		Assert.assertTrue(
+			_dsrDefaultPermissionObjectEntryModelResourcePermission.contains(
+				_permissionChecker, _objectEntry, ActionKeys.VIEW));
 
 		long primaryKey = RandomTestUtil.randomLong();
 
@@ -93,216 +194,12 @@ public class DSRDefaultPermissionObjectEntryModelResourcePermissionTest {
 				_permissionChecker, primaryKey, ActionKeys.VIEW));
 	}
 
-	@Test
-	public void testContainsWhenInactiveAndIsCompanyAdminReturnsTrue()
-		throws Exception {
-
-		_stubInactiveRoom(RandomTestUtil.randomLong());
-
-		Mockito.when(
-			_permissionChecker.isCompanyAdmin()
-		).thenReturn(
-			true
-		);
-
-		Assert.assertTrue(
-			_dsrDefaultPermissionObjectEntryModelResourcePermission.contains(
-				_permissionChecker, _objectEntry, ActionKeys.VIEW));
-	}
-
-	@Test
-	public void testContainsWhenInactiveAndIsGroupOwnerOfSiteReturnsTrue()
-		throws Exception {
-
-		long siteId = RandomTestUtil.randomLong();
-
-		_stubInactiveRoom(siteId);
-
-		Mockito.when(
-			_permissionChecker.isGroupOwner(siteId)
-		).thenReturn(
-			true
-		);
-
-		Assert.assertTrue(
-			_dsrDefaultPermissionObjectEntryModelResourcePermission.contains(
-				_permissionChecker, _objectEntry, ActionKeys.VIEW));
-	}
-
-	@Test
-	public void testContainsWhenInactiveAndNeitherAdminNorOwnerReturnsFalse()
-		throws Exception {
-
-		_stubInactiveRoom(RandomTestUtil.randomLong());
-
-		Assert.assertFalse(
-			_dsrDefaultPermissionObjectEntryModelResourcePermission.contains(
-				_permissionChecker, _objectEntry, ActionKeys.VIEW));
-	}
-
-	@Test
-	public void testContainsWhenInactiveAndSiteIdIsZeroReturnsFalse()
-		throws Exception {
-
-		_stubInactiveRoom(0L);
-
-		Mockito.when(
-			_permissionChecker.isGroupOwner(Mockito.anyLong())
-		).thenReturn(
-			true
-		);
-
-		Assert.assertFalse(
-			_dsrDefaultPermissionObjectEntryModelResourcePermission.contains(
-				_permissionChecker, _objectEntry, ActionKeys.VIEW));
-	}
-
-	@Test
-	public void testContainsWhenNotInactiveAndHasOwnerPermissionReturnsTrue()
-		throws Exception {
-
-		_stubActiveRoom();
-
-		Mockito.when(
-			_permissionChecker.hasOwnerPermission(
-				Mockito.anyLong(), Mockito.anyString(), Mockito.anyLong(),
-				Mockito.anyLong(), Mockito.anyString())
-		).thenReturn(
-			true
-		);
-
-		Assert.assertTrue(
-			_dsrDefaultPermissionObjectEntryModelResourcePermission.contains(
-				_permissionChecker, _objectEntry, ActionKeys.VIEW));
-	}
-
-	@Test
-	public void testContainsWhenNotInactiveAndHasPermissionReturnsTrue()
-		throws Exception {
-
-		_stubActiveRoom();
-
-		Mockito.when(
-			_permissionChecker.hasPermission(
-				Mockito.anyLong(), Mockito.anyString(), Mockito.anyLong(),
-				Mockito.anyString())
-		).thenReturn(
-			true
-		);
-
-		Assert.assertTrue(
-			_dsrDefaultPermissionObjectEntryModelResourcePermission.contains(
-				_permissionChecker, _objectEntry, ActionKeys.VIEW));
-	}
-
-	@Test
-	public void testContainsWhenNotInactiveAndIsGroupMemberForAddDiscussionReturnsTrue()
-		throws Exception {
-
-		long siteId = RandomTestUtil.randomLong();
-
-		_stubActiveRoom(siteId);
-
-		Mockito.when(
-			_permissionChecker.isGroupMember(siteId)
-		).thenReturn(
-			true
-		);
-
-		Assert.assertTrue(
-			_dsrDefaultPermissionObjectEntryModelResourcePermission.contains(
-				_permissionChecker, _objectEntry, ActionKeys.ADD_DISCUSSION));
-	}
-
-	@Test
-	public void testContainsWhenNotInactiveAndIsGroupMemberForViewReturnsTrue()
-		throws Exception {
-
-		long siteId = RandomTestUtil.randomLong();
-
-		_stubActiveRoom(siteId);
-
-		Mockito.when(
-			_permissionChecker.isGroupMember(siteId)
-		).thenReturn(
-			true
-		);
-
-		Assert.assertTrue(
-			_dsrDefaultPermissionObjectEntryModelResourcePermission.contains(
-				_permissionChecker, _objectEntry, ActionKeys.VIEW));
-	}
-
-	@Test
-	public void testContainsWhenNotInactiveAndOtherActionDelegatesToWrapped()
-		throws Exception {
-
-		_stubActiveRoom();
-
-		Mockito.when(
-			_modelResourcePermission.contains(
-				_permissionChecker, _objectEntry, ActionKeys.UPDATE)
-		).thenReturn(
-			true
-		);
-
-		Assert.assertTrue(
-			_dsrDefaultPermissionObjectEntryModelResourcePermission.contains(
-				_permissionChecker, _objectEntry, ActionKeys.UPDATE));
-	}
-
-	@Test
-	public void testGetModelNameDelegatesToWrapped() {
-		String modelName = RandomTestUtil.randomString();
-
-		Mockito.when(
-			_modelResourcePermission.getModelName()
-		).thenReturn(
-			modelName
-		);
-
-		Assert.assertEquals(
-			modelName,
-			_dsrDefaultPermissionObjectEntryModelResourcePermission.
-				getModelName());
-	}
-
-	@Test
-	public void testGetPortletResourcePermissionDelegatesToWrapped() {
-		Mockito.when(
-			_modelResourcePermission.getPortletResourcePermission()
-		).thenReturn(
-			_portletResourcePermission
-		);
-
-		Assert.assertSame(
-			_portletResourcePermission,
-			_dsrDefaultPermissionObjectEntryModelResourcePermission.
-				getPortletResourcePermission());
-	}
-
-	private void _stubActiveRoom() {
-		_stubActiveRoom(0L);
-	}
-
-	private void _stubActiveRoom(long siteId) {
+	private void _mockRoom(int roomStatus, long siteId) {
 		Mockito.when(
 			_objectEntry.getValues()
 		).thenReturn(
 			HashMapBuilder.<String, Serializable>put(
-				"roomStatus", WorkflowConstants.STATUS_APPROVED
-			).put(
-				"siteId", siteId
-			).build()
-		);
-	}
-
-	private void _stubInactiveRoom(long siteId) {
-		Mockito.when(
-			_objectEntry.getValues()
-		).thenReturn(
-			HashMapBuilder.<String, Serializable>put(
-				"roomStatus", WorkflowConstants.STATUS_INACTIVE
+				"roomStatus", roomStatus
 			).put(
 				"siteId", siteId
 			).build()
@@ -320,7 +217,5 @@ public class DSRDefaultPermissionObjectEntryModelResourcePermissionTest {
 		Mockito.mock(ObjectEntryLocalService.class);
 	private final PermissionChecker _permissionChecker = Mockito.mock(
 		PermissionChecker.class);
-	private final PortletResourcePermission _portletResourcePermission =
-		Mockito.mock(PortletResourcePermission.class);
 
 }

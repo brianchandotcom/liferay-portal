@@ -8,7 +8,6 @@ package com.liferay.oauth.client.admin.web.internal.portlet.action;
 import com.liferay.oauth.client.constants.OAuthClientAdminPortletKeys;
 import com.liferay.oauth.client.persistence.model.OAuthClientPRLocalMetadata;
 import com.liferay.oauth.client.persistence.service.OAuthClientPRLocalMetadataService;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -45,12 +44,10 @@ public class UpdateOAuthClientPRLocalMetadataMVCActionCommand
 				actionRequest, "oAuthClientPRLocalMetadataId");
 
 			String[] authorizationServers = StringUtil.split(
-				ParamUtil.getString(actionRequest, "authorizationServers"),
-				StringPool.COMMA);
+				ParamUtil.getString(actionRequest, "authorizationServers"));
 			String[] bearerMethodsSupported = StringUtil.split(
 				ParamUtil.getString(
-					actionRequest, "bearerMethodsSupported", "header"),
-				StringPool.COMMA);
+					actionRequest, "bearerMethodsSupported", "header"));
 			boolean localWellKnownEnabled = ParamUtil.getBoolean(
 				actionRequest, "localWellKnownEnabled");
 			String protectedResourceURI = ParamUtil.getString(
@@ -58,8 +55,7 @@ public class UpdateOAuthClientPRLocalMetadataMVCActionCommand
 			String resourceName = ParamUtil.getString(
 				actionRequest, "resourceName");
 			String[] scopesSupported = StringUtil.split(
-				ParamUtil.getString(actionRequest, "scopesSupported"),
-				StringPool.COMMA);
+				ParamUtil.getString(actionRequest, "scopesSupported"));
 
 			OAuthClientPRLocalMetadata oAuthClientPRLocalMetadata =
 				_oAuthClientPRLocalMetadataService.

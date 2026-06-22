@@ -8,7 +8,6 @@ package com.liferay.oauth.client.admin.web.internal.servlet.taglib.util;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.oauth.client.persistence.model.OAuthClientPRLocalMetadata;
-import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -42,52 +41,47 @@ public class OAuthClientPRLocalMetadataActionDropdownItemsProvider {
 
 	public List<DropdownItem> getActionDropdownItems() {
 		return DropdownItemListBuilder.add(
-			_getEditUnsafeConsumer()
+			dropdownItem -> {
+				dropdownItem.setHref(
+					PortletURLBuilder.createRenderURL(
+						_renderResponse
+					).setMVCRenderCommandName(
+						"/oauth_client_admin" +
+							"/update_oauth_client_pr_local_metadata"
+					).setRedirect(
+						_themeDisplay.getURLCurrent()
+					).setParameter(
+						"oAuthClientPRLocalMetadataId",
+						_oAuthClientPRLocalMetadata.
+							getOAuthClientPRLocalMetadataId()
+					).buildString());
+				dropdownItem.setIcon("pencil");
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "edit"));
+			}
 		).add(
-			_getDeleteUnsafeConsumer()
+			dropdownItem -> {
+				dropdownItem.putData(
+					"action", "deleteOAuthClientPRLocalMetadata");
+				dropdownItem.putData(
+					"deleteOAuthClientPRLocalMetadataURL",
+					PortletURLBuilder.createActionURL(
+						_renderResponse
+					).setActionName(
+						"/oauth_client_admin" +
+							"/delete_oauth_client_pr_local_metadata"
+					).setRedirect(
+						_themeDisplay.getURLCurrent()
+					).setParameter(
+						"oAuthClientPRLocalMetadataId",
+						_oAuthClientPRLocalMetadata.
+							getOAuthClientPRLocalMetadataId()
+					).buildString());
+				dropdownItem.setIcon("trash");
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "delete"));
+			}
 		).build();
-	}
-
-	private UnsafeConsumer<DropdownItem, Exception> _getDeleteUnsafeConsumer() {
-		return dropdownItem -> {
-			dropdownItem.putData("action", "deleteOAuthClientPRLocalMetadata");
-			dropdownItem.putData(
-				"deleteOAuthClientPRLocalMetadataURL",
-				PortletURLBuilder.createActionURL(
-					_renderResponse
-				).setActionName(
-					"/oauth_client_admin/delete_oauth_client_pr_local_metadata"
-				).setRedirect(
-					_themeDisplay.getURLCurrent()
-				).setParameter(
-					"oAuthClientPRLocalMetadataId",
-					_oAuthClientPRLocalMetadata.
-						getOAuthClientPRLocalMetadataId()
-				).buildString());
-			dropdownItem.setIcon("trash");
-			dropdownItem.setLabel(
-				LanguageUtil.get(_httpServletRequest, "delete"));
-		};
-	}
-
-	private UnsafeConsumer<DropdownItem, Exception> _getEditUnsafeConsumer() {
-		return dropdownItem -> {
-			dropdownItem.setHref(
-				PortletURLBuilder.createRenderURL(
-					_renderResponse
-				).setMVCRenderCommandName(
-					"/oauth_client_admin/update_oauth_client_pr_local_metadata"
-				).setRedirect(
-					_themeDisplay.getURLCurrent()
-				).setParameter(
-					"oAuthClientPRLocalMetadataId",
-					_oAuthClientPRLocalMetadata.
-						getOAuthClientPRLocalMetadataId()
-				).buildString());
-			dropdownItem.setIcon("pencil");
-			dropdownItem.setLabel(
-				LanguageUtil.get(_httpServletRequest, "edit"));
-		};
 	}
 
 	private final HttpServletRequest _httpServletRequest;

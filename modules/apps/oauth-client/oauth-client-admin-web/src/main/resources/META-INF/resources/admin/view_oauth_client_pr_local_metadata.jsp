@@ -73,10 +73,18 @@ OAuthClientPRLocalMetadataManagementToolbarDisplayContext oAuthClientPRLocalMeta
 					property="localWellKnownURI"
 				/>
 
-				<liferay-ui:search-container-column-jsp
-					align="right"
-					path="/admin/oauth_client_pr_local_metadata_actions.jsp"
-				/>
+				<liferay-ui:search-container-column-text>
+
+					<%
+					OAuthClientPRLocalMetadataActionDropdownItemsProvider oAuthClientPRLocalMetadataActionDropdownItemsProvider = new OAuthClientPRLocalMetadataActionDropdownItemsProvider(oAuthClientPRLocalMetadata, renderRequest, renderResponse);
+					%>
+
+					<clay:dropdown-actions
+						aria-label='<%= LanguageUtil.format(request, "actions-for-x", oAuthClientPRLocalMetadata.getProtectedResourceURI()) %>'
+						dropdownItems="<%= oAuthClientPRLocalMetadataActionDropdownItemsProvider.getActionDropdownItems() %>"
+						propsTransformer="{OAuthClientPRLocalMetadataActionDropdownPropsTransformer} from oauth-client-admin-web"
+					/>
+				</liferay-ui:search-container-column-text>
 			</liferay-ui:search-container-row>
 
 			<liferay-ui:search-iterator

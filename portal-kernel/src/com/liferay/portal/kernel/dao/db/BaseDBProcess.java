@@ -881,9 +881,9 @@ public abstract class BaseDBProcess implements DBProcess {
 
 			String methodName = method.getName();
 
-			boolean isAddBatch = methodName.equals("addBatch");
+			boolean addBatch = methodName.equals("addBatch");
 
-			if (isAddBatch && !_transaction) {
+			if (addBatch && !_transaction) {
 				_startTransaction();
 			}
 
@@ -896,14 +896,12 @@ public abstract class BaseDBProcess implements DBProcess {
 				throw invocationTargetException.getCause();
 			}
 
-			if (isAddBatch) {
+			if (addBatch) {
 				if (++_count >= PropsValues.HIBERNATE_JDBC_BATCH_SIZE) {
 					_finishTransaction(true);
 				}
 			}
-			else if (_transaction &&
-					 methodName.equals("executeBatch")) {
-
+			else if (_transaction && methodName.equals("executeBatch")) {
 				_finishTransaction(true);
 			}
 
@@ -943,10 +941,6 @@ public abstract class BaseDBProcess implements DBProcess {
 		}
 
 		private void _startTransaction() throws SQLException {
-			if (!_connection.getAutoCommit()) {
-				return;
-			}
-
 			if (!_transactionalConnections.add(_connection)) {
 				return;
 			}

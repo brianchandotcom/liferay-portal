@@ -114,14 +114,14 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 		_httpServer = HttpServer.create(
 			new InetSocketAddress("127.0.0.1", 0), 0);
 
-		_thumbnail1Bytes = _getBytes("thumbnail1.png");
-		_thumbnail2Bytes = _getBytes("thumbnail2.png");
+		_thumbnail1Bytes = _getBytes("thumbnail_1.png");
+		_thumbnail2Bytes = _getBytes("thumbnail_2.png");
 
 		_httpServer.createContext(
-			"/thumbnail1.png",
+			"/thumbnail_1.png",
 			httpExchange -> _writeBytes(httpExchange, _thumbnail1Bytes));
 		_httpServer.createContext(
-			"/thumbnail2.png",
+			"/thumbnail_2.png",
 			httpExchange -> _writeBytes(httpExchange, _thumbnail2Bytes));
 
 		_httpServer.start();
@@ -133,8 +133,8 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 
 		String baseURL = "http://127.0.0.1:" + inetSocketAddress.getPort();
 
-		_thumbnail1URL = baseURL + "/thumbnail1.png";
-		_thumbnail2URL = baseURL + "/thumbnail2.png";
+		_thumbnail1URL = baseURL + "/thumbnail_1.png";
+		_thumbnail2URL = baseURL + "/thumbnail_2.png";
 	}
 
 	@AfterClass
@@ -1148,7 +1148,7 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 				postFragment.getExternalReferenceCode(),
 				testGroup.getGroupId());
 
-		FileEntry fileEntry = _addPortletFileEntry("thumbnail1.png");
+		FileEntry fileEntry = _addPortletFileEntry("thumbnail_1.png");
 
 		_fragmentEntryLocalService.updateFragmentEntry(
 			fragmentEntry.getFragmentEntryId(), fileEntry.getFileEntryId());
@@ -1640,7 +1640,7 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 		ThumbnailURLReference thumbnailURLReference =
 			new ThumbnailURLReference();
 
-		FileEntry fileEntry = _addPortletFileEntry("thumbnail1.png");
+		FileEntry fileEntry = _addPortletFileEntry("thumbnail_1.png");
 
 		String externalReferenceCode = fileEntry.getExternalReferenceCode();
 
@@ -1656,7 +1656,7 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 		ThumbnailURLReference thumbnailURLReference =
 			new ThumbnailURLReference();
 
-		FileEntry fileEntry = _addPortletFileEntry("thumbnail1.png");
+		FileEntry fileEntry = _addPortletFileEntry("thumbnail_1.png");
 
 		String externalReferenceCode = fileEntry.getExternalReferenceCode();
 
@@ -2298,7 +2298,7 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 		ThumbnailURLReference thumbnailURLReference1 =
 			new ThumbnailURLReference();
 
-		FileEntry fileEntry1 = _addPortletFileEntry("thumbnail1.png");
+		FileEntry fileEntry1 = _addPortletFileEntry("thumbnail_1.png");
 
 		String externalReferenceCode1 = fileEntry1.getExternalReferenceCode();
 
@@ -2311,7 +2311,7 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 		ThumbnailURLReference thumbnailURLReference2 =
 			new ThumbnailURLReference();
 
-		FileEntry fileEntry2 = _addPortletFileEntry("thumbnail2.png");
+		FileEntry fileEntry2 = _addPortletFileEntry("thumbnail_2.png");
 
 		String externalReferenceCode2 = fileEntry2.getExternalReferenceCode();
 
@@ -2332,7 +2332,7 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 		ThumbnailURLReference thumbnailURLReference =
 			new ThumbnailURLReference();
 
-		FileEntry fileEntry = _addPortletFileEntry("thumbnail1.png");
+		FileEntry fileEntry = _addPortletFileEntry("thumbnail_1.png");
 
 		String externalReferenceCode = fileEntry.getExternalReferenceCode();
 
@@ -2379,7 +2379,7 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 				postFragment.getExternalReferenceCode(),
 				testGroup.getGroupId());
 
-		FileEntry fileEntry = _addPortletFileEntry("thumbnail1.png");
+		FileEntry fileEntry = _addPortletFileEntry("thumbnail_1.png");
 
 		_fragmentEntryLocalService.updateFragmentEntry(
 			fragmentEntry.getFragmentEntryId(), fileEntry.getFileEntryId());

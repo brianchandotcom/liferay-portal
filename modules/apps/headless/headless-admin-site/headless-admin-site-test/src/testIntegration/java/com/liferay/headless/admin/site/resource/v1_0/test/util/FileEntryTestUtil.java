@@ -27,7 +27,7 @@ public class FileEntryTestUtil {
 			null, group.getGroupId(), TestPropsValues.getUserId(), null, 0,
 			"com_liferay_layout_admin_web_portlet_GroupPagesPortlet",
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			resourceClass.getResourceAsStream("dependencies/thumbnail1.png"),
+			resourceClass.getResourceAsStream("dependencies/thumbnail_1.png"),
 			RandomTestUtil.randomString() + "_preview.png",
 			ContentTypes.IMAGE_PNG, false);
 	}

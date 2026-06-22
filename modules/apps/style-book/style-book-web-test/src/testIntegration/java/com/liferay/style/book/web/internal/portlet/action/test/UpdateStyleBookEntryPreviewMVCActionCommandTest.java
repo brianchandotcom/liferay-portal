@@ -144,7 +144,7 @@ public class UpdateStyleBookEntryPreviewMVCActionCommandTest {
 			Assert.assertNotNull(noSuchFileEntryException);
 		}
 
-		_testProcessAction("thumbnail1.png");
+		_testProcessAction("thumbnail_1.png");
 
 		StyleBookEntry updatedStyleBookEntry =
 			_styleBookEntryLocalService.fetchStyleBookEntry(
@@ -152,7 +152,7 @@ public class UpdateStyleBookEntryPreviewMVCActionCommandTest {
 
 		long previewFileEntryId = updatedStyleBookEntry.getPreviewFileEntryId();
 
-		_testProcessAction("thumbnail2.png");
+		_testProcessAction("thumbnail_2.png");
 
 		updatedStyleBookEntry = _styleBookEntryLocalService.fetchStyleBookEntry(
 			_styleBookEntry.getStyleBookEntryId());

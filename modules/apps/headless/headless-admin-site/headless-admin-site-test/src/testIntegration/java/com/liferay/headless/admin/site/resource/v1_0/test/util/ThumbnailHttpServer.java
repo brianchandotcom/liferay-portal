@@ -28,14 +28,16 @@ public class ThumbnailHttpServer {
 		HttpServer httpServer = HttpServer.create(
 			new InetSocketAddress("127.0.0.1", 0), 0);
 
-		byte[] thumbnail1Bytes = _getBytes(clazz, "thumbnail1.png");
-		byte[] thumbnail2Bytes = _getBytes(clazz, "thumbnail2.png");
+		byte[] thumbnail1Bytes = _getBytes(clazz, "thumbnail_1.png");
 
 		httpServer.createContext(
-			"/thumbnail1.png",
+			"/thumbnail_1.png",
 			httpExchange -> _writeBytes(thumbnail1Bytes, httpExchange));
+
+		byte[] thumbnail2Bytes = _getBytes(clazz, "thumbnail_2.png");
+
 		httpServer.createContext(
-			"/thumbnail2.png",
+			"/thumbnail_2.png",
 			httpExchange -> _writeBytes(thumbnail2Bytes, httpExchange));
 
 		httpServer.start();
@@ -110,8 +112,8 @@ public class ThumbnailHttpServer {
 
 		String baseURL = "http://127.0.0.1:" + inetSocketAddress.getPort();
 
-		_thumbnail1URL = baseURL + "/thumbnail1.png";
-		_thumbnail2URL = baseURL + "/thumbnail2.png";
+		_thumbnail1URL = baseURL + "/thumbnail_1.png";
+		_thumbnail2URL = baseURL + "/thumbnail_2.png";
 	}
 
 	private final HttpServer _httpServer;

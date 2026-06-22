@@ -84,7 +84,7 @@ public class UpgradePortletId extends BasePortletIdUpgradeProcess {
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
 					"delete from ResourcePermission where companyId = ? and " +
-						"name = ? and scope = ? and primkey = ? and roleId = " +
+						"name = ? and scope = ? and primKey = ? and roleId = " +
 							"?")) {
 
 			while (resultSet.next()) {

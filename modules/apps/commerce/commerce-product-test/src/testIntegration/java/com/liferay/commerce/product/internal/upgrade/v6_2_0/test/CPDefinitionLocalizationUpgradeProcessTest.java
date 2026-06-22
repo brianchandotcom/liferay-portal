@@ -76,8 +76,8 @@ public class CPDefinitionLocalizationUpgradeProcessTest {
 			PreparedStatement preparedStatement =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
-					"update CPDefinitionLocalization set cProductId = null " +
-						"where cpDefinitionId = ?")) {
+					"update CPDefinitionLocalization set CProductId = null " +
+						"where CPDefinitionId = ?")) {
 
 			preparedStatement.setLong(1, cpDefinition.getCPDefinitionId());
 			preparedStatement.executeUpdate();
@@ -88,8 +88,8 @@ public class CPDefinitionLocalizationUpgradeProcessTest {
 		try (Connection connection = DataAccess.getConnection();
 
 			PreparedStatement preparedStatement = connection.prepareStatement(
-				"select cProductId from CPDefinitionLocalization where " +
-					"cpDefinitionId = ?")) {
+				"select CProductId from CPDefinitionLocalization where " +
+					"CPDefinitionId = ?")) {
 
 			preparedStatement.setLong(1, cpDefinition.getCPDefinitionId());
 

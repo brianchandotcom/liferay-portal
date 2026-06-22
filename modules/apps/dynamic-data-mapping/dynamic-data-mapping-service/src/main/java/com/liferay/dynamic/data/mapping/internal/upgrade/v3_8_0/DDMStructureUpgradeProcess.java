@@ -108,8 +108,8 @@ public class DDMStructureUpgradeProcess extends UpgradeProcess {
 
 		sb.append("select DDMStructure.structureId, ");
 		sb.append("DDMStructureVersion.definition from DDMStructure inner ");
-		sb.append("join DDMStructureVersion on DDMStructure.structureid = ");
-		sb.append("DDMStructureVersion.structureid where ");
+		sb.append("join DDMStructureVersion on DDMStructure.structureId = ");
+		sb.append("DDMStructureVersion.structureId where ");
 		sb.append("DDMStructure.version = DDMStructureVersion.version and ");
 		sb.append("DDMStructure.classNameId = ? and DDMStructure.structureId ");
 		sb.append("in (");

@@ -59,8 +59,8 @@ public class DDMStructureUpgradeProcess extends UpgradeProcess {
 						"inner join DDMStructureVersion on ",
 						"DDMStructure.ctCollectionId = ",
 						"DDMStructureVersion.ctCollectionId and ",
-						"DDMStructure.structureid = ",
-						"DDMStructureVersion.structureid where ",
+						"DDMStructure.structureId = ",
+						"DDMStructureVersion.structureId where ",
 						"DDMStructure.version = DDMStructureVersion.version ",
 						"and DDMStructure.classNameId = ?"));
 			PreparedStatement updatePreparedStatement =

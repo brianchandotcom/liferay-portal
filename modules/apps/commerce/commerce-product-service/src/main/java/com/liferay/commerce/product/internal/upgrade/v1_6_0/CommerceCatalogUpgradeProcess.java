@@ -149,7 +149,7 @@ public class CommerceCatalogUpgradeProcess extends UpgradeProcess {
 					ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
 
 				ResultSet cpDefinitionsResultSet = s2.executeQuery(
-					"select distinct cpDefinitionId from CPDefinition where " +
+					"select distinct CPDefinitionId from CPDefinition where " +
 						"groupId = " + catalogGroup.getGroupId());
 
 				while (cpDefinitionsResultSet.next()) {

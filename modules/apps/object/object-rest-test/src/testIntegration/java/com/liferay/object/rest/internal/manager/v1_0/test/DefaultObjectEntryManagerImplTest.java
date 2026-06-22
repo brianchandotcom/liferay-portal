@@ -6148,19 +6148,11 @@ public class DefaultObjectEntryManagerImplTest
 				},
 				ObjectDefinitionConstants.SCOPE_COMPANY);
 
-		// Filtering the relationship's external reference code for an empty
-		// value must return the entries that are not linked through the
-		// relationship
-
-		_assertFilteredObjectEntryIds(
+		_testGetObjectEntriesFilterByEmptyRelationshipExternalReferenceCode(
 			buildEqualsExpressionFilterString(
 				_objectRelationshipERCObjectFieldName, StringPool.BLANK),
 			unlinkedObjectEntry.getId());
-
-		// Filtering by a linked external reference code must still return only
-		// the linked entry
-
-		_assertFilteredObjectEntryIds(
+		_testGetObjectEntriesFilterByEmptyRelationshipExternalReferenceCode(
 			buildEqualsExpressionFilterString(
 				_objectRelationshipERCObjectFieldName,
 				parentObjectEntry.getExternalReferenceCode()),
@@ -10731,7 +10723,7 @@ public class DefaultObjectEntryManagerImplTest
 			objectEntries.toString(), size, objectEntries.size());
 	}
 
-	private void _assertFilteredObjectEntryIds(
+	private void _testGetObjectEntriesFilterByEmptyRelationshipExternalReferenceCode(
 			String filterString, Long... expectedObjectEntryIds)
 		throws Exception {
 

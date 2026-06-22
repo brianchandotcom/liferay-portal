@@ -145,6 +145,10 @@ public class PublishFragmentEntryMVCActionCommandTest {
 
 			ContentLayoutTestUtil.publishLayout(draftLayout, layout);
 
+			_assertLayoutStatusApproved(
+				_layoutLocalService.getLayout(draftLayout.getPlid()),
+				_layoutLocalService.getLayout(layout.getPlid()));
+
 			fragmentEntry.setHtml(fragmentEntry.getHtml() + "<!--updated-->");
 
 			fragmentEntry = _fragmentEntryLocalService.updateFragmentEntry(
@@ -159,11 +163,16 @@ public class PublishFragmentEntryMVCActionCommandTest {
 					new MockLiferayPortletActionResponse());
 			}
 
-			Layout updatedLayout = _layoutLocalService.getLayout(
-				layout.getPlid());
+			_assertLayoutStatusApproved(
+				_layoutLocalService.getLayout(draftLayout.getPlid()),
+				_layoutLocalService.getLayout(layout.getPlid()));
+		}
+	}
 
+	private void _assertLayoutStatusApproved(Layout... layouts) {
+		for (Layout layout : layouts) {
 			Assert.assertEquals(
-				WorkflowConstants.STATUS_APPROVED, updatedLayout.getStatus());
+				WorkflowConstants.STATUS_APPROVED, layout.getStatus());
 		}
 	}
 

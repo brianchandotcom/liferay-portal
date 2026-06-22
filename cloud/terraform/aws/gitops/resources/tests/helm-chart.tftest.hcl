@@ -70,15 +70,15 @@ override_data {
 run "should_configure_the_liferay_aws_marketplace_chart" {
 	assert {
 		condition=length(aws_iam_role_policy.aws_marketplace_metering_policy) == 1 && local.aws_marketplace_enabled == true
-		error_message="The marketplace chart must enable the AWS Marketplace metering policy"
+		error_message="The liferay-aws-marketplace chart must enable the AWS Marketplace metering policy"
 	}
 	assert {
 		condition=local.liferay_helm_chart_config.region == "us-east-1" && tostring(local.liferay_helm_chart_config.ecr_credentials_sync_required) == "true"
-		error_message="The marketplace chart must pin us-east-1 and require ECR credential sync"
+		error_message="The liferay-aws-marketplace chart must use the specified region and must require ECR credential sync"
 	}
 	assert {
 		condition=local.liferay_helm_chart_config.values_scope_prefix == "liferay-aws.liferay-default."
-		error_message="The marketplace chart must double scope values under liferay-aws.liferay-default"
+		error_message="The liferay-aws-marketplace chart must include prefixes for both liferay-aws and liferay-default charts"
 	}
 	command=plan
 	variables {
@@ -88,7 +88,7 @@ run "should_configure_the_liferay_aws_marketplace_chart" {
 run "should_configure_the_liferay_default_chart" {
 	assert {
 		condition=local.liferay_helm_chart_config.values_scope_prefix == "" && tostring(local.liferay_helm_chart_config.ecr_credentials_sync_required) == "false"
-		error_message="The liferay-default chart must use an empty values scope and require no ECR credential sync"
+		error_message="The liferay-default chart must not have scopes defined, and must not require ECR credential sync"
 	}
 	command=plan
 	variables {
@@ -99,17 +99,17 @@ run "should_not_accept_an_unknown_helm_chart_name" {
 	command=plan
 	expect_failures=[var.liferay_helm_chart_name]
 	variables {
-		liferay_helm_chart_name="liferay-azure"
+		liferay_helm_chart_name="liferay-invalid-chart-name"
 	}
 }
 run "should_use_the_liferay_aws_chart_by_default" {
 	assert {
 		condition=length(aws_iam_role_policy.aws_marketplace_metering_policy) == 0
-		error_message="No Marketplace metering policy should exist for the liferay-aws chart"
+		error_message="The AWS Marketplace metering policy should exist for the liferay-aws chart"
 	}
 	assert {
 		condition=local.aws_marketplace_enabled == false
-		error_message="AWS Marketplace must be disabled for the liferay-aws chart"
+		error_message="The AWS Marketplace must be disabled for the liferay-aws chart"
 	}
 	assert {
 		condition=local.liferay_helm_chart_config.region == "us-east-1" && tostring(local.liferay_helm_chart_config.ecr_credentials_sync_required) == "false"

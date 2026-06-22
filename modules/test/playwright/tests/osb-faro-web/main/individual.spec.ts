@@ -1279,6 +1279,91 @@ test(
 );
 
 test(
+	'Individual Events activity can be expanded to view its event attributes',
+	{
+		tag: '@LRAC-8907',
+	},
+	async ({
+		analyticsChannel: channel,
+		apiHelpers,
+		dxpSyncedAnalyticsChannel,
+		page,
+		project,
+	}) => {
+		const {dataSourceId} = dxpSyncedAnalyticsChannel;
+
+		const individual = {
+			...generateIndividual({name: 'act' + getRandomString()}),
+			dataSourceId,
+		};
+
+		const date = new Date();
+
+		await createIndividuals({apiHelpers, individuals: [individual]});
+
+		await apiHelpers.jsonWebServicesOSBAsah.createEvents([
+			{
+				applicationId: 'Page',
+				canonicalUrl: 'https://www.liferay.com',
+				channelId: channel.id,
+				dataSourceId,
+				emailAddressHashed: createHash('sha256')
+					.update(`${individual.name}@liferay.com`)
+					.digest('hex'),
+				eventDate: date.toISOString(),
+				eventId: 'pageViewed',
+				sessionId: individual.id,
+				title: 'pageViewed',
+				userId: individual.id,
+			},
+		]);
+
+		await apiHelpers.jsonWebServicesOSBAsah.createSessions([
+			{
+				channelId: channel.id,
+				id: individual.id,
+				sessionEnd: date.toISOString(),
+				sessionStart: date.toISOString(),
+				userId: individual.id,
+			},
+		]);
+
+		await apiHelpers.jsonWebServicesOSBAsah.createIdentityActivitiesSummary(
+			[
+				{
+					activitiesCount: 1,
+					channelId: channel.id,
+					dataSourceId,
+					eventId: 'pageViewed',
+					firstActivityDate: date.toISOString(),
+					identityId: individual.id,
+					individualId: individual.id,
+					lastActivityDate: date.toISOString(),
+				},
+			]
+		);
+
+		// Open the individual profile
+
+		await openIndividualProfileViaURL({
+			channelID: channel.id,
+			individualId: individual.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		// Expand the activity in the Individual Events timeline
+
+		await changeTimeFilter({page, timeFilterPeriod: 'Last 24 hours'});
+
+		await page.getByText('pageViewed').first().click();
+
+		await expect(page.getByText('"applicationId": "Page"')).toBeVisible();
+		await expect(page.getByText('"eventId": "pageViewed"')).toBeVisible();
+	}
+);
+
+test(
 	'Synced contacts appear in the Known Individuals list',
 	{
 		tag: '@LRAC-12659',

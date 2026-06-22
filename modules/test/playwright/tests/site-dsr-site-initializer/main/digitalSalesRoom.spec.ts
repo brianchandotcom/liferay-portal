@@ -1408,7 +1408,10 @@ test(
 			await digitalSalesRoomsPage.goToRoomsPage();
 
 			await expect(
-				digitalSalesRoomsPage.digitalSalesRoomsTable.cell(roomName, false)
+				digitalSalesRoomsPage.digitalSalesRoomsTable.cell(
+					roomName,
+					false
+				)
 			).toBeVisible();
 
 			await digitalSalesRoomsPage.clickRowActionsMenuItem(
@@ -1425,86 +1428,72 @@ test(
 			emailAddress: string,
 			rowText: string
 		) => {
-			await test.step(
-				'Add the user with an access expiration date',
-				async () => {
-					await digitalSalesRoomUsersPage.userEmailAddressesInput.fill(
-						emailAddress
-					);
-					await digitalSalesRoomUsersPage.userEmailAddressesInput.press(
-						'Enter'
-					);
-					await digitalSalesRoomUsersPage.inviteExpirationDateInput.fill(
-						'2030-07-15'
-					);
-					await digitalSalesRoomUsersPage.inviteButton.click();
+			await test.step('Add the user with an access expiration date', async () => {
+				await digitalSalesRoomUsersPage.userEmailAddressesInput.fill(
+					emailAddress
+				);
+				await digitalSalesRoomUsersPage.userEmailAddressesInput.press(
+					'Enter'
+				);
+				await digitalSalesRoomUsersPage.inviteExpirationDateInput.fill(
+					'2030-07-15'
+				);
+				await digitalSalesRoomUsersPage.inviteButton.click();
 
-					await waitForAlert(
-						page,
-						'Success:User was invited successfully.'
-					);
+				await waitForAlert(
+					page,
+					'Success:User was invited successfully.'
+				);
 
-					await expect(
-						digitalSalesRoomUsersPage.expirationLabel(rowText)
-					).toContainText('Jul 15, 2030');
-				}
-			);
+				await expect(
+					digitalSalesRoomUsersPage.expirationLabel(rowText)
+				).toContainText('Jul 15, 2030');
+			});
 
-			await test.step(
-				'Update the access expiration date',
-				async () => {
-					await digitalSalesRoomUsersPage
-						.editExpirationButton(rowText)
-						.click();
-					await digitalSalesRoomUsersPage
-						.rowExpirationDateInput(rowText)
-						.fill('2031-08-20');
-					await digitalSalesRoomUsersPage
-						.confirmExpirationButton(rowText)
-						.click();
+			await test.step('Update the access expiration date', async () => {
+				await digitalSalesRoomUsersPage
+					.editExpirationButton(rowText)
+					.click();
+				await digitalSalesRoomUsersPage
+					.rowExpirationDateInput(rowText)
+					.fill('2031-08-20');
+				await digitalSalesRoomUsersPage
+					.confirmExpirationButton(rowText)
+					.click();
 
-					await waitForAlert(page);
+				await waitForAlert(page);
 
-					await expect(
-						digitalSalesRoomUsersPage.expirationLabel(rowText)
-					).toContainText('Aug 20, 2031');
-				}
-			);
+				await expect(
+					digitalSalesRoomUsersPage.expirationLabel(rowText)
+				).toContainText('Aug 20, 2031');
+			});
 
-			await test.step(
-				'Remove the access expiration date',
-				async () => {
-					await digitalSalesRoomUsersPage
-						.editExpirationButton(rowText)
-						.click();
-					await digitalSalesRoomUsersPage
-						.rowExpirationDateInput(rowText)
-						.fill('');
-					await digitalSalesRoomUsersPage
-						.confirmExpirationButton(rowText)
-						.click();
+			await test.step('Remove the access expiration date', async () => {
+				await digitalSalesRoomUsersPage
+					.editExpirationButton(rowText)
+					.click();
+				await digitalSalesRoomUsersPage
+					.rowExpirationDateInput(rowText)
+					.fill('');
+				await digitalSalesRoomUsersPage
+					.confirmExpirationButton(rowText)
+					.click();
 
-					await waitForAlert(page);
+				await waitForAlert(page);
 
-					await expect(
-						digitalSalesRoomUsersPage.userRow(rowText)
-					).toContainText('No Expiration');
-				}
-			);
+				await expect(
+					digitalSalesRoomUsersPage.userRow(rowText)
+				).toContainText('No Expiration');
+			});
 		};
 
-		await test.step(
-			'Manage the access expiration for an internal member',
-			() =>
-				verifyExpirationLifecycle(
-					userAccount.emailAddress,
-					userAccount.alternateName
-				)
-		);
+		await test.step('Manage the access expiration for an internal member', () =>
+			verifyExpirationLifecycle(
+				userAccount.emailAddress,
+				userAccount.alternateName
+			));
 
-		await test.step(
-			'Manage the access expiration for a pending invitation',
-			() => verifyExpirationLifecycle(invitedEmail, invitedEmail)
-		);
+		await test.step('Manage the access expiration for a pending invitation', () =>
+			verifyExpirationLifecycle(invitedEmail, invitedEmail));
 	}
 );

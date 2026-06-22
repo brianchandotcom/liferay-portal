@@ -78,7 +78,9 @@ describe('RoomShare', () => {
 			mockUsers
 		);
 
-		(RoomService.updateRoomInvitedMember as jest.Mock).mockResolvedValue({});
+		(RoomService.updateRoomInvitedMember as jest.Mock).mockResolvedValue(
+			{}
+		);
 
 		(RoomService.updateRoomUserAccount as jest.Mock).mockImplementation(
 			(roomId, userId, data) => {
@@ -547,7 +549,9 @@ describe('RoomShare', () => {
 			expect(screen.getByText('Win Doe')).toBeInTheDocument();
 		});
 
-		const expiringSoonRow = screen.getByText('Ran Doe').closest('.user-row');
+		const expiringSoonRow = screen
+			.getByText('Ran Doe')
+			.closest('.user-row');
 
 		expect(expiringSoonRow?.querySelector('.label-warning')).not.toBeNull();
 		expect(

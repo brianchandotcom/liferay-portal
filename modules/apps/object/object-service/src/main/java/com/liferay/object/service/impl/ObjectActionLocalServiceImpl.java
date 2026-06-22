@@ -50,7 +50,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -620,10 +619,7 @@ public class ObjectActionLocalServiceImpl
 			ObjectDefinition objectDefinition)
 		throws PortalException {
 
-		if (!FeatureFlagManagerUtil.isEnabled(
-				objectDefinition.getCompanyId(), "LPD-34594") ||
-			objectDefinition.isRootNode()) {
-
+		if (objectDefinition.isRootNode()) {
 			return;
 		}
 
@@ -784,9 +780,7 @@ public class ObjectActionLocalServiceImpl
 			ObjectDefinition objectDefinition)
 		throws PortalException {
 
-		if (FeatureFlagManagerUtil.isEnabled(
-				objectDefinition.getCompanyId(), "LPD-34594") &&
-			StringUtil.equals(
+		if (StringUtil.equals(
 				objectActionTriggerKey,
 				ObjectActionTriggerConstants.KEY_ON_AFTER_ROOT_UPDATE) &&
 			!objectDefinition.isRootNode()) {

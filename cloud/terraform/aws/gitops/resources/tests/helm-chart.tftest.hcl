@@ -105,7 +105,7 @@ run "should_not_accept_an_unknown_helm_chart_name" {
 run "should_use_the_liferay_aws_chart_by_default" {
 	assert {
 		condition=length(aws_iam_role_policy.aws_marketplace_metering_policy) == 0
-		error_message="The AWS Marketplace metering policy should exist for the liferay-aws chart"
+		error_message="The AWS Marketplace metering policy must not exist for the liferay-aws chart"
 	}
 	assert {
 		condition=local.aws_marketplace_enabled == false

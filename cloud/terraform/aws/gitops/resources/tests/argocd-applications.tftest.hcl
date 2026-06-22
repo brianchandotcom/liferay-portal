@@ -67,7 +67,7 @@ override_data {
 		cidr_block="10.0.0.0/16"
 	}
 }
-run "should_include_required_prefixes_for_the_marketplace_chart_to_gatewayName" {
+run "should_include_required_prefixes_for_the_marketplace_chart_to_gateway_name" {
 	assert {
 		condition=kubernetes_manifest.liferay_applicationset.manifest.spec.template.spec.sources[0].helm.parameters[0].name == "liferay-aws.liferay-default.network.gatewayName"
 		error_message="The liferay-aws-marketplace chart must include prefixes for both liferay-aws and liferay-default charts to gatewayName Helm parameter"

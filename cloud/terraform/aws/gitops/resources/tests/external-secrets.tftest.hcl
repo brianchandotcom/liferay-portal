@@ -1,10 +1,12 @@
 mock_provider "aws" {
 	mock_data "aws_iam_policy_document" {
 		defaults={
-			json=jsonencode({
-				Statement=[]
-				Version="2012-10-17"
-			})
+			json=jsonencode(
+				{
+					Statement=[]
+					Version="2012-10-17"
+				}
+			)
 		}
 	}
 	mock_resource "aws_iam_policy" {
@@ -91,7 +93,7 @@ run "should_create_the_secret_store_with_the_default_provider" {
 run "should_create_the_sso_external_secret_when_enabled" {
 	assert {
 		condition=length(kubernetes_manifest.argocd_sso_saml_external_secret) == 1
-		error_message="Enabling SAML SSO must create the customer-idp-saml ExternalSecret"
+		error_message="The customer-idp-saml ExternalSecret should be created if SSO is enabled"
 	}
 	assert {
 		condition=length(kubernetes_manifest.argocd_sso_saml_external_secret[0].manifest.spec.data) == 4
@@ -111,7 +113,7 @@ run "should_disable_default_irsa_for_a_custom_secret_store_provider" {
 	}
 	assert {
 		condition=length(aws_iam_policy.secret_store_policy) == 0 && length(aws_iam_role.secret_store_role) == 0 && length(kubernetes_service_account.secret_store_sa) == 0
-		error_message="Supplying a custom secret store provider must disable the default IRSA resources"
+		error_message="Supplying a custom secret store provider must disable the default resources for IAM roles"
 	}
 	command=plan
 	variables {

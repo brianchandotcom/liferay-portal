@@ -108,16 +108,17 @@ public class JenkinsCohort {
 
 			if (!blacklist.contains(jenkinsMasterName)) {
 				blacklist.add(jenkinsMasterName);
-			}
 
-			List<JenkinsMaster> availableJenkinsMasters =
-				_getAvailableJenkinsMasters(blacklist);
+				List<JenkinsMaster> availableJenkinsMasters =
+					_getAvailableJenkinsMasters(blacklist);
 
-			if (availableJenkinsMasters.isEmpty()) {
-				System.out.println(
-					"Unable to exclude Jenkins master " + jenkinsMasterName);
+				if (availableJenkinsMasters.isEmpty()) {
+					System.out.println(
+						"Unable to exclude Jenkins master " +
+							jenkinsMasterName);
 
-				blacklist.remove(jenkinsMasterName);
+					blacklist.remove(jenkinsMasterName);
+				}
 			}
 		}
 

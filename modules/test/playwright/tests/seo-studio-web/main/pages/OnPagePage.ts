@@ -8,6 +8,8 @@ import {Locator, Page, expect} from '@playwright/test';
 export class OnPagePage {
 	readonly page: Page;
 
+	readonly filterButton: Locator;
+	readonly filteredEmptyStateTitle: Locator;
 	readonly insightsHeading: Locator;
 	readonly lastScanLabel: Locator;
 	readonly noInsightsEmptyStateDescription: Locator;
@@ -16,10 +18,15 @@ export class OnPagePage {
 	readonly noScansEmptyStateTitle: Locator;
 	readonly onPageHeading: Locator;
 	readonly runScanNowButton: Locator;
+	readonly tableRows: Locator;
 
 	constructor(page: Page) {
 		this.page = page;
 
+		this.filterButton = this.page.getByRole('button', {name: 'Filter'});
+		this.filteredEmptyStateTitle = this.page.getByText(
+			'No Insights Match These Filters'
+		);
 		this.insightsHeading = this.page.getByRole('heading', {
 			level: 3,
 			name: 'Insights',
@@ -43,6 +50,21 @@ export class OnPagePage {
 		this.runScanNowButton = this.page.getByRole('button', {
 			name: 'Run scan now',
 		});
+		this.tableRows = this.page.locator('.table tbody tr');
+	}
+
+	async applyFilter(filterLabel: string, itemLabels: string[]) {
+		await this.filterButton.click();
+
+		const dropdownMenu = this.page.locator('.dropdown-menu');
+
+		await dropdownMenu.getByRole('menuitem', {name: filterLabel}).click();
+
+		for (const itemLabel of itemLabels) {
+			await dropdownMenu.getByRole('checkbox', {name: itemLabel}).check();
+		}
+
+		await dropdownMenu.getByRole('button', {name: 'Add Filter'}).click();
 	}
 
 	async emptyStateIsVisible(variant: 'no-insights' | 'no-scans') {
@@ -56,10 +78,31 @@ export class OnPagePage {
 		}
 	}
 
+	activeFilterChip(text: string): Locator {
+		return this.page.getByRole('button', {name: text});
+	}
+
 	getInsightRow(name: string): Locator {
 		return this.page.getByRole('row', {
 			name: new RegExp(`(^|\\s)${name}(\\s|$)`),
 		});
+	}
+
+	async getInsightNamesInOrder(): Promise<string[]> {
+		const rows = await this.tableRows.all();
+
+		const names = await Promise.all(
+			rows.map((row) => row.locator('td').first().innerText())
+		);
+
+		return names.map((name) => name.trim());
+	}
+
+	async sortByColumn(name: string) {
+		await this.page
+			.getByRole('columnheader', {name})
+			.getByRole('button')
+			.click();
 	}
 
 	async selectInsight(name: string) {

@@ -12,7 +12,7 @@ import com.liferay.portal.kernel.util.Accessor;
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * The extended model interface for the LayoutPageTemplateStructureRelElementVariation service. Represents a row in the &quot;LPTStructureElementVariation&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the LayoutPageTemplateStructureRelElementVariation service. Represents a row in the &quot;LPTSRelElementVariation&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
  * @see LayoutPageTemplateStructureRelElementVariationModel
@@ -62,4 +62,4 @@ public interface LayoutPageTemplateStructureRelElementVariation
 				};
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1423348812
+// LIFERAY-SERVICE-BUILDER-HASH:-203147207

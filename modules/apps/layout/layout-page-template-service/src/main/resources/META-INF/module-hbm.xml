@@ -96,8 +96,8 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="statusDate" type="timestamp" />
 	</class>
-	<class dynamic-update="true" name="com.liferay.layout.page.template.model.impl.LayoutPageTemplateStructureRelElementVariationImpl" table="LPTStructureElementVariation">
-		<id access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="lptStructureElementVariationId" name="layoutPageTemplateStructureRelElementVariationId" type="long">
+	<class dynamic-update="true" name="com.liferay.layout.page.template.model.impl.LayoutPageTemplateStructureRelElementVariationImpl" table="LPTSRelElementVariation">
+		<id access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="lptsRelElementVariationId" name="layoutPageTemplateStructureRelElementVariationId" type="long">
 			<generator class="assigned" />
 		</id>
 		<version access="com.liferay.portal.dao.orm.hibernate.PrivateFieldPropertyAccessor" name="mvccVersion" type="long" />

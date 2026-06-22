@@ -35,12 +35,12 @@ test(
 				catalogId: catalog.id,
 			});
 
-		const response =
+		const patchedProduct =
 			await apiHelpers.headlessCommerceAdminCatalog.patchProduct(
 				String(product.productId)
 			);
 
-		expect(response.ok()).toBe(true);
+		expect(patchedProduct.productId).toBe(product.productId);
 
 		await expect(userPersonalBarPage.notificationBadge).not.toBeVisible();
 

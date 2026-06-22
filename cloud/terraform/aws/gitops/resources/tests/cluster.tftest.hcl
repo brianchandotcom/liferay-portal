@@ -1,10 +1,12 @@
 mock_provider "aws" {
 	mock_data "aws_iam_policy_document" {
 		defaults={
-			json=jsonencode({
-				Statement=[]
-				Version="2012-10-17"
-			})
+			json=jsonencode(
+				{
+					Statement=[]
+					Version="2012-10-17"
+				}
+			)
 		}
 	}
 	mock_resource "aws_iam_policy" {
@@ -68,15 +70,15 @@ override_data {
 run "should_compute_cluster_identity_locals" {
 	assert {
 		condition=local.account_id == "123456789012"
-		error_message="local.account_id must come from the caller identity"
+		error_message="The local.account_id must come from the caller identity"
 	}
 	assert {
 		condition=local.cluster_name == "liferay-test-eks"
-		error_message="local.cluster_name must be \"<deployment_name>-eks\""
+		error_message="The local.cluster_name must include eks as a suffix"
 	}
 	assert {
 		condition=local.liferay_service_account_role_name == "liferay-test-irsa"
-		error_message="local.liferay_service_account_role_name must be derived from deployment_name"
+		error_message="The local.liferay_service_account_role_name must be derived from deployment_name"
 	}
 	assert {
 		condition=local.oidc_provider == "oidc.eks.us-east-1.amazonaws.com/id/EXAMPLE"

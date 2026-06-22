@@ -3,17 +3,19 @@ templates:
     -   templates/liferay-network-cm.yaml
 tests:
     -   asserts:
-            -   equal:
-                    path: metadata.name
-                    value: liferay-network
-            -   isKind:
-                    of: ConfigMap
-            -   isNullOrEmpty:
-                    path: data
-        it: Creates an empty liferay-network ConfigMap when no hostnames are configured
+            -   hasDocuments:
+                    count: 0
+        it: Omits the ConfigMap liferay-network when no hostnames are configured
         set:
-            liferay-default.network.enabled: true
-            liferay-default.network.hostnames: []
+            network.enabled: true
+            network.hostnames: []
+    -   asserts:
+            -   hasDocuments:
+                    count: 0
+        it: Omits the ConfigMap liferay-network when network is disabled
+        set:
+            network.enabled: true
+            network.hostnames: []
     -   asserts:
             -   equal:
                     path: data["LIFERAY_COMPANY_PERIOD_DEFAULT_PERIOD_VIRTUAL_PERIOD_HOST_PERIOD_NAME"]
@@ -23,8 +25,8 @@ tests:
                     value: a.example.com
         it: Derives the default virtual host from the first configured hostname
         set:
-            liferay-default.network.enabled: true
-            liferay-default.network.hostnames:
+            network.enabled: true
+            network.hostnames:
                 -   a.example.com
                 -   b.example.com
     -   asserts:
@@ -33,8 +35,8 @@ tests:
                     value: a.example.com,b.example.com,localhost,${env.POD_IP}
         it: Joins every configured hostname into the valid hosts list
         set:
-            liferay-default.network.enabled: true
-            liferay-default.network.hostnames:
+            network.enabled: true
+            network.hostnames:
                 -   a.example.com
                 -   b.example.com
     -   asserts:
@@ -42,4 +44,4 @@ tests:
                     count: 0
         it: Omits the ConfigMap when networking is disabled
         set:
-            liferay-default.network.enabled: false
+            network.enabled: false

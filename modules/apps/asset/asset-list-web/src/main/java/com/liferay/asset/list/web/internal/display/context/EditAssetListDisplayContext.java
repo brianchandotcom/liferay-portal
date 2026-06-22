@@ -70,7 +70,6 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.CollatorUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -98,10 +97,6 @@ import jakarta.portlet.PortletResponse;
 import jakarta.portlet.PortletURL;
 
 import jakarta.servlet.http.HttpServletRequest;
-
-import java.io.Serializable;
-
-import java.text.Collator;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -1490,29 +1485,5 @@ public class EditAssetListDisplayContext {
 	private Boolean _subtypeFieldsFilterEnabled;
 	private final ThemeDisplay _themeDisplay;
 	private final UnicodeProperties _unicodeProperties;
-
-	private class SelectorEntriesLabelComparator
-		implements Comparator<Map<String, Object>>, Serializable {
-
-		public SelectorEntriesLabelComparator(Locale locale) {
-			_collator = CollatorUtil.getInstance(locale);
-		}
-
-		@Override
-		public int compare(Map<String, Object> map1, Map<String, Object> map2) {
-			String label1 = StringPool.BLANK;
-			String label2 = StringPool.BLANK;
-
-			if (map1.containsKey("label") && map2.containsKey("label")) {
-				label1 = (String)map1.get("label");
-				label2 = (String)map2.get("label");
-			}
-
-			return _collator.compare(label1, label2);
-		}
-
-		private final Collator _collator;
-
-	}
 
 }

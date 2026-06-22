@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -227,11 +228,7 @@ public class InviteMemberMVCActionCommandTest {
 			objectEntry.getObjectEntryId());
 
 		Group group = _groupLocalService.getGroup(
-			GetterUtil.getLong(
-				objectEntry.getValues(
-				).get(
-					"siteId"
-				)));
+			MapUtil.getLong(objectEntry.getValues(), "siteId"));
 
 		String emailAddress = StringUtil.lowerCase(
 			RandomTestUtil.randomString() + "@liferay.com");

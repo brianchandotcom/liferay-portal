@@ -8,6 +8,7 @@ package com.liferay.layout.set.prototype.exportimport.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactoryUtil;
 import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalServiceUtil;
 import com.liferay.exportimport.kernel.service.ExportImportLocalServiceUtil;
@@ -26,11 +27,17 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.File;
 
+import java.util.Date;
 import java.util.Map;
+import java.util.concurrent.Callable;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -160,6 +167,89 @@ public class LayoutSetPrototypeExportImportTest
 		exportImportLayoutSetPrototype(true);
 	}
 
+	@Test
+	@TestInfo("LPD-95511")
+	public void testImportContentPageIntoLayoutSetPrototypeDoesNotDeadlock()
+		throws Exception {
+
+		LayoutSetPrototype layoutSetPrototype =
+			LayoutTestUtil.addLayoutSetPrototype(RandomTestUtil.randomString());
+
+		Group group = layoutSetPrototype.getGroup();
+
+		long layoutSetPrototypeId =
+			layoutSetPrototype.getLayoutSetPrototypeId();
+
+		// A layout set prototype import runs in an outer transaction that
+		// updates and therefore locks the layout set prototype row, while the
+		// batch engine imports each content page in a nested REQUIRES_NEW
+		// transaction. Adding a content page fires
+		// LayoutSetPrototypeLayoutModelListener, whose cascade updates the
+		// layout set and, through LayoutSetPrototypeLayoutSetModelListener, the
+		// same layout set prototype row again from the nested transaction.
+		// Before LPD-95511 that nested update blocked on the outer lock and
+		// timed out with a PessimisticLockException. The fix skips the cascade
+		// while an import is in process, which this test asserts by reproducing
+		// the same transaction nesting.
+
+		boolean layoutImportInProcess =
+			ExportImportThreadLocal.isLayoutImportInProcess();
+
+		ExportImportThreadLocal.setLayoutImportInProcess(true);
+
+		Callable<Void> importLayoutSetPrototypeCallable = () -> {
+
+			// Lock the layout set prototype row in the outer transaction, as
+			// importing its staged model does
+
+			LayoutSetPrototype lockedLayoutSetPrototype =
+				LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototype(
+					layoutSetPrototypeId);
+
+			Date modifiedDate = lockedLayoutSetPrototype.getModifiedDate();
+
+			long time = modifiedDate.getTime();
+
+			lockedLayoutSetPrototype.setModifiedDate(new Date(time - Time.DAY));
+
+			LayoutSetPrototypeLocalServiceUtil.updateLayoutSetPrototype(
+				lockedLayoutSetPrototype);
+
+			// Import a content page in a nested transaction, as the batch
+			// engine does for each page
+
+			try {
+				TransactionInvokerUtil.invoke(
+					_requiresNewTransactionConfig,
+					() -> LayoutTestUtil.addTypeContentLayout(
+						group, true, false));
+			}
+			catch (Throwable throwable) {
+				throw new Exception(throwable);
+			}
+
+			return null;
+		};
+
+		try {
+			TransactionInvokerUtil.invoke(
+				_requiredTransactionConfig, importLayoutSetPrototypeCallable);
+		}
+		catch (Throwable throwable) {
+			throw new AssertionError(
+				"Importing a content page into a layout set prototype " +
+					"deadlocked",
+				throwable);
+		}
+		finally {
+			ExportImportThreadLocal.setLayoutImportInProcess(
+				layoutImportInProcess);
+
+			LayoutSetPrototypeLocalServiceUtil.deleteLayoutSetPrototype(
+				layoutSetPrototypeId);
+		}
+	}
+
 	protected void exportImportLayoutSetPrototype(boolean layoutPrototype)
 		throws Exception {
 
@@ -228,5 +318,12 @@ public class LayoutSetPrototypeExportImportTest
 	protected void testExportImportDisplayStyle(long groupId, String scopeType)
 		throws Exception {
 	}
+
+	private static final TransactionConfig _requiredTransactionConfig =
+		TransactionConfig.Factory.create(
+			Propagation.REQUIRED, new Class<?>[] {Exception.class});
+	private static final TransactionConfig _requiresNewTransactionConfig =
+		TransactionConfig.Factory.create(
+			Propagation.REQUIRES_NEW, new Class<?>[] {Exception.class});
 
 }

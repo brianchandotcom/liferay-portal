@@ -17,14 +17,12 @@ mock_provider "aws" {
 }
 mock_provider "helm" {}
 mock_provider "kubernetes" {}
-
 override_data {
 	target=data.aws_caller_identity.current
 	values={
 		account_id="123456789012"
 	}
 }
-
 override_data {
 	target=data.aws_eks_cluster.cluster
 	values={
@@ -44,14 +42,12 @@ override_data {
 		}]
 	}
 }
-
 override_data {
 	target=data.aws_iam_role.envoy_proxy_role
 	values={
 		arn="arn:aws:iam::123456789012:role/liferay-test-envoy-proxy"
 	}
 }
-
 override_data {
 	target=data.aws_iam_role.liferay_irsa
 	values={
@@ -59,73 +55,59 @@ override_data {
 		id="liferay-test-irsa"
 	}
 }
-
 override_data {
 	target=data.aws_subnets.private
 	values={
 		ids=["subnet-aaa", "subnet-bbb"]
 	}
 }
-
 override_data {
 	target=data.aws_vpc.current
 	values={
 		cidr_block="10.0.0.0/16"
 	}
 }
-
 run "should_create_ecr_sync_resources_for_the_marketplace_chart" {
 	assert {
 		condition=aws_iam_role.ecr_role[0].name == "liferay-test-eks-gitops-ecr-credentials-sync" && length(aws_iam_role.ecr_role) == 1
 		error_message="The marketplace chart must create the ECR sync IRSA role named after the cluster"
 	}
-
 	assert {
 		condition=contains(keys(kubernetes_service_account.ecr_sa[0].metadata[0].annotations), "eks.amazonaws.com/role-arn")
 		error_message="The ECR sync service account must carry the IRSA role-arn annotation"
 	}
-
 	assert {
 		condition=kubernetes_cron_job_v1.ecr_credentials_sync[0].spec[0].schedule == "0 */8 * * *" && length(kubernetes_cron_job_v1.ecr_credentials_sync) == 1
 		error_message="The marketplace chart must schedule the ECR credentials sync CronJob every 8 hours"
 	}
-
 	assert {
 		condition=length(kubernetes_job_v1.ecr_credentials_sync_initial) == 1
 		error_message="The marketplace chart must create the one time initial ECR credentials sync Job"
 	}
-
 	assert {
 		condition=length(kubernetes_role.ecr_secret_manager) == 1 && length(kubernetes_role_binding.ecr_secret_manager_binding) == 1 && length(kubernetes_service_account.ecr_sa) == 1
 		error_message="The marketplace chart must create the ECR sync RBAC role, binding, and service account"
 	}
-
 	command=plan
-
 	variables {
 		liferay_helm_chart_name="liferay-aws-marketplace"
 	}
 }
-
 run "should_not_create_ecr_sync_resources_for_a_non_marketplace_chart" {
 	assert {
 		condition=length(aws_iam_role.ecr_role) == 0 && length(aws_iam_role_policy_attachment.ecr_policy) == 0
 		error_message="No ECR sync IAM resources should exist unless the chart requires ECR credential sync"
 	}
-
 	assert {
 		condition=length(kubernetes_cron_job_v1.ecr_credentials_sync) == 0 && length(kubernetes_job_v1.ecr_credentials_sync_initial) == 0
 		error_message="No ECR sync jobs should exist unless the chart requires ECR credential sync"
 	}
-
 	assert {
 		condition=length(kubernetes_role.ecr_secret_manager) == 0 && length(kubernetes_role_binding.ecr_secret_manager_binding) == 0 && length(kubernetes_service_account.ecr_sa) == 0
 		error_message="No ECR sync RBAC resources should exist unless the chart requires ECR credential sync"
 	}
-
 	command=plan
 }
-
 variables {
 	deployment_name="liferay-test"
 	infrastructure_helm_chart_version="0.4.9"

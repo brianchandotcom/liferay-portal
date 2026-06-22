@@ -17,14 +17,12 @@ mock_provider "aws" {
 }
 mock_provider "helm" {}
 mock_provider "kubernetes" {}
-
 override_data {
 	target=data.aws_caller_identity.current
 	values={
 		account_id="123456789012"
 	}
 }
-
 override_data {
 	target=data.aws_eks_cluster.cluster
 	values={
@@ -44,14 +42,12 @@ override_data {
 		}]
 	}
 }
-
 override_data {
 	target=data.aws_iam_role.envoy_proxy_role
 	values={
 		arn="arn:aws:iam::123456789012:role/liferay-test-envoy-proxy"
 	}
 }
-
 override_data {
 	target=data.aws_iam_role.liferay_irsa
 	values={
@@ -59,91 +55,72 @@ override_data {
 		id="liferay-test-irsa"
 	}
 }
-
 override_data {
 	target=data.aws_subnets.private
 	values={
 		ids=["subnet-aaa", "subnet-bbb"]
 	}
 }
-
 override_data {
 	target=data.aws_vpc.current
 	values={
 		cidr_block="10.0.0.0/16"
 	}
 }
-
 run "should_configure_the_liferay_aws_marketplace_chart" {
 	assert {
 		condition=length(aws_iam_role_policy.aws_marketplace_metering_policy) == 1 && local.aws_marketplace_enabled == true
 		error_message="The marketplace chart must enable the AWS Marketplace metering policy"
 	}
-
 	assert {
 		condition=local.liferay_helm_chart_config.region == "us-east-1" && tostring(local.liferay_helm_chart_config.ecr_credentials_sync_required) == "true"
 		error_message="The marketplace chart must pin us-east-1 and require ECR credential sync"
 	}
-
 	assert {
 		condition=local.liferay_helm_chart_config.values_scope_prefix == "liferay-aws.liferay-default."
 		error_message="The marketplace chart must double scope values under liferay-aws.liferay-default"
 	}
-
 	command=plan
-
 	variables {
 		liferay_helm_chart_name="liferay-aws-marketplace"
 	}
 }
-
 run "should_configure_the_liferay_default_chart" {
 	assert {
 		condition=local.liferay_helm_chart_config.values_scope_prefix == "" && tostring(local.liferay_helm_chart_config.ecr_credentials_sync_required) == "false"
 		error_message="The liferay-default chart must use an empty values scope and require no ECR credential sync"
 	}
-
 	command=plan
-
 	variables {
 		liferay_helm_chart_name="liferay-default"
 	}
 }
-
 run "should_not_accept_an_unknown_helm_chart_name" {
 	command=plan
-
 	expect_failures=[var.liferay_helm_chart_name]
-
 	variables {
 		liferay_helm_chart_name="liferay-azure"
 	}
 }
-
 run "should_use_the_liferay_aws_chart_by_default" {
 	assert {
 		condition=length(aws_iam_role_policy.aws_marketplace_metering_policy) == 0
 		error_message="No Marketplace metering policy should exist for the liferay-aws chart"
 	}
-
 	assert {
 		condition=local.aws_marketplace_enabled == false
 		error_message="AWS Marketplace must be disabled for the liferay-aws chart"
 	}
-
 	assert {
 		condition=local.liferay_helm_chart_config.region == "us-east-1" && tostring(local.liferay_helm_chart_config.ecr_credentials_sync_required) == "false"
 		error_message="The liferay-aws chart must use the deployment region and require no ECR credential sync"
 	}
-
 	assert {
 		condition=local.liferay_helm_chart_config.values_scope_prefix == "liferay-default."
 		error_message="The liferay-aws chart must scope values under liferay-default"
 	}
-
 	command=plan
 }
-
 variables {
 	deployment_name="liferay-test"
 	infrastructure_helm_chart_version="0.4.9"

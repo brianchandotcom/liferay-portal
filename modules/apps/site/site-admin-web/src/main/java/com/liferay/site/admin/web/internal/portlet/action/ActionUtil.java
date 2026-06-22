@@ -161,7 +161,8 @@ public class ActionUtil {
 	}
 
 	public static void updateLayoutSetPrototypesLinks(
-			ActionRequest actionRequest, Group liveGroup, Sites sites)
+			ActionRequest actionRequest, Group liveGroup,
+			boolean mergeLayoutSetPrototype, Sites sites)
 		throws Exception {
 
 		long privateLayoutSetPrototypeId = ParamUtil.getLong(
@@ -224,8 +225,8 @@ public class ActionUtil {
 		}
 
 		sites.updateLayoutSetPrototypesLinks(
-			group, publicLayoutSetPrototypeId, privateLayoutSetPrototypeId,
-			publicLayoutSetPrototypeLinkEnabled,
+			group, mergeLayoutSetPrototype, publicLayoutSetPrototypeId,
+			privateLayoutSetPrototypeId, publicLayoutSetPrototypeLinkEnabled,
 			privateLayoutSetPrototypeLinkEnabled);
 	}
 

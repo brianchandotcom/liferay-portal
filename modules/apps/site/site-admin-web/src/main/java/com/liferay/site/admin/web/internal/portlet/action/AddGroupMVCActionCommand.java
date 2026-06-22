@@ -652,7 +652,8 @@ public class AddGroupMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, Group group)
 		throws Exception {
 
-		ActionUtil.updateLayoutSetPrototypesLinks(actionRequest, group, _sites);
+		ActionUtil.updateLayoutSetPrototypesLinks(
+			actionRequest, group, true, _sites);
 
 		long layoutSetPrototypeId = ParamUtil.getLong(
 			actionRequest, "layoutSetPrototypeId");

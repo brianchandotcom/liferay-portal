@@ -82,7 +82,7 @@ public class EditProfileAndDashboardMVCActionCommand
 					privateLayoutSet.isLayoutSetPrototypeLinkEnabled())) {
 
 				_sites.updateLayoutSetPrototypesLinks(
-					group, publicLayoutSetPrototypeId,
+					group, false, publicLayoutSetPrototypeId,
 					privateLayoutSetPrototypeId,
 					publicLayoutSetPrototypeLinkEnabled,
 					privateLayoutSetPrototypeLinkEnabled);

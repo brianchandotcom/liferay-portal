@@ -124,7 +124,7 @@ public class UpdateOrganizationOrganizationSiteMVCActionCommand
 				privateLayoutSetPrototypeId > 0);
 
 			_sites.updateLayoutSetPrototypesLinks(
-				organizationGroup, publicLayoutSetPrototypeId,
+				organizationGroup, false, publicLayoutSetPrototypeId,
 				privateLayoutSetPrototypeId,
 				publicLayoutSetPrototypeLinkEnabled,
 				privateLayoutSetPrototypeLinkEnabled);

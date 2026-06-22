@@ -28,7 +28,7 @@ public class MFATimeBasedOTPUtilTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void testVerifyTimeBasedOTP() throws Exception {
+	public void test() throws Exception {
 		String sharedSecret = MFATimeBasedOTPUtil.generateSharedSecret(20);
 
 		FIPSAlgorithmTestUtil.assertAlgorithmSwitch(

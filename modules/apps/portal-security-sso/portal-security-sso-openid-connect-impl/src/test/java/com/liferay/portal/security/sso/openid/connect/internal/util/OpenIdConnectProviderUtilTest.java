@@ -27,7 +27,7 @@ public class OpenIdConnectProviderUtilTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void testGenerateLocalWellKnownURI() throws Exception {
+	public void test() throws Exception {
 		FIPSAlgorithmTestUtil.assertAlgorithmSwitch(
 			() -> OpenIdConnectProviderUtil.generateLocalWellKnownURI(
 				"https://" + RandomTestUtil.randomString(),

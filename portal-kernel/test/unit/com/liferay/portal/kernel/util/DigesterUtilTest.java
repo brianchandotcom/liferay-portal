@@ -18,7 +18,7 @@ import org.junit.Test;
 public class DigesterUtilTest {
 
 	@Test
-	public void testDigestHex() throws Exception {
+	public void test() throws Exception {
 		FIPSAlgorithmTestUtil.assertAlgorithmSwitch(
 			() -> DigesterUtil.digestHex(RandomTestUtil.randomString()),
 			DigesterUtil.SHA, MessageDigest::getInstance, MessageDigest.class,

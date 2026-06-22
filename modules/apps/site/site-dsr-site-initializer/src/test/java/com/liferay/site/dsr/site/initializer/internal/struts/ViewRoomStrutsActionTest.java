@@ -110,6 +110,12 @@ public class ViewRoomStrutsActionTest {
 			Collections.emptyMap()
 		);
 
+		Mockito.when(
+			_themeDisplay.getPermissionChecker()
+		).thenReturn(
+			_permissionChecker
+		);
+
 		_permissionThreadLocalMockedStatic.when(
 			PermissionThreadLocal::getPermissionChecker
 		).thenReturn(

@@ -89,6 +89,7 @@ public class PerformanceMetricResourceTest
 			"location", "downloadsMetric",
 			"/api/1.0/asset-metric/objectEntry/geolocation");
 		_testGetPerformanceMetricWithInvalidMetricType();
+		_testGetPerformanceMetricWithNoData();
 	}
 
 	@Override
@@ -202,17 +203,21 @@ public class PerformanceMetricResourceTest
 
 		PerformanceMetric performanceMetric = _getPerformanceMetric(
 			dataSourceId,
-			JSONUtil.putAll(
-				JSONUtil.put(
-					"value", value1
-				).put(
-					"valueKey", valueKey1
-				),
-				JSONUtil.put(
-					"value", value2
-				).put(
-					"valueKey", valueKey2
-				)
+			JSONUtil.put(
+				"metricName", metricType
+			).put(
+				"metrics",
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"value", value1
+					).put(
+						"valueKey", valueKey1
+					),
+					JSONUtil.put(
+						"value", value2
+					).put(
+						"valueKey", valueKey2
+					))
 			).toString(),
 			metricType, path, rangeKey,
 			depotEntryIds -> _performanceMetricResource.getPerformanceMetric(
@@ -320,6 +325,29 @@ public class PerformanceMetricResourceTest
 					_depotEntries, DepotEntry::getDepotEntryId, Long.class),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				RandomTestUtil.nextInt()));
+	}
+
+	private void _testGetPerformanceMetricWithNoData() throws Exception {
+		String metricType = "viewsMetric";
+		int rangeKey = RandomTestUtil.nextInt();
+
+		PerformanceMetric performanceMetric = _getPerformanceMetric(
+			RandomTestUtil.nextLong(),
+			JSONUtil.put(
+				"metricName", metricType
+			).put(
+				"metrics", JSONUtil.putAll()
+			).toString(),
+			metricType, "/api/1.0/asset-metric/objectEntry/geolocation",
+			rangeKey,
+			depotEntryIds -> _performanceMetricResource.getPerformanceMetric(
+				depotEntryIds, "location", metricType, rangeKey));
+
+		Assert.assertEquals(metricType, performanceMetric.getMetricType());
+
+		Metric[] metrics = performanceMetric.getMetrics();
+
+		Assert.assertEquals(Arrays.toString(metrics), 0, metrics.length);
 	}
 
 	@DeleteAfterTestRun

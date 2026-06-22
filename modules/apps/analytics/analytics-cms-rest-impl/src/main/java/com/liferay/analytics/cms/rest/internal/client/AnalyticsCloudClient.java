@@ -471,12 +471,9 @@ public class AnalyticsCloudClient {
 
 					performanceMetric.setMetricType(() -> metricType);
 
-					ObjectReader objectReader =
-						ObjectMapperHolder._objectMapper.readerFor(
-							Metric[].class);
+					Metric[] metrics = _getMetrics(jsonNode.get("metrics"));
 
-					performanceMetric.setMetrics(
-						() -> objectReader.readValue(jsonNode));
+					performanceMetric.setMetrics(() -> metrics);
 				}
 
 				return performanceMetric;
@@ -721,6 +718,17 @@ public class AnalyticsCloudClient {
 			null, dataSourceId, externalReferenceCode, null, null, groupIds,
 			liferayAnalyticsFaroBackendURL, null, null, null, path, rangeKey,
 			selectedMetrics, null, null, null, null);
+	}
+
+	private Metric[] _getMetrics(JsonNode metricsJsonNode) throws Exception {
+		if ((metricsJsonNode == null) || !metricsJsonNode.isArray()) {
+			return new Metric[0];
+		}
+
+		ObjectReader objectReader = ObjectMapperHolder._objectMapper.readerFor(
+			Metric[].class);
+
+		return objectReader.readValue(metricsJsonNode);
 	}
 
 	private Double _getMetricValue(JsonNode jsonNode, String metricName) {

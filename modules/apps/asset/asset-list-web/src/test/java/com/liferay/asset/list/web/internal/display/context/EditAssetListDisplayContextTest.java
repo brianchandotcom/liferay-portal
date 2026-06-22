@@ -157,10 +157,12 @@ public class EditAssetListDisplayContextTest {
 		EditAssetListDisplayContext editAssetListDisplayContext =
 			_getEditAssetListDisplayContext(unicodeProperties);
 
+		JSONArray assetEntryTypesJSONArray =
+			editAssetListDisplayContext.getAssetEntryTypesJSONArray();
+
 		Assert.assertEquals(
-			0,
-			editAssetListDisplayContext.getAssetEntryTypesJSONArray(
-			).length());
+			assetEntryTypesJSONArray.toString(), 0,
+			assetEntryTypesJSONArray.length());
 	}
 
 	@Test

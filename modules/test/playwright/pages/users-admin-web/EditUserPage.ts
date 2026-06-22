@@ -330,7 +330,7 @@ export class EditUserPage {
 		this.categoryGridCell = (categoryName: string) =>
 			page.getByRole('gridcell', {exact: true, name: categoryName});
 		this.categoryInput = (vocabularyName: string) =>
-			page.getByRole('combobox', {exact: true, name: vocabularyName});
+			page.getByRole('combobox', {name: vocabularyName});
 		this.categoryOption = (categoryName: string) =>
 			page.getByRole('option', {name: categoryName});
 		this.changeImageButton = page.getByLabel('Change Image');

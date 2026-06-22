@@ -14,6 +14,7 @@ import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
 import {createCategories} from '../../../helpers/CreateCategories';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getGlobalSiteId from '../../../utils/getGlobalSiteId';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
@@ -1818,8 +1819,12 @@ test(
 			)
 		).click();
 
-		await editUserPage.categoryInput(vocabularyName + 'Required').click();
-		await editUserPage.categoryOption(categoryName).click({timeout: 1000});
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: editUserPage.categoryOption(categoryName),
+			trigger: editUserPage.categoryInput(vocabularyName),
+		});
+
 		await editUserPage.saveButton.click();
 		await editUserPage.membershipsLink.click();
 

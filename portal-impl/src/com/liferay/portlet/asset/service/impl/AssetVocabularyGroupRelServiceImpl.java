@@ -21,14 +21,14 @@ public class AssetVocabularyGroupRelServiceImpl
 
 	@Override
 	public AssetVocabularyGroupRel addAssetVocabularyGroupRel(
-			long groupId, long vocabularyId)
+			long groupId, long vocabularyId, int depotEntryType)
 		throws PortalException {
 
 		AssetVocabularyPermission.check(
 			getPermissionChecker(), vocabularyId, ActionKeys.UPDATE);
 
 		return assetVocabularyGroupRelLocalService.addAssetVocabularyGroupRel(
-			groupId, vocabularyId);
+			groupId, vocabularyId, depotEntryType);
 	}
 
 	@Override
@@ -44,14 +44,15 @@ public class AssetVocabularyGroupRelServiceImpl
 	}
 
 	@Override
-	public void setAssetVocabularyGroupRels(long vocabularyId, long[] groupIds)
+	public void setAssetVocabularyGroupRels(
+			long vocabularyId, long[] groupIds, int depotEntryType)
 		throws PortalException {
 
 		AssetVocabularyPermission.check(
 			getPermissionChecker(), vocabularyId, ActionKeys.UPDATE);
 
 		assetVocabularyGroupRelLocalService.setAssetVocabularyGroupRels(
-			vocabularyId, groupIds);
+			vocabularyId, groupIds, depotEntryType);
 	}
 
 }

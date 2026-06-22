@@ -335,6 +335,7 @@
 		<!-- Other fields -->
 
 		<column name="vocabularyId" type="long" />
+		<column name="depotEntryType" type="int" />
 
 		<!-- Finder methods -->
 
@@ -347,6 +348,15 @@
 		<finder name="G_V" return-type="AssetVocabularyGroupRel">
 			<finder-column name="groupId" />
 			<finder-column name="vocabularyId" />
+		</finder>
+		<finder name="V_D" return-type="Collection">
+			<finder-column name="vocabularyId" />
+			<finder-column name="depotEntryType" />
+		</finder>
+		<finder name="G_V_D" return-type="AssetVocabularyGroupRel">
+			<finder-column name="groupId" />
+			<finder-column name="vocabularyId" />
+			<finder-column name="depotEntryType" />
 		</finder>
 	</entity>
 	<exceptions>

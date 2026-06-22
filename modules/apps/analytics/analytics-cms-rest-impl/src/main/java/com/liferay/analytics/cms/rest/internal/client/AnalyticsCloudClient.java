@@ -471,12 +471,24 @@ public class AnalyticsCloudClient {
 
 					performanceMetric.setMetricType(() -> metricType);
 
-					ObjectReader objectReader =
-						ObjectMapperHolder._objectMapper.readerFor(
-							Metric[].class);
+					Metric[] metrics;
 
-					performanceMetric.setMetrics(
-						() -> objectReader.readValue(jsonNode));
+					JsonNode metricsJsonNode = jsonNode.get("metrics");
+
+					if ((metricsJsonNode == null) ||
+						!metricsJsonNode.isArray()) {
+
+						metrics = new Metric[0];
+					}
+					else {
+						ObjectReader objectReader =
+							ObjectMapperHolder._objectMapper.readerFor(
+								Metric[].class);
+
+						metrics = objectReader.readValue(jsonNode);
+					}
+
+					performanceMetric.setMetrics(() -> metrics);
 				}
 
 				return performanceMetric;

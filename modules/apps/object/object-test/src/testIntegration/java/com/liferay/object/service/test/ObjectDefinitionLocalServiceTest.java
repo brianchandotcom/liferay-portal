@@ -3257,6 +3257,56 @@ public class ObjectDefinitionLocalServiceTest {
 	}
 
 	@Test
+	public void testGetOrAddEmptyObjectDefinitionDerivesSystemFlagFromPrefix()
+		throws Throwable {
+
+		ObjectDefinition customObjectDefinition = null;
+		ObjectDefinition systemObjectDefinition = null;
+
+		try (AutoCloseable autoCloseable =
+				new ExportImportConfigurationTemporarySwapper(
+					RandomTestUtil.randomLong())) {
+
+			long companyId = TestPropsValues.getCompanyId();
+			long userId = TestPropsValues.getUserId();
+
+			// A partner external reference code with the system prefix derives
+			// system = true even when the caller passes system = false.
+
+			systemObjectDefinition =
+				_objectDefinitionLocalService.getOrAddEmptyObjectDefinition(
+					ObjectDefinitionConstants.
+						EXTERNAL_REFERENCE_CODE_PREFIX_SYSTEM_OBJECT_DEFINITION +
+							RandomTestUtil.randomString(),
+					companyId, userId, _defaultObjectFolder.getObjectFolderId(),
+					true, ObjectDefinitionConstants.SCOPE_COMPANY, false);
+
+			Assert.assertTrue(systemObjectDefinition.isSystem());
+
+			// A nonprefixed external reference code keeps system = false.
+
+			customObjectDefinition =
+				_objectDefinitionLocalService.getOrAddEmptyObjectDefinition(
+					RandomTestUtil.randomString(), companyId, userId,
+					_defaultObjectFolder.getObjectFolderId(), true,
+					ObjectDefinitionConstants.SCOPE_COMPANY, false);
+
+			Assert.assertFalse(customObjectDefinition.isSystem());
+		}
+		finally {
+			if (customObjectDefinition != null) {
+				_objectDefinitionLocalService.deleteObjectDefinition(
+					customObjectDefinition);
+			}
+
+			if (systemObjectDefinition != null) {
+				_objectDefinitionLocalService.deleteObjectDefinition(
+					systemObjectDefinition);
+			}
+		}
+	}
+
+	@Test
 	public void testPublishCustomObjectDefinition() throws Exception {
 		ObjectDefinition objectDefinition1 =
 			_objectDefinitionLocalService.addCustomObjectDefinition(

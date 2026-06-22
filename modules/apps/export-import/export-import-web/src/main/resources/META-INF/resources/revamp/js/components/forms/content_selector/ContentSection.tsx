@@ -134,8 +134,8 @@ export default function ContentSection({
 		isSelected(sectionSelection[context.name], context)
 	);
 
-	const anySelected = allPreviewPortletDataHandlers.some((context) =>
-		isSelected(sectionSelection[context.name], context)
+	const anySelected = allPreviewPortletDataHandlers.some(
+		(context) => sectionSelection[context.name] !== undefined
 	);
 
 	const sectionFooters = [

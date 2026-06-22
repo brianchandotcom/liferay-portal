@@ -101,7 +101,8 @@ public class DepotEntryModelListenerTest {
 		long[] groupIds = {depotEntry1.getGroupId(), depotEntry2.getGroupId()};
 
 		_assetVocabularyGroupRelLocalService.setAssetVocabularyGroupRels(
-			assetVocabulary.getVocabularyId(), groupIds);
+			assetVocabulary.getVocabularyId(), groupIds,
+			DepotConstants.TYPE_SPACE);
 
 		assetVocabularyGroupRels =
 			_assetVocabularyGroupRelLocalService.

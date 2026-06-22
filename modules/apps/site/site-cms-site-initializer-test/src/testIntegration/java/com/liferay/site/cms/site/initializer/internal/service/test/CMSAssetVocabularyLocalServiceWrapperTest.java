@@ -87,7 +87,8 @@ public class CMSAssetVocabularyLocalServiceWrapperTest {
 		_cmsAssetVocabularies.add(assetVocabulary);
 
 		_assetVocabularyGroupRelLocalService.setAssetVocabularyGroupRels(
-			assetVocabulary.getVocabularyId(), groupIds);
+			assetVocabulary.getVocabularyId(), groupIds,
+			DepotConstants.TYPE_SPACE);
 
 		return assetVocabulary;
 	}

@@ -11,6 +11,7 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.AssetVocabularyGroupRel;
 import com.liferay.asset.kernel.service.AssetVocabularyGroupRelLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
+import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryService;
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
@@ -473,7 +474,8 @@ public class AssetVocabularyStagedModelDataHandler
 
 		_assetVocabularyGroupRelLocalService.setAssetVocabularyGroupRels(
 			importedVocabularyId,
-			ListUtil.toLongArray(groupIds, Long::longValue));
+			ListUtil.toLongArray(groupIds, Long::longValue),
+			DepotConstants.TYPE_SPACE);
 	}
 
 	private boolean _validateMissingReference(

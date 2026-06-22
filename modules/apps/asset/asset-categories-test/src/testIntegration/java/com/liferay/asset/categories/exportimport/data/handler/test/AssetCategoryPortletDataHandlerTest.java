@@ -250,7 +250,7 @@ public class AssetCategoryPortletDataHandlerTest
 
 			_assetVocabularyGroupRelLocalService.setAssetVocabularyGroupRels(
 				assetVocabulary.getVocabularyId(),
-				new long[] {depotGroup.getGroupId()});
+				new long[] {depotGroup.getGroupId()}, depotEntry.getType());
 
 			File larFile = _exportLayoutsAsFile();
 

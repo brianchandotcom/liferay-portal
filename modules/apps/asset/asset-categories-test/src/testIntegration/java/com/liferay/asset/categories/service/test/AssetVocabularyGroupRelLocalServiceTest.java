@@ -13,6 +13,7 @@ import com.liferay.asset.kernel.model.AssetVocabularyConstants;
 import com.liferay.asset.kernel.model.AssetVocabularyGroupRel;
 import com.liferay.asset.kernel.service.AssetVocabularyGroupRelLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
+import com.liferay.depot.constants.DepotConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -69,7 +70,7 @@ public class AssetVocabularyGroupRelLocalServiceTest {
 
 		for (long assetVocabularyId : assetVocabularyIds) {
 			_assetVocabularyGroupRelLocalService.addAssetVocabularyGroupRel(
-				group.getGroupId(), assetVocabularyId);
+				group.getGroupId(), assetVocabularyId, DepotConstants.TYPE_ANY);
 		}
 
 		List<AssetVocabularyGroupRel> assetVocabularyGroupRels =
@@ -110,7 +111,8 @@ public class AssetVocabularyGroupRelLocalServiceTest {
 		long[] groupIds = {group1.getGroupId(), group2.getGroupId()};
 
 		_assetVocabularyGroupRelLocalService.setAssetVocabularyGroupRels(
-			_assetVocabulary.getVocabularyId(), groupIds);
+			_assetVocabulary.getVocabularyId(), groupIds,
+			DepotConstants.TYPE_ANY);
 
 		List<AssetVocabularyGroupRel> assetVocabularyGroupRels =
 			_assetVocabularyGroupRelLocalService.
@@ -151,7 +153,8 @@ public class AssetVocabularyGroupRelLocalServiceTest {
 		long[] groupIds = {group1.getGroupId(), group2.getGroupId()};
 
 		_assetVocabularyGroupRelLocalService.setAssetVocabularyGroupRels(
-			_assetVocabulary.getVocabularyId(), groupIds);
+			_assetVocabulary.getVocabularyId(), groupIds,
+			DepotConstants.TYPE_ANY);
 
 		Assert.assertEquals(
 			2,
@@ -229,7 +232,7 @@ public class AssetVocabularyGroupRelLocalServiceTest {
 
 		_assetVocabularyGroupRelLocalService.setAssetVocabularyGroupRels(
 			_assetVocabulary.getVocabularyId(),
-			new long[] {group1.getGroupId()});
+			new long[] {group1.getGroupId()}, DepotConstants.TYPE_ANY);
 
 		List<AssetVocabularyGroupRel> assetVocabularyGroupRels =
 			_assetVocabularyGroupRelLocalService.
@@ -248,7 +251,7 @@ public class AssetVocabularyGroupRelLocalServiceTest {
 
 		_assetVocabularyGroupRelLocalService.setAssetVocabularyGroupRels(
 			_assetVocabulary.getVocabularyId(),
-			new long[] {group2.getGroupId()});
+			new long[] {group2.getGroupId()}, DepotConstants.TYPE_ANY);
 
 		assetVocabularyGroupRels =
 			_assetVocabularyGroupRelLocalService.
@@ -269,7 +272,7 @@ public class AssetVocabularyGroupRelLocalServiceTest {
 
 		_assetVocabularyGroupRelLocalService.setAssetVocabularyGroupRels(
 			assetVocabulary.getVocabularyId(),
-			new long[] {GroupConstants.GROUP_ID_ALL});
+			new long[] {GroupConstants.GROUP_ID_ALL}, DepotConstants.TYPE_ANY);
 
 		Group group = GroupTestUtil.addGroup();
 
@@ -282,7 +285,8 @@ public class AssetVocabularyGroupRelLocalServiceTest {
 				_assetVocabularyGroupRelLocalService.
 					setAssetVocabularyGroupRels(
 						assetVocabulary.getVocabularyId(),
-						new long[] {group.getGroupId()}));
+						new long[] {group.getGroupId()},
+						DepotConstants.TYPE_ANY));
 	}
 
 	private void _testSetAssetVocabularyGroupRelsWithoutGroupIds()
@@ -290,7 +294,8 @@ public class AssetVocabularyGroupRelLocalServiceTest {
 
 		try {
 			_assetVocabularyGroupRelLocalService.setAssetVocabularyGroupRels(
-				_assetVocabulary.getVocabularyId(), new long[0]);
+				_assetVocabulary.getVocabularyId(), new long[0],
+				DepotConstants.TYPE_ANY);
 
 			Assert.fail();
 		}

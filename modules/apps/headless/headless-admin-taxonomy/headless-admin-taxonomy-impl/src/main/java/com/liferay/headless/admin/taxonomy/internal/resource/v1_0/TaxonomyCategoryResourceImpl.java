@@ -953,7 +953,8 @@ public class TaxonomyCategoryResourceImpl
 					_assetVocabularyGroupRelLocalService.
 						setAssetVocabularyGroupRels(
 							assetVocabulary.getVocabularyId(),
-							new long[] {GroupConstants.GROUP_ID_ALL});
+							new long[] {GroupConstants.GROUP_ID_ALL},
+							DepotConstants.TYPE_SPACE);
 				}
 			}
 

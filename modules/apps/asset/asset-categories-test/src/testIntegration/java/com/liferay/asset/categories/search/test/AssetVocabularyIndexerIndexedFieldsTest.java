@@ -10,6 +10,7 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.AssetVocabularyGroupRel;
 import com.liferay.asset.kernel.service.AssetVocabularyGroupRelLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyService;
+import com.liferay.depot.constants.DepotConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -112,7 +113,8 @@ public class AssetVocabularyIndexerIndexedFieldsTest {
 
 		_assetVocabularyGroupRelLocalService.setAssetVocabularyGroupRels(
 			assetVocabulary.getVocabularyId(),
-			new long[] {group1.getGroupId(), group2.getGroupId()});
+			new long[] {group1.getGroupId(), group2.getGroupId()},
+			DepotConstants.TYPE_SPACE);
 
 		String searchTerm = "新しい";
 

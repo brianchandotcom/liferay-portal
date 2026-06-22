@@ -51,7 +51,8 @@ public class DepotEntryModelListener extends BaseModelListener<DepotEntry> {
 					_assetVocabularyGroupRelLocalService.
 						addAssetVocabularyGroupRel(
 							GroupConstants.ANY_PARENT_GROUP_ID,
-							assetVocabularyGroupRel.getVocabularyId());
+							assetVocabularyGroupRel.getVocabularyId(),
+							DepotConstants.TYPE_SPACE);
 				}
 			}
 		}

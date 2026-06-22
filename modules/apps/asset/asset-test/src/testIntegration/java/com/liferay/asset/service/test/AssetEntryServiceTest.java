@@ -325,7 +325,8 @@ public class AssetEntryServiceTest {
 			AssetCategoryConstants.ALL_CLASS_TYPE_PK, true);
 
 		_assetVocabularyGroupRelLocalService.addAssetVocabularyGroupRel(
-			_depotEntry.getGroupId(), assetVocabulary.getVocabularyId());
+			_depotEntry.getGroupId(), assetVocabulary.getVocabularyId(),
+			_depotEntry.getType());
 
 		_assetEntryLocalService.validate(
 			_depotEntry.getGroupId(), assetEntry.getClassName(),

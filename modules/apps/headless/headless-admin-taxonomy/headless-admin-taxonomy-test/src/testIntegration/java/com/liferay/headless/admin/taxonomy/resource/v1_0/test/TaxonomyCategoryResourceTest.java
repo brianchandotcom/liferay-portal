@@ -205,7 +205,8 @@ public class TaxonomyCategoryResourceTest
 				testGroup.getGroupId(), TestPropsValues.getUserId()));
 
 		_assetVocabularyGroupRelLocalService.addAssetVocabularyGroupRel(
-			depotEntry2.getGroupId(), assetVocabulary2.getVocabularyId());
+			depotEntry2.getGroupId(), assetVocabulary2.getVocabularyId(),
+			depotEntry2.getType());
 
 		page = taxonomyCategoryResource.getAssetLibraryTaxonomyCategoriesPage(
 			depotEntry1.getDepotEntryId(), null, null, null,

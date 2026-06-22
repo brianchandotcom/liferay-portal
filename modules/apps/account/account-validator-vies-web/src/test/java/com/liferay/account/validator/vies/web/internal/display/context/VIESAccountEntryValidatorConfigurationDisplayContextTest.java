@@ -44,7 +44,7 @@ public class VIESAccountEntryValidatorConfigurationDisplayContextTest {
 		_currentCountryA2 = RandomTestUtil.randomString();
 
 		Mockito.when(
-			_viesAccountEntryValidatorConfiguration.countries()
+			_viesAccountEntryValidatorConfiguration.countryCodes()
 		).thenReturn(
 			new String[] {_currentCountryA2}
 		);

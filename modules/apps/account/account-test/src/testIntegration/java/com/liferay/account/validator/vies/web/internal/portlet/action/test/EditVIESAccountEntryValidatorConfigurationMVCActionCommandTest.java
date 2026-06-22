@@ -132,7 +132,7 @@ public class EditVIESAccountEntryValidatorConfigurationMVCActionCommandTest {
 				GetterUtil.getInteger(properties.get("checkInterval")));
 			Assert.assertArrayEquals(
 				countries,
-				GetterUtil.getStringValues(properties.get("countries")));
+				GetterUtil.getStringValues(properties.get("countryCodes")));
 			Assert.assertTrue(GetterUtil.getBoolean(properties.get("enabled")));
 			Assert.assertEquals(
 				viesEndpointURL,

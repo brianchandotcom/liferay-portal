@@ -1,6 +1,6 @@
 suite: liferay-init-scripts-gcp ConfigMap
 templates:
-    -   liferay-init-scripts-cm.yaml
+    -   templates/liferay-init-scripts-cm.yaml
 tests:
     -   asserts:
             -   equal:

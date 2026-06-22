@@ -15,6 +15,7 @@ export default function OnPage({
 	emptyState,
 	fdsActionDropdownItems,
 	fdsId,
+	filters,
 	insightDetailsURL,
 	lastScanDate,
 	views,
@@ -23,13 +24,16 @@ export default function OnPage({
 	emptyState: Record<string, unknown>;
 	fdsActionDropdownItems: any[];
 	fdsId: string;
+	filters: any[];
 	insightDetailsURL: string;
 	lastScanDate: string | null;
 	views: any[];
 }) {
 	const handleSelectInsight = (externalReferenceCode: string) => {
 		window.location.assign(
-			`${insightDetailsURL}?objectEntryExternalReferenceCode=${externalReferenceCode}`
+			`${insightDetailsURL}?backURL=${encodeURIComponent(
+				window.location.href
+			)}&objectEntryExternalReferenceCode=${externalReferenceCode}`
 		);
 	};
 
@@ -45,6 +49,7 @@ export default function OnPage({
 				emptyState={emptyState}
 				fdsActionDropdownItems={fdsActionDropdownItems}
 				fdsId={fdsId}
+				filters={filters}
 				onSelectInsight={handleSelectInsight}
 				views={views}
 			/>

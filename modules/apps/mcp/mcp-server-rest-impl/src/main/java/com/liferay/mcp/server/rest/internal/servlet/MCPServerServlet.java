@@ -262,11 +262,25 @@ public class MCPServerServlet extends HttpServlet {
 					String toolName = tokens[1];
 					String toolSetName = tokens[0];
 
-					return new McpStatelessServerFeatures.SyncToolSpecification(
-						_getTool(httpServletRequest, toolName, toolSetName),
-						(mcpTransportContext, callToolRequest) -> _call(
-							mcpTransportContext, callToolRequest.arguments(),
-							toolName, toolSetName));
+					try {
+						return new McpStatelessServerFeatures.
+							SyncToolSpecification(
+								_getTool(
+									httpServletRequest, toolName, toolSetName),
+								(mcpTransportContext, callToolRequest) -> _call(
+									mcpTransportContext,
+									callToolRequest.arguments(), toolName,
+									toolSetName));
+					}
+					catch (Exception exception) {
+						_log.error(
+							StringBundler.concat(
+								"Skipping MCP tool \"", toolName,
+								"\" from tool set \"", toolSetName, "\""),
+							exception);
+
+						return null;
+					}
 				});
 
 		McpStatelessSyncServer mcpStatelessSyncServer = McpServer.sync(

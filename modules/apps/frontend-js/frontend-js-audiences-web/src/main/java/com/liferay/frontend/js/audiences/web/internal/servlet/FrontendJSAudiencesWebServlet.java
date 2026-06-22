@@ -52,11 +52,11 @@ public class FrontendJSAudiencesWebServlet extends HttpServlet {
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		String contentType = null;
-		HashedContent hashedContent = null;
-
 		String[] parts = StringUtil.split(
 			httpServletRequest.getPathInfo(), CharPool.SLASH);
+
+		String contentType = null;
+		HashedContent hashedContent = null;
 
 		if ((parts.length == 2) && parts[1].startsWith("bootstrap.")) {
 			Long plid = _getPlid(httpServletRequest.getParameter("plid"));

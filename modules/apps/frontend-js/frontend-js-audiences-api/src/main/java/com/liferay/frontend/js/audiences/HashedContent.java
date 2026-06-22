@@ -10,9 +10,9 @@ package com.liferay.frontend.js.audiences;
  */
 public class HashedContent {
 
-	public HashedContent(String hash, String content) {
-		_hash = hash;
+	public HashedContent(String content, String hash) {
 		_content = content;
+		_hash = hash;
 	}
 
 	public String getContent() {

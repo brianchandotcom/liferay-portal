@@ -993,8 +993,8 @@ public class SitesImpl implements Sites {
 		}
 
 		_layoutSetService.updateLayoutSetPrototypeLinkEnabled(
-			groupId, privateLayout, layoutSetPrototypeLinkEnabled,
-			layoutSetPrototypeUuid);
+			groupId, mergeLayoutSetPrototype, privateLayout,
+			layoutSetPrototypeLinkEnabled, layoutSetPrototypeUuid);
 
 		_layoutLocalService.updatePriorities(groupId, privateLayout);
 	}

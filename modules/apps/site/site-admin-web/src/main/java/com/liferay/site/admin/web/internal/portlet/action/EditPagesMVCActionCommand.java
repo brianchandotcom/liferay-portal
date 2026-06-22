@@ -87,7 +87,7 @@ public class EditPagesMVCActionCommand
 			liveGroup.getGroupId(), typeSettingsUnicodeProperties.toString());
 
 		ActionUtil.updateLayoutSetPrototypesLinks(
-			actionRequest, liveGroup, _sites);
+			actionRequest, liveGroup, false, _sites);
 	}
 
 	@Reference

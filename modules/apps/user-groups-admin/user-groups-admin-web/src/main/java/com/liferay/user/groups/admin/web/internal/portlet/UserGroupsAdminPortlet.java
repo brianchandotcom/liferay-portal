@@ -124,7 +124,7 @@ public class UserGroupsAdminPortlet extends MVCPortlet {
 				actionRequest, "privateLayoutSetPrototypeLinkEnabled");
 
 			_sites.updateLayoutSetPrototypesLinks(
-				userGroup.getGroup(), publicLayoutSetPrototypeId,
+				userGroup.getGroup(), false, publicLayoutSetPrototypeId,
 				privateLayoutSetPrototypeId,
 				publicLayoutSetPrototypeLinkEnabled,
 				privateLayoutSetPrototypeLinkEnabled);

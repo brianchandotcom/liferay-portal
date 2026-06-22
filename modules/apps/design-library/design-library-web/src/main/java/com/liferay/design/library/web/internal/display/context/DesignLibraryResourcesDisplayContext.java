@@ -203,11 +203,15 @@ public class DesignLibraryResourcesDisplayContext {
 				"target", "connected-sites"
 			),
 			JSONUtil.put(
+				"externalReferenceCode", group.getExternalReferenceCode()
+			).put(
 				"href", "#manage-members"
 			).put(
 				"label", LanguageUtil.get(_httpServletRequest, "manage-members")
 			).put(
 				"symbolLeft", "users"
+			).put(
+				"target", "manage-members"
 			),
 			JSONUtil.put(
 				"href",

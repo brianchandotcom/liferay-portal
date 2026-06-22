@@ -6,12 +6,16 @@
 import ClayBreadcrumb from '@clayui/breadcrumb';
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown, {ClayDropDownWithItems} from '@clayui/drop-down';
-import {openModal} from 'frontend-js-components-web';
-import {navigate, sub} from 'frontend-js-web';
+import {navigate} from 'frontend-js-web';
 import React, {ComponentProps} from 'react';
 
-import DesignLibraryConnectedSitesModal from './modal/DesignLibraryConnectedSitesModal';
-import confirmAndDeleteEntryAction from './props_transformer/actions/confirmAndDeleteEntryAction';
+import {
+	confirmDeleteDesignLibrary,
+	openConnectedSitesModal,
+	openManageMembersModal,
+} from './actions/breadcrumbActions';
+
+type ActionTarget = 'connected-sites' | 'delete' | 'manage-members';
 
 export interface ActionDropdownItemProps {
 	descriptiveName?: string;
@@ -19,7 +23,7 @@ export interface ActionDropdownItemProps {
 	href?: string;
 	label?: string;
 	redirect?: string;
-	target?: 'connected-sites' | string;
+	target?: string;
 }
 interface DesignLibraryBreadcrumbProps {
 	actionItems?: ComponentProps<typeof ClayDropDownWithItems>['items'] &
@@ -36,38 +40,25 @@ function ActionDropdownItem({
 	target,
 	...props
 }: ActionDropdownItemProps) {
-	const handleClick = async () => {
-		if (target === 'connected-sites') {
-			openModal({
-				contentComponent: () =>
-					DesignLibraryConnectedSitesModal({
-						externalReferenceCode,
-					}),
-				size: 'md',
-			});
-		}
-		else if (target === 'delete') {
-			confirmAndDeleteEntryAction({
-				bodyHTML: `
-					<p>${Liferay.Language.get('delete-design-library-confirmation-body-main')}</p>
-					<p>${Liferay.Language.get('delete-design-library-confirmation-body-warning')}</p>
-				`,
-				deleteAction: {
-					href,
-					method: 'DELETE',
-				},
-				redirect,
-				successMessage: sub(
-					Liferay.Language.get('x-was-successfully-deleted'),
-					`<strong>${Liferay.Util.escapeHTML(descriptiveName)}</strong>`
-				),
-				title: sub(
-					Liferay.Language.get(
-						'delete-design-library-confirmation-title'
-					),
-					descriptiveName
-				),
-			});
+	const handleClick = () => {
+		const actions: Record<ActionTarget, () => void> = {
+			'connected-sites': () => {
+				openConnectedSitesModal({externalReferenceCode});
+			},
+
+			'delete': () => {
+				confirmDeleteDesignLibrary({descriptiveName, href, redirect});
+			},
+
+			'manage-members': () => {
+				openManageMembersModal({externalReferenceCode});
+			},
+		};
+
+		const action = target ? actions[target as ActionTarget] : null;
+
+		if (action) {
+			action();
 		}
 		else {
 			navigate(href);

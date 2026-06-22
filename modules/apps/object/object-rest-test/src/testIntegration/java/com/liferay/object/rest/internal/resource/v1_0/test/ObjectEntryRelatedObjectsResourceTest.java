@@ -109,10 +109,10 @@ public class ObjectEntryRelatedObjectsResourceTest {
 					true
 				).indexedAsKeyword(
 					true
-				).name(
-					_OBJECT_FIELD_NAME_1
 				).labelMap(
 					RandomTestUtil.randomLocaleStringMap()
+				).name(
+					_OBJECT_FIELD_NAME_1
 				).build()),
 			false);
 
@@ -128,10 +128,10 @@ public class ObjectEntryRelatedObjectsResourceTest {
 					true
 				).indexedAsKeyword(
 					true
-				).name(
-					_OBJECT_FIELD_NAME_2
 				).labelMap(
 					RandomTestUtil.randomLocaleStringMap()
+				).name(
+					_OBJECT_FIELD_NAME_2
 				).build()),
 			false);
 
@@ -149,10 +149,10 @@ public class ObjectEntryRelatedObjectsResourceTest {
 					true
 				).indexedAsKeyword(
 					true
-				).name(
-					_OBJECT_FIELD_NAME_2
 				).labelMap(
 					RandomTestUtil.randomLocaleStringMap()
+				).name(
+					_OBJECT_FIELD_NAME_2
 				).build()),
 			false);
 

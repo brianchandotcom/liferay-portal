@@ -7,9 +7,16 @@ package com.liferay.headless.admin.site.internal.dto.v1_0.util;
 
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.headless.admin.site.dto.v1_0.ClassNameReference;
+import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
+import com.liferay.headless.admin.site.dto.v1_0.RepeatableFieldsCollectionProviderReference;
+import com.liferay.headless.admin.site.internal.util.LogUtil;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
+import com.liferay.info.collection.provider.RepeatableFieldInfoItemCollectionProvider;
 import com.liferay.info.item.InfoItemServiceRegistry;
+import com.liferay.info.item.InfoItemServiceRegistryUtil;
+import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
+import com.liferay.info.item.provider.RepeatableFieldsInfoItemFormProvider;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.object.constants.ObjectDefinitionSettingConstants;
 import com.liferay.object.model.ObjectDefinition;
@@ -18,6 +25,7 @@ import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectDefinitionSettingLocalServiceUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -46,6 +54,8 @@ public class CollectionUtilTest {
 	public static void tearDownClass() {
 		_companyThreadLocalMockedStatic.close();
 		_exportImportThreadLocalMockedStatic.close();
+		_infoItemServiceRegistryUtilMockedStatic.close();
+		_logUtilMockedStatic.close();
 		_objectDefinitionLocalServiceUtilMockedStatic.close();
 		_objectDefinitionSettingLocalServiceUtilMockedStatic.close();
 	}
@@ -121,6 +131,73 @@ public class CollectionUtilTest {
 		);
 	}
 
+	@Test
+	@TestInfo("LPD-95298")
+	public void testGetCollectionJSONObjectWithRepeatableFieldsCollectionProviderReference()
+		throws Exception {
+
+		String className = RandomTestUtil.randomString();
+		String externalReferenceCode = RandomTestUtil.randomString();
+		long scopeGroupId = RandomTestUtil.randomLong();
+
+		_infoItemServiceRegistryUtilMockedStatic.when(
+			() -> InfoItemServiceRegistryUtil.getFirstInfoItemService(
+				RepeatableFieldsInfoItemFormProvider.class, className)
+		).thenReturn(
+			Mockito.mock(RepeatableFieldsInfoItemFormProvider.class)
+		);
+
+		_infoItemServiceRegistryUtilMockedStatic.when(
+			() -> InfoItemServiceRegistryUtil.getFirstInfoItemService(
+				InfoItemFormVariationsProvider.class, className)
+		).thenReturn(
+			Mockito.mock(InfoItemFormVariationsProvider.class)
+		);
+
+		JSONObject jsonObject = CollectionUtil.getCollectionJSONObject(
+			_getRepeatableFieldsCollectionProviderReference(
+				className, externalReferenceCode),
+			_COMPANY_ID, _infoItemServiceRegistry, scopeGroupId);
+
+		Assert.assertEquals(
+			externalReferenceCode, jsonObject.getString("itemSubtypeKey"));
+		Assert.assertEquals(className, jsonObject.getString("itemType"));
+		Assert.assertEquals(
+			RepeatableFieldInfoItemCollectionProvider.class.getName(),
+			jsonObject.getString("key"));
+
+		_logUtilMockedStatic.verify(
+			() -> LogUtil.logOptionalReference(
+				Mockito.eq(className), Mockito.eq(externalReferenceCode),
+				Mockito.any(), Mockito.eq(scopeGroupId)),
+			Mockito.never());
+
+		_infoItemServiceRegistryUtilMockedStatic.when(
+			() -> InfoItemServiceRegistryUtil.getFirstInfoItemService(
+				InfoItemFormVariationsProvider.class, className)
+		).thenReturn(
+			null
+		);
+
+		jsonObject = CollectionUtil.getCollectionJSONObject(
+			_getRepeatableFieldsCollectionProviderReference(
+				className, externalReferenceCode),
+			_COMPANY_ID, _infoItemServiceRegistry, scopeGroupId);
+
+		Assert.assertEquals(
+			externalReferenceCode, jsonObject.getString("itemSubtypeKey"));
+		Assert.assertEquals(className, jsonObject.getString("itemType"));
+		Assert.assertEquals(
+			RepeatableFieldInfoItemCollectionProvider.class.getName(),
+			jsonObject.getString("key"));
+
+		_logUtilMockedStatic.verify(
+			() -> LogUtil.logOptionalReference(
+				Mockito.eq(className), Mockito.eq(externalReferenceCode),
+				Mockito.any(), Mockito.eq(scopeGroupId)),
+			Mockito.times(2));
+	}
+
 	private void _assertCollectionJSONObject(JSONObject jsonObject) {
 		Assert.assertEquals(_OLD_CLASS_NAME, jsonObject.getString("itemType"));
 		Assert.assertEquals(_KEY, jsonObject.getString("key"));
@@ -136,6 +213,28 @@ public class CollectionUtilTest {
 		classNameReference.setClassName(() -> _OLD_CLASS_NAME);
 
 		return classNameReference;
+	}
+
+	private RepeatableFieldsCollectionProviderReference
+		_getRepeatableFieldsCollectionProviderReference(
+			String className, String externalReferenceCode) {
+
+		RepeatableFieldsCollectionProviderReference
+			repeatableFieldsCollectionProviderReference =
+				new RepeatableFieldsCollectionProviderReference();
+
+		ItemExternalReference itemExternalReference =
+			new ItemExternalReference();
+
+		itemExternalReference.setExternalReferenceCode(externalReferenceCode);
+
+		repeatableFieldsCollectionProviderReference.setClassName(className);
+		repeatableFieldsCollectionProviderReference.setFieldName(
+			RandomTestUtil.randomString());
+		repeatableFieldsCollectionProviderReference.setSubTypeExternalReference(
+			itemExternalReference);
+
+		return repeatableFieldsCollectionProviderReference;
 	}
 
 	private void _setUpCompanyThreadLocal() {
@@ -269,6 +368,11 @@ public class CollectionUtilTest {
 	private static final MockedStatic<ExportImportThreadLocal>
 		_exportImportThreadLocalMockedStatic = Mockito.mockStatic(
 			ExportImportThreadLocal.class);
+	private static final MockedStatic<InfoItemServiceRegistryUtil>
+		_infoItemServiceRegistryUtilMockedStatic = Mockito.mockStatic(
+			InfoItemServiceRegistryUtil.class);
+	private static final MockedStatic<LogUtil> _logUtilMockedStatic =
+		Mockito.mockStatic(LogUtil.class);
 	private static final MockedStatic<ObjectDefinitionLocalServiceUtil>
 		_objectDefinitionLocalServiceUtilMockedStatic = Mockito.mockStatic(
 			ObjectDefinitionLocalServiceUtil.class);

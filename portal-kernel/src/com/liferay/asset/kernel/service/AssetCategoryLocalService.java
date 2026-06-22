@@ -465,6 +465,11 @@ public interface AssetCategoryLocalService
 		OrderByComparator<AssetCategory> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetCategory> getVocabularyCategories(
+		long groupId, String name, long vocabularyId, int start, int end,
+		OrderByComparator<AssetCategory> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getVocabularyCategoriesCount(long vocabularyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -551,4 +556,4 @@ public interface AssetCategoryLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1373125127
+// LIFERAY-SERVICE-BUILDER-HASH:-416155490

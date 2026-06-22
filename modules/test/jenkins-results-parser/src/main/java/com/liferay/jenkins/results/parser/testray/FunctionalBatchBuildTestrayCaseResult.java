@@ -121,7 +121,7 @@ public class FunctionalBatchBuildTestrayCaseResult
 	}
 
 	@Override
-	public TestReport getTestReport() {
+	protected TestReport findTestReport() {
 		FunctionalTestClass functionalTestClass = getTestClass();
 
 		if (functionalTestClass.isBuildCachingEnabled()) {

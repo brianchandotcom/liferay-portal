@@ -17,16 +17,13 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import java.io.Serializable;
-
-import java.util.Map;
 import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
@@ -80,14 +77,9 @@ public class ArchivedRoomServicePreAction extends Action {
 		ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(
 			group.getClassPK());
 
-		if (objectEntry == null) {
-			return;
-		}
-
-		Map<String, Serializable> values = objectEntry.getValues();
-
-		if (GetterUtil.getInteger(values.get("roomStatus")) !=
-				WorkflowConstants.STATUS_INACTIVE) {
+		if ((objectEntry == null) ||
+			(MapUtil.getInteger(objectEntry.getValues(), "roomStatus") !=
+				WorkflowConstants.STATUS_INACTIVE)) {
 
 			return;
 		}

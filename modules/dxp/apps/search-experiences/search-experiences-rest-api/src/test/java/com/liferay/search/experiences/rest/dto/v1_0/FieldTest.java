@@ -92,7 +92,7 @@ public class FieldTest {
 
 		Field field2 = Field.unsafeToDTO(field1.toString());
 
-		Object[] expectedDefaultValues;
+		Object[] expectedDefaultValues = null;
 
 		if (defaultValue instanceof Collection) {
 			Collection<?> collection = (Collection<?>)defaultValue;

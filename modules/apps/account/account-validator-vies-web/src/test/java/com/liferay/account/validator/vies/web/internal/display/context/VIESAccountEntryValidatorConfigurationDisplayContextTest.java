@@ -109,9 +109,9 @@ public class VIESAccountEntryValidatorConfigurationDisplayContextTest {
 		Assert.assertEquals(
 			availableCountries.toString(), 1, availableCountries.size());
 
-		KeyValuePair country = availableCountries.get(0);
+		KeyValuePair countryKeyValuePair = availableCountries.get(0);
 
-		Assert.assertEquals(_availableCountryA2, country.getKey());
+		Assert.assertEquals(_availableCountryA2, countryKeyValuePair.getKey());
 	}
 
 	@Test
@@ -139,9 +139,10 @@ public class VIESAccountEntryValidatorConfigurationDisplayContextTest {
 		Assert.assertEquals(
 			currentCountries.toString(), 1, currentCountries.size());
 
-		KeyValuePair currentCountry = currentCountries.get(0);
+		KeyValuePair currentCountryKeyValuePair = currentCountries.get(0);
 
-		Assert.assertEquals(_currentCountryA2, currentCountry.getKey());
+		Assert.assertEquals(
+			_currentCountryA2, currentCountryKeyValuePair.getKey());
 	}
 
 	@Test

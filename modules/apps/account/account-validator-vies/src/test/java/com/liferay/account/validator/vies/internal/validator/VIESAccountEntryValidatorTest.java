@@ -327,7 +327,7 @@ public class VIESAccountEntryValidatorTest {
 
 	private VIESAccountEntryValidatorConfiguration
 			_mockVIESAccountEntryValidatorConfiguration(
-				String[] countries, boolean enabled)
+				String[] countryCodes, boolean enabled)
 		throws Exception {
 
 		VIESAccountEntryValidatorConfiguration
@@ -335,9 +335,9 @@ public class VIESAccountEntryValidatorTest {
 				VIESAccountEntryValidatorConfiguration.class);
 
 		Mockito.when(
-			viesAccountEntryValidatorConfiguration.countries()
+			viesAccountEntryValidatorConfiguration.countryCodes()
 		).thenReturn(
-			countries
+			countryCodes
 		);
 
 		Mockito.when(

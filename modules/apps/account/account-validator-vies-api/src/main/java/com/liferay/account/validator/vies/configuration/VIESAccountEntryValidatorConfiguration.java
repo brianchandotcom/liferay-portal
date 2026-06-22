@@ -34,10 +34,10 @@ public interface VIESAccountEntryValidatorConfiguration
 
 	@Meta.AD(
 		deflt = "AT,BE,BG,CY,CZ,DE,DK,EE,ES,FI,FR,GR,HR,HU,IE,IT,LT,LU,LV,MT,NL,PL,PT,RO,SE,SI,SK",
-		description = "vies-countries-description", name = "vies-countries",
-		required = false
+		description = "vies-country-codes-description",
+		name = "vies-country-codes", required = false
 	)
-	public String[] countries();
+	public String[] countryCodes();
 
 	@Meta.AD(deflt = "true", name = "enabled", required = false)
 	@Override

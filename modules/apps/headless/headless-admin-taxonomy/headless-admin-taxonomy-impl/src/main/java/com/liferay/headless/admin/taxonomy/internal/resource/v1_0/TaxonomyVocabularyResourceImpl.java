@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.asset.kernel.service.AssetVocabularyGroupRelLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyService;
+import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.util.SiteConnectedGroupGroupProviderUtil;
 import com.liferay.exportimport.constants.ExportImportConstants;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
@@ -36,7 +37,6 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
@@ -528,7 +528,8 @@ public class TaxonomyVocabularyResourceImpl
 			_assetVocabularyGroupRelLocalService.setAssetVocabularyGroupRels(
 				assetVocabulary.getVocabularyId(),
 				_getAssetLibraryGroupIds(
-					group.getCompanyId(), taxonomyVocabulary));
+					group.getCompanyId(), taxonomyVocabulary),
+				DepotConstants.TYPE_SPACE);
 		}
 
 		return assetVocabulary;
@@ -1075,19 +1076,10 @@ public class TaxonomyVocabularyResourceImpl
 			new HashSet<>(descriptionMap.keySet()));
 
 		if (FeatureFlagManagerUtil.isEnabled(companyId, "LPD-17564")) {
-			if (ArrayUtil.isNotEmpty(taxonomyVocabulary.getAssetLibraries())) {
-				_assetVocabularyGroupRelLocalService.
-					setAssetVocabularyGroupRels(
-						assetVocabulary.getVocabularyId(),
-						_getAssetLibraryGroupIds(
-							companyId, taxonomyVocabulary));
-			}
-			else {
-				_assetVocabularyGroupRelLocalService.
-					setAssetVocabularyGroupRels(
-						assetVocabulary.getVocabularyId(),
-						new long[] {GroupConstants.GROUP_ID_ALL});
-			}
+			_assetVocabularyGroupRelLocalService.setAssetVocabularyGroupRels(
+				assetVocabulary.getVocabularyId(),
+				_getAssetLibraryGroupIds(companyId, taxonomyVocabulary),
+				DepotConstants.TYPE_SPACE);
 		}
 
 		return _assetVocabularyService.updateVocabulary(

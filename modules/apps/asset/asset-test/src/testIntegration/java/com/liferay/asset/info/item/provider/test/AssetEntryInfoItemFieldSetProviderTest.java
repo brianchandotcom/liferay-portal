@@ -192,14 +192,14 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 
 		_assetVocabularyGroupRelLocalService.setAssetVocabularyGroupRels(
 			assetVocabulary1.getVocabularyId(),
-			new long[] {depotEntry1.getGroupId()});
+			new long[] {depotEntry1.getGroupId()}, depotEntry1.getType());
 
 		AssetVocabulary assetVocabulary2 = AssetTestUtil.addVocabulary(
 			cmsGroup.getGroupId(), classNameId, classTypeId, false);
 
 		_assetVocabularyGroupRelLocalService.setAssetVocabularyGroupRels(
 			assetVocabulary2.getVocabularyId(),
-			new long[] {depotEntry2.getGroupId()});
+			new long[] {depotEntry2.getGroupId()}, depotEntry2.getType());
 
 		InfoFieldSet infoFieldSet =
 			_assetEntryInfoItemFieldSetProvider.getInfoFieldSet(

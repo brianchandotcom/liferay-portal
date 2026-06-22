@@ -10,6 +10,7 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyGroupRelLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.change.tracking.test.util.BaseTableReferenceDefinitionTestCase;
+import com.liferay.depot.constants.DepotConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
@@ -56,7 +57,8 @@ public class AssetVocabularyGroupRelTableReferenceDefinitionTest
 	@Override
 	protected CTModel<?> addCTModel() throws Exception {
 		return _assetVocabularyGroupRelLocalService.addAssetVocabularyGroupRel(
-			_assetVocabulary.getVocabularyId(), _group.getGroupId());
+			_assetVocabulary.getVocabularyId(), _group.getGroupId(),
+			DepotConstants.TYPE_ANY);
 	}
 
 	private AssetVocabulary _assetVocabulary;

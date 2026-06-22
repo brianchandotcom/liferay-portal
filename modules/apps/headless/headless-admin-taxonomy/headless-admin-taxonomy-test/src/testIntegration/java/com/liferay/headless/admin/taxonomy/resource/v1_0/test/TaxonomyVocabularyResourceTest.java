@@ -111,7 +111,7 @@ public class TaxonomyVocabularyResourceTest
 	public void testDeleteTaxonomyVocabulary() throws Exception {
 		super.testDeleteTaxonomyVocabulary();
 
-		_testDeleteSystemTaxonomyVocabulary();
+		_testDeleteTaxonomyVocabularySystem();
 	}
 
 	@Override
@@ -281,7 +281,7 @@ public class TaxonomyVocabularyResourceTest
 	public void testPatchTaxonomyVocabulary() throws Exception {
 		super.testPatchTaxonomyVocabulary();
 
-		_testPatchSystemTaxonomyVocabularyRename();
+		_testPatchTaxonomyVocabularySystemRename();
 	}
 
 	@Test
@@ -420,7 +420,7 @@ public class TaxonomyVocabularyResourceTest
 		};
 	}
 
-	private void _testDeleteSystemTaxonomyVocabulary() throws Exception {
+	private void _testDeleteTaxonomyVocabularySystem() throws Exception {
 		TaxonomyVocabulary taxonomyVocabulary = randomTaxonomyVocabulary();
 
 		taxonomyVocabulary.setSystem(true);
@@ -647,7 +647,7 @@ public class TaxonomyVocabularyResourceTest
 		Assert.assertNull(getTaxonomyVocabulary.getPermissions());
 	}
 
-	private void _testPatchSystemTaxonomyVocabularyRename() throws Exception {
+	private void _testPatchTaxonomyVocabularySystemRename() throws Exception {
 		TaxonomyVocabulary taxonomyVocabulary = randomTaxonomyVocabulary();
 
 		taxonomyVocabulary.setSystem(true);
@@ -888,7 +888,7 @@ public class TaxonomyVocabularyResourceTest
 			}
 		};
 
-		TaxonomyVocabulary updatedTaxonomyVocabulary =
+		TaxonomyVocabulary putTaxonomyVocabulary =
 			taxonomyVocabularyResource.
 				putSiteTaxonomyVocabularyByExternalReferenceCode(
 					assetVocabulary.getGroupId(),
@@ -897,7 +897,7 @@ public class TaxonomyVocabularyResourceTest
 
 		Assert.assertEquals(
 			TaxonomyVocabulary.VisibilityType.PUBLIC,
-			updatedTaxonomyVocabulary.getVisibilityType());
+			putTaxonomyVocabulary.getVisibilityType());
 
 		assetVocabulary =
 			_assetVocabularyLocalService.
@@ -927,13 +927,13 @@ public class TaxonomyVocabularyResourceTest
 
 		postedTaxonomyVocabulary.setDescription(StringPool.BLANK);
 
-		TaxonomyVocabulary updatedTaxonomyVocabulary =
+		TaxonomyVocabulary putTaxonomyVocabulary =
 			taxonomyVocabularyResource.putTaxonomyVocabulary(
 				postedTaxonomyVocabulary.getId(), postedTaxonomyVocabulary);
 
 		Assert.assertTrue(
-			Validator.isNull(updatedTaxonomyVocabulary.getDescription()));
-		Assert.assertNull(updatedTaxonomyVocabulary.getDescription_i18n());
+			Validator.isNull(putTaxonomyVocabulary.getDescription()));
+		Assert.assertNull(putTaxonomyVocabulary.getDescription_i18n());
 	}
 
 	private static final String _LOG_NAME =

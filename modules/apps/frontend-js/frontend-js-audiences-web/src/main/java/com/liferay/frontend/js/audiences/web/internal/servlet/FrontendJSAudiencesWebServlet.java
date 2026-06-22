@@ -75,13 +75,13 @@ public class FrontendJSAudiencesWebServlet extends HttpServlet {
 		}
 	}
 
-	private Long _parsePlid(String plid) {
+	private Long _getPlid(String plid) {
 		try {
 			return Long.valueOf(plid);
 		}
 		catch (NumberFormatException numberFormatException) {
 			_log.error(
-				"Unable to parse plid from " + plid, numberFormatException);
+				"Unable to get plid from " + plid, numberFormatException);
 
 			return null;
 		}
@@ -148,7 +148,7 @@ public class FrontendJSAudiencesWebServlet extends HttpServlet {
 			return;
 		}
 
-		Long plid = _parsePlid(httpServletRequest.getParameter("plid"));
+		Long plid = _getPlid(httpServletRequest.getParameter("plid"));
 
 		if (plid == null) {
 			httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
@@ -182,7 +182,7 @@ public class FrontendJSAudiencesWebServlet extends HttpServlet {
 			return;
 		}
 
-		Long plid = _parsePlid(parts[1]);
+		Long plid = _getPlid(parts[1]);
 
 		if (plid == null) {
 			httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);

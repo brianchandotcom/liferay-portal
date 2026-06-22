@@ -31,12 +31,12 @@ public class AssetVocabularyGroupRelLocalServiceImpl
 
 	@Override
 	public AssetVocabularyGroupRel addAssetVocabularyGroupRel(
-			long groupId, long vocabularyId)
+			long groupId, long vocabularyId, int depotEntryType)
 		throws PortalException {
 
 		AssetVocabularyGroupRel assetVocabularyGroupRel =
-			assetVocabularyGroupRelPersistence.fetchByG_V(
-				groupId, vocabularyId);
+			assetVocabularyGroupRelPersistence.fetchByG_V_D(
+				groupId, vocabularyId, depotEntryType);
 
 		if (assetVocabularyGroupRel != null) {
 			return assetVocabularyGroupRel;
@@ -47,6 +47,7 @@ public class AssetVocabularyGroupRelLocalServiceImpl
 
 		assetVocabularyGroupRel.setGroupId(groupId);
 		assetVocabularyGroupRel.setVocabularyId(vocabularyId);
+		assetVocabularyGroupRel.setDepotEntryType(depotEntryType);
 
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
@@ -91,13 +92,23 @@ public class AssetVocabularyGroupRelLocalServiceImpl
 	}
 
 	@Override
+	public List<AssetVocabularyGroupRel>
+		getAssetVocabularyGroupRelsByVocabularyIdAndDepotEntryType(
+			long vocabularyId, int depotEntryType) {
+
+		return assetVocabularyGroupRelPersistence.findByV_D(
+			vocabularyId, depotEntryType);
+	}
+
+	@Override
 	public int getAssetVocabularyGroupRelsCount(long vocabularyId) {
 		return assetVocabularyGroupRelPersistence.countByVocabularyId(
 			vocabularyId);
 	}
 
 	@Override
-	public void setAssetVocabularyGroupRels(long vocabularyId, long[] groupIds)
+	public void setAssetVocabularyGroupRels(
+			long vocabularyId, long[] groupIds, int depotEntryType)
 		throws PortalException {
 
 		if (ArrayUtil.isEmpty(groupIds)) {
@@ -106,10 +117,11 @@ public class AssetVocabularyGroupRelLocalServiceImpl
 
 		_validateSystemVocabulary(groupIds, vocabularyId);
 
-		assetVocabularyGroupRelPersistence.removeByVocabularyId(vocabularyId);
+		assetVocabularyGroupRelPersistence.removeByV_D(
+			vocabularyId, depotEntryType);
 
 		for (long groupId : groupIds) {
-			addAssetVocabularyGroupRel(groupId, vocabularyId);
+			addAssetVocabularyGroupRel(groupId, vocabularyId, depotEntryType);
 		}
 	}
 

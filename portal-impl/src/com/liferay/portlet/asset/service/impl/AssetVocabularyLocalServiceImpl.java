@@ -15,7 +15,6 @@ import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.AssetVocabularyConstants;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
-import com.liferay.asset.kernel.service.AssetVocabularyGroupRelLocalService;
 import com.liferay.exportimport.kernel.empty.model.EmptyModelManagerUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -25,7 +24,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -243,18 +241,6 @@ public class AssetVocabularyLocalServiceImpl
 		else {
 			addVocabularyResources(
 				vocabulary, serviceContext.getModelPermissions());
-		}
-
-		if (FeatureFlagManagerUtil.isEnabled(
-				vocabulary.getCompanyId(), "LPD-17564")) {
-
-			Group group = _groupLocalService.fetchGroup(groupId);
-
-			if ((group != null) && group.isCMS()) {
-				_assetVocabularyGroupRelLocalService.
-					setAssetVocabularyGroupRels(
-						vocabularyId, new long[] {GroupConstants.GROUP_ID_ALL});
-			}
 		}
 
 		return vocabulary;
@@ -858,10 +844,6 @@ public class AssetVocabularyLocalServiceImpl
 
 	@BeanReference(type = AssetCategoryLocalService.class)
 	private AssetCategoryLocalService _assetCategoryLocalService;
-
-	@BeanReference(type = AssetVocabularyGroupRelLocalService.class)
-	private AssetVocabularyGroupRelLocalService
-		_assetVocabularyGroupRelLocalService;
 
 	@BeanReference(type = ClassNameLocalService.class)
 	private ClassNameLocalService _classNameLocalService;

@@ -5,6 +5,7 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
@@ -40,7 +41,7 @@ public class LayoutSetPrototypeLayoutModelListener
 	}
 
 	protected void updateLayoutSetPrototype(Layout layout, Date modifiedDate) {
-		if (layout == null) {
+		if ((layout == null) || ExportImportThreadLocal.isImportInProcess()) {
 			return;
 		}
 

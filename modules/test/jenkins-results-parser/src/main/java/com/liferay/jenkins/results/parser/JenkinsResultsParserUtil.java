@@ -652,8 +652,10 @@ public class JenkinsResultsParserUtil {
 			HttpURLConnection httpURLConnection =
 				(HttpURLConnection)urlObject.openConnection();
 
-			httpURLConnection.setConnectTimeout(timeout);
-			httpURLConnection.setReadTimeout(timeout);
+			if (timeout != 0) {
+				httpURLConnection.setConnectTimeout(timeout);
+				httpURLConnection.setReadTimeout(timeout);
+			}
 
 			httpURLConnection.setDoOutput(true);
 			httpURLConnection.setRequestMethod("POST");
@@ -3687,8 +3689,10 @@ public class JenkinsResultsParserUtil {
 			HttpURLConnection httpURLConnection =
 				(HttpURLConnection)urlObject.openConnection();
 
-			httpURLConnection.setConnectTimeout(timeout);
-			httpURLConnection.setReadTimeout(timeout);
+			if (timeout != 0) {
+				httpURLConnection.setConnectTimeout(timeout);
+				httpURLConnection.setReadTimeout(timeout);
+			}
 
 			HTTPAuthorization httpAuthorization = getJenkinsHTTPAuthorization();
 

@@ -168,10 +168,10 @@ public class AnalyticsSecurityAuthVerifier implements AuthVerifier {
 		throws Exception {
 
 		Signature signature = Signature.getInstance(
-			PropsValues.FIPS_ENABLED ? "SHA256withECDSA" : _DSA);
+			PropsValues.FIPS_ENABLED ? "SHA256withECDSA" : "DSA");
 
 		KeyFactory keyFactory = KeyFactory.getInstance(
-			PropsValues.FIPS_ENABLED ? "EC" : _DSA);
+			PropsValues.FIPS_ENABLED ? "EC" : "DSA");
 
 		signature.initVerify(
 			keyFactory.generatePublic(
@@ -205,8 +205,6 @@ public class AnalyticsSecurityAuthVerifier implements AuthVerifier {
 
 		return signature.verify(Base64.decode(signatureString));
 	}
-
-	private static final String _DSA = "DSA";
 
 	private static final long _EXPIRATION = 10 * 60 * 1000;
 

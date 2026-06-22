@@ -44,7 +44,7 @@ const SLIDES: Slide[] = [
 		description: Liferay.Language.get(
 			'built-in-governance-tools-reduce-risks-and-keep-every-asset-on-brand-and-compliant'
 		),
-		image: `${imagesPath}/carousel-1.png`,
+		image: `${imagesPath}/carousel-4.png`,
 		title: Liferay.Language.get('control-every-piece-of-content'),
 	},
 ];

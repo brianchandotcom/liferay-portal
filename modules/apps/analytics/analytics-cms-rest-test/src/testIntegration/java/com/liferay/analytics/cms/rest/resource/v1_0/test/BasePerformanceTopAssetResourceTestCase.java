@@ -180,6 +180,11 @@ public abstract class BasePerformanceTopAssetResourceTestCase {
 		Assert.assertTrue(false);
 	}
 
+	@Test
+	public void testGetPerformanceTopAssetExport() throws Exception {
+		Assert.assertTrue(false);
+	}
+
 	protected void assertContains(
 		PerformanceTopAsset performanceTopAsset,
 		List<PerformanceTopAsset> performanceTopAssets) {
@@ -902,4 +907,4 @@ public abstract class BasePerformanceTopAssetResourceTestCase {
 			_performanceTopAssetResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1098663781
+// LIFERAY-REST-BUILDER-HASH:-1344748680

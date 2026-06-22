@@ -20,6 +20,7 @@ import jakarta.annotation.Generated;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
 
 import java.util.Collections;
@@ -42,6 +43,11 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface PerformanceMetricResource {
 
 	public PerformanceMetric getPerformanceMetric(
+			Long[] depotEntryIds, String groupBy, String metricType,
+			Integer rangeKey)
+		throws Exception;
+
+	public Response getPerformanceMetricExport(
 			Long[] depotEntryIds, String groupBy, String metricType,
 			Integer rangeKey)
 		throws Exception;
@@ -134,4 +140,4 @@ public interface PerformanceMetricResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-10594854
+// LIFERAY-REST-BUILDER-HASH:-213412740

@@ -153,6 +153,10 @@ public interface FriendlyURLEntryLocalService
 		long groupId, long classNameId, long classPK);
 
 	public void deleteFriendlyURLLocalizationEntry(
+			FriendlyURLEntryLocalization friendlyURLEntryLocalization)
+		throws PortalException;
+
+	public void deleteFriendlyURLLocalizationEntry(
 			long friendlyURLEntryId, String languageId)
 		throws PortalException;
 
@@ -517,4 +521,4 @@ public interface FriendlyURLEntryLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1795462559
+// LIFERAY-SERVICE-BUILDER-HASH:-1460019721

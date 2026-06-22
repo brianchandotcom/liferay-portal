@@ -326,11 +326,11 @@
 			<finder-column name="segmentsExperienceId" />
 		</finder>
 	</entity>
-	<entity external-reference-code="group" local-service="true" name="LayoutPageTemplateStructureRelElementVariation" remote-service="false" table="LPTStructureElementVariation" uuid="true">
+	<entity external-reference-code="group" local-service="true" name="LayoutPageTemplateStructureRelElementVariation" remote-service="false" table="LPTSRelElementVariation" uuid="true">
 
 		<!-- PK fields -->
 
-		<column db-name="lptStructureElementVariationId" name="layoutPageTemplateStructureRelElementVariationId" primary="true" type="long" />
+		<column db-name="lptsRelElementVariationId" name="layoutPageTemplateStructureRelElementVariationId" primary="true" type="long" />
 
 		<!-- Group instance -->
 

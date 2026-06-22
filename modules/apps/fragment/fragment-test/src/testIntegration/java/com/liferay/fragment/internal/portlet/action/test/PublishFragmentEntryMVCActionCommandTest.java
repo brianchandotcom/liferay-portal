@@ -113,7 +113,7 @@ public class PublishFragmentEntryMVCActionCommandTest {
 
 	@Test
 	@TestInfo("LPD-79507")
-	public void testPublishFragmentWithInvalidDropZoneConfiguration()
+	public void testPublishFragmentWithPropagateChangesEnabled()
 		throws Exception {
 
 		try (CompanyConfigurationTemporarySwapper

@@ -248,14 +248,8 @@ public class FragmentExportImportTest extends BasePortletExportImportTestCase {
 				StringPool.BLANK, serviceContext),
 			RandomTestUtil.randomString(), serviceContext);
 
-		_testExportImportPortletWithValidationWithFragmentEntryContentException(
-			_updateFragmentEntry(fragmentEntry, "${"));
-		_testExportImportPortletWithValidation(
-			_updateFragmentEntry(fragmentEntry, _getRESTClientHTML()));
-		_testExportImportPortletWithValidationWithFragmentEntryContentException(
-			_updateFragmentEntry(fragmentEntry, "${"));
-		_testExportImportPortletWithValidation(
-			_updateFragmentEntry(fragmentEntry, _getRESTClientHTML()));
+		_testExportImportPortletWithValidation(fragmentEntry);
+		_testExportImportPortletWithValidation(fragmentEntry);
 	}
 
 	@Test
@@ -436,6 +430,14 @@ public class FragmentExportImportTest extends BasePortletExportImportTestCase {
 	private void _testExportImportPortletWithValidation(
 			FragmentEntry fragmentEntry)
 		throws Exception {
+
+		fragmentEntry = _updateFragmentEntry(fragmentEntry, "${");
+
+		_testExportImportPortletWithValidationWithFragmentEntryContentException(
+			fragmentEntry);
+
+		fragmentEntry = _updateFragmentEntry(
+			fragmentEntry, _getRESTClientHTML());
 
 		exportImportPortlet(FragmentPortletKeys.FRAGMENT, false);
 

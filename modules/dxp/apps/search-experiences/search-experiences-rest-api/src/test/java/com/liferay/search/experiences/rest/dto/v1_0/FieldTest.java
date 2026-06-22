@@ -42,20 +42,20 @@ public class FieldTest {
 
 	@Test
 	public void testToStringDefaultValueCollection() throws Exception {
-		_testToStringDefaultValue(_createEntries());
+		_testToStringDefaultValue(_createMaps());
 	}
 
 	@Test
 	public void testToStringDefaultValueObjectArray() throws Exception {
-		_testToStringDefaultValue(_createEntries().toArray());
+		_testToStringDefaultValue(_createMaps().toArray());
 	}
 
-	private List<Map<String, String>> _createEntries() {
+	private List<Map<String, String>> _createMaps() {
 		return Arrays.asList(
-			_createEntry("label1", "value1"), _createEntry("label2", "value2"));
+			_createMap("label1", "value1"), _createMap("label2", "value2"));
 	}
 
-	private Map<String, String> _createEntry(String label, String value) {
+	private Map<String, String> _createMap(String label, String value) {
 		return HashMapBuilder.put(
 			"label", label
 		).put(

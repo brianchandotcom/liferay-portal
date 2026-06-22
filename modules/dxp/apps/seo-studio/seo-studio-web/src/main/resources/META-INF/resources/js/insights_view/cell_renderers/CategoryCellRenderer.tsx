@@ -8,8 +8,14 @@ import React from 'react';
 
 import './CategoryCellRenderer.scss';
 
-export default function CategoryCellRenderer({value}: {value: string}) {
-	if (!value) {
+export default function CategoryCellRenderer({
+	itemData,
+}: {
+	itemData: {category?: {name?: string}};
+}) {
+	const category = itemData?.category;
+
+	if (!category?.name) {
 		return null;
 	}
 
@@ -19,7 +25,7 @@ export default function CategoryCellRenderer({value}: {value: string}) {
 			displayType="info"
 			withClose={false}
 		>
-			{value}
+			{category.name}
 		</ClayLabel>
 	);
 }

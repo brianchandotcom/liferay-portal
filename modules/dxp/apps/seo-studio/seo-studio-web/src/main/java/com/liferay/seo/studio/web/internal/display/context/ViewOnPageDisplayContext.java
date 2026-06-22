@@ -39,9 +39,10 @@ import java.util.Map;
 public class ViewOnPageDisplayContext {
 
 	public ViewOnPageDisplayContext(
-		HttpServletRequest httpServletRequest, Language language,
-		ObjectEntry objectEntry, JSONArray viewsJSONArray) {
+		JSONArray filtersJSONArray, HttpServletRequest httpServletRequest,
+		Language language, ObjectEntry objectEntry, JSONArray viewsJSONArray) {
 
+		_filtersJSONArray = filtersJSONArray;
 		_httpServletRequest = httpServletRequest;
 		_language = language;
 		_objectEntry = objectEntry;
@@ -92,6 +93,8 @@ public class ViewOnPageDisplayContext {
 		).put(
 			"fdsId", SEOStudioFDSNames.INSIGHT_TYPE_SECTION
 		).put(
+			"filters", _filtersJSONArray
+		).put(
 			"insightDetailsURL", getViewInsightDetailsURL()
 		).put(
 			"lastScanDate", lastScanDateString
@@ -125,7 +128,8 @@ public class ViewOnPageDisplayContext {
 				seoStudioScanId, "'"),
 			true);
 
-		return "/o/seo-studio/insight-types?filter=" + filterString;
+		return "/o/seo-studio/insight-types?filter=" + filterString +
+			"&sort=severity:desc";
 	}
 
 	private Map<String, Object> _getEmptyState() {
@@ -143,10 +147,21 @@ public class ViewOnPageDisplayContext {
 			_language.get(
 				_httpServletRequest, "there-are-no-insights-for-the-last-scan")
 		).put(
+			"filtered",
+			HashMapBuilder.<String, Object>put(
+				"filters",
+				HashMapBuilder.<String, Object>put(
+					"title",
+					_language.get(
+						_httpServletRequest, "no-insights-match-these-filters")
+				).build()
+			).build()
+		).put(
 			"title", _language.get(_httpServletRequest, "no-insights-found")
 		).build();
 	}
 
+	private final JSONArray _filtersJSONArray;
 	private final HttpServletRequest _httpServletRequest;
 	private final Language _language;
 	private final ObjectEntry _objectEntry;

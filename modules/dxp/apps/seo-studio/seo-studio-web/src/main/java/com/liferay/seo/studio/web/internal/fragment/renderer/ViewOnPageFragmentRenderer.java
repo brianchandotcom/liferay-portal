@@ -46,11 +46,14 @@ public class ViewOnPageFragmentRenderer
 
 		ObjectEntry objectEntry = _fetchObjectEntry(httpServletRequest);
 
+		JSONArray filtersJSONArray = fdsSerializer.serializeFilters(
+			SEOStudioFDSNames.INSIGHT_TYPE_SECTION, httpServletRequest);
 		JSONArray viewsJSONArray = fdsSerializer.serializeViews(
 			SEOStudioFDSNames.INSIGHT_TYPE_SECTION, httpServletRequest);
 
 		return new ViewOnPageDisplayContext(
-			httpServletRequest, language, objectEntry, viewsJSONArray);
+			filtersJSONArray, httpServletRequest, language, objectEntry,
+			viewsJSONArray);
 	}
 
 	@Override

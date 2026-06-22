@@ -78,7 +78,7 @@ public class EditVIESAccountEntryValidatorConfigurationMVCActionCommand
 				Math.max(
 					1, ParamUtil.getInteger(actionRequest, "checkInterval", 15))
 			).put(
-				"countries",
+				"countryCodes",
 				StringUtil.split(
 					ParamUtil.getString(actionRequest, "countries"))
 			).put(

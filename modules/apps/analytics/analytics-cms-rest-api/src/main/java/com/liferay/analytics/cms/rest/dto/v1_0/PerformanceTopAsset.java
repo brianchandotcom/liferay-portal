@@ -456,4 +456,4 @@ public class PerformanceTopAsset implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1001946798
+// LIFERAY-REST-BUILDER-HASH:1438622282

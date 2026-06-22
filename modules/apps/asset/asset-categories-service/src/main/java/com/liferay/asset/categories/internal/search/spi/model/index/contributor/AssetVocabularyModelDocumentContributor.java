@@ -8,6 +8,7 @@ package com.liferay.asset.categories.internal.search.spi.model.index.contributor
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.AssetVocabularyGroupRel;
 import com.liferay.asset.kernel.service.AssetVocabularyGroupRelLocalService;
+import com.liferay.depot.constants.DepotConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Document;
@@ -59,7 +60,9 @@ public class AssetVocabularyModelDocumentContributor
 			"categoriesCount", assetVocabulary.getCategoriesCount());
 		document.addKeyword("classNameIds", _getClassNameIds(assetVocabulary));
 		document.addKeyword(
-			"groupIds", _getGroupIds(assetVocabulary.getVocabularyId()));
+			"groupIds",
+			_getGroupIds(
+				assetVocabulary.getVocabularyId(), DepotConstants.TYPE_SPACE));
 		document.addLocalizedKeyword(
 			"localized_title",
 			_localization.populateLocalizationMap(
@@ -67,6 +70,11 @@ public class AssetVocabularyModelDocumentContributor
 				assetVocabulary.getDefaultLanguageId(),
 				assetVocabulary.getGroupId()),
 			true, true);
+		document.addKeyword(
+			"projectDepotEntryGroupIds",
+			_getGroupIds(
+				assetVocabulary.getVocabularyId(),
+				DepotConstants.TYPE_PROJECT));
 	}
 
 	private long[] _getClassNameIds(AssetVocabulary assetVocabulary) {
@@ -76,10 +84,11 @@ public class AssetVocabularyModelDocumentContributor
 		return assetVocabularySettingsHelper.getClassNameIds();
 	}
 
-	private long[] _getGroupIds(long vocabularyId) {
+	private long[] _getGroupIds(long vocabularyId, int depotEntryType) {
 		return ListUtil.toLongArray(
 			_assetVocabularyGroupRelLocalService.
-				getAssetVocabularyGroupRelsByVocabularyId(vocabularyId),
+				getAssetVocabularyGroupRelsByVocabularyIdAndDepotEntryType(
+					vocabularyId, depotEntryType),
 			AssetVocabularyGroupRel::getGroupId);
 	}
 

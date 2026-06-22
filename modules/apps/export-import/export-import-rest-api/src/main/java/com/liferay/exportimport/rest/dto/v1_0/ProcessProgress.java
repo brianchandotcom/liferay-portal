@@ -229,4 +229,4 @@ public class ProcessProgress implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2084402417
+// LIFERAY-REST-BUILDER-HASH:918723115

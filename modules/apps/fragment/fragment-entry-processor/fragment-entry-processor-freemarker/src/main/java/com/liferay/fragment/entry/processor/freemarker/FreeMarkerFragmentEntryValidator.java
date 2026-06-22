@@ -149,7 +149,7 @@ public class FreeMarkerFragmentEntryValidator
 		}
 	}
 
-	public static class DummyRESTClient {
+	public class DummyRESTClient {
 
 		public Object get(String path) {
 			return Collections.emptyMap();

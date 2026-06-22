@@ -1570,8 +1570,8 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			});
 
 		task.setDescription(
-			"Downloads and extracts the latest AI agent rules files into the " +
-				"workspace.");
+			"Updates Liferay Workspace and supporting files to the latest " +
+				"version.");
 
 		return task;
 	}

@@ -50,6 +50,18 @@ export function createElementVariation(
 	};
 }
 
+export function createInitialState(
+	elementVariations: Omit<ElementVariation, 'key'>[]
+): State {
+	return {
+		draftElementVariation: null,
+		elementVariations: elementVariations.map((elementVariation) => ({
+			...elementVariation,
+			key: uuidv4(),
+		})),
+	};
+}
+
 export function reducer(state: State, action: Action): State {
 	switch (action.type) {
 		case 'CANCEL_ELEMENT_VARIATION_DRAFT':

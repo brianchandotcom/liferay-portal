@@ -11,12 +11,18 @@ import React, {useReducer, useState} from 'react';
 
 import ElementVariationForm from './ElementVariationForm';
 import ElementVariationsList from './ElementVariationsList';
-import {createElementVariation, reducer} from './elementVariationsReducer';
+import {
+	ElementVariation,
+	createElementVariation,
+	createInitialState,
+	reducer,
+} from './elementVariationsReducer';
 
 import './ElementVariations.scss';
 
 interface Props {
 	audiences: Array<{label: string; value: string}>;
+	elementVariations: Array<Omit<ElementVariation, 'key'>>;
 	experiences: Array<{label: string; value: string}>;
 	languageId: string;
 	plid: number;
@@ -37,7 +43,11 @@ const ExperienceTrigger = React.forwardRef<HTMLButtonElement, any>(
 	)
 );
 
-export default function ElementVariations({audiences, experiences}: Props) {
+export default function ElementVariations({
+	audiences = [],
+	elementVariations: initialElementVariations = [],
+	experiences = [],
+}: Props) {
 	const experienceId = useId();
 
 	const [experienceKey, setExperienceKey] = useState(
@@ -46,7 +56,8 @@ export default function ElementVariations({audiences, experiences}: Props) {
 
 	const [{draftElementVariation, elementVariations}, dispatch] = useReducer(
 		reducer,
-		{draftElementVariation: null, elementVariations: []}
+		initialElementVariations,
+		createInitialState
 	);
 
 	const experienceElementVariations = elementVariations.filter(

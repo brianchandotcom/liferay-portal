@@ -29,7 +29,7 @@ public class TunnelAuthenticationManagerImplTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void testGetSharedSecretKey() throws Exception {
+	public void test() throws Exception {
 		try (SafeCloseable safeCloseable1 =
 				PropsValuesTestUtil.swapWithSafeCloseable(
 					"TUNNELING_SERVLET_SHARED_SECRET", _SHARED_SECRET);

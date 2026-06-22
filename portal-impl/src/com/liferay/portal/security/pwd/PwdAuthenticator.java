@@ -51,9 +51,10 @@ public class PwdAuthenticator {
 			}
 
 			try {
-				MessageDigest digester = MessageDigest.getInstance(algorithm);
+				MessageDigest messageDigest = MessageDigest.getInstance(
+					algorithm);
 
-				digester.update(login.getBytes(StringPool.UTF8));
+				messageDigest.update(login.getBytes(StringPool.UTF8));
 
 				String shardKey = PropsUtil.get(PropsKeys.AUTH_MAC_SHARED_KEY);
 
@@ -68,7 +69,7 @@ public class PwdAuthenticator {
 				}
 
 				encryptedPassword = Base64.encode(
-					digester.digest(shardKey.getBytes(StringPool.UTF8)));
+					messageDigest.digest(shardKey.getBytes(StringPool.UTF8)));
 
 				return clearTextPassword.equals(encryptedPassword);
 			}

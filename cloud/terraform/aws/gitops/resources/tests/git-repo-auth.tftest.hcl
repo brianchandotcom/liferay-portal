@@ -15,14 +15,12 @@ mock_provider "aws" {
 }
 mock_provider "helm" {}
 mock_provider "kubernetes" {}
-
 override_data {
 	target=data.aws_caller_identity.current
 	values={
 		account_id="123456789012"
 	}
 }
-
 override_data {
 	target=data.aws_eks_cluster.cluster
 	values={
@@ -42,14 +40,12 @@ override_data {
 		}]
 	}
 }
-
 override_data {
 	target=data.aws_iam_role.envoy_proxy_role
 	values={
 		arn="arn:aws:iam::123456789012:role/liferay-test-envoy-proxy"
 	}
 }
-
 override_data {
 	target=data.aws_iam_role.liferay_irsa
 	values={
@@ -57,48 +53,39 @@ override_data {
 		id="liferay-test-irsa"
 	}
 }
-
 override_data {
 	target=data.aws_subnets.private
 	values={
 		ids=["subnet-aaa", "subnet-bbb"]
 	}
 }
-
 override_data {
 	target=data.aws_vpc.current
 	values={
 		cidr_block="10.0.0.0/16"
 	}
 }
-
 run "should_create_a_single_credentials_secret_for_a_shared_repo" {
 	assert {
 		condition=contains(keys(kubernetes_manifest.git_repo_credentials_external_secret), "liferay")
 		error_message="The single credentials secret must be keyed \"liferay\""
 	}
-
 	assert {
 		condition=length(kubernetes_manifest.git_repo_credentials_external_secret) == 1
 		error_message="A shared infrastructure/Liferay repo URL must yield a single git credentials ExternalSecret"
 	}
-
 	command=plan
 }
-
 run "should_create_two_credentials_secrets_for_separate_repos" {
 	assert {
 		condition=contains(keys(kubernetes_manifest.git_repo_credentials_external_secret), "infrastructure") && contains(keys(kubernetes_manifest.git_repo_credentials_external_secret), "liferay")
 		error_message="Both \"infrastructure\" and \"liferay\" credentials secrets must be created"
 	}
-
 	assert {
 		condition=length(kubernetes_manifest.git_repo_credentials_external_secret) == 2
 		error_message="A distinct infrastructure repo URL must yield infrastructure and Liferay credentials secrets"
 	}
-
 	command=plan
-
 	variables {
 		infrastructure_git_repo_config={
 			auth={}
@@ -108,7 +95,6 @@ run "should_create_two_credentials_secrets_for_separate_repos" {
 		}
 	}
 }
-
 run "should_map_the_private_key_for_ssh_auth" {
 	assert {
 		condition=kubernetes_manifest.git_repo_credentials_external_secret["liferay"].manifest.spec.data[0].secretKey == "ssh_private_key" && length([
@@ -116,9 +102,7 @@ run "should_map_the_private_key_for_ssh_auth" {
 		]) == 1
 		error_message="SSH auth must map a single ssh_private_key secret key"
 	}
-
 	command=plan
-
 	variables {
 		liferay_git_repo_config={
 			auth={
@@ -129,7 +113,6 @@ run "should_map_the_private_key_for_ssh_auth" {
 		}
 	}
 }
-
 run "should_map_username_and_password_for_https_auth" {
 	assert {
 		condition=contains([
@@ -139,22 +122,17 @@ run "should_map_username_and_password_for_https_auth" {
 		], "username")
 		error_message="HTTPS auth must map both username and password secret keys"
 	}
-
 	assert {
 		condition=length([
 			for d in kubernetes_manifest.git_repo_credentials_external_secret["liferay"].manifest.spec.data : d.secretKey
 		]) == 2
 		error_message="HTTPS auth must map exactly two secret keys"
 	}
-
 	command=plan
 }
-
 run "should_not_accept_an_invalid_git_auth_method" {
 	command=plan
-
 	expect_failures=[var.liferay_git_repo_config]
-
 	variables {
 		liferay_git_repo_config={
 			auth={
@@ -165,7 +143,6 @@ run "should_not_accept_an_invalid_git_auth_method" {
 		}
 	}
 }
-
 variables {
 	deployment_name="liferay-test"
 	infrastructure_helm_chart_version="0.4.9"

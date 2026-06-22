@@ -68,21 +68,6 @@ export class PageConfigurationPage {
 		);
 	}
 
-	private async selectLanguage(toggle: Locator, option: Locator) {
-		await clickAndExpectToBeVisible({target: option, trigger: toggle});
-
-		const isActive = await option.evaluate((element) =>
-			element.classList.contains('active')
-		);
-
-		if (isActive) {
-			await toggle.click();
-		}
-		else {
-			await option.click();
-		}
-	}
-
 	async selectMasterLayout(name: string) {
 		await this.page.getByLabel('Change Master').click();
 
@@ -104,22 +89,32 @@ export class PageConfigurationPage {
 	}
 
 	async setFriendlyURL(friendlyURL: string, language: 'spanish' | 'english') {
-		const toggle = this.page
-			.getByLabel('Current translation')
-			.nth(1)
-			.locator('..');
+		const selectLanguage = async (name: string) => {
+			const toggle = this.page.locator(
+				'.form-group.friendly-url .input-localized-trigger'
+			);
 
-		await this.selectLanguage(
-			toggle,
-			this.page.getByRole('menuitem', {name: language})
-		);
+			const option = this.page.getByRole('menuitem', {name});
+
+			await clickAndExpectToBeVisible({target: option, trigger: toggle});
+
+			const isActive = await option.evaluate((element) =>
+				element.classList.contains('active')
+			);
+
+			if (isActive) {
+				await toggle.click();
+			}
+			else {
+				await option.click();
+			}
+		};
+
+		await selectLanguage(language);
 
 		await this.friendlyURL.fill(friendlyURL);
 
-		await this.selectLanguage(
-			toggle,
-			this.page.getByRole('menuitem').filter({hasText: 'default'})
-		);
+		await selectLanguage('default');
 
 		await this.save();
 	}

@@ -19,7 +19,9 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -205,9 +207,14 @@ public class DesignLibraryResourcesDisplayContext {
 			JSONUtil.put(
 				"externalReferenceCode", group.getExternalReferenceCode()
 			).put(
+				"hasAssignMembersPermission",
+				_hasAssignMembersPermission(group.getGroupId())
+			).put(
 				"href", "#manage-members"
 			).put(
 				"label", LanguageUtil.get(_httpServletRequest, "manage-members")
+			).put(
+				"ownerId", String.valueOf(group.getCreatorUserId())
 			).put(
 				"symbolLeft", "users"
 			).put(
@@ -305,6 +312,14 @@ public class DesignLibraryResourcesDisplayContext {
 		).setBackURL(
 			PortalUtil.getCurrentURL(_httpServletRequest)
 		).buildString();
+	}
+
+	private boolean _hasAssignMembersPermission(long groupId)
+		throws PortalException {
+
+		return GroupPermissionUtil.contains(
+			_themeDisplay.getPermissionChecker(), groupId,
+			ActionKeys.ASSIGN_MEMBERS);
 	}
 
 	private boolean _hasManageStyleBookEntriesPermission(long groupId) {

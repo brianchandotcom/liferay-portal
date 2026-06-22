@@ -54,12 +54,20 @@ export function openConnectedSitesModal({
 
 export function openManageMembersModal({
 	externalReferenceCode,
+	hasAssignMembersPermission,
+	ownerId,
 }: {
 	externalReferenceCode: string;
+	hasAssignMembersPermission: boolean;
+	ownerId: string;
 }) {
 	openModal({
 		contentComponent: () =>
-			DesignLibraryManageMembersModal({externalReferenceCode}),
+			DesignLibraryManageMembersModal({
+				externalReferenceCode,
+				hasAssignMembersPermission,
+				ownerId,
+			}),
 		size: 'lg',
 	});
 }

@@ -99,12 +99,13 @@ public class EditVIESAccountEntryValidatorConfigurationMVCActionCommandTest {
 			mockLiferayPortletActionRequest.setParameter(
 				"checkInterval", String.valueOf(checkInterval));
 
-			String[] countries = {
+			String[] countryCodes = {
 				RandomTestUtil.randomString(), RandomTestUtil.randomString()
 			};
 
 			mockLiferayPortletActionRequest.setParameter(
-				"countries", StringUtil.merge(countries, StringPool.COMMA));
+				"countryCodes",
+				StringUtil.merge(countryCodes, StringPool.COMMA));
 
 			mockLiferayPortletActionRequest.setParameter("enabled", "true");
 
@@ -131,8 +132,8 @@ public class EditVIESAccountEntryValidatorConfigurationMVCActionCommandTest {
 				checkInterval,
 				GetterUtil.getInteger(properties.get("checkInterval")));
 			Assert.assertArrayEquals(
-				countries,
-				GetterUtil.getStringValues(properties.get("countries")));
+				countryCodes,
+				GetterUtil.getStringValues(properties.get("countryCodes")));
 			Assert.assertTrue(GetterUtil.getBoolean(properties.get("enabled")));
 			Assert.assertEquals(
 				viesEndpointURL,

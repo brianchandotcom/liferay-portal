@@ -776,6 +776,13 @@ public class PortalUpgradeProcessRegistryImpl
 			new Version(38, 5, 0),
 			UpgradeProcessFactory.addColumns(
 				"Layout", "styleBookEntryScopeERC VARCHAR(75) null"));
+
+		upgradeVersionTreeMap.put(
+			new Version(38, 6, 0),
+			UpgradeProcessFactory.addColumns(
+				"AssetVocabularyGroupRel", "depotEntryType INTEGER"),
+			UpgradeProcessFactory.runSQL(
+				"update AssetVocabularyGroupRel set depotEntryType = 1"));
 	}
 
 }

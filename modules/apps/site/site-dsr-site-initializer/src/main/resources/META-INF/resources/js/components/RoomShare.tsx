@@ -478,7 +478,9 @@ function RoomShare({closeModal, roomId}: IRoomShareProps) {
 										setExpirationDatePickerExpanded(false);
 									}
 								}}
-								onExpandedChange={setExpirationDatePickerExpanded}
+								onExpandedChange={
+									setExpirationDatePickerExpanded
+								}
 								placeholder="YYYY-MM-DD"
 								time={false}
 								value={expirationDate}
@@ -561,7 +563,9 @@ function RoomShare({closeModal, roomId}: IRoomShareProps) {
 															onChange={(
 																value: string
 															) => {
-																setEditingDate(value);
+																setEditingDate(
+																	value
+																);
 
 																if (
 																	isCompleteDate(
@@ -712,7 +716,17 @@ function RoomShare({closeModal, roomId}: IRoomShareProps) {
 															<DropDown.Item
 																key={item.key}
 																onClick={() =>
-																	handleUpdateUser({isInvitedMember: user.isInvitedMember, membershipExpirationDate: user.membershipExpirationDate, roleKey: item.key, userId: user.id})
+																	handleUpdateUser(
+																		{
+																			isInvitedMember:
+																				user.isInvitedMember,
+																			membershipExpirationDate:
+																				user.membershipExpirationDate,
+																			roleKey:
+																				item.key,
+																			userId: user.id,
+																		}
+																	)
 																}
 															>
 																<div className="font-weight-semi-bold">

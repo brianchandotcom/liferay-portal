@@ -21,6 +21,7 @@ import jakarta.annotation.Generated;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
 
 import java.util.Collections;
@@ -45,6 +46,11 @@ public interface PerformanceTopAssetResource {
 	public PerformanceTopAsset getPerformanceTopAsset(
 			String assetFilter, Long[] depotEntryIds, Integer rangeKey,
 			Pagination pagination,
+			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
+	public Response getPerformanceTopAssetExport(
+			String assetFilter, Long[] depotEntryIds, Integer rangeKey,
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
@@ -136,4 +142,4 @@ public interface PerformanceTopAssetResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-853044339
+// LIFERAY-REST-BUILDER-HASH:-1998518818

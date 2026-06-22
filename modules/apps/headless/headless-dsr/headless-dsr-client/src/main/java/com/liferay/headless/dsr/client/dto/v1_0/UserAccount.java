@@ -12,6 +12,7 @@ import jakarta.annotation.Generated;
 
 import java.io.Serializable;
 
+import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -107,6 +108,29 @@ public class UserAccount implements Cloneable, Serializable {
 
 	protected Long id;
 
+	public Date getMembershipExpirationDate() {
+		return membershipExpirationDate;
+	}
+
+	public void setMembershipExpirationDate(Date membershipExpirationDate) {
+		this.membershipExpirationDate = membershipExpirationDate;
+	}
+
+	public void setMembershipExpirationDate(
+		UnsafeSupplier<Date, Exception>
+			membershipExpirationDateUnsafeSupplier) {
+
+		try {
+			membershipExpirationDate =
+				membershipExpirationDateUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Date membershipExpirationDate;
+
 	public String getName() {
 		return name;
 	}
@@ -179,4 +203,4 @@ public class UserAccount implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-188702713
+// LIFERAY-REST-BUILDER-HASH:-886635697

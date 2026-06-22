@@ -439,7 +439,7 @@ public class EagerBlobEntryPersistenceImpl
 				new String[] {String.class.getName()}, new String[] {"uuid_"},
 				0, 1, false, null),
 			_SQL_SELECT_EAGERBLOBENTRY_WHERE, _SQL_COUNT_EAGERBLOBENTRY_WHERE,
-			EagerBlobEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			EagerBlobEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"eagerBlobEntry.", "uuid", "uuid_", FinderColumn.Type.STRING,
 				"=", true, true, EagerBlobEntry::getUuid));
@@ -523,4 +523,4 @@ public class EagerBlobEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1497664416
+// LIFERAY-SERVICE-BUILDER-HASH:-1452897314

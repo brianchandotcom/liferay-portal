@@ -1007,7 +1007,11 @@ public class ObjectDefinitionLocalServiceImpl
 			ObjectDefinition.class, companyId,
 			() -> _addObjectDefinition(
 				externalReferenceCode, userId, objectFolderId, modifiable,
-				scope, system),
+				scope,
+				system ||
+				externalReferenceCode.startsWith(
+					ObjectDefinitionConstants.
+						EXTERNAL_REFERENCE_CODE_PREFIX_SYSTEM_OBJECT_DEFINITION)),
 			externalReferenceCode,
 			this::fetchObjectDefinitionByExternalReferenceCode,
 			this::getObjectDefinitionByExternalReferenceCode,

@@ -40,16 +40,10 @@ public class ElasticsearchSearchEngineInformationTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_elasticsearchSearchEngineInformation =
-			new ElasticsearchSearchEngineInformation();
-
-		_elasticsearchSearchEngineInformation.elasticsearchConnectionManager =
-			_elasticsearchConnectionManager;
-
 		Mockito.when(
-			_elasticsearchClient.license()
+			_elasticsearchInferenceClient.get()
 		).thenReturn(
-			_elasticsearchLicenseClient
+			Mockito.mock(GetInferenceResponse.class)
 		);
 
 		Mockito.when(
@@ -59,9 +53,9 @@ public class ElasticsearchSearchEngineInformationTest {
 		);
 
 		Mockito.when(
-			_elasticsearchInferenceClient.get()
+			_elasticsearchClient.license()
 		).thenReturn(
-			Mockito.mock(GetInferenceResponse.class)
+			_elasticsearchLicenseClient
 		);
 
 		Mockito.when(
@@ -69,6 +63,9 @@ public class ElasticsearchSearchEngineInformationTest {
 		).thenReturn(
 			_elasticsearchClient
 		);
+
+		_elasticsearchSearchEngineInformation.elasticsearchConnectionManager =
+			_elasticsearchConnectionManager;
 	}
 
 	@Test
@@ -192,6 +189,7 @@ public class ElasticsearchSearchEngineInformationTest {
 	private final ElasticsearchLicenseClient _elasticsearchLicenseClient =
 		Mockito.mock(ElasticsearchLicenseClient.class);
 	private ElasticsearchSearchEngineInformation
-		_elasticsearchSearchEngineInformation;
+		_elasticsearchSearchEngineInformation =
+			new ElasticsearchSearchEngineInformation();
 
 }

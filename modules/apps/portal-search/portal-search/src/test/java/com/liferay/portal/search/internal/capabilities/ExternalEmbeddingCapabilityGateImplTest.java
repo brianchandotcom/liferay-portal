@@ -32,9 +32,6 @@ public class ExternalEmbeddingCapabilityGateImplTest {
 
 	@Before
 	public void setUp() {
-		_externalEmbeddingCapabilityGateImpl =
-			new ExternalEmbeddingCapabilityGateImpl();
-
 		ReflectionTestUtil.setFieldValue(
 			_externalEmbeddingCapabilityGateImpl, "_licenseManager",
 			_licenseManager);
@@ -113,7 +110,8 @@ public class ExternalEmbeddingCapabilityGateImplTest {
 	}
 
 	private ExternalEmbeddingCapabilityGateImpl
-		_externalEmbeddingCapabilityGateImpl;
+		_externalEmbeddingCapabilityGateImpl =
+			new ExternalEmbeddingCapabilityGateImpl();
 	private final LicenseManager _licenseManager = Mockito.mock(
 		LicenseManager.class);
 	private final SearchEngineInformation _searchEngineInformation =

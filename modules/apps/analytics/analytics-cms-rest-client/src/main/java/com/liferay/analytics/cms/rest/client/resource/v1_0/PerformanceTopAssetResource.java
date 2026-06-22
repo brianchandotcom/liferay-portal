@@ -34,13 +34,23 @@ public interface PerformanceTopAssetResource {
 	}
 
 	public PerformanceTopAsset getPerformanceTopAsset(
-			String assetFilter, Long[] depotEntryIds, Integer rangeKey,
+			String assetFilterString, Long[] depotEntryIds, Integer rangeKey,
 			Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getPerformanceTopAssetHttpResponse(
-			String assetFilter, Long[] depotEntryIds, Integer rangeKey,
+			String assetFilterString, Long[] depotEntryIds, Integer rangeKey,
 			Pagination pagination, String sortString)
+		throws Exception;
+
+	public void getPerformanceTopAssetExport(
+			String assetFilterString, Long[] depotEntryIds, Integer rangeKey,
+			String sortString)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse getPerformanceTopAssetExportHttpResponse(
+			String assetFilterString, Long[] depotEntryIds, Integer rangeKey,
+			String sortString)
 		throws Exception;
 
 	public static class Builder {
@@ -153,13 +163,13 @@ public interface PerformanceTopAssetResource {
 		implements PerformanceTopAssetResource {
 
 		public PerformanceTopAsset getPerformanceTopAsset(
-				String assetFilter, Long[] depotEntryIds, Integer rangeKey,
-				Pagination pagination, String sortString)
+				String assetFilterString, Long[] depotEntryIds,
+				Integer rangeKey, Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getPerformanceTopAssetHttpResponse(
-					assetFilter, depotEntryIds, rangeKey, pagination,
+					assetFilterString, depotEntryIds, rangeKey, pagination,
 					sortString);
 
 			String content = httpResponse.getContent();
@@ -222,8 +232,8 @@ public interface PerformanceTopAssetResource {
 		}
 
 		public HttpInvoker.HttpResponse getPerformanceTopAssetHttpResponse(
-				String assetFilter, Long[] depotEntryIds, Integer rangeKey,
-				Pagination pagination, String sortString)
+				String assetFilterString, Long[] depotEntryIds,
+				Integer rangeKey, Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -247,9 +257,9 @@ public interface PerformanceTopAssetResource {
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
-			if (assetFilter != null) {
+			if (assetFilterString != null) {
 				httpInvoker.parameter(
-					"assetFilter", String.valueOf(assetFilter));
+					"assetFilterString", String.valueOf(assetFilterString));
 			}
 
 			if (depotEntryIds != null) {
@@ -287,6 +297,123 @@ public interface PerformanceTopAssetResource {
 			return httpInvoker.invoke();
 		}
 
+		public void getPerformanceTopAssetExport(
+				String assetFilterString, Long[] depotEntryIds,
+				Integer rangeKey, String sortString)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				getPerformanceTopAssetExportHttpResponse(
+					assetFilterString, depotEntryIds, rangeKey, sortString);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				getPerformanceTopAssetExportHttpResponse(
+					String assetFilterString, Long[] depotEntryIds,
+					Integer rangeKey, String sortString)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (assetFilterString != null) {
+				httpInvoker.parameter(
+					"assetFilterString", String.valueOf(assetFilterString));
+			}
+
+			if (depotEntryIds != null) {
+				for (int i = 0; i < depotEntryIds.length; i++) {
+					httpInvoker.parameter(
+						"depotEntryIds", String.valueOf(depotEntryIds[i]));
+				}
+			}
+
+			if (rangeKey != null) {
+				httpInvoker.parameter("rangeKey", String.valueOf(rangeKey));
+			}
+
+			if (sortString != null) {
+				httpInvoker.parameter("sort", sortString);
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/analytics-cms-rest/v1.0/performance-top-asset/export");
+
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
+
+			return httpInvoker.invoke();
+		}
+
 		private PerformanceTopAssetResourceImpl(Builder builder) {
 			_builder = builder;
 		}
@@ -299,4 +426,4 @@ public interface PerformanceTopAssetResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:466283231
+// LIFERAY-REST-BUILDER-HASH:-996216549

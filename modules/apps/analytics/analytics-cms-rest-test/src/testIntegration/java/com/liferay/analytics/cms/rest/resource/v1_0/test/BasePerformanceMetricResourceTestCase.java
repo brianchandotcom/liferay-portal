@@ -184,6 +184,11 @@ public abstract class BasePerformanceMetricResourceTestCase {
 		Assert.assertTrue(false);
 	}
 
+	@Test
+	public void testGetPerformanceMetricExport() throws Exception {
+		Assert.assertTrue(false);
+	}
+
 	protected void assertContains(
 		PerformanceMetric performanceMetric,
 		List<PerformanceMetric> performanceMetrics) {
@@ -864,4 +869,4 @@ public abstract class BasePerformanceMetricResourceTestCase {
 			_performanceMetricResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-548735459
+// LIFERAY-REST-BUILDER-HASH:-31028759

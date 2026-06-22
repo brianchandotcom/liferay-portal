@@ -536,7 +536,7 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 	}
 
 	@Test
-	public void testIndividualPublishPreservesCircularArticleReference()
+	public void testPublishPortletPreservesCircularArticleReference()
 		throws Exception {
 
 		_liveGroup = GroupTestUtil.addGroup();
@@ -575,21 +575,21 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 				TestPropsValues.getUser()
 			).build();
 
-		String dataDefinitionString = _read(
+		String dataDefinitionJSON = _read(
 			"repeatable_journal_article_field_data_definition.json");
 
 		DataDefinition dataDefinition =
 			dataDefinitionResource.postSiteDataDefinitionByContentType(
 				stagingGroup.getGroupId(), "journal",
-				DataDefinition.toDTO(dataDefinitionString));
+				DataDefinition.toDTO(dataDefinitionJSON));
 
-		String structureKey = dataDefinition.getDataDefinitionKey();
+		String ddmStructureKey = dataDefinition.getDataDefinitionKey();
 
 		JournalArticle article1 = JournalTestUtil.addArticleWithXMLContent(
 			stagingGroup.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			JournalArticleConstants.CLASS_NAME_ID_DEFAULT,
-			_buildXMLContent("{}"), structureKey, null, LocaleUtil.US);
+			_buildXMLContent("{}"), ddmStructureKey, null, LocaleUtil.US);
 
 		JournalArticle article2 = JournalTestUtil.addArticleWithXMLContent(
 			stagingGroup.getGroupId(),
@@ -599,7 +599,7 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 				_getArticleReferenceJSONObject(
 					article1
 				).toString()),
-			structureKey, null, LocaleUtil.US);
+			ddmStructureKey, null, LocaleUtil.US);
 
 		JournalArticle stagingArticle1 = JournalTestUtil.updateArticle(
 			article1, RandomTestUtil.randomString(),
@@ -623,10 +623,10 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 			JournalArticleLocalServiceUtil.fetchJournalArticleByUuidAndGroupId(
 				article2.getUuid(), _liveGroup.getGroupId());
 
-		String liveArticle2ContentString = liveArticle2.getContent();
+		String liveArticle2Content = liveArticle2.getContent();
 
 		Assert.assertTrue(
-			liveArticle2ContentString.contains(
+			liveArticle2Content.contains(
 				"\"classPK\":\"" + liveArticle1.getResourcePrimKey() + "\""));
 
 		Changeset changeset = Changeset.create(
@@ -651,10 +651,10 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 			JournalArticleLocalServiceUtil.fetchJournalArticleByUuidAndGroupId(
 				article2.getUuid(), _liveGroup.getGroupId());
 
-		liveArticle2ContentString = liveArticle2.getContent();
+		liveArticle2Content = liveArticle2.getContent();
 
 		Assert.assertTrue(
-			liveArticle2ContentString.contains(
+			liveArticle2Content.contains(
 				"\"classPK\":\"" + liveArticle1.getResourcePrimKey() + "\""));
 	}
 

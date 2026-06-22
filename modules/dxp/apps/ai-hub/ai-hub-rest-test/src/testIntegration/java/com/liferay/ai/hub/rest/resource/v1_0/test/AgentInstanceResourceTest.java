@@ -27,7 +27,6 @@ import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.test.util.ObjectRelationshipTestUtil;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.encryptor.EncryptorUtil;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -46,7 +45,6 @@ import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -389,19 +387,17 @@ public class AgentInstanceResourceTest
 		}
 	}
 
-	private String _createCandidateCategories(String... names) {
-		JSONArray jsonArray = _jsonFactory.createJSONArray();
+	private String _createCandidateCategories(String... names)
+		throws Exception {
 
-		for (String name : names) {
-			jsonArray.put(
-				JSONUtil.put(
+		return String.valueOf(
+			JSONUtil.toJSONArray(
+				names,
+				name -> JSONUtil.put(
 					"id", RandomTestUtil.randomLong()
 				).put(
 					"name", name
-				));
-		}
-
-		return jsonArray.toString();
+				)));
 	}
 
 	private JSONObject _postAgentInstance(
@@ -641,7 +637,7 @@ public class AgentInstanceResourceTest
 			JSONUtil.put(
 				"candidateCategories",
 				_createCandidateCategories(
-					"Cooking", "Health", "Sports", "Science", "Technology",
+					"Cooking", "Health", "Science", "Sports", "Technology",
 					"Travel")
 			).put(
 				"content",
@@ -651,8 +647,8 @@ public class AgentInstanceResourceTest
 			));
 
 		_assertContains(
-			data, "confidence", "Health", "suggestions", "Sports",
-			"Technology");
+			data, "Health", "Sports", "Technology", "confidence",
+			"suggestions");
 
 		Assert.assertTrue(data, StringUtil.count(data, "confidence") <= 3);
 
@@ -673,7 +669,7 @@ public class AgentInstanceResourceTest
 				"count", "2"
 			));
 
-		_assertContains(data, "confidence", "suggestions", "Technology");
+		_assertContains(data, "Technology", "confidence", "suggestions");
 
 		Assert.assertTrue(data, StringUtil.count(data, "confidence") <= 2);
 	}
@@ -812,14 +808,16 @@ public class AgentInstanceResourceTest
 			).put(
 				"existingTags",
 				JSONUtil.putAll(
-					"gardening", "cooking", "home improvement"
+					"cooking", "gardening", "home improvement"
 				).toString()
 			));
 
 		_assertContains(data, "confidence", "isNew", "suggestions", "true");
 
-		AssertUtils.assertEqualsIgnoreCase("gardening", data);
-		AssertUtils.assertEqualsIgnoreCase("home improvement", data);
+		String lowerCaseData = StringUtil.toLowerCase(data);
+
+		Assert.assertFalse(data, lowerCaseData.contains("gardening"));
+		Assert.assertFalse(data, lowerCaseData.contains("home improvement"));
 
 		Assert.assertTrue(data, StringUtil.count(data, "confidence") <= 5);
 
@@ -837,15 +835,17 @@ public class AgentInstanceResourceTest
 			).put(
 				"existingTags",
 				JSONUtil.putAll(
-					"machine learning", "neural networks", "data science"
+					"data science", "machine learning", "neural networks"
 				).toString()
 			));
 
 		_assertContains(data, "confidence", "false", "isNew", "suggestions");
 
-		AssertUtils.assertEqualsIgnoreCase("data science", data);
-		AssertUtils.assertEqualsIgnoreCase("machine learning", data);
-		AssertUtils.assertEqualsIgnoreCase("neural networks", data);
+		lowerCaseData = StringUtil.toLowerCase(data);
+
+		Assert.assertTrue(data, lowerCaseData.contains("data science"));
+		Assert.assertTrue(data, lowerCaseData.contains("machine learning"));
+		Assert.assertTrue(data, lowerCaseData.contains("neural networks"));
 
 		Assert.assertTrue(data, StringUtil.count(data, "confidence") <= 5);
 	}

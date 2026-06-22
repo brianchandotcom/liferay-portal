@@ -194,46 +194,39 @@ public class ImportProcessResourceTest
 	@Override
 	@Test
 	public void testPostAssetLibraryPortletImportProcess() throws Exception {
-		ObjectDefinition objectDefinition = _publishObjectDefinition(
-			ObjectDefinitionConstants.SCOPE_DEPOT);
-
 		Layout layout = LayoutTestUtil.addTypePortletLayout(
 			testDepotEntryGroup);
+
+		ObjectDefinition objectDefinition = _publishObjectDefinition(
+			ObjectDefinitionConstants.SCOPE_DEPOT);
 
 		String portletId = objectDefinition.getPortletId();
 
 		LayoutTestUtil.addPortletToLayout(layout, portletId);
 
-		try {
-			assertHttpResponseStatusCode(
-				403,
-				_importProcessResource.
-					postAssetLibraryPortletImportProcessHttpResponse(
-						testDepotEntryGroup.getExternalReferenceCode(),
-						portletId, layout.getPlid(),
-						new ImportProcessRequest()));
+		assertHttpResponseStatusCode(
+			403,
+			_importProcessResource.
+				postAssetLibraryPortletImportProcessHttpResponse(
+					testDepotEntryGroup.getExternalReferenceCode(), portletId,
+					layout.getPlid(), new ImportProcessRequest()));
 
-			_testPostImportProcessWithObjectDefinition(
-				() -> _exportPortletAsFile(
-					testDepotEntryGroup.getGroupId(), layout.getPlid(),
-					portletId),
-				objectDefinition, testDepotEntryGroup.getGroupId(),
-				file ->
-					_importPreviewResource.postAssetLibraryPortletImportPreview(
-						testDepotEntryGroup.getExternalReferenceCode(),
-						portletId, layout.getPlid(), null,
-						HashMapBuilder.put(
-							"file", file
-						).build()),
-				importProcessRequest ->
-					importProcessResource.postAssetLibraryPortletImportProcess(
-						testDepotEntryGroup.getExternalReferenceCode(),
-						portletId, layout.getPlid(), importProcessRequest));
-		}
-		finally {
-			_objectDefinitionLocalService.deleteObjectDefinition(
-				objectDefinition);
-		}
+		_testPostImportProcessWithObjectDefinition(
+			() -> _exportPortletAsFile(
+				testDepotEntryGroup.getGroupId(), layout.getPlid(), portletId),
+			objectDefinition, testDepotEntryGroup.getGroupId(),
+			file -> _importPreviewResource.postAssetLibraryPortletImportPreview(
+				testDepotEntryGroup.getExternalReferenceCode(), portletId,
+				layout.getPlid(), null,
+				HashMapBuilder.put(
+					"file", file
+				).build()),
+			importProcessRequest ->
+				importProcessResource.postAssetLibraryPortletImportProcess(
+					testDepotEntryGroup.getExternalReferenceCode(), portletId,
+					layout.getPlid(), importProcessRequest));
+
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 	}
 
 	@Override
@@ -343,41 +336,37 @@ public class ImportProcessResourceTest
 	@Override
 	@Test
 	public void testPostSitePortletImportProcess() throws Exception {
+		Layout layout = LayoutTestUtil.addTypePortletLayout(testGroup);
+
 		ObjectDefinition objectDefinition = _publishObjectDefinition(
 			ObjectDefinitionConstants.SCOPE_SITE);
-
-		Layout layout = LayoutTestUtil.addTypePortletLayout(testGroup);
 
 		String portletId = objectDefinition.getPortletId();
 
 		LayoutTestUtil.addPortletToLayout(layout, portletId);
 
-		try {
-			assertHttpResponseStatusCode(
-				403,
-				_importProcessResource.postSitePortletImportProcessHttpResponse(
-					testGroup.getExternalReferenceCode(), portletId,
-					layout.getPlid(), new ImportProcessRequest()));
+		assertHttpResponseStatusCode(
+			403,
+			_importProcessResource.postSitePortletImportProcessHttpResponse(
+				testGroup.getExternalReferenceCode(), portletId,
+				layout.getPlid(), new ImportProcessRequest()));
 
-			_testPostImportProcessWithObjectDefinition(
-				() -> _exportPortletAsFile(
-					testGroup.getGroupId(), layout.getPlid(), portletId),
-				objectDefinition, testGroup.getGroupId(),
-				file -> _importPreviewResource.postSitePortletImportPreview(
+		_testPostImportProcessWithObjectDefinition(
+			() -> _exportPortletAsFile(
+				testGroup.getGroupId(), layout.getPlid(), portletId),
+			objectDefinition, testGroup.getGroupId(),
+			file -> _importPreviewResource.postSitePortletImportPreview(
+				testGroup.getExternalReferenceCode(), portletId,
+				layout.getPlid(), null,
+				HashMapBuilder.put(
+					"file", file
+				).build()),
+			importProcessRequest ->
+				importProcessResource.postSitePortletImportProcess(
 					testGroup.getExternalReferenceCode(), portletId,
-					layout.getPlid(), null,
-					HashMapBuilder.put(
-						"file", file
-					).build()),
-				importProcessRequest ->
-					importProcessResource.postSitePortletImportProcess(
-						testGroup.getExternalReferenceCode(), portletId,
-						layout.getPlid(), importProcessRequest));
-		}
-		finally {
-			_objectDefinitionLocalService.deleteObjectDefinition(
-				objectDefinition);
-		}
+					layout.getPlid(), importProcessRequest));
+
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 	}
 
 	@Override

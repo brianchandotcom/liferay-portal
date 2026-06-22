@@ -50,11 +50,6 @@ public class SLAInstanceResultWorkflowMetricsReindexer
 		return "sla-instance-result";
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #reindex(long, ExecutionMode)}
-	 */
-	@Deprecated
 	@Override
 	public void reindex(long companyId) throws PortalException {
 		try {
@@ -78,7 +73,7 @@ public class SLAInstanceResultWorkflowMetricsReindexer
 			return;
 		}
 
-		WorkflowMetricsIndex.createAllIndexes(
+		WorkflowMetricsIndex.createMissingIndexes(
 			_searchCapabilities, searchEngineAdapter, _indexNameBuilder,
 			companyId);
 
@@ -102,7 +97,7 @@ public class SLAInstanceResultWorkflowMetricsReindexer
 				companyId);
 		}
 
-		_creatDefaultDocuments(companyId);
+		_createDefaultDocuments(companyId);
 
 		WorkflowMetricsSLAProcessBackgroundTaskHelper
 			workflowMetricsSLAProcessBackgroundTaskHelper =
@@ -130,7 +125,7 @@ public class SLAInstanceResultWorkflowMetricsReindexer
 	@Reference
 	protected SearchEngineAdapter searchEngineAdapter;
 
-	private void _creatDefaultDocuments(long companyId) {
+	private void _createDefaultDocuments(long companyId) {
 		if (!_hasIndex(
 				_indexNameBuilder.getIndexName(companyId) +
 					WorkflowMetricsIndexNameConstants.SUFFIX_PROCESS)) {
@@ -173,7 +168,7 @@ public class SLAInstanceResultWorkflowMetricsReindexer
 					_slaInstanceResultWorkflowMetricsIndexer.getIndexName(
 						companyId),
 					_slaInstanceResultWorkflowMetricsIndexer.
-						creatDefaultDocument(
+						createDefaultDocument(
 							companyId, document.getLong("processId"))));
 		}
 

@@ -47,11 +47,6 @@ public class InstanceWorkflowMetricsReindexer
 		return "instance";
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #reindex(long, ExecutionMode)}
-	 */
-	@Deprecated
 	@Override
 	public void reindex(long companyId) throws PortalException {
 		try {
@@ -75,7 +70,7 @@ public class InstanceWorkflowMetricsReindexer
 			return;
 		}
 
-		WorkflowMetricsIndex.createAllIndexes(
+		WorkflowMetricsIndex.createMissingIndexes(
 			_searchCapabilities, _searchEngineAdapter, _indexNameBuilder,
 			companyId);
 

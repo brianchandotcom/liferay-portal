@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -44,11 +44,6 @@ public class ProcessWorkflowMetricsReindexer
 		return "process";
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #reindex(long, ExecutionMode)}
-	 */
-	@Deprecated
 	@Override
 	public void reindex(long companyId) throws PortalException {
 		try {
@@ -72,7 +67,7 @@ public class ProcessWorkflowMetricsReindexer
 			return;
 		}
 
-		WorkflowMetricsIndex.createAllIndexes(
+		WorkflowMetricsIndex.createMissingIndexes(
 			_searchCapabilities, _searchEngineAdapter, _indexNameBuilder,
 			companyId);
 

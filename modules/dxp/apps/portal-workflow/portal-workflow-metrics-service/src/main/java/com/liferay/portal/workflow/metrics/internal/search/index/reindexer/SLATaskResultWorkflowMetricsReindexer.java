@@ -51,11 +51,6 @@ public class SLATaskResultWorkflowMetricsReindexer
 		return "sla-task-result";
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #reindex(long, ExecutionMode)}
-	 */
-	@Deprecated
 	@Override
 	public void reindex(long companyId) throws PortalException {
 		try {
@@ -79,7 +74,7 @@ public class SLATaskResultWorkflowMetricsReindexer
 			return;
 		}
 
-		WorkflowMetricsIndex.createAllIndexes(
+		WorkflowMetricsIndex.createMissingIndexes(
 			_searchCapabilities, searchEngineAdapter, _indexNameBuilder,
 			companyId);
 
@@ -103,7 +98,7 @@ public class SLATaskResultWorkflowMetricsReindexer
 				companyId);
 		}
 
-		_creatDefaultDocuments(companyId);
+		_createDefaultDocuments(companyId);
 
 		if (_isExecuteSyncReindex(executionMode)) {
 			SyncReindexManager syncReindexManager =
@@ -121,7 +116,7 @@ public class SLATaskResultWorkflowMetricsReindexer
 	@Reference
 	protected SearchEngineAdapter searchEngineAdapter;
 
-	private void _creatDefaultDocuments(long companyId) {
+	private void _createDefaultDocuments(long companyId) {
 		if (!_hasIndex(
 				_indexNameBuilder.getIndexName(companyId) +
 					WorkflowMetricsIndexNameConstants.SUFFIX_NODE)) {
@@ -165,7 +160,7 @@ public class SLATaskResultWorkflowMetricsReindexer
 				new IndexDocumentRequest(
 					_slaTaskResultWorkflowMetricsIndexer.getIndexName(
 						companyId),
-					_slaTaskResultWorkflowMetricsIndexer.creatDefaultDocument(
+					_slaTaskResultWorkflowMetricsIndexer.createDefaultDocument(
 						companyId, document.getLong("nodeId"),
 						document.getLong("processId"),
 						document.getString("name"))));

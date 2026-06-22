@@ -52,7 +52,7 @@ public enum WorkflowMetricsIndex {
 		WorkflowMetricsIndexNameConstants.SUFFIX_TRANSITION,
 		WorkflowMetricsIndexTypeConstants.TRANSITION_TYPE);
 
-	public static void createAllIndexes(
+	public static void createMissingIndexes(
 			SearchCapabilities searchCapabilities,
 			SearchEngineAdapter searchEngineAdapter,
 			IndexNameBuilder indexNameBuilder, long companyId)

@@ -8,12 +8,16 @@ package com.liferay.portal.kernel.portlet.render;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.frontend.hashed.files.HashedFilesRegistryUtil;
 import com.liferay.portal.kernel.frontend.hashed.files.HashedFilesUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -25,6 +29,8 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import jakarta.portlet.PortletMode;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -53,6 +59,13 @@ public class PortletRenderUtil {
 	public static PortletRenderParts getPortletRenderParts(
 		HttpServletRequest httpServletRequest, String portletHTML,
 		Portlet portlet) {
+
+		if (!_hasAccessPermission(httpServletRequest, portlet)) {
+			return new PortletRenderParts(
+				Collections.emptyList(), Collections.emptyList(),
+				Collections.emptyList(), Collections.emptyList(), portletHTML,
+				!portlet.isAjaxable());
+		}
 
 		boolean portletOnLayout = false;
 
@@ -402,6 +415,39 @@ public class PortletRenderUtil {
 		}
 
 		return urls;
+	}
+
+	private static boolean _hasAccessPermission(
+		HttpServletRequest httpServletRequest, Portlet portlet) {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (themeDisplay == null) {
+			return true;
+		}
+
+		PermissionChecker permissionChecker =
+			themeDisplay.getPermissionChecker();
+		Layout layout = themeDisplay.getLayout();
+
+		if ((permissionChecker == null) || (layout == null)) {
+			return true;
+		}
+
+		try {
+			return PortletPermissionUtil.hasAccessPermission(
+				permissionChecker, themeDisplay.getScopeGroupId(), layout,
+				portlet, PortletMode.VIEW);
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+
+			return false;
+		}
 	}
 
 	private static boolean _isTokenized(String resourceURI) {

@@ -6,9 +6,14 @@
 import {Locator, Page} from '@playwright/test';
 
 export class DigitalSalesRoomUsersPage {
+	readonly confirmExpirationButton: (nameOrEmail: string) => Locator;
 	readonly doneButton: Locator;
+	readonly editExpirationButton: (nameOrEmail: string) => Locator;
+	readonly expirationLabel: (nameOrEmail: string) => Locator;
 	readonly inviteButton: Locator;
+	readonly inviteExpirationDateInput: Locator;
 	readonly page: Page;
+	readonly rowExpirationDateInput: (nameOrEmail: string) => Locator;
 	readonly shareButton: Locator;
 	readonly shareModal: Locator;
 	readonly shareModalEmailInput: Locator;
@@ -17,9 +22,26 @@ export class DigitalSalesRoomUsersPage {
 	readonly userEmailAddressesInput: Locator;
 
 	constructor(page: Page) {
+		this.confirmExpirationButton = (nameOrEmail) =>
+			this.userRow(nameOrEmail)
+				.getByRole('button')
+				.filter({has: page.locator('.lexicon-icon-check')});
 		this.doneButton = page.getByRole('button', {name: 'Done'});
+		this.editExpirationButton = (nameOrEmail) =>
+			this.userRow(nameOrEmail)
+				.getByRole('button')
+				.filter({has: page.locator('.lexicon-icon-pencil')});
+		this.expirationLabel = (nameOrEmail) =>
+			this.userRow(nameOrEmail).locator('.dsr-expiration-label');
 		this.inviteButton = page.locator('[data-testid="inviteButton"]');
+		this.inviteExpirationDateInput = page.locator(
+			'.dsr-expiration-date-picker input[type="text"]'
+		);
 		this.page = page;
+		this.rowExpirationDateInput = (nameOrEmail) =>
+			this.userRow(nameOrEmail).locator(
+				'.dsr-expiration-date-picker input[type="text"]'
+			);
 		this.shareButton = page.getByRole('button', {name: 'share'});
 		this.shareModal = page.locator('.modal-dialog');
 		this.shareModalEmailInput = this.shareModal.locator(

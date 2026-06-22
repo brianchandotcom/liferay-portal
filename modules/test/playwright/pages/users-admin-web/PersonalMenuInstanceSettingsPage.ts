@@ -40,10 +40,16 @@ export class PersonalMenuInstanceSettingsPage {
 	}
 
 	async selectPersonalApplicationsLookAndFeel(option: string) {
+		const optionLocator = this.page.getByRole('option', {name: option});
+
 		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: this.page.getByRole('option', {name: option}),
+			target: optionLocator,
+			timeout: 1000,
 			trigger: this.personalApplicationsLookAndFeelSelect,
 		});
+
+		await optionLocator.click({force: true});
+
+		await this.page.keyboard.press('Escape');
 	}
 }

@@ -191,7 +191,7 @@ public class PlaywrightBatchBuildTestrayCaseResult
 	}
 
 	@Override
-	public TestReport getTestReport() {
+	protected TestReport findTestReport() {
 		PlaywrightTestClassMethod playwrightTestClassMethod =
 			getTestClassMethod();
 

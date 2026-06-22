@@ -359,6 +359,10 @@ public class BatchBuildTestrayCaseResult
 		return null;
 	}
 
+	protected TestReport findTestReport() {
+		return null;
+	}
+
 	protected AxisTestClassGroup getAxisTestClassGroup() {
 		return _axisTestClassGroup;
 	}
@@ -430,7 +434,12 @@ public class BatchBuildTestrayCaseResult
 	}
 
 	protected TestReport getTestReport() {
-		return null;
+		if (!_testReportComputed) {
+			_testReport = findTestReport();
+			_testReportComputed = true;
+		}
+
+		return _testReport;
 	}
 
 	protected long getTestResultDuration() {
@@ -830,6 +839,8 @@ public class BatchBuildTestrayCaseResult
 	private final AxisTestClassGroup _axisTestClassGroup;
 	private A _testClass;
 	private B _testClassMethod;
+	private TestReport _testReport;
+	private boolean _testReportComputed;
 	private TopLevelStandaloneBuildTestrayCaseResult
 		_topLevelStandaloneBuildTestrayCaseResult;
 

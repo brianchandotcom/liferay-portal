@@ -714,7 +714,7 @@ public class LayoutPageTemplateStructureRelElementVariationPersistenceImpl
 		dbColumnNames.put("uuid", "uuid_");
 		dbColumnNames.put(
 			"layoutPageTemplateStructureRelElementVariationId",
-			"lptStructureElementVariationId");
+			"lptsRelElementVariationId");
 
 		setDBColumnNames(dbColumnNames);
 
@@ -1068,7 +1068,7 @@ public class LayoutPageTemplateStructureRelElementVariationPersistenceImpl
 
 	@Override
 	protected String getPKDBName() {
-		return "lptStructureElementVariationId";
+		return "lptsRelElementVariationId";
 	}
 
 	@Override
@@ -1097,7 +1097,7 @@ public class LayoutPageTemplateStructureRelElementVariationPersistenceImpl
 
 	@Override
 	public String getTableName() {
-		return "LPTStructureElementVariation";
+		return "LPTSRelElementVariation";
 	}
 
 	@Override
@@ -1145,7 +1145,7 @@ public class LayoutPageTemplateStructureRelElementVariationPersistenceImpl
 		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK,
-			Collections.singleton("lptStructureElementVariationId"));
+			Collections.singleton("lptsRelElementVariationId"));
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.STRICT, ctStrictColumnNames);
 
@@ -1441,4 +1441,4 @@ public class LayoutPageTemplateStructureRelElementVariationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-277500991
+// LIFERAY-SERVICE-BUILDER-HASH:1327637019

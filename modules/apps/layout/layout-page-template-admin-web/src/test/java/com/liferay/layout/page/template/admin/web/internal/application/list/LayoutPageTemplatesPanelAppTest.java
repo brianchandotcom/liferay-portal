@@ -54,6 +54,13 @@ public class LayoutPageTemplatesPanelAppTest {
 		LayoutPageTemplatesPanelApp layoutPageTemplatesPanelApp =
 			new LayoutPageTemplatesPanelApp();
 
+		ReflectionTestUtil.setFieldValue(
+			layoutPageTemplatesPanelApp, "_layoutPageTemplateEntryService",
+			layoutPageTemplateEntryService);
+
+		PortletLocalService portletLocalService = Mockito.mock(
+			PortletLocalService.class);
+
 		Portlet portlet = Mockito.mock(Portlet.class);
 
 		Mockito.when(
@@ -61,9 +68,6 @@ public class LayoutPageTemplatesPanelAppTest {
 		).thenReturn(
 			true
 		);
-
-		PortletLocalService portletLocalService = Mockito.mock(
-			PortletLocalService.class);
 
 		Mockito.when(
 			portletLocalService.getPortletById(
@@ -73,11 +77,9 @@ public class LayoutPageTemplatesPanelAppTest {
 		);
 
 		ReflectionTestUtil.setFieldValue(
-			layoutPageTemplatesPanelApp, "_layoutPageTemplateEntryService",
-			layoutPageTemplateEntryService);
-		ReflectionTestUtil.setFieldValue(
 			layoutPageTemplatesPanelApp, "_portletLocalService",
 			portletLocalService);
+
 		ReflectionTestUtil.setFieldValue(
 			layoutPageTemplatesPanelApp, "_stagingGroupHelper",
 			stagingGroupHelper);

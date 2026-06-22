@@ -84,7 +84,7 @@ public class LayoutPageTemplatesPanelApp extends BasePanelApp {
 			!FeatureFlagManagerUtil.isEnabled(
 				group.getCompanyId(), "LPD-76864")) {
 
-			int layoutPageTemplateEntriesCountByType =
+			int count =
 				_layoutPageTemplateEntryService.
 					getLayoutPageTemplateEntriesCountByType(
 						group.getGroupId(),
@@ -92,7 +92,7 @@ public class LayoutPageTemplatesPanelApp extends BasePanelApp {
 							PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 						LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE);
 
-			if (layoutPageTemplateEntriesCountByType == 0) {
+			if (count == 0) {
 				return false;
 			}
 		}

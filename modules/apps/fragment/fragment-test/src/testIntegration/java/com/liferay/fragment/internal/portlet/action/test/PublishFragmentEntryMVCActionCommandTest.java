@@ -10,6 +10,7 @@ import com.liferay.fragment.configuration.FragmentServiceConfiguration;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
@@ -133,17 +134,27 @@ public class PublishFragmentEntryMVCActionCommandTest {
 
 			Layout draftLayout = layout.fetchDraftLayout();
 
-			ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
-				StringPool.BLANK, fragmentEntry.getCss(),
-				fragmentEntry.getConfiguration(),
-				fragmentEntry.getExternalReferenceCode(), null,
-				fragmentEntry.getHtml(), fragmentEntry.getJs(), draftLayout,
-				fragmentEntry.getFragmentEntryKey(),
-				_segmentsExperienceLocalService.
-					fetchDefaultSegmentsExperienceId(draftLayout.getPlid()),
-				fragmentEntry.getType());
+			FragmentEntryLink fragmentEntryLink =
+				ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+					StringPool.BLANK, fragmentEntry.getCss(),
+					fragmentEntry.getConfiguration(),
+					fragmentEntry.getExternalReferenceCode(), null,
+					fragmentEntry.getHtml(), fragmentEntry.getJs(), draftLayout,
+					fragmentEntry.getFragmentEntryKey(),
+					_segmentsExperienceLocalService.
+						fetchDefaultSegmentsExperienceId(draftLayout.getPlid()),
+					fragmentEntry.getType());
 
 			ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+
+			_assertFragmentEntryLinkHTML(
+				fragmentEntry.getHtml(),
+				_fragmentEntryLinkLocalService.getFragmentEntryLink(
+					fragmentEntryLink.getFragmentEntryLinkId()),
+				_fragmentEntryLinkLocalService.getFragmentEntryLink(
+					_group.getGroupId(),
+					fragmentEntryLink.getExternalReferenceCode(),
+					layout.getPlid()));
 
 			_assertLayoutStatusApproved(
 				_layoutLocalService.getLayout(draftLayout.getPlid()),
@@ -166,6 +177,23 @@ public class PublishFragmentEntryMVCActionCommandTest {
 			_assertLayoutStatusApproved(
 				_layoutLocalService.getLayout(draftLayout.getPlid()),
 				_layoutLocalService.getLayout(layout.getPlid()));
+
+			_assertFragmentEntryLinkHTML(
+				fragmentEntry.getHtml(),
+				_fragmentEntryLinkLocalService.getFragmentEntryLink(
+					fragmentEntryLink.getFragmentEntryLinkId()),
+				_fragmentEntryLinkLocalService.getFragmentEntryLink(
+					_group.getGroupId(),
+					fragmentEntryLink.getExternalReferenceCode(),
+					layout.getPlid()));
+		}
+	}
+
+	private void _assertFragmentEntryLinkHTML(
+		String expectedHTML, FragmentEntryLink... fragmentEntryLinks) {
+
+		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
+			Assert.assertEquals(expectedHTML, fragmentEntryLink.getHtml());
 		}
 	}
 

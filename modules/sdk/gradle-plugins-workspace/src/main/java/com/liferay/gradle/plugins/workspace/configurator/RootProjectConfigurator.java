@@ -191,8 +191,6 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 	public static final String TAG_DOCKER_IMAGE_TASK_NAME = "tagDockerImage";
 
-	public static final String UPDATE_WORKSPACE_TASK_NAME = "updateWorkspace";
-
 	public static final String UPGRADE_JAKARTA_TASK_NAME = "upgradeJakarta";
 
 	public static final String UPGRADE_SOURCE_CODE_TASK_NAME =
@@ -1533,7 +1531,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 	private Task _addTaskUpdateWorkspace(final Project project) {
 		Task task = GradleUtil.addTask(
-			project, UPDATE_WORKSPACE_TASK_NAME, DefaultTask.class);
+			project, _UPDATE_WORKSPACE_TASK_NAME, DefaultTask.class);
 
 		task.doLast(
 			new Action<Task>() {
@@ -2082,6 +2080,8 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 	private static final String _LIFERAY_IMAGE_SETUP_SCRIPT =
 		"100_liferay_image_setup.sh";
+
+	private static final String _UPDATE_WORKSPACE_TASK_NAME = "updateWorkspace";
 
 	private static final Spec<Task> _skipIfExecutingParentTaskSpec =
 		new Spec<Task>() {

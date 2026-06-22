@@ -164,6 +164,15 @@ public class FriendlyURLEntryLocalServiceUtil {
 	}
 
 	public static void deleteFriendlyURLLocalizationEntry(
+			com.liferay.friendly.url.model.FriendlyURLEntryLocalization
+				friendlyURLEntryLocalization)
+		throws PortalException {
+
+		getService().deleteFriendlyURLLocalizationEntry(
+			friendlyURLEntryLocalization);
+	}
+
+	public static void deleteFriendlyURLLocalizationEntry(
 			long friendlyURLEntryId, String languageId)
 		throws PortalException {
 
@@ -708,4 +717,4 @@ public class FriendlyURLEntryLocalServiceUtil {
 			FriendlyURLEntryLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2045174786
+// LIFERAY-SERVICE-BUILDER-HASH:-2066583604

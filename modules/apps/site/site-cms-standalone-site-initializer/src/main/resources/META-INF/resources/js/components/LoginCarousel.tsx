@@ -6,7 +6,7 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useId, useState} from 'react';
 
 import '../../css/components/LoginCarousel.scss';
 
@@ -57,6 +57,8 @@ export default function LoginCarousel() {
 	const [exiting, setExiting] = useState<number | null>(null);
 	const [paused, setPaused] = useState<boolean>(false);
 
+	const titleId = useId();
+
 	function goTo(index: number) {
 		if (index === current) {
 			return;
@@ -101,17 +103,25 @@ export default function LoginCarousel() {
 				);
 
 				return (
-					<div className={className} key={index}>
+					<div
+						aria-hidden={index !== current}
+						className={className}
+						key={index}
+					>
 						<div className="login-carousel-card position-absolute">
 							<img
 								alt=""
 								className="login-carousel-placeholder shadow-lg"
+								loading="lazy"
 								src={slide.image}
 							/>
 						</div>
 
 						<div className="c-gap-2 d-flex flex-column login-carousel-text position-absolute text-center">
-							<h2 className="font-weight-bold login-carousel-title m-0">
+							<h2
+								className="font-weight-bold login-carousel-title m-0"
+								id={`${titleId}-${index}`}
+							>
 								{slide.title}
 							</h2>
 
@@ -126,7 +136,12 @@ export default function LoginCarousel() {
 			<div className="align-items-center c-gap-2 d-flex login-carousel-nav position-absolute">
 				{SLIDES.map((_, index) => (
 					<button
-						aria-label={`Slide ${index + 1}`}
+						aria-current={index === current}
+						aria-describedby={`${titleId}-${index}`}
+						aria-label={Liferay.Util.sub(
+							Liferay.Language.get('go-to-slide-x'),
+							[index + 1]
+						)}
 						className={classNames(
 							'btn-unstyled login-carousel-dot',
 							{

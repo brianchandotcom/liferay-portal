@@ -5,6 +5,7 @@
 
 package com.liferay.portal.workflow.kaleo.definition.internal.parser;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.workflow.kaleo.definition.Definition;
 import com.liferay.portal.workflow.kaleo.definition.NodeType;
@@ -44,10 +45,10 @@ public class ServiceNodeValidator extends BaseNodeValidator<ServiceNode> {
 			!javaDelegate.matches("[\\w.$]+#\\w+")) {
 
 			throw new KaleoDefinitionValidationException(
-				String.format(
-					"Service node %s must set a \"java-delegate\" in the " +
-						"form \"com.example.Converter#convert\"",
-					serviceNode.getDefaultLabel()));
+				StringBundler.concat(
+					"The ", serviceNode.getDefaultLabel(),
+					" node must set a \"java-delegate\" in the form ",
+					"\"com.example.Converter#convert\""));
 		}
 
 		if (serviceNode.getOutgoingTransitionsCount() == 0) {

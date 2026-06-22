@@ -569,7 +569,7 @@ public class CommerceAddressRestrictionPersistenceImpl
 				_SQL_SELECT_COMMERCEADDRESSRESTRICTION_WHERE,
 				_SQL_COUNT_COMMERCEADDRESSRESTRICTION_WHERE,
 				CommerceAddressRestrictionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"commerceAddressRestriction.", "countryId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -596,7 +596,7 @@ public class CommerceAddressRestrictionPersistenceImpl
 			_SQL_SELECT_COMMERCEADDRESSRESTRICTION_WHERE,
 			_SQL_COUNT_COMMERCEADDRESSRESTRICTION_WHERE,
 			CommerceAddressRestrictionModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX, "",
+			_ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"commerceAddressRestriction.", "classNameId",
 				FinderColumn.Type.LONG, "=", true, true,
@@ -698,4 +698,4 @@ public class CommerceAddressRestrictionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:634879774
+// LIFERAY-SERVICE-BUILDER-HASH:-135378718

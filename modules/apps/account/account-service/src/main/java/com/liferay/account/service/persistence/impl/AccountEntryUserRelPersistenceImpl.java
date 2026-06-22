@@ -519,7 +519,7 @@ public class AccountEntryUserRelPersistenceImpl
 				_SQL_SELECT_ACCOUNTENTRYUSERREL_WHERE,
 				_SQL_COUNT_ACCOUNTENTRYUSERREL_WHERE,
 				AccountEntryUserRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"accountEntryUserRel.", "accountEntryId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -548,7 +548,7 @@ public class AccountEntryUserRelPersistenceImpl
 				_SQL_SELECT_ACCOUNTENTRYUSERREL_WHERE,
 				_SQL_COUNT_ACCOUNTENTRYUSERREL_WHERE,
 				AccountEntryUserRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"accountEntryUserRel.", "accountUserId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -637,4 +637,4 @@ public class AccountEntryUserRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-968509604
+// LIFERAY-SERVICE-BUILDER-HASH:1109379360

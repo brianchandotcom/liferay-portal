@@ -1111,7 +1111,7 @@ public class CPInstanceOptionValueRelPersistenceImpl
 			_SQL_SELECT_CPINSTANCEOPTIONVALUEREL_WHERE,
 			_SQL_COUNT_CPINSTANCEOPTIONVALUEREL_WHERE,
 			CPInstanceOptionValueRelModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX, "",
+			_ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"cpInstanceOptionValueRel.", "uuid", "uuid_",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -1156,7 +1156,7 @@ public class CPInstanceOptionValueRelPersistenceImpl
 				_SQL_SELECT_CPINSTANCEOPTIONVALUEREL_WHERE,
 				_SQL_COUNT_CPINSTANCEOPTIONVALUEREL_WHERE,
 				CPInstanceOptionValueRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"cpInstanceOptionValueRel.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -1191,7 +1191,7 @@ public class CPInstanceOptionValueRelPersistenceImpl
 				_SQL_SELECT_CPINSTANCEOPTIONVALUEREL_WHERE,
 				_SQL_COUNT_CPINSTANCEOPTIONVALUEREL_WHERE,
 				CPInstanceOptionValueRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"cpInstanceOptionValueRel.", "CPDefinitionOptionRelId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1220,7 +1220,7 @@ public class CPInstanceOptionValueRelPersistenceImpl
 				_SQL_SELECT_CPINSTANCEOPTIONVALUEREL_WHERE,
 				_SQL_COUNT_CPINSTANCEOPTIONVALUEREL_WHERE,
 				CPInstanceOptionValueRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"cpInstanceOptionValueRel.", "CPInstanceId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1253,7 +1253,7 @@ public class CPInstanceOptionValueRelPersistenceImpl
 				_SQL_SELECT_CPINSTANCEOPTIONVALUEREL_WHERE,
 				_SQL_COUNT_CPINSTANCEOPTIONVALUEREL_WHERE,
 				CPInstanceOptionValueRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"cpInstanceOptionValueRel.", "CPDefinitionOptionRelId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1385,4 +1385,4 @@ public class CPInstanceOptionValueRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1239887618
+// LIFERAY-SERVICE-BUILDER-HASH:-1895490760

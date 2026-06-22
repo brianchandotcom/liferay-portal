@@ -899,7 +899,7 @@ public class SocialActivityAchievementPersistenceImpl
 				_SQL_SELECT_SOCIALACTIVITYACHIEVEMENT_WHERE,
 				_SQL_COUNT_SOCIALACTIVITYACHIEVEMENT_WHERE,
 				SocialActivityAchievementModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"socialActivityAchievement.", "groupId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -926,7 +926,7 @@ public class SocialActivityAchievementPersistenceImpl
 			_SQL_SELECT_SOCIALACTIVITYACHIEVEMENT_WHERE,
 			_SQL_COUNT_SOCIALACTIVITYACHIEVEMENT_WHERE,
 			SocialActivityAchievementModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX, "",
+			_ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"socialActivityAchievement.", "groupId", FinderColumn.Type.LONG,
 				"=", true, true, SocialActivityAchievement::getGroupId),
@@ -955,7 +955,7 @@ public class SocialActivityAchievementPersistenceImpl
 			_SQL_SELECT_SOCIALACTIVITYACHIEVEMENT_WHERE,
 			_SQL_COUNT_SOCIALACTIVITYACHIEVEMENT_WHERE,
 			SocialActivityAchievementModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX, "",
+			_ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"socialActivityAchievement.", "groupId", FinderColumn.Type.LONG,
 				"=", true, true, SocialActivityAchievement::getGroupId),
@@ -984,7 +984,7 @@ public class SocialActivityAchievementPersistenceImpl
 			_SQL_SELECT_SOCIALACTIVITYACHIEVEMENT_WHERE,
 			_SQL_COUNT_SOCIALACTIVITYACHIEVEMENT_WHERE,
 			SocialActivityAchievementModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX, "",
+			_ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"socialActivityAchievement.", "groupId", FinderColumn.Type.LONG,
 				"=", true, true, SocialActivityAchievement::getGroupId),
@@ -1043,7 +1043,7 @@ public class SocialActivityAchievementPersistenceImpl
 			_SQL_SELECT_SOCIALACTIVITYACHIEVEMENT_WHERE,
 			_SQL_COUNT_SOCIALACTIVITYACHIEVEMENT_WHERE,
 			SocialActivityAchievementModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX, "",
+			_ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"socialActivityAchievement.", "groupId", FinderColumn.Type.LONG,
 				"=", true, true, SocialActivityAchievement::getGroupId),
@@ -1089,4 +1089,4 @@ public class SocialActivityAchievementPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:579277174
+// LIFERAY-SERVICE-BUILDER-HASH:-874158992

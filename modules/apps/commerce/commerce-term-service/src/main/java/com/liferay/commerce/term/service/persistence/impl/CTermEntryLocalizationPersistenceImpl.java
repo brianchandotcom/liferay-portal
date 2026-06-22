@@ -486,7 +486,7 @@ public class CTermEntryLocalizationPersistenceImpl
 				_SQL_SELECT_CTERMENTRYLOCALIZATION_WHERE,
 				_SQL_COUNT_CTERMENTRYLOCALIZATION_WHERE,
 				CTermEntryLocalizationModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"cTermEntryLocalization.", "commerceTermEntryId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -578,4 +578,4 @@ public class CTermEntryLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1884011308
+// LIFERAY-SERVICE-BUILDER-HASH:488737686

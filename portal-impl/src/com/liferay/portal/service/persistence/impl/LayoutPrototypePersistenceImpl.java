@@ -902,7 +902,7 @@ public class LayoutPrototypePersistenceImpl
 				_SQL_SELECT_LAYOUTPROTOTYPE_WHERE,
 				_SQL_COUNT_LAYOUTPROTOTYPE_WHERE,
 				LayoutPrototypeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"layoutPrototype.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -930,7 +930,7 @@ public class LayoutPrototypePersistenceImpl
 				_SQL_SELECT_LAYOUTPROTOTYPE_WHERE,
 				_SQL_COUNT_LAYOUTPROTOTYPE_WHERE,
 				LayoutPrototypeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"layoutPrototype.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -961,7 +961,7 @@ public class LayoutPrototypePersistenceImpl
 				_SQL_SELECT_LAYOUTPROTOTYPE_WHERE,
 				_SQL_COUNT_LAYOUTPROTOTYPE_WHERE,
 				LayoutPrototypeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"layoutPrototype.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, LayoutPrototype::getCompanyId));
@@ -992,7 +992,7 @@ public class LayoutPrototypePersistenceImpl
 				_SQL_SELECT_LAYOUTPROTOTYPE_WHERE,
 				_SQL_COUNT_LAYOUTPROTOTYPE_WHERE,
 				LayoutPrototypeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"layoutPrototype.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, LayoutPrototype::getCompanyId),
@@ -1034,4 +1034,4 @@ public class LayoutPrototypePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1305492585
+// LIFERAY-SERVICE-BUILDER-HASH:2025533353

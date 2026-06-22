@@ -859,6 +859,7 @@ public class CSDiagramEntryPersistenceImpl
 				_SQL_SELECT_CSDIAGRAMENTRY_WHERE,
 				_SQL_COUNT_CSDIAGRAMENTRY_WHERE,
 				CSDiagramEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"csDiagramEntry.", "CPDefinitionId", FinderColumn.Type.LONG,
 					"=", true, true, CSDiagramEntry::getCPDefinitionId));
@@ -886,6 +887,7 @@ public class CSDiagramEntryPersistenceImpl
 				_SQL_SELECT_CSDIAGRAMENTRY_WHERE,
 				_SQL_COUNT_CSDIAGRAMENTRY_WHERE,
 				CSDiagramEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"csDiagramEntry.", "CPInstanceId", FinderColumn.Type.LONG,
 					"=", true, true, CSDiagramEntry::getCPInstanceId));
@@ -912,6 +914,7 @@ public class CSDiagramEntryPersistenceImpl
 				_SQL_SELECT_CSDIAGRAMENTRY_WHERE,
 				_SQL_COUNT_CSDIAGRAMENTRY_WHERE,
 				CSDiagramEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"csDiagramEntry.", "CProductId", FinderColumn.Type.LONG,
 					"=", true, true, CSDiagramEntry::getCProductId));
@@ -1019,4 +1022,4 @@ public class CSDiagramEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1414311019
+// LIFERAY-SERVICE-BUILDER-HASH:-1486684559

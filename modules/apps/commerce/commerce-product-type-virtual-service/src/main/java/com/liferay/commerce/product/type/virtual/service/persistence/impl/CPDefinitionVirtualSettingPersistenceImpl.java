@@ -653,7 +653,7 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 			_SQL_SELECT_CPDEFINITIONVIRTUALSETTING_WHERE,
 			_SQL_COUNT_CPDEFINITIONVIRTUALSETTING_WHERE,
 			CPDefinitionVirtualSettingModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX, "",
+			_ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"cpDefinitionVirtualSetting.", "uuid", "uuid_",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -699,7 +699,7 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 				_SQL_SELECT_CPDEFINITIONVIRTUALSETTING_WHERE,
 				_SQL_COUNT_CPDEFINITIONVIRTUALSETTING_WHERE,
 				CPDefinitionVirtualSettingModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"cpDefinitionVirtualSetting.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -796,4 +796,4 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-844593638
+// LIFERAY-SERVICE-BUILDER-HASH:812237526

@@ -469,6 +469,7 @@ public class DLSyncEventPersistenceImpl
 					new String[] {"modifiedTime"}, false),
 				_SQL_SELECT_DLSYNCEVENT_WHERE, _SQL_COUNT_DLSYNCEVENT_WHERE,
 				DLSyncEventModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"dlSyncEvent.", "modifiedTime", FinderColumn.Type.LONG, ">",
 					true, true, DLSyncEvent::getModifiedTime));
@@ -553,4 +554,4 @@ public class DLSyncEventPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2018334973
+// LIFERAY-SERVICE-BUILDER-HASH:335368891

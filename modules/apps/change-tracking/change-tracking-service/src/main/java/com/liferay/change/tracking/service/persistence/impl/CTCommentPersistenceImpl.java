@@ -454,7 +454,7 @@ public class CTCommentPersistenceImpl
 					new String[] {Long.class.getName()},
 					new String[] {"ctCollectionId"}, false),
 				_SQL_SELECT_CTCOMMENT_WHERE, _SQL_COUNT_CTCOMMENT_WHERE,
-				CTCommentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				CTCommentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"ctComment.", "ctCollectionId", FinderColumn.Type.LONG, "=",
 					true, true, CTComment::getCtCollectionId));
@@ -479,7 +479,7 @@ public class CTCommentPersistenceImpl
 					"countByCtEntryId", new String[] {Long.class.getName()},
 					new String[] {"ctEntryId"}, false),
 				_SQL_SELECT_CTCOMMENT_WHERE, _SQL_COUNT_CTCOMMENT_WHERE,
-				CTCommentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				CTCommentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"ctComment.", "ctEntryId", FinderColumn.Type.LONG, "=",
 					true, true, CTComment::getCtEntryId));
@@ -547,4 +547,4 @@ public class CTCommentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-546408028
+// LIFERAY-SERVICE-BUILDER-HASH:184595040

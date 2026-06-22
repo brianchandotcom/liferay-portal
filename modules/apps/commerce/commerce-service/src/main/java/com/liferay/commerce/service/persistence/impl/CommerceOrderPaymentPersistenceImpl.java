@@ -391,7 +391,7 @@ public class CommerceOrderPaymentPersistenceImpl
 				_SQL_SELECT_COMMERCEORDERPAYMENT_WHERE,
 				_SQL_COUNT_COMMERCEORDERPAYMENT_WHERE,
 				CommerceOrderPaymentModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"commerceOrderPayment.", "commerceOrderId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -460,4 +460,4 @@ public class CommerceOrderPaymentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1851366387
+// LIFERAY-SERVICE-BUILDER-HASH:1804268721

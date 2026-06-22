@@ -900,7 +900,7 @@ public class KaleoTaskFormInstancePersistenceImpl
 				_SQL_SELECT_KALEOTASKFORMINSTANCE_WHERE,
 				_SQL_COUNT_KALEOTASKFORMINSTANCE_WHERE,
 				KaleoTaskFormInstanceModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"kaleoTaskFormInstance.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -931,7 +931,7 @@ public class KaleoTaskFormInstancePersistenceImpl
 				_SQL_SELECT_KALEOTASKFORMINSTANCE_WHERE,
 				_SQL_COUNT_KALEOTASKFORMINSTANCE_WHERE,
 				KaleoTaskFormInstanceModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"kaleoTaskFormInstance.", "kaleoDefinitionVersionId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -962,7 +962,7 @@ public class KaleoTaskFormInstancePersistenceImpl
 				_SQL_SELECT_KALEOTASKFORMINSTANCE_WHERE,
 				_SQL_COUNT_KALEOTASKFORMINSTANCE_WHERE,
 				KaleoTaskFormInstanceModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"kaleoTaskFormInstance.", "kaleoInstanceId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -990,7 +990,7 @@ public class KaleoTaskFormInstancePersistenceImpl
 				_SQL_SELECT_KALEOTASKFORMINSTANCE_WHERE,
 				_SQL_COUNT_KALEOTASKFORMINSTANCE_WHERE,
 				KaleoTaskFormInstanceModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"kaleoTaskFormInstance.", "kaleoTaskId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1021,7 +1021,7 @@ public class KaleoTaskFormInstancePersistenceImpl
 				_SQL_SELECT_KALEOTASKFORMINSTANCE_WHERE,
 				_SQL_COUNT_KALEOTASKFORMINSTANCE_WHERE,
 				KaleoTaskFormInstanceModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"kaleoTaskFormInstance.", "kaleoTaskInstanceTokenId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1110,4 +1110,4 @@ public class KaleoTaskFormInstancePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1453812865
+// LIFERAY-SERVICE-BUILDER-HASH:-2080464641

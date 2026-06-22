@@ -823,7 +823,7 @@ public class LayoutPageTemplateStructurePersistenceImpl
 			_SQL_SELECT_LAYOUTPAGETEMPLATESTRUCTURE_WHERE,
 			_SQL_COUNT_LAYOUTPAGETEMPLATESTRUCTURE_WHERE,
 			LayoutPageTemplateStructureModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX, "",
+			_ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"layoutPageTemplateStructure.", "uuid", "uuid_",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -869,7 +869,7 @@ public class LayoutPageTemplateStructurePersistenceImpl
 				_SQL_SELECT_LAYOUTPAGETEMPLATESTRUCTURE_WHERE,
 				_SQL_COUNT_LAYOUTPAGETEMPLATESTRUCTURE_WHERE,
 				LayoutPageTemplateStructureModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"layoutPageTemplateStructure.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -901,7 +901,7 @@ public class LayoutPageTemplateStructurePersistenceImpl
 				_SQL_SELECT_LAYOUTPAGETEMPLATESTRUCTURE_WHERE,
 				_SQL_COUNT_LAYOUTPAGETEMPLATESTRUCTURE_WHERE,
 				LayoutPageTemplateStructureModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"layoutPageTemplateStructure.", "groupId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -997,4 +997,4 @@ public class LayoutPageTemplateStructurePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:368693428
+// LIFERAY-SERVICE-BUILDER-HASH:-1280002894

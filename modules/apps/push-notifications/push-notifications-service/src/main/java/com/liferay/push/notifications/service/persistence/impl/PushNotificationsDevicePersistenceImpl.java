@@ -526,7 +526,7 @@ public class PushNotificationsDevicePersistenceImpl
 			_SQL_SELECT_PUSHNOTIFICATIONSDEVICE_WHERE,
 			_SQL_COUNT_PUSHNOTIFICATIONSDEVICE_WHERE,
 			PushNotificationsDeviceModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX, "",
+			_ENTITY_ALIAS_PREFIX, "", "",
 			new ArrayableFinderColumn<>(
 				"pushNotificationsDevice.", "userId", FinderColumn.Type.LONG,
 				"=", false, true, true, PushNotificationsDevice::getUserId),
@@ -601,4 +601,4 @@ public class PushNotificationsDevicePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1445125848
+// LIFERAY-SERVICE-BUILDER-HASH:-1588971158

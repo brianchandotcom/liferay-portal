@@ -2416,7 +2416,7 @@ public class DDMTemplatePersistenceImpl
 				new String[] {String.class.getName()}, new String[] {"uuid_"},
 				0, 1, false, null),
 			_SQL_SELECT_DDMTEMPLATE_WHERE, _SQL_COUNT_DDMTEMPLATE_WHERE,
-			DDMTemplateModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			DDMTemplateModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"ddmTemplate.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
 				true, true, DDMTemplate::getUuid));
@@ -2458,6 +2458,7 @@ public class DDMTemplatePersistenceImpl
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_DDMTEMPLATE_WHERE, _SQL_COUNT_DDMTEMPLATE_WHERE,
 				DDMTemplateModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"ddmTemplate.", "uuid", "uuid_", FinderColumn.Type.STRING,
 					"=", true, true, DDMTemplate::getUuid),
@@ -2486,6 +2487,7 @@ public class DDMTemplatePersistenceImpl
 					new String[] {"groupId"}, false),
 				_SQL_SELECT_DDMTEMPLATE_WHERE, _SQL_COUNT_DDMTEMPLATE_WHERE,
 				DDMTemplateModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"ddmTemplate.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, DDMTemplate::getGroupId));
@@ -2511,6 +2513,7 @@ public class DDMTemplatePersistenceImpl
 					new String[] {"classPK"}, false),
 				_SQL_SELECT_DDMTEMPLATE_WHERE, _SQL_COUNT_DDMTEMPLATE_WHERE,
 				DDMTemplateModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"ddmTemplate.", "classPK", FinderColumn.Type.LONG, "=",
 					true, true, DDMTemplate::getClassPK));
@@ -2536,6 +2539,7 @@ public class DDMTemplatePersistenceImpl
 					new String[] {"templateKey"}, 0, 1, false, null),
 				_SQL_SELECT_DDMTEMPLATE_WHERE, _SQL_COUNT_DDMTEMPLATE_WHERE,
 				DDMTemplateModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"ddmTemplate.", "templateKey", FinderColumn.Type.STRING,
 					"=", true, true, DDMTemplate::getTemplateKey));
@@ -2558,7 +2562,7 @@ public class DDMTemplatePersistenceImpl
 				new String[] {String.class.getName()}, new String[] {"type_"},
 				0, 1, false, null),
 			_SQL_SELECT_DDMTEMPLATE_WHERE, _SQL_COUNT_DDMTEMPLATE_WHERE,
-			DDMTemplateModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			DDMTemplateModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"ddmTemplate.", "type", "type_", FinderColumn.Type.STRING, "=",
 				true, true, DDMTemplate::getType));
@@ -2584,6 +2588,7 @@ public class DDMTemplatePersistenceImpl
 					new String[] {"language"}, 0, 1, false, null),
 				_SQL_SELECT_DDMTEMPLATE_WHERE, _SQL_COUNT_DDMTEMPLATE_WHERE,
 				DDMTemplateModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"ddmTemplate.", "language", FinderColumn.Type.STRING, "=",
 					true, true, DDMTemplate::getLanguage));
@@ -2621,6 +2626,7 @@ public class DDMTemplatePersistenceImpl
 					new String[] {"groupId", "classNameId"}, false),
 				_SQL_SELECT_DDMTEMPLATE_WHERE, _SQL_COUNT_DDMTEMPLATE_WHERE,
 				DDMTemplateModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"ddmTemplate.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, DDMTemplate::getGroupId),
@@ -2649,6 +2655,7 @@ public class DDMTemplatePersistenceImpl
 					new String[] {"groupId", "classPK"}, false),
 				_SQL_SELECT_DDMTEMPLATE_WHERE, _SQL_COUNT_DDMTEMPLATE_WHERE,
 				DDMTemplateModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new ArrayableFinderColumn<>(
 					"ddmTemplate.", "groupId", FinderColumn.Type.LONG, "=",
 					false, true, true, DDMTemplate::getGroupId),
@@ -2684,6 +2691,7 @@ public class DDMTemplatePersistenceImpl
 					new String[] {"groupId", "classNameId", "classPK"}, false),
 				_SQL_SELECT_DDMTEMPLATE_WHERE, _SQL_COUNT_DDMTEMPLATE_WHERE,
 				DDMTemplateModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new ArrayableFinderColumn<>(
 					"ddmTemplate.", "groupId", FinderColumn.Type.LONG, "=",
 					false, true, true, DDMTemplate::getGroupId),
@@ -2743,7 +2751,7 @@ public class DDMTemplatePersistenceImpl
 				new String[] {"classNameId", "classPK", "type_"}, 0, 4, false,
 				null),
 			_SQL_SELECT_DDMTEMPLATE_WHERE, _SQL_COUNT_DDMTEMPLATE_WHERE,
-			DDMTemplateModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			DDMTemplateModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"ddmTemplate.", "classNameId", FinderColumn.Type.LONG, "=",
 				true, true, DDMTemplate::getClassNameId),
@@ -2785,6 +2793,7 @@ public class DDMTemplatePersistenceImpl
 					0, 8, false, null),
 				_SQL_SELECT_DDMTEMPLATE_WHERE, _SQL_COUNT_DDMTEMPLATE_WHERE,
 				DDMTemplateModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"ddmTemplate.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, DDMTemplate::getGroupId),
@@ -2840,6 +2849,7 @@ public class DDMTemplatePersistenceImpl
 					0, 24, false, null),
 				_SQL_SELECT_DDMTEMPLATE_WHERE, _SQL_COUNT_DDMTEMPLATE_WHERE,
 				DDMTemplateModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"ddmTemplate.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, DDMTemplate::getGroupId),
@@ -2945,4 +2955,4 @@ public class DDMTemplatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-452355673
+// LIFERAY-SERVICE-BUILDER-HASH:-154789263

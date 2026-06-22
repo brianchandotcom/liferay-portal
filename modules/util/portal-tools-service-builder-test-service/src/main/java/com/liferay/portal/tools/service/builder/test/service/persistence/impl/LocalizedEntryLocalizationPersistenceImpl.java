@@ -433,7 +433,7 @@ public class LocalizedEntryLocalizationPersistenceImpl
 				_SQL_SELECT_LOCALIZEDENTRYLOCALIZATION_WHERE,
 				_SQL_COUNT_LOCALIZEDENTRYLOCALIZATION_WHERE,
 				LocalizedEntryLocalizationModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"localizedEntryLocalization.", "localizedEntryId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -499,4 +499,4 @@ public class LocalizedEntryLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1387691854
+// LIFERAY-SERVICE-BUILDER-HASH:-1210787828

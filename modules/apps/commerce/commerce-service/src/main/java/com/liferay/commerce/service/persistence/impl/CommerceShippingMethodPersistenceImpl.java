@@ -567,7 +567,7 @@ public class CommerceShippingMethodPersistenceImpl
 				_SQL_SELECT_COMMERCESHIPPINGMETHOD_WHERE,
 				_SQL_COUNT_COMMERCESHIPPINGMETHOD_WHERE,
 				CommerceShippingMethodModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"commerceShippingMethod.", "groupId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -594,7 +594,7 @@ public class CommerceShippingMethodPersistenceImpl
 			_SQL_SELECT_COMMERCESHIPPINGMETHOD_WHERE,
 			_SQL_COUNT_COMMERCESHIPPINGMETHOD_WHERE,
 			CommerceShippingMethodModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"",
+			"", "",
 			new FinderColumn<>(
 				"commerceShippingMethod.", "groupId", FinderColumn.Type.LONG,
 				"=", true, true, CommerceShippingMethod::getGroupId),
@@ -689,4 +689,4 @@ public class CommerceShippingMethodPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-55730207
+// LIFERAY-SERVICE-BUILDER-HASH:-1728507743

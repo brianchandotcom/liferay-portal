@@ -1213,6 +1213,7 @@ public class ExpandoValuePersistenceImpl
 					new String[] {"tableId"}, false),
 				_SQL_SELECT_EXPANDOVALUE_WHERE, _SQL_COUNT_EXPANDOVALUE_WHERE,
 				ExpandoValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"expandoValue.", "tableId", FinderColumn.Type.LONG, "=",
 					true, true, ExpandoValue::getTableId));
@@ -1238,6 +1239,7 @@ public class ExpandoValuePersistenceImpl
 					new String[] {"columnId"}, false),
 				_SQL_SELECT_EXPANDOVALUE_WHERE, _SQL_COUNT_EXPANDOVALUE_WHERE,
 				ExpandoValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"expandoValue.", "columnId", FinderColumn.Type.LONG, "=",
 					true, true, ExpandoValue::getColumnId));
@@ -1260,7 +1262,7 @@ public class ExpandoValuePersistenceImpl
 				new String[] {Long.class.getName()}, new String[] {"rowId_"},
 				false),
 			_SQL_SELECT_EXPANDOVALUE_WHERE, _SQL_COUNT_EXPANDOVALUE_WHERE,
-			ExpandoValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			ExpandoValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"expandoValue.", "rowId", "rowId_", FinderColumn.Type.LONG, "=",
 				true, true, ExpandoValue::getRowId));
@@ -1284,7 +1286,7 @@ public class ExpandoValuePersistenceImpl
 				new String[] {Long.class.getName(), Long.class.getName()},
 				new String[] {"tableId", "columnId"}, false),
 			_SQL_SELECT_EXPANDOVALUE_WHERE, _SQL_COUNT_EXPANDOVALUE_WHERE,
-			ExpandoValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			ExpandoValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"expandoValue.", "tableId", FinderColumn.Type.LONG, "=", true,
 				true, ExpandoValue::getTableId),
@@ -1311,7 +1313,7 @@ public class ExpandoValuePersistenceImpl
 				new String[] {Long.class.getName(), Long.class.getName()},
 				new String[] {"tableId", "rowId_"}, false),
 			_SQL_SELECT_EXPANDOVALUE_WHERE, _SQL_COUNT_EXPANDOVALUE_WHERE,
-			ExpandoValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			ExpandoValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"expandoValue.", "tableId", FinderColumn.Type.LONG, "=", true,
 				true, ExpandoValue::getTableId),
@@ -1338,7 +1340,7 @@ public class ExpandoValuePersistenceImpl
 				new String[] {Long.class.getName(), Long.class.getName()},
 				new String[] {"tableId", "classPK"}, false),
 			_SQL_SELECT_EXPANDOVALUE_WHERE, _SQL_COUNT_EXPANDOVALUE_WHERE,
-			ExpandoValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			ExpandoValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"expandoValue.", "tableId", FinderColumn.Type.LONG, "=", true,
 				true, ExpandoValue::getTableId),
@@ -1380,7 +1382,7 @@ public class ExpandoValuePersistenceImpl
 				new String[] {Long.class.getName(), Long.class.getName()},
 				new String[] {"classNameId", "classPK"}, false),
 			_SQL_SELECT_EXPANDOVALUE_WHERE, _SQL_COUNT_EXPANDOVALUE_WHERE,
-			ExpandoValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			ExpandoValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"expandoValue.", "classNameId", FinderColumn.Type.LONG, "=",
 				true, true, ExpandoValue::getClassNameId),
@@ -1437,7 +1439,7 @@ public class ExpandoValuePersistenceImpl
 				new String[] {"tableId", "columnId", "data_"}, 0, 4, false,
 				null),
 			_SQL_SELECT_EXPANDOVALUE_WHERE, _SQL_COUNT_EXPANDOVALUE_WHERE,
-			ExpandoValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			ExpandoValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"expandoValue.", "tableId", FinderColumn.Type.LONG, "=", true,
 				true, ExpandoValue::getTableId),
@@ -1484,4 +1486,4 @@ public class ExpandoValuePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1695005079
+// LIFERAY-SERVICE-BUILDER-HASH:-1658193329

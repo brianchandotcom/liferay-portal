@@ -541,6 +541,7 @@ public class COREntryRelPersistenceImpl
 					new String[] {"COREntryId"}, false),
 				_SQL_SELECT_CORENTRYREL_WHERE, _SQL_COUNT_CORENTRYREL_WHERE,
 				COREntryRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"corEntryRel.", "COREntryId", FinderColumn.Type.LONG, "=",
 					true, true, COREntryRel::getCOREntryId));
@@ -564,7 +565,7 @@ public class COREntryRelPersistenceImpl
 				new String[] {Long.class.getName(), Long.class.getName()},
 				new String[] {"classNameId", "COREntryId"}, false),
 			_SQL_SELECT_CORENTRYREL_WHERE, _SQL_COUNT_CORENTRYREL_WHERE,
-			COREntryRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			COREntryRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"corEntryRel.", "classNameId", FinderColumn.Type.LONG, "=",
 				true, true, COREntryRel::getClassNameId),
@@ -660,4 +661,4 @@ public class COREntryRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:566236237
+// LIFERAY-SERVICE-BUILDER-HASH:1146112521

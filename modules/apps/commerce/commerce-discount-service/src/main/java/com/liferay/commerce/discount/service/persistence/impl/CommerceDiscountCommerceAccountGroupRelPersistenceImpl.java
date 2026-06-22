@@ -618,7 +618,7 @@ public class CommerceDiscountCommerceAccountGroupRelPersistenceImpl
 				_SQL_SELECT_COMMERCEDISCOUNTCOMMERCEACCOUNTGROUPREL_WHERE,
 				_SQL_COUNT_COMMERCEDISCOUNTCOMMERCEACCOUNTGROUPREL_WHERE,
 				CommerceDiscountCommerceAccountGroupRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"commerceDiscountCommerceAccountGroupRel.",
 					"commerceDiscountId", FinderColumn.Type.LONG, "=", true,
@@ -651,7 +651,7 @@ public class CommerceDiscountCommerceAccountGroupRelPersistenceImpl
 				_SQL_SELECT_COMMERCEDISCOUNTCOMMERCEACCOUNTGROUPREL_WHERE,
 				_SQL_COUNT_COMMERCEDISCOUNTCOMMERCEACCOUNTGROUPREL_WHERE,
 				CommerceDiscountCommerceAccountGroupRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"commerceDiscountCommerceAccountGroupRel.",
 					"commerceAccountGroupId", FinderColumn.Type.LONG, "=", true,
@@ -754,4 +754,4 @@ public class CommerceDiscountCommerceAccountGroupRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1588623387
+// LIFERAY-SERVICE-BUILDER-HASH:1791875611

@@ -624,7 +624,7 @@ public class AssetAutoTaggerEntryPersistenceImpl
 				_SQL_SELECT_ASSETAUTOTAGGERENTRY_WHERE,
 				_SQL_COUNT_ASSETAUTOTAGGERENTRY_WHERE,
 				AssetAutoTaggerEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"assetAutoTaggerEntry.", "assetEntryId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -652,7 +652,7 @@ public class AssetAutoTaggerEntryPersistenceImpl
 				_SQL_SELECT_ASSETAUTOTAGGERENTRY_WHERE,
 				_SQL_COUNT_ASSETAUTOTAGGERENTRY_WHERE,
 				AssetAutoTaggerEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"assetAutoTaggerEntry.", "assetTagId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -743,4 +743,4 @@ public class AssetAutoTaggerEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1101105612
+// LIFERAY-SERVICE-BUILDER-HASH:285889136

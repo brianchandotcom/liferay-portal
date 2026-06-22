@@ -1298,7 +1298,7 @@ public class DDMStorageLinkPersistenceImpl
 				new String[] {String.class.getName()}, new String[] {"uuid_"},
 				0, 1, false, null),
 			_SQL_SELECT_DDMSTORAGELINK_WHERE, _SQL_COUNT_DDMSTORAGELINK_WHERE,
-			DDMStorageLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			DDMStorageLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"ddmStorageLink.", "uuid", "uuid_", FinderColumn.Type.STRING,
 				"=", true, true, DDMStorageLink::getUuid));
@@ -1325,6 +1325,7 @@ public class DDMStorageLinkPersistenceImpl
 				_SQL_SELECT_DDMSTORAGELINK_WHERE,
 				_SQL_COUNT_DDMSTORAGELINK_WHERE,
 				DDMStorageLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"ddmStorageLink.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -1366,6 +1367,7 @@ public class DDMStorageLinkPersistenceImpl
 				_SQL_SELECT_DDMSTORAGELINK_WHERE,
 				_SQL_COUNT_DDMSTORAGELINK_WHERE,
 				DDMStorageLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"ddmStorageLink.", "structureId", FinderColumn.Type.LONG,
 					"=", true, true, DDMStorageLink::getStructureId));
@@ -1465,4 +1467,4 @@ public class DDMStorageLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1322808537
+// LIFERAY-SERVICE-BUILDER-HASH:1989998043

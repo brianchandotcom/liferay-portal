@@ -668,7 +668,7 @@ public class ObjectViewPersistenceImpl
 				new String[] {String.class.getName()}, new String[] {"uuid_"},
 				0, 1, false, null),
 			_SQL_SELECT_OBJECTVIEW_WHERE, _SQL_COUNT_OBJECTVIEW_WHERE,
-			ObjectViewModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			ObjectViewModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"objectView.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
 				true, true, ObjectView::getUuid));
@@ -693,7 +693,7 @@ public class ObjectViewPersistenceImpl
 					new String[] {String.class.getName(), Long.class.getName()},
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_OBJECTVIEW_WHERE, _SQL_COUNT_OBJECTVIEW_WHERE,
-				ObjectViewModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				ObjectViewModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"objectView.", "uuid", "uuid_", FinderColumn.Type.STRING,
 					"=", true, true, ObjectView::getUuid),
@@ -724,7 +724,7 @@ public class ObjectViewPersistenceImpl
 					new String[] {Long.class.getName()},
 					new String[] {"objectDefinitionId"}, false),
 				_SQL_SELECT_OBJECTVIEW_WHERE, _SQL_COUNT_OBJECTVIEW_WHERE,
-				ObjectViewModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				ObjectViewModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"objectView.", "objectDefinitionId", FinderColumn.Type.LONG,
 					"=", true, true, ObjectView::getObjectDefinitionId));
@@ -756,7 +756,7 @@ public class ObjectViewPersistenceImpl
 					new String[] {"objectDefinitionId", "defaultObjectView"},
 					false),
 				_SQL_SELECT_OBJECTVIEW_WHERE, _SQL_COUNT_OBJECTVIEW_WHERE,
-				ObjectViewModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				ObjectViewModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"objectView.", "objectDefinitionId", FinderColumn.Type.LONG,
 					"=", true, true, ObjectView::getObjectDefinitionId),
@@ -831,4 +831,4 @@ public class ObjectViewPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1983669632
+// LIFERAY-SERVICE-BUILDER-HASH:-1269139388

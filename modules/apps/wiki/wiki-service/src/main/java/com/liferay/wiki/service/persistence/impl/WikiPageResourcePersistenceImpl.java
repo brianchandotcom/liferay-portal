@@ -677,6 +677,7 @@ public class WikiPageResourcePersistenceImpl
 			_SQL_SELECT_WIKIPAGERESOURCE_WHERE,
 			_SQL_COUNT_WIKIPAGERESOURCE_WHERE,
 			WikiPageResourceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			"",
 			new FinderColumn<>(
 				"wikiPageResource.", "uuid", "uuid_", FinderColumn.Type.STRING,
 				"=", true, true, WikiPageResource::getUuid));
@@ -719,7 +720,7 @@ public class WikiPageResourcePersistenceImpl
 				_SQL_SELECT_WIKIPAGERESOURCE_WHERE,
 				_SQL_COUNT_WIKIPAGERESOURCE_WHERE,
 				WikiPageResourceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"wikiPageResource.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -816,4 +817,4 @@ public class WikiPageResourcePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:99493679
+// LIFERAY-SERVICE-BUILDER-HASH:-2110643469

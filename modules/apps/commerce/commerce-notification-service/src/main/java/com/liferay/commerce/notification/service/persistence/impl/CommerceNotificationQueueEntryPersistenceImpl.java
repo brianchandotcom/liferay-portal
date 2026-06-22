@@ -859,7 +859,7 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 				_SQL_SELECT_COMMERCENOTIFICATIONQUEUEENTRY_WHERE,
 				_SQL_COUNT_COMMERCENOTIFICATIONQUEUEENTRY_WHERE,
 				CommerceNotificationQueueEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"commerceNotificationQueueEntry.", "groupId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -890,7 +890,7 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 				_SQL_SELECT_COMMERCENOTIFICATIONQUEUEENTRY_WHERE,
 				_SQL_COUNT_COMMERCENOTIFICATIONQUEUEENTRY_WHERE,
 				CommerceNotificationQueueEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"commerceNotificationQueueEntry.",
 					"commerceNotificationTemplateId", FinderColumn.Type.LONG,
@@ -918,7 +918,7 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 			_SQL_SELECT_COMMERCENOTIFICATIONQUEUEENTRY_WHERE,
 			_SQL_COUNT_COMMERCENOTIFICATIONQUEUEENTRY_WHERE,
 			CommerceNotificationQueueEntryModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX, "",
+			_ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"commerceNotificationQueueEntry.", "sent",
 				FinderColumn.Type.BOOLEAN, "=", true, true,
@@ -943,7 +943,7 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 				_SQL_SELECT_COMMERCENOTIFICATIONQUEUEENTRY_WHERE,
 				_SQL_COUNT_COMMERCENOTIFICATIONQUEUEENTRY_WHERE,
 				CommerceNotificationQueueEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"commerceNotificationQueueEntry.", "sentDate",
 					FinderColumn.Type.DATE, "<", true, true,
@@ -981,7 +981,7 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 				_SQL_SELECT_COMMERCENOTIFICATIONQUEUEENTRY_WHERE,
 				_SQL_COUNT_COMMERCENOTIFICATIONQUEUEENTRY_WHERE,
 				CommerceNotificationQueueEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"commerceNotificationQueueEntry.", "groupId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1068,4 +1068,4 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2140682750
+// LIFERAY-SERVICE-BUILDER-HASH:-288159748

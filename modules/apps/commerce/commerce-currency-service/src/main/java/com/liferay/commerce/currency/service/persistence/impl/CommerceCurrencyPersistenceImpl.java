@@ -1073,6 +1073,7 @@ public class CommerceCurrencyPersistenceImpl
 			_SQL_SELECT_COMMERCECURRENCY_WHERE,
 			_SQL_COUNT_COMMERCECURRENCY_WHERE,
 			CommerceCurrencyModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			"",
 			new FinderColumn<>(
 				"commerceCurrency.", "uuid", "uuid_", FinderColumn.Type.STRING,
 				"=", true, true, CommerceCurrency::getUuid));
@@ -1099,7 +1100,7 @@ public class CommerceCurrencyPersistenceImpl
 				_SQL_SELECT_COMMERCECURRENCY_WHERE,
 				_SQL_COUNT_COMMERCECURRENCY_WHERE,
 				CommerceCurrencyModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"commerceCurrency.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -1130,7 +1131,7 @@ public class CommerceCurrencyPersistenceImpl
 				_SQL_SELECT_COMMERCECURRENCY_WHERE,
 				_SQL_COUNT_COMMERCECURRENCY_WHERE,
 				CommerceCurrencyModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"commerceCurrency.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, CommerceCurrency::getCompanyId));
@@ -1172,6 +1173,7 @@ public class CommerceCurrencyPersistenceImpl
 			_SQL_SELECT_COMMERCECURRENCY_WHERE,
 			_SQL_COUNT_COMMERCECURRENCY_WHERE,
 			CommerceCurrencyModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			"",
 			new FinderColumn<>(
 				"commerceCurrency.", "companyId", FinderColumn.Type.LONG, "=",
 				true, true, CommerceCurrency::getCompanyId),
@@ -1201,6 +1203,7 @@ public class CommerceCurrencyPersistenceImpl
 			_SQL_SELECT_COMMERCECURRENCY_WHERE,
 			_SQL_COUNT_COMMERCECURRENCY_WHERE,
 			CommerceCurrencyModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			"",
 			new FinderColumn<>(
 				"commerceCurrency.", "companyId", FinderColumn.Type.LONG, "=",
 				true, true, CommerceCurrency::getCompanyId),
@@ -1236,6 +1239,7 @@ public class CommerceCurrencyPersistenceImpl
 			_SQL_SELECT_COMMERCECURRENCY_WHERE,
 			_SQL_COUNT_COMMERCECURRENCY_WHERE,
 			CommerceCurrencyModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			"",
 			new FinderColumn<>(
 				"commerceCurrency.", "companyId", FinderColumn.Type.LONG, "=",
 				true, true, CommerceCurrency::getCompanyId),
@@ -1335,4 +1339,4 @@ public class CommerceCurrencyPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1838681799
+// LIFERAY-SERVICE-BUILDER-HASH:-1539534329

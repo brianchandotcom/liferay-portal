@@ -490,6 +490,7 @@ public class VersionedEntryPersistenceImpl
 				_SQL_SELECT_VERSIONEDENTRY_WHERE,
 				_SQL_COUNT_VERSIONEDENTRY_WHERE,
 				VersionedEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"versionedEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, VersionedEntry::getGroupId));
@@ -523,6 +524,7 @@ public class VersionedEntryPersistenceImpl
 				_SQL_SELECT_VERSIONEDENTRY_WHERE,
 				_SQL_COUNT_VERSIONEDENTRY_WHERE,
 				VersionedEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"versionedEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, VersionedEntry::getGroupId),
@@ -580,4 +582,4 @@ public class VersionedEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1774090990
+// LIFERAY-SERVICE-BUILDER-HASH:1082703338

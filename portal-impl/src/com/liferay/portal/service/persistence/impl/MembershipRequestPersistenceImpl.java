@@ -646,7 +646,7 @@ public class MembershipRequestPersistenceImpl
 				_SQL_SELECT_MEMBERSHIPREQUEST_WHERE,
 				_SQL_COUNT_MEMBERSHIPREQUEST_WHERE,
 				MembershipRequestModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"membershipRequest.", "groupId", FinderColumn.Type.LONG,
 					"=", true, true, MembershipRequest::getGroupId));
@@ -673,7 +673,7 @@ public class MembershipRequestPersistenceImpl
 				_SQL_SELECT_MEMBERSHIPREQUEST_WHERE,
 				_SQL_COUNT_MEMBERSHIPREQUEST_WHERE,
 				MembershipRequestModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"membershipRequest.", "userId", FinderColumn.Type.LONG, "=",
 					true, true, MembershipRequest::getUserId));
@@ -699,6 +699,7 @@ public class MembershipRequestPersistenceImpl
 			_SQL_SELECT_MEMBERSHIPREQUEST_WHERE,
 			_SQL_COUNT_MEMBERSHIPREQUEST_WHERE,
 			MembershipRequestModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			"",
 			new FinderColumn<>(
 				"membershipRequest.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, MembershipRequest::getGroupId),
@@ -733,6 +734,7 @@ public class MembershipRequestPersistenceImpl
 			_SQL_SELECT_MEMBERSHIPREQUEST_WHERE,
 			_SQL_COUNT_MEMBERSHIPREQUEST_WHERE,
 			MembershipRequestModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			"",
 			new FinderColumn<>(
 				"membershipRequest.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, MembershipRequest::getGroupId),
@@ -773,4 +775,4 @@ public class MembershipRequestPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1329543077
+// LIFERAY-SERVICE-BUILDER-HASH:-625377953

@@ -816,7 +816,7 @@ public class SocialActivitySettingPersistenceImpl
 				_SQL_SELECT_SOCIALACTIVITYSETTING_WHERE,
 				_SQL_COUNT_SOCIALACTIVITYSETTING_WHERE,
 				SocialActivitySettingModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"socialActivitySetting.", "groupId", FinderColumn.Type.LONG,
 					"=", true, true, SocialActivitySetting::getGroupId));
@@ -842,7 +842,7 @@ public class SocialActivitySettingPersistenceImpl
 			_SQL_SELECT_SOCIALACTIVITYSETTING_WHERE,
 			_SQL_COUNT_SOCIALACTIVITYSETTING_WHERE,
 			SocialActivitySettingModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"",
+			"", "",
 			new FinderColumn<>(
 				"socialActivitySetting.", "groupId", FinderColumn.Type.LONG,
 				"=", true, true, SocialActivitySetting::getGroupId),
@@ -871,7 +871,7 @@ public class SocialActivitySettingPersistenceImpl
 			_SQL_SELECT_SOCIALACTIVITYSETTING_WHERE,
 			_SQL_COUNT_SOCIALACTIVITYSETTING_WHERE,
 			SocialActivitySettingModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"",
+			"", "",
 			new FinderColumn<>(
 				"socialActivitySetting.", "groupId", FinderColumn.Type.LONG,
 				"=", true, true, SocialActivitySetting::getGroupId),
@@ -907,7 +907,7 @@ public class SocialActivitySettingPersistenceImpl
 			_SQL_SELECT_SOCIALACTIVITYSETTING_WHERE,
 			_SQL_COUNT_SOCIALACTIVITYSETTING_WHERE,
 			SocialActivitySettingModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"",
+			"", "",
 			new FinderColumn<>(
 				"socialActivitySetting.", "groupId", FinderColumn.Type.LONG,
 				"=", true, true, SocialActivitySetting::getGroupId),
@@ -980,4 +980,4 @@ public class SocialActivitySettingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1002411713
+// LIFERAY-SERVICE-BUILDER-HASH:1559274495

@@ -886,6 +886,7 @@ public class CommerceOrderNotePersistenceImpl
 			_SQL_SELECT_COMMERCEORDERNOTE_WHERE,
 			_SQL_COUNT_COMMERCEORDERNOTE_WHERE,
 			CommerceOrderNoteModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			"",
 			new FinderColumn<>(
 				"commerceOrderNote.", "uuid", "uuid_", FinderColumn.Type.STRING,
 				"=", true, true, CommerceOrderNote::getUuid));
@@ -928,7 +929,7 @@ public class CommerceOrderNotePersistenceImpl
 				_SQL_SELECT_COMMERCEORDERNOTE_WHERE,
 				_SQL_COUNT_COMMERCEORDERNOTE_WHERE,
 				CommerceOrderNoteModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"commerceOrderNote.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -962,7 +963,7 @@ public class CommerceOrderNotePersistenceImpl
 				_SQL_SELECT_COMMERCEORDERNOTE_WHERE,
 				_SQL_COUNT_COMMERCEORDERNOTE_WHERE,
 				CommerceOrderNoteModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"commerceOrderNote.", "commerceOrderId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -989,6 +990,7 @@ public class CommerceOrderNotePersistenceImpl
 			_SQL_SELECT_COMMERCEORDERNOTE_WHERE,
 			_SQL_COUNT_COMMERCEORDERNOTE_WHERE,
 			CommerceOrderNoteModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			"",
 			new FinderColumn<>(
 				"commerceOrderNote.", "commerceOrderId", FinderColumn.Type.LONG,
 				"=", true, true, CommerceOrderNote::getCommerceOrderId),
@@ -1084,4 +1086,4 @@ public class CommerceOrderNotePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1278271090
+// LIFERAY-SERVICE-BUILDER-HASH:-1927076938

@@ -1050,7 +1050,7 @@ public class CommercePaymentEntryPersistenceImpl
 				_SQL_SELECT_COMMERCEPAYMENTENTRY_WHERE,
 				_SQL_COUNT_COMMERCEPAYMENTENTRY_WHERE,
 				CommercePaymentEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"commercePaymentEntry.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1086,7 +1086,7 @@ public class CommercePaymentEntryPersistenceImpl
 				_SQL_SELECT_COMMERCEPAYMENTENTRY_WHERE,
 				_SQL_COUNT_COMMERCEPAYMENTENTRY_WHERE,
 				CommercePaymentEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"commercePaymentEntry.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1137,7 +1137,7 @@ public class CommercePaymentEntryPersistenceImpl
 				_SQL_SELECT_COMMERCEPAYMENTENTRY_WHERE,
 				_SQL_COUNT_COMMERCEPAYMENTENTRY_WHERE,
 				CommercePaymentEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"commercePaymentEntry.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1200,7 +1200,7 @@ public class CommercePaymentEntryPersistenceImpl
 				_SQL_SELECT_COMMERCEPAYMENTENTRY_WHERE,
 				_SQL_COUNT_COMMERCEPAYMENTENTRY_WHERE,
 				CommercePaymentEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"commercePaymentEntry.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1309,4 +1309,4 @@ public class CommercePaymentEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:542002586
+// LIFERAY-SERVICE-BUILDER-HASH:-1939069030

@@ -575,7 +575,7 @@ public class ObjectFilterPersistenceImpl
 				new String[] {String.class.getName()}, new String[] {"uuid_"},
 				0, 1, false, null),
 			_SQL_SELECT_OBJECTFILTER_WHERE, _SQL_COUNT_OBJECTFILTER_WHERE,
-			ObjectFilterModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			ObjectFilterModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"objectFilter.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
 				true, true, ObjectFilter::getUuid));
@@ -601,6 +601,7 @@ public class ObjectFilterPersistenceImpl
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_OBJECTFILTER_WHERE, _SQL_COUNT_OBJECTFILTER_WHERE,
 				ObjectFilterModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"objectFilter.", "uuid", "uuid_", FinderColumn.Type.STRING,
 					"=", true, true, ObjectFilter::getUuid),
@@ -630,6 +631,7 @@ public class ObjectFilterPersistenceImpl
 					new String[] {"objectFieldId"}, false),
 				_SQL_SELECT_OBJECTFILTER_WHERE, _SQL_COUNT_OBJECTFILTER_WHERE,
 				ObjectFilterModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"objectFilter.", "objectFieldId", FinderColumn.Type.LONG,
 					"=", true, true, ObjectFilter::getObjectFieldId));
@@ -700,4 +702,4 @@ public class ObjectFilterPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1137773419
+// LIFERAY-SERVICE-BUILDER-HASH:1134137939

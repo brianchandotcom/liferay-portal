@@ -495,7 +495,7 @@ public class CommerceShippingFixedOptionPersistenceImpl
 				_SQL_SELECT_COMMERCESHIPPINGFIXEDOPTION_WHERE,
 				_SQL_COUNT_COMMERCESHIPPINGFIXEDOPTION_WHERE,
 				CommerceShippingFixedOptionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"commerceShippingFixedOption.", "commerceShippingMethodId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -589,4 +589,4 @@ public class CommerceShippingFixedOptionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:362795727
+// LIFERAY-SERVICE-BUILDER-HASH:-879802863

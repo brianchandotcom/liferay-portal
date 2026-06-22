@@ -1195,7 +1195,7 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 				_SQL_SELECT_COMMERCECHANNELACCOUNTENTRYREL_WHERE,
 				_SQL_COUNT_COMMERCECHANNELACCOUNTENTRYREL_WHERE,
 				CommerceChannelAccountEntryRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"commerceChannelAccountEntryRel.", "accountEntryId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1226,7 +1226,7 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 				_SQL_SELECT_COMMERCECHANNELACCOUNTENTRYREL_WHERE,
 				_SQL_COUNT_COMMERCECHANNELACCOUNTENTRYREL_WHERE,
 				CommerceChannelAccountEntryRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"commerceChannelAccountEntryRel.", "commerceChannelId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1253,7 +1253,7 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 			_SQL_SELECT_COMMERCECHANNELACCOUNTENTRYREL_WHERE,
 			_SQL_COUNT_COMMERCECHANNELACCOUNTENTRYREL_WHERE,
 			CommerceChannelAccountEntryRelModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX, "",
+			_ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"commerceChannelAccountEntryRel.", "accountEntryId",
 				FinderColumn.Type.LONG, "=", true, true,
@@ -1284,7 +1284,7 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 			_SQL_SELECT_COMMERCECHANNELACCOUNTENTRYREL_WHERE,
 			_SQL_COUNT_COMMERCECHANNELACCOUNTENTRYREL_WHERE,
 			CommerceChannelAccountEntryRelModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX, "",
+			_ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"commerceChannelAccountEntryRel.", "classNameId",
 				FinderColumn.Type.LONG, "=", true, true,
@@ -1315,7 +1315,7 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 			_SQL_SELECT_COMMERCECHANNELACCOUNTENTRYREL_WHERE,
 			_SQL_COUNT_COMMERCECHANNELACCOUNTENTRYREL_WHERE,
 			CommerceChannelAccountEntryRelModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX, "",
+			_ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"commerceChannelAccountEntryRel.", "commerceChannelId",
 				FinderColumn.Type.LONG, "=", true, true,
@@ -1355,7 +1355,7 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 			_SQL_SELECT_COMMERCECHANNELACCOUNTENTRYREL_WHERE,
 			_SQL_COUNT_COMMERCECHANNELACCOUNTENTRYREL_WHERE,
 			CommerceChannelAccountEntryRelModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX, "",
+			_ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"commerceChannelAccountEntryRel.", "accountEntryId",
 				FinderColumn.Type.LONG, "=", true, true,
@@ -1407,7 +1407,7 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 				_SQL_SELECT_COMMERCECHANNELACCOUNTENTRYREL_WHERE,
 				_SQL_COUNT_COMMERCECHANNELACCOUNTENTRYREL_WHERE,
 				CommerceChannelAccountEntryRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"commerceChannelAccountEntryRel.", "classNameId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1540,4 +1540,4 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-543251631
+// LIFERAY-SERVICE-BUILDER-HASH:-443336365

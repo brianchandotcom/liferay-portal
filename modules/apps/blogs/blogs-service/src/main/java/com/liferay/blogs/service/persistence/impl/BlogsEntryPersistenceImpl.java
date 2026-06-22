@@ -4948,7 +4948,7 @@ public class BlogsEntryPersistenceImpl
 				new String[] {String.class.getName()}, new String[] {"uuid_"},
 				0, 1, false, null),
 			_SQL_SELECT_BLOGSENTRY_WHERE, _SQL_COUNT_BLOGSENTRY_WHERE,
-			BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"blogsEntry.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
 				true, true, BlogsEntry::getUuid));
@@ -4989,7 +4989,7 @@ public class BlogsEntryPersistenceImpl
 					new String[] {String.class.getName(), Long.class.getName()},
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_BLOGSENTRY_WHERE, _SQL_COUNT_BLOGSENTRY_WHERE,
-				BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"blogsEntry.", "uuid", "uuid_", FinderColumn.Type.STRING,
 					"=", true, true, BlogsEntry::getUuid),
@@ -5017,7 +5017,7 @@ public class BlogsEntryPersistenceImpl
 					new String[] {Long.class.getName()},
 					new String[] {"groupId"}, false),
 				_SQL_SELECT_BLOGSENTRY_WHERE, _SQL_COUNT_BLOGSENTRY_WHERE,
-				BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"blogsEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, BlogsEntry::getGroupId));
@@ -5042,7 +5042,7 @@ public class BlogsEntryPersistenceImpl
 					"countByCompanyId", new String[] {Long.class.getName()},
 					new String[] {"companyId"}, false),
 				_SQL_SELECT_BLOGSENTRY_WHERE, _SQL_COUNT_BLOGSENTRY_WHERE,
-				BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"blogsEntry.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, BlogsEntry::getCompanyId));
@@ -5080,7 +5080,7 @@ public class BlogsEntryPersistenceImpl
 					new String[] {Long.class.getName(), Date.class.getName()},
 					new String[] {"groupId", "displayDate"}, false),
 				_SQL_SELECT_BLOGSENTRY_WHERE, _SQL_COUNT_BLOGSENTRY_WHERE,
-				BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"blogsEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, BlogsEntry::getGroupId),
@@ -5112,7 +5112,7 @@ public class BlogsEntryPersistenceImpl
 					},
 					new String[] {"groupId", "status"}, false),
 				_SQL_SELECT_BLOGSENTRY_WHERE, _SQL_COUNT_BLOGSENTRY_WHERE,
-				BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"blogsEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, BlogsEntry::getGroupId),
@@ -5139,7 +5139,7 @@ public class BlogsEntryPersistenceImpl
 					},
 					new String[] {"groupId", "status"}, false),
 				_SQL_SELECT_BLOGSENTRY_WHERE, _SQL_COUNT_BLOGSENTRY_WHERE,
-				BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"blogsEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, BlogsEntry::getGroupId),
@@ -5166,7 +5166,7 @@ public class BlogsEntryPersistenceImpl
 				new String[] {Long.class.getName(), Long.class.getName()},
 				new String[] {"companyId", "userId"}, false),
 			_SQL_SELECT_BLOGSENTRY_WHERE, _SQL_COUNT_BLOGSENTRY_WHERE,
-			BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"blogsEntry.", "companyId", FinderColumn.Type.LONG, "=", true,
 				true, BlogsEntry::getCompanyId),
@@ -5190,7 +5190,7 @@ public class BlogsEntryPersistenceImpl
 				new String[] {Long.class.getName(), Date.class.getName()},
 				new String[] {"companyId", "displayDate"}, false),
 			_SQL_SELECT_BLOGSENTRY_WHERE, _SQL_COUNT_BLOGSENTRY_WHERE,
-			BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"blogsEntry.", "companyId", FinderColumn.Type.LONG, "=", true,
 				true, BlogsEntry::getCompanyId),
@@ -5217,7 +5217,7 @@ public class BlogsEntryPersistenceImpl
 				new String[] {Long.class.getName(), Integer.class.getName()},
 				new String[] {"companyId", "status"}, false),
 			_SQL_SELECT_BLOGSENTRY_WHERE, _SQL_COUNT_BLOGSENTRY_WHERE,
-			BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"blogsEntry.", "companyId", FinderColumn.Type.LONG, "=", true,
 				true, BlogsEntry::getCompanyId),
@@ -5244,7 +5244,7 @@ public class BlogsEntryPersistenceImpl
 					},
 					new String[] {"companyId", "status"}, false),
 				_SQL_SELECT_BLOGSENTRY_WHERE, _SQL_COUNT_BLOGSENTRY_WHERE,
-				BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"blogsEntry.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, BlogsEntry::getCompanyId),
@@ -5268,7 +5268,7 @@ public class BlogsEntryPersistenceImpl
 				new String[] {Date.class.getName(), Integer.class.getName()},
 				new String[] {"displayDate", "status"}, false),
 			_SQL_SELECT_BLOGSENTRY_WHERE, _SQL_COUNT_BLOGSENTRY_WHERE,
-			BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"blogsEntry.", "displayDate", FinderColumn.Type.DATE, "<", true,
 				true, BlogsEntry::getDisplayDate),
@@ -5297,7 +5297,7 @@ public class BlogsEntryPersistenceImpl
 					},
 					new String[] {"groupId", "userId", "displayDate"}, false),
 				_SQL_SELECT_BLOGSENTRY_WHERE, _SQL_COUNT_BLOGSENTRY_WHERE,
-				BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"blogsEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, BlogsEntry::getGroupId),
@@ -5335,7 +5335,7 @@ public class BlogsEntryPersistenceImpl
 					},
 					new String[] {"groupId", "userId", "status"}, false),
 				_SQL_SELECT_BLOGSENTRY_WHERE, _SQL_COUNT_BLOGSENTRY_WHERE,
-				BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"blogsEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, BlogsEntry::getGroupId),
@@ -5367,7 +5367,7 @@ public class BlogsEntryPersistenceImpl
 					},
 					new String[] {"groupId", "userId", "status"}, false),
 				_SQL_SELECT_BLOGSENTRY_WHERE, _SQL_COUNT_BLOGSENTRY_WHERE,
-				BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"blogsEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, BlogsEntry::getGroupId),
@@ -5405,7 +5405,7 @@ public class BlogsEntryPersistenceImpl
 					},
 					new String[] {"groupId", "displayDate", "status"}, false),
 				_SQL_SELECT_BLOGSENTRY_WHERE, _SQL_COUNT_BLOGSENTRY_WHERE,
-				BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"blogsEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, BlogsEntry::getGroupId),
@@ -5437,7 +5437,7 @@ public class BlogsEntryPersistenceImpl
 					},
 					new String[] {"groupId", "displayDate", "status"}, false),
 				_SQL_SELECT_BLOGSENTRY_WHERE, _SQL_COUNT_BLOGSENTRY_WHERE,
-				BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"blogsEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, BlogsEntry::getGroupId),
@@ -5469,7 +5469,7 @@ public class BlogsEntryPersistenceImpl
 					},
 					new String[] {"groupId", "displayDate", "status"}, false),
 				_SQL_SELECT_BLOGSENTRY_WHERE, _SQL_COUNT_BLOGSENTRY_WHERE,
-				BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"blogsEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, BlogsEntry::getGroupId),
@@ -5501,7 +5501,7 @@ public class BlogsEntryPersistenceImpl
 					},
 					new String[] {"groupId", "displayDate", "status"}, false),
 				_SQL_SELECT_BLOGSENTRY_WHERE, _SQL_COUNT_BLOGSENTRY_WHERE,
-				BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"blogsEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, BlogsEntry::getGroupId),
@@ -5537,7 +5537,7 @@ public class BlogsEntryPersistenceImpl
 				},
 				new String[] {"companyId", "userId", "status"}, false),
 			_SQL_SELECT_BLOGSENTRY_WHERE, _SQL_COUNT_BLOGSENTRY_WHERE,
-			BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"blogsEntry.", "companyId", FinderColumn.Type.LONG, "=", true,
 				true, BlogsEntry::getCompanyId),
@@ -5569,7 +5569,7 @@ public class BlogsEntryPersistenceImpl
 					},
 					new String[] {"companyId", "userId", "status"}, false),
 				_SQL_SELECT_BLOGSENTRY_WHERE, _SQL_COUNT_BLOGSENTRY_WHERE,
-				BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"blogsEntry.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, BlogsEntry::getCompanyId),
@@ -5601,7 +5601,7 @@ public class BlogsEntryPersistenceImpl
 					},
 					new String[] {"companyId", "displayDate", "status"}, false),
 				_SQL_SELECT_BLOGSENTRY_WHERE, _SQL_COUNT_BLOGSENTRY_WHERE,
-				BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"blogsEntry.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, BlogsEntry::getCompanyId),
@@ -5633,7 +5633,7 @@ public class BlogsEntryPersistenceImpl
 					},
 					new String[] {"companyId", "displayDate", "status"}, false),
 				_SQL_SELECT_BLOGSENTRY_WHERE, _SQL_COUNT_BLOGSENTRY_WHERE,
-				BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"blogsEntry.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, BlogsEntry::getCompanyId),
@@ -5667,7 +5667,7 @@ public class BlogsEntryPersistenceImpl
 					new String[] {"groupId", "userId", "displayDate", "status"},
 					false),
 				_SQL_SELECT_BLOGSENTRY_WHERE, _SQL_COUNT_BLOGSENTRY_WHERE,
-				BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"blogsEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, BlogsEntry::getGroupId),
@@ -5706,7 +5706,7 @@ public class BlogsEntryPersistenceImpl
 					new String[] {"groupId", "userId", "displayDate", "status"},
 					false),
 				_SQL_SELECT_BLOGSENTRY_WHERE, _SQL_COUNT_BLOGSENTRY_WHERE,
-				BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"blogsEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, BlogsEntry::getGroupId),
@@ -5809,4 +5809,4 @@ public class BlogsEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1834579760
+// LIFERAY-SERVICE-BUILDER-HASH:1022256186

@@ -1554,7 +1554,7 @@ public class WorkflowDefinitionLinkPersistenceImpl
 			_SQL_SELECT_WORKFLOWDEFINITIONLINK_WHERE,
 			_SQL_COUNT_WORKFLOWDEFINITIONLINK_WHERE,
 			WorkflowDefinitionLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"",
+			"", "",
 			new FinderColumn<>(
 				"workflowDefinitionLink.", "uuid", "uuid_",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -1599,7 +1599,7 @@ public class WorkflowDefinitionLinkPersistenceImpl
 				_SQL_SELECT_WORKFLOWDEFINITIONLINK_WHERE,
 				_SQL_COUNT_WORKFLOWDEFINITIONLINK_WHERE,
 				WorkflowDefinitionLinkModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"workflowDefinitionLink.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -1631,7 +1631,7 @@ public class WorkflowDefinitionLinkPersistenceImpl
 				_SQL_SELECT_WORKFLOWDEFINITIONLINK_WHERE,
 				_SQL_COUNT_WORKFLOWDEFINITIONLINK_WHERE,
 				WorkflowDefinitionLinkModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"workflowDefinitionLink.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1658,7 +1658,7 @@ public class WorkflowDefinitionLinkPersistenceImpl
 			_SQL_SELECT_WORKFLOWDEFINITIONLINK_WHERE,
 			_SQL_COUNT_WORKFLOWDEFINITIONLINK_WHERE,
 			WorkflowDefinitionLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"",
+			"", "",
 			new FinderColumn<>(
 				"workflowDefinitionLink.", "companyId", FinderColumn.Type.LONG,
 				"=", true, true, WorkflowDefinitionLink::getCompanyId),
@@ -1694,7 +1694,7 @@ public class WorkflowDefinitionLinkPersistenceImpl
 			_SQL_SELECT_WORKFLOWDEFINITIONLINK_WHERE,
 			_SQL_COUNT_WORKFLOWDEFINITIONLINK_WHERE,
 			WorkflowDefinitionLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"",
+			"", "",
 			new FinderColumn<>(
 				"workflowDefinitionLink.", "groupId", FinderColumn.Type.LONG,
 				"=", true, true, WorkflowDefinitionLink::getGroupId),
@@ -1735,7 +1735,7 @@ public class WorkflowDefinitionLinkPersistenceImpl
 				_SQL_SELECT_WORKFLOWDEFINITIONLINK_WHERE,
 				_SQL_COUNT_WORKFLOWDEFINITIONLINK_WHERE,
 				WorkflowDefinitionLinkModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"workflowDefinitionLink.", "groupId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1788,7 +1788,7 @@ public class WorkflowDefinitionLinkPersistenceImpl
 			_SQL_SELECT_WORKFLOWDEFINITIONLINK_WHERE,
 			_SQL_COUNT_WORKFLOWDEFINITIONLINK_WHERE,
 			WorkflowDefinitionLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"",
+			"", "",
 			new FinderColumn<>(
 				"workflowDefinitionLink.", "companyId", FinderColumn.Type.LONG,
 				"=", true, true, WorkflowDefinitionLink::getCompanyId),
@@ -1839,7 +1839,7 @@ public class WorkflowDefinitionLinkPersistenceImpl
 				_SQL_SELECT_WORKFLOWDEFINITIONLINK_WHERE,
 				_SQL_COUNT_WORKFLOWDEFINITIONLINK_WHERE,
 				WorkflowDefinitionLinkModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"workflowDefinitionLink.", "groupId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1903,7 +1903,7 @@ public class WorkflowDefinitionLinkPersistenceImpl
 				_SQL_SELECT_WORKFLOWDEFINITIONLINK_WHERE,
 				_SQL_COUNT_WORKFLOWDEFINITIONLINK_WHERE,
 				WorkflowDefinitionLinkModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"workflowDefinitionLink.", "groupId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1978,4 +1978,4 @@ public class WorkflowDefinitionLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2032759419
+// LIFERAY-SERVICE-BUILDER-HASH:-686084037

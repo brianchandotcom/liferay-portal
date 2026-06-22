@@ -1491,6 +1491,7 @@ public class SocialActivityPersistenceImpl
 				_SQL_SELECT_SOCIALACTIVITY_WHERE,
 				_SQL_COUNT_SOCIALACTIVITY_WHERE,
 				SocialActivityModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"socialActivity.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, SocialActivity::getGroupId));
@@ -1517,6 +1518,7 @@ public class SocialActivityPersistenceImpl
 				_SQL_SELECT_SOCIALACTIVITY_WHERE,
 				_SQL_COUNT_SOCIALACTIVITY_WHERE,
 				SocialActivityModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"socialActivity.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, SocialActivity::getCompanyId));
@@ -1543,6 +1545,7 @@ public class SocialActivityPersistenceImpl
 				_SQL_SELECT_SOCIALACTIVITY_WHERE,
 				_SQL_COUNT_SOCIALACTIVITY_WHERE,
 				SocialActivityModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"socialActivity.", "userId", FinderColumn.Type.LONG, "=",
 					true, true, SocialActivity::getUserId));
@@ -1570,6 +1573,7 @@ public class SocialActivityPersistenceImpl
 				_SQL_SELECT_SOCIALACTIVITY_WHERE,
 				_SQL_COUNT_SOCIALACTIVITY_WHERE,
 				SocialActivityModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"socialActivity.", "activitySetId", FinderColumn.Type.LONG,
 					"=", true, true, SocialActivity::getActivitySetId));
@@ -1612,6 +1616,7 @@ public class SocialActivityPersistenceImpl
 				_SQL_SELECT_SOCIALACTIVITY_WHERE,
 				_SQL_COUNT_SOCIALACTIVITY_WHERE,
 				SocialActivityModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"socialActivity.", "receiverUserId", FinderColumn.Type.LONG,
 					"=", true, true, SocialActivity::getReceiverUserId));
@@ -1635,7 +1640,7 @@ public class SocialActivityPersistenceImpl
 				new String[] {Long.class.getName(), Long.class.getName()},
 				new String[] {"companyId", "classNameId"}, false),
 			_SQL_SELECT_SOCIALACTIVITY_WHERE, _SQL_COUNT_SOCIALACTIVITY_WHERE,
-			SocialActivityModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			SocialActivityModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"socialActivity.", "companyId", FinderColumn.Type.LONG, "=",
 				true, true, SocialActivity::getCompanyId),
@@ -1662,7 +1667,7 @@ public class SocialActivityPersistenceImpl
 				new String[] {Long.class.getName(), Long.class.getName()},
 				new String[] {"classNameId", "classPK"}, false),
 			_SQL_SELECT_SOCIALACTIVITY_WHERE, _SQL_COUNT_SOCIALACTIVITY_WHERE,
-			SocialActivityModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			SocialActivityModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"socialActivity.", "classNameId", FinderColumn.Type.LONG, "=",
 				true, true, SocialActivity::getClassNameId),
@@ -1698,7 +1703,7 @@ public class SocialActivityPersistenceImpl
 				new String[] {"mirrorActivityId", "classNameId", "classPK"},
 				false),
 			_SQL_SELECT_SOCIALACTIVITY_WHERE, _SQL_COUNT_SOCIALACTIVITY_WHERE,
-			SocialActivityModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			SocialActivityModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"socialActivity.", "mirrorActivityId", FinderColumn.Type.LONG,
 				"=", true, true, SocialActivity::getMirrorActivityId),
@@ -1734,7 +1739,7 @@ public class SocialActivityPersistenceImpl
 				},
 				new String[] {"classNameId", "classPK", "type_"}, false),
 			_SQL_SELECT_SOCIALACTIVITY_WHERE, _SQL_COUNT_SOCIALACTIVITY_WHERE,
-			SocialActivityModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			SocialActivityModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"socialActivity.", "classNameId", FinderColumn.Type.LONG, "=",
 				true, true, SocialActivity::getClassNameId),
@@ -1791,6 +1796,7 @@ public class SocialActivityPersistenceImpl
 				_SQL_SELECT_SOCIALACTIVITY_WHERE,
 				_SQL_COUNT_SOCIALACTIVITY_WHERE,
 				SocialActivityModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"socialActivity.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, SocialActivity::getGroupId),
@@ -1890,4 +1896,4 @@ public class SocialActivityPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-912665786
+// LIFERAY-SERVICE-BUILDER-HASH:745664958

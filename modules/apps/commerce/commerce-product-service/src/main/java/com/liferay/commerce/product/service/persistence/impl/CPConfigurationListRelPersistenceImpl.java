@@ -656,7 +656,7 @@ public class CPConfigurationListRelPersistenceImpl
 				_SQL_SELECT_CPCONFIGURATIONLISTREL_WHERE,
 				_SQL_COUNT_CPCONFIGURATIONLISTREL_WHERE,
 				CPConfigurationListRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"cpConfigurationListRel.", "CPConfigurationListId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -683,7 +683,7 @@ public class CPConfigurationListRelPersistenceImpl
 			_SQL_SELECT_CPCONFIGURATIONLISTREL_WHERE,
 			_SQL_COUNT_CPCONFIGURATIONLISTREL_WHERE,
 			CPConfigurationListRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"",
+			"", "",
 			new FinderColumn<>(
 				"cpConfigurationListRel.", "classNameId",
 				FinderColumn.Type.LONG, "=", true, true,
@@ -789,4 +789,4 @@ public class CPConfigurationListRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1759666672
+// LIFERAY-SERVICE-BUILDER-HASH:-666811436

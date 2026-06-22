@@ -600,7 +600,7 @@ public class AnnouncementsDeliveryPersistenceImpl
 				_SQL_SELECT_ANNOUNCEMENTSDELIVERY_WHERE,
 				_SQL_COUNT_ANNOUNCEMENTSDELIVERY_WHERE,
 				AnnouncementsDeliveryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"announcementsDelivery.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -628,7 +628,7 @@ public class AnnouncementsDeliveryPersistenceImpl
 				_SQL_SELECT_ANNOUNCEMENTSDELIVERY_WHERE,
 				_SQL_COUNT_ANNOUNCEMENTSDELIVERY_WHERE,
 				AnnouncementsDeliveryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"announcementsDelivery.", "userId", FinderColumn.Type.LONG,
 					"=", true, true, AnnouncementsDelivery::getUserId));
@@ -686,4 +686,4 @@ public class AnnouncementsDeliveryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1953286915
+// LIFERAY-SERVICE-BUILDER-HASH:491835773

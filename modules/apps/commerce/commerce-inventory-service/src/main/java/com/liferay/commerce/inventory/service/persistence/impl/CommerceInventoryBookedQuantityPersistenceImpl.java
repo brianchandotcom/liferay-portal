@@ -673,7 +673,7 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 				_SQL_SELECT_COMMERCEINVENTORYBOOKEDQUANTITY_WHERE,
 				_SQL_COUNT_COMMERCEINVENTORYBOOKEDQUANTITY_WHERE,
 				CommerceInventoryBookedQuantityModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"commerceInventoryBookedQuantity.", "expirationDate",
 					FinderColumn.Type.DATE, "<", true, true,
@@ -699,7 +699,7 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 			_SQL_SELECT_COMMERCEINVENTORYBOOKEDQUANTITY_WHERE,
 			_SQL_COUNT_COMMERCEINVENTORYBOOKEDQUANTITY_WHERE,
 			CommerceInventoryBookedQuantityModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX, "",
+			_ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"commerceInventoryBookedQuantity.", "sku",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -734,7 +734,7 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 			_SQL_SELECT_COMMERCEINVENTORYBOOKEDQUANTITY_WHERE,
 			_SQL_COUNT_COMMERCEINVENTORYBOOKEDQUANTITY_WHERE,
 			CommerceInventoryBookedQuantityModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX, "",
+			_ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"commerceInventoryBookedQuantity.", "companyId",
 				FinderColumn.Type.LONG, "=", true, true,
@@ -817,4 +817,4 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1095936525
+// LIFERAY-SERVICE-BUILDER-HASH:-895132977

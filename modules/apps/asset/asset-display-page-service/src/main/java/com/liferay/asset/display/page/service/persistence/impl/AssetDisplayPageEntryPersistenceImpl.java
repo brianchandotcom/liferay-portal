@@ -1011,7 +1011,7 @@ public class AssetDisplayPageEntryPersistenceImpl
 			_SQL_SELECT_ASSETDISPLAYPAGEENTRY_WHERE,
 			_SQL_COUNT_ASSETDISPLAYPAGEENTRY_WHERE,
 			AssetDisplayPageEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"",
+			"", "",
 			new FinderColumn<>(
 				"assetDisplayPageEntry.", "uuid", "uuid_",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -1056,7 +1056,7 @@ public class AssetDisplayPageEntryPersistenceImpl
 				_SQL_SELECT_ASSETDISPLAYPAGEENTRY_WHERE,
 				_SQL_COUNT_ASSETDISPLAYPAGEENTRY_WHERE,
 				AssetDisplayPageEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"assetDisplayPageEntry.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -1088,7 +1088,7 @@ public class AssetDisplayPageEntryPersistenceImpl
 				_SQL_SELECT_ASSETDISPLAYPAGEENTRY_WHERE,
 				_SQL_COUNT_ASSETDISPLAYPAGEENTRY_WHERE,
 				AssetDisplayPageEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"assetDisplayPageEntry.", "groupId", FinderColumn.Type.LONG,
 					"=", true, true, AssetDisplayPageEntry::getGroupId));
@@ -1118,7 +1118,7 @@ public class AssetDisplayPageEntryPersistenceImpl
 				_SQL_SELECT_ASSETDISPLAYPAGEENTRY_WHERE,
 				_SQL_COUNT_ASSETDISPLAYPAGEENTRY_WHERE,
 				AssetDisplayPageEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"assetDisplayPageEntry.", "layoutPageTemplateEntryId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1145,7 +1145,7 @@ public class AssetDisplayPageEntryPersistenceImpl
 			_SQL_SELECT_ASSETDISPLAYPAGEENTRY_WHERE,
 			_SQL_COUNT_ASSETDISPLAYPAGEENTRY_WHERE,
 			AssetDisplayPageEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"",
+			"", "",
 			new FinderColumn<>(
 				"assetDisplayPageEntry.", "groupId", FinderColumn.Type.LONG,
 				"=", true, true, AssetDisplayPageEntry::getGroupId),
@@ -1248,4 +1248,4 @@ public class AssetDisplayPageEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1000231922
+// LIFERAY-SERVICE-BUILDER-HASH:-1717775376

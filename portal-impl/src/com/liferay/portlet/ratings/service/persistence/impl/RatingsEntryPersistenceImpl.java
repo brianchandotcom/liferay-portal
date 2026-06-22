@@ -1387,7 +1387,7 @@ public class RatingsEntryPersistenceImpl
 				new String[] {String.class.getName()}, new String[] {"uuid_"},
 				0, 1, false, null),
 			_SQL_SELECT_RATINGSENTRY_WHERE, _SQL_COUNT_RATINGSENTRY_WHERE,
-			RatingsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			RatingsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"ratingsEntry.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
 				true, true, RatingsEntry::getUuid));
@@ -1413,6 +1413,7 @@ public class RatingsEntryPersistenceImpl
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_RATINGSENTRY_WHERE, _SQL_COUNT_RATINGSENTRY_WHERE,
 				RatingsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"ratingsEntry.", "uuid", "uuid_", FinderColumn.Type.STRING,
 					"=", true, true, RatingsEntry::getUuid),
@@ -1439,7 +1440,7 @@ public class RatingsEntryPersistenceImpl
 				new String[] {Long.class.getName(), Long.class.getName()},
 				new String[] {"classNameId", "classPK"}, false),
 			_SQL_SELECT_RATINGSENTRY_WHERE, _SQL_COUNT_RATINGSENTRY_WHERE,
-			RatingsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			RatingsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"ratingsEntry.", "classNameId", FinderColumn.Type.LONG, "=",
 				true, true, RatingsEntry::getClassNameId),
@@ -1511,7 +1512,7 @@ public class RatingsEntryPersistenceImpl
 				},
 				new String[] {"classNameId", "classPK", "score"}, false),
 			_SQL_SELECT_RATINGSENTRY_WHERE, _SQL_COUNT_RATINGSENTRY_WHERE,
-			RatingsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			RatingsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"ratingsEntry.", "classNameId", FinderColumn.Type.LONG, "=",
 				true, true, RatingsEntry::getClassNameId),
@@ -1558,4 +1559,4 @@ public class RatingsEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:448302109
+// LIFERAY-SERVICE-BUILDER-HASH:-2094332515

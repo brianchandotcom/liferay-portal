@@ -607,7 +607,7 @@ public class RecentLayoutRevisionPersistenceImpl
 				_SQL_SELECT_RECENTLAYOUTREVISION_WHERE,
 				_SQL_COUNT_RECENTLAYOUTREVISION_WHERE,
 				RecentLayoutRevisionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"recentLayoutRevision.", "groupId", FinderColumn.Type.LONG,
 					"=", true, true, RecentLayoutRevision::getGroupId));
@@ -634,7 +634,7 @@ public class RecentLayoutRevisionPersistenceImpl
 				_SQL_SELECT_RECENTLAYOUTREVISION_WHERE,
 				_SQL_COUNT_RECENTLAYOUTREVISION_WHERE,
 				RecentLayoutRevisionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"recentLayoutRevision.", "userId", FinderColumn.Type.LONG,
 					"=", true, true, RecentLayoutRevision::getUserId));
@@ -664,7 +664,7 @@ public class RecentLayoutRevisionPersistenceImpl
 				_SQL_SELECT_RECENTLAYOUTREVISION_WHERE,
 				_SQL_COUNT_RECENTLAYOUTREVISION_WHERE,
 				RecentLayoutRevisionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"recentLayoutRevision.", "layoutRevisionId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -727,4 +727,4 @@ public class RecentLayoutRevisionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1662825162
+// LIFERAY-SERVICE-BUILDER-HASH:-120758448

@@ -508,6 +508,7 @@ public class CTPreferencesPersistenceImpl
 					new String[] {"ctCollectionId"}, false),
 				_SQL_SELECT_CTPREFERENCES_WHERE, _SQL_COUNT_CTPREFERENCES_WHERE,
 				CTPreferencesModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"ctPreferences.", "ctCollectionId", FinderColumn.Type.LONG,
 					"=", true, true, CTPreferences::getCtCollectionId));
@@ -536,6 +537,7 @@ public class CTPreferencesPersistenceImpl
 					new String[] {"previousCtCollectionId"}, false),
 				_SQL_SELECT_CTPREFERENCES_WHERE, _SQL_COUNT_CTPREFERENCES_WHERE,
 				CTPreferencesModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				"",
 				new FinderColumn<>(
 					"ctPreferences.", "previousCtCollectionId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -622,4 +624,4 @@ public class CTPreferencesPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-290843806
+// LIFERAY-SERVICE-BUILDER-HASH:1527157474

@@ -2922,7 +2922,7 @@ public class MBThreadPersistenceImpl
 				new String[] {String.class.getName()}, new String[] {"uuid_"},
 				0, 1, false, null),
 			_SQL_SELECT_MBTHREAD_WHERE, _SQL_COUNT_MBTHREAD_WHERE,
-			MBThreadModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			MBThreadModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"mbThread.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
 				true, true, MBThread::getUuid));
@@ -2962,7 +2962,7 @@ public class MBThreadPersistenceImpl
 					new String[] {String.class.getName(), Long.class.getName()},
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_MBTHREAD_WHERE, _SQL_COUNT_MBTHREAD_WHERE,
-				MBThreadModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				MBThreadModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"mbThread.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
 					true, true, MBThread::getUuid),
@@ -2991,7 +2991,7 @@ public class MBThreadPersistenceImpl
 					new String[] {"groupId"}, false),
 				_SQL_SELECT_MBTHREAD_WHERE, _SQL_COUNT_MBTHREAD_WHERE,
 				MBThreadModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"mbThread.categoryId != -1",
+				"mbThread.categoryId != -1", "mbThread.categoryId != -1",
 				new FinderColumn<>(
 					"mbThread.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, MBThread::getGroupId));
@@ -3028,7 +3028,7 @@ public class MBThreadPersistenceImpl
 					new String[] {Long.class.getName(), Long.class.getName()},
 					new String[] {"groupId", "categoryId"}, false),
 				_SQL_SELECT_MBTHREAD_WHERE, _SQL_COUNT_MBTHREAD_WHERE,
-				MBThreadModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				MBThreadModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"mbThread.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, MBThread::getGroupId),
@@ -3053,7 +3053,7 @@ public class MBThreadPersistenceImpl
 					new String[] {Long.class.getName(), Long.class.getName()},
 					new String[] {"groupId", "categoryId"}, false),
 				_SQL_SELECT_MBTHREAD_WHERE, _SQL_COUNT_MBTHREAD_WHERE,
-				MBThreadModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				MBThreadModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"mbThread.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, MBThread::getGroupId),
@@ -3086,7 +3086,7 @@ public class MBThreadPersistenceImpl
 					new String[] {"groupId", "status"}, false),
 				_SQL_SELECT_MBTHREAD_WHERE, _SQL_COUNT_MBTHREAD_WHERE,
 				MBThreadModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"mbThread.categoryId != -1",
+				"mbThread.categoryId != -1", "mbThread.categoryId != -1",
 				new FinderColumn<>(
 					"mbThread.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, MBThread::getGroupId),
@@ -3113,7 +3113,7 @@ public class MBThreadPersistenceImpl
 				new String[] {Long.class.getName(), Double.class.getName()},
 				new String[] {"categoryId", "priority"}, false),
 			_SQL_SELECT_MBTHREAD_WHERE, _SQL_COUNT_MBTHREAD_WHERE,
-			MBThreadModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			MBThreadModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"mbThread.", "categoryId", FinderColumn.Type.LONG, "=", true,
 				true, MBThread::getCategoryId),
@@ -3141,7 +3141,7 @@ public class MBThreadPersistenceImpl
 				new String[] {"lastPostDate", "priority"}, false),
 			_SQL_SELECT_MBTHREAD_WHERE, _SQL_COUNT_MBTHREAD_WHERE,
 			MBThreadModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"mbThread.categoryId != -1",
+			"mbThread.categoryId != -1", "mbThread.categoryId != -1",
 			new FinderColumn<>(
 				"mbThread.", "lastPostDate", FinderColumn.Type.DATE, "=", true,
 				true, MBThread::getLastPostDate),
@@ -3179,7 +3179,7 @@ public class MBThreadPersistenceImpl
 					new String[] {"groupId", "categoryId", "lastPostDate"},
 					false),
 				_SQL_SELECT_MBTHREAD_WHERE, _SQL_COUNT_MBTHREAD_WHERE,
-				MBThreadModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				MBThreadModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"mbThread.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, MBThread::getGroupId),
@@ -3217,7 +3217,7 @@ public class MBThreadPersistenceImpl
 					},
 					new String[] {"groupId", "categoryId", "status"}, false),
 				_SQL_SELECT_MBTHREAD_WHERE, _SQL_COUNT_MBTHREAD_WHERE,
-				MBThreadModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				MBThreadModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"mbThread.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, MBThread::getGroupId),
@@ -3249,7 +3249,7 @@ public class MBThreadPersistenceImpl
 					},
 					new String[] {"groupId", "categoryId", "status"}, false),
 				_SQL_SELECT_MBTHREAD_WHERE, _SQL_COUNT_MBTHREAD_WHERE,
-				MBThreadModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				MBThreadModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"mbThread.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, MBThread::getGroupId),
@@ -3281,7 +3281,7 @@ public class MBThreadPersistenceImpl
 					},
 					new String[] {"groupId", "categoryId", "status"}, false),
 				_SQL_SELECT_MBTHREAD_WHERE, _SQL_COUNT_MBTHREAD_WHERE,
-				MBThreadModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				MBThreadModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"mbThread.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, MBThread::getGroupId),
@@ -3314,7 +3314,7 @@ public class MBThreadPersistenceImpl
 					},
 					new String[] {"groupId", "categoryId", "status"}, false),
 				_SQL_SELECT_MBTHREAD_WHERE, _SQL_COUNT_MBTHREAD_WHERE,
-				MBThreadModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				MBThreadModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"mbThread.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, MBThread::getGroupId),
@@ -3397,4 +3397,4 @@ public class MBThreadPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-953130890
+// LIFERAY-SERVICE-BUILDER-HASH:-1844506688

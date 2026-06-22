@@ -997,7 +997,7 @@ public class AnalyticsAssociationPersistenceImpl
 				_SQL_SELECT_ANALYTICSASSOCIATION_WHERE,
 				_SQL_COUNT_ANALYTICSASSOCIATION_WHERE,
 				AnalyticsAssociationModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"analyticsAssociation.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1021,7 +1021,7 @@ public class AnalyticsAssociationPersistenceImpl
 			_SQL_SELECT_ANALYTICSASSOCIATION_WHERE,
 			_SQL_COUNT_ANALYTICSASSOCIATION_WHERE,
 			AnalyticsAssociationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"",
+			"", "",
 			new FinderColumn<>(
 				"analyticsAssociation.", "companyId", FinderColumn.Type.LONG,
 				"=", true, true, AnalyticsAssociation::getCompanyId),
@@ -1052,7 +1052,7 @@ public class AnalyticsAssociationPersistenceImpl
 			_SQL_SELECT_ANALYTICSASSOCIATION_WHERE,
 			_SQL_COUNT_ANALYTICSASSOCIATION_WHERE,
 			AnalyticsAssociationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"",
+			"", "",
 			new FinderColumn<>(
 				"analyticsAssociation.", "companyId", FinderColumn.Type.LONG,
 				"=", true, true, AnalyticsAssociation::getCompanyId),
@@ -1090,7 +1090,7 @@ public class AnalyticsAssociationPersistenceImpl
 				_SQL_SELECT_ANALYTICSASSOCIATION_WHERE,
 				_SQL_COUNT_ANALYTICSASSOCIATION_WHERE,
 				AnalyticsAssociationModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"analyticsAssociation.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1140,7 +1140,7 @@ public class AnalyticsAssociationPersistenceImpl
 			_SQL_SELECT_ANALYTICSASSOCIATION_WHERE,
 			_SQL_COUNT_ANALYTICSASSOCIATION_WHERE,
 			AnalyticsAssociationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"",
+			"", "",
 			new FinderColumn<>(
 				"analyticsAssociation.", "companyId", FinderColumn.Type.LONG,
 				"=", true, true, AnalyticsAssociation::getCompanyId),
@@ -1219,4 +1219,4 @@ public class AnalyticsAssociationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1406882865
+// LIFERAY-SERVICE-BUILDER-HASH:-1759069295

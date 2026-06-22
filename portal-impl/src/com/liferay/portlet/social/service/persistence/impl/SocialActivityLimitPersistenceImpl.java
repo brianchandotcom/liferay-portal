@@ -725,7 +725,7 @@ public class SocialActivityLimitPersistenceImpl
 				_SQL_SELECT_SOCIALACTIVITYLIMIT_WHERE,
 				_SQL_COUNT_SOCIALACTIVITYLIMIT_WHERE,
 				SocialActivityLimitModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"socialActivityLimit.", "groupId", FinderColumn.Type.LONG,
 					"=", true, true, SocialActivityLimit::getGroupId));
@@ -752,7 +752,7 @@ public class SocialActivityLimitPersistenceImpl
 				_SQL_SELECT_SOCIALACTIVITYLIMIT_WHERE,
 				_SQL_COUNT_SOCIALACTIVITYLIMIT_WHERE,
 				SocialActivityLimitModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"socialActivityLimit.", "userId", FinderColumn.Type.LONG,
 					"=", true, true, SocialActivityLimit::getUserId));
@@ -778,7 +778,7 @@ public class SocialActivityLimitPersistenceImpl
 			_SQL_SELECT_SOCIALACTIVITYLIMIT_WHERE,
 			_SQL_COUNT_SOCIALACTIVITYLIMIT_WHERE,
 			SocialActivityLimitModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"",
+			"", "",
 			new FinderColumn<>(
 				"socialActivityLimit.", "classNameId", FinderColumn.Type.LONG,
 				"=", true, true, SocialActivityLimit::getClassNameId),
@@ -861,4 +861,4 @@ public class SocialActivityLimitPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:134868609
+// LIFERAY-SERVICE-BUILDER-HASH:-388268225

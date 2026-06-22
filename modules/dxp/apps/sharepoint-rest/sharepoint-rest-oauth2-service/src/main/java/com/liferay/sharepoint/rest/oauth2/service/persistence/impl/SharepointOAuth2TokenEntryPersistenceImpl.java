@@ -461,7 +461,7 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 				_SQL_SELECT_SHAREPOINTOAUTH2TOKENENTRY_WHERE,
 				_SQL_COUNT_SHAREPOINTOAUTH2TOKENENTRY_WHERE,
 				SharepointOAuth2TokenEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"sharepointOAuth2TokenEntry.", "userId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -551,4 +551,4 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1081953657
+// LIFERAY-SERVICE-BUILDER-HASH:1438684869

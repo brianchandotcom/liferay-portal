@@ -1279,7 +1279,7 @@ public class CommerceInventoryWarehousePersistenceImpl
 				_SQL_SELECT_COMMERCEINVENTORYWAREHOUSE_WHERE,
 				_SQL_COUNT_COMMERCEINVENTORYWAREHOUSE_WHERE,
 				CommerceInventoryWarehouseModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"commerceInventoryWarehouse.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -1307,7 +1307,7 @@ public class CommerceInventoryWarehousePersistenceImpl
 				_SQL_SELECT_COMMERCEINVENTORYWAREHOUSE_WHERE,
 				_SQL_COUNT_COMMERCEINVENTORYWAREHOUSE_WHERE,
 				CommerceInventoryWarehouseModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"commerceInventoryWarehouse.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -1339,7 +1339,7 @@ public class CommerceInventoryWarehousePersistenceImpl
 				_SQL_SELECT_COMMERCEINVENTORYWAREHOUSE_WHERE,
 				_SQL_COUNT_COMMERCEINVENTORYWAREHOUSE_WHERE,
 				CommerceInventoryWarehouseModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"commerceInventoryWarehouse.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1371,7 +1371,7 @@ public class CommerceInventoryWarehousePersistenceImpl
 				_SQL_SELECT_COMMERCEINVENTORYWAREHOUSE_WHERE,
 				_SQL_COUNT_COMMERCEINVENTORYWAREHOUSE_WHERE,
 				CommerceInventoryWarehouseModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"commerceInventoryWarehouse.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1406,7 +1406,7 @@ public class CommerceInventoryWarehousePersistenceImpl
 				_SQL_SELECT_COMMERCEINVENTORYWAREHOUSE_WHERE,
 				_SQL_COUNT_COMMERCEINVENTORYWAREHOUSE_WHERE,
 				CommerceInventoryWarehouseModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"commerceInventoryWarehouse.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1454,7 +1454,7 @@ public class CommerceInventoryWarehousePersistenceImpl
 				_SQL_SELECT_COMMERCEINVENTORYWAREHOUSE_WHERE,
 				_SQL_COUNT_COMMERCEINVENTORYWAREHOUSE_WHERE,
 				CommerceInventoryWarehouseModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"commerceInventoryWarehouse.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1559,4 +1559,4 @@ public class CommerceInventoryWarehousePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-506697825
+// LIFERAY-SERVICE-BUILDER-HASH:461049439

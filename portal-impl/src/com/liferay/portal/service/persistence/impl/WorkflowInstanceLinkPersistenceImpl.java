@@ -768,7 +768,7 @@ public class WorkflowInstanceLinkPersistenceImpl
 			_SQL_SELECT_WORKFLOWINSTANCELINK_WHERE,
 			_SQL_COUNT_WORKFLOWINSTANCELINK_WHERE,
 			WorkflowInstanceLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"",
+			"", "",
 			new FinderColumn<>(
 				"workflowInstanceLink.", "companyId", FinderColumn.Type.LONG,
 				"=", true, true, WorkflowInstanceLink::getCompanyId),
@@ -803,7 +803,7 @@ public class WorkflowInstanceLinkPersistenceImpl
 			_SQL_SELECT_WORKFLOWINSTANCELINK_WHERE,
 			_SQL_COUNT_WORKFLOWINSTANCELINK_WHERE,
 			WorkflowInstanceLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"",
+			"", "",
 			new FinderColumn<>(
 				"workflowInstanceLink.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, WorkflowInstanceLink::getGroupId),
@@ -852,7 +852,7 @@ public class WorkflowInstanceLinkPersistenceImpl
 				_SQL_SELECT_WORKFLOWINSTANCELINK_WHERE,
 				_SQL_COUNT_WORKFLOWINSTANCELINK_WHERE,
 				WorkflowInstanceLinkModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"workflowInstanceLink.", "groupId", FinderColumn.Type.LONG,
 					"=", true, true, WorkflowInstanceLink::getGroupId),
@@ -901,4 +901,4 @@ public class WorkflowInstanceLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-172647211
+// LIFERAY-SERVICE-BUILDER-HASH:1481062675

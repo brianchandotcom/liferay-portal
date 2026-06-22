@@ -757,7 +757,7 @@ public class DefinitionPersistenceImpl
 				new String[] {String.class.getName()}, new String[] {"uuid_"},
 				0, 1, false, null),
 			_SQL_SELECT_DEFINITION_WHERE, _SQL_COUNT_DEFINITION_WHERE,
-			DefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			DefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"definition.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
 				true, true, Definition::getUuid));
@@ -798,7 +798,7 @@ public class DefinitionPersistenceImpl
 					new String[] {String.class.getName(), Long.class.getName()},
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_DEFINITION_WHERE, _SQL_COUNT_DEFINITION_WHERE,
-				DefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				DefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"definition.", "uuid", "uuid_", FinderColumn.Type.STRING,
 					"=", true, true, Definition::getUuid),
@@ -826,7 +826,7 @@ public class DefinitionPersistenceImpl
 					new String[] {Long.class.getName()},
 					new String[] {"groupId"}, false),
 				_SQL_SELECT_DEFINITION_WHERE, _SQL_COUNT_DEFINITION_WHERE,
-				DefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				DefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"definition.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, Definition::getGroupId));
@@ -851,7 +851,7 @@ public class DefinitionPersistenceImpl
 					"countByCompanyId", new String[] {Long.class.getName()},
 					new String[] {"companyId"}, false),
 				_SQL_SELECT_DEFINITION_WHERE, _SQL_COUNT_DEFINITION_WHERE,
-				DefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				DefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"definition.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, Definition::getCompanyId));
@@ -925,4 +925,4 @@ public class DefinitionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:267643702
+// LIFERAY-SERVICE-BUILDER-HASH:-466715214

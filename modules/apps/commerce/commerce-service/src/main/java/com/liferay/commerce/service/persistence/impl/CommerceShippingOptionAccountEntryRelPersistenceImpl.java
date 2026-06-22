@@ -702,7 +702,7 @@ public class CommerceShippingOptionAccountEntryRelPersistenceImpl
 				_SQL_SELECT_COMMERCESHIPPINGOPTIONACCOUNTENTRYREL_WHERE,
 				_SQL_COUNT_COMMERCESHIPPINGOPTIONACCOUNTENTRYREL_WHERE,
 				CommerceShippingOptionAccountEntryRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"commerceShippingOptionAccountEntryRel.", "accountEntryId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -733,7 +733,7 @@ public class CommerceShippingOptionAccountEntryRelPersistenceImpl
 				_SQL_SELECT_COMMERCESHIPPINGOPTIONACCOUNTENTRYREL_WHERE,
 				_SQL_COUNT_COMMERCESHIPPINGOPTIONACCOUNTENTRYREL_WHERE,
 				CommerceShippingOptionAccountEntryRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"commerceShippingOptionAccountEntryRel.",
 					"commerceChannelId", FinderColumn.Type.LONG, "=", true,
@@ -768,7 +768,7 @@ public class CommerceShippingOptionAccountEntryRelPersistenceImpl
 				_SQL_SELECT_COMMERCESHIPPINGOPTIONACCOUNTENTRYREL_WHERE,
 				_SQL_COUNT_COMMERCESHIPPINGOPTIONACCOUNTENTRYREL_WHERE,
 				CommerceShippingOptionAccountEntryRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"commerceShippingOptionAccountEntryRel.",
 					"commerceShippingOptionKey", FinderColumn.Type.STRING, "=",
@@ -867,4 +867,4 @@ public class CommerceShippingOptionAccountEntryRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-238903287
+// LIFERAY-SERVICE-BUILDER-HASH:-628274813

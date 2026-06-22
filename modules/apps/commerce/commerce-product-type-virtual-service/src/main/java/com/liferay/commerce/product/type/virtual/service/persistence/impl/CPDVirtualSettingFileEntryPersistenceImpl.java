@@ -770,7 +770,7 @@ public class CPDVirtualSettingFileEntryPersistenceImpl
 			_SQL_SELECT_CPDVIRTUALSETTINGFILEENTRY_WHERE,
 			_SQL_COUNT_CPDVIRTUALSETTINGFILEENTRY_WHERE,
 			CPDVirtualSettingFileEntryModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX, "",
+			_ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"cpdVirtualSettingFileEntry.", "uuid", "uuid_",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -816,7 +816,7 @@ public class CPDVirtualSettingFileEntryPersistenceImpl
 				_SQL_SELECT_CPDVIRTUALSETTINGFILEENTRY_WHERE,
 				_SQL_COUNT_CPDVIRTUALSETTINGFILEENTRY_WHERE,
 				CPDVirtualSettingFileEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"cpdVirtualSettingFileEntry.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -851,7 +851,7 @@ public class CPDVirtualSettingFileEntryPersistenceImpl
 				_SQL_SELECT_CPDVIRTUALSETTINGFILEENTRY_WHERE,
 				_SQL_COUNT_CPDVIRTUALSETTINGFILEENTRY_WHERE,
 				CPDVirtualSettingFileEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"cpdVirtualSettingFileEntry.",
 					"CPDefinitionVirtualSettingId", FinderColumn.Type.LONG, "=",
@@ -881,7 +881,7 @@ public class CPDVirtualSettingFileEntryPersistenceImpl
 				_SQL_SELECT_CPDVIRTUALSETTINGFILEENTRY_WHERE,
 				_SQL_COUNT_CPDVIRTUALSETTINGFILEENTRY_WHERE,
 				CPDVirtualSettingFileEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"cpdVirtualSettingFileEntry.", "fileEntryId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -956,4 +956,4 @@ public class CPDVirtualSettingFileEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:46498824
+// LIFERAY-SERVICE-BUILDER-HASH:533280772

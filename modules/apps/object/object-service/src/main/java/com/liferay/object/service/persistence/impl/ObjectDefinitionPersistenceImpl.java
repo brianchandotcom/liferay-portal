@@ -2559,7 +2559,7 @@ public class ObjectDefinitionPersistenceImpl
 				_SQL_SELECT_OBJECTDEFINITION_WHERE,
 				_SQL_COUNT_OBJECTDEFINITION_WHERE,
 				ObjectDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"objectDefinition.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -2587,7 +2587,7 @@ public class ObjectDefinitionPersistenceImpl
 				_SQL_SELECT_OBJECTDEFINITION_WHERE,
 				_SQL_COUNT_OBJECTDEFINITION_WHERE,
 				ObjectDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"objectDefinition.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -2618,7 +2618,7 @@ public class ObjectDefinitionPersistenceImpl
 				_SQL_SELECT_OBJECTDEFINITION_WHERE,
 				_SQL_COUNT_OBJECTDEFINITION_WHERE,
 				ObjectDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"objectDefinition.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, ObjectDefinition::getCompanyId));
@@ -2647,7 +2647,7 @@ public class ObjectDefinitionPersistenceImpl
 				_SQL_SELECT_OBJECTDEFINITION_WHERE,
 				_SQL_COUNT_OBJECTDEFINITION_WHERE,
 				ObjectDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"objectDefinition.", "objectFolderId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2678,7 +2678,7 @@ public class ObjectDefinitionPersistenceImpl
 				_SQL_SELECT_OBJECTDEFINITION_WHERE,
 				_SQL_COUNT_OBJECTDEFINITION_WHERE,
 				ObjectDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"objectDefinition.", "accountEntryRestricted",
 					FinderColumn.Type.BOOLEAN, "=", true, true,
@@ -2718,7 +2718,7 @@ public class ObjectDefinitionPersistenceImpl
 				_SQL_SELECT_OBJECTDEFINITION_WHERE,
 				_SQL_COUNT_OBJECTDEFINITION_WHERE,
 				ObjectDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"objectDefinition.", "system", "system_",
 					FinderColumn.Type.BOOLEAN, "=", true, true,
@@ -2746,7 +2746,7 @@ public class ObjectDefinitionPersistenceImpl
 				_SQL_SELECT_OBJECTDEFINITION_WHERE,
 				_SQL_COUNT_OBJECTDEFINITION_WHERE,
 				ObjectDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"objectDefinition.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, ObjectDefinition::getCompanyId),
@@ -2812,7 +2812,7 @@ public class ObjectDefinitionPersistenceImpl
 				_SQL_SELECT_OBJECTDEFINITION_WHERE,
 				_SQL_COUNT_OBJECTDEFINITION_WHERE,
 				ObjectDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"objectDefinition.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, ObjectDefinition::getCompanyId),
@@ -2846,7 +2846,7 @@ public class ObjectDefinitionPersistenceImpl
 				_SQL_SELECT_OBJECTDEFINITION_WHERE,
 				_SQL_COUNT_OBJECTDEFINITION_WHERE,
 				ObjectDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"objectDefinition.", "system", "system_",
 					FinderColumn.Type.BOOLEAN, "=", true, true,
@@ -2884,7 +2884,7 @@ public class ObjectDefinitionPersistenceImpl
 				_SQL_SELECT_OBJECTDEFINITION_WHERE,
 				_SQL_COUNT_OBJECTDEFINITION_WHERE,
 				ObjectDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"objectDefinition.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, ObjectDefinition::getCompanyId),
@@ -2925,7 +2925,7 @@ public class ObjectDefinitionPersistenceImpl
 				_SQL_SELECT_OBJECTDEFINITION_WHERE,
 				_SQL_COUNT_OBJECTDEFINITION_WHERE,
 				ObjectDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"objectDefinition.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, ObjectDefinition::getCompanyId),
@@ -2970,7 +2970,7 @@ public class ObjectDefinitionPersistenceImpl
 				_SQL_SELECT_OBJECTDEFINITION_WHERE,
 				_SQL_COUNT_OBJECTDEFINITION_WHERE,
 				ObjectDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"objectDefinition.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, ObjectDefinition::getCompanyId),
@@ -3033,7 +3033,7 @@ public class ObjectDefinitionPersistenceImpl
 				_SQL_SELECT_OBJECTDEFINITION_WHERE,
 				_SQL_COUNT_OBJECTDEFINITION_WHERE,
 				ObjectDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"objectDefinition.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, ObjectDefinition::getCompanyId),
@@ -3145,4 +3145,4 @@ public class ObjectDefinitionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-25326354
+// LIFERAY-SERVICE-BUILDER-HASH:2112443184

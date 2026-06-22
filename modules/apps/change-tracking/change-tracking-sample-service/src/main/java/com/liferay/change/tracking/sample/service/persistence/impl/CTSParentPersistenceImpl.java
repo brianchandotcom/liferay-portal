@@ -505,7 +505,7 @@ public class CTSParentPersistenceImpl
 					"countByCompanyId", new String[] {Long.class.getName()},
 					new String[] {"companyId"}, false),
 				_SQL_SELECT_CTSPARENT_WHERE, _SQL_COUNT_CTSPARENT_WHERE,
-				CTSParentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				CTSParentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"ctsParent.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, CTSParent::getCompanyId));
@@ -529,7 +529,7 @@ public class CTSParentPersistenceImpl
 				new String[] {Long.class.getName(), Long.class.getName()},
 				new String[] {"companyId", "ctsGrandParentId"}, false),
 			_SQL_SELECT_CTSPARENT_WHERE, _SQL_COUNT_CTSPARENT_WHERE,
-			CTSParentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			CTSParentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"ctsParent.", "companyId", FinderColumn.Type.LONG, "=", true,
 				true, CTSParent::getCompanyId),
@@ -603,4 +603,4 @@ public class CTSParentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1696593042
+// LIFERAY-SERVICE-BUILDER-HASH:1421206002

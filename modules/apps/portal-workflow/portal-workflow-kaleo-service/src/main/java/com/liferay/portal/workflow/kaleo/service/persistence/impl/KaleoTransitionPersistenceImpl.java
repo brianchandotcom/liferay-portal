@@ -782,7 +782,7 @@ public class KaleoTransitionPersistenceImpl
 				_SQL_SELECT_KALEOTRANSITION_WHERE,
 				_SQL_COUNT_KALEOTRANSITION_WHERE,
 				KaleoTransitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"kaleoTransition.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, KaleoTransition::getCompanyId));
@@ -812,7 +812,7 @@ public class KaleoTransitionPersistenceImpl
 				_SQL_SELECT_KALEOTRANSITION_WHERE,
 				_SQL_COUNT_KALEOTRANSITION_WHERE,
 				KaleoTransitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"kaleoTransition.", "kaleoDefinitionVersionId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -840,7 +840,7 @@ public class KaleoTransitionPersistenceImpl
 				_SQL_SELECT_KALEOTRANSITION_WHERE,
 				_SQL_COUNT_KALEOTRANSITION_WHERE,
 				KaleoTransitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
+				"", "",
 				new FinderColumn<>(
 					"kaleoTransition.", "kaleoNodeId", FinderColumn.Type.LONG,
 					"=", true, true, KaleoTransition::getKaleoNodeId));
@@ -947,4 +947,4 @@ public class KaleoTransitionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1454799169
+// LIFERAY-SERVICE-BUILDER-HASH:61748481

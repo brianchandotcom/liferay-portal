@@ -839,7 +839,7 @@ public class PortletPreferenceValuePersistenceImpl
 				_SQL_SELECT_PORTLETPREFERENCEVALUE_WHERE,
 				_SQL_COUNT_PORTLETPREFERENCEVALUE_WHERE,
 				PortletPreferenceValueModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"portletPreferenceValue.", "portletPreferencesId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -868,7 +868,7 @@ public class PortletPreferenceValuePersistenceImpl
 			_SQL_SELECT_PORTLETPREFERENCEVALUE_WHERE,
 			_SQL_COUNT_PORTLETPREFERENCEVALUE_WHERE,
 			PortletPreferenceValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"",
+			"", "",
 			new FinderColumn<>(
 				"portletPreferenceValue.", "portletPreferencesId",
 				FinderColumn.Type.LONG, "=", true, true,
@@ -908,7 +908,7 @@ public class PortletPreferenceValuePersistenceImpl
 				_SQL_SELECT_PORTLETPREFERENCEVALUE_WHERE,
 				_SQL_COUNT_PORTLETPREFERENCEVALUE_WHERE,
 				PortletPreferenceValueModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"portletPreferenceValue.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -978,7 +978,7 @@ public class PortletPreferenceValuePersistenceImpl
 				_SQL_SELECT_PORTLETPREFERENCEVALUE_WHERE,
 				_SQL_COUNT_PORTLETPREFERENCEVALUE_WHERE,
 				PortletPreferenceValueModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				_ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"portletPreferenceValue.", "portletPreferencesId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1027,4 +1027,4 @@ public class PortletPreferenceValuePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1254627284
+// LIFERAY-SERVICE-BUILDER-HASH:1201682452

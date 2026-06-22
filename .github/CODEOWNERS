@@ -7,7 +7,8 @@ modules/apps/analytics/    @liferay-ac
 modules/apps/announcements/    @liferay-content-management
 modules/apps/application-list/    @liferay-platform-experience
 modules/apps/archived/
-modules/apps/archived/portal-search-solr8/    @liferay-search
+modules/apps/archived/portal-search-solr8-api/    @liferay-search
+modules/apps/archived/portal-search-solr8-impl/    @liferay-search
 modules/apps/archived/youtube-web    @liferay-page-management
 modules/apps/asset/
 modules/apps/asset/asset-auto-tagger-google-cloud-natural-language-test    @liferay-content-management

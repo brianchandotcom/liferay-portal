@@ -1098,12 +1098,10 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 			).put(
 				"type", "FOLDER"
 			).build());
-
-		ClassedModel classedModel = objectEntryFolder;
-
 		bulkActionItem.setClassExternalReferenceCode(
 			objectEntryFolder::getExternalReferenceCode);
-		bulkActionItem.setClassName(classedModel::getModelClassName);
+		bulkActionItem.setClassName(
+			((ClassedModel)objectEntryFolder)::getModelClassName);
 		bulkActionItem.setClassPK(objectEntryFolder::getObjectEntryFolderId);
 		bulkActionItem.setName(objectEntryFolder::getName);
 

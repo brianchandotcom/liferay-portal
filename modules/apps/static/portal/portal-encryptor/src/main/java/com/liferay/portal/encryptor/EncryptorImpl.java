@@ -88,9 +88,7 @@ public class EncryptorImpl implements Encryptor {
 			}
 			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Falling back to legacy decryption after GCM failure",
-						exception);
+					_log.debug(exception);
 				}
 			}
 		}

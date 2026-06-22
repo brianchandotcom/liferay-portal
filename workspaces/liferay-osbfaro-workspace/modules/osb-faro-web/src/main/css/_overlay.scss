@@ -1,0 +1,10 @@
+.overlay-content-root {
+	position: absolute;
+	z-index: $overlayZIndex;
+
+	&.base-select-container,
+	&.date-range-input-root,
+	&.dropdown-root {
+		z-index: $menuZIndex;
+	}
+}

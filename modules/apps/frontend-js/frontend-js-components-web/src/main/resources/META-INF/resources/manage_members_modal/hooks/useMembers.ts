@@ -6,7 +6,7 @@
 import {useCallback, useEffect, useReducer} from 'react';
 
 import * as membersService from '../services/membersService';
-import {MembersConfig, SelectOptions, UserAccount, UserGroup} from '../types';
+import {MemberType, MembersConfig, UserAccount, UserGroup} from '../types';
 import {ActionTypes, initialState, reducer} from './membersReducer';
 import {runOptimisticMutation} from './runOptimisticMutation';
 
@@ -72,8 +72,8 @@ export function useMembers(
 	}, [fetchInitialData]);
 
 	const fetchPage = useCallback(
-		(type: SelectOptions, page: number, keywords: string) => {
-			const isUser = type === SelectOptions.USERS;
+		(type: MemberType, page: number, keywords: string) => {
+			const isUser = type === MemberType.USERS;
 
 			const params = {
 				externalReferenceCode,
@@ -91,12 +91,12 @@ export function useMembers(
 	);
 
 	const loadMore = useCallback(
-		async (type: SelectOptions) => {
+		async (type: MemberType) => {
 			if (state.isFetching) {
 				return;
 			}
 
-			const isUser = type === SelectOptions.USERS;
+			const isUser = type === MemberType.USERS;
 			const currentState = isUser ? state.users : state.groups;
 			const newPage = currentState.page + 1;
 
@@ -125,7 +125,7 @@ export function useMembers(
 	);
 
 	const search = useCallback(
-		async (type: SelectOptions, keywords: string) => {
+		async (type: MemberType, keywords: string) => {
 			if (state.isSearching) {
 				return;
 			}
@@ -159,8 +159,8 @@ export function useMembers(
 	);
 
 	const addMember = useCallback(
-		async (item: UserAccount | UserGroup, type: SelectOptions) => {
-			const isUser = type === SelectOptions.USERS;
+		async (item: UserAccount | UserGroup, type: MemberType) => {
+			const isUser = type === MemberType.USERS;
 			const items = isUser ? state.users.items : state.groups.items;
 
 			if (items.some((existingItem) => existingItem.id === item.id)) {
@@ -207,8 +207,8 @@ export function useMembers(
 	);
 
 	const removeMember = useCallback(
-		async (item: UserAccount | UserGroup, type: SelectOptions) => {
-			const isUser = type === SelectOptions.USERS;
+		async (item: UserAccount | UserGroup, type: MemberType) => {
+			const isUser = type === MemberType.USERS;
 
 			await runOptimisticMutation(dispatch, {
 				errorMessage: isUser
@@ -248,9 +248,9 @@ export function useMembers(
 		async (
 			itemToUpdate: UserAccount | UserGroup,
 			newRoles: string[],
-			type: SelectOptions
+			type: MemberType
 		) => {
-			const isUser = type === SelectOptions.USERS;
+			const isUser = type === MemberType.USERS;
 			const originalRoles = itemToUpdate.roles;
 
 			const newRoleObjects = state.roles.filter((role) => {

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Role, SelectOptions, UserAccount, UserGroup} from '../types';
+import {MemberType, Role, UserAccount, UserGroup} from '../types';
 
 export enum ActionTypes {
 	AddMemberError = 'ADD_MEMBER_ERROR',
@@ -62,7 +62,7 @@ export type Action =
 			type: ActionTypes.UpdateRolesSuccess;
 	  }
 	| {
-			payload: {id: number | string; type: SelectOptions};
+			payload: {id: number | string; type: MemberType};
 			type:
 				| ActionTypes.AddMemberFailure
 				| ActionTypes.RemoveMemberSuccess;
@@ -71,7 +71,7 @@ export type Action =
 			payload: {
 				items: (UserAccount | UserGroup)[];
 				lastPage: number;
-				type: SelectOptions;
+				type: MemberType;
 			};
 			type: ActionTypes.SearchSuccess;
 	  }
@@ -79,18 +79,18 @@ export type Action =
 			payload: {
 				items: (UserAccount | UserGroup)[];
 				page: number;
-				type: SelectOptions;
+				type: MemberType;
 			};
 			type: ActionTypes.LoadMoreSuccess;
 	  }
 	| {
-			payload: {item: UserAccount | UserGroup; type: SelectOptions};
+			payload: {item: UserAccount | UserGroup; type: MemberType};
 			type:
 				| ActionTypes.AddMemberSuccess
 				| ActionTypes.RemoveMemberFailure;
 	  }
 	| {
-			payload: {type: SelectOptions};
+			payload: {type: MemberType};
 			type: ActionTypes.SearchStart;
 	  }
 	| {
@@ -157,7 +157,7 @@ export function reducer(state: State, action: Action): State {
 		case ActionTypes.AddMemberSuccess: {
 			const {item, type} = action.payload;
 
-			const key = type === SelectOptions.USERS ? 'users' : 'groups';
+			const key = type === MemberType.USERS ? 'users' : 'groups';
 
 			return {
 				...state,
@@ -172,7 +172,7 @@ export function reducer(state: State, action: Action): State {
 		case ActionTypes.AddMemberFailure: {
 			const {id, type} = action.payload;
 
-			const key = type === SelectOptions.USERS ? 'users' : 'groups';
+			const key = type === MemberType.USERS ? 'users' : 'groups';
 
 			return {
 				...state,
@@ -189,7 +189,7 @@ export function reducer(state: State, action: Action): State {
 		case ActionTypes.RemoveMemberSuccess: {
 			const {id, type} = action.payload;
 
-			const key = type === SelectOptions.USERS ? 'users' : 'groups';
+			const key = type === MemberType.USERS ? 'users' : 'groups';
 
 			return {
 				...state,
@@ -205,7 +205,7 @@ export function reducer(state: State, action: Action): State {
 		case ActionTypes.RemoveMemberFailure: {
 			const {item, type} = action.payload;
 
-			const key = type === SelectOptions.USERS ? 'users' : 'groups';
+			const key = type === MemberType.USERS ? 'users' : 'groups';
 
 			return {
 				...state,
@@ -219,7 +219,7 @@ export function reducer(state: State, action: Action): State {
 		case ActionTypes.LoadMoreSuccess: {
 			const {items, page, type} = action.payload;
 
-			const key = type === SelectOptions.USERS ? 'users' : 'groups';
+			const key = type === MemberType.USERS ? 'users' : 'groups';
 
 			return {
 				...state,
@@ -290,7 +290,7 @@ export function reducer(state: State, action: Action): State {
 
 		case ActionTypes.SearchStart: {
 			const {type} = action.payload;
-			const key = type === SelectOptions.USERS ? 'users' : 'groups';
+			const key = type === MemberType.USERS ? 'users' : 'groups';
 
 			return {
 				...state,
@@ -306,7 +306,7 @@ export function reducer(state: State, action: Action): State {
 		case ActionTypes.SearchSuccess: {
 			const {items, lastPage, type} = action.payload;
 
-			const key = type === SelectOptions.USERS ? 'users' : 'groups';
+			const key = type === MemberType.USERS ? 'users' : 'groups';
 
 			return {
 				...state,

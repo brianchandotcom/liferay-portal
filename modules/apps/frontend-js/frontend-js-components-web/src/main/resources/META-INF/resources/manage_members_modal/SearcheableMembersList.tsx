@@ -8,13 +8,13 @@ import {debounce} from 'frontend-js-web';
 import React, {useMemo, useState} from 'react';
 
 import {MembersSelectOptions} from './MembersSelectOptions';
-import {SelectOptions} from './types';
+import {MemberType} from './types';
 
 interface SearcheableMembersListProps {
 	className?: string;
 	onSearch: (value: string) => void;
-	onSelectChange: (value: SelectOptions) => void;
-	selectValue: SelectOptions;
+	onSelectChange: (value: MemberType) => void;
+	selectValue: MemberType;
 }
 
 export function SearcheableMembersList({

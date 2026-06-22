@@ -90,7 +90,7 @@ public class DDMFormGuestUploadFieldUtilTest {
 
 	@After
 	public void tearDown() {
-		_ddmFormInstanceRecordsCountMap.clear();
+		_ddmFormInstanceRecordsCounts.clear();
 	}
 
 	@Test
@@ -203,7 +203,7 @@ public class DDMFormGuestUploadFieldUtilTest {
 	protected static final JSONFactory jsonFactory = new JSONFactoryImpl();
 
 	private void _addDDMFormInstanceRecordsCount(int count, String ipAddress) {
-		int ddmFormInstanceRecordsCount = _ddmFormInstanceRecordsCountMap.merge(
+		int ddmFormInstanceRecordsCount = _ddmFormInstanceRecordsCounts.merge(
 			ipAddress, count, Integer::sum);
 
 		Mockito.when(
@@ -296,7 +296,7 @@ public class DDMFormGuestUploadFieldUtilTest {
 	private static final MockedStatic<FrameworkUtil>
 		_frameworkUtilMockedStatic = Mockito.mockStatic(FrameworkUtil.class);
 
-	private final Map<String, Integer> _ddmFormInstanceRecordsCountMap =
+	private final Map<String, Integer> _ddmFormInstanceRecordsCounts =
 		new HashMap<>();
 
 }

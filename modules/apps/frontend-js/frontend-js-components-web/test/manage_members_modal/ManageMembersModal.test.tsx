@@ -13,9 +13,9 @@ import ManageMembersModal from '../../src/main/resources/META-INF/resources/mana
 import {MembersSelectOptions} from '../../src/main/resources/META-INF/resources/manage_members_modal/MembersSelectOptions';
 import {
 	AddMembersInputApi,
+	MemberType,
 	MembersConfig,
 	Role,
-	SelectOptions,
 	UserAccount,
 	UserGroup,
 } from '../../src/main/resources/META-INF/resources/manage_members_modal/types';
@@ -174,7 +174,7 @@ function renderAddMembersInput({
 			<button
 				onClick={() =>
 					onAutocompleteItemSelected(
-						selectValue === SelectOptions.USERS
+						selectValue === MemberType.USERS
 							? CANDIDATE_USER
 							: CANDIDATE_GROUP
 					)

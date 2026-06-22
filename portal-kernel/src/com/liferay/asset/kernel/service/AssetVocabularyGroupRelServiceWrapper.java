@@ -31,11 +31,11 @@ public class AssetVocabularyGroupRelServiceWrapper
 
 	@Override
 	public AssetVocabularyGroupRel addAssetVocabularyGroupRel(
-			long groupId, long vocabularyId)
+			long groupId, long vocabularyId, int depotEntryType)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _assetVocabularyGroupRelService.addAssetVocabularyGroupRel(
-			groupId, vocabularyId);
+			groupId, vocabularyId, depotEntryType);
 	}
 
 	@Override
@@ -58,11 +58,12 @@ public class AssetVocabularyGroupRelServiceWrapper
 	}
 
 	@Override
-	public void setAssetVocabularyGroupRels(long vocabularyId, long[] groupIds)
+	public void setAssetVocabularyGroupRels(
+			long vocabularyId, long[] groupIds, int depotEntryType)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_assetVocabularyGroupRelService.setAssetVocabularyGroupRels(
-			vocabularyId, groupIds);
+			vocabularyId, groupIds, depotEntryType);
 	}
 
 	@Override
@@ -80,4 +81,4 @@ public class AssetVocabularyGroupRelServiceWrapper
 	private AssetVocabularyGroupRelService _assetVocabularyGroupRelService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-628723472
+// LIFERAY-SERVICE-BUILDER-HASH:-1592607922

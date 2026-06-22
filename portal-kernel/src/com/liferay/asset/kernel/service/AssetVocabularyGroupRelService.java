@@ -45,7 +45,7 @@ public interface AssetVocabularyGroupRelService extends BaseService {
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portlet.asset.service.impl.AssetVocabularyGroupRelServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the asset vocabulary group rel remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link AssetVocabularyGroupRelServiceUtil} if injection and service tracking are not available.
 	 */
 	public AssetVocabularyGroupRel addAssetVocabularyGroupRel(
-			long groupId, long vocabularyId)
+			long groupId, long vocabularyId, int depotEntryType)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -60,8 +60,9 @@ public interface AssetVocabularyGroupRelService extends BaseService {
 	 */
 	public String getOSGiServiceIdentifier();
 
-	public void setAssetVocabularyGroupRels(long vocabularyId, long[] groupIds)
+	public void setAssetVocabularyGroupRels(
+			long vocabularyId, long[] groupIds, int depotEntryType)
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2124105144
+// LIFERAY-SERVICE-BUILDER-HASH:50115588

@@ -43,7 +43,8 @@ public class AssetVocabularyGroupRelServiceHttp {
 
 	public static com.liferay.asset.kernel.model.AssetVocabularyGroupRel
 			addAssetVocabularyGroupRel(
-				HttpPrincipal httpPrincipal, long groupId, long vocabularyId)
+				HttpPrincipal httpPrincipal, long groupId, long vocabularyId,
+				int depotEntryType)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -53,7 +54,7 @@ public class AssetVocabularyGroupRelServiceHttp {
 				_addAssetVocabularyGroupRelParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, vocabularyId);
+				methodKey, groupId, vocabularyId, depotEntryType);
 
 			Object returnObj = null;
 
@@ -130,7 +131,8 @@ public class AssetVocabularyGroupRelServiceHttp {
 	}
 
 	public static void setAssetVocabularyGroupRels(
-			HttpPrincipal httpPrincipal, long vocabularyId, long[] groupIds)
+			HttpPrincipal httpPrincipal, long vocabularyId, long[] groupIds,
+			int depotEntryType)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -140,7 +142,7 @@ public class AssetVocabularyGroupRelServiceHttp {
 				_setAssetVocabularyGroupRelsParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, vocabularyId, groupIds);
+				methodKey, vocabularyId, groupIds, depotEntryType);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
@@ -170,14 +172,14 @@ public class AssetVocabularyGroupRelServiceHttp {
 		AssetVocabularyGroupRelServiceHttp.class);
 
 	private static final Class<?>[] _addAssetVocabularyGroupRelParameterTypes0 =
-		new Class[] {long.class, long.class};
+		new Class[] {long.class, long.class, int.class};
 	private static final Class<?>[]
 		_getAssetVocabularyGroupRelsByVocabularyIdParameterTypes1 =
 			new Class[] {long.class};
 	private static final Class<?>[]
 		_setAssetVocabularyGroupRelsParameterTypes2 = new Class[] {
-			long.class, long[].class
+			long.class, long[].class, int.class
 		};
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:423677408
+// LIFERAY-SERVICE-BUILDER-HASH:1866084416

@@ -67,7 +67,7 @@ public class AssetVocabularyGroupRelCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -83,6 +83,8 @@ public class AssetVocabularyGroupRelCacheModel
 		sb.append(companyId);
 		sb.append(", vocabularyId=");
 		sb.append(vocabularyId);
+		sb.append(", depotEntryType=");
+		sb.append(depotEntryType);
 		sb.append("}");
 
 		return sb.toString();
@@ -108,6 +110,7 @@ public class AssetVocabularyGroupRelCacheModel
 		assetVocabularyGroupRelImpl.setGroupId(groupId);
 		assetVocabularyGroupRelImpl.setCompanyId(companyId);
 		assetVocabularyGroupRelImpl.setVocabularyId(vocabularyId);
+		assetVocabularyGroupRelImpl.setDepotEntryType(depotEntryType);
 
 		assetVocabularyGroupRelImpl.resetOriginalValues();
 
@@ -128,6 +131,8 @@ public class AssetVocabularyGroupRelCacheModel
 		companyId = objectInput.readLong();
 
 		vocabularyId = objectInput.readLong();
+
+		depotEntryType = objectInput.readInt();
 	}
 
 	@Override
@@ -150,6 +155,8 @@ public class AssetVocabularyGroupRelCacheModel
 		objectOutput.writeLong(companyId);
 
 		objectOutput.writeLong(vocabularyId);
+
+		objectOutput.writeInt(depotEntryType);
 	}
 
 	public long mvccVersion;
@@ -159,6 +166,7 @@ public class AssetVocabularyGroupRelCacheModel
 	public long groupId;
 	public long companyId;
 	public long vocabularyId;
+	public int depotEntryType;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:282957432
+// LIFERAY-SERVICE-BUILDER-HASH:1495904907

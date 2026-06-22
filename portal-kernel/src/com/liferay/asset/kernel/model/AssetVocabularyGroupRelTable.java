@@ -43,10 +43,14 @@ public class AssetVocabularyGroupRelTable
 	public final Column<AssetVocabularyGroupRelTable, Long> vocabularyId =
 		createColumn(
 			"vocabularyId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<AssetVocabularyGroupRelTable, Integer> depotEntryType =
+		createColumn(
+			"depotEntryType", Integer.class, Types.INTEGER,
+			Column.FLAG_DEFAULT);
 
 	private AssetVocabularyGroupRelTable() {
 		super("AssetVocabularyGroupRel", AssetVocabularyGroupRelTable::new);
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1244633168
+// LIFERAY-SERVICE-BUILDER-HASH:-1754020667

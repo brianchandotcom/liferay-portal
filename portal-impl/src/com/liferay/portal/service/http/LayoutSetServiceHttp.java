@@ -79,7 +79,8 @@ public class LayoutSetServiceHttp {
 	}
 
 	public static void updateLayoutSetPrototypeLinkEnabled(
-			HttpPrincipal httpPrincipal, long groupId, boolean privateLayout,
+			HttpPrincipal httpPrincipal, long groupId,
+			boolean mergeLayoutSetPrototype, boolean privateLayout,
 			boolean layoutSetPrototypeLinkEnabled,
 			String layoutSetPrototypeUuid)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -89,6 +90,46 @@ public class LayoutSetServiceHttp {
 				LayoutSetServiceUtil.class,
 				"updateLayoutSetPrototypeLinkEnabled",
 				_updateLayoutSetPrototypeLinkEnabledParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, groupId, mergeLayoutSetPrototype, privateLayout,
+				layoutSetPrototypeLinkEnabled, layoutSetPrototypeUuid);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static void updateLayoutSetPrototypeLinkEnabled(
+			HttpPrincipal httpPrincipal, long groupId, boolean privateLayout,
+			boolean layoutSetPrototypeLinkEnabled,
+			String layoutSetPrototypeUuid)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				LayoutSetServiceUtil.class,
+				"updateLayoutSetPrototypeLinkEnabled",
+				_updateLayoutSetPrototypeLinkEnabledParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, privateLayout,
@@ -126,7 +167,7 @@ public class LayoutSetServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutSetServiceUtil.class, "updateLogo",
-				_updateLogoParameterTypes2);
+				_updateLogoParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, privateLayout, hasLogo, bytes);
@@ -163,7 +204,7 @@ public class LayoutSetServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutSetServiceUtil.class, "updateLogo",
-				_updateLogoParameterTypes3);
+				_updateLogoParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, privateLayout, hasLogo, file);
@@ -200,7 +241,7 @@ public class LayoutSetServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutSetServiceUtil.class, "updateLogo",
-				_updateLogoParameterTypes4);
+				_updateLogoParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, privateLayout, hasLogo, inputStream);
@@ -238,7 +279,7 @@ public class LayoutSetServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutSetServiceUtil.class, "updateLogo",
-				_updateLogoParameterTypes5);
+				_updateLogoParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, privateLayout, hasLogo, inputStream,
@@ -276,7 +317,7 @@ public class LayoutSetServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutSetServiceUtil.class, "updateLookAndFeel",
-				_updateLookAndFeelParameterTypes6);
+				_updateLookAndFeelParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, privateLayout, themeId, colorSchemeId, css);
@@ -317,7 +358,7 @@ public class LayoutSetServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutSetServiceUtil.class, "updateSettings",
-				_updateSettingsParameterTypes7);
+				_updateSettingsParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, privateLayout, settings);
@@ -358,7 +399,7 @@ public class LayoutSetServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutSetServiceUtil.class, "updateVirtualHosts",
-				_updateVirtualHostsParameterTypes8);
+				_updateVirtualHostsParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, privateLayout, virtualHostnames);
@@ -397,29 +438,34 @@ public class LayoutSetServiceHttp {
 		new Class[] {long.class, boolean.class, long.class};
 	private static final Class<?>[]
 		_updateLayoutSetPrototypeLinkEnabledParameterTypes1 = new Class[] {
+			long.class, boolean.class, boolean.class, boolean.class,
+			String.class
+		};
+	private static final Class<?>[]
+		_updateLayoutSetPrototypeLinkEnabledParameterTypes2 = new Class[] {
 			long.class, boolean.class, boolean.class, String.class
 		};
-	private static final Class<?>[] _updateLogoParameterTypes2 = new Class[] {
+	private static final Class<?>[] _updateLogoParameterTypes3 = new Class[] {
 		long.class, boolean.class, boolean.class, byte[].class
 	};
-	private static final Class<?>[] _updateLogoParameterTypes3 = new Class[] {
+	private static final Class<?>[] _updateLogoParameterTypes4 = new Class[] {
 		long.class, boolean.class, boolean.class, java.io.File.class
 	};
-	private static final Class<?>[] _updateLogoParameterTypes4 = new Class[] {
+	private static final Class<?>[] _updateLogoParameterTypes5 = new Class[] {
 		long.class, boolean.class, boolean.class, java.io.InputStream.class
 	};
-	private static final Class<?>[] _updateLogoParameterTypes5 = new Class[] {
+	private static final Class<?>[] _updateLogoParameterTypes6 = new Class[] {
 		long.class, boolean.class, boolean.class, java.io.InputStream.class,
 		boolean.class
 	};
-	private static final Class<?>[] _updateLookAndFeelParameterTypes6 =
+	private static final Class<?>[] _updateLookAndFeelParameterTypes7 =
 		new Class[] {
 			long.class, boolean.class, String.class, String.class, String.class
 		};
-	private static final Class<?>[] _updateSettingsParameterTypes7 =
+	private static final Class<?>[] _updateSettingsParameterTypes8 =
 		new Class[] {long.class, boolean.class, String.class};
-	private static final Class<?>[] _updateVirtualHostsParameterTypes8 =
+	private static final Class<?>[] _updateVirtualHostsParameterTypes9 =
 		new Class[] {long.class, boolean.class, java.util.TreeMap.class};
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:66248207
+// LIFERAY-SERVICE-BUILDER-HASH:-291592870

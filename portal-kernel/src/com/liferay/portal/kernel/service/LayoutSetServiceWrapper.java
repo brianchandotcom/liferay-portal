@@ -44,6 +44,18 @@ public class LayoutSetServiceWrapper
 			groupId, privateLayout, faviconFileEntryId);
 	}
 
+	@Override
+	public void updateLayoutSetPrototypeLinkEnabled(
+			long groupId, boolean mergeLayoutSetPrototype,
+			boolean privateLayout, boolean layoutSetPrototypeLinkEnabled,
+			String layoutSetPrototypeUuid)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_layoutSetService.updateLayoutSetPrototypeLinkEnabled(
+			groupId, mergeLayoutSetPrototype, privateLayout,
+			layoutSetPrototypeLinkEnabled, layoutSetPrototypeUuid);
+	}
+
 	/**
 	 * Updates the state of the layout set prototype link.
 	 *
@@ -153,4 +165,4 @@ public class LayoutSetServiceWrapper
 	private LayoutSetService _layoutSetService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1048476957
+// LIFERAY-SERVICE-BUILDER-HASH:-1837078418

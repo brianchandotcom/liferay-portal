@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.dao.db.IndexMetadata;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -567,24 +568,27 @@ public class BaseDBProcessTest extends BaseDBProcess {
 
 	@Test
 	public void testProcessConcurrentlyWithBatch() throws Exception {
-		_validateProcessConcurrently(
-			threadIds -> processConcurrently(
-				"select id from " + _TABLE_NAME,
-				"update " + _TABLE_NAME + " set typeInteger = ? where id = ?",
-				resultSet -> new Object[] {resultSet.getInt("id")},
-				(values, preparedStatement) -> {
-					Thread currentThread = Thread.currentThread();
+		_validateProcessConcurrently(this::_processConcurrentlyWithBatch);
+	}
 
-					threadIds.add(currentThread.getId());
+	@Test
+	public void testProcessConcurrentlyWithBatchWhenDatabasePartitionEnabled()
+		throws Exception {
 
-					int value = (int)values[0];
+		_populateTable();
 
-					preparedStatement.setInt(1, value);
-					preparedStatement.setInt(2, value);
+		Set<Long> threadIds = Collections.synchronizedSet(new HashSet<>());
 
-					preparedStatement.addBatch();
-				},
-				null));
+		try (SafeCloseable safeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"DATABASE_PARTITION_ENABLED", true)) {
+
+			_processConcurrentlyWithBatch(threadIds);
+		}
+
+		Assert.assertTrue(threadIds.size() > 1);
+
+		_validateTableContent();
 	}
 
 	@Test
@@ -627,6 +631,28 @@ public class BaseDBProcessTest extends BaseDBProcess {
 					"insert into ", _TABLE_NAME, " (id, notNilColumn) values (",
 					i, ", '1')"));
 		}
+	}
+
+	private void _processConcurrentlyWithBatch(Set<Long> threadIds)
+		throws Exception {
+
+		processConcurrently(
+			"select id from " + _TABLE_NAME,
+			"update " + _TABLE_NAME + " set typeInteger = ? where id = ?",
+			resultSet -> new Object[] {resultSet.getInt("id")},
+			(values, preparedStatement) -> {
+				Thread currentThread = Thread.currentThread();
+
+				threadIds.add(currentThread.getId());
+
+				int value = (int)values[0];
+
+				preparedStatement.setInt(1, value);
+				preparedStatement.setInt(2, value);
+
+				preparedStatement.addBatch();
+			},
+			null);
 	}
 
 	private void _validateIndex(String[] columnNames) throws Exception {

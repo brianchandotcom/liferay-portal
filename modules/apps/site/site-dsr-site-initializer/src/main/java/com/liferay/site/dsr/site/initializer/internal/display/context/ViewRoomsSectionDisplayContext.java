@@ -65,9 +65,10 @@ public class ViewRoomsSectionDisplayContext extends BaseSectionDisplayContext {
 
 	@Override
 	public String getAPIURL() {
-		StringBundler sb = new StringBundler(2);
+		StringBundler sb = new StringBundler(3);
 
-		sb.append("/o/digital-sales-room/rooms?nestedFields=creator");
+		sb.append("/o/digital-sales-room/rooms?nestedFields=creator,");
+		sb.append("r_accountToDSRRooms_accountEntryId");
 
 		if (isHomePage()) {
 			sb.append("&pageSize=5&sort=dateModified:desc");

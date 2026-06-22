@@ -14,12 +14,8 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-
-import java.io.Serializable;
-
-import java.util.Map;
 
 /**
  * @author Tancredi Covioli
@@ -83,7 +79,9 @@ public class DSRDefaultPermissionObjectEntryModelResourcePermission
 			String actionId)
 		throws PortalException {
 
-		if (!_isInactive(objectEntry)) {
+		if (MapUtil.getInteger(objectEntry.getValues(), "roomStatus") !=
+				WorkflowConstants.STATUS_INACTIVE) {
+
 			return _contains(permissionChecker, objectEntry, actionId);
 		}
 
@@ -91,11 +89,7 @@ public class DSRDefaultPermissionObjectEntryModelResourcePermission
 			return true;
 		}
 
-		long siteId = GetterUtil.getLong(
-			objectEntry.getValues(
-			).get(
-				"siteId"
-			));
+		long siteId = MapUtil.getLong(objectEntry.getValues(), "siteId");
 
 		if ((siteId > 0) && permissionChecker.isGroupOwner(siteId)) {
 			return true;
@@ -135,11 +129,7 @@ public class DSRDefaultPermissionObjectEntryModelResourcePermission
 		if (actionId.equals(ActionKeys.ADD_DISCUSSION) ||
 			actionId.equals(ActionKeys.VIEW)) {
 
-			long siteId = GetterUtil.getLong(
-				objectEntry.getValues(
-				).get(
-					"siteId"
-				));
+			long siteId = MapUtil.getLong(objectEntry.getValues(), "siteId");
 
 			if ((siteId > 0) && permissionChecker.isGroupMember(siteId)) {
 				return true;
@@ -148,18 +138,6 @@ public class DSRDefaultPermissionObjectEntryModelResourcePermission
 
 		return _modelResourcePermission.contains(
 			permissionChecker, objectEntry, actionId);
-	}
-
-	private boolean _isInactive(ObjectEntry objectEntry) {
-		Map<String, Serializable> values = objectEntry.getValues();
-
-		if (GetterUtil.getInteger(values.get("roomStatus")) ==
-				WorkflowConstants.STATUS_INACTIVE) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	private final ModelResourcePermission<ObjectEntry> _modelResourcePermission;

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -60,8 +61,13 @@ public class ViewRoomStrutsAction implements StrutsAction {
 				httpServletRequest,
 				PrincipalException.MustHavePermission.class);
 
-			httpServletResponse.sendRedirect(
-				httpServletRequest.getHeader(HttpHeaders.REFERER));
+			String redirect = httpServletRequest.getHeader(HttpHeaders.REFERER);
+
+			if (Validator.isNull(redirect)) {
+				redirect = themeDisplay.getURLHome();
+			}
+
+			httpServletResponse.sendRedirect(redirect);
 
 			return null;
 		}
@@ -103,9 +109,14 @@ public class ViewRoomStrutsAction implements StrutsAction {
 					httpServletRequest,
 					PrincipalException.MustHavePermission.class);
 
-				httpServletResponse.sendRedirect(
-					_portal.escapeRedirect(
-						httpServletRequest.getHeader(HttpHeaders.REFERER)));
+				String redirect = _portal.escapeRedirect(
+					httpServletRequest.getHeader(HttpHeaders.REFERER));
+
+				if (Validator.isNull(redirect)) {
+					redirect = themeDisplay.getURLHome();
+				}
+
+				httpServletResponse.sendRedirect(redirect);
 
 				return null;
 			}

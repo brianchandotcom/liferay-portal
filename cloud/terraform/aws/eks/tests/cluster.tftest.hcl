@@ -3,21 +3,18 @@ mock_provider "helm" {}
 mock_provider "kubernetes" {}
 mock_provider "random" {}
 mock_provider "time" {}
-
 override_data {
 	target=data.aws_availability_zones.available
 	values={
 		names=["us-east-1a", "us-east-1b", "us-east-1c"]
 	}
 }
-
 override_data {
 	target=data.aws_caller_identity.current
 	values={
 		account_id="123456789012"
 	}
 }
-
 override_module {
 	outputs={
 		cluster_addons={}
@@ -32,12 +29,10 @@ override_module {
 	}
 	target=module.eks
 }
-
 override_module {
 	outputs={}
 	target=module.envoy_proxy_role
 }
-
 override_module {
 	outputs={
 		private_subnets=["subnet-aaa", "subnet-bbb"]
@@ -45,121 +40,91 @@ override_module {
 	}
 	target=module.vpc
 }
-
 run "should_accept_custom_deployment_namespace" {
 	assert {
 		condition=output.deployment_namespace == "my-ns"
 		error_message="The custom deployment_namespace must be accepted and exposed"
 	}
-
 	command=plan
-
 	variables {
 		deployment_namespace="my-ns"
 	}
 }
-
 run "should_accept_deployment_name_with_3_characters" {
 	assert {
 		condition=output.deployment_name == "abc"
 		error_message="The deployment_name with 3 lowercase characters must be accepted"
 	}
-
 	command=plan
-
 	variables {
 		deployment_name="abc"
 	}
 }
-
 run "should_derive_cluster_name_from_deployment_name" {
 	assert {
 		condition=local.cluster_name == "liferay-test-eks"
 		error_message="The local.cluster_name must be \"<deployment_name>-eks\""
 	}
-
 	assert {
 		condition=output.cluster_name == "liferay-test-eks"
 		error_message="The cluster_name output must come from module.eks"
 	}
-
 	command=plan
 }
-
 run "should_expose_inputs_as_outputs" {
 	assert {
 		condition=output.arn_partition == "aws"
 		error_message="The arn_partition output must default to \"aws\""
 	}
-
 	assert {
 		condition=output.deployment_name == "liferay-test"
 		error_message="The deployment_name output must echo var.deployment_name"
 	}
-
 	assert {
 		condition=output.deployment_namespace == "liferay-system"
 		error_message="The deployment_namespace output must default to \"liferay-system\""
 	}
-
 	assert {
 		condition=output.region == "us-east-1"
 		error_message="The region output must echo var.region"
 	}
-
 	command=plan
 }
-
 run "should_not_accept_deployment_name_longer_than_24_characters" {
 	command=plan
-
 	expect_failures=[var.deployment_name]
-
 	variables {
 		deployment_name="abcdefghijklmnopqrstuvwxy"
 	}
 }
-
 run "should_not_accept_deployment_name_shorter_than_3_characters" {
 	command=plan
-
 	expect_failures=[var.deployment_name]
-
 	variables {
 		deployment_name="ab"
 	}
 }
-
 run "should_not_accept_deployment_name_starting_with_a_digit" {
 	command=plan
-
 	expect_failures=[var.deployment_name]
-
 	variables {
 		deployment_name="1iferay-test"
 	}
 }
-
 run "should_not_accept_invalid_deployment_namespace" {
 	command=plan
-
 	expect_failures=[var.deployment_namespace]
-
 	variables {
 		deployment_namespace="Bad_Namespace"
 	}
 }
-
 run "should_not_accept_uppercase_deployment_name" {
 	command=plan
-
 	expect_failures=[var.deployment_name]
-
 	variables {
 		deployment_name="Liferay-Test"
 	}
 }
-
 variables {
 	deployment_name="liferay-test"
 	envoy_gateway_helm_chart_version="1.5.2"

@@ -23,13 +23,11 @@ public class FIPSModeUtil {
 			return false;
 		}
 
-		String normalizedString = StringUtil.toUpperCase(algorithm);
+		algorithm = StringUtil.toUpperCase(algorithm);
 
-		if (normalizedString.equals("AES") ||
-			normalizedString.startsWith("PBKDF2") ||
-			normalizedString.equals("SHA-256") ||
-			normalizedString.equals("SHA-384") ||
-			normalizedString.equals("SHA-512")) {
+		if (algorithm.equals("AES") || algorithm.startsWith("AES/") ||
+			algorithm.startsWith("PBKDF2") || algorithm.equals("SHA-256") ||
+			algorithm.equals("SHA-384") || algorithm.equals("SHA-512")) {
 
 			return true;
 		}

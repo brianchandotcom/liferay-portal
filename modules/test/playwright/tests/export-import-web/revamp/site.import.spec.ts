@@ -138,3 +138,37 @@ test('Should show error on invalid lar upload (extension not .lar)', async ({
 
 	await expect(exportImportPage.continueButton).toBeDisabled();
 });
+
+test(
+	'checks every content section by default on the Data Selection step',
+	{tag: '@LPD-95002'},
+	async ({exportImportPage, page, productMenuPage}) => {
+		await productMenuPage.openProductMenuIfClosed();
+
+		await productMenuPage.goToPublishingImport();
+
+		await exportImportPage.newImport.click();
+
+		await exportImportPage.selectFile(
+			path.join(__dirname, '../main/dependencies', 'site.lar')
+		);
+
+		await exportImportPage.completedLabel.waitFor();
+
+		await exportImportPage.continueButton.click();
+
+		// Sections are checked by default; a render loop never reaches this state.
+
+		const sectionToggle = page
+			.getByRole('button', {name: /^Expand /})
+			.first();
+
+		const sectionName = (await sectionToggle.getAttribute(
+			'aria-label'
+		))!.replace(/^Expand /, '');
+
+		await expect(
+			page.getByRole('checkbox', {name: sectionName})
+		).toBeChecked();
+	}
+);

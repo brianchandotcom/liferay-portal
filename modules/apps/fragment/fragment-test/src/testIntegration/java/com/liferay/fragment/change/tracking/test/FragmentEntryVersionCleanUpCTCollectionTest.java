@@ -91,7 +91,7 @@ public class FragmentEntryVersionCleanUpCTCollectionTest {
 
 				int count =
 					FragmentEntryVersionConstants.
-						FRAGMENT_ENTRY_VERSIONS_COUNT_MAX +
+						FRAGMENT_ENTRY_VERSIONS_MAX_COUNT +
 							RandomTestUtil.randomInt(1, 10);
 
 				for (int i = 0; i < count; i++) {
@@ -120,10 +120,10 @@ public class FragmentEntryVersionCleanUpCTCollectionTest {
 			Assert.assertTrue(
 				versionsInCTCollectionBeforeCleanUp >
 					FragmentEntryVersionConstants.
-						FRAGMENT_ENTRY_VERSIONS_COUNT_MAX);
+						FRAGMENT_ENTRY_VERSIONS_MAX_COUNT);
 
 			Assert.assertEquals(
-				FragmentEntryVersionConstants.FRAGMENT_ENTRY_VERSIONS_COUNT_MAX,
+				FragmentEntryVersionConstants.FRAGMENT_ENTRY_VERSIONS_MAX_COUNT,
 				versionsInCTCollectionAfterCleanUp);
 
 			try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(

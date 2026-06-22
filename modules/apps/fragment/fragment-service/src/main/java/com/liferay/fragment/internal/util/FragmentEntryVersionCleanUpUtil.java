@@ -36,7 +36,7 @@ public class FragmentEntryVersionCleanUpUtil {
 			"FragmentEntryVersion1.fragmentEntryId and ",
 			"FragmentEntryVersion2.version >= FragmentEntryVersion1.version) ",
 			"> ",
-			FragmentEntryVersionConstants.FRAGMENT_ENTRY_VERSIONS_COUNT_MAX,
+			FragmentEntryVersionConstants.FRAGMENT_ENTRY_VERSIONS_MAX_COUNT,
 			") tempFragmentEntryVersion)");
 	}
 

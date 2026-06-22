@@ -16,8 +16,6 @@ import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
-import com.liferay.layout.util.UpdateLayoutStatusThreadLocal;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -130,24 +128,21 @@ public class PublishFragmentEntryMVCActionCommandTest {
 				"<div><lfr-drop-zone data-lfr-drop-zone-id=\"1\">" +
 					"</lfr-drop-zone></div>");
 
-			Layout layout = LayoutTestUtil.addTypeContentPublishedLayout(
-				_group, RandomTestUtil.randomString(),
-				WorkflowConstants.STATUS_APPROVED);
+			Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
-			try (SafeCloseable safeCloseable =
-					UpdateLayoutStatusThreadLocal.
-						setUpdateLayoutStatusWithSafeCloseable(false)) {
+			Layout draftLayout = layout.fetchDraftLayout();
 
-				ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
-					StringPool.BLANK, fragmentEntry.getCss(),
-					fragmentEntry.getConfiguration(),
-					fragmentEntry.getExternalReferenceCode(), null,
-					fragmentEntry.getHtml(), fragmentEntry.getJs(), layout,
-					fragmentEntry.getFragmentEntryKey(),
-					_segmentsExperienceLocalService.
-						fetchDefaultSegmentsExperienceId(layout.getPlid()),
-					fragmentEntry.getType());
-			}
+			ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+				StringPool.BLANK, fragmentEntry.getCss(),
+				fragmentEntry.getConfiguration(),
+				fragmentEntry.getExternalReferenceCode(), null,
+				fragmentEntry.getHtml(), fragmentEntry.getJs(), draftLayout,
+				fragmentEntry.getFragmentEntryKey(),
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(draftLayout.getPlid()),
+				fragmentEntry.getType());
+
+			ContentLayoutTestUtil.publishLayout(draftLayout, layout);
 
 			fragmentEntry.setHtml(fragmentEntry.getHtml() + "<!--updated-->");
 

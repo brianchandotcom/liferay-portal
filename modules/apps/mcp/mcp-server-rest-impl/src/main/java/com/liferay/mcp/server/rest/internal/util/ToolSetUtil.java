@@ -338,12 +338,21 @@ public class ToolSetUtil {
 			_getBaseURL(httpServletRequest) + openAPIBrief._basePath +
 				openAPIBrief._openAPIPath,
 			url -> {
+				String content = null;
+
 				try {
-					return JSONFactoryUtil.createJSONObject(
-						_get(httpServletRequest, url));
+					content = _get(httpServletRequest, url);
+
+					return JSONFactoryUtil.createJSONObject(content);
 				}
 				catch (Exception exception) {
-					throw new RuntimeException(exception);
+					throw new RuntimeException(
+						StringBundler.concat(
+							"Unable to read a valid OpenAPI document from \"",
+							url, "\": ",
+							StringUtil.shorten(
+								GetterUtil.getString(content), 200)),
+						exception);
 				}
 			});
 	}

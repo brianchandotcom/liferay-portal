@@ -262,20 +262,10 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 		return layoutSetPersistence.update(layoutSet);
 	}
 
-	/**
-	 * Updates the state of the layout set prototype link.
-	 *
-	 * @param groupId the primary key of the group
-	 * @param privateLayout whether the layout set is private to the group
-	 * @param layoutSetPrototypeLinkEnabled whether the layout set prototype is
-	 *        link enabled
-	 * @param layoutSetPrototypeUuid the uuid of the layout set prototype to
-	 *        link with
-	 */
 	@Override
 	public void updateLayoutSetPrototypeLinkEnabled(
-			long groupId, boolean privateLayout,
-			boolean layoutSetPrototypeLinkEnabled,
+			long groupId, boolean mergeLayoutSetPrototype,
+			boolean privateLayout, boolean layoutSetPrototypeLinkEnabled,
 			String layoutSetPrototypeUuid)
 		throws PortalException {
 
@@ -329,7 +319,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 			_layoutSetBranchPersistence.update(layoutSetBranch);
 		}
 
-		if (!layoutSetPrototypeLinkEnabled ||
+		if (!mergeLayoutSetPrototype || !layoutSetPrototypeLinkEnabled ||
 			Validator.isNotNull(previousLayoutSetPrototypeUuid) ||
 			Validator.isNull(layoutSetPrototypeUuid)) {
 
@@ -348,6 +338,28 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 					exception);
 			}
 		}
+	}
+
+	/**
+	 * Updates the state of the layout set prototype link.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param privateLayout whether the layout set is private to the group
+	 * @param layoutSetPrototypeLinkEnabled whether the layout set prototype is
+	 *        link enabled
+	 * @param layoutSetPrototypeUuid the uuid of the layout set prototype to
+	 *        link with
+	 */
+	@Override
+	public void updateLayoutSetPrototypeLinkEnabled(
+			long groupId, boolean privateLayout,
+			boolean layoutSetPrototypeLinkEnabled,
+			String layoutSetPrototypeUuid)
+		throws PortalException {
+
+		layoutSetLocalService.updateLayoutSetPrototypeLinkEnabled(
+			groupId, true, privateLayout, layoutSetPrototypeLinkEnabled,
+			layoutSetPrototypeUuid);
 	}
 
 	@Override

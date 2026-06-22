@@ -38,6 +38,31 @@ public class LayoutSetServiceImpl extends LayoutSetServiceBaseImpl {
 			groupId, privateLayout, faviconFileEntryId);
 	}
 
+	@Override
+	public void updateLayoutSetPrototypeLinkEnabled(
+			long groupId, boolean mergeLayoutSetPrototype,
+			boolean privateLayout, boolean layoutSetPrototypeLinkEnabled,
+			String layoutSetPrototypeUuid)
+		throws PortalException {
+
+		GroupPermissionUtil.check(
+			getPermissionChecker(), groupId, ActionKeys.UPDATE);
+
+		LayoutSet layoutSet = layoutSetLocalService.getLayoutSet(
+			groupId, privateLayout);
+
+		if (layoutSet.isLayoutSetPrototypeLinkEnabled() &&
+			!layoutSetPrototypeLinkEnabled) {
+
+			PortalPermissionUtil.check(
+				getPermissionChecker(), ActionKeys.UNLINK_LAYOUT_SET_PROTOTYPE);
+		}
+
+		layoutSetLocalService.updateLayoutSetPrototypeLinkEnabled(
+			groupId, mergeLayoutSetPrototype, privateLayout,
+			layoutSetPrototypeLinkEnabled, layoutSetPrototypeUuid);
+	}
+
 	/**
 	 * Updates the state of the layout set prototype link.
 	 *
@@ -63,21 +88,8 @@ public class LayoutSetServiceImpl extends LayoutSetServiceBaseImpl {
 			String layoutSetPrototypeUuid)
 		throws PortalException {
 
-		GroupPermissionUtil.check(
-			getPermissionChecker(), groupId, ActionKeys.UPDATE);
-
-		LayoutSet layoutSet = layoutSetLocalService.getLayoutSet(
-			groupId, privateLayout);
-
-		if (layoutSet.isLayoutSetPrototypeLinkEnabled() &&
-			!layoutSetPrototypeLinkEnabled) {
-
-			PortalPermissionUtil.check(
-				getPermissionChecker(), ActionKeys.UNLINK_LAYOUT_SET_PROTOTYPE);
-		}
-
-		layoutSetLocalService.updateLayoutSetPrototypeLinkEnabled(
-			groupId, privateLayout, layoutSetPrototypeLinkEnabled,
+		layoutSetService.updateLayoutSetPrototypeLinkEnabled(
+			groupId, true, privateLayout, layoutSetPrototypeLinkEnabled,
 			layoutSetPrototypeUuid);
 	}
 

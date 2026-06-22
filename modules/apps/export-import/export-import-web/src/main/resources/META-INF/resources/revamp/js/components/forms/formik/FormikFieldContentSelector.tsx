@@ -4,7 +4,7 @@
  */
 
 import {useField, useFormikContext} from 'formik';
-import React, {useEffect} from 'react';
+import React, {useEffect, useRef} from 'react';
 
 import {PageTreeModalConfiguration} from '../../../pages/export/components/PageTreeModal';
 import {ExportImportProcess} from '../../../types/exportImportProcess';
@@ -50,10 +50,16 @@ export function FormikFieldContentSelector({
 			})
 		: undefined;
 
+	const hasSeededRef = useRef(false);
+
 	useEffect(() => {
-		if (seededContentSelection) {
-			setFieldValue(name, seededContentSelection);
+		if (hasSeededRef.current || !seededContentSelection) {
+			return;
 		}
+
+		hasSeededRef.current = true;
+
+		setFieldValue(name, seededContentSelection);
 	}, [name, seededContentSelection, setFieldValue]);
 
 	return (

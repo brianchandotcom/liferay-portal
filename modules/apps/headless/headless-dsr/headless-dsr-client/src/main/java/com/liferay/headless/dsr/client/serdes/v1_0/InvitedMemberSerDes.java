@@ -10,6 +10,9 @@ import com.liferay.headless.dsr.client.json.BaseJSONParser;
 
 import jakarta.annotation.Generated;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
@@ -46,6 +49,9 @@ public class InvitedMemberSerDes {
 
 		sb.append("{");
 
+		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ssXX");
+
 		if (invitedMember.getEmailAddress() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -68,6 +74,22 @@ public class InvitedMemberSerDes {
 			sb.append("\"id\": ");
 
 			sb.append(invitedMember.getId());
+		}
+
+		if (invitedMember.getMembershipExpirationDate() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"membershipExpirationDate\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				liferayToJSONDateFormat.format(
+					invitedMember.getMembershipExpirationDate()));
+
+			sb.append("\"");
 		}
 
 		if (invitedMember.getOwnerId() != null) {
@@ -113,6 +135,9 @@ public class InvitedMemberSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ssXX");
+
 		if (invitedMember.getEmailAddress() == null) {
 			map.put("emailAddress", null);
 		}
@@ -127,6 +152,16 @@ public class InvitedMemberSerDes {
 		}
 		else {
 			map.put("id", String.valueOf(invitedMember.getId()));
+		}
+
+		if (invitedMember.getMembershipExpirationDate() == null) {
+			map.put("membershipExpirationDate", null);
+		}
+		else {
+			map.put(
+				"membershipExpirationDate",
+				liferayToJSONDateFormat.format(
+					invitedMember.getMembershipExpirationDate()));
 		}
 
 		if (invitedMember.getOwnerId() == null) {
@@ -167,6 +202,11 @@ public class InvitedMemberSerDes {
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				return false;
 			}
+			else if (Objects.equals(
+						jsonParserFieldName, "membershipExpirationDate")) {
+
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "ownerId")) {
 				return false;
 			}
@@ -191,6 +231,14 @@ public class InvitedMemberSerDes {
 				if (jsonParserFieldValue != null) {
 					invitedMember.setId(
 						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "membershipExpirationDate")) {
+
+				if (jsonParserFieldValue != null) {
+					invitedMember.setMembershipExpirationDate(
+						toDate((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "ownerId")) {
@@ -285,4 +333,4 @@ public class InvitedMemberSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1697776880
+// LIFERAY-REST-BUILDER-HASH:-1182801149

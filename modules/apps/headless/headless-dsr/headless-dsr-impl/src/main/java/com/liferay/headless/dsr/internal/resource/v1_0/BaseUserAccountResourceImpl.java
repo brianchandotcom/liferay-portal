@@ -123,7 +123,7 @@ public abstract class BaseUserAccountResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-dsr/v1.0/rooms/{roomId}/user-accounts/{userAccountId}' -d $'{"emailAddress": ___, "roleKey": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-dsr/v1.0/rooms/{roomId}/user-accounts/{userAccountId}' -d $'{"emailAddress": ___, "membershipExpirationDate": ___, "roleKey": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -163,7 +163,7 @@ public abstract class BaseUserAccountResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-dsr/v1.0/rooms/{roomId}/user-accounts' -d $'{"emailAddress": ___, "roleKey": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-dsr/v1.0/rooms/{roomId}/user-accounts' -d $'{"emailAddress": ___, "membershipExpirationDate": ___, "roleKey": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -637,4 +637,4 @@ public abstract class BaseUserAccountResourceImpl
 		LogFactoryUtil.getLog(BaseUserAccountResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1968555674
+// LIFERAY-REST-BUILDER-HASH:1176836322

@@ -117,7 +117,7 @@ public abstract class BaseInvitedMemberResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-dsr/v1.0/rooms/{roomId}/invited-members/{invitedMemberId}' -d $'{"roleKey": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-dsr/v1.0/rooms/{roomId}/invited-members/{invitedMemberId}' -d $'{"membershipExpirationDate": ___, "roleKey": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -601,4 +601,4 @@ public abstract class BaseInvitedMemberResourceImpl
 		LogFactoryUtil.getLog(BaseInvitedMemberResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1698440073
+// LIFERAY-REST-BUILDER-HASH:-357422291

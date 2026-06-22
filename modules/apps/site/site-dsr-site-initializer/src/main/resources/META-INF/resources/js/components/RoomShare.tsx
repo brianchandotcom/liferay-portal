@@ -45,9 +45,9 @@ function getDateInputValue(membershipExpirationDate?: string): string {
 	const date = new Date(membershipExpirationDate);
 
 	return [
-		String(date.getFullYear()),
-		String(date.getMonth() + 1).padStart(2, '0'),
-		String(date.getDate()).padStart(2, '0'),
+		String(date.getUTCFullYear()),
+		String(date.getUTCMonth() + 1).padStart(2, '0'),
+		String(date.getUTCDate()).padStart(2, '0'),
 	].join('-');
 }
 
@@ -58,7 +58,7 @@ function getExpirationDateTime(date: string): string | undefined {
 
 	const [year, month, day] = date.split('-').map(Number);
 
-	return new Date(year, month - 1, day, 23, 59, 59).toISOString();
+	return new Date(Date.UTC(year, month - 1, day, 23, 59, 59)).toISOString();
 }
 
 function getExpirationLabel(membershipExpirationDate: string): string {
@@ -67,6 +67,7 @@ function getExpirationLabel(membershipExpirationDate: string): string {
 		{
 			day: 'numeric',
 			month: 'short',
+			timeZone: 'UTC',
 			year: 'numeric',
 		}
 	);

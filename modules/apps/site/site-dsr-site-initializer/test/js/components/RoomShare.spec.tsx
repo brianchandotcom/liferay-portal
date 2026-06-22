@@ -573,6 +573,7 @@ describe('RoomShare', () => {
 				new Date(notExpiringSoonDate).toLocaleDateString('en-US', {
 					day: 'numeric',
 					month: 'short',
+					timeZone: 'UTC',
 					year: 'numeric',
 				})
 			)

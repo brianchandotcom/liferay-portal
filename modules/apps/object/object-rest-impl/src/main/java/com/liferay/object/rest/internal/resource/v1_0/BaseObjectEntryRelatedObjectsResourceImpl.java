@@ -583,6 +583,7 @@ public abstract class BaseObjectEntryRelatedObjectsResourceImpl
 	)
 	@Parameters(
 		{
+			@Parameter(in = ParameterIn.PATH, name = "scopeKey"),
 			@Parameter(
 				in = ParameterIn.PATH, name = "currentExternalReferenceCode"
 			),

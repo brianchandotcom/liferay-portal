@@ -555,9 +555,10 @@ public class RolesAdminPortlet extends MVCPortlet {
 	protected void checkPermissions(PortletRequest portletRequest)
 		throws Exception {
 
-		long roleId = ParamUtil.getLong(portletRequest, "roleId");
 		int roleType = ParamUtil.getInteger(
 			portletRequest, "roleType", RoleConstants.TYPE_REGULAR);
+
+		long roleId = ParamUtil.getLong(portletRequest, "roleId");
 
 		Role role = _roleLocalService.fetchRole(roleId);
 
@@ -583,8 +584,7 @@ public class RolesAdminPortlet extends MVCPortlet {
 		if (Objects.equals(mvcPath, "/edit_role_assignments.jsp")) {
 			RolePermissionUtil.check(
 				themeDisplay.getPermissionChecker(),
-				ParamUtil.getLong(portletRequest, "roleId"),
-				ActionKeys.ASSIGN_MEMBERS);
+				roleId, ActionKeys.ASSIGN_MEMBERS);
 		}
 
 		super.checkPermissions(portletRequest);

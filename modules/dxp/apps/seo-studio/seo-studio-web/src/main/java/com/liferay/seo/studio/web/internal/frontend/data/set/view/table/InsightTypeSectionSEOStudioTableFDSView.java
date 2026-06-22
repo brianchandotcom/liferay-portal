@@ -39,15 +39,21 @@ public class InsightTypeSectionSEOStudioTableFDSView extends BaseTableFDSView {
 				true
 			)
 		).add(
-			"category.name", "category",
+			"category", "category",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"categoryCellRenderer")
+				"categoryCellRenderer"
+			).setSortable(
+				true
+			)
 		).add(
 			"affectedPagesCount", "affected-pages"
 		).add(
-			"severity.name", "impact",
+			"severity", "impact",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"impactCellRenderer")
+				"impactCellRenderer"
+			).setSortable(
+				true
+			)
 		).build();
 	}
 

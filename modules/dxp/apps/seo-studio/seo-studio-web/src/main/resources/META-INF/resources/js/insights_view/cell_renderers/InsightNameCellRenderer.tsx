@@ -9,12 +9,16 @@ import {InsightsViewContext} from '../InsightsViewContext';
 
 export default function InsightNameCellRenderer({
 	itemData,
-	value,
 }: {
-	itemData: {externalReferenceCode: string};
-	value: string;
+	itemData: {externalReferenceCode: string; name?: {name?: string}};
 }) {
 	const {selectInsight} = useContext(InsightsViewContext);
+
+	const name = itemData?.name;
+
+	if (!name?.name) {
+		return null;
+	}
 
 	return (
 		<span
@@ -25,7 +29,7 @@ export default function InsightNameCellRenderer({
 			}}
 			style={{cursor: 'pointer', textDecoration: 'underline'}}
 		>
-			{value}
+			{name.name}
 		</span>
 	);
 }

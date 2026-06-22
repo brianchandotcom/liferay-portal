@@ -5,13 +5,11 @@
 
 package com.liferay.frontend.js.audiences;
 
-import com.liferay.portal.kernel.util.KeyValuePair;
-
 /**
  * @author Iván Zaera Avellón
  */
 public interface AudiencesDefinitionProvider {
 
-	public KeyValuePair getAudiencesDefinition(long companyId);
+	public HashedContent getHashedContent(long companyId);
 
 }

@@ -5,6 +5,7 @@
 
 package com.liferay.frontend.js.audiences.web.internal.util;
 
+import com.liferay.frontend.js.audiences.HashedContent;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.frontend.hashed.files.HashedFilesUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -23,20 +24,22 @@ public class BootstrapJavaScriptUtil {
 		return _TPL_BOOTSTRAP_JS_HASH;
 	}
 
-	public static String getJavaScript(
+	public static HashedContent getHashedContent(
 		String audiencesDefinitionHash, String elementVariationsHash,
 		boolean enableLog, long plid) {
 
-		return StringUtil.replace(
-			_TPL_BOOTSTRAP_JS,
-			new String[] {
-				"[$AUDIENCES_DEFINITION_HASH$]", "[$ELEMENT_VARIATIONS_HASH$]",
-				"[$LOG_ENABLED$]", "[$PLID$]"
-			},
-			new Object[] {
-				HtmlUtil.escapeJS(audiencesDefinitionHash),
-				HtmlUtil.escapeJS(elementVariationsHash), enableLog, plid
-			});
+		return new HashedContent(
+			StringUtil.replace(
+				_TPL_BOOTSTRAP_JS,
+				new String[] {
+					"[$AUDIENCES_DEFINITION_HASH$]",
+					"[$ELEMENT_VARIATIONS_HASH$]", "[$ENABLE_LOG$]", "[$PLID$]"
+				},
+				new Object[] {
+					HtmlUtil.escapeJS(audiencesDefinitionHash),
+					HtmlUtil.escapeJS(elementVariationsHash), enableLog, plid
+				}),
+			_TPL_BOOTSTRAP_JS_HASH);
 	}
 
 	private static String _read(String name) {

@@ -112,8 +112,8 @@ public class FrontendJSAudiencesWebServlet extends HttpServlet {
 
 		if (!Objects.equals(audiencesDefinition.getHash(), requestHash)) {
 			_sendRedirect(
-				httpServletRequest, httpServletResponse,
-				audiencesDefinition.getHash());
+				audiencesDefinition.getHash(), httpServletRequest,
+				httpServletResponse);
 
 			return;
 		}
@@ -143,7 +143,7 @@ public class FrontendJSAudiencesWebServlet extends HttpServlet {
 		String requestHash = HashedFilesUtil.getHash(parts[1]);
 
 		if (!Objects.equals(hash, requestHash)) {
-			_sendRedirect(httpServletRequest, httpServletResponse, hash);
+			_sendRedirect(hash, httpServletRequest, httpServletResponse);
 
 			return;
 		}
@@ -203,8 +203,8 @@ public class FrontendJSAudiencesWebServlet extends HttpServlet {
 
 		if (!Objects.equals(elementVariations.getHash(), requestHash)) {
 			_sendRedirect(
-				httpServletRequest, httpServletResponse,
-				elementVariations.getHash());
+				elementVariations.getHash(), httpServletRequest,
+				httpServletResponse);
 
 			return;
 		}
@@ -219,8 +219,8 @@ public class FrontendJSAudiencesWebServlet extends HttpServlet {
 	}
 
 	private void _sendRedirect(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, String hash)
+			String hash, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws IOException {
 
 		StringBundler sb = new StringBundler(3);

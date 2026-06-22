@@ -191,8 +191,8 @@ public class ElasticsearchSearchEngineInformation
 	public boolean isInferenceAPISupported() {
 		LicenseType licenseType = _getActiveLicenseType();
 
-		if ((licenseType != LicenseType.Trial) &&
-			(licenseType != LicenseType.Enterprise)) {
+		if ((licenseType != LicenseType.Enterprise) &&
+			(licenseType != LicenseType.Trial)) {
 
 			return false;
 		}

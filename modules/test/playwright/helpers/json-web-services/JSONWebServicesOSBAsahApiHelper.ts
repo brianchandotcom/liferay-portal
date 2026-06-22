@@ -45,6 +45,7 @@ type Event = {
 	browserName?: string;
 	canonicalUrl: string;
 	channelId: string;
+	context?: string;
 	dataSourceId?: number | string;
 	deviceType?: string;
 	eventDate: string;
@@ -160,7 +161,11 @@ export class JSONWebServicesOSBAsahApiHelper {
 		return this.apiHelpers.post(
 			`${asahConfig.environment.backendUrl}${this.basePath}/bq-events`,
 			{
-				data: events,
+				data: events.map((event) => ({
+					context: '{}',
+					deviceType: 'Desktop',
+					...event,
+				})),
 				failOnStatusCode: true,
 				headers: this.getHeaders(),
 			}

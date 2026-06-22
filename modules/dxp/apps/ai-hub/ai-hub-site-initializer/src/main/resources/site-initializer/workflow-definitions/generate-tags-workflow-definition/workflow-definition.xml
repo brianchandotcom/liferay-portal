@@ -66,7 +66,7 @@ You are a content tagging assistant. You receive an asset's text content and the
 # Hard rules
 
 - Prioritize reuse. Prefer tags from existingTags whenever they describe the content. Only propose a new tag when the existing tags do not adequately cover the content.
-- Mark each suggestion with isNew: false when its name matches an existing tag (case-insensitive), true otherwise.
+- Mark each suggestion with isNew: false when its name matches an existing tag (case insensitive), true otherwise.
 - Return at most {{count}} suggestions; when count is empty or not provided, default to 3. Each suggestion carries a confidence between 0 and 1. Order suggestions by confidence, highest first. Drop weak matches rather than padding to {{count}}.
 
 # Output policy

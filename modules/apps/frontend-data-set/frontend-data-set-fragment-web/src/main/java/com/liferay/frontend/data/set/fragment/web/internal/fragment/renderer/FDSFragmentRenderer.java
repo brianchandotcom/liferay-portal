@@ -225,7 +225,7 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 
 			if (fragmentRendererContext.isEditMode()) {
 				if (hasTokens) {
-					_writeAutoResolvableTokenNames(
+					_writeAutoResolvedTokenNames(
 						externalReferenceCode, fragmentEntryLink,
 						httpServletRequest);
 				}
@@ -308,7 +308,7 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 		return _jsonFactory.createJSONObject();
 	}
 
-	private Set<String> _getAutoResolvableTokenNames(
+	private Set<String> _getAutoResolvedTokenNames(
 		String externalReferenceCode, HttpServletRequest httpServletRequest) {
 
 		Set<String> tokenNames = _getTokenNames(
@@ -347,7 +347,7 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 
 		JSONObject tokenResolutionsJSONObject = _jsonFactory.createJSONObject();
 
-		Set<String> autoResolvableTokenNames = _getAutoResolvableTokenNames(
+		Set<String> autoResolvedTokenNames = _getAutoResolvedTokenNames(
 			externalReferenceCode, httpServletRequest);
 		Set<String> tokenNames = _getTokenNames(
 			externalReferenceCode, httpServletRequest);
@@ -360,7 +360,7 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 				tokenResolutionsJSONObject.put(
 					tokenName, HtmlUtil.escape(tokenValue));
 			}
-			else if (autoResolvableTokenNames.contains(tokenName) &&
+			else if (autoResolvedTokenNames.contains(tokenName) &&
 					 _hasManualMapping(
 						 apiURLTokenMappingsJSONObject, tokenName)) {
 
@@ -389,7 +389,7 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 
 		String mappingMode = mappingJSONObject.getString("mappingMode");
 
-		if (Objects.equals(mappingMode, _MAPPING_MODE_AUTO_RESOLVED)) {
+		if (Objects.equals(mappingMode, "autoResolved")) {
 			return null;
 		}
 
@@ -452,8 +452,7 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 		}
 
 		return !Objects.equals(
-			mappingJSONObject.getString("mappingMode"),
-			_MAPPING_MODE_AUTO_RESOLVED);
+			mappingJSONObject.getString("mappingMode"), "autoResolved");
 	}
 
 	private boolean _hasTokens(
@@ -478,7 +477,7 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 		return !matcher.find();
 	}
 
-	private void _writeAutoResolvableTokenNames(
+	private void _writeAutoResolvedTokenNames(
 		String externalReferenceCode, FragmentEntryLink fragmentEntryLink,
 		HttpServletRequest httpServletRequest) {
 
@@ -506,21 +505,21 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 				configurationJSONObject);
 		}
 
-		Set<String> autoResolvableTokenNames = _getAutoResolvableTokenNames(
+		Set<String> autoResolvedTokenNames = _getAutoResolvedTokenNames(
 			externalReferenceCode, httpServletRequest);
 
 		try {
 			JSONArray jsonArray = JSONUtil.toJSONArray(
-				autoResolvableTokenNames,
-				autoResolvableTokenName -> autoResolvableTokenName);
+				autoResolvedTokenNames,
+				autoResolvedTokenName -> autoResolvedTokenName);
 
 			configurationJSONObject.put(
-				"autoResolvableTokenNames", jsonArray.toString());
+				"autoResolvedTokenNames", jsonArray.toString());
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to write autoresolvable token names", exception);
+					"Unable to write auto resolved token names", exception);
 			}
 		}
 	}
@@ -546,8 +545,6 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 
 		scriptData.writeTo(printWriter);
 	}
-
-	private static final String _MAPPING_MODE_AUTO_RESOLVED = "auto-resolved";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FDSFragmentRenderer.class);

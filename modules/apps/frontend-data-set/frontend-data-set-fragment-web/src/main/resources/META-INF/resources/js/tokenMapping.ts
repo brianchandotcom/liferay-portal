@@ -6,7 +6,7 @@
 export type IdentifierField = 'classPK' | 'externalReferenceCode';
 
 export enum EMappingMode {
-	AUTO_RESOLVED = 'auto-resolved',
+	AUTO_RESOLVED = 'autoResolved',
 	CONTENT = 'content',
 	CONTEXT = 'context',
 	LITERAL = 'literal',

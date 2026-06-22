@@ -154,56 +154,51 @@ public class ImportPreviewResourceTest
 	@Override
 	@Test
 	public void testPostAssetLibraryPortletImportPreview() throws Exception {
+		Layout layout = LayoutTestUtil.addTypePortletLayout(
+			testDepotEntryGroup);
+
 		ObjectDefinition objectDefinition = _publishObjectDefinitionWithEntries(
 			testDepotEntryGroup.getGroupId(),
 			ObjectDefinitionConstants.SCOPE_DEPOT);
-
-		Layout layout = LayoutTestUtil.addTypePortletLayout(
-			testDepotEntryGroup);
 
 		String portletId = objectDefinition.getPortletId();
 
 		LayoutTestUtil.addPortletToLayout(layout, portletId);
 
-		try {
-			assertHttpResponseStatusCode(
-				403,
-				_importPreviewResource.
+		assertHttpResponseStatusCode(
+			403,
+			_importPreviewResource.
+				postAssetLibraryPortletImportPreviewHttpResponse(
+					testDepotEntryGroup.getExternalReferenceCode(), portletId,
+					layout.getPlid(), null,
+					HashMapBuilder.put(
+						"file",
+						_exportPortletAsFile(
+							testDepotEntryGroup.getGroupId(), layout.getPlid(),
+							portletId)
+					).build()));
+
+		_testPostImportPreviewWithInvalidFile(
+			file ->
+				importPreviewResource.
 					postAssetLibraryPortletImportPreviewHttpResponse(
-						testDepotEntryGroup.getExternalReferenceCode(),
-						portletId, layout.getPlid(), null,
-						HashMapBuilder.put(
-							"file",
-							_exportPortletAsFile(
-								testDepotEntryGroup.getGroupId(),
-								layout.getPlid(), portletId)
-						).build()));
-
-			_testPostImportPreviewWithInvalidFile(
-				file ->
-					importPreviewResource.
-						postAssetLibraryPortletImportPreviewHttpResponse(
-							testDepotEntryGroup.getExternalReferenceCode(),
-							portletId, layout.getPlid(), null,
-							HashMapBuilder.put(
-								"file", file
-							).build()));
-
-			_testPostPortletImportPreviewWithObjectEntries(
-				testDepotEntryGroup.getGroupId(), objectDefinition,
-				layout.getPlid(),
-				file ->
-					importPreviewResource.postAssetLibraryPortletImportPreview(
 						testDepotEntryGroup.getExternalReferenceCode(),
 						portletId, layout.getPlid(), null,
 						HashMapBuilder.put(
 							"file", file
 						).build()));
-		}
-		finally {
-			_objectDefinitionLocalService.deleteObjectDefinition(
-				objectDefinition);
-		}
+
+		_testPostPortletImportPreviewWithObjectEntries(
+			testDepotEntryGroup.getGroupId(), objectDefinition,
+			layout.getPlid(),
+			file -> importPreviewResource.postAssetLibraryPortletImportPreview(
+				testDepotEntryGroup.getExternalReferenceCode(), portletId,
+				layout.getPlid(), null,
+				HashMapBuilder.put(
+					"file", file
+				).build()));
+
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 	}
 
 	@Override
@@ -285,50 +280,45 @@ public class ImportPreviewResourceTest
 	@Override
 	@Test
 	public void testPostSitePortletImportPreview() throws Exception {
+		Layout layout = LayoutTestUtil.addTypePortletLayout(testGroup);
+
 		ObjectDefinition objectDefinition = _publishObjectDefinitionWithEntries(
 			testGroup.getGroupId(), ObjectDefinitionConstants.SCOPE_SITE);
-
-		Layout layout = LayoutTestUtil.addTypePortletLayout(testGroup);
 
 		String portletId = objectDefinition.getPortletId();
 
 		LayoutTestUtil.addPortletToLayout(layout, portletId);
 
-		try {
-			assertHttpResponseStatusCode(
-				403,
-				_importPreviewResource.postSitePortletImportPreviewHttpResponse(
-					testGroup.getExternalReferenceCode(), portletId,
-					layout.getPlid(), null,
-					HashMapBuilder.put(
-						"file",
-						_exportPortletAsFile(
-							testGroup.getGroupId(), layout.getPlid(), portletId)
-					).build()));
+		assertHttpResponseStatusCode(
+			403,
+			_importPreviewResource.postSitePortletImportPreviewHttpResponse(
+				testGroup.getExternalReferenceCode(), portletId,
+				layout.getPlid(), null,
+				HashMapBuilder.put(
+					"file",
+					_exportPortletAsFile(
+						testGroup.getGroupId(), layout.getPlid(), portletId)
+				).build()));
 
-			_testPostImportPreviewWithInvalidFile(
-				file ->
-					importPreviewResource.
-						postSitePortletImportPreviewHttpResponse(
-							testGroup.getExternalReferenceCode(), portletId,
-							layout.getPlid(), null,
-							HashMapBuilder.put(
-								"file", file
-							).build()));
-
-			_testPostPortletImportPreviewWithObjectEntries(
-				testGroup.getGroupId(), objectDefinition, layout.getPlid(),
-				file -> importPreviewResource.postSitePortletImportPreview(
+		_testPostImportPreviewWithInvalidFile(
+			file ->
+				importPreviewResource.postSitePortletImportPreviewHttpResponse(
 					testGroup.getExternalReferenceCode(), portletId,
 					layout.getPlid(), null,
 					HashMapBuilder.put(
 						"file", file
 					).build()));
-		}
-		finally {
-			_objectDefinitionLocalService.deleteObjectDefinition(
-				objectDefinition);
-		}
+
+		_testPostPortletImportPreviewWithObjectEntries(
+			testGroup.getGroupId(), objectDefinition, layout.getPlid(),
+			file -> importPreviewResource.postSitePortletImportPreview(
+				testGroup.getExternalReferenceCode(), portletId,
+				layout.getPlid(), null,
+				HashMapBuilder.put(
+					"file", file
+				).build()));
+
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 	}
 
 	private void _addObjectEntry(

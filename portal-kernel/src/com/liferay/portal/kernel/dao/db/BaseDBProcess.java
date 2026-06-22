@@ -538,6 +538,36 @@ public abstract class BaseDBProcess implements DBProcess {
 
 	protected Connection connection;
 
+	private void _closeConnection(Connection connection) {
+		Boolean autoCommit = _autoCommits.remove(connection);
+
+		if (autoCommit != null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Closing a connection that still has an autoCommit " +
+						"override");
+			}
+
+			try {
+				connection.rollback();
+			}
+			catch (SQLException sqlException) {
+				_log.error(
+					"Unable to finish a transactional connection",
+					sqlException);
+			}
+
+			try {
+				connection.setAutoCommit(autoCommit);
+			}
+			catch (SQLException sqlException) {
+				_log.error("Unable to set autoCommit", sqlException);
+			}
+		}
+
+		DataAccess.cleanUp(connection);
+	}
+
 	private void _closeConnections(Map<Thread, Connection> connectionsMap) {
 		if (MapUtil.isEmpty(connectionsMap)) {
 			return;
@@ -552,7 +582,7 @@ public abstract class BaseDBProcess implements DBProcess {
 
 			iterator.remove();
 
-			_finishAndCloseConnection(connection);
+			_closeConnection(connection);
 		}
 	}
 
@@ -566,45 +596,7 @@ public abstract class BaseDBProcess implements DBProcess {
 		Connection connection = connectionsMap.remove(thread);
 
 		if (connection != null) {
-			_finishAndCloseConnection(connection);
-		}
-	}
-
-	private void _finishAndCloseConnection(Connection connection) {
-		if (_transactionalConnections.remove(connection)) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Closing a connection that still has an autoCommit " +
-						"override");
-			}
-
-			_finishTransactionalConnection(connection, false);
-		}
-
-		DataAccess.cleanUp(connection);
-	}
-
-	private void _finishTransactionalConnection(
-		Connection connection, boolean commit) {
-
-		try {
-			if (commit) {
-				connection.commit();
-			}
-			else {
-				connection.rollback();
-			}
-		}
-		catch (SQLException sqlException) {
-			_log.error(
-				"Unable to finish a transactional connection", sqlException);
-		}
-
-		try {
-			connection.setAutoCommit(true);
-		}
-		catch (SQLException sqlException) {
-			_log.error("Unable to set autoCommit", sqlException);
+			_closeConnection(connection);
 		}
 	}
 
@@ -869,10 +861,10 @@ public abstract class BaseDBProcess implements DBProcess {
 	private static final AtomicInteger _fixedThreadPoolSize = new AtomicInteger(
 		0);
 
+	private final Map<Connection, Boolean> _autoCommits =
+		new ConcurrentHashMap<>();
 	private final Map<Long, Map<Thread, Connection>> _connectionsMaps =
 		new ConcurrentHashMap<>();
-	private final Set<Connection> _transactionalConnections =
-		ConcurrentHashMap.newKeySet();
 
 	private class BatchCommitInvocationHandler implements InvocationHandler {
 
@@ -882,9 +874,9 @@ public abstract class BaseDBProcess implements DBProcess {
 
 			String methodName = method.getName();
 
-			boolean isAddBatch = methodName.equals("addBatch");
+			boolean addBatch = methodName.equals("addBatch");
 
-			if (isAddBatch && !_transaction) {
+			if (addBatch && !_transaction) {
 				_startTransaction();
 			}
 
@@ -897,14 +889,12 @@ public abstract class BaseDBProcess implements DBProcess {
 				throw invocationTargetException.getCause();
 			}
 
-			if (isAddBatch) {
+			if (addBatch) {
 				if (++_count >= PropsValues.HIBERNATE_JDBC_BATCH_SIZE) {
 					_finishTransaction(true);
 				}
 			}
-			else if (_transaction &&
-					 methodName.equals("executeBatch")) {
-
+			else if (_transaction && methodName.equals("executeBatch")) {
 				_finishTransaction(true);
 			}
 
@@ -922,8 +912,6 @@ public abstract class BaseDBProcess implements DBProcess {
 			_count = 0;
 			_transaction = false;
 
-			_transactionalConnections.remove(_connection);
-
 			try {
 				if (commit) {
 					_connection.commit();
@@ -933,32 +921,34 @@ public abstract class BaseDBProcess implements DBProcess {
 				}
 			}
 			finally {
+				Boolean autoCommit = _autoCommits.remove(_connection);
+
 				try {
-					_connection.setAutoCommit(true);
+					_connection.setAutoCommit(
+						GetterUtil.getBoolean(autoCommit, true));
 				}
 				catch (SQLException sqlException) {
-					_log.error(
-						"Unable to reset auto-commit to true", sqlException);
+					_log.error("Unable to set autoCommit", sqlException);
 				}
 			}
 		}
 
 		private void _startTransaction() throws SQLException {
-			if (!_connection.getAutoCommit()) {
+			boolean autoCommit = _connection.getAutoCommit();
+
+			if (_autoCommits.putIfAbsent(_connection, autoCommit) != null) {
 				return;
 			}
 
-			if (!_transactionalConnections.add(_connection)) {
-				return;
-			}
+			if (autoCommit) {
+				try {
+					_connection.setAutoCommit(false);
+				}
+				catch (SQLException sqlException) {
+					_autoCommits.remove(_connection);
 
-			try {
-				_connection.setAutoCommit(false);
-			}
-			catch (SQLException sqlException) {
-				_transactionalConnections.remove(_connection);
-
-				throw sqlException;
+					throw sqlException;
+				}
 			}
 
 			_transaction = true;

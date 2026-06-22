@@ -1,8 +1,8 @@
 suite: Overlay Init Container
 templates:
-    -   configmap.yaml
-    -   liferay-init-scripts-cm.yaml
-    -   workloads.yaml
+    -   templates/configmap.yaml
+    -   templates/liferay-init-scripts-cm.yaml
+    -   templates/workloads.yaml
 tests:
     -   asserts:
             -   contains:

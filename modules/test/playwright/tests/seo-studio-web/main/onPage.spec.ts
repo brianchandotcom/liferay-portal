@@ -7,6 +7,7 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {Scan} from '../../../helpers/SEOStudioApiHelper';
 import {seoStudioPagesTest} from './fixtures/seoStudioPagesTest';
 import {seoStudioSiteTest} from './fixtures/seoStudioSiteTest';
 
@@ -74,7 +75,7 @@ test(
 				severity: '2',
 			},
 			{
-				category: 'urls',
+				category: 'linksAndURLs',
 				name: 'brokenInternalLink',
 				pageURLs: [
 					'https://example.com/f',
@@ -108,3 +109,152 @@ test(
 		}
 	}
 );
+
+test.describe('Filter and Sort Insights tests', () => {
+	let scan: Scan;
+
+	test.beforeEach(async ({apiHelpers, onPagePage, seoStudioSite}) => {
+		scan = await apiHelpers.seoStudio.createScan('crawler');
+
+		await apiHelpers.seoStudio.createInsights(scan, [
+			{
+				category: 'images',
+				name: 'missingAltTextOnImages',
+				pageURLs: ['https://example.com/a'],
+				severity: '3',
+			},
+			{
+				category: 'images',
+				name: 'altTextTooLong',
+				pageURLs: ['https://example.com/b'],
+				severity: '2',
+			},
+			{
+				category: 'images',
+				name: 'brokenImageURLs',
+				pageURLs: ['https://example.com/c'],
+				severity: '1',
+			},
+		]);
+
+		await onPagePage.goto(seoStudioSite.friendlyUrlPath);
+	});
+
+	test.afterEach(async () => {
+		await scan.teardown();
+	});
+
+	test(
+		'Sorts the insights by impact from high to low by default',
+		{tag: '@LPD-91408'},
+		async ({onPagePage}) => {
+			await expect(
+				onPagePage.getInsightRow('Missing Alt Text on Images')
+			).toBeVisible();
+
+			await expect(async () => {
+				expect(await onPagePage.getInsightNamesInOrder()).toEqual([
+					'Missing Alt Text on Images',
+					'Alt Text Too Long (>125 chars)',
+					'Broken Image URLs (404s)',
+				]);
+			}).toPass({timeout: 10000});
+		}
+	);
+
+	test(
+		'Sorts the insights by a column header and reflects the sort in the URL',
+		{tag: '@LPD-91408'},
+		async ({onPagePage, page}) => {
+			await expect(
+				onPagePage.getInsightRow('Missing Alt Text on Images')
+			).toBeVisible();
+
+			await onPagePage.sortByColumn('Impact');
+
+			await expect(page).toHaveURL(/fdsConfig/);
+
+			await expect(async () => {
+				expect(await onPagePage.getInsightNamesInOrder()).toEqual([
+					'Broken Image URLs (404s)',
+					'Alt Text Too Long (>125 chars)',
+					'Missing Alt Text on Images',
+				]);
+			}).toPass({timeout: 10000});
+
+			await onPagePage.sortByColumn('Impact');
+
+			await expect(async () => {
+				expect(await onPagePage.getInsightNamesInOrder()).toEqual([
+					'Missing Alt Text on Images',
+					'Alt Text Too Long (>125 chars)',
+					'Broken Image URLs (404s)',
+				]);
+			}).toPass({timeout: 10000});
+		}
+	);
+
+	test(
+		'Filters the insights by impact and reflects the filter in the URL',
+		{tag: '@LPD-91408'},
+		async ({onPagePage, page}) => {
+			await onPagePage.applyFilter('Impact', ['High']);
+
+			await expect(
+				onPagePage.activeFilterChip('Impact: High')
+			).toBeVisible();
+
+			await expect(
+				onPagePage.getInsightRow('Missing Alt Text on Images')
+			).toBeVisible();
+			await expect(
+				onPagePage.getInsightRow('Broken Image URLs (404s)')
+			).not.toBeVisible();
+			await expect(
+				onPagePage.getInsightRow('Alt Text Too Long (>125 chars)')
+			).not.toBeVisible();
+
+			await expect(page).toHaveURL(/fdsConfig/);
+		}
+	);
+
+	test(
+		'Shows the filtered empty state when no insights match the filters',
+		{tag: '@LPD-91408'},
+		async ({onPagePage}) => {
+			await onPagePage.applyFilter('Category', ['AEO Readiness']);
+
+			await expect(onPagePage.filteredEmptyStateTitle).toBeVisible();
+		}
+	);
+
+	test(
+		'Preserves the active filter when returning via the insight detail breadcrumb',
+		{tag: '@LPD-91408'},
+		async ({insightDetailPage, onPagePage, page}) => {
+			await onPagePage.applyFilter('Impact', ['High']);
+
+			await expect(
+				onPagePage.activeFilterChip('Impact: High')
+			).toBeVisible();
+			await expect(
+				onPagePage.getInsightRow('Broken Image URLs (404s)')
+			).not.toBeVisible();
+
+			await onPagePage.selectInsight('Missing Alt Text on Images');
+
+			await expect(page).toHaveURL(/objectEntryExternalReferenceCode=/);
+
+			await insightDetailPage.onPageBreadcrumbLink.click();
+
+			await expect(onPagePage.onPageHeading).toBeVisible();
+
+			await expect(
+				onPagePage.activeFilterChip('Impact: High')
+			).toBeVisible();
+			await expect(
+				onPagePage.getInsightRow('Broken Image URLs (404s)')
+			).not.toBeVisible();
+		}
+	);
+});

@@ -104,10 +104,10 @@ public class JenkinsCohort {
 		List<String> blacklist = new ArrayList<>(_jenkinsMastersBlacklist);
 
 		if (excludedJenkinsMaster != null) {
-			String jenkinsMasterName = excludedJenkinsMaster.getName();
+			String excludedJenkinsMasterName = excludedJenkinsMaster.getName();
 
-			if (!blacklist.contains(jenkinsMasterName)) {
-				blacklist.add(jenkinsMasterName);
+			if (!blacklist.contains(excludedJenkinsMasterName)) {
+				blacklist.add(excludedJenkinsMasterName);
 
 				List<JenkinsMaster> availableJenkinsMasters =
 					_getAvailableJenkinsMasters(blacklist);
@@ -115,9 +115,9 @@ public class JenkinsCohort {
 				if (availableJenkinsMasters.isEmpty()) {
 					System.out.println(
 						"Unable to exclude Jenkins master " +
-							jenkinsMasterName);
+							excludedJenkinsMasterName);
 
-					blacklist.remove(jenkinsMasterName);
+					blacklist.remove(excludedJenkinsMasterName);
 				}
 			}
 		}

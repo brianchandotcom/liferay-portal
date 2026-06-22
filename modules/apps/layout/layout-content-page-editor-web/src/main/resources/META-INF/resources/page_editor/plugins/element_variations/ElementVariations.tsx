@@ -10,6 +10,7 @@ import {useId} from 'frontend-js-components-web';
 import React, {useReducer, useState} from 'react';
 
 import ElementVariationForm from './ElementVariationForm';
+import ElementVariationsList from './ElementVariationsList';
 import {createElementVariation, reducer} from './elementVariationsReducer';
 
 import './ElementVariations.scss';
@@ -112,25 +113,18 @@ export default function ElementVariations({audiences, experiences}: Props) {
 								</div>
 
 								{experienceElementVariations.length ? (
-									<div className="list-group">
-										{experienceElementVariations.map(
-											(elementVariation) => (
-												<button
-													className="list-group-item list-group-item-action text-left"
-													key={elementVariation.key}
-													onClick={() =>
-														dispatch({
-															key: elementVariation.key,
-															type: 'EDIT_ELEMENT_VARIATION',
-														})
-													}
-													type="button"
-												>
-													{elementVariation.name}
-												</button>
-											)
-										)}
-									</div>
+									<ElementVariationsList
+										audiences={audiences}
+										elementVariations={
+											experienceElementVariations
+										}
+										onEditElementVariation={(key) =>
+											dispatch({
+												key,
+												type: 'EDIT_ELEMENT_VARIATION',
+											})
+										}
+									/>
 								) : (
 									<ClayEmptyState
 										className="mb-0 px-3"

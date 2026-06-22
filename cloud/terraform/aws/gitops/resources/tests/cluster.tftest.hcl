@@ -15,14 +15,12 @@ mock_provider "aws" {
 }
 mock_provider "helm" {}
 mock_provider "kubernetes" {}
-
 override_data {
 	target=data.aws_caller_identity.current
 	values={
 		account_id="123456789012"
 	}
 }
-
 override_data {
 	target=data.aws_eks_cluster.cluster
 	values={
@@ -42,14 +40,12 @@ override_data {
 		}]
 	}
 }
-
 override_data {
 	target=data.aws_iam_role.envoy_proxy_role
 	values={
 		arn="arn:aws:iam::123456789012:role/liferay-test-envoy-proxy"
 	}
 }
-
 override_data {
 	target=data.aws_iam_role.liferay_irsa
 	values={
@@ -57,65 +53,51 @@ override_data {
 		id="liferay-test-irsa"
 	}
 }
-
 override_data {
 	target=data.aws_subnets.private
 	values={
 		ids=["subnet-aaa", "subnet-bbb"]
 	}
 }
-
 override_data {
 	target=data.aws_vpc.current
 	values={
 		cidr_block="10.0.0.0/16"
 	}
 }
-
 run "should_compute_cluster_identity_locals" {
 	assert {
 		condition=local.account_id == "123456789012"
 		error_message="local.account_id must come from the caller identity"
 	}
-
 	assert {
 		condition=local.cluster_name == "liferay-test-eks"
 		error_message="local.cluster_name must be \"<deployment_name>-eks\""
 	}
-
 	assert {
 		condition=local.liferay_service_account_role_name == "liferay-test-irsa"
 		error_message="local.liferay_service_account_role_name must be derived from deployment_name"
 	}
-
 	assert {
 		condition=local.oidc_provider == "oidc.eks.us-east-1.amazonaws.com/id/EXAMPLE"
 		error_message="local.oidc_provider must strip the https:// scheme from the EKS OIDC issuer"
 	}
-
 	command=plan
 }
-
 run "should_not_accept_deployment_name_shorter_than_3_characters" {
 	command=plan
-
 	expect_failures=[var.deployment_name]
-
 	variables {
 		deployment_name="ab"
 	}
 }
-
 run "should_not_accept_uppercase_deployment_name" {
 	command=plan
-
 	expect_failures=[var.deployment_name]
-
 	variables {
 		deployment_name="Liferay-Test"
 	}
 }
-
 variables {
 	deployment_name="liferay-test"
 	infrastructure_helm_chart_version="0.4.9"

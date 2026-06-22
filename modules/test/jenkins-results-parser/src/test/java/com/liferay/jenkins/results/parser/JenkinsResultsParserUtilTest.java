@@ -52,7 +52,7 @@ public class JenkinsResultsParserUtilTest
 
 	@Test(timeout = 30000)
 	public void testExecuteJenkinsScriptReadTimeout() throws Exception {
-		try (ServerSocket serverSocket = _createStalledServerSocket()) {
+		try (ServerSocket serverSocket = _createServerSocket()) {
 			int port = serverSocket.getLocalPort();
 
 			long startTime = System.currentTimeMillis();
@@ -333,7 +333,7 @@ public class JenkinsResultsParserUtilTest
 
 	@Test(timeout = 30000)
 	public void testInvokeJenkinsBuildReadTimeout() throws Exception {
-		try (ServerSocket serverSocket = _createStalledServerSocket()) {
+		try (ServerSocket serverSocket = _createServerSocket()) {
 			int port = serverSocket.getLocalPort();
 
 			JenkinsMaster jenkinsMaster = Mockito.mock(JenkinsMaster.class);
@@ -574,7 +574,7 @@ public class JenkinsResultsParserUtilTest
 		return url.toString();
 	}
 
-	private ServerSocket _createStalledServerSocket() throws Exception {
+	private ServerSocket _createServerSocket() throws Exception {
 		return new ServerSocket(0, 1, InetAddress.getByName("localhost"));
 	}
 

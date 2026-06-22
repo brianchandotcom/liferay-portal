@@ -131,23 +131,6 @@ public class FreeMarkerFragmentEntryProcessorTest {
 	}
 
 	@Test
-	@TestInfo("LPD-93455")
-	public void testAddFragmentEntryWithDynamicDataDuringImport()
-		throws Exception {
-
-		ExportImportThreadLocal.setLayoutImportInProcess(true);
-
-		try {
-			Assert.assertNotNull(
-				_addFragmentEntry(
-					"fragment_entry_with_rest_client_data.html", null));
-		}
-		finally {
-			ExportImportThreadLocal.setLayoutImportInProcess(false);
-		}
-	}
-
-	@Test
 	public void testAddFragmentEntryWithFragmentElementId() throws Exception {
 		FragmentEntry fragmentEntry = _fragmentEntryService.addFragmentEntry(
 			null, _group.getGroupId(),
@@ -282,6 +265,23 @@ public class FreeMarkerFragmentEntryProcessorTest {
 						_serviceContext.getCompanyId(), mockHttpServletRequest,
 						new MockHttpServletResponse(), LocaleUtil.getDefault(),
 						null, _serviceContext.getScopeGroupId()))));
+	}
+
+	@Test
+	@TestInfo("LPD-93455")
+	public void testAddFragmentEntryWithRESTClientDataDuringImport()
+		throws Exception {
+
+		ExportImportThreadLocal.setLayoutImportInProcess(true);
+
+		try {
+			Assert.assertNotNull(
+				_addFragmentEntry(
+					"fragment_entry_with_rest_client_data.html", null));
+		}
+		finally {
+			ExportImportThreadLocal.setLayoutImportInProcess(false);
+		}
 	}
 
 	@Test

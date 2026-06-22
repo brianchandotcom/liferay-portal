@@ -665,18 +665,32 @@ public class SitesImpl implements Sites {
 
 	@Override
 	public void updateLayoutSetPrototypesLinks(
+			Group group, boolean mergeLayoutSetPrototype,
+			long publicLayoutSetPrototypeId, long privateLayoutSetPrototypeId,
+			boolean publicLayoutSetPrototypeLinkEnabled,
+			boolean privateLayoutSetPrototypeLinkEnabled)
+		throws Exception {
+
+		updateLayoutSetPrototypeLink(
+			group.getGroupId(), mergeLayoutSetPrototype, true,
+			privateLayoutSetPrototypeId, privateLayoutSetPrototypeLinkEnabled);
+		updateLayoutSetPrototypeLink(
+			group.getGroupId(), mergeLayoutSetPrototype, false,
+			publicLayoutSetPrototypeId, publicLayoutSetPrototypeLinkEnabled);
+	}
+
+	@Override
+	public void updateLayoutSetPrototypesLinks(
 			Group group, long publicLayoutSetPrototypeId,
 			long privateLayoutSetPrototypeId,
 			boolean publicLayoutSetPrototypeLinkEnabled,
 			boolean privateLayoutSetPrototypeLinkEnabled)
 		throws Exception {
 
-		updateLayoutSetPrototypeLink(
-			group.getGroupId(), true, privateLayoutSetPrototypeId,
+		updateLayoutSetPrototypesLinks(
+			group, true, publicLayoutSetPrototypeId,
+			privateLayoutSetPrototypeId, publicLayoutSetPrototypeLinkEnabled,
 			privateLayoutSetPrototypeLinkEnabled);
-		updateLayoutSetPrototypeLink(
-			group.getGroupId(), false, publicLayoutSetPrototypeId,
-			publicLayoutSetPrototypeLinkEnabled);
 	}
 
 	protected void deleteUnreferencedPortlets(
@@ -940,7 +954,8 @@ public class SitesImpl implements Sites {
 	}
 
 	protected void updateLayoutSetPrototypeLink(
-			long groupId, boolean privateLayout, long layoutSetPrototypeId,
+			long groupId, boolean mergeLayoutSetPrototype,
+			boolean privateLayout, long layoutSetPrototypeId,
 			boolean layoutSetPrototypeLinkEnabled)
 		throws Exception {
 
@@ -957,7 +972,7 @@ public class SitesImpl implements Sites {
 				// Merge without enabling the link
 
 				if (!layoutSetPrototypeLinkEnabled &&
-					(layoutSetPrototypeId > 0)) {
+					(layoutSetPrototypeId > 0) && mergeLayoutSetPrototype) {
 
 					boolean mergeLayoutPrototypesThreadLocalInProgress =
 						MergeLayoutPrototypesThreadLocal.isInProgress();

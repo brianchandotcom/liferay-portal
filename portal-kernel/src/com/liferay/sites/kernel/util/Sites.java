@@ -100,6 +100,13 @@ public interface Sites {
 		throws Exception;
 
 	public void updateLayoutSetPrototypesLinks(
+			Group group, boolean mergeLayoutSetPrototype,
+			long publicLayoutSetPrototypeId, long privateLayoutSetPrototypeId,
+			boolean publicLayoutSetPrototypeLinkEnabled,
+			boolean privateLayoutSetPrototypeLinkEnabled)
+		throws Exception;
+
+	public void updateLayoutSetPrototypesLinks(
 			Group group, long publicLayoutSetPrototypeId,
 			long privateLayoutSetPrototypeId,
 			boolean publicLayoutSetPrototypeLinkEnabled,

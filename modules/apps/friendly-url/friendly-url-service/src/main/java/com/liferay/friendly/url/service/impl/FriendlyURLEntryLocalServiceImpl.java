@@ -285,12 +285,15 @@ public class FriendlyURLEntryLocalServiceImpl
 
 	@Override
 	public void deleteFriendlyURLLocalizationEntry(
-			long friendlyURLEntryId, String languageId)
+			FriendlyURLEntryLocalization friendlyURLEntryLocalization)
 		throws PortalException {
 
-		friendlyURLEntryLocalizationPersistence.
-			removeByFriendlyURLEntryId_LanguageId(
-				friendlyURLEntryId, languageId);
+		friendlyURLEntryLocalization =
+			friendlyURLEntryLocalizationPersistence.remove(
+				friendlyURLEntryLocalization);
+
+		long friendlyURLEntryId =
+			friendlyURLEntryLocalization.getFriendlyURLEntryId();
 
 		int count =
 			friendlyURLEntryLocalizationPersistence.countByFriendlyURLEntryId(
@@ -312,6 +315,17 @@ public class FriendlyURLEntryLocalServiceImpl
 		// Asset
 
 		_deleteAssetEntry(FriendlyURLEntry.class.getName(), friendlyURLEntryId);
+	}
+
+	@Override
+	public void deleteFriendlyURLLocalizationEntry(
+			long friendlyURLEntryId, String languageId)
+		throws PortalException {
+
+		deleteFriendlyURLLocalizationEntry(
+			friendlyURLEntryLocalizationPersistence.
+				findByFriendlyURLEntryId_LanguageId(
+					friendlyURLEntryId, languageId));
 	}
 
 	@Override

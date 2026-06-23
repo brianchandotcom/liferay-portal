@@ -286,7 +286,9 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		_configureTaskUpgradeSourceCode(
 			upgradeSourceCodeTask, workspaceExtension);
 
-		_addTaskUpdateWorkspace(project);
+		Task updateWorkspaceTask = _addTaskUpdateWorkspace(project);
+
+		_configureTaskUpdateWorkspace(updateWorkspaceTask);
 
 		_addTaskUpgradeJakarta(project);
 	}
@@ -1529,45 +1531,9 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		return dockerStopContainer;
 	}
 
-	private Task _addTaskUpdateWorkspace(final Project project) {
+	private Task _addTaskUpdateWorkspace(Project project) {
 		Task task = GradleUtil.addTask(
 			project, _UPDATE_WORKSPACE_TASK_NAME, DefaultTask.class);
-
-		task.doLast(
-			new Action<Task>() {
-
-				@Override
-				public void execute(Task task) {
-					ConfigurationContainer configurationContainer =
-						project.getConfigurations();
-
-					DependencyHandler dependencyHandler =
-						project.getDependencies();
-
-					Configuration configuration =
-						configurationContainer.detachedConfiguration(
-							dependencyHandler.create(
-								"com.liferay.workspace:" +
-									"com.liferay.sample.workspace.evergreen:" +
-										"latest.release"));
-
-					configuration.setTransitive(false);
-
-					project.copy(
-						new Action<CopySpec>() {
-
-							@Override
-							public void execute(CopySpec copySpec) {
-								copySpec.from(
-									project.zipTree(
-										configuration.getSingleFile()));
-								copySpec.into(project.getProjectDir());
-							}
-
-						});
-				}
-
-			});
 
 		task.setDescription(
 			"Updates Liferay Workspace and supporting files to the latest " +
@@ -1958,6 +1924,46 @@ public class RootProjectConfigurator implements Plugin<Project> {
 				@Override
 				public boolean isSatisfiedBy(Task task) {
 					return false;
+				}
+
+			});
+	}
+
+	private void _configureTaskUpdateWorkspace(Task task) {
+		final Project project = task.getProject();
+
+		task.doLast(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					ConfigurationContainer configurationContainer =
+						project.getConfigurations();
+
+					DependencyHandler dependencyHandler =
+						project.getDependencies();
+
+					Configuration configuration =
+						configurationContainer.detachedConfiguration(
+							dependencyHandler.create(
+								"com.liferay.workspace:" +
+									"com.liferay.sample.workspace.evergreen:" +
+										"latest.release"));
+
+					configuration.setTransitive(false);
+
+					project.copy(
+						new Action<CopySpec>() {
+
+							@Override
+							public void execute(CopySpec copySpec) {
+								copySpec.from(
+									project.zipTree(
+										configuration.getSingleFile()));
+								copySpec.into(project.getProjectDir());
+							}
+
+						});
 				}
 
 			});

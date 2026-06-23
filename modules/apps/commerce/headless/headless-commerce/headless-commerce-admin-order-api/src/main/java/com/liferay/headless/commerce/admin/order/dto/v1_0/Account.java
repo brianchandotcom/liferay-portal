@@ -232,7 +232,7 @@ public class Account implements Serializable {
 	@GraphQLField(
 		description = "Reference to the account (FK identifier). Read-only; set by the service when the account is first persisted."
 	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
 	@JsonIgnore
@@ -717,4 +717,4 @@ public class Account implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-726568821
+// LIFERAY-REST-BUILDER-HASH:562208474

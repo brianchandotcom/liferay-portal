@@ -137,7 +137,7 @@ public class OrderAccountGroup implements Serializable {
 	@GraphQLField(
 		description = "Display name of the linked account group. Read-only."
 	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String name;
 
 	@JsonIgnore
@@ -299,4 +299,4 @@ public class OrderAccountGroup implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:2087083078
+// LIFERAY-REST-BUILDER-HASH:-1050088871

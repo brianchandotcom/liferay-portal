@@ -259,7 +259,7 @@ public class OrderItem implements Serializable {
 	private Supplier<String> _deliveryGroupSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Display name of the delivery group. Read-only.",
+		description = "Display name of the delivery group.",
 		example = "Separate Package"
 	)
 	public String getDeliveryGroupName() {
@@ -295,9 +295,7 @@ public class OrderItem implements Serializable {
 		};
 	}
 
-	@GraphQLField(
-		description = "Display name of the delivery group. Read-only."
-	)
+	@GraphQLField(description = "Display name of the delivery group.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String deliveryGroupName;
 
@@ -1094,7 +1092,7 @@ public class OrderItem implements Serializable {
 	@GraphQLField(
 		description = "Reference to the order item (FK identifier). Read-only."
 	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
 	@JsonIgnore
@@ -1141,7 +1139,7 @@ public class OrderItem implements Serializable {
 	@GraphQLField(
 		description = "Display name of the product or SKU on this line item. Resolved against the request locale. Read-only."
 	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, String> name;
 
 	@JsonIgnore
@@ -1708,7 +1706,7 @@ public class OrderItem implements Serializable {
 	private Supplier<Long> _replacedSkuIdSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Buyer-requested delivery date for this line item.",
+		description = "Buyer-requested delivery date and time for this line item.",
 		example = "2017-07-21"
 	)
 	public Date getRequestedDeliveryDate() {
@@ -1745,7 +1743,7 @@ public class OrderItem implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "Buyer-requested delivery date for this line item."
+		description = "Buyer-requested delivery date and time for this line item."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date requestedDeliveryDate;
@@ -1801,7 +1799,7 @@ public class OrderItem implements Serializable {
 
 	@DecimalMin("0")
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Integer quantity already shipped for this line item. Read-only.",
+		description = "Integer quantity already shipped for this line item.",
 		example = "0"
 	)
 	@Valid
@@ -1839,7 +1837,7 @@ public class OrderItem implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "Integer quantity already shipped for this line item. Read-only."
+		description = "Integer quantity already shipped for this line item."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal shippedQuantity;
@@ -2161,14 +2159,14 @@ public class OrderItem implements Serializable {
 	@GraphQLField(
 		description = "When true, the line item is part of a subscription cycle. Read-only."
 	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean subscription;
 
 	@JsonIgnore
 	private Supplier<Boolean> _subscriptionSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Display name of the unit of measure (for example, case, pallet). Read-only.",
+		description = "Display name of the unit of measure (for example, case, pallet).",
 		example = "Each"
 	)
 	public String getUnitOfMeasure() {
@@ -2205,7 +2203,7 @@ public class OrderItem implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "Display name of the unit of measure (for example, case, pallet). Read-only."
+		description = "Display name of the unit of measure (for example, case, pallet)."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String unitOfMeasure;
@@ -3280,4 +3278,4 @@ public class OrderItem implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:182135686
+// LIFERAY-REST-BUILDER-HASH:999822033

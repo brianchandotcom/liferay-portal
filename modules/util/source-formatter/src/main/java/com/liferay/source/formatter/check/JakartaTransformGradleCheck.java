@@ -107,15 +107,14 @@ public class JakartaTransformGradleCheck extends BaseJakartaTransformCheck {
 
 			if (!file.isFile()) {
 				throw new IOException(
-					StringBundler.concat(
-						"Unable to read file \"",
-						jakartaTransformDependenciesFilePath, "\""));
+					"Unable to read file \"" +
+						jakartaTransformDependenciesFilePath + "\"");
 			}
 
 			content = FileUtil.read(file);
 		}
 
-		if (Validator.isNull(content)) {
+		if (Validator.isBlank(content)) {
 			Class<?> clazz = getClass();
 
 			content = StringUtil.read(

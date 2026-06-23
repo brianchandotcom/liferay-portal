@@ -28,6 +28,7 @@ dependencies {
 	testIntegrationImplementation project(":apps:layout:layout-admin-api")
 	testIntegrationImplementation project(":apps:layout:layout-api")
 	testIntegrationImplementation project(":apps:layout:layout-display-page-api")
+	testIntegrationImplementation project(":apps:layout:layout-page-template-admin-api")
 	testIntegrationImplementation project(":apps:layout:layout-page-template-api")
 	testIntegrationImplementation project(":apps:layout:layout-page-template-service")
 	testIntegrationImplementation project(":apps:layout:layout-page-template-test-util")

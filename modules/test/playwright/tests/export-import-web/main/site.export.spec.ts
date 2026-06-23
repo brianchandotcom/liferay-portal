@@ -188,7 +188,7 @@ test(
 
 		await uiElementsPage.clickNewButton();
 
-		await exportImportPage.expectPortletCounts(/^\s*Pages\s*/, {
+		await exportImportPage.expectPortletCounts(/^\s*Page Templates\s*/, {
 			registrations: [{counts: {items: 2}, label: 'Master Pages'}],
 		});
 	}
@@ -372,12 +372,16 @@ test(
 
 			await uiElementsPage.clickNewButton();
 
-			await exportImportPage.expectPortletDeletionsHidden('Pages');
+			await exportImportPage.expectPortletDeletionsHidden(
+				'Page Templates'
+			);
 
 			await exportImportPage.deletionsLabel.check();
 
-			await exportImportPage.expectPortletCounts('Pages', {
+			await exportImportPage.expectPortletCounts('Page Templates', {
 				counts: {deletions: 5},
+				portletId:
+					'com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet',
 				registrations: [
 					{
 						counts: {deletions: 1},

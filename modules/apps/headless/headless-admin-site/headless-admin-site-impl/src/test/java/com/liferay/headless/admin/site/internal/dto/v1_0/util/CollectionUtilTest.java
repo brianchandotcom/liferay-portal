@@ -223,14 +223,15 @@ public class CollectionUtilTest {
 			repeatableFieldsCollectionProviderReference =
 				new RepeatableFieldsCollectionProviderReference();
 
+		repeatableFieldsCollectionProviderReference.setClassName(className);
+		repeatableFieldsCollectionProviderReference.setFieldName(
+			RandomTestUtil.randomString());
+
 		ItemExternalReference itemExternalReference =
 			new ItemExternalReference();
 
 		itemExternalReference.setExternalReferenceCode(externalReferenceCode);
 
-		repeatableFieldsCollectionProviderReference.setClassName(className);
-		repeatableFieldsCollectionProviderReference.setFieldName(
-			RandomTestUtil.randomString());
 		repeatableFieldsCollectionProviderReference.setSubTypeExternalReference(
 			itemExternalReference);
 

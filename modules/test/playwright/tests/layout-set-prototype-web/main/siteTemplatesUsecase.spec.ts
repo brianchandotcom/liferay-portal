@@ -11,6 +11,7 @@ import {globalMenuPagesTest} from '../../../fixtures/globalMenuPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {productMenuPageTest} from '../../../fixtures/productMenuPageTest';
 import {siteSettingsPagesTest} from '../../../fixtures/siteSettingsPagesTest';
+import {userGroupsPageTest} from '../../../fixtures/userGroupsPageTest';
 import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
 import {liferayConfig} from '../../../liferay.config';
 import getRandomString from '../../../utils/getRandomString';
@@ -43,6 +44,7 @@ const testWithSiteTemplateSync = mergeTests(
 	loginTest(),
 	productMenuPageTest,
 	siteSettingsPagesTest,
+	userGroupsPageTest,
 	usersAndOrganizationsPagesTest
 );
 
@@ -313,6 +315,131 @@ test(
 				expect(
 					await apiHelpers.jsonWebServicesLayout.getLayoutsCount(
 						Number(organizationGroup.groupId),
+						false
+					)
+				).toBe(0);
+			}
+		}
+	);
+});
+
+[
+	{label: 'with the propagation toggle enabled', propagationEnabled: true},
+	{label: 'with the propagation toggle disabled', propagationEnabled: false},
+].forEach(({label, propagationEnabled}) => {
+	testWithSiteTemplateSync(
+		"Linking an existing User Group's Site to a Site Template " +
+			`through the Settings ${label} does not execute the propagation`,
+		{tag: '@LPD-87027'},
+		async ({
+			apiHelpers,
+			globalMenuPage,
+			layoutSetPrototypePage,
+			page,
+			productMenuPage,
+			userGroupsPage,
+		}) => {
+			testWithSiteTemplateSync.slow();
+
+			// Create a Site Template with a Web Content and a page
+
+			const siteTemplateName = 'SiteTemplate-' + getRandomString();
+			const webContentBody = 'Body-' + getRandomString();
+			const webContentName = 'WebContent-' + getRandomString();
+
+			const layoutSetPrototype = await createSiteTemplate({
+				apiHelpers,
+				page,
+				productMenuPage,
+				templateName: siteTemplateName,
+				text: webContentBody,
+				webContentName,
+			});
+
+			apiHelpers.data.push({
+				id: layoutSetPrototype.layoutSetPrototypeId,
+				type: 'layoutSetPrototype',
+			});
+
+			const layoutSetPrototypeGroup =
+				await apiHelpers.jsonWebServicesGroup.getGroupByKey(
+					layoutSetPrototype.companyId,
+					layoutSetPrototype.layoutSetPrototypeId
+				);
+
+			const pageName = 'Page-' + getRandomString();
+
+			await apiHelpers.jsonWebServicesLayout.addLayout({
+				groupId: layoutSetPrototypeGroup.groupId,
+				privateLayout: 'true',
+				title: pageName,
+			});
+
+			// The Site Template has a page that a sync would propagate
+
+			expect(
+				await apiHelpers.jsonWebServicesLayout.getLayoutsCount(
+					Number(layoutSetPrototypeGroup.groupId),
+					true
+				)
+			).toBeGreaterThan(0);
+
+			// Create a User Group (its Site is not linked to any Site Template)
+
+			const userGroup =
+				await apiHelpers.headlessAdminUser.postUserGroup();
+
+			// Link the User Group's Site to the Site Template from its Site
+			// settings
+
+			await userGroupsPage.goto(true);
+
+			await userGroupsPage.linkSiteTemplate(
+				userGroup.name,
+				siteTemplateName,
+				{propagationEnabled}
+			);
+
+			// Relating a User Group to a Site Template must not trigger the sync
+
+			const userGroupGroup =
+				await apiHelpers.jsonWebServicesGroup.getGroupByKey(
+					layoutSetPrototype.companyId,
+					String(userGroup.id)
+				);
+
+			expect(
+				await apiHelpers.jsonWebServicesLayout.getLayoutsCount(
+					Number(userGroupGroup.groupId),
+					false
+				)
+			).toBe(0);
+
+			// Execute the Site Template Sync manually
+
+			await globalMenuPage.goToControlPanel('Site Templates');
+
+			await layoutSetPrototypePage.executeSyncAndWaitForSuccess(
+				siteTemplateName
+			);
+
+			// The sync only updates the Site when the propagation toggle is enabled
+			// (LPD-82108 AC3)
+
+			if (propagationEnabled) {
+				await expect(async () => {
+					expect(
+						await apiHelpers.jsonWebServicesLayout.getLayoutsCount(
+							Number(userGroupGroup.groupId),
+							false
+						)
+					).toBeGreaterThan(0);
+				}).toPass();
+			}
+			else {
+				expect(
+					await apiHelpers.jsonWebServicesLayout.getLayoutsCount(
+						Number(userGroupGroup.groupId),
 						false
 					)
 				).toBe(0);

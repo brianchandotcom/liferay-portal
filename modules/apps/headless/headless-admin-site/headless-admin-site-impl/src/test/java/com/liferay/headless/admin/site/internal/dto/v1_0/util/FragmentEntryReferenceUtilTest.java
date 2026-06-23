@@ -51,9 +51,7 @@ public class FragmentEntryReferenceUtilTest {
 	}
 
 	@Test
-	public void testGetFragmentEntryReferenceWhenFragmentEntryIsFound()
-		throws Exception {
-
+	public void testGetFragmentEntryReference() throws Exception {
 		String externalReferenceCode = RandomTestUtil.randomString();
 		String fragmentEntryKey = RandomTestUtil.randomString();
 
@@ -85,13 +83,13 @@ public class FragmentEntryReferenceUtilTest {
 			fragmentEntryReference.getFragmentEntryERC());
 		Assert.assertEquals(
 			fragmentEntryKey, fragmentEntryReference.getFragmentEntryKey());
-	}
 
-	@Test
-	public void testGetFragmentEntryReferenceWhenFragmentEntryIsMissing()
-		throws Exception {
-
-		String externalReferenceCode = RandomTestUtil.randomString();
+		_logUtilMockedStatic.verify(
+			() -> LogUtil.logOptionalReference(
+				Mockito.eq(FragmentEntry.class.getName()),
+				Mockito.eq(externalReferenceCode), Mockito.any(),
+				Mockito.eq(_SCOPE_GROUP_ID)),
+			Mockito.never());
 
 		_fragmentEntryLocalServiceUtilMockedStatic.when(
 			() ->
@@ -102,7 +100,7 @@ public class FragmentEntryReferenceUtilTest {
 			null
 		);
 
-		FragmentEntryReference fragmentEntryReference =
+		fragmentEntryReference =
 			FragmentEntryReferenceUtil.getFragmentEntryReference(
 				_COMPANY_ID,
 				_getFragmentItemExternalReference(externalReferenceCode),
@@ -112,9 +110,6 @@ public class FragmentEntryReferenceUtilTest {
 			externalReferenceCode,
 			fragmentEntryReference.getFragmentEntryERC());
 		Assert.assertNull(fragmentEntryReference.getFragmentEntryKey());
-
-		// A missing fragment item external reference must be reported as a
-		// FragmentEntry, never with a null class name
 
 		_logUtilMockedStatic.verify(
 			() -> LogUtil.logOptionalReference(

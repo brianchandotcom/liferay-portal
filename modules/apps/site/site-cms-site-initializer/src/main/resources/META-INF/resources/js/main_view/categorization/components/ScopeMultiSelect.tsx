@@ -34,7 +34,6 @@ type PreselectedItem = {
 
 export default function ScopeMultiSelect<T extends ScopeItem>({
 	error,
-	getItems,
 	labels,
 	onChange,
 	onError,
@@ -42,9 +41,9 @@ export default function ScopeMultiSelect<T extends ScopeItem>({
 	preselectedItems,
 	renderItem,
 	showErrorInitially = true,
+	sourceItems,
 }: {
 	error: string;
-	getItems: () => Promise<T[]>;
 	labels: ScopeLabels;
 	onChange?: (value: boolean) => void;
 	onError: (value: string) => void;
@@ -52,8 +51,8 @@ export default function ScopeMultiSelect<T extends ScopeItem>({
 	preselectedItems?: PreselectedItem[];
 	renderItem: (item: T) => ReactNode;
 	showErrorInitially?: boolean;
+	sourceItems: T[];
 }) {
-	const [availableItems, setAvailableItems] = useState<T[]>([]);
 	const [allScopesChecked, setAllScopesChecked] = useState(true);
 	const [displayError, setDisplayError] = useState(showErrorInitially);
 	const [query, setQuery] = useState('');
@@ -62,40 +61,40 @@ export default function ScopeMultiSelect<T extends ScopeItem>({
 		[]
 	);
 
-	const loadingState = !availableItems.length
+	const loadingState = !sourceItems.length
 		? NetworkStatus.Polling
 		: undefined;
 
 	useEffect(() => {
-		getItems().then((items) => {
-			setAvailableItems(items);
+		if (!sourceItems.length) {
+			return;
+		}
 
-			const initialValues = preselectedItems?.map(
-				(preselectedItem) =>
-					items.find((item) => item.label === preselectedItem.name)
-						?.value
+		const initialValues = preselectedItems?.map(
+			(preselectedItem) =>
+				sourceItems.find((item) => item.label === preselectedItem.name)
+					?.value
+		);
+
+		setInitialSelectedValues(initialValues ?? []);
+
+		if (
+			!preselectedItems ||
+			!preselectedItems.length ||
+			preselectedItems.some((item) => item.id === -1)
+		) {
+			setAllScopesChecked(true);
+
+			setSelectedItems([]);
+		}
+		else if (initialValues) {
+			setAllScopesChecked(false);
+
+			setSelectedItems(
+				sourceItems.filter((item) => initialValues.includes(item.value))
 			);
-
-			setInitialSelectedValues(initialValues ?? []);
-
-			if (
-				!preselectedItems ||
-				!preselectedItems.length ||
-				preselectedItems.some((item) => item.id === -1)
-			) {
-				setAllScopesChecked(true);
-
-				setSelectedItems([]);
-			}
-			else if (initialValues) {
-				setAllScopesChecked(false);
-
-				setSelectedItems(
-					items.filter((item) => initialValues.includes(item.value))
-				);
-			}
-		});
-	}, [getItems, preselectedItems]);
+		}
+	}, [preselectedItems, sourceItems]);
 
 	useEffect(() => {
 		if (onChange) {
@@ -136,8 +135,8 @@ export default function ScopeMultiSelect<T extends ScopeItem>({
 	]);
 
 	const _getAvailableItems = (items: T[]) =>
-		availableItems.filter((availableItem) =>
-			items.some((item) => availableItem.value === item.value)
+		sourceItems.filter((sourceItem) =>
+			items.some((item) => sourceItem.value === item.value)
 		);
 
 	const _handleChangeItems = (items: T[]) => {
@@ -163,11 +162,11 @@ export default function ScopeMultiSelect<T extends ScopeItem>({
 					disabled={allScopesChecked}
 					id="multiSelect"
 					items={selectedItems}
-					key={availableItems.length ? 'loaded' : 'empty'}
+					key={sourceItems.length ? 'loaded' : 'empty'}
 					loadingState={loadingState}
 					onChange={setQuery}
 					onItemsChange={_handleChangeItems}
-					sourceItems={availableItems}
+					sourceItems={sourceItems}
 					value={allScopesChecked ? labels.allItemsValue : query}
 				>
 					{(item) => (

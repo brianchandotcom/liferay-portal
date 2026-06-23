@@ -313,12 +313,12 @@ public class AssetListFiltersUtil {
 		String operatorName = GetterUtil.getString(
 			jsonObject.getString("operatorName"), "contains");
 
-		Query valueQuery = _toCommonFieldValueQuery(
+		Query query = _toCommonFieldValueQuery(
 			field, jsonObject,
 			_localizedCommonFieldNames.contains(propertyName), operatorName,
 			type);
 
-		if (valueQuery == null) {
+		if (query == null) {
 			return null;
 		}
 
@@ -326,12 +326,12 @@ public class AssetListFiltersUtil {
 			BooleanQuery booleanQuery = new BooleanQuery();
 
 			booleanQuery.add(new MatchAllQuery(), BooleanClauseOccur.MUST);
-			booleanQuery.add(valueQuery, BooleanClauseOccur.MUST_NOT);
+			booleanQuery.add(query, BooleanClauseOccur.MUST_NOT);
 
 			return new BooleanClause<>(booleanQuery, BooleanClauseOccur.MUST);
 		}
 
-		return new BooleanClause<>(valueQuery, BooleanClauseOccur.MUST);
+		return new BooleanClause<>(query, BooleanClauseOccur.MUST);
 	}
 
 	private static Query _toCommonFieldRangeQuery(
@@ -453,10 +453,10 @@ public class AssetListFiltersUtil {
 
 		String subfield = _getSubfield(locale, objectField);
 
-		Query valueQuery = _toValueQuery(
+		Query query = _toValueQuery(
 			jsonObject, objectField, operatorName, subfield, value);
 
-		if (valueQuery == null) {
+		if (query == null) {
 			return null;
 		}
 
@@ -471,7 +471,7 @@ public class AssetListFiltersUtil {
 				subfield.substring(subfield.indexOf(CharPool.PERIOD) + 1)),
 			BooleanClauseOccur.MUST);
 		booleanQuery.add(
-			valueQuery,
+			query,
 			_isNegatedOperator(operatorName) ? BooleanClauseOccur.MUST_NOT :
 				BooleanClauseOccur.MUST);
 

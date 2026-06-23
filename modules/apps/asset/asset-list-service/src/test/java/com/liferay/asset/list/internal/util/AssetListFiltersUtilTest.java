@@ -91,20 +91,19 @@ public class AssetListFiltersUtilTest {
 	public void testGetFiltersBooleanClausesWithCommonFieldOperators() {
 		String priority = String.valueOf(RandomTestUtil.randomDouble());
 		String status = String.valueOf(RandomTestUtil.randomInt());
-		String titleContainsValue = RandomTestUtil.randomString();
-		String titleEqValue = RandomTestUtil.randomString();
+		String title1 = RandomTestUtil.randomString();
+		String title2 = RandomTestUtil.randomString();
 		String userName = RandomTestUtil.randomString();
 		String viewCount = String.valueOf(RandomTestUtil.randomInt());
 
 		_assertMatchQuery(
-			"localized_title_en_US", titleEqValue,
+			"localized_title_en_US", title1,
 			_runAndAssertCommonFieldRow(
-				_buildCommonFieldFilter("eq", "title", titleEqValue)));
+				_buildCommonFieldFilter("eq", "title", title1)));
 		_assertMatchQuery(
-			"localized_title_en_US", titleContainsValue,
+			"localized_title_en_US", title2,
 			_runAndAssertCommonFieldRow(
-				_buildCommonFieldFilter(
-					"contains", "title", titleContainsValue)));
+				_buildCommonFieldFilter("contains", "title", title2)));
 
 		_assertTermQuery(
 			"userName", userName,
@@ -382,7 +381,11 @@ public class AssetListFiltersUtilTest {
 
 		BooleanClause[] booleanClauses =
 			AssetListFiltersUtil.getFiltersBooleanClauses(
-				_COMPANY_ID, JSONUtil.putAll(_buildFilter("eq", "id", "5")),
+				_COMPANY_ID,
+				JSONUtil.putAll(
+					_buildFilter(
+						"eq", "id",
+						String.valueOf(RandomTestUtil.randomLong()))),
 				LocaleUtil.US);
 
 		Assert.assertEquals(

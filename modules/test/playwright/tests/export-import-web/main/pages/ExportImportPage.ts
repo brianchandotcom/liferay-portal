@@ -256,15 +256,44 @@ export class ExportImportPage {
 		label: string | RegExp,
 		{
 			counts = {},
+			portletId,
 			registrations,
 		}: {
 			counts?: {deletions?: number; items?: number};
+			portletId?: string;
 			registrations?: Array<{
 				counts: {deletions?: number; items?: number};
 				label: string | RegExp;
 			}>;
 		} = {}
 	) {
+		if (portletId) {
+			if (registrations) {
+				await this._expandPortlet(portletId);
+			}
+
+			await this._assertLabelCounts(
+				this._portletLabel(portletId),
+				counts
+			);
+
+			const contentLocator = this.page.locator(
+				`[id$="_content_${portletId}"]`
+			);
+
+			for (const registration of registrations ?? []) {
+				await this._assertLabelCounts(
+					this._filterLabels(
+						contentLocator.locator('label'),
+						registration.label
+					),
+					registration.counts
+				);
+			}
+
+			return;
+		}
+
 		if (registrations) {
 			if (typeof label === 'string') {
 				await this.page
@@ -311,6 +340,34 @@ export class ExportImportPage {
 		await this._assertPortletEntryCounts(label, {deletions: 'hidden'});
 	}
 
+	private _filterLabels(labels: Locator, label: string | RegExp): Locator {
+		return labels.filter(
+			typeof label === 'string'
+				? {has: this.page.locator(`:text-is("${label}")`)}
+				: {hasText: label}
+		);
+	}
+
+	private _portletLabel(portletId: string): Locator {
+		return this.page.locator('label').filter({
+			has: this.page.locator(`input[name$="_PORTLET_DATA_${portletId}"]`),
+		});
+	}
+
+	private async _expandPortlet(portletId: string) {
+		const dataCheckbox = this.page.locator(
+			`input[name$="_PORTLET_DATA_${portletId}"]`
+		);
+
+		if (!(await dataCheckbox.isChecked())) {
+			await dataCheckbox.check();
+		}
+
+		await this.page
+			.locator(`button.content-link[data-portletid="${portletId}"]`)
+			.click();
+	}
+
 	private async _assertPortletEntryCounts(
 		label: string | RegExp,
 		counts: {
@@ -318,12 +375,19 @@ export class ExportImportPage {
 			items?: 'absent' | number;
 		}
 	) {
-		const filter =
-			typeof label === 'string'
-				? {has: this.page.locator(`:text-is("${label}")`)}
-				: {hasText: label};
+		await this._assertLabelCounts(
+			this._filterLabels(this.page.locator('label'), label),
+			counts
+		);
+	}
 
-		const labelLocator = this.page.locator('label').filter(filter);
+	private async _assertLabelCounts(
+		labelLocator: Locator,
+		counts: {
+			deletions?: 'absent' | 'hidden' | number;
+			items?: 'absent' | number;
+		}
+	) {
 		const {deletions, items} = counts;
 
 		if (items !== undefined) {

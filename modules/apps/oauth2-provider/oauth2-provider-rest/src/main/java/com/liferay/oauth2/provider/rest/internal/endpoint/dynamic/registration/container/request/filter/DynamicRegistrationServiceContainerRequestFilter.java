@@ -9,7 +9,7 @@ import com.liferay.oauth2.provider.constants.OAuth2ApplicationConstants;
 import com.liferay.oauth2.provider.constants.OAuth2ProviderActionKeys;
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.model.OAuth2Authorization;
-import com.liferay.oauth2.provider.rest.internal.configuration.DynamicRegistrationConfiguration;
+import com.liferay.oauth2.provider.rest.internal.configuration.OAuth2DynamicRegistrationConfiguration;
 import com.liferay.oauth2.provider.rest.internal.constants.OAuth2ProviderRESTWebKeys;
 import com.liferay.oauth2.provider.rest.internal.endpoint.constants.OAuth2ProviderRESTEndpointConstants;
 import com.liferay.oauth2.provider.rest.internal.endpoint.util.OAuth2ErrorUtil;
@@ -319,19 +319,22 @@ public class DynamicRegistrationServiceContainerRequestFilter
 			long companyId, HttpServletRequest httpServletRequest)
 		throws ConfigurationException {
 
-		DynamicRegistrationConfiguration dynamicRegistrationConfiguration =
-			_getDynamicRegistrationConfiguration(companyId);
+		OAuth2DynamicRegistrationConfiguration
+			oAuth2DynamicRegistrationConfiguration =
+				_getOAuth2DynamicRegistrationConfiguration(companyId);
 
 		String clientHost = _normalizeHost(
 			_getClientHost(
 				httpServletRequest,
-				dynamicRegistrationConfiguration.trustProxyHeaders()));
+				oAuth2DynamicRegistrationConfiguration.trustProxyHeaders()));
 
 		httpServletRequest.setAttribute(
 			OAuth2ProviderRESTWebKeys.DYNAMIC_REGISTRATION_CLIENT_HOST,
 			clientHost);
 
-		if (dynamicRegistrationConfiguration.requireInitialAccessToken()) {
+		if (oAuth2DynamicRegistrationConfiguration.
+				requireInitialAccessToken()) {
+
 			_auditFailure(
 				clientHost, companyId,
 				OAuth2ProviderRESTEndpointConstants.ERROR_INVALID_TOKEN,
@@ -343,7 +346,7 @@ public class DynamicRegistrationServiceContainerRequestFilter
 		}
 
 		_validateOpenRegistrationHosts(
-			dynamicRegistrationConfiguration.allowedHosts(), clientHost,
+			oAuth2DynamicRegistrationConfiguration.allowedHosts(), clientHost,
 			companyId, httpServletRequest);
 
 		User user = _userLocalService.fetchUserByScreenName(
@@ -415,16 +418,6 @@ public class DynamicRegistrationServiceContainerRequestFilter
 		return null;
 	}
 
-	private DynamicRegistrationConfiguration
-			_getDynamicRegistrationConfiguration(long companyId)
-		throws ConfigurationException {
-
-		return _configurationProvider.getConfiguration(
-			DynamicRegistrationConfiguration.class,
-			new CompanyServiceSettingsLocator(
-				companyId, DynamicRegistrationConfiguration.class.getName()));
-	}
-
 	private JwtToken _getJwtToken(HttpServletRequest httpServletRequest) {
 		String authorization = httpServletRequest.getHeader("Authorization");
 
@@ -462,6 +455,17 @@ public class DynamicRegistrationServiceContainerRequestFilter
 			accessTokenContent);
 
 		return jwsJwtCompactConsumer.getJwtToken();
+	}
+
+	private OAuth2DynamicRegistrationConfiguration
+			_getOAuth2DynamicRegistrationConfiguration(long companyId)
+		throws ConfigurationException {
+
+		return _configurationProvider.getConfiguration(
+			OAuth2DynamicRegistrationConfiguration.class,
+			new CompanyServiceSettingsLocator(
+				companyId,
+				OAuth2DynamicRegistrationConfiguration.class.getName()));
 	}
 
 	private String _normalizeHost(String host) {

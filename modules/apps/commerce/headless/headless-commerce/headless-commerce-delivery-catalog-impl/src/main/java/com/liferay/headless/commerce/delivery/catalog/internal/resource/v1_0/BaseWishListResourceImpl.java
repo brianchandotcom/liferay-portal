@@ -172,6 +172,11 @@ public abstract class BaseWishListResourceImpl
 				name = "currencyCode"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
+				description = "Comma-separated list of nested fields to embed in each returned resource. Each value names a relationship exposed on the resource; when omitted, those relationships are not expanded inline.",
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "nestedFields"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
 				description = "One-based page index for paginated results. Combine with pageSize to walk pages; when omitted the server returns page 1.",
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "page"
@@ -235,6 +240,11 @@ public abstract class BaseWishListResourceImpl
 				name = "currencyCode"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
+				description = "Comma-separated list of nested fields to embed in each returned resource. Each value names a relationship exposed on the resource; when omitted, those relationships are not expanded inline.",
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "nestedFields"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
 				description = "One-based page index for paginated results. Combine with pageSize to walk pages; when omitted the server returns page 1.",
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "page"
@@ -284,6 +294,11 @@ public abstract class BaseWishListResourceImpl
 				description = "Reference to the addressed CommerceWishList; raises 404 when missing or when the caller lacks VIEW permission.",
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
 				name = "wishListId"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				description = "Comma-separated list of nested fields to embed in each returned resource. Each value names a relationship exposed on the resource; when omitted, those relationships are not expanded inline.",
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "nestedFields"
 			)
 		}
 	)
@@ -1156,4 +1171,4 @@ public abstract class BaseWishListResourceImpl
 		LogFactoryUtil.getLog(BaseWishListResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1743906659
+// LIFERAY-REST-BUILDER-HASH:-1146709118

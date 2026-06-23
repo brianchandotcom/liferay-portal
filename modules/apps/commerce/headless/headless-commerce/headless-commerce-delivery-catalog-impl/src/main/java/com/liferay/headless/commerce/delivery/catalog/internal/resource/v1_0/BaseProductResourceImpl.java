@@ -90,6 +90,11 @@ public abstract class BaseProductResourceImpl
 				description = "Reference to the AccountEntry the request is scoped to. When omitted, AccountUtil resolves the effective account from the authenticated user's commerce account assignments and channel eligibility; when the user has multiple accounts the explicit value is required (NoSuchEntryException otherwise).",
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "accountId"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				description = "Comma-separated list of nested fields to embed in each returned resource. Each value names a relationship exposed on the resource; when omitted, those relationships are not expanded inline.",
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "nestedFields"
 			)
 		}
 	)
@@ -141,6 +146,11 @@ public abstract class BaseProductResourceImpl
 				description = "Reference to the AccountEntry the request is scoped to. When omitted, AccountUtil resolves the effective account from the authenticated user's commerce account assignments and channel eligibility; when the user has multiple accounts the explicit value is required (NoSuchEntryException otherwise).",
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "accountId"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				description = "Comma-separated list of nested fields to embed in each returned resource. Each value names a relationship exposed on the resource; when omitted, those relationships are not expanded inline.",
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "nestedFields"
 			)
 		}
 	)
@@ -194,6 +204,11 @@ public abstract class BaseProductResourceImpl
 				description = "OData v4 $filter expression applied to the indexed entity. Supported fields are sourced from the entity model -- ChannelEntityModel exposes siteGroupId, name; AccountEntityModel exposes dateCreated, dateModified, name, type; ProductEntityModel exposes categoryIds, categoryNames, gtins, specificationNames, specificationValues, tags, createDate, modifiedDate, catalogId, statusCode, externalReferenceCode, name, productType plus every expando custom column. Currency, mapped product, and most child endpoints do not publish an entity model and ignore filter.",
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "filter"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				description = "Comma-separated list of nested fields to embed in each returned resource. Each value names a relationship exposed on the resource; when omitted, those relationships are not expanded inline.",
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "nestedFields"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				description = "One-based page index for paginated results. Combine with pageSize to walk pages; when omitted the server returns page 1.",
@@ -899,4 +914,4 @@ public abstract class BaseProductResourceImpl
 		LogFactoryUtil.getLog(BaseProductResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:1824894606
+// LIFERAY-REST-BUILDER-HASH:-1440678435

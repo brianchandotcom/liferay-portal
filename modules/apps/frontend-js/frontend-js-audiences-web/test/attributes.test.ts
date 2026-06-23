@@ -32,8 +32,6 @@ describe('attributes', () => {
 		delete (document as any).cookie;
 		delete (document as any).referrer;
 
-		delete (global as any).Analytics;
-
 		delete (navigator as any).userAgent;
 
 		window.history.replaceState({}, '', '/');
@@ -65,18 +63,6 @@ describe('attributes', () => {
 		Object.defineProperty(document, 'referrer', {
 			configurable: true,
 			value: 'https://www.wikipedia.org/',
-		});
-
-		Object.defineProperty(global, 'Analytics', {
-			configurable: true,
-			value: {
-				segment: {
-					getBatchSegmentExternalReferenceCodes: () =>
-						Promise.resolve(['SEGMENT_BATCH']),
-					getRealTimeSegmentExternalReferenceCodes: () =>
-						Promise.resolve(['SEGMENT_REAL_TIME']),
-				},
-			},
 		});
 
 		Object.defineProperty(navigator, 'userAgent', {
@@ -247,7 +233,9 @@ describe('attributes', () => {
 
 	describe('attribute segments', () => {
 		it('works and returns a Set<string>', async () => {
-			const value = await getSegments();
+			const value = getSegments(
+				new Set(['SEGMENT_BATCH', 'SEGMENT_REAL_TIME'])
+			);
 
 			expect(value).toBeInstanceOf(Set);
 			expect(value).toEqual(

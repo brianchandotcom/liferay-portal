@@ -85,6 +85,15 @@ public class AssetVocabularyGroupRelLocalServiceImpl
 
 	@Override
 	public List<AssetVocabularyGroupRel>
+		getAssetVocabularyGroupRelsByGroupIdAndDepotEntryType(
+			long groupId, int depotEntryType) {
+
+		return assetVocabularyGroupRelPersistence.findByG_D(
+			groupId, depotEntryType);
+	}
+
+	@Override
+	public List<AssetVocabularyGroupRel>
 		getAssetVocabularyGroupRelsByVocabularyId(long vocabularyId) {
 
 		return assetVocabularyGroupRelPersistence.findByVocabularyId(

@@ -68,6 +68,16 @@ components:
                 minimum: 0
                 type: integer
             style: simple
+        nestedFieldsQueryParam:
+            in: query
+            description:
+                Comma-separated list of nested fields to embed in each returned resource. Each value names a relationship exposed on the resource; when omitted, those relationships are not expanded inline.
+            explode: true
+            name: nestedFields
+            required: false
+            schema:
+                type: string
+            style: form
         orderIdPathParam:
             in: path
             description:
@@ -263,6 +273,7 @@ components:
                     example: 30130
                     format: int64
                     minimum: 0
+                    readOnly: true
                     type: integer
                 logoId:
                     description:
@@ -315,7 +326,7 @@ components:
                     type: string
                 dateModified:
                     description:
-                        Last-modification timestamp in ISO 8601 (UTC). Read-only; set by the service on each update.
+                        Last modification date and time in ISO 8601 (UTC). Read-only; set by the service on each update.
                     example: 2017-07-21T19:30:00Z
                     format: date-time
                     readOnly: true
@@ -614,9 +625,10 @@ components:
                     type: string
                 createDate:
                     description:
-                        Creation date for the order. Read-only; set by the service when the record is first persisted.
-                    example: 2017-07-21
-                    format: date
+                        Creation date and time of the order. Read-only; set by the service when the record is first persisted.
+                    example: 2017-07-21T19:30:00Z
+                    format: date-time
+                    readOnly: true
                     type: string
                 creatorEmailAddress:
                     description:
@@ -683,18 +695,21 @@ components:
                     example: 30130
                     format: int64
                     minimum: 0
+                    readOnly: true
                     type: integer
                 lastPriceUpdateDate:
                     description:
-                        Date of the most recent price recalculation on the order. Read-only.
-                    example: 2017-07-21
-                    format: date
+                        Date and time of the most recent price recalculation on the order. Read-only.
+                    example: 2017-07-21T19:30:00Z
+                    format: date-time
+                    readOnly: true
                     type: string
                 modifiedDate:
                     description:
-                        Last-modification date for the order. Read-only.
-                    example: 2017-08-21
-                    format: date
+                        Last modification date and time of the order. Read-only.
+                    example: 2017-08-21T19:30:00Z
+                    format: date-time
+                    readOnly: true
                     type: string
                 name:
                     description:
@@ -703,9 +718,9 @@ components:
                     type: string
                 orderDate:
                     description:
-                        Date the order was placed. May differ from the creation date when the order is imported from another system.
-                    example: 2017-07-21
-                    format: date
+                        Date and time the order was placed. May differ from the creation date when the order is imported from another system.
+                    example: 2017-07-21T19:30:00Z
+                    format: date-time
                     type: string
                 orderItems:
                     description:
@@ -786,9 +801,9 @@ components:
                     type: string
                 requestedDeliveryDate:
                     description:
-                        Buyer-requested delivery date.
-                    example: 2017-07-21
-                    format: date
+                        Buyer-requested delivery date and time.
+                    example: 2017-07-21T19:30:00Z
+                    format: date-time
                     type: string
                 shippable:
                     description:
@@ -821,6 +836,7 @@ components:
                     description:
                         Locale-aware formatted shipping charge with the currency symbol. Read-only.
                     example: $9.99
+                    readOnly: true
                     type: string
                 shippingAmountValue:
                     description:
@@ -828,6 +844,7 @@ components:
                     example: 9.99
                     format: double
                     minimum: 0
+                    readOnly: true
                     type: number
                 shippingDiscountAmount:
                     description:
@@ -839,12 +856,14 @@ components:
                     description:
                         Locale-aware formatted shipping-discount amount with the currency symbol. Read-only.
                     example: $0.00
+                    readOnly: true
                     type: string
                 shippingDiscountAmountValue:
                     description:
                         Raw decimal value of the shipping-discount amount without currency formatting. Read-only.
                     example: 0.0
                     format: double
+                    readOnly: true
                     type: number
                 shippingDiscountPercentageLevel1:
                     description:
@@ -912,6 +931,7 @@ components:
                     description:
                         Locale-aware formatted shipping-discount amount with tax included. Read-only.
                     example: $0.00
+                    readOnly: true
                     type: string
                 shippingMethod:
                     description:
@@ -934,6 +954,7 @@ components:
                     description:
                         Locale-aware formatted shipping charge with tax included. Read-only.
                     example: $10.79
+                    readOnly: true
                     type: string
                 shippingWithTaxAmountValue:
                     description:
@@ -941,6 +962,7 @@ components:
                     example: 10.79
                     format: double
                     minimum: 0
+                    readOnly: true
                     type: number
                 subtotal:
                     description:
@@ -965,6 +987,7 @@ components:
                     description:
                         Locale-aware formatted subtotal-discount amount with the currency symbol. Read-only.
                     example: $0.00
+                    readOnly: true
                     type: string
                 subtotalDiscountPercentageLevel1:
                     description:
@@ -1032,11 +1055,13 @@ components:
                     description:
                         Locale-aware formatted subtotal-discount amount with tax included. Read-only.
                     example: $0.00
+                    readOnly: true
                     type: string
                 subtotalFormatted:
                     description:
                         Locale-aware formatted subtotal with the currency symbol. Read-only.
                     example: $100.00
+                    readOnly: true
                     type: string
                 subtotalWithTaxAmount:
                     description:
@@ -1048,6 +1073,7 @@ components:
                     description:
                         Locale-aware formatted subtotal with tax included. Read-only.
                     example: $108.00
+                    readOnly: true
                     type: string
                 subtotalWithTaxAmountValue:
                     description:
@@ -1067,6 +1093,7 @@ components:
                     description:
                         Locale-aware formatted tax amount with the currency symbol. Read-only.
                     example: $8.00
+                    readOnly: true
                     type: string
                 taxAmountValue:
                     description:
@@ -1074,6 +1101,7 @@ components:
                     example: 8.0
                     format: double
                     minimum: 0
+                    readOnly: true
                     type: number
                 total:
                     description:
@@ -1101,6 +1129,7 @@ components:
                     description:
                         Locale-aware formatted total-discount amount with the currency symbol. Read-only.
                     example: $0.00
+                    readOnly: true
                     type: string
                 totalDiscountAmountValue:
                     description:
@@ -1108,6 +1137,7 @@ components:
                     example: 0.0
                     format: double
                     minimum: 0
+                    readOnly: true
                     type: number
                 totalDiscountPercentageLevel1:
                     description:
@@ -1176,6 +1206,7 @@ components:
                     description:
                         Locale-aware formatted total-discount amount with tax included. Read-only.
                     example: $0.00
+                    readOnly: true
                     type: string
                 totalDiscountWithTaxAmountValue:
                     description:
@@ -1183,11 +1214,13 @@ components:
                     example: 0.0
                     format: double
                     minimum: 0
+                    readOnly: true
                     type: number
                 totalFormatted:
                     description:
                         Locale-aware formatted total with the currency symbol. Read-only.
                     example: $117.99
+                    readOnly: true
                     type: string
                 totalWithTaxAmount:
                     description:
@@ -1200,6 +1233,7 @@ components:
                     description:
                         Locale-aware formatted total with tax included. Read-only.
                     example: $126.79
+                    readOnly: true
                     type: string
                 totalWithTaxAmountValue:
                     description:
@@ -1237,6 +1271,7 @@ components:
                     description:
                         Display name of the linked account group. Read-only.
                     example: Wholesale Buyers
+                    readOnly: true
                     type: string
             type: object
         OrderItem:
@@ -1273,7 +1308,7 @@ components:
                     type: string
                 deliveryGroupName:
                     description:
-                        Display name of the delivery group. Read-only.
+                        Display name of the delivery group.
                     example: Separate Package
                     type: string
                 discountAmount:
@@ -1383,6 +1418,7 @@ components:
                     example: 30130
                     format: int64
                     minimum: 0
+                    readOnly: true
                     type: integer
                 name:
                     additionalProperties:
@@ -1390,6 +1426,7 @@ components:
                     description:
                         Display name of the product or SKU on this line item. Resolved against the request locale. Read-only.
                     example: Hand Saw
+                    readOnly: true
                     type: object
                 options:
                     description:
@@ -1466,9 +1503,9 @@ components:
                     type: integer
                 requestedDeliveryDate:
                     description:
-                        Buyer-requested delivery date for this line item.
-                    example: 2017-07-21
-                    format: date
+                        Buyer-requested delivery date and time for this line item.
+                    example: 2017-07-21T19:30:00Z
+                    format: date-time
                     type: string
                 shippable:
                     description:
@@ -1478,7 +1515,7 @@ components:
                     type: boolean
                 shippedQuantity:
                     description:
-                        Integer quantity already shipped for this line item. Read-only.
+                        Integer quantity already shipped for this line item.
                     example: 0
                     format: bigdecimal
                     minimum: 0
@@ -1518,10 +1555,11 @@ components:
                     description:
                         When true, the line item is part of a subscription cycle. Read-only.
                     example: false
+                    readOnly: true
                     type: boolean
                 unitOfMeasure:
                     description:
-                        Display name of the unit of measure (for example, case, pallet). Read-only.
+                        Display name of the unit of measure (for example, case, pallet).
                     example: Each
                     type: string
                 unitOfMeasureKey:
@@ -1602,9 +1640,9 @@ components:
                     type: integer
                 modifiedDate:
                     description:
-                        Last modification timestamp in ISO 8601. Read-only.
-                    example: 2017-07-21
-                    format: date
+                        Last modification date and time in ISO 8601. Read-only.
+                    example: 2017-07-21T19:30:00Z
+                    format: date-time
                     readOnly: true
                     type: string
                 orderExternalReferenceCode:
@@ -1647,12 +1685,14 @@ components:
                     description:
                         Display name of the user who created the rule. Read-only.
                     example: Test Test
+                    readOnly: true
                     type: string
                 createDate:
                     description:
-                        Creation date for the rule. Read-only.
-                    example: 2017-07-21
-                    format: date
+                        Creation date and time of the rule. Read-only.
+                    example: 2017-07-21T19:30:00Z
+                    format: date-time
+                    readOnly: true
                     type: string
                 description:
                     description:
@@ -1661,15 +1701,15 @@ components:
                     type: string
                 displayDate:
                     description:
-                        Date the rule becomes active.
-                    example: 2017-07-21
-                    format: date
+                        Date and time the rule becomes active.
+                    example: 2017-07-21T19:30:00Z
+                    format: date-time
                     type: string
                 expirationDate:
                     description:
-                        Date the rule expires and stops applying.
-                    example: 2017-08-21
-                    format: date
+                        Date and time the rule expires and stops applying.
+                    example: 2017-08-21T19:30:00Z
+                    format: date-time
                     type: string
                 externalReferenceCode:
                     description:
@@ -1682,6 +1722,7 @@ components:
                     example: 30130
                     format: int64
                     minimum: 0
+                    readOnly: true
                     type: integer
                 name:
                     description:
@@ -1985,9 +2026,9 @@ components:
                     type: object
                 displayDate:
                     description:
-                        Date the order type becomes active.
-                    example: 2017-07-21
-                    format: date
+                        Date and time the order type becomes active.
+                    example: 2017-07-21T19:30:00Z
+                    format: date-time
                     type: string
                 displayOrder:
                     description:
@@ -1998,9 +2039,9 @@ components:
                     type: integer
                 expirationDate:
                     description:
-                        Date the order type expires.
-                    example: 2017-08-21
-                    format: date
+                        Date and time the order type expires.
+                    example: 2017-08-21T19:30:00Z
+                    format: date-time
                     type: string
                 externalReferenceCode:
                     description:
@@ -2013,6 +2054,7 @@ components:
                     example: 30130
                     format: int64
                     minimum: 0
+                    readOnly: true
                     type: integer
                 name:
                     additionalProperties:
@@ -2225,9 +2267,10 @@ components:
                     type: boolean
                 createDate:
                     description:
-                        Creation date for the term. Read-only.
-                    example: 2017-07-21
-                    format: date
+                        Creation date and time of the term. Read-only.
+                    example: 2017-07-21T19:30:00Z
+                    format: date-time
+                    readOnly: true
                     type: string
                 description:
                     additionalProperties:
@@ -2241,15 +2284,15 @@ components:
                     type: object
                 displayDate:
                     description:
-                        Date the term becomes active.
-                    example: 2017-07-21
-                    format: date
+                        Date and time the term becomes active.
+                    example: 2017-07-21T19:30:00Z
+                    format: date-time
                     type: string
                 expirationDate:
                     description:
-                        Date the term expires.
-                    example: 2017-08-21
-                    format: date
+                        Date and time the term expires.
+                    example: 2017-08-21T19:30:00Z
+                    format: date-time
                     type: string
                 externalReferenceCode:
                     description:
@@ -2262,6 +2305,7 @@ components:
                     example: 30130
                     format: int64
                     minimum: 0
+                    readOnly: true
                     type: integer
                 label:
                     additionalProperties:
@@ -2924,6 +2968,7 @@ paths:
             operationId: getOrderRuleOrderTypeOrderType
             parameters:
             -   $ref: "#/components/parameters/orderRuleOrderTypeIdPathParam"
+            -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             responses:
                 200:
                     content:
@@ -2988,6 +3033,7 @@ paths:
             operationId: getOrderRulesPage
             parameters:
             -   $ref: "#/components/parameters/filterQueryParam"
+            -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             -   $ref: "#/components/parameters/pageQueryParam"
             -   $ref: "#/components/parameters/pageSizeQueryParam"
             -   $ref: "#/components/parameters/searchQueryParam"
@@ -3157,6 +3203,7 @@ paths:
             operationId: getOrderRuleByExternalReferenceCode
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
+            -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             responses:
                 200:
                     content:
@@ -3530,6 +3577,7 @@ paths:
             operationId: getOrderRuleByExternalReferenceCodeOrderRuleAccountsPage
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
+            -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             -   $ref: "#/components/parameters/pageQueryParam"
             -   $ref: "#/components/parameters/pageSizeQueryParam"
             responses:
@@ -3675,6 +3723,7 @@ paths:
             operationId: getOrderRuleByExternalReferenceCodeOrderRuleChannelsPage
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
+            -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             -   $ref: "#/components/parameters/pageQueryParam"
             -   $ref: "#/components/parameters/pageSizeQueryParam"
             responses:
@@ -3820,6 +3869,7 @@ paths:
             operationId: getOrderRuleByExternalReferenceCodeOrderRuleOrderTypesPage
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
+            -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             -   $ref: "#/components/parameters/pageQueryParam"
             -   $ref: "#/components/parameters/pageSizeQueryParam"
             responses:
@@ -3997,6 +4047,7 @@ paths:
                 Gets an OrderRule by ID. Backed by the matching commerce service method on the target resource.
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
+            -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             responses:
                 200:
                     content:
@@ -4292,6 +4343,7 @@ paths:
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
             -   $ref: "#/components/parameters/filterQueryParam"
+            -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             -   $ref: "#/components/parameters/pageQueryParam"
             -   $ref: "#/components/parameters/pageSizeQueryParam"
             -   $ref: "#/components/parameters/searchQueryParam"
@@ -4438,6 +4490,7 @@ paths:
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
             -   $ref: "#/components/parameters/filterQueryParam"
+            -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             -   $ref: "#/components/parameters/pageQueryParam"
             -   $ref: "#/components/parameters/pageSizeQueryParam"
             -   $ref: "#/components/parameters/searchQueryParam"
@@ -4585,6 +4638,7 @@ paths:
             operationId: getOrderRuleIdOrderRuleOrderTypesPage
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
+            -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             -   $ref: "#/components/parameters/pageQueryParam"
             -   $ref: "#/components/parameters/pageSizeQueryParam"
             -   $ref: "#/components/parameters/searchQueryParam"
@@ -4830,6 +4884,7 @@ paths:
             operationId: getOrderTypesPage
             parameters:
             -   $ref: "#/components/parameters/filterQueryParam"
+            -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             -   $ref: "#/components/parameters/pageQueryParam"
             -   $ref: "#/components/parameters/pageSizeQueryParam"
             -   $ref: "#/components/parameters/searchQueryParam"
@@ -5002,6 +5057,7 @@ paths:
             operationId: getOrderTypeByExternalReferenceCode
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
+            -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             responses:
                 200:
                     content:
@@ -5236,6 +5292,7 @@ paths:
             operationId: getOrderTypeByExternalReferenceCodeOrderTypeChannelsPage
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
+            -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             -   $ref: "#/components/parameters/pageQueryParam"
             -   $ref: "#/components/parameters/pageSizeQueryParam"
             responses:
@@ -5415,6 +5472,7 @@ paths:
             operationId: getOrderType
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
+            -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             responses:
                 200:
                     content:
@@ -5564,6 +5622,7 @@ paths:
             operationId: getOrderTypeIdOrderTypeChannelsPage
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
+            -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             -   $ref: "#/components/parameters/pageQueryParam"
             -   $ref: "#/components/parameters/pageSizeQueryParam"
             -   $ref: "#/components/parameters/searchQueryParam"
@@ -5710,6 +5769,7 @@ paths:
                 Gets a list of Order Items. Backed by the matching commerce service method on the target resource.
             parameters:
             -   $ref: "#/components/parameters/filterQueryParam"
+            -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             -   $ref: "#/components/parameters/pageQueryParam"
             -   $ref: "#/components/parameters/pageSizeQueryParam"
             -   $ref: "#/components/parameters/searchQueryParam"
@@ -5802,6 +5862,7 @@ paths:
             operationId: getOrderItemByExternalReferenceCode
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
+            -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             responses:
                 200:
                     content:
@@ -6062,6 +6123,7 @@ paths:
             operationId: getOrderItem
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
+            -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             responses:
                 200:
                     content:
@@ -6703,6 +6765,7 @@ paths:
             operationId: getOrdersPage
             parameters:
             -   $ref: "#/components/parameters/filterQueryParam"
+            -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             -   $ref: "#/components/parameters/pageQueryParam"
             -   $ref: "#/components/parameters/pageSizeQueryParam"
             -   $ref: "#/components/parameters/searchQueryParam"
@@ -6874,6 +6937,7 @@ paths:
             operationId: getOrderByExternalReferenceCode
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
+            -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             responses:
                 200:
                     content:
@@ -7504,6 +7568,7 @@ paths:
             operationId: getOrderByExternalReferenceCodeOrderItemsPage
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
+            -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             -   $ref: "#/components/parameters/pageQueryParam"
             -   $ref: "#/components/parameters/pageSizeQueryParam"
             responses:
@@ -7975,6 +8040,7 @@ paths:
             operationId: getOrder
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
+            -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             responses:
                 200:
                     content:
@@ -8401,6 +8467,7 @@ paths:
             operationId: getOrderIdOrderItemsPage
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
+            -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             -   $ref: "#/components/parameters/pageQueryParam"
             -   $ref: "#/components/parameters/pageSizeQueryParam"
             responses:
@@ -9169,6 +9236,7 @@ paths:
             operationId: getTermOrderTypeOrderType
             parameters:
             -   $ref: "#/components/parameters/termOrderTypeIdPathParam"
+            -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             responses:
                 200:
                     content:
@@ -9233,6 +9301,7 @@ paths:
             operationId: getTermsPage
             parameters:
             -   $ref: "#/components/parameters/filterQueryParam"
+            -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             -   $ref: "#/components/parameters/pageQueryParam"
             -   $ref: "#/components/parameters/pageSizeQueryParam"
             -   $ref: "#/components/parameters/searchQueryParam"
@@ -9402,6 +9471,7 @@ paths:
             operationId: getTermByExternalReferenceCode
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
+            -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             responses:
                 200:
                     content:
@@ -9630,6 +9700,7 @@ paths:
             operationId: getTermByExternalReferenceCodeTermOrderTypesPage
             parameters:
             -   $ref: "#/components/parameters/externalReferenceCodePathParam"
+            -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             -   $ref: "#/components/parameters/pageQueryParam"
             -   $ref: "#/components/parameters/pageSizeQueryParam"
             responses:
@@ -9807,6 +9878,7 @@ paths:
                 Gets a Term by ID. Backed by the matching commerce service method on the target resource.
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
+            -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             responses:
                 200:
                     content:
@@ -9955,6 +10027,7 @@ paths:
             operationId: getTermIdTermOrderTypesPage
             parameters:
             -   $ref: "#/components/parameters/idPathParam"
+            -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             -   $ref: "#/components/parameters/pageQueryParam"
             -   $ref: "#/components/parameters/pageSizeQueryParam"
             -   $ref: "#/components/parameters/searchQueryParam"

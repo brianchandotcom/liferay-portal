@@ -163,24 +163,25 @@ public class AssetListAssetEntryProviderFiltersTest {
 			).build());
 
 		_assertFilteredClassPKs(
-			_buildFiltersJSONArray(_commonFieldFilter("eq", "title", title1)),
+			_buildFiltersJSONArray(
+				_buildCommonFieldFilter("eq", "title", title1)),
 			objectEntry1);
 		_assertFilteredClassPKs(
 			_buildFiltersJSONArray(
-				_commonFieldFilter("contains", "title", title1)),
+				_buildCommonFieldFilter("contains", "title", title1)),
 			objectEntry1);
 		_assertFilteredClassPKs(
 			_buildFiltersJSONArray(
-				_commonFieldFilter("not-contains", "title", title1)),
+				_buildCommonFieldFilter("not-contains", "title", title1)),
 			objectEntry2);
 
 		_assertFilteredClassPKs(
 			_buildFiltersJSONArray(
-				_commonFieldFilter("gt", "createDate", "2000-01-01")),
+				_buildCommonFieldFilter("gt", "createDate", "2000-01-01")),
 			objectEntry1, objectEntry2);
 		_assertFilteredClassPKs(
 			_buildFiltersJSONArray(
-				_commonFieldFilter("lt", "createDate", "2000-01-01")));
+				_buildCommonFieldFilter("lt", "createDate", "2000-01-01")));
 	}
 
 	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-74731"))
@@ -205,7 +206,7 @@ public class AssetListAssetEntryProviderFiltersTest {
 
 		List<Long> actualClassPKs = _getFilteredClassPKs(
 			_buildFiltersJSONArray(
-				_commonFieldFilter("contains", "title", title)));
+				_buildCommonFieldFilter("contains", "title", title)));
 
 		Assert.assertEquals(
 			actualClassPKs.toString(), 2, actualClassPKs.size());
@@ -229,7 +230,7 @@ public class AssetListAssetEntryProviderFiltersTest {
 
 		_assertFilteredClassPKs(
 			_buildFiltersJSONArray(
-				_filter(
+				_buildFilter(
 					"between", "dueDate",
 					JSONUtil.putAll("2026-01-01", "2026-03-01"))),
 			objectEntry1);
@@ -246,7 +247,7 @@ public class AssetListAssetEntryProviderFiltersTest {
 
 		_assertFilteredClassPKs(
 			_buildFiltersJSONArray(
-				_filter(
+				_buildFilter(
 					"between", "startTime",
 					JSONUtil.putAll("2026-01-15 00:00", "2026-01-15 23:59"))),
 			objectEntry2);
@@ -276,18 +277,18 @@ public class AssetListAssetEntryProviderFiltersTest {
 			).build());
 
 		_assertFilteredClassPKs(
-			_buildFiltersJSONArray(_filter("eq", "title", title)),
+			_buildFiltersJSONArray(_buildFilter("eq", "title", title)),
 			objectEntry1);
 		_assertFilteredClassPKs(
-			_buildFiltersJSONArray(_filter("not-eq", "title", title)),
+			_buildFiltersJSONArray(_buildFilter("not-eq", "title", title)),
 			objectEntry2);
 		_assertFilteredClassPKs(
 			_buildFiltersJSONArray(
-				_filter("eq", "priority", String.valueOf(priority))),
+				_buildFilter("eq", "priority", String.valueOf(priority))),
 			objectEntry2);
 		_assertFilteredClassPKs(
 			_buildFiltersJSONArray(
-				_filter("not-eq", "priority", String.valueOf(priority))),
+				_buildFilter("not-eq", "priority", String.valueOf(priority))),
 			objectEntry1);
 	}
 
@@ -310,11 +311,11 @@ public class AssetListAssetEntryProviderFiltersTest {
 
 		_assertFilteredClassPKs(
 			_buildFiltersJSONArray(
-				_filter("contains", "learnDocumentation", keyword)),
+				_buildFilter("contains", "learnDocumentation", keyword)),
 			objectEntry1);
 		_assertFilteredClassPKs(
 			_buildFiltersJSONArray(
-				_filter("not-contains", "learnDocumentation", keyword)),
+				_buildFilter("not-contains", "learnDocumentation", keyword)),
 			objectEntry2);
 	}
 
@@ -323,21 +324,21 @@ public class AssetListAssetEntryProviderFiltersTest {
 	public void testGetAssetEntriesInfoPageWithMultipleFiltersJoinedWithMust()
 		throws Exception {
 
-		String matchTitle = RandomTestUtil.randomString();
+		String title = RandomTestUtil.randomString();
 		int priority = RandomTestUtil.randomInt();
 
 		ObjectEntry objectEntry1 = _addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
 				"priority", priority
 			).put(
-				"title", matchTitle
+				"title", title
 			).build());
 
 		_addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
 				"priority", RandomTestUtil.randomInt()
 			).put(
-				"title", matchTitle
+				"title", title
 			).build());
 
 		_addObjectEntry(
@@ -349,8 +350,8 @@ public class AssetListAssetEntryProviderFiltersTest {
 
 		_assertFilteredClassPKs(
 			_buildFiltersJSONArray(
-				_filter("contains", "title", matchTitle),
-				_filter("eq", "priority", String.valueOf(priority))),
+				_buildFilter("contains", "title", title),
+				_buildFilter("eq", "priority", String.valueOf(priority))),
 			objectEntry1);
 	}
 
@@ -378,24 +379,24 @@ public class AssetListAssetEntryProviderFiltersTest {
 
 		_assertFilteredClassPKs(
 			_buildFiltersJSONArray(
-				_filter("gt", "priority", String.valueOf(priority2))),
+				_buildFilter("gt", "priority", String.valueOf(priority2))),
 			objectEntry3);
 		_assertFilteredClassPKs(
 			_buildFiltersJSONArray(
-				_filter("ge", "priority", String.valueOf(priority2))),
+				_buildFilter("ge", "priority", String.valueOf(priority2))),
 			objectEntry2, objectEntry3);
 
 		_assertFilteredClassPKs(
 			_buildFiltersJSONArray(
-				_filter("lt", "priority", String.valueOf(priority2))),
+				_buildFilter("lt", "priority", String.valueOf(priority2))),
 			objectEntry1);
 		_assertFilteredClassPKs(
 			_buildFiltersJSONArray(
-				_filter("le", "priority", String.valueOf(priority2))),
+				_buildFilter("le", "priority", String.valueOf(priority2))),
 			objectEntry1, objectEntry2);
 		_assertFilteredClassPKs(
 			_buildFiltersJSONArray(
-				_filter(
+				_buildFilter(
 					"between", "priority",
 					JSONUtil.putAll(
 						String.valueOf(priority2), String.valueOf(priority3)))),
@@ -418,11 +419,12 @@ public class AssetListAssetEntryProviderFiltersTest {
 
 		_assertFilteredClassPKs(
 			_buildFiltersJSONArray(
-				_picklistFilter("category", "any", _LIST_TYPE_ENTRY_KEY_1)),
+				_buildPicklistFilter(
+					"category", "any", _LIST_TYPE_ENTRY_KEY_1)),
 			objectEntry1);
 		_assertFilteredClassPKs(
 			_buildFiltersJSONArray(
-				_picklistFilter(
+				_buildPicklistFilter(
 					"category", "any", _LIST_TYPE_ENTRY_KEY_1,
 					_LIST_TYPE_ENTRY_KEY_2)),
 			objectEntry1, objectEntry2);
@@ -442,21 +444,24 @@ public class AssetListAssetEntryProviderFiltersTest {
 
 		_assertFilteredClassPKs(
 			_buildFiltersJSONArray(
-				_picklistFilter("categories", "any", _LIST_TYPE_ENTRY_KEY_1)),
+				_buildPicklistFilter(
+					"categories", "any", _LIST_TYPE_ENTRY_KEY_1)),
 			objectEntry3);
 		_assertFilteredClassPKs(
 			_buildFiltersJSONArray(
-				_picklistFilter("categories", "any", _LIST_TYPE_ENTRY_KEY_3)),
+				_buildPicklistFilter(
+					"categories", "any", _LIST_TYPE_ENTRY_KEY_3)),
 			objectEntry4);
 		_assertFilteredClassPKs(
 			_buildFiltersJSONArray(
-				_picklistFilter(
+				_buildPicklistFilter(
 					"categories", "all", _LIST_TYPE_ENTRY_KEY_1,
 					_LIST_TYPE_ENTRY_KEY_2)),
 			objectEntry3);
 		_assertFilteredClassPKs(
 			_buildFiltersJSONArray(
-				_picklistFilter("categories", "all", _LIST_TYPE_ENTRY_KEY_2)),
+				_buildPicklistFilter(
+					"categories", "all", _LIST_TYPE_ENTRY_KEY_2)),
 			objectEntry3, objectEntry4);
 	}
 
@@ -478,10 +483,11 @@ public class AssetListAssetEntryProviderFiltersTest {
 			).build());
 
 		_assertFilteredClassPKs(
-			_buildFiltersJSONArray(_filter("contains", "title", title)),
+			_buildFiltersJSONArray(_buildFilter("contains", "title", title)),
 			objectEntry1);
 		_assertFilteredClassPKs(
-			_buildFiltersJSONArray(_filter("not-contains", "title", title)),
+			_buildFiltersJSONArray(
+				_buildFilter("not-contains", "title", title)),
 			objectEntry2);
 	}
 
@@ -692,11 +698,7 @@ public class AssetListAssetEntryProviderFiltersTest {
 			actualClassPKs.containsAll(expectedClassPKs));
 	}
 
-	private JSONArray _buildFiltersJSONArray(JSONObject... filterJSONObjects) {
-		return JSONUtil.putAll((Object[])filterJSONObjects);
-	}
-
-	private JSONObject _commonFieldFilter(
+	private JSONObject _buildCommonFieldFilter(
 		String operatorName, String propertyName, Object value) {
 
 		return JSONUtil.put(
@@ -708,19 +710,7 @@ public class AssetListAssetEntryProviderFiltersTest {
 		);
 	}
 
-	private ObjectFieldSetting _createObjectFieldSetting(
-		String name, String value) {
-
-		ObjectFieldSetting objectFieldSetting =
-			_objectFieldSettingLocalService.createObjectFieldSetting(0L);
-
-		objectFieldSetting.setName(name);
-		objectFieldSetting.setValue(value);
-
-		return objectFieldSetting;
-	}
-
-	private JSONObject _filter(
+	private JSONObject _buildFilter(
 		String operatorName, String propertyName, Object value) {
 
 		return JSONUtil.put(
@@ -735,6 +725,47 @@ public class AssetListAssetEntryProviderFiltersTest {
 		).put(
 			"value", value
 		);
+	}
+
+	private JSONArray _buildFiltersJSONArray(JSONObject... filterJSONObjects) {
+		return JSONUtil.putAll((Object[])filterJSONObjects);
+	}
+
+	private JSONObject _buildPicklistFilter(
+		String propertyName, String quantifier, String... keys) {
+
+		JSONObject[] valueJSONObjects = new JSONObject[keys.length];
+
+		for (int i = 0; i < keys.length; i++) {
+			valueJSONObjects[i] = JSONUtil.put("value", keys[i]);
+		}
+
+		return JSONUtil.put(
+			"classNameId",
+			_portal.getClassNameId(_objectDefinition.getClassName())
+		).put(
+			"classTypeId", _objectDefinition.getObjectDefinitionId()
+		).put(
+			"operatorName", "contains"
+		).put(
+			"propertyName", propertyName
+		).put(
+			"quantifier", quantifier
+		).put(
+			"value", JSONUtil.putAll((Object[])valueJSONObjects)
+		);
+	}
+
+	private ObjectFieldSetting _createObjectFieldSetting(
+		String name, String value) {
+
+		ObjectFieldSetting objectFieldSetting =
+			_objectFieldSettingLocalService.createObjectFieldSetting(0L);
+
+		objectFieldSetting.setName(name);
+		objectFieldSetting.setValue(value);
+
+		return objectFieldSetting;
 	}
 
 	private List<Long> _getFilteredClassPKs(JSONArray filtersJSONArray)
@@ -765,31 +796,6 @@ public class AssetListAssetEntryProviderFiltersTest {
 
 		return TransformUtil.transform(
 			infoPage.getPageItems(), AssetEntry::getClassPK);
-	}
-
-	private JSONObject _picklistFilter(
-		String propertyName, String quantifier, String... keys) {
-
-		JSONObject[] valueJSONObjects = new JSONObject[keys.length];
-
-		for (int i = 0; i < keys.length; i++) {
-			valueJSONObjects[i] = JSONUtil.put("value", keys[i]);
-		}
-
-		return JSONUtil.put(
-			"classNameId",
-			_portal.getClassNameId(_objectDefinition.getClassName())
-		).put(
-			"classTypeId", _objectDefinition.getObjectDefinitionId()
-		).put(
-			"operatorName", "contains"
-		).put(
-			"propertyName", propertyName
-		).put(
-			"quantifier", quantifier
-		).put(
-			"value", JSONUtil.putAll((Object[])valueJSONObjects)
-		);
 	}
 
 	private static final String _LIST_TYPE_ENTRY_KEY_1 =

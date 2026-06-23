@@ -14,7 +14,6 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
@@ -55,11 +54,7 @@ public class AssetAnalyticsAttributesProvider {
 	}
 
 	public String buildAttributes(String action, String field) {
-		if ((_assetEntry == null) ||
-			!FeatureFlagManagerUtil.isEnabled(
-				_assetEntry.getCompanyId(), "LPD-81914") ||
-			!_isAnalyticsEnabled()) {
-
+		if ((_assetEntry == null) || !_isAnalyticsEnabled()) {
 			return StringPool.BLANK;
 		}
 

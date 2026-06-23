@@ -19,7 +19,6 @@ import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
 import com.liferay.asset.publisher.web.internal.util.AssetAnalyticsAttributesHelper;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -91,11 +90,7 @@ public class AssetPublisherPortletDisplayTemplateHandler
 			new TemplateVariableGroup(
 				"asset-publisher-util", restrictedVariables);
 
-		long companyId = CompanyThreadLocal.getCompanyId();
-
-		if (FeatureFlagManagerUtil.isEnabled(companyId, "LPD-81914") &&
-			_isAnalyticsHelperEnabled(companyId)) {
-
+		if (_isAnalyticsHelperEnabled(CompanyThreadLocal.getCompanyId())) {
 			assetPublisherUtilTemplateVariableGroup.addFieldVariable(
 				"asset-analytics-attributes-helper",
 				AssetAnalyticsAttributesHelper.class,

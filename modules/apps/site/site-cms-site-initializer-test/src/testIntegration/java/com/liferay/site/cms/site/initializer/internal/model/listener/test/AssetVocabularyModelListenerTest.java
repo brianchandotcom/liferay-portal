@@ -63,23 +63,39 @@ public class AssetVocabularyModelListenerTest {
 				ServiceContextTestUtil.getServiceContext(
 					_group.getGroupId(), TestPropsValues.getUserId()));
 
-		List<AssetVocabularyGroupRel> assetVocabularyGroupRels =
+		List<AssetVocabularyGroupRel> projectAssetVocabularyGroupRels =
 			_assetVocabularyGroupRelLocalService.
-				getAssetVocabularyGroupRelsByVocabularyId(
-					assetVocabulary.getVocabularyId());
+				getAssetVocabularyGroupRelsByVocabularyIdAndDepotEntryType(
+					assetVocabulary.getVocabularyId(),
+					DepotConstants.TYPE_PROJECT);
 
 		Assert.assertEquals(
-			assetVocabularyGroupRels.toString(), 1,
-			assetVocabularyGroupRels.size());
+			projectAssetVocabularyGroupRels.toString(), 1,
+			projectAssetVocabularyGroupRels.size());
 
-		AssetVocabularyGroupRel assetVocabularyGroupRel =
-			assetVocabularyGroupRels.get(0);
+		AssetVocabularyGroupRel projectAssetVocabularyGroupRel =
+			projectAssetVocabularyGroupRels.get(0);
 
 		Assert.assertEquals(
-			GroupConstants.GROUP_ID_ALL, assetVocabularyGroupRel.getGroupId());
+			GroupConstants.GROUP_ID_ALL,
+			projectAssetVocabularyGroupRel.getGroupId());
+
+		List<AssetVocabularyGroupRel> spaceAssetVocabularyGroupRels =
+			_assetVocabularyGroupRelLocalService.
+				getAssetVocabularyGroupRelsByVocabularyIdAndDepotEntryType(
+					assetVocabulary.getVocabularyId(),
+					DepotConstants.TYPE_SPACE);
+
 		Assert.assertEquals(
-			DepotConstants.TYPE_SPACE,
-			assetVocabularyGroupRel.getDepotEntryType());
+			spaceAssetVocabularyGroupRels.toString(), 1,
+			spaceAssetVocabularyGroupRels.size());
+
+		AssetVocabularyGroupRel spaceAssetVocabularyGroupRel =
+			spaceAssetVocabularyGroupRels.get(0);
+
+		Assert.assertEquals(
+			GroupConstants.GROUP_ID_ALL,
+			spaceAssetVocabularyGroupRel.getGroupId());
 	}
 
 	@Inject

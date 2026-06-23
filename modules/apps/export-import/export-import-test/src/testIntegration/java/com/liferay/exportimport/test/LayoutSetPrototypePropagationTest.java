@@ -6,6 +6,10 @@
 package com.liferay.exportimport.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
+import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.exportimport.kernel.background.task.BackgroundTaskExecutorNames;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
@@ -86,6 +90,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -101,6 +106,7 @@ import com.liferay.sites.kernel.util.Sites;
 
 import jakarta.portlet.PortletPreferences;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.Dictionary;
 import java.util.HashMap;
@@ -490,6 +496,105 @@ public class LayoutSetPrototypePropagationTest
 			group.getGroupId(), false, layout2.getFriendlyURL());
 
 		Assert.assertNotNull(layout2.getLayoutSetPrototypeLayout());
+	}
+
+	@Test
+	public void testLayoutSetPrototypePropagationOverridesSiteChanges()
+		throws Exception {
+
+		AssetVocabulary layoutSetPrototypeAssetVocabulary =
+			AssetTestUtil.addVocabulary(_layoutSetPrototypeGroup.getGroupId());
+
+		AssetCategory layoutSetPrototypeAssetCategory =
+			AssetTestUtil.addCategory(
+				_layoutSetPrototypeGroup.getGroupId(),
+				layoutSetPrototypeAssetVocabulary.getVocabularyId());
+
+		String title = layoutSetPrototypeAssetCategory.getTitle(
+			LocaleUtil.getSiteDefault());
+
+		long timestamp = System.currentTimeMillis();
+
+		propagateChanges(false, group);
+
+		_assertNotification(
+			"successful", timestamp, TestPropsValues.getUserId());
+
+		AssetCategory assetCategory =
+			AssetCategoryLocalServiceUtil.fetchAssetCategoryByUuidAndGroupId(
+				layoutSetPrototypeAssetCategory.getUuid(), group.getGroupId());
+
+		assetCategory = AssetCategoryLocalServiceUtil.updateCategory(
+			assetCategory.getExternalReferenceCode(),
+			TestPropsValues.getUserId(), assetCategory.getCategoryId(),
+			assetCategory.getParentCategoryId(),
+			Collections.singletonMap(
+				LocaleUtil.getSiteDefault(), "New Asset Category"),
+			assetCategory.getDescriptionMap(), assetCategory.getVocabularyId(),
+			null, ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+
+		Assert.assertEquals(
+			"New Asset Category",
+			assetCategory.getTitle(LocaleUtil.getSiteDefault()));
+
+		timestamp = System.currentTimeMillis();
+
+		propagateChanges(false, group);
+
+		_assertNotification(
+			"successful", timestamp, TestPropsValues.getUserId());
+
+		assetCategory =
+			AssetCategoryLocalServiceUtil.getAssetCategoryByUuidAndGroupId(
+				layoutSetPrototypeAssetCategory.getUuid(), group.getGroupId());
+
+		Assert.assertEquals(
+			title, assetCategory.getTitle(LocaleUtil.getSiteDefault()));
+	}
+
+	@Test
+	public void testLayoutSetPrototypePropagationToAllLinkedSites()
+		throws Exception {
+
+		long userId = TestPropsValues.getUserId();
+
+		Group group2 = GroupTestUtil.addGroup();
+
+		try {
+			_sites.updateLayoutSetPrototypesLinks(
+				group2, _layoutSetPrototype.getLayoutSetPrototypeId(), 0, true,
+				true);
+
+			long timestamp1 = System.currentTimeMillis();
+
+			propagateChanges(false, _layoutSetPrototype);
+
+			_assertNotification("successful", timestamp1, userId);
+
+			int initialCount1 = _layoutLocalService.getLayoutsCount(
+				group.getGroupId(), false);
+			int initialCount2 = _layoutLocalService.getLayoutsCount(
+				group2.getGroupId(), false);
+
+			LayoutTestUtil.addTypePortletLayout(_layoutSetPrototypeGroup, true);
+
+			long timestamp2 = System.currentTimeMillis();
+
+			propagateChanges(false, _layoutSetPrototype);
+
+			_assertNotification("successful", timestamp2, userId);
+
+			Assert.assertEquals(
+				initialCount1 + 1,
+				_layoutLocalService.getLayoutsCount(group.getGroupId(), false));
+			Assert.assertEquals(
+				initialCount2 + 1,
+				_layoutLocalService.getLayoutsCount(
+					group2.getGroupId(), false));
+		}
+		finally {
+			GroupLocalServiceUtil.deleteGroup(group2);
+		}
 	}
 
 	@Test
@@ -1204,14 +1309,26 @@ public class LayoutSetPrototypePropagationTest
 		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
 			group.getGroupId(), false);
 
-		LayoutSetPrototype layoutSetPrototype =
+		propagateChanges(
+			initial,
 			LayoutSetPrototypeLocalServiceUtil.
 				getLayoutSetPrototypeByUuidAndCompanyId(
 					layoutSet.getLayoutSetPrototypeUuid(),
-					layoutSet.getCompanyId());
+					layoutSet.getCompanyId()));
+	}
+
+	protected void propagateChanges(
+			boolean initial, LayoutSetPrototype layoutSetPrototype)
+		throws Exception {
 
 		if (initial) {
-			_sites.mergeLayoutSetPrototypeLayouts(layoutSet);
+			for (LayoutSet layoutSet :
+					LayoutSetLocalServiceUtil.
+						getLayoutSetsByLayoutSetPrototypeUuid(
+							layoutSetPrototype.getUuid())) {
+
+				_sites.mergeLayoutSetPrototypeLayouts(layoutSet);
+			}
 		}
 		else {
 			_sites.mergeLayoutSetPrototypeLayouts(

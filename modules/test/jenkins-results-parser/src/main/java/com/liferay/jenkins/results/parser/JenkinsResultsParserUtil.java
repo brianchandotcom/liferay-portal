@@ -5103,8 +5103,8 @@ public class JenkinsResultsParserUtil {
 		throws IOException {
 
 		return UrlReader.doRead(
-			url, checkCache, maxRetries, httpRequestMethod, postContent,
-			retryPeriod, timeout, httpAuthorization);
+			checkCache, httpAuthorization, httpRequestMethod, maxRetries,
+			postContent, retryPeriod, timeout, url);
 	}
 
 	public static JSONArray toJSONArray(String url) throws IOException {

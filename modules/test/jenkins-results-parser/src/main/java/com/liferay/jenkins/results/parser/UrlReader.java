@@ -41,9 +41,9 @@ import javax.net.ssl.SSLContext;
 public class UrlReader {
 
 	public static InputStream doRead(
-			String url, boolean checkCache, int maxRetries,
-			HttpRequestMethod httpRequestMethod, String postContent,
-			int retryPeriod, int timeout, HTTPAuthorization httpAuthorization)
+			boolean checkCache, HTTPAuthorization httpAuthorization,
+			HttpRequestMethod httpRequestMethod, int maxRetries,
+			String postContent, int retryPeriod, int timeout, String url)
 		throws IOException {
 
 		if (url.contains("/userContent/") && (timeout == 0)) {
@@ -321,11 +321,11 @@ public class UrlReader {
 					url.matches("http://test-\\d+-\\d+/.*")) {
 
 					return doRead(
+						checkCache, httpAuthorization, httpRequestMethod,
+						maxRetries, postContent, retryPeriod, timeout,
 						url.replaceAll(
 							"http://(test-\\d+-\\d+)(/.*)",
-							"https://$1.liferay.com$2"),
-						checkCache, maxRetries, httpRequestMethod, postContent,
-						retryPeriod, timeout, httpAuthorization);
+							"https://$1.liferay.com$2"));
 				}
 
 				String exceptionMessage = ioException.getMessage();

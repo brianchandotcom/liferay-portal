@@ -709,9 +709,7 @@ public class JenkinsResultsParserUtil {
 			return combine(jenkinsMasterName, ":\n", rawResponseText);
 		}
 		catch (IOException ioException) {
-			System.out.println("Unable to execute Jenkins script");
-
-			ioException.printStackTrace();
+			System.out.println("WARNING: " + ioException.getMessage());
 		}
 
 		return null;

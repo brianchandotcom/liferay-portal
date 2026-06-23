@@ -447,3 +447,130 @@ test(
 		}
 	);
 });
+
+[
+	{label: 'with the propagation toggle enabled', propagationEnabled: true},
+	{label: 'with the propagation toggle disabled', propagationEnabled: false},
+].forEach(({label, propagationEnabled}) => {
+	testWithSiteTemplateSync(
+		"Linking an existing User's Site to a Site Template through the " +
+			`Settings ${label} does not execute the propagation`,
+		{tag: '@LPD-87027'},
+		async ({
+			apiHelpers,
+			editUserPage,
+			globalMenuPage,
+			layoutSetPrototypePage,
+			page,
+			productMenuPage,
+			usersAndOrganizationsPage,
+		}) => {
+			testWithSiteTemplateSync.slow();
+
+			// Create a Site Template with a Web Content and a page
+
+			const siteTemplateName = 'SiteTemplate-' + getRandomString();
+			const webContentBody = 'Body-' + getRandomString();
+			const webContentName = 'WebContent-' + getRandomString();
+
+			const layoutSetPrototype = await createSiteTemplate({
+				apiHelpers,
+				page,
+				productMenuPage,
+				templateName: siteTemplateName,
+				text: webContentBody,
+				webContentName,
+			});
+
+			apiHelpers.data.push({
+				id: layoutSetPrototype.layoutSetPrototypeId,
+				type: 'layoutSetPrototype',
+			});
+
+			const layoutSetPrototypeGroup =
+				await apiHelpers.jsonWebServicesGroup.getGroupByKey(
+					layoutSetPrototype.companyId,
+					layoutSetPrototype.layoutSetPrototypeId
+				);
+
+			const pageName = 'Page-' + getRandomString();
+
+			await apiHelpers.jsonWebServicesLayout.addLayout({
+				groupId: layoutSetPrototypeGroup.groupId,
+				privateLayout: 'true',
+				title: pageName,
+			});
+
+			// The Site Template has a page that a sync would propagate
+
+			expect(
+				await apiHelpers.jsonWebServicesLayout.getLayoutsCount(
+					Number(layoutSetPrototypeGroup.groupId),
+					true
+				)
+			).toBeGreaterThan(0);
+
+			// Create a User (the personal Site is not linked to any Site Template)
+
+			const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+			// Link the User's profile pages to the Site Template from its Profile
+			// and Dashboard settings
+
+			await usersAndOrganizationsPage.goToUsers(true);
+
+			await usersAndOrganizationsPage.goToUser(
+				`${user.givenName} ${user.familyName}`
+			);
+
+			await editUserPage.linkSiteTemplate(siteTemplateName, {
+				propagationEnabled,
+			});
+
+			// Relating a User to a Site Template must not trigger the sync
+
+			const userGroup =
+				await apiHelpers.jsonWebServicesGroup.getUserGroup(
+					layoutSetPrototype.companyId,
+					String(user.id)
+				);
+
+			expect(
+				await apiHelpers.jsonWebServicesLayout.getLayoutsCount(
+					Number(userGroup.groupId),
+					false
+				)
+			).toBe(0);
+
+			// Execute the Site Template Sync manually
+
+			await globalMenuPage.goToControlPanel('Site Templates');
+
+			await layoutSetPrototypePage.executeSyncAndWaitForSuccess(
+				siteTemplateName
+			);
+
+			// The sync only updates the Site when the propagation toggle is enabled
+			// (LPD-82108 AC3)
+
+			if (propagationEnabled) {
+				await expect(async () => {
+					expect(
+						await apiHelpers.jsonWebServicesLayout.getLayoutsCount(
+							Number(userGroup.groupId),
+							false
+						)
+					).toBeGreaterThan(0);
+				}).toPass();
+			}
+			else {
+				expect(
+					await apiHelpers.jsonWebServicesLayout.getLayoutsCount(
+						Number(userGroup.groupId),
+						false
+					)
+				).toBe(0);
+			}
+		}
+	);
+});

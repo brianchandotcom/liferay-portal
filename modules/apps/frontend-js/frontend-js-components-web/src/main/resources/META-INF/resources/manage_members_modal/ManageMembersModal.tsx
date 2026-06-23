@@ -9,6 +9,8 @@ import React from 'react';
 import {MembersList} from './MembersList';
 import {AddMembersInputApi, MembersConfig} from './types';
 
+import '../css/components/ManageMembersModal.scss';
+
 export interface ManageMembersModalProps {
 	config: MembersConfig;
 	emptyStateDescription: string;
@@ -31,7 +33,7 @@ export default function ManageMembersModal({
 	renderAddMembersInput,
 }: ManageMembersModalProps) {
 	return (
-		<div>
+		<div className="manage-member-modal">
 			<ClayModal.Header
 				closeButtonAriaLabel={Liferay.Language.get('close')}
 			>

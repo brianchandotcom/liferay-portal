@@ -1,0 +1,13 @@
+ext.clientExtensionBuildDir = "liferay-client-extension-build"
+ext.expectedContentStrings = [
+	'"baseURL" : "${portalURL}/o/my-custom-path"',
+	'"com.liferay.client.extension.type.configuration.CETConfiguration~web-context-path-client-extension"',
+	'"webContextPath" : "/my-custom-path"',
+]
+ext.unexpectedContentStrings = [
+	'"baseURL" : "${portalURL}/o//my-custom-path"',
+]
+ext.expectedFilePath = "web-context-path-client-extension.client-extension-config.json"
+ext.taskPath = ":web-context-path-client-extension:createClientExtensionConfig"
+
+apply from: project.property("commonScript.testClientExtensionBuildFileContentsTestCase.gradle")

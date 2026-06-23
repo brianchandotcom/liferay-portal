@@ -10,7 +10,6 @@ import com.liferay.frontend.js.audiences.ElementVariationsProvider;
 import com.liferay.frontend.js.audiences.HashedContent;
 import com.liferay.frontend.js.audiences.web.internal.configuration.FrontendJSAudiencesConfiguration;
 import com.liferay.frontend.js.audiences.web.internal.util.BootstrapJavaScriptUtil;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;

@@ -39,7 +39,7 @@ public class BootstrapJavaScriptUtil {
 					HtmlUtil.escapeJS(audiencesDefinitionHash),
 					HtmlUtil.escapeJS(elementVariationsHash), enableLog, plid
 				}),
-				_TPL_BOOTSTRAP_JS_HASH);
+			_TPL_BOOTSTRAP_JS_HASH);
 	}
 
 	private static String _read(String name) {

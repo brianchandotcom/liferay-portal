@@ -68,8 +68,8 @@ const EditCategoryPropertiesTab = ({
 		property?: TaxonomyCategoryProperty
 	) => {
 		return (
-			<ClayInput.Group className="category-property-row" key={index}>
-				<ClayInput.GroupItem>
+			<ClayInput.Group className="c-gap-3" key={index}>
+				<ClayInput.GroupItem className="c-gap-1">
 					<label>{Liferay.Language.get('key')}</label>
 
 					<ClayInput
@@ -86,26 +86,28 @@ const EditCategoryPropertiesTab = ({
 					/>
 				</ClayInput.GroupItem>
 
-				<ClayInput.GroupItem>
+				<ClayInput.GroupItem className="c-gap-1">
 					<div className="align-items-center d-flex flex-fill">
 						<label>{Liferay.Language.get('value')}</label>
 
 						<div className="category-property-row-buttons ml-auto">
 							<ClayButtonWithIcon
 								aria-label={Liferay.Language.get('delete-row')}
-								className="category-property-row-button"
+								className="rounded-circle"
 								data-testid={`delete-property-row-button-${index}`}
 								disabled={properties.length <= 1}
 								onClick={() => deleteRow(index)}
+								size="xs"
 								spritemap={spritemap}
 								symbol="hr"
 							/>
 
 							<ClayButtonWithIcon
 								aria-label={Liferay.Language.get('add-row')}
-								className="category-property-row-button"
+								className="ml-1 rounded-circle"
 								data-testid={`add-property-row-button-${index}`}
 								onClick={() => addRow()}
+								size="xs"
 								spritemap={spritemap}
 								symbol="plus"
 							/>

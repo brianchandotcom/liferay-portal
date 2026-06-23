@@ -146,7 +146,7 @@ function TreeViewLink({
 				<div className={getCN('autofit-row')}>
 					<div
 						className={getCN('autofit-col', {
-							'no-subcategories': !hasSubItems,
+							'ml-4': !hasSubItems,
 						})}
 					>
 						{hasSubItems && (
@@ -400,68 +400,58 @@ function MoveCategoryTreeView({
 
 	return (
 		<>
-			<div className="categorization-section">
-				<div className="category-selector-modal">
-					<ClayModal.Header
-						closeButtonAriaLabel={Liferay.Language.get('close')}
-					>
-						{sub(Liferay.Language.get('move-x'), itemData?.name)}
-					</ClayModal.Header>
+			<ClayModal.Header
+				closeButtonAriaLabel={Liferay.Language.get('close')}
+			>
+				{sub(Liferay.Language.get('move-x'), itemData?.name)}
+			</ClayModal.Header>
 
-					<ClayAlert displayType="info" variant="stripe">
-						{Liferay.Language.get(
-							'categories-can-only-be-moved-to-a-vocabulary-or-a-category-with-the-same-visibility-and-in-the-same-space'
-						)}
-					</ClayAlert>
+			<ClayAlert displayType="info" variant="stripe">
+				{Liferay.Language.get(
+					'categories-can-only-be-moved-to-a-vocabulary-or-a-category-with-the-same-visibility-and-in-the-same-space'
+				)}
+			</ClayAlert>
 
-					<ClayModal.Body>
-						<div className="selector-modal-tree">
-							{!tree[0]?.children?.length ? (
-								<span className="component-text text-secondary">
-									{Liferay.Language.get(
-										'no-items-were-found'
-									)}
-								</span>
-							) : (
-								<ul
-									className="treeview treeview-light treeview-nested"
-									role="tree"
-								>
-									<TreeViewGroup
-										activeItem={activeItem}
-										depth={0}
-										itemData={itemData}
-										items={tree[0].children || []}
-										onChangeItems={
-											_handleChangeSiteChildren
-										}
-										onSelect={(item: any) =>
-											_handleSelect(item)
-										}
-									/>
-								</ul>
-							)}
-						</div>
-					</ClayModal.Body>
-
-					<ClayModal.Footer
-						last={
-							<ClayButton.Group spaced>
-								<ClayButton
-									displayType="secondary"
-									onClick={onClose}
-								>
-									{Liferay.Language.get('cancel')}
-								</ClayButton>
-
-								<ClayButton onClick={_handleSave}>
-									{Liferay.Language.get('move')}
-								</ClayButton>
-							</ClayButton.Group>
-						}
-					/>
+			<ClayModal.Body>
+				<div
+					className="mt-4 overflow-auto p-3"
+					style={{height: '382px'}}
+				>
+					{!tree[0]?.children?.length ? (
+						<span className="component-text text-secondary">
+							{Liferay.Language.get('no-items-were-found')}
+						</span>
+					) : (
+						<ul
+							className="treeview treeview-light treeview-nested"
+							role="tree"
+						>
+							<TreeViewGroup
+								activeItem={activeItem}
+								depth={0}
+								itemData={itemData}
+								items={tree[0].children || []}
+								onChangeItems={_handleChangeSiteChildren}
+								onSelect={(item: any) => _handleSelect(item)}
+							/>
+						</ul>
+					)}
 				</div>
-			</div>
+			</ClayModal.Body>
+
+			<ClayModal.Footer
+				last={
+					<ClayButton.Group spaced>
+						<ClayButton displayType="secondary" onClick={onClose}>
+							{Liferay.Language.get('cancel')}
+						</ClayButton>
+
+						<ClayButton onClick={_handleSave}>
+							{Liferay.Language.get('move')}
+						</ClayButton>
+					</ClayButton.Group>
+				}
+			/>
 		</>
 	);
 }

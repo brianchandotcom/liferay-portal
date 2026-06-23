@@ -12,24 +12,22 @@ ViewStructureUsagesDisplayContext viewStructureUsagesDisplayContext = (ViewStruc
 %>
 
 <div class="cms-section">
-	<div class="categorization-section">
-		<div>
-			<react:component
-				module="{Breadcrumb} from site-cms-site-initializer"
-				props="<%= viewStructureUsagesDisplayContext.getBreadcrumbProps() %>"
-			/>
-		</div>
-
-		<frontend-data-set:headless-display
-			apiURL="<%= viewStructureUsagesDisplayContext.getAPIURL() %>"
-			bulkActionDropdownItems="<%= viewStructureUsagesDisplayContext.getBulkActionDropdownItems() %>"
-			fdsActionDropdownItems="<%= viewStructureUsagesDisplayContext.getFDSActionDropdownItems() %>"
-			formName="fm"
-			id="<%= CMSSiteInitializerFDSNames.STRUCTURE_USAGES %>"
-			itemsPerPage="<%= 20 %>"
-			propsTransformer="{StructureUsagesFDSPropsTransformer} from site-cms-site-initializer"
-			selectedItemsKey="id"
-			selectionType="multiple"
+	<div>
+		<react:component
+			module="{Breadcrumb} from site-cms-site-initializer"
+			props="<%= viewStructureUsagesDisplayContext.getBreadcrumbProps() %>"
 		/>
 	</div>
+
+	<frontend-data-set:headless-display
+		apiURL="<%= viewStructureUsagesDisplayContext.getAPIURL() %>"
+		bulkActionDropdownItems="<%= viewStructureUsagesDisplayContext.getBulkActionDropdownItems() %>"
+		fdsActionDropdownItems="<%= viewStructureUsagesDisplayContext.getFDSActionDropdownItems() %>"
+		formName="fm"
+		id="<%= CMSSiteInitializerFDSNames.STRUCTURE_USAGES %>"
+		itemsPerPage="<%= 20 %>"
+		propsTransformer="{StructureUsagesFDSPropsTransformer} from site-cms-site-initializer"
+		selectedItemsKey="id"
+		selectionType="multiple"
+	/>
 </div>

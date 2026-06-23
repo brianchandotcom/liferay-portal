@@ -12,23 +12,21 @@ ViewCategoriesDisplayContext viewCategoriesDisplayContext = (ViewCategoriesDispl
 %>
 
 <div class="cms-section">
-	<div class="categorization-section">
-		<div>
-			<react:component
-				module="{Breadcrumb} from site-cms-site-initializer"
-				props="<%= viewCategoriesDisplayContext.getBreadcrumbProps() %>"
-			/>
-		</div>
-
-		<frontend-data-set:headless-display
-			apiURL="<%= viewCategoriesDisplayContext.getAPIURL() %>"
-			creationMenu="<%= viewCategoriesDisplayContext.getCreationMenu() %>"
-			emptyState="<%= viewCategoriesDisplayContext.getEmptyState() %>"
-			fdsActionDropdownItems="<%= viewCategoriesDisplayContext.getFDSActionDropdownItems() %>"
-			id="<%= CMSSiteInitializerFDSNames.CATEGORIES %>"
-			propsTransformer="{CategoryFDSPropsTransformer} from site-cms-site-initializer"
-			selectedItemsKey="id"
-			selectionType="multiple"
+	<div>
+		<react:component
+			module="{Breadcrumb} from site-cms-site-initializer"
+			props="<%= viewCategoriesDisplayContext.getBreadcrumbProps() %>"
 		/>
 	</div>
+
+	<frontend-data-set:headless-display
+		apiURL="<%= viewCategoriesDisplayContext.getAPIURL() %>"
+		creationMenu="<%= viewCategoriesDisplayContext.getCreationMenu() %>"
+		emptyState="<%= viewCategoriesDisplayContext.getEmptyState() %>"
+		fdsActionDropdownItems="<%= viewCategoriesDisplayContext.getFDSActionDropdownItems() %>"
+		id="<%= CMSSiteInitializerFDSNames.CATEGORIES %>"
+		propsTransformer="{CategoryFDSPropsTransformer} from site-cms-site-initializer"
+		selectedItemsKey="id"
+		selectionType="multiple"
+	/>
 </div>

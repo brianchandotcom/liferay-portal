@@ -12,19 +12,17 @@ ViewCategoryUsagesDisplayContext viewCategoryUsagesDisplayContext = (ViewCategor
 %>
 
 <div class="cms-section">
-	<div class="categorization-section">
-		<div>
-			<react:component
-				module="{Breadcrumb} from site-cms-site-initializer"
-				props="<%= viewCategoryUsagesDisplayContext.getBreadcrumbProps() %>"
-			/>
-		</div>
-
-		<frontend-data-set:headless-display
-			apiURL="<%= viewCategoryUsagesDisplayContext.getAPIURL() %>"
-			formName="fm"
-			id="<%= CMSSiteInitializerFDSNames.CATEGORY_USAGES %>"
-			propsTransformer="{CategoryUsagesFDSPropsTransformer} from site-cms-site-initializer"
+	<div>
+		<react:component
+			module="{Breadcrumb} from site-cms-site-initializer"
+			props="<%= viewCategoryUsagesDisplayContext.getBreadcrumbProps() %>"
 		/>
 	</div>
+
+	<frontend-data-set:headless-display
+		apiURL="<%= viewCategoryUsagesDisplayContext.getAPIURL() %>"
+		formName="fm"
+		id="<%= CMSSiteInitializerFDSNames.CATEGORY_USAGES %>"
+		propsTransformer="{CategoryUsagesFDSPropsTransformer} from site-cms-site-initializer"
+	/>
 </div>

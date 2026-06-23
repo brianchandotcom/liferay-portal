@@ -12,19 +12,17 @@ ViewTagUsagesDisplayContext viewTagUsagesDisplayContext = (ViewTagUsagesDisplayC
 %>
 
 <div class="cms-section">
-	<div class="categorization-section">
-		<div>
-			<react:component
-				module="{Breadcrumb} from site-cms-site-initializer"
-				props="<%= viewTagUsagesDisplayContext.getBreadcrumbProps() %>"
-			/>
-		</div>
-
-		<frontend-data-set:headless-display
-			apiURL="<%= viewTagUsagesDisplayContext.getAPIURL() %>"
-			formName="fm"
-			id="<%= CMSSiteInitializerFDSNames.TAG_USAGES %>"
-			propsTransformer="{TagUsagesFDSPropsTransformer} from site-cms-site-initializer"
+	<div>
+		<react:component
+			module="{Breadcrumb} from site-cms-site-initializer"
+			props="<%= viewTagUsagesDisplayContext.getBreadcrumbProps() %>"
 		/>
 	</div>
+
+	<frontend-data-set:headless-display
+		apiURL="<%= viewTagUsagesDisplayContext.getAPIURL() %>"
+		formName="fm"
+		id="<%= CMSSiteInitializerFDSNames.TAG_USAGES %>"
+		propsTransformer="{TagUsagesFDSPropsTransformer} from site-cms-site-initializer"
+	/>
 </div>

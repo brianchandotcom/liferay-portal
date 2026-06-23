@@ -165,68 +165,66 @@ export default function CreateTagsModalContent({
 
 	return (
 		<ClayForm onSubmit={handleSubmit}>
-			<div className="categorization-modal">
-				<ClayModal.Header
-					closeButtonAriaLabel={Liferay.Language.get('close')}
-				>
-					{Liferay.Language.get('new-tag')}
-				</ClayModal.Header>
+			<ClayModal.Header
+				closeButtonAriaLabel={Liferay.Language.get('close')}
+			>
+				{Liferay.Language.get('new-tag')}
+			</ClayModal.Header>
 
-				<ClayModal.Body>
-					<FieldText
-						errorMessage={handleNameInputErrorMessage()}
-						label={Liferay.Language.get('name')}
-						name="tagName"
-						onBlur={handleBlur}
-						onChange={(event) => {
-							setNameInputError('');
-							handleChange(event);
-						}}
-						required
-						value={values.tagName}
-					/>
-
-					<CategorizationSpaces
-						checkboxText="tag"
-						setSelectedSpaces={setSelectedSpaces}
-						setSpaceInputError={setSpaceInputError}
-						spaceInputError={spaceInputError}
-					/>
-				</ClayModal.Body>
-
-				<ClayModal.Footer
-					last={
-						<ClayButton.Group spaced>
-							<ClayButton
-								borderless
-								displayType="secondary"
-								onClick={closeModal}
-								outline
-								type="button"
-							>
-								{Liferay.Language.get('cancel')}
-							</ClayButton>
-
-							<ClayButton
-								disabled={shouldDisableSaveBtn}
-								displayType="secondary"
-								type="submit"
-							>
-								{Liferay.Language.get('save-and-add-another')}
-							</ClayButton>
-
-							<ClayButton
-								disabled={shouldDisableSaveBtn}
-								displayType="primary"
-								onClick={() => setClose(true)}
-								type="submit"
-							>
-								{Liferay.Language.get('save')}
-							</ClayButton>
-						</ClayButton.Group>
-					}
+			<ClayModal.Body>
+				<FieldText
+					errorMessage={handleNameInputErrorMessage()}
+					label={Liferay.Language.get('name')}
+					name="tagName"
+					onBlur={handleBlur}
+					onChange={(event) => {
+						setNameInputError('');
+						handleChange(event);
+					}}
+					required
+					value={values.tagName}
 				/>
-			</div>
+
+				<CategorizationSpaces
+					checkboxText="tag"
+					setSelectedSpaces={setSelectedSpaces}
+					setSpaceInputError={setSpaceInputError}
+					spaceInputError={spaceInputError}
+				/>
+			</ClayModal.Body>
+
+			<ClayModal.Footer
+				last={
+					<ClayButton.Group spaced>
+						<ClayButton
+							borderless
+							displayType="secondary"
+							onClick={closeModal}
+							outline
+							type="button"
+						>
+							{Liferay.Language.get('cancel')}
+						</ClayButton>
+
+						<ClayButton
+							disabled={shouldDisableSaveBtn}
+							displayType="secondary"
+							type="submit"
+						>
+							{Liferay.Language.get('save-and-add-another')}
+						</ClayButton>
+
+						<ClayButton
+							disabled={shouldDisableSaveBtn}
+							displayType="primary"
+							onClick={() => setClose(true)}
+							type="submit"
+						>
+							{Liferay.Language.get('save')}
+						</ClayButton>
+					</ClayButton.Group>
+				}
+			/>
 		</ClayForm>
 	);
 }

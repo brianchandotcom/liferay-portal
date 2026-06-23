@@ -315,7 +315,7 @@ test(
 
 		await checkAccessibility({
 			page: editVocabularyPage.page,
-			selectors: ['.categorization-section'],
+			selectors: ['.cms-section'],
 			selectorsToExclude: ['.control-menu-container'],
 		});
 
@@ -329,7 +329,9 @@ test(
 			'Private'
 		);
 
-		const spacesInputLocator = page.locator('#multiSelect');
+		const spacesInputLocator = page.getByLabel('Space Selector', {
+			exact: true,
+		});
 
 		await expect(spacesInputLocator).toHaveAttribute('value', 'All Spaces');
 

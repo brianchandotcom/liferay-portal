@@ -117,10 +117,16 @@ public class ClientExtension {
 		String webContextPath = (String)typeSettings.getOrDefault(
 			"webContextPath", "/" + pathSuffix);
 
+		String baseURLWebContextPath = webContextPath;
+
+		if (baseURLWebContextPath.startsWith("/")) {
+			baseURLWebContextPath = baseURLWebContextPath.substring(1);
+		}
+
 		configMap.put(
 			"baseURL",
 			typeSettings.getOrDefault(
-				"baseURL", "${portalURL}/o/" + webContextPath));
+				"baseURL", "${portalURL}/o/" + baseURLWebContextPath));
 
 		configMap.put("buildTimestamp", System.currentTimeMillis());
 		configMap.put("description", description);

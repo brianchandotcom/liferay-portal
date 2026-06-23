@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Http;
@@ -213,6 +214,7 @@ public class TestEntityResourceTest extends BaseTestEntityResourceTestCase {
 
 	@Override
 	@Test
+	@TestInfo("LPD-95759")
 	public void testPostTestEntity() throws Exception {
 		super.testPostTestEntity();
 

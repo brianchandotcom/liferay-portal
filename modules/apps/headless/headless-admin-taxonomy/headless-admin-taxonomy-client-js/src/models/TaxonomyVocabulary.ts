@@ -36,6 +36,7 @@
 			"permissions"?: Array<Permission>;
 			"siteExternalReferenceCode"?: string;
 			"siteId"?: number;
+			"system"?: boolean;
 			"uuid"?: string;
 			"viewableBy"?: 'Anyone' | 'Members' | 'Owner';
 			"visibilityType"?: 'EMPTY' | 'INTERNAL' | 'PUBLIC';
@@ -141,6 +142,11 @@
 			baseName: "siteId",
 			name: "siteId",
 			type: "number",
+		},
+		{
+			baseName: "system",
+			name: "system",
+			type: "boolean",
 		},
 		{
 			baseName: "uuid",

@@ -659,7 +659,7 @@ public class AnalyticsCloudClient {
 
 		if (Validator.isNotNull(metricType)) {
 			url = HttpComponentsUtil.addParameter(
-				url, "assetSummaryMetricTypeString", metricType);
+				url, "assetSummaryMetricType", metricType);
 		}
 
 		if (Validator.isNotNull(objectType)) {

@@ -183,7 +183,11 @@ public class ChildTestEntity3SerDes {
 			for (int i = 0; i < childTestEntity3.getStringTestEntities().length;
 				 i++) {
 
+				sb.append("\"");
+
 				sb.append(childTestEntity3.getStringTestEntities()[i]);
+
+				sb.append("\"");
 
 				if ((i + 1) < childTestEntity3.getStringTestEntities().length) {
 					sb.append(", ");
@@ -482,8 +486,19 @@ public class ChildTestEntity3SerDes {
 						jsonParserFieldName, "stringTestEntities")) {
 
 				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					StringTestEntity[] stringTestEntitiesArray =
+						new StringTestEntity[jsonParserFieldValues.length];
+
+					for (int i = 0; i < stringTestEntitiesArray.length; i++) {
+						stringTestEntitiesArray[i] = StringTestEntity.create(
+							(String)jsonParserFieldValues[i]);
+					}
+
 					childTestEntity3.setStringTestEntities(
-						(StringTestEntity[])jsonParserFieldValue);
+						stringTestEntitiesArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "stringTestEntity")) {
@@ -586,4 +601,4 @@ public class ChildTestEntity3SerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-430355436
+// LIFERAY-REST-BUILDER-HASH:565722706

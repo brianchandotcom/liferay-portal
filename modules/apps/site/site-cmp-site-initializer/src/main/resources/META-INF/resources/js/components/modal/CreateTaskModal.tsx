@@ -29,6 +29,7 @@ import './../AssigneeTrigger.scss';
 
 type CreateTaskModalProps = {
 	closeModal: () => void;
+	dueDate?: string;
 	loadData: Function;
 	projectId?: string;
 	state: string;
@@ -36,6 +37,7 @@ type CreateTaskModalProps = {
 
 export default function CreateTaskModal({
 	closeModal,
+	dueDate = '',
 	loadData,
 	projectId,
 	state,
@@ -61,7 +63,7 @@ export default function CreateTaskModal({
 	} = useFormik({
 		initialValues: {
 			assignTo: {},
-			dueDate: '',
+			dueDate,
 			r_cmpProjectToCMPTasks_c_cmpProjectId: Number(projectId) ?? 0,
 			state,
 			title: '',
@@ -228,6 +230,7 @@ export default function CreateTaskModal({
 						setFieldValue('dueDate', value);
 					}}
 					type="Date"
+					value={values.dueDate}
 				/>
 			</ClayModal.Body>
 

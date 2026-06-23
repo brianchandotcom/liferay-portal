@@ -1889,7 +1889,7 @@ public class Cart implements Serializable {
 	private Supplier<String> _purchaseOrderNumberSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Buyer-requested delivery date in ISO 8601 (date only, no time component).",
+		description = "Buyer-requested delivery date and time in ISO 8601.",
 		example = "2017-07-21"
 	)
 	public Date getRequestedDeliveryDate() {
@@ -1926,7 +1926,7 @@ public class Cart implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "Buyer-requested delivery date in ISO 8601 (date only, no time component)."
+		description = "Buyer-requested delivery date and time in ISO 8601."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date requestedDeliveryDate;
@@ -3354,4 +3354,4 @@ public class Cart implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-813160661
+// LIFERAY-REST-BUILDER-HASH:744942315

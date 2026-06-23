@@ -205,6 +205,11 @@ public abstract class BaseCartResourceImpl
 				description = "Internal numeric identifier of a cart. Counterpart to the by-externalReferenceCode path variant; identifiers are server-assigned and stable across the cart's lifetime.",
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
 				name = "cartId"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				description = "Comma-separated list of nested fields to embed in each returned resource. Each value names a relationship exposed on the resource; when omitted, those relationships are not expanded inline.",
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "nestedFields"
 			)
 		}
 	)
@@ -239,6 +244,11 @@ public abstract class BaseCartResourceImpl
 				description = "External reference code that addresses the target resource on the by-externalReferenceCode paths. The code is the integration-supplied idempotency key, unique within the resource scope; POST against this path is upsert (create when absent, replace when present).",
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
 				name = "externalReferenceCode"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				description = "Comma-separated list of nested fields to embed in each returned resource. Each value names a relationship exposed on the resource; when omitted, those relationships are not expanded inline.",
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "nestedFields"
 			)
 		}
 	)
@@ -377,6 +387,11 @@ public abstract class BaseCartResourceImpl
 				name = "filter"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
+				description = "Comma-separated list of nested fields to embed in each returned resource. Each value names a relationship exposed on the resource; when omitted, those relationships are not expanded inline.",
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "nestedFields"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
 				description = "One-based page index. Combined with pageSize to paginate the result set; defaults to 1 when omitted.",
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "page"
@@ -453,6 +468,11 @@ public abstract class BaseCartResourceImpl
 				name = "filter"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
+				description = "Comma-separated list of nested fields to embed in each returned resource. Each value names a relationship exposed on the resource; when omitted, those relationships are not expanded inline.",
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "nestedFields"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
 				description = "One-based page index. Combined with pageSize to paginate the result set; defaults to 1 when omitted.",
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "page"
@@ -525,6 +545,11 @@ public abstract class BaseCartResourceImpl
 				description = "OData v4 filter expression that narrows the result set. Supported fields depend on the endpoint and come from the matching entity model. For /carts list endpoints, supported fields include accountId, orderStatus, createDate, modifiedDate, orderDate, id, orderId, account, author, externalReferenceCode, name, orderType, and purchaseOrderNumber. For /carts/<cartId>/attachments, restricted, dateCreated, dateModified, priority, commerceOrderId, externalReferenceCode, title, and type are supported. For /carts/<cartId>/items, quantity, name, sku, and unitOfMeasure are supported. Example -- filter=accountId eq 12345.",
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "filter"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				description = "Comma-separated list of nested fields to embed in each returned resource. Each value names a relationship exposed on the resource; when omitted, those relationships are not expanded inline.",
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "nestedFields"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				description = "One-based page index. Combined with pageSize to paginate the result set; defaults to 1 when omitted.",
@@ -1949,4 +1974,4 @@ public abstract class BaseCartResourceImpl
 		LogFactoryUtil.getLog(BaseCartResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:561245825
+// LIFERAY-REST-BUILDER-HASH:1630830338

@@ -58,6 +58,16 @@ export class VocabulariesPage {
 		});
 	}
 
+	async expectItemActionHidden({
+		action,
+		filter,
+	}: {
+		action: string;
+		filter: string;
+	}) {
+		await this.dataSetFragmentPage.expectItemActionHidden({action, filter});
+	}
+
 	async search(value: string) {
 		await this.dataSetFragmentPage.search(value);
 	}

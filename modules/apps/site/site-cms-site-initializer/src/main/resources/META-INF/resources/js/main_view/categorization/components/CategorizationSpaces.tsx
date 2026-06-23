@@ -64,7 +64,6 @@ export default function CategorizationSpaces({
 			onError={setSpaceInputError}
 			onSelectionChange={setSelectedSpaces}
 			preselectedItems={assetLibraries}
-			showErrorInitially={checkboxText !== 'vocabulary'}
 			sourceItems={sourceItems}
 		/>
 	);

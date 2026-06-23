@@ -34,7 +34,8 @@ public class OAuth2ProviderRESTEndpointConstants {
 
 	public static final String ERROR_SERVER_ERROR = "server_error";
 
-	public static final String EVENT_TYPE_DYNAMIC_REGISTRATION_ADD = "ADD";
+	public static final String EVENT_TYPE_DYNAMIC_REGISTRATION_ADD =
+		"DYNAMIC_REGISTRATION_ADD";
 
 	public static final String EVENT_TYPE_DYNAMIC_REGISTRATION_REJECT =
 		"DYNAMIC_REGISTRATION_REJECT";

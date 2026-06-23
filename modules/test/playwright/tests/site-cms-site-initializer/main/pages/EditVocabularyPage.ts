@@ -133,6 +133,11 @@ export class EditVocabularyPage {
 
 		await this.spaceSelector.click();
 
-		await this.page.getByText(spaceName).click();
+		const option = this.page
+			.getByRole('option')
+			.filter({hasText: spaceName});
+
+		await option.scrollIntoViewIfNeeded();
+		await option.click();
 	}
 }

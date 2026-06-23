@@ -165,6 +165,10 @@ public abstract class BaseWarehouseAccountResourceImpl
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "nestedFields"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "page"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -213,6 +217,10 @@ public abstract class BaseWarehouseAccountResourceImpl
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "filter"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "nestedFields"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
@@ -1098,4 +1106,4 @@ public abstract class BaseWarehouseAccountResourceImpl
 		LogFactoryUtil.getLog(BaseWarehouseAccountResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1393541530
+// LIFERAY-REST-BUILDER-HASH:1830787386

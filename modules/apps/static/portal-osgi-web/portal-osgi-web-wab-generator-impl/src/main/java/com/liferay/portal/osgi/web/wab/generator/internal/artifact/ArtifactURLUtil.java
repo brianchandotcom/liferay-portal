@@ -7,6 +7,7 @@ package com.liferay.portal.osgi.web.wab.generator.internal.artifact;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -111,6 +112,14 @@ public class ArtifactURLUtil {
 
 						return JSONFactoryUtil.createJSONObject(
 							StringUtil.read(inputStream));
+					}
+					catch (JSONException jsonException) {
+						_log.error(
+							"Unable to parse client extension config in " +
+								path,
+							jsonException);
+
+						return null;
 					}
 				}
 			}

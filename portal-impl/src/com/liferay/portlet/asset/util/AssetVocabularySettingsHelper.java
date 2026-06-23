@@ -104,6 +104,12 @@ public class AssetVocabularySettingsHelper {
 		return GetterUtil.getBoolean(value, true);
 	}
 
+	public boolean isSystem() {
+		String value = _unicodeProperties.getProperty(_KEY_SYSTEM);
+
+		return GetterUtil.getBoolean(value);
+	}
+
 	public void setClassNameIdsAndClassTypePKs(
 		long[] classNameIds, long[] classTypePKs, boolean[] requireds) {
 
@@ -205,6 +211,10 @@ public class AssetVocabularySettingsHelper {
 		_unicodeProperties.setProperty(
 			_KEY_REGISTERED_CLASS_NAME_IDS_AND_CLASS_TYPE_PKS,
 			StringUtil.merge(registeredClassNameIds));
+	}
+
+	public void setSystem(boolean system) {
+		_unicodeProperties.setProperty(_KEY_SYSTEM, String.valueOf(system));
 	}
 
 	@Override
@@ -338,6 +348,8 @@ public class AssetVocabularySettingsHelper {
 	private static final String
 		_KEY_SELECTED_CLASS_NAME_IDS_AND_CLASS_TYPE_PKS =
 			"selectedClassNameIds";
+
+	private static final String _KEY_SYSTEM = "system";
 
 	private final UnicodeProperties _unicodeProperties;
 

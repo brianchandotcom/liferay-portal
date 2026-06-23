@@ -7,6 +7,7 @@ package com.liferay.portlet.asset.service.impl;
 
 import com.liferay.asset.kernel.exception.DuplicateVocabularyException;
 import com.liferay.asset.kernel.exception.DuplicateVocabularyExternalReferenceCodeException;
+import com.liferay.asset.kernel.exception.SystemVocabularyException;
 import com.liferay.asset.kernel.exception.VocabularyExternalReferenceCodeException;
 import com.liferay.asset.kernel.exception.VocabularyNameException;
 import com.liferay.asset.kernel.exception.VocabularyVisibilityTypeException;
@@ -50,6 +51,7 @@ import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -59,6 +61,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.asset.service.base.AssetVocabularyLocalServiceBaseImpl;
+import com.liferay.portlet.asset.util.AssetVocabularySettingsHelper;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -66,6 +69,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Provides the local service for accessing, adding, deleting, and updating
@@ -298,6 +302,14 @@ public class AssetVocabularyLocalServiceImpl
 	)
 	public AssetVocabulary deleteVocabulary(AssetVocabulary vocabulary)
 		throws PortalException {
+
+		if (FeatureFlagManagerUtil.isEnabled(
+				vocabulary.getCompanyId(), "LPD-86291") &&
+			!GroupThreadLocal.isDeleteInProcess() && vocabulary.isSystem()) {
+
+			throw new SystemVocabularyException.MustNotDelete(
+				vocabulary.getVocabularyId());
+		}
 
 		// Vocabulary
 
@@ -532,14 +544,18 @@ public class AssetVocabularyLocalServiceImpl
 		AssetVocabulary vocabulary =
 			assetVocabularyPersistence.findByPrimaryKey(vocabularyId);
 
+		Map<Locale, String> trimmedTitleMap = _getTrimmedTitleMap(titleMap);
+
+		_validateSystemVocabulary(
+			descriptionMap, externalReferenceCode, settings, trimmedTitleMap,
+			visibilityType, vocabulary);
+
 		if (Validator.isNotNull(externalReferenceCode)) {
 			_validateExternalReferenceCode(
 				externalReferenceCode, vocabulary.getGroupId(), vocabularyId);
 
 			vocabulary.setExternalReferenceCode(externalReferenceCode);
 		}
-
-		Map<Locale, String> trimmedTitleMap = _getTrimmedTitleMap(titleMap);
 
 		vocabulary.setName(
 			_getAssetVocabularyName(trimmedTitleMap, vocabulary));
@@ -571,14 +587,18 @@ public class AssetVocabularyLocalServiceImpl
 		AssetVocabulary vocabulary =
 			assetVocabularyPersistence.findByPrimaryKey(vocabularyId);
 
+		Map<Locale, String> trimmedTitleMap = _getTrimmedTitleMap(titleMap);
+
+		_validateSystemVocabulary(
+			descriptionMap, externalReferenceCode, settings, trimmedTitleMap,
+			visibilityType, vocabulary);
+
 		if (Validator.isNotNull(externalReferenceCode)) {
 			_validateExternalReferenceCode(
 				externalReferenceCode, vocabulary.getGroupId(), vocabularyId);
 
 			vocabulary.setExternalReferenceCode(externalReferenceCode);
 		}
-
-		Map<Locale, String> trimmedTitleMap = _getTrimmedTitleMap(titleMap);
 
 		vocabulary.setName(
 			_getAssetVocabularyName(trimmedTitleMap, vocabulary));
@@ -742,6 +762,22 @@ public class AssetVocabularyLocalServiceImpl
 		return StringPool.BLANK;
 	}
 
+	private boolean _isValidSystemVocabularySettings(
+		String originalSettings, String settings) {
+
+		AssetVocabularySettingsHelper assetVocabularySettingsHelper =
+			new AssetVocabularySettingsHelper(settings);
+		AssetVocabularySettingsHelper originalAssetVocabularySettingsHelper =
+			new AssetVocabularySettingsHelper(originalSettings);
+
+		assetVocabularySettingsHelper.setMultiValued(
+			originalAssetVocabularySettingsHelper.isMultiValued());
+
+		return Objects.equals(
+			originalAssetVocabularySettingsHelper.toString(),
+			assetVocabularySettingsHelper.toString());
+	}
+
 	private void _validateExternalReferenceCode(
 			String externalReferenceCode, long groupId, long vocabularyId)
 		throws PortalException {
@@ -771,6 +807,38 @@ public class AssetVocabularyLocalServiceImpl
 				StringBundler.concat(
 					"Duplicate vocabulary external reference code ",
 					externalReferenceCode, " in group ", groupId));
+		}
+	}
+
+	private void _validateSystemVocabulary(
+			Map<Locale, String> descriptionMap, String externalReferenceCode,
+			String settings, Map<Locale, String> trimmedTitleMap,
+			int visibilityType, AssetVocabulary vocabulary)
+		throws PortalException {
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				vocabulary.getCompanyId(), "LPD-86291") ||
+			!vocabulary.isSystem()) {
+
+			return;
+		}
+
+		if ((Validator.isNotNull(externalReferenceCode) &&
+			 !externalReferenceCode.equals(
+				 vocabulary.getExternalReferenceCode())) ||
+			!trimmedTitleMap.equals(vocabulary.getTitleMap())) {
+
+			throw new SystemVocabularyException.MustNotRename(
+				vocabulary.getVocabularyId());
+		}
+
+		if (!Objects.equals(descriptionMap, vocabulary.getDescriptionMap()) ||
+			(visibilityType != vocabulary.getVisibilityType()) ||
+			!_isValidSystemVocabularySettings(
+				vocabulary.getSettings(), settings)) {
+
+			throw new SystemVocabularyException.MustNotModify(
+				vocabulary.getVocabularyId());
 		}
 	}
 

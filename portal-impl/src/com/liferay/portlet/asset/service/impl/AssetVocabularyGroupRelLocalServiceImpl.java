@@ -6,9 +6,14 @@
 package com.liferay.portlet.asset.service.impl;
 
 import com.liferay.asset.kernel.exception.AssetVocabularyGroupRelGroupIdException;
+import com.liferay.asset.kernel.exception.SystemVocabularyException;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.AssetVocabularyGroupRel;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -99,6 +104,8 @@ public class AssetVocabularyGroupRelLocalServiceImpl
 			throw new AssetVocabularyGroupRelGroupIdException();
 		}
 
+		_validateSystemVocabulary(groupIds, vocabularyId);
+
 		assetVocabularyGroupRelPersistence.removeByVocabularyId(vocabularyId);
 
 		for (long groupId : groupIds) {
@@ -114,5 +121,29 @@ public class AssetVocabularyGroupRelLocalServiceImpl
 
 		indexer.reindex(AssetVocabulary.class.getName(), vocabularyId);
 	}
+
+	private void _validateSystemVocabulary(long[] groupIds, long vocabularyId)
+		throws PortalException {
+
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyLocalService.fetchAssetVocabulary(vocabularyId);
+
+		if ((assetVocabulary == null) || !assetVocabulary.isSystem() ||
+			!FeatureFlagManagerUtil.isEnabled(
+				assetVocabulary.getCompanyId(), "LPD-86291")) {
+
+			return;
+		}
+
+		if ((groupIds.length != 1) ||
+			(groupIds[0] != GroupConstants.GROUP_ID_ALL)) {
+
+			throw new SystemVocabularyException.MustNotChangeGroupRels(
+				vocabularyId);
+		}
+	}
+
+	@BeanReference(type = AssetVocabularyLocalService.class)
+	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
 }

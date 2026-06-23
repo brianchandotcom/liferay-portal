@@ -535,7 +535,7 @@ public class PriceEntry implements Serializable {
 	private Supplier<String> _discountLevelsFormattedSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Date when this record becomes effective. ISO 8601.",
+		description = "Date and time when this record becomes effective. ISO 8601.",
 		example = "2017-07-21"
 	)
 	public Date getDisplayDate() {
@@ -572,7 +572,7 @@ public class PriceEntry implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "Date when this record becomes effective. ISO 8601."
+		description = "Date and time when this record becomes effective. ISO 8601."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date displayDate;
@@ -581,7 +581,7 @@ public class PriceEntry implements Serializable {
 	private Supplier<Date> _displayDateSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Date when this record expires. ISO 8601; the runtime stops honoring it past this date.",
+		description = "Date and time when this record expires. ISO 8601; the runtime stops honoring it past this date.",
 		example = "2017-08-21"
 	)
 	public Date getExpirationDate() {
@@ -618,7 +618,7 @@ public class PriceEntry implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "Date when this record expires. ISO 8601; the runtime stops honoring it past this date."
+		description = "Date and time when this record expires. ISO 8601; the runtime stops honoring it past this date."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date expirationDate;
@@ -1870,4 +1870,4 @@ public class PriceEntry implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-996000539
+// LIFERAY-REST-BUILDER-HASH:2092643843

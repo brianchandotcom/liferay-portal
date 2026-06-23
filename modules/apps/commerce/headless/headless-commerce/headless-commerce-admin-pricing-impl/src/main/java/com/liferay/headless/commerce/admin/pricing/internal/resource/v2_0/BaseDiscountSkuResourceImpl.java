@@ -161,6 +161,11 @@ public abstract class BaseDiscountSkuResourceImpl
 				name = "externalReferenceCode"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
+				description = "Comma separated list of nested fields to embed in each returned resource. Each value names a relationship exposed on the resource; when omitted, those relationships are not expanded inline.",
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "nestedFields"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
 				description = "One-based page index. Combined with pageSize to paginate the result set; defaults to 1 when omitted.",
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "page"
@@ -211,6 +216,11 @@ public abstract class BaseDiscountSkuResourceImpl
 				description = "OData v4 filter expression that narrows the result set. Filterable fields are sourced from the matching EntityModel and listed in each list operation's description.",
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "filter"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				description = "Comma separated list of nested fields to embed in each returned resource. Each value names a relationship exposed on the resource; when omitted, those relationships are not expanded inline.",
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "nestedFields"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				description = "One-based page index. Combined with pageSize to paginate the result set; defaults to 1 when omitted.",
@@ -1091,4 +1101,4 @@ public abstract class BaseDiscountSkuResourceImpl
 		LogFactoryUtil.getLog(BaseDiscountSkuResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:2100514539
+// LIFERAY-REST-BUILDER-HASH:-971708565

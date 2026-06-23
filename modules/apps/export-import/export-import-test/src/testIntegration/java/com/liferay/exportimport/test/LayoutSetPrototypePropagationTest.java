@@ -687,16 +687,6 @@ public class LayoutSetPrototypePropagationTest
 
 		LayoutSetLocalServiceUtil.updateLayoutSet(prototypePublicLayoutSet);
 
-		_layoutSetPrototype =
-			LayoutSetPrototypeLocalServiceUtil.fetchLayoutSetPrototype(
-				_layoutSetPrototype.getLayoutSetPrototypeId());
-
-		_layoutSetPrototype.setModifiedDate(new Date());
-
-		_layoutSetPrototype =
-			LayoutSetPrototypeLocalServiceUtil.updateLayoutSetPrototype(
-				_layoutSetPrototype);
-
 		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
 			LayoutPageTemplateTestUtil.addLayoutPageTemplateEntry(
 				_layoutSetPrototypeGroup.getGroupId(),
@@ -866,16 +856,6 @@ public class LayoutSetPrototypePropagationTest
 
 		LayoutSetLocalServiceUtil.updateLayoutSet(prototypePublicLayoutSet);
 
-		_layoutSetPrototype =
-			LayoutSetPrototypeLocalServiceUtil.fetchLayoutSetPrototype(
-				_layoutSetPrototype.getLayoutSetPrototypeId());
-
-		_layoutSetPrototype.setModifiedDate(new Date());
-
-		_layoutSetPrototype =
-			LayoutSetPrototypeLocalServiceUtil.updateLayoutSetPrototype(
-				_layoutSetPrototype);
-
 		propagateChanges(group);
 
 		LayoutSet propagatedLayoutSet = group.getPrivateLayoutSet();
@@ -909,16 +889,6 @@ public class LayoutSetPrototypePropagationTest
 			prototypePrivateLayoutSet =
 				LayoutSetLocalServiceUtil.updateLayoutSet(
 					prototypePrivateLayoutSet);
-
-			layoutSetPrototype =
-				LayoutSetPrototypeLocalServiceUtil.fetchLayoutSetPrototype(
-					layoutSetPrototype.getLayoutSetPrototypeId());
-
-			layoutSetPrototype.setModifiedDate(new Date());
-
-			layoutSetPrototype =
-				LayoutSetPrototypeLocalServiceUtil.updateLayoutSetPrototype(
-					layoutSetPrototype);
 
 			LayoutSet privateLayoutSet =
 				LayoutSetLocalServiceUtil.fetchLayoutSet(
@@ -977,16 +947,6 @@ public class LayoutSetPrototypePropagationTest
 			prototypePrivateLayoutSet =
 				LayoutSetLocalServiceUtil.updateLayoutSet(
 					prototypePrivateLayoutSet);
-
-			layoutSetPrototype =
-				LayoutSetPrototypeLocalServiceUtil.fetchLayoutSetPrototype(
-					layoutSetPrototype.getLayoutSetPrototypeId());
-
-			layoutSetPrototype.setModifiedDate(new Date());
-
-			layoutSetPrototype =
-				LayoutSetPrototypeLocalServiceUtil.updateLayoutSetPrototype(
-					layoutSetPrototype);
 
 			LayoutSet publicLayoutSet =
 				LayoutSetLocalServiceUtil.fetchLayoutSet(
@@ -1053,16 +1013,6 @@ public class LayoutSetPrototypePropagationTest
 			prototypeLayoutSet);
 
 		setLinkEnabled(true);
-
-		_layoutSetPrototype =
-			LayoutSetPrototypeLocalServiceUtil.fetchLayoutSetPrototype(
-				_layoutSetPrototype.getLayoutSetPrototypeId());
-
-		_layoutSetPrototype.setModifiedDate(new Date());
-
-		_layoutSetPrototype =
-			LayoutSetPrototypeLocalServiceUtil.updateLayoutSetPrototype(
-				_layoutSetPrototype);
 
 		propagateChanges(group);
 

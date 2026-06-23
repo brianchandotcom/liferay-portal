@@ -211,7 +211,7 @@ public class Account implements Serializable {
 	private Supplier<Date> _dateCreatedSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Last-modification timestamp in ISO 8601 (UTC). Filterable and sortable via the OData query parameters. Read-only; updated on every save.",
+		description = "Last modification timestamp in ISO 8601 (UTC). Filterable and sortable via the OData query parameters. Read-only; updated on every save.",
 		example = "2017-08-21"
 	)
 	public Date getDateModified() {
@@ -248,7 +248,7 @@ public class Account implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "Last-modification timestamp in ISO 8601 (UTC). Filterable and sortable via the OData query parameters. Read-only; updated on every save."
+		description = "Last modification timestamp in ISO 8601 (UTC). Filterable and sortable via the OData query parameters. Read-only; updated on every save."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
@@ -1306,4 +1306,4 @@ public class Account implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1117862223
+// LIFERAY-REST-BUILDER-HASH:279312239

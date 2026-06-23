@@ -210,7 +210,7 @@ public class Order implements Serializable {
 	private Supplier<Long> _channelIdSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Date the order was created, in ISO 8601 (yyyy-MM-dd). Read-only.",
+		description = "Timestamp when the order was created, in ISO 8601. Read-only.",
 		example = "2017-07-21"
 	)
 	public Date getCreateDate() {
@@ -247,7 +247,7 @@ public class Order implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "Date the order was created, in ISO 8601 (yyyy-MM-dd). Read-only."
+		description = "Timestamp when the order was created, in ISO 8601. Read-only."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date createDate;
@@ -439,7 +439,7 @@ public class Order implements Serializable {
 	private Supplier<Long> _idSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Date the order was last modified, in ISO 8601 (yyyy-MM-dd). Read-only.",
+		description = "Timestamp when the order was last modified, in ISO 8601. Read-only.",
 		example = "2017-08-21"
 	)
 	public Date getModifiedDate() {
@@ -476,7 +476,7 @@ public class Order implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "Date the order was last modified, in ISO 8601 (yyyy-MM-dd). Read-only."
+		description = "Timestamp when the order was last modified, in ISO 8601. Read-only."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date modifiedDate;
@@ -485,7 +485,7 @@ public class Order implements Serializable {
 	private Supplier<Date> _modifiedDateSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Date the order was placed by the buyer, in ISO 8601 (yyyy-MM-dd). Distinct from the create date when the order was imported.",
+		description = "Date and time the order was placed by the buyer, in ISO 8601. Distinct from the create date when the order was imported.",
 		example = "2017-07-21"
 	)
 	public Date getOrderDate() {
@@ -522,7 +522,7 @@ public class Order implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "Date the order was placed by the buyer, in ISO 8601 (yyyy-MM-dd). Distinct from the create date when the order was imported."
+		description = "Date and time the order was placed by the buyer, in ISO 8601. Distinct from the create date when the order was imported."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date orderDate;
@@ -1351,4 +1351,4 @@ public class Order implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1311319069
+// LIFERAY-REST-BUILDER-HASH:-126768917

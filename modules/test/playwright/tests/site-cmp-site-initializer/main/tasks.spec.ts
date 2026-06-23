@@ -285,6 +285,193 @@ test(
 );
 
 test(
+	'Calendar view properly displays tasks',
+	{tag: ['@LPD-69885']},
+	async ({apiHelpers, page, projectPage, projectsPage, tasksPage}) => {
+		const now = new Date();
+
+		const currentLabel = getMonthYearLabel(now);
+		const nextLabel = getMonthYearLabel(
+			new Date(now.getFullYear(), now.getMonth() + 1, 1)
+		);
+		const previousLabel = getMonthYearLabel(
+			new Date(now.getFullYear(), now.getMonth() - 1, 1)
+		);
+		const todayDate = toDateString(now);
+
+		const tomorrow = new Date();
+
+		tomorrow.setDate(tomorrow.getDate() + 1);
+
+		const dueDate = toDateString(tomorrow);
+
+		const taskTitleBase = getRandomString();
+
+		const taskTitles = Array.from(
+			{length: 3},
+			(_, index) => `${taskTitleBase}-${index}`
+		);
+
+		const unscheduledTaskTitle = `${taskTitleBase}-unscheduled`;
+
+		await test.step('Create three tasks on the same due date and one without a due date', async () => {
+			for (const title of taskTitles) {
+				await apiHelpers.objectEntry.postObjectEntry(
+					{
+						dueDate: `${dueDate}T00:00:00Z`,
+						r_cmpProjectToCMPTasks_c_cmpProjectId: project.id,
+						title,
+					},
+					cmpTask,
+					project.scopeKey
+				);
+			}
+
+			await apiHelpers.objectEntry.postObjectEntry(
+				{
+					r_cmpProjectToCMPTasks_c_cmpProjectId: project.id,
+					title: unscheduledTaskTitle,
+				},
+				cmpTask,
+				project.scopeKey
+			);
+		});
+
+		const {calendarView} = tasksPage;
+
+		await test.step('View the project and open its Tasks tab', async () => {
+			await projectsPage.goto();
+
+			await projectsPage.getProject(project.title).click();
+
+			await projectPage.tasksTab.click();
+		});
+
+		await test.step('Calendar view is available and can be selected', async () => {
+			await tasksPage.tableViewButton.click();
+
+			await expect(calendarView.viewOption).toBeVisible();
+
+			await calendarView.viewOption.click();
+		});
+
+		await test.step('Calendar shows the current month and year', async () => {
+			await expect(calendarView.title).toBeVisible();
+
+			await expect(calendarView.title).toContainText(currentLabel);
+		});
+
+		await test.step('Next and previous buttons change the title', async () => {
+			await calendarView.nextMonthButton.click();
+
+			await expect(calendarView.title).toContainText(nextLabel);
+
+			await calendarView.previousMonthButton.click();
+			await calendarView.previousMonthButton.click();
+
+			await expect(calendarView.title).toContainText(previousLabel);
+		});
+
+		await test.step('Date picker jumps the calendar to the selected month', async () => {
+			await calendarView.title.click();
+
+			await expect(calendarView.datePickerMenu).toBeVisible();
+
+			await calendarView.datePickerMenu
+				.getByText('15', {exact: true})
+				.click();
+
+			await expect(calendarView.title).toContainText(currentLabel);
+		});
+
+		await test.step('Today button returns to the current month', async () => {
+			await calendarView.previousMonthButton.click();
+
+			await expect(calendarView.title).toContainText(previousLabel);
+
+			await calendarView.todayButton.click();
+
+			await expect(calendarView.title).toContainText(currentLabel);
+		});
+
+		await test.step('The current date is highlighted', async () => {
+			await expect(page.locator('.fc-day-today')).toBeVisible();
+
+			await expect(page.locator('.fc-day-today')).toHaveAttribute(
+				'data-date',
+				todayDate
+			);
+		});
+
+		await test.step('The tasks appear on their due date', async () => {
+			await expect(
+				page
+					.locator(`[data-date="${dueDate}"]`)
+					.getByText(taskTitles[0], {exact: true})
+			).toBeVisible();
+		});
+
+		await test.step('A More link reveals the tasks hidden in a dense day', async () => {
+			const dayCell = page.locator(`[data-date="${dueDate}"]`);
+
+			await expect(
+				dayCell.getByText(taskTitles[1], {exact: true})
+			).toBeHidden();
+			await expect(
+				dayCell.getByText(taskTitles[2], {exact: true})
+			).toBeHidden();
+
+			await expect(calendarView.moreLinkButton).toBeVisible();
+
+			await test.step('Check that the custom popover opens', async () => {
+				await clickAndExpectToBeVisible({
+					target: calendarView.moreLinkPopover,
+					trigger: calendarView.moreLinkButton,
+				});
+			});
+
+			await test.step('Check that the default FullCalendar popover does not open', async () => {
+				await expect(page.locator('.fc-popover')).toBeHidden();
+			});
+
+			await expect(
+				calendarView.moreLinkPopover.getByText(taskTitles[1], {
+					exact: true,
+				})
+			).toBeVisible();
+			await expect(
+				calendarView.moreLinkPopover.getByText(taskTitles[2], {
+					exact: true,
+				})
+			).toBeVisible();
+		});
+
+		await test.step('The unscheduled tasks button shows the count', async () => {
+			await expect(calendarView.unscheduledTasksButton).toBeVisible();
+
+			await expect(calendarView.unscheduledTasksButton).toContainText(
+				/\d+ Unscheduled Tasks?/
+			);
+		});
+
+		await test.step('Opening the panel lists every unscheduled task', async () => {
+			await clickAndExpectToBeVisible({
+				target: calendarView.unscheduledTasksPanel,
+				trigger: calendarView.unscheduledTasksButton,
+			});
+
+			for (const taskName of [...taskNames, unscheduledTaskTitle]) {
+				await expect(
+					calendarView.unscheduledTasksPanel.getByText(taskName, {
+						exact: true,
+					})
+				).toBeVisible();
+			}
+		});
+	}
+);
+
+test(
 	'Ensure that the "All Tasks" tab disables highlighted bulk actions when project and workflow tasks are selected together',
 	{tag: ['@LPD-88846']},
 	async ({apiHelpers, assignWorkflowToAssetType, page, tasksPage}) => {
@@ -535,192 +722,5 @@ test(
 		await tasksPage.workflowTasksTab.click();
 
 		await expect(tasksPage.viewSelectorButton).toBeHidden();
-	}
-);
-
-test(
-	'Calendar view properly displays tasks',
-	{tag: ['@LPD-69885']},
-	async ({apiHelpers, page, projectPage, projectsPage, tasksPage}) => {
-		const now = new Date();
-
-		const currentLabel = getMonthYearLabel(now);
-		const nextLabel = getMonthYearLabel(
-			new Date(now.getFullYear(), now.getMonth() + 1, 1)
-		);
-		const previousLabel = getMonthYearLabel(
-			new Date(now.getFullYear(), now.getMonth() - 1, 1)
-		);
-		const todayDate = toDateString(now);
-
-		const tomorrow = new Date();
-
-		tomorrow.setDate(tomorrow.getDate() + 1);
-
-		const dueDate = toDateString(tomorrow);
-
-		const taskTitleBase = getRandomString();
-
-		const taskTitles = Array.from(
-			{length: 3},
-			(_, index) => `${taskTitleBase}-${index}`
-		);
-
-		const unscheduledTaskTitle = `${taskTitleBase}-unscheduled`;
-
-		await test.step('Create three tasks on the same due date and one without a due date', async () => {
-			for (const title of taskTitles) {
-				await apiHelpers.objectEntry.postObjectEntry(
-					{
-						dueDate: `${dueDate}T00:00:00Z`,
-						r_cmpProjectToCMPTasks_c_cmpProjectId: project.id,
-						title,
-					},
-					cmpTask,
-					project.scopeKey
-				);
-			}
-
-			await apiHelpers.objectEntry.postObjectEntry(
-				{
-					r_cmpProjectToCMPTasks_c_cmpProjectId: project.id,
-					title: unscheduledTaskTitle,
-				},
-				cmpTask,
-				project.scopeKey
-			);
-		});
-
-		const {calendarView} = tasksPage;
-
-		await test.step('View the project and open its Tasks tab', async () => {
-			await projectsPage.goto();
-
-			await projectsPage.getProject(project.title).click();
-
-			await projectPage.tasksTab.click();
-		});
-
-		await test.step('Calendar view is available and can be selected', async () => {
-			await tasksPage.tableViewButton.click();
-
-			await expect(calendarView.viewOption).toBeVisible();
-
-			await calendarView.viewOption.click();
-		});
-
-		await test.step('Calendar shows the current month and year', async () => {
-			await expect(calendarView.title).toBeVisible();
-
-			await expect(calendarView.title).toContainText(currentLabel);
-		});
-
-		await test.step('Next and previous buttons change the title', async () => {
-			await calendarView.nextMonthButton.click();
-
-			await expect(calendarView.title).toContainText(nextLabel);
-
-			await calendarView.previousMonthButton.click();
-			await calendarView.previousMonthButton.click();
-
-			await expect(calendarView.title).toContainText(previousLabel);
-		});
-
-		await test.step('Date picker jumps the calendar to the selected month', async () => {
-			await calendarView.title.click();
-
-			await expect(calendarView.datePickerMenu).toBeVisible();
-
-			await calendarView.datePickerMenu
-				.getByText('15', {exact: true})
-				.click();
-
-			await expect(calendarView.title).toContainText(currentLabel);
-		});
-
-		await test.step('Today button returns to the current month', async () => {
-			await calendarView.previousMonthButton.click();
-
-			await expect(calendarView.title).toContainText(previousLabel);
-
-			await calendarView.todayButton.click();
-
-			await expect(calendarView.title).toContainText(currentLabel);
-		});
-
-		await test.step('The current date is highlighted', async () => {
-			await expect(page.locator('.fc-day-today')).toBeVisible();
-
-			await expect(page.locator('.fc-day-today')).toHaveAttribute(
-				'data-date',
-				todayDate
-			);
-		});
-
-		await test.step('The tasks appear on their due date', async () => {
-			await expect(
-				page
-					.locator(`[data-date="${dueDate}"]`)
-					.getByText(taskTitles[0], {exact: true})
-			).toBeVisible();
-		});
-
-		await test.step('A More link reveals the tasks hidden in a dense day', async () => {
-			const dayCell = page.locator(`[data-date="${dueDate}"]`);
-
-			await expect(
-				dayCell.getByText(taskTitles[1], {exact: true})
-			).toBeHidden();
-			await expect(
-				dayCell.getByText(taskTitles[2], {exact: true})
-			).toBeHidden();
-
-			await expect(calendarView.moreLinkButton).toBeVisible();
-
-			await test.step('Check that the custom popover opens', async () => {
-				await clickAndExpectToBeVisible({
-					target: calendarView.moreLinkPopover,
-					trigger: calendarView.moreLinkButton,
-				});
-			});
-
-			await test.step('Check that the default FullCalendar popover does not open', async () => {
-				await expect(page.locator('.fc-popover')).toBeHidden();
-			});
-
-			await expect(
-				calendarView.moreLinkPopover.getByText(taskTitles[1], {
-					exact: true,
-				})
-			).toBeVisible();
-			await expect(
-				calendarView.moreLinkPopover.getByText(taskTitles[2], {
-					exact: true,
-				})
-			).toBeVisible();
-		});
-
-		await test.step('The unscheduled tasks button shows the count', async () => {
-			await expect(calendarView.unscheduledTasksButton).toBeVisible();
-
-			await expect(calendarView.unscheduledTasksButton).toContainText(
-				/\d+ Unscheduled Tasks?/
-			);
-		});
-
-		await test.step('Opening the panel lists every unscheduled task', async () => {
-			await clickAndExpectToBeVisible({
-				target: calendarView.unscheduledTasksPanel,
-				trigger: calendarView.unscheduledTasksButton,
-			});
-
-			for (const taskName of [...taskNames, unscheduledTaskTitle]) {
-				await expect(
-					calendarView.unscheduledTasksPanel.getByText(taskName, {
-						exact: true,
-					})
-				).toBeVisible();
-			}
-		});
 	}
 );

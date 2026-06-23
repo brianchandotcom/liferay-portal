@@ -62,6 +62,10 @@ public class JakartaTransformSourceProcessorTest
 		sourceFormatterArgs.setCheckCategoryNames(
 			Arrays.asList("JakartaTransform"));
 
+		if (_jakartaTransformDependenciesFilePath == null) {
+			return sourceFormatterArgs;
+		}
+
 		List<String> sourceFormatterProperties =
 			sourceFormatterArgs.getSourceFormatterProperties();
 

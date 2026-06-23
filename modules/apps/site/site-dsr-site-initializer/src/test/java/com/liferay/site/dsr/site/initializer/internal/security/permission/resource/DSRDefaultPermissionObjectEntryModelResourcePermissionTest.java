@@ -105,15 +105,15 @@ public class DSRDefaultPermissionObjectEntryModelResourcePermissionTest {
 			WorkflowConstants.STATUS_INACTIVE, RandomTestUtil.randomLong());
 
 		Mockito.when(
-			_permissionChecker.isGroupOwner(Mockito.anyLong())
-		).thenReturn(
-			false
-		);
-
-		Mockito.when(
 			_permissionChecker.isCompanyAdmin()
 		).thenReturn(
 			true
+		);
+
+		Mockito.when(
+			_permissionChecker.isGroupOwner(Mockito.anyLong())
+		).thenReturn(
+			false
 		);
 
 		Assert.assertTrue(

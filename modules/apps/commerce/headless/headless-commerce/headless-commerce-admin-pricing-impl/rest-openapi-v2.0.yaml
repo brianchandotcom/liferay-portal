@@ -159,6 +159,16 @@ components:
                 minimum: 0
                 type: integer
             style: simple
+        nestedFieldsQueryParam:
+            in: query
+            description:
+                Comma separated list of nested fields to embed in each returned resource. Each value names a relationship exposed on the resource; when omitted, those relationships are not expanded inline.
+            explode: true
+            name: nestedFields
+            required: false
+            schema:
+                type: string
+            style: form
         pageQueryParam:
             in: query
             description:
@@ -534,15 +544,15 @@ components:
                     type: array
                 displayDate:
                     description:
-                        Date when the discount becomes effective. ISO 8601 (yyyy-MM-dd).
-                    example: 2017-07-21
-                    format: date
+                        Date and time when the discount becomes effective. ISO 8601.
+                    example: 2017-07-21T19:30:00Z
+                    format: date-time
                     type: string
                 expirationDate:
                     description:
-                        Date when the discount expires. ISO 8601 (yyyy-MM-dd); the runtime stops honoring the discount past this date.
-                    example: 2017-08-21
-                    format: date
+                        Date and time when the discount expires. ISO 8601; the runtime stops honoring the discount past this date.
+                    example: 2017-08-21T19:30:00Z
+                    format: date-time
                     type: string
                 externalReferenceCode:
                     description:
@@ -1288,15 +1298,15 @@ components:
                     type: string
                 displayDate:
                     description:
-                        Date when this record becomes effective. ISO 8601.
-                    example: 2017-07-21
-                    format: date
+                        Date and time when this record becomes effective. ISO 8601.
+                    example: 2017-07-21T19:30:00Z
+                    format: date-time
                     type: string
                 expirationDate:
                     description:
-                        Date when this record expires. ISO 8601; the runtime stops honoring it past this date.
-                    example: 2017-08-21
-                    format: date
+                        Date and time when this record expires. ISO 8601; the runtime stops honoring it past this date.
+                    example: 2017-08-21T19:30:00Z
+                    format: date-time
                     type: string
                 externalReferenceCode:
                     description:
@@ -1466,15 +1476,15 @@ components:
                     type: object
                 displayDate:
                     description:
-                        Date when this record becomes effective. ISO 8601.
-                    example: 2017-07-21
-                    format: date
+                        Date and time when this record becomes effective. ISO 8601.
+                    example: 2017-07-21T19:30:00Z
+                    format: date-time
                     type: string
                 expirationDate:
                     description:
-                        Date when this record expires. ISO 8601; the runtime stops honoring it past this date.
-                    example: 2017-08-21
-                    format: date
+                        Date and time when this record expires. ISO 8601; the runtime stops honoring it past this date.
+                    example: 2017-08-21T19:30:00Z
+                    format: date-time
                     type: string
                 externalReferenceCode:
                     description:
@@ -1885,15 +1895,15 @@ components:
                     type: boolean
                 displayDate:
                     description:
-                        Date when this record becomes effective. ISO 8601.
-                    example: 2017-07-21
-                    format: date
+                        Date and time when this record becomes effective. ISO 8601.
+                    example: 2017-07-21T19:30:00Z
+                    format: date-time
                     type: string
                 expirationDate:
                     description:
-                        Date when this record expires. ISO 8601; the runtime stops honoring it past this date.
-                    example: 2017-08-21
-                    format: date
+                        Date and time when this record expires. ISO 8601; the runtime stops honoring it past this date.
+                    example: 2017-08-21T19:30:00Z
+                    format: date-time
                     type: string
                 externalReferenceCode:
                     description:
@@ -2337,15 +2347,15 @@ components:
                     type: number
                 displayDate:
                     description:
-                        Date when this record becomes effective. ISO 8601.
-                    example: 2017-07-21
-                    format: date
+                        Date and time when this record becomes effective. ISO 8601.
+                    example: 2017-07-21T19:30:00Z
+                    format: date-time
                     type: string
                 expirationDate:
                     description:
-                        Date when this record expires. ISO 8601; the runtime stops honoring it past this date.
-                    example: 2017-08-21
-                    format: date
+                        Date and time when this record expires. ISO 8601; the runtime stops honoring it past this date.
+                    example: 2017-08-21T19:30:00Z
+                    format: date-time
                     type: string
                 externalReferenceCode:
                     description:
@@ -3371,6 +3381,7 @@ paths:
             operationId: getDiscountsPage
             parameters:
                 -   $ref: "#/components/parameters/filterQueryParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
                 -   $ref: "#/components/parameters/pageQueryParam"
                 -   $ref: "#/components/parameters/pageSizeQueryParam"
                 -   $ref: "#/components/parameters/searchQueryParam"
@@ -3537,6 +3548,7 @@ paths:
             operationId: getDiscountByExternalReferenceCode
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             responses:
                 200:
                     content:
@@ -3768,6 +3780,7 @@ paths:
             operationId: getDiscountByExternalReferenceCodeDiscountAccountGroupsPage
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
                 -   $ref: "#/components/parameters/pageQueryParam"
                 -   $ref: "#/components/parameters/pageSizeQueryParam"
             responses:
@@ -3911,6 +3924,7 @@ paths:
             operationId: getDiscountByExternalReferenceCodeDiscountAccountsPage
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
                 -   $ref: "#/components/parameters/pageQueryParam"
                 -   $ref: "#/components/parameters/pageSizeQueryParam"
             responses:
@@ -4054,6 +4068,7 @@ paths:
             operationId: getDiscountByExternalReferenceCodeDiscountCategoriesPage
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
                 -   $ref: "#/components/parameters/pageQueryParam"
                 -   $ref: "#/components/parameters/pageSizeQueryParam"
             responses:
@@ -4197,6 +4212,7 @@ paths:
             operationId: getDiscountByExternalReferenceCodeDiscountChannelsPage
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
                 -   $ref: "#/components/parameters/pageQueryParam"
                 -   $ref: "#/components/parameters/pageSizeQueryParam"
             responses:
@@ -4487,6 +4503,7 @@ paths:
             operationId: getDiscountByExternalReferenceCodeDiscountProductGroupsPage
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
                 -   $ref: "#/components/parameters/pageQueryParam"
                 -   $ref: "#/components/parameters/pageSizeQueryParam"
             responses:
@@ -4630,6 +4647,7 @@ paths:
             operationId: getDiscountByExternalReferenceCodeDiscountProductsPage
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
                 -   $ref: "#/components/parameters/pageQueryParam"
                 -   $ref: "#/components/parameters/pageSizeQueryParam"
             responses:
@@ -4919,6 +4937,7 @@ paths:
             operationId: getDiscountByExternalReferenceCodeDiscountSkusPage
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
                 -   $ref: "#/components/parameters/pageQueryParam"
                 -   $ref: "#/components/parameters/pageSizeQueryParam"
             responses:
@@ -5095,6 +5114,7 @@ paths:
             operationId: getDiscount
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             responses:
                 200:
                     content:
@@ -5240,6 +5260,7 @@ paths:
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
                 -   $ref: "#/components/parameters/filterQueryParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
                 -   $ref: "#/components/parameters/pageQueryParam"
                 -   $ref: "#/components/parameters/pageSizeQueryParam"
                 -   $ref: "#/components/parameters/searchQueryParam"
@@ -5386,6 +5407,7 @@ paths:
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
                 -   $ref: "#/components/parameters/filterQueryParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
                 -   $ref: "#/components/parameters/pageQueryParam"
                 -   $ref: "#/components/parameters/pageSizeQueryParam"
                 -   $ref: "#/components/parameters/searchQueryParam"
@@ -5532,6 +5554,7 @@ paths:
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
                 -   $ref: "#/components/parameters/filterQueryParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
                 -   $ref: "#/components/parameters/pageQueryParam"
                 -   $ref: "#/components/parameters/pageSizeQueryParam"
                 -   $ref: "#/components/parameters/searchQueryParam"
@@ -5678,6 +5701,7 @@ paths:
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
                 -   $ref: "#/components/parameters/filterQueryParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
                 -   $ref: "#/components/parameters/pageQueryParam"
                 -   $ref: "#/components/parameters/pageSizeQueryParam"
                 -   $ref: "#/components/parameters/searchQueryParam"
@@ -5974,6 +5998,7 @@ paths:
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
                 -   $ref: "#/components/parameters/filterQueryParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
                 -   $ref: "#/components/parameters/pageQueryParam"
                 -   $ref: "#/components/parameters/pageSizeQueryParam"
                 -   $ref: "#/components/parameters/searchQueryParam"
@@ -6120,6 +6145,7 @@ paths:
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
                 -   $ref: "#/components/parameters/filterQueryParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
                 -   $ref: "#/components/parameters/pageQueryParam"
                 -   $ref: "#/components/parameters/pageSizeQueryParam"
                 -   $ref: "#/components/parameters/searchQueryParam"
@@ -6415,6 +6441,7 @@ paths:
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
                 -   $ref: "#/components/parameters/filterQueryParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
                 -   $ref: "#/components/parameters/pageQueryParam"
                 -   $ref: "#/components/parameters/pageSizeQueryParam"
                 -   $ref: "#/components/parameters/searchQueryParam"
@@ -6593,6 +6620,7 @@ paths:
             operationId: getPriceEntryByExternalReferenceCode
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             responses:
                 200:
                     content:
@@ -6916,6 +6944,7 @@ paths:
             operationId: getPriceEntry
             parameters:
                 -   $ref: "#/components/parameters/priceEntryIdPathParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             responses:
                 200:
                     content:
@@ -7755,6 +7784,7 @@ paths:
             operationId: getPriceListsPage
             parameters:
                 -   $ref: "#/components/parameters/filterQueryParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
                 -   $ref: "#/components/parameters/pageQueryParam"
                 -   $ref: "#/components/parameters/pageSizeQueryParam"
                 -   $ref: "#/components/parameters/searchQueryParam"
@@ -7921,6 +7951,7 @@ paths:
             operationId: getPriceListByExternalReferenceCode
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             responses:
                 200:
                     content:
@@ -8153,6 +8184,7 @@ paths:
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
                 -   $ref: "#/components/parameters/filterQueryParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
                 -   $ref: "#/components/parameters/pageQueryParam"
                 -   $ref: "#/components/parameters/pageSizeQueryParam"
                 -   $ref: "#/components/parameters/searchQueryParam"
@@ -8298,6 +8330,7 @@ paths:
             operationId: getPriceListByExternalReferenceCodePriceListAccountGroupsPage
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
                 -   $ref: "#/components/parameters/pageQueryParam"
                 -   $ref: "#/components/parameters/pageSizeQueryParam"
             responses:
@@ -8441,6 +8474,7 @@ paths:
             operationId: getPriceListByExternalReferenceCodePriceListAccountsPage
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
                 -   $ref: "#/components/parameters/pageQueryParam"
                 -   $ref: "#/components/parameters/pageSizeQueryParam"
             responses:
@@ -8584,6 +8618,7 @@ paths:
             operationId: getPriceListByExternalReferenceCodePriceListChannelsPage
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
                 -   $ref: "#/components/parameters/pageQueryParam"
                 -   $ref: "#/components/parameters/pageSizeQueryParam"
             responses:
@@ -8870,6 +8905,7 @@ paths:
             operationId: getPriceListByExternalReferenceCodePriceListOrderTypesPage
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
                 -   $ref: "#/components/parameters/pageQueryParam"
                 -   $ref: "#/components/parameters/pageSizeQueryParam"
             responses:
@@ -9013,6 +9049,7 @@ paths:
             operationId: getPriceListByExternalReferenceCodePriceModifiersPage
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
                 -   $ref: "#/components/parameters/pageQueryParam"
                 -   $ref: "#/components/parameters/pageSizeQueryParam"
             responses:
@@ -9189,6 +9226,7 @@ paths:
             operationId: getPriceList
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             responses:
                 200:
                     content:
@@ -9334,6 +9372,7 @@ paths:
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
                 -   $ref: "#/components/parameters/filterQueryParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
                 -   $ref: "#/components/parameters/pageQueryParam"
                 -   $ref: "#/components/parameters/pageSizeQueryParam"
                 -   $ref: "#/components/parameters/searchQueryParam"
@@ -9480,6 +9519,7 @@ paths:
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
                 -   $ref: "#/components/parameters/filterQueryParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
                 -   $ref: "#/components/parameters/pageQueryParam"
                 -   $ref: "#/components/parameters/pageSizeQueryParam"
                 -   $ref: "#/components/parameters/searchQueryParam"
@@ -9625,6 +9665,7 @@ paths:
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
                 -   $ref: "#/components/parameters/filterQueryParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
                 -   $ref: "#/components/parameters/pageQueryParam"
                 -   $ref: "#/components/parameters/pageSizeQueryParam"
                 -   $ref: "#/components/parameters/searchQueryParam"
@@ -9770,6 +9811,7 @@ paths:
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
                 -   $ref: "#/components/parameters/filterQueryParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
                 -   $ref: "#/components/parameters/pageQueryParam"
                 -   $ref: "#/components/parameters/pageSizeQueryParam"
                 -   $ref: "#/components/parameters/searchQueryParam"
@@ -10058,6 +10100,7 @@ paths:
             operationId: getPriceListIdPriceListOrderTypesPage
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
                 -   $ref: "#/components/parameters/pageQueryParam"
                 -   $ref: "#/components/parameters/pageSizeQueryParam"
                 -   $ref: "#/components/parameters/searchQueryParam"
@@ -10202,6 +10245,7 @@ paths:
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
                 -   $ref: "#/components/parameters/filterQueryParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
                 -   $ref: "#/components/parameters/pageQueryParam"
                 -   $ref: "#/components/parameters/pageSizeQueryParam"
                 -   $ref: "#/components/parameters/searchQueryParam"
@@ -10671,6 +10715,7 @@ paths:
             operationId: getPriceModifierByExternalReferenceCode
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             responses:
                 200:
                     content:
@@ -10811,6 +10856,7 @@ paths:
             operationId: getPriceModifierByExternalReferenceCodePriceModifierCategoriesPage
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
                 -   $ref: "#/components/parameters/pageQueryParam"
                 -   $ref: "#/components/parameters/pageSizeQueryParam"
             responses:
@@ -10957,6 +11003,7 @@ paths:
             operationId: getPriceModifierByExternalReferenceCodePriceModifierProductGroupsPage
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
                 -   $ref: "#/components/parameters/pageQueryParam"
                 -   $ref: "#/components/parameters/pageSizeQueryParam"
             responses:
@@ -11103,6 +11150,7 @@ paths:
             operationId: getPriceModifierByExternalReferenceCodePriceModifierProductsPage
             parameters:
                 -   $ref: "#/components/parameters/externalReferenceCodePathParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
                 -   $ref: "#/components/parameters/pageQueryParam"
                 -   $ref: "#/components/parameters/pageSizeQueryParam"
             responses:
@@ -11282,6 +11330,7 @@ paths:
             operationId: getPriceModifier
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
             responses:
                 200:
                     content:
@@ -11423,6 +11472,7 @@ paths:
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
                 -   $ref: "#/components/parameters/filterQueryParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
                 -   $ref: "#/components/parameters/pageQueryParam"
                 -   $ref: "#/components/parameters/pageSizeQueryParam"
                 -   $ref: "#/components/parameters/searchQueryParam"
@@ -11569,6 +11619,7 @@ paths:
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
                 -   $ref: "#/components/parameters/filterQueryParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
                 -   $ref: "#/components/parameters/pageQueryParam"
                 -   $ref: "#/components/parameters/pageSizeQueryParam"
                 -   $ref: "#/components/parameters/searchQueryParam"
@@ -11715,6 +11766,7 @@ paths:
             parameters:
                 -   $ref: "#/components/parameters/idPathParam"
                 -   $ref: "#/components/parameters/filterQueryParam"
+                -   $ref: "#/components/parameters/nestedFieldsQueryParam"
                 -   $ref: "#/components/parameters/pageQueryParam"
                 -   $ref: "#/components/parameters/pageSizeQueryParam"
                 -   $ref: "#/components/parameters/searchQueryParam"

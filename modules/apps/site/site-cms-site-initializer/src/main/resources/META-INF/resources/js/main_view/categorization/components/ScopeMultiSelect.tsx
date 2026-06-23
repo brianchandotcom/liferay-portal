@@ -3,15 +3,15 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayAlert from '@clayui/alert';
 import {NetworkStatus} from '@clayui/data-provider';
-import {ClayCheckbox} from '@clayui/form';
+import ClayForm, {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayMultiSelect from '@clayui/multi-select';
 import {sub} from 'frontend-js-web';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useId, useState} from 'react';
 
 import SpaceSticker from '../../../common/components/SpaceSticker';
+import ErrorFeedback from '../../../common/components/forms/ErrorFeedback';
 import {LogoColor} from '../../../common/types/Space';
 
 export type ScopeItem = {
@@ -40,7 +40,6 @@ export default function ScopeMultiSelect<T extends ScopeItem>({
 	onError,
 	onSelectionChange,
 	preselectedItems,
-	showErrorInitially = true,
 	sourceItems,
 }: {
 	error: string;
@@ -49,16 +48,17 @@ export default function ScopeMultiSelect<T extends ScopeItem>({
 	onError: (value: string) => void;
 	onSelectionChange: (value: any) => void;
 	preselectedItems?: PreselectedItem[];
-	showErrorInitially?: boolean;
 	sourceItems: T[];
 }) {
 	const [allScopesChecked, setAllScopesChecked] = useState(true);
-	const [displayError, setDisplayError] = useState(showErrorInitially);
 	const [query, setQuery] = useState('');
+	const [touched, setTouched] = useState(false);
 	const [selectedItems, setSelectedItems] = useState<T[]>([]);
 	const [initialSelectedValues, setInitialSelectedValues] = useState<any[]>(
 		[]
 	);
+
+	const errorId = useId();
 
 	const loadingState = !sourceItems.length
 		? NetworkStatus.Polling
@@ -133,17 +133,10 @@ export default function ScopeMultiSelect<T extends ScopeItem>({
 		selectedItems,
 	]);
 
-	const _getAvailableItems = (items: T[]) =>
+	const getSelectedItems = (items: T[]) =>
 		sourceItems.filter((sourceItem) =>
 			items.some((item) => sourceItem.value === item.value)
 		);
-
-	const _handleChangeItems = (items: T[]) => {
-		setDisplayError(true);
-		setSelectedItems(_getAvailableItems(items));
-
-		onSelectionChange(items.map((item) => item.scopeKey));
-	};
 
 	return (
 		<div>
@@ -155,16 +148,23 @@ export default function ScopeMultiSelect<T extends ScopeItem>({
 				</span>
 			</label>
 
-			<div className={displayError && error ? 'has-error' : ''}>
+			<div className={touched && error ? 'has-error' : ''}>
 				<ClayMultiSelect
+					aria-describedby={touched && error ? errorId : undefined}
 					aria-label={labels.ariaLabel}
 					disabled={allScopesChecked}
 					id="multiSelect"
 					items={selectedItems}
 					key={sourceItems.length ? 'loaded' : 'empty'}
 					loadingState={loadingState}
+					onBlur={() => setTouched(true)}
 					onChange={setQuery}
-					onItemsChange={_handleChangeItems}
+					onItemsChange={(items: T[]) => {
+						setTouched(true);
+						setSelectedItems(getSelectedItems(items));
+
+						onSelectionChange(items.map((item) => item.scopeKey));
+					}}
 					sourceItems={sourceItems}
 					value={allScopesChecked ? labels.allItemsValue : query}
 				>
@@ -182,12 +182,10 @@ export default function ScopeMultiSelect<T extends ScopeItem>({
 					)}
 				</ClayMultiSelect>
 
-				{displayError && error && (
-					<ClayAlert displayType="danger" variant="feedback">
-						<strong>{Liferay.Language.get('error')}: </strong>
-
-						{error}
-					</ClayAlert>
+				{touched && error && (
+					<ClayForm.FeedbackGroup id={errorId} role="alert">
+						<ErrorFeedback message={error} />
+					</ClayForm.FeedbackGroup>
 				)}
 			</div>
 
@@ -196,8 +194,8 @@ export default function ScopeMultiSelect<T extends ScopeItem>({
 					checked={allScopesChecked}
 					label={labels.checkbox}
 					onChange={() => {
-						if (!showErrorInitially && allScopesChecked) {
-							setDisplayError(false);
+						if (allScopesChecked) {
+							setTouched(false);
 						}
 
 						setAllScopesChecked((checked) => !checked);

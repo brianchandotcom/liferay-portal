@@ -151,7 +151,7 @@ public class ${schemaName}SerDes {
 							sb.append("[");
 
 							for (int i = 0; i < ${schemaVarName}.get${capitalizedPropertyName}().length; i++) {
-								<#if stringUtil.equals(propertyType, "Date[]") || enumSchemas?keys?seq_contains(propertyType)>
+								<#if stringUtil.equals(propertyType, "Date[]") || enumSchemas?keys?seq_contains(propertyType?remove_ending("[]")) || globalEnumSchemas?keys?seq_contains(propertyType?remove_ending("[]"))>
 									sb.append("\"");
 
 									<#if stringUtil.equals(propertyType, "Date[]")>
@@ -417,6 +417,16 @@ public class ${schemaName}SerDes {
 
 							for (int i = 0; i < ${propertyName}Array.length; i++) {
 								${propertyName}Array[i] = ${propertyType?remove_ending("[]")}SerDes.toDTO((String)jsonParserFieldValues[i]);
+							}
+
+							${schemaVarName}.set${capitalizedPropertyName}(${propertyName}Array);
+						<#elseif propertyType?ends_with("[]") && globalEnumSchemas?keys?seq_contains(propertyType?remove_ending("[]"))>
+							Object[] jsonParserFieldValues = (Object[])jsonParserFieldValue;
+
+							${propertyType?remove_ending("[]")}[] ${propertyName}Array = new ${propertyType?remove_ending("[]")}[jsonParserFieldValues.length];
+
+							for (int i = 0; i < ${propertyName}Array.length; i++) {
+								${propertyName}Array[i] = ${propertyType?remove_ending("[]")}.create((String)jsonParserFieldValues[i]);
 							}
 
 							${schemaVarName}.set${capitalizedPropertyName}(${propertyName}Array);

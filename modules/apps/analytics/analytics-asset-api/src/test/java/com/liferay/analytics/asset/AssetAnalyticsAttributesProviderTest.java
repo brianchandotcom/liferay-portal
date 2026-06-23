@@ -12,7 +12,6 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -22,7 +21,6 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
 
@@ -39,19 +37,8 @@ public class AssetAnalyticsAttributesProviderTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
-	@Before
-	public void setUp() {
-		_featureFlagManagerUtilMockedStatic.when(
-			() -> FeatureFlagManagerUtil.isEnabled(
-				Mockito.anyLong(), Mockito.eq("LPD-81914"))
-		).thenReturn(
-			true
-		);
-	}
-
 	@After
 	public void tearDown() {
-		_featureFlagManagerUtilMockedStatic.close();
 		_objectDefinitionLocalServiceUtilMockedStatic.close();
 		_snapshotMockedConstruction.close();
 	}
@@ -342,9 +329,6 @@ public class AssetAnalyticsAttributesProviderTest {
 	private static final String _CLASS_NAME_JOURNAL_ARTICLE =
 		"com.liferay.journal.model.JournalArticle";
 
-	private final MockedStatic<FeatureFlagManagerUtil>
-		_featureFlagManagerUtilMockedStatic = Mockito.mockStatic(
-			FeatureFlagManagerUtil.class);
 	private final MockedStatic<ObjectDefinitionLocalServiceUtil>
 		_objectDefinitionLocalServiceUtilMockedStatic = Mockito.mockStatic(
 			ObjectDefinitionLocalServiceUtil.class);

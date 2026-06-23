@@ -729,7 +729,7 @@ paths:
             operationId: getPerformanceTopAsset
             parameters:
                 -   in: query
-                    name: assetFilter
+                    name: assetFilterString
                     schema:
                         type: string
                 -   in: query
@@ -772,7 +772,7 @@ paths:
             operationId: getPerformanceTopAssetExport
             parameters:
                 -   in: query
-                    name: assetFilter
+                    name: assetFilterString
                     schema:
                         type: string
                 -   in: query

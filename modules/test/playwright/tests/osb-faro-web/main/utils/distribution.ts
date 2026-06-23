@@ -5,26 +5,40 @@
 
 import {Page, expect} from '@playwright/test';
 
+import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
+import fillAndClickOutside from '../../../../utils/fillAndClickOutside';
 import getRandomString from '../../../../utils/getRandomString';
 import {waitForLoading} from './loading';
 import {navigateTo} from './navigation';
 
 export async function addBreakdownByAttribute({
 	attributeName,
+	attributeValue,
 	page,
 }: {
 	attributeName: String;
+	attributeValue?: String;
 	page: Page;
 }) {
-	await page.getByLabel('Add').click();
-	await page.getByPlaceholder('Select Field').click();
+	await clickAndExpectToBeVisible({
+		target: page.getByPlaceholder('Select Field'),
+		trigger: page.getByRole('button', {name: 'Add'}),
+	});
 
-	await page
-		.locator(`div.dropdown-menu span:has-text("${attributeName}")`)
-		.click();
+	await clickAndExpectToBeVisible({
+		autoClick: true,
+		target: page.locator(
+			`div.dropdown-menu span:has-text("${attributeName}")`
+		),
+		trigger: page.getByPlaceholder('Select Field'),
+	});
 
-	await page.getByLabel('Breakdown Name').click();
-	await page.getByLabel('Breakdown Name').fill(getRandomString());
+	await fillAndClickOutside(
+		page,
+		page.getByLabel('Breakdown Name'),
+		String(attributeValue || getRandomString())
+	);
+
 	await page.getByRole('button', {name: 'Save'}).click();
 
 	await waitForLoading(page);

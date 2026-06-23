@@ -549,6 +549,12 @@ public class LayoutSetPrototypePropagationTest
 		String title = layoutSetPrototypeAssetCategory.getTitle(
 			LocaleUtil.getSiteDefault());
 
+		AssetVocabulary siteAssetVocabulary = AssetTestUtil.addVocabulary(
+			group.getGroupId());
+
+		AssetCategory siteAssetCategory = AssetTestUtil.addCategory(
+			group.getGroupId(), siteAssetVocabulary.getVocabularyId());
+
 		long timestamp = System.currentTimeMillis();
 
 		propagateChanges(false, group);
@@ -586,6 +592,10 @@ public class LayoutSetPrototypePropagationTest
 
 		Assert.assertEquals(
 			title, assetCategory.getTitle(LocaleUtil.getSiteDefault()));
+
+		Assert.assertNotNull(
+			AssetCategoryLocalServiceUtil.fetchAssetCategory(
+				siteAssetCategory.getCategoryId()));
 	}
 
 	@Test

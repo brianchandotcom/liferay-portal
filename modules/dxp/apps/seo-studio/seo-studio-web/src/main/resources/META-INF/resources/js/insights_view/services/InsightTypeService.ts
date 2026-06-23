@@ -19,7 +19,13 @@ async function getInsightType(
 		{method: 'GET'}
 	);
 
-	return response.json();
+	const json = await response.json();
+
+	if (json?.name && typeof json.name === 'object') {
+		json.name = json.name.name;
+	}
+
+	return json;
 }
 
 async function getInsightTypes() {

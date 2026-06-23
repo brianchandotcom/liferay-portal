@@ -154,7 +154,7 @@
 				<one-to-one
 					<#if serviceBuilder.isVersionGTE_7_4_0()>
 						access="com.liferay.portal.dao.orm.hibernate.PrivateFieldPropertyAccessor"
-						cascade="merge, persist, save-update"
+						cascade="merge,persist,save-update"
 					<#else>
 						access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor"
 						cascade="save-update"

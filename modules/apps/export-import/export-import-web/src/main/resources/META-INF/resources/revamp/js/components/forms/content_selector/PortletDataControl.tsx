@@ -109,23 +109,25 @@ export default function PortletDataControl({
 		),
 	};
 
-	const body = nestedControls.map((nestedControl) => (
-		<PortletDataControl
-			control={nestedControl}
-			key={nestedControl.name}
-			onChange={(controlValue) =>
-				onChange(
-					updateSelection(
-						currentSelection,
-						nestedControl.name,
-						controlValue
+	const body = nestedControls
+		.filter((nestedControl) => nestedControl.type !== 'Choice' || !!value)
+		.map((nestedControl) => (
+			<PortletDataControl
+				control={nestedControl}
+				key={nestedControl.name}
+				onChange={(controlValue) =>
+					onChange(
+						updateSelection(
+							currentSelection,
+							nestedControl.name,
+							controlValue
+						)
 					)
-				)
-			}
-			pageTreeModalConfiguration={pageTreeModalConfiguration}
-			value={currentSelection[nestedControl.name]}
-		/>
-	));
+				}
+				pageTreeModalConfiguration={pageTreeModalConfiguration}
+				value={currentSelection[nestedControl.name]}
+			/>
+		));
 
 	if (topLevel) {
 		return (
@@ -144,7 +146,7 @@ export default function PortletDataControl({
 		<>
 			<ControlRow {...rowProps} />
 
-			{expandable && (
+			{!!body.length && (
 				<div className="c-gap-1 d-flex flex-column pl-4">{body}</div>
 			)}
 		</>

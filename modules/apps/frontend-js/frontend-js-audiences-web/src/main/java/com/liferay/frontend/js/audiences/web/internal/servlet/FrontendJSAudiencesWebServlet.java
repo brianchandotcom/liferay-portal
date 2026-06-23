@@ -56,9 +56,9 @@ public class FrontendJSAudiencesWebServlet extends HttpServlet {
 		String[] parts = StringUtil.split(
 			httpServletRequest.getPathInfo(), CharPool.SLASH);
 
-		String content;
-		String contentType;
-		String hash;
+		String content = null;
+		String contentType = null;
+		String hash = null;
 
 		if ((parts.length == 2) && parts[1].startsWith("bootstrap.")) {
 			Long plid = _getPlid(httpServletRequest.getParameter("plid"));

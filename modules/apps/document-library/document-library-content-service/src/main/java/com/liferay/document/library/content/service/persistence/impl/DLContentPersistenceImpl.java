@@ -789,7 +789,7 @@ public class DLContentPersistenceImpl
 				new String[] {Long.class.getName(), Long.class.getName()},
 				new String[] {"companyId", "repositoryId"}, false),
 			_SQL_SELECT_DLCONTENT_WHERE, _SQL_COUNT_DLCONTENT_WHERE,
-			DLContentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			DLContentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"dlContent.", "companyId", FinderColumn.Type.LONG, "=", true,
 				true, DLContent::getCompanyId),
@@ -824,7 +824,7 @@ public class DLContentPersistenceImpl
 				new String[] {"companyId", "repositoryId", "path_"}, 0, 4,
 				false, null),
 			_SQL_SELECT_DLCONTENT_WHERE, _SQL_COUNT_DLCONTENT_WHERE,
-			DLContentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			DLContentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 			new FinderColumn<>(
 				"dlContent.", "companyId", FinderColumn.Type.LONG, "=", true,
 				true, DLContent::getCompanyId),
@@ -856,7 +856,7 @@ public class DLContentPersistenceImpl
 					},
 					new String[] {"companyId", "repositoryId", "path_"}, false),
 				_SQL_SELECT_DLCONTENT_WHERE, _SQL_COUNT_DLCONTENT_WHERE,
-				DLContentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				DLContentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
 				new FinderColumn<>(
 					"dlContent.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, DLContent::getCompanyId),
@@ -966,4 +966,4 @@ public class DLContentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1552810903
+// LIFERAY-SERVICE-BUILDER-HASH:1264450347

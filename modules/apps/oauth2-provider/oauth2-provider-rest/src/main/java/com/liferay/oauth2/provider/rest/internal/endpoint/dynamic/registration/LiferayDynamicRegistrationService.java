@@ -6,7 +6,7 @@
 package com.liferay.oauth2.provider.rest.internal.endpoint.dynamic.registration;
 
 import com.liferay.oauth2.provider.model.OAuth2Application;
-import com.liferay.oauth2.provider.rest.internal.configuration.DynamicRegistrationConfiguration;
+import com.liferay.oauth2.provider.rest.internal.configuration.OAuth2DynamicRegistrationConfiguration;
 import com.liferay.oauth2.provider.rest.internal.constants.OAuth2ProviderRESTWebKeys;
 import com.liferay.oauth2.provider.rest.internal.endpoint.constants.OAuth2ProviderRESTEndpointConstants;
 import com.liferay.oauth2.provider.rest.internal.endpoint.dynamic.registration.model.LiferayClientRegistration;
@@ -564,16 +564,6 @@ public class LiferayDynamicRegistrationService
 		return _portal.getCompanyId(httpServletRequest);
 	}
 
-	private DynamicRegistrationConfiguration
-			_getDynamicRegistrationConfiguration(long companyId)
-		throws ConfigurationException {
-
-		return _configurationProvider.getConfiguration(
-			DynamicRegistrationConfiguration.class,
-			new CompanyServiceSettingsLocator(
-				companyId, DynamicRegistrationConfiguration.class.getName()));
-	}
-
 	private HttpServletRequest _getHttpServletRequest() {
 		MessageContext messageContext = getMessageContext();
 
@@ -582,6 +572,17 @@ public class LiferayDynamicRegistrationService
 		}
 
 		return messageContext.getHttpServletRequest();
+	}
+
+	private OAuth2DynamicRegistrationConfiguration
+			_getOAuth2DynamicRegistrationConfiguration(long companyId)
+		throws ConfigurationException {
+
+		return _configurationProvider.getConfiguration(
+			OAuth2DynamicRegistrationConfiguration.class,
+			new CompanyServiceSettingsLocator(
+				companyId,
+				OAuth2DynamicRegistrationConfiguration.class.getName()));
 	}
 
 	private boolean _isOpenRegistration(Client client) {
@@ -828,11 +829,12 @@ public class LiferayDynamicRegistrationService
 
 		long companyId = _getCompanyId();
 
-		DynamicRegistrationConfiguration dynamicRegistrationConfiguration;
+		OAuth2DynamicRegistrationConfiguration
+			oAuth2DynamicRegistrationConfiguration;
 
 		try {
-			dynamicRegistrationConfiguration =
-				_getDynamicRegistrationConfiguration(companyId);
+			oAuth2DynamicRegistrationConfiguration =
+				_getOAuth2DynamicRegistrationConfiguration(companyId);
 		}
 		catch (ConfigurationException configurationException) {
 			OAuth2ErrorUtil.reportInvalidRequestError(
@@ -845,14 +847,14 @@ public class LiferayDynamicRegistrationService
 		}
 
 		_validateOpenRegistrationGrantTypes(
-			dynamicRegistrationConfiguration.allowedGrantTypes(), client);
+			oAuth2DynamicRegistrationConfiguration.allowedGrantTypes(), client);
 
 		_validateOpenRegistrationScopes(
-			dynamicRegistrationConfiguration.allowedScopes(),
+			oAuth2DynamicRegistrationConfiguration.allowedScopes(),
 			clientRegistration);
 
 		_validateOpenRegistrationRedirectURIs(
-			dynamicRegistrationConfiguration.allowedRedirectURIPatterns(),
+			oAuth2DynamicRegistrationConfiguration.allowedRedirectURIPatterns(),
 			clientRegistration);
 	}
 

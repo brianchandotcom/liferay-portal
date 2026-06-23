@@ -674,7 +674,7 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 
 	private static final String _CONFIGURATION_PID =
 		"com.liferay.oauth2.provider.rest.internal.configuration." +
-			"DynamicRegistrationConfiguration";
+			"OAuth2DynamicRegistrationConfiguration";
 
 	private static final String _FIELD_CLIENT_NAME = "client_name";
 

@@ -285,16 +285,16 @@ public class OpenAPIUtil {
 
 		readOnlyPropertyNames.forEach(properties::remove);
 
-		List<Object> requiredList = (List<Object>)schemaMap.get("required");
+		List<Object> required = (List<Object>)schemaMap.get("required");
 
-		if (requiredList == null) {
+		if (required == null) {
 			return;
 		}
 
 		schemaMap.put(
 			"required",
 			ListUtil.filter(
-				TransformUtil.transform(requiredList, String::valueOf),
+				TransformUtil.transform(required, String::valueOf),
 				Predicate.not(readOnlyPropertyNames::contains)));
 	}
 

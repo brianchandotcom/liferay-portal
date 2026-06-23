@@ -13,7 +13,7 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="repositoryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="path_" name="path" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="version" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<one-to-one access="com.liferay.portal.dao.orm.hibernate.PrivateFieldPropertyAccessor" cascade="merge, persist, save-update" class="com.liferay.change.tracking.store.model.CTSContentDataBlobModel" constrained="false" name="dataBlobModel" outer-join="false" />
+		<one-to-one access="com.liferay.portal.dao.orm.hibernate.PrivateFieldPropertyAccessor" cascade="merge,persist,save-update" class="com.liferay.change.tracking.store.model.CTSContentDataBlobModel" constrained="false" name="dataBlobModel" outer-join="false" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="size_" name="size" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="storeType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>

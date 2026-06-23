@@ -18,20 +18,11 @@ long cpConfigurationListId = cpConfigurationListDisplayContext.getCPConfiguratio
 	elementClasses="mt-4"
 	title='<%= LanguageUtil.get(request, "products") %>'
 >
-	<aui:form method="post" name="fm">
-		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-		<aui:input name="updateCPConfigurationEntryIds" type="hidden" />
-
-		<frontend-data-set:headless-display
-			apiURL='<%= "/o/headless-commerce-admin-catalog/v1.0/product-configuration-lists/" + cpConfigurationListId + "/product-configurations?showDifferences=true" %>'
-			bulkActionDropdownItems="<%= cpConfigurationListDisplayContext.getBulkActionDropdownItems() %>"
-			fdsActionDropdownItems="<%= cpConfigurationListDisplayContext.getCPConfigurationEntryFDSActionDropdownItems() %>"
-			formName="fm"
-			id="<%= CPConfigurationFDSNames.PRODUCT_CONFIGURATIONS %>"
-			propsTransformer="{CPConfigurationEntryFDSPropsTransformer} from commerce-product-definitions-web"
-			selectedItemsKey="id"
-			selectionType="multiple"
-			style="fluid"
-		/>
-	</aui:form>
+	<frontend-data-set:headless-display
+		apiURL='<%= "/o/headless-commerce-admin-catalog/v1.0/product-configuration-lists/" + cpConfigurationListId + "/product-configurations?showDifferences=true" %>'
+		fdsActionDropdownItems="<%= cpConfigurationListDisplayContext.getCPConfigurationEntryFDSActionDropdownItems() %>"
+		id="<%= CPConfigurationFDSNames.PRODUCT_CONFIGURATIONS %>"
+		propsTransformer="{CPConfigurationEntryFDSPropsTransformer} from commerce-product-definitions-web"
+		style="fluid"
+	/>
 </commerce-ui:panel>

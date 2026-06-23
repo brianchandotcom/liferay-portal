@@ -5,9 +5,10 @@
 
 package com.liferay.frontend.js.audiences.web.internal.servlet.taglib;
 
+import com.liferay.frontend.js.audiences.AudiencesDefinition;
 import com.liferay.frontend.js.audiences.AudiencesDefinitionProvider;
+import com.liferay.frontend.js.audiences.ElementVariations;
 import com.liferay.frontend.js.audiences.ElementVariationsProvider;
-import com.liferay.frontend.js.audiences.HashedContent;
 import com.liferay.frontend.js.audiences.web.internal.configuration.FrontendJSAudiencesConfiguration;
 import com.liferay.frontend.js.audiences.web.internal.util.BootstrapJavaScriptUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
@@ -50,10 +51,10 @@ public class FrontendJSAudiencesWebTopHeadDynamicInclude
 			return;
 		}
 
-		HashedContent audiencesDefinitionHashedContent =
-			_audiencesDefinitionProvider.getHashedContent(companyId);
+		AudiencesDefinition audiencesDefinition =
+			_audiencesDefinitionProvider.getAudiencesDefinition(companyId);
 
-		if (audiencesDefinitionHashedContent == null) {
+		if (audiencesDefinition == null) {
 			return;
 		}
 
@@ -61,10 +62,11 @@ public class FrontendJSAudiencesWebTopHeadDynamicInclude
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		HashedContent elementVariationsHashedContent =
-			_elementVariationsProvider.getHashedContent(themeDisplay.getPlid());
+		ElementVariations elementVariations =
+			_elementVariationsProvider.getElementVariations(
+				themeDisplay.getPlid());
 
-		if (elementVariationsHashedContent == null) {
+		if (elementVariations == null) {
 			return;
 		}
 
@@ -88,9 +90,9 @@ public class FrontendJSAudiencesWebTopHeadDynamicInclude
 		printWriter.print("/bootstrap.(");
 		printWriter.print(BootstrapJavaScriptUtil.getHash());
 		printWriter.print(").js?audiencesDefinitionHash=");
-		printWriter.print(audiencesDefinitionHashedContent.getHash());
+		printWriter.print(audiencesDefinition.getHash());
 		printWriter.print("&elementVariationsHash=");
-		printWriter.print(elementVariationsHashedContent.getHash());
+		printWriter.print(elementVariations.getHash());
 		printWriter.print("&enableLog=");
 
 		FrontendJSAudiencesConfiguration frontendJSAudiencesConfiguration;

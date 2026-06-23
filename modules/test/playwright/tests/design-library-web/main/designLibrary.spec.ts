@@ -579,16 +579,24 @@ test(
 
 		await test.step('Check the add people to collaborate form and member list', async () => {
 			await expect(
-				manageMembersDialog.getByText('Add People to Collaborate')
+				manageMembersDialog.getByRole('combobox', {
+					name: 'Add People to Collaborate',
+				})
 			).toBeVisible();
 
-			await expect(
-				manageMembersDialog.getByText('Who Has Access')
-			).toBeVisible();
+			const membersList = manageMembersDialog.getByRole('list', {
+				name: 'Who Has Access',
+			});
 
-			await expect(
-				manageMembersDialog.getByRole('button', {name: 'Invite'})
-			).toBeDisabled();
+			await expect(membersList).toBeVisible();
+
+			const ownerItem = membersList.getByRole('listitem');
+
+			await expect(ownerItem).toBeVisible();
+
+			expect(ownerItem).toHaveText('Test Test(You)(Owner)', {
+				ignoreCase: true,
+			});
 		});
 
 		await test.step('Remove created design library', async () => {

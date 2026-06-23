@@ -1299,6 +1299,10 @@ test(
 
 		const date = new Date();
 
+		const pastDate = new Date(date);
+
+		pastDate.setDate(pastDate.getDate() - 1);
+
 		await createIndividuals({apiHelpers, individuals: [individual]});
 
 		await apiHelpers.jsonWebServicesOSBAsah.createEvents([
@@ -1310,7 +1314,7 @@ test(
 				emailAddressHashed: createHash('sha256')
 					.update(`${individual.name}@liferay.com`)
 					.digest('hex'),
-				eventDate: date.toISOString(),
+				eventDate: pastDate.toISOString(),
 				eventId: 'pageViewed',
 				sessionId: individual.id,
 				title: 'pageViewed',
@@ -1360,6 +1364,102 @@ test(
 
 		await expect(page.getByText('"applicationId": "Page"')).toBeVisible();
 		await expect(page.getByText('"eventId": "pageViewed"')).toBeVisible();
+	}
+);
+
+test(
+	'A selected individual activity point can clear its date selection',
+	{
+		tag: '@LRAC-8916',
+	},
+	async ({
+		analyticsChannel: channel,
+		apiHelpers,
+		dxpSyncedAnalyticsChannel,
+		page,
+		project,
+	}) => {
+		const {dataSourceId} = dxpSyncedAnalyticsChannel;
+
+		const individual = {
+			...generateIndividual({name: 'act' + getRandomString()}),
+			dataSourceId,
+		};
+
+		const date = new Date();
+
+		const pastDate = new Date(date);
+
+		pastDate.setDate(pastDate.getDate() - 1);
+
+		await createIndividuals({apiHelpers, individuals: [individual]});
+
+		await apiHelpers.jsonWebServicesOSBAsah.createEvents([
+			{
+				applicationId: 'Page',
+				canonicalUrl: 'https://www.liferay.com',
+				channelId: channel.id,
+				dataSourceId,
+				emailAddressHashed: createHash('sha256')
+					.update(`${individual.name}@liferay.com`)
+					.digest('hex'),
+				eventDate: pastDate.toISOString(),
+				eventId: 'pageViewed',
+				sessionId: individual.id,
+				title: 'pageViewed',
+				userId: individual.id,
+			},
+		]);
+
+		await apiHelpers.jsonWebServicesOSBAsah.createSessions([
+			{
+				channelId: channel.id,
+				id: individual.id,
+				sessionEnd: date.toISOString(),
+				sessionStart: date.toISOString(),
+				userId: individual.id,
+			},
+		]);
+
+		await apiHelpers.jsonWebServicesOSBAsah.closeSessions();
+
+		await apiHelpers.jsonWebServicesOSBAsah.createIdentityActivitiesSummary(
+			[
+				{
+					activitiesCount: 1,
+					channelId: channel.id,
+					dataSourceId,
+					eventId: 'pageViewed',
+					firstActivityDate: date.toISOString(),
+					identityId: individual.id,
+					individualId: individual.id,
+					lastActivityDate: date.toISOString(),
+				},
+			]
+		);
+
+		// Open the individual profile
+
+		await openIndividualProfileViaURL({
+			channelID: channel.id,
+			individualId: individual.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		// Select a point on the activity chart, then clear the date selection
+
+		await page.locator('.recharts-bar-rectangle path').first().click();
+
+		await expect(
+			page.getByRole('button', {name: 'Clear Date Selection'})
+		).toBeVisible();
+
+		await page.getByRole('button', {name: 'Clear Date Selection'}).click();
+
+		await expect(
+			page.getByRole('button', {name: 'Clear Date Selection'})
+		).toHaveCount(0);
 	}
 );
 

@@ -23,7 +23,3 @@ dependencies {
 	testImplementation group: "org.mockito", name: "mockito-core", version: "4.5.1"
 	testImplementation group: "org.mockito", name: "mockito-inline", version: "4.5.1"
 }
-
-test {
-	systemProperty "repository.dir", System.getProperty("repository.dir")
-}

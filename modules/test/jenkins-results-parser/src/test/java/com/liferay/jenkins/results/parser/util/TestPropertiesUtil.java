@@ -59,12 +59,6 @@ public class TestPropertiesUtil {
 			throw new RuntimeException(ioException);
 		}
 
-		String repositoryDir = System.getProperty("repository.dir");
-
-		if ((repositoryDir != null) && !repositoryDir.isEmpty()) {
-			_properties.setProperty("repository.dir", repositoryDir);
-		}
-
 		_printProperties(false);
 	}
 

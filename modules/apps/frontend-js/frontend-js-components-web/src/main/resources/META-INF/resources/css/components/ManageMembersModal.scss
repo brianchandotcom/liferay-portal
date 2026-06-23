@@ -1,0 +1,34 @@
+@import 'cadmin-variables';
+
+.manage-member-modal {
+	&,
+	html#{$cadmin-selector} .cadmin & {
+		.input-group-with-select {
+			select.form-control {
+				z-index: 1;
+			}
+
+			.input-group-append .input-group-item > .form-control {
+				border-bottom-left-radius: 0;
+				border-top-left-radius: 0;
+			}
+		}
+
+		.manage-members-list {
+			.permission-select-trigger-text {
+				max-width: 300px !important;
+			}
+
+			.members-list {
+				max-height: 200px;
+				overflow-y: auto;
+
+				li {
+					&:not(:last-child) {
+						margin-bottom: 8px;
+					}
+				}
+			}
+		}
+	}
+}

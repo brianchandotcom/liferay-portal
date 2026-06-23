@@ -213,6 +213,14 @@ public class AssetVocabularyGroupRelPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_D() throws Exception {
+		_persistence.countByG_D(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+
+		_persistence.countByG_D(0L, 0);
+	}
+
+	@Test
 	public void testCountByV_D() throws Exception {
 		_persistence.countByV_D(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
@@ -629,4 +637,4 @@ public class AssetVocabularyGroupRelPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-279284618
+// LIFERAY-SERVICE-BUILDER-HASH:1553590110

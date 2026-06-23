@@ -23,6 +23,7 @@
 	export {PageTaxonomyCategory} from './models/PageTaxonomyCategory';
 	export {PageTaxonomyVocabulary} from './models/PageTaxonomyVocabulary';
 	export {Permission} from './models/Permission';
+	export {Project} from './models/Project';
 	export {TaxonomyCategory} from './models/TaxonomyCategory';
 	export {TaxonomyCategoryProperty} from './models/TaxonomyCategoryProperty';
 	export {TaxonomyVocabulary} from './models/TaxonomyVocabulary';

@@ -7,6 +7,7 @@ package com.liferay.headless.admin.taxonomy.client.serdes.v1_0;
 
 import com.liferay.headless.admin.taxonomy.client.dto.v1_0.AssetLibrary;
 import com.liferay.headless.admin.taxonomy.client.dto.v1_0.AssetType;
+import com.liferay.headless.admin.taxonomy.client.dto.v1_0.Project;
 import com.liferay.headless.admin.taxonomy.client.dto.v1_0.TaxonomyVocabulary;
 import com.liferay.headless.admin.taxonomy.client.json.BaseJSONParser;
 
@@ -305,6 +306,26 @@ public class TaxonomyVocabularySerDes {
 			sb.append("]");
 		}
 
+		if (taxonomyVocabulary.getProjects() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"projects\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < taxonomyVocabulary.getProjects().length; i++) {
+				sb.append(String.valueOf(taxonomyVocabulary.getProjects()[i]));
+
+				if ((i + 1) < taxonomyVocabulary.getProjects().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (taxonomyVocabulary.getSiteExternalReferenceCode() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -549,6 +570,14 @@ public class TaxonomyVocabularySerDes {
 				String.valueOf(taxonomyVocabulary.getPermissions()));
 		}
 
+		if (taxonomyVocabulary.getProjects() == null) {
+			map.put("projects", null);
+		}
+		else {
+			map.put(
+				"projects", String.valueOf(taxonomyVocabulary.getProjects()));
+		}
+
 		if (taxonomyVocabulary.getSiteExternalReferenceCode() == null) {
 			map.put("siteExternalReferenceCode", null);
 		}
@@ -671,6 +700,9 @@ public class TaxonomyVocabularySerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "permissions")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "projects")) {
 				return false;
 			}
 			else if (Objects.equals(
@@ -843,6 +875,22 @@ public class TaxonomyVocabularySerDes {
 					taxonomyVocabulary.setPermissions(permissionsArray);
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "projects")) {
+				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					Project[] projectsArray =
+						new Project[jsonParserFieldValues.length];
+
+					for (int i = 0; i < projectsArray.length; i++) {
+						projectsArray[i] = ProjectSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					taxonomyVocabulary.setProjects(projectsArray);
+				}
+			}
 			else if (Objects.equals(
 						jsonParserFieldName, "siteExternalReferenceCode")) {
 
@@ -962,4 +1010,4 @@ public class TaxonomyVocabularySerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1855989974
+// LIFERAY-REST-BUILDER-HASH:85600847

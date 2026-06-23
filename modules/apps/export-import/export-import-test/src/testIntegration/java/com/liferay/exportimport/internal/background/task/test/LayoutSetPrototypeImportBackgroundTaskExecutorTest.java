@@ -9,16 +9,21 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.kernel.background.task.BackgroundTaskExecutorNames;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactoryUtil;
 import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalServiceUtil;
 import com.liferay.exportimport.kernel.service.ExportImportLocalServiceUtil;
 import com.liferay.exportimport.kernel.service.ExportImportServiceUtil;
+import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.LayoutSetPrototype;
+import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -28,7 +33,11 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -38,6 +47,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.Writer;
 
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Assert;
@@ -164,6 +174,83 @@ public class LayoutSetPrototypeImportBackgroundTaskExecutorTest {
 		Assert.assertEquals(
 			backgroundTasks.toString(), 0, backgroundTasks.size());
 	}
+
+	@Test
+	@TestInfo("LPD-95511")
+	public void testImportLayoutSetPrototypeWithLayout() throws Exception {
+		LayoutSetPrototype layoutSetPrototype =
+			LayoutTestUtil.addLayoutSetPrototype(RandomTestUtil.randomString());
+
+		Group group = layoutSetPrototype.getGroup();
+
+		long layoutSetPrototypeId =
+			layoutSetPrototype.getLayoutSetPrototypeId();
+
+		boolean layoutImportInProcess =
+			ExportImportThreadLocal.isLayoutImportInProcess();
+
+		ExportImportThreadLocal.setLayoutImportInProcess(true);
+
+		try {
+			TransactionInvokerUtil.invoke(
+				_requiredTransactionConfig,
+				() -> {
+
+					// Lock the layout set prototype row in the outer
+					// transaction, as importing its staged model does
+
+					LayoutSetPrototype lockedLayoutSetPrototype =
+						LayoutSetPrototypeLocalServiceUtil.
+							getLayoutSetPrototype(layoutSetPrototypeId);
+
+					Date modifiedDate =
+						lockedLayoutSetPrototype.getModifiedDate();
+
+					long time = modifiedDate.getTime();
+
+					lockedLayoutSetPrototype.setModifiedDate(
+						new Date(time - Time.DAY));
+
+					LayoutSetPrototypeLocalServiceUtil.updateLayoutSetPrototype(
+						lockedLayoutSetPrototype);
+
+					// Import a content page in a nested transaction, as the
+					// batch engine does for each page
+
+					try {
+						TransactionInvokerUtil.invoke(
+							_requiresNewTransactionConfig,
+							() -> LayoutTestUtil.addTypeContentLayout(
+								group, true, false));
+					}
+					catch (Throwable throwable) {
+						throw new SystemException(throwable);
+					}
+
+					return null;
+				});
+		}
+		catch (Throwable throwable) {
+			throw new AssertionError(
+				"Importing a content page into a layout set prototype " +
+					"deadlocked",
+				throwable);
+		}
+		finally {
+			ExportImportThreadLocal.setLayoutImportInProcess(
+				layoutImportInProcess);
+
+			LayoutSetPrototypeLocalServiceUtil.deleteLayoutSetPrototype(
+				layoutSetPrototypeId);
+		}
+	}
+
+	private static final TransactionConfig _requiredTransactionConfig =
+		TransactionConfig.Factory.create(
+			Propagation.REQUIRED, new Class<?>[] {Exception.class});
+	private static final TransactionConfig _requiresNewTransactionConfig =
+		TransactionConfig.Factory.create(
+			Propagation.REQUIRES_NEW, new Class<?>[] {Exception.class});
 
 	@DeleteAfterTestRun
 	private Group _group;

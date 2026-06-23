@@ -7,13 +7,16 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {globalMenuPagesTest} from '../../../fixtures/globalMenuPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {productMenuPageTest} from '../../../fixtures/productMenuPageTest';
 import {siteSettingsPagesTest} from '../../../fixtures/siteSettingsPagesTest';
+import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
 import {liferayConfig} from '../../../liferay.config';
 import getRandomString from '../../../utils/getRandomString';
 import {performLoginViaApi} from '../../../utils/performLogin';
 import {localizationPagesTest} from '../../site-admin-web/main/fixtures/localizationPagesTest';
+import {layoutSetPrototypePageTest} from './fixtures/layoutSetPrototypePageTest';
 import createSiteTemplate from './utils/createSiteTemplate';
 
 const DEFAULT_VIRTUAL_INSTANCE_NAME = 'www.able.com';
@@ -35,9 +38,12 @@ const testWithSiteTemplateSync = mergeTests(
 		'LPD-35443': {enabled: true},
 		'LPD-82107': {enabled: true},
 	}),
+	globalMenuPagesTest,
+	layoutSetPrototypePageTest,
 	loginTest(),
 	productMenuPageTest,
-	siteSettingsPagesTest
+	siteSettingsPagesTest,
+	usersAndOrganizationsPagesTest
 );
 
 test(
@@ -185,6 +191,132 @@ test(
 					webContentName.toLowerCase()
 				)
 			).rejects.toThrow();
+		}
+	);
+});
+
+[
+	{label: 'with the propagation toggle enabled', propagationEnabled: true},
+	{label: 'with the propagation toggle disabled', propagationEnabled: false},
+].forEach(({label, propagationEnabled}) => {
+	testWithSiteTemplateSync(
+		"Linking an existing Organization's Site to a Site Template " +
+			`through the Settings ${label} does not execute the propagation`,
+		{tag: '@LPD-87027'},
+		async ({
+			apiHelpers,
+			editOrganizationPage,
+			globalMenuPage,
+			layoutSetPrototypePage,
+			page,
+			productMenuPage,
+			usersAndOrganizationsPage,
+		}) => {
+			testWithSiteTemplateSync.slow();
+
+			// Create a Site Template with a Web Content and a page
+
+			const siteTemplateName = 'SiteTemplate-' + getRandomString();
+			const webContentBody = 'Body-' + getRandomString();
+			const webContentName = 'WebContent-' + getRandomString();
+
+			const layoutSetPrototype = await createSiteTemplate({
+				apiHelpers,
+				page,
+				productMenuPage,
+				templateName: siteTemplateName,
+				text: webContentBody,
+				webContentName,
+			});
+
+			apiHelpers.data.push({
+				id: layoutSetPrototype.layoutSetPrototypeId,
+				type: 'layoutSetPrototype',
+			});
+
+			const layoutSetPrototypeGroup =
+				await apiHelpers.jsonWebServicesGroup.getGroupByKey(
+					layoutSetPrototype.companyId,
+					layoutSetPrototype.layoutSetPrototypeId
+				);
+
+			const pageName = 'Page-' + getRandomString();
+
+			await apiHelpers.jsonWebServicesLayout.addLayout({
+				groupId: layoutSetPrototypeGroup.groupId,
+				privateLayout: 'true',
+				title: pageName,
+			});
+
+			// The Site Template has a page that a sync would propagate
+
+			expect(
+				await apiHelpers.jsonWebServicesLayout.getLayoutsCount(
+					Number(layoutSetPrototypeGroup.groupId),
+					true
+				)
+			).toBeGreaterThan(0);
+
+			// Create an Organization (its Site is not linked to any Site Template)
+
+			const organization =
+				await apiHelpers.headlessAdminUser.postOrganization();
+
+			// Link the Organization's Site to the Site Template from its Site
+			// settings
+
+			await usersAndOrganizationsPage.goToOrganizations(true);
+
+			await editOrganizationPage.linkSiteTemplate(
+				organization.name,
+				siteTemplateName,
+				{propagationEnabled}
+			);
+
+			// Relating an Organization to a Site Template must not trigger the sync
+
+			const organizationGroup =
+				await apiHelpers.jsonWebServicesGroup.getGroupByKey(
+					layoutSetPrototype.companyId,
+					organization.name + ' LFR_ORGANIZATION'
+				);
+
+			expect(
+				await apiHelpers.jsonWebServicesLayout.getLayoutsCount(
+					Number(organizationGroup.groupId),
+					false
+				)
+			).toBe(0);
+
+			// Execute the Site Template Sync manually
+
+			await globalMenuPage.goToControlPanel('Site Templates');
+
+			await layoutSetPrototypePage.executeSyncAndWaitForSuccess(
+				siteTemplateName
+			);
+
+			// The sync only updates the Site when the propagation toggle is enabled
+			// (LPD-82108 AC3)
+
+			if (propagationEnabled) {
+				await expect(async () => {
+					expect(
+						await apiHelpers.jsonWebServicesLayout.getLayoutsCount(
+							Number(organizationGroup.groupId),
+							false
+						)
+					).toBeGreaterThan(0);
+				}).toPass();
+			}
+			else {
+				expect(
+					await apiHelpers.jsonWebServicesLayout.getLayoutsCount(
+						Number(organizationGroup.groupId),
+						false
+					)
+				).toBe(0);
+			}
 		}
 	);
 });

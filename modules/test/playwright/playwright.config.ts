@@ -117,6 +117,7 @@ import {config as loginWebConfig} from './tests/login-web/main/config';
 import {config as loginWebSetupAdminConfig} from './tests/login-web/setup-admin/config';
 import {config as marketplaceAppManagerWebConfig} from './tests/marketplace-app-manager-web/main/config';
 import {config as messageBoardsWebConfig} from './tests/message-boards-web/main/config';
+import {config as multifactorAuthenticationEmailOTPConfig} from './tests/multi-factor-authentication-email-otp-web/main/config';
 import {config as multifactorAuthenticationConfig} from './tests/multi-factor-authentication-timebased-otp-web/main/config';
 import {config as multifactorAuthenticationWebConfig} from './tests/multi-factor-authentication-web/main/config';
 import {config as nestedPortletsWebConfig} from './tests/nested-portlets-web/main/config';
@@ -350,6 +351,7 @@ export default defineConfig({
 		marketplaceConfig,
 		messageBoardsWebConfig,
 		multifactorAuthenticationConfig,
+		multifactorAuthenticationEmailOTPConfig,
 		multifactorAuthenticationWebConfig,
 		nestedPortletsWebConfig,
 		notificationWebConfig,

@@ -85,14 +85,6 @@ export default function CalendarView({items}: CalendarViewProps) {
 		setUnscheduledTasks(unscheduledTasks);
 	}, [setUnscheduledTasks, unscheduledTasks]);
 
-	// Reset the shared tasks when the calendar unmounts so the info panel does
-	// not show a stale list after switching to another view.
-
-	useEffect(() => () => setUnscheduledTasks([]), [setUnscheduledTasks]);
-
-	const currentYear = new Date().getFullYear();
-	const locale = Liferay.ThemeDisplay.getBCP47LanguageId();
-
 	useEffect(() => {
 		Liferay.fire(UPDATE_TASKS_QUICK_FILTER_VISIBILITY, {visible: false});
 
@@ -123,6 +115,9 @@ export default function CalendarView({items}: CalendarViewProps) {
 
 		return () => resizeObserver.disconnect();
 	}, []);
+
+	const currentYear = new Date().getFullYear();
+	const locale = Liferay.ThemeDisplay.getBCP47LanguageId();
 
 	return (
 		<div className="lfr__calendar-view" ref={calendarViewRef}>

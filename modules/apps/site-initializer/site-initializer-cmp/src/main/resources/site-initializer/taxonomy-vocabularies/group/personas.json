@@ -1,0 +1,18 @@
+{
+	"assetTypes": [
+		{
+			"required": false,
+			"subtype": "AllAssetSubtypes",
+			"type": "AllAssetTypes",
+			"typeId": 0
+		}
+	],
+	"externalReferenceCode": "L_CMP_PERSONAS",
+	"multiValued": true,
+	"name": "Personas",
+	"name_i18n": {
+		"en_US": "Personas"
+	},
+	"system": true,
+	"viewableBy": "Anyone"
+}

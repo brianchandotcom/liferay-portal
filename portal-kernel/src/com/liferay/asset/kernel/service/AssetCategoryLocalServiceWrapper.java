@@ -665,6 +665,16 @@ public class AssetCategoryLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<AssetCategory> getVocabularyCategories(
+		long groupId, String name, long vocabularyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetCategory>
+			orderByComparator) {
+
+		return _assetCategoryLocalService.getVocabularyCategories(
+			groupId, name, vocabularyId, start, end, orderByComparator);
+	}
+
+	@Override
 	public int getVocabularyCategoriesCount(long vocabularyId) {
 		return _assetCategoryLocalService.getVocabularyCategoriesCount(
 			vocabularyId);
@@ -832,4 +842,4 @@ public class AssetCategoryLocalServiceWrapper
 	private AssetCategoryLocalService _assetCategoryLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-141568759
+// LIFERAY-SERVICE-BUILDER-HASH:1671983655

@@ -189,7 +189,6 @@ export default function CreateTagsModalContent({
 					checkboxText="tag"
 					setSelectedSpaces={setSelectedSpaces}
 					setSpaceInputError={setSpaceInputError}
-					spaceInputError={spaceInputError}
 				/>
 			</ClayModal.Body>
 

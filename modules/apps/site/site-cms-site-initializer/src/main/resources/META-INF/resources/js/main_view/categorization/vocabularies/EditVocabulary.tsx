@@ -363,7 +363,6 @@ export default function EditVocabulary({
 									setVocabularyPermissions
 								}
 								showPermissions={isNew}
-								spaceInputError={spaceInputError}
 								spritemap={spritemap}
 								vocabulary={vocabulary}
 							/>

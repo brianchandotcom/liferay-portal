@@ -29,7 +29,6 @@ type ScopeLabels = {
 };
 
 export default function ScopeMultiSelect<T extends ScopeItem>({
-	error,
 	labels,
 	onChange,
 	onError,
@@ -37,7 +36,6 @@ export default function ScopeMultiSelect<T extends ScopeItem>({
 	preselectedItems,
 	sourceItems,
 }: {
-	error: string;
 	labels: ScopeLabels;
 	onChange?: (value: boolean) => void;
 	onError: (value: string) => void;
@@ -45,6 +43,7 @@ export default function ScopeMultiSelect<T extends ScopeItem>({
 	preselectedItems?: T[];
 	sourceItems: T[];
 }) {
+	const [active, setActive] = useState(false);
 	const [allScopesChecked, setAllScopesChecked] = useState(true);
 	const [query, setQuery] = useState('');
 	const [touched, setTouched] = useState(false);
@@ -79,21 +78,24 @@ export default function ScopeMultiSelect<T extends ScopeItem>({
 		onChange(!allScopesChecked && Boolean(selectionChanged));
 	}, [allScopesChecked, onChange, preselectedItems, selectedItems]);
 
+	const errorMessage =
+		allScopesChecked || selectedItems.length
+			? ''
+			: sub(
+					Liferay.Language.get('the-x-field-is-required'),
+					labels.field
+				);
+
 	useEffect(() => {
-		onError(
-			allScopesChecked || selectedItems.length
-				? ''
-				: sub(
-						Liferay.Language.get('the-x-field-is-required'),
-						labels.field
-					)
-		);
-	}, [allScopesChecked, labels.field, onError, selectedItems]);
+		onError(errorMessage);
+	}, [errorMessage, onError]);
 
 	const getSelectedItems = (items: T[]) =>
 		sourceItems.filter((sourceItem) =>
 			items.some((item) => sourceItem.value === item.value)
 		);
+
+	const showError = touched && !active && Boolean(errorMessage);
 
 	return (
 		<div>
@@ -103,15 +105,17 @@ export default function ScopeMultiSelect<T extends ScopeItem>({
 				<RequiredMark />
 			</label>
 
-			<div className={touched && error ? 'has-error' : ''}>
+			<div className={showError ? 'has-error' : ''}>
 				<ClayMultiSelect
-					aria-describedby={touched && error ? errorId : undefined}
+					active={active}
+					aria-describedby={showError ? errorId : undefined}
 					aria-label={labels.ariaLabel}
 					disabled={allScopesChecked}
 					id={inputId}
 					items={selectedItems}
 					key={sourceItems.length ? 'loaded' : 'empty'}
 					loadingState={loadingState}
+					onActiveChange={setActive}
 					onBlur={() => setTouched(true)}
 					onChange={setQuery}
 					onItemsChange={(items: T[]) => {
@@ -137,9 +141,9 @@ export default function ScopeMultiSelect<T extends ScopeItem>({
 					)}
 				</ClayMultiSelect>
 
-				{touched && error && (
+				{showError && (
 					<ClayForm.FeedbackGroup id={errorId} role="alert">
-						<ErrorFeedback message={error} />
+						<ErrorFeedback message={errorMessage} />
 					</ClayForm.FeedbackGroup>
 				)}
 			</div>

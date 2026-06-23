@@ -175,7 +175,6 @@ export default function EditTagsModalContent({
 					setSelectedSpaces={setSelectedSpaces}
 					setSpaceChange={setSpaceChange}
 					setSpaceInputError={setSpaceInputError}
-					spaceInputError={spaceInputError}
 				/>
 			</ClayModal.Body>
 

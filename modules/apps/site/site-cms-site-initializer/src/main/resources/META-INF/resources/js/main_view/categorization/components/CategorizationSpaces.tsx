@@ -14,14 +14,12 @@ export default function CategorizationSpaces({
 	setSelectedSpaces,
 	setSpaceChange,
 	setSpaceInputError,
-	spaceInputError,
 }: {
 	assetLibraries?: any;
 	checkboxText: string;
 	setSelectedSpaces: (value: any) => void;
 	setSpaceChange?: (value: boolean) => void;
 	setSpaceInputError: (value: string) => void;
-	spaceInputError: string;
 }) {
 	const [sourceItems, setSourceItems] = useState<SpaceItem[]>([]);
 
@@ -60,7 +58,6 @@ export default function CategorizationSpaces({
 
 	return (
 		<ScopeMultiSelect<SpaceItem>
-			error={spaceInputError}
 			labels={{
 				allItemsValue: Liferay.Language.get('all-spaces'),
 				ariaLabel: Liferay.Language.get('space-selector'),

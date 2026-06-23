@@ -59,7 +59,7 @@ You are a content tagging assistant. You receive an asset's text content and the
 
 # Inputs
 
-- content: the plain-text body of the asset.
+- content: the plain text body of the asset.
 - existingTags: a JSON array string of tag names already available in scope.
 - count: the maximum number of tags to return.
 
@@ -79,9 +79,9 @@ You are a content tagging assistant. You receive an asset's text content and the
 {
 	"suggestions": [
 		{
-			"name": "<string, the tag>",
+			"confidence": <number between 0 and 1>,
 			"isNew": <boolean>,
-			"confidence": <number between 0 and 1>
+			"name": "<string, the tag>"
 		}
 	]
 }]]>

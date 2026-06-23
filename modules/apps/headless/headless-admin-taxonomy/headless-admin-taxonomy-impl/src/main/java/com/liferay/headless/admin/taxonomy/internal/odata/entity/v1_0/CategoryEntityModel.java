@@ -35,6 +35,9 @@ public class CategoryEntityModel implements EntityModel {
 				"assetLibraries", locale -> "groupIds", String::valueOf),
 			new IdEntityField(
 				"assetTypes", locale -> "classNameIds", String::valueOf),
+			new IdEntityField(
+				"projects", locale -> "projectDepotEntryGroupIds",
+				String::valueOf),
 			new StringEntityField(
 				"externalReferenceCode", locale -> "externalReferenceCode"),
 			new StringEntityField(

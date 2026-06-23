@@ -670,7 +670,7 @@ public class Order implements Serializable {
 	private Supplier<String> _couponCodeSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Creation date for the order. Read-only; set by the service when the record is first persisted.",
+		description = "Creation date and time of the order. Read-only; set by the service when the record is first persisted.",
 		example = "2017-07-21"
 	)
 	public Date getCreateDate() {
@@ -707,9 +707,9 @@ public class Order implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "Creation date for the order. Read-only; set by the service when the record is first persisted."
+		description = "Creation date and time of the order. Read-only; set by the service when the record is first persisted."
 	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date createDate;
 
 	@JsonIgnore
@@ -1228,14 +1228,14 @@ public class Order implements Serializable {
 	@GraphQLField(
 		description = "Reference to the order (FK identifier). Read-only."
 	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Date of the most recent price recalculation on the order. Read-only.",
+		description = "Date and time of the most recent price recalculation on the order. Read-only.",
 		example = "2017-07-21"
 	)
 	public Date getLastPriceUpdateDate() {
@@ -1272,16 +1272,16 @@ public class Order implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "Date of the most recent price recalculation on the order. Read-only."
+		description = "Date and time of the most recent price recalculation on the order. Read-only."
 	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date lastPriceUpdateDate;
 
 	@JsonIgnore
 	private Supplier<Date> _lastPriceUpdateDateSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Last-modification date for the order. Read-only.",
+		description = "Last modification date and time of the order. Read-only.",
 		example = "2017-08-21"
 	)
 	public Date getModifiedDate() {
@@ -1318,9 +1318,9 @@ public class Order implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "Last-modification date for the order. Read-only."
+		description = "Last modification date and time of the order. Read-only."
 	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date modifiedDate;
 
 	@JsonIgnore
@@ -1371,7 +1371,7 @@ public class Order implements Serializable {
 	private Supplier<String> _nameSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Date the order was placed. May differ from the creation date when the order is imported from another system.",
+		description = "Date and time the order was placed. May differ from the creation date when the order is imported from another system.",
 		example = "2017-07-21"
 	)
 	public Date getOrderDate() {
@@ -1408,7 +1408,7 @@ public class Order implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "Date the order was placed. May differ from the creation date when the order is imported from another system."
+		description = "Date and time the order was placed. May differ from the creation date when the order is imported from another system."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date orderDate;
@@ -2067,7 +2067,8 @@ public class Order implements Serializable {
 	private Supplier<String> _purchaseOrderNumberSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Buyer-requested delivery date.", example = "2017-07-21"
+		description = "Buyer-requested delivery date and time.",
+		example = "2017-07-21"
 	)
 	public Date getRequestedDeliveryDate() {
 		if (_requestedDeliveryDateSupplier != null) {
@@ -2102,7 +2103,7 @@ public class Order implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "Buyer-requested delivery date.")
+	@GraphQLField(description = "Buyer-requested delivery date and time.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date requestedDeliveryDate;
 
@@ -2385,7 +2386,7 @@ public class Order implements Serializable {
 	@GraphQLField(
 		description = "Locale-aware formatted shipping charge with the currency symbol. Read-only."
 	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String shippingAmountFormatted;
 
 	@JsonIgnore
@@ -2432,7 +2433,7 @@ public class Order implements Serializable {
 	@GraphQLField(
 		description = "Raw decimal value of the shipping charge without currency formatting. Read-only."
 	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Double shippingAmountValue;
 
 	@JsonIgnore
@@ -2530,7 +2531,7 @@ public class Order implements Serializable {
 	@GraphQLField(
 		description = "Locale-aware formatted shipping-discount amount with the currency symbol. Read-only."
 	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String shippingDiscountAmountFormatted;
 
 	@JsonIgnore
@@ -2580,7 +2581,7 @@ public class Order implements Serializable {
 	@GraphQLField(
 		description = "Raw decimal value of the shipping-discount amount without currency formatting. Read-only."
 	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Double shippingDiscountAmountValue;
 
 	@JsonIgnore
@@ -3113,7 +3114,7 @@ public class Order implements Serializable {
 	@GraphQLField(
 		description = "Locale-aware formatted shipping-discount amount with tax included. Read-only."
 	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String shippingDiscountWithTaxAmountFormatted;
 
 	@JsonIgnore
@@ -3304,7 +3305,7 @@ public class Order implements Serializable {
 	@GraphQLField(
 		description = "Locale-aware formatted shipping charge with tax included. Read-only."
 	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String shippingWithTaxAmountFormatted;
 
 	@JsonIgnore
@@ -3355,7 +3356,7 @@ public class Order implements Serializable {
 	@GraphQLField(
 		description = "Raw decimal value of the shipping charge with tax included. Read-only."
 	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Double shippingWithTaxAmountValue;
 
 	@JsonIgnore
@@ -3546,7 +3547,7 @@ public class Order implements Serializable {
 	@GraphQLField(
 		description = "Locale-aware formatted subtotal-discount amount with the currency symbol. Read-only."
 	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String subtotalDiscountAmountFormatted;
 
 	@JsonIgnore
@@ -4079,7 +4080,7 @@ public class Order implements Serializable {
 	@GraphQLField(
 		description = "Locale-aware formatted subtotal-discount amount with tax included. Read-only."
 	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String subtotalDiscountWithTaxAmountFormatted;
 
 	@JsonIgnore
@@ -4125,7 +4126,7 @@ public class Order implements Serializable {
 	@GraphQLField(
 		description = "Locale-aware formatted subtotal with the currency symbol. Read-only."
 	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String subtotalFormatted;
 
 	@JsonIgnore
@@ -4220,7 +4221,7 @@ public class Order implements Serializable {
 	@GraphQLField(
 		description = "Locale-aware formatted subtotal with tax included. Read-only."
 	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String subtotalWithTaxAmountFormatted;
 
 	@JsonIgnore
@@ -4364,7 +4365,7 @@ public class Order implements Serializable {
 	@GraphQLField(
 		description = "Locale-aware formatted tax amount with the currency symbol. Read-only."
 	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String taxAmountFormatted;
 
 	@JsonIgnore
@@ -4411,7 +4412,7 @@ public class Order implements Serializable {
 	@GraphQLField(
 		description = "Raw decimal value of the tax amount without currency formatting. Read-only."
 	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Double taxAmountValue;
 
 	@JsonIgnore
@@ -4605,7 +4606,7 @@ public class Order implements Serializable {
 	@GraphQLField(
 		description = "Locale-aware formatted total-discount amount with the currency symbol. Read-only."
 	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String totalDiscountAmountFormatted;
 
 	@JsonIgnore
@@ -4653,7 +4654,7 @@ public class Order implements Serializable {
 	@GraphQLField(
 		description = "Raw decimal value of the total-discount amount without currency formatting. Read-only."
 	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Double totalDiscountAmountValue;
 
 	@JsonIgnore
@@ -5181,7 +5182,7 @@ public class Order implements Serializable {
 	@GraphQLField(
 		description = "Locale-aware formatted total-discount amount with tax included. Read-only."
 	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String totalDiscountWithTaxAmountFormatted;
 
 	@JsonIgnore
@@ -5232,7 +5233,7 @@ public class Order implements Serializable {
 	@GraphQLField(
 		description = "Raw decimal value of the total-discount amount with tax included. Read-only."
 	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Double totalDiscountWithTaxAmountValue;
 
 	@JsonIgnore
@@ -5278,7 +5279,7 @@ public class Order implements Serializable {
 	@GraphQLField(
 		description = "Locale-aware formatted total with the currency symbol. Read-only."
 	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String totalFormatted;
 
 	@JsonIgnore
@@ -5377,7 +5378,7 @@ public class Order implements Serializable {
 	@GraphQLField(
 		description = "Locale-aware formatted total with tax included. Read-only."
 	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String totalWithTaxAmountFormatted;
 
 	@JsonIgnore
@@ -7214,4 +7215,4 @@ public class Order implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1403266712
+// LIFERAY-REST-BUILDER-HASH:1021491117

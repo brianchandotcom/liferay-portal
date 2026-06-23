@@ -330,7 +330,7 @@ public class OrderNote implements Serializable {
 	private Supplier<Long> _idSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Last modification timestamp in ISO 8601. Read-only.",
+		description = "Last modification date and time in ISO 8601. Read-only.",
 		example = "2017-07-21"
 	)
 	public Date getModifiedDate() {
@@ -367,7 +367,7 @@ public class OrderNote implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "Last modification timestamp in ISO 8601. Read-only."
+		description = "Last modification date and time in ISO 8601. Read-only."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date modifiedDate;
@@ -791,4 +791,4 @@ public class OrderNote implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-11921680
+// LIFERAY-REST-BUILDER-HASH:975756180

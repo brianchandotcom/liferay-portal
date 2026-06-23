@@ -19,57 +19,59 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.oauth2.provider.rest.internal.configuration.OAuth2DynamicRegistrationConfiguration",
 	localization = "content/Language",
-	name = "dynamic-registration-configuration-name"
+	name = "oauth2-dynamic-registration-configuration-name"
 )
 public interface OAuth2DynamicRegistrationConfiguration {
 
 	@Meta.AD(
 		deflt = "",
-		description = "dynamic-registration-allowed-grant-types-description",
+		description = "oauth2-dynamic-registration-allowed-grant-types-description",
 		id = "dynamic.registration.allowed.grant.types",
-		name = "dynamic-registration-allowed-grant-types", required = false
+		name = "oauth2-dynamic-registration-allowed-grant-types",
+		required = false
 	)
 	public String[] allowedGrantTypes();
 
 	@Meta.AD(
 		deflt = "",
-		description = "dynamic-registration-allowed-hosts-description",
+		description = "oauth2-dynamic-registration-allowed-hosts-description",
 		id = "dynamic.registration.allowed.hosts",
-		name = "dynamic-registration-allowed-hosts", required = false
+		name = "oauth2-dynamic-registration-allowed-hosts", required = false
 	)
 	public String[] allowedHosts();
 
 	@Meta.AD(
 		deflt = "",
-		description = "dynamic-registration-allowed-redirect-uri-patterns-description",
+		description = "oauth2-dynamic-registration-allowed-redirect-uri-patterns-description",
 		id = "dynamic.registration.allowed.redirect.uri.patterns",
-		name = "dynamic-registration-allowed-redirect-uri-patterns",
+		name = "oauth2-dynamic-registration-allowed-redirect-uri-patterns",
 		required = false
 	)
 	public String[] allowedRedirectURIPatterns();
 
 	@Meta.AD(
 		deflt = "",
-		description = "dynamic-registration-allowed-scopes-description",
+		description = "oauth2-dynamic-registration-allowed-scopes-description",
 		id = "dynamic.registration.allowed.scopes",
-		name = "dynamic-registration-allowed-scopes", required = false
+		name = "oauth2-dynamic-registration-allowed-scopes", required = false
 	)
 	public String[] allowedScopes();
 
 	@Meta.AD(
 		deflt = "true",
-		description = "dynamic-registration-require-initial-access-token-description",
+		description = "oauth2-dynamic-registration-require-initial-access-token-description",
 		id = "dynamic.registration.require.initial.access.token",
-		name = "dynamic-registration-require-initial-access-token",
+		name = "oauth2-dynamic-registration-require-initial-access-token",
 		required = false
 	)
 	public boolean requireInitialAccessToken();
 
 	@Meta.AD(
 		deflt = "false",
-		description = "dynamic-registration-trust-proxy-headers-description",
+		description = "oauth2-dynamic-registration-trust-proxy-headers-description",
 		id = "dynamic.registration.trust.proxy.headers",
-		name = "dynamic-registration-trust-proxy-headers", required = false
+		name = "oauth2-dynamic-registration-trust-proxy-headers",
+		required = false
 	)
 	public boolean trustProxyHeaders();
 

@@ -154,7 +154,9 @@ public class LayoutImportBackgroundTaskExecutorTest {
 	}
 
 	@Test
-	public void testGetStatusCompletedWithWarnings() throws Exception {
+	public void testGetStatusCompletedWithErrorsWhenReportEntryTypeIsWarning()
+		throws Exception {
+
 		ServiceContextThreadLocal.pushServiceContext(
 			ServiceContextTestUtil.getServiceContext());
 
@@ -196,7 +198,7 @@ public class LayoutImportBackgroundTaskExecutorTest {
 						backgroundTaskId);
 
 				Assert.assertEquals(
-					BackgroundTaskConstants.STATUS_COMPLETED_WITH_WARNINGS,
+					BackgroundTaskConstants.STATUS_COMPLETED_WITH_ERRORS,
 					backgroundTask.getStatus());
 			});
 

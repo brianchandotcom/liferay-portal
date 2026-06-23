@@ -61,6 +61,7 @@ const testBaseProps = {
 	options: {
 		actionId: 'view',
 	},
+	systemIconLabel: 'system-default-structure',
 	value: 'Web Content Test',
 };
 
@@ -73,6 +74,7 @@ const testFolderProps = {
 	options: {
 		actionId: 'view',
 	},
+	systemIconLabel: 'system-default-structure',
 	value: 'Folder Test',
 };
 
@@ -179,19 +181,32 @@ describe('SimpleActionLinkRenderer. Show type icon.', () => {
 });
 
 describe('SimpleActionLinkRenderer. Show lock icon.', () => {
-	it('shows lock icon if it is a system link', () => {
-		render(
+	it('does not alter the link accessible name for non-system links', () => {
+		render(<SimpleActionLinkRenderer {...testBaseProps} />);
+
+		expect(
+			screen.getByRole('link', {name: testBaseProps.value})
+		).toHaveAttribute('aria-label', testBaseProps.value);
+	});
+
+	it('shows lock icon labeled with the system icon label for system links', () => {
+		const {container} = render(
 			<SimpleActionLinkRenderer
 				{...testBaseProps}
 				itemData={{
 					...testBaseProps.itemData,
 					system: true,
 				}}
+				systemIconLabel="system-vocabulary"
 			/>
 		);
 
+		const lockIcon = container.querySelector('.lexicon-icon-lock');
+
+		expect(lockIcon).toHaveAttribute('aria-label', 'system-vocabulary');
+		expect(lockIcon).toHaveAttribute('data-title', 'system-vocabulary');
 		expect(
-			screen.getByLabelText('system-default-structure')
-		).toBeInTheDocument();
+			screen.getByRole('link', {name: testBaseProps.value})
+		).toHaveAttribute('aria-label', testBaseProps.value);
 	});
 });

@@ -60,7 +60,6 @@ public class BatchEngineImportTaskServiceTest
 				BatchEngineTaskExecuteStatus.INITIAL.name(), null,
 				BatchEngineImportTaskConstants.IMPORT_STRATEGY_ON_ERROR_FAIL,
 				BatchEngineTaskOperation.CREATE.name(), new HashMap<>(), null));
-
 		AssertUtils.assertFailure(
 			PrincipalException.class, null,
 			() -> _batchEngineImportTaskService.addBatchEngineImportTask(

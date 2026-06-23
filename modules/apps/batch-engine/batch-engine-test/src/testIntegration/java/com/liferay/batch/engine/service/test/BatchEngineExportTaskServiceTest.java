@@ -65,7 +65,6 @@ public class BatchEngineExportTaskServiceTest
 					"siteId", TestPropsValues.getGroupId()
 				).build(),
 				null));
-
 		AssertUtils.assertFailure(
 			PrincipalException.class, null,
 			() -> _batchEngineExportTaskService.addBatchEngineExportTask(

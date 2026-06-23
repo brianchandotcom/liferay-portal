@@ -7,20 +7,28 @@ package com.liferay.asset.categories.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.exception.AssetVocabularyGroupRelGroupIdException;
+import com.liferay.asset.kernel.exception.SystemVocabularyException;
 import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.model.AssetVocabularyConstants;
 import com.liferay.asset.kernel.model.AssetVocabularyGroupRel;
 import com.liferay.asset.kernel.service.AssetVocabularyGroupRelLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portlet.asset.util.AssetVocabularySettingsHelper;
 
 import java.util.List;
 
@@ -168,19 +176,54 @@ public class AssetVocabularyGroupRelLocalServiceTest {
 					_assetVocabulary.getVocabularyId()));
 	}
 
+	@FeatureFlag("LPD-86291")
 	@Test
 	public void testSetAssetVocabularyGroupRels() throws Exception {
-		try {
-			_assetVocabularyGroupRelLocalService.setAssetVocabularyGroupRels(
-				_assetVocabulary.getVocabularyId(), new long[0]);
+		_testSetAssetVocabularyGroupRelsReplacingGroups();
+		_testSetAssetVocabularyGroupRelsSystem();
+		_testSetAssetVocabularyGroupRelsWithoutGroupIds();
+	}
 
-			Assert.fail();
-		}
-		catch (AssetVocabularyGroupRelGroupIdException
-					assetVocabularyGroupRelGroupIdException) {
+	private AssetVocabulary _addAssetVocabulary() throws Exception {
+		return _assetVocabularyLocalService.addVocabulary(
+			TestPropsValues.getUserId(), GroupConstants.DEFAULT_PARENT_GROUP_ID,
+			RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext());
+	}
 
-			Assert.assertNotNull(assetVocabularyGroupRelGroupIdException);
-		}
+	private AssetVocabulary _addSystemVocabulary() throws Exception {
+		AssetVocabularySettingsHelper assetVocabularySettingsHelper =
+			new AssetVocabularySettingsHelper();
+
+		assetVocabularySettingsHelper.setMultiValued(true);
+		assetVocabularySettingsHelper.setSystem(true);
+
+		return _assetVocabularyLocalService.addVocabulary(
+			null, TestPropsValues.getUserId(),
+			GroupConstants.DEFAULT_PARENT_GROUP_ID,
+			RandomTestUtil.randomString(), null,
+			HashMapBuilder.put(
+				LocaleUtil.getSiteDefault(), RandomTestUtil.randomString()
+			).build(),
+			null, assetVocabularySettingsHelper.toString(),
+			AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC,
+			ServiceContextTestUtil.getServiceContext());
+	}
+
+	private void _assertAssetVocabularyGroupRel(
+			AssetVocabularyGroupRel assetVocabularyGroupRel,
+			long expectedAssetVocabularyId, long expectedGroupId)
+		throws Exception {
+
+		Assert.assertEquals(
+			expectedAssetVocabularyId,
+			assetVocabularyGroupRel.getVocabularyId());
+		Assert.assertEquals(
+			expectedGroupId, assetVocabularyGroupRel.getGroupId());
+	}
+
+	private void _testSetAssetVocabularyGroupRelsReplacingGroups()
+		throws Exception {
 
 		Group group1 = GroupTestUtil.addGroup();
 
@@ -221,23 +264,41 @@ public class AssetVocabularyGroupRelLocalServiceTest {
 			group2.getGroupId());
 	}
 
-	private AssetVocabulary _addAssetVocabulary() throws Exception {
-		return _assetVocabularyLocalService.addVocabulary(
-			TestPropsValues.getUserId(), GroupConstants.DEFAULT_PARENT_GROUP_ID,
-			RandomTestUtil.randomString(),
-			ServiceContextTestUtil.getServiceContext());
+	private void _testSetAssetVocabularyGroupRelsSystem() throws Exception {
+		AssetVocabulary assetVocabulary = _addSystemVocabulary();
+
+		_assetVocabularyGroupRelLocalService.setAssetVocabularyGroupRels(
+			assetVocabulary.getVocabularyId(),
+			new long[] {GroupConstants.GROUP_ID_ALL});
+
+		Group group = GroupTestUtil.addGroup();
+
+		AssertUtils.assertFailure(
+			SystemVocabularyException.MustNotChangeGroupRels.class,
+			StringBundler.concat(
+				"Group rels of vocabulary ", assetVocabulary.getVocabularyId(),
+				" cannot be changed"),
+			() ->
+				_assetVocabularyGroupRelLocalService.
+					setAssetVocabularyGroupRels(
+						assetVocabulary.getVocabularyId(),
+						new long[] {group.getGroupId()}));
 	}
 
-	private void _assertAssetVocabularyGroupRel(
-			AssetVocabularyGroupRel assetVocabularyGroupRel,
-			long expectedAssetVocabularyId, long expectedGroupId)
+	private void _testSetAssetVocabularyGroupRelsWithoutGroupIds()
 		throws Exception {
 
-		Assert.assertEquals(
-			expectedAssetVocabularyId,
-			assetVocabularyGroupRel.getVocabularyId());
-		Assert.assertEquals(
-			expectedGroupId, assetVocabularyGroupRel.getGroupId());
+		try {
+			_assetVocabularyGroupRelLocalService.setAssetVocabularyGroupRels(
+				_assetVocabulary.getVocabularyId(), new long[0]);
+
+			Assert.fail();
+		}
+		catch (AssetVocabularyGroupRelGroupIdException
+					assetVocabularyGroupRelGroupIdException) {
+
+			Assert.assertNotNull(assetVocabularyGroupRelGroupIdException);
+		}
 	}
 
 	private AssetVocabulary _assetVocabulary;

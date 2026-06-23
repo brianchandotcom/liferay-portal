@@ -296,6 +296,23 @@ public class AssetVocabularySettingsHelperTest {
 		Assert.assertTrue(vocabularySettingsHelper.isMultiValued());
 	}
 
+	@Test
+	public void testIsSystem() {
+		AssetVocabularySettingsHelper assetVocabularySettingsHelper =
+			new AssetVocabularySettingsHelper();
+
+		Assert.assertFalse(assetVocabularySettingsHelper.isSystem());
+
+		assetVocabularySettingsHelper.setSystem(true);
+
+		Assert.assertTrue(assetVocabularySettingsHelper.isSystem());
+
+		assetVocabularySettingsHelper = new AssetVocabularySettingsHelper(
+			assetVocabularySettingsHelper.toString());
+
+		Assert.assertTrue(assetVocabularySettingsHelper.isSystem());
+	}
+
 	protected AssetVocabularySettingsHelper getVocabularySettingsHelper(
 		boolean multiValued, long[] classNameIds, long[] classTypePKs,
 		boolean[] depotRequireds, boolean[] requireds) {

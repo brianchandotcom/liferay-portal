@@ -5,13 +5,16 @@
 
 package com.liferay.jenkins.results.parser.util;
 
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+
+import java.io.File;
+
 /**
  * @author Michael Hashimoto
  */
 public class TestPropertiesValues {
 
-	public static final String FILE_PATH_REPOSITORY = TestPropertiesUtil.get(
-		"repository.dir");
+	public static final String FILE_PATH_REPOSITORY = _getFilePathRepository();
 
 	public static final String HOSTNAME_REPOSITORY = TestPropertiesUtil.get(
 		"repository.hostname");
@@ -24,5 +27,16 @@ public class TestPropertiesValues {
 
 	public static final String USERNAME_REPOSITORY = TestPropertiesUtil.get(
 		"repository.username");
+
+	private static String _getFilePathRepository() {
+		File baseGitRepositoryDir =
+			JenkinsResultsParserUtil.getBaseGitRepositoryDir();
+
+		String repositoryName = TestPropertiesUtil.get("repository.name");
+
+		File repositoryDir = new File(baseGitRepositoryDir, repositoryName);
+
+		return JenkinsResultsParserUtil.getCanonicalPath(repositoryDir);
+	}
 
 }

@@ -142,7 +142,7 @@ public class TaxonomyCategoryResourceTest
 	@FeatureFlag("LPD-17564")
 	@Override
 	@Test
-	@TestInfo("LPD-83791")
+	@TestInfo({"LPD-83791", "LPD-95641"})
 	public void testGetAssetLibraryTaxonomyCategoriesPage() throws Exception {
 		_scopeType = Scope.Type.ASSET_LIBRARY;
 
@@ -153,77 +153,8 @@ public class TaxonomyCategoryResourceTest
 
 		_addCMSGroup();
 
-		AssetVocabulary assetVocabulary1 =
-			_assetVocabularyLocalService.addVocabulary(
-				TestPropsValues.getUserId(), testGroup.getGroupId(),
-				RandomTestUtil.randomString(),
-				ServiceContextTestUtil.getServiceContext(
-					testGroup.getGroupId(), TestPropsValues.getUserId()));
-
-		AssetCategory assetCategory = _assetCategoryLocalService.addCategory(
-			TestPropsValues.getUserId(), testGroup.getGroupId(),
-			RandomTestUtil.randomString(), assetVocabulary1.getVocabularyId(),
-			ServiceContextTestUtil.getServiceContext(
-				testGroup.getGroupId(), TestPropsValues.getUserId()));
-
-		AssetVocabulary assetVocabulary2 =
-			_assetVocabularyLocalService.addVocabulary(
-				TestPropsValues.getUserId(), testGroup.getGroupId(),
-				RandomTestUtil.randomString(),
-				ServiceContextTestUtil.getServiceContext(
-					testGroup.getGroupId(), TestPropsValues.getUserId()));
-
-		_assetCategoryLocalService.addCategory(
-			TestPropsValues.getUserId(), testGroup.getGroupId(),
-			RandomTestUtil.randomString(), assetVocabulary2.getVocabularyId(),
-			ServiceContextTestUtil.getServiceContext(
-				testGroup.getGroupId(), TestPropsValues.getUserId()));
-
-		DepotEntry depotEntry1 = _depotEntryLocalService.addDepotEntry(
-			Collections.singletonMap(
-				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
-			null, DepotConstants.TYPE_SPACE,
-			ServiceContextTestUtil.getServiceContext(
-				testGroup.getGroupId(), TestPropsValues.getUserId()));
-
-		Page<TaxonomyCategory> page =
-			taxonomyCategoryResource.getAssetLibraryTaxonomyCategoriesPage(
-				depotEntry1.getDepotEntryId(), null, null, null,
-				Pagination.of(1, 10), null);
-
-		Assert.assertEquals(2, page.getTotalCount());
-
-		_assetVocabularyGroupRelLocalService.
-			deleteAssetVocabularyGroupRelsByVocabularyId(
-				assetVocabulary2.getVocabularyId());
-
-		DepotEntry depotEntry2 = _depotEntryLocalService.addDepotEntry(
-			Collections.singletonMap(
-				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
-			null, DepotConstants.TYPE_SPACE,
-			ServiceContextTestUtil.getServiceContext(
-				testGroup.getGroupId(), TestPropsValues.getUserId()));
-
-		_assetVocabularyGroupRelLocalService.addAssetVocabularyGroupRel(
-			depotEntry2.getGroupId(), assetVocabulary2.getVocabularyId(),
-			depotEntry2.getType());
-
-		page = taxonomyCategoryResource.getAssetLibraryTaxonomyCategoriesPage(
-			depotEntry1.getDepotEntryId(), null, null, null,
-			Pagination.of(1, 10), null);
-
-		Assert.assertEquals(1, page.getTotalCount());
-
-		List<TaxonomyCategory> items = (List<TaxonomyCategory>)page.getItems();
-
-		TaxonomyCategory taxonomyCategory = items.get(0);
-
-		Assert.assertEquals(
-			String.valueOf(assetCategory.getCategoryId()),
-			taxonomyCategory.getId());
-
-		_assetVocabularyLocalService.deleteVocabulary(assetVocabulary1);
-		_assetVocabularyLocalService.deleteVocabulary(assetVocabulary2);
+		_testGetAssetLibraryTaxonomyCategoriesPage(DepotConstants.TYPE_PROJECT);
+		_testGetAssetLibraryTaxonomyCategoriesPage(DepotConstants.TYPE_SPACE);
 
 		irrelevantGroup = originalIrrelevantGroup;
 		testGroup = originalTestGroup;
@@ -1074,6 +1005,82 @@ public class TaxonomyCategoryResourceTest
 		};
 	}
 
+	private void _testGetAssetLibraryTaxonomyCategoriesPage(int depotEntryType)
+		throws Exception {
+
+		AssetVocabulary assetVocabulary1 =
+			_assetVocabularyLocalService.addVocabulary(
+				TestPropsValues.getUserId(), testGroup.getGroupId(),
+				RandomTestUtil.randomString(),
+				ServiceContextTestUtil.getServiceContext(
+					testGroup.getGroupId(), TestPropsValues.getUserId()));
+
+		AssetCategory assetCategory = _assetCategoryLocalService.addCategory(
+			TestPropsValues.getUserId(), testGroup.getGroupId(),
+			RandomTestUtil.randomString(), assetVocabulary1.getVocabularyId(),
+			ServiceContextTestUtil.getServiceContext(
+				testGroup.getGroupId(), TestPropsValues.getUserId()));
+
+		AssetVocabulary assetVocabulary2 =
+			_assetVocabularyLocalService.addVocabulary(
+				TestPropsValues.getUserId(), testGroup.getGroupId(),
+				RandomTestUtil.randomString(),
+				ServiceContextTestUtil.getServiceContext(
+					testGroup.getGroupId(), TestPropsValues.getUserId()));
+
+		_assetCategoryLocalService.addCategory(
+			TestPropsValues.getUserId(), testGroup.getGroupId(),
+			RandomTestUtil.randomString(), assetVocabulary2.getVocabularyId(),
+			ServiceContextTestUtil.getServiceContext(
+				testGroup.getGroupId(), TestPropsValues.getUserId()));
+
+		DepotEntry depotEntry1 = _depotEntryLocalService.addDepotEntry(
+			Collections.singletonMap(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
+			null, depotEntryType,
+			ServiceContextTestUtil.getServiceContext(
+				testGroup.getGroupId(), TestPropsValues.getUserId()));
+
+		Page<TaxonomyCategory> page =
+			taxonomyCategoryResource.getAssetLibraryTaxonomyCategoriesPage(
+				depotEntry1.getDepotEntryId(), null, null, null,
+				Pagination.of(1, 10), null);
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		_assetVocabularyGroupRelLocalService.
+			deleteAssetVocabularyGroupRelsByVocabularyId(
+				assetVocabulary2.getVocabularyId());
+
+		DepotEntry depotEntry2 = _depotEntryLocalService.addDepotEntry(
+			Collections.singletonMap(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
+			null, depotEntryType,
+			ServiceContextTestUtil.getServiceContext(
+				testGroup.getGroupId(), TestPropsValues.getUserId()));
+
+		_assetVocabularyGroupRelLocalService.addAssetVocabularyGroupRel(
+			depotEntry2.getGroupId(), assetVocabulary2.getVocabularyId(),
+			depotEntry2.getType());
+
+		page = taxonomyCategoryResource.getAssetLibraryTaxonomyCategoriesPage(
+			depotEntry1.getDepotEntryId(), null, null, null,
+			Pagination.of(1, 10), null);
+
+		Assert.assertEquals(1, page.getTotalCount());
+
+		List<TaxonomyCategory> items = (List<TaxonomyCategory>)page.getItems();
+
+		TaxonomyCategory taxonomyCategory = items.get(0);
+
+		Assert.assertEquals(
+			String.valueOf(assetCategory.getCategoryId()),
+			taxonomyCategory.getId());
+
+		_assetVocabularyLocalService.deleteVocabulary(assetVocabulary1);
+		_assetVocabularyLocalService.deleteVocabulary(assetVocabulary2);
+	}
+
 	private void _testGetTaxonomyCategoryTaxonomyCategoryUsageCount()
 		throws Exception {
 
@@ -1603,8 +1610,9 @@ public class TaxonomyCategoryResourceTest
 
 		List<AssetVocabularyGroupRel> assetVocabularyGroupRels =
 			_assetVocabularyGroupRelLocalService.
-				getAssetVocabularyGroupRelsByVocabularyId(
-					assetVocabulary.getVocabularyId());
+				getAssetVocabularyGroupRelsByVocabularyIdAndDepotEntryType(
+					assetVocabulary.getVocabularyId(),
+					DepotConstants.TYPE_PROJECT);
 
 		Assert.assertEquals(
 			assetVocabularyGroupRels.toString(), 1,
@@ -1612,6 +1620,20 @@ public class TaxonomyCategoryResourceTest
 
 		AssetVocabularyGroupRel assetVocabularyGroupRel =
 			assetVocabularyGroupRels.get(0);
+
+		Assert.assertEquals(-1L, assetVocabularyGroupRel.getGroupId());
+
+		assetVocabularyGroupRels =
+			_assetVocabularyGroupRelLocalService.
+				getAssetVocabularyGroupRelsByVocabularyIdAndDepotEntryType(
+					assetVocabulary.getVocabularyId(),
+					DepotConstants.TYPE_SPACE);
+
+		Assert.assertEquals(
+			assetVocabularyGroupRels.toString(), 1,
+			assetVocabularyGroupRels.size());
+
+		assetVocabularyGroupRel = assetVocabularyGroupRels.get(0);
 
 		Assert.assertEquals(-1L, assetVocabularyGroupRel.getGroupId());
 

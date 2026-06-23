@@ -650,8 +650,7 @@ public class JenkinsResultsParserUtil {
 			httpURLConnection.setDoOutput(true);
 			httpURLConnection.setRequestMethod("POST");
 
-			HTTPAuthorization httpAuthorization =
-				_getJenkinsHTTPAuthorization();
+			HTTPAuthorization httpAuthorization = getJenkinsHTTPAuthorization();
 
 			httpURLConnection.setRequestProperty(
 				"Authorization", httpAuthorization.toString());
@@ -712,8 +711,7 @@ public class JenkinsResultsParserUtil {
 
 			httpURLConnection.setRequestMethod("HEAD");
 
-			HTTPAuthorization httpAuthorization =
-				_getJenkinsHTTPAuthorization();
+			HTTPAuthorization httpAuthorization = getJenkinsHTTPAuthorization();
 
 			httpURLConnection.setRequestProperty(
 				"Authorization", httpAuthorization.toString());
@@ -995,6 +993,20 @@ public class JenkinsResultsParserUtil {
 		}
 
 		return flattenedBuilds;
+	}
+
+	public static String generateToStringCacheKey(
+		String urlString, String postContent) {
+
+		String key = fixURL(urlString);
+
+		key.replace("//", "/");
+
+		if (!isNullOrEmpty(postContent)) {
+			key += postContent;
+		}
+
+		return key;
 	}
 
 	public static String getActualResult(String buildURL) throws IOException {
@@ -1939,7 +1951,7 @@ public class JenkinsResultsParserUtil {
 
 			jsonObject = jsonObject.getJSONObject("rate");
 
-			return _getGitHubAPIRateLimitStatusMessage(
+			return getGitHubAPIRateLimitStatusMessage(
 				jsonObject.getInt("limit"), jsonObject.getInt("remaining"),
 				jsonObject.getLong("reset"));
 		}
@@ -1948,6 +1960,21 @@ public class JenkinsResultsParserUtil {
 		}
 
 		return "";
+	}
+
+	public static String getGitHubAPIRateLimitStatusMessage(
+		int limit, int remaining, long reset) {
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(remaining);
+		sb.append(" GitHub API calls out of ");
+		sb.append(limit);
+		sb.append(" remain. GitHub API call limit will reset in ");
+		sb.append(toDurationString((1000 * reset) - getCurrentTimeMillis()));
+		sb.append(".");
+
+		return sb.toString();
 	}
 
 	public static String getGitHubApiSearchUrl(List<String> filters) {
@@ -2317,6 +2344,14 @@ public class JenkinsResultsParserUtil {
 		}
 
 		return _URL_JENKINS_GITHUB_DEFAULT;
+	}
+
+	public static HTTPAuthorization getJenkinsHTTPAuthorization()
+		throws IOException {
+
+		return new BasicHTTPAuthorization(
+			getBuildProperty("jenkins.admin.user.token"),
+			getBuildProperty("jenkins.admin.user.name"));
 	}
 
 	public static String getJenkinsLoadBalancerURL() {
@@ -3637,8 +3672,7 @@ public class JenkinsResultsParserUtil {
 			HttpURLConnection httpURLConnection =
 				(HttpURLConnection)urlObject.openConnection();
 
-			HTTPAuthorization httpAuthorization =
-				_getJenkinsHTTPAuthorization();
+			HTTPAuthorization httpAuthorization = getJenkinsHTTPAuthorization();
 
 			httpURLConnection.setRequestProperty(
 				"Authorization", httpAuthorization.toString());
@@ -5099,7 +5133,7 @@ public class JenkinsResultsParserUtil {
 				}
 
 				File cachedFile = getCacheFile(
-					_generateToStringCacheKey(url, postContent));
+					generateToStringCacheKey(url, postContent));
 
 				if ((cachedFile != null) && cachedFile.exists()) {
 					return new FileInputStream(cachedFile);
@@ -5148,7 +5182,7 @@ public class JenkinsResultsParserUtil {
 				if ((httpAuthorization == null) &&
 					url.startsWith("https://release.liferay.com")) {
 
-					httpAuthorization = _getJenkinsHTTPAuthorization();
+					httpAuthorization = getJenkinsHTTPAuthorization();
 				}
 
 				if ((httpAuthorization == null) &&
@@ -5163,7 +5197,7 @@ public class JenkinsResultsParserUtil {
 						url = getRemoteURL(url);
 					}
 
-					httpAuthorization = _getJenkinsHTTPAuthorization();
+					httpAuthorization = getJenkinsHTTPAuthorization();
 				}
 
 				boolean testray1Request = false;
@@ -5313,7 +5347,7 @@ public class JenkinsResultsParserUtil {
 
 						System.out.println(
 							combine(
-								_getGitHubAPIRateLimitStatusMessage(
+								getGitHubAPIRateLimitStatusMessage(
 									limit, remaining, reset),
 								"\n    ", url));
 					}
@@ -5803,7 +5837,7 @@ public class JenkinsResultsParserUtil {
 
 					if (checkCache && !url.startsWith("file:")) {
 						saveToCacheFile(
-							_generateToStringCacheKey(url, postContent),
+							generateToStringCacheKey(url, postContent),
 							content);
 					}
 
@@ -6574,20 +6608,6 @@ public class JenkinsResultsParserUtil {
 		return sb.toString();
 	}
 
-	private static String _generateToStringCacheKey(
-		String urlString, String postContent) {
-
-		String key = fixURL(urlString);
-
-		key.replace("//", "/");
-
-		if (!isNullOrEmpty(postContent)) {
-			key += postContent;
-		}
-
-		return key;
-	}
-
 	private static synchronized String _getCacheURL() {
 		if (_cacheURL != null) {
 			return _cacheURL;
@@ -6817,21 +6837,6 @@ public class JenkinsResultsParserUtil {
 		return null;
 	}
 
-	private static String _getGitHubAPIRateLimitStatusMessage(
-		int limit, int remaining, long reset) {
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(remaining);
-		sb.append(" GitHub API calls out of ");
-		sb.append(limit);
-		sb.append(" remain. GitHub API call limit will reset in ");
-		sb.append(toDurationString((1000 * reset) - getCurrentTimeMillis()));
-		sb.append(".");
-
-		return sb.toString();
-	}
-
 	private static synchronized JSONArray _getGitWorkingDirectoriesJSONArray() {
 		if (_gitWorkingDirectoriesJSONArray != null) {
 			return _gitWorkingDirectoriesJSONArray;
@@ -6863,14 +6868,6 @@ public class JenkinsResultsParserUtil {
 		}
 
 		return _gitWorkingDirectoriesJSONArray;
-	}
-
-	private static HTTPAuthorization _getJenkinsHTTPAuthorization()
-		throws IOException {
-
-		return new BasicHTTPAuthorization(
-			getBuildProperty("jenkins.admin.user.token"),
-			getBuildProperty("jenkins.admin.user.name"));
 	}
 
 	private static String _getJenkinsRepositoryURL() {

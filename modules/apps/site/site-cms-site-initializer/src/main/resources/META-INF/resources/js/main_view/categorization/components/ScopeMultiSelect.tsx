@@ -54,7 +54,6 @@ export default function ScopeMultiSelect<T extends ScopeItem>({
 	showErrorInitially?: boolean;
 }) {
 	const [availableItems, setAvailableItems] = useState<T[]>([]);
-	const [availableItemsKey, setAvailableItemsKey] = useState(0);
 	const [allItemsChecked, setAllItemsChecked] = useState(true);
 	const [displayError, setDisplayError] = useState(showErrorInitially);
 	const [query, setQuery] = useState('');
@@ -70,7 +69,6 @@ export default function ScopeMultiSelect<T extends ScopeItem>({
 	useEffect(() => {
 		getItems().then((items) => {
 			setAvailableItems(items);
-			setAvailableItemsKey((key) => key + 1);
 
 			const initialValues = preselectedItems?.map(
 				(preselectedItem) =>
@@ -176,7 +174,7 @@ export default function ScopeMultiSelect<T extends ScopeItem>({
 					disabled={allItemsChecked}
 					id="multiSelect"
 					items={selectedItems}
-					key={availableItemsKey}
+					key={availableItems.length ? 'loaded' : 'empty'}
 					loadingState={loadingState}
 					onChange={setQuery}
 					onItemsChange={_handleChangeItems}

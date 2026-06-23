@@ -35,6 +35,7 @@ import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.image.ImageToolUtil;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
@@ -105,6 +106,8 @@ import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.sites.kernel.util.Sites;
 
 import jakarta.portlet.PortletPreferences;
+
+import java.awt.image.BufferedImage;
 
 import java.util.Collections;
 import java.util.Date;
@@ -496,6 +499,38 @@ public class LayoutSetPrototypePropagationTest
 			group.getGroupId(), false, layout2.getFriendlyURL());
 
 		Assert.assertNotNull(layout2.getLayoutSetPrototypeLayout());
+	}
+
+	@Test
+	public void testLayoutSetPrototypePropagationOverridesLogo()
+		throws Exception {
+
+		LayoutSetLocalServiceUtil.updateLogo(
+			group.getGroupId(), false, true,
+			ImageToolUtil.getBytes(
+				new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB), "png"));
+
+		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+			group.getGroupId(), false);
+
+		long logoId = layoutSet.getLogoId();
+
+		LayoutSetLocalServiceUtil.updateLogo(
+			_layoutSetPrototypeGroup.getGroupId(), true, true,
+			ImageToolUtil.getBytes(
+				new BufferedImage(2, 2, BufferedImage.TYPE_INT_RGB), "png"));
+
+		long timestamp = System.currentTimeMillis();
+
+		propagateChanges(false, group);
+
+		_assertNotification(
+			"successful", timestamp, TestPropsValues.getUserId());
+
+		layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+			group.getGroupId(), false);
+
+		Assert.assertNotEquals(logoId, layoutSet.getLogoId());
 	}
 
 	@Test

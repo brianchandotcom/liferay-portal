@@ -69,19 +69,22 @@ public class CardinalityAssetEntryValidator implements AssetEntryValidator {
 			groupId);
 
 		if ((depotEntry != null) &&
-			(depotEntry.getType() == DepotConstants.TYPE_SPACE) &&
+			((depotEntry.getType() == DepotConstants.TYPE_PROJECT) ||
+			 (depotEntry.getType() == DepotConstants.TYPE_SPACE)) &&
 			FeatureFlagManagerUtil.isEnabled(
 				depotEntry.getCompanyId(), "LPD-17564")) {
 
 			List<AssetVocabularyGroupRel> assetVocabularyGroupRels =
 				new ArrayList<>(
 					_assetVocabularyGroupRelLocalService.
-						getAssetVocabularyGroupRelsByGroupId(groupId));
+						getAssetVocabularyGroupRelsByGroupIdAndDepotEntryType(
+							groupId, depotEntry.getType()));
 
 			assetVocabularyGroupRels.addAll(
 				_assetVocabularyGroupRelLocalService.
-					getAssetVocabularyGroupRelsByGroupId(
-						GroupConstants.ANY_PARENT_GROUP_ID));
+					getAssetVocabularyGroupRelsByGroupIdAndDepotEntryType(
+						GroupConstants.ANY_PARENT_GROUP_ID,
+						depotEntry.getType()));
 
 			assetVocabularies.addAll(
 				TransformUtil.transform(

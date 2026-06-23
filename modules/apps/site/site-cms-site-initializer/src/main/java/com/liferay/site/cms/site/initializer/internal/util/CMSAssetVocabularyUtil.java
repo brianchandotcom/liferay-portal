@@ -31,6 +31,7 @@ public class CMSAssetVocabularyUtil {
 
 		Set<AssetVocabulary> assetVocabularies = new LinkedHashSet<>();
 
+		boolean hasConnectedProjectDepotEntry = false;
 		boolean hasConnectedSpaceDepotEntry = false;
 
 		for (long groupId : groupIds) {
@@ -43,19 +44,33 @@ public class CMSAssetVocabularyUtil {
 			int depotEntryType = GetterUtil.getInteger(
 				group.getTypeSettingsProperty("depotEntryType"));
 
-			if (depotEntryType != DepotConstants.TYPE_SPACE) {
-				continue;
+			if (depotEntryType == DepotConstants.TYPE_PROJECT) {
+				hasConnectedProjectDepotEntry = true;
+			}
+			else if (depotEntryType == DepotConstants.TYPE_SPACE) {
+				hasConnectedSpaceDepotEntry = true;
 			}
 
-			hasConnectedSpaceDepotEntry = true;
+			if ((depotEntryType == DepotConstants.TYPE_PROJECT) ||
+				(depotEntryType == DepotConstants.TYPE_SPACE)) {
 
-			assetVocabularies.addAll(_getAssetVocabulariesByGroupRels(groupId));
+				assetVocabularies.addAll(
+					_getAssetVocabulariesByGroupRels(groupId, depotEntryType));
+			}
+		}
+
+		if (hasConnectedProjectDepotEntry) {
+			assetVocabularies.addAll(
+				_getAssetVocabulariesByGroupRels(
+					GroupConstants.ANY_PARENT_GROUP_ID,
+					DepotConstants.TYPE_PROJECT));
 		}
 
 		if (hasConnectedSpaceDepotEntry) {
 			assetVocabularies.addAll(
 				_getAssetVocabulariesByGroupRels(
-					GroupConstants.ANY_PARENT_GROUP_ID));
+					GroupConstants.ANY_PARENT_GROUP_ID,
+					DepotConstants.TYPE_SPACE));
 		}
 
 		return new ArrayList<>(assetVocabularies);
@@ -74,13 +89,14 @@ public class CMSAssetVocabularyUtil {
 	}
 
 	private static List<AssetVocabulary> _getAssetVocabulariesByGroupRels(
-		long groupId) {
+		long groupId, int depotEntryType) {
 
 		List<AssetVocabulary> assetVocabularies = new ArrayList<>();
 
 		for (AssetVocabularyGroupRel assetVocabularyGroupRel :
 				AssetVocabularyGroupRelLocalServiceUtil.
-					getAssetVocabularyGroupRelsByGroupId(groupId)) {
+					getAssetVocabularyGroupRelsByGroupIdAndDepotEntryType(
+						groupId, depotEntryType)) {
 
 			AssetVocabulary assetVocabulary =
 				AssetVocabularyLocalServiceUtil.fetchAssetVocabulary(

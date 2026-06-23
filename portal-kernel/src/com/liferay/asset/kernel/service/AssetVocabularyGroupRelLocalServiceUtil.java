@@ -307,6 +307,15 @@ public class AssetVocabularyGroupRelLocalServiceUtil {
 		return getService().getAssetVocabularyGroupRelsByGroupId(groupId);
 	}
 
+	public static List<AssetVocabularyGroupRel>
+		getAssetVocabularyGroupRelsByGroupIdAndDepotEntryType(
+			long groupId, int depotEntryType) {
+
+		return getService().
+			getAssetVocabularyGroupRelsByGroupIdAndDepotEntryType(
+				groupId, depotEntryType);
+	}
+
 	/**
 	 * Returns all the asset vocabulary group rels matching the UUID and company.
 	 *
@@ -431,4 +440,4 @@ public class AssetVocabularyGroupRelLocalServiceUtil {
 	private static volatile AssetVocabularyGroupRelLocalService _service;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1422452086
+// LIFERAY-SERVICE-BUILDER-HASH:-1997192690

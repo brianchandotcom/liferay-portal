@@ -274,6 +274,11 @@ public interface AssetVocabularyGroupRelLocalService
 	public List<AssetVocabularyGroupRel> getAssetVocabularyGroupRelsByGroupId(
 		long groupId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetVocabularyGroupRel>
+		getAssetVocabularyGroupRelsByGroupIdAndDepotEntryType(
+			long groupId, int depotEntryType);
+
 	/**
 	 * Returns all the asset vocabulary group rels matching the UUID and company.
 	 *
@@ -374,4 +379,4 @@ public interface AssetVocabularyGroupRelLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2135087332
+// LIFERAY-SERVICE-BUILDER-HASH:418658790

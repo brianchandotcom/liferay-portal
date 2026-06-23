@@ -14,6 +14,7 @@
 	import {PageTaxonomyCategory} from '../models/PageTaxonomyCategory';
 	import {PageTaxonomyVocabulary} from '../models/PageTaxonomyVocabulary';
 	import {Permission} from '../models/Permission';
+	import {Project} from '../models/Project';
 	import {TaxonomyCategory} from '../models/TaxonomyCategory';
 	import {TaxonomyCategoryProperty} from '../models/TaxonomyCategoryProperty';
 	import {TaxonomyVocabulary} from '../models/TaxonomyVocabulary';
@@ -62,6 +63,7 @@ const typeMap: {[index: string]: any} = {
 	PageTaxonomyCategory,
 	PageTaxonomyVocabulary,
 	Permission,
+	Project,
 	TaxonomyCategory,
 	TaxonomyCategoryProperty,
 	TaxonomyVocabulary,

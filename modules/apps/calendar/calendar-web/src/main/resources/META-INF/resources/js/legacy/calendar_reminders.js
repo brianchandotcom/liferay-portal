@@ -19,10 +19,10 @@ AUI.add(
 			'</label>' +
 			'<input class="input-mini reminder-value" <tpl if="disabled">disabled="disabled"</tpl> name="{portletNamespace}reminderValue{i}" size="5" type="text" value="{time.value}" /> ' +
 			'<select class="reminder-duration span2" <tpl if="disabled">disabled="disabled"</tpl> name="{portletNamespace}reminderDuration{i}">' +
-			'<option <tpl if="time.desc == \'minutes\'">selected="selected"</tpl> value="60">{minutes}</option>' +
-			'<option <tpl if="time.desc == \'hours\'">selected="selected"</tpl> value="3600">{hours}</option>' +
-			'<option <tpl if="time.desc == \'days\'">selected="selected"</tpl> value="86400">{days}</option>' +
-			'<option <tpl if="time.desc == \'weeks\'">selected="selected"</tpl> value="604800">{weeks}</option>' +
+			'<option <tpl if="time.description == \'minutes\'">selected="selected"</tpl> value="60">{minutes}</option>' +
+			'<option <tpl if="time.description == \'hours\'">selected="selected"</tpl> value="3600">{hours}</option>' +
+			'<option <tpl if="time.description == \'days\'">selected="selected"</tpl> value="86400">{days}</option>' +
+			'<option <tpl if="time.description == \'weeks\'">selected="selected"</tpl> value="604800">{weeks}</option>' +
 			'</select>' +
 			'</div>';
 

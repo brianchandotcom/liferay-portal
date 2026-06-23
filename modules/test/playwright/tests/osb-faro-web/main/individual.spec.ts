@@ -35,6 +35,7 @@ import {
 	viewNameListInOrder,
 	viewPaginationResults,
 } from './utils/utils';
+import {waitForLoading} from "./utils/loading";
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -1460,6 +1461,105 @@ test(
 		await expect(
 			page.getByRole('button', {name: 'Clear Date Selection'})
 		).toHaveCount(0);
+	}
+);
+
+test(
+	'All seeded individual attributes appear in the Details list',
+	{
+		tag: '@LRAC-8938',
+	},
+	async ({
+		analyticsChannel: channel,
+		apiHelpers,
+		dxpSyncedAnalyticsChannel,
+		page,
+		project,
+	}) => {
+		const {dataSourceId} = dxpSyncedAnalyticsChannel;
+
+		const individual = {
+			...generateIndividual({name: 'det' + getRandomString()}),
+			dataSourceId,
+			jobTitle: 'lawyer',
+		};
+
+		const date = new Date();
+
+		await createIndividuals({apiHelpers, individuals: [individual]});
+
+		await apiHelpers.jsonWebServicesOSBAsah.createEvents([
+			{
+				applicationId: 'Page',
+				canonicalUrl: 'https://www.liferay.com',
+				channelId: channel.id,
+				dataSourceId,
+				emailAddressHashed: createHash('sha256')
+					.update(`${individual.name}@liferay.com`)
+					.digest('hex'),
+				eventDate: date.toISOString(),
+				eventId: 'pageViewed',
+				sessionId: individual.id,
+				title: 'pageViewed',
+				userId: individual.id,
+			},
+		]);
+
+		await apiHelpers.jsonWebServicesOSBAsah.createSessions([
+			{
+				channelId: channel.id,
+				id: individual.id,
+				sessionEnd: date.toISOString(),
+				sessionStart: date.toISOString(),
+				userId: individual.id,
+			},
+		]);
+
+		await apiHelpers.jsonWebServicesOSBAsah.createIdentityActivitiesSummary(
+			[
+				{
+					activitiesCount: 1,
+					channelId: channel.id,
+					dataSourceId,
+					eventId: 'pageViewed',
+					firstActivityDate: date.toISOString(),
+					identityId: individual.id,
+					individualId: individual.id,
+					lastActivityDate: date.toISOString(),
+				},
+			]
+		);
+
+		// Open the individual profile Details tab
+
+		await openIndividualProfileViaURL({
+			channelID: channel.id,
+			individualId: individual.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await waitForLoading(page);
+
+		await page.getByRole('link', {exact: true, name: 'Details'}).click();
+
+		// The seeded attributes appear in the Details list
+
+		await expect(
+			page.getByRole('row').nth(1).getByRole('cell').nth(0)
+		).toContainText('birthDate');
+		await expect(
+			page.getByRole('row').nth(2).getByRole('cell').nth(0)
+		).toContainText('email');
+		await expect(
+			page.getByRole('row').nth(3).getByRole('cell').nth(0)
+		).toContainText('familyName');
+		await expect(
+			page.getByRole('row').nth(4).getByRole('cell').nth(0)
+		).toContainText('givenName');
+		await expect(
+			page.getByRole('row').nth(5).getByRole('cell').nth(0)
+		).toContainText('jobTitle');
 	}
 );
 

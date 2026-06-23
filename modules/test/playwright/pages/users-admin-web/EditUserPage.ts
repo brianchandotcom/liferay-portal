@@ -850,6 +850,25 @@ export class EditUserPage {
 			this.passwordConfirmationFrame.getByLabel('Your Password');
 	}
 
+	async linkSiteTemplate(
+		siteTemplateName: string,
+		{propagationEnabled = false}: {propagationEnabled?: boolean} = {}
+	) {
+		await this.profileAndDashboardLink.click();
+
+		await this.page
+			.locator('select[name$="publicLayoutSetPrototypeId"]')
+			.selectOption({label: siteTemplateName});
+
+		await this.page
+			.locator('input[name$="publicLayoutSetPrototypeLinkEnabled"]')
+			.setChecked(propagationEnabled, {force: true});
+
+		await this.saveButton.click();
+
+		await waitForAlert(this.page);
+	}
+
 	async addNewAddress(makePrimary: boolean, streetName: string) {
 		await expect(async () => {
 			await this.addAddressButton.click();

@@ -21,7 +21,6 @@ function mockAudiencesDefinition(conjunction: Conjunction, rules: Rule[]) {
 			{
 				conjunction,
 				id: 'the_audience',
-				retentionType: 'BROWSER',
 				rules,
 			},
 		],
@@ -59,7 +58,10 @@ describe('detection', () => {
 
 		jest.restoreAllMocks();
 
-		delete (document as any).cookie;
+		for (const item of document.cookie.split(';')) {
+			document.cookie = `${item.split('=')[0].trim()}=; path=/; max-age=0`;
+		}
+
 		delete (document as any).referrer;
 
 		delete (global as any).Analytics;
@@ -89,10 +91,9 @@ describe('detection', () => {
 			'resolvedOptions'
 		).mockReturnValue({timeZone: 'America/New_York'} as any);
 
-		Object.defineProperty(document, 'cookie', {
-			configurable: true,
-			value: 'REMEMBER_ME=true; JSESSIONID=ba8e4d1c',
-		});
+		document.cookie = 'REMEMBER_ME=true';
+		document.cookie = 'JSESSIONID=ba8e4d1c';
+
 		Object.defineProperty(document, 'referrer', {
 			configurable: true,
 			value: 'https://www.wikipedia.org/',

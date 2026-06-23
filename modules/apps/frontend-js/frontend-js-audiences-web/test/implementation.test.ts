@@ -19,7 +19,7 @@ describe('implementation', () => {
 
 			// Store audiences in reverse order so that we really test the registration is honored
 
-			store.setPageAudienceIds(new Set(audienceIds.reverse()));
+			store.setAudienceIds(new Set(audienceIds.reverse()));
 
 			for (const audienceId of audienceIds) {
 				audiences.on(audienceId, () => {
@@ -36,7 +36,7 @@ describe('implementation', () => {
 		it('clears the registered handlers after running', async () => {
 			let runCount = 0;
 
-			store.setPageAudienceIds(new Set(['a']));
+			store.setAudienceIds(new Set(['a']));
 
 			audiences.on('a', () => {
 				runCount += 1;

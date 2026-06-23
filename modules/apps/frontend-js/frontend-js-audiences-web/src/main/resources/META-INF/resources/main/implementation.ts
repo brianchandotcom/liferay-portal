@@ -7,19 +7,19 @@ import {Detection} from './detection';
 import {log} from './log';
 import {store} from './store';
 
-import type {AudiencesDefinition, Handler, RetentionType} from './index';
+import type {AudienceId, AudiencesDefinition, Handler} from './index';
 
 interface HandlersMap {
-	[audienceId: string]: Handler[];
+	[audienceId: AudienceId]: Handler[];
 }
 
 const handlers: HandlersMap = {};
 
-export function clear(retentionType?: RetentionType): void {
-	store.clear(retentionType);
+export function clear(): void {
+	store.clear();
 }
 
-export function get(): Set<string> {
+export function get(): Set<AudienceId> {
 	return store.getAudienceIds();
 }
 
@@ -70,41 +70,16 @@ export async function runDetection(
 		);
 	}
 
-	const browserAudienceIds = store.getBrowserAudienceIds();
-	const pageAudienceIds = store.getPageAudienceIds();
-	const tabAudienceIds = store.getTabAudienceIds();
+	const audienceIds = store.getAudienceIds();
 
 	for (const match of matches) {
-		switch (match.retentionType) {
-			case 'BROWSER': {
-				browserAudienceIds.add(match.id);
-				break;
-			}
-
-			case 'PAGE': {
-				pageAudienceIds.add(match.id);
-				break;
-			}
-
-			case 'TAB': {
-				tabAudienceIds.add(match.id);
-				break;
-			}
-
-			default: {
-				throw new Error(
-					`Unsupported retention type '${match.retentionType}' for audience '${match.id}'`
-				);
-			}
-		}
+		audienceIds.add(match);
 	}
 
-	store.setBrowserAudienceIds(browserAudienceIds);
-	store.setPageAudienceIds(pageAudienceIds);
-	store.setTabAudienceIds(tabAudienceIds);
+	store.setAudienceIds(audienceIds);
 }
 
-export function on(audienceId: string, handler: Handler): void {
+export function on(audienceId: AudienceId, handler: Handler): void {
 	log(
 		`Adding handler '${handler.name ?? 'anonymous'}' for audience '${audienceId}'`
 	);

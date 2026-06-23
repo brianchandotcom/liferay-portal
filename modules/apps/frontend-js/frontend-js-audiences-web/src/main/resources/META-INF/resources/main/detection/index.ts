@@ -33,19 +33,14 @@ import {notIncludes} from './operators/not_includes';
 
 import type {
 	Attribute,
+	AudienceId,
 	AudiencesDefinition,
 	Conjunction,
 	Operator,
-	RetentionType,
 	Rule,
 } from '../index';
 
 declare const Analytics: any;
-
-export interface AudienceMatch {
-	id: string;
-	retentionType: RetentionType;
-}
 
 type AttributeValue = Set<string> | boolean | number | string;
 
@@ -65,23 +60,20 @@ export class Detection {
 		this._uaParser = new UAParser(navigator.userAgent);
 	}
 
-	async run(): Promise<AudienceMatch[]> {
+	async run(): Promise<AudienceId[]> {
 		const matches = [];
 
 		for (const audience of this._audiencesDefinition.audiences) {
-			const {conjunction, id, retentionType, rules} = audience;
+			const {conjunction, id, rules} = audience;
 
 			log(`Checking rules for audience '${id}'...`);
 
 			const matched = await this._evaluateGroup(conjunction, rules);
 
 			if (matched) {
-				log(`Matched ${retentionType} audience: ${id}`);
+				log(`Matched audience: ${id}`);
 
-				matches.push({
-					id,
-					retentionType,
-				});
+				matches.push(id);
 			}
 		}
 

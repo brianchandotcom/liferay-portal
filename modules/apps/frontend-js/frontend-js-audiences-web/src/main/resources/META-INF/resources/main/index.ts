@@ -20,14 +20,13 @@ export interface AudiencesDefinition {
 
 export interface Audience {
 	conjunction: Conjunction;
-	id: string;
-	retentionType: RetentionType;
+	id: AudienceId;
 	rules: Rule[];
 }
 
-export type Conjunction = 'AND' | 'OR';
+export type AudienceId = string;
 
-export type RetentionType = 'BROWSER' | 'PAGE' | 'TAB';
+export type Conjunction = 'AND' | 'OR';
 
 export type Rule = LeafRule | RuleGroup;
 
@@ -81,9 +80,9 @@ export interface Handler {
 }
 
 export interface AudiencesAPI {
-	clear(retentionType?: RetentionType): void;
-	get(): Set<string>;
-	on(audienceId: string, handler: Handler): void;
+	clear(): void;
+	get(): Set<AudienceId>;
+	on(audienceId: AudienceId, handler: Handler): void;
 	runDetection(audiencesDefinitionURL: string): Promise<void>;
 	runHandlers(): Promise<void>;
 	setLogEnabled(enabled: boolean): void;

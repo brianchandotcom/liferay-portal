@@ -4,7 +4,7 @@ const {audiences} = await import(`${BASE_URL}o/frontend-js-audiences-web/__lifer
 
 audiences.setLogEnabled([$ENABLE_LOG$]);
 
-audiences.clear('PAGE');
+audiences.clear();
 await audiences.runDetection(`${BASE_URL}o/audiences/definition.([$AUDIENCES_DEFINITION_HASH$]).json`);
 
 await import(`${BASE_URL}o/audiences/[$PLID$]/variations.([$ELEMENT_VARIATIONS_HASH$]).js`);

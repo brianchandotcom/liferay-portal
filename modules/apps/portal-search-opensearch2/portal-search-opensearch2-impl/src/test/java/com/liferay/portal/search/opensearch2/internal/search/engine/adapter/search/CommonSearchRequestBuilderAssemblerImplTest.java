@@ -463,6 +463,35 @@ public class CommonSearchRequestBuilderAssemblerImplTest {
 	}
 
 	@Test
+	public void testRootClauseWithParentNestsUnderNamedParentQuery()
+		throws Exception {
+
+		_index("alpha 1", "JournalArticle");
+		_index("alpha 2", "DLFileEntry");
+		_index("bravo 1", "DLFileEntry");
+
+		SearchSearchRequest searchSearchRequest = _createSearchSearchRequest();
+
+		BooleanQuery booleanQuery = new BooleanQuery();
+
+		booleanQuery.add(
+			new MatchQuery("title", "alpha"), BooleanClauseOccur.MUST);
+
+		searchSearchRequest.setQuery(booleanQuery);
+
+		_assertSearch(searchSearchRequest, "alpha 1", "alpha 2");
+
+		_addPartNamed("parent_query", "must", searchSearchRequest);
+
+		_addPartRootWithParent(
+			"should", "parent_query",
+			QueriesUtil.term("entryClassName", "DLFileEntry"),
+			searchSearchRequest);
+
+		_assertSearch(searchSearchRequest, "alpha 2");
+	}
+
+	@Test
 	public void testRootOnlyAppliedWhenMainQueryIsBooleanFilterOccur()
 		throws Exception {
 
@@ -594,6 +623,21 @@ public class CommonSearchRequestBuilderAssemblerImplTest {
 				).build()));
 	}
 
+	private void _addPartNamed(
+		String name, String occur, SearchSearchRequest searchSearchRequest) {
+
+		searchSearchRequest.addComplexQueryParts(
+			Arrays.asList(
+				_complexQueryPartBuilderFactory.builder(
+				).name(
+					name
+				).occur(
+					occur
+				).query(
+					QueriesUtil.booleanQuery()
+				).build()));
+	}
+
 	private void _addPartRoot(
 		String occur, Query query, SearchSearchRequest searchSearchRequest) {
 
@@ -602,6 +646,24 @@ public class CommonSearchRequestBuilderAssemblerImplTest {
 				_complexQueryPartBuilderFactory.builder(
 				).occur(
 					occur
+				).query(
+					query
+				).rootClause(
+					true
+				).build()));
+	}
+
+	private void _addPartRootWithParent(
+		String occur, String parent, Query query,
+		SearchSearchRequest searchSearchRequest) {
+
+		searchSearchRequest.addComplexQueryParts(
+			Arrays.asList(
+				_complexQueryPartBuilderFactory.builder(
+				).occur(
+					occur
+				).parent(
+					parent
 				).query(
 					query
 				).rootClause(

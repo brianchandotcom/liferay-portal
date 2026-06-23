@@ -91,5 +91,7 @@ public interface AssetVocabulary extends AssetVocabularyModel, PersistedModel {
 
 	public boolean isRequired(long classNameId, long classTypePK, long groupId);
 
+	public boolean isSystem();
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1452275424
+// LIFERAY-SERVICE-BUILDER-HASH:1303112662

@@ -611,6 +611,11 @@ public class AssetVocabularyWrapper
 	}
 
 	@Override
+	public boolean isSystem() {
+		return model.isSystem();
+	}
+
+	@Override
 	public void persist() {
 		model.persist();
 	}
@@ -971,4 +976,4 @@ public class AssetVocabularyWrapper
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:673150587
+// LIFERAY-SERVICE-BUILDER-HASH:1261844750

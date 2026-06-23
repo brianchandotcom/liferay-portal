@@ -11,7 +11,7 @@ import AddMembersInput from '../components/members/AddMembersInput';
 const CONFIG: MembersConfig = {
 	defaultRoleName: 'Asset Library Member',
 	excludedRoleNames: ['Asset Library Connected Site Member'],
-	hiddenRoleNames: ['Asset Library Owner', 'CMS Consumer'],
+	hiddenRoleNames: ['Asset Library Owner'],
 	messages: {
 		addGroupError: Liferay.Language.get(
 			'failed-to-add-group-x-to-design-library'
@@ -44,6 +44,15 @@ const CONFIG: MembersConfig = {
 		updateUserError: Liferay.Language.get(
 			'unable-to-update-roles-for-user-x'
 		),
+	},
+	roleNames: {
+		L_ASSET_LIBRARY_ADMINISTRATOR: Liferay.Language.get(
+			'design-library-administrator'
+		),
+		L_ASSET_LIBRARY_CONTENT_REVIEWER: Liferay.Language.get(
+			'design-library-content-reviewer'
+		),
+		L_ASSET_LIBRARY_MEMBER: Liferay.Language.get('design-library-member'),
 	},
 };
 

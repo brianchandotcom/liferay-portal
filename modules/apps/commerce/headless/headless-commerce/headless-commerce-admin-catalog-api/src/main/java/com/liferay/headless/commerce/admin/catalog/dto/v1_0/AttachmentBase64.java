@@ -205,7 +205,7 @@ public class AttachmentBase64 implements Serializable {
 		_customFieldsSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "ISO 8601 date controlling visibility start, interpreted in the request user's time zone. A future date causes the attachment to be persisted as scheduled.",
+		description = "ISO 8601 date-time controlling visibility start, interpreted in the request user's time zone. A future date causes the attachment to be persisted as scheduled.",
 		example = "2017-07-21"
 	)
 	public Date getDisplayDate() {
@@ -242,7 +242,7 @@ public class AttachmentBase64 implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "ISO 8601 date controlling visibility start, interpreted in the request user's time zone. A future date causes the attachment to be persisted as scheduled."
+		description = "ISO 8601 date-time controlling visibility start, interpreted in the request user's time zone. A future date causes the attachment to be persisted as scheduled."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date displayDate;
@@ -251,7 +251,7 @@ public class AttachmentBase64 implements Serializable {
 	private Supplier<Date> _displayDateSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "ISO 8601 date controlling visibility end. Defaults to one month after the display date when omitted; rejected when in the past or earlier than the display date.",
+		description = "ISO 8601 date-time controlling visibility end. Defaults to one month after the display date when omitted; rejected when in the past or earlier than the display date.",
 		example = "2017-08-21"
 	)
 	public Date getExpirationDate() {
@@ -288,7 +288,7 @@ public class AttachmentBase64 implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "ISO 8601 date controlling visibility end. Defaults to one month after the display date when omitted; rejected when in the past or earlier than the display date."
+		description = "ISO 8601 date-time controlling visibility end. Defaults to one month after the display date when omitted; rejected when in the past or earlier than the display date."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date expirationDate;
@@ -1113,4 +1113,4 @@ public class AttachmentBase64 implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1982484137
+// LIFERAY-REST-BUILDER-HASH:-680519157

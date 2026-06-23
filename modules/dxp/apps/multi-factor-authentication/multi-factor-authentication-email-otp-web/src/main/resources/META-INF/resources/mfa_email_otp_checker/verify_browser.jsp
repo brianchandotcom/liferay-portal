@@ -9,6 +9,20 @@
 
 <%
 long mfaEmailOTPFailedAttemptsRetryTimeout = GetterUtil.getLong(request.getAttribute(MFAEmailOTPWebKeys.MFA_EMAIL_OTP_FAILED_ATTEMPTS_RETRY_TIMEOUT));
+
+long mfaEmailOTPResendEmailTimeout = mfaEmailOTPConfiguration.resendEmailTimeout();
+
+long mfaEmailOTPSetAtTime = GetterUtil.getLong(request.getAttribute(MFAEmailOTPWebKeys.MFA_EMAIL_OTP_SET_AT_TIME));
+
+long mfaEmailOTPRemainingResendTime = 0;
+
+if ((mfaEmailOTPSetAtTime > 0) && (mfaEmailOTPResendEmailTimeout > 0)) {
+	long mfaEmailOTPElapsedTime = (System.currentTimeMillis() - mfaEmailOTPSetAtTime) / 1000;
+
+	if (mfaEmailOTPElapsedTime < mfaEmailOTPResendEmailTimeout) {
+		mfaEmailOTPRemainingResendTime = mfaEmailOTPResendEmailTimeout - Math.max(0, mfaEmailOTPElapsedTime);
+	}
+}
 %>
 
 <c:if test="<%= mfaEmailOTPFailedAttemptsRetryTimeout > 0 %>">
@@ -23,7 +37,7 @@ long mfaEmailOTPFailedAttemptsRetryTimeout = GetterUtil.getLong(request.getAttri
 	</div>
 
 	<aui:button-row>
-		<aui:button id="sendEmailButton" value="send" />
+		<aui:button disabled="<%= mfaEmailOTPRemainingResendTime > 0 %>" id="sendEmailButton" value='<%= (mfaEmailOTPRemainingResendTime > 0) ? String.valueOf(mfaEmailOTPRemainingResendTime) : "send" %>' />
 	</aui:button-row>
 </div>
 
@@ -55,7 +69,7 @@ long mfaEmailOTPFailedAttemptsRetryTimeout = GetterUtil.getLong(request.getAttri
 
 	var submitEmailButton = A.one('#<portlet:namespace />submitEmailButton');
 
-	var originalSendButtonText = sendEmailButton.text();
+	var originalSendButtonText = '<%= UnicodeLanguageUtil.get(request, "send") %>';
 
 	var originalSubmitButtonText = submitEmailButton.text();
 
@@ -130,6 +144,8 @@ long mfaEmailOTPFailedAttemptsRetryTimeout = GetterUtil.getLong(request.getAttri
 
 		var resendDuration = configuredResendDuration - elapsedTime;
 
+		<portlet:namespace />setResendCountdown(resendDuration);
+
 		resendCountdown = <portlet:namespace />createCountdown(
 			<portlet:namespace />setResendCountdown,
 			resendDuration,
@@ -152,6 +168,8 @@ long mfaEmailOTPFailedAttemptsRetryTimeout = GetterUtil.getLong(request.getAttri
 		sendEmailButton.setAttribute('disabled', 'disabled');
 
 		var resendDuration = <%= mfaEmailOTPConfiguration.resendEmailTimeout() %>;
+
+		<portlet:namespace />setResendCountdown(resendDuration);
 
 		resendCountdown = <portlet:namespace />createCountdown(
 			<portlet:namespace />setResendCountdown,

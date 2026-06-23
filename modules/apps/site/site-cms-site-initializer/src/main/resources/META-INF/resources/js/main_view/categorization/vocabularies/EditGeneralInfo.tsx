@@ -48,7 +48,6 @@ export default function EditGeneralInfo({
 	setSpaceInputError,
 	setVocabularyPermissions,
 	showPermissions,
-	spaceInputError,
 	spritemap,
 	vocabulary,
 }: {
@@ -66,7 +65,6 @@ export default function EditGeneralInfo({
 	setSpaceInputError: (value: string) => void;
 	setVocabularyPermissions: Function;
 	showPermissions: boolean;
-	spaceInputError: string;
 	spritemap: string;
 	vocabulary: IVocabulary;
 }) {
@@ -355,7 +353,6 @@ export default function EditGeneralInfo({
 						setSelectedSpaces={onChangeSelectedSpaces}
 						setSpaceChange={setSpaceChange}
 						setSpaceInputError={setSpaceInputError}
-						spaceInputError={spaceInputError}
 					/>
 				</ClayForm.Group>
 			</ClayPanel>

@@ -10,7 +10,7 @@ import aQute.bnd.annotation.metatype.Meta;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
- * @author Rafael Praxedes
+ * @author Jorge García Jiménez
  */
 @ExtendedObjectClassDefinition(
 	category = "oauth2", featureFlagKey = "LPD-63416",

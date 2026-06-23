@@ -7,12 +7,9 @@ package com.liferay.source.formatter.processor;
 
 import com.liferay.source.formatter.SourceFormatterArgs;
 
-import java.io.IOException;
-
 import java.util.Arrays;
-import java.util.Collections;
+import java.util.List;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -33,22 +30,13 @@ public class JakartaTransformSourceProcessorTest
 
 	@Test
 	public void testGradleJakartaTransform() throws Exception {
-		_testJakartaTransformDependenciesFile(
-			null, "jakartatransform/JakartaTransform.testgradle");
+		test("jakartatransform/JakartaTransform1.testgradle");
 
-		_testJakartaTransformDependenciesFile(
+		_jakartaTransformDependenciesFilePath =
 			"src/test/resources/com/liferay/source/formatter/dependencies" +
-				"/jakartatransform/jakarta-transform-dependencies.txt",
-			"jakartatransform/JakartaTransformExternalDependencies.testgradle");
+				"/jakartatransform/jakarta-transform-dependencies.txt";
 
-		_testInvalidJakartaTransformDependenciesFile(
-			"/jakarta-transform-dependencies-does-not-exist.txt",
-			"Unable to read file");
-
-		_testInvalidJakartaTransformDependenciesFile(
-			"src/test/resources/com/liferay/source/formatter/dependencies" +
-				"/jakartatransform/jakarta-transform-dependencies-invalid.txt",
-			"Invalid line");
+		test("jakartatransform/JakartaTransform2.testgradle");
 	}
 
 	@Test
@@ -74,55 +62,17 @@ public class JakartaTransformSourceProcessorTest
 		sourceFormatterArgs.setCheckCategoryNames(
 			Arrays.asList("JakartaTransform"));
 
-		if (_jakartaTransformDependenciesFilePath != null) {
-			sourceFormatterArgs.setSourceFormatterProperties(
-				Collections.singletonList(
-					"jakarta.transform.dependencies.file.path=" +
-						_jakartaTransformDependenciesFilePath));
-		}
+		List<String> sourceFormatterProperties =
+			sourceFormatterArgs.getSourceFormatterProperties();
+
+		sourceFormatterProperties.add(
+			"jakarta.transform.dependencies.file.path=" +
+				_jakartaTransformDependenciesFilePath);
+
+		sourceFormatterArgs.setSourceFormatterProperties(
+			sourceFormatterProperties);
 
 		return sourceFormatterArgs;
-	}
-
-	private void _testInvalidJakartaTransformDependenciesFile(
-			String jakartaTransformDependenciesFilePath, String expectedMessage)
-		throws Exception {
-
-		try {
-			_testJakartaTransformDependenciesFile(
-				jakartaTransformDependenciesFilePath,
-				"jakartatransform/JakartaTransform.testgradle");
-
-			Assert.fail();
-		}
-		catch (Exception exception) {
-			Throwable throwable = exception;
-
-			while (throwable.getCause() != null) {
-				throwable = throwable.getCause();
-			}
-
-			Assert.assertTrue(throwable instanceof IOException);
-
-			String message = throwable.getMessage();
-
-			Assert.assertTrue(message.contains(expectedMessage));
-		}
-	}
-
-	private void _testJakartaTransformDependenciesFile(
-			String jakartaTransformDependenciesFilePath, String testFileName)
-		throws Exception {
-
-		_jakartaTransformDependenciesFilePath =
-			jakartaTransformDependenciesFilePath;
-
-		try {
-			test(testFileName);
-		}
-		finally {
-			_jakartaTransformDependenciesFilePath = null;
-		}
 	}
 
 	private String _jakartaTransformDependenciesFilePath;

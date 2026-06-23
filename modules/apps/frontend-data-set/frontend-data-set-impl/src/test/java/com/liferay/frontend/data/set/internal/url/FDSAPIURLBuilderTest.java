@@ -176,6 +176,75 @@ public class FDSAPIURLBuilderTest {
 				"param5=value5"
 			).build());
 
+		// Nullified tokens
+
+		Assert.assertEquals(
+			"/o/app/{foo}/endpoint",
+			new FDSAPIURLBuilder(
+				_fdsAPIURLResolverRegistry, _httpServletRequest, "/app",
+				"/{foo}/endpoint", "schema"
+			).setTokenResolutions(
+				JSONUtil.put("foo", JSONFactoryUtil.createJSONObject())
+			).build());
+		Assert.assertEquals(
+			"/o/app/{siteId}/endpoint",
+			new FDSAPIURLBuilder(
+				_fdsAPIURLResolverRegistry, _httpServletRequest, "/app",
+				"/{siteId}/endpoint", "schema"
+			).setTokenResolutions(
+				JSONUtil.put("siteId", JSONFactoryUtil.createJSONObject())
+			).build());
+		Assert.assertEquals(
+			"/o/app/{userId}/{userExternalReferenceCode}/endpoint",
+			new FDSAPIURLBuilder(
+				_fdsAPIURLResolverRegistry, _httpServletRequest, "/app",
+				"/{userId}/{userExternalReferenceCode}/endpoint", "schema"
+			).setTokenResolutions(
+				JSONUtil.put(
+					"userExternalReferenceCode",
+					JSONFactoryUtil.createJSONObject()
+				).put(
+					"userId", JSONFactoryUtil.createJSONObject()
+				)
+			).build());
+		Assert.assertEquals(
+			"/o/app/{siteId}/bar/endpoint",
+			new FDSAPIURLBuilder(
+				_fdsAPIURLResolverRegistry, _httpServletRequest, "/app",
+				"/{siteId}/{foo}/endpoint", "schema"
+			).setTokenResolutions(
+				JSONUtil.put(
+					"foo", "bar"
+				).put(
+					"siteId", JSONFactoryUtil.createJSONObject()
+				)
+			).build());
+
+		// Nullified tokens, resolver
+
+		serviceRegistration1 = _registerFDSAPIURLResolver(
+			"/app", "schema", new String[] {"{foo}", "{userId}"},
+			new String[] {"bar", RandomTestUtil.randomString()});
+
+		Assert.assertEquals(
+			"/o/app/{foo}/endpoint",
+			new FDSAPIURLBuilder(
+				_fdsAPIURLResolverRegistry, _httpServletRequest, "/app",
+				"/{foo}/endpoint", "schema"
+			).setTokenResolutions(
+				JSONUtil.put("foo", JSONFactoryUtil.createJSONObject())
+			).build());
+		Assert.assertEquals(
+			"/o/app/bar/{userId}/endpoint",
+			new FDSAPIURLBuilder(
+				_fdsAPIURLResolverRegistry, _httpServletRequest, "/app",
+				"/{foo}/{userId}/endpoint", "schema"
+			).setTokenResolutions(
+				JSONUtil.put("userId", JSONFactoryUtil.createJSONObject())
+			).build());
+
+		serviceRegistration1.unregister();
+
 		// One resolver, one token
 
 		serviceRegistration1 = _registerFDSAPIURLResolver(
@@ -339,75 +408,6 @@ public class FDSAPIURLBuilderTest {
 
 		serviceRegistration1.unregister();
 		serviceRegistration2.unregister();
-
-		// Nullified tokens
-
-		Assert.assertEquals(
-			"/o/app/{foo}/endpoint",
-			new FDSAPIURLBuilder(
-				_fdsAPIURLResolverRegistry, _httpServletRequest, "/app",
-				"/{foo}/endpoint", "schema"
-			).setTokenResolutions(
-				JSONUtil.put("foo", JSONFactoryUtil.createJSONObject())
-			).build());
-		Assert.assertEquals(
-			"/o/app/{siteId}/endpoint",
-			new FDSAPIURLBuilder(
-				_fdsAPIURLResolverRegistry, _httpServletRequest, "/app",
-				"/{siteId}/endpoint", "schema"
-			).setTokenResolutions(
-				JSONUtil.put("siteId", JSONFactoryUtil.createJSONObject())
-			).build());
-		Assert.assertEquals(
-			"/o/app/{userId}/{userExternalReferenceCode}/endpoint",
-			new FDSAPIURLBuilder(
-				_fdsAPIURLResolverRegistry, _httpServletRequest, "/app",
-				"/{userId}/{userExternalReferenceCode}/endpoint", "schema"
-			).setTokenResolutions(
-				JSONUtil.put(
-					"userExternalReferenceCode",
-					JSONFactoryUtil.createJSONObject()
-				).put(
-					"userId", JSONFactoryUtil.createJSONObject()
-				)
-			).build());
-		Assert.assertEquals(
-			"/o/app/{siteId}/bar/endpoint",
-			new FDSAPIURLBuilder(
-				_fdsAPIURLResolverRegistry, _httpServletRequest, "/app",
-				"/{siteId}/{foo}/endpoint", "schema"
-			).setTokenResolutions(
-				JSONUtil.put(
-					"foo", "bar"
-				).put(
-					"siteId", JSONFactoryUtil.createJSONObject()
-				)
-			).build());
-
-		// Nullified tokens, resolver
-
-		serviceRegistration1 = _registerFDSAPIURLResolver(
-			"/app", "schema", new String[] {"{foo}", "{userId}"},
-			new String[] {"bar", RandomTestUtil.randomString()});
-
-		Assert.assertEquals(
-			"/o/app/{foo}/endpoint",
-			new FDSAPIURLBuilder(
-				_fdsAPIURLResolverRegistry, _httpServletRequest, "/app",
-				"/{foo}/endpoint", "schema"
-			).setTokenResolutions(
-				JSONUtil.put("foo", JSONFactoryUtil.createJSONObject())
-			).build());
-		Assert.assertEquals(
-			"/o/app/bar/{userId}/endpoint",
-			new FDSAPIURLBuilder(
-				_fdsAPIURLResolverRegistry, _httpServletRequest, "/app",
-				"/{foo}/{userId}/endpoint", "schema"
-			).setTokenResolutions(
-				JSONUtil.put("userId", JSONFactoryUtil.createJSONObject())
-			).build());
-
-		serviceRegistration1.unregister();
 	}
 
 	private ServiceRegistration<FDSAPIURLResolver> _registerFDSAPIURLResolver(

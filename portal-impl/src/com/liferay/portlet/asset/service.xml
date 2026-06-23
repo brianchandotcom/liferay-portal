@@ -370,6 +370,7 @@
 		<exception>DuplicateVocabulary</exception>
 		<exception>DuplicateVocabularyExternalReferenceCode</exception>
 		<exception>InvalidAssetCategory</exception>
+		<exception>SystemVocabulary</exception>
 		<exception>VocabularyExternalReferenceCode</exception>
 		<exception>VocabularyName</exception>
 		<exception>VocabularyVisibilityType</exception>

@@ -114,10 +114,13 @@ public class ClientExtension {
 		String pathSuffix = StringUtil.suffixIfNotBlank(
 			projectName, virtualInstanceId);
 
+		String webContextPath = (String)typeSettings.getOrDefault(
+			"webContextPath", "/" + pathSuffix);
+
 		configMap.put(
 			"baseURL",
 			typeSettings.getOrDefault(
-				"baseURL", "${portalURL}/o/" + pathSuffix));
+				"baseURL", "${portalURL}/o/" + webContextPath));
 
 		configMap.put("buildTimestamp", System.currentTimeMillis());
 		configMap.put("description", description);
@@ -131,7 +134,7 @@ public class ClientExtension {
 		configMap.put("type", type);
 		configMap.put(
 			"webContextPath",
-			typeSettings.getOrDefault("webContextPath", "/" + pathSuffix));
+			webContextPath);
 
 		if (!pid.contains("CETConfiguration")) {
 			configMap.putAll(typeSettings);

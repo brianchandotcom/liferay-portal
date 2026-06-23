@@ -38,7 +38,6 @@ const AddPropertyForm = ({
 	onSubmit,
 	tabsIList = new List()
 }) => {
-	const _formRef = useRef();
 	const _formSelectFieldInputRef = useRef();
 
 	const [showBin, setShowBin] = useState(false);
@@ -47,13 +46,10 @@ const AddPropertyForm = ({
 		_formSelectFieldInputRef.current.focus();
 	};
 
-	const handleSubmit = ({
-		numberOfBins,
-		property: {context, id, rawType},
-		title
-	}) => {
-		const {setSubmitting} = _formRef.current;
-
+	const handleSubmit = (
+		{numberOfBins, property: {context, id, rawType}, title},
+		{setSubmitting}
+	) => {
 		onSubmit(
 			DistributionTab({
 				context,
@@ -123,7 +119,6 @@ const AddPropertyForm = ({
 							title: ''
 						}}
 						onSubmit={handleSubmit}
-						ref={_formRef}
 					>
 						{({handleSubmit, isSubmitting, isValid}) => (
 							<Form.Form

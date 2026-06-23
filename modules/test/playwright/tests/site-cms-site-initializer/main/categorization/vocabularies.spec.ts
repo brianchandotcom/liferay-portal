@@ -44,6 +44,17 @@ test.afterEach(async ({vocabulariesPage}) => {
 	createdVocabularyNames.length = 0;
 });
 
+const systemVocabularyTest = mergeTests(
+	categorizationPagesTest,
+	cmsPagesTest,
+	dataApiHelpersTest,
+	featureFlagsTest({
+		'LPD-17564': {enabled: true},
+		'LPD-86291': {enabled: true},
+	}),
+	loginTest()
+);
+
 const createScopedVocabularyAndContent = async ({
 	apiHelpers,
 	assetLibraries,
@@ -755,3 +766,133 @@ test(
 		});
 	}
 );
+
+systemVocabularyTest.describe('System vocabulary tests', () => {
+	let systemVocabularyId: number | undefined;
+	let systemVocabularyName: string;
+
+	systemVocabularyTest.beforeEach(
+		'Create a system vocabulary via API',
+		async ({apiHelpers}) => {
+			systemVocabularyName = getRandomString();
+
+			const siteId = await apiHelpers.headlessAdminUser
+				.getSiteByFriendlyUrlPath('cms')
+				.then((response) => response.id);
+
+			systemVocabularyId = await apiHelpers.headlessAdminTaxonomy
+				.postSiteTaxonomyVocabulary({
+					assetLibraries: [{id: -1}],
+					assetTypes: [
+						{
+							required: true,
+							subtype: 'AllAssetSubtypes',
+							type: 'AllAssetTypes',
+						},
+					],
+					name: systemVocabularyName,
+					siteId,
+					system: true,
+					visibilityType: 'PUBLIC',
+				})
+				.then((response) => response.id);
+		}
+	);
+
+	systemVocabularyTest.afterEach(async ({apiHelpers}) => {
+		if (systemVocabularyId === undefined) {
+			return;
+		}
+
+		// A system vocabulary cannot be deleted while LPD-86291 is enabled, so
+		// disable it before cleaning up.
+
+		await apiHelpers.featureFlag.updateFeatureFlag('LPD-86291', false);
+
+		await apiHelpers.headlessAdminTaxonomy.deleteTaxonomyVocabulary(
+			systemVocabularyId
+		);
+
+		systemVocabularyId = undefined;
+	});
+
+	systemVocabularyTest(
+		'Hide the delete action for a system vocabulary',
+		{tag: '@LPD-93225'},
+		async ({vocabulariesPage}) => {
+			await vocabulariesPage.goto();
+
+			// The delete action is not offered for a system vocabulary
+
+			await vocabulariesPage.expectItemActionHidden({
+				action: 'Delete',
+				filter: systemVocabularyName,
+			});
+		}
+	);
+
+	systemVocabularyTest(
+		'Lock the protected fields and hide the asset types tab when editing a system vocabulary',
+		{tag: '@LPD-93225'},
+		async ({editVocabularyPage, page, vocabulariesPage}) => {
+			await vocabulariesPage.goto();
+
+			// Open the system vocabulary edit page
+
+			await page.getByRole('link', {name: systemVocabularyName}).click();
+
+			await expect(
+				page.getByText(`Edit ${systemVocabularyName}`)
+			).toBeVisible();
+
+			// Name, external reference code and description cannot be edited
+
+			await expect(editVocabularyPage.nameInput).toBeDisabled();
+			await expect(
+				editVocabularyPage.externalReferenceCodeInput
+			).toBeDisabled();
+			await expect(editVocabularyPage.descriptionInput).toBeDisabled();
+
+			// The spaces the vocabulary is available in cannot be changed
+
+			await expect(editVocabularyPage.spaceCheckbox).toBeDisabled();
+
+			// Allowing multiple categories remains editable
+
+			await expect(editVocabularyPage.multiSelectToggle).toBeEnabled();
+
+			// The associated asset types tab is not available
+
+			await expect(editVocabularyPage.assetTypesButton).toBeHidden();
+		}
+	);
+
+	systemVocabularyTest(
+		'Add a category to a system vocabulary',
+		{tag: '@LPD-93225'},
+		async ({categoriesPage, editCategoryPage, page, vocabulariesPage}) => {
+			await vocabulariesPage.goto();
+
+			// Categories can still be added to a system vocabulary
+
+			await vocabulariesPage.execItemAction({
+				action: 'Add Category',
+				filter: systemVocabularyName,
+			});
+
+			await expect(page.getByText('Basic Info')).toBeVisible();
+
+			const categoryName = getRandomString();
+
+			await editCategoryPage.fillName(categoryName);
+			await editCategoryPage.clickSave();
+
+			await categoriesPage.assertBreadcrumbItemText(
+				1,
+				systemVocabularyName
+			);
+
+			await expect(categoriesPage.getItem(categoryName)).toBeVisible();
+		}
+	);
+});

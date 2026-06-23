@@ -170,8 +170,7 @@ public class PerformanceMetricResourceTest
 
 			String location = recordingMockHttp.getLocation();
 
-			_assertParameter(
-				metricType, "assetSummaryMetricTypeString", location);
+			_assertParameter(metricType, "assetSummaryMetricType", location);
 			_assertParameter(
 				String.valueOf(dataSourceId), "dataSourceId", location);
 			_assertParameter(
@@ -289,8 +288,7 @@ public class PerformanceMetricResourceTest
 
 			String location = recordingMockHttp.getLocation();
 
-			_assertParameter(
-				metricType, "assetSummaryMetricTypeString", location);
+			_assertParameter(metricType, "assetSummaryMetricType", location);
 			_assertParameter(
 				String.valueOf(dataSourceId), "dataSourceId", location);
 			_assertParameter(

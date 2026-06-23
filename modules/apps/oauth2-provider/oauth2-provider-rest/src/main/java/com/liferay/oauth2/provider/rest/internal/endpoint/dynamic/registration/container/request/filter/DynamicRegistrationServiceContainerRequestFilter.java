@@ -66,6 +66,7 @@ import org.apache.cxf.message.Message;
 import org.apache.cxf.rs.security.jose.jws.JwsJwtCompactConsumer;
 import org.apache.cxf.rs.security.jose.jwt.JwtClaims;
 import org.apache.cxf.rs.security.jose.jwt.JwtToken;
+import org.apache.cxf.rs.security.oauth2.utils.OAuthConstants;
 import org.apache.cxf.transport.http.AbstractHTTPDestination;
 
 import org.osgi.service.component.annotations.Component;
@@ -73,7 +74,6 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jorge García Jiménez
- * @author Rafael Praxedes
  */
 @Component(
 	property = {
@@ -115,7 +115,6 @@ public class DynamicRegistrationServiceContainerRequestFilter
 
 		boolean authenticatedRegistration = StringUtil.startsWith(
 			httpServletRequest.getHeader("Authorization"), "Bearer ");
-
 		User user = null;
 
 		try {
@@ -184,15 +183,15 @@ public class DynamicRegistrationServiceContainerRequestFilter
 				"Bearer token authorization failed", httpServletRequest,
 				OAuth2ProviderRESTEndpointConstants.
 					DYNAMIC_REGISTRATION_MODE_AUTHENTICATED);
-
-			return;
 		}
-
-		_auditFailure(
-			clientHost, companyId,
-			OAuth2ProviderRESTEndpointConstants.ERROR_SERVER_ERROR,
-			"Open registration authorization failed", httpServletRequest,
-			OAuth2ProviderRESTEndpointConstants.DYNAMIC_REGISTRATION_MODE_OPEN);
+		else {
+			_auditFailure(
+				clientHost, companyId,
+				OAuth2ProviderRESTEndpointConstants.ERROR_SERVER_ERROR,
+				"Open registration authorization failed", httpServletRequest,
+				OAuth2ProviderRESTEndpointConstants.
+					DYNAMIC_REGISTRATION_MODE_OPEN);
+		}
 	}
 
 	private void _auditFailure(
@@ -241,19 +240,16 @@ public class DynamicRegistrationServiceContainerRequestFilter
 
 		long currentTime = TimeUnit.SECONDS.convert(
 			System.currentTimeMillis(), TimeUnit.MILLISECONDS);
-
 		long expirationTime = GetterUtil.getLong(jwtToken.getClaim("exp"));
 
 		if ((expirationTime > 0) && (currentTime > expirationTime)) {
 			throw ExceptionUtils.toNotAuthorizedException(null, null);
 		}
 
+		String clientId = GetterUtil.getString(jwtToken.getClaim("client_id"));
 		User user = _userLocalService.getUser(
 			GetterUtil.getLong(jwtToken.getClaim("sub")));
-
 		OAuth2Application oAuth2Application = null;
-
-		String clientId = GetterUtil.getString(jwtToken.getClaim("client_id"));
 
 		if (!Validator.isBlank(clientId)) {
 			oAuth2Application =
@@ -297,8 +293,8 @@ public class DynamicRegistrationServiceContainerRequestFilter
 			OAuth2ApplicationConstants.NAME_DYNAMIC_REGISTRATOR,
 			oAuth2Application.getName());
 
-		if (StringUtil.equalsIgnoreCase(method, "POST") &&
-			!dynamicRegistrator) {
+		if (!dynamicRegistrator &&
+			StringUtil.equalsIgnoreCase(method, "POST")) {
 
 			throw ExceptionUtils.toNotAuthorizedException(null, null);
 		}
@@ -565,13 +561,14 @@ public class DynamicRegistrationServiceContainerRequestFilter
 					"host: " + clientHost;
 
 			_auditFailure(
-				clientHost, companyId, "access_denied", message,
+				clientHost, companyId, OAuthConstants.ACCESS_DENIED, message,
 				httpServletRequest,
 				OAuth2ProviderRESTEndpointConstants.
 					DYNAMIC_REGISTRATION_MODE_OPEN);
 
 			OAuth2ErrorUtil.reportInvalidRequestError(
-				message, "access_denied", Response.Status.FORBIDDEN);
+				message, OAuthConstants.ACCESS_DENIED,
+				Response.Status.FORBIDDEN);
 		}
 	}
 

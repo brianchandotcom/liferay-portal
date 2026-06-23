@@ -330,6 +330,16 @@ public class TaxonomyVocabularySerDes {
 			sb.append(taxonomyVocabulary.getSiteId());
 		}
 
+		if (taxonomyVocabulary.getSystem() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"system\": ");
+
+			sb.append(taxonomyVocabulary.getSystem());
+		}
+
 		if (taxonomyVocabulary.getUuid() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -556,6 +566,13 @@ public class TaxonomyVocabularySerDes {
 			map.put("siteId", String.valueOf(taxonomyVocabulary.getSiteId()));
 		}
 
+		if (taxonomyVocabulary.getSystem() == null) {
+			map.put("system", null);
+		}
+		else {
+			map.put("system", String.valueOf(taxonomyVocabulary.getSystem()));
+		}
+
 		if (taxonomyVocabulary.getUuid() == null) {
 			map.put("uuid", null);
 		}
@@ -662,6 +679,9 @@ public class TaxonomyVocabularySerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "siteId")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "system")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "uuid")) {
@@ -837,6 +857,11 @@ public class TaxonomyVocabularySerDes {
 						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "system")) {
+				if (jsonParserFieldValue != null) {
+					taxonomyVocabulary.setSystem((Boolean)jsonParserFieldValue);
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "uuid")) {
 				if (jsonParserFieldValue != null) {
 					taxonomyVocabulary.setUuid((String)jsonParserFieldValue);
@@ -937,4 +962,4 @@ public class TaxonomyVocabularySerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1582454682
+// LIFERAY-REST-BUILDER-HASH:1855989974

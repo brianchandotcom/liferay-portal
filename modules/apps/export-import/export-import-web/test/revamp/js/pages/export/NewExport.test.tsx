@@ -608,4 +608,35 @@ describe('NewExport', () => {
 			expect(handlerNames).not.toContain('COMMENTS');
 		});
 	});
+
+	it('hides a nested control when its parent control is unchecked', async () => {
+		renderComponent();
+
+		await screen.findByText('loaded');
+
+		await expandSection('Content & Data');
+
+		await userEvent.click(
+			screen.getAllByRole('button', {name: 'show-all-x'})[0]
+		);
+
+		const referencedContentCheckbox = screen.getByRole('checkbox', {
+			name: 'Referenced Content',
+		}) as HTMLInputElement;
+
+		if (!referencedContentCheckbox.checked) {
+			await userEvent.click(referencedContentCheckbox);
+		}
+
+		expect(
+			screen.getByText('Referenced Content Behavior')
+		).toBeInTheDocument();
+
+		await userEvent.click(referencedContentCheckbox);
+
+		expect(referencedContentCheckbox).not.toBeChecked();
+		expect(
+			screen.queryByText('Referenced Content Behavior')
+		).not.toBeInTheDocument();
+	});
 });

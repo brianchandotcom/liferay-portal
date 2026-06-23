@@ -177,6 +177,40 @@ export class EditOrganizationPage {
 		return name;
 	}
 
+	async linkSiteTemplate(
+		organizationName: string,
+		siteTemplateName: string,
+		{propagationEnabled = false}: {propagationEnabled?: boolean} = {}
+	) {
+		await expect(async () => {
+			await (
+				await this.usersAndOrganizationsPage.organizationsTable.rowActions(
+					organizationName
+				)
+			).click();
+
+			await expect(this.organizationEditMenuItem).toBeVisible();
+		}).toPass({timeout: 5000});
+
+		await this.organizationEditMenuItem.click();
+
+		await this.organizationSiteLink.click();
+
+		await this.createSiteToggle.setChecked(true, {force: true});
+
+		await this.page
+			.locator('select[name$="publicLayoutSetPrototypeId"]')
+			.selectOption({label: siteTemplateName});
+
+		await this.page
+			.locator('input[name$="publicLayoutSetPrototypeLinkEnabled"]')
+			.setChecked(propagationEnabled, {force: true});
+
+		await this.organizationSiteSaveButton.click();
+
+		await waitForAlert(this.page);
+	}
+
 	async addTag(tagName: string) {
 		await this.tagsInput.fill(tagName);
 		await this.tagsInput.press('Enter');

@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -106,9 +106,7 @@ function SaveSnapshotModalComponent({
 		);
 
 		if (duplicated) {
-			return Liferay.Language.get(
-				'a-view-with-this-name-already-exists'
-			);
+			return Liferay.Language.get('a-view-with-this-name-already-exists');
 		}
 
 		return null;
@@ -419,8 +417,7 @@ const SnapshotsControls = () => {
 					closeModal={closeModal}
 					existingLabels={ownedSnapshotItems
 						.filter(
-							(item: ISnapshot) =>
-								item.erc !== activeSnapshot.erc
+							(item: ISnapshot) => item.erc !== activeSnapshot.erc
 						)
 						.map((item: ISnapshot) => item.label)}
 					initialLabel={initialLabel}

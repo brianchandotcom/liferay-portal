@@ -164,6 +164,11 @@ public abstract class BaseWarehouseOrderTypeResourceImpl
 				name = "externalReferenceCode"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
+				description = "Comma-separated list of nested fields to embed in each returned resource. Each value names a relationship exposed on the resource; when omitted, those relationships are not expanded inline.",
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "nestedFields"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "page"
 			),
@@ -213,6 +218,11 @@ public abstract class BaseWarehouseOrderTypeResourceImpl
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "filter"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				description = "Comma-separated list of nested fields to embed in each returned resource. Each value names a relationship exposed on the resource; when omitted, those relationships are not expanded inline.",
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "nestedFields"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
@@ -1098,4 +1108,4 @@ public abstract class BaseWarehouseOrderTypeResourceImpl
 		LogFactoryUtil.getLog(BaseWarehouseOrderTypeResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:232116114
+// LIFERAY-REST-BUILDER-HASH:2145657998

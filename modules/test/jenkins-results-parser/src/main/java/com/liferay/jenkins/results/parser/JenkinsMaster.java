@@ -1063,7 +1063,12 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 		_buildURLs.addAll(buildURLs);
 	}
 
-	public static class QueueItem {
+	public static class QueueItem implements Comparable<QueueItem> {
+
+		@Override
+		public int compareTo(QueueItem queueItem) {
+			return Long.compare(getInQueueSince(), queueItem.getInQueueSince());
+		}
 
 		public long getId() {
 			return _jsonObject.getLong("id");

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.ElasticsearchAggregationVisitor;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.ElasticsearchPipelineAggregationVisitor;
 import com.liferay.portal.search.elasticsearch8.internal.facet.FacetTranslator;
@@ -235,7 +236,10 @@ public class CommonSearchRequestBuilderAssembler {
 				additiveComplexQueryParts.add(complexQueryPart);
 			}
 			else {
-				if (complexQueryPart.isRootClause() && query1.isBool()) {
+				if (complexQueryPart.isRootClause() &&
+					Validator.isBlank(complexQueryPart.getParent()) &&
+					query1.isBool()) {
+
 					query1 = _combine(query1.bool(), complexQueryPart);
 				}
 				else {

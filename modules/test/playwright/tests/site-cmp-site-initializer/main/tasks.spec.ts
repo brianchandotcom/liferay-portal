@@ -25,6 +25,7 @@ const test = mergeTests(
 	featureFlagsTest({
 		'LPD-58677': {enabled: true},
 		'LPD-69885': {enabled: true},
+		'LPD-74152': {enabled: true},
 	}),
 	globalMenuPagesTest,
 	loginTest(),
@@ -467,6 +468,75 @@ test(
 					})
 				).toBeVisible();
 			}
+		});
+	}
+);
+
+test(
+	'Create a task from the calendar by clicking a day',
+	{tag: ['@LPD-93258']},
+	async ({page, projectPage, projectsPage, tasksPage}) => {
+		const taskTitle = getRandomString();
+
+		const targetDate = new Date();
+
+		targetDate.setDate(15);
+
+		const dayCell = page.locator(
+			`[data-date="${toDateString(targetDate)}"]`
+		);
+
+		await test.step('View the project and open its calendar view', async () => {
+			await projectsPage.goto();
+
+			await projectsPage.getProject(project.title).click();
+
+			await projectPage.tasksTab.click();
+
+			await tasksPage.tableViewButton.click();
+
+			await tasksPage.calendarView.viewOption.click();
+
+			await expect(tasksPage.calendarView.title).toBeVisible();
+		});
+
+		await test.step('Click the add task button to open the create task modal', async () => {
+			const addTaskButton = dayCell.getByLabel('Add Task');
+
+			await dayCell.hover();
+
+			await clickAndExpectToBeVisible({
+				target: tasksPage.titleInput,
+				trigger: addTaskButton,
+			});
+		});
+
+		await test.step('The clicked day is pre-filled as the due date', async () => {
+			const locale = await page.evaluate(() =>
+				Liferay.ThemeDisplay.getBCP47LanguageId()
+			);
+
+			const expectedDueDate = targetDate.toLocaleDateString(locale, {
+				day: '2-digit',
+				month: '2-digit',
+				year: 'numeric',
+			});
+
+			await expect(page.getByLabel('Due Date')).toHaveValue(
+				expectedDueDate
+			);
+		});
+
+		await test.step('Fill in the title and save', async () => {
+			await tasksPage.titleInput.fill(taskTitle);
+
+			await tasksPage.saveButton.click();
+		});
+
+		await test.step('The new task appears on the clicked day', async () => {
+			await expect(
+				dayCell.getByText(taskTitle, {exact: true})
+			).toBeVisible();
 		});
 	}
 );

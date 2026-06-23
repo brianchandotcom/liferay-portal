@@ -52,17 +52,17 @@ public class FieldTest {
 		_testToStringDefaultValue(maps.toArray());
 	}
 
-	private List<Map<String, String>> _createMaps() {
-		return Arrays.asList(
-			_createMap("label1", "value1"), _createMap("label2", "value2"));
-	}
-
 	private Map<String, String> _createMap(String label, String value) {
 		return HashMapBuilder.put(
 			"label", label
 		).put(
 			"value", value
 		).build();
+	}
+
+	private List<Map<String, String>> _createMaps() {
+		return Arrays.asList(
+			_createMap("label1", "value1"), _createMap("label2", "value2"));
 	}
 
 	private void _testEscape(String escaped, String unescaped) {

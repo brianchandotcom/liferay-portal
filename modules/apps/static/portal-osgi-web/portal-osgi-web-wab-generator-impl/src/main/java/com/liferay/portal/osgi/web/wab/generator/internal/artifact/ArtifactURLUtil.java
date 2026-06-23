@@ -126,6 +126,10 @@ public class ArtifactURLUtil {
 		for (String key : jsonObject.keySet()) {
 			JSONObject configurationJSONObject = jsonObject.getJSONObject(key);
 
+			if (configurationJSONObject == null) {
+				continue;
+			}
+
 			String webContextPath = configurationJSONObject.getString(
 				"webContextPath");
 

@@ -304,7 +304,7 @@ public class ObjectEntryModelDocumentContributor
 					StringUtil.split(valueString, StringPool.COMMA_AND_SPACE));
 
 				_appendToContent(
-					objectContentHelper, locale, fieldName, valueString);
+					locale, fieldName, textEmbeddingContentHelper, valueString);
 
 				return;
 			}

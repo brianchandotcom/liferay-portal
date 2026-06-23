@@ -62,9 +62,12 @@ jest.mock('@liferay/map-openstreetmap', () => ({
 			on: jest.fn((eventName, callback) => {
 				mockInstance._listeners[eventName] = callback;
 
-				return {removeListener: jest.fn()};
+				return {
+					removeListener: jest.fn(() => {
+						delete mockInstance._listeners[eventName];
+					}),
+				};
 			}),
-			removeAllListeners: jest.fn(),
 			setCenter: jest.fn(),
 		};
 

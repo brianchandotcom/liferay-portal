@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 
 import SpaceService from '../../../common/services/SpaceService';
 import ScopeMultiSelect, {ScopeItem as SpaceItem} from './ScopeMultiSelect';
@@ -44,6 +44,20 @@ export default function CategorizationSpaces({
 		loadSpaces();
 	}, []);
 
+	const preselectedItems = useMemo(() => {
+		if (
+			assetLibraries?.some((assetLibrary: any) => assetLibrary.id === -1)
+		) {
+			return [];
+		}
+
+		const scopeKeys = assetLibraries?.map(
+			(assetLibrary: any) => assetLibrary.scopeKey
+		);
+
+		return sourceItems.filter((item) => scopeKeys?.includes(item.scopeKey));
+	}, [assetLibraries, sourceItems]);
+
 	return (
 		<ScopeMultiSelect<SpaceItem>
 			error={spaceInputError}
@@ -63,7 +77,7 @@ export default function CategorizationSpaces({
 			onChange={setSpaceChange}
 			onError={setSpaceInputError}
 			onSelectionChange={setSelectedSpaces}
-			preselectedItems={assetLibraries}
+			preselectedItems={preselectedItems}
 			sourceItems={sourceItems}
 		/>
 	);

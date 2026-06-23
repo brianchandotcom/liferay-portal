@@ -83,7 +83,7 @@ export async function createIndividuals({
 }
 
 export function generateIndividual({name}: {name: string}): Individual {
-	const id = getRandomString();
+	const id = getRandomString().replace(/-/g, '');
 
 	return {
 		id,

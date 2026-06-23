@@ -375,12 +375,15 @@ public class TaxonomyCategoryResourceImpl
 				BooleanFilter booleanFilter =
 					booleanQuery.getPreBooleanFilter();
 
-				if (depotEntry.getType() == DepotConstants.TYPE_SPACE) {
+				if ((depotEntry.getType() == DepotConstants.TYPE_PROJECT) ||
+					(depotEntry.getType() == DepotConstants.TYPE_SPACE)) {
+
 					TermsFilter assetVocabularyIdTermsFilter = new TermsFilter(
 						Field.ASSET_VOCABULARY_ID);
 
 					assetVocabularyIdTermsFilter.addValues(
-						_getAssetVocabularyIds(depotEntry.getGroupId()));
+						_getAssetVocabularyIds(
+							depotEntry.getGroupId(), depotEntry.getType()));
 
 					booleanFilter.add(
 						assetVocabularyIdTermsFilter, BooleanClauseOccur.MUST);
@@ -401,6 +404,7 @@ public class TaxonomyCategoryResourceImpl
 				searchContext.setCompanyId(contextCompany.getCompanyId());
 
 				if ((depotEntry != null) &&
+					(depotEntry.getType() != DepotConstants.TYPE_PROJECT) &&
 					(depotEntry.getType() != DepotConstants.TYPE_SPACE)) {
 
 					searchContext.setGroupIds(new long[] {assetLibraryId});
@@ -750,17 +754,18 @@ public class TaxonomyCategoryResourceImpl
 		return assetCategory.getVocabularyId();
 	}
 
-	private String[] _getAssetVocabularyIds(long groupId) {
+	private String[] _getAssetVocabularyIds(long groupId, int depotEntryType) {
 		List<AssetVocabularyGroupRel> assetVocabularyGroupRels =
 			new ArrayList<>();
 
 		assetVocabularyGroupRels.addAll(
 			_assetVocabularyGroupRelLocalService.
-				getAssetVocabularyGroupRelsByGroupId(groupId));
+				getAssetVocabularyGroupRelsByGroupIdAndDepotEntryType(
+					groupId, depotEntryType));
 		assetVocabularyGroupRels.addAll(
 			_assetVocabularyGroupRelLocalService.
-				getAssetVocabularyGroupRelsByGroupId(
-					GroupConstants.GROUP_ID_ALL));
+				getAssetVocabularyGroupRelsByGroupIdAndDepotEntryType(
+					GroupConstants.GROUP_ID_ALL, depotEntryType));
 
 		return transformToArray(
 			assetVocabularyGroupRels,

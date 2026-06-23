@@ -22,6 +22,7 @@ import {
 	viewBreakdownRechartsData,
 } from './utils/distribution';
 import {createIndividuals, generateIndividual} from './utils/individuals';
+import {waitForLoading} from './utils/loading';
 import {Nanites, runNanites} from './utils/nanites';
 import {
 	ACPage,
@@ -35,7 +36,6 @@ import {
 	viewNameListInOrder,
 	viewPaginationResults,
 } from './utils/utils';
-import {waitForLoading} from "./utils/loading";
 
 export const test = mergeTests(
 	apiHelpersTest,

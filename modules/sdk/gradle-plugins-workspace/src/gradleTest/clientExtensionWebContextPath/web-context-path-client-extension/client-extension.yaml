@@ -1,0 +1,3 @@
+web-context-path-client-extension:
+    type: customElement
+    webContextPath: /my-custom-path

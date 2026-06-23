@@ -72,7 +72,7 @@ export class TasksPage {
 			}),
 			title: page.getByTestId('calendarTitle'),
 			todayButton: page.getByRole('button', {name: 'Today'}),
-			unscheduledTasksButton: page.getByText(/\d+ Unscheduled Tasks/),
+			unscheduledTasksButton: page.getByText(/\d+ Unscheduled Tasks?/),
 			unscheduledTasksPanel: page.getByTestId(
 				'calendarUnscheduledTasksPanel'
 			),

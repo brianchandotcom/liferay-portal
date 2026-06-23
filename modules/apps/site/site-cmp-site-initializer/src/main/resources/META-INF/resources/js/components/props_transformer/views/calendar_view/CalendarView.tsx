@@ -142,9 +142,14 @@ export default function CalendarView({items}: CalendarViewProps) {
 								<ClayIcon symbol="warning-full" />
 							</span>
 
-							{sub(Liferay.Language.get('x-unscheduled-tasks'), [
-								unscheduledTasks.length,
-							])}
+							{sub(
+								unscheduledTasks.length === 1
+									? Liferay.Language.get('x-unscheduled-task')
+									: Liferay.Language.get(
+											'x-unscheduled-tasks'
+										),
+								[unscheduledTasks.length]
+							)}
 						</ClayButton>
 					)}
 				</ClayLayout.Col>

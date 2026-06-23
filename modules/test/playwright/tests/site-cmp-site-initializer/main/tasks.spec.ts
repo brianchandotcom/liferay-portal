@@ -704,7 +704,7 @@ test(
 			await expect(calendarView.unscheduledTasksButton).toBeVisible();
 
 			await expect(calendarView.unscheduledTasksButton).toContainText(
-				/\d+ Unscheduled Tasks/
+				/\d+ Unscheduled Tasks?/
 			);
 		});
 

@@ -7,6 +7,7 @@
 			import {AssetType} from './AssetType';
 			import {Creator} from './Creator';
 			import {Permission} from './Permission';
+			import {Project} from './Project';
 
 /**
  * @author Javier Gamarra
@@ -34,6 +35,7 @@
 			"name_i18n"?: {[key: string]: string;};
 			"numberOfTaxonomyCategories"?: number;
 			"permissions"?: Array<Permission>;
+			"projects"?: Array<Project>;
 			"siteExternalReferenceCode"?: string;
 			"siteId"?: number;
 			"system"?: boolean;
@@ -132,6 +134,11 @@
 			baseName: "permissions",
 			name: "permissions",
 			type: "Array<Permission>",
+		},
+		{
+			baseName: "projects",
+			name: "projects",
+			type: "Array<Project>",
 		},
 		{
 			baseName: "siteExternalReferenceCode",

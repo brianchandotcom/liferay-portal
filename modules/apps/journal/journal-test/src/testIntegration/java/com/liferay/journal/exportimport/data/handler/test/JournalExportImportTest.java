@@ -565,10 +565,6 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 			ExportImportConfigurationParameterMapFactoryUtil.
 				buildParameterMap());
 
-		Layout liveLayout = LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
-			stagingLayout.getUuid(), _liveGroup.getGroupId(),
-			stagingLayout.isPrivateLayout());
-
 		DataDefinitionResource dataDefinitionResource =
 			_dataDefinitionResourceFactory.create(
 			).user(
@@ -607,6 +603,10 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 				_getArticleReferenceJSONObject(
 					article2
 				).toString()));
+
+		Layout liveLayout = LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
+			stagingLayout.getUuid(), _liveGroup.getGroupId(),
+			stagingLayout.isPrivateLayout());
 
 		StagingUtil.publishPortlet(
 			TestPropsValues.getUserId(), stagingGroup.getGroupId(),

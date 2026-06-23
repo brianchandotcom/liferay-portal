@@ -97,20 +97,11 @@ export default function ScopeMultiSelect<T extends ScopeItem>({
 
 	useEffect(() => {
 		if (onChange) {
-			if (allScopesChecked) {
-				onChange(false);
-			}
-			else if (
-				initialSelectedValues.some(
-					(value) =>
-						!selectedItems.find((item) => item.value === value)
-				)
-			) {
-				onChange(true);
-			}
-			else {
-				onChange(false);
-			}
+			const initialValueRemoved = initialSelectedValues.some(
+				(value) => !selectedItems.some((item) => item.value === value)
+			);
+
+			onChange(!allScopesChecked && initialValueRemoved);
 		}
 
 		if (allScopesChecked || selectedItems.length) {

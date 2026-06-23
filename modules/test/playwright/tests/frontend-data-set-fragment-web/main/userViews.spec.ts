@@ -308,6 +308,55 @@ test(
 			page.keyboard.press('Escape');
 		});
 
+		await test.step('Cannot save a view with a blank or duplicate name', async () => {
+			await dataSetFragmentPage.userViewsActionsButton.click();
+
+			await userViewsActionsDropdown
+				.filter({has: page.getByRole('menu')})
+				.waitFor();
+
+			await userViewsActionsDropdown
+				.getByRole('menuitem', {name: 'Save View As...'})
+				.click();
+
+			await expect(
+				dataSetFragmentPage.userViewsSaveModal
+			).toBeInViewport();
+
+			const nameInput =
+				dataSetFragmentPage.userViewsSaveModal.getByLabel(
+					'NameRequired'
+				);
+			const saveButton = dataSetFragmentPage.userViewsSaveModal.getByRole(
+				'button',
+				{name: 'Save'}
+			);
+
+			await nameInput.fill('   ');
+
+			await expect(saveButton).toBeDisabled();
+
+			await nameInput.fill(userView1Name.toUpperCase());
+
+			await expect(saveButton).toBeEnabled();
+
+			await saveButton.click();
+
+			await expect(
+				dataSetFragmentPage.userViewsSaveModal.getByText(
+					'A view with this name already exists.'
+				)
+			).toBeVisible();
+
+			await dataSetFragmentPage.userViewsSaveModal
+				.getByRole('button', {name: 'Cancel'})
+				.click();
+
+			await expect(
+				dataSetFragmentPage.userViewsSaveModal
+			).not.toBeInViewport();
+		});
+
 		await test.step('Confirm that changes in an user view does not affect Default View', async () => {
 			await expect(
 				dataSetFragmentPage.userViewsSelectorButton

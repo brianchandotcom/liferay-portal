@@ -180,6 +180,34 @@ components:
             required:
                 -   name
             type: object
+        Project:
+            properties:
+                externalReferenceCode:
+                    description:
+                        The project's external reference code.
+                    type: string
+                id:
+                    description:
+                        The project's site ID.
+                    format: int64
+                    type: integer
+                name:
+                    description:
+                        The project's name.
+                    readOnly: true
+                    type: string
+                name_i18n:
+                    additionalProperties:
+                        type: string
+                    description:
+                        The localized project's name.
+                    readOnly: true
+                    type: object
+                scopeKey:
+                    description:
+                        The project's scope key.
+                    type: string
+            type: object
         TaxonomyCategory:
             description:
                 Represents a category, which is a hierarchical classification that can be associated with particular asset types. Properties follow the [category](https://schema.org/category) specification.
@@ -449,6 +477,12 @@ components:
                 permissions:
                     items:
                         type: permission
+                    type: array
+                projects:
+                    description:
+                        A list of projects that this vocabulary is associated with.
+                    items:
+                        $ref: "#/components/schemas/Project"
                     type: array
                 siteExternalReferenceCode:
                     description:

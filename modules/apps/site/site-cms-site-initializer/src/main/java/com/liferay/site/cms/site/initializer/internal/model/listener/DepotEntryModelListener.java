@@ -30,29 +30,32 @@ public class DepotEntryModelListener extends BaseModelListener<DepotEntry> {
 		throws ModelListenerException {
 
 		try {
-			if (!(depotEntry.getType() == DepotConstants.TYPE_SPACE)) {
+			if ((depotEntry.getType() != DepotConstants.TYPE_PROJECT) &&
+				(depotEntry.getType() != DepotConstants.TYPE_SPACE)) {
+
 				return;
 			}
 
 			List<AssetVocabularyGroupRel> assetVocabularyGroupRels =
 				_assetVocabularyGroupRelLocalService.
-					getAssetVocabularyGroupRelsByGroupId(
-						depotEntry.getGroupId());
+					getAssetVocabularyGroupRelsByGroupIdAndDepotEntryType(
+						depotEntry.getGroupId(), depotEntry.getType());
 
 			for (AssetVocabularyGroupRel assetVocabularyGroupRel :
 					assetVocabularyGroupRels) {
 
-				long count =
+				List<AssetVocabularyGroupRel> spaceAssetVocabularyGroupRels =
 					_assetVocabularyGroupRelLocalService.
-						getAssetVocabularyGroupRelsCount(
-							assetVocabularyGroupRel.getVocabularyId());
+						getAssetVocabularyGroupRelsByVocabularyIdAndDepotEntryType(
+							assetVocabularyGroupRel.getVocabularyId(),
+							depotEntry.getType());
 
-				if (count == 1) {
+				if (spaceAssetVocabularyGroupRels.size() == 1) {
 					_assetVocabularyGroupRelLocalService.
 						addAssetVocabularyGroupRel(
 							GroupConstants.ANY_PARENT_GROUP_ID,
 							assetVocabularyGroupRel.getVocabularyId(),
-							DepotConstants.TYPE_SPACE);
+							depotEntry.getType());
 				}
 			}
 		}

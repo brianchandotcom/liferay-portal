@@ -47,6 +47,10 @@ public class AssetVocabularyModelListener
 			_assetVocabularyGroupRelLocalService.setAssetVocabularyGroupRels(
 				assetVocabulary.getVocabularyId(),
 				new long[] {GroupConstants.GROUP_ID_ALL},
+				DepotConstants.TYPE_PROJECT);
+			_assetVocabularyGroupRelLocalService.setAssetVocabularyGroupRels(
+				assetVocabulary.getVocabularyId(),
+				new long[] {GroupConstants.GROUP_ID_ALL},
 				DepotConstants.TYPE_SPACE);
 		}
 		catch (Exception exception) {

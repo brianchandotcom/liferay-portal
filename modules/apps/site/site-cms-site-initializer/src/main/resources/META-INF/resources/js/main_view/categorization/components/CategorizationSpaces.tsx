@@ -5,7 +5,6 @@
 
 import React, {useEffect, useState} from 'react';
 
-import SpaceSticker from '../../../common/components/SpaceSticker';
 import SpaceService from '../../../common/services/SpaceService';
 import ScopeMultiSelect, {ScopeItem as SpaceItem} from './ScopeMultiSelect';
 
@@ -65,13 +64,6 @@ export default function CategorizationSpaces({
 			onError={setSpaceInputError}
 			onSelectionChange={setSelectedSpaces}
 			preselectedItems={assetLibraries}
-			renderItem={(item) => (
-				<SpaceSticker
-					displayType={item.displayType}
-					name={item.label}
-					size="sm"
-				/>
-			)}
 			showErrorInitially={checkboxText !== 'vocabulary'}
 			sourceItems={sourceItems}
 		/>

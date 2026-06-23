@@ -9,8 +9,9 @@ import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayMultiSelect from '@clayui/multi-select';
 import {sub} from 'frontend-js-web';
-import React, {ReactNode, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
+import SpaceSticker from '../../../common/components/SpaceSticker';
 import {LogoColor} from '../../../common/types/Space';
 
 export type ScopeItem = {
@@ -39,7 +40,6 @@ export default function ScopeMultiSelect<T extends ScopeItem>({
 	onError,
 	onSelectionChange,
 	preselectedItems,
-	renderItem,
 	showErrorInitially = true,
 	sourceItems,
 }: {
@@ -49,7 +49,6 @@ export default function ScopeMultiSelect<T extends ScopeItem>({
 	onError: (value: string) => void;
 	onSelectionChange: (value: any) => void;
 	preselectedItems?: PreselectedItem[];
-	renderItem: (item: T) => ReactNode;
 	showErrorInitially?: boolean;
 	sourceItems: T[];
 }) {
@@ -174,7 +173,11 @@ export default function ScopeMultiSelect<T extends ScopeItem>({
 							key={item.value}
 							textValue={item.label}
 						>
-							{renderItem(item)}
+							<SpaceSticker
+								displayType={item.displayType}
+								name={item.label}
+								size="sm"
+							/>
 						</ClayMultiSelect.Item>
 					)}
 				</ClayMultiSelect>

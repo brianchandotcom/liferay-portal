@@ -505,12 +505,10 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 				configurationJSONObject);
 		}
 
-		Set<String> autoResolvedTokenNames = _getAutoResolvedTokenNames(
-			externalReferenceCode, httpServletRequest);
-
 		try {
 			JSONArray jsonArray = JSONUtil.toJSONArray(
-				autoResolvedTokenNames,
+				_getAutoResolvedTokenNames(
+					externalReferenceCode, httpServletRequest),
 				autoResolvedTokenName -> autoResolvedTokenName);
 
 			configurationJSONObject.put(

@@ -648,6 +648,36 @@ describe('odata', () => {
 
 			testConversionToAndFrom(testQuery);
 		});
+
+		it('should be able to translate a query string with a backtick in the value to map and back to string', () => {
+			const testQuery = "(givenName eq '`test`')";
+
+			testConversionToAndFrom(testQuery);
+		});
+
+		it('should be able to translate a query string with a caret in the value to map and back to string', () => {
+			const testQuery = "(givenName eq 'te^st')";
+
+			testConversionToAndFrom(testQuery);
+		});
+
+		it('should be able to translate a query string with braces in the value to map and back to string', () => {
+			const testQuery = "(givenName eq '{test}')";
+
+			testConversionToAndFrom(testQuery);
+		});
+
+		it('should be able to translate a query string with a pipe in the value to map and back to string', () => {
+			const testQuery = "(givenName eq 'te|st')";
+
+			testConversionToAndFrom(testQuery);
+		});
+
+		it('should be able to translate a query string with a single quote in the value to map and back to string', () => {
+			const testQuery = "(givenName eq 'O''Brien')";
+
+			testConversionToAndFrom(testQuery);
+		});
 	});
 
 	describe('vocabularies.filterByCount', () => {

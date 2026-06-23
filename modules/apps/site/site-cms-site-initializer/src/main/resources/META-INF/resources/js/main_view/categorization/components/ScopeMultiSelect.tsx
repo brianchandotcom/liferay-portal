@@ -54,7 +54,7 @@ export default function ScopeMultiSelect<T extends ScopeItem>({
 	showErrorInitially?: boolean;
 }) {
 	const [availableItems, setAvailableItems] = useState<T[]>([]);
-	const [allItemsChecked, setAllItemsChecked] = useState(true);
+	const [allScopesChecked, setAllScopesChecked] = useState(true);
 	const [displayError, setDisplayError] = useState(showErrorInitially);
 	const [query, setQuery] = useState('');
 	const [selectedItems, setSelectedItems] = useState<T[]>([]);
@@ -83,12 +83,12 @@ export default function ScopeMultiSelect<T extends ScopeItem>({
 				!preselectedItems.length ||
 				preselectedItems.some((item) => item.id === -1)
 			) {
-				setAllItemsChecked(true);
+				setAllScopesChecked(true);
 
 				setSelectedItems([]);
 			}
 			else if (initialValues) {
-				setAllItemsChecked(false);
+				setAllScopesChecked(false);
 
 				setSelectedItems(
 					items.filter((item) => initialValues.includes(item.value))
@@ -99,7 +99,7 @@ export default function ScopeMultiSelect<T extends ScopeItem>({
 
 	useEffect(() => {
 		if (onChange) {
-			if (allItemsChecked) {
+			if (allScopesChecked) {
 				onChange(false);
 			}
 			else if (
@@ -115,7 +115,7 @@ export default function ScopeMultiSelect<T extends ScopeItem>({
 			}
 		}
 
-		if (allItemsChecked || selectedItems.length) {
+		if (allScopesChecked || selectedItems.length) {
 			onError('');
 		}
 		else {
@@ -127,7 +127,7 @@ export default function ScopeMultiSelect<T extends ScopeItem>({
 			);
 		}
 	}, [
-		allItemsChecked,
+		allScopesChecked,
 		initialSelectedValues,
 		labels.field,
 		onChange,
@@ -139,17 +139,6 @@ export default function ScopeMultiSelect<T extends ScopeItem>({
 		availableItems.filter((availableItem) =>
 			items.some((item) => availableItem.value === item.value)
 		);
-
-	const _handleToggleAllItems = () => {
-		if (!showErrorInitially && allItemsChecked) {
-			setDisplayError(false);
-		}
-
-		setSelectedItems([]);
-		onSelectionChange([]);
-		setQuery('');
-		setAllItemsChecked((checked) => !checked);
-	};
 
 	const _handleChangeItems = (items: T[]) => {
 		setDisplayError(true);
@@ -171,7 +160,7 @@ export default function ScopeMultiSelect<T extends ScopeItem>({
 			<div className={displayError && error ? 'has-error' : ''}>
 				<ClayMultiSelect
 					aria-label={labels.ariaLabel}
-					disabled={allItemsChecked}
+					disabled={allScopesChecked}
 					id="multiSelect"
 					items={selectedItems}
 					key={availableItems.length ? 'loaded' : 'empty'}
@@ -179,7 +168,7 @@ export default function ScopeMultiSelect<T extends ScopeItem>({
 					onChange={setQuery}
 					onItemsChange={_handleChangeItems}
 					sourceItems={availableItems}
-					value={allItemsChecked ? labels.allItemsValue : query}
+					value={allScopesChecked ? labels.allItemsValue : query}
 				>
 					{(item) => (
 						<ClayMultiSelect.Item
@@ -202,9 +191,18 @@ export default function ScopeMultiSelect<T extends ScopeItem>({
 
 			<div className="mt-2">
 				<ClayCheckbox
-					checked={allItemsChecked}
+					checked={allScopesChecked}
 					label={labels.checkbox}
-					onChange={_handleToggleAllItems}
+					onChange={() => {
+						if (!showErrorInitially && allScopesChecked) {
+							setDisplayError(false);
+						}
+
+						setAllScopesChecked((checked) => !checked);
+						setSelectedItems([]);
+						onSelectionChange([]);
+						setQuery('');
+					}}
 				/>
 			</div>
 		</div>

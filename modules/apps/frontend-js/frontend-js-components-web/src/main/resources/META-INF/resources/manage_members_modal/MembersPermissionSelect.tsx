@@ -9,13 +9,14 @@ import {ClayCheckbox} from '@clayui/form';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import React, {useCallback, useMemo, useState} from 'react';
 
-import {Role} from './types';
+import {Role, RoleExternalReferenceCode} from './types';
 
 interface MembersPermissionSelectProps {
 	defaultRoleName: string;
 	disabled?: boolean;
 	hiddenRoleNames?: string[];
 	onChange: (selectedRoles: string[]) => void;
+	roleNames?: Partial<Record<RoleExternalReferenceCode, string>>;
 	roles: Role[];
 	selectedRoles: string[];
 }
@@ -25,6 +26,7 @@ export function MembersPermissionSelect({
 	disabled = false,
 	hiddenRoleNames = [],
 	onChange,
+	roleNames,
 	roles: rawRoles = [],
 	selectedRoles,
 }: MembersPermissionSelectProps) {
@@ -34,13 +36,11 @@ export function MembersPermissionSelect({
 	}, [hiddenRoleNames, rawRoles]);
 
 	const getRoleName = useCallback(
-		(roleName: string) => {
-			const currentLang = Liferay.ThemeDisplay.getBCP47LanguageId();
-			const roleFound = roles.find((role) => role.name === roleName);
-
-			return roleFound?.name_i18n[currentLang] || roleFound?.name;
-		},
-		[roles]
+		(role: Role) =>
+			roleNames?.[
+				role.externalReferenceCode as RoleExternalReferenceCode
+			] ?? role.name,
+		[roleNames]
 	);
 
 	const handleCheckboxChange = useCallback(
@@ -57,7 +57,7 @@ export function MembersPermissionSelect({
 	const {tooltipText, triggerText} = useMemo(() => {
 		const allSelectedRoleNames = roles
 			.filter(({name}) => selectedRoles.includes(name))
-			.map(({name}) => getRoleName(name));
+			.map((role) => getRoleName(role));
 
 		const maxVisibleRoles = 2;
 		const tooltip = allSelectedRoleNames.join(', ');
@@ -107,7 +107,7 @@ export function MembersPermissionSelect({
 						<ClayCheckbox
 							checked={selectedRoles.includes(role.name)}
 							disabled={role.name === defaultRoleName}
-							label={getRoleName(role.name)}
+							label={getRoleName(role)}
 							onChange={() => handleCheckboxChange(role.name)}
 						/>
 					</ClayDropDown.Item>

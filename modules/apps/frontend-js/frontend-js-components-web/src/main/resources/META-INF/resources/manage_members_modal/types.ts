@@ -12,10 +12,14 @@ export type Role = {
 	externalReferenceCode: string;
 	id: number;
 	name: string;
-	name_i18n: {
-		[key: string]: string;
-	};
 };
+
+export type RoleExternalReferenceCode =
+	| 'L_ASSET_LIBRARY_ADMINISTRATOR'
+	| 'L_ASSET_LIBRARY_CONNECTED_SITE_MEMBER'
+	| 'L_ASSET_LIBRARY_CONTENT_REVIEWER'
+	| 'L_ASSET_LIBRARY_MEMBER'
+	| 'L_ASSET_LIBRARY_OWNER';
 
 export interface UserRole {
 	id: number;
@@ -78,6 +82,7 @@ export interface MembersConfig {
 	excludedRoleNames?: string[];
 	hiddenRoleNames: string[];
 	messages: MembersFeedbackMessages;
+	roleNames?: Partial<Record<RoleExternalReferenceCode, string>>;
 }
 
 export interface AddMembersInputApi {

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import React, {useCallback} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import SpaceSticker from '../../../common/components/SpaceSticker';
 import SpaceService from '../../../common/services/SpaceService';
@@ -24,9 +24,13 @@ export default function CategorizationSpaces({
 	setSpaceInputError: (value: string) => void;
 	spaceInputError: string;
 }) {
-	const getItems = useCallback(
-		() =>
-			SpaceService.getSpaces().then((response) =>
+	const [sourceItems, setSourceItems] = useState<SpaceItem[]>([]);
+
+	useEffect(() => {
+		const loadSpaces = async () => {
+			const response = await SpaceService.getSpaces();
+
+			setSourceItems(
 				response.map(
 					(item): SpaceItem => ({
 						displayType: item.settings?.logoColor,
@@ -35,14 +39,15 @@ export default function CategorizationSpaces({
 						value: item.id,
 					})
 				)
-			),
-		[]
-	);
+			);
+		};
+
+		loadSpaces();
+	}, []);
 
 	return (
 		<ScopeMultiSelect<SpaceItem>
 			error={spaceInputError}
-			getItems={getItems}
 			labels={{
 				allItemsValue: Liferay.Language.get('all-spaces'),
 				ariaLabel: Liferay.Language.get('space-selector'),
@@ -68,6 +73,7 @@ export default function CategorizationSpaces({
 				/>
 			)}
 			showErrorInitially={checkboxText !== 'vocabulary'}
+			sourceItems={sourceItems}
 		/>
 	);
 }

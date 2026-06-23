@@ -106,7 +106,11 @@ public class UpgradeJakartaTask extends FormatSourceTask {
 		List<ReleaseEntry> releaseEntries = ReleaseUtil.getReleaseEntries();
 
 		for (ReleaseEntry releaseEntry : releaseEntries) {
-			toVersionValues.add(releaseEntry.getTargetPlatformVersion());
+			List<String> tags = releaseEntry.getTags();
+
+			if (tags.contains("jakarta")) {
+				toVersionValues.add(releaseEntry.getTargetPlatformVersion());
+			}
 		}
 
 		return toVersionValues;

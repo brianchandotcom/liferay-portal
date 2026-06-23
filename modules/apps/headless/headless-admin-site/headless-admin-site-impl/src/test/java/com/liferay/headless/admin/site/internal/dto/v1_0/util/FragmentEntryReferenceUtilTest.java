@@ -10,6 +10,7 @@ import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentReference;
 import com.liferay.headless.admin.site.internal.util.LogUtil;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -51,6 +52,7 @@ public class FragmentEntryReferenceUtilTest {
 	}
 
 	@Test
+	@TestInfo("LPD-95298")
 	public void testGetFragmentEntryReference() throws Exception {
 		String externalReferenceCode = RandomTestUtil.randomString();
 		String fragmentEntryKey = RandomTestUtil.randomString();

@@ -79,6 +79,20 @@ describe('utils', () => {
 		});
 	});
 
+	describe('jsDatetoYYYYMMDD', () => {
+		it('formats a Date object as a yyyy-MM-dd string', () => {
+			expect(
+				Utils.jsDatetoYYYYMMDD(new Date('2026-01-05T12:00:00.000Z'))
+			).toEqual('2026-01-05');
+		});
+
+		it('formats a date string as a yyyy-MM-dd string', () => {
+			expect(Utils.jsDatetoYYYYMMDD('2026-01-05T12:00:00.000Z')).toEqual(
+				'2026-01-05'
+			);
+		});
+	});
+
 	describe('objectToFormData', () => {
 		it('takes an object of key value pairs and return a form data object with the same values', () => {
 			const testData = {

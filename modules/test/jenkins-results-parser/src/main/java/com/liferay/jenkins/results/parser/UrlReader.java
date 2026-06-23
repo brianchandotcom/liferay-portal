@@ -40,7 +40,22 @@ import javax.net.ssl.SSLContext;
  */
 public class UrlReader {
 
-	public static InputStream doRead(
+	public static InputStream read(
+			boolean checkCache, HTTPAuthorization httpAuthorization,
+			HttpRequestMethod httpRequestMethod, int maxRetries,
+			String postContent, int retryPeriod, int timeout, String url)
+		throws IOException {
+
+		return _urlReader.doRead(
+			checkCache, httpAuthorization, httpRequestMethod, maxRetries,
+			postContent, retryPeriod, timeout, url);
+	}
+
+	public static void setInstance(UrlReader urlReader) {
+		_urlReader = urlReader;
+	}
+
+	protected InputStream doRead(
 			boolean checkCache, HTTPAuthorization httpAuthorization,
 			HttpRequestMethod httpRequestMethod, int maxRetries,
 			String postContent, int retryPeriod, int timeout, String url)
@@ -417,5 +432,6 @@ public class UrlReader {
 		Arrays.asList(
 			HttpRequestMethod.POST, HttpRequestMethod.PATCH,
 			HttpRequestMethod.PUT, HttpRequestMethod.DELETE);
+	private static volatile UrlReader _urlReader = new UrlReader();
 
 }

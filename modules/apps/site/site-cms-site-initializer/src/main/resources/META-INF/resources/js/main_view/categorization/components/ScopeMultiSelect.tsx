@@ -28,11 +28,6 @@ type ScopeLabels = {
 	field: string;
 };
 
-type PreselectedItem = {
-	id?: number;
-	name?: string;
-};
-
 export default function ScopeMultiSelect<T extends ScopeItem>({
 	error,
 	labels,
@@ -47,16 +42,13 @@ export default function ScopeMultiSelect<T extends ScopeItem>({
 	onChange?: (value: boolean) => void;
 	onError: (value: string) => void;
 	onSelectionChange: (value: any) => void;
-	preselectedItems?: PreselectedItem[];
+	preselectedItems?: T[];
 	sourceItems: T[];
 }) {
 	const [allScopesChecked, setAllScopesChecked] = useState(true);
 	const [query, setQuery] = useState('');
 	const [touched, setTouched] = useState(false);
 	const [selectedItems, setSelectedItems] = useState<T[]>([]);
-	const [initialSelectedValues, setInitialSelectedValues] = useState<any[]>(
-		[]
-	);
 
 	const errorId = useId();
 	const inputId = useId();
@@ -66,64 +58,37 @@ export default function ScopeMultiSelect<T extends ScopeItem>({
 		: undefined;
 
 	useEffect(() => {
-		if (!sourceItems.length) {
+		setAllScopesChecked(!preselectedItems?.length);
+		setSelectedItems(preselectedItems ?? []);
+	}, [preselectedItems]);
+
+	useEffect(() => {
+		if (!onChange) {
 			return;
 		}
 
-		const initialValues = preselectedItems?.map(
-			(preselectedItem) =>
-				sourceItems.find((item) => item.label === preselectedItem.name)
-					?.value
-		);
-
-		setInitialSelectedValues(initialValues ?? []);
-
-		if (
-			!preselectedItems ||
-			!preselectedItems.length ||
-			preselectedItems.some((item) => item.id === -1)
-		) {
-			setAllScopesChecked(true);
-
-			setSelectedItems([]);
-		}
-		else if (initialValues) {
-			setAllScopesChecked(false);
-
-			setSelectedItems(
-				sourceItems.filter((item) => initialValues.includes(item.value))
+		const selectionChanged =
+			preselectedItems?.length !== selectedItems.length ||
+			preselectedItems?.some(
+				(preselectedItem) =>
+					!selectedItems.some(
+						(item) => item.value === preselectedItem.value
+					)
 			);
-		}
-	}, [preselectedItems, sourceItems]);
+
+		onChange(!allScopesChecked && Boolean(selectionChanged));
+	}, [allScopesChecked, onChange, preselectedItems, selectedItems]);
 
 	useEffect(() => {
-		if (onChange) {
-			const initialValueRemoved = initialSelectedValues.some(
-				(value) => !selectedItems.some((item) => item.value === value)
-			);
-
-			onChange(!allScopesChecked && initialValueRemoved);
-		}
-
-		if (allScopesChecked || selectedItems.length) {
-			onError('');
-		}
-		else {
-			onError(
-				sub(
-					Liferay.Language.get('the-x-field-is-required'),
-					labels.field
-				)
-			);
-		}
-	}, [
-		allScopesChecked,
-		initialSelectedValues,
-		labels.field,
-		onChange,
-		onError,
-		selectedItems,
-	]);
+		onError(
+			allScopesChecked || selectedItems.length
+				? ''
+				: sub(
+						Liferay.Language.get('the-x-field-is-required'),
+						labels.field
+					)
+		);
+	}, [allScopesChecked, labels.field, onError, selectedItems]);
 
 	const getSelectedItems = (items: T[]) =>
 		sourceItems.filter((sourceItem) =>

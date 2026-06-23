@@ -17,11 +17,11 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(
-	id = "com.liferay.oauth2.provider.rest.internal.configuration.DynamicRegistrationConfiguration",
+	id = "com.liferay.oauth2.provider.rest.internal.configuration.OAuth2DynamicRegistrationConfiguration",
 	localization = "content/Language",
 	name = "dynamic-registration-configuration-name"
 )
-public interface DynamicRegistrationConfiguration {
+public interface OAuth2DynamicRegistrationConfiguration {
 
 	@Meta.AD(
 		deflt = "",

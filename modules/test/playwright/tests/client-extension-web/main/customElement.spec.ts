@@ -282,9 +282,9 @@ test('Check that Name field can be translated', async ({
 	const defaultTranslationName = getRandomString();
 	const ptTranslationName = getRandomString();
 
-	await editCustomElementPage.nameInput.fill(defaultTranslationName);
+	await editCustomElementPage.fillName('en_US', defaultTranslationName);
 	await editCustomElementPage.changeNameLanguage('pt_BR');
-	await editCustomElementPage.nameInput.fill(ptTranslationName);
+	await editCustomElementPage.fillName('pt_BR', ptTranslationName);
 
 	await test.step('Check expectations', async () => {
 		await editCustomElementPage.changeNameLanguage('en_US');

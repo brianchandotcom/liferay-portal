@@ -44,7 +44,8 @@ test(
 		await editFDSCellRendererPage.goto();
 
 		await editFDSCellRendererPage.changeNameLanguage('es_ES');
-		await editFDSCellRendererPage.nameInput.fill(
+		await editFDSCellRendererPage.fillName(
+			'es_ES',
 			'Cambiar formato de fecha'
 		);
 		await editFDSCellRendererPage.changeNameLanguage('en_US');

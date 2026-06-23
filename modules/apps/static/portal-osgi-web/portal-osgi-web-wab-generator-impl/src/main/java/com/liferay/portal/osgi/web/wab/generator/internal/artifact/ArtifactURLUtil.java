@@ -133,11 +133,15 @@ public class ArtifactURLUtil {
 			String webContextPath = configurationJSONObject.getString(
 				"webContextPath");
 
-			if (Validator.isNotNull(webContextPath)) {
-				if (webContextPath.startsWith("/")) {
-					return webContextPath.substring(1);
-				}
+			if (Validator.isNull(webContextPath)) {
+				continue;
 			}
+
+			if (webContextPath.startsWith("/")) {
+				return webContextPath.substring(1);
+			}
+
+			return webContextPath;
 		}
 
 		return null;

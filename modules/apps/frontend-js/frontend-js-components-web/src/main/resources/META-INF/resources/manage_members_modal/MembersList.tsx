@@ -166,6 +166,7 @@ export function MembersList({
 									);
 								}}
 								ownerId={ownerId}
+								roleNames={config.roleNames}
 								roles={roles}
 							/>
 						) : (
@@ -187,6 +188,7 @@ export function MembersList({
 										selectedOption
 									);
 								}}
+								roleNames={config.roleNames}
 								roles={roles}
 							/>
 						)}

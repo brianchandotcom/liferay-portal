@@ -11,7 +11,7 @@ import {sub} from 'frontend-js-web';
 import React from 'react';
 
 import {MembersPermissionSelect} from './MembersPermissionSelect';
-import {Role, UserAccount, UserGroup} from './types';
+import {Role, RoleExternalReferenceCode, UserAccount, UserGroup} from './types';
 
 interface MemberListItemProps {
 	currentUserId?: string;
@@ -23,6 +23,7 @@ interface MemberListItemProps {
 	onRemoveItem: (item: UserAccount | UserGroup) => Promise<void>;
 	onUpdateItemRoles: (item: UserAccount | UserGroup, roles: string[]) => void;
 	ownerId?: string | number;
+	roleNames?: Partial<Record<RoleExternalReferenceCode, string>>;
 	roles: Role[];
 }
 
@@ -36,6 +37,7 @@ export function MemberListItem({
 	onRemoveItem,
 	onUpdateItemRoles,
 	ownerId,
+	roleNames,
 	roles,
 }: MemberListItemProps) {
 	return (
@@ -122,6 +124,7 @@ export function MemberListItem({
 									onChange={(newRoles) => {
 										onUpdateItemRoles(item, newRoles);
 									}}
+									roleNames={roleNames}
 									roles={roles}
 									selectedRoles={selectedRoles}
 								/>

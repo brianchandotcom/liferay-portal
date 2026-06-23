@@ -29,9 +29,9 @@ jest.mock(
 );
 
 const ROLES: Role[] = [
-	{externalReferenceCode: 'r-member', id: 10, name: 'Member', name_i18n: {}},
-	{externalReferenceCode: 'r-editor', id: 11, name: 'Editor', name_i18n: {}},
-	{externalReferenceCode: 'r-owner', id: 12, name: 'Owner', name_i18n: {}},
+	{externalReferenceCode: 'r-member', id: 10, name: 'Member'},
+	{externalReferenceCode: 'r-editor', id: 11, name: 'Editor'},
+	{externalReferenceCode: 'r-owner', id: 12, name: 'Owner'},
 ];
 
 const ALICE: UserAccount = {

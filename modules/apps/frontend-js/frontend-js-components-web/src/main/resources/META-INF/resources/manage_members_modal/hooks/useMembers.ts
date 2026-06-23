@@ -36,12 +36,7 @@ export function useMembers(
 				}),
 				membersService.getRoles({
 					externalReferenceCode,
-					fields: [
-						'externalReferenceCode',
-						'id',
-						'name',
-						'name_i18n',
-					].join(','),
+					fields: ['externalReferenceCode', 'id', 'name'].join(','),
 				}),
 			]);
 

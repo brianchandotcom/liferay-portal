@@ -73,13 +73,12 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 
 	@Test
 	public void testBearerInOpenMode() throws Exception {
-		long companyId = TestPropsValues.getCompanyId();
-
 		WebTarget registerWebTarget = getRegisterWebTarget();
 
 		try (CompanyConfigurationTemporarySwapper
 				companyConfigurationTemporarySwapper =
-					_createCompanyConfigurationTemporarySwapper(companyId)) {
+					_createCompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId())) {
 
 			Invocation.Builder invocationBuilder = authorize(
 				registerWebTarget.request(),
@@ -140,13 +139,12 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 
 	@Test
 	public void testOpenAccepted() throws Exception {
+		String clientName = RandomTestUtil.randomString();
 		long companyId = TestPropsValues.getCompanyId();
 
 		WebTarget registerWebTarget = getRegisterWebTarget();
 
 		Invocation.Builder invocationBuilder = registerWebTarget.request();
-
-		String clientName = RandomTestUtil.randomString();
 
 		String body = JSONUtil.put(
 			_FIELD_CLIENT_NAME, clientName
@@ -196,13 +194,13 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 
 	@Test
 	public void testOpenEnforcesHostAllowlist() throws Exception {
-		String allowedHost = "test-allowed-" + RandomTestUtil.randomString();
+		String allowedHost = RandomTestUtil.randomString();
 
 		_testOpenEnforcesHostAllowlist(allowedHost, allowedHost, 201);
 		_testOpenEnforcesHostAllowlist(
-			allowedHost, "test-other-" + RandomTestUtil.randomString(), 403);
+			allowedHost, RandomTestUtil.randomString(), 403);
 
-		String bracketedHost = "test-bracket-" + RandomTestUtil.randomString();
+		String bracketedHost = RandomTestUtil.randomString();
 
 		_testOpenEnforcesHostAllowlist(
 			bracketedHost,
@@ -216,7 +214,7 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 				PortalUtil.getPortalServerPort(false)),
 			bracketedHost, 201);
 
-		String portHost = "test-port-" + RandomTestUtil.randomString();
+		String portHost = RandomTestUtil.randomString();
 
 		_testOpenEnforcesHostAllowlist(
 			portHost, portHost + ":" + PortalUtil.getPortalServerPort(false),
@@ -393,11 +391,9 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 
 	@Test
 	public void testPromotesPublicAuthorizationCode() throws Exception {
-		long companyId = TestPropsValues.getCompanyId();
-
-		WebTarget registerWebTarget = getRegisterWebTarget();
-
 		String clientName = RandomTestUtil.randomString();
+		long companyId = TestPropsValues.getCompanyId();
+		WebTarget registerWebTarget = getRegisterWebTarget();
 
 		String body = JSONUtil.put(
 			_FIELD_CLIENT_NAME, clientName
@@ -501,15 +497,11 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 	}
 
 	protected static WebTarget getRegisterWebTarget() {
-		WebTarget webTarget = getOAuth2WebTarget();
-
-		return webTarget.path("register");
+		return getOAuth2WebTarget().path("register");
 	}
 
 	protected static WebTarget getRegisterWebTarget(String target) {
-		WebTarget webTarget = getRegisterWebTarget();
-
-		return webTarget.path(target);
+		return getRegisterWebTarget().path(target);
 	}
 
 	@Override
@@ -587,9 +579,7 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 	}
 
 	private String _getToken(OAuth2Application oAuth2Application) {
-		WebTarget tokenWebTarget = getTokenWebTarget();
-
-		Invocation.Builder invocationBuilder = tokenWebTarget.request();
+		Invocation.Builder invocationBuilder = getTokenWebTarget().request();
 
 		String tokenString = parseTokenString(
 			invocationBuilder.post(
@@ -615,14 +605,12 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 			String allowedHost, String requestHost, int expectedStatus)
 		throws Exception {
 
-		long companyId = TestPropsValues.getCompanyId();
-
 		WebTarget registerWebTarget = getRegisterWebTarget();
 
 		try (CompanyConfigurationTemporarySwapper
 				companyConfigurationTemporarySwapper =
 					_createCompanyConfigurationTemporarySwapper(
-						companyId, _PROPERTY_ALLOWED_HOSTS,
+						TestPropsValues.getCompanyId(), _PROPERTY_ALLOWED_HOSTS,
 						new String[] {allowedHost},
 						_PROPERTY_TRUST_PROXY_HEADERS, true)) {
 
@@ -636,7 +624,8 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 			Assert.assertEquals(expectedStatus, response.getStatus());
 
 			if (expectedStatus == 403) {
-				Assert.assertEquals("access_denied", parseError(response));
+				Assert.assertEquals(
+					OAuthConstants.ACCESS_DENIED, parseError(response));
 			}
 		}
 	}

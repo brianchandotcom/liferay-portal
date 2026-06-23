@@ -82,6 +82,7 @@ import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -135,6 +136,7 @@ import org.osgi.framework.ServiceRegistration;
  * @author Eduardo García
  */
 @RunWith(Arquillian.class)
+@Sync
 public class LayoutSetPrototypePropagationTest
 	extends BasePrototypePropagationTestCase {
 
@@ -1318,8 +1320,6 @@ public class LayoutSetPrototypePropagationTest
 			_sites.mergeLayoutSetPrototypeLayouts(
 				layoutSetPrototype, TestPropsValues.getUserId());
 		}
-
-		Thread.sleep(2000);
 	}
 
 	protected void propagateChanges(Group group) throws Exception {
@@ -1395,8 +1395,6 @@ public class LayoutSetPrototypePropagationTest
 		_sites.updateLayoutSetPrototypesLinks(
 			group, _layoutSetPrototype.getLayoutSetPrototypeId(), 0,
 			linkEnabled, linkEnabled);
-
-		Thread.sleep(2000);
 	}
 
 	protected void setLinkEnabled(
@@ -1408,8 +1406,6 @@ public class LayoutSetPrototypePropagationTest
 		_sites.updateLayoutSetPrototypesLinks(
 			group, publicLayoutSetPrototypeId, privateLayoutSetPrototypeId,
 			publicLinkEnabled, privateLinkEnabled);
-
-		Thread.sleep(2000);
 	}
 
 	protected void testAddChildLayout(boolean layoutSetPrototypeLinkEnabled)

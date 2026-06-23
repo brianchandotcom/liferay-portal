@@ -5,6 +5,8 @@
 
 package com.liferay.release.util;
 
+import java.util.List;
+
 /**
  * @author Drew Brokke
  */
@@ -39,6 +41,8 @@ public interface ReleaseEntry {
 	public String getReleaseKey();
 
 	public String getTargetPlatformVersion();
+
+	public List<String> getTags();
 
 	public String getURL();
 

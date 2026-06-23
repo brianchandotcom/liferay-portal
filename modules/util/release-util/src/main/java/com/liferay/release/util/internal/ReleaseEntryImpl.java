@@ -10,6 +10,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.release.util.ReleaseEntry;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import java.util.function.Supplier;
 
@@ -139,6 +141,11 @@ public class ReleaseEntryImpl implements ReleaseEntry {
 	}
 
 	@Override
+	public List<String> getTags() {
+		return _tags;
+	}
+
+	@Override
 	public String getURL() {
 		return _url;
 	}
@@ -207,6 +214,9 @@ public class ReleaseEntryImpl implements ReleaseEntry {
 
 	@JsonProperty("releaseKey")
 	private String _releaseKey;
+
+	@JsonProperty("tags")
+	private List<String> _tags = new ArrayList<>();
 
 	@JsonProperty("targetPlatformVersion")
 	private String _targetPlatformVersion;

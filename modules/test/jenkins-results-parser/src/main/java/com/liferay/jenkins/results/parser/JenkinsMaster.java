@@ -1070,12 +1070,36 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 			return Long.compare(getInQueueSince(), queueItem.getInQueueSince());
 		}
 
+		public AWSFleetCloud getAWSFleetCloud() {
+			if (_awsFleetCloud != null) {
+				return _awsFleetCloud;
+			}
+
+			for (AWSFleetCloud awsFleetCloud :
+					_jenkinsMaster.getAWSFleetClouds()) {
+
+				if (_jenkinsMaster._matchesLabels(
+						getLabelExpression(), awsFleetCloud.getLabels())) {
+
+					_awsFleetCloud = awsFleetCloud;
+
+					return _awsFleetCloud;
+				}
+			}
+
+			return null;
+		}
+
 		public long getId() {
 			return _jsonObject.getLong("id");
 		}
 
 		public long getInQueueSince() {
 			return _jsonObject.getLong("inQueueSince");
+		}
+
+		public JenkinsMaster getJenkinsMaster() {
+			return _jenkinsMaster;
 		}
 
 		public JSONObject getJSONObject() {
@@ -1106,6 +1130,10 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 
 		public Map<String, String> getParameters() {
 			return _getParameters(_jsonObject);
+		}
+
+		public String getPrimaryLabel() {
+			return _awsFleetCloud.getPrimaryLabel();
 		}
 
 		public String getTaskName() {
@@ -1177,6 +1205,7 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 			_jsonObject = jsonObject;
 		}
 
+		private AWSFleetCloud _awsFleetCloud;
 		private final JenkinsMaster _jenkinsMaster;
 		private final JSONObject _jsonObject;
 

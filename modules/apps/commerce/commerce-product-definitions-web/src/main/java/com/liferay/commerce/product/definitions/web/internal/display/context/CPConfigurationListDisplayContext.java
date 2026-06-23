@@ -30,7 +30,6 @@ import com.liferay.commerce.util.comparator.CommerceAvailabilityEstimatePriority
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -90,19 +89,6 @@ public class CPConfigurationListDisplayContext {
 		cpRequestHelper = new CPRequestHelper(httpServletRequest);
 
 		liferayPortletResponse = cpRequestHelper.getLiferayPortletResponse();
-	}
-
-	public List<DropdownItem> getBulkActionDropdownItems() {
-		return ListUtil.fromArray(
-			new FDSActionDropdownItem(
-				_getEditCPConfigurationEntryActionURL("setVisible"), "view",
-				"update", "set-as-visible",
-				LanguageUtil.get(httpServletRequest, "update"), "update", null),
-			new FDSActionDropdownItem(
-				_getEditCPConfigurationEntryActionURL("setHidden"), "hidden",
-				"update", "set-as-not-visible",
-				LanguageUtil.get(httpServletRequest, "update"), "update",
-				null));
 	}
 
 	public List<CommerceAvailabilityEstimate> getCommerceAvailabilityEstimates()
@@ -456,16 +442,6 @@ public class CPConfigurationListDisplayContext {
 	protected final CPTaxCategoryLocalService cpTaxCategoryLocalService;
 	protected final HttpServletRequest httpServletRequest;
 	protected final LiferayPortletResponse liferayPortletResponse;
-
-	private String _getEditCPConfigurationEntryActionURL(String cmd) {
-		return PortletURLBuilder.createActionURL(
-			cpRequestHelper.getRenderResponse()
-		).setActionName(
-			"/cp_configuration_lists/edit_cp_configuration_entry"
-		).setCMD(
-			cmd
-		).buildString();
-	}
 
 	private CPConfigurationEntry _cpConfigurationEntry;
 	private CPDefinition _cpDefinition;

@@ -583,8 +583,8 @@ public class RolesAdminPortlet extends MVCPortlet {
 
 		if (Objects.equals(mvcPath, "/edit_role_assignments.jsp")) {
 			RolePermissionUtil.check(
-				themeDisplay.getPermissionChecker(),
-				roleId, ActionKeys.ASSIGN_MEMBERS);
+				themeDisplay.getPermissionChecker(), roleId,
+				ActionKeys.ASSIGN_MEMBERS);
 		}
 
 		super.checkPermissions(portletRequest);

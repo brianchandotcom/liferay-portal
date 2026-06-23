@@ -97,6 +97,18 @@ const FARO_SPECIAL_CHARS = {
 		encoded: '_FARO_AT_',
 		raw: '@',
 	},
+	backtick: {
+		encoded: '_FARO_BACKTICK_',
+		raw: '`',
+	},
+	braceLeft: {
+		encoded: '_FARO_LEFT_BRACE_',
+		raw: '{',
+	},
+	braceRight: {
+		encoded: '_FARO_RIGHT_BRACE_',
+		raw: '}',
+	},
 	bracketLeft: {
 		encoded: '_FARO_LEFT_BRACKET_',
 		raw: '[',
@@ -104,6 +116,10 @@ const FARO_SPECIAL_CHARS = {
 	bracketRight: {
 		encoded: '_FARO_RIGHT_BRACKET_',
 		raw: ']',
+	},
+	caret: {
+		encoded: '_FARO_CARET_',
+		raw: '^',
 	},
 	dash: {
 		encoded: '_FARO_DASH_',
@@ -128,6 +144,10 @@ const FARO_SPECIAL_CHARS = {
 	percent: {
 		encoded: '_FARO_PERCENT_',
 		raw: '%',
+	},
+	pipe: {
+		encoded: '_FARO_PIPE_',
+		raw: '|',
 	},
 	plus: {
 		encoded: '_FARO_PLUS_',
@@ -429,7 +449,7 @@ const encodeQuotes = (text: string): string => text.replace(/'/g, '%27');
  * Encode certain special characters with our own encoding.
  */
 const encodeSpecialCharacters = (queryString: string): string => {
-	const charsNeedEscaped = ['+', '?', '$', '[', ']'];
+	const charsNeedEscaped = ['+', '?', '$', '[', ']', '^', '{', '}', '|'];
 	const specialCharactersArr = Object.values(FARO_SPECIAL_CHARS);
 
 	const specialCharsPattern = specialCharactersArr

@@ -7,6 +7,7 @@ package com.liferay.asset.entry.query.processor.custom.user.attributes.internal.
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
@@ -29,9 +30,16 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+
+import java.util.Collections;
+import java.util.Locale;
+import java.util.Map;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -119,6 +127,81 @@ public class CustomUserAttributesAssetEntryQueryProcessorTest {
 		Assert.assertArrayEquals(
 			new long[] {assetCategory.getCategoryId()},
 			_processAssetEntryQuery());
+	}
+
+	@Test
+	@TestInfo({"LPD-94663", "LPS-130127"})
+	public void testProcessAssetEntryQueryWithCategoryInDifferentVocabulary()
+		throws Exception {
+
+		String userCustomFieldValue = RandomTestUtil.randomString();
+
+		_setCustomUserAttributeValue(userCustomFieldValue);
+
+		AssetVocabulary assetVocabulary1 = _addVocabulary(
+			_CUSTOM_USER_ATTRIBUTE_NAME);
+
+		_addCategory(
+			RandomTestUtil.randomString(), assetVocabulary1.getVocabularyId());
+
+		AssetVocabulary assetVocabulary2 = _addVocabulary(
+			RandomTestUtil.randomString());
+
+		_addCategory(userCustomFieldValue, assetVocabulary2.getVocabularyId());
+
+		Assert.assertArrayEquals(new long[0], _processAssetEntryQuery());
+	}
+
+	@Test
+	@TestInfo({"LPD-94663", "LPS-171296"})
+	public void testProcessAssetEntryQueryWithTranslatedCategory()
+		throws Exception {
+
+		String userCustomFieldValue = RandomTestUtil.randomString();
+
+		_setCustomUserAttributeValue(userCustomFieldValue);
+
+		AssetVocabulary assetVocabulary = _addVocabulary(
+			_CUSTOM_USER_ATTRIBUTE_NAME);
+
+		AssetCategory assetCategory = _addCategory(
+			HashMapBuilder.put(
+				LocaleUtil.getSiteDefault(), userCustomFieldValue
+			).put(
+				LocaleUtil.SPAIN, RandomTestUtil.randomString()
+			).build(),
+			assetVocabulary.getVocabularyId());
+
+		_addCategory(
+			HashMapBuilder.put(
+				LocaleUtil.getSiteDefault(), RandomTestUtil.randomString()
+			).put(
+				LocaleUtil.SPAIN, userCustomFieldValue
+			).build(),
+			assetVocabulary.getVocabularyId());
+
+		Locale themeDisplayLocale = LocaleThreadLocal.getThemeDisplayLocale();
+
+		LocaleThreadLocal.setThemeDisplayLocale(LocaleUtil.SPAIN);
+
+		try {
+			Assert.assertArrayEquals(
+				new long[] {assetCategory.getCategoryId()},
+				_processAssetEntryQuery());
+		}
+		finally {
+			LocaleThreadLocal.setThemeDisplayLocale(themeDisplayLocale);
+		}
+	}
+
+	private AssetCategory _addCategory(
+			Map<Locale, String> titleMap, long vocabularyId)
+		throws Exception {
+
+		return _assetCategoryLocalService.addCategory(
+			null, TestPropsValues.getUserId(), _companyGroup.getGroupId(),
+			AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, titleMap,
+			Collections.emptyMap(), vocabularyId, null, _serviceContext);
 	}
 
 	private AssetCategory _addCategory(String name, long vocabularyId)

@@ -269,6 +269,29 @@ export class JSONWebServicesOSBFaroApiHelper {
 		).then((response) => response);
 	}
 
+	async deleteDistributionTab(
+		distributionTabId: string,
+		groupId: string
+	): Promise<Response> {
+		const formdata = new FormData();
+
+		formdata.append('distributionTabId', distributionTabId);
+		formdata.append('scope', 'group');
+
+		const header = new Headers();
+
+		header.append('Authorization', _authorization);
+
+		return fetch(
+			`${faroConfig.environment.baseUrl}${this.basePath}/main/${groupId}/preferences/distribution_tabs`,
+			{
+				body: formdata,
+				headers: header,
+				method: 'DELETE',
+			}
+		).then((response) => response);
+	}
+
 	async deleteUser(id: string, groupId: string): Promise<Response> {
 		const header = new Headers();
 

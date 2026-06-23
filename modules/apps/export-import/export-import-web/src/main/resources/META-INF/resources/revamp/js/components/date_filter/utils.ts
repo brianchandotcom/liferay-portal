@@ -72,10 +72,10 @@ export function normalizeDateFilter(
 		const {endDate, startDate} = dateFilter;
 
 		return {
-			...(endDate ? {endDate: new Date(endDate).toISOString()} : {}),
-			...(startDate
-				? {startDate: new Date(startDate).toISOString()}
-				: {}),
+			endDate: endDate ? new Date(endDate).toISOString() : undefined,
+			startDate: startDate
+				? new Date(startDate).toISOString()
+				: undefined,
 		};
 	}
 

@@ -171,6 +171,17 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 	}
 
 	@Override
+	public boolean equals(Object object) {
+		if (!(object instanceof JenkinsMaster)) {
+			return false;
+		}
+
+		JenkinsMaster jenkinsMaster = (JenkinsMaster)object;
+
+		return Objects.equals(jenkinsMaster.getName(), getName());
+	}
+
+	@Override
 	public List<String> getAssignedLabels() {
 		return _assignedLabels;
 	}
@@ -716,6 +727,13 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 
 	public String getURL() {
 		return _masterURL;
+	}
+
+	@Override
+	public int hashCode() {
+		String name = getName();
+
+		return name.hashCode();
 	}
 
 	public synchronized boolean isAvailable() {

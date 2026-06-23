@@ -66,10 +66,10 @@ public class BulkDocumentRequestExecutor {
 		BulkDocumentResponse bulkDocumentResponse = new BulkDocumentResponse(
 			bulkResponse.took());
 
-		List<BulkResponseItem> bulkResponseItems = bulkResponse.items();
-
 		String failureMessage = null;
 		int rejectedItemsCount = 0;
+
+		List<BulkResponseItem> bulkResponseItems = bulkResponse.items();
 
 		for (BulkResponseItem bulkResponseItem : bulkResponseItems) {
 			BulkDocumentItemResponse bulkDocumentItemResponse =

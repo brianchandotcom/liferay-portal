@@ -155,7 +155,6 @@ public class BulkDocumentRequestExecutorTest {
 			).status(
 				429
 			).build();
-
 		BulkResponseItem successfulBulkResponseItem =
 			new BulkResponseItem.Builder(
 			).index(

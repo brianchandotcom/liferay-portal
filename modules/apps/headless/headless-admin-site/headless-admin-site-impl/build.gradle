@@ -34,6 +34,7 @@ dependencies {
 	compileOnly project(":apps:journal:journal-api")
 	compileOnly project(":apps:layout:layout-admin-api")
 	compileOnly project(":apps:layout:layout-api")
+	compileOnly project(":apps:layout:layout-page-template-admin-api")
 	compileOnly project(":apps:layout:layout-page-template-api")
 	compileOnly project(":apps:layout:layout-seo-api")
 	compileOnly project(":apps:layout:layout-utility-page-api")

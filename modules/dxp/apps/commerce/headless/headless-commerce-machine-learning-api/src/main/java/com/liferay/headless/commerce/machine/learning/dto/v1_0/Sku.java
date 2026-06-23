@@ -158,7 +158,7 @@ public class Sku implements Serializable {
 	private Supplier<Boolean> _discontinuedSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Date from which the SKU is visible on the storefront, in ISO 8601 (yyyy-MM-dd).",
+		description = "Date and time from which the SKU is visible on the storefront, in ISO 8601.",
 		example = "2017-07-21"
 	)
 	public Date getDisplayDate() {
@@ -195,7 +195,7 @@ public class Sku implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "Date from which the SKU is visible on the storefront, in ISO 8601 (yyyy-MM-dd)."
+		description = "Date and time from which the SKU is visible on the storefront, in ISO 8601."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date displayDate;
@@ -204,7 +204,7 @@ public class Sku implements Serializable {
 	private Supplier<Date> _displayDateSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Date from which the SKU is no longer visible on the storefront, in ISO 8601 (yyyy-MM-dd).",
+		description = "Date and time from which the SKU is no longer visible on the storefront, in ISO 8601.",
 		example = "2017-08-21"
 	)
 	public Date getExpirationDate() {
@@ -241,7 +241,7 @@ public class Sku implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "Date from which the SKU is no longer visible on the storefront, in ISO 8601 (yyyy-MM-dd)."
+		description = "Date and time from which the SKU is no longer visible on the storefront, in ISO 8601."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date expirationDate;
@@ -853,4 +853,4 @@ public class Sku implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1530784980
+// LIFERAY-REST-BUILDER-HASH:1402852718

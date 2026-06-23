@@ -1,11 +1,11 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import {render, screen, waitFor} from '@testing-library/react';
 import {openModal} from 'frontend-js-components-web';
-import {fetch} from 'frontend-js-web';
+import fetch from 'jest-fetch-mock';
 import React from 'react';
 
 import '@testing-library/jest-dom';
@@ -21,31 +21,10 @@ jest.mock(
 );
 
 jest.mock('frontend-js-components-web', () => ({
-	...jest.requireActual('frontend-js-components-web'),
+	...(jest.requireActual('frontend-js-components-web') as object),
 	openModal: jest.fn(),
 	openToast: jest.fn(),
 }));
-
-jest.mock('frontend-js-web', () => ({
-	...jest.requireActual('frontend-js-web'),
-	fetch: jest.fn(() =>
-		Promise.resolve({
-			json: () => ({
-				externalReferenceCode: 'erc',
-				id: 1,
-				label: 'New View',
-				viewConfig: '{}',
-			}),
-			ok: true,
-		})
-	),
-}));
-
-global.Liferay = {
-	Language: {
-		get: (key: string) => key,
-	},
-} as any;
 
 const mockFDSContext = {
 	globalFDSState: {filters: []},
@@ -164,7 +143,6 @@ describe('SnapshotsControls view name validation', () => {
 	});
 
 	beforeEach(() => {
-		(fetch as jest.Mock).mockClear();
 		(openModal as jest.Mock).mockClear();
 	});
 
@@ -175,15 +153,11 @@ describe('SnapshotsControls view name validation', () => {
 				ownedViewsState({activeSnapshotERC: null})
 			);
 
-			expect(
-				screen.getByRole('button', {name: 'save'})
-			).toBeDisabled();
+			expect(screen.getByRole('button', {name: 'save'})).toBeDisabled();
 
 			await userEvent.type(screen.getByLabelText(/name/), '   ');
 
-			expect(
-				screen.getByRole('button', {name: 'save'})
-			).toBeDisabled();
+			expect(screen.getByRole('button', {name: 'save'})).toBeDisabled();
 		});
 
 		it('blocks saving and warns when the name matches an existing view', async () => {
@@ -235,6 +209,15 @@ describe('SnapshotsControls view name validation', () => {
 				'A Brand New View'
 			);
 
+			fetch.mockResponseOnce(
+				JSON.stringify({
+					externalReferenceCode: 'erc',
+					id: 1,
+					label: 'New View',
+					viewConfig: '{}',
+				})
+			);
+
 			await userEvent.click(screen.getByRole('button', {name: 'save'}));
 
 			expect(
@@ -248,6 +231,15 @@ describe('SnapshotsControls view name validation', () => {
 	describe('"Rename View"', () => {
 		it('allows keeping the current name unchanged', async () => {
 			await renderModalFor('rename-view', ownedViewsState());
+
+			fetch.mockResponseOnce(
+				JSON.stringify({
+					externalReferenceCode: 'erc',
+					id: 1,
+					label: 'New View',
+					viewConfig: '{}',
+				})
+			);
 
 			await userEvent.click(screen.getByRole('button', {name: 'save'}));
 

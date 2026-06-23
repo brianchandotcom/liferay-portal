@@ -1455,6 +1455,8 @@ public class ArrayUtil {
 			return new byte[0];
 		}
 
+		array = clone(array);
+
 		if (array.length < 2) {
 			return array;
 		}
@@ -1480,6 +1482,8 @@ public class ArrayUtil {
 		if (array == null) {
 			return new double[0];
 		}
+
+		array = clone(array);
 
 		if (array.length < 2) {
 			return array;
@@ -1507,6 +1511,8 @@ public class ArrayUtil {
 			return new float[0];
 		}
 
+		array = clone(array);
+
 		if (array.length < 2) {
 			return array;
 		}
@@ -1532,6 +1538,8 @@ public class ArrayUtil {
 		if (array == null) {
 			return new int[0];
 		}
+
+		array = clone(array);
 
 		if (array.length < 2) {
 			return array;
@@ -1559,6 +1567,8 @@ public class ArrayUtil {
 			return new long[0];
 		}
 
+		array = clone(array);
+
 		if (array.length < 2) {
 			return array;
 		}
@@ -1585,6 +1595,8 @@ public class ArrayUtil {
 			return new short[0];
 		}
 
+		array = clone(array);
+
 		if (array.length < 2) {
 			return array;
 		}
@@ -1610,6 +1622,8 @@ public class ArrayUtil {
 		if (array == null) {
 			return new String[0];
 		}
+
+		array = clone(array);
 
 		if (array.length < 2) {
 			return array;

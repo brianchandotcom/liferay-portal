@@ -66,7 +66,6 @@ public class FriendlyURLEntryLocalizationConstraintResolverTest {
 	@Test
 	public void testResolveConflict() throws Exception {
 		long classNameId = _classNameLocalService.getClassNameId(User.class);
-
 		String languageId = LocaleUtil.toLanguageId(
 			LocaleUtil.getSiteDefault());
 
@@ -162,9 +161,10 @@ public class FriendlyURLEntryLocalizationConstraintResolverTest {
 
 		FriendlyURLEntry friendlyURLEntry = null;
 
+		String urlTitle = RandomTestUtil.randomString();
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
-		String urlTitle = RandomTestUtil.randomString();
 
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(

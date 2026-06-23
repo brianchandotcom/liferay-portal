@@ -58,11 +58,10 @@ public class LayoutConstraintResolverTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_group = GroupTestUtil.addGroup();
-
 		_ctCollection = _ctCollectionLocalService.addCTCollection(
 			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
 			0, RandomTestUtil.randomString(), null);
+		_group = GroupTestUtil.addGroup();
 	}
 
 	@Test

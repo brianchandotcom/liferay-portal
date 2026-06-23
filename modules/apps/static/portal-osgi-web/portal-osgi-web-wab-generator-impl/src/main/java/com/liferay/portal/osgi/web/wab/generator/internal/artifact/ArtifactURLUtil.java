@@ -134,7 +134,9 @@ public class ArtifactURLUtil {
 				"webContextPath");
 
 			if (Validator.isNotNull(webContextPath)) {
-				return webContextPath.substring(1);
+				if (webContextPath.startsWith("/")) {
+					return webContextPath.substring(1);
+				}
 			}
 		}
 

@@ -186,6 +186,60 @@ describe('NewExport', () => {
 		);
 	});
 
+	it('exports the last range window resolved at apply, not at submit', async () => {
+		const HOUR = 60 * 60 * 1000;
+		const applyTime = Date.UTC(2026, 0, 1, 12, 0, 0);
+
+		let now = applyTime;
+
+		const dateNowSpy = jest
+			.spyOn(Date, 'now')
+			.mockImplementation(() => now);
+
+		renderComponent();
+
+		await screen.findByText('loaded');
+
+		await userEvent.type(
+			await screen.findByRole('textbox', {name: /^name/i}),
+			'test-file'
+		);
+		await userEvent.click(screen.getByRole('checkbox', {name: 'Design'}));
+
+		await userEvent.selectOptions(
+			screen.getByRole('combobox', {name: 'filter-content-by'}),
+			'last'
+		);
+		await userEvent.click(
+			screen.getByRole('button', {name: /show-results/i})
+		);
+
+		// The user submits five hours after applying the filter.
+
+		now = applyTime + 5 * HOUR;
+
+		fetch.mockResponseOnce(JSON.stringify({}));
+
+		await userEvent.click(screen.getByRole('button', {name: /^export$/i}));
+
+		await waitFor(() => {
+			const exportCall = fetch.mock.calls.find(
+				([, init]) => init?.method === 'POST'
+			);
+
+			const body = JSON.parse(exportCall![1]!.body as string);
+
+			// The 12-hour window stays anchored to the apply time.
+
+			expect(body.startDate).toBe(
+				new Date(applyTime - 12 * HOUR).toISOString()
+			);
+			expect(body.endDate).toBe(new Date(applyTime).toISOString());
+		});
+
+		dateNowSpy.mockRestore();
+	});
+
 	it('enables the export button once the name is set since entities are checked by default', async () => {
 		renderComponent();
 

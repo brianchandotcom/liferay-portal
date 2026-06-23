@@ -72,6 +72,18 @@ public class ArtifactURLUtilTest {
 	}
 
 	@Test
+	public void testClientExtensionURLWithMalformedConfigFallsBack()
+		throws Exception {
+
+		String query = _transformClientExtensionConfigToQuery(
+			"{this is not valid JSON", "malformedconfig.zip");
+
+		Assert.assertTrue(
+			query.contains(Constants.BUNDLE_SYMBOLICNAME + "=malformedconfig"));
+		Assert.assertTrue(query.contains("Web-ContextPath=/malformedconfig"));
+	}
+
+	@Test
 	public void testClientExtensionURLWithoutVersionContainsExpectedSymbolicName()
 		throws Exception {
 
@@ -85,6 +97,18 @@ public class ArtifactURLUtilTest {
 
 		Assert.assertTrue(
 			query.contains(Constants.BUNDLE_SYMBOLICNAME + "=clientextension"));
+	}
+
+	@Test
+	public void testClientExtensionURLWithStringConfigValueFallsBack()
+		throws Exception {
+
+		String query = _transformClientExtensionConfigToQuery(
+			"{\"sample\": \"not-an-object\"}", "nonobjectconfig.zip");
+
+		Assert.assertTrue(
+			query.contains(Constants.BUNDLE_SYMBOLICNAME + "=nonobjectconfig"));
+		Assert.assertTrue(query.contains("Web-ContextPath=/nonobjectconfig"));
 	}
 
 	@Test
@@ -110,32 +134,27 @@ public class ArtifactURLUtilTest {
 	public void testClientExtensionURLWithVersionUsesConfigWebContextPath()
 		throws Exception {
 
-		File dir = temporaryFolder.newFolder();
-
-		File configFile = new File(
-			dir, "liferay-sample-global-js.client-extension-config.json");
-
-		String json =
-			"{\"sample\": {\"webContextPath\": \"/liferay-sample-global-js\"}}";
-
-		Files.write(configFile.toPath(), json.getBytes(StandardCharsets.UTF_8));
-
-		File file = temporaryFolder.newFile(
+		String query = _transformClientExtensionConfigToQuery(
+			"{\"sample\": {\"webContextPath\": \"/liferay-sample-global-js\"}}",
 			"liferay-sample-global-js-1.0.0-SNAPSHOT.zip");
-
-		ZipTestUtil.zipDirToFile(dir, file);
-
-		URI uri = file.toURI();
-
-		URL url = ArtifactURLUtil.transform(uri.toURL());
-
-		String query = url.getQuery();
 
 		Assert.assertTrue(
 			query.contains("Web-ContextPath=/liferay-sample-global-js&"));
 		Assert.assertFalse(
 			query.contains(
 				"Web-ContextPath=/liferay-sample-global-js-1.0.0-SNAPSHOT"));
+	}
+
+	@Test
+	public void testClientExtensionURLWithWebContextPathWithoutLeadingSlash()
+		throws Exception {
+
+		String query = _transformClientExtensionConfigToQuery(
+			"{\"sample\": {\"webContextPath\": \"no-slash\"}}",
+			"noleadingslash.zip");
+
+		Assert.assertTrue(query.contains("Web-ContextPath=/no-slash"));
+		Assert.assertFalse(query.contains("Web-ContextPath=//no-slash"));
 	}
 
 	@Test
@@ -160,6 +179,29 @@ public class ArtifactURLUtilTest {
 		URI uri = url.toURI();
 
 		return uri.toASCIIString();
+	}
+
+	private String _transformClientExtensionConfigToQuery(
+			String configJSON, String zipName)
+		throws Exception {
+
+		File dir = temporaryFolder.newFolder();
+
+		File configFile = new File(
+			dir, "liferay-sample-global-js.client-extension-config.json");
+
+		Files.write(
+			configFile.toPath(), configJSON.getBytes(StandardCharsets.UTF_8));
+
+		File file = temporaryFolder.newFile(zipName);
+
+		ZipTestUtil.zipDirToFile(dir, file);
+
+		URI uri = file.toURI();
+
+		URL url = ArtifactURLUtil.transform(uri.toURL());
+
+		return url.getQuery();
 	}
 
 }

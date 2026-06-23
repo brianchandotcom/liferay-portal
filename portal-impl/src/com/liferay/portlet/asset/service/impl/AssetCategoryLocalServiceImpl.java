@@ -598,6 +598,20 @@ public class AssetCategoryLocalServiceImpl
 	}
 
 	@Override
+	public List<AssetCategory> getVocabularyCategories(
+		long groupId, String name, long vocabularyId, int start, int end,
+		OrderByComparator<AssetCategory> orderByComparator) {
+
+		if (Validator.isNull(name)) {
+			return assetCategoryPersistence.findByG_V(
+				groupId, vocabularyId, start, end, orderByComparator);
+		}
+
+		return assetCategoryPersistence.findByG_LikeN_V(
+			groupId, name, vocabularyId, start, end, orderByComparator);
+	}
+
+	@Override
 	public int getVocabularyCategoriesCount(long vocabularyId) {
 		return assetCategoryPersistence.countByVocabularyId(vocabularyId);
 	}

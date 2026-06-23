@@ -488,7 +488,7 @@ test('JS client extension can be created with name translations while having a l
 			page.getByLabel('Current translation is English', {exact: false})
 		).toBeVisible();
 
-		await editJSClientExtensionsPage.nameInput.fill(englishName);
+		await editJSClientExtensionsPage.fillName('en_US', englishName);
 
 		await clickAndExpectToBeVisible({
 			autoClick: true,
@@ -505,7 +505,7 @@ test('JS client extension can be created with name translations while having a l
 			page.getByLabel('Current translation is Spanish', {exact: false})
 		).toBeVisible();
 
-		await editJSClientExtensionsPage.nameInput.fill(spanishName);
+		await editJSClientExtensionsPage.fillName('es_ES', spanishName);
 
 		await editJSClientExtensionsPage.javaScriptURLInput.fill(
 			'https://www.example.com/script.js'

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page} from '@playwright/test';
+import {Locator, Page, expect} from '@playwright/test';
 
 import POM from '../../../../utils/POM';
 import {waitForInputLocalized} from '../../../../utils/waitFor';
@@ -105,6 +105,14 @@ export class EditClientExtensionsPage extends POM {
 		await this.page
 			.locator(`#_${this.portletName}_namePaletteContentBox`)
 			.waitFor({state: 'hidden'});
+	}
+
+	async fillName(languageId: string, name: string) {
+		await this.nameInput.fill(name);
+
+		await expect(
+			this.page.locator(`#_${this.portletName}_name_${languageId}`)
+		).toHaveValue(name);
 	}
 
 	async publish(waitAction: WaitAction) {

@@ -119,7 +119,7 @@ public class DisplayPageTemplateFolderResourceImpl
 
 			@Override
 			public String getSectionKey() {
-				return ExportImportConstants.SECTION_KEY_SITE_BUILDER;
+				return ExportImportConstants.SECTION_KEY_DESIGN;
 			}
 
 			@Override

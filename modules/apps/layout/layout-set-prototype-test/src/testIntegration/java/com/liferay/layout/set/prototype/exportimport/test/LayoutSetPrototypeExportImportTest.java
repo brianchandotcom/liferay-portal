@@ -16,6 +16,7 @@ import com.liferay.exportimport.test.util.lar.BasePortletExportImportTestCase;
 import com.liferay.layout.set.prototype.constants.LayoutSetPrototypePortletKeys;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
@@ -37,7 +38,6 @@ import java.io.File;
 
 import java.util.Date;
 import java.util.Map;
-import java.util.concurrent.Callable;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -169,9 +169,7 @@ public class LayoutSetPrototypeExportImportTest
 
 	@Test
 	@TestInfo("LPD-95511")
-	public void testImportContentPageIntoLayoutSetPrototypeDoesNotDeadlock()
-		throws Exception {
-
+	public void testImportLayoutSetPrototypeWithLayout() throws Exception {
 		LayoutSetPrototype layoutSetPrototype =
 			LayoutTestUtil.addLayoutSetPrototype(RandomTestUtil.randomString());
 
@@ -180,60 +178,49 @@ public class LayoutSetPrototypeExportImportTest
 		long layoutSetPrototypeId =
 			layoutSetPrototype.getLayoutSetPrototypeId();
 
-		// A layout set prototype import runs in an outer transaction that
-		// updates and therefore locks the layout set prototype row, while the
-		// batch engine imports each content page in a nested REQUIRES_NEW
-		// transaction. Adding a content page fires
-		// LayoutSetPrototypeLayoutModelListener, whose cascade updates the
-		// layout set and, through LayoutSetPrototypeLayoutSetModelListener, the
-		// same layout set prototype row again from the nested transaction.
-		// Before LPD-95511 that nested update blocked on the outer lock and
-		// timed out with a PessimisticLockException. The fix skips the cascade
-		// while an import is in process, which this test asserts by reproducing
-		// the same transaction nesting.
-
 		boolean layoutImportInProcess =
 			ExportImportThreadLocal.isLayoutImportInProcess();
 
 		ExportImportThreadLocal.setLayoutImportInProcess(true);
 
-		Callable<Void> importLayoutSetPrototypeCallable = () -> {
-
-			// Lock the layout set prototype row in the outer transaction, as
-			// importing its staged model does
-
-			LayoutSetPrototype lockedLayoutSetPrototype =
-				LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototype(
-					layoutSetPrototypeId);
-
-			Date modifiedDate = lockedLayoutSetPrototype.getModifiedDate();
-
-			long time = modifiedDate.getTime();
-
-			lockedLayoutSetPrototype.setModifiedDate(new Date(time - Time.DAY));
-
-			LayoutSetPrototypeLocalServiceUtil.updateLayoutSetPrototype(
-				lockedLayoutSetPrototype);
-
-			// Import a content page in a nested transaction, as the batch
-			// engine does for each page
-
-			try {
-				TransactionInvokerUtil.invoke(
-					_requiresNewTransactionConfig,
-					() -> LayoutTestUtil.addTypeContentLayout(
-						group, true, false));
-			}
-			catch (Throwable throwable) {
-				throw new Exception(throwable);
-			}
-
-			return null;
-		};
-
 		try {
 			TransactionInvokerUtil.invoke(
-				_requiredTransactionConfig, importLayoutSetPrototypeCallable);
+				_requiredTransactionConfig,
+				() -> {
+
+					// Lock the layout set prototype row in the outer
+					// transaction, as importing its staged model does
+
+					LayoutSetPrototype lockedLayoutSetPrototype =
+						LayoutSetPrototypeLocalServiceUtil.
+							getLayoutSetPrototype(layoutSetPrototypeId);
+
+					Date modifiedDate =
+						lockedLayoutSetPrototype.getModifiedDate();
+
+					long time = modifiedDate.getTime();
+
+					lockedLayoutSetPrototype.setModifiedDate(
+						new Date(time - Time.DAY));
+
+					LayoutSetPrototypeLocalServiceUtil.updateLayoutSetPrototype(
+						lockedLayoutSetPrototype);
+
+					// Import a content page in a nested transaction, as the
+					// batch engine does for each page
+
+					try {
+						TransactionInvokerUtil.invoke(
+							_requiresNewTransactionConfig,
+							() -> LayoutTestUtil.addTypeContentLayout(
+								group, true, false));
+					}
+					catch (Throwable throwable) {
+						throw new SystemException(throwable);
+					}
+
+					return null;
+				});
 		}
 		catch (Throwable throwable) {
 			throw new AssertionError(

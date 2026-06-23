@@ -1,6 +1,3 @@
-const currentLength = document.getElementById(
-	`${fragmentElementId}-current-length`
-);
 const dropdown = document.getElementById(`${fragmentElementId}-dropdown`);
 const error = document.getElementById(`${fragmentElementId}-email-input-error`);
 const errorMessage = document.getElementById(
@@ -10,7 +7,6 @@ const formGroup = document.getElementById(`${fragmentElementId}-form-group`);
 const inputElement = document.getElementById(
 	`${fragmentElementId}-email-input`
 );
-const lengthInfo = document.getElementById(`${fragmentElementId}-length-info`);
 
 function main() {
 	if (layoutMode === 'edit' && inputElement) {
@@ -28,14 +24,12 @@ function main() {
 			registerUnlocalizedInput,
 		}) => {
 			registerInputFeedback({
-				currentLengthContainer: currentLength,
 				errorContainer: error,
 				errorMessageContainer: errorMessage,
 				formGroup,
 				fragmentElement,
 				input,
 				inputElement,
-				lengthInfoContainer: lengthInfo,
 			});
 
 			const defaultLanguageId = input.attributes.defaultLanguageId;

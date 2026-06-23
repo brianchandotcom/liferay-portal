@@ -61,6 +61,16 @@ public class DepotEntryModelListenerTest {
 	public void testOnBeforeRemoveUpdateAssetVocabularyGroupRel()
 		throws Exception {
 
+		_testOnBeforeRemoveUpdateAssetVocabularyGroupRel(
+			DepotConstants.TYPE_PROJECT);
+		_testOnBeforeRemoveUpdateAssetVocabularyGroupRel(
+			DepotConstants.TYPE_SPACE);
+	}
+
+	private void _testOnBeforeRemoveUpdateAssetVocabularyGroupRel(
+			int depotEntryType)
+		throws Exception {
+
 		AssetVocabulary assetVocabulary =
 			_assetVocabularyLocalService.addVocabulary(
 				TestPropsValues.getUserId(), _group.getGroupId(),
@@ -70,8 +80,8 @@ public class DepotEntryModelListenerTest {
 
 		List<AssetVocabularyGroupRel> assetVocabularyGroupRels =
 			_assetVocabularyGroupRelLocalService.
-				getAssetVocabularyGroupRelsByVocabularyId(
-					assetVocabulary.getVocabularyId());
+				getAssetVocabularyGroupRelsByVocabularyIdAndDepotEntryType(
+					assetVocabulary.getVocabularyId(), depotEntryType);
 
 		Assert.assertEquals(
 			assetVocabularyGroupRels.toString(), 1,
@@ -87,27 +97,26 @@ public class DepotEntryModelListenerTest {
 		DepotEntry depotEntry1 = _depotEntryLocalService.addDepotEntry(
 			Collections.singletonMap(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
-			null, DepotConstants.TYPE_SPACE,
+			null, depotEntryType,
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId()));
 
 		DepotEntry depotEntry2 = _depotEntryLocalService.addDepotEntry(
 			Collections.singletonMap(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
-			null, DepotConstants.TYPE_SPACE,
+			null, depotEntryType,
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId()));
 
 		long[] groupIds = {depotEntry1.getGroupId(), depotEntry2.getGroupId()};
 
 		_assetVocabularyGroupRelLocalService.setAssetVocabularyGroupRels(
-			assetVocabulary.getVocabularyId(), groupIds,
-			DepotConstants.TYPE_SPACE);
+			assetVocabulary.getVocabularyId(), groupIds, depotEntryType);
 
 		assetVocabularyGroupRels =
 			_assetVocabularyGroupRelLocalService.
-				getAssetVocabularyGroupRelsByVocabularyId(
-					assetVocabulary.getVocabularyId());
+				getAssetVocabularyGroupRelsByVocabularyIdAndDepotEntryType(
+					assetVocabulary.getVocabularyId(), depotEntryType);
 
 		Assert.assertEquals(
 			assetVocabularyGroupRels.toString(), 2,
@@ -127,8 +136,8 @@ public class DepotEntryModelListenerTest {
 
 		assetVocabularyGroupRels =
 			_assetVocabularyGroupRelLocalService.
-				getAssetVocabularyGroupRelsByVocabularyId(
-					assetVocabulary.getVocabularyId());
+				getAssetVocabularyGroupRelsByVocabularyIdAndDepotEntryType(
+					assetVocabulary.getVocabularyId(), depotEntryType);
 
 		Assert.assertEquals(
 			assetVocabularyGroupRels.toString(), 1,
@@ -143,8 +152,8 @@ public class DepotEntryModelListenerTest {
 
 		assetVocabularyGroupRels =
 			_assetVocabularyGroupRelLocalService.
-				getAssetVocabularyGroupRelsByVocabularyId(
-					assetVocabulary.getVocabularyId());
+				getAssetVocabularyGroupRelsByVocabularyIdAndDepotEntryType(
+					assetVocabulary.getVocabularyId(), depotEntryType);
 
 		Assert.assertEquals(
 			assetVocabularyGroupRels.toString(), 1,

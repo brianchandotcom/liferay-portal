@@ -184,14 +184,5 @@ export function jsDatetoYYYYMMDD(dateJsObject: string | Date) {
 		dateJsObject = new Date(dateJsObject as string);
 	}
 
-	const intl = new Intl.DateTimeFormat(
-		Liferay.ThemeDisplay.getBCP47LanguageId(),
-		{
-			day: '2-digit',
-			month: '2-digit',
-			year: 'numeric',
-		}
-	);
-
-	return intl.format(dateJsObject as Date);
+	return dateUtils.format(dateJsObject as Date, 'yyyy-MM-dd');
 }

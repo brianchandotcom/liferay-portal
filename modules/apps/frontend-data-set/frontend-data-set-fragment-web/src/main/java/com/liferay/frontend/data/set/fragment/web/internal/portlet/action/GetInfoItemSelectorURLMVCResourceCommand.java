@@ -26,10 +26,6 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * Returns a portlet URL pointing at the Info Item selector together with the
- * event name the selector fires when an item is picked. The Data Set fragment
- * configuration UI uses both to open the selector via openSelectionModal.
- *
  * @author Daniel Sanz
  */
 @Component(
@@ -64,8 +60,7 @@ public class GetInfoItemSelectorURLMVCResourceCommand
 
 		if (itemSelectorURL == null) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Item Selector returned a null URL for InfoItem criterion");
+				_log.warn("Item selector URL is null");
 			}
 
 			JSONPortletResponseUtil.writeJSON(

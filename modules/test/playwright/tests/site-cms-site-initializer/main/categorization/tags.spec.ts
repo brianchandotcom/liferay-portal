@@ -537,10 +537,13 @@ test('Validate tag inputs', {tag: ['@LPD-69687']}, async ({page, tagsPage}) => {
 
 	// Check we can't publish without selecting a space
 
-	await clickAndExpectToBeVisible({
-		target: page.getByText('The Space field is required'),
-		trigger: tagsPage.spaceCheckbox,
-	});
+	await tagsPage.spaceCheckbox.uncheck();
+
+	await page.getByLabel('Space Selector').focus();
+
+	await page.keyboard.press('Tab');
+
+	await expect(page.getByText('The Space field is required')).toBeVisible();
 
 	await expect(tagsPage.saveButton).toBeDisabled();
 });

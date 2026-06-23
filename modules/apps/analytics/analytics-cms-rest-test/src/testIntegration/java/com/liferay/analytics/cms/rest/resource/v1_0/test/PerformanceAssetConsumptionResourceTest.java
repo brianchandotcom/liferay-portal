@@ -338,8 +338,7 @@ public class PerformanceAssetConsumptionResourceTest
 
 		String location = recordingMockHttp.getLocation();
 
-		_assertParameter(
-			"viewsMetric", "assetSummaryMetricTypeString", location);
+		_assertParameter("viewsMetric", "assetSummaryMetricType", location);
 		_assertParameter(String.valueOf(categoryId), "categoryId", location);
 		_assertParameter(
 			String.valueOf(dataSourceId), "dataSourceId", location);

@@ -26,7 +26,6 @@ function audience(overrides: {[key: string]: any} = {}): any {
 	return {
 		conjunction: 'AND',
 		id: 'the_audience',
-		retentionType: 'PAGE',
 		rules: [leafRule()],
 		...overrides,
 	};
@@ -202,19 +201,6 @@ describe('check', () => {
 			expect(() =>
 				check(audiencesDefinition({audiences: [audience({id: 123})]}))
 			).toThrow("field 'id' must be a string");
-		});
-
-		it('rejects an invalid retentionType', () => {
-			expect(() =>
-				check(
-					audiencesDefinition({
-						audiences: [audience({retentionType: 'FOREVER'})],
-					})
-				)
-			).toThrow(
-				"Audience 'the_audience' field 'retentionType' must be one of: " +
-					"'BROWSER', 'PAGE', 'TAB'"
-			);
 		});
 	});
 

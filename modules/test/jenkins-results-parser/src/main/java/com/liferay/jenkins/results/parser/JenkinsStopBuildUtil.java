@@ -22,6 +22,29 @@ import org.json.JSONObject;
  */
 public class JenkinsStopBuildUtil {
 
+	public static void cancelQueueItem(
+			JenkinsMaster jenkinsMaster, long queueId)
+		throws Exception {
+
+		String normalizedURL = JenkinsResultsParserUtil.fixURL(
+			JenkinsResultsParserUtil.getLocalURL(jenkinsMaster.getURL()));
+
+		URL urlObject = new URL(
+			normalizedURL + "/queue/cancelItem?id=" + queueId);
+
+		HttpURLConnection httpConnection =
+			(HttpURLConnection)urlObject.openConnection();
+
+		httpConnection.setRequestMethod("POST");
+
+		_setAuthorization(httpConnection);
+
+		System.out.println(
+			"Response from " + urlObject.toString() + ": " +
+				httpConnection.getResponseCode() + " " +
+					httpConnection.getResponseMessage());
+	}
+
 	public static void stopBuild(String buildURL) throws Exception {
 		_stopDownstreamBuilds(buildURL);
 
@@ -79,6 +102,20 @@ public class JenkinsStopBuildUtil {
 		return downstreamURLs;
 	}
 
+	private static void _setAuthorization(HttpURLConnection httpConnection)
+		throws Exception {
+
+		String username = JenkinsResultsParserUtil.getBuildProperty(
+			"jenkins.admin.user.name");
+
+		String password = JenkinsResultsParserUtil.getBuildProperty(
+			"jenkins.admin.user.token");
+
+		httpConnection.setRequestProperty(
+			"Authorization",
+			"Basic " + encodeAuthorizationFields(username, password));
+	}
+
 	private static void _stopBuild(Build build) throws Exception {
 		_stopBuild(build.getBuildURL());
 	}
@@ -98,20 +135,7 @@ public class JenkinsStopBuildUtil {
 
 			httpConnection.setRequestMethod("POST");
 
-			String username = JenkinsResultsParserUtil.getBuildProperty(
-				"jenkins.admin.user.name");
-
-			String password = JenkinsResultsParserUtil.getBuildProperty(
-				"jenkins.admin.user.token");
-
-			if (normalizedBuildURL.contains("test-1-1")) {
-				password = JenkinsResultsParserUtil.getBuildProperty(
-					"jenkins.admin.user.password");
-			}
-
-			httpConnection.setRequestProperty(
-				"Authorization",
-				"Basic " + encodeAuthorizationFields(username, password));
+			_setAuthorization(httpConnection);
 
 			System.out.println(
 				"Response from " + urlObject.toString() + ": " +

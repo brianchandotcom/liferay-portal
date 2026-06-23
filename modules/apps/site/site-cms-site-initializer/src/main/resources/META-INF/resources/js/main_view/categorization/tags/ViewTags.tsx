@@ -228,7 +228,7 @@ export default function ViewTags({
 	};
 
 	return (
-		<div className="categorization-section">
+		<>
 			<CategorizationToolbar
 				actionItems={actionItems}
 				activeTab="tags"
@@ -321,6 +321,6 @@ export default function ViewTags({
 				showSearch={true}
 				views={views}
 			/>
-		</div>
+		</>
 	);
 }

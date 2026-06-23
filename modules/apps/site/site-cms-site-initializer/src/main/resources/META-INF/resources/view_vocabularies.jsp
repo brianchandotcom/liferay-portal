@@ -12,21 +12,19 @@ ViewVocabulariesDisplayContext viewVocabulariesDisplayContext = (ViewVocabularie
 %>
 
 <div class="cms-section">
-	<div class="categorization-section">
-		<div>
-			<react:component
-				module="{CategorizationToolbar} from site-cms-site-initializer"
-				props="<%= viewVocabulariesDisplayContext.getReactData() %>"
-			/>
-		</div>
-
-		<frontend-data-set:headless-display
-			apiURL="<%= viewVocabulariesDisplayContext.getAPIURL() %>"
-			creationMenu="<%= viewVocabulariesDisplayContext.getCreationMenu() %>"
-			emptyState="<%= viewVocabulariesDisplayContext.getEmptyState() %>"
-			fdsActionDropdownItems="<%= viewVocabulariesDisplayContext.getFDSActionDropdownItems() %>"
-			id="<%= CMSSiteInitializerFDSNames.VOCABULARIES %>"
-			propsTransformer="{VocabularyFDSPropsTransformer} from site-cms-site-initializer"
+	<div>
+		<react:component
+			module="{CategorizationToolbar} from site-cms-site-initializer"
+			props="<%= viewVocabulariesDisplayContext.getReactData() %>"
 		/>
 	</div>
+
+	<frontend-data-set:headless-display
+		apiURL="<%= viewVocabulariesDisplayContext.getAPIURL() %>"
+		creationMenu="<%= viewVocabulariesDisplayContext.getCreationMenu() %>"
+		emptyState="<%= viewVocabulariesDisplayContext.getEmptyState() %>"
+		fdsActionDropdownItems="<%= viewVocabulariesDisplayContext.getFDSActionDropdownItems() %>"
+		id="<%= CMSSiteInitializerFDSNames.VOCABULARIES %>"
+		propsTransformer="{VocabularyFDSPropsTransformer} from site-cms-site-initializer"
+	/>
 </div>

@@ -11,7 +11,7 @@ import ClayMultiSelect from '@clayui/multi-select';
 import {FrontendDataSet} from '@liferay/frontend-data-set-web';
 import {useFormik} from 'formik';
 import {sub} from 'frontend-js-web';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useId, useRef, useState} from 'react';
 
 import SpaceSticker from '../../../common/components/SpaceSticker';
 import ApiHelper from '../../../common/services/ApiHelper';
@@ -238,100 +238,96 @@ export default function MergeTagsModalContent({
 
 		return (
 			<>
-				<div className="categorization-modal categorization-section">
-					<ClayModal.Header
-						closeButtonAriaLabel={Liferay.Language.get('close')}
-					>
-						{Liferay.Language.get('merge-tags')}
-					</ClayModal.Header>
+				<ClayModal.Header
+					closeButtonAriaLabel={Liferay.Language.get('close')}
+				>
+					{Liferay.Language.get('merge-tags')}
+				</ClayModal.Header>
 
-					<ClayModal.Body className="merge-tags">
-						<FrontendDataSet
-							apiURL={`/o/headless-admin-taxonomy/v1.0/sites/${cmsGroupId}/keywords`}
-							bulkActions={[]}
-							customRenderers={{
-								tableCell: [
-									{
-										component: ViewsSpaceTableCell,
-										name: VIEWS_SPACE_TABLE_CELL_RENDERER_NAME,
-										type: 'internal',
-									},
-								],
-							}}
-							hideManagementBarInEmptyState={true}
-							id="merge"
-
-							// @ts-ignore
-
-							onSelectedItemsChange={(
-								selectedItems: React.SetStateAction<{
-									selectedItems: any;
-								}>
-							) => {
-								const items = JSON.parse(
-									JSON.stringify(selectedItems)
-								);
-
-								const setTag: Tag[] = items.map(
-									(item: {id: any; name: any}) => ({
-										label: item.name,
-										value: item.id,
-									})
-								);
-
-								setSelectedTags(setTag);
-							}}
-							selectedItemsKey="id"
-							selectionType="multiple"
-							views={[
+				<ClayModal.Body>
+					<FrontendDataSet
+						apiURL={`/o/headless-admin-taxonomy/v1.0/sites/${cmsGroupId}/keywords`}
+						bulkActions={[]}
+						customRenderers={{
+							tableCell: [
 								{
-									contentRenderer: 'table',
-									label: Liferay.Language.get('table'),
-									name: 'table',
-									schema: {
-										fields: [
-											{
-												fieldName: 'name',
-												label: Liferay.Language.get(
-													'name'
-												),
-												sortable: false,
-											},
-											{
-												contentRenderer:
-													VIEWS_SPACE_TABLE_CELL_RENDERER_NAME,
-												fieldName: 'assetLibraries',
-												label: Liferay.Language.get(
-													'space'
-												),
-												sortable: false,
-											},
-										],
-									},
-									thumbnail: 'table',
+									component: ViewsSpaceTableCell,
+									name: VIEWS_SPACE_TABLE_CELL_RENDERER_NAME,
+									type: 'internal',
 								},
-							]}
-						/>
-					</ClayModal.Body>
+							],
+						}}
+						hideManagementBarInEmptyState={true}
+						id="merge"
 
-					<ClayModal.Footer
-						last={
-							<ClayButton.Group spaced>
-								<ClayButton
-									className="btn-cancel"
-									displayType="secondary"
-									onClick={() => closeModal()}
-								>
-									{Liferay.Language.get('cancel')}
-								</ClayButton>
+						// @ts-ignore
 
-								<ClayButton onClick={() => closeModal()}>
-									{Liferay.Language.get('done')}
-								</ClayButton>
-							</ClayButton.Group>
-						}
+						onSelectedItemsChange={(
+							selectedItems: React.SetStateAction<{
+								selectedItems: any;
+							}>
+						) => {
+							const items = JSON.parse(
+								JSON.stringify(selectedItems)
+							);
+
+							const setTag: Tag[] = items.map(
+								(item: {id: any; name: any}) => ({
+									label: item.name,
+									value: item.id,
+								})
+							);
+
+							setSelectedTags(setTag);
+						}}
+						selectedItemsKey="id"
+						selectionType="multiple"
+						views={[
+							{
+								contentRenderer: 'table',
+								label: Liferay.Language.get('table'),
+								name: 'table',
+								schema: {
+									fields: [
+										{
+											fieldName: 'name',
+											label: Liferay.Language.get('name'),
+											sortable: false,
+										},
+										{
+											contentRenderer:
+												VIEWS_SPACE_TABLE_CELL_RENDERER_NAME,
+											fieldName: 'assetLibraries',
+											label: Liferay.Language.get(
+												'space'
+											),
+											sortable: false,
+										},
+									],
+								},
+								thumbnail: 'table',
+							},
+						]}
 					/>
-				</div>
+				</ClayModal.Body>
+
+				<ClayModal.Footer
+					last={
+						<ClayButton.Group spaced>
+							<ClayButton
+								className="btn-cancel"
+								displayType="secondary"
+								onClick={() => closeModal()}
+							>
+								{Liferay.Language.get('cancel')}
+							</ClayButton>
+
+							<ClayButton onClick={() => closeModal()}>
+								{Liferay.Language.get('done')}
+							</ClayButton>
+						</ClayButton.Group>
+					}
+				/>
 			</>
 		);
 	};
@@ -346,95 +342,96 @@ export default function MergeTagsModalContent({
 		});
 	};
 
+	const selectId = useId();
+
 	return (
 		<form onSubmit={handleSubmit}>
-			<div className="categorization-modal">
-				<ClayModal.Header
-					closeButtonAriaLabel={Liferay.Language.get('close')}
-				>
-					{Liferay.Language.get('merge-tags')}
-				</ClayModal.Header>
+			<ClayModal.Header
+				closeButtonAriaLabel={Liferay.Language.get('close')}
+			>
+				{Liferay.Language.get('merge-tags')}
+			</ClayModal.Header>
 
-				<ClayModal.Body>
-					<ClayInput.Group>
-						<ClayInput.GroupItem className="categorization-spaces">
-							<label htmlFor="multiSelect">
-								{Liferay.Language.get('tags')}
-
-								<span className="ml-1 reference-mark">
-									<ClayIcon symbol="asterisk" />
-								</span>
-							</label>
-
-							<ClayMultiSelect
-								aria-label="multiSelect"
-								inputName="multiSelect"
-								items={selectedTags}
-								loadingState={3}
-								onItemsChange={(items: Tag[]) => {
-									_handleTagChange(items);
-								}}
-								sourceItems={tags}
-							/>
-						</ClayInput.GroupItem>
-
-						<ClayInput.GroupItem className="c-mt-4" shrink>
-							<ClayButton
-								aria-haspopup="dialog"
-								aria-label={Liferay.Language.get('select')}
-								displayType="secondary"
-								onClick={handleSelectButtonClick}
-							>
-								{Liferay.Language.get('select')}
-							</ClayButton>
-						</ClayInput.GroupItem>
-					</ClayInput.Group>
-
-					<Form.Group className="c-mt-3">
-						<label>
-							{Liferay.Language.get('into-this-tag')}
+			<ClayModal.Body>
+				<ClayInput.Group>
+					<ClayInput.GroupItem className="categorization-spaces">
+						<label htmlFor="multiSelect">
+							{Liferay.Language.get('tags')}
 
 							<span className="ml-1 reference-mark">
 								<ClayIcon symbol="asterisk" />
 							</span>
 						</label>
 
-						<ClaySelectWithOption
-							onChange={(event) => {
-								const selectedId = event.target.value;
-
-								const tag = selectedTags.find(
-									(item) => String(item.value) === selectedId
-								);
-
-								if (tag) {
-									setFieldValue('currentTag', tag);
-								}
+						<ClayMultiSelect
+							aria-label="multiSelect"
+							inputName="multiSelect"
+							items={selectedTags}
+							loadingState={3}
+							onItemsChange={(items: Tag[]) => {
+								_handleTagChange(items);
 							}}
-							options={selectedTags}
-							value={values.currentTag.value}
+							sourceItems={tags}
 						/>
-					</Form.Group>
-				</ClayModal.Body>
+					</ClayInput.GroupItem>
 
-				<ClayModal.Footer
-					last={
-						<ClayButton.Group spaced>
-							<ClayButton
-								displayType="secondary"
-								onClick={closeModal}
-								type="button"
-							>
-								{Liferay.Language.get('cancel')}
-							</ClayButton>
+					<ClayInput.GroupItem className="c-mt-4" shrink>
+						<ClayButton
+							aria-haspopup="dialog"
+							aria-label={Liferay.Language.get('select')}
+							displayType="secondary"
+							onClick={handleSelectButtonClick}
+						>
+							{Liferay.Language.get('select')}
+						</ClayButton>
+					</ClayInput.GroupItem>
+				</ClayInput.Group>
 
-							<ClayButton displayType="primary" type="submit">
-								{Liferay.Language.get('save')}
-							</ClayButton>
-						</ClayButton.Group>
-					}
-				/>
-			</div>
+				<Form.Group className="c-mt-3">
+					<label htmlFor={selectId}>
+						{Liferay.Language.get('into-this-tag')}
+
+						<span className="ml-1 reference-mark">
+							<ClayIcon symbol="asterisk" />
+						</span>
+					</label>
+
+					<ClaySelectWithOption
+						id={selectId}
+						onChange={(event) => {
+							const selectedId = event.target.value;
+
+							const tag = selectedTags.find(
+								(item) => String(item.value) === selectedId
+							);
+
+							if (tag) {
+								setFieldValue('currentTag', tag);
+							}
+						}}
+						options={selectedTags}
+						value={values.currentTag.value}
+					/>
+				</Form.Group>
+			</ClayModal.Body>
+
+			<ClayModal.Footer
+				last={
+					<ClayButton.Group spaced>
+						<ClayButton
+							displayType="secondary"
+							onClick={closeModal}
+							type="button"
+						>
+							{Liferay.Language.get('cancel')}
+						</ClayButton>
+
+						<ClayButton displayType="primary" type="submit">
+							{Liferay.Language.get('save')}
+						</ClayButton>
+					</ClayButton.Group>
+				}
+			/>
 		</form>
 	);
 }

@@ -36,7 +36,7 @@ test('Add a new tag', {tag: '@LPD-51250'}, async ({page, tagsPage}) => {
 
 	await checkAccessibility({
 		page,
-		selectors: ['.categorization-section'],
+		selectors: ['.cms-section'],
 	});
 
 	await tagsPage.deleteTag(tagName);
@@ -220,7 +220,7 @@ test('Bulk Merge tags', {tag: '@LPD-43388'}, async ({page, tagsPage}) => {
 
 	await expect(
 		page
-			.locator('.categorization-section')
+			.locator('.modal')
 			.locator('.fds table')
 			.locator('tbody tr')
 			.filter({hasText: tagName1})
@@ -228,19 +228,19 @@ test('Bulk Merge tags', {tag: '@LPD-43388'}, async ({page, tagsPage}) => {
 
 	await expect(
 		page
-			.locator('.categorization-section')
+			.locator('.modal')
 			.locator('.fds table')
 			.locator('tbody tr')
 			.filter({hasText: tagName2})
 	).toBeVisible();
 
 	await page
-		.locator('.categorization-section')
+		.locator('.fds table')
 		.getByRole('row', {name: tagName1})
 		.getByLabel('')
 		.click();
 	await page
-		.locator('.categorization-section')
+		.locator('.fds table')
 		.getByRole('row', {name: tagName2})
 		.getByLabel('')
 		.click();
@@ -273,6 +273,8 @@ test('Bulk Merge tags', {tag: '@LPD-43388'}, async ({page, tagsPage}) => {
 });
 
 test('Merge tags', {tag: '@LPD-43388'}, async ({page, tagsPage}) => {
+	await page.emulateMedia({reducedMotion: 'reduce'});
+
 	const tagName1 = await tagsPage.createTag();
 	const tagName2 = await tagsPage.createTag();
 
@@ -293,7 +295,7 @@ test('Merge tags', {tag: '@LPD-43388'}, async ({page, tagsPage}) => {
 
 	await checkAccessibility({
 		page,
-		selectors: ['.categorization-section'],
+		selectors: ['.modal-content'],
 	});
 
 	await expect(

@@ -301,7 +301,7 @@ test.describe("Category tests that don't focus on creation", () => {
 
 			await checkAccessibility({
 				page: editCategoryPage.page,
-				selectors: ['.categorization-section'],
+				selectors: ['.cms-section'],
 				selectorsToExclude: ['.control-menu-container'],
 			});
 
@@ -479,7 +479,7 @@ test.describe('Move category tests', () => {
 
 			await checkAccessibility({
 				page,
-				selectors: ['.category-selector-modal'],
+				selectors: ['.modal-content'],
 			});
 
 			await page.getByRole('button', {name: 'move'}).click();

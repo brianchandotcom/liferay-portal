@@ -103,7 +103,7 @@ const EditCategoryGeneralInfoTab = ({
 				role="group"
 			>
 				<ClayForm.Group className="c-gap-4 d-flex flex-column p-4">
-					<ClayLayout.Row className="form-title" justify="between">
+					<ClayLayout.Row className="mx-0" justify="between">
 						<h2 className="mb-0 py-2 text-6 text-dark">
 							{Liferay.Language.get('basic-info')}
 						</h2>

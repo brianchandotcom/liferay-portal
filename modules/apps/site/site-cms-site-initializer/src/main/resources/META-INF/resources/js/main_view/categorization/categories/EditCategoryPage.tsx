@@ -350,49 +350,47 @@ const EditCategoryPage = ({
 	};
 
 	return (
-		<div className="categorization-section">
-			<div className="edit-page">
-				<Toolbar backURL={backURL.toString()} title={getTitle()}>
-					<Toolbar.Item>
-						<ClayButton
-							aria-label={Liferay.Language.get('back')}
-							borderless
-							displayType="secondary"
-							onClick={() => navigate(backURL)}
-							outline
-							size="sm"
-						>
-							{Liferay.Language.get('cancel')}
-						</ClayButton>
+		<>
+			<Toolbar backURL={backURL.toString()} title={getTitle()}>
+				<Toolbar.Item>
+					<ClayButton
+						aria-label={Liferay.Language.get('back')}
+						borderless
+						displayType="secondary"
+						onClick={() => navigate(backURL)}
+						outline
+						size="sm"
+					>
+						{Liferay.Language.get('cancel')}
+					</ClayButton>
 
-						{isCreateNew && (
-							<ClayButton
-								data-testid="save-and-add-another-button"
-								disabled={!category.name.trim()}
-								displayType="secondary"
-								onClick={handleSaveAndAddAnother}
-								size="sm"
-							>
-								{Liferay.Language.get('save-and-add-another')}
-							</ClayButton>
-						)}
-
+					{isCreateNew && (
 						<ClayButton
-							className="inline-item-after"
-							data-testid="save-button"
+							data-testid="save-and-add-another-button"
 							disabled={!category.name.trim()}
-							displayType="primary"
-							onClick={handleSave}
+							displayType="secondary"
+							onClick={handleSaveAndAddAnother}
 							size="sm"
 						>
-							{Liferay.Language.get('save')}
+							{Liferay.Language.get('save-and-add-another')}
 						</ClayButton>
-					</Toolbar.Item>
-				</Toolbar>
+					)}
 
-				<VerticalNavLayout items={verticalNavItems} />
-			</div>
-		</div>
+					<ClayButton
+						className="inline-item-after"
+						data-testid="save-button"
+						disabled={!category.name.trim()}
+						displayType="primary"
+						onClick={handleSave}
+						size="sm"
+					>
+						{Liferay.Language.get('save')}
+					</ClayButton>
+				</Toolbar.Item>
+			</Toolbar>
+
+			<VerticalNavLayout items={verticalNavItems} />
+		</>
 	);
 };
 export default EditCategoryPage;

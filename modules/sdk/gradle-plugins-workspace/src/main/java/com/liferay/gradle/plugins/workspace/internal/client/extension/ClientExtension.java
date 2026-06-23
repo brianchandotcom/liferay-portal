@@ -138,9 +138,7 @@ public class ClientExtension {
 		configMap.put("properties", _encode(properties));
 		configMap.put("sourceCodeURL", sourceCodeURL);
 		configMap.put("type", type);
-		configMap.put(
-			"webContextPath",
-			webContextPath);
+		configMap.put("webContextPath", webContextPath);
 
 		if (!pid.contains("CETConfiguration")) {
 			configMap.putAll(typeSettings);

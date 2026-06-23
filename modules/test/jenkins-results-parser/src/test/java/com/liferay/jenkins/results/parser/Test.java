@@ -5,6 +5,7 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
@@ -47,6 +48,8 @@ public class Test {
 		Environment.setInstance(new Environment());
 
 		Shell.setInstance(new Shell());
+
+		UrlReader.setInstance(new UrlReader());
 	}
 
 	@Rule
@@ -316,6 +319,20 @@ public class Test {
 		return shell;
 	}
 
+	protected UrlReader mockUrlReader() {
+		UrlReader urlReader = Mockito.mock(
+			UrlReader.class,
+			invocation -> {
+				String url = invocation.getArgument(7);
+
+				throw new AssertionError("No output set for URL: " + url);
+			});
+
+		UrlReader.setInstance(urlReader);
+
+		return urlReader;
+	}
+
 	protected String read(File file) throws IOException {
 		return new String(Files.readAllBytes(Paths.get(file.toURI())));
 	}
@@ -343,6 +360,22 @@ public class Test {
 		).doExecute(
 			Mockito.argThat(
 				executionRequest -> _hasCommand(command, executionRequest))
+		);
+	}
+
+	protected void setUrlReaderOutput(
+			String standardOut, String url, UrlReader urlReader)
+		throws Exception {
+
+		Mockito.doAnswer(
+			invocation -> new ByteArrayInputStream(standardOut.getBytes())
+		).when(
+			urlReader
+		).doRead(
+			Mockito.anyBoolean(), Mockito.any(), Mockito.any(),
+			Mockito.anyInt(), Mockito.any(), Mockito.anyInt(), Mockito.anyInt(),
+			Mockito.argThat(
+				readURL -> (readURL != null) && readURL.contains(url))
 		);
 	}
 

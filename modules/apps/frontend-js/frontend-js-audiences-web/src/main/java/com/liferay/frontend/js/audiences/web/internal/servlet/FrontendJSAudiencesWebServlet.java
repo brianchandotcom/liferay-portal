@@ -5,9 +5,10 @@
 
 package com.liferay.frontend.js.audiences.web.internal.servlet;
 
+import com.liferay.frontend.js.audiences.AudiencesDefinition;
 import com.liferay.frontend.js.audiences.AudiencesDefinitionProvider;
+import com.liferay.frontend.js.audiences.ElementVariations;
 import com.liferay.frontend.js.audiences.ElementVariationsProvider;
-import com.liferay.frontend.js.audiences.HashedContent;
 import com.liferay.frontend.js.audiences.web.internal.util.BootstrapJavaScriptUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -55,44 +56,61 @@ public class FrontendJSAudiencesWebServlet extends HttpServlet {
 		String[] parts = StringUtil.split(
 			httpServletRequest.getPathInfo(), CharPool.SLASH);
 
-		String contentType = null;
-		HashedContent hashedContent = null;
+		String content;
+		String contentType;
+		String hash;
 
 		if ((parts.length == 2) && parts[1].startsWith("bootstrap.")) {
 			Long plid = _getPlid(httpServletRequest.getParameter("plid"));
 
-			if (plid != null) {
-				contentType = ContentTypes.APPLICATION_JAVASCRIPT;
-				hashedContent = BootstrapJavaScriptUtil.getHashedContent(
-					httpServletRequest.getParameter("audiencesDefinitionHash"),
-					httpServletRequest.getParameter("elementVariationsHash"),
-					Boolean.parseBoolean(
-						httpServletRequest.getParameter("enableLog")),
-					plid);
+			if (plid == null) {
+				httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
+
+				return;
 			}
+
+			content = BootstrapJavaScriptUtil.getContent(
+				httpServletRequest.getParameter("audiencesDefinitionHash"),
+				httpServletRequest.getParameter("elementVariationsHash"),
+				Boolean.parseBoolean(
+					httpServletRequest.getParameter("enableLog")),
+				plid);
+			contentType = ContentTypes.APPLICATION_JAVASCRIPT;
+			hash = BootstrapJavaScriptUtil.getHash();
 		}
 		else if ((parts.length == 2) && parts[1].startsWith("definition.")) {
+			AudiencesDefinition audiencesDefinition =
+				_audiencesDefinitionProvider.getAudiencesDefinition(
+					_portal.getCompanyId(httpServletRequest));
+
+			if (audiencesDefinition == null) {
+				httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
+
+				return;
+			}
+
+			content = audiencesDefinition.getContent();
 			contentType = ContentTypes.APPLICATION_JSON;
-			hashedContent = _audiencesDefinitionProvider.getHashedContent(
-				_portal.getCompanyId(httpServletRequest));
+			hash = audiencesDefinition.getHash();
 		}
 		else if ((parts.length == 3) && parts[2].startsWith("variations.")) {
-			Long plid = _getPlid(parts[1]);
+			ElementVariations elementVariations = _getElementVariations(parts);
 
-			if (plid != null) {
-				contentType = ContentTypes.APPLICATION_JAVASCRIPT;
-				hashedContent = _elementVariationsProvider.getHashedContent(
-					plid);
+			if (elementVariations == null) {
+				httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
+
+				return;
 			}
-		}
 
-		if (hashedContent == null) {
+			content = elementVariations.getContent();
+			contentType = ContentTypes.APPLICATION_JAVASCRIPT;
+			hash = elementVariations.getHash();
+		}
+		else {
 			httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
 
 			return;
 		}
-
-		String hash = hashedContent.getHash();
 
 		String requestHash = HashedFilesUtil.getHash(
 			httpServletRequest.getPathInfo());
@@ -122,7 +140,17 @@ public class FrontendJSAudiencesWebServlet extends HttpServlet {
 
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
-		printWriter.print(hashedContent.getContent());
+		printWriter.print(content);
+	}
+
+	private ElementVariations _getElementVariations(String[] parts) {
+		Long plid = _getPlid(parts[1]);
+
+		if (plid == null) {
+			return null;
+		}
+
+		return _elementVariationsProvider.getElementVariations(plid);
 	}
 
 	private Long _getPlid(String plid) {

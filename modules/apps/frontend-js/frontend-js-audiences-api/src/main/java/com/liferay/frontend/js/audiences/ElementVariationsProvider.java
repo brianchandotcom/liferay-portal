@@ -10,6 +10,6 @@ package com.liferay.frontend.js.audiences;
  */
 public interface ElementVariationsProvider {
 
-	public HashedContent getHashedContent(long plid);
+	public ElementVariations getElementVariations(long plid);
 
 }

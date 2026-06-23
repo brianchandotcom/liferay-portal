@@ -10,6 +10,6 @@ package com.liferay.frontend.js.audiences;
  */
 public interface AudiencesDefinitionProvider {
 
-	public HashedContent getHashedContent(long companyId);
+	public AudiencesDefinition getAudiencesDefinition(long companyId);
 
 }

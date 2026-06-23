@@ -678,7 +678,7 @@ public class Discount implements Serializable {
 	private Supplier<DiscountRule[]> _discountRulesSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Date when the discount becomes effective. ISO 8601 (yyyy-MM-dd).",
+		description = "Date and time when the discount becomes effective. ISO 8601.",
 		example = "2017-07-21"
 	)
 	public Date getDisplayDate() {
@@ -715,7 +715,7 @@ public class Discount implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "Date when the discount becomes effective. ISO 8601 (yyyy-MM-dd)."
+		description = "Date and time when the discount becomes effective. ISO 8601."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date displayDate;
@@ -724,7 +724,7 @@ public class Discount implements Serializable {
 	private Supplier<Date> _displayDateSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Date when the discount expires. ISO 8601 (yyyy-MM-dd); the runtime stops honoring the discount past this date.",
+		description = "Date and time when the discount expires. ISO 8601; the runtime stops honoring the discount past this date.",
 		example = "2017-08-21"
 	)
 	public Date getExpirationDate() {
@@ -761,7 +761,7 @@ public class Discount implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "Date when the discount expires. ISO 8601 (yyyy-MM-dd); the runtime stops honoring the discount past this date."
+		description = "Date and time when the discount expires. ISO 8601; the runtime stops honoring the discount past this date."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date expirationDate;
@@ -2323,4 +2323,4 @@ public class Discount implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1327394978
+// LIFERAY-REST-BUILDER-HASH:2067642816

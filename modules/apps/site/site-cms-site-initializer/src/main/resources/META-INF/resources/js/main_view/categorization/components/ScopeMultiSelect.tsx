@@ -5,13 +5,13 @@
 
 import {NetworkStatus} from '@clayui/data-provider';
 import ClayForm, {ClayCheckbox} from '@clayui/form';
-import ClayIcon from '@clayui/icon';
 import ClayMultiSelect from '@clayui/multi-select';
 import {sub} from 'frontend-js-web';
 import React, {useEffect, useId, useState} from 'react';
 
 import SpaceSticker from '../../../common/components/SpaceSticker';
 import ErrorFeedback from '../../../common/components/forms/ErrorFeedback';
+import RequiredMark from '../../../common/components/forms/RequiredMark';
 import {LogoColor} from '../../../common/types/Space';
 
 export type ScopeItem = {
@@ -59,6 +59,7 @@ export default function ScopeMultiSelect<T extends ScopeItem>({
 	);
 
 	const errorId = useId();
+	const inputId = useId();
 
 	const loadingState = !sourceItems.length
 		? NetworkStatus.Polling
@@ -131,12 +132,10 @@ export default function ScopeMultiSelect<T extends ScopeItem>({
 
 	return (
 		<div>
-			<label htmlFor="multiSelect">
+			<label htmlFor={inputId}>
 				{labels.field}
 
-				<span className="ml-1 reference-mark">
-					<ClayIcon symbol="asterisk" />
-				</span>
+				<RequiredMark />
 			</label>
 
 			<div className={touched && error ? 'has-error' : ''}>
@@ -144,7 +143,7 @@ export default function ScopeMultiSelect<T extends ScopeItem>({
 					aria-describedby={touched && error ? errorId : undefined}
 					aria-label={labels.ariaLabel}
 					disabled={allScopesChecked}
-					id="multiSelect"
+					id={inputId}
 					items={selectedItems}
 					key={sourceItems.length ? 'loaded' : 'empty'}
 					loadingState={loadingState}

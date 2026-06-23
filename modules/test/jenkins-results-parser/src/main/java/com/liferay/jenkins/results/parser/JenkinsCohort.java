@@ -51,6 +51,30 @@ public class JenkinsCohort {
 		return awsFleetCloudsMap.keySet();
 	}
 
+	public List<JenkinsMaster> getAvailableJenkinsMasters() {
+		List<JenkinsMaster> availableJenkinsMasters = new ArrayList<>();
+
+		for (JenkinsMaster jenkinsMaster : getJenkinsMasters()) {
+			if (!jenkinsMaster.isBlackListed() && jenkinsMaster.isAvailable()) {
+				availableJenkinsMasters.add(jenkinsMaster);
+			}
+		}
+
+		return availableJenkinsMasters;
+	}
+
+	public List<JenkinsMaster> getBlackListedJenkinsMasters() {
+		List<JenkinsMaster> blackListedJenkinsMasters = new ArrayList<>();
+
+		for (JenkinsMaster jenkinsMaster : getJenkinsMasters()) {
+			if (jenkinsMaster.isBlackListed()) {
+				blackListedJenkinsMasters.add(jenkinsMaster);
+			}
+		}
+
+		return blackListedJenkinsMasters;
+	}
+
 	public int getIdleJenkinsSlaveCount() {
 		int idleJenkinsSlaveCount = 0;
 

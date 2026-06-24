@@ -4,28 +4,23 @@
  */
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
-import ClayForm, {
-	ClayInput,
-	ClaySelectWithOption,
-	ClayToggle,
-} from '@clayui/form';
+import ClayForm, {ClayInput, ClayToggle} from '@clayui/form';
+import ClayMultiSelect from '@clayui/multi-select';
 import {useId} from 'frontend-js-components-web';
 import React from 'react';
 
-interface ElementVariation {
-	audienceEntryERC: string;
-	hide: boolean;
-	html: string;
-	js: string;
-	name: string;
-	targetElement: string;
-}
+import {ElementVariation} from './elementVariationsReducer';
+
+type ElementVariationFormData = Pick<
+	ElementVariation,
+	'audienceEntryERC' | 'hide' | 'html' | 'js' | 'name' | 'targetElement'
+>;
 
 interface Props {
 	audiences: Array<{label: string; value: string}>;
-	elementVariation: ElementVariation;
+	elementVariation: ElementVariationFormData;
 	onCancel: () => void;
-	onChange: (properties: Partial<ElementVariation>) => void;
+	onChange: (properties: Partial<ElementVariationFormData>) => void;
 	onSave: () => void;
 }
 
@@ -61,7 +56,7 @@ export default function ElementVariationForm({
 			</div>
 
 			<div className="flex-grow-1 overflow-auto p-3">
-				<ClayForm.Group>
+				<ClayForm.Group small>
 					<label htmlFor={nameId}>
 						{Liferay.Language.get('name')}
 					</label>
@@ -74,7 +69,7 @@ export default function ElementVariationForm({
 					/>
 				</ClayForm.Group>
 
-				<ClayForm.Group>
+				<ClayForm.Group small>
 					<label htmlFor={targetElementId}>
 						{Liferay.Language.get('page-element')}
 					</label>
@@ -89,30 +84,60 @@ export default function ElementVariationForm({
 					/>
 				</ClayForm.Group>
 
-				<ClayForm.Group>
+				<ClayForm.Group small>
 					<label htmlFor={audienceId}>
 						{Liferay.Language.get('audience')}
 					</label>
 
-					<ClaySelectWithOption
+					<ClayMultiSelect
 						id={audienceId}
-						onChange={(event) =>
-							onChange({audienceEntryERC: event.target.value})
-						}
-						options={audiences}
-						value={elementVariation.audienceEntryERC}
+						items={audiences.filter(
+							(audience) =>
+								audience.value ===
+								elementVariation.audienceEntryERC
+						)}
+						onItemsChange={(
+							items: Array<{label: string; value: string}>
+						) => {
+							const existingAudiences = items
+								.map((item) =>
+									audiences.find(
+										(audience) =>
+											audience.value === item.value
+									)
+								)
+								.filter(
+									(
+										audience
+									): audience is {
+										label: string;
+										value: string;
+									} => Boolean(audience)
+								);
+
+							onChange({
+								audienceEntryERC: existingAudiences.length
+									? existingAudiences[
+											existingAudiences.length - 1
+										].value
+									: '',
+							});
+						}}
+						sourceItems={audiences}
 					/>
 				</ClayForm.Group>
 
-				<ClayToggle
-					label={Liferay.Language.get(
-						'hide-element-for-this-audience'
-					)}
-					onToggle={(hide) => onChange({hide})}
-					toggled={elementVariation.hide}
-				/>
-
 				<ClayForm.Group>
+					<ClayToggle
+						label={Liferay.Language.get(
+							'hide-element-for-this-audience'
+						)}
+						onToggle={(hide) => onChange({hide})}
+						toggled={elementVariation.hide}
+					/>
+				</ClayForm.Group>
+
+				<ClayForm.Group small>
 					<label htmlFor={htmlId}>
 						{Liferay.Language.get('html')}
 					</label>
@@ -125,7 +150,7 @@ export default function ElementVariationForm({
 					/>
 				</ClayForm.Group>
 
-				<ClayForm.Group>
+				<ClayForm.Group small>
 					<label htmlFor={jsId}>
 						{Liferay.Language.get('javascript')}
 					</label>
@@ -151,7 +176,7 @@ export default function ElementVariationForm({
 
 				<ClayButton
 					className="ml-2"
-					displayType="secondary"
+					displayType="primary"
 					onClick={onSave}
 					size="sm"
 				>

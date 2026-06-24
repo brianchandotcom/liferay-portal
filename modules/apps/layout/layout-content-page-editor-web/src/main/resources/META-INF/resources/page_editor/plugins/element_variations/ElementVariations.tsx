@@ -9,7 +9,10 @@ import ClayEmptyState from '@clayui/empty-state';
 import {useId} from 'frontend-js-components-web';
 import React, {useReducer, useState} from 'react';
 
+import {initializeConfig} from '../../app/config/index';
+import {Config} from '../../types/config';
 import ElementVariationForm from './ElementVariationForm';
+import ElementVariationService from './ElementVariationService';
 import ElementVariationsList from './ElementVariationsList';
 import {
 	ElementVariation,
@@ -21,38 +24,51 @@ import {
 import './ElementVariations.scss';
 
 interface Props {
+	addElementVariationURL: string;
 	audiences: Array<{label: string; value: string}>;
+	deleteElementVariationURL: string;
 	elementVariations: Array<Omit<ElementVariation, 'key'>>;
-	experiences: Array<{label: string; value: string}>;
+	experiences: Array<{
+		label: string;
+		segmentsExperienceERC: string;
+		segmentsExperienceId: number;
+	}>;
 	languageId: string;
 	plid: number;
-	redirect: string;
-	segmentsExperienceId: number;
+	portletNamespace: string;
+	selectedSegmentsExperienceId: number;
 }
 
-const ExperienceTrigger = React.forwardRef<HTMLButtonElement, any>(
-	({children, ...otherProps}, ref) => (
-		<ClayButton
-			className="form-control form-control-select form-control-sm text-left"
-			displayType="secondary"
-			ref={ref}
-			{...otherProps}
-		>
-			{children}
-		</ClayButton>
-	)
-);
+export default function (props: Props) {
+	initializeConfig({portletNamespace: props.portletNamespace} as Config);
 
-export default function ElementVariations({
+	return <ElementVariations {...props} />;
+}
+
+function ElementVariations({
+	addElementVariationURL,
 	audiences = [],
+	deleteElementVariationURL,
 	elementVariations: initialElementVariations = [],
 	experiences = [],
+	languageId,
+	plid,
+	selectedSegmentsExperienceId,
 }: Props) {
 	const experienceId = useId();
 
-	const [experienceKey, setExperienceKey] = useState(
-		experiences[0]?.value ?? ''
-	);
+	const [experienceKey, setExperienceKey] = useState(() => {
+		const selectedExperience = experiences.find(
+			(experience) =>
+				experience.segmentsExperienceId === selectedSegmentsExperienceId
+		);
+
+		return (
+			selectedExperience?.segmentsExperienceERC ??
+			experiences[0]?.segmentsExperienceERC ??
+			''
+		);
+	});
 
 	const [{draftElementVariation, elementVariations}, dispatch] = useReducer(
 		reducer,
@@ -86,7 +102,16 @@ export default function ElementVariations({
 								})
 							}
 							onSave={() =>
-								dispatch({type: 'SAVE_ELEMENT_VARIATION_DRAFT'})
+								ElementVariationService.addElementVariation({
+									addElementVariationURL,
+									elementVariation: draftElementVariation,
+									languageId,
+									plid,
+								}).then(() =>
+									dispatch({
+										type: 'SAVE_ELEMENT_VARIATION_DRAFT',
+									})
+								)
 							}
 						/>
 					) : (
@@ -107,7 +132,7 @@ export default function ElementVariations({
 										aria-label={Liferay.Language.get(
 											'experience'
 										)}
-										as={ExperienceTrigger}
+										className="form-control-sm"
 										id={experienceId}
 										items={experiences}
 										onSelectionChange={(selection) =>
@@ -116,7 +141,9 @@ export default function ElementVariations({
 										selectedKey={experienceKey}
 									>
 										{(item) => (
-											<Option key={item.value}>
+											<Option
+												key={item.segmentsExperienceERC}
+											>
 												{item.label}
 											</Option>
 										)}
@@ -128,6 +155,23 @@ export default function ElementVariations({
 										audiences={audiences}
 										elementVariations={
 											experienceElementVariations
+										}
+										onDeleteElementVariation={(
+											elementVariation
+										) =>
+											ElementVariationService.deleteElementVariation(
+												{
+													deleteElementVariationURL,
+													externalReferenceCode:
+														elementVariation.externalReferenceCode,
+													plid,
+												}
+											).then(() =>
+												dispatch({
+													key: elementVariation.key,
+													type: 'DELETE_ELEMENT_VARIATION',
+												})
+											)
 										}
 										onEditElementVariation={(key) =>
 											dispatch({

@@ -83,7 +83,7 @@ public class JournalArticleCTCollectionHistoryProvider
 	public CTEntry getCTEntry(
 		long ctCollectionId, long modelClassNameId, long modelClassPK) {
 
-		List<Long> resourcePrimKey = _ctEntryLocalService.dslQuery(
+		List<Long> resourcePrimKeys = _ctEntryLocalService.dslQuery(
 			DSLQueryFactoryUtil.select(
 				JournalArticleTable.INSTANCE.resourcePrimKey
 			).from(
@@ -92,7 +92,7 @@ public class JournalArticleCTCollectionHistoryProvider
 				JournalArticleTable.INSTANCE.id.eq(modelClassPK)
 			));
 
-		if (resourcePrimKey.isEmpty()) {
+		if (resourcePrimKeys.isEmpty()) {
 			return null;
 		}
 
@@ -103,7 +103,7 @@ public class JournalArticleCTCollectionHistoryProvider
 				JournalArticleTable.INSTANCE
 			).where(
 				JournalArticleTable.INSTANCE.resourcePrimKey.eq(
-					resourcePrimKey.get(0)
+					resourcePrimKeys.get(0)
 				).and(
 					JournalArticleTable.INSTANCE.ctCollectionId.eq(
 						ctCollectionId)
@@ -129,18 +129,26 @@ public class JournalArticleCTCollectionHistoryProvider
 	public UnsafeConsumer<SearchUtil.SearchContext, Exception>
 		getSearchContextUnsafeConsumer(long classNameId, long classPK) {
 
-		JournalArticle journalArticle =
-			_journalArticleLocalService.fetchJournalArticle(classPK);
-
 		return searchContext -> {
 			searchContext.setAttribute(
 				"modelClassNameId", new Long[] {classNameId});
 
-			if (journalArticle == null) {
-				if (classPK > 0) {
-					searchContext.setAttribute(
-						"modelClassPK", new Long[] {classPK});
-				}
+			if (classPK <= 0) {
+				return;
+			}
+
+			List<Long> resourcePrimKeys = _ctEntryLocalService.dslQuery(
+				DSLQueryFactoryUtil.select(
+					JournalArticleTable.INSTANCE.resourcePrimKey
+				).from(
+					JournalArticleTable.INSTANCE
+				).where(
+					JournalArticleTable.INSTANCE.id.eq(classPK)
+				));
+
+			if (resourcePrimKeys.isEmpty()) {
+				searchContext.setAttribute(
+					"modelClassPK", new Long[] {classPK});
 
 				return;
 			}
@@ -158,7 +166,7 @@ public class JournalArticleCTCollectionHistoryProvider
 							JournalArticleTable.INSTANCE
 						).where(
 							JournalArticleTable.INSTANCE.resourcePrimKey.eq(
-								journalArticle.getResourcePrimKey())
+								resourcePrimKeys.get(0))
 						))
 				));
 

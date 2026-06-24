@@ -36,7 +36,7 @@ const IndividualsDistributionCard: React.FC<
 			distributionKey="individualsDashboard"
 			fetchDistribution={(name) => toPromise(fetchDistribution(name))}
 			groupId={groupId}
-			id={id ?? groupId}
+			id={id ?? ''}
 			noResultsRenderer={() => (
 				<NoResultsDisplay
 					description={

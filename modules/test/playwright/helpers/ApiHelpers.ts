@@ -77,6 +77,7 @@ import {JSONWebServicesMBApiHelper} from './json-web-services/JSONWebServicesMBA
 import {JSONWebServicesOSBAsahApiHelper} from './json-web-services/JSONWebServicesOSBAsahApiHelper';
 import {JSONWebServicesOSBFaroApiHelper} from './json-web-services/JSONWebServicesOSBFaroApiHelper';
 import {JSONWebServicesResourcePermissionApiHelper} from './json-web-services/JSONWebServicesResourcePermissionApiHelper';
+import {JSONWebServicesRoleApiHelper} from './json-web-services/JSONWebServicesRoleApiHelper';
 import {JSONWebServicesSegmentsEntryApiHelper} from './json-web-services/JSONWebServicesSegmentsEntryApiHelper';
 import {JSONWebServicesSiteNavigationMenuApiHelper} from './json-web-services/JSONWebServicesSiteNavigationMenuApiHelper';
 import {JSONWebServicesStagingApiHelper} from './json-web-services/JSONWebServicesStagingApiHelper';
@@ -177,6 +178,7 @@ export class ApiHelpers {
 	readonly jsonWebServicesOSBAsah: JSONWebServicesOSBAsahApiHelper;
 	readonly jsonWebServicesOSBFaro: JSONWebServicesOSBFaroApiHelper;
 	readonly jsonWebServicesResourcePermissionApiHelper: JSONWebServicesResourcePermissionApiHelper;
+	readonly jsonWebServicesRole: JSONWebServicesRoleApiHelper;
 	readonly jsonWebServicesSegmentsEntry: JSONWebServicesSegmentsEntryApiHelper;
 	readonly jsonWebServicesSiteNavigationMenu: JSONWebServicesSiteNavigationMenuApiHelper;
 	readonly jsonWebServicesStaging: JSONWebServicesStagingApiHelper;
@@ -290,6 +292,7 @@ export class ApiHelpers {
 		this.jsonWebServicesOSBAsah = new JSONWebServicesOSBAsahApiHelper(this);
 		this.jsonWebServicesResourcePermissionApiHelper =
 			new JSONWebServicesResourcePermissionApiHelper(this);
+		this.jsonWebServicesRole = new JSONWebServicesRoleApiHelper(this);
 		this.jsonWebServicesSegmentsEntry =
 			new JSONWebServicesSegmentsEntryApiHelper(this);
 		this.jsonWebServicesSiteNavigationMenu =

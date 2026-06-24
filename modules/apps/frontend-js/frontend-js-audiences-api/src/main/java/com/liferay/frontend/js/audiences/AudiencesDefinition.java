@@ -5,10 +5,12 @@
 
 package com.liferay.frontend.js.audiences;
 
+import java.io.Serializable;
+
 /**
  * @author Iván Zaera Avellón
  */
-public class AudiencesDefinition {
+public class AudiencesDefinition implements Serializable {
 
 	public AudiencesDefinition(String content, String hash) {
 		_content = content;

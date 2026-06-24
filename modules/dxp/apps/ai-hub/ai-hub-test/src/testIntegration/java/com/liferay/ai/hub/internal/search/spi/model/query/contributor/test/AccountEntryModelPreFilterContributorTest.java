@@ -37,7 +37,7 @@ import org.junit.runner.RunWith;
  */
 @FeatureFlag("LPD-62272")
 @RunWith(Arquillian.class)
-public class AIHubAccountEntryModelPreFilterContributorTest {
+public class AccountEntryModelPreFilterContributorTest {
 
 	@ClassRule
 	@Rule
@@ -48,13 +48,8 @@ public class AIHubAccountEntryModelPreFilterContributorTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_accountEntry =
-			_accountEntryLocalService.fetchAccountEntryByExternalReferenceCode(
-				"L_AI_HUB", TestPropsValues.getCompanyId());
-
-		if (_accountEntry == null) {
-			_accountEntry = _addAccountEntry("L_AI_HUB");
-		}
+		_aiHubAccountEntry = _fetchOrAddAccountEntry("L_AI_HUB");
+		_seoStudioAccountEntry = _fetchOrAddAccountEntry("L_SEO_STUDIO");
 	}
 
 	@Test
@@ -73,7 +68,11 @@ public class AIHubAccountEntryModelPreFilterContributorTest {
 		Assert.assertTrue(
 			accountEntries.toString(), accountEntries.contains(accountEntry));
 		Assert.assertFalse(
-			accountEntries.toString(), accountEntries.contains(_accountEntry));
+			accountEntries.toString(),
+			accountEntries.contains(_aiHubAccountEntry));
+		Assert.assertFalse(
+			accountEntries.toString(),
+			accountEntries.contains(_seoStudioAccountEntry));
 	}
 
 	@Rule
@@ -91,9 +90,24 @@ public class AIHubAccountEntryModelPreFilterContributorTest {
 			ServiceContextTestUtil.getServiceContext());
 	}
 
-	private AccountEntry _accountEntry;
+	private AccountEntry _fetchOrAddAccountEntry(String externalReferenceCode)
+		throws Exception {
+
+		AccountEntry accountEntry =
+			_accountEntryLocalService.fetchAccountEntryByExternalReferenceCode(
+				externalReferenceCode, TestPropsValues.getCompanyId());
+
+		if (accountEntry == null) {
+			accountEntry = _addAccountEntry(externalReferenceCode);
+		}
+
+		return accountEntry;
+	}
 
 	@Inject
 	private AccountEntryLocalService _accountEntryLocalService;
+
+	private AccountEntry _aiHubAccountEntry;
+	private AccountEntry _seoStudioAccountEntry;
 
 }

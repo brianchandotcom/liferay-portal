@@ -48,6 +48,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+import com.liferay.site.cms.site.initializer.test.util.CMSTestUtil;
 
 import java.io.Serializable;
 
@@ -80,6 +81,9 @@ public class CMSObjectRelationshipEdgeUpgradeProcessTest {
 	@Before
 	public void setUp() throws Exception {
 		UserTestUtil.setUser(TestPropsValues.getUser());
+
+		CMSTestUtil.getOrAddGroup(
+			CMSObjectRelationshipEdgeUpgradeProcessTest.class);
 
 		_cmsContentStructuresObjectFolder =
 			_objectFolderLocalService.getObjectFolderByExternalReferenceCode(

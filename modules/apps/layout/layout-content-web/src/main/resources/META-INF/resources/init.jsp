@@ -10,9 +10,8 @@
 <%@ taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
-<%@ page import="com.liferay.portal.kernel.model.Layout" %><%@
-page import="com.liferay.portal.kernel.service.LayoutLocalServiceUtil" %><%@
-page import="com.liferay.portal.kernel.util.HashMapBuilder" %>
+<%@ page import="com.liferay.layout.content.web.internal.constants.LayoutContentVersionWebKeys" %><%@
+page import="com.liferay.layout.content.web.internal.display.context.LayoutContentVersionDisplayContext" %>
 
 <liferay-theme:defineObjects />
 

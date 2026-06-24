@@ -10,22 +10,10 @@
 <%@ include file="/init.jsp" %>
 
 <%
-Layout draftLayout = themeDisplay.getLayout();
-
-Layout publishedLayout = LayoutLocalServiceUtil.getLayout(draftLayout.getClassPK());
-
-String siteExternalReferenceCode = themeDisplay.getScopeGroup(
-).getExternalReferenceCode();
-String sitePageExternalReferenceCode = publishedLayout.getExternalReferenceCode();
-
-String pageSpecificationVersionsURL = "/o/headless-admin-site/v1.0/sites/" + siteExternalReferenceCode + "/site-pages/" + sitePageExternalReferenceCode + "/page-specification-versions";
+LayoutContentVersionDisplayContext layoutContentVersionDisplayContext = (LayoutContentVersionDisplayContext)request.getAttribute(LayoutContentVersionWebKeys.LAYOUT_CONTENT_VERSION_DISPLAY_CONTEXT);
 %>
 
 <react:component
 	module="{VersionHistory} from layout-content-web"
-	props='<%=
-		HashMapBuilder.<String, Object>put(
-			"pageSpecificationVersionsURL", pageSpecificationVersionsURL
-		).build()
-	%>'
+	props="<%= layoutContentVersionDisplayContext.getContext() %>"
 />

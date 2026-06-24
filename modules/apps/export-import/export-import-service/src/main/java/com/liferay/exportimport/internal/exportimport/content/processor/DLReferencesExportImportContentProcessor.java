@@ -18,6 +18,7 @@ import com.liferay.exportimport.kernel.lar.ExportImportProcessCallbackRegistry;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.exportimport.report.constants.ExportImportReportEntryConstants;
 import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -220,11 +221,12 @@ public class DLReferencesExportImportContentProcessor
 					ExportImportThreadLocal.getExportImportConfigurationId());
 
 				_exportImportReportEntryLocalService.
-					getOrAddEmptyExportImportReportEntry(
+					getOrAddExportImportReportEntry(
 						companyGroup ? 0L : groupId,
 						portletDataContext.getCompanyId(),
 						documentLibraryReference.getExternalReferenceCode(),
-						classNameId, exportImportConfigurationId,
+						classNameId, 0, exportImportConfigurationId,
+						ExportImportReportEntryConstants.TYPE_EMPTY, null, null,
 						FileEntry.class.getName());
 
 				_exportImportProcessCallbackRegistry.registerCallback(

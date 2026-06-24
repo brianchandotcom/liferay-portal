@@ -12,6 +12,7 @@ import com.liferay.exportimport.kernel.exception.ExportImportContentProcessorExc
 import com.liferay.exportimport.kernel.exception.ExportImportContentValidationException;
 import com.liferay.exportimport.kernel.lar.ExportImportClassedModelUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.report.constants.ExportImportReportEntryConstants;
 import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -696,7 +697,7 @@ public class LayoutReferencesExportImportContentProcessor
 					Class<?> modelClass = stagedModel.getModelClass();
 
 					_exportImportReportEntryLocalService.
-						getOrAddErrorExportImportReportEntry(
+						getOrAddExportImportReportEntry(
 							group.getGroupId(),
 							portletDataContext.getCompanyId(),
 							externalReferenceCode,
@@ -706,6 +707,7 @@ public class LayoutReferencesExportImportContentProcessor
 								stagedModel),
 							GetterUtil.getLong(
 								portletDataContext.getExportImportProcessId()),
+							ExportImportReportEntryConstants.TYPE_ERROR,
 							StringBundler.concat(
 								"Warning: The referenced Layout group ",
 								"reference ('", groupReference,

@@ -11,6 +11,7 @@ import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.exportimport.report.constants.ExportImportReportEntryConstants;
 import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.frontend.token.definition.FrontendToken;
@@ -299,7 +300,7 @@ public class StylebookEntryStagedModelDataHandler
 
 		if (!warningMessages.isEmpty()) {
 			_exportImportReportEntryLocalService.
-				getOrAddWarningExportImportReportEntry(
+				getOrAddExportImportReportEntry(
 					importedStyleBookEntry.getGroupId(),
 					portletDataContext.getCompanyId(),
 					importedStyleBookEntry.getExternalReferenceCode(),
@@ -308,7 +309,8 @@ public class StylebookEntryStagedModelDataHandler
 					GetterUtil.getLong(
 						ExportImportThreadLocal.
 							getExportImportConfigurationId()),
-					StringUtil.merge(warningMessages, StringPool.SPACE),
+					ExportImportReportEntryConstants.TYPE_WARNING,
+					StringUtil.merge(warningMessages, StringPool.SPACE), null,
 					StyleBookEntry.class.getName());
 		}
 	}

@@ -32,6 +32,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.exportimport.kernel.lar.UserIdStrategy;
 import com.liferay.exportimport.kernel.xstream.XStreamAlias;
 import com.liferay.exportimport.kernel.xstream.XStreamConverter;
+import com.liferay.exportimport.report.constants.ExportImportReportEntryConstants;
 import com.liferay.exportimport.report.service.ExportImportReportEntryLocalServiceUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.CharPool;
@@ -1975,7 +1976,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 						}
 
 						ExportImportReportEntryLocalServiceUtil.
-							getOrAddErrorExportImportReportEntry(
+							getOrAddExportImportReportEntry(
 								getGroupId(), getCompanyId(),
 								externalReferenceCode,
 								ExportImportClassedModelUtil.getClassNameId(
@@ -1983,6 +1984,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 								ExportImportClassedModelUtil.getClassPK(
 									classedModel),
 								GetterUtil.getLong(getExportImportProcessId()),
+								ExportImportReportEntryConstants.TYPE_ERROR,
 								StringUtil.merge(warningMessages, "\n"), null,
 								clazz.getName());
 					}

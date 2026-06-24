@@ -9,6 +9,7 @@ import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.exception.handler.BatchEngineImportTaskExceptionHandler;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
+import com.liferay.exportimport.report.constants.ExportImportReportEntryConstants;
 import com.liferay.exportimport.report.internal.util.ExportImportReportEntryUtil;
 import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
 import com.liferay.portal.kernel.log.Log;
@@ -52,18 +53,17 @@ public class ExportImportBatchEngineImportTaskExceptionHandler
 			groupId = 0;
 		}
 
-		_exportImportReportEntryLocalService.
-			getOrAddErrorExportImportReportEntry(
-				groupId, batchEngineImportTask.getCompanyId(),
-				_getExternalReferenceCode(item),
-				_classNameLocalService.getClassNameId(
-					batchEngineImportTask.getParameterValue("modelClassName")),
-				_getId(item),
-				GetterUtil.getLong(
-					ExportImportThreadLocal.getExportImportConfigurationId()),
-				message, _getErrorStackTrace(exception),
-				batchEngineImportTask.getParameterValue(
-					"modelNameLanguageKey"));
+		_exportImportReportEntryLocalService.getOrAddExportImportReportEntry(
+			groupId, batchEngineImportTask.getCompanyId(),
+			_getExternalReferenceCode(item),
+			_classNameLocalService.getClassNameId(
+				batchEngineImportTask.getParameterValue("modelClassName")),
+			_getId(item),
+			GetterUtil.getLong(
+				ExportImportThreadLocal.getExportImportConfigurationId()),
+			ExportImportReportEntryConstants.TYPE_ERROR, message,
+			_getErrorStackTrace(exception),
+			batchEngineImportTask.getParameterValue("modelNameLanguageKey"));
 	}
 
 	private String _getErrorStackTrace(Throwable throwable) {

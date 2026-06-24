@@ -65,12 +65,12 @@ public class FriendlyURLEntryLocalizationConstraintResolverTest {
 
 	@Test
 	public void testResolveConflict() throws Exception {
-		long classNameId = _classNameLocalService.getClassNameId(User.class);
 		String languageId = LocaleUtil.toLanguageId(
 			LocaleUtil.getSiteDefault());
 
 		FriendlyURLEntry friendlyURLEntry = _addConflictingFriendlyURLEntry(
-			classNameId, _ctCollection, languageId);
+			_classNameLocalService.getClassNameId(User.class), _ctCollection,
+			languageId);
 
 		String urlTitle = _getURLTitle(
 			_ctCollection, friendlyURLEntry, languageId);

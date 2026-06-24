@@ -5,6 +5,8 @@
 
 import {IDisplayType} from './types';
 
+export const DEFAULT_TASK_STATE_KEY = 'notStarted';
+
 export const DISPLAY_TYPES = [
 	'danger',
 	'info',

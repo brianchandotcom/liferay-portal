@@ -15,7 +15,10 @@ import classNames from 'classnames';
 import {dateUtils, sub} from 'frontend-js-web';
 import React, {useContext, useEffect, useMemo, useRef, useState} from 'react';
 
+import {DEFAULT_TASK_STATE_KEY} from '../../../../utils/constants';
+import {openCMPModal} from '../../../../utils/openCMPModal';
 import {ITask, ITaskObjectEntry} from '../../../../utils/types';
+import CreateTaskModal from '../../../modal/CreateTaskModal';
 import {UPDATE_TASKS_QUICK_FILTER_VISIBILITY} from '../../../task/TasksQuickFilters';
 import CalendarMoreLinkPopover from './components/CalendarMoreLinkPopover';
 import CalendarTaskCard from './components/CalendarTaskCard';
@@ -27,6 +30,7 @@ import type {FirstDayOfWeekLocale} from 'frontend-js-web';
 
 interface CalendarViewProps {
 	items: ITask[];
+	projectId?: string;
 }
 
 interface MoreLinkPopover {
@@ -35,8 +39,10 @@ interface MoreLinkPopover {
 	tasks: ITaskObjectEntry[];
 }
 
-export default function CalendarView({items}: CalendarViewProps) {
-	const {onInfoPanelToggleButtonClick} = useContext(FrontendDataSetContext);
+export default function CalendarView({items, projectId}: CalendarViewProps) {
+	const {loadData, onInfoPanelToggleButtonClick} = useContext(
+		FrontendDataSetContext
+	);
 
 	const calendarRef = useRef<FullCalendar>(null);
 	const calendarViewRef = useRef<HTMLDivElement>(null);
@@ -115,6 +121,22 @@ export default function CalendarView({items}: CalendarViewProps) {
 
 		return () => resizeObserver.disconnect();
 	}, []);
+
+	const openCreateTaskModal = (dueDate: string) => {
+		openCMPModal({
+			center: true,
+			contentComponent: ({closeModal}: {closeModal: () => void}) => (
+				<CreateTaskModal
+					closeModal={closeModal}
+					dueDate={dueDate}
+					loadData={loadData}
+					projectId={projectId}
+					state={DEFAULT_TASK_STATE_KEY}
+				/>
+			),
+			size: 'md',
+		});
+	};
 
 	const currentYear = new Date().getFullYear();
 	const locale = Liferay.ThemeDisplay.getBCP47LanguageId();
@@ -310,6 +332,29 @@ export default function CalendarView({items}: CalendarViewProps) {
 				moreLinkHint={Liferay.Language.get('view-all-tasks')}
 				plugins={[dayGridPlugin]}
 				ref={calendarRef}
+				{...(Liferay.FeatureFlags['LPD-74152'] && {
+					dayCellContent: (arg) => (
+						<>
+							{arg.dayNumberText}
+
+							<ClayButtonWithIcon
+								aria-label={Liferay.Language.get('add-task')}
+								borderless
+								className="lfr__calendar-view-add-task-button"
+								displayType="secondary"
+								onClick={() =>
+									openCreateTaskModal(
+										dateUtils.format(arg.date, 'yyyy-MM-dd')
+									)
+								}
+								rounded
+								size="xs"
+								symbol="plus"
+								title={Liferay.Language.get('add-task')}
+							/>
+						</>
+					),
+				})}
 			/>
 
 			{moreLinkPopover && (

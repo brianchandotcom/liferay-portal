@@ -53,21 +53,14 @@ public class MCPServerProtectedResourceMetadataServletTest {
 			httpResponse.headers());
 		_assertHeader(
 			"public, max-age=300", "Cache-Control", httpResponse.headers());
-
 		Assert.assertEquals(
 			HttpServletResponse.SC_OK, httpResponse.statusCode());
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			httpResponse.body());
 
-		String portalURL =
-			"http://localhost:" + PortalUtil.getPortalServerPort(false);
-
-		JSONArray authorizationServersJSONArray = jsonObject.getJSONArray(
-			"authorization_servers");
-
 		Assert.assertEquals(
-			portalURL, authorizationServersJSONArray.getString(0));
+			"Liferay MCP Server", jsonObject.getString("resource_name"));
 
 		JSONArray bearerMethodsSupportedJSONArray = jsonObject.getJSONArray(
 			"bearer_methods_supported");
@@ -75,10 +68,17 @@ public class MCPServerProtectedResourceMetadataServletTest {
 		Assert.assertEquals(
 			"header", bearerMethodsSupportedJSONArray.getString(0));
 
+		String portalURL =
+			"http://localhost:" + PortalUtil.getPortalServerPort(false);
+
 		Assert.assertEquals(
 			portalURL + "/o/mcp", jsonObject.getString("resource"));
+
+		JSONArray authorizationServersJSONArray = jsonObject.getJSONArray(
+			"authorization_servers");
+
 		Assert.assertEquals(
-			"Liferay MCP Server", jsonObject.getString("resource_name"));
+			portalURL, authorizationServersJSONArray.getString(0));
 
 		httpResponse = _send("HEAD");
 
@@ -101,14 +101,12 @@ public class MCPServerProtectedResourceMetadataServletTest {
 			StringPool.STAR, "Access-Control-Allow-Origin",
 			httpResponse.headers());
 		_assertHeader("300", "Access-Control-Max-Age", httpResponse.headers());
-
 		Assert.assertEquals(
 			HttpServletResponse.SC_NO_CONTENT, httpResponse.statusCode());
 
 		httpResponse = _send("POST");
 
 		_assertHeader("GET, HEAD, OPTIONS", "Allow", httpResponse.headers());
-
 		Assert.assertEquals(
 			HttpServletResponse.SC_METHOD_NOT_ALLOWED,
 			httpResponse.statusCode());

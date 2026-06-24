@@ -79,7 +79,7 @@ public class AudiencesCriteriaProviderTest {
 				TestPropsValues.getCompanyId(), LocaleUtil.getDefault());
 
 		AudiencesCriteriaType audiencesCriteriaType =
-			audiencesCriteriaTypes.get(1);
+			audiencesCriteriaTypes.get(2);
 
 		List<AudiencesCriteria> audiencesCriterias =
 			audiencesCriteriaType.getAudiencesCriterias();
@@ -94,6 +94,51 @@ public class AudiencesCriteriaProviderTest {
 		Assert.assertEquals(name, audiencesCriteria.getLabel());
 		Assert.assertEquals(
 			AudiencesCriteria.Type.STRING, audiencesCriteria.getType());
+	}
+
+	@Test
+	public void testGetGeneralAttributesAudiencesCriteriaType()
+		throws Exception {
+
+		List<AudiencesCriteriaType> audiencesCriteriaTypes =
+			_audiencesCriteriaProvider.getAudiencesCriteriaTypes(
+				TestPropsValues.getCompanyId(), LocaleUtil.getDefault());
+
+		AudiencesCriteriaType audiencesCriteriaType =
+			audiencesCriteriaTypes.get(1);
+
+		List<AudiencesCriteria> audiencesCriterias =
+			audiencesCriteriaType.getAudiencesCriterias();
+
+		Assert.assertEquals(
+			audiencesCriterias.toString(), 2, audiencesCriterias.size());
+
+		AudiencesCriteria authenticationAudiencesCriteria =
+			_getAudiencesCriteria(audiencesCriterias, "authentication");
+
+		Assert.assertEquals(
+			AudiencesCriteria.Type.OPTIONS,
+			authenticationAudiencesCriteria.getType());
+
+		List<AudiencesCriteria.Option> options =
+			authenticationAudiencesCriteria.getOptions();
+
+		Assert.assertEquals(options.toString(), 2, options.size());
+
+		AudiencesCriteria.Option option1 = options.get(0);
+
+		Assert.assertEquals("yes", option1.getValue());
+
+		AudiencesCriteria.Option option2 = options.get(1);
+
+		Assert.assertEquals("no", option2.getValue());
+
+		AudiencesCriteria languageAudiencesCriteria = _getAudiencesCriteria(
+			audiencesCriterias, "language");
+
+		Assert.assertEquals(
+			AudiencesCriteria.Type.OPTIONS,
+			languageAudiencesCriteria.getType());
 	}
 
 	private ClientExtensionEntry _addClientExtensionEntry(String name)

@@ -211,6 +211,70 @@ public interface LayoutPageTemplateStructureRelElementVariationPersistence
 	public int countByUuid_C(String uuid, long companyId);
 
 	/**
+	 * Returns an ordered range of all the layout page template structure rel element variations where plid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.layout.page.template.model.impl.LayoutPageTemplateStructureRelElementVariationModelImpl</code>.
+	 * </p>
+	 *
+	 * @param plid the plid
+	 * @param start the lower bound of the range of layout page template structure rel element variations
+	 * @param end the upper bound of the range of layout page template structure rel element variations (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching layout page template structure rel element variations
+	 */
+	public java.util.List<LayoutPageTemplateStructureRelElementVariation>
+		findByPlid(
+			long plid, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateStructureRelElementVariation>
+					orderByComparator,
+			boolean useFinderCache);
+
+	/**
+	 * Returns the first layout page template structure rel element variation in the ordered set where plid = &#63;.
+	 *
+	 * @param plid the plid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout page template structure rel element variation
+	 * @throws NoSuchPageTemplateStructureRelElementVariationException if a matching layout page template structure rel element variation could not be found
+	 */
+	public LayoutPageTemplateStructureRelElementVariation findByPlid_First(
+			long plid,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateStructureRelElementVariation>
+					orderByComparator)
+		throws NoSuchPageTemplateStructureRelElementVariationException;
+
+	/**
+	 * Returns the first layout page template structure rel element variation in the ordered set where plid = &#63;.
+	 *
+	 * @param plid the plid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout page template structure rel element variation, or <code>null</code> if a matching layout page template structure rel element variation could not be found
+	 */
+	public LayoutPageTemplateStructureRelElementVariation fetchByPlid_First(
+		long plid,
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateStructureRelElementVariation> orderByComparator);
+
+	/**
+	 * Removes all the layout page template structure rel element variations where plid = &#63; from the database.
+	 *
+	 * @param plid the plid
+	 */
+	public void removeByPlid(long plid);
+
+	/**
+	 * Returns the number of layout page template structure rel element variations where plid = &#63;.
+	 *
+	 * @param plid the plid
+	 * @return the number of matching layout page template structure rel element variations
+	 */
+	public int countByPlid(long plid);
+
+	/**
 	 * Returns an ordered range of all the layout page template structure rel element variations where segmentsExperienceERC = &#63;.
 	 *
 	 * <p>
@@ -579,6 +643,62 @@ public interface LayoutPageTemplateStructureRelElementVariationPersistence
 	}
 
 	/**
+	 * Returns all the layout page template structure rel element variations where plid = &#63;.
+	 *
+	 * @param plid the plid
+	 * @return the matching layout page template structure rel element variations
+	 */
+	public default java.util.List
+		<LayoutPageTemplateStructureRelElementVariation> findByPlid(long plid) {
+
+		return findByPlid(
+			plid, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the layout page template structure rel element variations where plid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.layout.page.template.model.impl.LayoutPageTemplateStructureRelElementVariationModelImpl</code>.
+	 * </p>
+	 *
+	 * @param plid the plid
+	 * @param start the lower bound of the range of layout page template structure rel element variations
+	 * @param end the upper bound of the range of layout page template structure rel element variations (not inclusive)
+	 * @return the range of matching layout page template structure rel element variations
+	 */
+	public default java.util.List
+		<LayoutPageTemplateStructureRelElementVariation> findByPlid(
+			long plid, int start, int end) {
+
+		return findByPlid(plid, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the layout page template structure rel element variations where plid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.layout.page.template.model.impl.LayoutPageTemplateStructureRelElementVariationModelImpl</code>.
+	 * </p>
+	 *
+	 * @param plid the plid
+	 * @param start the lower bound of the range of layout page template structure rel element variations
+	 * @param end the upper bound of the range of layout page template structure rel element variations (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layout page template structure rel element variations
+	 */
+	public default java.util.List
+		<LayoutPageTemplateStructureRelElementVariation> findByPlid(
+			long plid, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateStructureRelElementVariation>
+					orderByComparator) {
+
+		return findByPlid(plid, start, end, orderByComparator, true);
+	}
+
+	/**
 	 * Returns all the layout page template structure rel element variations where segmentsExperienceERC = &#63;.
 	 *
 	 * @param segmentsExperienceERC the segments experience erc
@@ -704,4 +824,4 @@ public interface LayoutPageTemplateStructureRelElementVariationPersistence
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1219091522
+// LIFERAY-SERVICE-BUILDER-HASH:706472755

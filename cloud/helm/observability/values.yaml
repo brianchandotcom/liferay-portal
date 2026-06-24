@@ -461,6 +461,8 @@ fullnameOverride: ""
 gcp:
     projectId: ""
 grafana:
+    admin:
+        existingSecret: grafana-admin-credentials
     datasources: {}
     grafana.ini:
         analytics:

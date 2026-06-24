@@ -203,10 +203,12 @@ if ((mfaEmailOTPSetAtTime > 0) && (mfaEmailOTPResendEmailTimeout > 0)) {
 						'<span class="alert alert-danger"><liferay-ui:message key="failed-to-send-email" /></span>'
 					);
 
-					sendEmailButton.text(buttonText);
+					sendEmailButton.text(originalSendButtonText);
 					sendEmailButton.removeAttribute('disabled');
 
-					clearInterval(interval);
+					clearInterval(resendCountdown);
+
+					resendCountdown = null;
 				},
 				success: function (event, id, obj) {
 					messageContainer.html(

@@ -608,7 +608,7 @@ public class SitesImpl implements Sites {
 			}
 			catch (PortalException portalException) {
 				_log.error(
-					"Unable to add draft export-import configuration for " +
+					"Unable to add draft export/import configuration for " +
 						"layout set " + layoutSet.getLayoutSetId(),
 					portalException);
 

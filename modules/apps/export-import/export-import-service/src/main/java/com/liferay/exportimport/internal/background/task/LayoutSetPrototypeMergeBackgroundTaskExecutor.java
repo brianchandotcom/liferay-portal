@@ -5,6 +5,7 @@
 
 package com.liferay.exportimport.internal.background.task;
 
+import com.liferay.exportimport.kernel.background.task.constants.LayoutSetPrototypeMergeBackgroundTaskConstants;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactoryUtil;
 import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
@@ -21,21 +22,29 @@ import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstant
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.File;
 import java.io.Serializable;
 
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
+
+import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
@@ -71,8 +80,6 @@ public class LayoutSetPrototypeMergeBackgroundTaskExecutor
 			(Map<String, String[]>)settingsMap.get("parameterMap");
 
 		long layoutSetId = MapUtil.getLong(parameterMap, "layoutSetId");
-		long layoutSetPrototypeId = MapUtil.getLong(
-			parameterMap, "layoutSetPrototypeId");
 
 		try {
 			LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
@@ -84,52 +91,60 @@ public class LayoutSetPrototypeMergeBackgroundTaskExecutor
 
 			boolean importData = MapUtil.getBoolean(parameterMap, "importData");
 
-			String cacheFileName = StringBundler.concat(
-				_TEMP_DIR, layoutSetPrototype.getUuid(), importData, ".v",
-				layoutSetPrototype.getMvccVersion(), ".lar");
+			File larFile = null;
 
-			File cacheFile = new File(cacheFileName);
+			String sessionId = MapUtil.getString(
+				backgroundTask.getTaskContextMap(),
+				LayoutSetPrototypeMergeBackgroundTaskConstants.SESSION_ID);
 
-			if (cacheFile.exists()) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Using cached layout set prototype LAR file " +
-							cacheFile.getAbsolutePath());
+			if (!Validator.isBlank(sessionId)) {
+				File cacheFile = new File(
+					StringBundler.concat(_TEMP_DIR, sessionId, ".lar"));
+
+				if (cacheFile.exists()) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							"Using cached layout set prototype LAR file " +
+								cacheFile.getAbsolutePath());
+					}
+
+					larFile = cacheFile;
+				}
+				else {
+					larFile = _exportImportLocalService.exportLayoutsAsFile(
+						exportImportConfiguration);
+
+					try {
+						FileUtil.mkdirs(cacheFile.getParentFile());
+
+						Files.move(
+							larFile.toPath(), cacheFile.toPath(),
+							StandardCopyOption.REPLACE_EXISTING);
+
+						larFile = cacheFile;
+
+						if (_log.isDebugEnabled()) {
+							_log.debug(
+								"Moved exported LAR to " +
+									cacheFile.getAbsolutePath());
+						}
+					}
+					catch (Exception exception) {
+						_log.error(
+							StringBundler.concat(
+								"Unable to move ", larFile.getAbsolutePath(),
+								" to ", cacheFile.getAbsolutePath()),
+							exception);
+					}
 				}
 			}
 			else {
-				File larFile = _exportImportLocalService.exportLayoutsAsFile(
+				larFile = _exportImportLocalService.exportLayoutsAsFile(
 					exportImportConfiguration);
-
-				try {
-					FileUtil.copyFile(larFile, cacheFile);
-
-					if (_log.isDebugEnabled()) {
-						_log.debug(
-							StringBundler.concat(
-								"Copied ", larFile.getAbsolutePath(), " to ",
-								cacheFile.getAbsolutePath()));
-					}
-				}
-				catch (Exception exception) {
-					_log.error(
-						StringBundler.concat(
-							"Unable to copy file ", larFile.getAbsolutePath(),
-							" to ", cacheFile.getAbsolutePath()),
-						exception);
-
-					cacheFile = larFile;
-				}
 			}
 
 			User user = _userLocalService.getDefaultUser(
 				layoutSet.getCompanyId());
-
-			parameterMap.put(
-				"lastMergeVersion",
-				new String[] {
-					String.valueOf(layoutSetPrototype.getMvccVersion())
-				});
 
 			Map<String, Serializable> importLayoutSettingsMap =
 				ExportImportConfigurationSettingsMapFactoryUtil.
@@ -150,7 +165,7 @@ public class LayoutSetPrototypeMergeBackgroundTaskExecutor
 			MergeLayoutPrototypesThreadLocal.setInProgress(true);
 
 			_exportImportLocalService.importLayouts(
-				importExportImportConfiguration, cacheFile);
+				importExportImportConfiguration, larFile);
 
 			int count =
 				_exportImportReportEntryLocalService.
@@ -168,7 +183,7 @@ public class LayoutSetPrototypeMergeBackgroundTaskExecutor
 		catch (Throwable throwable) {
 			_log.error(
 				"The merge process failed for layout set prototype " +
-					layoutSetPrototypeId,
+					MapUtil.getLong(parameterMap, "layoutSetPrototypeId"),
 				throwable);
 
 			throw new SystemException(throwable);

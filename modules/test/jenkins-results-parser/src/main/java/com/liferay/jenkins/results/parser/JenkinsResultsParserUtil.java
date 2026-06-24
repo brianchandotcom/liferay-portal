@@ -989,7 +989,7 @@ public class JenkinsResultsParserUtil {
 		return flattenedBuilds;
 	}
 
-	public static String generateToStringCacheKey(
+	public static String getCacheFileKey(
 		String urlString, String postContent) {
 
 		String key = fixURL(urlString);
@@ -5488,7 +5488,7 @@ public class JenkinsResultsParserUtil {
 
 					if (checkCache && !url.startsWith("file:")) {
 						saveToCacheFile(
-							generateToStringCacheKey(url, postContent),
+							getCacheFileKey(url, postContent),
 							content);
 					}
 

@@ -86,7 +86,7 @@ public class UrlReader {
 				}
 
 				File cachedFile = JenkinsResultsParserUtil.getCacheFile(
-					JenkinsResultsParserUtil.generateToStringCacheKey(
+					JenkinsResultsParserUtil.getCacheFileKey(
 						url, postContent));
 
 				if ((cachedFile != null) && cachedFile.exists()) {

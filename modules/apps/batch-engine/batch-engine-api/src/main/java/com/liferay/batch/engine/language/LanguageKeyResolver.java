@@ -15,9 +15,6 @@ import java.util.Map;
  */
 public interface LanguageKeyResolver {
 
-	public static final String FOR_EACH_LANGUAGE_ID =
-		"[$FOR_EACH_LANGUAGE_ID$]";
-
 	public void expand(long companyId, JSONObject jsonObject)
 		throws ConfigurationException;
 

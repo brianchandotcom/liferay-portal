@@ -158,8 +158,10 @@ public class FrontendJSAudiencesWebServlet extends HttpServlet {
 			return Long.valueOf(plid);
 		}
 		catch (NumberFormatException numberFormatException) {
-			_log.error(
-				"Unable to get plid from " + plid, numberFormatException);
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to get plid from " + plid, numberFormatException);
+			}
 
 			return null;
 		}

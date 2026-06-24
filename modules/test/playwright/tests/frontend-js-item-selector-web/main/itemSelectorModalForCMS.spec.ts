@@ -165,7 +165,6 @@ test('Item Selector Modal filters availability for CMS Files', async ({
 			'Display Date',
 			'Expiration Date',
 			'Modified Date',
-			'Publish Date',
 			'Review Date',
 		];
 

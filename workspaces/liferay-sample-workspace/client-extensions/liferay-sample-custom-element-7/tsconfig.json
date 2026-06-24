@@ -6,8 +6,8 @@
 			"DOM",
 			"ES2020"
 		],
-		"module": "ESNext",
-		"moduleResolution": "Node",
+		"module": "ES2020",
+		"moduleResolution": "node",
 		"noEmit": true,
 		"paths": {
 			"@liferay/frontend-data-set-web/api": [

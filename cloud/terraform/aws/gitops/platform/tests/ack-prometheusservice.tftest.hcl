@@ -18,15 +18,6 @@ override_data {
 		}]
 	}
 }
-
-run "should_not_install_ack_prometheusservice_by_default" {
-	assert {
-		condition=length(helm_release.ack_prometheusservice) == 0
-		error_message="The ACK Prometheus Service controller must not be installed when observability is disabled"
-	}
-	command=plan
-}
-
 run "should_honor_a_custom_ack_namespace" {
 	assert {
 		condition=helm_release.ack_prometheusservice[0].namespace == "ack"
@@ -40,7 +31,6 @@ run "should_honor_a_custom_ack_namespace" {
 		}
 	}
 }
-
 run "should_install_ack_prometheusservice_when_observability_is_enabled" {
 	assert {
 		condition=length(helm_release.ack_prometheusservice) == 1
@@ -61,7 +51,13 @@ run "should_install_ack_prometheusservice_when_observability_is_enabled" {
 		}
 	}
 }
-
+run "should_not_install_ack_prometheusservice_by_default" {
+	assert {
+		condition=length(helm_release.ack_prometheusservice) == 0
+		error_message="The ACK Prometheus Service controller must not be installed when observability is disabled"
+	}
+	command=plan
+}
 variables {
 	ack_prometheusservice_helm_chart_version="1.4.1"
 	argo_workflows_helm_chart_version="1.0.10"

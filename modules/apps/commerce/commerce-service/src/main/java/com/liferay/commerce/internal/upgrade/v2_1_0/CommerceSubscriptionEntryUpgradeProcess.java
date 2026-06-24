@@ -46,7 +46,7 @@ public class CommerceSubscriptionEntryUpgradeProcess extends UpgradeProcess {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"update CommerceSubscriptionEntry set CProductId = ?," +
-					"CPInstanceUuid = ? where CPInstanceId = ?");
+					"CPInstanceUUID = ? where CPInstanceId = ?");
 
 			Statement s = connection.createStatement();
 
@@ -86,7 +86,7 @@ public class CommerceSubscriptionEntryUpgradeProcess extends UpgradeProcess {
 	protected UpgradeStep[] getPreUpgradeSteps() {
 		return new UpgradeStep[] {
 			UpgradeProcessFactory.addColumns(
-				"CommerceSubscriptionEntry", "CPInstanceUuid VARCHAR(75)",
+				"CommerceSubscriptionEntry", "CPInstanceUUID VARCHAR(75)",
 				"CProductId LONG")
 		};
 	}

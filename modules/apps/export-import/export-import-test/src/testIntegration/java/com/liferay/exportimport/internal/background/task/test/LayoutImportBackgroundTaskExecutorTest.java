@@ -18,6 +18,7 @@ import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalSer
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalServiceUtil;
 import com.liferay.exportimport.kernel.service.ExportImportLocalService;
 import com.liferay.exportimport.kernel.service.ExportImportLocalServiceUtil;
+import com.liferay.exportimport.report.constants.ExportImportReportEntryConstants;
 import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
 import com.liferay.exportimport.test.util.ExportImportTestUtil;
 import com.liferay.object.constants.ObjectDefinitionConstants;
@@ -179,11 +180,12 @@ public class LayoutImportBackgroundTaskExecutorTest {
 		ExportImportConfiguration exportImportConfiguration =
 			_addImportExportImportConfiguration(group, objectDefinition);
 
-		_exportImportReportEntryLocalService.addWarningExportImportReportEntry(
+		_exportImportReportEntryLocalService.addExportImportReportEntry(
 			group.getGroupId(), TestPropsValues.getCompanyId(), null,
 			PortalUtil.getClassNameId(ExportImportConfiguration.class), 0,
 			exportImportConfiguration.getExportImportConfigurationId(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+			ExportImportReportEntryConstants.TYPE_WARNING,
+			RandomTestUtil.randomString(), null, RandomTestUtil.randomString());
 
 		long backgroundTaskId =
 			ExportImportLocalServiceUtil.importLayoutsInBackground(

@@ -115,27 +115,25 @@ public class ReportEntryResourceTest extends BaseReportEntryResourceTestCase {
 			(type.getCode() == ExportImportReportEntryConstants.TYPE_EMPTY)) {
 
 			exportImportReportEntry =
-				_exportImportReportEntryLocalService.
-					addEmptyExportImportReportEntry(
-						testGroup.getGroupId(), testCompany.getCompanyId(),
-						reportEntry.getClassExternalReferenceCode(),
-						reportEntry.getClassNameId(),
-						_exportImportConfiguration.
-							getExportImportConfigurationId(),
-						reportEntry.getModelName());
+				_exportImportReportEntryLocalService.addExportImportReportEntry(
+					testGroup.getGroupId(), testCompany.getCompanyId(),
+					reportEntry.getClassExternalReferenceCode(),
+					reportEntry.getClassNameId(), 0,
+					_exportImportConfiguration.getExportImportConfigurationId(),
+					ExportImportReportEntryConstants.TYPE_EMPTY, null, null,
+					reportEntry.getModelName());
 		}
 		else {
 			exportImportReportEntry =
-				_exportImportReportEntryLocalService.
-					addErrorExportImportReportEntry(
-						testGroup.getGroupId(), testCompany.getCompanyId(),
-						reportEntry.getClassExternalReferenceCode(),
-						reportEntry.getClassNameId(), reportEntry.getClassPK(),
-						_exportImportConfiguration.
-							getExportImportConfigurationId(),
-						reportEntry.getErrorMessage(),
-						reportEntry.getErrorStacktrace(),
-						reportEntry.getModelName());
+				_exportImportReportEntryLocalService.addExportImportReportEntry(
+					testGroup.getGroupId(), testCompany.getCompanyId(),
+					reportEntry.getClassExternalReferenceCode(),
+					reportEntry.getClassNameId(), reportEntry.getClassPK(),
+					_exportImportConfiguration.getExportImportConfigurationId(),
+					ExportImportReportEntryConstants.TYPE_ERROR,
+					reportEntry.getErrorMessage(),
+					reportEntry.getErrorStacktrace(),
+					reportEntry.getModelName());
 		}
 
 		_exportImportReportEntries.add(exportImportReportEntry);
@@ -302,14 +300,14 @@ public class ReportEntryResourceTest extends BaseReportEntryResourceTestCase {
 		ReportEntry reportEntry = randomReportEntry();
 
 		_exportImportReportEntries.add(
-			_exportImportReportEntryLocalService.
-				addErrorExportImportReportEntry(
-					testGroup.getGroupId(), testCompany.getCompanyId(),
-					reportEntry.getClassExternalReferenceCode(),
-					reportEntry.getClassNameId(), reportEntry.getClassPK(),
-					_exportImportConfiguration.getExportImportConfigurationId(),
-					reportEntry.getErrorMessage(),
-					reportEntry.getErrorStacktrace(), "example-text"));
+			_exportImportReportEntryLocalService.addExportImportReportEntry(
+				testGroup.getGroupId(), testCompany.getCompanyId(),
+				reportEntry.getClassExternalReferenceCode(),
+				reportEntry.getClassNameId(), reportEntry.getClassPK(),
+				_exportImportConfiguration.getExportImportConfigurationId(),
+				ExportImportReportEntryConstants.TYPE_ERROR,
+				reportEntry.getErrorMessage(), reportEntry.getErrorStacktrace(),
+				"example-text"));
 
 		Page<ReportEntry> page =
 			reportEntryResource.getImportProcessReportEntriesPage(

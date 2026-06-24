@@ -29,7 +29,7 @@ public class OrphanReferencesDataCleanupUtilTest {
 
 		Mockito.doThrow(
 			new SQLException(
-				RandomTestUtil.randomString(), _SQLSTATE_CONSTRAINT_VIOLATION)
+				RandomTestUtil.randomString(), _SQL_STATE_CONSTRAINT_VIOLATION)
 		).when(
 			preparedStatement
 		).executeUpdate();
@@ -43,7 +43,7 @@ public class OrphanReferencesDataCleanupUtilTest {
 			SQLException sqlException = (SQLException)exception;
 
 			Assert.assertEquals(
-				_SQLSTATE_CONSTRAINT_VIOLATION, sqlException.getSQLState());
+				_SQL_STATE_CONSTRAINT_VIOLATION, sqlException.getSQLState());
 		}
 
 		Mockito.verify(
@@ -57,7 +57,7 @@ public class OrphanReferencesDataCleanupUtilTest {
 			PreparedStatement.class);
 
 		Mockito.doThrow(
-			new SQLException(RandomTestUtil.randomString(), _SQLSTATE_DEADLOCK)
+			new SQLException(RandomTestUtil.randomString(), _SQL_STATE_DEADLOCK)
 		).doReturn(
 			RandomTestUtil.randomInt()
 		).when(
@@ -77,7 +77,7 @@ public class OrphanReferencesDataCleanupUtilTest {
 			PreparedStatement.class);
 
 		Mockito.doThrow(
-			new SQLException(RandomTestUtil.randomString(), _SQLSTATE_DEADLOCK)
+			new SQLException(RandomTestUtil.randomString(), _SQL_STATE_DEADLOCK)
 		).when(
 			preparedStatement
 		).executeUpdate();
@@ -90,7 +90,7 @@ public class OrphanReferencesDataCleanupUtilTest {
 		catch (Exception exception) {
 			SQLException sqlException = (SQLException)exception;
 
-			Assert.assertEquals(_SQLSTATE_DEADLOCK, sqlException.getSQLState());
+			Assert.assertEquals(_SQL_STATE_DEADLOCK, sqlException.getSQLState());
 		}
 
 		int expectedAttempts =
@@ -120,8 +120,8 @@ public class OrphanReferencesDataCleanupUtilTest {
 			RandomTestUtil.randomString());
 	}
 
-	private static final String _SQLSTATE_CONSTRAINT_VIOLATION = "23000";
+	private static final String _SQL_STATE_CONSTRAINT_VIOLATION = "23000";
 
-	private static final String _SQLSTATE_DEADLOCK = "40001";
+	private static final String _SQL_STATE_DEADLOCK = "40001";
 
 }

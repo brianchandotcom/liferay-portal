@@ -51,7 +51,7 @@ const mockUsers = [
 		emailAddress: 'ran.doe@liferay.com',
 		id: 2,
 		name: 'Ran Doe',
-		roleKey: 'DSR Contributor',
+		roleKey: 'DSR Content Contributor',
 	},
 	{
 		emailAddress: 'win.doe@liferay.com',
@@ -61,8 +61,10 @@ const mockUsers = [
 	},
 ];
 
-const renderComponent = ({roomId}: IRoomShareProps) => {
-	return render(<RoomShare roomId={roomId} />);
+const renderComponent = ({canAssignAllRoles, roomId}: IRoomShareProps) => {
+	return render(
+		<RoomShare canAssignAllRoles={canAssignAllRoles} roomId={roomId} />
+	);
 };
 
 describe('RoomShare', () => {
@@ -227,6 +229,7 @@ describe('RoomShare', () => {
 		]);
 
 		renderComponent({
+			canAssignAllRoles: true,
 			roomId: 10,
 		});
 
@@ -248,11 +251,15 @@ describe('RoomShare', () => {
 		});
 
 		const openDropdownMenu = document.querySelector('.dropdown-menu.show');
-		const contributorMenuItem = openDropdownMenu?.querySelector(
-			'.dropdown-item'
+		const contributorMenuItem = Array.from(
+			openDropdownMenu?.querySelectorAll('.dropdown-item') ?? []
+		).find((item) =>
+			item.textContent?.includes('content-contributor')
 		) as HTMLElement;
 
-		expect(contributorMenuItem.textContent).toContain('contributor');
+		expect(contributorMenuItem.textContent).toContain(
+			'content-contributor'
+		);
 
 		await userEvent.click(contributorMenuItem);
 
@@ -262,7 +269,7 @@ describe('RoomShare', () => {
 				3,
 				{
 					membershipExpirationDate,
-					roleKey: 'DSR Contributor',
+					roleKey: 'DSR Content Contributor',
 				}
 			);
 		});
@@ -323,6 +330,7 @@ describe('RoomShare', () => {
 
 	it('selects role from dropdown before inviting', async () => {
 		const {container} = renderComponent({
+			canAssignAllRoles: true,
 			roomId: 10,
 		});
 
@@ -336,11 +344,13 @@ describe('RoomShare', () => {
 		await userEvent.click(roleKeyButton);
 
 		await waitFor(() => {
-			document.querySelector('[data-testid="roleKeyItem_contributor"]');
+			document.querySelector(
+				'[data-testid="roleKeyItem_content-contributor"]'
+			);
 		});
 
 		const contributorItem = document.querySelector(
-			'[data-testid="roleKeyItem_contributor"]'
+			'[data-testid="roleKeyItem_content-contributor"]'
 		) as HTMLButtonElement;
 		await userEvent.click(contributorItem);
 
@@ -357,7 +367,7 @@ describe('RoomShare', () => {
 		await waitFor(() => {
 			expect(RoomService.addRoomUserAccount).toHaveBeenCalledWith(10, {
 				emailAddress: 'newuser@liferay.com',
-				roleKey: 'DSR Contributor',
+				roleKey: 'DSR Content Contributor',
 			});
 		});
 	});
@@ -444,8 +454,6 @@ describe('RoomShare', () => {
 	});
 
 	it('shows role dropdown for invited members when current user is owner', async () => {
-		jest.spyOn(Liferay.ThemeDisplay, 'getUserId').mockReturnValue('1');
-
 		const mockInvitedMembers = [
 			{
 				emailAddress: 'invited@example.com',
@@ -459,6 +467,7 @@ describe('RoomShare', () => {
 		);
 
 		renderComponent({
+			canAssignAllRoles: true,
 			roomId: 10,
 		});
 
@@ -594,6 +603,7 @@ describe('RoomShare', () => {
 		]);
 
 		const {container} = renderComponent({
+			canAssignAllRoles: true,
 			roomId: 10,
 		});
 
@@ -708,6 +718,7 @@ describe('RoomShare', () => {
 		]);
 
 		const {container} = renderComponent({
+			canAssignAllRoles: true,
 			roomId: 10,
 		});
 
@@ -736,5 +747,131 @@ describe('RoomShare', () => {
 				})
 			);
 		});
+	});
+
+	it('invites a user with the room collaborator role', async () => {
+		const {container} = renderComponent({
+			canAssignAllRoles: true,
+			roomId: 10,
+		});
+
+		await waitFor(() => {
+			expect(screen.getByText('John Doe')).toBeInTheDocument();
+		});
+
+		const roleKeyButton = container.querySelector(
+			'[data-testid="roleKeyButton"]'
+		) as HTMLButtonElement;
+		await userEvent.click(roleKeyButton);
+
+		await waitFor(() => {
+			expect(
+				document.querySelector(
+					'[data-testid="roleKeyItem_room-collaborator"]'
+				)
+			).toBeInTheDocument();
+		});
+
+		const roomCollaboratorItem = document.querySelector(
+			'[data-testid="roleKeyItem_room-collaborator"]'
+		) as HTMLButtonElement;
+		await userEvent.click(roomCollaboratorItem);
+
+		const emailInput = container.querySelector(
+			'[data-testid="emailAddressesInput"]'
+		) as HTMLInputElement;
+		await userEvent.type(emailInput, 'newuser@liferay.com,');
+
+		const inviteButton = container.querySelector(
+			'[data-testid="inviteButton"]'
+		) as HTMLButtonElement;
+		await userEvent.click(inviteButton);
+
+		await waitFor(() => {
+			expect(RoomService.addRoomUserAccount).toHaveBeenCalledWith(10, {
+				emailAddress: 'newuser@liferay.com',
+				roleKey: 'DSR Room Collaborator',
+			});
+		});
+	});
+
+	it('shows only the content contributor and viewer roles when the current user is a room collaborator', async () => {
+		const roomCollaboratorUser = [
+			{
+				emailAddress: 'jack.doe@liferay.com',
+				id: 1,
+				name: 'Jack Doe',
+				roleKey: 'DSR Room Collaborator',
+			},
+		];
+
+		(RoomService.getRoomUserAccounts as jest.Mock).mockResolvedValue(
+			roomCollaboratorUser
+		);
+
+		const {container} = renderComponent({
+			roomId: 10,
+		});
+
+		await waitFor(() => {
+			expect(screen.getByText('Jack Doe')).toBeInTheDocument();
+		});
+
+		const roleKeyButton = container.querySelector(
+			'[data-testid="roleKeyButton"]'
+		) as HTMLButtonElement;
+		await userEvent.click(roleKeyButton);
+
+		await waitFor(() => {
+			expect(
+				document.querySelector(
+					'[data-testid="roleKeyItem_content-contributor"]'
+				)
+			).toBeInTheDocument();
+		});
+
+		expect(
+			document.querySelector('[data-testid="roleKeyItem_viewer"]')
+		).toBeInTheDocument();
+		expect(
+			document.querySelector(
+				'[data-testid="roleKeyItem_room-collaborator"]'
+			)
+		).toBeNull();
+	});
+
+	it('shows all roles when the current user is an administrator who is not a room member', async () => {
+		jest.spyOn(Liferay.ThemeDisplay, 'getUserId').mockReturnValue('999');
+
+		const {container} = renderComponent({
+			canAssignAllRoles: true,
+			roomId: 10,
+		});
+
+		await waitFor(() => {
+			expect(screen.getByText('John Doe')).toBeInTheDocument();
+		});
+
+		const roleKeyButton = container.querySelector(
+			'[data-testid="roleKeyButton"]'
+		) as HTMLButtonElement;
+		await userEvent.click(roleKeyButton);
+
+		await waitFor(() => {
+			expect(
+				document.querySelector(
+					'[data-testid="roleKeyItem_room-collaborator"]'
+				)
+			).toBeInTheDocument();
+		});
+
+		expect(
+			document.querySelector(
+				'[data-testid="roleKeyItem_content-contributor"]'
+			)
+		).toBeInTheDocument();
+		expect(
+			document.querySelector('[data-testid="roleKeyItem_viewer"]')
+		).toBeInTheDocument();
 	});
 });

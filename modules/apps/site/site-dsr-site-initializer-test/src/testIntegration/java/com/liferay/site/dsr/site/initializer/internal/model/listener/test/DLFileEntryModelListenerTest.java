@@ -149,7 +149,7 @@ public class DLFileEntryModelListenerTest {
 			role.getRoleId());
 
 		role = _roleLocalService.fetchRole(
-			TestPropsValues.getCompanyId(), "DSR Contributor");
+			TestPropsValues.getCompanyId(), "DSR Content Contributor");
 
 		_assertHasResourcePermissions(
 			actionIds, dlFileEntry.getFileEntryId(),

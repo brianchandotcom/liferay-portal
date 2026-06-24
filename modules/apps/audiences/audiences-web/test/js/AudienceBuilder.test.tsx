@@ -10,8 +10,8 @@ import React from 'react';
 import AudienceBuilder from '../../src/main/resources/META-INF/resources/js/AudienceBuilder';
 
 describe('AudienceBuilder', () => {
-	it('renders the editor shell, updates the title from the name, and links back', async () => {
-		const {getByLabelText, getByRole, getByText, queryByText} = render(
+	it('renders editor, updates name, back and cancel link to backURL', async () => {
+		const {getByLabelText, getByText, queryByText} = render(
 			<AudienceBuilder backURL="/back" namespace="_test_" />
 		);
 
@@ -23,7 +23,7 @@ describe('AudienceBuilder', () => {
 		expect(getByLabelText('back').getAttribute('href')).toBe('/back');
 		expect(getByText('cancel').getAttribute('href')).toBe('/back');
 
-		const input = getByRole('textbox');
+		const input = getByLabelText('name');
 
 		expect(input.getAttribute('name')).toBe('_test_name');
 		expect(input.getAttribute('maxLength')).toBe('75');

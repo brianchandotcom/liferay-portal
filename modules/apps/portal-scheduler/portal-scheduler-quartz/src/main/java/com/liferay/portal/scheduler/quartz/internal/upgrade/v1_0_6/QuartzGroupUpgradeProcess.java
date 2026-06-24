@@ -47,9 +47,9 @@ public class QuartzGroupUpgradeProcess extends UpgradeProcess {
 		Map<String, String> jobGroups = new HashMap<>();
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select job_name, job_group, job_data from " +
-					"QUARTZ_JOB_DETAILS where job_name like '%@%' and " +
-						"job_group not like '%@%'");
+				"select JOB_NAME, JOB_GROUP, JOB_DATA from " +
+					"QUARTZ_JOB_DETAILS where JOB_NAME like '%@%' and " +
+						"JOB_GROUP not like '%@%'");
 
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
@@ -86,20 +86,20 @@ public class QuartzGroupUpgradeProcess extends UpgradeProcess {
 		jobNames.removeAll(deleteJobNames);
 
 		_updateTables(
-			companyIds, jobGroups, "job_group", "job_name",
+			companyIds, jobGroups, "JOB_GROUP", "JOB_NAME",
 			new String[] {
 				"QUARTZ_FIRED_TRIGGERS", "QUARTZ_JOB_DETAILS", "QUARTZ_TRIGGERS"
 			});
 
 		_updateTables(
-			companyIds, jobGroups, "trigger_group", "trigger_name",
+			companyIds, jobGroups, "TRIGGER_GROUP", "TRIGGER_NAME",
 			_QUARTZ_TRIGGER_TABLE_NAMES);
 
 		_deleteFromTables(
-			deleteJobNames, jobGroups, "trigger_group", "trigger_name",
+			deleteJobNames, jobGroups, "TRIGGER_GROUP", "TRIGGER_NAME",
 			_QUARTZ_TRIGGER_TABLE_NAMES);
 		_deleteFromTables(
-			deleteJobNames, jobGroups, "job_group", "job_name",
+			deleteJobNames, jobGroups, "JOB_GROUP", "JOB_NAME",
 			new String[] {"QUARTZ_JOB_DETAILS"});
 	}
 
@@ -210,8 +210,8 @@ public class QuartzGroupUpgradeProcess extends UpgradeProcess {
 		Set<String> renamedJobGroups = new HashSet<>();
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select job_group from QUARTZ_JOB_DETAILS where job_name " +
-					"like '%@%' and job_group like '%@%'");
+				"select JOB_GROUP from QUARTZ_JOB_DETAILS where JOB_NAME " +
+					"like '%@%' and JOB_GROUP like '%@%'");
 
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 

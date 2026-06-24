@@ -11,15 +11,22 @@ import ClayLink from '@clayui/link';
 import ClayToolbar from '@clayui/toolbar';
 import React, {useState} from 'react';
 
+import AttributesSidebar from './components/AttributesSidebar';
+import {AudiencesCriteriaType} from './types';
+
+import './AudienceBuilder.scss';
+
 const NAME_MAX_LENGTH = 75;
 
 interface IProps {
+	audiencesCriteriaTypes?: AudiencesCriteriaType[];
 	backURL?: string;
 	name?: string;
 	namespace?: string;
 }
 
 export default function AudienceBuilder({
+	audiencesCriteriaTypes = [],
 	backURL,
 	name,
 	namespace = '',
@@ -29,7 +36,7 @@ export default function AudienceBuilder({
 	);
 
 	return (
-		<>
+		<div className="d-flex flex-column overflow-hidden">
 			<ClayToolbar>
 				<ClayLayout.ContainerFluid size={false}>
 					<ClayToolbar.Nav>
@@ -77,12 +84,14 @@ export default function AudienceBuilder({
 				</ClayLayout.ContainerFluid>
 			</ClayToolbar>
 
-			<ClayLayout.Row className="m-0">
-				<ClayLayout.Col className="border-right p-4" md={3}>
-					<h4>{Liferay.Language.get('attributes-types')}</h4>
-				</ClayLayout.Col>
+			<div className="audience-builder-content d-flex">
+				<div className="audience-builder-sidebar border-right d-flex flex-column flex-shrink-0 px-4">
+					<AttributesSidebar
+						audiencesCriteriaTypes={audiencesCriteriaTypes}
+					/>
+				</div>
 
-				<ClayLayout.Col className="p-4" md={9}>
+				<div className="flex-grow-1 overflow-auto p-4">
 					<ClayForm.Group>
 						<label htmlFor={`${namespace}name`}>
 							{Liferay.Language.get('name')}
@@ -104,8 +113,8 @@ export default function AudienceBuilder({
 							value={currentName}
 						/>
 					</ClayForm.Group>
-				</ClayLayout.Col>
-			</ClayLayout.Row>
-		</>
+				</div>
+			</div>
+		</div>
 	);
 }

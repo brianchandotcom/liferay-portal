@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.LayoutFriendlyURLComposite;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -108,6 +110,13 @@ public class CommerceOrderAssetDisplayPageFriendlyURLResolver
 			_commerceOrderLocalService.fetchCommerceOrder(commerceOrderId);
 
 		if (commerceOrder == null) {
+			return null;
+		}
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if ((permissionChecker == null) || !permissionChecker.isSignedIn()) {
 			return null;
 		}
 

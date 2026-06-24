@@ -7,6 +7,7 @@ package com.liferay.exportimport.report.internal.empty.model;
 
 import com.liferay.exportimport.kernel.empty.model.EmptyModelManager;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
+import com.liferay.exportimport.report.constants.ExportImportReportEntryConstants;
 import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
 import com.liferay.petra.function.UnsafeBiFunction;
 import com.liferay.petra.function.UnsafeSupplier;
@@ -62,12 +63,14 @@ public class EmptyModelManagerImpl implements EmptyModelManager {
 
 			if (ExportImportThreadLocal.isImportInProcess()) {
 				_exportImportReportEntryLocalService.
-					getOrAddEmptyExportImportReportEntry(
+					getOrAddExportImportReportEntry(
 						0L, companyId, externalReferenceCode,
 						_classNameLocalService.getClassNameId(clazz.getName()),
+						0,
 						GetterUtil.getLong(
 							ExportImportThreadLocal.
 								getExportImportConfigurationId()),
+						ExportImportReportEntryConstants.TYPE_EMPTY, null, null,
 						modelNameLanguageKey);
 			}
 
@@ -109,12 +112,13 @@ public class EmptyModelManagerImpl implements EmptyModelManager {
 				}
 
 				_exportImportReportEntryLocalService.
-					getOrAddEmptyExportImportReportEntry(
+					getOrAddExportImportReportEntry(
 						groupId, companyId, externalReferenceCode,
-						_classNameLocalService.getClassNameId(className),
+						_classNameLocalService.getClassNameId(className), 0,
 						GetterUtil.getLong(
 							ExportImportThreadLocal.
 								getExportImportConfigurationId()),
+						ExportImportReportEntryConstants.TYPE_EMPTY, null, null,
 						modelNameLanguageKey);
 			}
 
@@ -141,13 +145,13 @@ public class EmptyModelManagerImpl implements EmptyModelManager {
 			return;
 		}
 
-		_exportImportReportEntryLocalService.
-			getOrAddMissingReferenceExportImportReportEntry(
-				groupId, group.getCompanyId(), externalReferenceCode,
-				_classNameLocalService.getClassNameId(className),
-				GetterUtil.getLong(
-					ExportImportThreadLocal.getExportImportConfigurationId()),
-				className);
+		_exportImportReportEntryLocalService.getOrAddExportImportReportEntry(
+			groupId, group.getCompanyId(), externalReferenceCode,
+			_classNameLocalService.getClassNameId(className), 0,
+			GetterUtil.getLong(
+				ExportImportThreadLocal.getExportImportConfigurationId()),
+			ExportImportReportEntryConstants.TYPE_MISSING_REFERENCE, null, null,
+			className);
 	}
 
 	@Override

@@ -9,6 +9,7 @@ import com.liferay.exportimport.kernel.exception.handler.ImportStagedModelExcept
 import com.liferay.exportimport.kernel.lar.ExportImportClassedModelUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
+import com.liferay.exportimport.report.constants.ExportImportReportEntryConstants;
 import com.liferay.exportimport.report.internal.util.ExportImportReportEntryUtil;
 import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
 import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
@@ -55,17 +56,14 @@ public class ImportStagedModelExceptionHandlerImpl
 			groupId = 0;
 		}
 
-		_exportImportReportEntryLocalService.
-			getOrAddErrorExportImportReportEntry(
-				groupId, portletDataContext.getCompanyId(),
-				externalReferenceCode,
-				ExportImportClassedModelUtil.getClassNameId(stagedModel),
-				ExportImportClassedModelUtil.getClassPK(stagedModel),
-				GetterUtil.getLong(
-					portletDataContext.getExportImportProcessId()),
-				portletDataException.getMessage(),
-				_getErrorStackTrace(portletDataException),
-				modelClass.getName());
+		_exportImportReportEntryLocalService.getOrAddExportImportReportEntry(
+			groupId, portletDataContext.getCompanyId(), externalReferenceCode,
+			ExportImportClassedModelUtil.getClassNameId(stagedModel),
+			ExportImportClassedModelUtil.getClassPK(stagedModel),
+			GetterUtil.getLong(portletDataContext.getExportImportProcessId()),
+			ExportImportReportEntryConstants.TYPE_ERROR,
+			portletDataException.getMessage(),
+			_getErrorStackTrace(portletDataException), modelClass.getName());
 	}
 
 	private String _getErrorStackTrace(Throwable throwable) {

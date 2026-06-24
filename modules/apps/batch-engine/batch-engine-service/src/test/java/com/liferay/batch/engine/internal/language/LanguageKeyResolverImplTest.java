@@ -90,7 +90,7 @@ public class LanguageKeyResolverImplTest {
 		_whenTranslation(LocaleUtil.BRAZIL, "welcome-to-liferay", "Bem-vindo");
 
 		Map<String, Object> map = LinkedHashMapBuilder.<String, Object>put(
-			LanguageKeyResolver.FOR_EACH_LANGUAGE_ID, "welcome-to-liferay"
+			_FOR_EACH_LANGUAGE_ID, "welcome-to-liferay"
 		).build();
 
 		_languageKeyResolver.expand(_COMPANY_ID, map);
@@ -108,13 +108,12 @@ public class LanguageKeyResolverImplTest {
 		_whenTranslation(LocaleUtil.BRAZIL, "welcome-to-liferay", "Bem-vindo");
 
 		Map<String, Object> map = LinkedHashMapBuilder.<String, Object>put(
-			LanguageKeyResolver.FOR_EACH_LANGUAGE_ID, "welcome-to-liferay"
+			_FOR_EACH_LANGUAGE_ID, "welcome-to-liferay"
 		).build();
 
 		_languageKeyResolver.expand(_COMPANY_ID, map);
 
-		Assert.assertFalse(
-			map.containsKey(LanguageKeyResolver.FOR_EACH_LANGUAGE_ID));
+		Assert.assertFalse(map.containsKey(_FOR_EACH_LANGUAGE_ID));
 		Assert.assertEquals(map.toString(), 3, map.size());
 		Assert.assertEquals("Welcome", map.get("en_US"));
 		Assert.assertEquals("Bienvenido", map.get("es_ES"));
@@ -129,8 +128,7 @@ public class LanguageKeyResolverImplTest {
 
 		JSONObject valueI18nJSONObject = _jsonFactoryImpl.createJSONObject();
 
-		valueI18nJSONObject.put(
-			LanguageKeyResolver.FOR_EACH_LANGUAGE_ID, "welcome-to-liferay");
+		valueI18nJSONObject.put(_FOR_EACH_LANGUAGE_ID, "welcome-to-liferay");
 
 		JSONObject jsonObject = _jsonFactoryImpl.createJSONObject();
 
@@ -140,8 +138,7 @@ public class LanguageKeyResolverImplTest {
 
 		JSONObject expandedJSONObject = jsonObject.getJSONObject("value_i18n");
 
-		Assert.assertFalse(
-			expandedJSONObject.has(LanguageKeyResolver.FOR_EACH_LANGUAGE_ID));
+		Assert.assertFalse(expandedJSONObject.has(_FOR_EACH_LANGUAGE_ID));
 		Assert.assertEquals("Welcome", expandedJSONObject.getString("en_US"));
 		Assert.assertEquals(
 			"Bienvenido", expandedJSONObject.getString("es_ES"));
@@ -156,7 +153,7 @@ public class LanguageKeyResolverImplTest {
 
 		Map<String, Object> valueI18nMap =
 			LinkedHashMapBuilder.<String, Object>put(
-				LanguageKeyResolver.FOR_EACH_LANGUAGE_ID, "welcome-to-liferay"
+				_FOR_EACH_LANGUAGE_ID, "welcome-to-liferay"
 			).build();
 
 		_languageKeyResolver.expand(
@@ -187,7 +184,7 @@ public class LanguageKeyResolverImplTest {
 		Map<String, Object> map = LinkedHashMapBuilder.<String, Object>put(
 			"en_US", "Custom"
 		).put(
-			LanguageKeyResolver.FOR_EACH_LANGUAGE_ID, "welcome-to-liferay"
+			_FOR_EACH_LANGUAGE_ID, "welcome-to-liferay"
 		).build();
 
 		_languageKeyResolver.expand(_COMPANY_ID, map);
@@ -204,7 +201,7 @@ public class LanguageKeyResolverImplTest {
 		_whenTranslation(LocaleUtil.BRAZIL, "missing-key", null);
 
 		Map<String, Object> map = LinkedHashMapBuilder.<String, Object>put(
-			LanguageKeyResolver.FOR_EACH_LANGUAGE_ID, "missing-key"
+			_FOR_EACH_LANGUAGE_ID, "missing-key"
 		).build();
 
 		_languageKeyResolver.expand(_COMPANY_ID, map);
@@ -233,15 +230,14 @@ public class LanguageKeyResolverImplTest {
 		);
 
 		Map<String, Object> map = LinkedHashMapBuilder.<String, Object>put(
-			LanguageKeyResolver.FOR_EACH_LANGUAGE_ID, "welcome-to-liferay"
+			_FOR_EACH_LANGUAGE_ID, "welcome-to-liferay"
 		).build();
 
 		_languageKeyResolver.expand(_COMPANY_ID, map);
 
 		Assert.assertEquals(map.toString(), 1, map.size());
 		Assert.assertEquals(
-			"welcome-to-liferay",
-			map.get(LanguageKeyResolver.FOR_EACH_LANGUAGE_ID));
+			"welcome-to-liferay", map.get(_FOR_EACH_LANGUAGE_ID));
 	}
 
 	private void _whenTranslation(
@@ -255,6 +251,9 @@ public class LanguageKeyResolverImplTest {
 	}
 
 	private static final long _COMPANY_ID = 1L;
+
+	private static final String _FOR_EACH_LANGUAGE_ID =
+		"[$FOR_EACH_LANGUAGE_ID$]";
 
 	private BatchEngineTaskCompanyConfiguration
 		_batchEngineTaskCompanyConfiguration;

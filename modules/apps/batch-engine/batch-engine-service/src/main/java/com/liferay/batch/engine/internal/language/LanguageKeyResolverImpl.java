@@ -68,13 +68,13 @@ public class LanguageKeyResolverImpl implements LanguageKeyResolver {
 				_expand(jsonObject.get(key));
 			}
 
-			Object value = jsonObject.get(FOR_EACH_LANGUAGE_ID);
+			Object value = jsonObject.get(_FOR_EACH_LANGUAGE_ID);
 
 			if (!(value instanceof String)) {
 				return;
 			}
 
-			jsonObject.remove(FOR_EACH_LANGUAGE_ID);
+			jsonObject.remove(_FOR_EACH_LANGUAGE_ID);
 
 			Map<String, String> translations = _resolve((String)value);
 
@@ -96,13 +96,13 @@ public class LanguageKeyResolverImpl implements LanguageKeyResolver {
 				_expand(value);
 			}
 
-			Object value = map.get(FOR_EACH_LANGUAGE_ID);
+			Object value = map.get(_FOR_EACH_LANGUAGE_ID);
 
 			if (!(value instanceof String)) {
 				return;
 			}
 
-			map.remove(FOR_EACH_LANGUAGE_ID);
+			map.remove(_FOR_EACH_LANGUAGE_ID);
 
 			Map<String, String> translations = _resolve((String)value);
 
@@ -143,6 +143,9 @@ public class LanguageKeyResolverImpl implements LanguageKeyResolver {
 
 		return translations;
 	}
+
+	private static final String _FOR_EACH_LANGUAGE_ID =
+		"[$FOR_EACH_LANGUAGE_ID$]";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LanguageKeyResolverImpl.class);

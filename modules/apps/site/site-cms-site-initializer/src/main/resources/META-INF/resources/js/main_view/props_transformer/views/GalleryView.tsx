@@ -4,8 +4,13 @@
  */
 
 import ClayEmptyState from '@clayui/empty-state';
-import {Card, ICardSchema} from '@liferay/frontend-data-set-web';
+import {
+	Card,
+	ICardSchema,
+	IFileDropSettings,
+} from '@liferay/frontend-data-set-web';
 import React, {Context, useContext, useMemo, useState} from 'react';
+import {useDropzone} from 'react-dropzone';
 
 import '../../../../css/props_transformer/GalleryView.scss';
 
@@ -22,11 +27,13 @@ const MAX_VISIBLE_INDEX = (itemsLength: number) =>
 	Math.max(0, itemsLength - VISIBLE_ITEMS_COUNT);
 
 const GalleryView = ({
+	fileDropSettings,
 	frontendDataSetContext,
 	items,
 	schema,
 	...otherProps
 }: {
+	fileDropSettings?: IFileDropSettings;
 	frontendDataSetContext: Context<IFrontendDataSetContext>;
 	items: any[];
 	schema: ICardSchema;
@@ -165,33 +172,22 @@ const GalleryView = ({
 				<div className="c-gap-3 d-flex fds-gallery-view__thumbnails flex-grow-1">
 					{visibleItems.map((item, index) => {
 						const actualIndex = visibleStartIndex + index;
-						const classes = classNames(
-							'fds-gallery-view__thumbnail',
-							{
-								selected: actualIndex === selectedIndex,
-							}
-						);
 
 						return (
-							<div
-								className={classes}
+							<GalleryThumbnail
+								cardWidth={cardWidth}
+								fileDropSettings={fileDropSettings}
+								item={item}
+								items={items}
 								key={actualIndex}
 								onClick={() => handleItemClick(actualIndex)}
 								onKeyDown={(event) =>
 									handleKeyDown(event, actualIndex)
 								}
-								style={{
-									width: cardWidth,
-								}}
-								tabIndex={0}
-							>
-								<Card
-									item={item}
-									items={items}
-									schema={schema}
-									{...otherProps}
-								/>
-							</div>
+								schema={schema}
+								selected={actualIndex === selectedIndex}
+								{...otherProps}
+							/>
 						);
 					})}
 				</div>
@@ -211,3 +207,58 @@ const GalleryView = ({
 };
 
 export default GalleryView;
+
+function GalleryThumbnail({
+	cardWidth,
+	fileDropSettings,
+	item,
+	items,
+	onClick,
+	onKeyDown,
+	schema,
+	selected,
+	...otherProps
+}: {
+	cardWidth: string;
+	fileDropSettings?: IFileDropSettings;
+	item: any;
+	items: any[];
+	onClick: () => void;
+	onKeyDown: (event: React.KeyboardEvent) => void;
+	schema: ICardSchema;
+	selected: boolean;
+}) {
+	const isDropTarget = Boolean(
+		fileDropSettings?.enabled && fileDropSettings.isDropTarget({item})
+	);
+
+	// Only folders accept drops
+
+	const {getRootProps, isDragActive} = useDropzone({
+		disabled: !isDropTarget,
+		noClick: true,
+		noDragEventsBubbling: true,
+		noKeyboard: true,
+		onDrop: (droppedFiles) => {
+			fileDropSettings?.onFileDrop?.(droppedFiles, item);
+		},
+	});
+
+	return (
+		<div
+			{...getRootProps()}
+			className={classNames('fds-gallery-view__thumbnail', {
+				'drop-target': isDragActive,
+				selected,
+			})}
+			onClick={onClick}
+			onKeyDown={onKeyDown}
+			style={{
+				width: cardWidth,
+			}}
+			tabIndex={0}
+		>
+			<Card item={item} items={items} schema={schema} {...otherProps} />
+		</div>
+	);
+}

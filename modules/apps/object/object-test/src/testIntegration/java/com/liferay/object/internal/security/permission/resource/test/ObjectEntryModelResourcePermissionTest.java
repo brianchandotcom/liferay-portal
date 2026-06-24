@@ -70,6 +70,10 @@ public class ObjectEntryModelResourcePermissionTest {
 			RandomTestUtil.randomLocaleStringMap(),
 			DepotConstants.TYPE_ASSET_LIBRARY,
 			ServiceContextTestUtil.getServiceContext());
+		_guestPermissionChecker = PermissionCheckerFactoryUtil.create(
+			_userLocalService.getGuestUser(TestPropsValues.getCompanyId()));
+		_guestRole = _roleLocalService.getRole(
+			TestPropsValues.getCompanyId(), RoleConstants.GUEST);
 
 		String textObjectFieldName = "a" + RandomTestUtil.randomString();
 
@@ -82,6 +86,10 @@ public class ObjectEntryModelResourcePermissionTest {
 					textObjectFieldName
 				).build()),
 			ObjectDefinitionConstants.SCOPE_DEPOT);
+
+		_modelResourcePermission =
+			ModelResourcePermissionRegistryUtil.getModelResourcePermission(
+				_objectDefinition.getClassName());
 
 		_objectDefinitionSettingLocalService.addObjectDefinitionSetting(
 			TestPropsValues.getUserId(),
@@ -98,15 +106,6 @@ public class ObjectEntryModelResourcePermissionTest {
 				textObjectFieldName, RandomTestUtil.randomString()
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
-
-		_modelResourcePermission =
-			ModelResourcePermissionRegistryUtil.getModelResourcePermission(
-				_objectDefinition.getClassName());
-
-		_guestPermissionChecker = PermissionCheckerFactoryUtil.create(
-			_userLocalService.getGuestUser(TestPropsValues.getCompanyId()));
-		_guestRole = _roleLocalService.getRole(
-			TestPropsValues.getCompanyId(), RoleConstants.GUEST);
 	}
 
 	@Test

@@ -147,16 +147,17 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		Group group = layoutSetPrototype.getGroup();
 
 		Role role = _roleLocalService.fetchRoleByExternalReferenceCode(
-			DSRRoleConstants.EXTERNAL_REFERENCE_CODE_DSR_CONTRIBUTOR,
+			DSRRoleConstants.EXTERNAL_REFERENCE_CODE_DSR_CONTENT_CONTRIBUTOR,
 			companyId);
 
 		if (role == null) {
 			User user = _userLocalService.getGuestUser(companyId);
 
 			role = _roleLocalService.addRole(
-				DSRRoleConstants.EXTERNAL_REFERENCE_CODE_DSR_CONTRIBUTOR,
+				DSRRoleConstants.
+					EXTERNAL_REFERENCE_CODE_DSR_CONTENT_CONTRIBUTOR,
 				user.getUserId(), null, 0,
-				DSRRoleConstants.NAME_DSR_CONTRIBUTOR, null, null,
+				DSRRoleConstants.NAME_DSR_CONTENT_CONTRIBUTOR, null, null,
 				RoleConstants.TYPE_SITE, null, null);
 		}
 
@@ -165,6 +166,41 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			ResourceConstants.SCOPE_GROUP_TEMPLATE,
 			String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
 			role.getRoleId(), ActionKeys.ASSIGN_MEMBERS);
+
+		role = _roleLocalService.fetchRoleByExternalReferenceCode(
+			DSRRoleConstants.EXTERNAL_REFERENCE_CODE_DSR_ROOM_COLLABORATOR,
+			companyId);
+
+		if (role == null) {
+			User user = _userLocalService.getGuestUser(companyId);
+
+			role = _roleLocalService.addRole(
+				DSRRoleConstants.EXTERNAL_REFERENCE_CODE_DSR_ROOM_COLLABORATOR,
+				user.getUserId(), null, 0,
+				DSRRoleConstants.NAME_DSR_ROOM_COLLABORATOR, null, null,
+				RoleConstants.TYPE_SITE, null, null);
+		}
+
+		_resourcePermissionLocalService.addResourcePermission(
+			companyId, Group.class.getName(),
+			ResourceConstants.SCOPE_GROUP_TEMPLATE,
+			String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
+			role.getRoleId(), ActionKeys.ASSIGN_MEMBERS);
+		_resourcePermissionLocalService.addResourcePermission(
+			companyId, Group.class.getName(),
+			ResourceConstants.SCOPE_GROUP_TEMPLATE,
+			String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
+			role.getRoleId(), ActionKeys.MANAGE_LAYOUTS);
+		_resourcePermissionLocalService.addResourcePermission(
+			companyId, Layout.class.getName(),
+			ResourceConstants.SCOPE_GROUP_TEMPLATE,
+			String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
+			role.getRoleId(), ActionKeys.UPDATE);
+		_resourcePermissionLocalService.addResourcePermission(
+			companyId, Layout.class.getName(),
+			ResourceConstants.SCOPE_GROUP_TEMPLATE,
+			String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
+			role.getRoleId(), ActionKeys.VIEW);
 
 		role = _roleLocalService.fetchRoleByExternalReferenceCode(
 			DSRRoleConstants.EXTERNAL_REFERENCE_CODE_DSR_SELLER, companyId);
@@ -216,7 +252,13 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			new String[] {ActionKeys.VIEW});
 
 		Map<String, String[]> permissionsMap = HashMapBuilder.put(
-			DSRRoleConstants.NAME_DSR_CONTRIBUTOR,
+			DSRRoleConstants.NAME_DSR_CONTENT_CONTRIBUTOR,
+			new String[] {
+				ActionKeys.ADD_DOCUMENT, ActionKeys.ADVANCED_UPDATE,
+				ActionKeys.UPDATE, ActionKeys.SUBSCRIBE, ActionKeys.VIEW
+			}
+		).put(
+			DSRRoleConstants.NAME_DSR_ROOM_COLLABORATOR,
 			new String[] {
 				ActionKeys.ADD_DOCUMENT, ActionKeys.ADVANCED_UPDATE,
 				ActionKeys.UPDATE, ActionKeys.SUBSCRIBE, ActionKeys.VIEW

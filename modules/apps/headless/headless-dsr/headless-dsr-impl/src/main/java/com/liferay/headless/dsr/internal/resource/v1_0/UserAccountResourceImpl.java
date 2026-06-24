@@ -59,6 +59,7 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.site.dsr.site.initializer.constants.DSRPortletKeys;
+import com.liferay.site.dsr.site.initializer.constants.DSRRoleConstants;
 import com.liferay.site.dsr.site.initializer.constants.DSRTicketConstants;
 
 import jakarta.portlet.PortletMode;
@@ -73,6 +74,7 @@ import java.io.Serializable;
 
 import java.util.Date;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import org.osgi.service.component.annotations.Component;
@@ -149,8 +151,11 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		User user = _userLocalService.getUser(userAccountId);
 		Group group = _getGroup(roomId);
+
+		_checkPermission(group, userAccount.getRoleKey());
+
+		User user = _userLocalService.getUser(userAccountId);
 
 		_userGroupRoleLocalService.deleteUserGroupRoles(
 			new long[] {user.getUserId()}, group.getGroupId());
@@ -196,10 +201,13 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 
 		Map<String, Serializable> values = objectEntry.getValues();
 
-		long accountEntryId = GetterUtil.getLong(
-			values.get("r_accountToDSRRooms_accountEntryId"));
 		Group group = _groupService.getGroup(
 			GetterUtil.getLong(values.get("siteId")));
+
+		_checkPermission(group, userAccount.getRoleKey());
+
+		long accountEntryId = GetterUtil.getLong(
+			values.get("r_accountToDSRRooms_accountEntryId"));
 
 		Ticket ticket = _addInviteMemberTicket(
 			accountEntryId, group.getCompanyId(), group,
@@ -377,8 +385,27 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 			membershipExpirationDate, new ServiceContext());
 	}
 
+	private void _checkPermission(Group group, String roleKey)
+		throws Exception {
+
+		if (!Objects.equals(
+				roleKey, DSRRoleConstants.NAME_DSR_ROOM_COLLABORATOR)) {
+
+			return;
+		}
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if (!permissionChecker.isGroupAdmin(group.getGroupId()) &&
+			!permissionChecker.isGroupOwner(group.getGroupId())) {
+
+			throw new RoleAssignmentException();
+		}
+	}
+
 	private Group _getGroup(long roomId) throws Exception {
-		ObjectEntry objectEntry = _getObjectEntry(false, roomId);
+		ObjectEntry objectEntry = _getObjectEntry(true, roomId);
 
 		return _groupService.getGroup(
 			MapUtil.getLong(objectEntry.getValues(), "siteId"));

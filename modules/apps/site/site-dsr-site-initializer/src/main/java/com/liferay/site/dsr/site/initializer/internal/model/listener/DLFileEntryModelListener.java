@@ -102,7 +102,7 @@ public class DLFileEntryModelListener extends BaseModelListener<DLFileEntry> {
 		serviceContext.setModelPermissions(
 			ModelPermissionsFactory.create(
 				HashMapBuilder.put(
-					DSRRoleConstants.NAME_DSR_CONTRIBUTOR,
+					DSRRoleConstants.NAME_DSR_CONTENT_CONTRIBUTOR,
 					new String[] {
 						ActionKeys.ADD_DISCUSSION, ActionKeys.DOWNLOAD,
 						ActionKeys.SUBSCRIBE, ActionKeys.UPDATE, ActionKeys.VIEW

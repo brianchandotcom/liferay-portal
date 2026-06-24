@@ -21,19 +21,30 @@ import {IRoomShareProps, IUserAccount} from '../common/utils/types';
 export const DSR_SITE_ROLES = [
 	{
 		description: Liferay.Language.get(
-			'users-can-view-content-leave-comments-and-upload-documents'
+			'users-can-manage-pages-and-documents-add-room-comments-and-share-the-room'
 		),
-		key: 'DSR Contributor',
-		label: Liferay.Language.get('contributor'),
+		key: 'DSR Room Collaborator',
+		label: Liferay.Language.get('room-collaborator'),
 	},
 	{
 		description: Liferay.Language.get(
-			'users-can-view-documents-and-leave-comments-but-cannot-upload-files'
+			'users-can-view-room-content-add-comments-upload-documents-and-share-the-room'
+		),
+		key: 'DSR Content Contributor',
+		label: Liferay.Language.get('content-contributor'),
+	},
+	{
+		description: Liferay.Language.get(
+			'users-can-view-documents-and-add-comments-but-cannot-upload-documents'
 		),
 		key: 'Site Member',
 		label: Liferay.Language.get('viewer'),
 	},
 ];
+const ASSIGNABLE_ROLE_KEYS_BY_ROLE_KEY: Record<string, string[]> = {
+	'DSR Content Contributor': ['DSR Content Contributor', 'Site Member'],
+	'DSR Room Collaborator': ['DSR Content Contributor', 'Site Member'],
+};
 const EXPIRATION_WARNING_DAYS = 7;
 const OWNER_ROLE_KEY = 'Site Owner';
 
@@ -120,7 +131,11 @@ function isEmailAddressValid(email: string) {
 	return emailRegex.test(email);
 }
 
-function RoomShare({closeModal, roomId}: IRoomShareProps) {
+function RoomShare({
+	canAssignAllRoles = false,
+	closeModal,
+	roomId,
+}: IRoomShareProps) {
 	const [bannerDismissed, setBannerDismissed] = useState(false);
 	const [editingDate, setEditingDate] = useState('');
 	const [editingDatePickerExpanded, setEditingDatePickerExpanded] =
@@ -138,9 +153,17 @@ function RoomShare({closeModal, roomId}: IRoomShareProps) {
 	const currentUserId = Number(Liferay.ThemeDisplay.getUserId());
 	const minExpirationDate = getDateInputValue(new Date().toISOString());
 
-	const isOwner =
-		users.find((user) => user.id === currentUserId)?.roleKey ===
-		OWNER_ROLE_KEY;
+	const currentUserRoleKey = users.find(
+		(user) => user.id === currentUserId
+	)?.roleKey;
+
+	const assignableRoleKeys = canAssignAllRoles
+		? DSR_SITE_ROLES.map((role) => role.key)
+		: ASSIGNABLE_ROLE_KEYS_BY_ROLE_KEY[currentUserRoleKey ?? ''] ?? [];
+
+	const assignableRoles = DSR_SITE_ROLES.filter((role) =>
+		assignableRoleKeys.includes(role.key)
+	);
 
 	const loadUsers = useCallback(async () => {
 		setLoading(true);
@@ -350,13 +373,13 @@ function RoomShare({closeModal, roomId}: IRoomShareProps) {
 		}
 
 		if (
-			isOwner ||
+			canAssignAllRoles ||
 			(user.isInvitedMember && user.ownerId === currentUserId)
 		) {
 			return true;
 		}
 
-		return false;
+		return assignableRoles.some((role) => role.key === user.roleKey);
 	};
 
 	const renderContent = () => {
@@ -424,7 +447,7 @@ function RoomShare({closeModal, roomId}: IRoomShareProps) {
 								}
 								triggerIcon="caret-bottom"
 							>
-								<DropDown.ItemList items={DSR_SITE_ROLES}>
+								<DropDown.ItemList items={assignableRoles}>
 									{(item: any) => (
 										<DropDown.Item
 											data-testid={`roleKeyItem_${item.label}`}
@@ -707,7 +730,7 @@ function RoomShare({closeModal, roomId}: IRoomShareProps) {
 													}
 												>
 													<DropDown.ItemList
-														items={DSR_SITE_ROLES.filter(
+														items={assignableRoles.filter(
 															(role) =>
 																role.key !==
 																user.roleKey

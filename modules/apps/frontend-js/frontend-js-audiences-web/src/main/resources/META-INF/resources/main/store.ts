@@ -25,7 +25,17 @@ class Store {
 			return new Set();
 		}
 
-		return new Set(decodeURIComponent(value).split(STORAGE_SEPARATOR));
+		try {
+			return new Set(decodeURIComponent(value).split(STORAGE_SEPARATOR));
+		}
+		catch (error) {
+			log(
+				`Invalid audiences cookie found: '${value}'`,
+				`(reason: ${error})`
+			);
+
+			return new Set();
+		}
 	}
 
 	setAudienceIds(audienceIds: Set<AudienceId>): void {

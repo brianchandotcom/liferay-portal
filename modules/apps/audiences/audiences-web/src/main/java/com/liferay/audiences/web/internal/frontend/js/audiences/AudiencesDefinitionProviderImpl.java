@@ -38,8 +38,7 @@ public class AudiencesDefinitionProviderImpl
 			return null;
 		}
 
-		AudiencesDefinition audiencesDefinition = _portalCache.get(
-			companyId);
+		AudiencesDefinition audiencesDefinition = _portalCache.get(companyId);
 
 		if (audiencesDefinition != null) {
 			return audiencesDefinition;

@@ -241,7 +241,7 @@ definition {
 
 		task ("But if the admin uses the dropdown to add a tag") {
 			Type(
-				locator1 = "ACSettings#INVITE_USERS_INPUT",
+				locator1 = "CommerceEntry#MULTISELECT_INPUT",
 				value1 = "f");
 
 			for (var rowList : list "featured,fnew_tag") {
@@ -251,7 +251,7 @@ definition {
 			}
 
 			Type(
-				locator1 = "ACSettings#INVITE_USERS_INPUT",
+				locator1 = "CommerceEntry#MULTISELECT_INPUT",
 				value1 = "fn");
 
 			AssertElementPresent(
@@ -412,7 +412,7 @@ definition {
 
 		task ("But if the admin uses the dropdown to add a tag") {
 			Type(
-				locator1 = "ACSettings#INVITE_USERS_INPUT",
+				locator1 = "CommerceEntry#MULTISELECT_INPUT",
 				value1 = "f");
 
 			for (var rowList : list "featured,fnew_tag") {
@@ -422,7 +422,7 @@ definition {
 			}
 
 			Type(
-				locator1 = "ACSettings#INVITE_USERS_INPUT",
+				locator1 = "CommerceEntry#MULTISELECT_INPUT",
 				value1 = "fn");
 
 			AssertElementPresent(

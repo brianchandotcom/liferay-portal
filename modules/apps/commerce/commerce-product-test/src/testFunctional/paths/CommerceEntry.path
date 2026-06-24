@@ -776,6 +776,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGINATION_NEXT_PAGES</td>
+	<td>xpath=(//a | //button)[contains(@class, 'page-link')][*[name()='svg'][contains(@class,'lexicon-icon-angle-right')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGINATION_NEXT_PAGES_BY_TABLE</td>
 	<td>//div[contains(@id,'${key_id}')]//a[contains(@class, 'page-link')][*[name()='svg'][contains(@class,'lexicon-icon-angle-right')]]</td>
 	<td></td>
@@ -1219,6 +1224,11 @@
 <tr>
 	<td>IMAGE_TAG</td>
 	<td>//span[contains(@class,'label label-secondary')]//span[contains(.,'${key_tagName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MULTISELECT_INPUT</td>
+	<td>//input[@class='form-control-inset']</td>
 	<td></td>
 </tr>
 <tr>

@@ -75,7 +75,7 @@ definition {
 
 		Workflow.openWorkflowMetrics();
 
-		ACLoading.waitForLoadingComplete();
+		WaitForElementNotPresent(locator1 = "//span[contains(@class,'loading-animation')]");
 
 		WorkflowMetricsProcessListView.assertPaginationComponentPresent(pageNumberList = 1);
 	}

@@ -7,6 +7,7 @@ package com.liferay.exportimport.report.internal.empty.model;
 
 import com.liferay.exportimport.kernel.empty.model.EmptyModelManager;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
+import com.liferay.exportimport.report.constants.ExportImportReportEntryConstants;
 import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
 import com.liferay.petra.function.UnsafeBiFunction;
 import com.liferay.petra.function.UnsafeSupplier;
@@ -189,9 +190,11 @@ public class EmptyModelManagerImplTest {
 
 			Mockito.verify(
 				_exportImportReportEntryLocalService
-			).getOrAddEmptyExportImportReportEntry(
-				0L, companyId, externalReferenceCode, classNameId,
-				exportImportConfigurationId, User.class.getName()
+			).getOrAddExportImportReportEntry(
+				0L, companyId, externalReferenceCode, classNameId, 0,
+				exportImportConfigurationId,
+				ExportImportReportEntryConstants.TYPE_EMPTY, null, null,
+				User.class.getName()
 			);
 		}
 	}
@@ -423,9 +426,11 @@ public class EmptyModelManagerImplTest {
 
 			Mockito.verify(
 				_exportImportReportEntryLocalService
-			).getOrAddEmptyExportImportReportEntry(
-				groupId, companyId, userExternalReferenceCode, classNameId,
-				exportImportConfigurationId, User.class.getName()
+			).getOrAddExportImportReportEntry(
+				groupId, companyId, userExternalReferenceCode, classNameId, 0,
+				exportImportConfigurationId,
+				ExportImportReportEntryConstants.TYPE_EMPTY, null, null,
+				User.class.getName()
 			);
 		}
 	}
@@ -584,9 +589,11 @@ public class EmptyModelManagerImplTest {
 
 			Mockito.verify(
 				_exportImportReportEntryLocalService
-			).getOrAddEmptyExportImportReportEntry(
-				0L, companyId, externalReferenceCode, classNameId,
-				exportImportConfigurationId, User.class.getName()
+			).getOrAddExportImportReportEntry(
+				0L, companyId, externalReferenceCode, classNameId, 0,
+				exportImportConfigurationId,
+				ExportImportReportEntryConstants.TYPE_EMPTY, null, null,
+				User.class.getName()
 			);
 		}
 	}
@@ -658,9 +665,11 @@ public class EmptyModelManagerImplTest {
 
 			Mockito.verify(
 				_exportImportReportEntryLocalService
-			).getOrAddMissingReferenceExportImportReportEntry(
-				groupId, companyId, externalReferenceCode, classNameId,
-				exportImportConfigurationId, User.class.getName()
+			).getOrAddExportImportReportEntry(
+				groupId, companyId, externalReferenceCode, classNameId, 0,
+				exportImportConfigurationId,
+				ExportImportReportEntryConstants.TYPE_MISSING_REFERENCE, null,
+				null, User.class.getName()
 			);
 		}
 	}

@@ -1133,7 +1133,13 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 		}
 
 		public String getPrimaryLabel() {
-			return _awsFleetCloud.getPrimaryLabel();
+			AWSFleetCloud awsFleetCloud = getAWSFleetCloud();
+
+			if (awsFleetCloud == null) {
+				return null;
+			}
+
+			return awsFleetCloud.getPrimaryLabel();
 		}
 
 		public String getTaskName() {

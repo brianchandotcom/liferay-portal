@@ -115,18 +115,20 @@ export class BlogsEditBlogEntryPage {
 
 		await fieldset.getByLabel(`Select ${vocabularyName}`).click();
 
-		const categoriesSelectorIframe = await this.page.frameLocator(
-			`iframe[title="Select ${vocabularyName}"]`
-		);
+		const categoriesSelectorModal = this.page.getByRole('dialog', {
+			name: `Select ${vocabularyName}`,
+		});
 
 		for (const {name} of categories) {
-			await categoriesSelectorIframe
+			await categoriesSelectorModal
 				.locator('.treeview-item', {hasText: name})
 				.getByRole('checkbox')
 				.check();
 		}
 
-		await this.page.getByRole('button', {name: 'Done'}).click();
+		await categoriesSelectorModal
+			.getByRole('button', {name: 'Done'})
+			.click();
 	}
 
 	private async editBlogEntryAddfriendlyUrl({

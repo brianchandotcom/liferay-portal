@@ -21,6 +21,9 @@ import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalFolderLocalService;
 import com.liferay.journal.test.util.JournalFolderFixture;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.knowledge.base.model.KBArticle;
+import com.liferay.knowledge.base.service.KBArticleLocalService;
+import com.liferay.knowledge.base.test.util.KBTestUtil;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
@@ -68,6 +71,8 @@ public class CTEntryResourceTest extends BaseCTEntryResourceTestCase {
 
 		_journalArticleClassNameId = _classNameLocalService.getClassNameId(
 			JournalArticle.class);
+		_kbArticleClassNameId = _classNameLocalService.getClassNameId(
+			KBArticle.class);
 	}
 
 	@After
@@ -150,6 +155,35 @@ public class CTEntryResourceTest extends BaseCTEntryResourceTestCase {
 
 		assertContains(ctEntry2, (List<CTEntry>)page.getItems());
 		assertContains(ctEntry3, (List<CTEntry>)page.getItems());
+	}
+
+	@Test
+	public void testGetCTEntriesHistoryPageInKBArticlePublicationContext()
+		throws Exception {
+
+		KBArticle kbArticle = KBTestUtil.addKBArticle(testGroup.getGroupId());
+
+		long ctCollectionId1 = _getCTCollectionId();
+
+		CTEntry ctEntry1 = _addKBArticleCTEntry(ctCollectionId1, kbArticle);
+
+		long ctCollectionId2 = _getCTCollectionId();
+
+		CTEntry ctEntry2 = _addKBArticleCTEntry(ctCollectionId2, kbArticle);
+
+		Page<CTEntry> page;
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					ctCollectionId1)) {
+
+			page = ctEntryResource.getCTEntriesHistoryPage(
+				_kbArticleClassNameId, ctEntry1.getModelClassPK(), null,
+				testGroup.getGroupId(), null, Pagination.of(1, 10), null);
+		}
+
+		assertContains(ctEntry1, (List<CTEntry>)page.getItems());
+		assertContains(ctEntry2, (List<CTEntry>)page.getItems());
 	}
 
 	@Override
@@ -623,6 +657,39 @@ public class CTEntryResourceTest extends BaseCTEntryResourceTestCase {
 		return ctEntryResource.getCTEntry(serviceBuilderCTEntry.getCtEntryId());
 	}
 
+	private CTEntry _addKBArticleCTEntry(
+			long ctCollectionId, KBArticle kbArticle)
+		throws Exception {
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					ctCollectionId)) {
+
+			_kbArticleLocalService.updateKBArticle(
+				kbArticle.getUserId(), kbArticle.getResourcePrimKey(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				kbArticle.getDescription(), new String[0],
+				kbArticle.getSourceURL(), kbArticle.getDisplayDate(),
+				kbArticle.getExpirationDate(), kbArticle.getReviewDate(), null,
+				null,
+				ServiceContextTestUtil.getServiceContext(
+					testGroup.getGroupId()));
+		}
+
+		CTCollectionHistoryProvider<?> ctCollectionHistoryProvider =
+			_ctCollectionHistoryProviderRegistry.getCTCollectionHistoryProvider(
+				_kbArticleClassNameId);
+
+		com.liferay.change.tracking.model.CTEntry serviceBuilderCTEntry =
+			ctCollectionHistoryProvider.getCTEntry(
+				ctCollectionId, _kbArticleClassNameId,
+				kbArticle.getKbArticleId());
+
+		_waitForReindex();
+
+		return ctEntryResource.getCTEntry(serviceBuilderCTEntry.getCtEntryId());
+	}
+
 	private long _getCTCollectionId() throws Exception {
 		CTCollection ctCollection = _ctCollectionLocalService.addCTCollection(
 			null, testCompany.getCompanyId(), testCompany.getUserId(), 0,
@@ -677,6 +744,11 @@ public class CTEntryResourceTest extends BaseCTEntryResourceTestCase {
 
 	@Inject
 	private JournalFolderLocalService _journalFolderLocalService;
+
+	private long _kbArticleClassNameId;
+
+	@Inject
+	private KBArticleLocalService _kbArticleLocalService;
 
 	@Inject
 	private ListTypeLocalService _listTypeLocalService;

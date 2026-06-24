@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" srcLang="en-US" trgLang="es-ES" version="2.0">
+	<file id="com.liferay.journal.model.JournalArticle:122">
+		<unit id="JournalArticle_title">
+			<segment>
+				<source><![CDATA[This is the Title]]></source>
+				<target></target>
+			</segment>
+		</unit>
+		<unit id="JournalArticle_description">
+			<segment>
+				<source><![CDATA[This is the summary]]></source>
+				<target><![CDATA[Este es el resumen]]></target>
+			</segment>
+		</unit>
+	</file>
+</xliff>

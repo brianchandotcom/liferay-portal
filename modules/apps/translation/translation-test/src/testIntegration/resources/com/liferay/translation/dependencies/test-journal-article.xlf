@@ -5,13 +5,13 @@
 		<unit id="JournalArticle_title">
 			<segment>
 				<source><![CDATA[Test Article]]></source>
-				<target><![CDATA[Test Article]]></target>
+				<target></target>
 			</segment>
 		</unit>
 		<unit id="JournalArticle_description">
 			<segment>
 				<source><![CDATA[]]></source>
-				<target><![CDATA[]]></target>
+				<target></target>
 			</segment>
 		</unit>
 		<unit id="DDMStructure_HTML4acl">
@@ -35,7 +35,7 @@
 		<unit id="DDMStructure_Integer2cc6">
 			<segment>
 				<source><![CDATA[1]]></source>
-				<target><![CDATA[1]]></target>
+				<target></target>
 			</segment>
 		</unit>
 	</file>

@@ -149,7 +149,8 @@ public class InvitedMemberResourceTest
 			new long[] {groupId}, ServiceContextTestUtil.getServiceContext());
 
 		role = _roleLocalService.getRole(
-			_objectEntry.getCompanyId(), DSRRoleConstants.NAME_DSR_CONTRIBUTOR);
+			_objectEntry.getCompanyId(),
+			DSRRoleConstants.NAME_DSR_CONTENT_CONTRIBUTOR);
 
 		_userGroupRoleLocalService.addUserGroupRoles(
 			new long[] {_user.getUserId()}, groupId, role.getRoleId());
@@ -204,7 +205,7 @@ public class InvitedMemberResourceTest
 						membershipExpirationDate = new Date(
 							((System.currentTimeMillis() + Time.DAY) / 1000) *
 								1000);
-						roleKey = DSRRoleConstants.NAME_DSR_CONTRIBUTOR;
+						roleKey = DSRRoleConstants.NAME_DSR_CONTENT_CONTRIBUTOR;
 					}
 				});
 
@@ -215,7 +216,7 @@ public class InvitedMemberResourceTest
 		Assert.assertEquals(
 			Long.valueOf(_user.getUserId()), patchedInvitedMember.getOwnerId());
 		Assert.assertEquals(
-			DSRRoleConstants.NAME_DSR_CONTRIBUTOR,
+			DSRRoleConstants.NAME_DSR_CONTENT_CONTRIBUTOR,
 			patchedInvitedMember.getRoleKey());
 
 		InvitedMember invitedMember2 = randomInvitedMember();
@@ -245,7 +246,7 @@ public class InvitedMemberResourceTest
 				_objectEntry.getObjectEntryId(), invitedMember2.getId(),
 				new InvitedMember() {
 					{
-						roleKey = DSRRoleConstants.NAME_DSR_CONTRIBUTOR;
+						roleKey = DSRRoleConstants.NAME_DSR_CONTENT_CONTRIBUTOR;
 					}
 				});
 
@@ -289,6 +290,19 @@ public class InvitedMemberResourceTest
 				});
 
 		Assert.assertNull(patchedInvitedMember.getMembershipExpirationDate());
+
+		patchedInvitedMember =
+			_invitedMemberDSRSellerResource.patchRoomInvitedMember(
+				_objectEntry.getObjectEntryId(), invitedMember1.getId(),
+				new InvitedMember() {
+					{
+						roleKey = DSRRoleConstants.NAME_DSR_ROOM_COLLABORATOR;
+					}
+				});
+
+		Assert.assertEquals(
+			DSRRoleConstants.NAME_DSR_ROOM_COLLABORATOR,
+			patchedInvitedMember.getRoleKey());
 	}
 
 	@Override

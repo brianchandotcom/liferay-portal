@@ -146,7 +146,7 @@ public class ObjectDefinitionDeployerImplTest {
 
 		Assert.assertNotNull(
 			_roleLocalService.fetchRoleByExternalReferenceCode(
-				"L_DSR_CONTRIBUTOR", TestPropsValues.getCompanyId()));
+				"L_DSR_CONTENT_CONTRIBUTOR", TestPropsValues.getCompanyId()));
 
 		Role role = _roleLocalService.fetchRoleByExternalReferenceCode(
 			"L_DSR_SELLER", TestPropsValues.getCompanyId());
@@ -203,7 +203,7 @@ public class ObjectDefinitionDeployerImplTest {
 			List.of(ActionKeys.VIEW), role.getRoleId());
 
 		role = _roleLocalService.fetchRole(
-			TestPropsValues.getCompanyId(), "DSR Contributor");
+			TestPropsValues.getCompanyId(), "DSR Content Contributor");
 
 		_assertHasResourcePermissions(
 			actionIds, layoutSetPrototype.getGroupId(),

@@ -1081,7 +1081,7 @@ test(
 		await editDigitalSalesRoomPage.contributorRoleButton.click();
 
 		await expect(
-			digitalSalesRoomUsersPage.roleText(email, 'Contributor')
+			digitalSalesRoomUsersPage.roleText(email, 'Content Contributor')
 		).toBeVisible();
 
 		await performUserSwitch(page, 'test');
@@ -1364,6 +1364,133 @@ test(
 				editDigitalSalesRoomPage.documentCard('liferay')
 			).toBeVisible();
 		});
+	}
+);
+
+test(
+	'The room collaborator can manage pages and documents, add room comments, and share the room',
+	{tag: '@LPD-92366'},
+	async ({
+		apiHelpers,
+		digitalSalesRoomUsersPage,
+		digitalSalesRoomsPage,
+		editDigitalSalesRoomPage,
+		page,
+	}) => {
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			type: 'business',
+		});
+
+		const collaborator =
+			await apiHelpers.headlessAdminUser.postUserAccount();
+		const member = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[collaborator.alternateName] = {
+			name: collaborator.givenName,
+			password: 'test',
+			surname: collaborator.familyName,
+		};
+
+		const roomName = `A${getRandomInt()}`;
+
+		await digitalSalesRoomsPage.goToRoomsPage();
+
+		await expect(
+			digitalSalesRoomsPage.digitalSalesRoomsTable.searchInput
+		).toBeVisible();
+
+		await digitalSalesRoomsPage.digitalSalesRoomsTable.newButton.click();
+		await editDigitalSalesRoomPage.addDigitalSalesRoom({
+			accountName: account.name,
+			roomName,
+		});
+
+		await digitalSalesRoomsPage.goToRoomsPage();
+		await digitalSalesRoomsPage.clickRowActionsMenuItem(
+			roomName,
+			digitalSalesRoomsPage.shareMenuItem
+		);
+
+		await expect(
+			digitalSalesRoomUsersPage.userEmailAddressesInput
+		).toBeVisible();
+
+		await digitalSalesRoomUsersPage.userEmailAddressesInput.fill(
+			collaborator.emailAddress
+		);
+		await digitalSalesRoomUsersPage.userEmailAddressesInput.press('Enter');
+		await editDigitalSalesRoomPage.roleKeyButton.click();
+
+		await expect(
+			editDigitalSalesRoomPage.roomCollaboratorRoleInputButton
+		).toBeVisible();
+
+		await editDigitalSalesRoomPage.roomCollaboratorRoleInputButton.click();
+		await digitalSalesRoomUsersPage.inviteButton.click();
+
+		await waitForAlert(page, 'Success:User was invited successfully.');
+
+		await performUserSwitch(page, collaborator.alternateName);
+
+		await page.goto(`/web/${roomName}/onboarding?p_l_mode=edit`);
+
+		await expect(editDigitalSalesRoomPage.pageEditor).toBeVisible();
+
+		await page.goto(`/web/${roomName}`);
+
+		await digitalSalesRoomUsersPage.shareButton.click();
+		await digitalSalesRoomUsersPage.userEmailAddressesInput.fill(
+			member.emailAddress
+		);
+		await digitalSalesRoomUsersPage.userEmailAddressesInput.press('Enter');
+		await editDigitalSalesRoomPage.roleKeyButton.click();
+
+		await expect(
+			editDigitalSalesRoomPage.contributorRoleInputButton
+		).toBeVisible();
+		await expect(
+			editDigitalSalesRoomPage.viewerRoleInputButton
+		).toBeVisible();
+		await expect(
+			editDigitalSalesRoomPage.roomCollaboratorRoleInputButton
+		).not.toBeVisible();
+
+		await editDigitalSalesRoomPage.viewerRoleInputButton.click();
+		await digitalSalesRoomUsersPage.inviteButton.click();
+
+		await waitForAlert(page, 'Success:User was invited successfully.');
+
+		await expect(
+			digitalSalesRoomUsersPage.roleText(member.name, 'Viewer')
+		).toBeVisible();
+
+		await digitalSalesRoomUsersPage.roleDropdown(member.name).click();
+		await editDigitalSalesRoomPage.contributorRoleButton.click();
+
+		await expect(
+			digitalSalesRoomUsersPage.roleText(
+				member.name,
+				'Content Contributor'
+			)
+		).toBeVisible();
+
+		await page.goto(`/web/${roomName}`);
+
+		const comment = getRandomString();
+
+		await editDigitalSalesRoomPage.addDigitalSalesRoomComment(comment);
+
+		await expect(page.getByText(comment)).toBeVisible();
+
+		await editDigitalSalesRoomPage.uploadDocument(
+			path.join(__dirname, 'dependencies', 'liferay.png')
+		);
+
+		await expect(
+			editDigitalSalesRoomPage.noDocumentsMessage
+		).not.toBeVisible();
+
+		await performUserSwitch(page, 'test');
 	}
 );
 

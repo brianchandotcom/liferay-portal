@@ -34,9 +34,11 @@ export class EditDigitalSalesRoomPage {
 	readonly noDocumentsMessage: Locator;
 	readonly onboardingMenuItem: Locator;
 	readonly page: Page;
+	readonly pageEditor: Locator;
 	readonly publishButton: Locator;
 	readonly replyButton: Locator;
 	readonly roleKeyButton: Locator;
+	readonly roomCollaboratorRoleInputButton: Locator;
 	readonly roomCommentsText: Locator;
 	readonly roomNameInput: Locator;
 	readonly saveButton: Locator;
@@ -48,6 +50,7 @@ export class EditDigitalSalesRoomPage {
 	readonly selectImageFrame: FrameLocator;
 	readonly selectOption: (value: string) => Locator;
 	readonly templatePreviewFrame: FrameLocator;
+	readonly viewerRoleInputButton: Locator;
 
 	constructor(page: Page) {
 		this.cancelButton = page.getByRole('button', {
@@ -66,10 +69,10 @@ export class EditDigitalSalesRoomPage {
 			name: 'Add comment.',
 		});
 		this.contributorRoleButton = page.getByRole('menuitem', {
-			name: 'Contributor',
+			name: 'Content Contributor',
 		});
 		this.contributorRoleInputButton = page.locator(
-			'[data-testid="roleKeyItem_Contributor"]'
+			'[data-testid="roleKeyItem_Content Contributor"]'
 		);
 		this.documentCard = (documentName: string) =>
 			page.locator('.card-title', {hasText: documentName});
@@ -103,9 +106,13 @@ export class EditDigitalSalesRoomPage {
 			name: 'Onboarding',
 		});
 		this.page = page;
+		this.pageEditor = page.locator('#page-editor');
 		this.publishButton = page.getByRole('button', {name: 'Publish'});
 		this.replyButton = page.getByRole('button', {name: 'reply'});
 		this.roleKeyButton = page.locator('[data-testid="roleKeyButton"]');
+		this.roomCollaboratorRoleInputButton = page.locator(
+			'[data-testid="roleKeyItem_Room Collaborator"]'
+		);
 		this.roomCommentsText = page.getByText('Room Comments');
 		this.roomNameInput = page.getByLabel('Room Name');
 		this.saveButton = page.getByRole('button', {name: 'Save'});
@@ -127,6 +134,9 @@ export class EditDigitalSalesRoomPage {
 		this.templatePreviewFrame = page
 			.getByLabel('Create New Digital Sales Room')
 			.frameLocator('iframe');
+		this.viewerRoleInputButton = page.locator(
+			'[data-testid="roleKeyItem_Viewer"]'
+		);
 	}
 
 	async uploadDocument(filePath: string) {

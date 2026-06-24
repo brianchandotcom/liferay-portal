@@ -67,17 +67,19 @@ function CartItemsListActions() {
 							hide: isAsking,
 						})}
 					>
-						<ClayButton
-							className="action"
-							disabled={!itemsCount}
-							displayType="link"
-							onClick={() => {
-								liferayNavigate(orderDetailURL);
-							}}
-							small
-						>
-							{labels[VIEW_DETAILS]}
-						</ClayButton>
+						{Liferay.ThemeDisplay.isSignedIn() && (
+							<ClayButton
+								className="action"
+								disabled={!itemsCount}
+								displayType="link"
+								onClick={() => {
+									liferayNavigate(orderDetailURL);
+								}}
+								small
+							>
+								{labels[VIEW_DETAILS]}
+							</ClayButton>
+						)}
 
 						<ClayButton
 							className="action text-danger"

@@ -14,7 +14,6 @@ import {Role, RoleExternalReferenceCode} from './types';
 interface MembersPermissionSelectProps {
 	defaultRoleName: string;
 	disabled?: boolean;
-	hiddenRoleNames?: string[];
 	onChange: (selectedRoles: string[]) => void;
 	roleNames?: Partial<Record<RoleExternalReferenceCode, string>>;
 	roles: Role[];
@@ -24,16 +23,12 @@ interface MembersPermissionSelectProps {
 export function MembersPermissionSelect({
 	defaultRoleName,
 	disabled = false,
-	hiddenRoleNames = [],
 	onChange,
 	roleNames,
-	roles: rawRoles = [],
+	roles = [],
 	selectedRoles,
 }: MembersPermissionSelectProps) {
 	const [active, setActive] = useState(false);
-	const roles = useMemo(() => {
-		return rawRoles.filter((role) => !hiddenRoleNames.includes(role.name));
-	}, [hiddenRoleNames, rawRoles]);
 
 	const getRoleName = useCallback(
 		(role: Role) =>

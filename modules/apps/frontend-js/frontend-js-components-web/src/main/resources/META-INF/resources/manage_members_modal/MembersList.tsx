@@ -152,7 +152,6 @@ export function MembersList({
 								hasAssignMembersPermission={
 									hasAssignMembersPermission
 								}
-								hiddenRoleNames={config.hiddenRoleNames}
 								itemType="user"
 								items={users.items}
 								onRemoveItem={(item) => {
@@ -175,7 +174,6 @@ export function MembersList({
 								hasAssignMembersPermission={
 									hasAssignMembersPermission
 								}
-								hiddenRoleNames={config.hiddenRoleNames}
 								itemType="group"
 								items={groups.items}
 								onRemoveItem={(item) => {

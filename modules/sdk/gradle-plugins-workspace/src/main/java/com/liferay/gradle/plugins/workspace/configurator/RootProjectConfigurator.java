@@ -30,7 +30,6 @@ import com.liferay.gradle.plugins.workspace.docker.DockerPruneImage;
 import com.liferay.gradle.plugins.workspace.internal.configurator.TargetPlatformRootProjectConfigurator;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.workspace.internal.util.StringUtil;
-import com.liferay.gradle.plugins.workspace.internal.util.VersionUtil;
 import com.liferay.gradle.plugins.workspace.task.CreateTokenTask;
 import com.liferay.gradle.plugins.workspace.task.InitBundleTask;
 import com.liferay.gradle.plugins.workspace.task.UpgradeJakartaTask;
@@ -40,6 +39,7 @@ import com.liferay.gradle.plugins.workspace.task.VerifyProductTask;
 import com.liferay.gradle.util.ArrayUtil;
 import com.liferay.gradle.util.OSDetector;
 import com.liferay.gradle.util.Validator;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.release.util.ReleaseEntry;
 import com.liferay.release.util.ReleaseUtil;
 
@@ -57,9 +57,11 @@ import java.net.URI;
 import java.net.URL;
 
 import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -77,8 +79,6 @@ import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.artifacts.DependencySet;
-import org.gradle.api.artifacts.LenientConfiguration;
-import org.gradle.api.artifacts.ResolvedConfiguration;
 import org.gradle.api.artifacts.dsl.DependencyHandler;
 import org.gradle.api.execution.TaskExecutionGraph;
 import org.gradle.api.file.CopySpec;
@@ -100,7 +100,6 @@ import org.gradle.api.provider.Property;
 import org.gradle.api.provider.Provider;
 import org.gradle.api.provider.SetProperty;
 import org.gradle.api.specs.Spec;
-import org.gradle.api.specs.Specs;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.TaskOutputs;
@@ -2117,8 +2116,9 @@ public class RootProjectConfigurator implements Plugin<Project> {
 	}
 
 	private RegularFile _getJakartaTransformDependenciesFile(
-		Project project, Property<String> toVersionProperty,
-		WorkspaceExtension workspaceExtension) {
+			Project project, Property<String> toVersionProperty,
+			WorkspaceExtension workspaceExtension)
+		throws Exception {
 
 		String toVersion = toVersionProperty.getOrNull();
 
@@ -2132,55 +2132,94 @@ public class RootProjectConfigurator implements Plugin<Project> {
 				workspaceExtension.getTargetPlatformVersion();
 
 			if (Validator.isNull(targetPlatformVersion)) {
+				Logger logger = project.getLogger();
+
+				if (logger.isWarnEnabled()) {
+					logger.warn("Failed to validate target platform version.");
+				}
+
 				return null;
 			}
 		}
 
-		String normalizedTargetPlatformVersion =
-			VersionUtil.normalizeTargetPlatformVersion(targetPlatformVersion);
+		List<ReleaseEntry> releaseEntries = ReleaseUtil.getReleaseEntries();
 
-		String productName = "portal";
+		Collections.reverse(releaseEntries);
 
-		if (VersionUtil.isDXPVersion(normalizedTargetPlatformVersion)) {
-			productName = "dxp";
+		ReleaseEntry oldestReleaseEntry = null;
+
+		for (ReleaseEntry entry : releaseEntries) {
+			String entryProductGroupVersion = entry.getProductGroupVersion();
+
+			if ((entryProductGroupVersion != null) &&
+				targetPlatformVersion.startsWith(
+					entryProductGroupVersion + ".")) {
+
+				oldestReleaseEntry = entry;
+
+				break;
+			}
 		}
 
-		String dependencyNotation = StringUtil.concat(
-			"com.liferay.portal:release.", productName, ".tools:",
-			normalizedTargetPlatformVersion, "@txt");
+		if (oldestReleaseEntry == null) {
+			Logger logger = project.getLogger();
 
-		ConfigurationContainer configurationContainer =
-			project.getConfigurations();
+			if (logger.isWarnEnabled()) {
+				logger.warn(
+					"Failed to find Jakarta dependencies file for target " +
+						"platform version '{}'.",
+					targetPlatformVersion);
+			}
 
-		DependencyHandler dependencyHandler = project.getDependencies();
+			return null;
+		}
 
-		Configuration detachedConfiguration =
-			configurationContainer.detachedConfiguration(
-				dependencyHandler.create(dependencyNotation));
+		List<String> tags = oldestReleaseEntry.getTags();
 
-		ResolvedConfiguration resolvedConfiguration =
-			detachedConfiguration.getResolvedConfiguration();
+		if (!tags.contains("jakarta")) {
+			throw new GradleException(
+				StringBundler.concat(
+					targetPlatformVersion,
+					" does not support Jakarta migration. Choose a different ",
+					"Liferay version that is Jakarta compatible."));
+		}
 
-		LenientConfiguration lenientConfiguration =
-			resolvedConfiguration.getLenientConfiguration();
+		String oldestReleaseEntryURL = oldestReleaseEntry.getURL();
+
+		String jakartaDependenciesURL =
+			oldestReleaseEntryURL + "/jakarta-transform-dependencies.txt";
+
+		URL url = new URL(jakartaDependenciesURL);
+
+		File buildDir = project.getBuildDir();
+
+		File tmpDir = new File(buildDir, "tmp/upgradeJakarta/");
+
+		tmpDir.mkdirs();
+
+		File jakartaDepsFile = new File(
+			tmpDir, "jakarta-transform-dependencies.txt");
+
+		try (InputStream inputStream = url.openStream()) {
+			Files.copy(
+				inputStream, jakartaDepsFile.toPath(),
+				StandardCopyOption.REPLACE_EXISTING);
+		}
+		catch (Exception exception) {
+			throw new GradleException(
+				"Unable to download jakarta-transform-dependencies.txt from: " +
+					jakartaDependenciesURL,
+				exception);
+		}
 
 		ProjectLayout projectLayout = project.getLayout();
 
 		Directory projectDirectory = projectLayout.getProjectDirectory();
 
-		for (File file : lenientConfiguration.getFiles(Specs.satisfyAll())) {
-			return projectDirectory.file(file.getAbsolutePath());
-		}
+		String jakartaDependenciesAbsolutePath =
+			jakartaDepsFile.getAbsolutePath();
 
-		Logger logger = project.getLogger();
-
-		if (logger.isInfoEnabled()) {
-			logger.info(
-				"Unable to resolve Jakarta transform dependencies artifact: {}",
-				dependencyNotation);
-		}
-
-		return null;
+		return projectDirectory.file(jakartaDependenciesAbsolutePath);
 	}
 
 	private String _loadTemplate(String name) {

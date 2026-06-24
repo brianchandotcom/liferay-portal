@@ -19,6 +19,7 @@ import {ClayButtonWithIcon} from '@clayui/button';
 // eslint-disable-next-line
 import {IFrontendDataSetContext} from '@liferay/frontend-data-set-web/src/main/resources/META-INF/resources/FrontendDataSetContext';
 import classNames from 'classnames';
+import {getObjectValueFromPath, sub} from 'frontend-js-web';
 
 import AssetPreview from '../../../common/components/AssetPreview';
 
@@ -244,9 +245,18 @@ function GalleryThumbnail({
 		},
 	});
 
+	const title = schema.title
+		? getObjectValueFromPath({object: item, path: schema.title})
+		: '';
+
 	return (
 		<div
 			{...getRootProps()}
+			aria-label={
+				title
+					? sub(Liferay.Language.get('preview-x'), title)
+					: undefined
+			}
 			className={classNames('fds-gallery-view__thumbnail', {
 				'drop-target': isDragActive,
 				selected,

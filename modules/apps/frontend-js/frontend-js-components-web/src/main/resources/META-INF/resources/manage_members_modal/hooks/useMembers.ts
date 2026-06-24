@@ -6,7 +6,13 @@
 import {useCallback, useEffect, useReducer} from 'react';
 
 import * as membersService from '../services/membersService';
-import {MemberType, MembersConfig, UserAccount, UserGroup} from '../types';
+import {
+	MemberType,
+	MembersConfig,
+	RoleExternalReferenceCode,
+	UserAccount,
+	UserGroup,
+} from '../types';
 import {ActionTypes, initialState, reducer} from './membersReducer';
 import {runOptimisticMutation} from './runOptimisticMutation';
 
@@ -40,13 +46,17 @@ export function useMembers(
 				}),
 			]);
 
-			const excludedRoleNames = config.excludedRoleNames ?? [];
+			const excludedRoleExternalReferenceCodes =
+				config.excludedRoleExternalReferenceCodes ?? [];
 
 			dispatch({
 				payload: {
 					groups,
 					roles: allRoles.items.filter(
-						(role) => !excludedRoleNames.includes(role.name)
+						(role) =>
+							!excludedRoleExternalReferenceCodes.includes(
+								role.externalReferenceCode as RoleExternalReferenceCode
+							)
 					),
 					users,
 				},
@@ -60,7 +70,11 @@ export function useMembers(
 				type: ActionTypes.FetchError,
 			});
 		}
-	}, [config.excludedRoleNames, externalReferenceCode, pageSize]);
+	}, [
+		config.excludedRoleExternalReferenceCodes,
+		externalReferenceCode,
+		pageSize,
+	]);
 
 	useEffect(() => {
 		fetchInitialData();

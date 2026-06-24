@@ -9,6 +9,11 @@
 		.fragment-type-card {
 			flex: 1;
 
+			.card-item-first {
+				margin: 0;
+				top: 0;
+			}
+
 			&-basic .card-item-first {
 				background-color: $teal;
 			}

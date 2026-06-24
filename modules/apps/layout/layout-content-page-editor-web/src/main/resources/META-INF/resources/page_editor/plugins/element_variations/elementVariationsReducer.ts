@@ -27,6 +27,7 @@ type Action =
 			draftElementVariation: ElementVariation;
 			type: 'CREATE_ELEMENT_VARIATION_DRAFT';
 	  }
+	| {key: string; type: 'DELETE_ELEMENT_VARIATION'}
 	| {key: string; type: 'EDIT_ELEMENT_VARIATION'}
 	| {
 			properties: Partial<ElementVariation>;
@@ -39,7 +40,7 @@ export function createElementVariation(
 ): ElementVariation {
 	return {
 		audienceEntryERC: '',
-		externalReferenceCode: '',
+		externalReferenceCode: uuidv4(),
 		hide: false,
 		html: '',
 		js: '',
@@ -67,12 +68,24 @@ export function reducer(state: State, action: Action): State {
 		case 'CANCEL_ELEMENT_VARIATION_DRAFT':
 			return {...state, draftElementVariation: null};
 
+		case 'DELETE_ELEMENT_VARIATION':
+			return {
+				...state,
+				elementVariations: state.elementVariations.filter(
+					(elementVariation) => elementVariation.key !== action.key
+				),
+			};
+
 		case 'EDIT_ELEMENT_VARIATION': {
 			const elementVariation = state.elementVariations.find(
 				(elementVariation) => elementVariation.key === action.key
 			);
 
-			return {...state, draftElementVariation: {...elementVariation!}};
+			if (!elementVariation) {
+				return state;
+			}
+
+			return {...state, draftElementVariation: {...elementVariation}};
 		}
 
 		case 'SAVE_ELEMENT_VARIATION_DRAFT': {

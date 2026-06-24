@@ -331,6 +331,13 @@ public class LayoutPageTemplateStructureRelElementVariationPersistenceTest {
 	}
 
 	@Test
+	public void testCountByPlid() throws Exception {
+		_persistence.countByPlid(RandomTestUtil.nextLong());
+
+		_persistence.countByPlid(0L);
+	}
+
+	@Test
 	public void testCountBySegmentsExperienceERC() throws Exception {
 		_persistence.countBySegmentsExperienceERC("");
 
@@ -856,4 +863,4 @@ public class LayoutPageTemplateStructureRelElementVariationPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1335631027
+// LIFERAY-SERVICE-BUILDER-HASH:-389629694

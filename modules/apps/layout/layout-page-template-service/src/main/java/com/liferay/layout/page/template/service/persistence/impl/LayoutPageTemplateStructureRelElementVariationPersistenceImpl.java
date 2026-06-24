@@ -357,6 +357,96 @@ public class LayoutPageTemplateStructureRelElementVariationPersistenceImpl
 	private CollectionPersistenceFinder
 		<LayoutPageTemplateStructureRelElementVariation,
 		 NoSuchPageTemplateStructureRelElementVariationException>
+			_collectionPersistenceFinderByPlid;
+
+	/**
+	 * Returns an ordered range of all the layout page template structure rel element variations where plid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateStructureRelElementVariationModelImpl</code>.
+	 * </p>
+	 *
+	 * @param plid the plid
+	 * @param start the lower bound of the range of layout page template structure rel element variations
+	 * @param end the upper bound of the range of layout page template structure rel element variations (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching layout page template structure rel element variations
+	 */
+	@Override
+	public List<LayoutPageTemplateStructureRelElementVariation> findByPlid(
+		long plid, int start, int end,
+		OrderByComparator<LayoutPageTemplateStructureRelElementVariation>
+			orderByComparator,
+		boolean useFinderCache) {
+
+		return _collectionPersistenceFinderByPlid.find(
+			finderCache, new Object[] {plid}, start, end, orderByComparator,
+			useFinderCache);
+	}
+
+	/**
+	 * Returns the first layout page template structure rel element variation in the ordered set where plid = &#63;.
+	 *
+	 * @param plid the plid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout page template structure rel element variation
+	 * @throws NoSuchPageTemplateStructureRelElementVariationException if a matching layout page template structure rel element variation could not be found
+	 */
+	@Override
+	public LayoutPageTemplateStructureRelElementVariation findByPlid_First(
+			long plid,
+			OrderByComparator<LayoutPageTemplateStructureRelElementVariation>
+				orderByComparator)
+		throws NoSuchPageTemplateStructureRelElementVariationException {
+
+		return _collectionPersistenceFinderByPlid.findFirst(
+			finderCache, new Object[] {plid}, orderByComparator);
+	}
+
+	/**
+	 * Returns the first layout page template structure rel element variation in the ordered set where plid = &#63;.
+	 *
+	 * @param plid the plid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout page template structure rel element variation, or <code>null</code> if a matching layout page template structure rel element variation could not be found
+	 */
+	@Override
+	public LayoutPageTemplateStructureRelElementVariation fetchByPlid_First(
+		long plid,
+		OrderByComparator<LayoutPageTemplateStructureRelElementVariation>
+			orderByComparator) {
+
+		return _collectionPersistenceFinderByPlid.fetchFirst(
+			finderCache, new Object[] {plid}, orderByComparator);
+	}
+
+	/**
+	 * Removes all the layout page template structure rel element variations where plid = &#63; from the database.
+	 *
+	 * @param plid the plid
+	 */
+	@Override
+	public void removeByPlid(long plid) {
+		_collectionPersistenceFinderByPlid.remove(
+			finderCache, new Object[] {plid});
+	}
+
+	/**
+	 * Returns the number of layout page template structure rel element variations where plid = &#63;.
+	 *
+	 * @param plid the plid
+	 * @return the number of matching layout page template structure rel element variations
+	 */
+	@Override
+	public int countByPlid(long plid) {
+		return _collectionPersistenceFinderByPlid.count(
+			finderCache, new Object[] {plid});
+	}
+
+	private CollectionPersistenceFinder
+		<LayoutPageTemplateStructureRelElementVariation,
+		 NoSuchPageTemplateStructureRelElementVariationException>
 			_collectionPersistenceFinderBySegmentsExperienceERC;
 
 	/**
@@ -1151,6 +1241,33 @@ public class LayoutPageTemplateStructureRelElementVariationPersistenceImpl
 					LayoutPageTemplateStructureRelElementVariation::
 						getCompanyId));
 
+		_collectionPersistenceFinderByPlid = new CollectionPersistenceFinder<>(
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByPlid",
+				new String[] {
+					Long.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"plid"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByPlid",
+				new String[] {Long.class.getName()}, new String[] {"plid"},
+				true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByPlid",
+				new String[] {Long.class.getName()}, new String[] {"plid"},
+				false),
+			_SQL_SELECT_LAYOUTPAGETEMPLATESTRUCTURERELELEMENTVARIATION_WHERE,
+			_SQL_COUNT_LAYOUTPAGETEMPLATESTRUCTURERELELEMENTVARIATION_WHERE,
+			LayoutPageTemplateStructureRelElementVariationModelImpl.
+				ORDER_BY_JPQL,
+			_ENTITY_ALIAS_PREFIX, "", "",
+			new FinderColumn<>(
+				"layoutPageTemplateStructureRelElementVariation.", "plid",
+				FinderColumn.Type.LONG, "=", true, true,
+				LayoutPageTemplateStructureRelElementVariation::getPlid));
+
 		_collectionPersistenceFinderBySegmentsExperienceERC =
 			new CollectionPersistenceFinder<>(
 				this,
@@ -1324,4 +1441,4 @@ public class LayoutPageTemplateStructureRelElementVariationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1872149297
+// LIFERAY-SERVICE-BUILDER-HASH:-1246642275

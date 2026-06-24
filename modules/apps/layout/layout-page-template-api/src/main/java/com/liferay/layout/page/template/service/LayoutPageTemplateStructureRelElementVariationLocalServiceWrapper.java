@@ -56,6 +56,25 @@ public class LayoutPageTemplateStructureRelElementVariationLocalServiceWrapper
 				layoutPageTemplateStructureRelElementVariation);
 	}
 
+	@Override
+	public LayoutPageTemplateStructureRelElementVariation
+			addOrUpdateLayoutPageTemplateStructureRelElementVariation(
+				String externalReferenceCode, long userId, long groupId,
+				String audienceEntryERC,
+				java.util.Map<java.util.Locale, String> hideMap,
+				java.util.Map<java.util.Locale, String> htmlMap,
+				java.util.Map<java.util.Locale, String> jsMap, String name,
+				long plid, String segmentsExperienceERC, String targetElement,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutPageTemplateStructureRelElementVariationLocalService.
+			addOrUpdateLayoutPageTemplateStructureRelElementVariation(
+				externalReferenceCode, userId, groupId, audienceEntryERC,
+				hideMap, htmlMap, jsMap, name, plid, segmentsExperienceERC,
+				targetElement, serviceContext);
+	}
+
 	/**
 	 * Creates a new layout page template structure rel element variation with the primary key. Does not add the layout page template structure rel element variation to the database.
 	 *
@@ -125,6 +144,15 @@ public class LayoutPageTemplateStructureRelElementVariationLocalServiceWrapper
 		return _layoutPageTemplateStructureRelElementVariationLocalService.
 			deleteLayoutPageTemplateStructureRelElementVariation(
 				layoutPageTemplateStructureRelElementVariationId);
+	}
+
+	@Override
+	public void deleteLayoutPageTemplateStructureRelElementVariation(
+		String externalReferenceCode, long groupId) {
+
+		_layoutPageTemplateStructureRelElementVariationLocalService.
+			deleteLayoutPageTemplateStructureRelElementVariation(
+				externalReferenceCode, groupId);
 	}
 
 	/**
@@ -377,6 +405,14 @@ public class LayoutPageTemplateStructureRelElementVariationLocalServiceWrapper
 			getLayoutPageTemplateStructureRelElementVariations(start, end);
 	}
 
+	@Override
+	public java.util.List<LayoutPageTemplateStructureRelElementVariation>
+		getLayoutPageTemplateStructureRelElementVariations(long plid) {
+
+		return _layoutPageTemplateStructureRelElementVariationLocalService.
+			getLayoutPageTemplateStructureRelElementVariations(plid);
+	}
+
 	/**
 	 * Returns all the layout page template structure rel element variations matching the UUID and company.
 	 *
@@ -525,4 +561,4 @@ public class LayoutPageTemplateStructureRelElementVariationLocalServiceWrapper
 		_layoutPageTemplateStructureRelElementVariationLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1476151159
+// LIFERAY-SERVICE-BUILDER-HASH:1728596920

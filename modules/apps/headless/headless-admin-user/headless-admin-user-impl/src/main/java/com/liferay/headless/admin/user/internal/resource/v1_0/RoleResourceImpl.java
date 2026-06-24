@@ -15,6 +15,7 @@ import com.liferay.headless.admin.user.resource.v1_0.RoleResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.NoSuchRoleException;
 import com.liferay.portal.kernel.exception.RoleAssignmentException;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.role.RoleConstants;
@@ -522,22 +523,25 @@ public class RoleResourceImpl
 			Role role, com.liferay.portal.kernel.model.Role serviceBuilderRole)
 		throws Exception {
 
-		if (ArrayUtil.isNotEmpty(role.getRolePermissions())) {
-			for (RolePermission rolePermission : role.getRolePermissions()) {
-				if (rolePermission.getScope() ==
-						ResourceConstants.SCOPE_INDIVIDUAL) {
+		if (ArrayUtil.isEmpty(role.getRolePermissions())) {
+			return;
+		}
 
-					continue;
-				}
+		for (RolePermission rolePermission : role.getRolePermissions()) {
+			int scope = Math.toIntExact(rolePermission.getScope());
 
-				for (String actionId : rolePermission.getActionIds()) {
-					_resourcePermissionService.addResourcePermission(
-						contextUser.getGroupId(), contextCompany.getCompanyId(),
-						rolePermission.getResourceName(),
-						Math.toIntExact(rolePermission.getScope()),
-						rolePermission.getPrimaryKey(),
-						serviceBuilderRole.getRoleId(), actionId);
-				}
+			if (scope == ResourceConstants.SCOPE_INDIVIDUAL) {
+				continue;
+			}
+
+			String primKey = _getResourcePermissionPrimKey(
+				scope, rolePermission.getPrimaryKey());
+
+			for (String actionId : rolePermission.getActionIds()) {
+				_resourcePermissionService.addResourcePermission(
+					contextUser.getGroupId(), contextCompany.getCompanyId(),
+					rolePermission.getResourceName(), scope, primKey,
+					serviceBuilderRole.getRoleId(), actionId);
 			}
 		}
 	}
@@ -608,6 +612,18 @@ public class RoleResourceImpl
 		}
 
 		return descriptionMap;
+	}
+
+	private String _getResourcePermissionPrimKey(int scope, String primaryKey) {
+		if (scope == ResourceConstants.SCOPE_COMPANY) {
+			return String.valueOf(contextCompany.getCompanyId());
+		}
+
+		if (scope == ResourceConstants.SCOPE_GROUP_TEMPLATE) {
+			return String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID);
+		}
+
+		return primaryKey;
 	}
 
 	private Map<Locale, String> _getTitleMap(Role role) {

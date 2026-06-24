@@ -36,6 +36,20 @@ export default function AssetsFilesDropFDSPropsTransformer({
 
 	const isCreationMenuEmpty = !creationMenu?.primaryItems?.length;
 
+	const fileDropSettings = {
+		enabled: !isCreationMenuEmpty,
+		isDropTarget: ({item}: {item: any}) => {
+			return item.entryClassName.includes(OBJECT_ENTRY_FOLDER_CLASS_NAME);
+		},
+		onFileDrop: (droppedFiles: any, dropTarget?: any) => {
+			if (isCreationMenuEmpty) {
+				return;
+			}
+
+			return fileDropAction(additionalProps, droppedFiles, dropTarget);
+		},
+	};
+
 	return {
 		...assetsData,
 		atom: allFDSAtom,
@@ -61,25 +75,24 @@ export default function AssetsFilesDropFDSPropsTransformer({
 				};
 			}
 		),
-		fileDropSettings: {
-			enabled: !isCreationMenuEmpty,
-			isDropTarget: ({item}: {item: any}) => {
-				return item.entryClassName.includes(
-					OBJECT_ENTRY_FOLDER_CLASS_NAME
-				);
-			},
-			onFileDrop: (droppedFiles: any, dropTarget?: any) => {
-				if (isCreationMenuEmpty) {
-					return;
-				}
-
-				return fileDropAction(
-					additionalProps,
-					droppedFiles,
-					dropTarget
-				);
-			},
-		},
+		fileDropSettings,
 		snapshotsEnabled: true,
+
+		// The gallery renders outside the FDS drop context, so it gets the
+		// drop settings directly.
+
+		views: (assetsData.views || []).map((view: IView) => {
+			const {component} = view;
+
+			if (view.name !== 'gallery' || !component) {
+				return view;
+			}
+
+			return {
+				...view,
+				component: (props: any) =>
+					component({...props, fileDropSettings}),
+			};
+		}),
 	};
 }

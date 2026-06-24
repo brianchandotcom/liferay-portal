@@ -6,6 +6,7 @@
 package com.liferay.batch.engine.language;
 
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 
 import java.util.Map;
 
@@ -17,8 +18,10 @@ public interface LanguageKeyResolver {
 	public static final String FOR_EACH_LANGUAGE_ID =
 		"[$FOR_EACH_LANGUAGE_ID$]";
 
-	public void expand(JSONObject jsonObject);
+	public void expand(long companyId, JSONObject jsonObject)
+		throws ConfigurationException;
 
-	public void expand(Map<String, Object> fieldNameValueMap);
+	public void expand(long companyId, Map<String, Object> fieldNameValueMap)
+		throws ConfigurationException;
 
 }

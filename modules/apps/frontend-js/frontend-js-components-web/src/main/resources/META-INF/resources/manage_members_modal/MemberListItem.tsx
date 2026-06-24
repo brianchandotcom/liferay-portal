@@ -17,7 +17,6 @@ interface MemberListItemProps {
 	currentUserId?: string;
 	defaultRoleName: string;
 	hasAssignMembersPermission: boolean;
-	hiddenRoleNames?: string[];
 	itemType: 'group' | 'user';
 	items: (UserAccount | UserGroup)[];
 	onRemoveItem: (item: UserAccount | UserGroup) => Promise<void>;
@@ -31,7 +30,6 @@ export function MemberListItem({
 	currentUserId,
 	defaultRoleName,
 	hasAssignMembersPermission,
-	hiddenRoleNames,
 	itemType,
 	items,
 	onRemoveItem,
@@ -120,7 +118,6 @@ export function MemberListItem({
 								<MembersPermissionSelect
 									defaultRoleName={defaultRoleName}
 									disabled={isCurrentUser}
-									hiddenRoleNames={hiddenRoleNames}
 									onChange={(newRoles) => {
 										onUpdateItemRoles(item, newRoles);
 									}}

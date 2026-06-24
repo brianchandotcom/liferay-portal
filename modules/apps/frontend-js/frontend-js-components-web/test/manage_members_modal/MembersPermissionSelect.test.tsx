@@ -35,7 +35,6 @@ describe('MembersPermissionSelect', () => {
 		render(
 			<MembersPermissionSelect
 				defaultRoleName="Member"
-				hiddenRoleNames={['Owner', 'Consumer']}
 				onChange={() => {}}
 				roles={ROLES}
 				selectedRoles={['Member']}
@@ -46,14 +45,7 @@ describe('MembersPermissionSelect', () => {
 		fireEvent.click(screen.getByRole('button'));
 	}
 
-	it('hides the roles listed in hiddenRoleNames', () => {
-		renderOpened();
-
-		expect(screen.queryByText('Owner')).not.toBeInTheDocument();
-		expect(screen.queryByText('Consumer')).not.toBeInTheDocument();
-	});
-
-	it('renders the non-hidden roles', () => {
+	it('renders the provided roles', () => {
 		renderOpened();
 
 		expect(screen.getByLabelText('Member')).toBeInTheDocument();

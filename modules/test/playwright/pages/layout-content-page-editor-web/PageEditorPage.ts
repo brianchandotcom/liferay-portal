@@ -886,17 +886,6 @@ export class PageEditorPage {
 			{steps: 5}
 		);
 
-		// Calculate drop data
-
-		const targetBox = await targetNode.boundingBox();
-
-		const y =
-			position === 'middle'
-				? targetBox.height / 2
-				: position === 'bottom'
-					? targetBox.height - 2
-					: 2;
-
 		const cssClass =
 			position === 'middle'
 				? /drag-over-middle/
@@ -904,14 +893,23 @@ export class PageEditorPage {
 					? /drag-over-bottom/
 					: /drag-over-top/;
 
-		const approachY = position === 'top' ? y + 4 : y - 4;
-
-		// Move over the target until the drop indicator appears. Each pass
-		// moves to a nearby point first and then to the real drop point, so
-		// the pointer position always changes and Chromium keeps firing
-		// dragover events.
+		// Move over the target until the drop indicator appears. The target
+		// box is recomputed on every pass because starting the drag can shift
+		// the tree. Each pass also approaches from a nearby point so the
+		// pointer keeps moving and Chromium keeps firing dragover events.
 
 		await expect(async () => {
+			const targetBox = await targetNode.boundingBox();
+
+			const y =
+				position === 'middle'
+					? targetBox.height / 2
+					: position === 'bottom'
+						? targetBox.height - 2
+						: 2;
+
+			const approachY = position === 'top' ? y + 4 : y - 4;
+
 			await this.page.mouse.move(
 				targetBox.x + targetBox.width / 2,
 				targetBox.y + approachY,

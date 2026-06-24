@@ -79,6 +79,12 @@ public class BuildDatabaseTestUtil {
 							"login", "test-owner-" + index
 						)
 					)
+				).put(
+					"user",
+					new JSONObject(
+					).put(
+						"login", "test-owner-" + index
+					)
 				)
 			).put(
 				"html_url", htmlURL

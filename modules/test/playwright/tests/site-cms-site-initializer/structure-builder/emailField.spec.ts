@@ -28,7 +28,7 @@ const test = mergeTests(
 );
 
 test(
-	'Email field maps to the EmailAddress business type, round-trips its domain settings and enforces blocked domains',
+	'Email field maps to the EmailAddress business type, round-trips its domain settings, autocompletes domains and validates format and blocked domains',
 	{tag: ['@LPD-91039']},
 	async ({contentsPage, page, structureBuilderPage}) => {
 		const structureLabel = `Structure${getRandomInt()}`;
@@ -97,16 +97,38 @@ test(
 			page.getByRole('gridcell', {exact: true, name: '@liferay.com'})
 		).toBeVisible();
 
-		// A valid, non-blocked email is stored
-
 		await contentsPage.goto();
 
 		await contentsPage.createContent(structureLabel);
 
-		await contentsPage.fillData([
-			{label: 'Title', value: validTitle},
-			{label: 'Email', value: 'user@liferay.com'},
-		]);
+		await contentsPage.fillData([{label: 'Title', value: validTitle}]);
+
+		const emailInput = page.getByLabel('Email').first();
+
+		// A malformed email is rejected on the client
+
+		await emailInput.fill('notanemail');
+
+		await emailInput.blur();
+
+		await expect(
+			page.getByText('Please enter a valid email address')
+		).toBeVisible();
+
+		// Typing the local part and "@" suggests the configured autocomplete
+		// domain, and picking it fills the input
+
+		await emailInput.fill('');
+
+		await emailInput.click();
+
+		await page.keyboard.type('user@l');
+
+		await page.getByRole('option', {name: '@liferay.com'}).click();
+
+		await expect(emailInput).toHaveValue('user@liferay.com');
+
+		// A valid, non-blocked email is stored
 
 		await contentsPage.saveContent();
 

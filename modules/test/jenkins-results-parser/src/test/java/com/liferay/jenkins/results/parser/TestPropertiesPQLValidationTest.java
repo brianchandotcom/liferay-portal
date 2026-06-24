@@ -116,8 +116,9 @@ public class TestPropertiesPQLValidationTest {
 						}
 						catch (RuntimeException runtimeException) {
 							errorMessages.add(
-								"Invalid PQL in property " + propertyName +
-									": " + runtimeException.getMessage());
+								JenkinsResultsParserUtil.combine(
+									"Invalid PQL in property ", propertyName,
+									": ", runtimeException.getMessage()));
 						}
 					}
 

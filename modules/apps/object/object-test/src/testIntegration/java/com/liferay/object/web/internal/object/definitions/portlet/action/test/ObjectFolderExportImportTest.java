@@ -127,10 +127,8 @@ public class ObjectFolderExportImportTest extends BaseExportImportTestCase {
 			"TestObjectFolder2",
 			Collections.singletonList("TESTOBJECTDEFINITION1"));
 		_assertObjectFolder(
-			0, Collections.emptyList(), "TestObjectFolder3",
-			Collections.emptyList());
-		_assertDefaultObjectFolder(
-			Collections.singletonList("TESTOBJECTDEFINITION1"),
+			2, Collections.singletonList("TESTOBJECTDEFINITION1"),
+			"TestObjectFolder3",
 			Collections.singletonList("TESTOBJECTDEFINITION2"));
 	}
 

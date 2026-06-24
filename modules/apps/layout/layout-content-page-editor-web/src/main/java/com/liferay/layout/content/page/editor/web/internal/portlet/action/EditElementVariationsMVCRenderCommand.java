@@ -5,13 +5,19 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
+import com.liferay.audiences.service.AudiencesEntryService;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
+import com.liferay.layout.content.page.editor.web.internal.display.context.EditElementVariationsDisplayContext;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelElementVariationService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.segments.service.SegmentsExperienceService;
 
 import jakarta.portlet.RenderRequest;
 import jakarta.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Víctor Galán
@@ -29,7 +35,28 @@ public class EditElementVariationsMVCRenderCommand implements MVCRenderCommand {
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
+		renderRequest.setAttribute(
+			EditElementVariationsDisplayContext.class.getName(),
+			new EditElementVariationsDisplayContext(
+				_audiencesEntryService,
+				_portal.getHttpServletRequest(renderRequest),
+				_layoutPageTemplateStructureRelElementVariationService, _portal,
+				_segmentsExperienceService));
+
 		return "/edit_element_variations.jsp";
 	}
+
+	@Reference
+	private AudiencesEntryService _audiencesEntryService;
+
+	@Reference
+	private LayoutPageTemplateStructureRelElementVariationService
+		_layoutPageTemplateStructureRelElementVariationService;
+
+	@Reference
+	private Portal _portal;
+
+	@Reference
+	private SegmentsExperienceService _segmentsExperienceService;
 
 }

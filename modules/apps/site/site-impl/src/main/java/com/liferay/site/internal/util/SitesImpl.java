@@ -78,7 +78,6 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.PortletPreferencesImpl;
 import com.liferay.site.internal.exportimport.constants.LayoutSetPrototypeMergeConstants;
-import com.liferay.site.internal.exportimport.internal.notifications.LayoutSetPrototypeNotificationUtil;
 import com.liferay.sites.kernel.util.Sites;
 
 import jakarta.portlet.PortletPreferences;
@@ -598,6 +597,8 @@ public class SitesImpl implements Sites {
 		Map<Long, ExportImportConfiguration> exportImportConfigurations =
 			new HashMap<>();
 
+		boolean preValidationErrors = false;
+
 		User user = _userLocalService.getUser(userId);
 
 		for (Iterator<LayoutSet> iterator = mergeableLayoutSets.iterator();
@@ -618,7 +619,13 @@ public class SitesImpl implements Sites {
 					portalException);
 
 				iterator.remove();
+
+				preValidationErrors = true;
 			}
+		}
+
+		if (mergeableLayoutSets.isEmpty() && preValidationErrors) {
+			throw new PortalException("Unable to start site template merge");
 		}
 
 		Map<String, Serializable> taskContextMap =

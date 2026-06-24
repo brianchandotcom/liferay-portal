@@ -5,7 +5,9 @@
 
 package com.liferay.batch.engine.internal.language;
 
+import com.liferay.batch.engine.configuration.BatchEngineTaskCompanyConfiguration;
 import com.liferay.batch.engine.language.LanguageKeyResolver;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
@@ -39,7 +41,7 @@ public class LanguageKeyResolverImplTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Before
-	public void setUp() {
+	public void setUp() throws Exception {
 		_language = Mockito.mock(Language.class);
 
 		Set<Locale> locales = new LinkedHashSet<>();
@@ -54,14 +56,35 @@ public class LanguageKeyResolverImplTest {
 			locales
 		);
 
+		_configurationProvider = Mockito.mock(ConfigurationProvider.class);
+
+		_batchEngineTaskCompanyConfiguration = Mockito.mock(
+			BatchEngineTaskCompanyConfiguration.class);
+
+		Mockito.when(
+			_configurationProvider.getCompanyConfiguration(
+				BatchEngineTaskCompanyConfiguration.class, _COMPANY_ID)
+		).thenReturn(
+			_batchEngineTaskCompanyConfiguration
+		);
+
+		Mockito.when(
+			_batchEngineTaskCompanyConfiguration.languageKeyResolutionEnabled()
+		).thenReturn(
+			true
+		);
+
 		_languageKeyResolver = new LanguageKeyResolverImpl();
 
+		ReflectionTestUtil.setFieldValue(
+			_languageKeyResolver, "_configurationProvider",
+			_configurationProvider);
 		ReflectionTestUtil.setFieldValue(
 			_languageKeyResolver, "_language", _language);
 	}
 
 	@Test
-	public void testExpandExcludesLocalesWithoutTranslation() {
+	public void testExpandExcludesLocalesWithoutTranslation() throws Exception {
 		_whenTranslation(LocaleUtil.US, "welcome-to-liferay", "Welcome");
 		_whenTranslation(LocaleUtil.SPAIN, "welcome-to-liferay", null);
 		_whenTranslation(LocaleUtil.BRAZIL, "welcome-to-liferay", "Bem-vindo");
@@ -70,7 +93,7 @@ public class LanguageKeyResolverImplTest {
 			LanguageKeyResolver.FOR_EACH_LANGUAGE_ID, "welcome-to-liferay"
 		).build();
 
-		_languageKeyResolver.expand(map);
+		_languageKeyResolver.expand(_COMPANY_ID, map);
 
 		Assert.assertEquals(map.toString(), 2, map.size());
 		Assert.assertEquals("Welcome", map.get("en_US"));
@@ -79,7 +102,7 @@ public class LanguageKeyResolverImplTest {
 	}
 
 	@Test
-	public void testExpandFullLocaleMap() {
+	public void testExpandFullLocaleMap() throws Exception {
 		_whenTranslation(LocaleUtil.US, "welcome-to-liferay", "Welcome");
 		_whenTranslation(LocaleUtil.SPAIN, "welcome-to-liferay", "Bienvenido");
 		_whenTranslation(LocaleUtil.BRAZIL, "welcome-to-liferay", "Bem-vindo");
@@ -88,7 +111,7 @@ public class LanguageKeyResolverImplTest {
 			LanguageKeyResolver.FOR_EACH_LANGUAGE_ID, "welcome-to-liferay"
 		).build();
 
-		_languageKeyResolver.expand(map);
+		_languageKeyResolver.expand(_COMPANY_ID, map);
 
 		Assert.assertFalse(
 			map.containsKey(LanguageKeyResolver.FOR_EACH_LANGUAGE_ID));
@@ -99,7 +122,7 @@ public class LanguageKeyResolverImplTest {
 	}
 
 	@Test
-	public void testExpandJSONObject() {
+	public void testExpandJSONObject() throws Exception {
 		_whenTranslation(LocaleUtil.US, "welcome-to-liferay", "Welcome");
 		_whenTranslation(LocaleUtil.SPAIN, "welcome-to-liferay", "Bienvenido");
 		_whenTranslation(LocaleUtil.BRAZIL, "welcome-to-liferay", "Bem-vindo");
@@ -113,7 +136,7 @@ public class LanguageKeyResolverImplTest {
 
 		jsonObject.put("value_i18n", valueI18nJSONObject);
 
-		_languageKeyResolver.expand(jsonObject);
+		_languageKeyResolver.expand(_COMPANY_ID, jsonObject);
 
 		JSONObject expandedJSONObject = jsonObject.getJSONObject("value_i18n");
 
@@ -126,7 +149,7 @@ public class LanguageKeyResolverImplTest {
 	}
 
 	@Test
-	public void testExpandNestedMaps() {
+	public void testExpandNestedMaps() throws Exception {
 		_whenTranslation(LocaleUtil.US, "welcome-to-liferay", "Welcome");
 		_whenTranslation(LocaleUtil.SPAIN, "welcome-to-liferay", "Bienvenido");
 		_whenTranslation(LocaleUtil.BRAZIL, "welcome-to-liferay", "Bem-vindo");
@@ -137,6 +160,7 @@ public class LanguageKeyResolverImplTest {
 			).build();
 
 		_languageKeyResolver.expand(
+			_COMPANY_ID,
 			LinkedHashMapBuilder.<String, Object>put(
 				"fragmentFields",
 				List.<Object>of(
@@ -155,7 +179,7 @@ public class LanguageKeyResolverImplTest {
 	}
 
 	@Test
-	public void testExpandPreservesExistingLocaleEntries() {
+	public void testExpandPreservesExistingLocaleEntries() throws Exception {
 		_whenTranslation(LocaleUtil.US, "welcome-to-liferay", "Welcome");
 		_whenTranslation(LocaleUtil.SPAIN, "welcome-to-liferay", "Bienvenido");
 		_whenTranslation(LocaleUtil.BRAZIL, "welcome-to-liferay", "Bem-vindo");
@@ -166,7 +190,7 @@ public class LanguageKeyResolverImplTest {
 			LanguageKeyResolver.FOR_EACH_LANGUAGE_ID, "welcome-to-liferay"
 		).build();
 
-		_languageKeyResolver.expand(map);
+		_languageKeyResolver.expand(_COMPANY_ID, map);
 
 		Assert.assertEquals("Custom", map.get("en_US"));
 		Assert.assertEquals("Bienvenido", map.get("es_ES"));
@@ -174,7 +198,7 @@ public class LanguageKeyResolverImplTest {
 	}
 
 	@Test
-	public void testExpandUnknownKeyLeavesMapEmpty() {
+	public void testExpandUnknownKeyLeavesMapEmpty() throws Exception {
 		_whenTranslation(LocaleUtil.US, "missing-key", null);
 		_whenTranslation(LocaleUtil.SPAIN, "missing-key", null);
 		_whenTranslation(LocaleUtil.BRAZIL, "missing-key", null);
@@ -183,21 +207,41 @@ public class LanguageKeyResolverImplTest {
 			LanguageKeyResolver.FOR_EACH_LANGUAGE_ID, "missing-key"
 		).build();
 
-		_languageKeyResolver.expand(map);
+		_languageKeyResolver.expand(_COMPANY_ID, map);
 
 		Assert.assertTrue(map.toString(), map.isEmpty());
 	}
 
 	@Test
-	public void testExpandWithoutPlaceholderIsNoOp() {
+	public void testExpandWithoutPlaceholderIsNoOp() throws Exception {
 		Map<String, Object> map = LinkedHashMapBuilder.<String, Object>put(
 			"en_US", "Welcome"
 		).build();
 
-		_languageKeyResolver.expand(map);
+		_languageKeyResolver.expand(_COMPANY_ID, map);
 
 		Assert.assertEquals(map.toString(), 1, map.size());
 		Assert.assertEquals("Welcome", map.get("en_US"));
+	}
+
+	@Test
+	public void testExpandWithResolutionDisabledIsNoOp() throws Exception {
+		Mockito.when(
+			_batchEngineTaskCompanyConfiguration.languageKeyResolutionEnabled()
+		).thenReturn(
+			false
+		);
+
+		Map<String, Object> map = LinkedHashMapBuilder.<String, Object>put(
+			LanguageKeyResolver.FOR_EACH_LANGUAGE_ID, "welcome-to-liferay"
+		).build();
+
+		_languageKeyResolver.expand(_COMPANY_ID, map);
+
+		Assert.assertEquals(map.toString(), 1, map.size());
+		Assert.assertEquals(
+			"welcome-to-liferay",
+			map.get(LanguageKeyResolver.FOR_EACH_LANGUAGE_ID));
 	}
 
 	private void _whenTranslation(
@@ -210,6 +254,11 @@ public class LanguageKeyResolverImplTest {
 		);
 	}
 
+	private static final long _COMPANY_ID = 1L;
+
+	private BatchEngineTaskCompanyConfiguration
+		_batchEngineTaskCompanyConfiguration;
+	private ConfigurationProvider _configurationProvider;
 	private final JSONFactoryImpl _jsonFactoryImpl = new JSONFactoryImpl();
 	private Language _language;
 	private LanguageKeyResolver _languageKeyResolver;

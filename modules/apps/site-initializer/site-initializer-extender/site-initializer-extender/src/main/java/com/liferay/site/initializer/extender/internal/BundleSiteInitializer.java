@@ -28,7 +28,6 @@ import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.asset.list.util.comparator.ClassNameModelResourceComparator;
 import com.liferay.asset.util.AssetRendererFactoryWrapper;
-import com.liferay.batch.engine.configuration.BatchEngineTaskCompanyConfiguration;
 import com.liferay.batch.engine.language.LanguageKeyResolver;
 import com.liferay.batch.engine.unit.BatchEngineUnitThreadLocal;
 import com.liferay.blogs.model.BlogsEntry;
@@ -1116,16 +1115,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 					SiteInitializerUtil.replace(json, serviceContext),
 					stringUtilReplaceValues);
 
-				if (_isLanguageKeyResolutionEnabled(
-						serviceContext.getCompanyId())) {
+				JSONObject pageDefinitionJSONObject =
+					_jsonFactory.createJSONObject(json);
 
-					JSONObject pageDefinitionJSONObject =
-						_jsonFactory.createJSONObject(json);
+				_languageKeyResolver.expand(
+					serviceContext.getCompanyId(), pageDefinitionJSONObject);
 
-					_languageKeyResolver.expand(pageDefinitionJSONObject);
-
-					json = pageDefinitionJSONObject.toString();
-				}
+				json = pageDefinitionJSONObject.toString();
 
 				String css = _replace(
 					SiteInitializerUtil.read(
@@ -1199,16 +1195,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 					SiteInitializerUtil.replace(json, serviceContext),
 					stringUtilReplaceValues);
 
-				if (_isLanguageKeyResolutionEnabled(
-						serviceContext.getCompanyId())) {
+				JSONObject pageDefinitionJSONObject =
+					_jsonFactory.createJSONObject(json);
 
-					JSONObject pageDefinitionJSONObject =
-						_jsonFactory.createJSONObject(json);
+				_languageKeyResolver.expand(
+					serviceContext.getCompanyId(), pageDefinitionJSONObject);
 
-					_languageKeyResolver.expand(pageDefinitionJSONObject);
-
-					json = pageDefinitionJSONObject.toString();
-				}
+				json = pageDefinitionJSONObject.toString();
 
 				String css = _replace(
 					SiteInitializerUtil.read(
@@ -1298,16 +1291,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			json = _replace(json, stringUtilReplaceValues);
 
-			if (_isLanguageKeyResolutionEnabled(
-					serviceContext.getCompanyId())) {
+			JSONObject objectDefinitionJSONObject =
+				_jsonFactory.createJSONObject(json);
 
-				JSONObject objectDefinitionJSONObject =
-					_jsonFactory.createJSONObject(json);
+			_languageKeyResolver.expand(
+				serviceContext.getCompanyId(), objectDefinitionJSONObject);
 
-				_languageKeyResolver.expand(objectDefinitionJSONObject);
-
-				json = objectDefinitionJSONObject.toString();
-			}
+			json = objectDefinitionJSONObject.toString();
 
 			ObjectDefinition objectDefinition = ObjectDefinition.toDTO(json);
 
@@ -2983,9 +2973,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 		JSONObject pageDefinitionJSONObject = _jsonFactory.createJSONObject(
 			json);
 
-		if (_isLanguageKeyResolutionEnabled(serviceContext.getCompanyId())) {
-			_languageKeyResolver.expand(pageDefinitionJSONObject);
-		}
+		_languageKeyResolver.expand(
+			serviceContext.getCompanyId(), pageDefinitionJSONObject);
 
 		if (!Objects.equals(type, LayoutConstants.TYPE_CONTENT) &&
 			!Objects.equals(type, LayoutConstants.TYPE_UTILITY)) {
@@ -5928,18 +5917,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 
 		_updateGroupSiteInitializerKey(groupId);
-	}
-
-	private boolean _isLanguageKeyResolutionEnabled(long companyId)
-		throws Exception {
-
-		BatchEngineTaskCompanyConfiguration
-			batchEngineTaskCompanyConfiguration =
-				_configurationProvider.getCompanyConfiguration(
-					BatchEngineTaskCompanyConfiguration.class, companyId);
-
-		return batchEngineTaskCompanyConfiguration.
-			languageKeyResolutionEnabled();
 	}
 
 	private void _publishObjectDefinitions(

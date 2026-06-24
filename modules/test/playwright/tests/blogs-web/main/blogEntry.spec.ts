@@ -726,7 +726,7 @@ test(
 			`${liferayConfig.environment.baseUrl}/o/blogs-web/blogs/entry_cover_image_caption.jsp?coverImageCaption=${encodeURIComponent(payload)}&coverImageURL=https://example.com/image.png`
 		);
 
-		await expect(page.getByRole('img')).toHaveCount(0);
+		await expect(page.locator('img')).toHaveCount(0);
 	}
 );
 

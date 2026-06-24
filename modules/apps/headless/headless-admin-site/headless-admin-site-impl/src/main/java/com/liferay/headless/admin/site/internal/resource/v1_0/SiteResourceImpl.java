@@ -117,7 +117,7 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		Group group = _groupLocalService.getGroupByExternalReferenceCode(
+		Group group = _groupService.getGroupByExternalReferenceCode(
 			externalReferenceCode, contextCompany.getCompanyId());
 
 		File file = _siteInitializerSerializer.serialize(group.getGroupId());

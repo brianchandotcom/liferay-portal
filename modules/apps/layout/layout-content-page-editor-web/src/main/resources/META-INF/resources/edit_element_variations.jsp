@@ -8,8 +8,10 @@
 <%@ include file="/init.jsp" %>
 
 <%
+EditElementVariationsDisplayContext editElementVariationsDisplayContext = (EditElementVariationsDisplayContext)request.getAttribute(EditElementVariationsDisplayContext.class.getName());
+
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(ParamUtil.getString(request, "redirect"));
+portletDisplay.setURLBack(editElementVariationsDisplayContext.getRedirect());
 portletDisplay.setURLBackTitle(ParamUtil.getString(request, "backURLTitle"));
 
 renderResponse.setTitle(LanguageUtil.get(request, "element-variations"));
@@ -20,6 +22,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "element-variations"));
 <div>
 	<react:component
 		module="{ElementVariations} from layout-content-page-editor-web"
-		props="<%= java.util.Collections.emptyMap() %>"
+		props="<%= editElementVariationsDisplayContext.getData() %>"
 	/>
 </div>

@@ -204,6 +204,9 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static void clearCache() {
+		_cacheURL = null;
+		_ciNode = null;
+
 		File cacheDirectory = new File(
 			System.getProperty("java.io.tmpdir"), "jenkins-cached-files");
 

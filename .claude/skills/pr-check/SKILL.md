@@ -12,11 +12,17 @@ Run premerge checks against the current branch. The skill iterates through the v
 
 ## Preconditions
 
-- **Branch rebased on local `master`.** Compare `git merge-base HEAD master` to `git rev-parse master`; when they differ, abort and tell the developer to rebase (`git rebase master`). The `format-source-current-branch` validation diffs against the local `master` tip to decide which files to format — when the branch's merge-base lags behind that tip, SF picks up reverse-direction diffs from the master commits the branch has not absorbed and the `<TICKET> SF` autocommit captures unrelated rewrites.
+- **Working tree clean.** `git status --porcelain` must return empty. When dirty, abort and ask the developer to commit first.
 
-- **Working tree clean.** `git status --porcelain` must return empty. When dirty, abort and ask the developer to commit first — the autocommit steps inside drift validations would otherwise capture their uncommitted edits.
+- **Rebased on the latest `master`.** Resolve the master remote. Use the one the developer names, otherwise `upstream`, otherwise `origin`. When none resolves, compare `git merge-base HEAD master` to `git rev-parse master`. Abort and tell the developer to rebase when the two differ, and warn that the branch was not checked against a remote. Otherwise run these steps.
 
-- **Diff baseline is local `master`.** The skill never fetches from a remote and does not compare against an `upstream/master` ref. Whether local `master` is up to date is the developer's call.
+	1. `git fetch <remote> master`.
+
+	1. Fast forward local `master` to the fetched tip. When local `master` has diverged, warn and stop.
+
+	1. `git rebase <remote>/master`. On a clean rebase, continue against the rebased branch. On conflict, list the unmerged files (`git diff --diff-filter=U --name-only`) and ask the developer who should resolve the conflicts. When the developer chooses to, run `git rebase --abort` and FAIL. When the developer asks you to, fix the conflicts, `git add` the files, and run `git rebase --continue`. When the conflicts cannot be resolved, run `git rebase --abort` and FAIL.
+
+- **Diff baseline is local `master`.** After the rebase, the three-dot diff against local `master` is the baseline.
 
 - **Diff is nonempty.** When the three-dot diff produces no files, exit with a one-line message — no validation produces useful signal on a clean branch.
 

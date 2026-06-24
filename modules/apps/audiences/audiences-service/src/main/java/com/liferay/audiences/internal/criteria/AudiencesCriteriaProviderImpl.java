@@ -44,6 +44,9 @@ public class AudiencesCriteriaProviderImpl
 		audiencesCriteriaTypes.add(
 			_getBrowserAttributesAudiencesCriteriaType(locale));
 
+		audiencesCriteriaTypes.add(
+			_getGeneralAttributesAudiencesCriteriaType(locale));
+
 		AudiencesCriteriaType customAudiencesCriteriaType =
 			_getCustomAudiencesCriteriaType(companyId, locale);
 
@@ -151,6 +154,28 @@ public class AudiencesCriteriaProviderImpl
 
 			return null;
 		}
+	}
+
+	private AudiencesCriteriaType _getGeneralAttributesAudiencesCriteriaType(
+		Locale locale) {
+
+		return new AudiencesCriteriaType(
+			Arrays.asList(
+				new AudiencesCriteria(
+					"text", AudiencesCriteriaKeys.AUTHENTICATION,
+					_language.get(locale, "authentication"),
+					Arrays.asList(
+						new AudiencesCriteria.Option(
+							_language.get(locale, "yes"), "yes"),
+						new AudiencesCriteria.Option(
+							_language.get(locale, "no"), "no")),
+					AudiencesCriteria.Type.OPTIONS),
+				new AudiencesCriteria(
+					"text", AudiencesCriteriaKeys.LANGUAGE,
+					_language.get(locale, "language"),
+					_getLanguageOptions(locale),
+					AudiencesCriteria.Type.OPTIONS)),
+			_language.get(locale, "general"));
 	}
 
 	private List<AudiencesCriteria.Option> _getLanguageOptions(Locale locale) {

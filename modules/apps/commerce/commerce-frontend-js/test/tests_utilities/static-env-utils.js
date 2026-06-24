@@ -43,6 +43,7 @@ const Liferay = {
 		getPathThemeImages: () => '/assets',
 		getPortalURL: () => window.location.origin,
 		getScopeGroupId: () => '123',
+		isSignedIn: () => true,
 	},
 	Util: {
 		sub: (key, ...values) => {

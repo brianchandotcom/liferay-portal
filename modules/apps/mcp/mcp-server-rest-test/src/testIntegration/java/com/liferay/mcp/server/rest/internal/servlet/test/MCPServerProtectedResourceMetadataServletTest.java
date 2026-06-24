@@ -6,16 +6,25 @@
 package com.liferay.mcp.server.rest.internal.servlet.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
-import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+
+import jakarta.servlet.http.HttpServletResponse;
+
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpHeaders;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+
+import java.util.List;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -36,30 +45,20 @@ public class MCPServerProtectedResourceMetadataServletTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testServiceWithGet() throws Exception {
-		Http.Options options = new Http.Options();
+	public void testService() throws Exception {
+		HttpResponse<String> httpResponse = _send("GET");
 
-		options.setLocation(_getURL());
+		_assertHeader(
+			StringPool.STAR, "Access-Control-Allow-Origin",
+			httpResponse.headers());
+		_assertHeader(
+			"public, max-age=300", "Cache-Control", httpResponse.headers());
 
-		String body = _http.URLtoString(options);
-
-		Http.Response response = options.getResponse();
-
-		Assert.assertEquals(200, response.getResponseCode());
-
-		Assert.assertTrue(
-			response.getContentType(),
-			response.getContentType(
-			).contains(
-				"application/json"
-			));
 		Assert.assertEquals(
-			"public, max-age=300",
-			response.getHeader(HttpHeaders.CACHE_CONTROL));
-		Assert.assertEquals(
-			"*", response.getHeader("Access-Control-Allow-Origin"));
+			HttpServletResponse.SC_OK, httpResponse.statusCode());
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(body);
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			httpResponse.body());
 
 		String portalURL =
 			"http://localhost:" + PortalUtil.getPortalServerPort(false);
@@ -80,30 +79,69 @@ public class MCPServerProtectedResourceMetadataServletTest {
 			portalURL + "/o/mcp", jsonObject.getString("resource"));
 		Assert.assertEquals(
 			"Liferay MCP Server", jsonObject.getString("resource_name"));
+
+		httpResponse = _send("HEAD");
+
+		_assertHeader(
+			"public, max-age=300", "Cache-Control", httpResponse.headers());
+
+		Assert.assertEquals(
+			HttpServletResponse.SC_OK, httpResponse.statusCode());
+		Assert.assertEquals(StringPool.BLANK, httpResponse.body());
+
+		httpResponse = _send("OPTIONS");
+
+		_assertHeader(
+			"Authorization, Content-Type, MCP-Protocol-Version",
+			"Access-Control-Allow-Headers", httpResponse.headers());
+		_assertHeader(
+			"GET, HEAD, OPTIONS", "Access-Control-Allow-Methods",
+			httpResponse.headers());
+		_assertHeader(
+			StringPool.STAR, "Access-Control-Allow-Origin",
+			httpResponse.headers());
+		_assertHeader("300", "Access-Control-Max-Age", httpResponse.headers());
+
+		Assert.assertEquals(
+			HttpServletResponse.SC_NO_CONTENT, httpResponse.statusCode());
+
+		httpResponse = _send("POST");
+
+		_assertHeader("GET, HEAD, OPTIONS", "Allow", httpResponse.headers());
+
+		Assert.assertEquals(
+			HttpServletResponse.SC_METHOD_NOT_ALLOWED,
+			httpResponse.statusCode());
 	}
 
-	@Test
-	public void testServiceWithPost() throws Exception {
-		Http.Options options = new Http.Options();
+	private void _assertHeader(
+		String expectedHeaderValue, String headerName,
+		HttpHeaders httpHeaders) {
 
-		options.setLocation(_getURL());
-		options.setPost(true);
+		Map<String, List<String>> map = httpHeaders.map();
 
-		_http.URLtoString(options);
+		List<String> headerValues = map.get(headerName);
 
-		Http.Response response = options.getResponse();
-
-		Assert.assertEquals(405, response.getResponseCode());
-
-		Assert.assertEquals("GET, HEAD, OPTIONS", response.getHeader("Allow"));
+		Assert.assertEquals(expectedHeaderValue, headerValues.get(0));
 	}
 
-	private String _getURL() {
-		return "http://localhost:" + PortalUtil.getPortalServerPort(false) +
-			"/o/.well-known/oauth-protected-resource";
+	private HttpResponse<String> _send(String method) throws Exception {
+		return _httpClient.send(
+			HttpRequest.newBuilder(
+			).uri(
+				URI.create(
+					"http://localhost:" +
+						PortalUtil.getPortalServerPort(false) +
+							"/o/.well-known/oauth-protected-resource")
+			).method(
+				method, HttpRequest.BodyPublishers.noBody()
+			).build(),
+			HttpResponse.BodyHandlers.ofString());
 	}
 
-	@Inject
-	private Http _http;
+	private final HttpClient _httpClient = HttpClient.newBuilder(
+	).followRedirects(
+		HttpClient.Redirect.NEVER
+	).build();
 
 }

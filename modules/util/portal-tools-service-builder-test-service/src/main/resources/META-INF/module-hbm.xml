@@ -31,6 +31,7 @@
 	<import class="com.liferay.portal.tools.service.builder.test.model.NestedSetsTreeEntry" />
 	<import class="com.liferay.portal.tools.service.builder.test.model.NullConvertibleEntry" />
 	<import class="com.liferay.portal.tools.service.builder.test.model.PermissionCheckFinderEntry" />
+	<import class="com.liferay.portal.tools.service.builder.test.model.ReassociateEntry" />
 	<import class="com.liferay.portal.tools.service.builder.test.model.RedundantIndexEntry" />
 	<import class="com.liferay.portal.tools.service.builder.test.model.RenameFinderColumnEntry" />
 	<import class="com.liferay.portal.tools.service.builder.test.model.UADPartialEntry" />
@@ -378,6 +379,12 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="integer_" name="integer" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="type_" name="type" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="com.liferay.portal.tools.service.builder.test.model.impl.ReassociateEntryImpl" table="ReassociateEntry">
+		<id access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="reassociateEntryId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.portal.tools.service.builder.test.model.impl.RedundantIndexEntryImpl" table="RedundantIndexEntry">
 		<id access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="redundantIndexEntryId" type="long">

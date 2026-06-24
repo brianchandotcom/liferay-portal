@@ -267,6 +267,10 @@
 		<field name="name" type="String" />
 		<field name="type" type="String" />
 	</model>
+	<model name="com.liferay.portal.tools.service.builder.test.model.ReassociateEntry">
+		<field name="reassociateEntryId" type="long" />
+		<field name="name" type="String" />
+	</model>
 	<model name="com.liferay.portal.tools.service.builder.test.model.RedundantIndexEntry">
 		<field name="redundantIndexEntryId" type="long" />
 		<field name="companyId" type="long" />

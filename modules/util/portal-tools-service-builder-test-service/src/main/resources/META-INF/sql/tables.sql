@@ -310,6 +310,11 @@ create table PermissionCheckFinderEntry (
 	type_ VARCHAR(75) null
 );
 
+create table ReassociateEntry (
+	reassociateEntryId LONG not null primary key,
+	name VARCHAR(75) null
+);
+
 create table RedundantIndexEntry (
 	redundantIndexEntryId LONG not null primary key,
 	companyId LONG,

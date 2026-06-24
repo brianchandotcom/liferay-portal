@@ -27,6 +27,8 @@ import {useParams} from 'react-router-dom';
 import {useRequest} from 'shared/hooks/useRequest';
 import {useStatefulPagination} from 'shared/hooks/useStatefulPagination';
 
+const MAX_DELTA = 500;
+
 const ORDER_BY_OPTIONS = [
 	{
 		label: Liferay.Language.get('name'),
@@ -140,6 +142,7 @@ const IndividualsList: React.FC = () => {
 		dataSourceFn: API.individuals.fetchFieldValues,
 		variables: {
 			channelId,
+			delta: MAX_DELTA,
 			fieldMappingFieldName: 'country',
 			groupId,
 		},

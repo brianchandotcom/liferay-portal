@@ -208,11 +208,10 @@ public class MCPServerServlet extends HttpServlet {
 			return false;
 		}
 
+		List<String> audiences = oAuth2Authorization.getAudiencesList();
 		String mcpResourceURI = StringBundler.concat(
 			_portal.getPortalURL(httpServletRequest), _portal.getPathContext(),
 			Portal.PATH_MODULE, MCPServerConstants.MCP_PATH);
-
-		List<String> audiences = oAuth2Authorization.getAudiencesList();
 
 		if ((audiences == null) || !audiences.contains(mcpResourceURI)) {
 			_sendInvalidTokenChallenge(

@@ -136,7 +136,9 @@ public class ExportProcess implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateCompletedSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The export process's creation date."
+	)
 	public Date getDateCreated() {
 		if (_dateCreatedSupplier != null) {
 			dateCreated = _dateCreatedSupplier.get();
@@ -170,14 +172,16 @@ public class ExportProcess implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The export process's creation date.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
 	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The export process's last modification date."
+	)
 	public Date getDateModified() {
 		if (_dateModifiedSupplier != null) {
 			dateModified = _dateModifiedSupplier.get();
@@ -211,7 +215,7 @@ public class ExportProcess implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The export process's last modification date.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
@@ -259,7 +263,9 @@ public class ExportProcess implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _errorMessageSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The export process's ID."
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -291,14 +297,16 @@ public class ExportProcess implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The export process's ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The export process's name."
+	)
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -330,14 +338,16 @@ public class ExportProcess implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The export process's name.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String name;
 
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The export process's end status."
+	)
 	@Valid
 	public Status getStatus() {
 		if (_statusSupplier != null) {
@@ -372,7 +382,7 @@ public class ExportProcess implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The export process's end status.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Status status;
 
@@ -626,4 +636,4 @@ public class ExportProcess implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:22558268
+// LIFERAY-REST-BUILDER-HASH:-524014116

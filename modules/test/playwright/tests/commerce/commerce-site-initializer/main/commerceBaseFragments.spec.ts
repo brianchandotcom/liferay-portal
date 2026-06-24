@@ -16,10 +16,16 @@ import {liferayConfig} from '../../../../liferay.config';
 import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
 import {getRandomInt} from '../../../../utils/getRandomInt';
 import getRandomString from '../../../../utils/getRandomString';
-import performLogin, {performLogout} from '../../../../utils/performLogin';
+import {
+	performLoginViaApi,
+	performLogout,
+} from '../../../../utils/performLogin';
 import {waitForAlert} from '../../../../utils/waitForAlert';
 import {ORDER_WORKFLOW_STATUS_CODE} from '../../../workspaces/liferay-workspace-marketplace/main/utils/constants';
-import {classicCommerceSetUp} from '../../utils/commerce';
+import {
+	classicCommerceSetUp,
+	configureBuyerUserForSite,
+} from '../../utils/commerce';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -206,15 +212,13 @@ test(
 
 test(
 	'Returns and Shipments tabs should not be visible when the order is open',
-	{tag: ['@LPD-53393']},
+	{tag: ['@LPD-53393', '@LPD-93819']},
 	async ({
 		apiHelpers,
 		commerceAdminHealthCheckPage,
 		commerceThemeClassicOrdersPage,
 		page,
 	}) => {
-		test.setTimeout(180000);
-
 		let account;
 		let address;
 		let channel;
@@ -256,34 +260,11 @@ test(
 				type: 'business',
 			});
 
-			await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
-				account.id,
-				['demo.unprivileged@liferay.com']
-			);
-
-			user =
-				await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
-					'demo.unprivileged@liferay.com'
-				);
-			const rolesResponse =
-				await apiHelpers.headlessAdminUser.getAccountRoles(account.id);
-
-			const accountRoleBuyer = rolesResponse?.items?.filter((role) => {
-				return role.name === 'Buyer';
-			});
-
-			const siteRole =
-				await apiHelpers.headlessAdminUser.getRoleByName('Site Member');
-
-			await apiHelpers.headlessAdminUser.assignAccountRoles(
-				account.externalReferenceCode,
-				accountRoleBuyer[0].id,
-				user.emailAddress
-			);
-			await apiHelpers.headlessAdminUser.assignUserToSite(
-				siteRole.id,
-				site.id,
-				user.id
+			user = await configureBuyerUserForSite(
+				account,
+				apiHelpers,
+				site,
+				'demo.unprivileged@liferay.com'
 			);
 
 			address = await apiHelpers.headlessCommerceAdminAccount.postAddress(
@@ -292,7 +273,7 @@ test(
 			);
 		});
 
-		await test.step('Login as a Buyer and add a product to cart, assert that only Details tab is visible in pending order and checkout', async () => {
+		await test.step('Login as a Buyer and add a product to cart, assert that no tabs are visible in pending order and checkout', async () => {
 			const product =
 				await apiHelpers.headlessCommerceAdminCatalog.getProducts(
 					new URLSearchParams({
@@ -311,8 +292,7 @@ test(
 			const sku = productSkus[0];
 
 			await performLogout(page);
-
-			await performLogin(page, user.alternateName);
+			await performLoginViaApi({page, screenName: user.alternateName});
 
 			postCart = await apiHelpers.headlessCommerceDeliveryCart.postCart(
 				{
@@ -335,7 +315,7 @@ test(
 
 			await expect(
 				commerceThemeClassicOrdersPage.orderTabs('Details')
-			).toBeVisible();
+			).not.toBeVisible();
 			await expect(
 				commerceThemeClassicOrdersPage.orderTabs('Shipments')
 			).not.toBeVisible();
@@ -351,8 +331,7 @@ test(
 
 		await test.step('Login as a Admin, create a shipment and complete the order', async () => {
 			await performLogout(page);
-
-			await performLogin(page, 'test');
+			await performLoginViaApi({page, screenName: 'test'});
 
 			await apiHelpers.headlessCommerceAdminOrder.patchOrder(
 				postCart.id,
@@ -395,8 +374,7 @@ test(
 
 		await test.step('Login as a Buyer and assert that in Placed Order only Details and Shipments tabs are visible', async () => {
 			await performLogout(page);
-
-			await performLogin(page, user.alternateName);
+			await performLoginViaApi({page, screenName: user.alternateName});
 
 			await page.goto(
 				liferayConfig.environment.baseUrl +

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporter;
 import com.liferay.translation.info.field.TranslationInfoFieldChecker;
+import com.liferay.translation.internal.util.XLIFFExporterUtil;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -168,8 +169,9 @@ public class XLIFF12InfoFormTranslationExporter
 
 					mrkElement.addAttribute("mid", String.valueOf(mid));
 					mrkElement.addAttribute("mtype", "seg");
-					mrkElement.addCDATA(
-						(String)infoFieldValue.getValue(targetLocale));
+
+					XLIFFExporterUtil.addTargetValue(
+						mrkElement, infoFieldValue, targetLocale);
 
 					mid++;
 				}
@@ -177,8 +179,8 @@ public class XLIFF12InfoFormTranslationExporter
 			else {
 				InfoFieldValue<Object> infoFieldValue = infoFieldValues.get(0);
 
-				targetElement.addCDATA(
-					_getStringValue(infoFieldValue.getValue(targetLocale)));
+				XLIFFExporterUtil.addTargetValue(
+					targetElement, infoFieldValue, targetLocale);
 			}
 		}
 

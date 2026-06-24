@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporter;
 import com.liferay.translation.info.field.TranslationInfoFieldChecker;
+import com.liferay.translation.internal.util.XLIFFExporterUtil;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -139,8 +140,8 @@ public class XLIFF20InfoFormTranslationExporter
 
 		Element targetElement = segmentElement.addElement("target");
 
-		targetElement.addCDATA(
-			_getStringValue(infoFieldValue.getValue(targetLocale)));
+		XLIFFExporterUtil.addTargetValue(
+			targetElement, infoFieldValue, targetLocale);
 	}
 
 	private String _getStringValue(Object value) {

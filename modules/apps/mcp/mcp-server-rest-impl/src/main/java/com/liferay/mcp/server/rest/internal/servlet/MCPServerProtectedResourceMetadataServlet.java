@@ -31,13 +31,13 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = {
-		"osgi.http.whiteboard.servlet.name=com.liferay.mcp.server.rest.internal.servlet.MCPProtectedResourceMetadataServlet",
+		"osgi.http.whiteboard.servlet.name=com.liferay.mcp.server.rest.internal.servlet.MCPServerProtectedResourceMetadataServlet",
 		"osgi.http.whiteboard.servlet.pattern=/.well-known/oauth-protected-resource",
 		"osgi.http.whiteboard.servlet.pattern=/.well-known/oauth-protected-resource/*"
 	},
 	service = Servlet.class
 )
-public class MCPProtectedResourceMetadataServlet extends HttpServlet {
+public class MCPServerProtectedResourceMetadataServlet extends HttpServlet {
 
 	@Override
 	protected void service(

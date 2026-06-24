@@ -16,7 +16,6 @@ import {
 	normalizeDateFilter,
 } from '../../components/date_filter';
 import {ContentSelection} from '../../components/forms/content_selector/ContentSelector';
-import {FormikDebug} from '../../components/forms/formik';
 import {
 	ExportPreviewParams,
 	getExportPreview,
@@ -198,8 +197,6 @@ export function NewExport({
 						}
 						backURL={backURL}
 					/>
-
-					{process.env.NODE_ENV === 'development' && <FormikDebug />}
 				</Form>
 			)}
 		</Formik>

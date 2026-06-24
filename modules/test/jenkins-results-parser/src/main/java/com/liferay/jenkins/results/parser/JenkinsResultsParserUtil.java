@@ -989,20 +989,6 @@ public class JenkinsResultsParserUtil {
 		return flattenedBuilds;
 	}
 
-	public static String getCacheFileKey(
-		String urlString, String postContent) {
-
-		String key = fixURL(urlString);
-
-		key.replace("//", "/");
-
-		if (!isNullOrEmpty(postContent)) {
-			key += postContent;
-		}
-
-		return key;
-	}
-
 	public static String getActualResult(String buildURL) throws IOException {
 		String progressiveText = toString(
 			getLocalURL(buildURL + "/logText/progressiveText"), false);
@@ -1553,6 +1539,18 @@ public class JenkinsResultsParserUtil {
 			String.valueOf(key.hashCode()), ".txt");
 
 		return new File(fileName);
+	}
+
+	public static String getCacheFileKey(String urlString, String postContent) {
+		String key = fixURL(urlString);
+
+		key.replace("//", "/");
+
+		if (!isNullOrEmpty(postContent)) {
+			key += postContent;
+		}
+
+		return key;
 	}
 
 	public static long getCacheFileSize(String key) {
@@ -5488,8 +5486,7 @@ public class JenkinsResultsParserUtil {
 
 					if (checkCache && !url.startsWith("file:")) {
 						saveToCacheFile(
-							getCacheFileKey(url, postContent),
-							content);
+							getCacheFileKey(url, postContent), content);
 					}
 
 					return content;

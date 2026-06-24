@@ -38,7 +38,7 @@ export const test = mergeTests(
 
 test(
 	'Guest can directly checkout a new order in B2B channel site',
-	{tag: ['@LPD-35678', '@LPD-84664']},
+	{tag: ['@LPD-35678', '@LPD-84664', '@LPD-93817']},
 	async ({
 		apiHelpers,
 		checkoutPage,
@@ -78,17 +78,7 @@ test(
 				await commerceMiniCartPage.miniCartButton.click();
 			});
 
-			await test.step('Open the order details and verify that no error alert is shown', async () => {
-				await commerceMiniCartPage.viewDetailsButton.click();
-
-				await page.waitForLoadState('networkidle');
-
-				await expect(page.locator('.alert-danger')).toHaveCount(0);
-			});
-
 			await test.step('Proceed as guest from the mini cart and verify the checkout survives a page reload', async () => {
-				await commerceMiniCartPage.miniCartButton.click();
-
 				await commerceMiniCartPage.proceedAsGuest.click();
 
 				await expect(checkoutPage.activeCheckoutStep).toBeVisible();

@@ -5445,15 +5445,15 @@ public class BundleSiteInitializer implements SiteInitializer {
 		).put(
 			addLayoutPageTemplatesR,
 			_dependsOn(
-				addOrUpdateBlogPostingsR, addCPDefinitionsR,
-				addOrUpdateClientExtensionEntriesR, addOrUpdateJournalArticlesR,
-				addOrUpdateSXPBlueprintR)
+				addFragmentEntriesR, addOrUpdateBlogPostingsR,
+				addCPDefinitionsR, addOrUpdateClientExtensionEntriesR,
+				addOrUpdateJournalArticlesR, addOrUpdateSXPBlueprintR)
 		).put(
 			addLayoutUtilityPageEntriesR,
 			_dependsOn(
-				addOrUpdateBlogPostingsR, addCPDefinitionsR,
-				addOrUpdateClientExtensionEntriesR, addOrUpdateJournalArticlesR,
-				addOrUpdateSXPBlueprintR)
+				addFragmentEntriesR, addOrUpdateBlogPostingsR,
+				addCPDefinitionsR, addOrUpdateClientExtensionEntriesR,
+				addOrUpdateJournalArticlesR, addOrUpdateSXPBlueprintR)
 		).put(
 			addObjectDefinitionsR,
 			_dependsOn(
@@ -5495,7 +5495,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 			addOrUpdateKnowledgeBaseArticlesR,
 			_dependsOn(addOrUpdateExpandoColumnsR)
 		).put(
-			addOrUpdateLayoutsContentR, _dependsOn(addLayoutPageTemplatesR)
+			addOrUpdateLayoutsContentR,
+			_dependsOn(addFragmentEntriesR, addLayoutPageTemplatesR)
 		).put(
 			addOrUpdateLayoutsR, _dependsOn(addOrUpdateRolesR)
 		).put(

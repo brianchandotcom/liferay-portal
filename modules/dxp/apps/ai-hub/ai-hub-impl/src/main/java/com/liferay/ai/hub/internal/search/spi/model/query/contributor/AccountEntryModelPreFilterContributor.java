@@ -21,7 +21,7 @@ import org.osgi.service.component.annotations.Component;
 	property = "indexer.class.name=com.liferay.account.model.AccountEntry",
 	service = ModelPreFilterContributor.class
 )
-public class AIHubAccountEntryModelPreFilterContributor
+public class AccountEntryModelPreFilterContributor
 	implements ModelPreFilterContributor {
 
 	@Override
@@ -31,6 +31,9 @@ public class AIHubAccountEntryModelPreFilterContributor
 
 		booleanFilter.add(
 			new TermFilter("externalReferenceCode", "L_AI_HUB"),
+			BooleanClauseOccur.MUST_NOT);
+		booleanFilter.add(
+			new TermFilter("externalReferenceCode", "L_SEO_STUDIO"),
 			BooleanClauseOccur.MUST_NOT);
 	}
 

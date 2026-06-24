@@ -2124,7 +2124,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			Logger logger = project.getLogger();
 
 			if (logger.isWarnEnabled()) {
-				logger.warn("Failed to validate target platform version.");
+				logger.warn("Unable to validate target platform version.");
 			}
 
 			return null;
@@ -2154,7 +2154,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 			if (logger.isWarnEnabled()) {
 				logger.warn(
-					"Failed to find Jakarta dependencies file for target " +
+					"Unable to find Jakarta dependencies file for target " +
 						"platform version '{}'.",
 					targetPlatformVersion);
 			}
@@ -2204,10 +2204,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 		Directory projectDirectory = projectLayout.getProjectDirectory();
 
-		String jakartaDependenciesAbsolutePath =
-			jakartaDepsFile.getAbsolutePath();
-
-		return projectDirectory.file(jakartaDependenciesAbsolutePath);
+		return projectDirectory.file(jakartaDepsFile.getAbsolutePath());
 	}
 
 	private String _loadTemplate(String name) {

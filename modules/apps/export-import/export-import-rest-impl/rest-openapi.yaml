@@ -26,10 +26,14 @@ components:
                     readOnly: true
                     type: string
                 dateCreated:
+                    description:
+                        The export process's creation date.
                     format: date-time
                     readOnly: true
                     type: string
                 dateModified:
+                    description:
+                        The export process's last modification date.
                     format: date-time
                     readOnly: true
                     type: string
@@ -37,14 +41,20 @@ components:
                     readOnly: true
                     type: string
                 id:
+                    description:
+                        The export process's ID.
                     format: int64
                     readOnly: true
                     type: integer
                 name:
+                    description:
+                        The export process's name.
                     readOnly: true
                     type: string
                 status:
                     $ref: "#/components/schemas/Status"
+                    description:
+                        The export process's end status.
                     readOnly: true
             type: object
         ExportProcessRequest:
@@ -364,7 +374,7 @@ components:
                         string
                 classNameId:
                     description:
-                        The reported item's class name id.
+                        The reported item's class name ID.
                     format: int64
                     readOnly: true
                     type: integer
@@ -402,7 +412,7 @@ components:
                     type: string
                 errorStacktrace:
                     description:
-                        Optional field with the full stack trace of the error, can be embedded with nestedFields.
+                        The full stack trace of the error. It is an optional field that can be embedded with nested fields.
                     readOnly: true
                     type: string
                 id:
@@ -429,7 +439,7 @@ components:
                 status:
                     $ref: "#/components/schemas/Status"
                     description:
-                        The report entry's 's status.
+                        The report entry's status.
                     readOnly: true
                 type:
                     $ref: "#/components/schemas/Type"
@@ -478,11 +488,11 @@ components:
             type: object
 info:
     description:
-        "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID 'com.liferay.exportimport.report.rest', and version '1.0.0'.. A Java client JAR is available for use with the group ID 'com.liferay', artifact ID 'com.liferay.exportimport.rest.client', and version '1.0.8'."
+        "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID 'com.liferay.exportimport.rest.client', and version '1.0.8'."
     license:
         name: Apache 2.0
         url: http://www.apache.org/licenses/LICENSE-2.0.html
-    title: ""
+    title: Export Import
     version: v1.0
 openapi: 3.0.1
 paths:

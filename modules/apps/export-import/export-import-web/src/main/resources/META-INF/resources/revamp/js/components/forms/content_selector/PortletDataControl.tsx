@@ -74,7 +74,6 @@ export default function PortletDataControl({
 			? (value as Record<string, HandlerSelection>)
 			: {};
 	const nestedControls = control.previewPortletDataHandlerControls ?? [];
-	const expandable = !!nestedControls.length;
 
 	const additionCount =
 		control.type === 'Boolean' ? control.additionCount : undefined;
@@ -129,6 +128,8 @@ export default function PortletDataControl({
 			/>
 		));
 
+	const expandable = !!body.length;
+
 	if (topLevel) {
 		return (
 			<PortletDataHandlerPanel
@@ -146,7 +147,7 @@ export default function PortletDataControl({
 		<>
 			<ControlRow {...rowProps} />
 
-			{!!body.length && (
+			{expandable && (
 				<div className="c-gap-1 d-flex flex-column pl-4">{body}</div>
 			)}
 		</>

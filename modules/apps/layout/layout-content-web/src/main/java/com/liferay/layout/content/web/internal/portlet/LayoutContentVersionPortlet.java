@@ -58,22 +58,11 @@ public class LayoutContentVersionPortlet extends MVCPortlet {
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			renderRequest);
 
-		LayoutContentVersionDisplayContext layoutContentVersionDisplayContext =
-			(LayoutContentVersionDisplayContext)httpServletRequest.getAttribute(
-				LayoutContentVersionWebKeys.
-					LAYOUT_CONTENT_VERSION_DISPLAY_CONTEXT);
-
-		if (layoutContentVersionDisplayContext == null) {
-			layoutContentVersionDisplayContext =
-				new LayoutContentVersionDisplayContext(
-					httpServletRequest, _language, _layoutLocalService,
-					_segmentsExperienceLocalService);
-
-			httpServletRequest.setAttribute(
-				LayoutContentVersionWebKeys.
-					LAYOUT_CONTENT_VERSION_DISPLAY_CONTEXT,
-				layoutContentVersionDisplayContext);
-		}
+		httpServletRequest.setAttribute(
+			LayoutContentVersionWebKeys.LAYOUT_CONTENT_VERSION_DISPLAY_CONTEXT,
+			new LayoutContentVersionDisplayContext(
+				httpServletRequest, _language, _layoutLocalService,
+				_segmentsExperienceLocalService));
 
 		super.doDispatch(renderRequest, renderResponse);
 	}

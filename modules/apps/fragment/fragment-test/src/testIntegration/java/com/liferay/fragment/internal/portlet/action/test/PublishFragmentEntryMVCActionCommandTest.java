@@ -18,6 +18,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocal
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.LayoutServiceContextHelper;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -160,7 +161,10 @@ public class PublishFragmentEntryMVCActionCommandTest {
 				_layoutLocalService.getLayout(draftLayout.getPlid()),
 				_layoutLocalService.getLayout(layout.getPlid()));
 
-			fragmentEntry.setHtml(fragmentEntry.getHtml() + "<!--updated-->");
+			fragmentEntry.setHtml(
+				StringBundler.concat(
+					fragmentEntry.getHtml(), "<!--", RandomTestUtil.randomString(),
+					"-->"));
 
 			fragmentEntry = _fragmentEntryLocalService.updateFragmentEntry(
 				fragmentEntry);

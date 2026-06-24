@@ -23,9 +23,9 @@ public class MCPServerConstants {
 	public static final String EXTERNAL_REFERENCE_CODE_MCP_SERVER_PROMPT =
 		"L_MCP_SERVER_PROMPT";
 
-	public static final String MCP_PATH = "/mcp";
+	public static final String PATH_MCP = "/mcp";
 
-	public static final String WELL_KNOWN_PROTECTED_RESOURCE_PATH =
+	public static final String PATH_WELL_KNOWN_PROTECTED_RESOURCE =
 		"/.well-known/oauth-protected-resource";
 
 }

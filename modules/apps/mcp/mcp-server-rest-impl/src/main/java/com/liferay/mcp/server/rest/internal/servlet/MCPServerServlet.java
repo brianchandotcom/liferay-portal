@@ -211,7 +211,7 @@ public class MCPServerServlet extends HttpServlet {
 		List<String> audiences = oAuth2Authorization.getAudiencesList();
 		String mcpResourceURI = StringBundler.concat(
 			_portal.getPortalURL(httpServletRequest), _portal.getPathContext(),
-			Portal.PATH_MODULE, MCPServerConstants.MCP_PATH);
+			Portal.PATH_MODULE, MCPServerConstants.PATH_MCP);
 
 		if ((audiences == null) || !audiences.contains(mcpResourceURI)) {
 			_sendInvalidTokenChallenge(
@@ -552,7 +552,7 @@ public class MCPServerServlet extends HttpServlet {
 				"Bearer realm=\"mcp\", resource_metadata=\"",
 				_portal.getPortalURL(httpServletRequest),
 				_portal.getPathContext(), Portal.PATH_MODULE,
-				MCPServerConstants.WELL_KNOWN_PROTECTED_RESOURCE_PATH, "\", ",
+				MCPServerConstants.PATH_WELL_KNOWN_PROTECTED_RESOURCE, "\", ",
 				"error=\"invalid_token\", error_description=\"", description,
 				"\""));
 		httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
@@ -569,7 +569,7 @@ public class MCPServerServlet extends HttpServlet {
 				"Bearer realm=\"mcp\", resource_metadata=\"",
 				_portal.getPortalURL(httpServletRequest),
 				_portal.getPathContext(), Portal.PATH_MODULE,
-				MCPServerConstants.WELL_KNOWN_PROTECTED_RESOURCE_PATH, "\""));
+				MCPServerConstants.PATH_WELL_KNOWN_PROTECTED_RESOURCE, "\""));
 		httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 	}
 

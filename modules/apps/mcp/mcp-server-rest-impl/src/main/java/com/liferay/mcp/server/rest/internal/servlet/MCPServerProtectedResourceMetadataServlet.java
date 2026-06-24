@@ -96,7 +96,7 @@ public class MCPServerProtectedResourceMetadataServlet extends HttpServlet {
 					"bearer_methods_supported", JSONUtil.putAll("header")
 				).put(
 					"resource",
-					portalURL + Portal.PATH_MODULE + MCPServerConstants.MCP_PATH
+					portalURL + Portal.PATH_MODULE + MCPServerConstants.PATH_MCP
 				).put(
 					"resource_name", "Liferay MCP Server"
 				).toString());

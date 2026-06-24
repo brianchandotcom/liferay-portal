@@ -1053,6 +1053,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 					existingKeyword = page.fetchFirstItem();
 				}
 				else {
+					groupId = serviceContext.getScopeGroupId();
+
 					Page<Keyword> page = keywordResource.getSiteKeywordsPage(
 						groupId, null, null,
 						keywordResource.toFilter(
@@ -1060,8 +1062,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 						null, null);
 
 					existingKeyword = page.fetchFirstItem();
-
-					groupId = serviceContext.getScopeGroupId();
 				}
 
 				if (existingKeyword != null) {

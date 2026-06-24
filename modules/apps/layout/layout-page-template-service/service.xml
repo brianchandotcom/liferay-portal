@@ -326,7 +326,7 @@
 			<finder-column name="segmentsExperienceId" />
 		</finder>
 	</entity>
-	<entity external-reference-code="group" local-service="true" name="LayoutPageTemplateStructureRelElementVariation" remote-service="false" table="LPTSRelElementVariation" uuid="true">
+	<entity external-reference-code="group" local-service="true" name="LayoutPageTemplateStructureRelElementVariation" remote-service="true" table="LPTSRelElementVariation" uuid="true">
 
 		<!-- PK fields -->
 
@@ -357,6 +357,9 @@
 
 		<!-- Finder methods -->
 
+		<finder name="Plid" return-type="Collection">
+			<finder-column name="plid" />
+		</finder>
 		<finder name="SegmentsExperienceERC" return-type="Collection">
 			<finder-column name="segmentsExperienceERC" />
 		</finder>

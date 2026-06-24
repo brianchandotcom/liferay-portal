@@ -47,6 +47,10 @@
 		}
 	}
 
+	.card-item-first {
+		overflow: hidden;
+	}
+
 	.product-card-picture {
 		height: 190px;
 		object-fit: cover;
@@ -217,6 +221,11 @@
 	height: 40px;
 	margin-bottom: 1.5rem;
 	width: inherit;
+}
+
+.price-range-btn-wrapper {
+	align-items: flex-end;
+	display: flex;
 }
 
 input.price-range-input {

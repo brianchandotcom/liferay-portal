@@ -10,6 +10,7 @@
 				"pageElements": [
 					{
 						"definition": {
+							"customCSS": ".commerce-main .[$FRAGMENT_CLASS$].container-fluid-max-xl {\nmax-width: 1600px;\n}\n\n.[$FRAGMENT_CLASS$] .product-detail-actions {\ngap: 0.75rem;\n}\n\n.[$FRAGMENT_CLASS$] .product-detail-actions .add-to-wish-list {\nmargin-bottom: 0.5rem;\n}\n\n.[$FRAGMENT_CLASS$] [class*='portlet-boundary_com_liferay_commerce_product_content_web_internal_portlet_CPPublisherPortlet'] {\nmargin-top: 1.5rem;\n}",
 							"indexed": true,
 							"layout": {
 								"widthType": "Fixed"
@@ -44,7 +45,7 @@
 											"dataSource": "assetCategoriesAndTagsDataSource",
 											"diagram--cpTypeListEntryRendererKey": "list-entry-diagram",
 											"grouped--cpTypeListEntryRendererKey": "list-entry-default",
-											"paginationDelta": "5",
+											"paginationDelta": "6",
 											"renderSelection": "custom",
 											"selectionStyle": "dataSource",
 											"simple--cpTypeListEntryRendererKey": "list-entry-default",
@@ -63,7 +64,7 @@
 											"dataSource": "csDiagramEntryDataSource",
 											"diagram--cpTypeListEntryRendererKey": "list-entry-diagram",
 											"grouped--cpTypeListEntryRendererKey": "list-entry-default",
-											"paginationDelta": "5",
+											"paginationDelta": "6",
 											"renderSelection": "custom",
 											"selectionStyle": "dataSource",
 											"simple--cpTypeListEntryRendererKey": "list-entry-default",

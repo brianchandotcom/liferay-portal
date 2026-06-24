@@ -3,7 +3,7 @@
 		"pageElements": [
 			{
 				"definition": {
-					"customCSS": ".[$FRAGMENT_CLASS$] .management-bar {\nmax-width: var(--container-max-xl, 1248px);\n} .[$FRAGMENT_CLASS$] .management-bar-wrapper {\nbackground-color: var(--white);\n}",
+					"customCSS": ".[$FRAGMENT_CLASS$] .management-bar-wrapper {\nbackground-color: var(--white);\n}\n\n.[$FRAGMENT_CLASS$] .container {\nmax-width: none;\npadding-left: 1.5rem;\npadding-right: 1.5rem;\n}\n\n.[$FRAGMENT_CLASS$] .portlet-content {\nposition: relative;\n}\n\n.[$FRAGMENT_CLASS$] .commerce-header {\nmargin-bottom: 2.5rem;\n}\n\n.[$FRAGMENT_CLASS$] .commerce-header .container-fluid-max-xxxl {\npadding-left: 1.5rem;\npadding-right: 1.5rem;\n}\n\n.[$FRAGMENT_CLASS$] .portlet-header {\nleft: 0;\npadding-left: 1.5rem;\nposition: absolute;\ntop: 4.5rem;\n}",
 					"widgetInstance": {
 						"widgetConfig": {
 						},

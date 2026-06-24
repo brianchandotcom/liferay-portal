@@ -47,7 +47,6 @@ public class QuartzUpgradeProcess extends UpgradeProcess {
 				"select JOB_NAME, JOB_DATA from QUARTZ_JOB_DETAILS where " +
 					"JOB_NAME not like '%@%'");
 
-
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {

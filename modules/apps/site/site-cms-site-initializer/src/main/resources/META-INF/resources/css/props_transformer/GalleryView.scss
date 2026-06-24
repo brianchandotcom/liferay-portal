@@ -41,6 +41,13 @@
 	.fds-gallery-view__thumbnail {
 		max-width: 20%;
 
+		&.drop-target {
+			.card {
+				background-color: $info-l2;
+				box-shadow: 0 0 0 2px $info;
+			}
+		}
+
 		&.selected {
 			.card {
 				box-shadow: 0 0 0 2px $primary-l1;

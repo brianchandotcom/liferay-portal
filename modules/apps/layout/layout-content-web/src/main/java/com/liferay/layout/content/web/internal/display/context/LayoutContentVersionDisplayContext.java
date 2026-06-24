@@ -92,21 +92,24 @@ public class LayoutContentVersionDisplayContext {
 
 		return TransformUtil.transform(
 			segmentsExperiences,
-			segmentsExperience -> HashMapBuilder.<String, Object>put(
-				"active", _isActive(segmentsExperience, segmentsExperiences)
-			).put(
-				"segmentsExperienceERC",
-				segmentsExperience.getExternalReferenceCode()
-			).put(
-				"segmentsExperienceName",
-				segmentsExperience.getName(_themeDisplay.getLocale())
-			).put(
-				"statusLabel",
-				() -> _language.get(
-					_httpServletRequest,
-					_isActive(segmentsExperience, segmentsExperiences) ?
-						"active" : "inactive")
-			).build());
+			segmentsExperience -> {
+				boolean active = _isActive(
+					segmentsExperience, segmentsExperiences);
+
+				return HashMapBuilder.<String, Object>put(
+					"active", active
+				).put(
+					"segmentsExperienceERC",
+					segmentsExperience.getExternalReferenceCode()
+				).put(
+					"segmentsExperienceName",
+					segmentsExperience.getName(_themeDisplay.getLocale())
+				).put(
+					"statusLabel",
+					() -> _language.get(
+						_httpServletRequest, active ? "active" : "inactive")
+				).build();
+			});
 	}
 
 	private String _getPageSpecificationVersionsURL() throws Exception {

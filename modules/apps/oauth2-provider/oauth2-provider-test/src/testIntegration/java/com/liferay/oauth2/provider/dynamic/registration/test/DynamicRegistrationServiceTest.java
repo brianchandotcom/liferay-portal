@@ -497,11 +497,15 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 	}
 
 	protected static WebTarget getRegisterWebTarget() {
-		return getOAuth2WebTarget().path("register");
+		WebTarget webTarget = getOAuth2WebTarget();
+
+		return webTarget.path("register");
 	}
 
 	protected static WebTarget getRegisterWebTarget(String target) {
-		return getRegisterWebTarget().path(target);
+		WebTarget webTarget = getRegisterWebTarget();
+
+		return webTarget.path(target);
 	}
 
 	@Override
@@ -579,7 +583,9 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 	}
 
 	private String _getToken(OAuth2Application oAuth2Application) {
-		Invocation.Builder invocationBuilder = getTokenWebTarget().request();
+		WebTarget tokenWebTarget = getTokenWebTarget();
+
+		Invocation.Builder invocationBuilder = tokenWebTarget.request();
 
 		String tokenString = parseTokenString(
 			invocationBuilder.post(

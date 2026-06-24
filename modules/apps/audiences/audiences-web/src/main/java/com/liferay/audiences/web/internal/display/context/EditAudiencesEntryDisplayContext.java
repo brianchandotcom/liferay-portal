@@ -10,8 +10,11 @@ import com.liferay.audiences.criteria.AudiencesCriteriaProvider;
 import com.liferay.audiences.model.AudiencesEntry;
 import com.liferay.audiences.service.AudiencesEntryServiceUtil;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -115,6 +118,12 @@ public class EditAudiencesEntryDisplayContext {
 				).put(
 					"label", audiencesCriteriaType.getLabel()
 				).build())
+		).put(
+			"backURL", getBackURL()
+		).put(
+			"name", _getName()
+		).put(
+			"namespace", _renderResponse.getNamespace()
 		).build();
 	}
 
@@ -145,7 +154,7 @@ public class EditAudiencesEntryDisplayContext {
 			_title = audiencesEntry.getName();
 		}
 		else {
-			_title = LanguageUtil.get(_httpServletRequest, "new-audiences");
+			_title = LanguageUtil.get(_httpServletRequest, "new-audience");
 		}
 
 		return _title;
@@ -167,6 +176,26 @@ public class EditAudiencesEntryDisplayContext {
 
 		return null;
 	}
+
+	private String _getName() {
+		try {
+			AudiencesEntry audiencesEntry = _getAudiencesEntry();
+
+			if (audiencesEntry != null) {
+				return audiencesEntry.getName();
+			}
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+		}
+
+		return StringPool.BLANK;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		EditAudiencesEntryDisplayContext.class);
 
 	private final AudiencesCriteriaProvider _audiencesCriteriaProvider;
 	private AudiencesEntry _audiencesEntry;

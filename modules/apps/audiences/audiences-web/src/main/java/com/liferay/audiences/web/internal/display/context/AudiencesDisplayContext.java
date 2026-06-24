@@ -46,7 +46,7 @@ public class AudiencesDisplayContext {
 					"/audiences/edit_audiences_entry");
 				dropdownItem.setLabel(
 					LanguageUtil.get(
-						_themeDisplay.getLocale(), "add-new-audiences"));
+						_themeDisplay.getLocale(), "new-audience"));
 			}
 		).build();
 	}

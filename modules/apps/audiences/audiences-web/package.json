@@ -1,0 +1,23 @@
+{
+	"dependencies": {
+		"@clayui/button": "^3.165.0",
+		"@clayui/form": "^3.165.0",
+		"@clayui/icon": "^3.165.0",
+		"@clayui/layout": "^3.165.0",
+		"@clayui/link": "^3.165.0",
+		"@clayui/toolbar": "^3.165.0",
+		"react": "18.2.0"
+	},
+	"description": "",
+	"main": "js/index.ts",
+	"name": "@liferay/audiences-web",
+	"private": true,
+	"scripts": {
+		"build": "node-scripts build",
+		"checkFormat": "node-scripts format --check",
+		"format": "node-scripts format",
+		"test": "node-scripts test",
+		"test:watch": "node-scripts test --watch"
+	},
+	"version": "1.0.0"
+}

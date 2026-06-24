@@ -16,6 +16,7 @@ import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.layout.util.LayoutServiceContextHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -149,9 +150,14 @@ public class PublishFragmentEntryMVCActionCommandTest {
 			fragmentEntry = _fragmentEntryLocalService.updateFragmentEntry(
 				fragmentEntry);
 
-			_mvcActionCommand.processAction(
-				_getActionRequest(fragmentEntry),
-				new MockLiferayPortletActionResponse());
+			try (AutoCloseable autoCloseable =
+					_layoutServiceContextHelper.getServiceContextAutoCloseable(
+						layout, TestPropsValues.getUser())) {
+
+				_mvcActionCommand.processAction(
+					_getActionRequest(fragmentEntry),
+					new MockLiferayPortletActionResponse());
+			}
 
 			Layout updatedLayout = _layoutLocalService.getLayout(
 				layout.getPlid());
@@ -240,6 +246,9 @@ public class PublishFragmentEntryMVCActionCommandTest {
 	@Inject
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
+
+	@Inject
+	private LayoutServiceContextHelper _layoutServiceContextHelper;
 
 	@Inject(filter = "mvc.command.name=/fragment/publish_fragment_entry")
 	private MVCActionCommand _mvcActionCommand;

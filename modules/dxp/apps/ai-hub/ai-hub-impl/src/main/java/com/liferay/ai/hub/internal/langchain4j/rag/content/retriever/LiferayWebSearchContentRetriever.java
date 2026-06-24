@@ -110,7 +110,7 @@ public class LiferayWebSearchContentRetriever extends BaseContentRetriever {
 
 		options.setMethod(Http.Method.GET);
 
-		String responseBody = HttpUtil.URLtoString(options);
+		String json = HttpUtil.URLtoString(options);
 
 		Http.Response response = options.getResponse();
 
@@ -123,7 +123,7 @@ public class LiferayWebSearchContentRetriever extends BaseContentRetriever {
 					" failed with response code ", response.getResponseCode()));
 		}
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(responseBody);
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(json);
 
 		List<Content> contents = new ArrayList<>();
 

@@ -79,6 +79,7 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.PortletPreferencesImpl;
 import com.liferay.site.internal.exportimport.constants.LayoutSetPrototypeMergeConstants;
+import com.liferay.site.internal.exportimport.internal.notifications.LayoutSetPrototypeNotificationUtil;
 import com.liferay.sites.kernel.util.Sites;
 
 import jakarta.portlet.PortletPreferences;
@@ -633,8 +634,16 @@ public class SitesImpl implements Sites {
 			}
 		}
 
-		if (mergeableLayoutSets.isEmpty() && preValidationErrors) {
-			throw new PortalException("Unable to start site template merge");
+		if (mergeableLayoutSets.isEmpty()) {
+			if (preValidationErrors) {
+				throw new PortalException(
+					"Unable to start site template merge");
+			}
+
+			LayoutSetPrototypeNotificationUtil.sendMergeCompletedNotification(
+				null, layoutSetPrototype, userId);
+
+			return;
 		}
 
 		Map<String, Serializable> taskContextMap =

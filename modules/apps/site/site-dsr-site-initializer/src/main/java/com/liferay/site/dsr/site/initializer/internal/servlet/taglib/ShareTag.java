@@ -64,12 +64,19 @@ public class ShareTag extends IncludeTag {
 				return SKIP_BODY;
 			}
 
+			PermissionChecker permissionChecker =
+				themeDisplay.getPermissionChecker();
+
 			_hasAssignMembersPermission = _hasAssignMembersPermission(
-				themeDisplay.getPermissionChecker(), objectEntry);
+				permissionChecker, objectEntry);
 
 			if (!_hasAssignMembersPermission) {
 				return SKIP_BODY;
 			}
+
+			_canAssignAllRoles =
+				permissionChecker.isGroupAdmin(_groupId) ||
+				permissionChecker.isGroupOwner(_groupId);
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
@@ -126,6 +133,7 @@ public class ShareTag extends IncludeTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
+		_canAssignAllRoles = false;
 		_groupId = 0;
 		_hasAssignMembersPermission = false;
 		_roomId = 0;
@@ -138,6 +146,9 @@ public class ShareTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(
+			"liferay-site-dsr-site-initializer:share:canAssignAllRoles",
+			_canAssignAllRoles);
 		httpServletRequest.setAttribute(
 			"liferay-site-dsr-site-initializer:share:roomId", _roomId);
 	}
@@ -166,6 +177,7 @@ public class ShareTag extends IncludeTag {
 
 	private static final Log _log = LogFactoryUtil.getLog(ShareTag.class);
 
+	private boolean _canAssignAllRoles;
 	private long _groupId;
 	private boolean _hasAssignMembersPermission;
 	private long _roomId;

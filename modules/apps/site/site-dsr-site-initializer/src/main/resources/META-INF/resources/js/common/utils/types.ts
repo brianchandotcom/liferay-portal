@@ -153,6 +153,7 @@ export interface IRoomObjectEntry {
 }
 
 export interface IRoomShareProps {
+	canAssignAllRoles?: boolean;
 	closeModal?: () => void;
 	roomId: number;
 }

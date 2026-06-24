@@ -40,9 +40,9 @@ public interface ReleaseEntry {
 
 	public String getReleaseKey();
 
-	public String getTargetPlatformVersion();
-
 	public List<String> getTags();
+
+	public String getTargetPlatformVersion();
 
 	public String getURL();
 

@@ -132,17 +132,17 @@ public class ReleaseEntryImpl implements ReleaseEntry {
 	}
 
 	@Override
+	public List<String> getTags() {
+		return _tags;
+	}
+
+	@Override
 	public String getTargetPlatformVersion() {
 		if (_targetPlatformVersion != null) {
 			return _targetPlatformVersion;
 		}
 
 		return _getFromProperties("target.platform.version");
-	}
-
-	@Override
-	public List<String> getTags() {
-		return _tags;
 	}
 
 	@Override

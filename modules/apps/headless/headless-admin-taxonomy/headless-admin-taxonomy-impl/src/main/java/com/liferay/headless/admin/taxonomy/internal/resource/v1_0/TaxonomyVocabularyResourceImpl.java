@@ -60,6 +60,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.action.DTOActionProvider;
@@ -499,10 +500,11 @@ public class TaxonomyVocabularyResourceImpl
 
 		Map<Locale, String> titleMap = LocalizedMapUtil.getLocalizedMap(
 			contextAcceptLanguage.getPreferredLocale(),
-			taxonomyVocabulary.getName(), taxonomyVocabulary.getName_i18n());
+			_getLocalizedMapDefaultValue(taxonomyVocabulary.getName()),
+			taxonomyVocabulary.getName_i18n());
 		Map<Locale, String> descriptionMap = LocalizedMapUtil.getLocalizedMap(
 			contextAcceptLanguage.getPreferredLocale(),
-			taxonomyVocabulary.getDescription(),
+			_getLocalizedMapDefaultValue(taxonomyVocabulary.getDescription()),
 			taxonomyVocabulary.getDescription_i18n());
 
 		LocalizedMapUtil.validateI18n(
@@ -821,6 +823,14 @@ public class TaxonomyVocabularyResourceImpl
 		return null;
 	}
 
+	private String _getLocalizedMapDefaultValue(String value) {
+		if (Validator.isBlank(value)) {
+			return null;
+		}
+
+		return value;
+	}
+
 	private String _getModelResource(
 		AssetRendererFactory<?> assetRendererFactory) {
 
@@ -1082,11 +1092,11 @@ public class TaxonomyVocabularyResourceImpl
 
 		Map<Locale, String> titleMap = LocalizedMapUtil.getLocalizedMap(
 			contextAcceptLanguage.getPreferredLocale(),
-			taxonomyVocabulary.getName(), taxonomyVocabulary.getName_i18n(),
-			assetVocabulary.getTitleMap());
+			_getLocalizedMapDefaultValue(taxonomyVocabulary.getName()),
+			taxonomyVocabulary.getName_i18n(), assetVocabulary.getTitleMap());
 		Map<Locale, String> descriptionMap = LocalizedMapUtil.getLocalizedMap(
 			contextAcceptLanguage.getPreferredLocale(),
-			taxonomyVocabulary.getDescription(),
+			_getLocalizedMapDefaultValue(taxonomyVocabulary.getDescription()),
 			taxonomyVocabulary.getDescription_i18n(),
 			assetVocabulary.getDescriptionMap());
 

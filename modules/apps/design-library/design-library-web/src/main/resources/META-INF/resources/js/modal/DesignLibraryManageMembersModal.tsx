@@ -10,8 +10,10 @@ import AddMembersInput from '../components/members/AddMembersInput';
 
 const CONFIG: MembersConfig = {
 	defaultRoleName: 'Asset Library Member',
-	excludedRoleNames: ['Asset Library Connected Site Member'],
-	hiddenRoleNames: ['Asset Library Owner'],
+	excludedRoleExternalReferenceCodes: [
+		'L_ASSET_LIBRARY_CONNECTED_SITE_MEMBER',
+		'L_ASSET_LIBRARY_OWNER',
+	],
 	messages: {
 		addGroupError: Liferay.Language.get(
 			'failed-to-add-group-x-to-design-library'

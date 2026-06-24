@@ -90,6 +90,9 @@ describe('MiniCart', () => {
 			Language: {
 				get: jest.fn((text) => text),
 			},
+			ThemeDisplay: {
+				isSignedIn: jest.fn(() => true),
+			},
 			detach: jest.fn(),
 			fire: jest.fn(),
 			on: jest.fn((eventName, callback) => {

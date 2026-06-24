@@ -376,9 +376,7 @@ public class ChangesetPortletDataHandler extends BasePortletDataHandler {
 
 			String key = entry.getKey();
 
-			if (key.endsWith(
-					ExportImportConstants.POST_PROCESS_STAGED_MODEL_PATH)) {
-
+			if (key.endsWith(".postProcessStagedModelPath")) {
 				postProcessStagedModelPaths.putAll(
 					(Map<String, String>)entry.getValue());
 			}

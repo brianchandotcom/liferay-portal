@@ -8,7 +8,6 @@ package com.liferay.journal.internal.dynamic.data.mapping.util;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.util.DDMFormFieldValueTransformer;
-import com.liferay.exportimport.constants.ExportImportConstants;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.journal.article.dynamic.data.mapping.form.field.type.constants.JournalArticleDDMFormFieldTypeConstants;
@@ -113,8 +112,7 @@ public class JournalArticleImportDDMFormFieldValueTransformer
 						(Map<String, String>)
 							_portletDataContext.getNewPrimaryKeysMap(
 								JournalArticle.class +
-									ExportImportConstants.
-										POST_PROCESS_STAGED_MODEL_PATH);
+									".postProcessStagedModelPath");
 
 					postProcessStagedModelPaths.computeIfAbsent(
 						_stagedModel.getUuid(),

@@ -479,8 +479,7 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 
 			Map<String, String> postProcessStagedModelPaths =
 				(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
-					JournalArticle.class +
-						ExportImportConstants.POST_PROCESS_STAGED_MODEL_PATH);
+					JournalArticle.class + ".postProcessStagedModelPath");
 
 			Collection<String> articleModelPaths =
 				postProcessStagedModelPaths.values();

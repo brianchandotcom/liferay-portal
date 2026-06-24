@@ -154,7 +154,6 @@
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/coreinfrastructureee/security/multi-factor-authentication/MultiFactorAuthentication\.testcase" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/enduser/webformsanddatalists/forms/FormsEntries\.testcase" />
 		<suppress checks="PoshiPropertiesOrderCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/coreinfrastructure/search/searchportlet/Search\.testcase" />
-		<suppress checks="PoshiPropertiesOrderCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/coreinfrastructure/search/searchportlet/SolrSearch\.testcase" />
 		<suppress checks="PoshiVariableNameCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/json/journal/JSONWebcontentUtil\.macro" />
 		<suppress checks="PrimitiveWrapperInstantiationCheck" files="portal-impl/src/com/liferay/portal/json/jabsorb/serializer/LiferaySerializer\.java" />
 		<suppress checks="PropertiesEmptyLinesCheck" files="build\.properties" />

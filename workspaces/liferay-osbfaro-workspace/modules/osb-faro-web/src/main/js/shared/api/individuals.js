@@ -62,6 +62,7 @@ export function fetchMembership({
 
 export function fetchFieldValues({
 	channelId,
+	delta = DEFAULT_DELTA,
 	fieldMappingFieldName,
 	groupId,
 	query = '',
@@ -69,7 +70,7 @@ export function fetchFieldValues({
 	return sendRequest({
 		data: {
 			channelId,
-			delta: 20,
+			delta,
 			fieldMappingFieldName,
 			query: escapeSingleQuotes(query),
 		},

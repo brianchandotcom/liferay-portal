@@ -9,6 +9,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.batch.engine.test.util.BatchEngineTestUtil;
+import com.liferay.oauth2.provider.model.OAuth2Authorization;
+import com.liferay.oauth2.provider.service.OAuth2AuthorizationLocalService;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
@@ -19,6 +21,7 @@ import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -29,8 +32,8 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -42,10 +45,9 @@ import io.modelcontextprotocol.spec.McpSchema;
 
 import java.io.Serializable;
 
-import java.nio.charset.StandardCharsets;
-
-import java.util.Base64;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.After;
@@ -84,11 +86,140 @@ public class MCPServerServletTest {
 					"definition",
 				".com.liferay.mcp.server.rest.internal.batch.03.object.entry"
 			});
+
+		_accessTokenContent = RandomTestUtil.randomString();
+
+		_addOAuth2Authorization(
+			_accessTokenContent,
+			new Date(System.currentTimeMillis() + Time.HOUR),
+			Collections.singletonList(_getMCPURL()));
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		_updateMCPServerConfiguration(false);
+		try {
+			for (OAuth2Authorization oAuth2Authorization :
+					_oAuth2Authorizations) {
+
+				_oAuth2AuthorizationLocalService.deleteOAuth2Authorization(
+					oAuth2Authorization);
+			}
+
+			_oAuth2Authorizations.clear();
+		}
+		finally {
+			_updateMCPServerConfiguration(false);
+		}
+	}
+
+	@Test
+	public void testServiceWhenAccessTokenAudienceIsNotBound()
+		throws Exception {
+
+		String accessTokenContent = RandomTestUtil.randomString();
+
+		_addOAuth2Authorization(
+			accessTokenContent,
+			new Date(System.currentTimeMillis() + Time.HOUR),
+			Collections.singletonList("http://localhost/o/other-resource"));
+
+		Http.Response response = _getResponse("Bearer " + accessTokenContent);
+
+		Assert.assertEquals(401, response.getResponseCode());
+
+		String wwwAuthenticate = response.getHeader(
+			HttpHeaders.WWW_AUTHENTICATE);
+
+		Assert.assertTrue(
+			wwwAuthenticate,
+			wwwAuthenticate.contains("error=\"invalid_token\""));
+		Assert.assertTrue(
+			wwwAuthenticate,
+			wwwAuthenticate.contains(
+				"error_description=\"Access token is not bound to this MCP " +
+					"server\""));
+	}
+
+	@Test
+	public void testServiceWhenAccessTokenIsExpired() throws Exception {
+		String accessTokenContent = RandomTestUtil.randomString();
+
+		_addOAuth2Authorization(
+			accessTokenContent,
+			new Date(System.currentTimeMillis() - Time.HOUR),
+			Collections.singletonList(_getMCPURL()));
+
+		Http.Response response = _getResponse("Bearer " + accessTokenContent);
+
+		Assert.assertEquals(401, response.getResponseCode());
+
+		String wwwAuthenticate = response.getHeader(
+			HttpHeaders.WWW_AUTHENTICATE);
+
+		Assert.assertTrue(
+			wwwAuthenticate,
+			wwwAuthenticate.contains("error=\"invalid_token\""));
+		Assert.assertTrue(
+			wwwAuthenticate,
+			wwwAuthenticate.contains(
+				"error_description=\"Access token has expired\""));
+	}
+
+	@Test
+	public void testServiceWhenAccessTokenIsUnknown() throws Exception {
+		Http.Response response = _getResponse(
+			"Bearer " + RandomTestUtil.randomString());
+
+		Assert.assertEquals(401, response.getResponseCode());
+
+		String wwwAuthenticate = response.getHeader(
+			HttpHeaders.WWW_AUTHENTICATE);
+
+		Assert.assertTrue(
+			wwwAuthenticate,
+			wwwAuthenticate.contains("error=\"invalid_token\""));
+		Assert.assertTrue(
+			wwwAuthenticate,
+			wwwAuthenticate.contains(
+				"error_description=\"Access token is unknown or revoked\""));
+	}
+
+	@Test
+	public void testServiceWhenAuthorizationHeaderIsMissing() throws Exception {
+		Http.Response response = _getResponse(null);
+
+		Assert.assertEquals(401, response.getResponseCode());
+
+		String wwwAuthenticate = response.getHeader(
+			HttpHeaders.WWW_AUTHENTICATE);
+
+		Assert.assertTrue(
+			wwwAuthenticate,
+			wwwAuthenticate.startsWith("Bearer realm=\"mcp\""));
+		Assert.assertTrue(
+			wwwAuthenticate, wwwAuthenticate.contains("resource_metadata="));
+		Assert.assertFalse(wwwAuthenticate, wwwAuthenticate.contains("error="));
+	}
+
+	@Test
+	public void testServiceWhenAuthorizationHeaderIsNotBearer()
+		throws Exception {
+
+		Http.Response response = _getResponse("Basic dGVzdDp0ZXN0");
+
+		Assert.assertEquals(401, response.getResponseCode());
+
+		String wwwAuthenticate = response.getHeader(
+			HttpHeaders.WWW_AUTHENTICATE);
+
+		Assert.assertTrue(
+			wwwAuthenticate,
+			wwwAuthenticate.contains("error=\"invalid_token\""));
+		Assert.assertTrue(
+			wwwAuthenticate,
+			wwwAuthenticate.contains(
+				"error_description=\"Authorization header is not a Bearer " +
+					"token\""));
 	}
 
 	@Test
@@ -451,6 +582,23 @@ public class MCPServerServletTest {
 		mcpSyncClient.closeGracefully();
 	}
 
+	private OAuth2Authorization _addOAuth2Authorization(
+			String accessTokenContent, Date accessTokenExpirationDate,
+			List<String> audiencesList)
+		throws Exception {
+
+		OAuth2Authorization oAuth2Authorization =
+			_oAuth2AuthorizationLocalService.addOAuth2Authorization(
+				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+				"test@liferay.com", 0, 0, accessTokenContent, new Date(),
+				accessTokenExpirationDate, audiencesList, "localhost",
+				"127.0.0.1", null, null, null);
+
+		_oAuth2Authorizations.add(oAuth2Authorization);
+
+		return oAuth2Authorization;
+	}
+
 	private ObjectEntry _addObjectEntry(String name, String... tools)
 		throws Exception {
 
@@ -493,16 +641,7 @@ public class MCPServerServletTest {
 	}
 
 	private String _getAuthorization() {
-		Base64.Encoder encoder = Base64.getEncoder();
-
-		String userNameAndPassword =
-			"test@liferay.com:" + PropsValues.DEFAULT_ADMIN_PASSWORD;
-
-		return "Basic " +
-			new String(
-				encoder.encode(
-					userNameAndPassword.getBytes(StandardCharsets.UTF_8)),
-				StandardCharsets.UTF_8);
+		return "Bearer " + _accessTokenContent;
 	}
 
 	private McpSyncClient _getMcpSyncClient(String profileName) {
@@ -523,6 +662,25 @@ public class MCPServerServletTest {
 		).build();
 	}
 
+	private String _getMCPURL() {
+		return "http://localhost:" + PortalUtil.getPortalServerPort(false) +
+			"/o/mcp";
+	}
+
+	private Http.Response _getResponse(String authorization) throws Exception {
+		Http.Options options = new Http.Options();
+
+		if (authorization != null) {
+			options.addHeader("Authorization", authorization);
+		}
+
+		options.setLocation(_getMCPURL());
+
+		_http.URLtoString(options);
+
+		return options.getResponse();
+	}
+
 	private void _updateMCPServerConfiguration(boolean enabled)
 		throws Exception {
 
@@ -536,8 +694,16 @@ public class MCPServerServletTest {
 			).build());
 	}
 
+	private String _accessTokenContent;
+
 	@Inject
 	private Http _http;
+
+	@Inject
+	private OAuth2AuthorizationLocalService _oAuth2AuthorizationLocalService;
+
+	private final List<OAuth2Authorization> _oAuth2Authorizations =
+		new ArrayList<>();
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

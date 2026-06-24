@@ -6,7 +6,7 @@
 					"cssClasses": [
 						"commerce-main"
 					],
-					"customCSS": ":root  {\n--commerce-header-user-height: 2.6rem;\n}\n\n.commerce-main {\n\tbackground-color: var(--gray-100);\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: space-between;\n\tmin-height: calc(100vh - var(--control-menu-height, 0px));\n\toverflow-x: clip;\n\tposition: relative;\n}\n\n.signed-out .commerce-main {\n\tmin-height: 100vh;\n}",
+					"customCSS": ":root  {\n--commerce-header-user-height: 2.6rem;\n}\n\n.commerce-main {\n\tbackground-color: var(--gray-100);\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: space-between;\n\tmin-height: calc(100vh - var(--control-menu-height, 0px));\n\toverflow-x: clip;\n\tposition: relative;\n}\n\n.signed-out .commerce-main {\n\tmin-height: 100vh;\n}\n\n.commerce-main .container-fluid-max-xl {\n\tmax-width: none;\n\tpadding-left: 1.5rem;\n\tpadding-right: 1.5rem;\n}\n\n.commerce-main .container-fluid-max-xl .container-fluid-max-xl {\n\tpadding-left: 0;\n\tpadding-right: 0;\n}",
 					"indexed": true,
 					"layout": {
 					}

@@ -125,7 +125,7 @@ CPPriceRangeFacetsDisplayContext cpPriceRangeFacetsDisplayContext = (CPPriceRang
 
 								<aui:input cssClass="price-range-input" name="maximum" prefix="<%= HtmlUtil.escape(cpPriceRangeFacetsDisplayContext.getCurrentCommerceCurrencySymbol()) %>" type="number" value="<%= max %>" wrapperCssClass="col-md-5 price-range-input-wrapper" />
 
-								<div class="col-md-3 ml-2 p-0">
+								<div class="col-md-3 ml-2 p-0 price-range-btn-wrapper">
 									<button class="btn btn-secondary price-range-btn" id="<portlet:namespace />priceRangeButton"><liferay-ui:message key="go" /></button>
 								</div>
 							</div>

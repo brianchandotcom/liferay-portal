@@ -3,6 +3,7 @@
 		"pageElements": [
 			{
 				"definition": {
+					"customCSS": ".[$FRAGMENT_CLASS$] .portlet-content {\nposition: relative;\n}\n\n.[$FRAGMENT_CLASS$] .portlet-content-container .navbar.navbar-expand-md > .container-fluid-max-xxxl {\npadding-left: 1.5rem;\n}\n\n.[$FRAGMENT_CLASS$] .portlet-header {\nleft: 0;\nmargin-left: auto;\nmargin-right: auto;\nmax-width: 800px;\nposition: absolute;\nright: 0;\ntop: 3.5rem;\n}",
 					"widgetInstance": {
 						"widgetConfig": {
 						},

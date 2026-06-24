@@ -179,7 +179,8 @@
 																			"fragmentStyle": {
 																				"backgroundColor": "blockquoteSmallColor",
 																				"borderRadius": "borderRadiusLg",
-																				"fontSize": "fontSizeSm"
+																				"fontSize": "fontSizeSm",
+																				"width": "40px"
 																			},
 																			"indexed": true
 																		},

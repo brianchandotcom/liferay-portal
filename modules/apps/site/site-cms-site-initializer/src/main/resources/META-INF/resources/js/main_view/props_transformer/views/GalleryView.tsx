@@ -112,6 +112,10 @@ const GalleryView = ({
 	};
 
 	const handleKeyDown = (event: React.KeyboardEvent, index: number) => {
+		if (event.target !== event.currentTarget) {
+			return;
+		}
+
 		if (event.key === 'Enter' || event.key === ' ') {
 			event.preventDefault();
 			handleItemClick(index);

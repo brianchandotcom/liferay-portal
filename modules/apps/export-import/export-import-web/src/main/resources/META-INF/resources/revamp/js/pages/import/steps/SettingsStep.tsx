@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {ClayRadio} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import React from 'react';
@@ -14,6 +15,8 @@ import {
 	USER_ID_STRATEGIES,
 } from '../../../types/exportImportProcess';
 import {SCOPES, Scope} from '../../../types/scope';
+
+const noop = () => {};
 
 export const SETTINGS_STEP_INITIAL_VALUES = {
 	dataStrategy: DATA_STRATEGIES.MIRROR,
@@ -97,10 +100,7 @@ export default function SettingsStep({scope}: {scope: Scope}) {
 				/>
 
 				{dataStrategyOptions.length === 1 ? (
-					<ReadOnlyOption
-						option={dataStrategyOptions[0]}
-						symbol="reset"
-					/>
+					<ReadOnlyOption option={dataStrategyOptions[0]} />
 				) : (
 					<FormikFieldRadioGroup
 						aria-labelledby="dataStrategy-label"
@@ -115,20 +115,17 @@ export default function SettingsStep({scope}: {scope: Scope}) {
 
 function ReadOnlyOption({
 	option,
-	symbol,
 }: {
 	option: {description: string; label: string};
-	symbol: string;
 }) {
 	return (
 		<ClayLayout.ContentRow className="mb-2">
-			<ClayLayout.ContentCol expand={false}>
-				<span
-					aria-hidden="true"
-					className="inline-item inline-item-before invisible small text-secondary"
-				>
-					<ClayIcon className="mr-1" symbol={symbol} />
-				</span>
+			<ClayLayout.ContentCol
+				aria-hidden="true"
+				className="invisible pr-2"
+				expand={false}
+			>
+				<ClayRadio checked={false} disabled onChange={noop} value="" />
 			</ClayLayout.ContentCol>
 
 			<ClayLayout.ContentCol expand>

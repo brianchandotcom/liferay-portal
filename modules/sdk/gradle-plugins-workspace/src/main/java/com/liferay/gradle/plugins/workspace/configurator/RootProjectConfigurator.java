@@ -2007,12 +2007,10 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		RegularFileProperty jakartaTransformDependenciesFileProperty =
 			upgradeJakartaTask.getJakartaTransformDependenciesFile();
 
-		Property<String> toVersionProperty = upgradeJakartaTask.getToVersion();
-
 		jakartaTransformDependenciesFileProperty.convention(
 			project.provider(
 				() -> _getJakartaTransformDependenciesFile(
-					project, toVersionProperty, workspaceExtension)));
+					project, workspaceExtension)));
 	}
 
 	private void _configureTaskUpgradeSourceCode(
@@ -2116,30 +2114,20 @@ public class RootProjectConfigurator implements Plugin<Project> {
 	}
 
 	private RegularFile _getJakartaTransformDependenciesFile(
-			Project project, Property<String> toVersionProperty,
-			WorkspaceExtension workspaceExtension)
+			Project project, WorkspaceExtension workspaceExtension)
 		throws Exception {
 
-		String toVersion = toVersionProperty.getOrNull();
+		String targetPlatformVersion =
+			workspaceExtension.getTargetPlatformVersion();
 
-		String targetPlatformVersion;
+		if (Validator.isNull(targetPlatformVersion)) {
+			Logger logger = project.getLogger();
 
-		if (Validator.isNotNull(toVersion)) {
-			targetPlatformVersion = toVersion;
-		}
-		else {
-			targetPlatformVersion =
-				workspaceExtension.getTargetPlatformVersion();
-
-			if (Validator.isNull(targetPlatformVersion)) {
-				Logger logger = project.getLogger();
-
-				if (logger.isWarnEnabled()) {
-					logger.warn("Failed to validate target platform version.");
-				}
-
-				return null;
+			if (logger.isWarnEnabled()) {
+				logger.warn("Failed to validate target platform version.");
 			}
+
+			return null;
 		}
 
 		List<ReleaseEntry> releaseEntries = ReleaseUtil.getReleaseEntries();

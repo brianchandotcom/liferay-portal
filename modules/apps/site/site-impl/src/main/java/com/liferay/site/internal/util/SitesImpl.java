@@ -606,6 +606,8 @@ public class SitesImpl implements Sites {
 		Map<Long, ExportImportConfiguration> exportImportConfigurations =
 			new HashMap<>();
 
+		boolean preValidationErrors = false;
+
 		User user = _userLocalService.getUser(userId);
 
 		for (Iterator<LayoutSet> iterator = mergeableLayoutSets.iterator();
@@ -626,7 +628,13 @@ public class SitesImpl implements Sites {
 					portalException);
 
 				iterator.remove();
+
+				preValidationErrors = true;
 			}
+		}
+
+		if (mergeableLayoutSets.isEmpty() && preValidationErrors) {
+			throw new PortalException("Unable to start site template merge");
 		}
 
 		Map<String, Serializable> taskContextMap =

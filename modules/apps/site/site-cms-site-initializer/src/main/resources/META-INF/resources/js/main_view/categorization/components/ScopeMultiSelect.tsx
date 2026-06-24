@@ -120,9 +120,14 @@ export default function ScopeMultiSelect<T extends ScopeItem>({
 					onChange={setQuery}
 					onItemsChange={(items: T[]) => {
 						setTouched(true);
-						setSelectedItems(getSelectedItems(items));
 
-						onSelectionChange(items.map((item) => item.scopeKey));
+						const nextSelectedItems = getSelectedItems(items);
+
+						setSelectedItems(nextSelectedItems);
+
+						onSelectionChange(
+							nextSelectedItems.map((item) => item.scopeKey)
+						);
 					}}
 					sourceItems={sourceItems}
 					value={allScopesChecked ? labels.allItemsValue : query}

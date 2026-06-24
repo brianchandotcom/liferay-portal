@@ -101,15 +101,27 @@ export class DocumentLibraryPage {
 	}
 
 	async changeView(viewName: string) {
+		const trigger = this.page.getByLabel(
+			'Select View, Currently Selected: '
+		);
+
+		await trigger.waitFor({state: 'visible'});
+
+		const currentViewLabel = this.page.getByLabel(
+			`Select View, Currently Selected: ${viewName}`
+		);
+
+		if (await currentViewLabel.isVisible()) {
+			return;
+		}
+
 		await clickAndExpectToBeVisible({
 			autoClick: true,
 			target: this.page.getByRole('menuitem', {name: viewName}),
-			trigger: this.page.getByLabel('Select View, Currently Selected: '),
+			trigger,
 		});
 
-		await expect(
-			this.page.getByLabel(`Select View, Currently Selected: ${viewName}`)
-		).toBeVisible();
+		await expect(currentViewLabel).toBeVisible();
 	}
 
 	async deleteAllFileEntries() {
@@ -333,8 +345,9 @@ export class DocumentLibraryPage {
 		for (const vocabularyCategory of vocabularyCategories) {
 			for (const categoryName of vocabularyCategory.categoryNames) {
 				await this.page
-					.getByLabel(vocabularyCategory.vocabularyName, {
+					.getByRole('combobox', {
 						exact: true,
+						name: vocabularyCategory.vocabularyName,
 					})
 					.fill(categoryName);
 				await this.page

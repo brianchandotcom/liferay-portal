@@ -189,14 +189,12 @@ test(
 
 		await documentLibraryPage.goto(site.friendlyUrlPath);
 
-		await documentLibraryPage.orderBy('Modified Date');
+		await documentLibraryPage.orderBy('Ascending');
 		await documentLibraryPage.orderBy('Descending');
 
 		await expect(
-			page
-				.locator(`dd.card-page-item[data-title="${title}"]`)
-				.getAttribute('id')
-		).resolves.toMatch(/_entries_1$/);
+			page.locator(`dd.card-page-item[data-title="${title}"]`)
+		).toHaveAttribute('id', /_entries_1$/);
 	}
 );
 

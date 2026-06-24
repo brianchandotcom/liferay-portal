@@ -68,6 +68,10 @@ describe('MiniCart Items List Actions', () => {
 				get: jest.fn((text) => text),
 			},
 
+			ThemeDisplay: {
+				isSignedIn: jest.fn(() => true),
+			},
+
 			fire: jest.fn(),
 		};
 	});
@@ -116,6 +120,29 @@ describe('MiniCart Items List Actions', () => {
 				).toBe(true);
 			}
 		);
+	});
+
+	describe('if the user is not signed in', () => {
+		it(`does not render the "${VIEW_DETAILS}" button`, () => {
+			window.Liferay.ThemeDisplay.isSignedIn.mockReturnValue(false);
+
+			const {container} = render(
+				<MiniCartContext.Provider value={BASE_CONTEXT_MOCK}>
+					<CartItemsListActions />
+				</MiniCartContext.Provider>
+			);
+
+			const ActionsElement = container.querySelector(
+				`${COMPONENT_SELECTOR}-actions`
+			);
+			const ActionButtonsElements =
+				ActionsElement.querySelectorAll('.action');
+
+			expect(ActionButtonsElements.length).toEqual(1);
+			expect(
+				ActionButtonsElements[0].classList.contains('text-danger')
+			).toBe(true);
+		});
 	});
 
 	describe('by data flow', () => {

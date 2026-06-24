@@ -112,84 +112,29 @@ public class PublishFragmentEntryMVCActionCommandTest {
 	}
 
 	@Test
-	@TestInfo("LPD-79507")
+	@TestInfo({"LPD-79507", "LPD-95510"})
 	public void testPublishFragmentWithPropagateChangesEnabled()
 		throws Exception {
 
-		try (CompanyConfigurationTemporarySwapper
-				companyConfigurationTemporarySwapper =
-					new CompanyConfigurationTemporarySwapper(
-						TestPropsValues.getCompanyId(),
-						FragmentServiceConfiguration.class.getName(),
-						HashMapDictionaryBuilder.<String, Object>put(
-							"propagateChanges", true
-						).build())) {
+		FragmentEntry fragmentEntry = _getFragmentEntry(
+			null,
+			"<div><lfr-drop-zone data-lfr-drop-zone-id=\"1\">" +
+				"</lfr-drop-zone></div>");
 
-			FragmentEntry fragmentEntry = _getFragmentEntry(
+		_testPublishFragmentWithPropagateChangesEnabled(
+			fragmentEntry,
+			StringBundler.concat(
+				fragmentEntry.getHtml(), "<!--", RandomTestUtil.randomString(),
+				"-->"));
+
+		_testPublishFragmentWithPropagateChangesEnabled(
+			_getFragmentEntry(
 				null,
-				"<div><lfr-drop-zone data-lfr-drop-zone-id=\"1\">" +
-					"</lfr-drop-zone></div>");
-
-			Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
-
-			Layout draftLayout = layout.fetchDraftLayout();
-
-			FragmentEntryLink fragmentEntryLink =
-				ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
-					StringPool.BLANK, fragmentEntry.getCss(),
-					fragmentEntry.getConfiguration(),
-					fragmentEntry.getExternalReferenceCode(), null,
-					fragmentEntry.getHtml(), fragmentEntry.getJs(), draftLayout,
-					fragmentEntry.getFragmentEntryKey(),
-					_segmentsExperienceLocalService.
-						fetchDefaultSegmentsExperienceId(draftLayout.getPlid()),
-					fragmentEntry.getType());
-
-			ContentLayoutTestUtil.publishLayout(draftLayout, layout);
-
-			_assertFragmentEntryLinkHTML(
-				fragmentEntry.getHtml(),
-				_fragmentEntryLinkLocalService.getFragmentEntryLink(
-					fragmentEntryLink.getFragmentEntryLinkId()),
-				_fragmentEntryLinkLocalService.getFragmentEntryLink(
-					_group.getGroupId(),
-					fragmentEntryLink.getExternalReferenceCode(),
-					layout.getPlid()));
-
-			_assertLayoutStatusApproved(
-				_layoutLocalService.getLayout(draftLayout.getPlid()),
-				_layoutLocalService.getLayout(layout.getPlid()));
-
-			fragmentEntry.setHtml(
-				StringBundler.concat(
-					fragmentEntry.getHtml(), "<!--", RandomTestUtil.randomString(),
-					"-->"));
-
-			fragmentEntry = _fragmentEntryLocalService.updateFragmentEntry(
-				fragmentEntry);
-
-			try (AutoCloseable autoCloseable =
-					_layoutServiceContextHelper.getServiceContextAutoCloseable(
-						layout, TestPropsValues.getUser())) {
-
-				_mvcActionCommand.processAction(
-					_getActionRequest(fragmentEntry),
-					new MockLiferayPortletActionResponse());
-			}
-
-			_assertLayoutStatusApproved(
-				_layoutLocalService.getLayout(draftLayout.getPlid()),
-				_layoutLocalService.getLayout(layout.getPlid()));
-
-			_assertFragmentEntryLinkHTML(
-				fragmentEntry.getHtml(),
-				_fragmentEntryLinkLocalService.getFragmentEntryLink(
-					fragmentEntryLink.getFragmentEntryLinkId()),
-				_fragmentEntryLinkLocalService.getFragmentEntryLink(
-					_group.getGroupId(),
-					fragmentEntryLink.getExternalReferenceCode(),
-					layout.getPlid()));
-		}
+				"<div><lfr-drop-zone></lfr-drop-zone>" +
+					"<lfr-drop-zone></lfr-drop-zone></div>"),
+			"<div><lfr-drop-zone></lfr-drop-zone>" +
+				"<lfr-drop-zone></lfr-drop-zone>" +
+					"<lfr-drop-zone></lfr-drop-zone></div>");
 	}
 
 	private void _assertFragmentEntryLinkHTML(
@@ -254,6 +199,78 @@ public class PublishFragmentEntryMVCActionCommandTest {
 			clazz.getClassLoader(),
 			"com/liferay/fragment/internal/portlet/action/test/dependencies" +
 				"/fragment_configuration_invalid.json");
+	}
+
+	private void _testPublishFragmentWithPropagateChangesEnabled(
+			FragmentEntry fragmentEntry, String updatedHTML)
+		throws Exception {
+
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						FragmentServiceConfiguration.class.getName(),
+						HashMapDictionaryBuilder.<String, Object>put(
+							"propagateChanges", true
+						).build())) {
+
+			Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+			Layout draftLayout = layout.fetchDraftLayout();
+
+			FragmentEntryLink fragmentEntryLink =
+				ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+					StringPool.BLANK, fragmentEntry.getCss(),
+					fragmentEntry.getConfiguration(),
+					fragmentEntry.getExternalReferenceCode(), null,
+					fragmentEntry.getHtml(), fragmentEntry.getJs(), draftLayout,
+					fragmentEntry.getFragmentEntryKey(),
+					_segmentsExperienceLocalService.
+						fetchDefaultSegmentsExperienceId(draftLayout.getPlid()),
+					fragmentEntry.getType());
+
+			ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+
+			_assertFragmentEntryLinkHTML(
+				fragmentEntry.getHtml(),
+				_fragmentEntryLinkLocalService.getFragmentEntryLink(
+					fragmentEntryLink.getFragmentEntryLinkId()),
+				_fragmentEntryLinkLocalService.getFragmentEntryLink(
+					_group.getGroupId(),
+					fragmentEntryLink.getExternalReferenceCode(),
+					layout.getPlid()));
+
+			_assertLayoutStatusApproved(
+				_layoutLocalService.getLayout(draftLayout.getPlid()),
+				_layoutLocalService.getLayout(layout.getPlid()));
+
+			fragmentEntry.setHtml(updatedHTML);
+
+			fragmentEntry = _fragmentEntryLocalService.updateFragmentEntry(
+				fragmentEntry);
+
+			try (AutoCloseable autoCloseable =
+					_layoutServiceContextHelper.getServiceContextAutoCloseable(
+						layout, TestPropsValues.getUser())) {
+
+				_mvcActionCommand.processAction(
+					_getActionRequest(fragmentEntry),
+					new MockLiferayPortletActionResponse());
+			}
+
+			_assertLayoutStatusApproved(
+				_layoutLocalService.getLayout(draftLayout.getPlid()),
+				_layoutLocalService.getLayout(layout.getPlid()));
+
+			_assertFragmentEntryLinkHTML(
+				fragmentEntry.getHtml(),
+				_fragmentEntryLinkLocalService.getFragmentEntryLink(
+					fragmentEntryLink.getFragmentEntryLinkId()),
+				_fragmentEntryLinkLocalService.getFragmentEntryLink(
+					_group.getGroupId(),
+					fragmentEntryLink.getExternalReferenceCode(),
+					layout.getPlid()));
+		}
 	}
 
 	@Inject

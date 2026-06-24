@@ -45,6 +45,8 @@ public class Test {
 
 	@After
 	public void tearDown() {
+		BuildDatabaseUtil.clearBuildDatabases();
+
 		Environment.setInstance(new Environment());
 
 		Shell.setInstance(new Shell());
@@ -300,6 +302,30 @@ public class Test {
 		}
 
 		return _simpleClassNames;
+	}
+
+	protected Environment mockEnvironment(
+		Map<String, String> environmentValues) {
+
+		Environment environment = Mockito.mock(Environment.class);
+
+		Mockito.doAnswer(
+			invocation -> environmentValues.get(invocation.getArgument(0))
+		).when(
+			environment
+		).doGet(
+			Mockito.anyString()
+		);
+
+		Mockito.doReturn(
+			environmentValues
+		).when(
+			environment
+		).doGetAll();
+
+		Environment.setInstance(environment);
+
+		return environment;
 	}
 
 	protected Shell mockShell() {

@@ -19,6 +19,23 @@ import org.junit.Test;
 public class PullRequestTest extends com.liferay.jenkins.results.parser.Test {
 
 	@Test
+	public void testGetCIMergeSHA() throws Exception {
+		PullRequest pullRequest = _newPullRequest();
+
+		UrlReader urlReader = mockUrlReader();
+
+		setUrlReaderOutput(
+			JenkinsResultsParserUtil.combine(
+				"[{\"filename\": \"test/ci-merge\", ",
+				"\"patch\": \"+abcdef0123456789abcdef0123456789abcdef01\"}]"),
+			"/files", urlReader);
+
+		Assert.assertEquals(
+			"abcdef0123456789abcdef0123456789abcdef01",
+			pullRequest.getCIMergeSHA());
+	}
+
+	@Test
 	public void testGetFileNames() throws Exception {
 		PullRequest pullRequest = _newPullRequest();
 

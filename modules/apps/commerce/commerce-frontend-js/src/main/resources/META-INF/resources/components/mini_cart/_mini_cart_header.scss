@@ -32,7 +32,7 @@
 				font-weight: 500;
 				padding: 2px;
 
-				&:last-child {
+				&:last-child:not(:only-child) {
 					border-left: 2px solid $gray-200;
 					border-radius: 0;
 					height: auto;

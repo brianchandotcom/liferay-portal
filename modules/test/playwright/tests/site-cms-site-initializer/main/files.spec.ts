@@ -4,7 +4,9 @@
  */
 
 import {expect, mergeTests} from '@playwright/test';
+import {readFileSync} from 'fs';
 import fs from 'fs/promises';
+import path from 'path';
 
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
@@ -869,6 +871,100 @@ test(
 			await apiHelpers.objectEntry.deleteObjectEntry(
 				applicationName,
 				String(objectEntry2.id)
+			);
+		}
+	}
+);
+
+test(
+	'Uploads a file dropped onto a folder into that folder in Gallery View',
+	{tag: '@LPD-87681'},
+	async ({apiHelpers, assetsPage, page}) => {
+		const fileName = 'file_upload_image_1.jpeg';
+		const parentFolderTitle = getRandomString();
+		const targetFolderTitle = getRandomString();
+
+		const parentFolder =
+			await apiHelpers.objectFolder.createObjectEntryFolder({
+				scopeKey: 'Default',
+				title: parentFolderTitle,
+			});
+
+		const targetFolder =
+			await apiHelpers.objectFolder.createObjectEntryFolder({
+				parentObjectEntryFolderExternalReferenceCode:
+					parentFolder.externalReferenceCode,
+				scopeKey: 'Default',
+				title: targetFolderTitle,
+			});
+
+		try {
+			await test.step('Open the parent folder in Gallery View', async () => {
+				await assetsPage.gotoFiles();
+
+				await page.getByRole('link', {name: parentFolderTitle}).click();
+
+				await expect(
+					page.getByRole('combobox', {
+						name: 'Gallery View Selected',
+					})
+				).toBeVisible();
+			});
+
+			const folderThumbnail = assetsPage.galleryThumbnails.locator(
+				'.fds-gallery-view__thumbnail',
+				{hasText: targetFolderTitle}
+			);
+
+			const dataTransfer = await page.evaluateHandle(
+				(data) => {
+					const dataTransfer = new DataTransfer();
+
+					dataTransfer.items.add(
+						new File(
+							[data.toString('hex')],
+							'file_upload_image_1.jpeg',
+							{type: 'image/jpg'}
+						)
+					);
+
+					return dataTransfer;
+				},
+				readFileSync(
+					path.join(
+						__dirname,
+						'/dependencies/file_upload_image_1.jpg'
+					)
+				)
+			);
+
+			await test.step('Highlight the folder as the drop target', async () => {
+				await folderThumbnail.dispatchEvent('dragenter', {
+					dataTransfer,
+				});
+				await folderThumbnail.dispatchEvent('dragover', {dataTransfer});
+
+				await expect(folderThumbnail).toHaveClass(/drop-target/);
+			});
+
+			await test.step('Drop the file onto the folder', async () => {
+				await folderThumbnail.dispatchEvent('drop', {dataTransfer});
+
+				await expect(assetsPage.modal.container).toBeVisible();
+
+				await expect(assetsPage.modal.title).toContainText(
+					'Upload Multiple Files'
+				);
+
+				await expect(assetsPage.modal.body).toContainText(fileName);
+			});
+		}
+		finally {
+			await apiHelpers.objectFolder.deleteObjectEntryFolder(
+				targetFolder.id
+			);
+			await apiHelpers.objectFolder.deleteObjectEntryFolder(
+				parentFolder.id
 			);
 		}
 	}

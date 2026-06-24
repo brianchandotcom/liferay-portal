@@ -101,7 +101,7 @@ public class ReportEntry implements Serializable {
 	private Supplier<String> _classExternalReferenceCodeSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The reported item's class name id."
+		description = "The reported item's class name ID."
 	)
 	public Long getClassNameId() {
 		if (_classNameIdSupplier != null) {
@@ -136,7 +136,7 @@ public class ReportEntry implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "The reported item's class name id.")
+	@GraphQLField(description = "The reported item's class name ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long classNameId;
 
@@ -401,7 +401,7 @@ public class ReportEntry implements Serializable {
 	private Supplier<String> _errorMessageSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Optional field with the full stack trace of the error, can be embedded with nestedFields."
+		description = "The full stack trace of the error. It is an optional field that can be embedded with nested fields."
 	)
 	public String getErrorStacktrace() {
 		if (_errorStacktraceSupplier != null) {
@@ -437,7 +437,7 @@ public class ReportEntry implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "Optional field with the full stack trace of the error, can be embedded with nestedFields."
+		description = "The full stack trace of the error. It is an optional field that can be embedded with nested fields."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String errorStacktrace;
@@ -619,7 +619,7 @@ public class ReportEntry implements Serializable {
 	private Supplier<com.liferay.portal.vulcan.scope.Scope> _scopeSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The report entry's 's status."
+		description = "The report entry's status."
 	)
 	@Valid
 	public Status getStatus() {
@@ -655,7 +655,7 @@ public class ReportEntry implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "The report entry's 's status.")
+	@GraphQLField(description = "The report entry's status.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Status status;
 
@@ -1039,4 +1039,4 @@ public class ReportEntry implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1325041115
+// LIFERAY-REST-BUILDER-HASH:715435741

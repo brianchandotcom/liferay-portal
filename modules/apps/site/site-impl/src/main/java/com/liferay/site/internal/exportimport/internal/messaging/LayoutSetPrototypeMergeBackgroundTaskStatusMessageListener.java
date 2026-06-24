@@ -91,6 +91,12 @@ public class LayoutSetPrototypeMergeBackgroundTaskStatusMessageListener
 			LayoutSetPrototypeMergeBackgroundTaskConstants.SESSION_ID);
 
 		if (Validator.isNull(sessionId)) {
+			if (backgroundTaskStatus ==
+					BackgroundTaskConstants.STATUS_SUCCESSFUL) {
+
+				_deleteBackgroundTask(backgroundTask);
+			}
+
 			return;
 		}
 
@@ -154,7 +160,14 @@ public class LayoutSetPrototypeMergeBackgroundTaskStatusMessageListener
 			for (BackgroundTask completedBackgroundTask :
 					completedBackgroundTasks) {
 
-				_markNotified(completedBackgroundTask);
+				if (completedBackgroundTask.getStatus() ==
+						BackgroundTaskConstants.STATUS_SUCCESSFUL) {
+
+					_deleteBackgroundTask(completedBackgroundTask);
+				}
+				else {
+					_markNotified(completedBackgroundTask);
+				}
 			}
 		}
 		finally {
@@ -188,6 +201,19 @@ public class LayoutSetPrototypeMergeBackgroundTaskStatusMessageListener
 		}
 
 		return lock;
+	}
+
+	private void _deleteBackgroundTask(BackgroundTask backgroundTask) {
+		try {
+			_backgroundTaskLocalService.deleteBackgroundTask(
+				backgroundTask.getBackgroundTaskId());
+		}
+		catch (Exception exception) {
+			_log.error(
+				"Unable to delete background task " +
+					backgroundTask.getBackgroundTaskId(),
+				exception);
+		}
 	}
 
 	private BackgroundTask[] _getBackgroundTasks(

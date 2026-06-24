@@ -18,7 +18,6 @@ import com.liferay.ai.hub.rest.manager.v1_0.ProvisioningRequestManager;
 import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.oauth2.provider.constants.ClientProfile;
 import com.liferay.oauth2.provider.constants.GrantType;
-import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
 import com.liferay.oauth2.provider.util.OAuth2SecureRandomGenerator;
 import com.liferay.object.model.ObjectDefinition;
@@ -178,21 +177,10 @@ public class ProvisioningRequestManagerImpl
 			ServiceContext serviceContext)
 		throws Exception {
 
-		String externalReferenceCode =
-			customerAccountEntry.getAccountEntryId() +
-				"-ai-hub-oauth2-application";
-
-		OAuth2Application oAuth2Application =
-			_oAuth2ApplicationLocalService.
-				fetchOAuth2ApplicationByExternalReferenceCode(
-					externalReferenceCode, serviceContext.getCompanyId());
-
-		if (oAuth2Application != null) {
-			return;
-		}
-
 		_oAuth2ApplicationLocalService.addOrUpdateOAuth2Application(
-			externalReferenceCode, user.getUserId(), user.getFullName(),
+			customerAccountEntry.getAccountEntryId() +
+				"-ai-hub-oauth2-application",
+			user.getUserId(), user.getFullName(),
 			List.of(GrantType.CLIENT_CREDENTIALS), "client_secret_post",
 			user.getUserId(), OAuth2SecureRandomGenerator.generateClientId(),
 			ClientProfile.HEADLESS_SERVER.id(),

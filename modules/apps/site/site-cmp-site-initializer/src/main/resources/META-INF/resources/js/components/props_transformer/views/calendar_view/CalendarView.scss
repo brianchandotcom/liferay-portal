@@ -46,6 +46,14 @@
 		margin-left: 0.25rem;
 	}
 
+	&-add-task-button {
+		opacity: 0;
+		position: absolute;
+		right: 0.25rem;
+		top: 50%;
+		transform: translateY(-50%);
+	}
+
 	&-toolbar {
 		align-items: center;
 		margin-left: 0;
@@ -119,16 +127,29 @@
 		background-color: $gray-100;
 	}
 
+	.fc-daygrid-day-frame:hover .lfr__calendar-view-add-task-button,
+	.lfr__calendar-view-add-task-button:focus-visible {
+		opacity: 1;
+	}
+
 	.fc-daygrid-day-number {
 		color: $secondary;
 		font-size: $font-size-sm;
 		font-weight: $font-weight-semi-bold;
 		padding: 0.5rem 0.75rem;
+
+		// Drop the FullCalendar default "position: relative" so the add task
+		// button anchors to the full-width day number row instead of the
+		// content-width day number, which keeps it at the row's right edge and
+		// vertically centered with the number text.
+
+		position: static;
 		text-decoration: none !important;
 	}
 
 	.fc-daygrid-day-top {
 		flex-direction: row;
+		position: relative;
 	}
 
 	.fc-theme-standard .fc-scrollgrid {

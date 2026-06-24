@@ -10,7 +10,7 @@
  */
 
 module.exports = {
-	hash: 'f0af3b7a0a73372be66161e606f5efb791ebbfc0d25737b603000dbad3ae6154',
+	hash: 'eb9e4d36c23bc0df4d3060a3e32ef3e06c348534b258e3f16770a5ea3dec4e94',
 	imports: {
 		'@liferay/accessibility-menu-web': [],
 		'@liferay/accessibility-settings-state-web': [],

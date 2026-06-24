@@ -59,7 +59,7 @@ export default function SettingsStep({scope}: {scope: Scope}) {
 			<ClayLayout.Sheet>
 				<SectionHeader
 					name="userIdStrategy"
-					symbol="pencil"
+					symbol="signature"
 					title={Liferay.Language.get('authorship-of-the-content')}
 				/>
 
@@ -92,14 +92,14 @@ export default function SettingsStep({scope}: {scope: Scope}) {
 			<ClayLayout.Sheet className="mt-4">
 				<SectionHeader
 					name="dataStrategy"
-					symbol="restore"
+					symbol="reset"
 					title={Liferay.Language.get('update-data')}
 				/>
 
 				{dataStrategyOptions.length === 1 ? (
 					<ReadOnlyOption
 						option={dataStrategyOptions[0]}
-						symbol="restore"
+						symbol="reset"
 					/>
 				) : (
 					<FormikFieldRadioGroup

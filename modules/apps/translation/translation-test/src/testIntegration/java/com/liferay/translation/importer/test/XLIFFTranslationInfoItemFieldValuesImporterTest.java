@@ -78,6 +78,32 @@ public class XLIFFTranslationInfoItemFieldValuesImporterTest {
 				"example-1_2-bad-formed.xlf"));
 	}
 
+	@Test(expected = XLIFFFileException.MustBeWellFormed.class)
+	public void testImportXLIFF12FailsFileNoTarget() throws Exception {
+		_xliffTranslationInfoItemFieldValuesImporter.importInfoItemFieldValues(
+			_group.getGroupId(),
+			new InfoItemReference(JournalArticle.class.getName(), 122),
+			TranslationTestUtil.readFileToInputStream(
+				"example-1_2-no-target.xlf"));
+	}
+
+	@Test
+	public void testImportXLIFF12IgnoresEmptyTarget() throws Exception {
+		InfoItemFieldValues infoItemFieldValues =
+			_xliffTranslationInfoItemFieldValuesImporter.
+				importInfoItemFieldValues(
+					_group.getGroupId(),
+					new InfoItemReference(JournalArticle.class.getName(), 122),
+					TranslationTestUtil.readFileToInputStream(
+						"example-1_2-empty-target.xlf"));
+
+		Collection<InfoFieldValue<Object>> infoFieldValues =
+			infoItemFieldValues.getInfoFieldValues();
+
+		Assert.assertEquals(
+			infoFieldValues.toString(), 1, infoFieldValues.size());
+	}
+
 	@Test
 	public void testImportXLIFF12VersionDocument() throws Exception {
 		InfoItemFieldValues infoItemFieldValues =
@@ -156,6 +182,23 @@ public class XLIFFTranslationInfoItemFieldValuesImporterTest {
 			new InfoItemReference(JournalArticle.class.getName(), 122),
 			TranslationTestUtil.readFileToInputStream(
 				"test-journal-article-no-target.xlf"));
+	}
+
+	@Test
+	public void testImportXLIFF20IgnoresEmptyTarget() throws Exception {
+		InfoItemFieldValues infoItemFieldValues =
+			_xliffTranslationInfoItemFieldValuesImporter.
+				importInfoItemFieldValues(
+					_group.getGroupId(),
+					new InfoItemReference(JournalArticle.class.getName(), 122),
+					TranslationTestUtil.readFileToInputStream(
+						"test-journal-article-122-empty-target.xlf"));
+
+		Collection<InfoFieldValue<Object>> infoFieldValues =
+			infoItemFieldValues.getInfoFieldValues();
+
+		Assert.assertEquals(
+			infoFieldValues.toString(), 1, infoFieldValues.size());
 	}
 
 	@Test

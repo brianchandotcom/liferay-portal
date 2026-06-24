@@ -79,7 +79,9 @@ const CANDIDATE_GROUP: UserGroup = {
 
 const CONFIG: MembersConfig = {
 	defaultRoleName: 'Member',
-	excludedRoleNames: ['Connected', 'Owner'],
+	excludedRoleExternalReferenceCodes: [
+		'r-owner',
+	] as MembersConfig['excludedRoleExternalReferenceCodes'],
 	messages: {
 		addGroupError: 'add-group-error {0}',
 		addGroupSuccess: 'add-group-success {0}',

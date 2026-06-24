@@ -85,50 +85,6 @@ public class ProductionReadinessCheckUtilTest {
 	}
 
 	@Test
-	public void testCheckBetaLanguagesFail() throws Exception {
-		try (AutoCloseable closeable1 =
-				ReflectionTestUtil.setFieldValueWithAutoCloseable(
-					PropsValues.class, "LOCALES_BETA", new String[] {"fr_FR"});
-			AutoCloseable closeable2 =
-				ReflectionTestUtil.setFieldValueWithAutoCloseable(
-					PropsValues.class, "LOCALES_ENABLED",
-					new String[] {"en_US", "fr_FR"})) {
-
-			ProductionReadinessResult productionReadinessResult =
-				ReflectionTestUtil.invoke(
-					ProductionReadinessCheckUtil.class, "_checkBetaLanguages",
-					new Class<?>[0]);
-
-			Assert.assertFalse(productionReadinessResult.isPass());
-			Assert.assertEquals(
-				"languages-beta", productionReadinessResult.getKey());
-			Assert.assertEquals(
-				"fr_FR", productionReadinessResult.getCurrentValue());
-		}
-	}
-
-	@Test
-	public void testCheckBetaLanguagesPass() throws Exception {
-		try (AutoCloseable closeable1 =
-				ReflectionTestUtil.setFieldValueWithAutoCloseable(
-					PropsValues.class, "LOCALES_BETA", new String[] {"fr_FR"});
-			AutoCloseable closeable2 =
-				ReflectionTestUtil.setFieldValueWithAutoCloseable(
-					PropsValues.class, "LOCALES_ENABLED",
-					new String[] {"en_US"})) {
-
-			ProductionReadinessResult productionReadinessResult =
-				ReflectionTestUtil.invoke(
-					ProductionReadinessCheckUtil.class, "_checkBetaLanguages",
-					new Class<?>[0]);
-
-			Assert.assertTrue(productionReadinessResult.isPass());
-			Assert.assertEquals(
-				"languages-beta", productionReadinessResult.getKey());
-		}
-	}
-
-	@Test
 	public void testCheckCounterIncrementFail() {
 		try (MockedStatic<PropsUtil> propsUtilMockedStatic = Mockito.mockStatic(
 				PropsUtil.class)) {
@@ -171,82 +127,6 @@ public class ProductionReadinessCheckUtilTest {
 			Assert.assertTrue(productionReadinessResult.isPass());
 			Assert.assertEquals(
 				"counter-increment", productionReadinessResult.getKey());
-		}
-	}
-
-	@Test
-	public void testCheckDatabaseConfigurationFail() throws Exception {
-		try (MockedStatic<PropsUtil> propsUtilMockedStatic = Mockito.mockStatic(
-				PropsUtil.class);
-			MockedStatic<ManagementFactory> managementFactoryMockedStatic =
-				Mockito.mockStatic(ManagementFactory.class)) {
-
-			propsUtilMockedStatic.when(
-				() -> PropsUtil.get("jdbc.default.maximumPoolSize")
-			).thenReturn(
-				"10"
-			);
-
-			_mockMBeanServerMaxThreads(managementFactoryMockedStatic, 200);
-
-			ProductionReadinessResult productionReadinessResult =
-				ReflectionTestUtil.invoke(
-					ProductionReadinessCheckUtil.class,
-					"_checkDatabaseConfiguration", new Class<?>[0]);
-
-			Assert.assertFalse(productionReadinessResult.isPass());
-			Assert.assertEquals(
-				"pool-vs-thread-size", productionReadinessResult.getKey());
-		}
-	}
-
-	@Test
-	public void testCheckDatabaseConfigurationNull() throws Exception {
-		try (MockedStatic<PropsUtil> propsUtilMockedStatic = Mockito.mockStatic(
-				PropsUtil.class);
-			MockedStatic<ManagementFactory> managementFactoryMockedStatic =
-				Mockito.mockStatic(ManagementFactory.class)) {
-
-			propsUtilMockedStatic.when(
-				() -> PropsUtil.get("jdbc.default.maximumPoolSize")
-			).thenReturn(
-				"0"
-			);
-
-			_mockMBeanServerMaxThreads(managementFactoryMockedStatic, 200);
-
-			ProductionReadinessResult productionReadinessResult =
-				ReflectionTestUtil.invoke(
-					ProductionReadinessCheckUtil.class,
-					"_checkDatabaseConfiguration", new Class<?>[0]);
-
-			Assert.assertNull(productionReadinessResult);
-		}
-	}
-
-	@Test
-	public void testCheckDatabaseConfigurationPass() throws Exception {
-		try (MockedStatic<PropsUtil> propsUtilMockedStatic = Mockito.mockStatic(
-				PropsUtil.class);
-			MockedStatic<ManagementFactory> managementFactoryMockedStatic =
-				Mockito.mockStatic(ManagementFactory.class)) {
-
-			propsUtilMockedStatic.when(
-				() -> PropsUtil.get("jdbc.default.maximumPoolSize")
-			).thenReturn(
-				"200"
-			);
-
-			_mockMBeanServerMaxThreads(managementFactoryMockedStatic, 200);
-
-			ProductionReadinessResult productionReadinessResult =
-				ReflectionTestUtil.invoke(
-					ProductionReadinessCheckUtil.class,
-					"_checkDatabaseConfiguration", new Class<?>[0]);
-
-			Assert.assertTrue(productionReadinessResult.isPass());
-			Assert.assertEquals(
-				"pool-vs-thread-size", productionReadinessResult.getKey());
 		}
 	}
 
@@ -926,11 +806,176 @@ public class ProductionReadinessCheckUtilTest {
 	}
 
 	@Test
+	public void testCheckLocalesBetaFail() throws Exception {
+		try (AutoCloseable closeable1 =
+				ReflectionTestUtil.setFieldValueWithAutoCloseable(
+					PropsValues.class, "LOCALES_BETA", new String[] {"fr_FR"});
+			AutoCloseable closeable2 =
+				ReflectionTestUtil.setFieldValueWithAutoCloseable(
+					PropsValues.class, "LOCALES_ENABLED",
+					new String[] {"en_US", "fr_FR"})) {
+
+			ProductionReadinessResult productionReadinessResult =
+				ReflectionTestUtil.invoke(
+					ProductionReadinessCheckUtil.class, "_checkLocalesBeta",
+					new Class<?>[0]);
+
+			Assert.assertFalse(productionReadinessResult.isPass());
+			Assert.assertEquals(
+				"locales-beta", productionReadinessResult.getKey());
+			Assert.assertEquals(
+				"fr_FR", productionReadinessResult.getCurrentValue());
+		}
+	}
+
+	@Test
+	public void testCheckLocalesBetaPass() throws Exception {
+		try (AutoCloseable closeable1 =
+				ReflectionTestUtil.setFieldValueWithAutoCloseable(
+					PropsValues.class, "LOCALES_BETA", new String[] {"fr_FR"});
+			AutoCloseable closeable2 =
+				ReflectionTestUtil.setFieldValueWithAutoCloseable(
+					PropsValues.class, "LOCALES_ENABLED",
+					new String[] {"en_US"})) {
+
+			ProductionReadinessResult productionReadinessResult =
+				ReflectionTestUtil.invoke(
+					ProductionReadinessCheckUtil.class, "_checkLocalesBeta",
+					new Class<?>[0]);
+
+			Assert.assertTrue(productionReadinessResult.isPass());
+			Assert.assertEquals(
+				"locales-beta", productionReadinessResult.getKey());
+		}
+	}
+
+	@Test
+	public void testCheckLocalesUnusedFail() throws Exception {
+		try (AutoCloseable closeable1 =
+				ReflectionTestUtil.setFieldValueWithAutoCloseable(
+					PropsValues.class, "LOCALES",
+					new String[] {"en_US", "de_DE"});
+			AutoCloseable closeable2 =
+				ReflectionTestUtil.setFieldValueWithAutoCloseable(
+					PropsValues.class, "LOCALES_ENABLED",
+					new String[] {"en_US"})) {
+
+			ProductionReadinessResult productionReadinessResult =
+				ReflectionTestUtil.invoke(
+					ProductionReadinessCheckUtil.class, "_checkLocalesUnused",
+					new Class<?>[0]);
+
+			Assert.assertFalse(productionReadinessResult.isPass());
+			Assert.assertEquals(
+				"locales-unused", productionReadinessResult.getKey());
+			Assert.assertEquals(
+				"de_DE", productionReadinessResult.getCurrentValue());
+		}
+	}
+
+	@Test
+	public void testCheckLocalesUnusedPass() throws Exception {
+		try (AutoCloseable closeable1 =
+				ReflectionTestUtil.setFieldValueWithAutoCloseable(
+					PropsValues.class, "LOCALES", new String[] {"en_US"});
+			AutoCloseable closeable2 =
+				ReflectionTestUtil.setFieldValueWithAutoCloseable(
+					PropsValues.class, "LOCALES_ENABLED",
+					new String[] {"en_US"})) {
+
+			ProductionReadinessResult productionReadinessResult =
+				ReflectionTestUtil.invoke(
+					ProductionReadinessCheckUtil.class, "_checkLocalesUnused",
+					new Class<?>[0]);
+
+			Assert.assertTrue(productionReadinessResult.isPass());
+			Assert.assertEquals(
+				"locales-unused", productionReadinessResult.getKey());
+		}
+	}
+
+	@Test
 	public void testCheckPasswordEncryption() {
 		_testCheckPasswordEncryption("BCRYPT", true);
 		_testCheckPasswordEncryption("MD5", false);
 		_testCheckPasswordEncryption("PBKDF2WithHmacSHA1/160/1300000", true);
 		_testCheckPasswordEncryption("PBKDF2WithHmacSHA1/160/1000", false);
+	}
+
+	@Test
+	public void testCheckPoolVsThreadSizeFail() throws Exception {
+		try (MockedStatic<PropsUtil> propsUtilMockedStatic = Mockito.mockStatic(
+				PropsUtil.class);
+			MockedStatic<ManagementFactory> managementFactoryMockedStatic =
+				Mockito.mockStatic(ManagementFactory.class)) {
+
+			propsUtilMockedStatic.when(
+				() -> PropsUtil.get("jdbc.default.maximumPoolSize")
+			).thenReturn(
+				"10"
+			);
+
+			_mockMBeanServerMaxThreads(managementFactoryMockedStatic, 200);
+
+			ProductionReadinessResult productionReadinessResult =
+				ReflectionTestUtil.invoke(
+					ProductionReadinessCheckUtil.class,
+					"_checkPoolVsThreadSize", new Class<?>[0]);
+
+			Assert.assertFalse(productionReadinessResult.isPass());
+			Assert.assertEquals(
+				"pool-vs-thread-size", productionReadinessResult.getKey());
+		}
+	}
+
+	@Test
+	public void testCheckPoolVsThreadSizeNull() throws Exception {
+		try (MockedStatic<PropsUtil> propsUtilMockedStatic = Mockito.mockStatic(
+				PropsUtil.class);
+			MockedStatic<ManagementFactory> managementFactoryMockedStatic =
+				Mockito.mockStatic(ManagementFactory.class)) {
+
+			propsUtilMockedStatic.when(
+				() -> PropsUtil.get("jdbc.default.maximumPoolSize")
+			).thenReturn(
+				"0"
+			);
+
+			_mockMBeanServerMaxThreads(managementFactoryMockedStatic, 200);
+
+			ProductionReadinessResult productionReadinessResult =
+				ReflectionTestUtil.invoke(
+					ProductionReadinessCheckUtil.class,
+					"_checkPoolVsThreadSize", new Class<?>[0]);
+
+			Assert.assertNull(productionReadinessResult);
+		}
+	}
+
+	@Test
+	public void testCheckPoolVsThreadSizePass() throws Exception {
+		try (MockedStatic<PropsUtil> propsUtilMockedStatic = Mockito.mockStatic(
+				PropsUtil.class);
+			MockedStatic<ManagementFactory> managementFactoryMockedStatic =
+				Mockito.mockStatic(ManagementFactory.class)) {
+
+			propsUtilMockedStatic.when(
+				() -> PropsUtil.get("jdbc.default.maximumPoolSize")
+			).thenReturn(
+				"200"
+			);
+
+			_mockMBeanServerMaxThreads(managementFactoryMockedStatic, 200);
+
+			ProductionReadinessResult productionReadinessResult =
+				ReflectionTestUtil.invoke(
+					ProductionReadinessCheckUtil.class,
+					"_checkPoolVsThreadSize", new Class<?>[0]);
+
+			Assert.assertTrue(productionReadinessResult.isPass());
+			Assert.assertEquals(
+				"pool-vs-thread-size", productionReadinessResult.getKey());
+		}
 	}
 
 	@Test
@@ -1125,51 +1170,6 @@ public class ProductionReadinessCheckUtilTest {
 
 			Assert.assertTrue(
 				logEntry.getThrowable() instanceof RuntimeException);
-		}
-	}
-
-	@Test
-	public void testCheckUnusedLanguagesFail() throws Exception {
-		try (AutoCloseable closeable1 =
-				ReflectionTestUtil.setFieldValueWithAutoCloseable(
-					PropsValues.class, "LOCALES",
-					new String[] {"en_US", "de_DE"});
-			AutoCloseable closeable2 =
-				ReflectionTestUtil.setFieldValueWithAutoCloseable(
-					PropsValues.class, "LOCALES_ENABLED",
-					new String[] {"en_US"})) {
-
-			ProductionReadinessResult productionReadinessResult =
-				ReflectionTestUtil.invoke(
-					ProductionReadinessCheckUtil.class, "_checkUnusedLanguages",
-					new Class<?>[0]);
-
-			Assert.assertFalse(productionReadinessResult.isPass());
-			Assert.assertEquals(
-				"languages-unused", productionReadinessResult.getKey());
-			Assert.assertEquals(
-				"de_DE", productionReadinessResult.getCurrentValue());
-		}
-	}
-
-	@Test
-	public void testCheckUnusedLanguagesPass() throws Exception {
-		try (AutoCloseable closeable1 =
-				ReflectionTestUtil.setFieldValueWithAutoCloseable(
-					PropsValues.class, "LOCALES", new String[] {"en_US"});
-			AutoCloseable closeable2 =
-				ReflectionTestUtil.setFieldValueWithAutoCloseable(
-					PropsValues.class, "LOCALES_ENABLED",
-					new String[] {"en_US"})) {
-
-			ProductionReadinessResult productionReadinessResult =
-				ReflectionTestUtil.invoke(
-					ProductionReadinessCheckUtil.class, "_checkUnusedLanguages",
-					new Class<?>[0]);
-
-			Assert.assertTrue(productionReadinessResult.isPass());
-			Assert.assertEquals(
-				"languages-unused", productionReadinessResult.getKey());
 		}
 	}
 

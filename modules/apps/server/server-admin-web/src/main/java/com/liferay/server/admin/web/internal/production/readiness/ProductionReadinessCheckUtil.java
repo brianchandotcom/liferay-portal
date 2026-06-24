@@ -58,30 +58,6 @@ public class ProductionReadinessCheckUtil {
 			_productionReadinessResultSuppliers, Supplier::get);
 	}
 
-	private static ProductionReadinessResult _checkBetaLanguages() {
-		List<String> betaLocales = List.of(PropsValues.LOCALES_BETA);
-
-		List<String> enabledBetaLocales = ListUtil.filter(
-			List.of(PropsValues.LOCALES_ENABLED), betaLocales::contains);
-
-		String enabledBetaLocalesString = StringUtil.merge(enabledBetaLocales);
-
-		ProductionReadinessResult.Builder builder =
-			ProductionReadinessResult.builder(
-				_CATEGORY_PORTAL_PROPERTIES_CONFIGURATION, "languages-beta"
-			).currentValue(
-				enabledBetaLocalesString
-			).messageParameters(
-				enabledBetaLocalesString
-			);
-
-		if (enabledBetaLocales.isEmpty()) {
-			return builder.pass();
-		}
-
-		return builder.fail();
-	}
-
 	private static ProductionReadinessResult _checkCounterIncrement() {
 		int counterIncrement = GetterUtil.getInteger(
 			PropsUtil.get(PropsKeys.COUNTER_INCREMENT));
@@ -96,34 +72,6 @@ public class ProductionReadinessCheckUtil {
 			);
 
 		if (counterIncrement >= _MIN_COUNTER_INCREMENT) {
-			return builder.pass();
-		}
-
-		return builder.fail();
-	}
-
-	private static ProductionReadinessResult _checkDatabaseConfiguration() {
-		int jdbcMaxPoolSize = GetterUtil.getInteger(
-			PropsUtil.get("jdbc.default.maximumPoolSize"));
-
-		int tomcatMaxThreads = _getTomcatMaxThreads();
-
-		if ((jdbcMaxPoolSize <= 0) || (tomcatMaxThreads <= 0)) {
-			return null;
-		}
-
-		ProductionReadinessResult.Builder builder =
-			ProductionReadinessResult.builder(
-				"database-configuration", "pool-vs-thread-size"
-			).currentValue(
-				StringBundler.concat(
-					"jdbc.default.maximumPoolSize=", jdbcMaxPoolSize,
-					", Tomcat maxThreads=", tomcatMaxThreads)
-			).recommendedValue(
-				"jdbc.default.maximumPoolSize>=" + tomcatMaxThreads
-			);
-
-		if (jdbcMaxPoolSize >= tomcatMaxThreads) {
 			return builder.pass();
 		}
 
@@ -507,6 +455,55 @@ public class ProductionReadinessCheckUtil {
 		return builder.fail();
 	}
 
+	private static ProductionReadinessResult _checkLocalesBeta() {
+		List<String> betaLocales = List.of(PropsValues.LOCALES_BETA);
+
+		List<String> enabledBetaLocales = ListUtil.filter(
+			List.of(PropsValues.LOCALES_ENABLED), betaLocales::contains);
+
+		String enabledBetaLocalesString = StringUtil.merge(enabledBetaLocales);
+
+		ProductionReadinessResult.Builder builder =
+			ProductionReadinessResult.builder(
+				_CATEGORY_PORTAL_PROPERTIES_CONFIGURATION, "locales-beta"
+			).currentValue(
+				enabledBetaLocalesString
+			).messageParameters(
+				enabledBetaLocalesString
+			);
+
+		if (enabledBetaLocales.isEmpty()) {
+			return builder.pass();
+		}
+
+		return builder.fail();
+	}
+
+	private static ProductionReadinessResult _checkLocalesUnused() {
+		List<String> enabledLocales = List.of(PropsValues.LOCALES_ENABLED);
+
+		List<String> unusedLocales = ListUtil.filter(
+			List.of(PropsValues.LOCALES),
+			locale -> !enabledLocales.contains(locale));
+
+		String unusedLocalesString = StringUtil.merge(unusedLocales);
+
+		ProductionReadinessResult.Builder builder =
+			ProductionReadinessResult.builder(
+				_CATEGORY_PORTAL_PROPERTIES_CONFIGURATION, "locales-unused"
+			).currentValue(
+				unusedLocalesString
+			).messageParameters(
+				unusedLocalesString
+			);
+
+		if (unusedLocales.isEmpty()) {
+			return builder.pass();
+		}
+
+		return builder.fail();
+	}
+
 	private static ProductionReadinessResult _checkPasswordEncryption() {
 		String algorithm = PropsUtil.get(
 			PropsKeys.PASSWORDS_ENCRYPTION_ALGORITHM);
@@ -522,6 +519,34 @@ public class ProductionReadinessCheckUtil {
 			);
 
 		if (_isStrongerAlgorithm(algorithm)) {
+			return builder.pass();
+		}
+
+		return builder.fail();
+	}
+
+	private static ProductionReadinessResult _checkPoolVsThreadSize() {
+		int jdbcMaxPoolSize = GetterUtil.getInteger(
+			PropsUtil.get("jdbc.default.maximumPoolSize"));
+
+		int tomcatMaxThreads = _getTomcatMaxThreads();
+
+		if ((jdbcMaxPoolSize <= 0) || (tomcatMaxThreads <= 0)) {
+			return null;
+		}
+
+		ProductionReadinessResult.Builder builder =
+			ProductionReadinessResult.builder(
+				"database-configuration", "pool-vs-thread-size"
+			).currentValue(
+				StringBundler.concat(
+					"jdbc.default.maximumPoolSize=", jdbcMaxPoolSize,
+					", Tomcat maxThreads=", tomcatMaxThreads)
+			).recommendedValue(
+				"jdbc.default.maximumPoolSize>=" + tomcatMaxThreads
+			);
+
+		if (jdbcMaxPoolSize >= tomcatMaxThreads) {
 			return builder.pass();
 		}
 
@@ -593,31 +618,6 @@ public class ProductionReadinessCheckUtil {
 				"search-engine-connectivity-validation", "sidecar-detection");
 
 		if (productionModeEnabled) {
-			return builder.pass();
-		}
-
-		return builder.fail();
-	}
-
-	private static ProductionReadinessResult _checkUnusedLanguages() {
-		List<String> enabledLocales = List.of(PropsValues.LOCALES_ENABLED);
-
-		List<String> unusedLocales = ListUtil.filter(
-			List.of(PropsValues.LOCALES),
-			locale -> !enabledLocales.contains(locale));
-
-		String unusedLocalesString = StringUtil.merge(unusedLocales);
-
-		ProductionReadinessResult.Builder builder =
-			ProductionReadinessResult.builder(
-				_CATEGORY_PORTAL_PROPERTIES_CONFIGURATION, "languages-unused"
-			).currentValue(
-				unusedLocalesString
-			).messageParameters(
-				unusedLocalesString
-			);
-
-		if (unusedLocales.isEmpty()) {
 			return builder.pass();
 		}
 
@@ -781,9 +781,7 @@ public class ProductionReadinessCheckUtil {
 
 	private static final List<Supplier<ProductionReadinessResult>>
 		_productionReadinessResultSuppliers = List.of(
-			ProductionReadinessCheckUtil::_checkBetaLanguages,
 			ProductionReadinessCheckUtil::_checkCounterIncrement,
-			ProductionReadinessCheckUtil::_checkDatabaseConfiguration,
 			ProductionReadinessCheckUtil::_checkDLImagePreviewDPI,
 			ProductionReadinessCheckUtil::_checkDLPreviewForking,
 			ProductionReadinessCheckUtil::_checkExplicitGCDisabled,
@@ -795,11 +793,13 @@ public class ProductionReadinessCheckUtil {
 			ProductionReadinessCheckUtil::_checkJMXConfigurationDisabled,
 			ProductionReadinessCheckUtil::_checkJSPEngineSettings,
 			ProductionReadinessCheckUtil::_checkJSPReloading,
+			ProductionReadinessCheckUtil::_checkLocalesBeta,
+			ProductionReadinessCheckUtil::_checkLocalesUnused,
 			ProductionReadinessCheckUtil::_checkPasswordEncryption,
+			ProductionReadinessCheckUtil::_checkPoolVsThreadSize,
 			ProductionReadinessCheckUtil::_checkPortalDeveloperProperties,
 			ProductionReadinessCheckUtil::_checkPreventDiagnosticOverhead,
-			ProductionReadinessCheckUtil::_checkSidecarDetection,
-			ProductionReadinessCheckUtil::_checkUnusedLanguages);
+			ProductionReadinessCheckUtil::_checkSidecarDetection);
 	private static final List<String> _recommendedDLStoreImplClassNames =
 		List.of(
 			"com.liferay.portal.store.azure.AzureStore",

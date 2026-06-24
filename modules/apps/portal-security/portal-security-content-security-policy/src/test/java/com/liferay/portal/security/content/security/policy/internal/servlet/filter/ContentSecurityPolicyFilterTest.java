@@ -32,27 +32,36 @@ public class ContentSecurityPolicyFilterTest {
 
 	@Before
 	public void setUp() {
-		_contentSecurityPolicyConfiguration = Mockito.mock(
-			ContentSecurityPolicyConfiguration.class);
-
-		Mockito.when(
-			_contentSecurityPolicyConfiguration.excludedPaths()
-		).thenReturn(
-			new String[] {"/group"}
-		);
-
 		_contentSecurityPolicyFilter = new ContentSecurityPolicyFilter();
 	}
 
 	@Test
 	public void testIsExcludedURIPath() {
-		_testIsExcludedURIPath(false, null, "/c/portal/layout");
-		_testIsExcludedURIPath(true, "/group/guest/home", "/c/portal/layout");
-		_testIsExcludedURIPath(true, null, "/group/guest/home");
+		_testIsExcludedURIPath(
+			new String[] {"/group"}, false, null, "/c/portal/layout");
+		_testIsExcludedURIPath(
+			new String[] {"/group"}, false, "/web/mysite/home",
+			"/c/portal/layout");
+		_testIsExcludedURIPath(
+			new String[] {"/group"}, true, "/group/guest/home",
+			"/c/portal/layout");
+		_testIsExcludedURIPath(
+			new String[] {"/group"}, true, null, "/group/guest/home");
+		_testIsExcludedURIPath(new String[0], true, null, "/GROUP/guest/home");
 	}
 
 	private void _testIsExcludedURIPath(
-		boolean excludedURIPath, String forwardRequestURI, String requestURI) {
+		String[] excludedPaths, boolean excludedURIPath,
+		String forwardRequestURI, String requestURI) {
+
+		ContentSecurityPolicyConfiguration contentSecurityPolicyConfiguration =
+			Mockito.mock(ContentSecurityPolicyConfiguration.class);
+
+		Mockito.when(
+			contentSecurityPolicyConfiguration.excludedPaths()
+		).thenReturn(
+			excludedPaths
+		);
 
 		HttpServletRequest httpServletRequest = Mockito.mock(
 			HttpServletRequest.class);
@@ -78,11 +87,9 @@ public class ContentSecurityPolicyFilterTest {
 					ContentSecurityPolicyConfiguration.class,
 					HttpServletRequest.class
 				},
-				_contentSecurityPolicyConfiguration, httpServletRequest));
+				contentSecurityPolicyConfiguration, httpServletRequest));
 	}
 
-	private ContentSecurityPolicyConfiguration
-		_contentSecurityPolicyConfiguration;
 	private ContentSecurityPolicyFilter _contentSecurityPolicyFilter;
 
 }

@@ -78,21 +78,11 @@ export default function AssetsFilesDropFDSPropsTransformer({
 		fileDropSettings,
 		snapshotsEnabled: true,
 
-		// The gallery renders outside the FDS drop context, so it gets the
-		// drop settings directly.
+		// Custom views do not receive the top-level drop settings, so they are
+		// attached to the gallery view.
 
-		views: (assetsData.views || []).map((view: IView) => {
-			const {component} = view;
-
-			if (view.name !== 'gallery' || !component) {
-				return view;
-			}
-
-			return {
-				...view,
-				component: (props: any) =>
-					component({...props, fileDropSettings}),
-			};
-		}),
+		views: (assetsData.views || []).map((view: IView) =>
+			view.name === 'gallery' ? {...view, fileDropSettings} : view
+		),
 	};
 }

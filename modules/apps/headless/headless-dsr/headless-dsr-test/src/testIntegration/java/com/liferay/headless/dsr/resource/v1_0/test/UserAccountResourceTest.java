@@ -250,10 +250,9 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	private void _testDeleteRoomUserAccountWithMembershipExpirationDate()
 		throws Exception {
 
-		User user = UserTestUtil.addUser();
-
 		Date expirationDate = new Date(
 			((System.currentTimeMillis() + Time.DAY) / 1000) * 1000);
+		User user = UserTestUtil.addUser();
 
 		userAccountResource.postRoomUserAccount(
 			_objectEntry.getObjectEntryId(),
@@ -273,10 +272,9 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	private void _testGetRoomUserAccountsPageWithMembershipExpirationDate()
 		throws Exception {
 
-		User user = UserTestUtil.addUser();
-
 		Date expirationDate = new Date(
 			((System.currentTimeMillis() + Time.DAY) / 1000) * 1000);
+		User user = UserTestUtil.addUser();
 
 		userAccountResource.postRoomUserAccount(
 			_objectEntry.getObjectEntryId(),
@@ -433,10 +431,9 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	private void _testPostRoomUserAccountWithMembershipExpirationDate()
 		throws Exception {
 
-		User user = UserTestUtil.addUser();
-
 		Date expirationDate = new Date(
 			((System.currentTimeMillis() + Time.DAY) / 1000) * 1000);
+		User user = UserTestUtil.addUser();
 
 		UserAccount postUserAccount = userAccountResource.postRoomUserAccount(
 			_objectEntry.getObjectEntryId(),

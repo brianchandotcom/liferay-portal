@@ -15,6 +15,7 @@ import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.exportimport.test.rule.LazyReferencing;
 import com.liferay.exportimport.test.rule.LazyReferencingTestRule;
 import com.liferay.headless.admin.user.client.dto.v1_0.Role;
+import com.liferay.headless.admin.user.client.dto.v1_0.RolePermission;
 import com.liferay.headless.admin.user.client.http.HttpInvoker;
 import com.liferay.headless.admin.user.client.pagination.Page;
 import com.liferay.headless.admin.user.client.pagination.Pagination;
@@ -276,6 +277,7 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 		super.testPostRole();
 
 		_testPostRoleBatch();
+		_testPostRoleWithPrimaryKeyZero();
 		_testPostRoleWithSubtype();
 	}
 
@@ -1060,6 +1062,38 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 			serviceBuilderRole3.getType());
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_EMPTY, serviceBuilderRole3.getStatus());
+	}
+
+	private void _testPostRoleWithPrimaryKeyZero() throws Exception {
+		String resourceName =
+			com.liferay.portal.kernel.model.Role.class.getName();
+
+		RolePermission rolePermission = new RolePermission();
+
+		rolePermission.setActionIds(new String[] {ActionKeys.VIEW});
+		rolePermission.setPrimaryKey("0");
+		rolePermission.setResourceName(resourceName);
+		rolePermission.setScope((long)ResourceConstants.SCOPE_COMPANY);
+
+		Role role = randomRole();
+
+		role.setRoleType(
+			RoleConstants.getTypeLabel(RoleConstants.TYPE_REGULAR));
+		role.setRolePermissions(new RolePermission[] {rolePermission});
+
+		Role postRole = roleResource.postRole(role);
+
+		long companyId = testCompany.getCompanyId();
+
+		Assert.assertTrue(
+			_resourcePermissionLocalService.hasResourcePermission(
+				companyId, resourceName, ResourceConstants.SCOPE_COMPANY,
+				String.valueOf(companyId), postRole.getId(), ActionKeys.VIEW));
+
+		Assert.assertEquals(
+			0,
+			_resourcePermissionLocalService.getResourcePermissionsCount(
+				companyId, resourceName, ResourceConstants.SCOPE_COMPANY, "0"));
 	}
 
 	private void _testPostRoleWithSubtype() throws Exception {

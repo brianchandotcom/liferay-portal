@@ -1,0 +1,9 @@
+task runGradleTest
+
+runGradleTest {
+	doLast {
+		File jakartaDepsFile = tasks.upgradeJakarta.jakartaTransformDependenciesFile.get().asFile
+
+		assert jakartaDepsFile.exists()
+	}
+}

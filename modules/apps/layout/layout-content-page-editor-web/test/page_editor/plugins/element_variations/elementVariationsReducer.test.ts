@@ -148,6 +148,20 @@ describe('elementVariationsReducer', () => {
 			expect(state.draftElementVariation).toEqual(elementVariation);
 		});
 
+		it('removes a variation on DELETE_ELEMENT_VARIATION', () => {
+			const elementVariation = buildElementVariation({key: 'key-1'});
+
+			const state = reducer(
+				{
+					draftElementVariation: null,
+					elementVariations: [elementVariation],
+				},
+				{key: 'key-1', type: 'DELETE_ELEMENT_VARIATION'}
+			);
+
+			expect(state.elementVariations).toEqual([]);
+		});
+
 		it('clears the draft on CANCEL_ELEMENT_VARIATION_DRAFT', () => {
 			const state = reducer(
 				{

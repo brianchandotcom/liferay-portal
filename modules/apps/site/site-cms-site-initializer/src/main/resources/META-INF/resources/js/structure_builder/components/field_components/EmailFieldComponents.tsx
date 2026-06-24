@@ -74,9 +74,6 @@ function AdvancedTabComponent({
 	const emailField = field as EmailField;
 
 	const dispatch = useStateDispatch();
-	const publishedChildren = useSelector(selectPublishedChildren);
-
-	const isPublished = publishedChildren.has(field.uuid);
 
 	const blockedDomainsId = useId();
 	const domainsId = useId();
@@ -114,7 +111,7 @@ function AdvancedTabComponent({
 
 						<ClayMultiSelect
 							aria-label={Liferay.Language.get('blocked-domains')}
-							disabled={disabled || isPublished}
+							disabled={disabled}
 							id={blockedDomainsId}
 							items={toItems(emailField.settings.blockedDomains)}
 							onItemsChange={(items: DomainItem[]) => {
@@ -146,7 +143,7 @@ function AdvancedTabComponent({
 
 						<ClayMultiSelect
 							aria-label={Liferay.Language.get('domains')}
-							disabled={disabled || isPublished}
+							disabled={disabled}
 							id={domainsId}
 							items={toItems(
 								emailField.settings.autocompleteDomains

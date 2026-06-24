@@ -655,8 +655,6 @@ public class ExportImportLocalServiceImpl
 				BackgroundTaskExecutorNames.
 					LAYOUT_SET_PROTOTYPE_MERGE_BACKGROUND_TASK_EXECUTOR,
 				HashMapBuilder.<String, Serializable>put(
-					BackgroundTaskContextMapConstants.DELETE_ON_SUCCESS, true
-				).put(
 					BackgroundTaskContextMapConstants.SKIP_NOTIFICATION, true
 				).put(
 					"exportImportConfigurationId",

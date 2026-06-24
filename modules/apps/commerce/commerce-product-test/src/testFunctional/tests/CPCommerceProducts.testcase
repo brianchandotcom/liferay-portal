@@ -2675,7 +2675,7 @@ definition {
 
 		CommerceProducts.openProductsAdmin();
 
-		Click(locator1 = "ACUtils#NEXT_PAGES");
+		Click(locator1 = "CommerceEntry#PAGINATION_NEXT_PAGES");
 
 		AssertTextEquals(
 			locator1 = "CP2ActivationKeys#PAGINATION_BUTTON",
@@ -2703,7 +2703,7 @@ definition {
 
 		CommerceEntry.gotoMenuTab(menuTab = "SKUs");
 
-		Click(locator1 = "ACUtils#NEXT_PAGES");
+		Click(locator1 = "CommerceEntry#PAGINATION_NEXT_PAGES");
 
 		CommerceEntry.viewPaginationResults(results = "Showing 21 to 40 of 54 entries.");
 

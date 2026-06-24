@@ -93,6 +93,33 @@ describe('Individuals List', () => {
 		expect(getByText('Test Test')).toBeInTheDocument();
 	});
 
+	it('fetches the full list of countries for the filter', async () => {
+
+		// @ts-ignore
+		API.individuals.search.mockReturnValue(
+			Promise.resolve({items: [], total: 0})
+		);
+
+		const history = createMemoryHistory();
+
+		render(
+			<Router history={history}>
+				<IndividualsList />
+			</Router>
+		);
+
+		await waitForLoadingToBeRemoved(document.body);
+
+		expect(
+			API.individuals.fetchFieldValues as jest.Mock
+		).toHaveBeenCalledWith(
+			expect.objectContaining({
+				delta: 500,
+				fieldMappingFieldName: 'country',
+			})
+		);
+	});
+
 	it('renders empty state when no individuals are synced', async () => {
 
 		// @ts-ignore

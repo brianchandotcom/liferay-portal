@@ -1,5 +1,5 @@
 {
-	"@generated": "b59e5d6ff0f6899c743c5aa689f11aadd02db3ef",
+	"@generated": "df59c713b3b691c7cd600f88ab3fe2309dbdcc64",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -11,6 +11,9 @@
 		"module": "es2022",
 		"moduleResolution": "node",
 		"paths": {
+			"@liferay/layout-js-components-web": [
+				"../../../layout/layout-js-components-web/src/main/resources/META-INF/resources/js/index.ts"
+			]
 		},
 		"rootDir": "../../../..",
 		"skipLibCheck": true,
@@ -30,5 +33,8 @@
 		"../src/**/*.tsx"
 	],
 	"references": [
+		{
+			"path": "../../../layout/layout-js-components-web/src/main/resources/META-INF/resources/tsconfig.json"
+		}
 	]
 }

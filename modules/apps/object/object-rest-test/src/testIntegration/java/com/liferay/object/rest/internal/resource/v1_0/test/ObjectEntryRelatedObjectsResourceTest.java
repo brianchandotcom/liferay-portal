@@ -2355,15 +2355,13 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			ObjectDefinition objectDefinition2, String scopeKey)
 		throws Exception {
 
+		ObjectEntry objectEntry1 = ObjectEntryTestUtil.addObjectEntry(
+			objectDefinition1, _OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1);
+		ObjectEntry objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
+			objectDefinition2, _OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2);
 		ObjectRelationship objectRelationship = _addObjectRelationship(
 			objectDefinition1, objectDefinition2,
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
-
-		ObjectEntry objectEntry1 = ObjectEntryTestUtil.addObjectEntry(
-			objectDefinition1, _OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1);
-
-		ObjectEntry objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
-			objectDefinition2, _OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2);
 
 		ObjectRelationshipTestUtil.relateObjectEntries(
 			objectEntry1.getPrimaryKey(), objectEntry2.getPrimaryKey(),

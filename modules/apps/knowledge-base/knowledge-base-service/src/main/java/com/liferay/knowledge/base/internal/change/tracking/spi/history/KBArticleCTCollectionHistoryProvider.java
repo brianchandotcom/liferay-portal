@@ -83,7 +83,7 @@ public class KBArticleCTCollectionHistoryProvider
 	public CTEntry getCTEntry(
 		long ctCollectionId, long modelClassNameId, long modelClassPK) {
 
-		List<Long> resourcePrimKey = _ctEntryLocalService.dslQuery(
+		List<Long> resourcePrimKeys = _ctEntryLocalService.dslQuery(
 			DSLQueryFactoryUtil.select(
 				KBArticleTable.INSTANCE.resourcePrimKey
 			).from(
@@ -92,7 +92,7 @@ public class KBArticleCTCollectionHistoryProvider
 				KBArticleTable.INSTANCE.kbArticleId.eq(modelClassPK)
 			));
 
-		if (resourcePrimKey.isEmpty()) {
+		if (resourcePrimKeys.isEmpty()) {
 			return null;
 		}
 
@@ -103,7 +103,7 @@ public class KBArticleCTCollectionHistoryProvider
 				KBArticleTable.INSTANCE
 			).where(
 				KBArticleTable.INSTANCE.resourcePrimKey.eq(
-					resourcePrimKey.get(0)
+					resourcePrimKeys.get(0)
 				).and(
 					KBArticleTable.INSTANCE.ctCollectionId.eq(ctCollectionId)
 				)
@@ -128,17 +128,26 @@ public class KBArticleCTCollectionHistoryProvider
 	public UnsafeConsumer<SearchUtil.SearchContext, Exception>
 		getSearchContextUnsafeConsumer(long classNameId, long classPK) {
 
-		KBArticle kbArticle = _kbArticleLocalService.fetchKBArticle(classPK);
-
 		return searchContext -> {
 			searchContext.setAttribute(
 				"modelClassNameId", new Long[] {classNameId});
 
-			if (kbArticle == null) {
-				if (classPK > 0) {
-					searchContext.setAttribute(
-						"modelClassPK", new Long[] {classPK});
-				}
+			if (classPK <= 0) {
+				return;
+			}
+
+			List<Long> resourcePrimKeys = _ctEntryLocalService.dslQuery(
+				DSLQueryFactoryUtil.select(
+					KBArticleTable.INSTANCE.resourcePrimKey
+				).from(
+					KBArticleTable.INSTANCE
+				).where(
+					KBArticleTable.INSTANCE.kbArticleId.eq(classPK)
+				));
+
+			if (resourcePrimKeys.isEmpty()) {
+				searchContext.setAttribute(
+					"modelClassPK", new Long[] {classPK});
 
 				return;
 			}
@@ -156,7 +165,7 @@ public class KBArticleCTCollectionHistoryProvider
 							KBArticleTable.INSTANCE
 						).where(
 							KBArticleTable.INSTANCE.resourcePrimKey.eq(
-								kbArticle.getResourcePrimKey())
+								resourcePrimKeys.get(0))
 						))
 				));
 

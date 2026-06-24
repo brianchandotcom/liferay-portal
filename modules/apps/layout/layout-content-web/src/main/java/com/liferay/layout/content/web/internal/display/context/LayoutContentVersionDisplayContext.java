@@ -7,6 +7,7 @@ package com.liferay.layout.content.web.internal.display.context;
 
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -46,7 +47,7 @@ public class LayoutContentVersionDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public Map<String, Object> getContext() throws Exception {
+	public Map<String, Object> getContext() throws PortalException {
 		return HashMapBuilder.<String, Object>put(
 			"config",
 			HashMapBuilder.<String, Object>put(
@@ -84,7 +85,7 @@ public class LayoutContentVersionDisplayContext {
 	}
 
 	private List<Map<String, Object>> _getAvailableSegmentsExperiences()
-		throws Exception {
+		throws PortalException {
 
 		List<SegmentsExperience> segmentsExperiences =
 			_segmentsExperienceLocalService.getSegmentsExperiences(
@@ -112,7 +113,7 @@ public class LayoutContentVersionDisplayContext {
 			});
 	}
 
-	private String _getPageSpecificationVersionsURL() throws Exception {
+	private String _getPageSpecificationVersionsURL() throws PortalException {
 		Group group = _themeDisplay.getScopeGroup();
 
 		Layout draftLayout = _themeDisplay.getLayout();

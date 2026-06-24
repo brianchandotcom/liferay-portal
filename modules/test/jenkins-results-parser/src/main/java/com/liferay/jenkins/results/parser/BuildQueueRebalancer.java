@@ -346,6 +346,14 @@ public class BuildQueueRebalancer {
 
 				Queue queue = _getQueue(_queueItem.getPrimaryLabel());
 
+				if (queue == null) {
+					System.out.println(
+						"Skipping rebalance for queue item with no matching " +
+							"fleet " + _queueItem.getURL());
+
+					return;
+				}
+
 				JenkinsMaster targetJenkinsMaster =
 					queue.getMostAvailableJenkinsMaster();
 
@@ -370,7 +378,8 @@ public class BuildQueueRebalancer {
 			}
 			catch (Exception exception) {
 				System.out.println(
-					"Unable to rebalance queue item " + _queueItem.getURL());
+					"Unable to rebalance queue item " + _queueItem.getURL() +
+						": " + exception);
 			}
 		}
 

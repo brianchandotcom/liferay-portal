@@ -39,11 +39,11 @@ import java.util.function.Supplier;
  */
 @Generated("")
 @GraphQLName(
-	description = "An option attached to a specific product, carrying per-product overrides for the global option template; the link captures localized labels, required and SKU-contributor flags, price modifier settings, and the list of selectable values for that product.",
+	description = "An option attached to a specific product, carrying per-product overrides for the global option template; the link captures localized labels, required and SKU-contributor flags, price modifier settings, and the list of selectable values for that product. The global option template is never created from this payload; it must already exist (create it first with POST /options) and is referenced by `optionId` or `optionExternalReferenceCode`. Supplying neither, or referencing an option that does not exist, fails the request with a 404 No Such Option error.",
 	value = "ProductOption"
 )
 @io.swagger.v3.oas.annotations.media.Schema(
-	description = "An option attached to a specific product, carrying per-product overrides for the global option template; the link captures localized labels, required and SKU-contributor flags, price modifier settings, and the list of selectable values for that product.",
+	description = "An option attached to a specific product, carrying per-product overrides for the global option template; the link captures localized labels, required and SKU-contributor flags, price modifier settings, and the list of selectable values for that product. The global option template is never created from this payload; it must already exist (create it first with POST /options) and is referenced by `optionId` or `optionExternalReferenceCode`. Supplying neither, or referencing an option that does not exist, fails the request with a 404 No Such Option error.",
 	requiredProperties = {"fieldType", "key", "name", "optionId"}
 )
 @JsonFilter("Liferay.Vulcan")
@@ -528,7 +528,7 @@ public class ProductOption implements Serializable {
 	private Supplier<Map<String, String>> _nameSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "External reference code of the linked global option; used as an alternative to `optionId` when wiring a product to an existing option.",
+		description = "External reference code of the linked global option; used as an alternative to `optionId` when wiring a product to an existing option, and consulted only when `optionId` is omitted or zero. The option must already exist; it is not created from this code.",
 		example = "AB-34098-789-N"
 	)
 	public String getOptionExternalReferenceCode() {
@@ -569,7 +569,7 @@ public class ProductOption implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "External reference code of the linked global option; used as an alternative to `optionId` when wiring a product to an existing option."
+		description = "External reference code of the linked global option; used as an alternative to `optionId` when wiring a product to an existing option, and consulted only when `optionId` is omitted or zero. The option must already exist; it is not created from this code."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String optionExternalReferenceCode;
@@ -579,7 +579,7 @@ public class ProductOption implements Serializable {
 
 	@DecimalMin("0")
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Reference to the global option template this product link is based on; required.",
+		description = "Reference to an already-existing global option template this product link is based on; the option is looked up, never created, so it must be provisioned first (POST /options). When omitted or zero, `optionExternalReferenceCode` is used instead; one of the two is required.",
 		example = "30080"
 	)
 	public Long getOptionId() {
@@ -616,7 +616,7 @@ public class ProductOption implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "Reference to the global option template this product link is based on; required."
+		description = "Reference to an already-existing global option template this product link is based on; the option is looked up, never created, so it must be provisioned first (POST /options). When omitted or zero, `optionExternalReferenceCode` is used instead; one of the two is required."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotNull
@@ -1293,4 +1293,4 @@ public class ProductOption implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2142938306
+// LIFERAY-REST-BUILDER-HASH:1936177490

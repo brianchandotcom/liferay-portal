@@ -121,23 +121,11 @@ public class MCPServerServletTest {
 		_addOAuth2Authorization(
 			accessTokenContent,
 			new Date(System.currentTimeMillis() + Time.HOUR),
-			Collections.singletonList("http://localhost/o/other-resource"));
+			Collections.singletonList(RandomTestUtil.randomString()));
 
-		Http.Response response = _getResponse("Bearer " + accessTokenContent);
-
-		Assert.assertEquals(401, response.getResponseCode());
-
-		String wwwAuthenticate = response.getHeader(
-			HttpHeaders.WWW_AUTHENTICATE);
-
-		Assert.assertTrue(
-			wwwAuthenticate,
-			wwwAuthenticate.contains("error=\"invalid_token\""));
-		Assert.assertTrue(
-			wwwAuthenticate,
-			wwwAuthenticate.contains(
-				"error_description=\"Access token is not bound to this MCP " +
-					"server\""));
+		_assertInvalidTokenChallenge(
+			_getResponse("Bearer " + accessTokenContent),
+			"Access token is not bound to this MCP server");
 	}
 
 	@Test
@@ -149,39 +137,16 @@ public class MCPServerServletTest {
 			new Date(System.currentTimeMillis() - Time.HOUR),
 			Collections.singletonList(_getMCPURL()));
 
-		Http.Response response = _getResponse("Bearer " + accessTokenContent);
-
-		Assert.assertEquals(401, response.getResponseCode());
-
-		String wwwAuthenticate = response.getHeader(
-			HttpHeaders.WWW_AUTHENTICATE);
-
-		Assert.assertTrue(
-			wwwAuthenticate,
-			wwwAuthenticate.contains("error=\"invalid_token\""));
-		Assert.assertTrue(
-			wwwAuthenticate,
-			wwwAuthenticate.contains(
-				"error_description=\"Access token has expired\""));
+		_assertInvalidTokenChallenge(
+			_getResponse("Bearer " + accessTokenContent),
+			"Access token has expired");
 	}
 
 	@Test
 	public void testServiceWhenAccessTokenIsUnknown() throws Exception {
-		Http.Response response = _getResponse(
-			"Bearer " + RandomTestUtil.randomString());
-
-		Assert.assertEquals(401, response.getResponseCode());
-
-		String wwwAuthenticate = response.getHeader(
-			HttpHeaders.WWW_AUTHENTICATE);
-
-		Assert.assertTrue(
-			wwwAuthenticate,
-			wwwAuthenticate.contains("error=\"invalid_token\""));
-		Assert.assertTrue(
-			wwwAuthenticate,
-			wwwAuthenticate.contains(
-				"error_description=\"Access token is unknown or revoked\""));
+		_assertInvalidTokenChallenge(
+			_getResponse("Bearer " + RandomTestUtil.randomString()),
+			"Access token is unknown or revoked");
 	}
 
 	@Test
@@ -205,21 +170,9 @@ public class MCPServerServletTest {
 	public void testServiceWhenAuthorizationHeaderIsNotBearer()
 		throws Exception {
 
-		Http.Response response = _getResponse("Basic dGVzdDp0ZXN0");
-
-		Assert.assertEquals(401, response.getResponseCode());
-
-		String wwwAuthenticate = response.getHeader(
-			HttpHeaders.WWW_AUTHENTICATE);
-
-		Assert.assertTrue(
-			wwwAuthenticate,
-			wwwAuthenticate.contains("error=\"invalid_token\""));
-		Assert.assertTrue(
-			wwwAuthenticate,
-			wwwAuthenticate.contains(
-				"error_description=\"Authorization header is not a Bearer " +
-					"token\""));
+		_assertInvalidTokenChallenge(
+			_getResponse(RandomTestUtil.randomString()),
+			"Authorization header is not a Bearer token");
 	}
 
 	@Test
@@ -590,9 +543,11 @@ public class MCPServerServletTest {
 		OAuth2Authorization oAuth2Authorization =
 			_oAuth2AuthorizationLocalService.addOAuth2Authorization(
 				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-				"test@liferay.com", 0, 0, accessTokenContent, new Date(),
-				accessTokenExpirationDate, audiencesList, "localhost",
-				"127.0.0.1", null, null, null);
+				RandomTestUtil.randomString(), RandomTestUtil.randomLong(),
+				RandomTestUtil.randomLong(), accessTokenContent, new Date(),
+				accessTokenExpirationDate, audiencesList,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				null, null, null);
 
 		_oAuth2Authorizations.add(oAuth2Authorization);
 
@@ -620,6 +575,23 @@ public class MCPServerServletTest {
 				"tools", StringUtil.merge(tools, "\n")
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
+	}
+
+	private void _assertInvalidTokenChallenge(
+		Http.Response response, String description) {
+
+		Assert.assertEquals(401, response.getResponseCode());
+
+		String wwwAuthenticate = response.getHeader(
+			HttpHeaders.WWW_AUTHENTICATE);
+
+		Assert.assertTrue(
+			wwwAuthenticate,
+			wwwAuthenticate.contains("error=\"invalid_token\""));
+		Assert.assertTrue(
+			wwwAuthenticate,
+			wwwAuthenticate.contains(
+				"error_description=\"" + description + "\""));
 	}
 
 	private void _assertTool(

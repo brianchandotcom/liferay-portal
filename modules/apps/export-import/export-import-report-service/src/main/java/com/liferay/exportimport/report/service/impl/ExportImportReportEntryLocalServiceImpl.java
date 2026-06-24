@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 
@@ -43,49 +44,11 @@ public class ExportImportReportEntryLocalServiceImpl
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public ExportImportReportEntry addEmptyExportImportReportEntry(
-		long groupId, long companyId, String classExternalReferenceCode,
-		long classNameId, long exportImportConfigurationId,
-		String modelNameLanguageKey) {
-
-		ExportImportReportEntry exportImportReportEntry =
-			exportImportReportEntryPersistence.create(
-				counterLocalService.increment());
-
-		exportImportReportEntry.setGroupId(groupId);
-		exportImportReportEntry.setCompanyId(companyId);
-		exportImportReportEntry.setClassExternalReferenceCode(
-			classExternalReferenceCode);
-		exportImportReportEntry.setClassNameId(classNameId);
-		exportImportReportEntry.setExportImportConfigurationId(
-			exportImportConfigurationId);
-		exportImportReportEntry.setErrorMessage(
-			_language.format(
-				LocaleUtil.US,
-				"the-x-with-external-reference-code-x-was-not-found-an-empty-" +
-					"shell-was-created",
-				new String[] {
-					modelNameLanguageKey, classExternalReferenceCode
-				}));
-		exportImportReportEntry.setModelNameLanguageKey(modelNameLanguageKey);
-		exportImportReportEntry.setOrigin(
-			ExportImportReportEntryUtil.getOrigin());
-		exportImportReportEntry.setType(
-			ExportImportReportEntryConstants.TYPE_EMPTY);
-		exportImportReportEntry.setStatus(
-			ExportImportReportEntryConstants.STATUS_UNRESOLVED);
-
-		return exportImportReportEntryPersistence.update(
-			exportImportReportEntry);
-	}
-
-	@Indexable(type = IndexableType.REINDEX)
-	@Override
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public ExportImportReportEntry addErrorExportImportReportEntry(
+	public ExportImportReportEntry addExportImportReportEntry(
 		long groupId, long companyId, String classExternalReferenceCode,
 		long classNameId, long classPK, long exportImportConfigurationId,
-		String errorMessage, String errorStacktrace,
+		int type, String message, String errorStacktrace,
 		String modelNameLanguageKey) {
 
 		ExportImportReportEntry exportImportReportEntry =
@@ -100,89 +63,15 @@ public class ExportImportReportEntryLocalServiceImpl
 		exportImportReportEntry.setClassPK(classPK);
 		exportImportReportEntry.setExportImportConfigurationId(
 			exportImportConfigurationId);
-		exportImportReportEntry.setErrorMessage(errorMessage);
+		exportImportReportEntry.setErrorMessage(
+			_getMessage(
+				classExternalReferenceCode, groupId, message,
+				modelNameLanguageKey, type));
 		exportImportReportEntry.setErrorStacktrace(errorStacktrace);
 		exportImportReportEntry.setModelNameLanguageKey(modelNameLanguageKey);
 		exportImportReportEntry.setOrigin(
 			ExportImportReportEntryUtil.getOrigin());
-		exportImportReportEntry.setType(
-			ExportImportReportEntryConstants.TYPE_ERROR);
-		exportImportReportEntry.setStatus(
-			ExportImportReportEntryConstants.STATUS_UNRESOLVED);
-
-		return exportImportReportEntryPersistence.update(
-			exportImportReportEntry);
-	}
-
-	@Indexable(type = IndexableType.REINDEX)
-	@Override
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public ExportImportReportEntry addMissingReferenceExportImportReportEntry(
-		long groupId, long companyId, String classExternalReferenceCode,
-		long classNameId, long exportImportConfigurationId,
-		String modelNameLanguageKey) {
-
-		ExportImportReportEntry exportImportReportEntry =
-			exportImportReportEntryPersistence.create(
-				counterLocalService.increment());
-
-		exportImportReportEntry.setGroupId(groupId);
-		exportImportReportEntry.setCompanyId(companyId);
-		exportImportReportEntry.setClassExternalReferenceCode(
-			classExternalReferenceCode);
-		exportImportReportEntry.setClassNameId(classNameId);
-		exportImportReportEntry.setExportImportConfigurationId(
-			exportImportConfigurationId);
-		exportImportReportEntry.setErrorMessage(
-			_language.format(
-				LocaleUtil.US,
-				"missing-reference-entity-x-with-external-reference-code-x-" +
-					"in-scope-x-was-not-found-please-ensure-the-referenced-" +
-						"entity-is-imported",
-				new String[] {
-					GetterUtil.getString(modelNameLanguageKey, "<unknown>"),
-					GetterUtil.getString(
-						classExternalReferenceCode, "<unknown>"),
-					String.valueOf(groupId)
-				}));
-		exportImportReportEntry.setModelNameLanguageKey(modelNameLanguageKey);
-		exportImportReportEntry.setOrigin(
-			ExportImportReportEntryUtil.getOrigin());
-		exportImportReportEntry.setType(
-			ExportImportReportEntryConstants.TYPE_MISSING_REFERENCE);
-		exportImportReportEntry.setStatus(
-			ExportImportReportEntryConstants.STATUS_UNRESOLVED);
-
-		return exportImportReportEntryPersistence.update(
-			exportImportReportEntry);
-	}
-
-	@Indexable(type = IndexableType.REINDEX)
-	@Override
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public ExportImportReportEntry addWarningExportImportReportEntry(
-		long groupId, long companyId, String classExternalReferenceCode,
-		long classNameId, long classPK, long exportImportConfigurationId,
-		String warningMessage, String modelNameLanguageKey) {
-
-		ExportImportReportEntry exportImportReportEntry =
-			exportImportReportEntryPersistence.create(
-				counterLocalService.increment());
-
-		exportImportReportEntry.setGroupId(groupId);
-		exportImportReportEntry.setCompanyId(companyId);
-		exportImportReportEntry.setClassExternalReferenceCode(
-			classExternalReferenceCode);
-		exportImportReportEntry.setClassNameId(classNameId);
-		exportImportReportEntry.setClassPK(classPK);
-		exportImportReportEntry.setExportImportConfigurationId(
-			exportImportConfigurationId);
-		exportImportReportEntry.setErrorMessage(warningMessage);
-		exportImportReportEntry.setModelNameLanguageKey(modelNameLanguageKey);
-		exportImportReportEntry.setOrigin(
-			ExportImportReportEntryUtil.getOrigin());
-		exportImportReportEntry.setType(
-			ExportImportReportEntryConstants.TYPE_WARNING);
+		exportImportReportEntry.setType(type);
 		exportImportReportEntry.setStatus(
 			ExportImportReportEntryConstants.STATUS_UNRESOLVED);
 
@@ -207,95 +96,25 @@ public class ExportImportReportEntryLocalServiceImpl
 	}
 
 	@Override
-	public ExportImportReportEntry getOrAddEmptyExportImportReportEntry(
+	public ExportImportReportEntry getOrAddExportImportReportEntry(
 		long groupId, long companyId, String classExternalReferenceCode,
-		long classNameId, long exportImportConfigurationId,
+		long classNameId, long classPK, long exportImportConfigurationId,
+		int type, String message, String errorStacktrace,
 		String modelNameLanguageKey) {
 
 		ExportImportReportEntry exportImportReportEntry =
 			exportImportReportEntryPersistence.fetchByG_C_C_C_E_T(
 				groupId, companyId, classExternalReferenceCode, classNameId,
-				exportImportConfigurationId,
-				ExportImportReportEntryConstants.TYPE_EMPTY);
+				exportImportConfigurationId, type, false);
 
 		if (exportImportReportEntry != null) {
 			return exportImportReportEntry;
 		}
 
-		return exportImportReportEntryLocalService.
-			addEmptyExportImportReportEntry(
-				groupId, companyId, classExternalReferenceCode, classNameId,
-				exportImportConfigurationId, modelNameLanguageKey);
-	}
-
-	@Override
-	public ExportImportReportEntry getOrAddErrorExportImportReportEntry(
-		long groupId, long companyId, String classExternalReferenceCode,
-		long classNameId, long classPK, long exportImportConfigurationId,
-		String errorMessage, String errorStacktrace,
-		String modelNameLanguageKey) {
-
-		ExportImportReportEntry exportImportReportEntry =
-			exportImportReportEntryPersistence.fetchByG_C_C_C_E_T(
-				groupId, companyId, classExternalReferenceCode, classNameId,
-				exportImportConfigurationId,
-				ExportImportReportEntryConstants.TYPE_ERROR, false);
-
-		if (exportImportReportEntry != null) {
-			return exportImportReportEntry;
-		}
-
-		return exportImportReportEntryLocalService.
-			addErrorExportImportReportEntry(
-				groupId, companyId, classExternalReferenceCode, classNameId,
-				classPK, exportImportConfigurationId, errorMessage,
-				errorStacktrace, modelNameLanguageKey);
-	}
-
-	@Override
-	public ExportImportReportEntry
-		getOrAddMissingReferenceExportImportReportEntry(
-			long groupId, long companyId, String classExternalReferenceCode,
-			long classNameId, long exportImportConfigurationId,
-			String modelNameLanguageKey) {
-
-		ExportImportReportEntry exportImportReportEntry =
-			exportImportReportEntryPersistence.fetchByG_C_C_C_E_T(
-				groupId, companyId, classExternalReferenceCode, classNameId,
-				exportImportConfigurationId,
-				ExportImportReportEntryConstants.TYPE_MISSING_REFERENCE, false);
-
-		if (exportImportReportEntry != null) {
-			return exportImportReportEntry;
-		}
-
-		return exportImportReportEntryLocalService.
-			addMissingReferenceExportImportReportEntry(
-				groupId, companyId, classExternalReferenceCode, classNameId,
-				exportImportConfigurationId, modelNameLanguageKey);
-	}
-
-	@Override
-	public ExportImportReportEntry getOrAddWarningExportImportReportEntry(
-		long groupId, long companyId, String classExternalReferenceCode,
-		long classNameId, long classPK, long exportImportConfigurationId,
-		String warningMessage, String modelNameLanguageKey) {
-
-		ExportImportReportEntry exportImportReportEntry =
-			exportImportReportEntryPersistence.fetchByG_C_C_C_E_T(
-				groupId, companyId, classExternalReferenceCode, classNameId,
-				exportImportConfigurationId,
-				ExportImportReportEntryConstants.TYPE_WARNING, false);
-
-		if (exportImportReportEntry != null) {
-			return exportImportReportEntry;
-		}
-
-		return exportImportReportEntryLocalService.
-			addWarningExportImportReportEntry(
-				groupId, companyId, classExternalReferenceCode, classNameId,
-				classPK, exportImportConfigurationId, warningMessage,
-				modelNameLanguageKey);
+		return exportImportReportEntryLocalService.addExportImportReportEntry(
+			groupId, companyId, classExternalReferenceCode, classNameId,
+			classPK, exportImportConfigurationId, type, message,
+			errorStacktrace, modelNameLanguageKey);
 	}
 
 	@Override
@@ -385,6 +204,41 @@ public class ExportImportReportEntryLocalServiceImpl
 			});
 
 		actionableDynamicQuery.performActions();
+	}
+
+	private String _getMessage(
+		String classExternalReferenceCode, long groupId, String message,
+		String modelNameLanguageKey, int type) {
+
+		if (Validator.isNotNull(message)) {
+			return message;
+		}
+
+		if (type == ExportImportReportEntryConstants.TYPE_EMPTY) {
+			return _language.format(
+				LocaleUtil.US,
+				"the-x-with-external-reference-code-x-was-not-found-an-empty-" +
+					"shell-was-created",
+				new String[] {
+					modelNameLanguageKey, classExternalReferenceCode
+				});
+		}
+
+		if (type == ExportImportReportEntryConstants.TYPE_MISSING_REFERENCE) {
+			return _language.format(
+				LocaleUtil.US,
+				"missing-reference-entity-x-with-external-reference-code-x-" +
+					"in-scope-x-was-not-found-please-ensure-the-referenced-" +
+						"entity-is-imported",
+				new String[] {
+					GetterUtil.getString(modelNameLanguageKey, "<unknown>"),
+					GetterUtil.getString(
+						classExternalReferenceCode, "<unknown>"),
+					String.valueOf(groupId)
+				});
+		}
+
+		return message;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

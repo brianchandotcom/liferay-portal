@@ -21,7 +21,6 @@ import com.liferay.layout.util.LayoutServiceContextHelper;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
@@ -224,7 +223,7 @@ public class PublishFragmentEntryMVCActionCommandTest {
 	}
 
 	private FragmentEntry _getFragmentEntry(String configuration, String html)
-		throws PortalException {
+		throws Exception {
 
 		return _fragmentEntryLocalService.addFragmentEntry(
 			null, TestPropsValues.getUserId(), _group.getGroupId(),

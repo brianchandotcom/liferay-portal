@@ -5,12 +5,15 @@
 
 package com.liferay.batch.engine.internal.language;
 
+import com.liferay.batch.engine.configuration.BatchEngineTaskCompanyConfiguration;
 import com.liferay.batch.engine.language.LanguageKeyResolver;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -29,12 +32,24 @@ import org.osgi.service.component.annotations.Reference;
 public class LanguageKeyResolverImpl implements LanguageKeyResolver {
 
 	@Override
-	public void expand(JSONObject jsonObject) {
+	public void expand(long companyId, JSONObject jsonObject)
+		throws ConfigurationException {
+
+		if (!_isLanguageKeyResolutionEnabled(companyId)) {
+			return;
+		}
+
 		_expand(jsonObject);
 	}
 
 	@Override
-	public void expand(Map<String, Object> fieldNameValueMap) {
+	public void expand(long companyId, Map<String, Object> fieldNameValueMap)
+		throws ConfigurationException {
+
+		if (!_isLanguageKeyResolutionEnabled(companyId)) {
+			return;
+		}
+
 		_expand(fieldNameValueMap);
 	}
 
@@ -97,6 +112,18 @@ public class LanguageKeyResolverImpl implements LanguageKeyResolver {
 		}
 	}
 
+	private boolean _isLanguageKeyResolutionEnabled(long companyId)
+		throws ConfigurationException {
+
+		BatchEngineTaskCompanyConfiguration
+			batchEngineTaskCompanyConfiguration =
+				_configurationProvider.getCompanyConfiguration(
+					BatchEngineTaskCompanyConfiguration.class, companyId);
+
+		return batchEngineTaskCompanyConfiguration.
+			languageKeyResolutionEnabled();
+	}
+
 	private Map<String, String> _resolve(String key) {
 		Map<String, String> translations = new LinkedHashMap<>();
 
@@ -119,6 +146,9 @@ public class LanguageKeyResolverImpl implements LanguageKeyResolver {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LanguageKeyResolverImpl.class);
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private Language _language;

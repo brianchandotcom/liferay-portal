@@ -388,6 +388,14 @@ public class MCPServerServlet extends HttpServlet {
 		}
 	}
 
+	private String _getChallenge(HttpServletRequest httpServletRequest) {
+		return StringBundler.concat(
+			"Bearer realm=\"mcp\", resource_metadata=\"",
+			_portal.getPortalURL(httpServletRequest), _portal.getPathContext(),
+			Portal.PATH_MODULE,
+			MCPServerConstants.PATH_WELL_KNOWN_PROTECTED_RESOURCE, "\"");
+	}
+
 	private String _getMCPServerProfileName(
 		HttpServletRequest httpServletRequest) {
 
@@ -549,11 +557,8 @@ public class MCPServerServlet extends HttpServlet {
 		httpServletResponse.setHeader(
 			HttpHeaders.WWW_AUTHENTICATE,
 			StringBundler.concat(
-				"Bearer realm=\"mcp\", resource_metadata=\"",
-				_portal.getPortalURL(httpServletRequest),
-				_portal.getPathContext(), Portal.PATH_MODULE,
-				MCPServerConstants.PATH_WELL_KNOWN_PROTECTED_RESOURCE, "\", ",
-				"error=\"invalid_token\", error_description=\"", description,
+				_getChallenge(httpServletRequest),
+				", error=\"invalid_token\", error_description=\"", description,
 				"\""));
 		httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 	}
@@ -564,12 +569,7 @@ public class MCPServerServlet extends HttpServlet {
 		throws IOException {
 
 		httpServletResponse.setHeader(
-			HttpHeaders.WWW_AUTHENTICATE,
-			StringBundler.concat(
-				"Bearer realm=\"mcp\", resource_metadata=\"",
-				_portal.getPortalURL(httpServletRequest),
-				_portal.getPathContext(), Portal.PATH_MODULE,
-				MCPServerConstants.PATH_WELL_KNOWN_PROTECTED_RESOURCE, "\""));
+			HttpHeaders.WWW_AUTHENTICATE, _getChallenge(httpServletRequest));
 		httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 	}
 

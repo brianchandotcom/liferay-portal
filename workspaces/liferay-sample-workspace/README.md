@@ -89,7 +89,7 @@ For `liferay-sample-etc-cron` and `liferay-sample-etc-spring-boot` the third typ
 - *liferay-sample-editor-config-contributor-3*
 
 	Add a custom timestamp button to CKEditor 5 as an example of a customer style plugin implementation without portal dependencies.
-	
+
 - *liferay-sample-editor-config-contributor-4*
 
 	Add a custom style (Featured Content) to the CKEditor 5 Styles dropdown as an example of extending the editor's style definitions via a client extension.

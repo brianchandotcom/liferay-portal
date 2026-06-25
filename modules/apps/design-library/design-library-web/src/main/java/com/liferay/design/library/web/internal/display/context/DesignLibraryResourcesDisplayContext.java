@@ -208,7 +208,9 @@ public class DesignLibraryResourcesDisplayContext {
 				"externalReferenceCode", group.getExternalReferenceCode()
 			).put(
 				"hasAssignMembersPermission",
-				_hasAssignMembersPermission(group.getGroupId())
+				GroupPermissionUtil.contains(
+					_themeDisplay.getPermissionChecker(), group.getGroupId(),
+					ActionKeys.ASSIGN_MEMBERS)
 			).put(
 				"href", "#manage-members"
 			).put(
@@ -312,14 +314,6 @@ public class DesignLibraryResourcesDisplayContext {
 		).setBackURL(
 			PortalUtil.getCurrentURL(_httpServletRequest)
 		).buildString();
-	}
-
-	private boolean _hasAssignMembersPermission(long groupId)
-		throws PortalException {
-
-		return GroupPermissionUtil.contains(
-			_themeDisplay.getPermissionChecker(), groupId,
-			ActionKeys.ASSIGN_MEMBERS);
 	}
 
 	private boolean _hasManageStyleBookEntriesPermission(long groupId) {

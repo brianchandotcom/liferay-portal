@@ -200,7 +200,7 @@ export function MembersList({
 							</li>
 						)}
 
-						<div ref={sentinelRef} />
+						<li ref={sentinelRef} role="presentation" />
 					</ul>
 				</>
 			)}

@@ -9,6 +9,7 @@ import * as membersService from '../services/membersService';
 import {
 	MemberType,
 	MembersConfig,
+	Role,
 	RoleExternalReferenceCode,
 	UserAccount,
 	UserGroup,
@@ -293,12 +294,13 @@ export function useMembers(
 				rollbackAction: {
 					payload: {
 						id: itemToUpdate.id,
-						originalRoles:
-							originalRoles?.map((originalRole) => {
+						originalRoles: (originalRoles || [])
+							.map((originalRole) => {
 								return state.roles.find(
 									(role) => role.id === originalRole.id
-								)!;
-							}) || [],
+								);
+							})
+							.filter((role): role is Role => Boolean(role)),
 					},
 					type: ActionTypes.UpdateRolesFailure,
 				},

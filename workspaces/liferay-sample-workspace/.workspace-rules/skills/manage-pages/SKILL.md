@@ -327,7 +327,7 @@ curl \
 
 Expect `200 OK` on the page probe.
 
-## Live API Patterns & Gotchas
+## Live API Patterns and Gotchas
 
 ### Schema Discovery Before Write Operations
 

@@ -42,7 +42,7 @@ When MCP is available, always attempt operations via MCP before reaching for hea
 
 **Fallback policy**: only fall back to REST APIs if MCP has been configured correctly and is still returning errors. "Not yet configured" is not a valid fallback condition — configure it first. When falling back, document why before pivoting to REST — this prevents silently sliding into REST auth debugging.
 
-## Quirks & Workarounds
+## Quirks and Workarounds
 
 ### DXP 2026.Q1+: Streamable HTTP Transport Required
 

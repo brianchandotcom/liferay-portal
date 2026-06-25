@@ -12,8 +12,10 @@ import com.liferay.client.extension.type.CET;
 import com.liferay.client.extension.type.configuration.CETConfiguration;
 import com.liferay.client.extension.type.deployer.CETDeployer;
 import com.liferay.client.extension.type.factory.CETFactory;
+import com.liferay.client.extension.type.internal.configuration.CETManagerConfiguration;
 import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.SingleVMPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -37,12 +39,16 @@ import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(service = CETManager.class)
+@Component(
+	configurationPid = "com.liferay.client.extension.type.internal.configuration.CETManagerConfiguration",
+	service = CETManager.class
+)
 public class CETManagerImpl implements CETManager {
 
 	@Override
@@ -134,17 +140,13 @@ public class CETManagerImpl implements CETManager {
 	}
 
 	@Activate
-	protected void activate() {
-		_portalCache =
-			(PortalCache<Long, CETHolder>)_singleVMPool.getPortalCache(
-				CETManagerImpl.class.getName());
+	protected void activate(Map<String, Object> properties) {
+		modified(properties);
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		if (_portalCache != null) {
-			_portalCache.removeAll();
-		}
+		_destroyPortalCache();
 
 		for (Map.Entry<Long, Map<String, CET>> entry1 : _cetsMaps.entrySet()) {
 			Map<String, CET> cetsMap = entry1.getValue();
@@ -154,6 +156,20 @@ public class CETManagerImpl implements CETManager {
 
 				_undeployCET(cet);
 			}
+		}
+	}
+
+	@Modified
+	protected void modified(Map<String, Object> properties) {
+		CETManagerConfiguration cetManagerConfiguration =
+			ConfigurableUtil.createConfigurable(
+				CETManagerConfiguration.class, properties);
+
+		if (cetManagerConfiguration.cacheEnabled()) {
+			_createPortalCache();
+		}
+		else {
+			_destroyPortalCache();
 		}
 	}
 
@@ -168,23 +184,47 @@ public class CETManagerImpl implements CETManager {
 		return string1.contains(string2);
 	}
 
+	@SuppressWarnings("unchecked")
+	private void _createPortalCache() {
+		if (_portalCache == null) {
+			_portalCache =
+				(PortalCache<Long, CETHolder>)_singleVMPool.getPortalCache(
+					CETManagerImpl.class.getName());
+		}
+	}
+
+	private void _destroyPortalCache() {
+		if (_portalCache != null) {
+			_portalCache.removeAll();
+
+			_singleVMPool.removePortalCache(CETManagerImpl.class.getName());
+
+			_portalCache = null;
+		}
+	}
+
 	private CET _getCET(ClientExtensionEntry clientExtensionEntry)
 		throws PortalException {
 
-		long key = clientExtensionEntry.getClientExtensionEntryId();
+		if (_portalCache != null) {
+			CETHolder cetHolder = _portalCache.get(
+				clientExtensionEntry.getClientExtensionEntryId());
 
-		CETHolder cetHolder = _portalCache.get(key);
+			if ((cetHolder != null) &&
+				(cetHolder._mvccVersion ==
+					clientExtensionEntry.getMvccVersion())) {
 
-		if ((cetHolder != null) &&
-			(cetHolder._mvccVersion == clientExtensionEntry.getMvccVersion())) {
-
-			return cetHolder._cet;
+				return cetHolder._cet;
+			}
 		}
 
 		CET cet = _cetFactory.create(clientExtensionEntry, true);
 
-		_portalCache.put(
-			key, new CETHolder(cet, clientExtensionEntry.getMvccVersion()));
+		if (_portalCache != null) {
+			_portalCache.put(
+				clientExtensionEntry.getClientExtensionEntryId(),
+				new CETHolder(cet, clientExtensionEntry.getMvccVersion()));
+		}
 
 		return cet;
 	}
@@ -326,7 +366,7 @@ public class CETManagerImpl implements CETManager {
 	@Reference
 	private ClientExtensionEntryLocalService _clientExtensionEntryLocalService;
 
-	private PortalCache<Long, CETHolder> _portalCache;
+	private volatile PortalCache<Long, CETHolder> _portalCache;
 	private final Map<Long, Map<String, List<ServiceRegistration<?>>>>
 		_serviceRegistrationsMaps = new ConcurrentHashMap<>();
 

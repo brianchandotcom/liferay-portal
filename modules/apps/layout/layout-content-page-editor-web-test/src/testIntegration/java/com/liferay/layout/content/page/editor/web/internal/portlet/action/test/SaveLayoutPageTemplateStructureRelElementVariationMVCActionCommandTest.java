@@ -52,13 +52,13 @@ public class
 
 	@Test
 	public void testProcessAction() throws Exception {
-		Group group = _groupLocalService.getGroup(TestPropsValues.getGroupId());
-
-		Layout layout = LayoutTestUtil.addTypeContentLayout(group);
-
 		String externalReferenceCode = RandomTestUtil.randomString();
 		String name = RandomTestUtil.randomString();
 		String targetElement = RandomTestUtil.randomString();
+
+		Group group = _groupLocalService.getGroup(TestPropsValues.getGroupId());
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(group);
 
 		_mvcActionCommand.processAction(
 			_getMockLiferayPortletActionRequest(

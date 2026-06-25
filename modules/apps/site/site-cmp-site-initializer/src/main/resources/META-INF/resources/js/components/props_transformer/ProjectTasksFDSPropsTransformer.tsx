@@ -65,7 +65,11 @@ export default function ProjectTasksFDSPropsTransformer({
 	installCMPTabPersistence();
 
 	const calendarView: IView = {
-		component: CalendarView,
+		component: (props: any) =>
+			CalendarView({
+				...props,
+				projectId: additionalProps.projectId,
+			}),
 		default: false,
 		initialPaginationDelta: FDS_PAGINATION_DELTA_ALL,
 		label: Liferay.Language.get('calendar'),

@@ -194,11 +194,11 @@ public class ArtifactURLUtilTest {
 		Files.write(
 			configFile.toPath(), configJSON.getBytes(StandardCharsets.UTF_8));
 
-		File file = temporaryFolder.newFile(zipName);
+		File zipFile = temporaryFolder.newFile(zipName);
 
-		ZipTestUtil.zipDirToFile(dir, file);
+		ZipTestUtil.zipDirToFile(dir, zipFile);
 
-		URI uri = file.toURI();
+		URI uri = zipFile.toURI();
 
 		URL url = ArtifactURLUtil.transform(uri.toURL());
 

@@ -1,4 +1,4 @@
-**/test-reports/*
+**/test-results/*
 *.tfstate
 *.tfstate.*
 .terraform/

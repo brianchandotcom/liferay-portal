@@ -7,6 +7,7 @@ package com.liferay.site.internal.util;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.change.tracking.configuration.helper.CTSettingsConfigurationHelper;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactoryUtil;
 import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.lar.ExportImportHelper;
@@ -579,6 +580,14 @@ public class SitesImpl implements Sites {
 					"import, or staging process is in progress");
 		}
 
+		if (_ctSettingsConfigurationHelper.isEnabled(
+				layoutSetPrototype.getCompanyId())) {
+
+			throw new IllegalStateException(
+				"The site template merge cannot start while Publications is " +
+					"enabled");
+		}
+
 		List<LayoutSet> mergeableLayoutSets = new ArrayList<>();
 
 		for (LayoutSet layoutSet :
@@ -1110,6 +1119,9 @@ public class SitesImpl implements Sites {
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference
+	private CTSettingsConfigurationHelper _ctSettingsConfigurationHelper;
 
 	@Reference
 	private ExportImportConfigurationLocalService

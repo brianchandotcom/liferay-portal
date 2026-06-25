@@ -146,9 +146,9 @@ public class DateTimeObjectFieldBusinessType
 			return null;
 		}
 
-		if (serializable instanceof String) {
+		if (serializable instanceof String dateString) {
 			Date date = DateUtil.parseDate(
-				"yyyy-MM-dd", (String)serializable,
+				ObjectFieldUtil.getDateTimePattern(dateString), dateString,
 				LocaleUtil.getSiteDefault());
 
 			serializable = new Timestamp(date.getTime());

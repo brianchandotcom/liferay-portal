@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
+import com.liferay.segments.util.SegmentsExperienceUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -26,7 +27,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * @author Lourdes Fernández Besada
@@ -94,7 +94,7 @@ public class LayoutContentVersionDisplayContext {
 		return TransformUtil.transform(
 			segmentsExperiences,
 			segmentsExperience -> {
-				boolean active = _isActive(
+				boolean active = SegmentsExperienceUtil.isActive(
 					segmentsExperience, segmentsExperiences);
 
 				return HashMapBuilder.<String, Object>put(
@@ -124,32 +124,6 @@ public class LayoutContentVersionDisplayContext {
 			"/o/headless-admin-site/v1.0/sites/",
 			group.getExternalReferenceCode(), "/site-pages/",
 			layout.getExternalReferenceCode(), "/page-specification-versions");
-	}
-
-	private boolean _isActive(
-		SegmentsExperience segmentsExperience,
-		List<SegmentsExperience> segmentsExperiences) {
-
-		for (SegmentsExperience curSegmentsExperience : segmentsExperiences) {
-			if ((Objects.equals(
-					curSegmentsExperience.getSegmentsEntryERC(),
-					segmentsExperience.getSegmentsEntryERC()) &&
-				 Objects.equals(
-					 curSegmentsExperience.getSegmentsEntryScopeERC(),
-					 segmentsExperience.getSegmentsEntryScopeERC())) ||
-				curSegmentsExperience.hasDefaultSegmentsEntry()) {
-
-				if (curSegmentsExperience.getSegmentsExperienceId() ==
-						segmentsExperience.getSegmentsExperienceId()) {
-
-					return true;
-				}
-
-				return false;
-			}
-		}
-
-		return false;
 	}
 
 	private final HttpServletRequest _httpServletRequest;

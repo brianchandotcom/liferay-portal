@@ -28,6 +28,7 @@ import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsEntryServiceUtil;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
+import com.liferay.segments.util.SegmentsExperienceUtil;
 import com.liferay.staging.StagingGroupHelper;
 import com.liferay.staging.StagingGroupHelperUtil;
 
@@ -35,7 +36,6 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * @author Eduardo García
@@ -155,7 +155,9 @@ public class SegmentsSimulationDisplayContext {
 		_segmentsExperiencesJSONArray = JSONUtil.toJSONArray(
 			segmentsExperiences,
 			segmentsExperience -> JSONUtil.put(
-				"active", _isActive(segmentsExperience, segmentsExperiences)
+				"active",
+				SegmentsExperienceUtil.isActive(
+					segmentsExperience, segmentsExperiences)
 			).put(
 				"segmentsEntryName",
 				segmentsExperience.getSegmentsEntryName(
@@ -171,7 +173,9 @@ public class SegmentsSimulationDisplayContext {
 				() -> {
 					String statusLabelKey = "inactive";
 
-					if (_isActive(segmentsExperience, segmentsExperiences)) {
+					if (SegmentsExperienceUtil.isActive(
+							segmentsExperience, segmentsExperiences)) {
+
 						statusLabelKey = "active";
 					}
 
@@ -194,32 +198,6 @@ public class SegmentsSimulationDisplayContext {
 			_themeDisplay.getScopeGroupId(), SegmentsPortletKeys.SEGMENTS);
 
 		return _groupId;
-	}
-
-	private boolean _isActive(
-		SegmentsExperience segmentsExperience,
-		List<SegmentsExperience> segmentsExperiences) {
-
-		for (SegmentsExperience curSegmentsExperience : segmentsExperiences) {
-			if ((Objects.equals(
-					curSegmentsExperience.getSegmentsEntryERC(),
-					segmentsExperience.getSegmentsEntryERC()) &&
-				 Objects.equals(
-					 curSegmentsExperience.getSegmentsEntryScopeERC(),
-					 segmentsExperience.getSegmentsEntryScopeERC())) ||
-				curSegmentsExperience.hasDefaultSegmentsEntry()) {
-
-				if (curSegmentsExperience.getSegmentsExperienceId() ==
-						segmentsExperience.getSegmentsExperienceId()) {
-
-					return true;
-				}
-
-				return false;
-			}
-		}
-
-		return false;
 	}
 
 	private boolean _isSegmentationEnabled() {

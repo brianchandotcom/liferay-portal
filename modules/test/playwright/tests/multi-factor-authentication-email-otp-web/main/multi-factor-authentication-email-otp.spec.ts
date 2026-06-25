@@ -104,3 +104,119 @@ test(
 		}
 	}
 );
+
+test(
+	'LPD-95735 keeps the send button disabled while the resend cooldown is still running after the retry lockout expires',
+	{tag: '@LPD-95735'},
+	async ({
+		apiHelpers,
+		browser,
+		multiFactorAuthenticationConfigurationPage,
+	}) => {
+		test.setTimeout(60000);
+
+		// Enable email OTP and configure a resend cooldown that outlasts the
+		// failed-attempts retry lockout, so the two timers expire at clearly
+		// different moments. A single failed attempt is enough to trigger the
+		// lockout.
+
+		await multiFactorAuthenticationConfigurationPage.goto();
+
+		await multiFactorAuthenticationConfigurationPage.enable({
+			failedAttemptsAllowed: 1,
+			resendEmailTimeout: 12,
+			retryTimeout: 4,
+		});
+
+		// Create a user that will be challenged with email OTP when signing in
+
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		// Reach the MFA stage in a clean context, leaving the admin signed in
+
+		const userContext = await browser.newContext();
+		const userPage = await userContext.newPage();
+
+		try {
+			await userPage.goto('/');
+
+			await userPage
+				.getByRole('button', {name: 'Sign In'})
+				.last()
+				.click();
+
+			await userPage.getByLabel('Email Address').fill(user.emailAddress);
+			await userPage.getByLabel('Password').fill('test');
+
+			await userPage
+				.getByRole('button', {name: 'Sign In'})
+				.last()
+				.click();
+
+			// Request a one-time password so the send button starts its cooldown
+
+			const sendEmailButton = userPage.locator('[id$="sendEmailButton"]');
+
+			const submitEmailButton = userPage.locator(
+				'[id$="submitEmailButton"]'
+			);
+
+			await expect(sendEmailButton).toHaveText('Send');
+
+			await clickAndExpectToBeVisible({
+				target: userPage.getByText(
+					'Your one-time password has been sent by email.'
+				),
+				trigger: sendEmailButton,
+			});
+
+			// Submit an incorrect OTP to exhaust the single allowed attempt. The
+			// full-page re-render brings back the challenge with the retry
+			// lockout active: both buttons are disabled and the submit button
+			// shows the lockout countdown.
+
+			await userPage
+				.getByLabel('Enter the one-time password from the email')
+				.fill(getRandomString());
+
+			await submitEmailButton.click();
+
+			await expect(
+				userPage.getByText('Multi-factor authentication has failed.')
+			).toBeVisible();
+
+			await expect(submitEmailButton).toBeDisabled();
+
+			await expect(sendEmailButton).toBeDisabled();
+
+			// Once the retry lockout expires the submit button is re-enabled,
+			// but the resend cooldown is still running. LPD-95735: the send
+			// button must stay disabled and keep showing its countdown instead
+			// of becoming clickable while the cooldown has not elapsed.
+
+			await expect(submitEmailButton).toBeEnabled({timeout: 15000});
+
+			await expect(sendEmailButton).toBeDisabled();
+
+			await expect(sendEmailButton).not.toHaveText('Send');
+
+			await expect(sendEmailButton).toHaveText(/^\s*\d+\s*$/);
+
+			// Once the resend cooldown also elapses, the send button must
+			// become fully usable again, not merely lose its disabled
+			// attribute. A leftover server-rendered "disabled" CSS class would
+			// keep it greyed out and unclickable.
+
+			await expect(sendEmailButton).toBeEnabled({timeout: 15000});
+
+			await expect(sendEmailButton).not.toHaveClass(/\bdisabled\b/);
+		}
+		finally {
+			await userContext.close();
+
+			await multiFactorAuthenticationConfigurationPage.goto();
+
+			await multiFactorAuthenticationConfigurationPage.resetConfiguration();
+		}
+	}
+);

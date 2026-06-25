@@ -121,9 +121,8 @@ public class ProductionReadinessCheckUtil {
 	}
 
 	private static ProductionReadinessResult _checkExplicitGCDisabled() {
-		RuntimeMXBean runtimeMXBean = ManagementFactory.getRuntimeMXBean();
-
-		List<String> inputArguments = runtimeMXBean.getInputArguments();
+		List<String> inputArguments = ManagementFactory.getRuntimeMXBean(
+		).getInputArguments();
 
 		boolean disabled = inputArguments.contains("-XX:+DisableExplicitGC");
 
@@ -165,15 +164,12 @@ public class ProductionReadinessCheckUtil {
 	}
 
 	private static ProductionReadinessResult _checkGarbageCollectorType() {
-		List<GarbageCollectorMXBean> garbageCollectorMXBeans =
-			ManagementFactory.getGarbageCollectorMXBeans();
-
 		List<String> gcNames = new ArrayList<>();
 
 		boolean pass = false;
 
 		for (GarbageCollectorMXBean garbageCollectorMXBean :
-				garbageCollectorMXBeans) {
+				ManagementFactory.getGarbageCollectorMXBeans()) {
 
 			String name = garbageCollectorMXBean.getName();
 
@@ -227,9 +223,7 @@ public class ProductionReadinessCheckUtil {
 	}
 
 	private static ProductionReadinessResult _checkHeapSizeUpperLimit() {
-		MemoryUsage heapMemoryUsage = _getHeapMemoryUsage();
-
-		long xmxBytes = heapMemoryUsage.getMax();
+		long xmxBytes = _getHeapMemoryUsage().getMax();
 
 		double maxMemoryGB = _toUnit(xmxBytes, _BYTES_PER_GIGABYTE);
 
@@ -249,9 +243,7 @@ public class ProductionReadinessCheckUtil {
 	}
 
 	private static ProductionReadinessResult _checkHugePagesConfiguration() {
-		MemoryUsage heapMemoryUsage = _getHeapMemoryUsage();
-
-		long xmxBytes = heapMemoryUsage.getMax();
+		long xmxBytes = _getHeapMemoryUsage().getMax();
 
 		double maxMemoryGB = _toUnit(xmxBytes, _BYTES_PER_GIGABYTE);
 
@@ -266,9 +258,8 @@ public class ProductionReadinessCheckUtil {
 			).pass();
 		}
 
-		RuntimeMXBean runtimeMXBean = ManagementFactory.getRuntimeMXBean();
-
-		List<String> inputArguments = runtimeMXBean.getInputArguments();
+		List<String> inputArguments = ManagementFactory.getRuntimeMXBean(
+		).getInputArguments();
 
 		String largePageSizeArgument = null;
 		boolean useLargePages = false;
@@ -578,9 +569,8 @@ public class ProductionReadinessCheckUtil {
 	}
 
 	private static ProductionReadinessResult _checkPreventDiagnosticOverhead() {
-		RuntimeMXBean runtimeMXBean = ManagementFactory.getRuntimeMXBean();
-
-		List<String> inputArguments = runtimeMXBean.getInputArguments();
+		List<String> inputArguments = ManagementFactory.getRuntimeMXBean(
+		).getInputArguments();
 
 		boolean unlocked = inputArguments.contains(
 			"-XX:+UnlockDiagnosticVMOptions");
@@ -604,12 +594,10 @@ public class ProductionReadinessCheckUtil {
 		boolean productionModeEnabled = false;
 
 		try {
-			ElasticsearchConfiguration elasticsearchConfiguration =
-				ConfigurationProviderUtil.getSystemConfiguration(
-					ElasticsearchConfiguration.class);
-
 			productionModeEnabled =
-				elasticsearchConfiguration.productionModeEnabled();
+				ConfigurationProviderUtil.getSystemConfiguration(
+					ElasticsearchConfiguration.class
+				).productionModeEnabled();
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {

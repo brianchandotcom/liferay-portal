@@ -214,8 +214,6 @@ describe('NewExport', () => {
 			screen.getByRole('button', {name: /show-results/i})
 		);
 
-		// The user submits five hours after applying the filter.
-
 		now = applyTime + 5 * HOUR;
 
 		fetch.mockResponseOnce(JSON.stringify({}));
@@ -228,8 +226,6 @@ describe('NewExport', () => {
 			);
 
 			const body = JSON.parse(exportCall![1]!.body as string);
-
-			// The 12-hour window stays anchored to the apply time.
 
 			expect(body.startDate).toBe(
 				new Date(applyTime - 12 * HOUR).toISOString()

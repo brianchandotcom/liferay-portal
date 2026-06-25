@@ -286,7 +286,7 @@ test(
 
 test(
 	'Calendar view properly displays tasks',
-	{tag: ['@LPD-69885']},
+	{tag: ['@LPD-69885', '@LPD-96021']},
 	async ({apiHelpers, page, projectPage, projectsPage, tasksPage}) => {
 		const now = new Date();
 
@@ -411,6 +411,23 @@ test(
 			).toBeVisible();
 		});
 
+		await test.step('Clicking a task opens its view page', async () => {
+			await page
+				.locator(`[data-date="${dueDate}"]`)
+				.getByText(taskTitles[0], {exact: true})
+				.click();
+
+			await expect(page).toHaveURL(/\/e\/task\//);
+
+			await expect(
+				page.getByText(taskTitles[0], {exact: true})
+			).toBeVisible();
+
+			await page.goBack();
+
+			await expect(calendarView.title).toBeVisible();
+		});
+
 		await test.step('A More link reveals the tasks hidden in a dense day', async () => {
 			const dayCell = page.locator(`[data-date="${dueDate}"]`);
 
@@ -444,6 +461,22 @@ test(
 					exact: true,
 				})
 			).toBeVisible();
+		});
+
+		await test.step('Clicking a task in the more popover opens its view page', async () => {
+			await calendarView.moreLinkPopover
+				.getByText(taskTitles[1], {exact: true})
+				.click();
+
+			await expect(page).toHaveURL(/\/e\/task\//);
+
+			await expect(
+				page.getByText(taskTitles[1], {exact: true})
+			).toBeVisible();
+
+			await page.goBack();
+
+			await expect(calendarView.title).toBeVisible();
 		});
 
 		await test.step('The unscheduled tasks button shows the count', async () => {

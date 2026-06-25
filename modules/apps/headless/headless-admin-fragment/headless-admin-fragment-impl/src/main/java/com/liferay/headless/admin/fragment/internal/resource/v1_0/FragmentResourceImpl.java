@@ -7,6 +7,7 @@ package com.liferay.headless.admin.fragment.internal.resource.v1_0;
 
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.constants.FragmentPortletKeys;
+import com.liferay.fragment.exception.FragmentEntryFieldTypesException;
 import com.liferay.fragment.exception.RequiredFragmentEntryVersionException;
 import com.liferay.fragment.exception.UnsupportedUnpublishFragmentEntryOperationException;
 import com.liferay.fragment.model.FragmentCollection;
@@ -15,6 +16,8 @@ import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentCollectionService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.service.FragmentEntryService;
+import com.liferay.headless.admin.fragment.constant.v1_0.FieldType;
+import com.liferay.headless.admin.fragment.dto.v1_0.FormFragment;
 import com.liferay.headless.admin.fragment.dto.v1_0.Fragment;
 import com.liferay.headless.admin.fragment.dto.v1_0.FragmentSet;
 import com.liferay.headless.admin.fragment.dto.v1_0.FragmentVersion;
@@ -22,10 +25,13 @@ import com.liferay.headless.admin.fragment.internal.odata.entity.v1_0.FragmentEn
 import com.liferay.headless.admin.fragment.internal.resource.v1_0.util.FragmentSetUtil;
 import com.liferay.headless.admin.fragment.internal.resource.v1_0.util.ServiceContextUtil;
 import com.liferay.headless.admin.fragment.internal.util.EnabledUtil;
+import com.liferay.headless.admin.fragment.internal.util.FieldTypeUtil;
 import com.liferay.headless.admin.fragment.resource.v1_0.FragmentResource;
 import com.liferay.headless.admin.site.dto.v1_0.util.FileEntryUtil;
 import com.liferay.headless.common.spi.util.GroupUtil;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.log.Log;
@@ -241,6 +247,10 @@ public class FragmentResourceImpl extends BaseFragmentResourceImpl {
 		FragmentVersion draftFragmentVersion = _getFragmentVersion(
 			fragment, FragmentVersion.Status.DRAFT);
 
+		int type = _getType(fragment);
+
+		String typeOptions = _getTypeOptions(fragment);
+
 		ServiceContext serviceContext = ServiceContextUtil.getServiceContext(
 			contextCompany.getCompanyId(), fragment.getDateCreated(), groupId,
 			contextHttpServletRequest, fragment.getDateModified(),
@@ -259,9 +269,8 @@ public class FragmentResourceImpl extends BaseFragmentResourceImpl {
 				approvedFragmentVersion.getConfiguration(), fragment.getIcon(),
 				previewFileEntryId,
 				GetterUtil.getBoolean(fragment.getMarketplace()),
-				GetterUtil.getBoolean(fragment.getReadOnly()),
-				FragmentConstants.TYPE_COMPONENT, null,
-				WorkflowConstants.STATUS_APPROVED, serviceContext);
+				GetterUtil.getBoolean(fragment.getReadOnly()), type,
+				typeOptions, WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 			if (draftFragmentVersion != null) {
 				_updateDraft(
@@ -278,9 +287,8 @@ public class FragmentResourceImpl extends BaseFragmentResourceImpl {
 				draftFragmentVersion.getConfiguration(), fragment.getIcon(),
 				previewFileEntryId,
 				GetterUtil.getBoolean(fragment.getMarketplace()),
-				GetterUtil.getBoolean(fragment.getReadOnly()),
-				FragmentConstants.TYPE_COMPONENT, null,
-				WorkflowConstants.STATUS_DRAFT, serviceContext);
+				GetterUtil.getBoolean(fragment.getReadOnly()), type,
+				typeOptions, WorkflowConstants.STATUS_DRAFT, serviceContext);
 		}
 		else {
 			fragmentEntry = _fragmentEntryService.addFragmentEntry(
@@ -290,9 +298,8 @@ public class FragmentResourceImpl extends BaseFragmentResourceImpl {
 				GetterUtil.getBoolean(fragment.getCacheable()), null, null,
 				previewFileEntryId,
 				GetterUtil.getBoolean(fragment.getMarketplace()),
-				GetterUtil.getBoolean(fragment.getReadOnly()),
-				FragmentConstants.TYPE_COMPONENT, null,
-				WorkflowConstants.STATUS_DRAFT, serviceContext);
+				GetterUtil.getBoolean(fragment.getReadOnly()), type,
+				typeOptions, WorkflowConstants.STATUS_DRAFT, serviceContext);
 		}
 
 		return _toFragment(fragmentEntry);
@@ -395,6 +402,44 @@ public class FragmentResourceImpl extends BaseFragmentResourceImpl {
 			fragment.getThumbnailURLReference(), contextUser.getUserId());
 	}
 
+	private int _getType(Fragment fragment) {
+		Fragment.Type type = fragment.getType();
+
+		if (type == Fragment.Type.BASIC_FRAGMENT) {
+			return FragmentConstants.TYPE_COMPONENT;
+		}
+
+		if (type == Fragment.Type.FORM_FRAGMENT) {
+			return FragmentConstants.TYPE_INPUT;
+		}
+
+		throw new IllegalArgumentException(
+			_language.get(
+				contextAcceptLanguage.getPreferredLocale(),
+				"a-fragment-type-is-required"));
+	}
+
+	private String _getTypeOptions(Fragment fragment) {
+		if (!(fragment instanceof FormFragment)) {
+			return null;
+		}
+
+		FormFragment formFragment = (FormFragment)fragment;
+
+		FieldType[] fieldTypes = formFragment.getFieldTypes();
+
+		if (fieldTypes == null) {
+			return null;
+		}
+
+		JSONObject typeOptionsJSONObject = JSONUtil.put(
+			"fieldTypes",
+			JSONUtil.putAll(
+				(Object[])FieldTypeUtil.toInternalFieldTypes(fieldTypes)));
+
+		return typeOptionsJSONObject.toString();
+	}
+
 	private Fragment _toFragment(FragmentEntry fragmentEntry) throws Exception {
 		return _fragmentDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
@@ -439,6 +484,20 @@ public class FragmentResourceImpl extends BaseFragmentResourceImpl {
 			throw new UnsupportedUnpublishFragmentEntryOperationException();
 		}
 
+		if ((fragment instanceof FormFragment) != fragmentEntry.isTypeInput()) {
+			throw new IllegalArgumentException(
+				_language.get(
+					contextAcceptLanguage.getPreferredLocale(),
+					"the-fragment-type-cannot-be-changed"));
+		}
+
+		String typeOptions = _getTypeOptions(fragment);
+
+		if ((typeOptions == null) && fragmentEntry.isTypeInput()) {
+			throw new FragmentEntryFieldTypesException(
+				"A form fragment requires field types");
+		}
+
 		FragmentEntry updatedFragmentEntry = null;
 
 		long fragmentCollectionId = fragmentEntry.getFragmentCollectionId();
@@ -474,8 +533,7 @@ public class FragmentResourceImpl extends BaseFragmentResourceImpl {
 				GetterUtil.getBoolean(fragment.getCacheable()),
 				approvedFragmentVersion.getConfiguration(), fragment.getIcon(),
 				previewFileEntryId,
-				GetterUtil.getBoolean(fragment.getReadOnly()),
-				fragmentEntry.getTypeOptions(),
+				GetterUtil.getBoolean(fragment.getReadOnly()), typeOptions,
 				WorkflowConstants.STATUS_APPROVED);
 
 			if (draftFragmentVersion != null) {
@@ -492,8 +550,8 @@ public class FragmentResourceImpl extends BaseFragmentResourceImpl {
 				GetterUtil.getBoolean(fragment.getCacheable()),
 				draftFragmentVersion.getConfiguration(), fragment.getIcon(),
 				previewFileEntryId,
-				GetterUtil.getBoolean(fragment.getReadOnly()),
-				fragmentEntry.getTypeOptions(), WorkflowConstants.STATUS_DRAFT);
+				GetterUtil.getBoolean(fragment.getReadOnly()), typeOptions,
+				WorkflowConstants.STATUS_DRAFT);
 
 			updatedFragmentEntry = _fragmentEntryService.updateDraft(
 				updatedFragmentEntry);

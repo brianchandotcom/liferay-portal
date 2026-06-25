@@ -23,7 +23,7 @@ public class CPDefinitionVirtualSettingUpgradeProcess extends UpgradeProcess {
 				"= ?";
 
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
-				"select groupId, CPDefinitionId from CPDefinition");
+				"select CPDefinitionId, groupId from CPDefinition");
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection, updateCPDefinitionVirtualSettingGroupId);
@@ -41,7 +41,7 @@ public class CPDefinitionVirtualSettingUpgradeProcess extends UpgradeProcess {
 		}
 
 		try (PreparedStatement preparedStatement3 = connection.prepareStatement(
-				"select groupId, CPInstanceId from CPInstance");
+				"select CPInstanceId, groupId from CPInstance");
 			PreparedStatement preparedStatement4 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection, updateCPDefinitionVirtualSettingGroupId);

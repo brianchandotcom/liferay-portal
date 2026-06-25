@@ -5,8 +5,8 @@ apply plugin: "com.liferay.patcher"
 task patch(type: PatchTask)
 
 dependencies {
-	api group: "org.springframework", name: "spring-beans", version: "6.2.9"
-	api group: "org.springframework", name: "spring-core", version: "6.2.9"
+	api group: "org.springframework", name: "spring-beans", version: "6.2.19"
+	api group: "org.springframework", name: "spring-core", version: "6.2.19"
 }
 
 jarSources {

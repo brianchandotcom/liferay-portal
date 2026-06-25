@@ -161,8 +161,8 @@ public class AudiencesCriteriaProviderImpl
 		return new AudiencesCriteriaType(
 			Arrays.asList(
 				new AudiencesCriteria(
-					"text", AudiencesCriteriaKeys.AUTHENTICATION,
-					_language.get(locale, "authentication"),
+					"check", AudiencesCriteriaKeys.USER_AUTHENTICATION,
+					_language.get(locale, "user-authentication"),
 					Arrays.asList(
 						new AudiencesCriteria.Option(
 							_language.get(locale, "yes"), "yes"),
@@ -170,8 +170,8 @@ public class AudiencesCriteriaProviderImpl
 							_language.get(locale, "no"), "no")),
 					AudiencesCriteria.Type.OPTIONS),
 				new AudiencesCriteria(
-					"text", AudiencesCriteriaKeys.LANGUAGE,
-					_language.get(locale, "language"),
+					"text", AudiencesCriteriaKeys.USER_LANGUAGE,
+					_language.get(locale, "user-language"),
 					_getLanguageOptions(locale),
 					AudiencesCriteria.Type.OPTIONS)),
 			_language.get(locale, "general"));

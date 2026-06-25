@@ -15,6 +15,7 @@ export class MultiFactorAuthenticationConfigurationPage {
 	readonly instanceSettingsPage: InstanceSettingsPage;
 	readonly oneTimePasswordLength: Locator;
 	readonly page: Page;
+	readonly resendEmailTimeout: Locator;
 	readonly resetDefaultValues: Locator;
 	readonly retryTimeout: Locator;
 	readonly saveButton: Locator;
@@ -31,6 +32,7 @@ export class MultiFactorAuthenticationConfigurationPage {
 			'One-Time Password Length'
 		);
 		this.page = page;
+		this.resendEmailTimeout = page.getByLabel('Resend Email Timeout');
 		this.resetDefaultValues = page.getByText('Reset Default Values');
 		this.retryTimeout = page.getByLabel('Retry Timeout');
 		this.saveButton = page.getByRole('button', {name: 'Save'});
@@ -39,8 +41,13 @@ export class MultiFactorAuthenticationConfigurationPage {
 
 	async enable({
 		failedAttemptsAllowed,
+		resendEmailTimeout,
 		retryTimeout,
-	}: {failedAttemptsAllowed?: number; retryTimeout?: number} = {}) {
+	}: {
+		failedAttemptsAllowed?: number;
+		resendEmailTimeout?: number;
+		retryTimeout?: number;
+	} = {}) {
 		await expect(this.enabledCheckBox).toBeVisible();
 
 		await expect(async () => {
@@ -53,6 +60,10 @@ export class MultiFactorAuthenticationConfigurationPage {
 			await this.failedAttemptsAllowed.fill(
 				String(failedAttemptsAllowed)
 			);
+		}
+
+		if (resendEmailTimeout !== undefined) {
+			await this.resendEmailTimeout.fill(String(resendEmailTimeout));
 		}
 
 		if (retryTimeout !== undefined) {

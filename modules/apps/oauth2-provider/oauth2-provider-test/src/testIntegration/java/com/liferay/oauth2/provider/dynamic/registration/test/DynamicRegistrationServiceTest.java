@@ -75,6 +75,18 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 	public void testBearerInOpenMode() throws Exception {
 		WebTarget registerWebTarget = getRegisterWebTarget();
 
+		String body = JSONUtil.put(
+			_FIELD_CLIENT_NAME, RandomTestUtil.randomString()
+		).put(
+			_FIELD_GRANT_TYPES,
+			new String[] {OAuthConstants.CLIENT_CREDENTIALS_GRANT}
+		).put(
+			_FIELD_REDIRECT_URIS,
+			new String[] {
+				"https://" + RandomTestUtil.randomString() + ".com/callback"
+			}
+		).toString();
+
 		try (CompanyConfigurationTemporarySwapper
 				companyConfigurationTemporarySwapper =
 					_createCompanyConfigurationTemporarySwapper(
@@ -85,20 +97,7 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 				_getToken(_getDynamicRegistratorOAuth2Application()));
 
 			Response response = invocationBuilder.method(
-				"post",
-				Entity.json(
-					JSONUtil.put(
-						_FIELD_CLIENT_NAME, RandomTestUtil.randomString()
-					).put(
-						_FIELD_GRANT_TYPES,
-						new String[] {OAuthConstants.CLIENT_CREDENTIALS_GRANT}
-					).put(
-						_FIELD_REDIRECT_URIS,
-						new String[] {
-							"https://" + RandomTestUtil.randomString() +
-								".com/callback"
-						}
-					).toString()));
+				"post", Entity.json(body));
 
 			Assert.assertEquals(201, response.getStatus());
 		}
@@ -224,35 +223,17 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 	@Test
 	public void testOpenRegistrationIsRejected() throws Exception {
 		_testOpenRegistrationIsRejected(
+			400, "invalid_client_metadata", _bodyWithoutGrantTypes(),
+			_PROPERTY_ALLOWED_GRANT_TYPES,
+			new String[] {OAuthConstants.CLIENT_CREDENTIALS_GRANT});
+		_testOpenRegistrationIsRejected(
 			400, "invalid_client_metadata", _body(), _PROPERTY_ALLOWED_SCOPES,
 			new String[] {"Liferay.Headless.Delivery.everything"});
 
 		_testOpenRegistrationIsRejected(
-			400, OAuthConstants.INVALID_SCOPE,
-			JSONUtil.put(
-				_FIELD_CLIENT_NAME, RandomTestUtil.randomString()
-			).put(
-				_FIELD_GRANT_TYPES,
-				new String[] {OAuthConstants.CLIENT_CREDENTIALS_GRANT}
-			).put(
-				_FIELD_SCOPE, "Liferay.Headless.Admin.Site.everything"
-			).toString(),
-			_PROPERTY_ALLOWED_SCOPES,
-			new String[] {"Liferay.Headless.Delivery.everything"});
-
-		_testOpenRegistrationIsRejected(
-			400, "invalid_client_metadata",
-			JSONUtil.put(
-				_FIELD_CLIENT_NAME, RandomTestUtil.randomString()
-			).put(
-				_FIELD_REDIRECT_URIS,
-				new String[] {
-					"https://" + RandomTestUtil.randomString() + ".com/callback"
-				}
-			).toString(),
-			_PROPERTY_ALLOWED_GRANT_TYPES,
-			new String[] {OAuthConstants.CLIENT_CREDENTIALS_GRANT});
-
+			400, "invalid_redirect_uri", _body(""),
+			_PROPERTY_ALLOWED_REDIRECT_URI_PATTERNS,
+			new String[] {"https://*.example.org/*"});
 		_testOpenRegistrationIsRejected(
 			400, "invalid_redirect_uri",
 			_body("https://attacker.test/callback"),
@@ -263,16 +244,15 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 			_body("https://attacker.test/foo.example.org/callback"),
 			_PROPERTY_ALLOWED_REDIRECT_URI_PATTERNS,
 			new String[] {"https://*.example.org/*"});
-		_testOpenRegistrationIsRejected(
-			400, "invalid_redirect_uri", _body(""),
-			_PROPERTY_ALLOWED_REDIRECT_URI_PATTERNS,
-			new String[] {"https://*.example.org/*"});
 
 		_testOpenRegistrationIsRejected(
-			401, null,
-			JSONUtil.put(
-				_FIELD_CLIENT_NAME, RandomTestUtil.randomString()
-			).toString(),
+			400, "invalid_scope",
+			_bodyWithScope("Liferay.Headless.Admin.Site.everything"),
+			_PROPERTY_ALLOWED_SCOPES,
+			new String[] {"Liferay.Headless.Delivery.everything"});
+
+		_testOpenRegistrationIsRejected(
+			401, null, _bodyWithClientNameOnly(),
 			_PROPERTY_REQUIRE_INITIAL_ACCESS_TOKEN, true);
 	}
 
@@ -529,6 +509,34 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 		).put(
 			_FIELD_RESPONSE_TYPES,
 			new String[] {OAuthConstants.CODE_RESPONSE_TYPE}
+		).toString();
+	}
+
+	private String _bodyWithClientNameOnly() {
+		return JSONUtil.put(
+			_FIELD_CLIENT_NAME, RandomTestUtil.randomString()
+		).toString();
+	}
+
+	private String _bodyWithoutGrantTypes() {
+		return JSONUtil.put(
+			_FIELD_CLIENT_NAME, RandomTestUtil.randomString()
+		).put(
+			_FIELD_REDIRECT_URIS,
+			new String[] {
+				"https://" + RandomTestUtil.randomString() + ".com/callback"
+			}
+		).toString();
+	}
+
+	private String _bodyWithScope(String scope) {
+		return JSONUtil.put(
+			_FIELD_CLIENT_NAME, RandomTestUtil.randomString()
+		).put(
+			_FIELD_GRANT_TYPES,
+			new String[] {OAuthConstants.CLIENT_CREDENTIALS_GRANT}
+		).put(
+			_FIELD_SCOPE, scope
 		).toString();
 	}
 

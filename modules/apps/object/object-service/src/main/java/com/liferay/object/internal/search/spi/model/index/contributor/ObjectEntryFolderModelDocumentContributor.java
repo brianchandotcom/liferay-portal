@@ -54,6 +54,7 @@ public class ObjectEntryFolderModelDocumentContributor
 
 		document.addLocalizedKeyword(
 			"localized_label", objectEntryFolder.getLabelMap(), true, true);
+		document.addKeyword("rootDescendantNode", false);
 	}
 
 	private String _getCMSSection(String[] parts) {

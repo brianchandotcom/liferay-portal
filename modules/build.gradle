@@ -655,19 +655,15 @@ gradle.beforeProject {
 			}
 
 			compileTestJava {
-				for (ProjectDependency projectDependency in configurations.compileOnly.allDependencies.withType(ProjectDependency)) {
-					Project dependencyProject = projectDependency.dependencyProject
-
-					if (!dependencyProject.name.endsWith("-theme")) {
-						mustRunAfter "${dependencyProject.path}:processResources"
+				configurations.compileOnly.allDependencies.withType(ProjectDependency) {
+					if (!it.dependencyProject.name.endsWith("-theme")) {
+						mustRunAfter "${it.dependencyProject.path}:processResources"
 					}
 				}
 
-				for (ProjectDependency projectDependency in configurations.testImplementation.allDependencies.withType(ProjectDependency)) {
-					Project dependencyProject = projectDependency.dependencyProject
-
-					if (!dependencyProject.name.endsWith("-theme")) {
-						mustRunAfter "${dependencyProject.path}:processResources"
+				configurations.testImplementation.allDependencies.withType(ProjectDependency) {
+					if (!it.dependencyProject.name.endsWith("-theme")) {
+						mustRunAfter "${it.dependencyProject.path}:processResources"
 					}
 				}
 			}

@@ -20,22 +20,37 @@ public class SegmentsExperienceUtil {
 		List<SegmentsExperience> segmentsExperiences) {
 
 		for (SegmentsExperience curSegmentsExperience : segmentsExperiences) {
-			if ((Objects.equals(
-					curSegmentsExperience.getSegmentsEntryERC(),
-					segmentsExperience.getSegmentsEntryERC()) &&
-				 Objects.equals(
-					 curSegmentsExperience.getSegmentsEntryScopeERC(),
-					 segmentsExperience.getSegmentsEntryScopeERC())) ||
-				curSegmentsExperience.hasDefaultSegmentsEntry()) {
+			if (!_isMatchingSegmentsEntry(
+					curSegmentsExperience, segmentsExperience)) {
 
-				if (curSegmentsExperience.getSegmentsExperienceId() ==
-						segmentsExperience.getSegmentsExperienceId()) {
-
-					return true;
-				}
-
-				return false;
+				continue;
 			}
+
+			if (curSegmentsExperience.getSegmentsExperienceId() ==
+					segmentsExperience.getSegmentsExperienceId()) {
+
+				return true;
+			}
+
+			return false;
+		}
+
+		return false;
+	}
+
+	private static boolean _isMatchingSegmentsEntry(
+		SegmentsExperience curSegmentsExperience,
+		SegmentsExperience segmentsExperience) {
+
+		if (curSegmentsExperience.hasDefaultSegmentsEntry() ||
+			(Objects.equals(
+				curSegmentsExperience.getSegmentsEntryERC(),
+				segmentsExperience.getSegmentsEntryERC()) &&
+			 Objects.equals(
+				 curSegmentsExperience.getSegmentsEntryScopeERC(),
+				 segmentsExperience.getSegmentsEntryScopeERC()))) {
+
+			return true;
 		}
 
 		return false;

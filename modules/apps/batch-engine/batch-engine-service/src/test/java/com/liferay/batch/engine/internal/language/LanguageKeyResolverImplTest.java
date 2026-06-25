@@ -8,10 +8,11 @@ package com.liferay.batch.engine.internal.language;
 import com.liferay.batch.engine.configuration.BatchEngineTaskCompanyConfiguration;
 import com.liferay.batch.engine.language.LanguageKeyResolver;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
-import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -126,13 +127,9 @@ public class LanguageKeyResolverImplTest {
 		_whenTranslation(LocaleUtil.SPAIN, "welcome-to-liferay", "Bienvenido");
 		_whenTranslation(LocaleUtil.BRAZIL, "welcome-to-liferay", "Bem-vindo");
 
-		JSONObject valueI18nJSONObject = _jsonFactoryImpl.createJSONObject();
-
-		valueI18nJSONObject.put(_FOR_EACH_LANGUAGE_ID, "welcome-to-liferay");
-
-		JSONObject jsonObject = _jsonFactoryImpl.createJSONObject();
-
-		jsonObject.put("value_i18n", valueI18nJSONObject);
+		JSONObject jsonObject = JSONUtil.put(
+			"value_i18n",
+			JSONUtil.put(_FOR_EACH_LANGUAGE_ID, "welcome-to-liferay"));
 
 		_languageKeyResolver.expand(_COMPANY_ID, jsonObject);
 
@@ -250,7 +247,7 @@ public class LanguageKeyResolverImplTest {
 		);
 	}
 
-	private static final long _COMPANY_ID = 1L;
+	private static final long _COMPANY_ID = RandomTestUtil.randomLong();
 
 	private static final String _FOR_EACH_LANGUAGE_ID =
 		"[$FOR_EACH_LANGUAGE_ID$]";
@@ -258,7 +255,6 @@ public class LanguageKeyResolverImplTest {
 	private BatchEngineTaskCompanyConfiguration
 		_batchEngineTaskCompanyConfiguration;
 	private ConfigurationProvider _configurationProvider;
-	private final JSONFactoryImpl _jsonFactoryImpl = new JSONFactoryImpl();
 	private Language _language;
 	private LanguageKeyResolver _languageKeyResolver;
 

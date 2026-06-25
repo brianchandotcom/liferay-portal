@@ -523,6 +523,10 @@ public class TestrayCaseResult {
 		}
 	}
 
+	protected void cacheTestrayCaseResultURL() {
+		getTestrayCaseResultURL();
+	}
+
 	protected synchronized void initTestrayAttachments() {
 		if (testrayAttachments != null) {
 			return;

@@ -13,8 +13,7 @@ import React, {
 
 import {IAssetObjectEntry} from '../../../common/types/AssetType';
 import {displayErrorToast} from '../../../common/utils/toastUtil';
-import AssetCategories from '../components/AssetCategories';
-import AssetTags from '../components/AssetTags';
+import AssetCategorizationSections from '../components/AssetCategorizationSections';
 import {AssetTypeInfoPanelContext} from '../context';
 import ObjectEntryService from '../services/ObjectEntryService';
 
@@ -105,22 +104,13 @@ const CategorizationTabContent = () => {
 	}
 
 	return !currentAsset ? null : (
-		<>
-			<AssetCategories
-				cmsGroupId={cmsGroupId}
-				hasUpdatePermission={hasUpdatePermission}
-				objectEntry={currentAsset}
-				updateObjectEntry={updateObjectEntry}
-			/>
-
-			<AssetTags
-				assetLibraryId={assetLibrary.groupId}
-				cmsGroupId={cmsGroupId}
-				hasUpdatePermission={hasUpdatePermission}
-				objectEntry={currentAsset}
-				updateObjectEntry={updateObjectEntry}
-			/>
-		</>
+		<AssetCategorizationSections
+			assetLibraryId={assetLibrary.groupId}
+			cmsGroupId={cmsGroupId}
+			hasUpdatePermission={hasUpdatePermission}
+			objectEntry={currentAsset}
+			updateObjectEntry={updateObjectEntry}
+		/>
 	);
 };
 

@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
-import com.liferay.site.internal.exportimport.constants.LayoutSetPrototypeMergeConstants;
 import com.liferay.site.internal.exportimport.internal.notifications.LayoutSetPrototypeNotificationUtil;
 
 import java.io.Serializable;
@@ -100,8 +99,9 @@ public class LayoutSetPrototypeMergeBackgroundTaskStatusMessageListener
 			return;
 		}
 
-		Long[] layoutSetGroupIds = (Long[])taskContextMap.get(
-			LayoutSetPrototypeMergeConstants.LAYOUT_SET_GROUP_IDS);
+		Long[] layoutSetGroupIds =
+			LayoutSetPrototypeNotificationUtil.getLayoutSetGroupIds(
+				taskContextMap);
 
 		if (layoutSetGroupIds == null) {
 			return;
@@ -128,13 +128,10 @@ public class LayoutSetPrototypeMergeBackgroundTaskStatusMessageListener
 				return;
 			}
 
-			long layoutSetPrototypeId = MapUtil.getLong(
-				taskContextMap,
-				LayoutSetPrototypeMergeConstants.LAYOUT_SET_PROTOTYPE_ID);
-
 			LayoutSetPrototype layoutSetPrototype =
 				_layoutSetPrototypeLocalService.fetchLayoutSetPrototype(
-					layoutSetPrototypeId);
+					LayoutSetPrototypeNotificationUtil.getLayoutSetPrototypeId(
+						taskContextMap));
 
 			if (layoutSetPrototype == null) {
 				return;
@@ -144,9 +141,8 @@ public class LayoutSetPrototypeMergeBackgroundTaskStatusMessageListener
 				TransformUtil.transformToList(
 					completedBackgroundTasks, BackgroundTask::getStatus));
 
-			if (MapUtil.getBoolean(
-					taskContextMap,
-					LayoutSetPrototypeMergeConstants.PRE_VALIDATION_ERRORS)) {
+			if (LayoutSetPrototypeNotificationUtil.hasPreValidationErrors(
+					taskContextMap)) {
 
 				backgroundTaskStatuses.add(
 					BackgroundTaskConstants.STATUS_FAILED);
@@ -154,8 +150,7 @@ public class LayoutSetPrototypeMergeBackgroundTaskStatusMessageListener
 
 			LayoutSetPrototypeNotificationUtil.sendMergeCompletedNotification(
 				backgroundTaskStatuses, layoutSetPrototype,
-				MapUtil.getLong(
-					taskContextMap, LayoutSetPrototypeMergeConstants.USER_ID));
+				LayoutSetPrototypeNotificationUtil.getUserId(taskContextMap));
 
 			for (BackgroundTask completedBackgroundTask :
 					completedBackgroundTasks) {

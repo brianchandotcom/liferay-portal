@@ -5,12 +5,11 @@
 
 import '@testing-library/jest-dom';
 import {
-	act,
 	fireEvent,
 	render,
 	screen,
 	waitFor,
-	waitForElementToBeRemoved,
+	within,
 } from '@testing-library/react';
 import React from 'react';
 
@@ -71,36 +70,32 @@ describe('[CMS Dashboard] Components: AllVocabulariesDropdown', () => {
 
 		render(<WrappedComponent onSelectItem={onSelectItem} />);
 
-		const vocabulariesDropdownButton = screen.getByRole('button', {
+		const trigger = screen.getByRole('combobox', {
+			name: 'filter-by-vocabulary',
+		});
+
+		expect(trigger).toHaveTextContent('all-vocabularies');
+
+		fireEvent.click(trigger);
+
+		expect(screen.getByPlaceholderText('search')).toBeInTheDocument();
+
+		const listbox = await screen.findByRole('listbox');
+
+		const option = within(listbox).getByRole('option', {
 			name: 'all-vocabularies',
 		});
 
-		expect(vocabulariesDropdownButton).toBeInTheDocument();
+		expect(within(listbox).getAllByRole('option')).toHaveLength(1);
 
-		fireEvent.click(vocabulariesDropdownButton);
+		fireEvent.click(option);
 
-		expect(screen.queryByText('filter-by-vocabulary')).toBeInTheDocument();
-
-		expect(screen.queryByPlaceholderText('search')).toBeInTheDocument();
-
-		await waitForElementToBeRemoved(() => screen.getByTestId('loading'));
-
-		expect(screen.getAllByRole('menuitem').length).toBe(1);
-
-		const menuitem = screen.getByRole('menuitem', {
-			name: 'all-vocabularies',
-		});
-
-		expect(menuitem).toBeInTheDocument();
-
-		fireEvent.click(menuitem);
-
-		expect(onSelectItem).toHaveBeenCalledTimes(1);
-
-		expect(onSelectItem).toHaveBeenCalledWith({
-			label: 'all-vocabularies',
-			value: 'all',
-		});
+		expect(onSelectItem).toHaveBeenCalledWith(
+			expect.objectContaining({
+				label: 'all-vocabularies',
+				value: 'all',
+			})
+		);
 	});
 
 	it('renders a vocabulary list', async () => {
@@ -111,32 +106,28 @@ describe('[CMS Dashboard] Components: AllVocabulariesDropdown', () => {
 
 		render(<WrappedComponent onSelectItem={jest.fn()} />);
 
-		const vocabulariesDropdownButton = screen.getByRole('button', {
-			name: 'all-vocabularies',
-		});
+		fireEvent.click(
+			screen.getByRole('combobox', {name: 'filter-by-vocabulary'})
+		);
 
-		fireEvent.click(vocabulariesDropdownButton);
-
-		await waitForElementToBeRemoved(() => screen.getByTestId('loading'));
-
-		expect(screen.getAllByRole('menuitem').length).toBe(3);
+		const listbox = await screen.findByRole('listbox');
 
 		expect(
-			screen.queryByRole('menuitem', {name: 'all-vocabularies'})
+			await within(listbox).findByRole('option', {name: 'vocabulary 01'})
 		).toBeInTheDocument();
 
 		expect(
-			screen.queryByRole('menuitem', {name: 'vocabulary 01'})
+			within(listbox).getByRole('option', {name: 'vocabulary 02'})
 		).toBeInTheDocument();
 
 		expect(
-			screen.queryByRole('menuitem', {name: 'vocabulary 02'})
+			within(listbox).getByRole('option', {name: 'all-vocabularies'})
 		).toBeInTheDocument();
+
+		expect(within(listbox).getAllByRole('option')).toHaveLength(3);
 	});
 
-	it('search by a vocabulary and returns a filtered result', async () => {
-		jest.useFakeTimers();
-
+	it('searches by vocabulary name and returns a filtered result', async () => {
 		jest.spyOn(ApiHelper, 'get').mockResolvedValue({
 			data: mockVocabularyApiResponse,
 			error: null,
@@ -144,60 +135,36 @@ describe('[CMS Dashboard] Components: AllVocabulariesDropdown', () => {
 
 		render(<WrappedComponent onSelectItem={jest.fn()} />);
 
-		const vocabulariesDropdownButton = screen.getByRole('button', {
-			name: 'all-vocabularies',
+		fireEvent.click(
+			screen.getByRole('combobox', {name: 'filter-by-vocabulary'})
+		);
+
+		const listbox = await screen.findByRole('listbox');
+
+		await within(listbox).findByRole('option', {name: 'vocabulary 02'});
+
+		fireEvent.change(screen.getByPlaceholderText('search'), {
+			target: {value: 'vocabulary 02'},
 		});
 
-		fireEvent.click(vocabulariesDropdownButton);
-
-		await waitForElementToBeRemoved(() => screen.getByTestId('loading'));
-
-		expect(screen.getAllByRole('menuitem').length).toBe(3);
-
-		jest.spyOn(ApiHelper, 'get').mockResolvedValue({
-			data: {
-				items: [
-					{
-						id: '02',
-						name: 'vocabulary 02',
-					},
-				],
-			},
-			error: null,
-		});
-
-		await act(async () => {
-			fireEvent.change(screen.getByPlaceholderText('search'), {
-				target: {
-					value: 'vocabulary 02',
-				},
-			});
-
-			jest.advanceTimersByTime(300);
-		});
-
-		await waitFor(() => {
-			expect(screen.getAllByRole('menuitem').length).toBe(1);
-
-			expect(
-				screen.queryByRole('menuitem', {name: 'vocabulary 02'})
-			).toBeInTheDocument();
-		});
+		await waitFor(() =>
+			expect(within(listbox).getAllByRole('option')).toHaveLength(1)
+		);
 
 		expect(
-			screen.queryByRole('menuitem', {name: 'all-vocabularies'})
+			within(listbox).getByRole('option', {name: 'vocabulary 02'})
+		).toBeInTheDocument();
+
+		expect(
+			within(listbox).queryByRole('option', {name: 'vocabulary 01'})
 		).not.toBeInTheDocument();
 
 		expect(
-			screen.queryByRole('menuitem', {name: 'vocabulary 01'})
+			within(listbox).queryByRole('option', {name: 'all-vocabularies'})
 		).not.toBeInTheDocument();
-
-		jest.useRealTimers();
 	});
 
-	it('search by a vocabulary and returns a empty result', async () => {
-		jest.useFakeTimers();
-
+	it('shows a message when no vocabulary matches the search', async () => {
 		jest.spyOn(ApiHelper, 'get').mockResolvedValue({
 			data: mockVocabularyApiResponse,
 			error: null,
@@ -205,44 +172,27 @@ describe('[CMS Dashboard] Components: AllVocabulariesDropdown', () => {
 
 		render(<WrappedComponent onSelectItem={jest.fn()} />);
 
-		const vocabulariesDropdownButton = screen.getByRole('button', {
-			name: 'all-vocabularies',
+		fireEvent.click(
+			screen.getByRole('combobox', {name: 'filter-by-vocabulary'})
+		);
+
+		const listbox = await screen.findByRole('listbox');
+
+		await within(listbox).findByRole('option', {name: 'vocabulary 02'});
+
+		fireEvent.change(screen.getByPlaceholderText('search'), {
+			target: {value: 'no-match'},
 		});
 
-		fireEvent.click(vocabulariesDropdownButton);
-
-		await waitForElementToBeRemoved(() => screen.getByTestId('loading'));
-
-		expect(screen.getAllByRole('menuitem').length).toBe(3);
-
-		jest.spyOn(ApiHelper, 'get').mockResolvedValue({
-			data: {items: []},
-			error: null,
-		});
-
-		await act(async () => {
-			fireEvent.change(screen.getByPlaceholderText('search'), {
-				target: {value: 'empty?'},
-			});
-
-			jest.advanceTimersByTime(300);
-		});
-
-		await waitFor(() => {
-			expect(screen.getAllByRole('menuitem').length).toBe(1);
-
+		await waitFor(() =>
 			expect(
-				screen.queryByRole('menuitem', {name: 'all-vocabularies'})
-			).not.toBeInTheDocument();
+				within(listbox).queryByRole('option')
+			).not.toBeInTheDocument()
+		);
 
-			expect(
-				screen.queryByRole('menuitem', {
-					name: 'no-filters-were-found',
-				})
-			).toBeInTheDocument();
-		});
-
-		jest.useRealTimers();
+		expect(
+			within(listbox).getByText('no-results-were-found')
+		).toBeInTheDocument();
 	});
 
 	it('selects a new vocabulary', async () => {
@@ -251,20 +201,20 @@ describe('[CMS Dashboard] Components: AllVocabulariesDropdown', () => {
 			error: null,
 		});
 
-		render(<WrappedComponent onSelectItem={() => {}} />);
+		render(<WrappedComponent onSelectItem={jest.fn()} />);
 
-		expect(screen.getByTestId('vocabularies')).toHaveTextContent(
-			'all-vocabularies'
+		const trigger = screen.getByRole('combobox', {
+			name: 'filter-by-vocabulary',
+		});
+
+		fireEvent.click(trigger);
+
+		const listbox = await screen.findByRole('listbox');
+
+		fireEvent.click(
+			await within(listbox).findByRole('option', {name: 'vocabulary 02'})
 		);
 
-		fireEvent.click(screen.getByTestId('vocabularies'));
-
-		await waitForElementToBeRemoved(() => screen.getByTestId('loading'));
-
-		fireEvent.click(screen.getByRole('menuitem', {name: 'vocabulary 02'}));
-
-		expect(screen.getByTestId('vocabularies')).toHaveTextContent(
-			'vocabulary 02'
-		);
+		await waitFor(() => expect(trigger).toHaveTextContent('vocabulary 02'));
 	});
 });

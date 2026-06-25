@@ -36,13 +36,22 @@ const mockData = {
 	error: null,
 };
 
+const mockApiHelperGet = (inventoryAnalysisData: any) =>
+	jest
+		.spyOn(ApiHelper, 'get')
+		.mockImplementation((url: string) =>
+			url.includes('inventory-analysis')
+				? Promise.resolve(inventoryAnalysisData)
+				: Promise.resolve({data: {items: []}, error: null})
+		);
+
 describe('[CMS Dashboard] InventoryAnalysisCard', () => {
 	afterEach(() => {
 		jest.restoreAllMocks();
 	});
 
 	it('renders inventory analysis data inside a PaginatedTable', async () => {
-		jest.spyOn(ApiHelper, 'get').mockResolvedValue(mockData);
+		mockApiHelperGet(mockData);
 
 		render(
 			<ViewDashboardContext.Provider value={mockContextValue}>
@@ -61,7 +70,7 @@ describe('[CMS Dashboard] InventoryAnalysisCard', () => {
 	});
 
 	it('allows user to switch preferences between chart and table', async () => {
-		jest.spyOn(ApiHelper, 'get').mockResolvedValue(mockData);
+		mockApiHelperGet(mockData);
 
 		render(
 			<ViewDashboardContext.Provider value={mockContextValue}>
@@ -73,20 +82,22 @@ describe('[CMS Dashboard] InventoryAnalysisCard', () => {
 			expect(screen.getByText('Articles')).toBeInTheDocument()
 		);
 
-		const preferencesButton = screen.getByRole('button', {
+		const preferencesButton = screen.getByRole('combobox', {
 			name: 'chart',
 		});
 
 		fireEvent.click(preferencesButton);
 
-		const tableOption = screen.getByText('table');
+		const tableOption = await screen.findByRole('option', {name: 'table'});
 		fireEvent.click(tableOption);
 
-		expect(screen.getByRole('button', {name: 'table'})).toBeInTheDocument();
+		expect(
+			screen.getByRole('combobox', {name: 'table'})
+		).toBeInTheDocument();
 	});
 
 	it('renders filters (group by and filter by) when data is available', async () => {
-		jest.spyOn(ApiHelper, 'get').mockResolvedValue(mockData);
+		mockApiHelperGet(mockData);
 
 		render(
 			<ViewDashboardContext.Provider value={mockContextValue}>
@@ -103,7 +114,7 @@ describe('[CMS Dashboard] InventoryAnalysisCard', () => {
 	});
 
 	it('renders EmptyStateCard when no inventory analysis data is available', async () => {
-		jest.spyOn(ApiHelper, 'get').mockResolvedValue({
+		mockApiHelperGet({
 			data: {
 				inventoryAnalysisItems: [],
 				totalCount: 0,

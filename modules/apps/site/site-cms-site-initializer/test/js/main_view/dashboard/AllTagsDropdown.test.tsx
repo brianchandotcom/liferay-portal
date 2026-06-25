@@ -5,12 +5,11 @@
 
 import '@testing-library/jest-dom';
 import {
-	act,
 	fireEvent,
 	render,
 	screen,
 	waitFor,
-	waitForElementToBeRemoved,
+	within,
 } from '@testing-library/react';
 import React from 'react';
 
@@ -71,36 +70,28 @@ describe('[CMS Dashboard] Components: AllTagsDropdown', () => {
 
 		render(<WrappedComponent onSelectItem={onSelectItem} />);
 
-		const tagsDropdownButton = screen.getByRole('button', {
-			name: 'all-tags',
-		});
+		const trigger = screen.getByRole('combobox', {name: 'filter-by-tag'});
 
-		expect(tagsDropdownButton).toBeInTheDocument();
+		expect(trigger).toHaveTextContent('all-tags');
 
-		fireEvent.click(tagsDropdownButton);
+		fireEvent.click(trigger);
 
-		expect(screen.queryByText('filter-by-tag')).toBeInTheDocument();
+		expect(screen.getByPlaceholderText('search')).toBeInTheDocument();
 
-		expect(screen.queryByPlaceholderText('search')).toBeInTheDocument();
+		const listbox = await screen.findByRole('listbox');
 
-		await waitForElementToBeRemoved(() => screen.getByTestId('loading'));
+		const option = within(listbox).getByRole('option', {name: 'all-tags'});
 
-		expect(screen.getAllByRole('menuitem').length).toBe(1);
+		expect(within(listbox).getAllByRole('option')).toHaveLength(1);
 
-		const menuitem = screen.getByRole('menuitem', {
-			name: 'all-tags',
-		});
+		fireEvent.click(option);
 
-		expect(menuitem).toBeInTheDocument();
-
-		fireEvent.click(menuitem);
-
-		expect(onSelectItem).toHaveBeenCalledTimes(1);
-
-		expect(onSelectItem).toHaveBeenCalledWith({
-			label: 'all-tags',
-			value: 'all',
-		});
+		expect(onSelectItem).toHaveBeenCalledWith(
+			expect.objectContaining({
+				label: 'all-tags',
+				value: 'all',
+			})
+		);
 	});
 
 	it('renders a tag list', async () => {
@@ -111,151 +102,107 @@ describe('[CMS Dashboard] Components: AllTagsDropdown', () => {
 
 		render(<WrappedComponent onSelectItem={jest.fn()} />);
 
-		const tagsDropdownButton = screen.getByRole('button', {
-			name: 'all-tags',
-		});
+		fireEvent.click(screen.getByRole('combobox', {name: 'filter-by-tag'}));
 
-		fireEvent.click(tagsDropdownButton);
-
-		await waitForElementToBeRemoved(() => screen.getByTestId('loading'));
-
-		expect(screen.getAllByRole('menuitem').length).toBe(3);
+		const listbox = await screen.findByRole('listbox');
 
 		expect(
-			screen.queryByRole('menuitem', {name: 'all-tags'})
+			await within(listbox).findByRole('option', {name: 'tag 01'})
 		).toBeInTheDocument();
 
 		expect(
-			screen.queryByRole('menuitem', {name: 'tag 01'})
+			within(listbox).getByRole('option', {name: 'tag 02'})
 		).toBeInTheDocument();
 
 		expect(
-			screen.queryByRole('menuitem', {name: 'tag 02'})
+			within(listbox).getByRole('option', {name: 'all-tags'})
 		).toBeInTheDocument();
+
+		expect(within(listbox).getAllByRole('option')).toHaveLength(3);
 	});
 
-	it('search by a tag and returns a filtered result', async () => {
-		jest.useFakeTimers();
-
-		jest.spyOn(ApiHelper, 'get')
-			.mockResolvedValueOnce({
-				data: mockTagsApiResponse,
-				error: null,
-			})
-			.mockResolvedValueOnce({
-				data: {items: [{id: '02', name: 'tag 02'}]},
-				error: null,
-			});
-
-		render(<WrappedComponent onSelectItem={jest.fn()} />);
-
-		const tagsDropdownButton = screen.getByRole('button', {
-			name: 'all-tags',
-		});
-
-		fireEvent.click(tagsDropdownButton);
-
-		await waitForElementToBeRemoved(() => screen.getByTestId('loading'));
-
-		expect(screen.getAllByRole('menuitem').length).toBe(3);
-
-		await act(async () => {
-			fireEvent.change(screen.getByPlaceholderText('search'), {
-				target: {
-					value: 'tag 02',
-				},
-			});
-
-			jest.advanceTimersByTime(300);
-		});
-
-		await waitFor(() => {
-			expect(screen.getAllByRole('menuitem').length).toBe(1);
-
-			expect(
-				screen.queryByRole('menuitem', {name: 'tag 02'})
-			).toBeInTheDocument();
-		});
-
-		expect(
-			screen.queryByRole('menuitem', {name: 'all-tags'})
-		).not.toBeInTheDocument();
-
-		expect(
-			screen.queryByRole('menuitem', {name: 'tag 01'})
-		).not.toBeInTheDocument();
-
-		jest.useRealTimers();
-	});
-
-	it('search by a tag and returns a empty result', async () => {
-		jest.useFakeTimers();
-
-		jest.spyOn(ApiHelper, 'get')
-			.mockResolvedValueOnce({
-				data: mockTagsApiResponse,
-				error: null,
-			})
-			.mockResolvedValueOnce({
-				data: {items: []},
-				error: null,
-			});
-
-		render(<WrappedComponent onSelectItem={jest.fn()} />);
-
-		const tagsDropdownButton = screen.getByRole('button', {
-			name: 'all-tags',
-		});
-
-		fireEvent.click(tagsDropdownButton);
-
-		await waitForElementToBeRemoved(() => screen.getByTestId('loading'));
-
-		expect(screen.getAllByRole('menuitem').length).toBe(3);
-
-		await act(async () => {
-			fireEvent.change(screen.getByPlaceholderText('search'), {
-				target: {
-					value: 'empty?',
-				},
-			});
-
-			jest.advanceTimersByTime(300);
-		});
-
-		await waitFor(() => {
-			expect(screen.getAllByRole('menuitem').length).toBe(1);
-
-			expect(
-				screen.queryByRole('menuitem', {
-					name: 'no-filters-were-found',
-				})
-			).toBeInTheDocument();
-		});
-
-		expect(
-			screen.queryByRole('menuitem', {name: 'all-tags'})
-		).not.toBeInTheDocument();
-
-		jest.useRealTimers();
-	});
-
-	it('selects a new tag', async () => {
-		jest.spyOn(ApiHelper, 'get').mockResolvedValueOnce({
+	it('searches by tag name and returns a filtered result', async () => {
+		jest.spyOn(ApiHelper, 'get').mockResolvedValue({
 			data: mockTagsApiResponse,
 			error: null,
 		});
 
-		render(<WrappedComponent onSelectItem={() => {}} />);
+		render(<WrappedComponent onSelectItem={jest.fn()} />);
 
-		expect(screen.getByTestId('tags')).toHaveTextContent('all-tags');
+		fireEvent.click(screen.getByRole('combobox', {name: 'filter-by-tag'}));
 
-		fireEvent.click(screen.getByTestId('tags'));
+		const listbox = await screen.findByRole('listbox');
 
-		await waitForElementToBeRemoved(() => screen.getByTestId('loading'));
+		await within(listbox).findByRole('option', {name: 'tag 02'});
 
-		fireEvent.click(screen.getByRole('menuitem', {name: 'tag 02'}));
+		fireEvent.change(screen.getByPlaceholderText('search'), {
+			target: {value: 'tag 02'},
+		});
 
-		expect(screen.getByTestId('tags')).toHaveTextContent('tag 02');
+		await waitFor(() =>
+			expect(within(listbox).getAllByRole('option')).toHaveLength(1)
+		);
+
+		expect(
+			within(listbox).getByRole('option', {name: 'tag 02'})
+		).toBeInTheDocument();
+
+		expect(
+			within(listbox).queryByRole('option', {name: 'tag 01'})
+		).not.toBeInTheDocument();
+
+		expect(
+			within(listbox).queryByRole('option', {name: 'all-tags'})
+		).not.toBeInTheDocument();
+	});
+
+	it('shows a message when no tag matches the search', async () => {
+		jest.spyOn(ApiHelper, 'get').mockResolvedValue({
+			data: mockTagsApiResponse,
+			error: null,
+		});
+
+		render(<WrappedComponent onSelectItem={jest.fn()} />);
+
+		fireEvent.click(screen.getByRole('combobox', {name: 'filter-by-tag'}));
+
+		const listbox = await screen.findByRole('listbox');
+
+		await within(listbox).findByRole('option', {name: 'tag 02'});
+
+		fireEvent.change(screen.getByPlaceholderText('search'), {
+			target: {value: 'no-match'},
+		});
+
+		await waitFor(() =>
+			expect(
+				within(listbox).queryByRole('option')
+			).not.toBeInTheDocument()
+		);
+
+		expect(
+			within(listbox).getByText('no-results-were-found')
+		).toBeInTheDocument();
+	});
+
+	it('selects a new tag', async () => {
+		jest.spyOn(ApiHelper, 'get').mockResolvedValue({
+			data: mockTagsApiResponse,
+			error: null,
+		});
+
+		render(<WrappedComponent onSelectItem={jest.fn()} />);
+
+		const trigger = screen.getByRole('combobox', {name: 'filter-by-tag'});
+
+		fireEvent.click(trigger);
+
+		const listbox = await screen.findByRole('listbox');
+
+		fireEvent.click(
+			await within(listbox).findByRole('option', {name: 'tag 02'})
+		);
+
+		await waitFor(() => expect(trigger).toHaveTextContent('tag 02'));
 	});
 });

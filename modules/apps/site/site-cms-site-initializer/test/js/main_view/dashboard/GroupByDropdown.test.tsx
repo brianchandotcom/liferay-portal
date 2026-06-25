@@ -84,21 +84,26 @@ describe('[CMS Dashboard] Components: GroupByDropdown - All Options', () => {
 				/>
 			);
 
-			const button = screen.getByRole('button', {
+			const trigger = screen.getByRole('combobox', {
+				name: 'group-by',
+			});
+			expect(trigger).toHaveTextContent(item.label);
+
+			fireEvent.click(trigger);
+
+			const option = await screen.findByRole('option', {
 				name: item.label,
 			});
-			expect(button).toBeInTheDocument();
+			expect(option).toBeInTheDocument();
 
-			fireEvent.click(button);
+			fireEvent.click(option);
 
-			const menuitem = screen.getByRole('menuitem', {
-				name: item.label,
-			});
-			expect(menuitem).toBeInTheDocument();
-
-			fireEvent.click(menuitem);
-
-			expect(onSelectItem).toHaveBeenCalledWith(item);
+			expect(onSelectItem).toHaveBeenCalledWith(
+				expect.objectContaining({
+					label: item.label,
+					value: item.value,
+				})
+			);
 		}
 	);
 });

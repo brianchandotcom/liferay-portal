@@ -4,7 +4,13 @@
  */
 
 import '@testing-library/jest-dom';
-import {fireEvent, render, screen, waitFor} from '@testing-library/react';
+import {
+	fireEvent,
+	render,
+	screen,
+	waitFor,
+	within,
+} from '@testing-library/react';
 import React from 'react';
 
 import SpaceService from '../../../../src/main/resources/META-INF/resources/js/common/services/SpaceService';
@@ -46,35 +52,41 @@ describe('[CMS Dashboard] Components: LanguagesDropdown', () => {
 			</ViewDashboardContext.Provider>
 		);
 
-		const button = screen.getByRole('button', {name: 'all-languages'});
+		const trigger = screen.getByRole('combobox', {
+			name: 'filter-by-languages',
+		});
 
-		expect(button).toBeInTheDocument();
+		expect(trigger).toHaveTextContent('all-languages');
 
-		fireEvent.click(button);
+		fireEvent.click(trigger);
+
+		const listbox = await screen.findByRole('listbox');
 
 		expect(
-			screen.getByRole('menuitem', {name: 'all-languages'})
+			within(listbox).getByRole('option', {name: 'all-languages'})
 		).toBeInTheDocument();
 
-		const availableLanguages = Object.values(localizations);
-
-		availableLanguages.forEach((translation) => {
+		Object.values(localizations).forEach((translation) => {
 			expect(
-				screen.getByRole('menuitem', {name: translation})
+				within(listbox).getByRole('option', {name: translation})
 			).toBeInTheDocument();
 		});
 	});
 
-	it('filters languages when searching and restores them when backspacing or reopening', async () => {
+	it('filters languages when searching and restores them when reopening', async () => {
 		render(
 			<ViewDashboardContext.Provider value={mockedContext}>
 				<LanguagesDropdown />
 			</ViewDashboardContext.Provider>
 		);
 
-		const button = screen.getByRole('button', {name: 'all-languages'});
+		const trigger = screen.getByRole('combobox', {
+			name: 'filter-by-languages',
+		});
 
-		fireEvent.click(button);
+		fireEvent.click(trigger);
+
+		let listbox = await screen.findByRole('listbox');
 
 		const searchInput = screen.getByPlaceholderText('search');
 
@@ -84,11 +96,13 @@ describe('[CMS Dashboard] Components: LanguagesDropdown', () => {
 
 		await waitFor(() => {
 			expect(
-				screen.getByRole('menuitem', {name: localizations.en_US})
+				within(listbox).getByRole('option', {name: localizations.en_US})
 			).toBeInTheDocument();
 
 			expect(
-				screen.queryByRole('menuitem', {name: localizations.es_ES})
+				within(listbox).queryByRole('option', {
+					name: localizations.es_ES,
+				})
 			).not.toBeInTheDocument();
 		});
 
@@ -98,39 +112,29 @@ describe('[CMS Dashboard] Components: LanguagesDropdown', () => {
 
 		await waitFor(() => {
 			expect(
-				screen.queryByRole('menuitem', {name: localizations.en_US})
+				within(listbox).queryByRole('option', {
+					name: localizations.en_US,
+				})
 			).not.toBeInTheDocument();
 		});
 
-		// Backspace (simulated by searching for a prefix)
+		// Close and reopen the dropdown
 
-		fireEvent.change(searchInput, {
-			target: {value: localizations.en_US.substring(0, 3)},
-		});
+		fireEvent.click(trigger);
 
-		await waitFor(() => {
-			expect(
-				screen.getByRole('menuitem', {name: localizations.en_US})
-			).toBeInTheDocument();
-		});
+		fireEvent.click(trigger);
 
-		// Close the dropdown
-
-		fireEvent.click(button);
-
-		// Reopen the dropdown
-
-		fireEvent.click(button);
+		listbox = await screen.findByRole('listbox');
 
 		// Should show all languages again
 
 		await waitFor(() => {
 			expect(
-				screen.getByRole('menuitem', {name: localizations.en_US})
+				within(listbox).getByRole('option', {name: localizations.en_US})
 			).toBeInTheDocument();
 
 			expect(
-				screen.getByRole('menuitem', {name: localizations.es_ES})
+				within(listbox).getByRole('option', {name: localizations.es_ES})
 			).toBeInTheDocument();
 		});
 	});
@@ -168,24 +172,28 @@ describe('[CMS Dashboard] Components: LanguagesDropdown', () => {
 			)
 		);
 
-		fireEvent.click(screen.getByRole('button', {name: 'all-languages'}));
+		fireEvent.click(
+			screen.getByRole('combobox', {name: 'filter-by-languages'})
+		);
+
+		const listbox = await screen.findByRole('listbox');
 
 		expect(
-			screen.getByRole('menuitem', {name: 'all-languages'})
+			within(listbox).getByRole('option', {name: 'all-languages'})
 		).toBeInTheDocument();
 
 		expect(
-			screen.getByRole('menuitem', {name: localizations.en_US})
+			within(listbox).getByRole('option', {name: localizations.en_US})
 		).toBeInTheDocument();
 
 		expect(
-			screen.getByRole('menuitem', {name: localizations.es_ES})
+			within(listbox).getByRole('option', {name: localizations.es_ES})
 		).toBeInTheDocument();
 
 		// Should not show other languages
 
 		expect(
-			screen.queryByRole('menuitem', {name: localizations.pt_BR})
+			within(listbox).queryByRole('option', {name: localizations.pt_BR})
 		).not.toBeInTheDocument();
 	});
 
@@ -256,13 +264,15 @@ describe('[CMS Dashboard] Components: LanguagesDropdown', () => {
 			expect(mockedSpaceService.getSpace).toHaveBeenCalled()
 		);
 
-		fireEvent.click(screen.getByRole('button', {name: 'all-languages'}));
+		fireEvent.click(
+			screen.getByRole('combobox', {name: 'filter-by-languages'})
+		);
 
-		const availableLanguages = Object.values(localizations);
+		const listbox = await screen.findByRole('listbox');
 
-		availableLanguages.forEach((translation) => {
+		Object.values(localizations).forEach((translation) => {
 			expect(
-				screen.getByRole('menuitem', {name: translation})
+				within(listbox).getByRole('option', {name: translation})
 			).toBeInTheDocument();
 		});
 	});

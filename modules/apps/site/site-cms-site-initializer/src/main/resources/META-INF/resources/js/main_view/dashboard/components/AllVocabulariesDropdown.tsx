@@ -4,7 +4,7 @@
  */
 
 import {Option, Picker} from '@clayui/core';
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useMemo, useState} from 'react';
 
 import VocabularyService from '../../../common/services/VocabularyService';
 import {ViewDashboardContext} from '../ViewDashboardContext';
@@ -16,6 +16,8 @@ import {
 } from './InventoryAnalysisCard';
 import PickerTrigger from './PickerTrigger';
 
+type Vocabulary = {assetLibraries: {id: number}[]; id: string; name: string};
+
 const AllVocabulariesDropdown: React.FC<IAllFiltersDropdown> = ({
 	className,
 	item,
@@ -26,9 +28,7 @@ const AllVocabulariesDropdown: React.FC<IAllFiltersDropdown> = ({
 		filters: {space},
 	} = useContext(ViewDashboardContext);
 
-	const [vocabularies, setVocabularies] = useState<Item[]>([
-		initialFilters.vocabulary,
-	]);
+	const [rawVocabularies, setRawVocabularies] = useState<Vocabulary[]>([]);
 
 	useEffect(() => {
 		const fetchVocabularies = async () => {
@@ -42,24 +42,29 @@ const AllVocabulariesDropdown: React.FC<IAllFiltersDropdown> = ({
 			}
 
 			if (data) {
-				setVocabularies([
-					initialFilters.vocabulary,
-					...data.items
-						.filter(
-							({assetLibraries}) =>
-								space.value === 'all' ||
-								filterBySpaces(assetLibraries, space.value)
-						)
-						.map(({id, name}) => ({
-							label: name,
-							value: String(id),
-						})),
-				]);
+				setRawVocabularies(data.items);
 			}
 		};
 
 		fetchVocabularies();
-	}, [cmsGroupId, space.value]);
+	}, [cmsGroupId]);
+
+	const vocabularies: Item[] = useMemo(
+		() => [
+			initialFilters.vocabulary,
+			...rawVocabularies
+				.filter(
+					({assetLibraries}) =>
+						space.value === 'all' ||
+						filterBySpaces(assetLibraries, space.value)
+				)
+				.map(({id, name}) => ({
+					label: name,
+					value: String(id),
+				})),
+		],
+		[rawVocabularies, space.value]
+	);
 
 	return (
 		<Picker

@@ -19,7 +19,7 @@ dependencies {
 	testImplementation group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testImplementation group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
 	testImplementation group: "jakarta.servlet", name: "jakarta.servlet-api", version: "6.0.0"
-	testImplementation group: "org.springframework", name: "spring-web", version: "6.2.9"
+	testImplementation group: "org.springframework", name: "spring-web", version: "6.2.19"
 	testImplementation project(":apps:static:portal-configuration:portal-configuration-persistence-api")
 	testImplementation project(":apps:static:portal-file-install:portal-file-install-api")
 	testImplementation project(":core:petra:petra-process")

@@ -10,12 +10,12 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.field.builder.DateTimeObjectFieldBuilder;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
+import com.liferay.object.model.ObjectField;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Collections;
 
@@ -57,18 +57,36 @@ public class DateTimeObjectFieldBusinessTypeTest {
 			_getDisplayContextValue("2025-08-04 09:10:11.123"));
 	}
 
+	@Test
+	public void testGetDTOValue() throws Exception {
+		Assert.assertEquals(
+			"2025-08-04T00:00:00.000", _getDTOValue("2025-08-04"));
+		Assert.assertEquals(
+			"2025-08-04T09:10:00.000", _getDTOValue("2025-08-04 09:10"));
+		Assert.assertEquals(
+			"2025-08-04T09:10:11.123", _getDTOValue("2025-08-04 09:10:11.123"));
+	}
+
 	private String _getDisplayContextValue(String value) throws Exception {
 		return String.valueOf(
 			_objectFieldBusinessType.getDisplayContextValue(
-				new DateTimeObjectFieldBuilder(
-				).labelMap(
-					LocalizedMapUtil.getLocalizedMap(
-						RandomTestUtil.randomString())
-				).name(
-					_OBJECT_FIELD_NAME
-				).build(),
-				TestPropsValues.getUserId(),
+				_getObjectField(), TestPropsValues.getUserId(),
 				Collections.singletonMap(_OBJECT_FIELD_NAME, value)));
+	}
+
+	private String _getDTOValue(String value) throws Exception {
+		return String.valueOf(
+			_objectFieldBusinessType.getDTOValue(
+				null, null, null, _getObjectField(), value));
+	}
+
+	private ObjectField _getObjectField() {
+		return new DateTimeObjectFieldBuilder(
+		).labelMap(
+			RandomTestUtil.randomLocaleStringMap()
+		).name(
+			_OBJECT_FIELD_NAME
+		).build();
 	}
 
 	private static final String _OBJECT_FIELD_NAME =

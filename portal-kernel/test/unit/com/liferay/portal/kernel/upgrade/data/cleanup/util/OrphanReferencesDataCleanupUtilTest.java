@@ -90,7 +90,8 @@ public class OrphanReferencesDataCleanupUtilTest {
 		catch (Exception exception) {
 			SQLException sqlException = (SQLException)exception;
 
-			Assert.assertEquals(_SQL_STATE_DEADLOCK, sqlException.getSQLState());
+			Assert.assertEquals(
+				_SQL_STATE_DEADLOCK, sqlException.getSQLState());
 		}
 
 		int expectedAttempts =

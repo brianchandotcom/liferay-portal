@@ -13,10 +13,12 @@ import com.liferay.client.extension.type.CET;
 import com.liferay.client.extension.type.GlobalCSSCET;
 import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.log.LogCapture;
@@ -69,24 +71,41 @@ public class CETManagerImplTest {
 
 	@Test
 	public void testGetCETIsCached() throws Exception {
-		ClientExtensionEntry clientExtensionEntry = _addClientExtensionEntry(
-			ClientExtensionEntryConstants.TYPE_GLOBAL_CSS,
-			"http://example.com/a.css");
+		String pid =
+			"com.liferay.client.extension.type.internal.configuration." +
+				"CETManagerConfiguration";
 
-		CET cet1 = _cetManager.getCET(
-			TestPropsValues.getCompanyId(),
-			clientExtensionEntry.getExternalReferenceCode());
+		ConfigurationTestUtil.saveConfiguration(
+			pid,
+			HashMapDictionaryBuilder.<String, Object>put(
+				"cacheEnabled", true
+			).build());
 
-		CET cet2 = _cetManager.getCET(
-			TestPropsValues.getCompanyId(),
-			clientExtensionEntry.getExternalReferenceCode());
+		try {
+			ClientExtensionEntry clientExtensionEntry =
+				_addClientExtensionEntry(
+					ClientExtensionEntryConstants.TYPE_GLOBAL_CSS,
+					"http://example.com/a.css");
 
-		Assert.assertNotNull(cet1);
-		Assert.assertSame(cet1, cet2);
+			CET cet1 = _cetManager.getCET(
+				TestPropsValues.getCompanyId(),
+				clientExtensionEntry.getExternalReferenceCode());
 
-		GlobalCSSCET globalCSSCET = (GlobalCSSCET)cet1;
+			CET cet2 = _cetManager.getCET(
+				TestPropsValues.getCompanyId(),
+				clientExtensionEntry.getExternalReferenceCode());
 
-		Assert.assertEquals("http://example.com/a.css", globalCSSCET.getURL());
+			Assert.assertNotNull(cet1);
+			Assert.assertSame(cet1, cet2);
+
+			GlobalCSSCET globalCSSCET = (GlobalCSSCET)cet1;
+
+			Assert.assertEquals(
+				"http://example.com/a.css", globalCSSCET.getURL());
+		}
+		finally {
+			ConfigurationTestUtil.deleteConfiguration(pid);
+		}
 	}
 
 	@Test

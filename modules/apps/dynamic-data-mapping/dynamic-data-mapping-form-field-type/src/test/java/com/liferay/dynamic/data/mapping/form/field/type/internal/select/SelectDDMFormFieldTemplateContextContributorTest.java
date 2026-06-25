@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -304,40 +305,11 @@ public class SelectDDMFormFieldTemplateContextContributorTest
 
 	@Test
 	public void testGetOptionsAlphabeticallyOrdered() {
-		List<Object> expectedOptions = new ArrayList<>();
-
-		expectedOptions.add(
-			DDMFormFieldOptionsTestUtil.createOption(
-				"Label 1",
-				HashMapBuilder.put(
-					LocaleUtil.US, "Label 1"
-				).build(),
-				"Reference 1", "value 1"));
-		expectedOptions.add(
-			DDMFormFieldOptionsTestUtil.createOption(
-				"Label 2",
-				HashMapBuilder.put(
-					LocaleUtil.US, "Label 2"
-				).build(),
-				"Reference 2", "value 2"));
-		expectedOptions.add(
-			DDMFormFieldOptionsTestUtil.createOption(
-				"Label 3",
-				HashMapBuilder.put(
-					LocaleUtil.US, "Label 3"
-				).build(),
-				"Reference 3", "value 3"));
+		List<Map<String, Object>> expectedOptions = _createExpectedOptions();
 
 		DDMFormField ddmFormField = new DDMFormField("field", "select");
 
-		DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
-
-		for (int i = 3; i > 0; i--) {
-			ddmFormFieldOptions.addOptionLabel(
-				"value " + i, LocaleUtil.US, "Label " + i);
-			ddmFormFieldOptions.addOptionReference(
-				"value " + i, "Reference " + i);
-		}
+		DDMFormFieldOptions ddmFormFieldOptions = _createDDMFormFieldOptions();
 
 		Assert.assertNotEquals(
 			expectedOptions,
@@ -509,6 +481,43 @@ public class SelectDDMFormFieldTemplateContextContributorTest
 	}
 
 	@Test
+	public void testGetParametersAlphabeticallyOrdered() throws Exception {
+		List<Map<String, Object>> expectedOptions = _createExpectedOptions();
+
+		DDMFormField ddmFormField = new DDMFormField("field", "select");
+
+		ddmFormField.setDDMForm(getDDMForm());
+		ddmFormField.setProperty(
+			"listTypeDefinitionId", RandomTestUtil.randomLong());
+		ddmFormField.setProperty("objectFieldId", RandomTestUtil.randomLong());
+
+		DDMFormFieldOptions ddmFormFieldOptions = _createDDMFormFieldOptions();
+
+		ddmFormFieldOptions.setDefaultLocale(LocaleUtil.US);
+
+		ddmFormField.setDDMFormFieldOptions(ddmFormFieldOptions);
+
+		SelectDDMFormFieldTemplateContextContributor
+			selectDDMFormFieldTemplateContextContributor = _createSpy();
+
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
+			createDDMFormFieldRenderingContext();
+
+		Map<String, Object> parameters =
+			selectDDMFormFieldTemplateContextContributor.getParameters(
+				ddmFormField, ddmFormFieldRenderingContext);
+
+		Assert.assertNotEquals(expectedOptions, parameters.get("options"));
+
+		ddmFormField.setProperty("alphabeticalOrder", "true");
+
+		parameters = selectDDMFormFieldTemplateContextContributor.getParameters(
+			ddmFormField, ddmFormFieldRenderingContext);
+
+		Assert.assertEquals(expectedOptions, parameters.get("options"));
+	}
+
+	@Test
 	public void testGetValue1() {
 		List<String> values =
 			_selectDDMFormFieldTemplateContextContributor.getValue(
@@ -533,6 +542,41 @@ public class SelectDDMFormFieldTemplateContextContributorTest
 		ddmFormField.setProperty("multiple", multiple);
 
 		return ddmFormField;
+	}
+
+	private DDMFormFieldOptions _createDDMFormFieldOptions() {
+		DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
+
+		for (int i = 3; i > 0; i--) {
+			ddmFormFieldOptions.addOptionLabel(
+				"value " + i, LocaleUtil.US, "Label " + i);
+			ddmFormFieldOptions.addOptionReference(
+				"value " + i, "Reference " + i);
+		}
+
+		return ddmFormFieldOptions;
+	}
+
+	private List<Map<String, Object>> _createExpectedOptions() {
+		return ListUtil.fromArray(
+			DDMFormFieldOptionsTestUtil.createOption(
+				"Label 1",
+				HashMapBuilder.put(
+					LocaleUtil.US, "Label 1"
+				).build(),
+				"Reference 1", "value 1"),
+			DDMFormFieldOptionsTestUtil.createOption(
+				"Label 2",
+				HashMapBuilder.put(
+					LocaleUtil.US, "Label 2"
+				).build(),
+				"Reference 2", "value 2"),
+			DDMFormFieldOptionsTestUtil.createOption(
+				"Label 3",
+				HashMapBuilder.put(
+					LocaleUtil.US, "Label 3"
+				).build(),
+				"Reference 3", "value 3"));
 	}
 
 	private SelectDDMFormFieldTemplateContextContributor _createSpy() {

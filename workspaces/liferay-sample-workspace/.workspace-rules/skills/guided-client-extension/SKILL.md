@@ -9,12 +9,12 @@ name: guided-client-extension
 
 # Liferay Client Extension Mentor Protocol (Beginner Friendly)
 
-## 0. Preflight Check
+## Preflight Check
 
 - If the user appears to be new to Liferay or Client Extensions, ask if they would like a guided experience.
 - If they decline, use this document only for technical reference.
 
-## 1. Guided One Shot Generation
+## Guided One Shot Generation
 
 - **Target directory**: create a new folder at `client-extensions/liferay-hello-world`.
 - **Source of truth**: always reference official Liferay samples for the correct structure.
@@ -25,7 +25,7 @@ name: guided-client-extension
   - `assets/style.css`: standard entry point for component styling.
 - **Autodetection**: remind the user that no `build.gradle` is needed in the extension folder; the Liferay workspace plugin detects everything in `client-extensions/` automatically by finding the `client-extension.yaml`.
 
-## 2. Deployment Workflow
+## Deployment Workflow
 
 - **Mechanism**: explain that Blade uses the Gradle Wrapper (`blade gw`) to package the code into a `.zip` file.
 - **Prerequisites**:
@@ -35,12 +35,12 @@ name: guided-client-extension
   - **Tomcat**: run `blade gw deploy`. This compiles the assets and copies the zip to `bundles/osgi/client-extensions/`.
   - **Docker**: run `./gradlew deploy "-Ddeploy.docker.container.id=$(docker compose ps --quiet liferay)"`. This deploys directly into the running container with no restart needed.
 
-## 3. Runtime Verification
+## Runtime Verification
 
 - **Logs**: instruct the user (or search yourself) for the log entry: `STARTED [extension-id]`.
 - **Significance**: explain that this log entry confirms Liferay has detected, registered, and started the extension in the OSGi registry.
 
-## 4. UI Placement & Publishing
+## UI Placement & Publishing
 
 Guide the user through these manual steps in the Liferay Portal UI:
 
@@ -54,7 +54,7 @@ Guide the user through these manual steps in the Liferay Portal UI:
 
 1. Click **Publish**.
 
-## 5. Next Steps
+## Next Steps
 
 - Ask the user if they would like to explore other Client Extension types (e.g., Global CSS, IFrame, or Batch).
 - Refer to the [official samples](https://github.com/liferay/liferay-portal/tree/master/workspaces/liferay-sample-workspace/client-extensions/) for more advanced patterns.

@@ -23,7 +23,7 @@ Feature flag `LPD-17564` is required for the object collaborators API (per objec
 
 ## Workflow
 
-### 1. Create a Role
+### Create a Role
 
 ```bash
 curl \
@@ -49,7 +49,7 @@ curl \
 
 Save the returned `id` as `<role-id>`.
 
-### 2. Assign Users to a Role
+### Assign Users to a Role
 
 ```bash
 # Assign a user account to a regular role
@@ -71,7 +71,7 @@ curl \
 	--user "test@liferay.com:test"
 ```
 
-### 3. Grant Permissions on an Object Definition
+### Grant Permissions on an Object Definition
 
 Object level permissions control which roles can create, view, update, or delete entries for that object definition.
 
@@ -102,7 +102,7 @@ Common `actionIds` for object definitions:
 | `VIEW` | View the object in site and admin UI |
 | `PERMISSIONS` | Manage permissions on this object |
 
-### 4. Grant Permissions on Object Entries (Requires LPD-17564)
+### Grant Permissions on Object Entries (Requires LPD-17564)
 
 Per entry permissions are managed via the object collaborators API. Ensure `LPD-17564` is enabled before calling.
 
@@ -132,7 +132,7 @@ Common `actionIds` for object entries:
 | `DELETE` | Delete the entry |
 | `PERMISSIONS` | Manage permissions on this entry |
 
-### 5. Grant Permissions on a Site Page
+### Grant Permissions on a Site Page
 
 Page level permissions control visibility and edit access.
 
@@ -159,7 +159,7 @@ curl \
 
 To make a page visible only to authenticated users, remove the VIEW permission from the Guest role. To make it fully private, also remove it from the User role and grant VIEW only to the target role.
 
-### 6. Verify Roles and Permissions
+### Verify Roles and Permissions
 
 ```bash
 # List roles

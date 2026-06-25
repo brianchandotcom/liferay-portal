@@ -29,7 +29,7 @@ Provide the user with the exact command (Tomcat: `blade gw deploy`; Docker: `./g
 
 ## Workflow
 
-### 1. Identify the Target
+### Identify the Target
 
 Target type drives the command:
 
@@ -53,13 +53,13 @@ docker compose up
 
 The workspace Gradle plugin outputs client extensions to a docker build directory, which docker-compose mounts into the container at `/opt/liferay/osgi/client-extensions`. After the container is up, switch to iterative deploys above.
 
-### 2. Run the Deploy
+### Run the Deploy
 
 Always invoke through Blade for Tomcat (`blade gw deploy`) or Gradle for Docker. Capture the build output. A failure here is a build problem; surface the message and stop.
 
 **Parallel execution**: run the deploy command as a nonblocking background process so log watching can happen concurrently. Use whatever background execution mechanism your tool provides.
 
-### 3. Tail for STARTED
+### Tail for STARTED
 
 Watch the log until either of these markers appears:
 
@@ -81,7 +81,7 @@ Use `until grep` rather than `tail --follow=name --retry` polling.
 
 The bundle symbolic name comes from `Bundle-SymbolicName` in `bnd.bnd`, or from `client-extension.yaml` `id` (prefixed by the workspace project ID).
 
-### 4. Smoke Check
+### Smoke Check
 
 After STARTED:
 
@@ -92,7 +92,7 @@ After STARTED:
 
 For Headless APIs and Client Extension assets, success means HTTP `200 OK` on the resource URL — not just a successful deploy exit code.
 
-### 5. Troubleshoot
+### Troubleshoot
 
 When STARTED never appears:
 

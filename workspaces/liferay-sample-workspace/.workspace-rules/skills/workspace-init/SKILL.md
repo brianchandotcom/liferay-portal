@@ -13,13 +13,13 @@ Stand up a working Liferay Workspace from zero, or diagnose a workspace that loo
 
 > **Note:** These rules apply to local workspace initialization and must not be used to configure higher environments (UAT/Prod).
 
-## 1. Version & Tooling Check
+## Version & Tooling Check
 
 - **Check version**: read `liferay.workspace.product` in `gradle.properties`.
 - **Verify tooling**: check that `blade` (`blade --version`) and Java (`javac -version`) are installed. If missing, provide installation steps.
 - **DXP License**: if `liferay.workspace.product` contains `dxp`, a license file is required. Liferay identifies license files by XML content, not filename — check `bundles/deploy/` for any `.xml` file whose root element is `<license>` or `<licenses>`. If none is found, stop and ask the user to place their license file in `bundles/deploy/` before continuing. For Docker, apply the same check to the directory mounted to the container's deploy path. Community Edition and free tier products do not require a license — skip this check for those.
 
-## 2. Environment Readiness & State Sync
+## Environment Readiness & State Sync
 
 ### Configure MCP Before Starting the Server
 
@@ -74,12 +74,12 @@ Skip this block if MCP is not supported in your DXP version.
 - **Start**: `docker compose up` (foreground) or `docker compose up --detach` (background). Run from the directory containing the compose file.
 - **Login**: use credentials defined in `liferay.env` (default: `test@liferay.com` / `test`).
 
-## 3. Server Verification
+## Server Verification
 
 - **Tomcat**: watch `bundles/tomcat*/logs/catalina.out` for `Server startup in [X] ms`. Then verify `http://localhost:${PORT}` is reachable.
 - **Docker**: poll the health check endpoint until it returns `200`: `curl --fail http://localhost:${PORT}/c/portal/status`. Then verify `http://localhost:${PORT}` is reachable. (Port may differ if the compose file maps a different host port.)
 
-## 4. First Login Bootstrap (Mandatory Before API/MCP Calls)
+## First Login Bootstrap (Mandatory Before API/MCP Calls)
 
 On a fresh Liferay instance, the default admin `test@liferay.com` is created with `passwordReset=true` and `agreedToTermsOfUse=false` in the database. Until both flags are cleared, every authenticated API call (REST, MCP `call-http-endpoint`) returns 403 — including for the Omni Admin user.
 
@@ -89,7 +89,7 @@ Otherwise, prompt the user to log into `http://localhost:${PORT}` as `test@lifer
 
 Do not automate the browser login flow — Liferay's login form structure varies across versions and automation is brittle.
 
-## 5. MCP Connection Check (When MCP Is Configured)
+## MCP Connection Check (When MCP Is Configured)
 
 With the server running, verify the MCP connection using your client's built in connection test (see `skills/mcp-server/SKILL.md`). If it returns 401/403, stop and ask the user for updated credentials. If MCP tools are not visible, ensure the CLI session was restarted after configuration.
 

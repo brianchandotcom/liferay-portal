@@ -17,7 +17,7 @@ Generate the companion OAuth application entry inside `client-extension.yaml` an
 
 ## Workflow
 
-### 1. Identify the Required Scopes
+### Identify the Required Scopes
 
 Consult `rules/oauth-scopes.md` for the full scope table. Pick the minimum set that covers what the CET calls.
 
@@ -26,7 +26,7 @@ Examples:
 - Site initializer that creates pages and content: `Liferay.Headless.Admin.Site.everything`, `Liferay.Headless.Admin.Content.everything`
 - Batch data import only: `Liferay.Headless.Batch.Engine.everything`
 
-### 2. Add the OAuth Application Entry to `client-extension.yaml`
+### Add the OAuth Application Entry to `client-extension.yaml`
 
 The OAuth companion type depends on the consuming CET — check `rules/client-extension-types.md` for the correct type and ERC field name for the CET you are wiring.
 
@@ -36,11 +36,11 @@ Deploy time CETs (`siteInitializer`, `batch`) use `oAuthApplicationHeadlessServe
 
 Replace `<workspace-id>` with the value of `id` in `client-extension.yaml`.
 
-### 3. Deploy
+### Deploy
 
 Run `deploy-and-verify` from the client extension root. Blade copies both entries to Liferay on deploy.
 
-### 4. Verify Registration
+### Verify Registration
 
 After deployment, confirm the OAuth application is registered:
 
@@ -63,7 +63,7 @@ lb | grep <workspace-id>
 
 Both the OAuth application bundle and the CET bundle should show `ACTIVE`.
 
-### 5. Token Acquisition (for Manual Testing)
+### Token Acquisition (for Manual Testing)
 
 The deployed CET retrieves its token automatically via the Liferay OAuth2 API. For manual testing:
 
@@ -78,7 +78,7 @@ curl \
 
 The client ID and secret are displayed once in Control Panel → OAuth 2 Administration when the application is created. Retrieve them from there when needed.
 
-### 6. Troubleshoot
+### Troubleshoot
 
 | Symptom | Check |
 | --- | --- |

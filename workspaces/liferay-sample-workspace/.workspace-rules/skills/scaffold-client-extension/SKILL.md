@@ -18,7 +18,7 @@ Generate a ready to deploy client extension under `client-extensions/<name>`. Th
 
 ## Workflow
 
-### 1. Identify the CET Type
+### Identify the CET Type
 
 If the user did not specify a type, ask. Refer to `rules/client-extension-types.md` for the full list of types grouped by classification:
 
@@ -27,7 +27,7 @@ If the user did not specify a type, ask. Refer to `rules/client-extension-types.
 - **Configuration**: `oAuthApplicationHeadlessServer`, `oAuthApplicationUserAgent`, `instanceSettings`
 - **Batch**: `batch`, `siteInitializer`
 
-### 2. Collect Inputs
+### Collect Inputs
 
 | Input | How to Obtain |
 | --- | --- |
@@ -36,7 +36,7 @@ If the user did not specify a type, ask. Refer to `rules/client-extension-types.
 | Microservice port | For microservice types; default `8081`, or next unused port |
 | OAuth scopes | Look up in `rules/oauth-scopes.md` for the CET type |
 
-### 3. Create the Directory
+### Create the Directory
 
 ```
 client-extensions/<extension-name>/
@@ -45,7 +45,7 @@ client-extensions/<extension-name>/
 
 Additional source files depend on type (see templates below).
 
-### 4. Type Specific Templates
+### Type Specific Templates
 
 #### `customElement` (React example)
 
@@ -197,15 +197,15 @@ Populate `site-initializer` per `rules/site-initializer-format.md`.
 
 `siteExternalReferenceCode` uniquely identifies the site so rerunning the initializer updates it rather than creating a duplicate. Derive it from the site name in kebab-case.
 
-### 5. Wire OAuth When Required
+### Wire OAuth When Required
 
 If `rules/client-extension-types.md` shows "Yes" in the OAuth column, call `setup-oauth` to add the companion `oAuthApplicationHeadlessServer` entry. The OAuth entry must appear in the same `client-extension.yaml` file.
 
-### 6. Deploy and Verify
+### Deploy and Verify
 
 Call `deploy-and-verify`. For microservice CETs, also start the microservice process on the declared port before the smoke check.
 
-### 7. Troubleshoot
+### Troubleshoot
 
 | Symptom | Check |
 | --- | --- |

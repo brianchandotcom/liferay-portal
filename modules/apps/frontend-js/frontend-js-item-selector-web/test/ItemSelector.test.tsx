@@ -243,4 +243,35 @@ describe('ItemSelector component', () => {
 			listItemSelected.querySelector('.lexicon-icon-check-small')
 		).toBeDefined();
 	});
+
+	it('hides items rejected by itemsFilter from the dropdown', async () => {
+		const {findByRole, queryByRole} = render(
+			<ItemSelector<TestItem>
+				apiURL={`${location.origin}/o/headless-delivery/v1.0/test-api-url`}
+				itemsFilter={(item) => item.id !== 1}
+			>
+				{(item) => (
+					<ItemSelector.Item key={item.id} textValue={item.name}>
+						{item.name}
+					</ItemSelector.Item>
+				)}
+			</ItemSelector>
+		);
+
+		const input = await findByRole('combobox');
+
+		await userEvent.click(input);
+
+		const menu = await findByRole('listbox');
+
+		expect(menu).toBeVisible();
+
+		expect(
+			await findByRole('option', {name: mockSecondItemName})
+		).toBeTruthy();
+
+		expect(
+			queryByRole('option', {name: mockFirstItemName})
+		).not.toBeInTheDocument();
+	});
 });

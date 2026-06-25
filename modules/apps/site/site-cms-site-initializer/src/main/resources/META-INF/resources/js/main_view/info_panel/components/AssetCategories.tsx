@@ -19,6 +19,17 @@ import {CategorizationInputSize} from './AssetCategorization';
 
 import type {EntryCategorizationDTO} from '../services/ObjectEntryService';
 
+/**
+ * Renders an asset's categories in one of two modes:
+ *
+ * - Generic mode (no vocabularyId): shows categories from every vocabulary,
+ *   grouped under vocabulary-name headers. Pass systemVocabularyIds to hide
+ *   the vocabularies that have their own dedicated panel (Personas, Funnel
+ *   Stage) so they are not shown twice.
+ *
+ * - Scoped mode (vocabularyId set): shows the categories of that single
+ *   vocabulary only, with no header, and ignores systemVocabularyIds.
+ */
 const AssetCategories = ({
 	cmsGroupId,
 	collapsable = true,
@@ -26,7 +37,11 @@ const AssetCategories = ({
 	hasUpdatePermission,
 	inputSize,
 	objectEntry,
+	placeholder,
+	systemVocabularyIds,
+	title,
 	updateObjectEntry,
+	vocabularyId,
 }: {
 	cmsGroupId: number | string;
 	collapsable?: boolean;
@@ -34,13 +49,21 @@ const AssetCategories = ({
 	hasUpdatePermission?: boolean;
 	inputSize?: CategorizationInputSize;
 	objectEntry: IAssetObjectEntry | EntryCategorizationDTO;
+	placeholder?: string;
+	systemVocabularyIds?: number[];
+	title?: string;
 	updateObjectEntry: (object: EntryCategorizationDTO) => void | Promise<void>;
+	vocabularyId?: number;
 }) => {
 	const [value, setValue] = useState('');
 
 	const feedbackId = useId();
 
 	const apiURL = useMemo(() => {
+		if (vocabularyId) {
+			return `${Liferay.ThemeDisplay.getPortalURL()}/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/${vocabularyId}/taxonomy-categories`;
+		}
+
 		const {
 			scopeId,
 			systemProperties: {objectDefinitionBrief: {classNameId = -1} = {}},
@@ -67,7 +90,29 @@ const AssetCategories = ({
 		const filterString = `?filter=${filterStrings.join(' and ')}`;
 
 		return `${Liferay.ThemeDisplay.getPortalURL()}/o/headless-admin-taxonomy/v1.0/${endpoint}/taxonomy-categories${filterString}`;
-	}, [cmsGroupId, objectEntry]);
+	}, [cmsGroupId, objectEntry, vocabularyId]);
+
+	const isVisibleVocabulary = useCallback(
+		(currentVocabularyId: number) => {
+			if (vocabularyId) {
+				return currentVocabularyId === vocabularyId;
+			}
+
+			return !systemVocabularyIds?.includes(currentVocabularyId);
+		},
+		[systemVocabularyIds, vocabularyId]
+	);
+
+	// Hide categories from the system vocabularies (Personas, Funnel Stage)
+	// in the generic dropdown, since they have their own dedicated panels.
+
+	const filterDropdownItem = useCallback(
+		(item: any) =>
+			!systemVocabularyIds?.includes(
+				Number(item?.parentTaxonomyVocabulary?.id)
+			),
+		[systemVocabularyIds]
+	);
 
 	const groupedTaxonomies: IGroupedTaxonomies = useMemo(
 		() =>
@@ -130,11 +175,6 @@ const AssetCategories = ({
 		[groupedTaxonomies.taxonomyCategoryIds, updateObjectEntry]
 	);
 
-	const selectedCategories = useMemo(
-		() => Object.values(groupedTaxonomies.taxonomyVocabularies).flat(),
-		[groupedTaxonomies.taxonomyVocabularies]
-	);
-
 	const removeCategory = useCallback(
 		async (category: ITaxonomyCategoryFacade) => {
 			const {taxonomyCategoryIds} = groupedTaxonomies;
@@ -163,13 +203,23 @@ const AssetCategories = ({
 		[groupedTaxonomies, updateObjectEntry]
 	);
 
+	const selectedCategories = useMemo(
+		() =>
+			Object.entries(groupedTaxonomies.taxonomyVocabularies)
+				.filter(([currentVocabularyId]) =>
+					isVisibleVocabulary(Number(currentVocabularyId))
+				)
+				.flatMap(([, vocabularyCategories]) => vocabularyCategories),
+		[groupedTaxonomies.taxonomyVocabularies, isVisibleVocabulary]
+	);
+
 	return (
 		<ClayPanel
 			collapsable={collapsable}
 			defaultExpanded={true}
 			displayTitle={
 				<ClayPanel.Title className="panel-title text-secondary">
-					{Liferay.Language.get('categories')}
+					{title ?? Liferay.Language.get('categories')}
 				</ClayPanel.Title>
 			}
 			displayType="unstyled"
@@ -187,6 +237,9 @@ const AssetCategories = ({
 						disabled={!hasUpdatePermission}
 						estimateSize={49}
 						items={selectedCategories}
+						itemsFilter={
+							vocabularyId ? undefined : filterDropdownItem
+						}
 						locator={{
 							id: 'id',
 							label: 'name',
@@ -204,7 +257,9 @@ const AssetCategories = ({
 								setTimeout(() => setValue(''));
 							}
 						}}
-						placeholder={Liferay.Language.get('add-category')}
+						placeholder={
+							placeholder ?? Liferay.Language.get('add-category')
+						}
 						refetchOnActive
 						sizing={inputSize}
 						value={value}
@@ -239,16 +294,29 @@ const AssetCategories = ({
 
 				{groupedTaxonomies.taxonomyVocabularies &&
 					Object.entries(groupedTaxonomies?.taxonomyVocabularies).map(
-						([, vocabularyCategories], index) => {
+						(
+							[currentVocabularyId, vocabularyCategories],
+							index
+						) => {
+							if (
+								!isVisibleVocabulary(
+									Number(currentVocabularyId)
+								)
+							) {
+								return null;
+							}
+
 							const vocabularyName =
 								vocabularyCategories[0].parentTaxonomyVocabulary
 									.name;
 
 							return vocabularyCategories.length ? (
 								<div className="pt-3" key={index}>
-									<p className="font-weight-semi-bold vocabulary-name">
-										{vocabularyName}
-									</p>
+									{!vocabularyId && (
+										<p className="font-weight-semi-bold vocabulary-name">
+											{vocabularyName}
+										</p>
+									)}
 
 									{vocabularyCategories.map(
 										(category: ITaxonomyCategoryFacade) => (

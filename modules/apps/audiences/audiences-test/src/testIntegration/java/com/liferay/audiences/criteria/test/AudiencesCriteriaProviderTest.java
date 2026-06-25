@@ -114,7 +114,7 @@ public class AudiencesCriteriaProviderTest {
 			audiencesCriterias.toString(), 2, audiencesCriterias.size());
 
 		AudiencesCriteria authenticationAudiencesCriteria =
-			_getAudiencesCriteria(audiencesCriterias, "authentication");
+			_getAudiencesCriteria(audiencesCriterias, "user_authentication");
 
 		Assert.assertEquals(
 			AudiencesCriteria.Type.OPTIONS,
@@ -134,7 +134,7 @@ public class AudiencesCriteriaProviderTest {
 		Assert.assertEquals("no", option2.getValue());
 
 		AudiencesCriteria languageAudiencesCriteria = _getAudiencesCriteria(
-			audiencesCriterias, "language");
+			audiencesCriterias, "user_language");
 
 		Assert.assertEquals(
 			AudiencesCriteria.Type.OPTIONS,

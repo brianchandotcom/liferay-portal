@@ -75,6 +75,18 @@ public class FragmentEntryLocalServiceWrapper
 	}
 
 	@Override
+	public void cleanUpFragmentEntryVersions() {
+		_fragmentEntryLocalService.cleanUpFragmentEntryVersions();
+	}
+
+	@Override
+	public void cleanUpFragmentEntryVersions(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_fragmentEntryLocalService.cleanUpFragmentEntryVersions(companyId);
+	}
+
+	@Override
 	public FragmentEntry copyFragmentEntry(
 			long userId, long groupId, long sourceFragmentEntryId,
 			long fragmentCollectionId,
@@ -760,4 +772,4 @@ public class FragmentEntryLocalServiceWrapper
 	private FragmentEntryLocalService _fragmentEntryLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1282295569
+// LIFERAY-SERVICE-BUILDER-HASH:202580416

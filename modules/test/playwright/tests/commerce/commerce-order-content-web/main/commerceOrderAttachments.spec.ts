@@ -25,7 +25,6 @@ export const test = mergeTests(
 	displayPageTemplatesPagesTest,
 	featureFlagsTest({
 		'LPD-6252': {enabled: true},
-		'LPD-20379': {enabled: true},
 	}),
 	globalMenuPagesTest,
 	pageEditorPagesTest,

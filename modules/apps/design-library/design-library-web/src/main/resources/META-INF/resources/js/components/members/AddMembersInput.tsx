@@ -92,7 +92,7 @@ export default function AddMembersInput({
 				}}
 				textValue={item.name}
 			>
-				<ClaySticker displayType="primary" shape="circle" size="sm">
+				<ClaySticker displayType="secondary" shape="circle" size="lg">
 					<ClaySticker.Image
 						alt={item.name}
 						src={
@@ -103,7 +103,10 @@ export default function AddMembersInput({
 				</ClaySticker>
 
 				<span className="ml-2 text-truncate">
-					{item.name} ({item.emailAddress?.split('@')[0]})
+					{item.name}
+
+					{item.emailAddress &&
+						` (${item.emailAddress.split('@')[0]})`}
 				</span>
 			</ItemSelector.Item>
 		);
@@ -127,12 +130,8 @@ export default function AddMembersInput({
 				}}
 				textValue={item.name}
 			>
-				<ClaySticker displayType="primary" shape="circle" size="sm">
-					<ClayIcon
-						className="text-secondary"
-						fontSize="24px"
-						symbol="users"
-					/>
+				<ClaySticker displayType="secondary" shape="circle" size="lg">
+					<ClayIcon symbol="users" />
 				</ClaySticker>
 
 				<span className="ml-2 text-truncate">{item.name}</span>

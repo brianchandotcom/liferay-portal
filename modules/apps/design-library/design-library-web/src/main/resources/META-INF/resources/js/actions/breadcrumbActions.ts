@@ -68,6 +68,6 @@ export function openManageMembersModal({
 				hasAssignMembersPermission,
 				ownerId,
 			}),
-		size: 'lg',
+		size: 'md',
 	});
 }

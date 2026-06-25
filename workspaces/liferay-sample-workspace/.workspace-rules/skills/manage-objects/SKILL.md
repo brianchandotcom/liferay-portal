@@ -271,6 +271,7 @@ The OpenAPI spec for `object-admin` and the per object `/o/c/<pluralLabel>` endp
 
 - **Namespace safety**: NEVER use `userId` as a custom field name — it is a system column in `ObjectEntryTable` and will collide. Use `liferayUserId` instead.
 - **Type storage**: every `DateTime` or `Date` field MUST have `timeStorage` set in `objectFieldSettings` (e.g., `"convertToUTC"`).
+- **Indexed language**: `indexedLanguageId` is valid only on `String` and `Clob` field types. Never set it on `Date`/`DateTime` or other non-text fields.
 
 ## Field Settings Gotchas
 
@@ -285,6 +286,8 @@ After granting permissions via the Headless API, always verify with a follow up 
 ## Batch Initialization via Client Extension
 
 Use a Batch Client Extension (CX) to initialize Object Definitions, Folders, and seed data at deploy time. Do **not** mix Batch CX with Custom Element CX in the same project or `client-extension.yaml`.
+
+**Permissions are not importable via batch.** The Batch Engine does not apply object or entry permissions from the JSON payload — do not put a `permissions` block in a `*.batch-engine-data.json` file expecting it to take effect. Grant permissions after deploy via Control Panel → Objects → [Object] → Permissions (or the Headless permissions API; see "Permission Grants" above).
 
 ### Project Structure
 

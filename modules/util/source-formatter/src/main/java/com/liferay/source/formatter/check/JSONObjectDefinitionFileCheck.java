@@ -127,15 +127,15 @@ public class JSONObjectDefinitionFileCheck extends BaseFileCheck {
 	private void _checkClassName(String fileName, JSONObject jsonObject)
 		throws Exception {
 
-		String regex = _getClassNameRegex();
+		String classNameRegex = _getClassNameRegex();
 
-		if (regex == null) {
+		if (classNameRegex == null) {
 			return;
 		}
 
 		String className = jsonObject.getString("className");
 
-		if (className.isBlank() || className.matches(regex)) {
+		if (className.isBlank() || className.matches(classNameRegex)) {
 			return;
 		}
 

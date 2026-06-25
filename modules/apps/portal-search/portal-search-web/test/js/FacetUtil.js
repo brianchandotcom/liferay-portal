@@ -5,7 +5,46 @@
 
 import {FacetUtil} from '../../src/main/resources/META-INF/resources/js/FacetUtil';
 
+function createForm(values) {
+	return {
+		querySelector: (selector) =>
+			selector in values ? {value: values[selector]} : null,
+	};
+}
+
 describe('FacetUtil', () => {
+	describe('getSelectedTerm()', () => {
+		it('derives a date range from the locale-independent hidden inputs', () => {
+			const form = createForm({
+				'.aggregation-type': 'dateRange',
+				'[id$=fromDay]': '24',
+				'[id$=fromInput]': '24/6/26',
+				'[id$=fromMonth]': '5',
+				'[id$=fromYear]': '2026',
+				'[id$=toDay]': '25',
+				'[id$=toInput]': '25/6/26',
+				'[id$=toMonth]': '5',
+				'[id$=toYear]': '2026',
+			});
+
+			expect(
+				FacetUtil.getSelectedTerm('custom-range', form, true)
+			).toEqual(['2026-06-24', '2026-06-25']);
+		});
+
+		it('returns the raw numeric bounds for a non-date range', () => {
+			const form = createForm({
+				'.aggregation-type': 'range',
+				'[id$=fromInput]': '10',
+				'[id$=toInput]': '20',
+			});
+
+			expect(
+				FacetUtil.getSelectedTerm('custom-range', form, true)
+			).toEqual(['10', '20']);
+		});
+	});
+
 	describe('queryParameterAndUpdateValue()', () => {
 		let originalQuerySelector;
 

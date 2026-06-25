@@ -162,6 +162,10 @@ public class JSONObjectDefinitionFileCheck extends BaseFileCheck {
 				"/object/internal/definition/processor" +
 					"/ObjectDefinitionClassNameProcessorImpl.java");
 
+		if (!file.exists()) {
+			return null;
+		}
+
 		String content = FileUtil.read(file);
 
 		FileText fileText = new FileText(

@@ -42,13 +42,7 @@ function OrdersTable({orders, selectOrderURL}) {
 									resetCommerceCurrency();
 
 									navigate(
-										formatActionUrl(
-											selectOrderURL,
-											order,
-											Liferay.FeatureFlags['LPD-20379']
-												? {skipRedirect: true}
-												: {}
-										)
+										formatActionUrl(selectOrderURL, order)
 									);
 								}}
 								role="button"

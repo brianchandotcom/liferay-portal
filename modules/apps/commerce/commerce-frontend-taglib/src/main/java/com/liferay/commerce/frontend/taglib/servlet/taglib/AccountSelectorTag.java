@@ -28,7 +28,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -260,25 +259,26 @@ public class AccountSelectorTag extends IncludeTag {
 	private String _getEditOrderURL(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		long plid = PortalUtil.getPlidFromPortletId(
-			PortalUtil.getScopeGroupId(httpServletRequest),
-			CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT);
+		return PortletURLBuilder.create(
+			_getPortletURL(
+				httpServletRequest,
+				CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT)
+		).setActionName(
+			"/commerce_open_order_content/edit_commerce_order"
+		).setCMD(
+			"setCurrent"
+		).setParameter(
+			"commerceOrderId", "{id}"
+		).setParameter(
+			"skipRedirect",
+			() -> {
+				long plid = PortalUtil.getPlidFromPortletId(
+					PortalUtil.getScopeGroupId(httpServletRequest),
+					CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT);
 
-		if ((plid > 0) || FeatureFlagManagerUtil.isEnabled("LPD-20379")) {
-			return PortletURLBuilder.create(
-				_getPortletURL(
-					httpServletRequest,
-					CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT)
-			).setActionName(
-				"/commerce_open_order_content/edit_commerce_order"
-			).setCMD(
-				"setCurrent"
-			).setParameter(
-				"commerceOrderId", "{id}"
-			).buildString();
-		}
-
-		return StringPool.BLANK;
+				return plid <= 0;
+			}
+		).buildString();
 	}
 
 	private PortletURL _getPortletURL(

@@ -28,7 +28,6 @@ import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -316,11 +315,10 @@ public class RequestQuoteTag extends IncludeTag {
 			HttpServletRequest httpServletRequest, String portletId)
 		throws PortalException {
 
-		long groupId = PortalUtil.getScopeGroupId(httpServletRequest);
+		long plid = PortalUtil.getPlidFromPortletId(
+			PortalUtil.getScopeGroupId(httpServletRequest), portletId);
 
-		long plid = PortalUtil.getPlidFromPortletId(groupId, portletId);
-
-		if ((plid > 0) || FeatureFlagManagerUtil.isEnabled("LPD-20379")) {
+		if (plid > 0) {
 			return PortletURLFactoryUtil.create(
 				httpServletRequest, portletId, plid,
 				PortletRequest.ACTION_PHASE);

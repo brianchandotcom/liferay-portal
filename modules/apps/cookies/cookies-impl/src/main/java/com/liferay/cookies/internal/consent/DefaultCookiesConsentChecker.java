@@ -38,14 +38,6 @@ public class DefaultCookiesConsentChecker implements CookiesConsentChecker {
 			return true;
 		}
 
-		String consentCookieValue = CookiesManagerUtil.getCookieValue(
-			CookiesConstants.getConsentTypeName(consentType),
-			httpServletRequest);
-
-		if (Validator.isNotNull(consentCookieValue)) {
-			return GetterUtil.getBoolean(consentCookieValue);
-		}
-
 		try {
 			CookiesPreferenceHandlingConfiguration
 				cookiesPreferenceHandlingConfiguration = null;
@@ -70,6 +62,18 @@ public class DefaultCookiesConsentChecker implements CookiesConsentChecker {
 				cookiesPreferenceHandlingConfiguration =
 					_configurationProvider.getSystemConfiguration(
 						CookiesPreferenceHandlingConfiguration.class);
+			}
+
+			if (!cookiesPreferenceHandlingConfiguration.enabled()) {
+				return true;
+			}
+
+			String consentCookieValue = CookiesManagerUtil.getCookieValue(
+				CookiesConstants.getConsentTypeName(consentType),
+				httpServletRequest);
+
+			if (Validator.isNotNull(consentCookieValue)) {
+				return GetterUtil.getBoolean(consentCookieValue);
 			}
 
 			return !cookiesPreferenceHandlingConfiguration.

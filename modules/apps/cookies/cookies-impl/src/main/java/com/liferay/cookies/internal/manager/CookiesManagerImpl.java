@@ -152,7 +152,8 @@ public class CookiesManagerImpl implements CookiesManager {
 				_deleteCookieConsentCookies(
 					httpServletRequest, httpServletResponse);
 			}
-			else if (!hasConsentType(consentType, httpServletRequest)) {
+
+			if (!hasConsentType(consentType, httpServletRequest)) {
 				return false;
 			}
 		}

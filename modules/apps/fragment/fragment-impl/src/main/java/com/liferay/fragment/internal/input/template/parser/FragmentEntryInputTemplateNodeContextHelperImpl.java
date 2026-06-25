@@ -59,9 +59,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.InfoFormException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -79,6 +77,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -468,8 +467,7 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 			}
 		}
 
-		inputTemplateNode.addAttribute(
-			"fileNameI18n", _jsonFactory.createJSONObject(fileNameI18n));
+		inputTemplateNode.addAttribute("fileNameI18n", fileNameI18n);
 
 		inputTemplateNode.addAttribute("groupId", groupId);
 
@@ -500,8 +498,7 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 			}
 		}
 
-		inputTemplateNode.addAttribute(
-			"previewURLI18n", _jsonFactory.createJSONObject(previewURLI18n));
+		inputTemplateNode.addAttribute("previewURLI18n", previewURLI18n);
 
 		boolean selectFromDocumentLibrary = false;
 
@@ -592,9 +589,7 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 		}
 
 		inputTemplateNode.addAttribute(
-			"availableLanguageIds",
-			_jsonFactory.createJSONArray(
-				LocaleUtil.toLanguageIds(availableLocales)));
+			"availableLanguageIds", LocaleUtil.toLanguageIds(availableLocales));
 		inputTemplateNode.addAttribute(
 			"defaultLanguageId", LocaleUtil.toLanguageId(siteDefaultLocale));
 
@@ -750,8 +745,7 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 		InfoField infoField, InputTemplateNode inputTemplateNode,
 		Locale locale) {
 
-		inputTemplateNode.addAttribute(
-			"countries", _getCountriesJSONObjects(locale));
+		inputTemplateNode.addAttribute("countries", _getCountries(locale));
 		inputTemplateNode.addAttribute(
 			"country",
 			infoField.getAttribute(PhoneNumberInfoFieldType.COUNTRY));
@@ -863,7 +857,7 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 		return sb.toString();
 	}
 
-	private List<JSONObject> _getCountriesJSONObjects(Locale locale) {
+	private List<Map<String, Object>> _getCountries(Locale locale) {
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
@@ -890,7 +884,7 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 			}
 		}
 
-		List<JSONObject> countriesJSONObjects = new ArrayList<>();
+		List<Map<String, Object>> countries = new ArrayList<>();
 
 		String languageId = LocaleUtil.toLanguageId(locale);
 
@@ -909,19 +903,19 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 				continue;
 			}
 
-			countriesJSONObjects.add(
-				JSONUtil.put(
+			countries.add(
+				HashMapBuilder.<String, Object>put(
 					"a2", a2
 				).put(
 					"name", country.getTitle(languageId)
 				).put(
 					"prefix", idd
-				));
+				).build());
 		}
 
 		return ListUtil.sort(
-			countriesJSONObjects,
-			Comparator.comparing(country -> country.getString("name")));
+			countries,
+			Comparator.comparing(country -> (String)country.get("name")));
 	}
 
 	private Locale _getCurrentLocale(
@@ -1462,9 +1456,6 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 
 	@Reference
 	private ItemSelector _itemSelector;
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Language _language;

@@ -54,9 +54,6 @@ if ((mfaEmailOTPSetAtTime > 0) && (mfaEmailOTPResendEmailTimeout > 0)) {
 <aui:script use="aui-base,aui-io-request">
 	<liferay-portlet:resourceURL id="/mfa_email_otp_verify/send_mfa_email_otp" portletName="<%= MFAEmailOTPPortletKeys.MFA_EMAIL_OTP_VERIFY %>" var="sendEmailOTPURL" />
 
-	var configuredResendDuration =
-		<%= mfaEmailOTPConfiguration.resendEmailTimeout() %>;
-
 	var failedAttemptsRetryTimeout = <%= mfaEmailOTPFailedAttemptsRetryTimeout %>;
 
 	var failedAttemptsRetryCountdown;
@@ -73,10 +70,7 @@ if ((mfaEmailOTPSetAtTime > 0) && (mfaEmailOTPResendEmailTimeout > 0)) {
 
 	var originalSubmitButtonText = submitEmailButton.text();
 
-	var previousSetTime =
-		<%= GetterUtil.getLong(request.getAttribute(MFAEmailOTPWebKeys.MFA_EMAIL_OTP_SET_AT_TIME)) %>;
-
-	var elapsedTime = Math.floor((Date.now() - previousSetTime) / 1000);
+	var remainingResendTime = <%= mfaEmailOTPRemainingResendTime %>;
 
 	function <portlet:namespace />createCountdown(f, countdown, interval) {
 		return setInterval(() => {
@@ -99,6 +93,8 @@ if ((mfaEmailOTPSetAtTime > 0) && (mfaEmailOTPResendEmailTimeout > 0)) {
 
 			if (!resendCountdown) {
 				sendEmailButton.removeAttribute('disabled');
+
+				sendEmailButton.removeClass('disabled');
 			}
 
 			submitEmailButton.text(originalSubmitButtonText);
@@ -120,6 +116,8 @@ if ((mfaEmailOTPSetAtTime > 0) && (mfaEmailOTPResendEmailTimeout > 0)) {
 
 			if (!failedAttemptsRetryCountdown) {
 				sendEmailButton.removeAttribute('disabled');
+
+				sendEmailButton.removeClass('disabled');
 			}
 
 			clearInterval(resendCountdown);
@@ -135,20 +133,14 @@ if ((mfaEmailOTPSetAtTime > 0) && (mfaEmailOTPResendEmailTimeout > 0)) {
 		}
 	}
 
-	if (
-		elapsedTime > 0 &&
-		elapsedTime < configuredResendDuration &&
-		previousSetTime > 0
-	) {
+	if (remainingResendTime > 0) {
 		sendEmailButton.setAttribute('disabled', 'disabled');
 
-		var resendDuration = configuredResendDuration - elapsedTime;
-
-		<portlet:namespace />setResendCountdown(resendDuration);
+		<portlet:namespace />setResendCountdown(remainingResendTime);
 
 		resendCountdown = <portlet:namespace />createCountdown(
 			<portlet:namespace />setResendCountdown,
-			resendDuration,
+			remainingResendTime,
 			1000
 		);
 	}
@@ -205,6 +197,7 @@ if ((mfaEmailOTPSetAtTime > 0) && (mfaEmailOTPResendEmailTimeout > 0)) {
 
 					sendEmailButton.text(originalSendButtonText);
 					sendEmailButton.removeAttribute('disabled');
+					sendEmailButton.removeClass('disabled');
 
 					clearInterval(resendCountdown);
 

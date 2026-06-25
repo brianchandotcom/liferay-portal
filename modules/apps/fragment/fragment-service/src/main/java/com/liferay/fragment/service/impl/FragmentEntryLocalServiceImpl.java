@@ -7,6 +7,7 @@ package com.liferay.fragment.service.impl;
 
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
+import com.liferay.fragment.configuration.FragmentEntryVersionConfiguration;
 import com.liferay.fragment.configuration.FragmentServiceConfiguration;
 import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.exception.DuplicateFragmentEntryKeyException;
@@ -22,6 +23,7 @@ import com.liferay.fragment.service.base.FragmentEntryLocalServiceBaseImpl;
 import com.liferay.fragment.service.persistence.FragmentCollectionPersistence;
 import com.liferay.fragment.validator.FragmentEntryValidator;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
@@ -48,6 +50,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -167,6 +170,48 @@ public class FragmentEntryLocalServiceImpl
 		}
 
 		return updatedDraftFragmentEntry;
+	}
+
+	@Override
+	public void cleanUpFragmentEntryVersions() {
+		_companyLocalService.forEachCompanyId(
+			this::_cleanUpFragmentEntryVersions);
+	}
+
+	@Override
+	public void cleanUpFragmentEntryVersions(long companyId)
+		throws PortalException {
+
+		FragmentEntryVersionConfiguration fragmentEntryVersionConfiguration =
+			_configurationProvider.getCompanyConfiguration(
+				FragmentEntryVersionConfiguration.class, companyId);
+
+		int maximumVersionsPerFragmentEntry =
+			fragmentEntryVersionConfiguration.maximumVersionsPerFragmentEntry();
+
+		if (maximumVersionsPerFragmentEntry <= 0) {
+			return;
+		}
+
+		runSQL(
+			StringBundler.concat(
+				"delete from FragmentEntryVersion where ",
+				"fragmentEntryVersionId in (select fragmentEntryVersionId ",
+				"from (select fragmentEntryVersionId from ",
+				"FragmentEntryVersion FragmentEntryVersion1 where ",
+				"FragmentEntryVersion1.companyId = ", companyId,
+				" and (select count(*) from FragmentEntryVersion ",
+				"FragmentEntryVersion2 where ",
+				"FragmentEntryVersion2.ctCollectionId = ",
+				"FragmentEntryVersion1.ctCollectionId and ",
+				"FragmentEntryVersion2.fragmentEntryId = ",
+				"FragmentEntryVersion1.fragmentEntryId and ",
+				"FragmentEntryVersion2.version >= ",
+				"FragmentEntryVersion1.version) > ",
+				maximumVersionsPerFragmentEntry,
+				") tempFragmentEntryVersion)"));
+
+		fragmentEntryVersionPersistence.clearCache();
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -819,6 +864,21 @@ public class FragmentEntryLocalServiceImpl
 		}
 	}
 
+	private void _cleanUpFragmentEntryVersions(long companyId) {
+		try {
+			cleanUpFragmentEntryVersions(companyId);
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					StringBundler.concat(
+						"Unable to clean up fragment entry versions for ",
+						"company ", companyId),
+					exception);
+			}
+		}
+	}
+
 	private void _copyFragmentEntryPreviewFileEntry(
 			long userId, long groupId, FragmentEntry sourceFragmentEntry,
 			FragmentEntry targetFragmentEntry)
@@ -1118,6 +1178,9 @@ public class FragmentEntryLocalServiceImpl
 
 	private static final Pattern _pattern = Pattern.compile(
 		"\\[resources:(.+?)\\]");
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

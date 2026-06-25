@@ -9,8 +9,29 @@ import React from 'react';
 
 import AssetCategories from '../../../../../src/main/resources/META-INF/resources/js/main_view/info_panel/components/AssetCategories';
 
-function MockItemSelector({apiURL}: {apiURL?: string}) {
-	return <div data-api-url={apiURL} data-testid="item-selector" />;
+function MockItemSelector({
+	apiURL,
+	itemsFilter,
+	placeholder,
+}: {
+	apiURL?: string;
+	itemsFilter?: (item: any) => boolean;
+	placeholder?: string;
+}) {
+	const filteredVocabularyIds = itemsFilter
+		? [10, 20]
+				.filter((id) => !itemsFilter({parentTaxonomyVocabulary: {id}}))
+				.join(',')
+		: '';
+
+	return (
+		<div
+			data-api-url={apiURL}
+			data-filtered-vocabulary-ids={filteredVocabularyIds}
+			data-placeholder={placeholder}
+			data-testid="item-selector"
+		/>
+	);
 }
 
 function MockItemSelectorItem({children}: {children: React.ReactNode}) {
@@ -53,14 +74,22 @@ function renderComponent({
 	classNameId = 1,
 	cmsGroupId = 456,
 	collapsable,
+	placeholder,
 	scopeId = 123,
+	systemVocabularyIds,
 	taxonomyCategoryBriefs = [],
+	title,
+	vocabularyId,
 }: {
 	classNameId?: number;
 	cmsGroupId?: number;
 	collapsable?: boolean;
+	placeholder?: string;
 	scopeId?: number;
+	systemVocabularyIds?: number[];
 	taxonomyCategoryBriefs?: ReturnType<typeof buildCategoryBrief>[];
+	title?: string;
+	vocabularyId?: number;
 } = {}) {
 	return render(
 		<AssetCategories
@@ -76,7 +105,11 @@ function renderComponent({
 					taxonomyCategoryBriefs,
 				} as any
 			}
+			placeholder={placeholder}
+			systemVocabularyIds={systemVocabularyIds}
+			title={title}
 			updateObjectEntry={jest.fn()}
+			vocabularyId={vocabularyId}
 		/>
 	);
 }
@@ -95,6 +128,92 @@ describe('AssetCategories', () => {
 
 	afterEach(() => {
 		jest.resetAllMocks();
+	});
+
+	it('builds the categories apiURL against the asset library when the scope is positive', () => {
+		renderComponent({classNameId: 1, scopeId: 123});
+
+		const apiURL = screen
+			.getByTestId('item-selector')
+			.getAttribute('data-api-url');
+
+		expect(apiURL).toContain(
+			'/o/headless-admin-taxonomy/v1.0/asset-libraries/123/taxonomy-categories'
+		);
+		expect(apiURL).toContain("assetTypes in ('0', '1')");
+		expect(apiURL).not.toContain('assetLibraries in');
+	});
+
+	it('builds the categories apiURL against the site with an asset library filter when the scope is negative', () => {
+		renderComponent({classNameId: 1, cmsGroupId: 456, scopeId: -1});
+
+		const apiURL = screen
+			.getByTestId('item-selector')
+			.getAttribute('data-api-url');
+
+		expect(apiURL).toContain(
+			'/o/headless-admin-taxonomy/v1.0/sites/456/taxonomy-categories'
+		);
+		expect(apiURL).toContain("assetLibraries in ('-1')");
+	});
+
+	it('builds the vocabulary-scoped apiURL and uses the custom placeholder when scoped to a vocabulary', () => {
+		renderComponent({placeholder: 'add-personas', vocabularyId: 10});
+
+		const itemSelector = screen.getByTestId('item-selector');
+
+		expect(itemSelector.getAttribute('data-api-url')).toContain(
+			'/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/10/taxonomy-categories'
+		);
+		expect(itemSelector.getAttribute('data-placeholder')).toBe(
+			'add-personas'
+		);
+	});
+
+	it('does not filter the dropdown when scoped to a vocabulary', () => {
+		renderComponent({vocabularyId: 10});
+
+		expect(
+			screen
+				.getByTestId('item-selector')
+				.getAttribute('data-filtered-vocabulary-ids')
+		).toBe('');
+	});
+
+	it('filters system vocabulary categories out of the generic dropdown', () => {
+		renderComponent({scopeId: 123, systemVocabularyIds: [10]});
+
+		expect(
+			screen
+				.getByTestId('item-selector')
+				.getAttribute('data-filtered-vocabulary-ids')
+		).toBe('10');
+	});
+
+	it('hides categories from system vocabularies', () => {
+		renderComponent({
+			systemVocabularyIds: [10],
+			taxonomyCategoryBriefs: [
+				buildCategoryBrief({
+					id: 1,
+					name: 'category-1',
+					taxonomyVocabularyId: 10,
+					vocabularyName: 'vocabulary-a',
+				}),
+				buildCategoryBrief({
+					id: 3,
+					name: 'category-3',
+					taxonomyVocabularyId: 20,
+					vocabularyName: 'vocabulary-b',
+				}),
+			],
+		});
+
+		expect(screen.queryByText('vocabulary-a')).not.toBeInTheDocument();
+		expect(screen.queryByText('category-1')).not.toBeInTheDocument();
+
+		expect(screen.getByText('vocabulary-b')).toBeInTheDocument();
+		expect(screen.getByText('category-3')).toBeInTheDocument();
 	});
 
 	it('renders categories grouped under their vocabulary names', () => {
@@ -143,6 +262,34 @@ describe('AssetCategories', () => {
 		).toBeInTheDocument();
 	});
 
+	it('renders only the scoped vocabulary categories with a custom title and no vocabulary header', () => {
+		renderComponent({
+			taxonomyCategoryBriefs: [
+				buildCategoryBrief({
+					id: 1,
+					name: 'persona-1',
+					taxonomyVocabularyId: 10,
+					vocabularyName: 'Personas',
+				}),
+				buildCategoryBrief({
+					id: 3,
+					name: 'stage-1',
+					taxonomyVocabularyId: 20,
+					vocabularyName: 'Funnel Stage',
+				}),
+			],
+			title: 'personas',
+			vocabularyId: 10,
+		});
+
+		expect(screen.getByText('personas')).toBeInTheDocument();
+		expect(screen.getByText('persona-1')).toBeInTheDocument();
+
+		expect(screen.queryByText('stage-1')).not.toBeInTheDocument();
+
+		expect(screen.queryByText('Personas')).not.toBeInTheDocument();
+	});
+
 	it('renders the panel as collapsable by default', () => {
 		renderComponent();
 
@@ -159,32 +306,5 @@ describe('AssetCategories', () => {
 		).not.toBeInTheDocument();
 
 		expect(screen.getByText('categories')).toBeInTheDocument();
-	});
-
-	it('builds the categories apiURL against the asset library when the scope is positive', () => {
-		renderComponent({classNameId: 1, scopeId: 123});
-
-		const apiURL = screen
-			.getByTestId('item-selector')
-			.getAttribute('data-api-url');
-
-		expect(apiURL).toContain(
-			'/o/headless-admin-taxonomy/v1.0/asset-libraries/123/taxonomy-categories'
-		);
-		expect(apiURL).toContain("assetTypes in ('0', '1')");
-		expect(apiURL).not.toContain('assetLibraries in');
-	});
-
-	it('builds the categories apiURL against the site with an asset library filter when the scope is negative', () => {
-		renderComponent({classNameId: 1, cmsGroupId: 456, scopeId: -1});
-
-		const apiURL = screen
-			.getByTestId('item-selector')
-			.getAttribute('data-api-url');
-
-		expect(apiURL).toContain(
-			'/o/headless-admin-taxonomy/v1.0/sites/456/taxonomy-categories'
-		);
-		expect(apiURL).toContain("assetLibraries in ('-1')");
 	});
 });

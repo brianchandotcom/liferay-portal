@@ -18,7 +18,7 @@
 		<aui:form action="<%= synchronizeSiteInitializerActionURL %>" method="post" name="fm">
 			<clay:sheet-header>
 				<div class="sheet-title">
-					<%= portletDisplay.getTitle() %>
+					<%= HtmlUtil.escape(portletDisplay.getTitle()) %>
 				</div>
 			</clay:sheet-header>
 

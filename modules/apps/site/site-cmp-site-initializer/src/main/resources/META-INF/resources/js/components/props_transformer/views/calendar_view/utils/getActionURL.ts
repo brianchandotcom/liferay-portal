@@ -8,6 +8,7 @@ import {
 	findAction,
 	replaceTokens,
 } from '@liferay/frontend-data-set-web';
+import {Immutable} from '@liferay/frontend-js-state-web';
 
 import {ITaskObjectEntry} from '../../../../../utils/types';
 
@@ -30,7 +31,7 @@ export default function getActionURL({
 }: {
 	actionId: string;
 	itemsActions: IItemsActions[];
-	task: ITaskObjectEntry;
+	task: Immutable<ITaskObjectEntry> | ITaskObjectEntry;
 }) {
 	return replaceTokens(findAction(itemsActions, actionId)?.href, {
 		embedded: task,

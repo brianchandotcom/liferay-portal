@@ -54,15 +54,11 @@ public class InputsFragmentCollectionContributor
 	private List<FragmentEntry> _filter(List<FragmentEntry> fragmentEntries) {
 		Set<String> excludedKeys = new HashSet<>();
 
-		long companyId = CompanyThreadLocal.getCompanyId();
+		if (!FeatureFlagManagerUtil.isEnabled(
+				CompanyThreadLocal.getCompanyId(), "LPD-17564")) {
 
-		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-17564")) {
 			excludedKeys.add("INPUTS-drag-and-drop-upload");
 			excludedKeys.add("INPUTS-video-previewer-input");
-		}
-
-		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-70672")) {
-			excludedKeys.add("INPUTS-email-input");
 		}
 
 		if (excludedKeys.isEmpty()) {

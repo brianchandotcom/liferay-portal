@@ -5,7 +5,7 @@
 
 package com.liferay.exportimport.internal.background.task;
 
-import com.liferay.exportimport.kernel.background.task.constants.LayoutSetPrototypeMergeBackgroundTaskConstants;
+import com.liferay.exportimport.kernel.background.task.constants.LayoutSetPrototypeBackgroundTaskConstants;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactoryUtil;
 import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
@@ -99,7 +99,7 @@ public class LayoutSetPrototypeMergeBackgroundTaskExecutor
 
 			String sessionId = MapUtil.getString(
 				backgroundTask.getTaskContextMap(),
-				LayoutSetPrototypeMergeBackgroundTaskConstants.SESSION_ID);
+				LayoutSetPrototypeBackgroundTaskConstants.SESSION_ID);
 
 			if (!Validator.isBlank(sessionId)) {
 				File cacheFile = new File(

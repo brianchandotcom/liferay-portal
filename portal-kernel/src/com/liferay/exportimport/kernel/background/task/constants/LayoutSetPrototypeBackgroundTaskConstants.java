@@ -8,7 +8,7 @@ package com.liferay.exportimport.kernel.background.task.constants;
 /**
  * @author Carlos Correa
  */
-public class LayoutSetPrototypeMergeBackgroundTaskConstants {
+public class LayoutSetPrototypeBackgroundTaskConstants {
 
 	public static final String SESSION_ID = "sessionId";
 

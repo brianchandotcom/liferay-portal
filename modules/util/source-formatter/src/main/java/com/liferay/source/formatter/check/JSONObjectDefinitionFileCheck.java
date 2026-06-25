@@ -47,6 +47,13 @@ public class JSONObjectDefinitionFileCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
+		if (!absolutePath.endsWith("-object-definition.json") &&
+			!absolutePath.endsWith(
+				"object-definition.batch-engine-data.json")) {
+
+			return content;
+		}
+
 		try {
 			JSONObject jsonObject = new JSONObjectImpl(content);
 

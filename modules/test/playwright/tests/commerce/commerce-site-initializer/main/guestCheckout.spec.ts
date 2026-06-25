@@ -30,7 +30,6 @@ export const test = mergeTests(
 	displayPageTemplatesPagesTest,
 	featureFlagsTest({
 		'LPD-10562': {enabled: true},
-		'LPD-20379': {enabled: true},
 	}),
 	loginTest(),
 	pageEditorPagesTest

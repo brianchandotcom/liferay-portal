@@ -7,7 +7,6 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {commercePagesTest} from '../../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
-import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../../fixtures/loginTest';
 import getRandomString from '../../../../utils/getRandomString';
 import {
@@ -19,9 +18,6 @@ import {classicCommerceSetUp} from '../../utils/commerce';
 export const test = mergeTests(
 	commercePagesTest,
 	dataApiHelpersTest,
-	featureFlagsTest({
-		'LPD-20379': {enabled: true},
-	}),
 	loginTest()
 );
 

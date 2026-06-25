@@ -166,12 +166,13 @@ describe('Kanban Task', () => {
 
 	it('navigates when edit and view actions are clicked', async () => {
 		const itemsActions = [
-			{items: []},
+			{items: [], type: 'group'},
 			{
 				items: [
 					{data: {id: 'edit'}, href: '/edit/{embedded.id}'},
 					{data: {id: 'actionLink'}, href: '/view/{embedded.id}'},
 				],
+				type: 'group',
 			},
 		];
 

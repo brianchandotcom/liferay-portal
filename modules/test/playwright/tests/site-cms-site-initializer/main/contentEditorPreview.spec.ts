@@ -36,7 +36,6 @@ const test = mergeTests(
 	fragmentsPagesTest,
 	featureFlagsTest({
 		'LPD-17564': {enabled: true},
-		'LPD-70672': {enabled: true},
 	}),
 	isolatedSiteTest,
 	loginTest(),

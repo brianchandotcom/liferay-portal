@@ -16,7 +16,7 @@ Run premerge checks against the current branch. The skill iterates through the v
 
 - **Working tree clean.** `git status --porcelain` must return empty. When dirty, abort and ask the developer to commit first.
 
-- **Rebased on the latest `master`.** Resolve the master remote. Use the one the developer names, otherwise `upstream`, otherwise `origin`. When none resolves, compare `git merge-base HEAD master` to `git rev-parse master`. Abort and tell the developer to rebase when the two differ, and warn that the branch was not checked against a remote. Otherwise run these steps.
+- **Rebased on the latest `master`.** Resolve the master remote. Prefer `upstream`, otherwise the remote whose URL points at `liferay/liferay-portal` (check `git remote --verbose`). When none resolves, compare `git merge-base HEAD master` to `git rev-parse master`. Abort and tell the developer to rebase when the two differ, and warn that the branch was not checked against a remote. Otherwise run these steps.
 
 	1. `git fetch <remote> master`.
 

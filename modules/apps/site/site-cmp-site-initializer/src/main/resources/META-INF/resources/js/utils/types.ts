@@ -81,6 +81,12 @@ export interface IItems {
 }
 
 export interface ITaskObjectEntry {
+	actions?: {
+		[action: string]: {
+			href: string;
+			method: string | 'DELETE' | 'GET' | 'PATCH' | 'POST' | 'PUT';
+		};
+	};
 	assignTo: AssigneeValue;
 	cmpProjectToCMPTasks: IProjectObjectEntry;
 	creator: ICreator;

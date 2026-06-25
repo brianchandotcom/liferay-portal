@@ -459,7 +459,7 @@ test('Assert that site tags appear in My Sites widget', async ({
 
 	await page.getByRole('menuitem', {name: 'Categorization'}).click();
 
-	const tagInputField = page.getByLabel('Tags', {exact: true});
+	const tagInputField = page.getByRole('combobox', {name: 'Tags'});
 
 	const tags = ['apple', 'banana', 'mango'];
 
@@ -469,7 +469,7 @@ test('Assert that site tags appear in My Sites widget', async ({
 		await tagInputField.press('Enter');
 	}
 
-	await page.getByLabel('Topic', {exact: true}).click();
+	await tagInputField.press('Escape');
 
 	await page.getByText('Save').click();
 

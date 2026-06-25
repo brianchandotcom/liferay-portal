@@ -8,6 +8,7 @@ import '@testing-library/jest-dom';
 // eslint-disable-next-line
 import {checkAccessibility} from '@liferay/layout-js-components-web/test/__lib__/index';
 import {act, fireEvent, render, waitFor} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import ShareModalContent from '../../src/main/resources/META-INF/resources/share_modal_content/ShareModalContent';
@@ -244,6 +245,22 @@ describe('ShareModalContent', () => {
 		await waitFor(() => {
 			expect(getByRole('listbox')).toBeInTheDocument();
 		});
+	});
+
+	it('keeps the typed value in the autocomplete input when a special character is entered', async () => {
+		const user = userEvent.setup({
+			advanceTimers: jest.advanceTimersByTime,
+		});
+
+		const {container} = renderComponent();
+
+		const input = container.querySelector<HTMLInputElement>(
+			'input#collaboratorAutocomplete'
+		)!;
+
+		await user.type(input, 'Test3,');
+
+		expect(input).toHaveValue('Test3,');
 	});
 
 	it('calls submission when share is clicked', async () => {

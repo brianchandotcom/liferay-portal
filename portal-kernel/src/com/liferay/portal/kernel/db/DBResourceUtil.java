@@ -90,12 +90,12 @@ public class DBResourceUtil {
 
 			moduleTableNames.addAll(
 				_moduleTableNamesDCLSingleton.getSingleton(
-					DBResourceUtil::_buildModuleTableNames));
+					DBResourceUtil::_getModuleTableNames));
 
 			return moduleTableNames;
 		}
 
-		return _buildModuleTableNames();
+		return _getModuleTableNames();
 	}
 
 	public static Map<String, String[]> getModuleTablesPrimaryKeyColumnNames(
@@ -227,7 +227,7 @@ public class DBResourceUtil {
 		return tableNames;
 	}
 
-	private static Set<String> _buildModuleTableNames() {
+	private static Set<String> _getModuleTableNames() {
 		Set<String> moduleTableNames = new TreeSet<>(
 			String.CASE_INSENSITIVE_ORDER);
 

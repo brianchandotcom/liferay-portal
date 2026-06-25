@@ -1167,6 +1167,24 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 		</if>
 	</target>
 
+	<target name="update-binaries-cache">
+		<copy
+			overwrite="false"
+			todir="${build.binaries.cache.dir}/.gradle/caches/modules-2/files-2.1"
+		>
+			<fileset
+				dir="${project.dir}/.gradle/caches/modules-2/files-2.1"
+			>
+				<size units="Mi" value="100" when="less" />
+			</fileset>
+		</copy>
+
+		<gradle-execute dir="${project.dir}/modules" task="updateYarnBinariesCache">
+			<arg value="--build-file=${project.dir}/modules/util.gradle" />
+			<arg value="-Pbuild.binaries.cache.dir=${build.binaries.cache.dir}" />
+		</gradle-execute>
+	</target>
+
 	<target name="update-gradle-cache">
 		<execute>
 			git reset --hard HEAD

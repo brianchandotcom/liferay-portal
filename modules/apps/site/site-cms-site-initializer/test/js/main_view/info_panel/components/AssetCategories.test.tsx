@@ -216,6 +216,26 @@ describe('AssetCategories', () => {
 		expect(screen.getByText('category-3')).toBeInTheDocument();
 	});
 
+	it('does not render the category selector before the asset scope is known', () => {
+		render(
+			<AssetCategories
+				cmsGroupId={456}
+				hasUpdatePermission={true}
+				objectEntry={
+					{
+						systemProperties: {
+							objectDefinitionBrief: {classNameId: 1},
+						},
+						taxonomyCategoryBriefs: [],
+					} as any
+				}
+				updateObjectEntry={jest.fn()}
+			/>
+		);
+
+		expect(screen.queryByTestId('item-selector')).not.toBeInTheDocument();
+	});
+
 	it('renders categories grouped under their vocabulary names', () => {
 		renderComponent({
 			taxonomyCategoryBriefs: [

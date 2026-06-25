@@ -31,7 +31,7 @@ describe('TagService.createTag', () => {
 		});
 
 		expect(postSpy).toHaveBeenCalledWith(
-			`/o/headless-admin-taxonomy/v1.0/sites/${cmsGroupId}/keywords`,
+			`/o/headless-admin-taxonomy/v1.0/sites/${assetLibraryId}/keywords`,
 			{
 				assetLibraries: [{id: assetLibraryId}],
 				name: 'Hola',
@@ -64,7 +64,7 @@ describe('TagService.createTag', () => {
 
 		expect(patchSpy).not.toHaveBeenCalled();
 		expect(postSpy).toHaveBeenCalledWith(
-			`/o/headless-admin-taxonomy/v1.0/sites/${cmsGroupId}/keywords`,
+			`/o/headless-admin-taxonomy/v1.0/sites/${assetLibraryId}/keywords`,
 			{
 				assetLibraries: [{id: assetLibraryId}],
 				name: 'Hola',
@@ -95,7 +95,7 @@ describe('TagService.createTag', () => {
 				assetLibraries: [{id: assetLibraryId}],
 				name: 'Hola',
 			},
-			`/o/headless-admin-taxonomy/v1.0/sites/${cmsGroupId}/keywords`
+			`/o/headless-admin-taxonomy/v1.0/sites/${assetLibraryId}/keywords`
 		);
 	});
 
@@ -119,5 +119,27 @@ describe('TagService.createTag', () => {
 		expect(patchSpy).not.toHaveBeenCalled();
 		expect(postSpy).not.toHaveBeenCalled();
 		expect(result).toEqual({data: existing, error: null, status: null});
+	});
+
+	it('POSTs to the CMS group scope when no asset library is given', async () => {
+		jest.spyOn(ApiHelper, 'get').mockResolvedValue({
+			data: {items: []},
+			error: null,
+		} as any);
+
+		const postSpy = jest
+			.spyOn(ApiHelper, 'post')
+			.mockResolvedValue({data: {name: 'Hola'}} as any);
+
+		await TagService.createTag({
+			assetLibraryId: null,
+			cmsGroupId,
+			name: 'Hola',
+		});
+
+		expect(postSpy).toHaveBeenCalledWith(
+			`/o/headless-admin-taxonomy/v1.0/sites/${cmsGroupId}/keywords`,
+			{name: 'Hola'}
+		);
 	});
 });

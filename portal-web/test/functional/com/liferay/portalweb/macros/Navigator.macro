@@ -368,6 +368,14 @@ definition {
 		else {
 			Open(value1 = "${baseURL}/web/${siteNameURL}-staging");
 		}
+
+		var count = 0;
+
+		while ((${count} != 3) && (IsElementNotPresent(locator1 = "Staging#STAGING_PUBLISH_TO_LIVE_BUTTON"))) {
+			Refresh();
+
+			var count = ${count} + 1;
+		}
 	}
 
 	@summary = "Default summary"

@@ -48,16 +48,16 @@ public class GetProductionReadinessResultsMVCResourceCommand
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		Locale locale = themeDisplay.getLocale();
-
 		JSONArray resultsJSONArray = _jsonFactory.createJSONArray();
 
 		int failed = 0;
 		int ignored = 0;
 		int passed = 0;
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Locale locale = themeDisplay.getLocale();
 
 		Set<String> ignoredRules =
 			ProductionReadinessIgnoredRuleUtil.getIgnoredRules();
@@ -103,10 +103,6 @@ public class GetProductionReadinessResultsMVCResourceCommand
 		Set<String> ignoredRules, Locale locale,
 		ProductionReadinessResult productionReadinessResult) {
 
-		String message = LanguageUtil.format(
-			locale, productionReadinessResult.getMessageKey(),
-			productionReadinessResult.getMessageParameters(), false);
-
 		return JSONUtil.put(
 			"category", productionReadinessResult.getCategory()
 		).put(
@@ -120,7 +116,10 @@ public class GetProductionReadinessResultsMVCResourceCommand
 		).put(
 			"ignored", ignoredRules.contains(productionReadinessResult.getKey())
 		).put(
-			"message", message
+			"message",
+			LanguageUtil.format(
+				locale, productionReadinessResult.getMessageKey(),
+				productionReadinessResult.getMessageParameters(), false)
 		).put(
 			"name",
 			LanguageUtil.get(

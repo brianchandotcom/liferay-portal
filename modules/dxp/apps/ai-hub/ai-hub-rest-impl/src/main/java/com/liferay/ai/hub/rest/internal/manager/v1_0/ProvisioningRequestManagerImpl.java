@@ -308,11 +308,17 @@ public class ProvisioningRequestManagerImpl
 			return user;
 		}
 
+		boolean sendEmail = true;
+
+		if (type == UserConstants.TYPE_SERVICE_ACCOUNT) {
+			sendEmail = false;
+		}
+
 		user = _userLocalService.addUser(
 			UserConstants.USER_ID_DEFAULT, companyId, true, null, null, false,
 			screenName, emailAddress, locale, firstName, StringPool.BLANK,
 			lastName, 0, 0, true, Calendar.JANUARY, 1, 1970, StringPool.BLANK,
-			type, null, null, null, null, false, serviceContext);
+			type, null, null, null, null, sendEmail, serviceContext);
 
 		if (!user.isServiceAccountUser()) {
 			return user;

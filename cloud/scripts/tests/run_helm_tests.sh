@@ -13,7 +13,7 @@ function main {
 
 	cloud_dir=$(cd "${script_dir}/../.." && pwd)
 
-	local test_reports_dir="${cloud_dir}/scripts/tests/test-reports"
+	local test_reports_dir="${cloud_dir}/scripts/tests/test-results"
 
 	mkdir --parents "${test_reports_dir}"
 

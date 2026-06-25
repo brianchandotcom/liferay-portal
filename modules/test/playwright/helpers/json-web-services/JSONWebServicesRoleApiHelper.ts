@@ -22,7 +22,7 @@ export class JSONWebServicesRoleApiHelper {
 
 	async getRole(companyId: string, name: string): Promise<Role> {
 		return this.apiHelpers.get(
-			`${liferayConfig.environment.baseUrl}${this.basePath}/get-role/company-id/${companyId}/name/${name}`,
+			`${liferayConfig.environment.baseUrl}${this.basePath}/get-role/company-id/${companyId}/name/${encodeURIComponent(name)}`,
 			true,
 			await this.apiHelpers.getJSONWebServicesHeaders()
 		);

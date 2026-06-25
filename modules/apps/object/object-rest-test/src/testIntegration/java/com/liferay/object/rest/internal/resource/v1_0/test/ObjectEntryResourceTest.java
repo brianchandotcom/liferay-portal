@@ -20735,7 +20735,7 @@ public class ObjectEntryResourceTest {
 	private void _testPostObjectEntryWithCrossSiteTaxonomyCategories()
 		throws Exception {
 
-		// Accept a category from a connected depot
+		// Accept a category from a connected depot entry
 
 		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
 			RandomTestUtil.randomLocaleStringMap(),

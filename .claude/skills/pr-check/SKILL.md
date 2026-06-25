@@ -20,7 +20,7 @@ Run premerge checks against the current branch. The skill iterates through the v
 
 	1. Fast forward local `master` to the fetched tip. When local `master` has diverged, warn and stop.
 
-	1. `git rebase <remote>/master`. On a clean rebase, continue against the rebased branch. On conflict, list the unmerged files (`git diff --diff-filter=U --name-only`) and ask the developer who should resolve the conflicts. When the developer chooses to, run `git rebase --abort` and FAIL. When the developer asks you to, fix the conflicts, `git add` the files, and run `git rebase --continue`. When the conflicts cannot be resolved, run `git rebase --abort` and FAIL.
+	1. `git rebase <remote>/master`. On a clean rebase, continue against the rebased branch. On conflict, list the unmerged files (`git diff --diff-filter=U --name-only`) and ask the developer who should resolve the conflicts. When the developer chooses to resolve them, run `git rebase --abort` and FAIL. When the developer asks you to resolve them, fix the conflicts, `git add` the files, and run `git rebase --continue`. When the conflicts cannot be resolved, run `git rebase --abort` and FAIL.
 
 - **Diff baseline is local `master`.** After the rebase, the three-dot diff against local `master` is the baseline.
 

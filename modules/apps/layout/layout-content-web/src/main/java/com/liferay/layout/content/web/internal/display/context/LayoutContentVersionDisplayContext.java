@@ -5,6 +5,7 @@
 
 package com.liferay.layout.content.web.internal.display.context;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
@@ -20,7 +21,6 @@ import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -83,33 +83,30 @@ public class LayoutContentVersionDisplayContext {
 		return availableLanguages;
 	}
 
-	private List<Object> _getAvailableSegmentsExperiences() throws Exception {
-		List<Object> availableSegmentsExperiences = new ArrayList<>();
+	private List<Map<String, Object>> _getAvailableSegmentsExperiences()
+		throws Exception {
 
 		List<SegmentsExperience> segmentsExperiences =
 			_segmentsExperienceLocalService.getSegmentsExperiences(
 				_themeDisplay.getScopeGroupId(), _themeDisplay.getPlid(), true);
 
-		for (SegmentsExperience segmentsExperience : segmentsExperiences) {
-			availableSegmentsExperiences.add(
-				HashMapBuilder.<String, Object>put(
-					"active", _isActive(segmentsExperience, segmentsExperiences)
-				).put(
-					"segmentsExperienceERC",
-					segmentsExperience.getExternalReferenceCode()
-				).put(
-					"segmentsExperienceName",
-					segmentsExperience.getName(_themeDisplay.getLocale())
-				).put(
-					"statusLabel",
-					() -> _language.get(
-						_httpServletRequest,
-						_isActive(segmentsExperience, segmentsExperiences) ?
-							"active" : "inactive")
-				).build());
-		}
-
-		return availableSegmentsExperiences;
+		return TransformUtil.transform(
+			segmentsExperiences,
+			segmentsExperience -> HashMapBuilder.<String, Object>put(
+				"active", _isActive(segmentsExperience, segmentsExperiences)
+			).put(
+				"segmentsExperienceERC",
+				segmentsExperience.getExternalReferenceCode()
+			).put(
+				"segmentsExperienceName",
+				segmentsExperience.getName(_themeDisplay.getLocale())
+			).put(
+				"statusLabel",
+				() -> _language.get(
+					_httpServletRequest,
+					_isActive(segmentsExperience, segmentsExperiences) ?
+						"active" : "inactive")
+			).build());
 	}
 
 	private String _getPageSpecificationVersionsURL() throws Exception {

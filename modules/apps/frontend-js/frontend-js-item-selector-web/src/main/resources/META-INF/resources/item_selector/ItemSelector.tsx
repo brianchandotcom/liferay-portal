@@ -155,6 +155,12 @@ export interface IBaseItemSelectorProps<T> {
 	items?: T[];
 
 	/**
+	 * Optional predicate used to filter the fetched items before they are
+	 * rendered in the dropdown. Items for which it returns `false` are hidden.
+	 */
+	itemsFilter?: (item: T) => boolean;
+
+	/**
 	 * A string key used to locate the id, label, or value within each item.
 	 * Can be used as a period separated path (e.g.: 'embedded.id').
 	 */
@@ -225,6 +231,7 @@ function ItemSelector<T extends Record<string, any>>({
 	onItemsChange,
 	multiSelect = false,
 	items: externalItems,
+	itemsFilter,
 	defaultValue,
 	defaultItems,
 	displaySelectedItems = true,
@@ -321,6 +328,14 @@ function ItemSelector<T extends Record<string, any>>({
 			) ?? []
 		);
 	}, [items, locator.value]);
+
+	const filteredSourceItems = useMemo(
+		() =>
+			itemsFilter && sourceItems
+				? sourceItems.filter(itemsFilter)
+				: sourceItems,
+		[itemsFilter, sourceItems]
+	);
 
 	const memoizedChildren = useCallback(
 		(item: T) => {
@@ -420,7 +435,7 @@ function ItemSelector<T extends Record<string, any>>({
 				onChange={setValue}
 				onItemsChange={setItems}
 				onLoadMore={async () => loadMore()}
-				sourceItems={sourceItems}
+				sourceItems={filteredSourceItems}
 				value={value}
 			>
 				{children}
@@ -438,7 +453,7 @@ function ItemSelector<T extends Record<string, any>>({
 						path: locator.label,
 					});
 				}}
-				items={sourceItems}
+				items={filteredSourceItems}
 				loadingState={networkStatus}
 				menuTrigger="focus"
 				messages={{

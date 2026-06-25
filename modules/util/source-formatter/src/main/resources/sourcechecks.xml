@@ -1192,7 +1192,7 @@
 		</check>
 		<check name="JSONObjectDefinitionFileCheck">
 			<category name="Styling" />
-			<description name="Enforces consistent ordering of `objectFields` in `*-object-definition.json` and `*object-definition.batch-engine-data.json` files (non-relationship fields first, followed by relationship fields, both sorted alphabetically by `name`)." />
+			<description name="Applies rules to enforce consistency in code style." />
 		</check>
 		<check name="JSONPackageJSONBNDVersionCheck">
 			<category name="Bug Prevention" />

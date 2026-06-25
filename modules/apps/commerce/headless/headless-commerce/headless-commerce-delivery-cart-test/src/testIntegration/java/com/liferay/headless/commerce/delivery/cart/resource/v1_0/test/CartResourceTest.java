@@ -606,12 +606,12 @@ public class CartResourceTest extends BaseCartResourceTestCase {
 			_user.getUserId(), CommerceChannel.class.getName(),
 			_commerceChannel.getCommerceChannelId(), corEntry.getCOREntryId());
 
-		Cart cart = _createCart();
+		CommerceOrder commerceOrder = _addCommerceOrder();
 
-		Cart invalidCart = cartResource.getCart(cart.getId());
+		Cart cart = cartResource.getCart(commerceOrder.getCommerceOrderId());
 
-		Assert.assertFalse(invalidCart.getValid());
-		Assert.assertTrue(ArrayUtil.isNotEmpty(invalidCart.getErrorMessages()));
+		Assert.assertFalse(cart.getValid());
+		Assert.assertTrue(ArrayUtil.isNotEmpty(cart.getErrorMessages()));
 
 		Page<Cart> cartsPage = cartResource.getChannelCartsPage(
 			_commerceChannel.getCommerceChannelId(), null, null,

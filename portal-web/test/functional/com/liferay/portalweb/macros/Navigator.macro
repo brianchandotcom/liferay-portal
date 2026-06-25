@@ -6,9 +6,14 @@ definition {
 		var count = 0;
 
 		while ((${count} != 3) && (IsElementNotPresent(locator1 = "Home#PAGE_ACTIVE"))) {
-			AssertClick.assertPartialTextClickAt(
-				locator1 = "Home#PAGE",
-				value1 = ${pageName});
+			if (IsElementPresent(locator1 = "Home#PAGE")) {
+				AssertClick.assertPartialTextClickAt(
+					locator1 = "Home#PAGE",
+					value1 = ${pageName});
+			}
+			else {
+				Refresh();
+			}
 
 			var count = ${count} + 1;
 		}

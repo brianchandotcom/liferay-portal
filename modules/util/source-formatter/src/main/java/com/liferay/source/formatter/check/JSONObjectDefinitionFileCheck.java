@@ -173,7 +173,7 @@ public class JSONObjectDefinitionFileCheck extends BaseFileCheck {
 
 		DetailAST nextSiblingDetailAST = rootDetailAST.getNextSibling();
 
-		while (true) {
+		while (nextSiblingDetailAST != null) {
 			if (nextSiblingDetailAST.getType() != TokenTypes.CLASS_DEF) {
 				nextSiblingDetailAST = nextSiblingDetailAST.getNextSibling();
 
@@ -241,9 +241,9 @@ public class JSONObjectDefinitionFileCheck extends BaseFileCheck {
 
 				return _classNameRegex;
 			}
-
-			return null;
 		}
+
+		return null;
 	}
 
 	private String _getClassNameRegex(DetailAST detailAST) {

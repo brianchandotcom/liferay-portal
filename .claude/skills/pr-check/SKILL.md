@@ -18,7 +18,7 @@ Run premerge checks against the current branch. The skill iterates through the v
 
 	1. `git fetch <remote> master`.
 
-	1. Fast forward local `master` to the fetched tip. When local `master` has diverged, warn and stop.
+	1. Fast forward local `master` to the fetched tip. When `master` is checked out in another worktree, fast forward it there with `git -C <worktree> merge --ff-only <remote>/master`. Otherwise update it in place with `git fetch <remote> master:master`. Both forms are fast forward only, so a diverged `master` makes the command fail. Warn and stop rather than rewriting it.
 
 	1. `git rebase <remote>/master`. On a clean rebase, continue against the rebased branch. On conflict, list the unmerged files (`git diff --diff-filter=U --name-only`) and ask the developer who should resolve the conflicts. When the developer chooses to resolve them, run `git rebase --abort` and FAIL. When the developer asks you to resolve them, fix the conflicts, `git add` the files, and run `git rebase --continue`. When the conflicts cannot be resolved, run `git rebase --abort` and FAIL.
 

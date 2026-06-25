@@ -32,18 +32,23 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.segments.constants.SegmentsEntryConstants;
+import com.liferay.segments.constants.SegmentsExperimentConstants;
 import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.criteria.CriteriaSerializer;
 import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
+import com.liferay.segments.exception.LockedSegmentsEntryException;
 import com.liferay.segments.exception.RequiredSegmentsEntryException;
 import com.liferay.segments.exception.SegmentsEntryKeyException;
 import com.liferay.segments.exception.SegmentsEntryNameException;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsEntryRel;
+import com.liferay.segments.model.SegmentsExperience;
+import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsEntryRelLocalService;
 import com.liferay.segments.service.SegmentsEntryRoleLocalService;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
+import com.liferay.segments.service.SegmentsExperimentLocalService;
 import com.liferay.segments.test.util.SegmentsTestUtil;
 
 import java.util.ArrayList;
@@ -630,6 +635,45 @@ public class SegmentsEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testUpdateSegmentsEntryUsedByDraftSegmentsExperiment()
+		throws PortalException {
+
+		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId());
+
+		_addSegmentsExperiment(segmentsEntry);
+
+		_segmentsEntryLocalService.updateSegmentsEntry(
+			segmentsEntry.getSegmentsEntryId(),
+			segmentsEntry.getSegmentsEntryKey(), segmentsEntry.getNameMap(),
+			segmentsEntry.getDescriptionMap(), segmentsEntry.isActive(),
+			segmentsEntry.getCriteria(),
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+	}
+
+	@Test(expected = LockedSegmentsEntryException.class)
+	public void testUpdateSegmentsEntryUsedByRunningSegmentsExperiment()
+		throws PortalException {
+
+		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId());
+
+		SegmentsExperiment segmentsExperiment = _addSegmentsExperiment(
+			segmentsEntry);
+
+		_segmentsExperimentLocalService.updateSegmentsExperimentStatus(
+			segmentsExperiment.getSegmentsExperimentId(),
+			SegmentsExperimentConstants.STATUS_RUNNING);
+
+		_segmentsEntryLocalService.updateSegmentsEntry(
+			segmentsEntry.getSegmentsEntryId(),
+			segmentsEntry.getSegmentsEntryKey(), segmentsEntry.getNameMap(),
+			segmentsEntry.getDescriptionMap(), segmentsEntry.isActive(),
+			segmentsEntry.getCriteria(),
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+	}
+
+	@Test
 	public void testUpdateSegmentsEntryWithAsahFaroBackendSource()
 		throws PortalException {
 
@@ -730,6 +774,20 @@ public class SegmentsEntryLocalServiceTest {
 			updatedSegmentsEntry.getSource());
 	}
 
+	private SegmentsExperiment _addSegmentsExperiment(
+			SegmentsEntry segmentsEntry)
+		throws PortalException {
+
+		SegmentsExperience segmentsExperience =
+			SegmentsTestUtil.addSegmentsExperience(
+				_group.getGroupId(), segmentsEntry.getExternalReferenceCode(),
+				null, 0);
+
+		return SegmentsTestUtil.addSegmentsExperiment(
+			_group.getGroupId(), segmentsExperience.getSegmentsExperienceId(),
+			0);
+	}
+
 	private Group _group;
 
 	@DeleteAfterTestRun
@@ -756,5 +814,8 @@ public class SegmentsEntryLocalServiceTest {
 
 	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
+
+	@Inject
+	private SegmentsExperimentLocalService _segmentsExperimentLocalService;
 
 }

@@ -15,7 +15,7 @@ For a first time user, follow this sequence:
 - Check for `gradle.properties` and `settings.gradle` in the root directory.
     - If missing, instruct the user to run `blade init -v [version]`.
     - Explain that Liferay Workspace is a generated set of folders and Gradle scripts that manage your SDK and server in one place.
-    - If the files exist, skip to step 3.
+    - If the files exist, skip to **Starting the Server**.
 
 ## Bundle Initialization
 

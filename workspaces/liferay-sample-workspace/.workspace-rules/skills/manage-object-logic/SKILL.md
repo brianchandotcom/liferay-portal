@@ -23,7 +23,7 @@ Object definition must already exist and be published (see `manage-objects`). Cl
 
 ## Workflow
 
-### 1. Choose the Trigger
+### Choose the Trigger
 
 | Trigger | When It Fires |
 | --- | --- |
@@ -32,7 +32,7 @@ Object definition must already exist and be published (see `manage-objects`). Cl
 | `onAfterDelete` | After an entry is deleted |
 | `standalone` | On demand, invoked explicitly by a user or API call |
 
-### 2. Choose the Action Type
+### Choose the Action Type
 
 Consult `rules/object-actions-catalog.md` for the full catalog. Summary:
 
@@ -45,7 +45,7 @@ Consult `rules/object-actions-catalog.md` for the full catalog. Summary:
 | Groovy Script | Script body | Only on self hosted or PaaS; not available on Liferay SaaS |
 | Client Extension | CET `objectAction` or `workflowAction` externalReferenceCode | Calls a deployed microservice |
 
-### 3a. Object Action — Notification
+### Object Action — Notification
 
 Create a notification template first if one does not exist:
 
@@ -89,7 +89,7 @@ curl \
 	--user "test@liferay.com:test"
 ```
 
-### 3b. Object Action — Webhook
+### Object Action — Webhook
 
 ```bash
 curl \
@@ -111,7 +111,7 @@ curl \
 	--user "test@liferay.com:test"
 ```
 
-### 3c. Object Action — Client Extension
+### Object Action — Client Extension
 
 First deploy the `objectAction` CET via `scaffold-client-extension`. Then reference its `externalReferenceCode`:
 
@@ -136,7 +136,7 @@ curl \
 
 The executor key for a Client Extension action is `"objectAction"` (not `"groovy"` — that key is only for the inline Groovy executor in §3a/§3b's sibling pattern). See `rules/object-actions-catalog.md`.
 
-### 4. Kaleo Workflow
+### Kaleo Workflow
 
 Deploy a workflow definition when the object requires multistep review or approval.
 
@@ -157,7 +157,7 @@ curl \
 
 After creating, associate the workflow with the object definition. The reliable path is the Control Panel (Objects → \<Definition\> → Actions → Workflow). There is **no** `workflow-definitions/{id}/assign-to-object` endpoint; programmatic association is done through the `workflow-definition-links` resource (`POST /o/headless-admin-workflow/v1.0/workflow-definitions/<id>/workflow-definition-links`) — confirm the request body against the OpenAPI spec (`get-openapi` MCP tool, or `GET /o/headless-admin-workflow/v1.0/openapi.json`) before scripting it, as the link payload (workflow, class name, type pk) is version sensitive.
 
-### 5. Verify Object Actions
+### Verify Object Actions
 
 ```bash
 curl \
@@ -169,7 +169,7 @@ curl \
 
 Confirm each action is `"active": true`.
 
-### 6. Test the Trigger
+### Test the Trigger
 
 Create a test entry and check the expected side effect (email received, webhook payload, other entry created):
 

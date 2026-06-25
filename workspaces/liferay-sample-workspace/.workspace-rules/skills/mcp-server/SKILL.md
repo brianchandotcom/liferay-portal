@@ -13,26 +13,26 @@ name: mcp-server
 
 ## Setup
 
-### 1. Enable the Feature Flag
+### Enable the Feature Flag
 
 Enable `LPD-63311` in the active configuration. Use `skills/feature-flags/SKILL.md` for the per environment mechanism (Tomcat / Docker prebuilt / Docker custom) and the env var encoding scheme.
 
-### 2. Restart the CLI Session
+### Restart the CLI Session
 
 Most CLI based agents load MCP configuration at startup only and cannot pick up new settings midsession. Prompt the user to exit and restart their agent session **before starting the Liferay server** — so the restart costs nothing while the server is still down.
 
 The CLI session restart kills any running Liferay server. If `blade server start` runs before the restart, the restart will tear the server down — forcing a second cold boot cycle. Liferay cold boot is several minutes. Complete the CLI restart before running `blade server start`.
 
-### 3. Endpoint URL by DXP Version
+### Endpoint URL by DXP Version
 
 - DXP 2025.Q4: `http://localhost:${PORT}/o/mcp/sse`
 - DXP 2026.Q1 and later: `http://localhost:${PORT}/o/mcp`
 
-### 4. Authentication
+### Authentication
 
 Basic auth with base64-encoded credentials. Default: `test@liferay.com` / `test`. Update in your MCP client config if credentials differ.
 
-### 5. Connection Check
+### Connection Check
 
 Use your MCP client's built in connection test. If it returns 401/403, stop and ask the user for updated credentials — do not edit these rule files.
 

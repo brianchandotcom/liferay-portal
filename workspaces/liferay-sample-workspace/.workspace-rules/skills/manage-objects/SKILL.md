@@ -31,7 +31,7 @@ Skip flags the user's workflow does not need. Do not enable flags without explic
 
 ## Workflow
 
-### 1. Collect Object Definition Inputs
+### Collect Object Definition Inputs
 
 Gather from the user or infer from context:
 
@@ -39,10 +39,10 @@ Gather from the user or infer from context:
 - `label` — human readable singular (e.g. `Book`)
 - `pluralLabel` — REST path safe plural (e.g. `books`)
 - `scope` — `company` (default, global) or `site`
-- `storageType` — where entries are stored: Liferay's own DB (the default) or an external source such as `salesforce` or `ext-Service` (see `integrate-external-data`). Do **not** send this on the create call for default DB storage — omit it and Liferay assigns the default (see step 2).
+- `storageType` — where entries are stored: Liferay's own DB (the default) or an external source such as `salesforce` or `ext-Service` (see `integrate-external-data`). Do **not** send this on the create call for default DB storage — omit it and Liferay assigns the default (see **Create the Object Definition**).
 - Fields list — each with `businessType`, `name`, `label`, `required`
 
-### 2. Create the Object Definition
+### Create the Object Definition
 
 ```bash
 curl \
@@ -63,7 +63,7 @@ Do **not** send `"storageType": "default"` on the create call — it returns `40
 
 Save the returned `id` as `<definition-id>`.
 
-### 3. Add Fields
+### Add Fields
 
 For each field in the user's list:
 
@@ -86,7 +86,7 @@ curl \
 
 Common `businessType` values: `Text`, `LongText`, `Integer`, `Decimal`, `Boolean`, `Date`, `DateTime`, `Attachment`, `Relationship`, `Picklist`.
 
-### 4. Add Picklists (When Needed)
+### Add Picklists (When Needed)
 
 Create the picklist first, then reference it in the field:
 
@@ -110,7 +110,7 @@ curl \
 
 Save the returned `id` as `<list-type-id>`. Then add a `Picklist` field referencing `"listTypeDefinitionId": <list-type-id>`.
 
-### 5. Add Relationships
+### Add Relationships
 
 Relationships are defined on the parent object. The `objectDefinitionId2` is the child definition's ID.
 
@@ -131,7 +131,7 @@ curl \
 
 Relationship `type` values: `oneToMany`, `manyToMany`, `oneToOne`.
 
-### 6. Add Validations
+### Add Validations
 
 Expression builder and script based validations are both available — no feature flag required.
 
@@ -153,7 +153,7 @@ curl \
 
 Consult learn.liferay.com for expression builder syntax (search `object validations expression builder`).
 
-### 7. Publish the Object Definition
+### Publish the Object Definition
 
 An unpublished object has no REST endpoint and no UI entry. Always publish after adding fields and relationships.
 
@@ -167,7 +167,7 @@ curl \
 
 After publishing, object entries are available at `/o/c/<pluralLabel>`.
 
-### 8. Verify
+### Verify
 
 ```bash
 # List all published definitions

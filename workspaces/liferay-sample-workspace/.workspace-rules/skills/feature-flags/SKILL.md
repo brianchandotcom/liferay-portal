@@ -18,7 +18,7 @@ Detect the current state of feature flags, report gaps against required sets, an
 
 ## Workflow
 
-### 1. Read Current State
+### Read Current State
 
 Check both sources, in order:
 
@@ -32,19 +32,19 @@ When Tomcat is running and the user is signed in as `test@liferay.com`, also fet
 
 For Docker workspaces, see "Enabling a Flag" below — flag state is read from `liferay.env` (prebuilt image) or `configs/docker/portal-ext.properties` (custom image) instead.
 
-### 2. Report the Gap
+### Report the Gap
 
 Print a table with: flag, required state, current state, what the flag unlocks, source line. Use `rules/feature-flags-catalog.md` for the metadata. Group rows by status (`OK`, `NEEDS_ENABLE`, `NEEDS_DISABLE`).
 
-### 3. Prompt Before Writing
+### Prompt Before Writing
 
 Never edit `portal-ext.properties` (or `liferay.env`) without explicit confirmation. Ask once, list every flag the write will touch, and only proceed on a clear yes. Do not bundle unrelated flags into the same prompt.
 
-### 4. Write per Environment
+### Write per Environment
 
 Persist changes per the environment — see "Enabling a Flag" below. Then bounce or restart according to the environment.
 
-### 5. Verify
+### Verify
 
 Reread the state and confirm every required flag is in the desired state. Report success or remaining gaps to the caller skill.
 

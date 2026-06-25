@@ -37,7 +37,7 @@ Blade merges properties in order: `common/portal-ext.properties` then `<env>/por
 
 ## Workflow
 
-### 1. Declare the Target Environment
+### Declare the Target Environment
 
 Check `gradle.properties`:
 
@@ -59,7 +59,7 @@ Then run `blade gw initBundle` to merge and push configs (applies to remote/UAT 
 blade gw deploy -Pliferay.workspace.environment=uat
 ```
 
-### 2. Add or Update Environment Properties
+### Add or Update Environment Properties
 
 Edit `configs/<env>/portal-ext.properties` with the target environment's values. Common properties per environment:
 
@@ -85,7 +85,7 @@ mail.send.blacklist=*
 feature.flag.LPD-35443=true
 ```
 
-### 3. Export Object Definitions
+### Export Object Definitions
 
 There is **no** `/object-definitions/{id}/export` or `/object-definitions/import` endpoint. Migrate object **definitions** through the Batch Engine endpoints on `object-admin`:
 
@@ -113,7 +113,7 @@ curl \
 
 Confirm the exact request bodies against the OpenAPI spec (`get-openapi` MCP tool, or fetch `GET /o/object-admin/v1.0/openapi.json` with curl). For source controlled migration, prefer a site-initializer `batch/` file (see `rules/site-initializer-format.md`).
 
-### 4. Export Object Data (Batch)
+### Export Object Data (Batch)
 
 Export entries from a live environment for bulk import elsewhere:
 
@@ -140,7 +140,7 @@ BatchEngine silently skips unrecognized fields during import — it logs a `Cann
 
 Ensure JSON field names exactly match the target Object Definition's field names before importing. Treat any `Cannot invoke` warning in `catalina.out` during an import as a hard error and cross check field names before retrying. After every import, GET a sample entry and confirm the imported fields actually persisted.
 
-### 5. Capture a Site as a Site Initializer
+### Capture a Site as a Site Initializer
 
 The `siteInitializer` CET pattern stores the site in source control so any environment can recreate it.
 
@@ -170,7 +170,7 @@ curl \
 
 **Step 6 — Commit and deploy to the target environment** via `deploy-and-verify`.
 
-### 6. Promote a Config Change to UAT
+### Promote a Config Change to UAT
 
 1. Edit `configs/uat/portal-ext.properties` with the new value.
 

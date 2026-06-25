@@ -35,7 +35,7 @@ Consult `rules/page-types.md` for the full table. Common types:
 
 Pages live in the initializer tree and come into being when the initializer is triggered. This avoids the unreliable live page creation API and keeps the page definitions in source control.
 
-### 1. Write `page.json`
+### Write `page.json`
 
 Create `site-initializer/layouts/<NN-page-name>/page.json`. The `NN` prefix controls creation order. Set the type, name, friendly URL, and any per role permissions (see the `page.json` format in `rules/site-initializer-format.md`):
 
@@ -52,7 +52,7 @@ Create `site-initializer/layouts/<NN-page-name>/page.json`. The `NN` prefix cont
 }
 ```
 
-### 2. Write `page-definition.json`
+### Write `page-definition.json`
 
 Compose the layout in `site-initializer/layouts/<NN-page-name>/page-definition.json`. Reference each fragment by its `key` and `siteKey` (the fragments must exist under `site-initializer/fragments/group/<collection-key>/fragments/`):
 
@@ -78,11 +78,11 @@ Compose the layout in `site-initializer/layouts/<NN-page-name>/page-definition.j
 
 The `key` is the fragment's directory name under the collection's `fragments/` folder (e.g. a folder `fragments/group/myco/fragments/hero/` → `"key": "hero"`). The `siteKey` token `[$GROUP_KEY$]` resolves to the current site at provision time and tells the importer the fragment lives in this site's collection (omit `siteKey` only for built in fragments, which use a combined key like `"key": "BASIC_COMPONENT-paragraph"`). **Do not** use `collectionExternalReferenceCode`/`fragmentEntryKey` here — the site-initializer importer reads `key`/`siteKey` and silently drops any fragment element it cannot resolve, leaving the page blank.
 
-### 3. Navigation and SEO
+### Navigation and SEO
 
 Set sitewide navigation and theme in `site-initializer/layout-set/public/metadata.json`. Per page SEO metadata lives alongside the page in `page.json`.
 
-### 4. Provision
+### Provision
 
 Trigger (or, for `layouts/` changes on an existing site, reprovision) the site — delete and recreate it from the initializer. See `rules/site-initializer-format.md` for the commands. Because the source tree is current and object data is company scoped, runtime entries survive the reprovision.
 
@@ -94,43 +94,43 @@ Compose it in `page-definition.json` (see the `Collection` / `CollectionItem` el
 
 1. **`Collection` element** — bind it to the object definition:
 
-   ```json
-   {
-     "definition": {
-       "collectionConfig": {
-         "collectionReference": {
-           "className": "[$OBJECT_DEFINITION_CLASS_NAME:<Name>$]"
-         },
-         "collectionType": "CollectionProvider"
-       },
-       "numberOfItems": 20,
-       "numberOfColumns": 1,
-       "paginationType": "Numeric"
-     },
-     "type": "Collection",
-     "pageElements": [ /* one CollectionItem, below */ ]
-   }
-   ```
+	```json
+	{
+		"definition": {
+			"collectionConfig": {
+				"collectionReference": {
+					"className": "[$OBJECT_DEFINITION_CLASS_NAME:<Name>$]"
+				},
+				"collectionType": "CollectionProvider"
+			},
+			"numberOfItems": 20,
+			"numberOfColumns": 1,
+			"paginationType": "Numeric"
+		},
+		"type": "Collection",
+		"pageElements": [ /* one CollectionItem, below */ ]
+	}
+	```
 
 1. **`CollectionItem` element** — nest one inside the Collection; its child `pageElements` are the per entry template (typically a custom card fragment from `scaffold-fragment`).
 
 1. **Map fragment fields to object fields** — on each editable fragment field, point the mapping at the object field and source it from the current collection item:
 
-   ```json
-   "fragmentFields": [
-     {
-       "id": "<editable-id>",
-       "value": {
-         "text": {
-           "mapping": {
-             "fieldKey": "ObjectField_<field>",
-             "itemReference": {"contextSource": "CollectionItem"}
-           }
-         }
-       }
-     }
-   ]
-   ```
+	```json
+	"fragmentFields": [
+		{
+			"id": "<editable-id>",
+			"value": {
+				"text": {
+					"mapping": {
+						"fieldKey": "ObjectField_<field>",
+						"itemReference": {"contextSource": "CollectionItem"}
+					}
+				}
+			}
+		}
+	]
+	```
 
 ### Mapping Limits — Denormalize Into Display Fields
 
@@ -148,7 +148,7 @@ Use the Headless Admin Site API (`/o/headless-admin-site/v1.0`) only when reprov
 
 > **Field/path corrections for the examples below** (verify against the OpenAPI spec — `get-openapi` MCP tool, or `GET /o/headless-admin-site/v1.0/openapi.json`). This module addresses sites by **`<site-erc>`** (external reference code), not numeric ID, and subresources are nested under `/sites/<site-erc>/…` (there is no top level `/site-pages/{id}`). On the current API the `SitePage` / `DisplayPageTemplate` / `MasterPage` DTOs use **`pageSpecifications`** (not the initializer's `pageDefinition`), `*_i18n` localized maps (`name_i18n`, `friendlyUrlPath_i18n` — `SitePage` has no `title` field), and `DisplayPageTemplate` binds via **`contentTypeReference`** (not flat `contentType`/`contentSubtype`). The illustrative bodies below predate that model — see "Page Specification Workflow (Draft and Publish)" for the verified shape. The `type` enum is **`ContentPage` / `WidgetPage` / `LinkToURLPage` / `EmbeddedPage` / `PageSetPage` / `LinkToPagePage`** (not `content`) — distinct from the site-initializer `page.json` `type` (`Content`/`Portlet`/`URL`/`Embedded`) and `headless-delivery`'s `pageType`. Page element operations also require flag `LPD-74328`.
 
-### 1. Ensure the Site Exists
+### Ensure the Site Exists
 
 ```bash
 # List sites
@@ -176,7 +176,7 @@ curl \
 	--user "test@liferay.com:test"
 ```
 
-### 2. Create a Content Page
+### Create a Content Page
 
 ```bash
 curl \
@@ -195,7 +195,7 @@ curl \
 
 Save the returned `id` as `<page-id>`.
 
-### 3. Add Fragment Sections to a Content Page
+### Add Fragment Sections to a Content Page
 
 > **Caution:** Prefer the site-initializer `page-definition.json` flow above — it is the verified path. The simple `collectionExternalReferenceCode`/`fragmentEntryKey` form shown below is **not** how either importer resolves a custom fragment: the site-initializer importer uses `key`/`siteKey`, and the live Headless API uses the `BasicFragment` + `fragmentReferenceType` form (see "Custom Fragment Placement via the Headless API" below). A reference written the wrong way is silently dropped and the section renders blank.
 
@@ -229,7 +229,7 @@ curl \
 	--user "test@liferay.com:test"
 ```
 
-### 4. Create a Display Page Template
+### Create a Display Page Template
 
 Display page templates bind an object or content type to a page layout so each entry has its own URL.
 
@@ -257,7 +257,7 @@ curl \
 
 Replace `contentType` and `contentSubtype` with the Liferay class name string for the target object. For Liferay Objects, use `com.liferay.object.model.ObjectEntry` and set `contentSubtype` to the object definition's ERC.
 
-### 5. Create a Navigation Menu
+### Create a Navigation Menu
 
 ```bash
 curl \
@@ -281,7 +281,7 @@ curl \
 
 The `uuid` is the `friendlyUrlPath` slug or the page UUID from the create response.
 
-### 6. Configure SEO Settings
+### Configure SEO Settings
 
 Update page SEO fields after creation:
 
@@ -306,7 +306,7 @@ curl \
 	--user "test@liferay.com:test"
 ```
 
-### 7. Verify
+### Verify
 
 ```bash
 # List pages

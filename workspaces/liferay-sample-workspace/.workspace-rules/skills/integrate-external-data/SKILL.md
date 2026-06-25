@@ -40,7 +40,7 @@ The CET implements an HTTP server that handles five operations Liferay calls:
 
 ## Workflow
 
-### 1. Define the Object With `ext-Service` Storage
+### Define the Object With `ext-Service` Storage
 
 ```bash
 curl \
@@ -58,9 +58,9 @@ curl \
 	--user "test@liferay.com:test"
 ```
 
-Use `"storageType": "salesforce"` for native Salesforce integration, or `"storageType": "ext-Service"` for the custom CET pattern. For `ext-Service`, proceed to step 2.
+Use `"storageType": "salesforce"` for native Salesforce integration, or `"storageType": "ext-Service"` for the custom CET pattern. For `ext-Service`, proceed to **Scaffold the `objectEntryManager` CET**.
 
-### 2. Scaffold the `objectEntryManager` CET
+### Scaffold the `objectEntryManager` CET
 
 Call `scaffold-client-extension` with type `objectEntryManager`. The CET is a microservice that Liferay calls inbound.
 
@@ -79,7 +79,7 @@ Where:
 - `baseURL` is the address Liferay uses to reach the microservice (use `host.docker.internal` in Docker environments)
 - `objectDefinitionRestContextPath` matches the published object's plural label
 
-### 3. Implement the Microservice
+### Implement the Microservice
 
 The microservice must respond to the five endpoints above. Use any stack (Spring Boot, Node.js, Python). The request and response bodies follow the Liferay Headless delivery envelope:
 
@@ -107,17 +107,17 @@ The microservice must respond to the five endpoints above. Use any stack (Spring
 
 Liferay sends the `X-Liferay-Token` header with each call for the CET to verify authenticity.
 
-### 4. Wire OAuth
+### Wire OAuth
 
 Call `setup-oauth` to add the companion `oAuthApplicationHeadlessServer` entry to `client-extension.yaml`. The entry manager needs scopes to call back into Liferay when it must resolve related objects or write audit entries.
 
 Minimum scope: `Liferay.Headless.Object.everything`. Add `Liferay.Object.Admin.REST.everything` if the entry manager needs to inspect or modify the object definition itself.
 
-### 5. Deploy
+### Deploy
 
 Run `deploy-and-verify` from the client extension root. Then start the microservice separately on the port declared in `baseURL`.
 
-### 6. Verify
+### Verify
 
 ```bash
 # Create an entry — should proxy to the external system
@@ -138,9 +138,9 @@ curl \
 	--user "test@liferay.com:test"
 ```
 
-Check the microservice logs to confirm Liferay forwarded the calls. If entries appear empty, the microservice's list response format may not match the expected envelope (step 3).
+Check the microservice logs to confirm Liferay forwarded the calls. If entries appear empty, the microservice's list response format may not match the expected envelope (see **Implement the Microservice**).
 
-### 7. Troubleshoot
+### Troubleshoot
 
 | Symptom | Check |
 | --- | --- |

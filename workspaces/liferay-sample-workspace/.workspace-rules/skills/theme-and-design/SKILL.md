@@ -182,7 +182,7 @@ To replace the Liferay favicon or icon spritemap, use the companion CET types:
 
 Deploy alongside the `themeCSS` CET.
 
-## globalCSS vs themeCSS
+## globalCSS Versus themeCSS
 
 A `themeCSS` CET overrides Clay Design System variables and is selected per site under Design → Theme. A `globalCSS` CET is different: it injects a plain CSS file on **every page** automatically as soon as it is deployed — there is no per site selection and **no Instance Settings or manual enablement step**. Scope is controlled on the CET itself (`scope: company` injects instance wide; omitting `scope` uses the default):
 

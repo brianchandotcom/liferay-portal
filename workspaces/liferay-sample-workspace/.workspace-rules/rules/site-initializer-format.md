@@ -264,7 +264,7 @@ Controls navigation menu visibility and theme assignment for the public (nonpriv
 }
 ```
 
-For themeCSS CETs leave `themeId` as `"classic_WAR_classictheme"` and control appearance entirely from the CET.
+For themeCSS CETs, leave `themeId` as `"classic_WAR_classictheme"` and control appearance entirely from the CET.
 
 ## `client-extension.yaml` for the Initializer
 

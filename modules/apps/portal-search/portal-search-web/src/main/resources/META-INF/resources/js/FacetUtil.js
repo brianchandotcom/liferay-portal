@@ -9,6 +9,14 @@ const FACET_TERM_CLASS = 'facet-term';
 
 const FACET_TERM_SELECTED_CLASS = 'facet-term-selected';
 
+function _getInputDate(form, prefix) {
+	const yearInput = form.querySelector(`[id$=${prefix}Year]`);
+	const monthInput = form.querySelector(`[id$=${prefix}Month]`);
+	const dayInput = form.querySelector(`[id$=${prefix}Day]`);
+
+	return new Date(yearInput.value, monthInput.value, dayInput.value);
+}
+
 /**
  * Gets the ID by checking the `data-term-id` attribute and then `id` if
  * `data-term-id` is not defined.
@@ -19,6 +27,14 @@ const FACET_TERM_SELECTED_CLASS = 'facet-term-selected';
  */
 function _getTermId(term) {
 	return term.dataset.termId || term.id;
+}
+
+function _toISODateString(date) {
+	const localDate = new Date(date);
+
+	localDate.setMinutes(date.getMinutes() - date.getTimezoneOffset());
+
+	return localDate.toISOString().split('T')[0];
 }
 
 /**
@@ -176,14 +192,11 @@ export const FacetUtil = {
 			);
 
 			if (fromValue && toValue) {
-				endDate = new Date(toValue);
-				startDate = new Date(fromValue);
+				startDate = _getInputDate(form, 'from');
+				endDate = _getInputDate(form, 'to');
 			}
 
-			return [
-				startDate.toISOString().split('T')[0],
-				endDate.toISOString().split('T')[0],
-			];
+			return [_toISODateString(startDate), _toISODateString(endDate)];
 		}
 		else {
 			return termId;

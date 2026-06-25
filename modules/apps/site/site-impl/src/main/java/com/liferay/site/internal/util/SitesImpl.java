@@ -8,7 +8,7 @@ package com.liferay.site.internal.util;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.change.tracking.configuration.helper.CTSettingsConfigurationHelper;
-import com.liferay.exportimport.kernel.background.task.constants.LayoutSetPrototypeMergeBackgroundTaskConstants;
+import com.liferay.exportimport.kernel.background.task.constants.LayoutSetPrototypeBackgroundTaskConstants;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactoryUtil;
 import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.lar.ExportImportHelper;
@@ -648,7 +648,7 @@ public class SitesImpl implements Sites {
 
 		Map<String, Serializable> taskContextMap =
 			HashMapBuilder.<String, Serializable>put(
-				LayoutSetPrototypeMergeBackgroundTaskConstants.SESSION_ID,
+				LayoutSetPrototypeBackgroundTaskConstants.SESSION_ID,
 				PortalUUIDUtil.generate()
 			).put(
 				LayoutSetPrototypeMergeConstants.LAYOUT_SET_GROUP_IDS,

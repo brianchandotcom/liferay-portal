@@ -170,7 +170,7 @@ public class MCPServerServlet extends HttpServlet {
 
 		if (!StringUtil.startsWith(authorization, "Bearer ")) {
 			_sendInvalidTokenChallenge(
-				"Authorization header is not a Bearer token",
+				"Authorization header is not a bearer token",
 				httpServletRequest, httpServletResponse);
 
 			return false;

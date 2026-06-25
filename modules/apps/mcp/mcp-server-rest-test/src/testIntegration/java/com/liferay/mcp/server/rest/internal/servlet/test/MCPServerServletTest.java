@@ -172,7 +172,7 @@ public class MCPServerServletTest {
 
 		_assertInvalidTokenChallenge(
 			_getResponse(RandomTestUtil.randomString()),
-			"Authorization header is not a Bearer token");
+			"Authorization header is not a bearer token");
 	}
 
 	@Test

@@ -71,6 +71,7 @@ public class MCPServerProtectedResourceMetadataServlet extends HttpServlet {
 
 		if (!Objects.equals(method, "GET") && !Objects.equals(method, "HEAD")) {
 			httpServletResponse.setHeader("Allow", "GET, HEAD, OPTIONS");
+
 			httpServletResponse.sendError(
 				HttpServletResponse.SC_METHOD_NOT_ALLOWED);
 

@@ -22,7 +22,7 @@ definition {
 			var site = "true";
 		}
 
-		var groupId = JSONGroupAPI._getGroupIdByName(
+		var liveGroupId = JSONGroupAPI._getGroupIdByName(
 			grandParentGroupName = ${grandParentGroupName},
 			groupName = ${groupName},
 			parentGroupName = ${parentGroupName},
@@ -39,21 +39,48 @@ definition {
 		JSONStagingAPI._enableLocalStaging(
 			branchingPrivate = ${branchingPrivate},
 			branchingPublic = ${branchingPublic},
-			groupId = ${groupId},
+			groupId = ${liveGroupId},
 			unCheckedContent = ${unCheckedContent});
 
-		var groupId = JSONGroupAPI._getGroupIdByNameNoError(
+		var stagingGroupId = JSONGroupAPI._getGroupIdByNameNoError(
 			grandParentGroupName = ${grandParentGroupName},
 			groupName = "${groupName} (Staging)",
 			parentGroupName = ${parentGroupName},
 			site = "false");
 
-		while ((${groupId} == "")) {
-			var groupId = JSONGroupAPI._getGroupIdByNameNoError(
+		while ((${stagingGroupId} == "")) {
+			var stagingGroupId = JSONGroupAPI._getGroupIdByNameNoError(
 				grandParentGroupName = ${grandParentGroupName},
 				groupName = "${groupName} (Staging)",
 				parentGroupName = ${parentGroupName},
 				site = "false");
+		}
+
+		var portalURL = JSONCompany.getPortalURL();
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
+		var liveLayoutsCurl = '''
+			${portalURL}/api/jsonws/layout/get-layouts \
+				-u ${userLoginInfo} \
+				-d groupId=${liveGroupId} \
+				-d privateLayout=false
+		''';
+
+		var liveLayoutId = JSONCurlUtil.post(${liveLayoutsCurl}, "$.[?(@['nameCurrentValue'] != '')]['layoutId']");
+
+		if (${liveLayoutId} != "") {
+			var stagingLayoutsCurl = '''
+				${portalURL}/api/jsonws/layout/get-layouts \
+					-u ${userLoginInfo} \
+					-d groupId=${stagingGroupId} \
+					-d privateLayout=false
+			''';
+
+			var stagingLayoutId = JSONCurlUtil.post(${stagingLayoutsCurl}, "$.[?(@['nameCurrentValue'] != '')]['layoutId']");
+
+			while ((${stagingLayoutId} == "")) {
+				var stagingLayoutId = JSONCurlUtil.post(${stagingLayoutsCurl}, "$.[?(@['nameCurrentValue'] != '')]['layoutId']");
+			}
 		}
 	}
 

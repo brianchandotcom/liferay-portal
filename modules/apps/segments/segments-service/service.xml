@@ -375,6 +375,7 @@
 	</entity>
 	<exceptions>
 		<exception>DuplicateSegmentsExperiment</exception>
+		<exception>LockedSegmentsEntry</exception>
 		<exception>LockedSegmentsExperiment</exception>
 		<exception>RequiredSegmentsEntry</exception>
 		<exception>RequiredSegmentsExperience</exception>

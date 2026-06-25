@@ -6,7 +6,7 @@
 package com.liferay.site.internal.exportimport.internal.messaging;
 
 import com.liferay.exportimport.kernel.background.task.BackgroundTaskExecutorNames;
-import com.liferay.exportimport.kernel.background.task.constants.LayoutSetPrototypeMergeBackgroundTaskConstants;
+import com.liferay.exportimport.kernel.background.task.constants.LayoutSetPrototypeBackgroundTaskConstants;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.portal.background.task.model.BackgroundTask;
@@ -88,7 +88,7 @@ public class LayoutSetPrototypeMergeBackgroundTaskStatusMessageListener
 
 		String sessionId = MapUtil.getString(
 			taskContextMap,
-			LayoutSetPrototypeMergeBackgroundTaskConstants.SESSION_ID);
+			LayoutSetPrototypeBackgroundTaskConstants.SESSION_ID);
 
 		if (Validator.isNull(sessionId)) {
 			if (backgroundTaskStatus ==
@@ -245,7 +245,7 @@ public class LayoutSetPrototypeMergeBackgroundTaskStatusMessageListener
 
 				String backgroundTaskSessionId = MapUtil.getString(
 					taskContextMap,
-					LayoutSetPrototypeMergeBackgroundTaskConstants.SESSION_ID);
+					LayoutSetPrototypeBackgroundTaskConstants.SESSION_ID);
 
 				if (!Objects.equals(backgroundTaskSessionId, sessionId) ||
 					(completed &&

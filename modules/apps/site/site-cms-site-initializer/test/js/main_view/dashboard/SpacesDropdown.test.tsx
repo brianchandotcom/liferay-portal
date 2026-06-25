@@ -5,243 +5,155 @@
 
 import '@testing-library/jest-dom';
 import {
-	act,
 	fireEvent,
 	render,
 	screen,
 	waitFor,
-	waitForElementToBeRemoved,
+	within,
 } from '@testing-library/react';
 import React from 'react';
 
-import ApiHelper from '../../../../src/main/resources/META-INF/resources/js/common/services/ApiHelper';
+import SpaceService from '../../../../src/main/resources/META-INF/resources/js/common/services/SpaceService';
 import {ViewDashboardContextProvider} from '../../../../src/main/resources/META-INF/resources/js/main_view/dashboard/ViewDashboardContext';
 import {SpacesDropdown} from '../../../../src/main/resources/META-INF/resources/js/main_view/dashboard/components/SpacesDropdown';
 
-const WrappedComponent = ({constants}: any) => (
-	<ViewDashboardContextProvider value={{constants}}>
+jest.mock(
+	'../../../../src/main/resources/META-INF/resources/js/common/services/SpaceService'
+);
+
+const mockedSpaceService = SpaceService as jest.Mocked<typeof SpaceService>;
+
+const WrappedComponent = () => (
+	<ViewDashboardContextProvider value={{}}>
 		<SpacesDropdown />
 	</ViewDashboardContextProvider>
 );
 
 describe('[CMS Dashboard] Components: SpacesDropdown', () => {
-	const mockSpacesApiResponse = {
-		items: [
-			{id: '01', name: 'space 01'},
-			{id: '02', name: 'space 02'},
-		],
-	};
+	const mockSpaces = [
+		{externalReferenceCode: 'ERC_01', id: '01', name: 'space 01'},
+		{externalReferenceCode: 'ERC_02', id: '02', name: 'space 02'},
+	];
 
-	afterEach(() => {
+	beforeEach(() => {
 		jest.clearAllMocks();
-		jest.restoreAllMocks();
+
+		mockedSpaceService.getSpaces.mockResolvedValue(mockSpaces as any);
 	});
 
-	it('fetches spaces filtered by type Space', async () => {
-		const apiHelperGetSpy = jest.spyOn(ApiHelper, 'get').mockResolvedValue({
-			data: {items: []},
-			error: null,
-		});
+	it('fetches the spaces', async () => {
+		render(<WrappedComponent />);
 
+		await waitFor(() =>
+			expect(mockedSpaceService.getSpaces).toHaveBeenCalled()
+		);
+	});
+
+	it('renders the selected space in the trigger', () => {
+		render(<WrappedComponent />);
+
+		expect(
+			screen.getByRole('combobox', {name: 'filter-by-spaces'})
+		).toHaveTextContent('all-spaces');
+	});
+
+	it('renders the space list', async () => {
 		render(<WrappedComponent />);
 
 		fireEvent.click(
-			screen.getByRole('button', {
-				name: 'all-spaces',
-			})
+			screen.getByRole('combobox', {name: 'filter-by-spaces'})
 		);
 
-		await waitForElementToBeRemoved(() => screen.getByTestId('loading'));
+		const listbox = await screen.findByRole('listbox');
 
-		expect(apiHelperGetSpy).toHaveBeenCalledWith(
-			expect.stringContaining(
-				`filter=${encodeURIComponent("type eq 'Space'")}`
-			)
+		expect(
+			await within(listbox).findByRole('option', {name: 'space 01'})
+		).toBeInTheDocument();
+
+		expect(
+			within(listbox).getByRole('option', {name: 'space 02'})
+		).toBeInTheDocument();
+
+		expect(
+			within(listbox).getByRole('option', {name: 'all-spaces'})
+		).toBeInTheDocument();
+
+		expect(within(listbox).getAllByRole('option')).toHaveLength(3);
+	});
+
+	it('filters the list when searching', async () => {
+		render(<WrappedComponent />);
+
+		fireEvent.click(
+			screen.getByRole('combobox', {name: 'filter-by-spaces'})
 		);
+
+		const listbox = await screen.findByRole('listbox');
+
+		await within(listbox).findByRole('option', {name: 'space 02'});
+
+		fireEvent.change(screen.getByPlaceholderText('search'), {
+			target: {value: 'space 02'},
+		});
+
+		await waitFor(() =>
+			expect(within(listbox).getAllByRole('option')).toHaveLength(1)
+		);
+
+		expect(
+			within(listbox).getByRole('option', {name: 'space 02'})
+		).toBeInTheDocument();
+
+		expect(
+			within(listbox).queryByRole('option', {name: 'space 01'})
+		).not.toBeInTheDocument();
+
+		expect(
+			within(listbox).queryByRole('option', {name: 'all-spaces'})
+		).not.toBeInTheDocument();
 	});
 
-	it('renders correctly', async () => {
-		jest.spyOn(ApiHelper, 'get').mockResolvedValue({
-			data: {items: []},
-			error: null,
-		});
-
+	it('shows a message when no space matches the search', async () => {
 		render(<WrappedComponent />);
 
-		const spacesDropdownButton = screen.getByRole('button', {
-			name: 'all-spaces',
+		fireEvent.click(
+			screen.getByRole('combobox', {name: 'filter-by-spaces'})
+		);
+
+		const listbox = await screen.findByRole('listbox');
+
+		await within(listbox).findByRole('option', {name: 'space 02'});
+
+		fireEvent.change(screen.getByPlaceholderText('search'), {
+			target: {value: 'no-match'},
 		});
 
-		expect(spacesDropdownButton).toBeInTheDocument();
-
-		fireEvent.click(spacesDropdownButton);
-
-		expect(screen.queryByText('filter-by-spaces')).toBeInTheDocument();
-
-		expect(screen.queryByPlaceholderText('search')).toBeInTheDocument();
-
-		await waitForElementToBeRemoved(() => screen.getByTestId('loading'));
-
-		expect(screen.getAllByRole('menuitem').length).toBe(1);
-
-		expect(
-			screen.queryByRole('menuitem', {name: 'all-spaces'})
-		).toBeInTheDocument();
-	});
-
-	it('renders a space list', async () => {
-		jest.spyOn(ApiHelper, 'get').mockResolvedValue({
-			data: mockSpacesApiResponse,
-			error: null,
-		});
-
-		render(<WrappedComponent />);
-
-		const spacesDropdownButton = screen.getByRole('button', {
-			name: 'all-spaces',
-		});
-
-		fireEvent.click(spacesDropdownButton);
-
-		await waitForElementToBeRemoved(() => screen.getByTestId('loading'));
-
-		expect(screen.getAllByRole('menuitem').length).toBe(3);
-
-		expect(
-			screen.queryByRole('menuitem', {name: 'all-spaces'})
-		).toBeInTheDocument();
-
-		expect(
-			screen.queryByRole('menuitem', {name: 'space 01'})
-		).toBeInTheDocument();
-
-		expect(
-			screen.queryByRole('menuitem', {name: 'space 02'})
-		).toBeInTheDocument();
-	});
-
-	it('search by a space and returns a filtered result', async () => {
-		jest.useFakeTimers();
-
-		jest.spyOn(ApiHelper, 'get')
-			.mockResolvedValueOnce({
-				data: mockSpacesApiResponse,
-				error: null,
-			})
-			.mockResolvedValueOnce({
-				data: {items: [{id: '02', name: 'space 02'}]},
-				error: null,
-			});
-
-		render(<WrappedComponent />);
-
-		const spacesDropdownButton = screen.getByRole('button', {
-			name: 'all-spaces',
-		});
-
-		fireEvent.click(spacesDropdownButton);
-
-		await waitForElementToBeRemoved(() => screen.getByTestId('loading'));
-
-		expect(screen.getAllByRole('menuitem').length).toBe(3);
-
-		await act(async () => {
-			fireEvent.change(screen.getByPlaceholderText('search'), {
-				target: {
-					value: 'space 02',
-				},
-			});
-
-			jest.advanceTimersByTime(300);
-		});
-
-		await waitFor(() => {
-			expect(screen.getAllByRole('menuitem').length).toBe(1);
-
+		await waitFor(() =>
 			expect(
-				screen.queryByRole('menuitem', {name: 'space 02'})
-			).toBeInTheDocument();
-		});
+				within(listbox).queryByRole('option')
+			).not.toBeInTheDocument()
+		);
 
 		expect(
-			screen.queryByRole('menuitem', {name: 'all-spaces'})
-		).not.toBeInTheDocument();
-
-		expect(
-			screen.queryByRole('menuitem', {name: 'space 01'})
-		).not.toBeInTheDocument();
-
-		jest.useRealTimers();
-	});
-
-	it('search by a space and returns a empty result', async () => {
-		jest.useFakeTimers();
-
-		jest.spyOn(ApiHelper, 'get')
-			.mockResolvedValueOnce({
-				data: mockSpacesApiResponse,
-				error: null,
-			})
-			.mockResolvedValueOnce({
-				data: {items: []},
-				error: null,
-			});
-
-		render(<WrappedComponent />);
-
-		const spacesDropdownButton = screen.getByRole('button', {
-			name: 'all-spaces',
-		});
-
-		fireEvent.click(spacesDropdownButton);
-
-		await waitForElementToBeRemoved(() => screen.getByTestId('loading'));
-
-		expect(screen.getAllByRole('menuitem').length).toBe(3);
-
-		await act(async () => {
-			fireEvent.change(screen.getByPlaceholderText('search'), {
-				target: {
-					value: 'empty?',
-				},
-			});
-
-			jest.advanceTimersByTime(300);
-		});
-
-		await waitFor(() => {
-			expect(screen.getAllByRole('menuitem').length).toBe(1);
-
-			expect(
-				screen.queryByRole('menuitem', {
-					name: 'no-filters-were-found',
-				})
-			).toBeInTheDocument();
-		});
-
-		expect(
-			screen.queryByRole('menuitem', {name: 'all-spaces'})
-		).not.toBeInTheDocument();
-
-		jest.useRealTimers();
+			within(listbox).getByText('no-results-were-found')
+		).toBeInTheDocument();
 	});
 
 	it('selects a new space', async () => {
-		jest.spyOn(ApiHelper, 'get').mockResolvedValue({
-			data: mockSpacesApiResponse,
-			error: null,
-		});
-
 		render(<WrappedComponent />);
 
-		expect(screen.getByTestId('spaces')).toHaveTextContent('all-spaces');
+		const trigger = screen.getByRole('combobox', {
+			name: 'filter-by-spaces',
+		});
 
-		fireEvent.click(screen.getByTestId('spaces'));
+		fireEvent.click(trigger);
 
-		await waitForElementToBeRemoved(() => screen.getByTestId('loading'));
+		const listbox = await screen.findByRole('listbox');
 
-		fireEvent.click(screen.getByRole('menuitem', {name: 'space 02'}));
+		fireEvent.click(
+			await within(listbox).findByRole('option', {name: 'space 02'})
+		);
 
-		expect(screen.getByTestId('spaces')).toHaveTextContent('space 02');
+		await waitFor(() => expect(trigger).toHaveTextContent('space 02'));
 	});
 });

@@ -5,12 +5,11 @@
 
 import '@testing-library/jest-dom';
 import {
-	act,
 	fireEvent,
 	render,
 	screen,
 	waitFor,
-	waitForElementToBeRemoved,
+	within,
 } from '@testing-library/react';
 import React from 'react';
 
@@ -75,38 +74,32 @@ describe('[CMS Dashboard] Components: AllStructureTypesDropdown', () => {
 
 		render(<WrappedComponent onSelectItem={onSelectItem} />);
 
-		const button = screen.getByRole('button', {
+		const trigger = screen.getByRole('combobox', {
+			name: 'filter-by-content-structure-type',
+		});
+
+		expect(trigger).toHaveTextContent('all-content-structures');
+
+		fireEvent.click(trigger);
+
+		expect(screen.getByPlaceholderText('search')).toBeInTheDocument();
+
+		const listbox = await screen.findByRole('listbox');
+
+		const option = within(listbox).getByRole('option', {
 			name: 'all-content-structures',
 		});
 
-		expect(button).toBeInTheDocument();
+		expect(within(listbox).getAllByRole('option')).toHaveLength(1);
 
-		fireEvent.click(button);
+		fireEvent.click(option);
 
-		expect(
-			screen.queryByText('filter-by-content-structure-type')
-		).toBeInTheDocument();
-
-		expect(screen.queryByPlaceholderText('search')).toBeInTheDocument();
-
-		await waitForElementToBeRemoved(() => screen.getByTestId('loading'));
-
-		expect(screen.getAllByRole('menuitem').length).toBe(1);
-
-		const menuitem = screen.getByRole('menuitem', {
-			name: 'all-content-structures',
-		});
-
-		expect(menuitem).toBeInTheDocument();
-
-		fireEvent.click(menuitem);
-
-		expect(onSelectItem).toHaveBeenCalledTimes(1);
-
-		expect(onSelectItem).toHaveBeenCalledWith({
-			label: 'all-content-structures',
-			value: 'all',
-		});
+		expect(onSelectItem).toHaveBeenCalledWith(
+			expect.objectContaining({
+				label: 'all-content-structures',
+				value: 'all',
+			})
+		);
 	});
 
 	it('renders a structure list', async () => {
@@ -117,169 +110,125 @@ describe('[CMS Dashboard] Components: AllStructureTypesDropdown', () => {
 
 		render(<WrappedComponent onSelectItem={jest.fn()} />);
 
-		const button = screen.getByRole('button', {
-			name: 'all-content-structures',
-		});
+		fireEvent.click(
+			screen.getByRole('combobox', {
+				name: 'filter-by-content-structure-type',
+			})
+		);
 
-		fireEvent.click(button);
-
-		await waitForElementToBeRemoved(() => screen.getByTestId('loading'));
-
-		expect(screen.getAllByRole('menuitem').length).toBe(3);
+		const listbox = await screen.findByRole('listbox');
 
 		expect(
-			screen.queryByRole('menuitem', {name: 'all-content-structures'})
+			await within(listbox).findByRole('option', {name: 'structure 01'})
 		).toBeInTheDocument();
 
 		expect(
-			screen.queryByRole('menuitem', {name: 'structure 01'})
+			within(listbox).getByRole('option', {name: 'structure 02'})
 		).toBeInTheDocument();
 
 		expect(
-			screen.queryByRole('menuitem', {name: 'structure 02'})
+			within(listbox).getByRole('option', {
+				name: 'all-content-structures',
+			})
 		).toBeInTheDocument();
+
+		expect(within(listbox).getAllByRole('option')).toHaveLength(3);
 	});
 
 	it('searches by structure name and returns a filtered result', async () => {
-		jest.useFakeTimers();
-
-		jest.spyOn(ApiHelper, 'get')
-			.mockResolvedValueOnce({
-				data: mockStructureTypesApiResponse,
-				error: null,
-			})
-			.mockResolvedValueOnce({
-				data: {
-					items: [
-						{
-							id: '02',
-							label: {
-								en_US: 'structure 02',
-							},
-						},
-					],
-				},
-				error: null,
-			});
-
-		render(<WrappedComponent onSelectItem={jest.fn()} />);
-
-		const dropdownButton = screen.getByRole('button', {
-			name: 'all-content-structures',
-		});
-
-		fireEvent.click(dropdownButton);
-
-		await waitForElementToBeRemoved(() => screen.getByTestId('loading'));
-
-		expect(screen.getAllByRole('menuitem').length).toBe(3);
-
-		await act(async () => {
-			fireEvent.change(screen.getByPlaceholderText('search'), {
-				target: {value: 'structure 02'},
-			});
-
-			jest.advanceTimersByTime(300);
-		});
-
-		await waitFor(() => {
-			expect(screen.getAllByRole('menuitem').length).toBe(1);
-
-			expect(
-				screen.getByRole('menuitem', {name: 'structure 02'})
-			).toBeInTheDocument();
-		});
-
-		expect(
-			screen.queryByRole('menuitem', {name: 'structure 01'})
-		).not.toBeInTheDocument();
-
-		expect(
-			screen.queryByRole('menuitem', {name: 'all-content-structures'})
-		).not.toBeInTheDocument();
-
-		jest.useRealTimers();
-	});
-
-	it('search by a structure and returns a empty result', async () => {
-		jest.useFakeTimers();
-
-		jest.spyOn(ApiHelper, 'get')
-			.mockResolvedValueOnce({
-				data: mockStructureTypesApiResponse,
-				error: null,
-			})
-			.mockResolvedValueOnce({
-				data: {
-					items: [],
-				},
-				error: null,
-			});
-
-		render(<WrappedComponent onSelectItem={jest.fn()} />);
-
-		const structuresDropdownButton = screen.getByRole('button', {
-			name: 'all-content-structures',
-		});
-
-		fireEvent.click(structuresDropdownButton);
-
-		await waitForElementToBeRemoved(() => screen.getByTestId('loading'));
-
-		expect(screen.getAllByRole('menuitem').length).toBe(3);
-
-		global.fetch = jest.fn().mockResolvedValue({
-			json: jest.fn().mockResolvedValue({items: []}),
-			ok: true,
-		});
-
-		await act(async () => {
-			fireEvent.change(screen.getByPlaceholderText('search'), {
-				target: {
-					value: 'empty?',
-				},
-			});
-
-			jest.advanceTimersByTime(300);
-		});
-
-		await waitFor(() => {
-			expect(screen.getAllByRole('menuitem').length).toBe(1);
-
-			expect(
-				screen.queryByRole('menuitem', {
-					name: 'no-filters-were-found',
-				})
-			).toBeInTheDocument();
-		});
-
-		expect(
-			screen.queryByRole('menuitem', {name: 'all-content-structures'})
-		).not.toBeInTheDocument();
-
-		jest.useRealTimers();
-	});
-
-	it('selects a new strucuture', async () => {
 		jest.spyOn(ApiHelper, 'get').mockResolvedValue({
 			data: mockStructureTypesApiResponse,
 			error: null,
 		});
 
-		render(<WrappedComponent onSelectItem={() => {}} />);
+		render(<WrappedComponent onSelectItem={jest.fn()} />);
 
-		expect(screen.getByTestId('structures')).toHaveTextContent(
-			'all-content-structures'
+		fireEvent.click(
+			screen.getByRole('combobox', {
+				name: 'filter-by-content-structure-type',
+			})
 		);
 
-		fireEvent.click(screen.getByTestId('structures'));
+		const listbox = await screen.findByRole('listbox');
 
-		await waitForElementToBeRemoved(() => screen.getByTestId('loading'));
+		await within(listbox).findByRole('option', {name: 'structure 02'});
 
-		fireEvent.click(screen.getByRole('menuitem', {name: 'structure 02'}));
+		fireEvent.change(screen.getByPlaceholderText('search'), {
+			target: {value: 'structure 02'},
+		});
 
-		expect(screen.getByTestId('structures')).toHaveTextContent(
-			'structure 02'
+		await waitFor(() =>
+			expect(within(listbox).getAllByRole('option')).toHaveLength(1)
 		);
+
+		expect(
+			within(listbox).getByRole('option', {name: 'structure 02'})
+		).toBeInTheDocument();
+
+		expect(
+			within(listbox).queryByRole('option', {name: 'structure 01'})
+		).not.toBeInTheDocument();
+
+		expect(
+			within(listbox).queryByRole('option', {
+				name: 'all-content-structures',
+			})
+		).not.toBeInTheDocument();
+	});
+
+	it('shows a message when no structure matches the search', async () => {
+		jest.spyOn(ApiHelper, 'get').mockResolvedValue({
+			data: mockStructureTypesApiResponse,
+			error: null,
+		});
+
+		render(<WrappedComponent onSelectItem={jest.fn()} />);
+
+		fireEvent.click(
+			screen.getByRole('combobox', {
+				name: 'filter-by-content-structure-type',
+			})
+		);
+
+		const listbox = await screen.findByRole('listbox');
+
+		await within(listbox).findByRole('option', {name: 'structure 02'});
+
+		fireEvent.change(screen.getByPlaceholderText('search'), {
+			target: {value: 'no-match'},
+		});
+
+		await waitFor(() =>
+			expect(
+				within(listbox).queryByRole('option')
+			).not.toBeInTheDocument()
+		);
+
+		expect(
+			within(listbox).getByText('no-results-were-found')
+		).toBeInTheDocument();
+	});
+
+	it('selects a new structure', async () => {
+		jest.spyOn(ApiHelper, 'get').mockResolvedValue({
+			data: mockStructureTypesApiResponse,
+			error: null,
+		});
+
+		render(<WrappedComponent onSelectItem={jest.fn()} />);
+
+		const trigger = screen.getByRole('combobox', {
+			name: 'filter-by-content-structure-type',
+		});
+
+		fireEvent.click(trigger);
+
+		const listbox = await screen.findByRole('listbox');
+
+		fireEvent.click(
+			await within(listbox).findByRole('option', {name: 'structure 02'})
+		);
+
+		await waitFor(() => expect(trigger).toHaveTextContent('structure 02'));
 	});
 });

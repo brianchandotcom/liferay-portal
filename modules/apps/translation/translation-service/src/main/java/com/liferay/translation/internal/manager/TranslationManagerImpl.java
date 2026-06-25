@@ -7,6 +7,7 @@ package com.liferay.translation.internal.manager;
 
 import com.liferay.document.library.kernel.exception.FileMimeTypeException;
 import com.liferay.info.exception.InfoItemPermissionException;
+import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
@@ -49,6 +50,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -300,6 +302,13 @@ public class TranslationManagerImpl implements TranslationManager {
 
 		InfoItemFieldValues infoItemFieldValues =
 			translationSnapshot.getInfoItemFieldValues();
+
+		Collection<InfoFieldValue<Object>> infoFieldValues =
+			infoItemFieldValues.getInfoFieldValues();
+
+		if (infoFieldValues.isEmpty()) {
+			return;
+		}
 
 		try {
 			_translationEntryService.addOrUpdateTranslationEntry(

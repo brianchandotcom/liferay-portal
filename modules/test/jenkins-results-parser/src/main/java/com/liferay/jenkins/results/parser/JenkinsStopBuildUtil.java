@@ -107,7 +107,6 @@ public class JenkinsStopBuildUtil {
 
 		String username = JenkinsResultsParserUtil.getBuildProperty(
 			"jenkins.admin.user.name");
-
 		String password = JenkinsResultsParserUtil.getBuildProperty(
 			"jenkins.admin.user.token");
 

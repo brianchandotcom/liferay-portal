@@ -155,6 +155,7 @@ public class ArtifactURLUtilTest {
 
 		Assert.assertTrue(query.contains("Web-ContextPath=/no-slash"));
 		Assert.assertFalse(query.contains("Web-ContextPath=//no-slash"));
+		Assert.assertFalse(query.contains("Web-ContextPath=no-slash"));
 	}
 
 	@Test

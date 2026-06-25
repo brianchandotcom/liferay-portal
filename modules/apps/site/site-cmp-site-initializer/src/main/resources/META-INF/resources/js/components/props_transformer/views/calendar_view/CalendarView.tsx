@@ -295,6 +295,7 @@ export default function CalendarView({items, projectId}: CalendarViewProps) {
 					<CalendarTaskCard task={arg.event.extendedProps.task} />
 				)}
 				events={events}
+				fixedWeekCount={false}
 				headerToolbar={false}
 				initialView="dayGridMonth"
 				moreLinkClassNames={[

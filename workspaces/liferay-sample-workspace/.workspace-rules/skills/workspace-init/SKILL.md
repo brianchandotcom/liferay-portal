@@ -5,7 +5,7 @@ name: workspace-init
 
 ---
 
-# Workspace Init & Preflight Checks
+# Workspace Init and Preflight Checks
 
 Stand up a working Liferay Workspace from zero, or diagnose a workspace that looks uninitialized. Covers `blade init`, bundle download, license setup, BasicAuth verifier, server start, and first login bootstrap.
 
@@ -13,13 +13,13 @@ Stand up a working Liferay Workspace from zero, or diagnose a workspace that loo
 
 > **Note:** These rules apply to local workspace initialization and must not be used to configure higher environments (UAT/Prod).
 
-## Version & Tooling Check
+## Version and Tooling Check
 
 - **Check version**: read `liferay.workspace.product` in `gradle.properties`.
 - **Verify tooling**: check that `blade` (`blade --version`) and Java (`javac -version`) are installed. If missing, provide installation steps.
 - **DXP License**: if `liferay.workspace.product` contains `dxp`, a license file is required. Liferay identifies license files by XML content, not filename — check `bundles/deploy/` for any `.xml` file whose root element is `<license>` or `<licenses>`. If none is found, stop and ask the user to place their license file in `bundles/deploy/` before continuing. For Docker, apply the same check to the directory mounted to the container's deploy path. Community Edition and free tier products do not require a license — skip this check for those.
 
-## Environment Readiness & State Sync
+## Environment Readiness and State Sync
 
 ### Configure MCP Before Starting the Server
 

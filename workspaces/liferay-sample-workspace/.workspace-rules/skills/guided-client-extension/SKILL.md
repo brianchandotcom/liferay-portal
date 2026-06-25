@@ -40,7 +40,7 @@ name: guided-client-extension
 - **Logs**: instruct the user (or search yourself) for the log entry: `STARTED [extension-id]`.
 - **Significance**: explain that this log entry confirms Liferay has detected, registered, and started the extension in the OSGi registry.
 
-## UI Placement & Publishing
+## UI Placement and Publishing
 
 Guide the user through these manual steps in the Liferay Portal UI:
 

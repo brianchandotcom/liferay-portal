@@ -15,7 +15,6 @@ import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
 import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
@@ -73,14 +72,6 @@ public class CommerceOrderItemSelectorView
 	@Override
 	public String getTitle(Locale locale) {
 		return _language.get(locale, "orders");
-	}
-
-	@Override
-	public boolean isVisible(
-		InfoItemItemSelectorCriterion infoItemItemSelectorCriterion,
-		ThemeDisplay themeDisplay) {
-
-		return FeatureFlagManagerUtil.isEnabled("LPD-20379");
 	}
 
 	@Override

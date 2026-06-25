@@ -170,10 +170,9 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 					_portal.getOriginalServletRequest(
 						_portal.getHttpServletRequest(actionRequest));
 
-				boolean skipRedirect = ParamUtil.getBoolean(
-					httpServletRequest, "skipRedirect");
+				if (ParamUtil.getBoolean(actionRequest, "skipRedirect") ||
+					ParamUtil.getBoolean(httpServletRequest, "skipRedirect")) {
 
-				if (skipRedirect) {
 					return;
 				}
 

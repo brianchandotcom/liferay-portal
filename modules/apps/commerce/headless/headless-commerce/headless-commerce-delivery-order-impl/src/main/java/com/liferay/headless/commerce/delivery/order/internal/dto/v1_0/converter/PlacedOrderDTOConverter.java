@@ -35,7 +35,6 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.BigDecimalUtil;
@@ -113,10 +112,6 @@ public class PlacedOrderDTOConverter
 					commerceOrder::getExternalReferenceCode);
 				setFriendlyURLSeparator(
 					() -> {
-						if (!FeatureFlagManagerUtil.isEnabled("LPD-20379")) {
-							return null;
-						}
-
 						FriendlyURLSeparatorProvider
 							friendlyURLSeparatorProvider =
 								_friendlyURLSeparatorProviderSnapshot.get();

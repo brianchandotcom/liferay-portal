@@ -11,13 +11,7 @@ import React from 'react';
 export function wipeCurrencyAndNavigate({cart, setCurrentOrderURL}) {
 	CurrencyUtils.resetCommerceCurrency();
 
-	navigate(
-		formatActionUrl(
-			setCurrentOrderURL,
-			cart,
-			Liferay.FeatureFlags['LPD-20379'] ? {skipRedirect: true} : {}
-		)
-	);
+	navigate(formatActionUrl(setCurrentOrderURL, cart));
 }
 
 const PendingOrderIdDataRenderer = ({setCurrentOrderURL, ...props}) => {

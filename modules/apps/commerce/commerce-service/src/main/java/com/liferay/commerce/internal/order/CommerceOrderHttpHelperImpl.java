@@ -249,9 +249,7 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 			CommerceOrder commerceOrder)
 		throws PortalException {
 
-		if ((commerceOrder != null) &&
-			FeatureFlagManagerUtil.isEnabled("LPD-20379")) {
-
+		if (commerceOrder != null) {
 			LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
 				_getLayoutDisplayPageObjectProvider(commerceOrder);
 

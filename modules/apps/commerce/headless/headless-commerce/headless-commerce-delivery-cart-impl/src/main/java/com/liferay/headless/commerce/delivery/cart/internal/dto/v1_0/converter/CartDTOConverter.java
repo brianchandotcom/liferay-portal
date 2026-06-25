@@ -44,7 +44,6 @@ import com.liferay.headless.commerce.delivery.cart.internal.dto.v1_0.converter.c
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -167,10 +166,6 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 					commerceOrder::getExternalReferenceCode);
 				setFriendlyURLSeparator(
 					() -> {
-						if (!FeatureFlagManagerUtil.isEnabled("LPD-20379")) {
-							return null;
-						}
-
 						FriendlyURLSeparatorProvider
 							friendlyURLSeparatorProvider =
 								_friendlyURLSeparatorProviderSnapshot.get();

@@ -112,11 +112,6 @@ public class OrdersDataSetFragmentRenderer implements FragmentRenderer {
 	}
 
 	@Override
-	public boolean isSelectable(HttpServletRequest httpServletRequest) {
-		return FeatureFlagManagerUtil.isEnabled("LPD-20379");
-	}
-
-	@Override
 	public void render(
 			FragmentRendererContext fragmentRendererContext,
 			HttpServletRequest httpServletRequest,

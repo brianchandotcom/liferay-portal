@@ -9,13 +9,13 @@ name: react-custom-elements
 
 # React Custom Element Engineering Standards
 
-## 1. Project Scaffold
+## Project Scaffold
 
 Before generating any scaffold code, ask the user which build tool they are using (e.g., Vite, webpack, Create React App). Do not assume a build tool — the project structure, output paths, and `assemble` block configuration differ between bundlers.
 
 For a reference starting point, consult the official [Liferay client-extension-samples](https://github.com/liferay/liferay-portal/tree/master/workspaces/liferay-sample-workspace/client-extensions/) which reflect the current recommended structure.
 
-## 2. `client-extension.yaml` — Assemble Block
+## `client-extension.yaml` — Assemble Block
 
 The `assemble` block is mandatory. Without it, Liferay Workspace will not package the extension's assets, causing 404 errors on all static resources.
 
@@ -42,7 +42,7 @@ my-react-app:
 
 **Home Page URL**: for associated OAuth2 applications, `homePageURL` must include the full protocol (e.g., `http://localhost:${PORT}`) to prevent interpolation errors.
 
-## 3. Implementation Patterns
+## Implementation Patterns
 
 Wrap the React application in a standard Web Components Custom Element class. This pattern is build tool agnostic — it works regardless of bundler.
 
@@ -77,7 +77,7 @@ if (!customElements.get(ELEMENT_ID)) {
 }
 ```
 
-## 4. Troubleshooting
+## Troubleshooting
 
 - **404 on assets**: usually a mismatch between the `assemble` block `from` path and the actual build output directory. Verify the path matches your bundler's output location.
 - **Multiple apps**: if deploying multiple React apps, ensure each has a unique `htmlElementName` and `friendlyURLMapping`.

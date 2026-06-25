@@ -28,7 +28,7 @@ For complex interactive widgets, use `scaffold-client-extension` with type `cust
 
 ## Workflow
 
-### 1. Choose Collection and Name
+### Choose Collection and Name
 
 Fragments belong to a collection. The source of truth is the **site initializer tree** — author fragments there so they ship with the site and stay in version control:
 
@@ -45,7 +45,7 @@ client-extensions/<site-initializer>/site-initializer/fragments/group/<collectio
 
 The `collection.json` sits at the collection-key root, and the fragment folders live under a `fragments/` subdirectory beside it. This nesting is required — placing fragment folders directly under `<collection-key>/` (with no `fragments/` level) prevents the collection's fragments from importing, so any page that references them renders blank. The `<fragment-name>` directory name becomes the fragment's `key` used in `page-definition.json` (see `manage-pages`). Use an existing collection or create a new one with its own `collection.json`.
 
-### 2. Generate the Files
+### Generate the Files
 
 Create four files for each fragment:
 
@@ -104,7 +104,7 @@ const fragmentElement = fragmentNamespace.element;
 // FragmentElement is the fragment's root DOM element
 ```
 
-### 3. Add Configuration Fields (Optional)
+### Add Configuration Fields (Optional)
 
 Create `configuration.json` to expose configurable options in the Content Page editor sidebar:
 
@@ -142,7 +142,7 @@ Create `configuration.json` to expose configurable options in the Content Page e
 
 Access the value in `index.html` with `[configuration.buttonStyle]` or in `index.js` via `configuration.buttonStyle`.
 
-### 4. Deploy
+### Deploy
 
 **Initial build — with the site:**
 The fragment lives in the `siteInitializer` tree and is created when the site is provisioned. Trigger the initializer (see `build-site` Phase 9 and `rules/site-initializer-format.md`); no separate fragment deploy is needed.
@@ -157,7 +157,7 @@ cd client-extensions/<fragment-collection-name>
 blade gw deploy
 ```
 
-### 5. Verify
+### Verify
 
 Open the Content Page editor at the target site. The fragment collection should appear in the left panel under Fragments. Drag the fragment onto the page and confirm editable regions are highlighted.
 

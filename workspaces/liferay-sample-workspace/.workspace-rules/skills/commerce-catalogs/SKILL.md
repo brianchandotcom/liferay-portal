@@ -9,7 +9,7 @@ name: commerce-catalogs
 
 # Liferay Commerce Engineering Standards
 
-## 1. Product Management via Headless APIs
+## Product Management via Headless APIs
 
 When programmatically managing products, follow these strict architectural findings:
 
@@ -17,13 +17,13 @@ When programmatically managing products, follow these strict architectural findi
 - **Product options**: options (size, color, etc.) are global, prerequisite entities. They must be created via the global `options` endpoint *before* you can link them to a specific product.
 - **Specifications**: do not use nested `POST` endpoints for specifications. Instead, `PATCH` the product itself via its ERC and supply a `productSpecifications` array containing the `specificationKey` and `value`.
 
-## 2. Image Management
+## Image Management
 
 - **Direct upload**: for robust image handling, Base64 encode the image content and use the `/products/by-externalReferenceCode/{ERC}/images/by-base64` endpoint.
 - **Persistence**: always include `"neverExpire": true` in the image payload to prevent the image from disappearing over time.
 - **Update workflow**: to replace an image, first `GET` the existing images, `DELETE` them via the `attachment` endpoint, then perform a new `POST` with the updated content.
 
-## 3. SKU Engineering
+## SKU Engineering
 
 Creating variant SKUs (e.g., different pack sizes) is a multistep process:
 
@@ -33,7 +33,7 @@ Creating variant SKUs (e.g., different pack sizes) is a multistep process:
 
 1. **Create SKU**: `POST` the SKU directly to the product's SKUs endpoint, including the `skuOptions` block to map the specific `optionValueId`.
 
-## 4. B2B Account Onboarding
+## B2B Account Onboarding
 
 When onboarding accounts and users via `headless-admin-user` APIs, adhere to these validation rules:
 

@@ -136,21 +136,17 @@ public class ContentSecurityPolicyFilter extends BasePortalFilter {
 			return null;
 		}
 
-		// Match the friendly URL servlet mapping. A virtual host request only
-		// reaches the "/web/<group>/<layout>" form once it is forwarded; the
-		// original dispatch does not match and is deferred below. The i18n
-		// language prefix is already stripped before the request is forwarded.
+		// Only the forwarded "/web/<group>/<layout>" form matches; the original
+		// virtual host dispatch is deferred below.
 
-		for (String mapping :
-				new String[] {
-					_portal.getPathFriendlyURLPrivateGroup(),
-					_portal.getPathFriendlyURLPrivateUser(),
-					_portal.getPathFriendlyURLPublic()
-				}) {
+		if (requestURI.startsWith(
+				_portal.getPathFriendlyURLPrivateGroup() + StringPool.SLASH) ||
+			requestURI.startsWith(
+				_portal.getPathFriendlyURLPrivateUser() + StringPool.SLASH) ||
+			requestURI.startsWith(
+				_portal.getPathFriendlyURLPublic() + StringPool.SLASH)) {
 
-			if (requestURI.startsWith(mapping + StringPool.SLASH)) {
-				return requestURI;
-			}
+			return requestURI;
 		}
 
 		return null;
@@ -179,10 +175,9 @@ public class ContentSecurityPolicyFilter extends BasePortalFilter {
 	private boolean _isExcludedLayoutEditMode(
 		HttpServletRequest httpServletRequest) {
 
-		// The content security policy breaks the layout editor, which uses eval
-		// and inline styles via CKEditor 4. Exclude it only for a genuine edit
-		// mode render of a layout the user can update, so appending
-		// "p_l_mode=edit" to any URL cannot disable the policy.
+		// The layout editor uses CKEditor 4, which needs eval and inline
+		// styles. Exclude only a real edit mode render of a layout the user can
+		// update so "p_l_mode=edit" cannot disable the policy elsewhere.
 
 		if (!Constants.EDIT.equals(
 				httpServletRequest.getParameter("p_l_mode"))) {
@@ -197,11 +192,9 @@ public class ContentSecurityPolicyFilter extends BasePortalFilter {
 
 			if (friendlyURL == null) {
 
-				// The friendly URL is not resolvable yet (for example a virtual
-				// host request before it is forwarded to its
-				// "/web/<group>/<layout>" form). Defer the decision so a strict
-				// header is not committed on this dispatch; the forwarded
-				// dispatch resolves the layout and makes the final decision.
+				// The friendly URL is not resolvable yet (a virtual host
+				// request before it is forwarded). Defer to the forwarded
+				// dispatch, which resolves the layout.
 
 				return true;
 			}

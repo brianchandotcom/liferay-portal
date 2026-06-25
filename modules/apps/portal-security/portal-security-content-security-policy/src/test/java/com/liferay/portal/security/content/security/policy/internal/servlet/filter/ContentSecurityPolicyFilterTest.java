@@ -80,11 +80,9 @@ public class ContentSecurityPolicyFilterTest {
 	@Test
 	public void testIsExcludedLayoutEditMode() throws Exception {
 
-		// Not edit mode
+		// Edit mode, friendly URL format but no matching layout (enforce)
 
-		_testIsExcludedLayoutEditMode(
-			false, RandomTestUtil.randomString(), Mockito.mock(Layout.class),
-			true, true);
+		_testIsExcludedLayoutEditModeUnresolved(false, "/web/guest/home");
 
 		// Edit mode, layout the user can update
 
@@ -106,9 +104,11 @@ public class ContentSecurityPolicyFilterTest {
 		_testIsExcludedLayoutEditModeUnresolved(
 			true, "/" + RandomTestUtil.randomString());
 
-		// Edit mode, friendly URL format but no matching layout (enforce)
+		// Not edit mode
 
-		_testIsExcludedLayoutEditModeUnresolved(false, "/web/guest/home");
+		_testIsExcludedLayoutEditMode(
+			false, RandomTestUtil.randomString(), Mockito.mock(Layout.class),
+			true, true);
 	}
 
 	@Test

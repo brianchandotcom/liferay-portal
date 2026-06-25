@@ -262,9 +262,8 @@ public abstract class BaseBundlePersistentResource
 				_isControllerBuildFinished()) {
 
 				print(
-					JenkinsResultsParserUtil.combine(
-						"Redispatching bundles after controller build ",
-						"completed at ", getControllerBuildURL()));
+					"Redispatching bundles after controller build completed " +
+						"at " + getControllerBuildURL());
 
 				_redispatchBuild(dataJSONObject);
 
@@ -388,9 +387,10 @@ public abstract class BaseBundlePersistentResource
 
 				if (_isTransientFailure(_build)) {
 					print(
-						JenkinsResultsParserUtil.combine(
-							"Resetting bundles after transient failure in ",
-							getProducerBuildURL()));
+						"Resetting bundles after transient failure in " +
+							getProducerBuildURL());
+
+					_failCount = 0;
 
 					setStatus(Status.NOT_STARTED);
 				}

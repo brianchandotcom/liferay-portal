@@ -1,0 +1,119 @@
+{
+	"#child-nodes": [
+		{
+			"#tag-name": "name",
+			"#value": "Service Node Workflow Definition"
+		},
+		{
+			"#tag-name": "version",
+			"#value": "1"
+		},
+		{
+			"#child-nodes": [
+				{
+					"#tag-name": "name",
+					"#value": "start"
+				},
+				{
+					"#tag-name": "initial",
+					"#value": "true"
+				},
+				{
+					"#child-nodes": [
+						{
+							"#child-nodes": [
+								{
+									"#tag-name": "name",
+									"#value": "convert"
+								},
+								{
+									"#tag-name": "target",
+									"#value": "convert"
+								}
+							],
+							"#tag-name": "transition"
+						}
+					],
+					"#tag-name": "transitions"
+				}
+			],
+			"#tag-name": "state"
+		},
+		{
+			"#child-nodes": [
+				{
+					"#tag-name": "name",
+					"#value": "convert"
+				},
+				{
+					"#cdata-value": [
+						"[",
+						"    {",
+						"        \"name\": \"input\",",
+						"        \"type\": \"string\"",
+						"    }",
+						"]"
+					],
+					"#tag-name": "input-variables"
+				},
+				{
+					"#tag-name": "java-delegate",
+					"#value": "com.example.Converter#convert"
+				},
+				{
+					"#child-nodes": [
+						{
+							"#tag-name": "label",
+							"#value": "Convert",
+							"language-id": "en_US"
+						}
+					],
+					"#tag-name": "labels"
+				},
+				{
+					"#cdata-value": [
+						"[",
+						"    {",
+						"        \"name\": \"output\",",
+						"        \"type\": \"string\"",
+						"    }",
+						"]"
+					],
+					"#tag-name": "output-variables"
+				},
+				{
+					"#child-nodes": [
+						{
+							"#child-nodes": [
+								{
+									"#tag-name": "name",
+									"#value": "end"
+								},
+								{
+									"#tag-name": "target",
+									"#value": "end"
+								}
+							],
+							"#tag-name": "transition"
+						}
+					],
+					"#tag-name": "transitions"
+				}
+			],
+			"#tag-name": "service"
+		},
+		{
+			"#child-nodes": [
+				{
+					"#tag-name": "name",
+					"#value": "end"
+				}
+			],
+			"#tag-name": "state"
+		}
+	],
+	"#tag-name": "workflow-definition",
+	"xmlns": "urn:liferay.com:liferay-workflow_7.4.0",
+	"xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
+	"xsi:schemaLocation": "urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
+}

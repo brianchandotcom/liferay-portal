@@ -445,7 +445,7 @@ public class WorkflowDefinitionManagerTest extends BaseWorkflowManagerTestCase {
 			() -> {
 				InputStream inputStream = getResourceInputStream(
 					"service-node-multiple-transitions-workflow-" +
-						"definition.xml");
+						"definition.json");
 
 				_workflowDefinitionManager.deployWorkflowDefinition(
 					FileUtil.getBytes(inputStream),
@@ -456,7 +456,7 @@ public class WorkflowDefinitionManagerTest extends BaseWorkflowManagerTestCase {
 			});
 
 		InputStream inputStream = getResourceInputStream(
-			"service-node-workflow-definition.xml");
+			"service-node-workflow-definition.json");
 
 		WorkflowDefinition workflowDefinition =
 			_workflowDefinitionManager.deployWorkflowDefinition(

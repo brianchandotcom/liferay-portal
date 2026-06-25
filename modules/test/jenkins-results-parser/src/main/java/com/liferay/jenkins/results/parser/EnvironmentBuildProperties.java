@@ -65,6 +65,8 @@ public class EnvironmentBuildProperties extends Properties {
 
 			load(new StringReader(contents));
 
+			_loadLocalProperties(urlString, checkCache);
+
 			return;
 		}
 		catch (IOException ioException) {
@@ -99,6 +101,8 @@ public class EnvironmentBuildProperties extends Properties {
 		}
 		catch (IOException ioException) {
 		}
+
+		_loadLocalProperties(urlString, checkCache);
 	}
 
 	public EnvironmentBuildProperties(File file) throws IOException {
@@ -179,6 +183,31 @@ public class EnvironmentBuildProperties extends Properties {
 		sb.append(_simpleDateFormat.format(new Date()));
 
 		return sb.toString();
+	}
+
+	private void _loadLocalProperties(String urlString, boolean checkCache) {
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(
+				System.getenv("MASTER_NETWORK_NAME"))) {
+
+			return;
+		}
+
+		Matcher matcher = _propertiesURLPattern.matcher(urlString);
+
+		if (!matcher.matches()) {
+			return;
+		}
+
+		try {
+			String content = _toString(
+				JenkinsResultsParserUtil.combine(
+					matcher.group(1), "-local", matcher.group(2)),
+				checkCache);
+
+			load(new StringReader(content));
+		}
+		catch (IOException ioException) {
+		}
 	}
 
 	private String _toString(String url, boolean checkCache)

@@ -5,11 +5,14 @@
 
 package com.liferay.fragment.input.template.parser;
 
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+
+import java.lang.reflect.Array;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -119,14 +122,8 @@ public class InputTemplateNode extends LinkedHashMap<String, Object> {
 					JSONFactoryUtil.createJSONObject();
 
 				for (Map.Entry<String, Object> entry : _attributes.entrySet()) {
-					Object value = entry.getValue();
-
-					if (value instanceof Collection) {
-						value = JSONFactoryUtil.createJSONArray(
-							(Collection<?>)value);
-					}
-
-					attributesJSONObject.put(entry.getKey(), value);
+					attributesJSONObject.put(
+						entry.getKey(), _toJSONValue(entry.getValue()));
 				}
 
 				attributesJSONObject.put("readOnly", _readOnly);
@@ -177,18 +174,78 @@ public class InputTemplateNode extends LinkedHashMap<String, Object> {
 			return _value;
 		}
 
-		@Override
-		public String toString() {
+		public JSONObject toJSONObject() {
 			return JSONUtil.put(
 				"label", _label
 			).put(
 				"value", _value
-			).toString();
+			);
+		}
+
+		@Override
+		public String toString() {
+			JSONObject jsonObject = toJSONObject();
+
+			return jsonObject.toString();
 		}
 
 		private final String _label;
 		private final String _value;
 
+	}
+
+	private Object _toJSONValue(Object value) {
+		if ((value == null) || (value instanceof JSONArray) ||
+			(value instanceof JSONObject)) {
+
+			return value;
+		}
+
+		Class<?> clazz = value.getClass();
+
+		if (clazz.isArray()) {
+			JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+			int length = Array.getLength(value);
+
+			for (int i = 0; i < length; i++) {
+				jsonArray.put(_toJSONValue(Array.get(value, i)));
+			}
+
+			return jsonArray;
+		}
+
+		if (value instanceof Collection) {
+			JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+			for (Object element : (Collection<?>)value) {
+				jsonArray.put(_toJSONValue(element));
+			}
+
+			return jsonArray;
+		}
+
+		if (value instanceof Map) {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+			Map<String, Object> map = (Map<String, Object>)value;
+
+			for (Map.Entry<String, Object> entry : map.entrySet()) {
+				jsonObject.put(
+					String.valueOf(entry.getKey()),
+					_toJSONValue(entry.getValue()));
+			}
+
+			return jsonObject;
+		}
+
+		if (value instanceof Option) {
+			Option option = (Option)value;
+
+			return option.toJSONObject();
+		}
+
+		return value;
 	}
 
 	private final Map<String, Object> _attributes = new HashMap<>();

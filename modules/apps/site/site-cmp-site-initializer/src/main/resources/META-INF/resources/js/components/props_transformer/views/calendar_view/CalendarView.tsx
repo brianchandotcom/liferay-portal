@@ -372,6 +372,7 @@ export default function CalendarView({
 			{moreLinkPopover && (
 				<CalendarMoreLinkPopover
 					alignElement={moreLinkPopover.alignElement}
+					itemsActions={itemsActions}
 					onClose={() => setMoreLinkPopover(null)}
 					tasks={moreLinkPopover.tasks}
 				/>

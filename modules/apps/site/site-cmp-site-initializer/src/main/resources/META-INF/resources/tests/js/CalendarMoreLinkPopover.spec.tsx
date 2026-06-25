@@ -48,6 +48,7 @@ function renderPopover(tasks: ITaskObjectEntry[]) {
 	return render(
 		<CalendarMoreLinkPopover
 			alignElement={document.createElement('a')}
+			itemsActions={[]}
 			onClose={jest.fn()}
 			tasks={tasks}
 		/>

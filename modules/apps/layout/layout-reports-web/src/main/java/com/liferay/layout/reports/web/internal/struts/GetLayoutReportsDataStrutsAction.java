@@ -30,12 +30,12 @@ import com.liferay.segments.model.SegmentsExperimentRel;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.service.SegmentsExperimentLocalService;
 import com.liferay.segments.service.SegmentsExperimentRelLocalService;
+import com.liferay.segments.util.SegmentsExperienceUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.util.List;
-import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -210,7 +210,7 @@ public class GetLayoutReportsDataStrutsAction implements StrutsAction {
 			ThemeDisplay themeDisplay)
 		throws Exception {
 
-		boolean segmentsExperienceIsActive = _isActive(
+		boolean segmentsExperienceIsActive = SegmentsExperienceUtil.isActive(
 			segmentsExperience, segmentsExperiences);
 
 		return JSONUtil.put(
@@ -327,32 +327,6 @@ public class GetLayoutReportsDataStrutsAction implements StrutsAction {
 
 		return SegmentsEntryConstants.getDefaultSegmentsEntryName(
 			themeDisplay.getLocale());
-	}
-
-	private boolean _isActive(
-		SegmentsExperience segmentsExperience,
-		List<SegmentsExperience> segmentsExperiences) {
-
-		for (SegmentsExperience curSegmentsExperience : segmentsExperiences) {
-			if ((Objects.equals(
-					curSegmentsExperience.getSegmentsEntryERC(),
-					segmentsExperience.getSegmentsEntryERC()) &&
-				 Objects.equals(
-					 curSegmentsExperience.getSegmentsEntryScopeERC(),
-					 segmentsExperience.getSegmentsEntryScopeERC())) ||
-				curSegmentsExperience.hasDefaultSegmentsEntry()) {
-
-				if (curSegmentsExperience.getSegmentsExperienceId() ==
-						segmentsExperience.getSegmentsExperienceId()) {
-
-					return true;
-				}
-
-				return false;
-			}
-		}
-
-		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

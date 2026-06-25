@@ -639,14 +639,15 @@ public class ExportProcessResourceTest
 					"WebApplicationExceptionMapper",
 				LoggerTestUtil.WARN)) {
 
-			long now = System.currentTimeMillis();
-
 			ExportProcessRequest exportProcessRequest =
 				new ExportProcessRequest();
 
-			exportProcessRequest.setEndDate(new Date(now - Time.DAY));
+			long time = System.currentTimeMillis();
+
+			exportProcessRequest.setEndDate(new Date(time - Time.DAY));
+
 			exportProcessRequest.setName(RandomTestUtil.randomString());
-			exportProcessRequest.setStartDate(new Date(now));
+			exportProcessRequest.setStartDate(new Date(time));
 
 			assertHttpResponseStatusCode(
 				400, unsafeFunction.apply(exportProcessRequest));

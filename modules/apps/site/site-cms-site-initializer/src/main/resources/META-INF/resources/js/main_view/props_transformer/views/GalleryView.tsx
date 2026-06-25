@@ -3,29 +3,28 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {ClayButtonWithIcon} from '@clayui/button';
 import ClayEmptyState from '@clayui/empty-state';
 import {
 	Card,
 	ICardSchema,
 	IFileDropSettings,
 } from '@liferay/frontend-data-set-web';
-import React, {Context, useContext, useMemo, useState} from 'react';
-import {useDropzone} from 'react-dropzone';
-
-import '../../../../css/props_transformer/GalleryView.scss';
-
-import {ClayButtonWithIcon} from '@clayui/button';
 
 // eslint-disable-next-line
 import {IFrontendDataSetContext} from '@liferay/frontend-data-set-web/src/main/resources/META-INF/resources/FrontendDataSetContext';
 import classNames from 'classnames';
 import {getObjectValueFromPath, sub} from 'frontend-js-web';
+import React, {Context, useContext, useEffect, useRef, useState} from 'react';
+import {useDropzone} from 'react-dropzone';
 
 import AssetPreview from '../../../common/components/AssetPreview';
 
-const VISIBLE_ITEMS_COUNT = 5;
-const MAX_VISIBLE_INDEX = (itemsLength: number) =>
-	Math.max(0, itemsLength - VISIBLE_ITEMS_COUNT);
+import '../../../../css/props_transformer/GalleryView.scss';
+
+const THUMBNAIL_WIDTH = 190;
+const THUMBNAIL_GAP = 16;
+const DEFAULT_VISIBLE_ITEMS_COUNT = 5;
 
 const GalleryView = ({
 	fileDropSettings,
@@ -42,73 +41,71 @@ const GalleryView = ({
 	const {selectedItems} = useContext(frontendDataSetContext);
 	const [selectedIndex, setSelectedIndex] = useState(0);
 	const [visibleStartIndex, setVisibleStartIndex] = useState(0);
+	const [visibleItemsCount, setVisibleItemsCount] = useState(
+		DEFAULT_VISIBLE_ITEMS_COUNT
+	);
+	const thumbnailsRef = useRef<HTMLDivElement>(null);
+
+	const safeSelectedIndex = Math.min(
+		selectedIndex,
+		Math.max(0, items.length - 1)
+	);
+
+	useEffect(() => {
+		const container = thumbnailsRef.current;
+
+		if (!container) {
+			return;
+		}
+
+		const updateVisibleItemsCount = () => {
+			const {width} = container.getBoundingClientRect();
+
+			const fittingCount = Math.floor(
+				(width + THUMBNAIL_GAP) / (THUMBNAIL_WIDTH + THUMBNAIL_GAP)
+			);
+
+			setVisibleItemsCount(Math.max(1, fittingCount));
+		};
+
+		updateVisibleItemsCount();
+
+		const resizeObserver = new ResizeObserver(updateVisibleItemsCount);
+
+		resizeObserver.observe(container);
+
+		return () => resizeObserver.disconnect();
+	}, []);
+
+	useEffect(() => {
+		setVisibleStartIndex((start) => {
+			const maxStart = Math.max(0, items.length - visibleItemsCount);
+
+			if (safeSelectedIndex < start) {
+				return safeSelectedIndex;
+			}
+
+			if (safeSelectedIndex >= start + visibleItemsCount) {
+				return Math.min(
+					safeSelectedIndex - visibleItemsCount + 1,
+					maxStart
+				);
+			}
+
+			return Math.min(start, maxStart);
+		});
+	}, [items.length, safeSelectedIndex, visibleItemsCount]);
 
 	const handlePrevClick = () => {
-		const itemsLength = items.length;
-
-		let newSelectedIndex;
-		let newVisibleIndex;
-
-		if (selectedIndex === 0) {
-			newSelectedIndex = itemsLength - 1;
-			newVisibleIndex = MAX_VISIBLE_INDEX(itemsLength);
-		}
-		else {
-			newSelectedIndex = selectedIndex - 1;
-			newVisibleIndex = visibleStartIndex;
-
-			if (newSelectedIndex < visibleStartIndex) {
-				newVisibleIndex = visibleStartIndex - 1;
-			}
-		}
-
-		setSelectedIndex(newSelectedIndex);
-		setVisibleStartIndex(newVisibleIndex);
+		setSelectedIndex(
+			safeSelectedIndex === 0 ? items.length - 1 : safeSelectedIndex - 1
+		);
 	};
 
 	const handleNextClick = () => {
-		const itemsLength = items.length;
-		const maxVisibleIndex = MAX_VISIBLE_INDEX(itemsLength);
-
-		let newSelectedIndex;
-		let newVisibleIndex;
-
-		if (selectedIndex === itemsLength - 1) {
-			newSelectedIndex = 0;
-			newVisibleIndex = 0;
-		}
-		else {
-			newSelectedIndex = selectedIndex + 1;
-			newVisibleIndex = visibleStartIndex;
-
-			if (newSelectedIndex >= visibleStartIndex + VISIBLE_ITEMS_COUNT) {
-				newVisibleIndex = Math.min(
-					maxVisibleIndex,
-					visibleStartIndex + 1
-				);
-			}
-		}
-
-		setSelectedIndex(newSelectedIndex);
-		setVisibleStartIndex(newVisibleIndex);
-	};
-
-	const handleItemClick = (index: number) => {
-		setSelectedIndex(index);
-
-		const itemsLength = items.length;
-		const maxVisibleIndex = MAX_VISIBLE_INDEX(itemsLength);
-
-		if (itemsLength > VISIBLE_ITEMS_COUNT) {
-			if (index < visibleStartIndex) {
-				setVisibleStartIndex(index);
-			}
-			else if (index >= visibleStartIndex + VISIBLE_ITEMS_COUNT) {
-				setVisibleStartIndex(
-					Math.min(maxVisibleIndex, index - VISIBLE_ITEMS_COUNT + 1)
-				);
-			}
-		}
+		setSelectedIndex(
+			safeSelectedIndex === items.length - 1 ? 0 : safeSelectedIndex + 1
+		);
 	};
 
 	const handleKeyDown = (event: React.KeyboardEvent, index: number) => {
@@ -118,21 +115,16 @@ const GalleryView = ({
 
 		if (event.key === 'Enter' || event.key === ' ') {
 			event.preventDefault();
-			handleItemClick(index);
+			setSelectedIndex(index);
 		}
 	};
 
 	const visibleItems = items.slice(
 		visibleStartIndex,
-		visibleStartIndex + VISIBLE_ITEMS_COUNT
+		visibleStartIndex + visibleItemsCount
 	);
 
-	const currentItem = useMemo(
-		() => items[selectedIndex],
-		[items, selectedIndex]
-	);
-
-	const cardWidth = `calc((100% - ${VISIBLE_ITEMS_COUNT - 1}rem) / ${VISIBLE_ITEMS_COUNT})`;
+	const currentItem = items[safeSelectedIndex];
 
 	const isNavigationDisabled = items.length === 1;
 
@@ -155,7 +147,7 @@ const GalleryView = ({
 					) : (
 						<AssetPreview
 							item={currentItem}
-							key={selectedIndex}
+							key={safeSelectedIndex}
 							showContentPreview={false}
 							url=""
 						/>
@@ -174,23 +166,25 @@ const GalleryView = ({
 					symbol="angle-left"
 				/>
 
-				<div className="c-gap-3 d-flex fds-gallery-view__thumbnails flex-grow-1">
+				<div
+					className="d-flex fds-gallery-view__thumbnails flex-grow-1 justify-content-center mb-3"
+					ref={thumbnailsRef}
+				>
 					{visibleItems.map((item, index) => {
 						const actualIndex = visibleStartIndex + index;
 
 						return (
 							<GalleryThumbnail
-								cardWidth={cardWidth}
 								fileDropSettings={fileDropSettings}
 								item={item}
 								items={items}
-								key={actualIndex}
-								onClick={() => handleItemClick(actualIndex)}
+								key={item.id}
+								onClick={() => setSelectedIndex(actualIndex)}
 								onKeyDown={(event) =>
 									handleKeyDown(event, actualIndex)
 								}
 								schema={schema}
-								selected={actualIndex === selectedIndex}
+								selected={actualIndex === safeSelectedIndex}
 								{...otherProps}
 							/>
 						);
@@ -214,7 +208,6 @@ const GalleryView = ({
 export default GalleryView;
 
 function GalleryThumbnail({
-	cardWidth,
 	fileDropSettings,
 	item,
 	items,
@@ -224,7 +217,6 @@ function GalleryThumbnail({
 	selected,
 	...otherProps
 }: {
-	cardWidth: string;
 	fileDropSettings?: IFileDropSettings;
 	item: any;
 	items: any[];
@@ -267,9 +259,6 @@ function GalleryThumbnail({
 			})}
 			onClick={onClick}
 			onKeyDown={onKeyDown}
-			style={{
-				width: cardWidth,
-			}}
 			tabIndex={0}
 		>
 			<Card item={item} items={items} schema={schema} {...otherProps} />

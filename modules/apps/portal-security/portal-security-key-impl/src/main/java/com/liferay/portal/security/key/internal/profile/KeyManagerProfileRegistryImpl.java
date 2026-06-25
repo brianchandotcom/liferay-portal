@@ -151,7 +151,7 @@ public class KeyManagerProfileRegistryImpl
 			try {
 				if (_log.isInfoEnabled()) {
 					_log.info(
-						"Initializing Key Manager profile: " + activeProfileId);
+						"Initializing key manager profile: " + activeProfileId);
 				}
 
 				keyManagerProfile.initialize();
@@ -160,7 +160,7 @@ public class KeyManagerProfileRegistryImpl
 			}
 			catch (Exception exception) {
 				_log.error(
-					"Unable to initialize Key Manager profile: " +
+					"Unable to initialize key manager profile: " +
 						activeProfileId,
 					exception);
 			}

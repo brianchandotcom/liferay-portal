@@ -36,8 +36,6 @@ public class KeyManagerProfileRegistryImplTest {
 	public void setUp() {
 		MockitoAnnotations.openMocks(this);
 
-		_keyManagerProfileRegistryImpl = new KeyManagerProfileRegistryImpl();
-
 		_setActiveProfileId(CustomKeyManagerProfile.PROFILE_ID);
 		_setServiceTrackerMap(_serviceTrackerMap);
 	}
@@ -167,7 +165,8 @@ public class KeyManagerProfileRegistryImplTest {
 	@Mock
 	private KeyManagerProfile _keyManagerProfile;
 
-	private KeyManagerProfileRegistryImpl _keyManagerProfileRegistryImpl;
+	private KeyManagerProfileRegistryImpl _keyManagerProfileRegistryImpl =
+		new KeyManagerProfileRegistryImpl();
 
 	@Mock
 	private ServiceTrackerMap<String, KeyManagerProfile> _serviceTrackerMap;

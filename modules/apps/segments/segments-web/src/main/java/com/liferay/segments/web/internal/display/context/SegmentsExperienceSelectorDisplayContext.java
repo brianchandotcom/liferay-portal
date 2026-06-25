@@ -142,11 +142,11 @@ public class SegmentsExperienceSelectorDisplayContext {
 		SegmentsExperience segmentsExperience,
 		List<SegmentsExperience> segmentsExperiences) {
 
-		boolean segmentsExperienceIsActive = SegmentsExperienceUtil.isActive(
+		boolean active = SegmentsExperienceUtil.isActive(
 			segmentsExperience, segmentsExperiences);
 
 		return JSONUtil.put(
-			"active", segmentsExperienceIsActive
+			"active", active
 		).put(
 			"segmentsEntryERC", segmentsExperience.getSegmentsEntryERC()
 		).put(
@@ -173,7 +173,7 @@ public class SegmentsExperienceSelectorDisplayContext {
 			() -> {
 				String statusLabelKey = "inactive";
 
-				if (segmentsExperienceIsActive) {
+				if (active) {
 					statusLabelKey = "active";
 				}
 

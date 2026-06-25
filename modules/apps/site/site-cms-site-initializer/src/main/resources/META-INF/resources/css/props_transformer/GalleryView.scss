@@ -2,6 +2,8 @@
 
 .fds-gallery-view {
 	$gallery-preview-height: unquote('max(320px, calc(100dvh - 475px))');
+	$gallery-thumbnail-gap: 1rem;
+	$gallery-thumbnail-width: 190px;
 
 	&__preview {
 		height: $gallery-preview-height;
@@ -35,11 +37,14 @@
 	}
 
 	.fds-gallery-view__thumbnails {
+		gap: $gallery-thumbnail-gap;
+		justify-content: center;
 		min-width: 0;
 	}
 
 	.fds-gallery-view__thumbnail {
-		max-width: 20%;
+		flex: 0 0 $gallery-thumbnail-width;
+		max-width: $gallery-thumbnail-width;
 
 		&.drop-target {
 			.card {

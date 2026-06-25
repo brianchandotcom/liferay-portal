@@ -67,6 +67,8 @@ public class ProductionReadinessCheckUtil {
 				_CATEGORY_PORTAL_PROPERTIES_CONFIGURATION, "counter-increment"
 			).currentValue(
 				String.valueOf(counterIncrement)
+			).messageParameters(
+				PropsKeys.COUNTER_INCREMENT
 			).recommendedValue(
 				PropsKeys.COUNTER_INCREMENT + ">=" + _MIN_COUNTER_INCREMENT
 			);
@@ -444,6 +446,8 @@ public class ProductionReadinessCheckUtil {
 			).currentValue(
 				PropsKeys.DIRECT_SERVLET_CONTEXT_RELOAD + "=" +
 					directServletContextReload
+			).messageParameters(
+				PropsKeys.DIRECT_SERVLET_CONTEXT_RELOAD
 			).recommendedValue(
 				PropsKeys.DIRECT_SERVLET_CONTEXT_RELOAD + "=false"
 			);

@@ -12,8 +12,10 @@ import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryVersion;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.headless.admin.fragment.client.constant.v1_0.FieldType;
 import com.liferay.headless.admin.fragment.client.dto.v1_0.BasicFragment;
 import com.liferay.headless.admin.fragment.client.dto.v1_0.Creator;
+import com.liferay.headless.admin.fragment.client.dto.v1_0.FormFragment;
 import com.liferay.headless.admin.fragment.client.dto.v1_0.Fragment;
 import com.liferay.headless.admin.fragment.client.dto.v1_0.FragmentSet;
 import com.liferay.headless.admin.fragment.client.dto.v1_0.FragmentVersion;
@@ -46,6 +48,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -356,6 +359,8 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 	protected Fragment testPostSiteFragment_addFragment(Fragment fragment)
 		throws Exception {
 
+		_populateFragment(fragment);
+
 		return fragmentResource.postSiteFragment(
 			testGroup.getExternalReferenceCode(), fragment);
 	}
@@ -364,6 +369,8 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 	protected Fragment testPostSiteFragmentSetFragment_addFragment(
 			Fragment fragment)
 		throws Exception {
+
+		_populateFragment(fragment);
 
 		return _postSiteFragmentSetFragment(fragment);
 	}
@@ -729,6 +736,24 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 		}
 
 		return null;
+	}
+
+	private void _populateFragment(Fragment fragment) {
+		if (fragment.getFragmentSet() == null) {
+			fragment.setFragmentSet(_toFragmentSet(_fragmentCollection));
+		}
+
+		if (ArrayUtil.isEmpty(fragment.getFragmentVersions())) {
+			fragment.setFragmentVersions(_randomFragmentVersions());
+		}
+
+		if ((fragment instanceof FormFragment formFragment) &&
+			(formFragment.getFieldTypes() == null)) {
+
+			formFragment.setFieldTypes(new FieldType[] {FieldType.TEXT});
+		}
+
+		fragment.setMarketplace(false);
 	}
 
 	private Fragment _postSiteFragment(Fragment fragment) throws Exception {

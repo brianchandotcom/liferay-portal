@@ -321,9 +321,9 @@
 			<xs:complexContent>
 				<xs:extension base="abstract-workflow-node-complex-type">
 					<xs:sequence>
-						<xs:element minOccurs="0" ref="labels" />
 						<xs:element minOccurs="0" name="input-variables" type="xs:string" />
 						<xs:element name="java-delegate" type="xs:string" />
+						<xs:element minOccurs="0" ref="labels" />
 						<xs:element minOccurs="0" name="output-variables" type="xs:string" />
 						<xs:element ref="transitions" />
 					</xs:sequence>

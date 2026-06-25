@@ -8,7 +8,6 @@ package com.liferay.site.internal.util;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.change.tracking.configuration.helper.CTSettingsConfigurationHelper;
-import com.liferay.exportimport.kernel.background.task.constants.LayoutSetPrototypeBackgroundTaskConstants;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactoryUtil;
 import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.lar.ExportImportHelper;
@@ -21,7 +20,6 @@ import com.liferay.exportimport.kernel.service.ExportImportLocalService;
 import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.change.tracking.CTTransactionException;
@@ -64,7 +62,6 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
@@ -78,7 +75,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.PortletPreferencesImpl;
-import com.liferay.site.internal.exportimport.constants.LayoutSetPrototypeMergeConstants;
 import com.liferay.site.internal.exportimport.internal.notifications.LayoutSetPrototypeNotificationUtil;
 import com.liferay.sites.kernel.util.Sites;
 
@@ -647,22 +643,9 @@ public class SitesImpl implements Sites {
 		}
 
 		Map<String, Serializable> taskContextMap =
-			HashMapBuilder.<String, Serializable>put(
-				LayoutSetPrototypeBackgroundTaskConstants.SESSION_ID,
-				PortalUUIDUtil.generate()
-			).put(
-				LayoutSetPrototypeMergeConstants.LAYOUT_SET_GROUP_IDS,
-				TransformUtil.transformToArray(
-					mergeableLayoutSets, LayoutSet::getGroupId, Long.class)
-			).put(
-				LayoutSetPrototypeMergeConstants.LAYOUT_SET_PROTOTYPE_ID,
-				layoutSetPrototype.getLayoutSetPrototypeId()
-			).put(
-				LayoutSetPrototypeMergeConstants.PRE_VALIDATION_ERRORS,
-				preValidationErrors
-			).put(
-				LayoutSetPrototypeMergeConstants.USER_ID, userId
-			).build();
+			LayoutSetPrototypeNotificationUtil.buildTaskContextMap(
+				mergeableLayoutSets, layoutSetPrototype, preValidationErrors,
+				userId);
 
 		for (LayoutSet layoutSet : mergeableLayoutSets) {
 			try {

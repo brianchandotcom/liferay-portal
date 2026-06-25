@@ -146,7 +146,6 @@ const viewsActions: TViewsActions = {
 
 		return {
 			...state,
-			snapshotUpdated: false,
 			snapshots: updatedSnapshots,
 		};
 	},

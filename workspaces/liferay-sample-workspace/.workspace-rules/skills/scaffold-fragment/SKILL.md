@@ -170,7 +170,7 @@ Check the browser console for JS errors from `index.js`. Check `bundles/logs/lif
 - CSS class prefix: `fragment-<name>` to avoid global collisions
 - Editable ID: `camelCase`, unique within the fragment
 
-## Patterns & Gotchas
+## Patterns and Gotchas
 
 ### `fragment.json` Path Keys — Hallucination Warning
 
@@ -264,7 +264,7 @@ When referencing configuration or editable values in `index.html`, always provid
 ${configuration.myVar!'Default'}
 ```
 
-### Common Errors & Fixes
+### Common Errors and Fixes
 
 - **"HTML content must not be empty"**: check `fragment.json` for incorrect path keys (must be `htmlPath`/`cssPath`/`jsPath`, not `html`/`css`/`js`).
 - **"required key [fieldSets] not found"**: check `configuration.json` — fields must be nested inside a `fieldSets` array.

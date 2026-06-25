@@ -221,11 +221,11 @@ public class ServiceContextUtil {
 				taxonomyCategoryBrief.
 					getTaxonomyCategoryExternalReferenceCode();
 
-			groupId = _getGroupId(
+			long scopeGroupId = _getGroupId(
 				companyId, groupId, externalReferenceCode,
 				taxonomyCategoryBrief);
 
-			if (!ArrayUtil.contains(groupIds, groupId)) {
+			if (!ArrayUtil.contains(groupIds, scopeGroupId)) {
 				throw new ObjectEntryGroupIdException.
 					InvalidGroupIdForAssetCategoryBrief(externalReferenceCode);
 			}
@@ -253,7 +253,7 @@ public class ServiceContextUtil {
 
 				AssetCategory assetCategory =
 					AssetCategoryServiceUtil.getOrAddEmptyCategoryWithAncestors(
-						externalReferenceCode, groupId,
+						externalReferenceCode, scopeGroupId,
 						parentTaxonomyCategoryExternalReferenceCode,
 						parentTaxonomyVocabularyExternalReferenceCode);
 
@@ -263,7 +263,7 @@ public class ServiceContextUtil {
 				_log.error(
 					StringBundler.concat(
 						"Invalid asset category with external reference code  ",
-						externalReferenceCode, " and group ", groupId),
+						externalReferenceCode, " and group ", scopeGroupId),
 					portalException);
 
 				throw new RuntimeException(portalException);

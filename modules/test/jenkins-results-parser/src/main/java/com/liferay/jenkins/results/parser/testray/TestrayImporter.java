@@ -1507,8 +1507,6 @@ public class TestrayImporter {
 		AxisTestClassGroup axisTestClassGroup,
 		List<TestrayCaseResult> testrayCaseResults, String testSuiteName) {
 
-		_preloadParentTestrayCaseResults(testrayCaseResults);
-
 		final String[] testrayCaseResultWarnings =
 			_getTestrayCaseResultWarnings(testrayCaseResults);
 
@@ -1552,23 +1550,6 @@ public class TestrayImporter {
 		}
 
 		return null;
-	}
-
-	private void _preloadParentTestrayCaseResults(
-		List<TestrayCaseResult> testrayCaseResults) {
-
-		for (TestrayCaseResult testrayCaseResult : testrayCaseResults) {
-			TestrayCaseResult parentTestrayCaseResult =
-				testrayCaseResult.getParentTestrayCaseResult();
-
-			if (parentTestrayCaseResult == null) {
-				continue;
-			}
-
-			parentTestrayCaseResult.getName();
-			parentTestrayCaseResult.getTestrayCaseResultURL();
-			parentTestrayCaseResult.getTestrayComponent();
-		}
 	}
 
 	private TestrayCaseResult _recordAppServerTestrayCaseResult(
@@ -1666,6 +1647,8 @@ public class TestrayImporter {
 			topLevelTestrayCaseResult);
 
 		buildTestrayCaseResult.setTestrayRun(testrayRun);
+
+		buildTestrayCaseResult.cacheTestrayCaseResultURL();
 
 		testrayCaseResults.add(buildTestrayCaseResult);
 

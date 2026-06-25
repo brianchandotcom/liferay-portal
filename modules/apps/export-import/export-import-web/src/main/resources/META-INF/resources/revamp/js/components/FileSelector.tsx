@@ -12,6 +12,7 @@ import ClayAlert from '@clayui/alert';
 import {ButtonWithIcon} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
+import ClaySticker from '@clayui/sticker';
 import {formatStorage} from 'frontend-js-web';
 
 import DragZone from './forms/DragZone';
@@ -103,67 +104,70 @@ export default function FileSelector({
 			aria-labelledby={ariaLabelledby}
 		>
 			{config.showFileInfo && file && (
-				<div className="align-items-center border border-light flex-fill p-4 rounded">
-					<ClayLayout.Row>
-						<ClayLayout.Col lg={1}>
-							<ClayIcon
-								className="text-secondary"
-								symbol="document"
-							/>
-						</ClayLayout.Col>
-
-						<ClayLayout.Col lg={9}>
-							<p className="font-weight-semi-bold mb-1">
-								{file.name}
-							</p>
-
-							<p className="mb-1">
-								{formatStorage(file.size, {
-									addSpaceBeforeSuffix: true,
-								})}
-							</p>
-						</ClayLayout.Col>
-
-						<ClayLayout.Col
-							className="d-flex justify-content-end"
-							lg={2}
-						>
-							<ButtonWithIcon
-								aria-label={Liferay.Language.get('remove-file')}
-								borderless
+				<div className="border flex-fill p-3 rounded">
+					<ClayLayout.ContentRow padded verticalAlign="center">
+						<ClayLayout.ContentCol>
+							<ClaySticker
+								className="sticker-border-secondary"
 								displayType="secondary"
-								onClick={onRemove}
-								symbol="times"
-							/>
-						</ClayLayout.Col>
-					</ClayLayout.Row>
+							>
+								<ClayIcon symbol="document" />
+							</ClaySticker>
+						</ClayLayout.ContentCol>
 
-					{config.showProgressBar && (
-						<ClayLayout.Row className="flex-fill mt-2">
-							<ClayLayout.Col lg={12}>
-								<ProgressBar
-									fillBarClassName={
-										status === 'VALIDATING'
-											? 'progress-bar-animated progress-bar-striped'
-											: ''
-									}
-									value={
-										status === 'SUCCESS' ||
-										status === 'VALIDATING'
-											? 100
-											: progress ?? 0
-									}
-								/>
+						<ClayLayout.ContentCol expand>
+							<ClayLayout.ContentRow verticalAlign="center">
+								<ClayLayout.ContentCol expand>
+									<div className="font-weight-semi-bold">
+										{file.name}
+									</div>
 
-								<div
-									aria-live="polite"
-									className="mt-1 small text-secondary"
-								>
-									{config.statusText}...
+									<div className="small text-secondary">
+										{formatStorage(file.size, {
+											addSpaceBeforeSuffix: true,
+										})}
+									</div>
+								</ClayLayout.ContentCol>
+
+								<ClayLayout.ContentCol>
+									<ButtonWithIcon
+										aria-label={Liferay.Language.get(
+											'remove-file'
+										)}
+										borderless
+										displayType="secondary"
+										onClick={onRemove}
+										symbol="times"
+									/>
+								</ClayLayout.ContentCol>
+							</ClayLayout.ContentRow>
+
+							{config.showProgressBar && (
+								<div className="mt-2">
+									<ProgressBar
+										fillBarClassName={
+											status === 'VALIDATING'
+												? 'progress-bar-animated progress-bar-striped'
+												: ''
+										}
+										value={
+											status === 'SUCCESS' ||
+											status === 'VALIDATING'
+												? 100
+												: progress ?? 0
+										}
+									/>
+
+									<div
+										aria-live="polite"
+										className="mt-1 small text-secondary"
+									>
+										{config.statusText}...
+									</div>
 								</div>
-							</ClayLayout.Col>
-						</ClayLayout.Row>
-					)}
+							)}
+						</ClayLayout.ContentCol>
+					</ClayLayout.ContentRow>
 				</div>
 			)}
 

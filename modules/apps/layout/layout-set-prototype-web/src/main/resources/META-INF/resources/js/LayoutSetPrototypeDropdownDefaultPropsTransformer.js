@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {openConfirmModal} from 'frontend-js-components-web';
+import {openConfirmModal, openModal} from 'frontend-js-components-web';
 import {openWindow} from 'frontend-js-web';
 
 const ACTIONS = {
@@ -38,6 +38,27 @@ const ACTIONS = {
 	},
 
 	executeLayoutSetPrototypeSync(itemData) {
+		if (itemData.publicationsEnabled === 'true') {
+			openModal({
+				bodyHTML: Liferay.Language.get(
+					'site-template-sync-cannot-be-run-with-publications-enabled'
+				),
+				buttons: [
+					{
+						autoFocus: true,
+						displayType: 'secondary',
+						label: Liferay.Language.get('close'),
+						type: 'cancel',
+					},
+				],
+				role: 'alertdialog',
+				status: 'warning',
+				title: Liferay.Language.get('site-template-sync'),
+			});
+
+			return;
+		}
+
 		openConfirmModal({
 			message: Liferay.Language.get('site-template-sync-help'),
 			onConfirm: (isConfirmed) => {

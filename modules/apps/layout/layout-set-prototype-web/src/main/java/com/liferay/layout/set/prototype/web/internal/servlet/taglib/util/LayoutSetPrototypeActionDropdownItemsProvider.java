@@ -8,6 +8,7 @@ package com.liferay.layout.set.prototype.web.internal.servlet.taglib.util;
 import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
+import com.liferay.change.tracking.configuration.helper.CTSettingsConfigurationHelper;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -16,6 +17,7 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -205,6 +207,16 @@ public class LayoutSetPrototypeActionDropdownItemsProvider {
 					"layoutSetPrototypeId",
 					_layoutSetPrototype.getLayoutSetPrototypeId()
 				).buildString());
+
+			CTSettingsConfigurationHelper ctSettingsConfigurationHelper =
+				_ctSettingsConfigurationHelperSnapshot.get();
+
+			dropdownItem.putData(
+				"publicationsEnabled",
+				String.valueOf(
+					ctSettingsConfigurationHelper.isEnabled(
+						_themeDisplay.getCompanyId())));
+
 			dropdownItem.setIcon("reload");
 			dropdownItem.setLabel(
 				LanguageUtil.get(
@@ -253,6 +265,11 @@ public class LayoutSetPrototypeActionDropdownItemsProvider {
 			_themeDisplay.getURLCurrent()
 		).buildPortletURL();
 	}
+
+	private static final Snapshot<CTSettingsConfigurationHelper>
+		_ctSettingsConfigurationHelperSnapshot = new Snapshot<>(
+			LayoutSetPrototypeActionDropdownItemsProvider.class,
+			CTSettingsConfigurationHelper.class);
 
 	private final HttpServletRequest _httpServletRequest;
 	private final LayoutSetPrototype _layoutSetPrototype;

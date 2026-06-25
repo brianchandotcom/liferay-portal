@@ -21,6 +21,7 @@ if (Validator.isNotNull(backURL)) {
 renderResponse.setTitle(editSegmentsEntryDisplayContext.getTitle(locale));
 %>
 
+<liferay-ui:error embed="<%= false %>" exception="<%= LockedSegmentsEntryException.class %>" message="the-segment-cannot-be-edited-because-it-is-used-by-a-running-ab-test" />
 <liferay-ui:error embed="<%= false %>" exception="<%= SegmentsEntryCriteriaException.class %>" message="invalid-criteria" />
 <liferay-ui:error embed="<%= false %>" exception="<%= SegmentsEntryKeyException.class %>" message="key-is-already-used" />
 <liferay-ui:error embed="<%= false %>" exception="<%= SegmentsEntryNameException.class %>" message="please-enter-a-valid-name" />

@@ -27,6 +27,7 @@ page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
+page import="com.liferay.segments.exception.LockedSegmentsEntryException" %><%@
 page import="com.liferay.segments.exception.NoSuchEntryException" %><%@
 page import="com.liferay.segments.exception.RequiredSegmentsEntryException" %><%@
 page import="com.liferay.segments.exception.SegmentsEntryCriteriaException" %><%@

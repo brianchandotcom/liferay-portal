@@ -9,7 +9,10 @@ import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import FullCalendar from '@fullcalendar/react';
-import {FrontendDataSetContext} from '@liferay/frontend-data-set-web';
+import {
+	FrontendDataSetContext,
+	IItemsActions,
+} from '@liferay/frontend-data-set-web';
 import {useLiferayState} from '@liferay/frontend-js-state-web/react';
 import classNames from 'classnames';
 import {dateUtils, sub} from 'frontend-js-web';
@@ -30,6 +33,7 @@ import type {FirstDayOfWeekLocale} from 'frontend-js-web';
 
 interface CalendarViewProps {
 	items: ITask[];
+	itemsActions: IItemsActions[];
 	projectId?: string;
 }
 
@@ -39,7 +43,11 @@ interface MoreLinkPopover {
 	tasks: ITaskObjectEntry[];
 }
 
-export default function CalendarView({items, projectId}: CalendarViewProps) {
+export default function CalendarView({
+	items,
+	itemsActions,
+	projectId,
+}: CalendarViewProps) {
 	const {loadData, onInfoPanelToggleButtonClick} = useContext(
 		FrontendDataSetContext
 	);
@@ -292,7 +300,10 @@ export default function CalendarView({items, projectId}: CalendarViewProps) {
 				dayHeaderFormat={{weekday: 'long'}}
 				dayMaxEvents
 				eventContent={(arg) => (
-					<CalendarTaskCard task={arg.event.extendedProps.task} />
+					<CalendarTaskCard
+						itemsActions={itemsActions}
+						task={arg.event.extendedProps.task}
+					/>
 				)}
 				events={events}
 				fixedWeekCount={false}

@@ -151,9 +151,9 @@ function SectionHeader({
 	title: string;
 }) {
 	return (
-		<ClayLayout.SheetHeader className="mb-1">
+		<ClayLayout.SheetHeader className="mb-0">
 			<div
-				className="mb-2 sheet-title"
+				className="sheet-title"
 				id={name ? `${name}-label` : undefined}
 			>
 				<span className="inline-item inline-item-before small text-secondary">

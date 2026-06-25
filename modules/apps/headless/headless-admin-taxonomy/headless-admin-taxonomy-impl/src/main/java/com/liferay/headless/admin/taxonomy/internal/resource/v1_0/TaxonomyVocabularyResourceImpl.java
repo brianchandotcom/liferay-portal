@@ -544,8 +544,9 @@ public class TaxonomyVocabularyResourceImpl
 				_assetVocabularyGroupRelLocalService.
 					setAssetVocabularyGroupRels(
 						assetVocabulary.getVocabularyId(),
-						_getAssetLibraryGroupIds(
-							group.getCompanyId(), taxonomyVocabulary),
+						TaxonomyGroupUtil.getAssetLibraryGroupIds(
+							taxonomyVocabulary.getAssetLibraries(),
+							group.getCompanyId()),
 						DepotConstants.TYPE_SPACE);
 			}
 		}
@@ -631,14 +632,6 @@ public class TaxonomyVocabularyResourceImpl
 				};
 			},
 			AssetLibrary.class);
-	}
-
-	private long[] _getAssetLibraryGroupIds(
-			long companyId, TaxonomyVocabulary taxonomyVocabulary)
-		throws Exception {
-
-		return TaxonomyGroupUtil.getAssetLibraryGroupIds(
-			taxonomyVocabulary.getAssetLibraries(), companyId);
 	}
 
 	private AssetType _getAssetType(
@@ -1190,7 +1183,8 @@ public class TaxonomyVocabularyResourceImpl
 				DepotConstants.TYPE_PROJECT);
 			_assetVocabularyGroupRelLocalService.setAssetVocabularyGroupRels(
 				assetVocabulary.getVocabularyId(),
-				_getAssetLibraryGroupIds(companyId, taxonomyVocabulary),
+				TaxonomyGroupUtil.getAssetLibraryGroupIds(
+					taxonomyVocabulary.getAssetLibraries(), companyId),
 				DepotConstants.TYPE_SPACE);
 		}
 

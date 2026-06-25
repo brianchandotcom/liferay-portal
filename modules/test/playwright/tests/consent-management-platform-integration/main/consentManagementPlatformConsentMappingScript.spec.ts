@@ -5,49 +5,27 @@
 
 import {Page, expect, mergeTests} from '@playwright/test';
 
-import {consentManagerConfigurationPageTest} from '../../../fixtures/consentManagerConfigurationPageTest';
 import {loginTest} from '../../../fixtures/loginTest';
-import {systemSettingsPageTest} from '../../../fixtures/systemSettingsPageTest';
 import {SiteSettingsPage} from '../../../pages/site-admin-web/SiteSettingsPage';
-import {clickAndExpectToBeHidden} from '../../../utils/clickAndExpectToBeHidden';
 import performLogin, {performLogout} from '../../../utils/performLogin';
 import {waitForAlert} from '../../../utils/waitForAlert';
-import {
-	resetConsentManagerConfiguration,
-	updateConsentManagerConfiguration,
-} from '../../cookies-banner-web/main/utils/consentManagerConfigurationHelper';
 
-const test = mergeTests(
-	consentManagerConfigurationPageTest,
-	loginTest(),
-	systemSettingsPageTest
-);
+const test = mergeTests(loginTest());
 
-test.beforeEach(async ({page}) => {
-	await updateConsentManagerConfiguration(page, {
-		enabled: true,
-		forceReload: true,
-	});
-
-	await acceptCookiesBanner(page);
-
-	await setCMPEnabled(page, true);
-});
-
-test.afterEach(async ({page, systemSettingsPage}) => {
+test.afterEach(async ({page}) => {
 	if (await page.getByRole('button', {name: 'Sign In'}).isVisible()) {
 		await performLogin(page, 'test');
 	}
 
 	await setCMPEnabled(page, false);
-
-	await resetConsentManagerConfiguration(systemSettingsPage);
 });
 
 test(
 	'Sign-in does not set the REMEMBER_ME cookie when functional consent is denied via the third-party CMP',
 	{tag: '@LPD-88765'},
 	async ({page}) => {
+		await setCMPEnabled(page, true);
+
 		await signInWithConsentState(page, {CONSENT_TYPE_FUNCTIONAL: false});
 
 		const cookies = await page.context().cookies();
@@ -62,6 +40,8 @@ test(
 	'Sign-in sets the REMEMBER_ME cookie when functional consent is granted via the third-party CMP',
 	{tag: '@LPD-88765'},
 	async ({page}) => {
+		await setCMPEnabled(page, true);
+
 		await signInWithConsentState(page, {CONSENT_TYPE_FUNCTIONAL: true});
 
 		const cookies = await page.context().cookies();
@@ -76,6 +56,8 @@ test(
 	'Necessary consent is honored even when the third-party CMP denies all consent',
 	{tag: '@LPD-88765'},
 	async ({page}) => {
+		await setCMPEnabled(page, true);
+
 		await signInWithConsentState(page, {
 			CONSENT_TYPE_FUNCTIONAL: false,
 			CONSENT_TYPE_NECESSARY: false,
@@ -99,6 +81,8 @@ test(
 	'Consent is granted when the third-party CMP sets no consent-state cookie',
 	{tag: '@LPD-88765'},
 	async ({page}) => {
+		await setCMPEnabled(page, true);
+
 		await signInWithConsentState(page, null);
 
 		const cookies = await page.context().cookies();
@@ -113,6 +97,8 @@ test(
 	'Consent is granted when the consent type is absent from the consent state',
 	{tag: '@LPD-88765'},
 	async ({page}) => {
+		await setCMPEnabled(page, true);
+
 		await signInWithConsentState(page, {CONSENT_TYPE_NECESSARY: true});
 
 		const cookies = await page.context().cookies();
@@ -127,6 +113,8 @@ test(
 	'Consent is granted when the consent state is malformed',
 	{tag: '@LPD-88765'},
 	async ({page}) => {
+		await setCMPEnabled(page, true);
+
 		await signInWithConsentState(page, 'not-json');
 
 		const cookies = await page.context().cookies();
@@ -137,13 +125,6 @@ test(
 	}
 );
 
-async function acceptCookiesBanner(page: Page) {
-	await clickAndExpectToBeHidden({
-		target: page.locator('div[role="dialog"][aria-modal="true"]'),
-		trigger: page.getByRole('button', {name: 'Accept All'}),
-	});
-}
-
 async function setCMPEnabled(page: Page, enabled: boolean) {
 	const siteSettingsPage = new SiteSettingsPage(page);
 
@@ -151,8 +132,6 @@ async function setCMPEnabled(page: Page, enabled: boolean) {
 		'Privacy',
 		'Third Party Consent Management Platform'
 	);
-
-	await acceptCookiesBanner(page);
 
 	await page
 		.getByLabel('Consent Management Platform Provider Name', {exact: true})

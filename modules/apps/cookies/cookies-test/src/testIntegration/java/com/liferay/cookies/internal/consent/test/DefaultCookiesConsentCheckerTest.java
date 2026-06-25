@@ -48,16 +48,27 @@ public class DefaultCookiesConsentCheckerTest {
 				CookiesConstants.CONSENT_TYPE_NECESSARY,
 				_createMockHttpServletRequest()));
 
-		MockHttpServletRequest mockHttpServletRequest =
-			_createMockHttpServletRequest();
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						CookiesPreferenceHandlingConfiguration.class.getName(),
+						HashMapDictionaryBuilder.<String, Object>put(
+							"enabled", true
+						).build())) {
 
-		mockHttpServletRequest.setCookies(
-			new Cookie(CookiesConstants.NAME_CONSENT_TYPE_FUNCTIONAL, "true"));
+			MockHttpServletRequest mockHttpServletRequest =
+				_createMockHttpServletRequest();
 
-		Assert.assertTrue(
-			cookiesConsentChecker.hasConsent(
-				CookiesConstants.CONSENT_TYPE_FUNCTIONAL,
-				mockHttpServletRequest));
+			mockHttpServletRequest.setCookies(
+				new Cookie(
+					CookiesConstants.NAME_CONSENT_TYPE_FUNCTIONAL, "true"));
+
+			Assert.assertTrue(
+				cookiesConsentChecker.hasConsent(
+					CookiesConstants.CONSENT_TYPE_FUNCTIONAL,
+					mockHttpServletRequest));
+		}
 
 		try (CompanyConfigurationTemporarySwapper
 				companyConfigurationTemporarySwapper =
@@ -65,6 +76,8 @@ public class DefaultCookiesConsentCheckerTest {
 						TestPropsValues.getCompanyId(),
 						CookiesPreferenceHandlingConfiguration.class.getName(),
 						HashMapDictionaryBuilder.<String, Object>put(
+							"enabled", true
+						).put(
 							"explicitConsentMode", false
 						).build())) {
 
@@ -80,6 +93,8 @@ public class DefaultCookiesConsentCheckerTest {
 						TestPropsValues.getCompanyId(),
 						CookiesPreferenceHandlingConfiguration.class.getName(),
 						HashMapDictionaryBuilder.<String, Object>put(
+							"enabled", true
+						).put(
 							"explicitConsentMode", true
 						).build())) {
 
@@ -88,6 +103,11 @@ public class DefaultCookiesConsentCheckerTest {
 					CookiesConstants.CONSENT_TYPE_FUNCTIONAL,
 					_createMockHttpServletRequest()));
 		}
+
+		Assert.assertTrue(
+			cookiesConsentChecker.hasConsent(
+				CookiesConstants.CONSENT_TYPE_FUNCTIONAL,
+				_createMockHttpServletRequest()));
 	}
 
 	private MockHttpServletRequest _createMockHttpServletRequest()

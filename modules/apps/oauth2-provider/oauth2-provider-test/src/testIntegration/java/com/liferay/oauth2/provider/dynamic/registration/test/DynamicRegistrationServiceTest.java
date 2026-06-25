@@ -268,11 +268,7 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 					_APPLICATION_NAME_DYNAMIC_REGISTER_TEST)));
 
 		Response response = invocationBuilder.method(
-			"post",
-			Entity.json(
-				JSONUtil.put(
-					_FIELD_CLIENT_NAME, RandomTestUtil.randomString()
-				).toString()));
+			"post", Entity.json(_bodyWithClientNameOnly()));
 
 		Assert.assertEquals(401, response.getStatus());
 
@@ -282,26 +278,8 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 			RandomTestUtil.randomString() + StringPool.SPACE +
 				RandomTestUtil.randomString();
 
-		JSONObject jsonObject = JSONUtil.put(
-			_FIELD_CLIENT_NAME, clientName
-		).put(
-			_FIELD_GRANT_TYPES,
-			new String[] {OAuthConstants.CLIENT_CREDENTIALS_GRANT}
-		).put(
-			_FIELD_LOGO_URI, RandomTestUtil.randomString()
-		).put(
-			_FIELD_REDIRECT_URIS,
-			new String[] {
-				StringBundler.concat(
-					Http.HTTPS_WITH_SLASH, RandomTestUtil.randomString(),
-					StringPool.SLASH, RandomTestUtil.randomString()),
-				StringBundler.concat(
-					Http.HTTPS_WITH_SLASH, RandomTestUtil.randomString(),
-					StringPool.SLASH, RandomTestUtil.randomString())
-			}
-		).put(
-			_FIELD_SCOPE, scope
-		);
+		JSONObject jsonObject = _createRegistrationJSONObject(
+			clientName, scope);
 
 		response = invocationBuilder.method(
 			"post", Entity.json(jsonObject.toString()));
@@ -445,27 +423,8 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 		Response response = invocationBuilder.method(
 			"put",
 			Entity.json(
-				JSONUtil.put(
-					_FIELD_CLIENT_NAME, clientName
-				).put(
-					_FIELD_GRANT_TYPES,
-					new String[] {OAuthConstants.CLIENT_CREDENTIALS_GRANT}
-				).put(
-					_FIELD_LOGO_URI, RandomTestUtil.randomString()
-				).put(
-					_FIELD_REDIRECT_URIS,
-					new String[] {
-						StringBundler.concat(
-							Http.HTTPS_WITH_SLASH,
-							RandomTestUtil.randomString(), StringPool.SLASH,
-							RandomTestUtil.randomString()),
-						StringBundler.concat(
-							Http.HTTPS_WITH_SLASH,
-							RandomTestUtil.randomString(), StringPool.SLASH,
-							RandomTestUtil.randomString())
-					}
-				).put(
-					_FIELD_SCOPE, RandomTestUtil.randomString()
+				_createRegistrationJSONObject(
+					clientName, RandomTestUtil.randomString()
 				).toString()));
 
 		Assert.assertEquals(200, response.getStatus());
@@ -564,6 +523,31 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 
 		return new CompanyConfigurationTemporarySwapper(
 			companyId, _CONFIGURATION_PID, properties);
+	}
+
+	private JSONObject _createRegistrationJSONObject(
+		String clientName, String scope) {
+
+		return JSONUtil.put(
+			_FIELD_CLIENT_NAME, clientName
+		).put(
+			_FIELD_GRANT_TYPES,
+			new String[] {OAuthConstants.CLIENT_CREDENTIALS_GRANT}
+		).put(
+			_FIELD_LOGO_URI, RandomTestUtil.randomString()
+		).put(
+			_FIELD_REDIRECT_URIS,
+			new String[] {
+				StringBundler.concat(
+					Http.HTTPS_WITH_SLASH, RandomTestUtil.randomString(),
+					StringPool.SLASH, RandomTestUtil.randomString()),
+				StringBundler.concat(
+					Http.HTTPS_WITH_SLASH, RandomTestUtil.randomString(),
+					StringPool.SLASH, RandomTestUtil.randomString())
+			}
+		).put(
+			_FIELD_SCOPE, scope
+		);
 	}
 
 	private OAuth2Application _getDynamicRegistratorOAuth2Application()

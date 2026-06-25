@@ -33,7 +33,7 @@ const CategoriesPopover = ({categories, vocabulary}) => {
 			}
 		>
 			{categories.map((cat, index) => (
-				<ClayLabel key={index} large={true}>
+				<ClayLabel key={index} size="lg">
 					{cat}
 				</ClayLabel>
 			))}

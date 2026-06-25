@@ -75,7 +75,7 @@ const LabelGuide = () => {
 									item.withClose ? {id: 'closeId'} : {}
 								}
 								displayType={`${type}${variant}`}
-								large={item.large}
+								size={item.large ? 'lg' : null}
 								withClose={item.withClose}
 							>
 								{item.withIcon ? (

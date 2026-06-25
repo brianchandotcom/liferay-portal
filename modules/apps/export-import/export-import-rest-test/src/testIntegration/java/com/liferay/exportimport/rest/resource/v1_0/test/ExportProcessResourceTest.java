@@ -240,7 +240,6 @@ public class ExportProcessResourceTest
 					postAssetLibraryPortletExportProcessHttpResponse(
 						testDepotEntryGroup.getExternalReferenceCode(),
 						portletId, layout.getPlid(), exportProcessRequest));
-
 		_testPostExportProcessWithObjectDefinition(
 			exportProcessRequest ->
 				exportProcessResource.postAssetLibraryPortletExportProcess(
@@ -352,7 +351,6 @@ public class ExportProcessResourceTest
 				exportProcessResource.postSitePortletExportProcessHttpResponse(
 					testGroup.getExternalReferenceCode(), portletId,
 					layout.getPlid(), exportProcessRequest));
-
 		_testPostExportProcessWithObjectDefinition(
 			exportProcessRequest ->
 				exportProcessResource.postSitePortletExportProcess(

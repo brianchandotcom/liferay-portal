@@ -187,7 +187,6 @@ public class ImportPreviewResourceTest
 						HashMapBuilder.put(
 							"file", file
 						).build()));
-
 		_testPostPortletImportPreviewWithObjectEntries(
 			testDepotEntryGroup.getGroupId(), objectDefinition,
 			layout.getPlid(),
@@ -308,7 +307,6 @@ public class ImportPreviewResourceTest
 					HashMapBuilder.put(
 						"file", file
 					).build()));
-
 		_testPostPortletImportPreviewWithObjectEntries(
 			testGroup.getGroupId(), objectDefinition, layout.getPlid(),
 			file -> importPreviewResource.postSitePortletImportPreview(

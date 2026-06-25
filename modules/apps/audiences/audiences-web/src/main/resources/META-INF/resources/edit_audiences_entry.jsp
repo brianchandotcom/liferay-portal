@@ -15,7 +15,8 @@ renderResponse.setTitle(editAudiencesEntryDisplayContext.getTitle());
 
 <liferay-util:html-top>
 	<aui:style type="text/css">
-		.control-menu {
+		.control-menu,
+		.side-navigation-container {
 			display: none;
 		}
 	</aui:style>

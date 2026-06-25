@@ -7,6 +7,7 @@ package com.liferay.portal.osgi.web.wab.generator.internal.artifact;
 
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.File;
@@ -188,21 +189,27 @@ public class ArtifactURLUtilTest {
 
 		File dir = temporaryFolder.newFolder();
 
-		File configFile = new File(
-			dir, "liferay-sample-global-js.client-extension-config.json");
+		try {
+			File configFile = new File(
+				dir, "liferay-sample-global-js.client-extension-config.json");
 
-		Files.write(
-			configFile.toPath(), configJSON.getBytes(StandardCharsets.UTF_8));
+			Files.write(
+				configFile.toPath(),
+				configJSON.getBytes(StandardCharsets.UTF_8));
 
-		File zipFile = temporaryFolder.newFile(zipName);
+			File zipFile = temporaryFolder.newFile(zipName);
 
-		ZipTestUtil.zipDirToFile(dir, zipFile);
+			ZipTestUtil.zipDirToFile(dir, zipFile);
 
-		URI uri = zipFile.toURI();
+			URI uri = zipFile.toURI();
 
-		URL url = ArtifactURLUtil.transform(uri.toURL());
+			URL url = ArtifactURLUtil.transform(uri.toURL());
 
-		return url.getQuery();
+			return url.getQuery();
+		}
+		finally {
+			FileUtil.delete(dir);
+		}
 	}
 
 }

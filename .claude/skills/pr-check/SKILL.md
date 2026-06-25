@@ -20,9 +20,9 @@ Run premerge checks against the current branch. The skill iterates through the v
 
 	1. `git fetch <remote> master`.
 
-	1. Fast forward local `master` to the fetched tip. When `master` is checked out in another worktree, fast forward it there with `git -C <worktree> merge --ff-only <remote>/master`. Otherwise update it in place with `git fetch <remote> master:master`. Both forms are fast forward only, so a diverged `master` makes the command fail. Warn and stop rather than rewriting it.
+	1. Fast forward local `master` to the fetched tip. When `master` is checked out in another worktree, fast forward it there with `git -C <worktree> merge --ff-only <remote>/master`. Otherwise update it in place with `git fetch <remote> master:master`, which also creates `master` when it does not exist. Both are fast forward only. When the command fails, because `master` has diverged or its worktree is not clean, warn the developer and stop the run.
 
-	1. `git rebase <remote>/master`. On a clean rebase, continue against the rebased branch. On conflict, list the unmerged files (`git diff --diff-filter=U --name-only`) and ask the developer who should resolve the conflicts. When the developer chooses to resolve them, run `git rebase --abort` and FAIL. When the developer asks you to resolve them, fix the conflicts, `git add` the files, and run `git rebase --continue`. When the conflicts cannot be resolved, run `git rebase --abort` and FAIL.
+	1. `git rebase <remote>/master`. On a clean rebase, continue against the rebased branch. On conflict, list the unmerged files (`git diff --diff-filter=U --name-only`) and ask the developer who should resolve the conflicts. When the developer asks you to resolve them, fix the conflicts, `git add` the files, and run `git rebase --continue`. In every other case (the developer resolves them, the conflicts cannot be resolved, or the rebase fails otherwise) run `git rebase --abort` and stop the run.
 
 - **Diff baseline is local `master`.** After the rebase, the three-dot diff against local `master` is the baseline.
 

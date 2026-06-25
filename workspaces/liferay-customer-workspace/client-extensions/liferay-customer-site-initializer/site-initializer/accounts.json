@@ -113,5 +113,10 @@
 		"externalReferenceCode": "ERC-023",
 		"name": "AI Hub Test Account",
 		"type": "business"
+	},
+	{
+		"externalReferenceCode": "ERC-024",
+		"name": "Liferay DXP Academic Test Account",
+		"type": "business"
 	}
 ]

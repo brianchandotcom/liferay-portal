@@ -111,14 +111,14 @@ public class UpdateOAuthClientPRLocalMetadataMVCActionCommandTest {
 				"protectedResourceURI", new String[] {protectedResourceURI1}
 			).build());
 
-		String authorizationServer1 =
-			Http.HTTPS_WITH_SLASH + RandomTestUtil.randomString() + ".com";
-
 		List<OAuthClientPRLocalMetadata> oAuthClientPRLocalMetadatas =
 			_oAuthClientPRLocalMetadataLocalService.
 				getCompanyOAuthClientPRLocalMetadata(_user.getCompanyId());
 
 		int count = oAuthClientPRLocalMetadatas.size();
+
+		String authorizationServer1 =
+			Http.HTTPS_WITH_SLASH + RandomTestUtil.randomString() + ".com";
 
 		Assert.assertTrue(
 			_updateMVCActionCommand.processAction(

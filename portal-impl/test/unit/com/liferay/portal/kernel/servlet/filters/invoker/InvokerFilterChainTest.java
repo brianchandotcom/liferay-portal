@@ -30,9 +30,7 @@ public class InvokerFilterChainTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void testDoFilterWithLiferayFilterWhenIsFilterEnabledThrowsException()
-		throws Exception {
-
+	public void testDoFilter() throws Exception {
 		InvokerFilterChain invokerFilterChain = new InvokerFilterChain(
 			new MockFilterChain());
 

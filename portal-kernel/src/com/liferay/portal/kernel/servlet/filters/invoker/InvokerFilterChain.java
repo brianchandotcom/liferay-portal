@@ -72,9 +72,9 @@ public class InvokerFilterChain implements FilterChain {
 				Filter filter = _filters.get(_index++);
 
 				if (filter instanceof LiferayFilter) {
-					LiferayFilter liferayFilter = (LiferayFilter)filter;
-
 					boolean filterEnabled = false;
+
+					LiferayFilter liferayFilter = (LiferayFilter)filter;
 
 					try {
 						filterEnabled =

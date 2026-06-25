@@ -4,7 +4,7 @@
  */
 
 import {Option, Picker} from '@clayui/core';
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useMemo, useState} from 'react';
 
 import TagService from '../../../common/services/TagService';
 import {ViewDashboardContext} from '../ViewDashboardContext';
@@ -16,6 +16,8 @@ import {
 } from './InventoryAnalysisCard';
 import PickerTrigger from './PickerTrigger';
 
+type Keyword = {assetLibraries: {id: number}[]; id: string; name: string};
+
 const AllTagsDropdown: React.FC<IAllFiltersDropdown> = ({
 	className,
 	item,
@@ -26,7 +28,7 @@ const AllTagsDropdown: React.FC<IAllFiltersDropdown> = ({
 		filters: {space},
 	} = useContext(ViewDashboardContext);
 
-	const [tags, setTags] = useState<Item[]>([initialFilters.tag]);
+	const [keywords, setKeywords] = useState<Keyword[]>([]);
 
 	useEffect(() => {
 		const fetchTags = async () => {
@@ -39,24 +41,29 @@ const AllTagsDropdown: React.FC<IAllFiltersDropdown> = ({
 			}
 
 			if (data) {
-				setTags([
-					initialFilters.tag,
-					...data.items
-						.filter(
-							({assetLibraries}) =>
-								space.value === 'all' ||
-								filterBySpaces(assetLibraries, space.value)
-						)
-						.map(({id, name}) => ({
-							label: name,
-							value: String(id),
-						})),
-				]);
+				setKeywords(data.items);
 			}
 		};
 
 		fetchTags();
-	}, [cmsGroupId, space.value]);
+	}, [cmsGroupId]);
+
+	const tags: Item[] = useMemo(
+		() => [
+			initialFilters.tag,
+			...keywords
+				.filter(
+					({assetLibraries}) =>
+						space.value === 'all' ||
+						filterBySpaces(assetLibraries, space.value)
+				)
+				.map(({id, name}) => ({
+					label: name,
+					value: String(id),
+				})),
+		],
+		[keywords, space.value]
+	);
 
 	return (
 		<Picker

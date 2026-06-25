@@ -103,13 +103,22 @@ public class SelectDDMFormFieldTemplateContextContributor
 					ddmFormField.getProperty("objectFieldId"));
 
 				if (objectFieldId > 0) {
-					return DDMFormFieldTemplateContextContributorUtil.
-						getOptions(
+					List<Map<String, Object>> options =
+						DDMFormFieldTemplateContextContributorUtil.getOptions(
 							ddmFormFieldOptions,
 							GetterUtil.getLong(
 								ddmFormField.getProperty(
 									"listTypeDefinitionId")),
 							_listTypeEntryLocalService);
+
+					if (GetterUtil.getBoolean(
+							ddmFormField.getProperty("alphabeticalOrder"))) {
+
+						return _getSortedOptions(
+							ddmFormFieldRenderingContext.getLocale(), options);
+					}
+
+					return options;
 				}
 
 				return getOptions(

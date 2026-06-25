@@ -10,8 +10,6 @@ package com.liferay.audiences.constants;
  */
 public class AudiencesCriteriaKeys {
 
-	public static final String AUTHENTICATION = "authentication";
-
 	public static final String BROWSER_NAME = "browser_name";
 
 	public static final String BROWSER_VERSION = "browser_version";
@@ -41,5 +39,9 @@ public class AudiencesCriteriaKeys {
 	public static final String URL = "url";
 
 	public static final String USER_AGENT = "user_agent";
+
+	public static final String USER_AUTHENTICATION = "user_authentication";
+
+	public static final String USER_LANGUAGE = "user_language";
 
 }

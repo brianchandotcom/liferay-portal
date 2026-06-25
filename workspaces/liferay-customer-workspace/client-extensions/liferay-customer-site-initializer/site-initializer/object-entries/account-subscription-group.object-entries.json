@@ -307,6 +307,17 @@
 			"name": "Liferay Cloud",
 			"r_accountEntryToAccountSubscriptionGroup_accountEntryERC": "ERC-023",
 			"tabOrder": 2
+		},
+		{
+			"accountKey": "ERC-024",
+			"activationProductName": "DXP",
+			"activationStatus": "Active",
+			"externalReferenceCode": "ERC-024_self-hosted",
+			"hasActivation": true,
+			"menuOrder": 1,
+			"name": "Self-Hosted",
+			"r_accountEntryToAccountSubscriptionGroup_accountEntryERC": "ERC-024",
+			"tabOrder": 2
 		}
 	],
 	"objectDefinitionName": "AccountSubscriptionGroup"

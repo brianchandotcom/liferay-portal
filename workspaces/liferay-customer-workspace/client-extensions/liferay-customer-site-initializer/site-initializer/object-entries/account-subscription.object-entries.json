@@ -587,6 +587,30 @@
 			"r_accountEntryToAccountSubscription_accountEntryERC": "ERC-023",
 			"startDate": "2023-01-01T00:00:00Z",
 			"subscriptionStatus": "Active"
+		},
+		{
+			"accountKey": "ERC-024",
+			"accountSubscriptionGroupERC": "ERC-024_self-hosted",
+			"endDate": "2026-12-31T00:00:00Z",
+			"externalReferenceCode": "ERC-024_self-hosted_academic-production",
+			"instanceSize": "1",
+			"name": "Academic Production",
+			"quantity": 1,
+			"r_accountEntryToAccountSubscription_accountEntryERC": "ERC-024",
+			"startDate": "2023-01-01T00:00:00Z",
+			"subscriptionStatus": "Active"
+		},
+		{
+			"accountKey": "ERC-024",
+			"accountSubscriptionGroupERC": "ERC-024_self-hosted",
+			"endDate": "2026-12-31T00:00:00Z",
+			"externalReferenceCode": "ERC-024_self-hosted_academic-non-production",
+			"instanceSize": "1",
+			"name": "Academic Non-Production",
+			"quantity": 1,
+			"r_accountEntryToAccountSubscription_accountEntryERC": "ERC-024",
+			"startDate": "2023-01-01T00:00:00Z",
+			"subscriptionStatus": "Active"
 		}
 	],
 	"objectDefinitionName": "AccountSubscription"

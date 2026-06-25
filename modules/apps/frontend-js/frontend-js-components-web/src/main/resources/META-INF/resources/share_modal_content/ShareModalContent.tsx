@@ -497,6 +497,7 @@ export default function ShareModalContent({
 							</div>
 
 							<ClayMultiSelect
+								allowsCustomLabel={false}
 								id="collaboratorAutocomplete"
 								items={[]}
 								loadingState={autocompleteNetworkStatus}

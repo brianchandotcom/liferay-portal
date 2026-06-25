@@ -165,7 +165,7 @@ public class KeyManagerProfileRegistryImplTest {
 	@Mock
 	private KeyManagerProfile _keyManagerProfile;
 
-	private KeyManagerProfileRegistryImpl _keyManagerProfileRegistryImpl =
+	private final KeyManagerProfileRegistryImpl _keyManagerProfileRegistryImpl =
 		new KeyManagerProfileRegistryImpl();
 
 	@Mock

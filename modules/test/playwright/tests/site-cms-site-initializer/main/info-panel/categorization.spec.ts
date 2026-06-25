@@ -138,6 +138,49 @@ test(
 				await expect(categoryLabel).toBeAttached();
 			});
 
+			let personaLabel;
+			let personaName;
+
+			await test.step('Add a new persona to the content', async () => {
+				const personasAutocomplete =
+					page.getByPlaceholder('Add personas');
+
+				personaName = 'Decision Maker';
+
+				await personasAutocomplete.fill(personaName);
+
+				const option = page.getByRole('option', {name: personaName});
+
+				await option.waitFor();
+				await option.click();
+
+				personaLabel = page.locator('.label-item', {
+					hasText: personaName,
+				});
+
+				await expect(personaLabel).toBeAttached();
+			});
+
+			let stageLabel;
+			let stageName;
+
+			await test.step('Add a new funnel stage to the content', async () => {
+				const stagesAutocomplete = page.getByPlaceholder('Add stages');
+
+				stageName = 'Awareness';
+
+				await stagesAutocomplete.fill(stageName);
+
+				const option = page.getByRole('option', {name: stageName});
+
+				await option.waitFor();
+				await option.click();
+
+				stageLabel = page.locator('.label-item', {hasText: stageName});
+
+				await expect(stageLabel).toBeAttached();
+			});
+
 			await test.step('Create an user and add to the Space', async () => {
 				user = await apiHelpers.headlessAdminUser.postUserAccount();
 
@@ -176,11 +219,19 @@ test(
 			await test.step('Check that space member can see tags and vocabulary but cannot edit them', async () => {
 				await expect(tagLabel).toBeAttached();
 				await expect(categoryLabel).toBeAttached();
+				await expect(personaLabel).toBeAttached();
+				await expect(stageLabel).toBeAttached();
 				await expect(
 					page.getByLabel(tagName).getByLabel('Close')
 				).toBeDisabled();
 				await expect(
 					page.getByLabel(categoryName).getByLabel('Close')
+				).toBeDisabled();
+				await expect(
+					page.getByLabel(personaName).getByLabel('Close')
+				).toBeDisabled();
+				await expect(
+					page.getByLabel(stageName).getByLabel('Close')
 				).toBeDisabled();
 			});
 		}

@@ -43,7 +43,6 @@ public class AudiencesCriteriaProviderImpl
 
 		audiencesCriteriaTypes.add(
 			_getBrowserAttributesAudiencesCriteriaType(locale));
-
 		audiencesCriteriaTypes.add(
 			_getGeneralAttributesAudiencesCriteriaType(locale));
 

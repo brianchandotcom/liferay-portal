@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -39,6 +40,10 @@ public class PasswordModifiedFilter extends BasePortalFilter {
 
 		if (!requestPath.equals("/c/portal/logout") &&
 			_isPasswordModified(httpServletRequest)) {
+
+			httpServletResponse.setHeader(
+				HttpHeaders.CACHE_CONTROL,
+				HttpHeaders.CACHE_CONTROL_NO_CACHE_VALUE);
 
 			httpServletResponse.sendRedirect(
 				PortalUtil.getPathMain() + "/portal/logout");

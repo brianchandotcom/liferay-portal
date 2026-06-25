@@ -24,4 +24,5 @@ Export-Package:\
 	com.liferay.segments.service,\
 	com.liferay.segments.service.persistence,\
 	com.liferay.segments.source.provider,\
+	com.liferay.segments.util,\
 	com.liferay.segments.util.comparator

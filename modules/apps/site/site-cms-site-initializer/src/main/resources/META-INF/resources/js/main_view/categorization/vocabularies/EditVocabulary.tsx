@@ -88,6 +88,7 @@ export default function EditVocabulary({
 		name_i18n: {
 			[defaultLanguageId.replace('_', '-')]: '',
 		},
+		system: false,
 		visibilityType: 'PUBLIC',
 	});
 	const [vocabularyPermissions, setVocabularyPermissions] =
@@ -321,18 +322,22 @@ export default function EditVocabulary({
 												NAVIGATION_TABS.GENERAL
 											),
 									},
-									{
-										active:
-											activeVerticalNavKey ===
-											NAVIGATION_TABS.ASSET_TYPES,
-										label: Liferay.Language.get(
-											'associated-asset-types'
-										),
-										onClick: () =>
-											_handleVerticalNavChange(
-												NAVIGATION_TABS.ASSET_TYPES
-											),
-									},
+									...(vocabulary.system
+										? []
+										: [
+												{
+													active:
+														activeVerticalNavKey ===
+														NAVIGATION_TABS.ASSET_TYPES,
+													label: Liferay.Language.get(
+														'associated-asset-types'
+													),
+													onClick: () =>
+														_handleVerticalNavChange(
+															NAVIGATION_TABS.ASSET_TYPES
+														),
+												},
+											]),
 								]}
 							/>
 						</div>

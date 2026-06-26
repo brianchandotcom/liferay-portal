@@ -10,19 +10,17 @@ import {
 } from '@liferay/frontend-data-set-web';
 import {Immutable} from '@liferay/frontend-js-state-web';
 
-import {ITaskObjectEntry} from '../../../../../utils/types';
+import {ITaskObjectEntry} from './types';
 
 /**
  * Builds the URL for one of a task's actions.
  *
- * It finds the action named `actionId` and takes its `href`. The task is
- * passed under the `embedded` key, so a token must name the field as
- * `{embedded.<field>}` to resolve. A bare token like `{id}` finds nothing and
- * is replaced with the string "undefined", so prefix the field with
- * `embedded.`.
+ * It finds the action named `actionId`, takes its `href`, and replaces the
+ * tokens in it with matching values from `task`. A token such as
+ * `{embedded.id}` is resolved as `task.embedded.id`.
  *
  * For example, an `href` of `/tasks/{embedded.id}/edit` with a `task` whose
- * `id` is 42 becomes `/tasks/42/edit`.
+ * `embedded.id` is 42 becomes `/tasks/42/edit`.
  */
 export default function getActionURL({
 	actionId,
@@ -31,9 +29,7 @@ export default function getActionURL({
 }: {
 	actionId: string;
 	itemsActions: IItemsActions[];
-	task: Immutable<ITaskObjectEntry> | ITaskObjectEntry;
+	task: {embedded: Immutable<ITaskObjectEntry> | ITaskObjectEntry};
 }) {
-	return replaceTokens(findAction(itemsActions, actionId)?.href, {
-		embedded: task,
-	});
+	return replaceTokens(findAction(itemsActions, actionId)?.href, task);
 }

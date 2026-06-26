@@ -323,9 +323,9 @@ public class PerformanceAssetConsumptionResourceTest
 					"L_CMS_BLOG", testCompany.getCompanyId());
 
 		long categoryId = RandomTestUtil.nextLong();
-		int page = 2;
+		int page = RandomTestUtil.nextInt();
 		int rangeKey = RandomTestUtil.nextInt();
-		int size = 5;
+		int size = RandomTestUtil.nextInt();
 		long tagId = RandomTestUtil.nextLong();
 		long vocabularyId = RandomTestUtil.nextLong();
 

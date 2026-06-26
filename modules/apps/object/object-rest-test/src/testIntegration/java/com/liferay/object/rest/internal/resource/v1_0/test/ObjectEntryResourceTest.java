@@ -20735,7 +20735,7 @@ public class ObjectEntryResourceTest {
 	private void _testPostObjectEntryWithCrossSiteTaxonomyCategories()
 		throws Exception {
 
-		// Accept a category from a connected depot entry
+		// Can add a category from a connected depot entry
 
 		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
 			RandomTestUtil.randomLocaleStringMap(),
@@ -20774,7 +20774,7 @@ public class ObjectEntryResourceTest {
 		_depotEntryGroupRelLocalService.deleteDepotEntryGroupRel(
 			depotEntryGroupRel.getDepotEntryGroupRelId());
 
-		// Accept a category from a parent site
+		// Can add a category from a parent site
 
 		AssetVocabulary assetVocabulary =
 			_assetVocabularyLocalService.addVocabulary(
@@ -20804,7 +20804,7 @@ public class ObjectEntryResourceTest {
 
 		_groupLocalService.deleteGroup(childGroup);
 
-		// Reject a category for a company-scoped entry
+		// Cannot add a category to a company-scoped entry
 
 		Assert.assertEquals(
 			400,
@@ -20817,7 +20817,7 @@ public class ObjectEntryResourceTest {
 				).toString(),
 				_objectDefinition1.getRESTContextPath(), Http.Method.POST));
 
-		// Reject a category from a foreign site
+		// Cannot add a category from a foreign site
 
 		Assert.assertEquals(
 			400,
@@ -20831,7 +20831,7 @@ public class ObjectEntryResourceTest {
 				_getEndpoint(_siteScopedObjectDefinition1, _testGroupId),
 				Http.Method.POST));
 
-		// Reject a category via UPSERT
+		// Cannot add a category via UPSERT
 
 		Assert.assertEquals(
 			400,
@@ -20848,7 +20848,7 @@ public class ObjectEntryResourceTest {
 					RandomTestUtil.randomString()),
 				Http.Method.PUT));
 
-		// Reject a category without leaking an empty asset category
+		// No empty category created
 
 		String externalReferenceCode = RandomTestUtil.randomString();
 

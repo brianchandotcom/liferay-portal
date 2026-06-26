@@ -290,13 +290,18 @@ public class ObjectDBResourceProvider implements DBResourceProvider {
 				continue;
 			}
 
+			ObjectDefinition objectDefinition1 = objectDefinitions.get(
+				objectRelationship.getObjectDefinitionId1());
+			ObjectDefinition objectDefinition2 = objectDefinitions.get(
+				objectRelationship.getObjectDefinitionId2());
+
+			if ((objectDefinition1 == null) || (objectDefinition2 == null)) {
+				continue;
+			}
+
 			Map<String, String> pkObjectFieldDBColumnNames =
 				ObjectRelationshipUtil.getPKObjectFieldDBColumnNames(
-					objectDefinitions.get(
-						objectRelationship.getObjectDefinitionId1()),
-					objectDefinitions.get(
-						objectRelationship.getObjectDefinitionId2()),
-					false);
+					objectDefinition1, objectDefinition2, false);
 
 			String pkObjectFieldDBColumnName1 = pkObjectFieldDBColumnNames.get(
 				"pkObjectFieldDBColumnName1");

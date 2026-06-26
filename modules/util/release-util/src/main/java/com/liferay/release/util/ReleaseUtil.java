@@ -42,6 +42,10 @@ public class ReleaseUtil {
 	}
 
 	public static ReleaseEntry getReleaseEntry(String releaseKey) {
+		if ((releaseKey == null) || releaseKey.isEmpty()) {
+			return null;
+		}
+
 		Map<String, ReleaseEntry> releaseEntryMap = getReleaseEntryMap();
 
 		return releaseEntryMap.get(releaseKey);

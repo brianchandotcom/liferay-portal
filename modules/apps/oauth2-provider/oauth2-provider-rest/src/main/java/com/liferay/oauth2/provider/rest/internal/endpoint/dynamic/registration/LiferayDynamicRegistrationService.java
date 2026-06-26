@@ -383,8 +383,6 @@ public class LiferayDynamicRegistrationService
 			String scope = StringPool.BLANK;
 
 			if (liferayClientRegistration != null) {
-				clientName = GetterUtil.getString(
-					liferayClientRegistration.getClientName());
 				grantTypesJSONArray = JSONFactoryUtil.createJSONArray(
 					liferayClientRegistration.getGrantTypes());
 				redirectUrisJSONArray = JSONFactoryUtil.createJSONArray(
@@ -482,35 +480,6 @@ public class LiferayDynamicRegistrationService
 				_log.debug(exception);
 			}
 		}
-	}
-
-	private Pattern _toPattern(String glob) {
-		StringBundler sb = new StringBundler("^");
-
-		for (int i = 0; i < glob.length(); i++) {
-			char c = glob.charAt(i);
-
-			if (c == '*') {
-				sb.append("[^/]*");
-
-				while (((i + 1) < glob.length()) &&
-					   (glob.charAt(i + 1) == '*')) {
-
-					i++;
-				}
-			}
-			else if ("\\.+?()[]{}^$|".indexOf(c) >= 0) {
-				sb.append('\\');
-				sb.append(c);
-			}
-			else {
-				sb.append(c);
-			}
-		}
-
-		sb.append('$');
-
-		return Pattern.compile(sb.toString());
 	}
 
 	private String _getApplicationType(ClientRegistration clientRegistration) {
@@ -687,6 +656,35 @@ public class LiferayDynamicRegistrationService
 			OAuth2ProviderRESTEndpointConstants.AUTHORIZATION_CODE_PKCE_GRANT);
 
 		client.setAllowedGrantTypes(promotedAllowedGrantTypes);
+	}
+
+	private Pattern _toPattern(String glob) {
+		StringBundler sb = new StringBundler("^");
+
+		for (int i = 0; i < glob.length(); i++) {
+			char c = glob.charAt(i);
+
+			if (c == '*') {
+				sb.append("[^/]*");
+
+				while (((i + 1) < glob.length()) &&
+					   (glob.charAt(i + 1) == '*')) {
+
+					i++;
+				}
+			}
+			else if ("\\.+?()[]{}^$|".indexOf(c) >= 0) {
+				sb.append('\\');
+				sb.append(c);
+			}
+			else {
+				sb.append(c);
+			}
+		}
+
+		sb.append('$');
+
+		return Pattern.compile(sb.toString());
 	}
 
 	private List<String> _toResponseGrantTypes(List<String> allowedGrantTypes) {

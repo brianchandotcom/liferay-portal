@@ -150,7 +150,7 @@ describe('NewSpace', () => {
 			})
 		);
 
-		await userEvent.click(screen.getByRole('option', {name: 'purple'}));
+		await userEvent.click(screen.getByRole('option', {name: 'indigo'}));
 
 		await userEvent.click(
 			screen.getByRole('button', {

@@ -217,10 +217,11 @@ public class ViewHomeRecentAssetsFilesSectionDisplayContextTest
 	@Override
 	protected String getFilterString() {
 		return StringBundler.concat(
+			"(cmsSection eq 'contents' or cmsSection eq 'files') and ",
 			"objectDefinitionExternalReferenceCode ne '",
 			ObjectEntryFolderConstants.
 				EXTERNAL_REFERENCE_CODE_OBJECT_ENTRY_FOLDER,
-			"' and (cmsSection eq 'contents' or cmsSection eq 'files')");
+			"'");
 	}
 
 	@Override

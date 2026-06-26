@@ -779,6 +779,12 @@
 		},
 		{
 			"properties": {
+				"automaticFriendlyURLConflictResolutionEnabled": {
+					"default": false,
+					"description": "Enable this mode to automatically resolve duplicate friendly URL conflicts.",
+					"title": "Automatic Resolution for Duplicate Friendly URL Conflicts",
+					"type": "boolean"
+				},
 				"cleanUpCTSContentData": {
 					"default": false,
 					"description": "Enable this to remove change tracking store content immediately after a publication publishes.",
@@ -2267,6 +2273,13 @@
 					"description": "Set this to true to index all article versions. Set this to false to index only the last indexable version.",
 					"title": "Index All Article Versions Enabled",
 					"type": "boolean"
+				},
+				"journalArticleCheckLimit": {
+					"default": 100,
+					"description": "Set the maximum number of articles to check.",
+					"min": 1,
+					"title": "Journal Article Check Limit",
+					"type": "number"
 				},
 				"journalArticleExportImportProcessorCacheEnabled": {
 					"default": true,
@@ -4707,6 +4720,32 @@
 			"title": "llms.txt"
 		},
 		{
+			"description": "Control how virtual hosts restrict access to sites.",
+			"properties": {
+				"allowDefaultInstanceURLBypass": {
+					"default": false,
+					"description": "When strict virtual host mode is enabled, still allow access to sites through the default instance URL.",
+					"title": "Allow Default Instance URL Bypass",
+					"type": "boolean"
+				},
+				"pid": {
+					"const": "com.liferay.site.internal.configuration.SiteVirtualHostConfiguration",
+					"description": "Control how virtual hosts restrict access to sites.",
+					"title": "Virtual Host Restrictions"
+				},
+				"strictModeEnabled": {
+					"default": false,
+					"description": "When enabled, a site that has a virtual host is reachable only through that virtual host.",
+					"title": "Strict Virtual Host Mode Enabled",
+					"type": "boolean"
+				}
+			},
+			"required": [
+				"pid"
+			],
+			"title": "Virtual Host Restrictions"
+		},
+		{
 			"properties": {
 				"companySitemapGroupIds": {
 					"default": "",
@@ -5106,6 +5145,7 @@
 				"com.liferay.sharing.internal.configuration.SharingCompanyConfiguration",
 				"com.liferay.site.cms.site.initializer.configuration.BulkActionTaskConfiguration",
 				"com.liferay.site.internal.configuration.LLMSCompanyConfiguration",
+				"com.liferay.site.internal.configuration.SiteVirtualHostConfiguration",
 				"com.liferay.site.internal.configuration.SitemapCompanyConfiguration",
 				"com.liferay.social.activity.internal.configuration.SocialActivityCompanyConfiguration",
 				"com.liferay.staging.configuration.StagingConfiguration",

@@ -24,6 +24,7 @@ import {closeSessions} from './utils/sessions';
 const test = mergeTests(
 	apiHelpersTest,
 	featureFlagsTest({
+		'LPD-76864': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
 	isolatedChannelTest,

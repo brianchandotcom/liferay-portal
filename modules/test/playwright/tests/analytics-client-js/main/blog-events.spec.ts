@@ -22,6 +22,7 @@ const test = mergeTests(
 	apiHelpersTest,
 	dataApiHelpersTest,
 	featureFlagsTest({
+		'LPD-76864': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
 	isolatedChannelTest,

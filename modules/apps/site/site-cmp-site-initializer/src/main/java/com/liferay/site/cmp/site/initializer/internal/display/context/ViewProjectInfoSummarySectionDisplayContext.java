@@ -40,14 +40,14 @@ public class ViewProjectInfoSummarySectionDisplayContext
 
 	public Map<String, Object> getProperties() throws Exception {
 		return HashMapBuilder.<String, Object>put(
-			"funnelStages", _getAssetCategoryNames("L_CMP_FUNNEL_STAGE")
+			"funnelStages", _getAssetCategoryTitles("L_CMP_FUNNEL_STAGE")
 		).put(
 			"manager",
 			_getUserInfoMap(
 				GetterUtil.getLong(
 					getFieldValue("r_userToCMPProjectManager_userId")))
 		).put(
-			"personas", _getAssetCategoryNames("L_CMP_PERSONAS")
+			"personas", _getAssetCategoryTitles("L_CMP_PERSONAS")
 		).put(
 			"projectId", objectEntry.getObjectEntryId()
 		).put(
@@ -60,7 +60,7 @@ public class ViewProjectInfoSummarySectionDisplayContext
 		).build();
 	}
 
-	private List<String> _getAssetCategoryNames(
+	private List<String> _getAssetCategoryTitles(
 		String assetVocabularyExternalReferenceCode) {
 
 		AssetVocabulary assetVocabulary =

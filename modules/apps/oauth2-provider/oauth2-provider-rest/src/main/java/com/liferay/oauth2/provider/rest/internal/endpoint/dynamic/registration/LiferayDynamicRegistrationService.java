@@ -191,12 +191,6 @@ public class LiferayDynamicRegistrationService
 		clientRegistration.setApplicationType(
 			_getApplicationType(clientRegistration));
 
-		List<String> redirectUris = clientRegistration.getRedirectUris();
-
-		if (redirectUris != null) {
-			client.setRedirectUris(redirectUris);
-		}
-
 		Map<String, String> properties = client.getProperties();
 
 		properties.put(
@@ -248,6 +242,12 @@ public class LiferayDynamicRegistrationService
 
 		if (clientUri != null) {
 			client.setApplicationWebUri(clientUri);
+		}
+
+		List<String> redirectUris = clientRegistration.getRedirectUris();
+
+		if (redirectUris != null) {
+			client.setRedirectUris(redirectUris);
 		}
 
 		List<String> resourceUris = clientRegistration.getResourceUris();
@@ -500,13 +500,8 @@ public class LiferayDynamicRegistrationService
 	}
 
 	private String _getApplicationType(ClientRegistration clientRegistration) {
-		String applicationType = clientRegistration.getApplicationType();
-
-		if (applicationType == null) {
-			applicationType = "web";
-		}
-
-		return applicationType;
+		return GetterUtil.getString(
+			clientRegistration.getApplicationType(), "web");
 	}
 
 	private JSONObject _getBaseAdditionalInfoJSONObject() {

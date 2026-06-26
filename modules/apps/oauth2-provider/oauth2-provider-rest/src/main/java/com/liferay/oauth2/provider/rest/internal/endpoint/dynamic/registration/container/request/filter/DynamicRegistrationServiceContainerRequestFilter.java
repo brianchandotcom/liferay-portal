@@ -393,7 +393,7 @@ public class DynamicRegistrationServiceContainerRequestFilter
 
 			forwardedFor = forwardedFor.trim();
 
-			if (!forwardedFor.isEmpty()) {
+			if (!Validator.isBlank(forwardedFor)) {
 				return forwardedFor;
 			}
 		}
@@ -539,12 +539,12 @@ public class DynamicRegistrationServiceContainerRequestFilter
 					continue;
 				}
 
-				for (String part : allowedHost.split("\\s+")) {
-					if (Validator.isBlank(part)) {
+				for (String host : allowedHost.split("\\s+")) {
+					if (Validator.isBlank(host)) {
 						continue;
 					}
 
-					normalizedAllowedHosts.add(_normalizeHost(part));
+					normalizedAllowedHosts.add(_normalizeHost(host));
 				}
 			}
 		}
@@ -553,9 +553,7 @@ public class DynamicRegistrationServiceContainerRequestFilter
 			return;
 		}
 
-		if (normalizedAllowedHosts.isEmpty() ||
-			!normalizedAllowedHosts.contains(clientHost)) {
-
+		if (!normalizedAllowedHosts.contains(clientHost)) {
 			String message =
 				"OAuth 2 application open registration is not allowed for " +
 					"host: " + clientHost;

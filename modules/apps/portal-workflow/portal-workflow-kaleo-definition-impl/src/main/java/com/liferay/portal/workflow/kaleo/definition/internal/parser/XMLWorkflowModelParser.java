@@ -113,7 +113,7 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 		_validate = GetterUtil.getBoolean(properties.get("validating"), true);
 	}
 
-	private String _normalizeJSONArrayString(String json) throws Exception {
+	private String _normalizeJSONArrayJSON(String json) throws Exception {
 		if (Validator.isNull(json)) {
 			return json;
 		}
@@ -279,14 +279,14 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 
 		Set<Setting> settings = new HashSet<>();
 
-		String inputVariables = _normalizeJSONArrayString(
+		String inputVariables = _normalizeJSONArrayJSON(
 			aiDecisionElement.elementTextTrim("input-variables"));
 
 		if (inputVariables != null) {
 			settings.add(new Setting("inputVariables", inputVariables));
 		}
 
-		String outputVariables = _normalizeJSONArrayString(
+		String outputVariables = _normalizeJSONArrayJSON(
 			aiDecisionElement.elementTextTrim("output-variables"));
 
 		if (outputVariables != null) {
@@ -302,7 +302,7 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 			settings.add(new Setting("rag", rag));
 		}
 
-		String tools = _normalizeJSONArrayString(
+		String tools = _normalizeJSONArrayJSON(
 			aiDecisionElement.elementTextTrim("tools"));
 
 		if (tools != null) {
@@ -503,14 +503,14 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 			settings.add(new Setting("httpMethod", httpMethod));
 		}
 
-		String inputVariables = _normalizeJSONArrayString(
+		String inputVariables = _normalizeJSONArrayJSON(
 			httpRequestElement.elementTextTrim("input-variables"));
 
 		if (inputVariables != null) {
 			settings.add(new Setting("inputVariables", inputVariables));
 		}
 
-		String outputVariables = _normalizeJSONArrayString(
+		String outputVariables = _normalizeJSONArrayJSON(
 			httpRequestElement.elementTextTrim("output-variables"));
 
 		if (outputVariables != null) {
@@ -610,14 +610,14 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 
 		Set<Setting> settings = new HashSet<>();
 
-		String inputVariables = _normalizeJSONArrayString(
+		String inputVariables = _normalizeJSONArrayJSON(
 			llmElement.elementTextTrim("input-variables"));
 
 		if (inputVariables != null) {
 			settings.add(new Setting("inputVariables", inputVariables));
 		}
 
-		String outputVariables = _normalizeJSONArrayString(
+		String outputVariables = _normalizeJSONArrayJSON(
 			llmElement.elementTextTrim("output-variables"));
 
 		if (outputVariables != null) {
@@ -633,7 +633,7 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 			settings.add(new Setting("rag", rag));
 		}
 
-		String tools = _normalizeJSONArrayString(
+		String tools = _normalizeJSONArrayJSON(
 			llmElement.elementTextTrim("tools"));
 
 		if (tools != null) {
@@ -823,7 +823,7 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 
 		Set<Setting> settings = new HashSet<>();
 
-		String inputVariables = _normalizeJSONArrayString(
+		String inputVariables = _normalizeJSONArrayJSON(
 			serviceElement.elementTextTrim("input-variables"));
 
 		if (inputVariables != null) {
@@ -835,7 +835,7 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 				"javaDelegate",
 				serviceElement.elementTextTrim("java-delegate")));
 
-		String outputVariables = _normalizeJSONArrayString(
+		String outputVariables = _normalizeJSONArrayJSON(
 			serviceElement.elementTextTrim("output-variables"));
 
 		if (outputVariables != null) {

@@ -106,7 +106,7 @@ public class SystemFDSSerializerTest {
 			_FDS_NAME, _getHttpServletRequest(_otherUser.getUserId()));
 
 		Assert.assertNull(
-			_findSharedItemJSONObject(
+			_getItemJSONObject(
 				jsonArray, _objectEntry.getObjectEntryId()));
 	}
 
@@ -117,7 +117,7 @@ public class SystemFDSSerializerTest {
 		JSONArray jsonArray = _fdsSerializer.serializeSnapshots(
 			_FDS_NAME, _getHttpServletRequest(_memberUser.getUserId()));
 
-		JSONObject itemJSONObject = _findSharedItemJSONObject(
+		JSONObject itemJSONObject = _getItemJSONObject(
 			jsonArray, _objectEntry.getObjectEntryId());
 
 		Assert.assertEquals(_LABEL, itemJSONObject.getString("label"));
@@ -141,7 +141,7 @@ public class SystemFDSSerializerTest {
 				TestPropsValues.getGroupId(), TestPropsValues.getUserId()));
 	}
 
-	private JSONObject _findSharedItemJSONObject(
+	private JSONObject _getItemJSONObject(
 		JSONArray jsonArray, long objectEntryId) {
 
 		for (int i = 0; i < jsonArray.length(); i++) {

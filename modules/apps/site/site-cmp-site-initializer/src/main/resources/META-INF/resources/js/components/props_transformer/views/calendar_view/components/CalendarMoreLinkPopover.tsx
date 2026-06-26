@@ -9,7 +9,7 @@ import {Immutable} from '@liferay/frontend-js-state-web';
 import {AssigneeAvatar} from '@liferay/object-dynamic-data-mapping-form-field-type';
 import classNames from 'classnames';
 import {navigate} from 'frontend-js-web';
-import React from 'react';
+import React, {useMemo} from 'react';
 
 import getActionURL from '../../../../../utils/getActionURL';
 import isOverdue from '../../../../../utils/isOverdue';
@@ -40,7 +40,7 @@ export default function CalendarMoreLinkPopover({
 	onClose,
 	tasks,
 }: CalendarMoreLinkPopoverProps) {
-	const sortedTasks = sortTasksByPriority(tasks);
+	const sortedTasks = useMemo(() => sortTasksByPriority(tasks), [tasks]);
 
 	const handleViewTask = (task: Immutable<ITaskObjectEntry>) => {
 		const viewURL = getActionURL({

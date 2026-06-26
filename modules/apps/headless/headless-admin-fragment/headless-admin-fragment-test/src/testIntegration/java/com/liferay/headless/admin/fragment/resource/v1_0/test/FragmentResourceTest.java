@@ -24,12 +24,15 @@ import com.liferay.headless.admin.fragment.client.pagination.Page;
 import com.liferay.headless.admin.fragment.client.pagination.Pagination;
 import com.liferay.headless.admin.fragment.client.problem.Problem;
 import com.liferay.headless.admin.fragment.client.resource.v1_0.FragmentResource;
+import com.liferay.headless.batch.engine.client.http.HttpInvoker;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -311,6 +314,24 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 		fragment.setMarketplace(false);
 
 		return fragment;
+	}
+
+	@Override
+	protected void testBatchEngineDeleteImportTask_deleteFragment(
+			int expectedStatusCode, String externalReferenceCode,
+			String... parameters)
+		throws Exception {
+
+		_deleteFragmentsBatch(
+			expectedStatusCode,
+			new JSONObject[] {
+				JSONUtil.put(
+					"externalReferenceCode", () -> externalReferenceCode
+				).put(
+					"type", "BasicFragment"
+				)
+			},
+			parameters);
 	}
 
 	@Override
@@ -690,6 +711,38 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 		Assert.assertTrue(contentType.startsWith("image/"));
 	}
 
+	private void _deleteFragmentsBatch(
+			int expectedStatusCode, JSONObject[] fragmentJSONObjects,
+			String... parameters)
+		throws Exception {
+
+		User user = UserTestUtil.getAdminUser(testCompany.getCompanyId());
+
+		ImportTaskResource importTaskResource = ImportTaskResource.builder(
+		).authentication(
+			user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(),
+			PortalUtil.getPortalServerPort(false), "http"
+		).parameters(
+			parameters
+		).build();
+
+		HttpInvoker.HttpResponse httpResponse =
+			importTaskResource.deleteImportTaskHttpResponse(
+				"com.liferay.headless.admin.fragment.dto.v1_0.Fragment", null,
+				null, null, null,
+				JSONUtil.putAll((Object[])fragmentJSONObjects));
+
+		Assert.assertEquals(expectedStatusCode, httpResponse.getStatusCode());
+
+		if (expectedStatusCode == 200) {
+			waitForFinish(
+				"COMPLETED",
+				JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+		}
+	}
+
 	private String _exportFragmentsToJSON(String siteExternalReferenceCode)
 		throws Exception {
 
@@ -1009,8 +1062,9 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 	}
 
 	private void _testBatchEngineDeleteImportTask() throws Exception {
-		Fragment fragment1 = _postSiteFragmentSetFragment(randomFragment());
-		Fragment fragment2 = _postSiteFragmentSetFragment(randomFragment());
+		Fragment basicFragment = _postSiteFragmentSetFragment(randomFragment());
+		Fragment formFragment = _postSiteFragmentSetFragment(
+			_randomFormFragment());
 
 		try (SafeCloseable safeCloseable =
 				LazyReferencingTestUtil.setLazyReferencingWithSafeCloseable(
@@ -1027,17 +1081,38 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 					Http.Method.POST));
 		}
 
-		testBatchEngineDeleteImportTask_deleteFragment(
-			200, fragment2.getExternalReferenceCode(),
+		_assertFragmentEntry(basicFragment, irrelevantGroup);
+		_assertFormFragmentEntry(
+			new FieldType[] {FieldType.TEXT}, formFragment, irrelevantGroup);
+
+		_deleteFragmentsBatch(
+			200,
+			new JSONObject[] {
+				JSONUtil.put(
+					"externalReferenceCode",
+					basicFragment.getExternalReferenceCode()
+				).put(
+					"type", "BasicFragment"
+				),
+				JSONUtil.put(
+					"externalReferenceCode",
+					formFragment.getExternalReferenceCode()
+				).put(
+					"type", "FormFragment"
+				)
+			},
 			"siteExternalReferenceCode",
 			irrelevantGroup.getExternalReferenceCode());
-
-		_assertFragmentEntry(fragment1, irrelevantGroup);
 
 		Assert.assertNull(
 			_fragmentEntryLocalService.
 				fetchFragmentEntryByExternalReferenceCode(
-					fragment2.getExternalReferenceCode(),
+					basicFragment.getExternalReferenceCode(),
+					irrelevantGroup.getGroupId()));
+		Assert.assertNull(
+			_fragmentEntryLocalService.
+				fetchFragmentEntryByExternalReferenceCode(
+					formFragment.getExternalReferenceCode(),
 					irrelevantGroup.getGroupId()));
 	}
 

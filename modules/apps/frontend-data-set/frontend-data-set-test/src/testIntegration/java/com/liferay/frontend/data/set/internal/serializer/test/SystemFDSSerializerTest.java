@@ -81,8 +81,7 @@ public class SystemFDSSerializerTest {
 				getObjectDefinitionByExternalReferenceCode(
 					"L_DATA_SET_SNAPSHOT", TestPropsValues.getCompanyId());
 
-		_objectEntry = _addObjectEntry(
-			_FDS_NAME, _LABEL, objectDefinition);
+		_objectEntry = _addObjectEntry(_FDS_NAME, _LABEL, objectDefinition);
 
 		_sharingEntry = _sharingEntryLocalService.addSharingEntry(
 			null, TestPropsValues.getUserId(), 0, _userGroup.getUserGroupId(),
@@ -112,8 +111,7 @@ public class SystemFDSSerializerTest {
 			_FDS_NAME, _getHttpServletRequest(_otherUser.getUserId()));
 
 		Assert.assertNull(
-			_getItemJSONObject(
-				jsonArray, _objectEntry.getObjectEntryId()));
+			_getItemJSONObject(jsonArray, _objectEntry.getObjectEntryId()));
 	}
 
 	private ObjectEntry _addObjectEntry(
@@ -132,6 +130,20 @@ public class SystemFDSSerializerTest {
 			).build(),
 			ServiceContextTestUtil.getServiceContext(
 				TestPropsValues.getGroupId(), TestPropsValues.getUserId()));
+	}
+
+	private HttpServletRequest _getHttpServletRequest(long userId)
+		throws Exception {
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.COMPANY_ID, TestPropsValues.getCompanyId());
+		mockHttpServletRequest.setAttribute(WebKeys.LOCALE, LocaleUtil.US);
+		mockHttpServletRequest.setAttribute(WebKeys.USER_ID, userId);
+
+		return mockHttpServletRequest;
 	}
 
 	private JSONObject _getItemJSONObject(
@@ -158,29 +170,15 @@ public class SystemFDSSerializerTest {
 		return null;
 	}
 
-	private HttpServletRequest _getHttpServletRequest(long userId)
-		throws Exception {
+	private static final String _FDS_NAME = RandomTestUtil.randomString();
 
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
-		mockHttpServletRequest.setAttribute(
-			WebKeys.COMPANY_ID, TestPropsValues.getCompanyId());
-		mockHttpServletRequest.setAttribute(WebKeys.LOCALE, LocaleUtil.US);
-		mockHttpServletRequest.setAttribute(WebKeys.USER_ID, userId);
-
-		return mockHttpServletRequest;
-	}
+	private static final String _LABEL = RandomTestUtil.randomString();
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
 
-	private static final String _FDS_NAME = RandomTestUtil.randomString();
-
 	@Inject(filter = "frontend.data.set.serializer.type=system")
 	private FDSSerializer _fdsSerializer;
-
-	private static final String _LABEL = RandomTestUtil.randomString();
 
 	@DeleteAfterTestRun
 	private User _memberUser;

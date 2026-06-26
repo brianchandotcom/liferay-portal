@@ -100,7 +100,7 @@ describe('Attributes', () => {
 
 		expect(screen.getByText('products')).toBeInTheDocument();
 
-		expect(screen.getByText('order')).toBeInTheDocument();
+		expect(screen.getByText('order[buy]')).toBeInTheDocument();
 	});
 
 	it('renders Attributes with values for account, order, people, product', async () => {
@@ -131,9 +131,13 @@ describe('Attributes', () => {
 			/selected/i
 		);
 
-		expect(await screen.findByRole('order')).toHaveTextContent(/order0/i);
+		expect(await screen.findByRole('order[buy]')).toHaveTextContent(
+			/order\[buy\]0/i
+		);
 
-		expect(await screen.findByRole('order')).toHaveTextContent(/selected/i);
+		expect(await screen.findByRole('order[buy]')).toHaveTextContent(
+			/selected/i
+		);
 	});
 
 	it('renders Attributes with select buttons', async () => {

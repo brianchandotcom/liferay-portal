@@ -59,8 +59,8 @@ describe('ContentEditorSidePanel', () => {
 	it('renders ContentEditorSidePanel', () => {
 		renderComponent();
 
-		['general', 'comments', 'schedule', 'categorization'].forEach((name) =>
-			expect(screen.getByTitle(name)).toBeInTheDocument()
+		['general', 'comments', 'schedule[noun]', 'categorization'].forEach(
+			(name) => expect(screen.getByTitle(name)).toBeInTheDocument()
 		);
 	});
 
@@ -180,10 +180,10 @@ describe('ContentEditorSidePanel', () => {
 	it('persists the schedule field value when checking Never Expire and switching tabs', async () => {
 		renderComponent();
 
-		await userEvent.click(screen.getByLabelText('schedule'));
+		await userEvent.click(screen.getByLabelText('schedule[noun]'));
 
 		await waitFor(() => {
-			expect(screen.getByText('schedule')).toBeInTheDocument();
+			expect(screen.getByText('schedule[noun]')).toBeInTheDocument();
 		});
 
 		const expireCheckbox = screen.getAllByLabelText('never-expire')[0];
@@ -202,10 +202,10 @@ describe('ContentEditorSidePanel', () => {
 			expect(screen.getByText('general')).toBeInTheDocument();
 		});
 
-		await userEvent.click(screen.getByLabelText('schedule'));
+		await userEvent.click(screen.getByLabelText('schedule[noun]'));
 
 		await waitFor(() => {
-			expect(screen.getByText('schedule')).toBeInTheDocument();
+			expect(screen.getByText('schedule[noun]')).toBeInTheDocument();
 			expect(expireCheckbox).toBeChecked();
 			expect(
 				screen.getByRole('textbox', {name: 'expiration-date'})

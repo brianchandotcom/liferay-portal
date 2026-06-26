@@ -307,16 +307,6 @@ public interface LayoutSetLocalService
 			String layoutSetPrototypeUuid)
 		throws PortalException;
 
-	/**
-	 * Updates the state of the layout set prototype link.
-	 *
-	 * @param groupId the primary key of the group
-	 * @param privateLayout whether the layout set is private to the group
-	 * @param layoutSetPrototypeLinkEnabled whether the layout set prototype is
-	 link enabled
-	 * @param layoutSetPrototypeUuid the uuid of the layout set prototype to
-	 link with
-	 */
 	public void updateLayoutSetPrototypeLinkEnabled(
 			long groupId, boolean privateLayout,
 			boolean layoutSetPrototypeLinkEnabled,
@@ -374,4 +364,4 @@ public interface LayoutSetLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-501998919
+// LIFERAY-SERVICE-BUILDER-HASH:-1798830565

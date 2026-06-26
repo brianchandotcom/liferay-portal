@@ -390,16 +390,6 @@ public class LayoutSetLocalServiceWrapper
 			layoutSetPrototypeLinkEnabled, layoutSetPrototypeUuid);
 	}
 
-	/**
-	 * Updates the state of the layout set prototype link.
-	 *
-	 * @param groupId the primary key of the group
-	 * @param privateLayout whether the layout set is private to the group
-	 * @param layoutSetPrototypeLinkEnabled whether the layout set prototype is
-	 link enabled
-	 * @param layoutSetPrototypeUuid the uuid of the layout set prototype to
-	 link with
-	 */
 	@Override
 	public void updateLayoutSetPrototypeLinkEnabled(
 			long groupId, boolean privateLayout,
@@ -526,4 +516,4 @@ public class LayoutSetLocalServiceWrapper
 	private LayoutSetLocalService _layoutSetLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1909598873
+// LIFERAY-SERVICE-BUILDER-HASH:-146223509

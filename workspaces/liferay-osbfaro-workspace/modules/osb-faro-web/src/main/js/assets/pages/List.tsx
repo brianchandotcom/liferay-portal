@@ -159,6 +159,17 @@ const List = () => {
 	const filters = useMemo(
 		() => [
 			{
+				apiURL: `/o/faro/contacts/${groupId}/account/search?channelId=${channelId}&filter=(rangeKey eq '${rangeSelectors.rangeKey}')`,
+				entityFieldType: 'string',
+				id: 'accountIds',
+				itemKey: 'id',
+				itemLabel: 'accountName',
+				label: Liferay.Language.get('account'),
+				multiple: true,
+				searchable: true,
+				type: 'selection',
+			},
+			{
 				apiURL: `/o/faro/contacts/${groupId}/asset-summary-types?channelId=${channelId}&${rangeSelectorParams}`,
 				entityFieldType: 'string',
 				id: 'assetType',

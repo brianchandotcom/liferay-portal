@@ -355,6 +355,45 @@ describe('List', () => {
 		});
 	});
 
+	describe('account filter', () => {
+		const getFilters = () =>
+			JSON.parse(screen.getByTestId('fds-filters').textContent);
+
+		const getAccountFilter = () => {
+			renderList();
+
+			return getFilters().find(
+				(filter: {id: string}) => filter.id === 'accountIds'
+			);
+		};
+
+		it('should pass the account filter to FrontendDataSet', () => {
+			expect(getAccountFilter()).toBeDefined();
+		});
+
+		it('should set the account filter as the first filter', () => {
+			renderList();
+
+			expect(getFilters()[0].id).toBe('accountIds');
+		});
+
+		it('should use the account search endpoint in the account filter apiURL', () => {
+			expect(getAccountFilter().apiURL).toContain('account/search');
+		});
+
+		it('should include the channelId in the account filter apiURL', () => {
+			expect(getAccountFilter().apiURL).toContain('channelId=123');
+		});
+
+		it('should set itemKey to "id" in the account filter', () => {
+			expect(getAccountFilter().itemKey).toBe('id');
+		});
+
+		it('should set itemLabel to "accountName" in the account filter', () => {
+			expect(getAccountFilter().itemLabel).toBe('accountName');
+		});
+	});
+
 	describe('initial range selector state', () => {
 		it('should default to Last30Days when no query string is present', () => {
 			renderList();

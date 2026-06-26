@@ -82,7 +82,7 @@ public class BuildBuildsMVCActionCommand extends BaseMVCActionCommand {
 				StringUtil.toUpperCase(patcherAccount.getAccountEntryCode()),
 				patcherBuild.getSupportTicket(),
 				PatcherBuildUtil.isSmokeTestOnly(patcherBuild),
-				PatcherBuildUtil.isMergeOnly(patcherBuild));
+				PatcherBuildUtil.isMergeOnly(patcherBuild), false);
 		}
 		else {
 			JenkinsUtil.sendDistJenkinsRequest(

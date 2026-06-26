@@ -93,7 +93,7 @@ public class UpdateBuildsMVCActionCommand extends BaseMVCActionCommand {
 
 		PatcherBuildUtil.savePatcherBuild(
 			themeDisplay.getUser(), patcherBuild, accountEntryCode,
-			supportTicket, smokeTestOnly, mergeOnly);
+			supportTicket, smokeTestOnly, mergeOnly, false);
 	}
 
 	@Reference

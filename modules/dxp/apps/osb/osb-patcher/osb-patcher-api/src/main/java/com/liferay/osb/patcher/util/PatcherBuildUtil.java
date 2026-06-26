@@ -1381,16 +1381,6 @@ public class PatcherBuildUtil {
 
 	public static void savePatcherBuild(
 			User user, PatcherBuild patcherBuild, String accountEntryCode,
-			String supportTicket, boolean smokeTestOnly, boolean mergeOnly)
-		throws Exception {
-
-		savePatcherBuild(
-			user, patcherBuild, accountEntryCode, supportTicket, smokeTestOnly,
-			mergeOnly, false);
-	}
-
-	public static void savePatcherBuild(
-			User user, PatcherBuild patcherBuild, String accountEntryCode,
 			String supportTicket, boolean smokeTestOnly, boolean mergeOnly,
 			boolean useExistingHotfix)
 		throws Exception {

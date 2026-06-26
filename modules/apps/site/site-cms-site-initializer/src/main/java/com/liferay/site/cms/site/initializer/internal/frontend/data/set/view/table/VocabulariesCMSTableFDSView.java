@@ -36,7 +36,7 @@ public class VocabulariesCMSTableFDSView extends BaseCMSTableFDSView {
 			fdsTableSchemaField -> fdsTableSchemaField.setActionId(
 				"edit"
 			).setContentRenderer(
-				"actionLink"
+				"simpleActionLinkTableCellRenderer"
 			).setSortable(
 				true
 			)

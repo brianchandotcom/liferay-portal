@@ -49,7 +49,7 @@ public class KubernetesJobService {
 			_namespace
 		).resource(
 			new JobBuilder(
-				_jobTemplate
+				_job
 			).editMetadata(
 			).addToLabels(
 				"account-entry-id", String.valueOf(accountEntryId)
@@ -113,7 +113,7 @@ public class KubernetesJobService {
 		try (InputStream inputStream = clazz.getResourceAsStream(
 				"dependencies/crawler-job-template.yaml")) {
 
-			_jobTemplate = Serialization.unmarshal(inputStream, Job.class);
+			_job = Serialization.unmarshal(inputStream, Job.class);
 		}
 		catch (IOException ioException) {
 			throw new IllegalStateException(
@@ -153,7 +153,7 @@ public class KubernetesJobService {
 	@Value("${liferay.seo.studio.crawler.k8s.image.name}")
 	private String _imageName;
 
-	private Job _jobTemplate;
+	private Job _job;
 	private final KubernetesClient _kubernetesClient =
 		new KubernetesClientBuilder(
 		).build();

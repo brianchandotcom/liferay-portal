@@ -32,7 +32,7 @@ export default function OnPage({
 	const handleSelectInsight = (externalReferenceCode: string) => {
 		window.location.assign(
 			`${insightDetailsURL}?backURL=${encodeURIComponent(
-				window.location.href
+				window.location.pathname + window.location.search
 			)}&objectEntryExternalReferenceCode=${externalReferenceCode}`
 		);
 	};

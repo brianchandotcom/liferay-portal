@@ -10,7 +10,7 @@ import com.liferay.portal.kernel.security.auth.AccessControlContext;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifier;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifierResult;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.vulcan.internal.template.servlet.RESTClientHttpServletRequestWrapper;
+import com.liferay.portal.vulcan.internal.http.VulcanRequestForwarderHttpServletRequestWrapper;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -22,10 +22,10 @@ import org.osgi.service.component.annotations.Component;
  * @author Alejandro Tardín
  */
 @Component(
-	property = "auth.verifier.RESTClientHttpServletRequestWrapperAuthVerifier.urls.includes=/o/*",
+	property = "auth.verifier.VulcanRequestForwarderHttpServletRequestWrapperAuthVerifier.urls.includes=/o/*",
 	service = AuthVerifier.class
 )
-public class RESTClientHttpServletRequestWrapperAuthVerifier
+public class VulcanRequestForwarderHttpServletRequestWrapperAuthVerifier
 	implements AuthVerifier {
 
 	@Override
@@ -45,7 +45,7 @@ public class RESTClientHttpServletRequestWrapperAuthVerifier
 			accessControlContext.getRequest();
 
 		Object value = httpServletRequest.getAttribute(
-			RESTClientHttpServletRequestWrapper.class.getName());
+			VulcanRequestForwarderHttpServletRequestWrapper.class.getName());
 
 		if (value == null) {
 			return authVerifierResult;

@@ -5,27 +5,15 @@
 
 package com.liferay.portal.vulcan.internal.template;
 
-import com.liferay.petra.io.unsync.UnsyncStringWriter;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.security.access.control.AccessControlUtil;
-import com.liferay.portal.kernel.security.auth.AccessControlContext;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.servlet.PipingServletResponse;
-import com.liferay.portal.kernel.servlet.ServletContextPool;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.template.TemplateContextContributor;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.vulcan.internal.template.servlet.RESTClientHttpResponse;
-import com.liferay.portal.vulcan.internal.template.servlet.RESTClientHttpServletRequestWrapper;
+import com.liferay.portal.vulcan.http.VulcanRequestForwarder;
 
-import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 
 import java.util.Map;
 import java.util.Objects;
@@ -74,58 +62,35 @@ public class RESTClientTemplateContextContributor
 		}
 
 		private Object _get(String path) throws Exception {
-			UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
+			VulcanRequestForwarder.Response response =
+				_vulcanRequestForwarder.forward(
+					_httpServletRequest,
+					new VulcanRequestForwarder.Request() {
 
-			AccessControlContext accessControlContext =
-				AccessControlUtil.getAccessControlContext();
+						@Override
+						public String getPath() {
+							return path;
+						}
 
-			HttpServletResponse httpServletResponse = new PipingServletResponse(
-				new RESTClientHttpResponse(), unsyncStringWriter);
+						@Override
+						public User getUser() {
+							return (User)_contextObjects.get("user");
+						}
 
-			ServletContext servletContext = _getServletContext();
-
-			RequestDispatcher requestDispatcher =
-				servletContext.getRequestDispatcher(Portal.PATH_MODULE + path);
-
-			PermissionChecker permissionChecker =
-				PermissionThreadLocal.getPermissionChecker();
-
-			try {
-				AccessControlUtil.setAccessControlContext(null);
-
-				requestDispatcher.forward(
-					new RESTClientHttpServletRequestWrapper(
-						_contextObjects, _httpServletRequest, path),
-					httpServletResponse);
-			}
-			finally {
-				AccessControlUtil.setAccessControlContext(accessControlContext);
-				PermissionThreadLocal.setPermissionChecker(permissionChecker);
-			}
-
-			String responseString = unsyncStringWriter.toString();
+					});
 
 			if (Objects.equals(
-					httpServletResponse.getContentType(),
-					ContentTypes.APPLICATION_JSON)) {
+					response.getContentType(), ContentTypes.APPLICATION_JSON)) {
 
-				return _jsonFactory.looseDeserialize(responseString);
+				return _jsonFactory.looseDeserialize(response.getContent());
 			}
 
-			return responseString;
+			return response.getContent();
 		}
 
 		private final Map<String, Object> _contextObjects;
 		private final HttpServletRequest _httpServletRequest;
 
-	}
-
-	private ServletContext _getServletContext() {
-		if (_servletContext == null) {
-			_servletContext = ServletContextPool.get(StringPool.BLANK);
-		}
-
-		return _servletContext;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -134,6 +99,7 @@ public class RESTClientTemplateContextContributor
 	@Reference
 	private JSONFactory _jsonFactory;
 
-	private ServletContext _servletContext;
+	@Reference
+	private VulcanRequestForwarder _vulcanRequestForwarder;
 
 }

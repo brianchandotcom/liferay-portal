@@ -503,7 +503,8 @@ public class MBEntriesManagementToolbarDisplayContext {
 					navigationPortletURL, "entriesNavigation", "categories");
 
 				dropdownItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "categories"));
+					LanguageUtil.get(
+						_httpServletRequest, "categories[message-board]"));
 			}
 		).build();
 	}

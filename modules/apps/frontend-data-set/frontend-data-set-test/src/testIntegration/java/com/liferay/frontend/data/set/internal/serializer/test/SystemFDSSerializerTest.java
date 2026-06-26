@@ -72,17 +72,16 @@ public class SystemFDSSerializerTest {
 	public void setUp() throws Exception {
 		FrontendDataSetTestUtil.initialize(SystemFDSSerializerTest.class);
 
+		_memberUser = UserTestUtil.addUser();
+		_otherUser = UserTestUtil.addUser();
+		_userGroup = UserGroupTestUtil.addUserGroup();
+
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.
 				fetchObjectDefinitionByExternalReferenceCode(
 					"L_DATA_SET_SNAPSHOT", TestPropsValues.getCompanyId());
 
 		Assert.assertNotNull(objectDefinition);
-
-		_memberUser = UserTestUtil.addUser();
-		_otherUser = UserTestUtil.addUser();
-
-		_userGroup = UserGroupTestUtil.addUserGroup();
 
 		_objectEntry = _addSnapshotObjectEntry(
 			_FDS_NAME, _LABEL, objectDefinition);

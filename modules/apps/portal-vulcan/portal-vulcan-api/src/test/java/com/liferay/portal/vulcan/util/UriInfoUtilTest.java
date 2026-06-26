@@ -139,8 +139,8 @@ public class UriInfoUtilTest {
 			_PORT_MIN_INCLUSIVE, _PORT_MAX_INCLUSIVE);
 
 		PropsUtil.set(PropsKeys.WEB_SERVER_HOST, _WEB_SERVER_HOST);
-		PropsUtil.set(PropsKeys.WEB_SERVER_PROTOCOL, Http.HTTP);
 		PropsUtil.set(PropsKeys.WEB_SERVER_HTTP_PORT, String.valueOf(httpPort));
+		PropsUtil.set(PropsKeys.WEB_SERVER_PROTOCOL, Http.HTTP);
 
 		Assert.assertSame(_uriBuilder, UriInfoUtil.getBaseUriBuilder(_uriInfo));
 
@@ -157,9 +157,9 @@ public class UriInfoUtilTest {
 		throws Exception {
 
 		PropsUtil.set(PropsKeys.WEB_SERVER_HOST, _WEB_SERVER_HOST);
-		PropsUtil.set(PropsKeys.WEB_SERVER_PROTOCOL, Http.HTTP);
 		PropsUtil.set(
 			PropsKeys.WEB_SERVER_HTTP_PORT, String.valueOf(Http.HTTP_PORT));
+		PropsUtil.set(PropsKeys.WEB_SERVER_PROTOCOL, Http.HTTP);
 
 		Assert.assertSame(_uriBuilder, UriInfoUtil.getBaseUriBuilder(_uriInfo));
 
@@ -176,9 +176,9 @@ public class UriInfoUtilTest {
 			_PORT_MIN_INCLUSIVE, _PORT_MAX_INCLUSIVE);
 
 		PropsUtil.set(PropsKeys.WEB_SERVER_HOST, _WEB_SERVER_HOST);
-		PropsUtil.set(PropsKeys.WEB_SERVER_PROTOCOL, Http.HTTPS);
 		PropsUtil.set(
 			PropsKeys.WEB_SERVER_HTTPS_PORT, String.valueOf(httpsPort));
+		PropsUtil.set(PropsKeys.WEB_SERVER_PROTOCOL, Http.HTTPS);
 
 		Assert.assertSame(_uriBuilder, UriInfoUtil.getBaseUriBuilder(_uriInfo));
 
@@ -195,9 +195,9 @@ public class UriInfoUtilTest {
 		throws Exception {
 
 		PropsUtil.set(PropsKeys.WEB_SERVER_HOST, _WEB_SERVER_HOST);
-		PropsUtil.set(PropsKeys.WEB_SERVER_PROTOCOL, Http.HTTPS);
 		PropsUtil.set(
 			PropsKeys.WEB_SERVER_HTTPS_PORT, String.valueOf(Http.HTTPS_PORT));
+		PropsUtil.set(PropsKeys.WEB_SERVER_PROTOCOL, Http.HTTPS);
 
 		Assert.assertSame(_uriBuilder, UriInfoUtil.getBaseUriBuilder(_uriInfo));
 
@@ -233,9 +233,9 @@ public class UriInfoUtilTest {
 			_PORT_MIN_INCLUSIVE, _PORT_MAX_INCLUSIVE);
 
 		PropsUtil.set(PropsKeys.WEB_SERVER_HOST, _WEB_SERVER_HOST);
-		PropsUtil.set(PropsKeys.WEB_SERVER_PROTOCOL, Http.HTTPS);
 		PropsUtil.set(
 			PropsKeys.WEB_SERVER_HTTPS_PORT, String.valueOf(Http.HTTPS_PORT));
+		PropsUtil.set(PropsKeys.WEB_SERVER_PROTOCOL, Http.HTTPS);
 
 		_uriBuilder.host(_SPOOFED_HOST);
 		_uriBuilder.port(spoofedPort);

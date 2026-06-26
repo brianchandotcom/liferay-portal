@@ -10,6 +10,7 @@ import com.liferay.oauth.client.persistence.exception.OAuthClientPRLocalMetadata
 import com.liferay.oauth.client.persistence.exception.OAuthClientPRLocalMetadataProtectedResourceURIException;
 import com.liferay.oauth.client.persistence.model.OAuthClientPRLocalMetadata;
 import com.liferay.oauth.client.persistence.service.OAuthClientPRLocalMetadataLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -41,7 +42,7 @@ import java.util.Map;
 
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -63,8 +64,8 @@ public class UpdateOAuthClientPRLocalMetadataMVCActionCommandTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
-	@BeforeClass
-	public static void setUpClass() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 		_company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
 
@@ -100,14 +101,14 @@ public class UpdateOAuthClientPRLocalMetadataMVCActionCommandTest {
 		_testProcessAction(
 			OAuthClientPRLocalMetadataMetadataJSONException.class,
 			HashMapBuilder.put(
+				"authorizationServers",
+				new String[] {RandomTestUtil.randomString()}
+			).put(
 				"protectedResourceURI", new String[] {protectedResourceURI1}
 			).build());
 		_testProcessAction(
 			OAuthClientPRLocalMetadataMetadataJSONException.class,
 			HashMapBuilder.put(
-				"authorizationServers",
-				new String[] {RandomTestUtil.randomString()}
-			).put(
 				"protectedResourceURI", new String[] {protectedResourceURI1}
 			).build());
 
@@ -120,23 +121,17 @@ public class UpdateOAuthClientPRLocalMetadataMVCActionCommandTest {
 		String authorizationServer1 =
 			Http.HTTPS_WITH_SLASH + RandomTestUtil.randomString() + ".com";
 
-		Assert.assertTrue(
-			_updateMVCActionCommand.processAction(
-				_getMockLiferayPortletActionRequest(
-					HashMapBuilder.put(
-						"authorizationServers",
-						new String[] {authorizationServer1}
-					).put(
-						"protectedResourceURI",
-						new String[] {protectedResourceURI1}
-					).put(
-						"resourceName",
-						new String[] {RandomTestUtil.randomString()}
-					).put(
-						"scopesSupported",
-						new String[] {RandomTestUtil.randomString()}
-					).build()),
-				new MockLiferayPortletActionResponse()));
+		_testProcessAction(
+			null,
+			HashMapBuilder.put(
+				"authorizationServers", new String[] {authorizationServer1}
+			).put(
+				"protectedResourceURI", new String[] {protectedResourceURI1}
+			).put(
+				"resourceName", new String[] {RandomTestUtil.randomString()}
+			).put(
+				"scopesSupported", new String[] {RandomTestUtil.randomString()}
+			).build());
 
 		oAuthClientPRLocalMetadatas =
 			_oAuthClientPRLocalMetadataLocalService.
@@ -163,50 +158,39 @@ public class UpdateOAuthClientPRLocalMetadataMVCActionCommandTest {
 		String resourceName = RandomTestUtil.randomString();
 		String scope = RandomTestUtil.randomString();
 
-		Assert.assertTrue(
-			_updateMVCActionCommand.processAction(
-				_getMockLiferayPortletActionRequest(
-					HashMapBuilder.put(
-						"authorizationServers",
-						new String[] {authorizationServer2}
-					).put(
-						"bearerMethodsSupported", new String[] {""}
-					).put(
-						"localWellKnownEnabled", new String[] {"true"}
-					).put(
-						"oAuthClientPRLocalMetadataId",
-						new String[] {
-							String.valueOf(oAuthClientPRLocalMetadataId)
-						}
-					).put(
-						"protectedResourceURI",
-						new String[] {protectedResourceURI2}
-					).put(
-						"resourceName", new String[] {resourceName}
-					).put(
-						"scopesSupported", new String[] {scope}
-					).build()),
-				new MockLiferayPortletActionResponse()));
+		_testProcessAction(
+			null,
+			HashMapBuilder.put(
+				"authorizationServers", new String[] {authorizationServer2}
+			).put(
+				"bearerMethodsSupported", new String[] {StringPool.BLANK}
+			).put(
+				"localWellKnownEnabled", new String[] {"true"}
+			).put(
+				"oAuthClientPRLocalMetadataId",
+				new String[] {String.valueOf(oAuthClientPRLocalMetadataId)}
+			).put(
+				"protectedResourceURI", new String[] {protectedResourceURI2}
+			).put(
+				"resourceName", new String[] {resourceName}
+			).put(
+				"scopesSupported", new String[] {scope}
+			).build());
 
 		oAuthClientPRLocalMetadata =
 			_oAuthClientPRLocalMetadataLocalService.
 				getOAuthClientPRLocalMetadata(oAuthClientPRLocalMetadataId);
 
+		Assert.assertTrue(oAuthClientPRLocalMetadata.isLocalWellKnownEnabled());
 		Assert.assertEquals(
 			protectedResourceURI2 + "/.well-known/oauth-protected-resource",
 			oAuthClientPRLocalMetadata.getLocalWellKnownURI());
 		Assert.assertEquals(
 			protectedResourceURI2,
 			oAuthClientPRLocalMetadata.getProtectedResourceURI());
-		Assert.assertTrue(oAuthClientPRLocalMetadata.isLocalWellKnownEnabled());
 
 		JSONObject metadataJSONObject = JSONFactoryUtil.createJSONObject(
 			oAuthClientPRLocalMetadata.getMetadataJSON());
-
-		Assert.assertEquals(
-			protectedResourceURI2, metadataJSONObject.getString("resource"));
-		Assert.assertEquals(
-			resourceName, metadataJSONObject.getString("resource_name"));
 
 		JSONArray authorizationServersJSONArray =
 			metadataJSONObject.getJSONArray("authorization_servers");
@@ -220,21 +204,35 @@ public class UpdateOAuthClientPRLocalMetadataMVCActionCommandTest {
 		Assert.assertEquals(
 			"header", bearerMethodsSupportedJSONArray.getString(0));
 
+		Assert.assertEquals(
+			protectedResourceURI2, metadataJSONObject.getString("resource"));
+		Assert.assertEquals(
+			resourceName, metadataJSONObject.getString("resource_name"));
+
 		JSONArray scopesSupportedJSONArray = metadataJSONObject.getJSONArray(
 			"scopes_supported");
 
 		Assert.assertEquals(scope, scopesSupportedJSONArray.getString(0));
 	}
 
-	private MockLiferayPortletActionRequest _getMockLiferayPortletActionRequest(
+	private void _testProcessAction(
+			Class<? extends PortalException> clazz,
 			Map<String, String[]> parameters)
 		throws Exception {
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			new MockLiferayPortletActionRequest();
 
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setCompany(_company);
+		themeDisplay.setPermissionChecker(
+			PermissionThreadLocal.getPermissionChecker());
+		themeDisplay.setRequest(new MockHttpServletRequest());
+		themeDisplay.setUser(_user);
+
 		mockLiferayPortletActionRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, _getThemeDisplay());
+			WebKeys.THEME_DISPLAY, themeDisplay);
 
 		for (Map.Entry<String, String[]> entry : parameters.entrySet()) {
 			mockLiferayPortletActionRequest.setParameter(
@@ -244,43 +242,26 @@ public class UpdateOAuthClientPRLocalMetadataMVCActionCommandTest {
 		mockLiferayPortletActionRequest.setPortletSession(
 			new MockPortletSession());
 
-		return mockLiferayPortletActionRequest;
+		if (clazz != null) {
+			Assert.assertFalse(
+				_updateMVCActionCommand.processAction(
+					mockLiferayPortletActionRequest,
+					new MockLiferayPortletActionResponse()));
+			Assert.assertTrue(
+				SessionErrors.contains(mockLiferayPortletActionRequest, clazz));
+		}
+		else {
+			Assert.assertTrue(
+				_updateMVCActionCommand.processAction(
+					mockLiferayPortletActionRequest,
+					new MockLiferayPortletActionResponse()));
+		}
 	}
 
-	private ThemeDisplay _getThemeDisplay() throws Exception {
-		ThemeDisplay themeDisplay = new ThemeDisplay();
-
-		themeDisplay.setCompany(_company);
-		themeDisplay.setPermissionChecker(
-			PermissionThreadLocal.getPermissionChecker());
-		themeDisplay.setRequest(new MockHttpServletRequest());
-		themeDisplay.setUser(_user);
-
-		return themeDisplay;
-	}
-
-	private void _testProcessAction(
-			Class<? extends PortalException> clazz,
-			Map<String, String[]> parameters)
-		throws Exception {
-
-		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
-			_getMockLiferayPortletActionRequest(parameters);
-
-		Assert.assertFalse(
-			_updateMVCActionCommand.processAction(
-				mockLiferayPortletActionRequest,
-				new MockLiferayPortletActionResponse()));
-		Assert.assertTrue(
-			SessionErrors.contains(mockLiferayPortletActionRequest, clazz));
-	}
-
-	private static Company _company;
+	private Company _company;
 
 	@Inject
-	private static CompanyLocalService _companyLocalService;
-
-	private static User _user;
+	private CompanyLocalService _companyLocalService;
 
 	@Inject
 	private OAuthClientPRLocalMetadataLocalService
@@ -290,5 +271,7 @@ public class UpdateOAuthClientPRLocalMetadataMVCActionCommandTest {
 		filter = "mvc.command.name=/oauth_client_admin/update_oauth_client_pr_local_metadata"
 	)
 	private MVCActionCommand _updateMVCActionCommand;
+
+	private User _user;
 
 }

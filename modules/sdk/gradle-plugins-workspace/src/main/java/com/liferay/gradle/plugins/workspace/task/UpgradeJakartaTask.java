@@ -59,14 +59,19 @@ public class UpgradeJakartaTask extends FormatSourceTask {
 	public void exec() {
 		ReleaseEntry releaseEntry = _getReleaseEntry();
 
+		String productVersion = _workspaceExtension.getProduct();
+
+		if (StringUtil.isBlank(productVersion)) {
+			productVersion = _workspaceExtension.getTargetPlatformVersion();
+		}
+
 		if (releaseEntry != null) {
 			List<String> tags = releaseEntry.getTags();
 
 			if (!tags.contains("jakarta")) {
 				throw new GradleException(
 					StringUtil.concat(
-						"Target liferay version ",
-						_workspaceExtension.getProduct(),
+						"Target liferay version ", productVersion,
 						" is not compatible with Jakarta dependencies"));
 			}
 		}
@@ -87,7 +92,7 @@ public class UpgradeJakartaTask extends FormatSourceTask {
 				logger.warn(
 					"Unable to find Jakarta dependencies file for product " +
 						"version '{}'",
-					_workspaceExtension.getProduct());
+					productVersion);
 			}
 		}
 

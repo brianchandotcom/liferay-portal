@@ -202,24 +202,41 @@ public class LiferayDynamicRegistrationService
 		properties.put(
 			"application_type", clientRegistration.getApplicationType());
 
-		_putIfNotEmpty(
-			properties,
-			OAuth2ProviderRESTEndpointConstants.PROPERTY_KEY_CLIENT_JWKS,
-			clientRegistration.getStringProperty(
-				OAuth2ProviderRESTEndpointConstants.PROPERTY_KEY_CLIENT_JWKS));
-		_putIfNotEmpty(
-			properties,
-			OAuth2ProviderRESTEndpointConstants.PROPERTY_KEY_CLIENT_JWKS_URI,
-			clientRegistration.getStringProperty(
+		String jwks = clientRegistration.getStringProperty(
+			OAuth2ProviderRESTEndpointConstants.PROPERTY_KEY_CLIENT_JWKS);
+
+		if (Validator.isNotNull(jwks)) {
+			properties.put(
+				OAuth2ProviderRESTEndpointConstants.PROPERTY_KEY_CLIENT_JWKS,
+				jwks);
+		}
+
+		String jwksUri = clientRegistration.getStringProperty(
+			OAuth2ProviderRESTEndpointConstants.PROPERTY_KEY_CLIENT_JWKS_URI);
+
+		if (Validator.isNotNull(jwksUri)) {
+			properties.put(
 				OAuth2ProviderRESTEndpointConstants.
-					PROPERTY_KEY_CLIENT_JWKS_URI));
-		_putIfNotEmpty(
-			properties,
-			OAuth2ProviderRESTEndpointConstants.PROPERTY_KEY_CLIENT_SOFTWARE_ID,
-			clientRegistration.getStringProperty(
+					PROPERTY_KEY_CLIENT_JWKS_URI,
+				jwksUri);
+		}
+
+		String softwareId = clientRegistration.getStringProperty(
+			OAuth2ProviderRESTEndpointConstants.
+				PROPERTY_KEY_CLIENT_SOFTWARE_ID);
+
+		if (Validator.isNotNull(softwareId)) {
+			properties.put(
 				OAuth2ProviderRESTEndpointConstants.
-					PROPERTY_KEY_CLIENT_SOFTWARE_ID));
-		_putIfNotEmpty(properties, "tos_uri", clientRegistration.getTosUri());
+					PROPERTY_KEY_CLIENT_SOFTWARE_ID,
+				softwareId);
+		}
+
+		String tosUri = clientRegistration.getTosUri();
+
+		if (Validator.isNotNull(tosUri)) {
+			properties.put("tos_uri", tosUri);
+		}
 
 		String logoUri = clientRegistration.getLogoUri();
 
@@ -618,14 +635,6 @@ public class LiferayDynamicRegistrationService
 		}
 
 		return normalizedValues;
-	}
-
-	private void _putIfNotEmpty(
-		Map<String, String> properties, String key, String value) {
-
-		if (Validator.isNotNull(value)) {
-			properties.put(key, value);
-		}
 	}
 
 	private void _setAllowedGrantTypes(Client client) {

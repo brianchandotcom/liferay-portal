@@ -252,6 +252,10 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 			new String[] {"Liferay.Headless.Delivery.everything"});
 
 		_testOpenRegistrationIsRejected(
+			400, "invalid_client_metadata", _body(), _PROPERTY_ALLOWED_SCOPES,
+			new String[] {"*"});
+
+		_testOpenRegistrationIsRejected(
 			401, null, _bodyWithClientNameOnly(),
 			_PROPERTY_REQUIRE_INITIAL_ACCESS_TOKEN, true);
 	}

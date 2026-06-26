@@ -14,6 +14,9 @@ public class ObjectEntryFolderConstants {
 
 	public static final String EXTERNAL_REFERENCE_CODE_FILES = "L_FILES";
 
+	public static final String EXTERNAL_REFERENCE_CODE_OBJECT_ENTRY_FOLDER =
+		"L_OBJECT_ENTRY_FOLDER";
+
 	public static final String
 		EXTERNAL_REFERENCE_CODE_PREFIX_SYSTEM_OBJECT_ENTRY_FOLDER = "L_";
 

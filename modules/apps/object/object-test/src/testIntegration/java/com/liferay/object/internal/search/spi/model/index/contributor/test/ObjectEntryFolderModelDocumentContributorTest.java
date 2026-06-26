@@ -60,6 +60,10 @@ public class ObjectEntryFolderModelDocumentContributorTest {
 				"cms_root", "true"
 			).put(
 				"cms_section", "contents"
+			).put(
+				"objectDefinitionExternalReferenceCode",
+				ObjectEntryFolderConstants.
+					EXTERNAL_REFERENCE_CODE_OBJECT_ENTRY_FOLDER
 			).build(),
 			ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS);
 		_testContribute(
@@ -69,6 +73,10 @@ public class ObjectEntryFolderModelDocumentContributorTest {
 				"cms_root", "true"
 			).put(
 				"cms_section", "files"
+			).put(
+				"objectDefinitionExternalReferenceCode",
+				ObjectEntryFolderConstants.
+					EXTERNAL_REFERENCE_CODE_OBJECT_ENTRY_FOLDER
 			).build(),
 			ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES);
 		_testContribute(
@@ -78,6 +86,8 @@ public class ObjectEntryFolderModelDocumentContributorTest {
 				"cms_root", StringPool.BLANK
 			).put(
 				"cms_section", StringPool.BLANK
+			).put(
+				"objectDefinitionExternalReferenceCode", StringPool.BLANK
 			).build(),
 			null);
 	}

@@ -8,8 +8,10 @@ package com.liferay.site.cms.site.initializer.internal.frontend.data.set.filter;
 import com.liferay.frontend.data.set.constants.FDSEntityFieldTypes;
 import com.liferay.frontend.data.set.filter.BaseSelectionFDSFilter;
 import com.liferay.frontend.data.set.filter.SelectionFDSFilterItem;
+import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionService;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 
 import java.util.ArrayList;
@@ -51,10 +53,6 @@ public abstract class BaseObjectDefinitionSelectionFDSFilter
 				CompanyThreadLocal.getCompanyId(),
 				getObjectFolderExternalReferenceCodes());
 
-		if (objectDefinitions.isEmpty()) {
-			return selectionFDSFilterItems;
-		}
-
 		for (ObjectDefinition objectDefinition : objectDefinitions) {
 			objectDefinition.getLabel(locale);
 
@@ -64,10 +62,19 @@ public abstract class BaseObjectDefinitionSelectionFDSFilter
 					objectDefinition.getExternalReferenceCode()));
 		}
 
+		selectionFDSFilterItems.add(
+			new SelectionFDSFilterItem(
+				language.get(locale, "folder"),
+				ObjectEntryFolderConstants.
+					EXTERNAL_REFERENCE_CODE_OBJECT_ENTRY_FOLDER));
+
 		return selectionFDSFilterItems;
 	}
 
 	protected abstract String[] getObjectFolderExternalReferenceCodes();
+
+	@Reference
+	protected Language language;
 
 	@Reference
 	protected ObjectDefinitionService objectDefinitionService;

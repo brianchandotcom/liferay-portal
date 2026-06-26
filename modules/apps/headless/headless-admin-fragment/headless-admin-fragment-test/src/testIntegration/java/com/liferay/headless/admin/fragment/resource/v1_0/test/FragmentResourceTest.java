@@ -521,6 +521,19 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 			expectedFieldTypes, formFragment.getFieldTypes());
 	}
 
+	private void _assertFormFragmentEntry(
+			FieldType[] expectedFieldTypes, Fragment fragment, Group group)
+		throws Exception {
+
+		_assertFragmentEntry(fragment, group);
+
+		Fragment getFragment = fragmentResource.getSiteFragment(
+			group.getExternalReferenceCode(),
+			fragment.getExternalReferenceCode());
+
+		_assertFormFragment(expectedFieldTypes, getFragment);
+	}
+
 	private void _assertFragmentEntry(Fragment fragment, Group group)
 		throws Exception {
 
@@ -1985,8 +1998,9 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 	}
 
 	private void _testPutSiteFragmentBatch() throws Exception {
-		Fragment fragment1 = _postSiteFragmentSetFragment(randomFragment());
-		Fragment fragment2 = _postSiteFragmentSetFragment(randomFragment());
+		Fragment basicFragment = _postSiteFragmentSetFragment(randomFragment());
+		Fragment formFragment = _postSiteFragmentSetFragment(
+			_randomFormFragment());
 
 		try (SafeCloseable safeCloseable =
 				LazyReferencingTestUtil.setLazyReferencingWithSafeCloseable(
@@ -2005,9 +2019,9 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 
 		Fragment putFragment = fragmentResource.putSiteFragment(
 			testGroup.getExternalReferenceCode(),
-			fragment2.getExternalReferenceCode(),
+			basicFragment.getExternalReferenceCode(),
 			_randomFragment(
-				true, true, fragment2.getExternalReferenceCode(), null));
+				true, true, basicFragment.getExternalReferenceCode(), null));
 
 		try (SafeCloseable safeCloseable =
 				LazyReferencingTestUtil.setLazyReferencingWithSafeCloseable(
@@ -2024,7 +2038,8 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 					Http.Method.POST));
 		}
 
-		_assertFragmentEntry(fragment1, irrelevantGroup);
+		_assertFormFragmentEntry(
+			new FieldType[] {FieldType.TEXT}, formFragment, irrelevantGroup);
 
 		FragmentEntry fragmentEntry =
 			_fragmentEntryLocalService.

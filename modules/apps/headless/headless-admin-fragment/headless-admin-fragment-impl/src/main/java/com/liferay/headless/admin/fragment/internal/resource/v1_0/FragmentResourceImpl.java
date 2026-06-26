@@ -419,7 +419,7 @@ public class FragmentResourceImpl extends BaseFragmentResourceImpl {
 				"a-fragment-type-is-required"));
 	}
 
-	private String _getTypeOptions(Fragment fragment) {
+	private String _getTypeOptions(Fragment fragment) throws Exception {
 		if (!(fragment instanceof FormFragment)) {
 			return null;
 		}
@@ -429,7 +429,8 @@ public class FragmentResourceImpl extends BaseFragmentResourceImpl {
 		FieldType[] fieldTypes = formFragment.getFieldTypes();
 
 		if (fieldTypes == null) {
-			return null;
+			throw new FragmentEntryFieldTypesException(
+				"A form fragment requires field types");
 		}
 
 		JSONObject typeOptionsJSONObject = JSONUtil.put(
@@ -492,11 +493,6 @@ public class FragmentResourceImpl extends BaseFragmentResourceImpl {
 		}
 
 		String typeOptions = _getTypeOptions(fragment);
-
-		if ((typeOptions == null) && fragmentEntry.isTypeInput()) {
-			throw new FragmentEntryFieldTypesException(
-				"A form fragment requires field types");
-		}
 
 		FragmentEntry updatedFragmentEntry = null;
 

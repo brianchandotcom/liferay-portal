@@ -11,12 +11,14 @@ import ScopeMultiSelect, {ScopeItem as SpaceItem} from './ScopeMultiSelect';
 export default function CategorizationSpaces({
 	assetLibraries,
 	checkboxText,
+	disabled = false,
 	setSelectedSpaces,
 	setSpaceChange,
 	setSpaceInputError,
 }: {
 	assetLibraries?: any;
 	checkboxText: string;
+	disabled?: boolean;
 	setSelectedSpaces: (value: any) => void;
 	setSpaceChange?: (value: boolean) => void;
 	setSpaceInputError: (value: string) => void;
@@ -58,6 +60,7 @@ export default function CategorizationSpaces({
 
 	return (
 		<ScopeMultiSelect<SpaceItem>
+			disabled={disabled}
 			labels={{
 				allItemsValue: Liferay.Language.get('all-spaces'),
 				ariaLabel: Liferay.Language.get('space-selector'),

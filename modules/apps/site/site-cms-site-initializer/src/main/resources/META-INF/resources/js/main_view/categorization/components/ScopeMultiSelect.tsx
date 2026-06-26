@@ -29,6 +29,7 @@ type ScopeLabels = {
 };
 
 export default function ScopeMultiSelect<T extends ScopeItem>({
+	disabled = false,
 	labels,
 	onChange,
 	onError,
@@ -36,6 +37,7 @@ export default function ScopeMultiSelect<T extends ScopeItem>({
 	preselectedItems,
 	sourceItems,
 }: {
+	disabled?: boolean;
 	labels: ScopeLabels;
 	onChange?: (value: boolean) => void;
 	onError: (value: string) => void;
@@ -110,7 +112,7 @@ export default function ScopeMultiSelect<T extends ScopeItem>({
 					active={active}
 					aria-describedby={showError ? errorId : undefined}
 					aria-label={labels.ariaLabel}
-					disabled={allScopesChecked}
+					disabled={allScopesChecked || disabled}
 					id={inputId}
 					items={selectedItems}
 					key={sourceItems.length ? 'loaded' : 'empty'}
@@ -156,6 +158,7 @@ export default function ScopeMultiSelect<T extends ScopeItem>({
 			<div className="mt-2">
 				<ClayCheckbox
 					checked={allScopesChecked}
+					disabled={disabled}
 					label={labels.checkbox}
 					onChange={() => {
 						if (allScopesChecked) {

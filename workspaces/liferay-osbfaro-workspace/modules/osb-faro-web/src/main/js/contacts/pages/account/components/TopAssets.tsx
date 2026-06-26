@@ -11,14 +11,16 @@ import ClayTabs from '@clayui/tabs';
 import React, {useState} from 'react';
 import StatesRenderer from 'shared/components/states-renderer/StatesRenderer';
 import {getMimeType} from 'assets/components/mime-type';
+import {IAccount} from './AccountInfo';
 import {ITopAsset, TopAssetMetric, TopAssetObjectType} from 'shared/api/assets';
 import {Option, Picker, Text} from '@clayui/core';
-import {Routes, toRoute} from 'shared/util/router';
+import {Routes, setUriQueryValues, toRoute} from 'shared/util/router';
 import {toThousands} from 'shared/util/numbers';
 import {useHistory, useParams} from 'react-router-dom';
 import {useRequest} from 'shared/hooks/useRequest';
 
 interface ITopAssetsProps {
+	account?: IAccount;
 	className?: string;
 }
 
@@ -237,17 +239,15 @@ const TopAssetsTabContent: React.FC<ITopAssetsTabContentProps> = ({
 	);
 };
 
-const TopAssets: React.FC<ITopAssetsProps> = ({className}) => {
+const TopAssets: React.FC<ITopAssetsProps> = ({account, className}) => {
 	const history = useHistory();
-	const {
-		channelId,
-		groupId,
-		id: accountId,
-	} = useParams<{
+	const {channelId, groupId} = useParams<{
 		channelId: string;
 		groupId: string;
-		id: string;
 	}>();
+
+	const accountId = account?.id;
+	const accountName = account?.accountName;
 
 	const [activeTab, setActiveTab] = useState(0);
 	const [groupBy, setGroupBy] = useState<GroupByMetric>(
@@ -271,8 +271,9 @@ const TopAssets: React.FC<ITopAssetsProps> = ({className}) => {
 		{items: ITopAsset[]}
 	>({
 		dataSourceFn: API.assets.fetchAccountTopAssets,
+		skipRequest: !accountId,
 		variables: {
-			accountId,
+			accountId: accountId!,
 			channelId,
 			groupId,
 			objectType: TAB_OBJECT_TYPES[TABS[activeTab]],
@@ -329,7 +330,16 @@ const TopAssets: React.FC<ITopAssetsProps> = ({className}) => {
 							className="ml-auto rounded-lg"
 							onClick={() =>
 								history.push(
-									toRoute(Routes.ASSETS, {channelId, groupId})
+									setUriQueryValues(
+										{
+											accountId,
+											...(accountName && {accountName}),
+										},
+										toRoute(Routes.ASSETS, {
+											channelId,
+											groupId,
+										})
+									)
 								)
 							}
 							size="sm"

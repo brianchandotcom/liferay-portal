@@ -20,6 +20,7 @@ export interface IAccount {
 		name: string;
 		value?: string;
 	}>;
+	id?: string;
 	industry?: string;
 	numberOfEmployees?: number;
 	website?: string;

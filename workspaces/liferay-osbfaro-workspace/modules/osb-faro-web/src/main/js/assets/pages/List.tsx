@@ -21,7 +21,7 @@ import {
 } from 'shared/util/router';
 import {toThousands} from 'shared/util/numbers';
 import {useChannelContext} from 'shared/context/channel';
-import {useHistory, useParams} from 'react-router-dom';
+import {useHistory, useLocation, useParams} from 'react-router-dom';
 import {useQueryRangeSelectors} from 'shared/hooks/useQueryRangeSelectors';
 
 const {cur: DEFAULT_CUR} = FaroConstants.pagination;
@@ -136,9 +136,14 @@ const assetsEmptyStateDescription = (
 
 const List = () => {
 	const history = useHistory();
+	const {search} = useLocation();
 	const {selectedChannel} = useChannelContext();
 	const {channelId, groupId} = useParams();
 	const initialRangeSelectors = useQueryRangeSelectors();
+
+	const searchParams = new URLSearchParams(search);
+	const accountId = searchParams.get('accountId');
+	const accountName = searchParams.get('accountName');
 
 	const [rangeSelectors, setRangeSelectors] = useState<RangeSelectors>(
 		initialRangeSelectors
@@ -166,6 +171,13 @@ const List = () => {
 				itemLabel: 'accountName',
 				label: Liferay.Language.get('account'),
 				multiple: true,
+				...(accountId && {
+					preloadedData: {
+						selectedItems: [
+							{label: accountName || accountId, value: accountId},
+						],
+					},
+				}),
 				searchable: true,
 				type: 'selection',
 			},
@@ -214,7 +226,7 @@ const List = () => {
 				type: 'selection',
 			},
 		],
-		[groupId, rangeSelectorParams]
+		[accountId, accountName, groupId, rangeSelectorParams]
 	);
 
 	return (

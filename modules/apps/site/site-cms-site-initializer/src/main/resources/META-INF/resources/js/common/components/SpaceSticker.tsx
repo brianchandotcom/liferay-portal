@@ -12,7 +12,7 @@ import {LogoColor} from '../types/Space';
 
 export const logoColors: Record<LogoColor, string> = {
 	'outline-0': Liferay.Language.get('gray'),
-	'outline-1': Liferay.Language.get('purple'),
+	'outline-1': Liferay.Language.get('indigo'),
 	'outline-2': Liferay.Language.get('yellow'),
 	'outline-3': Liferay.Language.get('green'),
 	'outline-4': Liferay.Language.get('red'),

@@ -137,7 +137,7 @@ test(
 
 test(
 	'Can create, edit and delete User Views',
-	{tag: '@LPD-10683'},
+	{tag: ['@LPD-10683', '@LPD-74823']},
 	async ({dataSetFragmentPage, dataSetManagerApiHelpers, layout, page}) => {
 		let userViewsActionsDropdown: Locator;
 		let userViewsDropdown: Locator;
@@ -390,6 +390,16 @@ test(
 
 			await expect(dataSetFragmentPage.cardsWrapper).toBeInViewport();
 
+			await dataSetFragmentPage.changeVisualizationMode('Table');
+
+			await dataSetFragmentPage.table.container.waitFor({
+				state: 'visible',
+			});
+
+			await expect(
+				dataSetFragmentPage.userViewsSelectorButton
+			).toHaveText(`${userView1Name}${userView1Name} Updated`);
+
 			await dataSetFragmentPage.userViewsActionsButton.click();
 
 			await userViewsActionsDropdown
@@ -418,10 +428,12 @@ test(
 				.click();
 
 			await waitForAlert(page, 'Success:View was renamed successfully.');
+		});
 
+		await test.step('Renaming a view keeps its unsaved changes mark', async () => {
 			await expect(
 				dataSetFragmentPage.userViewsSelectorButton
-			).toHaveText(userView2Name);
+			).toHaveText(`${userView2Name}${userView2Name} Updated`);
 		});
 
 		await test.step('Can delete a user view', async () => {

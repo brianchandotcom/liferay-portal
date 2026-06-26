@@ -68,6 +68,11 @@ public class RESTClientTemplateContextContributor
 					new VulcanRequestForwarder.Request() {
 
 						@Override
+						public String getMethod() {
+							return "GET";
+						}
+
+						@Override
 						public String getPath() {
 							return path;
 						}

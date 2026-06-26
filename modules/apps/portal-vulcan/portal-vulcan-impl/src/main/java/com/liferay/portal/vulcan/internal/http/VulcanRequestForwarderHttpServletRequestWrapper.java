@@ -7,7 +7,7 @@ package com.liferay.portal.vulcan.internal.http;
 
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
-import com.liferay.portal.kernel.servlet.HttpMethods;
+import com.liferay.portal.kernel.servlet.PersistentHttpServletRequestWrapper;
 import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -18,9 +18,12 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.vulcan.internal.constants.VulcanConstants;
 
 import jakarta.servlet.DispatcherType;
+import jakarta.servlet.ReadListener;
+import jakarta.servlet.ServletInputStream;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletRequestWrapper;
 import jakarta.servlet.http.HttpSession;
+
+import java.io.ByteArrayInputStream;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -32,20 +35,28 @@ import java.util.Map;
  * @author Alejandro Tardín
  */
 public class VulcanRequestForwarderHttpServletRequestWrapper
-	extends HttpServletRequestWrapper {
+	extends PersistentHttpServletRequestWrapper {
 
 	public VulcanRequestForwarderHttpServletRequestWrapper(
-		HttpServletRequest httpServletRequest, String pathInfo, User user) {
+		byte[] body, String contentType, HttpServletRequest httpServletRequest,
+		String method, String pathInfo, User user) {
 
 		super(httpServletRequest);
 
 		_attributes = HashMapBuilder.<String, Object>put(
-			VulcanRequestForwarderHttpServletRequestWrapper.class.getName(), true
+			VulcanRequestForwarderHttpServletRequestWrapper.class.getName(),
+			true
 		).put(
-			WebKeys.USER, user
+			WebKeys.USER_ID, (user != null) ? user.getUserId() : null
 		).build();
+
 		_headers = HashMapBuilder.put(
 			HttpHeaders.ACCEPT, ContentTypes.APPLICATION_JSON
+		).put(
+			HttpHeaders.CONTENT_LENGTH,
+			(body != null) ? String.valueOf(body.length) : null
+		).put(
+			HttpHeaders.CONTENT_TYPE, contentType
 		).put(
 			"Accept-Language",
 			() -> {
@@ -80,7 +91,10 @@ public class VulcanRequestForwarderHttpServletRequestWrapper
 				return csrfToken;
 			}
 		).build();
+		_body = body;
+		_contentType = contentType;
 		_httpServletRequest = httpServletRequest;
+		_method = method;
 		_pathInfo = pathInfo;
 
 		int index = pathInfo.indexOf('?');
@@ -109,6 +123,25 @@ public class VulcanRequestForwarderHttpServletRequestWrapper
 	}
 
 	@Override
+	public int getContentLength() {
+		if (_body == null) {
+			return super.getContentLength();
+		}
+
+		return _body.length;
+	}
+
+	@Override
+	public long getContentLengthLong() {
+		return getContentLength();
+	}
+
+	@Override
+	public String getContentType() {
+		return _contentType;
+	}
+
+	@Override
 	public DispatcherType getDispatcherType() {
 		return DispatcherType.FORWARD;
 	}
@@ -130,8 +163,50 @@ public class VulcanRequestForwarderHttpServletRequestWrapper
 	}
 
 	@Override
+	public ServletInputStream getInputStream() {
+		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(
+			(_body != null) ? _body : new byte[0]);
+
+		return new ServletInputStream() {
+
+			@Override
+			public boolean isFinished() {
+				if (_byteArrayInputStream.available() == 0) {
+					return true;
+				}
+
+				return false;
+			}
+
+			@Override
+			public boolean isReady() {
+				return true;
+			}
+
+			@Override
+			public int read() {
+				return _byteArrayInputStream.read();
+			}
+
+			@Override
+			public int read(byte[] bytes, int offset, int length) {
+				return _byteArrayInputStream.read(bytes, offset, length);
+			}
+
+			@Override
+			public void setReadListener(ReadListener readListener) {
+				throw new UnsupportedOperationException();
+			}
+
+			private final ByteArrayInputStream _byteArrayInputStream =
+				byteArrayInputStream;
+
+		};
+	}
+
+	@Override
 	public String getMethod() {
-		return HttpMethods.GET;
+		return _method;
 	}
 
 	@Override
@@ -181,8 +256,11 @@ public class VulcanRequestForwarderHttpServletRequestWrapper
 	}
 
 	private final Map<String, Object> _attributes;
+	private final byte[] _body;
+	private final String _contentType;
 	private final Map<String, String> _headers;
 	private final HttpServletRequest _httpServletRequest;
+	private final String _method;
 	private final Map<String, String[]> _parameterMap;
 	private final String _pathInfo;
 	private final String _queryString;

@@ -481,8 +481,7 @@ public class ObjectRelationshipLocalServiceTest {
 			() -> _objectRelationshipLocalService.addObjectRelationship(
 				null, TestPropsValues.getUserId(),
 				_objectDefinition1.getObjectDefinitionId(),
-				_objectDefinition2.getObjectDefinitionId(),
-				RandomTestUtil.randomLong(),
+				_objectDefinition2.getObjectDefinitionId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_PREVENT, false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				StringUtil.randomId(), true,
@@ -1772,26 +1771,38 @@ public class ObjectRelationshipLocalServiceTest {
 				objectFieldNamePrefix +
 					objectDefinition1.getPKObjectFieldName()));
 
+		_testAddObjectRelationshipOneToManyWithObjectField(false);
+		_testAddObjectRelationshipOneToManyWithObjectField(true);
+	}
+
+	private void _testAddObjectRelationshipOneToManyWithObjectField(
+			boolean system)
+		throws Exception {
+
 		ObjectField expectedObjectField = new ObjectFieldBuilder(
 		).externalReferenceCode(
 			RandomTestUtil.randomString()
 		).labelMap(
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			RandomTestUtil.randomLocaleStringMap()
+		).name(
+			"a_" + RandomTestUtil.randomString()
 		).readOnly(
 			ObjectFieldConstants.READ_ONLY_FALSE
 		).required(
 			RandomTestUtil.randomBoolean()
+		).system(
+			system
 		).build();
 
-		objectRelationship =
+		ObjectRelationship objectRelationship =
 			_objectRelationshipLocalService.addObjectRelationship(
 				null, TestPropsValues.getUserId(),
 				_objectDefinition1.getObjectDefinitionId(),
-				_objectDefinition2.getObjectDefinitionId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_PREVENT, false,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"able", false, ObjectRelationshipConstants.TYPE_ONE_TO_MANY,
+				_objectDefinition2.getObjectDefinitionId(),
 				expectedObjectField);
+
+		Assert.assertEquals(
+			expectedObjectField.isSystem(), objectRelationship.isSystem());
 
 		ObjectField actualObjectField = _objectFieldLocalService.getObjectField(
 			objectRelationship.getObjectFieldId2());
@@ -1805,6 +1816,8 @@ public class ObjectRelationshipLocalServiceTest {
 			expectedObjectField.getReadOnly(), actualObjectField.getReadOnly());
 		Assert.assertEquals(
 			expectedObjectField.isRequired(), actualObjectField.isRequired());
+		Assert.assertEquals(
+			expectedObjectField.isSystem(), actualObjectField.isSystem());
 
 		_objectRelationshipLocalService.deleteObjectRelationship(
 			objectRelationship);

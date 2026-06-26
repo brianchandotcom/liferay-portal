@@ -59,11 +59,12 @@ public class LayoutContentVersionDisplayContextTest {
 
 	@Test
 	public void testGetContext() throws PortalException {
+		SegmentsExperience defaultSegmentsExperience = _getSegmentsExperience(
+			null, null);
+
 		String segmentsEntryERC = RandomTestUtil.randomString();
 		String segmentsEntryScopeERC = RandomTestUtil.randomString();
 
-		SegmentsExperience defaultSegmentsExperience = _getSegmentsExperience(
-			null, null);
 		SegmentsExperience loserSegmentsExperience = _getSegmentsExperience(
 			segmentsEntryERC, segmentsEntryScopeERC);
 		SegmentsExperience winnerSegmentsExperience = _getSegmentsExperience(
@@ -107,10 +108,6 @@ public class LayoutContentVersionDisplayContextTest {
 			(List<Map<String, Object>>)config.get(
 				"availableSegmentsExperiences");
 
-		Assert.assertEquals(
-			availableSegmentsExperiences.toString(), 3,
-			availableSegmentsExperiences.size());
-
 		_assertSegmentsExperience(
 			true, winnerSegmentsExperience,
 			availableSegmentsExperiences.get(0));
@@ -120,6 +117,10 @@ public class LayoutContentVersionDisplayContextTest {
 		_assertSegmentsExperience(
 			true, defaultSegmentsExperience,
 			availableSegmentsExperiences.get(2));
+
+		Assert.assertEquals(
+			availableSegmentsExperiences.toString(), 3,
+			availableSegmentsExperiences.size());
 	}
 
 	private void _assertAvailableLanguages(

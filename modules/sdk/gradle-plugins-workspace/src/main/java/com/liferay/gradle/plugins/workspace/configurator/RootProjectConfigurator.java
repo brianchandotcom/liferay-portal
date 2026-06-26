@@ -39,7 +39,6 @@ import com.liferay.gradle.plugins.workspace.task.VerifyProductTask;
 import com.liferay.gradle.util.ArrayUtil;
 import com.liferay.gradle.util.OSDetector;
 import com.liferay.gradle.util.Validator;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.release.util.ReleaseEntry;
 import com.liferay.release.util.ReleaseUtil;
 
@@ -61,12 +60,12 @@ import java.nio.file.StandardCopyOption;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.Callable;
+import java.util.stream.Stream;
 
 import org.apache.commons.io.FilenameUtils;
 
@@ -2117,94 +2116,74 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			Project project, WorkspaceExtension workspaceExtension)
 		throws Exception {
 
-		String targetPlatformVersion =
-			workspaceExtension.getTargetPlatformVersion();
+		String product = workspaceExtension.getProduct();
 
-		if (Validator.isNull(targetPlatformVersion)) {
-			Logger logger = project.getLogger();
+		ReleaseEntry releaseEntry = ReleaseUtil.getReleaseEntry(product);
 
-			if (logger.isWarnEnabled()) {
-				logger.warn("Unable to validate target platform version.");
-			}
-
+		if (releaseEntry == null) {
 			return null;
 		}
 
-		List<ReleaseEntry> releaseEntries = ReleaseUtil.getReleaseEntries();
-
-		Collections.reverse(releaseEntries);
-
-		ReleaseEntry oldestReleaseEntry = null;
-
-		for (ReleaseEntry entry : releaseEntries) {
-			String entryProductGroupVersion = entry.getProductGroupVersion();
-
-			if ((entryProductGroupVersion != null) &&
-				targetPlatformVersion.startsWith(
-					entryProductGroupVersion + ".")) {
-
-				oldestReleaseEntry = entry;
-
-				break;
-			}
-		}
-
-		if (oldestReleaseEntry == null) {
-			Logger logger = project.getLogger();
-
-			if (logger.isWarnEnabled()) {
-				logger.warn(
-					"Unable to find Jakarta dependencies file for target " +
-						"platform version '{}'.",
-					targetPlatformVersion);
-			}
-
-			return null;
-		}
-
-		List<String> tags = oldestReleaseEntry.getTags();
+		List<String> tags = releaseEntry.getTags();
 
 		if (!tags.contains("jakarta")) {
 			throw new GradleException(
-				StringBundler.concat(
-					targetPlatformVersion,
+				StringUtil.concat(
+					product,
 					" does not support Jakarta migration. Choose a different ",
 					"Liferay version that is Jakarta compatible."));
 		}
 
-		String oldestReleaseEntryURL = oldestReleaseEntry.getURL();
+		ProjectLayout projectLayout = project.getLayout();
 
-		String jakartaDependenciesURL =
-			oldestReleaseEntryURL + "/jakarta-transform-dependencies.txt";
+		DirectoryProperty buildDirectory = projectLayout.getBuildDirectory();
 
-		URL url = new URL(jakartaDependenciesURL);
+		Provider<RegularFile> regularFileProvider = buildDirectory.file(
+			"upgradeJakarta/" + _JAKARTA_DEPENDENCIES_FILE_NAME);
 
-		File buildDir = project.getBuildDir();
+		RegularFile regularFile = regularFileProvider.get();
 
-		File tmpDir = new File(buildDir, "tmp/upgradeJakarta/");
+		Stream<ReleaseEntry> releaseEntryStream =
+			ReleaseUtil.getReleaseEntryStream();
 
-		tmpDir.mkdirs();
+		List<ReleaseEntry> releaseEntries = new ArrayList<>(
+			releaseEntryStream.filter(
+				releaseEntry1 -> Objects.equals(
+					releaseEntry.getProductGroupVersion(),
+					releaseEntry1.getProductGroupVersion())
+			).toList());
 
-		File jakartaDepsFile = new File(
-			tmpDir, "jakarta-transform-dependencies.txt");
+		ReleaseEntry lastReleaseEntry = releaseEntries.get(
+			releaseEntries.size() - 1);
+
+		URL url = new URL(
+			lastReleaseEntry.getURL() + "/" + _JAKARTA_DEPENDENCIES_FILE_NAME);
 
 		try (InputStream inputStream = url.openStream()) {
+			File file = regularFile.getAsFile();
+
+			File parentDirectory = file.getParentFile();
+
+			Files.createDirectories(parentDirectory.toPath());
+
 			Files.copy(
-				inputStream, jakartaDepsFile.toPath(),
+				inputStream, file.toPath(),
 				StandardCopyOption.REPLACE_EXISTING);
 		}
 		catch (Exception exception) {
-			throw new GradleException(
-				"Unable to download jakarta-transform-dependencies.txt from: " +
-					jakartaDependenciesURL,
-				exception);
+			Logger logger = project.getLogger();
+
+			if (logger.isWarnEnabled()) {
+				logger.warn(
+					"Unable to find Jakarta dependencies file for product " +
+						"version '{}'",
+					product);
+			}
+
+			return null;
 		}
 
-		ProjectLayout projectLayout = project.getLayout();
-
-		Directory projectDirectory = projectLayout.getProjectDirectory();
-
-		return projectDirectory.file(jakartaDepsFile.getAbsolutePath());
+		return regularFile;
 	}
 
 	private String _loadTemplate(String name) {
@@ -2221,6 +2200,9 @@ public class RootProjectConfigurator implements Plugin<Project> {
 	}
 
 	private static final boolean _DEFAULT_REPOSITORY_ENABLED = true;
+
+	private static final String _JAKARTA_DEPENDENCIES_FILE_NAME =
+		"jakarta-transform-dependencies.txt";
 
 	private static final String _LIFERAY_IMAGE_SETUP_SCRIPT =
 		"100_liferay_image_setup.sh";

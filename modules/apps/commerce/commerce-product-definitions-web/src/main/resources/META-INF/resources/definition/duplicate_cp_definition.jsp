@@ -20,7 +20,7 @@ CPDefinition cpDefinition = cpDefinitionsDisplayContext.getCPDefinition();
 	<aui:form cssClass="container-fluid container-fluid-max-xl p-0" method="post" name="duplicatefm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "apiSubmit(this.form);" %>'>
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
-		<label class="control-label" for="catalogId"><liferay-ui:message key="catalog" /></label>
+		<label class="control-label" for="catalogId"><liferay-ui:message key="catalog[noun]" /></label>
 
 		<div id="autocomplete-root"></div>
 	</aui:form>

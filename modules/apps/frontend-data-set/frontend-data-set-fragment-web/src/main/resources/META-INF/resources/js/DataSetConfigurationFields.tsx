@@ -383,7 +383,9 @@ export default function DataSetConfigurationFields({
 							<>
 								<ClayForm.Group>
 									<label htmlFor={mappingSelectId}>
-										{Liferay.Language.get('mapping')}
+										{Liferay.Language.get(
+											'mapping[content]'
+										)}
 									</label>
 
 									<ClaySelectWithOption

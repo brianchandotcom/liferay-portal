@@ -87,7 +87,7 @@ export default function AttributeFields({
 						className={disabled ? 'disabled' : ''}
 						htmlFor={nameId}
 					>
-						{Liferay.Language.get('attribute')}
+						{Liferay.Language.get('attribute[noun]')}
 
 						<span className="sr-only">
 							{Liferay.Language.get('spaces-are-not-allowed')}

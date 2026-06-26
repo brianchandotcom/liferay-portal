@@ -13,7 +13,7 @@ export default function MappingSidebar() {
 	return (
 		<>
 			<SidebarPanelHeader>
-				{Liferay.Language.get('mapping')}
+				{Liferay.Language.get('mapping[content]')}
 			</SidebarPanelHeader>
 
 			<div className="p-3">

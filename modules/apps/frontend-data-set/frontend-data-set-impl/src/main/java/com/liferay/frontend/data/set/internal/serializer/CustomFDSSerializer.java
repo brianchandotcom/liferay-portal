@@ -703,7 +703,7 @@ public class CustomFDSSerializer
 				).put(
 					"default", defaultVisualizationMode.equals("list")
 				).put(
-					"label", LanguageUtil.get(httpServletRequest, "list")
+					"label", LanguageUtil.get(httpServletRequest, "list[noun]")
 				).put(
 					"name", "list"
 				).put(

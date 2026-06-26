@@ -165,7 +165,7 @@ const AssetMetadata = () => {
 						{asset?.file?.extension && (
 							<div className="asset-metadata-section mt-3">
 								<p className="d-block font-weight-bold mb-0">
-									{Liferay.Language.get('extension')}
+									{Liferay.Language.get('extension[file]')}
 								</p>
 
 								<p className="d-block">

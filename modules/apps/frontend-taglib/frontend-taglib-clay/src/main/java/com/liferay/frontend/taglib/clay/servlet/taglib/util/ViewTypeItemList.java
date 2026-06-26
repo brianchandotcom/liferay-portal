@@ -88,7 +88,7 @@ public class ViewTypeItemList extends ArrayList<ViewTypeItem> {
 
 		viewTypeItem.setIcon("list");
 		viewTypeItem.setLabel(
-			LanguageUtil.get(LocaleUtil.getMostRelevantLocale(), "list"));
+			LanguageUtil.get(LocaleUtil.getMostRelevantLocale(), "list[noun]"));
 
 		add(viewTypeItem);
 

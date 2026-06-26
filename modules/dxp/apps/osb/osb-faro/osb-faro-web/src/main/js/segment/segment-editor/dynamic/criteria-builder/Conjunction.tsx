@@ -12,7 +12,7 @@ interface IConjunctionProps extends React.HTMLAttributes<HTMLButtonElement> {
 class Conjunction extends React.Component<IConjunctionProps> {
 	getConjunctionLabel(conjunctionName: string, sequential?: boolean) {
 		if (sequential && conjunctionName === Conjunctions.And) {
-			return Liferay.Language.get('then');
+			return Liferay.Language.get('then[sequence]');
 		}
 
 		const conjunction = SUPPORTED_CONJUNCTION_OPTIONS.find(

@@ -96,7 +96,7 @@ AUI.add(
 			scriptedAssignment: Liferay.Language.get('scripted-assignment'),
 			scriptedRecipient: Liferay.Language.get('scripted-recipient'),
 			search: Liferay.Language.get('search'),
-			second: Liferay.Language.get('second'),
+			second: Liferay.Language.get('second[time]'),
 			site: Liferay.Language.get('site'),
 			taskAssignees: Liferay.Language.get('task-assignees'),
 			taskTimers: Liferay.Language.get('task-timers'),

@@ -138,7 +138,7 @@ type DropdownItem = {
 const dropdownItems: DropdownItem[] = [
 	{
 		icon: 'polls',
-		name: Liferay.Language.get('chart'),
+		name: Liferay.Language.get('chart[noun]'),
 		value: 'chart',
 	},
 	{

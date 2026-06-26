@@ -1,9 +1,9 @@
 task runGradleTest
 
 runGradleTest {
-	doLast {
-		File jakartaDepsFile = tasks.upgradeJakarta.jakartaTransformDependenciesFile.get().asFile
+	dependsOn upgradeJakarta
 
-		assert jakartaDepsFile.exists()
+	doLast {
+		assert project.layout.buildDirectory.file("upgradeJakarta/jakarta-transform-dependencies.txt").get().asFile.exists()
 	}
 }

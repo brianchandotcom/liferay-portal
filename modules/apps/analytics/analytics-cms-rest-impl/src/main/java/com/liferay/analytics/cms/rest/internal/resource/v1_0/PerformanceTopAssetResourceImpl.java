@@ -58,8 +58,9 @@ public class PerformanceTopAssetResourceImpl
 		return analyticsCloudClient.getPerformanceTopAsset(
 			_analyticsSettingsManager.getAnalyticsConfiguration(
 				contextCompany.getCompanyId()),
-			assetFilterString, Arrays.asList(groupIds), pagination.getPage(),
-			rangeKey, pagination.getPageSize(), sorts);
+			assetFilterString, Arrays.asList(groupIds),
+			pagination.getPage() - 1, rangeKey, pagination.getPageSize(),
+			sorts);
 	}
 
 	@Override

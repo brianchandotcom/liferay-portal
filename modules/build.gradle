@@ -1060,9 +1060,9 @@ private boolean _containsProject(
 private List<String> _getTestClasses(Task task) {
 	List<String> testClasses = []
 
-	Project project = task.project
-
 	String javaDirName = "src/" + task.name + "/java/"
+
+	Project project = task.project
 
 	for (String testClass : project.gradle.testClasses) {
 		String testJavaClass = testClass.replace(".class", ".java")

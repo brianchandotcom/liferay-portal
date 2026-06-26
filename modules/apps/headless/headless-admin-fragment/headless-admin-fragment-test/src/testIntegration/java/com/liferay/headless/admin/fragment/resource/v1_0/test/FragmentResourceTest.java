@@ -31,6 +31,7 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Repository;
@@ -209,6 +210,7 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 	public void testPostSiteFragment() throws Exception {
 		super.testPostSiteFragment();
 
+		_testPostSiteFormFragment();
 		_testPostSiteFragmentApproved();
 		_testPostSiteFragmentApprovedAndDraft();
 		_testPostSiteFragmentBatch();
@@ -239,6 +241,7 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 	public void testPostSiteFragmentSetFragment() throws Exception {
 		super.testPostSiteFragmentSetFragment();
 
+		_testPostSiteFragmentSetFormFragment();
 		_testPostSiteFragmentSetFragmentApproved();
 		_testPostSiteFragmentSetFragmentApprovedAndDraft();
 		_testPostSiteFragmentSetFragmentDraft();
@@ -501,6 +504,17 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 					LocaleUtil.getDefault(), "html-content-must-not-be-empty"),
 				throwable.getMessage());
 		}
+	}
+
+	private void _assertFormFragment(
+		FieldType[] expectedFieldTypes, Fragment fragment) {
+
+		Assert.assertEquals(Fragment.Type.FORM_FRAGMENT, fragment.getType());
+
+		FormFragment formFragment = (FormFragment)fragment;
+
+		Assert.assertArrayEquals(
+			expectedFieldTypes, formFragment.getFieldTypes());
 	}
 
 	private void _assertFragmentEntry(Fragment fragment, Group group)
@@ -857,6 +871,25 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 		}
 
 		return (BasicFragment)fragment;
+	}
+
+	private FormFragment _randomFormFragment(FieldType[] fieldTypes) {
+		FormFragment formFragment = new FormFragment();
+
+		formFragment.setFieldTypes(fieldTypes);
+		formFragment.setFragmentSet(_toFragmentSet(_fragmentCollection));
+		formFragment.setFragmentVersions(
+			new FragmentVersion[] {
+				_randomFragmentVersion(FragmentVersion.Status.APPROVED)
+			});
+		formFragment.setKey(
+			StringUtil.toLowerCase(RandomTestUtil.randomString()));
+		formFragment.setMarketplace(false);
+		formFragment.setName(
+			StringUtil.toLowerCase(RandomTestUtil.randomString()));
+		formFragment.setType(Fragment.Type.FORM_FRAGMENT);
+
+		return formFragment;
 	}
 
 	private Fragment _randomFragment(boolean approved, boolean draft)
@@ -1285,6 +1318,62 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 		}
 	}
 
+	private void _testPostSiteFormFragment() throws Exception {
+		_testPostSiteFormFragmentFieldTypes();
+		_testPostSiteFormFragmentFieldTypesInvalidProblemException();
+		_testPostSiteFormFragmentFieldTypesUnsupportedProblemException();
+	}
+
+	private void _testPostSiteFormFragmentFieldTypes() throws Exception {
+		for (FieldType fieldType : FieldType.values()) {
+			FieldType[] fieldTypes = {fieldType};
+
+			Fragment postFragment = _postSiteFragment(
+				_randomFormFragment(fieldTypes));
+
+			_assertFormFragment(fieldTypes, postFragment);
+		}
+	}
+
+	private void _testPostSiteFormFragmentFieldTypesInvalidProblemException()
+		throws Exception {
+
+		_assertProblemException(
+			"the-form-fragment-field-types-are-invalid",
+			() -> _postSiteFragment(
+				_randomFormFragment(
+					new FieldType[] {FieldType.CAPTCHA, FieldType.TEXT})));
+
+		_assertProblemException(
+			"the-form-fragment-field-types-are-invalid",
+			() -> _postSiteFragment(
+				_randomFormFragment(
+					new FieldType[] {FieldType.STEPPER, FieldType.TEXT})));
+
+		_assertProblemException(
+			"the-form-fragment-field-types-are-invalid",
+			() -> _postSiteFragment(_randomFormFragment(new FieldType[0])));
+	}
+
+	private void _testPostSiteFormFragmentFieldTypesUnsupportedProblemException()
+		throws Exception {
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"fieldTypes", JSONUtil.putAll(RandomTestUtil.randomString())
+			).put(
+				"type", "FormFragment"
+			).toString(),
+			"headless-admin-fragment/v1.0/sites/" +
+				testGroup.getExternalReferenceCode() + "/fragments",
+			Http.Method.POST);
+
+		Assert.assertEquals("BAD_REQUEST", jsonObject.getString("status"));
+		Assert.assertEquals(
+			"Unable to map JSON path: fieldTypes.null",
+			jsonObject.getString("title"));
+	}
+
 	private void _testPostSiteFragmentApproved() throws Exception {
 		_testPostFragmentApproved(this::_postSiteFragment);
 	}
@@ -1543,6 +1632,15 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 			Assert.assertEquals(
 				fragmentVersion.getJs(), curFragmentEntry.getJs());
 		}
+	}
+
+	private void _testPostSiteFragmentSetFormFragment() throws Exception {
+		FieldType[] fieldTypes = {FieldType.NUMBER, FieldType.TEXT};
+
+		Fragment postFragment = _postSiteFragmentSetFragment(
+			_randomFormFragment(fieldTypes));
+
+		_assertFormFragment(fieldTypes, postFragment);
 	}
 
 	private void _testPostSiteFragmentSetFragmentApproved() throws Exception {

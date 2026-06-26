@@ -20,6 +20,16 @@ public interface VulcanRequestForwarder {
 
 	public interface Request {
 
+		public default byte[] getBody() {
+			return null;
+		}
+
+		public default String getContentType() {
+			return null;
+		}
+
+		public String getMethod();
+
 		public String getPath();
 
 		public User getUser();
@@ -31,6 +41,8 @@ public interface VulcanRequestForwarder {
 		public String getContent();
 
 		public String getContentType();
+
+		public int getStatusCode();
 
 	}
 

@@ -9,6 +9,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.batch.engine.test.util.BatchEngineTestUtil;
+import com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata;
+import com.liferay.oauth.client.persistence.service.OAuthClientASLocalMetadataLocalService;
 import com.liferay.oauth2.provider.model.OAuth2Authorization;
 import com.liferay.oauth2.provider.service.OAuth2AuthorizationLocalService;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
@@ -16,25 +18,34 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
+import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.test.rule.FeatureFlag;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -45,12 +56,15 @@ import io.modelcontextprotocol.spec.McpSchema;
 
 import java.io.Serializable;
 
-import java.util.ArrayList;
+import java.net.URI;
+
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -64,7 +78,12 @@ import org.skyscreamer.jsonassert.JSONAssert;
  * @author Alejandro Tardín
  * @author Beni Herrero
  */
-@FeatureFlag("LPD-63311")
+@FeatureFlags(
+	featureFlags = {
+		@FeatureFlag("LPD-63311"), @FeatureFlag("LPD-63415"),
+		@FeatureFlag("LPD-63416")
+	}
+)
 @RunWith(Arquillian.class)
 public class MCPServerServletTest {
 
@@ -75,8 +94,6 @@ public class MCPServerServletTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_updateMCPServerConfiguration(true);
-
 		BatchEngineTestUtil.processBatchEngineUnits(
 			"com.liferay.mcp.server.rest.impl", MCPServerServletTest.class,
 			new String[] {
@@ -86,72 +103,126 @@ public class MCPServerServletTest {
 					"definition",
 				".com.liferay.mcp.server.rest.internal.batch.03.object.entry"
 			});
-
-		_accessTokenContent = RandomTestUtil.randomString();
-
-		_addOAuth2Authorization(
-			_accessTokenContent,
-			new Date(System.currentTimeMillis() + Time.HOUR),
-			Collections.singletonList(_getMCPURL()));
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		try {
-			for (OAuth2Authorization oAuth2Authorization :
-					_oAuth2Authorizations) {
-
-				_oAuth2AuthorizationLocalService.deleteOAuth2Authorization(
-					oAuth2Authorization);
-			}
-
-			_oAuth2Authorizations.clear();
-		}
-		finally {
-			_updateMCPServerConfiguration(false);
-		}
 	}
 
 	@Test
-	public void testServiceWhenAccessTokenAudienceIsNotBound()
+	public void testService() throws Exception {
+		Assert.assertEquals(
+			404, HTTPTestUtil.invokeToHttpCode(null, "mcp", Http.Method.GET));
+
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						"com.liferay.mcp.server.rest.internal.configuration." +
+							"MCPServerConfiguration",
+						HashMapDictionaryBuilder.<String, Object>put(
+							"enabled", true
+						).build())) {
+
+			_assertInvalidTokenChallenge(
+				_getResponse("Bearer " + RandomTestUtil.randomString()),
+				"Access token is unknown or revoked");
+
+			String expiredAccessToken = RandomTestUtil.randomString();
+
+			_addOAuth2Authorization(
+				expiredAccessToken,
+				new Date(System.currentTimeMillis() - Time.HOUR),
+				Collections.singletonList(_getMCPURL()));
+
+			_assertInvalidTokenChallenge(
+				_getResponse("Bearer " + expiredAccessToken),
+				"Access token has expired");
+
+			String invalidAccessToken = RandomTestUtil.randomString();
+
+			_addOAuth2Authorization(
+				invalidAccessToken,
+				new Date(System.currentTimeMillis() + Time.HOUR),
+				Collections.singletonList(RandomTestUtil.randomString()));
+
+			_assertInvalidTokenChallenge(
+				_getResponse("Bearer " + invalidAccessToken),
+				"Access token is not bound to this MCP server");
+
+			Http.Response response = _getResponse(null);
+
+			Assert.assertEquals(401, response.getResponseCode());
+
+			String wwwAuthenticate = response.getHeader(
+				HttpHeaders.WWW_AUTHENTICATE);
+
+			Assert.assertTrue(
+				wwwAuthenticate,
+				wwwAuthenticate.startsWith("Bearer realm=\"mcp\""));
+			Assert.assertTrue(
+				wwwAuthenticate,
+				wwwAuthenticate.contains("resource_metadata="));
+			Assert.assertFalse(
+				wwwAuthenticate, wwwAuthenticate.contains("error="));
+
+			_assertInvalidTokenChallenge(
+				_getResponse(RandomTestUtil.randomString()),
+				"Authorization header is not a bearer token");
+
+			String userNameAndPassword =
+				"test@liferay.com:" + PropsValues.DEFAULT_ADMIN_PASSWORD;
+
+			for (String authorization :
+					List.of(
+						"Basic " +
+							Base64.encode(userNameAndPassword.getBytes()),
+						"Bearer " + _getAccessToken())) {
+
+				_testServiceWithModifiedProfile(authorization);
+				_testServiceWithNoContentResponse(authorization);
+				_testServiceWithoutProfile(authorization);
+				_testServiceWithoutSession(authorization);
+				_testServiceWithProfile(authorization);
+			}
+		}
+	}
+
+	private OAuth2Authorization _addOAuth2Authorization(
+			String accessTokenContent, Date accessTokenExpirationDate,
+			List<String> audiencesList)
 		throws Exception {
 
-		String accessTokenContent = RandomTestUtil.randomString();
-
-		_addOAuth2Authorization(
-			accessTokenContent,
-			new Date(System.currentTimeMillis() + Time.HOUR),
-			Collections.singletonList(RandomTestUtil.randomString()));
-
-		_assertInvalidTokenChallenge(
-			_getResponse("Bearer " + accessTokenContent),
-			"Access token is not bound to this MCP server");
+		return _oAuth2AuthorizationLocalService.addOAuth2Authorization(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomLong(),
+			RandomTestUtil.randomLong(), accessTokenContent, new Date(),
+			accessTokenExpirationDate, audiencesList,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
+			null, null);
 	}
 
-	@Test
-	public void testServiceWhenAccessTokenIsExpired() throws Exception {
-		String accessTokenContent = RandomTestUtil.randomString();
+	private ObjectEntry _addObjectEntry(String name, String... tools)
+		throws Exception {
 
-		_addOAuth2Authorization(
-			accessTokenContent,
-			new Date(System.currentTimeMillis() - Time.HOUR),
-			Collections.singletonList(_getMCPURL()));
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.
+				fetchObjectDefinitionByExternalReferenceCode(
+					"L_MCP_SERVER_PROFILE", TestPropsValues.getCompanyId());
 
-		_assertInvalidTokenChallenge(
-			_getResponse("Bearer " + accessTokenContent),
-			"Access token has expired");
+		return _objectEntryLocalService.addObjectEntry(
+			0, TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null,
+			HashMapBuilder.<String, Serializable>put(
+				"description", RandomTestUtil.randomString()
+			).put(
+				"name", name
+			).put(
+				"tools", StringUtil.merge(tools, "\n")
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
 	}
 
-	@Test
-	public void testServiceWhenAccessTokenIsUnknown() throws Exception {
-		_assertInvalidTokenChallenge(
-			_getResponse("Bearer " + RandomTestUtil.randomString()),
-			"Access token is unknown or revoked");
-	}
-
-	@Test
-	public void testServiceWhenAuthorizationHeaderIsMissing() throws Exception {
-		Http.Response response = _getResponse(null);
+	private void _assertInvalidTokenChallenge(
+		Http.Response response, String description) {
 
 		Assert.assertEquals(401, response.getResponseCode());
 
@@ -160,40 +231,350 @@ public class MCPServerServletTest {
 
 		Assert.assertTrue(
 			wwwAuthenticate,
-			wwwAuthenticate.startsWith("Bearer realm=\"mcp\""));
+			wwwAuthenticate.contains("error=\"invalid_token\""));
 		Assert.assertTrue(
-			wwwAuthenticate, wwwAuthenticate.contains("resource_metadata="));
-		Assert.assertFalse(wwwAuthenticate, wwwAuthenticate.contains("error="));
+			wwwAuthenticate,
+			wwwAuthenticate.contains(
+				"error_description=\"" + description + "\""));
 	}
 
-	@Test
-	public void testServiceWhenAuthorizationHeaderIsNotBearer()
+	private void _assertTool(
+			McpSchema.Tool tool, String expectedName,
+			String expectedSchemaFileName)
 		throws Exception {
 
-		_assertInvalidTokenChallenge(
-			_getResponse(RandomTestUtil.randomString()),
-			"Authorization header is not a bearer token");
+		Assert.assertEquals(expectedName, tool.name());
+
+		JSONAssert.assertEquals(
+			StringUtil.read(
+				MCPServerServletTest.class.getResourceAsStream(
+					"dependencies/" + expectedSchemaFileName)),
+			new ObjectMapper(
+			).writeValueAsString(
+				tool.inputSchema()
+			),
+			false);
 	}
 
-	@Test
-	public void testServiceWhenMCPServerConfigurationIsDisabled()
+	private String _get(String url) throws Exception {
+		Http.Options options = new Http.Options();
+
+		options.setFollowRedirects(false);
+		options.setLocation(url);
+
+		return _http.URLtoString(options);
+	}
+
+	private String _getAccessToken() throws Exception {
+		String portalURL =
+			"http://localhost:" + PortalUtil.getPortalServerPort(false);
+
+		OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
+			_oAuthClientASLocalMetadataLocalService.
+				fetchOAuthClientASLocalMetadata(
+					TestPropsValues.getCompanyId(), portalURL);
+
+		if (oAuthClientASLocalMetadata != null) {
+			_oAuthClientASLocalMetadataLocalService.
+				deleteOAuthClientASLocalMetadata(oAuthClientASLocalMetadata);
+		}
+
+		_oAuthClientASLocalMetadataLocalService.addOAuthClientASLocalMetadata(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			portalURL + "/o/oauth2/authorize", portalURL,
+			portalURL + "/o/oauth2/jwks", true,
+			portalURL + "/o/oauth2/register",
+			new String[] {"authorization_code", "client_credentials"},
+			new String[] {"everything"}, new String[] {"public"},
+			portalURL + "/o/oauth2/token", null);
+
+		Http.Options options = new Http.Options();
+
+		options.setFollowRedirects(false);
+		options.setLocation(_getMCPURL());
+
+		_http.URLtoString(options);
+
+		Http.Response response = options.getResponse();
+
+		Assert.assertEquals(401, response.getResponseCode());
+
+		Matcher matcher = _resourceMetadataPattern.matcher(
+			response.getHeader("WWW-Authenticate"));
+
+		Assert.assertTrue(matcher.find());
+
+		JSONObject protectedResourceMetadataJSONObject =
+			JSONFactoryUtil.createJSONObject(_get(matcher.group(1)));
+
+		String authorizationServerURL =
+			protectedResourceMetadataJSONObject.getJSONArray(
+				"authorization_servers"
+			).getString(
+				0
+			);
+
+		JSONObject authorizationServerMetadataJSONObject =
+			JSONFactoryUtil.createJSONObject(
+				_get(
+					authorizationServerURL +
+						"/.well-known/oauth-authorization-server"));
+
+		String redirectURI = "https://example.com/callback";
+
+		String clientId = null;
+
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						"com.liferay.oauth2.provider.rest.internal." +
+							"configuration.DynamicRegistrationConfiguration",
+						HashMapDictionaryBuilder.<String, Object>put(
+							"dynamic.registration.anonymous.allowed.grant." +
+								"types",
+							new String[] {"*"}
+						).put(
+							"dynamic.registration.anonymous.allowed.hosts",
+							new String[] {"*"}
+						).put(
+							"dynamic.registration.anonymous.allowed.redirect." +
+								"uri.patterns",
+							new String[] {"*"}
+						).put(
+							"dynamic.registration.anonymous.allowed.scopes",
+							new String[] {"*"}
+						).put(
+							"dynamic.registration.anonymous.registrations." +
+								"per.hour",
+							0
+						).put(
+							"dynamic.registration.require.initial.access.token",
+							false
+						).build())) {
+
+			options = new Http.Options();
+
+			options.addHeader("Content-Type", ContentTypes.APPLICATION_JSON);
+			options.setBody(
+				JSONUtil.put(
+					"client_name", RandomTestUtil.randomString()
+				).put(
+					"grant_types", JSONUtil.putAll("authorization_code")
+				).put(
+					"redirect_uris", JSONUtil.putAll(redirectURI)
+				).put(
+					"response_types", JSONUtil.putAll("code")
+				).put(
+					"scope", "everything"
+				).put(
+					"token_endpoint_auth_method", "none"
+				).toString(),
+				ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+			options.setFollowRedirects(false);
+			options.setLocation(
+				authorizationServerMetadataJSONObject.getString(
+					"registration_endpoint"));
+			options.setPost(true);
+
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				_http.URLtoString(options));
+
+			clientId = jsonObject.getString("client_id");
+		}
+
+		String codeVerifier =
+			"mcpServerTestCodeVerifier1234567890123456789012345";
+
+		String resource = protectedResourceMetadataJSONObject.getString(
+			"resource");
+
+		String authorizationEndpoint =
+			authorizationServerMetadataJSONObject.getString(
+				"authorization_endpoint");
+		String codeChallenge = StringUtil.removeChar(
+			StringUtil.replace(
+				DigesterUtil.digestBase64(DigesterUtil.SHA_256, codeVerifier),
+				new char[] {CharPool.PLUS, CharPool.SLASH},
+				new char[] {CharPool.MINUS, CharPool.UNDERLINE}),
+			CharPool.EQUAL);
+
+		String authorizeRequestURL = HttpComponentsUtil.addParameter(
+			authorizationEndpoint, "client_id", clientId);
+
+		authorizeRequestURL = HttpComponentsUtil.addParameter(
+			authorizeRequestURL, "code_challenge", codeChallenge);
+		authorizeRequestURL = HttpComponentsUtil.addParameter(
+			authorizeRequestURL, "code_challenge_method", "S256");
+		authorizeRequestURL = HttpComponentsUtil.addParameter(
+			authorizeRequestURL, "redirect_uri", redirectURI);
+		authorizeRequestURL = HttpComponentsUtil.addParameter(
+			authorizeRequestURL, "resource", resource);
+		authorizeRequestURL = HttpComponentsUtil.addParameter(
+			authorizeRequestURL, "response_type", "code");
+		authorizeRequestURL = HttpComponentsUtil.addParameter(
+			authorizeRequestURL, "scope", "everything");
+		authorizeRequestURL = HttpComponentsUtil.addParameter(
+			authorizeRequestURL, "state", RandomTestUtil.randomString());
+
+		portalURL = "http://localhost:" + PortalUtil.getPortalServerPort(false);
+
+		options = new Http.Options();
+
+		options.setLocation(portalURL + "/web/guest");
+
+		String body = _http.URLtoString(options);
+
+		matcher = _authTokenPattern.matcher(body);
+
+		Assert.assertTrue(matcher.find());
+
+		User user = TestPropsValues.getUser();
+
+		options = new Http.Options();
+
+		options.setBody(
+			StringBundler.concat(
+				"login=", URLCodec.encodeURL(user.getEmailAddress()),
+				"&p_auth=", matcher.group(2), "&password=",
+				URLCodec.encodeURL(PropsValues.DEFAULT_ADMIN_PASSWORD)),
+			ContentTypes.APPLICATION_X_WWW_FORM_URLENCODED, StringPool.UTF8);
+		options.setCookies(_http.getCookies());
+		options.setLocation(portalURL + "/c/portal/login");
+		options.setPost(true);
+
+		_http.URLtoString(options);
+
+		options = new Http.Options();
+
+		options.addHeader("Accept", ContentTypes.TEXT_HTML);
+		options.setCookies(_http.getCookies());
+		options.setFollowRedirects(false);
+		options.setLocation(authorizeRequestURL);
+
+		_http.URLtoString(options);
+
+		response = options.getResponse();
+
+		Map<String, String[]> parameterMap = HttpComponentsUtil.getParameterMap(
+			_getQueryString(response.getHeader("Location")));
+
+		StringBundler sb = new StringBundler();
+
+		sb.append("oauthDecision=allow");
+
+		for (Map.Entry<String, String[]> entry : parameterMap.entrySet()) {
+			String key = entry.getKey();
+
+			if (!key.startsWith("oauth2_")) {
+				continue;
+			}
+
+			sb.append(StringPool.AMPERSAND);
+			sb.append(URLCodec.encodeURL(key.substring(7)));
+			sb.append(StringPool.EQUAL);
+			sb.append(URLCodec.encodeURL(entry.getValue()[0]));
+		}
+
+		options = new Http.Options();
+
+		options.setBody(
+			sb.toString(), ContentTypes.APPLICATION_X_WWW_FORM_URLENCODED,
+			StringPool.UTF8);
+		options.setCookies(_http.getCookies());
+		options.setFollowRedirects(false);
+		options.setLocation(authorizationEndpoint + "/decision");
+		options.setPost(true);
+
+		_http.URLtoString(options);
+
+		response = options.getResponse();
+
+		Map<String, String[]> decisionParameterMap =
+			HttpComponentsUtil.getParameterMap(
+				_getQueryString(response.getHeader("Location")));
+
+		String code = decisionParameterMap.get("code")[0];
+
+		String tokenEndpoint = authorizationServerMetadataJSONObject.getString(
+			"token_endpoint");
+
+		options = new Http.Options();
+
+		options.setBody(
+			StringBundler.concat(
+				"client_id=", URLCodec.encodeURL(clientId), "&code=",
+				URLCodec.encodeURL(code), "&code_verifier=",
+				URLCodec.encodeURL(codeVerifier),
+				"&grant_type=authorization_code&redirect_uri=",
+				URLCodec.encodeURL(redirectURI), "&resource=",
+				URLCodec.encodeURL(resource)),
+			ContentTypes.APPLICATION_X_WWW_FORM_URLENCODED, StringPool.UTF8);
+		options.setFollowRedirects(false);
+		options.setLocation(tokenEndpoint);
+		options.setPost(true);
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			_http.URLtoString(options));
+
+		return jsonObject.getString("access_token");
+	}
+
+	private McpSyncClient _getMcpSyncClient(
+		String authorization, String profileName) {
+
+		return McpClient.sync(
+			HttpClientStreamableHttpTransport.builder(
+				"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+					"/o/"
+			).customizeRequest(
+				builder -> builder.header("Authorization", authorization)
+			).endpoint(
+				(profileName != null) ? "mcp/" + profileName : "mcp"
+			).build()
+		).capabilities(
+			McpSchema.ClientCapabilities.builder(
+			).elicitation(
+				true, true
+			).build()
+		).build();
+	}
+
+	private String _getMCPURL() {
+		return "http://localhost:" + PortalUtil.getPortalServerPort(false) +
+			"/o/mcp";
+	}
+
+	private String _getQueryString(String url) {
+		URI uri = URI.create(url);
+
+		return uri.getRawQuery();
+	}
+
+	private Http.Response _getResponse(String authorization) throws Exception {
+		Http.Options options = new Http.Options();
+
+		if (authorization != null) {
+			options.addHeader("Authorization", authorization);
+		}
+
+		options.setLocation(_getMCPURL());
+
+		_http.URLtoString(options);
+
+		return options.getResponse();
+	}
+
+	private void _testServiceWithModifiedProfile(String authorization)
 		throws Exception {
 
-		_updateMCPServerConfiguration(false);
-
-		Assert.assertEquals(
-			404, HTTPTestUtil.invokeToHttpCode(null, "mcp", Http.Method.GET));
-	}
-
-	@Test
-	public void testServiceWithModifiedProfile() throws Exception {
 		String name = RandomTestUtil.randomString();
 
 		ObjectEntry objectEntry = _addObjectEntry(
 			name, "mcp-server-profiles getMCPServerProfilesPage",
 			"mcp-server-profiles postMCPServerProfile");
 
-		McpSyncClient mcpSyncClient = _getMcpSyncClient(name);
+		McpSyncClient mcpSyncClient = _getMcpSyncClient(authorization, name);
 
 		mcpSyncClient.initialize();
 
@@ -224,7 +605,7 @@ public class MCPServerServletTest {
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
 
-		mcpSyncClient = _getMcpSyncClient(name);
+		mcpSyncClient = _getMcpSyncClient(authorization, name);
 
 		mcpSyncClient.initialize();
 
@@ -241,9 +622,10 @@ public class MCPServerServletTest {
 		mcpSyncClient.closeGracefully();
 	}
 
-	@Test
-	public void testServiceWithNoContentResponse() throws Exception {
-		McpSyncClient mcpSyncClient = _getMcpSyncClient(null);
+	private void _testServiceWithNoContentResponse(String authorization)
+		throws Exception {
+
+		McpSyncClient mcpSyncClient = _getMcpSyncClient(authorization, null);
 
 		mcpSyncClient.initialize();
 
@@ -277,9 +659,10 @@ public class MCPServerServletTest {
 		mcpSyncClient.closeGracefully();
 	}
 
-	@Test
-	public void testServiceWithoutProfile() throws Exception {
-		McpSyncClient mcpSyncClient = _getMcpSyncClient(null);
+	private void _testServiceWithoutProfile(String authorization)
+		throws Exception {
+
+		McpSyncClient mcpSyncClient = _getMcpSyncClient(authorization, null);
 
 		mcpSyncClient.initialize();
 
@@ -394,18 +777,57 @@ public class MCPServerServletTest {
 				"items"
 			));
 
+		String entryName = RandomTestUtil.randomString();
+
+		callToolResult = mcpSyncClient.callTool(
+			new McpSchema.CallToolRequest(
+				"postToolSetToolSetNameToolInvoke",
+				HashMapBuilder.<String, Object>put(
+					"body",
+					HashMapBuilder.<String, Object>put(
+						"body",
+						HashMapBuilder.<String, Object>put(
+							"description", RandomTestUtil.randomString()
+						).put(
+							"name", entryName
+						).put(
+							"tools",
+							"mcp-server-profiles getMCPServerProfilesPage"
+						).build()
+					).build()
+				).put(
+					"toolName", "postMCPServerProfile"
+				).put(
+					"toolSetName", "mcp-server-profiles"
+				).build()));
+
+		contents = callToolResult.content();
+
+		textContent = (McpSchema.TextContent)contents.get(0);
+
+		Assert.assertFalse(textContent.text(), callToolResult.isError());
+
+		Assert.assertEquals(
+			entryName,
+			JSONFactoryUtil.createJSONObject(
+				textContent.text()
+			).getString(
+				"name"
+			));
+
 		mcpSyncClient.closeGracefully();
 	}
 
-	@Test
-	public void testServiceWithoutSession() throws Exception {
+	private void _testServiceWithoutSession(String authorization)
+		throws Exception {
+
 		String url =
 			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
 				"/o/mcp";
 
 		Http.Options options = new Http.Options();
 
-		options.addHeader("Authorization", _getAuthorization());
+		options.addHeader("Authorization", authorization);
 		options.setLocation(url);
 
 		_http.URLtoString(options);
@@ -418,7 +840,7 @@ public class MCPServerServletTest {
 		options = new Http.Options();
 
 		options.addHeader("Accept", "application/json, text/event-stream");
-		options.addHeader("Authorization", _getAuthorization());
+		options.addHeader("Authorization", authorization);
 		options.addHeader("Content-Type", ContentTypes.APPLICATION_JSON);
 		options.setBody(
 			JSONUtil.put(
@@ -454,15 +876,16 @@ public class MCPServerServletTest {
 		Assert.assertEquals(200, response.getResponseCode());
 	}
 
-	@Test
-	public void testServiceWithProfile() throws Exception {
+	private void _testServiceWithProfile(String authorization)
+		throws Exception {
+
 		String name = RandomTestUtil.randomString();
 
 		_addObjectEntry(
 			name, "mcp-server-profiles getMCPServerProfilesPage",
 			"mcp-server-profiles postMCPServerProfile");
 
-		McpSyncClient mcpSyncClient = _getMcpSyncClient(name);
+		McpSyncClient mcpSyncClient = _getMcpSyncClient(authorization, name);
 
 		mcpSyncClient.initialize();
 
@@ -535,138 +958,10 @@ public class MCPServerServletTest {
 		mcpSyncClient.closeGracefully();
 	}
 
-	private OAuth2Authorization _addOAuth2Authorization(
-			String accessTokenContent, Date accessTokenExpirationDate,
-			List<String> audiencesList)
-		throws Exception {
-
-		OAuth2Authorization oAuth2Authorization =
-			_oAuth2AuthorizationLocalService.addOAuth2Authorization(
-				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-				RandomTestUtil.randomString(), RandomTestUtil.randomLong(),
-				RandomTestUtil.randomLong(), accessTokenContent, new Date(),
-				accessTokenExpirationDate, audiencesList,
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				null, null, null);
-
-		_oAuth2Authorizations.add(oAuth2Authorization);
-
-		return oAuth2Authorization;
-	}
-
-	private ObjectEntry _addObjectEntry(String name, String... tools)
-		throws Exception {
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.
-				fetchObjectDefinitionByExternalReferenceCode(
-					"L_MCP_SERVER_PROFILE", TestPropsValues.getCompanyId());
-
-		return _objectEntryLocalService.addObjectEntry(
-			0, TestPropsValues.getUserId(),
-			objectDefinition.getObjectDefinitionId(),
-			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
-			null,
-			HashMapBuilder.<String, Serializable>put(
-				"description", RandomTestUtil.randomString()
-			).put(
-				"name", name
-			).put(
-				"tools", StringUtil.merge(tools, "\n")
-			).build(),
-			ServiceContextTestUtil.getServiceContext());
-	}
-
-	private void _assertInvalidTokenChallenge(
-		Http.Response response, String description) {
-
-		Assert.assertEquals(401, response.getResponseCode());
-
-		String wwwAuthenticate = response.getHeader(
-			HttpHeaders.WWW_AUTHENTICATE);
-
-		Assert.assertTrue(
-			wwwAuthenticate,
-			wwwAuthenticate.contains("error=\"invalid_token\""));
-		Assert.assertTrue(
-			wwwAuthenticate,
-			wwwAuthenticate.contains(
-				"error_description=\"" + description + "\""));
-	}
-
-	private void _assertTool(
-			McpSchema.Tool tool, String expectedName,
-			String expectedSchemaFileName)
-		throws Exception {
-
-		Assert.assertEquals(expectedName, tool.name());
-
-		JSONAssert.assertEquals(
-			StringUtil.read(
-				MCPServerServletTest.class.getResourceAsStream(
-					"dependencies/" + expectedSchemaFileName)),
-			new ObjectMapper(
-			).writeValueAsString(
-				tool.inputSchema()
-			),
-			false);
-	}
-
-	private String _getAuthorization() {
-		return "Bearer " + _accessTokenContent;
-	}
-
-	private McpSyncClient _getMcpSyncClient(String profileName) {
-		return McpClient.sync(
-			HttpClientStreamableHttpTransport.builder(
-				"http://localhost:" + PortalUtil.getPortalServerPort(false) +
-					"/o/"
-			).customizeRequest(
-				builder -> builder.header("Authorization", _getAuthorization())
-			).endpoint(
-				(profileName != null) ? "mcp/" + profileName : "mcp"
-			).build()
-		).capabilities(
-			McpSchema.ClientCapabilities.builder(
-			).elicitation(
-				true, true
-			).build()
-		).build();
-	}
-
-	private String _getMCPURL() {
-		return "http://localhost:" + PortalUtil.getPortalServerPort(false) +
-			"/o/mcp";
-	}
-
-	private Http.Response _getResponse(String authorization) throws Exception {
-		Http.Options options = new Http.Options();
-
-		if (authorization != null) {
-			options.addHeader("Authorization", authorization);
-		}
-
-		options.setLocation(_getMCPURL());
-
-		_http.URLtoString(options);
-
-		return options.getResponse();
-	}
-
-	private void _updateMCPServerConfiguration(boolean enabled)
-		throws Exception {
-
-		ConfigurationTestUtil.createFactoryConfiguration(
-			"com.liferay.mcp.server.rest.internal.configuration." +
-				"MCPServerConfiguration.scoped",
-			HashMapDictionaryBuilder.<String, Object>put(
-				"companyId", TestPropsValues.getCompanyId()
-			).put(
-				"enabled", enabled
-			).build());
-	}
-
-	private String _accessTokenContent;
+	private static final Pattern _authTokenPattern = Pattern.compile(
+		"authToken:\\s*(['\"])(((?!\\1).)*)\\1,");
+	private static final Pattern _resourceMetadataPattern = Pattern.compile(
+		"resource_metadata=\"([^\"]+)\"");
 
 	@Inject
 	private Http _http;
@@ -674,8 +969,9 @@ public class MCPServerServletTest {
 	@Inject
 	private OAuth2AuthorizationLocalService _oAuth2AuthorizationLocalService;
 
-	private final List<OAuth2Authorization> _oAuth2Authorizations =
-		new ArrayList<>();
+	@Inject
+	private OAuthClientASLocalMetadataLocalService
+		_oAuthClientASLocalMetadataLocalService;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

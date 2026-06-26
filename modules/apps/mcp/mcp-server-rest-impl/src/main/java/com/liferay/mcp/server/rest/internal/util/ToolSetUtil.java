@@ -18,16 +18,15 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.service.Snapshot;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.vulcan.http.VulcanRequestForwarder;
 import com.liferay.portal.vulcan.jackson.databind.ObjectMapperProviderUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 
@@ -148,55 +147,28 @@ public class ToolSetUtil {
 			}
 		}
 
-		Http.Options options = _getOptions(
-			httpServletRequest, inputJSONObject, toolName, toolSetName);
+		VulcanRequestForwarder vulcanRequestForwarder =
+			_vulcanRequestForwarderSnapshot.get();
 
-		String content = _getContent(HttpUtil.URLtoString(options));
+		OpenAPIBrief openAPIBrief = _getOpenAPIBrief(toolSetName);
 
-		Http.Response response = options.getResponse();
+		VulcanRequestForwarder.Response response =
+			vulcanRequestForwarder.forward(
+				httpServletRequest,
+				OpenAPIUtil.getRequest(
+					openAPIBrief._basePath, inputJSONObject,
+					_getOpenAPIJSONObject(openAPIBrief, httpServletRequest),
+					toolName, _getUser(httpServletRequest)));
+
+		String content = response.getContent();
 
 		return Response.status(
-			response.getResponseCode()
+			response.getStatusCode()
 		).entity(
-			content
+			Validator.isNull(content) ? null : _getContent(content)
 		).type(
 			ContentTypes.TEXT_PLAIN_UTF8
 		).build();
-	}
-
-	private static String _get(
-			HttpServletRequest httpServletRequest, String url)
-		throws Exception {
-
-		Http.Options options = new Http.Options();
-
-		Map<String, String> headers = _getHeaders(httpServletRequest);
-
-		if (!headers.isEmpty()) {
-			options.setHeaders(headers);
-		}
-
-		options.setLocation(url);
-		options.setTimeout(60000);
-
-		String content = HttpUtil.URLtoString(options);
-
-		Http.Response response = options.getResponse();
-
-		int responseCode = response.getResponseCode();
-
-		if (responseCode >= 300) {
-			throw new Exception(
-				StringBundler.concat(
-					"HTTP ", responseCode, " for ", url, ": ", content));
-		}
-
-		return content;
-	}
-
-	private static String _getBaseURL(HttpServletRequest httpServletRequest) {
-		return PortalUtil.getPortalURL(httpServletRequest) +
-			PortalUtil.getPathContext() + Portal.PATH_MODULE;
 	}
 
 	private static String _getContent(String content) {
@@ -249,34 +221,6 @@ public class ToolSetUtil {
 		}
 
 		return description;
-	}
-
-	private static Map<String, String> _getHeaders(
-		HttpServletRequest httpServletRequest) {
-
-		String authorization = httpServletRequest.getHeader("Authorization");
-
-		if (authorization != null) {
-			return HashMapBuilder.put(
-				"Authorization", authorization
-			).build();
-		}
-
-		Map<String, String> headers = new HashMap<>();
-
-		String cookie = httpServletRequest.getHeader("Cookie");
-
-		if (cookie != null) {
-			headers.put("Cookie", cookie);
-		}
-
-		String csrfToken = httpServletRequest.getHeader("X-CSRF-Token");
-
-		if (csrfToken != null) {
-			headers.put("X-CSRF-Token", csrfToken);
-		}
-
-		return headers;
 	}
 
 	private static OpenAPIBrief _getOpenAPIBrief(String toolSetName) {
@@ -335,24 +279,46 @@ public class ToolSetUtil {
 		OpenAPIBrief openAPIBrief, HttpServletRequest httpServletRequest) {
 
 		return _openAPIJSONObjectCache.computeIfAbsent(
-			_getBaseURL(httpServletRequest) + openAPIBrief._basePath +
-				openAPIBrief._openAPIPath,
-			url -> {
-				String content = null;
-
+			openAPIBrief._basePath + openAPIBrief._openAPIPath,
+			path -> {
 				try {
-					content = _get(httpServletRequest, url);
+					VulcanRequestForwarder vulcanRequestForwarder =
+						_vulcanRequestForwarderSnapshot.get();
 
-					return JSONFactoryUtil.createJSONObject(content);
+					VulcanRequestForwarder.Response response =
+						vulcanRequestForwarder.forward(
+							httpServletRequest,
+							new VulcanRequestForwarder.Request() {
+
+								@Override
+								public String getMethod() {
+									return "GET";
+								}
+
+								@Override
+								public String getPath() {
+									return path;
+								}
+
+								@Override
+								public User getUser() {
+									return _getUser(httpServletRequest);
+								}
+
+							});
+
+					if (response.getStatusCode() >= 300) {
+						throw new RuntimeException(
+							StringBundler.concat(
+								"HTTP ", response.getStatusCode(), " for ",
+								path, ": ", response.getContent()));
+					}
+
+					return JSONFactoryUtil.createJSONObject(
+						response.getContent());
 				}
 				catch (Exception exception) {
-					throw new RuntimeException(
-						StringBundler.concat(
-							"Unable to read a valid OpenAPI document from \"",
-							url, "\": ",
-							StringUtil.shorten(
-								GetterUtil.getString(content), 200)),
-						exception);
+					throw new RuntimeException(exception);
 				}
 			});
 	}
@@ -387,29 +353,6 @@ public class ToolSetUtil {
 		}
 
 		return null;
-	}
-
-	private static Http.Options _getOptions(
-		HttpServletRequest httpServletRequest, JSONObject inputJSONObject,
-		String toolName, String toolSetName) {
-
-		OpenAPIBrief openAPIBrief = _getOpenAPIBrief(toolSetName);
-
-		Http.Options options = OpenAPIUtil.getOptions(
-			_getBaseURL(httpServletRequest) + openAPIBrief._basePath,
-			inputJSONObject,
-			_getOpenAPIJSONObject(openAPIBrief, httpServletRequest), toolName);
-
-		Map<String, String> headers = _getHeaders(httpServletRequest);
-
-		if (options.getHeaders() != null) {
-			headers.putAll(options.getHeaders());
-		}
-
-		options.setHeaders(headers);
-		options.setTimeout(60000);
-
-		return options;
 	}
 
 	private static Response _getResponse(Object value) throws Exception {
@@ -473,6 +416,12 @@ public class ToolSetUtil {
 		return toolSetDescriptions;
 	}
 
+	private static User _getUser(HttpServletRequest httpServletRequest) {
+		return UserLocalServiceUtil.fetchUser(
+			GetterUtil.getLong(
+				httpServletRequest.getAttribute(WebKeys.USER_ID)));
+	}
+
 	private static String _getVersionPath(String openAPIPath) {
 		int index = openAPIPath.lastIndexOf("/openapi");
 
@@ -492,6 +441,9 @@ public class ToolSetUtil {
 			ToolSetUtil.class, JaxrsServiceRuntime.class);
 	private static final Map<String, JSONObject> _openAPIJSONObjectCache =
 		new ConcurrentHashMap<>();
+	private static final Snapshot<VulcanRequestForwarder>
+		_vulcanRequestForwarderSnapshot = new Snapshot<>(
+			ToolSetUtil.class, VulcanRequestForwarder.class);
 
 	private static class OpenAPIBrief {
 

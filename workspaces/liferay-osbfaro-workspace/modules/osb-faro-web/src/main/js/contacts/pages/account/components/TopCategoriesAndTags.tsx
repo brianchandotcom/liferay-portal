@@ -8,6 +8,7 @@ import ClayTable from '@clayui/table';
 import ClayTabs from '@clayui/tabs';
 import React, {useCallback, useState} from 'react';
 import StatesRenderer from 'shared/components/states-renderer/StatesRenderer';
+import {IAccount} from './AccountInfo';
 import {Option, Picker, Text} from '@clayui/core';
 import {toThousands} from 'shared/util/numbers';
 import {useParams} from 'react-router-dom';
@@ -37,6 +38,7 @@ export interface ITopTag {
 }
 
 interface ITopCategoriesAndTagsProps {
+	account?: IAccount;
 	className?: string;
 }
 
@@ -196,17 +198,15 @@ const TabContent: React.FC<ITabContentProps> = ({
 };
 
 const TopCategoriesAndTags: React.FC<ITopCategoriesAndTagsProps> = ({
+	account,
 	className,
 }) => {
-	const {
-		channelId,
-		groupId,
-		id: accountId,
-	} = useParams<{
+	const {channelId, groupId} = useParams<{
 		channelId: string;
 		groupId: string;
-		id: string;
 	}>();
+
+	const accountId = account?.id;
 
 	const [activeTab, setActiveTab] = useState(0);
 	const [groupBy, setGroupBy] = useState<GroupByMetric>(
@@ -245,7 +245,14 @@ const TopCategoriesAndTags: React.FC<ITopCategoriesAndTagsProps> = ({
 		{items: TaxonomyItem[]}
 	>({
 		dataSourceFn,
-		variables: {accountId, channelId, groupId, isCategory, selectedMetric},
+		skipRequest: !accountId,
+		variables: {
+			accountId: accountId!,
+			channelId,
+			groupId,
+			isCategory,
+			selectedMetric,
+		},
 	});
 
 	const items = data?.items ?? [];

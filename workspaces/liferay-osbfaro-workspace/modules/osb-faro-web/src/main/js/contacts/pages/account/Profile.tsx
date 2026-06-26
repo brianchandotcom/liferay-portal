@@ -22,7 +22,7 @@ const Profile: React.FC<IProfileProps> = ({account, loading}) => (
 			<LifecycleStatus />
 			<AccountInfo account={account} loading={loading} />
 			<TopAssets account={account} />
-			<TopCategoriesAndTags />
+			<TopCategoriesAndTags account={account} />
 		</div>
 
 		<AccountIndividuals />

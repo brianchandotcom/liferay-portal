@@ -255,7 +255,7 @@ const FilterAndOrder: React.FC<IFilterAndOrderProps> = ({
 						</span>
 
 						<span className='mx-2'>
-							{Liferay.Language.get('order')}
+							{Liferay.Language.get('order[sort]')}
 						</span>
 
 						<span className='caret-root'>

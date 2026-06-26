@@ -6,7 +6,7 @@ import {Text} from '@clayui/core';
 const SegmentEnabledSequentialCard = () => (
 	<Card>
 		<Card.Header>
-			<Card.Title>{Liferay.Language.get('order')}</Card.Title>
+			<Card.Title>{Liferay.Language.get('order[ranking]')}</Card.Title>
 		</Card.Header>
 
 		<Card.Body>

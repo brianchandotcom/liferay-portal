@@ -18,7 +18,7 @@
 					icon="categories"
 				/>
 
-				<small class="text-uppercase"><liferay-ui:message key="categories" /></small>
+				<small class="text-uppercase"><liferay-ui:message key="categories[message-board]" /></small>
 
 				<p class="statistics-number"><%= numberFormat.format(categoryDisplay.getAllCategoriesCount()) %></p>
 			</div>

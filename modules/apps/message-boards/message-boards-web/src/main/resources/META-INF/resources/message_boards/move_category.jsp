@@ -60,7 +60,7 @@ if (portletTitleBasedNavigation) {
 					<liferay-frontend:resource-selector
 						inputLabel='<%= LanguageUtil.get(request, "parent-category") %>'
 						inputName="parentCategoryId"
-						modalTitle='<%= LanguageUtil.format(request, "select-x", "category") %>'
+						modalTitle='<%= LanguageUtil.format(request, "select-x", "category[message-board]") %>'
 						resourceName="<%= parentCategoryName %>"
 						resourceValue="<%= String.valueOf(parentCategoryId) %>"
 						selectEventName="selectCategory"

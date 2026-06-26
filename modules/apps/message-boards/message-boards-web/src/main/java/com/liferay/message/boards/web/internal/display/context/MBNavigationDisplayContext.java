@@ -56,7 +56,8 @@ public class MBNavigationDisplayContext {
 
 				if (_isMBPortlet()) {
 					navigationItem.setLabel(
-						LanguageUtil.get(_httpServletRequest, "categories"));
+						LanguageUtil.get(
+							_httpServletRequest, "categories[message-board]"));
 				}
 				else {
 					navigationItem.setLabel(

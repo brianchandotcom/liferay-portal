@@ -4,120 +4,149 @@
  */
 
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {
+	forwardRef,
+	useCallback,
+	useEffect,
+	useImperativeHandle,
+	useRef,
+	useState,
+} from 'react';
 
 import {ElementVariation} from './elementVariationsReducer';
 import getElementVariationScript from './getElementVariationScript';
+
+export interface ElementVariationsPreviewRef {
+	reload: () => void;
+}
 
 interface Props {
 	draftElementVariation: ElementVariation | null;
 	previewURL: string;
 }
 
-export default function ElementVariationsPreview({
-	draftElementVariation,
-	previewURL,
-}: Props) {
-	const iframeRef = useRef<HTMLIFrameElement>(null);
-	const appliedElementVariationRef = useRef<{
-		element: Element;
-		originalHTML: string | null;
-		styleElement: HTMLStyleElement | null;
-	} | null>(null);
+const ElementVariationsPreview = forwardRef<ElementVariationsPreviewRef, Props>(
+	function ElementVariationsPreview(
+		{draftElementVariation, previewURL},
+		ref
+	) {
+		const iframeRef = useRef<HTMLIFrameElement>(null);
+		const appliedElementVariationRef = useRef<{
+			element: Element;
+			originalHTML: string | null;
+			styleElement: HTMLStyleElement | null;
+		} | null>(null);
 
-	const [previewReady, setPreviewReady] = useState(false);
+		const [previewReady, setPreviewReady] = useState(false);
 
-	const applyDraftElementVariation = useCallback(() => {
-		const iframeDocument = iframeRef.current?.contentDocument;
+		useImperativeHandle(
+			ref,
+			() => ({
+				reload: () => {
+					setPreviewReady(false);
 
-		if (!iframeDocument?.body) {
-			return;
-		}
+					iframeRef.current?.contentWindow?.location.reload();
+				},
+			}),
+			[]
+		);
 
-		const appliedElementVariation = appliedElementVariationRef.current;
+		const applyDraftElementVariation = useCallback(() => {
+			const iframeDocument = iframeRef.current?.contentDocument;
 
-		if (appliedElementVariation) {
-			if (
-				appliedElementVariation.originalHTML !== null &&
-				appliedElementVariation.element.isConnected
-			) {
-				appliedElementVariation.element.innerHTML =
-					appliedElementVariation.originalHTML;
+			if (!iframeDocument?.body) {
+				return;
 			}
 
-			appliedElementVariation.styleElement?.remove();
+			const appliedElementVariation = appliedElementVariationRef.current;
 
-			appliedElementVariationRef.current = null;
-		}
+			if (appliedElementVariation) {
+				if (
+					appliedElementVariation.originalHTML !== null &&
+					appliedElementVariation.element.isConnected
+				) {
+					appliedElementVariation.element.innerHTML =
+						appliedElementVariation.originalHTML;
+				}
 
-		if (!draftElementVariation?.targetElement) {
-			return;
-		}
+				appliedElementVariation.styleElement?.remove();
 
-		const {hide, html, js, targetElement} = draftElementVariation;
+				appliedElementVariationRef.current = null;
+			}
 
-		const element = iframeDocument.querySelector(targetElement);
+			if (!draftElementVariation?.targetElement) {
+				return;
+			}
 
-		if (!element) {
-			return;
-		}
+			const {hide, html, js, targetElement} = draftElementVariation;
 
-		let originalHTML: string | null = null;
-		let styleElement: HTMLStyleElement | null = null;
+			const element = iframeDocument.querySelector(targetElement);
 
-		if (html) {
-			originalHTML = element.innerHTML;
+			if (!element) {
+				return;
+			}
 
-			element.innerHTML = html;
-		}
+			let originalHTML: string | null = null;
+			let styleElement: HTMLStyleElement | null = null;
 
-		if (js) {
-			const scriptElement = iframeDocument.createElement('script');
+			if (html) {
+				originalHTML = element.innerHTML;
 
-			scriptElement.textContent = getElementVariationScript(
-				draftElementVariation
-			);
+				element.innerHTML = html;
+			}
 
-			iframeDocument.body.appendChild(scriptElement);
+			if (js) {
+				const scriptElement = iframeDocument.createElement('script');
 
-			iframeDocument.body.removeChild(scriptElement);
-		}
+				scriptElement.textContent = getElementVariationScript(
+					draftElementVariation
+				);
 
-		if (hide) {
-			styleElement = iframeDocument.createElement('style');
+				iframeDocument.body.appendChild(scriptElement);
 
-			styleElement.textContent = `${targetElement} { display: none !important; }`;
+				iframeDocument.body.removeChild(scriptElement);
+			}
 
-			iframeDocument.head.appendChild(styleElement);
-		}
+			if (hide) {
+				styleElement = iframeDocument.createElement('style');
 
-		appliedElementVariationRef.current = {
-			element,
-			originalHTML,
-			styleElement,
-		};
-	}, [draftElementVariation]);
+				styleElement.textContent = `${targetElement} { display: none !important; }`;
 
-	useEffect(() => {
-		applyDraftElementVariation();
-	}, [applyDraftElementVariation]);
+				iframeDocument.head.appendChild(styleElement);
+			}
 
-	return (
-		<div className="d-flex flex-column flex-grow-1 position-relative">
-			{previewReady ? null : <ClayLoadingIndicator className="mt-3" />}
+			appliedElementVariationRef.current = {
+				element,
+				originalHTML,
+				styleElement,
+			};
+		}, [draftElementVariation]);
 
-			<iframe
-				className="border-0 flex-grow-1 w-100"
-				onLoad={() => {
-					applyDraftElementVariation();
+		useEffect(() => {
+			applyDraftElementVariation();
+		}, [applyDraftElementVariation]);
 
-					setPreviewReady(true);
-				}}
-				ref={iframeRef}
-				src={previewURL}
-				style={{visibility: previewReady ? 'visible' : 'hidden'}}
-				title={Liferay.Language.get('element-variations')}
-			/>
-		</div>
-	);
-}
+		return (
+			<div className="d-flex flex-column flex-grow-1 position-relative">
+				{previewReady ? null : (
+					<ClayLoadingIndicator className="mt-3" />
+				)}
+
+				<iframe
+					className="border-0 flex-grow-1 w-100"
+					onLoad={() => {
+						applyDraftElementVariation();
+
+						setPreviewReady(true);
+					}}
+					ref={iframeRef}
+					src={previewURL}
+					style={{visibility: previewReady ? 'visible' : 'hidden'}}
+					title={Liferay.Language.get('element-variations')}
+				/>
+			</div>
+		);
+	}
+);
+
+export default ElementVariationsPreview;

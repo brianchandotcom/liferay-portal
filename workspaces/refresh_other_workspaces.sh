@@ -13,21 +13,20 @@ function main {
 
 		rsync \
 			-a --delete \
-			--exclude "build.gradle" \
-			--exclude "gradle.properties" \
 			--exclude "Jenkinsfile" \
-			--exclude "package.json" \
 			--exclude "README.md" \
-			--exclude "test.properties" \
-			--exclude "yarn.lock" \
+			--exclude "build.gradle" \
 			--exclude "client-extensions" \
 			--exclude "language" \
 			--exclude "modules" \
 			--exclude "node_modules" \
 			--exclude "node_modules_cache" \
+			--exclude "package.json" \
 			--exclude "poshi" \
 			--exclude "quickstart" \
+			--exclude "test.properties" \
 			--exclude "themes" \
+			--exclude "yarn.lock" \
 			liferay-sample-workspace/ "${dir}"
 	done
 }

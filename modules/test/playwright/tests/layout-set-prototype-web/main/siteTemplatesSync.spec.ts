@@ -11,6 +11,7 @@ import {globalMenuPagesTest} from '../../../fixtures/globalMenuPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {productMenuPageTest} from '../../../fixtures/productMenuPageTest';
 import {sitesPageTest} from '../../../fixtures/sitesPageTest';
+import {ChangeTrackingPage} from '../../../pages/change-tracking-web/ChangeTrackingPage';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
 import {sitesAdminPagesTest} from '../../site-admin-web/main/fixtures/sitesAdminPagesTest';
@@ -72,6 +73,68 @@ test(
 			target: layoutSetPrototypePage.executeSyncMenuItem,
 			trigger: layoutSetPrototypePage.rowActions(siteTemplateName),
 		});
+	}
+);
+
+test(
+	'Execute Site Template Sync is blocked when Publications is enabled',
+	{tag: '@LPD-87027'},
+	async ({apiHelpers, globalMenuPage, layoutSetPrototypePage, page}) => {
+		const siteTemplateName = 'SiteTemplate-' + getRandomString();
+
+		const layoutSetPrototype =
+			await apiHelpers.jsonWebServicesLayoutSetPrototype.addLayoutSetPrototypes(
+				{
+					name: siteTemplateName,
+				}
+			);
+
+		apiHelpers.data.push({
+			id: layoutSetPrototype.layoutSetPrototypeId,
+			type: 'layoutSetPrototype',
+		});
+
+		const changeTrackingPage = new ChangeTrackingPage(page);
+
+		try {
+			await changeTrackingPage.enablePublications(true);
+
+			await globalMenuPage.goToControlPanel('Site Templates');
+
+			await clickAndExpectToBeVisible({
+				target: layoutSetPrototypePage.executeSyncMenuItem,
+				trigger: layoutSetPrototypePage.rowActions(siteTemplateName),
+			});
+
+			await layoutSetPrototypePage.executeSyncMenuItem.click();
+
+			await expect(
+				page.getByText(
+					'The site template sync cannot be run with publications enabled.'
+				)
+			).toBeVisible();
+
+			await expect(
+				page.getByText(
+					'This will apply changes from your site template to linked sites'
+				)
+			).toBeHidden();
+
+			// Close the dialog so it does not block the navigation that
+			// disables publications during cleanup
+
+			const dialog = page.getByRole('alertdialog');
+
+			await dialog
+				.locator('.modal-footer')
+				.getByRole('button', {name: 'Close'})
+				.click();
+
+			await expect(dialog).toBeHidden();
+		}
+		finally {
+			await changeTrackingPage.enablePublications(false);
+		}
 	}
 );
 

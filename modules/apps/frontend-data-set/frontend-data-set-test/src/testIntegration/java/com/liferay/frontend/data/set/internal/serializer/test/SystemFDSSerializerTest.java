@@ -79,15 +79,13 @@ public class SystemFDSSerializerTest {
 
 		Assert.assertNotNull(objectDefinition);
 
-		_fdsName = RandomTestUtil.randomString();
-		_label = RandomTestUtil.randomString();
 		_memberUser = UserTestUtil.addUser();
 		_otherUser = UserTestUtil.addUser();
 
 		_userGroup = UserGroupTestUtil.addUserGroup();
 
 		_objectEntry = _addSnapshotObjectEntry(
-			_fdsName, _label, objectDefinition);
+			_FDS_NAME, _LABEL, objectDefinition);
 
 		_sharingEntry = _sharingEntryLocalService.addSharingEntry(
 			null, TestPropsValues.getUserId(), 0, _userGroup.getUserGroupId(),
@@ -108,7 +106,7 @@ public class SystemFDSSerializerTest {
 		throws Exception {
 
 		JSONArray jsonArray = _fdsSerializer.serializeSnapshots(
-			_fdsName, _getHttpServletRequest(_otherUser.getUserId()));
+			_FDS_NAME, _getHttpServletRequest(_otherUser.getUserId()));
 
 		Assert.assertNull(
 			_findSharedItemJSONObject(
@@ -120,12 +118,12 @@ public class SystemFDSSerializerTest {
 		throws Exception {
 
 		JSONArray jsonArray = _fdsSerializer.serializeSnapshots(
-			_fdsName, _getHttpServletRequest(_memberUser.getUserId()));
+			_FDS_NAME, _getHttpServletRequest(_memberUser.getUserId()));
 
 		JSONObject itemJSONObject = _findSharedItemJSONObject(
 			jsonArray, _objectEntry.getObjectEntryId());
 
-		Assert.assertEquals(_label, itemJSONObject.getString("label"));
+		Assert.assertEquals(_LABEL, itemJSONObject.getString("label"));
 	}
 
 	private ObjectEntry _addSnapshotObjectEntry(
@@ -187,12 +185,12 @@ public class SystemFDSSerializerTest {
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
 
-	private String _fdsName;
+	private static final String _FDS_NAME = RandomTestUtil.randomString();
 
 	@Inject(filter = "frontend.data.set.serializer.type=system")
 	private FDSSerializer _fdsSerializer;
 
-	private String _label;
+	private static final String _LABEL = RandomTestUtil.randomString();
 
 	@DeleteAfterTestRun
 	private User _memberUser;

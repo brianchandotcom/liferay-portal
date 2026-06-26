@@ -33,11 +33,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class KubernetesJobService {
 
-	@PreDestroy
-	public void preDestroy() {
-		_kubernetesClient.close();
-	}
-
 	public Job createJob(
 		long accountEntryId, String domainURL, int maxCrawlDepth,
 		int maxDuration, String outputIndex, String sitemapURL) {
@@ -119,6 +114,11 @@ public class KubernetesJobService {
 			throw new IllegalStateException(
 				"Unable to load \"crawler-job.yaml\"", ioException);
 		}
+	}
+
+	@PreDestroy
+	public void preDestroy() {
+		_kubernetesClient.close();
 	}
 
 	private EnvVar _createEnvVar(String name, String value) {

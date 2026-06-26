@@ -47,12 +47,6 @@ public class StateTokenService {
 		).compact();
 	}
 
-	public Claims verifyState(String state) {
-		Jws<Claims> jws = _jwtParser.parseSignedClaims(state);
-
-		return jws.getPayload();
-	}
-
 	@PostConstruct
 	public void postConstruct() {
 		if (_stateSecret.startsWith("${") || (_stateSecret.length() < 32)) {
@@ -69,6 +63,12 @@ public class StateTokenService {
 		).verifyWith(
 			_secretKey
 		).build();
+	}
+
+	public Claims verifyState(String state) {
+		Jws<Claims> jws = _jwtParser.parseSignedClaims(state);
+
+		return jws.getPayload();
 	}
 
 	private JwtParser _jwtParser;

@@ -56,6 +56,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -778,60 +779,57 @@ public abstract class BaseDBProcess implements DBProcess {
 			boolean notificationEnabled = NotificationThreadLocal.isEnabled();
 			boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
 
+			Callable<Void> callable = () -> {
+				NotificationThreadLocal.setEnabled(notificationEnabled);
+				WorkflowThreadLocal.setEnabled(workflowEnabled);
+
+				Thread currentThread = Thread.currentThread();
+
+				try {
+					PreparedStatement preparedStatement = null;
+
+					while (true) {
+						T current = null;
+
+						synchronized (unsafeSupplier) {
+							current = unsafeSupplier.get();
+						}
+
+						if (current == null) {
+							break;
+						}
+
+						if (Validator.isNull(updateSQL)) {
+							unsafeConsumer.accept(current);
+						}
+						else {
+							preparedStatement = _getConcurrentPreparedStatement(
+								updateSQL, preparedStatementHashMap);
+
+							unsafeBiConsumer.accept(current, preparedStatement);
+						}
+					}
+
+					if (preparedStatement != null) {
+						preparedStatement.executeBatch();
+
+						preparedStatement.close();
+					}
+				}
+				catch (Exception exception) {
+					throwableCollector.collect(exception);
+				}
+				finally {
+					closeConnections(currentThread);
+				}
+
+				return null;
+			};
+
 			for (int i = 0; i < fixedThreadPoolSize; i++) {
 				futures.add(
 					executorService.submit(
-						new CompanyInheritableThreadLocalCallable<>(
-							() -> {
-								NotificationThreadLocal.setEnabled(
-									notificationEnabled);
-								WorkflowThreadLocal.setEnabled(workflowEnabled);
-
-								Thread currentThread = Thread.currentThread();
-
-								try {
-									PreparedStatement preparedStatement = null;
-
-									while (true) {
-										T current = null;
-
-										synchronized (unsafeSupplier) {
-											current = unsafeSupplier.get();
-										}
-
-										if (current == null) {
-											break;
-										}
-
-										if (Validator.isNull(updateSQL)) {
-											unsafeConsumer.accept(current);
-										}
-										else {
-											preparedStatement =
-												_getConcurrentPreparedStatement(
-													updateSQL,
-													preparedStatementHashMap);
-
-											unsafeBiConsumer.accept(
-												current, preparedStatement);
-										}
-									}
-
-									if (preparedStatement != null) {
-										preparedStatement.executeBatch();
-
-										preparedStatement.close();
-									}
-								}
-								catch (Exception exception) {
-									throwableCollector.collect(exception);
-								}
-								finally {
-									closeConnections(currentThread);
-								}
-
-								return null;
-							})));
+						new CompanyInheritableThreadLocalCallable<>(callable)));
 			}
 		}
 		finally {

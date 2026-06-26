@@ -32,6 +32,7 @@ export const test = mergeTests(
 	dataApiHelpersTest,
 	featureFlagsTest({
 		'LPD-78863': {enabled: true, system: true},
+		'LPS-178052': {enabled: true},
 	}),
 	instanceSettingsPagesTest,
 	pageEditorPagesTest,
@@ -295,9 +296,11 @@ test(
 
 		// Create an organization, a user, and assign the user to the organization
 
+		const organizationName = getRandomString();
+
 		const organization =
 			await apiHelpers.headlessAdminUser.postOrganization({
-				name: getRandomString(),
+				name: organizationName,
 			});
 
 		const user = await apiHelpers.headlessAdminUser.postUserAccount({
@@ -318,7 +321,9 @@ test(
 		await clickAndExpectToBeVisible({
 			autoClick: true,
 			target: page.getByRole('menuitem', {name: 'Edit'}),
-			trigger: page.getByRole('button', {name: 'Show Actions'}),
+			trigger: page
+				.locator('tr', {hasText: organizationName})
+				.getByRole('button', {name: 'Show Actions'}),
 		});
 
 		await clickAndExpectToBeVisible({
@@ -1802,7 +1807,7 @@ test(
 			await editUserPage.lastNameInput.fill('userln');
 			await editUserPage.screenNameInput.fill('usersn');
 
-			const tagInputFied = page.getByLabel('Tags', {exact: true});
+			const tagInputFied = page.getByRole('combobox', {name: 'Tags'});
 			await tagInputFied.fill('tagName');
 			await tagInputFied.press('Enter');
 			await page.locator('body').click();

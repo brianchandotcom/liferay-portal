@@ -350,7 +350,7 @@ public class PerformanceAssetConsumptionResourceTest
 				StringPool.COMMA),
 			"groupIds", location);
 		_assertParameter(objectDefinition.getName(), "objectType", location);
-		_assertParameter(String.valueOf(page), "page", location);
+		_assertParameter(String.valueOf(page - 1), "page", location);
 		_assertParameter(String.valueOf(rangeKey), "rangeKey", location);
 		_assertParameter(String.valueOf(size), "size", location);
 		_assertParameter(String.valueOf(tagId), "tagId", location);

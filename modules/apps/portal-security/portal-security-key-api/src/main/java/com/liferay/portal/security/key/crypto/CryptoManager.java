@@ -31,6 +31,15 @@ public interface CryptoManager {
 			long companyId, KeyReference keyReference, byte[] plaintext)
 		throws CryptoManagerException;
 
+	/**
+	 * Exports the plaintext key material referenced by the given key reference.
+	 * This is the only operation that removes a key from the vault in plaintext
+	 * form, so treat it as a deliberate, audited action: prefer referencing keys
+	 * by {@link KeyReference} and unwrapping into the vault, and call this method
+	 * only when a caller genuinely requires the raw key outside the module.
+	 *
+	 * @return the plaintext key material paired with its service indicator
+	 */
 	public CryptoServiceResult<Key> exportKey(
 			long companyId, KeyReference keyReference)
 		throws CryptoManagerException;
@@ -55,6 +64,13 @@ public interface CryptoManager {
 	public List<String> getProviderIds(long companyId)
 		throws CryptoManagerException;
 
+	/**
+	 * Imports the given raw key material into the vault. This method zeroes the
+	 * passed array before returning, so the caller must not reuse or rely on its
+	 * contents afterward.
+	 *
+	 * @return the imported key reference paired with its service indicator
+	 */
 	public CryptoServiceResult<KeyReference> importSecretKey(
 			String algorithm, long companyId, String identifier,
 			String providerId, byte[] rawKeyMaterial)

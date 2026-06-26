@@ -244,10 +244,8 @@ public class LayoutSetPrototypeMergeBackgroundTaskStatusMessageListener
 
 				if (!Objects.equals(backgroundTaskSessionId, sessionId) ||
 					(completed &&
-					 MapUtil.getBoolean(
-						 taskContextMap,
-						 LayoutSetPrototypeNotificationUtil.
-							 NOTIFICATION_PROCESSED))) {
+					 LayoutSetPrototypeNotificationUtil.isNotificationProcessed(
+						 taskContextMap))) {
 
 					return null;
 				}
@@ -259,14 +257,9 @@ public class LayoutSetPrototypeMergeBackgroundTaskStatusMessageListener
 
 	private void _markNotificationProcessed(BackgroundTask backgroundTask) {
 		try {
-			Map<String, Serializable> taskContextMap =
-				backgroundTask.getTaskContextMap();
-
-			taskContextMap.put(
-				LayoutSetPrototypeNotificationUtil.NOTIFICATION_PROCESSED,
-				Boolean.TRUE);
-
-			backgroundTask.setTaskContextMap(taskContextMap);
+			backgroundTask.setTaskContextMap(
+				LayoutSetPrototypeNotificationUtil.putNotificationProcessed(
+					backgroundTask.getTaskContextMap()));
 
 			backgroundTask = _backgroundTaskLocalService.updateBackgroundTask(
 				backgroundTask);

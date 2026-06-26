@@ -11,6 +11,7 @@ import com.liferay.fragment.model.FragmentComposition;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentCollectionLocalServiceUtil;
 import com.liferay.fragment.web.internal.security.permission.resource.FragmentPermission;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -238,6 +239,66 @@ public class FragmentDisplayContextTest {
 			_themeDisplay.getScopeGroupId()
 		).thenReturn(
 			groupId
+		);
+
+		try (MockedStatic<FragmentCollectionLocalServiceUtil>
+				fragmentCollectionLocalServiceUtilMockedStatic =
+					Mockito.mockStatic(
+						FragmentCollectionLocalServiceUtil.class)) {
+
+			fragmentCollectionLocalServiceUtilMockedStatic.when(
+				() ->
+					FragmentCollectionLocalServiceUtil.fetchFragmentCollection(
+						fragmentCollectionId)
+			).thenReturn(
+				fragmentCollection
+			);
+
+			FragmentDisplayContext fragmentDisplayContext =
+				new FragmentDisplayContext(
+					_httpServletRequest, _renderRequest, _renderResponse);
+
+			Assert.assertNotNull(
+				fragmentDisplayContext.getFragmentCollection());
+		}
+	}
+
+	@Test
+	@TestInfo("LPD-91054")
+	public void testGetFragmentCollectionFromSystemGroup() {
+		long fragmentCollectionId = RandomTestUtil.randomLong();
+
+		FragmentCollection fragmentCollection = Mockito.mock(
+			FragmentCollection.class);
+
+		Mockito.when(
+			fragmentCollection.getGroupId()
+		).thenReturn(
+			CompanyConstants.SYSTEM
+		);
+
+		Mockito.when(
+			_httpServletRequest.getParameter("fragmentCollectionId")
+		).thenReturn(
+			String.valueOf(fragmentCollectionId)
+		);
+
+		Mockito.when(
+			_httpServletRequest.getParameter("fragmentCollectionKey")
+		).thenReturn(
+			RandomTestUtil.randomString()
+		);
+
+		Mockito.when(
+			_themeDisplay.getCompanyGroupId()
+		).thenReturn(
+			RandomTestUtil.randomLong()
+		);
+
+		Mockito.when(
+			_themeDisplay.getScopeGroupId()
+		).thenReturn(
+			RandomTestUtil.randomLong()
 		);
 
 		try (MockedStatic<FragmentCollectionLocalServiceUtil>

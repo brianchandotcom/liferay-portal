@@ -197,7 +197,7 @@ public class PerformanceTopAssetResourceTest
 			}
 
 			sb.append(sorts[i].getFieldName());
-			sb.append(StringPool.COLON);
+			sb.append(StringPool.COMMA);
 			sb.append(sorts[i].isReverse() ? "desc" : "asc");
 		}
 
@@ -325,7 +325,7 @@ public class PerformanceTopAssetResourceTest
 
 		_assertParameter(dataSourceId, "dataSourceId", location);
 		_assertParameter(assetFilterString, "filter", location);
-		_assertParameter(String.valueOf(page), "page", location);
+		_assertParameter(String.valueOf(page - 1), "page", location);
 		_assertParameter(String.valueOf(rangeKey), "rangeKey", location);
 		_assertParameter(String.valueOf(pageSize), "size", location);
 
@@ -337,7 +337,7 @@ public class PerformanceTopAssetResourceTest
 			}
 
 			sb.append(sorts[i].getFieldName());
-			sb.append(StringPool.COLON);
+			sb.append(StringPool.COMMA);
 			sb.append(sorts[i].isReverse() ? "desc" : "asc");
 		}
 

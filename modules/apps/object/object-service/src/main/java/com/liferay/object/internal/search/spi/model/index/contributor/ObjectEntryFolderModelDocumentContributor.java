@@ -50,6 +50,10 @@ public class ObjectEntryFolderModelDocumentContributor
 			document.addKeyword("cms_kind", "folder");
 			document.addKeyword("cms_root", parts.length == 3);
 			document.addKeyword("cms_section", cmsSection);
+			document.addKeyword(
+				"objectDefinitionExternalReferenceCode",
+				ObjectEntryFolderConstants.
+					EXTERNAL_REFERENCE_CODE_OBJECT_ENTRY_FOLDER);
 		}
 
 		document.addLocalizedKeyword(

@@ -2,6 +2,7 @@
 	"date_detection": false,
 	"properties": {
 		"body": {
+			"copy_to": "text_embedding",
 			"type": "text"
 		},
 		"last_crawled_at": {

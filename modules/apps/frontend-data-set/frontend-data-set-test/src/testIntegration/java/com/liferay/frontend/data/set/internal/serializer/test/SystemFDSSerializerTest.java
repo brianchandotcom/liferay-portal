@@ -99,21 +99,7 @@ public class SystemFDSSerializerTest {
 	}
 
 	@Test
-	public void testSerializeSnapshotsSharedWithUserGroupForOtherUser()
-		throws Exception {
-
-		JSONArray jsonArray = _fdsSerializer.serializeSnapshots(
-			_FDS_NAME, _getHttpServletRequest(_otherUser.getUserId()));
-
-		Assert.assertNull(
-			_getItemJSONObject(
-				jsonArray, _objectEntry.getObjectEntryId()));
-	}
-
-	@Test
-	public void testSerializeSnapshotsSharedWithUserGroupMember()
-		throws Exception {
-
+	public void testSerializeSnapshots() throws Exception {
 		JSONArray jsonArray = _fdsSerializer.serializeSnapshots(
 			_FDS_NAME, _getHttpServletRequest(_memberUser.getUserId()));
 
@@ -121,6 +107,13 @@ public class SystemFDSSerializerTest {
 			jsonArray, _objectEntry.getObjectEntryId());
 
 		Assert.assertEquals(_LABEL, itemJSONObject.getString("label"));
+
+		jsonArray = _fdsSerializer.serializeSnapshots(
+			_FDS_NAME, _getHttpServletRequest(_otherUser.getUserId()));
+
+		Assert.assertNull(
+			_getItemJSONObject(
+				jsonArray, _objectEntry.getObjectEntryId()));
 	}
 
 	private ObjectEntry _addObjectEntry(

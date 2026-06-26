@@ -15,6 +15,7 @@ import io.fabric8.kubernetes.client.KubernetesClientBuilder;
 import io.fabric8.kubernetes.client.dsl.ScalableResource;
 import io.fabric8.kubernetes.client.utils.Serialization;
 
+import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 
 import java.io.IOException;
@@ -31,26 +32,6 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class KubernetesJobService {
-
-	public KubernetesJobService(
-		@Value("${liferay.seo.studio.crawler.elasticsearch.host}") String
-			elasticsearchHost,
-		@Value("${liferay.seo.studio.crawler.elasticsearch.port}") int
-			elasticsearchPort,
-		@Value("${liferay.seo.studio.crawler.k8s.image.name}") String imageName,
-		@Value("${liferay.seo.studio.crawler.local.network.allowed}") boolean
-			localNetworkAllowed,
-		@Value("${liferay.seo.studio.crawler.k8s.namespace}") String
-			namespace) {
-
-		_elasticsearchHost = elasticsearchHost;
-		_elasticsearchPort = elasticsearchPort;
-		_imageName = imageName;
-		_localNetworkAllowed = localNetworkAllowed;
-		_namespace = namespace;
-
-		_jobTemplate = _loadJobTemplate();
-	}
 
 	@PreDestroy
 	public void close() {
@@ -125,6 +106,21 @@ public class KubernetesJobService {
 		return scalableResource.get();
 	}
 
+	@PostConstruct
+	private void _initialize() {
+		Class<?> clazz = getClass();
+
+		try (InputStream inputStream = clazz.getResourceAsStream(
+				"dependencies/crawler-job-template.yaml")) {
+
+			_jobTemplate = Serialization.unmarshal(inputStream, Job.class);
+		}
+		catch (IOException ioException) {
+			throw new IllegalStateException(
+				"Unable to load \"crawler-job-template.yaml\"", ioException);
+		}
+	}
+
 	private EnvVar _createEnvVar(String name, String value) {
 		return new EnvVarBuilder(
 		).withName(
@@ -145,31 +141,27 @@ public class KubernetesJobService {
 		);
 	}
 
-	private Job _loadJobTemplate() {
-		Class<?> clazz = getClass();
-
-		try (InputStream inputStream = clazz.getResourceAsStream(
-				"dependencies/crawler-job-template.yaml")) {
-
-			return Serialization.unmarshal(inputStream, Job.class);
-		}
-		catch (IOException ioException) {
-			throw new IllegalStateException(
-				"Unable to load \"crawler-job-template.yaml\"", ioException);
-		}
-	}
-
 	private static final Log _log = LogFactory.getLog(
 		KubernetesJobService.class);
 
-	private final String _elasticsearchHost;
-	private final int _elasticsearchPort;
-	private final String _imageName;
-	private final Job _jobTemplate;
+	@Value("${liferay.seo.studio.crawler.elasticsearch.host}")
+	private String _elasticsearchHost;
+
+	@Value("${liferay.seo.studio.crawler.elasticsearch.port}")
+	private int _elasticsearchPort;
+
+	@Value("${liferay.seo.studio.crawler.k8s.image.name}")
+	private String _imageName;
+
+	private Job _jobTemplate;
 	private final KubernetesClient _kubernetesClient =
 		new KubernetesClientBuilder(
 		).build();
-	private final boolean _localNetworkAllowed;
-	private final String _namespace;
+
+	@Value("${liferay.seo.studio.crawler.local.network.allowed}")
+	private boolean _localNetworkAllowed;
+
+	@Value("${liferay.seo.studio.crawler.k8s.namespace}")
+	private String _namespace;
 
 }

@@ -117,7 +117,7 @@ export default function SchedulePublicationModal({
 						>
 							{hasWorkflow
 								? Liferay.Language.get('submit-for-workflow')
-								: Liferay.Language.get('schedule')}
+								: Liferay.Language.get('schedule[verb]')}
 						</ClayButton>
 					</ClayButton.Group>
 				}

@@ -112,7 +112,7 @@ const items: Item[] = [
 		component: SchedulePanel,
 		icon: 'date-time',
 		id: 'schedule',
-		title: Liferay.Language.get('schedule'),
+		title: Liferay.Language.get('schedule[noun]'),
 	},
 	{
 		component: CategorizationPanel,

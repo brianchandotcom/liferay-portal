@@ -134,7 +134,7 @@ export default function ModalSchedulePublication({
 										handleSubmit();
 									}}
 								>
-									{Liferay.Language.get('schedule')}
+									{Liferay.Language.get('schedule[verb]')}
 								</ClayButton>
 							</ClayButton.Group>
 						}

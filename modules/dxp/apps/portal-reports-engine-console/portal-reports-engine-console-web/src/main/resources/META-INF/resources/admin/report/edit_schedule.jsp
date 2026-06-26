@@ -74,7 +74,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "new-report-entry"));
 				<aui:input label="email-recipient" name="emailDelivery" type="text" />
 			</aui:fieldset>
 
-			<aui:fieldset collapsible="<%= true %>" cssClass="options-group" label="schedule">
+			<aui:fieldset collapsible="<%= true %>" cssClass="options-group" label="schedule[noun]">
 				<liferay-util:include page="/admin/report/input_scheduler.jsp" servletContext="<%= application %>" />
 			</aui:fieldset>
 
@@ -210,7 +210,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "new-report-entry"));
 	</div>
 
 	<aui:button-row>
-		<aui:button cssClass="btn-lg" type="submit" value="schedule" />
+		<aui:button cssClass="btn-lg" type="submit" value="schedule[verb]" />
 
 		<aui:button cssClass="btn-lg" href="<%= searchDefinitionURL.toString() %>" type="cancel" />
 	</aui:button-row>

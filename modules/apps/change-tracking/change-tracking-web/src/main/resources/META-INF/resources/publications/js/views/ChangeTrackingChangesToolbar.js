@@ -94,7 +94,7 @@ export default function ChangeTrackingChangesToolbar({
 
 				{renderToolbarAction(
 					'secondary',
-					Liferay.Language.get('schedule'),
+					Liferay.Language.get('schedule[verb]'),
 					'calendar',
 					scheduleURL
 				)}

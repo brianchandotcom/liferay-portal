@@ -206,7 +206,7 @@ class ChangeTrackingConflictsView extends ChangeTrackingBaseScheduleView {
 				{this.schedule && (
 					<div className="sheet-section">
 						<div className="sheet-subtitle">
-							{Liferay.Language.get('schedule')}
+							{Liferay.Language.get('schedule[noun]')}
 						</div>
 
 						<label>{Liferay.Language.get('date-and-time')}</label>
@@ -322,7 +322,7 @@ class ChangeTrackingConflictsView extends ChangeTrackingBaseScheduleView {
 									type="button"
 								>
 									{this.schedule
-										? Liferay.Language.get('schedule')
+										? Liferay.Language.get('schedule[verb]')
 										: Liferay.Language.get('publish')}
 								</button>
 							)}

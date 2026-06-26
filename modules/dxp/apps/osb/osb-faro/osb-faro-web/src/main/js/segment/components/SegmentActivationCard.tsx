@@ -176,7 +176,7 @@ const ActivationConfigurationModal: React.FC<
 			<Modal.Body>
 				<div className='d-flex flex-column mb-4'>
 					<Text weight='semi-bold'>
-						{Liferay.Language.get('schedule')}
+						{Liferay.Language.get('schedule[noun]')}
 					</Text>
 					<Text color='secondary'>
 						{Liferay.Language.get(

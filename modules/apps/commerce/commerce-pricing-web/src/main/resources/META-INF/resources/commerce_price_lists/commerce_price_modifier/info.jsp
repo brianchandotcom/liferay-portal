@@ -87,7 +87,7 @@ if (modifierType.equals(CommercePriceModifierConstants.MODIFIER_TYPE_PERCENTAGE)
 	</commerce-ui:panel>
 
 	<commerce-ui:panel
-		title='<%= LanguageUtil.get(request, "schedule") %>'
+		title='<%= LanguageUtil.get(request, "schedule[noun]") %>'
 	>
 		<liferay-ui:error exception="<%= CommercePriceModifierExpirationDateException.class %>" message="please-enter-a-valid-expiration-date" />
 

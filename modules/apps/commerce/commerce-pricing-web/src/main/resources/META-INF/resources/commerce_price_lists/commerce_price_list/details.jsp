@@ -125,7 +125,7 @@ if ((commercePriceList != null) && (commercePriceList.getExpirationDate() != nul
 		<div class="col-4">
 			<c:if test="<%= !(commercePriceList.isCatalogBasePriceList() && Objects.equals(commercePriceList.getType(), CommercePriceListConstants.TYPE_PRICE_LIST)) %>">
 				<commerce-ui:panel
-					title='<%= LanguageUtil.get(request, "schedule") %>'
+					title='<%= LanguageUtil.get(request, "schedule[noun]") %>'
 				>
 					<liferay-ui:error exception="<%= CommercePriceListExpirationDateException.class %>" message="please-enter-a-valid-expiration-date" />
 

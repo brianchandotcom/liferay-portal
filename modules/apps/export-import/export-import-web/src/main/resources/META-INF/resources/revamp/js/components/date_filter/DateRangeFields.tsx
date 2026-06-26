@@ -61,7 +61,7 @@ const DateRangeFields = ({
 					}
 					formGroupProps={{className: 'mb-0'}}
 					id="endDate"
-					label={Liferay.Language.get('to')}
+					label={Liferay.Language.get('to[date-time]')}
 					name="endDate"
 					onBlur={() => handleUpdateTouched({endDate: true})}
 					onChange={(value) =>

@@ -375,7 +375,7 @@ else {
 			id="dlFileEntryExpirationDatePanel"
 			markupView="lexicon"
 			persistState="<%= true %>"
-			title="schedule"
+			title="schedule[noun]"
 		>
 			<aui:fieldset>
 				<liferay-ui:error exception="<%= FileEntryDisplayDateException.class %>" message="please-enter-a-valid-publish-date" />

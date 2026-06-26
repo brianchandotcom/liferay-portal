@@ -17,7 +17,7 @@
 
 		<liferay-staging:radio
 			id="publishingEventSchedule"
-			label="schedule"
+			label="schedule[verb]"
 			name="schedule"
 			value="true"
 		/>

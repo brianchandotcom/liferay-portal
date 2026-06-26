@@ -154,7 +154,7 @@ boolean discontinued = BeanParamUtil.getBoolean(cpInstance, request, "discontinu
 	</c:if>
 
 	<commerce-ui:panel
-		title='<%= LanguageUtil.get(request, "schedule") %>'
+		title='<%= LanguageUtil.get(request, "schedule[noun]") %>'
 	>
 		<aui:input bean="<%= cpInstance %>" model="<%= CPInstance.class %>" name="published" />
 

@@ -53,7 +53,7 @@ long templateCPConfigurationEntryId = cpConfigurationListDisplayContext.getTempl
 			<div class="col-4">
 				<commerce-ui:panel
 					elementClasses="mt-4"
-					title='<%= LanguageUtil.get(request, "schedule") %>'
+					title='<%= LanguageUtil.get(request, "schedule[noun]") %>'
 				>
 					<div class="row">
 						<div class="col-12" data-qa-id="displayDate">

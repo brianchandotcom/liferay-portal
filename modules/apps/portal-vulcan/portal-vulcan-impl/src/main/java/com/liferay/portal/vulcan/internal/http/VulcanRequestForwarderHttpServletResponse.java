@@ -8,6 +8,8 @@ package com.liferay.portal.vulcan.internal.http;
 import com.liferay.portal.kernel.servlet.DummyHttpServletResponse;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 
+import jakarta.servlet.http.HttpServletResponse;
+
 import java.util.Objects;
 
 /**
@@ -19,6 +21,21 @@ public class VulcanRequestForwarderHttpServletResponse
 	@Override
 	public String getContentType() {
 		return _contentType;
+	}
+
+	@Override
+	public int getStatus() {
+		return _status;
+	}
+
+	@Override
+	public void sendError(int status) {
+		_status = status;
+	}
+
+	@Override
+	public void sendError(int status, String message) {
+		_status = status;
 	}
 
 	@Override
@@ -35,6 +52,12 @@ public class VulcanRequestForwarderHttpServletResponse
 		super.setHeader(name, value);
 	}
 
+	@Override
+	public void setStatus(int status) {
+		_status = status;
+	}
+
 	private String _contentType;
+	private int _status = HttpServletResponse.SC_OK;
 
 }

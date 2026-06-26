@@ -15,15 +15,18 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.vulcan.http.VulcanRequestForwarder;
+
+import java.nio.charset.StandardCharsets;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -37,43 +40,105 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.UUID;
 import java.util.function.Predicate;
+
+import org.apache.http.Header;
+import org.apache.http.HttpEntity;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.util.EntityUtils;
 
 /**
  * @author Alejandro Tardín
  */
 public class OpenAPIUtil {
 
-	public static Http.Options getOptions(
-		String baseURL, JSONObject inputJSONObject,
-		JSONObject openAPIJSONObject, String toolName) {
-
-		Http.Options options = new Http.Options();
+	public static VulcanRequestForwarder.Request getRequest(
+			String basePath, JSONObject inputJSONObject,
+			JSONObject openAPIJSONObject, String toolName, User user)
+		throws Exception {
 
 		Operation operation = _getOperation(openAPIJSONObject, toolName);
-
-		String url = baseURL + _getPath(inputJSONObject, operation);
-
-		String queryString = _getQueryString(inputJSONObject, operation);
-
-		if (!queryString.isEmpty()) {
-			url = url + StringPool.QUESTION + queryString;
-		}
-
-		options.setLocation(url);
-		options.setMethod(
-			Http.Method.valueOf(StringUtil.toUpperCase(operation._method)));
+		byte[] body;
+		String contentType;
 
 		if (_isMultipartRequest(operation._operationJSONObject)) {
-			_setMultipartBody(
-				inputJSONObject, openAPIJSONObject, operation, options);
+			HttpEntity httpEntity = _getMultipartHttpEntity(
+				inputJSONObject, openAPIJSONObject, operation);
+
+			body = EntityUtils.toByteArray(httpEntity);
+
+			Header contentTypeHeader = httpEntity.getContentType();
+
+			contentType = contentTypeHeader.getValue();
 		}
 		else if (operation._operationJSONObject.has("requestBody")) {
-			_setBody(inputJSONObject, options, toolName);
+			if (!inputJSONObject.has("body")) {
+				throw new IllegalArgumentException(
+					StringBundler.concat(
+						"The \"", toolName,
+						"\" tool requires the request payload nested under a ",
+						"\"body\" property. Pass any path or query parameters ",
+						"as siblings of \"body\" rather than flattening the ",
+						"payload into the input map."));
+			}
+
+			String bodyString = StringPool.BLANK;
+
+			Object bodyObject = inputJSONObject.get("body");
+
+			if (bodyObject instanceof JSONObject) {
+				bodyString = bodyObject.toString();
+			}
+			else if (bodyObject != null) {
+				bodyString = String.valueOf(bodyObject);
+			}
+
+			body = bodyString.getBytes(StandardCharsets.UTF_8);
+			contentType = ContentTypes.APPLICATION_JSON;
+		}
+		else {
+			body = null;
+			contentType = null;
 		}
 
-		return options;
+		return new VulcanRequestForwarder.Request() {
+
+			@Override
+			public byte[] getBody() {
+				return body;
+			}
+
+			@Override
+			public String getContentType() {
+				return contentType;
+			}
+
+			@Override
+			public String getMethod() {
+				return StringUtil.toUpperCase(operation._method);
+			}
+
+			@Override
+			public String getPath() {
+				String path = basePath + _getPath(inputJSONObject, operation);
+
+				String queryString = _getQueryString(
+					inputJSONObject, operation);
+
+				if (queryString.isEmpty()) {
+					return path;
+				}
+
+				return path + StringPool.QUESTION + queryString;
+			}
+
+			@Override
+			public User getUser() {
+				return user;
+			}
+
+		};
 	}
 
 	public static Tool getTool(
@@ -303,6 +368,7 @@ public class OpenAPIUtil {
 		Set<String> visitedRefs) {
 
 		Map<String, Object> allOfSchemaMap = new LinkedHashMap<>();
+
 		Map<String, Object> properties = new LinkedHashMap<>();
 		Set<String> requiredPropertyNames = new HashSet<>();
 
@@ -496,49 +562,6 @@ public class OpenAPIUtil {
 			Arrays.asList(StringUtil.split((String)value)));
 	}
 
-	private static Http.FilePart _getFilePart(String name, Object value) {
-		String fileName = name;
-		String contentType = ContentTypes.APPLICATION_OCTET_STREAM;
-		String data;
-
-		JSONObject jsonObject = null;
-
-		if (value instanceof JSONObject) {
-			jsonObject = (JSONObject)value;
-		}
-		else if (value instanceof Map) {
-			jsonObject = JSONFactoryUtil.createJSONObject(
-				(Map<String, ?>)value);
-		}
-
-		if (jsonObject != null) {
-			if (jsonObject.has("filename")) {
-				fileName = jsonObject.getString("filename");
-			}
-
-			if (jsonObject.has("contentType")) {
-				contentType = jsonObject.getString("contentType");
-			}
-
-			data = jsonObject.getString("data");
-		}
-		else {
-			data = String.valueOf(value);
-		}
-
-		if (Validator.isNull(data)) {
-			throw new IllegalArgumentException(
-				"Multipart part \"" + name + "\" has no \"data\"");
-		}
-
-		Base64.Decoder decoder = Base64.getDecoder();
-
-		byte[] bytes = decoder.decode(data);
-
-		return new Http.FilePart(
-			name, fileName, bytes, contentType, StringPool.UTF8);
-	}
-
 	private static Map<String, Object> _getInputSchema(
 		boolean injectVulcanParameters, String method,
 		JSONObject openAPIJSONObject, JSONObject operationJSONObject,
@@ -631,6 +654,89 @@ public class OpenAPIUtil {
 		).put(
 			"type", "object"
 		).build();
+	}
+
+	private static HttpEntity _getMultipartHttpEntity(
+		JSONObject inputJSONObject, JSONObject openAPIJSONObject,
+		Operation operation) {
+
+		Map<String, Object> bodySchemaMap =
+			(Map<String, Object>)_getSchemaObject(
+				openAPIJSONObject,
+				_getBodySchemaJSONObject(operation._operationJSONObject),
+				new HashSet<>());
+
+		MultipartEntityBuilder multipartEntityBuilder =
+			MultipartEntityBuilder.create();
+
+		Map<String, Object> properties = (Map<String, Object>)bodySchemaMap.get(
+			"properties");
+
+		if (properties == null) {
+			return multipartEntityBuilder.build();
+		}
+
+		for (Map.Entry<String, Object> entry : properties.entrySet()) {
+			String partName = entry.getKey();
+
+			Object value = inputJSONObject.get(partName);
+
+			if (value == null) {
+				continue;
+			}
+
+			Map<String, Object> partSchema =
+				(Map<String, Object>)entry.getValue();
+
+			if (Objects.equals(partSchema.get("format"), "binary")) {
+				JSONObject jsonObject = null;
+				String fileName = partName;
+				String contentType = ContentTypes.APPLICATION_OCTET_STREAM;
+				String data;
+
+				if (value instanceof JSONObject) {
+					jsonObject = (JSONObject)value;
+				}
+				else if (value instanceof Map) {
+					jsonObject = JSONFactoryUtil.createJSONObject(
+						(Map<String, ?>)value);
+				}
+
+				if (jsonObject != null) {
+					if (jsonObject.has("filename")) {
+						fileName = jsonObject.getString("filename");
+					}
+
+					if (jsonObject.has("contentType")) {
+						contentType = jsonObject.getString("contentType");
+					}
+
+					data = jsonObject.getString("data");
+				}
+				else {
+					data = String.valueOf(value);
+				}
+
+				if (Validator.isNull(data)) {
+					throw new IllegalArgumentException(
+						"Multipart part \"" + partName + "\" has no \"data\"");
+				}
+
+				Base64.Decoder decoder = Base64.getDecoder();
+
+				multipartEntityBuilder.addBinaryBody(
+					partName, decoder.decode(data),
+					ContentType.create(contentType), fileName);
+			}
+			else {
+				multipartEntityBuilder.addTextBody(
+					partName, _getPart(value),
+					ContentType.create(
+						ContentTypes.TEXT_PLAIN, StandardCharsets.UTF_8));
+			}
+		}
+
+		return multipartEntityBuilder.build();
 	}
 
 	private static Map<String, Object> _getOneOfSchemaMap(
@@ -1094,94 +1200,6 @@ public class OpenAPIUtil {
 		}
 
 		return contentJSONObject.has("multipart/form-data");
-	}
-
-	private static void _setBody(
-		JSONObject inputJSONObject, Http.Options options, String toolName) {
-
-		if (!inputJSONObject.has("body")) {
-			throw new IllegalArgumentException(
-				StringBundler.concat(
-					"The \"", toolName,
-					"\" tool requires the request payload nested under a ",
-					"\"body\" property. Pass any path or query parameters as ",
-					"siblings of \"body\" rather than flattening the payload ",
-					"into the input map."));
-		}
-
-		options.addHeader("Content-Type", ContentTypes.APPLICATION_JSON);
-
-		String body = StringPool.BLANK;
-
-		Object bodyObject = inputJSONObject.get("body");
-
-		if (bodyObject instanceof JSONObject) {
-			body = bodyObject.toString();
-		}
-		else if (bodyObject != null) {
-			body = String.valueOf(bodyObject);
-		}
-
-		options.setBody(body, ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-	}
-
-	private static void _setMultipartBody(
-		JSONObject inputJSONObject, JSONObject openAPIJSONObject,
-		Operation operation, Http.Options options) {
-
-		Map<String, Object> bodySchemaMap =
-			(Map<String, Object>)_getSchemaObject(
-				openAPIJSONObject,
-				_getBodySchemaJSONObject(operation._operationJSONObject),
-				new HashSet<>());
-
-		Map<String, Object> partProperties =
-			(Map<String, Object>)bodySchemaMap.get("properties");
-
-		if (partProperties == null) {
-			return;
-		}
-
-		List<Http.FilePart> fileParts = new ArrayList<>();
-		Map<String, String> parts = new LinkedHashMap<>();
-
-		for (Map.Entry<String, Object> entry : partProperties.entrySet()) {
-			String partName = entry.getKey();
-
-			if (!inputJSONObject.has(partName)) {
-				continue;
-			}
-
-			Object value = inputJSONObject.get(partName);
-
-			if (value == null) {
-				continue;
-			}
-
-			Map<String, Object> partSchema =
-				(Map<String, Object>)entry.getValue();
-
-			if (Objects.equals(partSchema.get("format"), "binary")) {
-				fileParts.add(_getFilePart(partName, value));
-			}
-			else {
-				parts.put(partName, _getPart(value));
-			}
-		}
-
-		if (!fileParts.isEmpty()) {
-			options.setFileParts(fileParts);
-		}
-
-		if (!parts.isEmpty()) {
-			options.setParts(parts);
-		}
-
-		if (!fileParts.isEmpty() || !parts.isEmpty()) {
-			options.addHeader(
-				"Content-Type",
-				"multipart/form-data; boundary=" + UUID.randomUUID());
-		}
 	}
 
 	private static final String _DESCRIPTION_FIELDS =

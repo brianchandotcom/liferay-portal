@@ -54,7 +54,7 @@ public class StateTokenService {
 	}
 
 	@PostConstruct
-	private void _initialize() {
+	public void postConstruct() {
 		if (_stateSecret.startsWith("${") || (_stateSecret.length() < 32)) {
 			throw new IllegalArgumentException(
 				"The application property \"liferay.seostudio.gsc.state." +

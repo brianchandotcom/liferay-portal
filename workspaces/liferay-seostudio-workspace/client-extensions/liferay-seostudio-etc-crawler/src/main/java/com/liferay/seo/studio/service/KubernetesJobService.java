@@ -107,7 +107,7 @@ public class KubernetesJobService {
 	}
 
 	@PostConstruct
-	private void _initialize() {
+	public void postConstruct() {
 		Class<?> clazz = getClass();
 
 		try (InputStream inputStream = clazz.getResourceAsStream(

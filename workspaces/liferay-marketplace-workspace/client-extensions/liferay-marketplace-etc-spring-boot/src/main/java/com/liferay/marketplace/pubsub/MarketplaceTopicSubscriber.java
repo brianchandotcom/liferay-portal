@@ -65,7 +65,7 @@ public class MarketplaceTopicSubscriber {
 	}
 
 	@PostConstruct
-	protected void activate() throws Exception {
+	public void postConstruct() {
 		GoogleCredentials googleCredentials;
 
 		try {

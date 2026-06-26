@@ -584,7 +584,7 @@ public class SitesImpl implements Sites {
 				layoutSetPrototype.getCompanyId())) {
 
 			throw new IllegalStateException(
-				"The site template merge cannot start while Publications is " +
+				"The site template merge cannot start while publications is " +
 					"enabled");
 		}
 

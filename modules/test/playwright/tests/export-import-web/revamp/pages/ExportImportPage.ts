@@ -12,20 +12,14 @@ import type {taskStatus} from '../../main/pages/ExportImportPage';
 export class ExportImportPage {
 	readonly completedLabel: Locator;
 	readonly continueButton: Locator;
-	readonly currentAndPreviousTab: Locator;
 	readonly exportButton: Locator;
 	readonly exportMenuItem: Locator;
 	readonly fileSelector: Locator;
 	readonly importButton: Locator;
 	readonly importMenuItem: Locator;
 	readonly nameInput: Locator;
-	readonly newExportButton: Locator;
-	readonly newExportTab: Locator;
-	readonly newImport: Locator;
-	readonly newImportTab: Locator;
+	readonly newButton: Locator;
 	readonly page: Page;
-	readonly title: Locator;
-	readonly taskRow: (taskName: string) => Locator;
 	readonly taskStatusLabel: (
 		taskName: string,
 		taskStatus?: taskStatus
@@ -34,48 +28,57 @@ export class ExportImportPage {
 	constructor(page: Page) {
 		this.completedLabel = page.getByText('completed');
 		this.continueButton = page.getByRole('button', {name: 'Continue'});
-		this.currentAndPreviousTab = page.getByRole('link', {
-			name: 'Current and Previous',
-		});
 		this.exportButton = page.getByRole('button', {name: 'Export'});
 		this.exportMenuItem = page.getByRole('menuitem', {
 			name: 'Export',
 		});
-		this.fileSelector = page.getByText('Select file');
+		this.fileSelector = page.getByText('Select Files');
 		this.importButton = page.getByRole('button', {name: 'Import'});
 		this.importMenuItem = page.getByRole('menuitem', {
 			name: 'Import',
 		});
 		this.nameInput = page.getByRole('textbox', {name: 'Name'});
-		this.newExportButton = page.getByRole('link', {name: 'Custom Export'});
-		this.newExportTab = page.getByRole('link', {
-			name: 'New Export Process',
-		});
-		this.newImport = page.getByRole('link', {name: 'Import'});
-		this.newImportTab = page.getByRole('link', {
-			name: 'New Import Process',
-		});
+		this.newButton = page
+			.getByRole('button', {exact: true, name: 'New'})
+			.first();
 		this.page = page;
-		this.title = page.getByLabel('Export the selected data to');
-		this.taskRow = (taskName) =>
-			this.page.locator('[data-qa-id="row"]', {
-				hasText: taskName,
-			});
 		this.taskStatusLabel = (taskName, taskStatus = 'success') => {
 			const taskStatusTexts: Record<taskStatus, string> = {
 				completedWithErrors: 'Completed with errors',
 				success: 'Successful',
 			};
 
-			return this.taskRow(taskName).getByText(
-				taskStatusTexts[taskStatus]
-			);
+			return this.page
+				.locator('tr', {hasText: taskName})
+				.locator('.cell-status')
+				.getByText(taskStatusTexts[taskStatus], {exact: true});
 		};
 	}
 
-	async export(title: string) {
-		await this.title.fill(title);
+	async export(name: string) {
+		await this.newButton.click();
+
+		await this.nameInput.fill(name);
+
 		await this.exportButton.click();
+	}
+
+	async import(folderPath: string, name: string) {
+		await this.nameInput.fill(name);
+
+		await this.selectFile(folderPath);
+
+		await this.completedLabel.waitFor();
+
+		await this.continueButton.click();
+
+		await this.continueButton.click();
+
+		await this.importButton.waitFor();
+
+		await this.importButton.click();
+
+		await this.taskStatusLabel(name).waitFor();
 	}
 
 	async selectFile(folderPath: string) {
@@ -90,31 +93,5 @@ export class ExportImportPage {
 				? await zipFolder(folderPath)
 				: folderPath
 		);
-	}
-
-	async import(folderPath: string, expectedUploadErrorMessage?: string) {
-		await this.fileSelector.click();
-
-		await this.selectFile(folderPath);
-
-		if (expectedUploadErrorMessage) {
-			await this.page
-				.getByText(expectedUploadErrorMessage, {exact: true})
-				.waitFor();
-
-			return;
-		}
-
-		await this.continueButton.click();
-
-		await this.importButton.waitFor();
-
-		await this.importButton.click();
-
-		await this.page
-			.locator(
-				'[data-qa-id=row]:nth-of-type(1) .background-task-status-successful'
-			)
-			.waitFor();
 	}
 }

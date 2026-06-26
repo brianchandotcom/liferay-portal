@@ -32,8 +32,7 @@ test('Can export using the new navigation buttons', async ({
 	await documentLibraryPage.openOptionsMenu();
 	await exportImportPage.exportMenuItem.click();
 
-	await expect(exportImportPage.newExportTab).toBeVisible();
-	await expect(exportImportPage.currentAndPreviousTab).toBeVisible();
+	await expect(exportImportPage.newButton).toBeVisible();
 
 	const exportName = `Test export-${getRandomString()}`;
 

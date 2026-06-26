@@ -903,15 +903,6 @@ public class LiferayDynamicRegistrationService
 	private void _validateOpenRegistrationScopes(
 		String[] allowedScopes, ClientRegistration clientRegistration) {
 
-		Set<String> normalizedAllowedScopes =
-			_normalizeOpenRegistrationAllowList(
-				allowedScopes, "Open registration does not permit any scope",
-				OAuthConstants.INVALID_SCOPE);
-
-		if (normalizedAllowedScopes == null) {
-			return;
-		}
-
 		String scope = clientRegistration.getScope();
 
 		if (Validator.isBlank(scope)) {
@@ -920,6 +911,15 @@ public class LiferayDynamicRegistrationService
 				OAuth2ProviderRESTEndpointConstants.
 					ERROR_INVALID_CLIENT_METADATA,
 				Response.Status.BAD_REQUEST);
+		}
+
+		Set<String> normalizedAllowedScopes =
+			_normalizeOpenRegistrationAllowList(
+				allowedScopes, "Open registration does not permit any scope",
+				OAuthConstants.INVALID_SCOPE);
+
+		if (normalizedAllowedScopes == null) {
+			return;
 		}
 
 		List<String> requestedScopes = OAuthUtils.parseScope(scope);

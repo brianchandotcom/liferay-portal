@@ -95,10 +95,6 @@ public class ViewAllTasksSectionDisplayContextTest
 		fdsActionDropdownItems =
 			(List<FDSActionDropdownItem>)fdsActionDropdownItem.get("items");
 
-		Assert.assertEquals(
-			fdsActionDropdownItems.toString(), 10,
-			fdsActionDropdownItems.size());
-
 		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
 			"pencil", "edit", "Edit", "get",
 			Collections.singletonMap(
@@ -156,14 +152,15 @@ public class ViewAllTasksSectionDisplayContextTest
 				"entryClassName", CLASS_NAME_KALEO_TASK_INSTANCE_TOKEN
 			).build(),
 			fdsActionDropdownItems.get(9));
+		Assert.assertEquals(
+			fdsActionDropdownItems.toString(), 10,
+			fdsActionDropdownItems.size());
 	}
 
 	@Override
 	@Test
 	public void testGetFDSFilters() throws Exception {
 		List<FDSFilter> fdsFilters = getFDSFilters(null);
-
-		Assert.assertEquals(fdsFilters.toString(), 7, fdsFilters.size());
 
 		assertFDSFilter(
 			FDSEntityFieldTypes.STRING, "cmpAssignTo", "assignee",
@@ -184,6 +181,7 @@ public class ViewAllTasksSectionDisplayContextTest
 		assertFDSFilter(
 			FDSEntityFieldTypes.INTEGER, "classNameId", "task-type",
 			fdsFilters.get(6));
+		Assert.assertEquals(fdsFilters.toString(), 7, fdsFilters.size());
 	}
 
 	@Override

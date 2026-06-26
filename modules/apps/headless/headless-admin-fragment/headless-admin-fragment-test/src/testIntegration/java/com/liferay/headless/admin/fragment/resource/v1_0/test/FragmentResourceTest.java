@@ -170,6 +170,7 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 	public void testDeleteSiteFragment() throws Exception {
 		super.testDeleteSiteFragment();
 
+		_testDeleteSiteFormFragment();
 		_testDeleteSiteFragment(false, true);
 		_testDeleteSiteFragment(true, false);
 		_testDeleteSiteFragment(true, true);
@@ -1025,6 +1026,30 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 				fetchFragmentEntryByExternalReferenceCode(
 					fragment2.getExternalReferenceCode(),
 					irrelevantGroup.getGroupId()));
+	}
+
+	private void _testDeleteSiteFormFragment() throws Exception {
+		Fragment postFragment = _postSiteFragmentSetFragment(
+			_randomFormFragment());
+
+		FragmentEntry fragmentEntry =
+			_fragmentEntryLocalService.
+				fetchFragmentEntryByExternalReferenceCode(
+					postFragment.getExternalReferenceCode(),
+					testGroup.getGroupId(), true);
+
+		fragmentResource.deleteSiteFragment(
+			testGroup.getExternalReferenceCode(),
+			postFragment.getExternalReferenceCode());
+
+		Assert.assertNull(
+			_fragmentEntryLocalService.fetchFragmentEntry(
+				fragmentEntry.getFragmentEntryId()));
+
+		List<FragmentEntryVersion> fragmentEntryVersions =
+			_fragmentEntryLocalService.getVersions(fragmentEntry);
+
+		Assert.assertTrue(fragmentEntryVersions.isEmpty());
 	}
 
 	private void _testDeleteSiteFragment(boolean approved, boolean draft)

@@ -57,8 +57,7 @@ public class UpgradeJakartaTask extends FormatSourceTask {
 
 	@Override
 	public void exec() {
-		ReleaseEntry releaseEntry = ReleaseUtil.getReleaseEntry(
-			_workspaceExtension.getProduct());
+		ReleaseEntry releaseEntry = _getReleaseEntry();
 
 		if (releaseEntry != null) {
 			List<String> tags = releaseEntry.getTags();
@@ -102,6 +101,13 @@ public class UpgradeJakartaTask extends FormatSourceTask {
 	}
 
 	private File _downloadJakartaTransformDependenciesFile() throws Exception {
+		ReleaseEntry releaseEntry = _getReleaseEntry();
+
+		if (releaseEntry == null) {
+			throw new GradleException(
+				"Valid product version or target platform version not found");
+		}
+
 		Project project = getProject();
 
 		ProjectLayout projectLayout = project.getLayout();
@@ -117,9 +123,6 @@ public class UpgradeJakartaTask extends FormatSourceTask {
 
 		Stream<ReleaseEntry> releaseEntryStream =
 			ReleaseUtil.getReleaseEntryStream();
-
-		ReleaseEntry releaseEntry = ReleaseUtil.getReleaseEntry(
-			_workspaceExtension.getProduct());
 
 		List<ReleaseEntry> releaseEntries = new ArrayList<>(
 			releaseEntryStream.filter(
@@ -157,6 +160,22 @@ public class UpgradeJakartaTask extends FormatSourceTask {
 		}
 
 		return _downloadJakartaTransformDependenciesFile();
+	}
+
+	private ReleaseEntry _getReleaseEntry() {
+		for (ReleaseEntry releaseEntry : ReleaseUtil.getReleaseEntries()) {
+			if (Objects.equals(
+					_workspaceExtension.getProduct(),
+					releaseEntry.getProduct()) ||
+				Objects.equals(
+					_workspaceExtension.getTargetPlatformVersion(),
+					releaseEntry.getTargetPlatformVersion())) {
+
+				return releaseEntry;
+			}
+		}
+
+		return null;
 	}
 
 	private static final String _JAKARTA_TRANSFORM_DEPENDENCIES_FILE_NAME =

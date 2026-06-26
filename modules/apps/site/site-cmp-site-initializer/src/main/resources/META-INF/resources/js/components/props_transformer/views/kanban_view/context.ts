@@ -3,9 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {IItemsActions} from '@liferay/frontend-data-set-web';
 import React from 'react';
 
-import {IColumn, IItemsActions, ITask} from '../../../../utils/types';
+import {IColumn, ITask} from '../../../../utils/types';
 
 interface IKanbanContext {
 	boardData: {[k: string]: IColumn};

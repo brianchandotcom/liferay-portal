@@ -7,7 +7,7 @@ import ClayButton from '@clayui/button';
 import Card from '@clayui/card/src/Card';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
-import {DateRenderer} from '@liferay/frontend-data-set-web';
+import {DateRenderer, IItemsActions} from '@liferay/frontend-data-set-web';
 import {AssigneeAvatar} from '@liferay/object-dynamic-data-mapping-form-field-type';
 import {
 	displayErrorToast,
@@ -25,12 +25,13 @@ import {
 	postSubscribeTaskByExternalReferenceCode,
 	postUnsubscribeTaskByExternalReferenceCode,
 } from '../../../../../utils/api';
+import getActionURL from '../../../../../utils/getActionURL';
 import {openCMPModal} from '../../../../../utils/openCMPModal';
 import {
 	displayAssignSuccessToast,
 	displayDeleteSuccessToast,
 } from '../../../../../utils/toastUtil';
-import {IItemsActions, ITask} from '../../../../../utils/types';
+import {ITask} from '../../../../../utils/types';
 import StateLabel from '../../../../StateLabel';
 import DeleteTaskModal from '../../../../modal/DeleteTaskModal';
 import EditAssigneeModalContent from '../../../../modal/EditAssigneeModalContent';
@@ -61,7 +62,11 @@ function getTaskItemsActions(
 		items.push({
 			label: Liferay.Language.get('edit'),
 			onClick: () => {
-				const editURL = getURL('edit', itemsActions, task);
+				const editURL = getActionURL({
+					actionId: 'edit',
+					itemsActions,
+					task,
+				});
 				if (editURL) {
 					navigate(editURL);
 				}
@@ -74,7 +79,11 @@ function getTaskItemsActions(
 		items.push({
 			label: Liferay.Language.get('view'),
 			onClick: () => {
-				const viewURL = getURL('actionLink', itemsActions, task);
+				const viewURL = getActionURL({
+					actionId: 'actionLink',
+					itemsActions,
+					task,
+				});
 				if (viewURL) {
 					navigate(viewURL);
 				}
@@ -242,13 +251,6 @@ function getTaskItemsActions(
 	}
 
 	return items;
-}
-
-function getURL(actionId: string, itemsActions: IItemsActions[], task: ITask) {
-	return itemsActions
-		.flatMap((group) => group.items || [])
-		.find((action) => action.data.id === actionId)
-		?.href.replace('{embedded.id}', String(task.embedded.id));
 }
 
 const TaskCard = React.memo(

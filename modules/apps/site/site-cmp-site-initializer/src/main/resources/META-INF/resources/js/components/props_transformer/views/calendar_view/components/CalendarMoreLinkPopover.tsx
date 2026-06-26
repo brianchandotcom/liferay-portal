@@ -11,10 +11,10 @@ import classNames from 'classnames';
 import {navigate} from 'frontend-js-web';
 import React from 'react';
 
+import getActionURL from '../../../../../utils/getActionURL';
 import isOverdue from '../../../../../utils/isOverdue';
 import {ITaskObjectEntry} from '../../../../../utils/types';
 import StateLabel from '../../../../StateLabel';
-import getActionURL from '../utils/getActionURL';
 import sortTasksByPriority from '../utils/sortTasksByPriority';
 
 import './CalendarMoreLinkPopover.scss';
@@ -46,7 +46,7 @@ export default function CalendarMoreLinkPopover({
 		const viewURL = getActionURL({
 			actionId: 'actionLink',
 			itemsActions,
-			task,
+			task: {embedded: task},
 		});
 
 		if (viewURL) {
@@ -91,6 +91,7 @@ export default function CalendarMoreLinkPopover({
 												event.key === ' '
 											) {
 												event.preventDefault();
+
 												handleViewTask(task);
 											}
 										}

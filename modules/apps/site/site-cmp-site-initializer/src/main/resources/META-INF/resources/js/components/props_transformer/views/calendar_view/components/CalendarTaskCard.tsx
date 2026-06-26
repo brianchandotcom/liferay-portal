@@ -10,9 +10,9 @@ import classNames from 'classnames';
 import {navigate} from 'frontend-js-web';
 import React from 'react';
 
+import getActionURL from '../../../../../utils/getActionURL';
 import isOverdue from '../../../../../utils/isOverdue';
 import {ITaskObjectEntry} from '../../../../../utils/types';
-import getActionURL from '../utils/getActionURL';
 
 import './CalendarTaskCard.scss';
 
@@ -28,19 +28,17 @@ export default function CalendarTaskCard({
 	const {assignTo, dueDate, state, title} = task;
 
 	const blocked = state?.key === 'blocked';
+	const overdue = isOverdue({dueDate, state});
+
 	const isViewable = Boolean(
 		task.actions?.get && Liferay.FeatureFlags['LPD-74152']
 	);
-	const overdue = isOverdue({dueDate, state});
-
-	// Open the task's view page. The future kebab menu button must call
-	// event.stopPropagation() so clicking it does not also navigate.
 
 	const handleViewTask = () => {
 		const viewURL = getActionURL({
 			actionId: 'actionLink',
 			itemsActions,
-			task,
+			task: {embedded: task},
 		});
 
 		if (viewURL) {
@@ -62,6 +60,7 @@ export default function CalendarTaskCard({
 					? (event) => {
 							if (event.key === 'Enter' || event.key === ' ') {
 								event.preventDefault();
+
 								handleViewTask();
 							}
 						}

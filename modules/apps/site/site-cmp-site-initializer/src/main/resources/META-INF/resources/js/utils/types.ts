@@ -64,22 +64,6 @@ export interface IProjectObjectEntry {
 	title: string;
 }
 
-export interface IItemsActions {
-	items: IItems[];
-}
-
-export interface IItems {
-	data: {
-		id: string;
-	};
-	disable: boolean;
-	href: string;
-	icon?: string;
-	label: string;
-	name: string;
-	type: string;
-}
-
 export interface ITaskObjectEntry {
 	actions?: {
 		[action: string]: {

@@ -751,8 +751,8 @@ public class LiferayDynamicRegistrationService
 			allowedGrantTypes, _allowedResponseTypes::get);
 		List<String> responseTypes = clientRegistration.getResponseTypes();
 
-		if (ListUtil.isEmpty(responseTypes) &&
-			ListUtil.isNotEmpty(allowedResponseTypes)) {
+		if (ListUtil.isNotEmpty(allowedResponseTypes) &&
+			ListUtil.isEmpty(responseTypes)) {
 
 			OAuth2ErrorUtil.reportInvalidRequestError(
 				StringBundler.concat(

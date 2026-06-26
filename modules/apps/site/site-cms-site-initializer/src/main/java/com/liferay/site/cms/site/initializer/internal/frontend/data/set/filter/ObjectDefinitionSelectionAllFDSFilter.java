@@ -6,6 +6,7 @@
 package com.liferay.site.cms.site.initializer.internal.frontend.data.set.filter;
 
 import com.liferay.frontend.data.set.filter.FDSFilter;
+import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.site.cms.site.initializer.internal.constants.CMSSiteInitializerFDSNames;
 
@@ -25,6 +26,14 @@ import org.osgi.service.component.annotations.Component;
 )
 public class ObjectDefinitionSelectionAllFDSFilter
 	extends BaseObjectDefinitionSelectionFDSFilter {
+
+	@Override
+	protected String[] getExcludedObjectDefinitionExternalReferenceCodes() {
+		return new String[] {
+			ObjectEntryFolderConstants.
+				EXTERNAL_REFERENCE_CODE_OBJECT_ENTRY_FOLDER
+		};
+	}
 
 	@Override
 	protected String[] getObjectFolderExternalReferenceCodes() {

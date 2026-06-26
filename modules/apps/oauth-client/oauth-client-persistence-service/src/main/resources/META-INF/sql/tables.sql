@@ -34,6 +34,7 @@ create table OAuthClientEntry (
 	matcherField VARCHAR(75) null,
 	metadataCacheTime LONG,
 	oidcUserInfoMapperJSON VARCHAR(3999) null,
+	tokenConnectionTimeout INTEGER,
 	tokenRequestParametersJSON VARCHAR(3999) null
 );
 

@@ -47,7 +47,7 @@ public class OAuthClientEntryServiceHttp {
 				long userId, String authRequestParametersJSON,
 				String authServerWellKnownURI, String customClaimsJSON,
 				String infoJSON, String matcherField, long metadataCacheTime,
-				String oidcUserInfoMapperJSON,
+				String oidcUserInfoMapperJSON, int tokenConnectionTimeout,
 				String tokenRequestParametersJSON)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -60,7 +60,8 @@ public class OAuthClientEntryServiceHttp {
 				methodKey, externalReferenceCode, userId,
 				authRequestParametersJSON, authServerWellKnownURI,
 				customClaimsJSON, infoJSON, matcherField, metadataCacheTime,
-				oidcUserInfoMapperJSON, tokenRequestParametersJSON);
+				oidcUserInfoMapperJSON, tokenConnectionTimeout,
+				tokenRequestParametersJSON);
 
 			Object returnObj = null;
 
@@ -505,7 +506,7 @@ public class OAuthClientEntryServiceHttp {
 				String authRequestParametersJSON, String authServerWellKnownURI,
 				String customClaimsJSON, String infoJSON, String matcherField,
 				long metadataCacheTime, String oidcUserInfoMapperJSON,
-				String tokenRequestParametersJSON)
+				int tokenConnectionTimeout, String tokenRequestParametersJSON)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -517,7 +518,7 @@ public class OAuthClientEntryServiceHttp {
 				methodKey, oAuthClientEntryId, authRequestParametersJSON,
 				authServerWellKnownURI, customClaimsJSON, infoJSON,
 				matcherField, metadataCacheTime, oidcUserInfoMapperJSON,
-				tokenRequestParametersJSON);
+				tokenConnectionTimeout, tokenRequestParametersJSON);
 
 			Object returnObj = null;
 
@@ -554,7 +555,8 @@ public class OAuthClientEntryServiceHttp {
 	private static final Class<?>[] _addOAuthClientEntryParameterTypes0 =
 		new Class[] {
 			String.class, long.class, String.class, String.class, String.class,
-			String.class, String.class, long.class, String.class, String.class
+			String.class, String.class, long.class, String.class, int.class,
+			String.class
 		};
 	private static final Class<?>[] _deleteOAuthClientEntryParameterTypes1 =
 		new Class[] {long.class};
@@ -584,8 +586,8 @@ public class OAuthClientEntryServiceHttp {
 	private static final Class<?>[] _updateOAuthClientEntryParameterTypes11 =
 		new Class[] {
 			long.class, String.class, String.class, String.class, String.class,
-			String.class, long.class, String.class, String.class
+			String.class, long.class, String.class, int.class, String.class
 		};
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1481289005
+// LIFERAY-SERVICE-BUILDER-HASH:-264091617

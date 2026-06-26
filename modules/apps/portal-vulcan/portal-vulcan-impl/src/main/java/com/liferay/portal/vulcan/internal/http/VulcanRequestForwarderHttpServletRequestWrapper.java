@@ -1,10 +1,11 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.vulcan.internal.template.servlet;
+package com.liferay.portal.vulcan.internal.http;
 
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
@@ -30,26 +31,18 @@ import java.util.Map;
 /**
  * @author Alejandro Tardín
  */
-public class RESTClientHttpServletRequestWrapper
+public class VulcanRequestForwarderHttpServletRequestWrapper
 	extends HttpServletRequestWrapper {
 
-	public RESTClientHttpServletRequestWrapper(
-		Map<String, Object> contextObjects,
-		HttpServletRequest httpServletRequest, String pathInfo) {
+	public VulcanRequestForwarderHttpServletRequestWrapper(
+		HttpServletRequest httpServletRequest, String pathInfo, User user) {
 
 		super(httpServletRequest);
 
 		_attributes = HashMapBuilder.<String, Object>put(
-			RESTClientHttpServletRequestWrapper.class.getName(), true
+			VulcanRequestForwarderHttpServletRequestWrapper.class.getName(), true
 		).put(
-			WebKeys.USER,
-			() -> {
-				if (contextObjects.containsKey("user")) {
-					return contextObjects.get("user");
-				}
-
-				return null;
-			}
+			WebKeys.USER, user
 		).build();
 		_headers = HashMapBuilder.put(
 			HttpHeaders.ACCEPT, ContentTypes.APPLICATION_JSON

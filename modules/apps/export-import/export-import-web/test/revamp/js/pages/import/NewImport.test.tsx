@@ -5,7 +5,7 @@
 
 // eslint-disable-next-line @liferay/portal/no-cross-module-deep-import
 import {checkAccessibility} from '@liferay/layout-js-components-web/test/__lib__/index';
-import {act, render, screen, waitFor} from '@testing-library/react';
+import {act, fireEvent, render, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
@@ -133,6 +133,53 @@ describe('NewImport', () => {
 		nameInput.blur();
 
 		await screen.findByText('this-field-is-required');
+	});
+
+	it('shows a client-side error when a non-lar file is selected', async () => {
+		renderComponent();
+
+		const dropzone = screen.getByRole('button', {
+			name: /drag-and-drop-to-upload/i,
+		});
+
+		const file = new File(['test'], 'Document.jpg', {type: 'image/jpeg'});
+
+		fireEvent.drop(dropzone, {
+			dataTransfer: {
+				files: [file],
+				items: [
+					{
+						getAsFile: () => file,
+						kind: 'file',
+						type: 'image/jpeg',
+					},
+				],
+				types: ['Files'],
+			},
+		});
+
+		expect(await screen.findByRole('alert')).toHaveTextContent(
+			'File type must be .lar'
+		);
+	});
+
+	it('shows the import preview error and keeps Continue disabled when the lar is invalid', async () => {
+		(postImportPreview as jest.Mock).mockImplementationOnce(() =>
+			Promise.resolve({
+				data: null,
+				error: 'Uploaded LAR file type Portlet does not match layout-prototype, layout-set, layout-set-prototype.',
+			})
+		);
+
+		renderComponent();
+
+		await uploadFile('folder.portlet.lar');
+
+		expect(await screen.findByRole('alert')).toHaveTextContent(
+			'Uploaded LAR file type Portlet does not match'
+		);
+
+		expect(screen.getByRole('button', {name: /continue/i})).toBeDisabled();
 	});
 
 	it('auto-fills the Name field with the uploaded file name when Name is empty', async () => {

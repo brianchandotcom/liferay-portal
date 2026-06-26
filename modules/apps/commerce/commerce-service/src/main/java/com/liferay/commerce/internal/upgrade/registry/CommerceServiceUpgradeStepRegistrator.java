@@ -906,6 +906,13 @@ public class CommerceServiceUpgradeStepRegistrator
 				"CommerceSubscriptionEntry", "CPInstanceUUID",
 				"CPInstanceUuid VARCHAR(75)"));
 
+		registry.register(
+			"15.1.2", "15.1.3",
+			new com.liferay.commerce.internal.upgrade.v15_1_3.
+				CommerceShipmentRoleUpgradeProcess(
+					_companyLocalService, _resourcePermissionLocalService,
+					_roleLocalService));
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce upgrade step registrator finished");
 		}

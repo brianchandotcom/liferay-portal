@@ -381,6 +381,9 @@ public class CommerceRoleHelperImpl implements CommerceRoleHelper {
 				CommerceOrderAttachment.class.getName(),
 				new String[] {ActionKeys.VIEW});
 			groupResourceActionIds.put(
+				CommerceShipment.class.getName(),
+				new String[] {ActionKeys.VIEW});
+			groupResourceActionIds.put(
 				"com.liferay.commerce.order",
 				new String[] {
 					CommerceOrderActionKeys.ADD_COMMERCE_ORDER,

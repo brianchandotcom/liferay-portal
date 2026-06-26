@@ -32,7 +32,6 @@ import com.liferay.object.model.ObjectDefinitionTable;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -686,19 +685,12 @@ public class AnalyticsCloudClient {
 		}
 
 		if (ArrayUtil.isNotEmpty(sorts)) {
-			StringBundler sb = new StringBundler((sorts.length * 4) - 1);
-
-			for (int i = 0; i < sorts.length; i++) {
-				if (i > 0) {
-					sb.append(StringPool.COMMA);
-				}
-
-				sb.append(sorts[i].getFieldName());
-				sb.append(StringPool.COLON);
-				sb.append(sorts[i].isReverse() ? "desc" : "asc");
+			for (Sort sort : sorts) {
+				url = HttpComponentsUtil.addParameter(
+					url, "sort", sort.getFieldName());
+				url = HttpComponentsUtil.addParameter(
+					url, "sort", sort.isReverse() ? "desc" : "asc");
 			}
-
-			url = HttpComponentsUtil.addParameter(url, "sort", sb.toString());
 		}
 
 		if (tagId != null) {

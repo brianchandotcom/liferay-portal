@@ -1409,19 +1409,19 @@ public class ObjectEntryLocalServiceTest {
 
 	@Test
 	public void testAddObjectEntryWithAssetCategories() throws Exception {
-		Group group1 = GroupTestUtil.addGroup();
+		Group group = GroupTestUtil.addGroup();
 
-		AssetCategory assetCategory1 = _addAssetCategory(group1);
-		AssetCategory assetCategory2 = _addAssetCategory(group1);
+		AssetCategory assetCategory1 = _addAssetCategory(group);
 
-		Group group2 = GroupTestUtil.addGroup();
+		AssetCategory assetCategory2 = _addAssetCategory(group);
 
 		_assetVocabularyGroupRelLocalService.addAssetVocabularyGroupRel(
-			group2.getGroupId(), assetCategory2.getVocabularyId());
+			TestPropsValues.getGroupId(), assetCategory2.getVocabularyId(),
+			DepotConstants.TYPE_ASSET_LIBRARY);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
-				group1.getGroupId(), TestPropsValues.getUserId());
+				group.getGroupId(), TestPropsValues.getUserId());
 
 		serviceContext.setAssetCategoryIds(
 			new long[] {
@@ -1429,7 +1429,7 @@ public class ObjectEntryLocalServiceTest {
 			});
 
 		ObjectEntry objectEntry = _addObjectEntry(
-			group1.getGroupId(),
+			group.getGroupId(),
 			ObjectDefinitionTestUtil.publishObjectDefinition(
 				Collections.singletonList(
 					new TextObjectFieldBuilder(

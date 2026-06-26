@@ -73,9 +73,19 @@ const ActivityStreamCard: React.FC<IActivityStreamCardProps> = ({
 	const {delta, onDeltaChange, onPageChange, page, resetPage} =
 		useStatefulPagination();
 
-	useEffect(() => {
+	const handleChangeSelection = (index: number | null) => {
 		resetPage();
-	}, [rangeSelectors.rangeKey]);
+		onPointSelect(index ?? undefined);
+	};
+
+	useEffect(() => {
+		handleChangeSelection(null);
+	}, [
+		interval,
+		rangeSelectors.rangeEnd,
+		rangeSelectors.rangeKey,
+		rangeSelectors.rangeStart,
+	]);
 
 	const safeRangeSelectors = getSafeRangeSelectors(rangeSelectors);
 
@@ -186,11 +196,6 @@ const ActivityStreamCard: React.FC<IActivityStreamCardProps> = ({
 
 	const sessionsData = sessionsResponse.data?.eventsByUserSessions;
 	const userSessions = sessionsData?.userSessions ?? [];
-
-	const handleChangeSelection = (index: number | null) => {
-		resetPage();
-		onPointSelect(index ?? undefined);
-	};
 
 	const handleQuerySubmit = (value: string) => {
 		setKeywords(value);

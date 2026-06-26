@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.scheduler.SchedulerJobConfiguration;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerConfiguration;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.Time;
@@ -34,7 +33,6 @@ import com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnec
 import com.liferay.portal.security.sso.openid.connect.constants.OpenIdConnectWebKeys;
 import com.liferay.portal.security.sso.openid.connect.internal.AuthorizationServerMetadataResolver;
 import com.liferay.portal.security.sso.openid.connect.internal.constants.OpenIdConnectDestinationNames;
-import com.liferay.portal.security.sso.openid.connect.internal.util.OpenIdConnectProviderUtil;
 import com.liferay.portal.security.sso.openid.connect.internal.util.OpenIdConnectTokenRequestUtil;
 import com.liferay.portal.security.sso.openid.connect.persistence.model.OpenIdConnectSession;
 import com.liferay.portal.security.sso.openid.connect.persistence.service.OpenIdConnectSessionLocalService;
@@ -60,7 +58,6 @@ import java.util.Map;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
-import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -249,27 +246,11 @@ public class OfflineOpenIdConnectSessionManager {
 						oAuthClientEntry.getMetadataCacheInSeconds(),
 						oAuthClientEntry.getOAuthClientEntryId());
 
-			int tokenConnectionTimeout = 0;
-
-			Dictionary<String, Object> properties =
-				OpenIdConnectProviderUtil.
-					getOpenIdConnectProviderConfigurationProperties(
-						oAuthClientEntry.getAuthServerWellKnownURI(),
-						oAuthClientEntry.getClientId(),
-						oAuthClientEntry.getCompanyId(), _configurationAdmin,
-						String.valueOf(oidcProviderMetadata.getIssuer()),
-						String.valueOf(
-							oidcProviderMetadata.getTokenEndpointURI()));
-
-			if (properties != null) {
-				tokenConnectionTimeout = GetterUtil.getInteger(
-					properties.get("tokenConnectionTimeout"));
-			}
-
 			OIDCTokens oidcTokens = OpenIdConnectTokenRequestUtil.request(
 				OIDCClientInformation.parse(
 					JSONObjectUtils.parse(oAuthClientEntry.getInfoJSON())),
-				oidcProviderMetadata, refreshToken, tokenConnectionTimeout,
+				oidcProviderMetadata, refreshToken,
+				oAuthClientEntry.getTokenConnectionTimeout(),
 				oAuthClientEntry.getTokenRequestParametersJSON());
 
 			_updateOpenIdConnectSessionIdToken(
@@ -409,9 +390,6 @@ public class OfflineOpenIdConnectSessionManager {
 
 	@Reference
 	private ClusterMasterExecutor _clusterMasterExecutor;
-
-	@Reference
-	private ConfigurationAdmin _configurationAdmin;
 
 	@Reference
 	private CounterLocalService _counterLocalService;

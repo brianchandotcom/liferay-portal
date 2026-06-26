@@ -143,7 +143,7 @@ export class SegmentsPage {
 
 	async clickDuplicateButton() {
 		const duplicateButton = this.page.getByRole('button', {
-			name: 'Duplicate Segment Property',
+			name: 'Duplicate Property',
 		});
 		await duplicateButton.click();
 	}
@@ -253,7 +253,9 @@ export class SegmentsPage {
 			exact: true,
 			name: tabName,
 		});
-		const propertyLocator = this.page.getByText(propertyName);
+		const propertyLocator = this.page.getByText(propertyName, {
+			exact: true,
+		});
 		const isPropertyVisible = await propertyLocator.isVisible();
 
 		if (!isPropertyVisible) {

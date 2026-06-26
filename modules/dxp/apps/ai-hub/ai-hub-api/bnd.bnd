@@ -6,4 +6,5 @@ Export-Package:\
 	com.liferay.ai.hub.configuration,\
 	com.liferay.ai.hub.guardrail,\
 	com.liferay.ai.hub.quota,\
-	com.liferay.ai.hub.util
+	com.liferay.ai.hub.util,\
+	com.liferay.ai.hub.workflow.node

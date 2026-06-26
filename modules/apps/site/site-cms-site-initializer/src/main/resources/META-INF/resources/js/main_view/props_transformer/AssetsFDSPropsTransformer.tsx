@@ -276,6 +276,9 @@ export default function AssetsFDSPropsTransformer({
 									});
 								}}
 								options={options}
+								systemIconLabel={Liferay.Language.get(
+									'system-default-structure'
+								)}
 								trailingIcon={
 									itemData?.embedded?.systemProperties
 										?.collaboratorBrief && (

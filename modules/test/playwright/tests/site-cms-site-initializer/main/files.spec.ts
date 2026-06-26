@@ -457,7 +457,9 @@ test(
 
 			await expect(page.getByRole('dialog')).toBeVisible();
 
-			await expect(page.getByText(imageName)).toBeVisible();
+			await expect(page.getByTestId('modal-header-name')).toHaveText(
+				imageName
+			);
 			await expect(
 				page.getByRole('link', {name: 'Download'})
 			).toBeVisible();

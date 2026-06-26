@@ -19,7 +19,12 @@ module.exports = {
 		Liferay: true,
 		pendo: true,
 	},
-	parser: '@typescript-eslint/parser',
+	parser: require.resolve('@typescript-eslint/parser', {
+		paths: [
+			__dirname,
+			require('path').join(__dirname, '..', '..', '..', '..', 'modules'),
+		],
+	}),
 	parserOptions: {
 		ecmaFeatures: {
 			allowImportExportEverywhere: true,

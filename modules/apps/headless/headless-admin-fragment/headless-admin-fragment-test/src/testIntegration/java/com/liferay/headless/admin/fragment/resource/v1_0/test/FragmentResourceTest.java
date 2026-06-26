@@ -181,6 +181,7 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 	public void testGetSiteFragment() throws Exception {
 		super.testGetSiteFragment();
 
+		_testGetSiteFormFragment();
 		_testGetSiteFragmentApprovedAndDraft();
 		_testGetSiteFragmentApproved();
 		_testGetSiteFragmentDraft();
@@ -1052,6 +1053,19 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 			fragmentResource.deleteSiteFragmentHttpResponse(
 				testGroup.getExternalReferenceCode(),
 				RandomTestUtil.randomString()));
+	}
+
+	private void _testGetSiteFormFragment() throws Exception {
+		FieldType[] fieldTypes = {FieldType.TEXT};
+
+		Fragment postFragment = _postSiteFragmentSetFragment(
+			_randomFormFragment(fieldTypes));
+
+		Fragment getFragment = fragmentResource.getSiteFragment(
+			testGroup.getExternalReferenceCode(),
+			postFragment.getExternalReferenceCode());
+
+		_assertFormFragment(fieldTypes, getFragment);
 	}
 
 	private void _testGetSiteFragment(boolean approved, boolean draft)

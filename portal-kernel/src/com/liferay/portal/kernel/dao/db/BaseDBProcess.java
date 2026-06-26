@@ -937,7 +937,7 @@ public abstract class BaseDBProcess implements DBProcess {
 						GetterUtil.getBoolean(autoCommit, true));
 				}
 				catch (SQLException sqlException) {
-					_log.error("Unable to set autoCommit", sqlException);
+					_log.error("Unable to set auto commit", sqlException);
 				}
 			}
 		}

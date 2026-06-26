@@ -269,6 +269,7 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 	@Test
 	@TestInfo("LPD-95281")
 	public void testPutSiteFragment() throws Exception {
+		_testPutSiteFormFragmentFieldTypesInvalidProblemException();
 		_testPutSiteFormFragmentUpdateFieldTypes();
 		_testPutSiteFragmentBatch();
 		_testPutSiteFragmentCreateApproved();
@@ -1478,21 +1479,22 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 	private void _testPostSiteFormFragmentFieldTypesInvalidProblemException()
 		throws Exception {
 
-		_assertProblemException(
-			"the-form-fragment-field-types-are-invalid",
-			() -> _postSiteFragment(
-				_randomFormFragment(
-					new FieldType[] {FieldType.CAPTCHA, FieldType.TEXT})));
+		_testPostSiteFormFragmentFieldTypesInvalidProblemException(
+			new FieldType[] {FieldType.CAPTCHA, FieldType.TEXT});
+		_testPostSiteFormFragmentFieldTypesInvalidProblemException(
+			new FieldType[] {FieldType.STEPPER, FieldType.TEXT});
+		_testPostSiteFormFragmentFieldTypesInvalidProblemException(
+			new FieldType[0]);
+		_testPostSiteFormFragmentFieldTypesInvalidProblemException(null);
+	}
+
+	private void _testPostSiteFormFragmentFieldTypesInvalidProblemException(
+			FieldType[] fieldTypes)
+		throws Exception {
 
 		_assertProblemException(
 			"the-form-fragment-field-types-are-invalid",
-			() -> _postSiteFragment(
-				_randomFormFragment(
-					new FieldType[] {FieldType.STEPPER, FieldType.TEXT})));
-
-		_assertProblemException(
-			"the-form-fragment-field-types-are-invalid",
-			() -> _postSiteFragment(_randomFormFragment(new FieldType[0])));
+			() -> _postSiteFragment(_randomFormFragment(fieldTypes)));
 	}
 
 	private void _testPostSiteFormFragmentFieldTypesUnsupportedProblemException()
@@ -2062,6 +2064,34 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 
 		assertEquals(fragment, getFragment);
 		assertValid(getFragment);
+	}
+
+	private void _testPutSiteFormFragmentFieldTypesInvalidProblemException()
+		throws Exception {
+
+		_testPutSiteFormFragmentFieldTypesInvalidProblemException(
+			new FieldType[] {FieldType.CAPTCHA, FieldType.TEXT});
+		_testPutSiteFormFragmentFieldTypesInvalidProblemException(
+			new FieldType[] {FieldType.STEPPER, FieldType.TEXT});
+		_testPutSiteFormFragmentFieldTypesInvalidProblemException(
+			new FieldType[0]);
+		_testPutSiteFormFragmentFieldTypesInvalidProblemException(null);
+	}
+
+	private void _testPutSiteFormFragmentFieldTypesInvalidProblemException(
+			FieldType[] fieldTypes)
+		throws Exception {
+
+		FormFragment formFragment = (FormFragment)_postSiteFragmentSetFragment(
+			_randomFormFragment());
+
+		formFragment.setFieldTypes(fieldTypes);
+
+		_assertProblemException(
+			"the-form-fragment-field-types-are-invalid",
+			() -> fragmentResource.putSiteFragment(
+				testGroup.getExternalReferenceCode(),
+				formFragment.getExternalReferenceCode(), formFragment));
 	}
 
 	private void _testPutSiteFormFragmentUpdateFieldTypes() throws Exception {

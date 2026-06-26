@@ -13,12 +13,11 @@ GroupDisplayContextHelper groupDisplayContextHelper = new GroupDisplayContextHel
 liveGroup = groupDisplayContextHelper.getLiveGroup();
 liveGroupId = groupDisplayContextHelper.getLiveGroupId();
 
+boolean liveGroupRemoteStaging = liveGroup.hasRemoteStagingGroup() && PropsValues.STAGING_LIVE_GROUP_REMOTE_STAGING_ENABLED;
 UnicodeProperties liveGroupTypeSettingsUnicodeProperties = liveGroup.getTypeSettingsProperties();
 
 LayoutSet privateLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(liveGroup.getGroupId(), true);
 LayoutSet publicLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(liveGroup.getGroupId(), false);
-
-boolean liveGroupRemoteStaging = liveGroup.hasRemoteStagingGroup() && PropsValues.STAGING_LIVE_GROUP_REMOTE_STAGING_ENABLED;
 
 boolean stagedLocally = liveGroup.isStaged() && !liveGroup.isStagedRemotely();
 

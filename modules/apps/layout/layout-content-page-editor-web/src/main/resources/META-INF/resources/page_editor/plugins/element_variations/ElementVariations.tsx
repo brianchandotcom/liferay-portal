@@ -7,14 +7,16 @@ import ClayButton from '@clayui/button';
 import {Option, Picker} from '@clayui/core';
 import ClayEmptyState from '@clayui/empty-state';
 import {useId} from 'frontend-js-components-web';
-import React, {useReducer, useState} from 'react';
+import React, {useReducer, useRef, useState} from 'react';
 
 import {initializeConfig} from '../../app/config/index';
 import {Config} from '../../types/config';
 import ElementVariationForm from './ElementVariationForm';
 import ElementVariationService from './ElementVariationService';
 import ElementVariationsList from './ElementVariationsList';
-import ElementVariationsPreview from './ElementVariationsPreview';
+import ElementVariationsPreview, {
+	ElementVariationsPreviewRef,
+} from './ElementVariationsPreview';
 import {
 	ElementVariation,
 	createElementVariation,
@@ -84,6 +86,9 @@ function ElementVariations({
 			elementVariation.segmentsExperienceERC === experienceKey
 	);
 
+	const elementVariationsPreviewRef =
+		useRef<ElementVariationsPreviewRef>(null);
+
 	return (
 		<div className="d-flex element-variations flex-column">
 			<div className="d-flex element-variations__content flex-grow-1">
@@ -103,6 +108,9 @@ function ElementVariations({
 									properties,
 									type: 'UPDATE_ELEMENT_VARIATION_DRAFT',
 								})
+							}
+							onReloadPreview={() =>
+								elementVariationsPreviewRef.current?.reload()
 							}
 							onSave={() =>
 								ElementVariationService.addElementVariation({
@@ -222,6 +230,7 @@ function ElementVariations({
 				<ElementVariationsPreview
 					draftElementVariation={draftElementVariation}
 					previewURL={previewURL}
+					ref={elementVariationsPreviewRef}
 				/>
 			</div>
 		</div>

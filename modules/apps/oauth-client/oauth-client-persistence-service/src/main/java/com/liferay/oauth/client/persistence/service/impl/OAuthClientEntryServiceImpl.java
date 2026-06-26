@@ -39,7 +39,7 @@ public class OAuthClientEntryServiceImpl
 			String authRequestParametersJSON, String authServerWellKnownURI,
 			String customClaimsJSON, String infoJSON, String matcherField,
 			long metadataCacheTime, String oidcUserInfoMapperJSON,
-			String tokenRequestParametersJSON)
+			int tokenConnectionTimeout, String tokenRequestParametersJSON)
 		throws PortalException {
 
 		ModelResourcePermissionUtil.check(
@@ -50,7 +50,7 @@ public class OAuthClientEntryServiceImpl
 		return oAuthClientEntryLocalService.addOAuthClientEntry(
 			externalReferenceCode, userId, authRequestParametersJSON,
 			authServerWellKnownURI, customClaimsJSON, infoJSON, matcherField,
-			metadataCacheTime, oidcUserInfoMapperJSON,
+			metadataCacheTime, oidcUserInfoMapperJSON, tokenConnectionTimeout,
 			tokenRequestParametersJSON);
 	}
 
@@ -184,7 +184,8 @@ public class OAuthClientEntryServiceImpl
 			long oAuthClientEntryId, String authRequestParametersJSON,
 			String authServerWellKnownURI, String customClaimsJSON,
 			String infoJSON, String matcherField, long metadataCacheTime,
-			String oidcUserInfoMapperJSON, String tokenRequestParametersJSON)
+			String oidcUserInfoMapperJSON, int tokenConnectionTimeout,
+			String tokenRequestParametersJSON)
 		throws PortalException {
 
 		_oAuthClientEntryModelResourcePermission.check(
@@ -193,7 +194,7 @@ public class OAuthClientEntryServiceImpl
 		return oAuthClientEntryLocalService.updateOAuthClientEntry(
 			oAuthClientEntryId, authRequestParametersJSON,
 			authServerWellKnownURI, customClaimsJSON, infoJSON, matcherField,
-			metadataCacheTime, oidcUserInfoMapperJSON,
+			metadataCacheTime, oidcUserInfoMapperJSON, tokenConnectionTimeout,
 			tokenRequestParametersJSON);
 	}
 

@@ -624,85 +624,94 @@ public class AnalyticsCloudClient {
 		String[] selectedMetrics, Integer size, Sort[] sorts, Long tagId,
 		Long vocabularyId) {
 
-		String url = String.join(
+		String location = String.join(
 			StringPool.BLANK, liferayAnalyticsFaroBackendURL,
 			"/api/1.0/asset-metric/objectEntry", path);
 
 		if (categoryId != null) {
-			url = HttpComponentsUtil.addParameter(
-				url, "categoryId", categoryId);
+			location = HttpComponentsUtil.addParameter(
+				location, "categoryId", categoryId);
 		}
 
 		if (Validator.isNotNull(dataSourceId)) {
-			url = HttpComponentsUtil.addParameter(
-				url, "dataSourceId", dataSourceId);
+			location = HttpComponentsUtil.addParameter(
+				location, "dataSourceId", dataSourceId);
 		}
 
 		if (Validator.isNotNull(externalReferenceCode)) {
-			url = HttpComponentsUtil.addParameter(
-				url, "externalReferenceCode", externalReferenceCode);
+			location = HttpComponentsUtil.addParameter(
+				location, "externalReferenceCode", externalReferenceCode);
 		}
 
 		if (Validator.isNotNull(filterString)) {
-			url = HttpComponentsUtil.addParameter(url, "filter", filterString);
+			location = HttpComponentsUtil.addParameter(
+				location, "filter", filterString);
 		}
 
 		if (Validator.isNotNull(groupBy)) {
-			url = HttpComponentsUtil.addParameter(url, "groupBy", groupBy);
+			location = HttpComponentsUtil.addParameter(
+				location, "groupBy", groupBy);
 		}
 
 		if (!groupIds.isEmpty()) {
-			url = HttpComponentsUtil.addParameter(
-				url, "groupIds", StringUtil.merge(groupIds, StringPool.COMMA));
+			location = HttpComponentsUtil.addParameter(
+				location, "groupIds",
+				StringUtil.merge(groupIds, StringPool.COMMA));
 		}
 
 		if (Validator.isNotNull(metricType)) {
-			url = HttpComponentsUtil.addParameter(
-				url, "assetSummaryMetricType", metricType);
+			location = HttpComponentsUtil.addParameter(
+				location, "assetSummaryMetricType", metricType);
 		}
 
 		if (Validator.isNotNull(objectType)) {
-			url = HttpComponentsUtil.addParameter(
-				url, "objectType", objectType);
+			location = HttpComponentsUtil.addParameter(
+				location, "objectType", objectType);
 		}
 
 		if (page != null) {
-			url = HttpComponentsUtil.addParameter(url, "page", page);
+			location = HttpComponentsUtil.addParameter(location, "page", page);
 		}
 
 		if (rangeKey != null) {
-			url = HttpComponentsUtil.addParameter(url, "rangeKey", rangeKey);
+			location = HttpComponentsUtil.addParameter(
+				location, "rangeKey", rangeKey);
 		}
 
 		if (ArrayUtil.isNotEmpty(selectedMetrics)) {
-			url = HttpComponentsUtil.addParameter(
-				url, "selectedMetrics",
+			location = HttpComponentsUtil.addParameter(
+				location, "selectedMetrics",
 				StringUtil.merge(selectedMetrics, StringPool.COMMA));
 		}
 
 		if (size != null) {
-			url = HttpComponentsUtil.addParameter(url, "size", size);
+			location = HttpComponentsUtil.addParameter(location, "size", size);
 		}
 
 		if (ArrayUtil.isNotEmpty(sorts)) {
+			List<String> sortStrings = new ArrayList<>();
+
 			for (Sort sort : sorts) {
-				url = HttpComponentsUtil.addParameter(
-					url, "sort", sort.getFieldName());
-				url = HttpComponentsUtil.addParameter(
-					url, "sort", sort.isReverse() ? "desc" : "asc");
+				sortStrings.add(sort.getFieldName());
+				sortStrings.add(sort.isReverse() ? "desc" : "asc");
 			}
+
+			location = HttpComponentsUtil.addParameter(
+				location, "sort",
+				StringUtil.merge(sortStrings, StringPool.COMMA));
 		}
 
 		if (tagId != null) {
-			url = HttpComponentsUtil.addParameter(url, "tagId", tagId);
+			location = HttpComponentsUtil.addParameter(
+				location, "tagId", tagId);
 		}
 
 		if (vocabularyId != null) {
-			url = HttpComponentsUtil.addParameter(
-				url, "vocabularyId", vocabularyId);
+			location = HttpComponentsUtil.addParameter(
+				location, "vocabularyId", vocabularyId);
 		}
 
-		return url;
+		return location;
 	}
 
 	private String _getLocation(

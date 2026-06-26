@@ -81,7 +81,7 @@ public class SystemFDSSerializerTest {
 				getObjectDefinitionByExternalReferenceCode(
 					"L_DATA_SET_SNAPSHOT", TestPropsValues.getCompanyId());
 
-		_objectEntry = _addSnapshotObjectEntry(
+		_objectEntry = _addObjectEntry(
 			_FDS_NAME, _LABEL, objectDefinition);
 
 		_sharingEntry = _sharingEntryLocalService.addSharingEntry(
@@ -123,7 +123,7 @@ public class SystemFDSSerializerTest {
 		Assert.assertEquals(_LABEL, itemJSONObject.getString("label"));
 	}
 
-	private ObjectEntry _addSnapshotObjectEntry(
+	private ObjectEntry _addObjectEntry(
 			String fdsName, String label, ObjectDefinition objectDefinition)
 		throws Exception {
 

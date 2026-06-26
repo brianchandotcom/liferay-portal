@@ -258,6 +258,7 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 	@Override
 	@Test
 	public void testPutSiteFragment() throws Exception {
+		_testPutSiteFormFragmentUpdateFieldTypes();
 		_testPutSiteFragmentBatch();
 		_testPutSiteFragmentCreateApproved();
 		_testPutSiteFragmentCreateApprovedAndDraft();
@@ -289,6 +290,7 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 		_testPutSiteFragmentUpdateThumbnailURLReferenceFileBase64();
 		_testPutSiteFragmentUpdateThumbnailURLReferenceNull();
 		_testPutSiteFragmentUpdateThumbnailURLReferenceURL();
+		_testPutSiteFragmentUpdateTypeProblemException();
 	}
 
 	@Override
@@ -872,6 +874,10 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 		}
 
 		return (BasicFragment)fragment;
+	}
+
+	private FormFragment _randomFormFragment() {
+		return _randomFormFragment(new FieldType[] {FieldType.TEXT});
 	}
 
 	private FormFragment _randomFormFragment(FieldType[] fieldTypes) {
@@ -1938,6 +1944,21 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 		assertValid(getFragment);
 	}
 
+	private void _testPutSiteFormFragmentUpdateFieldTypes() throws Exception {
+		FormFragment postFormFragment =
+			(FormFragment)_postSiteFragmentSetFragment(_randomFormFragment());
+
+		FieldType[] fieldTypes = {FieldType.NUMBER, FieldType.TEXT};
+
+		postFormFragment.setFieldTypes(fieldTypes);
+
+		Fragment putFragment = fragmentResource.putSiteFragment(
+			testGroup.getExternalReferenceCode(),
+			postFormFragment.getExternalReferenceCode(), postFormFragment);
+
+		_assertFormFragment(fieldTypes, putFragment);
+	}
+
 	private void _testPutSiteFragmentBatch() throws Exception {
 		Fragment fragment1 = _postSiteFragmentSetFragment(randomFragment());
 		Fragment fragment2 = _postSiteFragmentSetFragment(randomFragment());
@@ -2551,6 +2572,30 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 
 		_putSiteFragmentAndAssertThumbnailURLReference(
 			_thumbnail2Bytes, null, putFragment, thumbnailURLReference2);
+	}
+
+	private void _testPutSiteFragmentUpdateTypeProblemException()
+		throws Exception {
+
+		_testPutSiteFragmentUpdateTypeProblemException(
+			randomFragment(), _randomFormFragment());
+		_testPutSiteFragmentUpdateTypeProblemException(
+			_randomFormFragment(), randomFragment());
+	}
+
+	private void _testPutSiteFragmentUpdateTypeProblemException(
+			Fragment fragment1, Fragment fragment2)
+		throws Exception {
+
+		Fragment postFragment = _postSiteFragmentSetFragment(fragment1);
+
+		fragment2.setExternalReferenceCode(
+			postFragment.getExternalReferenceCode());
+		fragment2.setKey(postFragment.getKey());
+
+		_testPutSiteFragmentProblemException(
+			postFragment.getExternalReferenceCode(), fragment2,
+			"the-fragment-type-cannot-be-changed");
 	}
 
 	private FragmentSet _toFragmentSet(FragmentCollection fragmentCollection) {

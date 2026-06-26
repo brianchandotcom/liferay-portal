@@ -190,8 +190,8 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 		super.testGetSiteFragment();
 
 		_testGetSiteFormFragment();
-		_testGetSiteFragmentApprovedAndDraft();
 		_testGetSiteFragmentApproved();
+		_testGetSiteFragmentApprovedAndDraft();
 		_testGetSiteFragmentDraft();
 		_testGetSiteFragmentThumbnailURLReference();
 	}

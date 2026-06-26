@@ -8,7 +8,9 @@ package com.liferay.site.cms.site.initializer.internal.display.context;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.configuration.DLConfiguration;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
+import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.service.ObjectDefinitionService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -120,8 +122,12 @@ public class ViewHomeRecentAssetsSectionDisplayContext
 	protected String getCMSSectionFilterString() {
 		return appendStatus(
 			appendGroupIds(
-				"cmsKind eq 'object' and (cmsSection eq 'contents' or " +
-					"cmsSection eq 'files') and rootDescendantNode eq false"));
+				StringBundler.concat(
+					"objectDefinitionExternalReferenceCode ne '",
+					ObjectEntryFolderConstants.
+						EXTERNAL_REFERENCE_CODE_OBJECT_ENTRY_FOLDER,
+					"' and (cmsSection eq 'contents' or cmsSection eq ",
+					"'files') and rootDescendantNode eq false")));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -86,7 +86,6 @@ public class SearchResultEntityModel implements EntityModel {
 			new IntegerEntityField("status", locale -> Field.STATUS),
 			new StringEntityField("cmpAssignTo", locale -> "cmpAssignTo"),
 			new StringEntityField("cmpState", locale -> "cmpState"),
-			new StringEntityField("cmsKind", locale -> "cms_kind"),
 			new StringEntityField("cmsSection", locale -> "cms_section"),
 			new StringEntityField("extension", locale -> "extension"),
 			new StringEntityField(

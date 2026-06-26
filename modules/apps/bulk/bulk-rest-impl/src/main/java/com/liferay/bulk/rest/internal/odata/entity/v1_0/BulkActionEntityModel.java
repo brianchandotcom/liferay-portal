@@ -77,9 +77,11 @@ public class BulkActionEntityModel implements EntityModel {
 				"objectDefinitionId", locale -> "objectDefinitionId"),
 			new IntegerEntityField("scopeGroupId", locale -> "scopeGroupId"),
 			new IntegerEntityField("status", locale -> Field.STATUS),
-			new StringEntityField("cmsKind", locale -> "cms_kind"),
 			new StringEntityField("cmsSection", locale -> "cms_section"),
 			new StringEntityField("name", locale -> "name"),
+			new StringEntityField(
+				"objectDefinitionExternalReferenceCode",
+				locale -> "objectDefinitionExternalReferenceCode"),
 			new StringEntityField(
 				"title",
 				locale -> Field.getSortableFieldName(

@@ -135,12 +135,14 @@ describe('openCMSFileSelectorModal', () => {
 
 		expect(firstURL).toContain('(rootDescendantNode eq false)');
 
-		expect(firstURL).not.toContain("cmsKind eq 'object'");
+		expect(firstURL).not.toContain(
+			"objectDefinitionExternalReferenceCode ne 'L_OBJECT_ENTRY_FOLDER'"
+		);
 
 		expect(firstURL).not.toContain('folderId eq ');
 	});
 
-	it("widens the extension filter so folders pass through with cmsKind eq 'folder'", async () => {
+	it("widens the extension filter so folders pass through with objectDefinitionExternalReferenceCode eq 'L_OBJECT_ENTRY_FOLDER'", async () => {
 		openModal({
 			allowedExtensions: 'jpg,png',
 			groupId: 123,
@@ -157,7 +159,9 @@ describe('openCMSFileSelectorModal', () => {
 
 		expect(firstURL).toContain("extension in ('jpg','png')");
 
-		expect(firstURL).toContain("cmsKind eq 'folder'");
+		expect(firstURL).toContain(
+			"objectDefinitionExternalReferenceCode eq 'L_OBJECT_ENTRY_FOLDER'"
+		);
 	});
 
 	it('reopens at the folder browsed when the previous selection was confirmed', async () => {

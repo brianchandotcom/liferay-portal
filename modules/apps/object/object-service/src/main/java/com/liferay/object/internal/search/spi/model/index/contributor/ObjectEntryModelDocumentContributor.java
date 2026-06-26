@@ -600,7 +600,6 @@ public class ObjectEntryModelDocumentContributor
 			return;
 		}
 
-		document.addKeyword("cms_kind", "object");
 		document.addKeyword(
 			"cms_root",
 			rootObjectEntryFolder.getObjectEntryFolderId() ==

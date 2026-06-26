@@ -47,7 +47,6 @@ public class ObjectEntryFolderModelDocumentContributor
 		String cmsSection = _getCMSSection(parts);
 
 		if (cmsSection != null) {
-			document.addKeyword("cms_kind", "folder");
 			document.addKeyword("cms_root", parts.length == 3);
 			document.addKeyword("cms_section", cmsSection);
 			document.addKeyword(

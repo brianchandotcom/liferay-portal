@@ -184,9 +184,9 @@ const AccountsDataSet: React.FC<IAccountsDataSetProps> = ({
 				sorts={[
 					{
 						active: true,
-						direction: 'asc',
-						key: 'accountName',
-						label: Liferay.Language.get('account'),
+						direction: 'desc',
+						key: 'lastActive',
+						label: Liferay.Language.get('last-active'),
 					},
 				]}
 				views={[

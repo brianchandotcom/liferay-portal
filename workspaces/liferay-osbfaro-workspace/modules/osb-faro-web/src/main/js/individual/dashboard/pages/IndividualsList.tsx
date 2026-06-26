@@ -133,7 +133,7 @@ const IndividualsList: React.FC = () => {
 		initialFilterBy: Map({
 			activeUsers: Set([RangeKeyTimeRanges.Last30Days]),
 		}) as FilterByType,
-		initialOrderIOMap: createOrderIOMap(NAME),
+		initialOrderIOMap: createOrderIOMap(LAST_ACTIVITY_DATE),
 	});
 
 	const {data: countriesData, loading: countriesLoading} = useRequest({

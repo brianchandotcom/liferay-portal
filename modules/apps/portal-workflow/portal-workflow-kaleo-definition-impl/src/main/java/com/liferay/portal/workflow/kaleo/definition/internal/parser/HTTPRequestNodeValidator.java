@@ -6,8 +6,6 @@
 package com.liferay.portal.workflow.kaleo.definition.internal.parser;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.util.InetAddressUtil;
-import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.workflow.kaleo.definition.Definition;
 import com.liferay.portal.workflow.kaleo.definition.HTTPRequestNode;
@@ -15,10 +13,6 @@ import com.liferay.portal.workflow.kaleo.definition.NodeType;
 import com.liferay.portal.workflow.kaleo.definition.Setting;
 import com.liferay.portal.workflow.kaleo.definition.exception.KaleoDefinitionValidationException;
 import com.liferay.portal.workflow.kaleo.definition.parser.NodeValidator;
-
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.UnknownHostException;
 
 import java.util.Objects;
 import java.util.Set;
@@ -67,28 +61,6 @@ public class HTTPRequestNodeValidator
 				StringBundler.concat(
 					"The ", httpRequestNode.getDefaultLabel(),
 					" node must have a URL"));
-		}
-
-		try {
-			URL urlObject = new URL(url);
-
-			if (!PortalRunMode.isTestMode() &&
-				InetAddressUtil.isLocalInetAddress(
-					InetAddressUtil.getInetAddressByName(
-						urlObject.getHost()))) {
-
-				throw new KaleoDefinitionValidationException(
-					StringBundler.concat(
-						"The ", httpRequestNode.getDefaultLabel(),
-						" node must not have a local URL: ", url));
-			}
-		}
-		catch (MalformedURLException | UnknownHostException exception) {
-			throw new KaleoDefinitionValidationException(
-				StringBundler.concat(
-					"The ", httpRequestNode.getDefaultLabel(),
-					" node has an invalid URL: ", url),
-				exception);
 		}
 
 		if (httpRequestNode.getOutgoingTransitionsCount() == 0) {

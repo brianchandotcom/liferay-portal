@@ -24,6 +24,7 @@ import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.oauth.client.persistence.constants.OAuthClientEntryConstants;
 import com.liferay.oauth.client.persistence.model.OAuthClientEntry;
 import com.liferay.oauth.client.persistence.service.OAuthClientEntryLocalService;
+import com.liferay.oauth.client.test.util.OpenIdConnectProviderHttpServer;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
@@ -139,6 +140,11 @@ public class OIDCUserInfoProcessorTest {
 
 	@Before
 	public void setUp() throws Exception {
+		_openIdConnectProviderHttpServer =
+			new OpenIdConnectProviderHttpServer();
+
+		_discoveryEndpoint = _openIdConnectProviderHttpServer.getURL();
+
 		_emailAddress = StringUtil.toLowerCase(
 			RandomTestUtil.randomString() + "@liferay.com");
 
@@ -171,7 +177,7 @@ public class OIDCUserInfoProcessorTest {
 					};
 				}
 			).put(
-				"discoveryEndpoint", _DISCOVERY_ENDPOINT
+				"discoveryEndpoint", _discoveryEndpoint
 			).put(
 				"matcherField", "email"
 			).put(
@@ -187,6 +193,10 @@ public class OIDCUserInfoProcessorTest {
 	@After
 	public void tearDown() throws Exception {
 		ConfigurationTestUtil.deleteConfiguration(_pid);
+
+		if (_openIdConnectProviderHttpServer != null) {
+			_openIdConnectProviderHttpServer.close();
+		}
 	}
 
 	@Test
@@ -298,7 +308,7 @@ public class OIDCUserInfoProcessorTest {
 						HashMapDictionaryBuilder.<String, Object>put(
 							"companyId", TestPropsValues.getCompanyId()
 						).put(
-							"discoveryEndpoint", _DISCOVERY_ENDPOINT
+							"discoveryEndpoint", _discoveryEndpoint
 						).put(
 							"matcherField", "screenName"
 						).put(
@@ -408,7 +418,7 @@ public class OIDCUserInfoProcessorTest {
 
 	private OAuthClientEntry _getOAuthClientEntry() throws Exception {
 		return _oAuthClientEntryLocalService.getOAuthClientEntry(
-			TestPropsValues.getCompanyId(), _DISCOVERY_ENDPOINT, _CLIENT_ID);
+			TestPropsValues.getCompanyId(), _discoveryEndpoint, _CLIENT_ID);
 	}
 
 	private ExpandoColumn _getOrAddExpandoColumn(
@@ -590,9 +600,6 @@ public class OIDCUserInfoProcessorTest {
 
 	private static final String _CLIENT_ID = RandomTestUtil.randomString();
 
-	private static final String _DISCOVERY_ENDPOINT =
-		"https://accounts.google.com/.well-known/openid-configuration";
-
 	private static final String _ISSUER = RandomTestUtil.randomString();
 
 	private static String _customOIDCUserInfoMapperJSON;
@@ -609,6 +616,7 @@ public class OIDCUserInfoProcessorTest {
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
+	private String _discoveryEndpoint;
 	private String _emailAddress;
 
 	@Inject
@@ -631,6 +639,8 @@ public class OIDCUserInfoProcessorTest {
 		type = Inject.NoType.class
 	)
 	private Object _oidcUserInfoProcessor;
+
+	private OpenIdConnectProviderHttpServer _openIdConnectProviderHttpServer;
 
 	@Inject
 	private OpenIdConnectUserLocalService _openIdConnectUserLocalService;

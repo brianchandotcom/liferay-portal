@@ -13,6 +13,7 @@ import com.liferay.oauth.client.persistence.exception.OAuthClientEntryAuthServer
 import com.liferay.oauth.client.persistence.exception.OAuthClientEntryOIDCUserInfoMapperJSONException;
 import com.liferay.oauth.client.persistence.model.OAuthClientEntry;
 import com.liferay.oauth.client.persistence.service.OAuthClientEntryLocalService;
+import com.liferay.oauth.client.test.util.OpenIdConnectProviderHttpServer;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.DataGuard;
@@ -22,7 +23,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -40,125 +40,140 @@ public class OAuthClientEntryLocalServiceTest {
 	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Before
-	public void setUp() {
-		_authRequestParametersJSON = JSONUtil.put(
-			"response_type", "code"
-		).put(
-			"scope", "openid email profile"
-		).toString();
-
-		_infoJSON = JSONUtil.put(
-			"client_id", _CLIENT_ID
-		).put(
-			"client_name", "Client to Google"
-		).put(
-			"client_secret", RandomTestUtil.randomString()
-		).put(
-			"grant_types",
-			JSONUtil.putAll("authorization_code", "refresh_token")
-		).put(
-			"response_types", JSONUtil.putAll("code")
-		).put(
-			"scope", "openid email profile"
-		).toString();
-
-		_tokenRequestParametersJSON = JSONUtil.put(
-			"grant_type", "authorization_code"
-		).put(
-			"scope", "openid email profile"
-		).toString();
-	}
-
 	@Test
 	public void testAddOAuthClientEntry() throws Exception {
-		OAuthClientEntry oAuthClientEntry =
-			_oAuthClientEntryLocalService.addOAuthClientEntry(
-				null, TestPropsValues.getUserId(), _authRequestParametersJSON,
-				_AUTH_SERVER_WELL_KNOWN_URI, _CUSTOM_CLAIMS_JSON, _infoJSON,
-				"email", OAuthClientEntryConstants.METADATA_CACHE_TIME_DEFAULT,
-				OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON,
-				_tokenRequestParametersJSON);
+		try (OpenIdConnectProviderHttpServer openIdConnectProviderHttpServer =
+				new OpenIdConnectProviderHttpServer()) {
 
-		Assert.assertEquals(
-			OAuthClientEntryConstants.METADATA_CACHE_TIME_DEFAULT,
-			oAuthClientEntry.getMetadataCacheTime());
-		Assert.assertEquals(
-			OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON,
-			oAuthClientEntry.getOIDCUserInfoMapperJSON());
-		Assert.assertEquals(
-			_authRequestParametersJSON,
-			oAuthClientEntry.getAuthRequestParametersJSON());
-		Assert.assertEquals(
-			_CUSTOM_CLAIMS_JSON, oAuthClientEntry.getCustomClaimsJSON());
-		Assert.assertEquals(
-			_tokenRequestParametersJSON,
-			oAuthClientEntry.getTokenRequestParametersJSON());
-		Assert.assertEquals(
-			TestPropsValues.getUserId(), oAuthClientEntry.getUserId());
+			String authRequestParametersJSON = JSONUtil.put(
+				"response_type", "code"
+			).put(
+				"scope", "openid email profile"
+			).toString();
 
-		AssertUtils.assertFailure(
-			DuplicateOAuthClientEntryException.class, "Client ID " + _CLIENT_ID,
-			() -> _oAuthClientEntryLocalService.addOAuthClientEntry(
-				null, TestPropsValues.getUserId(), _authRequestParametersJSON,
-				_AUTH_SERVER_WELL_KNOWN_URI, _CUSTOM_CLAIMS_JSON, _infoJSON,
-				"email", OAuthClientEntryConstants.METADATA_CACHE_TIME_DEFAULT,
-				OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON,
-				_tokenRequestParametersJSON));
+			String authServerWellKnownURI =
+				openIdConnectProviderHttpServer.getURL();
 
-		_oAuthClientEntryLocalService.deleteOAuthClientEntry(
-			oAuthClientEntry.getOAuthClientEntryId());
+			String customClaimsJSON = "{}";
 
-		AssertUtils.assertFailure(
-			OAuthClientEntryAuthRequestParametersJSONException.class,
-			"Null or empty response type string",
-			() -> _oAuthClientEntryLocalService.addOAuthClientEntry(
-				null, TestPropsValues.getUserId(),
-				JSONUtil.put(
-					"response_type", ""
-				).put(
-					"scope", "openid email profile"
-				).toString(),
-				_AUTH_SERVER_WELL_KNOWN_URI, _CUSTOM_CLAIMS_JSON, _infoJSON,
-				"email", OAuthClientEntryConstants.METADATA_CACHE_TIME_DEFAULT,
-				OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON,
-				_tokenRequestParametersJSON));
-		Assert.assertThrows(
-			OAuthClientEntryAuthServerWellKnownURIException.class,
-			() -> _oAuthClientEntryLocalService.addOAuthClientEntry(
-				null, TestPropsValues.getUserId(), _authRequestParametersJSON,
-				"http://172.17.0.3:18080/auth/realms/master/." +
-					"well-known/openid-configuration",
-				_CUSTOM_CLAIMS_JSON, _infoJSON, "email",
+			String clientId = RandomTestUtil.randomString();
+
+			String infoJSON = JSONUtil.put(
+				"client_id", clientId
+			).put(
+				"client_name", RandomTestUtil.randomString()
+			).put(
+				"client_secret", RandomTestUtil.randomString()
+			).put(
+				"grant_types",
+				JSONUtil.putAll("authorization_code", "refresh_token")
+			).put(
+				"response_types", JSONUtil.putAll("code")
+			).put(
+				"scope", "openid email profile"
+			).toString();
+
+			int tokenConnectionTimeout = RandomTestUtil.randomInt();
+
+			String tokenRequestParametersJSON = JSONUtil.put(
+				"grant_type", "authorization_code"
+			).put(
+				"scope", "openid email profile"
+			).toString();
+
+			OAuthClientEntry oAuthClientEntry =
+				_oAuthClientEntryLocalService.addOAuthClientEntry(
+					null, TestPropsValues.getUserId(),
+					authRequestParametersJSON, authServerWellKnownURI,
+					customClaimsJSON, infoJSON, "email",
+					OAuthClientEntryConstants.METADATA_CACHE_TIME_DEFAULT,
+					OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON,
+					tokenConnectionTimeout, tokenRequestParametersJSON);
+
+			Assert.assertEquals(
+				TestPropsValues.getUserId(), oAuthClientEntry.getUserId());
+			Assert.assertEquals(
+				authRequestParametersJSON,
+				oAuthClientEntry.getAuthRequestParametersJSON());
+			Assert.assertEquals(
+				authServerWellKnownURI,
+				oAuthClientEntry.getAuthServerWellKnownURI());
+			Assert.assertEquals(clientId, oAuthClientEntry.getClientId());
+			Assert.assertEquals(
+				customClaimsJSON, oAuthClientEntry.getCustomClaimsJSON());
+			Assert.assertEquals("email", oAuthClientEntry.getMatcherField());
+			Assert.assertEquals(
 				OAuthClientEntryConstants.METADATA_CACHE_TIME_DEFAULT,
+				oAuthClientEntry.getMetadataCacheTime());
+			Assert.assertEquals(
 				OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON,
-				_tokenRequestParametersJSON));
-		AssertUtils.assertFailure(
-			OAuthClientEntryOIDCUserInfoMapperJSONException.class,
-			"emailAddress is required for user",
-			() -> _oAuthClientEntryLocalService.addOAuthClientEntry(
-				null, TestPropsValues.getUserId(), _authRequestParametersJSON,
-				_AUTH_SERVER_WELL_KNOWN_URI, _CUSTOM_CLAIMS_JSON, _infoJSON,
-				"email", OAuthClientEntryConstants.METADATA_CACHE_TIME_DEFAULT,
-				JSONUtil.put(
-					"user", JSONUtil.put("emailAddress", "")
-				).toString(),
-				_tokenRequestParametersJSON));
+				oAuthClientEntry.getOIDCUserInfoMapperJSON());
+			Assert.assertEquals(
+				tokenConnectionTimeout,
+				oAuthClientEntry.getTokenConnectionTimeout());
+			Assert.assertEquals(
+				tokenRequestParametersJSON,
+				oAuthClientEntry.getTokenRequestParametersJSON());
+
+			AssertUtils.assertFailure(
+				DuplicateOAuthClientEntryException.class,
+				"Client ID " + clientId,
+				() -> _oAuthClientEntryLocalService.addOAuthClientEntry(
+					null, TestPropsValues.getUserId(),
+					authRequestParametersJSON, authServerWellKnownURI,
+					customClaimsJSON, infoJSON, "email",
+					OAuthClientEntryConstants.METADATA_CACHE_TIME_DEFAULT,
+					OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON,
+					OAuthClientEntryConstants.TOKEN_CONNECTION_TIMEOUT_DEFAULT,
+					tokenRequestParametersJSON));
+
+			_oAuthClientEntryLocalService.deleteOAuthClientEntry(
+				oAuthClientEntry.getOAuthClientEntryId());
+
+			AssertUtils.assertFailure(
+				OAuthClientEntryAuthRequestParametersJSONException.class,
+				"Null or empty response type string",
+				() -> _oAuthClientEntryLocalService.addOAuthClientEntry(
+					null, TestPropsValues.getUserId(),
+					JSONUtil.put(
+						"response_type", ""
+					).put(
+						"scope", "openid email profile"
+					).toString(),
+					authServerWellKnownURI, customClaimsJSON, infoJSON, "email",
+					OAuthClientEntryConstants.METADATA_CACHE_TIME_DEFAULT,
+					OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON,
+					OAuthClientEntryConstants.TOKEN_CONNECTION_TIMEOUT_DEFAULT,
+					tokenRequestParametersJSON));
+			Assert.assertThrows(
+				OAuthClientEntryAuthServerWellKnownURIException.class,
+				() -> _oAuthClientEntryLocalService.addOAuthClientEntry(
+					null, TestPropsValues.getUserId(),
+					authRequestParametersJSON,
+					"http://" + RandomTestUtil.randomString() +
+						"/.well-known/openid-configuration",
+					customClaimsJSON, infoJSON, "email",
+					OAuthClientEntryConstants.METADATA_CACHE_TIME_DEFAULT,
+					OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON,
+					OAuthClientEntryConstants.TOKEN_CONNECTION_TIMEOUT_DEFAULT,
+					tokenRequestParametersJSON));
+			AssertUtils.assertFailure(
+				OAuthClientEntryOIDCUserInfoMapperJSONException.class,
+				"emailAddress is required for user",
+				() -> _oAuthClientEntryLocalService.addOAuthClientEntry(
+					null, TestPropsValues.getUserId(),
+					authRequestParametersJSON, authServerWellKnownURI,
+					customClaimsJSON, infoJSON, "email",
+					OAuthClientEntryConstants.METADATA_CACHE_TIME_DEFAULT,
+					JSONUtil.put(
+						"user", JSONUtil.put("emailAddress", "")
+					).toString(),
+					OAuthClientEntryConstants.TOKEN_CONNECTION_TIMEOUT_DEFAULT,
+					tokenRequestParametersJSON));
+		}
 	}
-
-	private static final String _AUTH_SERVER_WELL_KNOWN_URI =
-		"https://accounts.google.com/.well-known/openid-configuration";
-
-	private static final String _CLIENT_ID = RandomTestUtil.randomString();
-
-	private static final String _CUSTOM_CLAIMS_JSON = "{}";
-
-	private String _authRequestParametersJSON;
-	private String _infoJSON;
 
 	@Inject
 	private OAuthClientEntryLocalService _oAuthClientEntryLocalService;
-
-	private String _tokenRequestParametersJSON;
 
 }

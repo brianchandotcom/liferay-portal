@@ -63,6 +63,18 @@ public class EnvironmentBuildPropertiesUtil {
 						"github.webhook.url[aws-staging]"));
 			}
 
+			if (environment != EnvironmentBuildProperties.Environment.LOCAL) {
+				for (String propertyName :
+						environmentBuildProperties.stringPropertyNames()) {
+
+					environmentBuildProperties.setProperty(
+						propertyName,
+						SecretsUtil.getSecret(
+							environmentBuildProperties.getProperty(
+								propertyName)));
+				}
+			}
+
 			environmentBuildProperties.store(environmentBuildPropertiesFile);
 
 			System.out.println("Writing " + environmentBuildPropertiesFile);

@@ -78,10 +78,8 @@ public class SystemFDSSerializerTest {
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.
-				fetchObjectDefinitionByExternalReferenceCode(
+				getObjectDefinitionByExternalReferenceCode(
 					"L_DATA_SET_SNAPSHOT", TestPropsValues.getCompanyId());
-
-		Assert.assertNotNull(objectDefinition);
 
 		_objectEntry = _addSnapshotObjectEntry(
 			_FDS_NAME, _LABEL, objectDefinition);

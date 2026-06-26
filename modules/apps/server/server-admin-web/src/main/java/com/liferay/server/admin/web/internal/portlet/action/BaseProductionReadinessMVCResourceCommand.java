@@ -7,6 +7,7 @@ package com.liferay.server.admin.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -27,9 +28,10 @@ public abstract class BaseProductionReadinessMVCResourceCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (!themeDisplay.getPermissionChecker(
-			).isOmniadmin()) {
+		PermissionChecker permissionChecker =
+			themeDisplay.getPermissionChecker();
 
+		if (!permissionChecker.isOmniadmin()) {
 			throw new PrincipalException.MustBeOmniadmin(
 				themeDisplay.getUserId());
 		}

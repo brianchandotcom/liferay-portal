@@ -9,13 +9,18 @@ import com.liferay.audiences.service.AudiencesEntryService;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelElementVariationService;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -24,6 +29,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.service.SegmentsExperienceService;
 
 import jakarta.portlet.PortletResponse;
+import jakarta.portlet.WindowState;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -40,12 +46,14 @@ public class EditElementVariationsDisplayContext {
 	public EditElementVariationsDisplayContext(
 		AudiencesEntryService audiencesEntryService,
 		HttpServletRequest httpServletRequest,
+		LayoutLocalService layoutLocalService,
 		LayoutPageTemplateStructureRelElementVariationService
 			layoutPageTemplateStructureRelElementVariationService,
 		Portal portal, SegmentsExperienceService segmentsExperienceService) {
 
 		_audiencesEntryService = audiencesEntryService;
 		_httpServletRequest = httpServletRequest;
+		_layoutLocalService = layoutLocalService;
 		_layoutPageTemplateStructureRelElementVariationService =
 			layoutPageTemplateStructureRelElementVariationService;
 		_portal = portal;
@@ -83,6 +91,8 @@ public class EditElementVariationsDisplayContext {
 			"portletNamespace",
 			_portal.getPortletNamespace(
 				ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET)
+		).put(
+			"previewURL", _getPreviewURL()
 		).put(
 			"redirect", getRedirect()
 		).put(
@@ -192,6 +202,35 @@ public class EditElementVariationsDisplayContext {
 		return _plid;
 	}
 
+	private String _getPreviewURL() {
+		Layout layout = _layoutLocalService.fetchLayout(_getPlid());
+
+		if (layout == null) {
+			return StringPool.BLANK;
+		}
+
+		Layout draftLayout = layout;
+
+		if (!layout.isDraftLayout()) {
+			draftLayout = layout.fetchDraftLayout();
+		}
+
+		String previewURL = HttpComponentsUtil.addParameters(
+			_themeDisplay.getPortalURL() + _themeDisplay.getPathMain() +
+				"/portal/get_page_preview",
+			"p_l_id", draftLayout.getPlid(), "p_l_mode", Constants.PREVIEW,
+			"p_p_state", WindowState.UNDEFINED.toString(),
+			"segmentsExperienceId", _getSegmentsExperienceId(), "selPlid",
+			draftLayout.getPlid());
+
+		if (Validator.isNotNull(_themeDisplay.getDoAsUserId())) {
+			previewURL = _portal.addPreservedParameters(
+				_themeDisplay, previewURL, false, true);
+		}
+
+		return previewURL;
+	}
+
 	private long _getSegmentsExperienceId() {
 		if (_segmentsExperienceId != null) {
 			return _segmentsExperienceId;
@@ -231,6 +270,7 @@ public class EditElementVariationsDisplayContext {
 
 	private final AudiencesEntryService _audiencesEntryService;
 	private final HttpServletRequest _httpServletRequest;
+	private final LayoutLocalService _layoutLocalService;
 	private final LayoutPageTemplateStructureRelElementVariationService
 		_layoutPageTemplateStructureRelElementVariationService;
 	private Long _plid;

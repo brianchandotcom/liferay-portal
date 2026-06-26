@@ -10,6 +10,7 @@ import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortlet
 import com.liferay.layout.content.page.editor.web.internal.display.context.EditElementVariationsDisplayContext;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelElementVariationService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.segments.service.SegmentsExperienceService;
 
@@ -40,6 +41,7 @@ public class EditElementVariationsMVCRenderCommand implements MVCRenderCommand {
 			new EditElementVariationsDisplayContext(
 				_audiencesEntryService,
 				_portal.getHttpServletRequest(renderRequest),
+				_layoutLocalService,
 				_layoutPageTemplateStructureRelElementVariationService, _portal,
 				_segmentsExperienceService));
 
@@ -48,6 +50,9 @@ public class EditElementVariationsMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private AudiencesEntryService _audiencesEntryService;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private LayoutPageTemplateStructureRelElementVariationService

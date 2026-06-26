@@ -14,6 +14,7 @@ import {Config} from '../../types/config';
 import ElementVariationForm from './ElementVariationForm';
 import ElementVariationService from './ElementVariationService';
 import ElementVariationsList from './ElementVariationsList';
+import ElementVariationsPreview from './ElementVariationsPreview';
 import {
 	ElementVariation,
 	createElementVariation,
@@ -36,6 +37,7 @@ interface Props {
 	languageId: string;
 	plid: number;
 	portletNamespace: string;
+	previewURL: string;
 	selectedSegmentsExperienceId: number;
 }
 
@@ -53,6 +55,7 @@ function ElementVariations({
 	experiences = [],
 	languageId,
 	plid,
+	previewURL,
 	selectedSegmentsExperienceId,
 }: Props) {
 	const experienceId = useId();
@@ -216,10 +219,9 @@ function ElementVariations({
 					)}
 				</div>
 
-				<iframe
-					className="border-0 flex-grow-1 h-100 w-100"
-					src="https://example.com"
-					title={Liferay.Language.get('element-variations')}
+				<ElementVariationsPreview
+					draftElementVariation={draftElementVariation}
+					previewURL={previewURL}
 				/>
 			</div>
 		</div>

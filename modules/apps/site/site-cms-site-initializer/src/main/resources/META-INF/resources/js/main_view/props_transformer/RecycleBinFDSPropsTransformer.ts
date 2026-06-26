@@ -54,7 +54,13 @@ export default function RecycleBinFDSPropsTransformer({
 					type: 'internal',
 				} as IInternalRenderer,
 				{
-					component: SimpleActionLinkRenderer,
+					component: (props: any) =>
+						SimpleActionLinkRenderer({
+							...props,
+							systemIconLabel: Liferay.Language.get(
+								'system-default-structure'
+							),
+						}),
 					name: 'simpleActionLinkTableCellRenderer',
 					type: 'internal',
 				} as IInternalRenderer,

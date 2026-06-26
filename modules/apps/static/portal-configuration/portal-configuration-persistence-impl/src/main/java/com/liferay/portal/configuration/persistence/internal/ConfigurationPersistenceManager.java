@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -210,9 +211,7 @@ public class ConfigurationPersistenceManager
 			}
 		}
 		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
+			_log.error(exception);
 		}
 
 		_createConfigurationTable();
@@ -397,6 +396,38 @@ public class ConfigurationPersistenceManager
 		}
 	}
 
+	private Long _getScopeCompanyId(String pid, Object scopeCompanyIdObject) {
+		if (scopeCompanyIdObject instanceof Long scopeCompanyIdLong) {
+			return scopeCompanyIdLong;
+		}
+
+		if (scopeCompanyIdObject instanceof String scopeCompanyIdString) {
+			try {
+				long scopeCompanyId = GetterUtil.getLongStrict(
+					scopeCompanyIdString);
+
+				if (_log.isWarnEnabled()) {
+					_log.warn("Converted string company ID for " + pid);
+				}
+
+				return scopeCompanyId;
+			}
+			catch (NumberFormatException numberFormatException) {
+				_log.error(numberFormatException);
+
+				return null;
+			}
+		}
+
+		if (scopeCompanyIdObject != null) {
+			_log.error("Unexpected company ID type for " + pid);
+
+			return null;
+		}
+
+		return 0L;
+	}
+
 	private boolean _insertConfiguration(
 			Connection connection, String pid, String configuration)
 		throws IOException {
@@ -473,13 +504,15 @@ public class ConfigurationPersistenceManager
 						}
 
 						if (PropsValues.DATABASE_PARTITION_ENABLED) {
-							Long scopeCompanyId = (Long)dictionary.get(
-								ExtendedObjectClassDefinition.Scope.COMPANY.
-									getPropertyKey());
+							Long scopeCompanyId = _getScopeCompanyId(
+								pid,
+								dictionary.get(
+									ExtendedObjectClassDefinition.Scope.COMPANY.
+										getPropertyKey()));
 
-							if ((scopeCompanyId != null) &&
-								(scopeCompanyId != 0) &&
-								!scopeCompanyId.equals(companyId)) {
+							if ((scopeCompanyId == null) ||
+								((scopeCompanyId != 0) &&
+								 !scopeCompanyId.equals(companyId))) {
 
 								continue;
 							}

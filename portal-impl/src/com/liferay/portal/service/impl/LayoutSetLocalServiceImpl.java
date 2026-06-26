@@ -340,16 +340,6 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 		}
 	}
 
-	/**
-	 * Updates the state of the layout set prototype link.
-	 *
-	 * @param groupId the primary key of the group
-	 * @param privateLayout whether the layout set is private to the group
-	 * @param layoutSetPrototypeLinkEnabled whether the layout set prototype is
-	 *        link enabled
-	 * @param layoutSetPrototypeUuid the uuid of the layout set prototype to
-	 *        link with
-	 */
 	@Override
 	public void updateLayoutSetPrototypeLinkEnabled(
 			long groupId, boolean privateLayout,

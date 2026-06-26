@@ -40,6 +40,29 @@ const mockLiferayLanguageGet = jest.fn((key: string) => key);
 	},
 };
 
+class MockResizeObserver {
+	disconnect() {}
+	observe() {}
+	unobserve() {}
+}
+
+(global as any).ResizeObserver = MockResizeObserver;
+
+HTMLElement.prototype.getBoundingClientRect = jest.fn(
+	() =>
+		({
+			bottom: 0,
+			height: 0,
+			left: 0,
+			right: 1100,
+			toJSON: () => ({}),
+			top: 0,
+			width: 1100,
+			x: 0,
+			y: 0,
+		}) as DOMRect
+);
+
 const mockItems = Array.from({length: 10}, (_, i) => ({
 	id: `item-${i}`,
 	title: `Item ${i}`,

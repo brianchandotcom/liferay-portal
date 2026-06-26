@@ -31,7 +31,7 @@ public class VariablesUtil {
 		ExecutionContext executionContext, String kaleoNodeSettingName,
 		Map<String, String> kaleoNodeSettingValues) {
 
-		Map<String, String> inputVariables = _getInputVariables(
+		Map<String, String> inputVariables = getInputVariables(
 			kaleoNodeSettingValues, executionContext.getWorkflowContext());
 
 		String value = kaleoNodeSettingValues.get(kaleoNodeSettingName);
@@ -60,29 +60,7 @@ public class VariablesUtil {
 		workflowContext.put(jsonObject.getString("name"), value);
 	}
 
-	public static JSONArray getVariablesJSONArray(
-		String kaleoNodeSettingName,
-		Map<String, String> kaleoNodeSettingValues) {
-
-		String variables = kaleoNodeSettingValues.get(kaleoNodeSettingName);
-
-		if (variables == null) {
-			return null;
-		}
-
-		try {
-			return JSONFactoryUtil.createJSONArray(variables);
-		}
-		catch (JSONException jsonException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(jsonException);
-			}
-
-			return null;
-		}
-	}
-
-	private static Map<String, String> _getInputVariables(
+	public static Map<String, String> getInputVariables(
 		Map<String, String> kaleoNodeSettingValues,
 		Map<String, Serializable> workflowContext) {
 
@@ -112,6 +90,28 @@ public class VariablesUtil {
 			});
 
 		return inputVariables;
+	}
+
+	public static JSONArray getVariablesJSONArray(
+		String kaleoNodeSettingName,
+		Map<String, String> kaleoNodeSettingValues) {
+
+		String variables = kaleoNodeSettingValues.get(kaleoNodeSettingName);
+
+		if (variables == null) {
+			return null;
+		}
+
+		try {
+			return JSONFactoryUtil.createJSONArray(variables);
+		}
+		catch (JSONException jsonException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(jsonException);
+			}
+
+			return null;
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(VariablesUtil.class);

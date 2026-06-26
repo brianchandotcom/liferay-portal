@@ -484,7 +484,7 @@ public class LiferayDynamicRegistrationService
 		}
 	}
 
-	private Pattern _buildPattern(String glob) {
+	private Pattern _toPattern(String glob) {
 		StringBundler sb = new StringBundler("^");
 
 		for (int i = 0; i < glob.length(); i++) {
@@ -864,7 +864,7 @@ public class LiferayDynamicRegistrationService
 		List<Pattern> patterns = TransformUtil.transform(
 			normalizedAllowedPatterns,
 			normalizedAllowedPattern -> _globPatterns.computeIfAbsent(
-				normalizedAllowedPattern, this::_buildPattern));
+				normalizedAllowedPattern, this::_toPattern));
 
 		for (String redirectUri : redirectUris) {
 			if (Validator.isBlank(redirectUri)) {

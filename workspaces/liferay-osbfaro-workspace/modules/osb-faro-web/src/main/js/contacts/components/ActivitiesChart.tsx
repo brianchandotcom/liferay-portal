@@ -271,7 +271,7 @@ const ActivitiesChart: React.FC<
 					strokeWidth={1}
 					x={
 						selectedPoint !== undefined
-							? history[selectedPoint].intervalInitDate
+							? history[selectedPoint]?.intervalInitDate
 							: undefined
 					}
 				/>

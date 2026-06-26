@@ -166,7 +166,8 @@ public class ObjectRelationshipLocalServiceImpl
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId2),
 			0, ObjectRelationshipConstants.DELETION_TYPE_PREVENT, false,
 			LocalizedMapUtil.getLocalizedMap(externalReferenceCode),
-			objectFieldName.split(StringPool.UNDERLINE)[1], false, false,
+			objectFieldName.split(StringPool.UNDERLINE)[1], false,
+			objectField.isSystem(),
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY, objectField);
 	}
 
@@ -1282,9 +1283,6 @@ public class ObjectRelationshipLocalServiceImpl
 			ObjectField objectField)
 		throws PortalException {
 
-		_validateInvokerBundle(
-			"Only allowed bundles can add system object relationships", system);
-
 		User user = _userLocalService.getUser(userId);
 
 		_validateExternalReferenceCode(
@@ -1317,6 +1315,8 @@ public class ObjectRelationshipLocalServiceImpl
 			ObjectField objectField)
 		throws PortalException {
 
+		_validateInvokerBundle(
+			"Only allowed bundles can add system object relationships", system);
 		_validateScope(objectDefinition1, objectDefinition2);
 
 		ObjectRelationship objectRelationship =

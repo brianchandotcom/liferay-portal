@@ -8,7 +8,7 @@ import React from 'react';
 
 const options = [
 	{
-		label: Liferay.Language.get('second'),
+		label: Liferay.Language.get('second[time]'),
 		scale: 'second',
 	},
 	{

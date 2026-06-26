@@ -40,7 +40,7 @@ const SOURCE_OPTIONS = {
 		value: 'direct',
 	},
 	mapping: {
-		label: Liferay.Language.get('mapping'),
+		label: Liferay.Language.get('mapping[content]'),
 		value: 'mapping',
 	},
 };

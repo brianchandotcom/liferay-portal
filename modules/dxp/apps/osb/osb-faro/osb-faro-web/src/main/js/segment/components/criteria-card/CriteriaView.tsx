@@ -16,7 +16,7 @@ interface ICriteriaViewProps extends React.HTMLAttributes<HTMLDivElement> {
 const CONJUNCTION_MAP: Record<string, string> = {
 	[ConjunctionKey.And]: Liferay.Language.get('and'),
 	[ConjunctionKey.Or]: Liferay.Language.get('or'),
-	[ConjunctionKey.Then]: Liferay.Language.get('then')
+	[ConjunctionKey.Then]: Liferay.Language.get('then[sequence]')
 };
 
 const CriteriaView: React.FC<ICriteriaViewProps> = ({

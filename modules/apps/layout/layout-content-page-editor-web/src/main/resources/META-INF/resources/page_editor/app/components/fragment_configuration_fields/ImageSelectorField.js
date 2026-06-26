@@ -27,7 +27,7 @@ const IMAGE_SOURCES = {
 	},
 
 	mapping: {
-		label: Liferay.Language.get('mapping'),
+		label: Liferay.Language.get('mapping[content]'),
 		value: 'mapping',
 	},
 };

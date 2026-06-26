@@ -73,7 +73,7 @@ const dropdownItems: {
 }[] = [
 	{
 		icon: 'analytics',
-		name: Liferay.Language.get('chart'),
+		name: Liferay.Language.get('chart[noun]'),
 		renderer: renderComponent(AssetMetricsChart),
 		value: 'chart',
 	},

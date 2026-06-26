@@ -117,7 +117,7 @@ export const PANELS = {
 	},
 	[PANEL_IDS.editableMapping]: {
 		component: MappingPanel,
-		label: Liferay.Language.get('mapping'),
+		label: Liferay.Language.get('mapping[content]'),
 		priority: 1,
 	},
 	[PANEL_IDS.formAdvancedPanel]: {

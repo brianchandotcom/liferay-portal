@@ -120,7 +120,7 @@ const RatingsStars = ({
 			return inititalTitle;
 		}
 		else if (score <= 0) {
-			return Liferay.Language.get('vote');
+			return Liferay.Language.get('vote[action]');
 		}
 		else if (score > 0) {
 			const title =

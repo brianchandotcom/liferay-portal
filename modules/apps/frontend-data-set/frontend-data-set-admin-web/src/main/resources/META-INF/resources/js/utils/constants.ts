@@ -44,7 +44,7 @@ const DEFAULT_VISUALIZATION_MODES: Array<IBaseVisualizationMode<any>> = [
 		visualizationModeId: 'defaultCards',
 	},
 	{
-		label: Liferay.Language.get('list'),
+		label: Liferay.Language.get('list[noun]'),
 		mode: 'list',
 		thumbnail: 'list',
 		visualizationModeId: 'defaultList',

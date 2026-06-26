@@ -346,6 +346,13 @@ public class LiferayDynamicRegistrationService
 		LiferayClientRegistration liferayClientRegistration) {
 
 		try {
+			String clientName = StringPool.BLANK;
+
+			if (liferayClientRegistration != null) {
+				clientName = GetterUtil.getString(
+					liferayClientRegistration.getClientName());
+			}
+
 			String error =
 				OAuth2ProviderRESTEndpointConstants.ERROR_SERVER_ERROR;
 			String errorDescription = GetterUtil.getString(
@@ -371,7 +378,6 @@ public class LiferayDynamicRegistrationService
 				}
 			}
 
-			String clientName = StringPool.BLANK;
 			JSONArray grantTypesJSONArray = JSONFactoryUtil.createJSONArray();
 			JSONArray redirectUrisJSONArray = JSONFactoryUtil.createJSONArray();
 			String scope = StringPool.BLANK;

@@ -71,7 +71,7 @@ public class PerformanceAssetConsumptionResourceImpl
 				contextCompany.getCompanyId()),
 			categoryId, groupBy, Arrays.asList(groupIds),
 			contextAcceptLanguage.getPreferredLocale(), "viewsMetric",
-			objectType, pagination.getPage(), rangeKey,
+			objectType, pagination.getPage() - 1, rangeKey,
 			pagination.getPageSize(), tagId, vocabularyId);
 	}
 

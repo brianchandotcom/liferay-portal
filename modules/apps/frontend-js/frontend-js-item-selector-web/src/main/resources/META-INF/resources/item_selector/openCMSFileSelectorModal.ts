@@ -59,8 +59,8 @@ function urlBuilder({
 	const scopePredicates = folderId
 		? [`(folderId eq ${folderId})`]
 		: [
-				"(cmsSection eq 'files')",
 				'(cmsRoot eq true)',
+				"(cmsSection eq 'files')",
 				'(rootDescendantNode eq false)',
 			];
 

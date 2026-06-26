@@ -47,7 +47,7 @@ test('Generate a new token after expired', async ({
 			const rowToken = page.getByTestId(`row-token-${tokenId}`);
 
 			expect(await rowToken.textContent()).toBe(
-				`Token ending in${tokenId}Expired`
+				`Token Ending In${tokenId}Expired`
 			);
 		});
 

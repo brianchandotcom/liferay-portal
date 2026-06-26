@@ -392,6 +392,36 @@ describe('List', () => {
 		it('should set itemLabel to "accountName" in the account filter', () => {
 			expect(getAccountFilter().itemLabel).toBe('accountName');
 		});
+
+		it('should not preload the account filter when no accountId is in the URL', () => {
+			expect(getAccountFilter().preloadedData).toBeUndefined();
+		});
+
+		it('should preload the account filter from the accountId URL param', () => {
+			renderList({queryString: '?accountId=acc-1'});
+
+			const accountFilter = getFilters().find(
+				(filter: {id: string}) => filter.id === 'accountIds'
+			);
+
+			expect(accountFilter.preloadedData).toEqual({
+				selectedItems: [{label: 'acc-1', value: 'acc-1'}],
+			});
+		});
+
+		it('should use the accountName from the URL as the preloaded label', () => {
+			renderList({
+				queryString: '?accountId=acc-1&accountName=Acme%20Corp',
+			});
+
+			const accountFilter = getFilters().find(
+				(filter: {id: string}) => filter.id === 'accountIds'
+			);
+
+			expect(accountFilter.preloadedData).toEqual({
+				selectedItems: [{label: 'Acme Corp', value: 'acc-1'}],
+			});
+		});
 	});
 
 	describe('initial range selector state', () => {

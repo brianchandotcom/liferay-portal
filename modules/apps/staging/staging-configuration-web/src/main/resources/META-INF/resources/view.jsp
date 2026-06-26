@@ -15,6 +15,9 @@ liveGroupId = groupDisplayContextHelper.getLiveGroupId();
 
 UnicodeProperties liveGroupTypeSettingsUnicodeProperties = liveGroup.getTypeSettingsProperties();
 
+LayoutSet privateLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(liveGroup.getGroupId(), true);
+LayoutSet publicLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(liveGroup.getGroupId(), false);
+
 boolean liveGroupRemoteStaging = liveGroup.hasRemoteStagingGroup() && PropsValues.STAGING_LIVE_GROUP_REMOTE_STAGING_ENABLED;
 
 boolean stagedLocally = liveGroup.isStaged() && !liveGroup.isStagedRemotely();
@@ -64,11 +67,6 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskMan
 					<aui:input name="liveGroupId" type="hidden" value="<%= liveGroupId %>" />
 					<aui:input name="stagingGroupId" type="hidden" value="<%= stagingGroupId %>" />
 					<aui:input name="forceDisable" type="hidden" value="<%= false %>" />
-
-					<%
-					LayoutSet privateLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(liveGroup.getGroupId(), true);
-					LayoutSet publicLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(liveGroup.getGroupId(), false);
-					%>
 
 					<c:if test="<%= !privateLayoutSet.isLayoutSetPrototypeLinkActive() && !publicLayoutSet.isLayoutSetPrototypeLinkActive() %>">
 						<clay:sheet-header>

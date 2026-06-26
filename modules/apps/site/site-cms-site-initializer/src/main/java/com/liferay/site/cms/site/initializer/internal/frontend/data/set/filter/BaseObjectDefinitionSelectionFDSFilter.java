@@ -13,6 +13,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,22 +54,38 @@ public abstract class BaseObjectDefinitionSelectionFDSFilter
 				CompanyThreadLocal.getCompanyId(),
 				getObjectFolderExternalReferenceCodes());
 
+		String[] excludedObjectDefinitionExternalReferenceCodes =
+			getExcludedObjectDefinitionExternalReferenceCodes();
+
 		for (ObjectDefinition objectDefinition : objectDefinitions) {
-			objectDefinition.getLabel(locale);
+			if (!ArrayUtil.contains(
+					excludedObjectDefinitionExternalReferenceCodes,
+					objectDefinition.getExternalReferenceCode())) {
+
+				selectionFDSFilterItems.add(
+					new SelectionFDSFilterItem(
+						objectDefinition.getLabel(locale),
+						objectDefinition.getExternalReferenceCode()));
+			}
+		}
+
+		if (!ArrayUtil.contains(
+				excludedObjectDefinitionExternalReferenceCodes,
+				ObjectEntryFolderConstants.
+					EXTERNAL_REFERENCE_CODE_OBJECT_ENTRY_FOLDER)) {
 
 			selectionFDSFilterItems.add(
 				new SelectionFDSFilterItem(
-					objectDefinition.getLabel(locale),
-					objectDefinition.getExternalReferenceCode()));
+					language.get(locale, "folder"),
+					ObjectEntryFolderConstants.
+						EXTERNAL_REFERENCE_CODE_OBJECT_ENTRY_FOLDER));
 		}
 
-		selectionFDSFilterItems.add(
-			new SelectionFDSFilterItem(
-				language.get(locale, "folder"),
-				ObjectEntryFolderConstants.
-					EXTERNAL_REFERENCE_CODE_OBJECT_ENTRY_FOLDER));
-
 		return selectionFDSFilterItems;
+	}
+
+	protected String[] getExcludedObjectDefinitionExternalReferenceCodes() {
+		return new String[0];
 	}
 
 	protected abstract String[] getObjectFolderExternalReferenceCodes();

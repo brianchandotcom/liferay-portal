@@ -35,7 +35,7 @@
 		</commerce-ui:panel>
 
 		<commerce-ui:panel
-			title='<%= LanguageUtil.get(request, "schedule") %>'
+			title='<%= LanguageUtil.get(request, "schedule[noun]") %>'
 		>
 			<%@ include file="/attachment_file_entry/schedule.jspf" %>
 		</commerce-ui:panel>

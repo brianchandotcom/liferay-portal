@@ -47,7 +47,7 @@ public class CategoryCPAttachmentScheduleFormNavigatorEntry
 
 	@Override
 	public String getLabel(Locale locale) {
-		return _language.get(locale, "schedule");
+		return _language.get(locale, "schedule[noun]");
 	}
 
 	@Override

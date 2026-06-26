@@ -192,7 +192,7 @@ export default function ScheduleModal({
 							displayType="primary"
 							onClick={handleScheduleButtonOnClick}
 						>
-							{Liferay.Language.get('schedule')}
+							{Liferay.Language.get('schedule[verb]')}
 						</ClayButton>
 					</>
 				}

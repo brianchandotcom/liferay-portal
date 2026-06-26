@@ -169,7 +169,7 @@ if ((cpDefinition != null) && (cpDefinition.getExpirationDate() != null)) {
 			</commerce-ui:panel>
 
 			<commerce-ui:panel
-				title='<%= LanguageUtil.get(request, "schedule") %>'
+				title='<%= LanguageUtil.get(request, "schedule[noun]") %>'
 			>
 				<liferay-ui:error exception="<%= CPDefinitionExpirationDateException.class %>" message="please-select-a-valid-expiration-date" />
 

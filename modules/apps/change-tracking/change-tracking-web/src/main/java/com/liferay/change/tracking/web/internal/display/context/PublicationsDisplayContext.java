@@ -470,7 +470,7 @@ public class PublicationsDisplayContext {
 					"schedule", Boolean.TRUE
 				).buildString(),
 				"calendar", "schedule",
-				_language.get(_httpServletRequest, "schedule"), "get",
+				_language.get(_httpServletRequest, "schedule[verb]"), "get",
 				"schedule", null),
 			new FDSActionDropdownItem(
 				PortletURLBuilder.createRenderURL(

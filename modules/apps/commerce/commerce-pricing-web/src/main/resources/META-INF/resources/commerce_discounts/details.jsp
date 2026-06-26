@@ -152,7 +152,7 @@ boolean hasPermission = commerceDiscountDisplayContext.hasPermission(ActionKeys.
 		<div class="col-12 col-xl-4">
 			<commerce-ui:panel
 				bodyClasses="flex-fill"
-				title='<%= LanguageUtil.get(request, "schedule") %>'
+				title='<%= LanguageUtil.get(request, "schedule[noun]") %>'
 			>
 				<liferay-ui:error exception="<%= CommerceDiscountExpirationDateException.class %>" message="please-select-a-valid-expiration-date" />
 

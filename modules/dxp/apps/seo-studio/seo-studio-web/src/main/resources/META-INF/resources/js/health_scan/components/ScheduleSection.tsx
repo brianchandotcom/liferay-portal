@@ -34,7 +34,7 @@ export default function ScheduleSection({
 			<ClayPanel
 				collapsable
 				defaultExpanded
-				displayTitle={Liferay.Language.get('schedule')}
+				displayTitle={Liferay.Language.get('schedule[noun]')}
 				displayType="unstyled"
 			>
 				<ClayToggle

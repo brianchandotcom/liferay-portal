@@ -204,14 +204,14 @@ export default function ValueInput({
 					/>
 
 					<ClayInput
-						aria-label={Liferay.Language.get('to')}
+						aria-label={Liferay.Language.get('to[date-time]')}
 						className="form-control-sm"
 						id={`${property.name}-to-${index}`}
 						onChange={(event) =>
 							onChange([from, event.target.value] as string[])
 						}
 						onKeyDown={handlePreventEnterSubmit}
-						placeholder={Liferay.Language.get('to')}
+						placeholder={Liferay.Language.get('to[date-time]')}
 						step={type === 'decimal' ? '0.001' : '1'}
 						type="number"
 						value={to}

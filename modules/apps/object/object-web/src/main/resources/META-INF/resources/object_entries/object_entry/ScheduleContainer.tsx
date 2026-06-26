@@ -129,7 +129,7 @@ export default function ScheduleContainer({
 			<ClayPanel
 				collapsable
 				defaultExpanded
-				displayTitle={Liferay.Language.get('schedule')}
+				displayTitle={Liferay.Language.get('schedule[noun]')}
 				displayType="default"
 			>
 				<div className="lfr-object__entries-schedule-panel-description">

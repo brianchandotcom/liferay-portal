@@ -47,9 +47,9 @@ public class LanguageKeyResolverImplTest {
 
 		Set<Locale> locales = new LinkedHashSet<>();
 
-		locales.add(LocaleUtil.US);
-		locales.add(LocaleUtil.SPAIN);
 		locales.add(LocaleUtil.BRAZIL);
+		locales.add(LocaleUtil.SPAIN);
+		locales.add(LocaleUtil.US);
 
 		Mockito.when(
 			_language.getAvailableLocales()
@@ -86,9 +86,9 @@ public class LanguageKeyResolverImplTest {
 
 	@Test
 	public void testExpandExcludesLocalesWithoutTranslation() throws Exception {
-		_whenTranslation(LocaleUtil.US, "welcome-to-liferay", "Welcome");
-		_whenTranslation(LocaleUtil.SPAIN, "welcome-to-liferay", null);
 		_whenTranslation(LocaleUtil.BRAZIL, "welcome-to-liferay", "Bem-vindo");
+		_whenTranslation(LocaleUtil.SPAIN, "welcome-to-liferay", null);
+		_whenTranslation(LocaleUtil.US, "welcome-to-liferay", "Welcome");
 
 		Map<String, Object> map = LinkedHashMapBuilder.<String, Object>put(
 			_FOR_EACH_LANGUAGE_ID, "welcome-to-liferay"
@@ -104,9 +104,9 @@ public class LanguageKeyResolverImplTest {
 
 	@Test
 	public void testExpandFullLocaleMap() throws Exception {
-		_whenTranslation(LocaleUtil.US, "welcome-to-liferay", "Welcome");
-		_whenTranslation(LocaleUtil.SPAIN, "welcome-to-liferay", "Bienvenido");
 		_whenTranslation(LocaleUtil.BRAZIL, "welcome-to-liferay", "Bem-vindo");
+		_whenTranslation(LocaleUtil.SPAIN, "welcome-to-liferay", "Bienvenido");
+		_whenTranslation(LocaleUtil.US, "welcome-to-liferay", "Welcome");
 
 		Map<String, Object> map = LinkedHashMapBuilder.<String, Object>put(
 			_FOR_EACH_LANGUAGE_ID, "welcome-to-liferay"
@@ -123,9 +123,9 @@ public class LanguageKeyResolverImplTest {
 
 	@Test
 	public void testExpandJSONObject() throws Exception {
-		_whenTranslation(LocaleUtil.US, "welcome-to-liferay", "Welcome");
-		_whenTranslation(LocaleUtil.SPAIN, "welcome-to-liferay", "Bienvenido");
 		_whenTranslation(LocaleUtil.BRAZIL, "welcome-to-liferay", "Bem-vindo");
+		_whenTranslation(LocaleUtil.SPAIN, "welcome-to-liferay", "Bienvenido");
+		_whenTranslation(LocaleUtil.US, "welcome-to-liferay", "Welcome");
 
 		JSONObject jsonObject = JSONUtil.put(
 			"value_i18n",
@@ -144,9 +144,9 @@ public class LanguageKeyResolverImplTest {
 
 	@Test
 	public void testExpandNestedMaps() throws Exception {
-		_whenTranslation(LocaleUtil.US, "welcome-to-liferay", "Welcome");
-		_whenTranslation(LocaleUtil.SPAIN, "welcome-to-liferay", "Bienvenido");
 		_whenTranslation(LocaleUtil.BRAZIL, "welcome-to-liferay", "Bem-vindo");
+		_whenTranslation(LocaleUtil.SPAIN, "welcome-to-liferay", "Bienvenido");
+		_whenTranslation(LocaleUtil.US, "welcome-to-liferay", "Welcome");
 
 		Map<String, Object> valueI18nMap =
 			LinkedHashMapBuilder.<String, Object>put(
@@ -174,9 +174,9 @@ public class LanguageKeyResolverImplTest {
 
 	@Test
 	public void testExpandPreservesExistingLocaleEntries() throws Exception {
-		_whenTranslation(LocaleUtil.US, "welcome-to-liferay", "Welcome");
-		_whenTranslation(LocaleUtil.SPAIN, "welcome-to-liferay", "Bienvenido");
 		_whenTranslation(LocaleUtil.BRAZIL, "welcome-to-liferay", "Bem-vindo");
+		_whenTranslation(LocaleUtil.SPAIN, "welcome-to-liferay", "Bienvenido");
+		_whenTranslation(LocaleUtil.US, "welcome-to-liferay", "Welcome");
 
 		Map<String, Object> map = LinkedHashMapBuilder.<String, Object>put(
 			"en_US", "Custom"
@@ -193,9 +193,9 @@ public class LanguageKeyResolverImplTest {
 
 	@Test
 	public void testExpandUnknownKeyLeavesMapEmpty() throws Exception {
-		_whenTranslation(LocaleUtil.US, "missing-key", null);
-		_whenTranslation(LocaleUtil.SPAIN, "missing-key", null);
 		_whenTranslation(LocaleUtil.BRAZIL, "missing-key", null);
+		_whenTranslation(LocaleUtil.SPAIN, "missing-key", null);
+		_whenTranslation(LocaleUtil.US, "missing-key", null);
 
 		Map<String, Object> map = LinkedHashMapBuilder.<String, Object>put(
 			_FOR_EACH_LANGUAGE_ID, "missing-key"

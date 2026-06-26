@@ -6,14 +6,35 @@
 package com.liferay.gradle.plugins.workspace.task;
 
 import com.liferay.gradle.plugins.source.formatter.FormatSourceTask;
+import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
+import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
+import com.liferay.gradle.plugins.workspace.internal.util.StringUtil;
+import com.liferay.release.util.ReleaseEntry;
+import com.liferay.release.util.ReleaseUtil;
 
 import java.io.File;
+import java.io.InputStream;
 
+import java.net.URL;
+
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Stream;
+
+import org.gradle.api.GradleException;
 import org.gradle.api.Project;
+import org.gradle.api.file.DirectoryProperty;
+import org.gradle.api.file.ProjectLayout;
 import org.gradle.api.file.RegularFile;
 import org.gradle.api.file.RegularFileProperty;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.model.ObjectFactory;
+import org.gradle.api.plugins.ExtensionAware;
+import org.gradle.api.provider.Provider;
 import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.Optional;
 
@@ -29,27 +50,45 @@ public class UpgradeJakartaTask extends FormatSourceTask {
 
 		_jakartaTransformDependenciesFileProperty =
 			objectFactory.fileProperty();
+
+		_workspaceExtension = GradleUtil.getExtension(
+			(ExtensionAware)project.getGradle(), WorkspaceExtension.class);
 	}
 
 	@Override
 	public void exec() {
-		RegularFile regularFile =
-			_jakartaTransformDependenciesFileProperty.getOrNull();
+		ReleaseEntry releaseEntry = ReleaseUtil.getReleaseEntry(
+			_workspaceExtension.getProduct());
 
-		if (regularFile != null) {
-			File file = regularFile.getAsFile();
+		if (releaseEntry != null) {
+			List<String> tags = releaseEntry.getTags();
 
-			addSourceFormatterProperty(
-				"jakarta.transform.dependencies.file.path",
-				file.getAbsolutePath());
+			if (!tags.contains("jakarta")) {
+				throw new GradleException(
+					StringUtil.concat(
+						"Target liferay version ",
+						_workspaceExtension.getProduct(),
+						" is not compatible with Jakarta dependencies"));
+			}
 		}
-		else {
+
+		try {
+			File file = _getJakartaTransformDependenciesFile();
+
+			if ((file != null) && file.exists()) {
+				addSourceFormatterProperty(
+					"jakarta.transform.dependencies.file.path",
+					file.getAbsolutePath());
+			}
+		}
+		catch (Exception exception) {
 			Logger logger = getLogger();
 
-			if (logger.isInfoEnabled()) {
-				logger.info(
-					"Jakarta transform dependencies file not resolved; " +
-						"proceeding without it.");
+			if (logger.isWarnEnabled()) {
+				logger.warn(
+					"Unable to find Jakarta dependencies file for product " +
+						"version '{}'",
+					_workspaceExtension.getProduct());
 			}
 		}
 
@@ -62,6 +101,68 @@ public class UpgradeJakartaTask extends FormatSourceTask {
 		return _jakartaTransformDependenciesFileProperty;
 	}
 
+	private File _downloadJakartaTransformDependenciesFile() throws Exception {
+		Project project = getProject();
+
+		ProjectLayout projectLayout = project.getLayout();
+
+		DirectoryProperty buildDirectory = projectLayout.getBuildDirectory();
+
+		Provider<RegularFile> regularFileProvider = buildDirectory.file(
+			"upgradeJakarta/" + _JAKARTA_TRANSFORM_DEPENDENCIES_FILE_NAME);
+
+		RegularFile regularFile = regularFileProvider.get();
+
+		File file = regularFile.getAsFile();
+
+		Stream<ReleaseEntry> releaseEntryStream =
+			ReleaseUtil.getReleaseEntryStream();
+
+		ReleaseEntry releaseEntry = ReleaseUtil.getReleaseEntry(
+			_workspaceExtension.getProduct());
+
+		List<ReleaseEntry> releaseEntries = new ArrayList<>(
+			releaseEntryStream.filter(
+				releaseEntry1 -> Objects.equals(
+					releaseEntry.getProductGroupVersion(),
+					releaseEntry1.getProductGroupVersion())
+			).toList());
+
+		ReleaseEntry lastReleaseEntry = releaseEntries.get(
+			releaseEntries.size() - 1);
+
+		URL url = new URL(
+			lastReleaseEntry.getURL() + "/" +
+				_JAKARTA_TRANSFORM_DEPENDENCIES_FILE_NAME);
+
+		try (InputStream inputStream = url.openStream()) {
+			File parentDirectory = file.getParentFile();
+
+			Files.createDirectories(parentDirectory.toPath());
+
+			Files.copy(
+				inputStream, file.toPath(),
+				StandardCopyOption.REPLACE_EXISTING);
+		}
+
+		return file;
+	}
+
+	private File _getJakartaTransformDependenciesFile() throws Exception {
+		RegularFile regularFile =
+			_jakartaTransformDependenciesFileProperty.getOrNull();
+
+		if (regularFile != null) {
+			return regularFile.getAsFile();
+		}
+
+		return _downloadJakartaTransformDependenciesFile();
+	}
+
+	private static final String _JAKARTA_TRANSFORM_DEPENDENCIES_FILE_NAME =
+		"jakarta-transform-dependencies.txt";
+
 	private final RegularFileProperty _jakartaTransformDependenciesFileProperty;
+	private final WorkspaceExtension _workspaceExtension;
 
 }

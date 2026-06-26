@@ -38,9 +38,6 @@ import java.util.Set;
  */
 public class LayoutSetPrototypeNotificationUtil {
 
-	public static final String NOTIFICATION_PROCESSED =
-		"notification-processed";
-
 	public static final String STATUS_COMPLETED_WITH_ERRORS =
 		"completed-with-errors";
 
@@ -89,6 +86,20 @@ public class LayoutSetPrototypeNotificationUtil {
 		Map<String, Serializable> taskContextMap) {
 
 		return MapUtil.getBoolean(taskContextMap, _PRE_VALIDATION_ERRORS);
+	}
+
+	public static boolean isNotificationProcessed(
+		Map<String, Serializable> taskContextMap) {
+
+		return MapUtil.getBoolean(taskContextMap, _NOTIFICATION_PROCESSED);
+	}
+
+	public static Map<String, Serializable> putNotificationProcessed(
+		Map<String, Serializable> taskContextMap) {
+
+		taskContextMap.put(_NOTIFICATION_PROCESSED, Boolean.TRUE);
+
+		return taskContextMap;
 	}
 
 	public static void sendMergeCompletedNotification(
@@ -156,6 +167,9 @@ public class LayoutSetPrototypeNotificationUtil {
 
 	private static final String _LAYOUT_SET_PROTOTYPE_ID =
 		"layoutSetPrototypeId";
+
+	private static final String _NOTIFICATION_PROCESSED =
+		"notification-processed";
 
 	private static final String _PRE_VALIDATION_ERRORS = "preValidationErrors";
 

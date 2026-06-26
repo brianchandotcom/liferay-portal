@@ -50,7 +50,7 @@ import org.springframework.stereotype.Service;
 public class MarketplaceTopicSubscriber {
 
 	@PreDestroy
-	public void tearDown() {
+	public void preDestroy() {
 		for (Subscriber subscriber : _subscribers) {
 			if (subscriber != null) {
 				ApiService apiService = subscriber.stopAsync();

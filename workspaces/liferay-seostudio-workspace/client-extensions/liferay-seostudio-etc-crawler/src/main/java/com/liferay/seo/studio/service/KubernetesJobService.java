@@ -34,7 +34,7 @@ import org.springframework.stereotype.Service;
 public class KubernetesJobService {
 
 	@PreDestroy
-	public void close() {
+	public void preDestroy() {
 		_kubernetesClient.close();
 	}
 

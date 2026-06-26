@@ -56,7 +56,6 @@ import java.net.URI;
 import java.net.URL;
 
 import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -65,7 +64,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.Callable;
-import java.util.stream.Stream;
 
 import org.apache.commons.io.FilenameUtils;
 
@@ -87,8 +85,6 @@ import org.gradle.api.file.DuplicatesStrategy;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileCopyDetails;
 import org.gradle.api.file.ProjectLayout;
-import org.gradle.api.file.RegularFile;
-import org.gradle.api.file.RegularFileProperty;
 import org.gradle.api.initialization.Settings;
 import org.gradle.api.invocation.Gradle;
 import org.gradle.api.logging.Logger;
@@ -297,10 +293,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 		_configureTaskUpdateWorkspace(updateWorkspaceTask);
 
-		UpgradeJakartaTask upgradeJakartaTask = _addTaskUpgradeJakarta(project);
-
-		_configureTaskUpgradeJakarta(
-			project, upgradeJakartaTask, workspaceExtension);
+		_addTaskUpgradeJakarta(project);
 	}
 
 	public boolean isDefaultRepositoryEnabled() {
@@ -1572,7 +1565,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		return task;
 	}
 
-	private UpgradeJakartaTask _addTaskUpgradeJakarta(Project project) {
+	private void _addTaskUpgradeJakarta(Project project) {
 		UpgradeJakartaTask upgradeJakartaTask = GradleUtil.addTask(
 			project, UPGRADE_JAKARTA_TASK_NAME, UpgradeJakartaTask.class);
 
@@ -1582,8 +1575,6 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			"Runs the Jakarta source code upgrade.");
 		upgradeJakartaTask.setGroup("build");
 		upgradeJakartaTask.setJavaParserEnabled(false);
-
-		return upgradeJakartaTask;
 	}
 
 	private UpgradeSourceCodeTask _addTaskUpgradeSourceCode(Project project) {
@@ -1999,19 +1990,6 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			});
 	}
 
-	private void _configureTaskUpgradeJakarta(
-		Project project, UpgradeJakartaTask upgradeJakartaTask,
-		WorkspaceExtension workspaceExtension) {
-
-		RegularFileProperty jakartaTransformDependenciesFileProperty =
-			upgradeJakartaTask.getJakartaTransformDependenciesFile();
-
-		jakartaTransformDependenciesFileProperty.convention(
-			project.provider(
-				() -> _getJakartaTransformDependenciesFile(
-					project, workspaceExtension)));
-	}
-
 	private void _configureTaskUpgradeSourceCode(
 		UpgradeSourceCodeTask upgradeSourceCodeTask,
 		WorkspaceExtension workspaceExtension) {
@@ -2112,80 +2090,6 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		return sb.toString();
 	}
 
-	private RegularFile _getJakartaTransformDependenciesFile(
-			Project project, WorkspaceExtension workspaceExtension)
-		throws Exception {
-
-		String product = workspaceExtension.getProduct();
-
-		ReleaseEntry releaseEntry = ReleaseUtil.getReleaseEntry(product);
-
-		if (releaseEntry == null) {
-			return null;
-		}
-
-		List<String> tags = releaseEntry.getTags();
-
-		if (!tags.contains("jakarta")) {
-			throw new GradleException(
-				StringUtil.concat(
-					product,
-					" does not support Jakarta migration. Choose a different ",
-					"Liferay version that is Jakarta compatible."));
-		}
-
-		ProjectLayout projectLayout = project.getLayout();
-
-		DirectoryProperty buildDirectory = projectLayout.getBuildDirectory();
-
-		Provider<RegularFile> regularFileProvider = buildDirectory.file(
-			"upgradeJakarta/" + _JAKARTA_DEPENDENCIES_FILE_NAME);
-
-		RegularFile regularFile = regularFileProvider.get();
-
-		Stream<ReleaseEntry> releaseEntryStream =
-			ReleaseUtil.getReleaseEntryStream();
-
-		List<ReleaseEntry> releaseEntries = new ArrayList<>(
-			releaseEntryStream.filter(
-				releaseEntry1 -> Objects.equals(
-					releaseEntry.getProductGroupVersion(),
-					releaseEntry1.getProductGroupVersion())
-			).toList());
-
-		ReleaseEntry lastReleaseEntry = releaseEntries.get(
-			releaseEntries.size() - 1);
-
-		URL url = new URL(
-			lastReleaseEntry.getURL() + "/" + _JAKARTA_DEPENDENCIES_FILE_NAME);
-
-		try (InputStream inputStream = url.openStream()) {
-			File file = regularFile.getAsFile();
-
-			File parentDirectory = file.getParentFile();
-
-			Files.createDirectories(parentDirectory.toPath());
-
-			Files.copy(
-				inputStream, file.toPath(),
-				StandardCopyOption.REPLACE_EXISTING);
-		}
-		catch (Exception exception) {
-			Logger logger = project.getLogger();
-
-			if (logger.isWarnEnabled()) {
-				logger.warn(
-					"Unable to find Jakarta dependencies file for product " +
-						"version '{}'",
-					product);
-			}
-
-			return null;
-		}
-
-		return regularFile;
-	}
-
 	private String _loadTemplate(String name) {
 		try (InputStream inputStream =
 				RootProjectConfigurator.class.getResourceAsStream(
@@ -2200,9 +2104,6 @@ public class RootProjectConfigurator implements Plugin<Project> {
 	}
 
 	private static final boolean _DEFAULT_REPOSITORY_ENABLED = true;
-
-	private static final String _JAKARTA_DEPENDENCIES_FILE_NAME =
-		"jakarta-transform-dependencies.txt";
 
 	private static final String _LIFERAY_IMAGE_SETUP_SCRIPT =
 		"100_liferay_image_setup.sh";

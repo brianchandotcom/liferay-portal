@@ -37,7 +37,7 @@ import org.springframework.stereotype.Service;
 public class KubernetesJobService {
 
 	public Job createJob(long accountEntryId, String indexName, String url) {
-		URI uri;
+		URI uri = null;
 
 		try {
 			uri = URI.create(url);

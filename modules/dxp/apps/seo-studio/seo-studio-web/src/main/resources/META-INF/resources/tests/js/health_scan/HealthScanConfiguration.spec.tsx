@@ -461,7 +461,7 @@ describe('HealthScanConfiguration', () => {
 		it('toggles a section open and closed from its header', () => {
 			renderConfiguration();
 
-			const header = screen.getByRole('button', {name: 'schedule'});
+			const header = screen.getByRole('button', {name: 'schedule[noun]'});
 
 			expect(header).toHaveAttribute('aria-expanded', 'true');
 

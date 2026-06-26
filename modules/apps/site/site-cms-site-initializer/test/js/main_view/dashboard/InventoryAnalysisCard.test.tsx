@@ -83,7 +83,7 @@ describe('[CMS Dashboard] InventoryAnalysisCard', () => {
 		);
 
 		const preferencesButton = screen.getByRole('combobox', {
-			name: 'chart',
+			name: 'chart[noun]',
 		});
 
 		fireEvent.click(preferencesButton);

@@ -74,7 +74,7 @@ describe('DateFilter', () => {
 		);
 
 		expect(screen.getByLabelText('from')).toBeInTheDocument();
-		expect(screen.getByLabelText('to')).toBeInTheDocument();
+		expect(screen.getByLabelText('to[date-time]')).toBeInTheDocument();
 	});
 
 	it('calls onApplyFilter with correct values when applying a Modified Last filter', async () => {

@@ -484,7 +484,7 @@ public class AnalyticsCloudClient {
 							ObjectMapperHolder._objectMapper.readerFor(
 								Metric[].class);
 
-						metrics = objectReader.readValue(jsonNode);
+						metrics = objectReader.readValue(metricsJsonNode);
 					}
 
 					performanceMetric.setMetrics(() -> metrics);

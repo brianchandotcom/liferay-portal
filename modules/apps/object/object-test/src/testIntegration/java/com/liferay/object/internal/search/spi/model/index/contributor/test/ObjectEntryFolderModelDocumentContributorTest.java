@@ -55,8 +55,6 @@ public class ObjectEntryFolderModelDocumentContributorTest {
 	public void testContribute() throws Exception {
 		_testContribute(
 			HashMapBuilder.put(
-				"cms_kind", "folder"
-			).put(
 				"cms_root", "true"
 			).put(
 				"cms_section", "contents"
@@ -68,8 +66,6 @@ public class ObjectEntryFolderModelDocumentContributorTest {
 			ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS);
 		_testContribute(
 			HashMapBuilder.put(
-				"cms_kind", "folder"
-			).put(
 				"cms_root", "true"
 			).put(
 				"cms_section", "files"
@@ -81,8 +77,6 @@ public class ObjectEntryFolderModelDocumentContributorTest {
 			ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES);
 		_testContribute(
 			HashMapBuilder.put(
-				"cms_kind", StringPool.BLANK
-			).put(
 				"cms_root", StringPool.BLANK
 			).put(
 				"cms_section", StringPool.BLANK

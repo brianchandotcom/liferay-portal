@@ -10,8 +10,10 @@ import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.data.set.test.util.FrontendDataSetTestUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.model.ObjectEntryFolder;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.AssertUtils;
@@ -214,8 +216,11 @@ public class ViewHomeRecentAssetsFilesSectionDisplayContextTest
 
 	@Override
 	protected String getFilterString() {
-		return "cmsKind eq 'object' and (cmsSection eq 'contents' or " +
-			"cmsSection eq 'files')";
+		return StringBundler.concat(
+			"objectDefinitionExternalReferenceCode ne '",
+			ObjectEntryFolderConstants.
+				EXTERNAL_REFERENCE_CODE_OBJECT_ENTRY_FOLDER,
+			"' and (cmsSection eq 'contents' or cmsSection eq 'files')");
 	}
 
 	@Override

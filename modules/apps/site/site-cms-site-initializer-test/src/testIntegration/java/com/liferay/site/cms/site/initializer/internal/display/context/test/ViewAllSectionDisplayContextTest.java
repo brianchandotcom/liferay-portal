@@ -11,6 +11,7 @@ import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.data.set.test.util.FrontendDataSetTestUtil;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFolderConstants;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -193,8 +194,12 @@ public class ViewAllSectionDisplayContextTest
 
 	@Override
 	protected String getFilterString() {
-		return "cmsKind eq 'object' and (cmsSection eq 'contents' or " +
-			"cmsSection eq 'files') and rootDescendantNode eq false";
+		return StringBundler.concat(
+			"objectDefinitionExternalReferenceCode ne '",
+			ObjectEntryFolderConstants.
+				EXTERNAL_REFERENCE_CODE_OBJECT_ENTRY_FOLDER,
+			"' and (cmsSection eq 'contents' or cmsSection eq 'files') and ",
+			"rootDescendantNode eq false");
 	}
 
 	@Override

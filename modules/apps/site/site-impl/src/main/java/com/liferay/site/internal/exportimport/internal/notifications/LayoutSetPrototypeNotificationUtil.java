@@ -38,7 +38,8 @@ import java.util.Set;
  */
 public class LayoutSetPrototypeNotificationUtil {
 
-	public static final String NOTIFIED = "notified";
+	public static final String NOTIFICATION_PROCESSED =
+		"notification-processed";
 
 	public static final String STATUS_COMPLETED_WITH_ERRORS =
 		"completed-with-errors";

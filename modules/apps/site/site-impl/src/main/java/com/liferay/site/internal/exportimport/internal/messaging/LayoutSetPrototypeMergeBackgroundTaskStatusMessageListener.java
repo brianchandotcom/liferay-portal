@@ -161,7 +161,7 @@ public class LayoutSetPrototypeMergeBackgroundTaskStatusMessageListener
 					_deleteBackgroundTask(completedBackgroundTask);
 				}
 				else {
-					_markNotified(completedBackgroundTask);
+					_markNotificationProcessed(completedBackgroundTask);
 				}
 			}
 		}
@@ -246,7 +246,8 @@ public class LayoutSetPrototypeMergeBackgroundTaskStatusMessageListener
 					(completed &&
 					 MapUtil.getBoolean(
 						 taskContextMap,
-						 LayoutSetPrototypeNotificationUtil.NOTIFIED))) {
+						 LayoutSetPrototypeNotificationUtil.
+							 NOTIFICATION_PROCESSED))) {
 
 					return null;
 				}
@@ -256,13 +257,14 @@ public class LayoutSetPrototypeMergeBackgroundTaskStatusMessageListener
 			BackgroundTask.class);
 	}
 
-	private void _markNotified(BackgroundTask backgroundTask) {
+	private void _markNotificationProcessed(BackgroundTask backgroundTask) {
 		try {
 			Map<String, Serializable> taskContextMap =
 				backgroundTask.getTaskContextMap();
 
 			taskContextMap.put(
-				LayoutSetPrototypeNotificationUtil.NOTIFIED, Boolean.TRUE);
+				LayoutSetPrototypeNotificationUtil.NOTIFICATION_PROCESSED,
+				Boolean.TRUE);
 
 			backgroundTask.setTaskContextMap(taskContextMap);
 
@@ -272,7 +274,8 @@ public class LayoutSetPrototypeMergeBackgroundTaskStatusMessageListener
 		catch (Exception exception) {
 			_log.error(
 				"Unable to mark background task " +
-					backgroundTask.getBackgroundTaskId() + " as notified",
+					backgroundTask.getBackgroundTaskId() +
+						" as notification processed",
 				exception);
 		}
 	}

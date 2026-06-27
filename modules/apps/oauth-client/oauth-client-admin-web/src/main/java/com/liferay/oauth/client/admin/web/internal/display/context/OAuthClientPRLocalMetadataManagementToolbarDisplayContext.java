@@ -82,9 +82,9 @@ public class OAuthClientPRLocalMetadataManagementToolbarDisplayContext
 	public OrderByComparator<OAuthClientPRLocalMetadata>
 		getOrderByComparator() {
 
-		String orderByCol = getOrderByCol();
-
 		String columnName = "createDate";
+
+		String orderByCol = getOrderByCol();
 
 		if (orderByCol.equals("protectedResourceURI")) {
 			columnName = "protectedResourceURI";

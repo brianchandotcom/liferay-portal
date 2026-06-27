@@ -126,8 +126,9 @@ public class OAuth2FaroController extends BaseFaroController {
 			JSONObject jsonObject = _jsonFactory.createJSONObject(tokensJSON);
 
 			OAuth2Authorization oAuth2Authorization =
-				_fetchOAuth2AuthorizationByAccessToken(
-					jsonObject.getString("access_token"));
+				_oAuth2AuthorizationLocalService.
+					fetchOAuth2AuthorizationByAccessTokenContent(
+						jsonObject.getString("access_token"));
 
 			if (oAuth2Authorization == null) {
 				throw new PortalException(
@@ -157,7 +158,8 @@ public class OAuth2FaroController extends BaseFaroController {
 		throws Exception {
 
 		OAuth2Authorization oAuth2Authorization =
-			_fetchOAuth2AuthorizationByAccessToken(token);
+			_oAuth2AuthorizationLocalService.
+				fetchOAuth2AuthorizationByAccessTokenContent(token);
 
 		if (oAuth2Authorization == null) {
 			throw new IllegalArgumentException(
@@ -166,13 +168,6 @@ public class OAuth2FaroController extends BaseFaroController {
 
 		_oAuth2AuthorizationService.revokeOAuth2Authorization(
 			oAuth2Authorization.getOAuth2AuthorizationId());
-	}
-
-	private OAuth2Authorization _fetchOAuth2AuthorizationByAccessToken(
-		String accessToken) {
-
-		return _oAuth2AuthorizationLocalService.
-			fetchOAuth2AuthorizationByAccessTokenContent(accessToken);
 	}
 
 	private boolean _filterOAuth2Authorization(

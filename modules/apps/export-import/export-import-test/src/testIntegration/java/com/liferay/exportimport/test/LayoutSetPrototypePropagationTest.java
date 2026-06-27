@@ -469,7 +469,6 @@ public class LayoutSetPrototypePropagationTest
 
 		Layout layout1 = LayoutTestUtil.addTypePortletLayout(
 			_layoutSetPrototypeGroup, true);
-
 		Layout layout2 = LayoutTestUtil.addTypePortletLayout(
 			_layoutSetPrototypeGroup, true);
 
@@ -606,41 +605,37 @@ public class LayoutSetPrototypePropagationTest
 
 		Group group2 = GroupTestUtil.addGroup();
 
-		try {
-			_sites.updateLayoutSetPrototypesLinks(
-				group2, _layoutSetPrototype.getLayoutSetPrototypeId(), 0, true,
-				true);
+		_sites.updateLayoutSetPrototypesLinks(
+			group2, _layoutSetPrototype.getLayoutSetPrototypeId(), 0, true,
+			true);
 
-			long timestamp1 = System.currentTimeMillis();
+		long timestamp1 = System.currentTimeMillis();
 
-			propagateChanges(false, _layoutSetPrototype);
+		propagateChanges(false, _layoutSetPrototype);
 
-			_assertNotification("successful", timestamp1, userId);
+		_assertNotification("successful", timestamp1, userId);
 
-			int initialCount1 = _layoutLocalService.getLayoutsCount(
-				group.getGroupId(), false);
-			int initialCount2 = _layoutLocalService.getLayoutsCount(
-				group2.getGroupId(), false);
+		int initialCount1 = _layoutLocalService.getLayoutsCount(
+			group.getGroupId(), false);
+		int initialCount2 = _layoutLocalService.getLayoutsCount(
+			group2.getGroupId(), false);
 
-			LayoutTestUtil.addTypePortletLayout(_layoutSetPrototypeGroup, true);
+		LayoutTestUtil.addTypePortletLayout(_layoutSetPrototypeGroup, true);
 
-			long timestamp2 = System.currentTimeMillis();
+		long timestamp2 = System.currentTimeMillis();
 
-			propagateChanges(false, _layoutSetPrototype);
+		propagateChanges(false, _layoutSetPrototype);
 
-			_assertNotification("successful", timestamp2, userId);
+		_assertNotification("successful", timestamp2, userId);
 
-			Assert.assertEquals(
-				initialCount1 + 1,
-				_layoutLocalService.getLayoutsCount(group.getGroupId(), false));
-			Assert.assertEquals(
-				initialCount2 + 1,
-				_layoutLocalService.getLayoutsCount(
-					group2.getGroupId(), false));
-		}
-		finally {
-			GroupLocalServiceUtil.deleteGroup(group2);
-		}
+		Assert.assertEquals(
+			initialCount1 + 1,
+			_layoutLocalService.getLayoutsCount(group.getGroupId(), false));
+		Assert.assertEquals(
+			initialCount2 + 1,
+			_layoutLocalService.getLayoutsCount(group2.getGroupId(), false));
+
+		GroupLocalServiceUtil.deleteGroup(group2);
 	}
 
 	@Test
@@ -785,66 +780,63 @@ public class LayoutSetPrototypePropagationTest
 		boolean preferencesUniquePerLayout =
 			portlet.getPreferencesUniquePerLayout();
 
-		try {
-			portlet.setPreferencesUniquePerLayout(false);
+		portlet.setPreferencesUniquePerLayout(false);
 
-			_layoutSetPrototypeLayout = LayoutTestUtil.addTypePortletLayout(
-				_layoutSetPrototypeGroup, true, globalGroupId, layoutPrototype,
-				true);
+		_layoutSetPrototypeLayout = LayoutTestUtil.addTypePortletLayout(
+			_layoutSetPrototypeGroup, true, globalGroupId, layoutPrototype,
+			true);
 
-			Map<String, String[]> preferenceMap = HashMapBuilder.put(
-				"bulletStyle", new String[] {"Dots"}
-			).build();
+		Map<String, String[]> preferenceMap = HashMapBuilder.put(
+			"bulletStyle", new String[] {"Dots"}
+		).build();
 
-			String testPortletId1 = LayoutTestUtil.addPortletToLayout(
-				TestPropsValues.getUserId(), _layoutSetPrototypeLayout,
-				JournalContentPortletKeys.JOURNAL_CONTENT, "column-1",
-				preferenceMap);
+		String testPortletId1 = LayoutTestUtil.addPortletToLayout(
+			TestPropsValues.getUserId(), _layoutSetPrototypeLayout,
+			JournalContentPortletKeys.JOURNAL_CONTENT, "column-1",
+			preferenceMap);
 
-			preferenceMap.put("bulletStyle", new String[] {"Arrows"});
+		preferenceMap.put("bulletStyle", new String[] {"Arrows"});
 
-			String testPortletId2 = LayoutTestUtil.addPortletToLayout(
-				TestPropsValues.getUserId(), _layoutSetPrototypeLayout,
-				JournalContentPortletKeys.JOURNAL_CONTENT, "column-2",
-				preferenceMap);
+		String testPortletId2 = LayoutTestUtil.addPortletToLayout(
+			TestPropsValues.getUserId(), _layoutSetPrototypeLayout,
+			JournalContentPortletKeys.JOURNAL_CONTENT, "column-2",
+			preferenceMap);
 
-			propagateChanges(group);
+		propagateChanges(group);
 
-			Layout layout = LayoutLocalServiceUtil.getFriendlyURLLayout(
-				group.getGroupId(), false,
-				_layoutSetPrototypeLayout.getFriendlyURL());
+		Layout layout = LayoutLocalServiceUtil.getFriendlyURLLayout(
+			group.getGroupId(), false,
+			_layoutSetPrototypeLayout.getFriendlyURL());
 
-			PortletPreferences testPortletIdPortletPreferences =
-				PortletPreferencesFactoryUtil.getPortletSetup(
-					group.getGroupId(), layout,
-					JournalContentPortletKeys.JOURNAL_CONTENT, null);
+		PortletPreferences testPortletIdPortletPreferences =
+			PortletPreferencesFactoryUtil.getPortletSetup(
+				group.getGroupId(), layout,
+				JournalContentPortletKeys.JOURNAL_CONTENT, null);
 
-			Assert.assertEquals(
-				"Arrows",
-				testPortletIdPortletPreferences.getValue(
-					"bulletStyle", StringPool.BLANK));
+		Assert.assertEquals(
+			"Arrows",
+			testPortletIdPortletPreferences.getValue(
+				"bulletStyle", StringPool.BLANK));
 
-			PortletPreferences testPortletId1PortletPreferences =
-				PortletPreferencesFactoryUtil.getPortletSetup(
-					layout, testPortletId1, null);
+		PortletPreferences testPortletId1PortletPreferences =
+			PortletPreferencesFactoryUtil.getPortletSetup(
+				layout, testPortletId1, null);
 
-			Assert.assertEquals(
-				"Arrows",
-				testPortletId1PortletPreferences.getValue(
-					"bulletStyle", StringPool.BLANK));
+		Assert.assertEquals(
+			"Arrows",
+			testPortletId1PortletPreferences.getValue(
+				"bulletStyle", StringPool.BLANK));
 
-			PortletPreferences testPortletId2PortletPreferences =
-				PortletPreferencesFactoryUtil.getPortletSetup(
-					layout, testPortletId2, null);
+		PortletPreferences testPortletId2PortletPreferences =
+			PortletPreferencesFactoryUtil.getPortletSetup(
+				layout, testPortletId2, null);
 
-			Assert.assertEquals(
-				"Arrows",
-				testPortletId2PortletPreferences.getValue(
-					"bulletStyle", StringPool.BLANK));
-		}
-		finally {
-			portlet.setPreferencesUniquePerLayout(preferencesUniquePerLayout);
-		}
+		Assert.assertEquals(
+			"Arrows",
+			testPortletId2PortletPreferences.getValue(
+				"bulletStyle", StringPool.BLANK));
+
+		portlet.setPreferencesUniquePerLayout(preferencesUniquePerLayout);
 	}
 
 	@FeatureFlag(enable = false, value = "LPD-38869")
@@ -893,49 +885,43 @@ public class LayoutSetPrototypePropagationTest
 		LayoutSet prototypePrivateLayoutSet =
 			layoutSetPrototypeGroup.getPrivateLayoutSet();
 
+		prototypePrivateLayoutSet.setThemeId(_THEME_ID);
+
+		prototypePrivateLayoutSet = LayoutSetLocalServiceUtil.updateLayoutSet(
+			prototypePrivateLayoutSet);
+
 		Group testGroup = GroupTestUtil.addGroup();
 
-		try {
-			prototypePrivateLayoutSet.setThemeId(_THEME_ID);
+		LayoutSet privateLayoutSet = LayoutSetLocalServiceUtil.fetchLayoutSet(
+			testGroup.getGroupId(), true);
 
-			prototypePrivateLayoutSet =
-				LayoutSetLocalServiceUtil.updateLayoutSet(
-					prototypePrivateLayoutSet);
+		privateLayoutSet.setLayoutSetPrototypeLinkEnabled(true);
 
-			LayoutSet privateLayoutSet =
-				LayoutSetLocalServiceUtil.fetchLayoutSet(
-					testGroup.getGroupId(), true);
+		LayoutSetLocalServiceUtil.updateLayoutSet(privateLayoutSet);
 
-			privateLayoutSet.setLayoutSetPrototypeLinkEnabled(true);
+		setLinkEnabled(
+			testGroup, 0, layoutSetPrototype.getLayoutSetPrototypeId(), false,
+			true);
 
-			LayoutSetLocalServiceUtil.updateLayoutSet(privateLayoutSet);
+		_sites.mergeLayoutSetPrototypeLayouts(testGroup.getPrivateLayoutSet());
 
-			setLinkEnabled(
-				testGroup, 0, layoutSetPrototype.getLayoutSetPrototypeId(),
-				false, true);
+		LayoutSet publicLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+			testGroup.getGroupId(), false);
 
-			_sites.mergeLayoutSetPrototypeLayouts(
-				testGroup.getPrivateLayoutSet());
+		Assert.assertNotEquals(
+			prototypePrivateLayoutSet.getThemeId(),
+			publicLayoutSet.getThemeId());
 
-			LayoutSet publicLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-				testGroup.getGroupId(), false);
+		privateLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+			testGroup.getGroupId(), true);
 
-			Assert.assertNotEquals(
-				prototypePrivateLayoutSet.getThemeId(),
-				publicLayoutSet.getThemeId());
+		Assert.assertEquals(
+			prototypePrivateLayoutSet.getThemeId(),
+			privateLayoutSet.getThemeId());
 
-			privateLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-				testGroup.getGroupId(), true);
+		GroupTestUtil.deleteGroup(testGroup);
 
-			Assert.assertEquals(
-				prototypePrivateLayoutSet.getThemeId(),
-				privateLayoutSet.getThemeId());
-		}
-		finally {
-			GroupTestUtil.deleteGroup(testGroup);
-
-			GroupTestUtil.deleteGroup(layoutSetPrototypeGroup);
-		}
+		GroupTestUtil.deleteGroup(layoutSetPrototypeGroup);
 	}
 
 	@FeatureFlag("LPD-38869")
@@ -951,49 +937,43 @@ public class LayoutSetPrototypePropagationTest
 		LayoutSet prototypePrivateLayoutSet =
 			layoutSetPrototypeGroup.getPrivateLayoutSet();
 
+		prototypePrivateLayoutSet.setThemeId(_THEME_ID);
+
+		prototypePrivateLayoutSet = LayoutSetLocalServiceUtil.updateLayoutSet(
+			prototypePrivateLayoutSet);
+
 		Group testGroup = GroupTestUtil.addGroup();
 
-		try {
-			prototypePrivateLayoutSet.setThemeId(_THEME_ID);
+		LayoutSet publicLayoutSet = LayoutSetLocalServiceUtil.fetchLayoutSet(
+			testGroup.getGroupId(), false);
 
-			prototypePrivateLayoutSet =
-				LayoutSetLocalServiceUtil.updateLayoutSet(
-					prototypePrivateLayoutSet);
+		publicLayoutSet.setLayoutSetPrototypeLinkEnabled(true);
 
-			LayoutSet publicLayoutSet =
-				LayoutSetLocalServiceUtil.fetchLayoutSet(
-					testGroup.getGroupId(), false);
+		LayoutSetLocalServiceUtil.updateLayoutSet(publicLayoutSet);
 
-			publicLayoutSet.setLayoutSetPrototypeLinkEnabled(true);
+		setLinkEnabled(
+			testGroup, layoutSetPrototype.getLayoutSetPrototypeId(), 0, true,
+			false);
 
-			LayoutSetLocalServiceUtil.updateLayoutSet(publicLayoutSet);
+		_sites.mergeLayoutSetPrototypeLayouts(testGroup.getPublicLayoutSet());
 
-			setLinkEnabled(
-				testGroup, layoutSetPrototype.getLayoutSetPrototypeId(), 0,
-				true, false);
+		publicLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+			testGroup.getGroupId(), false);
 
-			_sites.mergeLayoutSetPrototypeLayouts(
-				testGroup.getPublicLayoutSet());
+		Assert.assertEquals(
+			prototypePrivateLayoutSet.getThemeId(),
+			publicLayoutSet.getThemeId());
 
-			publicLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-				testGroup.getGroupId(), false);
+		LayoutSet privateLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+			testGroup.getGroupId(), true);
 
-			Assert.assertEquals(
-				prototypePrivateLayoutSet.getThemeId(),
-				publicLayoutSet.getThemeId());
+		Assert.assertNotEquals(
+			prototypePrivateLayoutSet.getThemeId(),
+			privateLayoutSet.getThemeId());
 
-			LayoutSet privateLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-				testGroup.getGroupId(), true);
+		GroupTestUtil.deleteGroup(testGroup);
 
-			Assert.assertNotEquals(
-				prototypePrivateLayoutSet.getThemeId(),
-				privateLayoutSet.getThemeId());
-		}
-		finally {
-			GroupTestUtil.deleteGroup(testGroup);
-
-			GroupTestUtil.deleteGroup(layoutSetPrototypeGroup);
-		}
+		GroupTestUtil.deleteGroup(layoutSetPrototypeGroup);
 	}
 
 	@Test
@@ -1619,46 +1599,41 @@ public class LayoutSetPrototypePropagationTest
 
 		Group testGroup = GroupTestUtil.addGroup();
 
-		try {
-			_sites.updateLayoutSetPrototypesLinks(
-				testGroup, _layoutSetPrototype.getLayoutSetPrototypeId(), 0,
-				true, false);
+		_sites.updateLayoutSetPrototypesLinks(
+			testGroup, _layoutSetPrototype.getLayoutSetPrototypeId(), 0, true,
+			false);
 
-			try (SafeCloseable safeCloseable =
-					_registerServiceWithSafeCloseable(
-						BackgroundTaskExecutor.class,
-						HashMapDictionaryBuilder.<String, Object>put(
-							"background.task.executor.class.name",
-							BackgroundTaskExecutorNames.
-								LAYOUT_SET_PROTOTYPE_MERGE_BACKGROUND_TASK_EXECUTOR
-						).put(
-							"service.ranking", 1000
-						).build(),
-						new TestBackgroundTaskExecutor(
-							HashMapBuilder.put(
-								group.getGroupId(), status1
-							).put(
-								testGroup.getGroupId(), status2
-							).build()))) {
+		try (SafeCloseable safeCloseable = _registerServiceWithSafeCloseable(
+				BackgroundTaskExecutor.class,
+				HashMapDictionaryBuilder.<String, Object>put(
+					"background.task.executor.class.name",
+					BackgroundTaskExecutorNames.
+						LAYOUT_SET_PROTOTYPE_MERGE_BACKGROUND_TASK_EXECUTOR
+				).put(
+					"service.ranking", 1000
+				).build(),
+				new TestBackgroundTaskExecutor(
+					HashMapBuilder.put(
+						group.getGroupId(), status1
+					).put(
+						testGroup.getGroupId(), status2
+					).build()))) {
 
-				long timestamp = System.currentTimeMillis();
+			long timestamp = System.currentTimeMillis();
 
-				try (LogCapture logCapture =
-						LoggerTestUtil.configureLog4JLogger(
-							"com.liferay.portal.background.task.internal." +
-								"messaging.BackgroundTaskMessageListener",
-							LoggerTestUtil.OFF)) {
+			try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+					"com.liferay.portal.background.task.internal.messaging." +
+						"BackgroundTaskMessageListener",
+					LoggerTestUtil.OFF)) {
 
-					_sites.mergeLayoutSetPrototypeLayouts(
-						_layoutSetPrototype, userId);
+				_sites.mergeLayoutSetPrototypeLayouts(
+					_layoutSetPrototype, userId);
 
-					_assertNotification(expectedResult, timestamp, userId);
-				}
+				_assertNotification(expectedResult, timestamp, userId);
 			}
 		}
-		finally {
-			GroupLocalServiceUtil.deleteGroup(testGroup);
-		}
+
+		GroupLocalServiceUtil.deleteGroup(testGroup);
 	}
 
 	private void _testLayoutSetPrototypePropagationWithExportImportInProcess(

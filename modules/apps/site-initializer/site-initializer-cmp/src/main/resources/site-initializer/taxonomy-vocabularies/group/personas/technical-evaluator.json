@@ -1,0 +1,12 @@
+{
+	"description": "Assesses technical fit: architecture, integrations, security, and scalability.",
+	"description_i18n": {
+		"en_US": "Assesses technical fit: architecture, integrations, security, and scalability."
+	},
+	"externalReferenceCode": "L_CMP_PERSONAS_TECHNICAL_EVALUATOR",
+	"name": "Technical Evaluator",
+	"name_i18n": {
+		"en_US": "Technical Evaluator"
+	},
+	"viewableBy": "Anyone"
+}

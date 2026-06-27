@@ -1,0 +1,12 @@
+{
+	"description": "Internal advocate who drives the evaluation, rallies stakeholders, and pushes the deal forward.",
+	"description_i18n": {
+		"en_US": "Internal advocate who drives the evaluation, rallies stakeholders, and pushes the deal forward."
+	},
+	"externalReferenceCode": "L_CMP_PERSONAS_CHAMPION",
+	"name": "Champion",
+	"name_i18n": {
+		"en_US": "Champion"
+	},
+	"viewableBy": "Anyone"
+}

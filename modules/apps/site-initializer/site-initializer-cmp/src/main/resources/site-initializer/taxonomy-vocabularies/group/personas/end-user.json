@@ -1,0 +1,12 @@
+{
+	"description": "Day-to-day user of the product; cares about usability, productivity, and how the solution fits into existing workflows.",
+	"description_i18n": {
+		"en_US": "Day-to-day user of the product; cares about usability, productivity, and how the solution fits into existing workflows."
+	},
+	"externalReferenceCode": "L_CMP_PERSONAS_END_USER",
+	"name": "End User",
+	"name_i18n": {
+		"en_US": "End User"
+	},
+	"viewableBy": "Anyone"
+}

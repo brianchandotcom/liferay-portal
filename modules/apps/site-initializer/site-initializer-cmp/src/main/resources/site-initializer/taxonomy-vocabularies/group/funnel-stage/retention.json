@@ -1,0 +1,12 @@
+{
+	"description": "Drive adoption, expansion, and reduce churn for existing customers.",
+	"description_i18n": {
+		"en_US": "Drive adoption, expansion, and reduce churn for existing customers."
+	},
+	"externalReferenceCode": "L_CMP_FUNNEL_STAGE_RETENTION",
+	"name": "Retention",
+	"name_i18n": {
+		"en_US": "Retention"
+	},
+	"viewableBy": "Anyone"
+}

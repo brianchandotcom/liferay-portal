@@ -587,7 +587,9 @@ public class TaxonomyCategoryResourceImpl
 			Long assetLibraryId, TaxonomyCategory taxonomyCategory)
 		throws Exception {
 
-		return _postTaxonomyCategory(assetLibraryId, taxonomyCategory);
+		return _postTaxonomyCategory(
+			assetLibraryId, taxonomyCategory.getExternalReferenceCode(),
+			taxonomyCategory);
 	}
 
 	@Override
@@ -595,7 +597,9 @@ public class TaxonomyCategoryResourceImpl
 			Long siteId, TaxonomyCategory taxonomyCategory)
 		throws Exception {
 
-		return _postTaxonomyCategory(siteId, taxonomyCategory);
+		return _postTaxonomyCategory(
+			siteId, taxonomyCategory.getExternalReferenceCode(),
+			taxonomyCategory);
 	}
 
 	@Override
@@ -1034,7 +1038,8 @@ public class TaxonomyCategoryResourceImpl
 	}
 
 	private TaxonomyCategory _postTaxonomyCategory(
-			long groupId, TaxonomyCategory taxonomyCategory)
+			long groupId, String externalReferenceCode,
+			TaxonomyCategory taxonomyCategory)
 		throws Exception {
 
 		Long taxonomyVocabularyId = _getTaxonomyVocabularyId(
@@ -1047,7 +1052,7 @@ public class TaxonomyCategoryResourceImpl
 		}
 
 		return _addTaxonomyCategory(
-			taxonomyCategory.getExternalReferenceCode(), groupId,
+			externalReferenceCode, groupId,
 			contextAcceptLanguage.getPreferredLanguageId(),
 			_getParentTaxonomyCategoryId(groupId, taxonomyCategory),
 			taxonomyCategory, taxonomyVocabularyId);
@@ -1063,7 +1068,8 @@ public class TaxonomyCategoryResourceImpl
 				externalReferenceCode, groupId);
 
 		if (persistedAssetCategory == null) {
-			return _postTaxonomyCategory(groupId, taxonomyCategory);
+			return _postTaxonomyCategory(
+				groupId, externalReferenceCode, taxonomyCategory);
 		}
 
 		long assetVocabularyId = _getAssetVocabularyId(

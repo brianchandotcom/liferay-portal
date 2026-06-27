@@ -132,7 +132,7 @@ public class OAuth2FaroController extends BaseFaroController {
 
 			if (oAuth2Authorization == null) {
 				throw new PortalException(
-					"Unable to find OAuth2 authorization for the created " +
+					"Unable to get OAuth2 authorization for the created " +
 						"access token");
 			}
 

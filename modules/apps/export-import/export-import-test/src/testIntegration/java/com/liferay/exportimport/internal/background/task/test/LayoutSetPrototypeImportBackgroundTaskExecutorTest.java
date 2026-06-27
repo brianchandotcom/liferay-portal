@@ -219,7 +219,7 @@ public class LayoutSetPrototypeImportBackgroundTaskExecutorTest {
 
 					try {
 						TransactionInvokerUtil.invoke(
-							_requiresNewTransactionConfig,
+							_nestedTransactionConfig,
 							() -> LayoutTestUtil.addTypeContentLayout(
 								group, true, false));
 					}
@@ -245,12 +245,12 @@ public class LayoutSetPrototypeImportBackgroundTaskExecutorTest {
 		}
 	}
 
+	private static final TransactionConfig _nestedTransactionConfig =
+		TransactionConfig.Factory.create(
+			Propagation.NESTED, new Class<?>[] {Exception.class});
 	private static final TransactionConfig _requiredTransactionConfig =
 		TransactionConfig.Factory.create(
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});
-	private static final TransactionConfig _requiresNewTransactionConfig =
-		TransactionConfig.Factory.create(
-			Propagation.REQUIRES_NEW, new Class<?>[] {Exception.class});
 
 	@DeleteAfterTestRun
 	private Group _group;

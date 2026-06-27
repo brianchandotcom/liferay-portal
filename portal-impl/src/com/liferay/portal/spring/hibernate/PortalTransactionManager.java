@@ -11,6 +11,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import jakarta.persistence.PersistenceException;
 
 import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Savepoint;
 
 import java.util.Map;
 
@@ -31,6 +33,7 @@ import org.springframework.jdbc.datasource.ConnectionHolder;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.transaction.CannotCreateTransactionException;
 import org.springframework.transaction.IllegalTransactionStateException;
+import org.springframework.transaction.SavepointManager;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionSystemException;
 import org.springframework.transaction.support.AbstractPlatformTransactionManager;
@@ -47,6 +50,8 @@ public class PortalTransactionManager
 
 		_dataSource = dataSource;
 		_sessionFactory = sessionFactory;
+
+		setNestedTransactionAllowed(true);
 	}
 
 	public SessionFactory getSessionFactory() {
@@ -463,7 +468,24 @@ public class PortalTransactionManager
 
 	}
 
-	private class HibernateTransactionObject {
+	private class HibernateTransactionObject implements SavepointManager {
+
+		@Override
+		public Object createSavepoint() {
+			Session session = _sessionHolder.getSession();
+
+			session.flush();
+
+			try {
+				Connection connection = _connectionHolder.getConnection();
+
+				return connection.setSavepoint();
+			}
+			catch (SQLException sqlException) {
+				throw new CannotCreateTransactionException(
+					"Unable to create savepoint", sqlException);
+			}
+		}
 
 		public ConnectionHolder getConnectionHolder() {
 			return _connectionHolder;
@@ -495,6 +517,41 @@ public class PortalTransactionManager
 
 		public void markConnectionModified() {
 			_connectionModified = true;
+		}
+
+		@Override
+		public void releaseSavepoint(Object savepoint) {
+			try {
+				Connection connection = _connectionHolder.getConnection();
+
+				connection.releaseSavepoint((Savepoint)savepoint);
+			}
+			catch (SQLException sqlException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug("Unable to release savepoint", sqlException);
+				}
+			}
+		}
+
+		@Override
+		public void rollbackToSavepoint(Object savepoint) {
+			try {
+				Connection connection = _connectionHolder.getConnection();
+
+				connection.rollback((Savepoint)savepoint);
+			}
+			catch (SQLException sqlException) {
+				throw new TransactionSystemException(
+					"Unable to roll back to savepoint", sqlException);
+			}
+
+			// Clear the Hibernate first level cache so entities rolled back
+			// to the savepoint are not reflushed when the outer transaction
+			// commits.
+
+			Session session = _sessionHolder.getSession();
+
+			session.clear();
 		}
 
 		public void setConnectionHolder(ConnectionHolder connectionHolder) {

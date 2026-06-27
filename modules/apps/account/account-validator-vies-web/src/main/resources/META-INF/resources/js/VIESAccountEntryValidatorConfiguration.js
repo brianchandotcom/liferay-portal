@@ -4,7 +4,7 @@
  */
 
 export default function ({namespace}) {
-	function saveValidatedCountries() {
+	function saveCountryCodes() {
 		setTimeout(() => {
 			const form = document[`${namespace}fm`];
 
@@ -19,7 +19,7 @@ export default function ({namespace}) {
 
 			if (currentCountriesElement) {
 				Liferay.Util.setFormValues(form, {
-					countries: Liferay.Util.getSelectedOptionValues(
+					countryCodes: Liferay.Util.getSelectedOptionValues(
 						currentCountriesElement
 					),
 				});
@@ -33,6 +33,6 @@ export default function ({namespace}) {
 			'inputmoveboxes:moveItem',
 			'inputmoveboxes:orderItem',
 		],
-		saveValidatedCountries
+		saveCountryCodes
 	);
 }

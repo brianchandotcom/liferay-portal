@@ -704,7 +704,6 @@ public class TransactionalPortalCacheTest {
 		_testTransactionLifecycleListenerEnabledWithBarrier(
 			Propagation.NOT_SUPPORTED);
 		_testTransactionLifecycleListenerEnabledWithBarrier(Propagation.NEVER);
-		_testTransactionLifecycleListenerEnabledWithBarrier(Propagation.NESTED);
 	}
 
 	@Test
@@ -757,6 +756,234 @@ public class TransactionalPortalCacheTest {
 			Propagation.MANDATORY);
 		_testTransactionLifecycleListenerEnabledWithoutBarrier(
 			Propagation.REQUIRES_NEW);
+	}
+
+	@Test
+	public void testTransactionLifecycleListenerEnabledWithSavepoint() {
+		_setEnableTransactionalCache(true);
+
+		TransactionalPortalCache<String, String> transactionalPortalCache =
+			new TransactionalPortalCache<>(_portalCache, true);
+
+		TransactionLifecycleListener transactionLifecycleListener =
+			TransactionalPortalCacheUtil.TRANSACTION_LIFECYCLE_LISTENER;
+
+		TransactionAttribute.Builder builder =
+			new TransactionAttribute.Builder();
+
+		TransactionAttribute outerTransactionAttribute = builder.build();
+
+		TransactionStatus outerTransactionStatus = new TestTrasactionStatus(
+			true, false, false);
+
+		TransactionAttribute.Builder savepointBuilder =
+			new TransactionAttribute.Builder();
+
+		savepointBuilder.setPropagation(Propagation.NESTED);
+
+		TransactionAttribute savepointTransactionAttribute =
+			savepointBuilder.build();
+
+		TransactionStatus savepointTransactionStatus = new TestTrasactionStatus(
+			false, false, false);
+
+		// A committed savepoint merges its entries into the outer transaction
+
+		transactionLifecycleListener.created(
+			outerTransactionAttribute, outerTransactionStatus);
+
+		transactionLifecycleListener.created(
+			savepointTransactionAttribute, savepointTransactionStatus);
+
+		transactionalPortalCache.put(_KEY_1, _VALUE_1);
+
+		transactionLifecycleListener.committed(
+			savepointTransactionAttribute, savepointTransactionStatus);
+
+		transactionLifecycleListener.created(
+			savepointTransactionAttribute, savepointTransactionStatus);
+
+		transactionalPortalCache.put(_KEY_2, _VALUE_2);
+
+		transactionLifecycleListener.committed(
+			savepointTransactionAttribute, savepointTransactionStatus);
+
+		Assert.assertEquals(_VALUE_1, transactionalPortalCache.get(_KEY_1));
+		Assert.assertEquals(_VALUE_2, transactionalPortalCache.get(_KEY_2));
+		Assert.assertNull(_portalCache.get(_KEY_1));
+		Assert.assertNull(_portalCache.get(_KEY_2));
+
+		transactionLifecycleListener.committed(
+			outerTransactionAttribute, outerTransactionStatus);
+
+		Assert.assertEquals(_VALUE_1, _portalCache.get(_KEY_1));
+		Assert.assertEquals(_VALUE_2, _portalCache.get(_KEY_2));
+
+		_portalCache.removeAll();
+
+		// A rolled back savepoint discards only its own buffered entries
+
+		transactionLifecycleListener.created(
+			outerTransactionAttribute, outerTransactionStatus);
+
+		transactionalPortalCache.put(_KEY_1, _VALUE_1);
+
+		transactionLifecycleListener.created(
+			savepointTransactionAttribute, savepointTransactionStatus);
+
+		transactionalPortalCache.put(_KEY_2, _VALUE_2);
+
+		transactionLifecycleListener.rollbacked(
+			savepointTransactionAttribute, savepointTransactionStatus, null);
+
+		Assert.assertEquals(_VALUE_1, transactionalPortalCache.get(_KEY_1));
+		Assert.assertNull(transactionalPortalCache.get(_KEY_2));
+
+		transactionLifecycleListener.committed(
+			outerTransactionAttribute, outerTransactionStatus);
+
+		Assert.assertEquals(_VALUE_1, _portalCache.get(_KEY_1));
+		Assert.assertNull(_portalCache.get(_KEY_2));
+
+		_portalCache.removeAll();
+
+		// A nested transaction with no enclosing transaction commits to the
+		// cache directly
+
+		TransactionStatus newTransactionStatus = new TestTrasactionStatus(
+			true, false, false);
+
+		transactionLifecycleListener.created(
+			savepointTransactionAttribute, newTransactionStatus);
+
+		transactionalPortalCache.put(_KEY_1, _VALUE_1);
+
+		transactionLifecycleListener.committed(
+			savepointTransactionAttribute, newTransactionStatus);
+
+		Assert.assertEquals(_VALUE_1, _portalCache.get(_KEY_1));
+
+		_portalCache.removeAll();
+
+		// A committed savepoint merges a cache clear into the outer transaction
+
+		_portalCache.put(_KEY_1, _VALUE_1);
+
+		transactionLifecycleListener.created(
+			outerTransactionAttribute, outerTransactionStatus);
+
+		transactionalPortalCache.put(_KEY_2, _VALUE_2);
+
+		transactionLifecycleListener.created(
+			savepointTransactionAttribute, savepointTransactionStatus);
+
+		transactionalPortalCache.removeAll();
+
+		transactionLifecycleListener.committed(
+			savepointTransactionAttribute, savepointTransactionStatus);
+
+		transactionLifecycleListener.committed(
+			outerTransactionAttribute, outerTransactionStatus);
+
+		Assert.assertNull(_portalCache.get(_KEY_1));
+		Assert.assertNull(_portalCache.get(_KEY_2));
+
+		// A committed savepoint merges into a sharded outer buffer, reusing
+		// and creating company shards
+
+		ShardedTestPortalCache<String, String> shardedPortalCache =
+			new ShardedTestPortalCache<>("Sharded Test Portal Cache");
+
+		TransactionalPortalCache<String, String>
+			shardedTransactionalPortalCache = new TransactionalPortalCache<>(
+				shardedPortalCache, true);
+
+		long companyId1 = RandomTestUtil.randomLong();
+		long companyId2 = RandomTestUtil.randomLong();
+
+		_companyIdThreadLocal.set(companyId1);
+
+		transactionLifecycleListener.created(
+			outerTransactionAttribute, outerTransactionStatus);
+
+		shardedTransactionalPortalCache.put(_KEY_1, _VALUE_1);
+
+		transactionLifecycleListener.created(
+			savepointTransactionAttribute, savepointTransactionStatus);
+
+		shardedTransactionalPortalCache.put(_KEY_2, _VALUE_2);
+
+		_companyIdThreadLocal.set(companyId2);
+
+		shardedTransactionalPortalCache.put(_KEY_1, _VALUE_1);
+
+		transactionLifecycleListener.committed(
+			savepointTransactionAttribute, savepointTransactionStatus);
+
+		transactionLifecycleListener.committed(
+			outerTransactionAttribute, outerTransactionStatus);
+
+		Assert.assertEquals(_VALUE_1, shardedPortalCache.get(_KEY_1));
+
+		_companyIdThreadLocal.set(companyId1);
+
+		Assert.assertEquals(_VALUE_1, shardedPortalCache.get(_KEY_1));
+		Assert.assertEquals(_VALUE_2, shardedPortalCache.get(_KEY_2));
+
+		// A nested savepoint sees entries buffered by its enclosing transaction
+
+		transactionLifecycleListener.created(
+			outerTransactionAttribute, outerTransactionStatus);
+
+		transactionalPortalCache.put(_KEY_1, _VALUE_1);
+
+		transactionLifecycleListener.created(
+			savepointTransactionAttribute, savepointTransactionStatus);
+
+		Assert.assertEquals(_VALUE_1, transactionalPortalCache.get(_KEY_1));
+
+		transactionLifecycleListener.committed(
+			savepointTransactionAttribute, savepointTransactionStatus);
+
+		transactionLifecycleListener.committed(
+			outerTransactionAttribute, outerTransactionStatus);
+
+		_portalCache.removeAll();
+
+		// A requires-new transaction sees only its own entries, not those
+		// buffered by the suspended outer transaction
+
+		TransactionAttribute.Builder requiresNewBuilder =
+			new TransactionAttribute.Builder();
+
+		requiresNewBuilder.setPropagation(Propagation.REQUIRES_NEW);
+
+		TransactionAttribute requiresNewTransactionAttribute =
+			requiresNewBuilder.build();
+
+		TransactionStatus requiresNewTransactionStatus =
+			new TestTrasactionStatus(true, false, false);
+
+		transactionLifecycleListener.created(
+			outerTransactionAttribute, outerTransactionStatus);
+
+		transactionalPortalCache.put(_KEY_1, _VALUE_1);
+
+		transactionLifecycleListener.created(
+			requiresNewTransactionAttribute, requiresNewTransactionStatus);
+
+		transactionalPortalCache.put(_KEY_2, _VALUE_2);
+
+		Assert.assertNull(transactionalPortalCache.get(_KEY_1));
+		Assert.assertEquals(_VALUE_2, transactionalPortalCache.get(_KEY_2));
+
+		transactionLifecycleListener.committed(
+			requiresNewTransactionAttribute, requiresNewTransactionStatus);
+
+		transactionLifecycleListener.committed(
+			outerTransactionAttribute, outerTransactionStatus);
+
+		_portalCache.removeAll();
 	}
 
 	private int _getTransactionStackSize() {

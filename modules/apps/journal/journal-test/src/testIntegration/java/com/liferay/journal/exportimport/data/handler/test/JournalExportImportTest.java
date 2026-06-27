@@ -357,12 +357,8 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 					"[$JOURNAL_REF_JSON_1$]", "[$JOURNAL_REF_JSON_2$]"
 				},
 				new String[] {
-					_getArticleReferenceJSONObject(
-						referencedArticle1
-					).toString(),
-					_getArticleReferenceJSONObject(
-						referencedArticle2
-					).toString()
+					_getArticleReferenceJSON(referencedArticle1),
+					_getArticleReferenceJSON(referencedArticle2)
 				}),
 			dataDefinition.getDataDefinitionKey(), null, LocaleUtil.US);
 
@@ -591,18 +587,12 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 			stagingGroup.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			JournalArticleConstants.CLASS_NAME_ID_DEFAULT,
-			_buildXMLContent(
-				_getArticleReferenceJSONObject(
-					article1
-				).toString()),
+			_buildXMLContent(_getArticleReferenceJSON(article1)),
 			ddmStructureKey, null, LocaleUtil.US);
 
 		JournalArticle stagingArticle1 = JournalTestUtil.updateArticle(
 			article1, RandomTestUtil.randomString(),
-			_buildXMLContent(
-				_getArticleReferenceJSONObject(
-					article2
-				).toString()));
+			_buildXMLContent(_getArticleReferenceJSON(article2)));
 
 		Layout liveLayout = LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
 			stagingLayout.getUuid(), _liveGroup.getGroupId(),
@@ -1022,7 +1012,7 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 			"]]></dynamic-content></dynamic-element></root>");
 	}
 
-	private JSONObject _getArticleReferenceJSONObject(JournalArticle article)
+	private String _getArticleReferenceJSON(JournalArticle article)
 		throws Exception {
 
 		AssetEntry assetEntry = getAssetEntry(article);
@@ -1037,7 +1027,7 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 			"classPK", article.getResourcePrimKey()
 		).put(
 			"type", "Web Content Article"
-		);
+		).toString();
 	}
 
 	private String _read(String fileName) throws Exception {

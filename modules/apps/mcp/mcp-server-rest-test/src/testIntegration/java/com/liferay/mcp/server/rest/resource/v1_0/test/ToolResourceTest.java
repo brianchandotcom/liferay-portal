@@ -101,26 +101,15 @@ public class ToolResourceTest extends BaseToolResourceTestCase {
 					"siteId", testGroup.getGroupId()
 				).toString());
 
-		Assert.assertTrue(
-			JSONFactoryUtil.createJSONObject(
-				httpResponse.getContent()
-			).getJSONArray(
-				"items"
-			).getJSONObject(
-				0
-			).has(
-				"id"
-			));
-		Assert.assertFalse(
-			JSONFactoryUtil.createJSONObject(
-				httpResponse.getContent()
-			).getJSONArray(
-				"items"
-			).getJSONObject(
-				0
-			).has(
-				"title"
-			));
+		jsonObject = JSONFactoryUtil.createJSONObject(
+			httpResponse.getContent());
+
+		jsonArray = jsonObject.getJSONArray("items");
+
+		JSONObject itemJSONObject = jsonArray.getJSONObject(0);
+
+		Assert.assertTrue(itemJSONObject.has("id"));
+		Assert.assertFalse(itemJSONObject.has("title"));
 	}
 
 }

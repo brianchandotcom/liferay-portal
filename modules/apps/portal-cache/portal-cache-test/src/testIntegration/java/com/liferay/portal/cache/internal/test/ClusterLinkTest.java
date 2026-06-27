@@ -166,8 +166,9 @@ public class ClusterLinkTest implements Serializable {
 				Object transport = ReflectionTestUtil.invoke(
 					protocolStack, "getTransport", new Class<?>[0]);
 
-				return transport.getClass(
-				).getSimpleName();
+				Class<?> transportClass = transport.getClass();
+
+				return transportClass.getSimpleName();
 			});
 	}
 

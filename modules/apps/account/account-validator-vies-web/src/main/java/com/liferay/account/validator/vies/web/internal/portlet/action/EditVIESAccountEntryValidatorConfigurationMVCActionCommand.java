@@ -80,7 +80,7 @@ public class EditVIESAccountEntryValidatorConfigurationMVCActionCommand
 			).put(
 				"countryCodes",
 				StringUtil.split(
-					ParamUtil.getString(actionRequest, "countries"))
+					ParamUtil.getString(actionRequest, "countryCodes"))
 			).put(
 				"enabled", ParamUtil.getBoolean(actionRequest, "enabled")
 			).put(

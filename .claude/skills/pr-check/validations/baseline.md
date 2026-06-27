@@ -40,7 +40,7 @@ Both run as standalone Gradle projects that apply the `BaselinePlugin`. The task
 	baseline)
 ```
 
-The task writes a per-project log under `baseline-reports`. A nonempty log is a FAIL. Like the module task, it resolves the last released artifact from Nexus, so it needs network.
+A nonempty `baseline-reports/portal-impl.log` is a FAIL. Like the module task, it resolves the last released artifact from Nexus, so it needs network.
 
 ### Local Version Check
 

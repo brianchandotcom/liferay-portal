@@ -29,16 +29,18 @@ A nonempty `modules/<module>/build/reports/baseline/baseline.log` is a FAIL. An 
 
 ### Portal Impl And Portal Kernel
 
-Both run as standalone Gradle projects that apply the `BaselinePlugin`. The task baselines the Ant-built jar in the project directory, so build that jar first, then run the task (substitute `portal-kernel` for the kernel side):
+Both run as standalone Gradle projects that apply the `BaselinePlugin`. The task baselines the Ant-built jar in the project directory, so build that jar with `ant jar` first, then run the baseline task (substitute `portal-kernel` for the kernel side):
 
 ```bash
+(cd "${REPO_ROOT}/portal-impl" && ant jar)
+
 ("${REPO_ROOT}/gradlew" \
 	--project-dir "${REPO_ROOT}/portal-impl" \
 	-Dbaseline.ignoreFailures=true \
 	baseline)
 ```
 
-A nonempty `baseline-reports/portal-impl.log` is a FAIL. Like the module task, it resolves the last released artifact from Nexus, so it needs network.
+The task writes a per-project log under `baseline-reports`. A nonempty log is a FAIL. Like the module task, it resolves the last released artifact from Nexus, so it needs network.
 
 ### Local Version Check
 

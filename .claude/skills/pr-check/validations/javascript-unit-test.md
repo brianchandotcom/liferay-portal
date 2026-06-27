@@ -32,7 +32,7 @@ Run the module's **full Jest suite** for any matched change. Do not select indiv
 
 Cap the consumer set at 8. When more modules depend on the package, note the blast radius rather than running them all.
 
-**Oversized suites.** When a module's suite is large enough to blow the time budget, fall back to the parallel-name specs plus every changed file under the module's `test`, `tests`, or `__tests__` tree, and note the reduced scope in the result.
+**Oversized suites.** When a module's suite is large enough to blow the time budget, fall back to the spec named for each changed source (`Foo.test.tsx` for `Foo.tsx`) plus every changed file under the module's `test`, `tests`, or `__tests__` tree, and note the reduced scope in the result.
 
 ## Command
 

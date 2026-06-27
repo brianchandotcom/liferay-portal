@@ -1412,7 +1412,6 @@ public class ObjectEntryLocalServiceTest {
 		Group group = GroupTestUtil.addGroup();
 
 		AssetCategory assetCategory1 = _addAssetCategory(group);
-
 		AssetCategory assetCategory2 = _addAssetCategory(group);
 
 		_assetVocabularyGroupRelLocalService.addAssetVocabularyGroupRel(

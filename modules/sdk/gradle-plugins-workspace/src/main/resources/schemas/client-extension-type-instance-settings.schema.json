@@ -77,7 +77,7 @@
 			"properties": {
 				"checkInterval": {
 					"default": 15,
-					"description": "Set the number of days to wait before a VAT number is revalidated against VIES.",
+					"description": "Set the number of days before a VAT number is revalidated against VIES.",
 					"min": 1,
 					"title": "Check Interval",
 					"type": "number"

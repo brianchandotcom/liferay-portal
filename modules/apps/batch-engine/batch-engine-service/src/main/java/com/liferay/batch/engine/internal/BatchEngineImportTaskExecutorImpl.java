@@ -229,7 +229,7 @@ public class BatchEngineImportTaskExecutorImpl
 
 		try {
 			TransactionInvokerUtil.invoke(
-				_transactionConfig,
+				_requiresNewTransactionConfig,
 				() -> {
 					String errorMessage = ErrorMessageUtil.getErrorMessage(
 						exception, batchEngineImportTask.getUserId());
@@ -533,8 +533,13 @@ public class BatchEngineImportTaskExecutorImpl
 
 		try {
 			if (LazyReferencingThreadLocal.isEnabled()) {
+
+				// A nested savepoint shares the enclosing transaction's
+				// connection; a REQUIRES_NEW transaction would deadlock
+				// against the outer import transaction's row locks.
+
 				TransactionInvokerUtil.invoke(
-					_transactionConfig, importItemCallable);
+					_nestedTransactionConfig, importItemCallable);
 			}
 			else {
 				importItemCallable.call();
@@ -661,7 +666,10 @@ public class BatchEngineImportTaskExecutorImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		BatchEngineImportTaskExecutorImpl.class);
 
-	private static final TransactionConfig _transactionConfig =
+	private static final TransactionConfig _nestedTransactionConfig =
+		TransactionConfig.Factory.create(
+			Propagation.NESTED, new Class<?>[] {Exception.class});
+	private static final TransactionConfig _requiresNewTransactionConfig =
 		TransactionConfig.Factory.create(
 			Propagation.REQUIRES_NEW, new Class<?>[] {Exception.class});
 

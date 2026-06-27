@@ -1,0 +1,12 @@
+{
+	"description": "Attract strangers and surface the problem (TOFU).",
+	"description_i18n": {
+		"en_US": "Attract strangers and surface the problem (TOFU)."
+	},
+	"externalReferenceCode": "L_CMP_FUNNEL_STAGE_AWARENESS",
+	"name": "Awareness",
+	"name_i18n": {
+		"en_US": "Awareness"
+	},
+	"viewableBy": "Anyone"
+}

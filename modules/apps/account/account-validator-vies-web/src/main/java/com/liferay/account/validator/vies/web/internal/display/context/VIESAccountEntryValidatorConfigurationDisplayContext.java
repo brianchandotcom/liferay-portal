@@ -13,16 +13,17 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.KeyValuePairComparator;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Crescenzo Rega
@@ -41,7 +42,22 @@ public class VIESAccountEntryValidatorConfigurationDisplayContext {
 	}
 
 	public List<KeyValuePair> getAvailableCountries() {
-		return _getCountries(false);
+		Set<String> countryCodes = SetUtil.fromArray(
+			_getVIESAccountEntryValidatorConfiguration().countryCodes());
+
+		return ListUtil.sort(
+			TransformUtil.transform(
+				_getCompanyCountries(),
+				country -> {
+					if (countryCodes.contains(country.getA2())) {
+						return null;
+					}
+
+					return new KeyValuePair(
+						country.getA2(),
+						country.getName(_themeDisplay.getLocale()));
+				}),
+			_comparator);
 	}
 
 	public int getCheckInterval() {
@@ -53,7 +69,22 @@ public class VIESAccountEntryValidatorConfigurationDisplayContext {
 	}
 
 	public List<KeyValuePair> getCurrentCountries() {
-		return _getCountries(true);
+		Set<String> countryCodes = SetUtil.fromArray(
+			_getVIESAccountEntryValidatorConfiguration().countryCodes());
+
+		return ListUtil.sort(
+			TransformUtil.transform(
+				_getCompanyCountries(),
+				country -> {
+					if (!countryCodes.contains(country.getA2())) {
+						return null;
+					}
+
+					return new KeyValuePair(
+						country.getA2(),
+						country.getName(_themeDisplay.getLocale()));
+				}),
+			_comparator);
 	}
 
 	public String getVIESEndpointURL() {
@@ -92,32 +123,6 @@ public class VIESAccountEntryValidatorConfigurationDisplayContext {
 		return _companyCountries;
 	}
 
-	private List<KeyValuePair> _getCountries(boolean current) {
-		VIESAccountEntryValidatorConfiguration
-			viesAccountEntryValidatorConfiguration =
-				_getVIESAccountEntryValidatorConfiguration();
-
-		String[] countryCodes =
-			viesAccountEntryValidatorConfiguration.countryCodes();
-
-		return ListUtil.sort(
-			TransformUtil.transform(
-				_getCompanyCountries(),
-				country -> {
-					boolean contains = ArrayUtil.contains(
-						countryCodes, country.getA2());
-
-					if (contains == current) {
-						return new KeyValuePair(
-							country.getA2(),
-							country.getName(_themeDisplay.getLocale()));
-					}
-
-					return null;
-				}),
-			new KeyValuePairComparator(false, true));
-	}
-
 	private VIESAccountEntryValidatorConfiguration
 		_getVIESAccountEntryValidatorConfiguration() {
 
@@ -142,6 +147,8 @@ public class VIESAccountEntryValidatorConfigurationDisplayContext {
 		VIESAccountEntryValidatorConfigurationDisplayContext.class);
 
 	private List<Country> _companyCountries;
+	private final KeyValuePairComparator _comparator =
+		new KeyValuePairComparator(false, true);
 	private final ConfigurationProvider _configurationProvider;
 	private final CountryService _countryService;
 	private final ThemeDisplay _themeDisplay;

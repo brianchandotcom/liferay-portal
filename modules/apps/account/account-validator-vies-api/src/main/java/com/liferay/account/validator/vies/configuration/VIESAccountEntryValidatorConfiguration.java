@@ -46,8 +46,7 @@ public interface VIESAccountEntryValidatorConfiguration
 	@Meta.AD(
 		deflt = "https://ec.europa.eu/taxation_customs/vies/rest-api/check-vat-number",
 		description = "vies-endpoint-url-description",
-		name = "vies-endpoint-url",
-		required = false
+		name = "vies-endpoint-url", required = false
 	)
 	public String viesEndpointURL();
 

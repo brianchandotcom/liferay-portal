@@ -42,8 +42,12 @@ public class VIESAccountEntryValidatorConfigurationDisplayContext {
 	}
 
 	public List<KeyValuePair> getAvailableCountries() {
+		VIESAccountEntryValidatorConfiguration
+			viesAccountEntryValidatorConfiguration =
+				_getVIESAccountEntryValidatorConfiguration();
+
 		Set<String> countryCodes = SetUtil.fromArray(
-			_getVIESAccountEntryValidatorConfiguration().countryCodes());
+			viesAccountEntryValidatorConfiguration.countryCodes());
 
 		return ListUtil.sort(
 			TransformUtil.transform(
@@ -57,7 +61,7 @@ public class VIESAccountEntryValidatorConfigurationDisplayContext {
 						country.getA2(),
 						country.getName(_themeDisplay.getLocale()));
 				}),
-			_comparator);
+			_keyValuePairComparator);
 	}
 
 	public int getCheckInterval() {
@@ -69,8 +73,12 @@ public class VIESAccountEntryValidatorConfigurationDisplayContext {
 	}
 
 	public List<KeyValuePair> getCurrentCountries() {
+		VIESAccountEntryValidatorConfiguration
+			viesAccountEntryValidatorConfiguration =
+				_getVIESAccountEntryValidatorConfiguration();
+
 		Set<String> countryCodes = SetUtil.fromArray(
-			_getVIESAccountEntryValidatorConfiguration().countryCodes());
+			viesAccountEntryValidatorConfiguration.countryCodes());
 
 		return ListUtil.sort(
 			TransformUtil.transform(
@@ -84,7 +92,7 @@ public class VIESAccountEntryValidatorConfigurationDisplayContext {
 						country.getA2(),
 						country.getName(_themeDisplay.getLocale()));
 				}),
-			_comparator);
+			_keyValuePairComparator);
 	}
 
 	public String getVIESEndpointURL() {
@@ -147,10 +155,10 @@ public class VIESAccountEntryValidatorConfigurationDisplayContext {
 		VIESAccountEntryValidatorConfigurationDisplayContext.class);
 
 	private List<Country> _companyCountries;
-	private final KeyValuePairComparator _comparator =
-		new KeyValuePairComparator(false, true);
 	private final ConfigurationProvider _configurationProvider;
 	private final CountryService _countryService;
+	private final KeyValuePairComparator _keyValuePairComparator =
+		new KeyValuePairComparator(false, true);
 	private final ThemeDisplay _themeDisplay;
 	private VIESAccountEntryValidatorConfiguration
 		_viesAccountEntryValidatorConfiguration;

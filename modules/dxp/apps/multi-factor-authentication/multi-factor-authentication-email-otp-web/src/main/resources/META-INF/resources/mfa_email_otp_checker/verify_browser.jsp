@@ -10,13 +10,12 @@
 <%
 long mfaEmailOTPFailedAttemptsRetryTimeout = GetterUtil.getLong(request.getAttribute(MFAEmailOTPWebKeys.MFA_EMAIL_OTP_FAILED_ATTEMPTS_RETRY_TIMEOUT));
 
-long mfaEmailOTPResendEmailTimeout = mfaEmailOTPConfiguration.resendEmailTimeout();
-
-long mfaEmailOTPSetAtTime = GetterUtil.getLong(request.getAttribute(MFAEmailOTPWebKeys.MFA_EMAIL_OTP_SET_AT_TIME));
-
 long mfaEmailOTPRemainingResendTime = 0;
 
-if ((mfaEmailOTPSetAtTime > 0) && (mfaEmailOTPResendEmailTimeout > 0)) {
+long mfaEmailOTPResendEmailTimeout = mfaEmailOTPConfiguration.resendEmailTimeout();
+long mfaEmailOTPSetAtTime = GetterUtil.getLong(request.getAttribute(MFAEmailOTPWebKeys.MFA_EMAIL_OTP_SET_AT_TIME));
+
+if ((mfaEmailOTPResendEmailTimeout > 0) && (mfaEmailOTPSetAtTime > 0)) {
 	long mfaEmailOTPElapsedTime = (System.currentTimeMillis() - mfaEmailOTPSetAtTime) / 1000;
 
 	if (mfaEmailOTPElapsedTime < mfaEmailOTPResendEmailTimeout) {

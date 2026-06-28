@@ -62,6 +62,11 @@ export default function ElementVariationForm({
 				<ClayForm.Group small>
 					<label htmlFor={nameId}>
 						{Liferay.Language.get('name')}
+
+						<ClayIcon
+							className="mr-1 reference-mark"
+							symbol="asterisk"
+						/>
 					</label>
 
 					<ClayInput
@@ -75,6 +80,11 @@ export default function ElementVariationForm({
 				<ClayForm.Group small>
 					<label htmlFor={targetElementId}>
 						{Liferay.Language.get('page-element')}
+
+						<ClayIcon
+							className="mr-1 reference-mark"
+							symbol="asterisk"
+						/>
 					</label>
 
 					<ClayInput
@@ -90,6 +100,11 @@ export default function ElementVariationForm({
 				<ClayForm.Group small>
 					<label htmlFor={audienceId}>
 						{Liferay.Language.get('audience')}
+
+						<ClayIcon
+							className="mr-1 reference-mark"
+							symbol="asterisk"
+						/>
 					</label>
 
 					<ClayMultiSelect

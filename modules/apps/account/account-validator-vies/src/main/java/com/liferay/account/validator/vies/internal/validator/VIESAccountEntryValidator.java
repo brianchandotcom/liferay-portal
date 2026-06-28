@@ -137,13 +137,13 @@ public class VIESAccountEntryValidator implements AccountEntryValidator {
 		if ((errorWrappersJSONArray != null) &&
 			(errorWrappersJSONArray.length() > 0)) {
 
-			JSONObject errorJSONObject = errorWrappersJSONArray.getJSONObject(
-				0);
+			JSONObject errorWrapperJSONObject =
+				errorWrappersJSONArray.getJSONObject(0);
 
 			return AccountEntryValidatorResult.builder(
 				classPK
 			).resultMessage(
-				errorJSONObject.getString("error")
+				errorWrapperJSONObject.getString("error")
 			).resultStatus(
 				AccountEntryValidatorConstants.RESULT_WARNING
 			).build();

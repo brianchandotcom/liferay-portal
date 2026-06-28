@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Info List Provider Item Selector API
 Bundle-SymbolicName: com.liferay.info.list.provider.item.selector.api
-Bundle-Version: 4.0.1
+Bundle-Version: 4.0.2
 Export-Package:\
 	com.liferay.info.list.provider.item.selector,\
 	com.liferay.info.list.provider.item.selector.criterion

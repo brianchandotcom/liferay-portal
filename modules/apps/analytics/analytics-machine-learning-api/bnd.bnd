@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Analytics Machine Learning API
 Bundle-SymbolicName: com.liferay.analytics.machine.learning.api
-Bundle-Version: 2.1.2
+Bundle-Version: 2.1.3
 Export-Package:\
 	com.liferay.analytics.machine.learning.constants,\
 	com.liferay.analytics.machine.learning.content

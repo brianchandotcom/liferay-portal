@@ -185,9 +185,9 @@ public class TransactionalPortalCacheUtil {
 		PortalCache<K, V> portalCache, K key) {
 
 		// A nested savepoint shares its enclosing transaction's connection, so
-		// its reads must see the entries buffered by that transaction. Search
+		// its reads must see the entries buffered by that transaction; search
 		// outward through savepoint scopes, but stop at the first independent
-		// transaction (such as REQUIRES_NEW), which must stay isolated.
+		// transaction (such as REQUIRES_NEW), which must stay isolated
 
 		List<PortalCacheMap> portalCacheMaps = _portalCacheMaps.get();
 

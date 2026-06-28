@@ -80,8 +80,9 @@ public class NestedTransactionSavepointTest {
 			Assert.assertSame(exception, throwable);
 		}
 
-		// The savepoint released, but the outer transaction rolled back, so
-		// the item is gone from both the database and the entity cache.
+		// The nested savepoint was released when it succeeded, but the outer
+		// transaction rolled back, so the item is gone from both the database
+		// and the entity cache
 
 		Assert.assertNull(
 			_classNameLocalService.fetchClassName(nestedClassNameId));
@@ -113,8 +114,9 @@ public class NestedTransactionSavepointTest {
 							(Callable<Void>)() -> {
 								_addClassName(nestedClassNameId);
 
-								// Same connection as the outer transaction,
-								// unlike REQUIRES_NEW.
+								// The nested transaction runs on the same
+								// connection as the outer transaction, unlike
+								// REQUIRES_NEW
 
 								Assert.assertSame(
 									connection, _getCurrentConnection());
@@ -129,29 +131,29 @@ public class NestedTransactionSavepointTest {
 					}
 
 					// The outer transaction stays usable after the nested
-					// rollback.
+					// rollback
 
 					_addClassName(outerPostClassNameId);
 
 					return null;
 				});
 
-			// The outer transaction committed its pre-nested and post-nested
-			// work.
+			// The outer transaction committed the work done before and after
+			// the nested transaction
 
 			Assert.assertNotNull(
 				_classNameLocalService.fetchClassName(outerPreClassNameId));
 			Assert.assertNotNull(
 				_classNameLocalService.fetchClassName(outerPostClassNameId));
 
-			// The nested item rolled back with its savepoint.
+			// The nested item rolled back with its savepoint
 
 			Assert.assertNull(
 				_classNameLocalService.fetchClassName(nestedClassNameId));
 		}
 		finally {
 
-			// The nested item rolled back, so only the outer items exist.
+			// The nested item rolled back, so only the outer items exist
 
 			_classNameLocalService.deleteClassName(outerPreClassNameId);
 			_classNameLocalService.deleteClassName(outerPostClassNameId);
@@ -180,8 +182,9 @@ public class NestedTransactionSavepointTest {
 							(Callable<Void>)() -> {
 								_addClassName(nestedClassNameId);
 
-								// Same connection as the outer transaction,
-								// unlike REQUIRES_NEW.
+								// The nested transaction runs on the same
+								// connection as the outer transaction, unlike
+								// REQUIRES_NEW
 
 								Assert.assertSame(
 									connection, _getCurrentConnection());
@@ -222,7 +225,7 @@ public class NestedTransactionSavepointTest {
 		try {
 
 			// With no outer transaction, a nested transaction behaves like
-			// REQUIRED and commits as its own transaction.
+			// REQUIRED and commits as its own transaction
 
 			TransactionInvokerUtil.invoke(
 				_nestedTransactionConfig,
@@ -235,7 +238,7 @@ public class NestedTransactionSavepointTest {
 			Assert.assertNotNull(
 				_classNameLocalService.fetchClassName(committedClassNameId));
 
-			// It also rolls back as its own transaction.
+			// It also rolls back as its own transaction
 
 			try {
 				TransactionInvokerUtil.invoke(

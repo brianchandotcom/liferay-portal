@@ -535,8 +535,8 @@ public class BatchEngineImportTaskExecutorImpl
 			if (LazyReferencingThreadLocal.isEnabled()) {
 
 				// A nested savepoint shares the enclosing transaction's
-				// connection; a REQUIRES_NEW transaction would deadlock
-				// against the outer import transaction's row locks.
+				// connection; a REQUIRES_NEW transaction would deadlock on
+				// the row locks held by the outer import transaction
 
 				TransactionInvokerUtil.invoke(
 					_nestedTransactionConfig, importItemCallable);

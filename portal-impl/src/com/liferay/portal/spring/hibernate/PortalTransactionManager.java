@@ -545,9 +545,9 @@ public class PortalTransactionManager
 					"Unable to roll back to savepoint", sqlException);
 			}
 
-			// Clear the Hibernate first level cache so entities rolled back
+			// Clear the Hibernate first-level cache so entities rolled back
 			// to the savepoint are not reflushed when the outer transaction
-			// commits.
+			// commits
 
 			Session session = _sessionHolder.getSession();
 

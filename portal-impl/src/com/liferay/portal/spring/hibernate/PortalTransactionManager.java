@@ -212,8 +212,7 @@ public class PortalTransactionManager
 		SpringHibernateThreadLocalUtil.setResource(
 			_dataSource, null, resources);
 
-		SessionHolder sessionHolder =
-			portalSavepointManager.getSessionHolder();
+		SessionHolder sessionHolder = portalSavepointManager.getSessionHolder();
 
 		Session session = sessionHolder.getSession();
 
@@ -272,11 +271,9 @@ public class PortalTransactionManager
 	@Override
 	protected void doCommit(DefaultTransactionStatus defaultTransactionStatus) {
 		PortalSavepointManager portalSavepointManager =
-			(PortalSavepointManager)
-				defaultTransactionStatus.getTransaction();
+			(PortalSavepointManager)defaultTransactionStatus.getTransaction();
 
-		SessionHolder sessionHolder =
-			portalSavepointManager.getSessionHolder();
+		SessionHolder sessionHolder = portalSavepointManager.getSessionHolder();
 
 		Transaction transaction = sessionHolder.getTransaction();
 
@@ -353,11 +350,9 @@ public class PortalTransactionManager
 		DefaultTransactionStatus defaultTransactionStatus) {
 
 		PortalSavepointManager portalSavepointManager =
-			(PortalSavepointManager)
-				defaultTransactionStatus.getTransaction();
+			(PortalSavepointManager)defaultTransactionStatus.getTransaction();
 
-		SessionHolder sessionHolder =
-			portalSavepointManager.getSessionHolder();
+		SessionHolder sessionHolder = portalSavepointManager.getSessionHolder();
 
 		Transaction transaction = sessionHolder.getTransaction();
 
@@ -397,11 +392,9 @@ public class PortalTransactionManager
 		DefaultTransactionStatus defaultTransactionStatus) {
 
 		PortalSavepointManager portalSavepointManager =
-			(PortalSavepointManager)
-				defaultTransactionStatus.getTransaction();
+			(PortalSavepointManager)defaultTransactionStatus.getTransaction();
 
-		SessionHolder sessionHolder =
-			portalSavepointManager.getSessionHolder();
+		SessionHolder sessionHolder = portalSavepointManager.getSessionHolder();
 
 		sessionHolder.setRollbackOnly();
 
@@ -436,8 +429,7 @@ public class PortalTransactionManager
 		PortalSavepointManager portalSavepointManager =
 			(PortalSavepointManager)transactionObject;
 
-		SessionHolder sessionHolder =
-			portalSavepointManager.getSessionHolder();
+		SessionHolder sessionHolder = portalSavepointManager.getSessionHolder();
 
 		if ((sessionHolder != null) &&
 			(sessionHolder.getTransaction() != null)) {

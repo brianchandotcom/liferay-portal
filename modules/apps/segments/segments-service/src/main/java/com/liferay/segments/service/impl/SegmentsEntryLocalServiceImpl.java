@@ -430,7 +430,6 @@ public class SegmentsEntryLocalServiceImpl
 			segmentsEntryId, segmentsEntry.getGroupId(), segmentsEntryKey);
 
 		_validateName(segmentsEntry.getGroupId(), nameMap);
-
 		_validateSegmentsExperiment(segmentsEntry);
 
 		segmentsEntry.setModifiedDate(

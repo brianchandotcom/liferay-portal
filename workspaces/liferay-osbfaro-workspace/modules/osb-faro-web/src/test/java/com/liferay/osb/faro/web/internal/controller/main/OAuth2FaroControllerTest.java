@@ -6,12 +6,10 @@
 package com.liferay.osb.faro.web.internal.controller.main;
 
 import com.liferay.oauth2.provider.model.OAuth2Authorization;
+import com.liferay.oauth2.provider.service.OAuth2AuthorizationLocalService;
 import com.liferay.oauth2.provider.service.OAuth2AuthorizationService;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-
-import java.util.Arrays;
-import java.util.Collections;
 
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -19,8 +17,6 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import org.mockito.Mockito;
-
-import org.springframework.test.util.ReflectionTestUtils;
 
 /**
  * @author Eudaldo Alonso
@@ -34,7 +30,10 @@ public class OAuth2FaroControllerTest {
 
 	@Before
 	public void setUp() {
-		ReflectionTestUtils.setField(
+		ReflectionTestUtil.setFieldValue(
+			_oAuth2FaroController, "_oAuth2AuthorizationLocalService",
+			_oAuth2AuthorizationLocalService);
+		ReflectionTestUtil.setFieldValue(
 			_oAuth2FaroController, "_oAuth2AuthorizationService",
 			_oAuth2AuthorizationService);
 	}
@@ -43,14 +42,6 @@ public class OAuth2FaroControllerTest {
 	public void testRevokeToken() throws Exception {
 		OAuth2Authorization oAuth2Authorization = Mockito.mock(
 			OAuth2Authorization.class);
-
-		String accessToken = "abc";
-
-		Mockito.when(
-			oAuth2Authorization.getAccessTokenContent()
-		).thenReturn(
-			accessToken
-		);
 
 		long oAuth2AuthorizationId = 123;
 
@@ -61,13 +52,13 @@ public class OAuth2FaroControllerTest {
 		);
 
 		Mockito.when(
-			_oAuth2AuthorizationService.getUserOAuth2Authorizations(
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)
+			_oAuth2AuthorizationLocalService.
+				fetchOAuth2AuthorizationByAccessTokenContent("abc")
 		).thenReturn(
-			Arrays.asList(oAuth2Authorization)
+			oAuth2Authorization
 		);
 
-		_oAuth2FaroController.revokeToken(1, accessToken);
+		_oAuth2FaroController.revokeToken(1, "abc");
 
 		Mockito.verify(
 			_oAuth2AuthorizationService
@@ -78,16 +69,12 @@ public class OAuth2FaroControllerTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testRevokeTokenWhenTokenIsNotFound() throws Exception {
-		Mockito.when(
-			_oAuth2AuthorizationService.getUserOAuth2Authorizations(
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)
-		).thenReturn(
-			Collections.emptyList()
-		);
-
 		_oAuth2FaroController.revokeToken(1, "nonexistent");
 	}
 
+	private final OAuth2AuthorizationLocalService
+		_oAuth2AuthorizationLocalService = Mockito.mock(
+			OAuth2AuthorizationLocalService.class);
 	private final OAuth2AuthorizationService _oAuth2AuthorizationService =
 		Mockito.mock(OAuth2AuthorizationService.class);
 	private final OAuth2FaroController _oAuth2FaroController =

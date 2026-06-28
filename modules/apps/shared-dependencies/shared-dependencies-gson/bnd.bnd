@@ -1,5 +1,5 @@
 Bundle-Name: Liferay Shared Dependencies Gson
 Bundle-SymbolicName: com.liferay.shared.dependencies.gson
-Bundle-Version: 6.0.1
+Bundle-Version: 6.0.2
 -exportcontents: com.google.gson.*
 -fixupmessages: "^Classes found in the wrong directory: \\\\{META-INF/versions/9/";is:=warning

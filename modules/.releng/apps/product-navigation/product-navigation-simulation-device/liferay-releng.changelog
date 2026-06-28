@@ -397,3 +397,8 @@ fef8bf50c9959c00c8753f65ad9d5ee8b7782024^..9edcabf07ee151b23df4377a3374fa55e5ee1
 # Bundle Version 6.0.79
 #
 baec3ed718d40b596d087a9a498ab6e77f49a91b^..7efadae5785f73d6e7dacf2956f54a04a2fc9db2=LPD-93246
+
+#
+# Bundle Version 6.0.80
+#
+7efadae5785f73d6e7dacf2956f54a04a2fc9db2^..b7a95fdf07d623509923c2aa7b8f9cfeb9da94a4=LPD-92633 LPD-93859

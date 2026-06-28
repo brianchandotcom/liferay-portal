@@ -62,3 +62,8 @@ d60a96bd0bf8691eed3705ca60050faca8dd5bad^..8bc76184080d25e5a6c701bfa8db5da6bb747
 # Bundle Version 6.0.0
 #
 429bfa576431347040fd1debe02d5fa7bd6d5e94^..c912c0aeeca0e130209b4d037b72c8c9bb657dc3=LPD-91235
+
+#
+# Bundle Version 6.0.1
+#
+c912c0aeeca0e130209b4d037b72c8c9bb657dc3^..859e2e71dfc58ba2ca6d6aff4457c223bc87dabe=LPD-28402 LPD-92633 LPD-94447

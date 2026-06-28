@@ -1,5 +1,5 @@
 Bundle-Name: Liferay Text Localizer Address API
 Bundle-SymbolicName: com.liferay.text.localizer.address.api
-Bundle-Version: 4.0.7
+Bundle-Version: 4.0.8
 Export-Package: com.liferay.text.localizer.address
 -dsannotations-options: inherit

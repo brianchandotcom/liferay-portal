@@ -254,11 +254,11 @@ public class VIESAccountEntryValidatorTest {
 				unavailableVatNumber);
 
 			Assert.assertEquals(
-				AccountEntryValidatorConstants.RESULT_WARNING,
-				accountEntryValidatorResult.getResultStatus());
-			Assert.assertEquals(
 				_SERVICE_UNAVAILABLE,
 				accountEntryValidatorResult.getResultMessage());
+			Assert.assertEquals(
+				AccountEntryValidatorConstants.RESULT_WARNING,
+				accountEntryValidatorResult.getResultStatus());
 			Assert.assertTrue(accountEntryValidatorResult.isValid());
 
 			accountEntryValidatorResult = _validate(

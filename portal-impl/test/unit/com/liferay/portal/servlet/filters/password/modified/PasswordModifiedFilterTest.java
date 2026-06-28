@@ -112,7 +112,7 @@ public class PasswordModifiedFilterTest {
 
 				@Override
 				public String getPathMain() {
-					return "/c";
+					return PATH_MAIN;
 				}
 
 				@Override

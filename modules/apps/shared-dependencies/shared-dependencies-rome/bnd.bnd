@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Shared Dependencies Rome
 Bundle-SymbolicName: com.liferay.shared.dependencies.rome
-Bundle-Version: 1.0.2
+Bundle-Version: 1.0.3
 -exportcontents:\
 	com.rometools.rome.feed;version='1.16.0',\
 	com.rometools.rome.feed.module;version='1.16.0',\

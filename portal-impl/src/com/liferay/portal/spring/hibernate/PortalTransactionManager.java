@@ -62,11 +62,11 @@ public class PortalTransactionManager
 	protected void doBegin(
 		Object transactionObject, TransactionDefinition transactionDefinition) {
 
-		HibernateTransactionObject hibernateTransactionObject =
-			(HibernateTransactionObject)transactionObject;
+		PortalSavepointManager portalSavepointManager =
+			(PortalSavepointManager)transactionObject;
 
 		ConnectionHolder connectionHolder =
-			hibernateTransactionObject.getConnectionHolder();
+			portalSavepointManager.getConnectionHolder();
 
 		if ((connectionHolder != null) &&
 			connectionHolder.isSynchronizedWithTransaction()) {
@@ -79,15 +79,15 @@ public class PortalTransactionManager
 
 		try {
 			SessionHolder sessionHolder =
-				hibernateTransactionObject.getSessionHolder();
+				portalSavepointManager.getSessionHolder();
 
 			if ((sessionHolder == null) ||
 				sessionHolder.isSynchronizedWithTransaction()) {
 
-				hibernateTransactionObject.setSession(
+				portalSavepointManager.setSession(
 					_sessionFactory.openSession());
 
-				sessionHolder = hibernateTransactionObject.getSessionHolder();
+				sessionHolder = portalSavepointManager.getSessionHolder();
 			}
 
 			Session session = sessionHolder.getSession();
@@ -100,16 +100,16 @@ public class PortalTransactionManager
 
 				Connection connection = sessionImplementor.connection();
 
-				hibernateTransactionObject.markConnectionModified();
-				hibernateTransactionObject.setPreviousIsolationLevel(
+				portalSavepointManager.markConnectionModified();
+				portalSavepointManager.setPreviousIsolationLevel(
 					DataSourceUtils.prepareConnectionForTransaction(
 						connection, transactionDefinition));
-				hibernateTransactionObject.setReadOnly(
+				portalSavepointManager.setReadOnly(
 					transactionDefinition.isReadOnly());
 			}
 
 			if (transactionDefinition.isReadOnly()) {
-				if (hibernateTransactionObject.isNewSession()) {
+				if (portalSavepointManager.isNewSession()) {
 					sessionImplementor.setDefaultReadOnly(true);
 					sessionImplementor.setHibernateFlushMode(FlushMode.MANUAL);
 				}
@@ -154,9 +154,9 @@ public class PortalTransactionManager
 			SpringHibernateThreadLocalUtil.setResource(
 				_dataSource, newConnectionHolder, resources);
 
-			hibernateTransactionObject.setConnectionHolder(newConnectionHolder);
+			portalSavepointManager.setConnectionHolder(newConnectionHolder);
 
-			if (hibernateTransactionObject.isNewSessionHolder()) {
+			if (portalSavepointManager.isNewSessionHolder()) {
 				SpringHibernateThreadLocalUtil.setResource(
 					_sessionFactory, sessionHolder, resources);
 			}
@@ -164,7 +164,7 @@ public class PortalTransactionManager
 			sessionHolder.setSynchronizedWithTransaction(true);
 		}
 		catch (Throwable throwable1) {
-			if (hibernateTransactionObject.isNewSession()) {
+			if (portalSavepointManager.isNewSession()) {
 				try {
 					if (sessionImplementor != null) {
 						Transaction transaction =
@@ -187,7 +187,7 @@ public class PortalTransactionManager
 						sessionImplementor.close();
 					}
 
-					hibernateTransactionObject.setSessionHolder(null);
+					portalSavepointManager.setSessionHolder(null);
 				}
 			}
 
@@ -198,13 +198,13 @@ public class PortalTransactionManager
 
 	@Override
 	protected void doCleanupAfterCompletion(Object transactionObject) {
-		HibernateTransactionObject hibernateTransactionObject =
-			(HibernateTransactionObject)transactionObject;
+		PortalSavepointManager portalSavepointManager =
+			(PortalSavepointManager)transactionObject;
 
 		Map<Object, Object> resources =
 			SpringHibernateThreadLocalUtil.getResources(false);
 
-		if (hibernateTransactionObject.isNewSessionHolder()) {
+		if (portalSavepointManager.isNewSessionHolder()) {
 			SpringHibernateThreadLocalUtil.setResource(
 				_sessionFactory, null, resources);
 		}
@@ -213,7 +213,7 @@ public class PortalTransactionManager
 			_dataSource, null, resources);
 
 		SessionHolder sessionHolder =
-			hibernateTransactionObject.getSessionHolder();
+			portalSavepointManager.getSessionHolder();
 
 		Session session = sessionHolder.getSession();
 
@@ -226,7 +226,7 @@ public class PortalTransactionManager
 		LogicalConnectionImplementor logicalConnectionImplementor =
 			jdbcCoordinator.getLogicalConnection();
 
-		if (hibernateTransactionObject.isConnectionModified() &&
+		if (portalSavepointManager.isConnectionModified() &&
 			logicalConnectionImplementor.isPhysicallyConnected()) {
 
 			try {
@@ -234,8 +234,8 @@ public class PortalTransactionManager
 
 				DataSourceUtils.resetConnectionAfterTransaction(
 					connection,
-					hibernateTransactionObject.getPreviousIsolationLevel(),
-					hibernateTransactionObject.isReadOnly());
+					portalSavepointManager.getPreviousIsolationLevel(),
+					portalSavepointManager.isReadOnly());
 			}
 			catch (HibernateException hibernateException) {
 				if (_log.isDebugEnabled()) {
@@ -253,7 +253,7 @@ public class PortalTransactionManager
 			}
 		}
 
-		if (hibernateTransactionObject.isNewSession()) {
+		if (portalSavepointManager.isNewSession()) {
 			sessionImplementor.close();
 		}
 		else {
@@ -271,12 +271,12 @@ public class PortalTransactionManager
 
 	@Override
 	protected void doCommit(DefaultTransactionStatus defaultTransactionStatus) {
-		HibernateTransactionObject hibernateTransactionObject =
-			(HibernateTransactionObject)
+		PortalSavepointManager portalSavepointManager =
+			(PortalSavepointManager)
 				defaultTransactionStatus.getTransaction();
 
 		SessionHolder sessionHolder =
-			hibernateTransactionObject.getSessionHolder();
+			portalSavepointManager.getSessionHolder();
 
 		Transaction transaction = sessionHolder.getTransaction();
 
@@ -305,8 +305,8 @@ public class PortalTransactionManager
 
 	@Override
 	protected Object doGetTransaction() {
-		HibernateTransactionObject hibernateTransactionObject =
-			new HibernateTransactionObject();
+		PortalSavepointManager portalSavepointManager =
+			new PortalSavepointManager();
 
 		Map<Object, Object> resources =
 			SpringHibernateThreadLocalUtil.getResources(false);
@@ -318,13 +318,13 @@ public class PortalTransactionManager
 		if (sessionHolder != null) {
 			LastSessionRecorderUtil.setLastSession(sessionHolder.getSession());
 
-			hibernateTransactionObject.setSessionHolder(sessionHolder);
+			portalSavepointManager.setSessionHolder(sessionHolder);
 		}
 
-		hibernateTransactionObject.setConnectionHolder(
+		portalSavepointManager.setConnectionHolder(
 			SpringHibernateThreadLocalUtil.getResource(_dataSource, resources));
 
-		return hibernateTransactionObject;
+		return portalSavepointManager;
 	}
 
 	@Override
@@ -352,12 +352,12 @@ public class PortalTransactionManager
 	protected void doRollback(
 		DefaultTransactionStatus defaultTransactionStatus) {
 
-		HibernateTransactionObject hibernateTransactionObject =
-			(HibernateTransactionObject)
+		PortalSavepointManager portalSavepointManager =
+			(PortalSavepointManager)
 				defaultTransactionStatus.getTransaction();
 
 		SessionHolder sessionHolder =
-			hibernateTransactionObject.getSessionHolder();
+			portalSavepointManager.getSessionHolder();
 
 		Transaction transaction = sessionHolder.getTransaction();
 
@@ -384,7 +384,7 @@ public class PortalTransactionManager
 			throw persistenceException;
 		}
 		finally {
-			if (!hibernateTransactionObject.isNewSession()) {
+			if (!portalSavepointManager.isNewSession()) {
 				Session session = sessionHolder.getSession();
 
 				session.clear();
@@ -396,17 +396,17 @@ public class PortalTransactionManager
 	protected void doSetRollbackOnly(
 		DefaultTransactionStatus defaultTransactionStatus) {
 
-		HibernateTransactionObject hibernateTransactionObject =
-			(HibernateTransactionObject)
+		PortalSavepointManager portalSavepointManager =
+			(PortalSavepointManager)
 				defaultTransactionStatus.getTransaction();
 
 		SessionHolder sessionHolder =
-			hibernateTransactionObject.getSessionHolder();
+			portalSavepointManager.getSessionHolder();
 
 		sessionHolder.setRollbackOnly();
 
 		ConnectionHolder connectionHolder =
-			hibernateTransactionObject.getConnectionHolder();
+			portalSavepointManager.getConnectionHolder();
 
 		if (connectionHolder != null) {
 			connectionHolder.setRollbackOnly();
@@ -415,11 +415,11 @@ public class PortalTransactionManager
 
 	@Override
 	protected Object doSuspend(Object transactionObject) {
-		HibernateTransactionObject hibernateTransactionObject =
-			(HibernateTransactionObject)transactionObject;
+		PortalSavepointManager portalSavepointManager =
+			(PortalSavepointManager)transactionObject;
 
-		hibernateTransactionObject.setConnectionHolder(null);
-		hibernateTransactionObject.setSessionHolder(null);
+		portalSavepointManager.setConnectionHolder(null);
+		portalSavepointManager.setSessionHolder(null);
 
 		Map<Object, Object> resources =
 			SpringHibernateThreadLocalUtil.getResources(false);
@@ -433,11 +433,11 @@ public class PortalTransactionManager
 
 	@Override
 	protected boolean isExistingTransaction(Object transactionObject) {
-		HibernateTransactionObject hibernateTransactionObject =
-			(HibernateTransactionObject)transactionObject;
+		PortalSavepointManager portalSavepointManager =
+			(PortalSavepointManager)transactionObject;
 
 		SessionHolder sessionHolder =
-			hibernateTransactionObject.getSessionHolder();
+			portalSavepointManager.getSessionHolder();
 
 		if ((sessionHolder != null) &&
 			(sessionHolder.getTransaction() != null)) {
@@ -468,7 +468,7 @@ public class PortalTransactionManager
 
 	}
 
-	private class HibernateTransactionObject implements SavepointManager {
+	private class PortalSavepointManager implements SavepointManager {
 
 		@Override
 		public Object createSavepoint() {

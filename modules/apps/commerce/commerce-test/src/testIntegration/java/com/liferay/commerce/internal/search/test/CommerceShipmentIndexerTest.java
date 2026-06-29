@@ -192,9 +192,7 @@ public class CommerceShipmentIndexerTest {
 			ListUtil.fromArray(document.getValues("commerceOrderUserIds")));
 	}
 
-	private CommerceOrder _addCommerceOrderItem(User user)
-		throws Exception {
-
+	private CommerceOrder _addCommerceOrderItem(User user) throws Exception {
 		CommerceOrder commerceOrder = CommerceTestUtil.addB2CCommerceOrder(
 			user.getUserId(), _commerceChannel.getGroupId(),
 			_commerceCurrency.getCommerceCurrencyId());

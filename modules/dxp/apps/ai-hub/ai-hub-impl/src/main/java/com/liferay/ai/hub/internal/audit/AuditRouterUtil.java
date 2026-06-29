@@ -34,6 +34,10 @@ public class AuditRouterUtil {
 		AccountEntry accountEntry = AccountEntryUtil.getUserAccountEntry(
 			userId);
 
+		if (accountEntry == null) {
+			return;
+		}
+
 		com.liferay.portal.kernel.audit.AuditRouterUtil.route(
 			new AuditMessage(
 				0, accountEntry.getCompanyId(), userId,

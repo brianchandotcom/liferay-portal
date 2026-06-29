@@ -30,16 +30,80 @@
 				{
 					"if": {
 						"properties": {
-							"operator": {
-								"enum": [
-									"includes",
-									"not_includes"
-								]
+							"attribute": {
+								"const": "user_authentication"
 							}
-						}
+						},
+						"required": [
+							"attribute"
+						]
 					},
 					"then": {
 						"properties": {
+							"operator": {
+								"enum": [
+									"eq",
+									"not_eq"
+								]
+							},
+							"value": {
+								"type": "boolean"
+							}
+						}
+					}
+				},
+				{
+					"if": {
+						"properties": {
+							"attribute": {
+								"const": "local_hour"
+							}
+						},
+						"required": [
+							"attribute"
+						]
+					},
+					"then": {
+						"properties": {
+							"operator": {
+								"enum": [
+									"eq",
+									"gt",
+									"gte",
+									"lt",
+									"lte",
+									"not_eq"
+								]
+							},
+							"value": {
+								"type": "number"
+							}
+						}
+					}
+				},
+				{
+					"if": {
+						"properties": {
+							"attribute": {
+								"const": "local_date"
+							}
+						},
+						"required": [
+							"attribute"
+						]
+					},
+					"then": {
+						"properties": {
+							"operator": {
+								"enum": [
+									"eq",
+									"gt",
+									"gte",
+									"lt",
+									"lte",
+									"not_eq"
+								]
+							},
 							"value": {
 								"type": "string"
 							}
@@ -49,23 +113,27 @@
 				{
 					"if": {
 						"properties": {
-							"operator": {
+							"attribute": {
 								"enum": [
-									"gt",
-									"gte",
-									"lt",
-									"lte"
+									"cookies",
+									"request_parameters"
 								]
 							}
-						}
+						},
+						"required": [
+							"attribute"
+						]
 					},
 					"then": {
 						"properties": {
-							"value": {
-								"type": [
-									"number",
-									"string"
+							"operator": {
+								"enum": [
+									"includes",
+									"not_includes"
 								]
+							},
+							"value": {
+								"type": "string"
 							}
 						}
 					}
@@ -73,22 +141,73 @@
 				{
 					"if": {
 						"properties": {
+							"attribute": {
+								"enum": [
+									"language",
+									"user_language"
+								]
+							}
+						},
+						"required": [
+							"attribute"
+						]
+					},
+					"then": {
+						"properties": {
 							"operator": {
 								"enum": [
 									"eq",
 									"not_eq"
 								]
+							},
+							"value": {
+								"type": "string"
 							}
 						}
+					}
+				},
+				{
+					"if": {
+						"properties": {
+							"attribute": {
+								"anyOf": [
+									{
+										"enum": [
+											"browser_name",
+											"browser_version",
+											"device_type",
+											"geolocation",
+											"hostname",
+											"pathname",
+											"referrer",
+											"timezone",
+											"url",
+											"user_agent"
+										]
+									},
+									{
+										"pattern": "^custom:.+",
+										"type": "string"
+									}
+								]
+							}
+						},
+						"required": [
+							"attribute"
+						]
 					},
 					"then": {
 						"properties": {
-							"value": {
-								"type": [
-									"boolean",
-									"number",
-									"string"
+							"operator": {
+								"enum": [
+									"eq",
+									"includes",
+									"not_eq",
+									"not_includes"
 								]
+							},
+							"value": {
+								"type": "string"
 							}
 						}
 					}
@@ -111,10 +230,11 @@
 								"pathname",
 								"referrer",
 								"request_parameters",
-								"segments",
 								"timezone",
 								"url",
-								"user_agent"
+								"user_agent",
+								"user_authentication",
+								"user_language"
 							]
 						},
 						{

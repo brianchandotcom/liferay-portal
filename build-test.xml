@@ -4688,100 +4688,6 @@ tell application "Safari" to quit
 		</sequential>
 	</macrodef>
 
-	<macrodef name="prepare-selenium-google-cloud-translation-properties">
-		<sequential>
-			<if>
-				<isset property="google.cloud.translation.service.key.type" />
-				<then>
-					<echo append="true" file="${test.ext.properties.file}">
-						google.cloud.translation.service.key.type=${google.cloud.translation.service.key.type}
-					</echo>
-				</then>
-			</if>
-
-			<if>
-				<isset property="google.cloud.translation.service.key.project.id" />
-				<then>
-					<echo append="true" file="${test.ext.properties.file}">
-						google.cloud.translation.service.key.project.id=${google.cloud.translation.service.key.project.id}
-					</echo>
-				</then>
-			</if>
-
-			<if>
-				<isset property="google.cloud.translation.service.key.private.key.id" />
-				<then>
-					<echo append="true" file="${test.ext.properties.file}">
-						google.cloud.translation.service.key.private.key.id=${google.cloud.translation.service.key.private.key.id}
-					</echo>
-				</then>
-			</if>
-
-			<if>
-				<isset property="google.cloud.translation.service.key.private.key" />
-				<then>
-					<echo append="true" file="${test.ext.properties.file}">
-						google.cloud.translation.service.key.private.key=${google.cloud.translation.service.key.private.key}
-					</echo>
-				</then>
-			</if>
-
-			<if>
-				<isset property="google.cloud.translation.service.key.client.email" />
-				<then>
-					<echo append="true" file="${test.ext.properties.file}">
-						google.cloud.translation.service.key.client.email=${google.cloud.translation.service.key.client.email}
-					</echo>
-				</then>
-			</if>
-
-			<if>
-				<isset property="google.cloud.translation.service.key.client.id" />
-				<then>
-					<echo append="true" file="${test.ext.properties.file}">
-						google.cloud.translation.service.key.client.id=${google.cloud.translation.service.key.client.id}
-					</echo>
-				</then>
-			</if>
-
-			<if>
-				<isset property="google.cloud.translation.service.key.auth.uri" />
-				<then>
-					<echo append="true" file="${test.ext.properties.file}">
-						google.cloud.translation.service.key.auth.uri=${google.cloud.translation.service.key.auth.uri}
-					</echo>
-				</then>
-			</if>
-
-			<if>
-				<isset property="google.cloud.translation.service.key.token.uri" />
-				<then>
-					<echo append="true" file="${test.ext.properties.file}">
-						google.cloud.translation.service.key.token.uri=${google.cloud.translation.service.key.token.uri}
-					</echo>
-				</then>
-			</if>
-
-			<if>
-				<isset property="google.cloud.translation.service.key.auth.provider.x509.cert.url" />
-				<then>
-					<echo append="true" file="${test.ext.properties.file}">
-						google.cloud.translation.service.key.auth.provider.x509.cert.url=${google.cloud.translation.service.key.auth.provider.x509.cert.url}
-					</echo>
-				</then>
-			</if>
-
-			<if>
-				<isset property="google.cloud.translation.service.key.client.x509.cert.url" />
-				<then>
-					<echo append="true" file="${test.ext.properties.file}">
-						google.cloud.translation.service.key.client.x509.cert.url=${google.cloud.translation.service.key.client.x509.cert.url}
-					</echo>
-				</then>
-			</if>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="prepare-selenium-google-properties">
 		<sequential>
 			<if>
@@ -14323,7 +14229,6 @@ enterprise.product.enterprise.search.enabled=false</echo>
 		<prepare-selenium-email-properties />
 		<prepare-selenium-facebook-properties />
 		<prepare-selenium-google-cloud-autotagging-properties />
-		<prepare-selenium-google-cloud-translation-properties />
 		<prepare-selenium-google-properties />
 		<prepare-selenium-object-storage-salesforce-properties />
 		<prepare-selenium-object-storage-sugarcrm-properties />

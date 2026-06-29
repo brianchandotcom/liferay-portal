@@ -55,7 +55,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Alberto Sousa
  */
-@FeatureFlag("LPD-85514")
+@FeatureFlag("LPD-85515")
 @RunWith(Arquillian.class)
 public class CommitCSGGenerationObjectActionExecutorTest {
 

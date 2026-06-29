@@ -5,7 +5,7 @@
 		"parameters": {
 			"containsHeaders": "true",
 			"createStrategy": "UPSERT",
-			"featureFlag": "LPD-85514",
+			"featureFlag": "LPD-85515",
 			"importStrategy": "ON_ERROR_FAIL",
 			"updateStrategy": "UPDATE"
 		},
@@ -236,6 +236,36 @@
 					"name": "generationStatus",
 					"required": true,
 					"state": true,
+					"system": true,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Aggregation",
+					"externalReferenceCode": "ITEM_COUNT",
+					"indexed": false,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Item Count"
+					},
+					"name": "itemCount",
+					"objectFieldSettings": [
+						{
+							"name": "objectRelationshipName",
+							"value": "items"
+						},
+						{
+							"name": "function",
+							"value": "SUM"
+						},
+						{
+							"name": "objectFieldName",
+							"value": "itemCount"
+						}
+					],
+					"readOnly": "true",
+					"required": false,
+					"state": false,
 					"system": true,
 					"type": "String"
 				},

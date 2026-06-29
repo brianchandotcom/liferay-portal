@@ -77,13 +77,15 @@ function ElementVariations({
 		);
 	});
 
-	const [languageId, setLanguageId] = useState(defaultLanguageId);
-
-	const [{draftElementVariation, elementVariations}, dispatch] = useReducer(
-		reducer,
-		initialElementVariations,
-		createInitialState
-	);
+	const [{draftElementVariation, elementVariations, languageId}, dispatch] =
+		useReducer(
+			reducer,
+			{
+				defaultLanguageId,
+				elementVariations: initialElementVariations,
+			},
+			createInitialState
+		);
 
 	const experienceElementVariations = elementVariations.filter(
 		(elementVariation) =>
@@ -116,7 +118,12 @@ function ElementVariations({
 									type: 'UPDATE_ELEMENT_VARIATION_DRAFT',
 								})
 							}
-							onLanguageIdChange={setLanguageId}
+							onLanguageIdChange={(languageId) =>
+								dispatch({
+									languageId,
+									type: 'SET_LANGUAGE_ID',
+								})
+							}
 							onReloadPreview={() =>
 								elementVariationsPreviewRef.current?.reload()
 							}

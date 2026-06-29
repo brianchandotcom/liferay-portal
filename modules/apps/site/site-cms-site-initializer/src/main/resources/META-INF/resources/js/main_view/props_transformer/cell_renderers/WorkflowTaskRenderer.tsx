@@ -31,7 +31,7 @@ const WorkflowTaskRenderer = ({itemData}: {itemData: WorkflowTask}) => {
 					{`${itemData.auditUser} sent you `}
 
 					<a
-						className="home-link"
+						className="font-weight-bold text-decoration-underline"
 						href={createPortletURL(itemData.myWorkflowTasksURL, {
 							mvcPath: '/edit_workflow_task.jsp',
 							workflowTaskId: itemData.id,

@@ -11,7 +11,7 @@
 ViewHomeRecentAssetsSectionDisplayContext viewHomeRecentAssetsSectionDisplayContext = (ViewHomeRecentAssetsSectionDisplayContext)request.getAttribute(ViewHomeRecentAssetsSectionDisplayContext.class.getName());
 %>
 
-<div class="cms-section p-2 p-sm-3">
+<div class="p-2 p-sm-3">
 	<div class="container-fluid-max">
 		<div class="align-items-center d-flex justify-content-between">
 			<span aria-level=2 class="font-weight-semi-bold text-4" role="heading"><liferay-ui:message key="recent-assets" /></span>

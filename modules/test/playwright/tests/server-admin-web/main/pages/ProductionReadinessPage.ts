@@ -9,7 +9,7 @@ import {GlobalMenuPage} from '../../../../pages/product-navigation-applications-
 import {waitForPageToBeLoaded} from '../../../../utils/waitForPageToBeLoaded';
 
 type FilterLabel = 'All Validations' | 'Failed' | 'Ignored' | 'Passed';
-type SummaryLabel = 'Failed' | 'Passed' | 'Total';
+type SummaryLabel = 'Failed' | 'Ignored' | 'Passed' | 'Total';
 
 const FILTER_LABELS: FilterLabel[] = [
 	'All Validations',
@@ -82,13 +82,7 @@ export class ProductionReadinessPage {
 	}
 
 	async ignoredCount(): Promise<number> {
-		const [failed, passed, total] = await Promise.all([
-			this.summaryCount('Failed'),
-			this.summaryCount('Passed'),
-			this.summaryCount('Total'),
-		]);
-
-		return total - failed - passed;
+		return this.summaryCount('Ignored');
 	}
 
 	filterButton(label: FilterLabel): Locator {

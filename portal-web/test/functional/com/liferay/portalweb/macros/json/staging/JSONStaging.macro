@@ -66,9 +66,9 @@ definition {
 				-d privateLayout=false
 		''';
 
-		var liveLayoutId = JSONCurlUtil.post(${liveLayoutsCurl}, "$.[?(@['nameCurrentValue'] != '')]['layoutId']");
+		var liveLayoutNames = JSONCurlUtil.post(${liveLayoutsCurl}, "$.[?(@['nameCurrentValue'] != '')]['nameCurrentValue']");
 
-		if (${liveLayoutId} != "") {
+		if (${liveLayoutNames} != "") {
 			var stagingLayoutsCurl = '''
 				${portalURL}/api/jsonws/layout/get-layouts \
 					-u ${userLoginInfo} \
@@ -76,10 +76,10 @@ definition {
 					-d privateLayout=false
 			''';
 
-			var stagingLayoutId = JSONCurlUtil.post(${stagingLayoutsCurl}, "$.[?(@['nameCurrentValue'] != '')]['layoutId']");
+			var stagingLayoutNames = JSONCurlUtil.post(${stagingLayoutsCurl}, "$.[?(@['nameCurrentValue'] != '')]['nameCurrentValue']");
 
-			while ((${stagingLayoutId} == "")) {
-				var stagingLayoutId = JSONCurlUtil.post(${stagingLayoutsCurl}, "$.[?(@['nameCurrentValue'] != '')]['layoutId']");
+			while (${stagingLayoutNames} != ${liveLayoutNames}) {
+				var stagingLayoutNames = JSONCurlUtil.post(${stagingLayoutsCurl}, "$.[?(@['nameCurrentValue'] != '')]['nameCurrentValue']");
 			}
 		}
 	}

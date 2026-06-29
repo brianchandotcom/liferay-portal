@@ -69,7 +69,7 @@ describe('elementVariationsReducer', () => {
 			});
 		});
 
-		it('assigns a key to each loaded variation', () => {
+		it('assigns a key and parses the hide map to each loaded variation', () => {
 			const {draftElementVariation, elementVariations} =
 				createInitialState({
 					defaultLanguageId: 'en_US',
@@ -77,7 +77,7 @@ describe('elementVariationsReducer', () => {
 						{
 							audienceEntryERC: '',
 							externalReferenceCode: 'erc-1',
-							hide: {},
+							hide: {en_US: 'true'},
 							html: {},
 							js: {},
 							name: 'Variation 1',
@@ -91,6 +91,7 @@ describe('elementVariationsReducer', () => {
 			expect(elementVariations).toHaveLength(1);
 			expect(elementVariations[0].name).toBe('Variation 1');
 			expect(elementVariations[0].key).toBeTruthy();
+			expect(elementVariations[0].hide).toEqual({en_US: true});
 		});
 	});
 

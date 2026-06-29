@@ -119,7 +119,10 @@ public class CMSObjectEntryFolderDepotEntryLocalServiceWrapper
 
 		DepotEntry depotEntry = getDepotEntry(depotEntryId);
 
-		if (depotEntry.getType() == DepotConstants.TYPE_SPACE) {
+		if (FeatureFlagManagerUtil.isEnabled(
+				depotEntry.getCompanyId(), "LPD-17564") &&
+			(depotEntry.getType() == DepotConstants.TYPE_SPACE)) {
+
 			ObjectEntryFolderUtil.deleteObjectEntryFolders(depotEntry);
 
 			_deleteCMSDefaultPermissions(depotEntry.getGroup());

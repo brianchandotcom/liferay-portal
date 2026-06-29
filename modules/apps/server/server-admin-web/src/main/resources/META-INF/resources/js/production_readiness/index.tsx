@@ -186,6 +186,7 @@ export function ProductionReadinessDashboard(
 			<div className="align-items-start d-flex justify-content-between mb-4">
 				<SummaryHeader
 					failed={failed}
+					ignored={ignored}
 					passed={passed}
 					total={failed + ignored + passed}
 				/>

@@ -84,7 +84,8 @@ export function mergePages(
 				field.visible &&
 				viewMode
 			) {
-				fieldValue = '';
+				fieldValue =
+					field.predefinedValue ?? sourceField.predefinedValue ?? '';
 			}
 
 			let newField = {

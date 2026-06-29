@@ -110,7 +110,8 @@ public class UpgradeJakartaTask extends FormatSourceTask {
 
 		if (releaseEntry == null) {
 			throw new GradleException(
-				"Valid product version or target platform version not found");
+				"Unable to find a valid product version or target platform " +
+					"version");
 		}
 
 		Project project = getProject();
@@ -131,9 +132,9 @@ public class UpgradeJakartaTask extends FormatSourceTask {
 
 		List<ReleaseEntry> releaseEntries = new ArrayList<>(
 			releaseEntryStream.filter(
-				releaseEntry1 -> Objects.equals(
+				candidateEntry -> Objects.equals(
 					releaseEntry.getProductGroupVersion(),
-					releaseEntry1.getProductGroupVersion())
+					candidateEntry.getProductGroupVersion())
 			).toList());
 
 		ReleaseEntry lastReleaseEntry = releaseEntries.get(

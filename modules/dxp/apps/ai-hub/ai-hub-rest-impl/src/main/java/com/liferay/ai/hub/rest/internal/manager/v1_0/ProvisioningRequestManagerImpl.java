@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
@@ -70,6 +71,9 @@ public class ProvisioningRequestManagerImpl
 		).build();
 
 		serviceContext.setCompanyId(company.getCompanyId());
+		serviceContext.setPathMain(Portal.PATH_MAIN);
+		serviceContext.setPortalURL(
+			_portal.getPortalURL(dtoConverterContext.getHttpServletRequest()));
 		serviceContext.setUserId(dtoConverterContext.getUserId());
 
 		AccountEntry customerAccountEntry = _addCustomerAccountEntry(
@@ -392,6 +396,9 @@ public class ProvisioningRequestManagerImpl
 
 	@Reference(target = "(object.entry.manager.storage.type=default)")
 	private ObjectEntryManager _objectEntryManager;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference(policyOption = ReferencePolicyOption.GREEDY)
 	private QuotaManager _quotaManager;

@@ -5,18 +5,26 @@
 
 package com.liferay.exportimport.web.internal.display.context;
 
+import com.liferay.exportimport.rest.dto.v1_0.ExportPreview;
+import com.liferay.exportimport.rest.resource.v1_0.ExportPreviewResource;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate.Scope;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.group.capability.GroupCapabilityUtil;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.staging.StagingGroupHelper;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -32,12 +40,14 @@ import java.nio.charset.StandardCharsets;
 public class ExportImportPreviewDisplayContext {
 
 	public ExportImportPreviewDisplayContext(
-		String backMVCRenderCommandName, Group group, long groupId,
-		HttpServletRequest httpServletRequest,
+		String backMVCRenderCommandName,
+		ExportPreviewResource.Factory exportPreviewResourceFactory, Group group,
+		long groupId, HttpServletRequest httpServletRequest,
 		LiferayPortletResponse liferayPortletResponse, long liveGroupId,
 		boolean privateLayout, StagingGroupHelper stagingGroupHelper) {
 
 		_backMVCRenderCommandName = backMVCRenderCommandName;
+		_exportPreviewResourceFactory = exportPreviewResourceFactory;
 		_group = group;
 		_groupId = groupId;
 		_httpServletRequest = httpServletRequest;
@@ -45,6 +55,18 @@ public class ExportImportPreviewDisplayContext {
 		_liveGroupId = liveGroupId;
 		_privateLayout = privateLayout;
 		_stagingGroupHelper = stagingGroupHelper;
+	}
+
+	public ExportImportPreviewDisplayContext(
+		String backMVCRenderCommandName, Group group, long groupId,
+		HttpServletRequest httpServletRequest,
+		LiferayPortletResponse liferayPortletResponse, long liveGroupId,
+		boolean privateLayout, StagingGroupHelper stagingGroupHelper) {
+
+		this(
+			backMVCRenderCommandName, null, group, groupId, httpServletRequest,
+			liferayPortletResponse, liveGroupId, privateLayout,
+			stagingGroupHelper);
 	}
 
 	public String getBackURL() {
@@ -84,6 +106,28 @@ public class ExportImportPreviewDisplayContext {
 		_exportPreviewAPIURL = _getResourceAPIURL("/export-preview");
 
 		return _exportPreviewAPIURL;
+	}
+
+	public JSONObject getExportPreviewJSONObject() {
+		if (_exportPreviewJSONObject != null) {
+			return _exportPreviewJSONObject;
+		}
+
+		ExportPreview exportPreview = _getExportPreview();
+
+		if (exportPreview == null) {
+			return null;
+		}
+
+		try {
+			_exportPreviewJSONObject = JSONFactoryUtil.createJSONObject(
+				exportPreview.toString());
+		}
+		catch (Exception exception) {
+			_log.error("Unable to serialize export preview", exception);
+		}
+
+		return _exportPreviewJSONObject;
 	}
 
 	public String getExportProcessAPIURL() {
@@ -170,6 +214,64 @@ public class ExportImportPreviewDisplayContext {
 		return URLEncoder.encode(value, StandardCharsets.UTF_8);
 	}
 
+	private ExportPreview _getExportPreview() {
+		if (_exportPreviewResourceFactory == null) {
+			return null;
+		}
+
+		try {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)_httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			ExportPreviewResource exportPreviewResource =
+				_exportPreviewResourceFactory.create(
+				).checkPermissions(
+					true
+				).httpServletRequest(
+					_httpServletRequest
+				).preferredLocale(
+					themeDisplay.getLocale()
+				).user(
+					themeDisplay.getUser()
+				).build();
+
+			if (_stagingGroupHelper.isCompanyGroup(_group)) {
+				return exportPreviewResource.getExportPreview(null, null);
+			}
+
+			String externalReferenceCode = _group.getExternalReferenceCode();
+
+			String portletId = _getPortletId();
+
+			if (!Validator.isBlank(portletId)) {
+				long plid = ParamUtil.getLong(_httpServletRequest, "plid");
+
+				if (_group.isDepot()) {
+					return exportPreviewResource.
+						getAssetLibraryPortletExportPreview(
+							externalReferenceCode, portletId, null, plid, null);
+				}
+
+				return exportPreviewResource.getSitePortletExportPreview(
+					externalReferenceCode, portletId, null, plid, null);
+			}
+
+			if (_group.isDepot()) {
+				return exportPreviewResource.getAssetLibraryExportPreview(
+					externalReferenceCode, null, null);
+			}
+
+			return exportPreviewResource.getSiteExportPreview(
+				externalReferenceCode, null, null);
+		}
+		catch (Exception exception) {
+			_log.error("Unable to get export preview", exception);
+		}
+
+		return null;
+	}
+
 	private String _getPortletId() {
 		return ParamUtil.getString(_httpServletRequest, "portletId");
 	}
@@ -217,9 +319,14 @@ public class ExportImportPreviewDisplayContext {
 
 	private static final String _BASE_PATH = "/o/export-import/v1.0";
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		ExportImportPreviewDisplayContext.class);
+
 	private final String _backMVCRenderCommandName;
 	private String _backURL;
 	private String _exportPreviewAPIURL;
+	private JSONObject _exportPreviewJSONObject;
+	private final ExportPreviewResource.Factory _exportPreviewResourceFactory;
 	private String _exportProcessAPIURL;
 	private final Group _group;
 	private final long _groupId;

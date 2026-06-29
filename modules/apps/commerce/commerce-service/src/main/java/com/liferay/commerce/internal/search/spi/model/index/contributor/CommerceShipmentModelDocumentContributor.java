@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 
 import java.util.Date;
@@ -69,12 +70,12 @@ public class CommerceShipmentModelDocumentContributor
 			Set<Long> commerceOrderIds = _getCommerceOrderIds(
 				commerceShipment.getCommerceShipmentId());
 
-			Set<String> commerceOrderIdsKeywords = new HashSet<>();
+			document.addKeyword(
+				"commerceOrderIds", ArrayUtil.toStringArray(commerceOrderIds));
+
 			Set<String> commerceOrderUserIds = new HashSet<>();
 
 			for (long commerceOrderId : commerceOrderIds) {
-				commerceOrderIdsKeywords.add(String.valueOf(commerceOrderId));
-
 				CommerceOrder commerceOrder =
 					_commerceOrderLocalService.fetchCommerceOrder(
 						commerceOrderId);
@@ -85,9 +86,6 @@ public class CommerceShipmentModelDocumentContributor
 				}
 			}
 
-			document.addKeyword(
-				"commerceOrderIds",
-				commerceOrderIdsKeywords.toArray(new String[0]));
 			document.addKeyword(
 				"commerceOrderUserIds",
 				commerceOrderUserIds.toArray(new String[0]));

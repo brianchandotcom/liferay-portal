@@ -877,9 +877,7 @@ public class LVEntryPersistenceImpl
 
 		if (list == null) {
 			try {
-				if ((start == QueryUtil.ALL_POS) &&
-					(end == QueryUtil.ALL_POS) &&
-					(databaseInMaxParameters > 0) &&
+				if ((databaseInMaxParameters > 0) &&
 					(groupIds.length > databaseInMaxParameters)) {
 
 					list = new ArrayList<LVEntry>();
@@ -890,19 +888,23 @@ public class LVEntryPersistenceImpl
 					for (long[] groupIdsPage : groupIdsPages) {
 						list.addAll(
 							_findByGroupId(
-								groupIdsPage, start, end, orderByComparator));
+								groupIdsPage, QueryUtil.ALL_POS,
+								QueryUtil.ALL_POS, orderByComparator));
 					}
 
 					Collections.sort(list, orderByComparator);
 
-					list = Collections.unmodifiableList(list);
+					cacheResult(list);
+
+					list = Collections.unmodifiableList(
+						ListUtil.subList(list, start, end));
 				}
 				else {
 					list = _findByGroupId(
 						groupIds, start, end, orderByComparator);
-				}
 
-				cacheResult(list);
+					cacheResult(list);
+				}
 
 				if (useFinderCache) {
 					finderCache.putResult(
@@ -1449,9 +1451,7 @@ public class LVEntryPersistenceImpl
 
 		if (list == null) {
 			try {
-				if ((start == QueryUtil.ALL_POS) &&
-					(end == QueryUtil.ALL_POS) &&
-					(databaseInMaxParameters > 0) &&
+				if ((databaseInMaxParameters > 0) &&
 					(groupIds.length > databaseInMaxParameters)) {
 
 					list = new ArrayList<LVEntry>();
@@ -1462,20 +1462,23 @@ public class LVEntryPersistenceImpl
 					for (long[] groupIdsPage : groupIdsPages) {
 						list.addAll(
 							_findByGroupId_Head(
-								groupIdsPage, head, start, end,
-								orderByComparator));
+								groupIdsPage, head, QueryUtil.ALL_POS,
+								QueryUtil.ALL_POS, orderByComparator));
 					}
 
 					Collections.sort(list, orderByComparator);
 
-					list = Collections.unmodifiableList(list);
+					cacheResult(list);
+
+					list = Collections.unmodifiableList(
+						ListUtil.subList(list, start, end));
 				}
 				else {
 					list = _findByGroupId_Head(
 						groupIds, head, start, end, orderByComparator);
-				}
 
-				cacheResult(list);
+					cacheResult(list);
+				}
 
 				if (useFinderCache) {
 					finderCache.putResult(
@@ -2857,4 +2860,4 @@ public class LVEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:624635673
+// LIFERAY-SERVICE-BUILDER-HASH:297625357

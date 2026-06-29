@@ -398,9 +398,10 @@ public class PropertyValidator {
 		new HashSet<>(
 			Arrays.asList(
 				"cloud.fleet.primary.label", "dist.node.axis.count",
-				"failure.report.compare.length.max",
+				"env.S3_BUCKET_NAME", "failure.report.compare.length.max",
 				"failure.report.similarity.threshold",
 				"jenkins.osb.jenkins.web.master.url",
+				"jenkins.queue.rebalance.threshold",
 				"master.auto.scaling.group.name",
 				"one.password.access.token.key", "one.password.connect.url",
 				"scancode.s3.bucket", "test.history.batch.maximum.duration",

@@ -97,11 +97,6 @@ public class EditAudiencesEntryDisplayContext {
 						).put(
 							"label", audiencesCriteria.getLabel()
 						).put(
-							"operators",
-							TransformUtil.transform(
-								audiencesCriteria.getOperators(),
-								AudiencesCriteria.Operator::getValue)
-						).put(
 							"options",
 							TransformUtil.transform(
 								audiencesCriteria.getOptions(),

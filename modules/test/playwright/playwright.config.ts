@@ -146,7 +146,11 @@ import {config as objectValidationWebConfig} from './tests/object-web/validation
 import {config as objectViewWebConfig} from './tests/object-web/view/config';
 import {config as objectWorkflowWebConfig} from './tests/object-web/workflow/config';
 import {config as openIdLinkConfig} from './tests/openid-link/main/config';
+import {config as osbFaroWebAssetsConfig} from './tests/osb-faro-web/assets/config';
+import {config as osbFaroWebEventsConfig} from './tests/osb-faro-web/events/config';
 import {config as osbFaroWebConfig} from './tests/osb-faro-web/main/config';
+import {config as osbFaroWebSegmentsConfig} from './tests/osb-faro-web/segments/config';
+import {config as osbFaroWebSettingsConfig} from './tests/osb-faro-web/settings/config';
 import {config as passwordPoliciesAdminWebFirstLoginConfig} from './tests/password-policies-admin-web/first-login/config';
 import {config as passwordPoliciesAdminWebConfig} from './tests/password-policies-admin-web/main/config';
 import {config as passwordPoliciesAdminWebSetupAdminConfig} from './tests/password-policies-admin-web/setup-admin/config';
@@ -381,7 +385,11 @@ export default defineConfig({
 		objectViewWebConfig,
 		objectWorkflowWebConfig,
 		openIdLinkConfig,
+		osbFaroWebAssetsConfig,
 		osbFaroWebConfig,
+		osbFaroWebEventsConfig,
+		osbFaroWebSegmentsConfig,
+		osbFaroWebSettingsConfig,
 		passwordPoliciesAdminWebConfig,
 		passwordPoliciesAdminWebFirstLoginConfig,
 		passwordPoliciesAdminWebSetupAdminConfig,

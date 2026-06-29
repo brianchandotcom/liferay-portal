@@ -5,6 +5,7 @@
 
 import {
 	ElementVariation,
+	State,
 	createElementVariation,
 	createInitialState,
 	reducer,
@@ -27,6 +28,16 @@ function buildElementVariation(
 	};
 }
 
+function buildState(properties: Partial<State> = {}): State {
+	return {
+		defaultLanguageId: 'en_US',
+		draftElementVariation: null,
+		elementVariations: [],
+		languageId: 'en_US',
+		...properties,
+	};
+}
+
 describe('elementVariationsReducer', () => {
 	describe('createElementVariation', () => {
 		it('creates an empty variation for the given experience with a unique key', () => {
@@ -44,27 +55,37 @@ describe('elementVariationsReducer', () => {
 	});
 
 	describe('createInitialState', () => {
-		it('starts with no draft and no variations when none are loaded', () => {
-			expect(createInitialState([])).toEqual({
+		it('starts on the default language with no draft and no variations when none are loaded', () => {
+			expect(
+				createInitialState({
+					defaultLanguageId: 'en_US',
+					elementVariations: [],
+				})
+			).toEqual({
+				defaultLanguageId: 'en_US',
 				draftElementVariation: null,
 				elementVariations: [],
+				languageId: 'en_US',
 			});
 		});
 
 		it('assigns a key to each loaded variation', () => {
 			const {draftElementVariation, elementVariations} =
-				createInitialState([
-					{
-						audienceEntryERC: '',
-						externalReferenceCode: 'erc-1',
-						hide: {},
-						html: {},
-						js: {},
-						name: 'Variation 1',
-						segmentsExperienceERC: 'experience-1',
-						targetElement: '#main',
-					},
-				]);
+				createInitialState({
+					defaultLanguageId: 'en_US',
+					elementVariations: [
+						{
+							audienceEntryERC: '',
+							externalReferenceCode: 'erc-1',
+							hide: {},
+							html: {},
+							js: {},
+							name: 'Variation 1',
+							segmentsExperienceERC: 'experience-1',
+							targetElement: '#main',
+						},
+					],
+				});
 
 			expect(draftElementVariation).toBeNull();
 			expect(elementVariations).toHaveLength(1);
@@ -77,20 +98,17 @@ describe('elementVariationsReducer', () => {
 		it('sets the draft on CREATE_ELEMENT_VARIATION_DRAFT', () => {
 			const draftElementVariation = buildElementVariation();
 
-			const state = reducer(
-				{draftElementVariation: null, elementVariations: []},
-				{draftElementVariation, type: 'CREATE_ELEMENT_VARIATION_DRAFT'}
-			);
+			const state = reducer(buildState(), {
+				draftElementVariation,
+				type: 'CREATE_ELEMENT_VARIATION_DRAFT',
+			});
 
 			expect(state.draftElementVariation).toBe(draftElementVariation);
 		});
 
 		it('merges properties into the draft on UPDATE_ELEMENT_VARIATION_DRAFT', () => {
 			const state = reducer(
-				{
-					draftElementVariation: buildElementVariation(),
-					elementVariations: [],
-				},
+				buildState({draftElementVariation: buildElementVariation()}),
 				{
 					properties: {hide: {en_US: true}, name: 'Renamed'},
 					type: 'UPDATE_ELEMENT_VARIATION_DRAFT',
@@ -101,13 +119,21 @@ describe('elementVariationsReducer', () => {
 			expect(state.draftElementVariation?.hide).toEqual({en_US: true});
 		});
 
+		it('sets the language on SET_LANGUAGE_ID', () => {
+			const state = reducer(buildState(), {
+				languageId: 'es_ES',
+				type: 'SET_LANGUAGE_ID',
+			});
+
+			expect(state.languageId).toBe('es_ES');
+		});
+
 		it('appends a new draft and clears it on SAVE_ELEMENT_VARIATION_DRAFT', () => {
 			const draftElementVariation = buildElementVariation({key: 'new'});
 
-			const state = reducer(
-				{draftElementVariation, elementVariations: []},
-				{type: 'SAVE_ELEMENT_VARIATION_DRAFT'}
-			);
+			const state = reducer(buildState({draftElementVariation}), {
+				type: 'SAVE_ELEMENT_VARIATION_DRAFT',
+			});
 
 			expect(state.draftElementVariation).toBeNull();
 			expect(state.elementVariations).toEqual([draftElementVariation]);
@@ -120,13 +146,13 @@ describe('elementVariationsReducer', () => {
 			});
 
 			const state = reducer(
-				{
+				buildState({
 					draftElementVariation: {
 						...existingElementVariation,
 						name: 'New',
 					},
 					elementVariations: [existingElementVariation],
-				},
+				}),
 				{type: 'SAVE_ELEMENT_VARIATION_DRAFT'}
 			);
 
@@ -134,14 +160,23 @@ describe('elementVariationsReducer', () => {
 			expect(state.elementVariations[0].name).toBe('New');
 		});
 
+		it('resets the language to the default on SAVE_ELEMENT_VARIATION_DRAFT', () => {
+			const state = reducer(
+				buildState({
+					draftElementVariation: buildElementVariation({key: 'new'}),
+					languageId: 'es_ES',
+				}),
+				{type: 'SAVE_ELEMENT_VARIATION_DRAFT'}
+			);
+
+			expect(state.languageId).toBe('en_US');
+		});
+
 		it('loads a variation into the draft on EDIT_ELEMENT_VARIATION', () => {
 			const elementVariation = buildElementVariation({key: 'key-1'});
 
 			const state = reducer(
-				{
-					draftElementVariation: null,
-					elementVariations: [elementVariation],
-				},
+				buildState({elementVariations: [elementVariation]}),
 				{key: 'key-1', type: 'EDIT_ELEMENT_VARIATION'}
 			);
 
@@ -152,26 +187,24 @@ describe('elementVariationsReducer', () => {
 			const elementVariation = buildElementVariation({key: 'key-1'});
 
 			const state = reducer(
-				{
-					draftElementVariation: null,
-					elementVariations: [elementVariation],
-				},
+				buildState({elementVariations: [elementVariation]}),
 				{key: 'key-1', type: 'DELETE_ELEMENT_VARIATION'}
 			);
 
 			expect(state.elementVariations).toEqual([]);
 		});
 
-		it('clears the draft on CANCEL_ELEMENT_VARIATION_DRAFT', () => {
+		it('clears the draft and resets the language on CANCEL_ELEMENT_VARIATION_DRAFT', () => {
 			const state = reducer(
-				{
+				buildState({
 					draftElementVariation: buildElementVariation(),
-					elementVariations: [],
-				},
+					languageId: 'es_ES',
+				}),
 				{type: 'CANCEL_ELEMENT_VARIATION_DRAFT'}
 			);
 
 			expect(state.draftElementVariation).toBeNull();
+			expect(state.languageId).toBe('en_US');
 		});
 	});
 });

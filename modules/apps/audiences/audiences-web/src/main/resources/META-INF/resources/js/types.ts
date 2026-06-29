@@ -5,10 +5,11 @@
 
 export interface AudiencesCriteria {
 	icon: string;
+	inputType: 'boolean' | 'date' | 'select' | 'text';
 	key: string;
 	label: string;
 	options: Array<{label: string; value: string}>;
-	type: string;
+	type: 'boolean' | 'number' | 'set' | 'string';
 }
 
 export interface AudiencesCriteriaType {

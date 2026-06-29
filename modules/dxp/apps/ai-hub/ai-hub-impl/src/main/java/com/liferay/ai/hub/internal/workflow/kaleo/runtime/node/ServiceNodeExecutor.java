@@ -65,7 +65,9 @@ public class ServiceNodeExecutor extends BaseNodeExecutor {
 				ServiceNodeDelegate serviceNodeDelegate =
 					bundleContext.getService(serviceReference);
 
-				emitter.emit(serviceNodeDelegate.getKey());
+				if (serviceNodeDelegate != null) {
+					emitter.emit(serviceNodeDelegate.getKey());
+				}
 			});
 	}
 

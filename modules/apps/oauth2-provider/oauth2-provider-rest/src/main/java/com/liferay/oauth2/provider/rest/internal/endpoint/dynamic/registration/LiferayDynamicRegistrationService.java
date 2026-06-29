@@ -507,16 +507,6 @@ public class LiferayDynamicRegistrationService
 	private JSONObject _getBaseAdditionalInfoJSONObject() {
 		HttpServletRequest httpServletRequest = _getHttpServletRequest();
 
-		String mode =
-			OAuth2ProviderRESTEndpointConstants.
-				DYNAMIC_REGISTRATION_MODE_AUTHENTICATED;
-
-		if (_isOpenRegistrationRequest(httpServletRequest)) {
-			mode =
-				OAuth2ProviderRESTEndpointConstants.
-					DYNAMIC_REGISTRATION_MODE_OPEN;
-		}
-
 		String clientHost = StringPool.BLANK;
 		String userAgent = StringPool.BLANK;
 
@@ -528,6 +518,16 @@ public class LiferayDynamicRegistrationService
 
 			userAgent = GetterUtil.getString(
 				httpServletRequest.getHeader("User-Agent"));
+		}
+
+		String mode =
+			OAuth2ProviderRESTEndpointConstants.
+				DYNAMIC_REGISTRATION_MODE_AUTHENTICATED;
+
+		if (_isOpenRegistrationRequest(httpServletRequest)) {
+			mode =
+				OAuth2ProviderRESTEndpointConstants.
+					DYNAMIC_REGISTRATION_MODE_OPEN;
 		}
 
 		return JSONUtil.put(

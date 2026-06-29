@@ -137,7 +137,7 @@ public class AudiencesEntryLocalServiceImpl
 	private static final JSONValidator _criteriaJSONValidator =
 		new JSONValidator(
 			AudiencesEntryLocalServiceImpl.class.getResource(
-				"dependencies/criteria-json-schema.json"));
+				"dependencies/audiences-criteria-json-schema.json"));
 
 	@Reference
 	private CustomSQL _customSQL;

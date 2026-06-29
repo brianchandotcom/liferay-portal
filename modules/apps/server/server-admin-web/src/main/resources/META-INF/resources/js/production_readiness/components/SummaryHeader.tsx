@@ -7,11 +7,12 @@ import React from 'react';
 
 interface Props {
 	failed: number;
+	ignored: number;
 	passed: number;
 	total: number;
 }
 
-const SummaryHeader: React.FC<Props> = ({failed, passed, total}) => {
+const SummaryHeader: React.FC<Props> = ({failed, ignored, passed, total}) => {
 	return (
 		<div data-testid="production-readiness-summary">
 			<div className="small text-secondary text-uppercase">
@@ -48,8 +49,19 @@ const SummaryHeader: React.FC<Props> = ({failed, passed, total}) => {
 					{failed}
 				</span>
 
-				<span className="text-secondary">
+				<span className="mr-3 text-secondary">
 					{Liferay.Language.get('failed')}
+				</span>
+
+				<span
+					className="h2 mb-0 mr-1 text-secondary"
+					data-testid="production-readiness-count-ignored"
+				>
+					{ignored}
+				</span>
+
+				<span className="text-secondary">
+					{Liferay.Language.get('ignored')}
 				</span>
 			</div>
 		</div>

@@ -107,9 +107,11 @@ test(
 
 			await pageEditorPage.selectEditable(headingId, 'element-text');
 
-			await page
-				.getByRole('combobox', {exact: true, name: 'Field'})
-				.selectOption({label: 'Title'});
+			await pageEditorPage.changeConfiguration({
+				fieldLabel: 'Field',
+				tab: 'Mapping',
+				value: 'Title',
+			});
 
 			await pageEditorPage.waitForChangesSaved();
 
@@ -119,9 +121,11 @@ test(
 
 			await pageEditorPage.selectEditable(paragraphId, 'element-text');
 
-			await page
-				.getByRole('combobox', {exact: true, name: 'Field'})
-				.selectOption({label: 'Body'});
+			await pageEditorPage.changeConfiguration({
+				fieldLabel: 'Field',
+				tab: 'Mapping',
+				value: 'Body',
+			});
 
 			await pageEditorPage.waitForChangesSaved();
 
@@ -196,12 +200,12 @@ test(
 
 					await expect(
 						guestPage.getByText(titleValue, {exact: true})
-					).toBeVisible({timeout: 10000});
+					).toBeVisible({timeout: 2000});
 
 					await expect(
 						guestPage.getByText(bodyValue, {exact: true})
-					).toBeVisible({timeout: 10000});
-				}).toPass({timeout: 30000});
+					).toBeVisible({timeout: 2000});
+				}).toPass({timeout: 5000});
 			}
 			finally {
 				await guestContext.close();

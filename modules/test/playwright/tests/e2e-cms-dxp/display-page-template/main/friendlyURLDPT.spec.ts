@@ -63,9 +63,11 @@ test(
 
 			await pageEditorPage.selectEditable(headingId, 'element-text');
 
-			await page
-				.getByRole('combobox', {exact: true, name: 'Field'})
-				.selectOption('Title');
+			await pageEditorPage.changeConfiguration({
+				fieldLabel: 'Field',
+				tab: 'Mapping',
+				value: 'Title',
+			});
 
 			await pageEditorPage.waitForChangesSaved();
 
@@ -122,7 +124,7 @@ test(
 			);
 		}
 
-		const displayUrl = `/cmsbasicwebcontent/asset-library-${space.id}/${friendlyUrlPath}`;
+		const displayUrl = `/web${site.friendlyUrlPath}/cmsbasicwebcontent/asset-library-${space.id}/${friendlyUrlPath}`;
 
 		await test.step('GUEST reaches the entry at its DPT friendly URL', async () => {
 			const guestContext = await browser.newContext();
@@ -135,8 +137,8 @@ test(
 
 					await expect(
 						guestPage.getByText(contentTitle, {exact: true})
-					).toBeVisible({timeout: 10000});
-				}).toPass({timeout: 30000});
+					).toBeVisible({timeout: 2000});
+				}).toPass({timeout: 5000});
 			}
 			finally {
 				await guestContext.close();
@@ -175,8 +177,8 @@ test(
 
 					await expect(
 						userPage.getByText(contentTitle, {exact: true})
-					).toBeVisible({timeout: 10000});
-				}).toPass({timeout: 30000});
+					).toBeVisible({timeout: 2000});
+				}).toPass({timeout: 5000});
 			}
 			finally {
 				await userContext.close();

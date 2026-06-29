@@ -72,9 +72,11 @@ test(
 
 			await pageEditorPage.selectEditable(headingId, 'element-text');
 
-			await page
-				.getByRole('combobox', {exact: true, name: 'Field'})
-				.selectOption({label: 'Title'});
+			await pageEditorPage.changeConfiguration({
+				fieldLabel: 'Field',
+				tab: 'Mapping',
+				value: 'Title',
+			});
 
 			await pageEditorPage.waitForChangesSaved();
 
@@ -84,11 +86,17 @@ test(
 
 			await pageEditorPage.selectEditable(imageId, 'image-square');
 
-			await page.getByLabel('Source Selection').selectOption('Mapping');
+			await pageEditorPage.changeConfiguration({
+				fieldLabel: 'Source Selection',
+				tab: 'Image Source',
+				value: 'Mapping',
+			});
 
-			await page
-				.getByRole('combobox', {exact: true, name: 'Field'})
-				.selectOption({label: 'Preview URL'});
+			await pageEditorPage.changeConfiguration({
+				fieldLabel: 'Field',
+				tab: 'Image Source',
+				value: 'Preview URL',
+			});
 
 			await pageEditorPage.waitForChangesSaved();
 
@@ -161,8 +169,8 @@ test(
 
 					await expect(
 						guestPage.getByText(fileTitle, {exact: true})
-					).toBeVisible({timeout: 10000});
-				}).toPass({timeout: 30000});
+					).toBeVisible({timeout: 2000});
+				}).toPass({timeout: 5000});
 			}
 			finally {
 				await guestContext.close();

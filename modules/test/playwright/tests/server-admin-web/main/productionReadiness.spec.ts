@@ -20,7 +20,12 @@ test(
 		});
 
 		await test.step('Check the inline summary counts', async () => {
-			for (const label of ['Failed', 'Passed', 'Total'] as const) {
+			for (const label of [
+				'Failed',
+				'Ignored',
+				'Passed',
+				'Total',
+			] as const) {
 				expect(
 					await productionReadinessPage.summaryCount(label)
 				).toBeGreaterThanOrEqual(0);

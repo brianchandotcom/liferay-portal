@@ -1280,10 +1280,10 @@ public class SitemapManagerTest {
 
 			List<String> urls = new ArrayList<>();
 
-			for (Map.Entry<Long, String> entry :
-					_sitemapManager.getAssetTypeKeys(
-					).entrySet()) {
+			Map<Long, String> assetTypeKeys =
+				_sitemapManager.getAssetTypeKeys();
 
+			for (Map.Entry<Long, String> entry : assetTypeKeys.entrySet()) {
 				if (entry.getKey() == _objectEntryClassNameId) {
 					continue;
 				}
@@ -1705,13 +1705,12 @@ public class SitemapManagerTest {
 	}
 
 	private String _buildAssetTypeSitemapURL(long assetTypeClassNameId) {
+		Map<Long, String> assetTypeKeys = _sitemapManager.getAssetTypeKeys();
+
 		return StringBundler.concat(
 			_themeDisplay.getPortalURL(), _portal.getPathContext(), "/sitemap-",
-			_sitemapManager.getAssetTypeKeys(
-			).get(
-				assetTypeClassNameId
-			),
-			".xml?groupId=", _group.getGroupId(), "&privateLayout=false");
+			assetTypeKeys.get(assetTypeClassNameId), ".xml?groupId=",
+			_group.getGroupId(), "&privateLayout=false");
 	}
 
 	private Set<Locale> _getAvailableLocales(Layout layout)

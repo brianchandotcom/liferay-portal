@@ -9,6 +9,7 @@ import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -79,7 +80,7 @@ public class ArtifactURLUtilTest {
 		throws Exception {
 
 		String query = _transformClientExtensionConfigToQuery(
-			"{this is not valid JSON", "malformedconfig.zip");
+			RandomTestUtil.randomString(), "malformedconfig.zip");
 
 		Assert.assertTrue(
 			query.contains(Constants.BUNDLE_SYMBOLICNAME + "=malformedconfig"));
@@ -106,7 +107,8 @@ public class ArtifactURLUtilTest {
 	public void testClientExtensionURLWithStringConfigValueFallsBack()
 		throws Exception {
 
-		JSONObject jsonObject = JSONUtil.put("sample", "not-an-object");
+		JSONObject jsonObject = JSONUtil.put(
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
 		String query = _transformClientExtensionConfigToQuery(
 			jsonObject.toString(), "nonobjectconfig.zip");
@@ -140,7 +142,7 @@ public class ArtifactURLUtilTest {
 		throws Exception {
 
 		JSONObject jsonObject = JSONUtil.put(
-			"sample",
+			RandomTestUtil.randomString(),
 			JSONUtil.put("webContextPath", "/liferay-sample-global-js"));
 
 		String query = _transformClientExtensionConfigToQuery(
@@ -159,7 +161,8 @@ public class ArtifactURLUtilTest {
 		throws Exception {
 
 		JSONObject jsonObject = JSONUtil.put(
-			"sample", JSONUtil.put("webContextPath", "no-slash"));
+			RandomTestUtil.randomString(),
+			JSONUtil.put("webContextPath", "no-slash"));
 
 		String query = _transformClientExtensionConfigToQuery(
 			jsonObject.toString(), "noleadingslash.zip");

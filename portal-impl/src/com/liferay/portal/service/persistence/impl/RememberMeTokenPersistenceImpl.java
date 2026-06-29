@@ -557,13 +557,10 @@ public class RememberMeTokenPersistenceImpl
 	private static final String _SQL_COUNT_REMEMBERMETOKEN_WHERE =
 		"SELECT COUNT(rememberMeToken) FROM RememberMeToken rememberMeToken WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No RememberMeToken exists with the key {";
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return FinderCacheUtil.getFinderCache();
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1172023311
+// LIFERAY-SERVICE-BUILDER-HASH:626200540

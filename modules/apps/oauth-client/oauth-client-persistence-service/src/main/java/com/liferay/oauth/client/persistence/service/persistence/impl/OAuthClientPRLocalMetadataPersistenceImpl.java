@@ -21,8 +21,6 @@ import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
@@ -1493,12 +1491,6 @@ public class OAuthClientPRLocalMetadataPersistenceImpl
 	private static final String _SQL_COUNT_OAUTHCLIENTPRLOCALMETADATA_WHERE =
 		"SELECT COUNT(oAuthClientPRLocalMetadata) FROM OAuthClientPRLocalMetadata oAuthClientPRLocalMetadata WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No OAuthClientPRLocalMetadata exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		OAuthClientPRLocalMetadataPersistenceImpl.class);
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"uuid"});
 
@@ -1508,4 +1500,4 @@ public class OAuthClientPRLocalMetadataPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:167271545
+// LIFERAY-SERVICE-BUILDER-HASH:-1156981859

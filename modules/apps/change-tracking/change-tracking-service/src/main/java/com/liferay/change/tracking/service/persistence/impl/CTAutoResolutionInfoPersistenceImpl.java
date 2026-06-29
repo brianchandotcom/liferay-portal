@@ -13,7 +13,6 @@ import com.liferay.change.tracking.model.impl.CTAutoResolutionInfoModelImpl;
 import com.liferay.change.tracking.service.persistence.CTAutoResolutionInfoPersistence;
 import com.liferay.change.tracking.service.persistence.CTAutoResolutionInfoUtil;
 import com.liferay.change.tracking.service.persistence.impl.constants.CTPersistenceConstants;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
@@ -214,30 +213,13 @@ public class CTAutoResolutionInfoPersistenceImpl
 			OrderByComparator<CTAutoResolutionInfo> orderByComparator)
 		throws NoSuchAutoResolutionInfoException {
 
-		CTAutoResolutionInfo ctAutoResolutionInfo = fetchByC_MCNI_SMCPK_First(
-			ctCollectionId, modelClassNameId, sourceModelClassPK,
+		return _collectionPersistenceFinderByC_MCNI_SMCPK.findFirst(
+			finderCache,
+			new Object[] {
+				ctCollectionId, modelClassNameId,
+				new long[] {sourceModelClassPK}
+			},
 			orderByComparator);
-
-		if (ctAutoResolutionInfo != null) {
-			return ctAutoResolutionInfo;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("ctCollectionId=");
-		sb.append(ctCollectionId);
-
-		sb.append(", modelClassNameId=");
-		sb.append(modelClassNameId);
-
-		sb.append(", sourceModelClassPK=");
-		sb.append(sourceModelClassPK);
-
-		sb.append("}");
-
-		throw new NoSuchAutoResolutionInfoException(sb.toString());
 	}
 
 	/**
@@ -694,13 +676,10 @@ public class CTAutoResolutionInfoPersistenceImpl
 	private static final String _SQL_COUNT_CTAUTORESOLUTIONINFO_WHERE =
 		"SELECT COUNT(ctAutoResolutionInfo) FROM CTAutoResolutionInfo ctAutoResolutionInfo WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No CTAutoResolutionInfo exists with the key {";
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-347816708
+// LIFERAY-SERVICE-BUILDER-HASH:1073858741

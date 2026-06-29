@@ -14,7 +14,6 @@ import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateModelImpl;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMTemplatePersistence;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMTemplateUtil;
 import com.liferay.dynamic.data.mapping.service.persistence.impl.constants.DDMPersistenceConstants;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -23,8 +22,6 @@ import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
@@ -1023,26 +1020,9 @@ public class DDMTemplatePersistenceImpl
 			OrderByComparator<DDMTemplate> orderByComparator)
 		throws NoSuchTemplateException {
 
-		DDMTemplate ddmTemplate = fetchByG_CPK_First(
-			groupId, classPK, orderByComparator);
-
-		if (ddmTemplate != null) {
-			return ddmTemplate;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchTemplateException(sb.toString());
+		return _collectionPersistenceFinderByG_CPK.findFirst(
+			finderCache, new Object[] {new long[] {groupId}, classPK},
+			orderByComparator);
 	}
 
 	/**
@@ -1255,29 +1235,10 @@ public class DDMTemplatePersistenceImpl
 			OrderByComparator<DDMTemplate> orderByComparator)
 		throws NoSuchTemplateException {
 
-		DDMTemplate ddmTemplate = fetchByG_C_C_First(
-			groupId, classNameId, classPK, orderByComparator);
-
-		if (ddmTemplate != null) {
-			return ddmTemplate;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchTemplateException(sb.toString());
+		return _collectionPersistenceFinderByG_C_C.findFirst(
+			finderCache,
+			new Object[] {new long[] {groupId}, classNameId, classPK},
+			orderByComparator);
 	}
 
 	/**
@@ -2943,12 +2904,6 @@ public class DDMTemplatePersistenceImpl
 	private static final String _SQL_COUNT_DDMTEMPLATE_WHERE =
 		"SELECT COUNT(ddmTemplate) FROM DDMTemplate ddmTemplate WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No DDMTemplate exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DDMTemplatePersistenceImpl.class);
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"uuid", "type", "mode"});
 
@@ -2958,4 +2913,4 @@ public class DDMTemplatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1736235913
+// LIFERAY-SERVICE-BUILDER-HASH:1243922987

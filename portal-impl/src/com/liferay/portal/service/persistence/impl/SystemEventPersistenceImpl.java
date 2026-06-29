@@ -893,9 +893,6 @@ public class SystemEventPersistenceImpl
 	private static final String _SQL_COUNT_SYSTEMEVENT_WHERE =
 		"SELECT COUNT(systemEvent) FROM SystemEvent systemEvent WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No SystemEvent exists with the key {";
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"type"});
 
@@ -905,4 +902,4 @@ public class SystemEventPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:285324706
+// LIFERAY-SERVICE-BUILDER-HASH:1299591670

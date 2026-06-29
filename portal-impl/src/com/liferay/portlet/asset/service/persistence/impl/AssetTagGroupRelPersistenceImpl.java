@@ -17,8 +17,6 @@ import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelperUtil;
@@ -983,12 +981,6 @@ public class AssetTagGroupRelPersistenceImpl
 	private static final String _SQL_COUNT_ASSETTAGGROUPREL_WHERE =
 		"SELECT COUNT(assetTagGroupRel) FROM AssetTagGroupRel assetTagGroupRel WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No AssetTagGroupRel exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		AssetTagGroupRelPersistenceImpl.class);
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"uuid"});
 
@@ -998,4 +990,4 @@ public class AssetTagGroupRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-601916391
+// LIFERAY-SERVICE-BUILDER-HASH:306853691

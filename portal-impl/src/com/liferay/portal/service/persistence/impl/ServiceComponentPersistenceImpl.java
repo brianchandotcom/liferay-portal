@@ -12,8 +12,6 @@ import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchServiceComponentException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ServiceComponent;
 import com.liferay.portal.kernel.model.ServiceComponentTable;
 import com.liferay.portal.kernel.service.persistence.ServiceComponentPersistence;
@@ -478,12 +476,6 @@ public class ServiceComponentPersistenceImpl
 	private static final String _SQL_COUNT_SERVICECOMPONENT_WHERE =
 		"SELECT COUNT(serviceComponent) FROM ServiceComponent serviceComponent WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No ServiceComponent exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ServiceComponentPersistenceImpl.class);
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"data"});
 
@@ -493,4 +485,4 @@ public class ServiceComponentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-46825628
+// LIFERAY-SERVICE-BUILDER-HASH:-1564090222

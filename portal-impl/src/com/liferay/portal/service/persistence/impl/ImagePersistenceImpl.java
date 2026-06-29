@@ -511,9 +511,6 @@ public class ImagePersistenceImpl
 	private static final String _SQL_COUNT_IMAGE_WHERE =
 		"SELECT COUNT(image) FROM Image image WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No Image exists with the key {";
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"type", "size"});
 
@@ -523,4 +520,4 @@ public class ImagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-254421054
+// LIFERAY-SERVICE-BUILDER-HASH:363803161

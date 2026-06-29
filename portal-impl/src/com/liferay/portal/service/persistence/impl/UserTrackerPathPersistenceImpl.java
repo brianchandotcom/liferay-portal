@@ -387,9 +387,6 @@ public class UserTrackerPathPersistenceImpl
 	private static final String _SQL_COUNT_USERTRACKERPATH_WHERE =
 		"SELECT COUNT(userTrackerPath) FROM UserTrackerPath userTrackerPath WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No UserTrackerPath exists with the key {";
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"path"});
 
@@ -399,4 +396,4 @@ public class UserTrackerPathPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1288525283
+// LIFERAY-SERVICE-BUILDER-HASH:-1635125363

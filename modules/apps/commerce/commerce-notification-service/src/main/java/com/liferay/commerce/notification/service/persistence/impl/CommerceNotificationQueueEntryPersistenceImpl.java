@@ -1056,9 +1056,6 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 		_SQL_COUNT_COMMERCENOTIFICATIONQUEUEENTRY_WHERE =
 			"SELECT COUNT(commerceNotificationQueueEntry) FROM CommerceNotificationQueueEntry commerceNotificationQueueEntry WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No CommerceNotificationQueueEntry exists with the key {";
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"commerceNotificationQueueEntryId", "from", "to"});
 
@@ -1068,4 +1065,4 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:476936208
+// LIFERAY-SERVICE-BUILDER-HASH:816916114

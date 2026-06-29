@@ -19,8 +19,6 @@ import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
@@ -612,16 +610,10 @@ public class CTPreferencesPersistenceImpl
 	private static final String _SQL_COUNT_CTPREFERENCES_WHERE =
 		"SELECT COUNT(ctPreferences) FROM CTPreferences ctPreferences WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No CTPreferences exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		CTPreferencesPersistenceImpl.class);
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-818852752
+// LIFERAY-SERVICE-BUILDER-HASH:29263357

@@ -596,13 +596,10 @@ public class CTSParentPersistenceImpl
 	private static final String _SQL_COUNT_CTSPARENT_WHERE =
 		"SELECT COUNT(ctsParent) FROM CTSParent ctsParent WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No CTSParent exists with the key {";
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:659833528
+// LIFERAY-SERVICE-BUILDER-HASH:-1373632096

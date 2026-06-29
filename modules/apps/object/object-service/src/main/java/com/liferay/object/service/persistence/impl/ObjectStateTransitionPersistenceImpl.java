@@ -950,9 +950,6 @@ public class ObjectStateTransitionPersistenceImpl
 	private static final String _SQL_COUNT_OBJECTSTATETRANSITION_WHERE =
 		"SELECT COUNT(objectStateTransition) FROM ObjectStateTransition objectStateTransition WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No ObjectStateTransition exists with the key {";
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"uuid"});
 
@@ -962,4 +959,4 @@ public class ObjectStateTransitionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2058419532
+// LIFERAY-SERVICE-BUILDER-HASH:-920798874

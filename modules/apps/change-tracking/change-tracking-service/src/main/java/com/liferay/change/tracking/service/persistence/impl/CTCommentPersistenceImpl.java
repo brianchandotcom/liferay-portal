@@ -540,13 +540,10 @@ public class CTCommentPersistenceImpl
 	private static final String _SQL_COUNT_CTCOMMENT_WHERE =
 		"SELECT COUNT(ctComment) FROM CTComment ctComment WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No CTComment exists with the key {";
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1949055082
+// LIFERAY-SERVICE-BUILDER-HASH:331012585

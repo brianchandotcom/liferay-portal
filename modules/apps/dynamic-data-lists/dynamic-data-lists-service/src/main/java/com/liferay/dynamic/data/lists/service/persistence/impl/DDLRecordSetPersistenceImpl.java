@@ -13,7 +13,6 @@ import com.liferay.dynamic.data.lists.model.impl.DDLRecordSetModelImpl;
 import com.liferay.dynamic.data.lists.service.persistence.DDLRecordSetPersistence;
 import com.liferay.dynamic.data.lists.service.persistence.DDLRecordSetUtil;
 import com.liferay.dynamic.data.lists.service.persistence.impl.constants.DDLPersistenceConstants;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -21,8 +20,6 @@ import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -369,23 +366,9 @@ public class DDLRecordSetPersistenceImpl
 			long groupId, OrderByComparator<DDLRecordSet> orderByComparator)
 		throws NoSuchRecordSetException {
 
-		DDLRecordSet ddlRecordSet = fetchByGroupId_First(
-			groupId, orderByComparator);
-
-		if (ddlRecordSet != null) {
-			return ddlRecordSet;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchRecordSetException(sb.toString());
+		return _collectionPersistenceFinderByGroupId.findFirst(
+			finderCache, new Object[] {new long[] {groupId}},
+			orderByComparator);
 	}
 
 	/**
@@ -580,23 +563,9 @@ public class DDLRecordSetPersistenceImpl
 			OrderByComparator<DDLRecordSet> orderByComparator)
 		throws NoSuchRecordSetException {
 
-		DDLRecordSet ddlRecordSet = fetchByDDMStructureId_First(
-			DDMStructureId, orderByComparator);
-
-		if (ddlRecordSet != null) {
-			return ddlRecordSet;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("DDMStructureId=");
-		sb.append(DDMStructureId);
-
-		sb.append("}");
-
-		throw new NoSuchRecordSetException(sb.toString());
+		return _collectionPersistenceFinderByDDMStructureId.findFirst(
+			finderCache, new Object[] {new long[] {DDMStructureId}},
+			orderByComparator);
 	}
 
 	/**
@@ -1244,12 +1213,6 @@ public class DDLRecordSetPersistenceImpl
 	private static final String _SQL_COUNT_DDLRECORDSET_WHERE =
 		"SELECT COUNT(ddlRecordSet) FROM DDLRecordSet ddlRecordSet WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No DDLRecordSet exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DDLRecordSetPersistenceImpl.class);
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"uuid", "settings"});
 
@@ -1259,4 +1222,4 @@ public class DDLRecordSetPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:966619741
+// LIFERAY-SERVICE-BUILDER-HASH:-423858087

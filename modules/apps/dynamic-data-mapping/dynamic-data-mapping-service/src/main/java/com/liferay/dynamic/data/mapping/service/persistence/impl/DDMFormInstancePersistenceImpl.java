@@ -13,7 +13,6 @@ import com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceModelImpl;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMFormInstancePersistence;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMFormInstanceUtil;
 import com.liferay.dynamic.data.mapping.service.persistence.impl.constants.DDMPersistenceConstants;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -21,8 +20,6 @@ import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -372,23 +369,9 @@ public class DDMFormInstancePersistenceImpl
 			long groupId, OrderByComparator<DDMFormInstance> orderByComparator)
 		throws NoSuchFormInstanceException {
 
-		DDMFormInstance ddmFormInstance = fetchByGroupId_First(
-			groupId, orderByComparator);
-
-		if (ddmFormInstance != null) {
-			return ddmFormInstance;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchFormInstanceException(sb.toString());
+		return _collectionPersistenceFinderByGroupId.findFirst(
+			finderCache, new Object[] {new long[] {groupId}},
+			orderByComparator);
 	}
 
 	/**
@@ -1076,12 +1059,6 @@ public class DDMFormInstancePersistenceImpl
 	private static final String _SQL_COUNT_DDMFORMINSTANCE_WHERE =
 		"SELECT COUNT(ddmFormInstance) FROM DDMFormInstance ddmFormInstance WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No DDMFormInstance exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DDMFormInstancePersistenceImpl.class);
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"uuid", "settings"});
 
@@ -1091,4 +1068,4 @@ public class DDMFormInstancePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:291686319
+// LIFERAY-SERVICE-BUILDER-HASH:471415706

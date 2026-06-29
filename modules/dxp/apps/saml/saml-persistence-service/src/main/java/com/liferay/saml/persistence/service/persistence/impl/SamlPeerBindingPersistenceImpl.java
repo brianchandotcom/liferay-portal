@@ -634,13 +634,10 @@ public class SamlPeerBindingPersistenceImpl
 	private static final String _SQL_COUNT_SAMLPEERBINDING_WHERE =
 		"SELECT COUNT(samlPeerBinding) FROM SamlPeerBinding samlPeerBinding WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No SamlPeerBinding exists with the key {";
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1206055164
+// LIFERAY-SERVICE-BUILDER-HASH:-989996486

@@ -15,8 +15,6 @@ import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchTeamException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.model.TeamTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -1711,12 +1709,6 @@ public class TeamPersistenceImpl
 	private static final String _SQL_COUNT_TEAM_WHERE =
 		"SELECT COUNT(team) FROM Team team WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No Team exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		TeamPersistenceImpl.class);
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"uuid"});
 
@@ -1726,4 +1718,4 @@ public class TeamPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-897207843
+// LIFERAY-SERVICE-BUILDER-HASH:2128312967

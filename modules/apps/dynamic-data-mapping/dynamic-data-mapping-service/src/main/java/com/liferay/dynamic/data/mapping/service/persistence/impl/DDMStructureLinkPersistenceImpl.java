@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -713,16 +711,10 @@ public class DDMStructureLinkPersistenceImpl
 	private static final String _SQL_COUNT_DDMSTRUCTURELINK_WHERE =
 		"SELECT COUNT(ddmStructureLink) FROM DDMStructureLink ddmStructureLink WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No DDMStructureLink exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DDMStructureLinkPersistenceImpl.class);
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-754932018
+// LIFERAY-SERVICE-BUILDER-HASH:-1728918438

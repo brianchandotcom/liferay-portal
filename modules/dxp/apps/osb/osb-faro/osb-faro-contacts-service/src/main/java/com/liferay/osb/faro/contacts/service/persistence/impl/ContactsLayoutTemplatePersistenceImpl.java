@@ -561,9 +561,6 @@ public class ContactsLayoutTemplatePersistenceImpl
 	private static final String _SQL_COUNT_CONTACTSLAYOUTTEMPLATE_WHERE =
 		"SELECT COUNT(contactsLayoutTemplate) FROM ContactsLayoutTemplate contactsLayoutTemplate WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No ContactsLayoutTemplate exists with the key {";
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"settings", "type"});
 
@@ -573,4 +570,4 @@ public class ContactsLayoutTemplatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:643597061
+// LIFERAY-SERVICE-BUILDER-HASH:88032590

@@ -14,7 +14,6 @@ import com.liferay.blogs.model.impl.BlogsEntryModelImpl;
 import com.liferay.blogs.service.persistence.BlogsEntryPersistence;
 import com.liferay.blogs.service.persistence.BlogsEntryUtil;
 import com.liferay.blogs.service.persistence.impl.constants.BlogsPersistenceConstants;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -24,8 +23,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
@@ -2068,29 +2065,9 @@ public class BlogsEntryPersistenceImpl
 			OrderByComparator<BlogsEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		BlogsEntry blogsEntry = fetchByG_U_S_First(
-			groupId, userId, status, orderByComparator);
-
-		if (blogsEntry != null) {
-			return blogsEntry;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", userId=");
-		sb.append(userId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		return _collectionPersistenceFinderByG_U_S.findFirst(
+			finderCache, new Object[] {groupId, userId, new int[] {status}},
+			orderByComparator);
 	}
 
 	/**
@@ -5819,12 +5796,6 @@ public class BlogsEntryPersistenceImpl
 	private static final String _SQL_COUNT_BLOGSENTRY_WHERE =
 		"SELECT COUNT(blogsEntry) FROM BlogsEntry blogsEntry WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No BlogsEntry exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		BlogsEntryPersistenceImpl.class);
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"uuid"});
 
@@ -5834,4 +5805,4 @@ public class BlogsEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1003121507
+// LIFERAY-SERVICE-BUILDER-HASH:410637778

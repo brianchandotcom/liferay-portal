@@ -21,8 +21,6 @@ import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
@@ -962,12 +960,6 @@ public class OAuth2ScopeGrantPersistenceImpl
 	private static final String _SQL_COUNT_OAUTH2SCOPEGRANT_WHERE =
 		"SELECT COUNT(oAuth2ScopeGrant) FROM OAuth2ScopeGrant oAuth2ScopeGrant WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No OAuth2ScopeGrant exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		OAuth2ScopeGrantPersistenceImpl.class);
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"oAuth2ApplicationScopeAliasesId"});
 
@@ -977,4 +969,4 @@ public class OAuth2ScopeGrantPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-622595316
+// LIFERAY-SERVICE-BUILDER-HASH:-525427952

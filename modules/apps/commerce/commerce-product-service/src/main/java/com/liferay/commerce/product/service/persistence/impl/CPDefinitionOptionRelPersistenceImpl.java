@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -1667,12 +1665,6 @@ public class CPDefinitionOptionRelPersistenceImpl
 	private static final String _SQL_COUNT_CPDEFINITIONOPTIONREL_WHERE =
 		"SELECT COUNT(cpDefinitionOptionRel) FROM CPDefinitionOptionRel cpDefinitionOptionRel WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No CPDefinitionOptionRel exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		CPDefinitionOptionRelPersistenceImpl.class);
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"uuid", "key"});
 
@@ -1682,4 +1674,4 @@ public class CPDefinitionOptionRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:635707125
+// LIFERAY-SERVICE-BUILDER-HASH:1605722593

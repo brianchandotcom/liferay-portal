@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -817,12 +815,6 @@ public class LayoutSEOSitePersistenceImpl
 	private static final String _SQL_COUNT_LAYOUTSEOSITE_WHERE =
 		"SELECT COUNT(layoutSEOSite) FROM LayoutSEOSite layoutSEOSite WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No LayoutSEOSite exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		LayoutSEOSitePersistenceImpl.class);
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"uuid"});
 
@@ -832,4 +824,4 @@ public class LayoutSEOSitePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-709817450
+// LIFERAY-SERVICE-BUILDER-HASH:-264656968

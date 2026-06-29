@@ -780,9 +780,6 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 		_SQL_COUNT_COMMERCESHIPPINGFIXEDOPTIONREL_WHERE =
 			"SELECT COUNT(commerceShippingFixedOptionRel) FROM CommerceShippingFixedOptionRel commerceShippingFixedOptionRel WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No CommerceShippingFixedOptionRel exists with the key {";
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"commerceShippingFixedOptionRelId"});
 
@@ -792,4 +789,4 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-720854480
+// LIFERAY-SERVICE-BUILDER-HASH:571677648

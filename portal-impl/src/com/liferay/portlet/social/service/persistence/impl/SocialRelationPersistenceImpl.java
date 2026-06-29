@@ -12,8 +12,6 @@ import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelperUtil;
@@ -1613,12 +1611,6 @@ public class SocialRelationPersistenceImpl
 	private static final String _SQL_COUNT_SOCIALRELATION_WHERE =
 		"SELECT COUNT(socialRelation) FROM SocialRelation socialRelation WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No SocialRelation exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		SocialRelationPersistenceImpl.class);
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"uuid", "type"});
 
@@ -1628,4 +1620,4 @@ public class SocialRelationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1838954925
+// LIFERAY-SERVICE-BUILDER-HASH:-1742140431

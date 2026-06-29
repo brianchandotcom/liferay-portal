@@ -14,7 +14,6 @@ import com.liferay.change.tracking.model.impl.CTCollectionModelImpl;
 import com.liferay.change.tracking.service.persistence.CTCollectionPersistence;
 import com.liferay.change.tracking.service.persistence.CTCollectionUtil;
 import com.liferay.change.tracking.service.persistence.impl.constants.CTPersistenceConstants;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
@@ -22,8 +21,6 @@ import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
@@ -761,26 +758,9 @@ public class CTCollectionPersistenceImpl
 			OrderByComparator<CTCollection> orderByComparator)
 		throws NoSuchCollectionException {
 
-		CTCollection ctCollection = fetchByC_S_First(
-			companyId, status, orderByComparator);
-
-		if (ctCollection != null) {
-			return ctCollection;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchCollectionException(sb.toString());
+		return _collectionPersistenceFinderByC_S.findFirst(
+			finderCache, new Object[] {companyId, new int[] {status}},
+			orderByComparator);
 	}
 
 	/**
@@ -1539,12 +1519,6 @@ public class CTCollectionPersistenceImpl
 	private static final String _SQL_COUNT_CTCOLLECTION_WHERE =
 		"SELECT COUNT(ctCollection) FROM CTCollection ctCollection WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No CTCollection exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		CTCollectionPersistenceImpl.class);
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"uuid"});
 
@@ -1554,4 +1528,4 @@ public class CTCollectionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-92479312
+// LIFERAY-SERVICE-BUILDER-HASH:-710530157

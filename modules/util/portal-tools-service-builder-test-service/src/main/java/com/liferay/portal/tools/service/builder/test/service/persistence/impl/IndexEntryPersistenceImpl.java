@@ -12,8 +12,6 @@ import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
@@ -1800,16 +1798,10 @@ public class IndexEntryPersistenceImpl
 	private static final String _SQL_COUNT_INDEXENTRY_WHERE =
 		"SELECT COUNT(indexEntry) FROM IndexEntry indexEntry WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No IndexEntry exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		IndexEntryPersistenceImpl.class);
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-907816713
+// LIFERAY-SERVICE-BUILDER-HASH:1482266694

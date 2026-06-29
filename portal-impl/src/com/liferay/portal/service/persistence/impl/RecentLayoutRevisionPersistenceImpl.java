@@ -12,8 +12,6 @@ import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchRecentLayoutRevisionException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.RecentLayoutRevision;
 import com.liferay.portal.kernel.model.RecentLayoutRevisionTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -715,16 +713,10 @@ public class RecentLayoutRevisionPersistenceImpl
 	private static final String _SQL_COUNT_RECENTLAYOUTREVISION_WHERE =
 		"SELECT COUNT(recentLayoutRevision) FROM RecentLayoutRevision recentLayoutRevision WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No RecentLayoutRevision exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		RecentLayoutRevisionPersistenceImpl.class);
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return FinderCacheUtil.getFinderCache();
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-665915554
+// LIFERAY-SERVICE-BUILDER-HASH:-2096366392

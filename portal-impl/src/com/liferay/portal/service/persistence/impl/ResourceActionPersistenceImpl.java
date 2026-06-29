@@ -12,8 +12,6 @@ import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchResourceActionException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourceActionTable;
 import com.liferay.portal.kernel.service.persistence.ResourceActionPersistence;
@@ -448,16 +446,10 @@ public class ResourceActionPersistenceImpl
 	private static final String _SQL_COUNT_RESOURCEACTION_WHERE =
 		"SELECT COUNT(resourceAction) FROM ResourceAction resourceAction WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No ResourceAction exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ResourceActionPersistenceImpl.class);
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return FinderCacheUtil.getFinderCache();
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:880745720
+// LIFERAY-SERVICE-BUILDER-HASH:761276308

@@ -923,13 +923,10 @@ public class KaleoNotificationPersistenceImpl
 	private static final String _SQL_COUNT_KALEONOTIFICATION_WHERE =
 		"SELECT COUNT(kaleoNotification) FROM KaleoNotification kaleoNotification WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No KaleoNotification exists with the key {";
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1077448737
+// LIFERAY-SERVICE-BUILDER-HASH:1317077383

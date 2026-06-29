@@ -893,13 +893,10 @@ public class AnalyticsDeleteMessagePersistenceImpl
 	private static final String _SQL_COUNT_ANALYTICSDELETEMESSAGE_WHERE =
 		"SELECT COUNT(analyticsDeleteMessage) FROM AnalyticsDeleteMessage analyticsDeleteMessage WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No AnalyticsDeleteMessage exists with the key {";
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-577067303
+// LIFERAY-SERVICE-BUILDER-HASH:-1792209545

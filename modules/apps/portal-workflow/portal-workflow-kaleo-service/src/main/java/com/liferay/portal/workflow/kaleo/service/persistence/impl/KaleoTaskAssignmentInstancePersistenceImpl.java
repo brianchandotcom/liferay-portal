@@ -1437,13 +1437,10 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 	private static final String _SQL_COUNT_KALEOTASKASSIGNMENTINSTANCE_WHERE =
 		"SELECT COUNT(kaleoTaskAssignmentInstance) FROM KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No KaleoTaskAssignmentInstance exists with the key {";
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1462771813
+// LIFERAY-SERVICE-BUILDER-HASH:-920318076

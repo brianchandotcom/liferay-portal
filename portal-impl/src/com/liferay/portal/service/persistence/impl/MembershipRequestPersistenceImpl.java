@@ -766,13 +766,10 @@ public class MembershipRequestPersistenceImpl
 	private static final String _SQL_COUNT_MEMBERSHIPREQUEST_WHERE =
 		"SELECT COUNT(membershipRequest) FROM MembershipRequest membershipRequest WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No MembershipRequest exists with the key {";
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return FinderCacheUtil.getFinderCache();
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1592637313
+// LIFERAY-SERVICE-BUILDER-HASH:195545484

@@ -19,8 +19,6 @@ import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -785,12 +783,6 @@ public class CommercePaymentMethodGroupRelQualifierPersistenceImpl
 		_SQL_COUNT_COMMERCEPAYMENTMETHODGROUPRELQUALIFIER_WHERE =
 			"SELECT COUNT(commercePaymentMethodGroupRelQualifier) FROM CommercePaymentMethodGroupRelQualifier commercePaymentMethodGroupRelQualifier WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No CommercePaymentMethodGroupRelQualifier exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		CommercePaymentMethodGroupRelQualifierPersistenceImpl.class);
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {
 			"commercePaymentMethodGroupRelQualifierId",
@@ -803,4 +795,4 @@ public class CommercePaymentMethodGroupRelQualifierPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-82851381
+// LIFERAY-SERVICE-BUILDER-HASH:1393427929

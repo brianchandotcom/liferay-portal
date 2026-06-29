@@ -405,13 +405,10 @@ public class CTMessagePersistenceImpl
 	private static final String _SQL_COUNT_CTMESSAGE_WHERE =
 		"SELECT COUNT(ctMessage) FROM CTMessage ctMessage WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No CTMessage exists with the key {";
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1540425173
+// LIFERAY-SERVICE-BUILDER-HASH:-1878264201

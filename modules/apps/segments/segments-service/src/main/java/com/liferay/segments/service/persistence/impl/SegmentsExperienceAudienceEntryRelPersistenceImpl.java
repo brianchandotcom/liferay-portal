@@ -12,8 +12,6 @@ import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -1033,12 +1031,6 @@ public class SegmentsExperienceAudienceEntryRelPersistenceImpl
 		_SQL_COUNT_SEGMENTSEXPERIENCEAUDIENCEENTRYREL_WHERE =
 			"SELECT COUNT(segmentsExperienceAudienceEntryRel) FROM SegmentsExperienceAudienceEntryRel segmentsExperienceAudienceEntryRel WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No SegmentsExperienceAudienceEntryRel exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		SegmentsExperienceAudienceEntryRelPersistenceImpl.class);
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"uuid", "segmentsExperienceAudienceEntryRelId"});
 
@@ -1048,4 +1040,4 @@ public class SegmentsExperienceAudienceEntryRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1581765740
+// LIFERAY-SERVICE-BUILDER-HASH:-746838731

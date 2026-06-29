@@ -13,8 +13,6 @@ import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchWorkflowInstanceLinkException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.WorkflowInstanceLink;
 import com.liferay.portal.kernel.model.WorkflowInstanceLinkTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -889,16 +887,10 @@ public class WorkflowInstanceLinkPersistenceImpl
 	private static final String _SQL_COUNT_WORKFLOWINSTANCELINK_WHERE =
 		"SELECT COUNT(workflowInstanceLink) FROM WorkflowInstanceLink workflowInstanceLink WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No WorkflowInstanceLink exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		WorkflowInstanceLinkPersistenceImpl.class);
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return FinderCacheUtil.getFinderCache();
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:125573617
+// LIFERAY-SERVICE-BUILDER-HASH:2131211867

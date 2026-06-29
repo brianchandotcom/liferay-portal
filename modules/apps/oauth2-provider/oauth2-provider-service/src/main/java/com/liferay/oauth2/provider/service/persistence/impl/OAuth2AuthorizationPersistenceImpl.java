@@ -1343,9 +1343,6 @@ public class OAuth2AuthorizationPersistenceImpl
 	private static final String _SQL_COUNT_OAUTH2AUTHORIZATION_WHERE =
 		"SELECT COUNT(oAuth2Authorization) FROM OAuth2Authorization oAuth2Authorization WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No OAuth2Authorization exists with the key {";
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"oAuth2ApplicationScopeAliasesId"});
 
@@ -1355,4 +1352,4 @@ public class OAuth2AuthorizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2074917326
+// LIFERAY-SERVICE-BUILDER-HASH:717109788

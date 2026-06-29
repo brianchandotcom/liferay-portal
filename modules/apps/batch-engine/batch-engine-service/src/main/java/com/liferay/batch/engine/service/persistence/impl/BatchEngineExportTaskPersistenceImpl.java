@@ -21,8 +21,6 @@ import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
@@ -1003,12 +1001,6 @@ public class BatchEngineExportTaskPersistenceImpl
 	private static final String _SQL_COUNT_BATCHENGINEEXPORTTASK_WHERE =
 		"SELECT COUNT(batchEngineExportTask) FROM BatchEngineExportTask batchEngineExportTask WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No BatchEngineExportTask exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		BatchEngineExportTaskPersistenceImpl.class);
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"uuid"});
 
@@ -1018,4 +1010,4 @@ public class BatchEngineExportTaskPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1706718971
+// LIFERAY-SERVICE-BUILDER-HASH:-552105183

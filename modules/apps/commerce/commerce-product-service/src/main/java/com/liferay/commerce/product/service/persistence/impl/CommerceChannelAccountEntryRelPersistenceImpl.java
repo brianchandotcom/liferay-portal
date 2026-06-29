@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -1525,12 +1523,6 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 		_SQL_COUNT_COMMERCECHANNELACCOUNTENTRYREL_WHERE =
 			"SELECT COUNT(commerceChannelAccountEntryRel) FROM CommerceChannelAccountEntryRel commerceChannelAccountEntryRel WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No CommerceChannelAccountEntryRel exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		CommerceChannelAccountEntryRelPersistenceImpl.class);
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"commerceChannelAccountEntryRelId", "type"});
 
@@ -1540,4 +1532,4 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1763459481
+// LIFERAY-SERVICE-BUILDER-HASH:905451331

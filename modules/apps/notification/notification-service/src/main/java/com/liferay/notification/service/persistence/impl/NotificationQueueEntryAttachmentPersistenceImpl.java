@@ -474,9 +474,6 @@ public class NotificationQueueEntryAttachmentPersistenceImpl
 		_SQL_COUNT_NOTIFICATIONQUEUEENTRYATTACHMENT_WHERE =
 			"SELECT COUNT(notificationQueueEntryAttachment) FROM NotificationQueueEntryAttachment notificationQueueEntryAttachment WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No NotificationQueueEntryAttachment exists with the key {";
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"notificationQueueEntryAttachmentId"});
 
@@ -486,4 +483,4 @@ public class NotificationQueueEntryAttachmentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2006618245
+// LIFERAY-SERVICE-BUILDER-HASH:1192677604

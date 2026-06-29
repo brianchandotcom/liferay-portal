@@ -1194,9 +1194,6 @@ public class KaleoLogPersistenceImpl
 	private static final String _SQL_COUNT_KALEOLOG_WHERE =
 		"SELECT COUNT(kaleoLog) FROM KaleoLog kaleoLog WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No KaleoLog exists with the key {";
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"type", "comment"});
 
@@ -1206,4 +1203,4 @@ public class KaleoLogPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1777158449
+// LIFERAY-SERVICE-BUILDER-HASH:-532040156

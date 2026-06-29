@@ -136,6 +136,12 @@ public class PageTemplateResourceImpl
 			}
 
 			@Override
+			public List<String> getCompatibilityPortletIds() {
+				return Collections.singletonList(
+					LayoutAdminPortletKeys.GROUP_PAGES);
+			}
+
+			@Override
 			public String getKey() {
 				return LayoutPageTemplateEntry.class.getName() + "-" +
 					LayoutPageTemplateEntryTypeConstants.BASIC;

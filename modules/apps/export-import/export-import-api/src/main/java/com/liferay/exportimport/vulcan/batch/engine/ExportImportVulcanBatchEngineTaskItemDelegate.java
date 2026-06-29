@@ -11,6 +11,7 @@ import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 
 import java.io.Serializable;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -29,6 +30,10 @@ public interface ExportImportVulcanBatchEngineTaskItemDelegate<T>
 
 		public default Function<T, Boolean> getApplicableModelFunction() {
 			return null;
+		}
+
+		public default List<String> getCompatibilityPortletIds() {
+			return Collections.emptyList();
 		}
 
 		public default String getDescription(Locale locale) {

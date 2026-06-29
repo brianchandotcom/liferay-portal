@@ -27,6 +27,7 @@ import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.staging.StagingGroupHelper;
 
 import java.util.Dictionary;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -185,6 +186,24 @@ public class BatchEnginePortletDataHandlerRegistrar {
 			BatchEnginePortletDataHandler finalBatchEnginePortletDataHandler =
 				batchEnginePortletDataHandler;
 
+			List<String> compatibilityPortletIds =
+				exportImportDescriptor.getCompatibilityPortletIds();
+
+			for (String compatibilityPortletId : compatibilityPortletIds) {
+				_portletIdServiceRegistrations.computeIfAbsent(
+					compatibilityPortletId,
+					key -> _bundleContext.registerService(
+						PortletDataHandler.class,
+						finalBatchEnginePortletDataHandler,
+						_setEnabledCompanyId(
+							companyId,
+							HashMapDictionaryBuilder.<String, Object>put(
+								"jakarta.portlet.name", key
+							).put(
+								"service.ranking", Integer.MAX_VALUE
+							).build())));
+			}
+
 			return _portletIdServiceRegistrations.computeIfAbsent(
 				portletId,
 				key -> _bundleContext.registerService(
@@ -235,6 +254,9 @@ public class BatchEnginePortletDataHandlerRegistrar {
 				return;
 			}
 
+			List<String> compatibilityPortletIds =
+				exportImportDescriptor.getCompatibilityPortletIds();
+
 			exportImportDescriptor =
 				batchEnginePortletDataHandler.
 					unregisterExportImportVulcanBatchEngineTaskItemDelegate(
@@ -255,6 +277,17 @@ public class BatchEnginePortletDataHandlerRegistrar {
 					companyId, portletId);
 
 				_portletIdServiceRegistrations.remove(portletId);
+
+				for (String compatibilityPortletId : compatibilityPortletIds) {
+					ServiceRegistration<PortletDataHandler>
+						compatibilityServiceRegistration =
+							_portletIdServiceRegistrations.remove(
+								compatibilityPortletId);
+
+					if (compatibilityServiceRegistration != null) {
+						compatibilityServiceRegistration.unregister();
+					}
+				}
 			}
 		}
 

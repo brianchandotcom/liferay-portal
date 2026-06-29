@@ -13,6 +13,7 @@ import com.liferay.headless.admin.site.internal.resource.v1_0.util.DisplayPageTe
 import com.liferay.headless.admin.site.internal.util.EnabledUtil;
 import com.liferay.headless.admin.site.resource.v1_0.DisplayPageTemplateFolderResource;
 import com.liferay.headless.common.spi.util.GroupUtil;
+import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
@@ -34,6 +35,7 @@ import io.swagger.v3.oas.annotations.tags.Tags;
 import jakarta.ws.rs.core.MultivaluedMap;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
 
@@ -89,6 +91,12 @@ public class DisplayPageTemplateFolderResourceImpl
 				return layoutPageTemplateCollection ->
 					layoutPageTemplateCollection.getType() ==
 						LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE;
+			}
+
+			@Override
+			public List<String> getCompatibilityPortletIds() {
+				return Collections.singletonList(
+					LayoutAdminPortletKeys.GROUP_PAGES);
 			}
 
 			@Override

@@ -111,6 +111,12 @@ public class MasterPageResourceImpl
 			}
 
 			@Override
+			public List<String> getCompatibilityPortletIds() {
+				return Collections.singletonList(
+					LayoutAdminPortletKeys.GROUP_PAGES);
+			}
+
+			@Override
 			public String getKey() {
 				return LayoutPageTemplateEntry.class.getName() + "-" +
 					LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT;

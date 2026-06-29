@@ -22,6 +22,11 @@ import javax.security.auth.Destroyable;
  */
 public final class SecureSecret implements AutoCloseable, Destroyable {
 
+	/**
+	 * Creates a secret from a copy of the given bytes. This constructor does not
+	 * zero the passed array, so the caller still owns it and should zero it once
+	 * it is no longer needed.
+	 */
 	public SecureSecret(byte[] bytes, KeyReference keyReference) {
 		if (keyReference == null) {
 			throw new IllegalArgumentException(
@@ -38,6 +43,11 @@ public final class SecureSecret implements AutoCloseable, Destroyable {
 		_keyReference = keyReference;
 	}
 
+	/**
+	 * Creates a secret by encoding the given characters. This constructor does
+	 * not zero the passed array, so the caller still owns it and should zero it
+	 * once it is no longer needed.
+	 */
 	public SecureSecret(char[] chars, KeyReference keyReference) {
 		if (keyReference == null) {
 			throw new IllegalArgumentException(
@@ -96,6 +106,18 @@ public final class SecureSecret implements AutoCloseable, Destroyable {
 		_destroyed = true;
 	}
 
+	/**
+	 * Returns the live internal byte buffer backing this secret, not a defensive
+	 * copy. The caller must neither mutate nor retain the returned array: it is
+	 * shared with this instance and is overwritten with zeros when {@link
+	 * #close()} or {@link #destroy()} runs. Returning the live buffer keeps a
+	 * single plaintext copy of the secret in memory and lets this instance
+	 * zeroize the array the caller is still holding, so manage the secret within
+	 * a try-with-resources statement and read the bytes only for the duration of
+	 * that block.
+	 *
+	 * @return the live internal byte buffer, zeroized on close
+	 */
 	public synchronized byte[] getBytes() {
 		if (_destroyed) {
 			throw new IllegalStateException("Secret is destroyed");
@@ -104,6 +126,19 @@ public final class SecureSecret implements AutoCloseable, Destroyable {
 		return _bytes;
 	}
 
+	/**
+	 * Returns the live internal character buffer for this secret, decoding it
+	 * from the byte buffer and caching it on the first call rather than
+	 * returning a defensive copy. The caller must neither mutate nor retain the
+	 * returned array: it is shared with this instance and is overwritten with
+	 * zeros when {@link #close()} or {@link #destroy()} runs. Returning the live
+	 * buffer keeps the plaintext copies of the secret to a minimum and lets this
+	 * instance zeroize the array the caller is still holding, so manage the
+	 * secret within a try-with-resources statement and read the characters only
+	 * for the duration of that block.
+	 *
+	 * @return the live internal character buffer, zeroized on close
+	 */
 	public synchronized char[] getChars() {
 		if (_destroyed) {
 			throw new IllegalStateException("Secret is destroyed");

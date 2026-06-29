@@ -171,7 +171,7 @@ public class UpgradeJakartaTask extends FormatSourceTask {
 		for (ReleaseEntry releaseEntry : ReleaseUtil.getReleaseEntries()) {
 			if (Objects.equals(
 					_workspaceExtension.getProduct(),
-					releaseEntry.getProduct()) ||
+					releaseEntry.getReleaseKey()) ||
 				Objects.equals(
 					_workspaceExtension.getTargetPlatformVersion(),
 					releaseEntry.getTargetPlatformVersion())) {

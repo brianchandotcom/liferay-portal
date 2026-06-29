@@ -11,34 +11,16 @@
 KBArticleCompanyConfigurationDisplayContext kbArticleCompanyConfigurationDisplayContext = (KBArticleCompanyConfigurationDisplayContext)request.getAttribute(KBArticleCompanyConfigurationDisplayContext.class.getName());
 %>
 
-<aui:form action="<%= kbArticleCompanyConfigurationDisplayContext.getEditKBArticleConfigurationURL() %>" method="post" name="fm">
-	<clay:sheet>
-		<clay:sheet-header>
-			<h2>
-				<liferay-ui:message key="knowledge-base-service-configuration-name" />
-			</h2>
+<div class="form-group">
+	<aui:input label="check-interval" min="1" name="checkInterval" type="number" value="<%= kbArticleCompanyConfigurationDisplayContext.getCheckInterval() %>" />
+</div>
 
-			<liferay-ui:error exception="<%= ConfigurationException.class %>" message="there-was-an-error-processing-one-or-more-of-the-configurations" />
-		</clay:sheet-header>
+<div class="form-group">
+	<h3 class="sheet-subtitle"><liferay-ui:message key="article-expiration-date-notification" /></h3>
 
-		<clay:sheet-section>
-			<aui:input label="check-interval" min="1" name="checkInterval" type="number" value="<%= kbArticleCompanyConfigurationDisplayContext.getCheckInterval() %>" />
-		</clay:sheet-section>
+	<p class="text-muted">
+		<liferay-ui:message key="expiration-date-notification-date-weeks-description" />
+	</p>
 
-		<clay:sheet-section>
-			<h3 class="sheet-subtitle"><liferay-ui:message key="article-expiration-date-notification" /></h3>
-
-			<p class="text-muted">
-				<liferay-ui:message key="expiration-date-notification-date-weeks-description" />
-			</p>
-
-			<div>
-				<aui:input helpMessage="expiration-date-notification-date-weeks-help" label="notification-date-weeks" min="0" name="expirationDateNotificationDateWeeks" type="number" value="<%= kbArticleCompanyConfigurationDisplayContext.getExpirationDateNotificationDateWeeks() %>" />
-			</div>
-		</clay:sheet-section>
-
-		<clay:sheet-footer>
-			<aui:button primary="<%= true %>" type="submit" />
-		</clay:sheet-footer>
-	</clay:sheet>
-</aui:form>
+	<aui:input helpMessage="expiration-date-notification-date-weeks-help" label="notification-date-weeks" min="0" name="expirationDateNotificationDateWeeks" type="number" value="<%= kbArticleCompanyConfigurationDisplayContext.getExpirationDateNotificationDateWeeks() %>" />
+</div>

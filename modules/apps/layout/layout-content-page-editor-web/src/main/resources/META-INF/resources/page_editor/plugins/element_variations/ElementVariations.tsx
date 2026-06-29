@@ -18,7 +18,7 @@ import ElementVariationsPreview, {
 	ElementVariationsPreviewRef,
 } from './ElementVariationsPreview';
 import {
-	ElementVariation,
+	LoadedElementVariation,
 	createElementVariation,
 	createInitialState,
 	reducer,
@@ -31,7 +31,7 @@ interface Props {
 	audiences: Array<{label: string; value: string}>;
 	defaultLanguageId: string;
 	deleteElementVariationURL: string;
-	elementVariations: Array<Omit<ElementVariation, 'key'>>;
+	elementVariations: Array<LoadedElementVariation>;
 	experiences: Array<{
 		label: string;
 		segmentsExperienceERC: string;

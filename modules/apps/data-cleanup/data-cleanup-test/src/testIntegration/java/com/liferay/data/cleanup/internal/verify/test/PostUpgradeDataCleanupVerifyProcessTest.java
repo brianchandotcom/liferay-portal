@@ -6,7 +6,7 @@
 package com.liferay.data.cleanup.internal.verify.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.module.util.BundleUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
@@ -17,15 +17,10 @@ import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.Method;
-
-import java.sql.Connection;
 
 import java.util.List;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -44,91 +39,65 @@ public class PostUpgradeDataCleanupVerifyProcessTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@BeforeClass
-	public static void setUpClass() throws Exception {
-		_connection = DataAccess.getConnection();
-	}
-
-	@AfterClass
-	public static void tearDownClass() {
-		DataAccess.cleanUp(_connection);
-	}
-
 	@Test
 	public void testGetPostUpgradeDataCleanupProcesses() throws Exception {
 		Bundle bundle = BundleUtil.getBundle(
 			SystemBundleUtil.getBundleContext(),
 			"com.liferay.data.cleanup.impl");
 
-		Class<?> postUpgradeDataCleanupVerifyProcessClass = bundle.loadClass(
+		Class<?> clazz = bundle.loadClass(
 			"com.liferay.data.cleanup.internal.verify." +
 				"PostUpgradeDataCleanupVerifyProcess");
 
-		Constructor<?> constructor =
-			postUpgradeDataCleanupVerifyProcessClass.getDeclaredConstructor();
+		Constructor<?> constructor = clazz.getDeclaredConstructor();
 
 		Object postUpgradeDataCleanupVerifyProcess = constructor.newInstance();
 
-		ReflectionTestUtil.setFieldValue(
-			postUpgradeDataCleanupVerifyProcess, "connection", _connection);
+		Snapshot<Object> snapshot = new Snapshot<>(
+			PostUpgradeDataCleanupVerifyProcessTest.class, Object.class,
+			"(component.name=__unavailable__)");
 
 		try (AutoCloseable autoCloseable1 =
 				ReflectionTestUtil.setFieldValueWithAutoCloseable(
-					postUpgradeDataCleanupVerifyProcessClass,
-					"_indexInformationSnapshot",
-					new Snapshot<>(
-						PostUpgradeDataCleanupVerifyProcessTest.class,
-						Object.class));
+					clazz, "_indexInformationSnapshot", snapshot);
 			AutoCloseable autoCloseable2 =
 				ReflectionTestUtil.setFieldValueWithAutoCloseable(
-					postUpgradeDataCleanupVerifyProcessClass,
-					"_indexNameBuilderSnapshot",
-					new Snapshot<>(
-						PostUpgradeDataCleanupVerifyProcessTest.class,
-						Object.class));
+					clazz, "_indexNameBuilderSnapshot", snapshot);
 			LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.data.cleanup.internal.verify." +
 					"PostUpgradeDataCleanupVerifyProcess",
 				LoggerTestUtil.WARN)) {
 
-			Method method =
-				postUpgradeDataCleanupVerifyProcessClass.getDeclaredMethod(
-					"_getPostUpgradeDataCleanupProcesses");
-
-			method.setAccessible(true);
-
-			List<?> postUpgradeDataCleanupProcesses = (List<?>)method.invoke(
-				postUpgradeDataCleanupVerifyProcess);
+			List<?> postUpgradeDataCleanupProcesses = ReflectionTestUtil.invoke(
+				postUpgradeDataCleanupVerifyProcess,
+				"_getPostUpgradeDataCleanupProcesses", new Class<?>[0]);
 
 			Assert.assertEquals(
 				postUpgradeDataCleanupProcesses.toString(), 4,
 				postUpgradeDataCleanupProcesses.size());
 
-			for (Object postUpgradeDataCleanupProcess :
-					postUpgradeDataCleanupProcesses) {
+			List<String> classNames = TransformUtil.transform(
+				postUpgradeDataCleanupProcesses,
+				postUpgradeDataCleanupProcess -> {
+					Class<?> postUpgradeDataCleanupProcessClass =
+						postUpgradeDataCleanupProcess.getClass();
 
-				Class<?> clazz = postUpgradeDataCleanupProcess.getClass();
+					return postUpgradeDataCleanupProcessClass.getSimpleName();
+				});
 
-				String simpleName = clazz.getSimpleName();
-
-				Assert.assertFalse(
-					simpleName.equals(
-						"SearchIndexPostUpgradeDataCleanupProcess"));
-			}
+			Assert.assertFalse(
+				classNames.toString(),
+				classNames.contains(
+					"SearchIndexPostUpgradeDataCleanupProcess"));
 
 			List<String> messages = logCapture.getMessages();
 
-			String message = messages.get(0);
-
 			Assert.assertEquals(messages.toString(), 1, messages.size());
 
-			Assert.assertTrue(
-				message.contains(
-					"Skipping search index cleanup: search engine " +
-						"unavailable"));
+			Assert.assertEquals(
+				"Skipping search index cleanup: search engine unavailable",
+				messages.get(0));
 		}
 	}
-
-	private static Connection _connection;
 
 }

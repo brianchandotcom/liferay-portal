@@ -586,7 +586,7 @@ public class LiferayDynamicRegistrationService
 		HttpServletRequest httpServletRequest) {
 
 		if ((httpServletRequest != null) &&
-			Boolean.TRUE.equals(
+			GetterUtil.getBoolean(
 				httpServletRequest.getAttribute(
 					OAuth2ProviderRESTWebKeys.DYNAMIC_REGISTRATION_OPEN))) {
 
@@ -652,14 +652,13 @@ public class LiferayDynamicRegistrationService
 			return;
 		}
 
-		List<String> promotedAllowedGrantTypes = new ArrayList<>(
-			allowedGrantTypes);
+		allowedGrantTypes = new ArrayList<>(allowedGrantTypes);
 
-		promotedAllowedGrantTypes.set(
+		allowedGrantTypes.set(
 			index,
 			OAuth2ProviderRESTEndpointConstants.AUTHORIZATION_CODE_PKCE_GRANT);
 
-		client.setAllowedGrantTypes(promotedAllowedGrantTypes);
+		client.setAllowedGrantTypes(allowedGrantTypes);
 	}
 
 	private Pattern _toPattern(String glob) {
@@ -788,7 +787,7 @@ public class LiferayDynamicRegistrationService
 		Set<String> normalizedAllowedGrantTypes =
 			_normalizeOpenRegistrationAllowList(
 				allowedGrantTypes,
-				"Open registration does not permit any grant type",
+				"Open registration does not allow any grant type",
 				OAuth2ProviderRESTEndpointConstants.
 					ERROR_INVALID_CLIENT_METADATA);
 
@@ -807,7 +806,7 @@ public class LiferayDynamicRegistrationService
 			if (!normalizedAllowedGrantTypes.contains(requestedGrantType)) {
 				OAuth2ErrorUtil.reportInvalidRequestError(
 					"Grant type " + requestedGrantType +
-						" is not permitted for open registration",
+						" is not allowed for open registration",
 					OAuth2ProviderRESTEndpointConstants.
 						ERROR_INVALID_CLIENT_METADATA,
 					Response.Status.BAD_REQUEST);
@@ -849,8 +848,7 @@ public class LiferayDynamicRegistrationService
 		Set<String> normalizedAllowedPatterns =
 			_normalizeOpenRegistrationAllowList(
 				allowedPatterns,
-				"OAuth 2 application open registration does not allow any " +
-					"redirect URI",
+				"Open registration does not allow any redirect URI",
 				OAuth2ProviderRESTEndpointConstants.ERROR_INVALID_REDIRECT_URI);
 
 		if (normalizedAllowedPatterns == null) {
@@ -892,7 +890,7 @@ public class LiferayDynamicRegistrationService
 			if (!matched) {
 				OAuth2ErrorUtil.reportInvalidRequestError(
 					"Redirect URI " + redirectUri +
-						" is not permitted for open registration",
+						" is not allowed for open registration",
 					OAuth2ProviderRESTEndpointConstants.
 						ERROR_INVALID_REDIRECT_URI,
 					Response.Status.BAD_REQUEST);
@@ -907,7 +905,7 @@ public class LiferayDynamicRegistrationService
 
 		if (Validator.isBlank(scope)) {
 			OAuth2ErrorUtil.reportInvalidRequestError(
-				"Open registration requires an explicit scope",
+				"An explicit scope is required for open registration",
 				OAuth2ProviderRESTEndpointConstants.
 					ERROR_INVALID_CLIENT_METADATA,
 				Response.Status.BAD_REQUEST);
@@ -915,7 +913,7 @@ public class LiferayDynamicRegistrationService
 
 		Set<String> normalizedAllowedScopes =
 			_normalizeOpenRegistrationAllowList(
-				allowedScopes, "Open registration does not permit any scope",
+				allowedScopes, "Open registration does not allow any scope",
 				OAuthConstants.INVALID_SCOPE);
 
 		if (normalizedAllowedScopes == null) {
@@ -928,7 +926,7 @@ public class LiferayDynamicRegistrationService
 			if (!normalizedAllowedScopes.contains(requestedScope)) {
 				OAuth2ErrorUtil.reportInvalidRequestError(
 					"Scope " + requestedScope +
-						" is not permitted for open registration",
+						" is not allowed for open registration",
 					OAuthConstants.INVALID_SCOPE, Response.Status.BAD_REQUEST);
 			}
 		}

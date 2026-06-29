@@ -368,8 +368,8 @@ public class DynamicRegistrationServiceContainerRequestFilter
 		if (_log.isInfoEnabled()) {
 			_log.info(
 				StringBundler.concat(
-					"Open dynamic registration accepted for company ",
-					companyId, " from \"", clientHost, "\""));
+					"Open registration accepted for company ", companyId,
+					" from \"", clientHost, "\""));
 		}
 
 		return user;
@@ -555,8 +555,7 @@ public class DynamicRegistrationServiceContainerRequestFilter
 
 		if (!normalizedAllowedHosts.contains(clientHost)) {
 			String message =
-				"OAuth 2 application open registration is not allowed for " +
-					"host: " + clientHost;
+				"Open registration is not allowed for host: " + clientHost;
 
 			_auditFailure(
 				clientHost, companyId, OAuthConstants.ACCESS_DENIED, message,

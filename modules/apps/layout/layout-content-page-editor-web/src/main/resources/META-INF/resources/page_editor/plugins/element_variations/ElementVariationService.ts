@@ -9,7 +9,6 @@ import {ElementVariation} from './elementVariationsReducer';
 interface AddElementVariationParameters {
 	addElementVariationURL: string;
 	elementVariation: ElementVariation;
-	languageId: string;
 	plid: number;
 }
 
@@ -23,7 +22,6 @@ export default {
 	addElementVariation({
 		addElementVariationURL,
 		elementVariation,
-		languageId,
 		plid,
 	}: AddElementVariationParameters) {
 		return serviceFetch<void>(addElementVariationURL, {
@@ -32,9 +30,9 @@ export default {
 					audienceEntryERC: elementVariation.audienceEntryERC,
 					externalReferenceCode:
 						elementVariation.externalReferenceCode,
-					hideMap: {[languageId]: String(elementVariation.hide)},
-					htmlMap: {[languageId]: elementVariation.html},
-					jsMap: {[languageId]: elementVariation.js},
+					hideMap: elementVariation.hide,
+					htmlMap: elementVariation.html,
+					jsMap: elementVariation.js,
 					name: elementVariation.name,
 					segmentsExperienceERC:
 						elementVariation.segmentsExperienceERC,

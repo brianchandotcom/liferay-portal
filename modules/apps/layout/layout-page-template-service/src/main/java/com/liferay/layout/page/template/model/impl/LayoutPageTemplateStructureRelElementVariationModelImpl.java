@@ -110,7 +110,7 @@ public class LayoutPageTemplateStructureRelElementVariationModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table LPTSRelElementVariation (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,lptsRelElementVariationId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,audienceEntryERC VARCHAR(75) null,hide STRING null,html STRING null,js STRING null,name VARCHAR(75) null,plid LONG,segmentsExperienceERC VARCHAR(75) null,targetElement VARCHAR(75) null,primary key (lptsRelElementVariationId, ctCollectionId))";
+		"create table LPTSRelElementVariation (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,lptsRelElementVariationId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,audienceEntryERC VARCHAR(75) null,hide STRING null,html STRING null,js STRING null,name VARCHAR(75) null,plid LONG,segmentsExperienceERC VARCHAR(75) null,targetElement VARCHAR(1000) null,primary key (lptsRelElementVariationId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table LPTSRelElementVariation";
@@ -1921,4 +1921,4 @@ public class LayoutPageTemplateStructureRelElementVariationModelImpl
 	private LayoutPageTemplateStructureRelElementVariation _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-254678320
+// LIFERAY-SERVICE-BUILDER-HASH:709803567

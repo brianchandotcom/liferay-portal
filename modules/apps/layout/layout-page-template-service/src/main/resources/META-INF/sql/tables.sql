@@ -17,7 +17,7 @@ create table LPTSRelElementVariation (
 	name VARCHAR(75) null,
 	plid LONG,
 	segmentsExperienceERC VARCHAR(75) null,
-	targetElement VARCHAR(75) null,
+	targetElement VARCHAR(1000) null,
 	primary key (lptsRelElementVariationId, ctCollectionId)
 );
 

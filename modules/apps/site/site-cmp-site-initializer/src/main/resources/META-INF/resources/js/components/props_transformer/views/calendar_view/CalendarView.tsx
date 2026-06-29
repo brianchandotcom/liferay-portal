@@ -333,7 +333,7 @@ export default function CalendarView({items, projectId}: CalendarViewProps) {
 				moreLinkHint={Liferay.Language.get('view-all-tasks')}
 				plugins={[dayGridPlugin]}
 				ref={calendarRef}
-				{...(Liferay.FeatureFlags['LPD-74152'] && {
+				{...(Liferay.FeatureFlags['LPD-69885'] && {
 					dayCellContent: (arg) => (
 						<>
 							{arg.dayNumberText}

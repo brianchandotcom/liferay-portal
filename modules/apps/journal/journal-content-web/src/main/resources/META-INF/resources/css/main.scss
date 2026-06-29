@@ -33,6 +33,10 @@
 			}
 		}
 
+		img.image_resized {
+			height: auto;
+		}
+
 		&:after {
 			clear: both;
 			content: '';

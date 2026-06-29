@@ -41,7 +41,7 @@ public class VIESAccountEntryValidatorConfigurationDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public List<KeyValuePair> getAvailableCountries() {
+	public List<KeyValuePair> getAvailableCountryCodeKVPs() {
 		VIESAccountEntryValidatorConfiguration
 			viesAccountEntryValidatorConfiguration =
 				_getVIESAccountEntryValidatorConfiguration();
@@ -72,7 +72,7 @@ public class VIESAccountEntryValidatorConfigurationDisplayContext {
 		return viesAccountEntryValidatorConfiguration.checkInterval();
 	}
 
-	public List<KeyValuePair> getCurrentCountries() {
+	public List<KeyValuePair> getCurrentCountryCodeKVPs() {
 		VIESAccountEntryValidatorConfiguration
 			viesAccountEntryValidatorConfiguration =
 				_getVIESAccountEntryValidatorConfiguration();

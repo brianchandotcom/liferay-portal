@@ -12,15 +12,15 @@ export default function ({namespace}) {
 				return;
 			}
 
-			const currentCountriesElement = Liferay.Util.getFormElement(
+			const currentCountryCodesInput = Liferay.Util.getFormElement(
 				form,
-				'currentCountries'
+				'currentCountryCodes'
 			);
 
-			if (currentCountriesElement) {
+			if (currentCountryCodesInput) {
 				Liferay.Util.setFormValues(form, {
 					countryCodes: Liferay.Util.getSelectedOptionValues(
-						currentCountriesElement
+						currentCountryCodesInput
 					),
 				});
 			}

@@ -789,10 +789,10 @@ public class DBTest {
 					for (DB.QueryInfo lockedQueryInfo :
 							db.getLockedQueryInfos(pollingConnection)) {
 
-						query = lockedQueryInfo.getQuery();
+						String lockedQuery = lockedQueryInfo.getQuery();
 
 						Assert.assertFalse(
-							query.contains(_getSlowQueryFragment()));
+							lockedQuery.contains(_getSlowQueryFragment()));
 					}
 
 					return;

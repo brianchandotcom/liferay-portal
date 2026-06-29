@@ -136,7 +136,7 @@ public class CommerceShipmentIndexerTest {
 		User user2 = UserTestUtil.addUser(_group.getGroupId());
 
 		CommerceOrder commerceOrder1 = _addPlacedCommerceOrder(_user);
-		CommerceOrder commerceOrder2 = _addCommerceOrderWithItem(user2);
+		CommerceOrder commerceOrder2 = _addCommerceOrderItem(user2);
 
 		CommerceShipment commerceShipment = _addCommerceShipment(
 			commerceOrder1);
@@ -169,7 +169,7 @@ public class CommerceShipmentIndexerTest {
 		User user2 = UserTestUtil.addUser(_group.getGroupId());
 
 		CommerceOrder commerceOrder1 = _addPlacedCommerceOrder(_user);
-		CommerceOrder commerceOrder2 = _addCommerceOrderWithItem(user2);
+		CommerceOrder commerceOrder2 = _addCommerceOrderItem(user2);
 
 		CommerceShipment commerceShipment = _addCommerceShipment(
 			commerceOrder1);
@@ -192,7 +192,7 @@ public class CommerceShipmentIndexerTest {
 			ListUtil.fromArray(document.getValues("commerceOrderUserIds")));
 	}
 
-	private CommerceOrder _addCommerceOrderWithItem(User user)
+	private CommerceOrder _addCommerceOrderItem(User user)
 		throws Exception {
 
 		CommerceOrder commerceOrder = CommerceTestUtil.addB2CCommerceOrder(

@@ -54,18 +54,30 @@ export function createElementVariation(
 	};
 }
 
+export type LoadedElementVariation = Omit<ElementVariation, 'hide' | 'key'> & {
+	hide: Record<string, string>;
+};
+
 export function createInitialState({
 	defaultLanguageId,
 	elementVariations,
 }: {
 	defaultLanguageId: string;
-	elementVariations: Omit<ElementVariation, 'key'>[];
+	elementVariations: LoadedElementVariation[];
 }): State {
 	return {
 		defaultLanguageId,
 		draftElementVariation: null,
 		elementVariations: elementVariations.map((elementVariation) => ({
 			...elementVariation,
+			hide: Object.fromEntries(
+				Object.entries(elementVariation.hide).map(
+					([languageId, value]): [string, boolean] => [
+						languageId,
+						value === 'true',
+					]
+				)
+			),
 			key: uuidv4(),
 		})),
 		languageId: defaultLanguageId,

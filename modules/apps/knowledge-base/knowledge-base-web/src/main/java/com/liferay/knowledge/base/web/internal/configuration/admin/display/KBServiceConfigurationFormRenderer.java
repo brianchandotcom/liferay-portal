@@ -5,15 +5,11 @@
 
 package com.liferay.knowledge.base.web.internal.configuration.admin.display;
 
-import com.liferay.configuration.admin.display.ConfigurationScreen;
+import com.liferay.configuration.admin.display.ConfigurationFormRenderer;
 import com.liferay.knowledge.base.configuration.KBServiceConfigurationProvider;
 import com.liferay.knowledge.base.web.internal.display.context.KBArticleCompanyConfigurationDisplayContext;
-import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
-import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.Portal;
-
-import jakarta.portlet.PortletResponse;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ParamUtil;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletContext;
@@ -22,7 +18,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -30,28 +26,28 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alicia García
  */
-@Component(service = ConfigurationScreen.class)
-public class KBConfigurationScreen implements ConfigurationScreen {
+@Component(service = ConfigurationFormRenderer.class)
+public class KBServiceConfigurationFormRenderer
+	implements ConfigurationFormRenderer {
 
 	@Override
-	public String getCategoryKey() {
-		return "knowledge-base";
+	public String getPid() {
+		return "com.liferay.knowledge.base.internal.configuration." +
+			"KBServiceConfiguration";
 	}
 
 	@Override
-	public String getKey() {
-		return "knowledge-base-service";
-	}
+	public Map<String, Object> getRequestParameters(
+		HttpServletRequest httpServletRequest) {
 
-	@Override
-	public String getName(Locale locale) {
-		return _language.get(
-			locale, "knowledge-base-service-configuration-name");
-	}
-
-	@Override
-	public String getScope() {
-		return ExtendedObjectClassDefinition.Scope.SYSTEM.getValue();
+		return HashMapBuilder.<String, Object>put(
+			"checkInterval",
+			ParamUtil.getInteger(httpServletRequest, "checkInterval")
+		).put(
+			"expirationDateNotificationDateWeeks",
+			ParamUtil.getInteger(
+				httpServletRequest, "expirationDateNotificationDateWeeks")
+		).build();
 	}
 
 	@Override
@@ -64,10 +60,7 @@ public class KBConfigurationScreen implements ConfigurationScreen {
 			httpServletRequest.setAttribute(
 				KBArticleCompanyConfigurationDisplayContext.class.getName(),
 				new KBArticleCompanyConfigurationDisplayContext(
-					httpServletRequest, _kbServiceConfigurationProvider,
-					_portal.getLiferayPortletResponse(
-						(PortletResponse)httpServletRequest.getAttribute(
-							JavaConstants.JAKARTA_PORTLET_RESPONSE))));
+					_kbServiceConfigurationProvider));
 
 			RequestDispatcher requestDispatcher =
 				_servletContext.getRequestDispatcher(
@@ -85,12 +78,6 @@ public class KBConfigurationScreen implements ConfigurationScreen {
 
 	@Reference
 	private KBServiceConfigurationProvider _kbServiceConfigurationProvider;
-
-	@Reference
-	private Language _language;
-
-	@Reference
-	private Portal _portal;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.knowledge.base.web)"

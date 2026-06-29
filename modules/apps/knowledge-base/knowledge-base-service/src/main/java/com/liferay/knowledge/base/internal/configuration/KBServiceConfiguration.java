@@ -13,7 +13,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Alicia García
  */
 @ExtendedObjectClassDefinition(
-	category = "knowledge-base", generateUI = false,
+	category = "knowledge-base",
 	scope = ExtendedObjectClassDefinition.Scope.SYSTEM
 )
 @Meta.OCD(

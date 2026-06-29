@@ -12,14 +12,12 @@ import com.liferay.object.exception.ObjectEntryValuesException;
 import com.liferay.object.exception.ObjectFieldSettingValueException;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
-import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionTableUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -93,12 +91,6 @@ public class EmailAddressObjectFieldBusinessType
 	public Set<String> getUnmodifiableObjectFieldSettingsNames() {
 		return Collections.singleton(
 			ObjectFieldSettingConstants.NAME_UNIQUE_VALUES);
-	}
-
-	@Override
-	public boolean isVisible(ObjectDefinition objectDefinition) {
-		return FeatureFlagManagerUtil.isEnabled(
-			objectDefinition.getCompanyId(), "LPD-70673");
 	}
 
 	@Override

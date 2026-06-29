@@ -3,85 +3,109 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {expect, mergeTests} from '@playwright/test';
+import {expect} from '@playwright/test';
 
 import {loginTest} from '../../../fixtures/loginTest';
-import {systemSettingsPageTest} from '../../../fixtures/systemSettingsPageTest';
+import {KBServiceConfigurationPage} from '../../../pages/knowledge-base-web/KBServiceConfigurationPage';
 
-const test = mergeTests(loginTest(), systemSettingsPageTest);
-
-const FORM_SELECTOR =
-	'[id="_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_fm"]';
+const test = loginTest();
 
 let originalCheckInterval: string;
-let originalNotificationDateWeeks: string;
+let originalExpirationDateNotificationDateWeeks: string;
 
-test.afterEach(async ({systemSettingsPage}) => {
+test.beforeEach(async ({page}) => {
+	const kbServiceConfigurationPage = new KBServiceConfigurationPage(page);
+
+	await kbServiceConfigurationPage.goTo();
+
+	originalCheckInterval =
+		await kbServiceConfigurationPage.checkIntervalInput.inputValue();
+	originalExpirationDateNotificationDateWeeks =
+		await kbServiceConfigurationPage.expirationDateNotificationDateWeeksInput.inputValue();
+});
+
+test.afterEach(async ({page}) => {
 	if (originalCheckInterval === undefined) {
 		return;
 	}
 
-	await systemSettingsPage.goToSystemSetting('Knowledge Base', 'Service');
+	const kbServiceConfigurationPage = new KBServiceConfigurationPage(page);
 
-	const form = systemSettingsPage.page.locator(FORM_SELECTOR);
+	await kbServiceConfigurationPage.goTo();
 
-	await form
-		.locator('input[name$="checkInterval"]')
-		.fill(originalCheckInterval);
+	await kbServiceConfigurationPage.checkIntervalInput.fill(
+		originalCheckInterval
+	);
+	await kbServiceConfigurationPage.expirationDateNotificationDateWeeksInput.fill(
+		originalExpirationDateNotificationDateWeeks
+	);
 
-	await form
-		.locator('input[name$="expirationDateNotificationDateWeeks"]')
-		.fill(originalNotificationDateWeeks);
-
-	await systemSettingsPage.saveAndWaitForAlert();
+	await kbServiceConfigurationPage.save();
 });
 
 test(
 	'Persists Knowledge Base service configuration changes',
 	{tag: '@LPD-92881'},
-	async ({systemSettingsPage}) => {
-		const {page} = systemSettingsPage;
+	async ({page}) => {
+		const kbServiceConfigurationPage = new KBServiceConfigurationPage(page);
 
-		const form = page.locator(FORM_SELECTOR);
-		const checkIntervalInput = form.locator('input[name$="checkInterval"]');
-		const notificationDateWeeksInput = form.locator(
-			'input[name$="expirationDateNotificationDateWeeks"]'
+		const newCheckInterval = String(Number(originalCheckInterval) + 1);
+		const newExpirationDateNotificationDateWeeks = String(
+			Number(originalExpirationDateNotificationDateWeeks) + 1
 		);
 
-		let newCheckInterval = '';
-		let newNotificationDateWeeks = '';
-
 		await test.step('Change the configuration values', async () => {
-			await systemSettingsPage.goToSystemSetting(
-				'Knowledge Base',
-				'Service'
+			await kbServiceConfigurationPage.checkIntervalInput.fill(
+				newCheckInterval
+			);
+			await kbServiceConfigurationPage.expirationDateNotificationDateWeeksInput.fill(
+				newExpirationDateNotificationDateWeeks
 			);
 
-			originalCheckInterval = await checkIntervalInput.inputValue();
-			originalNotificationDateWeeks =
-				await notificationDateWeeksInput.inputValue();
-
-			newCheckInterval = String(Number(originalCheckInterval) + 1);
-			newNotificationDateWeeks = String(
-				Number(originalNotificationDateWeeks) + 1
-			);
-
-			await checkIntervalInput.fill(newCheckInterval);
-			await notificationDateWeeksInput.fill(newNotificationDateWeeks);
-
-			await systemSettingsPage.saveAndWaitForAlert();
+			await kbServiceConfigurationPage.save();
 		});
 
 		await test.step('Assert the values persisted', async () => {
-			await systemSettingsPage.goToSystemSetting(
-				'Knowledge Base',
-				'Service'
+			await kbServiceConfigurationPage.goTo();
+
+			await expect(
+				kbServiceConfigurationPage.checkIntervalInput
+			).toHaveValue(newCheckInterval);
+			await expect(
+				kbServiceConfigurationPage.expirationDateNotificationDateWeeksInput
+			).toHaveValue(newExpirationDateNotificationDateWeeks);
+		});
+	}
+);
+
+test(
+	'Resets Knowledge Base service configuration to default values',
+	{tag: '@LPD-92881'},
+	async ({page}) => {
+		const kbServiceConfigurationPage = new KBServiceConfigurationPage(page);
+
+		await test.step('Change and save non-default values', async () => {
+			await kbServiceConfigurationPage.checkIntervalInput.fill('99');
+			await kbServiceConfigurationPage.expirationDateNotificationDateWeeksInput.fill(
+				'9'
 			);
 
-			await expect(checkIntervalInput).toHaveValue(newCheckInterval);
-			await expect(notificationDateWeeksInput).toHaveValue(
-				newNotificationDateWeeks
-			);
+			await kbServiceConfigurationPage.save();
+		});
+
+		await test.step('Reset to the default values', async () => {
+			await kbServiceConfigurationPage.resetToDefaultValues();
+		});
+
+		await test.step('Assert the default values were restored', async () => {
+			await kbServiceConfigurationPage.goTo();
+
+			await expect(
+				kbServiceConfigurationPage.checkIntervalInput
+			).toHaveValue('15');
+			await expect(
+				kbServiceConfigurationPage.expirationDateNotificationDateWeeksInput
+			).toHaveValue('1');
 		});
 	}
 );

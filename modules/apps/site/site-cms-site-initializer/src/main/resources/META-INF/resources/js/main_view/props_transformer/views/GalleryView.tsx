@@ -19,6 +19,7 @@ import React, {Context, useContext, useEffect, useRef, useState} from 'react';
 import {useDropzone} from 'react-dropzone';
 
 import AssetPreview from '../../../common/components/AssetPreview';
+import useResizeObserver from '../../../common/hooks/useResizeObserver';
 
 import '../../../../css/props_transformer/GalleryView.scss';
 
@@ -51,31 +52,15 @@ const GalleryView = ({
 		Math.max(0, items.length - 1)
 	);
 
-	useEffect(() => {
-		const container = thumbnailsRef.current;
+	useResizeObserver(thumbnailsRef, (element) => {
+		const {width} = element.getBoundingClientRect();
 
-		if (!container) {
-			return;
-		}
+		const fittingCount = Math.floor(
+			(width + THUMBNAIL_GAP) / (THUMBNAIL_WIDTH + THUMBNAIL_GAP)
+		);
 
-		const updateVisibleItemsCount = () => {
-			const {width} = container.getBoundingClientRect();
-
-			const fittingCount = Math.floor(
-				(width + THUMBNAIL_GAP) / (THUMBNAIL_WIDTH + THUMBNAIL_GAP)
-			);
-
-			setVisibleItemsCount(Math.max(1, fittingCount));
-		};
-
-		updateVisibleItemsCount();
-
-		const resizeObserver = new ResizeObserver(updateVisibleItemsCount);
-
-		resizeObserver.observe(container);
-
-		return () => resizeObserver.disconnect();
-	}, []);
+		setVisibleItemsCount(Math.max(1, fittingCount));
+	});
 
 	useEffect(() => {
 		setVisibleStartIndex((start) => {

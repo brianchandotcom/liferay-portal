@@ -70,9 +70,9 @@ public class AudiencesCriteriaProviderTest {
 		throws Exception {
 
 		String name = RandomTestUtil.randomString();
+		String symbol = RandomTestUtil.randomString();
 
-		ClientExtensionEntry clientExtensionEntry = _addClientExtensionEntry(
-			name);
+		_addClientExtensionEntry(name, symbol);
 
 		List<AudiencesCriteriaType> audiencesCriteriaTypes =
 			_audiencesCriteriaProvider.getAudiencesCriteriaTypes(
@@ -87,13 +87,15 @@ public class AudiencesCriteriaProviderTest {
 		Assert.assertEquals(
 			audiencesCriterias.toString(), 1, audiencesCriterias.size());
 
-		AudiencesCriteria audiencesCriteria = _getAudiencesCriteria(
-			audiencesCriterias,
-			"custom:" + clientExtensionEntry.getExternalReferenceCode());
+		AudiencesCriteria audiencesCriteria = audiencesCriterias.get(0);
 
 		Assert.assertEquals(name, audiencesCriteria.getLabel());
 		Assert.assertEquals(
 			AudiencesCriteria.Type.STRING, audiencesCriteria.getType());
+
+		String key = audiencesCriteria.getKey();
+
+		Assert.assertTrue(key, key.endsWith(StringPool.POUND + symbol));
 	}
 
 	@Test
@@ -117,34 +119,26 @@ public class AudiencesCriteriaProviderTest {
 			_getAudiencesCriteria(audiencesCriterias, "user_authentication");
 
 		Assert.assertEquals(
-			AudiencesCriteria.Type.OPTIONS,
+			AudiencesCriteria.Type.BOOLEAN,
 			authenticationAudiencesCriteria.getType());
-
-		List<AudiencesCriteria.Option> options =
-			authenticationAudiencesCriteria.getOptions();
-
-		Assert.assertEquals(options.toString(), 2, options.size());
-
-		AudiencesCriteria.Option option1 = options.get(0);
-
-		Assert.assertEquals("yes", option1.getValue());
-
-		AudiencesCriteria.Option option2 = options.get(1);
-
-		Assert.assertEquals("no", option2.getValue());
+		Assert.assertNull(authenticationAudiencesCriteria.getOptions());
 
 		AudiencesCriteria languageAudiencesCriteria = _getAudiencesCriteria(
 			audiencesCriterias, "user_language");
 
 		Assert.assertEquals(
-			AudiencesCriteria.Type.OPTIONS,
-			languageAudiencesCriteria.getType());
+			AudiencesCriteria.Type.STRING, languageAudiencesCriteria.getType());
+
+		List<AudiencesCriteria.Option> options =
+			languageAudiencesCriteria.getOptions();
+
+		Assert.assertFalse(options.toString(), options.isEmpty());
 	}
 
-	private ClientExtensionEntry _addClientExtensionEntry(String name)
+	private void _addClientExtensionEntry(String name, String symbol)
 		throws Exception {
 
-		ClientExtensionEntry clientExtensionEntry =
+		_clientExtensionEntries.add(
 			_clientExtensionEntryLocalService.addClientExtensionEntry(
 				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 				StringPool.BLANK,
@@ -154,14 +148,14 @@ public class AudiencesCriteriaProviderTest {
 				UnicodePropertiesBuilder.create(
 					true
 				).put(
-					"symbols", RandomTestUtil.randomString()
+					"names", name
+				).put(
+					"symbols", symbol
+				).put(
+					"types", "string"
 				).put(
 					"url", "http://" + RandomTestUtil.randomString() + ".com"
-				).buildString());
-
-		_clientExtensionEntries.add(clientExtensionEntry);
-
-		return clientExtensionEntry;
+				).buildString()));
 	}
 
 	private AudiencesCriteria _getAudiencesCriteria(

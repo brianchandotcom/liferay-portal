@@ -5,16 +5,12 @@
 
 package com.liferay.ai.hub.internal.langchain4j.rag.content.retriever;
 
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
-import com.liferay.portal.search.highlight.FieldConfig;
 import com.liferay.portal.search.highlight.FieldConfigBuilder;
 import com.liferay.portal.search.highlight.FieldConfigBuilderFactory;
-import com.liferay.portal.search.highlight.Highlight;
 import com.liferay.portal.search.highlight.HighlightBuilder;
 import com.liferay.portal.search.highlight.HighlightBuilderFactory;
 import com.liferay.portal.search.highlight.HighlightField;
@@ -36,7 +32,6 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import org.mockito.ArgumentCaptor;
-import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
 /**
@@ -51,65 +46,35 @@ public class ElasticsearchContentRetrieverTest {
 
 	@Before
 	public void setUp() {
-		_searchEngineAdapter = Mockito.mock(SearchEngineAdapter.class);
-
-		_elasticsearchContentRetriever = new ElasticsearchContentRetriever(
-			_mockFieldConfigBuilderFactory(), _mockHighlightBuilderFactory(),
-			new String[] {RandomTestUtil.randomString()}, _searchEngineAdapter,
-			RandomTestUtil.randomLong(), RandomTestUtil.randomLong());
+		_setUpFieldConfigBuilderFactory();
+		_setUpHighlightBuilderFactory();
+		_setUpSearchEngineAdapter();
 	}
 
 	@Test
-	public void testSearchFetchesURLSourceField() {
-		try (MockedStatic<JSONUtil> jsonUtilMockedStatic = Mockito.mockStatic(
-				JSONUtil.class)) {
+	public void testSearch() {
+		ElasticsearchContentRetriever elasticsearchContentRetriever =
+			new ElasticsearchContentRetriever(
+				_fieldConfigBuilderFactory, _highlightBuilderFactory,
+				new String[] {RandomTestUtil.randomString()},
+				_searchEngineAdapter, RandomTestUtil.randomLong(),
+				RandomTestUtil.randomLong());
 
-			JSONObject jsonObject = Mockito.mock(JSONObject.class);
+		List<Content> contents = elasticsearchContentRetriever.search(
+			Mockito.mock(Query.class));
 
-			Mockito.when(
-				jsonObject.toString()
-			).thenReturn(
-				"{}"
-			);
+		Assert.assertEquals(contents.toString(), 1, contents.size());
 
-			jsonUtilMockedStatic.when(
-				() -> JSONUtil.put(Mockito.anyString(), (Object)Mockito.any())
-			).thenReturn(
-				jsonObject
-			);
+		Content content = contents.get(0);
 
-			Content content = _retrieveSingleContent(
-				"https://learn.liferay.com/w/dxp/low-code/objects",
-				"Liferay Objects let you build no-code applications.");
+		Assert.assertEquals(
+			_URL,
+			content.textSegment(
+			).metadata(
+			).getString(
+				"url"
+			));
 
-			// The retrieved URL must reach the chunk metadata so the content
-			// injector can append it at the end of the text segment for the
-			// model to cite (LPD-93999).
-
-			Assert.assertEquals(
-				"https://learn.liferay.com/w/dxp/low-code/objects",
-				content.textSegment(
-				).metadata(
-				).getString(
-					"url"
-				));
-
-			// The request must enable source fetching and restrict it to the
-			// "url" field. Reading "url" from the sources map while source
-			// fetching is disabled silently drops the URL.
-
-			SearchSearchRequest searchSearchRequest =
-				_captureSearchSearchRequest();
-
-			Assert.assertEquals(
-				Boolean.TRUE, searchSearchRequest.getFetchSource());
-			Assert.assertEquals(
-				Arrays.toString(new String[] {"url"}),
-				Arrays.toString(searchSearchRequest.getFetchSourceIncludes()));
-		}
-	}
-
-	private SearchSearchRequest _captureSearchSearchRequest() {
 		ArgumentCaptor<SearchSearchRequest> argumentCaptor =
 			ArgumentCaptor.forClass(SearchSearchRequest.class);
 
@@ -119,40 +84,28 @@ public class ElasticsearchContentRetrieverTest {
 			argumentCaptor.capture()
 		);
 
-		return argumentCaptor.getValue();
+		SearchSearchRequest searchSearchRequest = argumentCaptor.getValue();
+
+		Assert.assertEquals(Boolean.TRUE, searchSearchRequest.getFetchSource());
+		Assert.assertEquals(
+			Arrays.toString(new String[] {"url"}),
+			Arrays.toString(searchSearchRequest.getFetchSourceIncludes()));
 	}
 
-	private FieldConfigBuilderFactory _mockFieldConfigBuilderFactory() {
-		FieldConfigBuilderFactory fieldConfigBuilderFactory = Mockito.mock(
-			FieldConfigBuilderFactory.class);
-
-		FieldConfigBuilder fieldConfigBuilder = Mockito.mock(
-			FieldConfigBuilder.class);
-
+	private void _setUpFieldConfigBuilderFactory() {
 		Mockito.when(
-			fieldConfigBuilderFactory.builder(Mockito.anyString())
+			_fieldConfigBuilderFactory.builder(Mockito.anyString())
 		).thenReturn(
-			fieldConfigBuilder
+			Mockito.mock(FieldConfigBuilder.class)
 		);
-
-		Mockito.when(
-			fieldConfigBuilder.build()
-		).thenReturn(
-			Mockito.mock(FieldConfig.class)
-		);
-
-		return fieldConfigBuilderFactory;
 	}
 
-	private HighlightBuilderFactory _mockHighlightBuilderFactory() {
-		HighlightBuilderFactory highlightBuilderFactory = Mockito.mock(
-			HighlightBuilderFactory.class);
-
+	private void _setUpHighlightBuilderFactory() {
 		HighlightBuilder highlightBuilder = Mockito.mock(
 			HighlightBuilder.class);
 
 		Mockito.when(
-			highlightBuilderFactory.builder()
+			_highlightBuilderFactory.builder()
 		).thenReturn(
 			highlightBuilder
 		);
@@ -162,23 +115,15 @@ public class ElasticsearchContentRetrieverTest {
 		).thenReturn(
 			highlightBuilder
 		);
-
-		Mockito.when(
-			highlightBuilder.build()
-		).thenReturn(
-			Mockito.mock(Highlight.class)
-		);
-
-		return highlightBuilderFactory;
 	}
 
-	private Content _retrieveSingleContent(String url, String fragment) {
+	private void _setUpSearchEngineAdapter() {
 		HighlightField highlightField = Mockito.mock(HighlightField.class);
 
 		Mockito.when(
 			highlightField.getFragments()
 		).thenReturn(
-			List.of(fragment)
+			List.of(RandomTestUtil.randomString())
 		);
 
 		SearchHit searchHit = Mockito.mock(SearchHit.class);
@@ -192,7 +137,7 @@ public class ElasticsearchContentRetrieverTest {
 		Mockito.when(
 			searchHit.getSourcesMap()
 		).thenReturn(
-			Map.of("url", url)
+			Map.of("url", _URL)
 		);
 
 		SearchHits searchHits = Mockito.mock(SearchHits.class);
@@ -219,23 +164,15 @@ public class ElasticsearchContentRetrieverTest {
 		).execute(
 			Mockito.any(SearchSearchRequest.class)
 		);
-
-		Query query = Mockito.mock(Query.class);
-
-		Mockito.when(
-			query.text()
-		).thenReturn(
-			RandomTestUtil.randomString()
-		);
-
-		List<Content> contents = _elasticsearchContentRetriever.search(query);
-
-		Assert.assertEquals(contents.toString(), 1, contents.size());
-
-		return contents.get(0);
 	}
 
-	private ElasticsearchContentRetriever _elasticsearchContentRetriever;
-	private SearchEngineAdapter _searchEngineAdapter;
+	private static final String _URL = RandomTestUtil.randomString();
+
+	private final FieldConfigBuilderFactory _fieldConfigBuilderFactory =
+		Mockito.mock(FieldConfigBuilderFactory.class);
+	private final HighlightBuilderFactory _highlightBuilderFactory =
+		Mockito.mock(HighlightBuilderFactory.class);
+	private final SearchEngineAdapter _searchEngineAdapter = Mockito.mock(
+		SearchEngineAdapter.class);
 
 }

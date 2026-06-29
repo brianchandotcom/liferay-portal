@@ -7,6 +7,8 @@ package com.liferay.portal.osgi.web.wab.generator.internal.artifact;
 
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -104,8 +106,10 @@ public class ArtifactURLUtilTest {
 	public void testClientExtensionURLWithStringConfigValueFallsBack()
 		throws Exception {
 
+		JSONObject jsonObject = JSONUtil.put("sample", "not-an-object");
+
 		String query = _transformClientExtensionConfigToQuery(
-			"{\"sample\": \"not-an-object\"}", "nonobjectconfig.zip");
+			jsonObject.toString(), "nonobjectconfig.zip");
 
 		Assert.assertTrue(
 			query.contains(Constants.BUNDLE_SYMBOLICNAME + "=nonobjectconfig"));
@@ -135,8 +139,12 @@ public class ArtifactURLUtilTest {
 	public void testClientExtensionURLWithVersionUsesConfigWebContextPath()
 		throws Exception {
 
+		JSONObject jsonObject = JSONUtil.put(
+			"sample",
+			JSONUtil.put("webContextPath", "/liferay-sample-global-js"));
+
 		String query = _transformClientExtensionConfigToQuery(
-			"{\"sample\": {\"webContextPath\": \"/liferay-sample-global-js\"}}",
+			jsonObject.toString(),
 			"liferay-sample-global-js-1.0.0-SNAPSHOT.zip");
 
 		Assert.assertTrue(
@@ -150,9 +158,11 @@ public class ArtifactURLUtilTest {
 	public void testClientExtensionURLWithWebContextPathWithoutLeadingSlash()
 		throws Exception {
 
+		JSONObject jsonObject = JSONUtil.put(
+			"sample", JSONUtil.put("webContextPath", "no-slash"));
+
 		String query = _transformClientExtensionConfigToQuery(
-			"{\"sample\": {\"webContextPath\": \"no-slash\"}}",
-			"noleadingslash.zip");
+			jsonObject.toString(), "noleadingslash.zip");
 
 		Assert.assertTrue(query.contains("Web-ContextPath=/no-slash"));
 		Assert.assertFalse(query.contains("Web-ContextPath=//no-slash"));

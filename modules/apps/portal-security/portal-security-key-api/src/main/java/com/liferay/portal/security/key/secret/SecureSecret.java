@@ -10,6 +10,9 @@ import com.liferay.portal.security.key.KeyReference;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.charset.CharacterCodingException;
+import java.nio.charset.CharsetDecoder;
+import java.nio.charset.CharsetEncoder;
+import java.nio.charset.CoderResult;
 import java.nio.charset.StandardCharsets;
 
 import java.util.Arrays;
@@ -161,17 +164,32 @@ public final class SecureSecret implements AutoCloseable, Destroyable {
 	}
 
 	private char[] _decode(byte[] bytes) {
+		CharsetDecoder charsetDecoder = StandardCharsets.UTF_8.newDecoder();
+
+		char[] tempChars = new char
+			[(int)Math.ceil(bytes.length * charsetDecoder.maxCharsPerByte())];
+
 		try {
-			CharBuffer charBuffer = StandardCharsets.UTF_8.newDecoder(
-			).decode(
-				ByteBuffer.wrap(bytes)
-			);
+			CharBuffer charBuffer = CharBuffer.wrap(tempChars);
+
+			CoderResult coderResult = charsetDecoder.decode(
+				ByteBuffer.wrap(bytes), charBuffer, true);
+
+			if (coderResult.isError()) {
+				coderResult.throwException();
+			}
+
+			coderResult = charsetDecoder.flush(charBuffer);
+
+			if (coderResult.isError()) {
+				coderResult.throwException();
+			}
+
+			charBuffer.flip();
 
 			char[] chars = new char[charBuffer.remaining()];
 
 			charBuffer.get(chars);
-
-			Arrays.fill(charBuffer.array(), '\0');
 
 			return chars;
 		}
@@ -179,20 +197,38 @@ public final class SecureSecret implements AutoCloseable, Destroyable {
 			throw new IllegalArgumentException(
 				"Stored secret is not valid UTF-8", characterCodingException);
 		}
+		finally {
+			Arrays.fill(tempChars, '\0');
+		}
 	}
 
 	private byte[] _encode(char[] chars) {
+		CharsetEncoder charsetEncoder = StandardCharsets.UTF_8.newEncoder();
+
+		byte[] tempBytes = new byte
+			[(int)Math.ceil(chars.length * charsetEncoder.maxBytesPerChar())];
+
 		try {
-			ByteBuffer byteBuffer = StandardCharsets.UTF_8.newEncoder(
-			).encode(
-				CharBuffer.wrap(chars)
-			);
+			ByteBuffer byteBuffer = ByteBuffer.wrap(tempBytes);
+
+			CoderResult coderResult = charsetEncoder.encode(
+				CharBuffer.wrap(chars), byteBuffer, true);
+
+			if (coderResult.isError()) {
+				coderResult.throwException();
+			}
+
+			coderResult = charsetEncoder.flush(byteBuffer);
+
+			if (coderResult.isError()) {
+				coderResult.throwException();
+			}
+
+			byteBuffer.flip();
 
 			byte[] bytes = new byte[byteBuffer.remaining()];
 
 			byteBuffer.get(bytes);
-
-			Arrays.fill(byteBuffer.array(), (byte)0);
 
 			return bytes;
 		}
@@ -200,6 +236,9 @@ public final class SecureSecret implements AutoCloseable, Destroyable {
 			throw new IllegalArgumentException(
 				"Input character sequence is not valid UTF-16",
 				characterCodingException);
+		}
+		finally {
+			Arrays.fill(tempBytes, (byte)0);
 		}
 	}
 

@@ -2009,7 +2009,6 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertTrue(objectEntry.isApproved());
 	}
 
-	@FeatureFlag("LPD-70673")
 	@Test
 	public void testAddObjectEntryWithEmailAddressObjectField()
 		throws Exception {
@@ -7681,7 +7680,6 @@ public class ObjectEntryLocalServiceTest {
 			_dlFileEntryLocalService.fetchDLFileEntry(fileEntryId2));
 	}
 
-	@FeatureFlag("LPD-70673")
 	@Test
 	public void testUpdateObjectEntryWithEmailAddressObjectField()
 		throws Exception {

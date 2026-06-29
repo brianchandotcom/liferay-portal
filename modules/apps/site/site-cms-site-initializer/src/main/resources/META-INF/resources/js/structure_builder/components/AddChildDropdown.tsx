@@ -49,16 +49,6 @@ export default function AddChildDropdown({
 
 	const {data: objectDefinitions, status} = useCache('object-definitions');
 
-	const emailEnabled = !!Liferay.FeatureFlags['LPD-70673'];
-
-	const fieldTypes = FIELD_TYPES.filter((type) => {
-		if (type === 'email') {
-			return emailEnabled;
-		}
-
-		return true;
-	});
-
 	const addField = (type: Field['type']) =>
 		dispatch({
 			field: getDefaultField({
@@ -87,7 +77,7 @@ export default function AddChildDropdown({
 		<>
 			<ClayDropDownWithItems
 				items={[
-					...fieldTypes.map(
+					...FIELD_TYPES.map(
 						(type): Item => ({
 							label: FIELD_TYPE_LABEL[type],
 							onClick: () => addField(type),

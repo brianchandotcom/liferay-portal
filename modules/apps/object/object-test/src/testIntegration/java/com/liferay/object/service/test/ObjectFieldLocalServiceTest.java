@@ -1895,7 +1895,6 @@ public class ObjectFieldLocalServiceTest {
 			modifiableSystemObjectDefinition);
 	}
 
-	@FeatureFlag("LPD-70673")
 	@Test
 	public void testObjectFieldSettings() throws Exception {
 

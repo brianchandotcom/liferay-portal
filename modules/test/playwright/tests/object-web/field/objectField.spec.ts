@@ -29,9 +29,6 @@ import {postListTypeDefinitionListTypeEntries} from '../utils/postListTypeDefini
 const test = mergeTests(
 	apiHelpersTest,
 	dataApiHelpersTest,
-	featureFlagsTest({
-		'LPD-70673': {enabled: true}, // Email Address field
-	}),
 	loginTest(),
 	objectPagesTest
 );

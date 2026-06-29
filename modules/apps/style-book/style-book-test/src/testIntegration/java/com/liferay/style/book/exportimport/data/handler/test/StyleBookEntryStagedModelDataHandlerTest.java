@@ -171,11 +171,9 @@ public class StyleBookEntryStagedModelDataHandlerTest
 		ExportImportReportEntry exportImportReportEntry =
 			_getWarningExportImportReportEntry(liveGroup.getGroupId());
 
-		Assert.assertTrue(
-			exportImportReportEntry.getErrorMessage(
-			).contains(
-				"is not deployed"
-			));
+		String errorMessage = exportImportReportEntry.getErrorMessage();
+
+		Assert.assertTrue(errorMessage.contains("is not deployed"));
 	}
 
 	@Test
@@ -203,11 +201,9 @@ public class StyleBookEntryStagedModelDataHandlerTest
 		ExportImportReportEntry exportImportReportEntry =
 			_getWarningExportImportReportEntry(liveGroup.getGroupId());
 
-		Assert.assertTrue(
-			exportImportReportEntry.getErrorMessage(
-			).contains(
-				"do not exist"
-			));
+		String errorMessage = exportImportReportEntry.getErrorMessage();
+
+		Assert.assertTrue(errorMessage.contains("do not exist"));
 	}
 
 	@Test

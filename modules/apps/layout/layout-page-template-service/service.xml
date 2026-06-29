@@ -368,6 +368,35 @@
 			<finder-column name="segmentsExperienceERC" />
 		</finder>
 	</entity>
+	<entity external-reference-code="group" local-service="true" name="LayoutPageTemplateStructureRelElementVariationAudienceEntryRel" remote-service="true" table="LPTSREVAudienceEntryRel" uuid="true">
+
+		<!-- PK fields -->
+
+		<column db-name="lptsrevAudienceEntryRelId" name="layoutPageTemplateStructureRelElementVariationAudienceEntryRelId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="audienceEntryERC" type="String" />
+		<column db-name="lptsRelElementVariationERC" name="layoutPageTemplateStructureRelElementVariationERC" type="String" />
+
+		<!-- Finder methods -->
+
+		<finder name="LayoutPageTemplateStructureRelElementVariationERC" return-type="Collection">
+			<finder-column name="layoutPageTemplateStructureRelElementVariationERC" />
+		</finder>
+	</entity>
 	<exceptions>
 		<exception>DuplicateLayoutPageTemplateCollection</exception>
 		<exception>DuplicateLayoutPageTemplateCollectionType</exception>

@@ -34,9 +34,9 @@ ViewHomeRecentAssetsSectionDisplayContext viewHomeRecentAssetsSectionDisplayCont
 				fdsActionDropdownItems="<%= viewHomeRecentAssetsSectionDisplayContext.getFDSActionDropdownItems() %>"
 				formName="fm"
 				id="<%= CMSSiteInitializerFDSNames.HOME_RECENT_ASSETS_SECTION %>"
-				itemsPerPage="<%= 20 %>"
 				propsTransformer="{HomeRecentAssetsFDSPropsTransformer} from site-cms-site-initializer"
 				showManagementBar="<%= false %>"
+				showPagination="<%= false %>"
 				showSearch="<%= false %>"
 				style="fluid"
 			/>

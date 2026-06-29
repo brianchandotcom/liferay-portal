@@ -813,6 +813,7 @@ public class LayoutSetPersistenceImpl
 					new String[] {"groupId"}, false),
 				_SQL_SELECT_LAYOUTSET_WHERE, _SQL_COUNT_LAYOUTSET_WHERE,
 				LayoutSetModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"layoutSet.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, LayoutSet::getGroupId));
@@ -841,6 +842,7 @@ public class LayoutSetPersistenceImpl
 					new String[] {"layoutSetPrototypeUuid"}, 0, 1, false, null),
 				_SQL_SELECT_LAYOUTSET_WHERE, _SQL_COUNT_LAYOUTSET_WHERE,
 				LayoutSetModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"layoutSet.", "layoutSetPrototypeUuid",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -883,6 +885,7 @@ public class LayoutSetPersistenceImpl
 				false, null),
 			_SQL_SELECT_LAYOUTSET_WHERE, _SQL_COUNT_LAYOUTSET_WHERE,
 			LayoutSetModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			null,
 			new FinderColumn<>(
 				"layoutSet.", "companyId", FinderColumn.Type.LONG, "=", true,
 				true, LayoutSet::getCompanyId),
@@ -911,6 +914,7 @@ public class LayoutSetPersistenceImpl
 				new String[] {"privateLayout", "logoId"}, false),
 			_SQL_SELECT_LAYOUTSET_WHERE, _SQL_COUNT_LAYOUTSET_WHERE,
 			LayoutSetModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			null,
 			new FinderColumn<>(
 				"layoutSet.", "privateLayout", FinderColumn.Type.BOOLEAN, "=",
 				true, true, LayoutSet::isPrivateLayout),
@@ -954,4 +958,4 @@ public class LayoutSetPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-261934016
+// LIFERAY-SERVICE-BUILDER-HASH:-16599694

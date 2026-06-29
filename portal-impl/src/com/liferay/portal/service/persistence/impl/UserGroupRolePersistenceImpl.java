@@ -850,7 +850,7 @@ public class UserGroupRolePersistenceImpl
 					new String[] {"userId"}, false),
 				_SQL_SELECT_USERGROUPROLE_WHERE, _SQL_COUNT_USERGROUPROLE_WHERE,
 				UserGroupRoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				"",
+				"", null,
 				new FinderColumn<>(
 					"userGroupRole.", "userId", FinderColumn.Type.LONG, "=",
 					true, true, UserGroupRole::getUserId));
@@ -876,7 +876,7 @@ public class UserGroupRolePersistenceImpl
 					new String[] {"groupId"}, false),
 				_SQL_SELECT_USERGROUPROLE_WHERE, _SQL_COUNT_USERGROUPROLE_WHERE,
 				UserGroupRoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				"",
+				"", null,
 				new FinderColumn<>(
 					"userGroupRole.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, UserGroupRole::getGroupId));
@@ -902,7 +902,7 @@ public class UserGroupRolePersistenceImpl
 					new String[] {"roleId"}, false),
 				_SQL_SELECT_USERGROUPROLE_WHERE, _SQL_COUNT_USERGROUPROLE_WHERE,
 				UserGroupRoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				"",
+				"", null,
 				new FinderColumn<>(
 					"userGroupRole.", "roleId", FinderColumn.Type.LONG, "=",
 					true, true, UserGroupRole::getRoleId));
@@ -927,6 +927,7 @@ public class UserGroupRolePersistenceImpl
 				new String[] {"userId", "groupId"}, false),
 			_SQL_SELECT_USERGROUPROLE_WHERE, _SQL_COUNT_USERGROUPROLE_WHERE,
 			UserGroupRoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			null,
 			new FinderColumn<>(
 				"userGroupRole.", "userId", FinderColumn.Type.LONG, "=", true,
 				true, UserGroupRole::getUserId),
@@ -954,6 +955,7 @@ public class UserGroupRolePersistenceImpl
 				new String[] {"groupId", "roleId"}, false),
 			_SQL_SELECT_USERGROUPROLE_WHERE, _SQL_COUNT_USERGROUPROLE_WHERE,
 			UserGroupRoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			null,
 			new FinderColumn<>(
 				"userGroupRole.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, UserGroupRole::getGroupId),
@@ -1016,4 +1018,4 @@ public class UserGroupRolePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:967140258
+// LIFERAY-SERVICE-BUILDER-HASH:-1918608406

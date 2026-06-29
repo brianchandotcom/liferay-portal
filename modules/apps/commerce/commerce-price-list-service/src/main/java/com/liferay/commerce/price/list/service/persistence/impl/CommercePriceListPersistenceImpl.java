@@ -3217,7 +3217,7 @@ public class CommercePriceListPersistenceImpl
 			_SQL_SELECT_COMMERCEPRICELIST_WHERE,
 			_SQL_COUNT_COMMERCEPRICELIST_WHERE,
 			CommercePriceListModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-			"",
+			"", null,
 			new FinderColumn<>(
 				"commercePriceList.", "uuid", "uuid_", FinderColumn.Type.STRING,
 				"=", true, true, CommercePriceList::getUuid));
@@ -3260,7 +3260,7 @@ public class CommercePriceListPersistenceImpl
 				_SQL_SELECT_COMMERCEPRICELIST_WHERE,
 				_SQL_COUNT_COMMERCEPRICELIST_WHERE,
 				CommercePriceListModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"", "",
+				"", "", null,
 				new FinderColumn<>(
 					"commercePriceList.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -3291,7 +3291,7 @@ public class CommercePriceListPersistenceImpl
 				_SQL_SELECT_COMMERCEPRICELIST_WHERE,
 				_SQL_COUNT_COMMERCEPRICELIST_WHERE,
 				CommercePriceListModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"", "",
+				"", "", null,
 				new FinderColumn<>(
 					"commercePriceList.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, CommercePriceList::getCompanyId));
@@ -3321,7 +3321,7 @@ public class CommercePriceListPersistenceImpl
 				_SQL_SELECT_COMMERCEPRICELIST_WHERE,
 				_SQL_COUNT_COMMERCEPRICELIST_WHERE,
 				CommercePriceListModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"", "",
+				"", "", null,
 				new FinderColumn<>(
 					"commercePriceList.", "parentCommercePriceListId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -3349,7 +3349,7 @@ public class CommercePriceListPersistenceImpl
 				_SQL_SELECT_COMMERCEPRICELIST_WHERE,
 				_SQL_COUNT_COMMERCEPRICELIST_WHERE,
 				CommercePriceListModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"", "",
+				"", "", null,
 				new ArrayableFinderColumn<>(
 					"commercePriceList.", "groupId", FinderColumn.Type.LONG,
 					"=", false, true, true, CommercePriceList::getGroupId),
@@ -3383,7 +3383,7 @@ public class CommercePriceListPersistenceImpl
 				_SQL_SELECT_COMMERCEPRICELIST_WHERE,
 				_SQL_COUNT_COMMERCEPRICELIST_WHERE,
 				CommercePriceListModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"", "",
+				"", "", null,
 				new FinderColumn<>(
 					"commercePriceList.", "groupId", FinderColumn.Type.LONG,
 					"=", true, true, CommercePriceList::getGroupId),
@@ -3415,7 +3415,7 @@ public class CommercePriceListPersistenceImpl
 			_SQL_SELECT_COMMERCEPRICELIST_WHERE,
 			_SQL_COUNT_COMMERCEPRICELIST_WHERE,
 			CommercePriceListModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-			"",
+			"", null,
 			new FinderColumn<>(
 				"commercePriceList.", "companyId", FinderColumn.Type.LONG, "=",
 				true, true, CommercePriceList::getCompanyId),
@@ -3442,7 +3442,7 @@ public class CommercePriceListPersistenceImpl
 			_SQL_SELECT_COMMERCEPRICELIST_WHERE,
 			_SQL_COUNT_COMMERCEPRICELIST_WHERE,
 			CommercePriceListModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-			"",
+			"", null,
 			new FinderColumn<>(
 				"commercePriceList.", "displayDate", FinderColumn.Type.DATE,
 				"<", true, true, CommercePriceList::getDisplayDate),
@@ -3479,7 +3479,7 @@ public class CommercePriceListPersistenceImpl
 				_SQL_SELECT_COMMERCEPRICELIST_WHERE,
 				_SQL_COUNT_COMMERCEPRICELIST_WHERE,
 				CommercePriceListModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"", "",
+				"", "", null,
 				new ArrayableFinderColumn<>(
 					"commercePriceList.", "groupId", FinderColumn.Type.LONG,
 					"=", false, true, true, CommercePriceList::getGroupId),
@@ -3513,7 +3513,7 @@ public class CommercePriceListPersistenceImpl
 				_SQL_SELECT_COMMERCEPRICELIST_WHERE,
 				_SQL_COUNT_COMMERCEPRICELIST_WHERE,
 				CommercePriceListModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"", "",
+				"", "", null,
 				new ArrayableFinderColumn<>(
 					"commercePriceList.", "groupId", FinderColumn.Type.LONG,
 					"=", false, true, true, CommercePriceList::getGroupId),
@@ -3557,7 +3557,7 @@ public class CommercePriceListPersistenceImpl
 				_SQL_SELECT_COMMERCEPRICELIST_WHERE,
 				_SQL_COUNT_COMMERCEPRICELIST_WHERE,
 				CommercePriceListModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"", "",
+				"", "", null,
 				new FinderColumn<>(
 					"commercePriceList.", "groupId", FinderColumn.Type.LONG,
 					"=", true, true, CommercePriceList::getGroupId),
@@ -3602,7 +3602,7 @@ public class CommercePriceListPersistenceImpl
 				_SQL_SELECT_COMMERCEPRICELIST_WHERE,
 				_SQL_COUNT_COMMERCEPRICELIST_WHERE,
 				CommercePriceListModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"", "",
+				"", "", null,
 				new ArrayableFinderColumn<>(
 					"commercePriceList.", "groupId", FinderColumn.Type.LONG,
 					"=", false, true, true, CommercePriceList::getGroupId),
@@ -3642,7 +3642,7 @@ public class CommercePriceListPersistenceImpl
 				_SQL_SELECT_COMMERCEPRICELIST_WHERE,
 				_SQL_COUNT_COMMERCEPRICELIST_WHERE,
 				CommercePriceListModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"", "",
+				"", "", null,
 				new ArrayableFinderColumn<>(
 					"commercePriceList.", "groupId", FinderColumn.Type.LONG,
 					"=", false, true, true, CommercePriceList::getGroupId),
@@ -3748,4 +3748,4 @@ public class CommercePriceListPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-69818149
+// LIFERAY-SERVICE-BUILDER-HASH:-715426006

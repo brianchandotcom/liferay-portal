@@ -932,6 +932,7 @@ public class CTSContentPersistenceImpl
 				new String[] {"repositoryId", "path_"}, 0, 2, false, null),
 			_SQL_SELECT_CTSCONTENT_WHERE, _SQL_COUNT_CTSCONTENT_WHERE,
 			CTSContentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			null,
 			new FinderColumn<>(
 				"ctsContent.", "repositoryId", FinderColumn.Type.LONG, "=",
 				true, true, CTSContent::getRepositoryId),
@@ -967,6 +968,7 @@ public class CTSContentPersistenceImpl
 				false, null),
 			_SQL_SELECT_CTSCONTENT_WHERE, _SQL_COUNT_CTSCONTENT_WHERE,
 			CTSContentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			null,
 			new FinderColumn<>(
 				"ctsContent.", "companyId", FinderColumn.Type.LONG, "=", true,
 				true, CTSContent::getCompanyId),
@@ -1014,6 +1016,7 @@ public class CTSContentPersistenceImpl
 					0, 12, false, null),
 				_SQL_SELECT_CTSCONTENT_WHERE, _SQL_COUNT_CTSCONTENT_WHERE,
 				CTSContentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"ctsContent.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, CTSContent::getCompanyId),
@@ -1056,6 +1059,7 @@ public class CTSContentPersistenceImpl
 					false),
 				_SQL_SELECT_CTSCONTENT_WHERE, _SQL_COUNT_CTSCONTENT_WHERE,
 				CTSContentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"ctsContent.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, CTSContent::getCompanyId),
@@ -1175,4 +1179,4 @@ public class CTSContentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:356396205
+// LIFERAY-SERVICE-BUILDER-HASH:861282589

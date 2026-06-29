@@ -1971,6 +1971,7 @@ public class JournalFolderPersistenceImpl
 				0, 1, false, null),
 			_SQL_SELECT_JOURNALFOLDER_WHERE, _SQL_COUNT_JOURNALFOLDER_WHERE,
 			JournalFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			null,
 			new FinderColumn<>(
 				"journalFolder.", "uuid", "uuid_", FinderColumn.Type.STRING,
 				"=", true, true, JournalFolder::getUuid));
@@ -2012,7 +2013,7 @@ public class JournalFolderPersistenceImpl
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_JOURNALFOLDER_WHERE, _SQL_COUNT_JOURNALFOLDER_WHERE,
 				JournalFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				"",
+				"", null,
 				new FinderColumn<>(
 					"journalFolder.", "uuid", "uuid_", FinderColumn.Type.STRING,
 					"=", true, true, JournalFolder::getUuid),
@@ -2041,7 +2042,7 @@ public class JournalFolderPersistenceImpl
 					new String[] {"groupId"}, false),
 				_SQL_SELECT_JOURNALFOLDER_WHERE, _SQL_COUNT_JOURNALFOLDER_WHERE,
 				JournalFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				"",
+				"", null,
 				new FinderColumn<>(
 					"journalFolder.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, JournalFolder::getGroupId));
@@ -2067,7 +2068,7 @@ public class JournalFolderPersistenceImpl
 					new String[] {"companyId"}, false),
 				_SQL_SELECT_JOURNALFOLDER_WHERE, _SQL_COUNT_JOURNALFOLDER_WHERE,
 				JournalFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				"",
+				"", null,
 				new FinderColumn<>(
 					"journalFolder.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, JournalFolder::getCompanyId));
@@ -2093,7 +2094,7 @@ public class JournalFolderPersistenceImpl
 					new String[] {"groupId", "parentFolderId"}, false),
 				_SQL_SELECT_JOURNALFOLDER_WHERE, _SQL_COUNT_JOURNALFOLDER_WHERE,
 				JournalFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				"",
+				"", null,
 				new FinderColumn<>(
 					"journalFolder.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, JournalFolder::getGroupId),
@@ -2137,7 +2138,7 @@ public class JournalFolderPersistenceImpl
 					new String[] {"companyId", "status"}, false),
 				_SQL_SELECT_JOURNALFOLDER_WHERE, _SQL_COUNT_JOURNALFOLDER_WHERE,
 				JournalFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				"",
+				"", null,
 				new FinderColumn<>(
 					"journalFolder.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, JournalFolder::getCompanyId),
@@ -2196,7 +2197,7 @@ public class JournalFolderPersistenceImpl
 					false),
 				_SQL_SELECT_JOURNALFOLDER_WHERE, _SQL_COUNT_JOURNALFOLDER_WHERE,
 				JournalFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				"",
+				"", null,
 				new FinderColumn<>(
 					"journalFolder.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, JournalFolder::getGroupId),
@@ -2230,7 +2231,7 @@ public class JournalFolderPersistenceImpl
 					false),
 				_SQL_SELECT_JOURNALFOLDER_WHERE, _SQL_COUNT_JOURNALFOLDER_WHERE,
 				JournalFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				"",
+				"", null,
 				new FinderColumn<>(
 					"journalFolder.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, JournalFolder::getGroupId),
@@ -2271,7 +2272,7 @@ public class JournalFolderPersistenceImpl
 					false),
 				_SQL_SELECT_JOURNALFOLDER_WHERE, _SQL_COUNT_JOURNALFOLDER_WHERE,
 				JournalFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				"",
+				"", null,
 				new FinderColumn<>(
 					"journalFolder.", "folderId", FinderColumn.Type.LONG, ">",
 					true, true, JournalFolder::getFolderId),
@@ -2374,4 +2375,4 @@ public class JournalFolderPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-873731389
+// LIFERAY-SERVICE-BUILDER-HASH:-1902305853

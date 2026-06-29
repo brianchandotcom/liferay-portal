@@ -434,6 +434,7 @@ public class EntryPersistenceImpl
 					new String[] {"userId"}, false),
 				_SQL_SELECT_ENTRY_WHERE, _SQL_COUNT_ENTRY_WHERE,
 				EntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"entry.", "userId", FinderColumn.Type.LONG, "=", true, true,
 					Entry::getUserId));
@@ -519,4 +520,4 @@ public class EntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2124107416
+// LIFERAY-SERVICE-BUILDER-HASH:1256046194

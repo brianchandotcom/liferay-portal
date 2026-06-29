@@ -226,27 +226,10 @@ public class ExpandoColumnPersistenceImpl
 		OrderByComparator<ExpandoColumn> orderByComparator,
 		boolean useFinderCache) {
 
-		names = ArrayUtil.sortedUnique(names);
-
-		if (names.length == 1) {
-			ExpandoColumn expandoColumn = fetchByT_N(
-				tableId, names[0], useFinderCache);
-
-			if (expandoColumn == null) {
-				return Collections.emptyList();
-			}
-			else {
-				List<ExpandoColumn> list = new ArrayList<ExpandoColumn>(1);
-
-				list.add(expandoColumn);
-
-				return list;
-			}
-		}
-
 		return _collectionPersistenceFinderByT_N.find(
-			FinderCacheUtil.getFinderCache(), new Object[] {tableId, names},
-			start, end, orderByComparator, useFinderCache);
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {tableId, ArrayUtil.sortedUnique(names)}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -646,10 +629,26 @@ public class ExpandoColumnPersistenceImpl
 					new String[] {"tableId"}, false),
 				_SQL_SELECT_EXPANDOCOLUMN_WHERE, _SQL_COUNT_EXPANDOCOLUMN_WHERE,
 				ExpandoColumnModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				"",
+				"", null,
 				new FinderColumn<>(
 					"expandoColumn.", "tableId", FinderColumn.Type.LONG, "=",
 					true, true, ExpandoColumn::getTableId));
+
+		_uniquePersistenceFinderByT_N = new UniquePersistenceFinder<>(
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByT_N",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"tableId", "name"}, 0, 2, false,
+				ExpandoColumn::getTableId,
+				convertNullFunction(ExpandoColumn::getName)),
+			_SQL_SELECT_EXPANDOCOLUMN_WHERE, "",
+			new FinderColumn<>(
+				"expandoColumn.", "tableId", FinderColumn.Type.LONG, "=", true,
+				true, ExpandoColumn::getTableId),
+			new FinderColumn<>(
+				"expandoColumn.", "name", FinderColumn.Type.STRING, "=", true,
+				true, ExpandoColumn::getName));
 
 		_collectionPersistenceFinderByT_N =
 			new FilterCollectionPersistenceFinder<>(
@@ -672,29 +671,13 @@ public class ExpandoColumnPersistenceImpl
 					new String[] {"tableId", "name"}, 0, 2, false, null),
 				_SQL_SELECT_EXPANDOCOLUMN_WHERE, _SQL_COUNT_EXPANDOCOLUMN_WHERE,
 				ExpandoColumnModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				"",
+				"", _uniquePersistenceFinderByT_N,
 				new FinderColumn<>(
 					"expandoColumn.", "tableId", FinderColumn.Type.LONG, "=",
 					true, true, ExpandoColumn::getTableId),
 				new ArrayableFinderColumn<>(
 					"expandoColumn.", "name", FinderColumn.Type.STRING, "=",
 					false, true, true, ExpandoColumn::getName));
-
-		_uniquePersistenceFinderByT_N = new UniquePersistenceFinder<>(
-			this,
-			createUniqueFinderPath(
-				FINDER_CLASS_NAME_ENTITY, "fetchByT_N",
-				new String[] {Long.class.getName(), String.class.getName()},
-				new String[] {"tableId", "name"}, 0, 2, false,
-				ExpandoColumn::getTableId,
-				convertNullFunction(ExpandoColumn::getName)),
-			_SQL_SELECT_EXPANDOCOLUMN_WHERE, "",
-			new FinderColumn<>(
-				"expandoColumn.", "tableId", FinderColumn.Type.LONG, "=", true,
-				true, ExpandoColumn::getTableId),
-			new FinderColumn<>(
-				"expandoColumn.", "name", FinderColumn.Type.STRING, "=", true,
-				true, ExpandoColumn::getName));
 
 		ExpandoColumnUtil.setPersistence(this);
 	}
@@ -732,4 +715,4 @@ public class ExpandoColumnPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:175786852
+// LIFERAY-SERVICE-BUILDER-HASH:1524274596

@@ -754,7 +754,7 @@ public class PasswordPolicyPersistenceImpl
 				_SQL_SELECT_PASSWORDPOLICY_WHERE,
 				_SQL_COUNT_PASSWORDPOLICY_WHERE,
 				PasswordPolicyModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				"",
+				"", null,
 				new FinderColumn<>(
 					"passwordPolicy.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -782,7 +782,7 @@ public class PasswordPolicyPersistenceImpl
 				_SQL_SELECT_PASSWORDPOLICY_WHERE,
 				_SQL_COUNT_PASSWORDPOLICY_WHERE,
 				PasswordPolicyModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				"",
+				"", null,
 				new FinderColumn<>(
 					"passwordPolicy.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -813,7 +813,7 @@ public class PasswordPolicyPersistenceImpl
 				_SQL_SELECT_PASSWORDPOLICY_WHERE,
 				_SQL_COUNT_PASSWORDPOLICY_WHERE,
 				PasswordPolicyModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				"",
+				"", null,
 				new FinderColumn<>(
 					"passwordPolicy.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, PasswordPolicy::getCompanyId));
@@ -870,4 +870,4 @@ public class PasswordPolicyPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1962766975
+// LIFERAY-SERVICE-BUILDER-HASH:1424778435

@@ -435,7 +435,7 @@ public class ServiceComponentPersistenceImpl
 				_SQL_SELECT_SERVICECOMPONENT_WHERE,
 				_SQL_COUNT_SERVICECOMPONENT_WHERE,
 				ServiceComponentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"", "",
+				"", "", null,
 				new FinderColumn<>(
 					"serviceComponent.", "buildNamespace",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -493,4 +493,4 @@ public class ServiceComponentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1729993276
+// LIFERAY-SERVICE-BUILDER-HASH:-46825628

@@ -13277,6 +13277,7 @@ public class KBArticlePersistenceImpl
 					new String[] {"resourcePrimKey"}, false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"kbArticle.", "resourcePrimKey", FinderColumn.Type.LONG,
 					"=", true, true, KBArticle::getResourcePrimKey));
@@ -13300,6 +13301,7 @@ public class KBArticlePersistenceImpl
 				0, 1, false, null),
 			_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 			KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			null,
 			new FinderColumn<>(
 				"kbArticle.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
 				true, true, KBArticle::getUuid));
@@ -13340,6 +13342,7 @@ public class KBArticlePersistenceImpl
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"kbArticle.", "uuid", "uuid_", FinderColumn.Type.STRING,
 					"=", true, true, KBArticle::getUuid),
@@ -13368,6 +13371,7 @@ public class KBArticlePersistenceImpl
 					new String[] {"resourcePrimKey", "groupId"}, false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"kbArticle.", "resourcePrimKey", FinderColumn.Type.LONG,
 					"=", true, true, KBArticle::getResourcePrimKey),
@@ -13410,6 +13414,7 @@ public class KBArticlePersistenceImpl
 				new String[] {"resourcePrimKey", "latest"}, false),
 			_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 			KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			null,
 			new ArrayableFinderColumn<>(
 				"kbArticle.", "resourcePrimKey", FinderColumn.Type.LONG, "=",
 				false, true, true, KBArticle::getResourcePrimKey),
@@ -13437,6 +13442,7 @@ public class KBArticlePersistenceImpl
 				new String[] {"resourcePrimKey", "main"}, false),
 			_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 			KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			null,
 			new ArrayableFinderColumn<>(
 				"kbArticle.", "resourcePrimKey", FinderColumn.Type.LONG, "=",
 				false, true, true, KBArticle::getResourcePrimKey),
@@ -13464,6 +13470,7 @@ public class KBArticlePersistenceImpl
 				new String[] {"resourcePrimKey", "status"}, false),
 			_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 			KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			null,
 			new ArrayableFinderColumn<>(
 				"kbArticle.", "resourcePrimKey", FinderColumn.Type.LONG, "=",
 				false, true, true, KBArticle::getResourcePrimKey),
@@ -13494,6 +13501,7 @@ public class KBArticlePersistenceImpl
 					false, null),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"kbArticle.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, KBArticle::getGroupId),
@@ -13527,6 +13535,7 @@ public class KBArticlePersistenceImpl
 					new String[] {"groupId", "latest"}, false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"kbArticle.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, KBArticle::getGroupId),
@@ -13559,6 +13568,7 @@ public class KBArticlePersistenceImpl
 					new String[] {"groupId", "main"}, false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"kbArticle.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, KBArticle::getGroupId),
@@ -13591,6 +13601,7 @@ public class KBArticlePersistenceImpl
 					new String[] {"groupId", "status"}, false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"kbArticle.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, KBArticle::getGroupId),
@@ -13618,6 +13629,7 @@ public class KBArticlePersistenceImpl
 				new String[] {"companyId", "latest"}, false),
 			_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 			KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			null,
 			new FinderColumn<>(
 				"kbArticle.", "companyId", FinderColumn.Type.LONG, "=", true,
 				true, KBArticle::getCompanyId),
@@ -13645,6 +13657,7 @@ public class KBArticlePersistenceImpl
 				new String[] {"companyId", "main"}, false),
 			_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 			KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			null,
 			new FinderColumn<>(
 				"kbArticle.", "companyId", FinderColumn.Type.LONG, "=", true,
 				true, KBArticle::getCompanyId),
@@ -13672,6 +13685,7 @@ public class KBArticlePersistenceImpl
 				new String[] {"companyId", "status"}, false),
 			_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 			KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			null,
 			new FinderColumn<>(
 				"kbArticle.", "companyId", FinderColumn.Type.LONG, "=", true,
 				true, KBArticle::getCompanyId),
@@ -13699,6 +13713,7 @@ public class KBArticlePersistenceImpl
 				new String[] {"parentResourcePrimKey", "latest"}, false),
 			_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 			KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			null,
 			new ArrayableFinderColumn<>(
 				"kbArticle.", "parentResourcePrimKey", FinderColumn.Type.LONG,
 				"=", false, true, true, KBArticle::getParentResourcePrimKey),
@@ -13726,6 +13741,7 @@ public class KBArticlePersistenceImpl
 				new String[] {"parentResourcePrimKey", "main"}, false),
 			_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 			KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			null,
 			new ArrayableFinderColumn<>(
 				"kbArticle.", "parentResourcePrimKey", FinderColumn.Type.LONG,
 				"=", false, true, true, KBArticle::getParentResourcePrimKey),
@@ -13753,6 +13769,7 @@ public class KBArticlePersistenceImpl
 				new String[] {"parentResourcePrimKey", "status"}, false),
 			_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 			KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			null,
 			new ArrayableFinderColumn<>(
 				"kbArticle.", "parentResourcePrimKey", FinderColumn.Type.LONG,
 				"=", false, true, true, KBArticle::getParentResourcePrimKey),
@@ -13777,6 +13794,7 @@ public class KBArticlePersistenceImpl
 				new String[] {"displayDate", "status"}, false),
 			_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 			KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			null,
 			new FinderColumn<>(
 				"kbArticle.", "displayDate", FinderColumn.Type.DATE, "<", true,
 				true, KBArticle::getDisplayDate),
@@ -13837,6 +13855,7 @@ public class KBArticlePersistenceImpl
 					false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new ArrayableFinderColumn<>(
 					"kbArticle.", "resourcePrimKey", FinderColumn.Type.LONG,
 					"=", false, true, true, KBArticle::getResourcePrimKey),
@@ -13875,6 +13894,7 @@ public class KBArticlePersistenceImpl
 					new String[] {"resourcePrimKey", "groupId", "main"}, false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new ArrayableFinderColumn<>(
 					"kbArticle.", "resourcePrimKey", FinderColumn.Type.LONG,
 					"=", false, true, true, KBArticle::getResourcePrimKey),
@@ -13916,6 +13936,7 @@ public class KBArticlePersistenceImpl
 					false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new ArrayableFinderColumn<>(
 					"kbArticle.", "resourcePrimKey", FinderColumn.Type.LONG,
 					"=", false, true, true, KBArticle::getResourcePrimKey),
@@ -13950,6 +13971,7 @@ public class KBArticlePersistenceImpl
 					false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"kbArticle.", "resourcePrimKey", FinderColumn.Type.LONG,
 					"=", true, true, KBArticle::getResourcePrimKey),
@@ -13983,6 +14005,7 @@ public class KBArticlePersistenceImpl
 					false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new ArrayableFinderColumn<>(
 					"kbArticle.", "resourcePrimKey", FinderColumn.Type.LONG,
 					"=", false, true, true, KBArticle::getResourcePrimKey),
@@ -14015,6 +14038,7 @@ public class KBArticlePersistenceImpl
 					new String[] {"resourcePrimKey", "main", "status"}, false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new ArrayableFinderColumn<>(
 					"kbArticle.", "resourcePrimKey", FinderColumn.Type.LONG,
 					"=", false, true, true, KBArticle::getResourcePrimKey),
@@ -14079,6 +14103,7 @@ public class KBArticlePersistenceImpl
 					0, 2, false, null),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"kbArticle.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, KBArticle::getGroupId),
@@ -14121,6 +14146,7 @@ public class KBArticlePersistenceImpl
 					false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"kbArticle.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, KBArticle::getGroupId),
@@ -14163,6 +14189,7 @@ public class KBArticlePersistenceImpl
 					false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"kbArticle.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, KBArticle::getGroupId),
@@ -14205,6 +14232,7 @@ public class KBArticlePersistenceImpl
 					false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"kbArticle.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, KBArticle::getGroupId),
@@ -14248,6 +14276,7 @@ public class KBArticlePersistenceImpl
 					false, null),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"kbArticle.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, KBArticle::getGroupId),
@@ -14287,6 +14316,7 @@ public class KBArticlePersistenceImpl
 					new String[] {"groupId", "kbFolderId", "latest"}, false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"kbArticle.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, KBArticle::getGroupId),
@@ -14326,6 +14356,7 @@ public class KBArticlePersistenceImpl
 					new String[] {"groupId", "kbFolderId", "status"}, false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"kbArticle.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, KBArticle::getGroupId),
@@ -14358,6 +14389,7 @@ public class KBArticlePersistenceImpl
 					new String[] {"groupId", "sections", "latest"}, false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"kbArticle.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, KBArticle::getGroupId),
@@ -14390,6 +14422,7 @@ public class KBArticlePersistenceImpl
 					new String[] {"groupId", "sections", "main"}, false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"kbArticle.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, KBArticle::getGroupId),
@@ -14422,6 +14455,7 @@ public class KBArticlePersistenceImpl
 					new String[] {"groupId", "sections", "status"}, false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"kbArticle.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, KBArticle::getGroupId),
@@ -14454,6 +14488,7 @@ public class KBArticlePersistenceImpl
 					new String[] {"groupId", "latest", "status"}, false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"kbArticle.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, KBArticle::getGroupId),
@@ -14486,6 +14521,7 @@ public class KBArticlePersistenceImpl
 					new String[] {"groupId", "main", "status"}, false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"kbArticle.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, KBArticle::getGroupId),
@@ -14518,6 +14554,7 @@ public class KBArticlePersistenceImpl
 					new String[] {"companyId", "latest", "status"}, false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"kbArticle.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, KBArticle::getCompanyId),
@@ -14550,6 +14587,7 @@ public class KBArticlePersistenceImpl
 					new String[] {"companyId", "main", "status"}, false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"kbArticle.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, KBArticle::getCompanyId),
@@ -14584,6 +14622,7 @@ public class KBArticlePersistenceImpl
 					false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new ArrayableFinderColumn<>(
 					"kbArticle.", "parentResourcePrimKey",
 					FinderColumn.Type.LONG, "=", false, true, true,
@@ -14619,6 +14658,7 @@ public class KBArticlePersistenceImpl
 					false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new ArrayableFinderColumn<>(
 					"kbArticle.", "parentResourcePrimKey",
 					FinderColumn.Type.LONG, "=", false, true, true,
@@ -14658,6 +14698,7 @@ public class KBArticlePersistenceImpl
 					false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new ArrayableFinderColumn<>(
 					"kbArticle.", "resourcePrimKey", FinderColumn.Type.LONG,
 					"=", false, true, true, KBArticle::getResourcePrimKey),
@@ -14699,6 +14740,7 @@ public class KBArticlePersistenceImpl
 					false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new ArrayableFinderColumn<>(
 					"kbArticle.", "resourcePrimKey", FinderColumn.Type.LONG,
 					"=", false, true, true, KBArticle::getResourcePrimKey),
@@ -14749,6 +14791,7 @@ public class KBArticlePersistenceImpl
 					false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"kbArticle.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, KBArticle::getGroupId),
@@ -14791,6 +14834,7 @@ public class KBArticlePersistenceImpl
 					false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"kbArticle.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, KBArticle::getGroupId),
@@ -14842,6 +14886,7 @@ public class KBArticlePersistenceImpl
 					false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"kbArticle.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, KBArticle::getGroupId),
@@ -14884,6 +14929,7 @@ public class KBArticlePersistenceImpl
 					false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"kbArticle.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, KBArticle::getGroupId),
@@ -14937,6 +14983,7 @@ public class KBArticlePersistenceImpl
 					0, 4, false, null),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"kbArticle.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, KBArticle::getGroupId),
@@ -14980,6 +15027,7 @@ public class KBArticlePersistenceImpl
 					false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"kbArticle.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, KBArticle::getGroupId),
@@ -15019,6 +15067,7 @@ public class KBArticlePersistenceImpl
 					false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"kbArticle.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, KBArticle::getGroupId),
@@ -15058,6 +15107,7 @@ public class KBArticlePersistenceImpl
 					false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"kbArticle.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, KBArticle::getGroupId),
@@ -15097,6 +15147,7 @@ public class KBArticlePersistenceImpl
 					false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"kbArticle.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, KBArticle::getGroupId),
@@ -15182,4 +15233,4 @@ public class KBArticlePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1865027427
+// LIFERAY-SERVICE-BUILDER-HASH:-661681698

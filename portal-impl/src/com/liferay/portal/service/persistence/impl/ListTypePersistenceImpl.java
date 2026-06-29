@@ -725,7 +725,7 @@ public class ListTypePersistenceImpl
 				new String[] {String.class.getName()}, new String[] {"uuid_"},
 				0, 1, false, null),
 			_SQL_SELECT_LISTTYPE_WHERE, _SQL_COUNT_LISTTYPE_WHERE,
-			ListTypeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			ListTypeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "", null,
 			new FinderColumn<>(
 				"listType.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
 				true, true, ListType::getUuid));
@@ -751,6 +751,7 @@ public class ListTypePersistenceImpl
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_LISTTYPE_WHERE, _SQL_COUNT_LISTTYPE_WHERE,
 				ListTypeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"listType.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
 					true, true, ListType::getUuid),
@@ -779,6 +780,7 @@ public class ListTypePersistenceImpl
 					new String[] {"companyId"}, false),
 				_SQL_SELECT_LISTTYPE_WHERE, _SQL_COUNT_LISTTYPE_WHERE,
 				ListTypeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"listType.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, ListType::getCompanyId));
@@ -802,7 +804,7 @@ public class ListTypePersistenceImpl
 				new String[] {Long.class.getName(), String.class.getName()},
 				new String[] {"companyId", "type_"}, 0, 2, false, null),
 			_SQL_SELECT_LISTTYPE_WHERE, _SQL_COUNT_LISTTYPE_WHERE,
-			ListTypeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			ListTypeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "", null,
 			new FinderColumn<>(
 				"listType.", "companyId", FinderColumn.Type.LONG, "=", true,
 				true, ListType::getCompanyId),
@@ -868,4 +870,4 @@ public class ListTypePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2091751472
+// LIFERAY-SERVICE-BUILDER-HASH:1300605514

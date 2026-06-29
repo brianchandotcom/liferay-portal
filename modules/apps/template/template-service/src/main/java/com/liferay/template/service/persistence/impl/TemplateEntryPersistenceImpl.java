@@ -1273,6 +1273,7 @@ public class TemplateEntryPersistenceImpl
 				0, 1, false, null),
 			_SQL_SELECT_TEMPLATEENTRY_WHERE, _SQL_COUNT_TEMPLATEENTRY_WHERE,
 			TemplateEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			null,
 			new FinderColumn<>(
 				"templateEntry.", "uuid", "uuid_", FinderColumn.Type.STRING,
 				"=", true, true, TemplateEntry::getUuid));
@@ -1314,7 +1315,7 @@ public class TemplateEntryPersistenceImpl
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_TEMPLATEENTRY_WHERE, _SQL_COUNT_TEMPLATEENTRY_WHERE,
 				TemplateEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				"",
+				"", null,
 				new FinderColumn<>(
 					"templateEntry.", "uuid", "uuid_", FinderColumn.Type.STRING,
 					"=", true, true, TemplateEntry::getUuid),
@@ -1343,7 +1344,7 @@ public class TemplateEntryPersistenceImpl
 					new String[] {"groupId"}, false),
 				_SQL_SELECT_TEMPLATEENTRY_WHERE, _SQL_COUNT_TEMPLATEENTRY_WHERE,
 				TemplateEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				"",
+				"", null,
 				new ArrayableFinderColumn<>(
 					"templateEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					false, true, true, TemplateEntry::getGroupId));
@@ -1383,7 +1384,7 @@ public class TemplateEntryPersistenceImpl
 					null),
 				_SQL_SELECT_TEMPLATEENTRY_WHERE, _SQL_COUNT_TEMPLATEENTRY_WHERE,
 				TemplateEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				"",
+				"", null,
 				new FinderColumn<>(
 					"templateEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, TemplateEntry::getGroupId),
@@ -1435,7 +1436,7 @@ public class TemplateEntryPersistenceImpl
 					0, 6, false, null),
 				_SQL_SELECT_TEMPLATEENTRY_WHERE, _SQL_COUNT_TEMPLATEENTRY_WHERE,
 				TemplateEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				"",
+				"", null,
 				new ArrayableFinderColumn<>(
 					"templateEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					false, true, true, TemplateEntry::getGroupId),
@@ -1537,4 +1538,4 @@ public class TemplateEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2035682218
+// LIFERAY-SERVICE-BUILDER-HASH:528140196

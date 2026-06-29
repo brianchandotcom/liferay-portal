@@ -792,7 +792,7 @@ public class KaleoTaskFormPersistenceImpl
 					new String[] {"companyId"}, false),
 				_SQL_SELECT_KALEOTASKFORM_WHERE, _SQL_COUNT_KALEOTASKFORM_WHERE,
 				KaleoTaskFormModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				"",
+				"", null,
 				new FinderColumn<>(
 					"kaleoTaskForm.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, KaleoTaskForm::getCompanyId));
@@ -821,7 +821,7 @@ public class KaleoTaskFormPersistenceImpl
 					new String[] {"kaleoDefinitionVersionId"}, false),
 				_SQL_SELECT_KALEOTASKFORM_WHERE, _SQL_COUNT_KALEOTASKFORM_WHERE,
 				KaleoTaskFormModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				"",
+				"", null,
 				new FinderColumn<>(
 					"kaleoTaskForm.", "kaleoDefinitionVersionId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -848,7 +848,7 @@ public class KaleoTaskFormPersistenceImpl
 					new String[] {"kaleoNodeId"}, false),
 				_SQL_SELECT_KALEOTASKFORM_WHERE, _SQL_COUNT_KALEOTASKFORM_WHERE,
 				KaleoTaskFormModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				"",
+				"", null,
 				new FinderColumn<>(
 					"kaleoTaskForm.", "kaleoNodeId", FinderColumn.Type.LONG,
 					"=", true, true, KaleoTaskForm::getKaleoNodeId));
@@ -874,7 +874,7 @@ public class KaleoTaskFormPersistenceImpl
 					new String[] {"kaleoTaskId"}, false),
 				_SQL_SELECT_KALEOTASKFORM_WHERE, _SQL_COUNT_KALEOTASKFORM_WHERE,
 				KaleoTaskFormModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				"",
+				"", null,
 				new FinderColumn<>(
 					"kaleoTaskForm.", "kaleoTaskId", FinderColumn.Type.LONG,
 					"=", true, true, KaleoTaskForm::getKaleoTaskId));
@@ -964,4 +964,4 @@ public class KaleoTaskFormPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:324622371
+// LIFERAY-SERVICE-BUILDER-HASH:767640545

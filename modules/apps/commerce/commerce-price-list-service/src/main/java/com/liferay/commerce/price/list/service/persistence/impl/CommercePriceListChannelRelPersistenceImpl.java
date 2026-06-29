@@ -765,7 +765,7 @@ public class CommercePriceListChannelRelPersistenceImpl
 			_SQL_SELECT_COMMERCEPRICELISTCHANNELREL_WHERE,
 			_SQL_COUNT_COMMERCEPRICELISTCHANNELREL_WHERE,
 			CommercePriceListChannelRelModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX, "", "",
+			_ENTITY_ALIAS_PREFIX, "", "", null,
 			new FinderColumn<>(
 				"commercePriceListChannelRel.", "uuid", "uuid_",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -793,7 +793,7 @@ public class CommercePriceListChannelRelPersistenceImpl
 				_SQL_SELECT_COMMERCEPRICELISTCHANNELREL_WHERE,
 				_SQL_COUNT_COMMERCEPRICELISTCHANNELREL_WHERE,
 				CommercePriceListChannelRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "", "",
+				_ENTITY_ALIAS_PREFIX, "", "", null,
 				new FinderColumn<>(
 					"commercePriceListChannelRel.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -828,7 +828,7 @@ public class CommercePriceListChannelRelPersistenceImpl
 				_SQL_SELECT_COMMERCEPRICELISTCHANNELREL_WHERE,
 				_SQL_COUNT_COMMERCEPRICELISTCHANNELREL_WHERE,
 				CommercePriceListChannelRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "", "",
+				_ENTITY_ALIAS_PREFIX, "", "", null,
 				new FinderColumn<>(
 					"commercePriceListChannelRel.", "commercePriceListId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -925,4 +925,4 @@ public class CommercePriceListChannelRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1792346449
+// LIFERAY-SERVICE-BUILDER-HASH:-1409646581

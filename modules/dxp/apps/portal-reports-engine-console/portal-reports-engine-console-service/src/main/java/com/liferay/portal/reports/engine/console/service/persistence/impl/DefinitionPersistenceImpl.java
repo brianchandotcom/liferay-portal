@@ -758,6 +758,7 @@ public class DefinitionPersistenceImpl
 				0, 1, false, null),
 			_SQL_SELECT_DEFINITION_WHERE, _SQL_COUNT_DEFINITION_WHERE,
 			DefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			null,
 			new FinderColumn<>(
 				"definition.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
 				true, true, Definition::getUuid));
@@ -799,6 +800,7 @@ public class DefinitionPersistenceImpl
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_DEFINITION_WHERE, _SQL_COUNT_DEFINITION_WHERE,
 				DefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"definition.", "uuid", "uuid_", FinderColumn.Type.STRING,
 					"=", true, true, Definition::getUuid),
@@ -827,6 +829,7 @@ public class DefinitionPersistenceImpl
 					new String[] {"groupId"}, false),
 				_SQL_SELECT_DEFINITION_WHERE, _SQL_COUNT_DEFINITION_WHERE,
 				DefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"definition.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, Definition::getGroupId));
@@ -852,6 +855,7 @@ public class DefinitionPersistenceImpl
 					new String[] {"companyId"}, false),
 				_SQL_SELECT_DEFINITION_WHERE, _SQL_COUNT_DEFINITION_WHERE,
 				DefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"definition.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, Definition::getCompanyId));
@@ -925,4 +929,4 @@ public class DefinitionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-466715214
+// LIFERAY-SERVICE-BUILDER-HASH:2033330762

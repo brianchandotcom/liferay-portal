@@ -851,7 +851,7 @@ public class SXPBlueprintPersistenceImpl
 					new String[] {"uuid_"}, 0, 1, false, null),
 				_SQL_SELECT_SXPBLUEPRINT_WHERE, _SQL_COUNT_SXPBLUEPRINT_WHERE,
 				SXPBlueprintModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				"",
+				"", null,
 				new FinderColumn<>(
 					"sxpBlueprint.", "uuid", "uuid_", FinderColumn.Type.STRING,
 					"=", true, true, SXPBlueprint::getUuid));
@@ -877,7 +877,7 @@ public class SXPBlueprintPersistenceImpl
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_SXPBLUEPRINT_WHERE, _SQL_COUNT_SXPBLUEPRINT_WHERE,
 				SXPBlueprintModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				"",
+				"", null,
 				new FinderColumn<>(
 					"sxpBlueprint.", "uuid", "uuid_", FinderColumn.Type.STRING,
 					"=", true, true, SXPBlueprint::getUuid),
@@ -906,7 +906,7 @@ public class SXPBlueprintPersistenceImpl
 					new String[] {"companyId"}, false),
 				_SQL_SELECT_SXPBLUEPRINT_WHERE, _SQL_COUNT_SXPBLUEPRINT_WHERE,
 				SXPBlueprintModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				"",
+				"", null,
 				new FinderColumn<>(
 					"sxpBlueprint.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, SXPBlueprint::getCompanyId));
@@ -998,4 +998,4 @@ public class SXPBlueprintPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1373903688
+// LIFERAY-SERVICE-BUILDER-HASH:-553673474

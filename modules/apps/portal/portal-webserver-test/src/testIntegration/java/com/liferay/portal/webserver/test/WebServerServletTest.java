@@ -479,15 +479,15 @@ public class WebServerServletTest {
 		_webServerServlet.service(
 			mockHttpServletRequest, mockHttpServletResponse);
 
-		Assert.assertEquals(
-			HttpServletResponse.SC_OK, mockHttpServletResponse.getStatus());
-
 		String contentDisposition = mockHttpServletResponse.getHeader(
 			HttpHeaders.CONTENT_DISPOSITION);
 
 		Assert.assertTrue(
 			contentDisposition.startsWith(
 				HttpHeaders.CONTENT_DISPOSITION_ATTACHMENT));
+
+		Assert.assertEquals(
+			HttpServletResponse.SC_OK, mockHttpServletResponse.getStatus());
 	}
 
 	private void _testServiceGroupIdUUID() throws Exception {

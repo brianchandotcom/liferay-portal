@@ -17,6 +17,7 @@ function main {
 			--exclude "README.md" \
 			--exclude "build.gradle" \
 			--exclude "client-extensions" \
+			--exclude "gradle-local.properties" \
 			--exclude "language" \
 			--exclude "modules" \
 			--exclude "node_modules" \

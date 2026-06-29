@@ -38,6 +38,7 @@ export default function HomeRecentAssetsFDSPropsTransformer({
 		...otherProps,
 		additionalAPIURLParameters,
 		additionalProps: remainingAdditionalProps,
+		apiURL: `${otherProps.apiURL}&pageSize=16`,
 		customRenderers: {
 			tableCell: [
 				{

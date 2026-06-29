@@ -5,6 +5,7 @@
 
 package com.liferay.headless.admin.taxonomy.internal.util;
 
+import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalServiceUtil;
 import com.liferay.headless.admin.taxonomy.dto.v1_0.AssetLibrary;
@@ -14,6 +15,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
@@ -43,7 +45,9 @@ public class TaxonomyGroupUtil {
 				companyId, assetLibrary.getExternalReferenceCode(),
 				assetLibrary.getId(), assetLibrary.getScopeKey());
 
-			if (group != null) {
+			if ((group != null) &&
+				_isGroupDepotEntryType(group, DepotConstants.TYPE_SPACE)) {
+
 				groupIds.add(group.getGroupId());
 			}
 		}
@@ -80,7 +84,9 @@ public class TaxonomyGroupUtil {
 				companyId, project.getExternalReferenceCode(), project.getId(),
 				project.getScopeKey());
 
-			if (group != null) {
+			if ((group != null) &&
+				_isGroupDepotEntryType(group, DepotConstants.TYPE_PROJECT)) {
+
 				groupIds.add(group.getGroupId());
 			}
 		}
@@ -132,6 +138,19 @@ public class TaxonomyGroupUtil {
 		}
 
 		return null;
+	}
+
+	private static boolean _isGroupDepotEntryType(
+		Group group, int depotEntryType) {
+
+		int groupDepotEntryType = GetterUtil.getInteger(
+			group.getTypeSettingsProperty("depotEntryType"));
+
+		if (groupDepotEntryType == depotEntryType) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final long[] _GROUP_IDS_ALL = {-1L};

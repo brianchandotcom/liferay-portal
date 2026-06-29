@@ -27,37 +27,6 @@ const mockCategories = [
 ];
 
 describe('VocabularyMultiSelect', () => {
-	it('renders initial selected categories as chips', () => {
-		const {getByText} = render(
-			<VocabularyMultiSelect
-				disabled={false}
-				label="Personas"
-				onChange={jest.fn()}
-				placeholder="Add Personas"
-				value={mockCategories}
-				vocabularyERC="L_CMP_PERSONAS"
-			/>
-		);
-
-		expect(getByText('Decision Maker')).toBeInTheDocument();
-		expect(getByText('Champion')).toBeInTheDocument();
-	});
-
-	it('renders the label', () => {
-		const {getByText} = render(
-			<VocabularyMultiSelect
-				disabled={false}
-				label="Personas"
-				onChange={jest.fn()}
-				placeholder="Add Personas"
-				value={[]}
-				vocabularyERC="L_CMP_PERSONAS"
-			/>
-		);
-
-		expect(getByText('Personas')).toBeInTheDocument();
-	});
-
 	it('calls onChange with remaining items when a chip is removed', () => {
 		const onChange = jest.fn();
 
@@ -92,5 +61,36 @@ describe('VocabularyMultiSelect', () => {
 		getAllByLabelText('remove').forEach((button) => {
 			expect(button).toBeDisabled();
 		});
+	});
+
+	it('renders initial selected categories as chips', () => {
+		const {getByText} = render(
+			<VocabularyMultiSelect
+				disabled={false}
+				label="Personas"
+				onChange={jest.fn()}
+				placeholder="Add Personas"
+				value={mockCategories}
+				vocabularyERC="L_CMP_PERSONAS"
+			/>
+		);
+
+		expect(getByText('Decision Maker')).toBeInTheDocument();
+		expect(getByText('Champion')).toBeInTheDocument();
+	});
+
+	it('renders the label', () => {
+		const {getByText} = render(
+			<VocabularyMultiSelect
+				disabled={false}
+				label="Personas"
+				onChange={jest.fn()}
+				placeholder="Add Personas"
+				value={[]}
+				vocabularyERC="L_CMP_PERSONAS"
+			/>
+		);
+
+		expect(getByText('Personas')).toBeInTheDocument();
 	});
 });

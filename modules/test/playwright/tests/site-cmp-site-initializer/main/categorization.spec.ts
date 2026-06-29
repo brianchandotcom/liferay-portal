@@ -27,34 +27,6 @@ test(
 	'Can create, read, update, and delete personas and funnel stages from a project',
 	{tag: ['@LPD-93348']},
 	async ({apiHelpers, editProjectPage, page, projectPage, projectsPage}) => {
-		const cmsSite = await apiHelpers.headlessAdminSite.getSite('L_CMS');
-
-		const personasVocabulary =
-			await apiHelpers.headlessAdminTaxonomy.postSiteTaxonomyVocabulary({
-				externalReferenceCode: 'L_CMP_PERSONAS',
-				name: 'Personas',
-				siteId: cmsSite.id,
-			});
-
-		for (const name of ['Decision Maker', 'Champion']) {
-			await apiHelpers.headlessAdminTaxonomy.postTaxonomyVocabularyTaxonomyCategory(
-				{name, vocabularyId: personasVocabulary.id}
-			);
-		}
-
-		const funnelStagesVocabulary =
-			await apiHelpers.headlessAdminTaxonomy.postSiteTaxonomyVocabulary({
-				externalReferenceCode: 'L_CMP_FUNNEL_STAGE',
-				name: 'Funnel Stages',
-				siteId: cmsSite.id,
-			});
-
-		for (const name of ['Awareness', 'Consideration']) {
-			await apiHelpers.headlessAdminTaxonomy.postTaxonomyVocabularyTaxonomyCategory(
-				{name, vocabularyId: funnelStagesVocabulary.id}
-			);
-		}
-
 		const projectTitle = getRandomString();
 
 		const project = await apiHelpers.objectEntry.postObjectEntry(

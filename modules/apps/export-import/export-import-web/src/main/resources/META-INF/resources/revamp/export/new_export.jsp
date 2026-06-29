@@ -15,7 +15,7 @@ if (liveGroup == null) {
 	liveGroupId = groupId;
 }
 
-ExportImportPreviewDisplayContext exportImportPreviewDisplayContext = new ExportImportPreviewDisplayContext("/export_import/view_export_layouts", group, groupId, request, liferayPortletResponse, liveGroupId, privateLayout, stagingGroupHelper);
+ExportImportPreviewDisplayContext exportImportPreviewDisplayContext = (ExportImportPreviewDisplayContext)request.getAttribute(ExportImportWebKeys.EXPORT_IMPORT_PREVIEW_DISPLAY_CONTEXT);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(exportImportPreviewDisplayContext.getBackURL());
@@ -37,6 +37,8 @@ renderResponse.setTitle(exportImportPreviewDisplayContext.getExportTitle());
 				"backURL", exportImportPreviewDisplayContext.getBackURL()
 			).put(
 				"commentsAndRatingsEnabled", exportImportPreviewDisplayContext.isCommentsAndRatingsEnabled()
+			).put(
+				"exportPreview", exportImportPreviewDisplayContext.getExportPreviewJSONObject()
 			).put(
 				"exportPreviewAPIURL", exportImportPreviewDisplayContext.getExportPreviewAPIURL()
 			).put(

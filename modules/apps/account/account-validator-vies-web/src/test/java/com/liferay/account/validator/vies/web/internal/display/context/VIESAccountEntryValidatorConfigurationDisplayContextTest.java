@@ -101,15 +101,16 @@ public class VIESAccountEntryValidatorConfigurationDisplayContextTest {
 	}
 
 	@Test
-	public void testGetAvailableCountries() {
-		List<KeyValuePair> availableCountries =
+	public void testGetAvailableCountryCodeKVPs() {
+		List<KeyValuePair> availableCountryCodeKVPs =
 			_viesAccountEntryValidatorConfigurationDisplayContext.
-				getAvailableCountries();
+				getAvailableCountryCodeKVPs();
 
 		Assert.assertEquals(
-			availableCountries.toString(), 1, availableCountries.size());
+			availableCountryCodeKVPs.toString(), 1,
+			availableCountryCodeKVPs.size());
 
-		KeyValuePair keyValuePair = availableCountries.get(0);
+		KeyValuePair keyValuePair = availableCountryCodeKVPs.get(0);
 
 		Assert.assertEquals(_availableCountryA2, keyValuePair.getKey());
 	}
@@ -131,15 +132,16 @@ public class VIESAccountEntryValidatorConfigurationDisplayContextTest {
 	}
 
 	@Test
-	public void testGetCurrentCountries() {
-		List<KeyValuePair> currentCountries =
+	public void testGetCurrentCountryCodeKVPs() {
+		List<KeyValuePair> currentCountryCodeKVPs =
 			_viesAccountEntryValidatorConfigurationDisplayContext.
-				getCurrentCountries();
+				getCurrentCountryCodeKVPs();
 
 		Assert.assertEquals(
-			currentCountries.toString(), 1, currentCountries.size());
+			currentCountryCodeKVPs.toString(), 1,
+			currentCountryCodeKVPs.size());
 
-		KeyValuePair keyValuePair = currentCountries.get(0);
+		KeyValuePair keyValuePair = currentCountryCodeKVPs.get(0);
 
 		Assert.assertEquals(_currentCountryA2, keyValuePair.getKey());
 	}

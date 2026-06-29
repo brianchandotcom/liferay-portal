@@ -23,11 +23,11 @@ VIESAccountEntryValidatorConfigurationDisplayContext viesAccountEntryValidatorCo
 	<aui:input name="countryCodes" type="hidden" />
 
 	<liferay-ui:input-move-boxes
-		leftBoxName="availableCountries"
-		leftList="<%= viesAccountEntryValidatorConfigurationDisplayContext.getAvailableCountries() %>"
+		leftBoxName="availableCountryCodes"
+		leftList="<%= viesAccountEntryValidatorConfigurationDisplayContext.getAvailableCountryCodeKVPs() %>"
 		leftTitle="available"
-		rightBoxName="currentCountries"
-		rightList="<%= viesAccountEntryValidatorConfigurationDisplayContext.getCurrentCountries() %>"
+		rightBoxName="currentCountryCodes"
+		rightList="<%= viesAccountEntryValidatorConfigurationDisplayContext.getCurrentCountryCodeKVPs() %>"
 		rightTitle="in-use"
 	/>
 </aui:fieldset>

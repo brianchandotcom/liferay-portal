@@ -30,6 +30,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 import jakarta.portlet.ActionRequest;
 import jakarta.portlet.ActionResponse;
 
+import java.util.concurrent.ExecutorService;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -81,9 +83,11 @@ public class ResetTermsOfUseConsentMVCActionCommand
 	}
 
 	private void _resetTermsOfUseConsent(long companyId) {
-		_portalExecutorManager.getPortalExecutor(
-			ResetTermsOfUseConsentMVCActionCommand.class.getName()
-		).submit(
+		ExecutorService executorService =
+			_portalExecutorManager.getPortalExecutor(
+				ResetTermsOfUseConsentMVCActionCommand.class.getName());
+
+		executorService.submit(
 			() -> {
 				try {
 					ActionableDynamicQuery actionableDynamicQuery =
@@ -110,8 +114,7 @@ public class ResetTermsOfUseConsentMVCActionCommand
 							companyId,
 						exception);
 				}
-			}
-		);
+			});
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

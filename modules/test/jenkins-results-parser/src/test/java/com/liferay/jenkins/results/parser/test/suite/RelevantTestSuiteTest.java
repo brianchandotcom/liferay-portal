@@ -163,18 +163,18 @@ public class RelevantTestSuiteTest extends BaseRelevantRuleTestCase {
 
 	@Test
 	public void testStableRuleBatchBypassesWhitelist() {
-		RelevantRuleEngine relevantRuleEngine =
-			RelevantRuleEngine.getInstance();
+		RelevantRuleEngine relevantRuleEngine = RelevantRuleEngine.getInstance(
+			getPortalAcceptancePullRequestJob());
 
 		relevantRuleEngine.setBaseDir(getBaseDir());
-
-		Set<String> batchNames = new HashSet<>();
 
 		RelevantTestSuite relevantTestSuite = new RelevantTestSuite(
 			getPortalAcceptancePullRequestJob());
 
 		relevantTestSuite.setModifiedFiles(
 			Arrays.asList(new File(getBaseDir(), "stable/trigger.txt")));
+
+		Set<String> batchNames = new HashSet<>();
 
 		for (TestBatch testBatch : relevantTestSuite.getTestBatches(false)) {
 			batchNames.add(testBatch.getName());

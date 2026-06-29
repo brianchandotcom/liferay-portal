@@ -110,6 +110,9 @@ public class ObjectDefinitionDeployerImplTest {
 			_classNameLocalService.getClassNameId(
 				_objectDefinition.getClassName()),
 			_objectEntry.getObjectEntryId());
+
+		_objectEntry = _objectEntryLocalService.getObjectEntry(
+			_group.getClassPK());
 	}
 
 	@Test

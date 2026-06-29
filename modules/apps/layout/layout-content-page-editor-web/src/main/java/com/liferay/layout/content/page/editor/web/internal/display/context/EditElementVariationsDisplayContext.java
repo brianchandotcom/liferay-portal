@@ -11,6 +11,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelEl
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -18,14 +19,16 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.segments.service.SegmentsExperienceService;
 
 import jakarta.portlet.PortletResponse;
@@ -35,7 +38,6 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -73,6 +75,9 @@ public class EditElementVariationsDisplayContext {
 		).put(
 			"audiences", _getAudiencesEntries()
 		).put(
+			"defaultLanguageId",
+			LocaleUtil.toLanguageId(_themeDisplay.getSiteDefaultLocale())
+		).put(
 			"deleteElementVariationURL",
 			_getActionURL(
 				"/layout_content_page_editor" +
@@ -84,7 +89,7 @@ public class EditElementVariationsDisplayContext {
 		).put(
 			"experiences", _getSegmentsExperiences()
 		).put(
-			"languageId", _themeDisplay.getLanguageId()
+			"locales", _getLocales()
 		).put(
 			"plid", _getPlid()
 		).put(
@@ -144,8 +149,6 @@ public class EditElementVariationsDisplayContext {
 		_getLayoutPageTemplateStructureRelElementVariations() {
 
 		try {
-			Locale locale = _themeDisplay.getLocale();
-
 			return TransformUtil.transform(
 				_layoutPageTemplateStructureRelElementVariationService.
 					getLayoutPageTemplateStructureRelElementVariations(
@@ -161,17 +164,19 @@ public class EditElementVariationsDisplayContext {
 							getExternalReferenceCode()
 					).put(
 						"hide",
-						GetterUtil.getBoolean(
+						LocalizedMapUtil.getLanguageIdMap(
 							layoutPageTemplateStructureRelElementVariation.
-								getHide(locale))
+								getHideMap())
 					).put(
 						"html",
-						layoutPageTemplateStructureRelElementVariation.getHtml(
-							locale)
+						LocalizedMapUtil.getLanguageIdMap(
+							layoutPageTemplateStructureRelElementVariation.
+								getHtmlMap())
 					).put(
 						"js",
-						layoutPageTemplateStructureRelElementVariation.getJs(
-							locale)
+						LocalizedMapUtil.getLanguageIdMap(
+							layoutPageTemplateStructureRelElementVariation.
+								getJsMap())
 					).put(
 						"name",
 						layoutPageTemplateStructureRelElementVariation.getName()
@@ -190,6 +195,24 @@ public class EditElementVariationsDisplayContext {
 
 			return Collections.emptyList();
 		}
+	}
+
+	private List<Map<String, Object>> _getLocales() {
+		return TransformUtil.transform(
+			LanguageUtil.getAvailableLocales(_themeDisplay.getSiteGroupId()),
+			locale -> {
+				String w3cLanguageId = LocaleUtil.toW3cLanguageId(locale);
+
+				return HashMapBuilder.<String, Object>put(
+					"id", LocaleUtil.toLanguageId(locale)
+				).put(
+					"label", w3cLanguageId
+				).put(
+					"name", locale.getDisplayName()
+				).put(
+					"symbol", StringUtil.toLowerCase(w3cLanguageId)
+				).build();
+			});
 	}
 
 	private long _getPlid() {

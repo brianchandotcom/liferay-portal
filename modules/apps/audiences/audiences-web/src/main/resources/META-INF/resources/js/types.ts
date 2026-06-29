@@ -7,7 +7,6 @@ export interface AudiencesCriteria {
 	icon: string;
 	key: string;
 	label: string;
-	operators: string[];
 	options: Array<{label: string; value: string}>;
 	type: string;
 }

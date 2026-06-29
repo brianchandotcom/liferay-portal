@@ -18,8 +18,10 @@ export interface ElementVariation {
 }
 
 export interface State {
+	defaultLanguageId: string;
 	draftElementVariation: ElementVariation | null;
 	elementVariations: ElementVariation[];
+	languageId: string;
 }
 
 type Action =
@@ -29,6 +31,7 @@ type Action =
 	  }
 	| {key: string; type: 'DELETE_ELEMENT_VARIATION'}
 	| {key: string; type: 'EDIT_ELEMENT_VARIATION'}
+	| {languageId: string; type: 'SET_LANGUAGE_ID'}
 	| {
 			properties: Partial<ElementVariation>;
 			type: 'UPDATE_ELEMENT_VARIATION_DRAFT';
@@ -51,22 +54,32 @@ export function createElementVariation(
 	};
 }
 
-export function createInitialState(
-	elementVariations: Omit<ElementVariation, 'key'>[]
-): State {
+export function createInitialState({
+	defaultLanguageId,
+	elementVariations,
+}: {
+	defaultLanguageId: string;
+	elementVariations: Omit<ElementVariation, 'key'>[];
+}): State {
 	return {
+		defaultLanguageId,
 		draftElementVariation: null,
 		elementVariations: elementVariations.map((elementVariation) => ({
 			...elementVariation,
 			key: uuidv4(),
 		})),
+		languageId: defaultLanguageId,
 	};
 }
 
 export function reducer(state: State, action: Action): State {
 	switch (action.type) {
 		case 'CANCEL_ELEMENT_VARIATION_DRAFT':
-			return {...state, draftElementVariation: null};
+			return {
+				...state,
+				draftElementVariation: null,
+				languageId: state.defaultLanguageId,
+			};
 
 		case 'DELETE_ELEMENT_VARIATION':
 			return {
@@ -101,6 +114,7 @@ export function reducer(state: State, action: Action): State {
 			);
 
 			return {
+				...state,
 				draftElementVariation: null,
 				elementVariations: existing
 					? elementVariations.map((elementVariation) =>
@@ -109,6 +123,7 @@ export function reducer(state: State, action: Action): State {
 								: elementVariation
 						)
 					: [...elementVariations, draftElementVariation],
+				languageId: state.defaultLanguageId,
 			};
 		}
 
@@ -117,6 +132,9 @@ export function reducer(state: State, action: Action): State {
 				...state,
 				draftElementVariation: action.draftElementVariation,
 			};
+
+		case 'SET_LANGUAGE_ID':
+			return {...state, languageId: action.languageId};
 
 		case 'UPDATE_ELEMENT_VARIATION_DRAFT':
 			return {

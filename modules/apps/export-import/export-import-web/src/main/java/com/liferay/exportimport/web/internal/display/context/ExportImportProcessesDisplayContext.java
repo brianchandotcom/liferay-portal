@@ -59,7 +59,8 @@ public class ExportImportProcessesDisplayContext {
 
 	public CreationMenu getExportCreationMenu() {
 		return _getCreationMenu(
-			Constants.EXPORT, "/revamp/export/new_export.jsp");
+			Constants.EXPORT, "mvcRenderCommandName",
+			"/export_import/view_new_export");
 	}
 
 	public List<FDSActionDropdownItem> getExportFDSActionDropdownItems() {
@@ -104,7 +105,7 @@ public class ExportImportProcessesDisplayContext {
 
 	public CreationMenu getImportCreationMenu() {
 		return _getCreationMenu(
-			Constants.IMPORT, "/revamp/import/new_import.jsp");
+			Constants.IMPORT, "mvcPath", "/revamp/import/new_import.jsp");
 	}
 
 	public List<FDSActionDropdownItem> getImportFDSActionDropdownItems() {
@@ -187,12 +188,14 @@ public class ExportImportProcessesDisplayContext {
 		return fdsActionDropdownItem;
 	}
 
-	private CreationMenu _getCreationMenu(String cmd, String mvcPath) {
+	private CreationMenu _getCreationMenu(
+		String cmd, String mvcCommandName, String mvcCommandValue) {
+
 		return CreationMenuBuilder.addPrimaryDropdownItem(
 			dropdownItem -> {
 				dropdownItem.setHref(
-					_liferayPortletResponse.createRenderURL(), "mvcPath",
-					mvcPath, Constants.CMD, cmd, "groupId",
+					_liferayPortletResponse.createRenderURL(), mvcCommandName,
+					mvcCommandValue, Constants.CMD, cmd, "groupId",
 					String.valueOf(_groupId), "liveGroupId",
 					String.valueOf(_groupId), "privateLayout",
 					String.valueOf(_privateLayout), "plid",

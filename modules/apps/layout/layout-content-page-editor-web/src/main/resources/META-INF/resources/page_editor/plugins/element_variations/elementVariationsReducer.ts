@@ -8,9 +8,9 @@ import {v4 as uuidv4} from 'uuid';
 export interface ElementVariation {
 	audienceEntryERC: string;
 	externalReferenceCode: string;
-	hide: boolean;
-	html: string;
-	js: string;
+	hide: Record<string, boolean>;
+	html: Record<string, string>;
+	js: Record<string, string>;
 	key: string;
 	name: string;
 	segmentsExperienceERC: string;
@@ -41,9 +41,9 @@ export function createElementVariation(
 	return {
 		audienceEntryERC: '',
 		externalReferenceCode: uuidv4(),
-		hide: false,
-		html: '',
-		js: '',
+		hide: {},
+		html: {},
+		js: {},
 		key: uuidv4(),
 		name: '',
 		segmentsExperienceERC,

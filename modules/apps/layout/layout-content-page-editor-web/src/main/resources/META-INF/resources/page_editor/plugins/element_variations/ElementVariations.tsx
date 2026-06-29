@@ -29,6 +29,7 @@ import './ElementVariations.scss';
 interface Props {
 	addElementVariationURL: string;
 	audiences: Array<{label: string; value: string}>;
+	defaultLanguageId: string;
 	deleteElementVariationURL: string;
 	elementVariations: Array<Omit<ElementVariation, 'key'>>;
 	experiences: Array<{
@@ -36,7 +37,7 @@ interface Props {
 		segmentsExperienceERC: string;
 		segmentsExperienceId: number;
 	}>;
-	languageId: string;
+	locales: Array<{id: string; label: string; symbol: string}>;
 	plid: number;
 	portletNamespace: string;
 	previewURL: string;
@@ -52,10 +53,11 @@ export default function (props: Props) {
 function ElementVariations({
 	addElementVariationURL,
 	audiences = [],
+	defaultLanguageId,
 	deleteElementVariationURL,
 	elementVariations: initialElementVariations = [],
 	experiences = [],
-	languageId,
+	locales,
 	plid,
 	previewURL,
 	selectedSegmentsExperienceId,
@@ -74,6 +76,8 @@ function ElementVariations({
 			''
 		);
 	});
+
+	const [languageId, setLanguageId] = useState(defaultLanguageId);
 
 	const [{draftElementVariation, elementVariations}, dispatch] = useReducer(
 		reducer,
@@ -96,8 +100,11 @@ function ElementVariations({
 					{draftElementVariation ? (
 						<ElementVariationForm
 							audiences={audiences}
+							defaultLanguageId={defaultLanguageId}
 							elementVariation={draftElementVariation}
 							key={draftElementVariation.key}
+							languageId={languageId}
+							locales={locales}
 							onCancel={() =>
 								dispatch({
 									type: 'CANCEL_ELEMENT_VARIATION_DRAFT',
@@ -109,6 +116,7 @@ function ElementVariations({
 									type: 'UPDATE_ELEMENT_VARIATION_DRAFT',
 								})
 							}
+							onLanguageIdChange={setLanguageId}
 							onReloadPreview={() =>
 								elementVariationsPreviewRef.current?.reload()
 							}
@@ -116,7 +124,6 @@ function ElementVariations({
 								ElementVariationService.addElementVariation({
 									addElementVariationURL,
 									elementVariation: draftElementVariation,
-									languageId,
 									plid,
 								}).then(() =>
 									dispatch({
@@ -228,7 +235,9 @@ function ElementVariations({
 				</div>
 
 				<ElementVariationsPreview
+					defaultLanguageId={defaultLanguageId}
 					draftElementVariation={draftElementVariation}
+					languageId={languageId}
 					previewURL={previewURL}
 					ref={elementVariationsPreviewRef}
 				/>

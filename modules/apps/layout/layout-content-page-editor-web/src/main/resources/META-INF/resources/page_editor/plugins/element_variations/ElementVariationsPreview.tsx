@@ -21,13 +21,20 @@ export interface ElementVariationsPreviewRef {
 }
 
 interface Props {
+	defaultLanguageId: string;
 	draftElementVariation: ElementVariation | null;
+	languageId: string;
 	previewURL: string;
 }
 
 const ElementVariationsPreview = forwardRef<ElementVariationsPreviewRef, Props>(
 	function ElementVariationsPreview(
-		{draftElementVariation, previewURL},
+		{
+			defaultLanguageId,
+			draftElementVariation,
+			languageId,
+			previewURL: initialPreviewURL,
+		},
 		ref
 	) {
 		const iframeRef = useRef<HTMLIFrameElement>(null);
@@ -38,6 +45,9 @@ const ElementVariationsPreview = forwardRef<ElementVariationsPreviewRef, Props>(
 		} | null>(null);
 
 		const [previewReady, setPreviewReady] = useState(false);
+		const [previewURL, setPreviewURL] = useState(
+			() => `${initialPreviewURL}&languageId=${languageId}`
+		);
 
 		useImperativeHandle(
 			ref,
@@ -86,28 +96,35 @@ const ElementVariationsPreview = forwardRef<ElementVariationsPreviewRef, Props>(
 				return;
 			}
 
+			const hideValue = Boolean(
+				hide[languageId] ?? hide[defaultLanguageId]
+			);
+			const htmlValue = html[languageId] ?? html[defaultLanguageId] ?? '';
+			const jsValue = js[languageId] ?? js[defaultLanguageId] ?? '';
+
 			let originalHTML: string | null = null;
 			let styleElement: HTMLStyleElement | null = null;
 
-			if (html) {
+			if (htmlValue) {
 				originalHTML = element.innerHTML;
 
-				element.innerHTML = html;
+				element.innerHTML = htmlValue;
 			}
 
-			if (js) {
+			if (jsValue) {
 				const scriptElement = iframeDocument.createElement('script');
 
-				scriptElement.textContent = getElementVariationScript(
-					draftElementVariation
-				);
+				scriptElement.textContent = getElementVariationScript({
+					js: jsValue,
+					targetElement,
+				});
 
 				iframeDocument.body.appendChild(scriptElement);
 
 				iframeDocument.body.removeChild(scriptElement);
 			}
 
-			if (hide) {
+			if (hideValue) {
 				styleElement = iframeDocument.createElement('style');
 
 				styleElement.textContent = `${targetElement} { display: none !important; }`;
@@ -120,11 +137,17 @@ const ElementVariationsPreview = forwardRef<ElementVariationsPreviewRef, Props>(
 				originalHTML,
 				styleElement,
 			};
-		}, [draftElementVariation]);
+		}, [defaultLanguageId, draftElementVariation, languageId]);
 
 		useEffect(() => {
 			applyDraftElementVariation();
 		}, [applyDraftElementVariation]);
+
+		useEffect(() => {
+			setPreviewReady(false);
+
+			setPreviewURL(`${initialPreviewURL}&languageId=${languageId}`);
+		}, [initialPreviewURL, languageId]);
 
 		return (
 			<div className="d-flex flex-column flex-grow-1 position-relative">

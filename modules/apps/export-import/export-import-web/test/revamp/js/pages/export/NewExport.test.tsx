@@ -52,6 +52,24 @@ describe('NewExport', () => {
 		fetch.mockResponse(JSON.stringify(mockExportPreview));
 	});
 
+	it('preloads the preview without fetching when it is provided', async () => {
+		renderComponent({exportPreview: mockExportPreview});
+
+		await screen.findByText('loaded');
+
+		expect(screen.getByRole('checkbox', {name: 'Design'})).toBeChecked();
+		expect(fetch).not.toHaveBeenCalled();
+	});
+
+	it('fetches the preview on mount when it is not provided', async () => {
+		renderComponent();
+
+		await screen.findByText('loaded');
+
+		expect(fetch).toHaveBeenCalledTimes(1);
+		expect(fetch.mock.calls[0][0]).toBe(DEFAULT_PROPS.exportPreviewAPIURL);
+	});
+
 	it('renders the export form', async () => {
 		const {container} = renderComponent();
 

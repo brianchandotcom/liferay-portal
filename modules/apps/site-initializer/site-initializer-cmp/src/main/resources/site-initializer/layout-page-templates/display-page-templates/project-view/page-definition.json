@@ -223,6 +223,9 @@
 																						"fragmentLink": {
 																						},
 																						"text": {
+																							"defaultFragmentInlineValue": {
+																								"value": ""
+																							},
 																							"mapping": {
 																								"fieldKey": "ObjectField_description",
 																								"itemReference": {

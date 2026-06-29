@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.auth.CompanyInheritableThreadLocalCallable;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -88,33 +89,36 @@ public class ResetTermsOfUseConsentMVCActionCommand
 				ResetTermsOfUseConsentMVCActionCommand.class.getName());
 
 		executorService.submit(
-			() -> {
-				try {
-					ActionableDynamicQuery actionableDynamicQuery =
-						_userLocalService.getActionableDynamicQuery();
+			new CompanyInheritableThreadLocalCallable<>(
+				() -> {
+					try {
+						ActionableDynamicQuery actionableDynamicQuery =
+							_userLocalService.getActionableDynamicQuery();
 
-					actionableDynamicQuery.setAddCriteriaMethod(
-						dynamicQuery -> dynamicQuery.add(
-							PropertyFactoryUtil.forName(
-								"agreedToTermsOfUse"
-							).eq(
-								true
-							)));
-					actionableDynamicQuery.setCompanyId(companyId);
-					actionableDynamicQuery.setPerformActionMethod(
-						(User user) ->
-							_userLocalService.updateAgreedToTermsOfUse(
-								user.getUserId(), false));
+						actionableDynamicQuery.setAddCriteriaMethod(
+							dynamicQuery -> dynamicQuery.add(
+								PropertyFactoryUtil.forName(
+									"agreedToTermsOfUse"
+								).eq(
+									true
+								)));
+						actionableDynamicQuery.setCompanyId(companyId);
+						actionableDynamicQuery.setPerformActionMethod(
+							(User user) ->
+								_userLocalService.updateAgreedToTermsOfUse(
+									user.getUserId(), false));
 
-					actionableDynamicQuery.performActions();
-				}
-				catch (Exception exception) {
-					_log.error(
-						"Unable to reset terms of use consent for company " +
-							companyId,
-						exception);
-				}
-			});
+						actionableDynamicQuery.performActions();
+					}
+					catch (Exception exception) {
+						_log.error(
+							"Unable to reset terms of use consent for " +
+								"company " + companyId,
+							exception);
+					}
+
+					return null;
+				}));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

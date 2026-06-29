@@ -16,9 +16,9 @@ function buildElementVariation(
 	return {
 		audienceEntryERC: '',
 		externalReferenceCode: '',
-		hide: false,
-		html: '',
-		js: '',
+		hide: {},
+		html: {},
+		js: {},
 		key: 'key-1',
 		name: '',
 		segmentsExperienceERC: 'experience-1',
@@ -34,7 +34,7 @@ describe('elementVariationsReducer', () => {
 
 			expect(elementVariation.segmentsExperienceERC).toBe('experience-1');
 			expect(elementVariation.name).toBe('');
-			expect(elementVariation.hide).toBe(false);
+			expect(elementVariation.hide).toEqual({});
 			expect(elementVariation.key).toBeTruthy();
 
 			expect(createElementVariation('experience-1').key).not.toBe(
@@ -57,9 +57,9 @@ describe('elementVariationsReducer', () => {
 					{
 						audienceEntryERC: '',
 						externalReferenceCode: 'erc-1',
-						hide: false,
-						html: '',
-						js: '',
+						hide: {},
+						html: {},
+						js: {},
 						name: 'Variation 1',
 						segmentsExperienceERC: 'experience-1',
 						targetElement: '#main',
@@ -92,13 +92,13 @@ describe('elementVariationsReducer', () => {
 					elementVariations: [],
 				},
 				{
-					properties: {hide: true, name: 'Renamed'},
+					properties: {hide: {en_US: true}, name: 'Renamed'},
 					type: 'UPDATE_ELEMENT_VARIATION_DRAFT',
 				}
 			);
 
 			expect(state.draftElementVariation?.name).toBe('Renamed');
-			expect(state.draftElementVariation?.hide).toBe(true);
+			expect(state.draftElementVariation?.hide).toEqual({en_US: true});
 		});
 
 		it('appends a new draft and clears it on SAVE_ELEMENT_VARIATION_DRAFT', () => {

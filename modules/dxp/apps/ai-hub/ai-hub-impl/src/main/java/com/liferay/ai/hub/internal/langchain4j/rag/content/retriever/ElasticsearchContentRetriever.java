@@ -84,6 +84,10 @@ public class ElasticsearchContentRetriever extends BaseContentRetriever {
 		SearchHits searchHits = searchSearchResponse.getSearchHits();
 
 		for (SearchHit searchHit : searchHits.getSearchHits()) {
+			if (searchHit.getScore() < _MIN_SCORE) {
+				continue;
+			}
+
 			Map<String, HighlightField> highlightFields =
 				searchHit.getHighlightFieldsMap();
 
@@ -101,6 +105,8 @@ public class ElasticsearchContentRetriever extends BaseContentRetriever {
 
 		return contents;
 	}
+
+	private static final float _MIN_SCORE = 0.75F;
 
 	private final FieldConfigBuilderFactory _fieldConfigBuilderFactory;
 	private final HighlightBuilderFactory _highlightBuilderFactory;

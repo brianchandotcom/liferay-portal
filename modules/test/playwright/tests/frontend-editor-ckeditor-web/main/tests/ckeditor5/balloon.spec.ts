@@ -53,8 +53,7 @@ test(
 			'Image',
 			'Video',
 			'Horizontal line',
-			'Text alignment',
-			'AI Creator',
+			'Text alignment'
 		];
 
 		const controls = await balloonPage.toolbar

@@ -778,23 +778,24 @@ public class DBTest {
 
 					String query = queryInfo.getQuery();
 
-					if (query.contains(_getSlowQueryFragment())) {
-						Assert.assertNotNull(queryInfo.getId());
-						Assert.assertNotNull(queryInfo.getSchema());
-						Assert.assertNotNull(queryInfo.getState());
-
-						for (DB.QueryInfo lockedQueryInfo :
-								db.getLockedQueryInfos(pollingConnection)) {
-
-							Assert.assertFalse(
-								lockedQueryInfo.getQuery(
-								).contains(
-									_getSlowQueryFragment()
-								));
-						}
-
-						return;
+					if (!query.contains(_getSlowQueryFragment())) {
+						continue;
 					}
+
+					Assert.assertNotNull(queryInfo.getId());
+					Assert.assertNotNull(queryInfo.getSchema());
+					Assert.assertNotNull(queryInfo.getState());
+
+					for (DB.QueryInfo lockedQueryInfo :
+							db.getLockedQueryInfos(pollingConnection)) {
+
+						query = lockedQueryInfo.getQuery();
+
+						Assert.assertFalse(
+							query.contains(_getSlowQueryFragment()));
+					}
+
+					return;
 				}
 
 				Thread.sleep(200);

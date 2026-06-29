@@ -143,24 +143,27 @@ public class SafeLdapReferralUtilTest {
 		Map<String, String> environment = new HashMap<>();
 
 		SafeLdapReferralUtil.setProperties(
-			environment, LDAPConstants.REFERRAL_FOLLOW);
+			environment, LDAPConstants.REFERRAL_MODE_FOLLOW);
 
 		Assert.assertEquals(
-			LDAPConstants.REFERRAL_THROW, environment.get(Context.REFERRAL));
+			LDAPConstants.REFERRAL_MODE_THROW,
+			environment.get(Context.REFERRAL));
 		_assertTrustURLCodebaseDisabled(environment);
 
 		SafeLdapReferralUtil.setProperties(
-			environment, LDAPConstants.REFERRAL_IGNORE);
+			environment, LDAPConstants.REFERRAL_MODE_IGNORE);
 
 		Assert.assertEquals(
-			LDAPConstants.REFERRAL_IGNORE, environment.get(Context.REFERRAL));
+			LDAPConstants.REFERRAL_MODE_IGNORE,
+			environment.get(Context.REFERRAL));
 		_assertTrustURLCodebaseDisabled(environment);
 
 		SafeLdapReferralUtil.setProperties(
-			environment, LDAPConstants.REFERRAL_THROW);
+			environment, LDAPConstants.REFERRAL_MODE_THROW);
 
 		Assert.assertEquals(
-			LDAPConstants.REFERRAL_THROW, environment.get(Context.REFERRAL));
+			LDAPConstants.REFERRAL_MODE_THROW,
+			environment.get(Context.REFERRAL));
 		_assertTrustURLCodebaseDisabled(environment);
 	}
 

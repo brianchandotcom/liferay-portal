@@ -470,7 +470,7 @@ public class SafePortalLDAPImpl implements SafePortalLDAP {
 				new InitialLdapContext(environmentProperties, null),
 				Objects.equals(
 					systemLDAPConfiguration.referral(),
-					LDAPConstants.REFERRAL_FOLLOW));
+					LDAPConstants.REFERRAL_MODE_FOLLOW));
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {

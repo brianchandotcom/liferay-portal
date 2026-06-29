@@ -69,15 +69,17 @@ public interface SystemLDAPConfiguration extends CompanyScopedConfiguration {
 	public int rangeSize();
 
 	@Meta.AD(
-		deflt = LDAPConstants.REFERRAL_IGNORE,
+		deflt = LDAPConstants.REFERRAL_MODE_IGNORE,
 		description = "ldap-referral-help", name = "referral",
 		optionLabels = {
-			LDAPConstants.REFERRAL_FOLLOW, LDAPConstants.REFERRAL_IGNORE,
-			LDAPConstants.REFERRAL_THROW
+			LDAPConstants.REFERRAL_MODE_FOLLOW,
+			LDAPConstants.REFERRAL_MODE_IGNORE,
+			LDAPConstants.REFERRAL_MODE_THROW
 		},
 		optionValues = {
-			LDAPConstants.REFERRAL_FOLLOW, LDAPConstants.REFERRAL_IGNORE,
-			LDAPConstants.REFERRAL_THROW
+			LDAPConstants.REFERRAL_MODE_FOLLOW,
+			LDAPConstants.REFERRAL_MODE_IGNORE,
+			LDAPConstants.REFERRAL_MODE_THROW
 		},
 		required = false
 	)

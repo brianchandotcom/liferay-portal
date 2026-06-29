@@ -52,7 +52,7 @@ test('does something', {tag: '@LPD-12345'}, async ({apiHelpers, myPage, page}) =
 
 **Always tag the test with the LPD ticket** it covers: `{tag: '@LPD-XXXXX'}`. This is mandatory — it is how tests are linked back to Jira. Pass an array when a single test covers more than one ticket: `{tag: ['@LPD-12345', '@LPD-67890']}`.
 
-Break the body of a test into phases with single-line comments (`// Add fields`, `// Publish the structure`, `// Check validation`) so the flow reads top-down. Do not narrate each statement — the comments mark sections, not lines.
+Break the body of a test into phases with single-line comments (`// Add fields`, `// Publish the structure`, `// Check validation`) so the flow reads top-down. Do not narrate each statement — the comments mark sections, not lines. For a large test where named phases in the trace and HTML report would aid debugging, wrap each phase in `test.step('Add fields', async () => {...})` instead — same intent, but the phase names surface as collapsible steps when a run fails.
 
 Generate unique names with `getRandomInt` / `getRandomString` from `modules/test/playwright/utils` for anything that must not collide across parallel runs (structure labels, names, ERCs, etc.). Tests share an environment; hardcoded names flake.
 

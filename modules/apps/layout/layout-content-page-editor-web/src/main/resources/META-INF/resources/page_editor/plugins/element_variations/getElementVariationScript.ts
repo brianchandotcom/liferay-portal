@@ -3,12 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ElementVariation} from './elementVariationsReducer';
-
 export default function getElementVariationScript({
 	js,
 	targetElement,
-}: ElementVariation): string {
+}: {
+	js: string;
+	targetElement: string;
+}): string {
 	return `
 (function () {
 	const element = document.querySelector(${JSON.stringify(targetElement)});

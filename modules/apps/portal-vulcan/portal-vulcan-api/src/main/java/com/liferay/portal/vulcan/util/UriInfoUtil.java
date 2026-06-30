@@ -48,9 +48,9 @@ public class UriInfoUtil {
 
 		UriBuilder uriBuilder = getBaseUriBuilder(uriInfo);
 
-		boolean secure = PortalUtil.isSecure(httpServletRequest);
-
 		uriBuilder.host(PortalUtil.getForwardedHost(httpServletRequest));
+
+		boolean secure = PortalUtil.isSecure(httpServletRequest);
 
 		_setPort(
 			uriBuilder, PortalUtil.getForwardedPort(httpServletRequest),
@@ -354,9 +354,9 @@ public class UriInfoUtil {
 		String webServerHost = PropsUtil.get(PropsKeys.WEB_SERVER_HOST);
 
 		if (Validator.isNotNull(webServerHost)) {
-			boolean secure = _isSecure();
-
 			uriBuilder.host(webServerHost);
+
+			boolean secure = _isSecure();
 
 			_setPort(
 				uriBuilder,

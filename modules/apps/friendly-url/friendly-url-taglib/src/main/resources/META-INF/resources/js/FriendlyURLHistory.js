@@ -77,7 +77,7 @@ export default function FriendlyURLHistory({
 				}}
 				outline
 				small
-				symbol="restore"
+				symbol="time"
 				title={Liferay.Language.get('history')}
 			/>
 			{showModal && (

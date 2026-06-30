@@ -255,6 +255,7 @@ public class ObjectRelationshipExtensionProvider
 					nestedObjectEntry.getId(),
 					ServiceContextUtil.createServiceContext(
 						objectDefinition.getCompanyId(),
+						relatedObjectDefinition.isEnableCategorization(),
 						_getGroupId(
 							objectDefinition, nestedObjectEntry.getScopeKey()),
 						nestedObjectEntry, userId));

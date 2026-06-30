@@ -40,12 +40,18 @@
 			);
 
 			.criteria-sidebar-item-type {
-				background-color: $lightBackground;
+				flex-shrink: 0;
 				margin: 0 8px;
 			}
 
 			.lexicon-icon-drag {
 				color: $mainLighten52;
+			}
+
+			.criteria-sidebar-item-label {
+				flex: 1;
+				min-width: 0;
+				overflow-wrap: anywhere;
 			}
 
 			&.dragging {
@@ -71,6 +77,18 @@
 		list-style: none;
 		margin: 0;
 		padding: 0;
+	}
+
+	.events-criteria-tabs {
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+
+		.events-criteria-tabs-content {
+			flex: 1;
+			min-height: 0;
+			overflow-y: auto;
+		}
 	}
 
 	.sidebar-title {

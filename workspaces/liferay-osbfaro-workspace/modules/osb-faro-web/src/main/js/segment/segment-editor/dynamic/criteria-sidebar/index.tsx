@@ -1,20 +1,24 @@
+import AttributesCriteriaTabs from './AttributesCriteriaTabs';
 import ClayDropDown from '@clayui/drop-down';
 import CriteriaSidebarCollapse from './CriteriaSidebarCollapse';
 import CriteriaSidebarSearchBar from './CriteriaSidebarSearchBar';
+import EventsCriteriaTabs from './EventsCriteriaTabs';
 import Loading from 'shared/components/Loading';
 import React, {useContext, useEffect, useMemo, useState} from 'react';
 import {ClayPaginationWithBasicItems} from '@clayui/pagination';
 import {extractRemoteCriterionEntries} from '../criterion-types/extract';
+import {FieldOwnerTypes, SegmentTypes} from 'shared/util/constants';
 import {getRemoteCriterionTypeByPropertyKey} from '../criterion-types/registry';
 import {List} from 'immutable';
 import {Option, Picker} from '@clayui/core';
 import {PaginationBar} from '@clayui/pagination-bar';
 import {Property, PropertyGroup, PropertySubgroup} from 'shared/util/records';
 import {ReferencedObjectsContext} from '../context/referencedObjects';
-import {SegmentTypes} from 'shared/util/constants';
 import {translateQueryToCriteria} from '../utils/odata';
 
 const REMOTE_PAGE_SIZE = 12;
+
+const EVENTS_PROPERTY_KEY = 'web';
 
 const PROPERTY_KEY_TO_GROUP: Record<string, string> = {
 	account: 'attributes',
@@ -162,30 +166,96 @@ export default function CriteriaSidebar({
 		[propertyGroupsIList, remoteItems]
 	);
 
-	const groupedBySection = propertyGroupsIList
-		.toArray()
-		.reduce<Record<string, PropertyGroup[]>>((acc, pg) => {
-			const groupKey =
-				PROPERTY_KEY_TO_GROUP[pg.propertyKey] ?? 'attributes';
+	const groupedBySection = useMemo(
+		() =>
+			propertyGroupsIList
+				.toArray()
+				.reduce<Record<string, PropertyGroup[]>>((acc, pg) => {
+					const groupKey =
+						PROPERTY_KEY_TO_GROUP[pg.propertyKey] ?? 'attributes';
 
-			if (!acc[groupKey]) {
-				acc[groupKey] = [];
-			}
+					if (!acc[groupKey]) {
+						acc[groupKey] = [];
+					}
 
-			acc[groupKey].push(pg);
+					acc[groupKey].push(pg);
 
-			return acc;
-		}, {});
+					return acc;
+				}, {}),
+		[propertyGroupsIList]
+	);
 
-	const pickerItems: IPickerGroup[] = GROUP_ORDER.filter(
-		(groupKey) => groupedBySection[groupKey]?.length > 0
-	).map((groupKey) => ({
-		items: groupedBySection[groupKey].map(({label, propertyKey}) => ({
-			label,
-			value: propertyKey,
-		})),
-		label: GROUP_LABELS[groupKey] ?? groupKey,
-	}));
+	const pickerItems: IPickerGroup[] = useMemo(
+		() =>
+			GROUP_ORDER.filter(
+				(groupKey) => groupedBySection[groupKey]?.length > 0
+			).map((groupKey) => ({
+				items: groupedBySection[groupKey].map(
+					({label, propertyKey}) => ({
+						label,
+						value: propertyKey,
+					})
+				),
+				label: GROUP_LABELS[groupKey] ?? groupKey,
+			})),
+		[groupedBySection]
+	);
+
+	const isEventsSection = selectedPropertyKey === EVENTS_PROPERTY_KEY;
+
+	const eventsGroup = propertyGroupsIList.find(
+		(group) => group?.propertyKey === EVENTS_PROPERTY_KEY
+	);
+
+	const defaultEvents =
+		eventsGroup?.propertySubgroups.first()?.properties ?? List<Property>();
+
+	const isAttributesSection =
+		selectedPropertyKey === FieldOwnerTypes.Individual ||
+		selectedPropertyKey === FieldOwnerTypes.Organization;
+
+	const attributesGroup = propertyGroupsIList.find(
+		(group) => group?.propertyKey === selectedPropertyKey
+	);
+
+	const renderCriteria = () => {
+		if (isEventsSection) {
+			return (
+				<EventsCriteriaTabs
+					defaultEvents={defaultEvents}
+					searchValue={searchValue}
+				/>
+			);
+		}
+
+		if (isAttributesSection) {
+			return (
+				<AttributesCriteriaTabs
+					customProperties={
+						attributesGroup?.propertySubgroups.get(1)?.properties ??
+						List<Property>()
+					}
+					defaultProperties={
+						attributesGroup?.propertySubgroups.first()
+							?.properties ?? List<Property>()
+					}
+					searchValue={searchValue}
+				/>
+			);
+		}
+
+		if (isRemoteSection && remoteLoading) {
+			return <Loading overlay />;
+		}
+
+		return (
+			<CriteriaSidebarCollapse
+				propertyGroupsIList={effectivePropertyGroupsIList}
+				propertyKey={selectedPropertyKey ?? ''}
+				searchValue={isRemoteSection ? '' : searchValue}
+			/>
+		);
+	};
 
 	return (
 		<div className="criteria-sidebar-root">
@@ -225,17 +295,7 @@ export default function CriteriaSidebar({
 				/>
 			</div>
 
-			<div className="sidebar-collapse">
-				{isRemoteSection && remoteLoading ? (
-					<Loading overlay />
-				) : (
-					<CriteriaSidebarCollapse
-						propertyGroupsIList={effectivePropertyGroupsIList}
-						propertyKey={selectedPropertyKey ?? ''}
-						searchValue={isRemoteSection ? '' : searchValue}
-					/>
-				)}
-			</div>
+			<div className="sidebar-collapse">{renderCriteria()}</div>
 
 			{isRemoteSection && remoteTotalCount > 0 && (
 				<PaginationBar className="justify-content-center sidebar-pagination">

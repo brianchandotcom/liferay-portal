@@ -1,16 +1,12 @@
 import * as API from 'shared/api';
-import client from 'shared/apollo/client';
-import EventDefinitionsQuery from 'event-analysis/queries/EventDefinitionsQuery';
 import React from 'react';
 import {compose} from 'redux';
 import {
-	convertEventToProperty,
 	convertFieldMappingToAccountProperty,
 	convertFieldMappingToIndividualProperty,
 	convertFieldMappingToOrganizationProperty,
 	createInterestProperty,
 } from '../utils/utils';
-import {EventTypes} from 'event-analysis/utils/types';
 import {
 	FieldContexts,
 	FieldOwnerTypes,
@@ -23,8 +19,6 @@ import {
 	WEB_BEHAVIORS,
 } from '../utils/properties';
 import {List} from 'immutable';
-import {NAME} from 'shared/util/pagination';
-import {OrderByDirections} from 'shared/util/constants';
 import {PropertyGroup, PropertySubgroup} from 'shared/util/records';
 import {withRequest} from 'shared/hoc';
 
@@ -66,20 +60,6 @@ const fetchPropertyGroups = ({
 			groupId,
 			ownerType: FieldOwnerTypes.Organization,
 		}),
-		client.query({
-			fetchPolicy: 'network-only',
-			query: EventDefinitionsQuery,
-			variables: {
-				eventType: EventTypes.Custom,
-				hidden: false,
-				page: 0,
-				size: MAX_DELTA,
-				sort: {
-					column: NAME,
-					type: OrderByDirections.Ascending,
-				},
-			},
-		}),
 		Promise.resolve(WEB_BEHAVIORS),
 		type === SegmentTypes.Batch
 			? API.interests.searchKeywords({
@@ -99,7 +79,6 @@ const mapResultToProps = (
 		accountMappings,
 		organizationProperties,
 		organizationCustomMappings,
-		eventProperties,
 		webBehaviors,
 		interestKeywords,
 		sessionProperties,
@@ -135,24 +114,12 @@ const mapResultToProps = (
 			new PropertyGroup({
 				label: Liferay.Language.get('events'),
 				propertyKey: 'web',
-				propertySubgroups: List(
-					[
-						new PropertySubgroup({
-							label: Liferay.Language.get('default-events'),
-
-							properties: webBehaviors,
-						}),
-
-						new PropertySubgroup({
-							label: Liferay.Language.get('custom-events'),
-							properties: List(
-								eventProperties?.data?.eventDefinitions?.eventDefinitions?.map(
-									convertEventToProperty
-								)
-							),
-						}),
-					].filter(Boolean)
-				),
+				propertySubgroups: List([
+					new PropertySubgroup({
+						label: Liferay.Language.get('default-events'),
+						properties: webBehaviors,
+					}),
+				]),
 			}),
 			type === SegmentTypes.Batch &&
 				new PropertyGroup({

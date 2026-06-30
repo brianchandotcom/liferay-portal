@@ -1,70 +1,31 @@
-import {AssetNames, AssetTypes} from 'shared/util/constants';
 import {List} from 'immutable';
 import {Property} from 'shared/util/records';
 import {PropertyTypes} from '../constants';
 
 const createWebProperty = ({
-	entityType,
 	label,
 	name,
-	type = PropertyTypes.Behavior,
 }: {
-	entityType: AssetTypes;
 	label: string;
-	name: AssetNames;
-	type?: PropertyTypes;
+	name: string;
 }): Property =>
 	new Property({
 		entityName: Liferay.Language.get('individual'),
-		entityType,
 		label,
 		name,
 		propertyKey: 'web',
-		type,
+		type: PropertyTypes.Behavior,
 	});
 
 const WEB_BEHAVIORS = List(
 	[
-		{
-			entityType: AssetTypes.Document,
-			label: Liferay.Language.get('downloaded-document-&-media'),
-			name: AssetNames.DocumentDownloaded,
-		},
-		{
-			entityType: AssetTypes.Form,
-			label: Liferay.Language.get('submitted-form'),
-			name: AssetNames.FormSubmitted,
-		},
-		{
-			entityType: AssetTypes.Form,
-			label: Liferay.Language.get('viewed-form'),
-			name: AssetNames.FormViewed,
-		},
-		{
-			entityType: AssetTypes.WebPage,
-			label: Liferay.Language.get('viewed-page'),
-			name: AssetNames.PageViewed,
-		},
-		{
-			entityType: AssetTypes.Blog,
-			label: Liferay.Language.get('commented-on-blog'),
-			name: AssetNames.CommentPosted,
-		},
-		{
-			entityType: AssetTypes.Blog,
-			label: Liferay.Language.get('viewed-blog'),
-			name: AssetNames.BlogViewed,
-		},
-		{
-			entityType: AssetTypes.Document,
-			label: Liferay.Language.get('viewed-document-&-media'),
-			name: AssetNames.DocumentPreviewed,
-		},
-		{
-			entityType: AssetTypes.WebContent,
-			label: Liferay.Language.get('viewed-web-content'),
-			name: AssetNames.WebContentViewed,
-		},
+		{label: Liferay.Language.get('click'), name: 'click'},
+		{label: Liferay.Language.get('comment'), name: 'comment'},
+		{label: Liferay.Language.get('download'), name: 'download'},
+		{label: Liferay.Language.get('impression'), name: 'impression'},
+		{label: Liferay.Language.get('submit'), name: 'submit'},
+		{label: Liferay.Language.get('view-asset'), name: 'viewAsset'},
+		{label: Liferay.Language.get('view-page'), name: 'viewPage'},
 	].map(createWebProperty)
 );
 

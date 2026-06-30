@@ -9,7 +9,7 @@ import {Property} from 'shared/util/records';
 import {PropertyTypes} from '../utils/constants';
 
 const TYPE_ICON_MAP = {
-	[PropertyTypes.Behavior]: 'web-content',
+	[PropertyTypes.Behavior]: 'ac_event_analysis',
 	[PropertyTypes.Boolean]: 'check',
 	[PropertyTypes.AccountDate]: 'date',
 	[PropertyTypes.AccountNumber]: 'integer',
@@ -152,7 +152,7 @@ export class CriteriaSidebarItem extends React.Component<ICriteriaSidebarItemPro
 					</span>
 				</span>
 
-				{label}
+				<span className="criteria-sidebar-item-label">{label}</span>
 			</li>
 		);
 	}

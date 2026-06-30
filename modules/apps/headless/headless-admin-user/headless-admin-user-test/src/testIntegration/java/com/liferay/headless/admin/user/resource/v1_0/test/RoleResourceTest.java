@@ -277,7 +277,7 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 		super.testPostRole();
 
 		_testPostRoleBatch();
-		_testPostRoleWithPrimaryKeyZero();
+		_testPostRoleWithInvalidPrimaryKey();
 		_testPostRoleWithSubtype();
 	}
 
@@ -1064,36 +1064,42 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 			WorkflowConstants.STATUS_EMPTY, serviceBuilderRole3.getStatus());
 	}
 
-	private void _testPostRoleWithPrimaryKeyZero() throws Exception {
-		String resourceName =
-			com.liferay.portal.kernel.model.Role.class.getName();
-
-		RolePermission rolePermission = new RolePermission();
-
-		rolePermission.setActionIds(new String[] {ActionKeys.VIEW});
-		rolePermission.setPrimaryKey("0");
-		rolePermission.setResourceName(resourceName);
-		rolePermission.setScope((long)ResourceConstants.SCOPE_COMPANY);
-
+	private void _testPostRoleWithInvalidPrimaryKey() throws Exception {
+		long primKey = RandomTestUtil.randomLong();
 		Role role = randomRole();
 
+		role.setRolePermissions(
+			new RolePermission[] {
+				new RolePermission() {
+					{
+						setActionIds(new String[] {ActionKeys.VIEW});
+						setPrimaryKey(String.valueOf(primKey));
+						setResourceName(
+							com.liferay.portal.kernel.model.Role.class.
+								getName());
+						setScope((long)ResourceConstants.SCOPE_COMPANY);
+					}
+				}
+			});
 		role.setRoleType(
 			RoleConstants.getTypeLabel(RoleConstants.TYPE_REGULAR));
-		role.setRolePermissions(new RolePermission[] {rolePermission});
 
-		Role postRole = roleResource.postRole(role);
-
-		long companyId = testCompany.getCompanyId();
+		role = roleResource.postRole(role);
 
 		Assert.assertTrue(
 			_resourcePermissionLocalService.hasResourcePermission(
-				companyId, resourceName, ResourceConstants.SCOPE_COMPANY,
-				String.valueOf(companyId), postRole.getId(), ActionKeys.VIEW));
+				testCompany.getCompanyId(),
+				com.liferay.portal.kernel.model.Role.class.getName(),
+				ResourceConstants.SCOPE_COMPANY,
+				String.valueOf(testCompany.getCompanyId()), role.getId(),
+				ActionKeys.VIEW));
 
 		Assert.assertEquals(
 			0,
 			_resourcePermissionLocalService.getResourcePermissionsCount(
-				companyId, resourceName, ResourceConstants.SCOPE_COMPANY, "0"));
+				testCompany.getCompanyId(),
+				com.liferay.portal.kernel.model.Role.class.getName(),
+				ResourceConstants.SCOPE_COMPANY, String.valueOf(primKey)));
 	}
 
 	private void _testPostRoleWithSubtype() throws Exception {

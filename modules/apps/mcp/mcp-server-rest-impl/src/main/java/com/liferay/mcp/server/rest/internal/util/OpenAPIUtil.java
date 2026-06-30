@@ -58,9 +58,10 @@ public class OpenAPIUtil {
 			JSONObject openAPIJSONObject, String toolName, User user)
 		throws Exception {
 
-		Operation operation = _getOperation(openAPIJSONObject, toolName);
 		byte[] body;
 		String contentType;
+
+		Operation operation = _getOperation(openAPIJSONObject, toolName);
 
 		if (_isMultipartRequest(operation._operationJSONObject)) {
 			HttpEntity httpEntity = _getMultipartHttpEntity(

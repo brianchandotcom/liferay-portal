@@ -1916,8 +1916,10 @@ public class DefaultObjectEntryManagerImpl
 							serviceBuilderObjectEntry.getPrimaryKey(),
 							nestedObjectEntry.getId(),
 							ServiceContextUtil.createServiceContext(
-								objectDefinition.getCompanyId(), groupId,
-								nestedObjectEntry,
+								objectDefinition.getCompanyId(),
+								relatedObjectDefinition.
+									isEnableCategorization(),
+								groupId, nestedObjectEntry,
 								dtoConverterContext.getUserId()));
 					}
 
@@ -2142,6 +2144,7 @@ public class DefaultObjectEntryManagerImpl
 
 		return ServiceContextUtil.createServiceContext(
 			objectDefinition.getCompanyId(),
+			objectDefinition.isEnableCategorization(),
 			getGroupId(objectDefinition, scopeKey),
 			dtoConverterContext.getLocale(), modelPermissions, objectEntry,
 			objectEntryComments, dtoConverterContext.getUserId());

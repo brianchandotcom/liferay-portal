@@ -68,13 +68,14 @@ public class ServiceContextUtil {
 	}
 
 	public static ServiceContext createServiceContext(
-			long companyId, long groupId, Locale locale,
-			ModelPermissions modelPermissions, ObjectEntry objectEntry,
+			long companyId, boolean enableCategorization, long groupId,
+			Locale locale, ModelPermissions modelPermissions,
+			ObjectEntry objectEntry,
 			List<ObjectEntryComment> objectEntryComments, long userId)
 		throws PortalException {
 
 		ServiceContext serviceContext = createServiceContext(
-			companyId, groupId, objectEntry, userId);
+			companyId, enableCategorization, groupId, objectEntry, userId);
 
 		serviceContext.setAttribute(
 			"friendlyUrlMap",
@@ -92,7 +93,8 @@ public class ServiceContextUtil {
 	}
 
 	public static ServiceContext createServiceContext(
-			long companyId, long groupId, ObjectEntry objectEntry, long userId)
+			long companyId, boolean enableCategorization, long groupId,
+			ObjectEntry objectEntry, long userId)
 		throws PortalException {
 
 		ServiceContext serviceContext = new ServiceContext();
@@ -100,18 +102,21 @@ public class ServiceContextUtil {
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
 
-		if (objectEntry.getTaxonomyCategoryIds() == null) {
-			_setObjectEntryTaxonomyCategoryIds(companyId, groupId, objectEntry);
-		}
+		if (enableCategorization) {
+			if (objectEntry.getTaxonomyCategoryIds() == null) {
+				_setObjectEntryTaxonomyCategoryIds(
+					companyId, groupId, objectEntry);
+			}
 
-		if (objectEntry.getTaxonomyCategoryIds() != null) {
-			long[] assetCategoryIds = ArrayUtil.toArray(
-				objectEntry.getTaxonomyCategoryIds());
+			if (objectEntry.getTaxonomyCategoryIds() != null) {
+				long[] assetCategoryIds = ArrayUtil.toArray(
+					objectEntry.getTaxonomyCategoryIds());
 
-			_validateAssetCategoryGroupIds(
-				assetCategoryIds, companyId, groupId);
+				_validateAssetCategoryGroupIds(
+					assetCategoryIds, companyId, groupId);
 
-			serviceContext.setAssetCategoryIds(assetCategoryIds);
+				serviceContext.setAssetCategoryIds(assetCategoryIds);
+			}
 		}
 
 		if (Validator.isNotNull(objectEntry.getKeywords())) {

@@ -62,20 +62,15 @@ public class JenkinsResultsParserUtilTest
 
 			long duration = System.currentTimeMillis() - startTime;
 
-			if (result != null) {
-				errorCollector.addError(
-					new Throwable(
-						"executeJenkinsScript should return null on a read " +
-							"timeout, but returned: " + result));
-			}
+			testEquals(null, result);
 
 			if (duration < 1500) {
 				errorCollector.addError(
 					new Throwable(
 						JenkinsResultsParserUtil.combine(
-							"executeJenkinsScript returned after ",
-							String.valueOf(duration),
-							" ms; it did not reach the read timeout")));
+							"The read timeout was not reached after ",
+							JenkinsResultsParserUtil.toDurationString(
+								duration))));
 			}
 		}
 	}
@@ -362,17 +357,16 @@ public class JenkinsResultsParserUtilTest
 
 			if (!thrown) {
 				errorCollector.addError(
-					new Throwable(
-						"invokeJenkinsBuild should fail on a read timeout"));
+					new Throwable("A RuntimeException was not thrown"));
 			}
 
 			if (duration < 1500) {
 				errorCollector.addError(
 					new Throwable(
 						JenkinsResultsParserUtil.combine(
-							"invokeJenkinsBuild failed after ",
-							String.valueOf(duration),
-							" ms; it did not reach the read timeout")));
+							"The read timeout was not reached after ",
+							JenkinsResultsParserUtil.toDurationString(
+								duration))));
 			}
 		}
 	}

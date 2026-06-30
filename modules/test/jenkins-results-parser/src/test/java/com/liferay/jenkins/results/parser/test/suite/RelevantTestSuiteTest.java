@@ -33,6 +33,8 @@ public class RelevantTestSuiteTest extends BaseRelevantRuleTestCase {
 
 	@Test
 	public void testJUnitTestSelectorMerge() throws IOException {
+		getRelevantRuleEngine();
+
 		RelevantTestSuite relevantTestSuite = new RelevantTestSuite(
 			getPortalAcceptancePullRequestJob());
 
@@ -40,11 +42,6 @@ public class RelevantTestSuiteTest extends BaseRelevantRuleTestCase {
 			Arrays.asList(
 				new File(getBaseDir(), "text_file_0.txt"),
 				new File(getBaseDir(), "modules/module-1/text_file_1.txt")));
-
-		RelevantRuleEngine relevantRuleEngine =
-			RelevantRuleEngine.getInstance();
-
-		relevantRuleEngine.setBaseDir(getBaseDir());
 
 		JUnitTestBatch jUnitTestBatch = null;
 
@@ -81,6 +78,8 @@ public class RelevantTestSuiteTest extends BaseRelevantRuleTestCase {
 
 	@Test
 	public void testPlaywrightTestSelectorMerge() {
+		getRelevantRuleEngine();
+
 		RelevantTestSuite relevantTestSuite = new RelevantTestSuite(
 			getPortalAcceptancePullRequestJob());
 
@@ -88,11 +87,6 @@ public class RelevantTestSuiteTest extends BaseRelevantRuleTestCase {
 			Arrays.asList(
 				new File(getBaseDir(), "modules/module-1/text_file_1.txt"),
 				new File(getBaseDir(), "modules/module-2/text_file_2.txt")));
-
-		RelevantRuleEngine relevantRuleEngine =
-			RelevantRuleEngine.getInstance();
-
-		relevantRuleEngine.setBaseDir(getBaseDir());
 
 		PlaywrightTestBatch playwrightTestBatch = null;
 
@@ -125,6 +119,8 @@ public class RelevantTestSuiteTest extends BaseRelevantRuleTestCase {
 
 	@Test
 	public void testPoshiTestSelectorMerge() throws IOException {
+		getRelevantRuleEngine();
+
 		RelevantTestSuite relevantTestSuite = new RelevantTestSuite(
 			getPortalAcceptancePullRequestJob());
 
@@ -132,11 +128,6 @@ public class RelevantTestSuiteTest extends BaseRelevantRuleTestCase {
 			Arrays.asList(
 				new File(getBaseDir(), "test.properties"),
 				new File(getBaseDir(), "modules/module-2/text_file_2.txt")));
-
-		RelevantRuleEngine relevantRuleEngine =
-			RelevantRuleEngine.getInstance();
-
-		relevantRuleEngine.setBaseDir(getBaseDir());
 
 		PoshiTestBatch poshiTestBatch = null;
 
@@ -163,10 +154,7 @@ public class RelevantTestSuiteTest extends BaseRelevantRuleTestCase {
 
 	@Test
 	public void testStableRuleBatchBypassesWhitelist() {
-		RelevantRuleEngine relevantRuleEngine = RelevantRuleEngine.getInstance(
-			getPortalAcceptancePullRequestJob());
-
-		relevantRuleEngine.setBaseDir(getBaseDir());
+		getRelevantRuleEngine();
 
 		RelevantTestSuite relevantTestSuite = new RelevantTestSuite(
 			getPortalAcceptancePullRequestJob());

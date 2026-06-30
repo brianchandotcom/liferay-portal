@@ -35,8 +35,6 @@ export default async function shareAction({
 	title: string;
 }) {
 	try {
-		const externalUserSharingEnabled = !!Liferay.FeatureFlags['LPD-52006'];
-
 		const items = await CollaboratorService.getCollaborators(
 			collaboratorURL,
 			itemId
@@ -44,11 +42,6 @@ export default async function shareAction({
 
 		const initialCollaborators: Collaborator[] = items
 			.reverse()
-			.filter(
-				({type}) =>
-					externalUserSharingEnabled ||
-					type !== COLLABORATOR_TYPE.EXTERNAL_USER
-			)
 			.map(
 				({
 					actionIds,
@@ -100,7 +93,6 @@ export default async function shareAction({
 					collaboratorURL={collaboratorURL}
 					creator={{...creator, id: creator.id.toString()}}
 					entryClassName={entryClassName}
-					externalUserSharingEnabled={externalUserSharingEnabled}
 					initialCollaborators={initialCollaborators}
 					itemId={itemId}
 					title={title}

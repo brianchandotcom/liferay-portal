@@ -17,7 +17,6 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.EmailAddressException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -68,12 +67,6 @@ public class SharingCollaborationMailSenderImpl
 	public void sendEmail(
 			ServiceContext serviceContext, SharingEntry sharingEntry)
 		throws Exception {
-
-		if (!FeatureFlagManagerUtil.isEnabled(
-				sharingEntry.getCompanyId(), "LPD-52006")) {
-
-			return;
-		}
 
 		Ticket ticket = _ticketLocalService.fetchTicket(
 			sharingEntry.getToTicketId());

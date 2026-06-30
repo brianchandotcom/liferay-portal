@@ -254,11 +254,9 @@ public class CounterDataCleanupPreupgradeProcessTest
 		long fileEntryId1 = CounterLocalServiceUtil.increment();
 		long fileEntryId2 = CounterLocalServiceUtil.increment();
 		long fileEntryId3 = CounterLocalServiceUtil.increment();
-
 		long groupId1 = CounterLocalServiceUtil.increment();
 		long groupId2 = CounterLocalServiceUtil.increment();
 		long groupId3 = CounterLocalServiceUtil.increment();
-
 		long name =
 			CounterLocalServiceUtil.getCurrentId(DLFileEntry.class.getName()) +
 				100;

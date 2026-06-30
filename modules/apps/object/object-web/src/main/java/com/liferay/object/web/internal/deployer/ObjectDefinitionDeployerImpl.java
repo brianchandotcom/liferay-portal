@@ -683,13 +683,13 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		// Register ObjectEntriesPanelApp after ObjectEntriesPortlet. See
 		// LPS-140379.
 
-		if (objectDefinition.isPortlet()) {
-			String panelCategoryKey = objectDefinition.getPanelCategoryKey();
+		String panelCategoryKey = objectDefinition.getPanelCategoryKey();
 
-			if (!objectDefinition.isAllowStandaloneObjectEntry()) {
-				panelCategoryKey = StringPool.BLANK;
-			}
+		if (!objectDefinition.isAllowStandaloneObjectEntry()) {
+			panelCategoryKey = StringPool.BLANK;
+		}
 
+		if (Validator.isNotNull(panelCategoryKey)) {
 			serviceRegistrations.add(
 				_bundleContext.registerService(
 					PanelApp.class,

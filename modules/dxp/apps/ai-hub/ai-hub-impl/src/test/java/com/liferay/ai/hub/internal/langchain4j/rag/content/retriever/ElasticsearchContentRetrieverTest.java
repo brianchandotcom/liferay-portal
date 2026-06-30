@@ -16,6 +16,7 @@ import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
+import dev.langchain4j.data.segment.TextSegment;
 import dev.langchain4j.rag.content.Content;
 import dev.langchain4j.rag.query.Query;
 
@@ -124,10 +125,9 @@ public class ElasticsearchContentRetrieverTest {
 
 		Content content = contents.get(0);
 
-		Assert.assertEquals(
-			fragment,
-			content.textSegment(
-			).text());
+		TextSegment textSegment = content.textSegment();
+
+		Assert.assertEquals(fragment, textSegment.text());
 	}
 
 }

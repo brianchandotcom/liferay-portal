@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -75,10 +76,23 @@ public class CreateSEOStudioScansObjectActionExecutorImpl
 			return;
 		}
 
-		ObjectDefinition seoStudioScanObjectDefinition =
-			_objectDefinitionLocalService.
-				getObjectDefinitionByExternalReferenceCode(
-					"L_SEO_STUDIO_SCAN", companyId);
+		List<String> enabledEngineKeys = new ArrayList<>();
+
+		for (String engineKey : enginesJSONObject.keySet()) {
+			JSONObject engineJSONObject = enginesJSONObject.getJSONObject(
+				engineKey);
+
+			if ((engineJSONObject != null) &&
+				engineJSONObject.getBoolean("enabled")) {
+
+				enabledEngineKeys.add(engineKey);
+			}
+		}
+
+		if (enabledEngineKeys.isEmpty()) {
+			return;
+		}
+
 		ObjectDefinition seoStudioScanRunObjectDefinition =
 			_objectDefinitionLocalService.
 				getObjectDefinitionByExternalReferenceCode(
@@ -114,15 +128,14 @@ public class CreateSEOStudioScansObjectActionExecutorImpl
 			).build(),
 			serviceContext);
 
-		for (String engineKey : enginesJSONObject.keySet()) {
+		ObjectDefinition seoStudioScanObjectDefinition =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					"L_SEO_STUDIO_SCAN", companyId);
+
+		for (String engineKey : enabledEngineKeys) {
 			JSONObject engineJSONObject = enginesJSONObject.getJSONObject(
 				engineKey);
-
-			if ((engineJSONObject == null) ||
-				!engineJSONObject.getBoolean("enabled")) {
-
-				continue;
-			}
 
 			_objectEntryLocalService.addObjectEntry(
 				0, userId,

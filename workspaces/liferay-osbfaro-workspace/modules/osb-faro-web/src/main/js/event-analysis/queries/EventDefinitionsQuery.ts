@@ -11,6 +11,7 @@ export interface EventDefinitionsData {
 export interface EventDefinitionsVariables {
 	blocked?: boolean;
 	eventType: EventTypes;
+	hidden?: boolean;
 	keyword?: string;
 	page?: number;
 	size: number;

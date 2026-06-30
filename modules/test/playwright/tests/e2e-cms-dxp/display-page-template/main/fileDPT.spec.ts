@@ -78,8 +78,6 @@ test(
 				value: 'Title',
 			});
 
-			await pageEditorPage.waitForChangesSaved();
-
 			await pageEditorPage.addFragment('Basic Components', 'Image');
 
 			const imageId = await pageEditorPage.getFragmentId('Image');
@@ -97,8 +95,6 @@ test(
 				tab: 'Image Source',
 				value: 'Preview URL',
 			});
-
-			await pageEditorPage.waitForChangesSaved();
 
 			await pageEditorPage.publishPage();
 

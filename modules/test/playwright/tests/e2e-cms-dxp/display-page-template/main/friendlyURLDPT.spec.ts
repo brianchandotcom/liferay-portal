@@ -69,8 +69,6 @@ test(
 				value: 'Title',
 			});
 
-			await pageEditorPage.waitForChangesSaved();
-
 			await pageEditorPage.publishPage();
 
 			await displayPageTemplatesPage.goto(site.friendlyUrlPath);

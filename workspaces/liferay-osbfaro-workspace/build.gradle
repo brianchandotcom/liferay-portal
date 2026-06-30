@@ -24,9 +24,7 @@ buildDockerImage {
 task buildTheme(type: Exec)
 
 buildTheme {
-	commandLine "${project.buildDir}/node/bin/node",
-	"${project.buildDir}/node/lib/node_modules/npm/bin/npm-cli.js",
-	"run", "build"
+	commandLine "${project.buildDir}/node/bin/node", "${project.buildDir}/node/lib/node_modules/npm/bin/npm-cli.js", "run", "build"
 	dependsOn yarnInstall
 	environment "PATH", "${project.buildDir}/node/bin:${System.getenv('PATH') ?: ''}"
 	workingDir "modules/osb-faro-theme"

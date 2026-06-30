@@ -1,3 +1,4 @@
+import {EventNames} from 'shared/util/constants';
 import {List} from 'immutable';
 import {Property} from 'shared/util/records';
 import {PropertyTypes} from '../constants';
@@ -19,13 +20,16 @@ const createWebProperty = ({
 
 const WEB_BEHAVIORS = List(
 	[
-		{label: Liferay.Language.get('click'), name: 'click'},
-		{label: Liferay.Language.get('comment'), name: 'comment'},
-		{label: Liferay.Language.get('download'), name: 'download'},
-		{label: Liferay.Language.get('impression'), name: 'impression'},
-		{label: Liferay.Language.get('submit'), name: 'submit'},
-		{label: Liferay.Language.get('view-asset'), name: 'viewAsset'},
-		{label: Liferay.Language.get('view-page'), name: 'viewPage'},
+		{label: Liferay.Language.get('click'), name: EventNames.Click},
+		{label: Liferay.Language.get('comment'), name: EventNames.Comment},
+		{label: Liferay.Language.get('download'), name: EventNames.Download},
+		{
+			label: Liferay.Language.get('impression'),
+			name: EventNames.Impression,
+		},
+		{label: Liferay.Language.get('submit'), name: EventNames.Submit},
+		{label: Liferay.Language.get('view-asset'), name: EventNames.ViewAsset},
+		{label: Liferay.Language.get('view-page'), name: EventNames.ViewPage},
 	].map(createWebProperty)
 );
 

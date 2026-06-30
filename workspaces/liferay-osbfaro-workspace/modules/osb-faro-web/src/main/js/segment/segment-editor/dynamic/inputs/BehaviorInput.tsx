@@ -10,7 +10,7 @@ import {
 	RelationalOperators,
 } from '../utils/constants';
 import {activityAssetsListColumns} from 'shared/util/table-columns';
-import {AssetNames, SegmentTypes} from 'shared/util/constants';
+import {EventNames, SegmentTypes} from 'shared/util/constants';
 import {COUNT, createOrderIOMap} from 'shared/util/pagination';
 import {Criterion, ISegmentEditorCustomInputBase} from '../utils/types';
 import {CustomValue} from 'shared/util/records';
@@ -53,15 +53,15 @@ export const AssetItem: React.FC<{
 );
 
 const ASSET_MODAL_CONFIG_MAP = {
-	[AssetNames.CommentPosted]: {
+	[EventNames.Comment]: {
 		columns: [activityAssetsListColumns.commentCount],
 		label: Liferay.Language.get('comments'),
 	},
-	[AssetNames.DocumentDownloaded]: {
+	[EventNames.Download]: {
 		columns: [activityAssetsListColumns.downloadCount],
 		label: Liferay.Language.get('downloads'),
 	},
-	[AssetNames.FormSubmitted]: {
+	[EventNames.Submit]: {
 		columns: [activityAssetsListColumns.submissionCount],
 		label: Liferay.Language.get('submissions'),
 	},

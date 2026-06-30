@@ -27,7 +27,7 @@ Run the Nexus baseline task per selected `*-api` module, with its directory conv
 
 A nonempty `modules/<module>/build/reports/baseline/baseline.log` is a FAIL. An empty log is a PASS. The task builds the module jar and resolves the last released artifact from Nexus, so it requires network access.
 
-### Portal Impl And Portal Kernel
+### Portal Impl and Portal Kernel
 
 Both run as standalone Gradle projects that apply the `BaselinePlugin`. The task baselines the Ant-built jar in the project directory, so build that jar with `ant jar` first, then run the baseline task (substitute `portal-kernel` for the kernel side):
 
@@ -40,13 +40,13 @@ Both run as standalone Gradle projects that apply the `BaselinePlugin`. The task
 	baseline)
 ```
 
-A nonempty `baseline-reports/portal-impl.log` is a FAIL. Like the module task, it resolves the last released artifact from Nexus, so it needs network.
+A nonempty `baseline-reports/portal-impl.log` is a FAIL. Like the module task, it resolves the last released artifact from Nexus, so it needs network access.
 
 ### Local Version Check
 
 This needs no network and reports an advisory note, never a PASS or FAIL.
 
-Look at each changed `.java` under an `*-api` module's `src/main/java` or under `portal-impl/src` or `portal-kernel/src`. When its diff adds or removes a `public` or `protected` line, the exported API changed, so the version should be bumped too. The bump shows up in the diff as a changed `packageinfo`, or a changed `bnd.bnd` `Bundle-Version` for an `*-api` module. If neither changed, flag the package, since the API changed but the version did not.
+Look at each changed `.java` under an `*-api` module's `src/main/java`, `portal-impl/src`, or `portal-kernel/src`. When its diff adds or removes a `public` or `protected` line, the exported API changed, so the version should be bumped too. The bump shows up in the diff as a changed `packageinfo`, or a changed `bnd.bnd` `Bundle-Version` for an `*-api` module. If neither changed, flag the package, since the API changed but the version did not.
 
 Flag a lowered `packageinfo` or `Bundle-Version` that has no matching `public` or `protected` removal.
 

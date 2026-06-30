@@ -176,7 +176,7 @@ test('Check client extension does not apply to new instances @LPD-63018', async 
 			.fill('ckeditor');
 
 		await virtualInstancePage
-			.getByRole('menuitem', {name: 'CKEditor Sample Add CKEditor'})
+			.getByRole('menuitem', {name: 'CKEditor 4 Sample'})
 			.locator('div')
 			.first()
 			.click();
@@ -189,7 +189,7 @@ test('Check client extension does not apply to new instances @LPD-63018', async 
 
 		await virtualInstancePage
 			.locator('header')
-			.filter({hasText: 'CKEditor Sample'})
+			.filter({hasText: 'CKEditor 4 Sample'})
 			.first()
 			.waitFor({state: 'visible'});
 

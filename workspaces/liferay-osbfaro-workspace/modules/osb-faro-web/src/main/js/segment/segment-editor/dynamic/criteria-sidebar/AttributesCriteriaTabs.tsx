@@ -36,7 +36,7 @@ const AttributesCriteriaTabs: React.FC<IAttributesCriteriaTabsProps> = ({
 			</ClayTabs>
 
 			<div className="events-criteria-tabs-content mt-3">
-				{renderProperties(filteredProperties)}
+				{renderProperties(filteredProperties, searchValue)}
 			</div>
 		</div>
 	);

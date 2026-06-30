@@ -10,14 +10,19 @@ import com.liferay.audiences.criteria.AudiencesCriteria;
 import com.liferay.audiences.criteria.AudiencesCriteriaProvider;
 import com.liferay.audiences.criteria.AudiencesCriteriaType;
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
+import com.liferay.client.extension.type.AudiencesCustomAttributesCET;
 import com.liferay.client.extension.type.CET;
 import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.ArrayList;
@@ -151,14 +156,37 @@ public class AudiencesCriteriaProviderImpl
 				return null;
 			}
 
+			List<AudiencesCriteria> audiencesCriterias = new ArrayList<>();
+
+			for (CET cet : cets) {
+				AudiencesCustomAttributesCET audiencesCustomAttributesCET =
+					(AudiencesCustomAttributesCET)cet;
+
+				String[] names = StringUtil.split(
+					audiencesCustomAttributesCET.getNames(), CharPool.NEW_LINE);
+				String[] symbols = StringUtil.split(
+					audiencesCustomAttributesCET.getSymbols(),
+					CharPool.NEW_LINE);
+				String[] types = StringUtil.split(
+					audiencesCustomAttributesCET.getTypes(), CharPool.NEW_LINE);
+
+				for (int i = 0; i < symbols.length; i++) {
+					AudiencesCriteria.Type type = AudiencesCriteria.Type.parse(
+						types[i]);
+
+					audiencesCriterias.add(
+						new AudiencesCriteria(
+							"cog", _getInputType(type),
+							StringBundler.concat(
+								"custom:",
+								audiencesCustomAttributesCET.getURL(),
+								StringPool.POUND, symbols[i]),
+							names[i], type));
+				}
+			}
+
 			return new AudiencesCriteriaType(
-				TransformUtil.transform(
-					cets,
-					cet -> new AudiencesCriteria(
-						"cog", AudiencesCriteria.InputType.TEXT,
-						"custom:" + cet.getExternalReferenceCode(),
-						cet.getName(locale), AudiencesCriteria.Type.STRING)),
-				_language.get(locale, "custom"));
+				audiencesCriterias, _language.get(locale, "custom"));
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
@@ -186,6 +214,16 @@ public class AudiencesCriteriaProviderImpl
 					_getLanguageOptions(locale),
 					AudiencesCriteria.Type.STRING)),
 			_language.get(locale, "general"));
+	}
+
+	private AudiencesCriteria.InputType _getInputType(
+		AudiencesCriteria.Type type) {
+
+		if (type == AudiencesCriteria.Type.BOOLEAN) {
+			return AudiencesCriteria.InputType.BOOLEAN;
+		}
+
+		return AudiencesCriteria.InputType.TEXT;
 	}
 
 	private List<AudiencesCriteria.Option> _getLanguageOptions(Locale locale) {

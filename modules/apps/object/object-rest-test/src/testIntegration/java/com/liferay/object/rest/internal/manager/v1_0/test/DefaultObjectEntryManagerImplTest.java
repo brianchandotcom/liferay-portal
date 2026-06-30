@@ -2886,6 +2886,8 @@ public class DefaultObjectEntryManagerImplTest
 
 		// Lazy referencing disabled
 
+		Group companyGroup = _groupLocalService.getCompanyGroup(
+			TestPropsValues.getCompanyId());
 		String parentTaxonomyCategoryExternalReferenceCode =
 			RandomTestUtil.randomString();
 		String taxonomyCategoryExternalReferenceCode1 =
@@ -2902,7 +2904,7 @@ public class DefaultObjectEntryManagerImplTest
 						new TaxonomyCategoryBrief() {
 							{
 								scope = Scope.of(
-									_group, LocaleUtil.getDefault());
+									companyGroup, LocaleUtil.getDefault());
 								taxonomyCategoryExternalReferenceCode =
 									taxonomyCategoryExternalReferenceCode1;
 
@@ -2918,7 +2920,7 @@ public class DefaultObjectEntryManagerImplTest
 						new TaxonomyCategoryBrief() {
 							{
 								scope = Scope.of(
-									_group, LocaleUtil.getDefault());
+									companyGroup, LocaleUtil.getDefault());
 								taxonomyCategoryExternalReferenceCode =
 									taxonomyCategoryExternalReferenceCode2;
 
@@ -2963,7 +2965,7 @@ public class DefaultObjectEntryManagerImplTest
 				_assetCategoryLocalService.
 					fetchAssetCategoryByExternalReferenceCode(
 						taxonomyCategoryExternalReferenceCode1,
-						_group.getGroupId());
+						companyGroup.getGroupId());
 
 			Assert.assertEquals(
 				AssetVocabularyConstants.EMPTY_VOCABULARY_ID,
@@ -2975,7 +2977,7 @@ public class DefaultObjectEntryManagerImplTest
 				_assetCategoryLocalService.
 					getAssetCategoryByExternalReferenceCode(
 						parentTaxonomyCategoryExternalReferenceCode,
-						_group.getGroupId());
+						companyGroup.getGroupId());
 
 			Assert.assertEquals(
 				assetCategory1.getParentCategoryId(),
@@ -2988,7 +2990,7 @@ public class DefaultObjectEntryManagerImplTest
 				_assetCategoryLocalService.
 					fetchAssetCategoryByExternalReferenceCode(
 						taxonomyCategoryExternalReferenceCode2,
-						_group.getGroupId());
+						companyGroup.getGroupId());
 
 			Assert.assertEquals(
 				AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
@@ -3000,7 +3002,7 @@ public class DefaultObjectEntryManagerImplTest
 				_assetVocabularyLocalService.
 					fetchAssetVocabularyByExternalReferenceCode(
 						taxonomyVocabularyExternalReferenceCode,
-						_group.getGroupId());
+						companyGroup.getGroupId());
 
 			Assert.assertEquals(
 				assetCategory2.getVocabularyId(),

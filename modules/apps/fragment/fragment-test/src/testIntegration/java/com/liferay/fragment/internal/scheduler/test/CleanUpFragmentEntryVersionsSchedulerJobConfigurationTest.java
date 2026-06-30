@@ -116,7 +116,7 @@ public class CleanUpFragmentEntryVersionsSchedulerJobConfigurationTest {
 				FragmentEntryVersionTestUtil.getVersions(fragmentEntry1));
 			Assert.assertEquals(
 				FragmentEntryVersionTestUtil.MAX_VERSIONS_PER_FRAGMENT_ENTRY,
-				FragmentEntryVersionTestUtil.countVersions(
+				FragmentEntryVersionTestUtil.getFragmentEntryVersionsCount(
 					CTConstants.CT_COLLECTION_ID_PRODUCTION, fragmentEntry2));
 		}
 	}

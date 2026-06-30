@@ -118,14 +118,14 @@ public class FragmentEntryVersionCleanUpCTCollectionTest {
 			}
 
 			int versionsInCTCollectionBeforeCleanUp =
-				FragmentEntryVersionTestUtil.countVersions(
+				FragmentEntryVersionTestUtil.getFragmentEntryVersionsCount(
 					ctCollection.getCtCollectionId(), fragmentEntry);
 
 			_fragmentEntryLocalService.cleanUpFragmentEntryVersions(
 				TestPropsValues.getCompanyId());
 
 			int versionsInCTCollectionAfterCleanUp =
-				FragmentEntryVersionTestUtil.countVersions(
+				FragmentEntryVersionTestUtil.getFragmentEntryVersionsCount(
 					ctCollection.getCtCollectionId(), fragmentEntry);
 
 			Assert.assertTrue(

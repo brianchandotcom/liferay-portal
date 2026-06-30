@@ -60,7 +60,7 @@ public class FragmentEntryVersionTestUtil {
 				groupId, TestPropsValues.getUserId()));
 	}
 
-	public static int countVersions(
+	public static int getFragmentEntryVersionsCount(
 			long ctCollectionId, FragmentEntry fragmentEntry)
 		throws Exception {
 

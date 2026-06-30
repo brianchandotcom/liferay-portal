@@ -72,7 +72,7 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testBearerInOpenMode() throws Exception {
+	public void testAuthenticatedRegistrationInOpenMode() throws Exception {
 		WebTarget registerWebTarget = getRegisterWebTarget();
 
 		String body = JSONUtil.put(
@@ -191,23 +191,23 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 	}
 
 	@Test
-	public void testOpenRegistrationEnforcesHostAllowlist() throws Exception {
+	public void testOpenRegistrationEnforcesAllowedHosts() throws Exception {
 		String allowedHost = RandomTestUtil.randomString();
 
-		_testOpenRegistrationEnforcesHostAllowlist(
+		_testOpenRegistrationEnforcesAllowedHosts(
 			allowedHost, allowedHost, 201);
-		_testOpenRegistrationEnforcesHostAllowlist(
+		_testOpenRegistrationEnforcesAllowedHosts(
 			allowedHost, RandomTestUtil.randomString(), 403);
 
 		String bracketedHost = RandomTestUtil.randomString();
 
-		_testOpenRegistrationEnforcesHostAllowlist(
+		_testOpenRegistrationEnforcesAllowedHosts(
 			bracketedHost,
 			StringBundler.concat(
 				"[", bracketedHost, "]:",
 				PortalUtil.getPortalServerPort(false)),
 			201);
-		_testOpenRegistrationEnforcesHostAllowlist(
+		_testOpenRegistrationEnforcesAllowedHosts(
 			StringBundler.concat(
 				"[", bracketedHost, "]:",
 				PortalUtil.getPortalServerPort(false)),
@@ -215,7 +215,7 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 
 		String portHost = RandomTestUtil.randomString();
 
-		_testOpenRegistrationEnforcesHostAllowlist(
+		_testOpenRegistrationEnforcesAllowedHosts(
 			portHost, portHost + ":" + PortalUtil.getPortalServerPort(false),
 			201);
 	}
@@ -595,7 +595,7 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 		return tokenString;
 	}
 
-	private void _testOpenRegistrationEnforcesHostAllowlist(
+	private void _testOpenRegistrationEnforcesAllowedHosts(
 			String allowedHost, String requestHost, int expectedStatus)
 		throws Exception {
 

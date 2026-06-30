@@ -109,6 +109,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -1150,6 +1151,10 @@ public class BasePersistenceImpl
 		throw new UnsupportedOperationException();
 	}
 
+	protected String getPKFieldName() {
+		return getPKDBName();
+	}
+
 	protected String getSelectSQL() {
 		throw new UnsupportedOperationException();
 	}
@@ -1502,7 +1507,7 @@ public class BasePersistenceImpl
 			if (serializable != nullModel) {
 				if (serializable == null) {
 					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<>();
+						uncachedPrimaryKeys = new TreeSet<>();
 					}
 
 					uncachedPrimaryKeys.add(primaryKey);
@@ -1538,11 +1543,12 @@ public class BasePersistenceImpl
 		}
 
 		StringBundler sb = new StringBundler(
-			(2 * uncachedPrimaryKeys.size()) + 4);
+			(2 * uncachedPrimaryKeys.size()) + 5);
 
 		sb.append(getSelectSQL());
 		sb.append(" WHERE ");
-		sb.append(getPKDBName());
+		sb.append(_entityAliasPrefix);
+		sb.append(getPKFieldName());
 		sb.append(" IN (");
 
 		if (_modelPKType == ModelPKType.STRING) {

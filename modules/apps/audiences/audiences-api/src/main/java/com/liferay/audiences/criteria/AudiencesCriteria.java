@@ -5,6 +5,8 @@
 
 package com.liferay.audiences.criteria;
 
+import com.liferay.portal.kernel.util.StringUtil;
+
 import java.util.List;
 
 /**
@@ -93,6 +95,10 @@ public class AudiencesCriteria {
 	public enum Type {
 
 		BOOLEAN("boolean"), NUMBER("number"), SET("set"), STRING("string");
+
+		public static Type parse(String value) {
+			return valueOf(StringUtil.toUpperCase(value));
+		}
 
 		public String getValue() {
 			return _value;

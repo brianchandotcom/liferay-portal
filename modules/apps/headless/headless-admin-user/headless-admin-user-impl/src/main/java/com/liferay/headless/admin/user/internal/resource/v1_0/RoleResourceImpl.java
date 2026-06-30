@@ -15,7 +15,6 @@ import com.liferay.headless.admin.user.resource.v1_0.RoleResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.NoSuchRoleException;
 import com.liferay.portal.kernel.exception.RoleAssignmentException;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.role.RoleConstants;
@@ -534,8 +533,11 @@ public class RoleResourceImpl
 				continue;
 			}
 
-			String primKey = _getResourcePermissionPrimKey(
-				scope, rolePermission.getPrimaryKey());
+			String primKey = rolePermission.getPrimaryKey();
+
+			if (scope == ResourceConstants.SCOPE_COMPANY) {
+				primKey = String.valueOf(contextCompany.getCompanyId());
+			}
 
 			for (String actionId : rolePermission.getActionIds()) {
 				_resourcePermissionService.addResourcePermission(
@@ -612,18 +614,6 @@ public class RoleResourceImpl
 		}
 
 		return descriptionMap;
-	}
-
-	private String _getResourcePermissionPrimKey(int scope, String primaryKey) {
-		if (scope == ResourceConstants.SCOPE_COMPANY) {
-			return String.valueOf(contextCompany.getCompanyId());
-		}
-
-		if (scope == ResourceConstants.SCOPE_GROUP_TEMPLATE) {
-			return String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID);
-		}
-
-		return primaryKey;
 	}
 
 	private Map<Locale, String> _getTitleMap(Role role) {

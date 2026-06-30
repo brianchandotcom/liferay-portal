@@ -4,8 +4,14 @@ assemble:
         into: static
 liferay-sample-audiences-custom-attributes:
     name: Liferay Sample Audiences Custom Attributes
+    names:
+        -   Time of Day
+        -   Touch Device
     symbols:
         -   timeOfDay
         -   touchDevice
     type: audiencesCustomAttributes
+    types:
+        -   string
+        -   boolean
     url: custom-attributes.*.js

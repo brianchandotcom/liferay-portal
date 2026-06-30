@@ -20,10 +20,22 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface AudiencesCustomAttributesCET extends CET {
 
 	@CETProperty(
+		defaultValue = "", label = "names", name = "names",
+		type = CETProperty.Type.StringList
+	)
+	public String getNames();
+
+	@CETProperty(
 		defaultValue = "", label = "symbols", name = "symbols",
 		type = CETProperty.Type.StringList
 	)
 	public String getSymbols();
+
+	@CETProperty(
+		defaultValue = "", label = "types", name = "types",
+		type = CETProperty.Type.StringList
+	)
+	public String getTypes();
 
 	@CETProperty(
 		defaultValue = "", label = "js-url", name = "url",

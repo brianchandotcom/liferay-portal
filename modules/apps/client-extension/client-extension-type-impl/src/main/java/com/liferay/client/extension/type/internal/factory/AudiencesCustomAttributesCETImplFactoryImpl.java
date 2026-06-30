@@ -51,9 +51,19 @@ public class AudiencesCustomAttributesCETImplFactoryImpl
 		return UnicodePropertiesBuilder.create(
 			true
 		).put(
+			"names",
+			StringUtil.merge(
+				ParamUtil.getStringValues(portletRequest, "names"),
+				StringPool.NEW_LINE)
+		).put(
 			"symbols",
 			StringUtil.merge(
 				ParamUtil.getStringValues(portletRequest, "symbols"),
+				StringPool.NEW_LINE)
+		).put(
+			"types",
+			StringUtil.merge(
+				ParamUtil.getStringValues(portletRequest, "types"),
 				StringPool.NEW_LINE)
 		).put(
 			"url", ParamUtil.getString(portletRequest, "url")

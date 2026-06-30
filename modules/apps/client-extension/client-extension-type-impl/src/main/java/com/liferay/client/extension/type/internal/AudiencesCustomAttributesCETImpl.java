@@ -36,6 +36,11 @@ public class AudiencesCustomAttributesCETImpl
 	}
 
 	@Override
+	public String getNames() {
+		return getString("names");
+	}
+
+	@Override
 	public String getSymbols() {
 		return getString("symbols");
 	}
@@ -43,6 +48,11 @@ public class AudiencesCustomAttributesCETImpl
 	@Override
 	public String getType() {
 		return ClientExtensionEntryConstants.TYPE_AUDIENCES_CUSTOM_ATTRIBUTES;
+	}
+
+	@Override
+	public String getTypes() {
+		return getString("types");
 	}
 
 	@Override

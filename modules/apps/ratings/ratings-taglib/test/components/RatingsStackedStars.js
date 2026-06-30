@@ -44,7 +44,7 @@ describe('RatingsStackedStars', () => {
 		});
 
 		it('has vote title', () => {
-			expect(starsRadiosFieldset.title).toBe('vote');
+			expect(starsRadiosFieldset.title).toBe('vote[action]');
 		});
 
 		it('without vote has not render delete button', () => {

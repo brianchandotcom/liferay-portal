@@ -155,7 +155,7 @@ public class LDAPReferralUpgradeProcessTest {
 			HashMapDictionaryBuilder.<String, Object>put(
 				LDAPConstants.COMPANY_ID, companyId
 			).put(
-				LDAPConstants.REFERRAL, referral
+				"referral", referral
 			).build());
 	}
 
@@ -173,7 +173,7 @@ public class LDAPReferralUpgradeProcessTest {
 
 		Dictionary<String, Object> properties = configuration.getProperties();
 
-		return (String)properties.get(LDAPConstants.REFERRAL);
+		return (String)properties.get("referral");
 	}
 
 	private BundleContext _bundleContext;

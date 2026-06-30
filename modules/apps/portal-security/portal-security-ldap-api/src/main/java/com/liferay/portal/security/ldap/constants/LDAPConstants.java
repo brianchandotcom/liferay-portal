@@ -125,8 +125,6 @@ public class LDAPConstants {
 
 	public static final String RANGE_SIZE = "rangeSize";
 
-	public static final String REFERRAL = "referral";
-
 	public static final String REFERRAL_FOLLOW = "follow";
 
 	public static final String REFERRAL_IGNORE = "ignore";

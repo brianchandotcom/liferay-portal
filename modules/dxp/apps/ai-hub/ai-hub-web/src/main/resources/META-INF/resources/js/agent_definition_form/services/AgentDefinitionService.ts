@@ -46,7 +46,7 @@ async function getAgentDefinition(externalReferenceCode: string) {
 }
 
 async function getAgentDefinitions() {
-	const response = await fetch(AGENT_DEFINITION_BASE_URI, {
+	const response = await fetch('/o/ai-hub/v1.0/agent-definitions', {
 		method: 'GET',
 	});
 

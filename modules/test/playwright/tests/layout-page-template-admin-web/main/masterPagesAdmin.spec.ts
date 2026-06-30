@@ -400,7 +400,7 @@ test(
 			autoClick: true,
 			target: page
 				.locator('.dropdown-menu')
-				.getByRole('menuitem', {name: 'Import'}),
+				.getByRole('menuitem', {exact: true, name: 'Import'}),
 			trigger: page
 				.locator('.control-menu-nav-item')
 				.getByLabel('Options', {exact: true}),
@@ -485,7 +485,7 @@ test(
 			autoClick: true,
 			target: page
 				.locator('.dropdown-menu')
-				.getByRole('menuitem', {name: 'Import'}),
+				.getByRole('menuitem', {exact: true, name: 'Import'}),
 			trigger: page
 				.locator('.control-menu-nav-item')
 				.getByLabel('Options', {exact: true}),
@@ -545,7 +545,7 @@ test(
 			autoClick: true,
 			target: page
 				.locator('.dropdown-menu')
-				.getByRole('menuitem', {name: 'Import'}),
+				.getByRole('menuitem', {exact: true, name: 'Import'}),
 			trigger: page
 				.locator('.control-menu-nav-item')
 				.getByLabel('Options', {exact: true}),

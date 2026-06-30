@@ -349,6 +349,39 @@ describe('buildObjectDefinition', () => {
 		});
 	});
 
+	it('re-emits the allowStandaloneObjectEntry setting carried by the structure', () => {
+		const result = buildObjectDefinition({
+			children: getChildren([TEXT_FIELD]),
+			erc: 'structureERC',
+			label: {en_US: 'Structure'},
+			name: 'myStructure',
+			settings: {allowStandaloneObjectEntry: 'true'},
+			spaces: 'all',
+			status: 'published',
+		});
+
+		expect(result.objectDefinitionSettings).toEqual([
+			{name: 'acceptAllGroups', value: 'true'},
+			{name: 'allowStandaloneObjectEntry', value: 'true'},
+		]);
+	});
+
+	it('does not emit the allowStandaloneObjectEntry setting when the structure does not carry it', () => {
+		const result = buildObjectDefinition({
+			children: getChildren([TEXT_FIELD]),
+			erc: 'structureERC',
+			label: {en_US: 'Structure'},
+			name: 'myStructure',
+			settings: {},
+			spaces: 'all',
+			status: 'published',
+		});
+
+		expect(result.objectDefinitionSettings).toEqual([
+			{name: 'acceptAllGroups', value: 'true'},
+		]);
+	});
+
 	it('builds objectDefinition with related content relationships', () => {
 		const children: Map<Uuid, StructureChild> = new Map<
 			Uuid,

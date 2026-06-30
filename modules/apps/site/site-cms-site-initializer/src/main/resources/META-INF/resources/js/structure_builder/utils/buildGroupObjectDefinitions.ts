@@ -4,15 +4,18 @@
  */
 
 import {ObjectDefinition} from '../../common/types/ObjectDefinition';
+import {State} from '../contexts/StateContext';
 import {RepeatableGroup, Structure} from '../types/Structure';
 import buildObjectDefinition from './buildObjectDefinition';
 
 export default function buildGroupObjectDefinitions({
 	children,
 	objectDefinitions = [],
+	publishedChildren,
 }: {
 	children: (RepeatableGroup | Structure)['children'];
 	objectDefinitions?: ObjectDefinition[];
+	publishedChildren: State['publishedChildren'];
 }) {
 	let definitions: ObjectDefinition[] = [...objectDefinitions];
 
@@ -21,11 +24,20 @@ export default function buildGroupObjectDefinitions({
 			continue;
 		}
 
+		// A repeatable group becomes a root descendant node only once it has
+		// been published, and from then on the allowStandaloneObjectEntry
+		// setting is required. Its entries always live under their parent, so
+		// the value is always false. Sending it before the group is published
+		// is rejected because the definition is not yet a root descendant.
+
 		const objectDefinition = buildObjectDefinition({
 			children: child.children,
 			erc: child.erc,
 			label: child.label,
 			name: child.name,
+			settings: publishedChildren.has(child.uuid)
+				? {allowStandaloneObjectEntry: 'false'}
+				: undefined,
 			spaces: 'all',
 			status: 'published',
 		});
@@ -38,6 +50,7 @@ export default function buildGroupObjectDefinitions({
 		definitions = [
 			...buildGroupObjectDefinitions({
 				children: child.children,
+				publishedChildren,
 			}),
 			objectDefinition,
 			...definitions,

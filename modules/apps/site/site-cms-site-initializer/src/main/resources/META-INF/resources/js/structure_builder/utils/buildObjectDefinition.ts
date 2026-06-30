@@ -27,6 +27,7 @@ export default function buildObjectDefinition({
 	id,
 	label,
 	name,
+	settings,
 	spaces,
 	status = 'draft',
 	workflows,
@@ -36,6 +37,7 @@ export default function buildObjectDefinition({
 	id?: Structure['id'];
 	label: Structure['label'];
 	name: Structure['name'];
+	settings?: Structure['settings'];
 	spaces: Structure['spaces'];
 	status?: Structure['status'];
 	workflows?: Structure['workflows'];
@@ -89,6 +91,16 @@ export default function buildObjectDefinition({
 			{
 				name: 'acceptedGroupExternalReferenceCodes',
 				value: spaces.join(','),
+			},
+		];
+	}
+
+	if (settings?.allowStandaloneObjectEntry !== undefined) {
+		objectDefinition.objectDefinitionSettings = [
+			...(objectDefinition.objectDefinitionSettings ?? []),
+			{
+				name: 'allowStandaloneObjectEntry',
+				value: settings.allowStandaloneObjectEntry,
 			},
 		];
 	}

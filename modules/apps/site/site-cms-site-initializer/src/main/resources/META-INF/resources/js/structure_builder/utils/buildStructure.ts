@@ -45,6 +45,7 @@ export default function buildStructure({
 		label: mainObjectDefinition.label,
 		name: mainObjectDefinition.name ?? '',
 		path: mainObjectDefinition.restContextPath ?? '',
+		settings: getSettings(mainObjectDefinition),
 		spaces: getSpaces(mainObjectDefinition),
 		status: isPublished ? 'published' : 'draft',
 		system: mainObjectDefinition.system ?? false,
@@ -405,6 +406,18 @@ function getFieldType(objectField: ObjectField): FieldType {
 	} as const;
 
 	return BUSINESS_TYPE_TO_FIELD_TYPE[objectField.businessType];
+}
+
+export function getSettings(
+	objectDefinition: ObjectDefinition
+): Structure['settings'] {
+	const settings = objectDefinition.objectDefinitionSettings || [];
+
+	const allowStandaloneObjectEntry = settings.find(
+		({name}) => name === 'allowStandaloneObjectEntry'
+	)?.value;
+
+	return {allowStandaloneObjectEntry};
 }
 
 export function getSpaces(objectDefinition: ObjectDefinition) {

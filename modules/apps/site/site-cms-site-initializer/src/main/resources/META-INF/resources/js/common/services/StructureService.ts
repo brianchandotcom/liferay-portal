@@ -36,6 +36,8 @@ async function createStructure({
 	erc = getRandomId(),
 	label,
 	name,
+	publishedChildren,
+	settings,
 	spaces,
 	status,
 	workflows,
@@ -44,6 +46,8 @@ async function createStructure({
 	erc?: Structure['erc'];
 	label: Structure['label'];
 	name: Structure['name'];
+	publishedChildren: State['publishedChildren'];
+	settings: Structure['settings'];
 	spaces: Structure['spaces'];
 	status: Structure['status'];
 	workflows: Structure['workflows'];
@@ -51,7 +55,10 @@ async function createStructure({
 
 	// Publish object definitions for repeatable groups
 
-	const objectDefinitions = buildGroupObjectDefinitions({children});
+	const objectDefinitions = buildGroupObjectDefinitions({
+		children,
+		publishedChildren,
+	});
 
 	for (const objectDefinition of objectDefinitions) {
 		const {error, type} = await ApiHelper.put(
@@ -71,6 +78,7 @@ async function createStructure({
 		erc,
 		label,
 		name,
+		settings,
 		spaces,
 		status,
 		workflows,
@@ -114,6 +122,8 @@ async function updateStructure({
 	id,
 	label,
 	name,
+	publishedChildren,
+	settings,
 	spaces,
 	status,
 	workflows,
@@ -124,11 +134,16 @@ async function updateStructure({
 	id: Structure['id'];
 	label: Structure['label'];
 	name: Structure['name'];
+	publishedChildren: State['publishedChildren'];
+	settings: Structure['settings'];
 	spaces: Structure['spaces'];
 	status: Structure['status'];
 	workflows: Structure['workflows'];
 }) {
-	const groupObjectDefinitions = buildGroupObjectDefinitions({children});
+	const groupObjectDefinitions = buildGroupObjectDefinitions({
+		children,
+		publishedChildren,
+	});
 
 	const mainObjectDefinition = buildObjectDefinition({
 		children,
@@ -136,6 +151,7 @@ async function updateStructure({
 		id,
 		label,
 		name,
+		settings,
 		spaces,
 		status,
 		workflows,

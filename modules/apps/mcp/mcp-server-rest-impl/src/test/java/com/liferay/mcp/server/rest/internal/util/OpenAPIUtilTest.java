@@ -64,11 +64,26 @@ public class OpenAPIUtilTest {
 	@Test
 	public void testGetRequest() throws Exception {
 		_testGetRequest(
-			null, null, "GET", "/v1.0/items?restrictFields=actions",
-			JSONFactoryUtil.createJSONObject(), "getItems");
+			null, null, "GET",
+			"/v1.0/items/123?fields=name&restrictFields=actions",
+			JSONUtil.put(
+				"fields", "name"
+			).put(
+				"itemId", "123"
+			),
+			"getItem");
 		_testGetRequest(
-			null, null, "GET", "/v1.0/items?restrictFields=actions",
-			JSONUtil.put("fields", ""), "getItems");
+			null, null, "GET", "/v1.0/items/123?restrictFields=actions",
+			JSONUtil.put("itemId", "123"), "getItem");
+		_testGetRequest(
+			null, null, "GET",
+			"/v1.0/items?fields=name%2Cinteger&restrictFields=actions",
+			JSONUtil.put("fields", JSONUtil.putAll("name", "integer")),
+			"getItems");
+		_testGetRequest(
+			null, null, "GET",
+			"/v1.0/items?filter=name+eq+%27John+Doe%27&restrictFields=actions",
+			JSONUtil.put("filter", "name eq 'John Doe'"), "getItems");
 		_testGetRequest(
 			null, null, "GET",
 			"/v1.0/items?page=1&pageSize=20&fields=name&restrictFields=actions",
@@ -81,29 +96,14 @@ public class OpenAPIUtilTest {
 			),
 			"getItems");
 		_testGetRequest(
-			null, null, "GET",
-			"/v1.0/items?filter=name+eq+%27John+Doe%27&restrictFields=actions",
-			JSONUtil.put("filter", "name eq 'John Doe'"), "getItems");
+			null, null, "GET", "/v1.0/items?restrictFields=actions",
+			JSONFactoryUtil.createJSONObject(), "getItems");
 		_testGetRequest(
-			null, null, "GET",
-			"/v1.0/items?fields=name%2Cinteger&restrictFields=actions",
-			JSONUtil.put("fields", JSONUtil.putAll("name", "integer")),
-			"getItems");
+			null, null, "GET", "/v1.0/items?restrictFields=actions",
+			JSONUtil.put("fields", ""), "getItems");
 		_testGetRequest(
 			null, null, "GET", "/v1.0/items?restrictFields=actions",
 			JSONUtil.put("restrictFields", "name"), "getItems");
-		_testGetRequest(
-			null, null, "GET",
-			"/v1.0/items/123?fields=name&restrictFields=actions",
-			JSONUtil.put(
-				"fields", "name"
-			).put(
-				"itemId", "123"
-			),
-			"getItem");
-		_testGetRequest(
-			null, null, "GET", "/v1.0/items/123?restrictFields=actions",
-			JSONUtil.put("itemId", "123"), "getItem");
 		_testGetRequest(
 			JSONUtil.put(
 				"name", "Test"

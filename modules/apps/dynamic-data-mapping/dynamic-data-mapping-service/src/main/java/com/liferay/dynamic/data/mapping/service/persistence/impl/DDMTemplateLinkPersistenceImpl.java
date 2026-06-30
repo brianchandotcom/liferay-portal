@@ -495,7 +495,7 @@ public class DDMTemplateLinkPersistenceImpl
 				_SQL_SELECT_DDMTEMPLATELINK_WHERE,
 				_SQL_COUNT_DDMTEMPLATELINK_WHERE,
 				DDMTemplateLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"", "",
+				"", "", null,
 				new FinderColumn<>(
 					"ddmTemplateLink.", "templateId", FinderColumn.Type.LONG,
 					"=", true, true, DDMTemplateLink::getTemplateId));
@@ -584,4 +584,4 @@ public class DDMTemplateLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-79877996
+// LIFERAY-SERVICE-BUILDER-HASH:557466216

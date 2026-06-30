@@ -455,6 +455,7 @@ public class CTCommentPersistenceImpl
 					new String[] {"ctCollectionId"}, false),
 				_SQL_SELECT_CTCOMMENT_WHERE, _SQL_COUNT_CTCOMMENT_WHERE,
 				CTCommentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"ctComment.", "ctCollectionId", FinderColumn.Type.LONG, "=",
 					true, true, CTComment::getCtCollectionId));
@@ -480,6 +481,7 @@ public class CTCommentPersistenceImpl
 					new String[] {"ctEntryId"}, false),
 				_SQL_SELECT_CTCOMMENT_WHERE, _SQL_COUNT_CTCOMMENT_WHERE,
 				CTCommentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"ctComment.", "ctEntryId", FinderColumn.Type.LONG, "=",
 					true, true, CTComment::getCtEntryId));
@@ -547,4 +549,4 @@ public class CTCommentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:184595040
+// LIFERAY-SERVICE-BUILDER-HASH:1949055082

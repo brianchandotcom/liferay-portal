@@ -406,6 +406,7 @@ public class ResourceActionPersistenceImpl
 				1, false, null),
 			_SQL_SELECT_RESOURCEACTION_WHERE, _SQL_COUNT_RESOURCEACTION_WHERE,
 			ResourceActionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			null,
 			new FinderColumn<>(
 				"resourceAction.", "name", FinderColumn.Type.STRING, "=", true,
 				true, ResourceAction::getName));
@@ -459,4 +460,4 @@ public class ResourceActionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:609456620
+// LIFERAY-SERVICE-BUILDER-HASH:880745720

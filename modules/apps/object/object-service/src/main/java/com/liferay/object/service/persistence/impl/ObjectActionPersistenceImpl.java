@@ -1178,6 +1178,7 @@ public class ObjectActionPersistenceImpl
 				0, 1, false, null),
 			_SQL_SELECT_OBJECTACTION_WHERE, _SQL_COUNT_OBJECTACTION_WHERE,
 			ObjectActionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			null,
 			new FinderColumn<>(
 				"objectAction.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
 				true, true, ObjectAction::getUuid));
@@ -1203,7 +1204,7 @@ public class ObjectActionPersistenceImpl
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_OBJECTACTION_WHERE, _SQL_COUNT_OBJECTACTION_WHERE,
 				ObjectActionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				"",
+				"", null,
 				new FinderColumn<>(
 					"objectAction.", "uuid", "uuid_", FinderColumn.Type.STRING,
 					"=", true, true, ObjectAction::getUuid),
@@ -1235,7 +1236,7 @@ public class ObjectActionPersistenceImpl
 					new String[] {"objectDefinitionId"}, false),
 				_SQL_SELECT_OBJECTACTION_WHERE, _SQL_COUNT_OBJECTACTION_WHERE,
 				ObjectActionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				"",
+				"", null,
 				new FinderColumn<>(
 					"objectAction.", "objectDefinitionId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1284,7 +1285,7 @@ public class ObjectActionPersistenceImpl
 					false, null),
 				_SQL_SELECT_OBJECTACTION_WHERE, _SQL_COUNT_OBJECTACTION_WHERE,
 				ObjectActionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				"",
+				"", null,
 				new FinderColumn<>(
 					"objectAction.", "active", "active_",
 					FinderColumn.Type.BOOLEAN, "=", true, true,
@@ -1359,7 +1360,7 @@ public class ObjectActionPersistenceImpl
 					0, 4, false, null),
 				_SQL_SELECT_OBJECTACTION_WHERE, _SQL_COUNT_OBJECTACTION_WHERE,
 				ObjectActionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				"",
+				"", null,
 				new FinderColumn<>(
 					"objectAction.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, ObjectAction::getCompanyId),
@@ -1413,7 +1414,7 @@ public class ObjectActionPersistenceImpl
 					0, 4, false, null),
 				_SQL_SELECT_OBJECTACTION_WHERE, _SQL_COUNT_OBJECTACTION_WHERE,
 				ObjectActionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				"",
+				"", null,
 				new FinderColumn<>(
 					"objectAction.", "objectDefinitionId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1527,4 +1528,4 @@ public class ObjectActionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:714285750
+// LIFERAY-SERVICE-BUILDER-HASH:544685602

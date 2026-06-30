@@ -857,7 +857,7 @@ public class DDMFieldAttributePersistenceImpl
 				_SQL_SELECT_DDMFIELDATTRIBUTE_WHERE,
 				_SQL_COUNT_DDMFIELDATTRIBUTE_WHERE,
 				DDMFieldAttributeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"", "",
+				"", "", null,
 				new FinderColumn<>(
 					"ddmFieldAttribute.", "storageId", FinderColumn.Type.LONG,
 					"=", true, true, DDMFieldAttribute::getStorageId));
@@ -883,7 +883,7 @@ public class DDMFieldAttributePersistenceImpl
 			_SQL_SELECT_DDMFIELDATTRIBUTE_WHERE,
 			_SQL_COUNT_DDMFIELDATTRIBUTE_WHERE,
 			DDMFieldAttributeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-			"",
+			"", null,
 			new FinderColumn<>(
 				"ddmFieldAttribute.", "storageId", FinderColumn.Type.LONG, "=",
 				true, true, DDMFieldAttribute::getStorageId),
@@ -912,7 +912,7 @@ public class DDMFieldAttributePersistenceImpl
 			_SQL_SELECT_DDMFIELDATTRIBUTE_WHERE,
 			_SQL_COUNT_DDMFIELDATTRIBUTE_WHERE,
 			DDMFieldAttributeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-			"",
+			"", null,
 			new FinderColumn<>(
 				"ddmFieldAttribute.", "storageId", FinderColumn.Type.LONG, "=",
 				true, true, DDMFieldAttribute::getStorageId),
@@ -949,7 +949,7 @@ public class DDMFieldAttributePersistenceImpl
 				_SQL_SELECT_DDMFIELDATTRIBUTE_WHERE,
 				_SQL_COUNT_DDMFIELDATTRIBUTE_WHERE,
 				DDMFieldAttributeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"", "",
+				"", "", null,
 				new FinderColumn<>(
 					"ddmFieldAttribute.", "attributeName",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -1051,4 +1051,4 @@ public class DDMFieldAttributePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1886193310
+// LIFERAY-SERVICE-BUILDER-HASH:1031056091

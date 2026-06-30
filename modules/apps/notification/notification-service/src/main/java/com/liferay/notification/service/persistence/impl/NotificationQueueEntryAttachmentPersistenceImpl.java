@@ -409,7 +409,7 @@ public class NotificationQueueEntryAttachmentPersistenceImpl
 				_SQL_SELECT_NOTIFICATIONQUEUEENTRYATTACHMENT_WHERE,
 				_SQL_COUNT_NOTIFICATIONQUEUEENTRYATTACHMENT_WHERE,
 				NotificationQueueEntryAttachmentModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "", "",
+				_ENTITY_ALIAS_PREFIX, "", "", null,
 				new FinderColumn<>(
 					"notificationQueueEntryAttachment.",
 					"notificationQueueEntryId", FinderColumn.Type.LONG, "=",
@@ -486,4 +486,4 @@ public class NotificationQueueEntryAttachmentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1677669799
+// LIFERAY-SERVICE-BUILDER-HASH:-2006618245

@@ -922,6 +922,7 @@ public class TrashEntryPersistenceImpl
 					new String[] {"groupId"}, false),
 				_SQL_SELECT_TRASHENTRY_WHERE, _SQL_COUNT_TRASHENTRY_WHERE,
 				TrashEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"trashEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, TrashEntry::getGroupId));
@@ -947,6 +948,7 @@ public class TrashEntryPersistenceImpl
 					new String[] {"companyId"}, false),
 				_SQL_SELECT_TRASHENTRY_WHERE, _SQL_COUNT_TRASHENTRY_WHERE,
 				TrashEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"trashEntry.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, TrashEntry::getCompanyId));
@@ -969,6 +971,7 @@ public class TrashEntryPersistenceImpl
 					new String[] {"groupId", "createDate"}, false),
 				_SQL_SELECT_TRASHENTRY_WHERE, _SQL_COUNT_TRASHENTRY_WHERE,
 				TrashEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"trashEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, TrashEntry::getGroupId),
@@ -996,6 +999,7 @@ public class TrashEntryPersistenceImpl
 				new String[] {"groupId", "classNameId"}, false),
 			_SQL_SELECT_TRASHENTRY_WHERE, _SQL_COUNT_TRASHENTRY_WHERE,
 			TrashEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			null,
 			new FinderColumn<>(
 				"trashEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, TrashEntry::getGroupId),
@@ -1023,6 +1027,7 @@ public class TrashEntryPersistenceImpl
 				new String[] {"companyId", "classNameId"}, false),
 			_SQL_SELECT_TRASHENTRY_WHERE, _SQL_COUNT_TRASHENTRY_WHERE,
 			TrashEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			null,
 			new FinderColumn<>(
 				"trashEntry.", "companyId", FinderColumn.Type.LONG, "=", true,
 				true, TrashEntry::getCompanyId),
@@ -1114,4 +1119,4 @@ public class TrashEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:593292091
+// LIFERAY-SERVICE-BUILDER-HASH:1673209379

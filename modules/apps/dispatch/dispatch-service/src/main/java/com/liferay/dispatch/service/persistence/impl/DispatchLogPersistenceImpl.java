@@ -483,7 +483,7 @@ public class DispatchLogPersistenceImpl
 					new String[] {"dispatchTriggerId"}, false),
 				_SQL_SELECT_DISPATCHLOG_WHERE, _SQL_COUNT_DISPATCHLOG_WHERE,
 				DispatchLogModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				"",
+				"", null,
 				new FinderColumn<>(
 					"dispatchLog.", "dispatchTriggerId", FinderColumn.Type.LONG,
 					"=", true, true, DispatchLog::getDispatchTriggerId));
@@ -508,6 +508,7 @@ public class DispatchLogPersistenceImpl
 				new String[] {"dispatchTriggerId", "status"}, false),
 			_SQL_SELECT_DISPATCHLOG_WHERE, _SQL_COUNT_DISPATCHLOG_WHERE,
 			DispatchLogModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			null,
 			new FinderColumn<>(
 				"dispatchLog.", "dispatchTriggerId", FinderColumn.Type.LONG,
 				"=", true, true, DispatchLog::getDispatchTriggerId),
@@ -581,4 +582,4 @@ public class DispatchLogPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1773425462
+// LIFERAY-SERVICE-BUILDER-HASH:1245544690

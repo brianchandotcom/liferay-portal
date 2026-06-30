@@ -501,7 +501,7 @@ public class RegionLocalizationPersistenceImpl
 				_SQL_SELECT_REGIONLOCALIZATION_WHERE,
 				_SQL_COUNT_REGIONLOCALIZATION_WHERE,
 				RegionLocalizationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"", "",
+				"", "", null,
 				new FinderColumn<>(
 					"regionLocalization.", "regionId", FinderColumn.Type.LONG,
 					"=", true, true, RegionLocalization::getRegionId));
@@ -557,4 +557,4 @@ public class RegionLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-728259522
+// LIFERAY-SERVICE-BUILDER-HASH:2017052670

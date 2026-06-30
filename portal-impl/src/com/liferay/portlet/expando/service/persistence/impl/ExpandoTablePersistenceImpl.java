@@ -496,6 +496,7 @@ public class ExpandoTablePersistenceImpl
 				new String[] {"companyId", "classNameId"}, false),
 			_SQL_SELECT_EXPANDOTABLE_WHERE, _SQL_COUNT_EXPANDOTABLE_WHERE,
 			ExpandoTableModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			null,
 			new FinderColumn<>(
 				"expandoTable.", "companyId", FinderColumn.Type.LONG, "=", true,
 				true, ExpandoTable::getCompanyId),
@@ -558,4 +559,4 @@ public class ExpandoTablePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1790034350
+// LIFERAY-SERVICE-BUILDER-HASH:-986430976

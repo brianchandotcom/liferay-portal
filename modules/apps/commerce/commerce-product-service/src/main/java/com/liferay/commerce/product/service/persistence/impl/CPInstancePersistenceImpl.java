@@ -2060,6 +2060,7 @@ public class CPInstancePersistenceImpl
 				0, 1, false, null),
 			_SQL_SELECT_CPINSTANCE_WHERE, _SQL_COUNT_CPINSTANCE_WHERE,
 			CPInstanceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			null,
 			new FinderColumn<>(
 				"cpInstance.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
 				true, true, CPInstance::getUuid));
@@ -2101,6 +2102,7 @@ public class CPInstancePersistenceImpl
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_CPINSTANCE_WHERE, _SQL_COUNT_CPINSTANCE_WHERE,
 				CPInstanceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"cpInstance.", "uuid", "uuid_", FinderColumn.Type.STRING,
 					"=", true, true, CPInstance::getUuid),
@@ -2129,6 +2131,7 @@ public class CPInstancePersistenceImpl
 					new String[] {"groupId"}, false),
 				_SQL_SELECT_CPINSTANCE_WHERE, _SQL_COUNT_CPINSTANCE_WHERE,
 				CPInstanceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"cpInstance.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, CPInstance::getGroupId));
@@ -2154,6 +2157,7 @@ public class CPInstancePersistenceImpl
 					new String[] {"companyId"}, false),
 				_SQL_SELECT_CPINSTANCE_WHERE, _SQL_COUNT_CPINSTANCE_WHERE,
 				CPInstanceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"cpInstance.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, CPInstance::getCompanyId));
@@ -2181,6 +2185,7 @@ public class CPInstancePersistenceImpl
 					new String[] {"CPDefinitionId"}, false),
 				_SQL_SELECT_CPINSTANCE_WHERE, _SQL_COUNT_CPINSTANCE_WHERE,
 				CPInstanceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"cpInstance.", "CPDefinitionId", FinderColumn.Type.LONG,
 					"=", true, true, CPInstance::getCPDefinitionId));
@@ -2209,6 +2214,7 @@ public class CPInstancePersistenceImpl
 					new String[] {"CPInstanceUuid"}, 0, 1, false, null),
 				_SQL_SELECT_CPINSTANCE_WHERE, _SQL_COUNT_CPINSTANCE_WHERE,
 				CPInstanceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"cpInstance.", "CPInstanceUuid", FinderColumn.Type.STRING,
 					"=", true, true, CPInstance::getCPInstanceUuid));
@@ -2238,6 +2244,7 @@ public class CPInstancePersistenceImpl
 					new String[] {"groupId", "status"}, false),
 				_SQL_SELECT_CPINSTANCE_WHERE, _SQL_COUNT_CPINSTANCE_WHERE,
 				CPInstanceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"cpInstance.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, CPInstance::getGroupId),
@@ -2265,6 +2272,7 @@ public class CPInstancePersistenceImpl
 				new String[] {"companyId", "sku"}, 0, 2, false, null),
 			_SQL_SELECT_CPINSTANCE_WHERE, _SQL_COUNT_CPINSTANCE_WHERE,
 			CPInstanceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			null,
 			new FinderColumn<>(
 				"cpInstance.", "companyId", FinderColumn.Type.LONG, "=", true,
 				true, CPInstance::getCompanyId),
@@ -2324,6 +2332,7 @@ public class CPInstancePersistenceImpl
 				new String[] {"CPDefinitionId", "status"}, false),
 			_SQL_SELECT_CPINSTANCE_WHERE, _SQL_COUNT_CPINSTANCE_WHERE,
 			CPInstanceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			null,
 			new FinderColumn<>(
 				"cpInstance.", "CPDefinitionId", FinderColumn.Type.LONG, "=",
 				true, true, CPInstance::getCPDefinitionId),
@@ -2348,6 +2357,7 @@ public class CPInstancePersistenceImpl
 				new String[] {"displayDate", "status"}, false),
 			_SQL_SELECT_CPINSTANCE_WHERE, _SQL_COUNT_CPINSTANCE_WHERE,
 			CPInstanceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			null,
 			new FinderColumn<>(
 				"cpInstance.", "displayDate", FinderColumn.Type.DATE, "<", true,
 				true, CPInstance::getDisplayDate),
@@ -2379,6 +2389,7 @@ public class CPInstancePersistenceImpl
 					false),
 				_SQL_SELECT_CPINSTANCE_WHERE, _SQL_COUNT_CPINSTANCE_WHERE,
 				CPInstanceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"cpInstance.", "CPDefinitionId", FinderColumn.Type.LONG,
 					"=", true, true, CPInstance::getCPDefinitionId),
@@ -2427,6 +2438,7 @@ public class CPInstancePersistenceImpl
 				0, 1, false, null),
 			_SQL_SELECT_CPINSTANCE_WHERE, _SQL_COUNT_CPINSTANCE_WHERE,
 			CPInstanceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			null,
 			new FinderColumn<>(
 				"cpInstance.", "replacementCPInstanceUuid",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -2528,4 +2540,4 @@ public class CPInstancePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1424131747
+// LIFERAY-SERVICE-BUILDER-HASH:1858210649

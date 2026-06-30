@@ -800,7 +800,7 @@ public class RepositoryEntryPersistenceImpl
 				0, 1, false, null),
 			_SQL_SELECT_REPOSITORYENTRY_WHERE, _SQL_COUNT_REPOSITORYENTRY_WHERE,
 			RepositoryEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-			"",
+			"", null,
 			new FinderColumn<>(
 				"repositoryEntry.", "uuid", "uuid_", FinderColumn.Type.STRING,
 				"=", true, true, RepositoryEntry::getUuid));
@@ -843,7 +843,7 @@ public class RepositoryEntryPersistenceImpl
 				_SQL_SELECT_REPOSITORYENTRY_WHERE,
 				_SQL_COUNT_REPOSITORYENTRY_WHERE,
 				RepositoryEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"", "",
+				"", "", null,
 				new FinderColumn<>(
 					"repositoryEntry.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -875,7 +875,7 @@ public class RepositoryEntryPersistenceImpl
 				_SQL_SELECT_REPOSITORYENTRY_WHERE,
 				_SQL_COUNT_REPOSITORYENTRY_WHERE,
 				RepositoryEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"", "",
+				"", "", null,
 				new FinderColumn<>(
 					"repositoryEntry.", "repositoryId", FinderColumn.Type.LONG,
 					"=", true, true, RepositoryEntry::getRepositoryId));
@@ -932,4 +932,4 @@ public class RepositoryEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-107356274
+// LIFERAY-SERVICE-BUILDER-HASH:2041639104

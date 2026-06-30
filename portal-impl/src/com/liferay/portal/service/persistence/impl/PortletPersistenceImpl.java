@@ -418,6 +418,7 @@ public class PortletPersistenceImpl
 					new String[] {"companyId"}, false),
 				_SQL_SELECT_PORTLET_WHERE, _SQL_COUNT_PORTLET_WHERE,
 				PortletModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"portlet.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Portlet::getCompanyId));
@@ -474,4 +475,4 @@ public class PortletPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1950786388
+// LIFERAY-SERVICE-BUILDER-HASH:-1867910016

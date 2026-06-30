@@ -800,7 +800,7 @@ public class JSONStorageEntryPersistenceImpl
 				_SQL_SELECT_JSONSTORAGEENTRY_WHERE,
 				_SQL_COUNT_JSONSTORAGEENTRY_WHERE,
 				JSONStorageEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"", "",
+				"", "", null,
 				new FinderColumn<>(
 					"jsonStorageEntry.", "classNameId", FinderColumn.Type.LONG,
 					"=", true, true, JSONStorageEntry::getClassNameId),
@@ -854,7 +854,7 @@ public class JSONStorageEntryPersistenceImpl
 				_SQL_SELECT_JSONSTORAGEENTRY_WHERE,
 				_SQL_COUNT_JSONSTORAGEENTRY_WHERE,
 				JSONStorageEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"", "",
+				"", "", null,
 				new FinderColumn<>(
 					"jsonStorageEntry.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, JSONStorageEntry::getCompanyId),
@@ -916,7 +916,7 @@ public class JSONStorageEntryPersistenceImpl
 				_SQL_SELECT_JSONSTORAGEENTRY_WHERE,
 				_SQL_COUNT_JSONSTORAGEENTRY_WHERE,
 				JSONStorageEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"", "",
+				"", "", null,
 				new FinderColumn<>(
 					"jsonStorageEntry.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, JSONStorageEntry::getCompanyId),
@@ -1044,4 +1044,4 @@ public class JSONStorageEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-216768468
+// LIFERAY-SERVICE-BUILDER-HASH:-787952156

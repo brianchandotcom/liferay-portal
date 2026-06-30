@@ -1021,6 +1021,7 @@ public class RepositoryPersistenceImpl
 				0, 1, false, null),
 			_SQL_SELECT_REPOSITORY_WHERE, _SQL_COUNT_REPOSITORY_WHERE,
 			RepositoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			null,
 			new FinderColumn<>(
 				"repository.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
 				true, true, Repository::getUuid));
@@ -1062,6 +1063,7 @@ public class RepositoryPersistenceImpl
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_REPOSITORY_WHERE, _SQL_COUNT_REPOSITORY_WHERE,
 				RepositoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"repository.", "uuid", "uuid_", FinderColumn.Type.STRING,
 					"=", true, true, Repository::getUuid),
@@ -1090,6 +1092,7 @@ public class RepositoryPersistenceImpl
 					new String[] {"groupId"}, false),
 				_SQL_SELECT_REPOSITORY_WHERE, _SQL_COUNT_REPOSITORY_WHERE,
 				RepositoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"repository.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, Repository::getGroupId));
@@ -1115,6 +1118,7 @@ public class RepositoryPersistenceImpl
 					new String[] {"portletId"}, 0, 1, false, null),
 				_SQL_SELECT_REPOSITORY_WHERE, _SQL_COUNT_REPOSITORY_WHERE,
 				RepositoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"repository.", "portletId", FinderColumn.Type.STRING, "=",
 					true, true, Repository::getPortletId));
@@ -1195,4 +1199,4 @@ public class RepositoryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-148542734
+// LIFERAY-SERVICE-BUILDER-HASH:1470829564

@@ -1181,7 +1181,7 @@ public class LayoutPageTemplateStructureRelElementVariationPersistenceImpl
 			_SQL_COUNT_LAYOUTPAGETEMPLATESTRUCTURERELELEMENTVARIATION_WHERE,
 			LayoutPageTemplateStructureRelElementVariationModelImpl.
 				ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX, "", "",
+			_ENTITY_ALIAS_PREFIX, "", "", null,
 			new FinderColumn<>(
 				"layoutPageTemplateStructureRelElementVariation.", "uuid",
 				"uuid_", FinderColumn.Type.STRING, "=", true, true,
@@ -1230,7 +1230,7 @@ public class LayoutPageTemplateStructureRelElementVariationPersistenceImpl
 				_SQL_COUNT_LAYOUTPAGETEMPLATESTRUCTURERELELEMENTVARIATION_WHERE,
 				LayoutPageTemplateStructureRelElementVariationModelImpl.
 					ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "", "",
+				_ENTITY_ALIAS_PREFIX, "", "", null,
 				new FinderColumn<>(
 					"layoutPageTemplateStructureRelElementVariation.", "uuid",
 					"uuid_", FinderColumn.Type.STRING, "=", true, true,
@@ -1262,7 +1262,7 @@ public class LayoutPageTemplateStructureRelElementVariationPersistenceImpl
 			_SQL_COUNT_LAYOUTPAGETEMPLATESTRUCTURERELELEMENTVARIATION_WHERE,
 			LayoutPageTemplateStructureRelElementVariationModelImpl.
 				ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX, "", "",
+			_ENTITY_ALIAS_PREFIX, "", "", null,
 			new FinderColumn<>(
 				"layoutPageTemplateStructureRelElementVariation.", "plid",
 				FinderColumn.Type.LONG, "=", true, true,
@@ -1294,7 +1294,7 @@ public class LayoutPageTemplateStructureRelElementVariationPersistenceImpl
 				_SQL_COUNT_LAYOUTPAGETEMPLATESTRUCTURERELELEMENTVARIATION_WHERE,
 				LayoutPageTemplateStructureRelElementVariationModelImpl.
 					ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "", "",
+				_ENTITY_ALIAS_PREFIX, "", "", null,
 				new FinderColumn<>(
 					"layoutPageTemplateStructureRelElementVariation.",
 					"segmentsExperienceERC", FinderColumn.Type.STRING, "=",
@@ -1327,7 +1327,7 @@ public class LayoutPageTemplateStructureRelElementVariationPersistenceImpl
 				_SQL_COUNT_LAYOUTPAGETEMPLATESTRUCTURERELELEMENTVARIATION_WHERE,
 				LayoutPageTemplateStructureRelElementVariationModelImpl.
 					ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "", "",
+				_ENTITY_ALIAS_PREFIX, "", "", null,
 				new FinderColumn<>(
 					"layoutPageTemplateStructureRelElementVariation.", "plid",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1441,4 +1441,4 @@ public class LayoutPageTemplateStructureRelElementVariationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1246642275
+// LIFERAY-SERVICE-BUILDER-HASH:-926190037

@@ -362,6 +362,7 @@ public class AuditEventPersistenceImpl
 					new String[] {"companyId"}, false),
 				_SQL_SELECT_AUDITEVENT_WHERE, _SQL_COUNT_AUDITEVENT_WHERE,
 				AuditEventModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"auditEvent.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, AuditEvent::getCompanyId));
@@ -423,4 +424,4 @@ public class AuditEventPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-387669688
+// LIFERAY-SERVICE-BUILDER-HASH:567728618

@@ -356,7 +356,7 @@ public class FinderWhereClauseEntryPersistenceImpl
 				FinderWhereClauseEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX,
 				"finderWhereClauseEntry.nickname IS NOT NULL",
-				"finderWhereClauseEntry.nickname IS NOT NULL",
+				"finderWhereClauseEntry.nickname IS NOT NULL", null,
 				new FinderColumn<>(
 					"finderWhereClauseEntry.", "name", FinderColumn.Type.STRING,
 					"=", true, true, FinderWhereClauseEntry::getName));
@@ -397,4 +397,4 @@ public class FinderWhereClauseEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:358158925
+// LIFERAY-SERVICE-BUILDER-HASH:-1755641893

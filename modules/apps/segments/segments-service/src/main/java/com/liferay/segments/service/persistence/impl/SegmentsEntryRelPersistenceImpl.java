@@ -738,7 +738,7 @@ public class SegmentsEntryRelPersistenceImpl
 				_SQL_SELECT_SEGMENTSENTRYREL_WHERE,
 				_SQL_COUNT_SEGMENTSENTRYREL_WHERE,
 				SegmentsEntryRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"", "",
+				"", "", null,
 				new FinderColumn<>(
 					"segmentsEntryRel.", "segmentsEntryId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -766,7 +766,7 @@ public class SegmentsEntryRelPersistenceImpl
 				_SQL_SELECT_SEGMENTSENTRYREL_WHERE,
 				_SQL_COUNT_SEGMENTSENTRYREL_WHERE,
 				SegmentsEntryRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"", "",
+				"", "", null,
 				new FinderColumn<>(
 					"segmentsEntryRel.", "classNameId", FinderColumn.Type.LONG,
 					"=", true, true, SegmentsEntryRel::getClassNameId),
@@ -804,7 +804,7 @@ public class SegmentsEntryRelPersistenceImpl
 				_SQL_SELECT_SEGMENTSENTRYREL_WHERE,
 				_SQL_COUNT_SEGMENTSENTRYREL_WHERE,
 				SegmentsEntryRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"", "",
+				"", "", null,
 				new FinderColumn<>(
 					"segmentsEntryRel.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, SegmentsEntryRel::getGroupId),
@@ -906,4 +906,4 @@ public class SegmentsEntryRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:870473406
+// LIFERAY-SERVICE-BUILDER-HASH:-1348077266

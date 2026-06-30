@@ -955,7 +955,7 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 			_SQL_SELECT_LAYOUTPAGETEMPLATESTRUCTUREREL_WHERE,
 			_SQL_COUNT_LAYOUTPAGETEMPLATESTRUCTUREREL_WHERE,
 			LayoutPageTemplateStructureRelModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX, "", "",
+			_ENTITY_ALIAS_PREFIX, "", "", null,
 			new FinderColumn<>(
 				"layoutPageTemplateStructureRel.", "uuid", "uuid_",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -1001,7 +1001,7 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 				_SQL_SELECT_LAYOUTPAGETEMPLATESTRUCTUREREL_WHERE,
 				_SQL_COUNT_LAYOUTPAGETEMPLATESTRUCTUREREL_WHERE,
 				LayoutPageTemplateStructureRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "", "",
+				_ENTITY_ALIAS_PREFIX, "", "", null,
 				new FinderColumn<>(
 					"layoutPageTemplateStructureRel.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -1036,7 +1036,7 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 				_SQL_SELECT_LAYOUTPAGETEMPLATESTRUCTUREREL_WHERE,
 				_SQL_COUNT_LAYOUTPAGETEMPLATESTRUCTUREREL_WHERE,
 				LayoutPageTemplateStructureRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "", "",
+				_ENTITY_ALIAS_PREFIX, "", "", null,
 				new FinderColumn<>(
 					"layoutPageTemplateStructureRel.",
 					"layoutPageTemplateStructureId", FinderColumn.Type.LONG,
@@ -1069,7 +1069,7 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 				_SQL_SELECT_LAYOUTPAGETEMPLATESTRUCTUREREL_WHERE,
 				_SQL_COUNT_LAYOUTPAGETEMPLATESTRUCTUREREL_WHERE,
 				LayoutPageTemplateStructureRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "", "",
+				_ENTITY_ALIAS_PREFIX, "", "", null,
 				new FinderColumn<>(
 					"layoutPageTemplateStructureRel.", "segmentsExperienceId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1174,4 +1174,4 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1971127077
+// LIFERAY-SERVICE-BUILDER-HASH:-1427399329

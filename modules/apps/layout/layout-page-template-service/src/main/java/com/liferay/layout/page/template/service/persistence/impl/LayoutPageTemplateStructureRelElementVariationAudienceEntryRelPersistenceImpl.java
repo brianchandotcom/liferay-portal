@@ -1072,7 +1072,7 @@ public class
 			_SQL_SELECT_LAYOUTPAGETEMPLATESTRUCTURERELELEMENTVARIATIONAUDIENCEENTRYREL_WHERE,
 			_SQL_COUNT_LAYOUTPAGETEMPLATESTRUCTURERELELEMENTVARIATIONAUDIENCEENTRYREL_WHERE,
 			LayoutPageTemplateStructureRelElementVariationAudienceEntryRelModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX, "", "",
+			_ENTITY_ALIAS_PREFIX, "", "", null,
 			new FinderColumn<>(
 				"layoutPageTemplateStructureRelElementVariationAudienceEntryRel.",
 				"uuid", "uuid_", FinderColumn.Type.STRING, "=", true, true,
@@ -1125,7 +1125,7 @@ public class
 				_SQL_SELECT_LAYOUTPAGETEMPLATESTRUCTURERELELEMENTVARIATIONAUDIENCEENTRYREL_WHERE,
 				_SQL_COUNT_LAYOUTPAGETEMPLATESTRUCTURERELELEMENTVARIATIONAUDIENCEENTRYREL_WHERE,
 				LayoutPageTemplateStructureRelElementVariationAudienceEntryRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "", "",
+				_ENTITY_ALIAS_PREFIX, "", "", null,
 				new FinderColumn<>(
 					"layoutPageTemplateStructureRelElementVariationAudienceEntryRel.",
 					"uuid", "uuid_", FinderColumn.Type.STRING, "=", true, true,
@@ -1164,7 +1164,7 @@ public class
 				_SQL_SELECT_LAYOUTPAGETEMPLATESTRUCTURERELELEMENTVARIATIONAUDIENCEENTRYREL_WHERE,
 				_SQL_COUNT_LAYOUTPAGETEMPLATESTRUCTURERELELEMENTVARIATIONAUDIENCEENTRYREL_WHERE,
 				LayoutPageTemplateStructureRelElementVariationAudienceEntryRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "", "",
+				_ENTITY_ALIAS_PREFIX, "", "", null,
 				new FinderColumn<>(
 					"layoutPageTemplateStructureRelElementVariationAudienceEntryRel.",
 					"layoutPageTemplateStructureRelElementVariationERC",
@@ -1282,4 +1282,4 @@ public class
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-62239459
+// LIFERAY-SERVICE-BUILDER-HASH:531093909

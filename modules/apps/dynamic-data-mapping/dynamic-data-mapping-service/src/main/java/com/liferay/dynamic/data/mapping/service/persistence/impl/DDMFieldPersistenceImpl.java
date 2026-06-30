@@ -750,6 +750,7 @@ public class DDMFieldPersistenceImpl
 					new String[] {"storageId"}, false),
 				_SQL_SELECT_DDMFIELD_WHERE, _SQL_COUNT_DDMFIELD_WHERE,
 				DDMFieldModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"ddmField.", "storageId", FinderColumn.Type.LONG, "=", true,
 					true, DDMField::getStorageId));
@@ -778,6 +779,7 @@ public class DDMFieldPersistenceImpl
 					new String[] {"structureVersionId"}, false),
 				_SQL_SELECT_DDMFIELD_WHERE, _SQL_COUNT_DDMFIELD_WHERE,
 				DDMFieldModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"ddmField.", "structureVersionId", FinderColumn.Type.LONG,
 					"=", true, true, DDMField::getStructureVersionId));
@@ -801,7 +803,7 @@ public class DDMFieldPersistenceImpl
 				new String[] {Long.class.getName(), String.class.getName()},
 				new String[] {"companyId", "fieldType"}, 0, 2, false, null),
 			_SQL_SELECT_DDMFIELD_WHERE, _SQL_COUNT_DDMFIELD_WHERE,
-			DDMFieldModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			DDMFieldModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "", null,
 			new FinderColumn<>(
 				"ddmField.", "companyId", FinderColumn.Type.LONG, "=", true,
 				true, DDMField::getCompanyId),
@@ -828,7 +830,7 @@ public class DDMFieldPersistenceImpl
 				new String[] {Long.class.getName(), String.class.getName()},
 				new String[] {"storageId", "fieldName"}, 0, 2, false, null),
 			_SQL_SELECT_DDMFIELD_WHERE, _SQL_COUNT_DDMFIELD_WHERE,
-			DDMFieldModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			DDMFieldModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "", null,
 			new FinderColumn<>(
 				"ddmField.", "storageId", FinderColumn.Type.LONG, "=", true,
 				true, DDMField::getStorageId),
@@ -921,4 +923,4 @@ public class DDMFieldPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-47292955
+// LIFERAY-SERVICE-BUILDER-HASH:192375561

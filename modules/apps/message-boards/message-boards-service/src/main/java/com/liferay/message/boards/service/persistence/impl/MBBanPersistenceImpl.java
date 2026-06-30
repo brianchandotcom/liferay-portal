@@ -935,7 +935,7 @@ public class MBBanPersistenceImpl
 				new String[] {String.class.getName()}, new String[] {"uuid_"},
 				0, 1, false, null),
 			_SQL_SELECT_MBBAN_WHERE, _SQL_COUNT_MBBAN_WHERE,
-			MBBanModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			MBBanModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "", null,
 			new FinderColumn<>(
 				"mbBan.", "uuid", "uuid_", FinderColumn.Type.STRING, "=", true,
 				true, MBBan::getUuid));
@@ -976,6 +976,7 @@ public class MBBanPersistenceImpl
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_MBBAN_WHERE, _SQL_COUNT_MBBAN_WHERE,
 				MBBanModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"mbBan.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
 					true, true, MBBan::getUuid),
@@ -1004,6 +1005,7 @@ public class MBBanPersistenceImpl
 					new String[] {"groupId"}, false),
 				_SQL_SELECT_MBBAN_WHERE, _SQL_COUNT_MBBAN_WHERE,
 				MBBanModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"mbBan.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, MBBan::getGroupId));
@@ -1029,6 +1031,7 @@ public class MBBanPersistenceImpl
 					new String[] {"userId"}, false),
 				_SQL_SELECT_MBBAN_WHERE, _SQL_COUNT_MBBAN_WHERE,
 				MBBanModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"mbBan.", "userId", FinderColumn.Type.LONG, "=", true, true,
 					MBBan::getUserId));
@@ -1054,6 +1057,7 @@ public class MBBanPersistenceImpl
 					new String[] {"banUserId"}, false),
 				_SQL_SELECT_MBBAN_WHERE, _SQL_COUNT_MBBAN_WHERE,
 				MBBanModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"mbBan.", "banUserId", FinderColumn.Type.LONG, "=", true,
 					true, MBBan::getBanUserId));
@@ -1145,4 +1149,4 @@ public class MBBanPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1350781979
+// LIFERAY-SERVICE-BUILDER-HASH:1036040845

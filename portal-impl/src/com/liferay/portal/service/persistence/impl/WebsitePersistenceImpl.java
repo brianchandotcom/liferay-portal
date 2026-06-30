@@ -1087,7 +1087,7 @@ public class WebsitePersistenceImpl
 				new String[] {String.class.getName()}, new String[] {"uuid_"},
 				0, 1, false, null),
 			_SQL_SELECT_WEBSITE_WHERE, _SQL_COUNT_WEBSITE_WHERE,
-			WebsiteModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			WebsiteModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "", null,
 			new FinderColumn<>(
 				"website.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
 				true, true, Website::getUuid));
@@ -1113,6 +1113,7 @@ public class WebsitePersistenceImpl
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_WEBSITE_WHERE, _SQL_COUNT_WEBSITE_WHERE,
 				WebsiteModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"website.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
 					true, true, Website::getUuid),
@@ -1141,6 +1142,7 @@ public class WebsitePersistenceImpl
 					new String[] {"companyId"}, false),
 				_SQL_SELECT_WEBSITE_WHERE, _SQL_COUNT_WEBSITE_WHERE,
 				WebsiteModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"website.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Website::getCompanyId));
@@ -1166,6 +1168,7 @@ public class WebsitePersistenceImpl
 					new String[] {"userId"}, false),
 				_SQL_SELECT_WEBSITE_WHERE, _SQL_COUNT_WEBSITE_WHERE,
 				WebsiteModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"website.", "userId", FinderColumn.Type.LONG, "=", true,
 					true, Website::getUserId));
@@ -1189,7 +1192,7 @@ public class WebsitePersistenceImpl
 				new String[] {Long.class.getName(), Long.class.getName()},
 				new String[] {"companyId", "classNameId"}, false),
 			_SQL_SELECT_WEBSITE_WHERE, _SQL_COUNT_WEBSITE_WHERE,
-			WebsiteModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			WebsiteModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "", null,
 			new FinderColumn<>(
 				"website.", "companyId", FinderColumn.Type.LONG, "=", true,
 				true, Website::getCompanyId),
@@ -1222,7 +1225,7 @@ public class WebsitePersistenceImpl
 				},
 				new String[] {"companyId", "classNameId", "classPK"}, false),
 			_SQL_SELECT_WEBSITE_WHERE, _SQL_COUNT_WEBSITE_WHERE,
-			WebsiteModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			WebsiteModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "", null,
 			new FinderColumn<>(
 				"website.", "companyId", FinderColumn.Type.LONG, "=", true,
 				true, Website::getCompanyId),
@@ -1270,6 +1273,7 @@ public class WebsitePersistenceImpl
 					false),
 				_SQL_SELECT_WEBSITE_WHERE, _SQL_COUNT_WEBSITE_WHERE,
 				WebsiteModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"website.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Website::getCompanyId),
@@ -1336,4 +1340,4 @@ public class WebsitePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1795611650
+// LIFERAY-SERVICE-BUILDER-HASH:1893217872

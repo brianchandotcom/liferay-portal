@@ -868,6 +868,7 @@ public class SAPEntryPersistenceImpl
 					new String[] {"uuid_"}, 0, 1, false, null),
 				_SQL_SELECT_SAPENTRY_WHERE, _SQL_COUNT_SAPENTRY_WHERE,
 				SAPEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"sapEntry.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
 					true, true, SAPEntry::getUuid));
@@ -893,6 +894,7 @@ public class SAPEntryPersistenceImpl
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_SAPENTRY_WHERE, _SQL_COUNT_SAPENTRY_WHERE,
 				SAPEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"sapEntry.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
 					true, true, SAPEntry::getUuid),
@@ -921,6 +923,7 @@ public class SAPEntryPersistenceImpl
 					new String[] {"companyId"}, false),
 				_SQL_SELECT_SAPENTRY_WHERE, _SQL_COUNT_SAPENTRY_WHERE,
 				SAPEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"sapEntry.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, SAPEntry::getCompanyId));
@@ -950,6 +953,7 @@ public class SAPEntryPersistenceImpl
 					new String[] {"companyId", "defaultSAPEntry"}, false),
 				_SQL_SELECT_SAPENTRY_WHERE, _SQL_COUNT_SAPENTRY_WHERE,
 				SAPEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"sapEntry.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, SAPEntry::getCompanyId),
@@ -1041,4 +1045,4 @@ public class SAPEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1724466609
+// LIFERAY-SERVICE-BUILDER-HASH:67060017

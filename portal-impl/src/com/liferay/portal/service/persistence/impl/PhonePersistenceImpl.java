@@ -1169,7 +1169,7 @@ public class PhonePersistenceImpl
 				new String[] {String.class.getName()}, new String[] {"uuid_"},
 				0, 1, false, null),
 			_SQL_SELECT_PHONE_WHERE, _SQL_COUNT_PHONE_WHERE,
-			PhoneModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			PhoneModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "", null,
 			new FinderColumn<>(
 				"phone.", "uuid", "uuid_", FinderColumn.Type.STRING, "=", true,
 				true, Phone::getUuid));
@@ -1195,6 +1195,7 @@ public class PhonePersistenceImpl
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_PHONE_WHERE, _SQL_COUNT_PHONE_WHERE,
 				PhoneModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"phone.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
 					true, true, Phone::getUuid),
@@ -1223,6 +1224,7 @@ public class PhonePersistenceImpl
 					new String[] {"companyId"}, false),
 				_SQL_SELECT_PHONE_WHERE, _SQL_COUNT_PHONE_WHERE,
 				PhoneModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"phone.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Phone::getCompanyId));
@@ -1248,6 +1250,7 @@ public class PhonePersistenceImpl
 					new String[] {"userId"}, false),
 				_SQL_SELECT_PHONE_WHERE, _SQL_COUNT_PHONE_WHERE,
 				PhoneModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"phone.", "userId", FinderColumn.Type.LONG, "=", true, true,
 					Phone::getUserId));
@@ -1271,7 +1274,7 @@ public class PhonePersistenceImpl
 				new String[] {Long.class.getName(), Long.class.getName()},
 				new String[] {"companyId", "classNameId"}, false),
 			_SQL_SELECT_PHONE_WHERE, _SQL_COUNT_PHONE_WHERE,
-			PhoneModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			PhoneModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "", null,
 			new FinderColumn<>(
 				"phone.", "companyId", FinderColumn.Type.LONG, "=", true, true,
 				Phone::getCompanyId),
@@ -1304,7 +1307,7 @@ public class PhonePersistenceImpl
 				},
 				new String[] {"companyId", "classNameId", "classPK"}, false),
 			_SQL_SELECT_PHONE_WHERE, _SQL_COUNT_PHONE_WHERE,
-			PhoneModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			PhoneModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "", null,
 			new FinderColumn<>(
 				"phone.", "companyId", FinderColumn.Type.LONG, "=", true, true,
 				Phone::getCompanyId),
@@ -1352,6 +1355,7 @@ public class PhonePersistenceImpl
 					false),
 				_SQL_SELECT_PHONE_WHERE, _SQL_COUNT_PHONE_WHERE,
 				PhoneModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"phone.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Phone::getCompanyId),
@@ -1417,4 +1421,4 @@ public class PhonePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:769548687
+// LIFERAY-SERVICE-BUILDER-HASH:-1704852353

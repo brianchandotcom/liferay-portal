@@ -581,7 +581,7 @@ public class TrashVersionPersistenceImpl
 					new String[] {"entryId"}, false),
 				_SQL_SELECT_TRASHVERSION_WHERE, _SQL_COUNT_TRASHVERSION_WHERE,
 				TrashVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				"",
+				"", null,
 				new FinderColumn<>(
 					"trashVersion.", "entryId", FinderColumn.Type.LONG, "=",
 					true, true, TrashVersion::getEntryId));
@@ -606,6 +606,7 @@ public class TrashVersionPersistenceImpl
 				new String[] {"entryId", "classNameId"}, false),
 			_SQL_SELECT_TRASHVERSION_WHERE, _SQL_COUNT_TRASHVERSION_WHERE,
 			TrashVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			null,
 			new FinderColumn<>(
 				"trashVersion.", "entryId", FinderColumn.Type.LONG, "=", true,
 				true, TrashVersion::getEntryId),
@@ -697,4 +698,4 @@ public class TrashVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:397582352
+// LIFERAY-SERVICE-BUILDER-HASH:1706890152

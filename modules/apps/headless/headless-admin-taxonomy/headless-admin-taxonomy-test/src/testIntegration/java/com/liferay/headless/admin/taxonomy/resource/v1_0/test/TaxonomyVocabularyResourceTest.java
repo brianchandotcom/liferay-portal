@@ -395,9 +395,8 @@ public class TaxonomyVocabularyResourceTest
 	protected TaxonomyVocabulary randomTaxonomyVocabulary() throws Exception {
 		return new TaxonomyVocabulary() {
 			{
-				assetLibraries =
-					testGroup.isCMS() ? new AssetLibrary[] {_randomSpace()} :
-						null;
+				assetLibraries = testGroup.isCMS() ?
+					new AssetLibrary[] {_randomSpaceAssetLibrary()} : null;
 				assetTypes = new AssetType[] {
 					new AssetType() {
 						{
@@ -414,8 +413,8 @@ public class TaxonomyVocabularyResourceTest
 				multiValued = RandomTestUtil.randomBoolean();
 				name = RandomTestUtil.randomString();
 				numberOfTaxonomyCategories = 0;
-				projects =
-					testGroup.isCMS() ? new Project[] {_randomProject()} : null;
+				projects = testGroup.isCMS() ?
+					new Project[] {_randomProjectAssetLibrary()} : null;
 				siteId = testGroup.getGroupId();
 				visibilityType = VisibilityType.PUBLIC;
 			}
@@ -467,7 +466,7 @@ public class TaxonomyVocabularyResourceTest
 			GroupConstants.DEFAULT_PARENT_GROUP_ID, GroupConstants.CMS);
 	}
 
-	private Project _randomProject() throws Exception {
+	private Project _randomProjectAssetLibrary() throws Exception {
 		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
 			RandomTestUtil.randomLocaleStringMap(), null,
 			DepotConstants.TYPE_PROJECT,
@@ -483,7 +482,7 @@ public class TaxonomyVocabularyResourceTest
 		};
 	}
 
-	private AssetLibrary _randomSpace() throws Exception {
+	private AssetLibrary _randomSpaceAssetLibrary() throws Exception {
 		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
 			RandomTestUtil.randomLocaleStringMap(), null,
 			DepotConstants.TYPE_SPACE,

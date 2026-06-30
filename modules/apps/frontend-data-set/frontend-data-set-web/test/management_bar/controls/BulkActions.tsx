@@ -85,4 +85,45 @@ describe('BulkActions className propagation', () => {
 			'text-danger'
 		);
 	});
+
+	it('does not apply data.className to the highlighted bulk action button when it is disabled', () => {
+		const bulkActions: IBulkActionItem[] = [
+			{
+				className: 'text-danger',
+				data: {
+					disabled: true,
+					highlighted: true,
+					id: 'delete',
+				},
+				icon: 'trash',
+				label: 'Delete',
+			},
+		];
+
+		renderBulkActions(bulkActions);
+
+		const button = screen.getByRole('button', {name: /delete/i});
+
+		expect(button).toBeDisabled();
+		expect(button).not.toHaveClass('text-danger');
+	});
+
+	it('does not apply data.className to the overflow dropdown item when it is disabled', async () => {
+		const bulkActions: IBulkActionItem[] = [
+			{
+				className: 'text-danger',
+				data: {disabled: true, id: 'delete'},
+				icon: 'trash',
+				label: 'Delete',
+			},
+		];
+
+		renderBulkActions(bulkActions);
+
+		await userEvent.click(screen.getByRole('button', {name: /actions/i}));
+
+		expect(screen.getByRole('menuitem', {name: /delete/i})).not.toHaveClass(
+			'text-danger'
+		);
+	});
 });

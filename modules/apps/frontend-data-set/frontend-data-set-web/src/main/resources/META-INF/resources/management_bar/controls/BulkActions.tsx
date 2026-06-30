@@ -291,7 +291,9 @@ function BulkActions({
 												<ClayButton
 													className={classNames(
 														'bulk-action-btn nav-link',
-														highlightedBulkAction.className
+														!highlightedBulkAction
+															.data?.disabled &&
+															highlightedBulkAction.className
 													)}
 													disabled={
 														highlightedBulkAction
@@ -352,7 +354,10 @@ function BulkActions({
 												(actionDefinition) => (
 													<DropDown.Item
 														className={
-															actionDefinition.className
+															actionDefinition
+																.data?.disabled
+																? undefined
+																: actionDefinition.className
 														}
 														disabled={
 															actionDefinition

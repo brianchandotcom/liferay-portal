@@ -1065,8 +1065,9 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 	}
 
 	private void _testPostRoleWithInvalidPrimaryKey() throws Exception {
-		long primKey = RandomTestUtil.randomLong();
 		Role role = randomRole();
+
+		long primKey = RandomTestUtil.randomLong();
 
 		role.setRolePermissions(
 			new RolePermission[] {
@@ -1081,6 +1082,7 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 					}
 				}
 			});
+
 		role.setRoleType(
 			RoleConstants.getTypeLabel(RoleConstants.TYPE_REGULAR));
 

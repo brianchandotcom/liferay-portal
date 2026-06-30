@@ -46,7 +46,7 @@ describe('RatingsSelectStars', () => {
 		});
 
 		it('has vote title', () => {
-			expect(starsDropdownToggle.title).toBe('vote');
+			expect(starsDropdownToggle.title).toBe('vote[action]');
 		});
 
 		it('has delete option disabled', () => {

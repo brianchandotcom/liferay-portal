@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.DummyHttpServletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
@@ -72,9 +71,7 @@ public class CollaboratorResourceImpl extends BaseCollaboratorResourceImpl {
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled(
-				contextCompany.getCompanyId(), "LPD-17564") ||
-			!FeatureFlagManagerUtil.isEnabled(
-				contextCompany.getCompanyId(), "LPD-52006")) {
+				contextCompany.getCompanyId(), "LPD-17564")) {
 
 			throw new UnsupportedOperationException();
 		}
@@ -97,10 +94,7 @@ public class CollaboratorResourceImpl extends BaseCollaboratorResourceImpl {
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled(
-				contextCompany.getCompanyId(), "LPD-17564") ||
-			(StringUtil.equals("Email", type) &&
-			 !FeatureFlagManagerUtil.isEnabled(
-				 contextCompany.getCompanyId(), "LPD-52006"))) {
+				contextCompany.getCompanyId(), "LPD-17564")) {
 
 			throw new UnsupportedOperationException();
 		}
@@ -123,9 +117,7 @@ public class CollaboratorResourceImpl extends BaseCollaboratorResourceImpl {
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled(
-				contextCompany.getCompanyId(), "LPD-17564") ||
-			!FeatureFlagManagerUtil.isEnabled(
-				contextCompany.getCompanyId(), "LPD-52006")) {
+				contextCompany.getCompanyId(), "LPD-17564")) {
 
 			throw new UnsupportedOperationException();
 		}
@@ -153,10 +145,7 @@ public class CollaboratorResourceImpl extends BaseCollaboratorResourceImpl {
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled(
-				contextCompany.getCompanyId(), "LPD-17564") ||
-			(StringUtil.equals("Email", type) &&
-			 !FeatureFlagManagerUtil.isEnabled(
-				 contextCompany.getCompanyId(), "LPD-52006"))) {
+				contextCompany.getCompanyId(), "LPD-17564")) {
 
 			throw new UnsupportedOperationException();
 		}
@@ -180,9 +169,7 @@ public class CollaboratorResourceImpl extends BaseCollaboratorResourceImpl {
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled(
-				contextCompany.getCompanyId(), "LPD-17564") ||
-			!FeatureFlagManagerUtil.isEnabled(
-				contextCompany.getCompanyId(), "LPD-52006")) {
+				contextCompany.getCompanyId(), "LPD-17564")) {
 
 			throw new UnsupportedOperationException();
 		}
@@ -206,10 +193,7 @@ public class CollaboratorResourceImpl extends BaseCollaboratorResourceImpl {
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled(
-				contextCompany.getCompanyId(), "LPD-17564") ||
-			(StringUtil.equals("Email", type) &&
-			 !FeatureFlagManagerUtil.isEnabled(
-				 contextCompany.getCompanyId(), "LPD-52006"))) {
+				contextCompany.getCompanyId(), "LPD-17564")) {
 
 			throw new UnsupportedOperationException();
 		}
@@ -259,9 +243,7 @@ public class CollaboratorResourceImpl extends BaseCollaboratorResourceImpl {
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled(
-				contextCompany.getCompanyId(), "LPD-17564") ||
-			!FeatureFlagManagerUtil.isEnabled(
-				contextCompany.getCompanyId(), "LPD-52006")) {
+				contextCompany.getCompanyId(), "LPD-17564")) {
 
 			throw new UnsupportedOperationException();
 		}
@@ -290,10 +272,7 @@ public class CollaboratorResourceImpl extends BaseCollaboratorResourceImpl {
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled(
-				contextCompany.getCompanyId(), "LPD-17564") ||
-			(StringUtil.equals("Email", type) &&
-			 !FeatureFlagManagerUtil.isEnabled(
-				 contextCompany.getCompanyId(), "LPD-52006"))) {
+				contextCompany.getCompanyId(), "LPD-17564")) {
 
 			throw new UnsupportedOperationException();
 		}
@@ -410,9 +389,7 @@ public class CollaboratorResourceImpl extends BaseCollaboratorResourceImpl {
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled(
-				contextCompany.getCompanyId(), "LPD-17564") ||
-			!FeatureFlagManagerUtil.isEnabled(
-				contextCompany.getCompanyId(), "LPD-52006")) {
+				contextCompany.getCompanyId(), "LPD-17564")) {
 
 			throw new UnsupportedOperationException();
 		}
@@ -441,10 +418,7 @@ public class CollaboratorResourceImpl extends BaseCollaboratorResourceImpl {
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled(
-				contextCompany.getCompanyId(), "LPD-17564") ||
-			(StringUtil.equals("Email", type) &&
-			 !FeatureFlagManagerUtil.isEnabled(
-				 contextCompany.getCompanyId(), "LPD-52006"))) {
+				contextCompany.getCompanyId(), "LPD-17564")) {
 
 			throw new UnsupportedOperationException();
 		}
@@ -474,9 +448,7 @@ public class CollaboratorResourceImpl extends BaseCollaboratorResourceImpl {
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled(
-				contextCompany.getCompanyId(), "LPD-17564") ||
-			!FeatureFlagManagerUtil.isEnabled(
-				contextCompany.getCompanyId(), "LPD-52006")) {
+				contextCompany.getCompanyId(), "LPD-17564")) {
 
 			throw new UnsupportedOperationException();
 		}
@@ -509,10 +481,7 @@ public class CollaboratorResourceImpl extends BaseCollaboratorResourceImpl {
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled(
-				contextCompany.getCompanyId(), "LPD-17564") ||
-			(StringUtil.equals("Email", type) &&
-			 !FeatureFlagManagerUtil.isEnabled(
-				 contextCompany.getCompanyId(), "LPD-52006"))) {
+				contextCompany.getCompanyId(), "LPD-17564")) {
 
 			throw new UnsupportedOperationException();
 		}

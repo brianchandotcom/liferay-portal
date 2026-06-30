@@ -12,7 +12,6 @@ import com.liferay.portal.configuration.module.configuration.ConfigurationProvid
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Ticket;
 import com.liferay.portal.kernel.model.TicketConstants;
 import com.liferay.portal.kernel.model.User;
@@ -75,7 +74,7 @@ public class CollaboratorUtil {
 			UserLocalService userLocalService)
 		throws Exception {
 
-		_validateType(companyId, type);
+		_validateType(type);
 
 		if (StringUtil.equals("Email", type)) {
 			return addOrUpdateCollaboratorByEmailAddress(
@@ -108,7 +107,7 @@ public class CollaboratorUtil {
 			UserLocalService userLocalService)
 		throws Exception {
 
-		_validateType(companyId, "Email");
+		_validateType("Email");
 		_validateEmailAddress(emailAddress);
 		_validateEmailActionIds(collaborator.getActionIds());
 
@@ -190,7 +189,7 @@ public class CollaboratorUtil {
 		Set<Long> ticketIds = new HashSet<>();
 
 		for (Collaborator collaborator : collaborators) {
-			_validateType(companyId, collaborator.getType());
+			_validateType(collaborator.getType());
 
 			SharingEntry sharingEntry = null;
 
@@ -283,7 +282,7 @@ public class CollaboratorUtil {
 			SharingEntryService sharingEntryService, String type)
 		throws Exception {
 
-		_validateType(companyId, type);
+		_validateType(type);
 
 		if (StringUtil.equals("Email", type)) {
 			throw new IllegalArgumentException(
@@ -354,7 +353,7 @@ public class CollaboratorUtil {
 			UriInfo uriInfo, User user)
 		throws Exception {
 
-		_validateType(companyId, type);
+		_validateType(type);
 
 		if (StringUtil.equals("Email", type)) {
 			throw new IllegalArgumentException(
@@ -644,25 +643,14 @@ public class CollaboratorUtil {
 		}
 	}
 
-	private static void _validateType(long companyId, String type) {
-		if (FeatureFlagManagerUtil.isEnabled(companyId, "LPD-52006")) {
-			if (!StringUtil.equals("Email", type) &&
-				!StringUtil.equals("User", type) &&
-				!StringUtil.equals("UserGroup", type)) {
-
-				throw new IllegalArgumentException(
-					"Collaborator type must be \"Email\", \"User\", or " +
-						"\"UserGroup\"");
-			}
-
-			return;
-		}
-
-		if (!StringUtil.equals("User", type) &&
+	private static void _validateType(String type) {
+		if (!StringUtil.equals("Email", type) &&
+			!StringUtil.equals("User", type) &&
 			!StringUtil.equals("UserGroup", type)) {
 
 			throw new IllegalArgumentException(
-				"Collaborator type must be \"User\" or \"UserGroup\"");
+				"Collaborator type must be \"Email\", \"User\", or " +
+					"\"UserGroup\"");
 		}
 	}
 

@@ -9,7 +9,6 @@ import com.liferay.account.admin.web.internal.display.context.InvitedAccountUser
 import com.liferay.account.admin.web.internal.portlet.action.util.TicketUtil;
 import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.portal.kernel.exception.NoSuchTicketException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -70,10 +69,7 @@ public class CreateAccountUserMVCRenderCommand implements MVCRenderCommand {
 
 		invitedAccountUserDisplayContext.setTicketKey(ticket.getKey());
 
-		if ((ticket.getType() == TicketConstants.TYPE_INVITE_COLLABORATOR) &&
-			FeatureFlagManagerUtil.isEnabled(
-				themeDisplay.getCompanyId(), "LPD-52006")) {
-
+		if (ticket.getType() == TicketConstants.TYPE_INVITE_COLLABORATOR) {
 			invitedAccountUserDisplayContext.setEmailAddress(
 				ticket.getEmailAddress());
 			invitedAccountUserDisplayContext.setTitle(

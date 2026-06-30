@@ -307,12 +307,9 @@ public class MCPServerServletTest {
 		JSONObject protectedResourceMetadataJSONObject =
 			JSONFactoryUtil.createJSONObject(_get(matcher.group(1)));
 
-		String authorizationServerURL =
-			protectedResourceMetadataJSONObject.getJSONArray(
-				"authorization_servers"
-			).getString(
-				0
-			);
+		String authorizationServerURL = JSONUtil.getValueAsString(
+			protectedResourceMetadataJSONObject,
+			"JSONArray/authorization_servers", "Object/0");
 
 		JSONObject authorizationServerMetadataJSONObject =
 			JSONFactoryUtil.createJSONObject(

@@ -1,6 +1,12 @@
 import EventsCriteriaTabs from '../EventsCriteriaTabs';
 import React from 'react';
-import {cleanup, fireEvent, render, screen} from '@testing-library/react';
+import {
+	cleanup,
+	fireEvent,
+	render,
+	screen,
+	waitFor
+} from '@testing-library/react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 import {List} from 'immutable';
@@ -163,7 +169,7 @@ describe('EventsCriteriaTabs', () => {
 		expect(screen.queryByText('2')).not.toBeInTheDocument();
 	});
 
-	it('passes the search keyword to the backend query and resets to the first page', () => {
+	it('passes the search keyword to the backend query and resets to the first page', async () => {
 		useQuery.mockReturnValue(customEventsResult(10, 25));
 
 		const {rerender} = renderTabs();
@@ -182,10 +188,12 @@ describe('EventsCriteriaTabs', () => {
 			</DndProvider>
 		);
 
-		expect(lastQueryVariables()).toMatchObject({
-			keyword: 'checkout',
-			page: 0
-		});
+		await waitFor(() =>
+			expect(lastQueryVariables()).toMatchObject({
+				keyword: 'checkout',
+				page: 0
+			})
+		);
 	});
 
 	it('filters the default events client-side by the search keyword', () => {
@@ -205,5 +213,17 @@ describe('EventsCriteriaTabs', () => {
 		expect(
 			container.querySelectorAll('[data-testid^="criteria-item-"]')
 		).toHaveLength(0);
+	});
+
+	it('shows an empty state when a search yields no custom events', async () => {
+		useQuery.mockReturnValue(customEventsResult(0, 0));
+
+		renderTabs({searchValue: 'nothing-matches'});
+
+		fireEvent.click(screen.getByText('Custom'));
+
+		await waitFor(() =>
+			expect(screen.getByText('no-results-found')).toBeInTheDocument()
+		);
 	});
 });

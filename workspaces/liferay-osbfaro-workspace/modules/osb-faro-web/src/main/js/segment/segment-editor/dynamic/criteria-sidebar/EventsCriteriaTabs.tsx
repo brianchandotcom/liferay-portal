@@ -14,11 +14,14 @@ import {NAME} from 'shared/util/pagination';
 import {OrderByDirections} from 'shared/util/constants';
 import {PaginationBar} from '@clayui/pagination-bar';
 import {Property} from 'shared/util/records';
+import {useDebounce} from 'shared/hooks/useDebounce';
 import {useQuery} from '@apollo/client';
 
 const CUSTOM_EVENTS_PAGE_SIZE = 10;
 
 const DEFAULT_TAB = 0;
+
+const SEARCH_DEBOUNCE_DELAY = 300;
 
 interface IEventsCriteriaTabsProps {
 	defaultEvents: List<Property>;
@@ -32,19 +35,25 @@ const EventsCriteriaTabs: React.FC<IEventsCriteriaTabsProps> = ({
 	const [activeTab, setActiveTab] = useState<number>(DEFAULT_TAB);
 	const [page, setPage] = useState(1);
 
+	const debouncedSearchValue = useDebounce(
+		searchValue,
+		SEARCH_DEBOUNCE_DELAY
+	);
+
 	useEffect(() => {
 		setPage(1);
-	}, [searchValue]);
+	}, [debouncedSearchValue]);
 
 	const {data, loading} = useQuery<
 		EventDefinitionsData,
 		EventDefinitionsVariables
 	>(EventDefinitionsQuery, {
 		fetchPolicy: 'network-only',
+		skip: activeTab === DEFAULT_TAB,
 		variables: {
 			eventType: EventTypes.Custom,
 			hidden: false,
-			keyword: searchValue,
+			keyword: debouncedSearchValue,
 			page: page - 1,
 			size: CUSTOM_EVENTS_PAGE_SIZE,
 			sort: {
@@ -77,7 +86,7 @@ const EventsCriteriaTabs: React.FC<IEventsCriteriaTabsProps> = ({
 			return <Loading />;
 		}
 
-		return renderProperties(customEvents);
+		return renderProperties(customEvents, debouncedSearchValue);
 	};
 
 	return (
@@ -90,7 +99,7 @@ const EventsCriteriaTabs: React.FC<IEventsCriteriaTabsProps> = ({
 
 			<div className="events-criteria-tabs-content mt-3">
 				{activeTab === DEFAULT_TAB
-					? renderProperties(filteredDefaultEvents)
+					? renderProperties(filteredDefaultEvents, searchValue)
 					: renderCustomContent()}
 			</div>
 

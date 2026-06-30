@@ -19,15 +19,14 @@ export enum Applications {
 	Main = 'main',
 }
 
-export enum AssetNames {
-	BlogViewed = 'blogViewed',
-	CommentPosted = 'commentPosted',
-	DocumentDownloaded = 'documentDownloaded',
-	DocumentPreviewed = 'documentPreviewed',
-	FormSubmitted = 'formSubmitted',
-	FormViewed = 'formViewed',
-	PageViewed = 'pageViewed',
-	WebContentViewed = 'webContentViewed',
+export enum EventNames {
+	Click = 'click',
+	Comment = 'comment',
+	Download = 'download',
+	Impression = 'impression',
+	Submit = 'submit',
+	ViewAsset = 'viewAsset',
+	ViewPage = 'viewPage',
 }
 
 export enum AssetTypes {

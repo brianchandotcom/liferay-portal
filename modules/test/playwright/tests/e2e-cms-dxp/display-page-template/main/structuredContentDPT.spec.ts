@@ -113,8 +113,6 @@ test(
 				value: 'Title',
 			});
 
-			await pageEditorPage.waitForChangesSaved();
-
 			await pageEditorPage.addFragment('Basic Components', 'Paragraph');
 
 			const paragraphId = await pageEditorPage.getFragmentId('Paragraph');
@@ -126,8 +124,6 @@ test(
 				tab: 'Mapping',
 				value: 'Body',
 			});
-
-			await pageEditorPage.waitForChangesSaved();
 
 			await pageEditorPage.publishPage();
 

@@ -118,7 +118,7 @@ test(
 			await expect(fdsSamplePage.table.headerCells).toHaveCount(11);
 		});
 
-		await test.step('Can not change a user view name if no name is provided', async () => {
+		await test.step('Can not rename a user view to a blank or duplicate name', async () => {
 			await fdsSamplePage.userViewsSelectorButton.click();
 
 			await fdsSamplePage.dropdownMenu.waitFor();
@@ -141,17 +141,26 @@ test(
 
 			await expect(fdsSamplePage.userViewsRenameModal).toBeInViewport();
 
-			await fdsSamplePage.userViewsRenameModal
-				.getByLabel('NameRequired')
-				.fill('');
+			const nameInput =
+				fdsSamplePage.userViewsRenameModal.getByLabel('NameRequired');
+			const saveButton = fdsSamplePage.userViewsRenameModal.getByRole(
+				'button',
+				{name: 'Save'}
+			);
 
-			await fdsSamplePage.userViewsRenameModal
-				.getByRole('button', {name: 'Save'})
-				.click();
+			await nameInput.fill('   ');
+
+			await expect(saveButton).toBeDisabled();
+
+			await nameInput.fill(userView1Name);
+
+			await expect(saveButton).toBeEnabled();
+
+			await saveButton.click();
 
 			await expect(
 				fdsSamplePage.userViewsRenameModal.getByText(
-					'This field is required.'
+					'A view with this name already exists.'
 				)
 			).toBeVisible();
 

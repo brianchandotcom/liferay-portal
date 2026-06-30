@@ -96,6 +96,7 @@ public class OpenAPIUtil {
 			}
 
 			body = bodyString.getBytes(StandardCharsets.UTF_8);
+
 			contentType = ContentTypes.APPLICATION_JSON;
 		}
 		else {

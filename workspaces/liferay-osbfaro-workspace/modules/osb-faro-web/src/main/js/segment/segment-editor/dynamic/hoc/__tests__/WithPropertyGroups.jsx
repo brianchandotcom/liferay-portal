@@ -1,14 +1,9 @@
 import * as API from 'shared/api';
-import client from 'shared/apollo/client';
 import React from 'react';
 import withPropertyGroups from '../WithPropertyGroups';
 import {render} from '@testing-library/react';
 import {StaticRouter} from 'react-router';
 import {waitForLoadingToBeRemoved} from 'test/helpers';
-
-jest.mock('shared/apollo/client', () => ({
-	query: jest.fn()
-}));
 
 jest.unmock('react-dom');
 
@@ -119,27 +114,6 @@ describe('WithPropertyGroups', () => {
 					}
 				],
 				total: 1
-			})
-		);
-
-		client.query.mockReturnValueOnce(
-			Promise.resolve({
-				data: {
-					eventDefinitions: {
-						__typename: 'EventDefinitionBag',
-						eventDefinitions: [
-							{
-								__typename: 'EventDefinition',
-								description: null,
-								displayName: 'displayName-1',
-								id: '1',
-								name: 'name-1',
-								type: 'DEFAULT'
-							}
-						],
-						total: 1
-					}
-				}
 			})
 		);
 

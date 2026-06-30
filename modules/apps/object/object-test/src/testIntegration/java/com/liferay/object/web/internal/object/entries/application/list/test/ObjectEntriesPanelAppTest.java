@@ -116,10 +116,19 @@ public class ObjectEntriesPanelAppTest {
 		panelApps = _panelAppRegistry.getPanelApps(
 			objectDefinition.getPanelCategoryKey());
 
+		portlet = null;
+
 		for (PanelApp panelApp : panelApps) {
-			Assert.assertNotEquals(
-				objectDefinition.getPortletId(), panelApp.getPortletId());
+			if (Objects.equals(
+					panelApp.getPortletId(), objectDefinition.getPortletId())) {
+
+				portlet = panelApp.getPortlet();
+			}
 		}
+
+		Assert.assertEquals(
+			"site_administration.content",
+			portlet.getControlPanelEntryCategory());
 	}
 
 	@Inject

@@ -64,9 +64,7 @@ export default function CalendarMoreLinkPopover({
 		>
 			<div className="lfr__cmp-calendar-more-link-popover-tasks">
 				{sortedTasks.map((task) => {
-					const isViewable = Boolean(
-						task.actions?.get && Liferay.FeatureFlags['LPD-74152']
-					);
+					const hasViewPermission = Boolean(task.actions?.get);
 
 					return (
 						<div
@@ -74,17 +72,17 @@ export default function CalendarMoreLinkPopover({
 								'lfr__cmp-calendar-more-link-popover-task',
 								{
 									'lfr__cmp-calendar-more-link-popover-task-clickable':
-										isViewable,
+										hasViewPermission,
 								}
 							)}
 							key={task.id}
 							onClick={
-								isViewable
+								hasViewPermission
 									? () => handleViewTask(task)
 									: undefined
 							}
 							onKeyDown={
-								isViewable
+								hasViewPermission
 									? (event) => {
 											if (
 												event.key === 'Enter' ||
@@ -97,8 +95,8 @@ export default function CalendarMoreLinkPopover({
 										}
 									: undefined
 							}
-							role={isViewable ? 'button' : undefined}
-							tabIndex={isViewable ? 0 : undefined}
+							role={hasViewPermission ? 'button' : undefined}
+							tabIndex={hasViewPermission ? 0 : undefined}
 						>
 							<span
 								className="lfr__cmp-calendar-more-link-popover-task-title"

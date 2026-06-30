@@ -30,9 +30,7 @@ export default function CalendarTaskCard({
 	const blocked = state?.key === 'blocked';
 	const overdue = isOverdue({dueDate, state});
 
-	const isViewable = Boolean(
-		task.actions?.get && Liferay.FeatureFlags['LPD-74152']
-	);
+	const hasViewPermission = Boolean(task.actions?.get);
 
 	const handleViewTask = () => {
 		const viewURL = getActionURL({
@@ -49,14 +47,14 @@ export default function CalendarTaskCard({
 	return (
 		<div
 			className={classNames('lfr__cmp-calendar-task-card', {
-				'lfr__cmp-calendar-task-card-clickable': isViewable,
+				'lfr__cmp-calendar-task-card-clickable': hasViewPermission,
 				'lfr__cmp-calendar-task-card-state-overdue': overdue,
 				[`lfr__cmp-calendar-task-card-state-${state?.key}`]:
 					!overdue && state?.key,
 			})}
-			onClick={isViewable ? handleViewTask : undefined}
+			onClick={hasViewPermission ? handleViewTask : undefined}
 			onKeyDown={
-				isViewable
+				hasViewPermission
 					? (event) => {
 							if (event.key === 'Enter' || event.key === ' ') {
 								event.preventDefault();
@@ -66,8 +64,8 @@ export default function CalendarTaskCard({
 						}
 					: undefined
 			}
-			role={isViewable ? 'button' : undefined}
-			tabIndex={isViewable ? 0 : undefined}
+			role={hasViewPermission ? 'button' : undefined}
+			tabIndex={hasViewPermission ? 0 : undefined}
 		>
 			<span className="lfr__cmp-calendar-task-card-title">{title}</span>
 

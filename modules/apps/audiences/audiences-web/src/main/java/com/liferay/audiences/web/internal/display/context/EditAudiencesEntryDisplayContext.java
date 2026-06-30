@@ -121,6 +121,8 @@ public class EditAudiencesEntryDisplayContext {
 		).put(
 			"backURL", getBackURL()
 		).put(
+			"json", _getJSON()
+		).put(
 			"name", _getName()
 		).put(
 			"namespace", _renderResponse.getNamespace()
@@ -175,6 +177,23 @@ public class EditAudiencesEntryDisplayContext {
 		}
 
 		return null;
+	}
+
+	private String _getJSON() {
+		try {
+			AudiencesEntry audiencesEntry = _getAudiencesEntry();
+
+			if (audiencesEntry != null) {
+				return audiencesEntry.getJSON();
+			}
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+		}
+
+		return StringPool.BLANK;
 	}
 
 	private String _getName() {

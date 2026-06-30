@@ -383,40 +383,6 @@ public class MCPServerServletTest {
 			clientId = jsonObject.getString("client_id");
 		}
 
-		String codeVerifier =
-			"mcpServerTestCodeVerifier1234567890123456789012345";
-
-		String resource = protectedResourceMetadataJSONObject.getString(
-			"resource");
-
-		String authorizationEndpoint =
-			authorizationServerMetadataJSONObject.getString(
-				"authorization_endpoint");
-		String codeChallenge = StringUtil.removeChar(
-			StringUtil.replace(
-				DigesterUtil.digestBase64(DigesterUtil.SHA_256, codeVerifier),
-				new char[] {CharPool.PLUS, CharPool.SLASH},
-				new char[] {CharPool.MINUS, CharPool.UNDERLINE}),
-			CharPool.EQUAL);
-
-		String authorizeRequestURL = HttpComponentsUtil.addParameter(
-			authorizationEndpoint, "client_id", clientId);
-
-		authorizeRequestURL = HttpComponentsUtil.addParameter(
-			authorizeRequestURL, "code_challenge", codeChallenge);
-		authorizeRequestURL = HttpComponentsUtil.addParameter(
-			authorizeRequestURL, "code_challenge_method", "S256");
-		authorizeRequestURL = HttpComponentsUtil.addParameter(
-			authorizeRequestURL, "redirect_uri", redirectURI);
-		authorizeRequestURL = HttpComponentsUtil.addParameter(
-			authorizeRequestURL, "resource", resource);
-		authorizeRequestURL = HttpComponentsUtil.addParameter(
-			authorizeRequestURL, "response_type", "code");
-		authorizeRequestURL = HttpComponentsUtil.addParameter(
-			authorizeRequestURL, "scope", "everything");
-		authorizeRequestURL = HttpComponentsUtil.addParameter(
-			authorizeRequestURL, "state", RandomTestUtil.randomString());
-
 		portalURL = "http://localhost:" + PortalUtil.getPortalServerPort(false);
 
 		options = new Http.Options();
@@ -445,12 +411,42 @@ public class MCPServerServletTest {
 
 		_http.URLtoString(options);
 
+		String authorizationEndpoint =
+			authorizationServerMetadataJSONObject.getString(
+				"authorization_endpoint");
+
+		String authorizationURL = HttpComponentsUtil.addParameter(
+			authorizationEndpoint, "client_id", clientId);
+
+		authorizationURL = HttpComponentsUtil.addParameter(
+			authorizationURL, "code_challenge",
+			StringUtil.removeChar(
+				StringUtil.replace(
+					DigesterUtil.digestBase64(
+						DigesterUtil.SHA_256, RandomTestUtil.randomString()),
+					new char[] {CharPool.PLUS, CharPool.SLASH},
+					new char[] {CharPool.MINUS, CharPool.UNDERLINE}),
+				CharPool.EQUAL));
+		authorizationURL = HttpComponentsUtil.addParameter(
+			authorizationURL, "code_challenge_method", "S256");
+		authorizationURL = HttpComponentsUtil.addParameter(
+			authorizationURL, "redirect_uri", redirectURI);
+		authorizationURL = HttpComponentsUtil.addParameter(
+			authorizationURL, "resource",
+			protectedResourceMetadataJSONObject.getString("resource"));
+		authorizationURL = HttpComponentsUtil.addParameter(
+			authorizationURL, "response_type", "code");
+		authorizationURL = HttpComponentsUtil.addParameter(
+			authorizationURL, "scope", "everything");
+		authorizationURL = HttpComponentsUtil.addParameter(
+			authorizationURL, "state", RandomTestUtil.randomString());
+
 		options = new Http.Options();
 
 		options.addHeader("Accept", ContentTypes.TEXT_HTML);
 		options.setCookies(_http.getCookies());
 		options.setFollowRedirects(false);
-		options.setLocation(authorizeRequestURL);
+		options.setLocation(authorizationURL);
 
 		_http.URLtoString(options);
 
@@ -505,19 +501,22 @@ public class MCPServerServletTest {
 			StringBundler.concat(
 				"client_id=", URLCodec.encodeURL(clientId), "&code=",
 				URLCodec.encodeURL(code), "&code_verifier=",
-				URLCodec.encodeURL(codeVerifier),
+				URLCodec.encodeURL(
+					"mcpServerTestCodeVerifier1234567890123456789012345"),
 				"&grant_type=authorization_code&redirect_uri=",
 				URLCodec.encodeURL(redirectURI), "&resource=",
-				URLCodec.encodeURL(resource)),
+				URLCodec.encodeURL(
+					protectedResourceMetadataJSONObject.getString("resource"))),
 			ContentTypes.APPLICATION_X_WWW_FORM_URLENCODED, StringPool.UTF8);
 		options.setFollowRedirects(false);
 		options.setLocation(tokenEndpoint);
 		options.setPost(true);
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			_http.URLtoString(options));
-
-		return jsonObject.getString("access_token");
+		return JSONFactoryUtil.createJSONObject(
+			_http.URLtoString(options)
+		).getString(
+			"access_token"
+		);
 	}
 
 	private McpSyncClient _getMcpSyncClient(

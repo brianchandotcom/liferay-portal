@@ -108,29 +108,29 @@ public class ServiceNodeExecutor extends BaseNodeExecutor {
 		Map<String, Serializable> workflowContext =
 			executionContext.getWorkflowContext();
 
+		workflowContext.put(
+			"aiHubCellLiferayDXPURL",
+			_getAIHubCellLiferayDXPURL(workflowContext));
+
 		KaleoInstanceToken kaleoInstanceToken =
 			executionContext.getKaleoInstanceToken();
 
 		workflowContext.put(
 			"workflowInstanceId", kaleoInstanceToken.getKaleoInstanceId());
 
-		workflowContext.put(
-			"aiHubCellLiferayDXPURL",
-			_getAIHubCellLiferayDXPURL(workflowContext));
-
 		try {
-			String result = serviceNodeDelegate.execute(
-				VariablesUtil.getInputVariables(
-					kaleoNodeSettingValues, workflowContext),
-				workflowContext);
-
 			JSONArray jsonArray = VariablesUtil.getVariablesJSONArray(
 				"outputVariables", kaleoNodeSettingValues);
 
 			if ((jsonArray != null) && (jsonArray.length() > 0)) {
 				JSONObject jsonObject = jsonArray.getJSONObject(0);
 
-				workflowContext.put(jsonObject.getString("name"), result);
+				workflowContext.put(
+					jsonObject.getString("name"),
+					serviceNodeDelegate.execute(
+						VariablesUtil.getInputVariables(
+							kaleoNodeSettingValues, workflowContext),
+						workflowContext));
 			}
 		}
 		catch (Exception exception) {

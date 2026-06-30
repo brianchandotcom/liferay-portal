@@ -95,6 +95,7 @@ const INITIAL_STATE: State = {
 		label: {},
 		name: '',
 		path: '',
+		settings: {},
 		spaces: 'all',
 		status: 'new',
 		system: false,

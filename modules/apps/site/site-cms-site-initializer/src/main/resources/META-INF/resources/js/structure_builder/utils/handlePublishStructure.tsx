@@ -20,6 +20,7 @@ import {config} from '../config';
 import {CacheKey} from '../contexts/CacheContext';
 import {Action, State} from '../contexts/StateContext';
 import selectHistory from '../selectors/selectHistory';
+import selectPublishedChildren from '../selectors/selectPublishedChildren';
 import selectStructureChildren from '../selectors/selectStructureChildren';
 import selectStructureERC from '../selectors/selectStructureERC';
 import selectStructureId from '../selectors/selectStructureId';
@@ -27,6 +28,7 @@ import selectStructureLabel from '../selectors/selectStructureLabel';
 import selectStructureLocalizedLabel from '../selectors/selectStructureLocalizedLabel';
 import selectStructureName from '../selectors/selectStructureName';
 import selectStructurePath from '../selectors/selectStructurePath';
+import selectStructureSettings from '../selectors/selectStructureSettings';
 import selectStructureSpaces from '../selectors/selectStructureSpaces';
 import selectStructureStatus from '../selectors/selectStructureStatus';
 import selectStructureUuid from '../selectors/selectStructureUuid';
@@ -126,6 +128,8 @@ export default async function handlePublishStructure({
 	const localizedLabel = selectStructureLocalizedLabel(state);
 	const name = selectStructureName(state);
 	const path = selectStructurePath(state);
+	const publishedChildren = selectPublishedChildren(state);
+	const settings = selectStructureSettings(state);
 	const structureSpaces = selectStructureSpaces(state);
 	const status = selectStructureStatus(state);
 	let structureId = selectStructureId(state);
@@ -272,6 +276,8 @@ export default async function handlePublishStructure({
 			erc,
 			label,
 			name,
+			publishedChildren,
+			settings,
 			spaces,
 			status: 'published',
 			workflows,
@@ -296,6 +302,8 @@ export default async function handlePublishStructure({
 			id,
 			label,
 			name,
+			publishedChildren,
+			settings,
 			spaces,
 			status: 'published',
 			workflows,

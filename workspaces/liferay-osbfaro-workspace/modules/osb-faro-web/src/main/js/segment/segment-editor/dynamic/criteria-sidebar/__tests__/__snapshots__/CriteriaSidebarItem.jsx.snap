@@ -34,7 +34,11 @@ exports[`CriteriaSidebarItem should render 1`] = `
         </svg>
       </span>
     </span>
-    Page Views
+    <span
+      class="criteria-sidebar-item-label"
+    >
+      Page Views
+    </span>
   </li>
 </div>
 `;

@@ -72,7 +72,7 @@ test.describe(
 			const createdEntries: ObjectEntry[] = [];
 
 			for (let i = 0; i < FILE_COUNT; i++) {
-				const title = `${titlePrefix}_${i}`;
+				const title = `${titlePrefix} ${i}`;
 				const entry = await setupApiHelpers.objectEntry.postObjectEntry(
 					{
 						file: {
@@ -121,8 +121,8 @@ test.describe(
 
 			const dataSetPage = new DataSetPage(page);
 
-			await dataSetPage.search(`${titlePrefix}_0`);
-			await selectRow(page, `${titlePrefix}_0`, true);
+			await dataSetPage.search(`${titlePrefix} 0`);
+			await selectRow(page, `${titlePrefix} 0`, true);
 
 			await expectBulkActionVisible(page, 'Delete');
 		});
@@ -137,8 +137,8 @@ test.describe(
 			const dataSetPage = new DataSetPage(page);
 
 			await dataSetPage.search(titlePrefix);
-			await selectRow(page, `${titlePrefix}_0`, true);
-			await selectRow(page, `${titlePrefix}_1`, true);
+			await selectRow(page, `${titlePrefix} 0`, true);
+			await selectRow(page, `${titlePrefix} 1`, true);
 
 			await expectBulkActionVisible(page, 'Delete');
 		});

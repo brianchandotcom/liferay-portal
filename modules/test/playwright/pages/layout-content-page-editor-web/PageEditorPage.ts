@@ -1175,7 +1175,11 @@ export class PageEditorPage {
 	}
 
 	async goToConfigurationTab(tab: ConfigurationTab) {
-		await this.page.getByRole('tab', {exact: true, name: tab}).click();
+		await this.page
+			.getByRole('tab', {exact: true, name: tab})
+			.filter({visible: true})
+			.last()
+			.click();
 	}
 
 	async goToSidebarTab(tab: SidebarTab) {

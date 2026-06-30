@@ -118,11 +118,11 @@ public class LDAPReferralUpgradeProcessTest {
 	public void testUpgradeThrowsReferral() throws Exception {
 		long followCompanyId = RandomTestUtil.randomLong();
 
-		_createConfiguration(followCompanyId, LDAPConstants.REFERRAL_FOLLOW);
+		_createConfiguration(followCompanyId, "follow");
 
 		long ignoreCompanyId = RandomTestUtil.randomLong();
 
-		_createConfiguration(ignoreCompanyId, LDAPConstants.REFERRAL_IGNORE);
+		_createConfiguration(ignoreCompanyId, "ignore");
 
 		long legacyThrowsCompanyId = RandomTestUtil.randomLong();
 
@@ -130,18 +130,14 @@ public class LDAPReferralUpgradeProcessTest {
 
 		long throwCompanyId = RandomTestUtil.randomLong();
 
-		_createConfiguration(throwCompanyId, LDAPConstants.REFERRAL_THROW);
+		_createConfiguration(throwCompanyId, "throw");
 
 		_upgradeProcess.upgrade();
 
-		Assert.assertEquals(
-			LDAPConstants.REFERRAL_FOLLOW, _getReferral(followCompanyId));
-		Assert.assertEquals(
-			LDAPConstants.REFERRAL_IGNORE, _getReferral(ignoreCompanyId));
-		Assert.assertEquals(
-			LDAPConstants.REFERRAL_THROW, _getReferral(legacyThrowsCompanyId));
-		Assert.assertEquals(
-			LDAPConstants.REFERRAL_THROW, _getReferral(throwCompanyId));
+		Assert.assertEquals("follow", _getReferral(followCompanyId));
+		Assert.assertEquals("ignore", _getReferral(ignoreCompanyId));
+		Assert.assertEquals("throw", _getReferral(legacyThrowsCompanyId));
+		Assert.assertEquals("throw", _getReferral(throwCompanyId));
 	}
 
 	private void _createConfiguration(long companyId, String referral)

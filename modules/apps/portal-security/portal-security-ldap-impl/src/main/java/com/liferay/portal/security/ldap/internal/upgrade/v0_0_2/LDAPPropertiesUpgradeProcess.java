@@ -469,8 +469,7 @@ public class LDAPPropertiesUpgradeProcess extends UpgradeProcess {
 			).put(
 				LDAPConstants.REFERRAL,
 				_prefsProps.getString(
-					companyId, LegacyLDAPPropsKeys.LDAP_REFERRAL,
-					LDAPConstants.REFERRAL_FOLLOW)
+					companyId, LegacyLDAPPropsKeys.LDAP_REFERRAL, "follow")
 			).build();
 
 		if (_log.isInfoEnabled()) {

@@ -9,7 +9,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.security.ldap.constants.LDAPConstants;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.HashMap;
@@ -142,25 +141,19 @@ public class SafeLdapReferralUtilTest {
 	public void testSetProperties() {
 		Map<String, String> environment = new HashMap<>();
 
-		SafeLdapReferralUtil.setProperties(
-			environment, LDAPConstants.REFERRAL_FOLLOW);
+		SafeLdapReferralUtil.setProperties(environment, "follow");
 
-		Assert.assertEquals(
-			LDAPConstants.REFERRAL_THROW, environment.get(Context.REFERRAL));
+		Assert.assertEquals("throw", environment.get(Context.REFERRAL));
 		_assertTrustURLCodebaseDisabled(environment);
 
-		SafeLdapReferralUtil.setProperties(
-			environment, LDAPConstants.REFERRAL_IGNORE);
+		SafeLdapReferralUtil.setProperties(environment, "ignore");
 
-		Assert.assertEquals(
-			LDAPConstants.REFERRAL_IGNORE, environment.get(Context.REFERRAL));
+		Assert.assertEquals("ignore", environment.get(Context.REFERRAL));
 		_assertTrustURLCodebaseDisabled(environment);
 
-		SafeLdapReferralUtil.setProperties(
-			environment, LDAPConstants.REFERRAL_THROW);
+		SafeLdapReferralUtil.setProperties(environment, "throw");
 
-		Assert.assertEquals(
-			LDAPConstants.REFERRAL_THROW, environment.get(Context.REFERRAL));
+		Assert.assertEquals("throw", environment.get(Context.REFERRAL));
 		_assertTrustURLCodebaseDisabled(environment);
 	}
 

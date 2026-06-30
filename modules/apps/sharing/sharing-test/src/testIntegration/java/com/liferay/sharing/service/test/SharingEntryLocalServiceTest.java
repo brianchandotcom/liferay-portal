@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.mail.MailMessage;
 import com.liferay.portal.test.mail.MailServiceTestUtil;
-import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
@@ -505,7 +504,6 @@ public class SharingEntryLocalServiceTest {
 			externalReferenceCode, sharingEntry.getExternalReferenceCode());
 	}
 
-	@FeatureFlag("LPD-52006")
 	@Test
 	@TestInfo("LPD-48130")
 	public void testAddSharingEntryWithInviteCollaboratorTicket()

@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -73,7 +72,6 @@ public class UserModelListenerTest {
 		_group1 = GroupTestUtil.addGroup();
 	}
 
-	@FeatureFlag("LPD-52006")
 	@Test
 	@TestInfo("LPD-48130")
 	public void testOnAfterCreate() throws Exception {

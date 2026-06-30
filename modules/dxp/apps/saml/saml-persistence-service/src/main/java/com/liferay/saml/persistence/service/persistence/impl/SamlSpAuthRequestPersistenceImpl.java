@@ -12,8 +12,6 @@ import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -580,16 +578,10 @@ public class SamlSpAuthRequestPersistenceImpl
 	private static final String _SQL_COUNT_SAMLSPAUTHREQUEST_WHERE =
 		"SELECT COUNT(samlSpAuthRequest) FROM SamlSpAuthRequest samlSpAuthRequest WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No SamlSpAuthRequest exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		SamlSpAuthRequestPersistenceImpl.class);
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:602378760
+// LIFERAY-SERVICE-BUILDER-HASH:-850096672

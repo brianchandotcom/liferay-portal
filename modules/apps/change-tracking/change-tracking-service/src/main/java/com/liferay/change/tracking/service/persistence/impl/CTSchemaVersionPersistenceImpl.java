@@ -412,13 +412,10 @@ public class CTSchemaVersionPersistenceImpl
 	private static final String _SQL_COUNT_CTSCHEMAVERSION_WHERE =
 		"SELECT COUNT(ctSchemaVersion) FROM CTSchemaVersion ctSchemaVersion WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No CTSchemaVersion exists with the key {";
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1067041246
+// LIFERAY-SERVICE-BUILDER-HASH:-820179206

@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
@@ -4279,12 +4277,6 @@ public class DLFolderPersistenceImpl
 	private static final String _SQL_COUNT_DLFOLDER_WHERE =
 		"SELECT COUNT(dlFolder) FROM DLFolder dlFolder WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No DLFolder exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DLFolderPersistenceImpl.class);
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"uuid", "hidden"});
 
@@ -4294,4 +4286,4 @@ public class DLFolderPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1427138042
+// LIFERAY-SERVICE-BUILDER-HASH:-1477134075

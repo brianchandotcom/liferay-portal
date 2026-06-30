@@ -13,7 +13,6 @@ import com.liferay.asset.list.model.impl.AssetListEntryAssetEntryRelModelImpl;
 import com.liferay.asset.list.service.persistence.AssetListEntryAssetEntryRelPersistence;
 import com.liferay.asset.list.service.persistence.AssetListEntryAssetEntryRelUtil;
 import com.liferay.asset.list.service.persistence.impl.constants.AssetListPersistenceConstants;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -22,8 +21,6 @@ import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -552,27 +549,10 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 			OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator)
 		throws NoSuchEntryAssetEntryRelException {
 
-		AssetListEntryAssetEntryRel assetListEntryAssetEntryRel =
-			fetchByA_S_First(
-				assetListEntryId, segmentsEntryId, orderByComparator);
-
-		if (assetListEntryAssetEntryRel != null) {
-			return assetListEntryAssetEntryRel;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("assetListEntryId=");
-		sb.append(assetListEntryId);
-
-		sb.append(", segmentsEntryId=");
-		sb.append(segmentsEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryAssetEntryRelException(sb.toString());
+		return _collectionPersistenceFinderByA_S.findFirst(
+			finderCache,
+			new Object[] {assetListEntryId, new long[] {segmentsEntryId}},
+			orderByComparator);
 	}
 
 	/**
@@ -1541,12 +1521,6 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 	private static final String _SQL_COUNT_ASSETLISTENTRYASSETENTRYREL_WHERE =
 		"SELECT COUNT(assetListEntryAssetEntryRel) FROM AssetListEntryAssetEntryRel assetListEntryAssetEntryRel WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No AssetListEntryAssetEntryRel exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		AssetListEntryAssetEntryRelPersistenceImpl.class);
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"uuid"});
 
@@ -1556,4 +1530,4 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-511091367
+// LIFERAY-SERVICE-BUILDER-HASH:1426986000

@@ -1795,9 +1795,6 @@ public class AnnouncementsEntryPersistenceImpl
 	private static final String _SQL_COUNT_ANNOUNCEMENTSENTRY_WHERE =
 		"SELECT COUNT(announcementsEntry) FROM AnnouncementsEntry announcementsEntry WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No AnnouncementsEntry exists with the key {";
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"uuid", "type"});
 
@@ -1807,4 +1804,4 @@ public class AnnouncementsEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:718388039
+// LIFERAY-SERVICE-BUILDER-HASH:171155895

@@ -12,8 +12,6 @@ import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchSubscriptionException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Subscription;
 import com.liferay.portal.kernel.model.SubscriptionTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -999,16 +997,10 @@ public class SubscriptionPersistenceImpl
 	private static final String _SQL_COUNT_SUBSCRIPTION_WHERE =
 		"SELECT COUNT(subscription) FROM Subscription subscription WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No Subscription exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		SubscriptionPersistenceImpl.class);
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return FinderCacheUtil.getFinderCache();
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1149048292
+// LIFERAY-SERVICE-BUILDER-HASH:296779081

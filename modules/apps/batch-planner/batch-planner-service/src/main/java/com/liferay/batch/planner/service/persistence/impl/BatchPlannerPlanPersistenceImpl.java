@@ -1312,9 +1312,6 @@ public class BatchPlannerPlanPersistenceImpl
 	private static final String _SQL_COUNT_BATCHPLANNERPLAN_WHERE =
 		"SELECT COUNT(batchPlannerPlan) FROM BatchPlannerPlan batchPlannerPlan WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No BatchPlannerPlan exists with the key {";
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"active", "size"});
 
@@ -1324,4 +1321,4 @@ public class BatchPlannerPlanPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:125135308
+// LIFERAY-SERVICE-BUILDER-HASH:-1002817380

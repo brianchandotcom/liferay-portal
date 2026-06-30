@@ -14,8 +14,6 @@ import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchPortletPreferencesException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.model.PortletPreferencesTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -1693,16 +1691,10 @@ public class PortletPreferencesPersistenceImpl
 	private static final String _SQL_COUNT_PORTLETPREFERENCES_WHERE =
 		"SELECT COUNT(portletPreferences) FROM PortletPreferences portletPreferences WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No PortletPreferences exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		PortletPreferencesPersistenceImpl.class);
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return FinderCacheUtil.getFinderCache();
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1780606130
+// LIFERAY-SERVICE-BUILDER-HASH:-169615065

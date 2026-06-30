@@ -1069,9 +1069,6 @@ public class KaleoActionPersistenceImpl
 	private static final String _SQL_COUNT_KALEOACTION_WHERE =
 		"SELECT COUNT(kaleoAction) FROM KaleoAction kaleoAction WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No KaleoAction exists with the key {";
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"type"});
 
@@ -1081,4 +1078,4 @@ public class KaleoActionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:641408445
+// LIFERAY-SERVICE-BUILDER-HASH:1301034259

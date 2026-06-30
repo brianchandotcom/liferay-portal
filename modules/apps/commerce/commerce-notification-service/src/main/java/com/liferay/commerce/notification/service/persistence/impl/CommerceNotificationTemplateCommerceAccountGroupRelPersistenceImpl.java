@@ -19,8 +19,6 @@ import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -797,13 +795,6 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 		_SQL_COUNT_COMMERCENOTIFICATIONTEMPLATECOMMERCEACCOUNTGROUPREL_WHERE =
 			"SELECT COUNT(commerceNotificationTemplateCommerceAccountGroupRel) FROM CommerceNotificationTemplateCommerceAccountGroupRel commerceNotificationTemplateCommerceAccountGroupRel WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No CommerceNotificationTemplateCommerceAccountGroupRel exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl.
-			class);
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"commerceNotificationTemplateCommerceAccountGroupRelId"});
 
@@ -813,4 +804,4 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-424884477
+// LIFERAY-SERVICE-BUILDER-HASH:-766770742

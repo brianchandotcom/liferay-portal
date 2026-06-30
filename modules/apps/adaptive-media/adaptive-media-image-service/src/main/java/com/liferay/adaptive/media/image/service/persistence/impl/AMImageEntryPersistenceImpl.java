@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -1391,12 +1389,6 @@ public class AMImageEntryPersistenceImpl
 	private static final String _SQL_COUNT_AMIMAGEENTRY_WHERE =
 		"SELECT COUNT(amImageEntry) FROM AMImageEntry amImageEntry WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No AMImageEntry exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		AMImageEntryPersistenceImpl.class);
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"uuid", "size"});
 
@@ -1406,4 +1398,4 @@ public class AMImageEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-855853894
+// LIFERAY-SERVICE-BUILDER-HASH:-1794824632

@@ -21,8 +21,6 @@ import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
@@ -1294,12 +1292,6 @@ public class CommercePaymentEntryPersistenceImpl
 	private static final String _SQL_COUNT_COMMERCEPAYMENTENTRY_WHERE =
 		"SELECT COUNT(commercePaymentEntry) FROM CommercePaymentEntry commercePaymentEntry WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No CommercePaymentEntry exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		CommercePaymentEntryPersistenceImpl.class);
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"type"});
 
@@ -1309,4 +1301,4 @@ public class CommercePaymentEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1773252822
+// LIFERAY-SERVICE-BUILDER-HASH:-366200078

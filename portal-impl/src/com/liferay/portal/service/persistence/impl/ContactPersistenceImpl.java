@@ -736,13 +736,10 @@ public class ContactPersistenceImpl
 	private static final String _SQL_COUNT_CONTACT_WHERE =
 		"SELECT COUNT(contact) FROM Contact contact WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No Contact exists with the key {";
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return FinderCacheUtil.getFinderCache();
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1352499154
+// LIFERAY-SERVICE-BUILDER-HASH:-326883991

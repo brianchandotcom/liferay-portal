@@ -14,7 +14,6 @@ import com.liferay.account.model.impl.AccountGroupModelImpl;
 import com.liferay.account.service.persistence.AccountGroupPersistence;
 import com.liferay.account.service.persistence.AccountGroupUtil;
 import com.liferay.account.service.persistence.impl.constants.AccountPersistenceConstants;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
@@ -23,8 +22,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
@@ -381,23 +378,9 @@ public class AccountGroupPersistenceImpl
 			OrderByComparator<AccountGroup> orderByComparator)
 		throws NoSuchGroupException {
 
-		AccountGroup accountGroup = fetchByAccountGroupId_First(
-			accountGroupId, orderByComparator);
-
-		if (accountGroup != null) {
-			return accountGroup;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("accountGroupId=");
-		sb.append(accountGroupId);
-
-		sb.append("}");
-
-		throw new NoSuchGroupException(sb.toString());
+		return _collectionPersistenceFinderByAccountGroupId.findFirst(
+			finderCache, new Object[] {new long[] {accountGroupId}},
+			orderByComparator);
 	}
 
 	/**
@@ -1763,12 +1746,6 @@ public class AccountGroupPersistenceImpl
 	private static final String _SQL_COUNT_ACCOUNTGROUP_WHERE =
 		"SELECT COUNT(accountGroup) FROM AccountGroup accountGroup WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No AccountGroup exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		AccountGroupPersistenceImpl.class);
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"uuid", "type"});
 
@@ -1778,4 +1755,4 @@ public class AccountGroupPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1898762544
+// LIFERAY-SERVICE-BUILDER-HASH:1189577864

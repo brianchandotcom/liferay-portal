@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -1722,12 +1720,6 @@ public class AssetListEntryUsagePersistenceImpl
 	private static final String _SQL_COUNT_ASSETLISTENTRYUSAGE_WHERE =
 		"SELECT COUNT(assetListEntryUsage) FROM AssetListEntryUsage assetListEntryUsage WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No AssetListEntryUsage exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		AssetListEntryUsagePersistenceImpl.class);
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"uuid", "key", "type"});
 
@@ -1737,4 +1729,4 @@ public class AssetListEntryUsagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-604214423
+// LIFERAY-SERVICE-BUILDER-HASH:-642218365

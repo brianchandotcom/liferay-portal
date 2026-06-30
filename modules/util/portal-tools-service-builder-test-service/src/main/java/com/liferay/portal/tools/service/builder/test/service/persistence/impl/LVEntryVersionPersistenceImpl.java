@@ -11,8 +11,6 @@ import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
@@ -2048,12 +2046,6 @@ public class LVEntryVersionPersistenceImpl
 	private static final String _SQL_COUNT_LVENTRYVERSION_WHERE =
 		"SELECT COUNT(lvEntryVersion) FROM LVEntryVersion lvEntryVersion WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No LVEntryVersion exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		LVEntryVersionPersistenceImpl.class);
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"uuid"});
 
@@ -2063,4 +2055,4 @@ public class LVEntryVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1346983013
+// LIFERAY-SERVICE-BUILDER-HASH:100465564

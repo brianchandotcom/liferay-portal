@@ -363,13 +363,10 @@ public class OrgLaborPersistenceImpl
 	private static final String _SQL_COUNT_ORGLABOR_WHERE =
 		"SELECT COUNT(orgLabor) FROM OrgLabor orgLabor WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No OrgLabor exists with the key {";
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return FinderCacheUtil.getFinderCache();
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-697252918
+// LIFERAY-SERVICE-BUILDER-HASH:-2100216970

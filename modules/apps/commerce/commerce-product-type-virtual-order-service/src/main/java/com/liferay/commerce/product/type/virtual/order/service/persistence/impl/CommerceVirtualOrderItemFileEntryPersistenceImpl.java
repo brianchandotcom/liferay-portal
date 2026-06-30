@@ -19,8 +19,6 @@ import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -986,12 +984,6 @@ public class CommerceVirtualOrderItemFileEntryPersistenceImpl
 		_SQL_COUNT_COMMERCEVIRTUALORDERITEMFILEENTRY_WHERE =
 			"SELECT COUNT(commerceVirtualOrderItemFileEntry) FROM CommerceVirtualOrderItemFileEntry commerceVirtualOrderItemFileEntry WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No CommerceVirtualOrderItemFileEntry exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		CommerceVirtualOrderItemFileEntryPersistenceImpl.class);
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"uuid", "commerceVirtualOrderItemFileEntryId"});
 
@@ -1001,4 +993,4 @@ public class CommerceVirtualOrderItemFileEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2008645187
+// LIFERAY-SERVICE-BUILDER-HASH:-526647606

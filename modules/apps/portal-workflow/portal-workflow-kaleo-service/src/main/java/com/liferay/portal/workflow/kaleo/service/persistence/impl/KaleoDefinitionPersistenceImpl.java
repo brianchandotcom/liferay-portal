@@ -13,8 +13,6 @@ import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
@@ -1827,12 +1825,6 @@ public class KaleoDefinitionPersistenceImpl
 	private static final String _SQL_COUNT_KALEODEFINITION_WHERE =
 		"SELECT COUNT(kaleoDefinition) FROM KaleoDefinition kaleoDefinition WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No KaleoDefinition exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		KaleoDefinitionPersistenceImpl.class);
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"uuid", "active"});
 
@@ -1842,4 +1834,4 @@ public class KaleoDefinitionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2128841241
+// LIFERAY-SERVICE-BUILDER-HASH:1076804654

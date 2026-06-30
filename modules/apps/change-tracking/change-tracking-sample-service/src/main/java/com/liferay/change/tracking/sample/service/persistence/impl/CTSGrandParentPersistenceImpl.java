@@ -410,13 +410,10 @@ public class CTSGrandParentPersistenceImpl
 	private static final String _SQL_COUNT_CTSGRANDPARENT_WHERE =
 		"SELECT COUNT(ctsGrandParent) FROM CTSGrandParent ctsGrandParent WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No CTSGrandParent exists with the key {";
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2098897960
+// LIFERAY-SERVICE-BUILDER-HASH:-2028370576

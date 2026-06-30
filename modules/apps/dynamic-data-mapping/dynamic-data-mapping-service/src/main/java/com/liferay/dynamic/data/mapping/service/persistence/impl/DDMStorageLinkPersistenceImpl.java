@@ -13,7 +13,6 @@ import com.liferay.dynamic.data.mapping.model.impl.DDMStorageLinkModelImpl;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStorageLinkPersistence;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStorageLinkUtil;
 import com.liferay.dynamic.data.mapping.service.persistence.impl.constants.DDMPersistenceConstants;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -21,8 +20,6 @@ import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 import com.liferay.portal.kernel.service.persistence.impl.ArrayableFinderColumn;
@@ -447,23 +444,9 @@ public class DDMStorageLinkPersistenceImpl
 			OrderByComparator<DDMStorageLink> orderByComparator)
 		throws NoSuchStorageLinkException {
 
-		DDMStorageLink ddmStorageLink = fetchByStructureVersionId_First(
-			structureVersionId, orderByComparator);
-
-		if (ddmStorageLink != null) {
-			return ddmStorageLink;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("structureVersionId=");
-		sb.append(structureVersionId);
-
-		sb.append("}");
-
-		throw new NoSuchStorageLinkException(sb.toString());
+		return _collectionPersistenceFinderByStructureVersionId.findFirst(
+			finderCache, new Object[] {new long[] {structureVersionId}},
+			orderByComparator);
 	}
 
 	/**
@@ -988,12 +971,6 @@ public class DDMStorageLinkPersistenceImpl
 	private static final String _SQL_COUNT_DDMSTORAGELINK_WHERE =
 		"SELECT COUNT(ddmStorageLink) FROM DDMStorageLink ddmStorageLink WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No DDMStorageLink exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DDMStorageLinkPersistenceImpl.class);
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"uuid"});
 
@@ -1003,4 +980,4 @@ public class DDMStorageLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1129767284
+// LIFERAY-SERVICE-BUILDER-HASH:-1053749238

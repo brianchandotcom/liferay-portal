@@ -451,13 +451,10 @@ public class CommerceOrderPaymentPersistenceImpl
 	private static final String _SQL_COUNT_COMMERCEORDERPAYMENT_WHERE =
 		"SELECT COUNT(commerceOrderPayment) FROM CommerceOrderPayment commerceOrderPayment WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No CommerceOrderPayment exists with the key {";
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-818383703
+// LIFERAY-SERVICE-BUILDER-HASH:1115398416

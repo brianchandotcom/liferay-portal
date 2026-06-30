@@ -510,13 +510,10 @@ public class AnalyticsMessagePersistenceImpl
 	private static final String _SQL_COUNT_ANALYTICSMESSAGE_WHERE =
 		"SELECT COUNT(analyticsMessage) FROM AnalyticsMessage analyticsMessage WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No AnalyticsMessage exists with the key {";
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-283709443
+// LIFERAY-SERVICE-BUILDER-HASH:-173512874

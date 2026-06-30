@@ -12,8 +12,6 @@ import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchListTypeException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.ListTypeTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -855,12 +853,6 @@ public class ListTypePersistenceImpl
 	private static final String _SQL_COUNT_LISTTYPE_WHERE =
 		"SELECT COUNT(listType) FROM ListType listType WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No ListType exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ListTypePersistenceImpl.class);
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"uuid", "type"});
 
@@ -870,4 +862,4 @@ public class ListTypePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1300605514
+// LIFERAY-SERVICE-BUILDER-HASH:1443372553

@@ -17,8 +17,6 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.DuplicateUserExternalReferenceCodeException;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
@@ -4211,12 +4209,6 @@ public class UserPersistenceImpl
 	private static final String _SQL_COUNT_USER_WHERE =
 		"SELECT COUNT(user) FROM User user WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No User exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		UserPersistenceImpl.class);
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"uuid", "password", "type", "groups"});
 
@@ -4226,4 +4218,4 @@ public class UserPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:776544062
+// LIFERAY-SERVICE-BUILDER-HASH:1765733541

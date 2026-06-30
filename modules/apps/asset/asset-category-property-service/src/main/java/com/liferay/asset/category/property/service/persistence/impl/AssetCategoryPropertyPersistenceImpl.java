@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
@@ -1040,12 +1038,6 @@ public class AssetCategoryPropertyPersistenceImpl
 	private static final String _SQL_COUNT_ASSETCATEGORYPROPERTY_WHERE =
 		"SELECT COUNT(assetCategoryProperty) FROM AssetCategoryProperty assetCategoryProperty WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No AssetCategoryProperty exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		AssetCategoryPropertyPersistenceImpl.class);
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"key"});
 
@@ -1055,4 +1047,4 @@ public class AssetCategoryPropertyPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-287581970
+// LIFERAY-SERVICE-BUILDER-HASH:-1932134743

@@ -24,8 +24,6 @@ import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -656,26 +654,10 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 			OrderByComparator<DEDataDefinitionFieldLink> orderByComparator)
 		throws NoSuchDataDefinitionFieldLinkException {
 
-		DEDataDefinitionFieldLink deDataDefinitionFieldLink =
-			fetchByDDMSI_F_First(ddmStructureId, fieldName, orderByComparator);
-
-		if (deDataDefinitionFieldLink != null) {
-			return deDataDefinitionFieldLink;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("ddmStructureId=");
-		sb.append(ddmStructureId);
-
-		sb.append(", fieldName=");
-		sb.append(fieldName);
-
-		sb.append("}");
-
-		throw new NoSuchDataDefinitionFieldLinkException(sb.toString());
+		return _collectionPersistenceFinderByDDMSI_F.findFirst(
+			finderCache,
+			new Object[] {ddmStructureId, new String[] {fieldName}},
+			orderByComparator);
 	}
 
 	/**
@@ -815,30 +797,12 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 			OrderByComparator<DEDataDefinitionFieldLink> orderByComparator)
 		throws NoSuchDataDefinitionFieldLinkException {
 
-		DEDataDefinitionFieldLink deDataDefinitionFieldLink =
-			fetchByC_DDMSI_F_First(
-				classNameId, ddmStructureId, fieldName, orderByComparator);
-
-		if (deDataDefinitionFieldLink != null) {
-			return deDataDefinitionFieldLink;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", ddmStructureId=");
-		sb.append(ddmStructureId);
-
-		sb.append(", fieldName=");
-		sb.append(fieldName);
-
-		sb.append("}");
-
-		throw new NoSuchDataDefinitionFieldLinkException(sb.toString());
+		return _collectionPersistenceFinderByC_DDMSI_F.findFirst(
+			finderCache,
+			new Object[] {
+				classNameId, ddmStructureId, new String[] {fieldName}
+			},
+			orderByComparator);
 	}
 
 	/**
@@ -1830,12 +1794,6 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 	private static final String _SQL_COUNT_DEDATADEFINITIONFIELDLINK_WHERE =
 		"SELECT COUNT(deDataDefinitionFieldLink) FROM DEDataDefinitionFieldLink deDataDefinitionFieldLink WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No DEDataDefinitionFieldLink exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DEDataDefinitionFieldLinkPersistenceImpl.class);
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"uuid"});
 
@@ -1845,4 +1803,4 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:453962174
+// LIFERAY-SERVICE-BUILDER-HASH:1747816864

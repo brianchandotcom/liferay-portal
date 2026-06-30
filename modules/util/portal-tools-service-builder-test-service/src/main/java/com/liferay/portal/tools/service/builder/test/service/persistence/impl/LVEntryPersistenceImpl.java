@@ -5,15 +5,12 @@
 
 package com.liferay.portal.tools.service.builder.test.service.persistence.impl;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.ArrayableFinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -631,22 +628,9 @@ public class LVEntryPersistenceImpl
 			long groupId, OrderByComparator<LVEntry> orderByComparator)
 		throws NoSuchLVEntryException {
 
-		LVEntry lvEntry = fetchByGroupId_First(groupId, orderByComparator);
-
-		if (lvEntry != null) {
-			return lvEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchLVEntryException(sb.toString());
+		return _collectionPersistenceFinderByGroupId.findFirst(
+			finderCache, new Object[] {new long[] {groupId}},
+			orderByComparator);
 	}
 
 	/**
@@ -767,26 +751,9 @@ public class LVEntryPersistenceImpl
 			OrderByComparator<LVEntry> orderByComparator)
 		throws NoSuchLVEntryException {
 
-		LVEntry lvEntry = fetchByGroupId_Head_First(
-			groupId, head, orderByComparator);
-
-		if (lvEntry != null) {
-			return lvEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", head=");
-		sb.append(head);
-
-		sb.append("}");
-
-		throw new NoSuchLVEntryException(sb.toString());
+		return _collectionPersistenceFinderByGroupId_Head.findFirst(
+			finderCache, new Object[] {new long[] {groupId}, head},
+			orderByComparator);
 	}
 
 	/**
@@ -1981,12 +1948,6 @@ public class LVEntryPersistenceImpl
 	private static final String _SQL_COUNT_LVENTRY_WHERE =
 		"SELECT COUNT(lvEntry) FROM LVEntry lvEntry WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No LVEntry exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		LVEntryPersistenceImpl.class);
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"uuid"});
 
@@ -1996,4 +1957,4 @@ public class LVEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1001092156
+// LIFERAY-SERVICE-BUILDER-HASH:172766456

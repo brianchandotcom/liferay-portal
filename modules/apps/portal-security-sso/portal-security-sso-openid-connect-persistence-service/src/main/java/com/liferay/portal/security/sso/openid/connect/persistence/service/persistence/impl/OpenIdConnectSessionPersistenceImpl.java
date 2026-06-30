@@ -12,8 +12,6 @@ import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -1041,16 +1039,10 @@ public class OpenIdConnectSessionPersistenceImpl
 	private static final String _SQL_COUNT_OPENIDCONNECTSESSION_WHERE =
 		"SELECT COUNT(openIdConnectSession) FROM OpenIdConnectSession openIdConnectSession WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No OpenIdConnectSession exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		OpenIdConnectSessionPersistenceImpl.class);
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:235663509
+// LIFERAY-SERVICE-BUILDER-HASH:283857613

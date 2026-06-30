@@ -21,8 +21,6 @@ import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
@@ -1224,12 +1222,6 @@ public class OAuth2ApplicationPersistenceImpl
 	private static final String _SQL_COUNT_OAUTH2APPLICATION_WHERE =
 		"SELECT COUNT(oAuth2Application) FROM OAuth2Application oAuth2Application WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No OAuth2Application exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		OAuth2ApplicationPersistenceImpl.class);
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"uuid", "oAuth2ApplicationScopeAliasesId"});
 
@@ -1239,4 +1231,4 @@ public class OAuth2ApplicationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:732376600
+// LIFERAY-SERVICE-BUILDER-HASH:1579497273

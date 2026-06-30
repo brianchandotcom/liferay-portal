@@ -19,8 +19,6 @@ import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -660,12 +658,6 @@ public class ObjectStateFlowPersistenceImpl
 	private static final String _SQL_COUNT_OBJECTSTATEFLOW_WHERE =
 		"SELECT COUNT(objectStateFlow) FROM ObjectStateFlow objectStateFlow WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No ObjectStateFlow exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ObjectStateFlowPersistenceImpl.class);
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"uuid"});
 
@@ -675,4 +667,4 @@ public class ObjectStateFlowPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1448663404
+// LIFERAY-SERVICE-BUILDER-HASH:-1097894402

@@ -5,7 +5,6 @@
 
 package com.liferay.template.service.persistence.impl;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -14,8 +13,6 @@ import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
@@ -379,23 +376,9 @@ public class TemplateEntryPersistenceImpl
 			long groupId, OrderByComparator<TemplateEntry> orderByComparator)
 		throws NoSuchTemplateEntryException {
 
-		TemplateEntry templateEntry = fetchByGroupId_First(
-			groupId, orderByComparator);
-
-		if (templateEntry != null) {
-			return templateEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchTemplateEntryException(sb.toString());
+		return _collectionPersistenceFinderByGroupId.findFirst(
+			finderCache, new Object[] {new long[] {groupId}},
+			orderByComparator);
 	}
 
 	/**
@@ -679,30 +662,13 @@ public class TemplateEntryPersistenceImpl
 			OrderByComparator<TemplateEntry> orderByComparator)
 		throws NoSuchTemplateEntryException {
 
-		TemplateEntry templateEntry = fetchByG_IICN_IIFVK_First(
-			groupId, infoItemClassName, infoItemFormVariationKey,
+		return _collectionPersistenceFinderByG_IICN_IIFVK.findFirst(
+			finderCache,
+			new Object[] {
+				new long[] {groupId}, infoItemClassName,
+				infoItemFormVariationKey
+			},
 			orderByComparator);
-
-		if (templateEntry != null) {
-			return templateEntry;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", infoItemClassName=");
-		sb.append(infoItemClassName);
-
-		sb.append(", infoItemFormVariationKey=");
-		sb.append(infoItemFormVariationKey);
-
-		sb.append("}");
-
-		throw new NoSuchTemplateEntryException(sb.toString());
 	}
 
 	/**
@@ -1523,12 +1489,6 @@ public class TemplateEntryPersistenceImpl
 	private static final String _SQL_COUNT_TEMPLATEENTRY_WHERE =
 		"SELECT COUNT(templateEntry) FROM TemplateEntry templateEntry WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No TemplateEntry exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		TemplateEntryPersistenceImpl.class);
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"uuid"});
 
@@ -1538,4 +1498,4 @@ public class TemplateEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:528140196
+// LIFERAY-SERVICE-BUILDER-HASH:1000715026

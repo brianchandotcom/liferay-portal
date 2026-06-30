@@ -17,8 +17,6 @@ import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelperUtil;
@@ -1477,12 +1475,6 @@ public class ExpandoValuePersistenceImpl
 	private static final String _SQL_COUNT_EXPANDOVALUE_WHERE =
 		"SELECT COUNT(expandoValue) FROM ExpandoValue expandoValue WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No ExpandoValue exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ExpandoValuePersistenceImpl.class);
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"rowId", "data"});
 
@@ -1492,4 +1484,4 @@ public class ExpandoValuePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1160201661
+// LIFERAY-SERVICE-BUILDER-HASH:2135904188

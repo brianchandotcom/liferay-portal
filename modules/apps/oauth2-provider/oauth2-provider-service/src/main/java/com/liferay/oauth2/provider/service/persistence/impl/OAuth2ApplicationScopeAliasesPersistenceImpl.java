@@ -591,9 +591,6 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 	private static final String _SQL_COUNT_OAUTH2APPLICATIONSCOPEALIASES_WHERE =
 		"SELECT COUNT(oAuth2ApplicationScopeAliases) FROM OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No OAuth2ApplicationScopeAliases exists with the key {";
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"oAuth2ApplicationScopeAliasesId"});
 
@@ -603,4 +600,4 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:593427800
+// LIFERAY-SERVICE-BUILDER-HASH:-1538562306

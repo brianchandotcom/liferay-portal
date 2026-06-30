@@ -12,8 +12,6 @@ import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchCompanyException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyTable;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -469,12 +467,6 @@ public class CompanyPersistenceImpl
 	private static final String _SQL_COUNT_COMPANY_WHERE =
 		"SELECT COUNT(company) FROM Company company WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No Company exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		CompanyPersistenceImpl.class);
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"active", "type", "size"});
 
@@ -484,4 +476,4 @@ public class CompanyPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-627210531
+// LIFERAY-SERVICE-BUILDER-HASH:-976663355

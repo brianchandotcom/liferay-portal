@@ -834,9 +834,6 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 	private static final String _SQL_COUNT_COMMERCEAVAILABILITYESTIMATE_WHERE =
 		"SELECT COUNT(commerceAvailabilityEstimate) FROM CommerceAvailabilityEstimate commerceAvailabilityEstimate WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No CommerceAvailabilityEstimate exists with the key {";
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"uuid"});
 
@@ -846,4 +843,4 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1883310498
+// LIFERAY-SERVICE-BUILDER-HASH:-1828158335

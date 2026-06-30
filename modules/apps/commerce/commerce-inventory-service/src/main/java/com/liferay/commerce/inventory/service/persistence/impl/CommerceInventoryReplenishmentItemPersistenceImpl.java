@@ -21,8 +21,6 @@ import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
@@ -1489,12 +1487,6 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 		_SQL_COUNT_COMMERCEINVENTORYREPLENISHMENTITEM_WHERE =
 			"SELECT COUNT(commerceInventoryReplenishmentItem) FROM CommerceInventoryReplenishmentItem commerceInventoryReplenishmentItem WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No CommerceInventoryReplenishmentItem exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		CommerceInventoryReplenishmentItemPersistenceImpl.class);
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"uuid", "commerceInventoryReplenishmentItemId"});
 
@@ -1504,4 +1496,4 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-551992081
+// LIFERAY-SERVICE-BUILDER-HASH:-1016339794

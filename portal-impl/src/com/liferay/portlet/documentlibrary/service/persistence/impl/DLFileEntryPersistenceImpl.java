@@ -11,7 +11,6 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryTable;
 import com.liferay.document.library.kernel.service.persistence.DLFileEntryPersistence;
 import com.liferay.document.library.kernel.service.persistence.DLFileEntryUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -20,8 +19,6 @@ import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
@@ -1315,26 +1312,9 @@ public class DLFileEntryPersistenceImpl
 			OrderByComparator<DLFileEntry> orderByComparator)
 		throws NoSuchFileEntryException {
 
-		DLFileEntry dlFileEntry = fetchByG_F_First(
-			groupId, folderId, orderByComparator);
-
-		if (dlFileEntry != null) {
-			return dlFileEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", folderId=");
-		sb.append(folderId);
-
-		sb.append("}");
-
-		throw new NoSuchFileEntryException(sb.toString());
+		return _collectionPersistenceFinderByG_F.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, new long[] {folderId}}, orderByComparator);
 	}
 
 	/**
@@ -1736,29 +1716,10 @@ public class DLFileEntryPersistenceImpl
 			OrderByComparator<DLFileEntry> orderByComparator)
 		throws NoSuchFileEntryException {
 
-		DLFileEntry dlFileEntry = fetchByG_U_F_First(
-			groupId, userId, folderId, orderByComparator);
-
-		if (dlFileEntry != null) {
-			return dlFileEntry;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", userId=");
-		sb.append(userId);
-
-		sb.append(", folderId=");
-		sb.append(folderId);
-
-		sb.append("}");
-
-		throw new NoSuchFileEntryException(sb.toString());
+		return _collectionPersistenceFinderByG_U_F.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, userId, new long[] {folderId}},
+			orderByComparator);
 	}
 
 	/**
@@ -2199,29 +2160,10 @@ public class DLFileEntryPersistenceImpl
 			OrderByComparator<DLFileEntry> orderByComparator)
 		throws NoSuchFileEntryException {
 
-		DLFileEntry dlFileEntry = fetchByG_F_F_First(
-			groupId, folderId, fileEntryTypeId, orderByComparator);
-
-		if (dlFileEntry != null) {
-			return dlFileEntry;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", folderId=");
-		sb.append(folderId);
-
-		sb.append(", fileEntryTypeId=");
-		sb.append(fileEntryTypeId);
-
-		sb.append("}");
-
-		throw new NoSuchFileEntryException(sb.toString());
+		return _collectionPersistenceFinderByG_F_F.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, new long[] {folderId}, fileEntryTypeId},
+			orderByComparator);
 	}
 
 	/**
@@ -3803,12 +3745,6 @@ public class DLFileEntryPersistenceImpl
 	private static final String _SQL_COUNT_DLFILEENTRY_WHERE =
 		"SELECT COUNT(dlFileEntry) FROM DLFileEntry dlFileEntry WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No DLFileEntry exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DLFileEntryPersistenceImpl.class);
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"uuid", "size"});
 
@@ -3818,4 +3754,4 @@ public class DLFileEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:402628749
+// LIFERAY-SERVICE-BUILDER-HASH:-253877549

@@ -14,7 +14,6 @@ import com.liferay.message.boards.model.impl.MBMessageModelImpl;
 import com.liferay.message.boards.service.persistence.MBMessagePersistence;
 import com.liferay.message.boards.service.persistence.MBMessageUtil;
 import com.liferay.message.boards.service.persistence.impl.constants.MBPersistenceConstants;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -24,8 +23,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
@@ -1450,26 +1447,9 @@ public class MBMessagePersistenceImpl
 			OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 
-		MBMessage mbMessage = fetchByU_C_First(
-			userId, classNameId, orderByComparator);
-
-		if (mbMessage != null) {
-			return mbMessage;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append("}");
-
-		throw new NoSuchMessageException(sb.toString());
+		return _collectionPersistenceFinderByU_C.findFirst(
+			finderCache, new Object[] {userId, new long[] {classNameId}},
+			orderByComparator);
 	}
 
 	/**
@@ -2802,29 +2782,10 @@ public class MBMessagePersistenceImpl
 			OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 
-		MBMessage mbMessage = fetchByU_C_S_First(
-			userId, classNameId, status, orderByComparator);
-
-		if (mbMessage != null) {
-			return mbMessage;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchMessageException(sb.toString());
+		return _collectionPersistenceFinderByU_C_S.findFirst(
+			finderCache,
+			new Object[] {userId, new long[] {classNameId}, status},
+			orderByComparator);
 	}
 
 	/**
@@ -4934,12 +4895,6 @@ public class MBMessagePersistenceImpl
 	private static final String _SQL_COUNT_MBMESSAGE_WHERE =
 		"SELECT COUNT(mbMessage) FROM MBMessage mbMessage WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No MBMessage exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		MBMessagePersistenceImpl.class);
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"uuid"});
 
@@ -4949,4 +4904,4 @@ public class MBMessagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1373939576
+// LIFERAY-SERVICE-BUILDER-HASH:-1874956054

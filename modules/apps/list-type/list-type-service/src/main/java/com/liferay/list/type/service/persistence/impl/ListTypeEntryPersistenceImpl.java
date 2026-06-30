@@ -13,7 +13,6 @@ import com.liferay.list.type.model.impl.ListTypeEntryModelImpl;
 import com.liferay.list.type.service.persistence.ListTypeEntryPersistence;
 import com.liferay.list.type.service.persistence.ListTypeEntryUtil;
 import com.liferay.list.type.service.persistence.impl.constants.ListTypePersistenceConstants;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
@@ -21,8 +20,6 @@ import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
@@ -309,23 +306,9 @@ public class ListTypeEntryPersistenceImpl
 			OrderByComparator<ListTypeEntry> orderByComparator)
 		throws NoSuchListTypeEntryException {
 
-		ListTypeEntry listTypeEntry = fetchByListTypeEntryId_First(
-			listTypeEntryId, orderByComparator);
-
-		if (listTypeEntry != null) {
-			return listTypeEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("listTypeEntryId=");
-		sb.append(listTypeEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchListTypeEntryException(sb.toString());
+		return _collectionPersistenceFinderByListTypeEntryId.findFirst(
+			finderCache, new Object[] {new long[] {listTypeEntryId}},
+			orderByComparator);
 	}
 
 	/**
@@ -450,23 +433,9 @@ public class ListTypeEntryPersistenceImpl
 			OrderByComparator<ListTypeEntry> orderByComparator)
 		throws NoSuchListTypeEntryException {
 
-		ListTypeEntry listTypeEntry = fetchByListTypeDefinitionId_First(
-			listTypeDefinitionId, orderByComparator);
-
-		if (listTypeEntry != null) {
-			return listTypeEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("listTypeDefinitionId=");
-		sb.append(listTypeDefinitionId);
-
-		sb.append("}");
-
-		throw new NoSuchListTypeEntryException(sb.toString());
+		return _collectionPersistenceFinderByListTypeDefinitionId.findFirst(
+			finderCache, new Object[] {new long[] {listTypeDefinitionId}},
+			orderByComparator);
 	}
 
 	/**
@@ -1292,12 +1261,6 @@ public class ListTypeEntryPersistenceImpl
 	private static final String _SQL_COUNT_LISTTYPEENTRY_WHERE =
 		"SELECT COUNT(listTypeEntry) FROM ListTypeEntry listTypeEntry WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No ListTypeEntry exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ListTypeEntryPersistenceImpl.class);
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"uuid", "key", "system", "type"});
 
@@ -1307,4 +1270,4 @@ public class ListTypeEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1977177389
+// LIFERAY-SERVICE-BUILDER-HASH:1685619531

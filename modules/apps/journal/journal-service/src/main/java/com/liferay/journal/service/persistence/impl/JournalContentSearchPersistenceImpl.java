@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -1561,16 +1559,10 @@ public class JournalContentSearchPersistenceImpl
 	private static final String _SQL_COUNT_JOURNALCONTENTSEARCH_WHERE =
 		"SELECT COUNT(journalContentSearch) FROM JournalContentSearch journalContentSearch WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No JournalContentSearch exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		JournalContentSearchPersistenceImpl.class);
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:840666058
+// LIFERAY-SERVICE-BUILDER-HASH:-378740090

@@ -15,8 +15,6 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.DuplicateWorkflowDefinitionLinkExternalReferenceCodeException;
 import com.liferay.portal.kernel.exception.NoSuchWorkflowDefinitionLinkException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLinkTable;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
@@ -1963,12 +1961,6 @@ public class WorkflowDefinitionLinkPersistenceImpl
 	private static final String _SQL_COUNT_WORKFLOWDEFINITIONLINK_WHERE =
 		"SELECT COUNT(workflowDefinitionLink) FROM WorkflowDefinitionLink workflowDefinitionLink WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No WorkflowDefinitionLink exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		WorkflowDefinitionLinkPersistenceImpl.class);
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"uuid"});
 
@@ -1978,4 +1970,4 @@ public class WorkflowDefinitionLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1802153075
+// LIFERAY-SERVICE-BUILDER-HASH:-551343136

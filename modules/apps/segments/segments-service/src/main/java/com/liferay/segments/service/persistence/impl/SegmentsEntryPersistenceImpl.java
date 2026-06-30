@@ -5,7 +5,6 @@
 
 package com.liferay.segments.service.persistence.impl;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -14,8 +13,6 @@ import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
@@ -378,23 +375,9 @@ public class SegmentsEntryPersistenceImpl
 			OrderByComparator<SegmentsEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		SegmentsEntry segmentsEntry = fetchBySegmentsEntryId_First(
-			segmentsEntryId, orderByComparator);
-
-		if (segmentsEntry != null) {
-			return segmentsEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("segmentsEntryId=");
-		sb.append(segmentsEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		return _collectionPersistenceFinderBySegmentsEntryId.findFirst(
+			finderCache, new Object[] {new long[] {segmentsEntryId}},
+			orderByComparator);
 	}
 
 	/**
@@ -518,23 +501,9 @@ public class SegmentsEntryPersistenceImpl
 			long groupId, OrderByComparator<SegmentsEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		SegmentsEntry segmentsEntry = fetchByGroupId_First(
-			groupId, orderByComparator);
-
-		if (segmentsEntry != null) {
-			return segmentsEntry;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		return _collectionPersistenceFinderByGroupId.findFirst(
+			finderCache, new Object[] {new long[] {groupId}},
+			orderByComparator);
 	}
 
 	/**
@@ -962,26 +931,9 @@ public class SegmentsEntryPersistenceImpl
 			OrderByComparator<SegmentsEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		SegmentsEntry segmentsEntry = fetchByG_A_First(
-			groupId, active, orderByComparator);
-
-		if (segmentsEntry != null) {
-			return segmentsEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", active=");
-		sb.append(active);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		return _collectionPersistenceFinderByG_A.findFirst(
+			finderCache, new Object[] {new long[] {groupId}, active},
+			orderByComparator);
 	}
 
 	/**
@@ -1192,26 +1144,10 @@ public class SegmentsEntryPersistenceImpl
 			OrderByComparator<SegmentsEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		SegmentsEntry segmentsEntry = fetchByG_SRC_First(
-			groupId, source, orderByComparator);
-
-		if (segmentsEntry != null) {
-			return segmentsEntry;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", source=");
-		sb.append(source);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		return _collectionPersistenceFinderByG_SRC.findFirst(
+			finderCache,
+			new Object[] {new long[] {groupId}, new String[] {source}},
+			orderByComparator);
 	}
 
 	/**
@@ -1438,29 +1374,10 @@ public class SegmentsEntryPersistenceImpl
 			OrderByComparator<SegmentsEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		SegmentsEntry segmentsEntry = fetchByG_A_SRC_First(
-			groupId, active, source, orderByComparator);
-
-		if (segmentsEntry != null) {
-			return segmentsEntry;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", active=");
-		sb.append(active);
-
-		sb.append(", source=");
-		sb.append(source);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		return _collectionPersistenceFinderByG_A_SRC.findFirst(
+			finderCache,
+			new Object[] {new long[] {groupId}, active, new String[] {source}},
+			orderByComparator);
 	}
 
 	/**
@@ -2466,12 +2383,6 @@ public class SegmentsEntryPersistenceImpl
 	private static final String _SQL_COUNT_SEGMENTSENTRY_WHERE =
 		"SELECT COUNT(segmentsEntry) FROM SegmentsEntry segmentsEntry WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No SegmentsEntry exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		SegmentsEntryPersistenceImpl.class);
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"uuid", "active"});
 
@@ -2481,4 +2392,4 @@ public class SegmentsEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1869402482
+// LIFERAY-SERVICE-BUILDER-HASH:-1862643258

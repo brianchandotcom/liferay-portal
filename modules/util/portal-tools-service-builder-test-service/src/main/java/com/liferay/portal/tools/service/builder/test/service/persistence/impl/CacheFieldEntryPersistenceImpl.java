@@ -370,13 +370,10 @@ public class CacheFieldEntryPersistenceImpl
 	private static final String _SQL_COUNT_CACHEFIELDENTRY_WHERE =
 		"SELECT COUNT(cacheFieldEntry) FROM CacheFieldEntry cacheFieldEntry WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No CacheFieldEntry exists with the key {";
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1551320990
+// LIFERAY-SERVICE-BUILDER-HASH:-547398316

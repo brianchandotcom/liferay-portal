@@ -536,13 +536,10 @@ public class PatcherBuildRelPersistenceImpl
 	private static final String _SQL_COUNT_PATCHERBUILDREL_WHERE =
 		"SELECT COUNT(patcherBuildRel) FROM PatcherBuildRel patcherBuildRel WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No PatcherBuildRel exists with the key {";
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:723605303
+// LIFERAY-SERVICE-BUILDER-HASH:-656638508

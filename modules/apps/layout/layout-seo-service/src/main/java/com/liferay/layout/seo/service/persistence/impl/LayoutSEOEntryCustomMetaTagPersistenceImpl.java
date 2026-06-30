@@ -524,13 +524,10 @@ public class LayoutSEOEntryCustomMetaTagPersistenceImpl
 	private static final String _SQL_COUNT_LAYOUTSEOENTRYCUSTOMMETATAG_WHERE =
 		"SELECT COUNT(layoutSEOEntryCustomMetaTag) FROM LayoutSEOEntryCustomMetaTag layoutSEOEntryCustomMetaTag WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No LayoutSEOEntryCustomMetaTag exists with the key {";
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-794016600
+// LIFERAY-SERVICE-BUILDER-HASH:-1182064002

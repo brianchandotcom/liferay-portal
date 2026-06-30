@@ -1210,13 +1210,10 @@ public class AnalyticsAssociationPersistenceImpl
 	private static final String _SQL_COUNT_ANALYTICSASSOCIATION_WHERE =
 		"SELECT COUNT(analyticsAssociation) FROM AnalyticsAssociation analyticsAssociation WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No AnalyticsAssociation exists with the key {";
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1845926943
+// LIFERAY-SERVICE-BUILDER-HASH:418642964

@@ -11,7 +11,6 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.AssetVocabularyTable;
 import com.liferay.asset.kernel.service.persistence.AssetVocabularyPersistence;
 import com.liferay.asset.kernel.service.persistence.AssetVocabularyUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -21,8 +20,6 @@ import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
@@ -379,23 +376,9 @@ public class AssetVocabularyPersistenceImpl
 			long groupId, OrderByComparator<AssetVocabulary> orderByComparator)
 		throws NoSuchVocabularyException {
 
-		AssetVocabulary assetVocabulary = fetchByGroupId_First(
-			groupId, orderByComparator);
-
-		if (assetVocabulary != null) {
-			return assetVocabulary;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchVocabularyException(sb.toString());
+		return _collectionPersistenceFinderByGroupId.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {new long[] {groupId}}, orderByComparator);
 	}
 
 	/**
@@ -975,26 +958,10 @@ public class AssetVocabularyPersistenceImpl
 			OrderByComparator<AssetVocabulary> orderByComparator)
 		throws NoSuchVocabularyException {
 
-		AssetVocabulary assetVocabulary = fetchByG_V_First(
-			groupId, visibilityType, orderByComparator);
-
-		if (assetVocabulary != null) {
-			return assetVocabulary;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", visibilityType=");
-		sb.append(visibilityType);
-
-		sb.append("}");
-
-		throw new NoSuchVocabularyException(sb.toString());
+		return _collectionPersistenceFinderByG_V.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {new long[] {groupId}, new int[] {visibilityType}},
+			orderByComparator);
 	}
 
 	/**
@@ -1857,12 +1824,6 @@ public class AssetVocabularyPersistenceImpl
 	private static final String _SQL_COUNT_ASSETVOCABULARY_WHERE =
 		"SELECT COUNT(assetVocabulary) FROM AssetVocabulary assetVocabulary WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No AssetVocabulary exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		AssetVocabularyPersistenceImpl.class);
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"uuid", "settings"});
 
@@ -1872,4 +1833,4 @@ public class AssetVocabularyPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1237210927
+// LIFERAY-SERVICE-BUILDER-HASH:903093048

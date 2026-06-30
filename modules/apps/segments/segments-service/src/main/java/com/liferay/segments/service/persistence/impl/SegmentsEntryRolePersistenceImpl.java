@@ -12,8 +12,6 @@ import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -727,16 +725,10 @@ public class SegmentsEntryRolePersistenceImpl
 	private static final String _SQL_COUNT_SEGMENTSENTRYROLE_WHERE =
 		"SELECT COUNT(segmentsEntryRole) FROM SegmentsEntryRole segmentsEntryRole WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No SegmentsEntryRole exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		SegmentsEntryRolePersistenceImpl.class);
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1813871874
+// LIFERAY-SERVICE-BUILDER-HASH:123929721

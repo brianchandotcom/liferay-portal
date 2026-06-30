@@ -7,7 +7,7 @@ package com.liferay.document.library.internal.exportimport.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
-import com.liferay.document.library.kernel.service.DLAppServiceUtil;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.HashMap;
@@ -63,8 +64,8 @@ public class RepositoryStagedModelDataHandlerTest
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), TestPropsValues.getUserId());
 
-		Folder mountFolder = DLAppServiceUtil.addFolder(
-			null, group.getGroupId(),
+		Folder mountFolder = _dlAppLocalService.addFolder(
+			null, TestPropsValues.getUserId(), group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			serviceContext);
@@ -142,6 +143,9 @@ public class RepositoryStagedModelDataHandlerTest
 		Assert.assertEquals(
 			repository.getDescription(), importedRepository.getDescription());
 	}
+
+	@Inject
+	private DLAppLocalService _dlAppLocalService;
 
 	private Repository _repository;
 

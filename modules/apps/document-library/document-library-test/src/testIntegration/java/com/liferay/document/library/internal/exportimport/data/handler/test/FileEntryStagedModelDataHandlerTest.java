@@ -667,8 +667,8 @@ public class FileEntryStagedModelDataHandlerTest
 		addDependentStagedModel(
 			dependentStagedModelsMap, DDMStructure.class, ddmStructure);
 
-		Folder folder = _dlAppService.addFolder(
-			null, group.getGroupId(),
+		Folder folder = _dlAppLocalService.addFolder(
+			null, TestPropsValues.getUserId(), group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			ServiceContextTestUtil.getServiceContext(

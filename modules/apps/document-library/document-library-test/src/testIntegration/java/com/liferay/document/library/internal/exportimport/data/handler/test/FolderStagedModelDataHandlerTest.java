@@ -202,8 +202,8 @@ public class FolderStagedModelDataHandlerTest
 		addDependentStagedModel(
 			dependentStagedModelsMap, DLFileEntryType.class, dlFileEntryType);
 
-		Folder folder = DLAppServiceUtil.addFolder(
-			null, group.getGroupId(),
+		Folder folder = _dlAppLocalService.addFolder(
+			null, TestPropsValues.getUserId(), group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			ServiceContextTestUtil.getServiceContext(

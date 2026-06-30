@@ -19,7 +19,7 @@ import com.liferay.message.boards.constants.MBMessageConstants;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
-import com.liferay.message.boards.service.MBCategoryLocalServiceUtil;
+import com.liferay.message.boards.service.MBCategoryLocalService;
 import com.liferay.message.boards.service.MBCategoryServiceUtil;
 import com.liferay.message.boards.service.MBMessageLocalServiceUtil;
 import com.liferay.message.boards.service.MBThreadLocalService;
@@ -170,7 +170,7 @@ public class MBMessageStagedModelDataHandlerTest
 		Map<String, List<StagedModel>> dependentStagedModelsMap =
 			new HashMap<>();
 
-		MBCategory category = MBCategoryServiceUtil.addCategory(
+		MBCategory category = _mbCategoryLocalService.addCategory(
 			null, TestPropsValues.getUserId(),
 			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
 			RandomTestUtil.randomString(), StringPool.BLANK,
@@ -350,7 +350,7 @@ public class MBMessageStagedModelDataHandlerTest
 
 		MBCategory category = (MBCategory)dependentStagedModels.get(0);
 
-		MBCategoryLocalServiceUtil.getMBCategoryByUuidAndGroupId(
+		_mbCategoryLocalService.getMBCategoryByUuidAndGroupId(
 			category.getUuid(), group.getGroupId());
 	}
 
@@ -395,6 +395,9 @@ public class MBMessageStagedModelDataHandlerTest
 			message.isAllowPingbacks(), importedMessage.isAllowPingbacks());
 		Assert.assertEquals(message.isAnswer(), importedMessage.isAnswer());
 	}
+
+	@Inject
+	private MBCategoryLocalService _mbCategoryLocalService;
 
 	@Inject
 	private MBThreadLocalService _mbThreadLocalService;

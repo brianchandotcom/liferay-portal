@@ -1641,23 +1641,29 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		if (PropsValues.DATABASE_PARTITION_ENABLED) {
 			TransactionCommitCallbackUtil.registerCallback(
 				() -> {
-					_clearCache(companyId);
-
-					Store store = _storeSnapshot.get();
-
-					store.deleteDirectory(companyId);
-
-					PortalInstances.removeCompany(company.getCompanyId());
-
-					unregisterCompany(company);
-
-					_synchronizePortalInstances();
-
 					try (SafeCloseable safeCloseable =
-							CompanyThreadLocal.setCompanyIdWithSafeCloseable(
-								companyId)) {
+							PortalInstances.
+								setCompanyInDeletionProcessWithSafeCloseable(
+									companyId)) {
 
-						CacheRegistryUtil.clear();
+						_clearCache(companyId);
+
+						Store store = _storeSnapshot.get();
+
+						store.deleteDirectory(companyId);
+
+						PortalInstances.removeCompany(company.getCompanyId());
+
+						unregisterCompany(company);
+
+						_synchronizePortalInstances();
+
+						try (SafeCloseable safeCloseable2 =
+								CompanyThreadLocal.
+									setCompanyIdWithSafeCloseable(companyId)) {
+
+							CacheRegistryUtil.clear();
+						}
 					}
 
 					return null;

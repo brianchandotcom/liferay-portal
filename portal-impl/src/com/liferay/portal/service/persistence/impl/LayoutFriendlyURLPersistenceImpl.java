@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceF
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -935,9 +936,7 @@ public class LayoutFriendlyURLPersistenceImpl
 
 			if (list == null) {
 				try {
-					if ((start == QueryUtil.ALL_POS) &&
-						(end == QueryUtil.ALL_POS) &&
-						(databaseInMaxParameters > 0) &&
+					if ((databaseInMaxParameters > 0) &&
 						(plids.length > databaseInMaxParameters)) {
 
 						list = new ArrayList<LayoutFriendlyURL>();
@@ -948,20 +947,23 @@ public class LayoutFriendlyURLPersistenceImpl
 						for (long[] plidsPage : plidsPages) {
 							list.addAll(
 								_findByP_L(
-									plidsPage, languageId, start, end,
-									orderByComparator));
+									plidsPage, languageId, QueryUtil.ALL_POS,
+									QueryUtil.ALL_POS, orderByComparator));
 						}
 
 						Collections.sort(list, orderByComparator);
 
-						list = Collections.unmodifiableList(list);
+						cacheResult(list);
+
+						list = Collections.unmodifiableList(
+							ListUtil.subList(list, start, end));
 					}
 					else {
 						list = _findByP_L(
 							plids, languageId, start, end, orderByComparator);
-					}
 
-					cacheResult(list);
+						cacheResult(list);
+					}
 
 					if (useFinderCache) {
 						FinderCacheUtil.putResult(
@@ -2272,4 +2274,4 @@ public class LayoutFriendlyURLPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1323637908
+// LIFERAY-SERVICE-BUILDER-HASH:1287382224

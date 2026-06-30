@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceF
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -724,9 +725,7 @@ public class DDMStorageLinkPersistenceImpl
 
 			if (list == null) {
 				try {
-					if ((start == QueryUtil.ALL_POS) &&
-						(end == QueryUtil.ALL_POS) &&
-						(databaseInMaxParameters > 0) &&
+					if ((databaseInMaxParameters > 0) &&
 						(structureVersionIds.length >
 							databaseInMaxParameters)) {
 
@@ -741,20 +740,23 @@ public class DDMStorageLinkPersistenceImpl
 
 							list.addAll(
 								_findByStructureVersionId(
-									structureVersionIdsPage, start, end,
-									orderByComparator));
+									structureVersionIdsPage, QueryUtil.ALL_POS,
+									QueryUtil.ALL_POS, orderByComparator));
 						}
 
 						Collections.sort(list, orderByComparator);
 
-						list = Collections.unmodifiableList(list);
+						cacheResult(list);
+
+						list = Collections.unmodifiableList(
+							ListUtil.subList(list, start, end));
 					}
 					else {
 						list = _findByStructureVersionId(
 							structureVersionIds, start, end, orderByComparator);
-					}
 
-					cacheResult(list);
+						cacheResult(list);
+					}
 
 					if (useFinderCache) {
 						finderCache.putResult(
@@ -1467,4 +1469,4 @@ public class DDMStorageLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1989998043
+// LIFERAY-SERVICE-BUILDER-HASH:552390775

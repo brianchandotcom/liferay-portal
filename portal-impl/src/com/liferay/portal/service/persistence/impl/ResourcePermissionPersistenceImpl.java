@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -1221,9 +1222,7 @@ public class ResourcePermissionPersistenceImpl
 
 			if (list == null) {
 				try {
-					if ((start == QueryUtil.ALL_POS) &&
-						(end == QueryUtil.ALL_POS) &&
-						(databaseInMaxParameters > 0) &&
+					if ((databaseInMaxParameters > 0) &&
 						(roleIds.length > databaseInMaxParameters)) {
 
 						list = new ArrayList<ResourcePermission>();
@@ -1235,21 +1234,24 @@ public class ResourcePermissionPersistenceImpl
 							list.addAll(
 								_findByC_N_S_P_R(
 									companyId, name, scope, primKey,
-									roleIdsPage, start, end,
-									orderByComparator));
+									roleIdsPage, QueryUtil.ALL_POS,
+									QueryUtil.ALL_POS, orderByComparator));
 						}
 
 						Collections.sort(list, orderByComparator);
 
-						list = Collections.unmodifiableList(list);
+						cacheResult(list);
+
+						list = Collections.unmodifiableList(
+							ListUtil.subList(list, start, end));
 					}
 					else {
 						list = _findByC_N_S_P_R(
 							companyId, name, scope, primKey, roleIds, start,
 							end, orderByComparator);
-					}
 
-					cacheResult(list);
+						cacheResult(list);
+					}
 
 					if (useFinderCache) {
 						FinderCacheUtil.putResult(
@@ -2273,9 +2275,7 @@ public class ResourcePermissionPersistenceImpl
 
 			if (list == null) {
 				try {
-					if ((start == QueryUtil.ALL_POS) &&
-						(end == QueryUtil.ALL_POS) &&
-						(databaseInMaxParameters > 0) &&
+					if ((databaseInMaxParameters > 0) &&
 						(roleIds.length > databaseInMaxParameters)) {
 
 						list = new ArrayList<ResourcePermission>();
@@ -2287,21 +2287,24 @@ public class ResourcePermissionPersistenceImpl
 							list.addAll(
 								_findByC_N_S_R_V(
 									companyId, name, scope, roleIdsPage,
-									viewActionId, start, end,
-									orderByComparator));
+									viewActionId, QueryUtil.ALL_POS,
+									QueryUtil.ALL_POS, orderByComparator));
 						}
 
 						Collections.sort(list, orderByComparator);
 
-						list = Collections.unmodifiableList(list);
+						cacheResult(list);
+
+						list = Collections.unmodifiableList(
+							ListUtil.subList(list, start, end));
 					}
 					else {
 						list = _findByC_N_S_R_V(
 							companyId, name, scope, roleIds, viewActionId,
 							start, end, orderByComparator);
-					}
 
-					cacheResult(list);
+						cacheResult(list);
+					}
 
 					if (useFinderCache) {
 						FinderCacheUtil.putResult(
@@ -3355,4 +3358,4 @@ public class ResourcePermissionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1965612231
+// LIFERAY-SERVICE-BUILDER-HASH:-543347375

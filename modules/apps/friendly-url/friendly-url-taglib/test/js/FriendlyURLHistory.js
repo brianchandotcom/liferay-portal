@@ -95,11 +95,11 @@ describe('FriendlyURLHistory', () => {
 		expect(historyButton.className).toContain('btn-url-history');
 	});
 
-	it('renders a restore icon inside the button', () => {
+	it('renders a time icon inside the button', () => {
 		renderComponent(defaultProps);
 
 		expect(historyButton.querySelector('svg').classList).toContain(
-			'lexicon-icon-restore'
+			'lexicon-icon-time'
 		);
 	});
 

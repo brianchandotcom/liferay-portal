@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -514,9 +515,7 @@ public class RatingsEntryPersistenceImpl
 
 			if (list == null) {
 				try {
-					if ((start == QueryUtil.ALL_POS) &&
-						(end == QueryUtil.ALL_POS) &&
-						(databaseInMaxParameters > 0) &&
+					if ((databaseInMaxParameters > 0) &&
 						(classPKs.length > databaseInMaxParameters)) {
 
 						list = new ArrayList<RatingsEntry>();
@@ -527,21 +526,25 @@ public class RatingsEntryPersistenceImpl
 						for (long[] classPKsPage : classPKsPages) {
 							list.addAll(
 								_findByU_C_C(
-									userId, classNameId, classPKsPage, start,
-									end, orderByComparator));
+									userId, classNameId, classPKsPage,
+									QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+									orderByComparator));
 						}
 
 						Collections.sort(list, orderByComparator);
 
-						list = Collections.unmodifiableList(list);
+						cacheResult(list);
+
+						list = Collections.unmodifiableList(
+							ListUtil.subList(list, start, end));
 					}
 					else {
 						list = _findByU_C_C(
 							userId, classNameId, classPKs, start, end,
 							orderByComparator);
-					}
 
-					cacheResult(list);
+						cacheResult(list);
+					}
 
 					if (useFinderCache) {
 						FinderCacheUtil.putResult(
@@ -1559,4 +1562,4 @@ public class RatingsEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2094332515
+// LIFERAY-SERVICE-BUILDER-HASH:534079179

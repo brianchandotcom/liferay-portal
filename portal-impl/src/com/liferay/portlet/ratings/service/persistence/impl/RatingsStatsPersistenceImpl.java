@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPe
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelperUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -227,9 +228,7 @@ public class RatingsStatsPersistenceImpl
 
 			if (list == null) {
 				try {
-					if ((start == QueryUtil.ALL_POS) &&
-						(end == QueryUtil.ALL_POS) &&
-						(databaseInMaxParameters > 0) &&
+					if ((databaseInMaxParameters > 0) &&
 						(classPKs.length > databaseInMaxParameters)) {
 
 						list = new ArrayList<RatingsStats>();
@@ -240,21 +239,25 @@ public class RatingsStatsPersistenceImpl
 						for (long[] classPKsPage : classPKsPages) {
 							list.addAll(
 								_findByC_C(
-									classNameId, classPKsPage, start, end,
+									classNameId, classPKsPage,
+									QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 									orderByComparator));
 						}
 
 						Collections.sort(list, orderByComparator);
 
-						list = Collections.unmodifiableList(list);
+						cacheResult(list);
+
+						list = Collections.unmodifiableList(
+							ListUtil.subList(list, start, end));
 					}
 					else {
 						list = _findByC_C(
 							classNameId, classPKs, start, end,
 							orderByComparator);
-					}
 
-					cacheResult(list);
+						cacheResult(list);
+					}
 
 					if (useFinderCache) {
 						FinderCacheUtil.putResult(
@@ -991,4 +994,4 @@ public class RatingsStatsPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1976423703
+// LIFERAY-SERVICE-BUILDER-HASH:-112709017

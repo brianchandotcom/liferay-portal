@@ -234,7 +234,7 @@ public class SecretManagerImpl implements SecretManager {
 					throw new SecretManagerException(
 						StringBundler.concat(
 							"Secret vault provider ", providerId,
-							" is in an error state for company ID: ",
+							" is in an error state for company ID ",
 							companyId));
 				}
 
@@ -244,8 +244,8 @@ public class SecretManagerImpl implements SecretManager {
 
 		throw new SecretManagerException(
 			StringBundler.concat(
-				"No secret vault provider found for ID: ", providerId,
-				" and company ID: ", companyId));
+				"No secret vault provider found for ID ", providerId,
+				" and company ID ", companyId));
 	}
 
 	private String _getSecretVaultProviderId(long companyId, String providerId)
@@ -266,7 +266,7 @@ public class SecretManagerImpl implements SecretManager {
 			throw new SecretManagerException(
 				StringBundler.concat(
 					"No active KeyManagerProfile found to resolve the ",
-					"provider wildcard for company ID: ", companyId));
+					"provider wildcard for company ID ", companyId));
 		}
 
 		if (companyId == CompanyConstants.SYSTEM) {

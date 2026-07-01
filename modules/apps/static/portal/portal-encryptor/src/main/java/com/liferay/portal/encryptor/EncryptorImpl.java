@@ -119,7 +119,7 @@ public class EncryptorImpl implements Encryptor {
 
 	@Override
 	public Key deserializeKey(String base64String) {
-		if (!FIPSModeUtil.isAllowedAlgorithm(KEY_ALGORITHM)) {
+		if (FIPSModeUtil.isNotAllowedAlgorithm(KEY_ALGORITHM)) {
 			throw new SecurityException(
 				"Algorithm \"" + KEY_ALGORITHM +
 					"\" is not allowed in FIPS mode");
@@ -211,7 +211,7 @@ public class EncryptorImpl implements Encryptor {
 
 	@Override
 	public Key generateKey() throws EncryptorException {
-		if (!FIPSModeUtil.isAllowedAlgorithm(KEY_ALGORITHM)) {
+		if (FIPSModeUtil.isNotAllowedAlgorithm(KEY_ALGORITHM)) {
 			throw new SecurityException(
 				"Algorithm \"" + KEY_ALGORITHM +
 					"\" is not allowed in FIPS mode");

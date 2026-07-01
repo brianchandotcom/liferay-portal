@@ -9,30 +9,34 @@ import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Set;
+
 /**
  * @author Lucas Miranda
  */
 public class FIPSModeUtil {
 
-	public static boolean isAllowedAlgorithm(String algorithm) {
+	public static boolean isNotAllowedAlgorithm(String algorithm) {
 		if (!PropsValues.FIPS_ENABLED) {
-			return true;
+			return false;
 		}
 
 		if (Validator.isNull(algorithm)) {
-			return false;
+			return true;
 		}
 
 		algorithm = StringUtil.toUpperCase(algorithm);
 
-		if (algorithm.equals("AES") || algorithm.startsWith("AES/") ||
-			algorithm.startsWith("PBKDF2") || algorithm.equals("SHA-256") ||
-			algorithm.equals("SHA-384") || algorithm.equals("SHA-512")) {
-
-			return true;
+		for (String allowedAlgorithm : _allowedAlgorithms) {
+			if (algorithm.startsWith(allowedAlgorithm)) {
+				return false;
+			}
 		}
 
-		return false;
+		return true;
 	}
+
+	private static final Set<String> _allowedAlgorithms = Set.of(
+		"AES", "PBKDF2", "SHA-256", "SHA-384", "SHA-512");
 
 }

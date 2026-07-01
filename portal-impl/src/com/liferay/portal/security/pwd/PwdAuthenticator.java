@@ -44,7 +44,7 @@ public class PwdAuthenticator {
 
 			String algorithm = PropsUtil.get(PropsKeys.AUTH_MAC_ALGORITHM);
 
-			if (!FIPSModeUtil.isAllowedAlgorithm(algorithm)) {
+			if (FIPSModeUtil.isNotAllowedAlgorithm(algorithm)) {
 				throw new SecurityException(
 					"Algorithm \"" + algorithm +
 						"\" is not allowed in FIPS mode");

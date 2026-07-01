@@ -42,9 +42,9 @@ public class ElasticsearchContentRetrieverTest {
 
 	@Test
 	public void testSearch() {
-		String fragment = RandomTestUtil.randomString();
-
 		HighlightField highlightField = Mockito.mock(HighlightField.class);
+
+		String fragment = RandomTestUtil.randomString();
 
 		Mockito.when(
 			highlightField.getFragments()

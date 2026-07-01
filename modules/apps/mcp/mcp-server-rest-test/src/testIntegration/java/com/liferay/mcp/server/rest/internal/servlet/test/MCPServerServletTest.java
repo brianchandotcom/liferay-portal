@@ -317,9 +317,8 @@ public class MCPServerServletTest {
 					authorizationServerURL +
 						"/.well-known/oauth-authorization-server"));
 
-		String redirectURI = "https://example.com/callback";
-
 		String clientId = null;
+		String redirectURI = "https://example.com/callback";
 
 		try (CompanyConfigurationTemporarySwapper
 				companyConfigurationTemporarySwapper =

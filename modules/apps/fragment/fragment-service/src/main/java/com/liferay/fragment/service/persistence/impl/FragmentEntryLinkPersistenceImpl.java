@@ -14,7 +14,6 @@ import com.liferay.fragment.model.impl.FragmentEntryLinkModelImpl;
 import com.liferay.fragment.service.persistence.FragmentEntryLinkPersistence;
 import com.liferay.fragment.service.persistence.FragmentEntryLinkUtil;
 import com.liferay.fragment.service.persistence.impl.constants.FragmentPersistenceConstants;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -23,8 +22,6 @@ import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
@@ -728,26 +725,9 @@ public class FragmentEntryLinkPersistenceImpl
 			OrderByComparator<FragmentEntryLink> orderByComparator)
 		throws NoSuchEntryLinkException {
 
-		FragmentEntryLink fragmentEntryLink = fetchByC_R_First(
-			companyId, rendererKey, orderByComparator);
-
-		if (fragmentEntryLink != null) {
-			return fragmentEntryLink;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", rendererKey=");
-		sb.append(rendererKey);
-
-		sb.append("}");
-
-		throw new NoSuchEntryLinkException(sb.toString());
+		return _collectionPersistenceFinderByC_R.findFirst(
+			finderCache, new Object[] {companyId, new String[] {rendererKey}},
+			orderByComparator);
 	}
 
 	/**
@@ -1196,29 +1176,10 @@ public class FragmentEntryLinkPersistenceImpl
 			OrderByComparator<FragmentEntryLink> orderByComparator)
 		throws NoSuchEntryLinkException {
 
-		FragmentEntryLink fragmentEntryLink = fetchByG_S_P_First(
-			groupId, segmentsExperienceId, plid, orderByComparator);
-
-		if (fragmentEntryLink != null) {
-			return fragmentEntryLink;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", segmentsExperienceId=");
-		sb.append(segmentsExperienceId);
-
-		sb.append(", plid=");
-		sb.append(plid);
-
-		sb.append("}");
-
-		throw new NoSuchEntryLinkException(sb.toString());
+		return _collectionPersistenceFinderByG_S_P.findFirst(
+			finderCache,
+			new Object[] {groupId, new long[] {segmentsExperienceId}, plid},
+			orderByComparator);
 	}
 
 	/**
@@ -2178,32 +2139,12 @@ public class FragmentEntryLinkPersistenceImpl
 			OrderByComparator<FragmentEntryLink> orderByComparator)
 		throws NoSuchEntryLinkException {
 
-		FragmentEntryLink fragmentEntryLink = fetchByG_S_P_D_First(
-			groupId, segmentsExperienceId, plid, deleted, orderByComparator);
-
-		if (fragmentEntryLink != null) {
-			return fragmentEntryLink;
-		}
-
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", segmentsExperienceId=");
-		sb.append(segmentsExperienceId);
-
-		sb.append(", plid=");
-		sb.append(plid);
-
-		sb.append(", deleted=");
-		sb.append(deleted);
-
-		sb.append("}");
-
-		throw new NoSuchEntryLinkException(sb.toString());
+		return _collectionPersistenceFinderByG_S_P_D.findFirst(
+			finderCache,
+			new Object[] {
+				groupId, new long[] {segmentsExperienceId}, plid, deleted
+			},
+			orderByComparator);
 	}
 
 	/**
@@ -4044,12 +3985,6 @@ public class FragmentEntryLinkPersistenceImpl
 	private static final String _SQL_COUNT_FRAGMENTENTRYLINK_WHERE =
 		"SELECT COUNT(fragmentEntryLink) FROM FragmentEntryLink fragmentEntryLink WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No FragmentEntryLink exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		FragmentEntryLinkPersistenceImpl.class);
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"uuid", "type"});
 
@@ -4059,4 +3994,4 @@ public class FragmentEntryLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:898158625
+// LIFERAY-SERVICE-BUILDER-HASH:147644762

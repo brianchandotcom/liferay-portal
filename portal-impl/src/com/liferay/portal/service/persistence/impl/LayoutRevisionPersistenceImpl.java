@@ -2025,13 +2025,10 @@ public class LayoutRevisionPersistenceImpl
 	private static final String _SQL_COUNT_LAYOUTREVISION_WHERE =
 		"SELECT COUNT(layoutRevision) FROM LayoutRevision layoutRevision WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No LayoutRevision exists with the key {";
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return FinderCacheUtil.getFinderCache();
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1195596498
+// LIFERAY-SERVICE-BUILDER-HASH:1563496330

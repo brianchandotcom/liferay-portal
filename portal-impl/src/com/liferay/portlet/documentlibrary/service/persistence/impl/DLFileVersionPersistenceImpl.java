@@ -10,7 +10,6 @@ import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.model.DLFileVersionTable;
 import com.liferay.document.library.kernel.service.persistence.DLFileVersionPersistence;
 import com.liferay.document.library.kernel.service.persistence.DLFileVersionUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -19,8 +18,6 @@ import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -943,26 +940,9 @@ public class DLFileVersionPersistenceImpl
 			OrderByComparator<DLFileVersion> orderByComparator)
 		throws NoSuchFileVersionException {
 
-		DLFileVersion dlFileVersion = fetchByF_S_First(
-			fileEntryId, status, orderByComparator);
-
-		if (dlFileVersion != null) {
-			return dlFileVersion;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("fileEntryId=");
-		sb.append(fileEntryId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchFileVersionException(sb.toString());
+		return _collectionPersistenceFinderByF_S.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {fileEntryId, new int[] {status}}, orderByComparator);
 	}
 
 	/**
@@ -1352,29 +1332,10 @@ public class DLFileVersionPersistenceImpl
 			OrderByComparator<DLFileVersion> orderByComparator)
 		throws NoSuchFileVersionException {
 
-		DLFileVersion dlFileVersion = fetchByC_E_S_First(
-			companyId, expirationDate, status, orderByComparator);
-
-		if (dlFileVersion != null) {
-			return dlFileVersion;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", expirationDate=");
-		sb.append(expirationDate);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchFileVersionException(sb.toString());
+		return _collectionPersistenceFinderByC_E_S.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, expirationDate, new int[] {status}},
+			orderByComparator);
 	}
 
 	/**
@@ -2326,12 +2287,6 @@ public class DLFileVersionPersistenceImpl
 	private static final String _SQL_COUNT_DLFILEVERSION_WHERE =
 		"SELECT COUNT(dlFileVersion) FROM DLFileVersion dlFileVersion WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No DLFileVersion exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DLFileVersionPersistenceImpl.class);
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"uuid", "size"});
 
@@ -2341,4 +2296,4 @@ public class DLFileVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1043672313
+// LIFERAY-SERVICE-BUILDER-HASH:1999006828

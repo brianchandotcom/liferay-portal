@@ -434,9 +434,6 @@ public class ContactsCardTemplatePersistenceImpl
 	private static final String _SQL_COUNT_CONTACTSCARDTEMPLATE_WHERE =
 		"SELECT COUNT(contactsCardTemplate) FROM ContactsCardTemplate contactsCardTemplate WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No ContactsCardTemplate exists with the key {";
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"settings", "type"});
 
@@ -446,4 +443,4 @@ public class ContactsCardTemplatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1664206359
+// LIFERAY-SERVICE-BUILDER-HASH:2101627684

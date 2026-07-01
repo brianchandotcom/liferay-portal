@@ -13,8 +13,6 @@ import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchRegionLocalizationException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.RegionLocalization;
 import com.liferay.portal.kernel.model.RegionLocalizationTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -545,16 +543,10 @@ public class RegionLocalizationPersistenceImpl
 	private static final String _SQL_COUNT_REGIONLOCALIZATION_WHERE =
 		"SELECT COUNT(regionLocalization) FROM RegionLocalization regionLocalization WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No RegionLocalization exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		RegionLocalizationPersistenceImpl.class);
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return FinderCacheUtil.getFinderCache();
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2017052670
+// LIFERAY-SERVICE-BUILDER-HASH:-224750270

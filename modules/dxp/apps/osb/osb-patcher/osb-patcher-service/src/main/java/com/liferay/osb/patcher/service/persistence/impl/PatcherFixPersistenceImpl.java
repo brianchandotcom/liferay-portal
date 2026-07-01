@@ -15,7 +15,6 @@ import com.liferay.osb.patcher.model.impl.PatcherFixModelImpl;
 import com.liferay.osb.patcher.service.persistence.PatcherFixPersistence;
 import com.liferay.osb.patcher.service.persistence.PatcherFixUtil;
 import com.liferay.osb.patcher.service.persistence.impl.constants.OSBPatcherPersistenceConstants;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
@@ -1442,32 +1441,10 @@ public class PatcherFixPersistenceImpl
 			OrderByComparator<PatcherFix> orderByComparator)
 		throws NoSuchPatcherFixException {
 
-		PatcherFix patcherFix = fetchByLtM_N_T_S_First(
-			modifiedDate, notified, type, status, orderByComparator);
-
-		if (patcherFix != null) {
-			return patcherFix;
-		}
-
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("modifiedDate<");
-		sb.append(modifiedDate);
-
-		sb.append(", notified=");
-		sb.append(notified);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchPatcherFixException(sb.toString());
+		return _collectionPersistenceFinderByLtM_N_T_S.findFirst(
+			finderCache,
+			new Object[] {modifiedDate, notified, new int[] {type}, status},
+			orderByComparator);
 	}
 
 	/**
@@ -3663,9 +3640,6 @@ public class PatcherFixPersistenceImpl
 	private static final String _SQL_COUNT_PATCHERFIX_WHERE =
 		"SELECT COUNT(patcherFix) FROM PatcherFix patcherFix WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No PatcherFix exists with the key {";
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"key", "type"});
 
@@ -3675,4 +3649,4 @@ public class PatcherFixPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:319536327
+// LIFERAY-SERVICE-BUILDER-HASH:-699755618

@@ -12,8 +12,6 @@ import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchRecentLayoutBranchException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.RecentLayoutBranch;
 import com.liferay.portal.kernel.model.RecentLayoutBranchTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -711,16 +709,10 @@ public class RecentLayoutBranchPersistenceImpl
 	private static final String _SQL_COUNT_RECENTLAYOUTBRANCH_WHERE =
 		"SELECT COUNT(recentLayoutBranch) FROM RecentLayoutBranch recentLayoutBranch WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No RecentLayoutBranch exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		RecentLayoutBranchPersistenceImpl.class);
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return FinderCacheUtil.getFinderCache();
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1162710381
+// LIFERAY-SERVICE-BUILDER-HASH:-909012661

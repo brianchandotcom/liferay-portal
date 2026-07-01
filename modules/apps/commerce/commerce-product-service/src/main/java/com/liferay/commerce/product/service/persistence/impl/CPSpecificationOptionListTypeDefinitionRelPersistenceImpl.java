@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -799,12 +797,6 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceImpl
 		_SQL_COUNT_CPSPECIFICATIONOPTIONLISTTYPEDEFINITIONREL_WHERE =
 			"SELECT COUNT(cpSpecificationOptionListTypeDefinitionRel) FROM CPSpecificationOptionListTypeDefinitionRel cpSpecificationOptionListTypeDefinitionRel WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No CPSpecificationOptionListTypeDefinitionRel exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		CPSpecificationOptionListTypeDefinitionRelPersistenceImpl.class);
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"CPSpecificationOptionListTypeDefinitionRelId"});
 
@@ -814,4 +806,4 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2053626336
+// LIFERAY-SERVICE-BUILDER-HASH:242431455

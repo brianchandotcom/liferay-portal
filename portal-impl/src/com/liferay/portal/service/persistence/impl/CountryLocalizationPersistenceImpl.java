@@ -13,8 +13,6 @@ import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchCountryLocalizationException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CountryLocalization;
 import com.liferay.portal.kernel.model.CountryLocalizationTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -545,16 +543,10 @@ public class CountryLocalizationPersistenceImpl
 	private static final String _SQL_COUNT_COUNTRYLOCALIZATION_WHERE =
 		"SELECT COUNT(countryLocalization) FROM CountryLocalization countryLocalization WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No CountryLocalization exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		CountryLocalizationPersistenceImpl.class);
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return FinderCacheUtil.getFinderCache();
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2044914374
+// LIFERAY-SERVICE-BUILDER-HASH:587357310

@@ -5,7 +5,6 @@
 
 package com.liferay.portal.service.persistence.impl;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -17,8 +16,6 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.DuplicateLayoutExternalReferenceCodeException;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTable;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
@@ -1351,26 +1348,10 @@ public class LayoutPersistenceImpl
 			OrderByComparator<Layout> orderByComparator)
 		throws NoSuchLayoutException {
 
-		Layout layout = fetchByC_C_First(
-			classNameId, classPK, orderByComparator);
-
-		if (layout != null) {
-			return layout;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchLayoutException(sb.toString());
+		return _collectionPersistenceFinderByC_C.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {classNameId, new long[] {classPK}},
+			orderByComparator);
 	}
 
 	/**
@@ -1702,29 +1683,10 @@ public class LayoutPersistenceImpl
 			OrderByComparator<Layout> orderByComparator)
 		throws NoSuchLayoutException {
 
-		Layout layout = fetchByG_P_P_First(
-			groupId, privateLayout, parentLayoutId, orderByComparator);
-
-		if (layout != null) {
-			return layout;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", privateLayout=");
-		sb.append(privateLayout);
-
-		sb.append(", parentLayoutId=");
-		sb.append(parentLayoutId);
-
-		sb.append("}");
-
-		throw new NoSuchLayoutException(sb.toString());
+		return _collectionPersistenceFinderByG_P_P.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, privateLayout, new long[] {parentLayoutId}},
+			orderByComparator);
 	}
 
 	/**
@@ -1967,29 +1929,10 @@ public class LayoutPersistenceImpl
 			OrderByComparator<Layout> orderByComparator)
 		throws NoSuchLayoutException {
 
-		Layout layout = fetchByG_P_T_First(
-			groupId, privateLayout, type, orderByComparator);
-
-		if (layout != null) {
-			return layout;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", privateLayout=");
-		sb.append(privateLayout);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchLayoutException(sb.toString());
+		return _collectionPersistenceFinderByG_P_T.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, privateLayout, new String[] {type}},
+			orderByComparator);
 	}
 
 	/**
@@ -2605,29 +2548,10 @@ public class LayoutPersistenceImpl
 			OrderByComparator<Layout> orderByComparator)
 		throws NoSuchLayoutException {
 
-		Layout layout = fetchByG_P_ST_First(
-			groupId, privateLayout, status, orderByComparator);
-
-		if (layout != null) {
-			return layout;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", privateLayout=");
-		sb.append(privateLayout);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchLayoutException(sb.toString());
+		return _collectionPersistenceFinderByG_P_ST.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, privateLayout, new int[] {status}},
+			orderByComparator);
 	}
 
 	/**
@@ -2871,32 +2795,12 @@ public class LayoutPersistenceImpl
 			boolean hidden, OrderByComparator<Layout> orderByComparator)
 		throws NoSuchLayoutException {
 
-		Layout layout = fetchByG_P_P_H_First(
-			groupId, privateLayout, parentLayoutId, hidden, orderByComparator);
-
-		if (layout != null) {
-			return layout;
-		}
-
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", privateLayout=");
-		sb.append(privateLayout);
-
-		sb.append(", parentLayoutId=");
-		sb.append(parentLayoutId);
-
-		sb.append(", hidden=");
-		sb.append(hidden);
-
-		sb.append("}");
-
-		throw new NoSuchLayoutException(sb.toString());
+		return _collectionPersistenceFinderByG_P_P_H.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {
+				groupId, privateLayout, new long[] {parentLayoutId}, hidden
+			},
+			orderByComparator);
 	}
 
 	/**
@@ -3174,32 +3078,12 @@ public class LayoutPersistenceImpl
 			boolean system, OrderByComparator<Layout> orderByComparator)
 		throws NoSuchLayoutException {
 
-		Layout layout = fetchByG_P_P_S_First(
-			groupId, privateLayout, parentLayoutId, system, orderByComparator);
-
-		if (layout != null) {
-			return layout;
-		}
-
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", privateLayout=");
-		sb.append(privateLayout);
-
-		sb.append(", parentLayoutId=");
-		sb.append(parentLayoutId);
-
-		sb.append(", system=");
-		sb.append(system);
-
-		sb.append("}");
-
-		throw new NoSuchLayoutException(sb.toString());
+		return _collectionPersistenceFinderByG_P_P_S.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {
+				groupId, privateLayout, new long[] {parentLayoutId}, system
+			},
+			orderByComparator);
 	}
 
 	/**
@@ -4979,12 +4863,6 @@ public class LayoutPersistenceImpl
 	private static final String _SQL_COUNT_LAYOUT_WHERE =
 		"SELECT COUNT(layout) FROM Layout layout WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No Layout exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		LayoutPersistenceImpl.class);
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {
 			"uuid", "type", "hidden", "system",
@@ -5000,4 +4878,4 @@ public class LayoutPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-963661925
+// LIFERAY-SERVICE-BUILDER-HASH:1954378235

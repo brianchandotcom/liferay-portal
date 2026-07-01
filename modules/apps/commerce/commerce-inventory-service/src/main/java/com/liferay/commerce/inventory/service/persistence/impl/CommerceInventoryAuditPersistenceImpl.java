@@ -662,9 +662,6 @@ public class CommerceInventoryAuditPersistenceImpl
 	private static final String _SQL_COUNT_COMMERCEINVENTORYAUDIT_WHERE =
 		"SELECT COUNT(commerceInventoryAudit) FROM CommerceInventoryAudit commerceInventoryAudit WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No CommerceInventoryAudit exists with the key {";
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"commerceInventoryAuditId"});
 
@@ -674,4 +671,4 @@ public class CommerceInventoryAuditPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1984446528
+// LIFERAY-SERVICE-BUILDER-HASH:1638125391

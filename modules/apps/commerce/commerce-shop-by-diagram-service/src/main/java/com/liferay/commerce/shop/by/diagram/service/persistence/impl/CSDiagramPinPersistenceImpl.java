@@ -522,13 +522,10 @@ public class CSDiagramPinPersistenceImpl
 	private static final String _SQL_COUNT_CSDIAGRAMPIN_WHERE =
 		"SELECT COUNT(csDiagramPin) FROM CSDiagramPin csDiagramPin WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No CSDiagramPin exists with the key {";
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-23840016
+// LIFERAY-SERVICE-BUILDER-HASH:1413476730

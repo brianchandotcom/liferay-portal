@@ -388,13 +388,10 @@ public class FinderWhereClauseEntryPersistenceImpl
 	private static final String _SQL_COUNT_FINDERWHERECLAUSEENTRY_WHERE =
 		"SELECT COUNT(finderWhereClauseEntry) FROM FinderWhereClauseEntry finderWhereClauseEntry WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No FinderWhereClauseEntry exists with the key {";
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1755641893
+// LIFERAY-SERVICE-BUILDER-HASH:-669787185

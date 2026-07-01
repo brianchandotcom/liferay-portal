@@ -12,8 +12,6 @@ import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
@@ -569,16 +567,10 @@ public class RedirectNotFoundEntryPersistenceImpl
 	private static final String _SQL_COUNT_REDIRECTNOTFOUNDENTRY_WHERE =
 		"SELECT COUNT(redirectNotFoundEntry) FROM RedirectNotFoundEntry redirectNotFoundEntry WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No RedirectNotFoundEntry exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		RedirectNotFoundEntryPersistenceImpl.class);
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:296725197
+// LIFERAY-SERVICE-BUILDER-HASH:596244345

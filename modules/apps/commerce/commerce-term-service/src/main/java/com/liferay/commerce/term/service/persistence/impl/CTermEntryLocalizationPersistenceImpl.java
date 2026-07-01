@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
@@ -566,16 +564,10 @@ public class CTermEntryLocalizationPersistenceImpl
 	private static final String _SQL_COUNT_CTERMENTRYLOCALIZATION_WHERE =
 		"SELECT COUNT(cTermEntryLocalization) FROM CTermEntryLocalization cTermEntryLocalization WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No CTermEntryLocalization exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		CTermEntryLocalizationPersistenceImpl.class);
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:397617884
+// LIFERAY-SERVICE-BUILDER-HASH:-1005118682

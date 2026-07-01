@@ -934,9 +934,6 @@ public class ExportImportConfigurationPersistenceImpl
 	private static final String _SQL_COUNT_EXPORTIMPORTCONFIGURATION_WHERE =
 		"SELECT COUNT(exportImportConfiguration) FROM ExportImportConfiguration exportImportConfiguration WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No ExportImportConfiguration exists with the key {";
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"type", "settings"});
 
@@ -946,4 +943,4 @@ public class ExportImportConfigurationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1397901755
+// LIFERAY-SERVICE-BUILDER-HASH:178992442

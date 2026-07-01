@@ -776,9 +776,6 @@ public class KaleoNodePersistenceImpl
 	private static final String _SQL_COUNT_KALEONODE_WHERE =
 		"SELECT COUNT(kaleoNode) FROM KaleoNode kaleoNode WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No KaleoNode exists with the key {";
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"type", "initial"});
 
@@ -788,4 +785,4 @@ public class KaleoNodePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-103771699
+// LIFERAY-SERVICE-BUILDER-HASH:-744898008

@@ -12,8 +12,6 @@ import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -517,16 +515,10 @@ public class RatingsStatsPersistenceImpl
 	private static final String _SQL_COUNT_RATINGSSTATS_WHERE =
 		"SELECT COUNT(ratingsStats) FROM RatingsStats ratingsStats WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No RatingsStats exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		RatingsStatsPersistenceImpl.class);
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return FinderCacheUtil.getFinderCache();
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-849209351
+// LIFERAY-SERVICE-BUILDER-HASH:-374714380

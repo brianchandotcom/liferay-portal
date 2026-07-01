@@ -826,9 +826,6 @@ public class ObjectViewColumnPersistenceImpl
 	private static final String _SQL_COUNT_OBJECTVIEWCOLUMN_WHERE =
 		"SELECT COUNT(objectViewColumn) FROM ObjectViewColumn objectViewColumn WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No ObjectViewColumn exists with the key {";
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"uuid"});
 
@@ -838,4 +835,4 @@ public class ObjectViewColumnPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1531411253
+// LIFERAY-SERVICE-BUILDER-HASH:1004589212

@@ -1022,9 +1022,6 @@ public class LayoutPrototypePersistenceImpl
 	private static final String _SQL_COUNT_LAYOUTPROTOTYPE_WHERE =
 		"SELECT COUNT(layoutPrototype) FROM LayoutPrototype layoutPrototype WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No LayoutPrototype exists with the key {";
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"uuid", "settings", "active"});
 
@@ -1034,4 +1031,4 @@ public class LayoutPrototypePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1499959293
+// LIFERAY-SERVICE-BUILDER-HASH:1868436002

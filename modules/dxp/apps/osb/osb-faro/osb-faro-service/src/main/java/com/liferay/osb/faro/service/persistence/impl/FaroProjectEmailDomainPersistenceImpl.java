@@ -540,13 +540,10 @@ public class FaroProjectEmailDomainPersistenceImpl
 	private static final String _SQL_COUNT_FAROPROJECTEMAILDOMAIN_WHERE =
 		"SELECT COUNT(faroProjectEmailDomain) FROM FaroProjectEmailDomain faroProjectEmailDomain WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No FaroProjectEmailDomain exists with the key {";
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:262246361
+// LIFERAY-SERVICE-BUILDER-HASH:-256890809

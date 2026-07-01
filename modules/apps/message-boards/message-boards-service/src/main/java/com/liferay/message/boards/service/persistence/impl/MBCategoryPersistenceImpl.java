@@ -14,7 +14,6 @@ import com.liferay.message.boards.model.impl.MBCategoryModelImpl;
 import com.liferay.message.boards.service.persistence.MBCategoryPersistence;
 import com.liferay.message.boards.service.persistence.MBCategoryUtil;
 import com.liferay.message.boards.service.persistence.impl.constants.MBPersistenceConstants;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -24,8 +23,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
@@ -583,26 +580,9 @@ public class MBCategoryPersistenceImpl
 			OrderByComparator<MBCategory> orderByComparator)
 		throws NoSuchCategoryException {
 
-		MBCategory mbCategory = fetchByG_P_First(
-			groupId, parentCategoryId, orderByComparator);
-
-		if (mbCategory != null) {
-			return mbCategory;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", parentCategoryId=");
-		sb.append(parentCategoryId);
-
-		sb.append("}");
-
-		throw new NoSuchCategoryException(sb.toString());
+		return _collectionPersistenceFinderByG_P.findFirst(
+			finderCache, new Object[] {groupId, new long[] {parentCategoryId}},
+			orderByComparator);
 	}
 
 	/**
@@ -1163,29 +1143,12 @@ public class MBCategoryPersistenceImpl
 			OrderByComparator<MBCategory> orderByComparator)
 		throws NoSuchCategoryException {
 
-		MBCategory mbCategory = fetchByNotC_G_P_First(
-			categoryId, groupId, parentCategoryId, orderByComparator);
-
-		if (mbCategory != null) {
-			return mbCategory;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("categoryId!=");
-		sb.append(categoryId);
-
-		sb.append(", groupId=");
-		sb.append(groupId);
-
-		sb.append(", parentCategoryId=");
-		sb.append(parentCategoryId);
-
-		sb.append("}");
-
-		throw new NoSuchCategoryException(sb.toString());
+		return _collectionPersistenceFinderByNotC_G_P.findFirst(
+			finderCache,
+			new Object[] {
+				new long[] {categoryId}, groupId, new long[] {parentCategoryId}
+			},
+			orderByComparator);
 	}
 
 	/**
@@ -1593,29 +1556,10 @@ public class MBCategoryPersistenceImpl
 			OrderByComparator<MBCategory> orderByComparator)
 		throws NoSuchCategoryException {
 
-		MBCategory mbCategory = fetchByG_P_S_First(
-			groupId, parentCategoryId, status, orderByComparator);
-
-		if (mbCategory != null) {
-			return mbCategory;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", parentCategoryId=");
-		sb.append(parentCategoryId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchCategoryException(sb.toString());
+		return _collectionPersistenceFinderByG_P_S.findFirst(
+			finderCache,
+			new Object[] {groupId, new long[] {parentCategoryId}, status},
+			orderByComparator);
 	}
 
 	/**
@@ -1920,29 +1864,10 @@ public class MBCategoryPersistenceImpl
 			OrderByComparator<MBCategory> orderByComparator)
 		throws NoSuchCategoryException {
 
-		MBCategory mbCategory = fetchByG_P_NotS_First(
-			groupId, parentCategoryId, status, orderByComparator);
-
-		if (mbCategory != null) {
-			return mbCategory;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", parentCategoryId=");
-		sb.append(parentCategoryId);
-
-		sb.append(", status!=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchCategoryException(sb.toString());
+		return _collectionPersistenceFinderByG_P_NotS.findFirst(
+			finderCache,
+			new Object[] {groupId, new long[] {parentCategoryId}, status},
+			orderByComparator);
 	}
 
 	/**
@@ -2408,32 +2333,13 @@ public class MBCategoryPersistenceImpl
 			OrderByComparator<MBCategory> orderByComparator)
 		throws NoSuchCategoryException {
 
-		MBCategory mbCategory = fetchByNotC_G_P_S_First(
-			categoryId, groupId, parentCategoryId, status, orderByComparator);
-
-		if (mbCategory != null) {
-			return mbCategory;
-		}
-
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("categoryId!=");
-		sb.append(categoryId);
-
-		sb.append(", groupId=");
-		sb.append(groupId);
-
-		sb.append(", parentCategoryId=");
-		sb.append(parentCategoryId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchCategoryException(sb.toString());
+		return _collectionPersistenceFinderByNotC_G_P_S.findFirst(
+			finderCache,
+			new Object[] {
+				new long[] {categoryId}, groupId, new long[] {parentCategoryId},
+				status
+			},
+			orderByComparator);
 	}
 
 	/**
@@ -3704,12 +3610,6 @@ public class MBCategoryPersistenceImpl
 	private static final String _SQL_COUNT_MBCATEGORY_WHERE =
 		"SELECT COUNT(mbCategory) FROM MBCategory mbCategory WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No MBCategory exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		MBCategoryPersistenceImpl.class);
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"uuid"});
 
@@ -3719,4 +3619,4 @@ public class MBCategoryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1566246772
+// LIFERAY-SERVICE-BUILDER-HASH:854885866

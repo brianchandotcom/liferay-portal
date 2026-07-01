@@ -5,7 +5,6 @@
 
 package com.liferay.portal.service.persistence.impl;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -16,8 +15,6 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.DuplicateAddressExternalReferenceCodeException;
 import com.liferay.portal.kernel.exception.NoSuchAddressException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.AddressTable;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
@@ -939,32 +936,12 @@ public class AddressPersistenceImpl
 			OrderByComparator<Address> orderByComparator)
 		throws NoSuchAddressException {
 
-		Address address = fetchByC_C_C_L_First(
-			companyId, classNameId, classPK, listTypeId, orderByComparator);
-
-		if (address != null) {
-			return address;
-		}
-
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append(", listTypeId=");
-		sb.append(listTypeId);
-
-		sb.append("}");
-
-		throw new NoSuchAddressException(sb.toString());
+		return _collectionPersistenceFinderByC_C_C_L.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {
+				companyId, classNameId, classPK, new long[] {listTypeId}
+			},
+			orderByComparator);
 	}
 
 	/**
@@ -2178,12 +2155,6 @@ public class AddressPersistenceImpl
 	private static final String _SQL_COUNT_ADDRESS_WHERE =
 		"SELECT COUNT(address) FROM Address address WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No Address exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		AddressPersistenceImpl.class);
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"uuid", "primary"});
 
@@ -2193,4 +2164,4 @@ public class AddressPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:259759376
+// LIFERAY-SERVICE-BUILDER-HASH:-800045342

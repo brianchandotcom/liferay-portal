@@ -610,13 +610,10 @@ public class SamlIdpSpSessionPersistenceImpl
 	private static final String _SQL_COUNT_SAMLIDPSPSESSION_WHERE =
 		"SELECT COUNT(samlIdpSpSession) FROM SamlIdpSpSession samlIdpSpSession WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No SamlIdpSpSession exists with the key {";
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1889499546
+// LIFERAY-SERVICE-BUILDER-HASH:-190548050

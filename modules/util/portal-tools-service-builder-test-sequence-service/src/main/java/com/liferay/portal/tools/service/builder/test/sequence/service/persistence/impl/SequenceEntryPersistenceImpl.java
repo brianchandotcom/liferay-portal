@@ -552,9 +552,6 @@ public class SequenceEntryPersistenceImpl
 	private static final String _SQL_COUNT_SEQUENCEENTRY_WHERE =
 		"SELECT COUNT(sequenceEntry) FROM SequenceEntry sequenceEntry WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No SequenceEntry exists with the key {";
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"uuid"});
 
@@ -564,4 +561,4 @@ public class SequenceEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1259000986
+// LIFERAY-SERVICE-BUILDER-HASH:-2032349407

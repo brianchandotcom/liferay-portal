@@ -13,7 +13,6 @@ import com.liferay.knowledge.base.model.impl.KBCommentModelImpl;
 import com.liferay.knowledge.base.service.persistence.KBCommentPersistence;
 import com.liferay.knowledge.base.service.persistence.KBCommentUtil;
 import com.liferay.knowledge.base.service.persistence.impl.constants.KBPersistenceConstants;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -21,8 +20,6 @@ import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -827,29 +824,10 @@ public class KBCommentPersistenceImpl
 			OrderByComparator<KBComment> orderByComparator)
 		throws NoSuchCommentException {
 
-		KBComment kbComment = fetchByC_C_S_First(
-			classNameId, classPK, status, orderByComparator);
-
-		if (kbComment != null) {
-			return kbComment;
-		}
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchCommentException(sb.toString());
+		return _collectionPersistenceFinderByC_C_S.findFirst(
+			finderCache,
+			new Object[] {classNameId, classPK, new int[] {status}},
+			orderByComparator);
 	}
 
 	/**
@@ -1550,12 +1528,6 @@ public class KBCommentPersistenceImpl
 	private static final String _SQL_COUNT_KBCOMMENT_WHERE =
 		"SELECT COUNT(kbComment) FROM KBComment kbComment WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No KBComment exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		KBCommentPersistenceImpl.class);
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"uuid"});
 
@@ -1565,4 +1537,4 @@ public class KBCommentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1030092613
+// LIFERAY-SERVICE-BUILDER-HASH:1521489119

@@ -5,7 +5,6 @@
 
 package com.liferay.portal.service.persistence.impl;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -15,8 +14,6 @@ import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchResourcePermissionException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.ResourcePermissionTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -205,23 +202,9 @@ public class ResourcePermissionPersistenceImpl
 			int scope, OrderByComparator<ResourcePermission> orderByComparator)
 		throws NoSuchResourcePermissionException {
 
-		ResourcePermission resourcePermission = fetchByScope_First(
-			scope, orderByComparator);
-
-		if (resourcePermission != null) {
-			return resourcePermission;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("scope=");
-		sb.append(scope);
-
-		sb.append("}");
-
-		throw new NoSuchResourcePermissionException(sb.toString());
+		return _collectionPersistenceFinderByScope.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {new int[] {scope}},
+			orderByComparator);
 	}
 
 	/**
@@ -794,32 +777,10 @@ public class ResourcePermissionPersistenceImpl
 			OrderByComparator<ResourcePermission> orderByComparator)
 		throws NoSuchResourcePermissionException {
 
-		ResourcePermission resourcePermission = fetchByC_N_S_P_First(
-			companyId, name, scope, primKey, orderByComparator);
-
-		if (resourcePermission != null) {
-			return resourcePermission;
-		}
-
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", name=");
-		sb.append(name);
-
-		sb.append(", scope=");
-		sb.append(scope);
-
-		sb.append(", primKey=");
-		sb.append(primKey);
-
-		sb.append("}");
-
-		throw new NoSuchResourcePermissionException(sb.toString());
+		return _collectionPersistenceFinderByC_N_S_P.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, name, scope, new String[] {primKey}},
+			orderByComparator);
 	}
 
 	/**
@@ -1242,35 +1203,12 @@ public class ResourcePermissionPersistenceImpl
 			OrderByComparator<ResourcePermission> orderByComparator)
 		throws NoSuchResourcePermissionException {
 
-		ResourcePermission resourcePermission = fetchByC_N_S_R_V_First(
-			companyId, name, scope, roleId, viewActionId, orderByComparator);
-
-		if (resourcePermission != null) {
-			return resourcePermission;
-		}
-
-		StringBundler sb = new StringBundler(12);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", name=");
-		sb.append(name);
-
-		sb.append(", scope=");
-		sb.append(scope);
-
-		sb.append(", roleId=");
-		sb.append(roleId);
-
-		sb.append(", viewActionId=");
-		sb.append(viewActionId);
-
-		sb.append("}");
-
-		throw new NoSuchResourcePermissionException(sb.toString());
+		return _collectionPersistenceFinderByC_N_S_R_V.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {
+				companyId, name, scope, new long[] {roleId}, viewActionId
+			},
+			orderByComparator);
 	}
 
 	/**
@@ -2078,16 +2016,10 @@ public class ResourcePermissionPersistenceImpl
 	private static final String _SQL_COUNT_RESOURCEPERMISSION_WHERE =
 		"SELECT COUNT(resourcePermission) FROM ResourcePermission resourcePermission WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No ResourcePermission exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ResourcePermissionPersistenceImpl.class);
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return FinderCacheUtil.getFinderCache();
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2121737223
+// LIFERAY-SERVICE-BUILDER-HASH:737800981

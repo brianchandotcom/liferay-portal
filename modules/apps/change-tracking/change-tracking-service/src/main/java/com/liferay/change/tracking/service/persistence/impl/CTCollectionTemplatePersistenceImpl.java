@@ -483,13 +483,10 @@ public class CTCollectionTemplatePersistenceImpl
 	private static final String _SQL_COUNT_CTCOLLECTIONTEMPLATE_WHERE =
 		"SELECT COUNT(ctCollectionTemplate) FROM CTCollectionTemplate ctCollectionTemplate WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No CTCollectionTemplate exists with the key {";
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:774629522
+// LIFERAY-SERVICE-BUILDER-HASH:2120372469

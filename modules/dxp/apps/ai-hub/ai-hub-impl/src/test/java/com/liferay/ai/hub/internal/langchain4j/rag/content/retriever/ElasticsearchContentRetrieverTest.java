@@ -42,6 +42,8 @@ public class ElasticsearchContentRetrieverTest {
 
 	@Test
 	public void testSearch() {
+		SearchHit highScoreSearchHit = Mockito.mock(SearchHit.class);
+
 		HighlightField highlightField = Mockito.mock(HighlightField.class);
 
 		String fragment = RandomTestUtil.randomString();
@@ -51,8 +53,6 @@ public class ElasticsearchContentRetrieverTest {
 		).thenReturn(
 			List.of(fragment)
 		);
-
-		SearchHit highScoreSearchHit = Mockito.mock(SearchHit.class);
 
 		Mockito.when(
 			highScoreSearchHit.getHighlightFieldsMap()

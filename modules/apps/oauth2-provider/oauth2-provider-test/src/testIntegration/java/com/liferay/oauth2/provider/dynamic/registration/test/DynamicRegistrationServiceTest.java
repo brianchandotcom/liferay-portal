@@ -107,7 +107,7 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 	public void testDelete() throws Exception {
 		OAuth2Application oAuth2Application =
 			_oAuth2ApplicationLocalService.fetchOAuth2Application(
-				TestPropsValues.getCompanyId(), _APPLICATION_NAME_DELETE_ME);
+				TestPropsValues.getCompanyId(), "oauthDeleteMeApplication");
 
 		WebTarget registerWebTarget = getRegisterWebTarget(
 			oAuth2Application.getClientId());
@@ -117,7 +117,7 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 			_getToken(
 				_oAuth2ApplicationLocalService.fetchOAuth2Application(
 					TestPropsValues.getCompanyId(),
-					_APPLICATION_NAME_DYNAMIC_REGISTER_TEST)));
+					"oauthDynamicRegisterTestApplication")));
 
 		Response response = invocationBuilder.delete();
 
@@ -138,33 +138,23 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 
 	@Test
 	public void testOpenRegistrationAccepted() throws Exception {
-		String clientName = RandomTestUtil.randomString();
 		long companyId = TestPropsValues.getCompanyId();
 
 		WebTarget registerWebTarget = getRegisterWebTarget();
 
 		Invocation.Builder invocationBuilder = registerWebTarget.request();
 
-		String body = JSONUtil.put(
-			"client_name", clientName
-		).put(
-			"grant_types",
-			new String[] {OAuthConstants.AUTHORIZATION_CODE_GRANT}
-		).put(
-			"redirect_uris",
-			new String[] {
-				"https://" + RandomTestUtil.randomString() + ".com/callback"
-			}
-		).put(
-			"response_types", new String[] {OAuthConstants.CODE_RESPONSE_TYPE}
-		).toString();
+		JSONObject jsonObject = _createOpenRegistrationJSONObject(
+			"https://" + RandomTestUtil.randomString() + ".com/callback", true);
+
+		String clientName = jsonObject.getString("client_name");
 
 		try (CompanyConfigurationTemporarySwapper
 				companyConfigurationTemporarySwapper =
 					_createCompanyConfigurationTemporarySwapper(companyId)) {
 
 			Response response = invocationBuilder.method(
-				"post", Entity.json(body));
+				"post", Entity.json(jsonObject.toString()));
 
 			Assert.assertEquals(201, response.getStatus());
 
@@ -195,35 +185,27 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 		String allowedHost = RandomTestUtil.randomString();
 
 		_testOpenRegistrationEnforcesAllowedHosts(
-			allowedHost, allowedHost, 201);
+			allowedHost, 201, allowedHost);
 		_testOpenRegistrationEnforcesAllowedHosts(
-			allowedHost, RandomTestUtil.randomString(), 403);
-
-		String bracketedHost = RandomTestUtil.randomString();
+			allowedHost, 403, RandomTestUtil.randomString());
 
 		_testOpenRegistrationEnforcesAllowedHosts(
-			bracketedHost,
+			allowedHost, 201,
 			StringBundler.concat(
-				"[", bracketedHost, "]:",
-				PortalUtil.getPortalServerPort(false)),
-			201);
+				"[", allowedHost, "]:", PortalUtil.getPortalServerPort(false)));
 		_testOpenRegistrationEnforcesAllowedHosts(
 			StringBundler.concat(
-				"[", bracketedHost, "]:",
-				PortalUtil.getPortalServerPort(false)),
-			bracketedHost, 201);
-
-		String portHost = RandomTestUtil.randomString();
+				"[", allowedHost, "]:", PortalUtil.getPortalServerPort(false)),
+			201, allowedHost);
 
 		_testOpenRegistrationEnforcesAllowedHosts(
-			portHost, portHost + ":" + PortalUtil.getPortalServerPort(false),
-			201);
+			allowedHost, 201,
+			allowedHost + ":" + PortalUtil.getPortalServerPort(false));
 	}
 
 	@Test
 	public void testOpenRegistrationIsRejected() throws Exception {
 		_testOpenRegistrationIsRejected(
-			400, "invalid_client_metadata",
 			JSONUtil.put(
 				"client_name", RandomTestUtil.randomString()
 			).put(
@@ -232,29 +214,41 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 					"https://" + RandomTestUtil.randomString() + ".com/callback"
 				}
 			).toString(),
-			_PROPERTY_ALLOWED_GRANT_TYPES,
+			"invalid_client_metadata", 400,
+			"dynamic.registration.allowed.grant.types",
 			new String[] {OAuthConstants.CLIENT_CREDENTIALS_GRANT});
 		_testOpenRegistrationIsRejected(
-			400, "invalid_client_metadata", _body(), _PROPERTY_ALLOWED_SCOPES,
+			_createOpenRegistrationJSONObject(
+				"https://" + RandomTestUtil.randomString() + ".com/callback",
+				false
+			).toString(),
+			"invalid_client_metadata", 400,
+			"dynamic.registration.allowed.scopes",
 			new String[] {"Liferay.Headless.Delivery.everything"});
 
 		_testOpenRegistrationIsRejected(
-			400, "invalid_redirect_uri", _body(""),
-			_PROPERTY_ALLOWED_REDIRECT_URI_PATTERNS,
+			_createOpenRegistrationJSONObject(
+				StringPool.BLANK, true
+			).toString(),
+			"invalid_redirect_uri", 400,
+			"dynamic.registration.allowed.redirect.uri.patterns",
 			new String[] {"https://*.example.org/*"});
 		_testOpenRegistrationIsRejected(
-			400, "invalid_redirect_uri",
-			_body("https://attacker.test/callback"),
-			_PROPERTY_ALLOWED_REDIRECT_URI_PATTERNS,
+			_createOpenRegistrationJSONObject(
+				"https://attacker.test/callback", true
+			).toString(),
+			"invalid_redirect_uri", 400,
+			"dynamic.registration.allowed.redirect.uri.patterns",
 			new String[] {"https://*.example.org/*"});
 		_testOpenRegistrationIsRejected(
-			400, "invalid_redirect_uri",
-			_body("https://attacker.test/foo.example.org/callback"),
-			_PROPERTY_ALLOWED_REDIRECT_URI_PATTERNS,
+			_createOpenRegistrationJSONObject(
+				"https://attacker.test/foo.example.org/callback", true
+			).toString(),
+			"invalid_redirect_uri", 400,
+			"dynamic.registration.allowed.redirect.uri.patterns",
 			new String[] {"https://*.example.org/*"});
 
 		_testOpenRegistrationIsRejected(
-			400, "invalid_scope",
 			JSONUtil.put(
 				"client_name", RandomTestUtil.randomString()
 			).put(
@@ -263,19 +257,24 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 			).put(
 				"scope", "Liferay.Headless.Admin.Site.everything"
 			).toString(),
-			_PROPERTY_ALLOWED_SCOPES,
+			"invalid_scope", 400, "dynamic.registration.allowed.scopes",
 			new String[] {"Liferay.Headless.Delivery.everything"});
 
 		_testOpenRegistrationIsRejected(
-			400, "invalid_client_metadata", _body(), _PROPERTY_ALLOWED_SCOPES,
+			_createOpenRegistrationJSONObject(
+				"https://" + RandomTestUtil.randomString() + ".com/callback",
+				false
+			).toString(),
+			"invalid_client_metadata", 400,
+			"dynamic.registration.allowed.scopes",
 			new String[] {StringPool.STAR});
 
 		_testOpenRegistrationIsRejected(
-			401, null,
 			JSONUtil.put(
 				"client_name", RandomTestUtil.randomString()
 			).toString(),
-			_PROPERTY_REQUIRE_INITIAL_ACCESS_TOKEN, true);
+			null, 401, "dynamic.registration.require.initial.access.token",
+			true);
 	}
 
 	@Test
@@ -287,7 +286,7 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 			_getToken(
 				_oAuth2ApplicationLocalService.fetchOAuth2Application(
 					TestPropsValues.getCompanyId(),
-					_APPLICATION_NAME_DYNAMIC_REGISTER_TEST)));
+					"oauthDynamicRegisterTestApplication")));
 
 		Response response = invocationBuilder.method(
 			"post",
@@ -304,7 +303,7 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 			RandomTestUtil.randomString() + StringPool.SPACE +
 				RandomTestUtil.randomString();
 
-		JSONObject jsonObject = _createRegistrationJSONObject(
+		JSONObject jsonObject = _createAuthenticatedRegistrationJSONObject(
 			clientName, scope);
 
 		response = invocationBuilder.method(
@@ -375,22 +374,11 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 
 	@Test
 	public void testPromotesPublicAuthorizationCode() throws Exception {
-		String clientName = RandomTestUtil.randomString();
 		long companyId = TestPropsValues.getCompanyId();
 		WebTarget registerWebTarget = getRegisterWebTarget();
 
-		String body = JSONUtil.put(
-			"client_name", clientName
-		).put(
-			"grant_types",
-			new String[] {OAuthConstants.AUTHORIZATION_CODE_GRANT}
-		).put(
-			"redirect_uris",
-			new String[] {
-				"https://" + RandomTestUtil.randomString() + ".com/callback"
-			}
-		).put(
-			"response_types", new String[] {OAuthConstants.CODE_RESPONSE_TYPE}
+		String body = _createOpenRegistrationJSONObject(
+			"https://" + RandomTestUtil.randomString() + ".com/callback", true
 		).put(
 			"token_endpoint_auth_method",
 			OAuthConstants.TOKEN_ENDPOINT_AUTH_NONE
@@ -434,7 +422,7 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 	public void testPut() throws Exception {
 		OAuth2Application oAuth2Application =
 			_oAuth2ApplicationLocalService.fetchOAuth2Application(
-				TestPropsValues.getCompanyId(), _APPLICATION_NAME_DELETE_ME);
+				TestPropsValues.getCompanyId(), "oauthDeleteMeApplication");
 
 		WebTarget registerWebTarget = getRegisterWebTarget(
 			oAuth2Application.getClientId());
@@ -448,7 +436,7 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 		Response response = invocationBuilder.method(
 			"put",
 			Entity.json(
-				_createRegistrationJSONObject(
+				_createAuthenticatedRegistrationJSONObject(
 					clientName, RandomTestUtil.randomString()
 				).toString()));
 
@@ -476,52 +464,7 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 		return new DynamicRegistrationServiceTestPreparatorBundleActivator();
 	}
 
-	private String _body() {
-		return _body(
-			"https://" + RandomTestUtil.randomString() + ".com/callback");
-	}
-
-	private String _body(String redirectUri) {
-		return JSONUtil.put(
-			"client_name", RandomTestUtil.randomString()
-		).put(
-			"grant_types",
-			new String[] {OAuthConstants.AUTHORIZATION_CODE_GRANT}
-		).put(
-			"redirect_uris", new String[] {redirectUri}
-		).put(
-			"response_types", new String[] {OAuthConstants.CODE_RESPONSE_TYPE}
-		).toString();
-	}
-
-	private CompanyConfigurationTemporarySwapper
-			_createCompanyConfigurationTemporarySwapper(
-				long companyId, Object... overrides)
-		throws Exception {
-
-		Dictionary<String, Object> properties =
-			HashMapDictionaryBuilder.<String, Object>put(
-				_PROPERTY_ALLOWED_GRANT_TYPES, new String[] {StringPool.STAR}
-			).put(
-				_PROPERTY_ALLOWED_HOSTS, new String[] {StringPool.STAR}
-			).put(
-				_PROPERTY_ALLOWED_REDIRECT_URI_PATTERNS,
-				new String[] {StringPool.STAR}
-			).put(
-				_PROPERTY_ALLOWED_SCOPES, new String[] {StringPool.STAR}
-			).put(
-				_PROPERTY_REQUIRE_INITIAL_ACCESS_TOKEN, false
-			).build();
-
-		for (int i = 0; i < overrides.length; i += 2) {
-			properties.put((String)overrides[i], overrides[i + 1]);
-		}
-
-		return new CompanyConfigurationTemporarySwapper(
-			companyId, _CONFIGURATION_PID, properties);
-	}
-
-	private JSONObject _createRegistrationJSONObject(
+	private JSONObject _createAuthenticatedRegistrationJSONObject(
 		String clientName, String scope) {
 
 		return JSONUtil.put(
@@ -544,6 +487,60 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 		).put(
 			"scope", scope
 		);
+	}
+
+	private CompanyConfigurationTemporarySwapper
+			_createCompanyConfigurationTemporarySwapper(
+				long companyId, Object... keysAndValues)
+		throws Exception {
+
+		Dictionary<String, Object> properties =
+			HashMapDictionaryBuilder.<String, Object>put(
+				"dynamic.registration.allowed.grant.types",
+				new String[] {StringPool.STAR}
+			).put(
+				"dynamic.registration.allowed.hosts",
+				new String[] {StringPool.STAR}
+			).put(
+				"dynamic.registration.allowed.redirect.uri.patterns",
+				new String[] {StringPool.STAR}
+			).put(
+				"dynamic.registration.allowed.scopes",
+				new String[] {StringPool.STAR}
+			).put(
+				"dynamic.registration.require.initial.access.token", false
+			).build();
+
+		for (int i = 0; i < keysAndValues.length; i += 2) {
+			properties.put((String)keysAndValues[i], keysAndValues[i + 1]);
+		}
+
+		return new CompanyConfigurationTemporarySwapper(
+			companyId,
+			"com.liferay.oauth2.provider.rest.internal.configuration." +
+				"OAuth2DynamicRegistrationConfiguration",
+			properties);
+	}
+
+	private JSONObject _createOpenRegistrationJSONObject(
+		String redirectUri, boolean includeScope) {
+
+		JSONObject jsonObject = JSONUtil.put(
+			"client_name", RandomTestUtil.randomString()
+		).put(
+			"grant_types",
+			new String[] {OAuthConstants.AUTHORIZATION_CODE_GRANT}
+		).put(
+			"redirect_uris", new String[] {redirectUri}
+		).put(
+			"response_types", new String[] {OAuthConstants.CODE_RESPONSE_TYPE}
+		);
+
+		if (includeScope) {
+			jsonObject.put("scope", RandomTestUtil.randomString());
+		}
+
+		return jsonObject;
 	}
 
 	private OAuth2Application _getDynamicRegistratorOAuth2Application()
@@ -596,7 +593,7 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 	}
 
 	private void _testOpenRegistrationEnforcesAllowedHosts(
-			String allowedHost, String requestHost, int expectedStatus)
+			String allowedHost, int expectedStatus, String requestHost)
 		throws Exception {
 
 		WebTarget registerWebTarget = getRegisterWebTarget();
@@ -604,16 +601,23 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 		try (CompanyConfigurationTemporarySwapper
 				companyConfigurationTemporarySwapper =
 					_createCompanyConfigurationTemporarySwapper(
-						TestPropsValues.getCompanyId(), _PROPERTY_ALLOWED_HOSTS,
+						TestPropsValues.getCompanyId(),
+						"dynamic.registration.allowed.hosts",
 						new String[] {allowedHost},
-						_PROPERTY_TRUST_PROXY_HEADERS, true)) {
+						"dynamic.registration.trust.proxy.headers", true)) {
 
 			Invocation.Builder invocationBuilder = registerWebTarget.request();
 
 			invocationBuilder.header("X-Forwarded-For", requestHost);
 
 			Response response = invocationBuilder.method(
-				"post", Entity.json(_body()));
+				"post",
+				Entity.json(
+					_createOpenRegistrationJSONObject(
+						"https://" + RandomTestUtil.randomString() +
+							".com/callback",
+						true
+					).toString()));
 
 			Assert.assertEquals(expectedStatus, response.getStatus());
 
@@ -625,8 +629,8 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 	}
 
 	private void _testOpenRegistrationIsRejected(
-			int expectedStatus, String expectedError, String body,
-			Object... configOverrides)
+			String body, String expectedError, int expectedStatus,
+			Object... keysAndValues)
 		throws Exception {
 
 		WebTarget registerWebTarget = getRegisterWebTarget();
@@ -634,7 +638,7 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 		try (CompanyConfigurationTemporarySwapper
 				companyConfigurationTemporarySwapper =
 					_createCompanyConfigurationTemporarySwapper(
-						TestPropsValues.getCompanyId(), configOverrides)) {
+						TestPropsValues.getCompanyId(), keysAndValues)) {
 
 			Invocation.Builder invocationBuilder = registerWebTarget.request();
 
@@ -648,34 +652,6 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 			}
 		}
 	}
-
-	private static final String _APPLICATION_NAME_DELETE_ME =
-		"oauthDeleteMeApplication";
-
-	private static final String _APPLICATION_NAME_DYNAMIC_REGISTER_TEST =
-		"oauthDynamicRegisterTestApplication";
-
-	private static final String _CONFIGURATION_PID =
-		"com.liferay.oauth2.provider.rest.internal.configuration." +
-			"OAuth2DynamicRegistrationConfiguration";
-
-	private static final String _PROPERTY_ALLOWED_GRANT_TYPES =
-		"dynamic.registration.allowed.grant.types";
-
-	private static final String _PROPERTY_ALLOWED_HOSTS =
-		"dynamic.registration.allowed.hosts";
-
-	private static final String _PROPERTY_ALLOWED_REDIRECT_URI_PATTERNS =
-		"dynamic.registration.allowed.redirect.uri.patterns";
-
-	private static final String _PROPERTY_ALLOWED_SCOPES =
-		"dynamic.registration.allowed.scopes";
-
-	private static final String _PROPERTY_REQUIRE_INITIAL_ACCESS_TOKEN =
-		"dynamic.registration.require.initial.access.token";
-
-	private static final String _PROPERTY_TRUST_PROXY_HEADERS =
-		"dynamic.registration.trust.proxy.headers";
 
 	@Inject
 	private OAuth2ApplicationLocalService _oAuth2ApplicationLocalService;
@@ -693,9 +669,9 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 			User user = UserTestUtil.getAdminUser(companyId);
 
 			createOAuth2Application(
-				companyId, user, _APPLICATION_NAME_DYNAMIC_REGISTER_TEST);
+				companyId, user, "oauthDynamicRegisterTestApplication");
 			createOAuth2Application(
-				companyId, user, _APPLICATION_NAME_DELETE_ME);
+				companyId, user, "oauthDeleteMeApplication");
 		}
 
 	}

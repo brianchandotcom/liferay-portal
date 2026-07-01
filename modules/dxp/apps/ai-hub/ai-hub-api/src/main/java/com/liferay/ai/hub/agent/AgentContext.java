@@ -23,6 +23,7 @@ public class AgentContext {
 	public AgentContext(AgentContext.Builder builder) {
 		_agentDefinitionExternalReferenceCode =
 			builder._agentDefinitionExternalReferenceCode;
+		_asynchronous = builder._asynchronous;
 		_chatbotExternalReferenceCode = builder._chatbotExternalReferenceCode;
 		_companyId = builder._companyId;
 		_dtoConverterContext = builder._dtoConverterContext;
@@ -40,6 +41,10 @@ public class AgentContext {
 
 	public String getAgentDefinitionExternalReferenceCode() {
 		return _agentDefinitionExternalReferenceCode;
+	}
+
+	public boolean getAsynchronous() {
+		return _asynchronous;
 	}
 
 	public String getChatbotExternalReferenceCode() {
@@ -101,6 +106,12 @@ public class AgentContext {
 
 			_agentDefinitionExternalReferenceCode =
 				agentDefinitionExternalReferenceCode;
+
+			return this;
+		}
+
+		public Builder asynchronous(boolean asynchronous) {
+			_asynchronous = asynchronous;
 
 			return this;
 		}
@@ -194,6 +205,7 @@ public class AgentContext {
 		}
 
 		private String _agentDefinitionExternalReferenceCode;
+		private boolean _asynchronous;
 		private String _chatbotExternalReferenceCode;
 		private long _companyId;
 		private DTOConverterContext _dtoConverterContext;
@@ -211,6 +223,7 @@ public class AgentContext {
 	}
 
 	private final String _agentDefinitionExternalReferenceCode;
+	private final boolean _asynchronous;
 	private final String _chatbotExternalReferenceCode;
 	private final long _companyId;
 	private final DTOConverterContext _dtoConverterContext;

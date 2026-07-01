@@ -5,8 +5,8 @@
 
 package com.liferay.portal.security.key.spi.secret;
 
+import com.liferay.portal.security.key.secret.Secret;
 import com.liferay.portal.security.key.secret.SecretManagerException;
-import com.liferay.portal.security.key.secret.SecureSecret;
 import com.liferay.portal.security.key.spi.SecurityModuleProvider;
 
 import java.util.List;
@@ -20,13 +20,13 @@ public interface SecretVaultProvider extends SecurityModuleProvider {
 	public void deleteSecret(long companyId, String identifier)
 		throws SecretManagerException;
 
-	public SecureSecret getSecret(long companyId, String identifier)
+	public Secret getSecret(long companyId, String identifier)
 		throws SecretManagerException;
 
 	public List<String> getSecretIdentifiers(long companyId)
 		throws SecretManagerException;
 
-	public void putSecret(long companyId, SecureSecret secureSecret)
+	public void putSecret(long companyId, Secret secret)
 		throws SecretManagerException;
 
 }

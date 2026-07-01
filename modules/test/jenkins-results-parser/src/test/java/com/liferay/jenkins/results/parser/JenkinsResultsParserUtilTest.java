@@ -13,7 +13,6 @@ import java.net.URI;
 import java.net.URL;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Properties;
 
 import org.json.JSONArray;
@@ -329,17 +328,13 @@ public class JenkinsResultsParserUtilTest
 	@Test(timeout = 30000)
 	public void testInvokeJenkinsBuildReadTimeout() throws Exception {
 		try (ServerSocket serverSocket = _createServerSocket()) {
-			int port = serverSocket.getLocalPort();
-
 			JenkinsMaster jenkinsMaster = Mockito.mock(JenkinsMaster.class);
 
 			Mockito.when(
 				jenkinsMaster.getRemoteURL()
 			).thenReturn(
-				"http://localhost:" + port + "/"
+				"http://localhost:" + serverSocket.getLocalPort() + "/"
 			);
-
-			Map<String, String> buildParameters = new HashMap<>();
 
 			long startTime = System.currentTimeMillis();
 
@@ -347,7 +342,7 @@ public class JenkinsResultsParserUtilTest
 
 			try {
 				JenkinsResultsParserUtil.invokeJenkinsBuild(
-					jenkinsMaster, "test-job", buildParameters, 2000);
+					jenkinsMaster, "test-job", new HashMap<>(), 2000);
 			}
 			catch (RuntimeException runtimeException) {
 				thrown = true;

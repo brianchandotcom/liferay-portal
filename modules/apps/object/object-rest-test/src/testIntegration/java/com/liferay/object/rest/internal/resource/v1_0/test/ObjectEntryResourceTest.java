@@ -14,6 +14,7 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetVocabularyGroupRelLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.depot.constants.DepotConstants;
@@ -20829,6 +20830,120 @@ public class ObjectEntryResourceTest {
 			));
 
 		_groupLocalService.deleteGroup(childGroup);
+
+		// Can add a category whose vocabulary is shared to all spaces
+
+		AssetVocabulary allSpacesAssetVocabulary =
+			_assetVocabularyLocalService.addVocabulary(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), new ServiceContext());
+
+		AssetVocabularyGroupRelLocalServiceUtil.addAssetVocabularyGroupRel(
+			GroupConstants.ANY_PARENT_GROUP_ID,
+			allSpacesAssetVocabulary.getVocabularyId(),
+			DepotConstants.TYPE_SPACE);
+
+		TaxonomyCategory allSpacesTaxonomyCategory =
+			_postTaxonomyVocabularyTaxonomyCategory(
+				allSpacesAssetVocabulary.getGroupId(),
+				allSpacesAssetVocabulary.getVocabularyId());
+
+		Assert.assertNotNull(
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
+				).put(
+					"taxonomyCategoryIds",
+					JSONUtil.put(allSpacesTaxonomyCategory.getId())
+				).toString(),
+				_getEndpoint(_siteScopedObjectDefinition1, _testGroupId),
+				Http.Method.POST
+			).get(
+				"id"
+			));
+
+		_assetVocabularyLocalService.deleteVocabulary(allSpacesAssetVocabulary);
+
+		// Can add a category whose vocabulary is shared to the entry group
+
+		AssetVocabulary sharedAssetVocabulary =
+			_assetVocabularyLocalService.addVocabulary(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), new ServiceContext());
+
+		AssetVocabularyGroupRelLocalServiceUtil.addAssetVocabularyGroupRel(
+			_testGroupId, sharedAssetVocabulary.getVocabularyId(),
+			DepotConstants.TYPE_SPACE);
+
+		TaxonomyCategory sharedTaxonomyCategory =
+			_postTaxonomyVocabularyTaxonomyCategory(
+				sharedAssetVocabulary.getGroupId(),
+				sharedAssetVocabulary.getVocabularyId());
+
+		Assert.assertNotNull(
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
+				).put(
+					"taxonomyCategoryIds",
+					JSONUtil.put(sharedTaxonomyCategory.getId())
+				).toString(),
+				_getEndpoint(_siteScopedObjectDefinition1, _testGroupId),
+				Http.Method.POST
+			).get(
+				"id"
+			));
+
+		_assetVocabularyLocalService.deleteVocabulary(sharedAssetVocabulary);
+
+		// Can add a category by brief whose vocabulary is shared to all spaces
+
+		AssetVocabulary briefAssetVocabulary =
+			_assetVocabularyLocalService.addVocabulary(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), new ServiceContext());
+
+		AssetVocabularyGroupRelLocalServiceUtil.addAssetVocabularyGroupRel(
+			GroupConstants.ANY_PARENT_GROUP_ID,
+			briefAssetVocabulary.getVocabularyId(), DepotConstants.TYPE_SPACE);
+
+		TaxonomyCategory briefTaxonomyCategory =
+			_postTaxonomyVocabularyTaxonomyCategory(
+				briefAssetVocabulary.getGroupId(),
+				briefAssetVocabulary.getVocabularyId());
+
+		Assert.assertNotNull(
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
+				).put(
+					"taxonomyCategoryBriefs",
+					JSONUtil.putAll(
+						JSONUtil.put(
+							"parentTaxonomyVocabulary",
+							JSONUtil.put(
+								"externalReferenceCode",
+								briefAssetVocabulary.getExternalReferenceCode())
+						).put(
+							"scope",
+							JSONUtil.put(
+								"externalReferenceCode",
+								_group.getExternalReferenceCode()
+							).put(
+								"type", "Site"
+							)
+						).put(
+							"taxonomyCategoryExternalReferenceCode",
+							briefTaxonomyCategory.getExternalReferenceCode()
+						))
+				).toString(),
+				_getEndpoint(_siteScopedObjectDefinition1, _testGroupId),
+				Http.Method.POST
+			).get(
+				"id"
+			));
+
+		_assetVocabularyLocalService.deleteVocabulary(briefAssetVocabulary);
 
 		// Cannot add a category to a company-scoped entry
 

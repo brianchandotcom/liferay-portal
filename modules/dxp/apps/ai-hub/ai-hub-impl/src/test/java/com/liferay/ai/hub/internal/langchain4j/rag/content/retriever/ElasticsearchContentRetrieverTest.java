@@ -42,6 +42,9 @@ public class ElasticsearchContentRetrieverTest {
 
 	@Test
 	public void testSearch() {
+		SearchSearchResponse searchSearchResponse = Mockito.mock(
+			SearchSearchResponse.class);
+
 		SearchHits searchHits = Mockito.mock(SearchHits.class);
 
 		SearchHit lowScoreSearchHit = Mockito.mock(SearchHit.class);
@@ -81,9 +84,6 @@ public class ElasticsearchContentRetrieverTest {
 		).thenReturn(
 			List.of(lowScoreSearchHit, highScoreSearchHit)
 		);
-
-		SearchSearchResponse searchSearchResponse = Mockito.mock(
-			SearchSearchResponse.class);
 
 		Mockito.when(
 			searchSearchResponse.getSearchHits()

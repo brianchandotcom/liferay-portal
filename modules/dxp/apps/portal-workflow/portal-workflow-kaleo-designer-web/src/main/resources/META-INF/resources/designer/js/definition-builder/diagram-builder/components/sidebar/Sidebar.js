@@ -148,6 +148,11 @@ if (Liferay.FeatureFlags['LPD-62272']) {
 		showDeleteButton: true,
 		title: Liferay.Language.get('ai-decision'),
 	};
+	contents['ai-hub-agent'] = {
+		sections: ['nodeInformation', 'aiHubAgentDefinition'],
+		showDeleteButton: true,
+		title: Liferay.Language.get('ai-hub-agent'),
+	};
 	contents['http-request'] = {
 		sections: [
 			'nodeInformation',

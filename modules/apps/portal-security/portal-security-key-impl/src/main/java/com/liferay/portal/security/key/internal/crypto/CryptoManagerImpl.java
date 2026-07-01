@@ -540,9 +540,11 @@ public class CryptoManagerImpl implements CryptoManager {
 			_log.info(
 				StringBundler.concat(
 					"Operation ", operation, " for company ID ", companyId,
-					" used security function ",
-					serviceIndicator.getSecurityFunctionName(), " (approved ",
-					serviceIndicator.isApproved(), ")"));
+					" used ",
+					serviceIndicator.isApproved() ? "an approved " :
+						"a nonapproved ",
+					"security function ",
+					serviceIndicator.getSecurityFunctionName()));
 		}
 	}
 

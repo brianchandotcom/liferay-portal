@@ -15,9 +15,9 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.security.key.KeyReference;
+import com.liferay.portal.security.key.secret.Secret;
 import com.liferay.portal.security.key.secret.SecretManager;
 import com.liferay.portal.security.key.secret.SecretManagerException;
-import com.liferay.portal.security.key.secret.SecureSecret;
 import com.liferay.portal.security.key.spi.ModuleStatus;
 import com.liferay.portal.security.key.spi.profile.KeyManagerProfile;
 import com.liferay.portal.security.key.spi.profile.KeyManagerProfileRegistry;
@@ -139,7 +139,7 @@ public class SecretManagerImpl implements SecretManager {
 	}
 
 	@Override
-	public SecureSecret getSecret(long companyId, KeyReference keyReference)
+	public Secret getSecret(long companyId, KeyReference keyReference)
 		throws SecretManagerException {
 
 		if (keyReference == null) {
@@ -165,15 +165,15 @@ public class SecretManagerImpl implements SecretManager {
 	}
 
 	@Override
-	public KeyReference putSecret(long companyId, SecureSecret secureSecret)
+	public KeyReference putSecret(long companyId, Secret secret)
 		throws SecretManagerException {
 
-		if (secureSecret == null) {
-			throw new IllegalArgumentException("Secure secret is null");
+		if (secret == null) {
+			throw new IllegalArgumentException("Secret is null");
 		}
 
 		try {
-			KeyReference keyReference = secureSecret.getKeyReference();
+			KeyReference keyReference = secret.getKeyReference();
 
 			String providerId = _getSecretVaultProviderId(
 				companyId, keyReference.getProviderId());
@@ -181,7 +181,7 @@ public class SecretManagerImpl implements SecretManager {
 			SecretVaultProvider secretVaultProvider = _getSecretVaultProvider(
 				companyId, providerId);
 
-			secretVaultProvider.putSecret(companyId, secureSecret);
+			secretVaultProvider.putSecret(companyId, secret);
 
 			return new KeyReference(
 				keyReference.getIdentifier(), providerId,

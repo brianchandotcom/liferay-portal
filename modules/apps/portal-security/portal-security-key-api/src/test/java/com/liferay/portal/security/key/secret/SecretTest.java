@@ -20,7 +20,7 @@ import org.junit.Test;
  * @author Tomas Polesovsky
  * @author Christopher Kian
  */
-public class SecureSecretTest {
+public class SecretTest {
 
 	@ClassRule
 	@Rule
@@ -31,24 +31,23 @@ public class SecureSecretTest {
 	public void testCharsRoundTripPreservesUnicodeContent() {
 		String data = "héllo 世界";
 
-		SecureSecret secureSecret = new SecureSecret(
-			_createKeyReference(), data);
+		Secret secret = new Secret(_createKeyReference(), data);
 
 		Assert.assertArrayEquals(
-			data.getBytes(StandardCharsets.UTF_8), secureSecret.getBytes());
-		Assert.assertArrayEquals(data.toCharArray(), secureSecret.getChars());
+			data.getBytes(StandardCharsets.UTF_8), secret.getBytes());
+		Assert.assertArrayEquals(data.toCharArray(), secret.getChars());
 	}
 
 	@Test
 	public void testCharsZeroedOnDestroy() {
-		SecureSecret secureSecret = new SecureSecret(
+		Secret secret = new Secret(
 			_createKeyReference(), RandomTestUtil.randomString());
 
-		char[] chars = secureSecret.getChars();
+		char[] chars = secret.getChars();
 
 		Assert.assertTrue(chars.length > 0);
 
-		secureSecret.close();
+		secret.close();
 
 		for (char c : chars) {
 			Assert.assertEquals('\0', c);
@@ -57,22 +56,22 @@ public class SecureSecretTest {
 
 	@Test
 	public void testDestroyIsIdempotent() {
-		SecureSecret secureSecret = new SecureSecret(
+		Secret secret = new Secret(
 			RandomTestUtil.randomBytes(), _createKeyReference());
 
-		secureSecret.destroy();
-		secureSecret.destroy();
+		secret.destroy();
+		secret.destroy();
 
-		Assert.assertTrue(secureSecret.isDestroyed());
+		Assert.assertTrue(secret.isDestroyed());
 	}
 
 	@Test
 	public void testGetCharsCachesResult() {
-		SecureSecret secureSecret = new SecureSecret(
+		Secret secret = new Secret(
 			_createKeyReference(), RandomTestUtil.randomString());
 
-		char[] chars1 = secureSecret.getChars();
-		char[] chars2 = secureSecret.getChars();
+		char[] chars1 = secret.getChars();
+		char[] chars2 = secret.getChars();
 
 		Assert.assertSame(chars1, chars2);
 	}
@@ -81,39 +80,36 @@ public class SecureSecretTest {
 	public void testGetCharsFromBytes() {
 		String data = RandomTestUtil.randomString();
 
-		SecureSecret secureSecret = new SecureSecret(
+		Secret secret = new Secret(
 			data.getBytes(StandardCharsets.UTF_8), _createKeyReference());
 
-		Assert.assertArrayEquals(data.toCharArray(), secureSecret.getChars());
+		Assert.assertArrayEquals(data.toCharArray(), secret.getChars());
 	}
 
 	@Test
 	public void testGetThrowsAfterDestroy() {
-		SecureSecret secureSecret = new SecureSecret(
+		Secret secret = new Secret(
 			RandomTestUtil.randomBytes(), _createKeyReference());
 
-		secureSecret.close();
+		secret.close();
 
-		Assert.assertThrows(
-			IllegalStateException.class, secureSecret::getBytes);
-		Assert.assertThrows(
-			IllegalStateException.class, secureSecret::getChars);
+		Assert.assertThrows(IllegalStateException.class, secret::getBytes);
+		Assert.assertThrows(IllegalStateException.class, secret::getChars);
 	}
 
 	@Test
 	public void testRejectsInvalidUTF8WhenDecoding() {
-		SecureSecret secureSecret = new SecureSecret(
+		Secret secret = new Secret(
 			new byte[] {(byte)0xC0, (byte)0xC0}, _createKeyReference());
 
-		Assert.assertThrows(
-			IllegalArgumentException.class, secureSecret::getChars);
+		Assert.assertThrows(IllegalArgumentException.class, secret::getChars);
 	}
 
 	@Test
 	public void testRejectsLoneSurrogateChar() {
 		Assert.assertThrows(
 			IllegalArgumentException.class,
-			() -> new SecureSecret(
+			() -> new Secret(
 				_createKeyReference(), new String(new char[] {'\uD800'})));
 	}
 
@@ -121,61 +117,58 @@ public class SecureSecretTest {
 	public void testRejectsNullKeyReference() {
 		Assert.assertThrows(
 			IllegalArgumentException.class,
-			() -> new SecureSecret(null, RandomTestUtil.randomString()));
+			() -> new Secret(null, RandomTestUtil.randomString()));
 		Assert.assertThrows(
 			IllegalArgumentException.class,
-			() -> new SecureSecret(RandomTestUtil.randomBytes(), null));
+			() -> new Secret(RandomTestUtil.randomBytes(), null));
 	}
 
 	@Test
-	public void testSecureSecretFromString() {
+	public void testSecretFromString() {
 		String data = RandomTestUtil.randomString();
 
-		SecureSecret secureSecret = new SecureSecret(
-			_createKeyReference(), data);
+		Secret secret = new Secret(_createKeyReference(), data);
 
-		Assert.assertArrayEquals(data.toCharArray(), secureSecret.getChars());
-		Assert.assertTrue(secureSecret.getBytes().length > 0);
+		Assert.assertArrayEquals(data.toCharArray(), secret.getChars());
+		Assert.assertTrue(secret.getBytes().length > 0);
 	}
 
 	@Test
-	public void testSecureSecretImmutable() {
+	public void testSecretImmutable() {
 		byte[] data = RandomTestUtil.randomBytes();
 
 		byte originalFirstByte = data[0];
-		SecureSecret secureSecret = new SecureSecret(
-			data, _createKeyReference());
+		Secret secret = new Secret(data, _createKeyReference());
 
 		// Constructor must copy the input
 
 		data[0] = (byte)~originalFirstByte;
 
-		Assert.assertEquals(originalFirstByte, secureSecret.getBytes()[0]);
+		Assert.assertEquals(originalFirstByte, secret.getBytes()[0]);
 	}
 
 	@Test
-	public void testSecureSecretReturnsSameInstance() {
-		SecureSecret secureSecret = new SecureSecret(
+	public void testSecretReturnsSameInstance() {
+		Secret secret = new Secret(
 			RandomTestUtil.randomBytes(), _createKeyReference());
 
-		byte[] internalBytes1 = secureSecret.getBytes();
-		byte[] internalBytes2 = secureSecret.getBytes();
+		byte[] internalBytes1 = secret.getBytes();
+		byte[] internalBytes2 = secret.getBytes();
 
 		Assert.assertSame(internalBytes1, internalBytes2);
 	}
 
 	@Test
-	public void testSecureSecretZeroing() {
+	public void testSecretZeroing() {
 		byte[] data = RandomTestUtil.randomBytes();
 
-		SecureSecret secureSecret = new SecureSecret(
-			data, _createKeyReference());
+		Secret secret = new Secret(data, _createKeyReference());
 
-		byte[] internalBytes = secureSecret.getBytes();
+		byte[] internalBytes = secret.getBytes();
 
 		Assert.assertArrayEquals(data, internalBytes);
 
-		secureSecret.close();
+		secret.close();
 
 		for (byte b : internalBytes) {
 			Assert.assertEquals(0, b);

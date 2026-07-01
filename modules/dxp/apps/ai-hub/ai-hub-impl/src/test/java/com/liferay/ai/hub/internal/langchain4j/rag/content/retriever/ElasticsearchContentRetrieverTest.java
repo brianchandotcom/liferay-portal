@@ -100,14 +100,6 @@ public class ElasticsearchContentRetrieverTest {
 			searchSearchResponse
 		);
 
-		Query query = Mockito.mock(Query.class);
-
-		Mockito.when(
-			query.text()
-		).thenReturn(
-			RandomTestUtil.randomString()
-		);
-
 		ElasticsearchContentRetriever elasticsearchContentRetriever =
 			new ElasticsearchContentRetriever(
 				Mockito.mock(
@@ -118,6 +110,14 @@ public class ElasticsearchContentRetrieverTest {
 				new String[] {RandomTestUtil.randomString()},
 				searchEngineAdapter, RandomTestUtil.randomLong(),
 				RandomTestUtil.randomLong());
+
+		Query query = Mockito.mock(Query.class);
+
+		Mockito.when(
+			query.text()
+		).thenReturn(
+			RandomTestUtil.randomString()
+		);
 
 		List<Content> contents = elasticsearchContentRetriever.search(query);
 

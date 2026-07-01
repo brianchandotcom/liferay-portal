@@ -338,22 +338,17 @@ public class JenkinsResultsParserUtilTest
 
 			long startTime = System.currentTimeMillis();
 
-			boolean thrown = false;
-
 			try {
 				JenkinsResultsParserUtil.invokeJenkinsBuild(
 					jenkinsMaster, "test-job", new HashMap<>(), 2000);
-			}
-			catch (RuntimeException runtimeException) {
-				thrown = true;
-			}
 
-			long duration = System.currentTimeMillis() - startTime;
-
-			if (!thrown) {
 				errorCollector.addError(
 					new Throwable("A RuntimeException was not thrown"));
 			}
+			catch (RuntimeException runtimeException) {
+			}
+
+			long duration = System.currentTimeMillis() - startTime;
 
 			if (duration < 1500) {
 				errorCollector.addError(

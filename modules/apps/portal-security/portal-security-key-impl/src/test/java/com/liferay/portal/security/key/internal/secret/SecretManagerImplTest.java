@@ -11,8 +11,8 @@ import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.security.key.KeyReference;
+import com.liferay.portal.security.key.secret.Secret;
 import com.liferay.portal.security.key.secret.SecretManagerException;
-import com.liferay.portal.security.key.secret.SecureSecret;
 import com.liferay.portal.security.key.spi.ModuleStatus;
 import com.liferay.portal.security.key.spi.profile.KeyManagerProfile;
 import com.liferay.portal.security.key.spi.profile.KeyManagerProfileRegistry;
@@ -137,7 +137,7 @@ public class SecretManagerImplTest {
 		Mockito.when(
 			_secretVaultProvider.getSecret(companyId, identifier)
 		).thenReturn(
-			new SecureSecret(
+			new Secret(
 				RandomTestUtil.randomBytes(),
 				_secretReference(providerId, identifier))
 		);
@@ -211,17 +211,17 @@ public class SecretManagerImplTest {
 		long companyId = RandomTestUtil.randomLong();
 		String identifier = RandomTestUtil.randomString();
 
-		try (SecureSecret secureSecret = new SecureSecret(
+		try (Secret secret = new Secret(
 				_secretReference(providerId, identifier),
 				RandomTestUtil.randomString())) {
 
-			_secretManagerImpl.putSecret(companyId, secureSecret);
+			_secretManagerImpl.putSecret(companyId, secret);
 		}
 
 		Mockito.verify(
 			_secretVaultProvider
 		).putSecret(
-			Mockito.eq(companyId), Mockito.any(SecureSecret.class)
+			Mockito.eq(companyId), Mockito.any(Secret.class)
 		);
 	}
 
@@ -274,12 +274,12 @@ public class SecretManagerImplTest {
 			true
 		);
 
-		try (SecureSecret secureSecret = new SecureSecret(
+		try (Secret secret = new Secret(
 				_secretReference(
 					StringPool.STAR, RandomTestUtil.randomString()),
 				RandomTestUtil.randomString())) {
 
-			_secretManagerImpl.putSecret(companyId, secureSecret);
+			_secretManagerImpl.putSecret(companyId, secret);
 		}
 
 		if (companyId == CompanyConstants.SYSTEM) {

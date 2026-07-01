@@ -23,9 +23,9 @@ import javax.security.auth.Destroyable;
  * @author Tomas Polesovsky
  * @author Christopher Kian
  */
-public final class SecureSecret implements AutoCloseable, Destroyable {
+public final class Secret implements AutoCloseable, Destroyable {
 
-	public SecureSecret(byte[] bytes, KeyReference keyReference) {
+	public Secret(byte[] bytes, KeyReference keyReference) {
 		if (keyReference == null) {
 			throw new IllegalArgumentException(
 				"Key reference must not be null");
@@ -41,7 +41,7 @@ public final class SecureSecret implements AutoCloseable, Destroyable {
 		_keyReference = keyReference;
 	}
 
-	public SecureSecret(char[] chars, KeyReference keyReference) {
+	public Secret(char[] chars, KeyReference keyReference) {
 		if (keyReference == null) {
 			throw new IllegalArgumentException(
 				"Key reference must not be null");
@@ -57,7 +57,7 @@ public final class SecureSecret implements AutoCloseable, Destroyable {
 		_keyReference = keyReference;
 	}
 
-	public SecureSecret(KeyReference keyReference, String value) {
+	public Secret(KeyReference keyReference, String value) {
 		if (keyReference == null) {
 			throw new IllegalArgumentException(
 				"Key reference must not be null");

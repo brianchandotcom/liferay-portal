@@ -28,10 +28,10 @@ public interface SecretManager {
 	public List<String> getProviderIds(long companyId)
 		throws SecretManagerException;
 
-	public SecureSecret getSecret(long companyId, KeyReference keyReference)
+	public Secret getSecret(long companyId, KeyReference keyReference)
 		throws SecretManagerException;
 
-	public KeyReference putSecret(long companyId, SecureSecret secureSecret)
+	public KeyReference putSecret(long companyId, Secret secret)
 		throws SecretManagerException;
 
 }

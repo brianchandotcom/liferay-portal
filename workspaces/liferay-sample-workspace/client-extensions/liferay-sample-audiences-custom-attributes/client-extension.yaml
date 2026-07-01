@@ -12,6 +12,6 @@ liferay-sample-audiences-custom-attributes:
         -   touchDevice
     type: audiencesCustomAttributes
     types:
-        -   string
         -   boolean
+        -   string
     url: custom-attributes.*.js

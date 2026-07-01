@@ -32,44 +32,46 @@ public class TunnelAuthenticationManagerImplTest {
 	public void test() throws Exception {
 		try (SafeCloseable safeCloseable1 =
 				PropsValuesTestUtil.swapWithSafeCloseable(
-					"TUNNELING_SERVLET_SHARED_SECRET", _SHARED_SECRET);
+					"FIPS_ENABLED", false);
 			SafeCloseable safeCloseable2 =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"TUNNELING_SERVLET_ENCRYPTION_ALGORITHM", "Blowfish");
+			SafeCloseable safeCloseable3 =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"TUNNELING_SERVLET_SHARED_SECRET", _SHARED_SECRET);
+			SafeCloseable safeCloseable4 =
 				PropsValuesTestUtil.swapWithSafeCloseable(
 					"TUNNELING_SERVLET_SHARED_SECRET_HEX", false)) {
 
-			try (SafeCloseable safeCloseable3 =
-					PropsValuesTestUtil.swapWithSafeCloseable(
-						"TUNNELING_SERVLET_ENCRYPTION_ALGORITHM", "Blowfish");
-				SafeCloseable safeCloseable4 =
-					PropsValuesTestUtil.swapWithSafeCloseable(
-						"FIPS_ENABLED", false)) {
+			Key key = _getSharedSecretKey();
 
-				Key key = _getSharedSecretKey();
+			Assert.assertEquals("Blowfish", key.getAlgorithm());
+		}
 
-				Assert.assertEquals("Blowfish", key.getAlgorithm());
-			}
+		try (SafeCloseable safeCloseable1 =
+				PropsValuesTestUtil.swapWithSafeCloseable("FIPS_ENABLED", true);
+			SafeCloseable safeCloseable2 =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"TUNNELING_SERVLET_SHARED_SECRET", _SHARED_SECRET);
+			SafeCloseable safeCloseable3 =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"TUNNELING_SERVLET_SHARED_SECRET_HEX", false)) {
 
-			try (SafeCloseable safeCloseable3 =
+			try (SafeCloseable safeCloseable4 =
 					PropsValuesTestUtil.swapWithSafeCloseable(
-						"TUNNELING_SERVLET_ENCRYPTION_ALGORITHM", "Blowfish");
-				SafeCloseable safeCloseable4 =
-					PropsValuesTestUtil.swapWithSafeCloseable(
-						"FIPS_ENABLED", true)) {
-
-				Assert.assertThrows(
-					SecurityException.class, () -> _getSharedSecretKey());
-			}
-
-			try (SafeCloseable safeCloseable3 =
-					PropsValuesTestUtil.swapWithSafeCloseable(
-						"TUNNELING_SERVLET_ENCRYPTION_ALGORITHM", "AES");
-				SafeCloseable safeCloseable4 =
-					PropsValuesTestUtil.swapWithSafeCloseable(
-						"FIPS_ENABLED", true)) {
+						"TUNNELING_SERVLET_ENCRYPTION_ALGORITHM", "AES")) {
 
 				Key key = _getSharedSecretKey();
 
 				Assert.assertEquals("AES", key.getAlgorithm());
+			}
+
+			try (SafeCloseable safeCloseable4 =
+					PropsValuesTestUtil.swapWithSafeCloseable(
+						"TUNNELING_SERVLET_ENCRYPTION_ALGORITHM", "Blowfish")) {
+
+				Assert.assertThrows(
+					SecurityException.class, () -> _getSharedSecretKey());
 			}
 		}
 	}

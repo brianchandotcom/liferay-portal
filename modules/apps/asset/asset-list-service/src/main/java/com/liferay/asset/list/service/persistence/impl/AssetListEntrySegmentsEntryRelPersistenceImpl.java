@@ -13,7 +13,6 @@ import com.liferay.asset.list.model.impl.AssetListEntrySegmentsEntryRelModelImpl
 import com.liferay.asset.list.service.persistence.AssetListEntrySegmentsEntryRelPersistence;
 import com.liferay.asset.list.service.persistence.AssetListEntrySegmentsEntryRelUtil;
 import com.liferay.asset.list.service.persistence.impl.constants.AssetListPersistenceConstants;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -21,8 +20,6 @@ import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -622,27 +619,10 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 			OrderByComparator<AssetListEntrySegmentsEntryRel> orderByComparator)
 		throws NoSuchEntrySegmentsEntryRelException {
 
-		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel =
-			fetchByA_S_C_First(
-				assetListEntryId, segmentsEntryId, orderByComparator);
-
-		if (assetListEntrySegmentsEntryRel != null) {
-			return assetListEntrySegmentsEntryRel;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("assetListEntryId=");
-		sb.append(assetListEntryId);
-
-		sb.append(", segmentsEntryId=");
-		sb.append(segmentsEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchEntrySegmentsEntryRelException(sb.toString());
+		return _collectionPersistenceFinderByA_S_C.findFirst(
+			finderCache,
+			new Object[] {assetListEntryId, new long[] {segmentsEntryId}},
+			orderByComparator);
 	}
 
 	/**
@@ -1085,7 +1065,7 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 			_SQL_SELECT_ASSETLISTENTRYSEGMENTSENTRYREL_WHERE,
 			_SQL_COUNT_ASSETLISTENTRYSEGMENTSENTRYREL_WHERE,
 			AssetListEntrySegmentsEntryRelModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX, "", "",
+			_ENTITY_ALIAS_PREFIX, "", "", null,
 			new FinderColumn<>(
 				"assetListEntrySegmentsEntryRel.", "uuid", "uuid_",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -1131,7 +1111,7 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 				_SQL_SELECT_ASSETLISTENTRYSEGMENTSENTRYREL_WHERE,
 				_SQL_COUNT_ASSETLISTENTRYSEGMENTSENTRYREL_WHERE,
 				AssetListEntrySegmentsEntryRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "", "",
+				_ENTITY_ALIAS_PREFIX, "", "", null,
 				new FinderColumn<>(
 					"assetListEntrySegmentsEntryRel.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -1166,7 +1146,7 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 				_SQL_SELECT_ASSETLISTENTRYSEGMENTSENTRYREL_WHERE,
 				_SQL_COUNT_ASSETLISTENTRYSEGMENTSENTRYREL_WHERE,
 				AssetListEntrySegmentsEntryRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "", "",
+				_ENTITY_ALIAS_PREFIX, "", "", null,
 				new FinderColumn<>(
 					"assetListEntrySegmentsEntryRel.", "assetListEntryId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1197,7 +1177,7 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 				_SQL_SELECT_ASSETLISTENTRYSEGMENTSENTRYREL_WHERE,
 				_SQL_COUNT_ASSETLISTENTRYSEGMENTSENTRYREL_WHERE,
 				AssetListEntrySegmentsEntryRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "", "",
+				_ENTITY_ALIAS_PREFIX, "", "", null,
 				new FinderColumn<>(
 					"assetListEntrySegmentsEntryRel.", "segmentsEntryId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1242,7 +1222,7 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 			_SQL_SELECT_ASSETLISTENTRYSEGMENTSENTRYREL_WHERE,
 			_SQL_COUNT_ASSETLISTENTRYSEGMENTSENTRYREL_WHERE,
 			AssetListEntrySegmentsEntryRelModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX, "", "",
+			_ENTITY_ALIAS_PREFIX, "", "", null,
 			new FinderColumn<>(
 				"assetListEntrySegmentsEntryRel.", "assetListEntryId",
 				FinderColumn.Type.LONG, "=", true, true,
@@ -1312,12 +1292,6 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 		_SQL_COUNT_ASSETLISTENTRYSEGMENTSENTRYREL_WHERE =
 			"SELECT COUNT(assetListEntrySegmentsEntryRel) FROM AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No AssetListEntrySegmentsEntryRel exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		AssetListEntrySegmentsEntryRelPersistenceImpl.class);
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"uuid", "assetListEntrySegmentsEntryRelId"});
 
@@ -1327,4 +1301,4 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1739688469
+// LIFERAY-SERVICE-BUILDER-HASH:1371497924

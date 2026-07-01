@@ -673,7 +673,7 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 				_SQL_SELECT_COMMERCEINVENTORYBOOKEDQUANTITY_WHERE,
 				_SQL_COUNT_COMMERCEINVENTORYBOOKEDQUANTITY_WHERE,
 				CommerceInventoryBookedQuantityModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "", "",
+				_ENTITY_ALIAS_PREFIX, "", "", null,
 				new FinderColumn<>(
 					"commerceInventoryBookedQuantity.", "expirationDate",
 					FinderColumn.Type.DATE, "<", true, true,
@@ -699,7 +699,7 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 			_SQL_SELECT_COMMERCEINVENTORYBOOKEDQUANTITY_WHERE,
 			_SQL_COUNT_COMMERCEINVENTORYBOOKEDQUANTITY_WHERE,
 			CommerceInventoryBookedQuantityModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX, "", "",
+			_ENTITY_ALIAS_PREFIX, "", "", null,
 			new FinderColumn<>(
 				"commerceInventoryBookedQuantity.", "sku",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -734,7 +734,7 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 			_SQL_SELECT_COMMERCEINVENTORYBOOKEDQUANTITY_WHERE,
 			_SQL_COUNT_COMMERCEINVENTORYBOOKEDQUANTITY_WHERE,
 			CommerceInventoryBookedQuantityModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX, "", "",
+			_ENTITY_ALIAS_PREFIX, "", "", null,
 			new FinderColumn<>(
 				"commerceInventoryBookedQuantity.", "companyId",
 				FinderColumn.Type.LONG, "=", true, true,
@@ -805,9 +805,6 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 		_SQL_COUNT_COMMERCEINVENTORYBOOKEDQUANTITY_WHERE =
 			"SELECT COUNT(commerceInventoryBookedQuantity) FROM CommerceInventoryBookedQuantity commerceInventoryBookedQuantity WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No CommerceInventoryBookedQuantity exists with the key {";
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"commerceInventoryBookedQuantityId"});
 
@@ -817,4 +814,4 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-895132977
+// LIFERAY-SERVICE-BUILDER-HASH:1466261531

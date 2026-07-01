@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -808,7 +806,7 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 			_SQL_SELECT_COMMERCEPRICELISTCOMMERCEACCOUNTGROUPREL_WHERE,
 			_SQL_COUNT_COMMERCEPRICELISTCOMMERCEACCOUNTGROUPREL_WHERE,
 			CommercePriceListCommerceAccountGroupRelModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX, "", "",
+			_ENTITY_ALIAS_PREFIX, "", "", null,
 			new FinderColumn<>(
 				"commercePriceListCommerceAccountGroupRel.", "uuid", "uuid_",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -836,7 +834,7 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 				_SQL_SELECT_COMMERCEPRICELISTCOMMERCEACCOUNTGROUPREL_WHERE,
 				_SQL_COUNT_COMMERCEPRICELISTCOMMERCEACCOUNTGROUPREL_WHERE,
 				CommercePriceListCommerceAccountGroupRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "", "",
+				_ENTITY_ALIAS_PREFIX, "", "", null,
 				new FinderColumn<>(
 					"commercePriceListCommerceAccountGroupRel.", "uuid",
 					"uuid_", FinderColumn.Type.STRING, "=", true, true,
@@ -871,7 +869,7 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 				_SQL_SELECT_COMMERCEPRICELISTCOMMERCEACCOUNTGROUPREL_WHERE,
 				_SQL_COUNT_COMMERCEPRICELISTCOMMERCEACCOUNTGROUPREL_WHERE,
 				CommercePriceListCommerceAccountGroupRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "", "",
+				_ENTITY_ALIAS_PREFIX, "", "", null,
 				new FinderColumn<>(
 					"commercePriceListCommerceAccountGroupRel.",
 					"commercePriceListId", FinderColumn.Type.LONG, "=", true,
@@ -964,12 +962,6 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 		_SQL_COUNT_COMMERCEPRICELISTCOMMERCEACCOUNTGROUPREL_WHERE =
 			"SELECT COUNT(commercePriceListCommerceAccountGroupRel) FROM CommercePriceListCommerceAccountGroupRel commercePriceListCommerceAccountGroupRel WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No CommercePriceListCommerceAccountGroupRel exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		CommercePriceListCommerceAccountGroupRelPersistenceImpl.class);
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {
 			"uuid", "commercePriceListCommerceAccountGroupRelId", "order"
@@ -981,4 +973,4 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1672818965
+// LIFERAY-SERVICE-BUILDER-HASH:1179675502

@@ -12,8 +12,6 @@ import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -782,6 +780,7 @@ public class BasicEntryPersistenceImpl
 					new String[] {"groupId"}, false),
 				_SQL_SELECT_BASICENTRY_WHERE, _SQL_COUNT_BASICENTRY_WHERE,
 				BasicEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"basicEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, BasicEntry::getGroupId));
@@ -862,16 +861,10 @@ public class BasicEntryPersistenceImpl
 	private static final String _SQL_COUNT_BASICENTRY_WHERE =
 		"SELECT COUNT(basicEntry) FROM BasicEntry basicEntry WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No BasicEntry exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		BasicEntryPersistenceImpl.class);
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:500698858
+// LIFERAY-SERVICE-BUILDER-HASH:1327642974

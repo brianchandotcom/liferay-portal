@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
@@ -1072,7 +1070,7 @@ public class
 			_SQL_SELECT_LAYOUTPAGETEMPLATESTRUCTURERELELEMENTVARIATIONAUDIENCEENTRYREL_WHERE,
 			_SQL_COUNT_LAYOUTPAGETEMPLATESTRUCTURERELELEMENTVARIATIONAUDIENCEENTRYREL_WHERE,
 			LayoutPageTemplateStructureRelElementVariationAudienceEntryRelModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX, "", "",
+			_ENTITY_ALIAS_PREFIX, "", "", null,
 			new FinderColumn<>(
 				"layoutPageTemplateStructureRelElementVariationAudienceEntryRel.",
 				"uuid", "uuid_", FinderColumn.Type.STRING, "=", true, true,
@@ -1125,7 +1123,7 @@ public class
 				_SQL_SELECT_LAYOUTPAGETEMPLATESTRUCTURERELELEMENTVARIATIONAUDIENCEENTRYREL_WHERE,
 				_SQL_COUNT_LAYOUTPAGETEMPLATESTRUCTURERELELEMENTVARIATIONAUDIENCEENTRYREL_WHERE,
 				LayoutPageTemplateStructureRelElementVariationAudienceEntryRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "", "",
+				_ENTITY_ALIAS_PREFIX, "", "", null,
 				new FinderColumn<>(
 					"layoutPageTemplateStructureRelElementVariationAudienceEntryRel.",
 					"uuid", "uuid_", FinderColumn.Type.STRING, "=", true, true,
@@ -1164,7 +1162,7 @@ public class
 				_SQL_SELECT_LAYOUTPAGETEMPLATESTRUCTURERELELEMENTVARIATIONAUDIENCEENTRYREL_WHERE,
 				_SQL_COUNT_LAYOUTPAGETEMPLATESTRUCTURERELELEMENTVARIATIONAUDIENCEENTRYREL_WHERE,
 				LayoutPageTemplateStructureRelElementVariationAudienceEntryRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "", "",
+				_ENTITY_ALIAS_PREFIX, "", "", null,
 				new FinderColumn<>(
 					"layoutPageTemplateStructureRelElementVariationAudienceEntryRel.",
 					"layoutPageTemplateStructureRelElementVariationERC",
@@ -1263,12 +1261,6 @@ public class
 		_SQL_COUNT_LAYOUTPAGETEMPLATESTRUCTURERELELEMENTVARIATIONAUDIENCEENTRYREL_WHERE =
 			"SELECT COUNT(layoutPageTemplateStructureRelElementVariationAudienceEntryRel) FROM LayoutPageTemplateStructureRelElementVariationAudienceEntryRel layoutPageTemplateStructureRelElementVariationAudienceEntryRel WHERE ";
 
-	private static final String _NO_SUCH_ENTITY_WITH_KEY =
-		"No LayoutPageTemplateStructureRelElementVariationAudienceEntryRel exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		LayoutPageTemplateStructureRelElementVariationAudienceEntryRelPersistenceImpl.class);
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {
 			"uuid",
@@ -1282,4 +1274,4 @@ public class
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-62239459
+// LIFERAY-SERVICE-BUILDER-HASH:-963232998

@@ -19,6 +19,16 @@ public class JenkinsBuildPropertiesTest
 	extends com.liferay.jenkins.results.parser.Test {
 
 	@Test
+	public void testBinariesCacheEnabledProperties() {
+		_testGetProperty(
+			"binaries.cache.enabled", "false", "forward-pullrequest");
+		_testGetProperty(
+			"binaries.cache.enabled", "false", "test-portal-source-format");
+		_testGetProperty(
+			"binaries.cache.enabled", "true", "test-portal-release");
+	}
+
+	@Test
 	public void testBuildCachingEnabledProperties() {
 		_testGetProperty(
 			"build.caching.enabled", "false", "forward-pullrequest");
@@ -30,6 +40,14 @@ public class JenkinsBuildPropertiesTest
 			"build.caching.enabled", "true", "test-portal-hotfix-release");
 		_testGetProperty(
 			"build.caching.enabled", "true", "test-portal-release");
+	}
+
+	@Test
+	public void testGitArchiveEnabledProperties() {
+		_testGetProperty("git.archive.enabled", "false", "forward-pullrequest");
+		_testGetProperty(
+			"git.archive.enabled", "false", "test-portal-source-format");
+		_testGetProperty("git.archive.enabled", "true", "test-portal-release");
 	}
 
 	private Properties _getBuildAwsProperties() {

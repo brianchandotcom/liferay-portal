@@ -42,6 +42,9 @@ public class ElasticsearchContentRetrieverTest {
 
 	@Test
 	public void testSearch() {
+		SearchEngineAdapter searchEngineAdapter = Mockito.mock(
+			SearchEngineAdapter.class);
+
 		SearchSearchResponse searchSearchResponse = Mockito.mock(
 			SearchSearchResponse.class);
 
@@ -90,9 +93,6 @@ public class ElasticsearchContentRetrieverTest {
 		).thenReturn(
 			searchHits
 		);
-
-		SearchEngineAdapter searchEngineAdapter = Mockito.mock(
-			SearchEngineAdapter.class);
 
 		Mockito.when(
 			searchEngineAdapter.execute((SearchSearchRequest)Mockito.any())

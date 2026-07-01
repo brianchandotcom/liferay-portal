@@ -541,7 +541,7 @@ public class CryptoManagerImpl implements CryptoManager {
 				StringBundler.concat(
 					"Operation ", operation, " for company ID ", companyId,
 					" used security function ",
-					serviceIndicator.getSecurityFunctionName(), " (approved: ",
+					serviceIndicator.getSecurityFunctionName(), " (approved ",
 					serviceIndicator.isApproved(), ")"));
 		}
 	}
@@ -593,7 +593,7 @@ public class CryptoManagerImpl implements CryptoManager {
 					throw new CryptoManagerException(
 						StringBundler.concat(
 							"Crypto vault provider ", resolvedProviderId,
-							" is in an error state for company ID: ",
+							" is in an error state for company ID ",
 							companyId));
 				}
 
@@ -603,8 +603,8 @@ public class CryptoManagerImpl implements CryptoManager {
 
 		throw new CryptoManagerException(
 			StringBundler.concat(
-				"No crypto vault provider found for ID: ", resolvedProviderId,
-				" and company ID: ", companyId));
+				"No crypto vault provider found for ID ", resolvedProviderId,
+				" and company ID ", companyId));
 	}
 
 	private CryptoVaultProvider _getCryptoVaultProvider(
@@ -631,7 +631,7 @@ public class CryptoManagerImpl implements CryptoManager {
 			throw new CryptoManagerException(
 				StringBundler.concat(
 					"No active KeyManagerProfile found to resolve the ",
-					"provider wildcard for company ID: ", companyId));
+					"provider wildcard for company ID ", companyId));
 		}
 
 		if (companyId == CompanyConstants.SYSTEM) {
@@ -653,7 +653,7 @@ public class CryptoManagerImpl implements CryptoManager {
 			throw new CryptoManagerException(
 				StringBundler.concat(
 					"Active KeyManagerProfile resolved a null provider ID for ",
-					"role: ", providerRole, " and company ID: ", companyId));
+					"role ", providerRole, " and company ID ", companyId));
 		}
 
 		return providerId;

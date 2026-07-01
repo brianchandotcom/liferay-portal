@@ -16,6 +16,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -320,6 +321,23 @@ public class JenkinsResultsParserUtilTest
 			"https://releases.liferay.com/portal/",
 			JenkinsResultsParserUtil.getRemoteURL(
 				"https://releases.liferay.com/portal/"));
+	}
+
+	@Test
+	public void testIsBuildCachingEnabledNonCINode() {
+		Environment environment = mockEnvironment();
+
+		JenkinsResultsParserUtil.clearCache();
+
+		Mockito.when(
+			environment.doGet("BUILD_CACHING_ENABLED")
+		).thenReturn(
+			"true"
+		);
+
+		Assert.assertFalse(
+			JenkinsResultsParserUtil.isBuildCachingEnabled(
+				"test-portal-release", "default"));
 	}
 
 	@Test

@@ -19,6 +19,7 @@ import com.liferay.asset.kernel.service.AssetVocabularyGroupRelLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.asset.test.util.AssetTestUtil;
+import com.liferay.depot.constants.DepotConstants;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -202,21 +203,39 @@ public class AssetVocabularyServiceTest {
 		AssetVocabulary vocabulary = AssetTestUtil.addVocabulary(
 			cmsGroup.getGroupId(), RandomTestUtil.randomString());
 
-		List<AssetVocabularyGroupRel> assetVocabularyGroupRels =
+		List<AssetVocabularyGroupRel> spaceAssetVocabularyGroupRels =
 			_assetVocabularyGroupRelLocalService.
-				getAssetVocabularyGroupRelsByVocabularyId(
-					vocabulary.getVocabularyId());
+				getAssetVocabularyGroupRelsByVocabularyIdAndDepotEntryType(
+					vocabulary.getVocabularyId(), DepotConstants.TYPE_SPACE);
 
 		Assert.assertEquals(
-			assetVocabularyGroupRels.toString(), 1,
-			assetVocabularyGroupRels.size());
+			spaceAssetVocabularyGroupRels.toString(), 1,
+			spaceAssetVocabularyGroupRels.size());
 
-		AssetVocabularyGroupRel assetVocabularyGroupRel =
-			assetVocabularyGroupRels.get(0);
+		AssetVocabularyGroupRel spaceAssetVocabularyGroupRel =
+			spaceAssetVocabularyGroupRels.get(0);
 
 		Assert.assertEquals(
-			assetVocabularyGroupRels.toString(), GroupConstants.GROUP_ID_ALL,
-			assetVocabularyGroupRel.getGroupId());
+			spaceAssetVocabularyGroupRels.toString(),
+			GroupConstants.GROUP_ID_ALL,
+			spaceAssetVocabularyGroupRel.getGroupId());
+
+		List<AssetVocabularyGroupRel> projectAssetVocabularyGroupRels =
+			_assetVocabularyGroupRelLocalService.
+				getAssetVocabularyGroupRelsByVocabularyIdAndDepotEntryType(
+					vocabulary.getVocabularyId(), DepotConstants.TYPE_PROJECT);
+
+		Assert.assertEquals(
+			projectAssetVocabularyGroupRels.toString(), 1,
+			projectAssetVocabularyGroupRels.size());
+
+		AssetVocabularyGroupRel projectAssetVocabularyGroupRel =
+			projectAssetVocabularyGroupRels.get(0);
+
+		Assert.assertEquals(
+			projectAssetVocabularyGroupRels.toString(),
+			GroupConstants.GROUP_ID_ALL,
+			projectAssetVocabularyGroupRel.getGroupId());
 	}
 
 	@Test

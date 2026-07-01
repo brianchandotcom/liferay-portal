@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 
 import jakarta.annotation.Priority;
@@ -58,7 +59,6 @@ import java.security.Principal;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
 
 import org.apache.cxf.jaxrs.utils.ExceptionUtils;
 import org.apache.cxf.jaxrs.utils.JAXRSUtils;
@@ -180,7 +180,8 @@ public class DynamicRegistrationServiceContainerRequestFilter
 			_auditFailure(
 				clientHost, companyId,
 				OAuth2ProviderRESTEndpointConstants.ERROR_INVALID_TOKEN,
-				"Bearer token authorization failed", httpServletRequest,
+				"Authenticated registration authorization failed",
+				httpServletRequest,
 				OAuth2ProviderRESTEndpointConstants.
 					DYNAMIC_REGISTRATION_MODE_AUTHENTICATED);
 		}
@@ -238,8 +239,7 @@ public class DynamicRegistrationServiceContainerRequestFilter
 			throw ExceptionUtils.toNotAuthorizedException(null, null);
 		}
 
-		long currentTime = TimeUnit.SECONDS.convert(
-			System.currentTimeMillis(), TimeUnit.MILLISECONDS);
+		long currentTime = System.currentTimeMillis() / Time.SECOND;
 		long expirationTime = GetterUtil.getLong(jwtToken.getClaim("exp"));
 
 		if ((expirationTime > 0) && (currentTime > expirationTime)) {
@@ -440,8 +440,7 @@ public class DynamicRegistrationServiceContainerRequestFilter
 
 			if (accessTokenExpirationDate != null) {
 				jwtClaims.setExpiryTime(
-					TimeUnit.MILLISECONDS.toSeconds(
-						accessTokenExpirationDate.getTime()));
+					accessTokenExpirationDate.getTime() / Time.SECOND);
 			}
 
 			return new JwtToken(jwtClaims);

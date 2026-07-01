@@ -1316,7 +1316,7 @@ public class CTCollectionPersistenceImpl
 					new String[] {"uuid_"}, 0, 1, false, null),
 				_SQL_SELECT_CTCOLLECTION_WHERE, _SQL_COUNT_CTCOLLECTION_WHERE,
 				CTCollectionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				"",
+				"", null,
 				new FinderColumn<>(
 					"ctCollection.", "uuid", "uuid_", FinderColumn.Type.STRING,
 					"=", true, true, CTCollection::getUuid));
@@ -1342,7 +1342,7 @@ public class CTCollectionPersistenceImpl
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_CTCOLLECTION_WHERE, _SQL_COUNT_CTCOLLECTION_WHERE,
 				CTCollectionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				"",
+				"", null,
 				new FinderColumn<>(
 					"ctCollection.", "uuid", "uuid_", FinderColumn.Type.STRING,
 					"=", true, true, CTCollection::getUuid),
@@ -1371,7 +1371,7 @@ public class CTCollectionPersistenceImpl
 					new String[] {"companyId"}, false),
 				_SQL_SELECT_CTCOLLECTION_WHERE, _SQL_COUNT_CTCOLLECTION_WHERE,
 				CTCollectionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				"",
+				"", null,
 				new FinderColumn<>(
 					"ctCollection.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, CTCollection::getCompanyId));
@@ -1397,7 +1397,7 @@ public class CTCollectionPersistenceImpl
 					new String[] {"companyId", "userId"}, false),
 				_SQL_SELECT_CTCOLLECTION_WHERE, _SQL_COUNT_CTCOLLECTION_WHERE,
 				CTCollectionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				"",
+				"", null,
 				new FinderColumn<>(
 					"ctCollection.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, CTCollection::getCompanyId),
@@ -1426,7 +1426,7 @@ public class CTCollectionPersistenceImpl
 					new String[] {"companyId", "schemaVersionId"}, false),
 				_SQL_SELECT_CTCOLLECTION_WHERE, _SQL_COUNT_CTCOLLECTION_WHERE,
 				CTCollectionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				"",
+				"", null,
 				new FinderColumn<>(
 					"ctCollection.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, CTCollection::getCompanyId),
@@ -1459,7 +1459,7 @@ public class CTCollectionPersistenceImpl
 					new String[] {"companyId", "status"}, false),
 				_SQL_SELECT_CTCOLLECTION_WHERE, _SQL_COUNT_CTCOLLECTION_WHERE,
 				CTCollectionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				"",
+				"", null,
 				new FinderColumn<>(
 					"ctCollection.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, CTCollection::getCompanyId),
@@ -1554,4 +1554,4 @@ public class CTCollectionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-207217427
+// LIFERAY-SERVICE-BUILDER-HASH:-92479312

@@ -1730,7 +1730,7 @@ public class FragmentCollectionPersistenceImpl
 			_SQL_SELECT_FRAGMENTCOLLECTION_WHERE,
 			_SQL_COUNT_FRAGMENTCOLLECTION_WHERE,
 			FragmentCollectionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-			"",
+			"", null,
 			new FinderColumn<>(
 				"fragmentCollection.", "uuid", "uuid_",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -1775,7 +1775,7 @@ public class FragmentCollectionPersistenceImpl
 				_SQL_SELECT_FRAGMENTCOLLECTION_WHERE,
 				_SQL_COUNT_FRAGMENTCOLLECTION_WHERE,
 				FragmentCollectionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"", "",
+				"", "", null,
 				new FinderColumn<>(
 					"fragmentCollection.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -1806,7 +1806,7 @@ public class FragmentCollectionPersistenceImpl
 				_SQL_SELECT_FRAGMENTCOLLECTION_WHERE,
 				_SQL_COUNT_FRAGMENTCOLLECTION_WHERE,
 				FragmentCollectionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"", "",
+				"", "", null,
 				new ArrayableFinderColumn<>(
 					"fragmentCollection.", "groupId", FinderColumn.Type.LONG,
 					"=", false, true, true, FragmentCollection::getGroupId));
@@ -1848,7 +1848,7 @@ public class FragmentCollectionPersistenceImpl
 				_SQL_SELECT_FRAGMENTCOLLECTION_WHERE,
 				_SQL_COUNT_FRAGMENTCOLLECTION_WHERE,
 				FragmentCollectionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"", "",
+				"", "", null,
 				new ArrayableFinderColumn<>(
 					"fragmentCollection.", "groupId", FinderColumn.Type.LONG,
 					"=", false, true, true, FragmentCollection::getGroupId),
@@ -1877,7 +1877,7 @@ public class FragmentCollectionPersistenceImpl
 			_SQL_SELECT_FRAGMENTCOLLECTION_WHERE,
 			_SQL_COUNT_FRAGMENTCOLLECTION_WHERE,
 			FragmentCollectionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-			"",
+			"", null,
 			new ArrayableFinderColumn<>(
 				"fragmentCollection.", "groupId", FinderColumn.Type.LONG, "=",
 				false, true, true, FragmentCollection::getGroupId),
@@ -1908,7 +1908,7 @@ public class FragmentCollectionPersistenceImpl
 				_SQL_SELECT_FRAGMENTCOLLECTION_WHERE,
 				_SQL_COUNT_FRAGMENTCOLLECTION_WHERE,
 				FragmentCollectionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"", "",
+				"", "", null,
 				new ArrayableFinderColumn<>(
 					"fragmentCollection.", "groupId", FinderColumn.Type.LONG,
 					"=", false, true, true, FragmentCollection::getGroupId),
@@ -2010,4 +2010,4 @@ public class FragmentCollectionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-957970868
+// LIFERAY-SERVICE-BUILDER-HASH:-1445169514

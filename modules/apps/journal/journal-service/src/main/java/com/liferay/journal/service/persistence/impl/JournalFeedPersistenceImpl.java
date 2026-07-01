@@ -830,6 +830,7 @@ public class JournalFeedPersistenceImpl
 				0, 1, false, null),
 			_SQL_SELECT_JOURNALFEED_WHERE, _SQL_COUNT_JOURNALFEED_WHERE,
 			JournalFeedModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			null,
 			new FinderColumn<>(
 				"journalFeed.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
 				true, true, JournalFeed::getUuid));
@@ -871,7 +872,7 @@ public class JournalFeedPersistenceImpl
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_JOURNALFEED_WHERE, _SQL_COUNT_JOURNALFEED_WHERE,
 				JournalFeedModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				"",
+				"", null,
 				new FinderColumn<>(
 					"journalFeed.", "uuid", "uuid_", FinderColumn.Type.STRING,
 					"=", true, true, JournalFeed::getUuid),
@@ -900,7 +901,7 @@ public class JournalFeedPersistenceImpl
 					new String[] {"groupId"}, false),
 				_SQL_SELECT_JOURNALFEED_WHERE, _SQL_COUNT_JOURNALFEED_WHERE,
 				JournalFeedModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				"",
+				"", null,
 				new FinderColumn<>(
 					"journalFeed.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, JournalFeed::getGroupId));
@@ -993,4 +994,4 @@ public class JournalFeedPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-100213788
+// LIFERAY-SERVICE-BUILDER-HASH:-117195364

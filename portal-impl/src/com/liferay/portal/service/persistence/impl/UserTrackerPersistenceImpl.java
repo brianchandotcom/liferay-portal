@@ -527,7 +527,7 @@ public class UserTrackerPersistenceImpl
 					new String[] {"companyId"}, false),
 				_SQL_SELECT_USERTRACKER_WHERE, _SQL_COUNT_USERTRACKER_WHERE,
 				UserTrackerModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				"",
+				"", null,
 				new FinderColumn<>(
 					"userTracker.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, UserTracker::getCompanyId));
@@ -553,7 +553,7 @@ public class UserTrackerPersistenceImpl
 					new String[] {"userId"}, false),
 				_SQL_SELECT_USERTRACKER_WHERE, _SQL_COUNT_USERTRACKER_WHERE,
 				UserTrackerModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				"",
+				"", null,
 				new FinderColumn<>(
 					"userTracker.", "userId", FinderColumn.Type.LONG, "=", true,
 					true, UserTracker::getUserId));
@@ -579,7 +579,7 @@ public class UserTrackerPersistenceImpl
 					new String[] {"sessionId"}, 0, 1, false, null),
 				_SQL_SELECT_USERTRACKER_WHERE, _SQL_COUNT_USERTRACKER_WHERE,
 				UserTrackerModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				"",
+				"", null,
 				new FinderColumn<>(
 					"userTracker.", "sessionId", FinderColumn.Type.STRING, "=",
 					true, true, UserTracker::getSessionId));
@@ -614,4 +614,4 @@ public class UserTrackerPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1676363826
+// LIFERAY-SERVICE-BUILDER-HASH:-876641066

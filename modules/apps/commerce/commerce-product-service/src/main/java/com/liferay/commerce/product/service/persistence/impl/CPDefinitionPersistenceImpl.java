@@ -1618,6 +1618,7 @@ public class CPDefinitionPersistenceImpl
 				0, 1, false, null),
 			_SQL_SELECT_CPDEFINITION_WHERE, _SQL_COUNT_CPDEFINITION_WHERE,
 			CPDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			null,
 			new FinderColumn<>(
 				"cpDefinition.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
 				true, true, CPDefinition::getUuid));
@@ -1659,7 +1660,7 @@ public class CPDefinitionPersistenceImpl
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_CPDEFINITION_WHERE, _SQL_COUNT_CPDEFINITION_WHERE,
 				CPDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				"",
+				"", null,
 				new FinderColumn<>(
 					"cpDefinition.", "uuid", "uuid_", FinderColumn.Type.STRING,
 					"=", true, true, CPDefinition::getUuid),
@@ -1688,7 +1689,7 @@ public class CPDefinitionPersistenceImpl
 					new String[] {"groupId"}, false),
 				_SQL_SELECT_CPDEFINITION_WHERE, _SQL_COUNT_CPDEFINITION_WHERE,
 				CPDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				"",
+				"", null,
 				new FinderColumn<>(
 					"cpDefinition.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, CPDefinition::getGroupId));
@@ -1714,7 +1715,7 @@ public class CPDefinitionPersistenceImpl
 					new String[] {"companyId"}, false),
 				_SQL_SELECT_CPDEFINITION_WHERE, _SQL_COUNT_CPDEFINITION_WHERE,
 				CPDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				"",
+				"", null,
 				new FinderColumn<>(
 					"cpDefinition.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, CPDefinition::getCompanyId));
@@ -1740,7 +1741,7 @@ public class CPDefinitionPersistenceImpl
 					new String[] {"CProductId"}, false),
 				_SQL_SELECT_CPDEFINITION_WHERE, _SQL_COUNT_CPDEFINITION_WHERE,
 				CPDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				"",
+				"", null,
 				new FinderColumn<>(
 					"cpDefinition.", "CProductId", FinderColumn.Type.LONG, "=",
 					true, true, CPDefinition::getCProductId));
@@ -1769,7 +1770,7 @@ public class CPDefinitionPersistenceImpl
 					new String[] {"CPTaxCategoryId"}, false),
 				_SQL_SELECT_CPDEFINITION_WHERE, _SQL_COUNT_CPDEFINITION_WHERE,
 				CPDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				"",
+				"", null,
 				new FinderColumn<>(
 					"cpDefinition.", "CPTaxCategoryId", FinderColumn.Type.LONG,
 					"=", true, true, CPDefinition::getCPTaxCategoryId));
@@ -1799,7 +1800,7 @@ public class CPDefinitionPersistenceImpl
 					new String[] {"groupId", "subscriptionEnabled"}, false),
 				_SQL_SELECT_CPDEFINITION_WHERE, _SQL_COUNT_CPDEFINITION_WHERE,
 				CPDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				"",
+				"", null,
 				new FinderColumn<>(
 					"cpDefinition.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, CPDefinition::getGroupId),
@@ -1833,7 +1834,7 @@ public class CPDefinitionPersistenceImpl
 					new String[] {"groupId", "status"}, false),
 				_SQL_SELECT_CPDEFINITION_WHERE, _SQL_COUNT_CPDEFINITION_WHERE,
 				CPDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				"",
+				"", null,
 				new FinderColumn<>(
 					"cpDefinition.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, CPDefinition::getGroupId),
@@ -1876,6 +1877,7 @@ public class CPDefinitionPersistenceImpl
 				new String[] {"CProductId", "status"}, false),
 			_SQL_SELECT_CPDEFINITION_WHERE, _SQL_COUNT_CPDEFINITION_WHERE,
 			CPDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			null,
 			new FinderColumn<>(
 				"cpDefinition.", "CProductId", FinderColumn.Type.LONG, "=",
 				true, true, CPDefinition::getCProductId),
@@ -1900,6 +1902,7 @@ public class CPDefinitionPersistenceImpl
 				new String[] {"displayDate", "status"}, false),
 			_SQL_SELECT_CPDEFINITION_WHERE, _SQL_COUNT_CPDEFINITION_WHERE,
 			CPDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			null,
 			new FinderColumn<>(
 				"cpDefinition.", "displayDate", FinderColumn.Type.DATE, "<",
 				true, true, CPDefinition::getDisplayDate),
@@ -1983,4 +1986,4 @@ public class CPDefinitionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1244558271
+// LIFERAY-SERVICE-BUILDER-HASH:2084210989

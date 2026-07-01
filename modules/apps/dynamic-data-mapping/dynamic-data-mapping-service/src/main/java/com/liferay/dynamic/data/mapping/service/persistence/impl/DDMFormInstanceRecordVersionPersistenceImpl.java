@@ -951,7 +951,7 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 				_SQL_SELECT_DDMFORMINSTANCERECORDVERSION_WHERE,
 				_SQL_COUNT_DDMFORMINSTANCERECORDVERSION_WHERE,
 				DDMFormInstanceRecordVersionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "", "",
+				_ENTITY_ALIAS_PREFIX, "", "", null,
 				new FinderColumn<>(
 					"ddmFormInstanceRecordVersion.", "formInstanceRecordId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -978,7 +978,7 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 			_SQL_SELECT_DDMFORMINSTANCERECORDVERSION_WHERE,
 			_SQL_COUNT_DDMFORMINSTANCERECORDVERSION_WHERE,
 			DDMFormInstanceRecordVersionModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX, "", "",
+			_ENTITY_ALIAS_PREFIX, "", "", null,
 			new FinderColumn<>(
 				"ddmFormInstanceRecordVersion.", "userId",
 				FinderColumn.Type.LONG, "=", true, true,
@@ -1011,7 +1011,7 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 			_SQL_SELECT_DDMFORMINSTANCERECORDVERSION_WHERE,
 			_SQL_COUNT_DDMFORMINSTANCERECORDVERSION_WHERE,
 			DDMFormInstanceRecordVersionModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX, "", "",
+			_ENTITY_ALIAS_PREFIX, "", "", null,
 			new FinderColumn<>(
 				"ddmFormInstanceRecordVersion.", "formInstanceId",
 				FinderColumn.Type.LONG, "=", true, true,
@@ -1060,7 +1060,7 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 			_SQL_SELECT_DDMFORMINSTANCERECORDVERSION_WHERE,
 			_SQL_COUNT_DDMFORMINSTANCERECORDVERSION_WHERE,
 			DDMFormInstanceRecordVersionModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX, "", "",
+			_ENTITY_ALIAS_PREFIX, "", "", null,
 			new FinderColumn<>(
 				"ddmFormInstanceRecordVersion.", "formInstanceRecordId",
 				FinderColumn.Type.LONG, "=", true, true,
@@ -1111,7 +1111,7 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 				_SQL_SELECT_DDMFORMINSTANCERECORDVERSION_WHERE,
 				_SQL_COUNT_DDMFORMINSTANCERECORDVERSION_WHERE,
 				DDMFormInstanceRecordVersionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "", "",
+				_ENTITY_ALIAS_PREFIX, "", "", null,
 				new FinderColumn<>(
 					"ddmFormInstanceRecordVersion.", "userId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1199,4 +1199,4 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2131018955
+// LIFERAY-SERVICE-BUILDER-HASH:1376503849

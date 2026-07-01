@@ -2308,7 +2308,7 @@ public class ObjectRelationshipPersistenceImpl
 			_SQL_SELECT_OBJECTRELATIONSHIP_WHERE,
 			_SQL_COUNT_OBJECTRELATIONSHIP_WHERE,
 			ObjectRelationshipModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-			"",
+			"", null,
 			new FinderColumn<>(
 				"objectRelationship.", "uuid", "uuid_",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -2336,7 +2336,7 @@ public class ObjectRelationshipPersistenceImpl
 				_SQL_SELECT_OBJECTRELATIONSHIP_WHERE,
 				_SQL_COUNT_OBJECTRELATIONSHIP_WHERE,
 				ObjectRelationshipModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"", "",
+				"", "", null,
 				new FinderColumn<>(
 					"objectRelationship.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -2367,7 +2367,7 @@ public class ObjectRelationshipPersistenceImpl
 				_SQL_SELECT_OBJECTRELATIONSHIP_WHERE,
 				_SQL_COUNT_OBJECTRELATIONSHIP_WHERE,
 				ObjectRelationshipModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"", "",
+				"", "", null,
 				new FinderColumn<>(
 					"objectRelationship.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, ObjectRelationship::getCompanyId));
@@ -2397,7 +2397,7 @@ public class ObjectRelationshipPersistenceImpl
 				_SQL_SELECT_OBJECTRELATIONSHIP_WHERE,
 				_SQL_COUNT_OBJECTRELATIONSHIP_WHERE,
 				ObjectRelationshipModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"", "",
+				"", "", null,
 				new FinderColumn<>(
 					"objectRelationship.", "objectDefinitionId1",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2428,7 +2428,7 @@ public class ObjectRelationshipPersistenceImpl
 				_SQL_SELECT_OBJECTRELATIONSHIP_WHERE,
 				_SQL_COUNT_OBJECTRELATIONSHIP_WHERE,
 				ObjectRelationshipModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"", "",
+				"", "", null,
 				new FinderColumn<>(
 					"objectRelationship.", "objectDefinitionId2",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2473,7 +2473,7 @@ public class ObjectRelationshipPersistenceImpl
 				_SQL_SELECT_OBJECTRELATIONSHIP_WHERE,
 				_SQL_COUNT_OBJECTRELATIONSHIP_WHERE,
 				ObjectRelationshipModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"", "",
+				"", "", null,
 				new FinderColumn<>(
 					"objectRelationship.", "parameterObjectFieldId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2500,7 +2500,7 @@ public class ObjectRelationshipPersistenceImpl
 			_SQL_SELECT_OBJECTRELATIONSHIP_WHERE,
 			_SQL_COUNT_OBJECTRELATIONSHIP_WHERE,
 			ObjectRelationshipModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-			"",
+			"", null,
 			new FinderColumn<>(
 				"objectRelationship.", "companyId", FinderColumn.Type.LONG, "=",
 				true, true, ObjectRelationship::getCompanyId),
@@ -2534,7 +2534,7 @@ public class ObjectRelationshipPersistenceImpl
 				_SQL_SELECT_OBJECTRELATIONSHIP_WHERE,
 				_SQL_COUNT_OBJECTRELATIONSHIP_WHERE,
 				ObjectRelationshipModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"", "",
+				"", "", null,
 				new FinderColumn<>(
 					"objectRelationship.", "objectDefinitionId1",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2567,7 +2567,7 @@ public class ObjectRelationshipPersistenceImpl
 				_SQL_SELECT_OBJECTRELATIONSHIP_WHERE,
 				_SQL_COUNT_OBJECTRELATIONSHIP_WHERE,
 				ObjectRelationshipModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"", "",
+				"", "", null,
 				new FinderColumn<>(
 					"objectRelationship.", "objectDefinitionId1",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2602,7 +2602,7 @@ public class ObjectRelationshipPersistenceImpl
 				_SQL_SELECT_OBJECTRELATIONSHIP_WHERE,
 				_SQL_COUNT_OBJECTRELATIONSHIP_WHERE,
 				ObjectRelationshipModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"", "",
+				"", "", null,
 				new FinderColumn<>(
 					"objectRelationship.", "objectDefinitionId1",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2637,7 +2637,7 @@ public class ObjectRelationshipPersistenceImpl
 				_SQL_SELECT_OBJECTRELATIONSHIP_WHERE,
 				_SQL_COUNT_OBJECTRELATIONSHIP_WHERE,
 				ObjectRelationshipModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"", "",
+				"", "", null,
 				new FinderColumn<>(
 					"objectRelationship.", "objectDefinitionId2",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2672,7 +2672,7 @@ public class ObjectRelationshipPersistenceImpl
 				_SQL_SELECT_OBJECTRELATIONSHIP_WHERE,
 				_SQL_COUNT_OBJECTRELATIONSHIP_WHERE,
 				ObjectRelationshipModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"", "",
+				"", "", null,
 				new FinderColumn<>(
 					"objectRelationship.", "objectDefinitionId2",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2766,7 +2766,7 @@ public class ObjectRelationshipPersistenceImpl
 				_SQL_SELECT_OBJECTRELATIONSHIP_WHERE,
 				_SQL_COUNT_OBJECTRELATIONSHIP_WHERE,
 				ObjectRelationshipModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"", "",
+				"", "", null,
 				new FinderColumn<>(
 					"objectRelationship.", "objectDefinitionId1",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2820,7 +2820,7 @@ public class ObjectRelationshipPersistenceImpl
 				_SQL_SELECT_OBJECTRELATIONSHIP_WHERE,
 				_SQL_COUNT_OBJECTRELATIONSHIP_WHERE,
 				ObjectRelationshipModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"", "",
+				"", "", null,
 				new FinderColumn<>(
 					"objectRelationship.", "objectDefinitionId1",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2866,7 +2866,7 @@ public class ObjectRelationshipPersistenceImpl
 				_SQL_SELECT_OBJECTRELATIONSHIP_WHERE,
 				_SQL_COUNT_OBJECTRELATIONSHIP_WHERE,
 				ObjectRelationshipModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"", "",
+				"", "", null,
 				new FinderColumn<>(
 					"objectRelationship.", "objectDefinitionId1",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2912,7 +2912,7 @@ public class ObjectRelationshipPersistenceImpl
 				_SQL_SELECT_OBJECTRELATIONSHIP_WHERE,
 				_SQL_COUNT_OBJECTRELATIONSHIP_WHERE,
 				ObjectRelationshipModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"", "",
+				"", "", null,
 				new FinderColumn<>(
 					"objectRelationship.", "objectDefinitionId2",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2969,7 +2969,7 @@ public class ObjectRelationshipPersistenceImpl
 				_SQL_SELECT_OBJECTRELATIONSHIP_WHERE,
 				_SQL_COUNT_OBJECTRELATIONSHIP_WHERE,
 				ObjectRelationshipModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"", "",
+				"", "", null,
 				new FinderColumn<>(
 					"objectRelationship.", "objectDefinitionId1",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -3094,4 +3094,4 @@ public class ObjectRelationshipPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-762169963
+// LIFERAY-SERVICE-BUILDER-HASH:-1229003351

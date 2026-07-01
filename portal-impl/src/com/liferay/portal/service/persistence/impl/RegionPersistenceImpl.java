@@ -1030,7 +1030,7 @@ public class RegionPersistenceImpl
 				new String[] {String.class.getName()}, new String[] {"uuid_"},
 				0, 1, false, null),
 			_SQL_SELECT_REGION_WHERE, _SQL_COUNT_REGION_WHERE,
-			RegionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			RegionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "", null,
 			new FinderColumn<>(
 				"region.", "uuid", "uuid_", FinderColumn.Type.STRING, "=", true,
 				true, Region::getUuid));
@@ -1056,6 +1056,7 @@ public class RegionPersistenceImpl
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_REGION_WHERE, _SQL_COUNT_REGION_WHERE,
 				RegionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"region.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
 					true, true, Region::getUuid),
@@ -1084,6 +1085,7 @@ public class RegionPersistenceImpl
 					new String[] {"countryId"}, false),
 				_SQL_SELECT_REGION_WHERE, _SQL_COUNT_REGION_WHERE,
 				RegionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"region.", "countryId", FinderColumn.Type.LONG, "=", true,
 					true, Region::getCountryId));
@@ -1109,6 +1111,7 @@ public class RegionPersistenceImpl
 					new String[] {"active_"}, false),
 				_SQL_SELECT_REGION_WHERE, _SQL_COUNT_REGION_WHERE,
 				RegionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"region.", "active", "active_", FinderColumn.Type.BOOLEAN,
 					"=", true, true, Region::isActive));
@@ -1132,7 +1135,7 @@ public class RegionPersistenceImpl
 				new String[] {Long.class.getName(), Boolean.class.getName()},
 				new String[] {"countryId", "active_"}, false),
 			_SQL_SELECT_REGION_WHERE, _SQL_COUNT_REGION_WHERE,
-			RegionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			RegionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "", null,
 			new FinderColumn<>(
 				"region.", "countryId", FinderColumn.Type.LONG, "=", true, true,
 				Region::getCountryId),
@@ -1211,4 +1214,4 @@ public class RegionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-578336336
+// LIFERAY-SERVICE-BUILDER-HASH:-983815470

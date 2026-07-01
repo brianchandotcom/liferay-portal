@@ -757,7 +757,7 @@ public class SystemEventPersistenceImpl
 					new String[] {"groupId"}, false),
 				_SQL_SELECT_SYSTEMEVENT_WHERE, _SQL_COUNT_SYSTEMEVENT_WHERE,
 				SystemEventModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				"",
+				"", null,
 				new FinderColumn<>(
 					"systemEvent.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, SystemEvent::getGroupId));
@@ -782,6 +782,7 @@ public class SystemEventPersistenceImpl
 				new String[] {"groupId", "systemEventSetKey"}, false),
 			_SQL_SELECT_SYSTEMEVENT_WHERE, _SQL_COUNT_SYSTEMEVENT_WHERE,
 			SystemEventModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			null,
 			new FinderColumn<>(
 				"systemEvent.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, SystemEvent::getGroupId),
@@ -815,6 +816,7 @@ public class SystemEventPersistenceImpl
 				new String[] {"groupId", "classNameId", "classPK"}, false),
 			_SQL_SELECT_SYSTEMEVENT_WHERE, _SQL_COUNT_SYSTEMEVENT_WHERE,
 			SystemEventModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			null,
 			new FinderColumn<>(
 				"systemEvent.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, SystemEvent::getGroupId),
@@ -856,7 +858,7 @@ public class SystemEventPersistenceImpl
 					false),
 				_SQL_SELECT_SYSTEMEVENT_WHERE, _SQL_COUNT_SYSTEMEVENT_WHERE,
 				SystemEventModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				"",
+				"", null,
 				new FinderColumn<>(
 					"systemEvent.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, SystemEvent::getGroupId),
@@ -903,4 +905,4 @@ public class SystemEventPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1710829434
+// LIFERAY-SERVICE-BUILDER-HASH:285324706

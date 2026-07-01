@@ -1514,7 +1514,7 @@ public class AccountGroupPersistenceImpl
 					new String[] {"uuid_"}, 0, 1, false, null),
 				_SQL_SELECT_ACCOUNTGROUP_WHERE, _SQL_COUNT_ACCOUNTGROUP_WHERE,
 				AccountGroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				"",
+				"", null,
 				new FinderColumn<>(
 					"accountGroup.", "uuid", "uuid_", FinderColumn.Type.STRING,
 					"=", true, true, AccountGroup::getUuid));
@@ -1540,7 +1540,7 @@ public class AccountGroupPersistenceImpl
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_ACCOUNTGROUP_WHERE, _SQL_COUNT_ACCOUNTGROUP_WHERE,
 				AccountGroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				"",
+				"", null,
 				new FinderColumn<>(
 					"accountGroup.", "uuid", "uuid_", FinderColumn.Type.STRING,
 					"=", true, true, AccountGroup::getUuid),
@@ -1571,7 +1571,7 @@ public class AccountGroupPersistenceImpl
 					new String[] {"accountGroupId"}, false),
 				_SQL_SELECT_ACCOUNTGROUP_WHERE, _SQL_COUNT_ACCOUNTGROUP_WHERE,
 				AccountGroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				"",
+				"", null,
 				new ArrayableFinderColumn<>(
 					"accountGroup.", "accountGroupId", FinderColumn.Type.LONG,
 					"=", false, true, true, AccountGroup::getAccountGroupId));
@@ -1597,7 +1597,7 @@ public class AccountGroupPersistenceImpl
 					new String[] {"companyId"}, false),
 				_SQL_SELECT_ACCOUNTGROUP_WHERE, _SQL_COUNT_ACCOUNTGROUP_WHERE,
 				AccountGroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				"",
+				"", null,
 				new FinderColumn<>(
 					"accountGroup.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, AccountGroup::getCompanyId));
@@ -1627,7 +1627,7 @@ public class AccountGroupPersistenceImpl
 					new String[] {"companyId", "defaultAccountGroup"}, false),
 				_SQL_SELECT_ACCOUNTGROUP_WHERE, _SQL_COUNT_ACCOUNTGROUP_WHERE,
 				AccountGroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				"",
+				"", null,
 				new FinderColumn<>(
 					"accountGroup.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, AccountGroup::getCompanyId),
@@ -1654,7 +1654,7 @@ public class AccountGroupPersistenceImpl
 					new String[] {"companyId", "name"}, false),
 				_SQL_SELECT_ACCOUNTGROUP_WHERE, _SQL_COUNT_ACCOUNTGROUP_WHERE,
 				AccountGroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				"",
+				"", null,
 				new FinderColumn<>(
 					"accountGroup.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, AccountGroup::getCompanyId),
@@ -1683,7 +1683,7 @@ public class AccountGroupPersistenceImpl
 					new String[] {"companyId", "type_"}, 0, 2, false, null),
 				_SQL_SELECT_ACCOUNTGROUP_WHERE, _SQL_COUNT_ACCOUNTGROUP_WHERE,
 				AccountGroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				"",
+				"", null,
 				new FinderColumn<>(
 					"accountGroup.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, AccountGroup::getCompanyId),
@@ -1778,4 +1778,4 @@ public class AccountGroupPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1129055321
+// LIFERAY-SERVICE-BUILDER-HASH:-1898762544

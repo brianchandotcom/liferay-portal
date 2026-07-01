@@ -1260,6 +1260,7 @@ public class KBCommentPersistenceImpl
 				0, 1, false, null),
 			_SQL_SELECT_KBCOMMENT_WHERE, _SQL_COUNT_KBCOMMENT_WHERE,
 			KBCommentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			null,
 			new FinderColumn<>(
 				"kbComment.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
 				true, true, KBComment::getUuid));
@@ -1300,6 +1301,7 @@ public class KBCommentPersistenceImpl
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_KBCOMMENT_WHERE, _SQL_COUNT_KBCOMMENT_WHERE,
 				KBCommentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"kbComment.", "uuid", "uuid_", FinderColumn.Type.STRING,
 					"=", true, true, KBComment::getUuid),
@@ -1328,6 +1330,7 @@ public class KBCommentPersistenceImpl
 					new String[] {"groupId"}, false),
 				_SQL_SELECT_KBCOMMENT_WHERE, _SQL_COUNT_KBCOMMENT_WHERE,
 				KBCommentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"kbComment.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, KBComment::getGroupId));
@@ -1352,6 +1355,7 @@ public class KBCommentPersistenceImpl
 				new String[] {"groupId", "classNameId"}, false),
 			_SQL_SELECT_KBCOMMENT_WHERE, _SQL_COUNT_KBCOMMENT_WHERE,
 			KBCommentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			null,
 			new FinderColumn<>(
 				"kbComment.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, KBComment::getGroupId),
@@ -1379,6 +1383,7 @@ public class KBCommentPersistenceImpl
 				new String[] {"groupId", "status"}, false),
 			_SQL_SELECT_KBCOMMENT_WHERE, _SQL_COUNT_KBCOMMENT_WHERE,
 			KBCommentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			null,
 			new FinderColumn<>(
 				"kbComment.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, KBComment::getGroupId),
@@ -1406,6 +1411,7 @@ public class KBCommentPersistenceImpl
 				new String[] {"classNameId", "classPK"}, false),
 			_SQL_SELECT_KBCOMMENT_WHERE, _SQL_COUNT_KBCOMMENT_WHERE,
 			KBCommentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			null,
 			new FinderColumn<>(
 				"kbComment.", "classNameId", FinderColumn.Type.LONG, "=", true,
 				true, KBComment::getClassNameId),
@@ -1439,6 +1445,7 @@ public class KBCommentPersistenceImpl
 				new String[] {"userId", "classNameId", "classPK"}, false),
 			_SQL_SELECT_KBCOMMENT_WHERE, _SQL_COUNT_KBCOMMENT_WHERE,
 			KBCommentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			null,
 			new FinderColumn<>(
 				"kbComment.", "userId", FinderColumn.Type.LONG, "=", true, true,
 				KBComment::getUserId),
@@ -1475,6 +1482,7 @@ public class KBCommentPersistenceImpl
 				new String[] {"classNameId", "classPK", "status"}, false),
 			_SQL_SELECT_KBCOMMENT_WHERE, _SQL_COUNT_KBCOMMENT_WHERE,
 			KBCommentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			null,
 			new FinderColumn<>(
 				"kbComment.", "classNameId", FinderColumn.Type.LONG, "=", true,
 				true, KBComment::getClassNameId),
@@ -1557,4 +1565,4 @@ public class KBCommentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1124636842
+// LIFERAY-SERVICE-BUILDER-HASH:1030092613

@@ -638,7 +638,7 @@ public class FaroProjectPersistenceImpl
 					new String[] {"userId"}, false),
 				_SQL_SELECT_FAROPROJECT_WHERE, _SQL_COUNT_FAROPROJECT_WHERE,
 				FaroProjectModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				"",
+				"", null,
 				new FinderColumn<>(
 					"faroProject.", "userId", FinderColumn.Type.LONG, "=", true,
 					true, FaroProject::getUserId));
@@ -680,7 +680,7 @@ public class FaroProjectPersistenceImpl
 					new String[] {"serverLocation"}, 0, 1, false, null),
 				_SQL_SELECT_FAROPROJECT_WHERE, _SQL_COUNT_FAROPROJECT_WHERE,
 				FaroProjectModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				"",
+				"", null,
 				new FinderColumn<>(
 					"faroProject.", "serverLocation", FinderColumn.Type.STRING,
 					"=", true, true, FaroProject::getServerLocation));
@@ -766,4 +766,4 @@ public class FaroProjectPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1482170528
+// LIFERAY-SERVICE-BUILDER-HASH:1276586046

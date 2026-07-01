@@ -934,7 +934,7 @@ public class FriendlyURLEntryPersistenceImpl
 			_SQL_SELECT_FRIENDLYURLENTRY_WHERE,
 			_SQL_COUNT_FRIENDLYURLENTRY_WHERE,
 			FriendlyURLEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-			"",
+			"", null,
 			new FinderColumn<>(
 				"friendlyURLEntry.", "uuid", "uuid_", FinderColumn.Type.STRING,
 				"=", true, true, FriendlyURLEntry::getUuid));
@@ -977,7 +977,7 @@ public class FriendlyURLEntryPersistenceImpl
 				_SQL_SELECT_FRIENDLYURLENTRY_WHERE,
 				_SQL_COUNT_FRIENDLYURLENTRY_WHERE,
 				FriendlyURLEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"", "",
+				"", "", null,
 				new FinderColumn<>(
 					"friendlyURLEntry.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -1007,7 +1007,7 @@ public class FriendlyURLEntryPersistenceImpl
 			_SQL_SELECT_FRIENDLYURLENTRY_WHERE,
 			_SQL_COUNT_FRIENDLYURLENTRY_WHERE,
 			FriendlyURLEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-			"",
+			"", null,
 			new FinderColumn<>(
 				"friendlyURLEntry.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, FriendlyURLEntry::getGroupId),
@@ -1036,7 +1036,7 @@ public class FriendlyURLEntryPersistenceImpl
 			_SQL_SELECT_FRIENDLYURLENTRY_WHERE,
 			_SQL_COUNT_FRIENDLYURLENTRY_WHERE,
 			FriendlyURLEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-			"",
+			"", null,
 			new FinderColumn<>(
 				"friendlyURLEntry.", "companyId", FinderColumn.Type.LONG, "=",
 				true, true, FriendlyURLEntry::getCompanyId),
@@ -1071,7 +1071,7 @@ public class FriendlyURLEntryPersistenceImpl
 			_SQL_SELECT_FRIENDLYURLENTRY_WHERE,
 			_SQL_COUNT_FRIENDLYURLENTRY_WHERE,
 			FriendlyURLEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-			"",
+			"", null,
 			new FinderColumn<>(
 				"friendlyURLEntry.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, FriendlyURLEntry::getGroupId),
@@ -1158,4 +1158,4 @@ public class FriendlyURLEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1706206532
+// LIFERAY-SERVICE-BUILDER-HASH:-1330005230

@@ -910,6 +910,7 @@ public class RedirectEntryPersistenceImpl
 				0, 1, false, null),
 			_SQL_SELECT_REDIRECTENTRY_WHERE, _SQL_COUNT_REDIRECTENTRY_WHERE,
 			RedirectEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			null,
 			new FinderColumn<>(
 				"redirectEntry.", "uuid", "uuid_", FinderColumn.Type.STRING,
 				"=", true, true, RedirectEntry::getUuid));
@@ -951,7 +952,7 @@ public class RedirectEntryPersistenceImpl
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_REDIRECTENTRY_WHERE, _SQL_COUNT_REDIRECTENTRY_WHERE,
 				RedirectEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				"",
+				"", null,
 				new FinderColumn<>(
 					"redirectEntry.", "uuid", "uuid_", FinderColumn.Type.STRING,
 					"=", true, true, RedirectEntry::getUuid),
@@ -980,7 +981,7 @@ public class RedirectEntryPersistenceImpl
 					new String[] {"groupId"}, false),
 				_SQL_SELECT_REDIRECTENTRY_WHERE, _SQL_COUNT_REDIRECTENTRY_WHERE,
 				RedirectEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				"",
+				"", null,
 				new FinderColumn<>(
 					"redirectEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, RedirectEntry::getGroupId));
@@ -1008,7 +1009,7 @@ public class RedirectEntryPersistenceImpl
 					null),
 				_SQL_SELECT_REDIRECTENTRY_WHERE, _SQL_COUNT_REDIRECTENTRY_WHERE,
 				RedirectEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				"",
+				"", null,
 				new FinderColumn<>(
 					"redirectEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, RedirectEntry::getGroupId),
@@ -1102,4 +1103,4 @@ public class RedirectEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1122727100
+// LIFERAY-SERVICE-BUILDER-HASH:1179957768

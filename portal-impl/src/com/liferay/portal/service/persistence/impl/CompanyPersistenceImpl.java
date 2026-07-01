@@ -443,6 +443,7 @@ public class CompanyPersistenceImpl
 					new String[] {"logoId"}, false),
 				_SQL_SELECT_COMPANY_WHERE, _SQL_COUNT_COMPANY_WHERE,
 				CompanyModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"company.", "logoId", FinderColumn.Type.LONG, "=", true,
 					true, Company::getLogoId));
@@ -483,4 +484,4 @@ public class CompanyPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1920450105
+// LIFERAY-SERVICE-BUILDER-HASH:-627210531

@@ -423,7 +423,7 @@ public class PasswordPolicyRelPersistenceImpl
 				_SQL_SELECT_PASSWORDPOLICYREL_WHERE,
 				_SQL_COUNT_PASSWORDPOLICYREL_WHERE,
 				PasswordPolicyRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"", "",
+				"", "", null,
 				new FinderColumn<>(
 					"passwordPolicyRel.", "passwordPolicyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -478,4 +478,4 @@ public class PasswordPolicyRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-120662036
+// LIFERAY-SERVICE-BUILDER-HASH:2039378972

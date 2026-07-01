@@ -1556,7 +1556,7 @@ public class CommerceOrderItemPersistenceImpl
 			_SQL_SELECT_COMMERCEORDERITEM_WHERE,
 			_SQL_COUNT_COMMERCEORDERITEM_WHERE,
 			CommerceOrderItemModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-			"",
+			"", null,
 			new FinderColumn<>(
 				"commerceOrderItem.", "uuid", "uuid_", FinderColumn.Type.STRING,
 				"=", true, true, CommerceOrderItem::getUuid));
@@ -1599,7 +1599,7 @@ public class CommerceOrderItemPersistenceImpl
 				_SQL_SELECT_COMMERCEORDERITEM_WHERE,
 				_SQL_COUNT_COMMERCEORDERITEM_WHERE,
 				CommerceOrderItemModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"", "",
+				"", "", null,
 				new FinderColumn<>(
 					"commerceOrderItem.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -1633,7 +1633,7 @@ public class CommerceOrderItemPersistenceImpl
 				_SQL_SELECT_COMMERCEORDERITEM_WHERE,
 				_SQL_COUNT_COMMERCEORDERITEM_WHERE,
 				CommerceOrderItemModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"", "",
+				"", "", null,
 				new FinderColumn<>(
 					"commerceOrderItem.", "commerceInventoryBookedQuantityId",
 					"CIBookedQuantityId", FinderColumn.Type.LONG, "=", true,
@@ -1665,7 +1665,7 @@ public class CommerceOrderItemPersistenceImpl
 				_SQL_SELECT_COMMERCEORDERITEM_WHERE,
 				_SQL_COUNT_COMMERCEORDERITEM_WHERE,
 				CommerceOrderItemModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"", "",
+				"", "", null,
 				new FinderColumn<>(
 					"commerceOrderItem.", "commerceOrderId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1694,7 +1694,7 @@ public class CommerceOrderItemPersistenceImpl
 				_SQL_SELECT_COMMERCEORDERITEM_WHERE,
 				_SQL_COUNT_COMMERCEORDERITEM_WHERE,
 				CommerceOrderItemModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"", "",
+				"", "", null,
 				new FinderColumn<>(
 					"commerceOrderItem.", "CPInstanceId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1722,7 +1722,7 @@ public class CommerceOrderItemPersistenceImpl
 				_SQL_SELECT_COMMERCEORDERITEM_WHERE,
 				_SQL_COUNT_COMMERCEORDERITEM_WHERE,
 				CommerceOrderItemModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"", "",
+				"", "", null,
 				new FinderColumn<>(
 					"commerceOrderItem.", "CProductId", FinderColumn.Type.LONG,
 					"=", true, true, CommerceOrderItem::getCProductId));
@@ -1752,7 +1752,7 @@ public class CommerceOrderItemPersistenceImpl
 				_SQL_SELECT_COMMERCEORDERITEM_WHERE,
 				_SQL_COUNT_COMMERCEORDERITEM_WHERE,
 				CommerceOrderItemModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"", "",
+				"", "", null,
 				new FinderColumn<>(
 					"commerceOrderItem.", "customerCommerceOrderItemId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1783,7 +1783,7 @@ public class CommerceOrderItemPersistenceImpl
 				_SQL_SELECT_COMMERCEORDERITEM_WHERE,
 				_SQL_COUNT_COMMERCEORDERITEM_WHERE,
 				CommerceOrderItemModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"", "",
+				"", "", null,
 				new FinderColumn<>(
 					"commerceOrderItem.", "parentCommerceOrderItemId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1810,7 +1810,7 @@ public class CommerceOrderItemPersistenceImpl
 			_SQL_SELECT_COMMERCEORDERITEM_WHERE,
 			_SQL_COUNT_COMMERCEORDERITEM_WHERE,
 			CommerceOrderItemModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-			"",
+			"", null,
 			new FinderColumn<>(
 				"commerceOrderItem.", "commerceOrderId", FinderColumn.Type.LONG,
 				"=", true, true, CommerceOrderItem::getCommerceOrderId),
@@ -1849,7 +1849,7 @@ public class CommerceOrderItemPersistenceImpl
 				_SQL_SELECT_COMMERCEORDERITEM_WHERE,
 				_SQL_COUNT_COMMERCEORDERITEM_WHERE,
 				CommerceOrderItemModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"", "",
+				"", "", null,
 				new FinderColumn<>(
 					"commerceOrderItem.", "commerceOrderId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1880,7 +1880,7 @@ public class CommerceOrderItemPersistenceImpl
 			_SQL_SELECT_COMMERCEORDERITEM_WHERE,
 			_SQL_COUNT_COMMERCEORDERITEM_WHERE,
 			CommerceOrderItemModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-			"",
+			"", null,
 			new FinderColumn<>(
 				"commerceOrderItem.", "commerceOrderId", FinderColumn.Type.LONG,
 				"=", true, true, CommerceOrderItem::getCommerceOrderId),
@@ -1984,4 +1984,4 @@ public class CommerceOrderItemPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1641463882
+// LIFERAY-SERVICE-BUILDER-HASH:218906808

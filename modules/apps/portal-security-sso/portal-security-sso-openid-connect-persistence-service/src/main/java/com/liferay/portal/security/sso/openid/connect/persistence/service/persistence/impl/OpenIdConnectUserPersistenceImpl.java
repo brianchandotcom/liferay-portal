@@ -452,7 +452,7 @@ public class OpenIdConnectUserPersistenceImpl
 			_SQL_SELECT_OPENIDCONNECTUSER_WHERE,
 			_SQL_COUNT_OPENIDCONNECTUSER_WHERE,
 			OpenIdConnectUserModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-			"",
+			"", null,
 			new FinderColumn<>(
 				"openIdConnectUser.", "companyId", FinderColumn.Type.LONG, "=",
 				true, true, OpenIdConnectUser::getCompanyId),
@@ -549,4 +549,4 @@ public class OpenIdConnectUserPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1352857018
+// LIFERAY-SERVICE-BUILDER-HASH:-1161328152

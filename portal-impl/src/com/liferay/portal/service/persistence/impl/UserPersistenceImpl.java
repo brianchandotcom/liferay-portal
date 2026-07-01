@@ -3731,7 +3731,7 @@ public class UserPersistenceImpl
 				new String[] {String.class.getName()}, new String[] {"uuid_"},
 				0, 1, false, null),
 			_SQL_SELECT_USER_WHERE, _SQL_COUNT_USER_WHERE,
-			UserModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			UserModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "", null,
 			new FinderColumn<>(
 				"user.", "uuid", "uuid_", FinderColumn.Type.STRING, "=", true,
 				true, User::getUuid));
@@ -3756,7 +3756,7 @@ public class UserPersistenceImpl
 					new String[] {String.class.getName(), Long.class.getName()},
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_USER_WHERE, _SQL_COUNT_USER_WHERE,
-				UserModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				UserModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "", null,
 				new FinderColumn<>(
 					"user.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
 					true, true, User::getUuid),
@@ -3785,7 +3785,7 @@ public class UserPersistenceImpl
 					new String[] {"companyId"}, false),
 				_SQL_SELECT_USER_WHERE, _SQL_COUNT_USER_WHERE,
 				UserModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "type_ = 1",
-				"type_ = 1",
+				"type_ = 1", null,
 				new FinderColumn<>(
 					"user.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, User::getCompanyId));
@@ -3823,7 +3823,7 @@ public class UserPersistenceImpl
 					new String[] {String.class.getName()},
 					new String[] {"emailAddress"}, 0, 1, false, null),
 				_SQL_SELECT_USER_WHERE, _SQL_COUNT_USER_WHERE,
-				UserModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				UserModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "", null,
 				new FinderColumn<>(
 					"user.", "emailAddress", FinderColumn.Type.STRING, "=",
 					true, true, User::getEmailAddress));
@@ -3848,7 +3848,7 @@ public class UserPersistenceImpl
 					"countByPortraitId", new String[] {Long.class.getName()},
 					new String[] {"portraitId"}, false),
 				_SQL_SELECT_USER_WHERE, _SQL_COUNT_USER_WHERE,
-				UserModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				UserModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "", null,
 				new FinderColumn<>(
 					"user.", "portraitId", FinderColumn.Type.LONG, "=", true,
 					true, User::getPortraitId));
@@ -3870,7 +3870,7 @@ public class UserPersistenceImpl
 				new String[] {"userId", "companyId"}, false),
 			_SQL_SELECT_USER_WHERE, _SQL_COUNT_USER_WHERE,
 			UserModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "type_ = 1",
-			"type_ = 1",
+			"type_ = 1", null,
 			new FinderColumn<>(
 				"user.", "userId", FinderColumn.Type.LONG, ">", true, true,
 				User::getUserId),
@@ -3913,7 +3913,7 @@ public class UserPersistenceImpl
 				new String[] {"companyId", "createDate"}, false),
 			_SQL_SELECT_USER_WHERE, _SQL_COUNT_USER_WHERE,
 			UserModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "type_ = 1",
-			"type_ = 1",
+			"type_ = 1", null,
 			new FinderColumn<>(
 				"user.", "companyId", FinderColumn.Type.LONG, "=", true, true,
 				User::getCompanyId),
@@ -3941,7 +3941,7 @@ public class UserPersistenceImpl
 				new String[] {"companyId", "modifiedDate"}, false),
 			_SQL_SELECT_USER_WHERE, _SQL_COUNT_USER_WHERE,
 			UserModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "type_ = 1",
-			"type_ = 1",
+			"type_ = 1", null,
 			new FinderColumn<>(
 				"user.", "companyId", FinderColumn.Type.LONG, "=", true, true,
 				User::getCompanyId),
@@ -3998,7 +3998,7 @@ public class UserPersistenceImpl
 				new String[] {Long.class.getName(), Long.class.getName()},
 				new String[] {"companyId", "facebookId"}, false),
 			_SQL_SELECT_USER_WHERE, _SQL_COUNT_USER_WHERE,
-			UserModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			UserModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "", null,
 			new FinderColumn<>(
 				"user.", "companyId", FinderColumn.Type.LONG, "=", true, true,
 				User::getCompanyId),
@@ -4025,7 +4025,7 @@ public class UserPersistenceImpl
 				new String[] {Long.class.getName(), Integer.class.getName()},
 				new String[] {"companyId", "type_"}, false),
 			_SQL_SELECT_USER_WHERE, _SQL_COUNT_USER_WHERE,
-			UserModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			UserModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "", null,
 			new FinderColumn<>(
 				"user.", "companyId", FinderColumn.Type.LONG, "=", true, true,
 				User::getCompanyId),
@@ -4053,7 +4053,7 @@ public class UserPersistenceImpl
 				new String[] {"companyId", "status"}, false),
 			_SQL_SELECT_USER_WHERE, _SQL_COUNT_USER_WHERE,
 			UserModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "type_ = 1",
-			"type_ = 1",
+			"type_ = 1", null,
 			new FinderColumn<>(
 				"user.", "companyId", FinderColumn.Type.LONG, "=", true, true,
 				User::getCompanyId),
@@ -4092,7 +4092,7 @@ public class UserPersistenceImpl
 					false),
 				_SQL_SELECT_USER_WHERE, _SQL_COUNT_USER_WHERE,
 				UserModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "type_ = 1",
-				"type_ = 1",
+				"type_ = 1", null,
 				new FinderColumn<>(
 					"user.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, User::getCompanyId),
@@ -4128,7 +4128,7 @@ public class UserPersistenceImpl
 				},
 				new String[] {"companyId", "type_", "status"}, false),
 			_SQL_SELECT_USER_WHERE, _SQL_COUNT_USER_WHERE,
-			UserModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			UserModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "", null,
 			new FinderColumn<>(
 				"user.", "companyId", FinderColumn.Type.LONG, "=", true, true,
 				User::getCompanyId),
@@ -4226,4 +4226,4 @@ public class UserPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1199621636
+// LIFERAY-SERVICE-BUILDER-HASH:776544062

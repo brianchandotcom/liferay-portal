@@ -1077,6 +1077,7 @@ public class DDLRecordPersistenceImpl
 				0, 1, false, null),
 			_SQL_SELECT_DDLRECORD_WHERE, _SQL_COUNT_DDLRECORD_WHERE,
 			DDLRecordModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			null,
 			new FinderColumn<>(
 				"ddlRecord.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
 				true, true, DDLRecord::getUuid));
@@ -1117,6 +1118,7 @@ public class DDLRecordPersistenceImpl
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_DDLRECORD_WHERE, _SQL_COUNT_DDLRECORD_WHERE,
 				DDLRecordModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"ddlRecord.", "uuid", "uuid_", FinderColumn.Type.STRING,
 					"=", true, true, DDLRecord::getUuid),
@@ -1145,6 +1147,7 @@ public class DDLRecordPersistenceImpl
 					new String[] {"companyId"}, false),
 				_SQL_SELECT_DDLRECORD_WHERE, _SQL_COUNT_DDLRECORD_WHERE,
 				DDLRecordModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"ddlRecord.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, DDLRecord::getCompanyId));
@@ -1170,6 +1173,7 @@ public class DDLRecordPersistenceImpl
 					new String[] {"recordSetId"}, false),
 				_SQL_SELECT_DDLRECORD_WHERE, _SQL_COUNT_DDLRECORD_WHERE,
 				DDLRecordModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"ddlRecord.", "recordSetId", FinderColumn.Type.LONG, "=",
 					true, true, DDLRecord::getRecordSetId));
@@ -1194,6 +1198,7 @@ public class DDLRecordPersistenceImpl
 				new String[] {"recordSetId", "userId"}, false),
 			_SQL_SELECT_DDLRECORD_WHERE, _SQL_COUNT_DDLRECORD_WHERE,
 			DDLRecordModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			null,
 			new FinderColumn<>(
 				"ddlRecord.", "recordSetId", FinderColumn.Type.LONG, "=", true,
 				true, DDLRecord::getRecordSetId),
@@ -1223,6 +1228,7 @@ public class DDLRecordPersistenceImpl
 				null),
 			_SQL_SELECT_DDLRECORD_WHERE, _SQL_COUNT_DDLRECORD_WHERE,
 			DDLRecordModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			null,
 			new FinderColumn<>(
 				"ddlRecord.", "recordSetId", FinderColumn.Type.LONG, "=", true,
 				true, DDLRecord::getRecordSetId),
@@ -1250,6 +1256,7 @@ public class DDLRecordPersistenceImpl
 				new String[] {"className", "classPK"}, 0, 1, false, null),
 			_SQL_SELECT_DDLRECORD_WHERE, _SQL_COUNT_DDLRECORD_WHERE,
 			DDLRecordModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			null,
 			new FinderColumn<>(
 				"ddlRecord.", "className", FinderColumn.Type.STRING, "=", true,
 				true, DDLRecord::getClassName),
@@ -1329,4 +1336,4 @@ public class DDLRecordPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2044089230
+// LIFERAY-SERVICE-BUILDER-HASH:-1038201048

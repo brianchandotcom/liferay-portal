@@ -781,6 +781,7 @@ public class DepotEntryPersistenceImpl
 				0, 1, false, null),
 			_SQL_SELECT_DEPOTENTRY_WHERE, _SQL_COUNT_DEPOTENTRY_WHERE,
 			DepotEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			null,
 			new FinderColumn<>(
 				"depotEntry.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
 				true, true, DepotEntry::getUuid));
@@ -822,6 +823,7 @@ public class DepotEntryPersistenceImpl
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_DEPOTENTRY_WHERE, _SQL_COUNT_DEPOTENTRY_WHERE,
 				DepotEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+				null,
 				new FinderColumn<>(
 					"depotEntry.", "uuid", "uuid_", FinderColumn.Type.STRING,
 					"=", true, true, DepotEntry::getUuid),
@@ -860,6 +862,7 @@ public class DepotEntryPersistenceImpl
 				new String[] {"companyId", "type_"}, false),
 			_SQL_SELECT_DEPOTENTRY_WHERE, _SQL_COUNT_DEPOTENTRY_WHERE,
 			DepotEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "", "",
+			null,
 			new FinderColumn<>(
 				"depotEntry.", "companyId", FinderColumn.Type.LONG, "=", true,
 				true, DepotEntry::getCompanyId),
@@ -939,4 +942,4 @@ public class DepotEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1773203242
+// LIFERAY-SERVICE-BUILDER-HASH:-247817324

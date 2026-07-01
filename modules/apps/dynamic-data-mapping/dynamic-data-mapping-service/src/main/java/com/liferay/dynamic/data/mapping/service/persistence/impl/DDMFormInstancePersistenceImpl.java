@@ -928,7 +928,7 @@ public class DDMFormInstancePersistenceImpl
 				0, 1, false, null),
 			_SQL_SELECT_DDMFORMINSTANCE_WHERE, _SQL_COUNT_DDMFORMINSTANCE_WHERE,
 			DDMFormInstanceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-			"",
+			"", null,
 			new FinderColumn<>(
 				"ddmFormInstance.", "uuid", "uuid_", FinderColumn.Type.STRING,
 				"=", true, true, DDMFormInstance::getUuid));
@@ -971,7 +971,7 @@ public class DDMFormInstancePersistenceImpl
 				_SQL_SELECT_DDMFORMINSTANCE_WHERE,
 				_SQL_COUNT_DDMFORMINSTANCE_WHERE,
 				DDMFormInstanceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"", "",
+				"", "", null,
 				new FinderColumn<>(
 					"ddmFormInstance.", "uuid", "uuid_",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -1002,7 +1002,7 @@ public class DDMFormInstancePersistenceImpl
 				_SQL_SELECT_DDMFORMINSTANCE_WHERE,
 				_SQL_COUNT_DDMFORMINSTANCE_WHERE,
 				DDMFormInstanceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"", "",
+				"", "", null,
 				new ArrayableFinderColumn<>(
 					"ddmFormInstance.", "groupId", FinderColumn.Type.LONG, "=",
 					false, true, true, DDMFormInstance::getGroupId));
@@ -1091,4 +1091,4 @@ public class DDMFormInstancePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1925008684
+// LIFERAY-SERVICE-BUILDER-HASH:291686319

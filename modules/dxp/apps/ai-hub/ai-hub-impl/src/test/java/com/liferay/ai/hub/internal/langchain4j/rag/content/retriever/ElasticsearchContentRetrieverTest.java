@@ -41,7 +41,7 @@ public class ElasticsearchContentRetrieverTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void testSearchSkipsHitsScoringBelowMinScore() {
+	public void testSearch() {
 		String fragment = RandomTestUtil.randomString();
 
 		HighlightField highlightField = Mockito.mock(HighlightField.class);

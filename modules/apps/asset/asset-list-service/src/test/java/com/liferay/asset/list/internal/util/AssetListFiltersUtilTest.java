@@ -246,8 +246,7 @@ public class AssetListFiltersUtilTest {
 
 		_assertTermQuery(
 			"nestedFieldArray.value_integer", viewCount,
-			_runAndAssertNestedRow(
-				BooleanClauseOccur.MUST_NOT,
+			_runAndAssertNegatedNestedRow(
 				_buildFilter("not-eq", "viewCount", viewCount), "viewCount"));
 
 		_setUpObjectField(
@@ -288,8 +287,7 @@ public class AssetListFiltersUtilTest {
 
 		_assertTermQuery(
 			"nestedFieldArray.value_text", title,
-			_runAndAssertNestedRow(
-				BooleanClauseOccur.MUST_NOT,
+			_runAndAssertNegatedNestedRow(
 				_buildFilter("not-eq", "title", title), "title"));
 
 		ObjectField subtitleObjectField = _setUpObjectField(
@@ -340,8 +338,7 @@ public class AssetListFiltersUtilTest {
 
 		_assertWildcardQuery(
 			"nestedFieldArray.value_keyword", "*alpha*",
-			_runAndAssertNestedRow(
-				BooleanClauseOccur.MUST_NOT,
+			_runAndAssertNegatedNestedRow(
 				_buildFilter("not-contains", "learnDocumentation", "Alpha"),
 				"learnDocumentation"));
 
@@ -507,8 +504,7 @@ public class AssetListFiltersUtilTest {
 
 		_assertPicklistBooleanQuery(
 			BooleanClauseOccur.SHOULD,
-			_runAndAssertNestedRow(
-				BooleanClauseOccur.MUST_NOT,
+			_runAndAssertNegatedNestedRow(
 				_buildFilterWithJSONArrayValue(
 					"not-contains", "status",
 					JSONUtil.putAll(
@@ -612,8 +608,7 @@ public class AssetListFiltersUtilTest {
 		Assert.assertTrue(
 			containsQuery.toString(), containsQuery instanceof MatchQuery);
 
-		Query notContainsQuery = _runAndAssertNestedRow(
-			BooleanClauseOccur.MUST_NOT,
+		Query notContainsQuery = _runAndAssertNegatedNestedRow(
 			_buildFilter("not-contains", "title", title), "title");
 
 		Assert.assertTrue(
@@ -683,10 +678,7 @@ public class AssetListFiltersUtilTest {
 		Assert.assertEquals(expectedValue, matchQuery.getValue());
 	}
 
-	private Query _assertNestedRow(
-		BooleanClause[] booleanClauses, BooleanClauseOccur expectedValueOccur,
-		String propertyName, int rowIndex) {
-
+	private Query _assertNegatedRow(BooleanClause[] booleanClauses) {
 		Assert.assertEquals(
 			Arrays.toString(booleanClauses), 1, booleanClauses.length);
 
@@ -702,9 +694,42 @@ public class AssetListFiltersUtilTest {
 		List<BooleanClause<Query>> rowBooleanClauses =
 			outerBooleanQuery.clauses();
 
-		BooleanClause<Query> rowBooleanClause = rowBooleanClauses.get(rowIndex);
+		BooleanClause<Query> rowBooleanClause = rowBooleanClauses.get(0);
 
-		NestedQuery nestedQuery = (NestedQuery)rowBooleanClause.getClause();
+		Assert.assertEquals(
+			BooleanClauseOccur.MUST, rowBooleanClause.getBooleanClauseOccur());
+
+		BooleanQuery negatedBooleanQuery =
+			(BooleanQuery)rowBooleanClause.getClause();
+
+		List<BooleanClause<Query>> negatedBooleanClauses =
+			negatedBooleanQuery.clauses();
+
+		Assert.assertEquals(
+			negatedBooleanClauses.toString(), 2, negatedBooleanClauses.size());
+
+		BooleanClause<Query> matchAllBooleanClause = negatedBooleanClauses.get(
+			0);
+
+		Assert.assertTrue(
+			matchAllBooleanClause.getClause() instanceof MatchAllQuery);
+		Assert.assertEquals(
+			BooleanClauseOccur.MUST,
+			matchAllBooleanClause.getBooleanClauseOccur());
+
+		BooleanClause<Query> negatedBooleanClause = negatedBooleanClauses.get(
+			1);
+
+		Assert.assertEquals(
+			BooleanClauseOccur.MUST_NOT,
+			negatedBooleanClause.getBooleanClauseOccur());
+
+		return negatedBooleanClause.getClause();
+	}
+
+	private Query _assertNestedQuery(
+		NestedQuery nestedQuery, BooleanClauseOccur expectedValueOccur,
+		String propertyName) {
 
 		Assert.assertEquals("nestedFieldArray", nestedQuery.getPath());
 
@@ -755,6 +780,32 @@ public class AssetListFiltersUtilTest {
 			expectedValueOccur, valueBooleanClause.getBooleanClauseOccur());
 
 		return valueBooleanClause.getClause();
+	}
+
+	private Query _assertNestedRow(
+		BooleanClause[] booleanClauses, BooleanClauseOccur expectedValueOccur,
+		String propertyName, int rowIndex) {
+
+		Assert.assertEquals(
+			Arrays.toString(booleanClauses), 1, booleanClauses.length);
+
+		BooleanClause<?> outerBooleanClause = booleanClauses[0];
+
+		Assert.assertEquals(
+			BooleanClauseOccur.MUST,
+			outerBooleanClause.getBooleanClauseOccur());
+
+		BooleanQuery outerBooleanQuery =
+			(BooleanQuery)outerBooleanClause.getClause();
+
+		List<BooleanClause<Query>> rowBooleanClauses =
+			outerBooleanQuery.clauses();
+
+		BooleanClause<Query> rowBooleanClause = rowBooleanClauses.get(rowIndex);
+
+		return _assertNestedQuery(
+			(NestedQuery)rowBooleanClause.getClause(), expectedValueOccur,
+			propertyName);
 	}
 
 	private void _assertPicklistBooleanQuery(
@@ -900,50 +951,20 @@ public class AssetListFiltersUtilTest {
 	private Query _runAndAssertNegatedCommonFieldRow(
 		JSONObject filterJSONObject) {
 
-		BooleanClause[] booleanClauses =
+		return _assertNegatedRow(
 			AssetListFiltersUtil.getFiltersBooleanClauses(
-				_COMPANY_ID, JSONUtil.putAll(filterJSONObject), LocaleUtil.US);
+				_COMPANY_ID, JSONUtil.putAll(filterJSONObject), LocaleUtil.US));
+	}
 
-		Assert.assertEquals(
-			Arrays.toString(booleanClauses), 1, booleanClauses.length);
+	private Query _runAndAssertNegatedNestedRow(
+		JSONObject filterJSONObject, String propertyName) {
 
-		BooleanQuery outerBooleanQuery =
-			(BooleanQuery)booleanClauses[0].getClause();
-
-		List<BooleanClause<Query>> rowBooleanClauses =
-			outerBooleanQuery.clauses();
-
-		BooleanClause<Query> rowBooleanClause = rowBooleanClauses.get(0);
-
-		Assert.assertEquals(
-			BooleanClauseOccur.MUST, rowBooleanClause.getBooleanClauseOccur());
-
-		BooleanQuery negatedBooleanQuery =
-			(BooleanQuery)rowBooleanClause.getClause();
-
-		List<BooleanClause<Query>> negatedBooleanClauses =
-			negatedBooleanQuery.clauses();
-
-		Assert.assertEquals(
-			negatedBooleanClauses.toString(), 2, negatedBooleanClauses.size());
-
-		BooleanClause<Query> matchAllBooleanClause = negatedBooleanClauses.get(
-			0);
-
-		Assert.assertTrue(
-			matchAllBooleanClause.getClause() instanceof MatchAllQuery);
-		Assert.assertEquals(
-			BooleanClauseOccur.MUST,
-			matchAllBooleanClause.getBooleanClauseOccur());
-
-		BooleanClause<Query> negatedBooleanClause = negatedBooleanClauses.get(
-			1);
-
-		Assert.assertEquals(
-			BooleanClauseOccur.MUST_NOT,
-			negatedBooleanClause.getBooleanClauseOccur());
-
-		return negatedBooleanClause.getClause();
+		return _assertNestedQuery(
+			(NestedQuery)_assertNegatedRow(
+				AssetListFiltersUtil.getFiltersBooleanClauses(
+					_COMPANY_ID, JSONUtil.putAll(filterJSONObject),
+					LocaleUtil.US)),
+			BooleanClauseOccur.MUST, propertyName);
 	}
 
 	private Query _runAndAssertNestedRow(

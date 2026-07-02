@@ -314,10 +314,10 @@ public class AssetListFiltersUtil {
 			return null;
 		}
 
-		String field = _getCommonFieldName(locale, propertyName);
-		String type = _getCommonFieldType(propertyName);
+		String commonFieldName = _getCommonFieldName(locale, propertyName);
+		String commonFieldType = _getCommonFieldType(propertyName);
 
-		if ((field == null) || (type == null)) {
+		if ((commonFieldName == null) || (commonFieldType == null)) {
 			return null;
 		}
 
@@ -326,9 +326,9 @@ public class AssetListFiltersUtil {
 
 		return _toBooleanClause(
 			_toCommonFieldValueQuery(
-				field, jsonObject,
+				commonFieldName, jsonObject,
 				_localizedCommonFieldNames.contains(propertyName), operatorName,
-				type),
+				commonFieldType),
 			operatorName);
 	}
 

@@ -430,6 +430,10 @@ public class AssetListFiltersUtil {
 			return new MatchQuery(field, value);
 		}
 
+		if (_lowerCaseCommonFieldNames.contains(field)) {
+			value = StringUtil.toLowerCase(value);
+		}
+
 		if (operatorName.equals("contains") ||
 			operatorName.equals("not-contains")) {
 
@@ -666,6 +670,8 @@ public class AssetListFiltersUtil {
 		).build();
 	private static final Set<String> _localizedCommonFieldNames =
 		SetUtil.fromArray(Field.TITLE);
+	private static final Set<String> _lowerCaseCommonFieldNames =
+		SetUtil.fromArray(Field.USER_NAME);
 	private static final Map<String, String> _metadataCommonFieldNames =
 		HashMapBuilder.put(
 			"creator", Field.USER_NAME

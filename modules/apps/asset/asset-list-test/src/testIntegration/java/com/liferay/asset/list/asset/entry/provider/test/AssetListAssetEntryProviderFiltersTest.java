@@ -54,6 +54,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
@@ -294,6 +295,34 @@ public class AssetListAssetEntryProviderFiltersTest {
 
 	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-74731"))
 	@Test
+	public void testGetAssetEntriesInfoPageWithExternalReferenceCodeFilters()
+		throws Exception {
+
+		String externalReferenceCode = StringUtil.toUpperCase(
+			RandomTestUtil.randomString());
+
+		ObjectEntry objectEntry =
+			_objectEntryLocalService.addOrUpdateObjectEntry(
+				externalReferenceCode, _group.getGroupId(),
+				TestPropsValues.getUserId(),
+				_objectDefinition.getObjectDefinitionId(),
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+				HashMapBuilder.<String, Serializable>put(
+					"title", RandomTestUtil.randomString()
+				).build(),
+				ServiceContextTestUtil.getServiceContext(
+					_group.getGroupId(), TestPropsValues.getUserId()));
+
+		_assertFilteredClassPKs(
+			_buildFiltersJSONArray(
+				_buildCommonFieldFilter(
+					"eq", "externalReferenceCode", externalReferenceCode)),
+			objectEntry);
+	}
+
+	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-74731"))
+	@Test
 	public void testGetAssetEntriesInfoPageWithKeywordTextContainsFilters()
 		throws Exception {
 
@@ -317,6 +346,31 @@ public class AssetListAssetEntryProviderFiltersTest {
 			_buildFiltersJSONArray(
 				_buildFilter("not-contains", "learnDocumentation", keyword)),
 			objectEntry2);
+	}
+
+	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-74731"))
+	@Test
+	public void testGetAssetEntriesInfoPageWithMixedCaseUserNameFilters()
+		throws Exception {
+
+		ObjectEntry objectEntry = _addObjectEntry(
+			HashMapBuilder.<String, Serializable>put(
+				"title", RandomTestUtil.randomString()
+			).build());
+
+		String userName = TestPropsValues.getUser(
+		).getFullName();
+
+		_assertFilteredClassPKs(
+			_buildFiltersJSONArray(
+				_buildCommonFieldFilter(
+					"contains", "userName", StringUtil.toUpperCase(userName))),
+			objectEntry);
+		_assertFilteredClassPKs(
+			_buildFiltersJSONArray(
+				_buildCommonFieldFilter(
+					"eq", "userName", StringUtil.toUpperCase(userName))),
+			objectEntry);
 	}
 
 	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-74731"))
@@ -463,6 +517,30 @@ public class AssetListAssetEntryProviderFiltersTest {
 				_buildPicklistFilter(
 					"categories", "all", _LIST_TYPE_ENTRY_KEY_2)),
 			objectEntry3, objectEntry4);
+	}
+
+	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-74731"))
+	@Test
+	public void testGetAssetEntriesInfoPageWithStatusFilters()
+		throws Exception {
+
+		ObjectEntry objectEntry = _addObjectEntry(
+			HashMapBuilder.<String, Serializable>put(
+				"title", RandomTestUtil.randomString()
+			).build());
+
+		_assertFilteredClassPKs(
+			_buildFiltersJSONArray(
+				_buildCommonFieldFilter(
+					"eq", "status",
+					String.valueOf(WorkflowConstants.STATUS_APPROVED))),
+			objectEntry);
+
+		_assertFilteredClassPKs(
+			_buildFiltersJSONArray(
+				_buildCommonFieldFilter(
+					"not-eq", "status",
+					String.valueOf(WorkflowConstants.STATUS_APPROVED))));
 	}
 
 	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-74731"))

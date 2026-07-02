@@ -10,7 +10,6 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectFieldLocalServiceUtil;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -89,11 +88,12 @@ public class AssetListFiltersUtilTest {
 
 	@Test
 	public void testGetFiltersBooleanClausesWithCommonFieldOperators() {
+		String externalReferenceCode = "ABC-123";
 		String priority = String.valueOf(RandomTestUtil.randomDouble());
 		String status = String.valueOf(RandomTestUtil.randomInt());
 		String title1 = RandomTestUtil.randomString();
 		String title2 = RandomTestUtil.randomString();
-		String userName = RandomTestUtil.randomString();
+		String userName = "John Smith";
 		String viewCount = String.valueOf(RandomTestUtil.randomInt());
 
 		_assertMatchQuery(
@@ -106,13 +106,19 @@ public class AssetListFiltersUtilTest {
 				_buildCommonFieldFilter("contains", "title", title2)));
 
 		_assertTermQuery(
-			"userName", userName,
+			"userName", "john smith",
 			_runAndAssertCommonFieldRow(
 				_buildCommonFieldFilter("eq", "userName", userName)));
 		_assertWildcardQuery(
-			"userName", StringPool.STAR + userName + StringPool.STAR,
+			"userName", "*john smith*",
 			_runAndAssertNegatedCommonFieldRow(
 				_buildCommonFieldFilter("not-contains", "userName", userName)));
+
+		_assertTermQuery(
+			"externalReferenceCode", externalReferenceCode,
+			_runAndAssertCommonFieldRow(
+				_buildCommonFieldFilter(
+					"eq", "externalReferenceCode", externalReferenceCode)));
 
 		_assertTermQuery(
 			"viewCount", viewCount,
@@ -365,10 +371,10 @@ public class AssetListFiltersUtilTest {
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 			ObjectFieldConstants.DB_TYPE_STRING, "creator");
 
-		String userName = RandomTestUtil.randomString();
+		String userName = "John Smith";
 
 		_assertTermQuery(
-			"userName", userName,
+			"userName", "john smith",
 			_runAndAssertCommonFieldRow(
 				_buildFilter("eq", "creator", userName)));
 

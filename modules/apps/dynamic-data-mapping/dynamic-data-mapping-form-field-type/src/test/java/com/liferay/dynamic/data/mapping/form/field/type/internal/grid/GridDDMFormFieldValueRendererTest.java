@@ -13,6 +13,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -74,6 +75,31 @@ public class GridDDMFormFieldValueRendererTest {
 
 		Assert.assertEquals(
 			"rowLabel 1: columnLabel 1",
+			gridDDMFormFieldValueRenderer.render(
+				ddmFormFieldValue, LocaleUtil.US));
+	}
+
+	@Test
+	public void testRenderWithDeletedDDMFormField() throws Exception {
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
+
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
+
+		DDMFormFieldValue ddmFormFieldValue =
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"Grid",
+				new UnlocalizedValue("{\"rowValue 1\":\"columnValue 1\"}"));
+
+		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
+
+		Assert.assertNull(ddmFormFieldValue.getDDMFormField());
+
+		GridDDMFormFieldValueRenderer gridDDMFormFieldValueRenderer =
+			_createGridDDMFormFieldValueRenderer();
+
+		Assert.assertEquals(
+			StringPool.BLANK,
 			gridDDMFormFieldValueRenderer.render(
 				ddmFormFieldValue, LocaleUtil.US));
 	}

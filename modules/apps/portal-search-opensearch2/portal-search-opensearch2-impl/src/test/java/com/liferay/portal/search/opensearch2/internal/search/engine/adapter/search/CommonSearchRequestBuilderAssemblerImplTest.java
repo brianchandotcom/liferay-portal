@@ -466,9 +466,9 @@ public class CommonSearchRequestBuilderAssemblerImplTest {
 	public void testRootClauseWithParentNestsUnderNamedParentQuery()
 		throws Exception {
 
-		_index("alpha 1", "JournalArticle");
-		_index("alpha 2", "DLFileEntry");
-		_index("bravo 1", "DLFileEntry");
+		_index("JournalArticle", "alpha 1");
+		_index("DLFileEntry", "alpha 2");
+		_index("DLFileEntry", "bravo 1");
 
 		SearchSearchRequest searchSearchRequest = _createSearchSearchRequest();
 

@@ -253,6 +253,25 @@ public class AssetListFiltersUtil {
 		return format.format(calendar.getTime());
 	}
 
+	private static BooleanClause<Query> _toBooleanClause(
+		Query query, String operatorName) {
+
+		if (query == null) {
+			return null;
+		}
+
+		if (_isNegatedOperator(operatorName)) {
+			BooleanQuery booleanQuery = new BooleanQuery();
+
+			booleanQuery.add(new MatchAllQuery(), BooleanClauseOccur.MUST);
+			booleanQuery.add(query, BooleanClauseOccur.MUST_NOT);
+
+			return new BooleanClause<>(booleanQuery, BooleanClauseOccur.MUST);
+		}
+
+		return new BooleanClause<>(query, BooleanClauseOccur.MUST);
+	}
+
 	private static BooleanClause<Query> _toClause(
 		long companyId, JSONObject jsonObject, Locale locale) {
 
@@ -278,14 +297,10 @@ public class AssetListFiltersUtil {
 				jsonObject, locale, _aliasMetadataName(objectField.getName()));
 		}
 
-		NestedQuery nestedQuery = _toNestedQuery(
-			jsonObject, locale, objectField);
-
-		if (nestedQuery == null) {
-			return null;
-		}
-
-		return new BooleanClause<>(nestedQuery, BooleanClauseOccur.MUST);
+		return _toBooleanClause(
+			_toNestedQuery(jsonObject, locale, objectField),
+			GetterUtil.getString(
+				jsonObject.getString("operatorName"), "contains"));
 	}
 
 	private static BooleanClause<Query> _toCommonFieldClause(
@@ -305,25 +320,12 @@ public class AssetListFiltersUtil {
 		String operatorName = GetterUtil.getString(
 			jsonObject.getString("operatorName"), "contains");
 
-		Query query = _toCommonFieldValueQuery(
-			field, jsonObject,
-			_localizedCommonFieldNames.contains(propertyName), operatorName,
-			type);
-
-		if (query == null) {
-			return null;
-		}
-
-		if (_isNegatedOperator(operatorName)) {
-			BooleanQuery booleanQuery = new BooleanQuery();
-
-			booleanQuery.add(new MatchAllQuery(), BooleanClauseOccur.MUST);
-			booleanQuery.add(query, BooleanClauseOccur.MUST_NOT);
-
-			return new BooleanClause<>(booleanQuery, BooleanClauseOccur.MUST);
-		}
-
-		return new BooleanClause<>(query, BooleanClauseOccur.MUST);
+		return _toBooleanClause(
+			_toCommonFieldValueQuery(
+				field, jsonObject,
+				_localizedCommonFieldNames.contains(propertyName), operatorName,
+				type),
+			operatorName);
 	}
 
 	private static Query _toCommonFieldRangeQuery(
@@ -463,10 +465,7 @@ public class AssetListFiltersUtil {
 				"nestedFieldArray.valueFieldName",
 				subfield.substring(subfield.indexOf(CharPool.PERIOD) + 1)),
 			BooleanClauseOccur.MUST);
-		booleanQuery.add(
-			query,
-			_isNegatedOperator(operatorName) ? BooleanClauseOccur.MUST_NOT :
-				BooleanClauseOccur.MUST);
+		booleanQuery.add(query, BooleanClauseOccur.MUST);
 
 		return new NestedQuery("nestedFieldArray", booleanQuery);
 	}

@@ -20,9 +20,9 @@ public class DigesterUtilTest {
 	@Test
 	public void test() throws Exception {
 		FIPSAlgorithmTestUtil.assertAlgorithmSwitch(
-			() -> DigesterUtil.digestHex(RandomTestUtil.randomString()),
 			DigesterUtil.SHA, MessageDigest::getInstance, MessageDigest.class,
-			DigesterUtil.SHA_256);
+			DigesterUtil.SHA_256,
+			() -> DigesterUtil.digestHex(RandomTestUtil.randomString()));
 	}
 
 }

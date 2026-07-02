@@ -18,15 +18,15 @@ import org.mockito.Mockito;
 public class FIPSAlgorithmTestUtil {
 
 	public static <T> void assertAlgorithmSwitch(
-			UnsafeRunnable<Exception> action, String algorithm,
-			UnsafeConsumer<String, Exception> algorithmCall,
-			Class<T> classToMock, String fipsAlgorithm)
+			String algorithm, UnsafeConsumer<String, Exception> algorithmCall,
+			Class<T> classToMock, String fipsAlgorithm,
+			UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {
 
 		try (MockedStatic<T> mockedStatic = Mockito.mockStatic(
 				classToMock, Mockito.CALLS_REAL_METHODS)) {
 
-			action.run();
+			unsafeRunnable.run();
 
 			mockedStatic.verify(
 				() -> algorithmCall.accept(algorithm), Mockito.atLeastOnce());
@@ -40,7 +40,7 @@ public class FIPSAlgorithmTestUtil {
 				PropsValuesTestUtil.swapWithSafeCloseable(
 					"FIPS_ENABLED", true)) {
 
-			action.run();
+			unsafeRunnable.run();
 
 			mockedStatic.verify(
 				() -> algorithmCall.accept(algorithm), Mockito.never());

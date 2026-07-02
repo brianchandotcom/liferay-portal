@@ -266,10 +266,10 @@ public class PasswordEncryptorUtilTest {
 		}
 
 		FIPSAlgorithmTestUtil.assertAlgorithmSwitch(
-			() -> PasswordEncryptorUtil.encrypt(
-				PasswordEncryptor.TYPE_SSHA, "password", null),
 			DigesterUtil.SHA_1, MessageDigest::getInstance, MessageDigest.class,
-			DigesterUtil.SHA_256);
+			DigesterUtil.SHA_256,
+			() -> PasswordEncryptorUtil.encrypt(
+				PasswordEncryptor.TYPE_SSHA, "password", null));
 	}
 
 	@Test

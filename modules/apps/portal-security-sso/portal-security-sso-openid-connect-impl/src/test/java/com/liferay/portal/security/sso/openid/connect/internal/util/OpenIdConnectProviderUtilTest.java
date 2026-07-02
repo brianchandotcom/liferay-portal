@@ -29,11 +29,11 @@ public class OpenIdConnectProviderUtilTest {
 	@Test
 	public void test() throws Exception {
 		FIPSAlgorithmTestUtil.assertAlgorithmSwitch(
+			DigesterUtil.MD5, MessageDigest::getInstance, MessageDigest.class,
+			DigesterUtil.SHA_256,
 			() -> OpenIdConnectProviderUtil.generateLocalWellKnownURI(
 				"https://" + RandomTestUtil.randomString(),
-				RandomTestUtil.randomString()),
-			DigesterUtil.MD5, MessageDigest::getInstance, MessageDigest.class,
-			DigesterUtil.SHA_256);
+				RandomTestUtil.randomString()));
 	}
 
 }

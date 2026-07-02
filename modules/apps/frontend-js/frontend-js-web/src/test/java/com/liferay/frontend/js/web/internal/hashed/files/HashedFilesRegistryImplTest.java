@@ -94,11 +94,11 @@ public class HashedFilesRegistryImplTest {
 		).build();
 
 		FIPSAlgorithmTestUtil.assertAlgorithmSwitch(
+			DigesterUtil.MD5, MessageDigest::getInstance, MessageDigest.class,
+			DigesterUtil.SHA_256,
 			() -> ReflectionTestUtil.invoke(
 				new HashedFilesRegistryImpl(), "_getServletContextHash",
-				new Class<?>[] {Map.class}, hashedFileURIs),
-			DigesterUtil.MD5, MessageDigest::getInstance, MessageDigest.class,
-			DigesterUtil.SHA_256);
+				new Class<?>[] {Map.class}, hashedFileURIs));
 	}
 
 	private Map<String, HashedFilesRegistryImpl.DataBag> _mockDataBags(

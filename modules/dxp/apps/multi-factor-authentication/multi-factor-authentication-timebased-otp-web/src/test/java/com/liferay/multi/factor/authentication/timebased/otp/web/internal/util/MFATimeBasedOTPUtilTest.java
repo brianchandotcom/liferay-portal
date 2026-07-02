@@ -32,8 +32,8 @@ public class MFATimeBasedOTPUtilTest {
 		String sharedSecret = MFATimeBasedOTPUtil.generateSharedSecret(20);
 
 		FIPSAlgorithmTestUtil.assertAlgorithmSwitch(
-			() -> _generateCurrentOTP(sharedSecret), "HmacSHA1",
-			Mac::getInstance, Mac.class, "HmacSHA256");
+			"HmacSHA1", Mac::getInstance, Mac.class, "HmacSHA256",
+			() -> _generateCurrentOTP(sharedSecret));
 	}
 
 	private String _generateCurrentOTP(String sharedSecret) {

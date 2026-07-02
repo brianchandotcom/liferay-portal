@@ -734,20 +734,31 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 					companyId);
 		}
 
-		try (SafeCloseable safeCloseable1 =
-				CompanyThreadLocal.setCompanyIdWithSafeCloseable(companyId);
-			SafeCloseable safeCloseable2 =
-				PortalInstances.setCompanyInDeletionProcessWithSafeCloseable(
-					companyId)) {
+		SafeCloseable safeCloseable1 =
+			PortalInstances.setCompanyInDeletionProcessWithSafeCloseable(
+				companyId);
+
+		try (SafeCloseable safeCloseable2 =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(companyId)) {
 
 			return doDeleteCompany(companyId);
 		}
-		catch (PortalException portalException) {
+		catch (Throwable throwable) {
+			safeCloseable1.close();
+
 			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
+				_log.debug(throwable);
 			}
 
-			throw portalException;
+			throw throwable;
+		}
+		finally {
+			TransactionCommitCallbackUtil.registerCallback(
+				() -> {
+					safeCloseable1.close();
+
+					return null;
+				});
 		}
 	}
 
@@ -1641,29 +1652,23 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		if (PropsValues.DATABASE_PARTITION_ENABLED) {
 			TransactionCommitCallbackUtil.registerCallback(
 				() -> {
+					_clearCache(companyId);
+
+					Store store = _storeSnapshot.get();
+
+					store.deleteDirectory(companyId);
+
+					PortalInstances.removeCompany(company.getCompanyId());
+
+					unregisterCompany(company);
+
+					_synchronizePortalInstances();
+
 					try (SafeCloseable safeCloseable =
-							PortalInstances.
-								setCompanyInDeletionProcessWithSafeCloseable(
-									companyId)) {
+							CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+								companyId)) {
 
-						_clearCache(companyId);
-
-						Store store = _storeSnapshot.get();
-
-						store.deleteDirectory(companyId);
-
-						PortalInstances.removeCompany(company.getCompanyId());
-
-						unregisterCompany(company);
-
-						_synchronizePortalInstances();
-
-						try (SafeCloseable safeCloseable2 =
-								CompanyThreadLocal.
-									setCompanyIdWithSafeCloseable(companyId)) {
-
-							CacheRegistryUtil.clear();
-						}
+						CacheRegistryUtil.clear();
 					}
 
 					return null;

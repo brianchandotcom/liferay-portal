@@ -150,14 +150,14 @@ public class DynamicRegistrationServiceContainerRequestFilter
 				_log.debug(exception);
 			}
 
+			String clientHost = GetterUtil.getString(
+				httpServletRequest.getAttribute(
+					OAuth2ProviderRESTWebKeys.DYNAMIC_REGISTRATION_CLIENT_HOST),
+				_normalizeHost(_getClientHost(httpServletRequest, false)));
+
 			_auditAuthorizationFailure(
-				authenticatedRegistration,
-				GetterUtil.getString(
-					httpServletRequest.getAttribute(
-						OAuth2ProviderRESTWebKeys.
-							DYNAMIC_REGISTRATION_CLIENT_HOST),
-					_normalizeHost(_getClientHost(httpServletRequest, false))),
-				companyId, httpServletRequest);
+				authenticatedRegistration, clientHost, companyId,
+				httpServletRequest);
 
 			if (authenticatedRegistration) {
 				throw ExceptionUtils.toNotAuthorizedException(null, null);

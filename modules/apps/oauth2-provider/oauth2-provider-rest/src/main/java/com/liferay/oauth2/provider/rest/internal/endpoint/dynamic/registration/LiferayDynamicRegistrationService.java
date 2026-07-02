@@ -408,25 +408,27 @@ public class LiferayDynamicRegistrationService
 					liferayClientRegistration.getScope());
 			}
 
+			JSONObject additionalInfoJSONObject = JSONUtil.merge(
+				_getBaseAdditionalInfoJSONObject(),
+				JSONUtil.put(
+					"clientName", clientName
+				).put(
+					"error", error
+				).put(
+					"errorDescription", errorDescription
+				).put(
+					"grantTypes", grantTypesJSONArray
+				).put(
+					"redirectUris", redirectUrisJSONArray
+				).put(
+					"scope", scope
+				));
+
 			AuditRouterUtil.route(
 				new AuditMessage(
 					0, _getCompanyId(), 0, StringPool.BLANK, null,
-					JSONUtil.merge(
-						_getBaseAdditionalInfoJSONObject(),
-						JSONUtil.put(
-							"clientName", clientName
-						).put(
-							"error", error
-						).put(
-							"errorDescription", errorDescription
-						).put(
-							"grantTypes", grantTypesJSONArray
-						).put(
-							"redirectUris", redirectUrisJSONArray
-						).put(
-							"scope", scope
-						)),
-					OAuth2Application.class.getName(), StringPool.BLANK,
+					additionalInfoJSONObject, OAuth2Application.class.getName(),
+					StringPool.BLANK,
 					OAuth2ProviderRESTEndpointConstants.
 						EVENT_TYPE_DYNAMIC_REGISTRATION_REJECT,
 					StringPool.BLANK));
@@ -461,31 +463,29 @@ public class LiferayDynamicRegistrationService
 					liferayClientRegistrationResponse.getScope());
 			}
 
+			JSONObject additionalInfoJSONObject = JSONUtil.merge(
+				_getBaseAdditionalInfoJSONObject(),
+				JSONUtil.put(
+					"clientId", liferayClientRegistrationResponse.getClientId()
+				).put(
+					"clientName",
+					liferayClientRegistrationResponse.getClientName()
+				).put(
+					"grantTypes",
+					JSONFactoryUtil.createJSONArray(
+						liferayClientRegistrationResponse.getGrantTypes())
+				).put(
+					"redirectUris",
+					JSONFactoryUtil.createJSONArray(
+						liferayClientRegistrationResponse.getRedirectUris())
+				).put(
+					"scope", scope
+				));
+
 			AuditRouterUtil.route(
 				new AuditMessage(
 					0, _getCompanyId(), 0, StringPool.BLANK, null,
-					JSONUtil.merge(
-						_getBaseAdditionalInfoJSONObject(),
-						JSONUtil.put(
-							"clientId",
-							liferayClientRegistrationResponse.getClientId()
-						).put(
-							"clientName",
-							liferayClientRegistrationResponse.getClientName()
-						).put(
-							"grantTypes",
-							JSONFactoryUtil.createJSONArray(
-								liferayClientRegistrationResponse.
-									getGrantTypes())
-						).put(
-							"redirectUris",
-							JSONFactoryUtil.createJSONArray(
-								liferayClientRegistrationResponse.
-									getRedirectUris())
-						).put(
-							"scope", scope
-						)),
-					OAuth2Application.class.getName(),
+					additionalInfoJSONObject, OAuth2Application.class.getName(),
 					GetterUtil.getString(
 						liferayClientRegistrationResponse.getClientId()),
 					OAuth2ProviderRESTEndpointConstants.

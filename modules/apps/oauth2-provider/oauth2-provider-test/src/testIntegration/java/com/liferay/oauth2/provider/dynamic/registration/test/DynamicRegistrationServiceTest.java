@@ -572,20 +572,19 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 
 		Invocation.Builder invocationBuilder = tokenWebTarget.request();
 
+		MultivaluedHashMap<String, String> formData = new MultivaluedHashMap<>(
+			HashMapBuilder.put(
+				OAuthConstants.CLIENT_ID, oAuth2Application.getClientId()
+			).put(
+				OAuthConstants.CLIENT_SECRET,
+				oAuth2Application.getClientSecret()
+			).put(
+				OAuthConstants.GRANT_TYPE,
+				OAuthConstants.CLIENT_CREDENTIALS_GRANT
+			).build());
+
 		String tokenString = parseTokenString(
-			invocationBuilder.post(
-				Entity.form(
-					new MultivaluedHashMap<>(
-						HashMapBuilder.put(
-							OAuthConstants.CLIENT_ID,
-							oAuth2Application.getClientId()
-						).put(
-							OAuthConstants.CLIENT_SECRET,
-							oAuth2Application.getClientSecret()
-						).put(
-							OAuthConstants.GRANT_TYPE,
-							OAuthConstants.CLIENT_CREDENTIALS_GRANT
-						).build()))));
+			invocationBuilder.post(Entity.form(formData)));
 
 		Assert.assertNotNull(tokenString);
 

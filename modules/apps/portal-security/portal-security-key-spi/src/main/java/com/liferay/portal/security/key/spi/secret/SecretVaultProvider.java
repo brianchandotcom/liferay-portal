@@ -7,7 +7,7 @@ package com.liferay.portal.security.key.spi.secret;
 
 import com.liferay.portal.security.key.secret.Secret;
 import com.liferay.portal.security.key.secret.SecretManagerException;
-import com.liferay.portal.security.key.spi.SecurityModuleProvider;
+import com.liferay.portal.security.key.spi.ModuleStatus;
 
 import java.util.List;
 
@@ -15,16 +15,20 @@ import java.util.List;
  * @author Tomas Polesovsky
  * @author Christopher Kian
  */
-public interface SecretVaultProvider extends SecurityModuleProvider {
+public interface SecretVaultProvider {
 
 	public void deleteSecret(long companyId, String identifier)
 		throws SecretManagerException;
+
+	public ModuleStatus getModuleStatus();
 
 	public Secret getSecret(long companyId, String identifier)
 		throws SecretManagerException;
 
 	public List<String> getSecretIdentifiers(long companyId)
 		throws SecretManagerException;
+
+	public boolean isAllowedCompany(long companyId);
 
 	public void putSecret(long companyId, Secret secret)
 		throws SecretManagerException;

@@ -17,6 +17,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.audit.AuditException;
 import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.audit.AuditRouterUtil;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -118,12 +119,14 @@ public class LiferayDynamicRegistrationService
 		try {
 			Response response = super.register(liferayClientRegistration);
 
-			_auditResponse(response);
+			_routeAuditMessage(_buildAddAuditMessage(response));
 
 			return response;
 		}
 		catch (RuntimeException runtimeException) {
-			_auditFailure(runtimeException, liferayClientRegistration);
+			_routeAuditMessage(
+				_buildRejectAuditMessage(
+					runtimeException, liferayClientRegistration));
 
 			throw runtimeException;
 		}
@@ -358,145 +361,115 @@ public class LiferayDynamicRegistrationService
 		return OAuth2SecureRandomGenerator.generateClientSecret();
 	}
 
-	private void _auditFailure(
-		Exception exception1,
-		LiferayClientRegistration liferayClientRegistration) {
-
-		try {
-			String clientName = StringPool.BLANK;
-
-			if (liferayClientRegistration != null) {
-				clientName = GetterUtil.getString(
-					liferayClientRegistration.getClientName());
-			}
-
-			String error =
-				OAuth2ProviderRESTEndpointConstants.ERROR_SERVER_ERROR;
-			String errorDescription = GetterUtil.getString(
-				exception1.getMessage());
-
-			if (exception1 instanceof
-					WebApplicationException webApplicationException) {
-
-				Object entity = null;
-
-				Response response = webApplicationException.getResponse();
-
-				if (response != null) {
-					entity = response.getEntity();
-				}
-
-				if (entity instanceof OAuthError oAuthError) {
-					error = GetterUtil.getString(oAuthError.getError(), error);
-
-					if (Validator.isNotNull(oAuthError.getErrorDescription())) {
-						errorDescription = oAuthError.getErrorDescription();
-					}
-				}
-			}
-
-			JSONArray grantTypesJSONArray = JSONFactoryUtil.createJSONArray();
-			JSONArray redirectUrisJSONArray = JSONFactoryUtil.createJSONArray();
-			String scope = StringPool.BLANK;
-
-			if (liferayClientRegistration != null) {
-				grantTypesJSONArray = JSONFactoryUtil.createJSONArray(
-					liferayClientRegistration.getGrantTypes());
-				redirectUrisJSONArray = JSONFactoryUtil.createJSONArray(
-					liferayClientRegistration.getRedirectUris());
-				scope = GetterUtil.getString(
-					liferayClientRegistration.getScope());
-			}
-
-			AuditRouterUtil.route(
-				new AuditMessage(
-					0, _getCompanyId(), 0, StringPool.BLANK, null,
-					JSONUtil.merge(
-						_getBaseAdditionalInfoJSONObject(),
-						JSONUtil.put(
-							"clientName", clientName
-						).put(
-							"error", error
-						).put(
-							"errorDescription", errorDescription
-						).put(
-							"grantTypes", grantTypesJSONArray
-						).put(
-							"redirectUris", redirectUrisJSONArray
-						).put(
-							"scope", scope
-						)),
-					OAuth2Application.class.getName(), StringPool.BLANK,
-					OAuth2ProviderRESTEndpointConstants.
-						EVENT_TYPE_DYNAMIC_REGISTRATION_REJECT,
-					StringPool.BLANK));
+	private AuditMessage _buildAddAuditMessage(Response response) {
+		if (response == null) {
+			return null;
 		}
-		catch (Exception exception2) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception2);
-			}
+
+		Object entity = response.getEntity();
+
+		if (!(entity instanceof
+				LiferayClientRegistrationResponse
+					liferayClientRegistrationResponse)) {
+
+			return null;
 		}
+
+		JSONObject additionalInfoJSONObject = _getBaseAdditionalInfoJSONObject(
+		).put(
+			"clientId", liferayClientRegistrationResponse.getClientId()
+		).put(
+			"clientName", liferayClientRegistrationResponse.getClientName()
+		).put(
+			"grantTypes",
+			JSONFactoryUtil.createJSONArray(
+				liferayClientRegistrationResponse.getGrantTypes())
+		).put(
+			"redirectUris",
+			JSONFactoryUtil.createJSONArray(
+				liferayClientRegistrationResponse.getRedirectUris())
+		).put(
+			"scope", liferayClientRegistrationResponse.getScope()
+		);
+
+		return new AuditMessage(
+			0, _getCompanyId(), 0, StringPool.BLANK, null,
+			additionalInfoJSONObject, OAuth2Application.class.getName(),
+			GetterUtil.getString(
+				liferayClientRegistrationResponse.getClientId()),
+			OAuth2ProviderRESTEndpointConstants.
+				EVENT_TYPE_DYNAMIC_REGISTRATION_ADD,
+			StringPool.BLANK);
 	}
 
-	private void _auditResponse(Response response) {
-		try {
-			if (response == null) {
-				return;
-			}
+	private AuditMessage _buildRejectAuditMessage(
+		Exception exception,
+		LiferayClientRegistration liferayClientRegistration) {
 
-			Object entity = response.getEntity();
+		String clientName = StringPool.BLANK;
 
-			if (!(entity instanceof
-					LiferayClientRegistrationResponse
-						liferayClientRegistrationResponse)) {
-
-				return;
-			}
-
-			String scope = null;
-
-			if (liferayClientRegistrationResponse.getScope() != null) {
-				scope = String.join(
-					StringPool.SPACE,
-					liferayClientRegistrationResponse.getScope());
-			}
-
-			AuditRouterUtil.route(
-				new AuditMessage(
-					0, _getCompanyId(), 0, StringPool.BLANK, null,
-					JSONUtil.merge(
-						_getBaseAdditionalInfoJSONObject(),
-						JSONUtil.put(
-							"clientId",
-							liferayClientRegistrationResponse.getClientId()
-						).put(
-							"clientName",
-							liferayClientRegistrationResponse.getClientName()
-						).put(
-							"grantTypes",
-							JSONFactoryUtil.createJSONArray(
-								liferayClientRegistrationResponse.
-									getGrantTypes())
-						).put(
-							"redirectUris",
-							JSONFactoryUtil.createJSONArray(
-								liferayClientRegistrationResponse.
-									getRedirectUris())
-						).put(
-							"scope", scope
-						)),
-					OAuth2Application.class.getName(),
-					GetterUtil.getString(
-						liferayClientRegistrationResponse.getClientId()),
-					OAuth2ProviderRESTEndpointConstants.
-						EVENT_TYPE_DYNAMIC_REGISTRATION_ADD,
-					StringPool.BLANK));
+		if (liferayClientRegistration != null) {
+			clientName = GetterUtil.getString(
+				liferayClientRegistration.getClientName());
 		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
+
+		String error = OAuth2ProviderRESTEndpointConstants.ERROR_SERVER_ERROR;
+		String errorDescription = GetterUtil.getString(exception.getMessage());
+
+		if (exception instanceof
+				WebApplicationException webApplicationException) {
+
+			Object entity = null;
+
+			Response response = webApplicationException.getResponse();
+
+			if (response != null) {
+				entity = response.getEntity();
+			}
+
+			if (entity instanceof OAuthError oAuthError) {
+				error = GetterUtil.getString(oAuthError.getError(), error);
+
+				if (Validator.isNotNull(oAuthError.getErrorDescription())) {
+					errorDescription = oAuthError.getErrorDescription();
+				}
 			}
 		}
+
+		JSONArray grantTypesJSONArray = JSONFactoryUtil.createJSONArray();
+		JSONArray redirectUrisJSONArray = JSONFactoryUtil.createJSONArray();
+		String scope = StringPool.BLANK;
+
+		if (liferayClientRegistration != null) {
+			grantTypesJSONArray = JSONFactoryUtil.createJSONArray(
+				liferayClientRegistration.getGrantTypes());
+			redirectUrisJSONArray = JSONFactoryUtil.createJSONArray(
+				liferayClientRegistration.getRedirectUris());
+			scope = GetterUtil.getString(liferayClientRegistration.getScope());
+		}
+
+		JSONObject additionalInfoJSONObject = _getBaseAdditionalInfoJSONObject(
+		).put(
+			"clientName", clientName
+		).put(
+			"error", error
+		).put(
+			"errorDescription", errorDescription
+		).put(
+			"grantTypes", grantTypesJSONArray
+		).put(
+			"redirectUris", redirectUrisJSONArray
+		).put(
+			"scope", scope
+		);
+
+		return new AuditMessage(
+			0, _getCompanyId(), 0, StringPool.BLANK, null,
+			additionalInfoJSONObject, OAuth2Application.class.getName(),
+			StringPool.BLANK,
+			OAuth2ProviderRESTEndpointConstants.
+				EVENT_TYPE_DYNAMIC_REGISTRATION_REJECT,
+			StringPool.BLANK);
 	}
 
 	private String _getApplicationType(ClientRegistration clientRegistration) {
@@ -631,6 +604,26 @@ public class LiferayDynamicRegistrationService
 		}
 
 		return normalizedValues;
+	}
+
+	private void _routeAuditMessage(AuditMessage auditMessage) {
+		if (auditMessage == null) {
+			return;
+		}
+
+		try {
+			AuditRouterUtil.route(auditMessage);
+		}
+		catch (AuditException auditException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to route audit message", auditException);
+			}
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+		}
 	}
 
 	private void _setAllowedGrantTypes(Client client) {

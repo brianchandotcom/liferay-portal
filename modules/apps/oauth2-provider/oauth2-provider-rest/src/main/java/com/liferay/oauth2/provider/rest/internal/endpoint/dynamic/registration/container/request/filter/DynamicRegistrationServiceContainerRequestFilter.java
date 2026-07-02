@@ -18,6 +18,7 @@ import com.liferay.oauth2.provider.service.OAuth2AuthorizationLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.audit.AuditException;
 import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.audit.AuditRouterUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -150,14 +151,16 @@ public class DynamicRegistrationServiceContainerRequestFilter
 				_log.debug(exception);
 			}
 
-			_auditAuthorizationFailure(
-				authenticatedRegistration,
-				GetterUtil.getString(
-					httpServletRequest.getAttribute(
-						OAuth2ProviderRESTWebKeys.
-							DYNAMIC_REGISTRATION_CLIENT_HOST),
-					_normalizeHost(_getClientHost(httpServletRequest, false))),
-				companyId, httpServletRequest);
+			_routeAuditMessage(
+				_buildAuthorizationFailureAuditMessage(
+					authenticatedRegistration,
+					GetterUtil.getString(
+						httpServletRequest.getAttribute(
+							OAuth2ProviderRESTWebKeys.
+								DYNAMIC_REGISTRATION_CLIENT_HOST),
+						_normalizeHost(
+							_getClientHost(httpServletRequest, false))),
+					companyId, httpServletRequest));
 
 			if (authenticatedRegistration) {
 				throw ExceptionUtils.toNotAuthorizedException(null, null);
@@ -170,63 +173,6 @@ public class DynamicRegistrationServiceContainerRequestFilter
 		}
 
 		_setSecurityContext(containerRequestContext, httpServletRequest, user);
-	}
-
-	private void _auditAuthorizationFailure(
-		boolean authenticatedRegistration, String clientHost, long companyId,
-		HttpServletRequest httpServletRequest) {
-
-		if (authenticatedRegistration) {
-			_auditFailure(
-				clientHost, companyId,
-				OAuth2ProviderRESTEndpointConstants.ERROR_INVALID_TOKEN,
-				"Authenticated registration authorization failed",
-				httpServletRequest,
-				OAuth2ProviderRESTEndpointConstants.
-					DYNAMIC_REGISTRATION_MODE_AUTHENTICATED);
-		}
-		else {
-			_auditFailure(
-				clientHost, companyId,
-				OAuth2ProviderRESTEndpointConstants.ERROR_SERVER_ERROR,
-				"Open registration authorization failed", httpServletRequest,
-				OAuth2ProviderRESTEndpointConstants.
-					DYNAMIC_REGISTRATION_MODE_OPEN);
-		}
-	}
-
-	private void _auditFailure(
-		String clientHost, long companyId, String error,
-		String errorDescription, HttpServletRequest httpServletRequest,
-		String mode) {
-
-		try {
-			AuditRouterUtil.route(
-				new AuditMessage(
-					0, companyId, 0, StringPool.BLANK, null,
-					JSONUtil.put(
-						"clientHost", clientHost
-					).put(
-						"error", error
-					).put(
-						"errorDescription", errorDescription
-					).put(
-						"mode", mode
-					).put(
-						"userAgent",
-						GetterUtil.getString(
-							httpServletRequest.getHeader("User-Agent"))
-					),
-					OAuth2Application.class.getName(), StringPool.BLANK,
-					OAuth2ProviderRESTEndpointConstants.
-						EVENT_TYPE_DYNAMIC_REGISTRATION_REJECT,
-					StringPool.BLANK));
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-		}
 	}
 
 	private User _authorize(
@@ -331,12 +277,13 @@ public class DynamicRegistrationServiceContainerRequestFilter
 		if (oAuth2DynamicRegistrationConfiguration.
 				requireInitialAccessToken()) {
 
-			_auditFailure(
-				clientHost, companyId,
-				OAuth2ProviderRESTEndpointConstants.ERROR_INVALID_TOKEN,
-				"Initial access token is required", httpServletRequest,
-				OAuth2ProviderRESTEndpointConstants.
-					DYNAMIC_REGISTRATION_MODE_OPEN);
+			_routeAuditMessage(
+				_buildRejectAuditMessage(
+					clientHost, companyId,
+					OAuth2ProviderRESTEndpointConstants.ERROR_INVALID_TOKEN,
+					"Initial access token is required", httpServletRequest,
+					OAuth2ProviderRESTEndpointConstants.
+						DYNAMIC_REGISTRATION_MODE_OPEN));
 
 			throw ExceptionUtils.toNotAuthorizedException(null, null);
 		}
@@ -356,8 +303,9 @@ public class DynamicRegistrationServiceContainerRequestFilter
 						"company ", companyId));
 			}
 
-			_auditAuthorizationFailure(
-				false, clientHost, companyId, httpServletRequest);
+			_routeAuditMessage(
+				_buildAuthorizationFailureAuditMessage(
+					false, clientHost, companyId, httpServletRequest));
 
 			throw new WebApplicationException(
 				Response.status(
@@ -373,6 +321,52 @@ public class DynamicRegistrationServiceContainerRequestFilter
 		}
 
 		return user;
+	}
+
+	private AuditMessage _buildAuthorizationFailureAuditMessage(
+		boolean authenticatedRegistration, String clientHost, long companyId,
+		HttpServletRequest httpServletRequest) {
+
+		if (authenticatedRegistration) {
+			return _buildRejectAuditMessage(
+				clientHost, companyId,
+				OAuth2ProviderRESTEndpointConstants.ERROR_INVALID_TOKEN,
+				"Authenticated registration authorization failed",
+				httpServletRequest,
+				OAuth2ProviderRESTEndpointConstants.
+					DYNAMIC_REGISTRATION_MODE_AUTHENTICATED);
+		}
+
+		return _buildRejectAuditMessage(
+			clientHost, companyId,
+			OAuth2ProviderRESTEndpointConstants.ERROR_SERVER_ERROR,
+			"Open registration authorization failed", httpServletRequest,
+			OAuth2ProviderRESTEndpointConstants.DYNAMIC_REGISTRATION_MODE_OPEN);
+	}
+
+	private AuditMessage _buildRejectAuditMessage(
+		String clientHost, long companyId, String error,
+		String errorDescription, HttpServletRequest httpServletRequest,
+		String mode) {
+
+		return new AuditMessage(
+			0, companyId, 0, StringPool.BLANK, null,
+			JSONUtil.put(
+				"clientHost", clientHost
+			).put(
+				"error", error
+			).put(
+				"errorDescription", errorDescription
+			).put(
+				"mode", mode
+			).put(
+				"userAgent",
+				GetterUtil.getString(httpServletRequest.getHeader("User-Agent"))
+			),
+			OAuth2Application.class.getName(), StringPool.BLANK,
+			OAuth2ProviderRESTEndpointConstants.
+				EVENT_TYPE_DYNAMIC_REGISTRATION_REJECT,
+			StringPool.BLANK);
 	}
 
 	private String _getClientHost(
@@ -490,6 +484,26 @@ public class DynamicRegistrationServiceContainerRequestFilter
 		return StringUtil.toLowerCase(normalizedHost);
 	}
 
+	private void _routeAuditMessage(AuditMessage auditMessage) {
+		if (auditMessage == null) {
+			return;
+		}
+
+		try {
+			AuditRouterUtil.route(auditMessage);
+		}
+		catch (AuditException auditException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to route audit message", auditException);
+			}
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+		}
+	}
+
 	private void _setSecurityContext(
 		ContainerRequestContext containerRequestContext,
 		HttpServletRequest httpServletRequest, User user) {
@@ -556,11 +570,12 @@ public class DynamicRegistrationServiceContainerRequestFilter
 			String message =
 				"Open registration is not allowed for host: " + clientHost;
 
-			_auditFailure(
-				clientHost, companyId, OAuthConstants.ACCESS_DENIED, message,
-				httpServletRequest,
-				OAuth2ProviderRESTEndpointConstants.
-					DYNAMIC_REGISTRATION_MODE_OPEN);
+			_routeAuditMessage(
+				_buildRejectAuditMessage(
+					clientHost, companyId, OAuthConstants.ACCESS_DENIED,
+					message, httpServletRequest,
+					OAuth2ProviderRESTEndpointConstants.
+						DYNAMIC_REGISTRATION_MODE_OPEN));
 
 			OAuth2ErrorUtil.reportInvalidRequestError(
 				message, OAuthConstants.ACCESS_DENIED,

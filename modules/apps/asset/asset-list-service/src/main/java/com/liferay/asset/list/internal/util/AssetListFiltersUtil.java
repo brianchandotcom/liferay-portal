@@ -216,16 +216,12 @@ public class AssetListFiltersUtil {
 		if (dateTime) {
 			String padded = digits + "000000000000";
 
-			String paddedDigits = padded.substring(0, 12);
-
-			return paddedDigits + (endOfBound ? "59" : "00");
+			return padded.substring(0, 12) + (endOfBound ? "59" : "00");
 		}
 
 		String padded = digits + "00000000";
 
-		String paddedDigits = padded.substring(0, 8);
-
-		return paddedDigits + (endOfBound ? "235959" : "000000");
+		return padded.substring(0, 8) + (endOfBound ? "235959" : "000000");
 	}
 
 	private static String _resolveRelativeDateValue(String value) {
@@ -486,28 +482,26 @@ public class AssetListFiltersUtil {
 
 		JSONArray valueJSONArray = filterJSONObject.getJSONArray("value");
 
-		if ((valueJSONArray == null) || (valueJSONArray.length() == 0)) {
+		if (JSONUtil.isEmpty(valueJSONArray)) {
 			return null;
 		}
 
 		BooleanQuery booleanQuery = new BooleanQuery();
 
-		String quantifier = filterJSONObject.getString("quantifier");
-
 		BooleanClauseOccur booleanClauseOccur = BooleanClauseOccur.SHOULD;
 
-		if (Objects.equals(quantifier, "all")) {
+		if (Objects.equals(filterJSONObject.getString("quantifier"), "all")) {
 			booleanClauseOccur = BooleanClauseOccur.MUST;
 		}
 
 		for (int i = 0; i < valueJSONArray.length(); i++) {
 			JSONObject itemJSONObject = valueJSONArray.getJSONObject(i);
 
-			String value = StringUtil.toLowerCase(
-				itemJSONObject.getString("value"));
-
 			booleanQuery.add(
-				new TermQuery(subfield, value), booleanClauseOccur);
+				new TermQuery(
+					subfield,
+					StringUtil.toLowerCase(itemJSONObject.getString("value"))),
+				booleanClauseOccur);
 		}
 
 		return booleanQuery;

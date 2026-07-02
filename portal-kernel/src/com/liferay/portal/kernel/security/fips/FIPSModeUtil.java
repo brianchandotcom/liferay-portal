@@ -6,7 +6,6 @@
 package com.liferay.portal.kernel.security.fips;
 
 import com.liferay.portal.kernel.util.PropsValues;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Set;
@@ -25,8 +24,6 @@ public class FIPSModeUtil {
 			return true;
 		}
 
-		algorithm = StringUtil.toUpperCase(algorithm);
-
 		for (String allowedAlgorithm : _allowedAlgorithms) {
 			if (algorithm.startsWith(allowedAlgorithm)) {
 				return false;
@@ -37,6 +34,8 @@ public class FIPSModeUtil {
 	}
 
 	private static final Set<String> _allowedAlgorithms = Set.of(
-		"AES", "PBKDF2", "SHA-256", "SHA-384", "SHA-512");
+		"AES", "AES/GCM/NoPadding", "PBKDF2WithHmacSHA256",
+		"PBKDF2WithHmacSHA384", "PBKDF2WithHmacSHA512", "SHA-256", "SHA-384",
+		"SHA-512");
 
 }

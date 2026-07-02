@@ -11,8 +11,6 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.security.key.KeyReference;
 import com.liferay.portal.security.key.secret.Secret;
@@ -48,22 +46,12 @@ public class SecretManagerImpl implements SecretManager {
 			throw new IllegalArgumentException("Key reference is null");
 		}
 
-		try {
-			SecretVaultProvider secretVaultProvider = _getSecretVaultProvider(
-				companyId,
-				_getSecretVaultProviderId(
-					companyId, keyReference.getProviderId()));
+		SecretVaultProvider secretVaultProvider = _getSecretVaultProvider(
+			companyId,
+			_getSecretVaultProviderId(companyId, keyReference.getProviderId()));
 
-			secretVaultProvider.deleteSecret(
-				companyId, keyReference.getIdentifier());
-		}
-		catch (SecretManagerException secretManagerException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to delete secret", secretManagerException);
-			}
-
-			throw secretManagerException;
-		}
+		secretVaultProvider.deleteSecret(
+			companyId, keyReference.getIdentifier());
 	}
 
 	@Override
@@ -75,34 +63,23 @@ public class SecretManagerImpl implements SecretManager {
 			throw new IllegalArgumentException("Provider ID is null");
 		}
 
-		try {
-			String resolvedProviderId = _getSecretVaultProviderId(
-				companyId, providerId);
+		String resolvedProviderId = _getSecretVaultProviderId(
+			companyId, providerId);
 
-			SecretVaultProvider secretVaultProvider = _getSecretVaultProvider(
-				companyId, resolvedProviderId);
+		SecretVaultProvider secretVaultProvider = _getSecretVaultProvider(
+			companyId, resolvedProviderId);
 
-			List<String> identifiers = secretVaultProvider.getSecretIdentifiers(
-				companyId);
+		List<String> identifiers = secretVaultProvider.getSecretIdentifiers(
+			companyId);
 
-			if (identifiers == null) {
-				return new ArrayList<>();
-			}
-
-			return TransformUtil.transform(
-				identifiers,
-				identifier -> new KeyReference(
-					identifier, resolvedProviderId, KeyReference.Type.SECRET));
+		if (identifiers == null) {
+			return new ArrayList<>();
 		}
-		catch (SecretManagerException secretManagerException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to list secret identifiers",
-					secretManagerException);
-			}
 
-			throw secretManagerException;
-		}
+		return TransformUtil.transform(
+			identifiers,
+			identifier -> new KeyReference(
+				identifier, resolvedProviderId, KeyReference.Type.SECRET));
 	}
 
 	@Override
@@ -146,22 +123,12 @@ public class SecretManagerImpl implements SecretManager {
 			throw new IllegalArgumentException("Key reference is null");
 		}
 
-		try {
-			SecretVaultProvider secretVaultProvider = _getSecretVaultProvider(
-				companyId,
-				_getSecretVaultProviderId(
-					companyId, keyReference.getProviderId()));
+		SecretVaultProvider secretVaultProvider = _getSecretVaultProvider(
+			companyId,
+			_getSecretVaultProviderId(companyId, keyReference.getProviderId()));
 
-			return secretVaultProvider.getSecret(
-				companyId, keyReference.getIdentifier());
-		}
-		catch (SecretManagerException secretManagerException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to get secret", secretManagerException);
-			}
-
-			throw secretManagerException;
-		}
+		return secretVaultProvider.getSecret(
+			companyId, keyReference.getIdentifier());
 	}
 
 	@Override
@@ -172,28 +139,18 @@ public class SecretManagerImpl implements SecretManager {
 			throw new IllegalArgumentException("Secret is null");
 		}
 
-		try {
-			KeyReference keyReference = secret.getKeyReference();
+		KeyReference keyReference = secret.getKeyReference();
 
-			String providerId = _getSecretVaultProviderId(
-				companyId, keyReference.getProviderId());
+		String providerId = _getSecretVaultProviderId(
+			companyId, keyReference.getProviderId());
 
-			SecretVaultProvider secretVaultProvider = _getSecretVaultProvider(
-				companyId, providerId);
+		SecretVaultProvider secretVaultProvider = _getSecretVaultProvider(
+			companyId, providerId);
 
-			secretVaultProvider.putSecret(companyId, secret);
+		secretVaultProvider.putSecret(companyId, secret);
 
-			return new KeyReference(
-				keyReference.getIdentifier(), providerId,
-				KeyReference.Type.SECRET);
-		}
-		catch (SecretManagerException secretManagerException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to put secret", secretManagerException);
-			}
-
-			throw secretManagerException;
-		}
+		return new KeyReference(
+			keyReference.getIdentifier(), providerId, KeyReference.Type.SECRET);
 	}
 
 	@Activate
@@ -217,8 +174,15 @@ public class SecretManagerImpl implements SecretManager {
 			long companyId, String providerId)
 		throws SecretManagerException {
 
+		ServiceTrackerMap<String, List<SecretVaultProvider>> serviceTrackerMap =
+			_serviceTrackerMap;
+
+		if (serviceTrackerMap == null) {
+			throw new SecretManagerException("Secret manager is inactive");
+		}
+
 		List<SecretVaultProvider> secretVaultProviders =
-			_serviceTrackerMap.getService(providerId);
+			serviceTrackerMap.getService(providerId);
 
 		if (secretVaultProviders != null) {
 			for (SecretVaultProvider secretVaultProvider :
@@ -288,13 +252,10 @@ public class SecretManagerImpl implements SecretManager {
 		return providerId;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		SecretManagerImpl.class);
-
 	@Reference
 	private KeyManagerProfileRegistry _keyManagerProfileRegistry;
 
-	private ServiceTrackerMap<String, List<SecretVaultProvider>>
+	private volatile ServiceTrackerMap<String, List<SecretVaultProvider>>
 		_serviceTrackerMap;
 
 }

@@ -140,7 +140,7 @@ public class SecretTest {
 		byte originalFirstByte = data[0];
 		Secret secret = new Secret(data, _createKeyReference());
 
-		// Constructor must copy the input
+		// The constructor must copy the input
 
 		data[0] = (byte)~originalFirstByte;
 

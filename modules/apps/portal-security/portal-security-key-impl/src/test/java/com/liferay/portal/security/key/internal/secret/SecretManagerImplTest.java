@@ -159,6 +159,18 @@ public class SecretManagerImplTest {
 	}
 
 	@Test
+	public void testGetSecretThrowsWhenManagerInactive() {
+		ReflectionTestUtil.setFieldValue(
+			_secretManagerImpl, "_serviceTrackerMap", null);
+
+		Assert.assertThrows(
+			SecretManagerException.class,
+			() -> _secretManagerImpl.getSecret(
+				RandomTestUtil.randomLong(),
+				_secretReference(RandomTestUtil.randomString())));
+	}
+
+	@Test
 	public void testGetSecretThrowsWhenProviderInErrorState() {
 		String providerId = RandomTestUtil.randomString();
 

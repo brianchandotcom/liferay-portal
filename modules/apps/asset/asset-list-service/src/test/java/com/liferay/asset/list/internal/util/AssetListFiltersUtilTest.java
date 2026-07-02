@@ -88,31 +88,21 @@ public class AssetListFiltersUtilTest {
 
 	@Test
 	public void testFilterQueriesWithCommonFields() {
-		String externalReferenceCode = "ABC-123";
-		String priority = String.valueOf(RandomTestUtil.randomDouble());
-		String status = String.valueOf(RandomTestUtil.randomInt());
 		String title1 = RandomTestUtil.randomString();
-		String title2 = RandomTestUtil.randomString();
-		String userName = "John Smith";
-		String viewCount = String.valueOf(RandomTestUtil.randomInt());
 
 		_assertMatchQuery(
 			"localized_title_en_US", title1,
 			_runAndAssertCommonFieldRow(
 				_buildCommonFieldFilter("eq", "title", title1)));
+
+		String title2 = RandomTestUtil.randomString();
+
 		_assertMatchQuery(
 			"localized_title_en_US", title2,
 			_runAndAssertCommonFieldRow(
 				_buildCommonFieldFilter("contains", "title", title2)));
 
-		_assertTermQuery(
-			"userName", "john smith",
-			_runAndAssertCommonFieldRow(
-				_buildCommonFieldFilter("eq", "userName", userName)));
-		_assertWildcardQuery(
-			"userName", "*john smith*",
-			_runAndAssertNegatedCommonFieldRow(
-				_buildCommonFieldFilter("not-contains", "userName", userName)));
+		String externalReferenceCode = "ABC-123";
 
 		_assertTermQuery(
 			"externalReferenceCode", externalReferenceCode,
@@ -120,28 +110,27 @@ public class AssetListFiltersUtilTest {
 				_buildCommonFieldFilter(
 					"eq", "externalReferenceCode", externalReferenceCode)));
 
-		_assertTermQuery(
-			"viewCount", viewCount,
-			_runAndAssertCommonFieldRow(
-				_buildCommonFieldFilter("eq", "viewCount", viewCount)));
+		String status = String.valueOf(RandomTestUtil.randomInt());
+
 		_assertTermQuery(
 			"status", status,
 			_runAndAssertNegatedCommonFieldRow(
 				_buildCommonFieldFilter("not-eq", "status", status)));
 
-		_assertTermRangeQuery(
-			"priority", false, false, priority, null,
-			_runAndAssertCommonFieldRow(
-				_buildCommonFieldFilter("gt", "priority", priority)));
+		String userName = "John Smith";
 
-		_assertTermRangeQuery(
-			"modified", true, true, "20260115000000", "20260115235959",
+		_assertTermQuery(
+			"userName", "john smith",
 			_runAndAssertCommonFieldRow(
-				_buildCommonFieldFilter("eq", "modified", "2026-01-15")));
-		_assertTermRangeQuery(
-			"modified", true, true, "20260115000000", "20260115235959",
-			_runAndAssertNegatedCommonFieldRow(
-				_buildCommonFieldFilter("not-eq", "modified", "2026-01-15")));
+				_buildCommonFieldFilter("eq", "userName", userName)));
+
+		String viewCount = String.valueOf(RandomTestUtil.randomInt());
+
+		_assertTermQuery(
+			"viewCount", viewCount,
+			_runAndAssertCommonFieldRow(
+				_buildCommonFieldFilter("eq", "viewCount", viewCount)));
+
 		_assertTermRangeQuery(
 			"createDate", false, false, "20260115235959", null,
 			_runAndAssertCommonFieldRow(
@@ -152,6 +141,26 @@ public class AssetListFiltersUtilTest {
 				_buildCommonFieldFilterWithJSONArrayValue(
 					"between", "modified",
 					JSONUtil.putAll("2026-01-15", "2026-01-20"))));
+		_assertTermRangeQuery(
+			"modified", true, true, "20260115000000", "20260115235959",
+			_runAndAssertCommonFieldRow(
+				_buildCommonFieldFilter("eq", "modified", "2026-01-15")));
+		_assertTermRangeQuery(
+			"modified", true, true, "20260115000000", "20260115235959",
+			_runAndAssertNegatedCommonFieldRow(
+				_buildCommonFieldFilter("not-eq", "modified", "2026-01-15")));
+
+		String priority = String.valueOf(RandomTestUtil.randomDouble());
+
+		_assertTermRangeQuery(
+			"priority", false, false, priority, null,
+			_runAndAssertCommonFieldRow(
+				_buildCommonFieldFilter("gt", "priority", priority)));
+
+		_assertWildcardQuery(
+			"userName", "*john smith*",
+			_runAndAssertNegatedCommonFieldRow(
+				_buildCommonFieldFilter("not-contains", "userName", userName)));
 
 		BooleanClause[] booleanClauses =
 			AssetListFiltersUtil.getFiltersBooleanClauses(
@@ -178,31 +187,26 @@ public class AssetListFiltersUtilTest {
 			_runAndAssertNestedRow(
 				BooleanClauseOccur.MUST,
 				_buildFilter("eq", "dueDate", "2026-01-15"), "dueDate"));
-
 		_assertTermRangeQuery(
 			"nestedFieldArray.value_date", false, false, "20260115235959", null,
 			_runAndAssertNestedRow(
 				BooleanClauseOccur.MUST,
 				_buildFilter("gt", "dueDate", "2026-01-15"), "dueDate"));
-
 		_assertTermRangeQuery(
 			"nestedFieldArray.value_date", true, false, "20260115000000", null,
 			_runAndAssertNestedRow(
 				BooleanClauseOccur.MUST,
 				_buildFilter("ge", "dueDate", "2026-01-15"), "dueDate"));
-
 		_assertTermRangeQuery(
 			"nestedFieldArray.value_date", false, false, null, "20260115000000",
 			_runAndAssertNestedRow(
 				BooleanClauseOccur.MUST,
 				_buildFilter("lt", "dueDate", "2026-01-15"), "dueDate"));
-
 		_assertTermRangeQuery(
 			"nestedFieldArray.value_date", false, true, null, "20260115235959",
 			_runAndAssertNestedRow(
 				BooleanClauseOccur.MUST,
 				_buildFilter("le", "dueDate", "2026-01-15"), "dueDate"));
-
 		_assertTermRangeQuery(
 			"nestedFieldArray.value_date", true, true, "20260115000000",
 			"20260120235959",
@@ -249,7 +253,6 @@ public class AssetListFiltersUtilTest {
 			_runAndAssertNestedRow(
 				BooleanClauseOccur.MUST,
 				_buildFilter("eq", "viewCount", viewCount), "viewCount"));
-
 		_assertTermQuery(
 			"nestedFieldArray.value_integer", viewCount,
 			_runAndAssertNegatedNestedRow(
@@ -290,7 +293,6 @@ public class AssetListFiltersUtilTest {
 			_runAndAssertNestedRow(
 				BooleanClauseOccur.MUST, _buildFilter("eq", "title", title),
 				"title"));
-
 		_assertTermQuery(
 			"nestedFieldArray.value_text", title,
 			_runAndAssertNegatedNestedRow(
@@ -335,24 +337,23 @@ public class AssetListFiltersUtilTest {
 	public void testFilterQueriesWithKeywordTextContainsOperators() {
 		_setUpKeywordTextObjectField("learnDocumentation");
 
+		_assertTermQuery(
+			"nestedFieldArray.value_keyword", "alpha",
+			_runAndAssertNestedRow(
+				BooleanClauseOccur.MUST,
+				_buildFilter("eq", "learnDocumentation", "Alpha"),
+				"learnDocumentation"));
+
 		_assertWildcardQuery(
 			"nestedFieldArray.value_keyword", "*alpha*",
 			_runAndAssertNestedRow(
 				BooleanClauseOccur.MUST,
 				_buildFilter("contains", "learnDocumentation", "Alpha"),
 				"learnDocumentation"));
-
 		_assertWildcardQuery(
 			"nestedFieldArray.value_keyword", "*alpha*",
 			_runAndAssertNegatedNestedRow(
 				_buildFilter("not-contains", "learnDocumentation", "Alpha"),
-				"learnDocumentation"));
-
-		_assertTermQuery(
-			"nestedFieldArray.value_keyword", "alpha",
-			_runAndAssertNestedRow(
-				BooleanClauseOccur.MUST,
-				_buildFilter("eq", "learnDocumentation", "Alpha"),
 				"learnDocumentation"));
 	}
 
@@ -406,25 +407,21 @@ public class AssetListFiltersUtilTest {
 			_runAndAssertNestedRow(
 				BooleanClauseOccur.MUST, _buildFilter("gt", "viewCount", "5"),
 				"viewCount"));
-
 		_assertTermRangeQuery(
 			"nestedFieldArray.value_integer", true, false, "5", null,
 			_runAndAssertNestedRow(
 				BooleanClauseOccur.MUST, _buildFilter("ge", "viewCount", "5"),
 				"viewCount"));
-
 		_assertTermRangeQuery(
 			"nestedFieldArray.value_integer", false, false, null, "5",
 			_runAndAssertNestedRow(
 				BooleanClauseOccur.MUST, _buildFilter("lt", "viewCount", "5"),
 				"viewCount"));
-
 		_assertTermRangeQuery(
 			"nestedFieldArray.value_integer", false, true, null, "5",
 			_runAndAssertNestedRow(
 				BooleanClauseOccur.MUST, _buildFilter("le", "viewCount", "5"),
 				"viewCount"));
-
 		_assertTermRangeQuery(
 			"nestedFieldArray.value_integer", true, true, "5", "10",
 			_runAndAssertNestedRow(
@@ -442,7 +439,6 @@ public class AssetListFiltersUtilTest {
 			_runAndAssertNestedRow(
 				BooleanClauseOccur.MUST, _buildFilter("gt", "priority", "3.14"),
 				"priority"));
-
 		_assertTermRangeQuery(
 			"nestedFieldArray.value_double", true, true, "1.0", "5.0",
 			_runAndAssertNestedRow(
@@ -475,14 +471,13 @@ public class AssetListFiltersUtilTest {
 				_buildFilterWithJSONArrayValue(
 					"contains", "status",
 					JSONUtil.putAll(
-						_picklistValueJSONObject("approved"),
-						_picklistValueJSONObject("draft"))
+						_buildPicklistValueJSONObject("approved"),
+						_buildPicklistValueJSONObject("draft"))
 				).put(
 					"quantifier", "any"
 				),
 				"status"),
 			"approved", "draft");
-
 		_assertPicklistBooleanQuery(
 			BooleanClauseOccur.MUST,
 			_runAndAssertNestedRow(
@@ -490,45 +485,42 @@ public class AssetListFiltersUtilTest {
 				_buildFilterWithJSONArrayValue(
 					"contains", "status",
 					JSONUtil.putAll(
-						_picklistValueJSONObject("approved"),
-						_picklistValueJSONObject("draft"))
+						_buildPicklistValueJSONObject("approved"),
+						_buildPicklistValueJSONObject("draft"))
 				).put(
 					"quantifier", "all"
 				),
 				"status"),
 			"approved", "draft");
-
 		_assertPicklistBooleanQuery(
 			BooleanClauseOccur.SHOULD,
 			_runAndAssertNestedRow(
 				BooleanClauseOccur.MUST,
 				_buildFilterWithJSONArrayValue(
 					"contains", "status",
-					JSONUtil.putAll(_picklistValueJSONObject("approved"))),
+					JSONUtil.putAll(_buildPicklistValueJSONObject("approved"))),
 				"status"),
 			"approved");
-
 		_assertPicklistBooleanQuery(
 			BooleanClauseOccur.SHOULD,
 			_runAndAssertNegatedNestedRow(
 				_buildFilterWithJSONArrayValue(
 					"not-contains", "status",
 					JSONUtil.putAll(
-						_picklistValueJSONObject("approved"),
-						_picklistValueJSONObject("draft"))
+						_buildPicklistValueJSONObject("approved"),
+						_buildPicklistValueJSONObject("draft"))
 				).put(
 					"quantifier", "any"
 				),
 				"status"),
 			"approved", "draft");
-
 		_assertPicklistBooleanQuery(
 			BooleanClauseOccur.SHOULD,
 			_runAndAssertNestedRow(
 				BooleanClauseOccur.MUST,
 				_buildFilterWithJSONArrayValue(
 					"contains", "status",
-					JSONUtil.putAll(_picklistValueJSONObject("Approved"))
+					JSONUtil.putAll(_buildPicklistValueJSONObject("Approved"))
 				).put(
 					"quantifier", "any"
 				),
@@ -585,11 +577,11 @@ public class AssetListFiltersUtilTest {
 		Assert.assertEquals(lastYearLowerTerm, pastYearLowerTerm);
 		Assert.assertEquals(past24HoursLowerTerm, pastDayLowerTerm);
 
-		Assert.assertTrue(pastYearLowerTerm.compareTo(pastMonthLowerTerm) < 0);
+		Assert.assertTrue(nowLowerTerm.compareTo(nextMonthLowerTerm) < 0);
+		Assert.assertTrue(pastDayLowerTerm.compareTo(nowLowerTerm) < 0);
 		Assert.assertTrue(pastMonthLowerTerm.compareTo(pastWeekLowerTerm) < 0);
 		Assert.assertTrue(pastWeekLowerTerm.compareTo(pastDayLowerTerm) < 0);
-		Assert.assertTrue(pastDayLowerTerm.compareTo(nowLowerTerm) < 0);
-		Assert.assertTrue(nowLowerTerm.compareTo(nextMonthLowerTerm) < 0);
+		Assert.assertTrue(pastYearLowerTerm.compareTo(pastMonthLowerTerm) < 0);
 
 		_assertTermRangeQuery(
 			"nestedFieldArray.value_date", false, true, null,
@@ -940,7 +932,7 @@ public class AssetListFiltersUtilTest {
 		);
 	}
 
-	private JSONObject _picklistValueJSONObject(String value) {
+	private JSONObject _buildPicklistValueJSONObject(String value) {
 		return JSONUtil.put(
 			"label", value
 		).put(

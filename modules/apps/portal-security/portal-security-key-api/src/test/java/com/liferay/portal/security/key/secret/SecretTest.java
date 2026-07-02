@@ -28,85 +28,31 @@ public class SecretTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void testCharsRoundTripPreservesUnicodeContent() {
-		String data = "héllo 世界";
+	public void testConstructor() {
 
-		Secret secret = new Secret(_createKeyReference(), data);
+		// Copies the input so a later mutation does not affect the secret
 
-		Assert.assertArrayEquals(
-			data.getBytes(StandardCharsets.UTF_8), secret.getBytes());
-		Assert.assertArrayEquals(data.toCharArray(), secret.getChars());
-	}
+		byte[] bytes = RandomTestUtil.randomBytes();
 
-	@Test
-	public void testCharsZeroedOnDestroy() {
-		Secret secret = new Secret(
-			_createKeyReference(), RandomTestUtil.randomString());
+		byte firstByte = bytes[0];
 
-		char[] chars = secret.getChars();
+		Secret secret = new Secret(bytes, _createKeyReference());
 
-		Assert.assertTrue(chars.length > 0);
+		bytes[0] = (byte)~firstByte;
 
-		secret.close();
+		Assert.assertEquals(firstByte, secret.getBytes()[0]);
 
-		for (char c : chars) {
-			Assert.assertEquals('\0', c);
-		}
-	}
+		// Rejects a null key reference
 
-	@Test
-	public void testDestroyIsIdempotent() {
-		Secret secret = new Secret(
-			RandomTestUtil.randomBytes(), _createKeyReference());
+		Assert.assertThrows(
+			IllegalArgumentException.class,
+			() -> new Secret(RandomTestUtil.randomBytes(), null));
+		Assert.assertThrows(
+			IllegalArgumentException.class,
+			() -> new Secret(null, RandomTestUtil.randomString()));
 
-		secret.destroy();
-		secret.destroy();
+		// Rejects characters that are not valid UTF-16
 
-		Assert.assertTrue(secret.isDestroyed());
-	}
-
-	@Test
-	public void testGetCharsCachesResult() {
-		Secret secret = new Secret(
-			_createKeyReference(), RandomTestUtil.randomString());
-
-		char[] chars1 = secret.getChars();
-		char[] chars2 = secret.getChars();
-
-		Assert.assertSame(chars1, chars2);
-	}
-
-	@Test
-	public void testGetCharsFromBytes() {
-		String data = RandomTestUtil.randomString();
-
-		Secret secret = new Secret(
-			data.getBytes(StandardCharsets.UTF_8), _createKeyReference());
-
-		Assert.assertArrayEquals(data.toCharArray(), secret.getChars());
-	}
-
-	@Test
-	public void testGetThrowsAfterDestroy() {
-		Secret secret = new Secret(
-			RandomTestUtil.randomBytes(), _createKeyReference());
-
-		secret.close();
-
-		Assert.assertThrows(IllegalStateException.class, secret::getBytes);
-		Assert.assertThrows(IllegalStateException.class, secret::getChars);
-	}
-
-	@Test
-	public void testRejectsInvalidUTF8WhenDecoding() {
-		Secret secret = new Secret(
-			new byte[] {(byte)0xC0, (byte)0xC0}, _createKeyReference());
-
-		Assert.assertThrows(IllegalArgumentException.class, secret::getChars);
-	}
-
-	@Test
-	public void testRejectsLoneSurrogateChar() {
 		Assert.assertThrows(
 			IllegalArgumentException.class,
 			() -> new Secret(
@@ -114,65 +60,100 @@ public class SecretTest {
 	}
 
 	@Test
-	public void testRejectsNullKeyReference() {
-		Assert.assertThrows(
-			IllegalArgumentException.class,
-			() -> new Secret(null, RandomTestUtil.randomString()));
-		Assert.assertThrows(
-			IllegalArgumentException.class,
-			() -> new Secret(RandomTestUtil.randomBytes(), null));
-	}
+	public void testDestroy() {
 
-	@Test
-	public void testSecretFromString() {
-		String data = RandomTestUtil.randomString();
+		// Reports destroyed and is idempotent
 
-		Secret secret = new Secret(_createKeyReference(), data);
-
-		Assert.assertArrayEquals(data.toCharArray(), secret.getChars());
-		Assert.assertTrue(secret.getBytes().length > 0);
-	}
-
-	@Test
-	public void testSecretImmutable() {
-		byte[] data = RandomTestUtil.randomBytes();
-
-		byte originalFirstByte = data[0];
-		Secret secret = new Secret(data, _createKeyReference());
-
-		// Constructor must copy the input
-
-		data[0] = (byte)~originalFirstByte;
-
-		Assert.assertEquals(originalFirstByte, secret.getBytes()[0]);
-	}
-
-	@Test
-	public void testSecretReturnsSameInstance() {
 		Secret secret = new Secret(
 			RandomTestUtil.randomBytes(), _createKeyReference());
 
-		byte[] internalBytes1 = secret.getBytes();
-		byte[] internalBytes2 = secret.getBytes();
+		secret.destroy();
+		secret.destroy();
 
-		Assert.assertSame(internalBytes1, internalBytes2);
-	}
+		Assert.assertTrue(secret.isDestroyed());
 
-	@Test
-	public void testSecretZeroing() {
-		byte[] data = RandomTestUtil.randomBytes();
+		// Zeroes the byte buffer
 
-		Secret secret = new Secret(data, _createKeyReference());
+		Secret byteSecret = new Secret(
+			RandomTestUtil.randomBytes(), _createKeyReference());
 
-		byte[] internalBytes = secret.getBytes();
+		byte[] internalBytes = byteSecret.getBytes();
 
-		Assert.assertArrayEquals(data, internalBytes);
-
-		secret.close();
+		byteSecret.destroy();
 
 		for (byte b : internalBytes) {
 			Assert.assertEquals(0, b);
 		}
+
+		// Zeroes the char buffer
+
+		Secret charSecret = new Secret(
+			_createKeyReference(), RandomTestUtil.randomString());
+
+		char[] chars = charSecret.getChars();
+
+		charSecret.destroy();
+
+		for (char c : chars) {
+			Assert.assertEquals('\0', c);
+		}
+	}
+
+	@Test
+	public void testGetBytes() {
+
+		// Returns the same array instance on repeated calls
+
+		Secret secret = new Secret(
+			RandomTestUtil.randomBytes(), _createKeyReference());
+
+		Assert.assertSame(secret.getBytes(), secret.getBytes());
+
+		// Throws once the secret is destroyed
+
+		secret.destroy();
+
+		Assert.assertThrows(IllegalStateException.class, secret::getBytes);
+	}
+
+	@Test
+	public void testGetChars() {
+
+		// Decodes the stored bytes and caches the result
+
+		String data = RandomTestUtil.randomString();
+
+		Secret secret = new Secret(
+			data.getBytes(StandardCharsets.UTF_8), _createKeyReference());
+
+		Assert.assertArrayEquals(data.toCharArray(), secret.getChars());
+		Assert.assertSame(secret.getChars(), secret.getChars());
+
+		// Preserves Unicode content through the round trip
+
+		String unicodeData = "héllo 世界";
+
+		Secret unicodeSecret = new Secret(_createKeyReference(), unicodeData);
+
+		Assert.assertArrayEquals(
+			unicodeData.getBytes(StandardCharsets.UTF_8),
+			unicodeSecret.getBytes());
+		Assert.assertArrayEquals(
+			unicodeData.toCharArray(), unicodeSecret.getChars());
+
+		// Rejects stored bytes that are not valid UTF-8
+
+		Secret invalidSecret = new Secret(
+			new byte[] {(byte)0xC0, (byte)0xC0}, _createKeyReference());
+
+		Assert.assertThrows(
+			IllegalArgumentException.class, invalidSecret::getChars);
+
+		// Throws once the secret is destroyed
+
+		secret.destroy();
+
+		Assert.assertThrows(IllegalStateException.class, secret::getChars);
 	}
 
 	private KeyReference _createKeyReference() {

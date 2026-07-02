@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -36,7 +37,9 @@ import com.liferay.site.initializer.SiteInitializerRegistry;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.After;
 import org.junit.Before;
@@ -101,33 +104,24 @@ public abstract class BaseSEOStudioTestCase {
 
 	@After
 	public void tearDown() throws Exception {
-		if (seoStudioDomainObjectEntry != null) {
-			ObjectEntry seoStudioScanRunObjectEntry =
-				fetchSEOStudioScanRunObjectEntry(seoStudioDomainObjectEntry);
-
-			if (seoStudioScanRunObjectEntry != null) {
-				for (ObjectEntry seoStudioScanObjectEntry :
-						getSEOStudioScanObjectEntries(
-							seoStudioScanRunObjectEntry)) {
-
-					objectEntryLocalService.deleteObjectEntry(
-						seoStudioScanObjectEntry.getObjectEntryId());
-				}
-
-				objectEntryLocalService.deleteObjectEntry(
-					seoStudioScanRunObjectEntry.getObjectEntryId());
-			}
-
-			objectEntryLocalService.deleteObjectEntry(
-				seoStudioDomainObjectEntry.getObjectEntryId());
-		}
-
-		if (seoStudioInstanceObjectEntry != null) {
-			objectEntryLocalService.deleteObjectEntry(
-				seoStudioInstanceObjectEntry.getObjectEntryId());
-		}
-
 		ServiceContextThreadLocal.popServiceContext();
+	}
+
+	protected ObjectEntry addObjectEntry(
+			ObjectDefinition objectDefinition, Map<String, Serializable> values)
+		throws Exception {
+
+		ObjectEntry objectEntry = objectEntryLocalService.addObjectEntry(
+			0, TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null, values,
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId()));
+
+		_objectEntries.add(objectEntry);
+
+		return objectEntry;
 	}
 
 	protected ObjectEntry fetchSEOStudioScanRunObjectEntry(
@@ -191,11 +185,8 @@ public abstract class BaseSEOStudioTestCase {
 	}
 
 	private ObjectEntry _addSEOStudioInstanceObjectEntry() throws Exception {
-		return objectEntryLocalService.addObjectEntry(
-			0, TestPropsValues.getUserId(),
-			_seoStudioInstanceObjectDefinition.getObjectDefinitionId(),
-			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
-			null,
+		return addObjectEntry(
+			_seoStudioInstanceObjectDefinition,
 			HashMapBuilder.<String, Serializable>put(
 				"hostname", RandomTestUtil.randomString()
 			).put(
@@ -203,9 +194,7 @@ public abstract class BaseSEOStudioTestCase {
 			).put(
 				"r_accountToSEOStudioInstances_accountEntryId",
 				accountEntry.getAccountEntryId()
-			).build(),
-			ServiceContextTestUtil.getServiceContext(
-				group.getGroupId(), TestPropsValues.getUserId()));
+			).build());
 	}
 
 	@Inject
@@ -216,6 +205,9 @@ public abstract class BaseSEOStudioTestCase {
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@DeleteAfterTestRun
+	private List<ObjectEntry> _objectEntries = new ArrayList<>();
 
 	@Inject
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;

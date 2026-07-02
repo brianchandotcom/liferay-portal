@@ -8,13 +8,11 @@ package com.liferay.seo.studio.web.internal.object.action.executor.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.action.engine.ObjectActionEngine;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
-import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -47,7 +45,7 @@ public class CreateSEOStudioScansObjectActionExecutorTest
 		int maxPagesPerScan = RandomTestUtil.randomInt();
 		String scope = RandomTestUtil.randomString();
 
-		_addSEOStudioDomainObjectEntry(
+		seoStudioDomainObjectEntry = _addSEOStudioDomainObjectEntry(
 			hostname,
 			JSONUtil.put(
 				"engines",
@@ -136,7 +134,7 @@ public class CreateSEOStudioScansObjectActionExecutorTest
 
 	@Test
 	public void testExecuteWithNoEnabledEngines() throws Exception {
-		_addSEOStudioDomainObjectEntry(
+		seoStudioDomainObjectEntry = _addSEOStudioDomainObjectEntry(
 			RandomTestUtil.randomString(),
 			JSONUtil.put(
 				"engines",
@@ -157,15 +155,12 @@ public class CreateSEOStudioScansObjectActionExecutorTest
 			fetchSEOStudioScanRunObjectEntry(seoStudioDomainObjectEntry));
 	}
 
-	private void _addSEOStudioDomainObjectEntry(
+	private ObjectEntry _addSEOStudioDomainObjectEntry(
 			String hostname, String scanConfigJSON)
 		throws Exception {
 
-		seoStudioDomainObjectEntry = objectEntryLocalService.addObjectEntry(
-			0, TestPropsValues.getUserId(),
-			seoStudioDomainObjectDefinition.getObjectDefinitionId(),
-			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
-			null,
+		return addObjectEntry(
+			seoStudioDomainObjectDefinition,
 			HashMapBuilder.<String, Serializable>put(
 				"hostname", hostname
 			).put(
@@ -178,9 +173,7 @@ public class CreateSEOStudioScansObjectActionExecutorTest
 				seoStudioInstanceObjectEntry.getObjectEntryId()
 			).put(
 				"scanConfig", scanConfigJSON
-			).build(),
-			ServiceContextTestUtil.getServiceContext(
-				group.getGroupId(), TestPropsValues.getUserId()));
+			).build());
 	}
 
 	private void _executeCreateScans() throws Exception {

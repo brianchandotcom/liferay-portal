@@ -7,6 +7,7 @@ package com.liferay.seo.studio.web.internal.object.action.executor.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
+import com.liferay.object.model.ObjectEntry;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -33,7 +34,7 @@ public class ComputeSEOStudioDomainNextScanDateObjectActionExecutorTest
 
 	@Test
 	public void testExecute() throws Exception {
-		_addSEOStudioDomainObjectEntry();
+		seoStudioDomainObjectEntry = _addSEOStudioDomainObjectEntry();
 
 		_updateSEOStudioDomainObjectEntry(true);
 
@@ -47,7 +48,7 @@ public class ComputeSEOStudioDomainNextScanDateObjectActionExecutorTest
 
 	@Test
 	public void testExecuteWithAutoScanDisabled() throws Exception {
-		_addSEOStudioDomainObjectEntry();
+		seoStudioDomainObjectEntry = _addSEOStudioDomainObjectEntry();
 
 		_updateSEOStudioDomainObjectEntry(false);
 
@@ -57,12 +58,9 @@ public class ComputeSEOStudioDomainNextScanDateObjectActionExecutorTest
 		Assert.assertNull(values.get("nextScanDate"));
 	}
 
-	private void _addSEOStudioDomainObjectEntry() throws Exception {
-		seoStudioDomainObjectEntry = objectEntryLocalService.addObjectEntry(
-			0, TestPropsValues.getUserId(),
-			seoStudioDomainObjectDefinition.getObjectDefinitionId(),
-			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
-			null,
+	private ObjectEntry _addSEOStudioDomainObjectEntry() throws Exception {
+		return addObjectEntry(
+			seoStudioDomainObjectDefinition,
 			HashMapBuilder.<String, Serializable>put(
 				"hostname", RandomTestUtil.randomString()
 			).put(
@@ -73,9 +71,7 @@ public class ComputeSEOStudioDomainNextScanDateObjectActionExecutorTest
 			).put(
 				"r_seoStudioInstanceToSEOStudioDomains_seoStudioInstanceId",
 				seoStudioInstanceObjectEntry.getObjectEntryId()
-			).build(),
-			ServiceContextTestUtil.getServiceContext(
-				group.getGroupId(), TestPropsValues.getUserId()));
+			).build());
 	}
 
 	private void _updateSEOStudioDomainObjectEntry(boolean autoScanEnabled)

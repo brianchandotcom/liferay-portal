@@ -341,7 +341,8 @@ public class AssetListFiltersUtil {
 			operatorName.equals("lt")) {
 
 			return _toTermRangeQuery(
-				type.equals("date"), false, field, jsonObject, operatorName);
+				type.equals(_TYPE_DATE), false, field, jsonObject,
+				operatorName);
 		}
 
 		String value = jsonObject.getString("value");
@@ -350,7 +351,7 @@ public class AssetListFiltersUtil {
 			return null;
 		}
 
-		if (type.equals("date") &&
+		if (type.equals(_TYPE_DATE) &&
 			(operatorName.equals("eq") || operatorName.equals("not-eq"))) {
 
 			return new TermRangeQuery(
@@ -358,7 +359,7 @@ public class AssetListFiltersUtil {
 				_normalizeDateValue(false, true, value), true, true);
 		}
 
-		if (type.equals("decimal") || type.equals("integer")) {
+		if (type.equals(_TYPE_DECIMAL) || type.equals(_TYPE_INTEGER)) {
 			return new TermQuery(field, value);
 		}
 
@@ -579,31 +580,39 @@ public class AssetListFiltersUtil {
 		return new MatchQuery(subfield, value);
 	}
 
+	private static final String _TYPE_DATE = "date";
+
+	private static final String _TYPE_DECIMAL = "decimal";
+
+	private static final String _TYPE_INTEGER = "integer";
+
+	private static final String _TYPE_TEXT = "text";
+
 	private static final Map<String, String> _commonFieldTypes =
 		HashMapBuilder.put(
-			Field.CREATE_DATE, "date"
+			Field.CREATE_DATE, _TYPE_DATE
 		).put(
-			Field.DISPLAY_DATE, "date"
+			Field.DISPLAY_DATE, _TYPE_DATE
 		).put(
-			Field.EXPIRATION_DATE, "date"
+			Field.EXPIRATION_DATE, _TYPE_DATE
 		).put(
-			Field.MODIFIED_DATE, "date"
+			Field.MODIFIED_DATE, _TYPE_DATE
 		).put(
-			Field.PRIORITY, "decimal"
+			Field.PRIORITY, _TYPE_DECIMAL
 		).put(
-			Field.PUBLISH_DATE, "date"
+			Field.PUBLISH_DATE, _TYPE_DATE
 		).put(
-			Field.REVIEW_DATE, "date"
+			Field.REVIEW_DATE, _TYPE_DATE
 		).put(
-			Field.STATUS, "integer"
+			Field.STATUS, _TYPE_INTEGER
 		).put(
-			Field.TITLE, "text"
+			Field.TITLE, _TYPE_TEXT
 		).put(
-			Field.USER_NAME, "text"
+			Field.USER_NAME, _TYPE_TEXT
 		).put(
-			"externalReferenceCode", "text"
+			"externalReferenceCode", _TYPE_TEXT
 		).put(
-			"viewCount", "integer"
+			"viewCount", _TYPE_INTEGER
 		).build();
 	private static final Set<String> _localizedCommonFieldNames =
 		SetUtil.fromArray(Field.TITLE);

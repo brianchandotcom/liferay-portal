@@ -159,9 +159,6 @@ public final class Secret implements AutoCloseable, Destroyable {
 			throw new IllegalArgumentException(
 				"Stored secret is not valid UTF-8", characterCodingException);
 		}
-		finally {
-			Arrays.fill(tempChars, '\0');
-		}
 	}
 
 	private byte[] _encode(char[] chars) {
@@ -198,9 +195,6 @@ public final class Secret implements AutoCloseable, Destroyable {
 			throw new IllegalArgumentException(
 				"Input character sequence is not valid UTF-16",
 				characterCodingException);
-		}
-		finally {
-			Arrays.fill(tempBytes, (byte)0);
 		}
 	}
 

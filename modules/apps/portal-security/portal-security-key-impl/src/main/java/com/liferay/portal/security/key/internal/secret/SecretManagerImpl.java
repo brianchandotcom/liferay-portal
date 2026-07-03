@@ -21,7 +21,7 @@ import com.liferay.portal.security.key.secret.SecretManagerException;
 import com.liferay.portal.security.key.spi.ModuleStatus;
 import com.liferay.portal.security.key.spi.profile.KeyManagerProfile;
 import com.liferay.portal.security.key.spi.profile.KeyManagerProfileRegistry;
-import com.liferay.portal.security.key.spi.secret.SecretVaultProvider;
+import com.liferay.portal.security.key.spi.secret.SecretProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,12 +49,11 @@ public class SecretManagerImpl implements SecretManager {
 		}
 
 		try {
-			SecretVaultProvider secretVaultProvider = _getSecretVaultProvider(
+			SecretProvider secretProvider = _getSecretProvider(
 				companyId,
-				_getSecretVaultProviderId(
-					companyId, keyReference.getProviderId()));
+				_getSecretProviderId(companyId, keyReference.getProviderId()));
 
-			secretVaultProvider.deleteSecret(
+			secretProvider.deleteSecret(
 				companyId, keyReference.getIdentifier());
 		}
 		catch (SecretManagerException secretManagerException) {
@@ -76,13 +75,13 @@ public class SecretManagerImpl implements SecretManager {
 		}
 
 		try {
-			String resolvedProviderId = _getSecretVaultProviderId(
+			String resolvedProviderId = _getSecretProviderId(
 				companyId, providerId);
 
-			SecretVaultProvider secretVaultProvider = _getSecretVaultProvider(
+			SecretProvider secretProvider = _getSecretProvider(
 				companyId, resolvedProviderId);
 
-			List<String> identifiers = secretVaultProvider.getSecretIdentifiers(
+			List<String> identifiers = secretProvider.getSecretIdentifiers(
 				companyId);
 
 			if (identifiers == null) {
@@ -109,7 +108,7 @@ public class SecretManagerImpl implements SecretManager {
 	public List<String> getProviderIds(long companyId) {
 		List<String> providerIds = new ArrayList<>();
 
-		ServiceTrackerMap<String, List<SecretVaultProvider>> serviceTrackerMap =
+		ServiceTrackerMap<String, List<SecretProvider>> serviceTrackerMap =
 			_serviceTrackerMap;
 
 		if (serviceTrackerMap == null) {
@@ -117,17 +116,15 @@ public class SecretManagerImpl implements SecretManager {
 		}
 
 		for (String providerId : serviceTrackerMap.keySet()) {
-			List<SecretVaultProvider> secretVaultProviders =
-				serviceTrackerMap.getService(providerId);
+			List<SecretProvider> secretProviders = serviceTrackerMap.getService(
+				providerId);
 
-			if (secretVaultProviders == null) {
+			if (secretProviders == null) {
 				continue;
 			}
 
-			for (SecretVaultProvider secretVaultProvider :
-					secretVaultProviders) {
-
-				if (secretVaultProvider.isAllowedCompany(companyId)) {
+			for (SecretProvider secretProvider : secretProviders) {
+				if (secretProvider.isAllowedCompany(companyId)) {
 					providerIds.add(providerId);
 
 					break;
@@ -147,12 +144,11 @@ public class SecretManagerImpl implements SecretManager {
 		}
 
 		try {
-			SecretVaultProvider secretVaultProvider = _getSecretVaultProvider(
+			SecretProvider secretProvider = _getSecretProvider(
 				companyId,
-				_getSecretVaultProviderId(
-					companyId, keyReference.getProviderId()));
+				_getSecretProviderId(companyId, keyReference.getProviderId()));
 
-			return secretVaultProvider.getSecret(
+			return secretProvider.getSecret(
 				companyId, keyReference.getIdentifier());
 		}
 		catch (SecretManagerException secretManagerException) {
@@ -175,13 +171,13 @@ public class SecretManagerImpl implements SecretManager {
 		try {
 			KeyReference keyReference = secret.getKeyReference();
 
-			String providerId = _getSecretVaultProviderId(
+			String providerId = _getSecretProviderId(
 				companyId, keyReference.getProviderId());
 
-			SecretVaultProvider secretVaultProvider = _getSecretVaultProvider(
+			SecretProvider secretProvider = _getSecretProvider(
 				companyId, providerId);
 
-			secretVaultProvider.putSecret(companyId, secret);
+			secretProvider.putSecret(companyId, secret);
 
 			return new KeyReference(
 				keyReference.getIdentifier(), providerId,
@@ -199,8 +195,7 @@ public class SecretManagerImpl implements SecretManager {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
-			bundleContext, SecretVaultProvider.class,
-			"(keymanager.provider.id=*)",
+			bundleContext, SecretProvider.class, "(keymanager.provider.id=*)",
 			new PropertyServiceReferenceMapper<>("keymanager.provider.id"));
 	}
 
@@ -213,42 +208,37 @@ public class SecretManagerImpl implements SecretManager {
 		}
 	}
 
-	private SecretVaultProvider _getSecretVaultProvider(
-			long companyId, String providerId)
+	private SecretProvider _getSecretProvider(long companyId, String providerId)
 		throws SecretManagerException {
 
-		List<SecretVaultProvider> secretVaultProviders =
-			_serviceTrackerMap.getService(providerId);
+		List<SecretProvider> secretProviders = _serviceTrackerMap.getService(
+			providerId);
 
-		if (secretVaultProviders != null) {
-			for (SecretVaultProvider secretVaultProvider :
-					secretVaultProviders) {
-
-				if (!secretVaultProvider.isAllowedCompany(companyId)) {
+		if (secretProviders != null) {
+			for (SecretProvider secretProvider : secretProviders) {
+				if (!secretProvider.isAllowedCompany(companyId)) {
 					continue;
 				}
 
-				if (secretVaultProvider.getModuleStatus() ==
-						ModuleStatus.ERROR) {
-
+				if (secretProvider.getModuleStatus() == ModuleStatus.ERROR) {
 					throw new SecretManagerException(
 						StringBundler.concat(
-							"Secret vault provider ", providerId,
+							"Secret provider ", providerId,
 							" is in an error state for company ID ",
 							companyId));
 				}
 
-				return secretVaultProvider;
+				return secretProvider;
 			}
 		}
 
 		throw new SecretManagerException(
 			StringBundler.concat(
-				"No secret vault provider found for ID ", providerId,
+				"No secret provider found for ID ", providerId,
 				" and company ID ", companyId));
 	}
 
-	private String _getSecretVaultProviderId(long companyId, String providerId)
+	private String _getSecretProviderId(long companyId, String providerId)
 		throws SecretManagerException {
 
 		if (providerId == null) {
@@ -294,7 +284,6 @@ public class SecretManagerImpl implements SecretManager {
 	@Reference
 	private KeyManagerProfileRegistry _keyManagerProfileRegistry;
 
-	private ServiceTrackerMap<String, List<SecretVaultProvider>>
-		_serviceTrackerMap;
+	private ServiceTrackerMap<String, List<SecretProvider>> _serviceTrackerMap;
 
 }

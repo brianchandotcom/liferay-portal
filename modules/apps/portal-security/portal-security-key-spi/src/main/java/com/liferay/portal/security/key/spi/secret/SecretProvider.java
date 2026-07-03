@@ -15,7 +15,7 @@ import java.util.List;
  * @author Tomas Polesovsky
  * @author Christopher Kian
  */
-public interface SecretVaultProvider {
+public interface SecretProvider {
 
 	public void deleteSecret(long companyId, String identifier)
 		throws SecretManagerException;

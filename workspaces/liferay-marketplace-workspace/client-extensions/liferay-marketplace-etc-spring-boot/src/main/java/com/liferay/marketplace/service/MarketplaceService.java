@@ -67,7 +67,6 @@ import java.nio.file.Files;
 
 import java.util.Base64;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -232,6 +231,36 @@ public class MarketplaceService extends BaseService {
 							"?nestedFields=orderToAIHubApplication"
 				).build(
 				).toUri()));
+	}
+
+	public HttpResponse<InputStream> getAssetHttpResponse(String assetURL)
+		throws Exception {
+
+		HttpClient httpClient = HttpClient.newHttpClient();
+
+		HttpRequest httpRequest = HttpRequest.newBuilder(
+		).uri(
+			URI.create(
+				StringBundler.concat(
+					lxcDXPServerProtocol, "://", lxcDXPMainDomain, assetURL))
+		).header(
+			"Authorization",
+			_liferayOAuth2AccessTokenManager.getAuthorization(
+				"liferay-marketplace-etc-spring-boot-oahs")
+		).GET(
+		).build();
+
+		HttpResponse<InputStream> httpResponse = httpClient.send(
+			httpRequest, HttpResponse.BodyHandlers.ofInputStream());
+
+		if (httpResponse.statusCode() >= HttpURLConnection.HTTP_BAD_REQUEST) {
+			throw new IOException(
+				StringBundler.concat(
+					"Unable to download ", assetURL, ": ",
+					httpResponse.statusCode()));
+		}
+
+		return httpResponse;
 	}
 
 	public AttachmentResource getAttachmentResource() throws Exception {
@@ -470,7 +499,7 @@ public class MarketplaceService extends BaseService {
 			getProductIdProductVirtualSettings(productId);
 	}
 
-	public Collection<ProductVirtualSettingsFileEntry>
+	public ProductVirtualSettingsFileEntry[]
 			getProductVirtualSettingsFileEntries(long productId)
 		throws Exception {
 
@@ -478,17 +507,22 @@ public class MarketplaceService extends BaseService {
 			getProductVirtualSettings(productId);
 
 		if (productVirtualSettings == null) {
-			return Collections.emptyList();
+			return null;
 		}
 
 		ProductVirtualSettingsFileEntryResource
 			productVirtualSettingsFileEntryResource =
 				_getProductVirtualSettingsFileEntryResource();
 
-		return productVirtualSettingsFileEntryResource.
-			getProductVirtualSettingIdProductVirtualSettingsFileEntriesPage(
-				productVirtualSettings.getId(), Pagination.of(1, 20)
-			).getItems();
+		Collection<ProductVirtualSettingsFileEntry>
+			productVirtualSettingsFileEntries =
+				productVirtualSettingsFileEntryResource.
+					getProductVirtualSettingIdProductVirtualSettingsFileEntriesPage(
+						productVirtualSettings.getId(), Pagination.of(1, 20)
+					).getItems();
+
+		return productVirtualSettingsFileEntries.toArray(
+			new ProductVirtualSettingsFileEntry[0]);
 	}
 
 	public ProductVirtualSettingsFileEntry getProductVirtualSettingsFileEntry(
@@ -504,42 +538,10 @@ public class MarketplaceService extends BaseService {
 				productVirtualSettingsFileEntryId);
 	}
 
-	public HttpResponse<InputStream> getPublisherAssetHttpResponse(
-			String publisherAssetURL)
-		throws Exception {
-
-		HttpClient httpClient = HttpClient.newHttpClient();
-
-		HttpRequest httpRequest = HttpRequest.newBuilder(
-		).uri(
-			URI.create(
-				StringBundler.concat(
-					lxcDXPServerProtocol, "://", lxcDXPMainDomain,
-					publisherAssetURL))
-		).header(
-			"Authorization",
-			_liferayOAuth2AccessTokenManager.getAuthorization(
-				"liferay-marketplace-etc-spring-boot-oahs")
-		).GET(
-		).build();
-
-		HttpResponse<InputStream> httpResponse = httpClient.send(
-			httpRequest, HttpResponse.BodyHandlers.ofInputStream());
-
-		if (httpResponse.statusCode() >= HttpURLConnection.HTTP_BAD_REQUEST) {
-			throw new IOException(
-				StringBundler.concat(
-					"Unable to download ", publisherAssetURL, ": ",
-					httpResponse.statusCode()));
-		}
-
-		return httpResponse;
-	}
-
 	public InputStream getPublisherAssetInputStream(String publisherAssetURL)
 		throws Exception {
 
-		HttpResponse<InputStream> httpResponse = getPublisherAssetHttpResponse(
+		HttpResponse<InputStream> httpResponse = getAssetHttpResponse(
 			publisherAssetURL);
 
 		return httpResponse.body();

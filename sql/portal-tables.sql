@@ -231,10 +231,17 @@ create table Company (
 	modifiedDate DATE null,
 	webId VARCHAR(75) null,
 	mx VARCHAR(200) null,
+	maxUsers INTEGER,
+	active_ BOOLEAN
+);
+
+create table CompanyInfo (
+	mvccVersion LONG default 0 not null,
+	companyInfoId LONG not null primary key,
+	companyId LONG,
+	key_ TEXT null,
 	homeURL STRING null,
 	logoId LONG,
-	maxUsers INTEGER,
-	active_ BOOLEAN,
 	name VARCHAR(75) null,
 	legalName VARCHAR(75) null,
 	legalId VARCHAR(75) null,
@@ -246,13 +253,6 @@ create table Company (
 	size_ VARCHAR(75) null,
 	indexNameCurrent VARCHAR(75) null,
 	indexNameNext VARCHAR(75) null
-);
-
-create table CompanyInfo (
-	mvccVersion LONG default 0 not null,
-	companyInfoId LONG not null primary key,
-	companyId LONG,
-	key_ TEXT null
 );
 
 create table Contact_ (

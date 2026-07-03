@@ -115,6 +115,32 @@ public class CompanyInfoPersistenceTest {
 
 		newCompanyInfo.setKey(RandomTestUtil.randomString());
 
+		newCompanyInfo.setHomeURL(RandomTestUtil.randomString());
+
+		newCompanyInfo.setLogoId(RandomTestUtil.nextLong());
+
+		newCompanyInfo.setName(RandomTestUtil.randomString());
+
+		newCompanyInfo.setLegalName(RandomTestUtil.randomString());
+
+		newCompanyInfo.setLegalId(RandomTestUtil.randomString());
+
+		newCompanyInfo.setLegalType(RandomTestUtil.randomString());
+
+		newCompanyInfo.setSicCode(RandomTestUtil.randomString());
+
+		newCompanyInfo.setTickerSymbol(RandomTestUtil.randomString());
+
+		newCompanyInfo.setIndustry(RandomTestUtil.randomString());
+
+		newCompanyInfo.setType(RandomTestUtil.randomString());
+
+		newCompanyInfo.setSize(RandomTestUtil.randomString());
+
+		newCompanyInfo.setIndexNameCurrent(RandomTestUtil.randomString());
+
+		newCompanyInfo.setIndexNameNext(RandomTestUtil.randomString());
+
 		newCompanyInfo = _persistence.update(newCompanyInfo);
 
 		_companyInfos.add(newCompanyInfo);
@@ -132,6 +158,35 @@ public class CompanyInfoPersistenceTest {
 			existingCompanyInfo.getCompanyId(), newCompanyInfo.getCompanyId());
 		Assert.assertEquals(
 			existingCompanyInfo.getKey(), newCompanyInfo.getKey());
+		Assert.assertEquals(
+			existingCompanyInfo.getHomeURL(), newCompanyInfo.getHomeURL());
+		Assert.assertEquals(
+			existingCompanyInfo.getLogoId(), newCompanyInfo.getLogoId());
+		Assert.assertEquals(
+			existingCompanyInfo.getName(), newCompanyInfo.getName());
+		Assert.assertEquals(
+			existingCompanyInfo.getLegalName(), newCompanyInfo.getLegalName());
+		Assert.assertEquals(
+			existingCompanyInfo.getLegalId(), newCompanyInfo.getLegalId());
+		Assert.assertEquals(
+			existingCompanyInfo.getLegalType(), newCompanyInfo.getLegalType());
+		Assert.assertEquals(
+			existingCompanyInfo.getSicCode(), newCompanyInfo.getSicCode());
+		Assert.assertEquals(
+			existingCompanyInfo.getTickerSymbol(),
+			newCompanyInfo.getTickerSymbol());
+		Assert.assertEquals(
+			existingCompanyInfo.getIndustry(), newCompanyInfo.getIndustry());
+		Assert.assertEquals(
+			existingCompanyInfo.getType(), newCompanyInfo.getType());
+		Assert.assertEquals(
+			existingCompanyInfo.getSize(), newCompanyInfo.getSize());
+		Assert.assertEquals(
+			existingCompanyInfo.getIndexNameCurrent(),
+			newCompanyInfo.getIndexNameCurrent());
+		Assert.assertEquals(
+			existingCompanyInfo.getIndexNameNext(),
+			newCompanyInfo.getIndexNameNext());
 	}
 
 	@Test
@@ -167,7 +222,10 @@ public class CompanyInfoPersistenceTest {
 	protected OrderByComparator<CompanyInfo> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
 			"CompanyInfo", "mvccVersion", true, "companyInfoId", true,
-			"companyId", true);
+			"companyId", true, "homeURL", true, "logoId", true, "name", true,
+			"legalName", true, "legalId", true, "legalType", true, "sicCode",
+			true, "tickerSymbol", true, "industry", true, "type", true, "size",
+			true, "indexNameCurrent", true, "indexNameNext", true);
 	}
 
 	@Test
@@ -446,6 +504,32 @@ public class CompanyInfoPersistenceTest {
 
 		companyInfo.setKey(RandomTestUtil.randomString());
 
+		companyInfo.setHomeURL(RandomTestUtil.randomString());
+
+		companyInfo.setLogoId(RandomTestUtil.nextLong());
+
+		companyInfo.setName(RandomTestUtil.randomString());
+
+		companyInfo.setLegalName(RandomTestUtil.randomString());
+
+		companyInfo.setLegalId(RandomTestUtil.randomString());
+
+		companyInfo.setLegalType(RandomTestUtil.randomString());
+
+		companyInfo.setSicCode(RandomTestUtil.randomString());
+
+		companyInfo.setTickerSymbol(RandomTestUtil.randomString());
+
+		companyInfo.setIndustry(RandomTestUtil.randomString());
+
+		companyInfo.setType(RandomTestUtil.randomString());
+
+		companyInfo.setSize(RandomTestUtil.randomString());
+
+		companyInfo.setIndexNameCurrent(RandomTestUtil.randomString());
+
+		companyInfo.setIndexNameNext(RandomTestUtil.randomString());
+
 		_companyInfos.add(_persistence.update(companyInfo));
 
 		return companyInfo;
@@ -456,4 +540,4 @@ public class CompanyInfoPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1086181586
+// LIFERAY-SERVICE-BUILDER-HASH:-1741636858

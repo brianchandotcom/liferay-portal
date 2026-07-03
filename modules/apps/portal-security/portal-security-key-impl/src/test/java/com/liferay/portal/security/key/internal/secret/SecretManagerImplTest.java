@@ -16,7 +16,7 @@ import com.liferay.portal.security.key.secret.SecretManagerException;
 import com.liferay.portal.security.key.spi.ModuleStatus;
 import com.liferay.portal.security.key.spi.profile.KeyManagerProfile;
 import com.liferay.portal.security.key.spi.profile.KeyManagerProfileRegistry;
-import com.liferay.portal.security.key.spi.secret.SecretVaultProvider;
+import com.liferay.portal.security.key.spi.secret.SecretProvider;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Collections;
@@ -92,19 +92,19 @@ public class SecretManagerImplTest {
 		Mockito.when(
 			_serviceTrackerMap.getService(providerId)
 		).thenReturn(
-			Collections.singletonList(_secretVaultProvider)
+			Collections.singletonList(_secretProvider)
 		);
 
 		String identifier = RandomTestUtil.randomString();
 
 		Mockito.when(
-			_secretVaultProvider.getSecretIdentifiers(Mockito.anyLong())
+			_secretProvider.getSecretIdentifiers(Mockito.anyLong())
 		).thenReturn(
 			Collections.singletonList(identifier)
 		);
 
 		Mockito.when(
-			_secretVaultProvider.isAllowedCompany(Mockito.anyLong())
+			_secretProvider.isAllowedCompany(Mockito.anyLong())
 		).thenReturn(
 			true
 		);
@@ -128,14 +128,14 @@ public class SecretManagerImplTest {
 		Mockito.when(
 			_serviceTrackerMap.getService(providerId)
 		).thenReturn(
-			Collections.singletonList(_secretVaultProvider)
+			Collections.singletonList(_secretProvider)
 		);
 
 		long companyId = RandomTestUtil.randomLong();
 		String identifier = RandomTestUtil.randomString();
 
 		Mockito.when(
-			_secretVaultProvider.getSecret(companyId, identifier)
+			_secretProvider.getSecret(companyId, identifier)
 		).thenReturn(
 			new Secret(
 				RandomTestUtil.randomBytes(),
@@ -143,7 +143,7 @@ public class SecretManagerImplTest {
 		);
 
 		Mockito.when(
-			_secretVaultProvider.isAllowedCompany(Mockito.anyLong())
+			_secretProvider.isAllowedCompany(Mockito.anyLong())
 		).thenReturn(
 			true
 		);
@@ -152,7 +152,7 @@ public class SecretManagerImplTest {
 			companyId, _secretReference(providerId, identifier));
 
 		Mockito.verify(
-			_secretVaultProvider
+			_secretProvider
 		).getSecret(
 			companyId, identifier
 		);
@@ -165,17 +165,17 @@ public class SecretManagerImplTest {
 		Mockito.when(
 			_serviceTrackerMap.getService(providerId)
 		).thenReturn(
-			Collections.singletonList(_secretVaultProvider)
+			Collections.singletonList(_secretProvider)
 		);
 
 		Mockito.when(
-			_secretVaultProvider.getModuleStatus()
+			_secretProvider.getModuleStatus()
 		).thenReturn(
 			ModuleStatus.ERROR
 		);
 
 		Mockito.when(
-			_secretVaultProvider.isAllowedCompany(Mockito.anyLong())
+			_secretProvider.isAllowedCompany(Mockito.anyLong())
 		).thenReturn(
 			true
 		);
@@ -199,11 +199,11 @@ public class SecretManagerImplTest {
 		Mockito.when(
 			_serviceTrackerMap.getService(providerId)
 		).thenReturn(
-			Collections.singletonList(_secretVaultProvider)
+			Collections.singletonList(_secretProvider)
 		);
 
 		Mockito.when(
-			_secretVaultProvider.isAllowedCompany(Mockito.anyLong())
+			_secretProvider.isAllowedCompany(Mockito.anyLong())
 		).thenReturn(
 			true
 		);
@@ -219,7 +219,7 @@ public class SecretManagerImplTest {
 		}
 
 		Mockito.verify(
-			_secretVaultProvider
+			_secretProvider
 		).putSecret(
 			Mockito.eq(companyId), Mockito.any(Secret.class)
 		);
@@ -265,11 +265,11 @@ public class SecretManagerImplTest {
 		Mockito.when(
 			_serviceTrackerMap.getService(providerId)
 		).thenReturn(
-			Collections.singletonList(_secretVaultProvider)
+			Collections.singletonList(_secretProvider)
 		);
 
 		Mockito.when(
-			_secretVaultProvider.isAllowedCompany(companyId)
+			_secretProvider.isAllowedCompany(companyId)
 		).thenReturn(
 			true
 		);
@@ -303,10 +303,9 @@ public class SecretManagerImplTest {
 	private SecretManagerImpl _secretManagerImpl;
 
 	@Mock
-	private SecretVaultProvider _secretVaultProvider;
+	private SecretProvider _secretProvider;
 
 	@Mock
-	private ServiceTrackerMap<String, List<SecretVaultProvider>>
-		_serviceTrackerMap;
+	private ServiceTrackerMap<String, List<SecretProvider>> _serviceTrackerMap;
 
 }

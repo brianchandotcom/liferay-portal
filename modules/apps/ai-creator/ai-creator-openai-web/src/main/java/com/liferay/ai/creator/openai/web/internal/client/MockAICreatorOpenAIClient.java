@@ -6,9 +6,11 @@
 package com.liferay.ai.creator.openai.web.internal.client;
 
 import com.liferay.ai.creator.openai.web.internal.exception.AICreatorOpenAIClientException;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
@@ -83,7 +85,11 @@ public class MockAICreatorOpenAIClient implements AICreatorOpenAIClient {
 			return;
 		}
 
-		throw _getAICreatorOpenAIClientException(apiKey);
+		if (StringUtil.startsWith(apiKey, "OPENAI_API_")) {
+			throw _getAICreatorOpenAIClientException(apiKey);
+		}
+
+		throw _getInvalidAPIKeyException(apiKey);
 	}
 
 	private AICreatorOpenAIClientException _getAICreatorOpenAIClientException(
@@ -119,6 +125,18 @@ public class MockAICreatorOpenAIClient implements AICreatorOpenAIClient {
 		}
 
 		return generations;
+	}
+
+	private AICreatorOpenAIClientException _getInvalidAPIKeyException(
+		String apiKey) {
+
+		return new AICreatorOpenAIClientException(
+			"invalid_api_key",
+			StringBundler.concat(
+				"Incorrect API key provided: ", apiKey,
+				". You can find your API key at ",
+				"https://platform.openai.com/account/api-keys."),
+			HttpURLConnection.HTTP_UNAUTHORIZED);
 	}
 
 	private String _getSampleCompletion(long sleepMillis) {

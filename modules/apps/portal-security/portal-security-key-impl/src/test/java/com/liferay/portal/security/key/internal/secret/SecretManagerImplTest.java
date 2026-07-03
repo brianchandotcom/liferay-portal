@@ -13,7 +13,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.security.key.KeyReference;
 import com.liferay.portal.security.key.secret.Secret;
 import com.liferay.portal.security.key.secret.SecretManagerException;
-import com.liferay.portal.security.key.spi.ModuleStatus;
+import com.liferay.portal.security.key.spi.ProviderStatus;
 import com.liferay.portal.security.key.spi.profile.KeyManagerProfile;
 import com.liferay.portal.security.key.spi.profile.KeyManagerProfileRegistry;
 import com.liferay.portal.security.key.spi.secret.SecretProvider;
@@ -169,9 +169,9 @@ public class SecretManagerImplTest {
 		);
 
 		Mockito.when(
-			_secretProvider.getModuleStatus()
+			_secretProvider.getStatus()
 		).thenReturn(
-			ModuleStatus.ERROR
+			ProviderStatus.ERROR
 		);
 
 		Mockito.when(

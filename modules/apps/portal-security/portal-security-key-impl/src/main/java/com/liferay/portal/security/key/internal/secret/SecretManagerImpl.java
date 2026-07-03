@@ -18,7 +18,7 @@ import com.liferay.portal.security.key.KeyReference;
 import com.liferay.portal.security.key.secret.Secret;
 import com.liferay.portal.security.key.secret.SecretManager;
 import com.liferay.portal.security.key.secret.SecretManagerException;
-import com.liferay.portal.security.key.spi.ModuleStatus;
+import com.liferay.portal.security.key.spi.ProviderStatus;
 import com.liferay.portal.security.key.spi.profile.KeyManagerProfile;
 import com.liferay.portal.security.key.spi.profile.KeyManagerProfileRegistry;
 import com.liferay.portal.security.key.spi.secret.SecretProvider;
@@ -195,8 +195,8 @@ public class SecretManagerImpl implements SecretManager {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
-			bundleContext, SecretProvider.class, "(keymanager.provider.id=*)",
-			new PropertyServiceReferenceMapper<>("keymanager.provider.id"));
+			bundleContext, SecretProvider.class, "(secret.provider.id=*)",
+			new PropertyServiceReferenceMapper<>("secret.provider.id"));
 	}
 
 	@Deactivate
@@ -220,7 +220,7 @@ public class SecretManagerImpl implements SecretManager {
 					continue;
 				}
 
-				if (secretProvider.getModuleStatus() == ModuleStatus.ERROR) {
+				if (secretProvider.getStatus() == ProviderStatus.ERROR) {
 					throw new SecretManagerException(
 						StringBundler.concat(
 							"Secret provider ", providerId,

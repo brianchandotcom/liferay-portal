@@ -7,7 +7,7 @@ package com.liferay.portal.security.key.spi.secret;
 
 import com.liferay.portal.security.key.secret.Secret;
 import com.liferay.portal.security.key.secret.SecretManagerException;
-import com.liferay.portal.security.key.spi.ModuleStatus;
+import com.liferay.portal.security.key.spi.ProviderStatus;
 
 import java.util.List;
 
@@ -20,13 +20,13 @@ public interface SecretProvider {
 	public void deleteSecret(long companyId, String identifier)
 		throws SecretManagerException;
 
-	public ModuleStatus getModuleStatus();
-
 	public Secret getSecret(long companyId, String identifier)
 		throws SecretManagerException;
 
 	public List<String> getSecretIdentifiers(long companyId)
 		throws SecretManagerException;
+
+	public ProviderStatus getStatus();
 
 	public boolean isAllowedCompany(long companyId);
 

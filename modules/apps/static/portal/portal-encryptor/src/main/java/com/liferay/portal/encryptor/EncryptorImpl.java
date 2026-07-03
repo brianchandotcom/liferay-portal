@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.security.Key;
-import java.security.spec.AlgorithmParameterSpec;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -58,24 +57,6 @@ public class EncryptorImpl implements Encryptor {
 		byte[] encryptedBytes = Base64.decode(encryptedString);
 
 		return _decryptUnencodedAsString(key, encryptedBytes);
-	}
-
-	@Override
-	public byte[] decryptUnencodedAsBytes(
-			AlgorithmParameterSpec algorithmParameterSpec,
-			byte[] encryptedBytes, Key key, String transformation)
-		throws EncryptorException {
-
-		try {
-			Cipher cipher = Cipher.getInstance(transformation);
-
-			cipher.init(Cipher.DECRYPT_MODE, key, algorithmParameterSpec);
-
-			return cipher.doFinal(encryptedBytes);
-		}
-		catch (Exception exception) {
-			throw new EncryptorException(exception);
-		}
 	}
 
 	@Override
@@ -143,24 +124,6 @@ public class EncryptorImpl implements Encryptor {
 		byte[] encryptedBytes = encryptUnencoded(key, plainText);
 
 		return Base64.encode(encryptedBytes);
-	}
-
-	@Override
-	public byte[] encryptUnencoded(
-			AlgorithmParameterSpec algorithmParameterSpec, Key key,
-			byte[] plainBytes, String transformation)
-		throws EncryptorException {
-
-		try {
-			Cipher cipher = Cipher.getInstance(transformation);
-
-			cipher.init(Cipher.ENCRYPT_MODE, key, algorithmParameterSpec);
-
-			return cipher.doFinal(plainBytes);
-		}
-		catch (Exception exception) {
-			throw new EncryptorException(exception);
-		}
 	}
 
 	@Override
@@ -235,9 +198,19 @@ public class EncryptorImpl implements Encryptor {
 		byte[] initializationVector = Arrays.copyOfRange(
 			encryptedBytes, 0, _GCM_INITIALIZATION_VECTOR_LENGTH);
 
-		return decryptUnencodedAsBytes(
-			new GCMParameterSpec(_GCM_TAG_LENGTH_BITS, initializationVector),
-			cipherBytes, key, _AES_GCM_NOPADDING);
+		try {
+			Cipher cipher = Cipher.getInstance(_AES_GCM_NOPADDING);
+
+			cipher.init(
+				Cipher.DECRYPT_MODE, key,
+				new GCMParameterSpec(
+					_GCM_TAG_LENGTH_BITS, initializationVector));
+
+			return cipher.doFinal(cipherBytes);
+		}
+		catch (Exception exception) {
+			throw new EncryptorException(exception);
+		}
 	}
 
 	private String _decryptUnencodedAsString(Key key, byte[] encryptedBytes)
@@ -264,21 +237,31 @@ public class EncryptorImpl implements Encryptor {
 			initializationVector[i] = SecureRandomUtil.nextByte();
 		}
 
-		byte[] cipherBytes = encryptUnencoded(
-			new GCMParameterSpec(_GCM_TAG_LENGTH_BITS, initializationVector),
-			key, plainBytes, _AES_GCM_NOPADDING);
+		try {
+			Cipher cipher = Cipher.getInstance(_AES_GCM_NOPADDING);
 
-		byte[] encryptedBytes =
-			new byte[initializationVector.length + cipherBytes.length];
+			cipher.init(
+				Cipher.ENCRYPT_MODE, key,
+				new GCMParameterSpec(
+					_GCM_TAG_LENGTH_BITS, initializationVector));
 
-		System.arraycopy(
-			initializationVector, 0, encryptedBytes, 0,
-			initializationVector.length);
-		System.arraycopy(
-			cipherBytes, 0, encryptedBytes, initializationVector.length,
-			cipherBytes.length);
+			byte[] cipherBytes = cipher.doFinal(plainBytes);
 
-		return encryptedBytes;
+			byte[] encryptedBytes =
+				new byte[initializationVector.length + cipherBytes.length];
+
+			System.arraycopy(
+				initializationVector, 0, encryptedBytes, 0,
+				initializationVector.length);
+			System.arraycopy(
+				cipherBytes, 0, encryptedBytes, initializationVector.length,
+				cipherBytes.length);
+
+			return encryptedBytes;
+		}
+		catch (Exception exception) {
+			throw new EncryptorException(exception);
+		}
 	}
 
 	private Key _generateKey(String algorithm) throws EncryptorException {

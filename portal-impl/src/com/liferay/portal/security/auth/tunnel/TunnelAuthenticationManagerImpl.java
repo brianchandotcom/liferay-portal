@@ -209,7 +209,7 @@ public class TunnelAuthenticationManagerImpl
 
 		String algorithm = PropsValues.TUNNELING_SERVLET_ENCRYPTION_ALGORITHM;
 
-		if (FIPSModeUtil.isNotAllowedAlgorithm(algorithm)) {
+		if (FIPSModeUtil.isNotAllowedKeyAlgorithm(algorithm)) {
 			throw new SecurityException(
 				"Algorithm \"" + algorithm + "\" is not allowed in FIPS mode");
 		}

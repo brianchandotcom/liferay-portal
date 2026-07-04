@@ -85,11 +85,7 @@ public class MockAICreatorOpenAIClient implements AICreatorOpenAIClient {
 			return;
 		}
 
-		if (StringUtil.startsWith(apiKey, "OPENAI_API_")) {
-			throw _getAICreatorOpenAIClientException(apiKey);
-		}
-
-		throw _getInvalidAPIKeyException(apiKey);
+		throw _getAICreatorOpenAIClientException(apiKey);
 	}
 
 	private AICreatorOpenAIClientException _getAICreatorOpenAIClientException(
@@ -106,6 +102,16 @@ public class MockAICreatorOpenAIClient implements AICreatorOpenAIClient {
 			return new AICreatorOpenAIClientException(
 				"openai-api-error-code", errorMessage,
 				HttpURLConnection.HTTP_INTERNAL_ERROR);
+		}
+
+		if (!StringUtil.startsWith(key, "OPENAI_API_")) {
+			return new AICreatorOpenAIClientException(
+				"invalid_api_key",
+				StringBundler.concat(
+					"Incorrect API key provided: ", key,
+					". You can find your API key at ",
+					"https://platform.openai.com/account/api-keys."),
+				HttpURLConnection.HTTP_UNAUTHORIZED);
 		}
 
 		return new AICreatorOpenAIClientException(
@@ -125,18 +131,6 @@ public class MockAICreatorOpenAIClient implements AICreatorOpenAIClient {
 		}
 
 		return generations;
-	}
-
-	private AICreatorOpenAIClientException _getInvalidAPIKeyException(
-		String apiKey) {
-
-		return new AICreatorOpenAIClientException(
-			"invalid_api_key",
-			StringBundler.concat(
-				"Incorrect API key provided: ", apiKey,
-				". You can find your API key at ",
-				"https://platform.openai.com/account/api-keys."),
-			HttpURLConnection.HTTP_UNAUTHORIZED);
 	}
 
 	private String _getSampleCompletion(long sleepMillis) {

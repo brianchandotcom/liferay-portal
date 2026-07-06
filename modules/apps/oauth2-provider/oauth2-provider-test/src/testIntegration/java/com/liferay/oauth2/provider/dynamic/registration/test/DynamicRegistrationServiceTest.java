@@ -353,6 +353,57 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 	}
 
 	@Test
+	public void testRegisterInOpenModeIsCreateOnly() throws Exception {
+		long companyId = TestPropsValues.getCompanyId();
+
+		WebTarget registerWebTarget = getRegisterWebTarget();
+
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					_createCompanyConfigurationTemporarySwapper(companyId)) {
+
+			Invocation.Builder invocationBuilder = registerWebTarget.request();
+
+			Response response = invocationBuilder.method(
+				"post",
+				Entity.json(
+					_createOpenRegistrationJSONObject(
+						"https://" + RandomTestUtil.randomString() +
+							".com/callback",
+						true
+					).toString()));
+
+			Assert.assertEquals(201, response.getStatus());
+
+			JSONObject responseJSONObject = parseJSONObject(response);
+
+			// Open registration is create-only, so the response must not
+			// advertise a client management lifecycle
+
+			Assert.assertFalse(
+				responseJSONObject.has("registration_access_token"));
+			Assert.assertFalse(
+				responseJSONObject.has("registration_client_uri"));
+
+			WebTarget clientWebTarget = getRegisterWebTarget(
+				responseJSONObject.getString(OAuthConstants.CLIENT_ID));
+
+			invocationBuilder = clientWebTarget.request();
+
+			invocationBuilder.header(
+				"Authorization", "Bearer " + RandomTestUtil.randomString());
+
+			response = invocationBuilder.get();
+
+			Assert.assertEquals(401, response.getStatus());
+
+			response = invocationBuilder.delete();
+
+			Assert.assertEquals(401, response.getStatus());
+		}
+	}
+
+	@Test
 	public void testRegisterInOpenModeWithInvalidRequest() throws Exception {
 		_testRegisterInOpenModeWithInvalidRequest(
 			JSONUtil.put(

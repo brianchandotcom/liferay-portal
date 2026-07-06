@@ -335,8 +335,6 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 
 		_testRegisterInOpenModeEnforcesAllowedHosts(
 			allowedHost, 201, allowedHost);
-		_testRegisterInOpenModeEnforcesAllowedHosts(
-			allowedHost, 403, RandomTestUtil.randomString());
 
 		_testRegisterInOpenModeEnforcesAllowedHosts(
 			allowedHost, 201,
@@ -350,6 +348,9 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 		_testRegisterInOpenModeEnforcesAllowedHosts(
 			allowedHost, 201,
 			allowedHost + ":" + PortalUtil.getPortalServerPort(false));
+
+		_testRegisterInOpenModeEnforcesAllowedHosts(
+			allowedHost, 403, RandomTestUtil.randomString());
 	}
 
 	@Test

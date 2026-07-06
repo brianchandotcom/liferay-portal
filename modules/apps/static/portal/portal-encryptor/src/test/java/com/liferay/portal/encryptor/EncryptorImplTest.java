@@ -13,6 +13,8 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.security.Key;
 
+import javax.crypto.spec.SecretKeySpec;
+
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -64,6 +66,12 @@ public class EncryptorImplTest {
 				_PLAIN_TEXT, encryptor.decrypt(key, encryptedString1));
 			Assert.assertEquals(
 				_PLAIN_TEXT, encryptor.decrypt(key, encryptedString2));
+
+			Assert.assertThrows(
+				SecurityException.class,
+				() -> encryptor.encryptUnencoded(
+					new SecretKeySpec(new byte[8], "AES"),
+					_PLAIN_TEXT.getBytes()));
 		}
 	}
 

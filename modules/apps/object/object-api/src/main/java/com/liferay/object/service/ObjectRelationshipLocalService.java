@@ -419,7 +419,7 @@ public interface ObjectRelationshipLocalService
 		throws PortalException;
 
 	public void registerObjectRelationshipsRelatedInfoCollectionProviders(
-		ObjectDefinition objectDefinition1,
+		ObjectDefinition objectDefinition,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		List<ObjectRelationship> objectRelationships);
 
@@ -448,4 +448,4 @@ public interface ObjectRelationshipLocalService
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1607602875
+// LIFERAY-SERVICE-BUILDER-HASH:115953412

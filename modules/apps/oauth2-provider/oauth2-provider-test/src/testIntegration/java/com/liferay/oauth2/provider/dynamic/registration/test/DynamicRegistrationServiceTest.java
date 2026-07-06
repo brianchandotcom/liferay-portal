@@ -377,9 +377,6 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 
 			JSONObject responseJSONObject = parseJSONObject(response);
 
-			// Open registration is create-only, so the response must not
-			// advertise a client management lifecycle
-
 			Assert.assertFalse(
 				responseJSONObject.has("registration_access_token"));
 			Assert.assertFalse(
@@ -425,6 +422,14 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 			"invalid_client_metadata", 400,
 			"dynamic.registration.allowed.scopes",
 			new String[] {"Liferay.Headless.Delivery.everything"});
+		_testRegisterInOpenModeWithInvalidRequest(
+			_createOpenRegistrationJSONObject(
+				"https://" + RandomTestUtil.randomString() + ".com/callback",
+				false
+			).toString(),
+			"invalid_client_metadata", 400,
+			"dynamic.registration.allowed.scopes",
+			new String[] {StringPool.STAR});
 
 		_testRegisterInOpenModeWithInvalidRequest(
 			_createOpenRegistrationJSONObject(
@@ -459,15 +464,6 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 			).toString(),
 			"invalid_scope", 400, "dynamic.registration.allowed.scopes",
 			new String[] {"Liferay.Headless.Delivery.everything"});
-
-		_testRegisterInOpenModeWithInvalidRequest(
-			_createOpenRegistrationJSONObject(
-				"https://" + RandomTestUtil.randomString() + ".com/callback",
-				false
-			).toString(),
-			"invalid_client_metadata", 400,
-			"dynamic.registration.allowed.scopes",
-			new String[] {StringPool.STAR});
 
 		_testRegisterInOpenModeWithInvalidRequest(
 			JSONUtil.put(

@@ -165,7 +165,7 @@ const BaseLifecycle = () => {
 		variables: {groupId: groupId!},
 	});
 
-	const lifecycleId = lifecycles?.[0]?.id ?? '1';
+	const lifecycleId = lifecycles?.[0]?.id;
 
 	const {data: accountMetrics, loading: accountMetricsLoading} = useRequest({
 		dataSourceFn: API.accounts.fetchMetrics,
@@ -180,7 +180,7 @@ const BaseLifecycle = () => {
 
 	const authorized = currentUser.isAdmin();
 
-	const loading = dataSourcesLoading || lifecyclesLoading || !lifecycleId;
+	const loading = dataSourcesLoading || lifecyclesLoading;
 
 	const hasContent =
 		!loading &&
@@ -217,7 +217,7 @@ const BaseLifecycle = () => {
 			return <Loading />;
 		}
 
-		if (!totalAccounts) {
+		if (!totalAccounts || !lifecycleId) {
 			return (
 				<LifecycleEmptyState
 					authorized={authorized}

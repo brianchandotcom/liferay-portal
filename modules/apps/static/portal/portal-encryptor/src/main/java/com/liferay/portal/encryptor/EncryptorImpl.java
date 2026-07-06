@@ -191,6 +191,8 @@ public class EncryptorImpl implements Encryptor {
 	private byte[] _decryptGCM(byte[] encryptedBytes, Key key)
 		throws EncryptorException {
 
+		FIPSModeUtil.validateKey(key);
+
 		byte[] cipherBytes = Arrays.copyOfRange(
 			encryptedBytes, _GCM_INITIALIZATION_VECTOR_LENGTH,
 			encryptedBytes.length);
@@ -229,6 +231,8 @@ public class EncryptorImpl implements Encryptor {
 
 	private byte[] _encryptGCM(Key key, byte[] plainBytes)
 		throws EncryptorException {
+
+		FIPSModeUtil.validateKey(key);
 
 		byte[] initializationVector =
 			new byte[_GCM_INITIALIZATION_VECTOR_LENGTH];

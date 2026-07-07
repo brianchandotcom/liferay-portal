@@ -17,6 +17,7 @@ import co.elastic.clients.elasticsearch.indices.DeleteIndexRequest;
 import co.elastic.clients.elasticsearch.indices.ElasticsearchIndicesClient;
 import co.elastic.clients.json.JsonData;
 
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -26,6 +27,8 @@ import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -73,6 +76,9 @@ import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Test;
 
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
+
 /**
  * @author Dylan Rebelak
  */
@@ -113,6 +119,65 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 		_deleteIndex();
 
 		_documentFixture.tearDown();
+	}
+
+	@Test
+	public void testExecuteBatchModeMaxBulkableDocumentRequests()
+		throws Exception {
+
+		try (MockedStatic<SearchEngineHelperUtil>
+				searchEngineHelperUtilMockedStatic = Mockito.mockStatic(
+					SearchEngineHelperUtil.class)) {
+
+			ExecutorService executorService = Mockito.mock(
+				ExecutorService.class);
+
+			Mockito.doAnswer(
+				invocation -> {
+					Runnable runnable = invocation.getArgument(0);
+
+					runnable.run();
+
+					return null;
+				}
+			).when(
+				executorService
+			).execute(
+				Mockito.any(Runnable.class)
+			);
+
+			searchEngineHelperUtilMockedStatic.when(
+				SearchEngineHelperUtil::getDocumentsConsumerExecutorService
+			).thenReturn(
+				executorService
+			);
+
+			SearchEngineAdapter searchEngineAdapter = createSearchEngineAdapter(
+				_elasticsearchFixture,
+				HashMapBuilder.<String, Object>put(
+					"maxBulkableDocumentRequests", 2
+				).build());
+
+			try (SafeCloseable safeCloseable = SearchContext.openBatchMode(
+					false)) {
+
+				searchEngineAdapter.execute(_createIndexDocumentRequest("1"));
+
+				GetResponse getResponse1 = _getDocument("1");
+
+				Assert.assertFalse(getResponse1.found());
+
+				searchEngineAdapter.execute(_createIndexDocumentRequest("2"));
+
+				GetResponse getResponse2 = _getDocument("1");
+
+				Assert.assertTrue(getResponse2.found());
+
+				GetResponse getResponse3 = _getDocument("2");
+
+				Assert.assertTrue(getResponse3.found());
+			}
+		}
 	}
 
 	@Test
@@ -695,6 +760,14 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 	protected static SearchEngineAdapter createSearchEngineAdapter(
 		ElasticsearchClientResolver elasticsearchClientResolver) {
 
+		return createSearchEngineAdapter(
+			elasticsearchClientResolver, Collections.emptyMap());
+	}
+
+	protected static SearchEngineAdapter createSearchEngineAdapter(
+		ElasticsearchClientResolver elasticsearchClientResolver,
+		Map<String, Object> properties) {
+
 		ElasticsearchSearchEngineAdapterImpl
 			elasticsearchSearchEngineAdapterImpl =
 				new ElasticsearchSearchEngineAdapterImpl();
@@ -703,7 +776,7 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 			elasticsearchSearchEngineAdapterImpl,
 			"_elasticsearchClientResolver", elasticsearchClientResolver);
 
-		elasticsearchSearchEngineAdapterImpl.activate(Collections.emptyMap());
+		elasticsearchSearchEngineAdapterImpl.activate(properties);
 
 		return elasticsearchSearchEngineAdapterImpl;
 	}
@@ -729,6 +802,20 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
 		}
+	}
+
+	private IndexDocumentRequest _createIndexDocumentRequest(String uid) {
+		Document document = new DocumentImpl();
+
+		document.addKeyword(Field.UID, uid);
+
+		IndexDocumentRequest indexDocumentRequest = new IndexDocumentRequest(
+			_INDEX_NAME, document);
+
+		indexDocumentRequest.setType(
+			IndexMappingsConstants.LIFERAY_DOCUMENT_TYPE);
+
+		return indexDocumentRequest;
 	}
 
 	private void _deleteIndex() {

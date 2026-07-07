@@ -27,6 +27,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordVersionLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceVersionLocalService;
@@ -156,6 +157,25 @@ public class AddFormInstanceRecordMVCActionCommand
 			ddmFormValues.getDDMFormFieldValuesMap(true),
 			ddmStructure.getDDMFormLayout(),
 			ddmFormEvaluatorEvaluateResponse.getDisabledPagesIndexes());
+
+		long ddmFormInstanceRecordId = ParamUtil.getLong(
+			actionRequest, "formInstanceRecordId");
+
+		if (ddmFormInstanceRecordId > 0) {
+			DDMFormInstanceRecord ddmFormInstanceRecord =
+				_ddmFormInstanceRecordLocalService.getFormInstanceRecord(
+					ddmFormInstanceRecordId);
+
+			DDMFormValues persistedDDMFormValues =
+				ddmFormInstanceRecord.getDDMFormValues();
+
+			AddFormInstanceRecordMVCCommandUtil.
+				updateInvisibleDDMFormFieldValues(
+					ddmFormEvaluatorEvaluateResponse.
+						getDDMFormFieldsPropertyChanges(),
+					ddmFormValues.getDDMFormFieldValuesMap(true),
+					persistedDDMFormValues.getDDMFormFieldValuesMap(true));
+		}
 
 		AddFormInstanceRecordMVCCommandUtil.updateReadOnlyDDMFormFields(
 			ddmForm.getDDMFormFieldsMap(true),
@@ -331,6 +351,10 @@ public class AddFormInstanceRecordMVCActionCommand
 
 	@Reference
 	private DDMFormInstanceLocalService _ddmFormInstanceLocalService;
+
+	@Reference
+	private DDMFormInstanceRecordLocalService
+		_ddmFormInstanceRecordLocalService;
 
 	@Reference
 	private DDMFormInstanceRecordService _ddmFormInstanceRecordService;

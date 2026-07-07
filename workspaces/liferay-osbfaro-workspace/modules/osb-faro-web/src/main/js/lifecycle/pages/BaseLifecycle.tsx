@@ -127,7 +127,7 @@ const LifecycleStagesSection = () => {
 };
 
 const LifecycleAccounts = () => {
-	const {filters, lifecycleId} = useLifecycle();
+	const {filters, lifecycleId, stageSelectionNonce} = useLifecycle();
 
 	const {channelId, groupId} = useParams();
 
@@ -146,6 +146,7 @@ const LifecycleAccounts = () => {
 				groupId={groupId!}
 				industryFilter={filters.industryFilter}
 				lifecycleStageFilter={filters.lifecycleStageFilter}
+				stageSelectionNonce={stageSelectionNonce}
 			/>
 		</section>
 	);
@@ -165,7 +166,7 @@ const BaseLifecycle = () => {
 		variables: {groupId: groupId!},
 	});
 
-	const lifecycleId = lifecycles?.[0]?.id ?? '1';
+	const lifecycleId = lifecycles?.[0]?.id;
 
 	const {data: accountMetrics, loading: accountMetricsLoading} = useRequest({
 		dataSourceFn: API.accounts.fetchMetrics,
@@ -180,10 +181,14 @@ const BaseLifecycle = () => {
 
 	const authorized = currentUser.isAdmin();
 
-	const loading = dataSourcesLoading || lifecyclesLoading || !lifecycleId;
+	const loading = dataSourcesLoading || lifecyclesLoading;
 
 	const hasContent =
-		!loading && !noDataSources && !accountMetricsLoading && !!totalAccounts;
+		!loading &&
+		!noDataSources &&
+		!accountMetricsLoading &&
+		!!totalAccounts &&
+		!!lifecycleId;
 
 	const renderBody = () => {
 		if (loading) {
@@ -213,7 +218,7 @@ const BaseLifecycle = () => {
 			return <Loading />;
 		}
 
-		if (!totalAccounts) {
+		if (!totalAccounts || !lifecycleId) {
 			return (
 				<LifecycleEmptyState
 					authorized={authorized}

@@ -59,7 +59,7 @@ const beginDrag = ({
 
 	if (type === PropertyTypes.Behavior) {
 		touched = {asset: false, dateFilter: false, occurenceCount: false};
-		valid = {asset: false, dateFilter: true, occurenceCount: true};
+		valid = {asset: true, dateFilter: true, occurenceCount: true};
 	}
 	else if (type === PropertyTypes.Event) {
 		touched = {

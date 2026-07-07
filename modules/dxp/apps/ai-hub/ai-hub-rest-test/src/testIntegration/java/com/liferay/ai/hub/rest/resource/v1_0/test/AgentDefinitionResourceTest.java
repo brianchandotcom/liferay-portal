@@ -12,6 +12,7 @@ import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.ai.hub.configuration.VertexAIConfiguration;
 import com.liferay.ai.hub.rest.client.dto.v1_0.AgentDefinition;
 import com.liferay.ai.hub.rest.client.dto.v1_0.Model;
+import com.liferay.ai.hub.rest.client.dto.v1_0.Status;
 import com.liferay.ai.hub.rest.client.dto.v1_0.Variable;
 import com.liferay.ai.hub.rest.client.pagination.Page;
 import com.liferay.ai.hub.rest.client.pagination.Pagination;
@@ -23,7 +24,6 @@ import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -69,8 +70,10 @@ import com.liferay.site.initializer.SiteInitializerRegistry;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -134,6 +137,10 @@ public class AgentDefinitionResourceTest
 		_accountEntryUserRelLocalService.addAccountEntryUserRel(
 			_aiHubAccountEntry.getAccountEntryId(),
 			TestPropsValues.getUserId());
+
+		_seoStudioAccountEntry =
+			_accountEntryLocalService.getAccountEntryByExternalReferenceCode(
+				"L_SEO_STUDIO", TestPropsValues.getCompanyId());
 	}
 
 	@AfterClass
@@ -150,41 +157,8 @@ public class AgentDefinitionResourceTest
 	public void testDeleteAgentDefinitionByExternalReferenceCode()
 		throws Exception {
 
-		AgentDefinition agentDefinition = _addAgentDefinition();
-
-		ObjectDefinition objectDefinition = _getObjectDefinition();
-
-		ObjectEntry objectEntry = _objectEntryManager.getObjectEntry(
-			TestPropsValues.getCompanyId(), _dtoConverterContext,
-			agentDefinition.getExternalReferenceCode(), objectDefinition, null);
-
-		WorkflowDefinition workflowDefinition =
-			_workflowDefinitionManager.getWorkflowDefinition(
-				TestPropsValues.getCompanyId(),
-				agentDefinition.getWorkflowDefinitionName(), 1);
-
-		agentDefinitionResource.deleteAgentDefinitionByExternalReferenceCode(
-			agentDefinition.getExternalReferenceCode());
-
-		AssertUtils.assertFailure(
-			NoSuchObjectEntryException.class,
-			StringBundler.concat(
-				"No ObjectEntry exists with the key {externalReferenceCode=",
-				objectEntry.getExternalReferenceCode(),
-				", groupId=0, companyId=", TestPropsValues.getCompanyId(),
-				", objectDefinitionId=",
-				objectDefinition.getObjectDefinitionId(), "}"),
-			() -> _objectEntryManager.getObjectEntry(
-				TestPropsValues.getCompanyId(), _dtoConverterContext,
-				agentDefinition.getExternalReferenceCode(), objectDefinition,
-				null));
-		AssertUtils.assertFailure(
-			NoSuchWorkflowDefinitionException.class,
-			NoSuchDefinitionException.class.getName() +
-				": No KaleoDefinition exists with the primary key " +
-					workflowDefinition.getWorkflowDefinitionId(),
-			() -> _workflowDefinitionManager.getWorkflowDefinition(
-				workflowDefinition.getWorkflowDefinitionId()));
+		_testDeleteAgentDefinitionByExternalReferenceCode();
+		_testDeleteAgentDefinitionByExternalReferenceCodeWithSharedWorkflowDefinition();
 	}
 
 	@Override
@@ -192,8 +166,10 @@ public class AgentDefinitionResourceTest
 	public void testGetAgentDefinitionsPage() throws Exception {
 		_testGetAgentDefinitionsPage();
 		_testGetAgentDefinitionsPageWithFilter();
+		_testGetAgentDefinitionsPageWithMissingWorkflowDefinition();
 		_testGetAgentDefinitionsPageWithModel();
 		_testGetAgentDefinitionsPageWithPermissions();
+		_testGetAgentDefinitionsPageWithSort();
 	}
 
 	@Ignore
@@ -406,11 +382,94 @@ public class AgentDefinitionResourceTest
 	}
 
 	@Override
+	@Test
+	public void testPostAgentDefinitionDraft() throws Exception {
+		AgentDefinition agentDefinition =
+			agentDefinitionResource.postAgentDefinitionDraft();
+
+		Assert.assertFalse(agentDefinition.getActive());
+
+		Status status = agentDefinition.getStatus();
+
+		Assert.assertEquals("draft", status.getLabel());
+
+		String workflowDefinitionName =
+			agentDefinition.getWorkflowDefinitionName();
+
+		Assert.assertNotNull(workflowDefinitionName);
+
+		WorkflowDefinition workflowDefinition =
+			_workflowDefinitionManager.getWorkflowDefinition(
+				TestPropsValues.getCompanyId(), workflowDefinitionName, 1);
+
+		Assert.assertEquals(
+			_accountEntry.getAccountEntryGroupId(),
+			workflowDefinition.getGroupId());
+
+		ObjectEntry objectEntry = _objectEntryManager.getObjectEntry(
+			TestPropsValues.getCompanyId(), _dtoConverterContext,
+			agentDefinition.getExternalReferenceCode(), _getObjectDefinition(),
+			null);
+
+		com.liferay.object.rest.dto.v1_0.Status objectEntryStatus =
+			objectEntry.getStatus();
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_DRAFT, (int)objectEntryStatus.getCode());
+
+		_objectEntryManager.updateObjectEntry(
+			TestPropsValues.getCompanyId(), _dtoConverterContext,
+			agentDefinition.getExternalReferenceCode(), _getObjectDefinition(),
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						"active", true
+					).put(
+						"description", RandomTestUtil.randomString()
+					).put(
+						"inputVariables", "text"
+					).put(
+						"outputVariable", "result"
+					).put(
+						"r_accountToAIHubAgentDefinitions_accountEntryId",
+						_accountEntry.getAccountEntryId()
+					).put(
+						"title_i18n",
+						HashMapBuilder.put(
+							"en_US", RandomTestUtil.randomString()
+						).build()
+					).put(
+						"workflowDefinitionName", workflowDefinitionName
+					).build();
+				}
+			},
+			null);
+
+		objectEntry = _objectEntryManager.getObjectEntry(
+			TestPropsValues.getCompanyId(), _dtoConverterContext,
+			agentDefinition.getExternalReferenceCode(), _getObjectDefinition(),
+			null);
+
+		objectEntryStatus = objectEntry.getStatus();
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED,
+			(int)objectEntryStatus.getCode());
+
+		agentDefinitionResource.deleteAgentDefinitionByExternalReferenceCode(
+			agentDefinition.getExternalReferenceCode());
+	}
+
+	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {
 			"active", "externalReferenceCode", "inputVariables",
 			"outputVariable", "version", "workflowDefinitionName"
 		};
+	}
+
+	protected String[] getIgnoredEntityFieldNames() {
+		return new String[] {"dateCreated", "dateModified"};
 	}
 
 	@Override
@@ -441,6 +500,38 @@ public class AgentDefinitionResourceTest
 			postAgentDefinitionByExternalReferenceCodeCopy(
 				WorkflowDefinitionConstants.
 					EXTERNAL_REFERENCE_CODE_CHANGE_TONE);
+	}
+
+	private ObjectEntry _addAgentDefinitionObjectEntry(
+			String workflowDefinitionName)
+		throws Exception {
+
+		return _objectEntryManager.addObjectEntry(
+			_dtoConverterContext, _getObjectDefinition(),
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						"active", true
+					).put(
+						"description", RandomTestUtil.randomString()
+					).put(
+						"inputVariables", "text"
+					).put(
+						"outputVariable", "rewrittenText"
+					).put(
+						"r_accountToAIHubAgentDefinitions_accountEntryId",
+						_aiHubAccountEntry.getAccountEntryId()
+					).put(
+						"title_i18n",
+						HashMapBuilder.put(
+							"en_US", RandomTestUtil.randomString()
+						).build()
+					).put(
+						"workflowDefinitionName", workflowDefinitionName
+					).build();
+				}
+			},
+			null);
 	}
 
 	private void _assertAgentDefinitionModel(
@@ -477,6 +568,82 @@ public class AgentDefinitionResourceTest
 			TestPropsValues.getCompanyId(), "AIHubAgentDefinition");
 	}
 
+	private void _testDeleteAgentDefinitionByExternalReferenceCode()
+		throws Exception {
+
+		AgentDefinition agentDefinition = _addAgentDefinition();
+
+		ObjectDefinition objectDefinition = _getObjectDefinition();
+
+		ObjectEntry objectEntry = _objectEntryManager.getObjectEntry(
+			TestPropsValues.getCompanyId(), _dtoConverterContext,
+			agentDefinition.getExternalReferenceCode(), objectDefinition, null);
+
+		WorkflowDefinition workflowDefinition =
+			_workflowDefinitionManager.getWorkflowDefinition(
+				TestPropsValues.getCompanyId(),
+				agentDefinition.getWorkflowDefinitionName(), 1);
+
+		agentDefinitionResource.deleteAgentDefinitionByExternalReferenceCode(
+			agentDefinition.getExternalReferenceCode());
+
+		AssertUtils.assertFailure(
+			NoSuchObjectEntryException.class,
+			StringBundler.concat(
+				"No ObjectEntry exists with the key {externalReferenceCode=",
+				objectEntry.getExternalReferenceCode(),
+				", groupId=0, companyId=", TestPropsValues.getCompanyId(),
+				", objectDefinitionId=",
+				objectDefinition.getObjectDefinitionId(), "}"),
+			() -> _objectEntryManager.getObjectEntry(
+				TestPropsValues.getCompanyId(), _dtoConverterContext,
+				agentDefinition.getExternalReferenceCode(), objectDefinition,
+				null));
+		AssertUtils.assertFailure(
+			NoSuchWorkflowDefinitionException.class,
+			NoSuchDefinitionException.class.getName() +
+				": No KaleoDefinition exists with the primary key " +
+					workflowDefinition.getWorkflowDefinitionId(),
+			() -> _workflowDefinitionManager.getWorkflowDefinition(
+				workflowDefinition.getWorkflowDefinitionId()));
+	}
+
+	private void _testDeleteAgentDefinitionByExternalReferenceCodeWithSharedWorkflowDefinition()
+		throws Exception {
+
+		AgentDefinition agentDefinition = _addAgentDefinition();
+
+		String workflowDefinitionName =
+			agentDefinition.getWorkflowDefinitionName();
+
+		ObjectEntry objectEntry = _addAgentDefinitionObjectEntry(
+			workflowDefinitionName);
+
+		WorkflowDefinition workflowDefinition =
+			_workflowDefinitionManager.getWorkflowDefinition(
+				TestPropsValues.getCompanyId(), workflowDefinitionName, 1);
+
+		agentDefinitionResource.deleteAgentDefinitionByExternalReferenceCode(
+			agentDefinition.getExternalReferenceCode());
+
+		WorkflowDefinition latestWorkflowDefinition =
+			_workflowDefinitionManager.getLatestWorkflowDefinition(
+				TestPropsValues.getCompanyId(), workflowDefinitionName);
+
+		Assert.assertTrue(latestWorkflowDefinition.isActive());
+
+		agentDefinitionResource.deleteAgentDefinitionByExternalReferenceCode(
+			objectEntry.getExternalReferenceCode());
+
+		AssertUtils.assertFailure(
+			NoSuchWorkflowDefinitionException.class,
+			NoSuchDefinitionException.class.getName() +
+				": No KaleoDefinition exists with the primary key " +
+					workflowDefinition.getWorkflowDefinitionId(),
+			() -> _workflowDefinitionManager.getWorkflowDefinition(
+				workflowDefinition.getWorkflowDefinitionId()));
+	}
+
 	private void _testGetAgentDefinitionsPage() throws Exception {
 		Page<AgentDefinition> page =
 			agentDefinitionResource.getAgentDefinitionsPage(
@@ -494,7 +661,11 @@ public class AgentDefinitionResourceTest
 			agentDefinitionResource.getAgentDefinitionsPage(
 				null, "(active eq false)", Pagination.of(1, 10), null);
 
-		assertEquals(List.of(), (List<AgentDefinition>)page.getItems());
+		assertEquals(
+			ListUtil.filter(
+				_systemAgentDefinitions,
+				systemAgentDefinition -> !systemAgentDefinition.getActive()),
+			(List<AgentDefinition>)page.getItems());
 
 		// Active as true
 
@@ -502,7 +673,57 @@ public class AgentDefinitionResourceTest
 			null, "(active eq true)", Pagination.of(1, 10), null);
 
 		assertEquals(
+			ListUtil.filter(
+				_systemAgentDefinitions, AgentDefinition::getActive),
+			(List<AgentDefinition>)page.getItems());
+
+		// Date created
+
+		page = agentDefinitionResource.getAgentDefinitionsPage(
+			null, "dateCreated gt 2000-01-01T00:00:00Z", Pagination.of(1, 10),
+			null);
+
+		assertEquals(
 			_systemAgentDefinitions, (List<AgentDefinition>)page.getItems());
+
+		// Date modified
+
+		page = agentDefinitionResource.getAgentDefinitionsPage(
+			null, "dateModified gt 2000-01-01T00:00:00Z", Pagination.of(1, 10),
+			null);
+
+		assertEquals(
+			_systemAgentDefinitions, (List<AgentDefinition>)page.getItems());
+	}
+
+	private void _testGetAgentDefinitionsPageWithMissingWorkflowDefinition()
+		throws Exception {
+
+		ObjectEntry objectEntry = _addAgentDefinitionObjectEntry(
+			RandomTestUtil.randomString());
+
+		Page<AgentDefinition> page =
+			agentDefinitionResource.getAgentDefinitionsPage(
+				null, null, Pagination.of(1, 20), null);
+
+		AgentDefinition agentDefinition = null;
+
+		for (AgentDefinition curAgentDefinition : page.getItems()) {
+			if (Objects.equals(
+					curAgentDefinition.getExternalReferenceCode(),
+					objectEntry.getExternalReferenceCode())) {
+
+				agentDefinition = curAgentDefinition;
+
+				break;
+			}
+		}
+
+		Assert.assertNotNull(agentDefinition);
+		Assert.assertNull(agentDefinition.getVersion());
+
+		agentDefinitionResource.deleteAgentDefinitionByExternalReferenceCode(
+			objectEntry.getExternalReferenceCode());
 	}
 
 	private void _testGetAgentDefinitionsPageWithModel() throws Exception {
@@ -545,6 +766,8 @@ public class AgentDefinitionResourceTest
 
 		_accountEntryUserRelLocalService.addAccountEntryUserRel(
 			_aiHubAccountEntry.getAccountEntryId(), user.getUserId());
+		_accountEntryUserRelLocalService.addAccountEntryUserRel(
+			_seoStudioAccountEntry.getAccountEntryId(), user.getUserId());
 
 		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
@@ -597,6 +820,37 @@ public class AgentDefinitionResourceTest
 		}
 	}
 
+	private void _testGetAgentDefinitionsPageWithSort() throws Exception {
+
+		// Date created
+
+		_testGetAgentDefinitionsPageWithSort("dateCreated");
+
+		// Date modified
+
+		_testGetAgentDefinitionsPageWithSort("dateModified");
+	}
+
+	private void _testGetAgentDefinitionsPageWithSort(String sortField)
+		throws Exception {
+
+		Page<AgentDefinition> ascPage =
+			agentDefinitionResource.getAgentDefinitionsPage(
+				null, null, Pagination.of(1, 10), sortField + ":asc");
+
+		Page<AgentDefinition> descPage =
+			agentDefinitionResource.getAgentDefinitionsPage(
+				null, null, Pagination.of(1, 10), sortField + ":desc");
+
+		List<AgentDefinition> agentDefinitions = ListUtil.fromCollection(
+			descPage.getItems());
+
+		Collections.reverse(agentDefinitions);
+
+		assertEquals(
+			(List<AgentDefinition>)ascPage.getItems(), agentDefinitions);
+	}
+
 	private static AccountEntry _accountEntry;
 
 	@Inject
@@ -614,12 +868,47 @@ public class AgentDefinitionResourceTest
 
 	private static String _originalName;
 	private static PermissionChecker _originalPermissionChecker;
+	private static AccountEntry _seoStudioAccountEntry;
 
 	@Inject
 	private static SiteInitializerRegistry _siteInitializerRegistry;
 
 	private static final List<AgentDefinition> _systemAgentDefinitions =
 		List.of(
+			new AgentDefinition() {
+				{
+					active = true;
+					externalReferenceCode = "L_AUTO_CATEGORIZE";
+					inputVariables = new Variable[] {
+						new Variable() {
+							{
+								name = "candidateCategories";
+								type = "string";
+							}
+						},
+						new Variable() {
+							{
+								name = "content";
+								type = "string";
+							}
+						},
+						new Variable() {
+							{
+								name = "count";
+								type = "string";
+							}
+						}
+					};
+					outputVariable = new Variable() {
+						{
+							name = "suggestedCategories";
+							type = "string";
+						}
+					};
+					version = 1;
+					workflowDefinitionName = "Auto Categorize";
+				}
+			},
 			new AgentDefinition() {
 				{
 					active = true;
@@ -675,6 +964,40 @@ public class AgentDefinitionResourceTest
 					workflowDefinitionName =
 						WorkflowDefinitionConstants.
 							NAME_FIX_SPELLING_AND_GRAMMAR;
+				}
+			},
+			new AgentDefinition() {
+				{
+					active = true;
+					externalReferenceCode = "L_GENERATE_TAGS";
+					inputVariables = new Variable[] {
+						new Variable() {
+							{
+								name = "content";
+								type = "string";
+							}
+						},
+						new Variable() {
+							{
+								name = "count";
+								type = "string";
+							}
+						},
+						new Variable() {
+							{
+								name = "existingTags";
+								type = "string";
+							}
+						}
+					};
+					outputVariable = new Variable() {
+						{
+							name = "suggestedTags";
+							type = "string";
+						}
+					};
+					version = 1;
+					workflowDefinitionName = "Generate Tags";
 				}
 			},
 			new AgentDefinition() {
@@ -776,6 +1099,56 @@ public class AgentDefinitionResourceTest
 					workflowDefinitionName =
 						WorkflowDefinitionConstants.NAME_MAKE_SHORTER;
 				}
+			},
+			new AgentDefinition() {
+				{
+					active = true;
+					externalReferenceCode = "L_SEO_STUDIO_TITLE_GENERATOR";
+					inputVariables = new Variable[] {
+						new Variable() {
+							{
+								name = "pageContent";
+								type = "string";
+							}
+						}
+					};
+					outputVariable = new Variable() {
+						{
+							name = "titleTag";
+							type = "string";
+						}
+					};
+					version = 1;
+					workflowDefinitionName = "SEO Studio Title Generator";
+				}
+			},
+			new AgentDefinition() {
+				{
+					active = false;
+					externalReferenceCode = "L_SITE_BUILDER";
+					inputVariables = new Variable[] {
+						new Variable() {
+							{
+								name = "generationExternalReferenceCode";
+								type = "string";
+							}
+						},
+						new Variable() {
+							{
+								name = "request";
+								type = "string";
+							}
+						}
+					};
+					outputVariable = new Variable() {
+						{
+							name = "output";
+							type = "string";
+						}
+					};
+					version = 1;
+					workflowDefinitionName = "Site Builder";
+				}
 			});
 
 	@Inject
@@ -783,9 +1156,6 @@ public class AgentDefinitionResourceTest
 
 	@Inject(filter = "object.entry.manager.storage.type=default")
 	private ObjectEntryManager _objectEntryManager;
-
-	@Inject
-	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

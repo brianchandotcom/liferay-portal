@@ -564,6 +564,13 @@ describe('odata', () => {
 			testConversionToAndFrom(testQuery);
 		});
 
+		it('should be able to translate a single-type behavior query (applicationId eq / eventId eq) to map and back to string', () => {
+			const testQuery =
+				"(activities.filterByCount(filter='(applicationId eq ''Document'' and eventId eq ''documentDownloaded'' and day gt ''last24Hours'')',operator='ge',value=1))";
+
+			testConversionToAndFrom(testQuery);
+		});
+
 		it('should be able to translate a query string with "between" to a map and back to a string', () => {
 			const testQuery = "(between(date,'2020-2-2','2020-2-3'))";
 

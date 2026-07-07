@@ -331,8 +331,8 @@ describe('utils', () => {
 	});
 
 	describe('findPropertyByCriterion', () => {
-		it('should return the view asset Property when provided with a view asset Criterion', () => {
-			const criterion = data.generateCriterion({
+		const makeBehaviorCriterion = (activityKey) =>
+			data.generateCriterion({
 				operatorName: ActivitiesFilterByCount,
 				propertyName: ACTIVITY_KEY,
 				value: fromJS({
@@ -343,7 +343,7 @@ describe('utils', () => {
 							{
 								operatorName: EQ,
 								propertyName: ACTIVITY_KEY,
-								value: 'Blog#viewAsset#123123',
+								value: activityKey,
 							},
 							{
 								operatorName: GT,
@@ -357,13 +357,28 @@ describe('utils', () => {
 				}),
 			});
 
-			const property = utils.findPropertyByCriterion(criterion);
+		// Stored segments use application-specific eventIds; each must map back
+		// to its generic behavior property so the criterion still resolves.
 
-			expect(property).toBeInstanceOf(Property);
-			expect(property.name).toBe('viewAsset');
-			expect(property.propertyKey).toBe('web');
-			expect(property.type).toBe('behavior');
-		});
+		it.each([
+			['Page#pageViewed#123123', 'view'],
+			['WebContent#webContentViewed#123123', 'view'],
+			['Blog#blogViewed#123123', 'view'],
+			['Document#documentDownloaded#123123', 'download'],
+			['Form#formSubmitted#123123', 'submit'],
+		])(
+			'should map the stored activityKey %s back to the %s behavior property',
+			(activityKey, expectedName) => {
+				const property = utils.findPropertyByCriterion(
+					makeBehaviorCriterion(activityKey)
+				);
+
+				expect(property).toBeInstanceOf(Property);
+				expect(property.name).toBe(expectedName);
+				expect(property.propertyKey).toBe('web');
+				expect(property.type).toBe('behavior');
+			}
+		);
 
 		it('should return the account name Property when provided with an account name Criterion', () => {
 			const criterion = data.generateCriterion({

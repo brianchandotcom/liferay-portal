@@ -25,8 +25,7 @@ export enum EventNames {
 	Download = 'download',
 	Impression = 'impression',
 	Submit = 'submit',
-	ViewAsset = 'viewAsset',
-	ViewPage = 'viewPage',
+	View = 'view',
 }
 
 export enum AssetTypes {

@@ -22,11 +22,12 @@ function main {
 		gcp
 		gcp-infrastructure
 		gcp-infrastructure-provider
+		observability
 	)
 
 	for chart in "${charts[@]}"
 	do
-		helm dependency update --skip-refresh "${cloud_dir}/helm/${chart}"
+		helm dependency update "${cloud_dir}/helm/${chart}"
 
 		helm template liferay "${cloud_dir}/helm/${chart}" | kubeconform \
 			--schema-location default \

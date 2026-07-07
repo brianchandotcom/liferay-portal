@@ -358,7 +358,7 @@ const EventInput: React.FC<IEventInputProps> = ({
 									shrink
 								>
 									{Liferay.Language.get(
-										'performed'
+										'triggered'
 									).toLowerCase()}
 								</Form.GroupItem>
 

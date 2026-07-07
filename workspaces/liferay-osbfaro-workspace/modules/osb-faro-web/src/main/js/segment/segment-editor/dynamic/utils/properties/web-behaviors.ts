@@ -28,8 +28,7 @@ const WEB_BEHAVIORS = List(
 			name: EventNames.Impression,
 		},
 		{label: Liferay.Language.get('submit'), name: EventNames.Submit},
-		{label: Liferay.Language.get('view-asset'), name: EventNames.ViewAsset},
-		{label: Liferay.Language.get('view-page'), name: EventNames.ViewPage},
+		{label: Liferay.Language.get('view'), name: EventNames.View},
 	].map(createWebProperty)
 );
 

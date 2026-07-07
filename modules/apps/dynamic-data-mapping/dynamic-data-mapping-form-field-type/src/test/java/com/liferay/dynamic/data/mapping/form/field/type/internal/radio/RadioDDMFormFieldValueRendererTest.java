@@ -64,6 +64,22 @@ public class RadioDDMFormFieldValueRendererTest {
 			"option with &amp;",
 			radioDDMFormFieldValueRenderer.render(
 				ddmFormFieldValue, LocaleUtil.US));
+
+		ddmForm = DDMFormTestUtil.createDDMForm();
+
+		ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(ddmForm);
+
+		ddmFormFieldValue = DDMFormValuesTestUtil.createDDMFormFieldValue(
+			"Radio", new UnlocalizedValue("value 1"));
+
+		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
+
+		Assert.assertNull(ddmFormFieldValue.getDDMFormField());
+
+		Assert.assertEquals(
+			"value 1",
+			radioDDMFormFieldValueRenderer.render(
+				ddmFormFieldValue, LocaleUtil.US));
 	}
 
 }

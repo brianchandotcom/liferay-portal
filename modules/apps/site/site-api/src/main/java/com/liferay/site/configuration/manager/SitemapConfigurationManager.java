@@ -20,6 +20,9 @@ public interface SitemapConfigurationManager {
 	public Long[] getCompanySitemapObjectDefinitionIds(long companyId)
 		throws ConfigurationException;
 
+	public long getXMLSitemapRegenerationDelay(long companyId)
+		throws ConfigurationException;
+
 	public boolean includeCategoriesCompanyEnabled(long companyId)
 		throws ConfigurationException;
 
@@ -36,6 +39,9 @@ public interface SitemapConfigurationManager {
 		throws ConfigurationException;
 
 	public boolean includeWebContentGroupEnabled(long companyId, long groupId)
+		throws ConfigurationException;
+
+	public boolean indexModeAssetTypeCompanyEnabled(long companyId)
 		throws ConfigurationException;
 
 	public boolean isObjectDefinitionCompanyIncluded(

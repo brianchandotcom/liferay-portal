@@ -21,6 +21,7 @@ import {
 } from './constants';
 import {Criteria, Criterion, CriterionGroup, Operator} from './types';
 import {EntityType, ReferencedEntities} from '../context/referencedObjects';
+import {getActionFromEventId} from './activity-keys';
 import {Event} from 'event-analysis/utils/types';
 import {every, isBoolean, isString, isUndefined} from 'lodash';
 import {FieldContexts, FieldOwnerTypes} from 'shared/util/constants';
@@ -281,15 +282,43 @@ export const findPropertyByCriterion = (
 			operatorName as unknown as CustomFunctionOperators | NotOperators
 		)
 	) {
-		const {eventId = propertyName} = parseActivityKey(
-			(value as Map<string, any>).getIn(
-				['criterionGroup', 'items', 0, 'value'],
-				''
-			)
+		const items = (value as Map<string, any>).getIn([
+			'criterionGroup',
+			'items',
+		]) as any;
+
+		const eventIdItem = items?.find?.(
+			(item: any) => item.get?.('propertyName') === 'eventId'
 		);
 
+		let eventId;
+
+		if (eventIdItem) {
+			const eventIds = eventIdItem.get('value');
+			const eventIdArray = eventIds?.toJS?.() ?? eventIds;
+
+			eventId = Array.isArray(eventIdArray)
+				? eventIdArray[0]
+				: eventIdArray;
+		}
+		else {
+			const activityKeyValue =
+				(value as Map<string, any>).getIn(
+					['criterionGroup', 'items', 0, 'value'],
+					''
+				) ||
+				(value as Map<string, any>).getIn(
+					['criterionGroup', 'items', 0, 'items', 0, 'value'],
+					''
+				);
+
+			eventId = parseActivityKey(activityKeyValue).eventId;
+		}
+
+		const action = getActionFromEventId(eventId || propertyName);
+
 		return WEB_BEHAVIORS.find(
-			(property: Property | undefined) => property?.name === eventId
+			(property: Property | undefined) => property?.name === action
 		);
 	}
 	else if (

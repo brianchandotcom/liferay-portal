@@ -701,12 +701,25 @@ export const decodeValueFromCriteria = (criteria: Criteria) => {
 				newCriteria.value = decodeValue(newCriteria.value);
 			}
 			else if (newCriteria.value?._map) {
-				newCriteria.value = setPropertyValue(
+				const firstItemValue = getPropertyValue(
 					newCriteria.value,
 					'value',
-					0,
-					decodeValue(getPropertyValue(newCriteria.value, 'value', 0))
+					0
 				);
+
+				// Only the first item's value is a decodable entity id (an
+				// activityKey, vocabulary, or tag id). A vocabulary/tag
+				// criterion leads with an applicationId array, whose value must
+				// not be run through URI decoding.
+
+				if (typeof firstItemValue === 'string') {
+					newCriteria.value = setPropertyValue(
+						newCriteria.value,
+						'value',
+						0,
+						decodeValue(firstItemValue)
+					);
+				}
 			}
 		}
 
@@ -739,7 +752,7 @@ const buildInnerFilterItems = (
 ): {
 	entityId: string;
 	items: Criterion[];
-	matchedType: RemoteCriterionType;
+	matchedType: RemoteCriterionType | undefined;
 } | null => {
 	let matchedType: RemoteCriterionType | undefined;
 	let entityId = '';
@@ -767,33 +780,52 @@ const buildInnerFilterItems = (
 		break;
 	}
 
-	if (!matchedType) {
+	const appIdInMatch = innerFilter.match(/applicationId in \(([^)]+)\)/);
+	const eventIdInMatch = innerFilter.match(/eventId in \(([^)]+)\)/);
+	const appIdEqMatch = innerFilter.match(/applicationId eq '([^']+)'/);
+	const eventIdEqMatch = innerFilter.match(/eventId eq '([^']+)'/);
+
+	// Bail only when the filter matches neither a registered remote criterion
+	// type (vocabulary/tag, which list applicationId/eventId with `in`) nor a
+	// single-type behavior (applicationId/eventId with `eq`) nor a specific
+	// asset (activityKey). A behavior carries no entity id but must still
+	// round-trip.
+
+	if (
+		!matchedType &&
+		!(appIdInMatch && eventIdInMatch) &&
+		!(appIdEqMatch && eventIdEqMatch)
+	) {
 		return null;
 	}
 
-	const items: Criterion[] = [
-		{
-			operatorName: RelationalOperators.EQ,
-			propertyName: matchedType.idProperty,
-			rowId: generateRowId(),
-			touched: false,
-			valid: true,
-			value: entityId,
-		} as unknown as Criterion,
-		{
-			operatorName: RelationalOperators.EQ,
-			propertyName: matchedType.nameProperty,
-			rowId: generateRowId(),
-			touched: false,
-			valid: true,
-			value: entityName,
-		} as unknown as Criterion,
-	];
+	const items: Criterion[] = [];
 
-	const appIdMatch = innerFilter.match(/applicationId in \(([^)]+)\)/);
-	const eventIdMatch = innerFilter.match(/eventId in \(([^)]+)\)/);
+	if (matchedType) {
+		items.push(
+			{
+				operatorName: RelationalOperators.EQ,
+				propertyName: matchedType.idProperty,
+				rowId: generateRowId(),
+				touched: false,
+				valid: true,
+				value: entityId,
+			} as unknown as Criterion,
+			{
+				operatorName: RelationalOperators.EQ,
+				propertyName: matchedType.nameProperty,
+				rowId: generateRowId(),
+				touched: false,
+				valid: true,
+				value: entityName,
+			} as unknown as Criterion
+		);
+	}
 
-	if (appIdMatch && eventIdMatch) {
+	if (appIdInMatch && eventIdInMatch) {
+
+		// A vocabulary/tag criterion lists one or more applicationIds/eventIds.
+
 		const parseIds = (s: string) =>
 			s.split(',').map((id) => id.trim().replace(/^'|'$/g, ''));
 
@@ -803,7 +835,7 @@ const buildInnerFilterItems = (
 			rowId: generateRowId(),
 			touched: false,
 			valid: true,
-			value: parseIds(appIdMatch[1]),
+			value: parseIds(appIdInMatch[1]),
 		} as unknown as Criterion);
 
 		items.push({
@@ -812,7 +844,29 @@ const buildInnerFilterItems = (
 			rowId: generateRowId(),
 			touched: false,
 			valid: true,
-			value: parseIds(eventIdMatch[1]),
+			value: parseIds(eventIdInMatch[1]),
+		} as unknown as Criterion);
+	}
+	else if (appIdEqMatch && eventIdEqMatch) {
+
+		// A single-type behavior targets one applicationId/eventId.
+
+		items.push({
+			operatorName: RelationalOperators.EQ,
+			propertyName: 'applicationId',
+			rowId: generateRowId(),
+			touched: false,
+			valid: true,
+			value: appIdEqMatch[1],
+		} as unknown as Criterion);
+
+		items.push({
+			operatorName: RelationalOperators.EQ,
+			propertyName: 'eventId',
+			rowId: generateRowId(),
+			touched: false,
+			valid: true,
+			value: eventIdEqMatch[1],
 		} as unknown as Criterion);
 	}
 	else {
@@ -830,7 +884,7 @@ const buildInnerFilterItems = (
 		}
 	}
 
-	if (matchedType.supportsCategories) {
+	if (matchedType?.supportsCategories) {
 		const catRegex =
 			/\(categories\/id eq '([^']+)' and categories\/name eq '([^']+)'\)/g;
 		const categoryItems: Array<{id: string; name: string}> = [];
@@ -910,10 +964,16 @@ const parseRemoteFilterByCount = (
 		})
 	);
 
+	// A single-type behavior has no matched remote criterion type: it filters by
+	// activity, so use the activities operator and let the property resolve from
+	// its eventId (the entity id is empty).
+
 	return wrapInCriteriaGroup([
 		{
-			operatorName: matchedType.positiveOperator,
-			propertyName: entityId,
+			operatorName:
+				matchedType?.positiveOperator ??
+				CustomFunctionOperators.ActivitiesFilterByCount,
+			propertyName: matchedType ? entityId : items[0]?.propertyName ?? '',
 			rowId: generateRowId(),
 			touched: false,
 			valid: true,

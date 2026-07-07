@@ -41,6 +41,8 @@ import com.liferay.osb.faro.web.internal.controller.contacts.DataSourceFaroContr
 import com.liferay.osb.faro.web.internal.controller.contacts.FieldMappingFaroController;
 import com.liferay.osb.faro.web.internal.exception.FaroException;
 import com.liferay.osb.faro.web.internal.exception.FaroValidationException;
+import com.liferay.osb.faro.web.internal.helper.ProjectUsageHelper;
+import com.liferay.osb.faro.web.internal.model.display.contacts.DataSourceUsageMetricDisplay;
 import com.liferay.osb.faro.web.internal.model.display.contacts.JoinableProjectDisplay;
 import com.liferay.osb.faro.web.internal.model.display.contacts.ProjectDisplay;
 import com.liferay.osb.faro.web.internal.model.display.contacts.ProjectUsageMetricDisplay;
@@ -472,6 +474,20 @@ public class ProjectFaroController extends BaseFaroController {
 		faroProject.setRecommendationsEnabled(true);
 
 		_faroProjectLocalService.updateFaroProject(faroProject);
+	}
+
+	@GET
+	@Path("/usage/data-sources")
+	@RolesAllowed(RoleConstants.SITE_ADMINISTRATOR)
+	public Page<DataSourceUsageMetricDisplay> getDataSourceUsageMetricDisplays(
+			@QueryParam("endDate") String endDateString,
+			@DefaultValue("1") @QueryParam("page") int page,
+			@DefaultValue("15") @QueryParam("pageSize") int pageSize,
+			@QueryParam("startDate") String startDateString)
+		throws Exception {
+
+		return _projectUsageHelper.getDataSourceUsageMetricDisplays(
+			endDateString, page, pageSize, startDateString);
 	}
 
 	@GET
@@ -1756,6 +1772,9 @@ public class ProjectFaroController extends BaseFaroController {
 
 	@Reference
 	private PortalExecutorManager _portalExecutorManager;
+
+	@Reference
+	private ProjectUsageHelper _projectUsageHelper;
 
 	@Reference(
 		policy = ReferencePolicy.DYNAMIC,

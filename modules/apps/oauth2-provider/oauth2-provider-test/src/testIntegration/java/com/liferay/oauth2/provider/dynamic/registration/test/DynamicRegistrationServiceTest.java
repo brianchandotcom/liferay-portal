@@ -333,8 +333,7 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 	public void testRegisterInOpenModeEnforcesAllowedHosts() throws Exception {
 		String allowedHost = RandomTestUtil.randomString();
 
-		_testRegisterInOpenModeEnforcesAllowedHosts(
-			allowedHost, 201, allowedHost);
+		// Allow when the bracketed IPv6 host is compared with or without a port
 
 		_testRegisterInOpenModeEnforcesAllowedHosts(
 			allowedHost, 201,
@@ -345,9 +344,18 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 				"[", allowedHost, "]:", PortalUtil.getPortalServerPort(false)),
 			201, allowedHost);
 
+		// Allow when the port is present on the request host
+
 		_testRegisterInOpenModeEnforcesAllowedHosts(
 			allowedHost, 201,
 			allowedHost + ":" + PortalUtil.getPortalServerPort(false));
+
+		// Allow when the request host matches exactly
+
+		_testRegisterInOpenModeEnforcesAllowedHosts(
+			allowedHost, 201, allowedHost);
+
+		// Deny when the request host does not match
 
 		_testRegisterInOpenModeEnforcesAllowedHosts(
 			allowedHost, 403, RandomTestUtil.randomString());
@@ -403,6 +411,9 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 
 	@Test
 	public void testRegisterInOpenModeWithInvalidRequest() throws Exception {
+
+		// Deny when the grant type is not allowed
+
 		_testRegisterInOpenModeWithInvalidRequest(
 			JSONUtil.put(
 				"client_name", RandomTestUtil.randomString()
@@ -415,6 +426,45 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 			"invalid_client_metadata", 400,
 			"dynamic.registration.allowed.grant.types",
 			new String[] {OAuthConstants.CLIENT_CREDENTIALS_GRANT});
+
+		// Deny when the initial access token is missing
+
+		_testRegisterInOpenModeWithInvalidRequest(
+			JSONUtil.put(
+				"client_name", RandomTestUtil.randomString()
+			).toString(),
+			null, 401, "dynamic.registration.require.initial.access.token",
+			true);
+
+		// Deny when the redirect URI does not match the allowed patterns
+
+		_testRegisterInOpenModeWithInvalidRequest(
+			_createOpenRegistrationJSONObject(
+				"https://attacker.test/callback", true
+			).toString(),
+			"invalid_redirect_uri", 400,
+			"dynamic.registration.allowed.redirect.uri.patterns",
+			new String[] {"https://*.example.org/*"});
+		_testRegisterInOpenModeWithInvalidRequest(
+			_createOpenRegistrationJSONObject(
+				"https://attacker.test/foo.example.org/callback", true
+			).toString(),
+			"invalid_redirect_uri", 400,
+			"dynamic.registration.allowed.redirect.uri.patterns",
+			new String[] {"https://*.example.org/*"});
+
+		// Deny when the redirect URI is blank
+
+		_testRegisterInOpenModeWithInvalidRequest(
+			_createOpenRegistrationJSONObject(
+				StringPool.BLANK, true
+			).toString(),
+			"invalid_redirect_uri", 400,
+			"dynamic.registration.allowed.redirect.uri.patterns",
+			new String[] {"https://*.example.org/*"});
+
+		// Deny when the scope is missing, even when all scopes are allowed
+
 		_testRegisterInOpenModeWithInvalidRequest(
 			_createOpenRegistrationJSONObject(
 				"https://" + RandomTestUtil.randomString() + ".com/callback",
@@ -432,27 +482,7 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 			"dynamic.registration.allowed.scopes",
 			new String[] {StringPool.STAR});
 
-		_testRegisterInOpenModeWithInvalidRequest(
-			_createOpenRegistrationJSONObject(
-				StringPool.BLANK, true
-			).toString(),
-			"invalid_redirect_uri", 400,
-			"dynamic.registration.allowed.redirect.uri.patterns",
-			new String[] {"https://*.example.org/*"});
-		_testRegisterInOpenModeWithInvalidRequest(
-			_createOpenRegistrationJSONObject(
-				"https://attacker.test/callback", true
-			).toString(),
-			"invalid_redirect_uri", 400,
-			"dynamic.registration.allowed.redirect.uri.patterns",
-			new String[] {"https://*.example.org/*"});
-		_testRegisterInOpenModeWithInvalidRequest(
-			_createOpenRegistrationJSONObject(
-				"https://attacker.test/foo.example.org/callback", true
-			).toString(),
-			"invalid_redirect_uri", 400,
-			"dynamic.registration.allowed.redirect.uri.patterns",
-			new String[] {"https://*.example.org/*"});
+		// Deny when the scope is not allowed
 
 		_testRegisterInOpenModeWithInvalidRequest(
 			JSONUtil.put(
@@ -465,13 +495,6 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 			).toString(),
 			"invalid_scope", 400, "dynamic.registration.allowed.scopes",
 			new String[] {"Liferay.Headless.Delivery.everything"});
-
-		_testRegisterInOpenModeWithInvalidRequest(
-			JSONUtil.put(
-				"client_name", RandomTestUtil.randomString()
-			).toString(),
-			null, 401, "dynamic.registration.require.initial.access.token",
-			true);
 	}
 
 	@Test

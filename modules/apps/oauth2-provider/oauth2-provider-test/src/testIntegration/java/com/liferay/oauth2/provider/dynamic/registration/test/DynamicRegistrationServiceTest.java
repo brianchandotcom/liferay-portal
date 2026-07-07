@@ -294,7 +294,9 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 		Invocation.Builder invocationBuilder = registerWebTarget.request();
 
 		JSONObject jsonObject = _createOpenRegistrationJSONObject(
-			"https://" + RandomTestUtil.randomString() + ".com/callback", true);
+			Http.HTTPS_WITH_SLASH + RandomTestUtil.randomString() +
+				".com/callback",
+			true);
 
 		String clientName = jsonObject.getString("client_name");
 
@@ -377,7 +379,7 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 				"post",
 				Entity.json(
 					_createOpenRegistrationJSONObject(
-						"https://" + RandomTestUtil.randomString() +
+						Http.HTTPS_WITH_SLASH + RandomTestUtil.randomString() +
 							".com/callback",
 						true
 					).toString()));
@@ -420,7 +422,8 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 			).put(
 				"redirect_uris",
 				new String[] {
-					"https://" + RandomTestUtil.randomString() + ".com/callback"
+					Http.HTTPS_WITH_SLASH + RandomTestUtil.randomString() +
+						".com/callback"
 				}
 			).toString(),
 			"invalid_client_metadata", 400,
@@ -440,7 +443,9 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 
 		_testRegisterInOpenModeWithInvalidRequest(
 			_createOpenRegistrationJSONObject(
-				"https://attacker.test/callback", true
+				Http.HTTPS_WITH_SLASH + RandomTestUtil.randomString() +
+					".com/callback",
+				true
 			).toString(),
 			"invalid_redirect_uri", 400,
 			"dynamic.registration.allowed.redirect.uri.patterns",
@@ -467,7 +472,8 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 
 		_testRegisterInOpenModeWithInvalidRequest(
 			_createOpenRegistrationJSONObject(
-				"https://" + RandomTestUtil.randomString() + ".com/callback",
+				Http.HTTPS_WITH_SLASH + RandomTestUtil.randomString() +
+					".com/callback",
 				false
 			).toString(),
 			"invalid_client_metadata", 400,
@@ -475,7 +481,8 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 			new String[] {"Liferay.Headless.Delivery.everything"});
 		_testRegisterInOpenModeWithInvalidRequest(
 			_createOpenRegistrationJSONObject(
-				"https://" + RandomTestUtil.randomString() + ".com/callback",
+				Http.HTTPS_WITH_SLASH + RandomTestUtil.randomString() +
+					".com/callback",
 				false
 			).toString(),
 			"invalid_client_metadata", 400,
@@ -502,8 +509,10 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 		long companyId = TestPropsValues.getCompanyId();
 		WebTarget registerWebTarget = getRegisterWebTarget();
 
-		String body = _createOpenRegistrationJSONObject(
-			"https://" + RandomTestUtil.randomString() + ".com/callback", true
+		String bodyJSON = _createOpenRegistrationJSONObject(
+			Http.HTTPS_WITH_SLASH + RandomTestUtil.randomString() +
+				".com/callback",
+			true
 		).put(
 			"token_endpoint_auth_method",
 			OAuthConstants.TOKEN_ENDPOINT_AUTH_NONE
@@ -516,7 +525,7 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 			Invocation.Builder invocationBuilder = registerWebTarget.request();
 
 			Response response = invocationBuilder.method(
-				"post", Entity.json(body));
+				"post", Entity.json(bodyJSON));
 
 			Assert.assertEquals(201, response.getStatus());
 
@@ -547,7 +556,7 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 	public void testRegisterWithAuthenticationInOpenMode() throws Exception {
 		WebTarget registerWebTarget = getRegisterWebTarget();
 
-		String body = JSONUtil.put(
+		String bodyJSON = JSONUtil.put(
 			"client_name", RandomTestUtil.randomString()
 		).put(
 			"grant_types",
@@ -555,7 +564,8 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 		).put(
 			"redirect_uris",
 			new String[] {
-				"https://" + RandomTestUtil.randomString() + ".com/callback"
+				Http.HTTPS_WITH_SLASH + RandomTestUtil.randomString() +
+					".com/callback"
 			}
 		).toString();
 
@@ -569,7 +579,7 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 				_getToken(_getDynamicRegistratorOAuth2Application()));
 
 			Response response = invocationBuilder.method(
-				"post", Entity.json(body));
+				"post", Entity.json(bodyJSON));
 
 			Assert.assertEquals(201, response.getStatus());
 		}
@@ -709,7 +719,7 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 	}
 
 	private JSONObject _createOpenRegistrationJSONObject(
-		String redirectUri, boolean includeScope) {
+		String redirectURI, boolean includeScope) {
 
 		JSONObject jsonObject = JSONUtil.put(
 			"client_name", RandomTestUtil.randomString()
@@ -717,7 +727,7 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 			"grant_types",
 			new String[] {OAuthConstants.AUTHORIZATION_CODE_GRANT}
 		).put(
-			"redirect_uris", new String[] {redirectUri}
+			"redirect_uris", new String[] {redirectURI}
 		).put(
 			"response_types", new String[] {OAuthConstants.CODE_RESPONSE_TYPE}
 		);
@@ -810,7 +820,7 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 				"post",
 				Entity.json(
 					_createOpenRegistrationJSONObject(
-						"https://" + RandomTestUtil.randomString() +
+						Http.HTTPS_WITH_SLASH + RandomTestUtil.randomString() +
 							".com/callback",
 						true
 					).toString()));
@@ -825,7 +835,7 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 	}
 
 	private void _testRegisterInOpenModeWithInvalidRequest(
-			String body, String expectedError, int expectedStatus,
+			String bodyJSON, String expectedError, int expectedStatus,
 			Object... keysAndValues)
 		throws Exception {
 
@@ -839,7 +849,7 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 			Invocation.Builder invocationBuilder = registerWebTarget.request();
 
 			Response response = invocationBuilder.method(
-				"post", Entity.json(body));
+				"post", Entity.json(bodyJSON));
 
 			Assert.assertEquals(expectedStatus, response.getStatus());
 

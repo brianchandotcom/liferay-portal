@@ -23,6 +23,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -96,6 +99,41 @@ public class SharingEntryServiceTest {
 	public void testAddSharingEntry() throws Exception {
 		_testAddSharingEntryForBasicDocumentWithViewAddsDownloadAction();
 		_testAddSharingEntryForBasicWebContentWithViewDoesNotAddDownloadAction();
+	}
+
+	@Test
+	public void testContainsSharePermissionAsCMSAdministratorWithoutPrincipal()
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			_getCMSBasicDocumentObjectDefinition();
+
+		ObjectEntry objectEntry = _addCMSBasicDocumentObjectEntry(
+			objectDefinition);
+
+		User user = UserTestUtil.addCompanyUser(
+			_companyLocalService.getCompany(TestPropsValues.getCompanyId()),
+			RoleConstants.CMS_ADMINISTRATOR);
+
+		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
+			user);
+
+		String name = PrincipalThreadLocal.getName();
+
+		try {
+			PrincipalThreadLocal.setName(null);
+
+			Assert.assertTrue(
+				_sharingPermission.containsSharePermission(
+					permissionChecker,
+					_portal.getClassNameId(objectDefinition.getClassName()),
+					objectEntry.getObjectEntryId(), _depotEntry.getGroupId()));
+		}
+		finally {
+			PrincipalThreadLocal.setName(name);
+
+			_userLocalService.deleteUser(user);
+		}
 	}
 
 	private ObjectEntry _addCMSBasicDocumentObjectEntry(
@@ -286,6 +324,9 @@ public class SharingEntryServiceTest {
 
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Inject
+	private PermissionCheckerFactory _permissionCheckerFactory;
 
 	@Inject
 	private Portal _portal;

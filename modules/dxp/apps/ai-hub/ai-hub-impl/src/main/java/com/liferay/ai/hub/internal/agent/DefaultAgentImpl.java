@@ -36,7 +36,7 @@ public class DefaultAgentImpl implements DefaultAgent {
 				agentContext.getInputVariableNames(),
 				inputVariableName -> new AgentArgument(
 					String.class, inputVariableName)));
-		internalAgentImpl.setAsync(agentContext.getAsynchronous());
+		internalAgentImpl.setAsync(agentContext.isAsynchronous());
 		internalAgentImpl.setName(
 			agentContext.getAgentDefinitionExternalReferenceCode());
 		internalAgentImpl.setOutBoundEventName(

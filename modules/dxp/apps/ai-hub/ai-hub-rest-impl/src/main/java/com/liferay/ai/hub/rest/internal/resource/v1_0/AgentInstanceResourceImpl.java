@@ -108,7 +108,7 @@ public class AgentInstanceResourceImpl extends BaseAgentInstanceResourceImpl {
 					agentDefinition::getExternalReferenceCode);
 				setExternalReferenceCode(
 					() -> {
-						if (agentContext.getAsynchronous()) {
+						if (agentContext.isAsynchronous()) {
 							return String.valueOf(result);
 						}
 
@@ -116,7 +116,7 @@ public class AgentInstanceResourceImpl extends BaseAgentInstanceResourceImpl {
 					});
 				setOutput(
 					() -> {
-						if (agentContext.getAsynchronous()) {
+						if (agentContext.isAsynchronous()) {
 							return null;
 						}
 

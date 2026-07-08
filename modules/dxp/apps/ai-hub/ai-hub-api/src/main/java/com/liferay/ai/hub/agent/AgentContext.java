@@ -43,10 +43,6 @@ public class AgentContext {
 		return _agentDefinitionExternalReferenceCode;
 	}
 
-	public boolean getAsynchronous() {
-		return _asynchronous;
-	}
-
 	public String getChatbotExternalReferenceCode() {
 		return _chatbotExternalReferenceCode;
 	}
@@ -97,6 +93,10 @@ public class AgentContext {
 
 	public String getWorkflowDefinitionName() {
 		return _workflowDefinitionName;
+	}
+
+	public boolean isAsynchronous() {
+		return _asynchronous;
 	}
 
 	public static class Builder {

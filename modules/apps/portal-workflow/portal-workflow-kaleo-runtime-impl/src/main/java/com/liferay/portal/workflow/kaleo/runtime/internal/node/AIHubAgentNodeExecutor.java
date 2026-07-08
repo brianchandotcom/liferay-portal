@@ -85,7 +85,7 @@ public class AIHubAgentNodeExecutor extends BaseNodeExecutor {
 			new CompanyInheritableThreadLocalCallable<>(
 				() -> {
 					try {
-						_invokeAgent(currentKaleoNode, executionContext);
+						_postAgentInstance(currentKaleoNode, executionContext);
 					}
 					catch (Exception exception) {
 						_log.error(
@@ -124,21 +124,6 @@ public class AIHubAgentNodeExecutor extends BaseNodeExecutor {
 					executionContext.getServiceContext())));
 	}
 
-	private JSONObject _getAuthorizationTokenJSONObject(Company company)
-		throws Exception {
-
-		Http.Options options = new Http.Options();
-
-		options.addHeader(HttpHeaders.ACCEPT, ContentTypes.APPLICATION_JSON);
-		options.setLocation(
-			company.getPortalURL(0) +
-				"/o/ai-hub-cell/v1.0/authorization-tokens");
-		options.setMethod(Http.Method.POST);
-		options.setTimeout(10000);
-
-		return _getResponseBodyJSONObject(options);
-	}
-
 	private JSONObject _getResponseBodyJSONObject(Http.Options options)
 		throws Exception {
 
@@ -159,7 +144,7 @@ public class AIHubAgentNodeExecutor extends BaseNodeExecutor {
 		return _jsonFactory.createJSONObject(responseBody);
 	}
 
-	private void _invokeAgent(
+	private void _postAgentInstance(
 			KaleoNode currentKaleoNode, ExecutionContext executionContext)
 		throws Exception {
 
@@ -173,10 +158,8 @@ public class AIHubAgentNodeExecutor extends BaseNodeExecutor {
 		KaleoInstanceToken kaleoInstanceToken =
 			executionContext.getKaleoInstanceToken();
 
-		JSONObject authorizationTokenJSONObject =
-			_getAuthorizationTokenJSONObject(
-				_companyLocalService.getCompany(
-					kaleoInstanceToken.getCompanyId()));
+		JSONObject authorizationTokenJSONObject = _postAuthorizationToken(
+			_companyLocalService.getCompany(kaleoInstanceToken.getCompanyId()));
 
 		options.addHeader(
 			HttpHeaders.AUTHORIZATION,
@@ -256,6 +239,21 @@ public class AIHubAgentNodeExecutor extends BaseNodeExecutor {
 			kaleoInstanceToken.getCompanyId(), kaleoInstanceToken.getUserId(),
 			kaleoInstanceToken.getKaleoInstanceTokenId(),
 			kaleoTransition.getName(), workflowContext, false);
+	}
+
+	private JSONObject _postAuthorizationToken(Company company)
+		throws Exception {
+
+		Http.Options options = new Http.Options();
+
+		options.addHeader(HttpHeaders.ACCEPT, ContentTypes.APPLICATION_JSON);
+		options.setLocation(
+			company.getPortalURL(0) +
+				"/o/ai-hub-cell/v1.0/authorization-tokens");
+		options.setMethod(Http.Method.POST);
+		options.setTimeout(10000);
+
+		return _getResponseBodyJSONObject(options);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

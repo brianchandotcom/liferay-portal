@@ -7,9 +7,15 @@ package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
 
 import java.util.Map;
 
@@ -25,6 +31,27 @@ public class AIAssistantButtonComponentSectionFragmentRenderer
 	@Override
 	public String getCollectionKey() {
 		return "sections";
+	}
+
+	@Override
+	public void render(
+			FragmentRendererContext fragmentRendererContext,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws IOException {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				themeDisplay.getCompanyId(), "LPD-62272")) {
+
+			return;
+		}
+
+		super.render(
+			fragmentRendererContext, httpServletRequest, httpServletResponse);
 	}
 
 	@Override

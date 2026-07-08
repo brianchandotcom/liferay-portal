@@ -70,7 +70,7 @@ public class CETManagerImplTest {
 	}
 
 	private void _testGetCETIsCached() throws Exception {
-		String url = RandomTestUtil.randomString();
+		String url = "http://" + RandomTestUtil.randomString();
 
 		ClientExtensionEntry clientExtensionEntry = _addClientExtensionEntry(
 			ClientExtensionEntryConstants.TYPE_GLOBAL_CSS, url);
@@ -94,13 +94,13 @@ public class CETManagerImplTest {
 	private void _testGetCETIsRebuiltAfterUpdate() throws Exception {
 		ClientExtensionEntry clientExtensionEntry = _addClientExtensionEntry(
 			ClientExtensionEntryConstants.TYPE_GLOBAL_CSS,
-			RandomTestUtil.randomString());
+			"http://" + RandomTestUtil.randomString());
 
 		CET cet1 = _cetManager.getCET(
 			TestPropsValues.getCompanyId(),
 			clientExtensionEntry.getExternalReferenceCode());
 
-		String url = RandomTestUtil.randomString();
+		String url = "http://" + RandomTestUtil.randomString();
 
 		clientExtensionEntry.setTypeSettings(
 			UnicodePropertiesBuilder.create(
@@ -130,11 +130,11 @@ public class CETManagerImplTest {
 		ClientExtensionEntry globalCSSClientExtensionEntry =
 			_addClientExtensionEntry(
 				ClientExtensionEntryConstants.TYPE_GLOBAL_CSS,
-				RandomTestUtil.randomString());
+				"http://" + RandomTestUtil.randomString());
 		ClientExtensionEntry globalJSClientExtensionEntry =
 			_addClientExtensionEntry(
 				ClientExtensionEntryConstants.TYPE_GLOBAL_JS,
-				RandomTestUtil.randomString());
+				"http://" + RandomTestUtil.randomString());
 
 		List<CET> cets = _cetManager.getCETs(
 			TestPropsValues.getCompanyId(), null,

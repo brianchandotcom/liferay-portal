@@ -101,11 +101,11 @@ export default function LineChart({
 		return series.map((line) => line.description ?? line.label).join('. ');
 	}, [description, series]);
 
-	// Precompute the non-null point indices per series once per geometry, so the
+	// Precompute the non-null point indexes per series once per geometry, so the
 	// keyboard, legend and tabbable lookups stay O(1) instead of re-reducing on
 	// every focus and hover change.
 
-	const allFiniteIndices = useMemo(
+	const allFiniteIndexes = useMemo(
 		() =>
 			geometry.series.map((seriesLayout) =>
 				seriesLayout.points.reduce<number[]>(
@@ -122,9 +122,9 @@ export default function LineChart({
 		[geometry]
 	);
 
-	const finiteIndices = useCallback(
-		(seriesIndex: number): number[] => allFiniteIndices[seriesIndex] ?? [],
-		[allFiniteIndices]
+	const finiteIndexes = useCallback(
+		(seriesIndex: number): number[] => allFiniteIndexes[seriesIndex] ?? [],
+		[allFiniteIndexes]
 	);
 
 	const tabbable = useMemo<ActivePoint | null>(() => {
@@ -133,15 +133,15 @@ export default function LineChart({
 		}
 
 		for (let seriesIndex = 0; seriesIndex < series.length; seriesIndex++) {
-			const indices = finiteIndices(seriesIndex);
+			const indexes = finiteIndexes(seriesIndex);
 
-			if (indices.length) {
-				return {categoryIndex: indices[0], seriesIndex};
+			if (indexes.length) {
+				return {categoryIndex: indexes[0], seriesIndex};
 			}
 		}
 
 		return null;
-	}, [active, finiteIndices, series.length]);
+	}, [active, finiteIndexes, series.length]);
 
 	const setPointRef = useCallback(
 		(
@@ -197,19 +197,19 @@ export default function LineChart({
 
 	const nearestFinite = useCallback(
 		(seriesIndex: number, categoryIndex: number): number | null => {
-			const indices = finiteIndices(seriesIndex);
+			const indexes = finiteIndexes(seriesIndex);
 
-			if (!indices.length) {
+			if (!indexes.length) {
 				return null;
 			}
 
-			return indices.reduce((best, index) =>
+			return indexes.reduce((best, index) =>
 				Math.abs(index - categoryIndex) < Math.abs(best - categoryIndex)
 					? index
 					: best
 			);
 		},
-		[finiteIndices]
+		[finiteIndexes]
 	);
 
 	const onKeyDownPoint = useCallback(
@@ -218,8 +218,8 @@ export default function LineChart({
 			categoryIndex: number,
 			event: React.KeyboardEvent
 		) => {
-			const indices = finiteIndices(seriesIndex);
-			const position = indices.indexOf(categoryIndex);
+			const indexes = finiteIndexes(seriesIndex);
+			const position = indexes.indexOf(categoryIndex);
 
 			const moveSeries = (direction: 1 | -1) => {
 				for (
@@ -245,11 +245,11 @@ export default function LineChart({
 				case 'ArrowRight':
 					focusPoint(
 						seriesIndex,
-						indices[Math.min(position + 1, indices.length - 1)]
+						indexes[Math.min(position + 1, indexes.length - 1)]
 					);
 					break;
 				case 'ArrowLeft':
-					focusPoint(seriesIndex, indices[Math.max(position - 1, 0)]);
+					focusPoint(seriesIndex, indexes[Math.max(position - 1, 0)]);
 					break;
 				case 'ArrowDown':
 					moveSeries(1);
@@ -258,10 +258,10 @@ export default function LineChart({
 					moveSeries(-1);
 					break;
 				case 'Home':
-					focusPoint(seriesIndex, indices[0]);
+					focusPoint(seriesIndex, indexes[0]);
 					break;
 				case 'End':
-					focusPoint(seriesIndex, indices[indices.length - 1]);
+					focusPoint(seriesIndex, indexes[indexes.length - 1]);
 					break;
 				default:
 					handled = false;
@@ -271,7 +271,7 @@ export default function LineChart({
 				event.preventDefault();
 			}
 		},
-		[finiteIndices, focusPoint, nearestFinite, series.length]
+		[finiteIndexes, focusPoint, nearestFinite, series.length]
 	);
 
 	return (

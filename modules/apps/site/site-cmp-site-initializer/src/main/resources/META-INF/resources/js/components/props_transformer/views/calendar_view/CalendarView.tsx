@@ -106,10 +106,12 @@ export default function CalendarView({
 	const unscheduledTasks = useMemo(
 		() =>
 			items
-				.filter((item) => !item.embedded?.dueDate)
 				.map((item) => item.embedded)
-				.filter(Boolean),
-		[items]
+				.filter(Boolean)
+				.filter(
+					(task) => !(rescheduledDueDates[task.id] ?? task.dueDate)
+				),
+		[items, rescheduledDueDates]
 	);
 
 	// The panel should push the whole FDS container aside, not just the
@@ -354,6 +356,35 @@ export default function CalendarView({
 				datesSet={({view}) => setTitle(view.title)}
 				dayHeaderFormat={{weekday: 'long'}}
 				dayMaxEvents
+				drop={async (arg) => {
+					const task = unscheduledTasks.find(
+						(unscheduledTask) =>
+							String(unscheduledTask.id) ===
+							arg.draggedEl.dataset.taskId
+					);
+
+					if (!task) {
+						return;
+					}
+
+					const {error} = await patchTaskById({
+						body: {dueDate: arg.dateStr},
+						taskId: String(task.id),
+					});
+
+					if (!error) {
+						setRescheduledDueDates((dueDates) => ({
+							...dueDates,
+							[task.id]: arg.dateStr,
+						}));
+
+						displayDueDateSuccessToast(task.title);
+					}
+					else {
+						displayErrorToast(error);
+					}
+				}}
+				droppable
 				eventContent={(arg) => (
 					<CalendarTaskCard
 						itemsActions={itemsActions}

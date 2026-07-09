@@ -5,9 +5,12 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.File;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import org.mockito.InOrder;
@@ -18,6 +21,31 @@ import org.mockito.Mockito;
  */
 public class WorkspaceGitRepositoryTest
 	extends com.liferay.jenkins.results.parser.Test {
+
+	@Test
+	public void testIsFullDotGitDirArchiveRequiredOnlyForEE62X()
+		throws Exception {
+
+		Assert.assertTrue(
+			"A full .git dir archive is required for ee-6.2.x working dirs",
+			_isFullDotGitDirArchiveRequired(
+				_newWorkspaceGitRepository("liferay-plugins-ee-6.2.x")));
+
+		Assert.assertTrue(
+			"A full .git dir archive is required for ee-6.2.x working dirs",
+			_isFullDotGitDirArchiveRequired(
+				_newWorkspaceGitRepository("liferay-portal-ee-6.2.x")));
+
+		Assert.assertFalse(
+			"A full .git dir archive is not required for master working dirs",
+			_isFullDotGitDirArchiveRequired(
+				_newWorkspaceGitRepository("liferay-portal")));
+
+		Assert.assertFalse(
+			"A full .git dir archive is not required for 7.0.x working dirs",
+			_isFullDotGitDirArchiveRequired(
+				_newWorkspaceGitRepository("liferay-portal-7.0.x")));
+	}
 
 	@Test
 	public void testValidateSHAInRemoteGitRefFetchesBeforeContainsCheck()
@@ -68,6 +96,42 @@ public class WorkspaceGitRepositoryTest
 		).refContainsSHA(
 			localGitBranch, sha
 		);
+	}
+
+	private boolean _isFullDotGitDirArchiveRequired(
+			WorkspaceGitRepository workspaceGitRepository)
+		throws Exception {
+
+		Method method = BaseWorkspaceGitRepository.class.getDeclaredMethod(
+			"_isFullDotGitDirArchiveRequired");
+
+		method.setAccessible(true);
+
+		return (Boolean)method.invoke(workspaceGitRepository);
+	}
+
+	private WorkspaceGitRepository _newWorkspaceGitRepository(
+		String workingDirectoryName) {
+
+		GitWorkingDirectory gitWorkingDirectory = Mockito.mock(
+			GitWorkingDirectory.class);
+
+		Mockito.when(
+			gitWorkingDirectory.getWorkingDirectory()
+		).thenReturn(
+			new File(workingDirectoryName)
+		);
+
+		DefaultWorkspaceGitRepository defaultWorkspaceGitRepository =
+			Mockito.mock(DefaultWorkspaceGitRepository.class);
+
+		Mockito.when(
+			defaultWorkspaceGitRepository.getGitWorkingDirectory()
+		).thenReturn(
+			gitWorkingDirectory
+		);
+
+		return defaultWorkspaceGitRepository;
 	}
 
 	private void _validateSHAInRemoteGitRef(

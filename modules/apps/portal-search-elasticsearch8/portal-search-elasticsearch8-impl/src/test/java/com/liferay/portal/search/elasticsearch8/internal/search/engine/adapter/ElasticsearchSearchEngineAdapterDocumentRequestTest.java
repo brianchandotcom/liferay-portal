@@ -181,6 +181,70 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 	}
 
 	@Test
+	public void testExecuteBatchModeMaxBulkableDocumentRequestsExactMultiple()
+		throws Exception {
+
+		try (MockedStatic<SearchEngineHelperUtil>
+				searchEngineHelperUtilMockedStatic = Mockito.mockStatic(
+					SearchEngineHelperUtil.class)) {
+
+			ExecutorService executorService = Mockito.mock(
+				ExecutorService.class);
+
+			Mockito.doAnswer(
+				invocation -> {
+					Runnable runnable = invocation.getArgument(0);
+
+					runnable.run();
+
+					return null;
+				}
+			).when(
+				executorService
+			).execute(
+				Mockito.any(Runnable.class)
+			);
+
+			searchEngineHelperUtilMockedStatic.when(
+				SearchEngineHelperUtil::getDocumentsConsumerExecutorService
+			).thenReturn(
+				executorService
+			);
+
+			SearchEngineAdapter searchEngineAdapter = createSearchEngineAdapter(
+				_elasticsearchFixture,
+				HashMapBuilder.<String, Object>put(
+					"maxBulkableDocumentRequests", 2
+				).build());
+
+			try (SafeCloseable safeCloseable = SearchContext.openBatchMode(
+					false)) {
+
+				searchEngineAdapter.execute(_createIndexDocumentRequest("1"));
+				searchEngineAdapter.execute(_createIndexDocumentRequest("2"));
+			}
+
+			GetResponse getResponse1 = _getDocument("1");
+
+			Assert.assertTrue(getResponse1.found());
+
+			GetResponse getResponse2 = _getDocument("2");
+
+			Assert.assertTrue(getResponse2.found());
+
+			try (SafeCloseable safeCloseable = SearchContext.openBatchMode(
+					false)) {
+
+				searchEngineAdapter.execute(_createIndexDocumentRequest("3"));
+			}
+
+			GetResponse getResponse3 = _getDocument("3");
+
+			Assert.assertTrue(getResponse3.found());
+		}
+	}
+
+	@Test
 	public void testExecuteBulkDocumentRequest() throws JSONException {
 		Document document1 = new DocumentImpl();
 

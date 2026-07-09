@@ -109,10 +109,6 @@ public class AssetListFiltersUtilTest {
 			"userName", "john smith",
 			_runAndAssertCommonFieldRow(
 				_buildCommonFieldFilter("eq", "userName", userName)));
-		_assertWildcardQuery(
-			"userName", "*john smith*",
-			_runAndAssertNegatedCommonFieldRow(
-				_buildCommonFieldFilter("not-contains", "userName", userName)));
 
 		_assertTermQuery(
 			"externalReferenceCode", externalReferenceCode,
@@ -138,6 +134,7 @@ public class AssetListFiltersUtilTest {
 			"modified", true, true, "20260115000000", "20260115235959",
 			_runAndAssertCommonFieldRow(
 				_buildCommonFieldFilter("eq", "modified", "2026-01-15")));
+
 		_assertTermRangeQuery(
 			"modified", true, true, "20260115000000", "20260115235959",
 			_runAndAssertNegatedCommonFieldRow(
@@ -152,6 +149,10 @@ public class AssetListFiltersUtilTest {
 				_buildCommonFieldFilterWithJSONArrayValue(
 					"between", "modified",
 					JSONUtil.putAll("2026-01-15", "2026-01-20"))));
+		_assertWildcardQuery(
+			"userName", "*john smith*",
+			_runAndAssertNegatedCommonFieldRow(
+				_buildCommonFieldFilter("not-contains", "userName", userName)));
 
 		BooleanClause[] booleanClauses =
 			AssetListFiltersUtil.getFiltersBooleanClauses(

@@ -12,6 +12,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CompanyConstants;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.site.storage.helper.SitemapStorageHelper;
 
 import java.io.InputStream;
@@ -26,6 +27,12 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = SitemapStorageHelper.class)
 public class SitemapStorageHelperImpl implements SitemapStorageHelper {
+
+	@Override
+	public void deleteSitemaps(long companyId) throws PortalException {
+		_dlStore.deleteDirectory(
+			companyId, CompanyConstants.SYSTEM, "sitemaps");
+	}
 
 	@Override
 	public void deleteSitemaps(long companyId, long groupId)
@@ -83,6 +90,13 @@ public class SitemapStorageHelperImpl implements SitemapStorageHelper {
 			companyId, CompanyConstants.SYSTEM,
 			_getSitemapFileName(groupId, assetTypeKey, page),
 			Store.VERSION_DEFAULT);
+	}
+
+	@Override
+	public boolean hasSitemapFiles(long companyId) throws PortalException {
+		return ArrayUtil.isNotEmpty(
+			_dlStore.getFileNames(
+				companyId, CompanyConstants.SYSTEM, "sitemaps"));
 	}
 
 	@Override

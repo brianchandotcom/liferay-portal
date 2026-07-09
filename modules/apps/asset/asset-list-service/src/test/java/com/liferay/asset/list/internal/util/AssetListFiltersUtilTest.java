@@ -475,8 +475,8 @@ public class AssetListFiltersUtilTest {
 				_buildFilterWithJSONArrayValue(
 					"contains", "status",
 					JSONUtil.putAll(
-						_picklistValueJSONObject("approved"),
-						_picklistValueJSONObject("draft"))
+						_buildPicklistValueJSONObject("approved"),
+						_buildPicklistValueJSONObject("draft"))
 				).put(
 					"quantifier", "any"
 				),
@@ -490,8 +490,8 @@ public class AssetListFiltersUtilTest {
 				_buildFilterWithJSONArrayValue(
 					"contains", "status",
 					JSONUtil.putAll(
-						_picklistValueJSONObject("approved"),
-						_picklistValueJSONObject("draft"))
+						_buildPicklistValueJSONObject("approved"),
+						_buildPicklistValueJSONObject("draft"))
 				).put(
 					"quantifier", "all"
 				),
@@ -504,7 +504,7 @@ public class AssetListFiltersUtilTest {
 				BooleanClauseOccur.MUST,
 				_buildFilterWithJSONArrayValue(
 					"contains", "status",
-					JSONUtil.putAll(_picklistValueJSONObject("approved"))),
+					JSONUtil.putAll(_buildPicklistValueJSONObject("approved"))),
 				"status"),
 			"approved");
 
@@ -514,8 +514,8 @@ public class AssetListFiltersUtilTest {
 				_buildFilterWithJSONArrayValue(
 					"not-contains", "status",
 					JSONUtil.putAll(
-						_picklistValueJSONObject("approved"),
-						_picklistValueJSONObject("draft"))
+						_buildPicklistValueJSONObject("approved"),
+						_buildPicklistValueJSONObject("draft"))
 				).put(
 					"quantifier", "any"
 				),
@@ -528,7 +528,7 @@ public class AssetListFiltersUtilTest {
 				BooleanClauseOccur.MUST,
 				_buildFilterWithJSONArrayValue(
 					"contains", "status",
-					JSONUtil.putAll(_picklistValueJSONObject("Approved"))
+					JSONUtil.putAll(_buildPicklistValueJSONObject("Approved"))
 				).put(
 					"quantifier", "any"
 				),
@@ -940,7 +940,7 @@ public class AssetListFiltersUtilTest {
 		);
 	}
 
-	private JSONObject _picklistValueJSONObject(String value) {
+	private JSONObject _buildPicklistValueJSONObject(String value) {
 		return JSONUtil.put(
 			"label", value
 		).put(

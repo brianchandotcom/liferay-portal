@@ -78,18 +78,6 @@ public class AssetListFiltersUtil {
 		};
 	}
 
-	private static String _aliasMetadataName(String name) {
-		return _metadataCommonFieldNames.getOrDefault(name, name);
-	}
-
-	private static String _emptyToNull(String value) {
-		if (Validator.isNull(value)) {
-			return null;
-		}
-
-		return value;
-	}
-
 	private static ObjectDefinition _fetchObjectDefinition(
 		long classNameId, long companyId) {
 
@@ -132,6 +120,14 @@ public class AssetListFiltersUtil {
 
 	private static String _getCommonFieldType(String propertyName) {
 		return _commonFieldTypes.get(propertyName);
+	}
+
+	private static String _getNullIfEmpty(String value) {
+		if (Validator.isNull(value)) {
+			return null;
+		}
+
+		return value;
 	}
 
 	private static String _getSubfield(Locale locale, ObjectField objectField) {
@@ -224,6 +220,10 @@ public class AssetListFiltersUtil {
 		return padded.substring(0, 8) + (endOfBound ? "235959" : "000000");
 	}
 
+	private static String _resolveMetadataFieldName(String name) {
+		return _metadataCommonFieldNames.getOrDefault(name, name);
+	}
+
 	private static String _resolveRelativeDateValue(String value) {
 		if (!_relativeDateValues.contains(value)) {
 			return null;
@@ -298,7 +298,8 @@ public class AssetListFiltersUtil {
 
 		if (objectField.isMetadata()) {
 			return _toCommonFieldClause(
-				jsonObject, locale, _aliasMetadataName(objectField.getName()));
+				jsonObject, locale,
+				_resolveMetadataFieldName(objectField.getName()));
 		}
 
 		return _toBooleanClause(
@@ -478,8 +479,8 @@ public class AssetListFiltersUtil {
 				return null;
 			}
 
-			String lowerTerm = _emptyToNull(valueJSONArray.getString(0));
-			String upperTerm = _emptyToNull(valueJSONArray.getString(1));
+			String lowerTerm = _getNullIfEmpty(valueJSONArray.getString(0));
+			String upperTerm = _getNullIfEmpty(valueJSONArray.getString(1));
 
 			if (dateType) {
 				lowerTerm = _normalizeDateValue(dateTime, false, lowerTerm);

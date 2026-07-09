@@ -88,6 +88,7 @@ import {JSONWebServicesUserGroupApiHelper} from './json-web-services/JSONWebServ
 type ContentType = 'application/json' | 'application/x-www-form-urlencoded';
 
 type TDataApiHelpersData = {
+	applicationName?: string;
 	id: any;
 	type: string;
 };
@@ -596,6 +597,12 @@ export class DataApiHelpers extends ApiHelpers {
 				}
 
 				await objectDefinitionAPIClient.deleteObjectDefinition(item.id);
+			}
+			else if (item.type === 'objectEntry') {
+				await this.objectEntry.deleteObjectEntry(
+					item.applicationName!,
+					item.id
+				);
 			}
 			else if (item.type === 'objectFolder') {
 				const objectFolderRESTClient =

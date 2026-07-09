@@ -6,7 +6,7 @@
 package com.liferay.portal.upgrade.v6_2_0;
 
 import com.liferay.portal.kernel.encryptor.EncryptorUtil;
-import com.liferay.portal.kernel.security.fips.FIPSModeUtil;
+import com.liferay.portal.kernel.security.fips.FIPSModeValidator;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -28,7 +28,7 @@ public class UpgradeCompany extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		FIPSModeUtil.validateKeyAlgorithm(_KEY_ALGORITHM);
+		FIPSModeValidator.validateKeyAlgorithm(_KEY_ALGORITHM);
 
 		if (_KEY_ALGORITHM.equals("DES")) {
 			return;

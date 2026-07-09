@@ -10,7 +10,7 @@ import com.liferay.portal.crypto.hash.spi.CryptoHashProvider;
 import com.liferay.portal.crypto.hash.spi.CryptoHashProviderFactory;
 import com.liferay.portal.crypto.hash.spi.CryptoHashProviderResponse;
 import com.liferay.portal.kernel.security.SecureRandomUtil;
-import com.liferay.portal.kernel.security.fips.FIPSModeUtil;
+import com.liferay.portal.kernel.security.fips.FIPSModeValidator;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -73,7 +73,7 @@ public class MessageDigestCryptoHashProviderFactory
 				cryptoHashProviderProperties, "message.digest.algorithm",
 				DigesterUtil.SHA_256);
 
-			FIPSModeUtil.validateAlgorithm(algorithm);
+			FIPSModeValidator.validateAlgorithm(algorithm);
 
 			_messageDigest = MessageDigest.getInstance(algorithm);
 

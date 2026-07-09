@@ -11,7 +11,7 @@ import com.liferay.portal.kernel.encryptor.EncryptorException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.SecureRandomUtil;
-import com.liferay.portal.kernel.security.fips.FIPSModeUtil;
+import com.liferay.portal.kernel.security.fips.FIPSModeValidator;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -63,7 +63,11 @@ public class EncryptorImpl implements Encryptor {
 	public byte[] decryptUnencodedAsBytes(Key key, byte[] encryptedBytes)
 		throws EncryptorException {
 
-		FIPSModeUtil.validateKey(key);
+		byte[] encodedKey = key.getEncoded();
+
+		FIPSModeValidator.validateKey(
+			key.getAlgorithm(),
+			(encodedKey == null) ? 0 : encodedKey.length * 8);
 
 		if (PropsValues.FIPS_ENABLED) {
 			try {
@@ -102,7 +106,7 @@ public class EncryptorImpl implements Encryptor {
 
 	@Override
 	public Key deserializeKey(String base64String) {
-		FIPSModeUtil.validateKeyAlgorithm(KEY_ALGORITHM);
+		FIPSModeValidator.validateKeyAlgorithm(KEY_ALGORITHM);
 
 		byte[] bytes = Base64.decode(base64String);
 
@@ -128,7 +132,11 @@ public class EncryptorImpl implements Encryptor {
 	public byte[] encryptUnencoded(Key key, byte[] plainBytes)
 		throws EncryptorException {
 
-		FIPSModeUtil.validateKey(key);
+		byte[] encodedKey = key.getEncoded();
+
+		FIPSModeValidator.validateKey(
+			key.getAlgorithm(),
+			(encodedKey == null) ? 0 : encodedKey.length * 8);
 
 		if (PropsValues.FIPS_ENABLED) {
 			return _encryptGCM(key, plainBytes);
@@ -174,7 +182,7 @@ public class EncryptorImpl implements Encryptor {
 
 	@Override
 	public Key generateKey() throws EncryptorException {
-		FIPSModeUtil.validateKeyAlgorithm(KEY_ALGORITHM);
+		FIPSModeValidator.validateKeyAlgorithm(KEY_ALGORITHM);
 
 		return _generateKey(KEY_ALGORITHM);
 	}

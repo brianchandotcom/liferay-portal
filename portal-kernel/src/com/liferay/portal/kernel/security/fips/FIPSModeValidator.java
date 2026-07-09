@@ -9,6 +9,9 @@ import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsValues;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.lang.reflect.Method;
 
@@ -19,6 +22,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * @author Caio Farias
@@ -30,6 +34,59 @@ public class FIPSModeValidator {
 
 		_validateFIPSProvider(providers);
 		_validateProviders(providers);
+	}
+
+	public static void validateAlgorithm(String algorithm) {
+		if (_isNotAllowedAlgorithm(algorithm)) {
+			throw new SecurityException(
+				"Algorithm \"" + algorithm + "\" is not allowed in FIPS mode");
+		}
+	}
+
+	public static void validateKey(String algorithm, int keySize) {
+		if (!PropsValues.FIPS_ENABLED) {
+			return;
+		}
+
+		validateKeyAlgorithm(algorithm);
+
+		if (!_allowedKeySizes.contains(keySize)) {
+			throw new SecurityException(
+				"AES key must be 128, 192, or 256 bits");
+		}
+	}
+
+	public static void validateKeyAlgorithm(String algorithm) {
+		if (_isNotAllowedKeyAlgorithm(algorithm)) {
+			throw new SecurityException(
+				"Algorithm \"" + algorithm + "\" is not allowed in FIPS mode");
+		}
+	}
+
+	private static boolean _isNotAllowedAlgorithm(String algorithm) {
+		if (!PropsValues.FIPS_ENABLED) {
+			return false;
+		}
+
+		if (Validator.isNull(algorithm)) {
+			return true;
+		}
+
+		for (String allowedAlgorithm : _allowedAlgorithms) {
+			if (algorithm.startsWith(allowedAlgorithm)) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	private static boolean _isNotAllowedKeyAlgorithm(String algorithm) {
+		if (!PropsValues.FIPS_ENABLED) {
+			return false;
+		}
+
+		return !StringUtil.equalsIgnoreCase("AES", algorithm);
 	}
 
 	private static void _validateFIPSProvider(Provider[] providers) {
@@ -152,6 +209,10 @@ public class FIPSModeValidator {
 				" are not allowed in FIPS mode for ", provider.getName()));
 	}
 
+	private static final Set<String> _allowedAlgorithms = Set.of(
+		"PBKDF2WithHmacSHA256", "PBKDF2WithHmacSHA384", "PBKDF2WithHmacSHA512",
+		"SHA-256", "SHA-384", "SHA-512");
+	private static final Set<Integer> _allowedKeySizes = Set.of(128, 192, 256);
 	private static final Map<String, List<String>> _allowedProviderNames =
 		Map.of(
 			"AmazonCorrettoCryptoProvider",

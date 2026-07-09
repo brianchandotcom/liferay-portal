@@ -14,7 +14,7 @@ import com.liferay.portal.kernel.security.auth.AuthException;
 import com.liferay.portal.kernel.security.auth.RemoteAuthException;
 import com.liferay.portal.kernel.security.auth.http.HttpAuthorizationHeader;
 import com.liferay.portal.kernel.security.auth.tunnel.TunnelAuthenticationManager;
-import com.liferay.portal.kernel.security.fips.FIPSModeUtil;
+import com.liferay.portal.kernel.security.fips.FIPSModeValidator;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -209,7 +209,7 @@ public class TunnelAuthenticationManagerImpl
 
 		String algorithm = PropsValues.TUNNELING_SERVLET_ENCRYPTION_ALGORITHM;
 
-		FIPSModeUtil.validateKeyAlgorithm(algorithm);
+		FIPSModeValidator.validateKeyAlgorithm(algorithm);
 
 		if (StringUtil.equalsIgnoreCase(algorithm, "AES") &&
 			(key.length != 16) && (key.length != 32)) {

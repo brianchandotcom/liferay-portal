@@ -10,7 +10,7 @@ import com.liferay.portal.kernel.exception.PwdEncryptorException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.security.fips.FIPSModeUtil;
+import com.liferay.portal.kernel.security.fips.FIPSModeValidator;
 import com.liferay.portal.kernel.security.pwd.PasswordEncryptorUtil;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -44,7 +44,7 @@ public class PwdAuthenticator {
 
 			String algorithm = PropsUtil.get(PropsKeys.AUTH_MAC_ALGORITHM);
 
-			FIPSModeUtil.validateAlgorithm(algorithm);
+			FIPSModeValidator.validateAlgorithm(algorithm);
 
 			try {
 				MessageDigest messageDigest = MessageDigest.getInstance(

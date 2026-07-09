@@ -18,7 +18,38 @@ import java.util.Set;
  */
 public class FIPSModeUtil {
 
-	public static boolean isNotAllowedAlgorithm(String algorithm) {
+	public static void validateAlgorithm(String algorithm) {
+		if (_isNotAllowedAlgorithm(algorithm)) {
+			throw new SecurityException(
+				"Algorithm \"" + algorithm + "\" is not allowed in FIPS mode");
+		}
+	}
+
+	public static void validateKey(Key key) {
+		if (!PropsValues.FIPS_ENABLED) {
+			return;
+		}
+
+		validateKeyAlgorithm(key.getAlgorithm());
+
+		byte[] encodedKey = key.getEncoded();
+
+		if ((encodedKey == null) ||
+			!_allowedKeySizes.contains(encodedKey.length * 8)) {
+
+			throw new SecurityException(
+				"AES key must be 128, 192, or 256 bits");
+		}
+	}
+
+	public static void validateKeyAlgorithm(String algorithm) {
+		if (_isNotAllowedKeyAlgorithm(algorithm)) {
+			throw new SecurityException(
+				"Algorithm \"" + algorithm + "\" is not allowed in FIPS mode");
+		}
+	}
+
+	private static boolean _isNotAllowedAlgorithm(String algorithm) {
 		if (!PropsValues.FIPS_ENABLED) {
 			return false;
 		}
@@ -36,33 +67,12 @@ public class FIPSModeUtil {
 		return true;
 	}
 
-	public static boolean isNotAllowedKeyAlgorithm(String algorithm) {
+	private static boolean _isNotAllowedKeyAlgorithm(String algorithm) {
 		if (!PropsValues.FIPS_ENABLED) {
 			return false;
 		}
 
 		return !StringUtil.equalsIgnoreCase("AES", algorithm);
-	}
-
-	public static void validateKey(Key key) {
-		if (!PropsValues.FIPS_ENABLED) {
-			return;
-		}
-
-		if (isNotAllowedKeyAlgorithm(key.getAlgorithm())) {
-			throw new SecurityException(
-				"Algorithm \"" + key.getAlgorithm() +
-					"\" is not allowed in FIPS mode");
-		}
-
-		byte[] encodedKey = key.getEncoded();
-
-		if ((encodedKey == null) ||
-			!_allowedKeySizes.contains(encodedKey.length * 8)) {
-
-			throw new SecurityException(
-				"AES key must be 128, 192, or 256 bits");
-		}
 	}
 
 	private static final Set<String> _allowedAlgorithms = Set.of(

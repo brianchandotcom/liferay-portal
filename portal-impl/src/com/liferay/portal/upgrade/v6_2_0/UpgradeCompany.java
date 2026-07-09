@@ -28,11 +28,7 @@ public class UpgradeCompany extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (FIPSModeUtil.isNotAllowedKeyAlgorithm(_KEY_ALGORITHM)) {
-			throw new SecurityException(
-				"Algorithm \"" + _KEY_ALGORITHM +
-					"\" is not allowed in FIPS mode");
-		}
+		FIPSModeUtil.validateKeyAlgorithm(_KEY_ALGORITHM);
 
 		if (_KEY_ALGORITHM.equals("DES")) {
 			return;

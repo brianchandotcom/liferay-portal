@@ -24,17 +24,109 @@ public class PortalWorkspaceGitRepositoryTest
 	extends com.liferay.jenkins.results.parser.Test {
 
 	@Test
+	public void testPrepareGitWorkingDirectoryWithGitArchiveDisabled()
+		throws Exception {
+
+		mockEnvironment(
+			Collections.singletonMap("MASTER_NETWORK_NAME", "aws-network"));
+
+		Properties buildProperties = new Properties();
+
+		buildProperties.setProperty("binaries.cache.enabled", "true");
+		buildProperties.setProperty(
+			"cloud.ci.s3.bucket.dist.path", "s3://liferayci-dist/dist");
+		buildProperties.setProperty("git.archive.enabled", "false");
+
+		JenkinsResultsParserUtil.setBuildProperties(buildProperties);
+
+		Shell shell = mockShell();
+
+		PortalWorkspaceGitRepository portalWorkspaceGitRepository =
+			_newPortalWorkspaceGitRepository();
+
+		Mockito.doCallRealMethod(
+		).when(
+			portalWorkspaceGitRepository
+		).isBinariesCacheEnabled();
+
+		Mockito.doCallRealMethod(
+		).when(
+			portalWorkspaceGitRepository
+		).prepareGitWorkingDirectory();
+
+		portalWorkspaceGitRepository.prepareGitWorkingDirectory();
+
+		Mockito.verify(
+			shell, Mockito.never()
+		).doExecute(
+			Mockito.argThat(
+				executionRequest -> _isCommand(
+					executionRequest, "git-archives"))
+		);
+
+		Assert.assertTrue(
+			"The binaries cache must stay enabled when the git archive is " +
+				"disabled",
+			portalWorkspaceGitRepository.isBinariesCacheEnabled());
+	}
+
+	@Test
+	public void testPrepareGitWorkingDirectoryWithGitArchiveEnabled()
+		throws Exception {
+
+		mockEnvironment(
+			Collections.singletonMap("MASTER_NETWORK_NAME", "aws-network"));
+
+		Properties buildProperties = new Properties();
+
+		buildProperties.setProperty("binaries.cache.enabled", "false");
+		buildProperties.setProperty(
+			"cloud.ci.s3.bucket.dist.path", "s3://liferayci-dist/dist");
+		buildProperties.setProperty("git.archive.enabled", "true");
+
+		JenkinsResultsParserUtil.setBuildProperties(buildProperties);
+
+		Shell shell = mockShell();
+
+		Mockito.doReturn(
+			new Shell.ExecutionResult(0, "", "")
+		).when(
+			shell
+		).doExecute(
+			Mockito.any(Shell.ExecutionRequest.class)
+		);
+
+		PortalWorkspaceGitRepository portalWorkspaceGitRepository =
+			_newPortalWorkspaceGitRepository();
+
+		Mockito.doCallRealMethod(
+		).when(
+			portalWorkspaceGitRepository
+		).isBinariesCacheEnabled();
+
+		Mockito.doCallRealMethod(
+		).when(
+			portalWorkspaceGitRepository
+		).prepareGitWorkingDirectory();
+
+		portalWorkspaceGitRepository.prepareGitWorkingDirectory();
+
+		Mockito.verify(
+			shell, Mockito.atLeastOnce()
+		).doExecute(
+			Mockito.argThat(
+				executionRequest -> _isCommand(
+					executionRequest, "git-archives"))
+		);
+
+		Assert.assertFalse(
+			"The binaries cache must stay disabled when the git archive is " +
+				"enabled",
+			portalWorkspaceGitRepository.isBinariesCacheEnabled());
+	}
+
+	@Test
 	public void testSetUp() throws Exception {
-		File workingDirectory = File.createTempFile("portal-workspace-", null);
-
-		workingDirectory.delete();
-
-		workingDirectory.mkdir();
-
-		File gitDirectory = new File(workingDirectory, ".git");
-
-		gitDirectory.mkdir();
-
 		mockEnvironment(
 			Collections.singletonMap("MASTER_NETWORK_NAME", "aws-network"));
 
@@ -60,49 +152,8 @@ public class PortalWorkspaceGitRepositoryTest
 			Mockito.any(Shell.ExecutionRequest.class)
 		);
 
-		LocalGitBranch localGitBranch = Mockito.mock(LocalGitBranch.class);
-
-		Mockito.doReturn(
-			"1234567890123456789012345678901234567890"
-		).when(
-			localGitBranch
-		).getSHA();
-
-		GitWorkingDirectory gitWorkingDirectory = Mockito.mock(
-			GitWorkingDirectory.class);
-
 		PortalWorkspaceGitRepository portalWorkspaceGitRepository =
-			Mockito.mock(PortalWorkspaceGitRepository.class);
-
-		Mockito.doReturn(
-			workingDirectory
-		).when(
-			portalWorkspaceGitRepository
-		).getDirectory();
-
-		Mockito.doReturn(
-			"liferay-portal"
-		).when(
-			portalWorkspaceGitRepository
-		).getDirectoryName();
-
-		Mockito.doReturn(
-			gitWorkingDirectory
-		).when(
-			portalWorkspaceGitRepository
-		).getGitWorkingDirectory();
-
-		Mockito.doReturn(
-			localGitBranch
-		).when(
-			portalWorkspaceGitRepository
-		).getLocalGitBranch();
-
-		Mockito.doReturn(
-			"master"
-		).when(
-			portalWorkspaceGitRepository
-		).getUpstreamBranchName();
+			_newPortalWorkspaceGitRepository();
 
 		Mockito.doReturn(
 			true
@@ -164,6 +215,16 @@ public class PortalWorkspaceGitRepositoryTest
 		PortalWorkspaceGitRepository portalWorkspaceGitRepository =
 			_newPortalWorkspaceGitRepository();
 
+		Mockito.doCallRealMethod(
+		).when(
+			portalWorkspaceGitRepository
+		).isBinariesCacheEnabled();
+
+		Mockito.doCallRealMethod(
+		).when(
+			portalWorkspaceGitRepository
+		).setUpAdditionalCaches();
+
 		portalWorkspaceGitRepository.setUpAdditionalCaches();
 
 		Mockito.verify(
@@ -208,6 +269,16 @@ public class PortalWorkspaceGitRepositoryTest
 
 		PortalWorkspaceGitRepository portalWorkspaceGitRepository =
 			_newPortalWorkspaceGitRepository();
+
+		Mockito.doCallRealMethod(
+		).when(
+			portalWorkspaceGitRepository
+		).isBinariesCacheEnabled();
+
+		Mockito.doCallRealMethod(
+		).when(
+			portalWorkspaceGitRepository
+		).setUpAdditionalCaches();
 
 		portalWorkspaceGitRepository.setUpAdditionalCaches();
 
@@ -254,6 +325,22 @@ public class PortalWorkspaceGitRepositoryTest
 		return (Boolean)method.invoke(workspaceGitRepository);
 	}
 
+	private GitWorkingDirectory _newGitWorkingDirectory() {
+		return Mockito.mock(GitWorkingDirectory.class);
+	}
+
+	private LocalGitBranch _newLocalGitBranch() {
+		LocalGitBranch localGitBranch = Mockito.mock(LocalGitBranch.class);
+
+		Mockito.doReturn(
+			"1234567890123456789012345678901234567890"
+		).when(
+			localGitBranch
+		).getSHA();
+
+		return localGitBranch;
+	}
+
 	private PortalWorkspaceGitRepository _newPortalWorkspaceGitRepository()
 		throws Exception {
 
@@ -263,8 +350,18 @@ public class PortalWorkspaceGitRepositoryTest
 
 		workingDirectory.mkdir();
 
+		File gitDirectory = new File(workingDirectory, ".git");
+
+		gitDirectory.mkdir();
+
 		PortalWorkspaceGitRepository portalWorkspaceGitRepository =
 			Mockito.mock(PortalWorkspaceGitRepository.class);
+
+		Mockito.doReturn(
+			"1234567890123456789012345678901234567890"
+		).when(
+			portalWorkspaceGitRepository
+		).getBaseBranchSHA();
 
 		Mockito.doReturn(
 			workingDirectory
@@ -273,20 +370,34 @@ public class PortalWorkspaceGitRepositoryTest
 		).getDirectory();
 
 		Mockito.doReturn(
+			"liferay-portal"
+		).when(
+			portalWorkspaceGitRepository
+		).getDirectoryName();
+
+		Mockito.doReturn(
+			_newGitWorkingDirectory()
+		).when(
+			portalWorkspaceGitRepository
+		).getGitWorkingDirectory();
+
+		Mockito.doReturn(
+			_newLocalGitBranch()
+		).when(
+			portalWorkspaceGitRepository
+		).getLocalGitBranch();
+
+		Mockito.doReturn(
+			"0987654321098765432109876543210987654321"
+		).when(
+			portalWorkspaceGitRepository
+		).getSenderBranchSHA();
+
+		Mockito.doReturn(
 			"master"
 		).when(
 			portalWorkspaceGitRepository
 		).getUpstreamBranchName();
-
-		Mockito.doCallRealMethod(
-		).when(
-			portalWorkspaceGitRepository
-		).isBinariesCacheEnabled();
-
-		Mockito.doCallRealMethod(
-		).when(
-			portalWorkspaceGitRepository
-		).setUpAdditionalCaches();
 
 		return portalWorkspaceGitRepository;
 	}

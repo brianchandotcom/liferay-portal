@@ -152,13 +152,9 @@ public class ElasticsearchSearchEngineAdapterImpl
 			List<BulkableDocumentRequest<?>> bulkableDocumentRequests =
 				bulkDocumentRequest.getBulkableDocumentRequests();
 
-			int maxBulkableDocumentRequests = _maxBulkableDocumentRequests;
+			if (bulkableDocumentRequests.size() <
+					_maxBulkableDocumentRequests) {
 
-			if (maxBulkableDocumentRequests <= 0) {
-				maxBulkableDocumentRequests = Indexer.DEFAULT_INTERVAL;
-			}
-
-			if (bulkableDocumentRequests.size() < maxBulkableDocumentRequests) {
 				return null;
 			}
 
@@ -269,6 +265,10 @@ public class ElasticsearchSearchEngineAdapterImpl
 
 		_maxBulkableDocumentRequests =
 			bulkDocumentRequestRetryConfiguration.maxBulkableDocumentRequests();
+
+		if (_maxBulkableDocumentRequests <= 0) {
+			_maxBulkableDocumentRequests = Indexer.DEFAULT_INTERVAL;
+		}
 	}
 
 	protected void setThrowOriginalExceptions(boolean throwOriginalExceptions) {

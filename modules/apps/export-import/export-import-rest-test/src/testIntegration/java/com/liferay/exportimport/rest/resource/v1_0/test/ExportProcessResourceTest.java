@@ -288,6 +288,8 @@ public class ExportProcessResourceTest
 				companyGroup.getGroupId(), objectDefinition, objectEntries);
 			_testPostExportProcessWithPermissions(
 				companyGroup.getGroupId(), objectDefinition, objectEntries);
+
+			_testPostExportProcessWithSameName(companyGroup.getGroupId());
 		}
 		finally {
 			_objectDefinitionLocalService.deleteObjectDefinition(
@@ -941,6 +943,46 @@ public class ExportProcessResourceTest
 
 			Assert.assertTrue(
 				jsonObject.toString(), jsonObject.has("permissions"));
+		}
+	}
+
+	@TestInfo("LPD-90359")
+	private void _testPostExportProcessWithSameName(long groupId)
+		throws Exception {
+
+		ObjectDefinition objectDefinition = _publishObjectDefinition(
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		try {
+			_addObjectEntry(
+				objectDefinition, GroupConstants.DEFAULT_PARENT_GROUP_ID);
+
+			String name = RandomTestUtil.randomString();
+
+			ExportProcess exportProcess1 = _postExportProcess(
+				exportProcessResource::postExportProcess, objectDefinition,
+				exportProcessRequest -> exportProcessRequest.setName(name));
+
+			_addObjectEntry(
+				objectDefinition, GroupConstants.DEFAULT_PARENT_GROUP_ID);
+
+			ExportProcess exportProcess2 = _postExportProcess(
+				exportProcessResource::postExportProcess, objectDefinition,
+				exportProcessRequest -> exportProcessRequest.setName(name));
+
+			JSONArray jsonArray1 = _getExportedJSONArray(
+				exportProcess1, groupId, objectDefinition);
+
+			Assert.assertEquals(1, jsonArray1.length());
+
+			JSONArray jsonArray2 = _getExportedJSONArray(
+				exportProcess2, groupId, objectDefinition);
+
+			Assert.assertEquals(2, jsonArray2.length());
+		}
+		finally {
+			_objectDefinitionLocalService.deleteObjectDefinition(
+				objectDefinition);
 		}
 	}
 

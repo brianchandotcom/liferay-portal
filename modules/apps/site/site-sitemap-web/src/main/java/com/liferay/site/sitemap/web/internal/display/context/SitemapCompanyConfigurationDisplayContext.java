@@ -282,12 +282,13 @@ public class SitemapCompanyConfigurationDisplayContext {
 		String[] days = CalendarUtil.getDays(_themeDisplay.getLocale());
 
 		for (int i = 0; i < days.length; i++) {
-			String value = String.valueOf(i + 1);
+			String dayOfWeek = String.valueOf(i + 1);
 
 			selectOptions.add(
 				new SelectOption(
-					days[i], value,
-					StringUtil.equals(value, xmlSitemapRegenerationDayOfWeek)));
+					days[i], dayOfWeek,
+					StringUtil.equals(
+						dayOfWeek, xmlSitemapRegenerationDayOfWeek)));
 		}
 
 		return selectOptions;

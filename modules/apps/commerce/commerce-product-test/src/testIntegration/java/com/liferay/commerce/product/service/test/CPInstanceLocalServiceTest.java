@@ -7,6 +7,7 @@ package com.liferay.commerce.product.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.product.constants.CPInstanceConstants;
+import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
@@ -23,13 +24,16 @@ import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalServiceUtil;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.product.type.simple.constants.SimpleCPTypeConstants;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -37,7 +41,10 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
+import java.math.BigDecimal;
+
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -281,6 +288,56 @@ public class CPInstanceLocalServiceTest {
 			"SKU contributor value", cpDefinitionOptionRel.isSkuContributor());
 
 		_assertDefaultCPInstance(cpDefinition.getCPDefinitionId());
+	}
+
+	@Test
+	public void testGetOrAddEmptyCPInstance() throws Exception {
+		CPDefinition cpDefinition = CPTestUtil.addCPDefinition(
+			_commerceCatalog.getGroupId(), true, false,
+			WorkflowConstants.ACTION_PUBLISH);
+
+		try {
+			_cpInstanceLocalService.getOrAddEmptyCPInstance(
+				RandomTestUtil.randomString(), cpDefinition.getCPDefinitionId(),
+				cpDefinition.getGroupId(), cpDefinition.getCompanyId(),
+				cpDefinition.getUserId());
+
+			Assert.fail();
+		}
+		catch (NoSuchCPInstanceException noSuchCPInstanceException) {
+			Assert.assertNotNull(noSuchCPInstanceException);
+		}
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+
+			CPInstance cpInstance =
+				_cpInstanceLocalService.getOrAddEmptyCPInstance(
+					externalReferenceCode, cpDefinition.getCPDefinitionId(),
+					cpDefinition.getGroupId(), cpDefinition.getCompanyId(),
+					cpDefinition.getUserId());
+
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_EMPTY, cpInstance.getStatus());
+			Assert.assertEquals(
+				externalReferenceCode, cpInstance.getExternalReferenceCode());
+			Assert.assertEquals(externalReferenceCode, cpInstance.getSku());
+			Assert.assertEquals(
+				cpDefinition.getCPDefinitionId(),
+				cpInstance.getCPDefinitionId());
+
+			CPInstance resolvedCPInstance =
+				_cpInstanceLocalService.getOrAddEmptyCPInstance(
+					externalReferenceCode, cpDefinition.getCPDefinitionId(),
+					cpDefinition.getGroupId(), cpDefinition.getCompanyId(),
+					cpDefinition.getUserId());
+
+			Assert.assertEquals(
+				cpInstance.getCPInstanceId(),
+				resolvedCPInstance.getCPInstanceId());
+		}
 	}
 
 	@Test
@@ -598,6 +655,46 @@ public class CPInstanceLocalServiceTest {
 			deletedCPDefinitionOptionValueRel,
 			_cpInstanceLocalService.getCPDefinitionApprovedCPInstances(
 				cpDefinition.getCPDefinitionId()));
+	}
+
+	@Test
+	public void testUpdateCPInstanceClearsEmptyStatus() throws Exception {
+		CPDefinition cpDefinition = CPTestUtil.addCPDefinition(
+			_commerceCatalog.getGroupId(), true, false,
+			WorkflowConstants.ACTION_PUBLISH);
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		CPInstance cpInstance;
+
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+
+			cpInstance = _cpInstanceLocalService.getOrAddEmptyCPInstance(
+				externalReferenceCode, cpDefinition.getCPDefinitionId(),
+				cpDefinition.getGroupId(), cpDefinition.getCompanyId(),
+				cpDefinition.getUserId());
+		}
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_EMPTY, cpInstance.getStatus());
+
+		Calendar calendar = CalendarFactoryUtil.getCalendar();
+
+		cpInstance = _cpInstanceLocalService.updateCPInstance(
+			externalReferenceCode, cpInstance.getCPInstanceId(),
+			RandomTestUtil.randomString(), null, null, false, 0, 0, 0, 0,
+			BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, false,
+			calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE),
+			calendar.get(Calendar.YEAR), calendar.get(Calendar.HOUR_OF_DAY),
+			calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true, false, false, 0,
+			null, null, 0, false, 0, null, null, 0, null, false, null, 0, 0, 0,
+			0,
+			ServiceContextTestUtil.getServiceContext(
+				cpDefinition.getGroupId()));
+
+		Assert.assertNotEquals(
+			WorkflowConstants.STATUS_EMPTY, cpInstance.getStatus());
 	}
 
 	@Rule

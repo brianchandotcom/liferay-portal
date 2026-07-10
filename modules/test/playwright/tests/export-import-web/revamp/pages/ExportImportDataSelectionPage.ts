@@ -11,13 +11,19 @@ export class ExportImportDataSelectionPage {
 	readonly collapseSectionButton: (name: string) => Locator;
 	readonly expandSectionButton: (name: string) => Locator;
 	readonly page: Page;
+	readonly section: Locator;
+	readonly sectionCheckbox: (name: string) => Locator;
 
 	constructor(page: Page) {
+		this.section = page.locator('[data-testid="data-selection-section"]');
+
 		this.collapseSectionButton = (name) =>
-			page.getByRole('button', {name: `Collapse ${name}`});
+			this.section.getByRole('button', {name: `Collapse ${name}`});
 		this.expandSectionButton = (name) =>
-			page.getByRole('button', {name: `Expand ${name}`});
+			this.section.getByRole('button', {name: `Expand ${name}`});
 		this.page = page;
+		this.sectionCheckbox = (name) =>
+			this.section.getByRole('checkbox', {exact: true, name});
 	}
 
 	async expandSection(name: string) {
@@ -25,5 +31,13 @@ export class ExportImportDataSelectionPage {
 			target: this.collapseSectionButton(name),
 			trigger: this.expandSectionButton(name),
 		});
+	}
+
+	async selectSection(name: string) {
+		await this.sectionCheckbox(name).check();
+	}
+
+	async unselectSection(name: string) {
+		await this.sectionCheckbox(name).uncheck();
 	}
 }

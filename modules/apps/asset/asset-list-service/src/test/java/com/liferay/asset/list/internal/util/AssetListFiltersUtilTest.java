@@ -87,7 +87,7 @@ public class AssetListFiltersUtilTest {
 	}
 
 	@Test
-	public void testGetFiltersBooleanClausesWithCommonFieldOperators() {
+	public void testFilterQueriesWithCommonFields() {
 		String externalReferenceCode = "ABC-123";
 		String priority = String.valueOf(RandomTestUtil.randomDouble());
 		String status = String.valueOf(RandomTestUtil.randomInt());
@@ -96,19 +96,10 @@ public class AssetListFiltersUtilTest {
 		String userName = "John Smith";
 		String viewCount = String.valueOf(RandomTestUtil.randomInt());
 
-		_assertMatchQuery(
-			"localized_title_en_US", title1,
+		_assertTermRangeQuery(
+			"createDate", false, false, "20260115235959", null,
 			_runAndAssertCommonFieldRow(
-				_buildCommonFieldFilter("eq", "title", title1)));
-		_assertMatchQuery(
-			"localized_title_en_US", title2,
-			_runAndAssertCommonFieldRow(
-				_buildCommonFieldFilter("contains", "title", title2)));
-
-		_assertTermQuery(
-			"userName", "john smith",
-			_runAndAssertCommonFieldRow(
-				_buildCommonFieldFilter("eq", "userName", userName)));
+				_buildCommonFieldFilter("gt", "createDate", "2026-01-15")));
 
 		_assertTermQuery(
 			"externalReferenceCode", externalReferenceCode,
@@ -116,43 +107,53 @@ public class AssetListFiltersUtilTest {
 				_buildCommonFieldFilter(
 					"eq", "externalReferenceCode", externalReferenceCode)));
 
-		_assertTermQuery(
-			"viewCount", viewCount,
-			_runAndAssertCommonFieldRow(
-				_buildCommonFieldFilter("eq", "viewCount", viewCount)));
-		_assertTermQuery(
-			"status", status,
-			_runAndAssertNegatedCommonFieldRow(
-				_buildCommonFieldFilter("not-eq", "status", status)));
-
-		_assertTermRangeQuery(
-			"priority", false, false, priority, null,
-			_runAndAssertCommonFieldRow(
-				_buildCommonFieldFilter("gt", "priority", priority)));
-
-		_assertTermRangeQuery(
-			"modified", true, true, "20260115000000", "20260115235959",
-			_runAndAssertCommonFieldRow(
-				_buildCommonFieldFilter("eq", "modified", "2026-01-15")));
-
-		_assertTermRangeQuery(
-			"modified", true, true, "20260115000000", "20260115235959",
-			_runAndAssertNegatedCommonFieldRow(
-				_buildCommonFieldFilter("not-eq", "modified", "2026-01-15")));
-		_assertTermRangeQuery(
-			"createDate", false, false, "20260115235959", null,
-			_runAndAssertCommonFieldRow(
-				_buildCommonFieldFilter("gt", "createDate", "2026-01-15")));
 		_assertTermRangeQuery(
 			"modified", true, true, "20260115000000", "20260120235959",
 			_runAndAssertCommonFieldRow(
 				_buildCommonFieldFilterWithJSONArrayValue(
 					"between", "modified",
 					JSONUtil.putAll("2026-01-15", "2026-01-20"))));
+		_assertTermRangeQuery(
+			"modified", true, true, "20260115000000", "20260115235959",
+			_runAndAssertCommonFieldRow(
+				_buildCommonFieldFilter("eq", "modified", "2026-01-15")));
+		_assertTermRangeQuery(
+			"modified", true, true, "20260115000000", "20260115235959",
+			_runAndAssertNegatedCommonFieldRow(
+				_buildCommonFieldFilter("not-eq", "modified", "2026-01-15")));
+
+		_assertTermRangeQuery(
+			"priority", false, false, priority, null,
+			_runAndAssertCommonFieldRow(
+				_buildCommonFieldFilter("gt", "priority", priority)));
+
+		_assertTermQuery(
+			"status", status,
+			_runAndAssertNegatedCommonFieldRow(
+				_buildCommonFieldFilter("not-eq", "status", status)));
+
+		_assertMatchQuery(
+			"localized_title_en_US", title2,
+			_runAndAssertCommonFieldRow(
+				_buildCommonFieldFilter("contains", "title", title2)));
+		_assertMatchQuery(
+			"localized_title_en_US", title1,
+			_runAndAssertCommonFieldRow(
+				_buildCommonFieldFilter("eq", "title", title1)));
+
+		_assertTermQuery(
+			"userName", "john smith",
+			_runAndAssertCommonFieldRow(
+				_buildCommonFieldFilter("eq", "userName", userName)));
 		_assertWildcardQuery(
 			"userName", "*john smith*",
 			_runAndAssertNegatedCommonFieldRow(
 				_buildCommonFieldFilter("not-contains", "userName", userName)));
+
+		_assertTermQuery(
+			"viewCount", viewCount,
+			_runAndAssertCommonFieldRow(
+				_buildCommonFieldFilter("eq", "viewCount", viewCount)));
 
 		BooleanClause[] booleanClauses =
 			AssetListFiltersUtil.getFiltersBooleanClauses(
@@ -168,7 +169,7 @@ public class AssetListFiltersUtilTest {
 	}
 
 	@Test
-	public void testGetFiltersBooleanClausesWithDateAndDateTimeOperators() {
+	public void testFilterQueriesWithDateAndDateTimeOperators() {
 		_setUpObjectField(
 			ObjectFieldConstants.BUSINESS_TYPE_DATE,
 			ObjectFieldConstants.DB_TYPE_DATE, "dueDate");
@@ -228,7 +229,7 @@ public class AssetListFiltersUtilTest {
 	}
 
 	@Test
-	public void testGetFiltersBooleanClausesWithEqualityOperators() {
+	public void testFilterQueriesWithEqualityOperators() {
 		_setUpObjectField(
 			ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN,
 			ObjectFieldConstants.DB_TYPE_BOOLEAN, "visible");
@@ -317,7 +318,7 @@ public class AssetListFiltersUtilTest {
 	}
 
 	@Test
-	public void testGetFiltersBooleanClausesWithInvalidInput() {
+	public void testFilterQueriesWithInvalidInput() {
 		BooleanClause[] booleanClauses =
 			AssetListFiltersUtil.getFiltersBooleanClauses(
 				_COMPANY_ID, null, LocaleUtil.US);
@@ -333,7 +334,7 @@ public class AssetListFiltersUtilTest {
 	}
 
 	@Test
-	public void testGetFiltersBooleanClausesWithKeywordTextContainsOperators() {
+	public void testFilterQueriesWithKeywordTextContainsOperators() {
 		_setUpKeywordTextObjectField("learnDocumentation");
 
 		_assertWildcardQuery(
@@ -358,7 +359,7 @@ public class AssetListFiltersUtilTest {
 	}
 
 	@Test
-	public void testGetFiltersBooleanClausesWithMetadataObjectFields() {
+	public void testFilterQueriesWithMetadataObjectFields() {
 		_setUpMetadataObjectField(
 			ObjectFieldConstants.BUSINESS_TYPE_DATE,
 			ObjectFieldConstants.DB_TYPE_DATE, "modifiedDate");
@@ -397,7 +398,7 @@ public class AssetListFiltersUtilTest {
 	}
 
 	@Test
-	public void testGetFiltersBooleanClausesWithNumericRangeOperators() {
+	public void testFilterQueriesWithNumericRangeOperators() {
 		_setUpObjectField(
 			ObjectFieldConstants.BUSINESS_TYPE_INTEGER,
 			ObjectFieldConstants.DB_TYPE_INTEGER, "viewCount");
@@ -466,7 +467,7 @@ public class AssetListFiltersUtilTest {
 	}
 
 	@Test
-	public void testGetFiltersBooleanClausesWithPicklistMultiValueOperators() {
+	public void testFilterQueriesWithPicklistMultiValueOperators() {
 		_setUpPicklistObjectField("status");
 
 		_assertPicklistBooleanQuery(
@@ -552,7 +553,7 @@ public class AssetListFiltersUtilTest {
 	}
 
 	@Test
-	public void testGetFiltersBooleanClausesWithRelativeDateOperators() {
+	public void testFilterQueriesWithRelativeDateOperators() {
 		_setUpObjectField(
 			ObjectFieldConstants.BUSINESS_TYPE_DATE,
 			ObjectFieldConstants.DB_TYPE_DATE, "dueDate");
@@ -601,7 +602,7 @@ public class AssetListFiltersUtilTest {
 	}
 
 	@Test
-	public void testGetFiltersBooleanClausesWithTextContainsOperators() {
+	public void testFilterQueriesWithTextContainsOperators() {
 		_setUpObjectField(
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 			ObjectFieldConstants.DB_TYPE_STRING, "title");

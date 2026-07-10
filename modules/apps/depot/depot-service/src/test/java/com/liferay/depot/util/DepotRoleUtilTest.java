@@ -22,6 +22,7 @@ import org.mockito.Mockito;
 
 /**
  * @author Stefano Motta
+ * @author Thiago Buarque
  */
 public class DepotRoleUtilTest {
 
@@ -32,6 +33,35 @@ public class DepotRoleUtilTest {
 
 	@Test
 	public void testFilter() {
+		_testFilterByDepotEntry();
+		_testFilterBySubtype();
+	}
+
+	private DepotEntry _mockDepotEntry(int depotType) {
+		DepotEntry depotEntry = Mockito.mock(DepotEntry.class);
+
+		Mockito.when(
+			depotEntry.getType()
+		).thenReturn(
+			depotType
+		);
+
+		return depotEntry;
+	}
+
+	private Role _mockRole(String subtype) {
+		Role role = Mockito.mock(Role.class);
+
+		Mockito.when(
+			role.getSubtype()
+		).thenReturn(
+			subtype
+		);
+
+		return role;
+	}
+
+	private void _testFilterByDepotEntry() {
 		Role role1 = _mockRole(DepotRolesConstants.SUBTYPE_DESIGN_LIBRARY);
 		Role role2 = _mockRole(DepotRolesConstants.SUBTYPE_PROJECT);
 		Role role3 = _mockRole(DepotRolesConstants.SUBTYPE_SPACE);
@@ -65,8 +95,7 @@ public class DepotRoleUtilTest {
 				Arrays.asList(role1, role2, role3, role4, role5)));
 	}
 
-	@Test
-	public void testFilterBySubtype() {
+	private void _testFilterBySubtype() {
 		Role role1 = _mockRole(DepotRolesConstants.SUBTYPE_DESIGN_LIBRARY);
 		Role role2 = _mockRole(DepotRolesConstants.SUBTYPE_PROJECT);
 		Role role3 = _mockRole(DepotRolesConstants.SUBTYPE_SPACE);
@@ -96,30 +125,6 @@ public class DepotRoleUtilTest {
 			DepotRoleUtil.filter(
 				Arrays.asList(role1, role2, role3, role4, role5),
 				DepotRolesConstants.SUBTYPE_SPACE));
-	}
-
-	private DepotEntry _mockDepotEntry(int depotType) {
-		DepotEntry depotEntry = Mockito.mock(DepotEntry.class);
-
-		Mockito.when(
-			depotEntry.getType()
-		).thenReturn(
-			depotType
-		);
-
-		return depotEntry;
-	}
-
-	private Role _mockRole(String subtype) {
-		Role role = Mockito.mock(Role.class);
-
-		Mockito.when(
-			role.getSubtype()
-		).thenReturn(
-			subtype
-		);
-
-		return role;
 	}
 
 }

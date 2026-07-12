@@ -7,18 +7,18 @@ package com.liferay.headless.admin.site.internal.resource.v1_0;
 
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPageWidgetInstance;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.DTOConverterContextUtil;
+import com.liferay.headless.admin.site.internal.exception.NoSuchEntityException;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutUtil;
 import com.liferay.headless.admin.site.resource.v1_0.WidgetPageWidgetInstanceResource;
 import com.liferay.headless.common.spi.util.GroupUtil;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.exception.NoSuchPortletException;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutType;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
@@ -27,6 +27,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
 
+import java.util.List;
 import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
@@ -58,21 +59,8 @@ public class WidgetPageWidgetInstanceResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
-		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
-			sitePageExternalReferenceCode,
-			GroupUtil.getGroupId(
-				false, contextCompany.getCompanyId(),
-				siteExternalReferenceCode));
-
-		if (layout == null) {
-			throw new UnsupportedOperationException();
-		}
-
-		LayoutType layoutType = layout.getLayoutType();
-
-		if (!(layoutType instanceof LayoutTypePortlet)) {
-			throw new UnsupportedOperationException();
-		}
+		Layout layout = _getTypePortletLayout(
+			siteExternalReferenceCode, sitePageExternalReferenceCode);
 
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)layout.getLayoutType();
@@ -80,7 +68,9 @@ public class WidgetPageWidgetInstanceResourceImpl
 		if (!layoutTypePortlet.hasPortletId(
 				widgetInstanceExternalReferenceCode)) {
 
-			throw new NoSuchPortletException();
+			throw new NoSuchEntityException(
+				"widget instance", widgetInstanceExternalReferenceCode,
+				"site page");
 		}
 
 		layoutTypePortlet.removePortletId(
@@ -104,21 +94,8 @@ public class WidgetPageWidgetInstanceResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
-		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
-			sitePageExternalReferenceCode,
-			GroupUtil.getGroupId(
-				false, contextCompany.getCompanyId(),
-				siteExternalReferenceCode));
-
-		if (layout == null) {
-			throw new UnsupportedOperationException();
-		}
-
-		LayoutType layoutType = layout.getLayoutType();
-
-		if (!(layoutType instanceof LayoutTypePortlet)) {
-			throw new UnsupportedOperationException();
-		}
+		Layout layout = _getTypePortletLayout(
+			siteExternalReferenceCode, sitePageExternalReferenceCode);
 
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)layout.getLayoutType();
@@ -126,7 +103,9 @@ public class WidgetPageWidgetInstanceResourceImpl
 		if (!layoutTypePortlet.hasPortletId(
 				widgetInstanceExternalReferenceCode)) {
 
-			throw new NoSuchPortletException();
+			throw new NoSuchEntityException(
+				"widget instance", widgetInstanceExternalReferenceCode,
+				"site page");
 		}
 
 		return _toWidgetPageWidgetInstance(
@@ -145,21 +124,8 @@ public class WidgetPageWidgetInstanceResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
-		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
-			sitePageExternalReferenceCode,
-			GroupUtil.getGroupId(
-				false, contextCompany.getCompanyId(),
-				siteExternalReferenceCode));
-
-		if (layout == null) {
-			throw new UnsupportedOperationException();
-		}
-
-		LayoutType layoutType = layout.getLayoutType();
-
-		if (!(layoutType instanceof LayoutTypePortlet)) {
-			throw new UnsupportedOperationException();
-		}
+		Layout layout = _getTypePortletLayout(
+			siteExternalReferenceCode, sitePageExternalReferenceCode);
 
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)layout.getLayoutType();
@@ -190,21 +156,11 @@ public class WidgetPageWidgetInstanceResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
-		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
-			sitePageExternalReferenceCode,
-			GroupUtil.getGroupId(
-				false, contextCompany.getCompanyId(),
-				siteExternalReferenceCode));
+		Layout layout = _getTypePortletLayout(
+			siteExternalReferenceCode, sitePageExternalReferenceCode);
 
-		if (layout == null) {
-			throw new UnsupportedOperationException();
-		}
-
-		LayoutType layoutType = layout.getLayoutType();
-
-		if (!(layoutType instanceof LayoutTypePortlet)) {
-			throw new UnsupportedOperationException();
-		}
+		_validateParentSectionId(
+			layout, widgetPageWidgetInstance.getParentSectionId());
 
 		String portletId = PortletIdCodec.encode(
 			widgetPageWidgetInstance.getWidgetName(),
@@ -229,21 +185,11 @@ public class WidgetPageWidgetInstanceResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
-		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
-			sitePageExternalReferenceCode,
-			GroupUtil.getGroupId(
-				false, contextCompany.getCompanyId(),
-				siteExternalReferenceCode));
+		Layout layout = _getTypePortletLayout(
+			siteExternalReferenceCode, sitePageExternalReferenceCode);
 
-		if (layout == null) {
-			throw new UnsupportedOperationException();
-		}
-
-		LayoutType layoutType = layout.getLayoutType();
-
-		if (!(layoutType instanceof LayoutTypePortlet)) {
-			throw new UnsupportedOperationException();
-		}
+		_validateParentSectionId(
+			layout, widgetPageWidgetInstance.getParentSectionId());
 
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)layout.getLayoutType();
@@ -289,10 +235,11 @@ public class WidgetPageWidgetInstanceResourceImpl
 			contextUser.getUserId(), portletId, columnId, position);
 
 		if (addedPortletId == null) {
-			throw new PortalException(
+			throw new IllegalArgumentException(
 				StringBundler.concat(
-					"Portlet ", portletId, " cannot be added to layout ",
-					layout.getPlid(), " by user ", contextUser.getUserId()));
+					"The widget ", portletId,
+					" could not be added to the site page ",
+					layout.getExternalReferenceCode()));
 		}
 
 		layout = _layoutLocalService.updateTypeSettings(
@@ -300,6 +247,31 @@ public class WidgetPageWidgetInstanceResourceImpl
 			layout.getTypeSettings());
 
 		return _toWidgetPageWidgetInstance(layout, addedPortletId);
+	}
+
+	private Layout _getTypePortletLayout(
+			String siteExternalReferenceCode,
+			String sitePageExternalReferenceCode)
+		throws Exception {
+
+		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
+			sitePageExternalReferenceCode,
+			GroupUtil.getGroupId(
+				false, contextCompany.getCompanyId(),
+				siteExternalReferenceCode));
+
+		if (layout == null) {
+			throw new NoSuchEntityException(
+				"site page", sitePageExternalReferenceCode);
+		}
+
+		if (!Objects.equals(layout.getType(), LayoutConstants.TYPE_PORTLET)) {
+			throw new IllegalArgumentException(
+				"The site page with external reference code \"" +
+					sitePageExternalReferenceCode + "\" is not a widget page");
+		}
+
+		return layout;
 	}
 
 	private WidgetPageWidgetInstance _toWidgetPageWidgetInstance(
@@ -323,6 +295,25 @@ public class WidgetPageWidgetInstanceResourceImpl
 				contextHttpServletRequest, layout.getPlid(), contextUriInfo,
 				contextUser),
 			layout, portletId);
+	}
+
+	private void _validateParentSectionId(
+		Layout layout, String parentSectionId) {
+
+		if (Validator.isNull(parentSectionId)) {
+			return;
+		}
+
+		LayoutTypePortlet layoutTypePortlet =
+			(LayoutTypePortlet)layout.getLayoutType();
+
+		List<String> columns = layoutTypePortlet.getColumns();
+
+		if (!columns.contains(parentSectionId)) {
+			throw new IllegalArgumentException(
+				"The widget page section " + parentSectionId +
+					" does not exist");
+		}
 	}
 
 	@Reference

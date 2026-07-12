@@ -102,7 +102,6 @@ import com.liferay.headless.admin.site.client.dto.v1_0.URLImageValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetInstance;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetInstancePageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPermission;
-import com.liferay.headless.admin.site.client.problem.Problem;
 import com.liferay.headless.admin.site.client.scope.Scope;
 import com.liferay.headless.admin.site.client.serdes.v1_0.PageElementSerDes;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.FragmentConfigurationFieldValueTestUtil;
@@ -113,6 +112,7 @@ import com.liferay.headless.admin.site.resource.v1_0.test.util.FragmentViewportS
 import com.liferay.headless.admin.site.resource.v1_0.test.util.FragmentViewportTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.ImageValueTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.PageElementsTestUtil;
+import com.liferay.headless.admin.site.resource.v1_0.test.util.ProblemExceptionTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.ReferencesTestUtil;
 import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.journal.constants.JournalFolderConstants;
@@ -261,22 +261,18 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 			layoutStructure.getLayoutStructureItem(
 				pageElement.getExternalReferenceCode()));
 
-		try {
-			pageElementResource.
-				deleteSitePageSpecificationPageExperiencePageElement(
-					testGroup.getExternalReferenceCode(),
-					_draftLayout.getExternalReferenceCode(),
-					segmentsExperience.getExternalReferenceCode(),
-					pageElement.getExternalReferenceCode());
-
-			Assert.fail();
-		}
-		catch (Problem.ProblemException problemException) {
-			Problem problem = problemException.getProblem();
-
-			Assert.assertEquals("NOT_FOUND", problem.getStatus());
-			Assert.assertNull(problem.getTitle());
-		}
+		ProblemExceptionTestUtil.assertProblemException(
+			"NOT_FOUND",
+			"No page element with the external reference code \"" +
+				pageElement.getExternalReferenceCode() +
+					"\" exists in this page experience",
+			() ->
+				pageElementResource.
+					deleteSitePageSpecificationPageExperiencePageElement(
+						testGroup.getExternalReferenceCode(),
+						_draftLayout.getExternalReferenceCode(),
+						segmentsExperience.getExternalReferenceCode(),
+						pageElement.getExternalReferenceCode()));
 	}
 
 	@Override
@@ -304,22 +300,35 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		assertEquals(postPageElement, getPageElement);
 		assertValid(getPageElement);
 
-		try {
-			pageElementResource.
-				getSitePageSpecificationPageExperiencePageElement(
-					testGroup.getExternalReferenceCode(),
-					_draftLayout.getExternalReferenceCode(),
-					segmentsExperience.getExternalReferenceCode(),
-					RandomTestUtil.randomString());
+		String pageElementExternalReferenceCode = RandomTestUtil.randomString();
 
-			Assert.fail();
-		}
-		catch (Problem.ProblemException problemException) {
-			Problem problem = problemException.getProblem();
+		ProblemExceptionTestUtil.assertProblemException(
+			"NOT_FOUND",
+			"No page element with the external reference code \"" +
+				pageElementExternalReferenceCode +
+					"\" exists in this page experience",
+			() ->
+				pageElementResource.
+					getSitePageSpecificationPageExperiencePageElement(
+						testGroup.getExternalReferenceCode(),
+						_draftLayout.getExternalReferenceCode(),
+						segmentsExperience.getExternalReferenceCode(),
+						pageElementExternalReferenceCode));
 
-			Assert.assertEquals("NOT_FOUND", problem.getStatus());
-			Assert.assertNull(problem.getTitle());
-		}
+		_testGetSitePageSpecificationPageExperiencePageElementWithMismatchedPageSpecification();
+		_testGetSitePageSpecificationPageExperiencePageElementWithNonexistentPageExperience();
+		_testGetSitePageSpecificationPageExperiencePageElementWithOrphanedFragmentEntryLink();
+	}
+
+	@Override
+	@Test
+	public void testGetSitePageSpecificationPageExperiencePageElementPageElementsPage()
+		throws Exception {
+
+		super.
+			testGetSitePageSpecificationPageExperiencePageElementPageElementsPage();
+
+		_testGetSitePageSpecificationPageExperiencePageElementPageElementsPageWithNonexistentPageElement();
 	}
 
 	@Override
@@ -348,22 +357,20 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		assertEquals(postPageElement, pathPageElement);
 		assertValid(pathPageElement);
 
-		try {
-			pageElementResource.
-				patchSitePageSpecificationPageExperiencePageElement(
-					testGroup.getExternalReferenceCode(),
-					_draftLayout.getExternalReferenceCode(),
-					segmentsExperience.getExternalReferenceCode(),
-					RandomTestUtil.randomString(), randomPageElement());
+		String pageElementExternalReferenceCode = RandomTestUtil.randomString();
 
-			Assert.fail();
-		}
-		catch (Problem.ProblemException problemException) {
-			Problem problem = problemException.getProblem();
-
-			Assert.assertEquals("NOT_FOUND", problem.getStatus());
-			Assert.assertNull(problem.getTitle());
-		}
+		ProblemExceptionTestUtil.assertProblemException(
+			"NOT_FOUND",
+			"No page element with the external reference code \"" +
+				pageElementExternalReferenceCode +
+					"\" exists in this page experience",
+			() ->
+				pageElementResource.
+					patchSitePageSpecificationPageExperiencePageElement(
+						testGroup.getExternalReferenceCode(),
+						_draftLayout.getExternalReferenceCode(),
+						segmentsExperience.getExternalReferenceCode(),
+						pageElementExternalReferenceCode, randomPageElement()));
 	}
 
 	@Override
@@ -392,8 +399,14 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 		_testPostSitePageSpecificationPageExperiencePageElementWithFragmentPageElement();
 		_testPostSitePageSpecificationPageExperiencePageElementWithGridPageElement();
+		_testPostSitePageSpecificationPageExperiencePageElementWithInvalidPageElementDefinition();
+		_testPostSitePageSpecificationPageExperiencePageElementWithNonexistentParentPageElement();
 		_testPostSitePageSpecificationPageExperiencePageElementWithNonexistentWidgetPermissionRole();
 		_testPostSitePageSpecificationPageExperiencePageElementWithWidgetPageElement();
+		_testPostSitePageSpecificationPageExperiencePageElementWithoutCollectionSettings();
+		_testPostSitePageSpecificationPageExperiencePageElementWithoutExternalReferenceCode();
+		_testPostSitePageSpecificationPageExperiencePageElementWithoutFormContainerReference();
+		_testPostSitePageSpecificationPageExperiencePageElementWithoutPageElementDefinition();
 	}
 
 	@Override
@@ -833,24 +846,6 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		Assert.assertTrue(
 			scopeExternalReferenceCode,
 			Validator.isNull(scopeExternalReferenceCode));
-	}
-
-	private void _assertProblemException(
-			String status, String title,
-			UnsafeRunnable<Exception> unsafeRunnable)
-		throws Exception {
-
-		try {
-			unsafeRunnable.run();
-
-			Assert.fail();
-		}
-		catch (Problem.ProblemException problemException) {
-			Problem problem = problemException.getProblem();
-
-			Assert.assertEquals(status, problem.getStatus());
-			Assert.assertEquals(title, problem.getTitle());
-		}
 	}
 
 	private void _assertStyledLayoutStructureItemBackgroundImage(
@@ -2315,6 +2310,113 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		return pageElement;
 	}
 
+	private void _testGetSitePageSpecificationPageExperiencePageElementPageElementsPageWithNonexistentPageElement()
+		throws Exception {
+
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				testGroup.getGroupId(), SegmentsExperienceConstants.KEY_DEFAULT,
+				_layout.getPlid());
+
+		String pageElementExternalReferenceCode = RandomTestUtil.randomString();
+
+		ProblemExceptionTestUtil.assertProblemException(
+			"NOT_FOUND",
+			"No page element with the external reference code \"" +
+				pageElementExternalReferenceCode +
+					"\" exists in this page experience",
+			() ->
+				pageElementResource.
+					getSitePageSpecificationPageExperiencePageElementPageElementsPage(
+						testGroup.getExternalReferenceCode(),
+						_draftLayout.getExternalReferenceCode(),
+						segmentsExperience.getExternalReferenceCode(),
+						pageElementExternalReferenceCode, null));
+	}
+
+	private void _testGetSitePageSpecificationPageExperiencePageElementWithMismatchedPageSpecification()
+		throws Exception {
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(testGroup);
+
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				testGroup.getGroupId(), SegmentsExperienceConstants.KEY_DEFAULT,
+				layout.getPlid());
+
+		ProblemExceptionTestUtil.assertProblemException(
+			"BAD_REQUEST",
+			"The page experience does not belong to this page specification",
+			() ->
+				pageElementResource.
+					getSitePageSpecificationPageExperiencePageElement(
+						testGroup.getExternalReferenceCode(),
+						_draftLayout.getExternalReferenceCode(),
+						segmentsExperience.getExternalReferenceCode(),
+						RandomTestUtil.randomString()));
+	}
+
+	private void _testGetSitePageSpecificationPageExperiencePageElementWithNonexistentPageExperience()
+		throws Exception {
+
+		String pageExperienceExternalReferenceCode =
+			RandomTestUtil.randomString();
+
+		ProblemExceptionTestUtil.assertProblemException(
+			"NOT_FOUND",
+			"No page experience exists with the external reference code \"" +
+				pageExperienceExternalReferenceCode + "\"",
+			() ->
+				pageElementResource.
+					getSitePageSpecificationPageExperiencePageElement(
+						testGroup.getExternalReferenceCode(),
+						_draftLayout.getExternalReferenceCode(),
+						pageExperienceExternalReferenceCode,
+						RandomTestUtil.randomString()));
+	}
+
+	private void _testGetSitePageSpecificationPageExperiencePageElementWithOrphanedFragmentEntryLink()
+		throws Exception {
+
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				testGroup.getGroupId(), SegmentsExperienceConstants.KEY_DEFAULT,
+				_layout.getPlid());
+
+		PageElement pageElement =
+			testPostSitePageSpecificationPageExperiencePageElement_addPageElement(
+				_randomPageElement(
+					PageElementDefinition.Type.BASIC_FRAGMENT,
+					StringPool.BLANK));
+
+		BasicFragmentInstancePageElementDefinition
+			basicFragmentInstancePageElementDefinition =
+				(BasicFragmentInstancePageElementDefinition)
+					pageElement.getPageElementDefinition();
+
+		FragmentInstance fragmentInstance =
+			basicFragmentInstancePageElementDefinition.getFragmentInstance();
+
+		_fragmentEntryLinkLocalService.deleteFragmentEntryLink(
+			_fragmentEntryLinkLocalService.
+				getFragmentEntryLinkByExternalReferenceCode(
+					fragmentInstance.getFragmentInstanceExternalReferenceCode(),
+					testGroup.getGroupId()));
+
+		ProblemExceptionTestUtil.assertProblemException(
+			"NOT_FOUND",
+			"No page element with the external reference code \"" +
+				pageElement.getExternalReferenceCode() +
+					"\" exists in this page experience",
+			() ->
+				pageElementResource.
+					getSitePageSpecificationPageExperiencePageElement(
+						testGroup.getExternalReferenceCode(),
+						_draftLayout.getExternalReferenceCode(),
+						segmentsExperience.getExternalReferenceCode(),
+						pageElement.getExternalReferenceCode()));
+	}
+
 	private void _testMissingOptionalReference(
 			int count, UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {
@@ -2422,8 +2524,11 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		collectionItemPageElement.setExternalReferenceCode(
 			pageElements[0].getExternalReferenceCode());
 
-		_assertProblemException(
-			"BAD_REQUEST", null,
+		ProblemExceptionTestUtil.assertProblemException(
+			"CONFLICT",
+			"A page element with the external reference code \"" +
+				collectionItemPageElement.getExternalReferenceCode() +
+					"\" already exists",
 			() -> _testPostSitePageSpecificationPageExperiencePageElement(
 				collectionItemPageElement));
 	}
@@ -2562,7 +2667,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				RandomTestUtil.randomString(),
 				formContainerExternalReferenceCode, false));
 
-		_assertProblemException(
+		ProblemExceptionTestUtil.assertProblemException(
 			"BAD_REQUEST",
 			"Form relationship can only be added inside of a form",
 			() -> _testPostSitePageSpecificationPageExperiencePageElement(
@@ -2637,6 +2742,55 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		_assertStyledLayoutStructureItemBackgroundImage(
 			backgroundImageValue, journalArticle.getResourcePrimKey(),
 			journalArticle, pageElement.getExternalReferenceCode());
+	}
+
+	private void _testPostSitePageSpecificationPageExperiencePageElementWithInvalidPageElementDefinition()
+		throws Exception {
+
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				testGroup.getGroupId(), SegmentsExperienceConstants.KEY_DEFAULT,
+				_layout.getPlid());
+
+		PageElement pageElement = _randomPageElement(
+			PageElementDefinition.Type.COLLECTION_ITEM, StringPool.BLANK);
+
+		ProblemExceptionTestUtil.assertProblemException(
+			"BAD_REQUEST", "The page element definition is invalid",
+			() ->
+				pageElementResource.
+					postSitePageSpecificationPageExperiencePageElement(
+						testGroup.getExternalReferenceCode(),
+						_draftLayout.getExternalReferenceCode(),
+						segmentsExperience.getExternalReferenceCode(),
+						pageElement));
+	}
+
+	private void _testPostSitePageSpecificationPageExperiencePageElementWithNonexistentParentPageElement()
+		throws Exception {
+
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				testGroup.getGroupId(), SegmentsExperienceConstants.KEY_DEFAULT,
+				_layout.getPlid());
+
+		PageElement pageElement = randomPageElement();
+
+		String parentExternalReferenceCode = RandomTestUtil.randomString();
+
+		pageElement.setParentExternalReferenceCode(parentExternalReferenceCode);
+
+		ProblemExceptionTestUtil.assertProblemException(
+			"BAD_REQUEST",
+			"The parent page element \"" + parentExternalReferenceCode +
+				"\" does not exist",
+			() ->
+				pageElementResource.
+					postSitePageSpecificationPageExperiencePageElement(
+						testGroup.getExternalReferenceCode(),
+						_draftLayout.getExternalReferenceCode(),
+						segmentsExperience.getExternalReferenceCode(),
+						pageElement));
 	}
 
 	private void _testPostSitePageSpecificationPageExperiencePageElementWithNonexistentWidgetPermissionRole()
@@ -2778,6 +2932,120 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 		Assert.assertEquals(
 			undeployedPortletName, widgetInstance.getWidgetName());
+	}
+
+	private void _testPostSitePageSpecificationPageExperiencePageElementWithoutCollectionSettings()
+		throws Exception {
+
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				testGroup.getGroupId(), SegmentsExperienceConstants.KEY_DEFAULT,
+				_layout.getPlid());
+
+		CollectionDisplayPageElementDefinition
+			collectionDisplayPageElementDefinition =
+				new CollectionDisplayPageElementDefinition();
+
+		collectionDisplayPageElementDefinition.setType(
+			PageElementDefinition.Type.COLLECTION_DISPLAY);
+
+		PageElement pageElement = randomPageElement();
+
+		pageElement.setPageElementDefinition(
+			collectionDisplayPageElementDefinition);
+
+		ProblemExceptionTestUtil.assertProblemException(
+			"BAD_REQUEST", "Collection settings are required",
+			() ->
+				pageElementResource.
+					postSitePageSpecificationPageExperiencePageElement(
+						testGroup.getExternalReferenceCode(),
+						_draftLayout.getExternalReferenceCode(),
+						segmentsExperience.getExternalReferenceCode(),
+						pageElement));
+	}
+
+	private void _testPostSitePageSpecificationPageExperiencePageElementWithoutExternalReferenceCode()
+		throws Exception {
+
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				testGroup.getGroupId(), SegmentsExperienceConstants.KEY_DEFAULT,
+				_layout.getPlid());
+
+		PageElement pageElement = randomPageElement();
+
+		pageElement.setExternalReferenceCode((String)null);
+
+		ProblemExceptionTestUtil.assertProblemException(
+			"BAD_REQUEST", "An external reference code is required",
+			() ->
+				pageElementResource.
+					postSitePageSpecificationPageExperiencePageElement(
+						testGroup.getExternalReferenceCode(),
+						_draftLayout.getExternalReferenceCode(),
+						segmentsExperience.getExternalReferenceCode(),
+						pageElement));
+	}
+
+	private void _testPostSitePageSpecificationPageExperiencePageElementWithoutFormContainerReference()
+		throws Exception {
+
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				testGroup.getGroupId(), SegmentsExperienceConstants.KEY_DEFAULT,
+				_layout.getPlid());
+
+		FormContainerConfig formContainerConfig = new FormContainerConfig();
+
+		formContainerConfig.setFormContainerType(
+			FormContainerConfig.FormContainerType.SIMPLE);
+
+		FormContainerPageElementDefinition formContainerPageElementDefinition =
+			new FormContainerPageElementDefinition();
+
+		formContainerPageElementDefinition.setFormContainerConfig(
+			formContainerConfig);
+		formContainerPageElementDefinition.setType(
+			PageElementDefinition.Type.FORM_CONTAINER);
+
+		PageElement pageElement = randomPageElement();
+
+		pageElement.setPageElementDefinition(
+			formContainerPageElementDefinition);
+
+		ProblemExceptionTestUtil.assertProblemException(
+			"BAD_REQUEST", "A form container reference is required",
+			() ->
+				pageElementResource.
+					postSitePageSpecificationPageExperiencePageElement(
+						testGroup.getExternalReferenceCode(),
+						_draftLayout.getExternalReferenceCode(),
+						segmentsExperience.getExternalReferenceCode(),
+						pageElement));
+	}
+
+	private void _testPostSitePageSpecificationPageExperiencePageElementWithoutPageElementDefinition()
+		throws Exception {
+
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				testGroup.getGroupId(), SegmentsExperienceConstants.KEY_DEFAULT,
+				_layout.getPlid());
+
+		PageElement pageElement = randomPageElement();
+
+		pageElement.setPageElementDefinition((PageElementDefinition)null);
+
+		ProblemExceptionTestUtil.assertProblemException(
+			"BAD_REQUEST", "A page element definition is required",
+			() ->
+				pageElementResource.
+					postSitePageSpecificationPageExperiencePageElement(
+						testGroup.getExternalReferenceCode(),
+						_draftLayout.getExternalReferenceCode(),
+						segmentsExperience.getExternalReferenceCode(),
+						pageElement));
 	}
 
 	private PageElement _testPutSitePageSpecificationPageExperiencePageElement(

@@ -30,7 +30,8 @@ public class FragmentEntryReferenceUtil {
 		throws Exception {
 
 		if (fragmentReference == null) {
-			throw new UnsupportedOperationException();
+			throw new IllegalArgumentException(
+				"A fragment reference is required");
 		}
 
 		if (Objects.equals(
@@ -44,7 +45,8 @@ public class FragmentEntryReferenceUtil {
 			if (Validator.isNull(
 					fragmentItemExternalReference.getExternalReferenceCode())) {
 
-				throw new UnsupportedOperationException();
+				throw new IllegalArgumentException(
+					"A fragment reference external reference code is required");
 			}
 
 			FragmentEntry fragmentEntry = null;
@@ -89,7 +91,8 @@ public class FragmentEntryReferenceUtil {
 		if (Validator.isNull(
 				defaultFragmentReference.getDefaultFragmentKey())) {
 
-			throw new UnsupportedOperationException();
+			throw new IllegalArgumentException(
+				"A default fragment key is required");
 		}
 
 		FragmentEntry fragmentEntry =

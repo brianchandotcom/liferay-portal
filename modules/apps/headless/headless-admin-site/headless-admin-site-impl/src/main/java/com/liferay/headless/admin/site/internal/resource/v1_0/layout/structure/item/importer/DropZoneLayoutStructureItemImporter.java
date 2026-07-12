@@ -40,7 +40,9 @@ public class DropZoneLayoutStructureItemImporter
 		PageElement[] pageElements = pageElement.getPageElements();
 
 		if ((pageElements != null) && (pageElements.length > 1)) {
-			throw new UnsupportedOperationException();
+			throw new IllegalArgumentException(
+				"A drop zone page element cannot have more than one child " +
+					"page element");
 		}
 
 		DropZoneLayoutStructureItem dropZoneLayoutStructureItem =

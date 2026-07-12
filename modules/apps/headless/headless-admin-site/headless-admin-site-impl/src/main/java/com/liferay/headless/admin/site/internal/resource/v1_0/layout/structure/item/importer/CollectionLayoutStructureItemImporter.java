@@ -57,7 +57,9 @@ public class CollectionLayoutStructureItemImporter
 		PageElement[] pageElements = pageElement.getPageElements();
 
 		if ((pageElements != null) && (pageElements.length > 1)) {
-			throw new UnsupportedOperationException();
+			throw new IllegalArgumentException(
+				"A collection display page element cannot have more than one " +
+					"child page element");
 		}
 
 		String collectionItemItemId = PortalUUIDUtil.generate();
@@ -171,6 +173,11 @@ public class CollectionLayoutStructureItemImporter
 			LayoutStructureItemImporterContext
 				layoutStructureItemImporterContext)
 		throws Exception {
+
+		if (collectionSettings == null) {
+			throw new IllegalArgumentException(
+				"Collection settings are required");
+		}
 
 		CollectionReference collectionReference =
 			collectionSettings.getCollectionReference();

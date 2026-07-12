@@ -5,25 +5,25 @@
 
 package com.liferay.headless.admin.site.internal.vulcan.problem;
 
-import com.liferay.layout.util.structure.exception.NoSuchLayoutStructureItemException;
+import com.liferay.headless.admin.site.internal.exception.DuplicatePageElementException;
 import com.liferay.portal.vulcan.problem.Problem;
 import com.liferay.portal.vulcan.problem.ProblemMapper;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Rubén Pulido
+ * @author Javier Moral
  */
 @Component(service = ProblemMapper.class)
-public class NoSuchPageElementExceptionProblemMapper
-	implements ProblemMapper<NoSuchLayoutStructureItemException> {
+public class DuplicatePageElementExceptionProblemMapper
+	implements ProblemMapper<DuplicatePageElementException> {
 
 	@Override
 	public Problem getProblem(
-		NoSuchLayoutStructureItemException noSuchLayoutStructureItemException) {
+		DuplicatePageElementException duplicatePageElementException) {
 
 		return ProblemUtil.getProblem(
-			Problem.Status.NOT_FOUND, noSuchLayoutStructureItemException);
+			Problem.Status.CONFLICT, duplicatePageElementException);
 	}
 
 }

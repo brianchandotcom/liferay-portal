@@ -116,6 +116,11 @@ public class FormContainerLayoutStructureItemImporter
 			return formStyledLayoutStructureItem;
 		}
 
+		if (formContainerConfig.getFormContainerReference() == null) {
+			throw new IllegalArgumentException(
+				"A form container reference is required");
+		}
+
 		if (formContainerConfig.getFormContainerReference() instanceof
 				FormContainerContextReference) {
 

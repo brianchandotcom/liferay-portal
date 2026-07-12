@@ -116,7 +116,8 @@ public class FragmentConfigurationFieldValuesUtil {
 		if (!(pageElementDefinition instanceof
 				FormFragmentInstancePageElementDefinition)) {
 
-			throw new UnsupportedOperationException();
+			throw new IllegalArgumentException(
+				"The page element definition type is not supported");
 		}
 
 		FormFragmentInstancePageElementDefinition
@@ -492,7 +493,8 @@ public class FragmentConfigurationFieldValuesUtil {
 				itemExternalReference);
 		}
 
-		throw new UnsupportedOperationException();
+		throw new IllegalArgumentException(
+			"The category tree node type is not supported");
 	}
 
 	private static JSONObject _getCategoryTreeNodeMissingReferenceJSONObject(
@@ -649,7 +651,9 @@ public class FragmentConfigurationFieldValuesUtil {
 					FragmentConfigurationFieldValueTypeUtil.toExternalType(
 						fragmentConfigurationField.getType()))) {
 
-				throw new UnsupportedOperationException();
+				throw new IllegalArgumentException(
+					"The fragment configuration field value type does not " +
+						"match the fragment configuration field type");
 			}
 
 			jsonObject.put(

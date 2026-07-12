@@ -6,6 +6,7 @@
 package com.liferay.headless.admin.site.internal.resource.v1_0.util;
 
 import com.liferay.headless.admin.site.dto.v1_0.PageElement;
+import com.liferay.headless.admin.site.dto.v1_0.PageElementDefinition;
 import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.LayoutStructureItemImporter;
 import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.context.LayoutStructureItemImporterContext;
 import com.liferay.layout.util.structure.LayoutStructure;
@@ -25,9 +26,32 @@ public class LayoutStructureUtil {
 			PageElement pageElement)
 		throws Exception {
 
+		PageElementDefinition pageElementDefinition =
+			pageElement.getPageElementDefinition();
+
+		if (pageElementDefinition == null) {
+			throw new IllegalArgumentException(
+				"A page element definition is required");
+		}
+
+		String parentExternalReferenceCode =
+			pageElement.getParentExternalReferenceCode();
+
+		if (Validator.isNotNull(parentExternalReferenceCode)) {
+			LayoutStructureItem parentLayoutStructureItem =
+				layoutStructure.getLayoutStructureItem(
+					parentExternalReferenceCode);
+
+			if (parentLayoutStructureItem == null) {
+				throw new IllegalArgumentException(
+					"The parent page element \"" + parentExternalReferenceCode +
+						"\" does not exist");
+			}
+		}
+
 		LayoutStructureItemImporter layoutStructureItemImporter =
 			LayoutStructureItemImporterUtil.getLayoutStructureItemImporter(
-				pageElement.getPageElementDefinition());
+				pageElementDefinition);
 
 		LayoutStructureItem layoutStructureItem =
 			layoutStructureItemImporter.addLayoutStructureItem(

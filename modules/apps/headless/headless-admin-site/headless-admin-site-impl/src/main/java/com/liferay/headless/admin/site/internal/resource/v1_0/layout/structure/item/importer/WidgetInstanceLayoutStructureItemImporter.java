@@ -72,7 +72,7 @@ public class WidgetInstanceLayoutStructureItemImporter
 			widgetInstancePageElementDefinition.getWidgetInstance();
 
 		if (widgetInstance == null) {
-			throw new UnsupportedOperationException();
+			throw new IllegalArgumentException("A widget instance is required");
 		}
 
 		Layout layout = layoutStructureItemImporterContext.getLayout();

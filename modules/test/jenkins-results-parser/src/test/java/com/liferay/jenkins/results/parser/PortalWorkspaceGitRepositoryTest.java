@@ -6,6 +6,7 @@
 package com.liferay.jenkins.results.parser;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.lang.reflect.Method;
 
@@ -294,6 +295,54 @@ public class PortalWorkspaceGitRepositoryTest
 		Assert.assertFalse(
 			"The git archive must stay disabled when binaries cache is enabled",
 			_isGitArchiveEnabled(portalWorkspaceGitRepository));
+	}
+
+	@Test
+	public void testSetUpFailureDoesNotMarkTheRepositorySetUp()
+		throws Exception {
+
+		mockShell();
+
+		PortalWorkspaceGitRepository portalWorkspaceGitRepository =
+			_newPortalWorkspaceGitRepository();
+
+		Mockito.doCallRealMethod(
+		).when(
+			portalWorkspaceGitRepository
+		).isSetUp();
+
+		Mockito.doCallRealMethod(
+		).when(
+			portalWorkspaceGitRepository
+		).setSetUp(
+			Mockito.anyBoolean()
+		);
+
+		Mockito.doCallRealMethod(
+		).when(
+			portalWorkspaceGitRepository
+		).setUp();
+
+		IOException ioException = new IOException(
+			"The additional caches could not be set up");
+
+		Mockito.doThrow(
+			ioException
+		).when(
+			portalWorkspaceGitRepository
+		).setUpAdditionalCaches();
+
+		RuntimeException runtimeException = Assert.assertThrows(
+			RuntimeException.class, portalWorkspaceGitRepository::setUp);
+
+		Assert.assertSame(
+			"setUp() must rethrow the mid-sequence IOException as the " +
+				"RuntimeException cause",
+			ioException, runtimeException.getCause());
+
+		Assert.assertFalse(
+			"A failed setUp() must not mark the repository set up",
+			portalWorkspaceGitRepository.isSetUp());
 	}
 
 	@Test

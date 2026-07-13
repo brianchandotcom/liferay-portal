@@ -70,8 +70,7 @@ public class PortalWorkspaceGitRepositoryTest
 			"The bundle version must be read from the " +
 				"PORTAL_LATEST_BUNDLE_VERSION environment variable",
 			"environment.value",
-			testProperties.getProperty(
-				"test.released.release.bundle.version"));
+			testProperties.getProperty("test.released.release.bundle.version"));
 
 		Assert.assertEquals(
 			"The bundle zip URL must be resolved from the " +

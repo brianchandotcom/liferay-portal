@@ -82,165 +82,9 @@ public class PortalWorkspaceGitRepositoryTest
 	}
 
 	@Test
-	public void testSetUp() throws Exception {
-		mockEnvironment(
-			Collections.singletonMap("MASTER_NETWORK_NAME", "aws-network"));
-
-		Properties buildProperties = new Properties();
-
-		buildProperties.setProperty(
-			"binaries.cache.s3.path",
-			"s3://liferayci-file-propagator/binaries-cache/master.tar.gz");
-		buildProperties.setProperty("git.archive.enabled", "true");
-
-		JenkinsResultsParserUtil.setBuildProperties(buildProperties);
-
-		BuildDatabaseUtil.setBuildDatabase(
-			BuildDatabaseTestUtil.newBuildDatabaseWithPullRequest());
-
-		Shell shell = mockShell();
-
-		Mockito.doReturn(
-			new Shell.ExecutionResult(0, "", "")
-		).when(
-			shell
-		).doExecute(
-			Mockito.any(Shell.ExecutionRequest.class)
-		);
-
-		PortalWorkspaceGitRepository portalWorkspaceGitRepository =
-			_newPortalWorkspaceGitRepository();
-
-		Mockito.doReturn(
-			true
-		).when(
-			portalWorkspaceGitRepository
-		).isBinariesCacheEnabled();
-
-		Mockito.doCallRealMethod(
-		).when(
-			portalWorkspaceGitRepository
-		).prepareGitWorkingDirectory();
-
-		Mockito.doCallRealMethod(
-		).when(
-			portalWorkspaceGitRepository
-		).setUp();
-
-		Mockito.doCallRealMethod(
-		).when(
-			portalWorkspaceGitRepository
-		).setUpAdditionalCaches();
-
-		portalWorkspaceGitRepository.setUp();
-
-		Mockito.verify(
-			shell
-		).doExecute(
-			Mockito.argThat(
-				executionRequest -> hasCommand(
-					executionRequest, "aws s3 cp", "binaries-cache.tar.gz"))
-		);
-
-		Mockito.verify(
-			shell
-		).doExecute(
-			Mockito.argThat(
-				executionRequest -> hasCommand(
-					executionRequest, "tar --directory=",
-					"binaries-cache.tar.gz"))
-		);
-	}
-
-	@Test
-	public void testSetUpAdditionalCachesWithBinariesCacheDisabled()
-		throws Exception {
-
-		mockEnvironment(
-			Collections.singletonMap("MASTER_NETWORK_NAME", "aws-network"));
-
-		Properties buildProperties = new Properties();
-
-		buildProperties.setProperty("binaries.cache.enabled", "false");
-		buildProperties.setProperty("git.archive.enabled", "true");
-
-		JenkinsResultsParserUtil.setBuildProperties(buildProperties);
-
-		Shell shell = mockShell();
-
-		PortalWorkspaceGitRepository portalWorkspaceGitRepository =
-			_newPortalWorkspaceGitRepository();
-
-		Mockito.doCallRealMethod(
-		).when(
-			portalWorkspaceGitRepository
-		).isBinariesCacheEnabled();
-
-		Mockito.doCallRealMethod(
-		).when(
-			portalWorkspaceGitRepository
-		).setUpAdditionalCaches();
-
-		portalWorkspaceGitRepository.setUpAdditionalCaches();
-
-		Mockito.verify(
-			shell, Mockito.never()
-		).doExecute(
-			Mockito.argThat(
-				executionRequest -> hasCommand(
-					executionRequest, "aws s3 cp", "binaries-cache.tar.gz"))
-		);
-	}
-
-	@Test
-	public void testSetUpAdditionalCachesWithBinariesCacheEnabled()
-		throws Exception {
-
-		mockEnvironment(
-			Collections.singletonMap("MASTER_NETWORK_NAME", "aws-network"));
-
-		Properties buildProperties = new Properties();
-
-		buildProperties.setProperty("binaries.cache.enabled", "true");
-		buildProperties.setProperty(
-			"binaries.cache.s3.path",
-			"s3://liferayci-file-propagator/binaries-cache/master.tar.gz");
-		buildProperties.setProperty("git.archive.enabled", "false");
-
-		JenkinsResultsParserUtil.setBuildProperties(buildProperties);
-
-		Shell shell = mockShell();
-
-		Mockito.doReturn(
-			new Shell.ExecutionResult(0, "", "")
-		).when(
-			shell
-		).doExecute(
-			Mockito.any(Shell.ExecutionRequest.class)
-		);
-
-		PortalWorkspaceGitRepository portalWorkspaceGitRepository =
-			_newPortalWorkspaceGitRepository();
-
-		Mockito.doCallRealMethod(
-		).when(
-			portalWorkspaceGitRepository
-		).isBinariesCacheEnabled();
-
-		Mockito.doCallRealMethod(
-		).when(
-			portalWorkspaceGitRepository
-		).setUpAdditionalCaches();
-
-		portalWorkspaceGitRepository.setUpAdditionalCaches();
-
-		Mockito.verify(
-			shell
-		).doExecute(
-			Mockito.argThat(
-				executionRequest -> hasCommand(
-					executionRequest, "aws s3 cp", "binaries-cache.tar.gz"))
-		);
+	public void testSetUpAdditionalCaches() throws Exception {
+		_testSetUpAdditionalCaches(false);
+		_testSetUpAdditionalCaches(true);
 	}
 
 	@Test
@@ -518,6 +362,75 @@ public class PortalWorkspaceGitRepositoryTest
 				"archive is disabled",
 			!gitArchiveEnabled,
 			portalWorkspaceGitRepository.isBinariesCacheEnabled());
+	}
+
+	private void _testSetUpAdditionalCaches(boolean binariesCacheEnabled)
+		throws Exception {
+
+		mockEnvironment(
+			Collections.singletonMap("MASTER_NETWORK_NAME", "aws-network"));
+
+		Properties buildProperties = new Properties();
+
+		buildProperties.setProperty(
+			"binaries.cache.enabled", String.valueOf(binariesCacheEnabled));
+
+		if (binariesCacheEnabled) {
+			buildProperties.setProperty(
+				"binaries.cache.s3.path",
+				"s3://liferayci-file-propagator/binaries-cache/master.tar.gz");
+		}
+
+		buildProperties.setProperty(
+			"git.archive.enabled", String.valueOf(!binariesCacheEnabled));
+
+		JenkinsResultsParserUtil.setBuildProperties(buildProperties);
+
+		Shell shell = mockShell();
+
+		if (binariesCacheEnabled) {
+			Mockito.doReturn(
+				new Shell.ExecutionResult(0, "", "")
+			).when(
+				shell
+			).doExecute(
+				Mockito.any(Shell.ExecutionRequest.class)
+			);
+		}
+
+		PortalWorkspaceGitRepository portalWorkspaceGitRepository =
+			_newPortalWorkspaceGitRepository();
+
+		Mockito.doCallRealMethod(
+		).when(
+			portalWorkspaceGitRepository
+		).isBinariesCacheEnabled();
+
+		Mockito.doCallRealMethod(
+		).when(
+			portalWorkspaceGitRepository
+		).setUpAdditionalCaches();
+
+		portalWorkspaceGitRepository.setUpAdditionalCaches();
+
+		Mockito.verify(
+			shell, binariesCacheEnabled ? Mockito.times(1) : Mockito.never()
+		).doExecute(
+			Mockito.argThat(
+				executionRequest -> hasCommand(
+					executionRequest, "aws s3 cp", "binaries-cache.tar.gz"))
+		);
+
+		if (binariesCacheEnabled) {
+			Mockito.verify(
+				shell
+			).doExecute(
+				Mockito.argThat(
+					executionRequest -> hasCommand(
+						executionRequest, "tar --directory=",
+						"binaries-cache.tar.gz"))
+			);
+		}
 	}
 
 }

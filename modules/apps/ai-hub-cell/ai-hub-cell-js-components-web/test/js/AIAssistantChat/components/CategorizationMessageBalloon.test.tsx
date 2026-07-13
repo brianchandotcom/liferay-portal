@@ -273,11 +273,72 @@ describe('CategorizationMessageBalloon', () => {
 
 		fireEvent.click(screen.getByRole('button', {name: 'save-categories'}));
 
-		expect(mockFire).toHaveBeenCalledWith('cms:aiAssistant:commit', {
-			agent: 'L_AUTO_CATEGORIZE',
-			scopeId: 555,
-			suggestions: [{id: 39001, name: 'International'}],
+		expect(mockFire).toHaveBeenCalledWith(
+			'cms:aiAssistant:commit',
+			expect.objectContaining({
+				agent: 'L_AUTO_CATEGORIZE',
+				notifyAssistantPanelOpen: expect.any(Function),
+				scopeId: 555,
+				suggestions: [{id: 39001, name: 'International'}],
+			})
+		);
+	});
+
+	it('hides the link when the categorization panel is already open', async () => {
+		(Liferay.Language.get as jest.Mock).mockImplementation((key: string) => {
+			if (key === 'great-i-have-added-x-categories-to-your-content') {
+				return 'Great! I have added {0} categories to your content.';
+			}
+
+			if (key === 'x-to-see-them') {
+				return '{0} to see them.';
+			}
+
+			return key;
 		});
+
+		const fakeEventSource = createFakeEventSource();
+
+		mockCreateEventSource.mockResolvedValue(fakeEventSource as never);
+		mockGetCandidateCategories.mockResolvedValue([
+			{id: 39001, name: 'International', vocabulary: 'Travel'},
+		]);
+
+		await act(async () => {
+			render(
+				<CategorizationMessageBalloon
+					agent={ECategorizationAgent.AUTO_CATEGORIZE}
+					cmsGroupId={20124}
+					content="Japan"
+					scopeId={555}
+				/>
+			);
+		});
+
+		await act(async () => {
+			fakeEventSource.emit('Subscribe', 'sink-7');
+		});
+
+		await act(async () => {
+			fakeEventSource.emit(
+				'L_AUTO_CATEGORIZE',
+				JSON.stringify({
+					data: '{"suggestions":[{"id":39001,"confidence":0.9}]}',
+					nodeName: 'llm',
+				})
+			);
+		});
+
+		fireEvent.click(screen.getByRole('button', {name: 'save-categories'}));
+
+		await act(async () => {
+			mockFire.mock.calls[0][1].notifyAssistantPanelOpen(true);
+		});
+
+		expect(screen.getByText(/Great! I have added/)).toBeInTheDocument();
+		expect(
+			screen.queryByRole('button', {name: 'click-here'})
+		).not.toBeInTheDocument();
 	});
 
 	it('ignores case when counting new tags in the confirmation', async () => {

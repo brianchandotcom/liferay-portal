@@ -34,6 +34,8 @@ export default function CategorizationMessageBalloon({
 	scopeId,
 	targets,
 }: CategorizeEventPayload) {
+	const [categorizationPanelOpen, setCategorizationPanelOpen] =
+		useState(false);
 	const [committed, setCommitted] = useState(false);
 	const [dismissed, setDismissed] = useState<string[]>([]);
 
@@ -147,6 +149,7 @@ export default function CategorizationMessageBalloon({
 					onCommit={(committedSuggestions) => {
 						Liferay.fire(COMMIT_EVENT, {
 							agent,
+							notifyAssistantPanelOpen: setCategorizationPanelOpen,
 							scopeId,
 							suggestions: committedSuggestions,
 						});
@@ -160,6 +163,7 @@ export default function CategorizationMessageBalloon({
 						])
 					}
 					onRegenerate={() => {
+						setCategorizationPanelOpen(false);
 						setCommitted(false);
 						setDismissed([]);
 
@@ -184,23 +188,33 @@ export default function CategorizationMessageBalloon({
 						</div>
 
 						<div className="m-2">
-							{confirmationMessage}{' '}
+							{confirmationMessage}
 
-							{sub(Liferay.Language.get('x-to-see-them'), [
-								<ClayButton
-									className="align-baseline border-0 font-weight-semi-bold p-0 text-decoration-underline"
-									displayType="unstyled"
-									key="open-categorization-panel"
-									onClick={() =>
-										Liferay.fire(
-											OPEN_CATEGORIZATION_PANEL_EVENT,
-											{}
-										)
-									}
-								>
-									{Liferay.Language.get('click-here')}
-								</ClayButton>,
-							])}
+							{!categorizationPanelOpen && (
+								<>
+									{' '}
+									{sub(
+										Liferay.Language.get('x-to-see-them'),
+										[
+											<ClayButton
+												className="align-baseline border-0 font-weight-semi-bold p-0 text-decoration-underline"
+												displayType="unstyled"
+												key="open-categorization-panel"
+												onClick={() =>
+													Liferay.fire(
+														OPEN_CATEGORIZATION_PANEL_EVENT,
+														{}
+													)
+												}
+											>
+												{Liferay.Language.get(
+													'click-here'
+												)}
+											</ClayButton>,
+										]
+									)}
+								</>
+							)}
 						</div>
 					</div>
 				</div>

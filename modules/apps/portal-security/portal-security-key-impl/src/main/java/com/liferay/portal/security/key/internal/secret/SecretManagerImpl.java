@@ -218,7 +218,9 @@ public class SecretManagerImpl implements SecretManager {
 					continue;
 				}
 
-				if (secretProvider.getStatus() == ProviderStatus.ERROR) {
+				if (secretProvider.getProviderStatus() ==
+						ProviderStatus.ERROR) {
+
 					throw new SecretException(
 						StringBundler.concat(
 							"Secret provider ", providerId,

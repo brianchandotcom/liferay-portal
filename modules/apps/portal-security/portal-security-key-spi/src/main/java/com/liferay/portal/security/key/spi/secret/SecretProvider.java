@@ -20,13 +20,13 @@ public interface SecretProvider {
 	public void deleteSecret(long companyId, String identifier)
 		throws SecretException;
 
+	public ProviderStatus getProviderStatus();
+
 	public Secret getSecret(long companyId, String identifier)
 		throws SecretException;
 
 	public List<String> getSecretIdentifiers(long companyId)
 		throws SecretException;
-
-	public ProviderStatus getStatus();
 
 	public boolean isAllowedCompany(long companyId);
 

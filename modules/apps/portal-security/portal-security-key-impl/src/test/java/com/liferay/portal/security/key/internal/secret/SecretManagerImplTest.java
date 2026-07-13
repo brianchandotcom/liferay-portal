@@ -167,7 +167,7 @@ public class SecretManagerImplTest {
 		);
 
 		Mockito.when(
-			_secretProvider.getStatus()
+			_secretProvider.getProviderStatus()
 		).thenReturn(
 			ProviderStatus.ERROR
 		);

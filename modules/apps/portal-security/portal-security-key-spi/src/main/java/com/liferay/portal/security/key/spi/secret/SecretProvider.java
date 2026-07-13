@@ -6,7 +6,7 @@
 package com.liferay.portal.security.key.spi.secret;
 
 import com.liferay.portal.security.key.secret.Secret;
-import com.liferay.portal.security.key.secret.SecretException;
+import com.liferay.portal.security.key.secret.exception.SecretException;
 import com.liferay.portal.security.key.spi.ProviderStatus;
 
 import java.util.List;

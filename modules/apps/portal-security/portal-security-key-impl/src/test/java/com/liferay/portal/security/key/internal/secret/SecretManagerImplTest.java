@@ -12,7 +12,7 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.security.key.KeyReference;
 import com.liferay.portal.security.key.secret.Secret;
-import com.liferay.portal.security.key.secret.SecretException;
+import com.liferay.portal.security.key.secret.exception.SecretException;
 import com.liferay.portal.security.key.spi.ProviderStatus;
 import com.liferay.portal.security.key.spi.profile.KeyManagerProfile;
 import com.liferay.portal.security.key.spi.profile.KeyManagerProfileRegistry;
@@ -45,8 +45,6 @@ public class SecretManagerImplTest {
 	@Before
 	public void setUp() {
 		MockitoAnnotations.openMocks(this);
-
-		_secretManagerImpl = new SecretManagerImpl();
 
 		ReflectionTestUtil.setFieldValue(
 			_secretManagerImpl, "_keyManagerProfileRegistry",
@@ -300,7 +298,8 @@ public class SecretManagerImplTest {
 	@Mock
 	private KeyManagerProfileRegistry _keyManagerProfileRegistry;
 
-	private SecretManagerImpl _secretManagerImpl;
+	private final SecretManagerImpl _secretManagerImpl =
+		new SecretManagerImpl();
 
 	@Mock
 	private SecretProvider _secretProvider;

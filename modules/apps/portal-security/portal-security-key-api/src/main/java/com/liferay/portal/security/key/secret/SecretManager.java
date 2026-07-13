@@ -6,6 +6,7 @@
 package com.liferay.portal.security.key.secret;
 
 import com.liferay.portal.security.key.KeyReference;
+import com.liferay.portal.security.key.secret.exception.SecretException;
 
 import java.util.List;
 

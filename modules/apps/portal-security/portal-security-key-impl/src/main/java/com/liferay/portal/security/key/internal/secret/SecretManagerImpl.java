@@ -16,8 +16,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.security.key.KeyReference;
 import com.liferay.portal.security.key.secret.Secret;
-import com.liferay.portal.security.key.secret.SecretException;
 import com.liferay.portal.security.key.secret.SecretManager;
+import com.liferay.portal.security.key.secret.exception.SecretException;
 import com.liferay.portal.security.key.spi.ProviderStatus;
 import com.liferay.portal.security.key.spi.profile.KeyManagerProfile;
 import com.liferay.portal.security.key.spi.profile.KeyManagerProfileRegistry;
@@ -95,7 +95,7 @@ public class SecretManagerImpl implements SecretManager {
 		}
 		catch (SecretException secretException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to list secret identifiers", secretException);
+				_log.warn("Unable to get secret identifiers", secretException);
 			}
 
 			throw secretException;

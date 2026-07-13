@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 import org.junit.Assert;
@@ -24,6 +26,60 @@ import org.mockito.Mockito;
  */
 public class PortalWorkspaceGitRepositoryTest
 	extends com.liferay.jenkins.results.parser.Test {
+
+	@Test
+	public void testGetPortalTestPropertiesReadsBundleVersionFromEnvironment()
+		throws Exception {
+
+		Map<String, String> environmentValues = new HashMap<>();
+
+		environmentValues.put(
+			"PORTAL_LATEST_BUNDLE_VERSION", "environment.value");
+
+		mockEnvironment(environmentValues);
+
+		Properties buildProperties = new Properties();
+
+		buildProperties.setProperty(
+			"portal.bundle.tomcat[environment.value]", "dummy.value");
+
+		JenkinsResultsParserUtil.setBuildProperties(buildProperties);
+
+		Properties portalTestProperties = new Properties();
+
+		portalTestProperties.setProperty(
+			"test.released.release.bundle.version", "property.value");
+
+		PortalWorkspaceGitRepository portalWorkspaceGitRepository =
+			_newPortalWorkspaceGitRepository();
+
+		Mockito.doReturn(
+			portalTestProperties
+		).when(
+			portalWorkspaceGitRepository
+		).getProperties(
+			"portal.test.properties"
+		);
+
+		mockShell();
+
+		Properties testProperties = _getPortalTestProperties(
+			portalWorkspaceGitRepository);
+
+		Assert.assertEquals(
+			"The bundle version must be read from the " +
+				"PORTAL_LATEST_BUNDLE_VERSION environment variable",
+			"environment.value",
+			testProperties.getProperty(
+				"test.released.release.bundle.version"));
+
+		Assert.assertEquals(
+			"The bundle zip URL must be resolved from the " +
+				"portal.bundle.tomcat property keyed by the bundle version",
+			"dummy.value",
+			testProperties.getProperty(
+				"test.released.test.portal.bundle.zip.url"));
+	}
 
 	@Test
 	public void testPrepareGitWorkingDirectoryWithGitArchiveDisabled()
@@ -424,6 +480,18 @@ public class PortalWorkspaceGitRepositoryTest
 		).putWorkspaceGitRepository(
 			Mockito.anyString(), Mockito.any(WorkspaceGitRepository.class)
 		);
+	}
+
+	private Properties _getPortalTestProperties(
+			PortalWorkspaceGitRepository portalWorkspaceGitRepository)
+		throws Exception {
+
+		Method method = PortalWorkspaceGitRepository.class.getDeclaredMethod(
+			"_getPortalTestProperties");
+
+		method.setAccessible(true);
+
+		return (Properties)method.invoke(portalWorkspaceGitRepository);
 	}
 
 	private boolean _isCommand(

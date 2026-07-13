@@ -112,7 +112,7 @@ public class PortalWorkspaceGitRepositoryTest
 			shell, Mockito.never()
 		).doExecute(
 			Mockito.argThat(
-				executionRequest -> _isCommand(
+				executionRequest -> hasCommand(
 					executionRequest, "git-archives"))
 		);
 
@@ -167,7 +167,7 @@ public class PortalWorkspaceGitRepositoryTest
 			shell, Mockito.atLeastOnce()
 		).doExecute(
 			Mockito.argThat(
-				executionRequest -> _isCommand(
+				executionRequest -> hasCommand(
 					executionRequest, "git-archives"))
 		);
 
@@ -234,7 +234,7 @@ public class PortalWorkspaceGitRepositoryTest
 			shell
 		).doExecute(
 			Mockito.argThat(
-				executionRequest -> _isCommand(
+				executionRequest -> hasCommand(
 					executionRequest, "aws s3 cp", "binaries-cache.tar.gz"))
 		);
 
@@ -242,7 +242,7 @@ public class PortalWorkspaceGitRepositoryTest
 			shell
 		).doExecute(
 			Mockito.argThat(
-				executionRequest -> _isCommand(
+				executionRequest -> hasCommand(
 					executionRequest, "tar --directory=",
 					"binaries-cache.tar.gz"))
 		);
@@ -283,7 +283,7 @@ public class PortalWorkspaceGitRepositoryTest
 			shell, Mockito.never()
 		).doExecute(
 			Mockito.argThat(
-				executionRequest -> _isCommand(
+				executionRequest -> hasCommand(
 					executionRequest, "aws s3 cp", "binaries-cache.tar.gz"))
 		);
 
@@ -338,7 +338,7 @@ public class PortalWorkspaceGitRepositoryTest
 			shell
 		).doExecute(
 			Mockito.argThat(
-				executionRequest -> _isCommand(
+				executionRequest -> hasCommand(
 					executionRequest, "aws s3 cp", "binaries-cache.tar.gz"))
 		);
 
@@ -486,24 +486,6 @@ public class PortalWorkspaceGitRepositoryTest
 		method.setAccessible(true);
 
 		return (Properties)method.invoke(portalWorkspaceGitRepository);
-	}
-
-	private boolean _isCommand(
-		Shell.ExecutionRequest executionRequest, String... substrings) {
-
-		if (executionRequest == null) {
-			return false;
-		}
-
-		String command = executionRequest.getCommands()[0];
-
-		for (String substring : substrings) {
-			if (!command.contains(substring)) {
-				return false;
-			}
-		}
-
-		return true;
 	}
 
 	private boolean _isGitArchiveEnabled(

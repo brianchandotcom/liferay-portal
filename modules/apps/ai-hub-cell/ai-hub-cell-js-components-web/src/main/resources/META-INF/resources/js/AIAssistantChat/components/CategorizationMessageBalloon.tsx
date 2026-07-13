@@ -172,7 +172,7 @@ export default function CategorizationMessageBalloon({
 
 			{committed && committedCount > 0 ? (
 				<div className="ai-assistant-chat__ai-assistant-message-balloon d-flex flex-column mb-2 rounded">
-					<div className="d-flex flex-row font-weight-semi-bold">
+					<div className="d-flex flex-row">
 						<div className="align-items-start d-inline-block ml-2 mt-2">
 							<ClayIcon
 								color="#0B5FFF"
@@ -186,18 +186,21 @@ export default function CategorizationMessageBalloon({
 						<div className="m-2">
 							{confirmationMessage}{' '}
 
-							<ClayButton
-								className="align-baseline border-0 p-0 text-decoration-underline"
-								displayType="link"
-								onClick={() =>
-									Liferay.fire(
-										OPEN_CATEGORIZATION_PANEL_EVENT,
-										{}
-									)
-								}
-							>
-								{Liferay.Language.get('click-here-to-see-them')}
-							</ClayButton>
+							{sub(Liferay.Language.get('x-to-see-them'), [
+								<ClayButton
+									className="align-baseline border-0 font-weight-semi-bold p-0 text-decoration-underline"
+									displayType="unstyled"
+									key="open-categorization-panel"
+									onClick={() =>
+										Liferay.fire(
+											OPEN_CATEGORIZATION_PANEL_EVENT,
+											{}
+										)
+									}
+								>
+									{Liferay.Language.get('click-here')}
+								</ClayButton>,
+							])}
 						</div>
 					</div>
 				</div>

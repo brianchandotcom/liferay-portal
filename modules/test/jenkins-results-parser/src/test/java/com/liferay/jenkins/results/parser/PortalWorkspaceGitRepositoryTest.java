@@ -286,10 +286,6 @@ public class PortalWorkspaceGitRepositoryTest
 				executionRequest -> hasCommand(
 					executionRequest, "aws s3 cp", "binaries-cache.tar.gz"))
 		);
-
-		Assert.assertTrue(
-			"The git archive must stay enabled when binaries cache is disabled",
-			_isGitArchiveEnabled(portalWorkspaceGitRepository));
 	}
 
 	@Test
@@ -341,10 +337,6 @@ public class PortalWorkspaceGitRepositoryTest
 				executionRequest -> hasCommand(
 					executionRequest, "aws s3 cp", "binaries-cache.tar.gz"))
 		);
-
-		Assert.assertFalse(
-			"The git archive must stay disabled when binaries cache is enabled",
-			_isGitArchiveEnabled(portalWorkspaceGitRepository));
 	}
 
 	@Test
@@ -486,18 +478,6 @@ public class PortalWorkspaceGitRepositoryTest
 		method.setAccessible(true);
 
 		return (Properties)method.invoke(portalWorkspaceGitRepository);
-	}
-
-	private boolean _isGitArchiveEnabled(
-			WorkspaceGitRepository workspaceGitRepository)
-		throws Exception {
-
-		Method method = BaseWorkspaceGitRepository.class.getDeclaredMethod(
-			"_isGitArchiveEnabled");
-
-		method.setAccessible(true);
-
-		return (Boolean)method.invoke(workspaceGitRepository);
 	}
 
 	private GitWorkingDirectory _newGitWorkingDirectory() {

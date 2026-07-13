@@ -11,8 +11,6 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Properties;
 
 import org.junit.Assert;
@@ -31,12 +29,9 @@ public class PortalWorkspaceGitRepositoryTest
 	public void testGetPortalTestPropertiesReadsBundleVersionFromEnvironment()
 		throws Exception {
 
-		Map<String, String> environmentValues = new HashMap<>();
-
-		environmentValues.put(
-			"PORTAL_LATEST_BUNDLE_VERSION", "environment.value");
-
-		mockEnvironment(environmentValues);
+		mockEnvironment(
+			Collections.singletonMap(
+				"PORTAL_LATEST_BUNDLE_VERSION", "environment.value"));
 
 		Properties buildProperties = new Properties();
 

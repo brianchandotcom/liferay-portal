@@ -353,6 +353,7 @@
 		<column name="plid" type="long" />
 		<column name="segmentsExperienceERC" type="String" />
 		<column name="targetElement" type="String" />
+		<column name="active" type="boolean" />
 
 		<!-- Finder methods -->
 
@@ -365,6 +366,11 @@
 		<finder name="P_SEERC" return-type="Collection">
 			<finder-column name="plid" />
 			<finder-column name="segmentsExperienceERC" />
+		</finder>
+		<finder name="P_SEERC_A" return-type="Collection">
+			<finder-column name="plid" />
+			<finder-column name="segmentsExperienceERC" />
+			<finder-column name="active" />
 		</finder>
 	</entity>
 	<entity external-reference-code="group" local-service="true" name="LayoutPageTemplateStructureRelElementVariationAudienceEntryRel" remote-service="true" table="LPTSREVAudienceEntryRel" uuid="true">

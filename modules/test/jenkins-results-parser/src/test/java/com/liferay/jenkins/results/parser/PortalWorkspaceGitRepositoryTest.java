@@ -76,105 +76,9 @@ public class PortalWorkspaceGitRepositoryTest
 	}
 
 	@Test
-	public void testPrepareGitWorkingDirectoryWithGitArchiveDisabled()
-		throws Exception {
-
-		mockEnvironment(
-			Collections.singletonMap("MASTER_NETWORK_NAME", "aws-network"));
-
-		Properties buildProperties = new Properties();
-
-		buildProperties.setProperty("binaries.cache.enabled", "true");
-		buildProperties.setProperty(
-			"cloud.ci.s3.bucket.dist.path", "s3://liferayci-dist/dist");
-		buildProperties.setProperty("git.archive.enabled", "false");
-
-		JenkinsResultsParserUtil.setBuildProperties(buildProperties);
-
-		Shell shell = mockShell();
-
-		PortalWorkspaceGitRepository portalWorkspaceGitRepository =
-			_newPortalWorkspaceGitRepository();
-
-		Mockito.doCallRealMethod(
-		).when(
-			portalWorkspaceGitRepository
-		).isBinariesCacheEnabled();
-
-		Mockito.doCallRealMethod(
-		).when(
-			portalWorkspaceGitRepository
-		).prepareGitWorkingDirectory();
-
-		portalWorkspaceGitRepository.prepareGitWorkingDirectory();
-
-		Mockito.verify(
-			shell, Mockito.never()
-		).doExecute(
-			Mockito.argThat(
-				executionRequest -> hasCommand(
-					executionRequest, "git-archives"))
-		);
-
-		Assert.assertTrue(
-			"The binaries cache must stay enabled when the git archive is " +
-				"disabled",
-			portalWorkspaceGitRepository.isBinariesCacheEnabled());
-	}
-
-	@Test
-	public void testPrepareGitWorkingDirectoryWithGitArchiveEnabled()
-		throws Exception {
-
-		mockEnvironment(
-			Collections.singletonMap("MASTER_NETWORK_NAME", "aws-network"));
-
-		Properties buildProperties = new Properties();
-
-		buildProperties.setProperty("binaries.cache.enabled", "false");
-		buildProperties.setProperty(
-			"cloud.ci.s3.bucket.dist.path", "s3://liferayci-dist/dist");
-		buildProperties.setProperty("git.archive.enabled", "true");
-
-		JenkinsResultsParserUtil.setBuildProperties(buildProperties);
-
-		Shell shell = mockShell();
-
-		Mockito.doReturn(
-			new Shell.ExecutionResult(0, "", "")
-		).when(
-			shell
-		).doExecute(
-			Mockito.any(Shell.ExecutionRequest.class)
-		);
-
-		PortalWorkspaceGitRepository portalWorkspaceGitRepository =
-			_newPortalWorkspaceGitRepository();
-
-		Mockito.doCallRealMethod(
-		).when(
-			portalWorkspaceGitRepository
-		).isBinariesCacheEnabled();
-
-		Mockito.doCallRealMethod(
-		).when(
-			portalWorkspaceGitRepository
-		).prepareGitWorkingDirectory();
-
-		portalWorkspaceGitRepository.prepareGitWorkingDirectory();
-
-		Mockito.verify(
-			shell, Mockito.atLeastOnce()
-		).doExecute(
-			Mockito.argThat(
-				executionRequest -> hasCommand(
-					executionRequest, "git-archives"))
-		);
-
-		Assert.assertFalse(
-			"The binaries cache must stay disabled when the git archive is " +
-				"enabled",
-			portalWorkspaceGitRepository.isBinariesCacheEnabled());
+	public void testPrepareGitWorkingDirectory() throws Exception {
+		_testPrepareGitWorkingDirectory(false);
+		_testPrepareGitWorkingDirectory(true);
 	}
 
 	@Test
@@ -555,6 +459,65 @@ public class PortalWorkspaceGitRepositoryTest
 		).getUpstreamBranchName();
 
 		return portalWorkspaceGitRepository;
+	}
+
+	private void _testPrepareGitWorkingDirectory(boolean gitArchiveEnabled)
+		throws Exception {
+
+		mockEnvironment(
+			Collections.singletonMap("MASTER_NETWORK_NAME", "aws-network"));
+
+		Properties buildProperties = new Properties();
+
+		buildProperties.setProperty(
+			"binaries.cache.enabled", String.valueOf(!gitArchiveEnabled));
+		buildProperties.setProperty(
+			"cloud.ci.s3.bucket.dist.path", "s3://liferayci-dist/dist");
+		buildProperties.setProperty(
+			"git.archive.enabled", String.valueOf(gitArchiveEnabled));
+
+		JenkinsResultsParserUtil.setBuildProperties(buildProperties);
+
+		Shell shell = mockShell();
+
+		if (gitArchiveEnabled) {
+			Mockito.doReturn(
+				new Shell.ExecutionResult(0, "", "")
+			).when(
+				shell
+			).doExecute(
+				Mockito.any(Shell.ExecutionRequest.class)
+			);
+		}
+
+		PortalWorkspaceGitRepository portalWorkspaceGitRepository =
+			_newPortalWorkspaceGitRepository();
+
+		Mockito.doCallRealMethod(
+		).when(
+			portalWorkspaceGitRepository
+		).isBinariesCacheEnabled();
+
+		Mockito.doCallRealMethod(
+		).when(
+			portalWorkspaceGitRepository
+		).prepareGitWorkingDirectory();
+
+		portalWorkspaceGitRepository.prepareGitWorkingDirectory();
+
+		Mockito.verify(
+			shell, gitArchiveEnabled ? Mockito.atLeastOnce() : Mockito.never()
+		).doExecute(
+			Mockito.argThat(
+				executionRequest -> hasCommand(
+					executionRequest, "git-archives"))
+		);
+
+		Assert.assertEquals(
+			"The binaries cache must be enabled if and only if the git " +
+				"archive is disabled",
+			!gitArchiveEnabled,
+			portalWorkspaceGitRepository.isBinariesCacheEnabled());
 	}
 
 }

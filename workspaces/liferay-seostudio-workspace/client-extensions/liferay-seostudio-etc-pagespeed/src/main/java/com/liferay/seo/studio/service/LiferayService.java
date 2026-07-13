@@ -13,7 +13,10 @@ import com.liferay.client.extension.util.spring.boot3.service.BaseService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.seo.studio.constants.PageSpeedConstants;
 import com.liferay.seo.studio.model.Domain;
+import com.liferay.seo.studio.model.PageSpeedReport;
+import com.liferay.seo.studio.model.PageSpeedScanResult;
 
 import java.io.IOException;
 
@@ -32,6 +35,7 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -53,10 +57,7 @@ public class LiferayService extends BaseService {
 			"nestedFields", "seoStudioInstance"
 		).build();
 
-		String responseJSON = get(
-			_liferayOAuth2AccessTokenManager.getAuthorization(
-				"liferay-seostudio-etc-pagespeed-oahs"),
-			uriComponents.toUri());
+		String responseJSON = get(_getAuthorization(), uriComponents.toUri());
 
 		String message = "Unable to find domain " + domainId;
 
@@ -76,19 +77,143 @@ public class LiferayService extends BaseService {
 		}
 	}
 
+	public JSONArray getQueuedSEOStudioScansJSONArray() {
+		UriComponents uriComponents = UriComponentsBuilder.fromPath(
+			"/o/c/seostudioscans"
+		).queryParam(
+			"filter", "state eq '" + PageSpeedConstants.STATE_QUEUED + "'"
+		).queryParam(
+			"pageSize", 20
+		).build();
+
+		String responseJSON = get(_getAuthorization(), uriComponents.toUri());
+
+		if (Validator.isNull(responseJSON)) {
+			return new JSONArray();
+		}
+
+		JSONArray itemsJSONArray = new JSONObject(
+			responseJSON
+		).optJSONArray(
+			"items"
+		);
+
+		if (itemsJSONArray == null) {
+			return new JSONArray();
+		}
+
+		return itemsJSONArray;
+	}
+
+	public JSONObject getSEOStudioScanRunJSONObject(long seoStudioScanRunId) {
+		UriComponents uriComponents = UriComponentsBuilder.fromPath(
+			"/o/c/seostudioscanruns/" + seoStudioScanRunId
+		).build();
+
+		String responseJSON = get(_getAuthorization(), uriComponents.toUri());
+
+		String message =
+			"Unable to find SEO Studio scan run " + seoStudioScanRunId;
+
+		if (Validator.isNull(responseJSON)) {
+			throw new IllegalArgumentException(message);
+		}
+
+		try {
+			return new JSONObject(responseJSON);
+		}
+		catch (JSONException jsonException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(message, jsonException);
+			}
+
+			throw new IllegalArgumentException(message, jsonException);
+		}
+	}
+
 	public List<String> getSitemapPageURLs(String hostname, int limit) {
-		if ((limit <= 0) || Validator.isNull(hostname)) {
-			return Collections.emptyList();
+		if (Validator.isNull(hostname)) {
+			throw new IllegalArgumentException(
+				"Unable to fetch a sitemap without a hostname");
+		}
+
+		if (limit <= 0) {
+			throw new IllegalArgumentException(
+				"Unable to fetch a sitemap without a positive limit");
 		}
 
 		String sitemapXML = _getSitemapXML(
 			"https://" + hostname + "/sitemap.xml");
 
 		if (Validator.isNull(sitemapXML)) {
-			return Collections.emptyList();
+			throw new IllegalStateException(
+				"Unable to fetch a sitemap for " + hostname);
 		}
 
 		return _parseSitemapPageURLs(0, hostname, limit, sitemapXML);
+	}
+
+	public void patchSEOStudioScanState(
+		String errorMessage, long seoStudioScanId, String state) {
+
+		JSONObject bodyJSONObject = new JSONObject(
+		).put(
+			"state", state
+		);
+
+		if (Validator.isNotNull(errorMessage)) {
+			bodyJSONObject.put("errorMessage", errorMessage);
+		}
+
+		UriComponents uriComponents = UriComponentsBuilder.fromPath(
+			"/o/c/seostudioscans/" + seoStudioScanId
+		).build();
+
+		patch(
+			_getAuthorization(), bodyJSONObject.toString(),
+			uriComponents.toUri());
+	}
+
+	public void postSEOStudioPageSpeedResult(
+		PageSpeedScanResult pageSpeedScanResult, long seoStudioScanId) {
+
+		PageSpeedReport averagePageSpeedReport =
+			pageSpeedScanResult.getAveragePageSpeedReport();
+
+		JSONObject bodyJSONObject = new JSONObject(
+		).put(
+			"accessibilityScore", averagePageSpeedReport.getAccessibility()
+		).put(
+			"bestPracticesScore", averagePageSpeedReport.getBestPractices()
+		).put(
+			"pagesErrored", pageSpeedScanResult.getPagesErrored()
+		).put(
+			"pagesScanned", pageSpeedScanResult.getPagesScanned()
+		).put(
+			"pagesTotal", pageSpeedScanResult.getPagesTotal()
+		).put(
+			"performanceScore", averagePageSpeedReport.getPerformance()
+		).put(
+			"r_seoStudioScanToSEOStudioPageSpeedResults_seoStudioScanId",
+			seoStudioScanId
+		).put(
+			"seoScore", averagePageSpeedReport.getSEO()
+		).put(
+			"strategy", pageSpeedScanResult.getStrategy()
+		);
+
+		UriComponents uriComponents = UriComponentsBuilder.fromPath(
+			"/o/c/seostudiopagespeedresults"
+		).build();
+
+		post(
+			_getAuthorization(), bodyJSONObject.toString(),
+			uriComponents.toUri());
+	}
+
+	private String _getAuthorization() {
+		return _liferayOAuth2AccessTokenManager.getAuthorization(
+			"liferay-seostudio-etc-pagespeed-oahs");
 	}
 
 	private String _getSitemapXML(String url) {

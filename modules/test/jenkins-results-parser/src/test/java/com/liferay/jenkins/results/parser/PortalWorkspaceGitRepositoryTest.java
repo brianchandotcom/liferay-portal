@@ -15,6 +15,7 @@ import java.util.Properties;
 import org.junit.Assert;
 import org.junit.Test;
 
+import org.mockito.InOrder;
 import org.mockito.Mockito;
 
 /**
@@ -293,6 +294,87 @@ public class PortalWorkspaceGitRepositoryTest
 		Assert.assertFalse(
 			"The git archive must stay disabled when binaries cache is enabled",
 			_isGitArchiveEnabled(portalWorkspaceGitRepository));
+	}
+
+	@Test
+	public void testSetUpRunsStepsInOrderExactlyOnce() throws Exception {
+		mockEnvironment(
+			Collections.singletonMap("MASTER_NETWORK_NAME", "aws-network"));
+
+		Properties buildProperties = new Properties();
+
+		buildProperties.setProperty("git.archive.enabled", "true");
+
+		JenkinsResultsParserUtil.setBuildProperties(buildProperties);
+
+		BuildDatabase buildDatabase = Mockito.mock(BuildDatabase.class);
+
+		BuildDatabaseUtil.setBuildDatabase(buildDatabase);
+
+		mockShell();
+
+		PortalWorkspaceGitRepository portalWorkspaceGitRepository =
+			_newPortalWorkspaceGitRepository();
+
+		Mockito.doCallRealMethod(
+		).when(
+			portalWorkspaceGitRepository
+		).isSetUp();
+
+		Mockito.doCallRealMethod(
+		).when(
+			portalWorkspaceGitRepository
+		).setSetUp(
+			Mockito.anyBoolean()
+		);
+
+		Mockito.doCallRealMethod(
+		).when(
+			portalWorkspaceGitRepository
+		).setUp();
+
+		Assert.assertFalse(
+			"The repository must not be set up before setUp() runs",
+			portalWorkspaceGitRepository.isSetUp());
+
+		portalWorkspaceGitRepository.setUp();
+
+		Assert.assertTrue(
+			"The repository must be set up after setUp() runs",
+			portalWorkspaceGitRepository.isSetUp());
+
+		InOrder inOrder = Mockito.inOrder(
+			buildDatabase, portalWorkspaceGitRepository);
+
+		inOrder.verify(
+			portalWorkspaceGitRepository
+		).prepareGitWorkingDirectory();
+
+		inOrder.verify(
+			portalWorkspaceGitRepository
+		).setUpAdditionalCaches();
+
+		inOrder.verify(
+			buildDatabase
+		).putWorkspaceGitRepository(
+			Mockito.anyString(), Mockito.any(WorkspaceGitRepository.class)
+		);
+
+		portalWorkspaceGitRepository.setUp();
+
+		Mockito.verify(
+			portalWorkspaceGitRepository, Mockito.times(1)
+		).prepareGitWorkingDirectory();
+
+		Mockito.verify(
+			portalWorkspaceGitRepository, Mockito.times(1)
+		).setUpAdditionalCaches();
+
+		Mockito.verify(
+			buildDatabase, Mockito.times(1)
+		).putWorkspaceGitRepository(
+			Mockito.anyString(), Mockito.any(WorkspaceGitRepository.class)
+		);
 	}
 
 	private boolean _isCommand(

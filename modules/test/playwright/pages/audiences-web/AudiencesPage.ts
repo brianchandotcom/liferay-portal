@@ -20,7 +20,7 @@ export class AudiencesPage {
 	constructor(page: Page) {
 		this.nameInput = page.getByPlaceholder('New Audience');
 		this.newAudienceButton = page
-			.getByRole('button', {name: 'New Audience'})
+			.getByRole('button', {exact: true, name: 'New'})
 			.first();
 		this.page = page;
 		this.ruleDropZone = page.locator('.audience-builder-drop-zone');

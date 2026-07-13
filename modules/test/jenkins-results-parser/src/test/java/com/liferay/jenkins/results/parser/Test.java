@@ -304,6 +304,24 @@ public class Test {
 		return _simpleClassNames;
 	}
 
+	protected boolean hasCommand(
+		Shell.ExecutionRequest executionRequest, String... substrings) {
+
+		if (executionRequest == null) {
+			return false;
+		}
+
+		String command = executionRequest.getCommands()[0];
+
+		for (String substring : substrings) {
+			if (!command.contains(substring)) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
 	protected Environment mockEnvironment(
 		Map<String, String> environmentValues) {
 
@@ -385,7 +403,7 @@ public class Test {
 			shell
 		).doExecute(
 			Mockito.argThat(
-				executionRequest -> _hasCommand(command, executionRequest))
+				executionRequest -> hasCommand(executionRequest, command))
 		);
 	}
 
@@ -449,18 +467,6 @@ public class Test {
 		getSimpleClassNames());
 	protected ExpectedMessageGenerator expectedMessageGenerator;
 	protected Map<String, TestSample> testSamples = new HashMap<>();
-
-	private boolean _hasCommand(
-		String command, Shell.ExecutionRequest executionRequest) {
-
-		if (executionRequest == null) {
-			return false;
-		}
-
-		String[] commands = executionRequest.getCommands();
-
-		return commands[0].contains(command);
-	}
 
 	private static final String[][] _XML_REPLACEMENTS = {
 		{"<pre>", "<pre><![CDATA["}, {"</pre>", "]]></pre>"},

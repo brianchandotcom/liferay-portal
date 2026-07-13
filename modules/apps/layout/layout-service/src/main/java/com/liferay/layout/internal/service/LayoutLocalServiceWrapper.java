@@ -559,7 +559,7 @@ public class LayoutLocalServiceWrapper
 					targetLayout.getGroupId(),
 					audienceEntryERCs.toArray(new String[0]),
 					sourceLayoutPageTemplateStructureRelElementVariation.
-						getHideMap(),
+						getHide(),
 					sourceLayoutPageTemplateStructureRelElementVariation.
 						getHtmlMap(),
 					sourceLayoutPageTemplateStructureRelElementVariation.
@@ -569,6 +569,8 @@ public class LayoutLocalServiceWrapper
 					targetLayout.getPlid(), segmentsExperienceERC,
 					sourceLayoutPageTemplateStructureRelElementVariation.
 						getTargetElement(),
+					sourceLayoutPageTemplateStructureRelElementVariation.
+						isActive(),
 					ServiceContextThreadLocal.getServiceContext());
 		}
 	}

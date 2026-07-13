@@ -40,10 +40,11 @@ public class LayoutPageTemplateStructureRelElementVariationLocalServiceImpl
 	public LayoutPageTemplateStructureRelElementVariation
 			addOrUpdateLayoutPageTemplateStructureRelElementVariation(
 				String externalReferenceCode, long userId, long groupId,
-				String[] audienceEntryERCs, Map<Locale, String> hideMap,
+				String[] audienceEntryERCs, String hide,
 				Map<Locale, String> htmlMap, Map<Locale, String> jsMap,
 				String name, long plid, String segmentsExperienceERC,
-				String targetElement, ServiceContext serviceContext)
+				String targetElement, boolean active,
+				ServiceContext serviceContext)
 		throws PortalException {
 
 		_validate(audienceEntryERCs, name, targetElement);
@@ -77,7 +78,7 @@ public class LayoutPageTemplateStructureRelElementVariationLocalServiceImpl
 
 		layoutPageTemplateStructureRelElementVariation.setModifiedDate(
 			serviceContext.getModifiedDate(new Date()));
-		layoutPageTemplateStructureRelElementVariation.setHideMap(hideMap);
+		layoutPageTemplateStructureRelElementVariation.setHide(hide);
 		layoutPageTemplateStructureRelElementVariation.setHtmlMap(htmlMap);
 		layoutPageTemplateStructureRelElementVariation.setJsMap(jsMap);
 		layoutPageTemplateStructureRelElementVariation.setName(name);
@@ -86,6 +87,7 @@ public class LayoutPageTemplateStructureRelElementVariationLocalServiceImpl
 			segmentsExperienceERC);
 		layoutPageTemplateStructureRelElementVariation.setTargetElement(
 			targetElement);
+		layoutPageTemplateStructureRelElementVariation.setActive(active);
 
 		layoutPageTemplateStructureRelElementVariation =
 			layoutPageTemplateStructureRelElementVariationPersistence.update(
@@ -140,6 +142,14 @@ public class LayoutPageTemplateStructureRelElementVariationLocalServiceImpl
 
 		return layoutPageTemplateStructureRelElementVariationPersistence.
 			findByP_SEERC(plid, segmentsExperienceERC);
+	}
+
+	public List<LayoutPageTemplateStructureRelElementVariation>
+		getLayoutPageTemplateStructureRelElementVariations(
+			long plid, String segmentsExperienceERC, boolean active) {
+
+		return layoutPageTemplateStructureRelElementVariationPersistence.
+			findByP_SEERC_A(plid, segmentsExperienceERC, active);
 	}
 
 	private void _validate(

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -45,6 +46,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.test.rule.Inject;
@@ -316,6 +318,77 @@ public class LayoutServiceTest {
 	}
 
 	@Test
+	public void testGetTempFileNamesForCompanyGroupWithControlPanelPermission()
+		throws Exception {
+
+		Group companyGroup = _groupLocalService.getCompanyGroup(
+			TestPropsValues.getCompanyId());
+
+		User user = _addUserWithControlPanelPermission(
+			PortletKeys.COMPANY_IMPORT);
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user)) {
+
+			_layoutService.getTempFileNames(
+				companyGroup.getGroupId(), RandomTestUtil.randomString());
+		}
+	}
+
+	@Test(expected = PrincipalException.class)
+	public void testGetTempFileNamesForCompanyGroupWithoutPermission()
+		throws Exception {
+
+		Group companyGroup = _groupLocalService.getCompanyGroup(
+			TestPropsValues.getCompanyId());
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				UserTestUtil.addUser())) {
+
+			_layoutService.getTempFileNames(
+				companyGroup.getGroupId(), RandomTestUtil.randomString());
+		}
+	}
+
+	@Test(expected = PrincipalException.class)
+	public void testGetTempFileNamesForSiteGroupWithControlPanelPermission()
+		throws Exception {
+
+		User user = _addUserWithControlPanelPermission(
+			PortletKeys.COMPANY_IMPORT);
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user)) {
+
+			_layoutService.getTempFileNames(
+				_group.getGroupId(), RandomTestUtil.randomString());
+		}
+	}
+
+	@Test
+	public void testGetTempFileNamesForSiteGroupWithExportImportPermission()
+		throws Exception {
+
+		User user = UserTestUtil.addUser();
+
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		_roleLocalService.addUserRole(user.getUserId(), role.getRoleId());
+
+		RoleTestUtil.addResourcePermission(
+			role, Group.class.getName(), ResourceConstants.SCOPE_GROUP,
+			String.valueOf(_group.getGroupId()),
+			ActionKeys.EXPORT_IMPORT_LAYOUTS);
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user)) {
+
+			_layoutService.getTempFileNames(
+				_group.getGroupId(), RandomTestUtil.randomString());
+		}
+	}
+
+	@Test
 	@TestInfo("LPD-94951")
 	public void testGetTempFileNamesInsidePublication() throws Exception {
 		CTCollection ctCollection = _ctCollectionLocalService.addCTCollection(
@@ -436,6 +509,23 @@ public class LayoutServiceTest {
 			null,
 			ServiceContextTestUtil.getServiceContext(
 				_group, TestPropsValues.getUserId()));
+	}
+
+	private User _addUserWithControlPanelPermission(String portletId)
+		throws Exception {
+
+		User user = UserTestUtil.addUser();
+
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		_roleLocalService.addUserRole(user.getUserId(), role.getRoleId());
+
+		RoleTestUtil.addResourcePermission(
+			role, portletId, ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(TestPropsValues.getCompanyId()),
+			ActionKeys.ACCESS_IN_CONTROL_PANEL);
+
+		return user;
 	}
 
 	private void _assertAddLayout(boolean privateLayout) throws Exception {
@@ -563,6 +653,9 @@ public class LayoutServiceTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;

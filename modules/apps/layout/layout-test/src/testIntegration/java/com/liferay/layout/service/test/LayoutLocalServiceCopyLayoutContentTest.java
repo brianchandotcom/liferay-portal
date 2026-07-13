@@ -1650,11 +1650,12 @@ public class LayoutLocalServiceCopyLayoutContentTest {
 				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 				layout.getGroupId(),
 				new String[] {RandomTestUtil.randomString()},
-				Collections.<Locale, String>emptyMap(),
+				RandomTestUtil.randomString(),
 				Collections.<Locale, String>emptyMap(),
 				Collections.<Locale, String>emptyMap(),
 				RandomTestUtil.randomString(), layout.getPlid(),
 				segmentsExperienceERC, RandomTestUtil.randomString(),
+				RandomTestUtil.randomBoolean(),
 				ServiceContextTestUtil.getServiceContext(
 					layout.getGroupId(), TestPropsValues.getUserId()));
 	}

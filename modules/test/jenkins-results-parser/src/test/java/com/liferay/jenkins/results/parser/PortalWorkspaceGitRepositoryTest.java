@@ -88,9 +88,7 @@ public class PortalWorkspaceGitRepositoryTest
 	}
 
 	@Test
-	public void testSetUpFailureDoesNotMarkTheRepositorySetUp()
-		throws Exception {
-
+	public void testSetUpFailure() throws Exception {
 		mockShell();
 
 		PortalWorkspaceGitRepository portalWorkspaceGitRepository =
@@ -136,7 +134,7 @@ public class PortalWorkspaceGitRepositoryTest
 	}
 
 	@Test
-	public void testSetUpRunsStepsInOrderExactlyOnce() throws Exception {
+	public void testSetUpRunsOnce() throws Exception {
 		mockEnvironment(
 			Collections.singletonMap("MASTER_NETWORK_NAME", "aws-network"));
 

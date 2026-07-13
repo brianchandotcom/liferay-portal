@@ -122,14 +122,6 @@ public class AssetListFiltersUtil {
 		return _commonFieldTypes.get(propertyName);
 	}
 
-	private static String _getNullIfEmpty(String value) {
-		if (Validator.isNull(value)) {
-			return null;
-		}
-
-		return value;
-	}
-
 	private static String _getSubfield(Locale locale, ObjectField objectField) {
 		if (objectField.isIndexedAsKeyword()) {
 			return "nestedFieldArray.value_keyword";
@@ -479,8 +471,10 @@ public class AssetListFiltersUtil {
 				return null;
 			}
 
-			String lowerTerm = _getNullIfEmpty(valueJSONArray.getString(0));
-			String upperTerm = _getNullIfEmpty(valueJSONArray.getString(1));
+			String lowerTerm = GetterUtil.getString(
+				valueJSONArray.getString(0), null);
+			String upperTerm = GetterUtil.getString(
+				valueJSONArray.getString(1), null);
 
 			if (dateField) {
 				lowerTerm = _normalizeDateValue(dateTime, false, lowerTerm);

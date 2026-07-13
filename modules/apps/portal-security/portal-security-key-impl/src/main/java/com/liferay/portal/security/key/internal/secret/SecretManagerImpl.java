@@ -75,23 +75,24 @@ public class SecretManagerImpl implements SecretManager {
 		}
 
 		try {
-			String resolvedProviderId = _getSecretProviderId(
+			String secretProviderId = _getSecretProviderId(
 				companyId, providerId);
 
 			SecretProvider secretProvider = _getSecretProvider(
-				companyId, resolvedProviderId);
+				companyId, secretProviderId);
 
-			List<String> identifiers = secretProvider.getSecretIdentifiers(
-				companyId);
+			List<String> secretIdentifiers =
+				secretProvider.getSecretIdentifiers(companyId);
 
-			if (identifiers == null) {
+			if (secretIdentifiers == null) {
 				return new ArrayList<>();
 			}
 
 			return TransformUtil.transform(
-				identifiers,
-				identifier -> new KeyReference(
-					identifier, resolvedProviderId, KeyReference.Type.SECRET));
+				secretIdentifiers,
+				secretIdentifier -> new KeyReference(
+					secretIdentifier, secretProviderId,
+					KeyReference.Type.SECRET));
 		}
 		catch (SecretException secretException) {
 			if (_log.isWarnEnabled()) {
@@ -169,16 +170,16 @@ public class SecretManagerImpl implements SecretManager {
 		try {
 			KeyReference keyReference = secret.getKeyReference();
 
-			String providerId = _getSecretProviderId(
+			String secretProviderId = _getSecretProviderId(
 				companyId, keyReference.getProviderId());
 
 			SecretProvider secretProvider = _getSecretProvider(
-				companyId, providerId);
+				companyId, secretProviderId);
 
 			secretProvider.putSecret(companyId, secret);
 
 			return new KeyReference(
-				keyReference.getIdentifier(), providerId,
+				keyReference.getIdentifier(), secretProviderId,
 				KeyReference.Type.SECRET);
 		}
 		catch (SecretException secretException) {
@@ -206,11 +207,12 @@ public class SecretManagerImpl implements SecretManager {
 		}
 	}
 
-	private SecretProvider _getSecretProvider(long companyId, String providerId)
+	private SecretProvider _getSecretProvider(
+			long companyId, String secretProviderId)
 		throws SecretException {
 
 		List<SecretProvider> secretProviders = _serviceTrackerMap.getService(
-			providerId);
+			secretProviderId);
 
 		if (secretProviders != null) {
 			for (SecretProvider secretProvider : secretProviders) {
@@ -223,7 +225,7 @@ public class SecretManagerImpl implements SecretManager {
 
 					throw new SecretException(
 						StringBundler.concat(
-							"Secret provider ", providerId,
+							"Secret provider ", secretProviderId,
 							" is in an error state for company ID ",
 							companyId));
 				}
@@ -234,7 +236,7 @@ public class SecretManagerImpl implements SecretManager {
 
 		throw new SecretException(
 			StringBundler.concat(
-				"No secret provider found for ID ", providerId,
+				"No secret provider found for ID ", secretProviderId,
 				" and company ID ", companyId));
 	}
 

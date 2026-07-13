@@ -60,19 +60,19 @@ public class LayoutPageTemplateStructureRelElementVariationLocalServiceUtil {
 	public static LayoutPageTemplateStructureRelElementVariation
 			addOrUpdateLayoutPageTemplateStructureRelElementVariation(
 				String externalReferenceCode, long userId, long groupId,
-				String[] audienceEntryERCs,
-				Map<java.util.Locale, String> hideMap,
+				String[] audienceEntryERCs, String hide,
 				Map<java.util.Locale, String> htmlMap,
 				Map<java.util.Locale, String> jsMap, String name, long plid,
 				String segmentsExperienceERC, String targetElement,
+				boolean active,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().
 			addOrUpdateLayoutPageTemplateStructureRelElementVariation(
-				externalReferenceCode, userId, groupId, audienceEntryERCs,
-				hideMap, htmlMap, jsMap, name, plid, segmentsExperienceERC,
-				targetElement, serviceContext);
+				externalReferenceCode, userId, groupId, audienceEntryERCs, hide,
+				htmlMap, jsMap, name, plid, segmentsExperienceERC,
+				targetElement, active, serviceContext);
 	}
 
 	/**
@@ -374,6 +374,14 @@ public class LayoutPageTemplateStructureRelElementVariationLocalServiceUtil {
 			plid, segmentsExperienceERC);
 	}
 
+	public static List<LayoutPageTemplateStructureRelElementVariation>
+		getLayoutPageTemplateStructureRelElementVariations(
+			long plid, String segmentsExperienceERC, boolean active) {
+
+		return getService().getLayoutPageTemplateStructureRelElementVariations(
+			plid, segmentsExperienceERC, active);
+	}
+
 	/**
 	 * Returns all the layout page template structure rel element variations matching the UUID and company.
 	 *
@@ -476,4 +484,4 @@ public class LayoutPageTemplateStructureRelElementVariationLocalServiceUtil {
 					class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:175052173
+// LIFERAY-SERVICE-BUILDER-HASH:-83436783

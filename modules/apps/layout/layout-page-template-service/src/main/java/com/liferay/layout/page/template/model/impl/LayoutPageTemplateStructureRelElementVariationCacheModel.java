@@ -82,7 +82,7 @@ public class LayoutPageTemplateStructureRelElementVariationCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(39);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -120,6 +120,8 @@ public class LayoutPageTemplateStructureRelElementVariationCacheModel
 		sb.append(segmentsExperienceERC);
 		sb.append(", targetElement=");
 		sb.append(targetElement);
+		sb.append(", active=");
+		sb.append(active);
 		sb.append("}");
 
 		return sb.toString();
@@ -234,6 +236,8 @@ public class LayoutPageTemplateStructureRelElementVariationCacheModel
 				targetElement);
 		}
 
+		layoutPageTemplateStructureRelElementVariationImpl.setActive(active);
+
 		layoutPageTemplateStructureRelElementVariationImpl.
 			resetOriginalValues();
 
@@ -270,7 +274,7 @@ public class LayoutPageTemplateStructureRelElementVariationCacheModel
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
-		hide = objectInput.readUTF();
+		hide = (String)objectInput.readObject();
 		html = objectInput.readUTF();
 		js = objectInput.readUTF();
 		name = objectInput.readUTF();
@@ -278,6 +282,8 @@ public class LayoutPageTemplateStructureRelElementVariationCacheModel
 		plid = objectInput.readLong();
 		segmentsExperienceERC = objectInput.readUTF();
 		targetElement = objectInput.readUTF();
+
+		active = objectInput.readBoolean();
 
 		audienceEntryERCs = (java.util.List)objectInput.readObject();
 	}
@@ -322,10 +328,10 @@ public class LayoutPageTemplateStructureRelElementVariationCacheModel
 		objectOutput.writeLong(modifiedDate);
 
 		if (hide == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(hide);
+			objectOutput.writeObject(hide);
 		}
 
 		if (html == null) {
@@ -365,6 +371,8 @@ public class LayoutPageTemplateStructureRelElementVariationCacheModel
 			objectOutput.writeUTF(targetElement);
 		}
 
+		objectOutput.writeBoolean(active);
+
 		objectOutput.writeObject(audienceEntryERCs);
 	}
 
@@ -386,6 +394,7 @@ public class LayoutPageTemplateStructureRelElementVariationCacheModel
 	public long plid;
 	public String segmentsExperienceERC;
 	public String targetElement;
+	public boolean active;
 	public volatile java.util.List audienceEntryERCs;
 
 	private static final MethodHandle _audienceEntryERCsMethodHandle;
@@ -404,4 +413,4 @@ public class LayoutPageTemplateStructureRelElementVariationCacheModel
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2108233286
+// LIFERAY-SERVICE-BUILDER-HASH:2122486880

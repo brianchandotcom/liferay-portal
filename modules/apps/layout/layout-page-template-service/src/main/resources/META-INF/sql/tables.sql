@@ -27,13 +27,14 @@ create table LPTSRelElementVariation (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	hide STRING null,
+	hide TEXT null,
 	html STRING null,
 	js STRING null,
 	name VARCHAR(75) null,
 	plid LONG,
 	segmentsExperienceERC VARCHAR(75) null,
 	targetElement VARCHAR(1000) null,
+	active_ BOOLEAN,
 	primary key (lptsRelElementVariationId, ctCollectionId)
 );
 

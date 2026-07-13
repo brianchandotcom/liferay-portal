@@ -100,7 +100,9 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field localized="true" name="hide" type="String" />
+		<field name="hide" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 		<field localized="true" name="html" type="String" />
 		<field localized="true" name="js" type="String" />
 		<field name="name" type="String" />
@@ -109,6 +111,7 @@
 		<field name="targetElement" type="String">
 			<hint name="max-length">1000</hint>
 		</field>
+		<field name="active" type="boolean" />
 	</model>
 	<model name="com.liferay.layout.page.template.model.LayoutPageTemplateStructureRelElementVariationAudienceEntryRel">
 		<field name="mvccVersion" type="long" />

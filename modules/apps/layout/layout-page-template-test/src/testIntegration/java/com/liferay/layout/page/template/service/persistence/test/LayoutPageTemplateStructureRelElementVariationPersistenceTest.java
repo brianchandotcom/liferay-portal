@@ -176,6 +176,9 @@ public class LayoutPageTemplateStructureRelElementVariationPersistenceTest {
 		newLayoutPageTemplateStructureRelElementVariation.setTargetElement(
 			RandomTestUtil.randomString());
 
+		newLayoutPageTemplateStructureRelElementVariation.setActive(
+			RandomTestUtil.randomBoolean());
+
 		newLayoutPageTemplateStructureRelElementVariation = _persistence.update(
 			newLayoutPageTemplateStructureRelElementVariation);
 
@@ -263,6 +266,9 @@ public class LayoutPageTemplateStructureRelElementVariationPersistenceTest {
 				getTargetElement(),
 			newLayoutPageTemplateStructureRelElementVariation.
 				getTargetElement());
+		Assert.assertEquals(
+			existingLayoutPageTemplateStructureRelElementVariation.isActive(),
+			newLayoutPageTemplateStructureRelElementVariation.isActive());
 	}
 
 	@Test(
@@ -348,6 +354,18 @@ public class LayoutPageTemplateStructureRelElementVariationPersistenceTest {
 	}
 
 	@Test
+	public void testCountByP_SEERC_A() throws Exception {
+		_persistence.countByP_SEERC_A(
+			RandomTestUtil.nextLong(), "", RandomTestUtil.randomBoolean());
+
+		_persistence.countByP_SEERC_A(
+			0L, "null", RandomTestUtil.randomBoolean());
+
+		_persistence.countByP_SEERC_A(
+			0L, (String)null, RandomTestUtil.randomBoolean());
+	}
+
+	@Test
 	public void testCountByERC_G() throws Exception {
 		_persistence.countByERC_G("", RandomTestUtil.nextLong());
 
@@ -396,9 +414,9 @@ public class LayoutPageTemplateStructureRelElementVariationPersistenceTest {
 			true, "uuid", true, "externalReferenceCode", true,
 			"layoutPageTemplateStructureRelElementVariationId", true, "groupId",
 			true, "companyId", true, "userId", true, "userName", true,
-			"createDate", true, "modifiedDate", true, "hide", true, "html",
-			true, "js", true, "name", true, "plid", true,
-			"segmentsExperienceERC", true, "targetElement", true);
+			"createDate", true, "modifiedDate", true, "html", true, "js", true,
+			"name", true, "plid", true, "segmentsExperienceERC", true,
+			"targetElement", true, "active", true);
 	}
 
 	@Test
@@ -837,6 +855,9 @@ public class LayoutPageTemplateStructureRelElementVariationPersistenceTest {
 		layoutPageTemplateStructureRelElementVariation.setTargetElement(
 			RandomTestUtil.randomString());
 
+		layoutPageTemplateStructureRelElementVariation.setActive(
+			RandomTestUtil.randomBoolean());
+
 		_layoutPageTemplateStructureRelElementVariations.add(
 			_persistence.update(
 				layoutPageTemplateStructureRelElementVariation));
@@ -852,4 +873,4 @@ public class LayoutPageTemplateStructureRelElementVariationPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1881622989
+// LIFERAY-SERVICE-BUILDER-HASH:-1972421693

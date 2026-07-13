@@ -411,6 +411,85 @@ public interface LayoutPageTemplateStructureRelElementVariationPersistence
 	public int countByP_SEERC(long plid, String segmentsExperienceERC);
 
 	/**
+	 * Returns an ordered range of all the layout page template structure rel element variations where plid = &#63; and segmentsExperienceERC = &#63; and active = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.layout.page.template.model.impl.LayoutPageTemplateStructureRelElementVariationModelImpl</code>.
+	 * </p>
+	 *
+	 * @param plid the plid
+	 * @param segmentsExperienceERC the segments experience erc
+	 * @param active the active
+	 * @param start the lower bound of the range of layout page template structure rel element variations
+	 * @param end the upper bound of the range of layout page template structure rel element variations (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching layout page template structure rel element variations
+	 */
+	public java.util.List<LayoutPageTemplateStructureRelElementVariation>
+		findByP_SEERC_A(
+			long plid, String segmentsExperienceERC, boolean active, int start,
+			int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateStructureRelElementVariation>
+					orderByComparator,
+			boolean useFinderCache);
+
+	/**
+	 * Returns the first layout page template structure rel element variation in the ordered set where plid = &#63; and segmentsExperienceERC = &#63; and active = &#63;.
+	 *
+	 * @param plid the plid
+	 * @param segmentsExperienceERC the segments experience erc
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout page template structure rel element variation
+	 * @throws NoSuchPageTemplateStructureRelElementVariationException if a matching layout page template structure rel element variation could not be found
+	 */
+	public LayoutPageTemplateStructureRelElementVariation findByP_SEERC_A_First(
+			long plid, String segmentsExperienceERC, boolean active,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateStructureRelElementVariation>
+					orderByComparator)
+		throws NoSuchPageTemplateStructureRelElementVariationException;
+
+	/**
+	 * Returns the first layout page template structure rel element variation in the ordered set where plid = &#63; and segmentsExperienceERC = &#63; and active = &#63;.
+	 *
+	 * @param plid the plid
+	 * @param segmentsExperienceERC the segments experience erc
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout page template structure rel element variation, or <code>null</code> if a matching layout page template structure rel element variation could not be found
+	 */
+	public LayoutPageTemplateStructureRelElementVariation
+		fetchByP_SEERC_A_First(
+			long plid, String segmentsExperienceERC, boolean active,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateStructureRelElementVariation>
+					orderByComparator);
+
+	/**
+	 * Removes all the layout page template structure rel element variations where plid = &#63; and segmentsExperienceERC = &#63; and active = &#63; from the database.
+	 *
+	 * @param plid the plid
+	 * @param segmentsExperienceERC the segments experience erc
+	 * @param active the active
+	 */
+	public void removeByP_SEERC_A(
+		long plid, String segmentsExperienceERC, boolean active);
+
+	/**
+	 * Returns the number of layout page template structure rel element variations where plid = &#63; and segmentsExperienceERC = &#63; and active = &#63;.
+	 *
+	 * @param plid the plid
+	 * @param segmentsExperienceERC the segments experience erc
+	 * @param active the active
+	 * @return the number of matching layout page template structure rel element variations
+	 */
+	public int countByP_SEERC_A(
+		long plid, String segmentsExperienceERC, boolean active);
+
+	/**
 	 * Returns the layout page template structure rel element variation where externalReferenceCode = &#63; and groupId = &#63; or throws a <code>NoSuchPageTemplateStructureRelElementVariationException</code> if it could not be found.
 	 *
 	 * @param externalReferenceCode the external reference code
@@ -823,5 +902,74 @@ public interface LayoutPageTemplateStructureRelElementVariationPersistence
 			plid, segmentsExperienceERC, start, end, orderByComparator, true);
 	}
 
+	/**
+	 * Returns all the layout page template structure rel element variations where plid = &#63; and segmentsExperienceERC = &#63; and active = &#63;.
+	 *
+	 * @param plid the plid
+	 * @param segmentsExperienceERC the segments experience erc
+	 * @param active the active
+	 * @return the matching layout page template structure rel element variations
+	 */
+	public default java.util.List
+		<LayoutPageTemplateStructureRelElementVariation> findByP_SEERC_A(
+			long plid, String segmentsExperienceERC, boolean active) {
+
+		return findByP_SEERC_A(
+			plid, segmentsExperienceERC, active,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the layout page template structure rel element variations where plid = &#63; and segmentsExperienceERC = &#63; and active = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.layout.page.template.model.impl.LayoutPageTemplateStructureRelElementVariationModelImpl</code>.
+	 * </p>
+	 *
+	 * @param plid the plid
+	 * @param segmentsExperienceERC the segments experience erc
+	 * @param active the active
+	 * @param start the lower bound of the range of layout page template structure rel element variations
+	 * @param end the upper bound of the range of layout page template structure rel element variations (not inclusive)
+	 * @return the range of matching layout page template structure rel element variations
+	 */
+	public default java.util.List
+		<LayoutPageTemplateStructureRelElementVariation> findByP_SEERC_A(
+			long plid, String segmentsExperienceERC, boolean active, int start,
+			int end) {
+
+		return findByP_SEERC_A(
+			plid, segmentsExperienceERC, active, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the layout page template structure rel element variations where plid = &#63; and segmentsExperienceERC = &#63; and active = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.layout.page.template.model.impl.LayoutPageTemplateStructureRelElementVariationModelImpl</code>.
+	 * </p>
+	 *
+	 * @param plid the plid
+	 * @param segmentsExperienceERC the segments experience erc
+	 * @param active the active
+	 * @param start the lower bound of the range of layout page template structure rel element variations
+	 * @param end the upper bound of the range of layout page template structure rel element variations (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layout page template structure rel element variations
+	 */
+	public default java.util.List
+		<LayoutPageTemplateStructureRelElementVariation> findByP_SEERC_A(
+			long plid, String segmentsExperienceERC, boolean active, int start,
+			int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateStructureRelElementVariation>
+					orderByComparator) {
+
+		return findByP_SEERC_A(
+			plid, segmentsExperienceERC, active, start, end, orderByComparator,
+			true);
+	}
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:706472755
+// LIFERAY-SERVICE-BUILDER-HASH:-1003777356

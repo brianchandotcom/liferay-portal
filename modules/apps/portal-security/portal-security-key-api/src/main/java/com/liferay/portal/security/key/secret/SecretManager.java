@@ -19,19 +19,18 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface SecretManager {
 
 	public void deleteSecret(long companyId, KeyReference keyReference)
-		throws SecretManagerException;
+		throws SecretException;
 
 	public List<KeyReference> getKeyReferences(
 			long companyId, String providerId)
-		throws SecretManagerException;
+		throws SecretException;
 
-	public List<String> getProviderIds(long companyId)
-		throws SecretManagerException;
+	public List<String> getProviderIds(long companyId) throws SecretException;
 
 	public Secret getSecret(long companyId, KeyReference keyReference)
-		throws SecretManagerException;
+		throws SecretException;
 
 	public KeyReference putSecret(long companyId, Secret secret)
-		throws SecretManagerException;
+		throws SecretException;
 
 }

@@ -6,7 +6,7 @@
 package com.liferay.portal.security.key.spi.secret;
 
 import com.liferay.portal.security.key.secret.Secret;
-import com.liferay.portal.security.key.secret.SecretManagerException;
+import com.liferay.portal.security.key.secret.SecretException;
 import com.liferay.portal.security.key.spi.ProviderStatus;
 
 import java.util.List;
@@ -18,19 +18,18 @@ import java.util.List;
 public interface SecretProvider {
 
 	public void deleteSecret(long companyId, String identifier)
-		throws SecretManagerException;
+		throws SecretException;
 
 	public Secret getSecret(long companyId, String identifier)
-		throws SecretManagerException;
+		throws SecretException;
 
 	public List<String> getSecretIdentifiers(long companyId)
-		throws SecretManagerException;
+		throws SecretException;
 
 	public ProviderStatus getStatus();
 
 	public boolean isAllowedCompany(long companyId);
 
-	public void putSecret(long companyId, Secret secret)
-		throws SecretManagerException;
+	public void putSecret(long companyId, Secret secret) throws SecretException;
 
 }

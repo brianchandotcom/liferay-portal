@@ -12,7 +12,7 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.security.key.KeyReference;
 import com.liferay.portal.security.key.secret.Secret;
-import com.liferay.portal.security.key.secret.SecretManagerException;
+import com.liferay.portal.security.key.secret.SecretException;
 import com.liferay.portal.security.key.spi.ProviderStatus;
 import com.liferay.portal.security.key.spi.profile.KeyManagerProfile;
 import com.liferay.portal.security.key.spi.profile.KeyManagerProfileRegistry;
@@ -66,7 +66,7 @@ public class SecretManagerImplTest {
 		);
 
 		Assert.assertThrows(
-			SecretManagerException.class,
+			SecretException.class,
 			() -> _secretManagerImpl.deleteSecret(
 				RandomTestUtil.randomLong(), _secretReference(providerId)));
 	}
@@ -181,7 +181,7 @@ public class SecretManagerImplTest {
 		);
 
 		Assert.assertThrows(
-			SecretManagerException.class,
+			SecretException.class,
 			() -> _secretManagerImpl.getSecret(
 				RandomTestUtil.randomLong(), _secretReference(providerId)));
 	}

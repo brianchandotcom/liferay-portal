@@ -16,8 +16,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.security.key.KeyReference;
 import com.liferay.portal.security.key.secret.Secret;
+import com.liferay.portal.security.key.secret.SecretException;
 import com.liferay.portal.security.key.secret.SecretManager;
-import com.liferay.portal.security.key.secret.SecretManagerException;
 import com.liferay.portal.security.key.spi.ProviderStatus;
 import com.liferay.portal.security.key.spi.profile.KeyManagerProfile;
 import com.liferay.portal.security.key.spi.profile.KeyManagerProfileRegistry;
@@ -42,7 +42,7 @@ public class SecretManagerImpl implements SecretManager {
 
 	@Override
 	public void deleteSecret(long companyId, KeyReference keyReference)
-		throws SecretManagerException {
+		throws SecretException {
 
 		if (keyReference == null) {
 			throw new IllegalArgumentException("Key reference is null");
@@ -56,19 +56,19 @@ public class SecretManagerImpl implements SecretManager {
 			secretProvider.deleteSecret(
 				companyId, keyReference.getIdentifier());
 		}
-		catch (SecretManagerException secretManagerException) {
+		catch (SecretException secretException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to delete secret", secretManagerException);
+				_log.warn("Unable to delete secret", secretException);
 			}
 
-			throw secretManagerException;
+			throw secretException;
 		}
 	}
 
 	@Override
 	public List<KeyReference> getKeyReferences(
 			long companyId, String providerId)
-		throws SecretManagerException {
+		throws SecretException {
 
 		if (providerId == null) {
 			throw new IllegalArgumentException("Provider ID is null");
@@ -93,14 +93,12 @@ public class SecretManagerImpl implements SecretManager {
 				identifier -> new KeyReference(
 					identifier, resolvedProviderId, KeyReference.Type.SECRET));
 		}
-		catch (SecretManagerException secretManagerException) {
+		catch (SecretException secretException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to list secret identifiers",
-					secretManagerException);
+				_log.warn("Unable to list secret identifiers", secretException);
 			}
 
-			throw secretManagerException;
+			throw secretException;
 		}
 	}
 
@@ -137,7 +135,7 @@ public class SecretManagerImpl implements SecretManager {
 
 	@Override
 	public Secret getSecret(long companyId, KeyReference keyReference)
-		throws SecretManagerException {
+		throws SecretException {
 
 		if (keyReference == null) {
 			throw new IllegalArgumentException("Key reference is null");
@@ -151,18 +149,18 @@ public class SecretManagerImpl implements SecretManager {
 			return secretProvider.getSecret(
 				companyId, keyReference.getIdentifier());
 		}
-		catch (SecretManagerException secretManagerException) {
+		catch (SecretException secretException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to get secret", secretManagerException);
+				_log.warn("Unable to get secret", secretException);
 			}
 
-			throw secretManagerException;
+			throw secretException;
 		}
 	}
 
 	@Override
 	public KeyReference putSecret(long companyId, Secret secret)
-		throws SecretManagerException {
+		throws SecretException {
 
 		if (secret == null) {
 			throw new IllegalArgumentException("Secret is null");
@@ -183,12 +181,12 @@ public class SecretManagerImpl implements SecretManager {
 				keyReference.getIdentifier(), providerId,
 				KeyReference.Type.SECRET);
 		}
-		catch (SecretManagerException secretManagerException) {
+		catch (SecretException secretException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to put secret", secretManagerException);
+				_log.warn("Unable to put secret", secretException);
 			}
 
-			throw secretManagerException;
+			throw secretException;
 		}
 	}
 
@@ -209,7 +207,7 @@ public class SecretManagerImpl implements SecretManager {
 	}
 
 	private SecretProvider _getSecretProvider(long companyId, String providerId)
-		throws SecretManagerException {
+		throws SecretException {
 
 		List<SecretProvider> secretProviders = _serviceTrackerMap.getService(
 			providerId);
@@ -221,7 +219,7 @@ public class SecretManagerImpl implements SecretManager {
 				}
 
 				if (secretProvider.getStatus() == ProviderStatus.ERROR) {
-					throw new SecretManagerException(
+					throw new SecretException(
 						StringBundler.concat(
 							"Secret provider ", providerId,
 							" is in an error state for company ID ",
@@ -232,14 +230,14 @@ public class SecretManagerImpl implements SecretManager {
 			}
 		}
 
-		throw new SecretManagerException(
+		throw new SecretException(
 			StringBundler.concat(
 				"No secret provider found for ID ", providerId,
 				" and company ID ", companyId));
 	}
 
 	private String _getSecretProviderId(long companyId, String providerId)
-		throws SecretManagerException {
+		throws SecretException {
 
 		if (providerId == null) {
 			throw new IllegalArgumentException("Provider ID is null");
@@ -253,7 +251,7 @@ public class SecretManagerImpl implements SecretManager {
 			_keyManagerProfileRegistry.getActiveKeyManagerProfile();
 
 		if (activeProfile == null) {
-			throw new SecretManagerException(
+			throw new SecretException(
 				StringBundler.concat(
 					"No active KeyManagerProfile found to resolve the ",
 					"provider wildcard for company ID ", companyId));
@@ -267,7 +265,7 @@ public class SecretManagerImpl implements SecretManager {
 		}
 
 		if (providerId == null) {
-			throw new SecretManagerException(
+			throw new SecretException(
 				StringBundler.concat(
 					"The active KeyManagerProfile does not configure a ",
 					(companyId == CompanyConstants.SYSTEM) ? "system" :

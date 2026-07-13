@@ -11,20 +11,20 @@ import com.liferay.portal.kernel.exception.PortalException;
  * @author Tomas Polesovsky
  * @author Christopher Kian
  */
-public class SecretManagerException extends PortalException {
+public class SecretException extends PortalException {
 
-	public SecretManagerException() {
+	public SecretException() {
 	}
 
-	public SecretManagerException(String msg) {
+	public SecretException(String msg) {
 		super(msg);
 	}
 
-	public SecretManagerException(String msg, Throwable throwable) {
+	public SecretException(String msg, Throwable throwable) {
 		super(msg, throwable);
 	}
 
-	public SecretManagerException(Throwable throwable) {
+	public SecretException(Throwable throwable) {
 		super(throwable);
 	}
 

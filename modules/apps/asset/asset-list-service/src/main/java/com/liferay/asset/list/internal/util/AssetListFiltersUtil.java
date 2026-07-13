@@ -195,7 +195,7 @@ public class AssetListFiltersUtil {
 	}
 
 	private static String _normalizeDateValue(
-		boolean dateTime, boolean endOfBound, String value) {
+		boolean dateTime, boolean upperBound, String value) {
 
 		if (Validator.isNull(value)) {
 			return null;
@@ -212,12 +212,12 @@ public class AssetListFiltersUtil {
 		if (dateTime) {
 			String padded = digits + "000000000000";
 
-			return padded.substring(0, 12) + (endOfBound ? "59" : "00");
+			return padded.substring(0, 12) + (upperBound ? "59" : "00");
 		}
 
 		String padded = digits + "00000000";
 
-		return padded.substring(0, 8) + (endOfBound ? "235959" : "000000");
+		return padded.substring(0, 8) + (upperBound ? "235959" : "000000");
 	}
 
 	private static String _resolveMetadataFieldName(String name) {

@@ -551,7 +551,9 @@ public class LayoutLocalServiceWrapper
 					targetLayout.getGroupId(),
 					audienceEntryERCs.toArray(new String[0]),
 					sourceLayoutPageTemplateStructureRelElementVariation.
-						getHideMap(),
+						isActive(),
+					sourceLayoutPageTemplateStructureRelElementVariation.
+						getHide(),
 					sourceLayoutPageTemplateStructureRelElementVariation.
 						getHtmlMap(),
 					sourceLayoutPageTemplateStructureRelElementVariation.

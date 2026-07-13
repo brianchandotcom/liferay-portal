@@ -142,52 +142,60 @@ export default function CategorizationMessageBalloon({
 
 	return (
 		<>
-			<div className="ai-assistant-chat__ai-assistant-message-balloon mb-2 p-2 rounded">
-				<CategorizationSuggestions
-					committed={committed}
-					kind={isCategories ? 'categories' : 'tags'}
-					onCommit={(committedSuggestions) => {
-						Liferay.fire(COMMIT_EVENT, {
-							agent,
-							notifyAssistantPanelOpen: setCategorizationPanelOpen,
-							scopeId,
-							suggestions: committedSuggestions,
-						});
+			<div className="ai-assistant-chat__ai-assistant-message-balloon d-flex flex-column mb-2 rounded">
+				<div className="d-flex flex-row">
+					<div className="align-items-start d-inline-block flex-shrink-0 ml-2 mt-2 text-2 text-primary">
+						<ClayIcon
+							spritemap={Liferay.Icons.spritemap}
+							symbol="stars"
+						/>
+					</div>
 
-						setCommitted(true);
-					}}
-					onDismiss={(suggestion) =>
-						setDismissed((previousDismissed) => [
-							...previousDismissed,
-							getKey(suggestion),
-						])
-					}
-					onRegenerate={() => {
-						setCategorizationPanelOpen(false);
-						setCommitted(false);
-						setDismissed([]);
+					<div className="flex-grow-1 m-2">
+						<CategorizationSuggestions
+							committed={committed}
+							kind={isCategories ? 'categories' : 'tags'}
+							onCommit={(committedSuggestions) => {
+								Liferay.fire(COMMIT_EVENT, {
+									agent,
+									notifyAssistantPanelOpen: setCategorizationPanelOpen,
+									scopeId,
+									suggestions: committedSuggestions,
+								});
 
-						regenerate();
-					}}
-					status={status === 'idle' ? 'loading' : status}
-					suggestions={visibleSuggestions}
-				/>
+								setCommitted(true);
+							}}
+							onDismiss={(suggestion) =>
+								setDismissed((previousDismissed) => [
+									...previousDismissed,
+									getKey(suggestion),
+								])
+							}
+							onRegenerate={() => {
+								setCategorizationPanelOpen(false);
+								setCommitted(false);
+								setDismissed([]);
+
+								regenerate();
+							}}
+							status={status === 'idle' ? 'loading' : status}
+							suggestions={visibleSuggestions}
+						/>
+					</div>
+				</div>
 			</div>
 
 			{committed && committedCount > 0 ? (
 				<div className="ai-assistant-chat__ai-assistant-message-balloon d-flex flex-column mb-2 rounded">
 					<div className="d-flex flex-row">
-						<div className="align-items-start d-inline-block ml-2 mt-2">
+						<div className="align-items-start d-inline-block flex-shrink-0 ml-2 mt-2 text-2 text-primary">
 							<ClayIcon
-								color="#0B5FFF"
-								height={12}
 								spritemap={Liferay.Icons.spritemap}
 								symbol="stars"
-								width={12}
 							/>
 						</div>
 
-						<div className="m-2">
+						<div className="flex-grow-1 m-2">
 							{confirmationMessage}
 
 							{!categorizationPanelOpen && (

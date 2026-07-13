@@ -208,6 +208,10 @@ html#{$cadmin-selector} .cadmin {
 		}
 		.ai-assistant-chat__ai-assistant-message-balloon {
 			background: $cadmin-gray-100;
+
+			p:last-child {
+				margin-bottom: 0;
+			}
 		}
 
 		.ai-assistant-chat__content-generation-balloon {

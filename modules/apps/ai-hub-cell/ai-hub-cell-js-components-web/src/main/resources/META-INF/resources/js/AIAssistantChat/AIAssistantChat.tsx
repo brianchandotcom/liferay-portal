@@ -491,8 +491,7 @@ const AIAssistantChat: React.FC<AIAssistantChatProps> = ({
 				{!initialMessage && (
 					<AIAssistantMessageBalloon
 						error={false}
-						message="Hi! I can help you generate content, titles, tags, or
-						translate your work. What would you like to do?"
+						message="Hi! I can help you generate content, titles, tags, or translate your work. What would you like to do?"
 					/>
 				)}
 

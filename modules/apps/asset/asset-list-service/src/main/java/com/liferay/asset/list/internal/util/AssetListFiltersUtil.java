@@ -453,11 +453,11 @@ public class AssetListFiltersUtil {
 		JSONObject filterJSONObject, ObjectField objectField,
 		String operatorName, String subfield) {
 
-		boolean dateSubfield = subfield.endsWith(".value_date");
+		boolean dateField = subfield.endsWith(".value_date");
 
 		boolean dateTime = false;
 
-		if (dateSubfield &&
+		if (dateField &&
 			ObjectFieldConstants.DB_TYPE_DATE_TIME.equals(
 				objectField.getDBType())) {
 
@@ -465,12 +465,12 @@ public class AssetListFiltersUtil {
 		}
 
 		return _toTermRangeQuery(
-			dateSubfield, dateTime, subfield, filterJSONObject, operatorName);
+			dateField, dateTime, subfield, filterJSONObject, operatorName);
 	}
 
 	private static Query _toTermRangeQuery(
-		boolean dateType, boolean dateTime, String field, JSONObject jsonObject,
-		String operatorName) {
+		boolean dateField, boolean dateTime, String field,
+		JSONObject jsonObject, String operatorName) {
 
 		if (operatorName.equals("between")) {
 			JSONArray valueJSONArray = jsonObject.getJSONArray("value");
@@ -482,7 +482,7 @@ public class AssetListFiltersUtil {
 			String lowerTerm = _getNullIfEmpty(valueJSONArray.getString(0));
 			String upperTerm = _getNullIfEmpty(valueJSONArray.getString(1));
 
-			if (dateType) {
+			if (dateField) {
 				lowerTerm = _normalizeDateValue(dateTime, false, lowerTerm);
 				upperTerm = _normalizeDateValue(dateTime, true, upperTerm);
 			}
@@ -498,28 +498,28 @@ public class AssetListFiltersUtil {
 
 		if (operatorName.equals("ge")) {
 			String lowerTerm =
-				dateType ? _normalizeDateValue(dateTime, false, value) : value;
+				dateField ? _normalizeDateValue(dateTime, false, value) : value;
 
 			return new TermRangeQuery(field, lowerTerm, null, true, false);
 		}
 
 		if (operatorName.equals("gt")) {
 			String lowerTerm =
-				dateType ? _normalizeDateValue(dateTime, true, value) : value;
+				dateField ? _normalizeDateValue(dateTime, true, value) : value;
 
 			return new TermRangeQuery(field, lowerTerm, null, false, false);
 		}
 
 		if (operatorName.equals("le")) {
 			String upperTerm =
-				dateType ? _normalizeDateValue(dateTime, true, value) : value;
+				dateField ? _normalizeDateValue(dateTime, true, value) : value;
 
 			return new TermRangeQuery(field, null, upperTerm, false, true);
 		}
 
 		if (operatorName.equals("lt")) {
 			String upperTerm =
-				dateType ? _normalizeDateValue(dateTime, false, value) : value;
+				dateField ? _normalizeDateValue(dateTime, false, value) : value;
 
 			return new TermRangeQuery(field, null, upperTerm, false, false);
 		}

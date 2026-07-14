@@ -33,6 +33,7 @@ import {
 } from '../../main_view/info_panel/components/categorizationAgentEvents';
 import ObjectEntryService from '../../main_view/info_panel/services/ObjectEntryService';
 import {Comment} from '../services/CommentService';
+import getEditedContent from '../utils/getEditedContent';
 import {EVENT_VALIDATE_FORM} from './ContentEditorToolbar';
 import {dateConfig, toMomentDate, toServerISOFormat} from './ScheduleField';
 import CategorizationPanel from './panels/CategorizationPanel';
@@ -362,6 +363,11 @@ function SidePanel(props: SidePanelProps) {
 				return;
 			}
 
+			const editedContent = await getEditedContent(
+				data.systemProperties?.objectDefinitionBrief
+					?.externalReferenceCode
+			);
+
 			actions.forEach((action) => {
 				const agent =
 					action.agent === 'categorize'
@@ -371,7 +377,7 @@ function SidePanel(props: SidePanelProps) {
 				const payload: CategorizeEventPayload = {
 					agent,
 					cmsGroupId,
-					content: data.contentRawText ?? '',
+					content: editedContent || data.contentRawText || '',
 					count: action.count,
 					scopeId:
 						agent === AUTO_CATEGORIZE_AGENT

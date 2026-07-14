@@ -5,6 +5,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
@@ -140,15 +141,23 @@ export default function CategorizationMessageBalloon({
 		`${committedCount}`
 	);
 
+	const isLoading = status === 'idle' || status === 'loading';
+
 	return (
 		<>
 			<div className="ai-assistant-chat__ai-assistant-message-balloon d-flex flex-column mb-2 rounded">
 				<div className="d-flex flex-row">
-					<div className="align-items-start d-inline-block flex-shrink-0 ml-2 mt-2 text-2 text-primary">
-						<ClayIcon
-							spritemap={Liferay.Icons.spritemap}
-							symbol="stars"
-						/>
+					<div
+						className={`align-items-start d-inline-block flex-shrink-0 ml-2 mt-2 text-2 ${isLoading ? '' : 'text-primary'}`}
+					>
+						{isLoading ? (
+							<ClayLoadingIndicator size="sm" />
+						) : (
+							<ClayIcon
+								spritemap={Liferay.Icons.spritemap}
+								symbol="stars"
+							/>
+						)}
 					</div>
 
 					<div className="flex-grow-1 m-2">

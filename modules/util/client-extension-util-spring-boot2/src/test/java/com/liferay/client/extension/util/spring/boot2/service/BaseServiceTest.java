@@ -29,7 +29,8 @@ public class BaseServiceTest {
 
 	@BeforeClass
 	public static void setUpClass() {
-		_clientAndServer = ClientAndServer.startClientAndServer(63638);
+		_clientAndServer = ClientAndServer.startClientAndServer(0);
+		_port = _clientAndServer.getPort();
 	}
 
 	@AfterClass
@@ -40,7 +41,7 @@ public class BaseServiceTest {
 	@Test
 	public void testEmptyBodyErrorResponseThrows() {
 		new MockServerClient(
-			"localhost", 63638
+			"localhost", _port
 		).when(
 			HttpRequest.request(
 			).withMethod(
@@ -59,7 +60,8 @@ public class BaseServiceTest {
 		try {
 			TestService testService = new TestService();
 
-			testService.doGet(URI.create("http://localhost:63638/empty-error"));
+			testService.doGet(
+				URI.create("http://localhost:" + _port + "/empty-error"));
 
 			Assert.fail("Expected WebClientResponseException");
 		}
@@ -72,6 +74,7 @@ public class BaseServiceTest {
 	}
 
 	private static ClientAndServer _clientAndServer;
+	private static int _port;
 
 	private static class TestService extends BaseService {
 

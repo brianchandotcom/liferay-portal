@@ -1,4 +1,4 @@
-@import 'cadmin-variables';
+@import '../variables';
 
 @mixin ai-assistant-chat-gutter {
 	padding-left: 1rem;
@@ -198,8 +198,12 @@ html#{$cadmin-selector} .cadmin {
 		}
 
 		.ai-assistant-chat__generating-loading-text {
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
 			align-self: center;
-			color: $cadmin-primary;
+			background-clip: text;
+			background-image: $ai-loading-gradient;
+			color: transparent;
 			font-weight: 600;
 			margin: 0.5rem;
 		}

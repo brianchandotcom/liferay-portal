@@ -107,7 +107,7 @@ public class AudiencesEntryLocalServiceImpl
 	@Override
 	public AudiencesEntry updateAudiencesEntry(
 			long audiencesEntryId, String externalReferenceCode, String json,
-			String name)
+			String name, ServiceContext serviceContext)
 		throws PortalException {
 
 		_validate(json, name);
@@ -116,6 +116,12 @@ public class AudiencesEntryLocalServiceImpl
 			audiencesEntryPersistence.findByPrimaryKey(audiencesEntryId);
 
 		audiencesEntry.setExternalReferenceCode(externalReferenceCode);
+
+		User user = _userLocalService.getUser(serviceContext.getUserId());
+
+		audiencesEntry.setUserId(user.getUserId());
+		audiencesEntry.setUserName(user.getFullName());
+
 		audiencesEntry.setJSON(json);
 		audiencesEntry.setName(name);
 

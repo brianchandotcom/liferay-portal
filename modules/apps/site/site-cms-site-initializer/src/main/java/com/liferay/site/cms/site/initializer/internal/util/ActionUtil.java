@@ -56,6 +56,7 @@ import com.liferay.object.service.ObjectDefinitionSettingLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -906,6 +907,27 @@ public class ActionUtil {
 					httpServletRequest,
 					objectEntryFolderExternalReferenceCode)));
 
+		if (FeatureFlagManagerUtil.isEnabled(
+				PortalUtil.getCompanyId(httpServletRequest), "LPD-62272")) {
+
+			long groupId = InfoItemUtil.getGroupId(httpServletRequest);
+
+			dropdownItems.add(
+				getGenerateImageWithAIDropdownItem(
+					LanguageUtil.get(
+						httpServletRequest, "generate-single-image-with-ai"),
+					LanguageUtil.get(
+						httpServletRequest, "generate-single-image"),
+					groupId, objectEntryFolderExternalReferenceCode));
+			dropdownItems.add(
+				getGenerateImageWithAIDropdownItem(
+					LanguageUtil.get(
+						httpServletRequest, "generate-multiple-images-with-ai"),
+					LanguageUtil.get(
+						httpServletRequest, "generate-multiple-images"),
+					groupId, objectEntryFolderExternalReferenceCode));
+		}
+
 		List<DropdownItem> filesCustomDropdownItems =
 			getFilesCustomDropdownItems(
 				httpServletRequest, objectEntryFolderExternalReferenceCode);
@@ -918,6 +940,26 @@ public class ActionUtil {
 		dropdownItems.addAll(filesCustomDropdownItems);
 
 		return dropdownItems;
+	}
+
+	public static DropdownItem getGenerateImageWithAIDropdownItem(
+		String label, String message, long groupId,
+		String objectEntryFolderExternalReferenceCode) {
+
+		return DropdownItemBuilder.putData(
+			"action", "generateImageWithAI"
+		).putData(
+			"groupId", String.valueOf(groupId)
+		).putData(
+			"message", message
+		).putData(
+			"objectEntryFolderExternalReferenceCode",
+			objectEntryFolderExternalReferenceCode
+		).setIcon(
+			"stars"
+		).setLabel(
+			label
+		).build();
 	}
 
 	public static String getRecycleBinURL(ThemeDisplay themeDisplay) {

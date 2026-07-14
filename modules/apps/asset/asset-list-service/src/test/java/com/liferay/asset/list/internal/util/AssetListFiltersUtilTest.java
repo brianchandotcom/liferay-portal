@@ -96,15 +96,37 @@ public class AssetListFiltersUtilTest {
 		String userName = "John Smith";
 		String viewCount = String.valueOf(RandomTestUtil.randomInt());
 
-		_assertTermRangeQuery(
-			"createDate", false, false, "20260115235959", null,
+		_assertMatchQuery(
+			"localized_title_en_US", title2,
 			_runAndAssertCommonFieldRow(
-				_buildCommonFieldFilter("gt", "createDate", "2026-01-15")));
+				_buildCommonFieldFilter("contains", "title", title2)));
+		_assertMatchQuery(
+			"localized_title_en_US", title1,
+			_runAndAssertCommonFieldRow(
+				_buildCommonFieldFilter("eq", "title", title1)));
+
 		_assertTermQuery(
 			"externalReferenceCode", externalReferenceCode,
 			_runAndAssertCommonFieldRow(
 				_buildCommonFieldFilter(
 					"eq", "externalReferenceCode", externalReferenceCode)));
+		_assertTermQuery(
+			"status", status,
+			_runAndAssertNegatedCommonFieldRow(
+				_buildCommonFieldFilter("not-eq", "status", status)));
+		_assertTermQuery(
+			"userName", "john smith",
+			_runAndAssertCommonFieldRow(
+				_buildCommonFieldFilter("eq", "userName", userName)));
+		_assertTermQuery(
+			"viewCount", viewCount,
+			_runAndAssertCommonFieldRow(
+				_buildCommonFieldFilter("eq", "viewCount", viewCount)));
+
+		_assertTermRangeQuery(
+			"createDate", false, false, "20260115235959", null,
+			_runAndAssertCommonFieldRow(
+				_buildCommonFieldFilter("gt", "createDate", "2026-01-15")));
 		_assertTermRangeQuery(
 			"modified", true, true, "20260115000000", "20260120235959",
 			_runAndAssertCommonFieldRow(
@@ -123,30 +145,11 @@ public class AssetListFiltersUtilTest {
 			"priority", false, false, priority, null,
 			_runAndAssertCommonFieldRow(
 				_buildCommonFieldFilter("gt", "priority", priority)));
-		_assertTermQuery(
-			"status", status,
-			_runAndAssertNegatedCommonFieldRow(
-				_buildCommonFieldFilter("not-eq", "status", status)));
-		_assertMatchQuery(
-			"localized_title_en_US", title2,
-			_runAndAssertCommonFieldRow(
-				_buildCommonFieldFilter("contains", "title", title2)));
-		_assertMatchQuery(
-			"localized_title_en_US", title1,
-			_runAndAssertCommonFieldRow(
-				_buildCommonFieldFilter("eq", "title", title1)));
-		_assertTermQuery(
-			"userName", "john smith",
-			_runAndAssertCommonFieldRow(
-				_buildCommonFieldFilter("eq", "userName", userName)));
+
 		_assertWildcardQuery(
 			"userName", "*john smith*",
 			_runAndAssertNegatedCommonFieldRow(
 				_buildCommonFieldFilter("not-contains", "userName", userName)));
-		_assertTermQuery(
-			"viewCount", viewCount,
-			_runAndAssertCommonFieldRow(
-				_buildCommonFieldFilter("eq", "viewCount", viewCount)));
 
 		BooleanClause[] booleanClauses =
 			AssetListFiltersUtil.getFiltersBooleanClauses(
@@ -323,6 +326,13 @@ public class AssetListFiltersUtilTest {
 	public void testFilterQueriesWithKeywordTextContainsOperators() {
 		_setUpKeywordTextObjectField("learnDocumentation");
 
+		_assertTermQuery(
+			"nestedFieldArray.value_keyword", "alpha",
+			_runAndAssertNestedRow(
+				BooleanClauseOccur.MUST,
+				_buildFilter("eq", "learnDocumentation", "Alpha"),
+				"learnDocumentation"));
+
 		_assertWildcardQuery(
 			"nestedFieldArray.value_keyword", "*alpha*",
 			_runAndAssertNestedRow(
@@ -333,12 +343,6 @@ public class AssetListFiltersUtilTest {
 			"nestedFieldArray.value_keyword", "*alpha*",
 			_runAndAssertNegatedNestedRow(
 				_buildFilter("not-contains", "learnDocumentation", "Alpha"),
-				"learnDocumentation"));
-		_assertTermQuery(
-			"nestedFieldArray.value_keyword", "alpha",
-			_runAndAssertNestedRow(
-				BooleanClauseOccur.MUST,
-				_buildFilter("eq", "learnDocumentation", "Alpha"),
 				"learnDocumentation"));
 	}
 

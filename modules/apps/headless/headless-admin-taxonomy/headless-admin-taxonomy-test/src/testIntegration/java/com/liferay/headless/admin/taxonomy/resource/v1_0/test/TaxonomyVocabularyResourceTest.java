@@ -62,6 +62,7 @@ import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -366,10 +367,25 @@ public class TaxonomyVocabularyResourceTest
 		_testPutSiteTaxonomyVocabularyByExternalReferenceCodeWithNonexistentAssetLibrary();
 	}
 
+	@FeatureFlag("LPD-17564")
 	@Override
 	@Test
 	public void testPutTaxonomyVocabulary() throws Exception {
 		super.testPutTaxonomyVocabulary();
+
+		Group originalIrrelevantGroup = irrelevantGroup;
+		Group originalTestGroup = testGroup;
+
+		_addCMSGroup();
+
+		try {
+			_testPutTaxonomyVocabularyResetsProjectScope();
+			_testPutTaxonomyVocabularyResetsSpaceScope();
+		}
+		finally {
+			irrelevantGroup = originalIrrelevantGroup;
+			testGroup = originalTestGroup;
+		}
 
 		_testPutTaxonomyVocabularyUpdatesEmptyVocabulary();
 		_testPutTaxonomyVocabularyWithoutDescription();
@@ -464,6 +480,24 @@ public class TaxonomyVocabularyResourceTest
 		testGroup = GroupTestUtil.addGroup(
 			testDepotEntryGroup.getCompanyId(), TestPropsValues.getUserId(),
 			GroupConstants.DEFAULT_PARENT_GROUP_ID, GroupConstants.CMS);
+	}
+
+	private void _assertAllProjects(TaxonomyVocabulary taxonomyVocabulary) {
+		Project[] projects = taxonomyVocabulary.getProjects();
+
+		Assert.assertEquals(Arrays.toString(projects), 1, projects.length);
+		Assert.assertEquals(
+			Long.valueOf(GroupConstants.GROUP_ID_ALL), projects[0].getId());
+	}
+
+	private void _assertAllSpaces(TaxonomyVocabulary taxonomyVocabulary) {
+		AssetLibrary[] assetLibraries = taxonomyVocabulary.getAssetLibraries();
+
+		Assert.assertEquals(
+			Arrays.toString(assetLibraries), 1, assetLibraries.length);
+		Assert.assertEquals(
+			Long.valueOf(GroupConstants.GROUP_ID_ALL),
+			assetLibraries[0].getId());
 	}
 
 	private Project _randomProjectAssetLibrary() throws Exception {
@@ -894,6 +928,71 @@ public class TaxonomyVocabularyResourceTest
 
 		Assert.assertTrue(
 			ArrayUtil.isEmpty(putTaxonomyVocabulary.getAssetLibraries()));
+	}
+
+	private void _testPutTaxonomyVocabularyResetsProjectScope()
+		throws Exception {
+
+		Project project = _randomProjectAssetLibrary();
+
+		TaxonomyVocabulary randomTaxonomyVocabulary =
+			randomTaxonomyVocabulary();
+
+		randomTaxonomyVocabulary.setProjects(new Project[] {project});
+
+		TaxonomyVocabulary postTaxonomyVocabulary =
+			taxonomyVocabularyResource.postSiteTaxonomyVocabulary(
+				testGroup.getGroupId(), randomTaxonomyVocabulary);
+
+		Project[] projects = postTaxonomyVocabulary.getProjects();
+
+		Assert.assertEquals(Arrays.toString(projects), 1, projects.length);
+		Assert.assertEquals(project.getId(), projects[0].getId());
+
+		postTaxonomyVocabulary.setProjects(new Project[0]);
+
+		TaxonomyVocabulary putTaxonomyVocabulary =
+			taxonomyVocabularyResource.putTaxonomyVocabulary(
+				postTaxonomyVocabulary.getId(), postTaxonomyVocabulary);
+
+		_assertAllProjects(putTaxonomyVocabulary);
+
+		_assertAllProjects(
+			taxonomyVocabularyResource.getTaxonomyVocabulary(
+				putTaxonomyVocabulary.getId()));
+	}
+
+	private void _testPutTaxonomyVocabularyResetsSpaceScope() throws Exception {
+		AssetLibrary assetLibrary = _randomSpaceAssetLibrary();
+
+		TaxonomyVocabulary randomTaxonomyVocabulary =
+			randomTaxonomyVocabulary();
+
+		randomTaxonomyVocabulary.setAssetLibraries(
+			new AssetLibrary[] {assetLibrary});
+
+		TaxonomyVocabulary postTaxonomyVocabulary =
+			taxonomyVocabularyResource.postSiteTaxonomyVocabulary(
+				testGroup.getGroupId(), randomTaxonomyVocabulary);
+
+		AssetLibrary[] assetLibraries =
+			postTaxonomyVocabulary.getAssetLibraries();
+
+		Assert.assertEquals(
+			Arrays.toString(assetLibraries), 1, assetLibraries.length);
+		Assert.assertEquals(assetLibrary.getId(), assetLibraries[0].getId());
+
+		postTaxonomyVocabulary.setAssetLibraries(new AssetLibrary[0]);
+
+		TaxonomyVocabulary putTaxonomyVocabulary =
+			taxonomyVocabularyResource.putTaxonomyVocabulary(
+				postTaxonomyVocabulary.getId(), postTaxonomyVocabulary);
+
+		_assertAllSpaces(putTaxonomyVocabulary);
+
+		_assertAllSpaces(
+			taxonomyVocabularyResource.getTaxonomyVocabulary(
+				putTaxonomyVocabulary.getId()));
 	}
 
 	private void _testPutTaxonomyVocabularyUpdatesEmptyVocabulary()

@@ -126,7 +126,7 @@ public class AudiencesEntryServiceImpl extends AudiencesEntryServiceBaseImpl {
 	@Override
 	public AudiencesEntry updateAudiencesEntry(
 			long audiencesEntryId, String externalReferenceCode, String json,
-			String name)
+			String name, ServiceContext serviceContext)
 		throws PortalException {
 
 		_portletResourcePermission.check(
@@ -134,7 +134,8 @@ public class AudiencesEntryServiceImpl extends AudiencesEntryServiceBaseImpl {
 			AudiencesActionKeys.MANAGE_AUDIENCES_ENTRIES);
 
 		return audiencesEntryLocalService.updateAudiencesEntry(
-			audiencesEntryId, externalReferenceCode, json, name);
+			audiencesEntryId, externalReferenceCode, json, name,
+			serviceContext);
 	}
 
 	@Reference

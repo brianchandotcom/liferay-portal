@@ -68,7 +68,8 @@ public class AudiencesFDSDataProvider
 			audiencesEntries,
 			audiencesEntry -> new FDSAudiencesEntry(
 				audiencesEntry.getAudiencesEntryId(),
-				audiencesEntry.getModifiedDate(), audiencesEntry.getName()));
+				audiencesEntry.getModifiedDate(), audiencesEntry.getName(),
+				audiencesEntry.getUserName()));
 	}
 
 	@Override

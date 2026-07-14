@@ -70,7 +70,8 @@ public class UpdateAudiencesEntryMVCActionCommand extends BaseMVCActionCommand {
 			}
 			else {
 				audiencesEntry = _audiencesEntryService.updateAudiencesEntry(
-					audiencesEntryId, externalReferenceCode, json, name);
+					audiencesEntryId, externalReferenceCode, json, name,
+					serviceContext);
 			}
 
 			String redirect = ParamUtil.getString(actionRequest, "redirect");

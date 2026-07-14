@@ -8,6 +8,7 @@ package com.liferay.client.extension.util.spring.boot3.service;
 import java.net.URI;
 
 import java.util.Collections;
+import java.util.UUID;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -40,6 +41,8 @@ public class BaseServiceTest {
 
 	@Test
 	public void testEmptyBodyErrorResponseThrows() {
+		String path = "/" + UUID.randomUUID();
+
 		new MockServerClient(
 			"localhost", _port
 		).when(
@@ -47,7 +50,7 @@ public class BaseServiceTest {
 			).withMethod(
 				"GET"
 			).withPath(
-				"/empty-error"
+				path
 			),
 			Times.unlimited()
 		).respond(
@@ -61,7 +64,7 @@ public class BaseServiceTest {
 			TestService testService = new TestService();
 
 			testService.doGet(
-				URI.create("http://localhost:" + _port + "/empty-error"));
+				URI.create("http://localhost:" + _port + path));
 
 			Assert.fail("Expected WebClientResponseException");
 		}

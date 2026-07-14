@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -31,6 +31,7 @@ public class BaseServiceTest {
 	@BeforeClass
 	public static void setUpClass() {
 		_clientAndServer = ClientAndServer.startClientAndServer(0);
+
 		_port = _clientAndServer.getPort();
 	}
 
@@ -63,8 +64,7 @@ public class BaseServiceTest {
 		try {
 			TestService testService = new TestService();
 
-			testService.doGet(
-				URI.create("http://localhost:" + _port + path));
+			testService.doGet(URI.create("http://localhost:" + _port + path));
 
 			Assert.fail("Expected WebClientResponseException");
 		}

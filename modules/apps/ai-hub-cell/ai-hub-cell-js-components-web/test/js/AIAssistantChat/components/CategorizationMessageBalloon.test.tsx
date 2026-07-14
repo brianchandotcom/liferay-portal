@@ -285,17 +285,19 @@ describe('CategorizationMessageBalloon', () => {
 	});
 
 	it('hides the link when the categorization panel is already open', async () => {
-		(Liferay.Language.get as jest.Mock).mockImplementation((key: string) => {
-			if (key === 'great-i-have-added-x-categories-to-your-content') {
-				return 'Great! I have added {0} categories to your content.';
-			}
+		(Liferay.Language.get as jest.Mock).mockImplementation(
+			(key: string) => {
+				if (key === 'great-i-have-added-x-categories-to-your-content') {
+					return 'Great! I have added {0} categories to your content.';
+				}
 
-			if (key === 'x-to-see-them') {
-				return '{0} to see them.';
-			}
+				if (key === 'x-to-see-them') {
+					return '{0} to see them.';
+				}
 
-			return key;
-		});
+				return key;
+			}
+		);
 
 		const fakeEventSource = createFakeEventSource();
 
@@ -436,17 +438,19 @@ describe('CategorizationMessageBalloon', () => {
 	});
 
 	it('shows a confirmation message with a link to open the categorization panel after committing', async () => {
-		(Liferay.Language.get as jest.Mock).mockImplementation((key: string) => {
-			if (key === 'great-i-have-added-x-categories-to-your-content') {
-				return 'Great! I have added {0} categories to your content.';
-			}
+		(Liferay.Language.get as jest.Mock).mockImplementation(
+			(key: string) => {
+				if (key === 'great-i-have-added-x-categories-to-your-content') {
+					return 'Great! I have added {0} categories to your content.';
+				}
 
-			if (key === 'x-to-see-them') {
-				return '{0} to see them.';
-			}
+				if (key === 'x-to-see-them') {
+					return '{0} to see them.';
+				}
 
-			return key;
-		});
+				return key;
+			}
+		);
 
 		const fakeEventSource = createFakeEventSource();
 
@@ -484,9 +488,7 @@ describe('CategorizationMessageBalloon', () => {
 
 		expect(screen.getByText(/Great! I have added/)).toBeInTheDocument();
 
-		fireEvent.click(
-			screen.getByRole('button', {name: 'click-here'})
-		);
+		fireEvent.click(screen.getByRole('button', {name: 'click-here'}));
 
 		expect(mockFire).toHaveBeenCalledWith(
 			'cms:aiAssistant:openCategorizationPanel',

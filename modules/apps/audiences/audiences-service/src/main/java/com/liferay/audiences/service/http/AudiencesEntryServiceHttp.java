@@ -338,7 +338,8 @@ public class AudiencesEntryServiceHttp {
 	public static com.liferay.audiences.model.AudiencesEntry
 			updateAudiencesEntry(
 				HttpPrincipal httpPrincipal, long audiencesEntryId,
-				String externalReferenceCode, String json, String name)
+				String externalReferenceCode, String json, String name,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -347,7 +348,8 @@ public class AudiencesEntryServiceHttp {
 				_updateAudiencesEntryParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, audiencesEntryId, externalReferenceCode, json, name);
+				methodKey, audiencesEntryId, externalReferenceCode, json, name,
+				serviceContext);
 
 			Object returnObj = null;
 
@@ -404,7 +406,10 @@ public class AudiencesEntryServiceHttp {
 	private static final Class<?>[] _getAudiencesEntryParameterTypes6 =
 		new Class[] {long.class};
 	private static final Class<?>[] _updateAudiencesEntryParameterTypes7 =
-		new Class[] {long.class, String.class, String.class, String.class};
+		new Class[] {
+			long.class, String.class, String.class, String.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
+		};
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:968614239
+// LIFERAY-SERVICE-BUILDER-HASH:-250703774

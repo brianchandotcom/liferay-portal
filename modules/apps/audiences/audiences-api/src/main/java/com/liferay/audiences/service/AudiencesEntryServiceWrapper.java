@@ -106,11 +106,13 @@ public class AudiencesEntryServiceWrapper
 	@Override
 	public com.liferay.audiences.model.AudiencesEntry updateAudiencesEntry(
 			long audiencesEntryId, String externalReferenceCode, String json,
-			String name)
+			String name,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _audiencesEntryService.updateAudiencesEntry(
-			audiencesEntryId, externalReferenceCode, json, name);
+			audiencesEntryId, externalReferenceCode, json, name,
+			serviceContext);
 	}
 
 	@Override
@@ -126,4 +128,4 @@ public class AudiencesEntryServiceWrapper
 	private AudiencesEntryService _audiencesEntryService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1546322937
+// LIFERAY-SERVICE-BUILDER-HASH:-1060435356

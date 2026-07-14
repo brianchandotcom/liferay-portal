@@ -29,28 +29,26 @@ public class WorkspaceGitRepositoryTest
 		Assert.assertTrue(
 			"A full .git dir archive is required for ee-6.2.x working dirs",
 			_isFullDotGitDirArchiveRequired(
-				_newWorkspaceGitRepository("liferay-plugins-ee-6.2.x")));
+				_mockWorkspaceGitRepository("liferay-plugins-ee-6.2.x")));
 
 		Assert.assertTrue(
 			"A full .git dir archive is required for ee-6.2.x working dirs",
 			_isFullDotGitDirArchiveRequired(
-				_newWorkspaceGitRepository("liferay-portal-ee-6.2.x")));
+				_mockWorkspaceGitRepository("liferay-portal-ee-6.2.x")));
 
 		Assert.assertFalse(
 			"A full .git dir archive is not required for master working dirs",
 			_isFullDotGitDirArchiveRequired(
-				_newWorkspaceGitRepository("liferay-portal")));
+				_mockWorkspaceGitRepository("liferay-portal")));
 
 		Assert.assertFalse(
 			"A full .git dir archive is not required for 7.0.x working dirs",
 			_isFullDotGitDirArchiveRequired(
-				_newWorkspaceGitRepository("liferay-portal-7.0.x")));
+				_mockWorkspaceGitRepository("liferay-portal-7.0.x")));
 	}
 
 	@Test
-	public void testValidateSHAInRemoteGitRefFetchesBeforeContainsCheck()
-		throws Exception {
-
+	public void testValidateSHAInRemoteGitRef() throws Exception {
 		GitWorkingDirectory gitWorkingDirectory = Mockito.mock(
 			GitWorkingDirectory.class);
 
@@ -110,7 +108,7 @@ public class WorkspaceGitRepositoryTest
 		return (Boolean)method.invoke(workspaceGitRepository);
 	}
 
-	private WorkspaceGitRepository _newWorkspaceGitRepository(
+	private WorkspaceGitRepository _mockWorkspaceGitRepository(
 		String workingDirectoryName) {
 
 		GitWorkingDirectory gitWorkingDirectory = Mockito.mock(

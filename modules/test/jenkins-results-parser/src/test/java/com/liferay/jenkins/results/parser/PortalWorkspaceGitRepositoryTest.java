@@ -46,7 +46,7 @@ public class PortalWorkspaceGitRepositoryTest
 			"test.released.release.bundle.version", "property.value");
 
 		PortalWorkspaceGitRepository portalWorkspaceGitRepository =
-			_newPortalWorkspaceGitRepository();
+			_mockPortalWorkspaceGitRepository();
 
 		Mockito.doReturn(
 			portalTestProperties
@@ -92,7 +92,7 @@ public class PortalWorkspaceGitRepositoryTest
 		mockShell();
 
 		PortalWorkspaceGitRepository portalWorkspaceGitRepository =
-			_newPortalWorkspaceGitRepository();
+			_mockPortalWorkspaceGitRepository();
 
 		Mockito.doCallRealMethod(
 		).when(
@@ -151,7 +151,7 @@ public class PortalWorkspaceGitRepositoryTest
 		mockShell();
 
 		PortalWorkspaceGitRepository portalWorkspaceGitRepository =
-			_newPortalWorkspaceGitRepository();
+			_mockPortalWorkspaceGitRepository();
 
 		Mockito.doCallRealMethod(
 		).when(
@@ -226,11 +226,11 @@ public class PortalWorkspaceGitRepositoryTest
 		return (Properties)method.invoke(portalWorkspaceGitRepository);
 	}
 
-	private GitWorkingDirectory _newGitWorkingDirectory() {
+	private GitWorkingDirectory _mockGitWorkingDirectory() {
 		return Mockito.mock(GitWorkingDirectory.class);
 	}
 
-	private LocalGitBranch _newLocalGitBranch() {
+	private LocalGitBranch _mockLocalGitBranch() {
 		LocalGitBranch localGitBranch = Mockito.mock(LocalGitBranch.class);
 
 		Mockito.doReturn(
@@ -242,7 +242,7 @@ public class PortalWorkspaceGitRepositoryTest
 		return localGitBranch;
 	}
 
-	private PortalWorkspaceGitRepository _newPortalWorkspaceGitRepository()
+	private PortalWorkspaceGitRepository _mockPortalWorkspaceGitRepository()
 		throws Exception {
 
 		File workingDirectory = File.createTempFile("portal-workspace-", null);
@@ -277,13 +277,13 @@ public class PortalWorkspaceGitRepositoryTest
 		).getDirectoryName();
 
 		Mockito.doReturn(
-			_newGitWorkingDirectory()
+			_mockGitWorkingDirectory()
 		).when(
 			portalWorkspaceGitRepository
 		).getGitWorkingDirectory();
 
 		Mockito.doReturn(
-			_newLocalGitBranch()
+			_mockLocalGitBranch()
 		).when(
 			portalWorkspaceGitRepository
 		).getLocalGitBranch();
@@ -333,7 +333,7 @@ public class PortalWorkspaceGitRepositoryTest
 		}
 
 		PortalWorkspaceGitRepository portalWorkspaceGitRepository =
-			_newPortalWorkspaceGitRepository();
+			_mockPortalWorkspaceGitRepository();
 
 		Mockito.doCallRealMethod(
 		).when(
@@ -397,7 +397,7 @@ public class PortalWorkspaceGitRepositoryTest
 		}
 
 		PortalWorkspaceGitRepository portalWorkspaceGitRepository =
-			_newPortalWorkspaceGitRepository();
+			_mockPortalWorkspaceGitRepository();
 
 		Mockito.doCallRealMethod(
 		).when(

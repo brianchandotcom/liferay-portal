@@ -221,6 +221,9 @@ public class AssetListFiltersUtil {
 			return null;
 		}
 
+		Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(
+			"yyyyMMddHHmmss");
+
 		Calendar calendar = Calendar.getInstance();
 
 		calendar.set(Calendar.MILLISECOND, 0);
@@ -242,9 +245,6 @@ public class AssetListFiltersUtil {
 		else if (value.equals("past-week")) {
 			calendar.add(Calendar.DAY_OF_MONTH, -7);
 		}
-
-		Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(
-			"yyyyMMddHHmmss");
 
 		return format.format(calendar.getTime());
 	}
@@ -386,7 +386,6 @@ public class AssetListFiltersUtil {
 
 		String operatorName = GetterUtil.getString(
 			jsonObject.getString("operatorName"), "contains");
-
 		String subfield = _getSubfield(locale, objectField);
 
 		Query query = _toValueQuery(

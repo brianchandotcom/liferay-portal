@@ -12,9 +12,7 @@ import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.rest.filter.factory.FilterFactory;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
-import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.function.UnsafeRunnable;
-import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -69,6 +67,14 @@ public class CheckSEOStudioDomainsSchedulerJobConfiguration
 		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-44511")) {
 			return;
 		}
+
+		_createScheduledSEOStudioScans(companyId);
+
+		_finalizeSEOStudioScanRuns(companyId);
+	}
+
+	private void _createScheduledSEOStudioScans(long companyId)
+		throws Exception {
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.
@@ -146,6 +152,126 @@ public class CheckSEOStudioDomainsSchedulerJobConfiguration
 			serviceContext);
 	}
 
+	private void _finalizeSEOStudioScanRun(
+			ObjectDefinition seoStudioScanObjectDefinition,
+			long seoStudioScanRunId)
+		throws Exception {
+
+		long scanCount = _getSEOStudioScanCount(
+			seoStudioScanObjectDefinition, seoStudioScanRunId, null);
+
+		if (scanCount == 0) {
+			return;
+		}
+
+		long terminalScanCount = _getSEOStudioScanCount(
+			seoStudioScanObjectDefinition, seoStudioScanRunId,
+			"state in ('cancelled', 'completed', 'failed')");
+
+		if (terminalScanCount < scanCount) {
+			return;
+		}
+
+		ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
+			seoStudioScanRunId);
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setCompanyId(objectEntry.getCompanyId());
+		serviceContext.setUserId(objectEntry.getUserId());
+
+		_objectEntryLocalService.partialUpdateObjectEntry(
+			objectEntry.getUserId(), seoStudioScanRunId,
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			HashMapBuilder.<String, Serializable>put(
+				"state",
+				_getSEOStudioScanRunState(
+					seoStudioScanObjectDefinition, seoStudioScanRunId)
+			).build(),
+			serviceContext);
+	}
+
+	private void _finalizeSEOStudioScanRuns(long companyId) throws Exception {
+		ObjectDefinition seoStudioScanObjectDefinition =
+			_objectDefinitionLocalService.
+				fetchObjectDefinitionByExternalReferenceCode(
+					"L_SEO_STUDIO_SCAN", companyId);
+		ObjectDefinition seoStudioScanRunObjectDefinition =
+			_objectDefinitionLocalService.
+				fetchObjectDefinitionByExternalReferenceCode(
+					"L_SEO_STUDIO_SCAN_RUN", companyId);
+
+		if ((seoStudioScanObjectDefinition == null) ||
+			(seoStudioScanRunObjectDefinition == null)) {
+
+			return;
+		}
+
+		List<Long> seoStudioScanRunIds =
+			_objectEntryLocalService.getPrimaryKeys(
+				new Long[] {0L}, companyId, 0,
+				seoStudioScanRunObjectDefinition.getObjectDefinitionId(),
+				_filterFactory.create(
+					"state eq 'running'", seoStudioScanRunObjectDefinition),
+				false, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		for (long seoStudioScanRunId : seoStudioScanRunIds) {
+			try {
+				_finalizeSEOStudioScanRun(
+					seoStudioScanObjectDefinition, seoStudioScanRunId);
+			}
+			catch (Exception exception) {
+				_log.error(
+					"Unable to finalize SEO Studio scan run " +
+						seoStudioScanRunId,
+					exception);
+			}
+		}
+	}
+
+	private long _getSEOStudioScanCount(
+			ObjectDefinition seoStudioScanObjectDefinition,
+			long seoStudioScanRunId, String stateFilterString)
+		throws Exception {
+
+		String filterString = StringBundler.concat(
+			"r_seoStudioScanRunToSEOStudioScans_seoStudioScanRunId eq '",
+			seoStudioScanRunId, "'");
+
+		if (stateFilterString != null) {
+			filterString = StringBundler.concat(
+				"(", filterString, ") and (", stateFilterString, ")");
+		}
+
+		return _objectEntryLocalService.getObjectEntriesCount(
+			0, null, seoStudioScanObjectDefinition,
+			_filterFactory.create(filterString, seoStudioScanObjectDefinition));
+	}
+
+	private String _getSEOStudioScanRunState(
+			ObjectDefinition seoStudioScanObjectDefinition,
+			long seoStudioScanRunId)
+		throws Exception {
+
+		long failedScanCount = _getSEOStudioScanCount(
+			seoStudioScanObjectDefinition, seoStudioScanRunId,
+			"state eq 'failed'");
+
+		if (failedScanCount > 0) {
+			return "failed";
+		}
+
+		long completedScanCount = _getSEOStudioScanCount(
+			seoStudioScanObjectDefinition, seoStudioScanRunId,
+			"state eq 'completed'");
+
+		if (completedScanCount > 0) {
+			return "completed";
+		}
+
+		return "cancelled";
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		CheckSEOStudioDomainsSchedulerJobConfiguration.class);
 
@@ -162,9 +288,6 @@ public class CheckSEOStudioDomainsSchedulerJobConfiguration
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;
-
-	@Reference
-	private ObjectFieldLocalService _objectFieldLocalService;
 
 	@Reference
 	private SEOStudioScanCreator _seoStudioScanCreator;

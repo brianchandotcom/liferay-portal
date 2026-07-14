@@ -1481,7 +1481,16 @@ public class JournalArticleLocalServiceImpl
 		List<JournalArticle> articles = journalArticlePersistence.findByG_L(
 			groupId, layoutUuid);
 
+		Set<Long> processedResourcePrimKeys = new HashSet<>();
+
 		for (JournalArticle article : articles) {
+			_deleteLayoutArticleReferences(article.getPrimaryKey(), layoutUuid);
+
+			if (processedResourcePrimKeys.add(article.getResourcePrimKey())) {
+				_deleteLayoutArticleReferences(
+					article.getResourcePrimKey(), layoutUuid);
+			}
+
 			article.setLayoutUuid(StringPool.BLANK);
 
 			journalArticlePersistence.update(article);
@@ -7909,6 +7918,23 @@ public class JournalArticleLocalServiceImpl
 		finally {
 			serviceContext.setIndexingEnabled(indexingEnabled);
 		}
+	}
+
+	private void _deleteLayoutArticleReferences(
+		long classPK, String layoutUuid) {
+
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+			JournalArticle.class.getName(), classPK);
+
+		if ((assetEntry == null) ||
+			!Objects.equals(layoutUuid, assetEntry.getLayoutUuid())) {
+
+			return;
+		}
+
+		assetEntry.setLayoutUuid(StringPool.BLANK);
+
+		_assetEntryLocalService.updateAssetEntry(assetEntry);
 	}
 
 	private boolean _equals(

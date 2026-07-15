@@ -566,11 +566,11 @@ public class AssetListFiltersUtilTest {
 		Assert.assertEquals(lastYearLowerTerm, pastYearLowerTerm);
 		Assert.assertEquals(past24HoursLowerTerm, pastDayLowerTerm);
 
-		Assert.assertTrue(pastYearLowerTerm.compareTo(pastMonthLowerTerm) < 0);
+		Assert.assertTrue(nowLowerTerm.compareTo(nextMonthLowerTerm) < 0);
+		Assert.assertTrue(pastDayLowerTerm.compareTo(nowLowerTerm) < 0);
 		Assert.assertTrue(pastMonthLowerTerm.compareTo(pastWeekLowerTerm) < 0);
 		Assert.assertTrue(pastWeekLowerTerm.compareTo(pastDayLowerTerm) < 0);
-		Assert.assertTrue(pastDayLowerTerm.compareTo(nowLowerTerm) < 0);
-		Assert.assertTrue(nowLowerTerm.compareTo(nextMonthLowerTerm) < 0);
+		Assert.assertTrue(pastYearLowerTerm.compareTo(pastMonthLowerTerm) < 0);
 
 		_assertTermRangeQuery(
 			"nestedFieldArray.value_date", false, true, null,

@@ -300,8 +300,7 @@ export default function RoomsFDSPropsTransformer({
 						RoomShare({
 							closeModal,
 							readOnly:
-								itemData.roomStatus === ROOM_STATUS.INACTIVE &&
-								!additionalProps.companyAdmin,
+								itemData.roomStatus === ROOM_STATUS.INACTIVE,
 							roomId: itemData.id,
 						}),
 					size: 'lg',

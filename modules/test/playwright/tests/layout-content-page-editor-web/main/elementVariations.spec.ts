@@ -22,6 +22,7 @@ const test = mergeTests(
 	audiencesPagesTest,
 	dataApiHelpersTest,
 	featureFlagsTest({
+		'LPD-17564': {enabled: true},
 		'LPD-85746': {enabled: true},
 	}),
 	isolatedSiteTest,

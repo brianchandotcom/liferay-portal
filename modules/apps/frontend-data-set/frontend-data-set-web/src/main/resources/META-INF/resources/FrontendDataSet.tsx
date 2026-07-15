@@ -123,6 +123,8 @@ const FrontendDataSetContent = ({
 	hideManagementBarInEmptyState = false,
 	id,
 	infoPanelComponent,
+	infoPanelContainerRef,
+	infoPanelPosition,
 	inlineAddingSettings,
 	inlineEditingSettings,
 	inlineNotificationComponent,
@@ -2173,10 +2175,11 @@ const FrontendDataSetContent = ({
 							<InfoPanel
 								className="fds-info-panel"
 								component={infoPanelComponent}
-								containerRef={fdsRef}
+								containerRef={infoPanelContainerRef ?? fdsRef}
 								id={dataSetSupportInfoPanelIdRef.current}
 								onOpenChange={setInfoPanelOpen}
 								open={infoPanelOpen}
+								position={infoPanelPosition}
 							/>
 						)}
 

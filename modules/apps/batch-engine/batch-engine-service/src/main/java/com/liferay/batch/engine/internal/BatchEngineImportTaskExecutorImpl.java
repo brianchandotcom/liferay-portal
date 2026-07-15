@@ -213,6 +213,16 @@ public class BatchEngineImportTaskExecutorImpl
 	protected void activate(
 		BundleContext bundleContext, Map<String, Object> properties) {
 
+		_batchEngineImportTaskExceptionHandlers =
+			ServiceTrackerListFactory.open(
+				bundleContext, BatchEngineImportTaskExceptionHandler.class);
+		_importTaskPostActions = ServiceTrackerListFactory.open(
+			bundleContext, ImportTaskPostAction.class);
+		_importTaskPreActions = ServiceTrackerListFactory.open(
+			bundleContext, ImportTaskPreAction.class);
+		_itemReaderPostActions = ServiceTrackerListFactory.open(
+			bundleContext, ItemReaderPostAction.class);
+
 		ServiceReferenceMapper<String, BatchEngineContentProcessor>
 			propertyServiceReferenceMapper =
 				new PropertyServiceReferenceMapper<>("field.name");
@@ -228,16 +238,6 @@ public class BatchEngineImportTaskExecutorImpl
 						serviceReference, emitter);
 				}
 			});
-
-		_batchEngineImportTaskExceptionHandlers =
-			ServiceTrackerListFactory.open(
-				bundleContext, BatchEngineImportTaskExceptionHandler.class);
-		_importTaskPostActions = ServiceTrackerListFactory.open(
-			bundleContext, ImportTaskPostAction.class);
-		_importTaskPreActions = ServiceTrackerListFactory.open(
-			bundleContext, ImportTaskPreAction.class);
-		_itemReaderPostActions = ServiceTrackerListFactory.open(
-			bundleContext, ItemReaderPostAction.class);
 	}
 
 	protected <T> void addBatchEngineImportTaskError(
@@ -276,11 +276,11 @@ public class BatchEngineImportTaskExecutorImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_serviceTrackerMap.close();
 		_batchEngineImportTaskExceptionHandlers.close();
 		_importTaskPostActions.close();
 		_importTaskPreActions.close();
 		_itemReaderPostActions.close();
+		_serviceTrackerMap.close();
 	}
 
 	private <T> BatchEngineImportTask _commitItems(

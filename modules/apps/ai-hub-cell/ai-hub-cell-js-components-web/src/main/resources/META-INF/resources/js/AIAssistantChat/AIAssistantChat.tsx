@@ -56,31 +56,6 @@ interface AIAssistantChatProps {
 	triggerRound?: boolean;
 }
 
-function addAssistantImage(
-	messages: Message[],
-	agentDefinitionExternalReferenceCodes: string[],
-	image: string
-): Message[] {
-	const lastMessage = messages[messages.length - 1];
-
-	if (lastMessage?.images?.length && !lastMessage.text) {
-		return [
-			...messages.slice(0, -1),
-			{...lastMessage, images: [...lastMessage.images, image]},
-		];
-	}
-
-	return [
-		...messages,
-		{
-			agentDefinitionExternalReferenceCodes,
-			images: [image],
-			sender: 'assistant',
-			text: '',
-		},
-	];
-}
-
 const AIAssistantChat: React.FC<AIAssistantChatProps> = ({
 	aiState,
 	context,
@@ -265,10 +240,38 @@ const AIAssistantChat: React.FC<AIAssistantChatProps> = ({
 			eventSourceRef.current.addEventListener(
 				'Chat Message Sent',
 				(event) => {
-					let dataJSON: ChatMessageSentData;
-
 					try {
-						dataJSON = JSON.parse(event.data);
+						const dataJSON: ChatMessageSentData = JSON.parse(
+							event.data
+						);
+
+						const assistantMessage =
+							buildAssistantMessage(dataJSON);
+
+						setMessages((previousMessages) => {
+							const lastMessage = previousMessages.at(-1);
+							const messages = previousMessages.slice(0, -1);
+
+							if (
+								lastMessage?.images?.length &&
+								assistantMessage?.images?.length
+							) {
+								return [
+									...messages,
+									{
+										...assistantMessage,
+										images: [
+											...lastMessage.images,
+											...assistantMessage.images,
+										],
+									},
+								];
+							}
+
+							return [...previousMessages, assistantMessage];
+						});
+
+						setMessage('');
 					}
 					catch {
 						setMessages((previousMessages) => [
@@ -276,42 +279,11 @@ const AIAssistantChat: React.FC<AIAssistantChatProps> = ({
 							{error: true, sender: 'assistant', text: ''},
 						]);
 
+						return;
+					}
+					finally {
 						setIsGenerating(false);
-
-						return;
 					}
-
-					const agentDefinitionExternalReferenceCodes =
-						dataJSON.agentDefinitionExternalReferenceCodes ?? [];
-
-					if (dataJSON.type === 'image') {
-						const image = `data:${
-							dataJSON.mimeType ?? 'image/png'
-						};base64,${dataJSON.data}`;
-
-						setMessages((previousMessages) =>
-							addAssistantImage(
-								previousMessages,
-								agentDefinitionExternalReferenceCodes,
-								image
-							)
-						);
-
-						return;
-					}
-
-					setMessages((previousMessages) => [
-						...previousMessages,
-						{
-							agentDefinitionExternalReferenceCodes,
-							sender: 'assistant',
-							text: dataJSON.data ?? '',
-						},
-					]);
-
-					setMessage('');
-
-					setIsGenerating(false);
 				}
 			);
 

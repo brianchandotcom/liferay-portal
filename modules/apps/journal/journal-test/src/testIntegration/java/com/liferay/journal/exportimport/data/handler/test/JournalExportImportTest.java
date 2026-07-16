@@ -45,9 +45,13 @@ import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.journal.util.JournalContent;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.message.boards.model.MBDiscussion;
+import com.liferay.message.boards.model.MBMessage;
+import com.liferay.message.boards.service.MBDiscussionLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -59,6 +63,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.service.IdentityServiceContextFunction;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -99,10 +104,13 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -143,6 +151,84 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 		super.setUp();
 
 		UserTestUtil.setUser(TestPropsValues.getUser());
+	}
+
+	@Test
+	@TestInfo("LPS-143743")
+	public void testExportImportCompanyScopeJournalArticleSkipsCommentFromSiteScope()
+		throws Exception {
+
+		Company company = CompanyLocalServiceUtil.getCompany(
+			group.getCompanyId());
+
+		Group companyGroup = company.getGroup();
+
+		JournalArticle article = JournalTestUtil.addArticle(
+			companyGroup.getGroupId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString());
+
+		_commentManager.addComment(
+			TestPropsValues.getUserId(), group.getGroupId(),
+			JournalArticle.class.getName(), article.getResourcePrimKey(),
+			RandomTestUtil.randomString(),
+			new IdentityServiceContextFunction(
+				ServiceContextTestUtil.getServiceContext(group.getGroupId())));
+
+		MBDiscussion mbDiscussion = _mbDiscussionLocalService.getDiscussion(
+			JournalArticle.class.getName(), article.getResourcePrimKey());
+
+		Assert.assertEquals(group.getGroupId(), mbDiscussion.getGroupId());
+
+		Layout originalLayout = layout;
+
+		layout = LayoutTestUtil.addTypePortletLayout(companyGroup);
+
+		exportImportPortlet(
+			JournalPortletKeys.JOURNAL,
+			HashMapBuilder.put(
+				PortletDataHandlerKeys.COMMENTS,
+				new String[] {Boolean.TRUE.toString()}
+			).build(),
+			HashMapBuilder.put(
+				PortletDataHandlerKeys.COMMENTS,
+				new String[] {Boolean.TRUE.toString()}
+			).build());
+
+		LayoutLocalServiceUtil.deleteLayout(layout);
+
+		layout = originalLayout;
+
+		boolean articleEntryFound = false;
+
+		try (ZipFile zipFile = new ZipFile(larFile)) {
+			Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
+
+			while (enumeration.hasMoreElements()) {
+				ZipEntry zipEntry = enumeration.nextElement();
+
+				String name = zipEntry.getName();
+
+				Assert.assertFalse(
+					name, name.contains(MBMessage.class.getName()));
+
+				if (name.contains(JournalArticle.class.getName())) {
+					articleEntryFound = true;
+				}
+			}
+		}
+
+		Assert.assertTrue(articleEntryFound);
+
+		JournalArticle importedArticle =
+			JournalArticleLocalServiceUtil.fetchJournalArticleByUuidAndGroupId(
+				article.getUuid(), importedGroup.getGroupId());
+
+		Assert.assertNotNull(importedArticle);
+
+		Assert.assertNull(
+			_mbDiscussionLocalService.fetchDiscussion(
+				JournalArticle.class.getName(),
+				importedArticle.getResourcePrimKey()));
 	}
 
 	@Test
@@ -1215,6 +1301,9 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 	private ChangesetManager _changesetManager;
 
 	@Inject
+	private CommentManager _commentManager;
+
+	@Inject
 	private ConfigurationProvider _configurationProvider;
 
 	@Inject
@@ -1241,6 +1330,9 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 
 	@DeleteAfterTestRun
 	private Group _liveGroup;
+
+	@Inject
+	private MBDiscussionLocalService _mbDiscussionLocalService;
 
 	@Inject
 	private Portal _portal;

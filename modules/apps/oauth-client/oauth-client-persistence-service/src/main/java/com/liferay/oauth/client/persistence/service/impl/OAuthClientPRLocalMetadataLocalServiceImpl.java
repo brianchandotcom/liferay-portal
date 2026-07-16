@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.net.URI;
@@ -450,23 +451,16 @@ public class OAuthClientPRLocalMetadataLocalServiceImpl
 
 			String scheme = uri.getScheme();
 
-			if (!Http.HTTP.equalsIgnoreCase(scheme) &&
-				!Http.HTTPS.equalsIgnoreCase(scheme)) {
+			if (Validator.isNull(uri.getHost()) ||
+				(!Http.HTTP.equalsIgnoreCase(scheme) &&
+				 !Http.HTTPS.equalsIgnoreCase(scheme))) {
 
-				throw clazz.newInstance();
-			}
-
-			String host = uri.getHost();
-
-			if (Validator.isNull(host)) {
 				throw clazz.newInstance();
 			}
 
 			if (Validator.isNotNull(uri.getFragment()) ||
 				(!Http.HTTPS.equalsIgnoreCase(scheme) &&
-				 !Objects.equals(host, "127.0.0.1") &&
-				 !Objects.equals(host, "[::1]") &&
-				 !Objects.equals(host, "localhost"))) {
+				 !PortalRunMode.isTestMode())) {
 
 				throw clazz.newInstance();
 			}

@@ -112,6 +112,8 @@ export class DigitalSalesRoomsPage {
 	async archiveRoom(roomName: string) {
 		await this.clickRowActionsMenuItem(roomName, this.archiveMenuItem);
 
+		await expect(this.archiveButton).toHaveClass(/btn-warning/);
+
 		await this.archiveButton.click();
 
 		await expect(this.archiveButton).toBeHidden();

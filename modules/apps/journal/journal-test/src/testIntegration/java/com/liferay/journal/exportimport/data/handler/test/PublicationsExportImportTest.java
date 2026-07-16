@@ -89,7 +89,7 @@ public class PublicationsExportImportTest {
 
 	@Test
 	@TestInfo("LPS-164716")
-	public void testImportInsidePublicationAddsWebContentStructuresTemplatesAndFolders()
+	public void testImportInsidePublicationAddsDDMStructuresDDMTemplatesAndJournalFolders()
 		throws Exception {
 
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(

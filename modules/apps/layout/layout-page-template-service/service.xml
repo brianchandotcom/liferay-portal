@@ -406,6 +406,7 @@
 		<exception>DuplicateLayoutPageTemplateCollection</exception>
 		<exception>DuplicateLayoutPageTemplateCollectionType</exception>
 		<exception>DuplicateLayoutPageTemplateEntry</exception>
+		<exception>DuplicateLayoutPageTemplateStructureRelElementVariationAudienceEntryRel</exception>
 		<exception>LayoutPageTemplateCollectionGroupId</exception>
 		<exception>LayoutPageTemplateCollectionLayoutPageTemplateCollectionKey</exception>
 		<exception>LayoutPageTemplateCollectionName</exception>

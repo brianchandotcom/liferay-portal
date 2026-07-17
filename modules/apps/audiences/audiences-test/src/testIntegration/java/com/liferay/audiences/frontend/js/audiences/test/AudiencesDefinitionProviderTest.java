@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.FeatureFlags;
@@ -49,9 +48,7 @@ public class AudiencesDefinitionProviderTest {
 			_audiencesEntryLocalService.addAudiencesEntry(
 				RandomTestUtil.randomString(),
 				"{\"conjunction\": \"AND\", \"rules\": []}",
-				RandomTestUtil.randomString(),
-				ServiceContextTestUtil.getServiceContext(
-					TestPropsValues.getGroupId()));
+				RandomTestUtil.randomString(), TestPropsValues.getUserId());
 
 		AudiencesDefinition audiencesDefinition =
 			_audiencesDefinitionProvider.getAudiencesDefinition(

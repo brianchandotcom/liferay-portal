@@ -48,12 +48,11 @@ public class AudiencesEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.audiences.model.AudiencesEntry addAudiencesEntry(
-			String externalReferenceCode, String json, String name,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+			String externalReferenceCode, String json, String name, long userId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _audiencesEntryLocalService.addAudiencesEntry(
-			externalReferenceCode, json, name, serviceContext);
+			externalReferenceCode, json, name, userId);
 	}
 
 	/**
@@ -395,11 +394,11 @@ public class AudiencesEntryLocalServiceWrapper
 	@Override
 	public com.liferay.audiences.model.AudiencesEntry updateAudiencesEntry(
 			long audiencesEntryId, String externalReferenceCode, String json,
-			String name)
+			String name, long userId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _audiencesEntryLocalService.updateAudiencesEntry(
-			audiencesEntryId, externalReferenceCode, json, name);
+			audiencesEntryId, externalReferenceCode, json, name, userId);
 	}
 
 	@Override
@@ -422,4 +421,4 @@ public class AudiencesEntryLocalServiceWrapper
 	private AudiencesEntryLocalService _audiencesEntryLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-593247208
+// LIFERAY-SERVICE-BUILDER-HASH:1410961463

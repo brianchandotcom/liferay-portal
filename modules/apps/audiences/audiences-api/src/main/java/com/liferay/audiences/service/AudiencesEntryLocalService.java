@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -68,8 +67,7 @@ public interface AudiencesEntryLocalService
 	public AudiencesEntry addAudiencesEntry(AudiencesEntry audiencesEntry);
 
 	public AudiencesEntry addAudiencesEntry(
-			String externalReferenceCode, String json, String name,
-			ServiceContext serviceContext)
+			String externalReferenceCode, String json, String name, long userId)
 		throws PortalException;
 
 	/**
@@ -292,8 +290,8 @@ public interface AudiencesEntryLocalService
 
 	public AudiencesEntry updateAudiencesEntry(
 			long audiencesEntryId, String externalReferenceCode, String json,
-			String name)
+			String name, long userId)
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-306389058
+// LIFERAY-SERVICE-BUILDER-HASH:641945073

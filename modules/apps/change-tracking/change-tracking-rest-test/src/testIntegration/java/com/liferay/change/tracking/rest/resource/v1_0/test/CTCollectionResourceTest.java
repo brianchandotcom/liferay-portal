@@ -15,6 +15,7 @@ import com.liferay.change.tracking.rest.client.pagination.Page;
 import com.liferay.change.tracking.rest.client.pagination.Pagination;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
+import com.liferay.change.tracking.service.persistence.CTCollectionPersistence;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.lang.SafeCloseable;
@@ -22,12 +23,17 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -160,6 +166,43 @@ public class CTCollectionResourceTest extends BaseCTCollectionResourceTestCase {
 		assertEquals(
 			(List<CTCollection>)descPage.getItems(),
 			(List<CTCollection>)page.getItems());
+	}
+
+	@Test
+	public void testGetCTCollectionsPageWithStaleIndexDocument()
+		throws Throwable {
+
+		CTCollection ctCollection1 = _postCTCollection(randomCTCollection());
+		CTCollection ctCollection2 = _postCTCollection(randomCTCollection());
+
+		com.liferay.change.tracking.model.CTCollection
+			serviceBuilderCTCollection1 =
+				_ctCollectionLocalService.getCTCollection(
+					ctCollection1.getId());
+
+		TransactionConfig transactionConfig = TransactionConfig.Factory.create(
+			Propagation.REQUIRED, new Class<?>[] {Exception.class});
+
+		TransactionInvokerUtil.invoke(
+			transactionConfig,
+			() -> _ctCollectionPersistence.remove(serviceBuilderCTCollection1));
+
+		_resourceLocalService.deleteResource(
+			serviceBuilderCTCollection1.getCompanyId(),
+			com.liferay.change.tracking.model.CTCollection.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			serviceBuilderCTCollection1.getCtCollectionId());
+
+		Page<CTCollection> page = ctCollectionResource.getCTCollectionsPage(
+			null, null, null, Pagination.of(1, 10), null);
+
+		List<CTCollection> ctCollections = (List<CTCollection>)page.getItems();
+
+		assertContains(ctCollection2, ctCollections);
+
+		for (CTCollection ctCollection : ctCollections) {
+			Assert.assertNotEquals(ctCollection1.getId(), ctCollection.getId());
+		}
 	}
 
 	@Override
@@ -519,6 +562,9 @@ public class CTCollectionResourceTest extends BaseCTCollectionResourceTestCase {
 	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@Inject
+	private CTCollectionPersistence _ctCollectionPersistence;
+
+	@Inject
 	private CTPreferencesLocalService _ctPreferencesLocalService;
 
 	@Inject
@@ -526,5 +572,8 @@ public class CTCollectionResourceTest extends BaseCTCollectionResourceTestCase {
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;
+
+	@Inject
+	private ResourceLocalService _resourceLocalService;
 
 }

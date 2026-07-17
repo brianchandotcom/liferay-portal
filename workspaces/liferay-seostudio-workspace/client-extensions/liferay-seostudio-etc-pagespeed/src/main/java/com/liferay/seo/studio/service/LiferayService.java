@@ -58,7 +58,7 @@ public class LiferayService extends BaseService {
 				"liferay-seostudio-etc-pagespeed-oahs"),
 			uriComponents.toUri());
 
-		String message = "Unable to find domain " + domainId;
+		String message = "Unable to get domain " + domainId;
 
 		if (Validator.isNull(responseJSON)) {
 			throw new IllegalArgumentException(message);
@@ -107,7 +107,7 @@ public class LiferayService extends BaseService {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						StringBundler.concat(
-							"Unable to fetch sitemap ", url, ", HTTP ",
+							"Unable to get sitemap ", url, ", HTTP ",
 							httpResponse.statusCode()));
 				}
 
@@ -118,7 +118,7 @@ public class LiferayService extends BaseService {
 		}
 		catch (IllegalArgumentException | IOException exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to fetch sitemap " + url, exception);
+				_log.debug("Unable to get sitemap " + url, exception);
 			}
 
 			return null;
@@ -126,7 +126,7 @@ public class LiferayService extends BaseService {
 		catch (InterruptedException interruptedException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Unable to fetch sitemap " + url, interruptedException);
+					"Unable to get sitemap " + url, interruptedException);
 			}
 
 			Thread thread = Thread.currentThread();

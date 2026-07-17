@@ -1226,9 +1226,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			if (exists) {
 				WikiPage curPage = getPage(nodeId, curTitle);
 
-				if (!pages.containsKey(curPage.getTitle())) {
-					pages.put(curPage.getTitle(), curPage);
-				}
+				pages.putIfAbsent(curPage.getTitle(), curPage);
 			}
 			else {
 				WikiPageImpl wikiPageImpl = new WikiPageImpl();
@@ -1237,9 +1235,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 				wikiPageImpl.setNodeId(nodeId);
 				wikiPageImpl.setTitle(curTitle);
 
-				if (!pages.containsKey(curTitle)) {
-					pages.put(curTitle, wikiPageImpl);
-				}
+				pages.putIfAbsent(curTitle, wikiPageImpl);
 			}
 		}
 

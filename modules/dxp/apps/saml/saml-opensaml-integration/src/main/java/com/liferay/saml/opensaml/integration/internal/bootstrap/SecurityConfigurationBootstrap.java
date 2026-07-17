@@ -5,6 +5,7 @@
 
 package com.liferay.saml.opensaml.integration.internal.bootstrap;
 
+import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.saml.opensaml.integration.internal.util.ConfigurationServiceBootstrapUtil;
 
 import java.util.Collection;
@@ -21,6 +22,7 @@ import org.opensaml.xmlsec.impl.BasicDecryptionConfiguration;
 import org.opensaml.xmlsec.impl.BasicEncryptionConfiguration;
 import org.opensaml.xmlsec.impl.BasicSignatureSigningConfiguration;
 import org.opensaml.xmlsec.impl.BasicSignatureValidationConfiguration;
+import org.opensaml.xmlsec.signature.support.SignatureConstants;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -28,6 +30,7 @@ import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Carlos Sierra Andrés
+ * @author Jorge García Jiménez
  */
 @Component(service = {})
 public class SecurityConfigurationBootstrap {
@@ -76,6 +79,12 @@ public class SecurityConfigurationBootstrap {
 					(String[])blacklistedAlgorithmsObject));
 		}
 
+		if (PropsValues.FIPS_ENABLED) {
+			_blacklistFIPSDisallowedAlgorithms(
+				basicSignatureSigningConfiguration,
+				basicSignatureValidationConfiguration);
+		}
+
 		ConfigurationServiceBootstrapUtil.register(
 			DecryptionConfiguration.class, basicDecryptionConfiguration);
 		ConfigurationServiceBootstrapUtil.register(
@@ -88,6 +97,23 @@ public class SecurityConfigurationBootstrap {
 			basicSignatureValidationConfiguration);
 	}
 
+	private void _blacklistFIPSDisallowedAlgorithms(
+		BasicSignatureSigningConfiguration basicSignatureSigningConfiguration,
+		BasicSignatureValidationConfiguration
+			basicSignatureValidationConfiguration) {
+
+		basicSignatureSigningConfiguration.setBlacklistedAlgorithms(
+			_combine(
+				basicSignatureSigningConfiguration.getBlacklistedAlgorithms(),
+				_FIPS_DISALLOWED_ALGORITHMS));
+
+		basicSignatureValidationConfiguration.setBlacklistedAlgorithms(
+			_combine(
+				basicSignatureValidationConfiguration.
+					getBlacklistedAlgorithms(),
+				_FIPS_DISALLOWED_ALGORITHMS));
+	}
+
 	private Collection<String> _combine(
 		Collection<String> collection, String... strings) {
 
@@ -97,5 +123,16 @@ public class SecurityConfigurationBootstrap {
 
 		return combinedCollection;
 	}
+
+	private static final String[] _FIPS_DISALLOWED_ALGORITHMS = {
+		SignatureConstants.ALGO_ID_DIGEST_NOT_RECOMMENDED_MD5,
+		SignatureConstants.ALGO_ID_DIGEST_SHA1,
+		SignatureConstants.ALGO_ID_MAC_HMAC_NOT_RECOMMENDED_MD5,
+		SignatureConstants.ALGO_ID_MAC_HMAC_SHA1,
+		SignatureConstants.ALGO_ID_SIGNATURE_DSA_SHA1,
+		SignatureConstants.ALGO_ID_SIGNATURE_ECDSA_SHA1,
+		SignatureConstants.ALGO_ID_SIGNATURE_NOT_RECOMMENDED_RSA_MD5,
+		SignatureConstants.ALGO_ID_SIGNATURE_RSA_SHA1
+	};
 
 }

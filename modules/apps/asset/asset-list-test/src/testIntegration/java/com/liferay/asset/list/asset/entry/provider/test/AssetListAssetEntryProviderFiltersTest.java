@@ -27,6 +27,7 @@ import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -44,6 +45,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.rule.FeatureFlag;
@@ -55,7 +57,6 @@ import com.liferay.segments.constants.SegmentsEntryConstants;
 
 import java.io.Serializable;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -94,28 +95,28 @@ public class AssetListAssetEntryProviderFiltersTest {
 					_listTypeDefinition.getListTypeDefinitionId(),
 					ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST,
 					null, ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
-					"Categories", "categories", false, false),
+					RandomTestUtil.randomString(), "categories", false, false),
 				ObjectFieldUtil.createObjectField(
 					_listTypeDefinition.getListTypeDefinitionId(),
 					ObjectFieldConstants.BUSINESS_TYPE_PICKLIST, null,
 					ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
-					"Category", "category", false, false),
+					RandomTestUtil.randomString(), "category", false, false),
 				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_DATE,
 					ObjectFieldConstants.DB_TYPE_DATE, true, false, null,
-					"Due Date", "dueDate", false),
+					RandomTestUtil.randomString(), "dueDate", false),
 				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 					ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
-					"Learn Documentation", "learnDocumentation", false),
+					RandomTestUtil.randomString(), "learnDocumentation", false),
 				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_INTEGER,
 					ObjectFieldConstants.DB_TYPE_INTEGER, true, false, null,
-					"Priority", "priority", false),
+					RandomTestUtil.randomString(), "priority", false),
 				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_DATE_TIME,
 					ObjectFieldConstants.DB_TYPE_DATE_TIME, true, false, null,
-					"Start Time", "startTime",
+					RandomTestUtil.randomString(), "startTime",
 					Collections.singletonList(
 						_createObjectFieldSetting(
 							ObjectFieldSettingConstants.NAME_TIME_STORAGE,
@@ -125,13 +126,15 @@ public class AssetListAssetEntryProviderFiltersTest {
 				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 					ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
-					"Title", "title", false)),
+					RandomTestUtil.randomString(), "title", false)),
 			ObjectDefinitionConstants.SCOPE_SITE);
 	}
 
 	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-74731"))
 	@Test
-	public void testDateRangeFilters() throws Exception {
+	public void testGetAssetEntriesInfoPageWithDateRangeFilters()
+		throws Exception {
+
 		ObjectEntry objectEntry1 = _addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
 				"dueDate", "2026-01-15"
@@ -139,12 +142,12 @@ public class AssetListAssetEntryProviderFiltersTest {
 
 		_assertFilteredClassPKs(
 			_buildFiltersJSONArray(
-				_filter(
-					"dueDate", "between",
+				_buildFilter(
+					"between", "dueDate",
 					JSONUtil.putAll("2026-01-01", "2026-03-01"))),
 			objectEntry1);
 
-		ObjectEntry objectEntry3 = _addObjectEntry(
+		ObjectEntry objectEntry2 = _addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
 				"startTime", "2026-01-15 10:30"
 			).build());
@@ -156,247 +159,169 @@ public class AssetListAssetEntryProviderFiltersTest {
 
 		_assertFilteredClassPKs(
 			_buildFiltersJSONArray(
-				_filter(
-					"startTime", "between",
+				_buildFilter(
+					"between", "startTime",
 					JSONUtil.putAll("2026-01-15 00:00", "2026-01-15 23:59"))),
-			objectEntry3);
+			objectEntry2);
 	}
 
 	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-74731"))
 	@Test
-	public void testEqualityFilters() throws Exception {
-		ObjectEntry objectEntry1 = _addObjectEntry(
-			HashMapBuilder.<String, Serializable>put(
-				"priority", 1
-			).put(
-				"title", "alpha"
-			).build());
-		ObjectEntry objectEntry2 = _addObjectEntry(
-			HashMapBuilder.<String, Serializable>put(
-				"priority", 2
-			).put(
-				"title", "beta"
-			).build());
-
-		_assertFilteredClassPKs(
-			_buildFiltersJSONArray(_filter("title", "eq", "alpha")),
-			objectEntry1);
-		_assertFilteredClassPKs(
-			_buildFiltersJSONArray(_filter("title", "not-eq", "alpha")),
-			objectEntry2);
-		_assertFilteredClassPKs(
-			_buildFiltersJSONArray(_filter("priority", "eq", "2")),
-			objectEntry2);
-		_assertFilteredClassPKs(
-			_buildFiltersJSONArray(_filter("priority", "not-eq", "2")),
-			objectEntry1);
-	}
-
-	@FeatureFlag(enable = false, value = "LPD-74731")
-	@Test
-	public void testFiltersAreIgnoredWhenFeatureFlagDisabled()
+	public void testGetAssetEntriesInfoPageWithEqualityFilters()
 		throws Exception {
 
-		JSONArray filtersJSONArray = JSONUtil.putAll(
-			JSONUtil.put(
-				"classNameId",
-				_portal.getClassNameId(_objectDefinition.getClassName())
-			).put(
-				"classTypeId", _objectDefinition.getObjectDefinitionId()
-			).put(
-				"propertyName", "title"
-			).put(
-				"value", "keyword"
-			));
+		String title = StringUtil.toLowerCase(RandomTestUtil.randomString());
 
-		AssetListEntry assetListEntry = _addDynamicAssetListEntryWithFilters(
-			filtersJSONArray.toString());
-
-		AssetEntryQuery assetEntryQuery =
-			_assetListAssetEntryProvider.getAssetEntryQuery(
-				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
-				null);
-
-		Assert.assertNull(assetEntryQuery.getAttribute("filters"));
-	}
-
-	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-74731"))
-	@Test
-	public void testFiltersArePropagatedAsAttributeWhenFeatureFlagEnabled()
-		throws Exception {
-
-		JSONArray filtersJSONArray = JSONUtil.putAll(
-			JSONUtil.put(
-				"classNameId",
-				_portal.getClassNameId(_objectDefinition.getClassName())
-			).put(
-				"classTypeId", _objectDefinition.getObjectDefinitionId()
-			).put(
-				"operatorName", "contains"
-			).put(
-				"propertyName", "title"
-			).put(
-				"value", "keyword"
-			),
-			JSONUtil.put(
-				"classNameId",
-				_portal.getClassNameId(_objectDefinition.getClassName())
-			).put(
-				"classTypeId", _objectDefinition.getObjectDefinitionId()
-			).put(
-				"operatorName", "eq"
-			).put(
-				"propertyName", "priority"
-			).put(
-				"value", "1"
-			));
-
-		AssetListEntry assetListEntry = _addDynamicAssetListEntryWithFilters(
-			filtersJSONArray.toString());
-
-		AssetEntryQuery assetEntryQuery =
-			_assetListAssetEntryProvider.getAssetEntryQuery(
-				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
-				null);
-
-		JSONArray actualJSONArray = (JSONArray)assetEntryQuery.getAttribute(
-			"filters");
-
-		Assert.assertNotNull(actualJSONArray);
-		Assert.assertEquals(
-			actualJSONArray.toString(), 2, actualJSONArray.length());
-
-		JSONObject jsonObject = actualJSONArray.getJSONObject(0);
-
-		Assert.assertEquals("title", jsonObject.getString("propertyName"));
-		Assert.assertEquals("keyword", jsonObject.getString("value"));
-		Assert.assertEquals(
-			_portal.getClassNameId(_objectDefinition.getClassName()),
-			jsonObject.getLong("classNameId"));
-	}
-
-	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-74731"))
-	@Test
-	public void testGetAssetEntryQueryWithInvalidFilters() throws Exception {
-		AssetListEntry assetListEntry = _addDynamicAssetListEntryWithFilters(
-			"not-a-json-array");
-
-		AssetEntryQuery assetEntryQuery =
-			_assetListAssetEntryProvider.getAssetEntryQuery(
-				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
-				null);
-
-		Assert.assertNull(assetEntryQuery.getAttribute("filters"));
-	}
-
-	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-74731"))
-	@Test
-	public void testKeywordTextContainsFilters() throws Exception {
 		ObjectEntry objectEntry1 = _addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
-				"learnDocumentation", "I like alpha"
+				"priority", RandomTestUtil.randomInt()
+			).put(
+				"title", title
 			).build());
+
+		int priority = RandomTestUtil.randomInt();
+
 		ObjectEntry objectEntry2 = _addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
-				"learnDocumentation", "other content"
+				"priority", priority
+			).put(
+				"title", RandomTestUtil.randomString()
+			).build());
+
+		_assertFilteredClassPKs(
+			_buildFiltersJSONArray(_buildFilter("eq", "title", title)),
+			objectEntry1);
+		_assertFilteredClassPKs(
+			_buildFiltersJSONArray(_buildFilter("not-eq", "title", title)),
+			objectEntry2);
+		_assertFilteredClassPKs(
+			_buildFiltersJSONArray(
+				_buildFilter("eq", "priority", String.valueOf(priority))),
+			objectEntry2);
+		_assertFilteredClassPKs(
+			_buildFiltersJSONArray(
+				_buildFilter("not-eq", "priority", String.valueOf(priority))),
+			objectEntry1);
+	}
+
+	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-74731"))
+	@Test
+	public void testGetAssetEntriesInfoPageWithKeywordTextContainsFilters()
+		throws Exception {
+
+		String keyword = RandomTestUtil.randomString();
+
+		ObjectEntry objectEntry1 = _addObjectEntry(
+			HashMapBuilder.<String, Serializable>put(
+				"learnDocumentation", keyword
+			).build());
+
+		ObjectEntry objectEntry2 = _addObjectEntry(
+			HashMapBuilder.<String, Serializable>put(
+				"learnDocumentation", RandomTestUtil.randomString()
 			).build());
 
 		_assertFilteredClassPKs(
 			_buildFiltersJSONArray(
-				_filter("learnDocumentation", "contains", "alpha")),
+				_buildFilter("contains", "learnDocumentation", keyword)),
 			objectEntry1);
 		_assertFilteredClassPKs(
 			_buildFiltersJSONArray(
-				_filter("learnDocumentation", "not-contains", "alpha")),
+				_buildFilter("not-contains", "learnDocumentation", keyword)),
 			objectEntry2);
 	}
 
 	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-74731"))
 	@Test
-	public void testMultipleFiltersJoinedWithMust() throws Exception {
+	public void testGetAssetEntriesInfoPageWithMultipleFiltersJoinedWithMust()
+		throws Exception {
+
+		int priority = RandomTestUtil.randomInt();
+		String title = RandomTestUtil.randomString();
+
 		ObjectEntry objectEntry1 = _addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
-				"priority", 5
+				"priority", priority
 			).put(
-				"title", "match"
+				"title", title
 			).build());
 
 		_addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
-				"priority", 1
+				"priority", RandomTestUtil.randomInt()
 			).put(
-				"title", "match"
+				"title", title
 			).build());
 
 		_addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
-				"priority", 5
+				"priority", priority
 			).put(
-				"title", "other"
+				"title", RandomTestUtil.randomString()
 			).build());
 
 		_assertFilteredClassPKs(
 			_buildFiltersJSONArray(
-				_filter("title", "contains", "match"),
-				_filter("priority", "eq", "5")),
+				_buildFilter("contains", "title", title),
+				_buildFilter("eq", "priority", String.valueOf(priority))),
 			objectEntry1);
 	}
 
 	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-74731"))
 	@Test
-	public void testNoFiltersAttributeWhenTypeSettingsHasNoFilters()
+	public void testGetAssetEntriesInfoPageWithNumericRangeFilters()
 		throws Exception {
 
-		AssetListEntry assetListEntry = _addDynamicAssetListEntryWithFilters(
-			null);
-
-		AssetEntryQuery assetEntryQuery =
-			_assetListAssetEntryProvider.getAssetEntryQuery(
-				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
-				null);
-
-		Assert.assertNull(assetEntryQuery.getAttribute("filters"));
-	}
-
-	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-74731"))
-	@Test
-	public void testNumericRangeFilters() throws Exception {
 		ObjectEntry objectEntry1 = _addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
-				"priority", 1
+				"priority", RandomTestUtil.randomInt(1, 100)
 			).build());
+
+		int priority1 = RandomTestUtil.randomInt(101, 200);
 
 		ObjectEntry objectEntry2 = _addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
-				"priority", 5
+				"priority", priority1
 			).build());
+
+		int priority2 = RandomTestUtil.randomInt(201, 300);
+
 		ObjectEntry objectEntry3 = _addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
-				"priority", 10
+				"priority", priority2
 			).build());
 
 		_assertFilteredClassPKs(
-			_buildFiltersJSONArray(_filter("priority", "gt", "5")),
+			_buildFiltersJSONArray(
+				_buildFilter("gt", "priority", String.valueOf(priority1))),
 			objectEntry3);
 		_assertFilteredClassPKs(
-			_buildFiltersJSONArray(_filter("priority", "ge", "5")),
+			_buildFiltersJSONArray(
+				_buildFilter("ge", "priority", String.valueOf(priority1))),
 			objectEntry2, objectEntry3);
 
 		_assertFilteredClassPKs(
-			_buildFiltersJSONArray(_filter("priority", "lt", "5")),
+			_buildFiltersJSONArray(
+				_buildFilter("lt", "priority", String.valueOf(priority1))),
 			objectEntry1);
 		_assertFilteredClassPKs(
-			_buildFiltersJSONArray(_filter("priority", "le", "5")),
+			_buildFiltersJSONArray(
+				_buildFilter("le", "priority", String.valueOf(priority1))),
 			objectEntry1, objectEntry2);
 		_assertFilteredClassPKs(
 			_buildFiltersJSONArray(
-				_filter("priority", "between", JSONUtil.putAll("4", "11"))),
+				_buildFilter(
+					"between", "priority",
+					JSONUtil.putAll(
+						String.valueOf(priority1), String.valueOf(priority2)))),
 			objectEntry2, objectEntry3);
 	}
 
 	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-74731"))
 	@Test
-	public void testPicklistFilters() throws Exception {
+	public void testGetAssetEntriesInfoPageWithPicklistFilters()
+		throws Exception {
+
 		ObjectEntry objectEntry1 = _addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
 				"category", _LIST_TYPE_ENTRY_KEY_1
@@ -408,11 +333,12 @@ public class AssetListAssetEntryProviderFiltersTest {
 
 		_assertFilteredClassPKs(
 			_buildFiltersJSONArray(
-				_picklistFilter("category", "any", _LIST_TYPE_ENTRY_KEY_1)),
+				_buildPicklistFilter(
+					"category", "any", _LIST_TYPE_ENTRY_KEY_1)),
 			objectEntry1);
 		_assertFilteredClassPKs(
 			_buildFiltersJSONArray(
-				_picklistFilter(
+				_buildPicklistFilter(
 					"category", "any", _LIST_TYPE_ENTRY_KEY_1,
 					_LIST_TYPE_ENTRY_KEY_2)),
 			objectEntry1, objectEntry2);
@@ -432,45 +358,168 @@ public class AssetListAssetEntryProviderFiltersTest {
 
 		_assertFilteredClassPKs(
 			_buildFiltersJSONArray(
-				_picklistFilter("categories", "any", _LIST_TYPE_ENTRY_KEY_1)),
+				_buildPicklistFilter(
+					"categories", "any", _LIST_TYPE_ENTRY_KEY_1)),
 			objectEntry3);
 		_assertFilteredClassPKs(
 			_buildFiltersJSONArray(
-				_picklistFilter("categories", "any", _LIST_TYPE_ENTRY_KEY_3)),
+				_buildPicklistFilter(
+					"categories", "any", _LIST_TYPE_ENTRY_KEY_3)),
 			objectEntry4);
 		_assertFilteredClassPKs(
 			_buildFiltersJSONArray(
-				_picklistFilter(
+				_buildPicklistFilter(
 					"categories", "all", _LIST_TYPE_ENTRY_KEY_1,
 					_LIST_TYPE_ENTRY_KEY_2)),
 			objectEntry3);
 		_assertFilteredClassPKs(
 			_buildFiltersJSONArray(
-				_picklistFilter("categories", "all", _LIST_TYPE_ENTRY_KEY_2)),
+				_buildPicklistFilter(
+					"categories", "all", _LIST_TYPE_ENTRY_KEY_2)),
 			objectEntry3, objectEntry4);
 	}
 
 	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-74731"))
 	@Test
-	public void testTextContainsFilters() throws Exception {
+	public void testGetAssetEntriesInfoPageWithTextContainsFilters()
+		throws Exception {
+
+		String title = RandomTestUtil.randomString();
+
 		ObjectEntry objectEntry1 = _addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
-				"title", "liferay platform"
+				"title", title
 			).build());
+
 		ObjectEntry objectEntry2 = _addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
-				"title", "other content"
+				"title", RandomTestUtil.randomString()
 			).build());
 
 		_assertFilteredClassPKs(
-			_buildFiltersJSONArray(_filter("title", "contains", "liferay")),
+			_buildFiltersJSONArray(_buildFilter("contains", "title", title)),
 			objectEntry1);
 		_assertFilteredClassPKs(
-			_buildFiltersJSONArray(_filter("title", "not-contains", "liferay")),
+			_buildFiltersJSONArray(
+				_buildFilter("not-contains", "title", title)),
 			objectEntry2);
 	}
 
-	private AssetListEntry _addDynamicAssetListEntryWithFilters(String filters)
+	@FeatureFlag(enable = false, value = "LPD-74731")
+	@Test
+	public void testGetAssetEntryQueryWithFiltersWhenFeatureFlagDisabled()
+		throws Exception {
+
+		JSONArray filtersJSONArray = JSONUtil.putAll(
+			JSONUtil.put(
+				"classNameId",
+				_portal.getClassNameId(_objectDefinition.getClassName())
+			).put(
+				"classTypeId", _objectDefinition.getObjectDefinitionId()
+			).put(
+				"propertyName", "title"
+			).put(
+				"value", RandomTestUtil.randomString()
+			));
+
+		AssetListEntry assetListEntry = _addDynamicAssetListEntryWithFilters(
+			filtersJSONArray.toString());
+
+		AssetEntryQuery assetEntryQuery =
+			_assetListAssetEntryProvider.getAssetEntryQuery(
+				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
+				null);
+
+		Assert.assertNull(assetEntryQuery.getAttribute("filters"));
+	}
+
+	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-74731"))
+	@Test
+	public void testGetAssetEntryQueryWithFiltersWhenFeatureFlagEnabled()
+		throws Exception {
+
+		String propertyName = RandomTestUtil.randomString();
+		String value = RandomTestUtil.randomString();
+
+		JSONArray filtersJSONArray = JSONUtil.putAll(
+			JSONUtil.put(
+				"classNameId",
+				_portal.getClassNameId(_objectDefinition.getClassName())
+			).put(
+				"classTypeId", _objectDefinition.getObjectDefinitionId()
+			).put(
+				"operatorName", "contains"
+			).put(
+				"propertyName", propertyName
+			).put(
+				"value", value
+			),
+			JSONUtil.put(
+				"classNameId",
+				_portal.getClassNameId(_objectDefinition.getClassName())
+			).put(
+				"classTypeId", _objectDefinition.getObjectDefinitionId()
+			).put(
+				"operatorName", "eq"
+			).put(
+				"propertyName", RandomTestUtil.randomString()
+			).put(
+				"value", String.valueOf(RandomTestUtil.randomInt())
+			));
+
+		AssetListEntry assetListEntry = _addDynamicAssetListEntryWithFilters(
+			filtersJSONArray.toString());
+
+		AssetEntryQuery assetEntryQuery =
+			_assetListAssetEntryProvider.getAssetEntryQuery(
+				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
+				null);
+
+		JSONArray actualJSONArray = (JSONArray)assetEntryQuery.getAttribute(
+			"filters");
+
+		Assert.assertEquals(
+			actualJSONArray.toString(), 2, actualJSONArray.length());
+
+		JSONObject jsonObject = actualJSONArray.getJSONObject(0);
+
+		Assert.assertEquals(propertyName, jsonObject.getString("propertyName"));
+		Assert.assertEquals(value, jsonObject.getString("value"));
+		Assert.assertEquals(
+			_portal.getClassNameId(_objectDefinition.getClassName()),
+			jsonObject.getLong("classNameId"));
+	}
+
+	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-74731"))
+	@Test
+	public void testGetAssetEntryQueryWithInvalidFilters() throws Exception {
+		AssetListEntry assetListEntry = _addDynamicAssetListEntryWithFilters(
+			RandomTestUtil.randomString());
+
+		AssetEntryQuery assetEntryQuery =
+			_assetListAssetEntryProvider.getAssetEntryQuery(
+				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
+				null);
+
+		Assert.assertNull(assetEntryQuery.getAttribute("filters"));
+	}
+
+	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-74731"))
+	@Test
+	public void testGetAssetEntryQueryWithoutFilters() throws Exception {
+		AssetListEntry assetListEntry = _addDynamicAssetListEntryWithFilters(
+			null);
+
+		AssetEntryQuery assetEntryQuery =
+			_assetListAssetEntryProvider.getAssetEntryQuery(
+				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
+				null);
+
+		Assert.assertNull(assetEntryQuery.getAttribute("filters"));
+	}
+
+	private AssetListEntry _addDynamicAssetListEntryWithFilters(
+			String filtersJSON)
 		throws Exception {
 
 		AssetListEntry assetListEntry = AssetListTestUtil.addAssetListEntry(
@@ -485,9 +534,9 @@ public class AssetListAssetEntryProviderFiltersTest {
 					_portal.getClassNameId(_objectDefinition.getClassName()))
 			);
 
-		if (filters != null) {
+		if (filtersJSON != null) {
 			unicodePropertiesWrapper = unicodePropertiesWrapper.put(
-				"filters", filters);
+				"filters", filtersJSON);
 		}
 
 		UnicodeProperties typeSettingsUnicodeProperties =
@@ -549,17 +598,11 @@ public class AssetListAssetEntryProviderFiltersTest {
 				null, null, StringPool.BLANK, StringPool.BLANK,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		List<Long> actualClassPKs = new ArrayList<>();
+		List<Long> actualClassPKs = TransformUtil.transform(
+			infoPage.getPageItems(), AssetEntry::getClassPK);
 
-		for (AssetEntry assetEntry : infoPage.getPageItems()) {
-			actualClassPKs.add(assetEntry.getClassPK());
-		}
-
-		List<Long> expectedClassPKs = new ArrayList<>();
-
-		for (ObjectEntry objectEntry : expectedObjectEntries) {
-			expectedClassPKs.add(objectEntry.getObjectEntryId());
-		}
+		List<Long> expectedClassPKs = TransformUtil.transformToList(
+			expectedObjectEntries, ObjectEntry::getObjectEntryId);
 
 		Assert.assertEquals(
 			actualClassPKs.toString(), expectedClassPKs.size(),
@@ -569,24 +612,8 @@ public class AssetListAssetEntryProviderFiltersTest {
 			actualClassPKs.containsAll(expectedClassPKs));
 	}
 
-	private JSONArray _buildFiltersJSONArray(JSONObject... filterJSONObjects) {
-		return JSONUtil.putAll((Object[])filterJSONObjects);
-	}
-
-	private ObjectFieldSetting _createObjectFieldSetting(
-		String name, String value) {
-
-		ObjectFieldSetting objectFieldSetting =
-			_objectFieldSettingLocalService.createObjectFieldSetting(0L);
-
-		objectFieldSetting.setName(name);
-		objectFieldSetting.setValue(value);
-
-		return objectFieldSetting;
-	}
-
-	private JSONObject _filter(
-		String propertyName, String operatorName, Object value) {
+	private JSONObject _buildFilter(
+		String operatorName, String propertyName, Object value) {
 
 		return JSONUtil.put(
 			"classNameId",
@@ -602,7 +629,11 @@ public class AssetListAssetEntryProviderFiltersTest {
 		);
 	}
 
-	private JSONObject _picklistFilter(
+	private JSONArray _buildFiltersJSONArray(JSONObject... filterJSONObjects) {
+		return JSONUtil.putAll((Object[])filterJSONObjects);
+	}
+
+	private JSONObject _buildPicklistFilter(
 		String propertyName, String quantifier, String... keys) {
 
 		JSONObject[] valueJSONObjects = new JSONObject[keys.length];
@@ -627,11 +658,26 @@ public class AssetListAssetEntryProviderFiltersTest {
 		);
 	}
 
-	private static final String _LIST_TYPE_ENTRY_KEY_1 = "key1";
+	private ObjectFieldSetting _createObjectFieldSetting(
+		String name, String value) {
 
-	private static final String _LIST_TYPE_ENTRY_KEY_2 = "key2";
+		ObjectFieldSetting objectFieldSetting =
+			_objectFieldSettingLocalService.createObjectFieldSetting(0L);
 
-	private static final String _LIST_TYPE_ENTRY_KEY_3 = "key3";
+		objectFieldSetting.setName(name);
+		objectFieldSetting.setValue(value);
+
+		return objectFieldSetting;
+	}
+
+	private static final String _LIST_TYPE_ENTRY_KEY_1 =
+		RandomTestUtil.randomString();
+
+	private static final String _LIST_TYPE_ENTRY_KEY_2 =
+		RandomTestUtil.randomString();
+
+	private static final String _LIST_TYPE_ENTRY_KEY_3 =
+		RandomTestUtil.randomString();
 
 	@Inject
 	private AssetListAssetEntryProvider _assetListAssetEntryProvider;

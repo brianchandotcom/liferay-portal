@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+
+<portlet-app version="3.0" xmlns="http://xmlns.jcp.org/xml/ns/portlet" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/portlet http://xmlns.jcp.org/xml/ns/portlet/portlet-app_3_0.xsd">
+	<portlet>
+		<portlet-name>1</portlet-name>
+		<display-name>Sample CAPTCHA JSF Portlet</display-name>
+		<portlet-class>com.liferay.captcha.jsf.sample.portlet.CaptchaFacesPortlet</portlet-class>
+		<init-param>
+			<name>com.liferay.faces.defaultViewId.view</name>
+			<value>/WEB-INF/views/captcha.xhtml</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<portlet-info>
+			<title>Sample CAPTCHA JSF Portlet</title>
+			<short-title>Sample CAPTCHA JSF Portlet</short-title>
+			<keywords>Sample CAPTCHA JSF Portlet</keywords>
+		</portlet-info>
+	</portlet>
+</portlet-app>

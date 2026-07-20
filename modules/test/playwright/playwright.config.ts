@@ -28,6 +28,7 @@ import {config as batchPlannerConfig} from './tests/batch-planner/main/config';
 import {config as blogsWebConfig} from './tests/blogs-web/main/config';
 import {config as calendarWebConfig} from './tests/calendar-web/main/config';
 import {config as captchaWebClientExtensionConfig} from './tests/captcha-web/client-extension/config';
+import {config as captchaWebJsfConfig} from './tests/captcha-web/jsf/config';
 import {config as captchaWebConfig} from './tests/captcha-web/main/config';
 import {config as changeTrackingWebLocalePrependConfig} from './tests/change-tracking-web/main-locale-prepend/config';
 import {config as changeTrackingWebConfig} from './tests/change-tracking-web/main/config';
@@ -274,6 +275,7 @@ export default defineConfig({
 		calendarWebConfig,
 		captchaWebClientExtensionConfig,
 		captchaWebConfig,
+		captchaWebJsfConfig,
 		changeTrackingWebConfig,
 		changeTrackingWebLocalePrependConfig,
 		clientExtensionWebConfig,

@@ -1,0 +1,23 @@
+apply plugin: "war"
+
+dependencies {
+	compileOnly group: "com.liferay.jakarta.portlet", name: "com.liferay.jakarta.portlet-api", version: "4.0.0"
+	implementation group: "com.liferay", name: "com.liferay.faces.bridge.api", version: "7.0.0"
+	implementation group: "com.liferay", name: "com.liferay.faces.bridge.ext", version: "9.0.1"
+	implementation group: "com.liferay", name: "com.liferay.faces.bridge.impl", version: "7.0.1"
+	implementation group: "com.liferay", name: "com.liferay.faces.portal", version: "7.0.1"
+	implementation group: "com.liferay", name: "com.liferay.faces.util", version: "5.0.0"
+	implementation group: "com.liferay", name: "jakarta.faces", version: "2.3.21.LIFERAY-PATCHED-4.JAKARTA-LIFERAY-PATCHED-1"
+}
+
+deploy {
+	from war
+
+	rename {
+		"captcha-jsf-sample.war"
+	}
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/war")
+}

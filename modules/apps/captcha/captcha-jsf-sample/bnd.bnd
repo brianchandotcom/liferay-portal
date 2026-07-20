@@ -1,0 +1,3 @@
+Bundle-Name: Liferay CAPTCHA JSF Sample
+Bundle-SymbolicName: com.liferay.captcha.jsf.sample
+Bundle-Version: 1.0.0

@@ -650,7 +650,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 						company.setName(name);
 						company.setNew(true);
 
-						_companyInfoPersistence.update(company.getCompanyInfo());
+						_companyInfoPersistence.update(
+							company.getCompanyInfo());
 
 						company = companyPersistence.update(company);
 

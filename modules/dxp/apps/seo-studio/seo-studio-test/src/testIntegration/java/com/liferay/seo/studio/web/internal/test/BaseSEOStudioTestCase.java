@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.seo.studio.web.internal.object.action.executor.test;
+package com.liferay.seo.studio.web.internal.test;
 
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
@@ -12,9 +12,12 @@ import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -27,6 +30,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -48,7 +52,7 @@ import org.junit.Rule;
 /**
  * @author Jonathan McCann
  */
-public abstract class BaseObjectActionExecutorTestCase {
+public abstract class BaseSEOStudioTestCase {
 
 	@ClassRule
 	@Rule
@@ -127,12 +131,14 @@ public abstract class BaseObjectActionExecutorTestCase {
 	}
 
 	protected ObjectEntry addSEOStudioDomainObjectEntry(
-			String hostname, String scanConfigJSON)
+			boolean autoScanEnabled, String hostname, String scanConfigJSON)
 		throws Exception {
 
 		return addObjectEntry(
 			seoStudioDomainObjectDefinition,
 			HashMapBuilder.<String, Serializable>put(
+				"autoScanEnabled", autoScanEnabled
+			).put(
 				"hostname", hostname
 			).put(
 				"name", RandomTestUtil.randomString()
@@ -144,7 +150,54 @@ public abstract class BaseObjectActionExecutorTestCase {
 				seoStudioInstanceObjectEntry.getObjectEntryId()
 			).put(
 				"scanConfig", scanConfigJSON
+			).put(
+				"scanFrequency", "daily"
+			).put(
+				"scanTime", "09:00"
 			).build());
+	}
+
+	protected ObjectEntry fetchSEOStudioScanRunObjectEntry(
+			ObjectEntry seoStudioDomainObjectEntry)
+		throws Exception {
+
+		return _fetchRelatedObjectEntry(
+			seoStudioDomainObjectEntry, "seoStudioDomainToSEOStudioScanRuns");
+	}
+
+	protected List<ObjectEntry> getRelatedObjectEntries(
+			ObjectEntry objectEntry, String objectRelationshipName)
+		throws Exception {
+
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.fetchObjectRelationship(
+				objectEntry.getObjectDefinitionId(), objectRelationshipName);
+
+		return objectEntryLocalService.getOneToManyObjectEntries(
+			objectEntry.getGroupId(),
+			objectRelationship.getObjectRelationshipId(), null, true,
+			objectEntry.getObjectEntryId(), true, null, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	protected List<ObjectEntry> getSEOStudioScanObjectEntries(
+			ObjectEntry seoStudioScanRunObjectEntry)
+		throws Exception {
+
+		return getRelatedObjectEntries(
+			seoStudioScanRunObjectEntry, "seoStudioScanRunToSEOStudioScans");
+	}
+
+	protected ObjectEntry partialUpdateObjectEntry(
+			ObjectEntry objectEntry, Map<String, Serializable> values)
+		throws Exception {
+
+		return objectEntryLocalService.partialUpdateObjectEntry(
+			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			values,
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId()));
 	}
 
 	protected static Group group;
@@ -200,6 +253,20 @@ public abstract class BaseObjectActionExecutorTestCase {
 			).build());
 	}
 
+	private ObjectEntry _fetchRelatedObjectEntry(
+			ObjectEntry objectEntry, String objectRelationshipName)
+		throws Exception {
+
+		List<ObjectEntry> objectEntries = getRelatedObjectEntries(
+			objectEntry, objectRelationshipName);
+
+		if (ListUtil.isEmpty(objectEntries)) {
+			return null;
+		}
+
+		return objectEntries.get(0);
+	}
+
 	@Inject
 	private static ObjectActionLocalService _objectActionLocalService;
 
@@ -218,5 +285,8 @@ public abstract class BaseObjectActionExecutorTestCase {
 
 	@DeleteAfterTestRun
 	private List<ObjectEntry> _objectEntries = new ArrayList<>();
+
+	@Inject
+	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
 }

@@ -23,10 +23,12 @@ import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
@@ -193,6 +195,49 @@ public class ObjectEntryModelListenerTest {
 		_assertUserGroupRoles(
 			1, Collections.singletonList(DepotRolesConstants.PROJECT_MEMBER),
 			cmpProjectObjectEntry.getGroupId(), user2.getUserId());
+	}
+
+	@Test
+	public void testOnAfterUpdateWhenProjectManagerAndProjectSponsorAreUnchanged()
+		throws Exception {
+
+		ObjectEntry cmpProjectObjectEntry =
+			CMPTestUtil.addCMPProjectObjectEntry();
+
+		User projectManagerUser = UserTestUtil.addUser(
+			cmpProjectObjectEntry.getGroupId());
+
+		Map<String, Serializable> values = cmpProjectObjectEntry.getValues();
+
+		values.put(
+			"r_userToCMPProjectManager_userId", projectManagerUser.getUserId());
+
+		cmpProjectObjectEntry =
+			_objectEntryLocalService.partialUpdateObjectEntry(
+				TestPropsValues.getUserId(),
+				cmpProjectObjectEntry.getObjectEntryId(),
+				cmpProjectObjectEntry.getObjectEntryFolderId(), values,
+				ServiceContextTestUtil.getServiceContext());
+
+		User user = UserTestUtil.addUser();
+
+		UserTestUtil.setUser(user);
+
+		String description = RandomTestUtil.randomString();
+
+		cmpProjectObjectEntry =
+			_objectEntryLocalService.partialUpdateObjectEntry(
+				user.getUserId(), cmpProjectObjectEntry.getObjectEntryId(),
+				cmpProjectObjectEntry.getObjectEntryFolderId(),
+				HashMapBuilder.<String, Serializable>put(
+					"description", description
+				).build(),
+				ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertEquals(
+			description,
+			MapUtil.getString(
+				cmpProjectObjectEntry.getValues(), "description"));
 	}
 
 	private void _assertResourceActions(

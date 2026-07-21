@@ -13,7 +13,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.seo.studio.web.internal.display.context.PageSpeedChartsDisplayContext;
+import com.liferay.seo.studio.web.internal.display.context.ViewPageSpeedChartsDisplayContext;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -25,8 +25,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Kiana Suetani
  */
 @Component(service = FragmentRenderer.class)
-public class PageSpeedChartsFragmentRenderer
-	extends BaseFragmentRenderer<PageSpeedChartsDisplayContext> {
+public class ViewPageSpeedChartsFragmentRenderer
+	extends BaseFragmentRenderer<ViewPageSpeedChartsDisplayContext> {
 
 	@Override
 	public String getCollectionKey() {
@@ -39,10 +39,10 @@ public class PageSpeedChartsFragmentRenderer
 	}
 
 	@Override
-	protected PageSpeedChartsDisplayContext getDisplayContext(
+	protected ViewPageSpeedChartsDisplayContext getDisplayContext(
 		HttpServletRequest httpServletRequest) {
 
-		return new PageSpeedChartsDisplayContext(
+		return new ViewPageSpeedChartsDisplayContext(
 			_fetchSEOStudioPageSpeedResultObjectEntry(httpServletRequest));
 	}
 
@@ -88,6 +88,6 @@ public class PageSpeedChartsFragmentRenderer
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		PageSpeedChartsFragmentRenderer.class);
+		ViewPageSpeedChartsFragmentRenderer.class);
 
 }

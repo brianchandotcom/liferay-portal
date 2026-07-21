@@ -7,15 +7,15 @@
 
 <%@ taglib uri="http://liferay.com/tld/react" prefix="react" %>
 
-<%@ page import="com.liferay.seo.studio.web.internal.display.context.PageSpeedConfigurationDisplayContext" %>
+<%@ page import="com.liferay.seo.studio.web.internal.display.context.EditPageSpeedConfigurationDisplayContext" %>
 
 <%
-PageSpeedConfigurationDisplayContext pageSpeedConfigurationDisplayContext = (PageSpeedConfigurationDisplayContext)request.getAttribute(PageSpeedConfigurationDisplayContext.class.getName());
+EditPageSpeedConfigurationDisplayContext editPageSpeedConfigurationDisplayContext = (EditPageSpeedConfigurationDisplayContext)request.getAttribute(EditPageSpeedConfigurationDisplayContext.class.getName());
 %>
 
 <div class="seo-studio-pagespeed-configuration">
 	<react:component
 		module="{PageSpeedConfiguration} from seo-studio-web"
-		props="<%= pageSpeedConfigurationDisplayContext.getViewProps() %>"
+		props="<%= editPageSpeedConfigurationDisplayContext.getViewProps() %>"
 	/>
 </div>

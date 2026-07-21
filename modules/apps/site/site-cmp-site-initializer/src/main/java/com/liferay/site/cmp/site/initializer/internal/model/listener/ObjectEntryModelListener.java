@@ -108,7 +108,8 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 		try {
 			_updateGroup(objectEntry);
 			_updateProjectCompletionRate(objectEntry);
-			_updateProjectManagerProjectSponsorUserGroupRoles(objectEntry);
+			_updateProjectManagerProjectSponsorUserGroupRoles(
+				originalObjectEntry, objectEntry);
 		}
 		catch (Exception exception) {
 			throw new ModelListenerException(exception);
@@ -439,7 +440,7 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 	}
 
 	private void _updateProjectManagerProjectSponsorUserGroupRoles(
-			ObjectEntry objectEntry)
+			ObjectEntry originalObjectEntry, ObjectEntry objectEntry)
 		throws Exception {
 
 		ObjectDefinition objectDefinition = objectEntry.getObjectDefinition();
@@ -450,18 +451,31 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 			return;
 		}
 
-		_updateUserGroupRoles(
-			objectEntry.getGroupId(),
-			Collections.singletonList(DepotRolesConstants.PROJECT_MANAGER),
-			MapUtil.getLong(
-				objectEntry.getValues(), "r_userToCMPProjectManager_userId",
-				0));
-		_updateUserGroupRoles(
-			objectEntry.getGroupId(),
-			Collections.singletonList(DepotRolesConstants.PROJECT_MEMBER),
-			MapUtil.getLong(
-				objectEntry.getValues(), "r_userToCMPProjectSponsor_userId",
-				0));
+		long projectManagerUserId = MapUtil.getLong(
+			objectEntry.getValues(), "r_userToCMPProjectManager_userId", 0);
+
+		if (projectManagerUserId != MapUtil.getLong(
+				originalObjectEntry.getValues(),
+				"r_userToCMPProjectManager_userId", 0)) {
+
+			_updateUserGroupRoles(
+				objectEntry.getGroupId(),
+				Collections.singletonList(DepotRolesConstants.PROJECT_MANAGER),
+				projectManagerUserId);
+		}
+
+		long projectSponsorUserId = MapUtil.getLong(
+			objectEntry.getValues(), "r_userToCMPProjectSponsor_userId", 0);
+
+		if (projectSponsorUserId != MapUtil.getLong(
+				originalObjectEntry.getValues(),
+				"r_userToCMPProjectSponsor_userId", 0)) {
+
+			_updateUserGroupRoles(
+				objectEntry.getGroupId(),
+				Collections.singletonList(DepotRolesConstants.PROJECT_MEMBER),
+				projectSponsorUserId);
+		}
 	}
 
 	private User _updateUser(long[] groupIds, Long userId) throws Exception {

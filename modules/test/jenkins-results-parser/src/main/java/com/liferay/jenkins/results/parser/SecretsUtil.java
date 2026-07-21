@@ -657,21 +657,57 @@ public abstract class SecretsUtil {
 			"op://", vaultName, "/", itemTitle, "/", fieldLabel);
 	}
 
-	private static String _getSSMParameterValue(String parameterName)
+	private static synchronized String _getSSMParameterValue(
+			String parameterName)
 		throws IOException, TimeoutException {
 
-		Process process = JenkinsResultsParserUtil.executeBashCommands(
-			new File("."), true, false, 60000,
-			JenkinsResultsParserUtil.combine(
-				"aws ssm get-parameter --name \"", parameterName,
-				"\" --with-decryption | jq -r .Parameter.Value"));
+		Retryable<String> retryable = new Retryable<String>(
+			false, 3, 30, true) {
 
-		String value = JenkinsResultsParserUtil.readInputStream(
-			process.getInputStream());
+			@Override
+			public String execute() {
+				try {
+					Process process =
+						JenkinsResultsParserUtil.executeBashCommands(
+							new File("."), true, false, 60000, _getCommand());
 
-		value = value.replace("Finished executing Bash commands.", "");
+					String value = JenkinsResultsParserUtil.readInputStream(
+						process.getInputStream());
 
-		return value.trim();
+					value = value.replace(
+						"Finished executing Bash commands.", "");
+
+					value = value.trim();
+
+					if (JenkinsResultsParserUtil.isNullOrEmpty(value)) {
+						throw new RuntimeException(
+							"Unable to get SSM parameter value for " +
+								parameterName);
+					}
+
+					return value;
+				}
+				catch (IOException | TimeoutException exception) {
+					throw new RuntimeException(exception);
+				}
+			}
+
+			private String _getCommand() {
+				return JenkinsResultsParserUtil.combine(
+					"aws ssm get-parameter --name \"", parameterName,
+					"\" --with-decryption | jq -r .Parameter.Value");
+			}
+
+		};
+
+		String value = retryable.executeWithRetries();
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(value)) {
+			throw new IOException(
+				"Unable to get SSM parameter value for " + parameterName);
+		}
+
+		return value;
 	}
 
 	private static boolean _isSecretsConfigured() {

@@ -104,7 +104,7 @@ public class DesignLibraryResourcesDisplayContextTest {
 		throws Exception {
 
 		List<String> labels = _getBreadcrumbPropsActionItemsLabels(
-			false, false, true);
+			true, false, false);
 
 		Assert.assertFalse(labels.toString(), labels.contains("view-members"));
 		Assert.assertTrue(labels.toString(), labels.contains("manage-members"));
@@ -162,7 +162,7 @@ public class DesignLibraryResourcesDisplayContextTest {
 		throws Exception {
 
 		List<String> labels = _getBreadcrumbPropsActionItemsLabels(
-			true, false, false);
+			false, false, true);
 
 		Assert.assertFalse(labels.toString(), labels.contains("delete"));
 		Assert.assertTrue(labels.toString(), labels.contains("export"));
@@ -279,8 +279,8 @@ public class DesignLibraryResourcesDisplayContextTest {
 	}
 
 	private List<String> _getBreadcrumbPropsActionItemsLabels(
-			boolean hasUpdatePermission, boolean hasDeletePermission,
-			boolean hasAssignMembersPermission)
+			boolean hasAssignMembersPermission, boolean hasDeletePermission,
+			boolean hasUpdatePermission)
 		throws Exception {
 
 		try (MockedStatic<GroupPermissionUtil> groupPermissionUtilMockedStatic =
@@ -319,18 +319,18 @@ public class DesignLibraryResourcesDisplayContextTest {
 				permissionChecker.hasPermission(
 					Mockito.any(Group.class),
 					Mockito.eq(DepotEntry.class.getName()), Mockito.anyLong(),
-					Mockito.eq(ActionKeys.UPDATE))
+					Mockito.eq(ActionKeys.DELETE))
 			).thenReturn(
-				hasUpdatePermission
+				hasDeletePermission
 			);
 
 			Mockito.when(
 				permissionChecker.hasPermission(
 					Mockito.any(Group.class),
 					Mockito.eq(DepotEntry.class.getName()), Mockito.anyLong(),
-					Mockito.eq(ActionKeys.DELETE))
+					Mockito.eq(ActionKeys.UPDATE))
 			).thenReturn(
-				hasDeletePermission
+				hasUpdatePermission
 			);
 
 			Group group = Mockito.mock(Group.class);
@@ -369,12 +369,12 @@ public class DesignLibraryResourcesDisplayContextTest {
 				invocation -> invocation.getArgument(1)
 			);
 
+			HttpServletRequest httpServletRequest = Mockito.mock(
+				HttpServletRequest.class);
+
 			ThemeDisplay themeDisplay = new ThemeDisplay();
 
 			themeDisplay.setPermissionChecker(permissionChecker);
-
-			HttpServletRequest httpServletRequest = Mockito.mock(
-				HttpServletRequest.class);
 
 			Mockito.when(
 				httpServletRequest.getAttribute(WebKeys.THEME_DISPLAY)

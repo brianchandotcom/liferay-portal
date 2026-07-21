@@ -65,7 +65,7 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 @Sync(cleanTransaction = true)
-public class JournalExportImportCTCollectionTest {
+public class JournalCTExportImportTest {
 
 	@ClassRule
 	@Rule
@@ -89,9 +89,7 @@ public class JournalExportImportCTCollectionTest {
 
 	@Test
 	@TestInfo("LPS-164716")
-	public void testImportInsideCTCollectionAddsDDMStructuresDDMTemplatesAndJournalFolders()
-		throws Exception {
-
+	public void testJournalExportImportIntoCTCollection() throws Exception {
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
 			_group.getGroupId(), JournalArticle.class.getName());
 

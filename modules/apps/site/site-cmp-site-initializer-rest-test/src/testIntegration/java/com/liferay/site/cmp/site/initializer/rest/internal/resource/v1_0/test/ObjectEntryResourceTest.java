@@ -57,6 +57,11 @@ public class ObjectEntryResourceTest {
 			_objectDefinitionLocalService.
 				getObjectDefinitionByExternalReferenceCode(
 					"L_CMP_PROJECT", TestPropsValues.getCompanyId());
+		_projectAssetRelationshipObjectDefinition =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					"L_CMP_PROJECT_ASSET_RELATIONSHIP",
+					TestPropsValues.getCompanyId());
 		_taskObjectDefinition =
 			_objectDefinitionLocalService.
 				getObjectDefinitionByExternalReferenceCode(
@@ -78,11 +83,7 @@ public class ObjectEntryResourceTest {
 					depotEntry1.getGroupId(),
 				Http.Method.POST));
 
-		JSONObject projectJSONObject = HTTPTestUtil.invokeToJSONObject(
-			JSONUtil.put(
-				"title", RandomTestUtil.randomString()
-			).toString(),
-			_projectObjectDefinition.getRESTContextPath(), Http.Method.POST);
+		JSONObject projectJSONObject = _addProject();
 
 		DepotEntry depotEntry2 = _depotEntryLocalService.fetchGroupDepotEntry(
 			projectJSONObject.getLong("scopeId"));
@@ -131,6 +132,108 @@ public class ObjectEntryResourceTest {
 		Assert.assertEquals(
 			projectJSONObject.getLong("scopeId"),
 			taskJSONObject.getLong("scopeId"));
+
+		_testPostObjectEntryForProjectAssetRelationship();
+	}
+
+	private JSONObject _addProject() throws Exception {
+		return HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"title", RandomTestUtil.randomString()
+			).toString(),
+			_projectObjectDefinition.getRESTContextPath(), Http.Method.POST);
+	}
+
+	private JSONObject _addProjectAssetRelationship(
+			String classExternalReferenceCode, String className,
+			String groupExternalReferenceCode, JSONObject projectJSONObject)
+		throws Exception {
+
+		return HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"classExternalReferenceCode", classExternalReferenceCode
+			).put(
+				"className", className
+			).put(
+				"groupExternalReferenceCode", groupExternalReferenceCode
+			).put(
+				"r_cmpProjectToCMPProjectAssetRelationships_c_cmpProjectId",
+				projectJSONObject.getLong("id")
+			).toString(),
+			_projectAssetRelationshipObjectDefinition.getRESTContextPath() +
+				"/scopes/" + projectJSONObject.getLong("scopeId"),
+			Http.Method.POST);
+	}
+
+	private void _testPostObjectEntryForProjectAssetRelationship()
+		throws Exception {
+
+		// The asset in a project
+
+		JSONObject projectJSONObject = _addProject();
+
+		String classExternalReferenceCode = RandomTestUtil.randomString();
+		String className = RandomTestUtil.randomString();
+		String groupExternalReferenceCode = RandomTestUtil.randomString();
+
+		JSONObject projectAssetRelationshipJSONObject =
+			_addProjectAssetRelationship(
+				classExternalReferenceCode, className,
+				groupExternalReferenceCode, projectJSONObject);
+
+		Assert.assertEquals(
+			classExternalReferenceCode,
+			projectAssetRelationshipJSONObject.getString(
+				"classExternalReferenceCode"));
+		Assert.assertEquals(
+			className,
+			projectAssetRelationshipJSONObject.getString("className"));
+		Assert.assertEquals(
+			groupExternalReferenceCode,
+			projectAssetRelationshipJSONObject.getString(
+				"groupExternalReferenceCode"));
+		Assert.assertEquals(
+			projectJSONObject.getLong("id"),
+			projectAssetRelationshipJSONObject.getLong(
+				"r_cmpProjectToCMPProjectAssetRelationships_c_cmpProjectId"));
+		Assert.assertEquals(
+			projectJSONObject.getLong("scopeId"),
+			projectAssetRelationshipJSONObject.getLong("scopeId"));
+
+		// The same asset in a different project
+
+		JSONObject anotherProjectJSONObject = _addProject();
+
+		projectAssetRelationshipJSONObject = _addProjectAssetRelationship(
+			classExternalReferenceCode, className, groupExternalReferenceCode,
+			anotherProjectJSONObject);
+
+		Assert.assertEquals(
+			anotherProjectJSONObject.getLong("id"),
+			projectAssetRelationshipJSONObject.getLong(
+				"r_cmpProjectToCMPProjectAssetRelationships_c_cmpProjectId"));
+
+		// The same asset in the same project
+
+		String bodyJSONString = JSONUtil.put(
+			"classExternalReferenceCode", classExternalReferenceCode
+		).put(
+			"className", className
+		).put(
+			"groupExternalReferenceCode", groupExternalReferenceCode
+		).put(
+			"r_cmpProjectToCMPProjectAssetRelationships_c_cmpProjectId",
+			anotherProjectJSONObject.getLong("id")
+		).toString();
+
+		String restContextPath =
+			_projectAssetRelationshipObjectDefinition.getRESTContextPath() +
+				"/scopes/" + anotherProjectJSONObject.getLong("scopeId");
+
+		Assert.assertEquals(
+			400,
+			HTTPTestUtil.invokeToHttpCode(
+				bodyJSONString, restContextPath, Http.Method.POST));
 	}
 
 	@Inject
@@ -139,6 +242,7 @@ public class ObjectEntryResourceTest {
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
+	private ObjectDefinition _projectAssetRelationshipObjectDefinition;
 	private ObjectDefinition _projectObjectDefinition;
 	private ObjectDefinition _taskObjectDefinition;
 

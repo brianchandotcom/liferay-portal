@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactory
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -150,6 +151,36 @@ public class ContentEditorSidePanelComponentSectionFragmentRenderer
 		).put(
 			"assetType", classNameId
 		).put(
+			"cmpProjectAssetRelationshipObjectDefinitionId",
+			() -> {
+				ObjectDefinition cmpProjectAssetRelationshipObjectDefinition =
+					_objectDefinitionLocalService.
+						fetchObjectDefinitionByExternalReferenceCode(
+							"L_CMP_PROJECT_ASSET_RELATIONSHIP",
+							themeDisplay.getCompanyId());
+
+				if (cmpProjectAssetRelationshipObjectDefinition == null) {
+					return null;
+				}
+
+				return cmpProjectAssetRelationshipObjectDefinition.
+					getObjectDefinitionId();
+			}
+		).put(
+			"cmpProjectObjectDefinitionId",
+			() -> {
+				ObjectDefinition cmpProjectObjectDefinition =
+					_objectDefinitionLocalService.
+						fetchObjectDefinitionByExternalReferenceCode(
+							"L_CMP_PROJECT", themeDisplay.getCompanyId());
+
+				if (cmpProjectObjectDefinition == null) {
+					return null;
+				}
+
+				return cmpProjectObjectDefinition.getObjectDefinitionId();
+			}
+		).put(
 			"cmsGroupId", themeDisplay.getScopeGroupId()
 		).put(
 			"comments",
@@ -230,6 +261,22 @@ public class ContentEditorSidePanelComponentSectionFragmentRenderer
 					contentItemCommentEditorConfiguration.getData();
 
 				return data.get("editorConfig");
+			}
+		).put(
+			"entryClassName", objectEntry.getModelClassName()
+		).put(
+			"entryExternalReferenceCode", objectEntry.getExternalReferenceCode()
+		).put(
+			"entryGroupExternalReferenceCode",
+			() -> {
+				Group group = groupLocalService.fetchGroup(
+					objectEntry.getGroupId());
+
+				if (group == null) {
+					return null;
+				}
+
+				return group.getExternalReferenceCode();
 			}
 		).put(
 			"expirationDate",

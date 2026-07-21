@@ -48,7 +48,7 @@ public class BuildQueueRebalancerTest
 	}
 
 	@Test
-	public void testRebalanceBlackListedJenkinsMasters() throws Exception {
+	public void testRebalanceBuildQueues() throws Exception {
 		Properties buildProperties = new Properties();
 
 		buildProperties.setProperty("jenkins.load.balancer.blacklist", "");

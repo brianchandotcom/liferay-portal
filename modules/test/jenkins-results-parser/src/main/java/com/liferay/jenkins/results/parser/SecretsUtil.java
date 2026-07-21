@@ -108,37 +108,66 @@ public abstract class SecretsUtil {
 		return matcher.matches();
 	}
 
+	public static void writeCachedSecrets() {
+		String cachedSecretsURL = _getCachedSecretsURL();
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(cachedSecretsURL)) {
+			try {
+				writeCachedSecrets(cachedSecretsURL);
+			}
+			catch (IOException ioException) {
+				throw new RuntimeException(ioException);
+			}
+		}
+
+		String s3CachedSecretsPath = _getS3CachedSecretsPath();
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(s3CachedSecretsPath)) {
+			try {
+				_writeS3CachedSecrets(s3CachedSecretsPath);
+			}
+			catch (IOException ioException) {
+				throw new RuntimeException(ioException);
+			}
+		}
+	}
+
 	public static void writeCachedSecrets(File cachedSecretsFile)
 		throws IOException {
 
-		String encryptedCachedSecrets = _getEncryptedCachedSecrets();
+		String encryptedConnectSecrets = _getEncryptedConnectSecrets();
 
-		if (encryptedCachedSecrets == null) {
+		if (encryptedConnectSecrets == null) {
 			return;
 		}
 
 		JenkinsResultsParserUtil.write(
-			cachedSecretsFile, encryptedCachedSecrets);
+			cachedSecretsFile, encryptedConnectSecrets);
 
 		System.out.println(
-			"Wrote encrypted 1Password cache to " + cachedSecretsFile);
+			JenkinsResultsParserUtil.combine(
+				"Wrote ", String.valueOf(_connectSecrets.size()),
+				" encrypted 1Password secrets to ",
+				JenkinsResultsParserUtil.getCanonicalPath(cachedSecretsFile)));
 	}
 
 	public static void writeCachedSecrets(String cachedSecretsURL)
 		throws IOException {
 
 		if (cachedSecretsURL.startsWith("s3://")) {
-			String encryptedCachedSecrets = _getEncryptedCachedSecrets();
+			String encryptedConnectSecrets = _getEncryptedConnectSecrets();
 
-			if (encryptedCachedSecrets == null) {
+			if (encryptedConnectSecrets == null) {
 				return;
 			}
 
 			CloudBucketUtil.uploadS3Object(
-				encryptedCachedSecrets, cachedSecretsURL);
+				encryptedConnectSecrets, cachedSecretsURL);
 
 			System.out.println(
-				"Wrote encrypted 1Password cache to " + cachedSecretsURL);
+				JenkinsResultsParserUtil.combine(
+					"Wrote ", String.valueOf(_connectSecrets.size()),
+					" encrypted 1Password secrets to ", cachedSecretsURL));
 
 			return;
 		}
@@ -452,6 +481,19 @@ public abstract class SecretsUtil {
 		return _cachedSecretsURL;
 	}
 
+	private static String _getConnectSecrets() {
+		if (!_isSecretsConfigured()) {
+			System.out.println(
+				"Secrets are not configured, unable to write 1Password cache");
+
+			return null;
+		}
+
+		_loadConnectSecrets();
+
+		return String.valueOf(new JSONObject(_connectSecrets));
+	}
+
 	private static synchronized String _getConnectURL() {
 		if (_connectURL != null) {
 			return _connectURL;
@@ -509,7 +551,57 @@ public abstract class SecretsUtil {
 		return _encryptedCachedSecrets.get(key);
 	}
 
-	private static String _getEncryptedCachedSecrets() throws IOException {
+	private static synchronized String _getEncryptedCachedSecretsContent()
+		throws IOException {
+
+		if (_encryptedCachedSecretsContent != null) {
+			return _encryptedCachedSecretsContent;
+		}
+
+		String cachedSecretsURL = _getCachedSecretsURL();
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(cachedSecretsURL)) {
+			_encryptedCachedSecretsContent = "";
+
+			return _encryptedCachedSecretsContent;
+		}
+
+		if (cachedSecretsURL.startsWith("s3://")) {
+			_encryptedCachedSecretsContent = CloudBucketUtil.readS3Object(
+				cachedSecretsURL);
+
+			return _encryptedCachedSecretsContent;
+		}
+
+		if (JenkinsResultsParserUtil.isURL(cachedSecretsURL)) {
+			_encryptedCachedSecretsContent = JenkinsResultsParserUtil.toString(
+				cachedSecretsURL, false);
+
+			return _encryptedCachedSecretsContent;
+		}
+
+		String filePrefix = "file://";
+
+		if (!cachedSecretsURL.startsWith(filePrefix)) {
+			_encryptedCachedSecretsContent = "";
+
+			return _encryptedCachedSecretsContent;
+		}
+
+		File file = new File(cachedSecretsURL.substring(filePrefix.length()));
+
+		if (!file.exists()) {
+			_encryptedCachedSecretsContent = "";
+
+			return _encryptedCachedSecretsContent;
+		}
+
+		_encryptedCachedSecretsContent = JenkinsResultsParserUtil.read(file);
+
+		return _encryptedCachedSecretsContent;
+	}
+
+	private static String _getEncryptedConnectSecrets() throws IOException {
 		if (!_isSecretsConfigured()) {
 			System.out.println(
 				"Secrets are not configured, unable to write 1Password cache");
@@ -527,75 +619,19 @@ public abstract class SecretsUtil {
 			return null;
 		}
 
-		_loadConnectSecrets();
-
-		JSONObject jsonObject = new JSONObject(_connectSecrets);
-
-		String encryptedCachedSecrets = null;
-
 		try {
-			encryptedCachedSecrets = _encrypt(
-				jsonObject.toString(), cachedSecretsPublicKey);
+			String connectSecrets = _getConnectSecrets();
+
+			if (connectSecrets == null) {
+				return null;
+			}
+
+			return _encrypt(connectSecrets, cachedSecretsPublicKey);
 		}
 		catch (GeneralSecurityException generalSecurityException) {
 			throw new IOException(
 				"Unable to encrypt 1Password cache", generalSecurityException);
 		}
-
-		System.out.println(
-			"Encrypted " + jsonObject.length() + " 1Password secrets");
-
-		return encryptedCachedSecrets;
-	}
-
-	private static synchronized String _getEncryptedCachedSecretsContent()
-		throws IOException {
-
-		if (_ecnryptedCachedSecretsContent != null) {
-			return _ecnryptedCachedSecretsContent;
-		}
-
-		String cachedSecretsURL = _getCachedSecretsURL();
-
-		if (JenkinsResultsParserUtil.isNullOrEmpty(cachedSecretsURL)) {
-			_ecnryptedCachedSecretsContent = "";
-
-			return _ecnryptedCachedSecretsContent;
-		}
-
-		if (cachedSecretsURL.startsWith("s3://")) {
-			_ecnryptedCachedSecretsContent = CloudBucketUtil.readS3Object(
-				cachedSecretsURL);
-
-			return _ecnryptedCachedSecretsContent;
-		}
-
-		if (JenkinsResultsParserUtil.isURL(cachedSecretsURL)) {
-			_ecnryptedCachedSecretsContent = JenkinsResultsParserUtil.toString(
-				cachedSecretsURL, false);
-
-			return _ecnryptedCachedSecretsContent;
-		}
-
-		String filePrefix = "file://";
-
-		if (!cachedSecretsURL.startsWith(filePrefix)) {
-			_ecnryptedCachedSecretsContent = "";
-
-			return _ecnryptedCachedSecretsContent;
-		}
-
-		File file = new File(cachedSecretsURL.substring(filePrefix.length()));
-
-		if (!file.exists()) {
-			_ecnryptedCachedSecretsContent = "";
-
-			return _ecnryptedCachedSecretsContent;
-		}
-
-		_ecnryptedCachedSecretsContent = JenkinsResultsParserUtil.read(file);
-
-		return _ecnryptedCachedSecretsContent;
 	}
 
 	private static synchronized HTTPAuthorization _getHTTPAuthorization() {
@@ -878,7 +914,9 @@ public abstract class SecretsUtil {
 		String cachedSecretsS3Path = _getS3CachedSecretsPath();
 
 		try {
-			if (JenkinsResultsParserUtil.isNullOrEmpty(cachedSecretsS3Path)) {
+			if (JenkinsResultsParserUtil.isNullOrEmpty(cachedSecretsS3Path) ||
+				!CloudBucketUtil.isS3ObjectPathAvailable(cachedSecretsS3Path)) {
+
 				return;
 			}
 
@@ -962,6 +1000,23 @@ public abstract class SecretsUtil {
 		}
 	}
 
+	private static void _writeS3CachedSecrets(String s3CachedSecretsPath)
+		throws IOException {
+
+		String connectSecrets = _getConnectSecrets();
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(connectSecrets)) {
+			return;
+		}
+
+		CloudBucketUtil.writeS3Object(connectSecrets, s3CachedSecretsPath);
+
+		System.out.println(
+			JenkinsResultsParserUtil.combine(
+				"Wrote ", String.valueOf(_connectSecrets.size()),
+				" 1Password secrets to ", s3CachedSecretsPath));
+	}
+
 	private static final String _CACHE_CIPHER = "RSA-OAEP+AES-GCM";
 
 	private static String _accessToken;
@@ -976,8 +1031,8 @@ public abstract class SecretsUtil {
 		new ConcurrentHashMap<>();
 	private static boolean _connectSecretsLoaded;
 	private static String _connectURL;
-	private static String _ecnryptedCachedSecretsContent;
 	private static Map<String, String> _encryptedCachedSecrets;
+	private static String _encryptedCachedSecretsContent;
 	private static boolean _encryptedCachedSecretsLoaded;
 	private static BearerHTTPAuthorization _httpAuthorization;
 	private static Map<String, String> _s3CachedSecrets;

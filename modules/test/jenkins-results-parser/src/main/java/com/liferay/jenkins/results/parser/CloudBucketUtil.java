@@ -655,6 +655,61 @@ public class CloudBucketUtil {
 		}
 	}
 
+	public static void writeS3Object(String content, String s3ObjectPath)
+		throws IOException {
+
+		s3ObjectPath = _replaceS3ObjectPath(s3ObjectPath);
+
+		String suffix = ".temp";
+
+		File s3TempFile = _createTempFile(suffix);
+
+		File s3TempGzFile = null;
+
+		if (s3ObjectPath.endsWith(".gz")) {
+			s3TempGzFile = _createTempFile(".temp.gz");
+		}
+
+		try {
+			String s3TempFilePath = JenkinsResultsParserUtil.getCanonicalPath(
+				s3TempFile);
+
+			JenkinsResultsParserUtil.write(s3TempFile, content);
+
+			if (s3TempGzFile != null) {
+				JenkinsResultsParserUtil.gzip(s3TempFile, s3TempGzFile);
+
+				s3TempFilePath = JenkinsResultsParserUtil.getCanonicalPath(
+					s3TempGzFile);
+			}
+
+			Process process = JenkinsResultsParserUtil.executeBashCommands(
+				new File("."), true, false, 1000 * 60 * 10,
+				JenkinsResultsParserUtil.combine(
+					"aws s3 cp --quiet \"", s3TempFilePath, "\" \"",
+					s3ObjectPath, "\""));
+
+			if (process.exitValue() != 0) {
+				String errorMessage = JenkinsResultsParserUtil.readInputStream(
+					process.getErrorStream());
+
+				throw new IOException(
+					JenkinsResultsParserUtil.combine(
+						"Unable upload to ", s3ObjectPath, "\n", errorMessage));
+			}
+		}
+		catch (TimeoutException timeoutException) {
+			throw new IOException(timeoutException);
+		}
+		finally {
+			JenkinsResultsParserUtil.delete(s3TempFile);
+
+			if (s3TempGzFile != null) {
+				JenkinsResultsParserUtil.delete(s3TempGzFile);
+			}
+		}
+	}
+
 	private static void _createChecksumFile(
 			String s3DestinationPath, File sourceFile)
 		throws IOException {

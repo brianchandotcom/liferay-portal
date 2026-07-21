@@ -939,7 +939,9 @@ public class ObjectValidationRuleLocalServiceImpl
 			ObjectField objectField = _objectFieldPersistence.fetchByPrimaryKey(
 				GetterUtil.getLong(objectValidationRuleSetting.getValue()));
 
-			if ((objectField == null) || objectField.isSystem() ||
+			if ((objectField == null) || objectField.isMetadata() ||
+				(objectField.isSystem() &&
+				 !objectDefinition.isModifiableAndSystem()) ||
 				(objectValidationRuleSetting.compareName(
 					ObjectValidationRuleSettingConstants.
 						NAME_COMPOSITE_KEY_OBJECT_FIELD_ID) &&

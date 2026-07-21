@@ -3,5 +3,6 @@
 <suppressions>
 	<source-check>
 		<suppress checks="GradleDependencyArtifactsCheck" files=".*" />
+		<suppress checks="GradleDependencyVersionCheck" files=".*" />
 	</source-check>
 </suppressions>

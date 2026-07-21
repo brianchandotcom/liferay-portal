@@ -168,6 +168,29 @@ public class ObjectEntryModelListenerTest {
 	}
 
 	@Test
+	public void testOnAfterCreateWithProjectManagerAndProjectSponsor()
+		throws Exception {
+
+		User user1 = UserTestUtil.addUser();
+		User user2 = UserTestUtil.addUser();
+
+		ObjectEntry cmpProjectObjectEntry =
+			CMPTestUtil.addCMPProjectObjectEntry(
+				HashMapBuilder.<String, Serializable>put(
+					"r_userToCMPProjectManager_userId", user1.getUserId()
+				).put(
+					"r_userToCMPProjectSponsor_userId", user2.getUserId()
+				).build());
+
+		_assertUserGroupRoles(
+			1, Collections.singletonList(DepotRolesConstants.PROJECT_MANAGER),
+			cmpProjectObjectEntry.getGroupId(), user1.getUserId());
+		_assertUserGroupRoles(
+			1, Collections.singletonList(DepotRolesConstants.PROJECT_MEMBER),
+			cmpProjectObjectEntry.getGroupId(), user2.getUserId());
+	}
+
+	@Test
 	public void testOnAfterUpdate() throws Exception {
 		ObjectEntry cmpProjectObjectEntry =
 			CMPTestUtil.addCMPProjectObjectEntry();

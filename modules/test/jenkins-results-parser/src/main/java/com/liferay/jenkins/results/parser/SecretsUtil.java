@@ -75,10 +75,10 @@ public abstract class SecretsUtil {
 			return secret;
 		}
 
-		String cachedSecret = _getCachedSecret(secretReference);
+		secret = _getEncryptedCachedSecret(secretReference);
 
-		if (cachedSecret != null) {
-			return cachedSecret;
+		if (secret != null) {
+			return secret;
 		}
 
 		_loadConnectSecrets();
@@ -282,68 +282,6 @@ public abstract class SecretsUtil {
 		_accessToken = accessToken;
 
 		return _accessToken;
-	}
-
-	private static synchronized String _getCachedSecret(String key) {
-		if (!_cachedSecretsLoaded) {
-			_loadCachedSecrets();
-		}
-
-		if (_cachedSecrets == null) {
-			return null;
-		}
-
-		return _cachedSecrets.get(key);
-	}
-
-	private static synchronized String _getCachedSecretsContent()
-		throws IOException {
-
-		if (_cachedSecretsContent != null) {
-			return _cachedSecretsContent;
-		}
-
-		String cachedSecretsURL = _getCachedSecretsURL();
-
-		if (JenkinsResultsParserUtil.isNullOrEmpty(cachedSecretsURL)) {
-			_cachedSecretsContent = "";
-
-			return _cachedSecretsContent;
-		}
-
-		if (cachedSecretsURL.startsWith("s3://")) {
-			_cachedSecretsContent = CloudBucketUtil.readS3Object(
-				cachedSecretsURL);
-
-			return _cachedSecretsContent;
-		}
-
-		if (JenkinsResultsParserUtil.isURL(cachedSecretsURL)) {
-			_cachedSecretsContent = JenkinsResultsParserUtil.toString(
-				cachedSecretsURL, false);
-
-			return _cachedSecretsContent;
-		}
-
-		String filePrefix = "file://";
-
-		if (!cachedSecretsURL.startsWith(filePrefix)) {
-			_cachedSecretsContent = "";
-
-			return _cachedSecretsContent;
-		}
-
-		File file = new File(cachedSecretsURL.substring(filePrefix.length()));
-
-		if (!file.exists()) {
-			_cachedSecretsContent = "";
-
-			return _cachedSecretsContent;
-		}
-
-		_cachedSecretsContent = JenkinsResultsParserUtil.read(file);
-
-		return _cachedSecretsContent;
 	}
 
 	private static synchronized PrivateKey _getCachedSecretsPrivateKey() {
@@ -553,6 +491,18 @@ public abstract class SecretsUtil {
 		return _connectURL;
 	}
 
+	private static synchronized String _getEncryptedCachedSecret(String key) {
+		if (!_encryptedCachedSecretsLoaded) {
+			_loadEncryptedCachedSecrets();
+		}
+
+		if (_encryptedCachedSecrets == null) {
+			return null;
+		}
+
+		return _encryptedCachedSecrets.get(key);
+	}
+
 	private static String _getEncryptedCachedSecrets() throws IOException {
 		if (!_isSecretsConfigured()) {
 			System.out.println(
@@ -590,6 +540,56 @@ public abstract class SecretsUtil {
 			"Encrypted " + jsonObject.length() + " 1Password secrets");
 
 		return encryptedCachedSecrets;
+	}
+
+	private static synchronized String _getEncryptedCachedSecretsContent()
+		throws IOException {
+
+		if (_ecnryptedCachedSecretsContent != null) {
+			return _ecnryptedCachedSecretsContent;
+		}
+
+		String cachedSecretsURL = _getCachedSecretsURL();
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(cachedSecretsURL)) {
+			_ecnryptedCachedSecretsContent = "";
+
+			return _ecnryptedCachedSecretsContent;
+		}
+
+		if (cachedSecretsURL.startsWith("s3://")) {
+			_ecnryptedCachedSecretsContent = CloudBucketUtil.readS3Object(
+				cachedSecretsURL);
+
+			return _ecnryptedCachedSecretsContent;
+		}
+
+		if (JenkinsResultsParserUtil.isURL(cachedSecretsURL)) {
+			_ecnryptedCachedSecretsContent = JenkinsResultsParserUtil.toString(
+				cachedSecretsURL, false);
+
+			return _ecnryptedCachedSecretsContent;
+		}
+
+		String filePrefix = "file://";
+
+		if (!cachedSecretsURL.startsWith(filePrefix)) {
+			_ecnryptedCachedSecretsContent = "";
+
+			return _ecnryptedCachedSecretsContent;
+		}
+
+		File file = new File(cachedSecretsURL.substring(filePrefix.length()));
+
+		if (!file.exists()) {
+			_ecnryptedCachedSecretsContent = "";
+
+			return _ecnryptedCachedSecretsContent;
+		}
+
+		_ecnryptedCachedSecretsContent = JenkinsResultsParserUtil.read(file);
+
+		return _ecnryptedCachedSecretsContent;
 	}
 
 	private static synchronized HTTPAuthorization _getHTTPAuthorization() {
@@ -640,57 +640,6 @@ public abstract class SecretsUtil {
 		}
 
 		return true;
-	}
-
-	private static synchronized void _loadCachedSecrets() {
-		_cachedSecretsLoaded = true;
-
-		try {
-			String cachedSecretsContent = _getCachedSecretsContent();
-
-			if (JenkinsResultsParserUtil.isNullOrEmpty(cachedSecretsContent)) {
-				return;
-			}
-
-			PrivateKey cachedSecretsPrivateKey = _getCachedSecretsPrivateKey();
-
-			if (cachedSecretsPrivateKey == null) {
-				return;
-			}
-
-			cachedSecretsContent = _decrypt(
-				cachedSecretsContent, cachedSecretsPrivateKey);
-
-			if (JenkinsResultsParserUtil.isNullOrEmpty(cachedSecretsContent)) {
-				return;
-			}
-
-			JSONObject jsonObject = new JSONObject(cachedSecretsContent);
-
-			_cachedSecrets = new HashMap<>();
-
-			for (String key : jsonObject.keySet()) {
-				String value = jsonObject.getString(key);
-
-				if (JenkinsResultsParserUtil.isNullOrEmpty(value)) {
-					continue;
-				}
-
-				_cachedSecrets.put(key, value);
-
-				JenkinsResultsParserUtil.addRedactToken(value);
-			}
-
-			System.out.println(
-				JenkinsResultsParserUtil.combine(
-					"Loaded ", String.valueOf(_cachedSecrets.size()),
-					" cached secrets from ", _getCachedSecretsURL()));
-		}
-		catch (Exception exception) {
-			exception.printStackTrace();
-
-			_cachedSecrets = null;
-		}
 	}
 
 	private static synchronized void _loadConnectSecrets() {
@@ -778,6 +727,67 @@ public abstract class SecretsUtil {
 		}
 	}
 
+	private static synchronized void _loadEncryptedCachedSecrets() {
+		if (_encryptedCachedSecretsLoaded) {
+			return;
+		}
+
+		_encryptedCachedSecretsLoaded = true;
+
+		try {
+			String encryptedCachedSecretsContent =
+				_getEncryptedCachedSecretsContent();
+
+			if (JenkinsResultsParserUtil.isNullOrEmpty(
+					encryptedCachedSecretsContent)) {
+
+				return;
+			}
+
+			PrivateKey cachedSecretsPrivateKey = _getCachedSecretsPrivateKey();
+
+			if (cachedSecretsPrivateKey == null) {
+				return;
+			}
+
+			String decryptedCachedSecretsContent = _decrypt(
+				encryptedCachedSecretsContent, cachedSecretsPrivateKey);
+
+			if (JenkinsResultsParserUtil.isNullOrEmpty(
+					decryptedCachedSecretsContent)) {
+
+				return;
+			}
+
+			JSONObject jsonObject = new JSONObject(
+				decryptedCachedSecretsContent);
+
+			_encryptedCachedSecrets = new HashMap<>();
+
+			for (String key : jsonObject.keySet()) {
+				String value = jsonObject.getString(key);
+
+				if (JenkinsResultsParserUtil.isNullOrEmpty(value)) {
+					continue;
+				}
+
+				_encryptedCachedSecrets.put(key, value);
+
+				JenkinsResultsParserUtil.addRedactToken(value);
+			}
+
+			System.out.println(
+				JenkinsResultsParserUtil.combine(
+					"Loaded ", String.valueOf(_encryptedCachedSecrets.size()),
+					" cached secrets from ", _getCachedSecretsURL()));
+		}
+		catch (Exception exception) {
+			exception.printStackTrace();
+
+			_encryptedCachedSecrets = null;
+		}
+	}
+
 	private static JSONArray _toJSONArray(String path) {
 		if (!_isSecretsConfigured()) {
 			return new JSONArray();
@@ -835,9 +845,6 @@ public abstract class SecretsUtil {
 	private static final String _CACHE_CIPHER = "RSA-OAEP+AES-GCM";
 
 	private static String _accessToken;
-	private static Map<String, String> _cachedSecrets;
-	private static String _cachedSecretsContent;
-	private static boolean _cachedSecretsLoaded;
 	private static PrivateKey _cachedSecretsPrivateKey;
 	private static boolean _cachedSecretsPrivateKeyInitialized;
 	private static String _cachedSecretsPrivateKeyPEM;
@@ -849,6 +856,9 @@ public abstract class SecretsUtil {
 		new ConcurrentHashMap<>();
 	private static boolean _connectSecretsLoaded;
 	private static String _connectURL;
+	private static String _ecnryptedCachedSecretsContent;
+	private static Map<String, String> _encryptedCachedSecrets;
+	private static boolean _encryptedCachedSecretsLoaded;
 	private static BearerHTTPAuthorization _httpAuthorization;
 	private static final Pattern _secretReferencePattern = Pattern.compile(
 		"op://(?<vaultName>[^/]*)/(?<itemTitle>[^/]*)/(?<fieldLabel>.*)");

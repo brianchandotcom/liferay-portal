@@ -38,7 +38,7 @@ public class DetectorService {
 
 		if (domain == null) {
 			return new DetectorResult(
-				"Unable to get a domain for SEO Studio domain ID " +
+				"Unable to get a domain for SEO Studio Domain ID " +
 					seoStudioDomainId,
 				SEOStudioScanConstants.STATE_FAILED);
 		}
@@ -48,7 +48,7 @@ public class DetectorService {
 
 		if (ListUtil.isEmpty(crawlHits)) {
 			return new DetectorResult(
-				"Unable to get crawl hits for SEO Studio domain ID " +
+				"Unable to get crawl hits for SEO Studio Domain ID " +
 					seoStudioDomainId,
 				SEOStudioScanConstants.STATE_FAILED);
 		}

@@ -167,7 +167,8 @@ export default function CategorizationMessageBalloon({
 							onCommit={(committedSuggestions) => {
 								Liferay.fire(COMMIT_EVENT, {
 									agent,
-									notifyAssistantPanelOpen: setCategorizationPanelOpen,
+									notifyAssistantPanelOpen:
+										setCategorizationPanelOpen,
 									scopeId,
 									suggestions: committedSuggestions,
 								});

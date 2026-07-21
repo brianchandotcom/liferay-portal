@@ -75,6 +75,12 @@ public abstract class SecretsUtil {
 			return secret;
 		}
 
+		secret = _getS3CachedSecret(secretReference);
+
+		if (secret != null) {
+			return secret;
+		}
+
 		secret = _getEncryptedCachedSecret(secretReference);
 
 		if (secret != null) {
@@ -608,6 +614,42 @@ public abstract class SecretsUtil {
 		return _httpAuthorization;
 	}
 
+	private static synchronized String _getS3CachedSecret(String key) {
+		if (!_s3CachedSecretsLoaded) {
+			_loadS3CachedSecrets();
+		}
+
+		if (_s3CachedSecrets == null) {
+			return null;
+		}
+
+		return _s3CachedSecrets.get(key);
+	}
+
+	private static synchronized String _getS3CachedSecretsPath() {
+		if (_s3CachedSecretsPath != null) {
+			return _s3CachedSecretsPath;
+		}
+
+		String s3CachedSecretsPath;
+
+		try {
+			s3CachedSecretsPath = JenkinsResultsParserUtil.getBuildProperty(
+				"one.password.cached.secrets.s3.path");
+
+			if (JenkinsResultsParserUtil.isNullOrEmpty(s3CachedSecretsPath)) {
+				s3CachedSecretsPath = "";
+			}
+		}
+		catch (IOException ioException) {
+			s3CachedSecretsPath = "";
+		}
+
+		_s3CachedSecretsPath = s3CachedSecretsPath;
+
+		return _s3CachedSecretsPath;
+	}
+
 	private static String _getSecretReference(
 		String vaultName, String itemTitle, String fieldLabel) {
 
@@ -788,6 +830,48 @@ public abstract class SecretsUtil {
 		}
 	}
 
+	private static synchronized void _loadS3CachedSecrets() {
+		if (_s3CachedSecretsLoaded) {
+			return;
+		}
+
+		_s3CachedSecretsLoaded = true;
+
+		_s3CachedSecrets = new HashMap<>();
+
+		String cachedSecretsS3Path = _getS3CachedSecretsPath();
+
+		try {
+			if (JenkinsResultsParserUtil.isNullOrEmpty(cachedSecretsS3Path)) {
+				return;
+			}
+
+			JSONObject jsonObject = new JSONObject(
+				CloudBucketUtil.readS3Object(cachedSecretsS3Path));
+
+			for (String key : jsonObject.keySet()) {
+				String value = jsonObject.getString(key);
+
+				if (JenkinsResultsParserUtil.isNullOrEmpty(value)) {
+					continue;
+				}
+
+				_s3CachedSecrets.put(key, value);
+
+				JenkinsResultsParserUtil.addRedactToken(value);
+			}
+		}
+		catch (Exception exception) {
+			exception.printStackTrace();
+		}
+		finally {
+			System.out.println(
+				JenkinsResultsParserUtil.combine(
+					"Loaded ", String.valueOf(_s3CachedSecrets.size()),
+					" s3 cached secrets from ", cachedSecretsS3Path));
+		}
+	}
+
 	private static JSONArray _toJSONArray(String path) {
 		if (!_isSecretsConfigured()) {
 			return new JSONArray();
@@ -860,6 +944,9 @@ public abstract class SecretsUtil {
 	private static Map<String, String> _encryptedCachedSecrets;
 	private static boolean _encryptedCachedSecretsLoaded;
 	private static BearerHTTPAuthorization _httpAuthorization;
+	private static Map<String, String> _s3CachedSecrets;
+	private static boolean _s3CachedSecretsLoaded;
+	private static String _s3CachedSecretsPath;
 	private static final Pattern _secretReferencePattern = Pattern.compile(
 		"op://(?<vaultName>[^/]*)/(?<itemTitle>[^/]*)/(?<fieldLabel>.*)");
 

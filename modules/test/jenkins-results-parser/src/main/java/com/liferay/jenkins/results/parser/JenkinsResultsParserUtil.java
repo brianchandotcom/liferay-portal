@@ -1358,11 +1358,10 @@ public class JenkinsResultsParserUtil {
 					new EnvironmentBuildProperties(getLocalURL(url)));
 			}
 
-			String s3BucketName = Environment.get("S3_BUCKET_NAME");
+			String s3BucketName = _getS3BucketName();
 
 			if (!isNullOrEmpty(s3BucketName)) {
-				properties.setProperty(
-					"env.S3_BUCKET_NAME", Environment.get("S3_BUCKET_NAME"));
+				properties.setProperty("env.S3_BUCKET_NAME", s3BucketName);
 			}
 
 			if (!properties.containsKey("user.home")) {
@@ -6292,7 +6291,13 @@ public class JenkinsResultsParserUtil {
 		if (cacheDir.exists() && jenkinsRepositoryDir.exists()) {
 			String cacheDirPath = cacheDir.getPath();
 
-			System.out.println("Using " + cacheDirPath + " for cached files");
+			EnvironmentBuildProperties.Environment environment =
+				EnvironmentBuildProperties.getCurrentEnvironment();
+
+			System.out.println(
+				combine(
+					"Using ", cacheDirPath, " for cached files in ",
+					environment.getExtension()));
 
 			_cacheURL = "file://" + cacheDirPath;
 
@@ -6832,6 +6837,28 @@ public class JenkinsResultsParserUtil {
 		}
 
 		return hostName + ":" + filePath;
+	}
+
+	private static String _getS3BucketName() {
+		String s3BucketName = Environment.get("S3_BUCKET_NAME");
+
+		if (!isNullOrEmpty(s3BucketName)) {
+			return s3BucketName;
+		}
+
+		if (EnvironmentBuildProperties.getCurrentEnvironment() ==
+				EnvironmentBuildProperties.Environment.LOCAL) {
+
+			return null;
+		}
+
+		String jenkinsURL = Environment.get("JENKINS_URL");
+
+		if ((jenkinsURL != null) && jenkinsURL.contains("test-5")) {
+			return "liferayci-file-propagator-staging";
+		}
+
+		return "liferayci-file-propagator";
 	}
 
 	private static void _initializeRedactTokens() {

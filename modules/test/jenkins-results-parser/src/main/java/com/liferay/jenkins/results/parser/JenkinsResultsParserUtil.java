@@ -542,6 +542,15 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static Process executeBashCommands(
+			boolean exitOnFirstFail, boolean printCommands, String... commands)
+		throws IOException, TimeoutException {
+
+		return executeBashCommands(
+			new File("."), exitOnFirstFail, printCommands,
+			_MILLIS_BASH_COMMAND_TIMEOUT_DEFAULT, commands);
+	}
+
+	public static Process executeBashCommands(
 			boolean exitOnFirstFail, File baseDir, long timeout,
 			String... commands)
 		throws IOException, TimeoutException {

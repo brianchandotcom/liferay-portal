@@ -383,7 +383,7 @@ public class CloudBucketUtil {
 		}
 
 		try {
-			String listS3Files = listS3Files(s3ObjectPath, true);
+			String listS3Files = _listS3Files(s3ObjectPath, true);
 
 			if (!JenkinsResultsParserUtil.isNullOrEmpty(listS3Files.trim())) {
 				return true;
@@ -438,15 +438,7 @@ public class CloudBucketUtil {
 	public static String listS3Files(String path, boolean file)
 		throws IOException, TimeoutException {
 
-		if (!path.endsWith("/") && !file) {
-			path += "/";
-		}
-
-		Process process = JenkinsResultsParserUtil.executeBashCommands(
-			true, "aws s3 ls " + _escapeParentheses(path));
-
-		return JenkinsResultsParserUtil.readInputStream(
-			process.getInputStream());
+		return _listS3Files(path, file);
 	}
 
 	public static String readS3Object(String s3ObjectPath) throws IOException {
@@ -1026,6 +1018,20 @@ public class CloudBucketUtil {
 			s3ObjectPath);
 
 		return s3ObjectPathMatcher.find();
+	}
+
+	private static String _listS3Files(String path, boolean file)
+		throws IOException, TimeoutException {
+
+		if (!path.endsWith("/") && !file) {
+			path += "/";
+		}
+
+		Process process = JenkinsResultsParserUtil.executeBashCommands(
+			true, false, "aws s3 ls " + _escapeParentheses(path));
+
+		return JenkinsResultsParserUtil.readInputStream(
+			process.getInputStream());
 	}
 
 	private static String _replaceS3ObjectPath(String s3ObjectPath) {

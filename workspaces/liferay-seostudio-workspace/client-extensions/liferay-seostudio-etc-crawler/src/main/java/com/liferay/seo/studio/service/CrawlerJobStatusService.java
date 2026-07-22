@@ -9,11 +9,15 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.seo.studio.constants.SEOStudioScanConstants;
-import com.liferay.seo.studio.model.DetectorResult;
+import com.liferay.seo.studio.model.CrawlHit;
+import com.liferay.seo.studio.model.Domain;
+import com.liferay.seo.studio.processor.BasePageProcessor;
 
 import io.fabric8.kubernetes.api.model.batch.v1.Job;
 import io.fabric8.kubernetes.api.model.batch.v1.JobCondition;
 import io.fabric8.kubernetes.api.model.batch.v1.JobStatus;
+
+import java.net.URI;
 
 import java.util.List;
 import java.util.Objects;
@@ -70,12 +74,7 @@ public class CrawlerJobStatusService {
 				}
 
 				if (state.equals(SEOStudioScanConstants.STATE_COMPLETED)) {
-					DetectorResult detectorResult = _detectorService.detect(
-						seoStudioScanId, seoStudioScanJSONObject);
-
-					_seoStudioService.patchSEOStudioScan(
-						detectorResult.getErrorMessage(), seoStudioScanId,
-						detectorResult.getState());
+					_updateStatuses(seoStudioScanId, seoStudioScanJSONObject);
 				}
 				else if (state.equals(SEOStudioScanConstants.STATE_FAILED)) {
 					_seoStudioService.patchSEOStudioScan(
@@ -85,7 +84,7 @@ public class CrawlerJobStatusService {
 			}
 			catch (Exception exception) {
 				_log.error(
-					"Unable to update status of SEO Studio scan ID " +
+					"Unable to update the status of SEO Studio scan ID " +
 						seoStudioScanId,
 					exception);
 			}
@@ -148,11 +147,54 @@ public class CrawlerJobStatusService {
 		return null;
 	}
 
+	private void _updateStatuses(
+			long seoStudioScanId, JSONObject seoStudioScanJSONObject)
+		throws Exception {
+
+		long seoStudioDomainId = seoStudioScanJSONObject.getLong(
+			"r_seoStudioDomainToSEOStudioScans_seoStudioDomainId");
+
+		Domain domain = _seoStudioService.getSEOStudioDomain(seoStudioDomainId);
+
+		if (domain == null) {
+			_seoStudioService.patchSEOStudioScan(
+				"Unable to get a domain for SEO Studio domain ID " +
+					seoStudioDomainId,
+				seoStudioScanId, SEOStudioScanConstants.STATE_FAILED);
+
+			return;
+		}
+
+		List<CrawlHit> crawlHits = _seoStudioService.getCrawlHits(
+			seoStudioDomainId);
+
+		if (ListUtil.isEmpty(crawlHits)) {
+			_seoStudioService.patchSEOStudioScan(
+				"Unable to get crawl hits for SEO Studio domain ID " +
+					seoStudioDomainId,
+				seoStudioScanId, SEOStudioScanConstants.STATE_FAILED);
+
+			return;
+		}
+
+		URI crawlURI = _seoStudioService.toCrawlURI(domain.getHostname());
+
+		for (BasePageProcessor basePageProcessor : _basePageProcessors) {
+			basePageProcessor.processPages(
+				seoStudioScanJSONObject.getLong(
+					"r_accountToSEOStudioScans_accountEntryId"),
+				crawlHits, crawlURI, seoStudioScanId);
+		}
+
+		_seoStudioService.patchSEOStudioScan(
+			null, seoStudioScanId, SEOStudioScanConstants.STATE_COMPLETED);
+	}
+
 	private static final Log _log = LogFactory.getLog(
 		CrawlerJobStatusService.class);
 
 	@Autowired
-	private DetectorService _detectorService;
+	private List<BasePageProcessor> _basePageProcessors;
 
 	@Autowired
 	private KubernetesJobService _kubernetesJobService;

@@ -3,13 +3,14 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.seo.studio.detector;
+package com.liferay.seo.studio.processor;
 
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.seo.studio.model.CrawlHit;
+import com.liferay.seo.studio.model.InsightResult;
 
 import java.net.URI;
 
@@ -21,18 +22,16 @@ import java.util.Set;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import org.json.JSONObject;
-
 import org.springframework.stereotype.Component;
 
 /**
  * @author Brooke Dalton
  */
 @Component
-public class OrphanPagesDetector extends BaseDetector {
+public class OrphanPageProcessor extends BasePageProcessor {
 
 	@Override
-	public void detect(
+	protected InsightResult detectInsight(
 			long accountEntryId, List<CrawlHit> crawlHits, URI crawlURI,
 			long seoStudioScanId)
 		throws Exception {
@@ -79,44 +78,27 @@ public class OrphanPagesDetector extends BaseDetector {
 						seoStudioScanId);
 			}
 
-			return;
+			return null;
 		}
 
-		JSONObject definitionJSONObject = new JSONObject(
-		).put(
-			"category", "linksAndURLs"
-		).put(
-			"classification", "problem"
-		).put(
-			"description",
+		return new InsightResult(
+			"linksAndURLs", "problem",
 			StringBundler.concat(
 				"This page is published and indexable but has zero internal ",
 				"links pointing to it. Orphan pages are nearly invisible to ",
 				"both users browsing the site and crawlers building the link ",
 				"graph. Even when they are listed in a sitemap, they collect ",
-				"very little ranking authority.")
-		).put(
-			"fixHint",
+				"very little ranking authority."),
 			StringBundler.concat(
 				"Identify 2-5 topically related pages and add contextual ",
 				"internal links pointing to the orphan, with descriptive ",
 				"anchor text. If no relevant linking context exists anywhere ",
 				"on the site, that is a signal the page may not belong in the ",
-				"public site at all.")
-		).put(
-			"name", "orphanPages"
-		).put(
-			"severity", "2"
-		);
-
-		postSEOStudioScanInsights(
-			accountEntryId, definitionJSONObject, orphanPageURLs,
-			resolveSEOStudioPageIds(
-				accountEntryId, orphanPageURLs, seoStudioScanId),
-			seoStudioScanId);
+				"public site at all."),
+			"orphanPages", orphanPageURLs, "2");
 	}
 
 	private static final Log _log = LogFactory.getLog(
-		OrphanPagesDetector.class);
+		OrphanPageProcessor.class);
 
 }

@@ -1362,7 +1362,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		_companyInfoPersistence.update(company.getCompanyInfo());
 
-		return companyPersistence.update(company);
+		return company;
 	}
 
 	@Override
@@ -1377,7 +1377,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		_companyInfoPersistence.update(company.getCompanyInfo());
 
-		return companyPersistence.update(company);
+		return company;
 	}
 
 	/**
@@ -1598,8 +1598,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			company.setLogoId(logoId);
 
 			_companyInfoPersistence.update(company.getCompanyInfo());
-
-			company = companyPersistence.update(company);
 		}
 
 		return company;

@@ -9,7 +9,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.seo.studio.constants.SEOStudioScanConstants;
-import com.liferay.seo.studio.model.DetectorResult;
+import com.liferay.seo.studio.model.CrawlHit;
+import com.liferay.seo.studio.page.processor.PageProcessor;
 
 import io.fabric8.kubernetes.api.model.batch.v1.Job;
 import io.fabric8.kubernetes.api.model.batch.v1.JobCondition;
@@ -32,10 +33,10 @@ import org.springframework.stereotype.Service;
  * @author Brooke Dalton
  */
 @Service
-public class CrawlerJobStatusService {
+public class CrawlerJobInsightService {
 
 	@Scheduled(fixedDelay = 60000)
-	public void scheduledUpdateStates() {
+	public void updateSEOStudioScanStates() {
 		JSONArray itemsJSONArray = new JSONObject(
 			_seoStudioService.getActiveSEOStudioScans()
 		).optJSONArray(
@@ -70,12 +71,7 @@ public class CrawlerJobStatusService {
 				}
 
 				if (state.equals(SEOStudioScanConstants.STATE_COMPLETED)) {
-					DetectorResult detectorResult = _detectorService.detect(
-						seoStudioScanId, seoStudioScanJSONObject);
-
-					_seoStudioService.patchSEOStudioScan(
-						detectorResult.getErrorMessage(), seoStudioScanId,
-						detectorResult.getState());
+					_processInsights(seoStudioScanId, seoStudioScanJSONObject);
 				}
 				else if (state.equals(SEOStudioScanConstants.STATE_FAILED)) {
 					_seoStudioService.patchSEOStudioScan(
@@ -85,7 +81,7 @@ public class CrawlerJobStatusService {
 			}
 			catch (Exception exception) {
 				_log.error(
-					"Unable to update status of SEO Studio scan ID " +
+					"Unable to update the state of SEO Studio scan ID " +
 						seoStudioScanId,
 					exception);
 			}
@@ -148,14 +144,68 @@ public class CrawlerJobStatusService {
 		return null;
 	}
 
-	private static final Log _log = LogFactory.getLog(
-		CrawlerJobStatusService.class);
+	private void _processInsights(
+			long seoStudioScanId, JSONObject seoStudioScanJSONObject)
+		throws Exception {
 
-	@Autowired
-	private DetectorService _detectorService;
+		long seoStudioDomainId = _seoStudioService.getSEOStudioDomainId(
+			seoStudioScanJSONObject);
+
+		JSONObject seoStudioDomainJSONObject =
+			_seoStudioService.fetchSEOStudioDomainJSONObject(seoStudioDomainId);
+
+		if (seoStudioDomainJSONObject == null) {
+			_seoStudioService.patchSEOStudioScan(
+				"Unable to get a domain for SEO Studio domain ID " +
+					seoStudioDomainId,
+				seoStudioScanId, SEOStudioScanConstants.STATE_FAILED);
+
+			return;
+		}
+
+		List<CrawlHit> crawlHits = _seoStudioService.getCrawlHits(
+			seoStudioDomainId);
+
+		if (ListUtil.isEmpty(crawlHits)) {
+			_seoStudioService.patchSEOStudioScan(
+				"Unable to get crawl hits for SEO Studio domain ID " +
+					seoStudioDomainId,
+				seoStudioScanId, SEOStudioScanConstants.STATE_FAILED);
+
+			return;
+		}
+
+		String domainURL = _seoStudioService.toDomainURL(
+			_seoStudioService.toCrawlURI(
+				seoStudioDomainJSONObject.getString("hostname")));
+
+		long accountEntryId = seoStudioScanJSONObject.getLong(
+			"r_accountToSEOStudioScans_accountEntryId");
+
+		for (PageProcessor pageProcessor : _pageProcessors) {
+			JSONObject insightJSONObject = pageProcessor.processInsight(
+				crawlHits, domainURL, seoStudioScanId);
+
+			if (insightJSONObject == null) {
+				continue;
+			}
+
+			_seoStudioService.addSEOStudioScanInsights(
+				accountEntryId, insightJSONObject, seoStudioScanId);
+		}
+
+		_seoStudioService.patchSEOStudioScan(
+			null, seoStudioScanId, SEOStudioScanConstants.STATE_COMPLETED);
+	}
+
+	private static final Log _log = LogFactory.getLog(
+		CrawlerJobInsightService.class);
 
 	@Autowired
 	private KubernetesJobService _kubernetesJobService;
+
+	@Autowired
+	private List<PageProcessor> _pageProcessors;
 
 	@Autowired
 	private SEOStudioService _seoStudioService;

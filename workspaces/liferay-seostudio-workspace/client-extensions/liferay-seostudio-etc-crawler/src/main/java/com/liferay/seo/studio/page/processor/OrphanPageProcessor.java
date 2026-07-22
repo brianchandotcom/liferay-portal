@@ -3,15 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.seo.studio.detector;
+package com.liferay.seo.studio.page.processor;
 
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.seo.studio.model.CrawlHit;
-
-import java.net.URI;
 
 import java.util.HashSet;
 import java.util.LinkedHashSet;
@@ -29,12 +27,11 @@ import org.springframework.stereotype.Component;
  * @author Brooke Dalton
  */
 @Component
-public class OrphanPagesDetector extends BaseDetector {
+public class OrphanPageProcessor implements PageProcessor {
 
 	@Override
-	public void detect(
-			long accountEntryId, List<CrawlHit> crawlHits, URI crawlURI,
-			long seoStudioScanId)
+	public JSONObject processInsight(
+			List<CrawlHit> crawlHits, String domainURL, long seoStudioScanId)
 		throws Exception {
 
 		Set<String> canonicalURLs = new LinkedHashSet<>();
@@ -58,8 +55,6 @@ public class OrphanPagesDetector extends BaseDetector {
 			}
 		}
 
-		String domainURL = seoStudioService.toDomainURL(crawlURI);
-
 		List<String> orphanPageURLs = TransformUtil.transform(
 			canonicalURLs,
 			canonicalURL -> {
@@ -75,14 +70,14 @@ public class OrphanPagesDetector extends BaseDetector {
 		if (ListUtil.isEmpty(orphanPageURLs)) {
 			if (_log.isInfoEnabled()) {
 				_log.info(
-					"No orphan pages were detected for SEO Studio scan ID " +
+					"No orphan pages were found for SEO Studio scan ID " +
 						seoStudioScanId);
 			}
 
-			return;
+			return null;
 		}
 
-		JSONObject definitionJSONObject = new JSONObject(
+		return new JSONObject(
 		).put(
 			"category", "linksAndURLs"
 		).put(
@@ -106,17 +101,13 @@ public class OrphanPagesDetector extends BaseDetector {
 		).put(
 			"name", "orphanPages"
 		).put(
+			"pageURLs", orphanPageURLs
+		).put(
 			"severity", "2"
 		);
-
-		postSEOStudioScanInsights(
-			accountEntryId, definitionJSONObject, orphanPageURLs,
-			resolveSEOStudioPageIds(
-				accountEntryId, orphanPageURLs, seoStudioScanId),
-			seoStudioScanId);
 	}
 
 	private static final Log _log = LogFactory.getLog(
-		OrphanPagesDetector.class);
+		OrphanPageProcessor.class);
 
 }

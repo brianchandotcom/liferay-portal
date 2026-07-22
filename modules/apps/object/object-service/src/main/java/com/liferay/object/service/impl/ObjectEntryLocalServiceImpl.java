@@ -3919,7 +3919,8 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	private Predicate _fillPredicate(
-			long objectDefinitionId, Predicate predicate, String search)
+			ObjectDefinition objectDefinition, Predicate predicate,
+			String search)
 		throws PortalException {
 
 		if (Validator.isNull(search)) {
@@ -3927,17 +3928,21 @@ public class ObjectEntryLocalServiceImpl
 		}
 
 		List<ObjectField> objectFields = _objectFieldPersistence.findByODI_I(
-			objectDefinitionId, true);
+			objectDefinition.getObjectDefinitionId(), true);
 
 		if (objectFields.isEmpty()) {
 			return predicate;
 		}
 
+		String defaultLanguageId = objectDefinition.getDefaultLanguageId();
+		String preferredLanguageId = ObjectEntrySearchUtil.getLanguageId();
+
 		Predicate searchPredicate = null;
 
 		for (ObjectField objectField : objectFields) {
 			Predicate objectFieldPredicate = _getObjectFieldPredicate(
-				objectDefinitionId, objectField, search);
+				defaultLanguageId, objectDefinition.getObjectDefinitionId(),
+				objectField, preferredLanguageId, search);
 
 			if (objectFieldPredicate == null) {
 				continue;
@@ -4878,9 +4883,7 @@ public class ObjectEntryLocalServiceImpl
 			ObjectEntrySearchUtil.getObjectEntryIndexPredicate(
 				groupIds, objectDefinition,
 				Predicate.withParentheses(
-					_fillPredicate(
-						objectDefinition.getObjectDefinitionId(), predicate,
-						search))
+					_fillPredicate(objectDefinition, predicate, search))
 			).and(
 				ObjectEntryTable.INSTANCE.rootObjectEntryId.eq(
 					ObjectEntryTable.INSTANCE.objectEntryId
@@ -4900,7 +4903,8 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	private Predicate _getObjectFieldPredicate(
-			long objectDefinitionId, ObjectField objectField, String search)
+			String defaultLanguageId, long objectDefinitionId,
+			ObjectField objectField, String preferredLanguageId, String search)
 		throws PortalException {
 
 		Table<?> table = _objectFieldLocalService.getTable(
@@ -4927,9 +4931,21 @@ public class ObjectEntryLocalServiceImpl
 				column, objectField, search);
 		}
 
-		return ObjectEntrySearchUtil.getObjectFieldPredicate(
-			objectField.getBusinessType(), column, objectField.getDBType(),
-			search);
+		Predicate objectFieldPredicate =
+			ObjectEntrySearchUtil.getObjectFieldPredicate(
+				objectField.getBusinessType(), column, objectField.getDBType(),
+				search);
+
+		if (!objectField.isLocalized() || (objectFieldPredicate == null) ||
+			!(table instanceof DynamicObjectDefinitionLocalizationTable)) {
+
+			return objectFieldPredicate;
+		}
+
+		return ObjectEntrySearchUtil.getLocalizedObjectFieldPredicate(
+			column, defaultLanguageId,
+			(DynamicObjectDefinitionLocalizationTable)table, objectField,
+			objectFieldPredicate, preferredLanguageId);
 	}
 
 	private GroupByStep _getOneToManyObjectEntriesGroupByStep(
@@ -5043,9 +5059,7 @@ public class ObjectEntryLocalServiceImpl
 				}
 			).and(
 				Predicate.withParentheses(
-					_fillPredicate(
-						objectRelationship.getObjectDefinitionId2(), predicate,
-						search))
+					_fillPredicate(objectDefinition, predicate, search))
 			)
 		);
 	}

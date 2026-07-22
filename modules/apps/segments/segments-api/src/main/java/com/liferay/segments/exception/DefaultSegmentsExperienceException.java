@@ -10,22 +10,20 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author Javier Moral
  */
-public class DefaultSegmentsExperienceSegmentException extends PortalException {
+public class DefaultSegmentsExperienceException extends PortalException {
 
-	public DefaultSegmentsExperienceSegmentException() {
+	public DefaultSegmentsExperienceException() {
 	}
 
-	public DefaultSegmentsExperienceSegmentException(String msg) {
+	public DefaultSegmentsExperienceException(String msg) {
 		super(msg);
 	}
 
-	public DefaultSegmentsExperienceSegmentException(
-		String msg, Throwable throwable) {
-
+	public DefaultSegmentsExperienceException(String msg, Throwable throwable) {
 		super(msg, throwable);
 	}
 
-	public DefaultSegmentsExperienceSegmentException(Throwable throwable) {
+	public DefaultSegmentsExperienceException(Throwable throwable) {
 		super(throwable);
 	}
 

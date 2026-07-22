@@ -141,13 +141,7 @@ public class ObjectValidationRuleLocalServiceTest {
 	public void testAddCompositeKeyObjectValidationRuleWithSystemObjectFields()
 		throws Exception {
 
-		Map<Locale, String> errorLabelMap = LocalizedMapUtil.getLocalizedMap(
-			RandomTestUtil.randomString());
-		Map<Locale, String> nameLabelMap = LocalizedMapUtil.getLocalizedMap(
-			RandomTestUtil.randomString());
-
-		// A metadata system object field of a modifiable system object
-		// definition
+		// Metadata field on a modifiable system object definition
 
 		ObjectField systemObjectField1 = _addSystemObjectField(
 			_modifiableSystemObjectDefinition.getObjectDefinitionId(),
@@ -157,6 +151,11 @@ public class ObjectValidationRuleLocalServiceTest {
 			_objectFieldLocalService.fetchObjectField(
 				_modifiableSystemObjectDefinition.getObjectDefinitionId(),
 				"externalReferenceCode");
+
+		Map<Locale, String> errorLabelMap = LocalizedMapUtil.getLocalizedMap(
+			RandomTestUtil.randomString());
+		Map<Locale, String> nameLabelMap = LocalizedMapUtil.getLocalizedMap(
+			RandomTestUtil.randomString());
 
 		AssertUtils.assertFailure(
 			ObjectValidationRuleSettingValueException.InvalidValue.class,
@@ -176,8 +175,7 @@ public class ObjectValidationRuleLocalServiceTest {
 				_createCompositeKeyObjectValidationRuleSettings(
 					systemObjectField1, externalReferenceCodeObjectField)));
 
-		// A non metadata system object field of a modifiable system object
-		// definition
+		// System field on a modifiable system object definition
 
 		ObjectField systemObjectField2 = _addSystemObjectField(
 			_modifiableSystemObjectDefinition.getObjectDefinitionId(),
@@ -200,8 +198,7 @@ public class ObjectValidationRuleLocalServiceTest {
 		_objectValidationRuleLocalService.deleteObjectValidationRule(
 			objectValidationRule.getObjectValidationRuleId());
 
-		// A non metadata system object field of an unmodifiable system object
-		// definition
+		// System field on an unmodifiable system object definition
 
 		ObjectField systemObjectField3 = _createTextObjectField(
 			StringUtil.randomId());

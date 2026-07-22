@@ -14,6 +14,7 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -25,6 +26,9 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.site.cmp.site.initializer.test.util.CMPTestUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -53,15 +57,15 @@ public class ObjectEntryResourceTest {
 	public void setUp() throws Exception {
 		CMPTestUtil.getOrAddGroup(ObjectEntryResourceTest.class);
 
-		_projectObjectDefinition =
-			_objectDefinitionLocalService.
-				getObjectDefinitionByExternalReferenceCode(
-					"L_CMP_PROJECT", TestPropsValues.getCompanyId());
 		_projectAssetRelationshipObjectDefinition =
 			_objectDefinitionLocalService.
 				getObjectDefinitionByExternalReferenceCode(
 					"L_CMP_PROJECT_ASSET_RELATIONSHIP",
 					TestPropsValues.getCompanyId());
+		_projectObjectDefinition =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					"L_CMP_PROJECT", TestPropsValues.getCompanyId());
 		_taskObjectDefinition =
 			_objectDefinitionLocalService.
 				getObjectDefinitionByExternalReferenceCode(
@@ -69,84 +73,167 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
-	public void testPostObjectEntry() throws Exception {
-		DepotEntry depotEntry1 = _depotEntryLocalService.addDepotEntry(
-			RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomLocaleStringMap(), DepotConstants.TYPE_PROJECT,
-			ServiceContextTestUtil.getServiceContext());
+	public void testPostProjectAssetRelationshipObjectEntry() throws Exception {
+
+		// Asset in a project
+
+		String classExternalReferenceCode = RandomTestUtil.randomString();
+		String className = RandomTestUtil.randomString();
+		String groupExternalReferenceCode = RandomTestUtil.randomString();
+		JSONObject projectObjectEntryJSONObject1 = _postProjectObjectEntry();
+
+		JSONObject projectAssetRelationshipObjectEntryJSONObject =
+			_postProjectAssetRelationshipObjectEntry(
+				classExternalReferenceCode, className,
+				groupExternalReferenceCode, projectObjectEntryJSONObject1);
+
+		Assert.assertEquals(
+			classExternalReferenceCode,
+			projectAssetRelationshipObjectEntryJSONObject.getString(
+				"classExternalReferenceCode"));
+		Assert.assertEquals(
+			className,
+			projectAssetRelationshipObjectEntryJSONObject.getString(
+				"className"));
+		Assert.assertEquals(
+			groupExternalReferenceCode,
+			projectAssetRelationshipObjectEntryJSONObject.getString(
+				"groupExternalReferenceCode"));
+		Assert.assertEquals(
+			projectObjectEntryJSONObject1.getLong("id"),
+			projectAssetRelationshipObjectEntryJSONObject.getLong(
+				"r_cmpProjectToCMPProjectAssetRelationships_c_cmpProjectId"));
+		Assert.assertEquals(
+			projectObjectEntryJSONObject1.getLong("scopeId"),
+			projectAssetRelationshipObjectEntryJSONObject.getLong("scopeId"));
+
+		// Same asset in a different project
+
+		JSONObject projectObjectEntryJSONObject2 = _postProjectObjectEntry();
+
+		projectAssetRelationshipObjectEntryJSONObject =
+			_postProjectAssetRelationshipObjectEntry(
+				classExternalReferenceCode, className,
+				groupExternalReferenceCode, projectObjectEntryJSONObject2);
+
+		Assert.assertEquals(
+			projectObjectEntryJSONObject2.getLong("id"),
+			projectAssetRelationshipObjectEntryJSONObject.getLong(
+				"r_cmpProjectToCMPProjectAssetRelationships_c_cmpProjectId"));
+
+		// Same asset in the same project
+
+		Assert.assertEquals(
+			400,
+			HTTPTestUtil.invokeToHttpCode(
+				JSONUtil.put(
+					"classExternalReferenceCode", classExternalReferenceCode
+				).put(
+					"className", className
+				).put(
+					"groupExternalReferenceCode", groupExternalReferenceCode
+				).put(
+					"r_cmpProjectToCMPProjectAssetRelationships_c_cmpProjectId",
+					projectObjectEntryJSONObject2.getLong("id")
+				).toString(),
+				_projectAssetRelationshipObjectDefinition.getRESTContextPath() +
+					"/scopes/" +
+						projectObjectEntryJSONObject2.getLong("scopeId"),
+				Http.Method.POST));
+	}
+
+	@Test
+	public void testPostProjectObjectEntry() throws Exception {
+		DepotEntry depotEntry = _addProjectDepotEntry();
 
 		Assert.assertEquals(
 			409,
 			HTTPTestUtil.invokeToHttpCode(
 				null,
 				_projectObjectDefinition.getRESTContextPath() + "/scopes/" +
-					depotEntry1.getGroupId(),
+					depotEntry.getGroupId(),
 				Http.Method.POST));
 
-		JSONObject projectJSONObject = _addProject();
+		JSONObject projectObjectEntryJSONObject = _postProjectObjectEntry();
 
-		DepotEntry depotEntry2 = _depotEntryLocalService.fetchGroupDepotEntry(
-			projectJSONObject.getLong("scopeId"));
+		depotEntry = _depotEntryLocalService.fetchGroupDepotEntry(
+			projectObjectEntryJSONObject.getLong("scopeId"));
 
-		Assert.assertEquals(DepotConstants.TYPE_PROJECT, depotEntry2.getType());
+		Assert.assertEquals(DepotConstants.TYPE_PROJECT, depotEntry.getType());
+	}
+
+	@Test
+	public void testPostTaskObjectEntry() throws Exception {
+
+		// Different project scope
+
+		DepotEntry depotEntry = _addProjectDepotEntry();
+
+		JSONObject projectObjectEntryJSONObject = _postProjectObjectEntry();
 
 		Assert.assertEquals(
 			400,
 			HTTPTestUtil.invokeToHttpCode(
 				JSONUtil.put(
 					"r_cmpProjectToCMPTasks_c_cmpProjectId",
-					projectJSONObject.getLong("id")
+					projectObjectEntryJSONObject.getLong("id")
 				).put(
 					"title", RandomTestUtil.randomString()
 				).toString(),
 				_taskObjectDefinition.getRESTContextPath() + "/scopes/" +
-					depotEntry1.getGroupId(),
+					depotEntry.getGroupId(),
 				Http.Method.POST));
 		Assert.assertEquals(
 			404,
 			HTTPTestUtil.invokeToHttpCode(
 				JSONUtil.put(
 					"r_cmpProjectToCMPTasks_c_cmpProjectERC",
-					projectJSONObject.getString("externalReferenceCode")
+					projectObjectEntryJSONObject.getString(
+						"externalReferenceCode")
 				).put(
 					"title", RandomTestUtil.randomString()
 				).toString(),
 				_taskObjectDefinition.getRESTContextPath() + "/scopes/" +
-					depotEntry1.getGroupId(),
+					depotEntry.getGroupId(),
 				Http.Method.POST));
 
-		JSONObject taskJSONObject = HTTPTestUtil.invokeToJSONObject(
+		// Same project scope
+
+		JSONObject taskObjectEntryJSONObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"r_cmpProjectToCMPTasks_c_cmpProjectERC",
-				projectJSONObject.getString("externalReferenceCode")
+				projectObjectEntryJSONObject.getString("externalReferenceCode")
 			).put(
 				"title", RandomTestUtil.randomString()
 			).toString(),
 			_taskObjectDefinition.getRESTContextPath() + "/scopes/" +
-				depotEntry2.getGroupId(),
+				projectObjectEntryJSONObject.getLong("scopeId"),
 			Http.Method.POST);
 
 		Assert.assertEquals(
-			projectJSONObject.getLong("id"),
-			taskJSONObject.getLong("r_cmpProjectToCMPTasks_c_cmpProjectId"));
+			projectObjectEntryJSONObject.getLong("id"),
+			taskObjectEntryJSONObject.getLong(
+				"r_cmpProjectToCMPTasks_c_cmpProjectId"));
 		Assert.assertEquals(
-			projectJSONObject.getLong("scopeId"),
-			taskJSONObject.getLong("scopeId"));
-
-		_testPostObjectEntryForProjectAssetRelationship();
+			projectObjectEntryJSONObject.getLong("scopeId"),
+			taskObjectEntryJSONObject.getLong("scopeId"));
 	}
 
-	private JSONObject _addProject() throws Exception {
-		return HTTPTestUtil.invokeToJSONObject(
-			JSONUtil.put(
-				"title", RandomTestUtil.randomString()
-			).toString(),
-			_projectObjectDefinition.getRESTContextPath(), Http.Method.POST);
+	private DepotEntry _addProjectDepotEntry() throws Exception {
+		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(), DepotConstants.TYPE_PROJECT,
+			ServiceContextTestUtil.getServiceContext());
+
+		_depotEntries.add(depotEntry);
+
+		return depotEntry;
 	}
 
-	private JSONObject _addProjectAssetRelationship(
+	private JSONObject _postProjectAssetRelationshipObjectEntry(
 			String classExternalReferenceCode, String className,
-			String groupExternalReferenceCode, JSONObject projectJSONObject)
+			String groupExternalReferenceCode,
+			JSONObject projectObjectEntryJSONObject)
 		throws Exception {
 
 		return HTTPTestUtil.invokeToJSONObject(
@@ -158,83 +245,31 @@ public class ObjectEntryResourceTest {
 				"groupExternalReferenceCode", groupExternalReferenceCode
 			).put(
 				"r_cmpProjectToCMPProjectAssetRelationships_c_cmpProjectId",
-				projectJSONObject.getLong("id")
+				projectObjectEntryJSONObject.getLong("id")
 			).toString(),
 			_projectAssetRelationshipObjectDefinition.getRESTContextPath() +
-				"/scopes/" + projectJSONObject.getLong("scopeId"),
+				"/scopes/" + projectObjectEntryJSONObject.getLong("scopeId"),
 			Http.Method.POST);
 	}
 
-	private void _testPostObjectEntryForProjectAssetRelationship()
-		throws Exception {
+	private JSONObject _postProjectObjectEntry() throws Exception {
+		JSONObject projectObjectEntryJSONObject =
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					"title", RandomTestUtil.randomString()
+				).toString(),
+				_projectObjectDefinition.getRESTContextPath(),
+				Http.Method.POST);
 
-		// The asset in a project
+		_depotEntries.add(
+			_depotEntryLocalService.fetchGroupDepotEntry(
+				projectObjectEntryJSONObject.getLong("scopeId")));
 
-		JSONObject projectJSONObject = _addProject();
-
-		String classExternalReferenceCode = RandomTestUtil.randomString();
-		String className = RandomTestUtil.randomString();
-		String groupExternalReferenceCode = RandomTestUtil.randomString();
-
-		JSONObject projectAssetRelationshipJSONObject =
-			_addProjectAssetRelationship(
-				classExternalReferenceCode, className,
-				groupExternalReferenceCode, projectJSONObject);
-
-		Assert.assertEquals(
-			classExternalReferenceCode,
-			projectAssetRelationshipJSONObject.getString(
-				"classExternalReferenceCode"));
-		Assert.assertEquals(
-			className,
-			projectAssetRelationshipJSONObject.getString("className"));
-		Assert.assertEquals(
-			groupExternalReferenceCode,
-			projectAssetRelationshipJSONObject.getString(
-				"groupExternalReferenceCode"));
-		Assert.assertEquals(
-			projectJSONObject.getLong("id"),
-			projectAssetRelationshipJSONObject.getLong(
-				"r_cmpProjectToCMPProjectAssetRelationships_c_cmpProjectId"));
-		Assert.assertEquals(
-			projectJSONObject.getLong("scopeId"),
-			projectAssetRelationshipJSONObject.getLong("scopeId"));
-
-		// The same asset in a different project
-
-		JSONObject anotherProjectJSONObject = _addProject();
-
-		projectAssetRelationshipJSONObject = _addProjectAssetRelationship(
-			classExternalReferenceCode, className, groupExternalReferenceCode,
-			anotherProjectJSONObject);
-
-		Assert.assertEquals(
-			anotherProjectJSONObject.getLong("id"),
-			projectAssetRelationshipJSONObject.getLong(
-				"r_cmpProjectToCMPProjectAssetRelationships_c_cmpProjectId"));
-
-		// The same asset in the same project
-
-		String bodyJSONString = JSONUtil.put(
-			"classExternalReferenceCode", classExternalReferenceCode
-		).put(
-			"className", className
-		).put(
-			"groupExternalReferenceCode", groupExternalReferenceCode
-		).put(
-			"r_cmpProjectToCMPProjectAssetRelationships_c_cmpProjectId",
-			anotherProjectJSONObject.getLong("id")
-		).toString();
-
-		String restContextPath =
-			_projectAssetRelationshipObjectDefinition.getRESTContextPath() +
-				"/scopes/" + anotherProjectJSONObject.getLong("scopeId");
-
-		Assert.assertEquals(
-			400,
-			HTTPTestUtil.invokeToHttpCode(
-				bodyJSONString, restContextPath, Http.Method.POST));
+		return projectObjectEntryJSONObject;
 	}
+
+	@DeleteAfterTestRun
+	private List<DepotEntry> _depotEntries = new ArrayList<>();
 
 	@Inject
 	private DepotEntryLocalService _depotEntryLocalService;

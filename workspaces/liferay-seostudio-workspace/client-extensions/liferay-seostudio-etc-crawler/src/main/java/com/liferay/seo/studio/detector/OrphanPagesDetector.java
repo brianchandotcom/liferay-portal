@@ -10,6 +10,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.seo.studio.model.CrawlHit;
+import com.liferay.seo.studio.model.DetectorResult;
 
 import java.net.URI;
 
@@ -32,7 +33,7 @@ import org.springframework.stereotype.Component;
 public class OrphanPagesDetector extends BaseDetector {
 
 	@Override
-	public void detect(
+	protected DetectorResult doDetect(
 			long accountEntryId, List<CrawlHit> crawlHits, URI crawlURI,
 			long seoStudioScanId)
 		throws Exception {
@@ -79,7 +80,7 @@ public class OrphanPagesDetector extends BaseDetector {
 						seoStudioScanId);
 			}
 
-			return;
+			return null;
 		}
 
 		JSONObject definitionJSONObject = new JSONObject(
@@ -109,11 +110,7 @@ public class OrphanPagesDetector extends BaseDetector {
 			"severity", "2"
 		);
 
-		postSEOStudioScanInsights(
-			accountEntryId, definitionJSONObject, orphanPageURLs,
-			resolveSEOStudioPageIds(
-				accountEntryId, orphanPageURLs, seoStudioScanId),
-			seoStudioScanId);
+		return new DetectorResult(definitionJSONObject, orphanPageURLs);
 	}
 
 	private static final Log _log = LogFactory.getLog(

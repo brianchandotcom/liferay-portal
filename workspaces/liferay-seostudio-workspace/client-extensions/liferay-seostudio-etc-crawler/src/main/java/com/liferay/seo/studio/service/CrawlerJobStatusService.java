@@ -9,7 +9,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.seo.studio.constants.SEOStudioScanConstants;
-import com.liferay.seo.studio.model.DetectorResult;
+import com.liferay.seo.studio.model.DetectorStatus;
 
 import io.fabric8.kubernetes.api.model.batch.v1.Job;
 import io.fabric8.kubernetes.api.model.batch.v1.JobCondition;
@@ -70,12 +70,12 @@ public class CrawlerJobStatusService {
 				}
 
 				if (state.equals(SEOStudioScanConstants.STATE_COMPLETED)) {
-					DetectorResult detectorResult = _detectorService.detect(
+					DetectorStatus detectorStatus = _detectorService.detect(
 						seoStudioScanId, seoStudioScanJSONObject);
 
 					_seoStudioService.patchSEOStudioScan(
-						detectorResult.getErrorMessage(), seoStudioScanId,
-						detectorResult.getState());
+						detectorStatus.getErrorMessage(), seoStudioScanId,
+						detectorStatus.getState());
 				}
 				else if (state.equals(SEOStudioScanConstants.STATE_FAILED)) {
 					_seoStudioService.patchSEOStudioScan(

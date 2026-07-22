@@ -5,25 +5,60 @@
 
 package com.liferay.seo.studio.model;
 
+import java.util.List;
+
+import org.json.JSONObject;
+
 /**
  * @author Brooke Dalton
  */
 public class DetectorResult {
 
-	public DetectorResult(String errorMessage, String state) {
-		_errorMessage = errorMessage;
-		_state = state;
+	public DetectorResult(JSONObject jsonObject, List<String> pageURLs) {
+		_pageURLs = pageURLs;
+
+		_category = jsonObject.optString("category", null);
+		_classification = jsonObject.optString("classification", null);
+		_description = jsonObject.optString("description", null);
+		_fixHint = jsonObject.optString("fixHint", null);
+		_name = jsonObject.optString("name", null);
+		_severity = jsonObject.optString("severity", null);
 	}
 
-	public String getErrorMessage() {
-		return _errorMessage;
+	public String getCategory() {
+		return _category;
 	}
 
-	public String getState() {
-		return _state;
+	public String getClassification() {
+		return _classification;
 	}
 
-	private final String _errorMessage;
-	private final String _state;
+	public String getDescription() {
+		return _description;
+	}
+
+	public String getFixHint() {
+		return _fixHint;
+	}
+
+	public String getName() {
+		return _name;
+	}
+
+	public List<String> getPageURLs() {
+		return _pageURLs;
+	}
+
+	public String getSeverity() {
+		return _severity;
+	}
+
+	private final String _category;
+	private final String _classification;
+	private final String _description;
+	private final String _fixHint;
+	private final String _name;
+	private final List<String> _pageURLs;
+	private final String _severity;
 
 }

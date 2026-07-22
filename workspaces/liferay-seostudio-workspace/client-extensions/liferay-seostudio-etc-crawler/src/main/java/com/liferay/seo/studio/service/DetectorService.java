@@ -9,7 +9,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.seo.studio.constants.SEOStudioScanConstants;
 import com.liferay.seo.studio.detector.BaseDetector;
 import com.liferay.seo.studio.model.CrawlHit;
-import com.liferay.seo.studio.model.DetectorResult;
+import com.liferay.seo.studio.model.DetectorStatus;
 import com.liferay.seo.studio.model.Domain;
 
 import java.net.URI;
@@ -27,7 +27,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class DetectorService {
 
-	public DetectorResult detect(
+	public DetectorStatus detect(
 			long seoStudioScanId, JSONObject seoStudioScanJSONObject)
 		throws Exception {
 
@@ -37,7 +37,7 @@ public class DetectorService {
 		Domain domain = _seoStudioService.getSEOStudioDomain(seoStudioDomainId);
 
 		if (domain == null) {
-			return new DetectorResult(
+			return new DetectorStatus(
 				"Unable to get a domain for SEO Studio Domain ID " +
 					seoStudioDomainId,
 				SEOStudioScanConstants.STATE_FAILED);
@@ -47,7 +47,7 @@ public class DetectorService {
 			seoStudioDomainId);
 
 		if (ListUtil.isEmpty(crawlHits)) {
-			return new DetectorResult(
+			return new DetectorStatus(
 				"Unable to get crawl hits for SEO Studio Domain ID " +
 					seoStudioDomainId,
 				SEOStudioScanConstants.STATE_FAILED);
@@ -62,7 +62,7 @@ public class DetectorService {
 				crawlHits, crawlURI, seoStudioScanId);
 		}
 
-		return new DetectorResult(null, SEOStudioScanConstants.STATE_COMPLETED);
+		return new DetectorStatus(null, SEOStudioScanConstants.STATE_COMPLETED);
 	}
 
 	@Autowired

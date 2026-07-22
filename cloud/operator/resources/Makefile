@@ -1,12 +1,12 @@
-.PHONY: all build generate verify clean
+.PHONY: all build clean generate verify
 
 all: build
 
-clean:
-	rm -f manager
-
 build:
 	go build -o manager .
+
+clean:
+	rm -f manager
 
 generate:
 	go generate ./...

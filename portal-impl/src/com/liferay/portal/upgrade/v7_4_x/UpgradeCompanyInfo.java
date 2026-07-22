@@ -6,11 +6,13 @@
 package com.liferay.portal.upgrade.v7_4_x;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.db.partition.util.DBPartitionUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
+import com.liferay.portal.kernel.util.PropsValues;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,35 +24,30 @@ public class UpgradeCompanyInfo extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		DBPartitionUtil.forEachCompanyId(
-			companyId -> {
-				_addCompanyInfoColumns();
-				_copyCompanyInfo(companyId);
-			});
-	}
-
-	@Override
-	protected UpgradeStep[] getPostUpgradeSteps() {
-		return new UpgradeStep[] {
-			UpgradeProcessFactory.dropColumns("Company", _COMPANY_COLUMN_NAMES)
-		};
-	}
-
-	private void _addCompanyInfoColumns() throws Exception {
 		for (String[] column : _COMPANY_INFO_COLUMNS) {
 			if (!hasColumn("CompanyInfo", column[0])) {
 				alterTableAddColumn("CompanyInfo", column[0], column[1]);
 			}
 		}
-	}
 
-	private void _copyCompanyInfo(Long companyId) throws Exception {
 		if (!hasColumn("Company", "homeURL")) {
 			return;
 		}
 
+		Long companyId = null;
+
+		if (PropsValues.DATABASE_PARTITION_ENABLED) {
+			companyId = CompanyThreadLocal.getCompanyId();
+		}
+
+		String selectCompanySQL = StringBundler.concat(
+			"select companyId, homeURL, logoId, name, legalName, legalId, ",
+			"legalType, sicCode, tickerSymbol, industry, type_, size_, ",
+			"indexNameCurrent, indexNameNext from Company",
+			(companyId == null) ? StringPool.BLANK : " where companyId = ?");
+
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
-				_getSelectCompanySQL(companyId));
+				selectCompanySQL);
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.autoBatch(
 					connection,
@@ -103,17 +100,11 @@ public class UpgradeCompanyInfo extends UpgradeProcess {
 		}
 	}
 
-	private String _getSelectCompanySQL(Long companyId) {
-		String sql = StringBundler.concat(
-			"select companyId, homeURL, logoId, name, legalName, legalId, ",
-			"legalType, sicCode, tickerSymbol, industry, type_, size_, ",
-			"indexNameCurrent, indexNameNext from Company");
-
-		if (companyId == null) {
-			return sql;
-		}
-
-		return sql + " where companyId = ?";
+	@Override
+	protected UpgradeStep[] getPostUpgradeSteps() {
+		return new UpgradeStep[] {
+			UpgradeProcessFactory.dropColumns("Company", _COMPANY_COLUMN_NAMES)
+		};
 	}
 
 	private static final String[] _COMPANY_COLUMN_NAMES = {

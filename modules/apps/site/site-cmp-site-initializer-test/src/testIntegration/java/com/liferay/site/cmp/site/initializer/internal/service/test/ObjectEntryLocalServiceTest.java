@@ -6,11 +6,14 @@
 package com.liferay.site.cmp.site.initializer.internal.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -53,8 +56,13 @@ public class ObjectEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testDeleteObjectEntry() throws Exception {
+	public void testDeleteProjectDeletesProjectAssetRelationships()
+		throws Exception {
+
 		ObjectEntry projectObjectEntry = CMPTestUtil.addProjectObjectEntry();
+
+		_depotEntry = _depotEntryLocalService.fetchGroupDepotEntry(
+			projectObjectEntry.getGroupId());
 
 		ObjectEntry projectAssetRelationshipObjectEntry =
 			_addProjectAssetRelationshipObjectEntry(
@@ -95,6 +103,12 @@ public class ObjectEntryLocalServiceTest {
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
 	}
+
+	@DeleteAfterTestRun
+	private DepotEntry _depotEntry;
+
+	@Inject
+	private DepotEntryLocalService _depotEntryLocalService;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

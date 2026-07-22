@@ -1,0 +1,4 @@
+{{- include "liferay-platform.operatorApplication" (list . (merge (dict
+    "name" "crossplane"
+    "namespaceLabels" (dict "pod-security.kubernetes.io/enforce" "restricted")
+    "syncWave" "-100") .Values.operatorApplications.crossplane)) }}

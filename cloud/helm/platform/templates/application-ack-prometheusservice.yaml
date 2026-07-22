@@ -1,0 +1,5 @@
+{{- if .Values.observability.enabled -}}
+{{- include "liferay-platform.operatorApplication" (list . (merge (dict
+    "name" "ack-prometheusservice"
+    "syncWave" "-95") .Values.operatorApplications.ackPrometheusService)) }}
+{{- end -}}

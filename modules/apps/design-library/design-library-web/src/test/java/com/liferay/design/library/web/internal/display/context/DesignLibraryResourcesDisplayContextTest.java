@@ -70,7 +70,6 @@ public class DesignLibraryResourcesDisplayContextTest {
 	@Before
 	public void setUp() {
 		_setUpJSONFactoryUtil();
-		_setUpHttpServletRequest();
 
 		_setUpDesignLibraryResourcesDisplayContext();
 	}
@@ -490,12 +489,6 @@ public class DesignLibraryResourcesDisplayContextTest {
 
 			});
 
-		_designLibraryResourcesDisplayContext =
-			new DesignLibraryResourcesDisplayContext(
-				_mockHttpServletRequest, _liferayPortletResponse);
-	}
-
-	private void _setUpHttpServletRequest() {
 		Mockito.when(
 			_themeDisplay.getPermissionChecker()
 		).thenReturn(
@@ -510,6 +503,10 @@ public class DesignLibraryResourcesDisplayContextTest {
 
 		_mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _themeDisplay);
+
+		_designLibraryResourcesDisplayContext =
+			new DesignLibraryResourcesDisplayContext(
+				_mockHttpServletRequest, _liferayPortletResponse);
 	}
 
 	private void _setUpJSONFactoryUtil() {

@@ -204,7 +204,9 @@ export default function DesignLibraryResourcesFDSPropsTransformer(
 										? 'design-library-fds-sticker-fragment-set'
 										: 'design-library-fds-sticker-stylebook'
 								}
-								symbol="book"
+								symbol={getSymbol(
+									rendererProps?.itemData?.entryClassName
+								)}
 							/>
 						);
 					},
@@ -286,4 +288,12 @@ export default function DesignLibraryResourcesFDSPropsTransformer(
 			},
 		],
 	};
+}
+
+function getSymbol(entryClassName?: string): string {
+	if (entryClassName === FRAGMENT_COLLECTION_ENTRY_CLASS_NAME) {
+		return 'squares';
+	}
+
+	return 'book';
 }

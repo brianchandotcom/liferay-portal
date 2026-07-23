@@ -179,6 +179,37 @@ public class KoroneikiService {
 			productPurchase);
 	}
 
+	public void linkProductPurchaseToOrder(
+			long orderId, String productPurchaseKey)
+		throws Exception {
+
+		ProductPurchaseResource productPurchaseResource =
+			getProductPurchaseResource();
+
+		ProductPurchase productPurchase =
+			productPurchaseResource.getProductPurchase(productPurchaseKey);
+
+		String entityId = String.valueOf(orderId);
+
+		ExternalLink[] externalLinks = productPurchase.getExternalLinks();
+
+		if (externalLinks != null) {
+			for (ExternalLink externalLink : externalLinks) {
+				if (Objects.equals(externalLink.getEntityId(), entityId)) {
+					return;
+				}
+			}
+		}
+
+		productPurchase.setExternalLinks(
+			MarketplaceUtil.appendExternalLink(
+				externalLinks, "marketplace", entityId, "opportunity"));
+
+		productPurchaseResource.putProductPurchase(
+			_MARKETPLACE_AGENT_NAME, _MARKETPLACE_AGENT_NAME,
+			productPurchaseKey, productPurchase);
+	}
+
 	public ProductPurchase postAccountAccountKeyProductPurchase(
 			String accountKey, Jwt jwt, String licenseType,
 			String licenseUsageType, OrderItem orderItem)
@@ -352,6 +383,8 @@ public class KoroneikiService {
 		return accountResource.postAccount(
 			jwt.getClaim("username"), jwt.getClaim("sub"), koroneikiAccount);
 	}
+
+	private static final String _MARKETPLACE_AGENT_NAME = "marketplace";
 
 	private static final Log _log = LogFactory.getLog(KoroneikiService.class);
 

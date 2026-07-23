@@ -45,6 +45,12 @@ public class ProvisioningHubService extends BaseService {
 			ProductPurchase productPurchase)
 		throws Exception {
 
+		if (Objects.equals(order.getOrderTypeExternalReferenceCode(), "CMP")) {
+			_provisionCMP(order, productPurchase);
+
+			return;
+		}
+
 		Product product = productPurchase.getProduct();
 
 		String productName = product.getName();
@@ -193,6 +199,16 @@ public class ProvisioningHubService extends BaseService {
 						"project")
 				).toString()
 			).build(),
+			order.getId(), order.getPaymentStatus());
+	}
+
+	private void _provisionCMP(Order order, ProductPurchase productPurchase)
+		throws Exception {
+
+		_koroneikiService.linkProductPurchaseToOrder(
+			order.getId(), productPurchase.getKey());
+
+		_marketplaceService.completeOrder(
 			order.getId(), order.getPaymentStatus());
 	}
 

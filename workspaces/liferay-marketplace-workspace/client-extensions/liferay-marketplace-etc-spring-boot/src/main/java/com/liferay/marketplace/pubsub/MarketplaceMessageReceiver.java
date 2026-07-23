@@ -20,11 +20,14 @@ import com.liferay.headless.admin.user.client.pagination.Page;
 import com.liferay.headless.admin.user.client.pagination.Pagination;
 import com.liferay.headless.admin.user.client.resource.v1_0.AccountResource;
 import com.liferay.headless.admin.user.client.resource.v1_0.PostalAddressResource;
+import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Sku;
+import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.SkuOption;
 import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.SkuResource;
 import com.liferay.headless.commerce.admin.channel.client.dto.v1_0.Channel;
 import com.liferay.headless.commerce.admin.channel.client.resource.v1_0.ChannelResource;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Order;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderItem;
+import com.liferay.headless.commerce.admin.order.client.resource.v1_0.OrderItemResource;
 import com.liferay.headless.commerce.admin.order.client.resource.v1_0.OrderResource;
 import com.liferay.marketplace.constants.MarketplaceConstants;
 import com.liferay.marketplace.service.KoroneikiService;
@@ -45,6 +48,7 @@ import java.util.Objects;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import org.springframework.http.HttpStatus;
@@ -120,6 +124,47 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 		}
 	}
 
+	private void _addMissingOrderItem(
+			Order order, ProductPurchase productPurchase)
+		throws Exception {
+
+		OrderItemResource orderItemResource =
+			_marketplaceService.getOrderItemResource();
+
+		for (OrderItem orderItem :
+				orderItemResource.getOrderIdOrderItemsPage(
+					order.getId(),
+					com.liferay.headless.commerce.admin.order.client.pagination.
+						Pagination.of(1, 100)
+				).getItems()) {
+
+			if (Objects.equals(
+					orderItem.getSkuExternalReferenceCode(),
+					productPurchase.getProductKey())) {
+
+				return;
+			}
+		}
+
+		orderItemResource.postOrderIdOrderItem(
+			order.getId(),
+			_createOrderItem(
+				productPurchase, _getSku(productPurchase.getProductKey())));
+	}
+
+	private OrderItem _createOrderItem(
+		ProductPurchase productPurchase, Sku catalogSku) {
+
+		return new OrderItem() {
+			{
+				setOptions(() -> _getOptions(catalogSku));
+				setQuantity(
+					() -> new BigDecimal(productPurchase.getQuantity()));
+				setSkuExternalReferenceCode(productPurchase::getProductKey);
+			}
+		};
+	}
+
 	private Account _getAccount(String externalReferenceCode) throws Exception {
 		AccountResource accountResource =
 			_marketplaceService.getAccountResource();
@@ -183,6 +228,32 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 		};
 	}
 
+	private String _getOptions(Sku sku) {
+		JSONArray jsonArray = new JSONArray();
+
+		SkuOption[] skuOptions = sku.getSkuOptions();
+
+		if (skuOptions == null) {
+			return jsonArray.toString();
+		}
+
+		for (SkuOption skuOption : skuOptions) {
+			jsonArray.put(
+				new JSONObject(
+				).put(
+					"key", skuOption.getKey()
+				).put(
+					"value",
+					new JSONArray(
+					).put(
+						skuOption.getValue()
+					)
+				));
+		}
+
+		return jsonArray.toString();
+	}
+
 	private Order _getOrder(String externalReferenceCode) throws Exception {
 		OrderResource orderResource = _marketplaceService.getOrderResource();
 
@@ -201,6 +272,10 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 	private String _getOrderTypeExternalReferenceCode(String productName) {
 		if (productName.contains("AI Hub")) {
 			return "AI_HUB";
+		}
+
+		if (productName.contains("Content Marketing Platform")) {
+			return "CMP";
 		}
 
 		if (productName.contains("LR Tokens")) {
@@ -240,6 +315,24 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 				return postalAddress;
 			},
 			PostalAddress.class);
+	}
+
+	private Sku _getSku(String skuExternalReferenceCode) throws Exception {
+		SkuResource skuResource = _marketplaceService.getSkuResource();
+
+		com.liferay.headless.commerce.admin.catalog.client.http.HttpInvoker.
+			HttpResponse httpResponse =
+				skuResource.getSkuByExternalReferenceCodeHttpResponse(
+					skuExternalReferenceCode);
+
+		if (!_isOKStatusCode(httpResponse.getStatusCode())) {
+			throw new Exception(
+				StringBundler.concat(
+					"Unable to process product purchase, SKU ",
+					skuExternalReferenceCode, " not found"));
+		}
+
+		return Sku.toDTO(httpResponse.getContent());
 	}
 
 	private UserAccount _getUserAccount(String emailAddress) throws Exception {
@@ -354,31 +447,14 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 		Order order = _getOrder(opportunityId);
 
 		if (order == null) {
-			SkuResource skuResource = _marketplaceService.getSkuResource();
-
-			com.liferay.headless.commerce.admin.catalog.client.http.HttpInvoker.
-				HttpResponse httpResponse =
-					skuResource.getSkuByExternalReferenceCodeHttpResponse(
-						productPurchase.getProductKey());
-
-			if (!_isOKStatusCode(httpResponse.getStatusCode())) {
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						"Unable to process product purchase, SKU not found");
-				}
-
-				return;
-			}
-
 			if (_getAccount(koroneikiAccount.getParentAccountKey()) == null) {
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						"Unable to process product purchase, Account not " +
-							"found");
-				}
-
-				return;
+				throw new Exception(
+					StringBundler.concat(
+						"Unable to process product purchase, account ",
+						koroneikiAccount.getParentAccountKey(), " not found"));
 			}
+
+			Sku sku = _getSku(productPurchase.getProductKey());
 
 			OrderResource orderResource =
 				_marketplaceService.getOrderResource();
@@ -395,15 +471,7 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 						setExternalReferenceCode(() -> opportunityId);
 						setOrderItems(
 							() -> new OrderItem[] {
-								new OrderItem() {
-									{
-										setQuantity(
-											() -> new BigDecimal(
-												productPurchase.getQuantity()));
-										setSkuExternalReferenceCode(
-											productPurchase::getProductKey);
-									}
-								}
+								_createOrderItem(productPurchase, sku)
 							});
 						setOrderTypeExternalReferenceCode(
 							() -> _getOrderTypeExternalReferenceCode(
@@ -414,6 +482,9 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 									ORDER_PAYMENT_STATUS_NOT_REQUIRED);
 					}
 				});
+		}
+		else {
+			_addMissingOrderItem(order, productPurchase);
 		}
 
 		_provisioningHubService.provision(

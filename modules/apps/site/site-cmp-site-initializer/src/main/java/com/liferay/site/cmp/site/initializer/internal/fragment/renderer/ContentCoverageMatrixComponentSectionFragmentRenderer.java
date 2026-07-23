@@ -17,6 +17,7 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.cmp.site.initializer.internal.util.ActionUtil;
 import com.liferay.site.cmp.site.initializer.internal.util.ObjectEntryUtil;
@@ -90,6 +91,8 @@ public class ContentCoverageMatrixComponentSectionFragmentRenderer
 				objectEntry.getObjectEntryId(), "?redirect=",
 				themeDisplay.getURLCurrent())
 		).put(
+			"groupId", objectEntry.getGroupId()
+		).put(
 			"hasFunnelStagesOrPersonas",
 			() -> {
 				AssetVocabulary funnelStageAssetVocabulary =
@@ -122,6 +125,8 @@ public class ContentCoverageMatrixComponentSectionFragmentRenderer
 			}
 		).put(
 			"projectId", objectEntry.getObjectEntryId()
+		).put(
+			"projectTitle", MapUtil.getString(objectEntry.getValues(), "title")
 		).build();
 	}
 

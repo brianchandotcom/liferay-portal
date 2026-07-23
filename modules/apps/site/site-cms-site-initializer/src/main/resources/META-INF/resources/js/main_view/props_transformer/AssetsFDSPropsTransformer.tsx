@@ -231,6 +231,11 @@ export default function AssetsFDSPropsTransformer({
 				}${additionalAPIURLParameters}`
 			: otherProps.apiURL;
 
+	const GENERATE_WITH_AI_ACTIONS = [
+		'generateContentWithAI',
+		'generateImageWithAI',
+	];
+
 	return {
 		...otherProps,
 		additionalAPIURLParameters,
@@ -249,7 +254,7 @@ export default function AssetsFDSPropsTransformer({
 				creationMenu.primaryItems,
 				ACTIONS
 			).map((item) =>
-				item.data?.action === 'generateContentWithAI'
+				GENERATE_WITH_AI_ACTIONS.includes(item.data?.action ?? '')
 					? {...item, className: 'cms-generate-content-with-ai'}
 					: item
 			),

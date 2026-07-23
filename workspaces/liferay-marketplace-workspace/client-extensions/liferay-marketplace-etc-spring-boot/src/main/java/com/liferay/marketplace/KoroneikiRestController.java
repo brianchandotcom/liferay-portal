@@ -171,6 +171,13 @@ public class KoroneikiRestController extends BaseRestController {
 				"license-usage-type", orderItem.getOptions());
 
 			if (name == null) {
+				Sku sku = _marketplaceService.getSku(orderItem.getSkuId());
+
+				name = MarketplaceUtil.getSkuOptionValue(
+					"license-usage-type", sku.getSkuOptions());
+			}
+
+			if (name == null) {
 				name = orderItem.getSkuExternalReferenceCode();
 			}
 

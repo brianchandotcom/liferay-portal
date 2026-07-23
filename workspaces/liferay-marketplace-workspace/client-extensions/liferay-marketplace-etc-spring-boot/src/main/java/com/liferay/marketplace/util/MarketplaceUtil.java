@@ -14,6 +14,7 @@ import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ExternalLink;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -334,6 +335,10 @@ public class MarketplaceUtil {
 	}
 
 	public static String getSkuOptionValue(String key, SkuOption[] skuOptions) {
+		if (skuOptions == null) {
+			return null;
+		}
+
 		for (SkuOption skuOption : skuOptions) {
 			String skuOptionKey = skuOption.getKey();
 
@@ -348,6 +353,10 @@ public class MarketplaceUtil {
 	}
 
 	public static String getSkuOptionValue(String key, String options) {
+		if (Validator.isNull(options)) {
+			return null;
+		}
+
 		JSONArray optionsJSONArray = new JSONArray(options);
 
 		for (int i = 0; i < optionsJSONArray.length(); i++) {

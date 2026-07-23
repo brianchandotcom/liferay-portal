@@ -1,0 +1,354 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.osb.patcher.util;
+
+import com.liferay.osb.patcher.configuration.PatcherConfiguration;
+import com.liferay.osb.patcher.constants.JiraConstants;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
+import java.util.List;
+import java.util.Locale;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
+
+/**
+ * @author Pedro Malta
+ */
+public class JiraTicketResolverUtilTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
+
+	@Before
+	public void setUp() {
+		_jiraUtilMockedStatic = Mockito.mockStatic(JiraUtil.class);
+
+		_languageUtilMockedStatic = Mockito.mockStatic(LanguageUtil.class);
+
+		_languageUtilMockedStatic.when(
+			() -> LanguageUtil.format(
+				Mockito.any(Locale.class), Mockito.anyString(),
+				Mockito.<Object>any())
+		).thenAnswer(
+			invocation -> invocation.getArgument(1)
+		);
+	}
+
+	@After
+	public void tearDown() {
+		_jiraUtilMockedStatic.close();
+		_languageUtilMockedStatic.close();
+	}
+
+	@Test
+	public void testGetRelatedLPDKeysDedupesSameKey() {
+		JSONObject issueJSONObject = _issue(
+			_array(
+				_link(JiraConstants.LINK_TYPE_RELATIONSHIP, "LPD-9", "LPD-9"),
+				_link(JiraConstants.LINK_TYPE_RELATIONSHIP, "LPD-9", null)));
+
+		List<String> lpdKeys = JiraTicketResolverUtil.getRelatedLPDKeys(
+			issueJSONObject);
+
+		Assert.assertEquals(lpdKeys.toString(), 1, lpdKeys.size());
+		Assert.assertEquals("LPD-9", lpdKeys.get(0));
+	}
+
+	@Test
+	public void testGetRelatedLPDKeysWhenFieldsMissing() {
+		List<String> lpdKeys = JiraTicketResolverUtil.getRelatedLPDKeys(
+			JSONFactoryUtil.createJSONObject());
+
+		Assert.assertTrue(lpdKeys.isEmpty());
+	}
+
+	@Test
+	public void testGetRelatedLPDKeysWhenInwardIsLPD() {
+		List<String> lpdKeys = JiraTicketResolverUtil.getRelatedLPDKeys(
+			_issue(
+				_array(
+					_link(
+						JiraConstants.LINK_TYPE_RELATIONSHIP, "LPD-100",
+						null))));
+
+		Assert.assertEquals(lpdKeys.toString(), 1, lpdKeys.size());
+		Assert.assertEquals("LPD-100", lpdKeys.get(0));
+	}
+
+	@Test
+	public void testGetRelatedLPDKeysWhenIssueLinksEmpty() {
+		List<String> lpdKeys = JiraTicketResolverUtil.getRelatedLPDKeys(
+			_issue(JSONFactoryUtil.createJSONArray()));
+
+		Assert.assertTrue(lpdKeys.isEmpty());
+	}
+
+	@Test
+	public void testGetRelatedLPDKeysWhenIssueLinksMissing() {
+		JSONObject issueJSONObject = JSONUtil.put(
+			JiraConstants.FIELD_FIELDS, JSONFactoryUtil.createJSONObject());
+
+		List<String> lpdKeys = JiraTicketResolverUtil.getRelatedLPDKeys(
+			issueJSONObject);
+
+		Assert.assertTrue(lpdKeys.isEmpty());
+	}
+
+	@Test
+	public void testGetRelatedLPDKeysWhenLinkedIssueMissingKey() {
+		List<String> lpdKeys = JiraTicketResolverUtil.getRelatedLPDKeys(
+			_issue(
+				_array(
+					JSONUtil.put(
+						JiraConstants.FIELD_INWARD_ISSUE,
+						JSONFactoryUtil.createJSONObject()
+					).put(
+						JiraConstants.FIELD_TYPE,
+						JSONUtil.put(
+							JiraConstants.FIELD_NAME,
+							JiraConstants.LINK_TYPE_RELATIONSHIP)
+					))));
+
+		Assert.assertTrue(lpdKeys.isEmpty());
+	}
+
+	@Test
+	public void testGetRelatedLPDKeysWhenLinkedKeyNotLPD() {
+		List<String> lpdKeys = JiraTicketResolverUtil.getRelatedLPDKeys(
+			_issue(
+				_array(
+					_link(
+						JiraConstants.LINK_TYPE_RELATIONSHIP, "LPE-5", null))));
+
+		Assert.assertTrue(lpdKeys.isEmpty());
+	}
+
+	@Test
+	public void testGetRelatedLPDKeysWhenLinkTypeNotRelationship() {
+		List<String> lpdKeys = JiraTicketResolverUtil.getRelatedLPDKeys(
+			_issue(_array(_link("Blocks", "LPD-1", null))));
+
+		Assert.assertTrue(lpdKeys.isEmpty());
+	}
+
+	@Test
+	public void testGetRelatedLPDKeysWhenMultipleLinksOrdered() {
+		JSONObject issueJSONObject = _issue(
+			_array(
+				_link(JiraConstants.LINK_TYPE_RELATIONSHIP, "LPD-1", null),
+				_link(JiraConstants.LINK_TYPE_RELATIONSHIP, null, "LPD-2")));
+
+		List<String> lpdKeys = JiraTicketResolverUtil.getRelatedLPDKeys(
+			issueJSONObject);
+
+		Assert.assertEquals(lpdKeys.toString(), 2, lpdKeys.size());
+		Assert.assertEquals("LPD-1", lpdKeys.get(0));
+		Assert.assertEquals("LPD-2", lpdKeys.get(1));
+	}
+
+	@Test
+	public void testGetRelatedLPDKeysWhenNullLinkEntry() {
+		JSONArray issueLinksJSONArray = JSONUtil.putAll(
+			0, _link(JiraConstants.LINK_TYPE_RELATIONSHIP, "LPD-7", null));
+
+		List<String> lpdKeys = JiraTicketResolverUtil.getRelatedLPDKeys(
+			_issue(issueLinksJSONArray));
+
+		Assert.assertEquals(lpdKeys.toString(), 1, lpdKeys.size());
+		Assert.assertEquals("LPD-7", lpdKeys.get(0));
+	}
+
+	@Test
+	public void testGetRelatedLPDKeysWhenOutwardIsLPD() {
+		List<String> lpdKeys = JiraTicketResolverUtil.getRelatedLPDKeys(
+			_issue(
+				_array(
+					_link(
+						JiraConstants.LINK_TYPE_RELATIONSHIP, null,
+						"LPD-200"))));
+
+		Assert.assertEquals(lpdKeys.toString(), 1, lpdKeys.size());
+		Assert.assertEquals("LPD-200", lpdKeys.get(0));
+	}
+
+	@Test
+	public void testGetRelatedLPDKeysWhenTypeMissing() {
+		JSONObject linkJSONObject = JSONUtil.put(
+			JiraConstants.FIELD_INWARD_ISSUE, _linkedIssue("LPD-1"));
+
+		List<String> lpdKeys = JiraTicketResolverUtil.getRelatedLPDKeys(
+			_issue(_array(linkJSONObject)));
+
+		Assert.assertTrue(lpdKeys.isEmpty());
+	}
+
+	@Test
+	public void testResolveTicketsDedupesDuplicateTickets() throws Exception {
+		List<String> resolvedTickets = JiraTicketResolverUtil.resolveTickets(
+			_patcherConfiguration, "LPD-1,LPD-1");
+
+		Assert.assertEquals(
+			resolvedTickets.toString(), 1, resolvedTickets.size());
+		Assert.assertEquals("LPD-1", resolvedTickets.get(0));
+	}
+
+	@Test
+	public void testResolveTicketsPassesThroughTicketsWithoutLPE()
+		throws Exception {
+
+		List<String> resolvedTickets = JiraTicketResolverUtil.resolveTickets(
+			_patcherConfiguration, "LPD-1,LPS-2");
+
+		Assert.assertEquals(
+			resolvedTickets.toString(), 2, resolvedTickets.size());
+		Assert.assertEquals("LPD-1", resolvedTickets.get(0));
+		Assert.assertEquals("LPS-2", resolvedTickets.get(1));
+	}
+
+	@Test
+	public void testResolveTicketsResolvesLPEToSingleLPD() throws Exception {
+		_jiraUtilMockedStatic.when(
+			() -> JiraUtil.getIssue(
+				Mockito.any(PatcherConfiguration.class), Mockito.eq("LPE-123"))
+		).thenReturn(
+			_issue(
+				_array(
+					_link(
+						JiraConstants.LINK_TYPE_RELATIONSHIP, "LPD-500", null)))
+		);
+
+		List<String> resolvedTickets = JiraTicketResolverUtil.resolveTickets(
+			_patcherConfiguration, "LPE-123");
+
+		Assert.assertEquals(
+			resolvedTickets.toString(), 1, resolvedTickets.size());
+		Assert.assertEquals("LPD-500", resolvedTickets.get(0));
+	}
+
+	@Test
+	public void testResolveTicketsThrowsWhenLPEHasMultipleRelatedLPD()
+		throws Exception {
+
+		_jiraUtilMockedStatic.when(
+			() -> JiraUtil.getIssue(
+				Mockito.any(PatcherConfiguration.class), Mockito.eq("LPE-1"))
+		).thenReturn(
+			_issue(
+				_array(
+					_link(JiraConstants.LINK_TYPE_RELATIONSHIP, "LPD-1", null),
+					_link(JiraConstants.LINK_TYPE_RELATIONSHIP, "LPD-2", null)))
+		);
+
+		try {
+			JiraTicketResolverUtil.resolveTickets(
+				_patcherConfiguration, "LPE-1");
+
+			Assert.fail();
+		}
+		catch (PortalException portalException) {
+			Assert.assertEquals(
+				"multiple-related-lpd-tickets-found-for-x",
+				portalException.getMessage());
+		}
+	}
+
+	@Test
+	public void testResolveTicketsThrowsWhenLPEHasNoRelatedLPD()
+		throws Exception {
+
+		_jiraUtilMockedStatic.when(
+			() -> JiraUtil.getIssue(
+				Mockito.any(PatcherConfiguration.class), Mockito.eq("LPE-404"))
+		).thenReturn(
+			_issue(JSONFactoryUtil.createJSONArray())
+		);
+
+		try {
+			JiraTicketResolverUtil.resolveTickets(
+				_patcherConfiguration, "LPE-404");
+
+			Assert.fail();
+		}
+		catch (PortalException portalException) {
+			Assert.assertEquals(
+				"no-related-lpd-ticket-found-for-x",
+				portalException.getMessage());
+		}
+	}
+
+	@Test
+	public void testResolveTicketsTrimsAndSkipsBlanks() throws Exception {
+		List<String> resolvedTickets = JiraTicketResolverUtil.resolveTickets(
+			_patcherConfiguration, " LPD-1 , , LPD-2 ,");
+
+		Assert.assertEquals(
+			resolvedTickets.toString(), 2, resolvedTickets.size());
+		Assert.assertEquals("LPD-1", resolvedTickets.get(0));
+		Assert.assertEquals("LPD-2", resolvedTickets.get(1));
+	}
+
+	private JSONArray _array(JSONObject... linkJSONObjects) {
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		for (JSONObject linkJSONObject : linkJSONObjects) {
+			jsonArray.put(linkJSONObject);
+		}
+
+		return jsonArray;
+	}
+
+	private JSONObject _issue(JSONArray issueLinksJSONArray) {
+		return JSONUtil.put(
+			JiraConstants.FIELD_FIELDS,
+			JSONUtil.put(JiraConstants.FIELD_ISSUE_LINKS, issueLinksJSONArray));
+	}
+
+	private JSONObject _link(
+		String typeName, String inwardKey, String outwardKey) {
+
+		JSONObject linkJSONObject = JSONUtil.put(
+			JiraConstants.FIELD_TYPE,
+			JSONUtil.put(JiraConstants.FIELD_NAME, typeName));
+
+		if (inwardKey != null) {
+			linkJSONObject.put(
+				JiraConstants.FIELD_INWARD_ISSUE, _linkedIssue(inwardKey));
+		}
+
+		if (outwardKey != null) {
+			linkJSONObject.put(
+				JiraConstants.FIELD_OUTWARD_ISSUE, _linkedIssue(outwardKey));
+		}
+
+		return linkJSONObject;
+	}
+
+	private JSONObject _linkedIssue(String key) {
+		return JSONUtil.put(JiraConstants.FIELD_KEY, key);
+	}
+
+	private MockedStatic<JiraUtil> _jiraUtilMockedStatic;
+	private MockedStatic<LanguageUtil> _languageUtilMockedStatic;
+	private final PatcherConfiguration _patcherConfiguration = Mockito.mock(
+		PatcherConfiguration.class);
+
+}

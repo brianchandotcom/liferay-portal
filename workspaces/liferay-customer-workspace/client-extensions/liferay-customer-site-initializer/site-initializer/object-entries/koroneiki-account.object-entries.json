@@ -383,6 +383,22 @@
 			"partner": false,
 			"r_accountEntryToKoroneikiAccount_accountEntryERC": "ERC-024",
 			"region": "United States"
+		},
+		{
+			"accountKey": "ERC-026",
+			"code": "TESTACCOUNT26",
+			"dxpVersion": "7.4",
+			"externalReferenceCode": "ERC-026",
+			"liferayContactEmailAddress": "customer-service@liferay.com",
+			"liferayContactName": "Liferay Support",
+			"maxRequestors": -1,
+			"name": "Content Marketing Platform Test Account",
+			"partner": false,
+			"r_accountEntryToKoroneikiAccount_accountEntryERC": "ERC-026",
+			"region": "United States",
+			"slaCurrent": "Platinum Subscription",
+			"slaCurrentEndDate": "2026-12-31 00:00:00.0",
+			"slaCurrentStartDate": "2023-01-01 00:00:00.0"
 		}
 	],
 	"objectDefinitionName": "KoroneikiAccount"

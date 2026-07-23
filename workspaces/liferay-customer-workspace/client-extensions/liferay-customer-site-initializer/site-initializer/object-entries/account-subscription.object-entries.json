@@ -577,6 +577,42 @@
 			"subscriptionStatus": "Active"
 		},
 		{
+			"accountKey": "ERC-001",
+			"accountSubscriptionGroupERC": "ERC-001_liferay-cloud",
+			"endDate": "2026-12-31T00:00:00Z",
+			"externalReferenceCode": "ERC-001_liferay-cloud_content-marketing-platform",
+			"instanceSize": "1",
+			"name": "Content Marketing Platform",
+			"quantity": 1,
+			"r_accountEntryToAccountSubscription_accountEntryERC": "ERC-001",
+			"startDate": "2023-01-01T00:00:00Z",
+			"subscriptionStatus": "Active"
+		},
+		{
+			"accountKey": "ERC-001",
+			"accountSubscriptionGroupERC": "ERC-001_liferay-cloud",
+			"endDate": "2026-12-31T00:00:00Z",
+			"externalReferenceCode": "ERC-001_liferay-cloud_content-marketing-platform-production",
+			"instanceSize": "1",
+			"name": "Content Marketing Platform - Production",
+			"quantity": 1,
+			"r_accountEntryToAccountSubscription_accountEntryERC": "ERC-001",
+			"startDate": "2023-01-01T00:00:00Z",
+			"subscriptionStatus": "Active"
+		},
+		{
+			"accountKey": "ERC-001",
+			"accountSubscriptionGroupERC": "ERC-001_liferay-cloud",
+			"endDate": "2026-12-31T00:00:00Z",
+			"externalReferenceCode": "ERC-001_liferay-cloud_content-marketing-platform-non-production",
+			"instanceSize": "1",
+			"name": "Content Marketing Platform - Non-Production",
+			"quantity": 1,
+			"r_accountEntryToAccountSubscription_accountEntryERC": "ERC-001",
+			"startDate": "2023-01-01T00:00:00Z",
+			"subscriptionStatus": "Active"
+		},
+		{
 			"accountKey": "ERC-023",
 			"accountSubscriptionGroupERC": "ERC-023_liferay-cloud",
 			"endDate": "2026-12-31T00:00:00Z",
@@ -621,6 +657,42 @@
 			"name": "Academic Non-Production",
 			"quantity": 1,
 			"r_accountEntryToAccountSubscription_accountEntryERC": "ERC-024",
+			"startDate": "2023-01-01T00:00:00Z",
+			"subscriptionStatus": "Active"
+		},
+		{
+			"accountKey": "ERC-026",
+			"accountSubscriptionGroupERC": "ERC-026_liferay-cloud",
+			"endDate": "2026-12-31T00:00:00Z",
+			"externalReferenceCode": "ERC-026_liferay-cloud_content-marketing-platform",
+			"instanceSize": "1",
+			"name": "Content Marketing Platform",
+			"quantity": 1,
+			"r_accountEntryToAccountSubscription_accountEntryERC": "ERC-026",
+			"startDate": "2023-01-01T00:00:00Z",
+			"subscriptionStatus": "Active"
+		},
+		{
+			"accountKey": "ERC-026",
+			"accountSubscriptionGroupERC": "ERC-026_liferay-cloud",
+			"endDate": "2026-12-31T00:00:00Z",
+			"externalReferenceCode": "ERC-026_liferay-cloud_content-marketing-platform-production",
+			"instanceSize": "1",
+			"name": "Content Marketing Platform - Production",
+			"quantity": 1,
+			"r_accountEntryToAccountSubscription_accountEntryERC": "ERC-026",
+			"startDate": "2023-01-01T00:00:00Z",
+			"subscriptionStatus": "Active"
+		},
+		{
+			"accountKey": "ERC-026",
+			"accountSubscriptionGroupERC": "ERC-026_liferay-cloud",
+			"endDate": "2026-12-31T00:00:00Z",
+			"externalReferenceCode": "ERC-026_liferay-cloud_content-marketing-platform-non-production",
+			"instanceSize": "1",
+			"name": "Content Marketing Platform - Non-Production",
+			"quantity": 1,
+			"r_accountEntryToAccountSubscription_accountEntryERC": "ERC-026",
 			"startDate": "2023-01-01T00:00:00Z",
 			"subscriptionStatus": "Active"
 		}

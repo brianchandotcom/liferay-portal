@@ -9,6 +9,7 @@ export const PRODUCT_TYPES = {
 	cloudNative: 'Cloud Native',
 	commerce: 'Commerce',
 	commerceCloud: 'Commerce for Cloud',
+	contentMarketingPlatform: 'Content Marketing Platform',
 	dxp: 'DXP',
 	dxpCloud: 'Liferay PaaS',
 	enterpriseSearch: 'Enterprise Search',

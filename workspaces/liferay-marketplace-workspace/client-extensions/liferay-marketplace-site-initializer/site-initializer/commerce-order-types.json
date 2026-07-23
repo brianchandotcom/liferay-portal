@@ -165,5 +165,17 @@
 			"en_US": "CMP Beta"
 		},
 		"neverExpire": true
+	},
+	{
+		"active": true,
+		"description": {
+			"en_US": "Designates that the order is Liferay CMP."
+		},
+		"displayOrder": 14,
+		"externalReferenceCode": "CMP",
+		"name": {
+			"en_US": "CMP"
+		},
+		"neverExpire": true
 	}
 ]

@@ -149,32 +149,6 @@ describe('AIAssistantChat', () => {
 		).toHaveLength(2);
 	});
 
-	it('closes the chat when the categorization panel is opened', async () => {
-		const handlers: Record<string, (payload: unknown) => void> = {};
-
-		(Liferay.on as jest.Mock).mockImplementation(
-			(name: string, callback: (payload: unknown) => void) => {
-				handlers[name] = callback;
-			}
-		);
-
-		await renderAndOpen();
-
-		expect(
-			screen.getByRole('button', {name: 'ai-assistant'})
-		).toHaveAttribute('aria-expanded', 'true');
-
-		await act(async () => {
-			handlers['cms:aiAssistant:openCategorizationPanel']({});
-		});
-
-		expect(
-			screen.getByRole('button', {name: 'ai-assistant'})
-		).toHaveAttribute('aria-expanded', 'false');
-
-		(Liferay.on as jest.Mock).mockReset();
-	});
-
 	it('defaults the mime type to image/png when the image event omits it', async () => {
 		const fakeEventSource = createFakeEventSource();
 

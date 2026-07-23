@@ -16,7 +16,6 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {
 	CATEGORIZE_EVENT,
 	CategorizeEventPayload,
-	OPEN_CATEGORIZATION_PANEL_EVENT,
 	REQUEST_CATEGORIZE_EVENT,
 } from '../Categorization/events';
 import {classifyCategorizationIntent} from '../Categorization/services/classifyCategorizationIntent';
@@ -463,22 +462,10 @@ const AIAssistantChat: React.FC<AIAssistantChatProps> = ({
 			});
 		};
 
-		const handleOpenCategorizationPanel = () => {
-			setActive(false);
-		};
-
 		Liferay.on(CATEGORIZE_EVENT, handleCategorize);
-		Liferay.on(
-			OPEN_CATEGORIZATION_PANEL_EVENT,
-			handleOpenCategorizationPanel
-		);
 
 		return () => {
 			Liferay.detach(CATEGORIZE_EVENT, handleCategorize);
-			Liferay.detach(
-				OPEN_CATEGORIZATION_PANEL_EVENT,
-				handleOpenCategorizationPanel
-			);
 		};
 	}, []);
 

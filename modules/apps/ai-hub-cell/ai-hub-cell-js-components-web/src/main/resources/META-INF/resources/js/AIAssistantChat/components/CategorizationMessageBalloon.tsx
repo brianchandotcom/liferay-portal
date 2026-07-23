@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {sub} from 'frontend-js-web';
@@ -13,7 +12,6 @@ import CategorizationSuggestions from '../../Categorization/components/Categoriz
 import {
 	COMMIT_EVENT,
 	CategorizeEventPayload,
-	OPEN_CATEGORIZATION_PANEL_EVENT,
 } from '../../Categorization/events';
 import {getCandidateCategories} from '../../Categorization/services/getCandidateCategories';
 import {getExistingTags} from '../../Categorization/services/getExistingTags';
@@ -35,8 +33,6 @@ export default function CategorizationMessageBalloon({
 	scopeId,
 	targets,
 }: CategorizeEventPayload) {
-	const [categorizationPanelOpen, setCategorizationPanelOpen] =
-		useState(false);
 	const [committed, setCommitted] = useState(false);
 	const [dismissed, setDismissed] = useState<string[]>([]);
 
@@ -167,8 +163,6 @@ export default function CategorizationMessageBalloon({
 							onCommit={(committedSuggestions) => {
 								Liferay.fire(COMMIT_EVENT, {
 									agent,
-									notifyAssistantPanelOpen:
-										setCategorizationPanelOpen,
 									scopeId,
 									suggestions: committedSuggestions,
 								});
@@ -182,7 +176,6 @@ export default function CategorizationMessageBalloon({
 								])
 							}
 							onRegenerate={() => {
-								setCategorizationPanelOpen(false);
 								setCommitted(false);
 								setDismissed([]);
 
@@ -207,32 +200,6 @@ export default function CategorizationMessageBalloon({
 
 						<div className="flex-grow-1 m-2">
 							{confirmationMessage}
-
-							{!categorizationPanelOpen && (
-								<>
-									{' '}
-									{sub(
-										Liferay.Language.get('x-to-see-them'),
-										[
-											<ClayButton
-												className="align-baseline border-0 font-weight-semi-bold p-0 text-decoration-underline"
-												displayType="unstyled"
-												key="open-categorization-panel"
-												onClick={() =>
-													Liferay.fire(
-														OPEN_CATEGORIZATION_PANEL_EVENT,
-														{}
-													)
-												}
-											>
-												{Liferay.Language.get(
-													'click-here'
-												)}
-											</ClayButton>,
-										]
-									)}
-								</>
-							)}
 						</div>
 					</div>
 				</div>

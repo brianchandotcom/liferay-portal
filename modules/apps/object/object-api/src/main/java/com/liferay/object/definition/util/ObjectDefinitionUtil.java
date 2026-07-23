@@ -217,6 +217,8 @@ public class ObjectDefinitionUtil {
 		).put(
 			"CMPProject", "/cmp/projects"
 		).put(
+			"CMPProjectLink", "/cmp/project-links"
+		).put(
 			"CMPTask", "/cmp/tasks"
 		).put(
 			"CMSBasicDocument", "/cms/basic-documents"

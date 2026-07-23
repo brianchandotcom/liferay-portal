@@ -44,6 +44,8 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
+import com.liferay.portal.workflow.kaleo.service.KaleoTaskInstanceTokenLocalService;
 import com.liferay.site.cmp.site.initializer.internal.util.RoleUtil;
 
 import java.io.Serializable;
@@ -154,6 +156,23 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 
 		return new String[] {ActionKeys.ADD_DISCUSSION, ActionKeys.VIEW};
 	}
+
+	private void _reindexKaleoTaskInstanceTokens(ObjectEntry objectEntry)
+		throws Exception {
+
+		Indexer<KaleoTaskInstanceToken> indexer =
+			IndexerRegistryUtil.nullSafeGetIndexer(
+				KaleoTaskInstanceToken.class);
+
+		for (KaleoTaskInstanceToken kaleoTaskInstanceToken :
+				_kaleoTaskInstanceTokenLocalService.getKaleoTaskInstanceTokens(
+					objectEntry.getModelClassName(),
+					objectEntry.getObjectEntryId())) {
+
+			indexer.reindex(kaleoTaskInstanceToken);
+		}
+	}
+
 	private void _reindexLinkedObjectEntry(ObjectEntry objectEntry)
 		throws Exception {
 
@@ -202,6 +221,8 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 			linkedObjectDefinition.getClassName());
 
 		indexer.reindex(linkedObjectEntry);
+
+		_reindexKaleoTaskInstanceTokens(linkedObjectEntry);
 	}
 
 	private void _setResourcePermissions(ObjectEntry objectEntry)
@@ -423,6 +444,10 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private KaleoTaskInstanceTokenLocalService
+		_kaleoTaskInstanceTokenLocalService;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

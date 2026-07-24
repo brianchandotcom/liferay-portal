@@ -21,11 +21,14 @@ jest.mock('frontend-js-components-web', () => ({
 	openToast: jest.fn(),
 }));
 
-jest.mock('../../../../js/components/insights_view/services/AutoFixService', () => ({
-	applyFix: jest.fn(),
-	generateCandidates: jest.fn(),
-	resolveInsight: jest.fn(),
-}));
+jest.mock(
+	'../../../../js/components/insights_view/services/AutoFixService',
+	() => ({
+		applyFix: jest.fn(),
+		generateCandidates: jest.fn(),
+		resolveInsight: jest.fn(),
+	})
+);
 
 const item: ScanInsightItem = {
 	id: 123,

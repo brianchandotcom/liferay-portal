@@ -241,6 +241,7 @@ export const Routes = buildRoutes({
 								path: '/lifecycle',
 								routes: {
 									LIFECYCLE_CREATE: '/new',
+									LIFECYCLE_EDIT: '/:lifecycleId/edit',
 								},
 							},
 							SITES: {

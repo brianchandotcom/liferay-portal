@@ -105,7 +105,7 @@ public class JiraTicketResolverUtilTest {
 	@Test
 	public void testGetRelatedLPDKeysWhenIssueLinksMissing() {
 		JSONObject issueJSONObject = JSONUtil.put(
-			JiraConstants.FIELD_FIELDS, JSONFactoryUtil.createJSONObject());
+			JiraConstants.FIELDS, JSONFactoryUtil.createJSONObject());
 
 		List<String> lpdKeys = JiraTicketResolverUtil.getRelatedLPDKeys(
 			issueJSONObject);
@@ -318,7 +318,7 @@ public class JiraTicketResolverUtilTest {
 
 	private JSONObject _issue(JSONArray issueLinksJSONArray) {
 		return JSONUtil.put(
-			JiraConstants.FIELD_FIELDS,
+			JiraConstants.FIELDS,
 			JSONUtil.put(JiraConstants.FIELD_ISSUE_LINKS, issueLinksJSONArray));
 	}
 

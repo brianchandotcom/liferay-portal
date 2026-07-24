@@ -26,7 +26,7 @@ public class JiraTicketResolverUtil {
 		List<String> lpdKeys = new ArrayList<>();
 
 		JSONObject fieldsJSONObject = issueJSONObject.getJSONObject(
-			JiraConstants.FIELD_FIELDS);
+			JiraConstants.FIELDS);
 
 		if (fieldsJSONObject == null) {
 			return lpdKeys;

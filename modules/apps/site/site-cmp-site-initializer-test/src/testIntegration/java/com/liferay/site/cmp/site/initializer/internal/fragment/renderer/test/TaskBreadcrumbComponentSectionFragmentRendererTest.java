@@ -68,7 +68,7 @@ public class TaskBreadcrumbComponentSectionFragmentRendererTest
 	public void setUp() throws Exception {
 		super.setUp();
 
-		_taskObjectDefinition =
+		_cmpTaskObjectDefinition =
 			objectDefinitionLocalService.
 				getObjectDefinitionByExternalReferenceCode(
 					"L_CMP_TASK", TestPropsValues.getCompanyId());
@@ -78,19 +78,21 @@ public class TaskBreadcrumbComponentSectionFragmentRendererTest
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
-		_taskObjectEntry = _objectEntryLocalService.addObjectEntry(
-			projectObjectEntry.getGroupId(), projectObjectEntry.getUserId(),
-			_taskObjectDefinition.getObjectDefinitionId(), 0, null,
+		_cmpTaskObjectEntry = _objectEntryLocalService.addObjectEntry(
+			cmpProjectObjectEntry.getGroupId(),
+			cmpProjectObjectEntry.getUserId(),
+			_cmpTaskObjectDefinition.getObjectDefinitionId(), 0, null,
 			HashMapBuilder.<String, Serializable>put(
 				"r_cmpProjectToCMPTasks_c_cmpProjectId",
-				projectObjectEntry.getObjectEntryId()
+				cmpProjectObjectEntry.getObjectEntryId()
 			).build(),
 			serviceContext);
 
-		_taskTitle = MapUtil.getString(_taskObjectEntry.getValues(), "title");
+		_taskTitle = MapUtil.getString(
+			_cmpTaskObjectEntry.getValues(), "title");
 
 		mockHttpServletRequest = getMockHttpServletRequest(
-			_taskObjectDefinition, _taskObjectEntry);
+			_cmpTaskObjectDefinition, _cmpTaskObjectEntry);
 	}
 
 	@Test
@@ -108,8 +110,8 @@ public class TaskBreadcrumbComponentSectionFragmentRendererTest
 					themeDisplay.getPathFriendlyURLPublic(),
 					GroupConstants.CMS_FRIENDLY_URL, "/e/edit-task/",
 					_portal.getClassNameId(
-						_taskObjectDefinition.getClassName()),
-					StringPool.SLASH, _taskObjectEntry.getObjectEntryId(),
+						_cmpTaskObjectDefinition.getClassName()),
+					StringPool.SLASH, _cmpTaskObjectEntry.getObjectEntryId(),
 					"?redirect=", themeDisplay.getURLCurrent())
 			).put(
 				"label", "Edit"
@@ -124,10 +126,11 @@ public class TaskBreadcrumbComponentSectionFragmentRendererTest
 			JSONUtil.put(
 				"href",
 				StringBundler.concat(
-					"/o", _taskObjectDefinition.getRESTContextPath(),
-					"/scopes/", _taskObjectEntry.getGroupId(),
+					"/o", _cmpTaskObjectDefinition.getRESTContextPath(),
+					"/scopes/", _cmpTaskObjectEntry.getGroupId(),
 					"/by-external-reference-code/",
-					_taskObjectEntry.getExternalReferenceCode(), "/subscribe")
+					_cmpTaskObjectEntry.getExternalReferenceCode(),
+					"/subscribe")
 			).put(
 				"label", "Watch Task"
 			).put(
@@ -136,8 +139,8 @@ public class TaskBreadcrumbComponentSectionFragmentRendererTest
 					themeDisplay.getPathFriendlyURLPublic(),
 					GroupConstants.CMS_FRIENDLY_URL, "/e/task/",
 					PortalUtil.getClassNameId(
-						_taskObjectDefinition.getClassName()),
-					StringPool.SLASH, _taskObjectEntry.getObjectEntryId())
+						_cmpTaskObjectDefinition.getClassName()),
+					StringPool.SLASH, _cmpTaskObjectEntry.getObjectEntryId())
 			).put(
 				"successMessage",
 				LanguageUtil.format(
@@ -145,7 +148,7 @@ public class TaskBreadcrumbComponentSectionFragmentRendererTest
 					StringBundler.concat(
 						"<strong>",
 						MapUtil.getString(
-							_taskObjectEntry.getValues(), "title"),
+							_cmpTaskObjectEntry.getValues(), "title"),
 						"</strong>"))
 			).put(
 				"symbolLeft", "bell-on"
@@ -172,8 +175,8 @@ public class TaskBreadcrumbComponentSectionFragmentRendererTest
 			).put(
 				"href",
 				StringBundler.concat(
-					"/o", _taskObjectDefinition.getRESTContextPath(),
-					StringPool.SLASH, _taskObjectEntry.getObjectEntryId())
+					"/o", _cmpTaskObjectDefinition.getRESTContextPath(),
+					StringPool.SLASH, _cmpTaskObjectEntry.getObjectEntryId())
 			).put(
 				"label", "Delete"
 			).put(
@@ -221,8 +224,8 @@ public class TaskBreadcrumbComponentSectionFragmentRendererTest
 					themeDisplay.getPathFriendlyURLPublic(),
 					GroupConstants.CMS_FRIENDLY_URL, "/e/project/",
 					PortalUtil.getClassNameId(
-						projectObjectDefinition.getClassName()),
-					StringPool.SLASH, projectObjectEntry.getObjectEntryId())
+						cmpProjectObjectDefinition.getClassName()),
+					StringPool.SLASH, cmpProjectObjectEntry.getObjectEntryId())
 			).put(
 				"label", projectTitle
 			).toString(),
@@ -249,6 +252,9 @@ public class TaskBreadcrumbComponentSectionFragmentRendererTest
 		return _fragmentRenderer;
 	}
 
+	private ObjectDefinition _cmpTaskObjectDefinition;
+	private ObjectEntry _cmpTaskObjectEntry;
+
 	@Inject(
 		filter = "component.name=com.liferay.site.cmp.site.initializer.internal.fragment.renderer.TaskBreadcrumbComponentSectionFragmentRenderer"
 	)
@@ -263,8 +269,6 @@ public class TaskBreadcrumbComponentSectionFragmentRendererTest
 	@Inject
 	private Portal _portal;
 
-	private ObjectDefinition _taskObjectDefinition;
-	private ObjectEntry _taskObjectEntry;
 	private String _taskTitle;
 
 }

@@ -42,11 +42,11 @@ import type {FirstDayOfWeekLocale} from 'frontend-js-web';
 const ADD_TASK_BUTTON_CLASS_NAME = 'lfr__calendar-view-add-task-button';
 
 interface CalendarViewProps {
+	cmpProjectObjectDefinitionId: number;
 	hasAddTaskPermission: boolean;
 	items: ITask[];
 	itemsActions: IItemsActions[];
 	projectId?: string;
-	projectObjectDefinitionId: number;
 }
 
 interface MoreLinkPopover {
@@ -56,11 +56,11 @@ interface MoreLinkPopover {
 }
 
 export default function CalendarView({
+	cmpProjectObjectDefinitionId,
 	hasAddTaskPermission,
 	items,
 	itemsActions,
 	projectId,
-	projectObjectDefinitionId,
 }: CalendarViewProps) {
 	const {loadData, onItemsChange} = useContext(FrontendDataSetContext);
 
@@ -189,11 +189,11 @@ export default function CalendarView({
 			contentComponent: ({closeModal}: {closeModal: () => void}) => (
 				<CreateTaskModal
 					closeModal={closeModal}
+					cmpProjectObjectDefinitionId={cmpProjectObjectDefinitionId}
 					dueDate={dueDate}
 					loadData={loadData}
 					onItemsChange={onItemsChange}
 					projectId={projectId}
-					projectObjectDefinitionId={projectObjectDefinitionId}
 					state={DEFAULT_TASK_STATE_KEY}
 				/>
 			),

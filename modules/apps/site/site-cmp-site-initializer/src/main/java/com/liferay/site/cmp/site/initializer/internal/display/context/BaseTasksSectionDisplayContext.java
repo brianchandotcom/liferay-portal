@@ -70,10 +70,10 @@ public abstract class BaseTasksSectionDisplayContext
 		ObjectFieldLocalService objectFieldLocalService,
 		ObjectStateFlowLocalService objectStateFlowLocalService,
 		ObjectStateLocalService objectStateLocalService,
-		ObjectDefinition projectObjectDefinition, RoleService roleService,
-		ObjectDefinition taskObjectDefinition) {
+		ObjectDefinition cmpProjectObjectDefinition, RoleService roleService,
+		ObjectDefinition cmpTaskObjectDefinition) {
 
-		super(httpServletRequest, taskObjectDefinition, objectEntryService);
+		super(httpServletRequest, cmpTaskObjectDefinition, objectEntryService);
 
 		this.assetTagLocalService = assetTagLocalService;
 		this.classNameLocalService = classNameLocalService;
@@ -82,12 +82,15 @@ public abstract class BaseTasksSectionDisplayContext
 		this.objectFieldLocalService = objectFieldLocalService;
 		this.objectStateFlowLocalService = objectStateFlowLocalService;
 		this.objectStateLocalService = objectStateLocalService;
-		this.projectObjectDefinition = projectObjectDefinition;
+		this.cmpProjectObjectDefinition = cmpProjectObjectDefinition;
 		this.roleService = roleService;
 	}
 
 	public Map<String, Object> getAdditionalProps() throws Exception {
 		return HashMapBuilder.<String, Object>put(
+			"cmpProjectObjectDefinitionId",
+			cmpProjectObjectDefinition.getObjectDefinitionId()
+		).put(
 			"hasAddTaskPermission", hasAddObjectEntryPortletResourcePermission()
 		).put(
 			"projectId",
@@ -98,9 +101,6 @@ public abstract class BaseTasksSectionDisplayContext
 
 				return assetEntry.getClassPK();
 			}
-		).put(
-			"projectObjectDefinitionId",
-			projectObjectDefinition.getObjectDefinitionId()
 		).put(
 			"states",
 			() -> {
@@ -200,7 +200,7 @@ public abstract class BaseTasksSectionDisplayContext
 					"addProjectURL",
 					StringBundler.concat(
 						ActionUtil.getAddProjectURL(
-							projectObjectDefinition, themeDisplay),
+							cmpProjectObjectDefinition, themeDisplay),
 						"&action=",
 						CMPActionConstants.CREATE_PROJECT_GLOBAL_TASK));
 				dropdownItem.putData(
@@ -210,12 +210,12 @@ public abstract class BaseTasksSectionDisplayContext
 							0, objectDefinition, 0, themeDisplay),
 						"&action=", CMPActionConstants.CREATE_GLOBAL_TASK));
 				dropdownItem.putData(
+					"cmpProjectObjectDefinitionId",
+					String.valueOf(
+						cmpProjectObjectDefinition.getObjectDefinitionId()));
+				dropdownItem.putData(
 					"objectDefinitionId",
 					String.valueOf(objectDefinition.getObjectDefinitionId()));
-				dropdownItem.putData(
-					"projectObjectDefinitionId",
-					String.valueOf(
-						projectObjectDefinition.getObjectDefinitionId()));
 
 				if (assetEntry != null) {
 					dropdownItem.putData(
@@ -255,21 +255,21 @@ public abstract class BaseTasksSectionDisplayContext
 
 		fdsFilters.add(
 			new AssigneeSelectionFDSFilter(
-				classNameLocalService, projectObjectDefinition.getCompanyId(),
-				roleService));
+				classNameLocalService,
+				cmpProjectObjectDefinition.getCompanyId(), roleService));
 		fdsFilters.add(new CreateDateFDSFilter());
 		fdsFilters.add(new DueDateRangeFDSFilter());
 
 		if (assetEntry == null) {
 			fdsFilters.add(
-				new ProjectSelectionFDSFilter(projectObjectDefinition));
+				new ProjectSelectionFDSFilter(cmpProjectObjectDefinition));
 		}
 
 		fdsFilters.add(new StateSelectionFDSFilter());
 		fdsFilters.add(
 			new TagSelectionFDSFilter(
 				assetTagLocalService, depotEntryLocalService, assetEntry,
-				projectObjectDefinition));
+				cmpProjectObjectDefinition));
 
 		return fdsFilters;
 	}
@@ -489,12 +489,12 @@ public abstract class BaseTasksSectionDisplayContext
 
 	protected final AssetTagLocalService assetTagLocalService;
 	protected final ClassNameLocalService classNameLocalService;
+	protected final ObjectDefinition cmpProjectObjectDefinition;
 	protected final DepotEntryLocalService depotEntryLocalService;
 	protected final ListTypeEntryLocalService listTypeEntryLocalService;
 	protected final ObjectFieldLocalService objectFieldLocalService;
 	protected final ObjectStateFlowLocalService objectStateFlowLocalService;
 	protected final ObjectStateLocalService objectStateLocalService;
-	protected final ObjectDefinition projectObjectDefinition;
 	protected final RoleService roleService;
 
 	private JSONArray _getNextStatesJSONArray(

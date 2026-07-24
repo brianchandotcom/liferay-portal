@@ -66,8 +66,8 @@ public class ProjectBreadcrumbComponentSectionFragmentRendererTest
 					themeDisplay.getPathFriendlyURLPublic(),
 					GroupConstants.CMS_FRIENDLY_URL, "/e/edit-project/",
 					_portal.getClassNameId(
-						projectObjectDefinition.getClassName()),
-					StringPool.SLASH, projectObjectEntry.getObjectEntryId(),
+						cmpProjectObjectDefinition.getClassName()),
+					StringPool.SLASH, cmpProjectObjectEntry.getObjectEntryId(),
 					"?redirect=", themeDisplay.getURLCurrent())
 			).put(
 				"label", "Edit"
@@ -82,10 +82,11 @@ public class ProjectBreadcrumbComponentSectionFragmentRendererTest
 			JSONUtil.put(
 				"href",
 				StringBundler.concat(
-					"/o", projectObjectDefinition.getRESTContextPath(),
-					"/scopes/", projectObjectEntry.getGroupId(),
+					"/o", cmpProjectObjectDefinition.getRESTContextPath(),
+					"/scopes/", cmpProjectObjectEntry.getGroupId(),
 					"/by-external-reference-code/",
-					projectObjectEntry.getExternalReferenceCode(), "/subscribe")
+					cmpProjectObjectEntry.getExternalReferenceCode(),
+					"/subscribe")
 			).put(
 				"label", "Watch Project"
 			).put(
@@ -94,8 +95,8 @@ public class ProjectBreadcrumbComponentSectionFragmentRendererTest
 					themeDisplay.getPathFriendlyURLPublic(),
 					GroupConstants.CMS_FRIENDLY_URL, "/e/project/",
 					PortalUtil.getClassNameId(
-						projectObjectDefinition.getClassName()),
-					StringPool.SLASH, projectObjectEntry.getObjectEntryId())
+						cmpProjectObjectDefinition.getClassName()),
+					StringPool.SLASH, cmpProjectObjectEntry.getObjectEntryId())
 			).put(
 				"successMessage",
 				_language.format(
@@ -126,8 +127,8 @@ public class ProjectBreadcrumbComponentSectionFragmentRendererTest
 			).put(
 				"href",
 				StringBundler.concat(
-					"/o", projectObjectDefinition.getRESTContextPath(),
-					StringPool.SLASH, projectObjectEntry.getObjectEntryId())
+					"/o", cmpProjectObjectDefinition.getRESTContextPath(),
+					StringPool.SLASH, cmpProjectObjectEntry.getObjectEntryId())
 			).put(
 				"label", "Delete"
 			).put(

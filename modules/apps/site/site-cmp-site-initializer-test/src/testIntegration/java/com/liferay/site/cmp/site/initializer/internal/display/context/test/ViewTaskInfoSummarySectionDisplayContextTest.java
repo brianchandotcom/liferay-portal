@@ -67,7 +67,8 @@ public class ViewTaskInfoSummarySectionDisplayContextTest
 	public void setUp() throws Exception {
 		super.setUp();
 
-		_taskObjectEntry = CMPTestUtil.addTaskObjectEntry(projectObjectEntry);
+		_cmpTaskObjectEntry = CMPTestUtil.addCMPTaskObjectEntry(
+			cmpProjectObjectEntry);
 	}
 
 	@Test
@@ -84,9 +85,10 @@ public class ViewTaskInfoSummarySectionDisplayContextTest
 
 		String title = RandomTestUtil.randomString();
 
-		_taskObjectEntry = _objectEntryLocalService.partialUpdateObjectEntry(
-			_taskObjectEntry.getUserId(), _taskObjectEntry.getObjectEntryId(),
-			_taskObjectEntry.getObjectEntryFolderId(),
+		_cmpTaskObjectEntry = _objectEntryLocalService.partialUpdateObjectEntry(
+			_cmpTaskObjectEntry.getUserId(),
+			_cmpTaskObjectEntry.getObjectEntryId(),
+			_cmpTaskObjectEntry.getObjectEntryFolderId(),
 			HashMapBuilder.<String, Serializable>put(
 				"assignTo",
 				HashMapBuilder.put(
@@ -104,7 +106,7 @@ public class ViewTaskInfoSummarySectionDisplayContextTest
 			).build(),
 			serviceContext);
 
-		Map<String, Object> properties = getProperties(_taskObjectEntry);
+		Map<String, Object> properties = getProperties(_cmpTaskObjectEntry);
 
 		JSONAssert.assertEquals(
 			JSONUtil.put(
@@ -156,7 +158,7 @@ public class ViewTaskInfoSummarySectionDisplayContextTest
 			).put(
 				"tags", assetTagNames
 			).put(
-				"taskId", _taskObjectEntry.getObjectEntryId()
+				"taskId", _cmpTaskObjectEntry.getObjectEntryId()
 			).put(
 				"title", title
 			).toString(),
@@ -180,6 +182,8 @@ public class ViewTaskInfoSummarySectionDisplayContextTest
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
 
+	private ObjectEntry _cmpTaskObjectEntry;
+
 	@Inject(
 		filter = "component.name=com.liferay.site.cmp.site.initializer.internal.fragment.renderer.ViewTaskInfoSummaryJSPSectionFragmentRenderer"
 	)
@@ -193,7 +197,5 @@ public class ViewTaskInfoSummarySectionDisplayContextTest
 
 	@Inject
 	private RoleLocalService _roleLocalService;
-
-	private ObjectEntry _taskObjectEntry;
 
 }

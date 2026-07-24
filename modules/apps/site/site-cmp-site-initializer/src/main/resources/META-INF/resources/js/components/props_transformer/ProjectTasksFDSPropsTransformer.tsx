@@ -68,10 +68,10 @@ export default function ProjectTasksFDSPropsTransformer({
 		component: (props: any) =>
 			CalendarView({
 				...props,
+				cmpProjectObjectDefinitionId:
+					additionalProps.cmpProjectObjectDefinitionId,
 				hasAddTaskPermission: additionalProps.hasAddTaskPermission,
 				projectId: additionalProps.projectId,
-				projectObjectDefinitionId:
-					additionalProps.projectObjectDefinitionId,
 			}),
 		default: false,
 		initialPaginationDelta: FDS_PAGINATION_DELTA_ALL,
@@ -94,10 +94,10 @@ export default function ProjectTasksFDSPropsTransformer({
 		component: (props: any) =>
 			KanbanView({
 				...props,
+				cmpProjectObjectDefinitionId:
+					additionalProps.cmpProjectObjectDefinitionId,
 				hasAddTaskPermission: additionalProps.hasAddTaskPermission,
 				projectId: additionalProps.projectId,
-				projectObjectDefinitionId:
-					additionalProps.projectObjectDefinitionId,
 			}),
 		default: false,
 		initialPaginationDelta: FDS_PAGINATION_DELTA_ALL,

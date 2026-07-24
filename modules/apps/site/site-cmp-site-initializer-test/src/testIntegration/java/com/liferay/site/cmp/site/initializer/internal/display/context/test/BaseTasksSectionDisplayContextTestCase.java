@@ -68,22 +68,24 @@ public abstract class BaseTasksSectionDisplayContextTestCase
 	public void setUp() throws Exception {
 		super.setUp();
 
-		projectObjectDefinition =
+		cmpProjectObjectDefinition =
 			objectDefinitionLocalService.
 				getObjectDefinitionByExternalReferenceCode(
 					"L_CMP_PROJECT", TestPropsValues.getCompanyId());
 
-		ObjectEntry projectObjectEntry = CMPTestUtil.addProjectObjectEntry();
+		ObjectEntry cmpProjectObjectEntry =
+			CMPTestUtil.addCMPProjectObjectEntry();
 
-		projectObjectEntry = _objectEntryLocalService.updateObjectEntry(
-			TestPropsValues.getUserId(), projectObjectEntry.getObjectEntryId(),
-			projectObjectEntry.getObjectEntryFolderId(),
-			projectObjectEntry.getValues(),
+		cmpProjectObjectEntry = _objectEntryLocalService.updateObjectEntry(
+			TestPropsValues.getUserId(),
+			cmpProjectObjectEntry.getObjectEntryId(),
+			cmpProjectObjectEntry.getObjectEntryFolderId(),
+			cmpProjectObjectEntry.getValues(),
 			ServiceContextTestUtil.getServiceContext());
 
 		assetEntry = _assetEntryLocalService.getEntry(
-			projectObjectDefinition.getClassName(),
-			projectObjectEntry.getObjectEntryId());
+			cmpProjectObjectDefinition.getClassName(),
+			cmpProjectObjectEntry.getObjectEntryId());
 	}
 
 	@Test
@@ -92,8 +94,8 @@ public abstract class BaseTasksSectionDisplayContextTestCase
 
 		Assert.assertNull(additionalProps.get("projectId"));
 		Assert.assertEquals(
-			projectObjectDefinition.getObjectDefinitionId(),
-			additionalProps.get("projectObjectDefinitionId"));
+			cmpProjectObjectDefinition.getObjectDefinitionId(),
+			additionalProps.get("cmpProjectObjectDefinitionId"));
 		Assert.assertNotNull(additionalProps.get("states"));
 
 		additionalProps = getAdditionalProps(assetEntry);
@@ -101,8 +103,8 @@ public abstract class BaseTasksSectionDisplayContextTestCase
 		Assert.assertEquals(
 			assetEntry.getClassPK(), additionalProps.get("projectId"));
 		Assert.assertEquals(
-			projectObjectDefinition.getObjectDefinitionId(),
-			additionalProps.get("projectObjectDefinitionId"));
+			cmpProjectObjectDefinition.getObjectDefinitionId(),
+			additionalProps.get("cmpProjectObjectDefinitionId"));
 		Assert.assertNotNull(additionalProps.get("states"));
 	}
 
@@ -140,7 +142,7 @@ public abstract class BaseTasksSectionDisplayContextTestCase
 				themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
 				GroupConstants.CMS_FRIENDLY_URL,
 				"/add_project?objectDefinitionId=",
-				projectObjectDefinition.getObjectDefinitionId(), "&plid=",
+				cmpProjectObjectDefinition.getObjectDefinitionId(), "&plid=",
 				themeDisplay.getPlid(), "&redirect=",
 				themeDisplay.getURLCurrent(),
 				"&action=createProjectGlobalTask"),
@@ -160,8 +162,8 @@ public abstract class BaseTasksSectionDisplayContextTestCase
 			String.valueOf(objectDefinition.getObjectDefinitionId()),
 			getValue(dropdownItem, "objectDefinitionId"));
 		Assert.assertEquals(
-			String.valueOf(projectObjectDefinition.getObjectDefinitionId()),
-			getValue(dropdownItem, "projectObjectDefinitionId"));
+			String.valueOf(cmpProjectObjectDefinition.getObjectDefinitionId()),
+			getValue(dropdownItem, "cmpProjectObjectDefinitionId"));
 		Assert.assertEquals(
 			StringBundler.concat(
 				themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
@@ -244,7 +246,7 @@ public abstract class BaseTasksSectionDisplayContextTestCase
 		"com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken";
 
 	protected AssetEntry assetEntry;
-	protected ObjectDefinition projectObjectDefinition;
+	protected ObjectDefinition cmpProjectObjectDefinition;
 
 	private DropdownItem _getDropdownItem(CreationMenu creationMenu) {
 		List<DropdownItem> dropdownItems = (List<DropdownItem>)creationMenu.get(

@@ -111,11 +111,11 @@ describe('Kanban Task', () => {
 				value={{
 					boardData: {},
 					changeTaskStatus: jest.fn(),
+					cmpProjectObjectDefinitionId: 123,
 					hasAddTaskPermission: true,
 					itemsActions,
 					loadData: mockLoadData,
 					projectId,
-					projectObjectDefinitionId: 123,
 				}}
 			>
 				<Task {...task} />
@@ -231,11 +231,11 @@ describe('Kanban Task', () => {
 				value={{
 					boardData: {},
 					changeTaskStatus: jest.fn(),
+					cmpProjectObjectDefinitionId: 123,
 					hasAddTaskPermission: true,
 					itemsActions: [],
 					loadData: mockLoadData,
 					projectId: '123',
-					projectObjectDefinitionId: 123,
 				}}
 			>
 				<Task {...taskWithDueDate} />
@@ -302,11 +302,11 @@ describe('Kanban Task', () => {
 					value={{
 						boardData: {},
 						changeTaskStatus: jest.fn(),
+						cmpProjectObjectDefinitionId: 123,
 						hasAddTaskPermission: true,
 						itemsActions: [],
 						loadData: mockLoadData,
 						projectId: '',
-						projectObjectDefinitionId: 123,
 					}}
 				>
 					<Task {...taskWithSubscription} />
@@ -337,11 +337,11 @@ describe('Kanban Task', () => {
 					value={{
 						boardData: {},
 						changeTaskStatus: jest.fn(),
+						cmpProjectObjectDefinitionId: 123,
 						hasAddTaskPermission: true,
 						itemsActions: [],
 						loadData: mockLoadData,
 						projectId: '',
-						projectObjectDefinitionId: 123,
 					}}
 				>
 					<Task {...taskWithSubscription} />

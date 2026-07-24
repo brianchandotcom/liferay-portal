@@ -40,15 +40,15 @@ public class ViewProjectTasksSectionDisplayContext
 		ObjectFieldLocalService objectFieldLocalService,
 		ObjectStateFlowLocalService objectStateFlowLocalService,
 		ObjectStateLocalService objectStateLocalService,
-		ObjectDefinition projectObjectDefinition, RoleService roleService,
-		ObjectDefinition taskObjectDefinition) {
+		ObjectDefinition cmpProjectObjectDefinition, RoleService roleService,
+		ObjectDefinition cmpTaskObjectDefinition) {
 
 		super(
 			assetTagLocalService, classNameLocalService, depotEntryLocalService,
 			httpServletRequest, listTypeEntryLocalService, objectEntryService,
 			objectFieldLocalService, objectStateFlowLocalService,
-			objectStateLocalService, projectObjectDefinition, roleService,
-			taskObjectDefinition);
+			objectStateLocalService, cmpProjectObjectDefinition, roleService,
+			cmpTaskObjectDefinition);
 	}
 
 	@Override

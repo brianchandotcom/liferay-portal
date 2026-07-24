@@ -137,9 +137,9 @@ describe('CreateTaskModal', () => {
 		render(
 			<CreateTaskModal
 				closeModal={() => {}}
+				cmpProjectObjectDefinitionId={123}
 				loadData={() => {}}
 				projectId={projectId}
-				projectObjectDefinitionId={123}
 				state=""
 				{...props}
 			/>

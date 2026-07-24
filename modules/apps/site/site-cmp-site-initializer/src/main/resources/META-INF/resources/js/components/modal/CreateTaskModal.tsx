@@ -29,21 +29,21 @@ import './../AssigneeTrigger.scss';
 
 type CreateTaskModalProps = {
 	closeModal: () => void;
+	cmpProjectObjectDefinitionId: number;
 	dueDate?: string;
 	loadData: Function;
 	onItemsChange?: Function;
 	projectId?: string;
-	projectObjectDefinitionId: number;
 	state: string;
 };
 
 export default function CreateTaskModal({
 	closeModal,
+	cmpProjectObjectDefinitionId,
 	dueDate = '',
 	loadData,
 	onItemsChange,
 	projectId,
-	projectObjectDefinitionId,
 	state,
 }: CreateTaskModalProps) {
 	const [states, setStates] = useState([]);
@@ -125,7 +125,7 @@ export default function CreateTaskModal({
 
 			const {
 				data: {items},
-			} = (await getAllProjects(projectObjectDefinitionId)) as {
+			} = (await getAllProjects(cmpProjectObjectDefinitionId)) as {
 				data: {
 					items: {
 						embedded: IProjectObjectEntry;
@@ -155,7 +155,7 @@ export default function CreateTaskModal({
 		};
 
 		makeFetch();
-	}, [projectId, projectObjectDefinitionId]);
+	}, [projectId, cmpProjectObjectDefinitionId]);
 
 	return (
 		<ClayForm

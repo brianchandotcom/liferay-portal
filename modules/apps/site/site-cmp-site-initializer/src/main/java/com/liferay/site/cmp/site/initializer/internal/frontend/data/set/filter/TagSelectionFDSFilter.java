@@ -29,12 +29,13 @@ public class TagSelectionFDSFilter extends BaseSelectionFDSFilter {
 	public TagSelectionFDSFilter(
 		AssetTagLocalService assetTagLocalService,
 		DepotEntryLocalService depotEntryLocalService,
-		GroupedModel groupedModel, ObjectDefinition projectObjectDefinition) {
+		GroupedModel groupedModel,
+		ObjectDefinition cmpProjectObjectDefinition) {
 
 		_assetTagLocalService = assetTagLocalService;
 		_depotEntryLocalService = depotEntryLocalService;
 		_groupedModel = groupedModel;
-		_projectObjectDefinition = projectObjectDefinition;
+		_cmpProjectObjectDefinition = cmpProjectObjectDefinition;
 	}
 
 	@Override
@@ -64,7 +65,7 @@ public class TagSelectionFDSFilter extends BaseSelectionFDSFilter {
 		else {
 			groupIds = TransformUtil.transformToLongArray(
 				_depotEntryLocalService.getDepotEntries(
-					_projectObjectDefinition.getCompanyId(),
+					_cmpProjectObjectDefinition.getCompanyId(),
 					DepotConstants.TYPE_PROJECT),
 				DepotEntryModel::getGroupId);
 		}
@@ -89,8 +90,8 @@ public class TagSelectionFDSFilter extends BaseSelectionFDSFilter {
 	}
 
 	private final AssetTagLocalService _assetTagLocalService;
+	private final ObjectDefinition _cmpProjectObjectDefinition;
 	private final DepotEntryLocalService _depotEntryLocalService;
 	private final GroupedModel _groupedModel;
-	private final ObjectDefinition _projectObjectDefinition;
 
 }

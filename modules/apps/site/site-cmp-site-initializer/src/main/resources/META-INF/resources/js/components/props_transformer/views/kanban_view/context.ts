@@ -17,11 +17,11 @@ interface IKanbanContext {
 			name: string;
 		}
 	) => void;
+	cmpProjectObjectDefinitionId: number;
 	hasAddTaskPermission: boolean;
 	itemsActions: IItemsActions[];
 	loadData: Function;
 	projectId: string;
-	projectObjectDefinitionId: number;
 }
 
 export const KanbanViewContext = React.createContext({} as IKanbanContext);

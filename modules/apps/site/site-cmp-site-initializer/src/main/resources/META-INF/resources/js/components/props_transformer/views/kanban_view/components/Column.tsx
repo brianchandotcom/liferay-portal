@@ -45,10 +45,10 @@ export function ColumnView({
 }: IColumnViewProps) {
 	const {
 		changeTaskStatus,
+		cmpProjectObjectDefinitionId,
 		hasAddTaskPermission,
 		loadData,
 		projectId,
-		projectObjectDefinitionId,
 	} = useContext(KanbanViewContext);
 
 	const canTransition = (taskStateKey: string) => {
@@ -133,11 +133,11 @@ export function ColumnView({
 									}) => (
 										<CreateTaskModal
 											closeModal={closeModal}
+											cmpProjectObjectDefinitionId={
+												cmpProjectObjectDefinitionId
+											}
 											loadData={loadData}
 											projectId={projectId}
-											projectObjectDefinitionId={
-												projectObjectDefinitionId
-											}
 											state={key}
 										/>
 									),

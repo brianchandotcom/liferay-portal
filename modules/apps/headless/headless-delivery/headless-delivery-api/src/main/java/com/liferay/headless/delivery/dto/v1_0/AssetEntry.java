@@ -544,6 +544,49 @@ public class AssetEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _titleSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Whether guest users can view the asset entry."
+	)
+	public Boolean getViewableByGuest() {
+		if (_viewableByGuestSupplier != null) {
+			viewableByGuest = _viewableByGuestSupplier.get();
+
+			_viewableByGuestSupplier = null;
+		}
+
+		return viewableByGuest;
+	}
+
+	public void setViewableByGuest(Boolean viewableByGuest) {
+		this.viewableByGuest = viewableByGuest;
+
+		_viewableByGuestSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setViewableByGuest(
+		UnsafeSupplier<Boolean, Exception> viewableByGuestUnsafeSupplier) {
+
+		_viewableByGuestSupplier = () -> {
+			try {
+				return viewableByGuestUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "Whether guest users can view the asset entry.")
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Boolean viewableByGuest;
+
+	@JsonIgnore
+	private Supplier<Boolean> _viewableByGuestSupplier;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -730,6 +773,18 @@ public class AssetEntry implements Serializable {
 			sb.append("\"");
 		}
 
+		Boolean viewableByGuest = getViewableByGuest();
+
+		if (viewableByGuest != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"viewableByGuest\": ");
+
+			sb.append(viewableByGuest);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -831,4 +886,4 @@ public class AssetEntry implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1847726870
+// LIFERAY-REST-BUILDER-HASH:1548018747

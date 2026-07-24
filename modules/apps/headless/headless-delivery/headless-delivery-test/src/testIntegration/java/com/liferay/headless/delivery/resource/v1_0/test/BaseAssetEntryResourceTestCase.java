@@ -702,6 +702,14 @@ public abstract class BaseAssetEntryResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("viewableByGuest", additionalAssertFieldName)) {
+				if (assetEntry.getViewableByGuest() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
@@ -932,6 +940,17 @@ public abstract class BaseAssetEntryResourceTestCase {
 			if (Objects.equals("title", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						assetEntry1.getTitle(), assetEntry2.getTitle())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("viewableByGuest", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						assetEntry1.getViewableByGuest(),
+						assetEntry2.getViewableByGuest())) {
 
 					return false;
 				}
@@ -1331,6 +1350,11 @@ public abstract class BaseAssetEntryResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("viewableByGuest")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		throw new IllegalArgumentException(
 			"Invalid entity field " + entityFieldName);
 	}
@@ -1392,6 +1416,7 @@ public abstract class BaseAssetEntryResourceTestCase {
 					RandomTestUtil.randomString());
 				status = RandomTestUtil.randomInt();
 				title = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				viewableByGuest = RandomTestUtil.randomBoolean();
 			}
 		};
 	}
@@ -1616,4 +1641,4 @@ public abstract class BaseAssetEntryResourceTestCase {
 		_assetEntryResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1862261043
+// LIFERAY-REST-BUILDER-HASH:-502905078

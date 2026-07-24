@@ -13,14 +13,22 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.headless.delivery.client.dto.v1_0.AssetEntry;
 import com.liferay.headless.delivery.client.pagination.Page;
 import com.liferay.headless.delivery.client.pagination.Pagination;
+import com.liferay.headless.delivery.client.resource.v1_0.AssetEntryResource;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 
@@ -42,6 +50,7 @@ public class AssetEntryResourceTest extends BaseAssetEntryResourceTestCase {
 		super.testGetAssetEntriesPage();
 
 		_testGetAssetEntriesPageAssetEntryFields();
+		_testGetAssetEntriesPageViewableByGuest();
 		_testGetAssetEntriesPageWithClassNameIdFilter();
 		_testGetAssetEntriesPageWithClassPKFilter();
 		_testGetAssetEntriesPageWithClassTypeIdFilter();
@@ -77,6 +86,20 @@ public class AssetEntryResourceTest extends BaseAssetEntryResourceTestCase {
 			RandomTestUtil.randomString(),
 			ServiceContextTestUtil.getServiceContext(
 				groupId, TestPropsValues.getUserId()));
+	}
+
+	private AssetEntry _getAssetEntry(
+		List<AssetEntry> assetEntries, long classPK) {
+
+		for (AssetEntry assetEntry : assetEntries) {
+			Long assetEntryClassPK = assetEntry.getClassPK();
+
+			if ((assetEntryClassPK != null) && (assetEntryClassPK == classPK)) {
+				return assetEntry;
+			}
+		}
+
+		return null;
 	}
 
 	private boolean _hasClassPK(List<AssetEntry> assetEntries, long classPK) {
@@ -119,6 +142,61 @@ public class AssetEntryResourceTest extends BaseAssetEntryResourceTestCase {
 		Assert.assertEquals(
 			Integer.valueOf(WorkflowConstants.STATUS_APPROVED),
 			assetEntry.getStatus());
+	}
+
+	private void _testGetAssetEntriesPageViewableByGuest() throws Exception {
+		Long groupId = testGroup.getGroupId();
+
+		BlogsEntry viewableBlogsEntry = _addBlogsEntry(groupId);
+		BlogsEntry notViewableBlogsEntry = _addBlogsEntry(groupId);
+
+		Role guestRole = _roleLocalService.getRole(
+			testCompany.getCompanyId(), RoleConstants.GUEST);
+
+		_resourcePermissionLocalService.removeResourcePermission(
+			testCompany.getCompanyId(), BlogsEntry.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(notViewableBlogsEntry.getEntryId()),
+			guestRole.getRoleId(), ActionKeys.VIEW);
+
+		AssetEntryResource nestedFieldsAssetEntryResource =
+			AssetEntryResource.builder(
+			).authentication(
+				"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD
+			).locale(
+				LocaleUtil.getDefault()
+			).parameters(
+				"nestedFields", "viewableByGuest"
+			).build();
+
+		Page<AssetEntry> nestedFieldsPage =
+			nestedFieldsAssetEntryResource.getAssetEntriesPage(
+				new Long[] {groupId}, null, null, null, Pagination.of(1, 50),
+				null);
+
+		List<AssetEntry> nestedFieldsAssetEntries =
+			(List<AssetEntry>)nestedFieldsPage.getItems();
+
+		Assert.assertEquals(
+			Boolean.TRUE,
+			_getAssetEntry(
+				nestedFieldsAssetEntries, viewableBlogsEntry.getEntryId()
+			).getViewableByGuest());
+		Assert.assertEquals(
+			Boolean.FALSE,
+			_getAssetEntry(
+				nestedFieldsAssetEntries, notViewableBlogsEntry.getEntryId()
+			).getViewableByGuest());
+
+		Page<AssetEntry> page = assetEntryResource.getAssetEntriesPage(
+			new Long[] {groupId}, null, null, null, Pagination.of(1, 50), null);
+
+		List<AssetEntry> assetEntries = (List<AssetEntry>)page.getItems();
+
+		Assert.assertNull(
+			_getAssetEntry(
+				assetEntries, viewableBlogsEntry.getEntryId()
+			).getViewableByGuest());
 	}
 
 	private void _testGetAssetEntriesPageWithClassNameIdFilter()
@@ -278,5 +356,11 @@ public class AssetEntryResourceTest extends BaseAssetEntryResourceTestCase {
 
 	@Inject
 	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
 
 }

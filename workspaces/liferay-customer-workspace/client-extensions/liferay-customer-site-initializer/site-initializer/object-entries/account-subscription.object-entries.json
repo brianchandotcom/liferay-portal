@@ -2,6 +2,18 @@
 	"object-entries": [
 		{
 			"accountKey": "ERC-001",
+			"accountSubscriptionGroupERC": "ERC-001_ai-hub",
+			"endDate": "2026-12-31T00:00:00Z",
+			"externalReferenceCode": "ERC-001_ai-hub_seo-studio-beta",
+			"instanceSize": "1",
+			"name": "SEO Studio - Beta",
+			"quantity": 1,
+			"r_accountEntryToAccountSubscription_accountEntryERC": "ERC-001",
+			"startDate": "2023-01-01T00:00:00Z",
+			"subscriptionStatus": "Active"
+		},
+		{
+			"accountKey": "ERC-001",
 			"accountSubscriptionGroupERC": "ERC-001_analytics-cloud",
 			"endDate": "2026-12-31T00:00:00Z",
 			"externalReferenceCode": "ERC-001_analytics-cloud_production",
@@ -717,6 +729,18 @@
 			"name": "LDP Connector",
 			"quantity": 1,
 			"r_accountEntryToAccountSubscription_accountEntryERC": "ERC-027",
+			"startDate": "2023-01-01T00:00:00Z",
+			"subscriptionStatus": "Active"
+		},
+		{
+			"accountKey": "ERC-028",
+			"accountSubscriptionGroupERC": "ERC-028_ai-hub",
+			"endDate": "2026-12-31T00:00:00Z",
+			"externalReferenceCode": "ERC-028_ai-hub_seo-studio-beta",
+			"instanceSize": "1",
+			"name": "SEO Studio - Beta",
+			"quantity": 1,
+			"r_accountEntryToAccountSubscription_accountEntryERC": "ERC-028",
 			"startDate": "2023-01-01T00:00:00Z",
 			"subscriptionStatus": "Active"
 		}

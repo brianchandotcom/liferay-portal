@@ -2,6 +2,17 @@
 	"object-entries": [
 		{
 			"accountKey": "ERC-001",
+			"activationProductName": "SEO Studio - Beta",
+			"activationStatus": "Active",
+			"externalReferenceCode": "ERC-001_ai-hub",
+			"hasActivation": false,
+			"menuOrder": 1,
+			"name": "AI Hub",
+			"r_accountEntryToAccountSubscriptionGroup_accountEntryERC": "ERC-001",
+			"tabOrder": 2
+		},
+		{
+			"accountKey": "ERC-001",
 			"activationStatus": "Active",
 			"externalReferenceCode": "ERC-001_analytics-cloud",
 			"hasActivation": true,
@@ -328,6 +339,17 @@
 			"menuOrder": 1,
 			"name": "Liferay Cloud",
 			"r_accountEntryToAccountSubscriptionGroup_accountEntryERC": "ERC-027",
+			"tabOrder": 2
+		},
+		{
+			"accountKey": "ERC-028",
+			"activationProductName": "SEO Studio - Beta",
+			"activationStatus": "Active",
+			"externalReferenceCode": "ERC-028_ai-hub",
+			"hasActivation": false,
+			"menuOrder": 1,
+			"name": "AI Hub",
+			"r_accountEntryToAccountSubscriptionGroup_accountEntryERC": "ERC-028",
 			"tabOrder": 2
 		}
 	],

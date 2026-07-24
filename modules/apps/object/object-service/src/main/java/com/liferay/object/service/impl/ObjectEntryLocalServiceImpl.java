@@ -349,6 +349,43 @@ public class ObjectEntryLocalServiceImpl
 			Map<String, Serializable> values)
 		throws PortalException {
 
+		values = new HashMap<>(values);
+
+		ObjectFieldBusinessType objectFieldBusinessType =
+			_objectFieldBusinessTypeRegistry.getObjectFieldBusinessType(
+				ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT);
+
+		Map<String, Object> originalValues = new HashMap<>(values);
+
+		for (ObjectField objectField :
+				_objectFieldLocalService.getObjectFields(
+					objectDefinition.getObjectDefinitionId())) {
+
+			if (!objectField.compareBusinessType(
+					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
+
+				continue;
+			}
+
+			if (objectField.isLocalized()) {
+				Map<String, Object> localizedValues =
+					objectFieldBusinessType.getLocalizedValues(
+						objectField, userId, originalValues);
+
+				if (localizedValues != null) {
+					values.put(
+						objectField.getI18nObjectFieldName(),
+						(Serializable)localizedValues);
+				}
+			}
+			else if (values.containsKey(objectField.getName())) {
+				values.put(
+					objectField.getName(),
+					(Serializable)objectFieldBusinessType.getValue(
+						groupId, objectField, userId, originalValues));
+			}
+		}
+
 		ObjectEntry objectEntry = _addObjectEntry(
 			externalReferenceCode, groupId, userId, headObjectEntryId,
 			objectDefinition.getObjectDefinitionId(), objectEntryFolderId,

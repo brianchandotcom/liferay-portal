@@ -8,6 +8,8 @@ package com.liferay.site.sitemap.web.internal.portlet.action;
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -30,6 +32,7 @@ import jakarta.portlet.ActionRequest;
 import jakarta.portlet.ActionResponse;
 import jakarta.portlet.PortletException;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
 
@@ -80,6 +83,28 @@ public class SaveCompanyConfigurationMVCActionCommand
 			actionRequest, "xmlSitemapIndexMode",
 			_sitemapConfigurationManager.xmlSitemapIndexMode(companyId));
 
+		String xmlSitemapRegenerationTime =
+			_sitemapConfigurationManager.xmlSitemapRegenerationTime(companyId);
+
+		int hour = ParamUtil.getInteger(
+			actionRequest, "xmlSitemapRegenerationTimeHour", -1);
+
+		if (hour >= 0) {
+			int amPm = ParamUtil.getInteger(
+				actionRequest, "xmlSitemapRegenerationTimeAmPm");
+			int hourOfDay = hour;
+
+			if (amPm == Calendar.PM) {
+				hourOfDay += 12;
+			}
+
+			int minute = ParamUtil.getInteger(
+				actionRequest, "xmlSitemapRegenerationTimeMinute");
+
+			xmlSitemapRegenerationTime = StringBundler.concat(
+				hourOfDay, StringPool.COLON, minute);
+		}
+
 		_sitemapConfigurationManager.saveSitemapCompanyConfiguration(
 			cachedGenerationEnabled, companyId,
 			ArrayUtil.filter(
@@ -126,10 +151,7 @@ public class SaveCompanyConfigurationMVCActionCommand
 				actionRequest, "xmlSitemapRegenerationFrequency",
 				_sitemapConfigurationManager.xmlSitemapRegenerationFrequency(
 					companyId)),
-			ParamUtil.getString(
-				actionRequest, "xmlSitemapRegenerationTime",
-				_sitemapConfigurationManager.xmlSitemapRegenerationTime(
-					companyId)),
+			xmlSitemapRegenerationTime,
 			ParamUtil.getString(
 				actionRequest, "xmlSitemapRegenerationTimeZoneId",
 				_sitemapConfigurationManager.xmlSitemapRegenerationTimeZoneId(

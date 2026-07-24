@@ -1308,11 +1308,10 @@ public abstract class BaseMockContactsEngineClientImpl
 
 	@Override
 	public AccountLifecycle updateAccountLifecycle(
-		FaroProject faroProject, String description, String id, String name,
-		String segmentId) {
+		FaroProject faroProject, AccountLifecycle accountLifecycle) {
 
 		return contactsEngineClient.updateAccountLifecycle(
-			faroProject, description, id, name, segmentId);
+			faroProject, accountLifecycle);
 	}
 
 	@Override

@@ -10,6 +10,7 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.shop.by.diagram.model.CSDiagramEntry;
 import com.liferay.commerce.shop.by.diagram.service.CSDiagramEntryLocalService;
@@ -24,7 +25,9 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.search.test.rule.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
 
 import java.math.BigDecimal;
@@ -35,6 +38,7 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -72,8 +76,12 @@ public class MappedProductResourceTest
 	public void testGetChannelProductMappedProductsPage() throws Exception {
 		super.testGetChannelProductMappedProductsPage();
 
+		_testGetChannelProductMappedProductsPageWithSearch();
 		_testGetChannelProductMappedProductsPageWithUnitOfMeasure();
 	}
+
+	@Rule
+	public SearchTestRule searchTestRule = new SearchTestRule();
 
 	@Override
 	protected MappedProduct randomMappedProduct() throws Exception {
@@ -144,6 +152,97 @@ public class MappedProductResourceTest
 		return _cpDefinition.getCProductId();
 	}
 
+	private CPInstance _addMappedCPInstance(long cpDefinitionId)
+		throws Exception {
+
+		CPInstance cpInstance = CPTestUtil.addCPInstanceWithRandomSku(
+			testGroup.getGroupId(), BigDecimal.TEN);
+
+		CPDefinition cpDefinition = cpInstance.getCPDefinition();
+
+		_cpDefinitions.add(cpDefinition);
+
+		String description = StringUtil.toLowerCase(
+			RandomTestUtil.randomString());
+		String name = StringUtil.toLowerCase(RandomTestUtil.randomString());
+		String shortDescription = StringUtil.toLowerCase(
+			RandomTestUtil.randomString());
+
+		String languageId = LocaleUtil.toLanguageId(LocaleUtil.getDefault());
+
+		_cpDefinitionLocalService.updateCPDefinitionLocalization(
+			cpDefinition, languageId, description,
+			cpDefinition.getMetaDescription(languageId),
+			cpDefinition.getMetaKeywords(languageId),
+			cpDefinition.getMetaTitle(languageId), name, shortDescription);
+
+		_csDiagramEntries.add(
+			_csDiagramEntryLocalService.addCSDiagramEntry(
+				_user.getUserId(), cpDefinitionId, cpInstance.getCPInstanceId(),
+				cpDefinition.getCProductId(), false, 1,
+				StringUtil.toLowerCase(RandomTestUtil.randomString()),
+				cpInstance.getSku(), _serviceContext));
+
+		return cpInstance;
+	}
+
+	private void _assertSearch(
+			long productId, CPInstance expectedCPInstance,
+			CPInstance unexpectedCPInstance)
+		throws Exception {
+
+		CPDefinition cpDefinition = expectedCPInstance.getCPDefinition();
+
+		String languageId = LocaleUtil.toLanguageId(LocaleUtil.getDefault());
+
+		for (String search :
+				new String[] {
+					cpDefinition.getDescription(languageId),
+					cpDefinition.getName(languageId),
+					cpDefinition.getShortDescription(languageId),
+					expectedCPInstance.getSku()
+				}) {
+
+			Page<MappedProduct> mappedProductsPage =
+				mappedProductResource.getChannelProductMappedProductsPage(
+					_commerceChannel.getCommerceChannelId(), productId, null,
+					null, search, Pagination.of(1, 10), null);
+
+			List<Long> skuIds = new ArrayList<>();
+
+			for (MappedProduct mappedProduct : mappedProductsPage.getItems()) {
+				skuIds.add(mappedProduct.getSkuId());
+			}
+
+			Assert.assertTrue(
+				search, skuIds.contains(expectedCPInstance.getCPInstanceId()));
+			Assert.assertFalse(
+				search,
+				skuIds.contains(unexpectedCPInstance.getCPInstanceId()));
+		}
+	}
+
+	private void _testGetChannelProductMappedProductsPageWithSearch()
+		throws Exception {
+
+		CPInstance cpInstance = CPTestUtil.addCPInstanceWithRandomSku(
+			testGroup.getGroupId(), BigDecimal.TEN);
+
+		CPDefinition cpDefinition = cpInstance.getCPDefinition();
+
+		_cpDefinitions.add(cpDefinition);
+
+		long cpDefinitionId = cpDefinition.getCPDefinitionId();
+
+		CPInstance mappedCPInstance1 = _addMappedCPInstance(cpDefinitionId);
+		CPInstance mappedCPInstance2 = _addMappedCPInstance(cpDefinitionId);
+
+		long productId = cpDefinition.getCProductId();
+
+		_assertSearch(productId, mappedCPInstance1, mappedCPInstance2);
+		_assertSearch(productId, mappedCPInstance2, mappedCPInstance1);
+	}
+
 	private void _testGetChannelProductMappedProductsPageWithUnitOfMeasure()
 		throws Exception {
 
@@ -183,6 +282,12 @@ public class MappedProductResourceTest
 
 	@DeleteAfterTestRun
 	private CPDefinition _cpDefinition;
+
+	@Inject
+	private CPDefinitionLocalService _cpDefinitionLocalService;
+
+	@DeleteAfterTestRun
+	private final List<CPDefinition> _cpDefinitions = new ArrayList<>();
 
 	@DeleteAfterTestRun
 	private CPInstance _cpInstance;

@@ -378,14 +378,14 @@ public class SaveCompanyConfigurationMVCActionCommandTest {
 	public void testSaveCompanyConfigurationRegenerationSettings()
 		throws Exception {
 
-		String xmlSitemapRegenerationTime = StringBundler.concat(
-			RandomTestUtil.randomInt(0, 23), StringPool.COLON,
-			RandomTestUtil.randomInt(0, 59));
+		int amPm = RandomTestUtil.randomInt(Calendar.AM, Calendar.PM);
+		int hour = RandomTestUtil.randomInt(0, 11);
+		int minute = RandomTestUtil.randomInt(0, 59);
 
 		_processSaveCompanyConfiguration(
 			true, false, String.valueOf(Calendar.WEDNESDAY),
-			SitemapConstants.REGENERATION_FREQUENCY_WEEKLY,
-			xmlSitemapRegenerationTime, StringPool.UTC);
+			SitemapConstants.REGENERATION_FREQUENCY_WEEKLY, amPm, hour, minute,
+			StringPool.UTC);
 
 		Dictionary<String, Object> properties =
 			_getCompanyConfigurationProperties();
@@ -398,8 +398,15 @@ public class SaveCompanyConfigurationMVCActionCommandTest {
 		Assert.assertEquals(
 			SitemapConstants.REGENERATION_FREQUENCY_WEEKLY,
 			properties.get("xmlSitemapRegenerationFrequency"));
+
+		int hourOfDay = hour;
+
+		if (amPm == Calendar.PM) {
+			hourOfDay += 12;
+		}
+
 		Assert.assertEquals(
-			xmlSitemapRegenerationTime,
+			StringBundler.concat(hourOfDay, StringPool.COLON, minute),
 			properties.get("xmlSitemapRegenerationTime"));
 		Assert.assertEquals(
 			StringPool.UTC, properties.get("xmlSitemapRegenerationTimeZoneId"));
@@ -529,7 +536,9 @@ public class SaveCompanyConfigurationMVCActionCommandTest {
 			boolean cachedGenerationEnabled, boolean saveAndGenerate,
 			String xmlSitemapRegenerationDayOfWeek,
 			String xmlSitemapRegenerationFrequency,
-			String xmlSitemapRegenerationTime,
+			int xmlSitemapRegenerationTimeAmPm,
+			int xmlSitemapRegenerationTimeHour,
+			int xmlSitemapRegenerationTimeMinute,
 			String xmlSitemapRegenerationTimeZoneId)
 		throws Exception {
 
@@ -557,7 +566,14 @@ public class SaveCompanyConfigurationMVCActionCommandTest {
 		mockLiferayPortletActionRequest.addParameter(
 			"xmlSitemapRegenerationFrequency", xmlSitemapRegenerationFrequency);
 		mockLiferayPortletActionRequest.addParameter(
-			"xmlSitemapRegenerationTime", xmlSitemapRegenerationTime);
+			"xmlSitemapRegenerationTimeAmPm",
+			String.valueOf(xmlSitemapRegenerationTimeAmPm));
+		mockLiferayPortletActionRequest.addParameter(
+			"xmlSitemapRegenerationTimeHour",
+			String.valueOf(xmlSitemapRegenerationTimeHour));
+		mockLiferayPortletActionRequest.addParameter(
+			"xmlSitemapRegenerationTimeMinute",
+			String.valueOf(xmlSitemapRegenerationTimeMinute));
 		mockLiferayPortletActionRequest.addParameter(
 			"xmlSitemapRegenerationTimeZoneId",
 			xmlSitemapRegenerationTimeZoneId);
@@ -646,7 +662,7 @@ public class SaveCompanyConfigurationMVCActionCommandTest {
 
 		_processSaveCompanyConfiguration(
 			cachedGenerationEnabled, saveAndGenerate, StringPool.BLANK,
-			SitemapConstants.REGENERATION_FREQUENCY_HOURLY, StringPool.BLANK,
+			SitemapConstants.REGENERATION_FREQUENCY_HOURLY, -1, -1, -1,
 			StringPool.BLANK);
 	}
 
@@ -654,7 +670,9 @@ public class SaveCompanyConfigurationMVCActionCommandTest {
 			boolean cachedGenerationEnabled, boolean saveAndGenerate,
 			String xmlSitemapRegenerationDayOfWeek,
 			String xmlSitemapRegenerationFrequency,
-			String xmlSitemapRegenerationTime,
+			int xmlSitemapRegenerationTimeAmPm,
+			int xmlSitemapRegenerationTimeHour,
+			int xmlSitemapRegenerationTimeMinute,
 			String xmlSitemapRegenerationTimeZoneId)
 		throws Exception {
 
@@ -662,7 +680,9 @@ public class SaveCompanyConfigurationMVCActionCommandTest {
 			_getMockLiferayPortletActionRequest(
 				cachedGenerationEnabled, saveAndGenerate,
 				xmlSitemapRegenerationDayOfWeek,
-				xmlSitemapRegenerationFrequency, xmlSitemapRegenerationTime,
+				xmlSitemapRegenerationFrequency, xmlSitemapRegenerationTimeAmPm,
+				xmlSitemapRegenerationTimeHour,
+				xmlSitemapRegenerationTimeMinute,
 				xmlSitemapRegenerationTimeZoneId),
 			new MockLiferayPortletActionResponse());
 	}

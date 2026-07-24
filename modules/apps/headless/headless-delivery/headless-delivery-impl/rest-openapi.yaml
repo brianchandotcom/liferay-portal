@@ -119,6 +119,11 @@ components:
                         The asset entry's title in the requesting locale.
                     readOnly: true
                     type: string
+                viewableByGuest:
+                    description:
+                        Whether guest users can view the asset entry.
+                    readOnly: true
+                    type: boolean
             type: object
         BlogPosting:
             description:

@@ -6,6 +6,7 @@ COPY resources .
 
 RUN go mod download && \
 	go mod verify && \
+	go generate ./... && \
 	CGO_ENABLED=0 go build -a -ldflags="-s -w" -o manager main.go
 
 FROM gcr.io/distroless/static:nonroot

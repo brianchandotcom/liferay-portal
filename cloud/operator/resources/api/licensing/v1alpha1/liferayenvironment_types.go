@@ -22,9 +22,9 @@ type LicenseStatus struct {
 	ValidUntil *metav1.Time `json:"validUntil,omitempty"`
 }
 
-//+kubebuilder:object:root=true
-//+kubebuilder:resource:shortName=lenv
-//+kubebuilder:subresource:status
+// +kubebuilder:object:root=true
+// +kubebuilder:resource:shortName=lenv
+// +kubebuilder:subresource:status
 type LiferayEnvironment struct {
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	metav1.TypeMeta   `json:",inline"`
@@ -33,7 +33,7 @@ type LiferayEnvironment struct {
 	Status LiferayEnvironmentStatus `json:"status,omitempty"`
 }
 
-//+kubebuilder:object:root=true
+// +kubebuilder:object:root=true
 type LiferayEnvironmentList struct {
 	metav1.ListMeta `json:"metadata,omitempty"`
 	metav1.TypeMeta `json:",inline"`

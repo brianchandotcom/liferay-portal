@@ -1,0 +1,3 @@
+//go:generate go tool controller-gen object paths=./api/...
+
+package main

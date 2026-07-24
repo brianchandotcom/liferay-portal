@@ -26,7 +26,7 @@ public class JiraTicketResolverUtil {
 		List<String> lpdKeys = new ArrayList<>();
 
 		JSONObject fieldsJSONObject = issueJSONObject.getJSONObject(
-			JiraConstants.FIELD_FIELDS);
+			JiraConstants.FIELDS);
 
 		if (fieldsJSONObject == null) {
 			return lpdKeys;
@@ -51,7 +51,7 @@ public class JiraTicketResolverUtil {
 				JiraConstants.FIELD_TYPE);
 
 			if ((typeJSONObject == null) ||
-				!JiraConstants.LINK_TYPE_RELATIONSHIP.equals(
+				!JiraConstants.ISSUE_LINK_TYPE_RELATIONSHIP.equals(
 					typeJSONObject.getString(JiraConstants.FIELD_NAME))) {
 
 				continue;
@@ -83,7 +83,7 @@ public class JiraTicketResolverUtil {
 				continue;
 			}
 
-			if (!ticket.startsWith(JiraConstants.LPE_KEY_PREFIX)) {
+			if (!ticket.startsWith(JiraConstants.ISSUE_KEY_PREFIX_LPE)) {
 				if (!resolvedTickets.contains(ticket)) {
 					resolvedTickets.add(ticket);
 				}
@@ -129,7 +129,7 @@ public class JiraTicketResolverUtil {
 
 		String key = linkedIssueJSONObject.getString(JiraConstants.FIELD_KEY);
 
-		if (key.startsWith(JiraConstants.LPD_KEY_PREFIX) &&
+		if (key.startsWith(JiraConstants.ISSUE_KEY_PREFIX_LPD) &&
 			!lpdKeys.contains(key)) {
 
 			lpdKeys.add(key);

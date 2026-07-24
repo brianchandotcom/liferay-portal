@@ -34,7 +34,7 @@ public class JiraUtil {
 
 		return StringBundler.concat(
 			patcherConfiguration.jiraAPIURL(), "/issue/", issueKey,
-			StringPool.QUESTION, JiraConstants.FIELD_FIELDS, StringPool.EQUAL,
+			StringPool.QUESTION, JiraConstants.FIELDS, StringPool.EQUAL,
 			JiraConstants.FIELD_ISSUE_LINKS);
 	}
 

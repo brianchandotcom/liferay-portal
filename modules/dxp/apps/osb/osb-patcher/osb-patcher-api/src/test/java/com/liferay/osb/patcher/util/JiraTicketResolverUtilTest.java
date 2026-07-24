@@ -63,8 +63,12 @@ public class JiraTicketResolverUtilTest {
 	public void testGetRelatedLPDKeysDedupesSameKey() {
 		JSONObject issueJSONObject = _issue(
 			_array(
-				_link(JiraConstants.LINK_TYPE_RELATIONSHIP, "LPD-9", "LPD-9"),
-				_link(JiraConstants.LINK_TYPE_RELATIONSHIP, "LPD-9", null)));
+				_link(
+					JiraConstants.ISSUE_LINK_TYPE_RELATIONSHIP, "LPD-9",
+					"LPD-9"),
+				_link(
+					JiraConstants.ISSUE_LINK_TYPE_RELATIONSHIP, "LPD-9",
+					null)));
 
 		List<String> lpdKeys = JiraTicketResolverUtil.getRelatedLPDKeys(
 			issueJSONObject);
@@ -87,7 +91,7 @@ public class JiraTicketResolverUtilTest {
 			_issue(
 				_array(
 					_link(
-						JiraConstants.LINK_TYPE_RELATIONSHIP, "LPD-100",
+						JiraConstants.ISSUE_LINK_TYPE_RELATIONSHIP, "LPD-100",
 						null))));
 
 		Assert.assertEquals(lpdKeys.toString(), 1, lpdKeys.size());
@@ -105,7 +109,7 @@ public class JiraTicketResolverUtilTest {
 	@Test
 	public void testGetRelatedLPDKeysWhenIssueLinksMissing() {
 		JSONObject issueJSONObject = JSONUtil.put(
-			JiraConstants.FIELD_FIELDS, JSONFactoryUtil.createJSONObject());
+			JiraConstants.FIELDS, JSONFactoryUtil.createJSONObject());
 
 		List<String> lpdKeys = JiraTicketResolverUtil.getRelatedLPDKeys(
 			issueJSONObject);
@@ -125,7 +129,7 @@ public class JiraTicketResolverUtilTest {
 						JiraConstants.FIELD_TYPE,
 						JSONUtil.put(
 							JiraConstants.FIELD_NAME,
-							JiraConstants.LINK_TYPE_RELATIONSHIP)
+							JiraConstants.ISSUE_LINK_TYPE_RELATIONSHIP)
 					))));
 
 		Assert.assertTrue(lpdKeys.isEmpty());
@@ -137,7 +141,8 @@ public class JiraTicketResolverUtilTest {
 			_issue(
 				_array(
 					_link(
-						JiraConstants.LINK_TYPE_RELATIONSHIP, "LPE-5", null))));
+						JiraConstants.ISSUE_LINK_TYPE_RELATIONSHIP, "LPE-5",
+						null))));
 
 		Assert.assertTrue(lpdKeys.isEmpty());
 	}
@@ -154,8 +159,11 @@ public class JiraTicketResolverUtilTest {
 	public void testGetRelatedLPDKeysWhenMultipleLinksOrdered() {
 		JSONObject issueJSONObject = _issue(
 			_array(
-				_link(JiraConstants.LINK_TYPE_RELATIONSHIP, "LPD-1", null),
-				_link(JiraConstants.LINK_TYPE_RELATIONSHIP, null, "LPD-2")));
+				_link(
+					JiraConstants.ISSUE_LINK_TYPE_RELATIONSHIP, "LPD-1", null),
+				_link(
+					JiraConstants.ISSUE_LINK_TYPE_RELATIONSHIP, null,
+					"LPD-2")));
 
 		List<String> lpdKeys = JiraTicketResolverUtil.getRelatedLPDKeys(
 			issueJSONObject);
@@ -168,7 +176,8 @@ public class JiraTicketResolverUtilTest {
 	@Test
 	public void testGetRelatedLPDKeysWhenNullLinkEntry() {
 		JSONArray issueLinksJSONArray = JSONUtil.putAll(
-			0, _link(JiraConstants.LINK_TYPE_RELATIONSHIP, "LPD-7", null));
+			0,
+			_link(JiraConstants.ISSUE_LINK_TYPE_RELATIONSHIP, "LPD-7", null));
 
 		List<String> lpdKeys = JiraTicketResolverUtil.getRelatedLPDKeys(
 			_issue(issueLinksJSONArray));
@@ -183,7 +192,7 @@ public class JiraTicketResolverUtilTest {
 			_issue(
 				_array(
 					_link(
-						JiraConstants.LINK_TYPE_RELATIONSHIP, null,
+						JiraConstants.ISSUE_LINK_TYPE_RELATIONSHIP, null,
 						"LPD-200"))));
 
 		Assert.assertEquals(lpdKeys.toString(), 1, lpdKeys.size());
@@ -233,7 +242,8 @@ public class JiraTicketResolverUtilTest {
 			_issue(
 				_array(
 					_link(
-						JiraConstants.LINK_TYPE_RELATIONSHIP, "LPD-500", null)))
+						JiraConstants.ISSUE_LINK_TYPE_RELATIONSHIP, "LPD-500",
+						null)))
 		);
 
 		List<String> resolvedTickets = JiraTicketResolverUtil.resolveTickets(
@@ -254,8 +264,12 @@ public class JiraTicketResolverUtilTest {
 		).thenReturn(
 			_issue(
 				_array(
-					_link(JiraConstants.LINK_TYPE_RELATIONSHIP, "LPD-1", null),
-					_link(JiraConstants.LINK_TYPE_RELATIONSHIP, "LPD-2", null)))
+					_link(
+						JiraConstants.ISSUE_LINK_TYPE_RELATIONSHIP, "LPD-1",
+						null),
+					_link(
+						JiraConstants.ISSUE_LINK_TYPE_RELATIONSHIP, "LPD-2",
+						null)))
 		);
 
 		try {
@@ -318,7 +332,7 @@ public class JiraTicketResolverUtilTest {
 
 	private JSONObject _issue(JSONArray issueLinksJSONArray) {
 		return JSONUtil.put(
-			JiraConstants.FIELD_FIELDS,
+			JiraConstants.FIELDS,
 			JSONUtil.put(JiraConstants.FIELD_ISSUE_LINKS, issueLinksJSONArray));
 	}
 

@@ -10,8 +10,6 @@ package com.liferay.osb.patcher.constants;
  */
 public class JiraConstants {
 
-	public static final String FIELD_FIELDS = "fields";
-
 	public static final String FIELD_INWARD_ISSUE = "inwardIssue";
 
 	public static final String FIELD_ISSUE_LINKS = "issuelinks";
@@ -24,10 +22,12 @@ public class JiraConstants {
 
 	public static final String FIELD_TYPE = "type";
 
-	public static final String LINK_TYPE_RELATIONSHIP = "Relationship";
+	public static final String FIELDS = "fields";
 
-	public static final String LPD_KEY_PREFIX = "LPD-";
+	public static final String ISSUE_KEY_PREFIX_LPD = "LPD-";
 
-	public static final String LPE_KEY_PREFIX = "LPE-";
+	public static final String ISSUE_KEY_PREFIX_LPE = "LPE-";
+
+	public static final String ISSUE_LINK_TYPE_RELATIONSHIP = "Relationship";
 
 }

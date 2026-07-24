@@ -119,6 +119,11 @@ components:
                         The asset entry's title in the requesting locale.
                     readOnly: true
                     type: string
+                viewableByGuest:
+                    description:
+                        Whether the asset entry is viewable by the guest role. Only populated when requested via nestedFields.
+                    readOnly: true
+                    type: boolean
             type: object
         BlogPosting:
             description:

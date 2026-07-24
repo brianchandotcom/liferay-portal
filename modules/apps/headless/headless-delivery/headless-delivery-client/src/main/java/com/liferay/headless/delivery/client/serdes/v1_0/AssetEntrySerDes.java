@@ -185,6 +185,16 @@ public class AssetEntrySerDes {
 			sb.append("\"");
 		}
 
+		if (assetEntry.getViewableByGuest() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"viewableByGuest\": ");
+
+			sb.append(assetEntry.getViewableByGuest());
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -288,6 +298,15 @@ public class AssetEntrySerDes {
 			map.put("title", String.valueOf(assetEntry.getTitle()));
 		}
 
+		if (assetEntry.getViewableByGuest() == null) {
+			map.put("viewableByGuest", null);
+		}
+		else {
+			map.put(
+				"viewableByGuest",
+				String.valueOf(assetEntry.getViewableByGuest()));
+		}
+
 		return map;
 	}
 
@@ -339,6 +358,9 @@ public class AssetEntrySerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "title")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "viewableByGuest")) {
 				return false;
 			}
 
@@ -412,6 +434,12 @@ public class AssetEntrySerDes {
 			else if (Objects.equals(jsonParserFieldName, "title")) {
 				if (jsonParserFieldValue != null) {
 					assetEntry.setTitle((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "viewableByGuest")) {
+				if (jsonParserFieldValue != null) {
+					assetEntry.setViewableByGuest(
+						(Boolean)jsonParserFieldValue);
 				}
 			}
 		}
@@ -495,4 +523,4 @@ public class AssetEntrySerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-600015839
+// LIFERAY-REST-BUILDER-HASH:975162010

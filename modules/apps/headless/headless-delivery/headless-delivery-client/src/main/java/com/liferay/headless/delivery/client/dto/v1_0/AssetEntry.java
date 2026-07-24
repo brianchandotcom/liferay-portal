@@ -257,6 +257,27 @@ public class AssetEntry implements Cloneable, Serializable {
 
 	protected String title;
 
+	public Boolean getViewableByGuest() {
+		return viewableByGuest;
+	}
+
+	public void setViewableByGuest(Boolean viewableByGuest) {
+		this.viewableByGuest = viewableByGuest;
+	}
+
+	public void setViewableByGuest(
+		UnsafeSupplier<Boolean, Exception> viewableByGuestUnsafeSupplier) {
+
+		try {
+			viewableByGuest = viewableByGuestUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean viewableByGuest;
+
 	@Override
 	public AssetEntry clone() throws CloneNotSupportedException {
 		return (AssetEntry)super.clone();
@@ -289,4 +310,4 @@ public class AssetEntry implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1471080213
+// LIFERAY-REST-BUILDER-HASH:444265614

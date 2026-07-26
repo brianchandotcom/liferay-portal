@@ -8,9 +8,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
-long designLibraryEntryId = (long)request.getAttribute(DesignLibraryConstants.DESIGN_LIBRARY_ENTRY_ID_KEY);
+DepotEntry depotEntry = (DepotEntry)request.getAttribute(DesignLibraryConstants.DESIGN_LIBRARY_ENTRY);
 
-DesignLibrarySettingsDisplayContext designLibrarySettingsDisplayContext = new DesignLibrarySettingsDisplayContext(request, liferayPortletResponse, designLibraryEntryId);
+DesignLibrarySettingsDisplayContext designLibrarySettingsDisplayContext = new DesignLibrarySettingsDisplayContext(depotEntry, request, liferayPortletResponse);
 
 designLibrarySettingsDisplayContext.setPortletDisplay(portletDisplay, renderResponse);
 %>

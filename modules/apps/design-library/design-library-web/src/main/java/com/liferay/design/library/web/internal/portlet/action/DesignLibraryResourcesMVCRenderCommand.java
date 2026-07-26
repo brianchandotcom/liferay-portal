@@ -6,17 +6,14 @@
 package com.liferay.design.library.web.internal.portlet.action;
 
 import com.liferay.design.library.constants.DesignLibraryAdminPortletKeys;
-import com.liferay.design.library.web.internal.constants.DesignLibraryConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.util.ParamUtil;
-
-import jakarta.portlet.RenderRequest;
-import jakarta.portlet.RenderResponse;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Gabriel Prates
+ * @author Thiago Buarque
  */
 @Component(
 	property = {
@@ -26,19 +23,15 @@ import org.osgi.service.component.annotations.Component;
 	service = MVCRenderCommand.class
 )
 public class DesignLibraryResourcesMVCRenderCommand
-	implements MVCRenderCommand {
+	extends BaseDesignLibraryMVCRenderCommand {
 
 	@Override
-	public String render(
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+	protected String getActionId() {
+		return ActionKeys.VIEW;
+	}
 
-		long designLibraryEntryId = ParamUtil.getLong(
-			renderRequest, DesignLibraryConstants.DESIGN_LIBRARY_ENTRY_ID_KEY);
-
-		renderRequest.setAttribute(
-			DesignLibraryConstants.DESIGN_LIBRARY_ENTRY_ID_KEY,
-			designLibraryEntryId);
-
+	@Override
+	protected String getPath() {
 		return "/view_resources.jsp";
 	}
 

@@ -8,27 +8,27 @@
 <%@ include file="/init.jsp" %>
 
 <%
-long designLibraryEntryId = (long)request.getAttribute(DesignLibraryConstants.DESIGN_LIBRARY_ENTRY_ID_KEY);
+DepotEntry depotEntry = (DepotEntry)request.getAttribute(DesignLibraryConstants.DESIGN_LIBRARY_ENTRY);
 
-DesignLibraryResourcesDisplayContext designLibraryResourcesDisplayContext = new DesignLibraryResourcesDisplayContext(request, liferayPortletResponse);
+DesignLibraryResourcesDisplayContext designLibraryResourcesDisplayContext = new DesignLibraryResourcesDisplayContext(depotEntry, request, liferayPortletResponse);
 %>
 
 <div>
 	<div>
 		<react:component
 			module="{DesignLibraryBreadcrumb} from design-library-web"
-			props="<%= designLibraryResourcesDisplayContext.getBreadcrumbProps(designLibraryEntryId) %>"
+			props="<%= designLibraryResourcesDisplayContext.getBreadcrumbProps() %>"
 		/>
 	</div>
 
 	<c:choose>
-		<c:when test="<%= designLibraryResourcesDisplayContext.hasContentAccess(designLibraryEntryId) %>">
+		<c:when test="<%= designLibraryResourcesDisplayContext.hasContentAccess() %>">
 			<div class="design-library-fds-wrapper design-library-fds-wrapper--resources">
 				<frontend-data-set:headless-display
-					additionalProps="<%= designLibraryResourcesDisplayContext.getFDSAdditionalProps(designLibraryEntryId) %>"
-					apiURL="<%= designLibraryResourcesDisplayContext.getAPIURL(designLibraryEntryId) %>"
+					additionalProps="<%= designLibraryResourcesDisplayContext.getFDSAdditionalProps() %>"
+					apiURL="<%= designLibraryResourcesDisplayContext.getAPIURL() %>"
 					emptyState="<%= designLibraryResourcesDisplayContext.getEmptyState() %>"
-					fdsActionDropdownItems="<%= designLibraryResourcesDisplayContext.getFDSActionDropdownItems(designLibraryEntryId) %>"
+					fdsActionDropdownItems="<%= designLibraryResourcesDisplayContext.getFDSActionDropdownItems() %>"
 					formName="fm"
 					id="<%= DesignLibraryAdminFDSNames.DESIGN_LIBRARY_RESOURCES %>"
 					propsTransformer="{DesignLibraryResourcesFDSPropsTransformer} from design-library-web"

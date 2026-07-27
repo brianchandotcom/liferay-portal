@@ -6,8 +6,13 @@
 package com.liferay.object.internal.model.listener.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.document.library.test.util.DLTestUtil;
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.constants.ObjectEntryFolderConstants;
+import com.liferay.object.constants.ObjectFieldSettingConstants;
+import com.liferay.object.field.builder.AttachmentObjectFieldBuilder;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
+import com.liferay.object.field.setting.builder.ObjectFieldSettingBuilder;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.related.models.test.util.ObjectEntryTestUtil;
@@ -15,6 +20,7 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectEntryVersionLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -25,8 +31,12 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
@@ -37,6 +47,7 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -224,6 +235,151 @@ public class ObjectEntryVersionModelListenerTest {
 			StringPool.BLANK, null);
 
 		_assertNullLatestApprovedObjectEntry(_objectEntry.getObjectEntryId());
+	}
+
+	@Test
+	public void testOnAfterUpdatePreservesLocalizedAttachment()
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				true, false, true,
+				Collections.singletonList(
+					new AttachmentObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).localized(
+						true
+					).name(
+						"attachmentObjectFieldName"
+					).objectFieldSettings(
+						Arrays.asList(
+							new ObjectFieldSettingBuilder(
+							).name(
+								ObjectFieldSettingConstants.
+									NAME_ACCEPTED_FILE_EXTENSIONS
+							).value(
+								"txt"
+							).build(),
+							new ObjectFieldSettingBuilder(
+							).name(
+								ObjectFieldSettingConstants.NAME_FILE_SOURCE
+							).value(
+								ObjectFieldSettingConstants.
+									VALUE_USER_COMPUTER_TO_DOCS_AND_MEDIA
+							).build(),
+							new ObjectFieldSettingBuilder(
+							).name(
+								ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE
+							).value(
+								"100"
+							).build())
+					).build()),
+				ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
+
+		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
+			0, TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null,
+			HashMapBuilder.<String, Serializable>put(
+				"attachmentObjectFieldName_i18n",
+				(Serializable)HashMapBuilder.<String, Object>put(
+					"en_US",
+					_addTempFileEntry(
+						objectDefinition
+					).getFileEntryId()
+				).put(
+					"pt_BR",
+					_addTempFileEntry(
+						objectDefinition
+					).getFileEntryId()
+				).build()
+			).build(),
+			serviceContext);
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+
+		objectEntry = _objectEntryLocalService.updateObjectEntry(
+			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+			objectEntry.getObjectEntryFolderId(),
+			HashMapBuilder.<String, Serializable>put(
+				"attachmentObjectFieldName_i18n",
+				(Serializable)HashMapBuilder.<String, Object>put(
+					"en_US",
+					_addTempFileEntry(
+						objectDefinition
+					).getFileEntryId()
+				).put(
+					"pt_BR",
+					_addTempFileEntry(
+						objectDefinition
+					).getFileEntryId()
+				).build()
+			).build(),
+			serviceContext);
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
+
+		objectEntry = _objectEntryLocalService.updateObjectEntry(
+			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+			objectEntry.getObjectEntryFolderId(),
+			HashMapBuilder.<String, Serializable>put(
+				"attachmentObjectFieldName_i18n",
+				(Serializable)HashMapBuilder.<String, Object>put(
+					"en_US",
+					_addTempFileEntry(
+						objectDefinition
+					).getFileEntryId()
+				).put(
+					"pt_BR",
+					_addTempFileEntry(
+						objectDefinition
+					).getFileEntryId()
+				).build()
+			).build(),
+			serviceContext);
+
+		ObjectEntry latestApprovedObjectEntry =
+			_objectEntryLocalService.fetchObjectEntryByHeadObjectEntryId(
+				objectEntry.getObjectEntryId());
+
+		Assert.assertNotNull(latestApprovedObjectEntry);
+
+		Map<String, Object> latestApprovedLocalizedValues =
+			(Map<String, Object>)latestApprovedObjectEntry.getValues(
+			).get(
+				"attachmentObjectFieldName_i18n"
+			);
+
+		Assert.assertNotNull(latestApprovedLocalizedValues);
+
+		long enUSFileEntryId = GetterUtil.getLong(
+			latestApprovedLocalizedValues.get("en_US"));
+		long ptBRFileEntryId = GetterUtil.getLong(
+			latestApprovedLocalizedValues.get("pt_BR"));
+
+		Assert.assertNotEquals(0, enUSFileEntryId);
+		Assert.assertNotEquals(0, ptBRFileEntryId);
+		Assert.assertNotEquals(enUSFileEntryId, ptBRFileEntryId);
+	}
+
+	private FileEntry _addTempFileEntry(ObjectDefinition objectDefinition)
+		throws Exception {
+
+		return TempFileEntryUtil.addTempFileEntry(
+			TestPropsValues.getGroupId(), TestPropsValues.getUserId(),
+			objectDefinition.getPortletId(),
+			TempFileEntryUtil.getTempFileName(
+				RandomTestUtil.randomString() + ".txt"),
+			FileUtil.createTempFile(DLTestUtil.randomTextFileBytes()),
+			ContentTypes.TEXT_PLAIN);
 	}
 
 	private void _assertLatestApprovedObjectEntry(

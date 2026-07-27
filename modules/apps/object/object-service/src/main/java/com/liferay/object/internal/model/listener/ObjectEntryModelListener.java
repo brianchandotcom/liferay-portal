@@ -53,8 +53,10 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.audit.event.generators.constants.EventTypes;
 import com.liferay.portal.security.audit.event.generators.util.Attribute;
 import com.liferay.portal.security.audit.event.generators.util.AuditMessageBuilder;
@@ -224,8 +226,8 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 	}
 
 	private void _addModifiedLocalizedAttributes(
-		List<Attribute> attributes, ObjectField objectField,
-		Map<String, Serializable> originalValues,
+		List<Attribute> attributes, String defaultLanguageId,
+		ObjectField objectField, Map<String, Serializable> originalValues,
 		Map<String, Serializable> values) {
 
 		Map<String, Serializable> originalLocalizedValues = _getLocalizedValues(
@@ -248,9 +250,8 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 
 			attributes.add(
 				new Attribute(
-					StringBundler.concat(
-						objectField.getName(), StringPool.OPEN_BRACKET,
-						languageId, StringPool.CLOSE_BRACKET),
+					_getLocalizedAttributeName(
+						defaultLanguageId, languageId, objectField),
 					_getAuditValue(objectField, value),
 					_getAuditValue(objectField, originalValue)));
 		}
@@ -306,6 +307,23 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 					objectDefinition.getObjectDefinitionId())) {
 
 			Map<String, Serializable> values = objectEntry.getValues();
+
+			if (objectField.isLocalized()) {
+				Map<String, Serializable> localizedValues = _getLocalizedValues(
+					objectField, values);
+
+				for (Map.Entry<String, Serializable> entry :
+						localizedValues.entrySet()) {
+
+					additionalInfoJSONObject.put(
+						_getLocalizedAttributeName(
+							_getDefaultLanguageId(objectEntry), entry.getKey(),
+							objectField),
+						_getAuditValue(objectField, entry.getValue()));
+				}
+
+				continue;
+			}
 
 			additionalInfoJSONObject.put(
 				objectField.getName(),
@@ -416,22 +434,51 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 		return value;
 	}
 
+	private String _getDefaultLanguageId(ObjectEntry objectEntry) {
+		String defaultLanguageId = objectEntry.getDefaultLanguageId();
+
+		if (Validator.isNull(defaultLanguageId)) {
+			return LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault());
+		}
+
+		return defaultLanguageId;
+	}
+
+	private String _getLocalizedAttributeName(
+		String defaultLanguageId, String languageId, ObjectField objectField) {
+
+		if (Objects.equals(defaultLanguageId, languageId)) {
+			return objectField.getName();
+		}
+
+		return StringBundler.concat(
+			objectField.getName(), StringPool.OPEN_BRACKET, languageId,
+			StringPool.CLOSE_BRACKET);
+	}
+
 	private Map<String, Serializable> _getLocalizedValues(
 		ObjectField objectField, Map<String, Serializable> values) {
 
-		Map<String, Serializable> localizedValues =
-			(Map<String, Serializable>)values.get(
-				objectField.getI18nObjectFieldName());
+		Serializable localizedValues = values.get(
+			objectField.getI18nObjectFieldName());
 
-		if (localizedValues == null) {
+		if (!(localizedValues instanceof Map<?, ?>)) {
+			if ((localizedValues != null) && _log.isWarnEnabled()) {
+				_log.warn(
+					StringBundler.concat(
+						"Unable to audit object field \"",
+						objectField.getI18nObjectFieldName(),
+						"\" because its value is not a map"));
+			}
+
 			return Collections.emptyMap();
 		}
 
-		return localizedValues;
+		return (Map<String, Serializable>)localizedValues;
 	}
 
 	private List<Attribute> _getModifiedAttributes(
-		ObjectDefinition objectDefinition,
+		String defaultLanguageId, ObjectDefinition objectDefinition,
 		Map<String, Serializable> originalValues,
 		Map<String, Serializable> values) {
 
@@ -443,7 +490,8 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 
 			if (objectField.isLocalized()) {
 				_addModifiedLocalizedAttributes(
-					attributes, objectField, originalValues, values);
+					attributes, defaultLanguageId, objectField, originalValues,
+					values);
 
 				continue;
 			}
@@ -488,8 +536,8 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 					String.valueOf(objectEntry.getPrimaryKeyObj()), null,
 					EventTypes.UPDATE,
 					_getModifiedAttributes(
-						objectDefinition, originalObjectEntry.getValues(),
-						values)));
+						_getDefaultLanguageId(objectEntry), objectDefinition,
+						originalObjectEntry.getValues(), values)));
 		}
 		else {
 			_auditRouter.route(

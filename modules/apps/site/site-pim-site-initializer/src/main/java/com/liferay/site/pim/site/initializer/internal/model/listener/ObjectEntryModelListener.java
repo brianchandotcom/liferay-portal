@@ -45,8 +45,8 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 
 			ObjectEntryFolder objectEntryFolder =
 				PIMObjectEntryFolderUtil.getOrAddProductsObjectEntryFolder(
-					_objectEntryFolderLocalService,
-					_groupLocalService.getGroup(objectEntry.getGroupId()));
+					_groupLocalService.getGroup(objectEntry.getGroupId()),
+					_objectEntryFolderLocalService);
 
 			objectEntry.setObjectEntryFolderId(
 				objectEntryFolder.getObjectEntryFolderId());
@@ -103,9 +103,12 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 				objectEntryFolderId);
 
 		if ((objectEntryFolder != null) &&
-			Objects.equals(
+			(Objects.equals(
 				objectEntryFolder.getExternalReferenceCode(),
-				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS)) {
+				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS) ||
+			 Objects.equals(
+				 objectEntryFolder.getExternalReferenceCode(),
+				 ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES))) {
 
 			return true;
 		}

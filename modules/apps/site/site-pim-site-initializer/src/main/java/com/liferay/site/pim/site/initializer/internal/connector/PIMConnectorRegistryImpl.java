@@ -7,10 +7,11 @@ package com.liferay.site.pim.site.initializer.internal.connector;
 
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.site.pim.site.initializer.connector.PIMConnector;
 import com.liferay.site.pim.site.initializer.connector.PIMConnectorRegistry;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.framework.BundleContext;
@@ -38,15 +39,15 @@ public class PIMConnectorRegistryImpl implements PIMConnectorRegistry {
 	public List<PIMConnector> getConnectors(
 		long companyId, boolean activeOnly) {
 
-		List<PIMConnector> pimConnectors = new ArrayList<>();
+		return TransformUtil.transform(
+			_serviceTrackerMap.values(),
+			pimConnector -> {
+				if (!activeOnly || pimConnector.isActive(companyId)) {
+					return pimConnector;
+				}
 
-		for (PIMConnector pimConnector : _serviceTrackerMap.values()) {
-			if (!activeOnly || pimConnector.isActive(companyId)) {
-				pimConnectors.add(pimConnector);
-			}
-		}
-
-		return pimConnectors;
+				return null;
+			});
 	}
 
 	@Activate
@@ -58,7 +59,7 @@ public class PIMConnectorRegistryImpl implements PIMConnectorRegistry {
 					serviceReference);
 
 				try {
-					if (pimConnector.getKey() != null) {
+					if (Validator.isNotNull(pimConnector.getKey())) {
 						emitter.emit(pimConnector.getKey());
 					}
 				}

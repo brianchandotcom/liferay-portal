@@ -56,17 +56,10 @@ public class ViewPIMConnectorsDisplayContextTest {
 				httpServletRequest, objectDefinition);
 
 		Assert.assertEquals(
-			"/o/pim/connectors",
-			viewPIMConnectorsDisplayContext.getAPIURL());
-	}
+			"/o/pim/connectors", viewPIMConnectorsDisplayContext.getAPIURL());
 
-	@Test
-	public void testGetAPIURLWithNullObjectDefinition() {
-		HttpServletRequest httpServletRequest = Mockito.mock(
-			HttpServletRequest.class);
-
-		ViewPIMConnectorsDisplayContext viewPIMConnectorsDisplayContext =
-			new ViewPIMConnectorsDisplayContext(httpServletRequest, null);
+		viewPIMConnectorsDisplayContext = new ViewPIMConnectorsDisplayContext(
+			httpServletRequest, null);
 
 		Assert.assertEquals(
 			StringPool.BLANK, viewPIMConnectorsDisplayContext.getAPIURL());
@@ -188,8 +181,8 @@ public class ViewPIMConnectorsDisplayContextTest {
 		String editHref = String.valueOf(editFDSActionDropdownItem.get("href"));
 
 		Assert.assertTrue(editHref, editHref.contains("/edit-connector"));
-		Assert.assertTrue(
-			editHref, editHref.contains("&objectEntryId={id}"));
+		Assert.assertTrue(editHref, editHref.contains("&objectEntryId={id}"));
+
 		Assert.assertEquals("pencil", editFDSActionDropdownItem.get("icon"));
 		Assert.assertEquals("Edit", editFDSActionDropdownItem.get("label"));
 
@@ -203,12 +196,9 @@ public class ViewPIMConnectorsDisplayContextTest {
 			fdsActionDropdownItems.get(1);
 
 		Assert.assertEquals(
-			"{actions.delete.href}",
-			deleteFDSActionDropdownItem.get("href"));
-		Assert.assertEquals(
-			"trash", deleteFDSActionDropdownItem.get("icon"));
-		Assert.assertEquals(
-			"Delete", deleteFDSActionDropdownItem.get("label"));
+			"{actions.delete.href}", deleteFDSActionDropdownItem.get("href"));
+		Assert.assertEquals("trash", deleteFDSActionDropdownItem.get("icon"));
+		Assert.assertEquals("Delete", deleteFDSActionDropdownItem.get("label"));
 		Assert.assertEquals(
 			"headless", deleteFDSActionDropdownItem.get("target"));
 

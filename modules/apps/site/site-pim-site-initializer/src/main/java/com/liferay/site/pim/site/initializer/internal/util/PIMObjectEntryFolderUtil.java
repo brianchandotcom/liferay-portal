@@ -25,8 +25,8 @@ import java.util.Map;
 public class PIMObjectEntryFolderUtil {
 
 	public static ObjectEntryFolder getOrAddProductsObjectEntryFolder(
-			ObjectEntryFolderLocalService objectEntryFolderLocalService,
-			Group group)
+			Group group,
+			ObjectEntryFolderLocalService objectEntryFolderLocalService)
 		throws PortalException {
 
 		ObjectEntryFolder objectEntryFolder =

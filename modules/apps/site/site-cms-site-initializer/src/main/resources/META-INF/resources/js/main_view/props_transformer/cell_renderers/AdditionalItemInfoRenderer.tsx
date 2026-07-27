@@ -19,9 +19,9 @@ export default function AdditionalItemInfoRenderer({
 	let text: string;
 
 	if (isFolder) {
-		const articleLength = itemData.embedded.numberOfObjectEntries ?? 0;
+		const articleLength = itemData.embedded?.numberOfObjectEntries ?? 0;
 		const subfoldersLength =
-			itemData.embedded.numberOfObjectEntryFolders ?? 0;
+			itemData.embedded?.numberOfObjectEntryFolders ?? 0;
 
 		const articleLabel =
 			articleLength === 1
@@ -39,7 +39,7 @@ export default function AdditionalItemInfoRenderer({
 		text = sub(
 			Liferay.Language.get('modified-x-by-x'),
 			dateUtils.fromNow(new Date(itemData.dateModified)),
-			itemData.embedded.creator.name
+			itemData.embedded?.creator?.name
 		);
 	}
 

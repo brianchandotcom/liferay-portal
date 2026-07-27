@@ -329,7 +329,7 @@ export default function AssetsFDSPropsTransformer({
 				{
 					component: ({itemData}) => (
 						<SpaceRendererWithCache
-							scopeKey={itemData.embedded.scopeKey}
+							scopeKey={itemData.embedded?.scopeKey}
 							spaceExternalReferenceCode={getScopeExternalReferenceCode(
 								itemData
 							)}
@@ -523,7 +523,7 @@ export default function AssetsFDSPropsTransformer({
 								'edit-and-propagate-default-permissions',
 							apiURL: bulkActionAPIURL,
 							classExternalReferenceCode:
-								itemData.embedded.externalReferenceCode,
+								itemData.embedded?.externalReferenceCode,
 							className: itemData.entryClassName,
 							closeModal,
 							section:
@@ -536,7 +536,7 @@ export default function AssetsFDSPropsTransformer({
 			else if (action?.data?.id === 'delete') {
 				const title =
 					itemData.title ||
-					itemData.embedded.title ||
+					itemData.embedded?.title ||
 					Liferay.Language.get('untitled-asset');
 
 				const confirmationMessage =
@@ -616,19 +616,23 @@ export default function AssetsFDSPropsTransformer({
 			else if (action?.data?.id === 'reset-to-default-permissions') {
 				openResetAssetPermissionModal({
 					className: itemData.entryClassName,
-					classPK: itemData.embedded.id,
+					classPK: itemData.embedded?.id,
 					loadData,
 				});
 			}
 			else if (action?.data?.id === 'share') {
+				if (!itemData.embedded) {
+					return;
+				}
+
 				const {autocompleteURL, collaboratorURLs} = additionalProps;
 
 				shareAction({
 					autocompleteURL,
 					collaboratorURL: collaboratorURLs[itemData.entryClassName],
-					creator: itemData.embedded.creator,
+					creator: itemData.embedded?.creator,
 					entryClassName: itemData.entryClassName,
-					itemId: itemData.embedded.id,
+					itemId: itemData.embedded?.id,
 					title: itemData.embedded?.title,
 				});
 			}
@@ -644,7 +648,7 @@ export default function AssetsFDSPropsTransformer({
 				);
 
 				const currentItemPos = filteredItems.findIndex(
-					(item: any) => item.embedded.id === itemData.embedded.id
+					(item: any) => item.embedded?.id === itemData.embedded?.id
 				);
 
 				openCMSModal({

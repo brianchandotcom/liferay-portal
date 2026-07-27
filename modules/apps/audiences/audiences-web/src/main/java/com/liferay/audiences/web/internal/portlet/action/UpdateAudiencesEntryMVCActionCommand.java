@@ -141,14 +141,22 @@ public class UpdateAudiencesEntryMVCActionCommand implements MVCActionCommand {
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-			JSONPortletResponseUtil.writeJSON(
-				actionRequest, actionResponse,
-				JSONUtil.put(
-					"errorField", _getErrorFieldName(exception)
-				).put(
-					"errorMessage",
-					_language.get(themeDisplay.getLocale(), errorMessageKey)
-				));
+			String errorMessage = _language.get(
+				themeDisplay.getLocale(), errorMessageKey);
+
+			String errorFieldName = _getErrorFieldName(exception);
+
+			if (errorFieldName == null) {
+				JSONPortletResponseUtil.writeJSON(
+					actionRequest, actionResponse,
+					JSONUtil.put("errorMessage", errorMessage));
+			}
+			else {
+				JSONPortletResponseUtil.writeJSON(
+					actionRequest, actionResponse,
+					JSONUtil.put(
+						"errors", JSONUtil.put(errorFieldName, errorMessage)));
+			}
 
 			return false;
 		}

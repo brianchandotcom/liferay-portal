@@ -168,7 +168,7 @@ describe('AIAssistantHost', () => {
 			value: 1440,
 		});
 
-		window.HTMLElement.prototype.scrollIntoView = jest.fn();
+		window.HTMLElement.prototype.scrollTo = jest.fn();
 
 		mockCreateEventSource.mockReset();
 		mockCreateEventSource.mockResolvedValue(null);

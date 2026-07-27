@@ -45,8 +45,8 @@ import java.util.function.Supplier;
 @JsonSubTypes(
 	{
 		@JsonSubTypes.Type(
-			name = "AddObjectToProjectBulkSelectionAction",
-			value = AddObjectToProjectBulkSelectionAction.class
+			name = "AddObjectToCMPProjectBulkSelectionAction",
+			value = AddObjectToCMPProjectBulkSelectionAction.class
 		),
 		@JsonSubTypes.Type(
 			name = "AssignStructureDefaultWorkflowBulkSelectionAction",
@@ -365,8 +365,8 @@ public abstract class BulkAction implements Serializable {
 	@GraphQLName("Type")
 	public static enum Type {
 
-		ADD_OBJECT_TO_PROJECT_BULK_SELECTION_ACTION(
-			"AddObjectToProjectBulkSelectionAction"),
+		ADD_OBJECT_TO_CMP_PROJECT_BULK_SELECTION_ACTION(
+			"AddObjectToCMPProjectBulkSelectionAction"),
 		ASSIGN_STRUCTURE_DEFAULT_WORKFLOW_BULK_SELECTION_ACTION(
 			"AssignStructureDefaultWorkflowBulkSelectionAction"),
 		ASSIGN_TO_OBJECT_BULK_SELECTION_ACTION(
@@ -521,4 +521,4 @@ public abstract class BulkAction implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1038831538
+// LIFERAY-REST-BUILDER-HASH:401451781

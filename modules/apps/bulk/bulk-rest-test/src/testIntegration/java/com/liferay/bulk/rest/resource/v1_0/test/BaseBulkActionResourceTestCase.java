@@ -13,7 +13,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
-import com.liferay.bulk.rest.client.dto.v1_0.AddObjectToProjectBulkSelectionAction;
+import com.liferay.bulk.rest.client.dto.v1_0.AddObjectToCMPProjectBulkSelectionAction;
 import com.liferay.bulk.rest.client.dto.v1_0.AssignStructureDefaultWorkflowBulkSelectionAction;
 import com.liferay.bulk.rest.client.dto.v1_0.AssignToObjectBulkSelectionAction;
 import com.liferay.bulk.rest.client.dto.v1_0.BulkAction;
@@ -312,12 +312,12 @@ public abstract class BaseBulkActionResourceTestCase {
 
 			if (Objects.equals("projectScopeKeys", additionalAssertFieldName)) {
 				if (!(bulkAction instanceof
-						AddObjectToProjectBulkSelectionAction)) {
+						AddObjectToCMPProjectBulkSelectionAction)) {
 
 					continue;
 				}
 
-				if (((AddObjectToProjectBulkSelectionAction)bulkAction).
+				if (((AddObjectToCMPProjectBulkSelectionAction)bulkAction).
 						getProjectScopeKeys() == null) {
 
 					valid = false;
@@ -986,17 +986,17 @@ public abstract class BaseBulkActionResourceTestCase {
 
 			if (Objects.equals("projectScopeKeys", additionalAssertFieldName)) {
 				if (!(bulkAction1 instanceof
-						AddObjectToProjectBulkSelectionAction) ||
+						AddObjectToCMPProjectBulkSelectionAction) ||
 					!(bulkAction2 instanceof
-						AddObjectToProjectBulkSelectionAction)) {
+						AddObjectToCMPProjectBulkSelectionAction)) {
 
 					continue;
 				}
 
 				if (!Objects.deepEquals(
-						((AddObjectToProjectBulkSelectionAction)bulkAction1).
+						((AddObjectToCMPProjectBulkSelectionAction)bulkAction1).
 							getProjectScopeKeys(),
-						((AddObjectToProjectBulkSelectionAction)bulkAction2).
+						((AddObjectToCMPProjectBulkSelectionAction)bulkAction2).
 							getProjectScopeKeys())) {
 
 					return false;
@@ -1841,12 +1841,12 @@ public abstract class BaseBulkActionResourceTestCase {
 	protected BulkAction randomBulkAction() throws Exception {
 		List<Supplier<BulkAction>> suppliers = Arrays.asList(
 			() -> {
-				AddObjectToProjectBulkSelectionAction bulkAction =
-					new AddObjectToProjectBulkSelectionAction();
+				AddObjectToCMPProjectBulkSelectionAction bulkAction =
+					new AddObjectToCMPProjectBulkSelectionAction();
 
 				bulkAction.setType(
 					BulkAction.Type.create(
-						"AddObjectToProjectBulkSelectionAction"));
+						"AddObjectToCMPProjectBulkSelectionAction"));
 
 				return bulkAction;
 			},
@@ -2309,4 +2309,4 @@ public abstract class BaseBulkActionResourceTestCase {
 		_bulkActionResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:410759925
+// LIFERAY-REST-BUILDER-HASH:237653481

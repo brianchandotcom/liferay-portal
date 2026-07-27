@@ -6,7 +6,7 @@
 package com.liferay.bulk.rest.client.dto.v1_0;
 
 import com.liferay.bulk.rest.client.function.UnsafeSupplier;
-import com.liferay.bulk.rest.client.serdes.v1_0.AddObjectToProjectBulkSelectionActionSerDes;
+import com.liferay.bulk.rest.client.serdes.v1_0.AddObjectToCMPProjectBulkSelectionActionSerDes;
 
 import jakarta.annotation.Generated;
 
@@ -19,11 +19,11 @@ import java.util.Objects;
  * @generated
  */
 @Generated("")
-public class AddObjectToProjectBulkSelectionAction
+public class AddObjectToCMPProjectBulkSelectionAction
 	extends BulkAction implements Cloneable, Serializable {
 
-	public static AddObjectToProjectBulkSelectionAction toDTO(String json) {
-		return AddObjectToProjectBulkSelectionActionSerDes.toDTO(json);
+	public static AddObjectToCMPProjectBulkSelectionAction toDTO(String json) {
+		return AddObjectToCMPProjectBulkSelectionActionSerDes.toDTO(json);
 	}
 
 	public String[] getProjectScopeKeys() {
@@ -48,10 +48,10 @@ public class AddObjectToProjectBulkSelectionAction
 	protected String[] projectScopeKeys;
 
 	@Override
-	public AddObjectToProjectBulkSelectionAction clone()
+	public AddObjectToCMPProjectBulkSelectionAction clone()
 		throws CloneNotSupportedException {
 
-		return (AddObjectToProjectBulkSelectionAction)super.clone();
+		return (AddObjectToCMPProjectBulkSelectionAction)super.clone();
 	}
 
 	@Override
@@ -60,16 +60,16 @@ public class AddObjectToProjectBulkSelectionAction
 			return true;
 		}
 
-		if (!(object instanceof AddObjectToProjectBulkSelectionAction)) {
+		if (!(object instanceof AddObjectToCMPProjectBulkSelectionAction)) {
 			return false;
 		}
 
-		AddObjectToProjectBulkSelectionAction
-			addObjectToProjectBulkSelectionAction =
-				(AddObjectToProjectBulkSelectionAction)object;
+		AddObjectToCMPProjectBulkSelectionAction
+			addObjectToCMPProjectBulkSelectionAction =
+				(AddObjectToCMPProjectBulkSelectionAction)object;
 
 		return Objects.equals(
-			toString(), addObjectToProjectBulkSelectionAction.toString());
+			toString(), addObjectToCMPProjectBulkSelectionAction.toString());
 	}
 
 	@Override
@@ -80,8 +80,8 @@ public class AddObjectToProjectBulkSelectionAction
 	}
 
 	public String toString() {
-		return AddObjectToProjectBulkSelectionActionSerDes.toJSON(this);
+		return AddObjectToCMPProjectBulkSelectionActionSerDes.toJSON(this);
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-193945308
+// LIFERAY-REST-BUILDER-HASH:-1742543838

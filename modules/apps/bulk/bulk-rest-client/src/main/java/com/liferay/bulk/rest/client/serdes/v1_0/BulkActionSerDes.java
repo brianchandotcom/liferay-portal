@@ -5,7 +5,7 @@
 
 package com.liferay.bulk.rest.client.serdes.v1_0;
 
-import com.liferay.bulk.rest.client.dto.v1_0.AddObjectToProjectBulkSelectionAction;
+import com.liferay.bulk.rest.client.dto.v1_0.AddObjectToCMPProjectBulkSelectionAction;
 import com.liferay.bulk.rest.client.dto.v1_0.AssignStructureDefaultWorkflowBulkSelectionAction;
 import com.liferay.bulk.rest.client.dto.v1_0.AssignToObjectBulkSelectionAction;
 import com.liferay.bulk.rest.client.dto.v1_0.BulkAction;
@@ -65,9 +65,9 @@ public class BulkActionSerDes {
 		if (type != null) {
 			String typeString = type.toString();
 
-			if (typeString.equals("AddObjectToProjectBulkSelectionAction")) {
-				return AddObjectToProjectBulkSelectionActionSerDes.toJSON(
-					(AddObjectToProjectBulkSelectionAction)bulkAction);
+			if (typeString.equals("AddObjectToCMPProjectBulkSelectionAction")) {
+				return AddObjectToCMPProjectBulkSelectionActionSerDes.toJSON(
+					(AddObjectToCMPProjectBulkSelectionAction)bulkAction);
 			}
 
 			if (typeString.equals(
@@ -254,9 +254,9 @@ public class BulkActionSerDes {
 				String typeString = type.toString();
 
 				if (typeString.equals(
-						"AddObjectToProjectBulkSelectionAction")) {
+						"AddObjectToCMPProjectBulkSelectionAction")) {
 
-					return AddObjectToProjectBulkSelectionAction.toDTO(json);
+					return AddObjectToCMPProjectBulkSelectionAction.toDTO(json);
 				}
 
 				if (typeString.equals(
@@ -469,4 +469,4 @@ public class BulkActionSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1370304813
+// LIFERAY-REST-BUILDER-HASH:2124910059

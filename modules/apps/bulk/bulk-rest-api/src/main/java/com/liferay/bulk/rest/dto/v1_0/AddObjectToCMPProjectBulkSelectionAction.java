@@ -33,22 +33,22 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("AddObjectToProjectBulkSelectionAction")
+@GraphQLName("AddObjectToCMPProjectBulkSelectionAction")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "AddObjectToProjectBulkSelectionAction")
-public class AddObjectToProjectBulkSelectionAction
+@XmlRootElement(name = "AddObjectToCMPProjectBulkSelectionAction")
+public class AddObjectToCMPProjectBulkSelectionAction
 	extends BulkAction implements Serializable {
 
-	public static AddObjectToProjectBulkSelectionAction toDTO(String json) {
+	public static AddObjectToCMPProjectBulkSelectionAction toDTO(String json) {
 		return ObjectMapperUtil.readValue(
-			AddObjectToProjectBulkSelectionAction.class, json);
+			AddObjectToCMPProjectBulkSelectionAction.class, json);
 	}
 
-	public static AddObjectToProjectBulkSelectionAction unsafeToDTO(
+	public static AddObjectToCMPProjectBulkSelectionAction unsafeToDTO(
 		String json) {
 
 		return ObjectMapperUtil.unsafeReadValue(
-			AddObjectToProjectBulkSelectionAction.class, json);
+			AddObjectToCMPProjectBulkSelectionAction.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema
@@ -98,16 +98,16 @@ public class AddObjectToProjectBulkSelectionAction
 			return true;
 		}
 
-		if (!(object instanceof AddObjectToProjectBulkSelectionAction)) {
+		if (!(object instanceof AddObjectToCMPProjectBulkSelectionAction)) {
 			return false;
 		}
 
-		AddObjectToProjectBulkSelectionAction
-			addObjectToProjectBulkSelectionAction =
-				(AddObjectToProjectBulkSelectionAction)object;
+		AddObjectToCMPProjectBulkSelectionAction
+			addObjectToCMPProjectBulkSelectionAction =
+				(AddObjectToCMPProjectBulkSelectionAction)object;
 
 		return Objects.equals(
-			toString(), addObjectToProjectBulkSelectionAction.toString());
+			toString(), addObjectToCMPProjectBulkSelectionAction.toString());
 	}
 
 	@Override
@@ -203,7 +203,7 @@ public class AddObjectToProjectBulkSelectionAction
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.bulk.rest.dto.v1_0.AddObjectToProjectBulkSelectionAction",
+		defaultValue = "com.liferay.bulk.rest.dto.v1_0.AddObjectToCMPProjectBulkSelectionAction",
 		name = "x-class-name"
 	)
 	public String xClassName;
@@ -297,4 +297,4 @@ public class AddObjectToProjectBulkSelectionAction
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1824884614
+// LIFERAY-REST-BUILDER-HASH:-2023913932

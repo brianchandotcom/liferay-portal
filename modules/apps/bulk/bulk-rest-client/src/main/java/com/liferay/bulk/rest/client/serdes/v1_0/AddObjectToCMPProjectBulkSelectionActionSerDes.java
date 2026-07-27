@@ -5,7 +5,7 @@
 
 package com.liferay.bulk.rest.client.serdes.v1_0;
 
-import com.liferay.bulk.rest.client.dto.v1_0.AddObjectToProjectBulkSelectionAction;
+import com.liferay.bulk.rest.client.dto.v1_0.AddObjectToCMPProjectBulkSelectionAction;
 import com.liferay.bulk.rest.client.dto.v1_0.BulkActionItem;
 import com.liferay.bulk.rest.client.json.BaseJSONParser;
 
@@ -22,30 +22,33 @@ import java.util.TreeMap;
  * @generated
  */
 @Generated("")
-public class AddObjectToProjectBulkSelectionActionSerDes {
+public class AddObjectToCMPProjectBulkSelectionActionSerDes {
 
-	public static AddObjectToProjectBulkSelectionAction toDTO(String json) {
-		AddObjectToProjectBulkSelectionActionJSONParser
-			addObjectToProjectBulkSelectionActionJSONParser =
-				new AddObjectToProjectBulkSelectionActionJSONParser();
+	public static AddObjectToCMPProjectBulkSelectionAction toDTO(String json) {
+		AddObjectToCMPProjectBulkSelectionActionJSONParser
+			addObjectToCMPProjectBulkSelectionActionJSONParser =
+				new AddObjectToCMPProjectBulkSelectionActionJSONParser();
 
-		return addObjectToProjectBulkSelectionActionJSONParser.parseToDTO(json);
+		return addObjectToCMPProjectBulkSelectionActionJSONParser.parseToDTO(
+			json);
 	}
 
-	public static AddObjectToProjectBulkSelectionAction[] toDTOs(String json) {
-		AddObjectToProjectBulkSelectionActionJSONParser
-			addObjectToProjectBulkSelectionActionJSONParser =
-				new AddObjectToProjectBulkSelectionActionJSONParser();
+	public static AddObjectToCMPProjectBulkSelectionAction[] toDTOs(
+		String json) {
 
-		return addObjectToProjectBulkSelectionActionJSONParser.parseToDTOs(
+		AddObjectToCMPProjectBulkSelectionActionJSONParser
+			addObjectToCMPProjectBulkSelectionActionJSONParser =
+				new AddObjectToCMPProjectBulkSelectionActionJSONParser();
+
+		return addObjectToCMPProjectBulkSelectionActionJSONParser.parseToDTOs(
 			json);
 	}
 
 	public static String toJSON(
-		AddObjectToProjectBulkSelectionAction
-			addObjectToProjectBulkSelectionAction) {
+		AddObjectToCMPProjectBulkSelectionAction
+			addObjectToCMPProjectBulkSelectionAction) {
 
-		if (addObjectToProjectBulkSelectionAction == null) {
+		if (addObjectToCMPProjectBulkSelectionAction == null) {
 			return "null";
 		}
 
@@ -53,7 +56,7 @@ public class AddObjectToProjectBulkSelectionActionSerDes {
 
 		sb.append("{");
 
-		if (addObjectToProjectBulkSelectionAction.getProjectScopeKeys() !=
+		if (addObjectToCMPProjectBulkSelectionAction.getProjectScopeKeys() !=
 				null) {
 
 			if (sb.length() > 1) {
@@ -65,16 +68,16 @@ public class AddObjectToProjectBulkSelectionActionSerDes {
 			sb.append("[");
 
 			for (int i = 0;
-				 i < addObjectToProjectBulkSelectionAction.
+				 i < addObjectToCMPProjectBulkSelectionAction.
 					 getProjectScopeKeys().length;
 				 i++) {
 
 				sb.append(
 					_toJSON(
-						addObjectToProjectBulkSelectionAction.
+						addObjectToCMPProjectBulkSelectionAction.
 							getProjectScopeKeys()[i]));
 
-				if ((i + 1) < addObjectToProjectBulkSelectionAction.
+				if ((i + 1) < addObjectToCMPProjectBulkSelectionAction.
 						getProjectScopeKeys().length) {
 
 					sb.append(", ");
@@ -84,7 +87,7 @@ public class AddObjectToProjectBulkSelectionActionSerDes {
 			sb.append("]");
 		}
 
-		if (addObjectToProjectBulkSelectionAction.getBulkActionItems() !=
+		if (addObjectToCMPProjectBulkSelectionAction.getBulkActionItems() !=
 				null) {
 
 			if (sb.length() > 1) {
@@ -96,16 +99,16 @@ public class AddObjectToProjectBulkSelectionActionSerDes {
 			sb.append("[");
 
 			for (int i = 0;
-				 i < addObjectToProjectBulkSelectionAction.
+				 i < addObjectToCMPProjectBulkSelectionAction.
 					 getBulkActionItems().length;
 				 i++) {
 
 				sb.append(
 					String.valueOf(
-						addObjectToProjectBulkSelectionAction.
+						addObjectToCMPProjectBulkSelectionAction.
 							getBulkActionItems()[i]));
 
-				if ((i + 1) < addObjectToProjectBulkSelectionAction.
+				if ((i + 1) < addObjectToCMPProjectBulkSelectionAction.
 						getBulkActionItems().length) {
 
 					sb.append(", ");
@@ -115,7 +118,9 @@ public class AddObjectToProjectBulkSelectionActionSerDes {
 			sb.append("]");
 		}
 
-		if (addObjectToProjectBulkSelectionAction.getSelectionScope() != null) {
+		if (addObjectToCMPProjectBulkSelectionAction.getSelectionScope() !=
+				null) {
+
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -124,10 +129,11 @@ public class AddObjectToProjectBulkSelectionActionSerDes {
 
 			sb.append(
 				String.valueOf(
-					addObjectToProjectBulkSelectionAction.getSelectionScope()));
+					addObjectToCMPProjectBulkSelectionAction.
+						getSelectionScope()));
 		}
 
-		if (addObjectToProjectBulkSelectionAction.getType() != null) {
+		if (addObjectToCMPProjectBulkSelectionAction.getType() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -135,7 +141,7 @@ public class AddObjectToProjectBulkSelectionActionSerDes {
 			sb.append("\"type\": ");
 
 			sb.append("\"");
-			sb.append(addObjectToProjectBulkSelectionAction.getType());
+			sb.append(addObjectToCMPProjectBulkSelectionAction.getType());
 			sb.append("\"");
 		}
 
@@ -145,24 +151,25 @@ public class AddObjectToProjectBulkSelectionActionSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		AddObjectToProjectBulkSelectionActionJSONParser
-			addObjectToProjectBulkSelectionActionJSONParser =
-				new AddObjectToProjectBulkSelectionActionJSONParser();
+		AddObjectToCMPProjectBulkSelectionActionJSONParser
+			addObjectToCMPProjectBulkSelectionActionJSONParser =
+				new AddObjectToCMPProjectBulkSelectionActionJSONParser();
 
-		return addObjectToProjectBulkSelectionActionJSONParser.parseToMap(json);
+		return addObjectToCMPProjectBulkSelectionActionJSONParser.parseToMap(
+			json);
 	}
 
 	public static Map<String, String> toMap(
-		AddObjectToProjectBulkSelectionAction
-			addObjectToProjectBulkSelectionAction) {
+		AddObjectToCMPProjectBulkSelectionAction
+			addObjectToCMPProjectBulkSelectionAction) {
 
-		if (addObjectToProjectBulkSelectionAction == null) {
+		if (addObjectToCMPProjectBulkSelectionAction == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (addObjectToProjectBulkSelectionAction.getProjectScopeKeys() ==
+		if (addObjectToCMPProjectBulkSelectionAction.getProjectScopeKeys() ==
 				null) {
 
 			map.put("projectScopeKeys", null);
@@ -171,11 +178,11 @@ public class AddObjectToProjectBulkSelectionActionSerDes {
 			map.put(
 				"projectScopeKeys",
 				String.valueOf(
-					addObjectToProjectBulkSelectionAction.
+					addObjectToCMPProjectBulkSelectionAction.
 						getProjectScopeKeys()));
 		}
 
-		if (addObjectToProjectBulkSelectionAction.getBulkActionItems() ==
+		if (addObjectToCMPProjectBulkSelectionAction.getBulkActionItems() ==
 				null) {
 
 			map.put("bulkActionItems", null);
@@ -184,46 +191,49 @@ public class AddObjectToProjectBulkSelectionActionSerDes {
 			map.put(
 				"bulkActionItems",
 				String.valueOf(
-					addObjectToProjectBulkSelectionAction.
+					addObjectToCMPProjectBulkSelectionAction.
 						getBulkActionItems()));
 		}
 
-		if (addObjectToProjectBulkSelectionAction.getSelectionScope() == null) {
+		if (addObjectToCMPProjectBulkSelectionAction.getSelectionScope() ==
+				null) {
+
 			map.put("selectionScope", null);
 		}
 		else {
 			map.put(
 				"selectionScope",
 				String.valueOf(
-					addObjectToProjectBulkSelectionAction.getSelectionScope()));
+					addObjectToCMPProjectBulkSelectionAction.
+						getSelectionScope()));
 		}
 
-		if (addObjectToProjectBulkSelectionAction.getType() == null) {
+		if (addObjectToCMPProjectBulkSelectionAction.getType() == null) {
 			map.put("type", null);
 		}
 		else {
 			map.put(
 				"type",
 				String.valueOf(
-					addObjectToProjectBulkSelectionAction.getType()));
+					addObjectToCMPProjectBulkSelectionAction.getType()));
 		}
 
 		return map;
 	}
 
-	public static class AddObjectToProjectBulkSelectionActionJSONParser
-		extends BaseJSONParser<AddObjectToProjectBulkSelectionAction> {
+	public static class AddObjectToCMPProjectBulkSelectionActionJSONParser
+		extends BaseJSONParser<AddObjectToCMPProjectBulkSelectionAction> {
 
 		@Override
-		protected AddObjectToProjectBulkSelectionAction createDTO() {
-			return new AddObjectToProjectBulkSelectionAction();
+		protected AddObjectToCMPProjectBulkSelectionAction createDTO() {
+			return new AddObjectToCMPProjectBulkSelectionAction();
 		}
 
 		@Override
-		protected AddObjectToProjectBulkSelectionAction[] createDTOArray(
+		protected AddObjectToCMPProjectBulkSelectionAction[] createDTOArray(
 			int size) {
 
-			return new AddObjectToProjectBulkSelectionAction[size];
+			return new AddObjectToCMPProjectBulkSelectionAction[size];
 		}
 
 		@Override
@@ -246,14 +256,15 @@ public class AddObjectToProjectBulkSelectionActionSerDes {
 
 		@Override
 		protected void setField(
-			AddObjectToProjectBulkSelectionAction
-				addObjectToProjectBulkSelectionAction,
+			AddObjectToCMPProjectBulkSelectionAction
+				addObjectToCMPProjectBulkSelectionAction,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
 			if (Objects.equals(jsonParserFieldName, "projectScopeKeys")) {
 				if (jsonParserFieldValue != null) {
-					addObjectToProjectBulkSelectionAction.setProjectScopeKeys(
-						toStrings((Object[])jsonParserFieldValue));
+					addObjectToCMPProjectBulkSelectionAction.
+						setProjectScopeKeys(
+							toStrings((Object[])jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "bulkActionItems")) {
@@ -269,21 +280,21 @@ public class AddObjectToProjectBulkSelectionActionSerDes {
 							(String)jsonParserFieldValues[i]);
 					}
 
-					addObjectToProjectBulkSelectionAction.setBulkActionItems(
+					addObjectToCMPProjectBulkSelectionAction.setBulkActionItems(
 						bulkActionItemsArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "selectionScope")) {
 				if (jsonParserFieldValue != null) {
-					addObjectToProjectBulkSelectionAction.setSelectionScope(
+					addObjectToCMPProjectBulkSelectionAction.setSelectionScope(
 						SelectionScopeSerDes.toDTO(
 							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {
 				if (jsonParserFieldValue != null) {
-					addObjectToProjectBulkSelectionAction.setType(
-						AddObjectToProjectBulkSelectionAction.Type.create(
+					addObjectToCMPProjectBulkSelectionAction.setType(
+						AddObjectToCMPProjectBulkSelectionAction.Type.create(
 							(String)jsonParserFieldValue));
 				}
 			}
@@ -368,4 +379,4 @@ public class AddObjectToProjectBulkSelectionActionSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-403933576
+// LIFERAY-REST-BUILDER-HASH:-203574900

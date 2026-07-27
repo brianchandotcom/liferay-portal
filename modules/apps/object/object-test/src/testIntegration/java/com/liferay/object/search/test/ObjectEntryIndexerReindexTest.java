@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
@@ -51,6 +52,7 @@ import com.liferay.portal.search.test.util.FieldValuesAssert;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -319,6 +321,137 @@ public class ObjectEntryIndexerReindexTest {
 		}
 	}
 
+	@FeatureFlag("LPD-17564")
+	@Test
+	public void testReindexIndexesOnlyHeadObjectEntry() throws Exception {
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.addCustomObjectDefinition(
+				null, TestPropsValues.getUserId(), 0, null, true, false, true,
+				false, true, true, false, false, true, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				ObjectDefinitionTestUtil.getRandomName(), null, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				true, ObjectDefinitionConstants.SCOPE_COMPANY,
+				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
+				Collections.emptyList(),
+				Collections.singletonList(
+					new TextObjectFieldBuilder(
+					).indexed(
+						true
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"textObjectFieldName"
+					).build()),
+				Collections.emptyList(), new ServiceContext());
+
+		_objectDefinitionLocalService.publishCustomObjectDefinition(
+			TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId());
+
+		String originalName = PrincipalThreadLocal.getName();
+
+		_user = TestPropsValues.getUser();
+
+		try {
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext();
+
+			serviceContext.setWorkflowAction(
+				WorkflowConstants.ACTION_SAVE_DRAFT);
+
+			ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
+				0, TestPropsValues.getUserId(),
+				objectDefinition.getObjectDefinitionId(),
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+				null,
+				HashMapBuilder.<String, Serializable>put(
+					"textObjectFieldName", RandomTestUtil.randomString()
+				).build(),
+				serviceContext);
+
+			serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+
+			objectEntry = _objectEntryLocalService.updateObjectEntry(
+				TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+				objectEntry.getObjectEntryFolderId(),
+				HashMapBuilder.<String, Serializable>put(
+					"textObjectFieldName", "approvedValue"
+				).build(),
+				serviceContext);
+
+			serviceContext.setWorkflowAction(
+				WorkflowConstants.ACTION_SAVE_DRAFT);
+
+			objectEntry = _objectEntryLocalService.updateObjectEntry(
+				TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+				objectEntry.getObjectEntryFolderId(),
+				HashMapBuilder.<String, Serializable>put(
+					"textObjectFieldName", "draftValue"
+				).build(),
+				serviceContext);
+
+			ObjectEntry latestApprovedObjectEntry =
+				_objectEntryLocalService.fetchObjectEntryByHeadObjectEntryId(
+					objectEntry.getObjectEntryId());
+
+			Assert.assertNotNull(latestApprovedObjectEntry);
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_APPROVED,
+				latestApprovedObjectEntry.getStatus());
+
+			PrincipalThreadLocal.setName(null);
+
+			Indexer<ObjectEntry> indexer =
+				IndexerRegistryUtil.nullSafeGetIndexer(
+					objectEntry.getModelClassName());
+
+			try (SafeCloseable safeCloseable =
+					ReindexCacheThreadLocal.openReindexMode()) {
+
+				indexer.reindexCompany(_user.getCompanyId());
+			}
+
+			Assert.assertEquals(
+				1,
+				_search(
+					objectDefinition.getClassName(), "draftValue",
+					WorkflowConstants.STATUS_ANY
+				).getCount());
+			Assert.assertEquals(
+				0,
+				_search(
+					objectDefinition.getClassName(), "approvedValue",
+					WorkflowConstants.STATUS_ANY
+				).getCount());
+
+			_objectEntryLocalService.moveObjectEntryToTrash(
+				TestPropsValues.getUserId(), objectEntry,
+				ServiceContextTestUtil.getServiceContext());
+
+			Assert.assertEquals(
+				1,
+				_search(
+					objectDefinition.getClassName(), "draftValue",
+					WorkflowConstants.STATUS_IN_TRASH
+				).getCount());
+			Assert.assertEquals(
+				0,
+				_search(
+					objectDefinition.getClassName(), "approvedValue",
+					WorkflowConstants.STATUS_IN_TRASH
+				).getCount());
+		}
+		finally {
+			PrincipalThreadLocal.setName(originalName);
+
+			_objectDefinitionLocalService.deleteObjectDefinition(
+				objectDefinition);
+		}
+	}
+
 	@Test
 	public void testReindexWithLocalizedAttachmentObjectField()
 		throws Exception {
@@ -426,12 +559,12 @@ public class ObjectEntryIndexerReindexTest {
 
 				FieldValuesAssert.assertFieldValue(
 					Field.ENTRY_CLASS_NAME, objectEntry.getModelClassName(),
-					search(
+					_search(
 						objectDefinition.getClassName(),
 						String.valueOf(objectEntry.getObjectEntryId())));
 				FieldValuesAssert.assertFieldValue(
 					Field.ENTRY_CLASS_NAME, objectEntry.getModelClassName(),
-					search(objectDefinition.getClassName(), fileName));
+					_search(objectDefinition.getClassName(), fileName));
 
 				List<LogEntry> logEntries = logCapture.getLogEntries();
 
@@ -460,18 +593,6 @@ public class ObjectEntryIndexerReindexTest {
 			).build());
 	}
 
-	protected SearchResponse search(String entryClassName, String searchTerm) {
-		return searcher.search(
-			searchRequestBuilderFactory.builder(
-			).companyId(
-				_user.getCompanyId()
-			).entryClassNames(
-				entryClassName
-			).queryString(
-				searchTerm
-			).build());
-	}
-
 	@Inject
 	protected Searcher searcher;
 
@@ -488,6 +609,35 @@ public class ObjectEntryIndexerReindexTest {
 			TempFileEntryUtil.getTempFileName(fileName),
 			FileUtil.createTempFile(DLTestUtil.randomTextFileBytes()),
 			ContentTypes.TEXT_PLAIN);
+	}
+
+	private SearchResponse _search(String entryClassName, String searchTerm) {
+		return searcher.search(
+			searchRequestBuilderFactory.builder(
+			).companyId(
+				_user.getCompanyId()
+			).entryClassNames(
+				entryClassName
+			).queryString(
+				searchTerm
+			).build());
+	}
+
+	private SearchResponse _search(
+		String entryClassName, String searchTerm, int status) {
+
+		return searcher.search(
+			searchRequestBuilderFactory.builder(
+			).companyId(
+				_user.getCompanyId()
+			).entryClassNames(
+				entryClassName
+			).queryString(
+				searchTerm
+			).withSearchContext(
+				searchContext -> searchContext.setAttribute(
+					Field.STATUS, status)
+			).build());
 	}
 
 	@Inject

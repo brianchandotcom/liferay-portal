@@ -352,12 +352,6 @@ html#{$cadmin-selector} .cadmin {
 				display: flex;
 				gap: 0.5rem;
 				padding: 0.5rem;
-
-				.lexicon-icon {
-					color: $cadmin-primary;
-					flex-shrink: 0;
-					margin-top: 0.125rem;
-				}
 			}
 
 			&-form {
@@ -403,9 +397,14 @@ html#{$cadmin-selector} .cadmin {
 			&-icon {
 				color: $cadmin-primary;
 				display: inline-block;
+				flex-shrink: 0;
 				font-size: 12px;
 				margin-left: 0.5rem;
 				margin-top: 0.5rem;
+
+				&--error {
+					color: $cadmin-danger;
+				}
 			}
 
 			&-text {

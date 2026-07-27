@@ -26,17 +26,17 @@ import org.osgi.service.component.annotations.Deactivate;
 public class PIMConnectorRegistryImpl implements PIMConnectorRegistry {
 
 	@Override
-	public PIMConnector getConnector(String key) {
+	public PIMConnector getPIMConnector(String key) {
 		return _serviceTrackerMap.getService(key);
 	}
 
 	@Override
-	public List<PIMConnector> getConnectors(long companyId) {
-		return getConnectors(companyId, false);
+	public List<PIMConnector> getPIMConnectors(long companyId) {
+		return getPIMConnectors(companyId, false);
 	}
 
 	@Override
-	public List<PIMConnector> getConnectors(
+	public List<PIMConnector> getPIMConnectors(
 		long companyId, boolean activeOnly) {
 
 		return TransformUtil.transform(

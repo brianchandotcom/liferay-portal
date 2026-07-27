@@ -12,7 +12,7 @@ import ClayToolbar from '@clayui/toolbar';
 import {ScreenReaderAnnouncerContextProvider} from '@liferay/layout-js-components-web';
 import classNames from 'classnames';
 import {fetch, navigate} from 'frontend-js-web';
-import React, {useMemo, useReducer, useState} from 'react';
+import React, {useEffect, useMemo, useReducer, useRef, useState} from 'react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 
@@ -123,8 +123,30 @@ export default function AudienceBuilder({
 		[audiencesCriteriaTypes]
 	);
 
+	const [generalSettingsExpanded, setGeneralSettingsExpanded] =
+		useState(false);
 	const [saveErrors, setSaveErrors] = useState<SaveErrors>({});
 	const [saving, setSaving] = useState(false);
+
+	const externalReferenceCodeInputRef = useRef<HTMLInputElement>(null);
+	const nameInputRef = useRef<HTMLInputElement>(null);
+
+	useEffect(() => {
+		if (saveErrors.name) {
+			nameInputRef.current?.focus();
+		}
+		else if (saveErrors.externalReferenceCode) {
+			externalReferenceCodeInputRef.current?.focus();
+		}
+	}, [saveErrors]);
+
+	const showSaveErrors = (nextSaveErrors: SaveErrors) => {
+		setSaveErrors(nextSaveErrors);
+
+		if (nextSaveErrors.externalReferenceCode) {
+			setGeneralSettingsExpanded(true);
+		}
+	};
 
 	const clearSaveError = (field: SaveErrorField) =>
 		setSaveErrors((previousSaveErrors) => {
@@ -143,7 +165,7 @@ export default function AudienceBuilder({
 		const nextSaveErrors = getSaveErrors(state);
 
 		if (Object.keys(nextSaveErrors).length) {
-			setSaveErrors(nextSaveErrors);
+			showSaveErrors(nextSaveErrors);
 
 			return;
 		}
@@ -184,7 +206,7 @@ export default function AudienceBuilder({
 					const serverSaveErrors = getServerSaveErrors(errors);
 
 					if (Object.keys(serverSaveErrors).length) {
-						setSaveErrors(serverSaveErrors);
+						showSaveErrors(serverSaveErrors);
 					}
 					else {
 						showSaveErrorToast(errorMessage);
@@ -261,6 +283,7 @@ export default function AudienceBuilder({
 										placeholder={Liferay.Language.get(
 											'new-audience'
 										)}
+										ref={nameInputRef}
 										type="text"
 										value={state.name}
 									/>
@@ -282,10 +305,17 @@ export default function AudienceBuilder({
 									errorMessage={
 										saveErrors.externalReferenceCode
 									}
+									expanded={generalSettingsExpanded}
 									externalReferenceCode={
 										state.externalReferenceCode
 									}
+									externalReferenceCodeInputRef={
+										externalReferenceCodeInputRef
+									}
 									namespace={namespace}
+									onExpandedChange={
+										setGeneralSettingsExpanded
+									}
 									onExternalReferenceCodeChange={(
 										newExternalReferenceCode
 									) => {

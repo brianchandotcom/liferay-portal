@@ -25,6 +25,7 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFolderLocalService;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.search.ReindexCacheThreadLocal;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.search.indexer.IndexerDocumentBuilder;
@@ -252,6 +253,10 @@ public class ObjectEntryModelSearchConfigurator
 			AtomicReference<Map<Long, ObjectDefinition>>
 				objectDefinitionsMapReference = new AtomicReference<>();
 
+			indexableActionableDynamicQuery.setAddCriteriaMethod(
+				dynamicQuery -> dynamicQuery.add(
+					RestrictionsFactoryUtil.eqProperty(
+						"objectEntryId", "headObjectEntryId")));
 			indexableActionableDynamicQuery.setPerformActionMethod(
 				(ObjectEntry objectEntry) -> {
 					Map<Long, ObjectDefinition> objectDefinitionsMap =
@@ -275,6 +280,17 @@ public class ObjectEntryModelSearchConfigurator
 
 					return indexerDocumentBuilder.getDocument(objectEntry);
 				});
+		}
+
+		@Override
+		public IndexerWriterMode getIndexerWriterMode(ObjectEntry objectEntry) {
+			if (objectEntry.getObjectEntryId() !=
+					objectEntry.getHeadObjectEntryId()) {
+
+				return IndexerWriterMode.DELETE;
+			}
+
+			return super.getIndexerWriterMode(objectEntry);
 		}
 
 		@Override

@@ -10,7 +10,7 @@ import {
 	IBulkActionTaskType,
 } from '../../../common/types/BulkActionTask';
 import {
-	BULK_ACTION_ADD_OBJECT_TO_PROJECT,
+	BULK_ACTION_ADD_OBJECT_TO_CMP_PROJECT,
 	BULK_ACTION_ASSIGN_DEFAULT_WORKFLOW,
 	BULK_ACTION_ASSIGN_TO,
 	BULK_ACTION_CATEGORIES,
@@ -46,7 +46,7 @@ type BulkActionMessage = {
 };
 
 const BULK_ACTION_MESSAGES: BulkActionMessage = {
-	[BULK_ACTION_ADD_OBJECT_TO_PROJECT]: {
+	[BULK_ACTION_ADD_OBJECT_TO_CMP_PROJECT]: {
 		info: {
 			all: Liferay.Language.get(
 				'add-assets-to-project-action-started-for-all-assets'

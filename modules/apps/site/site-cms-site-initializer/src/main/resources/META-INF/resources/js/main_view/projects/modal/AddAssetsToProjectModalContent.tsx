@@ -94,7 +94,7 @@ export default function AddAssetsToProjectModalContent({
 	const confirm = () => {
 		setSubmitting(true);
 
-		triggerAssetBulkAction<'AddObjectToProjectBulkSelectionAction'>({
+		triggerAssetBulkAction<'AddObjectToCMPProjectBulkSelectionAction'>({
 			additionalData: {
 				targetName: selectedProjects.map(({title}) => title).join(', '),
 			},
@@ -124,7 +124,7 @@ export default function AddAssetsToProjectModalContent({
 			},
 			overrideDefaultErrorToast: true,
 			selectedData,
-			type: 'AddObjectToProjectBulkSelectionAction',
+			type: 'AddObjectToCMPProjectBulkSelectionAction',
 		});
 	};
 

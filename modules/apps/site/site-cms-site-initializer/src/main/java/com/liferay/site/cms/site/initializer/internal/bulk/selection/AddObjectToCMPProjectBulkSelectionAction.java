@@ -37,10 +37,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Mario Gomes
  */
 @Component(
-	property = "bulk.selection.action.key=add.object.to.project",
+	property = "bulk.selection.action.key=add.object.to.cmp.project",
 	service = BulkSelectionAction.class
 )
-public class AddObjectToProjectBulkSelectionAction
+public class AddObjectToCMPProjectBulkSelectionAction
 	extends BaseObjectBulkSelectionAction {
 
 	@Override
@@ -157,7 +157,7 @@ public class AddObjectToProjectBulkSelectionAction
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		AddObjectToProjectBulkSelectionAction.class);
+		AddObjectToCMPProjectBulkSelectionAction.class);
 
 	@Reference
 	private GroupLocalService _groupLocalService;

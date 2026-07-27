@@ -181,7 +181,7 @@ describe('AddAssetsToProjectModalContent', () => {
 					targetName: 'GOV Digital, TechLeaders Summit',
 				},
 				keyValues: {projectScopeKeys: ['PROJECT-1', 'PROJECT-2']},
-				type: 'AddObjectToProjectBulkSelectionAction',
+				type: 'AddObjectToCMPProjectBulkSelectionAction',
 			})
 		);
 

@@ -11,7 +11,7 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
-import com.liferay.bulk.rest.client.dto.v1_0.AddObjectToProjectBulkSelectionAction;
+import com.liferay.bulk.rest.client.dto.v1_0.AddObjectToCMPProjectBulkSelectionAction;
 import com.liferay.bulk.rest.client.dto.v1_0.AssignStructureDefaultWorkflowBulkSelectionAction;
 import com.liferay.bulk.rest.client.dto.v1_0.AssignToObjectBulkSelectionAction;
 import com.liferay.bulk.rest.client.dto.v1_0.BulkAction;
@@ -179,7 +179,7 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 	@Override
 	@Test
 	public void testPostBulkAction() throws Exception {
-		_testPostBulkActionWithTypeAddObjectToProject();
+		_testPostBulkActionWithTypeAddObjectToCMPProject();
 		_testPostBulkActionWithTypeAssignStructureDefaultWorkflow();
 		_testPostBulkActionWithTypeAssignTo();
 		_testPostBulkActionWithTypeCopy();
@@ -707,7 +707,7 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 			"FOLDER", null);
 	}
 
-	private void _testPostBulkActionWithTypeAddObjectToProject()
+	private void _testPostBulkActionWithTypeAddObjectToCMPProject()
 		throws Exception {
 
 		// Invalid project scope key
@@ -721,8 +721,8 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 				_depotEntry2.getGroupId(), _cmsBasicWebContentObjectDefinition,
 				_getObjectEntryValues());
 
-		AddObjectToProjectBulkSelectionAction bulkAction =
-			new AddObjectToProjectBulkSelectionAction();
+		AddObjectToCMPProjectBulkSelectionAction bulkAction =
+			new AddObjectToCMPProjectBulkSelectionAction();
 
 		bulkAction.setBulkActionItems(
 			_toBulkActionItems(
@@ -732,13 +732,13 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 		bulkAction.setProjectScopeKeys(
 			new String[] {RandomTestUtil.randomString()});
 		bulkAction.setType(
-			BulkAction.Type.ADD_OBJECT_TO_PROJECT_BULK_SELECTION_ACTION);
+			BulkAction.Type.ADD_OBJECT_TO_CMP_PROJECT_BULK_SELECTION_ACTION);
 
 		_assertNumberOfFailedItems(_postBulkAction(bulkAction), 2);
 
 		// Link basic web content to projects
 
-		bulkAction = new AddObjectToProjectBulkSelectionAction();
+		bulkAction = new AddObjectToCMPProjectBulkSelectionAction();
 
 		bulkAction.setBulkActionItems(
 			_toBulkActionItems(
@@ -767,7 +767,7 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 			});
 
 		bulkAction.setType(
-			BulkAction.Type.ADD_OBJECT_TO_PROJECT_BULK_SELECTION_ACTION);
+			BulkAction.Type.ADD_OBJECT_TO_CMP_PROJECT_BULK_SELECTION_ACTION);
 
 		_assertNumberOfFailedItems(_postBulkAction(bulkAction), 0);
 

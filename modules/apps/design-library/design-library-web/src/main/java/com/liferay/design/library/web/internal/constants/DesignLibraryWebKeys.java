@@ -7,6 +7,7 @@ package com.liferay.design.library.web.internal.constants;
 
 /**
  * @author Gabriel Prates
+ * @author Thiago Buarque
  */
 public class DesignLibraryWebKeys {
 

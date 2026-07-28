@@ -271,6 +271,41 @@ public abstract class BaseExportImportTestCase {
 			expectedJSON, getExportJSON(name), JSONCompareMode.LENIENT);
 	}
 
+	protected void testExportImportSystemObjectDefinition(
+			String fileName, String externalReferenceCode, String name)
+		throws Exception {
+
+		String json = read(fileName);
+
+		MockLiferayPortletActionResponse mockLiferayPortletActionResponse =
+			importJSON(externalReferenceCode, json, name);
+
+		MockHttpServletResponse mockHttpServletResponse =
+			(MockHttpServletResponse)
+				mockLiferayPortletActionResponse.getHttpServletResponse();
+
+		Assert.assertEquals("{}", mockHttpServletResponse.getContentAsString());
+
+		// A shared system object definition like AccountEntry can be extended
+		// with relationships by other deployed modules: an account entry
+		// restricted object definition adds a relationship to AccountEntry. Its
+		// relationship set is therefore not deterministic, so exclude it from
+		// the comparison.
+
+		JSONObject expectedJSONObject = jsonFactory.createJSONObject(json);
+
+		expectedJSONObject.remove("objectRelationships");
+
+		JSONObject exportJSONObject = jsonFactory.createJSONObject(
+			getExportJSON(name));
+
+		exportJSONObject.remove("objectRelationships");
+
+		JSONAssert.assertEquals(
+			expectedJSONObject.toString(), exportJSONObject.toString(),
+			JSONCompareMode.LENIENT);
+	}
+
 	protected void testFailedImportJSON(
 			String actualJSON, String expectedJSON,
 			String externalReferenceCode, String name)

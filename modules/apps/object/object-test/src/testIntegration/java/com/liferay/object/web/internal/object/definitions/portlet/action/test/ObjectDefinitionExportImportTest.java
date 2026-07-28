@@ -391,8 +391,7 @@ public class ObjectDefinitionExportImportTest extends BaseExportImportTestCase {
 		ObjectDefinition objectDefinition = _getObjectDefinition(
 			"AccountEntry");
 
-		testExportImport(
-			"test-account-entry-system-object-definition.json",
+		testExportImportSystemObjectDefinition(
 			"test-account-entry-system-object-definition.json",
 			objectDefinition.getExternalReferenceCode(), "AccountEntry");
 	}

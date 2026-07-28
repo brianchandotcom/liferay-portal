@@ -58,6 +58,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 /**
  * @author Gabriel Prates
  * @author Lourdes Fernández Besada
+ * @author Thiago Buarque
  */
 public class DesignLibraryResourcesDisplayContextTest {
 

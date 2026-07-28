@@ -7,7 +7,7 @@ package com.liferay.design.library.web.internal.portlet.action;
 
 import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
-import com.liferay.design.library.web.internal.constants.DesignLibraryConstants;
+import com.liferay.design.library.web.internal.constants.DesignLibraryWebKeys;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -60,7 +60,7 @@ public class DesignLibrarySettingsMVCRenderCommandTest {
 		Assert.assertSame(
 			depotEntry,
 			mockRenderRequest.getAttribute(
-				DesignLibraryConstants.DESIGN_LIBRARY_ENTRY));
+				DesignLibraryWebKeys.DESIGN_LIBRARY_ENTRY));
 	}
 
 	@Test

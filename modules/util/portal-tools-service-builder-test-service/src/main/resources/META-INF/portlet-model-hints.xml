@@ -288,6 +288,10 @@
 		<field name="groupId" type="long" />
 		<field name="columnToRename" type="String" />
 	</model>
+	<model name="com.liferay.portal.tools.service.builder.test.model.TimestampTypeEntry">
+		<field name="timestampTypeEntryId" type="long" />
+		<field name="dateValue" type="Date" />
+	</model>
 	<model name="com.liferay.portal.tools.service.builder.test.model.UADPartialEntry">
 		<field name="uadPartialEntryId" type="long" />
 		<field name="userId" type="long" />

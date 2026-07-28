@@ -335,6 +335,11 @@ create table RenameFinderColumnEntry (
 	columnToRename VARCHAR(75) null
 );
 
+create table TimestampTypeEntry (
+	timestampTypeEntryId LONG not null primary key,
+	dateValue DATE null
+);
+
 create table UADPartialEntry (
 	uadPartialEntryId LONG not null primary key,
 	userId LONG,

@@ -35,6 +35,7 @@
 	<import class="com.liferay.portal.tools.service.builder.test.model.ReassociateEntry" />
 	<import class="com.liferay.portal.tools.service.builder.test.model.RedundantIndexEntry" />
 	<import class="com.liferay.portal.tools.service.builder.test.model.RenameFinderColumnEntry" />
+	<import class="com.liferay.portal.tools.service.builder.test.model.TimestampTypeEntry" />
 	<import class="com.liferay.portal.tools.service.builder.test.model.UADPartialEntry" />
 	<import class="com.liferay.portal.tools.service.builder.test.model.UndefinedDefaultOrderEntry" />
 	<import class="com.liferay.portal.tools.service.builder.test.model.UniqueFinderEntry" />
@@ -409,6 +410,12 @@
 		</id>
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="columnToRename" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="com.liferay.portal.tools.service.builder.test.model.impl.TimestampTypeEntryImpl" table="TimestampTypeEntry">
+		<id access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="timestampTypeEntryId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="dateValue" type="timestamp" />
 	</class>
 	<class name="com.liferay.portal.tools.service.builder.test.model.impl.UADPartialEntryImpl" table="UADPartialEntry">
 		<id access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="uadPartialEntryId" type="long">

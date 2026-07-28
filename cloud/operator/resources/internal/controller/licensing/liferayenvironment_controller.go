@@ -13,9 +13,11 @@ import (
 	"time"
 
 	licensingv1alpha1 "github.com/liferay/liferay-portal/cloud/operator/api/licensing/v1alpha1"
+	corev1 "k8s.io/api/core/v1"
 	errors "k8s.io/apimachinery/pkg/api/errors"
 	meta "k8s.io/apimachinery/pkg/api/meta"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	types "k8s.io/apimachinery/pkg/types"
 	controllerruntime "sigs.k8s.io/controller-runtime"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
@@ -24,12 +26,6 @@ const (
 	identitySecretSuffix = "-identity"
 	licenseSecretSuffix  = "-license"
 )
-
-type LiferayEnvironmentReconciler struct {
-	client.Client
-
-	HeartbeatInterval time.Duration
-}
 
 // +kubebuilder:rbac:groups="",resources=namespaces,verbs=get;list;watch
 // +kubebuilder:rbac:groups="",resources=secrets,verbs=get;list;watch;create;update;patch
@@ -43,19 +39,16 @@ func (liferayEnvironmentReconciler *LiferayEnvironmentReconciler) Reconcile(
 		return controllerruntime.Result{}, client.IgnoreNotFound(error)
 	}
 
-	// environmentId is the namespace UID: stable, unique, DDOS-allowlisted.
 	environmentId, error := liferayEnvironmentReconciler.resolveEnvironmentId(context, liferayEnvironment.Namespace)
 
 	if error != nil {
-		return ctrl.Result{}, error
+		return controllerruntime.Result{}, error
 	}
 
 	liferayEnvironment.Status.EnvironmentId = environmentId
 
-	// Ensure the cluster keypair exists; the private key never leaves here.
-
 	if _, error := liferayEnvironmentReconciler.ensureIdentity(context, liferayEnvironment); error != nil {
-		return ctrl.Result{}, error
+		return controllerruntime.Result{}, error
 	}
 
 	if liferayEnvironment.Status.Phase == "" {
@@ -118,7 +111,7 @@ func (liferayEnvironmentReconciler *LiferayEnvironmentReconciler) ensureIdentity
 		return parsePrivateKey(secret.Data["private.pem"])
 	}
 
-	if !apierrors.IsNotFound(getError) {
+	if !errors.IsNotFound(getError) {
 		return nil, getError
 	}
 
@@ -156,7 +149,7 @@ func (liferayEnvironmentReconciler *LiferayEnvironmentReconciler) ensureIdentity
 		},
 	}
 
-	if err := ctrl.SetControllerReference(liferayEnvironment, secret, liferayEnvironmentReconciler.Scheme()); err != nil {
+	if err := controllerruntime.SetControllerReference(liferayEnvironment, secret, liferayEnvironmentReconciler.Scheme()); err != nil {
 		return nil, err
 	}
 
@@ -204,7 +197,8 @@ func publicKeyPEM(privateKey *rsa.PrivateKey) (string, error) {
 }
 
 func (LiferayEnvironmentReconciler *LiferayEnvironmentReconciler) resolveEnvironmentId(
-	context context.Context, namespaceName string,
+	context context.Context,
+	namespaceName string,
 ) (string, error) {
 
 	namespace := &corev1.Namespace{}
@@ -221,4 +215,3 @@ type LiferayEnvironmentReconciler struct {
 
 	HeartbeatInterval time.Duration
 }
-=

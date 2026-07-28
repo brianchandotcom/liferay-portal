@@ -86,7 +86,7 @@ public class ViewDesignLibraryAdminDisplayContext {
 				).setMVCRenderCommandName(
 					"/design_library/design_library_resources"
 				).setParameter(
-					DesignLibraryWebKeys.DESIGN_LIBRARY_ENTRY_ID_KEY, "{id}"
+					DesignLibraryWebKeys.DESIGN_LIBRARY_ENTRY_ID, "{id}"
 				).buildString(),
 				"pencil", "edit", LanguageUtil.get(_httpServletRequest, "edit"),
 				null, null, "link"),
@@ -110,7 +110,7 @@ public class ViewDesignLibraryAdminDisplayContext {
 		return HashMapBuilder.<String, Object>put(
 			"canAddDesignLibrary", _hasAddDepotEntryPermission()
 		).put(
-			"entryIdKey", DesignLibraryWebKeys.DESIGN_LIBRARY_ENTRY_ID_KEY
+			"entryIdKey", DesignLibraryWebKeys.DESIGN_LIBRARY_ENTRY_ID
 		).put(
 			"redirectURL",
 			PortletURLBuilder.createRenderURL(

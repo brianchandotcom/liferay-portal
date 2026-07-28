@@ -12,7 +12,6 @@ public class DesignLibraryWebKeys {
 
 	public static final String DESIGN_LIBRARY_ENTRY = "designLibraryEntry";
 
-	public static final String DESIGN_LIBRARY_ENTRY_ID_KEY =
-		"designLibraryEntryId";
+	public static final String DESIGN_LIBRARY_ENTRY_ID = "designLibraryEntryId";
 
 }

@@ -53,7 +53,7 @@ public class DesignLibraryMVCRenderCommandTestHelper {
 		mockRenderRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
 
 		mockRenderRequest.setParameter(
-			DesignLibraryWebKeys.DESIGN_LIBRARY_ENTRY_ID_KEY,
+			DesignLibraryWebKeys.DESIGN_LIBRARY_ENTRY_ID,
 			String.valueOf(depotEntryId));
 
 		return mockRenderRequest;

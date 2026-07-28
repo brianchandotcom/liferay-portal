@@ -35,16 +35,17 @@ public class FaroDataSourceUsageLocalServiceImpl
 		long dataSourceId, String dataSourceName, String dataSourceStatus,
 		long faroProjectId, long knownIndividualsCount, Date usageDate) {
 
-		long currentTimeMillis = System.currentTimeMillis();
-
 		FaroDataSourceUsage faroDataSourceUsage =
 			faroDataSourceUsagePersistence.create(
 				counterLocalService.increment());
 
 		faroDataSourceUsage.setCompanyId(companyId);
 		faroDataSourceUsage.setUserId(userId);
-		faroDataSourceUsage.setCreateTime(currentTimeMillis);
-		faroDataSourceUsage.setModifiedTime(currentTimeMillis);
+
+		long now = System.currentTimeMillis();
+
+		faroDataSourceUsage.setCreateTime(now);
+		faroDataSourceUsage.setModifiedTime(now);
 
 		faroDataSourceUsage.setBillableEventsCount(billableEventsCount);
 		faroDataSourceUsage.setDataSourceId(dataSourceId);

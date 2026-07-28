@@ -6,7 +6,7 @@
 package com.liferay.design.library.web.internal.display.context;
 
 import com.liferay.depot.model.DepotEntry;
-import com.liferay.design.library.web.internal.constants.DesignLibraryConstants;
+import com.liferay.design.library.web.internal.constants.DesignLibraryWebKeys;
 import com.liferay.exportimport.constants.ExportImportPortletKeys;
 import com.liferay.fragment.constants.FragmentActionKeys;
 import com.liferay.fragment.constants.FragmentConstants;
@@ -288,7 +288,7 @@ public class DesignLibraryResourcesDisplayContext {
 					).setMVCRenderCommandName(
 						"/design_library/design_library_settings"
 					).setParameter(
-						DesignLibraryConstants.DESIGN_LIBRARY_ENTRY_ID_KEY,
+						DesignLibraryWebKeys.DESIGN_LIBRARY_ENTRY_ID_KEY,
 						_depotEntry.getDepotEntryId()
 					).buildString()
 				).put(
@@ -450,7 +450,7 @@ public class DesignLibraryResourcesDisplayContext {
 		).setMVCRenderCommandName(
 			"/design_library/design_library_resources"
 		).setParameter(
-			DesignLibraryConstants.DESIGN_LIBRARY_ENTRY_ID_KEY,
+			DesignLibraryWebKeys.DESIGN_LIBRARY_ENTRY_ID_KEY,
 			_depotEntry.getDepotEntryId()
 		).buildString();
 	}

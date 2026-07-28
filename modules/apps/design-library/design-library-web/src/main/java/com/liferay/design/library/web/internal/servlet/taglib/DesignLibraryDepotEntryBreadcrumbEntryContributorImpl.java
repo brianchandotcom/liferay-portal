@@ -173,7 +173,7 @@ public class DesignLibraryDepotEntryBreadcrumbEntryContributorImpl
 			).setMVCRenderCommandName(
 				"/design_library/design_library_resources"
 			).setParameter(
-				DesignLibraryWebKeys.DESIGN_LIBRARY_ENTRY_ID_KEY,
+				DesignLibraryWebKeys.DESIGN_LIBRARY_ENTRY_ID,
 				depotEntry.getDepotEntryId()
 			).buildString());
 

@@ -288,7 +288,7 @@ public class DesignLibraryResourcesDisplayContext {
 					).setMVCRenderCommandName(
 						"/design_library/design_library_settings"
 					).setParameter(
-						DesignLibraryWebKeys.DESIGN_LIBRARY_ENTRY_ID_KEY,
+						DesignLibraryWebKeys.DESIGN_LIBRARY_ENTRY_ID,
 						_depotEntry.getDepotEntryId()
 					).buildString()
 				).put(
@@ -450,7 +450,7 @@ public class DesignLibraryResourcesDisplayContext {
 		).setMVCRenderCommandName(
 			"/design_library/design_library_resources"
 		).setParameter(
-			DesignLibraryWebKeys.DESIGN_LIBRARY_ENTRY_ID_KEY,
+			DesignLibraryWebKeys.DESIGN_LIBRARY_ENTRY_ID,
 			_depotEntry.getDepotEntryId()
 		).buildString();
 	}

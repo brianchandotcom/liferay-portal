@@ -68,7 +68,7 @@ public abstract class BaseDesignLibraryMVCRenderCommand
 		throws PortalException {
 
 		long designLibraryEntryId = ParamUtil.getLong(
-			renderRequest, DesignLibraryWebKeys.DESIGN_LIBRARY_ENTRY_ID_KEY);
+			renderRequest, DesignLibraryWebKeys.DESIGN_LIBRARY_ENTRY_ID);
 
 		DepotEntry depotEntry = depotEntryLocalService.fetchDepotEntry(
 			designLibraryEntryId);

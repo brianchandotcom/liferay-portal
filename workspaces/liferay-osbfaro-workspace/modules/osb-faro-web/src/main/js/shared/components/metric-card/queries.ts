@@ -25,6 +25,7 @@ export const AssetTabsQuery = (metrics: Metric[], name: string) => gql`
 		$rangeEnd: String
 		$rangeKey: Int
 		$rangeStart: String
+		$segmentId: String
 		$title: String
 		$touchpoint: String
 	) {
@@ -37,6 +38,7 @@ export const AssetTabsQuery = (metrics: Metric[], name: string) => gql`
 			rangeEnd: $rangeEnd
 			rangeKey: $rangeKey
 			rangeStart: $rangeStart
+			segmentId: $segmentId
 			title: $title
 		) {
 			${buildAssetTabsBody(metrics)}
@@ -56,6 +58,7 @@ export const AssetMetricQuery = (queryName: string) => (metricName: string) =>
 		$rangeEnd: String
 		$rangeKey: Int
 		$rangeStart: String
+		$segmentId: String
 		$title: String
 		$touchpoint: String
 	) {
@@ -68,6 +71,7 @@ export const AssetMetricQuery = (queryName: string) => (metricName: string) =>
 			rangeEnd: $rangeEnd
 			rangeKey: $rangeKey
 			rangeStart: $rangeStart
+			segmentId: $segmentId
 			title: $title
 		) {
 			${metricName} {
@@ -87,6 +91,7 @@ export const SitesTabsQuery = gql`
 		$rangeEnd: String
 		$rangeKey: Int
 		$rangeStart: String
+		$segmentId: String
 	) {
 		site(
 			accountId: $accountId
@@ -95,6 +100,7 @@ export const SitesTabsQuery = gql`
 			rangeEnd: $rangeEnd
 			rangeKey: $rangeKey
 			rangeStart: $rangeStart
+			segmentId: $segmentId
 		) {
 			bounceRateMetric {
 				...TabsFragment
@@ -122,6 +128,7 @@ const SitesGenericMetricQuery = (metricName: string) => gql`
 		$rangeEnd: String
 		$rangeKey: Int
 		$rangeStart: String
+		$segmentId: String
 	) {
 		site(
 			accountId: $accountId
@@ -130,6 +137,7 @@ const SitesGenericMetricQuery = (metricName: string) => gql`
 			rangeEnd: $rangeEnd
 			rangeKey: $rangeKey
 			rangeStart: $rangeStart
+			segmentId: $segmentId
 		) {
 			${metricName} {
 				...HistogramFragment
@@ -148,6 +156,7 @@ const SitesCompositeMetricQuery = gql`
 		$rangeEnd: String
 		$rangeKey: Int
 		$rangeStart: String
+		$segmentId: String
 	) {
 		site(
 			accountId: $accountId
@@ -156,6 +165,7 @@ const SitesCompositeMetricQuery = gql`
 			rangeEnd: $rangeEnd
 			rangeKey: $rangeKey
 			rangeStart: $rangeStart
+			segmentId: $segmentId
 		) {
 			visitorsMetric {
 				...HistogramFragment

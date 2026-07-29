@@ -11,22 +11,22 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Gabriel Prates
+ * @author Mario Leandro
  * @author Thiago Buarque
  */
 @Component(
 	property = {
 		"jakarta.portlet.name=" + DesignLibraryAdminPortletKeys.DESIGN_LIBRARY_ADMIN,
-		"mvc.command.name=/design_library/design_library_resources"
+		"mvc.command.name=/design_library/edit_settings_design_library"
 	},
 	service = MVCRenderCommand.class
 )
-public class DesignLibraryResourcesMVCRenderCommand
+public class EditSettingsDesignLibraryMVCRenderCommand
 	extends BaseDesignLibraryMVCRenderCommand {
 
 	@Override
 	protected String getPath() {
-		return "/view_resources.jsp";
+		return "/view_settings.jsp";
 	}
 
 }

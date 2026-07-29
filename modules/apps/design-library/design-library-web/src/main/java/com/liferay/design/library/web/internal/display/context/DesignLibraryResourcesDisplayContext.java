@@ -285,7 +285,7 @@ public class DesignLibraryResourcesDisplayContext {
 					PortletURLBuilder.createActionURL(
 						_liferayPortletResponse
 					).setMVCRenderCommandName(
-						"/design_library/design_library_settings"
+						"/design_library/edit_settings_design_library"
 					).setParameter(
 						"designLibraryEntryId", _depotEntry.getDepotEntryId()
 					).buildString()
@@ -446,7 +446,7 @@ public class DesignLibraryResourcesDisplayContext {
 		return PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse
 		).setMVCRenderCommandName(
-			"/design_library/design_library_resources"
+			"/design_library/view_resources_design_library"
 		).setParameter(
 			"designLibraryEntryId", _depotEntry.getDepotEntryId()
 		).buildString();

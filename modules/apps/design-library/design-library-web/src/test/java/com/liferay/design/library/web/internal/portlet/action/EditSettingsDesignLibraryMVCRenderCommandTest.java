@@ -24,7 +24,7 @@ import org.junit.Test;
 /**
  * @author Thiago Buarque
  */
-public class DesignLibrarySettingsMVCRenderCommandTest {
+public class EditSettingsDesignLibraryMVCRenderCommandTest {
 
 	@ClassRule
 	@Rule
@@ -34,7 +34,7 @@ public class DesignLibrarySettingsMVCRenderCommandTest {
 	@Before
 	public void setUp() {
 		_designLibraryMVCRenderCommandTestHelper.setUp(
-			_designLibrarySettingsMVCRenderCommand);
+			_editSettingsDesignLibraryMVCRenderCommand);
 	}
 
 	@After
@@ -59,7 +59,7 @@ public class DesignLibrarySettingsMVCRenderCommandTest {
 
 		Assert.assertEquals(
 			"/view_settings.jsp",
-			_designLibrarySettingsMVCRenderCommand.render(
+			_editSettingsDesignLibraryMVCRenderCommand.render(
 				mockRenderRequest, new MockRenderResponse()));
 		Assert.assertSame(
 			depotEntry,
@@ -80,7 +80,7 @@ public class DesignLibrarySettingsMVCRenderCommandTest {
 
 		Assert.assertEquals(
 			"/error.jsp",
-			_designLibrarySettingsMVCRenderCommand.render(
+			_editSettingsDesignLibraryMVCRenderCommand.render(
 				mockRenderRequest, new MockRenderResponse()));
 		Assert.assertTrue(
 			SessionErrors.contains(
@@ -91,8 +91,8 @@ public class DesignLibrarySettingsMVCRenderCommandTest {
 	private final DesignLibraryMVCRenderCommandTestHelper
 		_designLibraryMVCRenderCommandTestHelper =
 			new DesignLibraryMVCRenderCommandTestHelper();
-	private final DesignLibrarySettingsMVCRenderCommand
-		_designLibrarySettingsMVCRenderCommand =
-			new DesignLibrarySettingsMVCRenderCommand();
+	private final EditSettingsDesignLibraryMVCRenderCommand
+		_editSettingsDesignLibraryMVCRenderCommand =
+			new EditSettingsDesignLibraryMVCRenderCommand();
 
 }

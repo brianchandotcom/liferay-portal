@@ -83,7 +83,7 @@ public class ViewDesignLibraryAdminDisplayContext {
 				PortletURLBuilder.createActionURL(
 					_liferayPortletResponse
 				).setMVCRenderCommandName(
-					"/design_library/design_library_resources"
+					"/design_library/view_resources_design_library"
 				).setParameter(
 					"designLibraryEntryId", "{id}"
 				).buildString(),
@@ -115,7 +115,7 @@ public class ViewDesignLibraryAdminDisplayContext {
 			PortletURLBuilder.createRenderURL(
 				_liferayPortletResponse
 			).setMVCRenderCommandName(
-				"/design_library/design_library_resources"
+				"/design_library/view_resources_design_library"
 			).buildString()
 		).build();
 	}

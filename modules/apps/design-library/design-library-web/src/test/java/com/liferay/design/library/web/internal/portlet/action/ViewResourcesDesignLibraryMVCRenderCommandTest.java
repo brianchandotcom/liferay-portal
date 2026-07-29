@@ -27,7 +27,7 @@ import org.mockito.Mockito;
 /**
  * @author Thiago Buarque
  */
-public class DesignLibraryResourcesMVCRenderCommandTest {
+public class ViewResourcesDesignLibraryMVCRenderCommandTest {
 
 	@ClassRule
 	@Rule
@@ -37,7 +37,7 @@ public class DesignLibraryResourcesMVCRenderCommandTest {
 	@Before
 	public void setUp() {
 		_designLibraryMVCRenderCommandTestHelper.setUp(
-			_designLibraryResourcesMVCRenderCommand);
+			_viewResourcesDesignLibraryMVCRenderCommand);
 	}
 
 	@After
@@ -61,7 +61,7 @@ public class DesignLibraryResourcesMVCRenderCommandTest {
 
 		Assert.assertEquals(
 			"/error.jsp",
-			_designLibraryResourcesMVCRenderCommand.render(
+			_viewResourcesDesignLibraryMVCRenderCommand.render(
 				mockRenderRequest, new MockRenderResponse()));
 		Assert.assertNull(
 			mockRenderRequest.getAttribute(
@@ -83,7 +83,7 @@ public class DesignLibraryResourcesMVCRenderCommandTest {
 
 		Assert.assertEquals(
 			"/view_resources.jsp",
-			_designLibraryResourcesMVCRenderCommand.render(
+			_viewResourcesDesignLibraryMVCRenderCommand.render(
 				mockRenderRequest, new MockRenderResponse()));
 		Assert.assertSame(
 			depotEntry,
@@ -132,8 +132,8 @@ public class DesignLibraryResourcesMVCRenderCommandTest {
 	private final DesignLibraryMVCRenderCommandTestHelper
 		_designLibraryMVCRenderCommandTestHelper =
 			new DesignLibraryMVCRenderCommandTestHelper();
-	private final DesignLibraryResourcesMVCRenderCommand
-		_designLibraryResourcesMVCRenderCommand =
-			new DesignLibraryResourcesMVCRenderCommand();
+	private final ViewResourcesDesignLibraryMVCRenderCommand
+		_viewResourcesDesignLibraryMVCRenderCommand =
+			new ViewResourcesDesignLibraryMVCRenderCommand();
 
 }

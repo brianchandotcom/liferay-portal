@@ -160,8 +160,8 @@ func (liferayEnvironmentReconciler *LiferayEnvironmentReconciler) ensureIdentity
 	return privateKey, nil
 }
 
-func parsePrivateKey(bytes []byte) (*rsa.PrivateKey, error) {
-	block, _ := pem.Decode(bytes)
+func parsePrivateKey(privatePEM []byte) (*rsa.PrivateKey, error) {
+	block, _ := pem.Decode(privatePEM)
 
 	if block == nil {
 		return nil, fmt.Errorf("identity secret: no PEM block in private.pem")
@@ -173,13 +173,13 @@ func parsePrivateKey(bytes []byte) (*rsa.PrivateKey, error) {
 		return nil, error
 	}
 
-	privateKey, ok := parsed.(*rsa.PrivateKey)
+	parsedPrivateKey, ok := parsed.(*rsa.PrivateKey)
 
 	if !ok {
 		return nil, fmt.Errorf("identity secret: not an RSA private key")
 	}
 
-	return privateKey, nil
+	return parsedPrivateKey, nil
 }
 
 func publicKeyPEM(privateKey *rsa.PrivateKey) (string, error) {
@@ -199,13 +199,13 @@ func publicKeyPEM(privateKey *rsa.PrivateKey) (string, error) {
 	), nil
 }
 
-func (LiferayEnvironmentReconciler *LiferayEnvironmentReconciler) resolveEnvironmentId(
+func (liferayEnvironmentReconciler *LiferayEnvironmentReconciler) resolveEnvironmentId(
 	context context.Context,
 	namespaceName string,
 ) (string, error) {
 	namespace := &corev1.Namespace{}
 
-	if error := LiferayEnvironmentReconciler.Get(context, types.NamespacedName{Name: namespaceName}, namespace); error != nil {
+	if error := liferayEnvironmentReconciler.Get(context, types.NamespacedName{Name: namespaceName}, namespace); error != nil {
 		return "", error
 	}
 

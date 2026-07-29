@@ -7,7 +7,6 @@ package com.liferay.design.library.web.internal.display.context;
 
 import com.liferay.depot.constants.DepotActionKeys;
 import com.liferay.depot.constants.DepotConstants;
-import com.liferay.design.library.web.internal.constants.DesignLibraryWebKeys;
 import com.liferay.exportimport.constants.ExportImportPortletKeys;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.petra.string.StringBundler;
@@ -86,7 +85,7 @@ public class ViewDesignLibraryAdminDisplayContext {
 				).setMVCRenderCommandName(
 					"/design_library/design_library_resources"
 				).setParameter(
-					DesignLibraryWebKeys.DESIGN_LIBRARY_ENTRY_ID, "{id}"
+					"designLibraryEntryId", "{id}"
 				).buildString(),
 				"pencil", "edit", LanguageUtil.get(_httpServletRequest, "edit"),
 				null, null, "link"),
@@ -110,7 +109,7 @@ public class ViewDesignLibraryAdminDisplayContext {
 		return HashMapBuilder.<String, Object>put(
 			"canAddDesignLibrary", _hasAddDepotEntryPermission()
 		).put(
-			"entryIdKey", DesignLibraryWebKeys.DESIGN_LIBRARY_ENTRY_ID
+			"entryIdKey", "designLibraryEntryId"
 		).put(
 			"redirectURL",
 			PortletURLBuilder.createRenderURL(

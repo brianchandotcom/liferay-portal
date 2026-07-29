@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.service.GroupServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.test.randomizerbumpers.GroupFriendlyURLRandomizerBumper;
 import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerBumper;
 import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
@@ -80,6 +81,7 @@ public class GroupTestUtil {
 		throws Exception {
 
 		String name = RandomTestUtil.randomString(
+			GroupFriendlyURLRandomizerBumper.INSTANCE,
 			NumericStringRandomizerBumper.INSTANCE,
 			UniqueStringRandomizerBumper.INSTANCE);
 
@@ -156,6 +158,7 @@ public class GroupTestUtil {
 		throws Exception {
 
 		String name = RandomTestUtil.randomString(
+			GroupFriendlyURLRandomizerBumper.INSTANCE,
 			NumericStringRandomizerBumper.INSTANCE,
 			UniqueStringRandomizerBumper.INSTANCE);
 
@@ -230,6 +233,7 @@ public class GroupTestUtil {
 		throws Exception {
 
 		String name = RandomTestUtil.randomString(
+			GroupFriendlyURLRandomizerBumper.INSTANCE,
 			NumericStringRandomizerBumper.INSTANCE,
 			UniqueStringRandomizerBumper.INSTANCE);
 

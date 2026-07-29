@@ -10,5 +10,3 @@ package com.liferay.osb.faro.model.impl;
  */
 public class FaroDataSourceUsageImpl extends FaroDataSourceUsageBaseImpl {
 }
-
-// LIFERAY-SERVICE-BUILDER-HASH:77823332

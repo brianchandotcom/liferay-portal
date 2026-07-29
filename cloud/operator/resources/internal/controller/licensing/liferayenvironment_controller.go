@@ -24,11 +24,10 @@ import (
 
 const (
 	identitySecretSuffix = "-identity"
-	licenseSecretSuffix  = "-license"
 )
 
 // +kubebuilder:rbac:groups="",resources=namespaces,verbs=get;list;watch
-// +kubebuilder:rbac:groups="",resources=secrets,verbs=get;list;watch;create;update;patch
+// +kubebuilder:rbac:groups="",resources=secrets,verbs=create;get;list;patch;update;watch
 func (liferayEnvironmentReconciler *LiferayEnvironmentReconciler) Reconcile(
 	context context.Context,
 	request controllerruntime.Request,
@@ -101,11 +100,13 @@ func (liferayEnvironmentReconciler *LiferayEnvironmentReconciler) ensureIdentity
 
 	identityName := liferayEnvironment.Name + identitySecretSuffix
 
-	key := types.NamespacedName{Namespace: liferayEnvironment.Namespace, Name: identityName}
-
 	secret := &corev1.Secret{}
 
-	getError := liferayEnvironmentReconciler.Get(context, key, secret)
+	getError := liferayEnvironmentReconciler.Get(
+		context, types.NamespacedName{
+			Name:      identityName,
+			Namespace: liferayEnvironment.Namespace,
+		}, secret)
 
 	if getError == nil {
 		return parsePrivateKey(secret.Data["private.pem"])
@@ -127,10 +128,6 @@ func (liferayEnvironmentReconciler *LiferayEnvironmentReconciler) ensureIdentity
 		return nil, marshalKeyError
 	}
 
-	privatePEM := pem.EncodeToMemory(
-		&pem.Block{Type: "PRIVATE KEY", Bytes: privateBytes},
-	)
-
 	publicPEM, publicKeyError := publicKeyPEM(privateKey)
 
 	if publicKeyError != nil {
@@ -139,13 +136,18 @@ func (liferayEnvironmentReconciler *LiferayEnvironmentReconciler) ensureIdentity
 
 	secret = &corev1.Secret{
 		Data: map[string][]byte{
-			"private.pem": privatePEM,
-			"public.pem":  []byte(publicPEM),
+			"private.pem": pem.EncodeToMemory(
+				&pem.Block{
+					Bytes: privateBytes,
+					Type:  "PRIVATE KEY",
+				},
+			),
+			"public.pem": []byte(publicPEM),
 		},
 		ObjectMeta: metav1.ObjectMeta{
-			Namespace: liferayEnvironment.Namespace,
-			Name:      identityName,
 			Labels:    map[string]string{"controller-watched": "yes"},
+			Name:      identityName,
+			Namespace: liferayEnvironment.Namespace,
 		},
 	}
 
@@ -160,8 +162,8 @@ func (liferayEnvironmentReconciler *LiferayEnvironmentReconciler) ensureIdentity
 	return privateKey, nil
 }
 
-func parsePrivateKey(data []byte) (*rsa.PrivateKey, error) {
-	block, _ := pem.Decode(data)
+func parsePrivateKey(bytes []byte) (*rsa.PrivateKey, error) {
+	block, _ := pem.Decode(bytes)
 
 	if block == nil {
 		return nil, fmt.Errorf("identity secret: no PEM block in private.pem")
@@ -183,15 +185,18 @@ func parsePrivateKey(data []byte) (*rsa.PrivateKey, error) {
 }
 
 func publicKeyPEM(privateKey *rsa.PrivateKey) (string, error) {
-	publicBytes, err := x509.MarshalPKIXPublicKey(&privateKey.PublicKey)
+	publicBytes, error := x509.MarshalPKIXPublicKey(&privateKey.PublicKey)
 
-	if err != nil {
-		return "", err
+	if error != nil {
+		return "", error
 	}
 
 	return string(
 		pem.EncodeToMemory(
-			&pem.Block{Type: "PUBLIC KEY", Bytes: publicBytes},
+			&pem.Block{
+				Bytes: publicBytes,
+				Type:  "PUBLIC KEY",
+			},
 		),
 	), nil
 }
@@ -200,7 +205,6 @@ func (LiferayEnvironmentReconciler *LiferayEnvironmentReconciler) resolveEnviron
 	context context.Context,
 	namespaceName string,
 ) (string, error) {
-
 	namespace := &corev1.Namespace{}
 
 	if error := LiferayEnvironmentReconciler.Get(context, types.NamespacedName{Name: namespaceName}, namespace); error != nil {

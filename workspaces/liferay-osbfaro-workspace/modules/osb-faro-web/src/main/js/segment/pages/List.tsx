@@ -57,7 +57,12 @@ import {
 import {Link} from 'react-router-dom';
 import {OrderedMap} from 'immutable';
 import {OrderParams} from 'shared/util/records';
-import {SegmentStates, SegmentTypes, Sizes} from 'shared/util/constants';
+import {
+	SegmentCategories,
+	SegmentStates,
+	SegmentTypes,
+	Sizes,
+} from 'shared/util/constants';
 import {setUriQueryValues} from 'shared/util/router';
 import {sub} from 'shared/util/lang';
 import {useChannelContext} from 'shared/context/channel';
@@ -229,7 +234,8 @@ export const List: React.FC<IListProps> = ({
 	const isRealTimeDisabled =
 		ENABLE_REAL_TIME_SEGMENTS && realTimeLimitReached;
 
-	const allActionsDisabled = isBatchDisabled && isRealTimeDisabled;
+	const allActionsDisabled =
+		isBatchDisabled && (!ENABLE_REAL_TIME_SEGMENTS || isRealTimeDisabled);
 
 	const getUsageTooltipMessage = () => {
 		if (isBatchDisabled && isRealTimeDisabled) {
@@ -490,43 +496,73 @@ export const List: React.FC<IListProps> = ({
 				<Nav>
 					<Nav.Item>
 						<div className="d-flex align-items-center">
-							{ENABLE_REAL_TIME_SEGMENTS ? (
-								<ClayDropDown
-									alignmentPosition={Align.BottomRight}
-									trigger={
-										<ClayButton
-											aria-label={
-												pageActionsLabel &&
-												Liferay.Language.get('menu')
-											}
-											className="button-root p-2 rounded-lg"
-											disabled={
-												error ||
-												loading ||
-												allActionsDisabled
-											}
-											displayType="primary"
-											size="sm"
-										>
-											<>
-												<span>{pageActionsLabel}</span>
-												<ClayIcon
-													className="icon-root ml-2"
-													symbol="caret-bottom"
-												/>
-											</>
-										</ClayButton>
-									}
-								>
-									{usageDropDownMessage && (
-										<div
-											className="alert alert-fluid alert-info"
-											role="alert"
-										>
-											{usageDropDownMessage}
-										</div>
-									)}
+							<ClayDropDown
+								alignmentPosition={Align.BottomRight}
+								trigger={
+									<ClayButton
+										aria-label={
+											pageActionsLabel &&
+											Liferay.Language.get('menu')
+										}
+										className="button-root p-2 rounded-lg"
+										disabled={
+											error ||
+											loading ||
+											allActionsDisabled
+										}
+										displayType="primary"
+										size="sm"
+									>
+										<>
+											<span>{pageActionsLabel}</span>
+											<ClayIcon
+												className="icon-root ml-2"
+												symbol="caret-bottom"
+											/>
+										</>
+									</ClayButton>
+								}
+							>
+								{usageDropDownMessage && (
+									<div
+										className="alert alert-fluid alert-info"
+										role="alert"
+									>
+										{usageDropDownMessage}
+									</div>
+								)}
 
+								<ClayDropDown.Group
+									header={Liferay.Language.get('account')}
+								>
+									<ClayDropDown.Item
+										data-testid="account-batch-segment-dropdown-item"
+										disabled={
+											usageLoading || isBatchDisabled
+										}
+										href={setUriQueryValues(
+											{
+												category:
+													SegmentCategories.Account,
+												type: SegmentTypes.Batch,
+											},
+											toRoute(
+												Routes.CONTACTS_SEGMENT_CREATE,
+												{channelId, groupId}
+											)
+										)}
+									>
+										<ClayIcon
+											className="mr-2"
+											symbol="organizations"
+										/>
+										{Liferay.Language.get('batch')}
+									</ClayDropDown.Item>
+								</ClayDropDown.Group>
+
+								<ClayDropDown.Group
+									header={Liferay.Language.get('individual')}
+								>
 									<ClayDropDown.Item
 										data-testid="batch-segment-dropdown-item"
 										disabled={
@@ -547,51 +583,30 @@ export const List: React.FC<IListProps> = ({
 										{Liferay.Language.get('batch')}
 									</ClayDropDown.Item>
 
-									<ClayDropDown.Item
-										data-testid="real-time-segment-dropdown-item"
-										disabled={
-											usageLoading || isRealTimeDisabled
-										}
-										href={setUriQueryValues(
-											{type: SegmentTypes.RealTime},
-											toRoute(
-												Routes.CONTACTS_SEGMENT_CREATE,
-												{channelId, groupId}
-											)
-										)}
-									>
-										<ClayIcon
-											className="mr-2"
-											symbol="bolt"
-										/>
-										{Liferay.Language.get('real-time')}
-									</ClayDropDown.Item>
-								</ClayDropDown>
-							) : (
-								<ClayButton
-									aria-label={pageActionsLabel}
-									className="button-root p-2 rounded-lg"
-									data-testid="batch-segment-button"
-									disabled={
-										error || loading || isBatchDisabled
-									}
-									displayType="primary"
-									onClick={() =>
-										history.push(
-											setUriQueryValues(
-												{type: SegmentTypes.Batch},
+									{ENABLE_REAL_TIME_SEGMENTS && (
+										<ClayDropDown.Item
+											data-testid="real-time-segment-dropdown-item"
+											disabled={
+												usageLoading ||
+												isRealTimeDisabled
+											}
+											href={setUriQueryValues(
+												{type: SegmentTypes.RealTime},
 												toRoute(
 													Routes.CONTACTS_SEGMENT_CREATE,
 													{channelId, groupId}
 												)
-											)
-										)
-									}
-									size="sm"
-								>
-									{pageActionsLabel}
-								</ClayButton>
-							)}
+											)}
+										>
+											<ClayIcon
+												className="mr-2"
+												symbol="bolt"
+											/>
+											{Liferay.Language.get('real-time')}
+										</ClayDropDown.Item>
+									)}
+								</ClayDropDown.Group>
+							</ClayDropDown>
 
 							{usageMessage && (
 								<ClayButton

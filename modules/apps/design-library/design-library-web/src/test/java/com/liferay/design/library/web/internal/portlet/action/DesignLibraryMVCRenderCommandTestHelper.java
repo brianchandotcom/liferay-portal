@@ -7,7 +7,6 @@ package com.liferay.design.library.web.internal.portlet.action;
 
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
-import com.liferay.design.library.web.internal.constants.DesignLibraryWebKeys;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -53,8 +52,7 @@ public class DesignLibraryMVCRenderCommandTestHelper {
 		mockRenderRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
 
 		mockRenderRequest.setParameter(
-			DesignLibraryWebKeys.DESIGN_LIBRARY_ENTRY_ID,
-			String.valueOf(depotEntryId));
+			"designLibraryEntryId", String.valueOf(depotEntryId));
 
 		return mockRenderRequest;
 	}

@@ -6,7 +6,6 @@
 package com.liferay.design.library.web.internal.display.context;
 
 import com.liferay.depot.model.DepotEntry;
-import com.liferay.design.library.web.internal.constants.DesignLibraryWebKeys;
 import com.liferay.exportimport.constants.ExportImportPortletKeys;
 import com.liferay.fragment.constants.FragmentActionKeys;
 import com.liferay.fragment.constants.FragmentConstants;
@@ -288,8 +287,7 @@ public class DesignLibraryResourcesDisplayContext {
 					).setMVCRenderCommandName(
 						"/design_library/design_library_settings"
 					).setParameter(
-						DesignLibraryWebKeys.DESIGN_LIBRARY_ENTRY_ID,
-						_depotEntry.getDepotEntryId()
+						"designLibraryEntryId", _depotEntry.getDepotEntryId()
 					).buildString()
 				).put(
 					"label", LanguageUtil.get(_httpServletRequest, "settings")
@@ -450,8 +448,7 @@ public class DesignLibraryResourcesDisplayContext {
 		).setMVCRenderCommandName(
 			"/design_library/design_library_resources"
 		).setParameter(
-			DesignLibraryWebKeys.DESIGN_LIBRARY_ENTRY_ID,
-			_depotEntry.getDepotEntryId()
+			"designLibraryEntryId", _depotEntry.getDepotEntryId()
 		).buildString();
 	}
 

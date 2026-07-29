@@ -293,7 +293,7 @@ describe('List', () => {
 			featureFlags.ENABLE_REAL_TIME_SEGMENTS = false;
 		});
 
-		it('creates a batch segment directly without a type dropdown', async () => {
+		it('hides the real time segment option', async () => {
 			API.projects.fetchFeatureUsages.mockResolvedValueOnce([]);
 
 			render(<DefaultComponent />);
@@ -303,12 +303,12 @@ describe('List', () => {
 			});
 
 			expect(
-				screen.getByTestId('batch-segment-button')
+				screen.getByTestId('account-batch-segment-dropdown-item')
+			).toBeInTheDocument();
+			expect(
+				screen.getByTestId('batch-segment-dropdown-item')
 			).toBeInTheDocument();
 
-			expect(
-				screen.queryByTestId('batch-segment-dropdown-item')
-			).not.toBeInTheDocument();
 			expect(
 				screen.queryByTestId('real-time-segment-dropdown-item')
 			).not.toBeInTheDocument();
@@ -332,11 +332,13 @@ describe('List', () => {
 				jest.runAllTimers();
 			});
 
-			expect(screen.getByTestId('batch-segment-button')).toBeDisabled();
+			expect(
+				screen.getByText('New Segment').closest('button')
+			).toBeDisabled();
 		});
 	});
 
-	it('shows the segment type dropdown when real time segments are enabled', async () => {
+	it('groups the segment options by category', async () => {
 		API.projects.fetchFeatureUsages.mockResolvedValueOnce([]);
 
 		render(<DefaultComponent />);
@@ -346,13 +348,49 @@ describe('List', () => {
 		});
 
 		expect(
+			screen.getByTestId('account-batch-segment-dropdown-item')
+		).toBeInTheDocument();
+		expect(
 			screen.getByTestId('batch-segment-dropdown-item')
 		).toBeInTheDocument();
 		expect(
 			screen.getByTestId('real-time-segment-dropdown-item')
 		).toBeInTheDocument();
-		expect(
-			screen.queryByTestId('batch-segment-button')
-		).not.toBeInTheDocument();
+
+		const accountOption = screen.getByTestId(
+			'account-batch-segment-dropdown-item'
+		);
+
+		const [accountGroup, individualGroup] = accountOption
+			.closest('.dropdown-menu')
+			.querySelectorAll('.dropdown-subheader');
+
+		expect(accountGroup).toHaveTextContent('Account');
+		expect(individualGroup).toHaveTextContent('Individual');
+	});
+
+	it('disables the account segment option when the batch limit is reached', async () => {
+		API.projects.fetchFeatureUsages.mockReturnValueOnce(
+			Promise.resolve([
+				{
+					currentUsage: 5,
+					limit: 5,
+					name: 'Segment',
+					type: 'Batch'
+				}
+			])
+		);
+
+		render(<DefaultComponent />);
+
+		await act(async () => {
+			jest.runAllTimers();
+		});
+
+		const accountOption = screen.getByTestId(
+			'account-batch-segment-dropdown-item'
+		);
+
+		expect(accountOption.closest('a')).toHaveClass('disabled');
 	});
 });

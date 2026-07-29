@@ -64,9 +64,7 @@ func (liferayEnvironmentReconciler *LiferayEnvironmentReconciler) Reconcile(
 		},
 	)
 
-	status := liferayEnvironmentReconciler.Status()
-
-	if error := status.Update(context, liferayEnvironment); error != nil {
+	if error := liferayEnvironmentReconciler.Status().Update(context, liferayEnvironment); error != nil {
 		if errors.IsConflict(error) {
 			return controllerruntime.Result{RequeueAfter: time.Second}, nil
 		}

@@ -6,11 +6,12 @@
 package com.liferay.design.library.web.internal.portlet.action;
 
 import com.liferay.depot.model.DepotEntry;
-import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.depot.service.DepotEntryService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.portlet.MockRenderRequest;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -57,21 +58,23 @@ public class DesignLibraryMVCRenderCommandTestHelper {
 		return mockRenderRequest;
 	}
 
-	public void denyPermission(DepotEntry depotEntry, String actionId)
-		throws Exception {
+	public void denyViewPermission(DepotEntry depotEntry)
+		throws PortalException {
+
+		long depotEntryId = depotEntry.getDepotEntryId();
 
 		Mockito.doThrow(
 			new PrincipalException.MustHavePermission(
-				_permissionChecker, DepotEntry.class.getName(),
-				depotEntry.getDepotEntryId(), actionId)
+				_permissionChecker, DepotEntry.class.getName(), depotEntryId,
+				ActionKeys.VIEW)
 		).when(
-			_depotEntryModelResourcePermission
-		).check(
-			_permissionChecker, depotEntry, actionId
+			_depotEntryService
+		).getDepotEntry(
+			depotEntryId
 		);
 	}
 
-	public DepotEntry mockDepotEntry(int type) {
+	public DepotEntry mockDepotEntry(int type) throws PortalException {
 		DepotEntry depotEntry = Mockito.mock(DepotEntry.class);
 
 		Mockito.when(
@@ -95,7 +98,7 @@ public class DesignLibraryMVCRenderCommandTestHelper {
 		);
 
 		Mockito.when(
-			_depotEntryLocalService.fetchDepotEntry(depotEntryId)
+			_depotEntryService.getDepotEntry(depotEntryId)
 		).thenReturn(
 			depotEntry
 		);
@@ -133,12 +136,8 @@ public class DesignLibraryMVCRenderCommandTestHelper {
 		);
 
 		ReflectionTestUtil.setFieldValue(
-			baseDesignLibraryMVCRenderCommand, "depotEntryLocalService",
-			_depotEntryLocalService);
-		ReflectionTestUtil.setFieldValue(
-			baseDesignLibraryMVCRenderCommand,
-			"depotEntryModelResourcePermission",
-			_depotEntryModelResourcePermission);
+			baseDesignLibraryMVCRenderCommand, "depotEntryService",
+			_depotEntryService);
 	}
 
 	public void tearDown() {
@@ -147,11 +146,8 @@ public class DesignLibraryMVCRenderCommandTestHelper {
 
 	private static final long _COMPANY_ID = 1234;
 
-	private final DepotEntryLocalService _depotEntryLocalService = Mockito.mock(
-		DepotEntryLocalService.class);
-	private final ModelResourcePermission<DepotEntry>
-		_depotEntryModelResourcePermission = Mockito.mock(
-			ModelResourcePermission.class);
+	private final DepotEntryService _depotEntryService = Mockito.mock(
+		DepotEntryService.class);
 	private final PermissionChecker _permissionChecker = Mockito.mock(
 		PermissionChecker.class);
 	private MockedStatic<PortalUtil> _portalUtilMockedStatic;

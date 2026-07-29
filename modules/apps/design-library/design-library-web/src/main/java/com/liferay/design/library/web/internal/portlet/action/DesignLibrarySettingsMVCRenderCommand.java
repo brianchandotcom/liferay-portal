@@ -7,7 +7,6 @@ package com.liferay.design.library.web.internal.portlet.action;
 
 import com.liferay.design.library.constants.DesignLibraryAdminPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -24,11 +23,6 @@ import org.osgi.service.component.annotations.Component;
 )
 public class DesignLibrarySettingsMVCRenderCommand
 	extends BaseDesignLibraryMVCRenderCommand {
-
-	@Override
-	protected String getActionId() {
-		return ActionKeys.UPDATE;
-	}
 
 	@Override
 	protected String getPath() {

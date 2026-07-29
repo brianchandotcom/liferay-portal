@@ -9,7 +9,6 @@ import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.design.library.web.internal.constants.DesignLibraryWebKeys;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.test.portlet.MockRenderRequest;
 import com.liferay.portal.kernel.test.portlet.MockRenderResponse;
@@ -101,8 +100,7 @@ public class DesignLibraryResourcesMVCRenderCommandTest {
 			_designLibraryMVCRenderCommandTestHelper.mockDepotEntry(
 				DepotConstants.TYPE_DESIGN_LIBRARY);
 
-		_designLibraryMVCRenderCommandTestHelper.denyPermission(
-			depotEntry, ActionKeys.VIEW);
+		_designLibraryMVCRenderCommandTestHelper.denyViewPermission(depotEntry);
 
 		_assertError(depotEntry.getDepotEntryId());
 	}

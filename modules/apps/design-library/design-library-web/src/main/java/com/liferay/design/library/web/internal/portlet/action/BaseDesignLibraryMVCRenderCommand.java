@@ -7,13 +7,12 @@ package com.liferay.design.library.web.internal.portlet.action;
 
 import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
-import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.depot.service.DepotEntryService;
 import com.liferay.design.library.web.internal.constants.DesignLibraryWebKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -53,16 +52,10 @@ public abstract class BaseDesignLibraryMVCRenderCommand
 		return getPath();
 	}
 
-	protected abstract String getActionId();
-
 	protected abstract String getPath();
 
 	@Reference
-	protected DepotEntryLocalService depotEntryLocalService;
-
-	@Reference(target = "(model.class.name=com.liferay.depot.model.DepotEntry)")
-	protected ModelResourcePermission<DepotEntry>
-		depotEntryModelResourcePermission;
+	protected DepotEntryService depotEntryService;
 
 	private DepotEntry _getDepotEntry(RenderRequest renderRequest)
 		throws PortalException {
@@ -70,26 +63,23 @@ public abstract class BaseDesignLibraryMVCRenderCommand
 		long designLibraryEntryId = ParamUtil.getLong(
 			renderRequest, "designLibraryEntryId");
 
-		DepotEntry depotEntry = depotEntryLocalService.fetchDepotEntry(
+		DepotEntry depotEntry = depotEntryService.getDepotEntry(
 			designLibraryEntryId);
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
 		if ((depotEntry == null) ||
 			(depotEntry.getCompanyId() != themeDisplay.getCompanyId()) ||
 			(depotEntry.getType() != DepotConstants.TYPE_DESIGN_LIBRARY)) {
 
+			PermissionChecker permissionChecker =
+				themeDisplay.getPermissionChecker();
+
 			throw new PrincipalException.MustHavePermission(
 				permissionChecker, DepotEntry.class.getName(),
-				designLibraryEntryId, getActionId());
+				designLibraryEntryId, "VIEW");
 		}
-
-		depotEntryModelResourcePermission.check(
-			permissionChecker, depotEntry, getActionId());
 
 		return depotEntry;
 	}

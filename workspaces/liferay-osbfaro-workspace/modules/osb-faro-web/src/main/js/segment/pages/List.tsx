@@ -38,6 +38,7 @@ import {
 	INDIVIDUAL_COUNT,
 	LAST_MEMBERSHIP_UPDATE_DATE,
 	Routes,
+	SEGMENT_CATEGORY,
 	SEGMENT_STATE,
 	SEGMENT_TYPE,
 	SEGMENTS,
@@ -104,12 +105,33 @@ interface IListProps extends PropsFromRedux {
 	history: any;
 }
 
+const SEGMENT_CATEGORIES_LABEL_MAP = {
+	[SegmentCategories.Account]: Liferay.Language.get('account'),
+	[SegmentCategories.Individual]: Liferay.Language.get('individual'),
+};
+
 const SEGMENT_TYPES_LABEL_MAP = {
 	[SegmentTypes.Batch]: Liferay.Language.get('batch'),
 	[SegmentTypes.RealTime]: Liferay.Language.get('real-time'),
 };
 
 const FILTER_BY_OPTIONS = [
+	{
+		key: SEGMENT_CATEGORY,
+		label: Liferay.Language.get('segment-category'),
+		values: [
+			{
+				label: SEGMENT_CATEGORIES_LABEL_MAP[SegmentCategories.Account],
+				value: SegmentCategories.Account,
+			},
+			{
+				label: SEGMENT_CATEGORIES_LABEL_MAP[
+					SegmentCategories.Individual
+				],
+				value: SegmentCategories.Individual,
+			},
+		],
+	},
 	{
 		key: SEGMENT_TYPE,
 		label: Liferay.Language.get('segment-type'),
@@ -167,7 +189,7 @@ export const List: React.FC<IListProps> = ({
 
 	const {selectedItems, selectionDispatch} = useSelectionContext();
 	const {delta, filterBy, orderIOMap, page, query} = useQueryPagination({
-		filterFields: [SEGMENT_TYPE],
+		filterFields: [SEGMENT_CATEGORY, SEGMENT_TYPE],
 		initialDelta: paginationDefaults.delta,
 		initialOrderIOMap: createOrderIOMap(NAME, getDefaultSortOrder(NAME)),
 		initialPage: paginationDefaults.page,
@@ -195,6 +217,9 @@ export const List: React.FC<IListProps> = ({
 		};
 	}, []);
 
+	const selectedSegmentCategories =
+		filterBy?.get(SEGMENT_CATEGORY)?.toArray() || [];
+
 	const selectedSegmentTypes = filterBy?.get(SEGMENT_TYPE)?.toArray() || [];
 
 	const {data, error, loading, refetch} = useRequest({
@@ -206,6 +231,9 @@ export const List: React.FC<IListProps> = ({
 			orderIOMap,
 			page,
 			query,
+			segmentCategories: selectedSegmentCategories.length
+				? selectedSegmentCategories
+				: undefined,
 			segmentTypes: selectedSegmentTypes.length
 				? selectedSegmentTypes
 				: undefined,
@@ -786,7 +814,10 @@ export const List: React.FC<IListProps> = ({
 							delta={delta}
 							filterBy={filterBy}
 							filterByOptions={FILTER_BY_OPTIONS}
-							filterEnabled={!!selectedSegmentTypes.length}
+							filterEnabled={
+								!!selectedSegmentCategories.length ||
+								!!selectedSegmentTypes.length
+							}
 							items={data?.items}
 							loading={loading}
 							noResultsRenderer={

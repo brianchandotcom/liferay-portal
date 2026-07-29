@@ -44,6 +44,11 @@ public class DesignLibrarySettingsMVCRenderCommandTest {
 
 	@Test
 	public void testRender() throws Exception {
+		_testRender();
+		_testRenderWithoutViewPermission();
+	}
+
+	private void _testRender() throws Exception {
 		DepotEntry depotEntry =
 			_designLibraryMVCRenderCommandTestHelper.mockDepotEntry(
 				DepotConstants.TYPE_DESIGN_LIBRARY);
@@ -62,8 +67,7 @@ public class DesignLibrarySettingsMVCRenderCommandTest {
 				DesignLibraryWebKeys.DESIGN_LIBRARY_ENTRY));
 	}
 
-	@Test
-	public void testRenderWithoutViewPermission() throws Exception {
+	private void _testRenderWithoutViewPermission() throws Exception {
 		DepotEntry depotEntry =
 			_designLibraryMVCRenderCommandTestHelper.mockDepotEntry(
 				DepotConstants.TYPE_DESIGN_LIBRARY);

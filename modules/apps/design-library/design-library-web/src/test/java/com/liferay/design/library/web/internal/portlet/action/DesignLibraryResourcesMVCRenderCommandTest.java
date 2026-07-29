@@ -47,62 +47,11 @@ public class DesignLibraryResourcesMVCRenderCommandTest {
 
 	@Test
 	public void testRender() throws Exception {
-		DepotEntry depotEntry =
-			_designLibraryMVCRenderCommandTestHelper.mockDepotEntry(
-				DepotConstants.TYPE_DESIGN_LIBRARY);
-
-		MockRenderRequest mockRenderRequest =
-			_designLibraryMVCRenderCommandTestHelper.createMockRenderRequest(
-				depotEntry.getDepotEntryId());
-
-		Assert.assertEquals(
-			"/view_resources.jsp",
-			_designLibraryResourcesMVCRenderCommand.render(
-				mockRenderRequest, new MockRenderResponse()));
-		Assert.assertSame(
-			depotEntry,
-			mockRenderRequest.getAttribute(
-				DesignLibraryWebKeys.DESIGN_LIBRARY_ENTRY));
-	}
-
-	@Test
-	public void testRenderWithAssetLibrary() throws Exception {
-		DepotEntry depotEntry =
-			_designLibraryMVCRenderCommandTestHelper.mockDepotEntry(
-				DepotConstants.TYPE_ASSET_LIBRARY);
-
-		_assertError(depotEntry.getDepotEntryId());
-	}
-
-	@Test
-	public void testRenderWithDepotEntryFromAnotherCompany() throws Exception {
-		DepotEntry depotEntry =
-			_designLibraryMVCRenderCommandTestHelper.mockDepotEntry(
-				DepotConstants.TYPE_DESIGN_LIBRARY);
-
-		Mockito.when(
-			depotEntry.getCompanyId()
-		).thenReturn(
-			RandomTestUtil.randomLong()
-		);
-
-		_assertError(depotEntry.getDepotEntryId());
-	}
-
-	@Test
-	public void testRenderWithNonexistentDesignLibrary() throws Exception {
-		_assertError(RandomTestUtil.randomLong());
-	}
-
-	@Test
-	public void testRenderWithoutViewPermission() throws Exception {
-		DepotEntry depotEntry =
-			_designLibraryMVCRenderCommandTestHelper.mockDepotEntry(
-				DepotConstants.TYPE_DESIGN_LIBRARY);
-
-		_designLibraryMVCRenderCommandTestHelper.denyViewPermission(depotEntry);
-
-		_assertError(depotEntry.getDepotEntryId());
+		_testRender();
+		_testRenderWithAssetLibrary();
+		_testRenderWithDepotEntryFromAnotherCompany();
+		_testRenderWithNonexistentDesignLibrary();
+		_testRenderWithoutViewPermission();
 	}
 
 	private void _assertError(long depotEntryId) throws Exception {
@@ -121,6 +70,63 @@ public class DesignLibraryResourcesMVCRenderCommandTest {
 			SessionErrors.contains(
 				mockRenderRequest,
 				PrincipalException.MustHavePermission.class));
+	}
+
+	private void _testRender() throws Exception {
+		DepotEntry depotEntry =
+			_designLibraryMVCRenderCommandTestHelper.mockDepotEntry(
+				DepotConstants.TYPE_DESIGN_LIBRARY);
+
+		MockRenderRequest mockRenderRequest =
+			_designLibraryMVCRenderCommandTestHelper.createMockRenderRequest(
+				depotEntry.getDepotEntryId());
+
+		Assert.assertEquals(
+			"/view_resources.jsp",
+			_designLibraryResourcesMVCRenderCommand.render(
+				mockRenderRequest, new MockRenderResponse()));
+		Assert.assertSame(
+			depotEntry,
+			mockRenderRequest.getAttribute(
+				DesignLibraryWebKeys.DESIGN_LIBRARY_ENTRY));
+	}
+
+	private void _testRenderWithAssetLibrary() throws Exception {
+		DepotEntry depotEntry =
+			_designLibraryMVCRenderCommandTestHelper.mockDepotEntry(
+				DepotConstants.TYPE_ASSET_LIBRARY);
+
+		_assertError(depotEntry.getDepotEntryId());
+	}
+
+	private void _testRenderWithDepotEntryFromAnotherCompany()
+		throws Exception {
+
+		DepotEntry depotEntry =
+			_designLibraryMVCRenderCommandTestHelper.mockDepotEntry(
+				DepotConstants.TYPE_DESIGN_LIBRARY);
+
+		Mockito.when(
+			depotEntry.getCompanyId()
+		).thenReturn(
+			RandomTestUtil.randomLong()
+		);
+
+		_assertError(depotEntry.getDepotEntryId());
+	}
+
+	private void _testRenderWithNonexistentDesignLibrary() throws Exception {
+		_assertError(RandomTestUtil.randomLong());
+	}
+
+	private void _testRenderWithoutViewPermission() throws Exception {
+		DepotEntry depotEntry =
+			_designLibraryMVCRenderCommandTestHelper.mockDepotEntry(
+				DepotConstants.TYPE_DESIGN_LIBRARY);
+
+		_designLibraryMVCRenderCommandTestHelper.denyViewPermission(depotEntry);
+
+		_assertError(depotEntry.getDepotEntryId());
 	}
 
 	private final DesignLibraryMVCRenderCommandTestHelper

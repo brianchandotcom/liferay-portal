@@ -101,6 +101,9 @@ public class ViewProjectMembersSummarySectionDisplayContextTest
 			String.valueOf(TestPropsValues.getUserId()),
 			getValue(dropdownItem, "assetLibraryCreatorUserId"));
 		Assert.assertEquals(
+			String.valueOf(_objectEntry.getObjectEntryId()),
+			getValue(dropdownItem, "cmpProjectObjectEntryId"));
+		Assert.assertEquals(
 			_group.getExternalReferenceCode(),
 			getValue(dropdownItem, "externalReferenceCode"));
 		Assert.assertEquals(
@@ -170,6 +173,8 @@ public class ViewProjectMembersSummarySectionDisplayContextTest
 				).put(
 					"assetLibraryCreatorUserId",
 					String.valueOf(TestPropsValues.getUserId())
+				).put(
+					"cmpProjectObjectEntryId", _objectEntry.getObjectEntryId()
 				).put(
 					"externalReferenceCode", _group.getExternalReferenceCode()
 				).put(

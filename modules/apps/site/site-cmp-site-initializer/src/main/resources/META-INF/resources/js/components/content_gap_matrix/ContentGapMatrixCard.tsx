@@ -89,6 +89,7 @@ export default function ContentGapMatrixCard({
 								'define-personas-and-funnel-stages-to-unlock-content-coverage-insights-and-align-your-content-strategy'
 							)}
 							imgSrc={`${Liferay.ThemeDisplay.getPathThemeImages()}/states/cmp_empty_state_personas.svg`}
+							small
 							title={Liferay.Language.get(
 								'no-personas-or-funnel-stages-configured'
 							)}
@@ -136,6 +137,7 @@ export default function ContentGapMatrixCard({
 				<div className="lfr-cmp__content-gap-matrix-container">
 					<div className="empty-state">
 						<ClayEmptyState
+							small
 							title={Liferay.Language.get('an-error-occurred')}
 						/>
 					</div>

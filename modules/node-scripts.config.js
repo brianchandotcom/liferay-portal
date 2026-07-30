@@ -10,7 +10,7 @@
  */
 
 module.exports = {
-	hash: '062057d96994aa523fcea6509917c9119605f2dc4dade4ff54eba58281224816',
+	hash: '0d4aa5c6ccda7029ff95b5a755e6921228839c9bf747f5b52901dae3a3a048ec',
 	imports: {
 		'@liferay/accessibility-menu-web': [],
 		'@liferay/accessibility-settings-state-web': [],
@@ -570,33 +570,10 @@ module.exports = {
 			'__UNSTABLE_DataClient',
 			'useProvider',
 		],
-		'axe-core': ['*', 'default'],
-		'clipboard': ['*', 'default'],
-		'cropperjs': ['*', 'default'],
-		'dagre': ['*', 'default'],
-		'date-fns': ['*'],
 		'frontend-editor-ckeditor-web/plugins/DocumentLinkSelector': [
 			'default',
 		],
-		'fuzzy': ['*', 'default'],
-		'graphql-hooks-memcache': ['*', 'default'],
-		'highlight.js': ['*', 'default'],
-		'highlight.js/lib/core': ['*', 'default'],
-		'highlight.js/lib/languages/java': ['*', 'default'],
-		'highlight.js/lib/languages/javascript': ['*', 'default'],
-		'highlight.js/lib/languages/plaintext': ['*', 'default'],
-		'liferay-ckeditor': [],
-		'moment': ['*', 'default'],
-		'moment/min/moment-with-locales': ['*', 'default'],
-		'numeral': ['*', 'default'],
-		'object-hash': ['*', 'default'],
 		'prop-types': ['*', 'bigint', 'default'],
 		'qrcode': ['create', 'toCanvas', 'toString', 'toDataURL'],
-		'qs': ['*', 'default'],
-		'react': ['*', 'default'],
-		'react-dnd': ['*'],
-		'react-dom': ['*', 'default'],
-		'text-mask-addons': ['*', 'default'],
-		'text-mask-core': ['*', 'default'],
 	},
 };

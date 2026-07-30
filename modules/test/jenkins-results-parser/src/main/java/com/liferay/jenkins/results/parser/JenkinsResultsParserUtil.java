@@ -526,6 +526,17 @@ public class JenkinsResultsParserUtil {
 		return new URL(uriASCIIString.replace("#", "%23"));
 	}
 
+	public static String encodeURLParameter(String string) {
+		try {
+			string = URLEncoder.encode(string, StandardCharsets.UTF_8.name());
+
+			return string.replace("+", "%20");
+		}
+		catch (UnsupportedEncodingException unsupportedEncodingException) {
+			throw new RuntimeException(unsupportedEncodingException);
+		}
+	}
+
 	public static String escapeForBash(String string) {
 		string = string.replaceAll(" ", "\\\\ ");
 		string = string.replaceAll("'", "\\\\\\\'");
@@ -3701,15 +3712,17 @@ public class JenkinsResultsParserUtil {
 				continue;
 			}
 
-			sb.append(buildParameter.getKey());
+			sb.append(encodeURLParameter(buildParameter.getKey()));
 			sb.append("=");
-			sb.append(value);
+			sb.append(encodeURLParameter(value));
 			sb.append("&");
 		}
 
 		try {
 			sb.append("token=");
-			sb.append(getBuildProperty("jenkins.authentication.token"));
+			sb.append(
+				encodeURLParameter(
+					getBuildProperty("jenkins.authentication.token")));
 
 			return getJenkinsBuildQueueId(
 				UrlReader.getResponseHeader(

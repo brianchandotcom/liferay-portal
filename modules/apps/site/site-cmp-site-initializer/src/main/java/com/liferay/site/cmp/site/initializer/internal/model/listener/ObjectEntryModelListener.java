@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.audit.AuditRouter;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -289,12 +288,6 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 	}
 
 	private void _initializeSite(ObjectEntry objectEntry) {
-		if (!FeatureFlagManagerUtil.isEnabled(
-				objectEntry.getCompanyId(), "LPD-58677")) {
-
-			return;
-		}
-
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinition(
 				objectEntry.getObjectDefinitionId());
@@ -385,12 +378,6 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 	private void _route(String eventType, ObjectEntry objectEntry)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled(
-				objectEntry.getCompanyId(), "LPD-58677")) {
-
-			return;
-		}
-
 		ObjectDefinition objectDefinition = objectEntry.getObjectDefinition();
 
 		if (!StringUtil.equals(
@@ -476,12 +463,6 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 	}
 
 	private void _updateGroup(ObjectEntry objectEntry) {
-		if (!FeatureFlagManagerUtil.isEnabled(
-				objectEntry.getCompanyId(), "LPD-58677")) {
-
-			return;
-		}
-
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinition(
 				objectEntry.getObjectDefinitionId());

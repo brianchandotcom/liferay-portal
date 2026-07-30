@@ -197,6 +197,22 @@ public class Test {
 		);
 	}
 
+	protected void setUrlReaderException(
+			Exception exception, String url, UrlReader urlReader)
+		throws Exception {
+
+		Mockito.doThrow(
+			exception
+		).when(
+			urlReader
+		).doRead(
+			Mockito.anyBoolean(), Mockito.any(), Mockito.any(),
+			Mockito.anyInt(), Mockito.any(), Mockito.anyInt(), Mockito.anyInt(),
+			Mockito.argThat(
+				readURL -> (readURL != null) && readURL.contains(url))
+		);
+	}
+
 	protected void setUrlReaderOutput(
 			String standardOut, String url, UrlReader urlReader)
 		throws Exception {

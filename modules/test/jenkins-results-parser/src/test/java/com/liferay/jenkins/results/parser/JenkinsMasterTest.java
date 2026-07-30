@@ -5,7 +5,10 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
 
 import java.util.Map;
 
@@ -88,6 +91,48 @@ public class JenkinsMasterTest extends com.liferay.jenkins.results.parser.Test {
 
 		Assert.assertEquals(
 			availableSlavesCount, _jenkinsMaster.getAvailableSlavesCount(null));
+	}
+
+	@Test
+	public void testGetQueueItem() throws Exception {
+		UrlReader urlReader = mockUrlReader();
+
+		setUrlReaderOutput(
+			new JSONObject(
+			).put(
+				"id", 7800
+			).toString(),
+			"http://test-9-1/queue/item/7800/api/json", urlReader);
+
+		JenkinsMaster.QueueItem queueItem = _jenkinsMaster.getQueueItem(7800);
+
+		Assert.assertEquals(7800, queueItem.getId());
+	}
+
+	@Test
+	public void testGetQueueItemNotFound() throws Exception {
+		UrlReader urlReader = mockUrlReader();
+
+		String queueItemAPIURL = "http://test-9-1/queue/item/7800/api/json";
+
+		setUrlReaderException(
+			new FileNotFoundException(queueItemAPIURL), queueItemAPIURL,
+			urlReader);
+
+		ByteArrayOutputStream byteArrayOutputStream =
+			new ByteArrayOutputStream();
+		PrintStream printStream = System.out;
+
+		System.setOut(new PrintStream(byteArrayOutputStream, true));
+
+		try {
+			Assert.assertNull(_jenkinsMaster.getQueueItem(7800));
+		}
+		finally {
+			System.setOut(printStream);
+		}
+
+		Assert.assertEquals("", byteArrayOutputStream.toString());
 	}
 
 	@Test

@@ -8,7 +8,9 @@ package com.liferay.jenkins.results.parser;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -64,6 +66,63 @@ public class BaseBuildTest extends com.liferay.jenkins.results.parser.Test {
 
 		Assert.assertEquals(
 			Arrays.asList(firstBuildURL), baseBuild.getBadBuildURLs());
+	}
+
+	@Test
+	public void testLoadParametersFromQueryString() {
+		BaseBuild baseBuild = Mockito.mock(BaseBuild.class);
+
+		ReflectionTestUtil.setFieldValue(
+			baseBuild, "_parameters", new HashMap<String, String>());
+
+		Mockito.doCallRealMethod(
+		).when(
+			baseBuild
+		).loadParametersFromQueryString(
+			Mockito.anyString()
+		);
+
+		baseBuild.loadParametersFromQueryString(
+			JenkinsResultsParserUtil.combine(
+				"token=abc123&PORTAL_BATCH_TEST_SELECTOR=PortalSmoke%23Smoke",
+				"&TESTRAY_PROJECT_NAME=AWS%20%26%20CI",
+				"&PORTAL_BUILD_NOTES=100%25%20pass&PORTAL_UPSTREAM=master",
+				"&AXIS_VARIABLE=&PORTAL_QUERY=a%3Db"));
+
+		Map<String, String> parameters = ReflectionTestUtil.getFieldValue(
+			baseBuild, "_parameters");
+
+		Assert.assertEquals(
+			"PortalSmoke#Smoke", parameters.get("PORTAL_BATCH_TEST_SELECTOR"));
+		Assert.assertEquals("AWS & CI", parameters.get("TESTRAY_PROJECT_NAME"));
+		Assert.assertEquals("100% pass", parameters.get("PORTAL_BUILD_NOTES"));
+		Assert.assertEquals("master", parameters.get("PORTAL_UPSTREAM"));
+		Assert.assertEquals("", parameters.get("AXIS_VARIABLE"));
+		Assert.assertEquals("a=b", parameters.get("PORTAL_QUERY"));
+	}
+
+	@Test
+	public void testLoadParametersFromQueryStringIllegalEscape() {
+		BaseBuild baseBuild = Mockito.mock(BaseBuild.class);
+
+		ReflectionTestUtil.setFieldValue(
+			baseBuild, "_parameters", new HashMap<String, String>());
+
+		Mockito.doCallRealMethod(
+		).when(
+			baseBuild
+		).loadParametersFromQueryString(
+			Mockito.anyString()
+		);
+
+		baseBuild.loadParametersFromQueryString(
+			"PORTAL_BUILD_NOTES=100% pass&PORTAL_UPSTREAM=master");
+
+		Map<String, String> parameters = ReflectionTestUtil.getFieldValue(
+			baseBuild, "_parameters");
+
+		Assert.assertEquals("100% pass", parameters.get("PORTAL_BUILD_NOTES"));
+		Assert.assertEquals("master", parameters.get("PORTAL_UPSTREAM"));
 	}
 
 	@Test

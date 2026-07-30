@@ -10,6 +10,7 @@ import java.io.File;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Properties;
 
@@ -20,6 +21,7 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Test;
 
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
 /**
@@ -27,6 +29,22 @@ import org.mockito.Mockito;
  */
 public class JenkinsResultsParserUtilTest
 	extends com.liferay.jenkins.results.parser.Test {
+
+	@Test
+	public void testEncodeURLParameter() {
+		testEquals(
+			"PortalSmoke%23Smoke",
+			JenkinsResultsParserUtil.encodeURLParameter("PortalSmoke#Smoke"));
+		testEquals(
+			"AWS%20CI", JenkinsResultsParserUtil.encodeURLParameter("AWS CI"));
+		testEquals("a%26b", JenkinsResultsParserUtil.encodeURLParameter("a&b"));
+		testEquals(
+			"100%25%20pass",
+			JenkinsResultsParserUtil.encodeURLParameter("100% pass"));
+		testEquals("a%2Bb", JenkinsResultsParserUtil.encodeURLParameter("a+b"));
+		testEquals(
+			"master", JenkinsResultsParserUtil.encodeURLParameter("master"));
+	}
 
 	@Test(timeout = 30000)
 	public void testExecuteJenkinsScriptReadTimeout() throws Exception {
@@ -417,6 +435,72 @@ public class JenkinsResultsParserUtilTest
 			String.valueOf(
 				JenkinsResultsParserUtil.invokeJenkinsBuild(
 					jenkinsMaster, "test-job", new HashMap<>())));
+	}
+
+	@Test
+	public void testInvokeJenkinsBuildEncodeParameters() throws Exception {
+		Environment environment = mockEnvironment();
+
+		Mockito.when(
+			environment.doGet("MASTER_NETWORK_NAME")
+		).thenReturn(
+			"aws-network"
+		);
+
+		Properties buildProperties = new Properties();
+
+		buildProperties.setProperty(
+			"jenkins.admin.user.name", RandomTestUtil.randomString());
+		buildProperties.setProperty(
+			"jenkins.admin.user.token", RandomTestUtil.randomString());
+		buildProperties.setProperty(
+			"jenkins.authentication.token", RandomTestUtil.randomString());
+
+		JenkinsResultsParserUtil.setBuildProperties(buildProperties);
+
+		UrlReader urlReader = mockUrlReader();
+
+		Mockito.doReturn(
+			"https://test-1-1.liferay.com/queue/item/12345"
+		).when(
+			urlReader
+		).doGetResponseHeader(
+			Mockito.eq("Location"), Mockito.any(), Mockito.any(), Mockito.any(),
+			Mockito.anyInt(), Mockito.anyString()
+		);
+
+		JenkinsMaster jenkinsMaster = Mockito.mock(JenkinsMaster.class);
+
+		Mockito.when(
+			jenkinsMaster.getRemoteURL()
+		).thenReturn(
+			"https://test-1-1.liferay.com/"
+		);
+
+		JenkinsResultsParserUtil.invokeJenkinsBuild(
+			jenkinsMaster, "test-job",
+			Collections.singletonMap(
+				"PORTAL_BATCH_TEST_SELECTOR", "Portal Smoke#Smoke"));
+
+		ArgumentCaptor<String> urlArgumentCaptor = ArgumentCaptor.forClass(
+			String.class);
+
+		Mockito.verify(
+			urlReader
+		).doGetResponseHeader(
+			Mockito.eq("Location"), Mockito.any(), Mockito.any(), Mockito.any(),
+			Mockito.anyInt(), urlArgumentCaptor.capture()
+		);
+
+		String url = urlArgumentCaptor.getValue();
+
+		if (!url.contains(
+				"PORTAL_BATCH_TEST_SELECTOR=Portal%20Smoke%23Smoke")) {
+
+			errorCollector.addError(
+				new Throwable(
+					"PORTAL_BATCH_TEST_SELECTOR was not encoded in " + url));
+		}
 	}
 
 	@Test(timeout = 30000)

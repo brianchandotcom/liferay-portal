@@ -6,15 +6,23 @@
 package com.liferay.portal.tools.service.builder.test.sequence.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Release;
+import com.liferay.portal.kernel.service.ReleaseLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.AssumeTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.tools.service.builder.test.sequence.service.SequenceEntryLocalService;
 
+import java.io.IOException;
 import java.io.InputStream;
+
+import java.sql.SQLException;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -51,6 +59,8 @@ public class SequenceEntryLocalServiceTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
+		_deleteSequenceEntrySchema();
+
 		Bundle bundle = FrameworkUtil.getBundle(
 			SequenceEntryLocalServiceTest.class);
 
@@ -73,6 +83,8 @@ public class SequenceEntryLocalServiceTest {
 	@AfterClass
 	public static void tearDownClass() throws Exception {
 		_bundle.uninstall();
+
+		_deleteSequenceEntrySchema();
 	}
 
 	@Test
@@ -81,6 +93,34 @@ public class SequenceEntryLocalServiceTest {
 			_sequenceEntryLocalService.addSequenceEntry(
 				_sequenceEntryLocalService.createSequenceEntry(0)));
 	}
+
+	private static void _deleteSequenceEntrySchema() {
+		_runSQL("drop table SequenceEntry");
+		_runSQL("drop sequence id_sequence");
+
+		Release release = ReleaseLocalServiceUtil.fetchRelease(
+			"com.liferay.portal.tools.service.builder.test.sequence.service");
+
+		if (release != null) {
+			ReleaseLocalServiceUtil.deleteRelease(release);
+		}
+	}
+
+	private static void _runSQL(String sql) {
+		try {
+			DB db = DBManagerUtil.getDB();
+
+			db.runSQL(sql);
+		}
+		catch (IOException | SQLException exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SequenceEntryLocalServiceTest.class);
 
 	private static Bundle _bundle;
 

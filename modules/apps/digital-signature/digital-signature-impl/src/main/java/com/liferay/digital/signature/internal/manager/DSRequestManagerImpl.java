@@ -51,6 +51,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -284,7 +285,18 @@ public class DSRequestManagerImpl implements DSRequestManager {
 	}
 
 	private String _getRequestStatus(DSEnvelope dsEnvelope) {
+		LocalDateTime expireLocalDateTime = dsEnvelope.getExpireLocalDateTime();
 		String status = StringUtil.toLowerCase(dsEnvelope.getStatus());
+		LocalDateTime statusChangedLocalDateTime =
+			dsEnvelope.getStatusChangedLocalDateTime();
+
+		if (Objects.equals(status, DSRequestConstants.STATUS_VOIDED) &&
+			(expireLocalDateTime != null) &&
+			(statusChangedLocalDateTime != null) &&
+			!statusChangedLocalDateTime.isBefore(expireLocalDateTime)) {
+
+			return DSRequestConstants.STATUS_EXPIRED;
+		}
 
 		if (ArrayUtil.contains(DSRequestConstants.STATUSES, status)) {
 			return status;

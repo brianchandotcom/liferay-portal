@@ -322,9 +322,9 @@ public class ViewResourcesDesignLibraryDisplayContext
 			).put(
 				"refreshDataSetIds",
 				JSONUtil.putAll(
-					DesignLibraryAdminFDSNames.DESIGN_LIBRARY_MEMBERS_USERS,
 					DesignLibraryAdminFDSNames.
-						DESIGN_LIBRARY_MEMBERS_USER_GROUPS)
+						DESIGN_LIBRARY_MEMBERS_USER_GROUPS,
+					DesignLibraryAdminFDSNames.DESIGN_LIBRARY_MEMBERS_USERS)
 			).put(
 				"symbolLeft", "users"
 			).put(

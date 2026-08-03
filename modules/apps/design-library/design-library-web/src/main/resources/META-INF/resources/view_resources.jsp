@@ -8,11 +8,11 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ConnectedSitesDesignLibraryDisplayContext connectedSitesDesignLibraryDisplayContext = new ConnectedSitesDesignLibraryDisplayContext(request);
+ViewResourcesDesignLibraryDisplayContext viewResourcesDesignLibraryDisplayContext = new ViewResourcesDesignLibraryDisplayContext(request, liferayPortletResponse);
 
 MembersDesignLibraryDisplayContext membersDesignLibraryDisplayContext = new MembersDesignLibraryDisplayContext(request);
 
-ViewResourcesDesignLibraryDisplayContext viewResourcesDesignLibraryDisplayContext = new ViewResourcesDesignLibraryDisplayContext(request, liferayPortletResponse);
+ConnectedSitesDesignLibraryDisplayContext connectedSitesDesignLibraryDisplayContext = new ConnectedSitesDesignLibraryDisplayContext(request);
 %>
 
 <div>

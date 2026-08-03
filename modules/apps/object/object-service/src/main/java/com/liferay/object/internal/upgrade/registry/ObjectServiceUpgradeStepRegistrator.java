@@ -732,6 +732,17 @@ public class ObjectServiceUpgradeStepRegistrator
 			new com.liferay.object.internal.upgrade.v13_2_0.
 				ObjectDefinitionExternalReferenceCodeUpgradeProcess(
 					_systemObjectDefinitionManagerRegistry));
+
+		registry.register(
+			"13.2.0", "13.3.0",
+			new BaseExternalReferenceCodeUpgradeProcess() {
+
+				@Override
+				protected String[] getTableNames() {
+					return new String[] {"ObjectView"};
+				}
+
+			});
 	}
 
 	@Reference

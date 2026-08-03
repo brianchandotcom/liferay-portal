@@ -98,9 +98,6 @@ public class LayoutContentVersionDisplayContextTest {
 			_themeDisplay.getPathImage() + "/user_portrait?img_id=0",
 			config.get("defaultUserImageSrc"));
 		Assert.assertEquals(
-			_draftLayout.getName(_locale), config.get("draftName"));
-		Assert.assertEquals(!_draftLayout.isApproved(), config.get("hasDraft"));
-		Assert.assertEquals(
 			StringBundler.concat(
 				"/o/headless-admin-site/v1.0/sites/",
 				_group.getExternalReferenceCode(), "/site-pages/",
@@ -111,6 +108,9 @@ public class LayoutContentVersionDisplayContextTest {
 		_assertAvailableLanguages(
 			(Map<String, Object>)config.get("availableLanguages"), _locale,
 			_siteDefaultLocale);
+
+		_assertCurrentVersion(
+			(Map<String, Object>)config.get("currentVersion"));
 
 		List<Map<String, Object>> availableSegmentsExperiences =
 			(List<Map<String, Object>>)config.get(
@@ -150,6 +150,14 @@ public class LayoutContentVersionDisplayContextTest {
 				LocaleUtil.toW3cLanguageId(locale),
 				languageMap.get("w3cLanguageId"));
 		}
+	}
+
+	private void _assertCurrentVersion(Map<String, Object> currentVersion) {
+		Assert.assertEquals(
+			_draftLayout.getName(_locale), currentVersion.get("name"));
+		Assert.assertEquals(
+			_draftLayout.isApproved() ? "approved" : "draft",
+			currentVersion.get("status"));
 	}
 
 	private void _assertSegmentsExperience(

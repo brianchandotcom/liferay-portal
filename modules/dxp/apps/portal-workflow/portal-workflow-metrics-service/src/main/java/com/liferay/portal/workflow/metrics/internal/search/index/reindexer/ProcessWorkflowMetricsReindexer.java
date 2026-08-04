@@ -8,25 +8,14 @@ package com.liferay.portal.workflow.metrics.internal.search.index.reindexer;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.CompanyConstants;
-import com.liferay.portal.kernel.module.service.Snapshot;
-import com.liferay.portal.search.capabilities.SearchCapabilities;
-import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
-import com.liferay.portal.search.index.IndexNameBuilder;
-import com.liferay.portal.search.index.SyncReindexManager;
 import com.liferay.portal.search.spi.reindexer.IndexReindexer;
 import com.liferay.portal.workflow.kaleo.metrics.integration.helper.IndexerHelper;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;
-import com.liferay.portal.workflow.metrics.internal.search.index.WorkflowMetricsIndex;
 import com.liferay.portal.workflow.metrics.search.background.task.WorkflowMetricsReindexStatusMessageSender;
 import com.liferay.portal.workflow.metrics.search.index.ProcessWorkflowMetricsIndexer;
-import com.liferay.portal.workflow.metrics.search.index.constants.WorkflowMetricsIndexNameConstants;
 import com.liferay.portal.workflow.metrics.search.index.reindexer.WorkflowMetricsReindexer;
 
-import java.util.Collections;
-import java.util.Date;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.osgi.service.component.annotations.Component;
@@ -37,7 +26,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = {IndexReindexer.class, WorkflowMetricsReindexer.class})
 public class ProcessWorkflowMetricsReindexer
-	implements IndexReindexer, WorkflowMetricsReindexer {
+	extends BaseWorkflowMetricsReindexer {
 
 	@Override
 	public String getKey() {
@@ -45,51 +34,8 @@ public class ProcessWorkflowMetricsReindexer
 	}
 
 	@Override
-	public void reindex(long companyId) throws PortalException {
-		try {
-			reindex(companyId, ExecutionMode.FULL);
-		}
-		catch (PortalException portalException) {
-			throw portalException;
-		}
-		catch (Exception exception) {
-			throw new PortalException(exception);
-		}
-	}
-
-	@Override
-	public void reindex(long companyId, ExecutionMode executionMode)
+	protected void reindexEntities(long companyId, ExecutionMode executionMode)
 		throws Exception {
-
-		if (!_searchCapabilities.isWorkflowMetricsSupported() ||
-			(companyId == CompanyConstants.SYSTEM)) {
-
-			return;
-		}
-
-		WorkflowMetricsIndex.createMissingIndexes(
-			_searchCapabilities, _searchEngineAdapter, _indexNameBuilder,
-			companyId);
-
-		Date date = null;
-
-		if (_isExecuteSyncReindex(executionMode)) {
-			date = new Date();
-
-			Thread.sleep(1000);
-		}
-		else {
-			WorkflowMetricsIndex workflowMetricsIndex =
-				WorkflowMetricsIndex.toWorkflowMetricsIndex(getKey());
-
-			workflowMetricsIndex.removeIndex(
-				_searchCapabilities, _searchEngineAdapter, _indexNameBuilder,
-				companyId);
-
-			workflowMetricsIndex.createIndex(
-				_searchCapabilities, _searchEngineAdapter, _indexNameBuilder,
-				companyId);
-		}
 
 		ActionableDynamicQuery actionableDynamicQuery =
 			_kaleoDefinitionLocalService.getActionableDynamicQuery();
@@ -117,53 +63,16 @@ public class ProcessWorkflowMetricsReindexer
 			});
 
 		actionableDynamicQuery.performActions();
-
-		if (_isExecuteSyncReindex(executionMode)) {
-			SyncReindexManager syncReindexManager =
-				_syncReindexManagerSnapshot.get();
-
-			syncReindexManager.deleteStaleDocuments(
-				WorkflowMetricsIndex.getIndexName(
-					_indexNameBuilder,
-					WorkflowMetricsIndexNameConstants.SUFFIX_PROCESS,
-					companyId),
-				date, Collections.emptySet());
-		}
 	}
-
-	private boolean _isExecuteSyncReindex(ExecutionMode executionMode) {
-		if ((_syncReindexManagerSnapshot.get() != null) &&
-			(executionMode != null) &&
-			executionMode.equals(ExecutionMode.SYNC)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	private static final Snapshot<SyncReindexManager>
-		_syncReindexManagerSnapshot = new Snapshot<>(
-			ProcessWorkflowMetricsReindexer.class, SyncReindexManager.class,
-			null, true);
 
 	@Reference
 	private IndexerHelper _indexerHelper;
-
-	@Reference
-	private IndexNameBuilder _indexNameBuilder;
 
 	@Reference
 	private KaleoDefinitionLocalService _kaleoDefinitionLocalService;
 
 	@Reference
 	private ProcessWorkflowMetricsIndexer _processWorkflowMetricsIndexer;
-
-	@Reference
-	private SearchCapabilities _searchCapabilities;
-
-	@Reference
-	private SearchEngineAdapter _searchEngineAdapter;
 
 	@Reference
 	private WorkflowMetricsReindexStatusMessageSender

@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -91,7 +91,7 @@ public class PortalInstanceConfigurationExporterImplTest {
 		String encodedDictionary = _getEncodedDictionary(
 			ExtendedObjectClassDefinition.Scope.GROUP, groupId);
 
-		_setUpGroup(groupId, companyId);
+		_setUpGroup(companyId, groupId);
 		_setUpConfigurations(configurationId, encodedDictionary);
 
 		_portalInstanceConfigurationExporterImpl.exportConfigurations(
@@ -184,7 +184,7 @@ public class PortalInstanceConfigurationExporterImplTest {
 
 		long groupId = RandomTestUtil.randomLong();
 
-		_setUpGroup(groupId, RandomTestUtil.randomLong());
+		_setUpGroup(RandomTestUtil.randomLong(), groupId);
 		_setUpConfigurations(
 			RandomTestUtil.randomString(),
 			_getEncodedDictionary(
@@ -204,7 +204,7 @@ public class PortalInstanceConfigurationExporterImplTest {
 
 		long groupId = RandomTestUtil.randomLong();
 
-		_setUpGroup(groupId, RandomTestUtil.randomLong());
+		_setUpGroup(RandomTestUtil.randomLong(), groupId);
 		_setUpConfigurations(
 			RandomTestUtil.randomString(),
 			_getEncodedDictionary(
@@ -299,7 +299,7 @@ public class PortalInstanceConfigurationExporterImplTest {
 		);
 	}
 
-	private void _setUpGroup(long groupId, long companyId) {
+	private void _setUpGroup(long companyId, long groupId) {
 		Group group = Mockito.mock(Group.class);
 
 		Mockito.when(

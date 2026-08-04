@@ -6,6 +6,7 @@
 package com.liferay.portal.instances.web.internal.portlet.action;
 
 import com.liferay.portal.db.partition.util.DBPartitionUtil;
+import com.liferay.portal.instances.configuration.PortalInstanceConfigurationExporter;
 import com.liferay.portal.json.JSONObjectImpl;
 import com.liferay.portal.kernel.exception.RequiredCompanyException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -76,6 +77,10 @@ public class ExportInstanceMVCActionCommandTest {
 			_exportInstanceMVCActionCommand, "_jsonFactory", _jsonFactory);
 		ReflectionTestUtil.setFieldValue(
 			_exportInstanceMVCActionCommand, "_language", _language);
+		ReflectionTestUtil.setFieldValue(
+			_exportInstanceMVCActionCommand,
+			"_portalInstanceConfigurationExporter",
+			_portalInstanceConfigurationExporter);
 
 		_featureFlagManagerUtilMockedStatic = Mockito.mockStatic(
 			FeatureFlagManagerUtil.class);
@@ -104,6 +109,47 @@ public class ExportInstanceMVCActionCommandTest {
 	public void tearDown() {
 		_featureFlagManagerUtilMockedStatic.close();
 		_jsonPortletResponseUtilMockedStatic.close();
+	}
+
+	@Test
+	public void testConfigurationsExportedOnSuccess() throws Exception {
+		long companyId = RandomTestUtil.randomLong();
+
+		_exportInstanceMVCActionCommand.doProcessAction(
+			_getMockActionRequest(companyId), new MockActionResponse());
+
+		Assert.assertFalse(_jsonObject.has("error"));
+
+		Mockito.verify(
+			_portalInstanceConfigurationExporter
+		).exportConfigurations(
+			companyId
+		);
+	}
+
+	@Test
+	public void testErrorMessageForConfigurationExportFailure()
+		throws Exception {
+
+		long companyId = RandomTestUtil.randomLong();
+
+		String message = RandomTestUtil.randomString();
+
+		Mockito.doThrow(
+			new IllegalStateException(message)
+		).when(
+			_portalInstanceConfigurationExporter
+		).exportConfigurations(
+			companyId
+		);
+
+		_exportInstanceMVCActionCommand.doProcessAction(
+			_getMockActionRequest(companyId), new MockActionResponse());
+
+		Assert.assertEquals(
+			"export-failed-with-message-x:" + message,
+			_jsonObject.getString("error"));
+		Assert.assertFalse(_jsonObject.has("successMessage"));
 	}
 
 	@Test
@@ -234,5 +280,8 @@ public class ExportInstanceMVCActionCommandTest {
 	private final Language _language = Mockito.mock(Language.class);
 	private final PermissionChecker _permissionChecker = Mockito.mock(
 		PermissionChecker.class);
+	private final PortalInstanceConfigurationExporter
+		_portalInstanceConfigurationExporter = Mockito.mock(
+			PortalInstanceConfigurationExporter.class);
 
 }

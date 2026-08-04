@@ -74,6 +74,7 @@ import com.liferay.portal.kernel.theme.ThemeUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -686,6 +687,21 @@ public class SitePageResourceImpl
 		return nestedFields.contains("pageDefinition");
 	}
 
+	private void _setThemeDisplayVirtualHost(
+		HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay) {
+
+		String portalURL = _portal.getPortalURL(httpServletRequest);
+
+		themeDisplay.setPortalDomain(HttpComponentsUtil.getDomain(portalURL));
+		themeDisplay.setPortalURL(portalURL);
+
+		themeDisplay.setSecure(_portal.isForwardedSecure(httpServletRequest));
+		themeDisplay.setServerName(
+			_portal.getForwardedHost(httpServletRequest));
+		themeDisplay.setServerPort(
+			_portal.getForwardedPort(httpServletRequest));
+	}
+
 	private Long _toAssetCategoryId(
 		long groupId, TaxonomyCategoryBrief taxonomyCategoryBrief) {
 
@@ -769,6 +785,8 @@ public class SitePageResourceImpl
 					contextAcceptLanguage.getPreferredLocale()));
 			themeDisplay.setLocale(contextAcceptLanguage.getPreferredLocale());
 			themeDisplay.setRequest(httpServletRequest);
+
+			_setThemeDisplayVirtualHost(httpServletRequest, themeDisplay);
 
 			httpServletRequest.setAttribute(
 				WebKeys.LOCALE, contextAcceptLanguage.getPreferredLocale());

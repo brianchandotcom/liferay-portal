@@ -141,7 +141,6 @@
 										"pageElements": [
 											{
 												"definition": {
-													"customCSS": ".[$FRAGMENT_CLASS$] {\n width: 85%;\n}",
 													"indexed": true,
 													"layout": {
 													},
@@ -200,8 +199,7 @@
 															{
 																"definition": {
 																	"fragmentStyle": {
-																		"marginBottom": "40px",
-																		"marginRight": "48px"
+																		"marginBottom": "40px"
 																	},
 																	"indexed": true,
 																	"layout": {
@@ -445,7 +443,6 @@
 										"pageElements": [
 											{
 												"definition": {
-													"customCSS": ".[$FRAGMENT_CLASS$] {\n display: flex; flex-direction: column; align-items: end;\n}",
 													"indexed": true,
 													"layout": {
 													},
@@ -454,11 +451,6 @@
 												"pageElements": [
 													{
 														"definition": {
-															"fragmentStyle": {
-																"maxWidth": "424px",
-																"minWidth": "320px",
-																"width": "100%"
-															},
 															"indexed": true,
 															"layout": {
 															},

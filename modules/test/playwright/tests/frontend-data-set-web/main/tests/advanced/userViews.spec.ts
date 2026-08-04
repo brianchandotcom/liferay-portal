@@ -356,3 +356,85 @@ test(
 		});
 	}
 );
+
+test(
+	'Change the startup view to another user view and apply it on reload',
+	{
+		tag: ['@LPD-75910'],
+	},
+	async ({fdsSamplePage, page}) => {
+		const firstUserViewName = getRandomString();
+		const secondUserViewName = getRandomString();
+
+		const createUserView = async (name: string) => {
+			await fdsSamplePage.userViewsActionsButton.click();
+
+			await fdsSamplePage.dropdownMenu
+				.getByRole('menuitem', {name: 'Save View As...'})
+				.click();
+
+			await expect(fdsSamplePage.userViewsSaveModal).toBeInViewport();
+
+			await fdsSamplePage.userViewsSaveModal
+				.getByLabel('NameRequired')
+				.fill(name);
+
+			await fdsSamplePage.userViewsSaveModal
+				.getByRole('button', {name: 'Save'})
+				.click();
+
+			await expect(fdsSamplePage.userViewsSelectorButton).toHaveText(
+				name
+			);
+		};
+
+		const selectUserView = async (name: string) => {
+			await fdsSamplePage.userViewsSelectorButton.click();
+
+			await fdsSamplePage.dropdownMenu
+				.getByRole('menuitem', {name})
+				.click();
+		};
+
+		const setAsStartupView = async () => {
+			await fdsSamplePage.userViewsActionsButton.click();
+
+			await fdsSamplePage.dropdownMenu
+				.getByRole('menuitem', {name: 'Set as Startup View'})
+				.click();
+
+			await waitForAlert(page, 'The user view was set as startup');
+		};
+
+		await test.step('Set the first user view as the startup view', async () => {
+			await createUserView(firstUserViewName);
+			await createUserView(secondUserViewName);
+
+			await selectUserView(firstUserViewName);
+
+			await setAsStartupView();
+		});
+
+		// Re-pointing the startup view deletes the existing link and recreates
+		// it under the newly selected view in a single transaction
+
+		await test.step('Change the startup view to the second user view', async () => {
+			await selectUserView(secondUserViewName);
+
+			await setAsStartupView();
+		});
+
+		await test.step('The most recently set startup view is applied on reload', async () => {
+			await page.reload();
+
+			await waitForFDS({
+				page,
+				visualizationMode: EFDSVisualizationMode.TABLE,
+			});
+
+			await expect(fdsSamplePage.userViewsSelectorButton).toContainText(
+				secondUserViewName
+			);
+		});
+	}
+);

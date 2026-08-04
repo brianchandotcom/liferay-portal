@@ -324,6 +324,13 @@ public interface CPOptionValueLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
+	@Indexable(type = IndexableType.REINDEX)
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPOptionValue getOrAddEmptyCPOptionValue(
+			String externalReferenceCode, long cpOptionId, long companyId,
+			long userId)
+		throws PortalException;
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -388,4 +395,4 @@ public interface CPOptionValueLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1728763061
+// LIFERAY-SERVICE-BUILDER-HASH:1555397846

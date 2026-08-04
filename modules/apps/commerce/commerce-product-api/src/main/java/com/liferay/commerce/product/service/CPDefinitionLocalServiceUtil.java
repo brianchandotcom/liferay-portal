@@ -684,6 +684,15 @@ public class CPDefinitionLocalServiceUtil {
 		return getService().getLayoutUuid(groupId, cpDefinitionId);
 	}
 
+	public static CPDefinition getOrAddEmptyCPDefinition(
+			String externalReferenceCode, String productTypeName,
+			long companyId, long userId, long groupId)
+		throws PortalException {
+
+		return getService().getOrAddEmptyCPDefinition(
+			externalReferenceCode, productTypeName, companyId, userId, groupId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -982,4 +991,4 @@ public class CPDefinitionLocalServiceUtil {
 			CPDefinitionLocalServiceUtil.class, CPDefinitionLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1263191931
+// LIFERAY-SERVICE-BUILDER-HASH:-1068329835

@@ -86,6 +86,7 @@ export interface IFrontendDataSetContext {
 	selectedItemsKey: string;
 	selectedItemsValue?: Array<any>;
 	selectionType?: 'single' | 'multiple';
+	setStartupSnapshotURL?: string;
 	showBulkActionsManagementBar: boolean;
 	showBulkActionsManagementBarActions: boolean;
 	showInfoPanel: boolean;

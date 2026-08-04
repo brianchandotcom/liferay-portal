@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.portlet.MockActionRequest;
@@ -78,14 +77,6 @@ public class ExportInstanceMVCActionCommandTest {
 		ReflectionTestUtil.setFieldValue(
 			_exportInstanceMVCActionCommand, "_language", _language);
 
-		Mockito.when(
-			_permissionChecker.isOmniadmin()
-		).thenReturn(
-			true
-		);
-
-		PermissionThreadLocal.setPermissionChecker(_permissionChecker);
-
 		_featureFlagManagerUtilMockedStatic = Mockito.mockStatic(
 			FeatureFlagManagerUtil.class);
 
@@ -111,8 +102,6 @@ public class ExportInstanceMVCActionCommandTest {
 
 	@After
 	public void tearDown() {
-		PermissionThreadLocal.setPermissionChecker(null);
-
 		_featureFlagManagerUtilMockedStatic.close();
 		_jsonPortletResponseUtilMockedStatic.close();
 	}

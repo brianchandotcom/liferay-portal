@@ -1,6 +1,7 @@
 import AccountInfoBar from './components/AccountInfoBar';
 import BasePage from 'shared/components/base-page';
 import ClayLayout from '@clayui/layout';
+import MostEngagedIndividuals from './components/MostEngagedIndividuals';
 import React from 'react';
 import TopAssets from './components/TopAssets';
 import TopCategoriesAndTags from './components/TopCategoriesAndTags';
@@ -70,6 +71,12 @@ const Overview: React.FC<IOverviewProps> = ({account}) => {
 						account={account}
 						className="flex-grow-1"
 					/>
+				</ClayLayout.Col>
+			</ClayLayout.Row>
+
+			<ClayLayout.Row>
+				<ClayLayout.Col size={12}>
+					<MostEngagedIndividuals />
 				</ClayLayout.Col>
 			</ClayLayout.Row>
 		</BasePage.Context.Provider>

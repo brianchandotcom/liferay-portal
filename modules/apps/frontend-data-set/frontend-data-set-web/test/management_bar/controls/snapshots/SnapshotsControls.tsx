@@ -32,6 +32,7 @@ const mockFDSContext = {
 	namespace: 'testNamespace_',
 	onSnapshotChange: jest.fn(),
 	portletId: 'testPortlet',
+	setStartupSnapshotURL: '/set-startup-snapshot-url',
 };
 
 const ownedSnapshot = {erc: 'owned-erc', id: 1, label: 'Owned View'};
@@ -76,7 +77,7 @@ describe('SnapshotsControls action gating', () => {
 				snapshotUpdated: false,
 				snapshots: [{headerVisible: false, items: [ownedSnapshot]}],
 				sorts: [],
-				startupViewDataSetSnapshotERC: null,
+				startupSnapshot: null,
 				visibleFieldNames: {},
 			});
 		});
@@ -109,7 +110,7 @@ describe('SnapshotsControls action gating', () => {
 					},
 				],
 				sorts: [],
-				startupViewDataSetSnapshotERC: null,
+				startupSnapshot: null,
 				visibleFieldNames: {},
 			});
 		});
@@ -123,6 +124,63 @@ describe('SnapshotsControls action gating', () => {
 			expect(screen.queryByText('share-view')).not.toBeInTheDocument();
 			expect(screen.queryByText('delete-view')).not.toBeInTheDocument();
 		});
+	});
+});
+
+describe('SnapshotsControls startup snapshot', () => {
+	it('sets the active view as the startup snapshot through the resource command', async () => {
+		const {viewsDispatch} = renderSnapshotsControls({
+			activeSnapshotERC: ownedSnapshot.erc,
+			activeView: null,
+			defaultSnapshot: {},
+			paginationDelta: null,
+			snapshotUpdated: false,
+			snapshots: [{headerVisible: false, items: [ownedSnapshot]}],
+			sorts: [],
+			startupSnapshot: null,
+			visibleFieldNames: {},
+		});
+
+		await openActionsDropdown();
+
+		fetch.mockResponseOnce('{}');
+
+		await userEvent.click(await screen.findByText('set-as-startup-view'));
+
+		await waitFor(() =>
+			expect(fetch).toHaveBeenCalledWith(
+				'/set-startup-snapshot-url',
+				expect.objectContaining({method: 'POST'})
+			)
+		);
+
+		await waitFor(() =>
+			expect(viewsDispatch).toHaveBeenCalledWith({
+				type: 'ADD_OR_UPDATE_STARTUP_SNAPSHOT',
+				value: {startupSnapshot: {erc: ownedSnapshot.erc}},
+			})
+		);
+	});
+
+	it('hides "Set as Startup View" when the active view is already the startup snapshot', async () => {
+		renderSnapshotsControls({
+			activeSnapshotERC: ownedSnapshot.erc,
+			activeView: null,
+			defaultSnapshot: {},
+			paginationDelta: null,
+			snapshotUpdated: false,
+			snapshots: [{headerVisible: false, items: [ownedSnapshot]}],
+			sorts: [],
+			startupSnapshot: {erc: ownedSnapshot.erc},
+			visibleFieldNames: {},
+		});
+
+		await openActionsDropdown();
+
+		expect(await screen.findByText('save-view-as')).toBeInTheDocument();
+		expect(
+			screen.queryByText('set-as-startup-view')
+		).not.toBeInTheDocument();
 	});
 });
 

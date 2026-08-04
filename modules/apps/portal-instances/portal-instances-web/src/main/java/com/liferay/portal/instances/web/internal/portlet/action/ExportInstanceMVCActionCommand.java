@@ -6,6 +6,7 @@
 package com.liferay.portal.instances.web.internal.portlet.action;
 
 import com.liferay.portal.db.partition.util.DBPartitionUtil;
+import com.liferay.portal.instances.configuration.PortalInstanceConfigurationExporter;
 import com.liferay.portal.instances.web.internal.constants.PortalInstancesPortletKeys;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -61,6 +62,9 @@ public class ExportInstanceMVCActionCommand extends BaseMVCActionCommand {
 		try {
 			_companyService.exportCompany(companyId);
 
+			_portalInstanceConfigurationExporter.exportConfigurations(
+				companyId);
+
 			jsonObject.put(
 				"successMessage",
 				_language.format(
@@ -98,5 +102,9 @@ public class ExportInstanceMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private PortalInstanceConfigurationExporter
+		_portalInstanceConfigurationExporter;
 
 }

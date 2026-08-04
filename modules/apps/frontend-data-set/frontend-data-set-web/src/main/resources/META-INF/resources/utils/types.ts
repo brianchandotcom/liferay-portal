@@ -9,7 +9,7 @@ import React from 'react';
 
 import {IInlineNotificationComponent} from '../inline_notification/InlineNotification';
 import {EEntityFieldType} from '../management_bar/controls/filters/utils/types';
-import {ISnapshots} from '../views/ViewsContext';
+import {ISnapshots, IStartupSnapshot} from '../views/ViewsContext';
 
 export declare function FrontendDataSet({
 	actionParameterName,
@@ -385,6 +385,7 @@ export interface IFrontendDataSetProps {
 		initialPageNumber?: number;
 	};
 	portletId?: string;
+	saveStartupSnapshotURL?: string;
 	selectedItems?: any[];
 	selectedItemsKey?: string | undefined;
 	selectionType?: 'single' | 'multiple';
@@ -399,7 +400,7 @@ export interface IFrontendDataSetProps {
 	snapshots?: Array<ISnapshots>;
 	snapshotsEnabled?: boolean;
 	sorts?: TSort[];
-	startupViewDataSetSnapshotERC?: null | string;
+	startupSnapshot?: IStartupSnapshot | null;
 	style?: 'default' | 'fluid' | 'stacked';
 	uniformActionsDisplay?: boolean;
 	views: IView[];

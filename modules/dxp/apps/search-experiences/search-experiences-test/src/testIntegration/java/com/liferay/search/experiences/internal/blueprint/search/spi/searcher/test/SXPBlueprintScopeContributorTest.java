@@ -160,7 +160,10 @@ public class SXPBlueprintScopeContributorTest {
 	public void testSpaceScope() throws Exception {
 		_configureSXPBlueprint(_spaceGroup.getExternalReferenceCode());
 
-		_assertSearch(ListUtil.toList(_SPACE_TITLE));
+		_assertSearch(
+			Arrays.asList(
+				_SPACE_CONTENTS_OBJECT_ENTRY_FOLDER_TITLE,
+				_SPACE_FILES_OBJECT_ENTRY_FOLDER_TITLE, _SPACE_TITLE));
 	}
 
 	private static DepotEntry _addDepotEntry(int type) throws Exception {
@@ -256,6 +259,12 @@ public class SXPBlueprintScopeContributorTest {
 
 	private static final String _LOCALIZED_TITLE_FIELD =
 		"localized_title_en_US";
+
+	private static final String _SPACE_CONTENTS_OBJECT_ENTRY_FOLDER_TITLE =
+		"contents";
+
+	private static final String _SPACE_FILES_OBJECT_ENTRY_FOLDER_TITLE =
+		"files";
 
 	private static final String _SPACE_TITLE = "space title";
 

@@ -33,12 +33,14 @@ import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RepositoryLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.AssertUtils;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -97,6 +99,32 @@ public class DepotEntryLocalServiceTest {
 			_addStagedDepotEntry(DepotConstants.TYPE_ASSET_LIBRARY), 0);
 		_assertObjectEntryFolders(
 			_addStagedDepotEntry(DepotConstants.TYPE_SPACE), 2);
+	}
+
+	@Test
+	@TestInfo("LPD-101211")
+	public void testAddDepotEntryWithoutPrincipal() throws Exception {
+		String name = PrincipalThreadLocal.getName();
+
+		PrincipalThreadLocal.setName(null);
+
+		try {
+			DepotEntry depotEntry = _addDepotEntry(DepotConstants.TYPE_SPACE);
+
+			_assertObjectEntryFolders(depotEntry, 2);
+
+			Group group = depotEntry.getGroup();
+
+			Repository repository = _repositoryLocalService.fetchRepository(
+				group.getGroupId(), TempFileEntryUtil.class.getName(),
+				TempFileEntryUtil.class.getName());
+
+			Assert.assertEquals(
+				group.getCreatorUserId(), repository.getUserId());
+		}
+		finally {
+			PrincipalThreadLocal.setName(name);
+		}
 	}
 
 	@Test

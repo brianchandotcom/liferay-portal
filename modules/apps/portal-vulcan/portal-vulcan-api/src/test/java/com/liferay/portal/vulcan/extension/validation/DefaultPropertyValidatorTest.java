@@ -262,6 +262,21 @@ public class DefaultPropertyValidatorTest {
 			propertyDefinition, RandomTestUtil.randomBoolean());
 	}
 
+	@Test(expected = ValidationException.class)
+	public void testValidateNullMultipleElements() {
+		DefaultPropertyValidator defaultPropertyValidator =
+			new DefaultPropertyValidator();
+
+		PropertyDefinition propertyDefinition = new PropertyDefinition(
+			Collections.singleton(TestClass.class),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			PropertyDefinition.PropertyType.MULTIPLE_ELEMENT,
+			defaultPropertyValidator, RandomTestUtil.randomBoolean());
+
+		defaultPropertyValidator.validate(propertyDefinition, null);
+	}
+
 	@Test
 	public void testValidateSingleElement() {
 		DefaultPropertyValidator defaultPropertyValidator =

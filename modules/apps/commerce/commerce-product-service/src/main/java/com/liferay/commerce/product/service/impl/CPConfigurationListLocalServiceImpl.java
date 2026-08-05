@@ -503,16 +503,14 @@ public class CPConfigurationListLocalServiceImpl
 		cpConfigurationList.setDisplayDate(displayDate);
 		cpConfigurationList.setExpirationDate(expirationDate);
 
-		if (cpConfigurationList.getStatus() == WorkflowConstants.STATUS_EMPTY) {
-			cpConfigurationList.setStatus(
-				_emptyModelManager.solveEmptyModel(
-					cpConfigurationList.getExternalReferenceCode(),
-					cpConfigurationList.getModelClassName(),
-					cpConfigurationList.getCompanyId(),
-					cpConfigurationList.getGroupId(),
-					cpConfigurationList.getStatus(),
-					() -> WorkflowConstants.STATUS_APPROVED));
-		}
+		cpConfigurationList.setStatus(
+			_emptyModelManager.solveEmptyModel(
+				cpConfigurationList.getExternalReferenceCode(),
+				cpConfigurationList.getModelClassName(),
+				cpConfigurationList.getCompanyId(),
+				cpConfigurationList.getGroupId(),
+				cpConfigurationList.getStatus(),
+				() -> WorkflowConstants.STATUS_APPROVED));
 
 		cpConfigurationList.setExpandoBridgeAttributes(serviceContext);
 

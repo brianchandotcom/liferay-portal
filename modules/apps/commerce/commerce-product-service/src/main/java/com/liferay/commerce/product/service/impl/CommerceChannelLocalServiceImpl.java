@@ -530,15 +530,12 @@ public class CommerceChannelLocalServiceImpl
 		commerceChannel.setPriceDisplayType(priceDisplayType);
 		commerceChannel.setDiscountsTargetNetPrice(discountsTargetNetPrice);
 
-		if (commerceChannel.getStatus() == WorkflowConstants.STATUS_EMPTY) {
-			commerceChannel.setStatus(
-				_emptyModelManager.solveEmptyModel(
-					commerceChannel.getExternalReferenceCode(),
-					commerceChannel.getModelClassName(),
-					commerceChannel.getCompanyId(), 0,
-					commerceChannel.getStatus(),
-					() -> WorkflowConstants.STATUS_APPROVED));
-		}
+		commerceChannel.setStatus(
+			_emptyModelManager.solveEmptyModel(
+				commerceChannel.getExternalReferenceCode(),
+				commerceChannel.getModelClassName(),
+				commerceChannel.getCompanyId(), 0, commerceChannel.getStatus(),
+				() -> WorkflowConstants.STATUS_APPROVED));
 
 		commerceChannel = commerceChannelPersistence.update(commerceChannel);
 

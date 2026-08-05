@@ -483,15 +483,13 @@ public class CommerceCurrencyLocalServiceImpl
 		commerceCurrency.setPriority(priority);
 		commerceCurrency.setActive(active);
 
-		if (commerceCurrency.getStatus() == WorkflowConstants.STATUS_EMPTY) {
-			commerceCurrency.setStatus(
-				_emptyModelManager.solveEmptyModel(
-					commerceCurrency.getExternalReferenceCode(),
-					commerceCurrency.getModelClassName(),
-					commerceCurrency.getCompanyId(), 0,
-					commerceCurrency.getStatus(),
-					() -> WorkflowConstants.STATUS_APPROVED));
-		}
+		commerceCurrency.setStatus(
+			_emptyModelManager.solveEmptyModel(
+				commerceCurrency.getExternalReferenceCode(),
+				commerceCurrency.getModelClassName(),
+				commerceCurrency.getCompanyId(), 0,
+				commerceCurrency.getStatus(),
+				() -> WorkflowConstants.STATUS_APPROVED));
 
 		return commerceCurrencyPersistence.update(commerceCurrency);
 	}

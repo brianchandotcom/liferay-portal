@@ -270,14 +270,12 @@ public class CPTaxCategoryLocalServiceImpl
 		cpTaxCategory.setNameMap(nameMap);
 		cpTaxCategory.setDescriptionMap(descriptionMap);
 
-		if (cpTaxCategory.getStatus() == WorkflowConstants.STATUS_EMPTY) {
-			cpTaxCategory.setStatus(
-				_emptyModelManager.solveEmptyModel(
-					cpTaxCategory.getExternalReferenceCode(),
-					cpTaxCategory.getModelClassName(),
-					cpTaxCategory.getCompanyId(), 0, cpTaxCategory.getStatus(),
-					() -> WorkflowConstants.STATUS_APPROVED));
-		}
+		cpTaxCategory.setStatus(
+			_emptyModelManager.solveEmptyModel(
+				cpTaxCategory.getExternalReferenceCode(),
+				cpTaxCategory.getModelClassName(), cpTaxCategory.getCompanyId(),
+				0, cpTaxCategory.getStatus(),
+				() -> WorkflowConstants.STATUS_APPROVED));
 
 		return cpTaxCategoryPersistence.update(cpTaxCategory);
 	}

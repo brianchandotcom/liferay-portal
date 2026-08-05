@@ -401,15 +401,12 @@ public class CommerceCatalogLocalServiceImpl
 		commerceCatalog.setCommerceCurrencyCode(commerceCurrencyCode);
 		commerceCatalog.setCatalogDefaultLanguageId(catalogDefaultLanguageId);
 
-		if (commerceCatalog.getStatus() == WorkflowConstants.STATUS_EMPTY) {
-			commerceCatalog.setStatus(
-				_emptyModelManager.solveEmptyModel(
-					commerceCatalog.getExternalReferenceCode(),
-					commerceCatalog.getModelClassName(),
-					commerceCatalog.getCompanyId(), 0,
-					commerceCatalog.getStatus(),
-					() -> WorkflowConstants.STATUS_APPROVED));
-		}
+		commerceCatalog.setStatus(
+			_emptyModelManager.solveEmptyModel(
+				commerceCatalog.getExternalReferenceCode(),
+				commerceCatalog.getModelClassName(),
+				commerceCatalog.getCompanyId(), 0, commerceCatalog.getStatus(),
+				() -> WorkflowConstants.STATUS_APPROVED));
 
 		return commerceCatalogPersistence.update(commerceCatalog);
 	}

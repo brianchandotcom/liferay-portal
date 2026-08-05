@@ -13,6 +13,7 @@ import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Role;
@@ -31,12 +32,12 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.site.dsr.site.initializer.constants.DSRRoleConstants;
 
 import java.io.ByteArrayOutputStream;
 
@@ -166,35 +167,7 @@ public class GetEmailNotificationRolesMVCResourceCommandTest {
 					))
 			).put(
 				"regularRoles",
-				JSONUtil.putAll(
-					JSONUtil.put(
-						"name",
-						AccountRoleConstants.ROLE_NAME_ORDER_ADMINISTRATOR),
-					JSONUtil.put(
-						"name", AccountRoleConstants.ROLE_NAME_SUPPLIER),
-					JSONUtil.put("name", DSRRoleConstants.NAME_DSR_SELLER),
-					JSONUtil.put("name", RoleConstants.ADMINISTRATOR),
-					JSONUtil.put("name", RoleConstants.ANALYTICS_ADMINISTRATOR),
-					JSONUtil.put("name", RoleConstants.CMS_ADMINISTRATOR),
-					JSONUtil.put("name", RoleConstants.OWNER),
-					JSONUtil.put("name", RoleConstants.PORTAL_CONTENT_REVIEWER),
-					JSONUtil.put("name", RoleConstants.POWER_USER),
-					JSONUtil.put("name", RoleConstants.PUBLICATIONS_ADMIN),
-					JSONUtil.put("name", RoleConstants.PUBLICATIONS_EDITOR),
-					JSONUtil.put("name", RoleConstants.PUBLICATIONS_PUBLISHER),
-					JSONUtil.put("name", RoleConstants.PUBLICATIONS_USER),
-					JSONUtil.put("name", RoleConstants.PUBLICATIONS_VIEWER),
-					JSONUtil.put("name", RoleConstants.USER),
-					JSONUtil.put(
-						"label", regularRole1.getTitle(LocaleUtil.getDefault())
-					).put(
-						"name", regularRole1.getName()
-					),
-					JSONUtil.put(
-						"label", regularRole2.getTitle(LocaleUtil.getDefault())
-					).put(
-						"name", regularRole2.getName()
-					))
+				_getRegularRolesJSONArray(regularRole1, regularRole2)
 			).toString(),
 			byteArrayOutputStream.toString(), JSONCompareMode.LENIENT);
 
@@ -223,6 +196,46 @@ public class GetEmailNotificationRolesMVCResourceCommandTest {
 		return _roleLocalService.addRole(
 			RandomTestUtil.randomString(), user.getUserId(), null, 0,
 			RandomTestUtil.randomString(), null, null, type, null, null);
+	}
+
+	private JSONArray _getRegularRolesJSONArray(
+		Role regularRole1, Role regularRole2) {
+
+		JSONArray regularRolesJSONArray = JSONUtil.putAll(
+			JSONUtil.put(
+				"name", AccountRoleConstants.ROLE_NAME_ORDER_ADMINISTRATOR),
+			JSONUtil.put("name", AccountRoleConstants.ROLE_NAME_SUPPLIER),
+			JSONUtil.put("name", RoleConstants.ADMINISTRATOR),
+			JSONUtil.put("name", RoleConstants.ANALYTICS_ADMINISTRATOR),
+			JSONUtil.put("name", RoleConstants.CMS_ADMINISTRATOR),
+			JSONUtil.put("name", RoleConstants.OWNER),
+			JSONUtil.put("name", RoleConstants.PORTAL_CONTENT_REVIEWER),
+			JSONUtil.put("name", RoleConstants.POWER_USER),
+			JSONUtil.put("name", RoleConstants.PUBLICATIONS_ADMIN),
+			JSONUtil.put("name", RoleConstants.PUBLICATIONS_EDITOR),
+			JSONUtil.put("name", RoleConstants.PUBLICATIONS_PUBLISHER),
+			JSONUtil.put("name", RoleConstants.PUBLICATIONS_USER),
+			JSONUtil.put("name", RoleConstants.PUBLICATIONS_VIEWER),
+			JSONUtil.put("name", RoleConstants.USER),
+			JSONUtil.put(
+				"label", regularRole1.getTitle(LocaleUtil.getDefault())
+			).put(
+				"name", regularRole1.getName()
+			),
+			JSONUtil.put(
+				"label", regularRole2.getTitle(LocaleUtil.getDefault())
+			).put(
+				"name", regularRole2.getName()
+			));
+
+		// The DSR site initializer creates the DSR roles, and it is deployed on
+		// CI but excluded from the portal bundle.
+
+		if (Validator.isNotNull(System.getenv("JENKINS_HOME"))) {
+			regularRolesJSONArray.put(JSONUtil.put("name", "DSR Seller"));
+		}
+
+		return regularRolesJSONArray;
 	}
 
 	@Inject

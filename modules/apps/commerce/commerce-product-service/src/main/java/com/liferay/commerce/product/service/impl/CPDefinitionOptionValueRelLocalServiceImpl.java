@@ -899,6 +899,22 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 			cpDefinitionOptionValueRel, preselected);
 	}
 
+	@Override
+	public CPDefinitionOptionValueRel updateExternalReferenceCode(
+			String externalReferenceCode, long cpDefinitionOptionValueRelId)
+		throws PortalException {
+
+		CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
+			cpDefinitionOptionValueRelPersistence.findByPrimaryKey(
+				cpDefinitionOptionValueRelId);
+
+		cpDefinitionOptionValueRel.setExternalReferenceCode(
+			externalReferenceCode);
+
+		return cpDefinitionOptionValueRelPersistence.update(
+			cpDefinitionOptionValueRel);
+	}
+
 	private void _addCPDefinitionOptionValueRel(
 			long cpDefinitionOptionRelId, List<CPOptionValue> cpOptionValues,
 			ServiceContext serviceContext)

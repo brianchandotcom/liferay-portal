@@ -942,6 +942,20 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		return cpDefinitionOptionRel;
 	}
 
+	@Override
+	public CPDefinitionOptionRel updateExternalReferenceCode(
+			String externalReferenceCode, long cpDefinitionOptionRelId)
+		throws PortalException {
+
+		CPDefinitionOptionRel cpDefinitionOptionRel =
+			cpDefinitionOptionRelPersistence.findByPrimaryKey(
+				cpDefinitionOptionRelId);
+
+		cpDefinitionOptionRel.setExternalReferenceCode(externalReferenceCode);
+
+		return cpDefinitionOptionRelPersistence.update(cpDefinitionOptionRel);
+	}
+
 	private SearchContext _buildSearchContext(
 		long companyId, long groupId, long cpDefinitionId, String keywords,
 		int start, int end, Sort[] sorts) {

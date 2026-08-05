@@ -394,7 +394,7 @@ describe('AccountsDataSet', () => {
 		const segmentFilter = lastFilters?.find((f) => f.id === 'segmentId');
 
 		expect(segmentFilter?.apiURL).toBe(
-			'/o/faro/contacts/23/individual_segment?channelId=123'
+			'/o/faro/contacts/23/individual_segment/search?channelId=123'
 		);
 	});
 

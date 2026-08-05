@@ -188,7 +188,7 @@ const AccountsDataSet: React.FC<IAccountsDataSetProps> = ({
 						type: 'selection',
 					},
 					{
-						apiURL: `/o/faro/contacts/${groupId}/individual_segment?channelId=${channelId}`,
+						apiURL: `/o/faro/contacts/${groupId}/individual_segment/search?channelId=${channelId}`,
 						entityFieldType: 'string',
 						id: 'segmentId',
 						itemKey: 'id',

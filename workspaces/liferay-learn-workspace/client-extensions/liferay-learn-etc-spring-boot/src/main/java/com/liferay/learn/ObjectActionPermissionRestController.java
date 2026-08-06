@@ -212,7 +212,7 @@ public class ObjectActionPermissionRestController extends BaseRestController {
 		"DELETE", "PERMISSIONS", "UPDATE", "VIEW");
 	private static final List<String>
 		_excludedObjectDefinitionsExternalReferenceCodes = Arrays.asList(
-			"T4T14_ENROLLMENTS", "T4T14_QUIZ_ANSWER", "T4T14_QUIZ_QUESTION");
+			"P2S3_ENROLLMENT", "P2S3_QUIZ_ANSWER", "P2S3_QUIZ_QUESTION");
 
 	@Autowired
 	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;

@@ -131,7 +131,9 @@ public class JenkinsResultsParserUtil {
 	public static boolean debug;
 
 	public static void addRedactToken(String token) {
-		if (isNullOrEmpty(token) || _forbiddenRedactTokens.contains(token)) {
+		Set<String> forbiddenRedactTokens = _getForbiddenRedactTokens();
+
+		if (isNullOrEmpty(token) || forbiddenRedactTokens.contains(token)) {
 			return;
 		}
 
@@ -4653,9 +4655,11 @@ public class JenkinsResultsParserUtil {
 			return string;
 		}
 
+		Set<String> forbiddenRedactTokens = _getForbiddenRedactTokens();
+
 		synchronized (_redactTokens) {
 			for (String redactToken : _redactTokens) {
-				if (_forbiddenRedactTokens.contains(redactToken)) {
+				if (forbiddenRedactTokens.contains(redactToken)) {
 					continue;
 				}
 
@@ -6367,6 +6371,35 @@ public class JenkinsResultsParserUtil {
 		}
 	}
 
+	private static synchronized Set<String> _getForbiddenRedactTokens() {
+		if (_forbiddenRedactTokens != null) {
+			return _forbiddenRedactTokens;
+		}
+
+		Set<String> forbiddenRedactTokens = new HashSet<>();
+
+		try {
+			forbiddenRedactTokens.addAll(
+				getBuildPropertyAsList(
+					true, "liferay.jenkins.plugin.op.connect.ignored.values"));
+
+			for (String fobiddenRedactToken : forbiddenRedactTokens) {
+				fobiddenRedactToken = fobiddenRedactToken.trim();
+
+				if (!isNullOrEmpty(fobiddenRedactToken)) {
+					forbiddenRedactTokens.add(fobiddenRedactToken);
+				}
+			}
+		}
+		catch (IOException ioException) {
+			forbiddenRedactTokens = new HashSet<>();
+		}
+
+		_forbiddenRedactTokens = forbiddenRedactTokens;
+
+		return _forbiddenRedactTokens;
+	}
+
 	private static synchronized JSONArray _getGitDirectoriesJSONArray() {
 		if (_gitDirectoriesJSONArray != null) {
 			return _gitDirectoriesJSONArray;
@@ -6792,13 +6825,15 @@ public class JenkinsResultsParserUtil {
 				"Unable to get build properties", ioException);
 		}
 
+		Set<String> forbiddenRedactTokens = _getForbiddenRedactTokens();
+
 		for (int i = 1; properties.containsKey(_getRedactTokenKey(i)); i++) {
 			String key = _getRedactTokenKey(i);
 
 			String redactToken = getProperty(properties, key);
 
 			if (isNullOrEmpty(redactToken) ||
-				_forbiddenRedactTokens.contains(redactToken) ||
+				forbiddenRedactTokens.contains(redactToken) ||
 				redactToken.matches("^\\s*\\d{5}\\s*$")) {
 
 				continue;
@@ -6906,8 +6941,7 @@ public class JenkinsResultsParserUtil {
 		"(?<ecrDockerImageName>((?<repository>[^/\\s]+)/)?" +
 			"(?<name>[^/:\\s]+)(:(?<version>[^@:\\s]+))?)" +
 				"(@sha256:[^\\s]+)?");
-	private static final List<String> _forbiddenRedactTokens = Arrays.asList(
-		"admin", "liferay", "test");
+	private static Set<String> _forbiddenRedactTokens;
 	private static JSONArray _gitDirectoriesJSONArray;
 	private static final DateFormat _gitHubDateFormat;
 	private static final Pattern _gitSHAPattern = Pattern.compile(

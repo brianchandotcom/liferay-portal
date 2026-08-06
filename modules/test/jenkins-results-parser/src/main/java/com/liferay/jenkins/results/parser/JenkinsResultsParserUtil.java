@@ -6401,7 +6401,8 @@ public class JenkinsResultsParserUtil {
 			return _forbiddenRedactTokens;
 		}
 
-		Set<String> forbiddenRedactTokens = new HashSet<>();
+		Set<String> forbiddenRedactTokens = new HashSet<>(
+			Arrays.asList("admin", "liferay", "test"));
 
 		try {
 			for (String forbiddenRedactToken :
@@ -6417,7 +6418,8 @@ public class JenkinsResultsParserUtil {
 			}
 		}
 		catch (IOException ioException) {
-			forbiddenRedactTokens = new HashSet<>();
+			System.out.println(
+				"WARNING: Unable to get forbidden redact tokens");
 		}
 
 		_forbiddenRedactTokens = forbiddenRedactTokens;

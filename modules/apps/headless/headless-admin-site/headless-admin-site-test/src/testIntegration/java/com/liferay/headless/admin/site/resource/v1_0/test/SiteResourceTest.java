@@ -625,13 +625,14 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 	private void _testGetSitesPageWithExternalReferenceCodes()
 		throws Exception {
 
-		Site wantedSite = _testPostSite_addSite(randomSite());
+		Site postIncludedSite = _testPostSite_addSite(randomSite());
 
 		_testPostSite_addSite(randomSite());
 
 		Page<Site> sitesPage = siteResource.getSitesPage(
-			null, null, new String[] {wantedSite.getExternalReferenceCode()},
-			null, Pagination.of(1, 100));
+			null, null,
+			new String[] {postIncludedSite.getExternalReferenceCode()}, null,
+			Pagination.of(1, 100));
 
 		List<Site> sites = (List<Site>)sitesPage.getItems();
 
@@ -640,7 +641,7 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 		Site site = sites.get(0);
 
 		Assert.assertEquals(
-			wantedSite.getExternalReferenceCode(),
+			postIncludedSite.getExternalReferenceCode(),
 			site.getExternalReferenceCode());
 	}
 

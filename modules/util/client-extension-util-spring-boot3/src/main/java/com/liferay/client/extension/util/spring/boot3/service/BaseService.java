@@ -344,6 +344,8 @@ public abstract class BaseService {
 
 				return clientResponse.bodyToMono(
 					String.class
+				).defaultIfEmpty(
+					""
 				).flatMap(
 					body -> Mono.error(
 						new WebClientResponseException(

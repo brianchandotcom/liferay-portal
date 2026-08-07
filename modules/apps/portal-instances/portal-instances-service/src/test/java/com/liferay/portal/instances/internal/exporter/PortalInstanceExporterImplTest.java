@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.instances.internal.configuration;
+package com.liferay.portal.instances.internal.exporter;
 
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.lang.SafeCloseable;
@@ -12,6 +12,8 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 import com.liferay.portal.db.partition.util.DBPartitionUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.service.CompanyService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
@@ -26,6 +28,7 @@ import java.util.Dictionary;
 import org.apache.felix.cm.file.ConfigurationHandler;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
@@ -36,7 +39,7 @@ import org.mockito.Mockito;
 /**
  * @author Jorge Avalos
  */
-public class PortalInstanceConfigurationExporterImplTest {
+public class PortalInstanceExporterImplTest {
 
 	@ClassRule
 	public static LiferayUnitTestRule liferayUnitTestRule =
@@ -45,7 +48,9 @@ public class PortalInstanceConfigurationExporterImplTest {
 	@Before
 	public void setUp() {
 		ReflectionTestUtil.setFieldValue(
-			_portalInstanceConfigurationExporterImpl, "_groupLocalService",
+			_portalInstanceExporterImpl, "_companyService", _companyService);
+		ReflectionTestUtil.setFieldValue(
+			_portalInstanceExporterImpl, "_groupLocalService",
 			_groupLocalService);
 
 		_dbPartitionUtilMockedStatic = Mockito.mockStatic(
@@ -73,8 +78,7 @@ public class PortalInstanceConfigurationExporterImplTest {
 
 		_setUpConfigurations(configurationId, encodedDictionary);
 
-		_portalInstanceConfigurationExporterImpl.exportConfigurations(
-			companyId);
+		_portalInstanceExporterImpl.exportPortalInstance(companyId);
 
 		_dbPartitionUtilMockedStatic.verify(
 			() -> DBPartitionUtil.exportConfiguration(
@@ -94,8 +98,7 @@ public class PortalInstanceConfigurationExporterImplTest {
 		_setUpGroup(companyId, groupId);
 		_setUpConfigurations(configurationId, encodedDictionary);
 
-		_portalInstanceConfigurationExporterImpl.exportConfigurations(
-			companyId);
+		_portalInstanceExporterImpl.exportPortalInstance(companyId);
 
 		_dbPartitionUtilMockedStatic.verify(
 			() -> DBPartitionUtil.exportConfiguration(
@@ -115,8 +118,7 @@ public class PortalInstanceConfigurationExporterImplTest {
 
 		_setUpConfigurations(configurationId, encodedDictionary);
 
-		_portalInstanceConfigurationExporterImpl.exportConfigurations(
-			companyId);
+		_portalInstanceExporterImpl.exportPortalInstance(companyId);
 
 		_dbPartitionUtilMockedStatic.verify(
 			() -> DBPartitionUtil.exportConfiguration(
@@ -131,13 +133,37 @@ public class PortalInstanceConfigurationExporterImplTest {
 				PropsValuesTestUtil.swapWithSafeCloseable(
 					"DATABASE_PARTITION_ENABLED", true)) {
 
-			_portalInstanceConfigurationExporterImpl.exportConfigurations(
+			_portalInstanceExporterImpl.exportPortalInstance(
 				RandomTestUtil.randomLong());
 		}
 
 		_dbPartitionUtilMockedStatic.verify(
 			() -> DBPartitionUtil.getConfigurations(Mockito.anyLong()),
 			Mockito.never());
+	}
+
+	@Test
+	public void testConfigurationNotExportedForFailedCompanyExport()
+		throws Exception {
+
+		long companyId = RandomTestUtil.randomLong();
+
+		_setUpConfigurations(
+			RandomTestUtil.randomString(),
+			_getEncodedDictionary(
+				ExtendedObjectClassDefinition.Scope.COMPANY, companyId));
+
+		Mockito.when(
+			_companyService.exportCompany(companyId)
+		).thenThrow(
+			new PrincipalException.MustBeOmniadmin(RandomTestUtil.randomLong())
+		);
+
+		Assert.assertThrows(
+			PrincipalException.MustBeOmniadmin.class,
+			() -> _portalInstanceExporterImpl.exportPortalInstance(companyId));
+
+		_assertNoConfigurationExported();
 	}
 
 	@Test
@@ -155,7 +181,7 @@ public class PortalInstanceConfigurationExporterImplTest {
 			_getEncodedDictionary(
 				ExtendedObjectClassDefinition.Scope.GROUP, groupId));
 
-		_portalInstanceConfigurationExporterImpl.exportConfigurations(
+		_portalInstanceExporterImpl.exportPortalInstance(
 			RandomTestUtil.randomLong());
 
 		_assertNoConfigurationExported();
@@ -172,7 +198,7 @@ public class PortalInstanceConfigurationExporterImplTest {
 				RandomTestUtil.randomString(), null)
 		);
 
-		_portalInstanceConfigurationExporterImpl.exportConfigurations(
+		_portalInstanceExporterImpl.exportPortalInstance(
 			RandomTestUtil.randomLong());
 
 		_assertNoConfigurationExported();
@@ -190,7 +216,7 @@ public class PortalInstanceConfigurationExporterImplTest {
 			_getEncodedDictionary(
 				ExtendedObjectClassDefinition.Scope.GROUP, groupId));
 
-		_portalInstanceConfigurationExporterImpl.exportConfigurations(
+		_portalInstanceExporterImpl.exportPortalInstance(
 			RandomTestUtil.randomLong());
 
 		_assertNoConfigurationExported();
@@ -217,8 +243,7 @@ public class PortalInstanceConfigurationExporterImplTest {
 					groupId
 				).build()));
 
-		_portalInstanceConfigurationExporterImpl.exportConfigurations(
-			companyId);
+		_portalInstanceExporterImpl.exportPortalInstance(companyId);
 
 		_assertNoConfigurationExported();
 	}
@@ -233,7 +258,7 @@ public class PortalInstanceConfigurationExporterImplTest {
 				ExtendedObjectClassDefinition.Scope.COMPANY,
 				RandomTestUtil.randomLong()));
 
-		_portalInstanceConfigurationExporterImpl.exportConfigurations(
+		_portalInstanceExporterImpl.exportPortalInstance(
 			RandomTestUtil.randomLong());
 
 		_assertNoConfigurationExported();
@@ -246,10 +271,29 @@ public class PortalInstanceConfigurationExporterImplTest {
 			_getEncodedDictionary(
 				RandomTestUtil.randomString(), RandomTestUtil.randomString()));
 
-		_portalInstanceConfigurationExporterImpl.exportConfigurations(
+		_portalInstanceExporterImpl.exportPortalInstance(
 			RandomTestUtil.randomLong());
 
 		_assertNoConfigurationExported();
+	}
+
+	@Test
+	public void testExportPortalInstance() throws Exception {
+		long companyId = RandomTestUtil.randomLong();
+
+		String exportedPartitionName =
+			_portalInstanceExporterImpl.exportPortalInstance(companyId);
+
+		Assert.assertEquals(
+			DBPartitionUtil.DATABASE_EXPORTED_PARTITION_SCHEMA_NAME_PREFIX +
+				companyId,
+			exportedPartitionName);
+
+		Mockito.verify(
+			_companyService
+		).exportCompany(
+			companyId
+		);
 	}
 
 	private void _assertNoConfigurationExported() {
@@ -315,11 +359,12 @@ public class PortalInstanceConfigurationExporterImplTest {
 		);
 	}
 
+	private final CompanyService _companyService = Mockito.mock(
+		CompanyService.class);
 	private MockedStatic<DBPartitionUtil> _dbPartitionUtilMockedStatic;
 	private final GroupLocalService _groupLocalService = Mockito.mock(
 		GroupLocalService.class);
-	private final PortalInstanceConfigurationExporterImpl
-		_portalInstanceConfigurationExporterImpl =
-			new PortalInstanceConfigurationExporterImpl();
+	private final PortalInstanceExporterImpl _portalInstanceExporterImpl =
+		new PortalInstanceExporterImpl();
 
 }

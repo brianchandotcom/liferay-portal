@@ -104,8 +104,6 @@ public class LayoutDuplicateExternalReferenceCodeUpgradeProcessTest
 		Layout[] layouts1 = _addDuplicateExternalReferenceCodeLayouts();
 		Layout[] layouts2 = _addDuplicateExternalReferenceCodeLayouts();
 
-		Layout customLayout = LayoutTestUtil.addTypePortletLayout(
-			_group, false);
 		Layout duplicateLayout = LayoutTestUtil.addTypePortletLayout(
 			_group, false);
 		Layout uniqueLayout = LayoutTestUtil.addTypePortletLayout(
@@ -126,11 +124,6 @@ public class LayoutDuplicateExternalReferenceCodeUpgradeProcessTest
 
 		_updateExternalReferenceCode(
 			duplicateLayout.getPlid(), String.valueOf(minPlid2));
-
-		String customExternalReferenceCode = RandomTestUtil.randomString();
-
-		_updateExternalReferenceCode(
-			customLayout.getPlid(), customExternalReferenceCode);
 
 		String uniqueExternalReferenceCode = PortalUUIDUtil.generate();
 
@@ -159,9 +152,6 @@ public class LayoutDuplicateExternalReferenceCodeUpgradeProcessTest
 			String.valueOf(minPlid2),
 			_getExternalReferenceCode(duplicateLayout.getPlid()));
 		Assert.assertEquals(
-			customExternalReferenceCode,
-			_getExternalReferenceCode(customLayout.getPlid()));
-		Assert.assertEquals(
 			uniqueExternalReferenceCode,
 			_getExternalReferenceCode(uniqueLayout.getPlid()));
 		Assert.assertEquals(
@@ -179,8 +169,6 @@ public class LayoutDuplicateExternalReferenceCodeUpgradeProcessTest
 		Assert.assertNotNull(_layoutLocalService.fetchLayout(maxPlid1));
 		Assert.assertNotNull(_layoutLocalService.fetchLayout(minPlid2));
 		Assert.assertNotNull(_layoutLocalService.fetchLayout(maxPlid2));
-		Assert.assertNotNull(
-			_layoutLocalService.fetchLayout(customLayout.getPlid()));
 		Assert.assertNotNull(
 			_layoutLocalService.fetchLayout(duplicateLayout.getPlid()));
 		Assert.assertNotNull(

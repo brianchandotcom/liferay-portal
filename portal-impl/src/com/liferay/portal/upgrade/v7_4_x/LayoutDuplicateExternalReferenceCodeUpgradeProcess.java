@@ -7,6 +7,7 @@ package com.liferay.portal.upgrade.v7_4_x;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 import java.sql.PreparedStatement;
@@ -107,7 +108,8 @@ public class LayoutDuplicateExternalReferenceCodeUpgradeProcess
 		String externalReferenceCode = String.valueOf(plid);
 
 		while (externalReferenceCodes.contains(externalReferenceCode)) {
-			externalReferenceCode = String.valueOf(increment());
+			externalReferenceCode = String.valueOf(
+				increment(Layout.class.getName()));
 		}
 
 		return externalReferenceCode;

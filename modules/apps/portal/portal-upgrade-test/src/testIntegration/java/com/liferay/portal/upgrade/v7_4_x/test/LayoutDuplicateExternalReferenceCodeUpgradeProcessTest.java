@@ -101,34 +101,46 @@ public class LayoutDuplicateExternalReferenceCodeUpgradeProcessTest
 	@Test
 	@TestInfo("LPD-99950")
 	public void testUpgrade() throws Exception {
-		Layout[] layouts1 = _addDuplicateExternalReferenceCodeLayouts();
-		Layout[] layouts2 = _addDuplicateExternalReferenceCodeLayouts();
+		Layout[] duplicateExternalReferenceCodeLayouts1 =
+			_addDuplicateExternalReferenceCodeLayouts();
+		Layout[] duplicateExternalReferenceCodeLayouts2 =
+			_addDuplicateExternalReferenceCodeLayouts();
 
-		Layout duplicateLayout = LayoutTestUtil.addTypePortletLayout(
-			_group, false);
-		Layout uniqueLayout = LayoutTestUtil.addTypePortletLayout(
-			_group, false);
+		Layout fallbackExternalReferenceCodeLayout =
+			LayoutTestUtil.addTypePortletLayout(_group, false);
+		Layout uniqueExternalReferenceCodeLayout =
+			LayoutTestUtil.addTypePortletLayout(_group, false);
 
 		Group group2 = GroupTestUtil.addGroup();
 
 		Layout group2Layout = LayoutTestUtil.addTypePortletLayout(
 			group2, false);
 
-		long minPlid1 = Math.min(layouts1[0].getPlid(), layouts1[1].getPlid());
-		long maxPlid1 = Math.max(layouts1[0].getPlid(), layouts1[1].getPlid());
-		long minPlid2 = Math.min(layouts2[0].getPlid(), layouts2[1].getPlid());
-		long maxPlid2 = Math.max(layouts2[0].getPlid(), layouts2[1].getPlid());
+		long minPlid1 = Math.min(
+			duplicateExternalReferenceCodeLayouts1[0].getPlid(),
+			duplicateExternalReferenceCodeLayouts1[1].getPlid());
+		long maxPlid1 = Math.max(
+			duplicateExternalReferenceCodeLayouts1[0].getPlid(),
+			duplicateExternalReferenceCodeLayouts1[1].getPlid());
+		long minPlid2 = Math.min(
+			duplicateExternalReferenceCodeLayouts2[0].getPlid(),
+			duplicateExternalReferenceCodeLayouts2[1].getPlid());
+		long maxPlid2 = Math.max(
+			duplicateExternalReferenceCodeLayouts2[0].getPlid(),
+			duplicateExternalReferenceCodeLayouts2[1].getPlid());
 
 		String externalReferenceCode1 = _getExternalReferenceCode(minPlid1);
 		String externalReferenceCode2 = _getExternalReferenceCode(minPlid2);
 
 		_updateExternalReferenceCode(
-			duplicateLayout.getPlid(), String.valueOf(minPlid2));
+			fallbackExternalReferenceCodeLayout.getPlid(),
+			String.valueOf(minPlid2));
 
 		String uniqueExternalReferenceCode = PortalUUIDUtil.generate();
 
 		_updateExternalReferenceCode(
-			uniqueLayout.getPlid(), uniqueExternalReferenceCode);
+			uniqueExternalReferenceCodeLayout.getPlid(),
+			uniqueExternalReferenceCode);
 
 		_updateExternalReferenceCode(
 			group2Layout.getPlid(), externalReferenceCode1);
@@ -150,10 +162,12 @@ public class LayoutDuplicateExternalReferenceCodeUpgradeProcessTest
 			externalReferenceCode2, _getExternalReferenceCode(maxPlid2));
 		Assert.assertEquals(
 			String.valueOf(minPlid2),
-			_getExternalReferenceCode(duplicateLayout.getPlid()));
+			_getExternalReferenceCode(
+				fallbackExternalReferenceCodeLayout.getPlid()));
 		Assert.assertEquals(
 			uniqueExternalReferenceCode,
-			_getExternalReferenceCode(uniqueLayout.getPlid()));
+			_getExternalReferenceCode(
+				uniqueExternalReferenceCodeLayout.getPlid()));
 		Assert.assertEquals(
 			externalReferenceCode1,
 			_getExternalReferenceCode(group2Layout.getPlid()));
@@ -170,9 +184,11 @@ public class LayoutDuplicateExternalReferenceCodeUpgradeProcessTest
 		Assert.assertNotNull(_layoutLocalService.fetchLayout(minPlid2));
 		Assert.assertNotNull(_layoutLocalService.fetchLayout(maxPlid2));
 		Assert.assertNotNull(
-			_layoutLocalService.fetchLayout(duplicateLayout.getPlid()));
+			_layoutLocalService.fetchLayout(
+				fallbackExternalReferenceCodeLayout.getPlid()));
 		Assert.assertNotNull(
-			_layoutLocalService.fetchLayout(uniqueLayout.getPlid()));
+			_layoutLocalService.fetchLayout(
+				uniqueExternalReferenceCodeLayout.getPlid()));
 		Assert.assertNotNull(
 			_layoutLocalService.fetchLayout(group2Layout.getPlid()));
 

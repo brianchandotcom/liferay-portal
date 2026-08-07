@@ -4,6 +4,7 @@ import (
 	"context"
 	"crypto/rsa"
 	"fmt"
+	"strings"
 	"testing"
 	"time"
 
@@ -15,6 +16,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 	types "k8s.io/apimachinery/pkg/types"
+	record "k8s.io/client-go/tools/record"
 	controllerruntime "sigs.k8s.io/controller-runtime"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 	fake "sigs.k8s.io/controller-runtime/pkg/client/fake"
@@ -189,20 +191,21 @@ func TestEnforceReplicaCeiling(t *testing.T) {
 				})
 			}
 
-			reconciler := &LiferayEnvironmentReconciler{
+			liferayEnvironmentReconciler := &LiferayEnvironmentReconciler{
 				Client: newFakeClient(t, objects...),
 			}
 
-			if error := reconciler.enforceReplicaCeiling(
+			if error := liferayEnvironmentReconciler.enforceReplicaCeiling(
 				context.Background(), liferayEnvironment, testCase.maxClusterNodes,
 			); error != nil {
 				t.Fatalf("Unexpected error from enforceReplicaCeiling: %v", error)
 			}
 
 			assertReplicasEqual(
-				t, "status.effectiveReplicas",
-				testCase.expectedEffective,
 				liferayEnvironment.Status.EffectiveReplicas,
+				testCase.expectedEffective,
+				"status.effectiveReplicas",
+				t,
 			)
 
 			condition := meta.FindStatusCondition(
@@ -231,19 +234,11 @@ func TestEnforceReplicaCeiling(t *testing.T) {
 				return
 			}
 
-			statefulSet := &appsv1.StatefulSet{}
-
-			if error := reconciler.Get(
-				context.Background(), types.NamespacedName{
-					Name:      "dev-liferay",
-					Namespace: "liferay-dev",
-				}, statefulSet); error != nil {
-				t.Fatalf("Unable to read the workload: %v", error)
-			}
+			statefulSet := getStatefulSet(liferayEnvironmentReconciler, t)
 
 			assertReplicasEqual(
-				t, "statefulSet.spec.replicas",
-				testCase.expectedReplicas, statefulSet.Spec.Replicas,
+				statefulSet.Spec.Replicas, testCase.expectedReplicas,
+				"statefulSet.spec.replicas", t,
 			)
 		})
 	}
@@ -269,17 +264,17 @@ func TestReconcileBacksOffWhenActivationRejected(t *testing.T) {
 		pendingEnvironment(),
 	}
 
-	reconciler, result := reconcileEnvironment(
-		t, &stubProvisioning{
-			activateError: fmt.Errorf("provisioning: activation code rejected"),
-		}, objects...,
-	)
+	provisioningClient := &stubProvisioning{
+		activateError: fmt.Errorf("provisioning: activation code rejected"),
+	}
+
+	liferayEnvironmentReconciler, result := reconcileEnvironment(provisioningClient, t, objects...)
 
 	if result.RequeueAfter != 30*time.Second {
 		t.Errorf("RequeueAfter = %s, want the initial backoff 30s", result.RequeueAfter)
 	}
 
-	liferayEnvironment := getEnvironment(t, reconciler)
+	liferayEnvironment := getEnvironment(liferayEnvironmentReconciler, t)
 
 	if liferayEnvironment.Status.ConsecutiveFailures != 1 {
 		t.Errorf("ConsecutiveFailures = %d, want 1", liferayEnvironment.Status.ConsecutiveFailures)
@@ -298,12 +293,92 @@ func TestReconcileBacksOffWhenActivationRejected(t *testing.T) {
 	}
 }
 
+func TestReconcileDowngradesAfterGracePeriod(t *testing.T) {
+	unreachableSince := metav1.NewTime(time.Now().Add(-8 * 24 * time.Hour))
+
+	environment := activatedEnvironment()
+	environment.Status.ConsecutiveFailures = 50
+	environment.Status.UnreachableSince = &unreachableSince
+
+	meta.SetStatusCondition(
+		&environment.Status.Conditions,
+		metav1.Condition{
+			Reason: "EntitlementsFetchFailed",
+			Status: metav1.ConditionFalse,
+			Type:   conditionProvisioningReachable,
+		},
+	)
+
+	objects := []client.Object{
+		&appsv1.StatefulSet{
+			ObjectMeta: metav1.ObjectMeta{
+				Name:      "dev-liferay",
+				Namespace: "liferay-dev",
+			},
+			Spec: appsv1.StatefulSetSpec{
+				Replicas: pointerInt32(3),
+			},
+		},
+		&corev1.Secret{
+			Data: map[string][]byte{
+				"license.xml": []byte("<license>known-good</license>"),
+			},
+			ObjectMeta: metav1.ObjectMeta{
+				Name:      "dev-entitlements",
+				Namespace: "liferay-dev",
+			},
+		},
+		&corev1.Namespace{
+			ObjectMeta: metav1.ObjectMeta{
+				Name: "liferay-dev",
+				UID:  "dev-namespace-uid",
+			},
+		},
+		environment,
+	}
+
+	provisioningClient := &stubProvisioning{
+		manifestError: fmt.Errorf("provisioning: connection refused"),
+	}
+
+	liferayEnvironmentReconciler, _ := reconcileEnvironment(provisioningClient, t, objects...)
+
+	statefulSet := getStatefulSet(liferayEnvironmentReconciler, t)
+
+	assertReplicasEqual(
+		statefulSet.Spec.Replicas, pointerInt32(1), "statefulSet.spec.replicas", t,
+	)
+
+	liferayEnvironment := getEnvironment(liferayEnvironmentReconciler, t)
+
+	if !meta.IsStatusConditionTrue(
+		liferayEnvironment.Status.Conditions, conditionGracePeriodExpired,
+	) {
+		t.Error("GracePeriodExpired condition = not True, want True after the grace window")
+	}
+
+	if licenseXML := getLicenseXML(liferayEnvironmentReconciler, t); licenseXML != "<license>known-good</license>" {
+		t.Errorf("license.xml = %q, should retain last-known-good", licenseXML)
+	}
+
+	recorder := liferayEnvironmentReconciler.Recorder.(*record.FakeRecorder)
+
+	select {
+	case event := <-recorder.Events:
+		if !strings.Contains(event, "GracePeriodExpired") {
+			t.Errorf("event = %q, should mention GracePeriodExpired", event)
+		}
+	default:
+		t.Error("Expected a GracePeriodExpired warning event")
+	}
+}
+
 func TestReconcileIsNotBlockedByAddOns(t *testing.T) {
 	entitlements := &provisioning.Entitlements{
 		AddOns: []provisioning.AddOn{
 			{
-				DownloadURL:    "://not-a-real-url",
-				ProductID:      "broken-app",
+				DownloadURL:    "://fake-url",
+				ProductID:      "fake-app",
 				SHA256Checksum: "0000",
 			},
 		},
@@ -311,11 +386,11 @@ func TestReconcileIsNotBlockedByAddOns(t *testing.T) {
 		MaxClusterNodes: 3,
 	}
 
-	reconciler, result := reconcileEnvironment(
-		t, &stubProvisioning{entitlements: entitlements}, developmentObjects()...,
+	liferayEnvironmentReconciler, result := reconcileEnvironment(
+		&stubProvisioning{entitlements: entitlements}, t, developmentObjects()...,
 	)
 
-	liferayEnvironment := getEnvironment(t, reconciler)
+	liferayEnvironment := getEnvironment(liferayEnvironmentReconciler, t)
 
 	if liferayEnvironment.Status.Phase != "Ready" {
 		t.Errorf("Phase = %q, want Ready despite the broken add-on", liferayEnvironment.Status.Phase)
@@ -325,8 +400,80 @@ func TestReconcileIsNotBlockedByAddOns(t *testing.T) {
 		t.Errorf("RequeueAfter = %s, want the heartbeat 10m", result.RequeueAfter)
 	}
 
-	if length := len(getSecret(t, "dev-entitlements", reconciler).Data["add-ons.json"]); length == 0 {
+	if length := len(getSecret("dev-entitlements", liferayEnvironmentReconciler, t).Data["add-ons.json"]); length == 0 {
 		t.Error("add-ons.json was not written to the entitlements secret")
+	}
+}
+
+func TestReconcileRestoresReplicasWhenProvisioningRecovers(t *testing.T) {
+	unreachableSince := metav1.NewTime(time.Now().Add(-8 * 24 * time.Hour))
+
+	environment := activatedEnvironment()
+	environment.Spec.DesiredReplicas = pointerInt32(3)
+	environment.Status.ConsecutiveFailures = 50
+	environment.Status.UnreachableSince = &unreachableSince
+
+	meta.SetStatusCondition(
+		&environment.Status.Conditions,
+		metav1.Condition{
+			Message: "The grace period elapsed while provisioning was unreachable.",
+			Reason:  "ProvisioningUnreachable",
+			Status:  metav1.ConditionTrue,
+			Type:    conditionGracePeriodExpired,
+		},
+	)
+
+	objects := []client.Object{
+		&corev1.Namespace{
+			ObjectMeta: metav1.ObjectMeta{
+				Name: "liferay-dev",
+				UID:  "dev-namespace-uid",
+			},
+		},
+		&appsv1.StatefulSet{
+			ObjectMeta: metav1.ObjectMeta{
+				Name:      "dev-liferay",
+				Namespace: "liferay-dev",
+			},
+			Spec: appsv1.StatefulSetSpec{
+				Replicas: pointerInt32(1),
+			},
+		},
+		environment,
+	}
+
+	provisioningClient := &stubProvisioning{
+		entitlements: &provisioning.Entitlements{
+			LicenseXML:      []byte(virtualClusterLicenseXML("Friday, March 2, 2029 12:00:00 AM GMT", 3)),
+			MaxClusterNodes: 3,
+		},
+	}
+
+	liferayEnvironmentReconciler, _ := reconcileEnvironment(provisioningClient, t, objects...)
+
+	statefulSet := getStatefulSet(liferayEnvironmentReconciler, t)
+
+	assertReplicasEqual(
+		statefulSet.Spec.Replicas, pointerInt32(3), "statefulSet.spec.replicas", t,
+	)
+
+	liferayEnvironment := getEnvironment(liferayEnvironmentReconciler, t)
+
+	if meta.FindStatusCondition(
+		liferayEnvironment.Status.Conditions, conditionGracePeriodExpired,
+	) != nil {
+		t.Error("GracePeriodExpired condition still present, want it cleared after recovery")
+	}
+
+	if liferayEnvironment.Status.UnreachableSince != nil {
+		t.Errorf(
+			"UnreachableSince = %v, want nil after recovery",
+			liferayEnvironment.Status.UnreachableSince,
+		)
+	}
+
+	if liferayEnvironment.Status.Phase != "Ready" {
+		t.Errorf("Phase = %q, want Ready after recovery", liferayEnvironment.Status.Phase)
 	}
 }
 
@@ -344,17 +491,17 @@ func TestReconcileRetainsLastKnownGoodWhenProvisioningUnreachable(t *testing.T) 
 		},
 	)
 
-	reconciler, result := reconcileEnvironment(
-		t, &stubProvisioning{
-			manifestError: fmt.Errorf("provisioning: connection refused"),
-		}, objects...,
-	)
+	provisioningClient := &stubProvisioning{
+		manifestError: fmt.Errorf("provisioning: connection refused"),
+	}
+
+	liferayEnvironmentReconciler, result := reconcileEnvironment(provisioningClient, t, objects...)
 
 	if result.RequeueAfter != 30*time.Second {
 		t.Errorf("RequeueAfter = %s, want the base backoff 30s", result.RequeueAfter)
 	}
 
-	liferayEnvironment := getEnvironment(t, reconciler)
+	liferayEnvironment := getEnvironment(liferayEnvironmentReconciler, t)
 
 	condition := meta.FindStatusCondition(
 		liferayEnvironment.Status.Conditions, conditionProvisioningReachable,
@@ -368,7 +515,7 @@ func TestReconcileRetainsLastKnownGoodWhenProvisioningUnreachable(t *testing.T) 
 		t.Errorf("ConsecutiveFailures = %d, want 1", liferayEnvironment.Status.ConsecutiveFailures)
 	}
 
-	if licenseXML := string(getSecret(t, "dev-entitlements", reconciler).Data["license.xml"]); licenseXML != "<license>known-good</license>" {
+	if licenseXML := getLicenseXML(liferayEnvironmentReconciler, t); licenseXML != "<license>known-good</license>" {
 		t.Errorf("license.xml = %q, want the retained last-known-good", licenseXML)
 	}
 }
@@ -378,20 +525,22 @@ func TestReconcileWritesExpiredLicenseThrough(t *testing.T) {
 		"Wednesday, January 1, 2020 12:00:00 AM GMT", 1,
 	)
 
-	reconciler, _ := reconcileEnvironment(
-		t, &stubProvisioning{
-			entitlements: &provisioning.Entitlements{
-				LicenseXML:      []byte(expiredLicenseXML),
-				MaxClusterNodes: 1,
-			},
-		}, developmentObjects()...,
+	provisioningClient := &stubProvisioning{
+		entitlements: &provisioning.Entitlements{
+			LicenseXML:      []byte(expiredLicenseXML),
+			MaxClusterNodes: 1,
+		},
+	}
+
+	liferayEnvironmentReconciler, _ := reconcileEnvironment(
+		provisioningClient, t, developmentObjects()...,
 	)
 
-	if licenseXML := string(getSecret(t, "dev-entitlements", reconciler).Data["license.xml"]); licenseXML != expiredLicenseXML {
+	if licenseXML := getLicenseXML(liferayEnvironmentReconciler, t); licenseXML != expiredLicenseXML {
 		t.Errorf("license.xml = %q, want the expired license written through", licenseXML)
 	}
 
-	liferayEnvironment := getEnvironment(t, reconciler)
+	liferayEnvironment := getEnvironment(liferayEnvironmentReconciler, t)
 
 	condition := meta.FindStatusCondition(
 		liferayEnvironment.Status.Conditions, conditionLicenseValid,
@@ -475,7 +624,7 @@ func activatedEnvironment() *licensingv1alpha1.LiferayEnvironment {
 	}
 }
 
-func assertReplicasEqual(t *testing.T, field string, expected *int32, actual *int32) {
+func assertReplicasEqual(actual *int32, expected *int32, field string, t *testing.T) {
 	t.Helper()
 
 	if expected == nil {
@@ -519,14 +668,14 @@ func developmentObjects() []client.Object {
 }
 
 func getEnvironment(
+	liferayEnvironmentReconciler *LiferayEnvironmentReconciler,
 	t *testing.T,
-	reconciler *LiferayEnvironmentReconciler,
 ) *licensingv1alpha1.LiferayEnvironment {
 	t.Helper()
 
 	liferayEnvironment := &licensingv1alpha1.LiferayEnvironment{}
 
-	if error := reconciler.Get(
+	if error := liferayEnvironmentReconciler.Get(
 		context.Background(), types.NamespacedName{
 			Name:      "dev",
 			Namespace: "liferay-dev",
@@ -537,16 +686,20 @@ func getEnvironment(
 	return liferayEnvironment
 }
 
+func getLicenseXML(liferayEnvironmentReconciler *LiferayEnvironmentReconciler, t *testing.T) string {
+	return string(getSecret("dev-entitlements", liferayEnvironmentReconciler, t).Data["license.xml"])
+}
+
 func getSecret(
-	t *testing.T,
 	name string,
-	reconciler *LiferayEnvironmentReconciler,
+	liferayEnvironmentReconciler *LiferayEnvironmentReconciler,
+	t *testing.T,
 ) *corev1.Secret {
 	t.Helper()
 
 	secret := &corev1.Secret{}
 
-	if error := reconciler.Get(
+	if error := liferayEnvironmentReconciler.Get(
 		context.Background(), types.NamespacedName{
 			Name:      name,
 			Namespace: "liferay-dev",
@@ -555,6 +708,27 @@ func getSecret(
 	}
 
 	return secret
+}
+
+func getStatefulSet(
+	liferayEnvironmentReconciler *LiferayEnvironmentReconciler,
+	t *testing.T,
+) *appsv1.StatefulSet {
+	t.Helper()
+
+	statefulSet := &appsv1.StatefulSet{}
+
+	if error := liferayEnvironmentReconciler.Get(
+		context.Background(),
+		types.NamespacedName{
+			Name:      "dev-liferay",
+			Namespace: "liferay-dev",
+		},
+		statefulSet); error != nil {
+		t.Fatalf("Unable to read the workload: %v", error)
+	}
+
+	return statefulSet
 }
 
 func newFakeClient(t *testing.T, objects ...client.Object) client.Client {
@@ -606,21 +780,23 @@ func pointerInt32(value int32) *int32 {
 }
 
 func reconcileEnvironment(
-	t *testing.T,
 	provisioningClient provisioning.Client,
+	t *testing.T,
 	objects ...client.Object,
 ) (*LiferayEnvironmentReconciler, controllerruntime.Result) {
 	t.Helper()
 
-	reconciler := &LiferayEnvironmentReconciler{
+	liferayEnvironmentReconciler := &LiferayEnvironmentReconciler{
 		Client:            newFakeClient(t, objects...),
+		GracePeriod:       7 * 24 * time.Hour,
 		HeartbeatInterval: 10 * time.Minute,
 		Provisioning:      provisioningClient,
+		Recorder:          record.NewFakeRecorder(10),
 		RetryInitialDelay: 30 * time.Second,
 		RetryMaxDelay:     30 * time.Minute,
 	}
 
-	result, error := reconciler.Reconcile(
+	result, error := liferayEnvironmentReconciler.Reconcile(
 		context.Background(), controllerruntime.Request{
 			NamespacedName: types.NamespacedName{
 				Name:      "dev",
@@ -633,7 +809,7 @@ func reconcileEnvironment(
 		t.Fatalf("Unexpected reconcile error: %v", error)
 	}
 
-	return reconciler, result
+	return liferayEnvironmentReconciler, result
 }
 
 func virtualClusterLicenseXML(expirationDate string, maxClusterNodes int32) string {

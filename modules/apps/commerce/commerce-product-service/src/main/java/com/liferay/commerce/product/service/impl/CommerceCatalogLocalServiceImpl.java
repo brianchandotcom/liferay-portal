@@ -539,6 +539,10 @@ public class CommerceCatalogLocalServiceImpl
 		AccountEntry accountEntry = _accountEntryLocalService.getAccountEntry(
 			accountEntryId);
 
+		if (accountEntry.getStatus() == WorkflowConstants.STATUS_EMPTY) {
+			return;
+		}
+
 		if (!StringUtil.equals(
 				accountEntry.getType(),
 				AccountConstants.ACCOUNT_ENTRY_TYPE_SUPPLIER)) {

@@ -94,8 +94,8 @@ public class SLAInstanceResultWorkflowMetricsReindexer
 
 		searchSearchRequest.setSize(10000);
 
-		SearchSearchResponse searchSearchResponse = _searchEngineAdapter.execute(
-			searchSearchRequest);
+		SearchSearchResponse searchSearchResponse =
+			_searchEngineAdapter.execute(searchSearchRequest);
 
 		SearchHits searchHits = searchSearchResponse.getSearchHits();
 
@@ -138,6 +138,11 @@ public class SLAInstanceResultWorkflowMetricsReindexer
 		return indicesExistsIndexResponse.isExists();
 	}
 
+	private static final Snapshot<WorkflowMetricsSLAProcessBackgroundTaskHelper>
+		_workflowMetricsSLAProcessBackgroundTaskHelperSnapshot = new Snapshot<>(
+			SLAInstanceResultWorkflowMetricsReindexer.class,
+			WorkflowMetricsSLAProcessBackgroundTaskHelper.class, null, true);
+
 	@Reference
 	private IndexNameBuilder _indexNameBuilder;
 
@@ -150,10 +155,5 @@ public class SLAInstanceResultWorkflowMetricsReindexer
 	@Reference
 	private SLAInstanceResultWorkflowMetricsIndexer
 		_slaInstanceResultWorkflowMetricsIndexer;
-
-	private static final Snapshot<WorkflowMetricsSLAProcessBackgroundTaskHelper>
-		_workflowMetricsSLAProcessBackgroundTaskHelperSnapshot = new Snapshot<>(
-			SLAInstanceResultWorkflowMetricsReindexer.class,
-			WorkflowMetricsSLAProcessBackgroundTaskHelper.class, null, true);
 
 }

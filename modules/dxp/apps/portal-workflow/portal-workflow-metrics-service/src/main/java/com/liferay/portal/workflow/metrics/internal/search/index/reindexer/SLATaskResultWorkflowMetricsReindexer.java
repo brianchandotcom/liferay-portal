@@ -86,8 +86,8 @@ public class SLATaskResultWorkflowMetricsReindexer
 
 		searchSearchRequest.setSize(10000);
 
-		SearchSearchResponse searchSearchResponse = _searchEngineAdapter.execute(
-			searchSearchRequest);
+		SearchSearchResponse searchSearchResponse =
+			_searchEngineAdapter.execute(searchSearchRequest);
 
 		SearchHits searchHits = searchSearchResponse.getSearchHits();
 

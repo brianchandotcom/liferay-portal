@@ -5,9 +5,12 @@
 
 package com.liferay.portal.instances.exporter;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Jorge Avalos
  */
+@ProviderType
 public interface PortalInstanceExporter {
 
 	public String exportPortalInstance(long companyId) throws Exception;

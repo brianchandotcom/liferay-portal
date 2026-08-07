@@ -140,8 +140,6 @@ public class LayoutDuplicateExternalReferenceCodeUpgradeProcessTest
 		_updateExternalReferenceCode(
 			group2Layout.getPlid(), externalReferenceCode1);
 
-		_clearCaches();
-
 		runUpgrade();
 
 		Assert.assertEquals(
@@ -226,7 +224,8 @@ public class LayoutDuplicateExternalReferenceCodeUpgradeProcessTest
 
 		upgradeProcess.upgrade();
 
-		_clearCaches();
+		_entityCache.clearCache();
+		_multiVMPool.clear();
 	}
 
 	@Override
@@ -258,15 +257,10 @@ public class LayoutDuplicateExternalReferenceCodeUpgradeProcessTest
 		_updateExternalReferenceCode(
 			privateLayout.getPlid(), externalReferenceCode);
 
-		_clearCaches();
+		_entityCache.clearCache();
+		_multiVMPool.clear();
 
 		return new Layout[] {publicLayout, privateLayout};
-	}
-
-	private void _clearCaches() {
-		_entityCache.clearCache();
-
-		_multiVMPool.clear();
 	}
 
 	private String _getExternalReferenceCode(long plid) throws Exception {

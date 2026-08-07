@@ -11,8 +11,7 @@ import com.liferay.headless.portal.instances.dto.v1_0.PortalInstanceCopy;
 import com.liferay.headless.portal.instances.dto.v1_0.PortalInstanceExport;
 import com.liferay.headless.portal.instances.dto.v1_0.PortalInstanceImport;
 import com.liferay.headless.portal.instances.resource.v1_0.PortalInstanceResource;
-import com.liferay.portal.db.partition.util.DBPartitionUtil;
-import com.liferay.portal.instances.configuration.PortalInstanceConfigurationExporter;
+import com.liferay.portal.instances.exporter.PortalInstanceExporter;
 import com.liferay.portal.kernel.exception.UserEmailAddressException;
 import com.liferay.portal.kernel.exception.UserScreenNameException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -205,10 +204,15 @@ public class PortalInstanceResourceImpl extends BasePortalInstanceResourceImpl {
 		long companyId = company.getCompanyId();
 
 		try {
-			_companyService.exportCompany(companyId);
+			String exportedPartitionName =
+				_portalInstanceExporter.exportPortalInstance(companyId);
 
-			_portalInstanceConfigurationExporter.exportConfigurations(
-				companyId);
+			return new PortalInstanceExport() {
+				{
+					setExportedPartitionName(() -> exportedPartitionName);
+					setSourceCompanyId(() -> companyId);
+				}
+			};
 		}
 		catch (Exception exception) {
 			_log.error(
@@ -217,17 +221,6 @@ public class PortalInstanceResourceImpl extends BasePortalInstanceResourceImpl {
 
 			throw exception;
 		}
-
-		return new PortalInstanceExport() {
-			{
-				setExportedPartitionName(
-					() ->
-						DBPartitionUtil.
-							DATABASE_EXPORTED_PARTITION_SCHEMA_NAME_PREFIX +
-								companyId);
-				setSourceCompanyId(() -> companyId);
-			}
-		};
 	}
 
 	@Override
@@ -339,7 +332,6 @@ public class PortalInstanceResourceImpl extends BasePortalInstanceResourceImpl {
 	private CompanyService _companyService;
 
 	@Reference
-	private PortalInstanceConfigurationExporter
-		_portalInstanceConfigurationExporter;
+	private PortalInstanceExporter _portalInstanceExporter;
 
 }

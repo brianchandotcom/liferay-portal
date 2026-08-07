@@ -5,8 +5,7 @@
 
 package com.liferay.portal.instances.web.internal.portlet.action;
 
-import com.liferay.portal.db.partition.util.DBPartitionUtil;
-import com.liferay.portal.instances.configuration.PortalInstanceConfigurationExporter;
+import com.liferay.portal.instances.exporter.PortalInstanceExporter;
 import com.liferay.portal.instances.web.internal.constants.PortalInstancesPortletKeys;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -17,9 +16,9 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.service.CompanyService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -60,19 +59,15 @@ public class ExportInstanceMVCActionCommand extends BaseMVCActionCommand {
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		try {
-			_companyService.exportCompany(companyId);
-
-			_portalInstanceConfigurationExporter.exportConfigurations(
-				companyId);
+			String exportedPartitionName =
+				_portalInstanceExporter.exportPortalInstance(companyId);
 
 			jsonObject.put(
 				"successMessage",
 				_language.format(
 					actionRequest.getLocale(),
 					"the-instance-was-exported-to-the-schema-x",
-					DBPartitionUtil.
-						DATABASE_EXPORTED_PARTITION_SCHEMA_NAME_PREFIX +
-							companyId));
+					exportedPartitionName));
 		}
 		catch (Exception exception) {
 			_log.error(
@@ -82,7 +77,8 @@ public class ExportInstanceMVCActionCommand extends BaseMVCActionCommand {
 				"error",
 				_language.format(
 					actionRequest.getLocale(), "export-failed-with-message-x",
-					GetterUtil.getString(exception.getMessage())));
+					HtmlUtil.escape(
+						GetterUtil.getString(exception.getMessage()))));
 		}
 
 		JSONPortletResponseUtil.writeJSON(
@@ -95,16 +91,12 @@ public class ExportInstanceMVCActionCommand extends BaseMVCActionCommand {
 		ExportInstanceMVCActionCommand.class);
 
 	@Reference
-	private CompanyService _companyService;
-
-	@Reference
 	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Language _language;
 
 	@Reference
-	private PortalInstanceConfigurationExporter
-		_portalInstanceConfigurationExporter;
+	private PortalInstanceExporter _portalInstanceExporter;
 
 }

@@ -3,18 +3,19 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.instances.internal.configuration;
+package com.liferay.portal.instances.internal.exporter;
 
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.db.partition.util.DBPartitionUtil;
-import com.liferay.portal.instances.configuration.PortalInstanceConfigurationExporter;
+import com.liferay.portal.instances.exporter.PortalInstanceExporter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.CompanyService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsValues;
@@ -34,12 +35,20 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Jorge Avalos
  */
-@Component(service = PortalInstanceConfigurationExporter.class)
-public class PortalInstanceConfigurationExporterImpl
-	implements PortalInstanceConfigurationExporter {
+@Component(service = PortalInstanceExporter.class)
+public class PortalInstanceExporterImpl implements PortalInstanceExporter {
 
 	@Override
-	public void exportConfigurations(long companyId) throws Exception {
+	public String exportPortalInstance(long companyId) throws Exception {
+		_companyService.exportCompany(companyId);
+
+		_exportConfigurations(companyId);
+
+		return DBPartitionUtil.DATABASE_EXPORTED_PARTITION_SCHEMA_NAME_PREFIX +
+			companyId;
+	}
+
+	private void _exportConfigurations(long companyId) throws Exception {
 		if (PropsValues.DATABASE_PARTITION_ENABLED) {
 			return;
 		}
@@ -169,7 +178,10 @@ public class PortalInstanceConfigurationExporterImpl
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		PortalInstanceConfigurationExporterImpl.class);
+		PortalInstanceExporterImpl.class);
+
+	@Reference
+	private CompanyService _companyService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

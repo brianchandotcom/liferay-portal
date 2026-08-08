@@ -141,18 +141,6 @@ public class LayoutDuplicateExternalReferenceCodeUpgradeProcessTest
 		runUpgrade();
 
 		Assert.assertEquals(
-			externalReferenceCode1, _getExternalReferenceCode(plid1));
-		Assert.assertEquals(
-			String.valueOf(renamedPlid1),
-			_getExternalReferenceCode(renamedPlid1));
-
-		String externalReferenceCode3 = _getExternalReferenceCode(renamedPlid2);
-
-		Assert.assertNotEquals(externalReferenceCode2, externalReferenceCode3);
-		Assert.assertNotEquals(
-			String.valueOf(renamedPlid2), externalReferenceCode3);
-
-		Assert.assertEquals(
 			String.valueOf(renamedPlid2),
 			_getExternalReferenceCode(
 				fallbackExternalReferenceCodeLayout.getPlid()));
@@ -160,7 +148,17 @@ public class LayoutDuplicateExternalReferenceCodeUpgradeProcessTest
 			externalReferenceCode1,
 			_getExternalReferenceCode(group2Layout.getPlid()));
 		Assert.assertEquals(
+			externalReferenceCode1, _getExternalReferenceCode(plid1));
+		Assert.assertEquals(
 			externalReferenceCode2, _getExternalReferenceCode(plid2));
+		Assert.assertEquals(
+			String.valueOf(renamedPlid1),
+			_getExternalReferenceCode(renamedPlid1));
+		Assert.assertNotEquals(
+			externalReferenceCode2, _getExternalReferenceCode(renamedPlid2));
+		Assert.assertNotEquals(
+			String.valueOf(renamedPlid2),
+			_getExternalReferenceCode(renamedPlid2));
 		Assert.assertEquals(
 			uniqueExternalReferenceCode,
 			_getExternalReferenceCode(
@@ -186,6 +184,9 @@ public class LayoutDuplicateExternalReferenceCodeUpgradeProcessTest
 			_layoutLocalService.fetchLayout(
 				uniqueExternalReferenceCodeLayout.getPlid()));
 
+		String fallbackExternalReferenceCode = _getExternalReferenceCode(
+			renamedPlid2);
+
 		runUpgrade();
 
 		Assert.assertEquals(
@@ -194,7 +195,8 @@ public class LayoutDuplicateExternalReferenceCodeUpgradeProcessTest
 			String.valueOf(renamedPlid1),
 			_getExternalReferenceCode(renamedPlid1));
 		Assert.assertEquals(
-			externalReferenceCode3, _getExternalReferenceCode(renamedPlid2));
+			fallbackExternalReferenceCode,
+			_getExternalReferenceCode(renamedPlid2));
 	}
 
 	@Override

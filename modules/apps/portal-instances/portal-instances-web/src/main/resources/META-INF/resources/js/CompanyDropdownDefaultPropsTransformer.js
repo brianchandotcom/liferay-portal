@@ -9,6 +9,15 @@ import {fetch} from 'frontend-js-web';
 import openDeleteCompanyModal from './openDeleteCompanyModal';
 import openExportCompanyModal from './openExportCompanyModal';
 
+const pendingExportURLs = new Set();
+
+const showUnexpectedErrorToast = () => {
+	openToast({
+		message: Liferay.Language.get('an-unexpected-error-occurred'),
+		type: 'danger',
+	});
+};
+
 const ACTIONS = {
 	deleteInstance(itemData) {
 		openDeleteCompanyModal({
@@ -21,10 +30,29 @@ const ACTIONS = {
 	},
 
 	exportInstance(itemData) {
+		if (pendingExportURLs.has(itemData.exportURL)) {
+			openToast({
+				message: Liferay.Language.get(
+					'exporting-an-instance-is-already-in-progress'
+				),
+				type: 'info',
+			});
+
+			return;
+		}
+
 		openExportCompanyModal({
 			onExport: () => {
+				pendingExportURLs.add(itemData.exportURL);
+
 				fetch(itemData.exportURL, {method: 'POST'})
-					.then((response) => response.json())
+					.then((response) => {
+						if (!response.ok) {
+							throw new Error(response.status);
+						}
+
+						return response.json();
+					})
 					.then((responseJSON) => {
 						if (responseJSON.successMessage) {
 							openToast({
@@ -32,20 +60,21 @@ const ACTIONS = {
 								type: 'success',
 							});
 						}
-						else {
+						else if (responseJSON.error) {
 							openToast({
 								message: responseJSON.error,
 								type: 'danger',
 							});
 						}
+						else {
+							showUnexpectedErrorToast();
+						}
 					})
 					.catch(() => {
-						openToast({
-							message: Liferay.Language.get(
-								'an-unexpected-error-occurred'
-							),
-							type: 'danger',
-						});
+						showUnexpectedErrorToast();
+					})
+					.finally(() => {
+						pendingExportURLs.delete(itemData.exportURL);
 					});
 			},
 		});

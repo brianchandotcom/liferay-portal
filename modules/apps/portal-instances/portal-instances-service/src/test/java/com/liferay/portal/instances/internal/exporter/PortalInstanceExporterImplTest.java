@@ -71,8 +71,8 @@ public class PortalInstanceExporterImplTest {
 	@Test
 	public void testConfigurationExportedForCompanyScope() throws Exception {
 		long companyId = RandomTestUtil.randomLong();
-
 		String configurationId = RandomTestUtil.randomString();
+
 		String encodedDictionary = _getEncodedDictionary(
 			ExtendedObjectClassDefinition.Scope.COMPANY, companyId);
 
@@ -88,14 +88,14 @@ public class PortalInstanceExporterImplTest {
 	@Test
 	public void testConfigurationExportedForGroupScope() throws Exception {
 		long companyId = RandomTestUtil.randomLong();
-
+		String configurationId = RandomTestUtil.randomString();
 		long groupId = RandomTestUtil.randomLong();
 
-		String configurationId = RandomTestUtil.randomString();
+		_setUpGroup(companyId, groupId);
+
 		String encodedDictionary = _getEncodedDictionary(
 			ExtendedObjectClassDefinition.Scope.GROUP, groupId);
 
-		_setUpGroup(companyId, groupId);
 		_setUpConfigurations(configurationId, encodedDictionary);
 
 		_portalInstanceExporterImpl.exportPortalInstance(companyId);
@@ -110,8 +110,8 @@ public class PortalInstanceExporterImplTest {
 		throws Exception {
 
 		long companyId = RandomTestUtil.randomLong();
-
 		String configurationId = RandomTestUtil.randomString();
+
 		String encodedDictionary = _getEncodedDictionary(
 			ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE,
 			RandomTestUtil.randomString());
@@ -227,7 +227,6 @@ public class PortalInstanceExporterImplTest {
 		throws Exception {
 
 		long companyId = RandomTestUtil.randomLong();
-
 		long groupId = RandomTestUtil.randomLong();
 
 		_setUpGroup(RandomTestUtil.randomLong(), groupId);

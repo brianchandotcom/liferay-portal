@@ -8,7 +8,9 @@ package com.liferay.portal.upgrade.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.db.index.IndexUpdaterUtil;
+import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.IndexMetadata;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -26,7 +28,6 @@ import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
 import com.liferay.social.kernel.model.SocialActivitySetting;
 import com.liferay.social.kernel.service.SocialActivitySettingLocalService;
 
@@ -60,6 +61,7 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		_connection = DataAccess.getConnection();
+		_db = DBManagerUtil.getDB();
 
 		_dbInspector = new DBInspector(_connection);
 	}
@@ -71,8 +73,8 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 
 	@Test
 	public void testUpgradePortalPreferences() throws Exception {
-		List<IndexMetadata> indexMetadatas = UpgradeTestUtil.dropUniqueIndexes(
-			_connection, "PortalPreferences", "ownerId");
+		List<IndexMetadata> indexMetadatas = _dropUniqueIndexes(
+			"PortalPreferences", "ownerId");
 
 		PortalPreferences portalPreferences1 =
 			_portalPreferencesLocalService.createPortalPreferences(1);
@@ -110,8 +112,8 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 
 	@Test
 	public void testUpgradePortletItem() throws Exception {
-		List<IndexMetadata> indexMetadatas = UpgradeTestUtil.dropUniqueIndexes(
-			_connection, "PortletItem", "groupId");
+		List<IndexMetadata> indexMetadatas = _dropUniqueIndexes(
+			"PortletItem", "groupId");
 
 		PortletItem portletItem1 = _portletItemLocalService.createPortletItem(
 			1);
@@ -150,8 +152,8 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 
 	@Test
 	public void testUpgradeSocialActivitySetting() throws Exception {
-		List<IndexMetadata> indexMetadatas = UpgradeTestUtil.dropUniqueIndexes(
-			_connection, "SocialActivitySetting", "groupId");
+		List<IndexMetadata> indexMetadatas = _dropUniqueIndexes(
+			"SocialActivitySetting", "groupId");
 
 		SocialActivitySetting socialActivitySetting1 =
 			_socialActivitySettingLocalService.createSocialActivitySetting(1);
@@ -192,8 +194,8 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 
 	@Test
 	public void testUpgradeTicket() throws Exception {
-		List<IndexMetadata> indexMetadatas = UpgradeTestUtil.dropUniqueIndexes(
-			_connection, "Ticket", "key_");
+		List<IndexMetadata> indexMetadatas = _dropUniqueIndexes(
+			"Ticket", "key_");
 
 		Ticket ticket1 = _ticketLocalService.createTicket(1);
 
@@ -254,6 +256,20 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 		}
 	}
 
+	private List<IndexMetadata> _dropUniqueIndexes(
+			String tableName, String columnName)
+		throws Exception {
+
+		List<IndexMetadata> indexMetadatas = _db.getIndexMetadatas(
+			_connection, tableName, columnName, true);
+
+		for (IndexMetadata indexMetadata : indexMetadatas) {
+			_db.runSQL(_connection, indexMetadata.getDropSQL());
+		}
+
+		return indexMetadatas;
+	}
+
 	private void _runUpgrade(
 			String tableName, String[] columnNames, String orderByClause)
 		throws Exception {
@@ -279,6 +295,7 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 	}
 
 	private static Connection _connection;
+	private static DB _db;
 	private static DBInspector _dbInspector;
 
 	@Inject

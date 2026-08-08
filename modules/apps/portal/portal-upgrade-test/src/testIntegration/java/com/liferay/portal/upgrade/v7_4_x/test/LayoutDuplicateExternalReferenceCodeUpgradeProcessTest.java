@@ -10,7 +10,9 @@ import com.liferay.change.tracking.test.util.BaseCTUpgradeProcessTestCase;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.db.index.IndexUpdaterUtil;
 import com.liferay.portal.kernel.cache.MultiVMPool;
+import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.IndexMetadata;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -31,7 +33,6 @@ import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
 import com.liferay.portal.upgrade.v7_4_x.LayoutDuplicateExternalReferenceCodeUpgradeProcess;
 
 import java.sql.Connection;
@@ -241,8 +242,8 @@ public class LayoutDuplicateExternalReferenceCodeUpgradeProcessTest
 		throws Exception {
 
 		if (_indexMetadatas.isEmpty()) {
-			_indexMetadatas = UpgradeTestUtil.dropUniqueIndexes(
-				_connection, "Layout", "externalReferenceCode");
+			_indexMetadatas = _dropUniqueIndexes(
+				"Layout", "externalReferenceCode");
 		}
 
 		Layout publicLayout = LayoutTestUtil.addTypePortletLayout(
@@ -261,6 +262,22 @@ public class LayoutDuplicateExternalReferenceCodeUpgradeProcessTest
 		_multiVMPool.clear();
 
 		return new Layout[] {publicLayout, privateLayout};
+	}
+
+	private List<IndexMetadata> _dropUniqueIndexes(
+			String tableName, String columnName)
+		throws Exception {
+
+		DB db = DBManagerUtil.getDB();
+
+		List<IndexMetadata> indexMetadatas = db.getIndexMetadatas(
+			_connection, tableName, columnName, true);
+
+		for (IndexMetadata indexMetadata : indexMetadatas) {
+			db.runSQL(_connection, indexMetadata.getDropSQL());
+		}
+
+		return indexMetadatas;
 	}
 
 	private String _getExternalReferenceCode(long plid) throws Exception {

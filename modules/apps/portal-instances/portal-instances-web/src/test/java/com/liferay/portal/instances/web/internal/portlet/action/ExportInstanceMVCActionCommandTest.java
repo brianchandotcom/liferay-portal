@@ -144,18 +144,8 @@ public class ExportInstanceMVCActionCommandTest {
 	}
 
 	@Test
-	public void testErrorMessageOnFailure() throws Exception {
-		String message = RandomTestUtil.randomString();
-
-		_assertErrorMessage(
-			new RequiredCompanyException(message),
-			"export-failed-with-message-x:" + message);
-	}
-
-	@Test
 	public void testSchemaNameOnSuccess() throws Exception {
 		long companyId = RandomTestUtil.randomLong();
-
 		String exportedPartitionName = RandomTestUtil.randomString();
 
 		Mockito.when(

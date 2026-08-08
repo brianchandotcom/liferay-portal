@@ -141,30 +141,30 @@ public class LayoutDuplicateExternalReferenceCodeUpgradeProcessTest
 		runUpgrade();
 
 		Assert.assertEquals(
+			externalReferenceCode1, _getExternalReferenceCode(plid1));
+		Assert.assertEquals(
 			String.valueOf(renamedPlid1),
 			_getExternalReferenceCode(renamedPlid1));
-		Assert.assertEquals(
-			externalReferenceCode1, _getExternalReferenceCode(plid1));
 
 		String externalReferenceCode3 = _getExternalReferenceCode(renamedPlid2);
 
+		Assert.assertNotEquals(externalReferenceCode2, externalReferenceCode3);
 		Assert.assertNotEquals(
 			String.valueOf(renamedPlid2), externalReferenceCode3);
-		Assert.assertNotEquals(externalReferenceCode2, externalReferenceCode3);
 
-		Assert.assertEquals(
-			externalReferenceCode2, _getExternalReferenceCode(plid2));
 		Assert.assertEquals(
 			String.valueOf(renamedPlid2),
 			_getExternalReferenceCode(
 				fallbackExternalReferenceCodeLayout.getPlid()));
 		Assert.assertEquals(
+			externalReferenceCode1,
+			_getExternalReferenceCode(group2Layout.getPlid()));
+		Assert.assertEquals(
+			externalReferenceCode2, _getExternalReferenceCode(plid2));
+		Assert.assertEquals(
 			uniqueExternalReferenceCode,
 			_getExternalReferenceCode(
 				uniqueExternalReferenceCodeLayout.getPlid()));
-		Assert.assertEquals(
-			externalReferenceCode1,
-			_getExternalReferenceCode(group2Layout.getPlid()));
 
 		IndexUpdaterUtil.updatePortalIndexes();
 
@@ -173,26 +173,26 @@ public class LayoutDuplicateExternalReferenceCodeUpgradeProcessTest
 				_dbInspector.hasIndex("Layout", indexMetadata.getIndexName()));
 		}
 
-		Assert.assertNotNull(_layoutLocalService.fetchLayout(renamedPlid1));
-		Assert.assertNotNull(_layoutLocalService.fetchLayout(plid1));
-		Assert.assertNotNull(_layoutLocalService.fetchLayout(renamedPlid2));
-		Assert.assertNotNull(_layoutLocalService.fetchLayout(plid2));
 		Assert.assertNotNull(
 			_layoutLocalService.fetchLayout(
 				fallbackExternalReferenceCodeLayout.getPlid()));
 		Assert.assertNotNull(
+			_layoutLocalService.fetchLayout(group2Layout.getPlid()));
+		Assert.assertNotNull(_layoutLocalService.fetchLayout(plid1));
+		Assert.assertNotNull(_layoutLocalService.fetchLayout(plid2));
+		Assert.assertNotNull(_layoutLocalService.fetchLayout(renamedPlid1));
+		Assert.assertNotNull(_layoutLocalService.fetchLayout(renamedPlid2));
+		Assert.assertNotNull(
 			_layoutLocalService.fetchLayout(
 				uniqueExternalReferenceCodeLayout.getPlid()));
-		Assert.assertNotNull(
-			_layoutLocalService.fetchLayout(group2Layout.getPlid()));
 
 		runUpgrade();
 
 		Assert.assertEquals(
+			externalReferenceCode1, _getExternalReferenceCode(plid1));
+		Assert.assertEquals(
 			String.valueOf(renamedPlid1),
 			_getExternalReferenceCode(renamedPlid1));
-		Assert.assertEquals(
-			externalReferenceCode1, _getExternalReferenceCode(plid1));
 		Assert.assertEquals(
 			externalReferenceCode3, _getExternalReferenceCode(renamedPlid2));
 	}

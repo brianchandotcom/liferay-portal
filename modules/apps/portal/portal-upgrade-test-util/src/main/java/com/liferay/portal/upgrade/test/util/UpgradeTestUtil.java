@@ -5,40 +5,17 @@
 
 package com.liferay.portal.upgrade.test.util;
 
-import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.dao.db.DBManagerUtil;
-import com.liferay.portal.kernel.dao.db.IndexMetadata;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
-import java.sql.Connection;
-
-import java.util.List;
-
 /**
  * @author Adam Brandizzi
  * @author Alberto Chaparro
  */
 public class UpgradeTestUtil {
-
-	public static List<IndexMetadata> dropUniqueIndexes(
-			Connection connection, String tableName, String columnName)
-		throws Exception {
-
-		DB db = DBManagerUtil.getDB();
-
-		List<IndexMetadata> indexMetadatas = db.getIndexMetadatas(
-			connection, tableName, columnName, true);
-
-		for (IndexMetadata indexMetadata : indexMetadatas) {
-			db.runSQL(connection, indexMetadata.getDropSQL());
-		}
-
-		return indexMetadatas;
-	}
 
 	public static UpgradeProcess getUpgradeStep(
 		UpgradeStepRegistrator upgradeStepRegistrator,

@@ -122,8 +122,8 @@ public class LayoutDuplicateExternalReferenceCodeUpgradeProcessTest
 		long renamedPlid1 = duplicateExternalReferenceCodeLayouts1[0].getPlid();
 		long renamedPlid2 = duplicateExternalReferenceCodeLayouts2[0].getPlid();
 
-		String externalReferenceCode1 = _getExternalReferenceCode(renamedPlid1);
-		String externalReferenceCode2 = _getExternalReferenceCode(renamedPlid2);
+		String externalReferenceCode1 = _getExternalReferenceCode(plid1);
+		String externalReferenceCode2 = _getExternalReferenceCode(plid2);
 
 		_updateExternalReferenceCode(
 			fallbackExternalReferenceCodeLayout.getPlid(),

@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
+import java.sql.SQLException;
+
 import java.util.Collections;
 import java.util.Dictionary;
 
@@ -293,6 +295,30 @@ public class PortalInstanceExporterImplTest {
 		).exportCompany(
 			companyId
 		);
+	}
+
+	@Test
+	public void testExportPortalInstanceForFailedConfigurationExport()
+		throws Exception {
+
+		long companyId = RandomTestUtil.randomLong();
+		String configurationId = RandomTestUtil.randomString();
+
+		String encodedDictionary = _getEncodedDictionary(
+			ExtendedObjectClassDefinition.Scope.COMPANY, companyId);
+
+		_setUpConfigurations(configurationId, encodedDictionary);
+
+		_dbPartitionUtilMockedStatic.when(
+			() -> DBPartitionUtil.exportConfiguration(
+				companyId, configurationId, encodedDictionary)
+		).thenThrow(
+			new SQLException()
+		);
+
+		Assert.assertThrows(
+			SQLException.class,
+			() -> _portalInstanceExporterImpl.exportPortalInstance(companyId));
 	}
 
 	private void _assertNoConfigurationExported() {

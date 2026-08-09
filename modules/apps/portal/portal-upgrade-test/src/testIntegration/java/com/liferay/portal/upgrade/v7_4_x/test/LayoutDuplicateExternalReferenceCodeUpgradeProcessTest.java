@@ -66,9 +66,10 @@ public class LayoutDuplicateExternalReferenceCodeUpgradeProcessTest
 	@Before
 	public void setUp() throws Exception {
 		_connection = DataAccess.getConnection();
-		_group = GroupTestUtil.addGroup();
 
 		_dbInspector = new DBInspector(_connection);
+
+		_group = GroupTestUtil.addGroup();
 	}
 
 	@After
@@ -107,37 +108,38 @@ public class LayoutDuplicateExternalReferenceCodeUpgradeProcessTest
 		Layout[] duplicateExternalReferenceCodeLayouts2 =
 			_addDuplicateExternalReferenceCodeLayouts();
 
+		long renamedPlid1 = duplicateExternalReferenceCodeLayouts1[0].getPlid();
+		long renamedPlid2 = duplicateExternalReferenceCodeLayouts2[0].getPlid();
+
 		Layout fallbackExternalReferenceCodeLayout =
 			LayoutTestUtil.addTypePortletLayout(_group, false);
-		Layout uniqueExternalReferenceCodeLayout =
-			LayoutTestUtil.addTypePortletLayout(_group, false);
+
+		_updateExternalReferenceCode(
+			fallbackExternalReferenceCodeLayout.getPlid(),
+			String.valueOf(renamedPlid2));
+
+		long plid1 = duplicateExternalReferenceCodeLayouts1[1].getPlid();
+		long plid2 = duplicateExternalReferenceCodeLayouts2[1].getPlid();
+
+		String externalReferenceCode1 = _getExternalReferenceCode(plid1);
+		String externalReferenceCode2 = _getExternalReferenceCode(plid2);
 
 		Group group2 = GroupTestUtil.addGroup();
 
 		Layout group2Layout = LayoutTestUtil.addTypePortletLayout(
 			group2, false);
 
-		long plid1 = duplicateExternalReferenceCodeLayouts1[1].getPlid();
-		long plid2 = duplicateExternalReferenceCodeLayouts2[1].getPlid();
-
-		long renamedPlid1 = duplicateExternalReferenceCodeLayouts1[0].getPlid();
-		long renamedPlid2 = duplicateExternalReferenceCodeLayouts2[0].getPlid();
-
-		String externalReferenceCode1 = _getExternalReferenceCode(plid1);
-		String externalReferenceCode2 = _getExternalReferenceCode(plid2);
-
 		_updateExternalReferenceCode(
-			fallbackExternalReferenceCodeLayout.getPlid(),
-			String.valueOf(renamedPlid2));
+			group2Layout.getPlid(), externalReferenceCode1);
 
 		String uniqueExternalReferenceCode = PortalUUIDUtil.generate();
+
+		Layout uniqueExternalReferenceCodeLayout =
+			LayoutTestUtil.addTypePortletLayout(_group, false);
 
 		_updateExternalReferenceCode(
 			uniqueExternalReferenceCodeLayout.getPlid(),
 			uniqueExternalReferenceCode);
-
-		_updateExternalReferenceCode(
-			group2Layout.getPlid(), externalReferenceCode1);
 
 		runUpgrade();
 

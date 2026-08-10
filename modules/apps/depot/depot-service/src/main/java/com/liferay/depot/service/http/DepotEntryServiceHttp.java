@@ -450,6 +450,7 @@ public class DepotEntryServiceHttp {
 			java.util.Map<java.util.Locale, String> nameMap,
 			java.util.Map<java.util.Locale, String> descriptionMap,
 			java.util.Map<String, Boolean> depotAppCustomizationMap,
+			String friendlyURL,
 			com.liferay.portal.kernel.util.UnicodeProperties
 				typeSettingsUnicodeProperties,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -459,6 +460,54 @@ public class DepotEntryServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				DepotEntryServiceUtil.class, "updateDepotEntry",
 				_updateDepotEntryParameterTypes10);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, depotEntryId, nameMap, descriptionMap,
+				depotAppCustomizationMap, friendlyURL,
+				typeSettingsUnicodeProperties, serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.depot.model.DepotEntry)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.depot.model.DepotEntry updateDepotEntry(
+			HttpPrincipal httpPrincipal, long depotEntryId,
+			java.util.Map<java.util.Locale, String> nameMap,
+			java.util.Map<java.util.Locale, String> descriptionMap,
+			java.util.Map<String, Boolean> depotAppCustomizationMap,
+			com.liferay.portal.kernel.util.UnicodeProperties
+				typeSettingsUnicodeProperties,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				DepotEntryServiceUtil.class, "updateDepotEntry",
+				_updateDepotEntryParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, depotEntryId, nameMap, descriptionMap,
@@ -530,10 +579,17 @@ public class DepotEntryServiceHttp {
 	private static final Class<?>[] _updateDepotEntryParameterTypes10 =
 		new Class[] {
 			long.class, java.util.Map.class, java.util.Map.class,
+			java.util.Map.class, String.class,
+			com.liferay.portal.kernel.util.UnicodeProperties.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
+		};
+	private static final Class<?>[] _updateDepotEntryParameterTypes11 =
+		new Class[] {
+			long.class, java.util.Map.class, java.util.Map.class,
 			java.util.Map.class,
 			com.liferay.portal.kernel.util.UnicodeProperties.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-851994723
+// LIFERAY-SERVICE-BUILDER-HASH:1210175091

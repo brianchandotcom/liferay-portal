@@ -443,6 +443,20 @@ public class DepotEntryLocalServiceUtil {
 	public static DepotEntry updateDepotEntry(
 			long depotEntryId, Map<java.util.Locale, String> nameMap,
 			Map<java.util.Locale, String> descriptionMap,
+			Map<String, Boolean> depotAppCustomizationMap, String friendlyURL,
+			com.liferay.portal.kernel.util.UnicodeProperties
+				typeSettingsUnicodeProperties,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().updateDepotEntry(
+			depotEntryId, nameMap, descriptionMap, depotAppCustomizationMap,
+			friendlyURL, typeSettingsUnicodeProperties, serviceContext);
+	}
+
+	public static DepotEntry updateDepotEntry(
+			long depotEntryId, Map<java.util.Locale, String> nameMap,
+			Map<java.util.Locale, String> descriptionMap,
 			Map<String, Boolean> depotAppCustomizationMap,
 			com.liferay.portal.kernel.util.UnicodeProperties
 				typeSettingsUnicodeProperties,
@@ -463,4 +477,4 @@ public class DepotEntryLocalServiceUtil {
 			DepotEntryLocalServiceUtil.class, DepotEntryLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:239845251
+// LIFERAY-SERVICE-BUILDER-HASH:-699419304

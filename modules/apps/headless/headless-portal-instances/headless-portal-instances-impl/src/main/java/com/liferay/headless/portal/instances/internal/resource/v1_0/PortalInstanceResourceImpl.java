@@ -204,15 +204,17 @@ public class PortalInstanceResourceImpl extends BasePortalInstanceResourceImpl {
 		long companyId = company.getCompanyId();
 
 		try {
-			String exportedSchemaName =
+			String exportedPartitionName =
 				_portalInstanceExporter.exportPortalInstance(companyId);
 
-			return new PortalInstanceExport() {
-				{
-					setExportedPartitionName(() -> exportedSchemaName);
-					setSourceCompanyId(() -> companyId);
-				}
-			};
+			PortalInstanceExport portalInstanceExport =
+				new PortalInstanceExport();
+
+			portalInstanceExport.setExportedPartitionName(
+				() -> exportedPartitionName);
+			portalInstanceExport.setSourceCompanyId(() -> companyId);
+
+			return portalInstanceExport;
 		}
 		catch (Exception exception) {
 			_log.error(

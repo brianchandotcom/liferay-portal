@@ -368,20 +368,28 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 			_updateDLSizeLimitConfiguration(
 				assetLibrary, group.getGroupId(), mimeTypeSizeLimits);
 
-			DepotEntry updatedDepotEntry = _depotEntryService.updateDepotEntry(
-				depotEntry.getDepotEntryId(), nameMap, descriptionMap,
+			Map<String, Boolean> depotAppCustomizationMap =
 				_getDepotAppCustomizationMap(
-					depotEntry.getCompanyId(), externalReferenceCode),
+					depotEntry.getCompanyId(), externalReferenceCode);
+
+			UnicodeProperties typeSettingsUnicodeProperties =
 				UnicodePropertiesBuilder.create(
 					group.getTypeSettingsProperties(), true
 				).putAll(
 					unicodeProperties
-				).build(),
+				).build();
+
+			if (Validator.isNotNull(assetLibrary.getFriendlyURL())) {
+				return _depotEntryService.updateDepotEntry(
+					depotEntry.getDepotEntryId(), nameMap, descriptionMap,
+					depotAppCustomizationMap, assetLibrary.getFriendlyURL(),
+					typeSettingsUnicodeProperties, serviceContext);
+			}
+
+			return _depotEntryService.updateDepotEntry(
+				depotEntry.getDepotEntryId(), nameMap, descriptionMap,
+				depotAppCustomizationMap, typeSettingsUnicodeProperties,
 				serviceContext);
-
-			_updateFriendlyURL(assetLibrary, group.getGroupId());
-
-			return updatedDepotEntry;
 		}
 
 		if (Validator.isNotNull(externalReferenceCode)) {

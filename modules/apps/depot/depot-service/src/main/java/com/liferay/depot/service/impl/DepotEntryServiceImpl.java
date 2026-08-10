@@ -225,6 +225,23 @@ public class DepotEntryServiceImpl extends DepotEntryServiceBaseImpl {
 	public DepotEntry updateDepotEntry(
 			long depotEntryId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap,
+			Map<String, Boolean> depotAppCustomizationMap, String friendlyURL,
+			UnicodeProperties typeSettingsUnicodeProperties,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		_depotEntryModelResourcePermission.check(
+			getPermissionChecker(), depotEntryId, ActionKeys.UPDATE);
+
+		return depotEntryLocalService.updateDepotEntry(
+			depotEntryId, nameMap, descriptionMap, depotAppCustomizationMap,
+			friendlyURL, typeSettingsUnicodeProperties, serviceContext);
+	}
+
+	@Override
+	public DepotEntry updateDepotEntry(
+			long depotEntryId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap,
 			Map<String, Boolean> depotAppCustomizationMap,
 			UnicodeProperties typeSettingsUnicodeProperties,
 			ServiceContext serviceContext)

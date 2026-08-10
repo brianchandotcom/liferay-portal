@@ -424,7 +424,7 @@ public class AssetListAssetEntryProviderFiltersTest {
 		_assertFilteredClassPKs(
 			_buildFiltersJSONArray(
 				_buildFilterJSONObject(
-					"not-eq", _OBJECT_FIELD_NAME_TEXT, title)),
+					"not-contains", _OBJECT_FIELD_NAME_TEXT, title)),
 			objectEntry2);
 
 		String keyword = RandomTestUtil.randomString();

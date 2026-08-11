@@ -4,7 +4,7 @@
  */
 
 import '@testing-library/jest-dom';
-import {render, screen} from '@testing-library/react';
+import {cleanup, render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React, {useState} from 'react';
 
@@ -37,7 +37,7 @@ function ControlledDateFilter({
 
 describe('DateFilter', () => {
 	const renderDateFilter = (onApplyFilter = jest.fn()) => {
-		const user = userEvent.setup();
+		const user = userEvent.setup({delay: null});
 
 		render(<ControlledDateFilter onApplyFilter={onApplyFilter} />);
 
@@ -107,11 +107,12 @@ describe('DateFilter', () => {
 			Range.DateRange
 		);
 
-		await user.type(screen.getByLabelText('from'), '2026-01-01 08:00');
-		await user.type(
-			screen.getByLabelText('to[date-time]'),
-			'2026-01-02 08:00'
-		);
+		await user.click(screen.getByLabelText('from'));
+
+		await user.paste('2026-01-01 08:00');
+		await user.click(screen.getByLabelText('to[date-time]'));
+
+		await user.paste('2026-01-02 08:00');
 
 		await user.click(screen.getByText('show-results'));
 
@@ -160,5 +161,36 @@ describe('DateFilter', () => {
 			Range.All
 		);
 		expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+	});
+
+	it('offers the from last publish date range only with a last publish date', async () => {
+		render(<ControlledDateFilter onApplyFilter={jest.fn()} />);
+
+		expect(
+			screen.queryByRole('option', {name: 'from-last-publish-date'})
+		).not.toBeInTheDocument();
+
+		cleanup();
+
+		const onApplyFilter = jest.fn();
+
+		render(
+			<DateFilter
+				lastPublishDate="2026-07-20T15:30:00Z"
+				onApplyFilter={onApplyFilter}
+			/>
+		);
+
+		await userEvent.selectOptions(
+			screen.getByLabelText('filter-content-by'),
+			Range.LastPublishDate
+		);
+		await userEvent.click(
+			screen.getByRole('button', {name: /show-results/i})
+		);
+
+		expect(onApplyFilter).toHaveBeenCalledWith({
+			range: Range.LastPublishDate,
+		});
 	});
 });

@@ -42,7 +42,7 @@ const DEFAULT_PROPS = {
 	exportPreviewAPIURL: '/o/export-import/v1.0/export-preview',
 	exportProcessAPIURL: '/o/export-import/v1.0/export-processes',
 	pageTreeModalConfiguration: {
-		liveGroupId: 20121,
+		groupId: 20121,
 		pageSize: 20,
 		privateLayoutsAvailable: false,
 	},
@@ -239,7 +239,7 @@ describe('NewExport', () => {
 		);
 	});
 
-	it('exports the last range window resolved at apply, not at submit', async () => {
+	it('exports the last range start date resolved at apply, not at submit', async () => {
 		const HOUR = 60 * 60 * 1000;
 		const applyTime = Date.UTC(2026, 0, 1, 12, 0, 0);
 
@@ -281,7 +281,7 @@ describe('NewExport', () => {
 			expect(body.startDate).toBe(
 				new Date(applyTime - 12 * HOUR).toISOString()
 			);
-			expect(body.endDate).toBe(new Date(applyTime).toISOString());
+			expect(body.endDate).toBeUndefined();
 		});
 
 		dateNowSpy.mockRestore();

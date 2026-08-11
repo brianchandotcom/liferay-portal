@@ -8,11 +8,11 @@ import userEvent from '@testing-library/user-event';
 import fetch from 'jest-fetch-mock';
 import React from 'react';
 
-import PageTreeModal from '../../../../../../src/main/resources/META-INF/resources/revamp/js/pages/export/components/PageTreeModal';
-import {mockPageTreeItems} from '../../../mocks/mockPageTreeItems';
+import PageTreeModal from '../../../../src/main/resources/META-INF/resources/revamp/js/components/PageTreeModal';
+import {mockPageTreeItems} from '../mocks/mockPageTreeItems';
 
 jest.mock('staging-taglib', () => ({
-	PagesTree: require('../../../mocks/MockPagesTree').MockPagesTree,
+	PagesTree: require('../mocks/MockPagesTree').MockPagesTree,
 }));
 
 const renderModal = (
@@ -20,8 +20,8 @@ const renderModal = (
 ) =>
 	render(
 		<PageTreeModal
+			groupId={20121}
 			initialSelectedIds={[]}
-			liveGroupId={20121}
 			onClose={jest.fn()}
 			onSubmit={jest.fn()}
 			pageSize={20}

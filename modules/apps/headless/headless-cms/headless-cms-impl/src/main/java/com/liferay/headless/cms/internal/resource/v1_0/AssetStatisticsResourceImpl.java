@@ -9,36 +9,27 @@ import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.depot.service.DepotEntryService;
 import com.liferay.headless.cms.dto.v1_0.AssetStatistics;
+import com.liferay.headless.cms.internal.links.BrokenLinkAssetSearcher;
 import com.liferay.headless.cms.resource.v1_0.AssetStatisticsResource;
 import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntryTable;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectEntryLocalService;
-import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.search.query.BooleanQuery;
-import com.liferay.portal.search.query.QueriesUtil;
-import com.liferay.portal.search.query.TermsQuery;
-import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
-import com.liferay.portal.search.searcher.SearchResponse;
-import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.vulcan.util.GroupUtil;
 import com.liferay.site.cms.site.initializer.constants.CMSWorkflowConstants;
-import com.liferay.site.cms.site.initializer.util.CMSOutboundLinksUtil;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -162,39 +153,17 @@ public class AssetStatisticsResourceImpl
 		}
 
 		try {
-			List<String> expiredAssetTokens = _getExpiredAssetTokens(
-				objectDefinitionIds);
+			Set<String> outboundLinks =
+				_brokenLinkAssetSearcher.getExpiredAssetOutboundLinks(
+					contextCompany.getCompanyId(), objectDefinitionIds);
 
-			if (expiredAssetTokens.isEmpty()) {
+			if (outboundLinks.isEmpty()) {
 				return 0;
 			}
 
-			BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
-
-			booleanQuery.addFilterQueryClauses(
-				_getOutboundLinksBooleanQuery(expiredAssetTokens),
-				_getTermsQuery("cms_section", "contents", "files"),
-				_getTermsQuery(
-					Field.STATUS,
-					ArrayUtil.toStringArray(CMSWorkflowConstants.STATUSES)),
-				QueriesUtil.term("rootDescendantNode", false));
-
-			SearchResponse searchResponse = _searcher.search(
-				_searchRequestBuilderFactory.builder(
-				).companyId(
-					contextCompany.getCompanyId()
-				).emptySearchEnabled(
-					true
-				).groupIds(
-					ArrayUtil.toArray(groupIds)
-				).query(
-					booleanQuery
-				).withSearchContext(
-					searchContext -> searchContext.setAttribute(
-						Field.STATUS, WorkflowConstants.STATUS_ANY)
-				).build());
-
-			return searchResponse.getCount();
+			return _brokenLinkAssetSearcher.getCount(
+				contextCompany.getCompanyId(), ArrayUtil.toArray(groupIds),
+				outboundLinks);
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
@@ -222,39 +191,6 @@ public class AssetStatisticsResourceImpl
 		}
 	}
 
-	private List<String> _getExpiredAssetTokens(Long[] objectDefinitionIds) {
-		List<String> expiredAssetTokens = new ArrayList<>();
-
-		List<Object[]> results = _objectEntryLocalService.dslQuery(
-			DSLQueryFactoryUtil.select(
-				ObjectEntryTable.INSTANCE.externalReferenceCode,
-				ObjectEntryTable.INSTANCE.objectEntryId
-			).from(
-				ObjectEntryTable.INSTANCE
-			).where(
-				ObjectEntryTable.INSTANCE.companyId.eq(
-					contextCompany.getCompanyId()
-				).and(
-					ObjectEntryTable.INSTANCE.objectDefinitionId.in(
-						objectDefinitionIds)
-				).and(
-					ObjectEntryTable.INSTANCE.status.eq(
-						WorkflowConstants.STATUS_EXPIRED)
-				)
-			));
-
-		for (Object[] objects : results) {
-			expiredAssetTokens.add(
-				CMSOutboundLinksUtil.getObjectEntryExternalReferenceCodeToken(
-					GetterUtil.getString(objects[0])));
-			expiredAssetTokens.add(
-				CMSOutboundLinksUtil.getObjectEntryIdToken(
-					GetterUtil.getLong(objects[1])));
-		}
-
-		return expiredAssetTokens;
-	}
-
 	private Long[] _getGroupIds(Long assetLibraryId) {
 		List<Long> depotEntryGroupIds =
 			_depotEntryService.getDepotEntryGroupIds(
@@ -276,32 +212,6 @@ public class AssetStatisticsResourceImpl
 		return new Long[] {groupId};
 	}
 
-	private BooleanQuery _getOutboundLinksBooleanQuery(
-		List<String> outboundLinkTokens) {
-
-		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
-
-		for (int i = 0; i < outboundLinkTokens.size(); i += _MAX_TERMS_COUNT) {
-			List<String> values = outboundLinkTokens.subList(
-				i, Math.min(i + _MAX_TERMS_COUNT, outboundLinkTokens.size()));
-
-			booleanQuery.addShouldQueryClauses(
-				_getTermsQuery("outboundLinks", values.toArray(new String[0])));
-		}
-
-		booleanQuery.setMinimumShouldMatch(1);
-
-		return booleanQuery;
-	}
-
-	private TermsQuery _getTermsQuery(String fieldName, String... values) {
-		TermsQuery termsQuery = QueriesUtil.terms(fieldName);
-
-		termsQuery.addValues(values);
-
-		return termsQuery;
-	}
-
 	private AssetStatistics _toAssetStatistics() {
 		return new AssetStatistics() {
 			{
@@ -321,12 +231,13 @@ public class AssetStatisticsResourceImpl
 
 	private static final int _EXPIRING_SOON_DAYS = 7;
 
-	private static final int _MAX_TERMS_COUNT = 65536;
-
 	private static final int _UPCOMING_REVIEW_DAYS = 7;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetStatisticsResourceImpl.class);
+
+	@Reference
+	private BrokenLinkAssetSearcher _brokenLinkAssetSearcher;
 
 	@Reference
 	private DepotEntryLocalService _depotEntryLocalService;
@@ -339,11 +250,5 @@ public class AssetStatisticsResourceImpl
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;
-
-	@Reference
-	private Searcher _searcher;
-
-	@Reference
-	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
 
 }

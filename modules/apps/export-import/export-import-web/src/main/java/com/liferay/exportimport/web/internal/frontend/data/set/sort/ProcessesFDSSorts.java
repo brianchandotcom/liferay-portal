@@ -26,7 +26,8 @@ import org.osgi.service.component.annotations.Component;
 		"frontend.data.set.name=" + ExportImportFDSNames.COMPANY_EXPORT_PROCESSES,
 		"frontend.data.set.name=" + ExportImportFDSNames.COMPANY_IMPORT_PROCESSES,
 		"frontend.data.set.name=" + ExportImportFDSNames.EXPORT_PROCESSES,
-		"frontend.data.set.name=" + ExportImportFDSNames.IMPORT_PROCESSES
+		"frontend.data.set.name=" + ExportImportFDSNames.IMPORT_PROCESSES,
+		"frontend.data.set.name=" + ExportImportFDSNames.PUBLISH_PROCESSES
 	},
 	service = FDSSorts.class
 )

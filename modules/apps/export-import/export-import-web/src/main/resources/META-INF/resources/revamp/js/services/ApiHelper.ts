@@ -164,7 +164,32 @@ async function post<T>(url: string, body: unknown): Promise<RequestResult<T>> {
 	}
 }
 
+async function deleteResource(url: string): Promise<RequestResult<void>> {
+	try {
+		const response = await fetch(url, {
+			headers: HEADERS,
+			method: 'DELETE',
+		});
+
+		if (response.ok) {
+			return {data: undefined, error: null};
+		}
+
+		const responseData = await response.json();
+
+		return {
+			data: null,
+			error: getErrorMessage(responseData as ApiErrorResponse),
+			status: response.status.toString(),
+		};
+	}
+	catch (error) {
+		return {data: null, error: UNEXPECTED_ERROR_MESSAGE};
+	}
+}
+
 export default {
+	delete: deleteResource,
 	get,
 	post,
 	postFormDataWithProgress,

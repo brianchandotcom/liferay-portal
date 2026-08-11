@@ -7,6 +7,7 @@ package com.liferay.exportimport.web.internal.constants;
 
 import com.liferay.exportimport.constants.ExportImportPortletKeys;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.staging.constants.StagingProcessesPortletKeys;
 
 /**
  * @author Jorge González
@@ -30,5 +31,12 @@ public class ExportImportFDSNames {
 
 	public static final String IMPORT_REPORT_ENTRIES =
 		ExportImportPortletKeys.IMPORT + "-importReportEntries";
+
+	public static final String PUBLISH_PROCESSES =
+		StagingProcessesPortletKeys.STAGING_PROCESSES + "-publishProcesses";
+
+	public static final String SCHEDULED_PUBLISH_PROCESSES =
+		StagingProcessesPortletKeys.STAGING_PROCESSES +
+			"-scheduledPublishProcesses";
 
 }

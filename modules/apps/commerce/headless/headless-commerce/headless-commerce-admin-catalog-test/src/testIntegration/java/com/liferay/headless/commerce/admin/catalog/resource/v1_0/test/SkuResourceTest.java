@@ -277,6 +277,13 @@ public class SkuResourceTest extends BaseSkuResourceTestCase {
 	}
 
 	@Override
+	protected Sku testGetUnitOfMeasureSkusPage_addSku(Sku sku)
+		throws Exception {
+
+		return skuResource.postProductIdSku(_cProduct.getCProductId(), sku);
+	}
+
+	@Override
 	protected Sku testGraphQLSku_addSku() throws Exception {
 		return skuResource.postProductIdSku(
 			_cProduct.getCProductId(), randomSku());

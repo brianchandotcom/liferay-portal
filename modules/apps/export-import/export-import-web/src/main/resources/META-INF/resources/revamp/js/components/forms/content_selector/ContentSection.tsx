@@ -10,7 +10,6 @@ import {sub} from 'frontend-js-web';
 import React, {useEffect, useId, useRef, useState} from 'react';
 
 import '../../../../css/utilities.scss';
-import {PageTreeModalConfiguration} from '../../../pages/export/components/PageTreeModal';
 import {ExportImportProcess} from '../../../types/exportImportProcess';
 import {PreviewPortletDataHandlerSection as PortletDataHandlerSectionType} from '../../../types/portletDataHandler';
 import {
@@ -25,6 +24,7 @@ import {
 	isSelected,
 	updateSelection,
 } from '../../../utils/contentSelection';
+import {PageTreeModalConfiguration} from '../../PageTreeModal';
 import CollapsibleGroup from './CollapsibleGroup';
 import PortletDataControl from './PortletDataControl';
 import SectionFooter from './SectionFooter';
@@ -121,9 +121,13 @@ export default function ContentSection({
 					? Liferay.Language.get(
 							'for-each-of-the-selected-content-types,-import-their'
 						)
-					: Liferay.Language.get(
-							'for-each-of-the-selected-content-types,-export-their'
-						),
+					: process === 'publish'
+						? Liferay.Language.get(
+								'for-each-of-the-selected-content-types,-publish-their'
+							)
+						: Liferay.Language.get(
+								'for-each-of-the-selected-content-types,-export-their'
+							),
 			title: Liferay.Language.get('comments-and-ratings'),
 		},
 	].filter(({applies}) => applies);

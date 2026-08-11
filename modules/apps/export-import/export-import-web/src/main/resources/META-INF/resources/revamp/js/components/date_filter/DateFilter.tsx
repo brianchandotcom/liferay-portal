@@ -25,6 +25,7 @@ import {
 	getAppliedFilterSummary,
 	getIsDirty,
 	getValidation,
+	toEditingState,
 } from './utils';
 
 const INITIAL_EDITING: EditingState = {
@@ -42,13 +43,17 @@ const INITIAL_TOUCHED: TouchedFields = {
 export default function DateFilter({
 	appliedValue = {range: Range.All} as DateFilterValues,
 	itemsCount = 0,
+	lastPublishDate,
 	onApplyFilter,
 }: {
 	appliedValue?: DateFilterValues;
 	itemsCount?: number;
+	lastPublishDate?: string;
 	onApplyFilter?: (filterValues: DateFilterValues) => void;
 }) {
-	const [editing, setEditing] = useState<EditingState>(INITIAL_EDITING);
+	const [editing, setEditing] = useState<EditingState>(() =>
+		toEditingState(appliedValue)
+	);
 	const [touchedFields, setTouchedFields] =
 		useState<TouchedFields>(INITIAL_TOUCHED);
 
@@ -71,6 +76,22 @@ export default function DateFilter({
 	const updateTouched = (patch: Partial<TouchedFields>) => {
 		setTouchedFields((prev) => ({...prev, ...patch}));
 	};
+
+	const rangeOptions = useMemo(
+		() =>
+			lastPublishDate
+				? [
+						...RANGE_OPTIONS,
+						{
+							label: Liferay.Language.get(
+								'from-last-publish-date'
+							),
+							value: Range.LastPublishDate,
+						},
+					]
+				: RANGE_OPTIONS,
+		[lastPublishDate]
+	);
 
 	const handleShowResults = () => {
 		setTouchedFields({endDate: true, startDate: true});
@@ -100,7 +121,7 @@ export default function DateFilter({
 								range: event.target.value as Range,
 							})
 						}
-						options={RANGE_OPTIONS}
+						options={rangeOptions}
 						value={editing.range}
 					/>
 				</ClayLayout.ContentCol>

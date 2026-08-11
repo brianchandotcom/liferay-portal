@@ -7,6 +7,7 @@ export enum Range {
 	All = 'all',
 	DateRange = 'dateRange',
 	Last = 'last',
+	LastPublishDate = 'lastPublishDate',
 }
 
 export enum LastRange {
@@ -19,9 +20,11 @@ export enum LastRange {
 export type DateFilterValues =
 	| {range: Range.All}
 	| {last: LastRange; range: Range.Last}
-	| {endDate: string; range: Range.DateRange; startDate: string};
+	| {endDate: string; range: Range.DateRange; startDate: string}
+	| {range: Range.LastPublishDate};
 
 export type NormalizedDateFilter = {
+	dateRangeType?: 'ALL' | 'DATE_RANGE' | 'FROM_LAST_PUBLISH_DATE' | 'LAST';
 	endDate?: string;
 	startDate?: string;
 };

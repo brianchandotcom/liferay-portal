@@ -7,9 +7,13 @@ import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import {Form, Formik, FormikValues} from 'formik';
+import {sub} from 'frontend-js-web';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
+import DataSelection from '../../components/DataSelection';
 import Footer from '../../components/Footer';
+import {PageTreeModalConfiguration} from '../../components/PageTreeModal';
+import Setup from '../../components/Setup';
 import {
 	DateFilterValues,
 	NormalizedDateFilter,
@@ -17,10 +21,7 @@ import {
 	normalizeDateFilter,
 } from '../../components/date_filter';
 import {ContentSelection} from '../../components/forms/content_selector/ContentSelector';
-import {
-	ExportPreviewParams,
-	getExportPreview,
-} from '../../services/getExportPreview';
+import {PreviewParams, getPreview} from '../../services/getPreview';
 import {postExportProcess} from '../../services/postExportProcess';
 import {ExportPreview} from '../../types/exportImportPreview';
 import {
@@ -30,9 +31,6 @@ import {
 	withSelectedLayoutSetCount,
 } from '../../utils/contentSelection';
 import {toRequestPortletDataHandlers} from '../../utils/toRequestPortletDataHandlers';
-import DataSelection from './components/DataSelection';
-import {PageTreeModalConfiguration} from './components/PageTreeModal';
-import Setup from './components/Setup';
 
 export function NewExport({
 	backURL,
@@ -59,39 +57,33 @@ export function NewExport({
 	const initialPreviewRef = useRef<ExportPreview | undefined>(exportPreview);
 	const appliedDateFilterRef = useRef<NormalizedDateFilter>({});
 
-	const getPreview = useCallback(
-		(exportPreviewParams: ExportPreviewParams) => {
-			setLoading(true);
-			setError(null);
+	const loadPreview = useCallback((previewParams: PreviewParams) => {
+		setLoading(true);
+		setError(null);
 
-			getExportPreview(exportPreviewParams).then(
-				(exportPreviewResponse) => {
-					if (exportPreviewResponse.error !== null) {
-						setError(exportPreviewResponse.error);
-					}
-					else {
-						setPreview(exportPreviewResponse.data);
+		getPreview(previewParams).then((exportPreviewResponse) => {
+			if (exportPreviewResponse.error !== null) {
+				setError(exportPreviewResponse.error);
+			}
+			else {
+				setPreview(exportPreviewResponse.data);
 
-						if (!initialPreviewRef.current) {
-							initialPreviewRef.current =
-								exportPreviewResponse.data;
-						}
-					}
-
-					setLoading(false);
+				if (!initialPreviewRef.current) {
+					initialPreviewRef.current = exportPreviewResponse.data;
 				}
-			);
-		},
-		[]
-	);
+			}
+
+			setLoading(false);
+		});
+	}, []);
 
 	useEffect(() => {
 		if (exportPreview) {
 			return;
 		}
 
-		getPreview({url: exportPreviewAPIURL});
-	}, [exportPreview, exportPreviewAPIURL, getPreview]);
+		loadPreview({url: exportPreviewAPIURL});
+	}, [exportPreview, exportPreviewAPIURL, loadPreview]);
 
 	if (error) {
 		return <ClayAlert displayType="danger">{error}</ClayAlert>;
@@ -109,7 +101,7 @@ export function NewExport({
 			return;
 		}
 
-		getPreview({
+		loadPreview({
 			query: appliedDateFilterRef.current,
 			url: exportPreviewAPIURL,
 		});
@@ -182,7 +174,18 @@ export function NewExport({
 
 				return (
 					<Form noValidate>
-						<Setup />
+						<Setup
+							placeholder={Liferay.Language.get(
+								'add-an-export-name'
+							)}
+							subtitle={Liferay.Language.get(
+								'provide-a-descriptive-name-for-your-file'
+							)}
+							title={sub(
+								Liferay.Language.get('x-details'),
+								Liferay.Language.get('export')
+							)}
+						/>
 
 						<DataSelection
 							commentsAndRatingsEnabled={
@@ -192,6 +195,12 @@ export function NewExport({
 								preview?.deletionCount,
 								previewPortletDataHandlerSections,
 								contentSelection
+							)}
+							deletionsDescription={Liferay.Language.get(
+								'deletions-help-export'
+							)}
+							deletionsLabel={Liferay.Language.get(
+								'export-individual-deletions'
 							)}
 							itemsCount={getSelectedItemsCount(
 								preview?.additionCount,
@@ -204,9 +213,18 @@ export function NewExport({
 							pageTreeModalConfiguration={
 								pageTreeModalConfiguration
 							}
+							permissionsDescription={Liferay.Language.get(
+								'export-import-permissions-help'
+							)}
+							permissionsLabel={Liferay.Language.get(
+								'export-permissions'
+							)}
 							previewPortletDataHandlerSections={withSelectedLayoutSetCount(
 								previewPortletDataHandlerSections,
 								contentSelection
+							)}
+							subtitle={Liferay.Language.get(
+								'select-and-filter-the-data-you-want-to-include-in-your-export'
 							)}
 						/>
 

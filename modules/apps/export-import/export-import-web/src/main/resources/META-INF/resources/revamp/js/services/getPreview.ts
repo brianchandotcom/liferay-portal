@@ -9,15 +9,15 @@ import {NormalizedDateFilter} from '../components/date_filter';
 import {ExportPreview} from '../types/exportImportPreview';
 import ApiHelper, {RequestResult} from './ApiHelper';
 
-export interface ExportPreviewParams {
+export interface PreviewParams {
 	query?: NormalizedDateFilter;
 	url: string;
 }
 
-export function getExportPreview({
+export function getPreview({
 	query = {},
 	url,
-}: ExportPreviewParams): Promise<RequestResult<ExportPreview>> {
+}: PreviewParams): Promise<RequestResult<ExportPreview>> {
 	const params: Record<string, string> = {};
 
 	Object.entries(query).forEach(([key, value]) => {

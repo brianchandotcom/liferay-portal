@@ -331,11 +331,9 @@ public abstract class UrlReader<T> {
 				}
 
 				String exceptionMessage = ioException1.getMessage();
+				int responseCode = _getResponseCode(urlConnection);
 
-				if (exceptionMessage.matches(
-						".*HTTP response code\\: 422 .*") &&
-					(urlConnection != null)) {
-
+				if (responseCode == 422) {
 					StringBuilder sb = new StringBuilder();
 
 					sb.append(exceptionMessage);
@@ -353,9 +351,7 @@ public abstract class UrlReader<T> {
 
 				Matcher testray2URLMatcher = _testray2URLPattern.matcher(url);
 
-				if (exceptionMessage.matches(
-						".*HTTP response code\\: 403 .*") &&
-					testray2URLMatcher.find() &&
+				if ((responseCode == 403) && testray2URLMatcher.find() &&
 					(urlConnection instanceof HttpURLConnection)) {
 
 					HttpURLConnection httpURLConnection =
@@ -404,11 +400,7 @@ public abstract class UrlReader<T> {
 
 				Integer retryPeriodOverride = null;
 
-				if (gitHubAPICall &&
-					exceptionMessage.matches(
-						".*HTTP response code\\: 403 .*") &&
-					(urlConnection != null)) {
-
+				if (gitHubAPICall && (responseCode == 403)) {
 					try {
 						retryPeriodOverride = Integer.parseInt(
 							urlConnection.getHeaderField("retry-after"));
@@ -433,6 +425,12 @@ public abstract class UrlReader<T> {
 						throw new GitHubSecondaryRateLimitRuntimeException(
 							url, retryPeriodOverride, ioException1);
 					}
+				}
+
+				if ((responseCode >= 400) && (responseCode < 500) &&
+					!_retryableResponseCodes.contains(responseCode)) {
+
+					throw ioException1;
 				}
 
 				long retryPeriodMillis = 1000 * retryPeriod;
@@ -573,10 +571,41 @@ public abstract class UrlReader<T> {
 		JenkinsResultsParserUtil.sleep(duration);
 	}
 
+	/**
+	 * Returns the response code, or <code>-1</code> when the connection never
+	 * produced one. A connection that failed before the response line arrived,
+	 * or that is not HTTP at all, is not a 4xx and must stay retryable.
+	 */
+	private int _getResponseCode(URLConnection urlConnection) {
+		if (!(urlConnection instanceof HttpURLConnection)) {
+			return -1;
+		}
+
+		HttpURLConnection httpURLConnection = (HttpURLConnection)urlConnection;
+
+		try {
+			return httpURLConnection.getResponseCode();
+		}
+		catch (IOException ioException) {
+			return -1;
+		}
+	}
+
 	private static final int _SECONDS_RETRY_PERIOD_MAX = 60 * 30;
 
 	private static final Pattern _gitHubAPIURLPattern = Pattern.compile(
 		"https\\:\\/\\/api\\.github\\.com(.*)");
+
+	/**
+	 * A 4xx means the request will fail the same way every time, so it is
+	 * terminal. These three are the exceptions: 403 carries both the GitHub
+	 * secondary rate limit and the Testray 2 expired token, where a further
+	 * attempt is the entire remedy, and 408 and 429 are retryable by
+	 * definition.
+	 */
+	private static final List<Integer> _retryableResponseCodes = Arrays.asList(
+		403, 408, 429);
+
 	private static final Pattern _testray2URLPattern = Pattern.compile(
 		"(?<baseURL>https://webserver-testray2(-(?<lxcEnvironment>.+))?" +
 			"\\.lfr\\.cloud|https://testray\\.liferay\\.com).*");

@@ -104,13 +104,17 @@ public class BrokenLinkAssetSearcher {
 	}
 
 	public SearchResponse search(
-		long companyId, long[] groupIds, Set<String> outboundLinks,
-		Pagination pagination, String search, Sort[] sorts) {
+		long companyId, long[] groupIds, String languageId,
+		Set<String> outboundLinks, Pagination pagination, String search,
+		Sort[] sorts) {
 
 		SearchRequestBuilder searchRequestBuilder =
 			_createSearchRequestBuilder(companyId, groupIds, outboundLinks);
 
-		searchRequestBuilder.from(
+		searchRequestBuilder.addSelectedFieldNames(
+			CMSOutboundLinksUtil.FIELD_NAME, Field.ENTRY_CLASS_PK,
+			Field.getLocalizedName(languageId, "localized_title")
+		).from(
 			Math.min(pagination.getStartPosition(), _MAX_RESULT_WINDOW)
 		).size(
 			Math.min(

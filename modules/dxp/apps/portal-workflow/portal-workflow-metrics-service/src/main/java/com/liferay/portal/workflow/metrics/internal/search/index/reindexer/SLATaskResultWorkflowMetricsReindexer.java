@@ -5,6 +5,7 @@
 
 package com.liferay.portal.workflow.metrics.internal.search.index.reindexer;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.search.capabilities.SearchCapabilities;
@@ -23,6 +24,7 @@ import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.spi.reindexer.IndexReindexer;
 import com.liferay.portal.workflow.metrics.internal.search.index.SLATaskResultWorkflowMetricsIndexer;
+import com.liferay.portal.workflow.metrics.internal.search.index.WorkflowMetricsIndex;
 import com.liferay.portal.workflow.metrics.search.background.task.WorkflowMetricsReindexStatusMessageSender;
 import com.liferay.portal.workflow.metrics.search.index.constants.WorkflowMetricsIndexNameConstants;
 import com.liferay.portal.workflow.metrics.search.index.reindexer.WorkflowMetricsReindexer;
@@ -45,7 +47,11 @@ public class SLATaskResultWorkflowMetricsReindexer
 	}
 
 	@Override
-	public void reindex(long companyId) {
+	public void reindex(long companyId) throws PortalException {
+		WorkflowMetricsIndex.createMissingIndexes(
+			_searchCapabilities, _searchEngineAdapter, _indexNameBuilder,
+			companyId);
+
 		_createDefaultDocuments(companyId);
 	}
 
@@ -57,8 +63,7 @@ public class SLATaskResultWorkflowMetricsReindexer
 	}
 
 	private void _createDefaultDocuments(long companyId) {
-		if (!_searchCapabilities.isWorkflowMetricsSupported() ||
-			!_hasIndex(
+		if (!_hasIndex(
 				_indexNameBuilder.getIndexName(companyId) +
 					WorkflowMetricsIndexNameConstants.SUFFIX_NODE)) {
 

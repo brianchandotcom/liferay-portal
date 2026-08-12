@@ -30,8 +30,12 @@ import {useObjectDetailsForm} from './useObjectDetailsForm';
 
 import './ObjectDetails.scss';
 
+export type PanelCategory = LabelValueObject & {
+	deprecated?: boolean;
+};
+
 export type Scope = {
-	items: LabelValueObject[];
+	items: PanelCategory[];
 	label: string;
 };
 

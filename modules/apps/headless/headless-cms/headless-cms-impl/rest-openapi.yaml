@@ -81,6 +81,9 @@ components:
                     format: int64
                     readOnly: true
                     type: integer
+                objectDefinitionExternalReferenceCode:
+                    readOnly: true
+                    type: string
                 title:
                     readOnly: true
                     type: string

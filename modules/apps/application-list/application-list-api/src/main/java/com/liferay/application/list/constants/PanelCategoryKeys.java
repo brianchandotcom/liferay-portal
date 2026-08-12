@@ -59,6 +59,13 @@ public interface PanelCategoryKeys {
 	public static final String APPLICATIONS_MENU_APPLICATIONS_DESIGN =
 		"applications_menu.applications.design";
 
+	public static final String
+		APPLICATIONS_MENU_APPLICATIONS_DEVELOPER_INTEGRATION =
+			"applications_menu.applications.developer-integration";
+
+	public static final String APPLICATIONS_MENU_APPLICATIONS_IN_MAINTENANCE =
+		"applications_menu.applications.in-maintenance";
+
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #APPLICATIONS_MENU_APPLICATIONS}
 	 */

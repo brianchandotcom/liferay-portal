@@ -10,6 +10,10 @@ package com.liferay.portal.search.tuning.web.application.list.constants;
  */
 public interface SearchTuningPanelCategoryKeys {
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link com.liferay.portal.search.web.application.list.constants.SearchPanelCategoryKeys#CONTROL_PANEL_SEARCH}
+	 */
+	@Deprecated
 	public static final String CONTROL_PANEL_SEARCH_TUNING =
 		"control_panel.search_tuning";
 

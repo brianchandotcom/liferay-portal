@@ -8,6 +8,7 @@ package com.liferay.portal.upgrade.v7_4_x.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -80,16 +81,22 @@ public class UpgradeCompanyInfoTest {
 
 				db.alterTableAddColumn(connection, "Company", "logoId", "LONG");
 
-				for (String[] column : _COMPANY_INFO_COLUMNS) {
+				for (String columnDefinition :
+						_COMPANY_INFO_COLUMN_DEFINITIONS) {
+
+					int index = columnDefinition.indexOf(StringPool.SPACE);
+
 					db.alterTableAddColumn(
-						connection, "Company", column[0], column[1]);
+						connection, "Company",
+						columnDefinition.substring(0, index),
+						columnDefinition.substring(index + 1));
 				}
 			}
 
 			Map<String, String> clearedCompanyInfoValues = new HashMap<>();
 
-			for (String[] column : _COMPANY_INFO_COLUMNS) {
-				clearedCompanyInfoValues.put(column[0], null);
+			for (String columnName : _COMPANY_INFO_COLUMN_NAMES) {
+				clearedCompanyInfoValues.put(columnName, null);
 			}
 
 			clearedCompanyInfoValues.put("logoId", "0");
@@ -100,9 +107,10 @@ public class UpgradeCompanyInfoTest {
 			for (long companyId : companyIds) {
 				Map<String, String> expectedCompanyInfoValues = new HashMap<>();
 
-				for (String[] column : _COMPANY_INFO_COLUMNS) {
+				for (String columnName : _COMPANY_INFO_COLUMN_NAMES) {
 					expectedCompanyInfoValues.put(
-						column[0], RandomTestUtil.randomString(10) + companyId);
+						columnName,
+						RandomTestUtil.randomString(10) + companyId);
 				}
 
 				expectedCompanyInfoValues.put(
@@ -146,9 +154,10 @@ public class UpgradeCompanyInfoTest {
 				Assert.assertFalse(
 					"logoId", dbInspector.hasColumn("Company", "logoId"));
 
-				for (String[] column : _COMPANY_INFO_COLUMNS) {
+				for (String columnName : _COMPANY_INFO_COLUMN_NAMES) {
 					Assert.assertFalse(
-						column[0], dbInspector.hasColumn("Company", column[0]));
+						columnName,
+						dbInspector.hasColumn("Company", columnName));
 				}
 			}
 		}
@@ -165,10 +174,10 @@ public class UpgradeCompanyInfoTest {
 					db.alterTableDropColumn(connection, "Company", "logoId");
 				}
 
-				for (String[] column : _COMPANY_INFO_COLUMNS) {
-					if (dbInspector.hasColumn("Company", column[0])) {
+				for (String columnName : _COMPANY_INFO_COLUMN_NAMES) {
+					if (dbInspector.hasColumn("Company", columnName)) {
 						db.alterTableDropColumn(
-							connection, "Company", column[0]);
+							connection, "Company", columnName);
 					}
 				}
 			}
@@ -211,8 +220,8 @@ public class UpgradeCompanyInfoTest {
 	private String _getCompanyInfoColumnNamesSQL() {
 		StringBundler sb = new StringBundler();
 
-		for (String[] column : _COMPANY_INFO_COLUMNS) {
-			sb.append(column[0]);
+		for (String columnName : _COMPANY_INFO_COLUMN_NAMES) {
+			sb.append(columnName);
 			sb.append(", ");
 		}
 
@@ -241,9 +250,9 @@ public class UpgradeCompanyInfoTest {
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				Assert.assertTrue(resultSet.next());
 
-				for (String[] column : _COMPANY_INFO_COLUMNS) {
+				for (String columnName : _COMPANY_INFO_COLUMN_NAMES) {
 					companyInfoValues.put(
-						column[0], resultSet.getString(column[0]));
+						columnName, resultSet.getString(columnName));
 				}
 
 				companyInfoValues.put("logoId", resultSet.getString("logoId"));
@@ -263,9 +272,9 @@ public class UpgradeCompanyInfoTest {
 		sb.append(tableName);
 		sb.append(" set logoId = ?");
 
-		for (String[] column : _COMPANY_INFO_COLUMNS) {
+		for (String columnName : _COMPANY_INFO_COLUMN_NAMES) {
 			sb.append(", ");
-			sb.append(column[0]);
+			sb.append(columnName);
 			sb.append(" = ?");
 		}
 
@@ -281,9 +290,9 @@ public class UpgradeCompanyInfoTest {
 
 			int parameterIndex = 2;
 
-			for (String[] column : _COMPANY_INFO_COLUMNS) {
+			for (String columnName : _COMPANY_INFO_COLUMN_NAMES) {
 				preparedStatement.setString(
-					parameterIndex++, values.get(column[0]));
+					parameterIndex++, values.get(columnName));
 			}
 
 			preparedStatement.setLong(parameterIndex, companyId);
@@ -292,13 +301,19 @@ public class UpgradeCompanyInfoTest {
 		}
 	}
 
-	private static final String[][] _COMPANY_INFO_COLUMNS = {
-		{"homeURL", "STRING null"}, {"indexNameCurrent", "VARCHAR(75) null"},
-		{"indexNameNext", "VARCHAR(75) null"}, {"industry", "VARCHAR(75) null"},
-		{"legalId", "VARCHAR(75) null"}, {"legalName", "VARCHAR(75) null"},
-		{"legalType", "VARCHAR(75) null"}, {"name", "VARCHAR(75) null"},
-		{"sicCode", "VARCHAR(75) null"}, {"size_", "VARCHAR(75) null"},
-		{"tickerSymbol", "VARCHAR(75) null"}, {"type_", "VARCHAR(75) null"}
+	private static final String[] _COMPANY_INFO_COLUMN_DEFINITIONS = {
+		"homeURL STRING null", "indexNameCurrent VARCHAR(75) null",
+		"indexNameNext VARCHAR(75) null", "industry VARCHAR(75) null",
+		"legalId VARCHAR(75) null", "legalName VARCHAR(75) null",
+		"legalType VARCHAR(75) null", "name VARCHAR(75) null",
+		"sicCode VARCHAR(75) null", "size_ VARCHAR(75) null",
+		"tickerSymbol VARCHAR(75) null", "type_ VARCHAR(75) null"
+	};
+
+	private static final String[] _COMPANY_INFO_COLUMN_NAMES = {
+		"homeURL", "indexNameCurrent", "indexNameNext", "industry", "legalId",
+		"legalName", "legalType", "name", "sicCode", "size_", "tickerSymbol",
+		"type_"
 	};
 
 	@DeleteAfterTestRun

@@ -10,6 +10,10 @@ package com.liferay.search.experiences.constants;
  */
 public class SXPPanelCategoryKeys {
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link com.liferay.portal.search.web.application.list.constants.SearchPanelCategoryKeys#CONTROL_PANEL_SEARCH}
+	 */
+	@Deprecated
 	public static final String CONTROL_PANEL_SEARCH_EXPERIENCES =
 		"control_panel.search_experiences";
 

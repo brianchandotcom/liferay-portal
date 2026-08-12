@@ -39,7 +39,13 @@ public class BatchPlannerPanelCategory extends BasePanelCategory {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return _language.get(resourceBundle, "data-migration");
+		return _language.format(
+			resourceBundle, "x-deprecated", "data-migration");
+	}
+
+	@Override
+	public boolean isDeprecated() {
+		return true;
 	}
 
 	@Reference

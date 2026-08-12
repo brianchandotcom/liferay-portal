@@ -34,8 +34,14 @@ public class ApplicationsPublicationsPanelCategory extends BasePanelCategory {
 
 	@Override
 	public String getLabel(Locale locale) {
-		return _language.get(
-			locale, "category.applications_menu.applications.publications");
+		return _language.format(
+			locale, "x-deprecated",
+			"category.applications_menu.applications.publications");
+	}
+
+	@Override
+	public boolean isDeprecated() {
+		return true;
 	}
 
 	@Reference

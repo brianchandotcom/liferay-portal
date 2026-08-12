@@ -38,8 +38,8 @@ public class PLOEntryServiceImpl extends PLOEntryServiceBaseImpl {
 
 	@Override
 	public PLOEntry addOrUpdatePLOEntry(
-			String externalReferenceCode, long userId, String key,
-			String languageId, String value)
+			String externalReferenceCode, String key, String languageId,
+			String value)
 		throws PortalException {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
@@ -47,13 +47,9 @@ public class PLOEntryServiceImpl extends PLOEntryServiceBaseImpl {
 		PortalPermissionUtil.check(
 			permissionChecker, PLOActionKeys.MANAGE_LANGUAGE_OVERRIDES);
 
-		if (userId <= 0) {
-			userId = permissionChecker.getUserId();
-		}
-
 		return ploEntryLocalService.addOrUpdatePLOEntry(
-			externalReferenceCode, permissionChecker.getCompanyId(), userId,
-			key, languageId, value);
+			externalReferenceCode, permissionChecker.getCompanyId(),
+			getUserId(), key, languageId, value);
 	}
 
 	@Override

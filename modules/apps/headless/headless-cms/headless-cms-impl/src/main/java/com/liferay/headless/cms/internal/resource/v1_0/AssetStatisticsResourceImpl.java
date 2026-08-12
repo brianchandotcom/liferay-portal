@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
+import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.vulcan.util.GroupUtil;
 import com.liferay.site.cms.site.initializer.constants.CMSWorkflowConstants;
 
@@ -153,17 +155,22 @@ public class AssetStatisticsResourceImpl
 		}
 
 		try {
-			Set<String> outboundLinks =
-				_brokenLinkAssetSearcher.getExpiredAssetOutboundLinks(
+			BrokenLinkAssetSearcher brokenLinkAssetSearcher =
+				new BrokenLinkAssetSearcher(
+					_objectEntryLocalService, _searcher,
+					_searchRequestBuilderFactory);
+
+			Set<String> expiredAssetTokens =
+				brokenLinkAssetSearcher.getExpiredAssetTokens(
 					contextCompany.getCompanyId(), objectDefinitionIds);
 
-			if (outboundLinks.isEmpty()) {
+			if (expiredAssetTokens.isEmpty()) {
 				return 0;
 			}
 
-			return _brokenLinkAssetSearcher.getCount(
+			return brokenLinkAssetSearcher.getCount(
 				contextCompany.getCompanyId(), ArrayUtil.toArray(groupIds),
-				outboundLinks, contextUser.getUserId());
+				expiredAssetTokens, contextUser.getUserId());
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
@@ -237,9 +244,6 @@ public class AssetStatisticsResourceImpl
 		AssetStatisticsResourceImpl.class);
 
 	@Reference
-	private BrokenLinkAssetSearcher _brokenLinkAssetSearcher;
-
-	@Reference
 	private DepotEntryLocalService _depotEntryLocalService;
 
 	@Reference
@@ -250,5 +254,11 @@ public class AssetStatisticsResourceImpl
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Reference
+	private Searcher _searcher;
+
+	@Reference
+	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
 
 }

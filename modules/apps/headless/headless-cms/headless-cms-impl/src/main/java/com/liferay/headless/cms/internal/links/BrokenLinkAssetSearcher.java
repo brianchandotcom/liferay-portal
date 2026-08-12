@@ -32,56 +32,36 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Jürgen Kappler
  */
-@Component(service = BrokenLinkAssetSearcher.class)
 public class BrokenLinkAssetSearcher {
-
-	// The object definition is carried by its ID rather than by its external
-	// reference code, which the index normalizes to lowercase
 
 	public static final String FIELD_NAME_OBJECT_DEFINITION_ID =
 		"objectDefinitionId";
 
-	// The title is read from the object entry's own field rather than from
-	// "localized_title", which is analyzed and therefore indexed lowercased
-
 	public static final String FIELD_NAME_OBJECT_ENTRY_TITLE =
 		"objectEntryTitle";
 
+	public BrokenLinkAssetSearcher(
+		ObjectEntryLocalService objectEntryLocalService, Searcher searcher,
+		SearchRequestBuilderFactory searchRequestBuilderFactory) {
+
+		_objectEntryLocalService = objectEntryLocalService;
+		_searcher = searcher;
+		_searchRequestBuilderFactory = searchRequestBuilderFactory;
+	}
+
 	public long getCount(
-		long companyId, long[] groupIds, Set<String> outboundLinks,
+		long companyId, long[] groupIds, Set<String> outboundLinkTokens,
 		long userId) {
 
 		SearchResponse searchResponse = _searcher.search(
-			_createSearchRequestBuilder(
-				companyId, groupIds, outboundLinks, userId
+			_getSearchRequestBuilder(
+				companyId, groupIds, outboundLinkTokens, userId
 			).build());
 
 		return searchResponse.getCount();
-	}
-
-	public Set<String> getExpiredAssetOutboundLinks(
-		long companyId, Long[] objectDefinitionIds) {
-
-		Set<String> outboundLinks = new LinkedHashSet<>();
-
-		for (Object[] objects :
-				_getExpiredAssetObjects(companyId, objectDefinitionIds)) {
-
-			outboundLinks.add(
-				CMSOutboundLinksUtil.getObjectEntryExternalReferenceCodeToken(
-					String.valueOf(objects[0])));
-			outboundLinks.add(
-				CMSOutboundLinksUtil.getObjectEntryIdToken(
-					GetterUtil.getLong(objects[1])));
-		}
-
-		return outboundLinks;
 	}
 
 	public Map<String, String> getExpiredAssetTitles(
@@ -106,7 +86,7 @@ public class BrokenLinkAssetSearcher {
 
 			titles.put(
 				CMSOutboundLinksUtil.getObjectEntryExternalReferenceCodeToken(
-					String.valueOf(objects[0])),
+					GetterUtil.getString(objects[0])),
 				title);
 			titles.put(
 				CMSOutboundLinksUtil.getObjectEntryIdToken(objectEntryId),
@@ -116,29 +96,48 @@ public class BrokenLinkAssetSearcher {
 		return titles;
 	}
 
+	public Set<String> getExpiredAssetTokens(
+		long companyId, Long[] objectDefinitionIds) {
+
+		Set<String> expiredAssetTokens = new LinkedHashSet<>();
+
+		for (Object[] objects :
+				_getExpiredAssetObjects(companyId, objectDefinitionIds)) {
+
+			expiredAssetTokens.add(
+				CMSOutboundLinksUtil.getObjectEntryExternalReferenceCodeToken(
+					GetterUtil.getString(objects[0])));
+			expiredAssetTokens.add(
+				CMSOutboundLinksUtil.getObjectEntryIdToken(
+					GetterUtil.getLong(objects[1])));
+		}
+
+		return expiredAssetTokens;
+	}
+
 	public SearchResponse search(
 		long companyId, long[] groupIds, String languageId,
-		Set<String> outboundLinks, Pagination pagination, String search,
+		Set<String> outboundLinkTokens, Pagination pagination, String search,
 		Sort[] sorts, long userId) {
 
-		SearchRequestBuilder searchRequestBuilder =
-			_createSearchRequestBuilder(
-				companyId, groupIds, outboundLinks, userId);
+		SearchRequestBuilder searchRequestBuilder = _getSearchRequestBuilder(
+			companyId, groupIds, outboundLinkTokens, userId);
+
+		int startPosition = Math.min(
+			pagination.getStartPosition(), _MAX_RESULT_WINDOW);
 
 		searchRequestBuilder.addSelectedFieldNames(
 			CMSOutboundLinksUtil.FIELD_NAME, Field.ENTRY_CLASS_PK,
 			FIELD_NAME_OBJECT_DEFINITION_ID, FIELD_NAME_OBJECT_ENTRY_TITLE,
 			Field.getLocalizedName(languageId, FIELD_NAME_OBJECT_ENTRY_TITLE)
 		).from(
-			Math.min(pagination.getStartPosition(), _MAX_RESULT_WINDOW)
+			startPosition
 		).size(
 			Math.min(
-				pagination.getPageSize(),
-				_MAX_RESULT_WINDOW - Math.min(
-					pagination.getStartPosition(), _MAX_RESULT_WINDOW))
+				pagination.getPageSize(), _MAX_RESULT_WINDOW - startPosition)
 		);
 
-		if (!ArrayUtil.isEmpty(sorts)) {
+		if (ArrayUtil.isNotEmpty(sorts)) {
 			searchRequestBuilder.withSearchContext(
 				searchContext -> searchContext.setSorts(sorts));
 		}
@@ -148,74 +147,6 @@ public class BrokenLinkAssetSearcher {
 		}
 
 		return _searcher.search(searchRequestBuilder.build());
-	}
-
-	private BooleanQuery _createOutboundLinksBooleanQuery(
-		Set<String> outboundLinks) {
-
-		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
-
-		String[] values = outboundLinks.toArray(new String[0]);
-
-		for (int i = 0; i < values.length; i += _MAX_TERMS_COUNT) {
-			booleanQuery.addShouldQueryClauses(
-				_createTermsQuery(
-					CMSOutboundLinksUtil.FIELD_NAME,
-					ArrayUtil.subset(
-						values, i,
-						Math.min(i + _MAX_TERMS_COUNT, values.length))));
-		}
-
-		booleanQuery.setMinimumShouldMatch(1);
-
-		return booleanQuery;
-	}
-
-	private SearchRequestBuilder _createSearchRequestBuilder(
-		long companyId, long[] groupIds, Set<String> outboundLinks,
-		long userId) {
-
-		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
-
-		booleanQuery.addFilterQueryClauses(
-			_createOutboundLinksBooleanQuery(outboundLinks),
-			_createTermsQuery("cms_section", "contents", "files"),
-			_createTermsQuery(
-				Field.STATUS,
-				ArrayUtil.toStringArray(CMSWorkflowConstants.STATUSES)),
-			QueriesUtil.term("rootDescendantNode", false));
-
-		return _searchRequestBuilderFactory.builder(
-		).companyId(
-			companyId
-		).emptySearchEnabled(
-			true
-		).groupIds(
-			groupIds
-		).query(
-			booleanQuery
-		).withSearchContext(
-			searchContext -> {
-				searchContext.setAttribute(
-					Field.STATUS, WorkflowConstants.STATUS_ANY);
-
-				// The permission filter is only added when the search context
-				// carries a user, and a search context built from a search
-				// request starts without one, so both the count and the
-				// listing would otherwise answer for assets the caller cannot
-				// view
-
-				searchContext.setUserId(userId);
-			}
-		);
-	}
-
-	private TermsQuery _createTermsQuery(String fieldName, String... values) {
-		TermsQuery termsQuery = QueriesUtil.terms(fieldName);
-
-		termsQuery.addValues(values);
-
-		return termsQuery;
 	}
 
 	private List<Object[]> _getExpiredAssetObjects(
@@ -240,17 +171,73 @@ public class BrokenLinkAssetSearcher {
 			));
 	}
 
+	private BooleanQuery _getOutboundLinksBooleanQuery(
+		Set<String> outboundLinkTokens) {
+
+		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
+
+		String[] values = outboundLinkTokens.toArray(new String[0]);
+
+		for (int i = 0; i < values.length; i += _MAX_TERMS_COUNT) {
+			booleanQuery.addShouldQueryClauses(
+				_getTermsQuery(
+					CMSOutboundLinksUtil.FIELD_NAME,
+					ArrayUtil.subset(
+						values, i,
+						Math.min(i + _MAX_TERMS_COUNT, values.length))));
+		}
+
+		booleanQuery.setMinimumShouldMatch(1);
+
+		return booleanQuery;
+	}
+
+	private SearchRequestBuilder _getSearchRequestBuilder(
+		long companyId, long[] groupIds, Set<String> outboundLinkTokens,
+		long userId) {
+
+		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
+
+		booleanQuery.addFilterQueryClauses(
+			_getOutboundLinksBooleanQuery(outboundLinkTokens),
+			_getTermsQuery("cms_section", "contents", "files"),
+			_getTermsQuery(
+				Field.STATUS,
+				ArrayUtil.toStringArray(CMSWorkflowConstants.STATUSES)),
+			QueriesUtil.term("rootDescendantNode", false));
+
+		return _searchRequestBuilderFactory.builder(
+		).companyId(
+			companyId
+		).emptySearchEnabled(
+			true
+		).groupIds(
+			groupIds
+		).query(
+			booleanQuery
+		).withSearchContext(
+			searchContext -> {
+				searchContext.setAttribute(
+					Field.STATUS, WorkflowConstants.STATUS_ANY);
+				searchContext.setUserId(userId);
+			}
+		);
+	}
+
+	private TermsQuery _getTermsQuery(String fieldName, String... values) {
+		TermsQuery termsQuery = QueriesUtil.terms(fieldName);
+
+		termsQuery.addValues(values);
+
+		return termsQuery;
+	}
+
 	private static final int _MAX_RESULT_WINDOW = 10000;
 
 	private static final int _MAX_TERMS_COUNT = 65536;
 
-	@Reference
-	private ObjectEntryLocalService _objectEntryLocalService;
-
-	@Reference
-	private Searcher _searcher;
-
-	@Reference
-	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
+	private final ObjectEntryLocalService _objectEntryLocalService;
+	private final Searcher _searcher;
+	private final SearchRequestBuilderFactory _searchRequestBuilderFactory;
 
 }

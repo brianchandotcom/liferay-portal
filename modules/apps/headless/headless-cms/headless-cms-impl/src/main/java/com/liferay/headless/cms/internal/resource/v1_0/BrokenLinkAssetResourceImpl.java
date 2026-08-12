@@ -14,6 +14,7 @@ import com.liferay.headless.cms.resource.v1_0.BrokenLinkAssetResource;
 import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionService;
+import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -27,7 +28,9 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.entity.StringEntityField;
 import com.liferay.portal.search.document.Document;
+import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
+import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.GroupUtil;
@@ -91,8 +94,13 @@ public class BrokenLinkAssetResourceImpl
 			return Page.of(Collections.emptyList());
 		}
 
+		BrokenLinkAssetSearcher brokenLinkAssetSearcher =
+			new BrokenLinkAssetSearcher(
+				_objectEntryLocalService, _searcher,
+				_searchRequestBuilderFactory);
+
 		Map<String, String> expiredAssetTitles =
-			_brokenLinkAssetSearcher.getExpiredAssetTitles(
+			brokenLinkAssetSearcher.getExpiredAssetTitles(
 				contextCompany.getCompanyId(),
 				contextAcceptLanguage.getPreferredLanguageId(),
 				objectDefinitionIds);
@@ -101,7 +109,7 @@ public class BrokenLinkAssetResourceImpl
 			return Page.of(Collections.emptyList());
 		}
 
-		SearchResponse searchResponse = _brokenLinkAssetSearcher.search(
+		SearchResponse searchResponse = brokenLinkAssetSearcher.search(
 			contextCompany.getCompanyId(), ArrayUtil.toArray(groupIds),
 			contextAcceptLanguage.getPreferredLanguageId(),
 			expiredAssetTitles.keySet(), pagination, search, sorts,
@@ -221,9 +229,6 @@ public class BrokenLinkAssetResourceImpl
 					Field.getLocalizedName(locale, "localized_title"))));
 
 	@Reference
-	private BrokenLinkAssetSearcher _brokenLinkAssetSearcher;
-
-	@Reference
 	private DepotEntryLocalService _depotEntryLocalService;
 
 	@Reference
@@ -233,6 +238,15 @@ public class BrokenLinkAssetResourceImpl
 	private ObjectDefinitionService _objectDefinitionService;
 
 	@Reference
+	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Reference
 	private Portal _portal;
+
+	@Reference
+	private Searcher _searcher;
+
+	@Reference
+	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
 
 }

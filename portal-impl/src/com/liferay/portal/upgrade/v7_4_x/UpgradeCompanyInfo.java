@@ -24,9 +24,15 @@ public class UpgradeCompanyInfo extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		for (String[] column : _COMPANY_INFO_COLUMNS) {
-			if (!hasColumn("CompanyInfo", column[0])) {
-				alterTableAddColumn("CompanyInfo", column[0], column[1]);
+		for (String columnDefinition : _COMPANY_INFO_COLUMN_DEFINITIONS) {
+			int index = columnDefinition.indexOf(StringPool.SPACE);
+
+			String columnName = columnDefinition.substring(0, index);
+
+			if (!hasColumn("CompanyInfo", columnName)) {
+				alterTableAddColumn(
+					"CompanyInfo", columnName,
+					columnDefinition.substring(index + 1));
 			}
 		}
 
@@ -103,24 +109,20 @@ public class UpgradeCompanyInfo extends UpgradeProcess {
 	@Override
 	protected UpgradeStep[] getPostUpgradeSteps() {
 		return new UpgradeStep[] {
-			UpgradeProcessFactory.dropColumns("Company", _COMPANY_COLUMN_NAMES)
+			UpgradeProcessFactory.dropColumns(
+				"Company", "homeURL", "indexNameCurrent", "indexNameNext",
+				"industry", "legalId", "legalName", "legalType", "logoId",
+				"name", "sicCode", "size_", "tickerSymbol", "type_")
 		};
 	}
 
-	private static final String[] _COMPANY_COLUMN_NAMES = {
-		"homeURL", "indexNameCurrent", "indexNameNext", "industry", "legalId",
-		"legalName", "legalType", "logoId", "name", "sicCode", "size_",
-		"tickerSymbol", "type_"
-	};
-
-	private static final String[][] _COMPANY_INFO_COLUMNS = {
-		{"homeURL", "STRING null"}, {"indexNameCurrent", "VARCHAR(75) null"},
-		{"indexNameNext", "VARCHAR(75) null"}, {"industry", "VARCHAR(75) null"},
-		{"legalId", "VARCHAR(75) null"}, {"legalName", "VARCHAR(75) null"},
-		{"legalType", "VARCHAR(75) null"}, {"logoId", "LONG"},
-		{"name", "VARCHAR(75) null"}, {"sicCode", "VARCHAR(75) null"},
-		{"size_", "VARCHAR(75) null"}, {"tickerSymbol", "VARCHAR(75) null"},
-		{"type_", "VARCHAR(75) null"}
+	private static final String[] _COMPANY_INFO_COLUMN_DEFINITIONS = {
+		"homeURL STRING null", "indexNameCurrent VARCHAR(75) null",
+		"indexNameNext VARCHAR(75) null", "industry VARCHAR(75) null",
+		"legalId VARCHAR(75) null", "legalName VARCHAR(75) null",
+		"legalType VARCHAR(75) null", "logoId LONG", "name VARCHAR(75) null",
+		"sicCode VARCHAR(75) null", "size_ VARCHAR(75) null",
+		"tickerSymbol VARCHAR(75) null", "type_ VARCHAR(75) null"
 	};
 
 }

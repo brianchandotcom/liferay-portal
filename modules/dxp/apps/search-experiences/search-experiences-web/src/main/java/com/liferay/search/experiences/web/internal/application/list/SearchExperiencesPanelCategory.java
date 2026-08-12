@@ -36,7 +36,12 @@ public class SearchExperiencesPanelCategory extends BasePanelCategory {
 
 	@Override
 	public String getLabel(Locale locale) {
-		return _language.get(locale, "search-experiences");
+		return _language.format(locale, "x-deprecated", "search-experiences");
+	}
+
+	@Override
+	public boolean isDeprecated() {
+		return true;
 	}
 
 	@Reference

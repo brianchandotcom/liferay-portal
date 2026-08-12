@@ -17,27 +17,59 @@ public interface PanelCategoryKeys {
 	public static final String APPLICATIONS_MENU_APPLICATIONS =
 		"applications_menu.applications";
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #APPLICATIONS_MENU_APPLICATIONS_DEVELOPER_INTEGRATION}
+	 */
+	@Deprecated
 	public static final String APPLICATIONS_MENU_APPLICATIONS_BATCH_PLANNER =
 		"applications_menu.applications.batch_planner";
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String APPLICATIONS_MENU_APPLICATIONS_COMMERCE =
 		"applications_menu.applications.commerce";
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #APPLICATIONS_MENU_APPLICATIONS}
+	 */
+	@Deprecated
 	public static final String APPLICATIONS_MENU_APPLICATIONS_COMMUNICATION =
 		"applications_menu.applications.communication";
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #APPLICATIONS_MENU_APPLICATIONS_IN_MAINTENANCE}
+	 */
+	@Deprecated
 	public static final String APPLICATIONS_MENU_APPLICATIONS_CONTENT =
 		"applications_menu.applications.content";
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #APPLICATIONS_MENU_APPLICATIONS_DEVELOPER_INTEGRATION}
+	 */
+	@Deprecated
 	public static final String APPLICATIONS_MENU_APPLICATIONS_CUSTOM_APPS =
 		"applications_menu.applications.custom.apps";
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #APPLICATIONS_MENU_APPLICATIONS}
+	 */
+	@Deprecated
 	public static final String APPLICATIONS_MENU_APPLICATIONS_DESIGN =
 		"applications_menu.applications.design";
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #APPLICATIONS_MENU_APPLICATIONS}
+	 */
+	@Deprecated
 	public static final String APPLICATIONS_MENU_APPLICATIONS_PERSONALIZATION =
 		"applications_menu.applications.personalization";
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #APPLICATIONS_MENU_APPLICATIONS_IN_MAINTENANCE}
+	 */
+	@Deprecated
 	public static final String APPLICATIONS_MENU_APPLICATIONS_PUBLICATIONS =
 		"applications_menu.applications.publications";
 

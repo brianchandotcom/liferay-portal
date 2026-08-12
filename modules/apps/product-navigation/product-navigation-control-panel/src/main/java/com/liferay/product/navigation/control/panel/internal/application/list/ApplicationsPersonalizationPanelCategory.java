@@ -35,8 +35,14 @@ public class ApplicationsPersonalizationPanelCategory
 
 	@Override
 	public String getLabel(Locale locale) {
-		return _language.get(
-			locale, "category.applications_menu.applications.personalization");
+		return _language.format(
+			locale, "x-deprecated",
+			"category.applications_menu.applications.personalization");
+	}
+
+	@Override
+	public boolean isDeprecated() {
+		return true;
 	}
 
 	@Reference

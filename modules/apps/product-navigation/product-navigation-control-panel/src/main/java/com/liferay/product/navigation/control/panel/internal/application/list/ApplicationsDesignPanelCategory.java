@@ -38,8 +38,14 @@ public class ApplicationsDesignPanelCategory extends BasePanelCategory {
 
 	@Override
 	public String getLabel(Locale locale) {
-		return _language.get(
-			locale, "category.applications_menu.applications.design");
+		return _language.format(
+			locale, "x-deprecated",
+			"category.applications_menu.applications.design");
+	}
+
+	@Override
+	public boolean isDeprecated() {
+		return true;
 	}
 
 	@Override

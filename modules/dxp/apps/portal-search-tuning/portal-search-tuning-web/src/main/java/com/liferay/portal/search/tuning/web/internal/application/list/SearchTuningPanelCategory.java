@@ -40,7 +40,13 @@ public class SearchTuningPanelCategory extends BasePanelCategory {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return _language.get(resourceBundle, "search-tuning");
+		return _language.format(
+			resourceBundle, "x-deprecated", "search-tuning");
+	}
+
+	@Override
+	public boolean isDeprecated() {
+		return true;
 	}
 
 	@Reference

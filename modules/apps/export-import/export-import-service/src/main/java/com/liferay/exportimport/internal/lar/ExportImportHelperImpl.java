@@ -10,6 +10,7 @@ import com.liferay.exportimport.constants.ExportImportBackgroundTaskContextMapCo
 import com.liferay.exportimport.internal.data.handler.BatchEnginePortletDataHandler;
 import com.liferay.exportimport.internal.data.handler.BatchEnginePortletDataHandlerRegistryUtil;
 import com.liferay.exportimport.internal.data.handler.MissingPortlet;
+import com.liferay.exportimport.internal.util.LARManifestPathUtil;
 import com.liferay.exportimport.kernel.lar.DataLevel;
 import com.liferay.exportimport.kernel.lar.DefaultConfigurationPortletDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportHelper;
@@ -568,7 +569,9 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 		xmlReader.parse(
 			new InputSource(
-				portletDataContext.getZipEntryAsInputStream("/manifest.xml")));
+				portletDataContext.getZipEntryAsInputStream(
+					LARManifestPathUtil.getImportManifestXmlFilePath(
+						portletDataContext))));
 
 		return manifestSummary;
 	}
@@ -1064,7 +1067,9 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 		xmlReader.parse(
 			new InputSource(
-				portletDataContext.getZipEntryAsInputStream("/manifest.xml")));
+				portletDataContext.getZipEntryAsInputStream(
+					LARManifestPathUtil.getImportManifestXmlFilePath(
+						portletDataContext))));
 
 		return missingReferences;
 	}

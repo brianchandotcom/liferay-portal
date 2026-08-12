@@ -9,6 +9,7 @@ import com.liferay.asset.link.model.adapter.StagedAssetLink;
 import com.liferay.exportimport.configuration.ExportImportServiceConfiguration;
 import com.liferay.exportimport.constants.ExportImportConstants;
 import com.liferay.exportimport.controller.PortletImportController;
+import com.liferay.exportimport.internal.util.LARManifestPathUtil;
 import com.liferay.exportimport.kernel.controller.ExportImportController;
 import com.liferay.exportimport.kernel.controller.ImportController;
 import com.liferay.exportimport.kernel.exception.LARFileException;
@@ -34,6 +35,7 @@ import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.exportimport.lar.DeletionSystemEventImporter;
 import com.liferay.exportimport.lar.PermissionImporter;
+import com.liferay.exportimport.lar.SiteImporter;
 import com.liferay.exportimport.portlet.data.handler.provider.PortletDataHandlerProvider;
 import com.liferay.exportimport.portlet.element.handler.PortletElementHandler;
 import com.liferay.exportimport.portlet.element.handler.PortletElementHandlerFactory;
@@ -145,7 +147,8 @@ public class LayoutImportController implements ImportController {
 
 			try (ZipReader zipReader = _zipReaderFactory.getZipReader(file)) {
 				validateFile(
-					layoutSet.getCompanyId(), targetGroupId, parameterMap,
+					layoutSet.getCompanyId(), targetGroupId,
+					LARManifestPathUtil.MANIFEST_XML_FILE_PATH, parameterMap,
 					zipReader);
 
 				PortletDataContext portletDataContext = getPortletDataContext(
@@ -261,7 +264,8 @@ public class LayoutImportController implements ImportController {
 
 			try (ZipReader zipReader = _zipReaderFactory.getZipReader(file)) {
 				validateFile(
-					layoutSet.getCompanyId(), targetGroupId, parameterMap,
+					layoutSet.getCompanyId(), targetGroupId,
+					LARManifestPathUtil.MANIFEST_XML_FILE_PATH, parameterMap,
 					zipReader);
 
 				PortletDataContext portletDataContext = getPortletDataContext(
@@ -446,13 +450,13 @@ public class LayoutImportController implements ImportController {
 	}
 
 	protected void validateFile(
-			long companyId, long groupId, Map<String, String[]> parameterMap,
-			ZipReader zipReader)
+			long companyId, long groupId, String manifestXmlFilePath,
+			Map<String, String[]> parameterMap, ZipReader zipReader)
 		throws Exception {
 
 		// XML
 
-		String xml = zipReader.getEntryAsString("/manifest.xml");
+		String xml = zipReader.getEntryAsString(manifestXmlFilePath);
 
 		if (xml == null) {
 			throw new LARFileException(LARFileException.TYPE_MISSING_MANIFEST);
@@ -762,8 +766,10 @@ public class LayoutImportController implements ImportController {
 		// LAR validation
 
 		validateFile(
-			companyId, portletDataContext.getGroupId(), parameterMap,
-			portletDataContext.getZipReader());
+			companyId, portletDataContext.getGroupId(),
+			LARManifestPathUtil.getImportManifestXmlFilePath(
+				portletDataContext),
+			parameterMap, portletDataContext.getZipReader());
 
 		// Source and target group id
 
@@ -962,6 +968,9 @@ public class LayoutImportController implements ImportController {
 		if (_log.isInfoEnabled()) {
 			_log.info("Importing layouts takes " + stopWatch.getTime() + " ms");
 		}
+
+		_siteImporter.importSites(
+			portletDataContext, this::_importFile, userId);
 	}
 
 	private void _validateLayoutPrototypes(
@@ -1110,6 +1119,9 @@ public class LayoutImportController implements ImportController {
 
 	@Reference
 	private PortletLocalService _portletLocalService;
+
+	@Reference
+	private SiteImporter _siteImporter;
 
 	@Reference
 	private Staging _staging;

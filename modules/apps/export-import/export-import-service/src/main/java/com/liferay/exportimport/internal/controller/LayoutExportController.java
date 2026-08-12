@@ -9,6 +9,7 @@ import com.liferay.asset.link.model.adapter.StagedAssetLink;
 import com.liferay.exportimport.constants.ExportImportConstants;
 import com.liferay.exportimport.controller.PortletExportController;
 import com.liferay.exportimport.internal.lar.PermissionExporter;
+import com.liferay.exportimport.internal.util.LARManifestPathUtil;
 import com.liferay.exportimport.kernel.controller.ExportController;
 import com.liferay.exportimport.kernel.controller.ExportImportController;
 import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
@@ -23,6 +24,7 @@ import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleManager;
 import com.liferay.exportimport.kernel.lifecycle.constants.ExportImportLifecycleConstants;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.lar.DeletionSystemEventExporter;
+import com.liferay.exportimport.lar.SiteExporter;
 import com.liferay.portal.background.task.model.BackgroundTask;
 import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
@@ -279,6 +281,8 @@ public class LayoutExportController implements ExportController {
 		rootElement.addElement("site-portlets");
 		rootElement.addElement("site-services");
 
+		_siteExporter.addSitesElement(portletDataContext, rootElement);
+
 		// Export the group
 
 		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
@@ -341,7 +345,11 @@ public class LayoutExportController implements ExportController {
 		}
 
 		portletDataContext.addZipEntry(
-			"/manifest.xml", document.formattedString());
+			LARManifestPathUtil.getExportManifestXmlFilePath(
+				portletDataContext),
+			document.formattedString());
+
+		_siteExporter.exportSites(portletDataContext, this::doExport);
 
 		ZipWriter zipWriter = portletDataContext.getZipWriter();
 
@@ -444,6 +452,9 @@ public class LayoutExportController implements ExportController {
 
 	@Reference
 	private PortletExportController _portletExportController;
+
+	@Reference
+	private SiteExporter _siteExporter;
 
 	@Reference
 	private UserLocalService _userLocalService;

@@ -72,6 +72,21 @@ public class BatchEnginePortletDataHandlerUtilTest {
 	}
 
 	@Test
+	public void testBuildDeleteParametersWithParameters() {
+		Map<String, Serializable> parameters =
+			BatchEnginePortletDataHandlerUtil.buildDeleteParameters(
+				_mockExportImportDescriptor(
+					null, null,
+					HashMapBuilder.<String, Serializable>put(
+						"param1", "value1"
+					).build()),
+				_mockGroupLocalService(null), _mockPortletDataContext(),
+				_getStagingGroupHelper(false));
+
+		Assert.assertEquals("value1", parameters.get("param1"));
+	}
+
+	@Test
 	public void testBuildExportParametersWithEndDate() {
 		Date endDate = _getDate(0);
 
@@ -323,6 +338,21 @@ public class BatchEnginePortletDataHandlerUtilTest {
 				_getStagingGroupHelper(false));
 
 		Assert.assertEquals(modelClassName, parameters.get("modelClassName"));
+	}
+
+	@Test
+	public void testBuildImportParametersWithParameters() {
+		Map<String, Serializable> parameters =
+			BatchEnginePortletDataHandlerUtil.buildImportParameters(
+				_mockExportImportDescriptor(
+					null, null,
+					HashMapBuilder.<String, Serializable>put(
+						"param1", "value1"
+					).build()),
+				_mockGroupLocalService(null), _mockPortletDataContext(),
+				_getStagingGroupHelper(false));
+
+		Assert.assertEquals("value1", parameters.get("param1"));
 	}
 
 	@Test

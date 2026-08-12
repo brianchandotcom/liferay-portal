@@ -95,6 +95,19 @@ public interface PanelCategory extends PanelEntry {
 	}
 
 	/**
+	 * Returns <code>true</code> if the application category is deprecated. A
+	 * deprecated category stays in the registry so that the applications custom
+	 * objects and custom OSGi modules already place in it keep working, but it
+	 * is no longer offered as a destination for new ones.
+	 *
+	 * @return <code>true</code> if the application category is deprecated;
+	 *         <code>false</code> otherwise
+	 */
+	public default boolean isDeprecated() {
+		return false;
+	}
+
+	/**
 	 * Returns <code>true</code> if the state of the category is persisted.
 	 *
 	 * @return <code>true</code> if the state of the category is persisted;

@@ -41,9 +41,17 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = BrokenLinkAssetSearcher.class)
 public class BrokenLinkAssetSearcher {
 
-	public static final String
-		FIELD_NAME_OBJECT_DEFINITION_EXTERNAL_REFERENCE_CODE =
-			"objectDefinitionExternalReferenceCode";
+	// The object definition is carried by its ID rather than by its external
+	// reference code, which the index normalizes to lowercase
+
+	public static final String FIELD_NAME_OBJECT_DEFINITION_ID =
+		"objectDefinitionId";
+
+	// The title is read from the object entry's own field rather than from
+	// "localized_title", which is analyzed and therefore indexed lowercased
+
+	public static final String FIELD_NAME_OBJECT_ENTRY_TITLE =
+		"objectEntryTitle";
 
 	public long getCount(
 		long companyId, long[] groupIds, Set<String> outboundLinks,
@@ -119,8 +127,8 @@ public class BrokenLinkAssetSearcher {
 
 		searchRequestBuilder.addSelectedFieldNames(
 			CMSOutboundLinksUtil.FIELD_NAME, Field.ENTRY_CLASS_PK,
-			Field.getLocalizedName(languageId, "localized_title"),
-			FIELD_NAME_OBJECT_DEFINITION_EXTERNAL_REFERENCE_CODE
+			FIELD_NAME_OBJECT_DEFINITION_ID, FIELD_NAME_OBJECT_ENTRY_TITLE,
+			Field.getLocalizedName(languageId, FIELD_NAME_OBJECT_ENTRY_TITLE)
 		).from(
 			Math.min(pagination.getStartPosition(), _MAX_RESULT_WINDOW)
 		).size(

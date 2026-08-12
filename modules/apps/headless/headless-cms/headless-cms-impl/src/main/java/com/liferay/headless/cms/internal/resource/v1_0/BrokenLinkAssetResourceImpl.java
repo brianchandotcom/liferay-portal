@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.entity.StringEntityField;
 import com.liferay.portal.search.document.Document;
@@ -35,6 +36,7 @@ import com.liferay.site.cms.site.initializer.util.CMSOutboundLinksUtil;
 import jakarta.ws.rs.core.MultivaluedMap;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -72,15 +74,18 @@ public class BrokenLinkAssetResourceImpl
 			return Page.of(Collections.emptyList());
 		}
 
-		Long[] objectDefinitionIds = transformToArray(
+		List<ObjectDefinition> objectDefinitions =
 			_objectDefinitionService.getCMSObjectDefinitions(
 				contextCompany.getCompanyId(),
 				new String[] {
 					ObjectFolderConstants.
 						EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES,
 					ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES
-				}),
-			ObjectDefinition::getObjectDefinitionId, Long.class);
+				});
+
+		Long[] objectDefinitionIds = transformToArray(
+			objectDefinitions, ObjectDefinition::getObjectDefinitionId,
+			Long.class);
 
 		if (ArrayUtil.isEmpty(objectDefinitionIds)) {
 			return Page.of(Collections.emptyList());
@@ -102,10 +107,19 @@ public class BrokenLinkAssetResourceImpl
 			expiredAssetTitles.keySet(), pagination, search, sorts,
 			contextUser.getUserId());
 
+		Map<Long, String> externalReferenceCodes = new HashMap<>();
+
+		for (ObjectDefinition objectDefinition : objectDefinitions) {
+			externalReferenceCodes.put(
+				objectDefinition.getObjectDefinitionId(),
+				objectDefinition.getExternalReferenceCode());
+		}
+
 		return Page.of(
 			transform(
 				searchResponse.getDocuments(),
-				document -> _toBrokenLinkAsset(document, expiredAssetTitles)),
+				document -> _toBrokenLinkAsset(
+					document, expiredAssetTitles, externalReferenceCodes)),
 			pagination, searchResponse.getCount());
 	}
 
@@ -135,8 +149,23 @@ public class BrokenLinkAssetResourceImpl
 		return new Long[] {groupId};
 	}
 
+	private String _getTitle(Document document) {
+		String title = document.getString(
+			Field.getLocalizedName(
+				contextAcceptLanguage.getPreferredLocale(),
+				BrokenLinkAssetSearcher.FIELD_NAME_OBJECT_ENTRY_TITLE));
+
+		if (Validator.isNotNull(title)) {
+			return title;
+		}
+
+		return document.getString(
+			BrokenLinkAssetSearcher.FIELD_NAME_OBJECT_ENTRY_TITLE);
+	}
+
 	private BrokenLinkAsset _toBrokenLinkAsset(
-		Document document, Map<String, String> expiredAssetTitles) {
+		Document document, Map<String, String> expiredAssetTitles,
+		Map<Long, String> externalReferenceCodes) {
 
 		Set<String> brokenLinkTitles = new LinkedHashSet<>();
 
@@ -168,38 +197,28 @@ public class BrokenLinkAssetResourceImpl
 				setHref(
 					() -> StringBundler.concat(
 						_portal.getPortalURL(contextHttpServletRequest),
-						_portal.getPathMain(),
-						GroupConstants.CMS_FRIENDLY_URL,
+						_portal.getPathMain(), GroupConstants.CMS_FRIENDLY_URL,
 						"/edit_content_item?p_l_mode=read&p_p_state=",
 						LiferayWindowState.POP_UP, "&objectEntryId=",
 						objectEntryId));
 				setId(() -> objectEntryId);
 				setObjectDefinitionExternalReferenceCode(
-					() -> document.getString(
-						BrokenLinkAssetSearcher.
-							FIELD_NAME_OBJECT_DEFINITION_EXTERNAL_REFERENCE_CODE));
-				setTitle(
-					() -> document.getString(
-						Field.getLocalizedName(
-							contextAcceptLanguage.getPreferredLocale(),
-							_FIELD_NAME_LOCALIZED_TITLE)));
+					() -> externalReferenceCodes.get(
+						GetterUtil.getLong(
+							document.getString(
+								BrokenLinkAssetSearcher.
+									FIELD_NAME_OBJECT_DEFINITION_ID))));
+				setTitle(() -> _getTitle(document));
 			}
 		};
 	}
-
-	private static final String _FIELD_NAME_LOCALIZED_TITLE =
-		"localized_title";
-
-	// The broken link count is intersected per hit, after the search, so it is
-	// not a field the index can order by
 
 	private static final EntityModel _entityModel =
 		() -> EntityModel.toEntityFieldsMap(
 			new StringEntityField(
 				"title",
 				locale -> Field.getSortableFieldName(
-					Field.getLocalizedName(
-						locale, _FIELD_NAME_LOCALIZED_TITLE))));
+					Field.getLocalizedName(locale, "localized_title"))));
 
 	@Reference
 	private BrokenLinkAssetSearcher _brokenLinkAssetSearcher;

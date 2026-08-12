@@ -16,11 +16,15 @@ import com.liferay.exportimport.kernel.service.ExportImportLocalService;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.exportimport.rest.dto.v1_0.ImportPreview;
 import com.liferay.exportimport.rest.dto.v1_0.PreviewPortletDataHandler;
+import com.liferay.exportimport.rest.dto.v1_0.PreviewSite;
 import com.liferay.exportimport.rest.internal.util.GroupUtil;
 import com.liferay.exportimport.rest.internal.util.PermissionUtil;
 import com.liferay.exportimport.rest.internal.util.PreviewPortletDataHandlerUtil;
 import com.liferay.exportimport.rest.resource.v1_0.ImportPreviewResource;
+import com.liferay.exportimport.site.LARSite;
+import com.liferay.exportimport.site.LARSiteReader;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
@@ -29,6 +33,7 @@ import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
@@ -174,9 +179,16 @@ public class ImportPreviewResourceImpl extends BaseImportPreviewResourceImpl {
 				continue;
 			}
 
+			PortletDataHandler portletDataHandler =
+				portlet.getPortletDataHandlerInstance();
+
+			if ((portletDataHandler == null) || portletDataHandler.isHidden()) {
+				continue;
+			}
+
 			PreviewPortletDataHandlerUtil.addPreviewPortletDataHandler(
 				contextCompany.getCompanyId(), locale, manifestSummary, portlet,
-				portlet.getPortletDataHandlerInstance(),
+				portletDataHandler,
 				PortletDataHandler::getImportPortletDataHandlerControls,
 				portletScoped, previewPortletDataHandlersMap);
 		}
@@ -216,8 +228,54 @@ public class ImportPreviewResourceImpl extends BaseImportPreviewResourceImpl {
 						PreviewPortletDataHandlerUtil.
 							toPreviewPortletDataHandlerSections(
 								locale, previewPortletDataHandlersMap));
+				setPreviewSites(() -> _getPreviewSites(fileEntry));
 			}
 		};
+	}
+
+	private PreviewSite[] _getPreviewSites(FileEntry fileEntry)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-85946")) {
+
+			return new PreviewSite[0];
+		}
+
+		return _toPreviewSites(_larSiteReader.getLARSites(fileEntry));
+	}
+
+	private PreviewSite[] _toPreviewSites(List<LARSite> larSites) {
+		if (ListUtil.isEmpty(larSites)) {
+			return new PreviewSite[0];
+		}
+
+		PreviewSite[] previewSites = new PreviewSite[larSites.size()];
+
+		for (int i = 0; i < larSites.size(); i++) {
+			LARSite larSite = larSites.get(i);
+
+			previewSites[i] = new PreviewSite() {
+				{
+					setChildSiteCount(larSite::getChildSiteCount);
+					setDescriptiveName(larSite::getDescriptiveName);
+					setExistsInInstance(
+						() -> {
+							Group group =
+								groupLocalService.
+									fetchGroupByExternalReferenceCode(
+										larSite.getExternalReferenceCode(),
+										contextCompany.getCompanyId());
+
+							return group != null;
+						});
+					setExternalReferenceCode(larSite::getExternalReferenceCode);
+					setPath(larSite::getPath);
+				}
+			};
+		}
+
+		return previewSites;
 	}
 
 	private void _validateImportFile(
@@ -263,6 +321,9 @@ public class ImportPreviewResourceImpl extends BaseImportPreviewResourceImpl {
 
 	@Reference
 	private ExportImportLocalService _exportImportLocalService;
+
+	@Reference
+	private LARSiteReader _larSiteReader;
 
 	@Reference
 	private LayoutService _layoutService;

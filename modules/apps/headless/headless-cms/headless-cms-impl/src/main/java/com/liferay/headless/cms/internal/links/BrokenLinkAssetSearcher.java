@@ -41,6 +41,10 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = BrokenLinkAssetSearcher.class)
 public class BrokenLinkAssetSearcher {
 
+	public static final String
+		FIELD_NAME_OBJECT_DEFINITION_EXTERNAL_REFERENCE_CODE =
+			"objectDefinitionExternalReferenceCode";
+
 	public long getCount(
 		long companyId, long[] groupIds, Set<String> outboundLinks) {
 
@@ -113,7 +117,8 @@ public class BrokenLinkAssetSearcher {
 
 		searchRequestBuilder.addSelectedFieldNames(
 			CMSOutboundLinksUtil.FIELD_NAME, Field.ENTRY_CLASS_PK,
-			Field.getLocalizedName(languageId, "localized_title")
+			Field.getLocalizedName(languageId, "localized_title"),
+			FIELD_NAME_OBJECT_DEFINITION_EXTERNAL_REFERENCE_CODE
 		).from(
 			Math.min(pagination.getStartPosition(), _MAX_RESULT_WINDOW)
 		).size(

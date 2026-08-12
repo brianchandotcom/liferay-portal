@@ -164,6 +164,10 @@ public class BrokenLinkAssetResourceImpl
 						LiferayWindowState.POP_UP, "&objectEntryId=",
 						objectEntryId));
 				setId(() -> objectEntryId);
+				setObjectDefinitionExternalReferenceCode(
+					() -> document.getString(
+						BrokenLinkAssetSearcher.
+							FIELD_NAME_OBJECT_DEFINITION_EXTERNAL_REFERENCE_CODE));
 				setTitle(
 					() -> document.getString(
 						Field.getLocalizedName(

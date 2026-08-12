@@ -23,12 +23,16 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.odata.entity.StringEntityField;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.GroupUtil;
 import com.liferay.site.cms.site.initializer.util.CMSOutboundLinksUtil;
+
+import jakarta.ws.rs.core.MultivaluedMap;
 
 import java.util.Collections;
 import java.util.LinkedHashSet;
@@ -102,6 +106,11 @@ public class BrokenLinkAssetResourceImpl
 				searchResponse.getDocuments(),
 				document -> _toBrokenLinkAsset(document, expiredAssetTitles)),
 			pagination, searchResponse.getCount());
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
+		return _entityModel;
 	}
 
 	private Long[] _getGroupIds(Long assetLibraryId) {
@@ -179,6 +188,17 @@ public class BrokenLinkAssetResourceImpl
 
 	private static final String _FIELD_NAME_LOCALIZED_TITLE =
 		"localized_title";
+
+	// The broken link count is intersected per hit, after the search, so it is
+	// not a field the index can order by
+
+	private static final EntityModel _entityModel =
+		() -> EntityModel.toEntityFieldsMap(
+			new StringEntityField(
+				"title",
+				locale -> Field.getSortableFieldName(
+					Field.getLocalizedName(
+						locale, _FIELD_NAME_LOCALIZED_TITLE))));
 
 	@Reference
 	private BrokenLinkAssetSearcher _brokenLinkAssetSearcher;

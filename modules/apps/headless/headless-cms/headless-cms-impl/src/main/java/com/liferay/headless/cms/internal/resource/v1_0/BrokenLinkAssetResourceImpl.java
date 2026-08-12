@@ -99,7 +99,8 @@ public class BrokenLinkAssetResourceImpl
 		SearchResponse searchResponse = _brokenLinkAssetSearcher.search(
 			contextCompany.getCompanyId(), ArrayUtil.toArray(groupIds),
 			contextAcceptLanguage.getPreferredLanguageId(),
-			expiredAssetTitles.keySet(), pagination, search, sorts);
+			expiredAssetTitles.keySet(), pagination, search, sorts,
+			contextUser.getUserId());
 
 		return Page.of(
 			transform(

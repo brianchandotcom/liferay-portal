@@ -163,7 +163,7 @@ public class AssetStatisticsResourceImpl
 
 			return _brokenLinkAssetSearcher.getCount(
 				contextCompany.getCompanyId(), ArrayUtil.toArray(groupIds),
-				outboundLinks);
+				outboundLinks, contextUser.getUserId());
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {

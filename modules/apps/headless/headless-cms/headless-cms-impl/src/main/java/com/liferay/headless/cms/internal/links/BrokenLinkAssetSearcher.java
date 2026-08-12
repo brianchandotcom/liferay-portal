@@ -46,11 +46,12 @@ public class BrokenLinkAssetSearcher {
 			"objectDefinitionExternalReferenceCode";
 
 	public long getCount(
-		long companyId, long[] groupIds, Set<String> outboundLinks) {
+		long companyId, long[] groupIds, Set<String> outboundLinks,
+		long userId) {
 
 		SearchResponse searchResponse = _searcher.search(
 			_createSearchRequestBuilder(
-				companyId, groupIds, outboundLinks
+				companyId, groupIds, outboundLinks, userId
 			).build());
 
 		return searchResponse.getCount();
@@ -110,10 +111,11 @@ public class BrokenLinkAssetSearcher {
 	public SearchResponse search(
 		long companyId, long[] groupIds, String languageId,
 		Set<String> outboundLinks, Pagination pagination, String search,
-		Sort[] sorts) {
+		Sort[] sorts, long userId) {
 
 		SearchRequestBuilder searchRequestBuilder =
-			_createSearchRequestBuilder(companyId, groupIds, outboundLinks);
+			_createSearchRequestBuilder(
+				companyId, groupIds, outboundLinks, userId);
 
 		searchRequestBuilder.addSelectedFieldNames(
 			CMSOutboundLinksUtil.FIELD_NAME, Field.ENTRY_CLASS_PK,
@@ -162,7 +164,8 @@ public class BrokenLinkAssetSearcher {
 	}
 
 	private SearchRequestBuilder _createSearchRequestBuilder(
-		long companyId, long[] groupIds, Set<String> outboundLinks) {
+		long companyId, long[] groupIds, Set<String> outboundLinks,
+		long userId) {
 
 		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
@@ -184,8 +187,18 @@ public class BrokenLinkAssetSearcher {
 		).query(
 			booleanQuery
 		).withSearchContext(
-			searchContext -> searchContext.setAttribute(
-				Field.STATUS, WorkflowConstants.STATUS_ANY)
+			searchContext -> {
+				searchContext.setAttribute(
+					Field.STATUS, WorkflowConstants.STATUS_ANY);
+
+				// The permission filter is only added when the search context
+				// carries a user, and a search context built from a search
+				// request starts without one, so both the count and the
+				// listing would otherwise answer for assets the caller cannot
+				// view
+
+				searchContext.setUserId(userId);
+			}
 		);
 	}
 

@@ -94,6 +94,25 @@ public class BrokenLinkAssetSerDes {
 			sb.append(brokenLinkAsset.getId());
 		}
 
+		if (brokenLinkAsset.getObjectDefinitionExternalReferenceCode() !=
+				null) {
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"objectDefinitionExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				_escape(
+					brokenLinkAsset.
+						getObjectDefinitionExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (brokenLinkAsset.getTitle() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -159,6 +178,19 @@ public class BrokenLinkAssetSerDes {
 			map.put("id", String.valueOf(brokenLinkAsset.getId()));
 		}
 
+		if (brokenLinkAsset.getObjectDefinitionExternalReferenceCode() ==
+				null) {
+
+			map.put("objectDefinitionExternalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"objectDefinitionExternalReferenceCode",
+				String.valueOf(
+					brokenLinkAsset.
+						getObjectDefinitionExternalReferenceCode()));
+		}
+
 		if (brokenLinkAsset.getTitle() == null) {
 			map.put("title", null);
 		}
@@ -196,6 +228,12 @@ public class BrokenLinkAssetSerDes {
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				return false;
 			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"objectDefinitionExternalReferenceCode")) {
+
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "title")) {
 				return false;
 			}
@@ -229,6 +267,15 @@ public class BrokenLinkAssetSerDes {
 				if (jsonParserFieldValue != null) {
 					brokenLinkAsset.setId(
 						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"objectDefinitionExternalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					brokenLinkAsset.setObjectDefinitionExternalReferenceCode(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "title")) {
@@ -317,4 +364,4 @@ public class BrokenLinkAssetSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1636086955
+// LIFERAY-REST-BUILDER-HASH:-1284082796

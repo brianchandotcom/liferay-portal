@@ -176,6 +176,7 @@ public abstract class BaseBrokenLinkAssetResourceTestCase {
 
 		brokenLinkAsset.setBrokenLinkTitle(regex);
 		brokenLinkAsset.setHref(regex);
+		brokenLinkAsset.setObjectDefinitionExternalReferenceCode(regex);
 		brokenLinkAsset.setTitle(regex);
 
 		String json = BrokenLinkAssetSerDes.toJSON(brokenLinkAsset);
@@ -186,6 +187,8 @@ public abstract class BaseBrokenLinkAssetResourceTestCase {
 
 		Assert.assertEquals(regex, brokenLinkAsset.getBrokenLinkTitle());
 		Assert.assertEquals(regex, brokenLinkAsset.getHref());
+		Assert.assertEquals(
+			regex, brokenLinkAsset.getObjectDefinitionExternalReferenceCode());
 		Assert.assertEquals(regex, brokenLinkAsset.getTitle());
 	}
 
@@ -580,6 +583,19 @@ public abstract class BaseBrokenLinkAssetResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"objectDefinitionExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (brokenLinkAsset.
+						getObjectDefinitionExternalReferenceCode() == null) {
+
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("title", additionalAssertFieldName)) {
 				if (brokenLinkAsset.getTitle() == null) {
 					valid = false;
@@ -745,6 +761,22 @@ public abstract class BaseBrokenLinkAssetResourceTestCase {
 			if (Objects.equals("id", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						brokenLinkAsset1.getId(), brokenLinkAsset2.getId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"objectDefinitionExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						brokenLinkAsset1.
+							getObjectDefinitionExternalReferenceCode(),
+						brokenLinkAsset2.
+							getObjectDefinitionExternalReferenceCode())) {
 
 					return false;
 				}
@@ -973,6 +1005,53 @@ public abstract class BaseBrokenLinkAssetResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("objectDefinitionExternalReferenceCode")) {
+			Object object =
+				brokenLinkAsset.getObjectDefinitionExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("title")) {
 			Object object = brokenLinkAsset.getTitle();
 
@@ -1071,6 +1150,8 @@ public abstract class BaseBrokenLinkAssetResourceTestCase {
 					RandomTestUtil.randomString());
 				href = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
+				objectDefinitionExternalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				title = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}
 		};
@@ -1299,4 +1380,4 @@ public abstract class BaseBrokenLinkAssetResourceTestCase {
 		_brokenLinkAssetResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-298499474
+// LIFERAY-REST-BUILDER-HASH:1228634842

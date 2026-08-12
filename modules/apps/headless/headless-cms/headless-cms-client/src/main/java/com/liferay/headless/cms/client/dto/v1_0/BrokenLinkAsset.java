@@ -105,6 +105,32 @@ public class BrokenLinkAsset implements Cloneable, Serializable {
 
 	protected Long id;
 
+	public String getObjectDefinitionExternalReferenceCode() {
+		return objectDefinitionExternalReferenceCode;
+	}
+
+	public void setObjectDefinitionExternalReferenceCode(
+		String objectDefinitionExternalReferenceCode) {
+
+		this.objectDefinitionExternalReferenceCode =
+			objectDefinitionExternalReferenceCode;
+	}
+
+	public void setObjectDefinitionExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			objectDefinitionExternalReferenceCodeUnsafeSupplier) {
+
+		try {
+			objectDefinitionExternalReferenceCode =
+				objectDefinitionExternalReferenceCodeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String objectDefinitionExternalReferenceCode;
+
 	public String getTitle() {
 		return title;
 	}
@@ -158,4 +184,4 @@ public class BrokenLinkAsset implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:761964085
+// LIFERAY-REST-BUILDER-HASH:872486713

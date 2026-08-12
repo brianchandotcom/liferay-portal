@@ -6,7 +6,7 @@
 import {Option} from '@clayui/core';
 import ClayDropDown from '@clayui/drop-down';
 import {FormError, SingleSelect} from '@liferay/object-js-components-web';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 
 import {Scope} from './EditObjectDetails';
 
@@ -49,13 +49,45 @@ export function ScopeContainer({
 	const [selectedPanelCategoryValue, setSelectedPanelCategoryValue] =
 		useState('');
 
+	const initialPanelCategoryKeysRef = useRef<{[ERC: string]: string}>({});
+
+	if (
+		values?.externalReferenceCode &&
+		!initialPanelCategoryKeysRef.current[values.externalReferenceCode]
+	) {
+		initialPanelCategoryKeysRef.current[values.externalReferenceCode] =
+			values.panelCategoryKey ?? '';
+	}
+
+	const panelCategoryScopes = useMemo(() => {
+		const scopes: Scope[] = [];
+
+		const initialPanelCategoryKey =
+			values.externalReferenceCode &&
+			initialPanelCategoryKeysRef.current[values.externalReferenceCode];
+
+		(values.scope === 'company' ? companies : sites).forEach(
+			({items, label}) => {
+				const visibleItems = items.filter(({deprecated, value}) => {
+					return !deprecated || value === initialPanelCategoryKey;
+				});
+
+				if (visibleItems.length) {
+					scopes.push({items: visibleItems, label});
+				}
+			}
+		);
+
+		return scopes;
+	}, [companies, sites, values.externalReferenceCode, values.scope]);
+
 	const setPanelCategoryKey = (
-		sites: Scope[],
+		scopes: Scope[],
 		panelCategoryValue: string
 	) => {
 		let selectedPanelCategory: string = '';
 
-		sites.find(({items}) =>
+		scopes.find(({items}) =>
 			items.find(({value}) => {
 				if (value === panelCategoryValue) {
 					selectedPanelCategory = value;
@@ -70,12 +102,12 @@ export function ScopeContainer({
 
 	useEffect(() => {
 		setPanelCategoryKey(
-			values.scope === 'company' ? companies : sites,
+			panelCategoryScopes,
 			values.panelCategoryKey as string
 		);
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [values.id, values.scope, companies, sites]);
+	}, [values.id, values.scope, panelCategoryScopes]);
 
 	return (
 		<>
@@ -120,7 +152,7 @@ export function ScopeContainer({
 				}
 				error={errors.titleObjectFieldId}
 				id="lfr-objects__object-scope-container-panel-link"
-				items={values.scope === 'company' ? companies : sites}
+				items={panelCategoryScopes}
 				label={Liferay.Language.get('panel-link')}
 				onSelectionChange={(value) => {
 					setValues({

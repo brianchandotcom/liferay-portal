@@ -174,12 +174,18 @@ public class ObjectDefinitionsDetailsDisplayContext
 			for (PanelCategory childPanelCategory : childPanelCategories) {
 				itemsJSONArray.put(
 					JSONUtil.put(
+						"deprecated", childPanelCategory.isDeprecated()
+					).put(
 						"label",
 						childPanelCategory.getLabel(
 							objectRequestHelper.getLocale())
 					).put(
 						"value", childPanelCategory.getKey()
 					));
+			}
+
+			if (JSONUtil.isEmpty(itemsJSONArray)) {
+				continue;
 			}
 
 			jsonArray.put(

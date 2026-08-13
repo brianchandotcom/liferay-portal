@@ -167,7 +167,9 @@ public class AnalyticsCloudClient {
 		options.addPart("name", company.getName());
 		options.addPart("oAuthClientId", oAuth2Application.getClientId());
 		options.addPart(
-			"oAuthClientSecret", oAuth2Application.getClientSecret());
+			"oAuthClientSecret",
+			_oAuth2ApplicationLocalService.resolveClientSecret(
+				oAuth2Application));
 		options.addPart("portalURL", company.getPortalURL(0));
 		options.addPart("token", connectionTokenJSONObject.getString("token"));
 		options.setLocation(connectionTokenJSONObject.getString("url"));

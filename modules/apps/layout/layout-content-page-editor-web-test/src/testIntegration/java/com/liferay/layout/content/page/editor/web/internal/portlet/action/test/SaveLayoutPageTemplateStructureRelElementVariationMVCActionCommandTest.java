@@ -107,7 +107,7 @@ public class
 				layoutPageTemplateStructureRelElementVariations.get(0);
 
 		_assertAudienceEntryERCs(
-			externalReferenceCode,
+			group.getGroupId(), externalReferenceCode,
 			Arrays.asList(audienceEntryERC1, audienceEntryERC2));
 
 		Assert.assertTrue(
@@ -168,7 +168,7 @@ public class
 			layoutPageTemplateStructureRelElementVariations.get(0);
 
 		_assertAudienceEntryERCs(
-			externalReferenceCode,
+			group.getGroupId(), externalReferenceCode,
 			Collections.singletonList(updatedAudienceEntryERC));
 
 		Assert.assertFalse(
@@ -182,14 +182,15 @@ public class
 	}
 
 	private void _assertAudienceEntryERCs(
-		String externalReferenceCode, List<String> audienceEntryERCs) {
+		long groupId, String externalReferenceCode,
+		List<String> audienceEntryERCs) {
 
 		Collections.sort(audienceEntryERCs);
 
 		List<String> actualAudienceEntryERCs = TransformUtil.transform(
 			_layoutPageTemplateStructureRelElementVariationAudienceEntryRelLocalService.
 				getLayoutPageTemplateStructureRelElementVariationAudienceEntryRels(
-					externalReferenceCode),
+					groupId, externalReferenceCode),
 			LayoutPageTemplateStructureRelElementVariationAudienceEntryRel::
 				getAudienceEntryERC);
 

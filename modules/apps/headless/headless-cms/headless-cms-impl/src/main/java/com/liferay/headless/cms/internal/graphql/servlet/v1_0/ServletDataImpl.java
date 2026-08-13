@@ -10,9 +10,11 @@ import com.liferay.headless.cms.internal.graphql.query.v1_0.Query;
 import com.liferay.headless.cms.internal.resource.v1_0.AssetPermissionActionResourceImpl;
 import com.liferay.headless.cms.internal.resource.v1_0.AssetStatisticsResourceImpl;
 import com.liferay.headless.cms.internal.resource.v1_0.AssetUsageResourceImpl;
+import com.liferay.headless.cms.internal.resource.v1_0.SimilarityClusterResultResourceImpl;
 import com.liferay.headless.cms.resource.v1_0.AssetPermissionActionResource;
 import com.liferay.headless.cms.resource.v1_0.AssetStatisticsResource;
 import com.liferay.headless.cms.resource.v1_0.AssetUsageResource;
+import com.liferay.headless.cms.resource.v1_0.SimilarityClusterResultResource;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 
@@ -45,6 +47,8 @@ public class ServletDataImpl implements ServletData {
 			_assetStatisticsResourceComponentServiceObjects);
 		Query.setAssetUsageResourceComponentServiceObjects(
 			_assetUsageResourceComponentServiceObjects);
+		Query.setSimilarityClusterResultResourceComponentServiceObjects(
+			_similarityClusterResultResourceComponentServiceObjects);
 	}
 
 	public String getApplicationName() {
@@ -97,6 +101,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							AssetUsageResourceImpl.class,
 							"getAssetUsagesAssetPage"));
+					put(
+						"query#similarityCluster",
+						new ObjectValuePair<>(
+							SimilarityClusterResultResourceImpl.class,
+							"getSimilarityCluster"));
 				}
 			};
 
@@ -112,5 +121,9 @@ public class ServletDataImpl implements ServletData {
 	private ComponentServiceObjects<AssetUsageResource>
 		_assetUsageResourceComponentServiceObjects;
 
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<SimilarityClusterResultResource>
+		_similarityClusterResultResourceComponentServiceObjects;
+
 }
-// LIFERAY-REST-BUILDER-HASH:-1043047869
+// LIFERAY-REST-BUILDER-HASH:-1811138682

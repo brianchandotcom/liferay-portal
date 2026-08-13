@@ -111,22 +111,30 @@ public class ListTypeDefinitionResourceTest
 		// No permissions in the body request
 
 		_assertListTypeDefinitionWithPermissions(
-			JSONUtil.putAll(_getOwnerPermissionsJSONObject()),
+			JSONUtil.putAll(
+				_getPermissionsJSONObject(RoleConstants.CMS_ADMINISTRATOR),
+				_getPermissionsJSONObject(RoleConstants.OWNER)),
 			_patchPutListTypeDefinitionWithPermissions(
 				Http.Method.PATCH,
 				_postListTypeDefinitionWithPermissions(true, null), true,
 				null));
 		_assertListTypeDefinitionWithPermissions(
-			JSONUtil.putAll(_getOwnerPermissionsJSONObject()),
+			JSONUtil.putAll(
+				_getPermissionsJSONObject(RoleConstants.CMS_ADMINISTRATOR),
+				_getPermissionsJSONObject(RoleConstants.OWNER)),
 			_patchPutListTypeDefinitionWithPermissions(
 				Http.Method.PUT,
 				_postListTypeDefinitionWithPermissions(true, null), true,
 				null));
 		_assertListTypeDefinitionWithPermissions(
-			JSONUtil.putAll(_getOwnerPermissionsJSONObject()),
+			JSONUtil.putAll(
+				_getPermissionsJSONObject(RoleConstants.CMS_ADMINISTRATOR),
+				_getPermissionsJSONObject(RoleConstants.OWNER)),
 			_postListTypeDefinitionWithPermissions(true, null));
 		_assertListTypeDefinitionWithPermissions(
-			JSONUtil.putAll(_getOwnerPermissionsJSONObject()),
+			JSONUtil.putAll(
+				_getPermissionsJSONObject(RoleConstants.CMS_ADMINISTRATOR),
+				_getPermissionsJSONObject(RoleConstants.OWNER)),
 			_putByExternalReferenceCodeListTypeDefinitionWithPermissions(
 				_postListTypeDefinitionWithPermissions(true, null), true,
 				null));
@@ -156,6 +164,7 @@ public class ListTypeDefinitionResourceTest
 
 		_assertListTypeDefinitionWithPermissions(
 			JSONUtil.putAll(
+				_getPermissionsJSONObject(RoleConstants.CMS_ADMINISTRATOR),
 				_getPermissionsJSONObject(
 					new String[] {ActionKeys.DELETE, ActionKeys.PERMISSIONS},
 					role1.getName()),
@@ -168,6 +177,7 @@ public class ListTypeDefinitionResourceTest
 
 		_assertListTypeDefinitionWithPermissions(
 			JSONUtil.putAll(
+				_getPermissionsJSONObject(RoleConstants.CMS_ADMINISTRATOR),
 				_getPermissionsJSONObject(
 					new String[] {ActionKeys.DELETE}, role1.getName()),
 				_getPermissionsJSONObject(
@@ -179,6 +189,7 @@ public class ListTypeDefinitionResourceTest
 						new String[] {ActionKeys.VIEW}, role3.getName()))));
 		_assertListTypeDefinitionWithPermissions(
 			JSONUtil.putAll(
+				_getPermissionsJSONObject(RoleConstants.CMS_ADMINISTRATOR),
 				_getPermissionsJSONObject(
 					new String[] {ActionKeys.DELETE}, role1.getName()),
 				_getPermissionsJSONObject(
@@ -190,6 +201,7 @@ public class ListTypeDefinitionResourceTest
 						new String[] {ActionKeys.UPDATE}, role3.getName()))));
 		_assertListTypeDefinitionWithPermissions(
 			JSONUtil.putAll(
+				_getPermissionsJSONObject(RoleConstants.CMS_ADMINISTRATOR),
 				_getPermissionsJSONObject(
 					new String[] {ActionKeys.DELETE, ActionKeys.UPDATE},
 					role1.getName()),
@@ -208,6 +220,7 @@ public class ListTypeDefinitionResourceTest
 		// Permissions with empty list
 
 		JSONArray companyPermissionsJSONArray = JSONUtil.putAll(
+			_getPermissionsJSONObject(RoleConstants.CMS_ADMINISTRATOR),
 			_getPermissionsJSONObject(
 				new String[] {ActionKeys.DELETE}, role1.getName()));
 
@@ -496,13 +509,13 @@ public class ListTypeDefinitionResourceTest
 		Assert.assertNull(jsonObject.get("title"));
 	}
 
-	private JSONObject _getOwnerPermissionsJSONObject() {
+	private JSONObject _getPermissionsJSONObject(String roleName) {
 		return _getPermissionsJSONObject(
 			new String[] {
 				ActionKeys.DELETE, ActionKeys.PERMISSIONS, ActionKeys.UPDATE,
 				ActionKeys.VIEW
 			},
-			RoleConstants.OWNER);
+			roleName);
 	}
 
 	private JSONObject _getPermissionsJSONObject(

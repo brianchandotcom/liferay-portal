@@ -138,7 +138,7 @@ public class PortalHibernateConfiguration
 		Configuration configuration = new Configuration(
 			new MetadataSources(bootstrapServiceRegistryBuilder.build()));
 
-		SQLTransformer.populateSqlFunctions(configuration);
+		SQLTransformer.populateSQLFunctions(configuration);
 
 		if (_mvccEnabled) {
 			configuration.setInterceptor(new CTSQLInterceptor());

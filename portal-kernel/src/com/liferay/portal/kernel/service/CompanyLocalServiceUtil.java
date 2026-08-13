@@ -722,6 +722,30 @@ public class CompanyLocalServiceUtil {
 			strangersWithMx, strangersVerify, siteLogo);
 	}
 
+	public static void validateMaxUsers(int maxUsers)
+		throws com.liferay.portal.kernel.exception.CompanyMaxUsersException {
+
+		getService().validateMaxUsers(maxUsers);
+	}
+
+	public static void validateMx(long companyId, String mx)
+		throws PortalException {
+
+		getService().validateMx(companyId, mx);
+	}
+
+	public static void validateVirtualHost(String webId, String virtualHostname)
+		throws PortalException {
+
+		getService().validateVirtualHost(webId, virtualHostname);
+	}
+
+	public static void validateWebId(String webId)
+		throws com.liferay.portal.kernel.exception.CompanyWebIdException {
+
+		getService().validateWebId(webId);
+	}
+
 	public static CompanyLocalService getService() {
 		return _service;
 	}
@@ -733,4 +757,4 @@ public class CompanyLocalServiceUtil {
 	private static volatile CompanyLocalService _service;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-851174840
+// LIFERAY-SERVICE-BUILDER-HASH:436886638

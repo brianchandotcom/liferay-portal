@@ -10,8 +10,9 @@ import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.depot.service.DepotEntryService;
 import com.liferay.headless.cms.dto.v1_0.SimilarityCluster;
 import com.liferay.headless.cms.dto.v1_0.SimilarityClusterAsset;
+import com.liferay.headless.cms.dto.v1_0.SimilarityClusterResult;
 import com.liferay.headless.cms.internal.similarity.SimilarityClusterUtil;
-import com.liferay.headless.cms.resource.v1_0.SimilarityClusterResource;
+import com.liferay.headless.cms.resource.v1_0.SimilarityClusterResultResource;
 import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
@@ -36,7 +37,6 @@ import com.liferay.portal.search.query.TermsQuery;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
-import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.GroupUtil;
 
@@ -55,14 +55,15 @@ import org.osgi.service.component.annotations.ServiceScope;
  * @author Mikel Lorza
  */
 @Component(
-	properties = "OSGI-INF/liferay/rest/v1_0/similarity-cluster.properties",
-	scope = ServiceScope.PROTOTYPE, service = SimilarityClusterResource.class
+	properties = "OSGI-INF/liferay/rest/v1_0/similarity-cluster-result.properties",
+	scope = ServiceScope.PROTOTYPE,
+	service = SimilarityClusterResultResource.class
 )
-public class SimilarityClusterResourceImpl
-	extends BaseSimilarityClusterResourceImpl {
+public class SimilarityClusterResultResourceImpl
+	extends BaseSimilarityClusterResultResourceImpl {
 
 	@Override
-	public Page<SimilarityCluster> getSimilarityClustersPage(
+	public SimilarityClusterResult getSimilarityCluster(
 			Long assetLibraryId, Pagination pagination)
 		throws Exception {
 
@@ -71,7 +72,7 @@ public class SimilarityClusterResourceImpl
 		Long[] groupIds = _getGroupIds(assetLibraryId);
 
 		if (ArrayUtil.isEmpty(groupIds) || objectDefinitions.isEmpty()) {
-			return Page.of(new ArrayList<>(), pagination, 0);
+			return _toSimilarityClusterResult(new ArrayList<>(), 0);
 		}
 
 		String[] entryClassNames = ArrayUtil.toStringArray(
@@ -100,11 +101,11 @@ public class SimilarityClusterResourceImpl
 				objectDefinition.getObjectDefinitionId(), objectDefinition);
 		}
 
-		return Page.of(
+		return _toSimilarityClusterResult(
 			_getSimilarityClusters(
 				languageId, objectDefinitionsById, objectEntryIdsByClusterId,
 				pagination),
-			pagination, totalCount);
+			totalCount);
 	}
 
 	private List<ObjectDefinition> _getCMSObjectDefinitions() throws Exception {
@@ -151,10 +152,8 @@ public class SimilarityClusterResourceImpl
 	}
 
 	private List<SimilarityCluster> _getSimilarityClusters(
-			String languageId,
-			Map<Long, ObjectDefinition> objectDefinitionsById,
-			Map<Long, List<Long>> objectEntryIdsByClusterId,
-			Pagination pagination)
+			String languageId, Map<Long, ObjectDefinition> objectDefinitionsById,
+			Map<Long, List<Long>> objectEntryIdsByClusterId, Pagination pagination)
 		throws Exception {
 
 		List<SimilarityCluster> similarityClusters = new ArrayList<>();
@@ -202,8 +201,7 @@ public class SimilarityClusterResourceImpl
 	}
 
 	private List<Document> _searchClusteredDocuments(
-		String[] entryClassNames, Long[] groupIds,
-		List<String> sharedSimilarityKeys) {
+		String[] entryClassNames, Long[] groupIds, List<String> sharedSimilarityKeys) {
 
 		List<Document> documents = new ArrayList<>();
 
@@ -231,7 +229,10 @@ public class SimilarityClusterResourceImpl
 			).entryClassNames(
 				entryClassNames
 			).fetchSourceIncludes(
-				new String[] {"objectEntryId", _FIELD_TEXT_SIMILARITY_KEYS}
+				new String[] {
+					"objectEntryId",
+					_FIELD_TEXT_SIMILARITY_KEYS
+				}
 			).size(
 				_MAX_CLUSTERED_DOCUMENTS
 			).withSearchContext(
@@ -257,7 +258,8 @@ public class SimilarityClusterResourceImpl
 
 		termsAggregation.setMinDocCount(2);
 		termsAggregation.setIncludeExcludeClause(
-			new IncludeExcludeClauseImpl(languageId + "_.*", null));
+			new IncludeExcludeClauseImpl(
+				languageId + "_.*", null));
 		termsAggregation.setSize(_MAX_SIMILARITY_KEYS);
 
 		SearchResponse searchResponse = _searcher.search(
@@ -292,8 +294,7 @@ public class SimilarityClusterResourceImpl
 	}
 
 	private SimilarityCluster _toSimilarityCluster(
-			String languageId,
-			Map<Long, ObjectDefinition> objectDefinitionsById,
+			String languageId, Map<Long, ObjectDefinition> objectDefinitionsById,
 			List<Long> objectEntryIds, int size)
 		throws Exception {
 
@@ -338,15 +339,29 @@ public class SimilarityClusterResourceImpl
 		return similarityCluster;
 	}
 
-	private static final String _FIELD_TEXT_SIMILARITY_KEYS =
-		"textSimilarityKeys";
+	private SimilarityClusterResult _toSimilarityClusterResult(
+		List<SimilarityCluster> similarityClusters, long totalCount) {
 
-	private static final int _MAX_CLUSTERED_DOCUMENTS = 10000;
+		SimilarityCluster[] similarityClustersArray =
+			similarityClusters.toArray(new SimilarityCluster[0]);
+
+		SimilarityClusterResult similarityClusterResult =
+			new SimilarityClusterResult();
+
+		similarityClusterResult.setSimilarityClusters(
+			() -> similarityClustersArray);
+		similarityClusterResult.setTotalCount(() -> totalCount);
+
+		return similarityClusterResult;
+	}
+
+	private static final String _SIMILARITY_KEYS_AGGREGATION_NAME = "similarityKeys";
+
+	private static final String _FIELD_TEXT_SIMILARITY_KEYS = "textSimilarityKeys";
 
 	private static final int _MAX_SIMILARITY_KEYS = 10000;
 
-	private static final String _SIMILARITY_KEYS_AGGREGATION_NAME =
-		"similarityKeys";
+	private static final int _MAX_CLUSTERED_DOCUMENTS = 10000;
 
 	@Reference
 	private Aggregations _aggregations;

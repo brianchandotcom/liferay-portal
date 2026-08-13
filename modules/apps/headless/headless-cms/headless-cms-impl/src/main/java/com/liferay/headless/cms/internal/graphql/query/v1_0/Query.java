@@ -7,8 +7,10 @@ package com.liferay.headless.cms.internal.graphql.query.v1_0;
 
 import com.liferay.headless.cms.dto.v1_0.AssetStatistics;
 import com.liferay.headless.cms.dto.v1_0.AssetUsage;
+import com.liferay.headless.cms.dto.v1_0.SimilarityClusterResult;
 import com.liferay.headless.cms.resource.v1_0.AssetStatisticsResource;
 import com.liferay.headless.cms.resource.v1_0.AssetUsageResource;
+import com.liferay.headless.cms.resource.v1_0.SimilarityClusterResultResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -58,6 +60,15 @@ public class Query {
 			assetUsageResourceComponentServiceObjects;
 	}
 
+	public static void
+		setSimilarityClusterResultResourceComponentServiceObjects(
+			ComponentServiceObjects<SimilarityClusterResultResource>
+				similarityClusterResultResourceComponentServiceObjects) {
+
+		_similarityClusterResultResourceComponentServiceObjects =
+			similarityClusterResultResourceComponentServiceObjects;
+	}
+
 	/**
 	 * Invoke this method with the command line:
 	 *
@@ -97,6 +108,29 @@ public class Query {
 				assetUsageResource.getAssetUsagesAssetPage(
 					assetId, search, Pagination.of(page, pageSize),
 					_sortsBiFunction.apply(assetUsageResource, sortsString))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {similarityCluster(assetLibraryId: ___, page: ___, pageSize: ___){similarityClusters, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(
+		description = "List the clusters of CMS content whose main text overlaps significantly, paginated by asset. Content is compared within one language, so a translation is only ever compared against the same translation of other content, and clustering always spans the whole space, so a cluster's size never depends on the requested page. Omit assetLibraryId to span all accessible spaces."
+	)
+	public SimilarityClusterResult similarityCluster(
+			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_similarityClusterResultResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			similarityClusterResultResource ->
+				similarityClusterResultResource.getSimilarityCluster(
+					Long.valueOf(assetLibraryId),
+					Pagination.of(page, pageSize)));
 	}
 
 	@GraphQLName("AssetStatisticsPage")
@@ -150,6 +184,39 @@ public class Query {
 
 		@GraphQLField
 		protected java.util.Collection<AssetUsage> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
+	@GraphQLName("SimilarityClusterResultPage")
+	public class SimilarityClusterResultPage {
+
+		public SimilarityClusterResultPage(Page similarityClusterResultPage) {
+			actions = similarityClusterResultPage.getActions();
+
+			items = similarityClusterResultPage.getItems();
+			lastPage = similarityClusterResultPage.getLastPage();
+			page = similarityClusterResultPage.getPage();
+			pageSize = similarityClusterResultPage.getPageSize();
+			totalCount = similarityClusterResultPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map<String, String>> actions;
+
+		@GraphQLField
+		protected java.util.Collection<SimilarityClusterResult> items;
 
 		@GraphQLField
 		protected long lastPage;
@@ -221,10 +288,34 @@ public class Query {
 		assetUsageResource.setRoleLocalService(_roleLocalService);
 	}
 
+	private void _populateResourceContext(
+			SimilarityClusterResultResource similarityClusterResultResource)
+		throws Exception {
+
+		similarityClusterResultResource.setContextAcceptLanguage(
+			_acceptLanguage);
+		similarityClusterResultResource.setContextCompany(_company);
+		similarityClusterResultResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		similarityClusterResultResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		similarityClusterResultResource.setContextUriInfo(_uriInfo);
+		similarityClusterResultResource.setContextUser(_user);
+		similarityClusterResultResource.setGroupLocalService(
+			_groupLocalService);
+		similarityClusterResultResource.setResourceActionLocalService(
+			_resourceActionLocalService);
+		similarityClusterResultResource.setResourcePermissionLocalService(
+			_resourcePermissionLocalService);
+		similarityClusterResultResource.setRoleLocalService(_roleLocalService);
+	}
+
 	private static ComponentServiceObjects<AssetStatisticsResource>
 		_assetStatisticsResourceComponentServiceObjects;
 	private static ComponentServiceObjects<AssetUsageResource>
 		_assetUsageResourceComponentServiceObjects;
+	private static ComponentServiceObjects<SimilarityClusterResultResource>
+		_similarityClusterResultResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
 	private com.liferay.portal.kernel.model.Company _company;
@@ -243,4 +334,4 @@ public class Query {
 	private com.liferay.portal.kernel.model.User _user;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1260038530
+// LIFERAY-REST-BUILDER-HASH:1562894836

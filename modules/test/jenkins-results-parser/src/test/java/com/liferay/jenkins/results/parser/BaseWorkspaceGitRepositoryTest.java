@@ -29,6 +29,35 @@ public class BaseWorkspaceGitRepositoryTest
 	extends com.liferay.jenkins.results.parser.Test {
 
 	@Test
+	public void testDownloadGitArchives() throws Exception {
+		_testDownloadGitArchives(false, "test-portal-stable(7.3.x)", "compile");
+		_testDownloadGitArchives(false, "test-portal-stable(master)", null);
+		_testDownloadGitArchives(
+			true, "test-portal-stable(7.3.x)", "service-builder");
+		_testDownloadGitArchives(
+			true, "test-portal-stable(master)", "service-builder");
+		_testDownloadGitArchives(
+			true, "test-portal-upstream(7.4.x)", "rest-builder");
+
+		Set<String> topLevelJobNames = new HashSet<>();
+
+		topLevelJobNames.add("test-portal-release");
+
+		JenkinsResultsParserUtil.setTopLevelJobNames(topLevelJobNames);
+
+		_testDownloadGitArchives(true, "test-portal-release", "compile");
+	}
+
+	@Test
+	public void testGetGitWorkingDirectory() throws Exception {
+		_testGetGitWorkingDirectory(false, false, false, false);
+		_testGetGitWorkingDirectory(false, false, false, true);
+		_testGetGitWorkingDirectory(false, false, true, false);
+		_testGetGitWorkingDirectory(false, true, true, true);
+		_testGetGitWorkingDirectory(true, false, true, true);
+	}
+
+	@Test
 	public void testIsFullDotGitDirArchiveRequired() throws Exception {
 		Assert.assertFalse(_isFullDotGitDirArchiveRequired("liferay-portal"));
 		Assert.assertFalse(
@@ -41,10 +70,14 @@ public class BaseWorkspaceGitRepositoryTest
 
 	@Test
 	public void testPrepareGitWorkingDirectory() throws Exception {
-		_testPrepareGitWorkingDirectory(false, false);
-		_testPrepareGitWorkingDirectory(false, true);
-		_testPrepareGitWorkingDirectory(true, false);
-		_testPrepareGitWorkingDirectory(true, true);
+		_testPrepareGitWorkingDirectory(false, false, false);
+		_testPrepareGitWorkingDirectory(false, false, true);
+		_testPrepareGitWorkingDirectory(false, true, false);
+		_testPrepareGitWorkingDirectory(false, true, true);
+		_testPrepareGitWorkingDirectory(true, false, false);
+		_testPrepareGitWorkingDirectory(true, false, true);
+		_testPrepareGitWorkingDirectory(true, true, false);
+		_testPrepareGitWorkingDirectory(true, true, true);
 	}
 
 	@Test
@@ -377,12 +410,118 @@ public class BaseWorkspaceGitRepositoryTest
 		return Mockito.spy(new DefaultWorkspaceGitRepository(jsonObject));
 	}
 
-	private void _testPrepareGitWorkingDirectory(
+	private void _setUpEnvironment(String jobName, String jobVariant) {
+		Map<String, String> environmentValues = new HashMap<>();
+
+		if (jobVariant != null) {
+			environmentValues.put("JOB_VARIANT", jobVariant);
+		}
+
+		environmentValues.put("JOB_NAME", jobName);
+		environmentValues.put("MASTER_NETWORK_NAME", "aws-network");
+
+		mockEnvironment(environmentValues);
+	}
+
+	private void _testDownloadGitArchives(
+			boolean dotGitDirArchiveRequired, String jobName, String jobVariant)
+		throws Exception {
+
+		_setUpEnvironment(jobName, jobVariant);
+
+		Properties buildProperties = new Properties();
+
+		buildProperties.setProperty(
+			"git.archive.dot.git.dir.required[*rest-builder*]", "true");
+		buildProperties.setProperty(
+			"git.archive.dot.git.dir.required[*service-builder*]", "true");
+
+		JenkinsResultsParserUtil.setBuildProperties(buildProperties);
+
+		DefaultWorkspaceGitRepository defaultWorkspaceGitRepository =
+			_newDefaultWorkspaceGitRepository();
+
+		Mockito.doNothing(
+		).when(
+			defaultWorkspaceGitRepository
+		).downloadDotGitArchive();
+
+		Mockito.doNothing(
+		).when(
+			defaultWorkspaceGitRepository
+		).downloadGitArchive();
+
+		defaultWorkspaceGitRepository.downloadGitArchives();
+
+		Mockito.verify(
+			defaultWorkspaceGitRepository,
+			_getVerificationMode(dotGitDirArchiveRequired)
+		).downloadDotGitArchive();
+
+		Mockito.verify(
+			defaultWorkspaceGitRepository, Mockito.times(1)
+		).downloadGitArchive();
+	}
+
+	private void _testGetGitWorkingDirectory(
+			boolean dotGitDirArchiveRequired, boolean exceptionThrown,
 			boolean gitArchiveEnabled, boolean snapshot)
+		throws Exception {
+
+		_setUpEnvironment(
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+
+		Properties buildProperties = new Properties();
+
+		buildProperties.setProperty(
+			"git.archive.dot.git.dir.required",
+			String.valueOf(dotGitDirArchiveRequired));
+		buildProperties.setProperty(
+			"git.archive.enabled", String.valueOf(gitArchiveEnabled));
+
+		JenkinsResultsParserUtil.setBuildProperties(buildProperties);
+
+		DefaultWorkspaceGitRepository defaultWorkspaceGitRepository =
+			_newDefaultWorkspaceGitRepository();
+
+		GitWorkingDirectory gitWorkingDirectory = Mockito.mock(
+			GitWorkingDirectory.class);
+
+		ReflectionTestUtil.setFieldValue(
+			defaultWorkspaceGitRepository, "_gitWorkingDirectory",
+			gitWorkingDirectory);
+
+		defaultWorkspaceGitRepository.setSnapshot(snapshot);
+
+		if (exceptionThrown) {
+			try {
+				defaultWorkspaceGitRepository.getGitWorkingDirectory();
+
+				Assert.fail("Expected RuntimeException");
+			}
+			catch (RuntimeException runtimeException) {
+				testEquals(
+					"Using Git archive, unable to get Git working directory",
+					runtimeException.getMessage());
+			}
+
+			return;
+		}
+
+		testSame(
+			gitWorkingDirectory,
+			defaultWorkspaceGitRepository.getGitWorkingDirectory());
+	}
+
+	private void _testPrepareGitWorkingDirectory(
+			boolean buildCachingEnabled, boolean gitArchiveEnabled,
+			boolean snapshot)
 		throws Exception {
 
 		Properties buildProperties = new Properties();
 
+		buildProperties.setProperty(
+			"build.caching.enabled", String.valueOf(buildCachingEnabled));
 		buildProperties.setProperty(
 			"git.archive.enabled", String.valueOf(gitArchiveEnabled));
 

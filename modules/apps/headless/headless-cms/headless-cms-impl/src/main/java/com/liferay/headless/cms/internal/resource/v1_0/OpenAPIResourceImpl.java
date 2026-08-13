@@ -91,9 +91,11 @@ public class OpenAPIResourceImpl {
 
 			add(AssetUsageResourceImpl.class);
 
+			add(SimilarityClusterResourceImpl.class);
+
 			add(OpenAPIResourceImpl.class);
 		}
 	};
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1867425424
+// LIFERAY-REST-BUILDER-HASH:-580051171

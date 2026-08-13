@@ -68,6 +68,42 @@ components:
         ResetAssetPermissionAction:
             allOf:
                 -   $ref: "#/components/schemas/AssetPermissionAction"
+        SimilarityCluster:
+            description:
+                A group of CMS content assets detected as near duplicates of one another.
+            properties:
+                similarityClusterAssets:
+                    description:
+                        The cluster's assets that fall inside the requested page. A cluster split across pages repeats in the next page with the remaining assets.
+                    items:
+                        $ref: "#/components/schemas/SimilarityClusterAsset"
+                    readOnly: true
+                    type: array
+                size:
+                    description:
+                        The total number of assets in the cluster, independent of the requested page.
+                    readOnly: true
+                    type: integer
+        SimilarityClusterAsset:
+            description:
+                A CMS content asset that belongs to a similarity cluster.
+            properties:
+                contentType:
+                    description:
+                        The localized label of the asset's content type.
+                    readOnly: true
+                    type: string
+                dateModified:
+                    format: date-time
+                    readOnly: true
+                    type: string
+                id:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                title:
+                    readOnly: true
+                    type: string
 info:
     license:
         name: Apache 2.0
@@ -158,3 +194,36 @@ paths:
                                     $ref: "#/components/schemas/AssetUsage"
                                 type: array
             tags: ["AssetUsage"]
+    "/similarity-clusters":
+        get:
+            description:
+                List the clusters of CMS content whose main text overlaps significantly, paginated by asset. Content is compared within one language, so a translation is only ever compared against the same translation of other content, and clustering always spans the whole space, so a cluster's size never depends on the requested page. Omit assetLibraryId to span all accessible spaces.
+            operationId: getSimilarityClustersPage
+            parameters:
+                -   in: query
+                    name: assetLibraryId
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/SimilarityCluster"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/SimilarityCluster"
+                                type: array
+            tags: ["SimilarityCluster"]

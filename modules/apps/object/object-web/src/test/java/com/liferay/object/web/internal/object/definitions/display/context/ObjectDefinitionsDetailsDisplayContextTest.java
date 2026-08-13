@@ -114,21 +114,7 @@ public class ObjectDefinitionsDetailsDisplayContextTest {
 
 	@Test
 	@TestInfo("LPD-98002")
-	public void testGetScopeJSONArrayFlagsDeprecatedPanelCategories() {
-		Map<String, Boolean> deprecatedPanelCategories =
-			_getDeprecatedPanelCategories();
-
-		Assert.assertEquals(
-			deprecatedPanelCategories.toString(), 2,
-			deprecatedPanelCategories.size());
-		Assert.assertEquals(
-			Boolean.FALSE, deprecatedPanelCategories.get(_PANEL_CATEGORY_KEY));
-		Assert.assertEquals(
-			Boolean.TRUE,
-			deprecatedPanelCategories.get(_DEPRECATED_PANEL_CATEGORY_KEY));
-	}
-
-	private Map<String, Boolean> _getDeprecatedPanelCategories() {
+	public void testGetScopeJSONArrayWithDeprecatedPanelCategories() {
 		Map<String, Boolean> deprecatedPanelCategories = new HashMap<>();
 
 		ObjectDefinitionsDetailsDisplayContext
@@ -158,7 +144,14 @@ public class ObjectDefinitionsDetailsDisplayContextTest {
 				itemJSONObject.getBoolean("deprecated"));
 		}
 
-		return deprecatedPanelCategories;
+		Assert.assertEquals(
+			deprecatedPanelCategories.toString(), 2,
+			deprecatedPanelCategories.size());
+		Assert.assertEquals(
+			Boolean.FALSE, deprecatedPanelCategories.get(_PANEL_CATEGORY_KEY));
+		Assert.assertEquals(
+			Boolean.TRUE,
+			deprecatedPanelCategories.get(_DEPRECATED_PANEL_CATEGORY_KEY));
 	}
 
 	private HttpServletRequest _getHttpServletRequest() {

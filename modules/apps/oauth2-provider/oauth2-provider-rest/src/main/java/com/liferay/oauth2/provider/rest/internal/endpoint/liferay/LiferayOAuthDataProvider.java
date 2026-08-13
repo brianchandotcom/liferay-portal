@@ -1706,7 +1706,7 @@ public class LiferayOAuthDataProvider
 
 	private String _resolveClientSecret(OAuth2Application oAuth2Application) {
 		try {
-			return _oAuth2ApplicationLocalService.resolveClientSecret(
+			return _oAuth2ApplicationLocalService.getPlaintextClientSecret(
 				oAuth2Application);
 		}
 		catch (PortalException portalException) {

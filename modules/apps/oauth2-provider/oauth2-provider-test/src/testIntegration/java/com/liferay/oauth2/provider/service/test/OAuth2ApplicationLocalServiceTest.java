@@ -98,7 +98,7 @@ public class OAuth2ApplicationLocalServiceTest {
 
 			Assert.assertEquals(
 				clientSecret,
-				_oAuth2ApplicationLocalService.resolveClientSecret(
+				_oAuth2ApplicationLocalService.getPlaintextClientSecret(
 					_oAuth2Application));
 
 			String storedClientSecret = _oAuth2Application.getClientSecret();
@@ -118,7 +118,7 @@ public class OAuth2ApplicationLocalServiceTest {
 		Assert.assertEquals(clientSecret, _oAuth2Application.getClientSecret());
 		Assert.assertEquals(
 			clientSecret,
-			_oAuth2ApplicationLocalService.resolveClientSecret(
+			_oAuth2ApplicationLocalService.getPlaintextClientSecret(
 				_oAuth2Application));
 	}
 

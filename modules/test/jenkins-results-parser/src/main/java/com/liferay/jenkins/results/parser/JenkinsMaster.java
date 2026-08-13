@@ -739,23 +739,18 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 	}
 
 	public QueueItem getQueueItem(long queueId) {
-		String queueItemAPIURL = JenkinsResultsParserUtil.combine(
-			getURL(), "/queue/item/", String.valueOf(queueId),
-			"/api/json?tree=actions[parameters[name,value]],",
-			"id,inQueueSince,task[name,url],url,why");
-
 		try {
-			String response = JenkinsResultsParserUtil.toString(
-				queueItemAPIURL, false, 0, 0, 5000);
-
-			if (JenkinsResultsParserUtil.isNullOrEmpty(response)) {
-				return null;
-			}
-
 			JSONObject queueItemJSONObject =
-				JenkinsResultsParserUtil.createJSONObject(response);
+				JenkinsResultsParserUtil.toJSONObject(
+					JenkinsResultsParserUtil.combine(
+						getURL(), "/queue/item/", String.valueOf(queueId),
+						"/api/json?tree=actions[parameters[name,value]],",
+						"id,inQueueSince,task[name,url],url,why"),
+					false, 5000);
 
-			if (!queueItemJSONObject.has("id")) {
+			if ((queueItemJSONObject == null) ||
+				!queueItemJSONObject.has("id")) {
+
 				return null;
 			}
 

@@ -5,15 +5,16 @@
 
 package com.liferay.portal.instances.web.internal.portlet.action;
 
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.instances.web.internal.background.task.AddVirtualInstanceBackgroundTaskExecutor;
+import com.liferay.portal.instances.web.internal.constants.PortalInstancesBackgroundTaskConstants;
 import com.liferay.portal.instances.web.internal.constants.PortalInstancesPortletKeys;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
+import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.exception.CompanyMaxUsersException;
 import com.liferay.portal.kernel.exception.CompanyMxException;
 import com.liferay.portal.kernel.exception.CompanyVirtualHostException;
 import com.liferay.portal.kernel.exception.CompanyWebIdException;
-import com.liferay.portal.kernel.exception.ContactNameException;
-import com.liferay.portal.kernel.exception.UserEmailAddressException;
-import com.liferay.portal.kernel.exception.UserPasswordException;
-import com.liferay.portal.kernel.exception.UserScreenNameException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
@@ -22,12 +23,21 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.service.CompanyService;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.util.PortalInstances;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.portlet.ActionRequest;
 import jakarta.portlet.ActionResponse;
+
+import java.io.Serializable;
+
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -51,8 +61,17 @@ public class AddInstanceMVCActionCommand extends BaseMVCActionCommand {
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
+		Locale locale = actionRequest.getLocale();
+
+		hideDefaultSuccessMessage(actionRequest);
+
 		try {
-			_addInstance(actionRequest);
+			_addBackgroundTask(actionRequest);
+
+			jsonObject.put(
+				"successMessage",
+				_language.format(
+					locale, "the-x-operation-has-started-successfully", "add"));
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -73,82 +92,93 @@ public class AddInstanceMVCActionCommand extends BaseMVCActionCommand {
 			else if (exception instanceof CompanyWebIdException) {
 				errorMessage = "please-enter-a-valid-web-id";
 			}
-			else if (exception instanceof
-						ContactNameException.MustHaveFirstName) {
 
-				errorMessage = "please-enter-a-valid-first-name";
-			}
-			else if (exception instanceof
-						ContactNameException.MustHaveLastName) {
-
-				errorMessage = "please-enter-a-valid-last-name";
-			}
-			else if (exception instanceof
-						ContactNameException.MustHaveMiddleName) {
-
-				errorMessage = "please-enter-a-valid-middle-name";
-			}
-			else if (exception instanceof
-						ContactNameException.MustHaveValidFullName) {
-
-				errorMessage =
-					"please-enter-a-valid-first-middle-and-last-name";
-			}
-			else if (exception instanceof UserEmailAddressException) {
-				errorMessage = "please-enter-a-valid-email-address";
-			}
-			else if (exception instanceof UserPasswordException) {
-				errorMessage = "please-enter-a-valid-password";
-			}
-			else if (exception instanceof UserScreenNameException) {
-				errorMessage = "please-enter-a-valid-screen-name";
-			}
-
-			jsonObject.put(
-				"error",
-				_language.get(actionRequest.getLocale(), errorMessage));
-
-			hideDefaultSuccessMessage(actionRequest);
+			jsonObject.put("error", _language.get(locale, errorMessage));
 		}
 
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse, jsonObject);
 	}
 
-	private void _addInstance(ActionRequest actionRequest) throws Exception {
+	private void _addBackgroundTask(ActionRequest actionRequest)
+		throws Exception {
+
 		String webId = ParamUtil.getString(actionRequest, "webId");
-		String virtualHostname = ParamUtil.getString(
-			actionRequest, "virtualHostname");
+		String virtualHostname = StringUtil.toLowerCase(
+			StringUtil.trim(
+				ParamUtil.getString(actionRequest, "virtualHostname")));
 		String mx = ParamUtil.getString(actionRequest, "mx");
 		int maxUsers = ParamUtil.getInteger(actionRequest, "maxUsers");
-		boolean active = ParamUtil.getBoolean(actionRequest, "active");
-		String defaultAdminPassword = ParamUtil.getString(
-			actionRequest, "defaultAdminPassword", null);
-		String defaultAdminScreenName = ParamUtil.getString(
-			actionRequest, "defaultAdminScreenName", null);
-		String defaultAdminEmailAddress = ParamUtil.getString(
-			actionRequest, "defaultAdminEmailAddress", null);
-		String defaultAdminFirstName = ParamUtil.getString(
-			actionRequest, "defaultAdminFirstName", null);
-		String defaultAdminMiddleName = ParamUtil.getString(
-			actionRequest, "defaultAdminMiddleName", null);
-		String defaultAdminLastName = ParamUtil.getString(
-			actionRequest, "defaultAdminLastName", null);
 
-		PortalInstances.addCompany(
-			ParamUtil.getString(actionRequest, "siteInitializerKey"),
-			() -> _companyService.addCompany(
-				null, webId, virtualHostname, mx, maxUsers, active,
-				defaultAdminPassword, defaultAdminScreenName,
-				defaultAdminEmailAddress, defaultAdminFirstName,
-				defaultAdminMiddleName, defaultAdminLastName));
+		_companyLocalService.validateWebId(webId);
+		_companyLocalService.validateVirtualHost(webId, virtualHostname);
+		_companyLocalService.validateMx(-1, mx);
+		_companyLocalService.validateMaxUsers(maxUsers);
+
+		Map<String, Serializable> taskContextMap =
+			HashMapBuilder.<String, Serializable>put(
+				PortalInstancesBackgroundTaskConstants.ACTIVE,
+				ParamUtil.getBoolean(actionRequest, "active")
+			).put(
+				PortalInstancesBackgroundTaskConstants.
+					DEFAULT_ADMIN_EMAIL_ADDRESS,
+				() -> ParamUtil.getString(
+					actionRequest, "defaultAdminEmailAddress", null)
+			).put(
+				PortalInstancesBackgroundTaskConstants.DEFAULT_ADMIN_FIRST_NAME,
+				() -> ParamUtil.getString(
+					actionRequest, "defaultAdminFirstName", null)
+			).put(
+				PortalInstancesBackgroundTaskConstants.DEFAULT_ADMIN_LAST_NAME,
+				() -> ParamUtil.getString(
+					actionRequest, "defaultAdminLastName", null)
+			).put(
+				PortalInstancesBackgroundTaskConstants.
+					DEFAULT_ADMIN_MIDDLE_NAME,
+				() -> ParamUtil.getString(
+					actionRequest, "defaultAdminMiddleName", null)
+			).put(
+				PortalInstancesBackgroundTaskConstants.DEFAULT_ADMIN_PASSWORD,
+				() -> ParamUtil.getString(
+					actionRequest, "defaultAdminPassword", null)
+			).put(
+				PortalInstancesBackgroundTaskConstants.
+					DEFAULT_ADMIN_SCREEN_NAME,
+				() -> ParamUtil.getString(
+					actionRequest, "defaultAdminScreenName", null)
+			).put(
+				PortalInstancesBackgroundTaskConstants.MAX_USERS, maxUsers
+			).put(
+				PortalInstancesBackgroundTaskConstants.MX, mx
+			).put(
+				PortalInstancesBackgroundTaskConstants.SITE_INITIALIZER_KEY,
+				ParamUtil.getString(actionRequest, "siteInitializerKey")
+			).put(
+				PortalInstancesBackgroundTaskConstants.VIRTUAL_HOSTNAME,
+				virtualHostname
+			).put(
+				PortalInstancesBackgroundTaskConstants.WEB_ID, webId
+			).build();
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		_backgroundTaskManager.addBackgroundTask(
+			themeDisplay.getUserId(), BackgroundTaskConstants.GROUP_ID_DEFAULT,
+			PortalInstancesBackgroundTaskConstants.NAME_ADD_VIRTUAL_INSTANCE +
+				StringPool.POUND + webId,
+			AddVirtualInstanceBackgroundTaskExecutor.class.getName(),
+			taskContextMap, new ServiceContext());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AddInstanceMVCActionCommand.class);
 
 	@Reference
-	private CompanyService _companyService;
+	private BackgroundTaskManager _backgroundTaskManager;
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private JSONFactory _jsonFactory;

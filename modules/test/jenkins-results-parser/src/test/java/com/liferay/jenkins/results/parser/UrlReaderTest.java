@@ -15,7 +15,6 @@ import java.net.URL;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -23,14 +22,6 @@ import org.junit.Test;
  * @author Kenji Heigel
  */
 public class UrlReaderTest extends com.liferay.jenkins.results.parser.Test {
-
-	@After
-	@Override
-	public void tearDown() {
-		super.tearDown();
-
-		JenkinsMasterTestUtil.resetCaches();
-	}
 
 	@Test
 	public void testToInputStream() throws Exception {

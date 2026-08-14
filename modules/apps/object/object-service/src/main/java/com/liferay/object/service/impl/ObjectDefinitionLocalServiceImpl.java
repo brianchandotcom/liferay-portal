@@ -154,6 +154,7 @@ import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolverRegistryUtil;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.security.RandomUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -2294,8 +2295,13 @@ public class ObjectDefinitionLocalServiceImpl
 		}
 
 		while (true) {
-			String randomClassName =
-				ObjectDefinitionUtil.generateRandomClassName();
+			String randomClassName = StringBundler.concat(
+				ObjectDefinitionConstants.
+					CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION,
+				StringUtil.toUpperCase(StringUtil.randomId(1)),
+				RandomUtil.nextInt(10),
+				StringUtil.toUpperCase(StringUtil.randomId(1)),
+				RandomUtil.nextInt(10));
 
 			if (_getObjectDefinitionsCountByClassName(randomClassName) == 0) {
 				return randomClassName;

@@ -203,7 +203,10 @@ public class BrokenLinkAssetSearcher {
 			_getTermsQuery("cms_section", "contents", "files"),
 			_getTermsQuery(
 				Field.STATUS,
-				ArrayUtil.toStringArray(CMSWorkflowConstants.STATUSES)),
+				ArrayUtil.toStringArray(
+					ArrayUtil.remove(
+						CMSWorkflowConstants.STATUSES,
+						WorkflowConstants.STATUS_EXPIRED))),
 			QueriesUtil.term("rootDescendantNode", false));
 
 		return _searchRequestBuilderFactory.builder(

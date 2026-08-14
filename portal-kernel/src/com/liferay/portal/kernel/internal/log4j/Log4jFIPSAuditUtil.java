@@ -28,13 +28,13 @@ import org.apache.logging.log4j.message.ObjectMessage;
 public class Log4jFIPSAuditUtil {
 
 	public static void write(
-		Map<String, Object> record, FIPSAuditEvent.Severity severity) {
+		Map<String, Object> fields, FIPSAuditEvent.Severity severity) {
 
 		Level level = _getLevel(severity);
 
-		_validateDeliverable(level);
+		_validate(level);
 
-		_logger.log(level, new ObjectMessage(record));
+		_logger.log(level, new ObjectMessage(fields));
 	}
 
 	private static Level _getLevel(FIPSAuditEvent.Severity severity) {
@@ -45,22 +45,7 @@ public class Log4jFIPSAuditUtil {
 		return Level.INFO;
 	}
 
-	private static RollingFileAppender _getRollingFileAppender() {
-		LoggerContext loggerContext = (LoggerContext)LogManager.getContext(
-			false);
-
-		Configuration configuration = loggerContext.getConfiguration();
-
-		Appender appender = configuration.getAppender(_APPENDER_NAME);
-
-		if (appender instanceof RollingFileAppender) {
-			return (RollingFileAppender)appender;
-		}
-
-		return null;
-	}
-
-	private static void _validateDeliverable(Level level) {
+	private static void _validate(Level level) {
 		if (!PropsValues.FIPS_ENABLED ||
 			(ServerDetector.getServerId() == null)) {
 
@@ -78,7 +63,18 @@ public class Log4jFIPSAuditUtil {
 					"configuration lowers the level of that logger"));
 		}
 
-		RollingFileAppender rollingFileAppender = _getRollingFileAppender();
+		RollingFileAppender rollingFileAppender = null;
+
+		LoggerContext loggerContext = (LoggerContext)LogManager.getContext(
+			false);
+
+		Configuration configuration = loggerContext.getConfiguration();
+
+		Appender appender = configuration.getAppender(_APPENDER_NAME);
+
+		if (appender instanceof RollingFileAppender) {
+			rollingFileAppender = (RollingFileAppender)appender;
+		}
 
 		if (rollingFileAppender == null) {
 			throw new IllegalStateException(

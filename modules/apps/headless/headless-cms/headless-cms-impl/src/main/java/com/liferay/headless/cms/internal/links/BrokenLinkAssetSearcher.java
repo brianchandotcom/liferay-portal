@@ -127,7 +127,7 @@ public class BrokenLinkAssetSearcher {
 			pagination.getStartPosition(), _MAX_RESULT_WINDOW);
 
 		searchRequestBuilder.addSelectedFieldNames(
-			CMSOutboundLinksUtil.FIELD_NAME, Field.ENTRY_CLASS_PK,
+			"outboundLinks", Field.ENTRY_CLASS_PK,
 			FIELD_NAME_OBJECT_DEFINITION_ID, FIELD_NAME_OBJECT_ENTRY_TITLE,
 			Field.getLocalizedName(languageId, FIELD_NAME_OBJECT_ENTRY_TITLE)
 		).from(
@@ -181,7 +181,7 @@ public class BrokenLinkAssetSearcher {
 		for (int i = 0; i < values.length; i += _MAX_TERMS_COUNT) {
 			booleanQuery.addShouldQueryClauses(
 				_getTermsQuery(
-					CMSOutboundLinksUtil.FIELD_NAME,
+					"outboundLinks",
 					ArrayUtil.subset(
 						values, i,
 						Math.min(i + _MAX_TERMS_COUNT, values.length))));

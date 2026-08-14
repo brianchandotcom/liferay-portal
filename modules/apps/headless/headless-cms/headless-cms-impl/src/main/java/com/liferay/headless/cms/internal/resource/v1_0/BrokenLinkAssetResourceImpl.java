@@ -34,7 +34,6 @@ import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.GroupUtil;
-import com.liferay.site.cms.site.initializer.util.CMSOutboundLinksUtil;
 
 import jakarta.ws.rs.core.MultivaluedMap;
 
@@ -177,9 +176,7 @@ public class BrokenLinkAssetResourceImpl
 
 		Set<String> brokenLinkTitles = new LinkedHashSet<>();
 
-		for (String outboundLink :
-				document.getStrings(CMSOutboundLinksUtil.FIELD_NAME)) {
-
+		for (String outboundLink : document.getStrings("outboundLinks")) {
 			String brokenLinkTitle = expiredAssetTitles.get(outboundLink);
 
 			if (brokenLinkTitle != null) {

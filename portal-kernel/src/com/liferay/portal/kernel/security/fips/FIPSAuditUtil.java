@@ -160,8 +160,17 @@ public class FIPSAuditUtil {
 			return _normalizeTimestamps((Map<?, ?>)value);
 		}
 
-		if (value instanceof TemporalAccessor) {
-			return _formatTimestamp(_toInstant((TemporalAccessor)value));
+		if (value instanceof TemporalAccessor temporalAccessor) {
+			try {
+				return _formatTimestamp(Instant.from(temporalAccessor));
+			}
+			catch (DateTimeException dateTimeException) {
+				throw new IllegalArgumentException(
+					StringBundler.concat(
+						"Unable to normalize the FIPS audit timestamp \"",
+						temporalAccessor, "\" because it carries no time zone"),
+					dateTimeException);
+			}
 		}
 
 		return value;
@@ -177,19 +186,6 @@ public class FIPSAuditUtil {
 		}
 
 		return normalizedMap;
-	}
-
-	private static Instant _toInstant(TemporalAccessor temporalAccessor) {
-		try {
-			return Instant.from(temporalAccessor);
-		}
-		catch (DateTimeException dateTimeException) {
-			throw new IllegalArgumentException(
-				StringBundler.concat(
-					"Unable to normalize the FIPS audit timestamp \"",
-					temporalAccessor, "\" because it carries no time zone"),
-				dateTimeException);
-		}
 	}
 
 	private static final DateTimeFormatter _dateTimeFormatter =

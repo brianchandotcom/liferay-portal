@@ -178,13 +178,13 @@ public class BrokenLinkAssetSearcher {
 
 		String[] values = outboundLinkTokens.toArray(new String[0]);
 
-		for (int i = 0; i < values.length; i += _MAX_TERMS_COUNT) {
+		for (int i = 0; i < values.length; i += _TERMS_QUERY_CHUNK_SIZE) {
 			booleanQuery.addShouldQueryClauses(
 				_getTermsQuery(
 					"outboundLinks",
 					ArrayUtil.subset(
 						values, i,
-						Math.min(i + _MAX_TERMS_COUNT, values.length))));
+						Math.min(i + _TERMS_QUERY_CHUNK_SIZE, values.length))));
 		}
 
 		booleanQuery.setMinimumShouldMatch(1);
@@ -237,7 +237,10 @@ public class BrokenLinkAssetSearcher {
 
 	private static final int _MAX_RESULT_WINDOW = 10000;
 
-	private static final int _MAX_TERMS_COUNT = 65536;
+	// Each chunk becomes one terms clause, so the chunk size has to stay under
+	// "index.max_terms_count", which defaults to 65536 but can be lowered
+
+	private static final int _TERMS_QUERY_CHUNK_SIZE = 4096;
 
 	private final ObjectEntryLocalService _objectEntryLocalService;
 	private final Searcher _searcher;

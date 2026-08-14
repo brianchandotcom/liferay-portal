@@ -32,6 +32,12 @@ public interface AWSSecretsManagerCompanySecretProviderConfiguration {
 	@Meta.AD(deflt = "false", name = "enabled", required = false)
 	public boolean enabled();
 
+	@Meta.AD(
+		deflt = "30", max = "30", min = "7", name = "recovery-window-in-days",
+		required = false
+	)
+	public long recoveryWindowInDays();
+
 	@Meta.AD(deflt = "false", name = "use-fips-endpoint", required = false)
 	public boolean useFIPSEndpoint();
 

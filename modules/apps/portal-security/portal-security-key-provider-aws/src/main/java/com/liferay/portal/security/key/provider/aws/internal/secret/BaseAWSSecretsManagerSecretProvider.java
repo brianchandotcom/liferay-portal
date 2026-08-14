@@ -67,7 +67,7 @@ public abstract class BaseAWSSecretsManagerSecretProvider
 				awsSecretsManager -> awsSecretsManager.deleteSecret(
 					new DeleteSecretRequest(
 					).withRecoveryWindowInDays(
-						30L
+						configuration._recoveryWindowInDays
 					).withSecretId(
 						secretARN
 					)));
@@ -252,6 +252,8 @@ public abstract class BaseAWSSecretsManagerSecretProvider
 		boolean enabled = GetterUtil.getBoolean(properties.get("enabled"));
 		boolean fipsEnforced = GetterUtil.getBoolean(
 			properties.get("fipsEnforced"));
+		long recoveryWindowInDays = GetterUtil.getLong(
+			properties.get("recoveryWindowInDays"), 30);
 		String region = GetterUtil.getString(properties.get("awsRegion"));
 		String secretARNTemplate = GetterUtil.getString(
 			properties.get("arnTemplate"));
@@ -279,7 +281,7 @@ public abstract class BaseAWSSecretsManagerSecretProvider
 		_configuration = new Configuration(
 			accountId, awsClientManager,
 			new AWSSecretsManagerFIPSValidator(fipsEnforced, useFIPSEndpoint),
-			enabled, region, secretARNTemplate);
+			enabled, recoveryWindowInDays, region, secretARNTemplate);
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
@@ -307,12 +309,14 @@ public abstract class BaseAWSSecretsManagerSecretProvider
 			String accountId,
 			AWSClientManager<AWSSecretsManager> awsClientManager,
 			AWSSecretsManagerFIPSValidator awsSecretsManagerFIPSValidator,
-			boolean enabled, String region, String secretARNTemplate) {
+			boolean enabled, long recoveryWindowInDays, String region,
+			String secretARNTemplate) {
 
 			_accountId = accountId;
 			_awsClientManager = awsClientManager;
 			_awsSecretsManagerFIPSValidator = awsSecretsManagerFIPSValidator;
 			_enabled = enabled;
+			_recoveryWindowInDays = recoveryWindowInDays;
 			_region = region;
 			_secretARNTemplate = secretARNTemplate;
 		}
@@ -322,6 +326,7 @@ public abstract class BaseAWSSecretsManagerSecretProvider
 		private final AWSSecretsManagerFIPSValidator
 			_awsSecretsManagerFIPSValidator;
 		private final boolean _enabled;
+		private final long _recoveryWindowInDays;
 		private final String _region;
 		private final String _secretARNTemplate;
 

@@ -72,11 +72,20 @@ public class AWSSecretsManagerSystemSecretProviderTest {
 		_awsSecretsManagerSystemSecretProvider.deleteSecret(
 			CompanyConstants.SYSTEM, RandomTestUtil.randomString());
 
+		ArgumentCaptor<DeleteSecretRequest> argumentCaptor =
+			ArgumentCaptor.forClass(DeleteSecretRequest.class);
+
 		Mockito.verify(
 			_awsSecretsManager
 		).deleteSecret(
-			Mockito.any(DeleteSecretRequest.class)
+			argumentCaptor.capture()
 		);
+
+		DeleteSecretRequest deleteSecretRequest = argumentCaptor.getValue();
+
+		Assert.assertEquals(
+			Long.valueOf(_recoveryWindowInDays),
+			deleteSecretRequest.getRecoveryWindowInDays());
 	}
 
 	@Test
@@ -264,13 +273,16 @@ public class AWSSecretsManagerSystemSecretProviderTest {
 	private void _setConfiguration(
 		boolean enabled, boolean fipsEnforced, boolean useFIPSEndpoint) {
 
+		_recoveryWindowInDays = RandomTestUtil.randomLong();
+
 		ReflectionTestUtil.setFieldValue(
 			_awsSecretsManagerSystemSecretProvider, "_configuration",
 			new BaseAWSSecretsManagerSecretProvider.Configuration(
 				null, _awsClientManager,
 				new AWSSecretsManagerFIPSValidator(
 					fipsEnforced, useFIPSEndpoint),
-				enabled, RandomTestUtil.randomString(), _SECRET_ARN_TEMPLATE));
+				enabled, _recoveryWindowInDays, RandomTestUtil.randomString(),
+				_SECRET_ARN_TEMPLATE));
 	}
 
 	private static final String _SECRET_ARN_TEMPLATE =
@@ -284,5 +296,6 @@ public class AWSSecretsManagerSystemSecretProviderTest {
 	private final AWSSecretsManagerSystemSecretProvider
 		_awsSecretsManagerSystemSecretProvider =
 			new AWSSecretsManagerSystemSecretProvider();
+	private long _recoveryWindowInDays;
 
 }

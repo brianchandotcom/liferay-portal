@@ -16,6 +16,7 @@ import com.liferay.data.engine.rest.client.dto.v2_0.DataLayoutRow;
 import com.liferay.data.engine.rest.client.http.HttpInvoker;
 import com.liferay.data.engine.rest.client.pagination.Page;
 import com.liferay.data.engine.rest.client.pagination.Pagination;
+import com.liferay.data.engine.rest.client.permission.Permission;
 import com.liferay.data.engine.rest.client.problem.Problem;
 import com.liferay.data.engine.rest.client.resource.v2_0.DataDefinitionResource;
 import com.liferay.data.engine.rest.client.resource.v2_0.DataLayoutResource;
@@ -28,20 +29,28 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.RoleConstants;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -83,6 +92,110 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 			testGroup.getGroupId());
 		_irrelevantDataDefinition = DataDefinitionTestUtil.addDataDefinition(
 			irrelevantGroup.getGroupId());
+	}
+
+	@Override
+	@Test
+	public void testDeleteDataDefinitionDataLayout() throws Exception {
+		super.testDeleteDataDefinitionDataLayout();
+
+		// With permissions
+
+		User adminUser = UserTestUtil.getAdminUser(testCompany.getCompanyId());
+
+		DataDefinitionResource dataDefinitionResource =
+			DataDefinitionResource.builder(
+			).authentication(
+				adminUser.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
+			).endpoint(
+				testCompany.getVirtualHostname(),
+				PortalUtil.getPortalServerPort(false), "http"
+			).locale(
+				LocaleUtil.getDefault()
+			).build();
+
+		DataDefinition dataDefinition =
+			dataDefinitionResource.postSiteDataDefinitionByContentType(
+				testGroup.getGroupId(), "journal",
+				new DataDefinition() {
+					{
+						availableLanguageIds = new String[] {"en_US"};
+						dataDefinitionFields = new DataDefinitionField[] {
+							new DataDefinitionField() {
+								{
+									fieldType = "text";
+									label = new HashMap<>(
+										RandomTestUtil.
+											randomLanguageIdStringMap());
+									name = "text";
+								}
+							}
+						};
+						dataDefinitionKey = RandomTestUtil.randomString();
+						defaultLanguageId = "en_US";
+						name = new HashMap<>(
+							RandomTestUtil.randomLanguageIdStringMap());
+						siteId = testGroup.getGroupId();
+					}
+				});
+
+		dataLayoutResource.postDataDefinitionDataLayout(
+			dataDefinition.getId(),
+			DataLayoutTestUtil.createDataLayout(
+				dataDefinition.getId(), RandomTestUtil.randomString(),
+				testGroup.getGroupId()));
+
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		dataDefinitionResource.putDataDefinitionPermissionsPage(
+			dataDefinition.getId(),
+			new Permission[] {
+				new Permission() {
+					{
+						setActionIds(new String[] {"DELETE"});
+						setRoleName(role.getName());
+					}
+				}
+			});
+
+		User user = UserTestUtil.addUser(
+			testCompany, RandomTestUtil.randomString());
+
+		_userLocalService.addRoleUser(role.getRoleId(), user.getUserId());
+
+		DataLayoutResource userDataLayoutResource = DataLayoutResource.builder(
+		).authentication(
+			user.getEmailAddress(), user.getPasswordUnencrypted()
+		).endpoint(
+			testCompany.getVirtualHostname(),
+			PortalUtil.getPortalServerPort(false), "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		assertHttpResponseStatusCode(
+			204,
+			userDataLayoutResource.deleteDataDefinitionDataLayoutHttpResponse(
+				dataDefinition.getId()));
+
+		Assert.assertEquals(0, _getDataLayoutsCount(dataDefinition.getId()));
+
+		// Without permissions
+
+		dataLayoutResource.postDataDefinitionDataLayout(
+			dataDefinition.getId(),
+			DataLayoutTestUtil.createDataLayout(
+				dataDefinition.getId(), RandomTestUtil.randomString(),
+				testGroup.getGroupId()));
+
+		_userLocalService.deleteRoleUser(role.getRoleId(), user.getUserId());
+
+		assertHttpResponseStatusCode(
+			403,
+			userDataLayoutResource.deleteDataDefinitionDataLayoutHttpResponse(
+				dataDefinition.getId()));
+
+		Assert.assertEquals(1, _getDataLayoutsCount(dataDefinition.getId()));
 	}
 
 	@Override
@@ -538,6 +651,14 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 			_dataDefinition.getId(), randomDataLayout());
 	}
 
+	private long _getDataLayoutsCount(long dataDefinitionId) throws Exception {
+		Page<DataLayout> page =
+			dataLayoutResource.getDataDefinitionDataLayoutsPage(
+				dataDefinitionId, null, Pagination.of(1, 10), null);
+
+		return page.getTotalCount();
+	}
+
 	private DataLayout _randomDataLayout(boolean withVisualProperties) {
 		DataLayout dataLayout = randomDataLayout();
 
@@ -622,5 +743,8 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 
 	private DataDefinition _dataDefinition;
 	private DataDefinition _irrelevantDataDefinition;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

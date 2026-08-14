@@ -68,7 +68,7 @@ export class VirtualInstancesPage {
 		this.newVirtualInstanceButton = page.getByRole('button', {name: 'Add'});
 		this.page = page;
 		this.successMessage = page.getByText(
-			'Your request completed successfully'
+			'The Add operation has started successfully'
 		);
 	}
 
@@ -107,10 +107,11 @@ export class VirtualInstancesPage {
 		// Only wait for Virtual Instance creation if there are no errors
 
 		if (await this.errorMessage.isHidden()) {
-			await expect(await this.successMessage).toBeVisible({
-				timeout: 180 * 1000,
+			await expect(this.successMessage).toBeVisible({
+				timeout: 30 * 1000,
 			});
-			await this.page.locator('.alert').getByLabel('Close').click();
+
+			await this.waitForVirtualInstance(name);
 		}
 	}
 
@@ -163,6 +164,8 @@ export class VirtualInstancesPage {
 		]);
 
 		await this.page.waitForTimeout(1000);
+
+		await this.waitForVirtualInstance(name);
 	}
 
 	async deleteVirtualInstance(name: string) {
@@ -183,5 +186,19 @@ export class VirtualInstancesPage {
 
 	async goto() {
 		await this.globalMenuPage.goToControlPanel('Virtual Instances');
+	}
+
+	/**
+	 * The Add operation runs in a background task, so the row only shows up in
+	 * the list once the task completes.
+	 */
+	async waitForVirtualInstance(name: string) {
+		await expect(async () => {
+			await this.page.reload();
+
+			await expect(
+				this.page.getByRole('row').filter({hasText: name})
+			).toBeVisible({timeout: 10 * 1000});
+		}).toPass({timeout: 300 * 1000});
 	}
 }

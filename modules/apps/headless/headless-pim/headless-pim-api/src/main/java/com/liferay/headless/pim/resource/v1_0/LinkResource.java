@@ -14,6 +14,7 @@ import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.pagination.Page;
 
 import jakarta.annotation.Generated;
 
@@ -42,6 +43,11 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface LinkResource {
 
 	public void deleteScopeScopeKeyLink(
+			String scopeKey, String className, String externalReferenceCode,
+			String type)
+		throws Exception;
+
+	public Page<Link> getScopeScopeKeyLinksPage(
 			String scopeKey, String className, String externalReferenceCode,
 			String type)
 		throws Exception;
@@ -137,4 +143,4 @@ public interface LinkResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-495395654
+// LIFERAY-REST-BUILDER-HASH:-669682917

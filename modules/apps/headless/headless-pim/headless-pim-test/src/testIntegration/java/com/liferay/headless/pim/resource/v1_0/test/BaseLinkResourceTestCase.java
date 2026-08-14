@@ -187,6 +187,81 @@ public abstract class BaseLinkResourceTestCase {
 	}
 
 	@Test
+	public void testGetScopeScopeKeyLinksPage() throws Exception {
+		String scopeKey = testGetScopeScopeKeyLinksPage_getScopeKey();
+		String irrelevantScopeKey =
+			testGetScopeScopeKeyLinksPage_getIrrelevantScopeKey();
+
+		Page<Link> page = linkResource.getScopeScopeKeyLinksPage(
+			scopeKey, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+
+		long totalCount = page.getTotalCount();
+
+		if (irrelevantScopeKey != null) {
+			Link irrelevantLink = testGetScopeScopeKeyLinksPage_addLink(
+				irrelevantScopeKey, randomIrrelevantLink());
+
+			page = linkResource.getScopeScopeKeyLinksPage(
+				irrelevantScopeKey, null, null, null);
+
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
+
+			assertContains(irrelevantLink, (List<Link>)page.getItems());
+			assertValid(
+				page,
+				testGetScopeScopeKeyLinksPage_getExpectedActions(
+					irrelevantScopeKey));
+		}
+
+		Link link1 = testGetScopeScopeKeyLinksPage_addLink(
+			scopeKey, randomLink());
+
+		Link link2 = testGetScopeScopeKeyLinksPage_addLink(
+			scopeKey, randomLink());
+
+		page = linkResource.getScopeScopeKeyLinksPage(
+			scopeKey, null, null, null);
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(link1, (List<Link>)page.getItems());
+		assertContains(link2, (List<Link>)page.getItems());
+		assertValid(
+			page, testGetScopeScopeKeyLinksPage_getExpectedActions(scopeKey));
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetScopeScopeKeyLinksPage_getExpectedActions(String scopeKey)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
+	}
+
+	protected Link testGetScopeScopeKeyLinksPage_addLink(
+			String scopeKey, Link link)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String testGetScopeScopeKeyLinksPage_getScopeKey()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String testGetScopeScopeKeyLinksPage_getIrrelevantScopeKey()
+		throws Exception {
+
+		return null;
+	}
+
+	@Test
 	public void testPostScopeScopeKeyLink() throws Exception {
 		Assert.assertTrue(false);
 	}
@@ -866,4 +941,4 @@ public abstract class BaseLinkResourceTestCase {
 	private com.liferay.headless.pim.resource.v1_0.LinkResource _linkResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:928762267
+// LIFERAY-REST-BUILDER-HASH:570775601

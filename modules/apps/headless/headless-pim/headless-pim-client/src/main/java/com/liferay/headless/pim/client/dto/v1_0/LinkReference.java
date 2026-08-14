@@ -46,6 +46,25 @@ public class LinkReference implements Cloneable, Serializable {
 
 	protected String className;
 
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public void setCode(UnsafeSupplier<String, Exception> codeUnsafeSupplier) {
+		try {
+			code = codeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String code;
+
 	public String getExternalReferenceCode() {
 		return externalReferenceCode;
 	}
@@ -66,6 +85,46 @@ public class LinkReference implements Cloneable, Serializable {
 	}
 
 	protected String externalReferenceCode;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
+		try {
+			name = nameUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String name;
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public void setStatus(
+		UnsafeSupplier<String, Exception> statusUnsafeSupplier) {
+
+		try {
+			status = statusUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String status;
 
 	@Override
 	public LinkReference clone() throws CloneNotSupportedException {
@@ -99,4 +158,4 @@ public class LinkReference implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1009282245
+// LIFERAY-REST-BUILDER-HASH:1094996270

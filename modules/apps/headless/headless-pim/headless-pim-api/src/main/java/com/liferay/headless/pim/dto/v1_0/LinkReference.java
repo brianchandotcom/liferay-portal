@@ -94,6 +94,45 @@ public class LinkReference implements Serializable {
 	private Supplier<String> _classNameSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
+	public String getCode() {
+		if (_codeSupplier != null) {
+			code = _codeSupplier.get();
+
+			_codeSupplier = null;
+		}
+
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+
+		_codeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setCode(UnsafeSupplier<String, Exception> codeUnsafeSupplier) {
+		_codeSupplier = () -> {
+			try {
+				return codeUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String code;
+
+	@JsonIgnore
+	private Supplier<String> _codeSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -134,6 +173,86 @@ public class LinkReference implements Serializable {
 
 	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
+	public String getName() {
+		if (_nameSupplier != null) {
+			name = _nameSupplier.get();
+
+			_nameSupplier = null;
+		}
+
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+
+		_nameSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
+		_nameSupplier = () -> {
+			try {
+				return nameUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String name;
+
+	@JsonIgnore
+	private Supplier<String> _nameSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
+	public String getStatus() {
+		if (_statusSupplier != null) {
+			status = _statusSupplier.get();
+
+			_statusSupplier = null;
+		}
+
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+
+		_statusSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setStatus(
+		UnsafeSupplier<String, Exception> statusUnsafeSupplier) {
+
+		_statusSupplier = () -> {
+			try {
+				return statusUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String status;
+
+	@JsonIgnore
+	private Supplier<String> _statusSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -178,6 +297,22 @@ public class LinkReference implements Serializable {
 			sb.append("\"");
 		}
 
+		String code = getCode();
+
+		if (code != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"code\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(code));
+
+			sb.append("\"");
+		}
+
 		String externalReferenceCode = getExternalReferenceCode();
 
 		if (externalReferenceCode != null) {
@@ -190,6 +325,38 @@ public class LinkReference implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(externalReferenceCode));
+
+			sb.append("\"");
+		}
+
+		String name = getName();
+
+		if (name != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"name\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(name));
+
+			sb.append("\"");
+		}
+
+		String status = getStatus();
+
+		if (status != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"status\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(status));
 
 			sb.append("\"");
 		}
@@ -295,4 +462,4 @@ public class LinkReference implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1680599627
+// LIFERAY-REST-BUILDER-HASH:2139439368

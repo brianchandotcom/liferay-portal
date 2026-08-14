@@ -11,6 +11,7 @@ import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.headless.cms.client.dto.v1_0.BrokenLinkAsset;
 import com.liferay.headless.cms.client.pagination.Page;
+import com.liferay.headless.cms.client.pagination.Pagination;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectEntryFolder;
@@ -78,6 +79,54 @@ public class BrokenLinkAssetResourceTest
 	@Override
 	@Test
 	public void testGetBrokenLinkAssetsPageWithPagination() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		DepotEntry depotEntry = _addSpaceDepotEntry(serviceContext);
+
+		try {
+			ObjectDefinition objectDefinition =
+				_getBasicWebContentObjectDefinition();
+
+			ObjectEntry expiredObjectEntry = _addExpiredObjectEntry(
+				depotEntry, objectDefinition, serviceContext);
+
+			String imageHTML = _getImageHTML(
+				expiredObjectEntry.getExternalReferenceCode());
+
+			for (int i = 0; i < 3; i++) {
+				_addObjectEntry(
+					imageHTML, depotEntry, objectDefinition,
+					RandomTestUtil.randomString());
+			}
+
+			Page<BrokenLinkAsset> page =
+				brokenLinkAssetResource.getBrokenLinkAssetsPage(
+					depotEntry.getDepotEntryId(), null, Pagination.of(1, 2),
+					null);
+
+			Assert.assertEquals(3, page.getTotalCount());
+
+			List<BrokenLinkAsset> brokenLinkAssets =
+				(List<BrokenLinkAsset>)page.getItems();
+
+			Assert.assertEquals(
+				brokenLinkAssets.toString(), 2, brokenLinkAssets.size());
+
+			page = brokenLinkAssetResource.getBrokenLinkAssetsPage(
+				depotEntry.getDepotEntryId(), null, Pagination.of(2, 2), null);
+
+			Assert.assertEquals(3, page.getTotalCount());
+
+			brokenLinkAssets = (List<BrokenLinkAsset>)page.getItems();
+
+			Assert.assertEquals(
+				brokenLinkAssets.toString(), 1, brokenLinkAssets.size());
+		}
+		finally {
+			_depotEntryLocalService.deleteDepotEntry(
+				depotEntry.getDepotEntryId());
+		}
 	}
 
 	@Override
@@ -98,6 +147,47 @@ public class BrokenLinkAssetResourceTest
 	@Override
 	@Test
 	public void testGetBrokenLinkAssetsPageWithSortString() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		DepotEntry depotEntry = _addSpaceDepotEntry(serviceContext);
+
+		try {
+			ObjectDefinition objectDefinition =
+				_getBasicWebContentObjectDefinition();
+
+			ObjectEntry expiredObjectEntry = _addExpiredObjectEntry(
+				depotEntry, objectDefinition, serviceContext);
+
+			String imageHTML = _getImageHTML(
+				expiredObjectEntry.getExternalReferenceCode());
+
+			_addObjectEntry(imageHTML, depotEntry, objectDefinition, "aaa");
+			_addObjectEntry(imageHTML, depotEntry, objectDefinition, "bbb");
+
+			_assertTitleOrder(depotEntry, "aaa", "bbb", "title:asc");
+			_assertTitleOrder(depotEntry, "bbb", "aaa", "title:desc");
+		}
+		finally {
+			_depotEntryLocalService.deleteDepotEntry(
+				depotEntry.getDepotEntryId());
+		}
+	}
+
+	private ObjectEntry _addExpiredObjectEntry(
+			DepotEntry depotEntry, ObjectDefinition objectDefinition,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		ObjectEntry objectEntry = _addObjectEntry(
+			RandomTestUtil.randomString(), depotEntry, objectDefinition,
+			RandomTestUtil.randomString());
+
+		_objectEntryLocalService.updateStatus(
+			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+			WorkflowConstants.STATUS_EXPIRED, serviceContext);
+
+		return objectEntry;
 	}
 
 	private ObjectEntry _addObjectEntry(
@@ -140,6 +230,32 @@ public class BrokenLinkAssetResourceTest
 				LocaleUtil.getDefault(), StringUtil.randomString()
 			).build(),
 			DepotConstants.TYPE_SPACE, serviceContext);
+	}
+
+	private void _assertTitleOrder(
+			DepotEntry depotEntry, String expectedFirstTitle,
+			String expectedSecondTitle, String sortString)
+		throws Exception {
+
+		Page<BrokenLinkAsset> page =
+			brokenLinkAssetResource.getBrokenLinkAssetsPage(
+				depotEntry.getDepotEntryId(), null, null, sortString);
+
+		List<BrokenLinkAsset> brokenLinkAssets =
+			(List<BrokenLinkAsset>)page.getItems();
+
+		Assert.assertEquals(
+			brokenLinkAssets.toString(), 2, brokenLinkAssets.size());
+
+		BrokenLinkAsset firstBrokenLinkAsset = brokenLinkAssets.get(0);
+
+		Assert.assertEquals(
+			expectedFirstTitle, firstBrokenLinkAsset.getTitle());
+
+		BrokenLinkAsset secondBrokenLinkAsset = brokenLinkAssets.get(1);
+
+		Assert.assertEquals(
+			expectedSecondTitle, secondBrokenLinkAsset.getTitle());
 	}
 
 	private ObjectDefinition _getBasicWebContentObjectDefinition()

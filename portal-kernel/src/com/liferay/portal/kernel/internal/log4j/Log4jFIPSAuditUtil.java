@@ -1,0 +1,106 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.portal.kernel.internal.log4j;
+
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.security.fips.FIPSAuditEvent;
+import com.liferay.portal.kernel.util.PropsValues;
+import com.liferay.portal.kernel.util.ServerDetector;
+
+import java.util.Map;
+
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.core.Appender;
+import org.apache.logging.log4j.core.LoggerContext;
+import org.apache.logging.log4j.core.appender.RollingFileAppender;
+import org.apache.logging.log4j.core.config.Configuration;
+import org.apache.logging.log4j.message.ObjectMessage;
+
+/**
+ * @author Jorge García Jiménez
+ * @author Rafael Praxedes
+ */
+public class Log4jFIPSAuditUtil {
+
+	public static void write(
+		Map<String, Object> record, FIPSAuditEvent.Severity severity) {
+
+		Level level = _getLevel(severity);
+
+		_validateDeliverable(level);
+
+		_logger.log(level, new ObjectMessage(record));
+	}
+
+	private static Level _getLevel(FIPSAuditEvent.Severity severity) {
+		if (severity == FIPSAuditEvent.Severity.CRITICAL) {
+			return Level.ERROR;
+		}
+
+		return Level.INFO;
+	}
+
+	private static RollingFileAppender _getRollingFileAppender() {
+		LoggerContext loggerContext = (LoggerContext)LogManager.getContext(
+			false);
+
+		Configuration configuration = loggerContext.getConfiguration();
+
+		Appender appender = configuration.getAppender(_APPENDER_NAME);
+
+		if (appender instanceof RollingFileAppender) {
+			return (RollingFileAppender)appender;
+		}
+
+		return null;
+	}
+
+	private static void _validateDeliverable(Level level) {
+		if (!PropsValues.FIPS_ENABLED ||
+			(ServerDetector.getServerId() == null)) {
+
+			return;
+		}
+
+		if (!_logger.isEnabled(level)) {
+			throw new IllegalStateException(
+				StringBundler.concat(
+					"Unable to write a FIPS audit record because the logger \"",
+					Log4jFIPSAuditUtil.class.getName(),
+					"\" is disabled for the level \"", level,
+					"\". Check that the portal property ",
+					"\"log4j.configure.on.startup\" is enabled and that no ",
+					"configuration lowers the level of that logger"));
+		}
+
+		RollingFileAppender rollingFileAppender = _getRollingFileAppender();
+
+		if (rollingFileAppender == null) {
+			throw new IllegalStateException(
+				StringBundler.concat(
+					"Unable to write a FIPS audit record because the appender ",
+					"\"", _APPENDER_NAME, "\" is not configured"));
+		}
+
+		if (!(rollingFileAppender.getLayout() instanceof
+				FIPSAuditNDJSONLayout)) {
+
+			throw new IllegalStateException(
+				StringBundler.concat(
+					"Unable to write a FIPS audit record because the appender ",
+					"\"", _APPENDER_NAME, "\" does not render it with \"",
+					FIPSAuditNDJSONLayout.PLUGIN_NAME, "\""));
+		}
+	}
+
+	private static final String _APPENDER_NAME = "FIPS_AUDIT_FILE";
+
+	private static final Logger _logger = LogManager.getLogger(
+		Log4jFIPSAuditUtil.class);
+
+}

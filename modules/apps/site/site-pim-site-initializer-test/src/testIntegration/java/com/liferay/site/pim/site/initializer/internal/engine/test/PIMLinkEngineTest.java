@@ -17,7 +17,9 @@ import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
@@ -25,21 +27,31 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.site.pim.site.initializer.constants.PIMObjectDefinitionConstants;
 import com.liferay.site.pim.site.initializer.engine.PIMLinkEngine;
+import com.liferay.site.pim.site.initializer.link.PIMLinkType;
 import com.liferay.site.pim.site.initializer.test.util.PIMBaseSKUTestUtil;
 import com.liferay.site.pim.site.initializer.test.util.PIMTestUtil;
+import com.liferay.site.pim.site.initializer.test.util.link.TestPIMLinkType;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Stefano Motta
@@ -58,6 +70,18 @@ public class PIMLinkEngineTest {
 	@Before
 	public void setUp() throws Exception {
 		PIMTestUtil.getOrAddGroup();
+
+		Bundle bundle = FrameworkUtil.getBundle(PIMLinkEngineTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		_serviceRegistration = bundleContext.registerService(
+			PIMLinkType.class, new TestPIMLinkType(), null);
+	}
+
+	@After
+	public void tearDown() {
+		_serviceRegistration.unregister();
 	}
 
 	@Test
@@ -86,6 +110,125 @@ public class PIMLinkEngineTest {
 
 		Assert.assertNotNull(_getClusterKey(objectEntry1));
 		Assert.assertNull(_getClusterKey(objectEntry2));
+	}
+
+	@Test
+	public void testGetPIMLinkObjectEntries() throws Exception {
+		DepotEntry depotEntry = PIMTestUtil.addSpaceDepotEntry();
+
+		ObjectEntry sourceObjectEntry =
+			PIMBaseSKUTestUtil.addPIMBaseSKUObjectEntry(
+				depotEntry.getGroupId());
+
+		List<ObjectEntry> pimLinkObjectEntries =
+			_pimLinkEngine.getPIMLinkObjectEntries(sourceObjectEntry, _TYPE);
+
+		Assert.assertTrue(pimLinkObjectEntries.isEmpty());
+
+		sourceObjectEntry = PIMBaseSKUTestUtil.addPIMBaseSKUObjectEntry(
+			depotEntry.getGroupId());
+		ObjectEntry targetObjectEntry1 =
+			PIMBaseSKUTestUtil.addPIMBaseSKUObjectEntry(
+				depotEntry.getGroupId());
+		ObjectEntry targetObjectEntry2 =
+			PIMBaseSKUTestUtil.addPIMBaseSKUObjectEntry(
+				depotEntry.getGroupId());
+
+		_pimLinkEngine.addPIMLinks(
+			sourceObjectEntry,
+			Arrays.asList(targetObjectEntry1, targetObjectEntry2), _TYPE);
+
+		pimLinkObjectEntries = _pimLinkEngine.getPIMLinkObjectEntries(
+			sourceObjectEntry, _TYPE);
+
+		Assert.assertEquals(
+			pimLinkObjectEntries.toString(), 2, pimLinkObjectEntries.size());
+		Assert.assertFalse(
+			_containsObjectEntry(pimLinkObjectEntries, sourceObjectEntry));
+		Assert.assertTrue(
+			_containsObjectEntry(pimLinkObjectEntries, targetObjectEntry1));
+		Assert.assertTrue(
+			_containsObjectEntry(pimLinkObjectEntries, targetObjectEntry2));
+
+		_objectEntryLocalService.moveObjectEntryToTrash(
+			TestPropsValues.getUserId(), targetObjectEntry2,
+			ServiceContextTestUtil.getServiceContext(depotEntry.getGroupId()));
+
+		pimLinkObjectEntries = _pimLinkEngine.getPIMLinkObjectEntries(
+			sourceObjectEntry, _TYPE);
+
+		Assert.assertEquals(
+			pimLinkObjectEntries.toString(), 1, pimLinkObjectEntries.size());
+		Assert.assertTrue(
+			_containsObjectEntry(pimLinkObjectEntries, targetObjectEntry1));
+		Assert.assertFalse(
+			_containsObjectEntry(pimLinkObjectEntries, targetObjectEntry2));
+
+		ObjectEntry targetObjectEntry3 =
+			PIMBaseSKUTestUtil.addPIMBaseSKUObjectEntry(
+				depotEntry.getGroupId());
+
+		_pimLinkEngine.addPIMLinks(
+			sourceObjectEntry, Collections.singletonList(targetObjectEntry3),
+			TestPIMLinkType.TYPE);
+
+		pimLinkObjectEntries = _pimLinkEngine.getPIMLinkObjectEntries(
+			sourceObjectEntry, _TYPE);
+
+		Assert.assertEquals(
+			pimLinkObjectEntries.toString(), 1, pimLinkObjectEntries.size());
+		Assert.assertTrue(
+			_containsObjectEntry(pimLinkObjectEntries, targetObjectEntry1));
+		Assert.assertFalse(
+			_containsObjectEntry(pimLinkObjectEntries, targetObjectEntry3));
+	}
+
+	@Test
+	public void testGetPIMLinkTypes() throws Exception {
+		DepotEntry depotEntry = PIMTestUtil.addSpaceDepotEntry();
+
+		ObjectEntry sourceObjectEntry =
+			PIMBaseSKUTestUtil.addPIMBaseSKUObjectEntry(
+				depotEntry.getGroupId());
+
+		List<String> pimLinkTypes = _pimLinkEngine.getPIMLinkTypes(
+			sourceObjectEntry);
+
+		Assert.assertTrue(pimLinkTypes.isEmpty());
+
+		sourceObjectEntry = PIMBaseSKUTestUtil.addPIMBaseSKUObjectEntry(
+			depotEntry.getGroupId());
+		ObjectEntry targetObjectEntry1 =
+			PIMBaseSKUTestUtil.addPIMBaseSKUObjectEntry(
+				depotEntry.getGroupId());
+
+		_pimLinkEngine.addPIMLinks(
+			sourceObjectEntry, Collections.singletonList(targetObjectEntry1),
+			_TYPE);
+
+		ObjectEntry targetObjectEntry2 =
+			PIMBaseSKUTestUtil.addPIMBaseSKUObjectEntry(
+				depotEntry.getGroupId());
+
+		_pimLinkEngine.addPIMLinks(
+			sourceObjectEntry, Collections.singletonList(targetObjectEntry2),
+			TestPIMLinkType.TYPE);
+
+		pimLinkTypes = _pimLinkEngine.getPIMLinkTypes(sourceObjectEntry);
+
+		Assert.assertEquals(pimLinkTypes.toString(), 2, pimLinkTypes.size());
+		Assert.assertTrue(pimLinkTypes.contains(_TYPE));
+		Assert.assertTrue(pimLinkTypes.contains(TestPIMLinkType.TYPE));
+	}
+
+	private boolean _containsObjectEntry(
+		List<ObjectEntry> objectEntries, ObjectEntry objectEntry) {
+
+		return ListUtil.exists(
+			objectEntries,
+			curObjectEntry -> Objects.equals(
+				curObjectEntry.getExternalReferenceCode(),
+				objectEntry.getExternalReferenceCode()));
 	}
 
 	private String _getClusterKey(ObjectEntry objectEntry) throws Exception {
@@ -210,5 +353,7 @@ public class PIMLinkEngineTest {
 
 	@Inject
 	private PIMLinkEngine _pimLinkEngine;
+
+	private ServiceRegistration<PIMLinkType> _serviceRegistration;
 
 }

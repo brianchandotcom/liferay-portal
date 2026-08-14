@@ -10,6 +10,7 @@ import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.headless.pim.client.dto.v1_0.Link;
 import com.liferay.headless.pim.client.dto.v1_0.LinkReference;
+import com.liferay.headless.pim.client.pagination.Page;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -17,29 +18,40 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.site.pim.site.initializer.constants.PIMObjectDefinitionConstants;
+import com.liferay.site.pim.site.initializer.link.PIMLinkType;
 import com.liferay.site.pim.site.initializer.test.util.PIMBaseSKUTestUtil;
 import com.liferay.site.pim.site.initializer.test.util.PIMTestUtil;
+import com.liferay.site.pim.site.initializer.test.util.link.TestPIMLinkType;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Stefano Motta
@@ -61,6 +73,21 @@ public class LinkResourceTest extends BaseLinkResourceTestCase {
 		super.setUp();
 
 		PIMTestUtil.getOrAddGroup();
+
+		Bundle bundle = FrameworkUtil.getBundle(LinkResourceTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		_serviceRegistration = bundleContext.registerService(
+			PIMLinkType.class, new TestPIMLinkType(), null);
+	}
+
+	@After
+	@Override
+	public void tearDown() throws Exception {
+		super.tearDown();
+
+		_serviceRegistration.unregister();
 	}
 
 	@Override
@@ -76,7 +103,7 @@ public class LinkResourceTest extends BaseLinkResourceTestCase {
 		linkResource.postScopeScopeKeyLink(
 			String.valueOf(depotEntry.getGroupId()),
 			_toLink(
-				objectEntry1, Collections.singletonList(objectEntry2), _TYPE));
+				_TYPE, objectEntry1, Collections.singletonList(objectEntry2)));
 
 		Assert.assertNotNull(
 			_getClusterKey(
@@ -100,6 +127,100 @@ public class LinkResourceTest extends BaseLinkResourceTestCase {
 
 	@Override
 	@Test
+	public void testGetScopeScopeKeyLinksPage() throws Exception {
+		DepotEntry depotEntry = PIMTestUtil.addSpaceDepotEntry();
+
+		ObjectEntry sourceObjectEntry =
+			PIMBaseSKUTestUtil.addPIMBaseSKUObjectEntry(
+				depotEntry.getGroupId());
+
+		Page<Link> page = _getLinksPage(sourceObjectEntry, _TYPE);
+
+		Assert.assertEquals(0, page.getTotalCount());
+
+		ObjectEntry targetObjectEntry1 =
+			PIMBaseSKUTestUtil.addPIMBaseSKUObjectEntry(
+				depotEntry.getGroupId());
+		ObjectEntry targetObjectEntry2 =
+			PIMBaseSKUTestUtil.addPIMBaseSKUObjectEntry(
+				depotEntry.getGroupId());
+
+		linkResource.postScopeScopeKeyLink(
+			String.valueOf(depotEntry.getGroupId()),
+			_toLink(
+				_TYPE, sourceObjectEntry,
+				Arrays.asList(targetObjectEntry1, targetObjectEntry2)));
+
+		page = _getLinksPage(sourceObjectEntry, _TYPE);
+
+		Assert.assertEquals(1, page.getTotalCount());
+
+		Link link = page.fetchFirstItem();
+
+		Assert.assertEquals(_TYPE, link.getType());
+
+		LinkReference sourceLinkReference = link.getSourceLinkReference();
+
+		Assert.assertEquals(
+			sourceObjectEntry.getExternalReferenceCode(),
+			sourceLinkReference.getExternalReferenceCode());
+		Assert.assertEquals("approved", sourceLinkReference.getStatus());
+
+		Assert.assertEquals(2, link.getTargetLinkReferences().length);
+
+		List<Link> links = (List<Link>)page.getItems();
+
+		Assert.assertFalse(_containsLink(links, sourceObjectEntry, _TYPE));
+		Assert.assertTrue(_containsLink(links, targetObjectEntry1, _TYPE));
+		Assert.assertTrue(_containsLink(links, targetObjectEntry2, _TYPE));
+
+		_objectEntryLocalService.moveObjectEntryToTrash(
+			TestPropsValues.getUserId(), targetObjectEntry2,
+			ServiceContextTestUtil.getServiceContext(depotEntry.getGroupId()));
+
+		page = _getLinksPage(sourceObjectEntry, _TYPE);
+
+		link = page.fetchFirstItem();
+
+		Assert.assertEquals(1, link.getTargetLinkReferences().length);
+
+		links = (List<Link>)page.getItems();
+
+		Assert.assertTrue(_containsLink(links, targetObjectEntry1, _TYPE));
+		Assert.assertFalse(_containsLink(links, targetObjectEntry2, _TYPE));
+
+		ObjectEntry targetObjectEntry3 =
+			PIMBaseSKUTestUtil.addPIMBaseSKUObjectEntry(
+				depotEntry.getGroupId());
+
+		linkResource.postScopeScopeKeyLink(
+			String.valueOf(depotEntry.getGroupId()),
+			_toLink(
+				TestPIMLinkType.TYPE, sourceObjectEntry,
+				Collections.singletonList(targetObjectEntry3)));
+
+		page = _getLinksPage(sourceObjectEntry, _TYPE);
+
+		Assert.assertEquals(1, page.getTotalCount());
+
+		links = (List<Link>)page.getItems();
+
+		Assert.assertTrue(_containsLink(links, targetObjectEntry1, _TYPE));
+		Assert.assertFalse(_containsLink(links, targetObjectEntry3, _TYPE));
+
+		page = _getLinksPage(sourceObjectEntry, null);
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		links = (List<Link>)page.getItems();
+
+		Assert.assertTrue(_containsLink(links, targetObjectEntry1, _TYPE));
+		Assert.assertTrue(
+			_containsLink(links, targetObjectEntry3, TestPIMLinkType.TYPE));
+	}
+
+	@Override
+	@Test
 	public void testPostScopeScopeKeyLink() throws Exception {
 		DepotEntry depotEntry = PIMTestUtil.addSpaceDepotEntry();
 
@@ -111,7 +232,7 @@ public class LinkResourceTest extends BaseLinkResourceTestCase {
 		linkResource.postScopeScopeKeyLink(
 			String.valueOf(depotEntry.getGroupId()),
 			_toLink(
-				objectEntry1, Collections.singletonList(objectEntry2), _TYPE));
+				_TYPE, objectEntry1, Collections.singletonList(objectEntry2)));
 
 		String clusterKey = _getClusterKey(
 			depotEntry.getGroupId(), objectEntry1.getExternalReferenceCode());
@@ -122,6 +243,25 @@ public class LinkResourceTest extends BaseLinkResourceTestCase {
 			_getClusterKey(
 				depotEntry.getGroupId(),
 				objectEntry2.getExternalReferenceCode()));
+	}
+
+	private boolean _containsLink(
+		List<Link> links, ObjectEntry objectEntry, String type) {
+
+		if (ListUtil.exists(
+				links,
+				link ->
+					Objects.equals(link.getType(), type) &&
+					ListUtil.exists(
+						ListUtil.fromArray(link.getTargetLinkReferences()),
+						linkReference -> Objects.equals(
+							linkReference.getExternalReferenceCode(),
+							objectEntry.getExternalReferenceCode())))) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private String _getClusterKey(long groupId, String externalReferenceCode)
@@ -153,30 +293,40 @@ public class LinkResourceTest extends BaseLinkResourceTestCase {
 		return null;
 	}
 
+	private Page<Link> _getLinksPage(ObjectEntry objectEntry, String type)
+		throws Exception {
+
+		return linkResource.getScopeScopeKeyLinksPage(
+			String.valueOf(objectEntry.getGroupId()),
+			objectEntry.getModelClassName(),
+			objectEntry.getExternalReferenceCode(), type);
+	}
+
 	private Link _toLink(
-		ObjectEntry sourceObjectEntry, List<ObjectEntry> targetObjectEntries,
-		String type) {
+		String linkType, ObjectEntry sourceObjectEntry,
+		List<ObjectEntry> targetObjectEntries) {
 
-		Link link = new Link();
-
-		link.setSourceLinkReference(_toLinkReference(sourceObjectEntry));
-		link.setTargetLinkReferences(
-			TransformUtil.transformToArray(
-				targetObjectEntries, this::_toLinkReference,
-				LinkReference.class));
-		link.setType(type);
-
-		return link;
+		return new Link() {
+			{
+				setSourceLinkReference(_toLinkReference(sourceObjectEntry));
+				setTargetLinkReferences(
+					TransformUtil.transformToArray(
+						targetObjectEntries,
+						LinkResourceTest.this::_toLinkReference,
+						LinkReference.class));
+				setType(() -> linkType);
+			}
+		};
 	}
 
 	private LinkReference _toLinkReference(ObjectEntry objectEntry) {
-		LinkReference linkReference = new LinkReference();
-
-		linkReference.setClassName(objectEntry.getModelClassName());
-		linkReference.setExternalReferenceCode(
-			objectEntry.getExternalReferenceCode());
-
-		return linkReference;
+		return new LinkReference() {
+			{
+				setClassName(objectEntry.getModelClassName());
+				setExternalReferenceCode(
+					objectEntry.getExternalReferenceCode());
+			}
+		};
 	}
 
 	private static final String _TYPE = "variant";
@@ -189,5 +339,7 @@ public class LinkResourceTest extends BaseLinkResourceTestCase {
 
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;
+
+	private ServiceRegistration<PIMLinkType> _serviceRegistration;
 
 }

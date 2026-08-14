@@ -11,7 +11,6 @@ import com.liferay.object.constants.ObjectConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFolderConstants;
-import com.liferay.object.definition.util.ObjectDefinitionUtil;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
@@ -528,7 +527,7 @@ public class ObjectDefinitionServiceTest {
 
 			_objectDefinitionService.addSystemObjectDefinition(
 				RandomTestUtil.randomString(), user.getUserId(), objectFolderId,
-				ObjectDefinitionUtil.generateRandomClassName(), true, false,
+				ObjectDefinitionTestUtil.getRandomClassName(), true, false,
 				true, false, true, false, false, false, false, false, null,
 				RandomTestUtil.randomLocaleStringMap(),
 				ObjectDefinitionTestUtil.

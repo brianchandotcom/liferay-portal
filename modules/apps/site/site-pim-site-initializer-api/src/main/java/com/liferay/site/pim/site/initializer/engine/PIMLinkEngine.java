@@ -26,4 +26,11 @@ public interface PIMLinkEngine {
 	public void deletePIMLink(ObjectEntry objectEntry, String type)
 		throws PortalException;
 
+	public List<ObjectEntry> getPIMLinkObjectEntries(
+			ObjectEntry objectEntry, String type)
+		throws PortalException;
+
+	public List<String> getPIMLinkTypes(ObjectEntry objectEntry)
+		throws PortalException;
+
 }

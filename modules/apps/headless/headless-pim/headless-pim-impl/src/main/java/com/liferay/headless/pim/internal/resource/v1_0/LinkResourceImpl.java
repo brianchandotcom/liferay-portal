@@ -14,8 +14,18 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.util.GroupUtil;
 import com.liferay.site.pim.site.initializer.engine.PIMLinkEngine;
+
+import java.io.Serializable;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -46,6 +56,31 @@ public class LinkResourceImpl extends BaseLinkResourceImpl {
 			_getObjectEntry(
 				className, externalReferenceCode, _getGroupId(scopeKey)),
 			type);
+	}
+
+	@Override
+	public Page<Link> getScopeScopeKeyLinksPage(
+			String scopeKey, String className, String externalReferenceCode,
+			String type)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-96666")) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		ObjectEntry objectEntry = _getObjectEntry(
+			className, externalReferenceCode, _getGroupId(scopeKey));
+
+		List<String> types = Collections.singletonList(type);
+
+		if (Validator.isNull(type)) {
+			types = _pimLinkEngine.getPIMLinkTypes(objectEntry);
+		}
+
+		return Page.of(
+			transform(types, curType -> _toLink(curType, objectEntry)));
 	}
 
 	@Override
@@ -96,6 +131,48 @@ public class LinkResourceImpl extends BaseLinkResourceImpl {
 		return _objectEntryLocalService.getObjectEntry(
 			externalReferenceCode, groupId,
 			objectDefinition.getObjectDefinitionId());
+	}
+
+	private Link _toLink(String linkType, ObjectEntry objectEntry)
+		throws Exception {
+
+		List<ObjectEntry> pimLinkObjectEntries =
+			_pimLinkEngine.getPIMLinkObjectEntries(objectEntry, linkType);
+
+		if (pimLinkObjectEntries.isEmpty()) {
+			return null;
+		}
+
+		return new Link() {
+			{
+				setSourceLinkReference(() -> _toLinkReference(objectEntry));
+				setTargetLinkReferences(
+					() -> transformToArray(
+						pimLinkObjectEntries,
+						LinkResourceImpl.this::_toLinkReference,
+						LinkReference.class));
+				setType(() -> linkType);
+			}
+		};
+	}
+
+	private LinkReference _toLinkReference(ObjectEntry objectEntry)
+		throws Exception {
+
+		Map<String, Serializable> values = _objectEntryLocalService.getValues(
+			objectEntry);
+
+		return new LinkReference() {
+			{
+				setClassName(objectEntry::getModelClassName);
+				setCode(() -> MapUtil.getString(values, "code"));
+				setExternalReferenceCode(objectEntry::getExternalReferenceCode);
+				setName(() -> MapUtil.getString(values, "name"));
+				setStatus(
+					() -> WorkflowConstants.getStatusLabel(
+						objectEntry.getStatus()));
+			}
+		};
 	}
 
 	@Reference

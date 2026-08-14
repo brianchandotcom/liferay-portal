@@ -23,6 +23,10 @@ Follow the canonical code style rules in `pr-reviewer/rules` when writing, modif
 - `modules/sdk` — Gradle plugins used throughout the build (service builder, source formatter, etc.).
 - `modules/util` — Custom build tools like rest-builder, service-builder, and source formatter.
 
+### Cloud Operator (Go Based)
+
+- `cloud/operator` - The cloud operator is written in Go. Read `.claude/rules/go-style.md` when formatting, generating, or reviewing any Go code.
+
 ## Development
 
 Below you will find the main building blocks for daily development.

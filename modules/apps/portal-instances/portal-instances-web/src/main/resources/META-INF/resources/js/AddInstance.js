@@ -40,7 +40,11 @@ export default function ({namespace}) {
 				if (!response.error) {
 					opener.Liferay.fire('closeModal', {
 						id: `${namespace}addSiteDialog`,
-						redirect: opener.location.href,
+					});
+
+					opener.Liferay.Util.openToast({
+						message: response.successMessage,
+						type: 'success',
 					});
 				}
 				else {

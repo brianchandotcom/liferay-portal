@@ -17,6 +17,14 @@ Run the SDK setup, then run the source formatter in `current-branch` mode:
 (cd "${REPO_ROOT}/portal-impl" && ANT_OPTS="-Xmx2560m" ant format-source-current-branch -Dvalidate.commit.messages=true)
 ```
 
+When the branch changes any `.css`, `.js`, `.jsx`, `.scss`, `.ts`, or `.tsx` file, also run the JavaScript formatter:
+
+```bash
+(cd "${REPO_ROOT}/modules" && ../gradlew :portalYarnFormatCurrentBranch)
+```
+
+Both commands must pass.
+
 ## Autocommit
 
 When `git status --porcelain` is nonempty after the formatter (fixable subset applied to the working tree), stage all changes (`git add --all`) and create a commit titled `<TICKET> SF`.
@@ -28,6 +36,10 @@ Unfixable violations exit nonzero and fail this validation; surface them from th
 ## Notes
 
 Run **after** all drift validations so the formatter sees the regenerated tree.
+
+The Ant formatter does not type-check TypeScript. Only the JavaScript formatter does.
+
+Invoke the JavaScript formatter by its absolute task path. The bare name configures every subproject and fails on any JDK other than 17.
 
 ## Time Estimate
 

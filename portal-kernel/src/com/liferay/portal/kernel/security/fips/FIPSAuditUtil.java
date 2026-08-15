@@ -6,7 +6,7 @@
 package com.liferay.portal.kernel.security.fips;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.internal.log4j.Log4jFIPSAuditUtil;
+import com.liferay.portal.kernel.internal.log4j.FIPSLog4jUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.PropsValues;
@@ -46,7 +46,7 @@ public class FIPSAuditUtil {
 	public static void write(FIPSAuditEvent fipsAuditEvent) {
 		FIPSAuditEvent.Severity severity = fipsAuditEvent.getSeverity();
 
-		Log4jFIPSAuditUtil.write(
+		FIPSLog4jUtil.write(
 			LinkedHashMapBuilder.<String, Object>put(
 				"cmvp-certificate-id",
 				PropsValues.FIPS_AUDIT_PROVIDER_CMVP_CERTIFICATE_ID

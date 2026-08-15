@@ -6,7 +6,7 @@
 package com.liferay.portal.kernel.security.fips;
 
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.internal.log4j.Log4jFIPSAuditUtil;
+import com.liferay.portal.kernel.internal.log4j.FIPSLog4jUtil;
 import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -72,7 +72,7 @@ public class FIPSAuditUtilTest {
 			LogManager.class, Mockito.CALLS_REAL_METHODS);
 
 		_logManagerMockedStatic.when(
-			() -> LogManager.getLogger(Log4jFIPSAuditUtil.class)
+			() -> LogManager.getLogger(FIPSLog4jUtil.class)
 		).thenReturn(
 			_logger
 		);

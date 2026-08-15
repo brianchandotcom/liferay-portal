@@ -25,7 +25,7 @@ import org.apache.logging.log4j.message.ObjectMessage;
  * @author Jorge García Jiménez
  * @author Rafael Praxedes
  */
-public class Log4jFIPSAuditUtil {
+public class FIPSLog4jUtil {
 
 	public static void write(
 		Map<String, Object> fields, FIPSAuditEvent.Severity severity) {
@@ -56,7 +56,7 @@ public class Log4jFIPSAuditUtil {
 			throw new IllegalStateException(
 				StringBundler.concat(
 					"Unable to write a FIPS audit record because the logger \"",
-					Log4jFIPSAuditUtil.class.getName(),
+					FIPSLog4jUtil.class.getName(),
 					"\" is disabled for the level \"", level,
 					"\". Check that the portal property ",
 					"\"log4j.configure.on.startup\" is enabled and that no ",
@@ -97,6 +97,6 @@ public class Log4jFIPSAuditUtil {
 	private static final String _APPENDER_NAME = "FIPS_AUDIT_FILE";
 
 	private static final Logger _logger = LogManager.getLogger(
-		Log4jFIPSAuditUtil.class);
+		FIPSLog4jUtil.class);
 
 }

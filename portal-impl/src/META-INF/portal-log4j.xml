@@ -92,7 +92,7 @@
 		<Logger level="INFO" name="com.liferay.portal.kernel.deploy" />
 		<Logger level="WARN" name="com.liferay.portal.kernel.internal.configuration.ConfigurationImpl" />
 
-		<Logger additivity="false" level="INFO" name="com.liferay.portal.kernel.internal.log4j.Log4jFIPSAuditUtil">
+		<Logger additivity="false" level="INFO" name="com.liferay.portal.kernel.internal.log4j.FIPSLog4jUtil">
 			<AppenderRef ref="FIPS_AUDIT_FILE" />
 		</Logger>
 

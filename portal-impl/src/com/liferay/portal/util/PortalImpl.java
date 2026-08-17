@@ -7627,7 +7627,7 @@ public class PortalImpl implements Portal {
 
 		Locale currentLocale = themeDisplay.getLocale();
 
-		String portletFriendlyURLMappingPath = StringPool.BLANK;
+		String portletURLMappingPath = StringPool.BLANK;
 
 		String currentLayoutFriendlyURL = layout.getFriendlyURL(currentLocale);
 
@@ -7639,7 +7639,7 @@ public class PortalImpl implements Portal {
 		}
 
 		if (currentLayoutFriendlyURLIndex != -1) {
-			portletFriendlyURLMappingPath = _getPortletFriendlyURLMappingPath(
+			portletURLMappingPath = _getPortletURLMappingPath(
 				currentLayoutFriendlyURLIndex +
 					currentLayoutFriendlyURL.length(),
 				layoutURL);
@@ -7652,8 +7652,8 @@ public class PortalImpl implements Portal {
 			int groupFriendlyURLIndex = layoutURL.indexOf(groupFriendlyURL);
 
 			if (groupFriendlyURLIndex != -1) {
-				portletFriendlyURLMappingPath =
-					_getPortletFriendlyURLMappingPath(
+				portletURLMappingPath =
+					_getPortletURLMappingPath(
 						groupFriendlyURLIndex + groupFriendlyURL.length(),
 						layoutURL);
 			}
@@ -7757,8 +7757,8 @@ public class PortalImpl implements Portal {
 					changeLanguageURL += curFriendlyURLSeparatorPart;
 				}
 
-				if (Validator.isNotNull(portletFriendlyURLMappingPath)) {
-					changeLanguageURL += portletFriendlyURLMappingPath;
+				if (Validator.isNotNull(portletURLMappingPath)) {
+					changeLanguageURL += portletURLMappingPath;
 				}
 			}
 
@@ -8160,10 +8160,10 @@ public class PortalImpl implements Portal {
 		return new LayoutQueryStringComposite(null, friendlyURL, queryString);
 	}
 
-	private String _getPortletFriendlyURLMappingPath(
+	private String _getPortletURLMappingPath(
 		int fromIndex, String url) {
 
-		String portletFriendlyURLMappingPath = StringPool.BLANK;
+		String portletURLMappingPath = StringPool.BLANK;
 
 		List<FriendlyURLMapper> friendlyURLMappers =
 			PortletLocalServiceUtil.getFriendlyURLMappers();
@@ -8187,11 +8187,11 @@ public class PortalImpl implements Portal {
 			if ((mappingEndIndex == url.length()) ||
 				(url.charAt(mappingEndIndex) == CharPool.SLASH)) {
 
-				portletFriendlyURLMappingPath = url.substring(mappingIndex);
+				portletURLMappingPath = url.substring(mappingIndex);
 			}
 		}
 
-		return portletFriendlyURLMappingPath;
+		return portletURLMappingPath;
 	}
 
 	private String _getPortletTitle(

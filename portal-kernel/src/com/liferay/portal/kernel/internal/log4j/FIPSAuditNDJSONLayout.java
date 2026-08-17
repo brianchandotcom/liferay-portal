@@ -6,13 +6,15 @@
 package com.liferay.portal.kernel.internal.log4j;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONUtil;
 
 import java.nio.charset.StandardCharsets;
 
 import java.util.Map;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.Layout;
 import org.apache.logging.log4j.core.LogEvent;
 import org.apache.logging.log4j.core.config.Node;
@@ -94,14 +96,23 @@ public final class FIPSAuditNDJSONLayout extends AbstractStringLayout {
 			record = objectMessage.getParameter();
 		}
 
-		if (record instanceof Map) {
-			sb.append(JSONFactoryUtil.createJSONObject((Map<?, ?>)record));
+		if (!(record instanceof Map)) {
+			_logger.error(
+				StringBundler.concat(
+					"Unable to write the event from the logger \"",
+					logEvent.getLoggerName(),
+					"\" to the FIPS audit trail because its message does not ",
+					"carry a FIPS audit record"));
+
+			return;
 		}
-		else {
-			sb.append(JSONUtil.put("message", message.getFormattedMessage()));
-		}
+
+		sb.append(JSONFactoryUtil.createJSONObject((Map<?, ?>)record));
 
 		sb.append(CharPool.NEW_LINE);
 	}
+
+	private static final Logger _logger = LogManager.getLogger(
+		FIPSAuditNDJSONLayout.class);
 
 }

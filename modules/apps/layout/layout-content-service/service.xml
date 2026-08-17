@@ -93,10 +93,27 @@
 		<order by="desc">
 			<order-column name="createDate" />
 		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="LayoutContentVersionId" return-type="Collection">
+			<finder-column name="layoutContentVersionId" />
+		</finder>
+		<finder name="LCVI_SEERC" return-type="Collection">
+			<finder-column name="layoutContentVersionId" />
+			<finder-column name="segmentsExperienceERC" />
+		</finder>
+		<finder name="LCVI_SEERC_L" return-type="LayoutContentVersionPreview" unique="true">
+			<finder-column name="layoutContentVersionId" />
+			<finder-column name="segmentsExperienceERC" />
+			<finder-column name="languageId" />
+		</finder>
 	</entity>
 	<exceptions>
+		<exception>DuplicateLayoutContentVersionPreview</exception>
 		<exception>LayoutContentVersionExternalReferenceCode</exception>
 		<exception>LayoutContentVersionName</exception>
+		<exception>NoSuchLayoutContentVersionPreview</exception>
 		<exception>RequiredLayoutContentVersion</exception>
 		<exception>UnsupportedLayoutLayoutContentVersion</exception>
 	</exceptions>

@@ -5,11 +5,13 @@
 
 package com.liferay.layout.content.service.impl;
 
+import com.liferay.layout.content.exception.DuplicateLayoutContentVersionPreviewException;
 import com.liferay.layout.content.exception.NoSuchLayoutContentVersionException;
 import com.liferay.layout.content.model.LayoutContentVersion;
 import com.liferay.layout.content.model.LayoutContentVersionPreview;
 import com.liferay.layout.content.service.base.LayoutContentVersionPreviewLocalServiceBaseImpl;
 import com.liferay.layout.content.service.persistence.LayoutContentVersionPersistence;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -43,6 +45,9 @@ public class LayoutContentVersionPreviewLocalServiceImpl
 
 		FeatureFlagManagerUtil.checkEnabled(
 			layoutContentVersion.getCompanyId(), "LPD-10622");
+
+		_checkDuplicateLayoutContentVersionPreview(
+			layoutContentVersionId, segmentsExperienceERC, languageId);
 
 		LayoutContentVersionPreview layoutContentVersionPreview =
 			layoutContentVersionPreviewPersistence.create(
@@ -101,6 +106,27 @@ public class LayoutContentVersionPreviewLocalServiceImpl
 
 		return layoutContentVersionPreviewPersistence.
 			findByLayoutContentVersionId(layoutContentVersionId);
+	}
+
+	private void _checkDuplicateLayoutContentVersionPreview(
+			long layoutContentVersionId, String segmentsExperienceERC,
+			String languageId)
+		throws DuplicateLayoutContentVersionPreviewException {
+
+		LayoutContentVersionPreview layoutContentVersionPreview =
+			layoutContentVersionPreviewPersistence.fetchByLCVI_SEERC_L(
+				layoutContentVersionId, segmentsExperienceERC, languageId);
+
+		if (layoutContentVersionPreview == null) {
+			return;
+		}
+
+		throw new DuplicateLayoutContentVersionPreviewException(
+			StringBundler.concat(
+				"Duplicate layout content version preview for layout content ",
+				"version ", layoutContentVersionId,
+				", segments experience external reference code ",
+				segmentsExperienceERC, ", and language ID ", languageId));
 	}
 
 	private void _checkFeatureFlagEnabled(long layoutContentVersionId)

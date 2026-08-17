@@ -109,24 +109,25 @@ public class BrokenLinkAssetResourceTest
 				RandomTestUtil.randomString());
 		}
 
-		Page<BrokenLinkAsset> page =
+		Page<BrokenLinkAsset> brokenLinkAssetsPage =
 			brokenLinkAssetResource.getBrokenLinkAssetsPage(
 				depotEntry.getDepotEntryId(), null, Pagination.of(1, 2), null);
 
-		Assert.assertEquals(3, page.getTotalCount());
+		Assert.assertEquals(3, brokenLinkAssetsPage.getTotalCount());
 
 		List<BrokenLinkAsset> brokenLinkAssets =
-			(List<BrokenLinkAsset>)page.getItems();
+			(List<BrokenLinkAsset>)brokenLinkAssetsPage.getItems();
 
 		Assert.assertEquals(
 			brokenLinkAssets.toString(), 2, brokenLinkAssets.size());
 
-		page = brokenLinkAssetResource.getBrokenLinkAssetsPage(
+		brokenLinkAssetsPage = brokenLinkAssetResource.getBrokenLinkAssetsPage(
 			depotEntry.getDepotEntryId(), null, Pagination.of(2, 2), null);
 
-		Assert.assertEquals(3, page.getTotalCount());
+		Assert.assertEquals(3, brokenLinkAssetsPage.getTotalCount());
 
-		brokenLinkAssets = (List<BrokenLinkAsset>)page.getItems();
+		brokenLinkAssets =
+			(List<BrokenLinkAsset>)brokenLinkAssetsPage.getItems();
 
 		Assert.assertEquals(
 			brokenLinkAssets.toString(), 1, brokenLinkAssets.size());
@@ -238,12 +239,12 @@ public class BrokenLinkAssetResourceTest
 			String expectedSecondTitle, String sortString)
 		throws Exception {
 
-		Page<BrokenLinkAsset> page =
+		Page<BrokenLinkAsset> brokenLinkAssetsPage =
 			brokenLinkAssetResource.getBrokenLinkAssetsPage(
 				depotEntry.getDepotEntryId(), null, null, sortString);
 
 		List<BrokenLinkAsset> brokenLinkAssets =
-			(List<BrokenLinkAsset>)page.getItems();
+			(List<BrokenLinkAsset>)brokenLinkAssetsPage.getItems();
 
 		Assert.assertEquals(
 			brokenLinkAssets.toString(), 2, brokenLinkAssets.size());
@@ -308,14 +309,14 @@ public class BrokenLinkAssetResourceTest
 		_addObjectEntry(
 			sb.toString(), depotEntry, objectDefinition, referencingTitle);
 
-		Page<BrokenLinkAsset> page =
+		Page<BrokenLinkAsset> brokenLinkAssetsPage =
 			brokenLinkAssetResource.getBrokenLinkAssetsPage(
 				depotEntry.getDepotEntryId(), null, null, null);
 
-		Assert.assertEquals(1, page.getTotalCount());
+		Assert.assertEquals(1, brokenLinkAssetsPage.getTotalCount());
 
 		List<BrokenLinkAsset> brokenLinkAssets =
-			(List<BrokenLinkAsset>)page.getItems();
+			(List<BrokenLinkAsset>)brokenLinkAssetsPage.getItems();
 
 		BrokenLinkAsset brokenLinkAsset = brokenLinkAssets.get(0);
 

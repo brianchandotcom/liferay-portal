@@ -38,6 +38,7 @@ import java.util.TimeZone;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.MarkerManager;
 import org.apache.logging.log4j.core.Layout;
 import org.apache.logging.log4j.core.LoggerContext;
 import org.apache.logging.log4j.core.appender.RollingFileAppender;
@@ -421,7 +422,9 @@ public class FIPSAuditUtilTest {
 		Mockito.verify(
 			_logger, Mockito.atLeastOnce()
 		).log(
-			Mockito.eq(level), argumentCaptor.capture()
+			Mockito.eq(level),
+			Mockito.eq(MarkerManager.getMarker(FIPSLog4jUtil.MARKER_NAME)),
+			argumentCaptor.capture()
 		);
 
 		for (Message message : argumentCaptor.getAllValues()) {

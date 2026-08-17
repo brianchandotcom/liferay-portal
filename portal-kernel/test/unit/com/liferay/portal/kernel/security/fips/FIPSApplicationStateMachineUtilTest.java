@@ -21,6 +21,7 @@ import java.util.function.Consumer;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.message.Message;
 import org.apache.logging.log4j.message.ObjectMessage;
 
@@ -71,7 +72,7 @@ public class FIPSApplicationStateMachineUtilTest {
 
 		Mockito.doAnswer(
 			invocation -> {
-				ObjectMessage objectMessage = invocation.getArgument(1);
+				ObjectMessage objectMessage = invocation.getArgument(2);
 
 				_records.add((Map<String, Object>)objectMessage.getParameter());
 
@@ -80,7 +81,8 @@ public class FIPSApplicationStateMachineUtilTest {
 		).when(
 			_logger
 		).log(
-			Mockito.any(Level.class), Mockito.any(Message.class)
+			Mockito.any(Level.class), Mockito.any(Marker.class),
+			Mockito.any(Message.class)
 		);
 
 		_setFIPSApplicationState(FIPSApplicationState.INITIALIZING);

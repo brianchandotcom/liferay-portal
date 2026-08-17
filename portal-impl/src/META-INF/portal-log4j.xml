@@ -33,6 +33,8 @@
 		</Appender>
 
 		<Appender filePattern="@liferay.home@/logs/fips-audit.%d{yyyy-MM-dd}{UTC}.ndjson" filePermissions="rw-------" ignoreExceptions="false" immediateFlush="true" name="FIPS_AUDIT_FILE" type="RollingFile">
+			<Filter type="FIPSAuditFilter" />
+
 			<Layout type="FIPSAuditNDJSONLayout" />
 
 			<TimeBasedTriggeringPolicy />

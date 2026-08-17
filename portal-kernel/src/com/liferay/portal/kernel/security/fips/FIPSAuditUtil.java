@@ -160,7 +160,9 @@ public class FIPSAuditUtil {
 			return _normalizeTimestamps((Map<?, ?>)value);
 		}
 
-		if (value instanceof TemporalAccessor temporalAccessor) {
+		if (value instanceof TemporalAccessor) {
+			TemporalAccessor temporalAccessor = (TemporalAccessor)value;
+
 			try {
 				return _formatTimestamp(Instant.from(temporalAccessor));
 			}

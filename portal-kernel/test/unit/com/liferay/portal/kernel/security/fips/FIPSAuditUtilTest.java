@@ -114,9 +114,11 @@ public class FIPSAuditUtilTest {
 				eventType, FIPSAuditEvent.Severity.CRITICAL);
 
 			String fromState = RandomTestUtil.randomString();
-			String toState = RandomTestUtil.randomString();
 
 			fipsAuditEvent.put("from-state", fromState);
+
+			String toState = RandomTestUtil.randomString();
+
 			fipsAuditEvent.put("to-state", toState);
 
 			FIPSAuditUtil.write(fipsAuditEvent);
@@ -499,7 +501,7 @@ public class FIPSAuditUtilTest {
 			serverDetectorMockedStatic.when(
 				ServerDetector::getServerId
 			).thenReturn(
-				"tomcat"
+				RandomTestUtil.randomString()
 			);
 
 			Assert.assertThrows(

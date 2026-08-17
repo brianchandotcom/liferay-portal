@@ -8,7 +8,9 @@ package com.liferay.site.cms.site.initializer.internal.frontend.data.set;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.frontend.data.set.SystemFDSEntry;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.site.cms.site.initializer.internal.constants.CMSSiteInitializerFDSNames;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -53,7 +55,9 @@ public class ViewBrokenLinksSectionSystemFDSEntry implements SystemFDSEntry {
 
 	@Override
 	public String getDescription() {
-		return "CMS Broken Links Section";
+		return _language.get(
+			LocaleThreadLocal.getThemeDisplayLocale(),
+			"cms-broken-links-section");
 	}
 
 	@Override
@@ -94,10 +98,14 @@ public class ViewBrokenLinksSectionSystemFDSEntry implements SystemFDSEntry {
 
 	@Override
 	public String getTitle() {
-		return "Broken Links Section";
+		return _language.get(
+			LocaleThreadLocal.getThemeDisplayLocale(), "broken-links-section");
 	}
 
 	@Reference
 	private DepotEntryLocalService _depotEntryLocalService;
+
+	@Reference
+	private Language _language;
 
 }

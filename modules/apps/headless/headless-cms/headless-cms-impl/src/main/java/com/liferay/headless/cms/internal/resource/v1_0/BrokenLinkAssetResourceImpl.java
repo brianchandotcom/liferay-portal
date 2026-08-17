@@ -72,11 +72,14 @@ public class BrokenLinkAssetResourceImpl
 		}
 
 		Long[] spaceGroupIds = CMSGroupUtil.getSpaceGroupIds(
-			assetLibraryId, contextCompany.getCompanyId(),
-			contextUser.getUserId(), _depotEntryLocalService,
-			_depotEntryService, groupLocalService);
+			contextCompany.getCompanyId(), _depotEntryService,
+			contextUser.getUserId());
 
-		if (ArrayUtil.isEmpty(spaceGroupIds)) {
+		Long[] selectedSpaceGroupIds = CMSGroupUtil.getSelectedSpaceGroupIds(
+			assetLibraryId, contextCompany.getCompanyId(),
+			_depotEntryLocalService, groupLocalService, spaceGroupIds);
+
+		if (ArrayUtil.isEmpty(selectedSpaceGroupIds)) {
 			return Page.of(Collections.emptyList());
 		}
 
@@ -104,14 +107,16 @@ public class BrokenLinkAssetResourceImpl
 
 		Map<String, Long> expiredAssetObjectEntryIds =
 			brokenLinkAssetSearcher.getExpiredAssetObjectEntryIds(
-				contextCompany.getCompanyId(), objectDefinitionIds);
+				contextCompany.getCompanyId(), objectDefinitionIds,
+				spaceGroupIds);
 
 		if (expiredAssetObjectEntryIds.isEmpty()) {
 			return Page.of(Collections.emptyList());
 		}
 
 		SearchResponse searchResponse = brokenLinkAssetSearcher.search(
-			contextCompany.getCompanyId(), ArrayUtil.toArray(spaceGroupIds),
+			contextCompany.getCompanyId(),
+			ArrayUtil.toArray(selectedSpaceGroupIds),
 			contextAcceptLanguage.getPreferredLanguageId(),
 			expiredAssetObjectEntryIds.keySet(), pagination, search, sorts,
 			contextUser.getUserId());

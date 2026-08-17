@@ -9,6 +9,7 @@ import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.depot.service.DepotEntryService;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.vulcan.util.GroupUtil;
 
 import java.util.List;
@@ -18,28 +19,33 @@ import java.util.List;
  */
 public class CMSGroupUtil {
 
-	public static Long[] getSpaceGroupIds(
-		Long assetLibraryId, long companyId, long userId,
+	public static Long[] getSelectedSpaceGroupIds(
+		Long assetLibraryId, long companyId,
 		DepotEntryLocalService depotEntryLocalService,
-		DepotEntryService depotEntryService,
-		GroupLocalService groupLocalService) {
-
-		List<Long> depotEntryGroupIds = depotEntryService.getDepotEntryGroupIds(
-			companyId, userId, DepotConstants.TYPE_SPACE);
+		GroupLocalService groupLocalService, Long[] spaceGroupIds) {
 
 		if (assetLibraryId == null) {
-			return depotEntryGroupIds.toArray(new Long[0]);
+			return spaceGroupIds;
 		}
 
 		Long groupId = GroupUtil.getDepotGroupId(
 			String.valueOf(assetLibraryId), companyId, depotEntryLocalService,
 			groupLocalService);
 
-		if ((groupId == null) || !depotEntryGroupIds.contains(groupId)) {
+		if ((groupId == null) || !ArrayUtil.contains(spaceGroupIds, groupId)) {
 			return new Long[0];
 		}
 
 		return new Long[] {groupId};
+	}
+
+	public static Long[] getSpaceGroupIds(
+		long companyId, DepotEntryService depotEntryService, long userId) {
+
+		List<Long> depotEntryGroupIds = depotEntryService.getDepotEntryGroupIds(
+			companyId, userId, DepotConstants.TYPE_SPACE);
+
+		return depotEntryGroupIds.toArray(new Long[0]);
 	}
 
 }

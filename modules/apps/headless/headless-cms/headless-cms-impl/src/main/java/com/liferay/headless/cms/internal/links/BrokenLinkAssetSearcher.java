@@ -62,12 +62,13 @@ public class BrokenLinkAssetSearcher {
 	}
 
 	public Map<String, Long> getExpiredAssetObjectEntryIds(
-		long companyId, Long[] objectDefinitionIds) {
+		long companyId, Long[] objectDefinitionIds, Long[] spaceGroupIds) {
 
 		Map<String, Long> objectEntryIds = new LinkedHashMap<>();
 
 		for (Object[] objects :
-				_getExpiredAssetObjects(companyId, objectDefinitionIds)) {
+				_getExpiredAssetObjects(
+					companyId, objectDefinitionIds, spaceGroupIds)) {
 
 			long objectEntryId = GetterUtil.getLong(objects[1]);
 
@@ -118,7 +119,7 @@ public class BrokenLinkAssetSearcher {
 	}
 
 	private List<Object[]> _getExpiredAssetObjects(
-		long companyId, Long[] objectDefinitionIds) {
+		long companyId, Long[] objectDefinitionIds, Long[] spaceGroupIds) {
 
 		return _objectEntryLocalService.dslQuery(
 			DSLQueryFactoryUtil.select(
@@ -129,6 +130,8 @@ public class BrokenLinkAssetSearcher {
 			).where(
 				ObjectEntryTable.INSTANCE.companyId.eq(
 					companyId
+				).and(
+					ObjectEntryTable.INSTANCE.groupId.in(spaceGroupIds)
 				).and(
 					ObjectEntryTable.INSTANCE.objectDefinitionId.in(
 						objectDefinitionIds)

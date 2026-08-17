@@ -437,9 +437,10 @@ public class LanguageTagTest {
 
 		layoutSet.setVirtualHostnames(
 			TreeMapBuilder.put(
-				"fr.mysite.com", LocaleUtil.toLanguageId(LocaleUtil.FRANCE)
+				RandomTestUtil.randomString(),
+				LocaleUtil.toLanguageId(LocaleUtil.FRANCE)
 			).put(
-				"mysite.com", StringPool.BLANK
+				RandomTestUtil.randomString(), StringPool.BLANK
 			).build());
 
 		try {
@@ -565,7 +566,7 @@ public class LanguageTagTest {
 
 		layoutSet.setVirtualHostnames(
 			TreeMapBuilder.put(
-				"mysite.com", StringPool.BLANK
+				RandomTestUtil.randomString(), StringPool.BLANK
 			).build());
 
 		try {

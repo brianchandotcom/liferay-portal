@@ -12,6 +12,7 @@ import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.headless.cms.client.dto.v1_0.BrokenLinkAsset;
 import com.liferay.headless.cms.client.pagination.Page;
 import com.liferay.headless.cms.client.pagination.Pagination;
+import com.liferay.headless.cms.resource.v1_0.test.util.CMSOutboundLinkTestUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectEntryFolder;
@@ -100,7 +101,7 @@ public class BrokenLinkAssetResourceTest
 		ObjectEntry expiredObjectEntry = _addExpiredObjectEntry(
 			depotEntry, objectDefinition, serviceContext);
 
-		String imageHTML = _getImageHTML(
+		String imageHTML = CMSOutboundLinkTestUtil.getImageHTML(
 			expiredObjectEntry.getExternalReferenceCode());
 
 		for (int i = 0; i < 3; i++) {
@@ -162,7 +163,7 @@ public class BrokenLinkAssetResourceTest
 		ObjectEntry expiredObjectEntry = _addExpiredObjectEntry(
 			depotEntry, objectDefinition, serviceContext);
 
-		String imageHTML = _getImageHTML(
+		String imageHTML = CMSOutboundLinkTestUtil.getImageHTML(
 			expiredObjectEntry.getExternalReferenceCode());
 
 		_addObjectEntry(imageHTML, depotEntry, objectDefinition, "aaa");
@@ -268,15 +269,6 @@ public class BrokenLinkAssetResourceTest
 				"L_CMS_BASIC_WEB_CONTENT", TestPropsValues.getCompanyId());
 	}
 
-	private String _getImageHTML(String externalReferenceCode) {
-		return StringBundler.concat(
-			"<img src=\"/documents/20125/0/image.jpg/", StringUtil.randomId(),
-			"?download=true&amp;objectDefinitionExternalReferenceCode=",
-			"L_CMS_BASIC_DOCUMENT&amp;objectEntryExternalReferenceCode=",
-			externalReferenceCode,
-			"&amp;objectFieldExternalReferenceCode=FILE\">");
-	}
-
 	private void _testGetBrokenLinkAssetsPage(String... targetTitles)
 		throws Exception {
 
@@ -296,7 +288,8 @@ public class BrokenLinkAssetResourceTest
 				targetTitle);
 
 			sb.append(
-				_getImageHTML(targetObjectEntry.getExternalReferenceCode()));
+				CMSOutboundLinkTestUtil.getImageHTML(
+					targetObjectEntry.getExternalReferenceCode()));
 
 			_objectEntryLocalService.updateStatus(
 				TestPropsValues.getUserId(),

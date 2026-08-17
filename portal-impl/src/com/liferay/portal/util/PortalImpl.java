@@ -7652,10 +7652,9 @@ public class PortalImpl implements Portal {
 			int groupFriendlyURLIndex = layoutURL.indexOf(groupFriendlyURL);
 
 			if (groupFriendlyURLIndex != -1) {
-				portletURLMappingPath =
-					_getPortletURLMappingPath(
-						groupFriendlyURLIndex + groupFriendlyURL.length(),
-						layoutURL);
+				portletURLMappingPath = _getPortletURLMappingPath(
+					groupFriendlyURLIndex + groupFriendlyURL.length(),
+					layoutURL);
 			}
 		}
 
@@ -8160,9 +8159,27 @@ public class PortalImpl implements Portal {
 		return new LayoutQueryStringComposite(null, friendlyURL, queryString);
 	}
 
-	private String _getPortletURLMappingPath(
-		int fromIndex, String url) {
+	private String _getPortletTitle(
+		String rootPortletId, PortletConfig portletConfig, Locale locale) {
 
+		ResourceBundle resourceBundle = portletConfig.getResourceBundle(locale);
+
+		String portletTitle = LanguageUtil.get(
+			resourceBundle,
+			StringBundler.concat(
+				JavaConstants.JAKARTA_PORTLET_TITLE, StringPool.PERIOD,
+				rootPortletId),
+			null);
+
+		if (Validator.isNull(portletTitle)) {
+			portletTitle = LanguageUtil.get(
+				resourceBundle, JavaConstants.JAKARTA_PORTLET_TITLE);
+		}
+
+		return portletTitle;
+	}
+
+	private String _getPortletURLMappingPath(int fromIndex, String url) {
 		String portletURLMappingPath = StringPool.BLANK;
 
 		List<FriendlyURLMapper> friendlyURLMappers =
@@ -8192,26 +8209,6 @@ public class PortalImpl implements Portal {
 		}
 
 		return portletURLMappingPath;
-	}
-
-	private String _getPortletTitle(
-		String rootPortletId, PortletConfig portletConfig, Locale locale) {
-
-		ResourceBundle resourceBundle = portletConfig.getResourceBundle(locale);
-
-		String portletTitle = LanguageUtil.get(
-			resourceBundle,
-			StringBundler.concat(
-				JavaConstants.JAKARTA_PORTLET_TITLE, StringPool.PERIOD,
-				rootPortletId),
-			null);
-
-		if (Validator.isNull(portletTitle)) {
-			portletTitle = LanguageUtil.get(
-				resourceBundle, JavaConstants.JAKARTA_PORTLET_TITLE);
-		}
-
-		return portletTitle;
 	}
 
 	private long _getScopeGroupId(

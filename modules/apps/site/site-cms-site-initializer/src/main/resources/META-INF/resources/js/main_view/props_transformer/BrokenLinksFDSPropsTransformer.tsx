@@ -22,11 +22,12 @@ export interface IBrokenLinkAsset {
 export function renderBrokenLinks(itemData: IBrokenLinkAsset) {
 	const count = itemData.brokenLinkCount ?? 0;
 
-	if (count === 1 && itemData.brokenLinkTitle) {
+	if (count === 1) {
 		return (
 			<span className="text-secondary">
 				{sub(Liferay.Language.get('x-expired-asset'), [
-					itemData.brokenLinkTitle,
+					itemData.brokenLinkTitle ||
+						Liferay.Language.get('untitled-asset'),
 				])}
 			</span>
 		);

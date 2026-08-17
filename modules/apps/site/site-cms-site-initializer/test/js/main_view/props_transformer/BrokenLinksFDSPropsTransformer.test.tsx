@@ -38,10 +38,11 @@ describe('[CMS Broken Links] BrokenLinksFDSPropsTransformer', () => {
 		expect(screen.getByText('x-expired-assets')).toBeInTheDocument();
 	});
 
-	it('counts the expired assets when the only one is unreadable', () => {
+	it('uses the singular message when the single broken link has no title', () => {
 		render(<>{renderBrokenLinks({brokenLinkCount: 1})}</>);
 
-		expect(screen.getByText('x-expired-assets')).toBeInTheDocument();
+		expect(screen.getByText('x-expired-asset')).toBeInTheDocument();
+		expect(screen.queryByText('x-expired-assets')).not.toBeInTheDocument();
 	});
 
 	it('counts zero when the content carries no expired asset', () => {

@@ -8,6 +8,9 @@ package com.liferay.headless.cms.internal.links;
 import com.liferay.object.model.ObjectEntryTable;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -94,6 +97,16 @@ public class BrokenLinkAssetSearcher {
 
 		int startPosition = Math.min(
 			pagination.getStartPosition(), _MAX_RESULT_WINDOW);
+
+		if ((startPosition < pagination.getStartPosition()) &&
+			_log.isWarnEnabled()) {
+
+			_log.warn(
+				StringBundler.concat(
+					"Requested start position ", pagination.getStartPosition(),
+					" is beyond the maximum result window ", _MAX_RESULT_WINDOW,
+					", so the page is empty"));
+		}
 
 		searchRequestBuilder.addSelectedFieldNames(
 			"outboundLinks", Field.ENTRY_CLASS_PK,
@@ -212,6 +225,9 @@ public class BrokenLinkAssetSearcher {
 	// "index.max_terms_count", which defaults to 65536 but can be lowered
 
 	private static final int _TERMS_QUERY_CHUNK_SIZE = 4096;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BrokenLinkAssetSearcher.class);
 
 	private final ObjectEntryLocalService _objectEntryLocalService;
 	private final Searcher _searcher;

@@ -13,9 +13,11 @@ import com.liferay.headless.cms.internal.links.BrokenLinkAssetSearcher;
 import com.liferay.headless.cms.resource.v1_0.BrokenLinkAssetResource;
 import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -98,20 +100,18 @@ public class BrokenLinkAssetResourceImpl
 				_objectEntryLocalService, _searcher,
 				_searchRequestBuilderFactory);
 
-		Map<String, String> expiredAssetTitles =
-			brokenLinkAssetSearcher.getExpiredAssetTitles(
-				contextCompany.getCompanyId(),
-				contextAcceptLanguage.getPreferredLanguageId(),
-				objectDefinitionIds);
+		Map<String, Long> expiredAssetObjectEntryIds =
+			brokenLinkAssetSearcher.getExpiredAssetObjectEntryIds(
+				contextCompany.getCompanyId(), objectDefinitionIds);
 
-		if (expiredAssetTitles.isEmpty()) {
+		if (expiredAssetObjectEntryIds.isEmpty()) {
 			return Page.of(Collections.emptyList());
 		}
 
 		SearchResponse searchResponse = brokenLinkAssetSearcher.search(
 			contextCompany.getCompanyId(), ArrayUtil.toArray(groupIds),
 			contextAcceptLanguage.getPreferredLanguageId(),
-			expiredAssetTitles.keySet(), pagination, search, sorts,
+			expiredAssetObjectEntryIds.keySet(), pagination, search, sorts,
 			contextUser.getUserId());
 
 		Map<Long, String> externalReferenceCodes = new HashMap<>();
@@ -126,13 +126,32 @@ public class BrokenLinkAssetResourceImpl
 			transform(
 				searchResponse.getDocuments(),
 				document -> _toBrokenLinkAsset(
-					document, expiredAssetTitles, externalReferenceCodes)),
+					document, expiredAssetObjectEntryIds,
+					externalReferenceCodes)),
 			pagination, searchResponse.getCount());
 	}
 
 	@Override
 	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
 		return _entityModel;
+	}
+
+	private String _getBrokenLinkTitle(Set<Long> brokenLinkObjectEntryIds)
+		throws PortalException {
+
+		for (long brokenLinkObjectEntryId : brokenLinkObjectEntryIds) {
+			ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(
+				brokenLinkObjectEntryId);
+
+			if (objectEntry == null) {
+				continue;
+			}
+
+			return objectEntry.getTitleValue(
+				contextAcceptLanguage.getPreferredLanguageId(), true);
+		}
+
+		return null;
 	}
 
 	private Long[] _getGroupIds(Long assetLibraryId) {
@@ -171,16 +190,17 @@ public class BrokenLinkAssetResourceImpl
 	}
 
 	private BrokenLinkAsset _toBrokenLinkAsset(
-		Document document, Map<String, String> expiredAssetTitles,
+		Document document, Map<String, Long> expiredAssetObjectEntryIds,
 		Map<Long, String> externalReferenceCodes) {
 
-		Set<String> brokenLinkTitles = new LinkedHashSet<>();
+		Set<Long> brokenLinkObjectEntryIds = new LinkedHashSet<>();
 
 		for (String outboundLink : document.getStrings("outboundLinks")) {
-			String brokenLinkTitle = expiredAssetTitles.get(outboundLink);
+			Long brokenLinkObjectEntryId = expiredAssetObjectEntryIds.get(
+				outboundLink);
 
-			if (brokenLinkTitle != null) {
-				brokenLinkTitles.add(brokenLinkTitle);
+			if (brokenLinkObjectEntryId != null) {
+				brokenLinkObjectEntryIds.add(brokenLinkObjectEntryId);
 			}
 		}
 
@@ -189,16 +209,9 @@ public class BrokenLinkAssetResourceImpl
 
 		return new BrokenLinkAsset() {
 			{
-				setBrokenLinkCount(() -> (long)brokenLinkTitles.size());
+				setBrokenLinkCount(() -> (long)brokenLinkObjectEntryIds.size());
 				setBrokenLinkTitle(
-					() -> {
-						if (brokenLinkTitles.isEmpty()) {
-							return null;
-						}
-
-						return brokenLinkTitles.iterator(
-						).next();
-					});
+					() -> _getBrokenLinkTitle(brokenLinkObjectEntryIds));
 				setHref(
 					() -> StringBundler.concat(
 						_portal.getPortalURL(contextHttpServletRequest),

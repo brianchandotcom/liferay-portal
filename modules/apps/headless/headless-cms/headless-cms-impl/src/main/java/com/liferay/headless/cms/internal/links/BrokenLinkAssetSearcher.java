@@ -5,11 +5,9 @@
 
 package com.liferay.headless.cms.internal.links;
 
-import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectEntryTable;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -27,7 +25,6 @@ import com.liferay.site.cms.site.initializer.constants.CMSWorkflowConstants;
 import com.liferay.site.cms.site.initializer.util.CMSOutboundLinksUtil;
 
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -64,55 +61,26 @@ public class BrokenLinkAssetSearcher {
 		return searchResponse.getCount();
 	}
 
-	public Map<String, String> getExpiredAssetTitles(
-			long companyId, String languageId, Long[] objectDefinitionIds)
-		throws PortalException {
+	public Map<String, Long> getExpiredAssetObjectEntryIds(
+		long companyId, Long[] objectDefinitionIds) {
 
-		Map<String, String> titles = new LinkedHashMap<>();
+		Map<String, Long> objectEntryIds = new LinkedHashMap<>();
 
 		for (Object[] objects :
 				_getExpiredAssetObjects(companyId, objectDefinitionIds)) {
 
 			long objectEntryId = GetterUtil.getLong(objects[1]);
 
-			ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(
-				objectEntryId);
-
-			if (objectEntry == null) {
-				continue;
-			}
-
-			String title = objectEntry.getTitleValue(languageId, true);
-
-			titles.put(
+			objectEntryIds.put(
 				CMSOutboundLinksUtil.getObjectEntryExternalReferenceCodeToken(
 					GetterUtil.getString(objects[0])),
-				title);
-			titles.put(
+				objectEntryId);
+			objectEntryIds.put(
 				CMSOutboundLinksUtil.getObjectEntryIdToken(objectEntryId),
-				title);
+				objectEntryId);
 		}
 
-		return titles;
-	}
-
-	public Set<String> getExpiredAssetTokens(
-		long companyId, Long[] objectDefinitionIds) {
-
-		Set<String> expiredAssetTokens = new LinkedHashSet<>();
-
-		for (Object[] objects :
-				_getExpiredAssetObjects(companyId, objectDefinitionIds)) {
-
-			expiredAssetTokens.add(
-				CMSOutboundLinksUtil.getObjectEntryExternalReferenceCodeToken(
-					GetterUtil.getString(objects[0])));
-			expiredAssetTokens.add(
-				CMSOutboundLinksUtil.getObjectEntryIdToken(
-					GetterUtil.getLong(objects[1])));
-		}
-
-		return expiredAssetTokens;
+		return objectEntryIds;
 	}
 
 	public SearchResponse search(

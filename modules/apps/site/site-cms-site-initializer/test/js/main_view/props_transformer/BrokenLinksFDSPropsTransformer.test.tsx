@@ -10,7 +10,15 @@ import React from 'react';
 import {renderBrokenLinks} from '../../../../src/main/resources/META-INF/resources/js/main_view/props_transformer/BrokenLinksFDSPropsTransformer';
 
 describe('[CMS Broken Links] BrokenLinksFDSPropsTransformer', () => {
-	it('uses the singular message for a single broken link', () => {
+	beforeEach(() => {
+		jest.spyOn(Liferay.Language, 'get');
+	});
+
+	afterEach(() => {
+		jest.restoreAllMocks();
+	});
+
+	it('names the broken link when a content has a single one', () => {
 		render(
 			<>
 				{renderBrokenLinks({
@@ -21,7 +29,7 @@ describe('[CMS Broken Links] BrokenLinksFDSPropsTransformer', () => {
 		);
 
 		expect(screen.getByText('x-expired-asset')).toBeInTheDocument();
-		expect(screen.queryByText('x-expired-assets')).not.toBeInTheDocument();
+		expect(Liferay.Language.get).not.toHaveBeenCalledWith('untitled-asset');
 	});
 
 	it('counts the expired assets when a content has more than one', () => {
@@ -34,15 +42,15 @@ describe('[CMS Broken Links] BrokenLinksFDSPropsTransformer', () => {
 			</>
 		);
 
-		expect(screen.queryByText('x-expired-asset')).not.toBeInTheDocument();
 		expect(screen.getByText('x-expired-assets')).toBeInTheDocument();
+		expect(screen.queryByText('x-expired-asset')).not.toBeInTheDocument();
 	});
 
-	it('uses the singular message when the single broken link has no title', () => {
+	it('calls the single broken link untitled when it has no title', () => {
 		render(<>{renderBrokenLinks({brokenLinkCount: 1})}</>);
 
 		expect(screen.getByText('x-expired-asset')).toBeInTheDocument();
-		expect(screen.queryByText('x-expired-assets')).not.toBeInTheDocument();
+		expect(Liferay.Language.get).toHaveBeenCalledWith('untitled-asset');
 	});
 
 	it('counts zero when the content carries no expired asset', () => {

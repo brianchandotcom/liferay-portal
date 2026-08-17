@@ -5,11 +5,11 @@
 
 package com.liferay.headless.cms.internal.resource.v1_0;
 
-import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.depot.service.DepotEntryService;
 import com.liferay.headless.cms.dto.v1_0.BrokenLinkAsset;
 import com.liferay.headless.cms.internal.links.BrokenLinkAssetSearcher;
+import com.liferay.headless.cms.internal.util.CMSGroupUtil;
 import com.liferay.headless.cms.resource.v1_0.BrokenLinkAssetResource;
 import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.model.ObjectDefinition;
@@ -35,7 +35,6 @@ import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.util.GroupUtil;
 
 import jakarta.ws.rs.core.MultivaluedMap;
 
@@ -72,9 +71,12 @@ public class BrokenLinkAssetResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
-		Long[] groupIds = _getGroupIds(assetLibraryId);
+		Long[] spaceGroupIds = CMSGroupUtil.getSpaceGroupIds(
+			assetLibraryId, contextCompany.getCompanyId(),
+			contextUser.getUserId(), _depotEntryLocalService,
+			_depotEntryService, groupLocalService);
 
-		if (ArrayUtil.isEmpty(groupIds)) {
+		if (ArrayUtil.isEmpty(spaceGroupIds)) {
 			return Page.of(Collections.emptyList());
 		}
 
@@ -109,7 +111,7 @@ public class BrokenLinkAssetResourceImpl
 		}
 
 		SearchResponse searchResponse = brokenLinkAssetSearcher.search(
-			contextCompany.getCompanyId(), ArrayUtil.toArray(groupIds),
+			contextCompany.getCompanyId(), ArrayUtil.toArray(spaceGroupIds),
 			contextAcceptLanguage.getPreferredLanguageId(),
 			expiredAssetObjectEntryIds.keySet(), pagination, search, sorts,
 			contextUser.getUserId());
@@ -152,27 +154,6 @@ public class BrokenLinkAssetResourceImpl
 		}
 
 		return null;
-	}
-
-	private Long[] _getGroupIds(Long assetLibraryId) {
-		List<Long> depotEntryGroupIds =
-			_depotEntryService.getDepotEntryGroupIds(
-				contextCompany.getCompanyId(), contextUser.getUserId(),
-				DepotConstants.TYPE_SPACE);
-
-		if (assetLibraryId == null) {
-			return depotEntryGroupIds.toArray(new Long[0]);
-		}
-
-		Long groupId = GroupUtil.getDepotGroupId(
-			String.valueOf(assetLibraryId), contextCompany.getCompanyId(),
-			_depotEntryLocalService, groupLocalService);
-
-		if ((groupId == null) || !depotEntryGroupIds.contains(groupId)) {
-			return new Long[0];
-		}
-
-		return new Long[] {groupId};
 	}
 
 	private String _getTitle(Document document) {

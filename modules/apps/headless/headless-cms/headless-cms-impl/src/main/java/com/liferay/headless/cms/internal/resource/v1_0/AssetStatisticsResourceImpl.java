@@ -5,11 +5,11 @@
 
 package com.liferay.headless.cms.internal.resource.v1_0;
 
-import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.depot.service.DepotEntryService;
 import com.liferay.headless.cms.dto.v1_0.AssetStatistics;
 import com.liferay.headless.cms.internal.links.BrokenLinkAssetSearcher;
+import com.liferay.headless.cms.internal.util.CMSGroupUtil;
 import com.liferay.headless.cms.resource.v1_0.AssetStatisticsResource;
 import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.model.ObjectDefinition;
@@ -26,11 +26,9 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.Searcher;
-import com.liferay.portal.vulcan.util.GroupUtil;
 import com.liferay.site.cms.site.initializer.constants.CMSWorkflowConstants;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -51,9 +49,12 @@ public class AssetStatisticsResourceImpl
 	public AssetStatistics getAssetStatistics(Long assetLibraryId)
 		throws Exception {
 
-		Long[] groupIds = _getGroupIds(assetLibraryId);
+		Long[] spaceGroupIds = CMSGroupUtil.getSpaceGroupIds(
+			assetLibraryId, contextCompany.getCompanyId(),
+			contextUser.getUserId(), _depotEntryLocalService,
+			_depotEntryService, groupLocalService);
 
-		if (ArrayUtil.isEmpty(groupIds)) {
+		if (ArrayUtil.isEmpty(spaceGroupIds)) {
 			return _toAssetStatistics();
 		}
 
@@ -77,19 +78,20 @@ public class AssetStatisticsResourceImpl
 			{
 				setApprovedCount(
 					() -> _getCount(
-						groupIds, objectDefinitionIds,
+						spaceGroupIds, objectDefinitionIds,
 						ObjectEntryTable.INSTANCE.status.eq(
 							WorkflowConstants.STATUS_APPROVED)));
 				setBrokenLinksCount(
-					() -> _getBrokenLinksCount(groupIds, objectDefinitionIds));
+					() -> _getBrokenLinksCount(
+						spaceGroupIds, objectDefinitionIds));
 				setExpiredCount(
 					() -> _getCount(
-						groupIds, objectDefinitionIds,
+						spaceGroupIds, objectDefinitionIds,
 						ObjectEntryTable.INSTANCE.status.eq(
 							WorkflowConstants.STATUS_EXPIRED)));
 				setExpiringSoonCount(
 					() -> _getCount(
-						groupIds, objectDefinitionIds,
+						spaceGroupIds, objectDefinitionIds,
 						ObjectEntryTable.INSTANCE.status.eq(
 							WorkflowConstants.STATUS_APPROVED
 						).and(
@@ -100,17 +102,17 @@ public class AssetStatisticsResourceImpl
 						)));
 				setInDraftCount(
 					() -> _getCount(
-						groupIds, objectDefinitionIds,
+						spaceGroupIds, objectDefinitionIds,
 						ObjectEntryTable.INSTANCE.status.eq(
 							WorkflowConstants.STATUS_DRAFT)));
 				setPendingCount(
 					() -> _getCount(
-						groupIds, objectDefinitionIds,
+						spaceGroupIds, objectDefinitionIds,
 						ObjectEntryTable.INSTANCE.status.eq(
 							WorkflowConstants.STATUS_PENDING)));
 				setReviewDateOverdueCount(
 					() -> _getCount(
-						groupIds, objectDefinitionIds,
+						spaceGroupIds, objectDefinitionIds,
 						ObjectEntryTable.INSTANCE.reviewDate.lt(
 							date
 						).and(
@@ -119,17 +121,17 @@ public class AssetStatisticsResourceImpl
 						)));
 				setScheduledCount(
 					() -> _getCount(
-						groupIds, objectDefinitionIds,
+						spaceGroupIds, objectDefinitionIds,
 						ObjectEntryTable.INSTANCE.status.eq(
 							WorkflowConstants.STATUS_SCHEDULED)));
 				setTotalCount(
 					() -> _getCount(
-						groupIds, objectDefinitionIds,
+						spaceGroupIds, objectDefinitionIds,
 						ObjectEntryTable.INSTANCE.status.in(
 							CMSWorkflowConstants.STATUSES)));
 				setUpcomingReviewCount(
 					() -> _getCount(
-						groupIds, objectDefinitionIds,
+						spaceGroupIds, objectDefinitionIds,
 						ObjectEntryTable.INSTANCE.reviewDate.gt(
 							date
 						).and(
@@ -146,7 +148,7 @@ public class AssetStatisticsResourceImpl
 	}
 
 	private long _getBrokenLinksCount(
-		Long[] groupIds, Long[] objectDefinitionIds) {
+		Long[] spaceGroupIds, Long[] objectDefinitionIds) {
 
 		if (!FeatureFlagManagerUtil.isEnabled(
 				contextCompany.getCompanyId(), "LPD-82226")) {
@@ -169,7 +171,7 @@ public class AssetStatisticsResourceImpl
 			}
 
 			return brokenLinkAssetSearcher.getCount(
-				contextCompany.getCompanyId(), ArrayUtil.toArray(groupIds),
+				contextCompany.getCompanyId(), ArrayUtil.toArray(spaceGroupIds),
 				expiredAssetObjectEntryIds.keySet(), contextUser.getUserId());
 		}
 		catch (Exception exception) {
@@ -182,12 +184,12 @@ public class AssetStatisticsResourceImpl
 	}
 
 	private long _getCount(
-		Long[] groupIds, Long[] objectDefinitionIds, Predicate predicate) {
+		Long[] spaceGroupIds, Long[] objectDefinitionIds, Predicate predicate) {
 
 		try {
 			return _objectEntryLocalService.getValuesListCount(
-				contextCompany.getCompanyId(), groupIds, objectDefinitionIds,
-				predicate);
+				contextCompany.getCompanyId(), spaceGroupIds,
+				objectDefinitionIds, predicate);
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
@@ -196,27 +198,6 @@ public class AssetStatisticsResourceImpl
 
 			return 0;
 		}
-	}
-
-	private Long[] _getGroupIds(Long assetLibraryId) {
-		List<Long> depotEntryGroupIds =
-			_depotEntryService.getDepotEntryGroupIds(
-				contextCompany.getCompanyId(), contextUser.getUserId(),
-				DepotConstants.TYPE_SPACE);
-
-		if (assetLibraryId == null) {
-			return depotEntryGroupIds.toArray(new Long[0]);
-		}
-
-		Long groupId = GroupUtil.getDepotGroupId(
-			String.valueOf(assetLibraryId), contextCompany.getCompanyId(),
-			_depotEntryLocalService, groupLocalService);
-
-		if ((groupId == null) || !depotEntryGroupIds.contains(groupId)) {
-			return new Long[0];
-		}
-
-		return new Long[] {groupId};
 	}
 
 	private AssetStatistics _toAssetStatistics() {

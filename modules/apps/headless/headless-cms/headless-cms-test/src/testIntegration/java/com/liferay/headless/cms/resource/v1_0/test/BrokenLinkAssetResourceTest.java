@@ -19,9 +19,6 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
@@ -272,12 +269,9 @@ public class BrokenLinkAssetResourceTest
 	private ObjectDefinition _getBasicWebContentObjectDefinition()
 		throws Exception {
 
-		Group cmsGroup = _groupLocalService.getGroup(
-			TestPropsValues.getCompanyId(), GroupConstants.CMS);
-
 		return _objectDefinitionLocalService.
 			getObjectDefinitionByExternalReferenceCode(
-				"L_CMS_BASIC_WEB_CONTENT", cmsGroup.getCompanyId());
+				"L_CMS_BASIC_WEB_CONTENT", TestPropsValues.getCompanyId());
 	}
 
 	private String _getImageHTML(String externalReferenceCode) {
@@ -355,9 +349,6 @@ public class BrokenLinkAssetResourceTest
 
 	@Inject
 	private DepotEntryLocalService _depotEntryLocalService;
-
-	@Inject
-	private GroupLocalService _groupLocalService;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

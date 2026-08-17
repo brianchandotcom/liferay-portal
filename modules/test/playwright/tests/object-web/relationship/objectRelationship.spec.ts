@@ -42,8 +42,12 @@ test.describe('Manage object relationships through Model Builder', () => {
 			apiHelpers,
 			modelBuilderDiagramPage,
 			page,
-			viewObjectDefinitionsPage,
 		}) => {
+			const objectFolder =
+				await apiHelpers.objectAdmin.postRandomObjectFolder();
+
+			apiHelpers.data.push({id: objectFolder.id, type: 'objectFolder'});
+
 			const objectDefinitionAPIClient =
 				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
@@ -57,6 +61,8 @@ test.describe('Manage object relationships through Model Builder', () => {
 					},
 					name: 'Address',
 					objectFields: [],
+					objectFolderExternalReferenceCode:
+						objectFolder.externalReferenceCode,
 					pluralLabel: {
 						en_US: 'Custom Postal Addresses',
 					},
@@ -72,17 +78,22 @@ test.describe('Manage object relationships through Model Builder', () => {
 				type: 'objectDefinition',
 			});
 
-			const {body: commerceOrderDefinition} =
-				await objectDefinitionAPIClient.getObjectDefinitionByExternalReferenceCode(
-					'L_COMMERCE_ORDER'
-				);
+			const partnerObjectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFolderExternalReferenceCode:
+						objectFolder.externalReferenceCode,
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: partnerObjectDefinition.id,
+				type: 'objectDefinition',
+			});
 
 			await test.step('navigate to model builder and display all nodes', async () => {
-				await viewObjectDefinitionsPage.goto();
-
-				await viewObjectDefinitionsPage.openObjectFolder('Default');
-
-				await viewObjectDefinitionsPage.viewInModelBuilderButton.click();
+				await modelBuilderDiagramPage.goto({
+					objectFolderName: objectFolder.name,
+				});
 
 				await modelBuilderDiagramPage.toggleSidebarsButton.click();
 
@@ -92,7 +103,7 @@ test.describe('Manage object relationships through Model Builder', () => {
 			await test.step('assert that creating a relationship with a custom object named Address as the source node is allowed', async () => {
 				await modelBuilderDiagramPage.connectObjectDefinitionsNodeHandles(
 					customPostalAddressDefinition.id,
-					commerceOrderDefinition.id
+					partnerObjectDefinition.id
 				);
 
 				expect(
@@ -104,7 +115,7 @@ test.describe('Manage object relationships through Model Builder', () => {
 				await page.getByRole('button', {name: 'Cancel'}).click();
 
 				await modelBuilderDiagramPage.connectObjectDefinitionsNodeHandles(
-					commerceOrderDefinition.id,
+					partnerObjectDefinition.id,
 					customPostalAddressDefinition.id
 				);
 

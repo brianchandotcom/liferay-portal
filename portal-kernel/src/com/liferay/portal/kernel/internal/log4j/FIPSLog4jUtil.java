@@ -67,8 +67,6 @@ public class FIPSLog4jUtil {
 					"configuration lowers the level of that logger"));
 		}
 
-		RollingFileAppender rollingFileAppender = null;
-
 		LoggerContext loggerContext = (LoggerContext)LogManager.getContext(
 			false);
 
@@ -76,20 +74,14 @@ public class FIPSLog4jUtil {
 
 		Appender appender = configuration.getAppender(_APPENDER_NAME);
 
-		if (appender instanceof RollingFileAppender) {
-			rollingFileAppender = (RollingFileAppender)appender;
-		}
-
-		if (rollingFileAppender == null) {
+		if (!(appender instanceof RollingFileAppender)) {
 			throw new IllegalStateException(
 				StringBundler.concat(
 					"Unable to write a FIPS audit record because the appender ",
 					"\"", _APPENDER_NAME, "\" is not configured"));
 		}
 
-		if (!(rollingFileAppender.getLayout() instanceof
-				FIPSAuditNDJSONLayout)) {
-
+		if (!(appender.getLayout() instanceof FIPSAuditNDJSONLayout)) {
 			throw new IllegalStateException(
 				StringBundler.concat(
 					"Unable to write a FIPS audit record because the appender ",

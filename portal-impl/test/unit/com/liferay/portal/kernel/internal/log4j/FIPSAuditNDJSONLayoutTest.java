@@ -93,12 +93,11 @@ public class FIPSAuditNDJSONLayoutTest {
 
 	@Test
 	public void testToSerializableEndsWithASingleNewLine() {
-		String ndjson = _toSerializable(
-			Collections.singletonMap("event-type", "fips-state-transition"));
-
 		Assert.assertEquals(
-			"{\"event-type\":\"fips-state-transition\"}\n", ndjson);
-		Assert.assertEquals(ndjson.length() - 1, ndjson.indexOf('\n'));
+			"{\"event-type\":\"fips-state-transition\"}\n",
+			_toSerializable(
+				Collections.singletonMap(
+					"event-type", "fips-state-transition")));
 	}
 
 	@Test

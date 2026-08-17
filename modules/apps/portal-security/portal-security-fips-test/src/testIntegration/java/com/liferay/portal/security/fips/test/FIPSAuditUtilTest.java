@@ -60,7 +60,7 @@ public class FIPSAuditUtilTest {
 	}
 
 	@Test
-	public void testAuditLogFileIsReadableByTheOwnerOnly() throws Exception {
+	public void testAuditLogFileIsAccessibleByTheOwnerOnly() throws Exception {
 		Path path = _getAuditLogPath();
 
 		FileSystem fileSystem = path.getFileSystem();
@@ -100,7 +100,7 @@ public class FIPSAuditUtilTest {
 	}
 
 	@Test
-	public void testAuditLogRecordsCarryAMonotonicSequence() throws Exception {
+	public void testAuditLogRecordsCarryAContiguousSequence() throws Exception {
 		long previousEventSequence = 0;
 
 		for (JSONObject jsonObject : _getRecordJSONObjects()) {

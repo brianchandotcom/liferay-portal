@@ -59,21 +59,22 @@ public class FIPSAuditFilterTest {
 		Marker marker = MarkerManager.getMarker(FIPSLog4jUtil.MARKER_NAME);
 
 		_testFilterDenies(
-			marker, new ObjectMessage("not-a-map"),
-			"does not carry a FIPS audit record");
+			"does not carry a FIPS audit record", marker,
+			new ObjectMessage("not-a-map"));
 		_testFilterDenies(
-			marker, new SimpleMessage("Not a record"),
-			"does not carry a FIPS audit record");
+			"does not carry a FIPS audit record", marker,
+			new SimpleMessage("Not a record"));
 	}
 
 	@Test
 	public void testFilterDeniesAnEventWithoutTheMarker() {
 		_testFilterDenies(
+			"carries no \"FIPS_AUDIT\" marker",
 			MarkerManager.getMarker(RandomTestUtil.randomString()),
-			new ObjectMessage(_record), "carries no \"FIPS_AUDIT\" marker");
+			new ObjectMessage(_record));
 		_testFilterDenies(
-			null, new ObjectMessage(_record),
-			"carries no \"FIPS_AUDIT\" marker");
+			"carries no \"FIPS_AUDIT\" marker", null,
+			new ObjectMessage(_record));
 	}
 
 	private FIPSAuditFilter _createFIPSAuditFilter() {
@@ -94,7 +95,7 @@ public class FIPSAuditFilterTest {
 	}
 
 	private void _testFilterDenies(
-		Marker marker, Message message, String expectedMessage) {
+		String expectedMessage, Marker marker, Message message) {
 
 		FIPSAuditFilter fipsAuditFilter = _createFIPSAuditFilter();
 
@@ -117,6 +118,6 @@ public class FIPSAuditFilterTest {
 	}
 
 	private final Map<String, Object> _record = Collections.singletonMap(
-		"event-type", "fips-state-transition");
+		RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
 }

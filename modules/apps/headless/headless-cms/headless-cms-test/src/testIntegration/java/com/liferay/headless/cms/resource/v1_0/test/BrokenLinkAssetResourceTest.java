@@ -81,124 +81,10 @@ public class BrokenLinkAssetResourceTest
 		_testGetBrokenLinkAssetsPage(
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString());
-	}
 
-	@Test
-	public void testGetBrokenLinkAssetsPageWithDuplicateTitles()
-		throws Exception {
-
-		String targetTitle = RandomTestUtil.randomString();
-
-		_testGetBrokenLinkAssetsPage(targetTitle, targetTitle);
-	}
-
-	@Test
-	public void testGetBrokenLinkAssetsPageWithExpiredAssetInAnotherSpace()
-		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext();
-
-		DepotEntry depotEntry = _addSpaceDepotEntry(serviceContext);
-		DepotEntry otherDepotEntry = _addSpaceDepotEntry(serviceContext);
-
-		ObjectDefinition objectDefinition =
-			_getBasicWebContentObjectDefinition();
-
-		ObjectEntry expiredObjectEntry = _addExpiredObjectEntry(
-			otherDepotEntry, objectDefinition, serviceContext);
-
-		String referencingTitle = RandomTestUtil.randomString();
-
-		_addObjectEntry(
-			CMSOutboundLinkTestUtil.getImageHTML(
-				expiredObjectEntry.getExternalReferenceCode()),
-			depotEntry, objectDefinition, referencingTitle);
-
-		Page<BrokenLinkAsset> brokenLinkAssetsPage =
-			brokenLinkAssetResource.getBrokenLinkAssetsPage(
-				depotEntry.getDepotEntryId(), null, null, null);
-
-		Assert.assertEquals(1, brokenLinkAssetsPage.getTotalCount());
-
-		List<BrokenLinkAsset> brokenLinkAssets =
-			(List<BrokenLinkAsset>)brokenLinkAssetsPage.getItems();
-
-		BrokenLinkAsset brokenLinkAsset = brokenLinkAssets.get(0);
-
-		Assert.assertEquals(referencingTitle, brokenLinkAsset.getTitle());
-		Assert.assertEquals(
-			1, GetterUtil.getInteger(brokenLinkAsset.getBrokenLinkCount()));
-	}
-
-	@Test
-	public void testGetBrokenLinkAssetsPageWithExpiredAssetInInaccessibleSpace()
-		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext();
-
-		DepotEntry depotEntry = _addSpaceDepotEntry(serviceContext);
-		DepotEntry inaccessibleDepotEntry = _addSpaceDepotEntry(serviceContext);
-
-		ObjectDefinition objectDefinition =
-			_getBasicWebContentObjectDefinition();
-
-		ObjectEntry expiredObjectEntry = _addExpiredObjectEntry(
-			depotEntry, objectDefinition, serviceContext);
-		ObjectEntry inaccessibleExpiredObjectEntry = _addExpiredObjectEntry(
-			inaccessibleDepotEntry, objectDefinition, serviceContext);
-
-		String imageHTML = CMSOutboundLinkTestUtil.getImageHTML(
-			expiredObjectEntry.getExternalReferenceCode());
-		String inaccessibleImageHTML = CMSOutboundLinkTestUtil.getImageHTML(
-			inaccessibleExpiredObjectEntry.getExternalReferenceCode());
-
-		String referencingTitle = RandomTestUtil.randomString();
-
-		_addObjectEntry(
-			imageHTML + inaccessibleImageHTML, depotEntry, objectDefinition,
-			referencingTitle);
-
-		Page<BrokenLinkAsset> brokenLinkAssetsPage =
-			brokenLinkAssetResource.getBrokenLinkAssetsPage(
-				depotEntry.getDepotEntryId(), null, null, null);
-
-		Assert.assertEquals(1, brokenLinkAssetsPage.getTotalCount());
-
-		List<BrokenLinkAsset> brokenLinkAssets =
-			(List<BrokenLinkAsset>)brokenLinkAssetsPage.getItems();
-
-		BrokenLinkAsset brokenLinkAsset = brokenLinkAssets.get(0);
-
-		Assert.assertEquals(referencingTitle, brokenLinkAsset.getTitle());
-		Assert.assertEquals(
-			2, GetterUtil.getInteger(brokenLinkAsset.getBrokenLinkCount()));
-
-		BrokenLinkAssetResource spaceMemberBrokenLinkAssetResource =
-			_getSpaceMemberBrokenLinkAssetResource(depotEntry);
-
-		Page<BrokenLinkAsset> spaceMemberBrokenLinkAssetsPage =
-			spaceMemberBrokenLinkAssetResource.getBrokenLinkAssetsPage(
-				depotEntry.getDepotEntryId(), null, null, null);
-
-		Assert.assertEquals(1, spaceMemberBrokenLinkAssetsPage.getTotalCount());
-
-		List<BrokenLinkAsset> spaceMemberBrokenLinkAssets =
-			(List<BrokenLinkAsset>)spaceMemberBrokenLinkAssetsPage.getItems();
-
-		BrokenLinkAsset spaceMemberBrokenLinkAsset =
-			spaceMemberBrokenLinkAssets.get(0);
-
-		Assert.assertEquals(
-			referencingTitle, spaceMemberBrokenLinkAsset.getTitle());
-		Assert.assertEquals(
-			1,
-			GetterUtil.getInteger(
-				spaceMemberBrokenLinkAsset.getBrokenLinkCount()));
-		Assert.assertEquals(
-			expiredObjectEntry.getTitleValue("en_US", true),
-			spaceMemberBrokenLinkAsset.getBrokenLinkTitle());
+		_testGetBrokenLinkAssetsPageWithDuplicateTitles();
+		_testGetBrokenLinkAssetsPageWithExpiredAssetInAnotherSpace();
+		_testGetBrokenLinkAssetsPageWithExpiredAssetInInaccessibleSpace();
 	}
 
 	@Override
@@ -461,6 +347,121 @@ public class BrokenLinkAssetResourceTest
 			Assert.assertEquals(
 				targetTitles[0], brokenLinkAsset.getBrokenLinkTitle());
 		}
+	}
+
+	private void _testGetBrokenLinkAssetsPageWithDuplicateTitles()
+		throws Exception {
+
+		String targetTitle = RandomTestUtil.randomString();
+
+		_testGetBrokenLinkAssetsPage(targetTitle, targetTitle);
+	}
+
+	private void _testGetBrokenLinkAssetsPageWithExpiredAssetInAnotherSpace()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		DepotEntry depotEntry = _addSpaceDepotEntry(serviceContext);
+		DepotEntry otherDepotEntry = _addSpaceDepotEntry(serviceContext);
+
+		ObjectDefinition objectDefinition =
+			_getBasicWebContentObjectDefinition();
+
+		ObjectEntry expiredObjectEntry = _addExpiredObjectEntry(
+			otherDepotEntry, objectDefinition, serviceContext);
+
+		String referencingTitle = RandomTestUtil.randomString();
+
+		_addObjectEntry(
+			CMSOutboundLinkTestUtil.getImageHTML(
+				expiredObjectEntry.getExternalReferenceCode()),
+			depotEntry, objectDefinition, referencingTitle);
+
+		Page<BrokenLinkAsset> brokenLinkAssetsPage =
+			brokenLinkAssetResource.getBrokenLinkAssetsPage(
+				depotEntry.getDepotEntryId(), null, null, null);
+
+		Assert.assertEquals(1, brokenLinkAssetsPage.getTotalCount());
+
+		List<BrokenLinkAsset> brokenLinkAssets =
+			(List<BrokenLinkAsset>)brokenLinkAssetsPage.getItems();
+
+		BrokenLinkAsset brokenLinkAsset = brokenLinkAssets.get(0);
+
+		Assert.assertEquals(referencingTitle, brokenLinkAsset.getTitle());
+		Assert.assertEquals(
+			1, GetterUtil.getInteger(brokenLinkAsset.getBrokenLinkCount()));
+	}
+
+	private void _testGetBrokenLinkAssetsPageWithExpiredAssetInInaccessibleSpace()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		DepotEntry depotEntry = _addSpaceDepotEntry(serviceContext);
+		DepotEntry inaccessibleDepotEntry = _addSpaceDepotEntry(serviceContext);
+
+		ObjectDefinition objectDefinition =
+			_getBasicWebContentObjectDefinition();
+
+		ObjectEntry expiredObjectEntry = _addExpiredObjectEntry(
+			depotEntry, objectDefinition, serviceContext);
+		ObjectEntry inaccessibleExpiredObjectEntry = _addExpiredObjectEntry(
+			inaccessibleDepotEntry, objectDefinition, serviceContext);
+
+		String imageHTML = CMSOutboundLinkTestUtil.getImageHTML(
+			expiredObjectEntry.getExternalReferenceCode());
+		String inaccessibleImageHTML = CMSOutboundLinkTestUtil.getImageHTML(
+			inaccessibleExpiredObjectEntry.getExternalReferenceCode());
+
+		String referencingTitle = RandomTestUtil.randomString();
+
+		_addObjectEntry(
+			imageHTML + inaccessibleImageHTML, depotEntry, objectDefinition,
+			referencingTitle);
+
+		Page<BrokenLinkAsset> brokenLinkAssetsPage =
+			brokenLinkAssetResource.getBrokenLinkAssetsPage(
+				depotEntry.getDepotEntryId(), null, null, null);
+
+		Assert.assertEquals(1, brokenLinkAssetsPage.getTotalCount());
+
+		List<BrokenLinkAsset> brokenLinkAssets =
+			(List<BrokenLinkAsset>)brokenLinkAssetsPage.getItems();
+
+		BrokenLinkAsset brokenLinkAsset = brokenLinkAssets.get(0);
+
+		Assert.assertEquals(referencingTitle, brokenLinkAsset.getTitle());
+		Assert.assertEquals(
+			2, GetterUtil.getInteger(brokenLinkAsset.getBrokenLinkCount()));
+
+		BrokenLinkAssetResource spaceMemberBrokenLinkAssetResource =
+			_getSpaceMemberBrokenLinkAssetResource(depotEntry);
+
+		Page<BrokenLinkAsset> spaceMemberBrokenLinkAssetsPage =
+			spaceMemberBrokenLinkAssetResource.getBrokenLinkAssetsPage(
+				depotEntry.getDepotEntryId(), null, null, null);
+
+		Assert.assertEquals(1, spaceMemberBrokenLinkAssetsPage.getTotalCount());
+
+		List<BrokenLinkAsset> spaceMemberBrokenLinkAssets =
+			(List<BrokenLinkAsset>)spaceMemberBrokenLinkAssetsPage.getItems();
+
+		BrokenLinkAsset spaceMemberBrokenLinkAsset =
+			spaceMemberBrokenLinkAssets.get(0);
+
+		Assert.assertEquals(
+			referencingTitle, spaceMemberBrokenLinkAsset.getTitle());
+		Assert.assertEquals(
+			1,
+			GetterUtil.getInteger(
+				spaceMemberBrokenLinkAsset.getBrokenLinkCount()));
+		Assert.assertEquals(
+			expiredObjectEntry.getTitleValue("en_US", true),
+			spaceMemberBrokenLinkAsset.getBrokenLinkTitle());
 	}
 
 	@DeleteAfterTestRun

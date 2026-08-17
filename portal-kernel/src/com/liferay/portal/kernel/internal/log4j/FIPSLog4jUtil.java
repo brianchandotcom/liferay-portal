@@ -15,6 +15,8 @@ import java.util.Map;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.Marker;
+import org.apache.logging.log4j.MarkerManager;
 import org.apache.logging.log4j.core.Appender;
 import org.apache.logging.log4j.core.LoggerContext;
 import org.apache.logging.log4j.core.appender.RollingFileAppender;
@@ -27,6 +29,8 @@ import org.apache.logging.log4j.message.ObjectMessage;
  */
 public class FIPSLog4jUtil {
 
+	public static final String MARKER_NAME = "FIPS_AUDIT";
+
 	public static void write(
 		Map<String, Object> fields, FIPSAuditEvent.Severity severity) {
 
@@ -34,7 +38,7 @@ public class FIPSLog4jUtil {
 
 		_validate(level);
 
-		_logger.log(level, new ObjectMessage(fields));
+		_logger.log(level, _marker, new ObjectMessage(fields));
 	}
 
 	private static Level _getLevel(FIPSAuditEvent.Severity severity) {
@@ -98,5 +102,7 @@ public class FIPSLog4jUtil {
 
 	private static final Logger _logger = LogManager.getLogger(
 		FIPSLog4jUtil.class);
+
+	private static final Marker _marker = MarkerManager.getMarker(MARKER_NAME);
 
 }

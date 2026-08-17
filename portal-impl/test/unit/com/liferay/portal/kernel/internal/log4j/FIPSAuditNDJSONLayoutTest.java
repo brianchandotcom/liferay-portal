@@ -13,6 +13,8 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.ByteArrayOutputStream;
@@ -22,6 +24,7 @@ import java.nio.charset.StandardCharsets;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.logging.log4j.Level;
@@ -114,6 +117,35 @@ public class FIPSAuditNDJSONLayoutTest {
 	}
 
 	@Test
+	public void testToSerializableRejectsAForeignEvent() {
+		FIPSAuditNDJSONLayout fipsAuditNDJSONLayout =
+			_createFIPSAuditNDJSONLayout();
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				FIPSAuditNDJSONLayout.class.getName(), LoggerTestUtil.ERROR)) {
+
+			Assert.assertEquals(
+				"",
+				fipsAuditNDJSONLayout.toSerializable(
+					_createLogEvent(new SimpleMessage("Not a record"))));
+			Assert.assertEquals(
+				"",
+				fipsAuditNDJSONLayout.toSerializable(
+					_createLogEvent(new ObjectMessage("not-a-map"))));
+
+			List<String> messages = logCapture.getMessages();
+
+			Assert.assertEquals(messages.toString(), 2, messages.size());
+
+			for (String message : messages) {
+				Assert.assertTrue(
+					message,
+					message.contains("does not carry a FIPS audit record"));
+			}
+		}
+	}
+
+	@Test
 	public void testToSerializableWritesEveryEntry() throws Exception {
 		Map<String, Object> record = LinkedHashMapBuilder.<String, Object>put(
 			"event-type", "fips-state-transition"
@@ -132,23 +164,6 @@ public class FIPSAuditNDJSONLayoutTest {
 			Assert.assertEquals(
 				entry.getValue(), jsonObject.getString(entry.getKey()));
 		}
-	}
-
-	@Test
-	public void testToSerializableWritesMessageKeyForUnreadableMessages() {
-		FIPSAuditNDJSONLayout fipsAuditNDJSONLayout =
-			_createFIPSAuditNDJSONLayout();
-
-		Assert.assertEquals(
-			"{\"message\":\"Unable to \\\"parse\\\" the record\"}\n",
-			fipsAuditNDJSONLayout.toSerializable(
-				_createLogEvent(
-					new SimpleMessage("Unable to \"parse\" the record"))));
-
-		Assert.assertEquals(
-			"{\"message\":\"not-a-map\"}\n",
-			fipsAuditNDJSONLayout.toSerializable(
-				_createLogEvent(new ObjectMessage("not-a-map"))));
 	}
 
 	@Test

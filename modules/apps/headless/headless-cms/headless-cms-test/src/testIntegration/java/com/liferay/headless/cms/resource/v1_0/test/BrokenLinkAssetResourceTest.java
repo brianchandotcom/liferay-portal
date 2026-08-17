@@ -72,8 +72,19 @@ public class BrokenLinkAssetResourceTest
 	@Override
 	@Test
 	public void testGetBrokenLinkAssetsPage() throws Exception {
-		_testGetBrokenLinkAssetsPage(1);
-		_testGetBrokenLinkAssetsPage(3);
+		_testGetBrokenLinkAssetsPage(RandomTestUtil.randomString());
+		_testGetBrokenLinkAssetsPage(
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString());
+	}
+
+	@Test
+	public void testGetBrokenLinkAssetsPageWithDuplicateTitles()
+		throws Exception {
+
+		String targetTitle = RandomTestUtil.randomString();
+
+		_testGetBrokenLinkAssetsPage(targetTitle, targetTitle);
 	}
 
 	@Override
@@ -278,7 +289,7 @@ public class BrokenLinkAssetResourceTest
 			"&amp;objectFieldExternalReferenceCode=FILE\">");
 	}
 
-	private void _testGetBrokenLinkAssetsPage(int expiredAssetCount)
+	private void _testGetBrokenLinkAssetsPage(String... targetTitles)
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -290,17 +301,9 @@ public class BrokenLinkAssetResourceTest
 			ObjectDefinition objectDefinition =
 				_getBasicWebContentObjectDefinition();
 
-			StringBundler sb = new StringBundler(expiredAssetCount);
+			StringBundler sb = new StringBundler(targetTitles.length);
 
-			String firstTargetTitle = null;
-
-			for (int i = 0; i < expiredAssetCount; i++) {
-				String targetTitle = RandomTestUtil.randomString();
-
-				if (firstTargetTitle == null) {
-					firstTargetTitle = targetTitle;
-				}
-
+			for (String targetTitle : targetTitles) {
 				ObjectEntry targetObjectEntry = _addObjectEntry(
 					RandomTestUtil.randomString(), depotEntry, objectDefinition,
 					targetTitle);
@@ -333,15 +336,15 @@ public class BrokenLinkAssetResourceTest
 
 			Assert.assertEquals(referencingTitle, brokenLinkAsset.getTitle());
 			Assert.assertEquals(
-				expiredAssetCount,
+				targetTitles.length,
 				GetterUtil.getInteger(brokenLinkAsset.getBrokenLinkCount()));
 			Assert.assertEquals(
 				"L_CMS_BASIC_WEB_CONTENT",
 				brokenLinkAsset.getObjectDefinitionExternalReferenceCode());
 
-			if (expiredAssetCount == 1) {
+			if (targetTitles.length == 1) {
 				Assert.assertEquals(
-					firstTargetTitle, brokenLinkAsset.getBrokenLinkTitle());
+					targetTitles[0], brokenLinkAsset.getBrokenLinkTitle());
 			}
 		}
 		finally {

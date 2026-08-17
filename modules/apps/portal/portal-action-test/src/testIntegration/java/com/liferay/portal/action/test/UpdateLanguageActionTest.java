@@ -705,8 +705,7 @@ public class UpdateLanguageActionTest {
 			Locale sourceLocale)
 		throws Exception {
 
-		String portletURLMappingPath =
-			"/tags/" + RandomTestUtil.randomString();
+		String portletURLMappingPath = "/tags/" + RandomTestUtil.randomString();
 
 		_testGetRedirect(
 			sourceLocale,

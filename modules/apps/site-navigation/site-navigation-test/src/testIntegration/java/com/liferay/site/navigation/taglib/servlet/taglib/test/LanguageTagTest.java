@@ -95,8 +95,7 @@ public class LanguageTagTest {
 		Layout layout = _addLayout();
 
 		_testGetLanguageEntriesWithAnotherLocaleFriendlyURL(layout);
-		_testGetLanguageEntriesWithDefaultPagePortletURLMappingPath(
-			layout);
+		_testGetLanguageEntriesWithDefaultPagePortletURLMappingPath(layout);
 
 		_testGetLanguageEntriesWithDisplayPage();
 
@@ -318,9 +317,8 @@ public class LanguageTagTest {
 				LocaleUtil.FRANCE));
 	}
 
-	private void
-			_testGetLanguageEntriesWithDefaultPagePortletURLMappingPath(
-				Layout layout)
+	private void _testGetLanguageEntriesWithDefaultPagePortletURLMappingPath(
+			Layout layout)
 		throws Exception {
 
 		_assertLocalizedURL(
@@ -329,8 +327,7 @@ public class LanguageTagTest {
 				_getLanguageEntriesForURL(
 					StringBundler.concat(
 						PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING,
-						_group.getFriendlyURL(),
-						_PORTLET_URL_MAPPING_PATH),
+						_group.getFriendlyURL(), _PORTLET_URL_MAPPING_PATH),
 					null, _getThemeDisplay(layout, LocaleUtil.US)),
 				LocaleUtil.FRANCE));
 	}
@@ -499,8 +496,7 @@ public class LanguageTagTest {
 		}
 	}
 
-	private void _testGetLanguageEntriesWithPortletURLMappingPath(
-			Layout layout)
+	private void _testGetLanguageEntriesWithPortletURLMappingPath(Layout layout)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = _getThemeDisplay(layout, LocaleUtil.US);
@@ -513,12 +509,10 @@ public class LanguageTagTest {
 				LocaleUtil.FRANCE));
 
 		_assertLocalizedURL(
-			layout, LocaleUtil.FRANCE,
-			_PORTLET_URL_MAPPING_PATH + "?foo=bar",
+			layout, LocaleUtil.FRANCE, _PORTLET_URL_MAPPING_PATH + "?foo=bar",
 			_getURL(
 				_getLanguageEntries(
-					_PORTLET_URL_MAPPING_PATH + "?foo=bar", null,
-					themeDisplay),
+					_PORTLET_URL_MAPPING_PATH + "?foo=bar", null, themeDisplay),
 				LocaleUtil.FRANCE));
 
 		_assertLocalizedURL(
@@ -589,8 +583,7 @@ public class LanguageTagTest {
 
 	private static final String _FORM_ACTION = "/custom/view";
 
-	private static final String _PORTLET_URL_MAPPING_PATH =
-		"/tags/mytag";
+	private static final String _PORTLET_URL_MAPPING_PATH = "/tags/mytag";
 
 	private static final String _UPDATE_LANGUAGE_PATH =
 		"/c/portal/update_language";

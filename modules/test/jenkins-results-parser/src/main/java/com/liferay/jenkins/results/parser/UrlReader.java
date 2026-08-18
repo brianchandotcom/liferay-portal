@@ -12,7 +12,6 @@ import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil.HttpRequestMe
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil.TokenHTTPAuthorization;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -40,7 +39,7 @@ import javax.net.ssl.SSLContext;
 /**
  * @author Kenji Heigel
  */
-public class UrlReader {
+public abstract class UrlReader<T> {
 
 	public static String getResponseHeader(
 			String headerName, HTTPAuthorization httpAuthorization,
@@ -59,24 +58,11 @@ public class UrlReader {
 			Map<String, String> requestHeaders, int timeout, String url)
 		throws IOException {
 
-		return _urlReader.doGetResponseHeader(
+		StreamUrlReader streamUrlReader = StreamUrlReader.getInstance();
+
+		return streamUrlReader.doGetResponseHeader(
 			headerName, httpAuthorization, httpRequestMethod, postContent,
 			requestHeaders, timeout, url);
-	}
-
-	public static InputStream read(
-			boolean checkCache, HTTPAuthorization httpAuthorization,
-			HttpRequestMethod httpRequestMethod, int maxRetries,
-			String postContent, int retryPeriod, int timeout, String url)
-		throws IOException {
-
-		return _urlReader.doRead(
-			checkCache, httpAuthorization, httpRequestMethod, maxRetries,
-			postContent, retryPeriod, timeout, url);
-	}
-
-	public static void setInstance(UrlReader urlReader) {
-		_urlReader = urlReader;
 	}
 
 	protected String doGetResponseHeader(
@@ -141,7 +127,7 @@ public class UrlReader {
 		return httpURLConnection.getHeaderField(headerName);
 	}
 
-	protected InputStream doRead(
+	protected T doRead(
 			boolean checkCache, HTTPAuthorization httpAuthorization,
 			HttpRequestMethod httpRequestMethod, int maxRetries,
 			String postContent, int retryPeriod, int timeout, String url)
@@ -162,21 +148,24 @@ public class UrlReader {
 
 		url = JenkinsResultsParserUtil.fixURL(url);
 
+		String cacheFileKey = null;
+
 		if (url.startsWith("file:")) {
 			url = JenkinsResultsParserUtil.fixFileURL(url);
 		}
-		else {
-			if (checkCache) {
-				if (JenkinsResultsParserUtil.debug) {
-					System.out.println("Loading " + url);
-				}
+		else if (checkCache) {
+			cacheFileKey = JenkinsResultsParserUtil.getCacheFileKey(
+				url, postContent);
 
-				File cachedFile = JenkinsResultsParserUtil.getCacheFile(
-					JenkinsResultsParserUtil.getCacheFileKey(url, postContent));
+			if (JenkinsResultsParserUtil.debug) {
+				System.out.println("Loading " + url);
+			}
 
-				if ((cachedFile != null) && cachedFile.exists()) {
-					return new FileInputStream(cachedFile);
-				}
+			File cachedFile = JenkinsResultsParserUtil.getCacheFile(
+				cacheFileKey);
+
+			if ((cachedFile != null) && cachedFile.exists()) {
+				return handleCachedFile(cachedFile);
 			}
 		}
 
@@ -290,104 +279,13 @@ public class UrlReader {
 									clientId, clientSecret, tokenURL));
 				}
 
-				URL urlObject = new URL(url);
-
-				urlConnection = urlObject.openConnection();
-
-				if (urlConnection instanceof HttpURLConnection) {
-					HttpURLConnection httpURLConnection =
-						(HttpURLConnection)urlConnection;
-
-					if (httpRequestMethod == HttpRequestMethod.PATCH) {
-						httpURLConnection.setRequestMethod("POST");
-
-						httpURLConnection.setRequestProperty(
-							"X-HTTP-Method-Override", "PATCH");
-					}
-					else {
-						httpURLConnection.setRequestMethod(
-							httpRequestMethod.name());
-					}
-
-					if (gitHubAPICall &&
-						(httpURLConnection instanceof HttpsURLConnection)) {
-
-						SSLContext sslContext = null;
-
-						float javaVersionNumber =
-							JenkinsResultsParserUtil.getJavaVersionNumber();
-
-						try {
-							if (javaVersionNumber < 1.8F) {
-								sslContext = SSLContext.getInstance("TLSv1.2");
-
-								sslContext.init(null, null, null);
-
-								HttpsURLConnection httpsURLConnection =
-									(HttpsURLConnection)httpURLConnection;
-
-								httpsURLConnection.setSSLSocketFactory(
-									sslContext.getSocketFactory());
-							}
-						}
-						catch (KeyManagementException | NoSuchAlgorithmException
-									exception) {
-
-							throw new RuntimeException(
-								"Unable to set SSL context to TLS v1.2",
-								exception);
-						}
-					}
-
-					if (httpAuthorization != null) {
-						authorization = httpAuthorization.toString();
-
-						httpURLConnection.setRequestProperty(
-							"accept", "application/json");
-						httpURLConnection.setRequestProperty(
-							"Authorization", authorization);
-
-						if (!testray1Request) {
-							httpURLConnection.setRequestProperty(
-								"Content-Type", "application/json");
-						}
-					}
-
-					if (url.contains("/oauth2/")) {
-						httpURLConnection.setRequestProperty(
-							"accept", "application/json");
-						httpURLConnection.setRequestProperty(
-							"Content-Type",
-							"application/x-www-form-urlencoded");
-					}
-
-					if (url.startsWith("https://releases-cdn.liferay.com")) {
-						httpURLConnection.setRequestProperty("User-Agent", "");
-					}
-
-					if (postContent != null) {
-						if (httpRequestMethod == null) {
-							httpURLConnection.setRequestMethod("POST");
-						}
-
-						httpURLConnection.setDoOutput(true);
-
-						try (OutputStream outputStream =
-								httpURLConnection.getOutputStream()) {
-
-							outputStream.write(postContent.getBytes("UTF-8"));
-
-							outputStream.flush();
-						}
-					}
+				if (httpAuthorization != null) {
+					authorization = httpAuthorization.toString();
 				}
 
-				if (timeout != 0) {
-					urlConnection.setConnectTimeout(timeout);
-					urlConnection.setReadTimeout(timeout);
-				}
-
-				urlConnection.connect();
+				urlConnection = openURLConnection(
+					authorization, gitHubAPICall, httpRequestMethod,
+					postContent, testray1Request, timeout, url);
 
 				if (gitHubAPICall) {
 					try {
@@ -416,7 +314,7 @@ public class UrlReader {
 					}
 				}
 
-				return urlConnection.getInputStream();
+				return handleResponse(cacheFileKey, urlConnection);
 			}
 			catch (IOException ioException1) {
 				if (ioException1 instanceof FileNotFoundException) {
@@ -557,9 +455,122 @@ public class UrlReader {
 
 				retryCount++;
 
-				JenkinsResultsParserUtil.sleep(retryPeriodMillis);
+				sleep(retryPeriodMillis);
 			}
 		}
+	}
+
+	protected abstract T handleCachedFile(File cachedFile) throws IOException;
+
+	protected abstract T handleResponse(
+			String cacheFileKey, URLConnection urlConnection)
+		throws IOException;
+
+	protected URLConnection openURLConnection(
+			String authorization, boolean gitHubAPICall,
+			HttpRequestMethod httpRequestMethod, String postContent,
+			boolean testray1Request, int timeout, String url)
+		throws IOException {
+
+		URL urlObject = new URL(url);
+
+		URLConnection urlConnection = urlObject.openConnection();
+
+		if (urlConnection instanceof HttpURLConnection) {
+			HttpURLConnection httpURLConnection =
+				(HttpURLConnection)urlConnection;
+
+			if (httpRequestMethod == HttpRequestMethod.PATCH) {
+				httpURLConnection.setRequestMethod("POST");
+
+				httpURLConnection.setRequestProperty(
+					"X-HTTP-Method-Override", "PATCH");
+			}
+			else {
+				httpURLConnection.setRequestMethod(httpRequestMethod.name());
+			}
+
+			if (gitHubAPICall &&
+				(httpURLConnection instanceof HttpsURLConnection)) {
+
+				SSLContext sslContext = null;
+
+				float javaVersionNumber =
+					JenkinsResultsParserUtil.getJavaVersionNumber();
+
+				try {
+					if (javaVersionNumber < 1.8F) {
+						sslContext = SSLContext.getInstance("TLSv1.2");
+
+						sslContext.init(null, null, null);
+
+						HttpsURLConnection httpsURLConnection =
+							(HttpsURLConnection)httpURLConnection;
+
+						httpsURLConnection.setSSLSocketFactory(
+							sslContext.getSocketFactory());
+					}
+				}
+				catch (KeyManagementException | NoSuchAlgorithmException
+							exception) {
+
+					throw new RuntimeException(
+						"Unable to set SSL context to TLS v1.2", exception);
+				}
+			}
+
+			if (authorization != null) {
+				httpURLConnection.setRequestProperty(
+					"accept", "application/json");
+				httpURLConnection.setRequestProperty(
+					"Authorization", authorization);
+
+				if (!testray1Request) {
+					httpURLConnection.setRequestProperty(
+						"Content-Type", "application/json");
+				}
+			}
+
+			if (url.contains("/oauth2/")) {
+				httpURLConnection.setRequestProperty(
+					"accept", "application/json");
+				httpURLConnection.setRequestProperty(
+					"Content-Type", "application/x-www-form-urlencoded");
+			}
+
+			if (url.startsWith("https://releases-cdn.liferay.com")) {
+				httpURLConnection.setRequestProperty("User-Agent", "");
+			}
+
+			if (postContent != null) {
+				if (httpRequestMethod == null) {
+					httpURLConnection.setRequestMethod("POST");
+				}
+
+				httpURLConnection.setDoOutput(true);
+
+				try (OutputStream outputStream =
+						httpURLConnection.getOutputStream()) {
+
+					outputStream.write(postContent.getBytes("UTF-8"));
+
+					outputStream.flush();
+				}
+			}
+		}
+
+		if (timeout != 0) {
+			urlConnection.setConnectTimeout(timeout);
+			urlConnection.setReadTimeout(timeout);
+		}
+
+		urlConnection.connect();
+
+		return urlConnection;
+	}
+
+	protected void sleep(long duration) {
+		JenkinsResultsParserUtil.sleep(duration);
 	}
 
 	private static final int _SECONDS_RETRY_PERIOD_MAX = 60 * 30;
@@ -575,6 +586,5 @@ public class UrlReader {
 		Arrays.asList(
 			HttpRequestMethod.POST, HttpRequestMethod.PATCH,
 			HttpRequestMethod.PUT, HttpRequestMethod.DELETE);
-	private static volatile UrlReader _urlReader = new UrlReader();
 
 }

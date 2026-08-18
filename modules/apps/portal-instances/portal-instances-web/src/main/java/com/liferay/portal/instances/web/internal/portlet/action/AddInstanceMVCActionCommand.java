@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -82,22 +84,8 @@ public class AddInstanceMVCActionCommand extends BaseMVCActionCommand {
 				_log.debug(exception);
 			}
 
-			String errorMessage = "an-unexpected-error-occurred";
-
-			if (exception instanceof CompanyMaxUsersException) {
-				errorMessage = "please-enter-a-valid-max-users";
-			}
-			else if (exception instanceof CompanyMxException) {
-				errorMessage = "please-enter-a-valid-mail-domain";
-			}
-			else if (exception instanceof CompanyVirtualHostException) {
-				errorMessage = "please-enter-a-valid-virtual-host";
-			}
-			else if (exception instanceof CompanyWebIdException) {
-				errorMessage = "please-enter-a-valid-web-id";
-			}
-
-			jsonObject.put("error", _language.get(locale, errorMessage));
+			jsonObject.put(
+				"error", _language.get(locale, _getErrorMessageKey(exception)));
 		}
 
 		JSONPortletResponseUtil.writeJSON(
@@ -106,6 +94,16 @@ public class AddInstanceMVCActionCommand extends BaseMVCActionCommand {
 
 	private void _addBackgroundTask(ActionRequest actionRequest)
 		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PermissionChecker permissionChecker =
+			themeDisplay.getPermissionChecker();
+
+		if (!permissionChecker.isOmniadmin()) {
+			throw new PrincipalException.MustBeOmniadmin(permissionChecker);
+		}
 
 		String webId = ParamUtil.getString(actionRequest, "webId");
 		String virtualHostname = StringUtil.toLowerCase(
@@ -163,9 +161,6 @@ public class AddInstanceMVCActionCommand extends BaseMVCActionCommand {
 				PortalInstancesBackgroundTaskConstants.WEB_ID, webId
 			).build();
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		_backgroundTaskManager.addBackgroundTask(
 			themeDisplay.getUserId(), BackgroundTaskConstants.GROUP_ID_DEFAULT,
 			PortalInstancesBackgroundTaskConstants.NAME_ADD_VIRTUAL_INSTANCE +
@@ -185,6 +180,26 @@ public class AddInstanceMVCActionCommand extends BaseMVCActionCommand {
 			PortalInstances.getDefaultCompanyId());
 
 		return _encryptor.encrypt(company.getKeyObj(), defaultAdminPassword);
+	}
+
+	private String _getErrorMessageKey(Exception exception) {
+		if (exception instanceof CompanyMaxUsersException) {
+			return "please-enter-a-valid-max-users";
+		}
+		else if (exception instanceof CompanyMxException) {
+			return "please-enter-a-valid-mail-domain";
+		}
+		else if (exception instanceof CompanyVirtualHostException) {
+			return "please-enter-a-valid-virtual-host";
+		}
+		else if (exception instanceof CompanyWebIdException) {
+			return "please-enter-a-valid-web-id";
+		}
+		else if (exception instanceof PrincipalException.MustBeOmniadmin) {
+			return "you-must-be-an-admin-to-complete-this-action";
+		}
+
+		return "an-unexpected-error-occurred";
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

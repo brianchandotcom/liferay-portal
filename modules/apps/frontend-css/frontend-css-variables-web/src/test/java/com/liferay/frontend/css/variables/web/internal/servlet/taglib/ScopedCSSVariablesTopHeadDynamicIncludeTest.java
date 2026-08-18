@@ -97,6 +97,67 @@ public class ScopedCSSVariablesTopHeadDynamicIncludeTest {
 	}
 
 	@Test
+	public void testIncludeEscapesCSSVariableKeysAndValues()
+		throws IOException {
+
+		ScopedCSSVariablesTopHeadDynamicInclude
+			scopedCSSVariablesTopHeadDynamicInclude =
+				new ScopedCSSVariablesTopHeadDynamicInclude();
+
+		ScopedCSSVariablesProvider scopedCSSVariablesProvider = Mockito.mock(
+			ScopedCSSVariablesProvider.class);
+
+		String xssPayload = "</style><script>alert(1)</script>";
+
+		Collection<ScopedCSSVariables> scopedCSSVariablesCollection =
+			Arrays.asList(
+				new ScopedCSSVariables() {
+
+					@Override
+					public Map<String, String> getCSSVariables() {
+						return HashMapBuilder.put(
+							xssPayload, "red"
+						).put(
+							"color", xssPayload
+						).build();
+					}
+
+					@Override
+					public String getScope() {
+						return ":root";
+					}
+
+				});
+
+		Mockito.when(
+			scopedCSSVariablesProvider.getScopedCSSVariablesCollection(
+				Mockito.any(HttpServletRequest.class))
+		).thenReturn(
+			scopedCSSVariablesCollection
+		);
+
+		scopedCSSVariablesTopHeadDynamicInclude.setScopedCSSVariablesProviders(
+			Arrays.asList(scopedCSSVariablesProvider));
+
+		HttpServletRequest httpServletRequest = Mockito.mock(
+			HttpServletRequest.class);
+
+		HttpServletResponse httpServletResponse = Mockito.mock(
+			HttpServletResponse.class);
+
+		BufferCacheServletResponse bufferCacheServletResponse =
+			new BufferCacheServletResponse(httpServletResponse);
+
+		scopedCSSVariablesTopHeadDynamicInclude.include(
+			httpServletRequest, bufferCacheServletResponse,
+			"/html/common/themes/top_head.jsp#post");
+
+		String content = bufferCacheServletResponse.getString();
+
+		Assert.assertFalse(content, content.contains(xssPayload));
+	}
+
+	@Test
 	public void testIncludeWithMultipleProviders() throws IOException {
 		ScopedCSSVariablesTopHeadDynamicInclude
 			scopedCSSVariablesTopHeadDynamicInclude =

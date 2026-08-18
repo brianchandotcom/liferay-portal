@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.search.engine.adapter.index.DeleteIndexRequest;
+import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.workflow.kaleo.definition.Node;
 import com.liferay.portal.workflow.kaleo.definition.Task;
@@ -37,6 +39,7 @@ import com.liferay.portal.workflow.kaleo.service.KaleoInstanceTokenLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoNodeLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskInstanceTokenLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskLocalService;
+import com.liferay.portal.workflow.metrics.search.index.constants.WorkflowMetricsIndexNameConstants;
 import com.liferay.portal.workflow.metrics.search.index.reindexer.WorkflowMetricsReindexer;
 import com.liferay.portal.workflow.metrics.search.index.reindexer.WorkflowMetricsReindexerRegistry;
 
@@ -465,6 +468,15 @@ public abstract class BaseWorkflowMetricsIndexerTestCase
 		}
 	}
 
+	private void _deleteWorkflowMetricsIndexes(long companyId) {
+		String indexNamePrefix = _indexNameBuilder.getIndexName(companyId);
+
+		for (String indexNameSuffix : _INDEX_NAME_SUFFIXES) {
+			searchEngineAdapter.execute(
+				new DeleteIndexRequest(indexNamePrefix + indexNameSuffix));
+		}
+	}
+
 	private void _reindex(long companyId, String key) throws Exception {
 		WorkflowMetricsReindexer reindexer =
 			_workflowMetricsReindexerRegistry.getWorkflowMetricsReindexer(key);
@@ -473,6 +485,8 @@ public abstract class BaseWorkflowMetricsIndexerTestCase
 	}
 
 	private void _reindexMetricIndexes(long companyId) throws Exception {
+		_deleteWorkflowMetricsIndexes(companyId);
+
 		_reindex(companyId, "instance");
 		_reindex(companyId, "node");
 		_reindex(companyId, "process");
@@ -481,14 +495,29 @@ public abstract class BaseWorkflowMetricsIndexerTestCase
 	}
 
 	private void _reindexSLAIndexes(long companyId) throws Exception {
+		_deleteWorkflowMetricsIndexes(companyId);
+
 		_reindex(companyId, "sla-instance-result");
 		_reindex(companyId, "sla-task-result");
 	}
+
+	private static final String[] _INDEX_NAME_SUFFIXES = {
+		WorkflowMetricsIndexNameConstants.SUFFIX_INSTANCE,
+		WorkflowMetricsIndexNameConstants.SUFFIX_NODE,
+		WorkflowMetricsIndexNameConstants.SUFFIX_PROCESS,
+		WorkflowMetricsIndexNameConstants.SUFFIX_SLA_INSTANCE_RESULT,
+		WorkflowMetricsIndexNameConstants.SUFFIX_SLA_TASK_RESULT,
+		WorkflowMetricsIndexNameConstants.SUFFIX_TASK,
+		WorkflowMetricsIndexNameConstants.SUFFIX_TRANSITION
+	};
 
 	private final List<BlogsEntry> _blogsEntries = new ArrayList<>();
 
 	@Inject
 	private BlogsEntryLocalService _blogsEntryLocalService;
+
+	@Inject
+	private IndexNameBuilder _indexNameBuilder;
 
 	private KaleoDefinition _kaleoDefinition;
 

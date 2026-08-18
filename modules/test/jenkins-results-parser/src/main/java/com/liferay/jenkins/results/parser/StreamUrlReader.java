@@ -47,11 +47,13 @@ public class StreamUrlReader extends UrlReader<InputStream> {
 	/**
 	 * The stream reader cannot validate the body without buffering it, so it
 	 * retries transport failures only. Writing the cache would require the same
-	 * buffering, which is why <code>cacheFileKey</code> is ignored here.
+	 * buffering, which is why <code>cacheFileKey</code> and
+	 * <code>expectResponse</code> are both ignored here.
 	 */
 	@Override
 	protected InputStream handleResponse(
-			String cacheFileKey, URLConnection urlConnection)
+			String cacheFileKey, boolean expectResponse,
+			URLConnection urlConnection)
 		throws IOException {
 
 		return urlConnection.getInputStream();

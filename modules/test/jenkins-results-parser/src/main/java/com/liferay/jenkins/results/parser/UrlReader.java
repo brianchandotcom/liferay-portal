@@ -127,8 +127,15 @@ public abstract class UrlReader<T> {
 		return httpURLConnection.getHeaderField(headerName);
 	}
 
+	/**
+	 * The <code>expectResponse</code> flag travels down to
+	 * <code>handleResponse</code> so a reader that validates the body knows
+	 * whether an empty one is a failed attempt or an acceptable answer. Readers
+	 * that never look at the body ignore it.
+	 */
 	protected T doRead(
-			boolean checkCache, HTTPAuthorization httpAuthorization,
+			boolean checkCache, boolean expectResponse,
+			HTTPAuthorization httpAuthorization,
 			HttpRequestMethod httpRequestMethod, int maxRetries,
 			String postContent, int retryPeriod, int timeout, String url)
 		throws IOException {
@@ -314,7 +321,8 @@ public abstract class UrlReader<T> {
 					}
 				}
 
-				return handleResponse(cacheFileKey, urlConnection);
+				return handleResponse(
+					cacheFileKey, expectResponse, urlConnection);
 			}
 			catch (IOException ioException1) {
 				if (ioException1 instanceof FileNotFoundException) {
@@ -325,9 +333,9 @@ public abstract class UrlReader<T> {
 					url.matches("http://test-\\d+-\\d+/.*")) {
 
 					return doRead(
-						checkCache, httpAuthorization, httpRequestMethod,
-						maxRetries, postContent, retryPeriod, timeout,
-						JenkinsResultsParserUtil.getRemoteURL(url));
+						checkCache, expectResponse, httpAuthorization,
+						httpRequestMethod, maxRetries, postContent, retryPeriod,
+						timeout, JenkinsResultsParserUtil.getRemoteURL(url));
 				}
 
 				String exceptionMessage = ioException1.getMessage();
@@ -458,10 +466,22 @@ public abstract class UrlReader<T> {
 		}
 	}
 
+	protected T doRead(
+			boolean checkCache, HTTPAuthorization httpAuthorization,
+			HttpRequestMethod httpRequestMethod, int maxRetries,
+			String postContent, int retryPeriod, int timeout, String url)
+		throws IOException {
+
+		return doRead(
+			checkCache, true, httpAuthorization, httpRequestMethod, maxRetries,
+			postContent, retryPeriod, timeout, url);
+	}
+
 	protected abstract T handleCachedFile(File cachedFile) throws IOException;
 
 	protected abstract T handleResponse(
-			String cacheFileKey, URLConnection urlConnection)
+			String cacheFileKey, boolean expectResponse,
+			URLConnection urlConnection)
 		throws IOException;
 
 	protected URLConnection openURLConnection(

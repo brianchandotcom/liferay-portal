@@ -5433,41 +5433,10 @@ public class JenkinsResultsParserUtil {
 		long start = System.currentTimeMillis();
 
 		try {
-			for (int i = 0; i < 2; i++) {
-				try (BufferedReader bufferedReader = toBufferedReader(
-						url, checkCache, maxRetries, httpRequestMethod,
-						postContent, retryPeriod, timeout, httpAuthorization)) {
-
-					StringBuilder sb = new StringBuilder();
-
-					String line = bufferedReader.readLine();
-
-					while (line != null) {
-						sb.append(line);
-						sb.append("\n");
-
-						line = bufferedReader.readLine();
-					}
-
-					String content = sb.toString();
-
-					if (expectResponse && isNullOrEmpty(content) && (i < 1)) {
-						System.out.println(
-							"Unable to get response, retrying request");
-
-						continue;
-					}
-
-					if (checkCache && !url.startsWith("file:")) {
-						saveToCacheFile(
-							getCacheFileKey(url, postContent), content);
-					}
-
-					return content;
-				}
-			}
-
-			return "";
+			return TextUrlReader.read(
+				checkCache, expectResponse, httpAuthorization,
+				httpRequestMethod, maxRetries, postContent, retryPeriod,
+				timeout, url);
 		}
 		finally {
 			long duration = System.currentTimeMillis() - start;

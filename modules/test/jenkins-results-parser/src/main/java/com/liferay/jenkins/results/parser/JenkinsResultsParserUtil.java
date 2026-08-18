@@ -5108,17 +5108,9 @@ public class JenkinsResultsParserUtil {
 			int retryPeriod, int timeout, HTTPAuthorization httpAuthorization)
 		throws IOException {
 
-		String response = toString(
-			url, checkCache, maxRetries, null, postContent, retryPeriod,
-			timeout, httpAuthorization, true);
-
-		if ((response == null) ||
-			response.endsWith("was truncated due to its size.")) {
-
-			return null;
-		}
-
-		return new JSONArray(response);
+		return JSONArrayUrlReader.read(
+			checkCache, httpAuthorization, maxRetries, postContent, retryPeriod,
+			timeout, url);
 	}
 
 	public static JSONArray toJSONArray(String url, String postContent)
@@ -5196,44 +5188,9 @@ public class JenkinsResultsParserUtil {
 			int retryPeriod, int timeout, HTTPAuthorization httpAuthorization)
 		throws IOException {
 
-		Retryable<JSONObject> retryable = new Retryable<JSONObject>(
-			true, maxRetries, retryPeriod, true) {
-
-			@Override
-			public JSONObject execute() {
-				try {
-					String response = JenkinsResultsParserUtil.toString(
-						url, checkCache, 0, httpRequestMethod, postContent,
-						retryPeriod, timeout, httpAuthorization, true);
-
-					if ((response == null) ||
-						response.endsWith("was truncated due to its size.")) {
-
-						return null;
-					}
-
-					return createJSONObject(response);
-				}
-				catch (IOException ioException) {
-					throw new RuntimeException(ioException);
-				}
-			}
-
-			@Override
-			protected String getRetryMessage(int retryCount) {
-				return combine(
-					"Unable to create JSONObject: ",
-					super.getRetryMessage(retryCount));
-			}
-
-		};
-
-		try {
-			return retryable.executeWithRetries();
-		}
-		catch (Exception exception) {
-			throw new RuntimeException("Unable to create JSON object");
-		}
+		return JSONObjectUrlReader.read(
+			checkCache, httpAuthorization, httpRequestMethod, maxRetries,
+			postContent, retryPeriod, timeout, url);
 	}
 
 	public static JSONObject toJSONObject(

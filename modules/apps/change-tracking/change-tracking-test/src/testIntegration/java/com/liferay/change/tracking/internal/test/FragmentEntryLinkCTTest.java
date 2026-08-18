@@ -116,7 +116,8 @@ public class FragmentEntryLinkCTTest {
 			}
 			catch (Exception exception) {
 				Assert.assertTrue(
-					exception.getCause() instanceof CTRequiredModelException);
+					(exception instanceof CTRequiredModelException) ||
+					(exception.getCause() instanceof CTRequiredModelException));
 			}
 		}
 

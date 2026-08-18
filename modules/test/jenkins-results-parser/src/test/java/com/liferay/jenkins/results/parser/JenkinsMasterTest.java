@@ -34,7 +34,7 @@ public class JenkinsMasterTest extends com.liferay.jenkins.results.parser.Test {
 
 		Environment.setInstance(Mockito.mock(Environment.class));
 
-		MockUrlReaders urlReaders = mockUrlReader();
+		MockUrlReaders urlReaders = mockUrlReaders();
 
 		setUrlReaderOutput(
 			new JSONObject(
@@ -93,7 +93,7 @@ public class JenkinsMasterTest extends com.liferay.jenkins.results.parser.Test {
 
 	@Test
 	public void testGetQueueItem() throws Exception {
-		MockUrlReaders urlReaders = mockUrlReader();
+		MockUrlReaders urlReaders = mockUrlReaders();
 
 		setUrlReaderOutput(
 			new JSONObject(
@@ -109,7 +109,7 @@ public class JenkinsMasterTest extends com.liferay.jenkins.results.parser.Test {
 
 	@Test
 	public void testGetQueueItemNotFound() throws Exception {
-		MockUrlReaders urlReaders = mockUrlReader();
+		MockUrlReaders urlReaders = mockUrlReaders();
 
 		String queueItemAPIURL = "http://test-9-1/queue/item/7800/api/json";
 

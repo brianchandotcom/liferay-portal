@@ -105,7 +105,7 @@ public class ClientCredentialsHTTPAuthorizationTest
 	}
 
 	private MockUrlReaders _mockTokenRequestUrlReader() throws Exception {
-		MockUrlReaders urlReaders = mockUrlReader();
+		MockUrlReaders urlReaders = mockUrlReaders();
 
 		for (UrlReader<?> urlReader : urlReaders.getUrlReaders()) {
 			Mockito.doAnswer(

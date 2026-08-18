@@ -56,7 +56,7 @@ public class BuildQueueRebalancerTest
 
 		JenkinsResultsParserUtil.setBuildProperties(buildProperties);
 
-		MockUrlReaders urlReaders = mockUrlReader();
+		MockUrlReaders urlReaders = mockUrlReaders();
 
 		JSONObject queueJSONObject = new JSONObject();
 
@@ -153,7 +153,7 @@ public class BuildQueueRebalancerTest
 
 		JenkinsResultsParserUtil.setBuildProperties(buildProperties);
 
-		MockUrlReaders urlReaders = mockUrlReader();
+		MockUrlReaders urlReaders = mockUrlReaders();
 
 		setUrlReaderError(
 			new IOException("Connection refused"),

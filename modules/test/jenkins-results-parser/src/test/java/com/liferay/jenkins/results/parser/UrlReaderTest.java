@@ -9,7 +9,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.net.HttpURLConnection;
 import java.net.SocketTimeoutException;
 import java.net.URL;
 
@@ -19,8 +18,6 @@ import org.json.JSONObject;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
-
-import org.mockito.Mockito;
 
 /**
  * @author Kenji Heigel
@@ -37,7 +34,7 @@ public class UrlReaderTest extends com.liferay.jenkins.results.parser.Test {
 
 	@Test
 	public void testToInputStream() throws Exception {
-		MockUrlReaders urlReaders = mockUrlReader();
+		MockUrlReaders urlReaders = mockUrlReaders();
 
 		setUrlReaderOutput(_STANDARD_OUT, _URL, urlReaders);
 
@@ -52,7 +49,7 @@ public class UrlReaderTest extends com.liferay.jenkins.results.parser.Test {
 
 	@Test
 	public void testToJSONObject() throws Exception {
-		MockUrlReaders urlReaders = mockUrlReader();
+		MockUrlReaders urlReaders = mockUrlReaders();
 
 		JSONObject jsonObject = new JSONObject();
 
@@ -75,7 +72,7 @@ public class UrlReaderTest extends com.liferay.jenkins.results.parser.Test {
 	 */
 	@Test
 	public void testToJSONObjectWhenResponseCodeIs404() throws Exception {
-		MockUrlReaders urlReaders = mockUrlReader();
+		MockUrlReaders urlReaders = mockUrlReaders();
 
 		setUrlReaderError(new FileNotFoundException(_URL), _URL, urlReaders);
 
@@ -94,7 +91,7 @@ public class UrlReaderTest extends com.liferay.jenkins.results.parser.Test {
 
 	@Test
 	public void testToJSONObjectWhenResponseIsMalformed() throws Exception {
-		MockUrlReaders urlReaders = mockUrlReader();
+		MockUrlReaders urlReaders = mockUrlReaders();
 
 		setUrlReaderOutput("not json at all", _URL, urlReaders);
 
@@ -127,7 +124,7 @@ public class UrlReaderTest extends com.liferay.jenkins.results.parser.Test {
 
 		JenkinsMasterTestUtil.getJenkinsCohortProperties("test-9", 1);
 
-		MockUrlReaders urlReaders = mockUrlReader();
+		MockUrlReaders urlReaders = mockUrlReaders();
 
 		JSONObject jsonObject = new JSONObject();
 
@@ -148,7 +145,7 @@ public class UrlReaderTest extends com.liferay.jenkins.results.parser.Test {
 
 	@Test
 	public void testToString() throws Exception {
-		MockUrlReaders urlReaders = mockUrlReader();
+		MockUrlReaders urlReaders = mockUrlReaders();
 
 		setUrlReaderOutput(_STANDARD_OUT, _URL, urlReaders);
 
@@ -158,7 +155,7 @@ public class UrlReaderTest extends com.liferay.jenkins.results.parser.Test {
 
 	@Test
 	public void testToStringWhenConnectionTimesOut() throws Exception {
-		MockUrlReaders urlReaders = mockUrlReader();
+		MockUrlReaders urlReaders = mockUrlReaders();
 
 		setUrlReaderError(
 			new SocketTimeoutException("Read timed out"), _URL, urlReaders);
@@ -176,7 +173,7 @@ public class UrlReaderTest extends com.liferay.jenkins.results.parser.Test {
 
 	@Test
 	public void testToStringWhenResponseBodyIsEmpty() throws Exception {
-		MockUrlReaders urlReaders = mockUrlReader();
+		MockUrlReaders urlReaders = mockUrlReaders();
 
 		setUrlReaderOutput("", _URL, urlReaders);
 
@@ -206,7 +203,7 @@ public class UrlReaderTest extends com.liferay.jenkins.results.parser.Test {
 	public void testToStringWhenResponseBodyIsEmptyAndNotExpected()
 		throws Exception {
 
-		MockUrlReaders urlReaders = mockUrlReader();
+		MockUrlReaders urlReaders = mockUrlReaders();
 
 		setUrlReaderOutput("", _URL, urlReaders);
 
@@ -219,13 +216,8 @@ public class UrlReaderTest extends com.liferay.jenkins.results.parser.Test {
 	}
 
 	@Test
-	public void testToStringWhenResponseCodeIs403() throws Exception {
-		_testResponseCodeIsRetried(403);
-	}
-
-	@Test
 	public void testToStringWhenResponseCodeIs404() throws Exception {
-		MockUrlReaders urlReaders = mockUrlReader();
+		MockUrlReaders urlReaders = mockUrlReaders();
 
 		setUrlReaderError(new FileNotFoundException(_URL), _URL, urlReaders);
 
@@ -240,14 +232,17 @@ public class UrlReaderTest extends com.liferay.jenkins.results.parser.Test {
 		verifyUrlReadCount(1, urlReaders, _URL);
 	}
 
+	/**
+	 * A 403 carries the GitHub secondary rate limit and an expired Testray 2
+	 * token, and a 408 and a 429 are retryable by definition. A 5xx is not a
+	 * 4xx at all and keeps its retries.
+	 */
 	@Test
-	public void testToStringWhenResponseCodeIs429() throws Exception {
-		_testResponseCodeIsRetried(429);
-	}
-
-	@Test
-	public void testToStringWhenResponseCodeIs500() throws Exception {
-		_testResponseCodeIsRetried(500);
+	public void testToStringWhenResponseCodeIsRetryable() throws Exception {
+		_testToStringWhenResponseCodeIsRetryable(403);
+		_testToStringWhenResponseCodeIsRetryable(408);
+		_testToStringWhenResponseCodeIsRetryable(429);
+		_testToStringWhenResponseCodeIsRetryable(500);
 	}
 
 	/**
@@ -257,9 +252,9 @@ public class UrlReaderTest extends com.liferay.jenkins.results.parser.Test {
 	 */
 	@Test
 	public void testToStringWhenResponseCodeIsTerminal() throws Exception {
-		MockUrlReaders urlReaders = mockUrlReader();
+		MockUrlReaders urlReaders = mockUrlReaders();
 
-		_setResponseCodeError(400, _URL, urlReaders);
+		setUrlReaderError(400, _URL, urlReaders);
 
 		try {
 			JenkinsResultsParserUtil.toString(_URL, false, _MAX_RETRIES, 0, 0);
@@ -272,47 +267,12 @@ public class UrlReaderTest extends com.liferay.jenkins.results.parser.Test {
 		verifyUrlReadCount(1, urlReaders, _URL);
 	}
 
-	private void _setResponseCodeError(
-			int responseCode, String url, MockUrlReaders mockUrlReaders)
+	private void _testToStringWhenResponseCodeIsRetryable(int responseCode)
 		throws Exception {
 
-		for (UrlReader<?> urlReader : mockUrlReaders.getUrlReaders()) {
-			Mockito.doAnswer(
-				invocation -> {
-					HttpURLConnection httpURLConnection = Mockito.mock(
-						HttpURLConnection.class);
+		MockUrlReaders urlReaders = mockUrlReaders();
 
-					Mockito.doThrow(
-						new IOException(
-							"Server returned HTTP response code: " +
-								responseCode)
-					).when(
-						httpURLConnection
-					).getInputStream();
-
-					Mockito.doReturn(
-						responseCode
-					).when(
-						httpURLConnection
-					).getResponseCode();
-
-					return httpURLConnection;
-				}
-			).when(
-				urlReader
-			).openURLConnection(
-				Mockito.any(), Mockito.anyBoolean(), Mockito.any(),
-				Mockito.any(), Mockito.anyBoolean(), Mockito.anyInt(),
-				Mockito.argThat(
-					readURL -> (readURL != null) && readURL.contains(url))
-			);
-		}
-	}
-
-	private void _testResponseCodeIsRetried(int responseCode) throws Exception {
-		MockUrlReaders urlReaders = mockUrlReader();
-
-		_setResponseCodeError(responseCode, _URL, urlReaders);
+		setUrlReaderError(responseCode, _URL, urlReaders);
 
 		try {
 			JenkinsResultsParserUtil.toString(_URL, false, _MAX_RETRIES, 0, 0);

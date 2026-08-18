@@ -179,7 +179,34 @@ public class Test {
 	 * a stub sits below the retry loop rather than replacing it. Each
 	 * invocation must produce a new connection, because the retry loop consumes
 	 * the input stream once per attempt.
+	 *
+	 * <p>
+	 * The overload without a body is how a 4xx or a 5xx arrives: the response
+	 * code is legible while <code>getInputStream</code> throws.
+	 * </p>
 	 */
+	protected HttpURLConnection mockURLConnection(int responseCode)
+		throws IOException {
+
+		HttpURLConnection httpURLConnection = Mockito.mock(
+			HttpURLConnection.class);
+
+		Mockito.doThrow(
+			new IOException(
+				"Server returned HTTP response code: " + responseCode)
+		).when(
+			httpURLConnection
+		).getInputStream();
+
+		Mockito.doReturn(
+			responseCode
+		).when(
+			httpURLConnection
+		).getResponseCode();
+
+		return httpURLConnection;
+	}
+
 	protected HttpURLConnection mockURLConnection(
 			int responseCode, String standardOut)
 		throws IOException {
@@ -202,7 +229,7 @@ public class Test {
 		return httpURLConnection;
 	}
 
-	protected MockUrlReaders mockUrlReader() {
+	protected MockUrlReaders mockUrlReaders() {
 		JSONArrayUrlReader jsonArrayUrlReader = Mockito.spy(
 			new JSONArrayUrlReader());
 		JSONObjectUrlReader jsonObjectUrlReader = Mockito.spy(
@@ -275,6 +302,28 @@ public class Test {
 			Mockito.argThat(
 				executionRequest -> hasCommand(executionRequest, command))
 		);
+	}
+
+	/**
+	 * Fails the attempt with a response code the retry policy can classify,
+	 * rather than a bare transport failure.
+	 */
+	protected void setUrlReaderError(
+			int responseCode, String url, MockUrlReaders mockUrlReaders)
+		throws Exception {
+
+		for (UrlReader<?> urlReader : mockUrlReaders.getUrlReaders()) {
+			Mockito.doAnswer(
+				invocation -> mockURLConnection(responseCode)
+			).when(
+				urlReader
+			).openURLConnection(
+				Mockito.any(), Mockito.anyBoolean(), Mockito.any(),
+				Mockito.any(), Mockito.anyBoolean(), Mockito.anyInt(),
+				Mockito.argThat(
+					readURL -> (readURL != null) && readURL.contains(url))
+			);
+		}
 	}
 
 	/**

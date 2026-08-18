@@ -21,37 +21,22 @@ public class MockUrlReaders {
 		JSONObjectUrlReader jsonObjectUrlReader,
 		StreamUrlReader streamUrlReader, TextUrlReader textUrlReader) {
 
-		_jsonArrayUrlReader = jsonArrayUrlReader;
-		_jsonObjectUrlReader = jsonObjectUrlReader;
 		_streamUrlReader = streamUrlReader;
-		_textUrlReader = textUrlReader;
-	}
 
-	public JSONArrayUrlReader getJSONArrayUrlReader() {
-		return _jsonArrayUrlReader;
-	}
-
-	public JSONObjectUrlReader getJSONObjectUrlReader() {
-		return _jsonObjectUrlReader;
+		_urlReaders = Arrays.asList(
+			jsonArrayUrlReader, jsonObjectUrlReader, streamUrlReader,
+			textUrlReader);
 	}
 
 	public StreamUrlReader getStreamUrlReader() {
 		return _streamUrlReader;
 	}
 
-	public TextUrlReader getTextUrlReader() {
-		return _textUrlReader;
-	}
-
 	public List<UrlReader<?>> getUrlReaders() {
-		return Arrays.asList(
-			_jsonArrayUrlReader, _jsonObjectUrlReader, _streamUrlReader,
-			_textUrlReader);
+		return _urlReaders;
 	}
 
-	private final JSONArrayUrlReader _jsonArrayUrlReader;
-	private final JSONObjectUrlReader _jsonObjectUrlReader;
 	private final StreamUrlReader _streamUrlReader;
-	private final TextUrlReader _textUrlReader;
+	private final List<UrlReader<?>> _urlReaders;
 
 }

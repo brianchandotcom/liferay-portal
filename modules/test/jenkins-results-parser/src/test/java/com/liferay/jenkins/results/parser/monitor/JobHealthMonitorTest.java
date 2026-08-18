@@ -425,7 +425,7 @@ public class JobHealthMonitorTest
 
 	@Test
 	public void testExecuteUnreadableResponse() throws Exception {
-		MockUrlReaders urlReaders = mockUrlReader();
+		MockUrlReaders urlReaders = mockUrlReaders();
 
 		setUrlReaderOutput(
 			RandomTestUtil.randomString(), _JOB_API_URL, urlReaders);
@@ -536,7 +536,7 @@ public class JobHealthMonitorTest
 	}
 
 	private void _setJobJSONObject(JSONObject jobJSONObject) throws Exception {
-		MockUrlReaders urlReaders = mockUrlReader();
+		MockUrlReaders urlReaders = mockUrlReaders();
 
 		setUrlReaderOutput(jobJSONObject.toString(), _JOB_API_URL, urlReaders);
 	}

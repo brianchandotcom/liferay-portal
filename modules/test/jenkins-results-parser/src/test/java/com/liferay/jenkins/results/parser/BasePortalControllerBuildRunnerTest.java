@@ -31,7 +31,7 @@ public class BasePortalControllerBuildRunnerTest
 				"upstream-controller(master_content-management)/339/";
 		String invocationJobName = "test-portal-testsuite-upstream(master)";
 
-		UrlReader urlReader = mockUrlReader();
+		StreamUrlReader urlReader = mockUrlReader();
 
 		setUrlReaderOutput(
 			new JSONObject(

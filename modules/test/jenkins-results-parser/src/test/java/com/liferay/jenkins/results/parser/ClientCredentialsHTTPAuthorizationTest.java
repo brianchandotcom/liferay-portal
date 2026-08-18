@@ -32,7 +32,7 @@ public class ClientCredentialsHTTPAuthorizationTest
 
 	@Test
 	public void testInvalidateToken() throws Exception {
-		UrlReader urlReader = _mockTokenRequestUrlReader();
+		StreamUrlReader urlReader = _mockTokenRequestUrlReader();
 
 		JenkinsResultsParserUtil.ClientCredentialsHTTPAuthorization
 			clientCredentialsHTTPAuthorization =
@@ -50,7 +50,7 @@ public class ClientCredentialsHTTPAuthorizationTest
 
 	@Test
 	public void testInvalidateTokenWhenAuthorizationIsStale() throws Exception {
-		UrlReader urlReader = _mockTokenRequestUrlReader();
+		StreamUrlReader urlReader = _mockTokenRequestUrlReader();
 
 		JenkinsResultsParserUtil.ClientCredentialsHTTPAuthorization
 			clientCredentialsHTTPAuthorization =
@@ -72,7 +72,7 @@ public class ClientCredentialsHTTPAuthorizationTest
 
 	@Test
 	public void testToStringCachesToken() throws Exception {
-		UrlReader urlReader = _mockTokenRequestUrlReader();
+		StreamUrlReader urlReader = _mockTokenRequestUrlReader();
 
 		JenkinsResultsParserUtil.ClientCredentialsHTTPAuthorization
 			clientCredentialsHTTPAuthorization =
@@ -88,7 +88,7 @@ public class ClientCredentialsHTTPAuthorizationTest
 
 	@Test
 	public void testToStringRefreshesExpiredToken() throws Exception {
-		UrlReader urlReader = _mockTokenRequestUrlReader();
+		StreamUrlReader urlReader = _mockTokenRequestUrlReader();
 
 		JenkinsResultsParserUtil.ClientCredentialsHTTPAuthorization
 			clientCredentialsHTTPAuthorization =
@@ -106,8 +106,8 @@ public class ClientCredentialsHTTPAuthorizationTest
 		_verifyTokenRequestCount(2, urlReader);
 	}
 
-	private UrlReader _mockTokenRequestUrlReader() throws Exception {
-		UrlReader urlReader = mockUrlReader();
+	private StreamUrlReader _mockTokenRequestUrlReader() throws Exception {
+		StreamUrlReader urlReader = mockUrlReader();
 
 		Mockito.doAnswer(
 			invocation -> {
@@ -145,7 +145,7 @@ public class ClientCredentialsHTTPAuthorizationTest
 	}
 
 	private void _verifyTokenRequestCount(
-			int expectedCount, UrlReader urlReader)
+			int expectedCount, StreamUrlReader urlReader)
 		throws Exception {
 
 		Mockito.verify(

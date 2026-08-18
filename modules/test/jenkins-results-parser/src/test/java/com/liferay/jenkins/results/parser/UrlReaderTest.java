@@ -17,7 +17,7 @@ public class UrlReaderTest extends com.liferay.jenkins.results.parser.Test {
 
 	@Test
 	public void testToInputStream() throws Exception {
-		UrlReader urlReader = mockUrlReader();
+		StreamUrlReader urlReader = mockUrlReader();
 
 		setUrlReaderOutput(_STANDARD_OUT, _URL, urlReader);
 
@@ -32,7 +32,7 @@ public class UrlReaderTest extends com.liferay.jenkins.results.parser.Test {
 
 	@Test
 	public void testToString() throws Exception {
-		UrlReader urlReader = mockUrlReader();
+		StreamUrlReader urlReader = mockUrlReader();
 
 		setUrlReaderOutput(_STANDARD_OUT, _URL, urlReader);
 

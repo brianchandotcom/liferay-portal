@@ -6,6 +6,10 @@ metadata:
     name: {{ include "dxp-operator.fullname" . }}-statefulset-scale
 spec:
     failurePolicy: Fail
+    matchConditions:
+        -   expression: >-
+                request.userInfo.username != '{{ printf "system:serviceaccount:%s:%s" (include "dxp-operator.namespace" .) (include "dxp-operator.serviceAccountName" .) }}'
+            name: exclude-operator-serviceaccount
     matchConstraints:
         namespaceSelector:
             matchLabels:
@@ -21,39 +25,35 @@ spec:
                 resources:
                     -   statefulsets
                     -   statefulsets/scale
-    matchConditions:
-        -   name: exclude-operator-serviceaccount
-            expression: >-
-                request.userInfo.username != '{{ printf "system:serviceaccount:%s:%s" (include "dxp-operator.namespace" .) (include "dxp-operator.serviceAccountName" .) }}'
     paramKind:
         apiVersion: licensing.liferay.com/v1alpha1
         kind: LiferayEnvironment
     validations:
         -   expression: >-
-                variables.licensedWorkloadName != variables.workloadName ||
                 !variables.hasCeiling ||
+                variables.licensedWorkloadName != variables.workloadName ||
                 variables.requestedReplicas <= variables.maxClusterNodes
             messageExpression: >-
                 'replicas ' + string(variables.requestedReplicas) +
                 ' exceeds licensed maxClusterNodes ' + string(variables.maxClusterNodes) +
                 ' for StatefulSet ' + variables.workloadName
     variables:
-        -   name: isScale
-            expression: "has(request.subResource) && request.subResource == 'scale'"
-        -   name: hasCeiling
-            expression: >-
+        -   expression: >-
                 has(params.status) && has(params.status.license) &&
                 has(params.status.license.maxClusterNodes)
-        -   name: maxClusterNodes
-            expression: "variables.hasCeiling ? params.status.license.maxClusterNodes : 0"
-        -   name: licensedWorkloadName
-            expression: "has(params.spec.workloadRef) ? params.spec.workloadRef.name : ''"
-        -   name: requestedReplicas
-            expression: >-
+            name: hasCeiling
+        -   expression: "has(request.subResource) && request.subResource == 'scale'"
+            name: isScale
+        -   expression: "has(params.spec.workloadRef) ? params.spec.workloadRef.name : ''"
+            name: licensedWorkloadName
+        -   expression: "variables.hasCeiling ? params.status.license.maxClusterNodes : 0"
+            name: maxClusterNodes
+        -   expression: >-
                 has(object.spec.replicas) ? object.spec.replicas :
                 (variables.isScale ? 0 : 1)
-        -   name: workloadName
-            expression: "variables.isScale ? request.name : object.metadata.name"
+            name: requestedReplicas
+        -   expression: "variables.isScale ? request.name : object.metadata.name"
+            name: workloadName
 ---
 apiVersion: admissionregistration.k8s.io/v1
 kind: ValidatingAdmissionPolicyBinding

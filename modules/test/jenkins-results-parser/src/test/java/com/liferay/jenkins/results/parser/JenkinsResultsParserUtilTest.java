@@ -434,12 +434,12 @@ public class JenkinsResultsParserUtilTest
 
 		JenkinsResultsParserUtil.setBuildProperties(buildProperties);
 
-		StreamUrlReader urlReader = mockUrlReader();
+		MockUrlReaders urlReaders = mockUrlReader();
 
 		Mockito.doReturn(
 			"https://test-1-1.liferay.com/queue/item/12345"
 		).when(
-			urlReader
+			urlReaders.getStreamUrlReader()
 		).doGetResponseHeader(
 			Mockito.eq("Location"), Mockito.any(), Mockito.any(), Mockito.any(),
 			Mockito.any(), Mockito.anyInt(), Mockito.anyString()

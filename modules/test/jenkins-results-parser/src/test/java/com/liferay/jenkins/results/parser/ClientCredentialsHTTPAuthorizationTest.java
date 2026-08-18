@@ -5,8 +5,6 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.io.ByteArrayInputStream;
-
 import java.net.URL;
 
 import java.util.Date;
@@ -32,7 +30,7 @@ public class ClientCredentialsHTTPAuthorizationTest
 
 	@Test
 	public void testInvalidateToken() throws Exception {
-		StreamUrlReader urlReader = _mockTokenRequestUrlReader();
+		MockUrlReaders urlReaders = _mockTokenRequestUrlReader();
 
 		JenkinsResultsParserUtil.ClientCredentialsHTTPAuthorization
 			clientCredentialsHTTPAuthorization =
@@ -45,12 +43,12 @@ public class ClientCredentialsHTTPAuthorizationTest
 		Assert.assertNotEquals(
 			authorization, clientCredentialsHTTPAuthorization.toString());
 
-		_verifyTokenRequestCount(2, urlReader);
+		_verifyTokenRequestCount(2, urlReaders);
 	}
 
 	@Test
 	public void testInvalidateTokenWhenAuthorizationIsStale() throws Exception {
-		StreamUrlReader urlReader = _mockTokenRequestUrlReader();
+		MockUrlReaders urlReaders = _mockTokenRequestUrlReader();
 
 		JenkinsResultsParserUtil.ClientCredentialsHTTPAuthorization
 			clientCredentialsHTTPAuthorization =
@@ -67,12 +65,12 @@ public class ClientCredentialsHTTPAuthorizationTest
 		Assert.assertEquals(
 			newAuthorization, clientCredentialsHTTPAuthorization.toString());
 
-		_verifyTokenRequestCount(2, urlReader);
+		_verifyTokenRequestCount(2, urlReaders);
 	}
 
 	@Test
 	public void testToStringCachesToken() throws Exception {
-		StreamUrlReader urlReader = _mockTokenRequestUrlReader();
+		MockUrlReaders urlReaders = _mockTokenRequestUrlReader();
 
 		JenkinsResultsParserUtil.ClientCredentialsHTTPAuthorization
 			clientCredentialsHTTPAuthorization =
@@ -83,12 +81,12 @@ public class ClientCredentialsHTTPAuthorizationTest
 		Assert.assertEquals(
 			authorization, clientCredentialsHTTPAuthorization.toString());
 
-		_verifyTokenRequestCount(1, urlReader);
+		_verifyTokenRequestCount(1, urlReaders);
 	}
 
 	@Test
 	public void testToStringRefreshesExpiredToken() throws Exception {
-		StreamUrlReader urlReader = _mockTokenRequestUrlReader();
+		MockUrlReaders urlReaders = _mockTokenRequestUrlReader();
 
 		JenkinsResultsParserUtil.ClientCredentialsHTTPAuthorization
 			clientCredentialsHTTPAuthorization =
@@ -103,34 +101,35 @@ public class ClientCredentialsHTTPAuthorizationTest
 		Assert.assertNotEquals(
 			authorization, clientCredentialsHTTPAuthorization.toString());
 
-		_verifyTokenRequestCount(2, urlReader);
+		_verifyTokenRequestCount(2, urlReaders);
 	}
 
-	private StreamUrlReader _mockTokenRequestUrlReader() throws Exception {
-		StreamUrlReader urlReader = mockUrlReader();
+	private MockUrlReaders _mockTokenRequestUrlReader() throws Exception {
+		MockUrlReaders urlReaders = mockUrlReader();
 
-		Mockito.doAnswer(
-			invocation -> {
-				String json = new JSONObject(
-				).put(
-					"access_token", RandomTestUtil.randomString()
-				).put(
-					"expires_in", 600
-				).put(
-					"token_type", "Bearer"
-				).toString();
+		for (UrlReader<?> urlReader : urlReaders.getUrlReaders()) {
+			Mockito.doAnswer(
+				invocation -> mockURLConnection(
+					200,
+					String.valueOf(
+						new JSONObject(
+						).put(
+							"access_token", RandomTestUtil.randomString()
+						).put(
+							"expires_in", 600
+						).put(
+							"token_type", "Bearer"
+						)))
+			).when(
+				urlReader
+			).openURLConnection(
+				Mockito.any(), Mockito.anyBoolean(), Mockito.any(),
+				Mockito.any(), Mockito.anyBoolean(), Mockito.anyInt(),
+				Mockito.contains("/o/oauth2/token")
+			);
+		}
 
-				return new ByteArrayInputStream(json.getBytes());
-			}
-		).when(
-			urlReader
-		).doRead(
-			Mockito.anyBoolean(), Mockito.any(), Mockito.any(),
-			Mockito.anyInt(), Mockito.any(), Mockito.anyInt(), Mockito.anyInt(),
-			Mockito.contains("/o/oauth2/token")
-		);
-
-		return urlReader;
+		return urlReaders;
 	}
 
 	private JenkinsResultsParserUtil.ClientCredentialsHTTPAuthorization
@@ -145,16 +144,9 @@ public class ClientCredentialsHTTPAuthorizationTest
 	}
 
 	private void _verifyTokenRequestCount(
-			int expectedCount, StreamUrlReader urlReader)
-		throws Exception {
+		int expectedCount, MockUrlReaders urlReaders) {
 
-		Mockito.verify(
-			urlReader, Mockito.times(expectedCount)
-		).doRead(
-			Mockito.anyBoolean(), Mockito.any(), Mockito.any(),
-			Mockito.anyInt(), Mockito.any(), Mockito.anyInt(), Mockito.anyInt(),
-			Mockito.anyString()
-		);
+		verifyUrlReadCount(expectedCount, urlReaders, "/o/oauth2/token");
 	}
 
 }

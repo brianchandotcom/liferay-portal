@@ -17,9 +17,9 @@ public class UrlReaderTest extends com.liferay.jenkins.results.parser.Test {
 
 	@Test
 	public void testToInputStream() throws Exception {
-		StreamUrlReader urlReader = mockUrlReader();
+		MockUrlReaders urlReaders = mockUrlReader();
 
-		setUrlReaderOutput(_STANDARD_OUT, _URL, urlReader);
+		setUrlReaderOutput(_STANDARD_OUT, _URL, urlReaders);
 
 		try (InputStream inputStream = JenkinsResultsParserUtil.toInputStream(
 				_URL, false)) {
@@ -32,9 +32,9 @@ public class UrlReaderTest extends com.liferay.jenkins.results.parser.Test {
 
 	@Test
 	public void testToString() throws Exception {
-		StreamUrlReader urlReader = mockUrlReader();
+		MockUrlReaders urlReaders = mockUrlReader();
 
-		setUrlReaderOutput(_STANDARD_OUT, _URL, urlReader);
+		setUrlReaderOutput(_STANDARD_OUT, _URL, urlReaders);
 
 		Assert.assertEquals(
 			_STANDARD_OUT, JenkinsResultsParserUtil.toString(_URL, false));

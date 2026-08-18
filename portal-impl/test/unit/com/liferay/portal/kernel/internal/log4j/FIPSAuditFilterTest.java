@@ -59,10 +59,10 @@ public class FIPSAuditFilterTest {
 		Marker marker = MarkerManager.getMarker(FIPSLog4jUtil.MARKER_NAME);
 
 		_testFilterDenies(
-			"does not carry a FIPS audit record", marker,
+			"carries no FIPS audit record", marker,
 			new ObjectMessage("not-a-map"));
 		_testFilterDenies(
-			"does not carry a FIPS audit record", marker,
+			"carries no FIPS audit record", marker,
 			new SimpleMessage("Not a record"));
 	}
 

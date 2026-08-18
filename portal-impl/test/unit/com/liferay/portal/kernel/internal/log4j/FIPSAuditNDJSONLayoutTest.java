@@ -138,8 +138,7 @@ public class FIPSAuditNDJSONLayoutTest {
 
 			for (String message : messages) {
 				Assert.assertTrue(
-					message,
-					message.contains("does not carry a FIPS audit record"));
+					message, message.contains("carries no FIPS audit record"));
 			}
 		}
 	}

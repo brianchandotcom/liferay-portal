@@ -76,9 +76,9 @@ public class FIPSAuditEvent {
 		if (value == null) {
 			throw new IllegalArgumentException(
 				StringBundler.concat(
-					"Unable to record the FIPS audit field \"", key,
-					"\" because a null value is dropped from an audit record ",
-					"instead of being written"));
+					"Unable to write the FIPS audit field \"", key,
+					"\" because a null value is dropped from a FIPS audit ",
+					"record"));
 		}
 
 		if (value instanceof Iterable) {
@@ -102,17 +102,17 @@ public class FIPSAuditEvent {
 		if (_isNonfiniteNumber(value)) {
 			throw new IllegalArgumentException(
 				StringBundler.concat(
-					"Unable to record the FIPS audit field \"", key,
+					"Unable to write the FIPS audit field \"", key,
 					"\" because the number \"", value,
-					"\" is not finite and cannot be written as JSON"));
+					"\" is not finite and has no JSON representation"));
 		}
 
 		if (_isSensitiveSecurityParameter(value)) {
 			throw new IllegalArgumentException(
 				StringBundler.concat(
-					"Unable to record the FIPS audit field \"", key,
+					"Unable to write the FIPS audit field \"", key,
 					"\" because a sensitive security parameter must never ",
-					"reach an audit record"));
+					"reach a FIPS audit record"));
 		}
 	}
 

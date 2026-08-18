@@ -99,10 +99,10 @@ public final class FIPSAuditNDJSONLayout extends AbstractStringLayout {
 		if (!(record instanceof Map)) {
 			_logger.error(
 				StringBundler.concat(
-					"Unable to write the event from the logger \"",
+					"Unable to write the log event from the logger \"",
 					logEvent.getLoggerName(),
-					"\" to the FIPS audit trail because its message does not ",
-					"carry a FIPS audit record"));
+					"\" to the FIPS audit log because its message carries no ",
+					"FIPS audit record"));
 
 			return;
 		}

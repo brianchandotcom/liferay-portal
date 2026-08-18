@@ -5,14 +5,18 @@
 
 package com.liferay.style.book.service.impl;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.AssertUtils;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.style.book.exception.DuplicateStyleBookEntryFrontendTokenException;
 import com.liferay.style.book.exception.StyleBookEntryFrontendTokenDefinitionException;
+import com.liferay.style.book.exception.StyleBookEntryFrontendTokensValuesException;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
 import com.liferay.style.book.service.persistence.StyleBookEntryPersistence;
@@ -43,6 +47,9 @@ public class StyleBookEntryLocalServiceImplTest {
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
+
+		ReflectionTestUtil.setFieldValue(
+			_styleBookEntryLocalService, "_jsonFactory", new JSONFactoryImpl());
 	}
 
 	@Test
@@ -66,6 +73,26 @@ public class StyleBookEntryLocalServiceImplTest {
 		_testUpdateFrontendTokenDefinitionWithInvalidJSON();
 		_testUpdateFrontendTokenDefinitionWithInvalidJSONSchema();
 		_testUpdateFrontendTokenDefinitionWithValidFrontendTokenDefinition();
+	}
+
+	@Test
+	public void testUpdateFrontendTokensValues() throws Exception {
+		_testUpdateFrontendTokensValuesDoesNotThrow(null);
+		_testUpdateFrontendTokensValuesDoesNotThrow(StringPool.BLANK);
+		_testUpdateFrontendTokensValuesDoesNotThrow(
+			RandomTestUtil.randomString() + "{not valid json");
+		_testUpdateFrontendTokensValuesDoesNotThrow(
+			_createFrontendTokensValues(
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString()));
+		_testUpdateFrontendTokensValuesResubmittingPersistedValueDoesNotThrow();
+		_testUpdateFrontendTokensValuesWithXSS(
+			RandomTestUtil.randomString() + "<" + RandomTestUtil.randomString(),
+			RandomTestUtil.randomString());
+		_testUpdateFrontendTokensValuesWithXSS(
+			RandomTestUtil.randomString(),
+			RandomTestUtil.randomString() + "<" +
+				RandomTestUtil.randomString());
 	}
 
 	private String _createFrontendTokenDefinition(
@@ -118,6 +145,21 @@ public class StyleBookEntryLocalServiceImplTest {
 		).put(
 			"name", name
 		);
+	}
+
+	private String _createFrontendTokensValues(
+		String key, String cssVariableMapping, String value) {
+
+		return JSONUtil.put(
+			key,
+			JSONUtil.put(
+				"cssVariableMapping", cssVariableMapping
+			).put(
+				"tokenDefinitionId", RandomTestUtil.randomString()
+			).put(
+				"value", value
+			)
+		).toString();
 	}
 
 	private StyleBookEntry _mockStyleBookEntry(long styleBookEntryId)
@@ -262,6 +304,74 @@ public class StyleBookEntryLocalServiceImplTest {
 		).setFrontendTokenDefinition(
 			frontendTokenDefinition
 		);
+	}
+
+	private void _testUpdateFrontendTokensValuesDoesNotThrow(
+			String frontendTokensValues)
+		throws Exception {
+
+		long styleBookEntryId = RandomTestUtil.randomLong();
+
+		StyleBookEntry styleBookEntry = _mockStyleBookEntry(styleBookEntryId);
+
+		_styleBookEntryLocalService.updateFrontendTokensValues(
+			styleBookEntryId, frontendTokensValues);
+
+		Mockito.verify(
+			styleBookEntry
+		).setFrontendTokensValues(
+			frontendTokensValues
+		);
+	}
+
+	private void _testUpdateFrontendTokensValuesResubmittingPersistedValueDoesNotThrow()
+		throws Exception {
+
+		long styleBookEntryId = RandomTestUtil.randomLong();
+
+		StyleBookEntry styleBookEntry = _mockStyleBookEntry(styleBookEntryId);
+
+		String frontendTokensValues = _createFrontendTokensValues(
+			RandomTestUtil.randomString(),
+			RandomTestUtil.randomString() + "<" + RandomTestUtil.randomString(),
+			RandomTestUtil.randomString());
+
+		Mockito.when(
+			styleBookEntry.getFrontendTokensValues()
+		).thenReturn(
+			frontendTokensValues
+		);
+
+		_styleBookEntryLocalService.updateFrontendTokensValues(
+			styleBookEntryId, frontendTokensValues);
+
+		Mockito.verify(
+			styleBookEntry
+		).setFrontendTokensValues(
+			frontendTokensValues
+		);
+	}
+
+	private void _testUpdateFrontendTokensValuesWithXSS(
+			String cssVariableMapping, String value)
+		throws Exception {
+
+		long styleBookEntryId = RandomTestUtil.randomLong();
+
+		_mockStyleBookEntry(styleBookEntryId);
+
+		String key = RandomTestUtil.randomString();
+
+		String frontendTokensValues = _createFrontendTokensValues(
+			key, cssVariableMapping, value);
+
+		AssertUtils.assertFailure(
+			StyleBookEntryFrontendTokensValuesException.class,
+			StringBundler.concat(
+				"Frontend token value \"", key,
+				"\" contains invalid characters"),
+			() -> _styleBookEntryLocalService.updateFrontendTokensValues(
+				styleBookEntryId, frontendTokensValues));
 	}
 
 	@InjectMocks

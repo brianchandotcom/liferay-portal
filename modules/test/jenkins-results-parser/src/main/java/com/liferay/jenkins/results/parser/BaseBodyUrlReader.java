@@ -67,7 +67,7 @@ public abstract class BaseBodyUrlReader<T> extends UrlReader<T> {
 	 * answer null rather than parsing it.
 	 */
 	protected boolean isTruncated(String content) {
-		return content.endsWith(_SUFFIX_TRUNCATED);
+		return content.endsWith("was truncated due to its size.");
 	}
 
 	/**
@@ -98,8 +98,5 @@ public abstract class BaseBodyUrlReader<T> extends UrlReader<T> {
 
 		return sb.toString();
 	}
-
-	private static final String _SUFFIX_TRUNCATED =
-		"was truncated due to its size.";
 
 }

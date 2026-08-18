@@ -84,7 +84,7 @@ public class JenkinsStopBuildUtil {
 		String consoleOutput = JenkinsResultsParserUtil.toString(
 			JenkinsResultsParserUtil.getLocalURL(
 				buildURL + "/logText/progressiveText"),
-			true, true);
+			true, false);
 
 		Matcher progressiveTextMatcher = _progressiveTextPattern.matcher(
 			consoleOutput);

@@ -4899,28 +4899,6 @@ public class JenkinsResultsParserUtil {
 		}
 	}
 
-	public static BufferedReader toBufferedReader(
-			String url, boolean checkCache)
-		throws IOException {
-
-		return toBufferedReader(
-			url, checkCache, _RETRIES_SIZE_MAX_DEFAULT, null, null,
-			_SECONDS_RETRY_PERIOD_DEFAULT, _MILLIS_TIMEOUT_DEFAULT, null);
-	}
-
-	public static BufferedReader toBufferedReader(
-			String url, boolean checkCache, int maxRetries,
-			HttpRequestMethod httpRequestMethod, String postContent,
-			int retryPeriod, int timeout, HTTPAuthorization httpAuthorization)
-		throws IOException {
-
-		return new BufferedReader(
-			new InputStreamReader(
-				toInputStream(
-					url, checkCache, maxRetries, httpRequestMethod, postContent,
-					retryPeriod, timeout, httpAuthorization)));
-	}
-
 	public static String toDateString(Date date) {
 		return toDateString(
 			date, "MMM dd, yyyy h:mm:ss a z", "America/Los_Angeles");

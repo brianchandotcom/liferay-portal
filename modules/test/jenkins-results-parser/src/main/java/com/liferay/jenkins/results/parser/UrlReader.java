@@ -18,6 +18,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import java.net.HttpURLConnection;
+import java.net.SocketException;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.UnknownHostException;
@@ -343,7 +345,8 @@ public abstract class UrlReader<T> {
 				}
 
 				String exceptionMessage = ioException1.getMessage();
-				int responseCode = _getResponseCode(urlConnection);
+				int responseCode = _getResponseCode(
+					ioException1, urlConnection);
 
 				if (responseCode == 422) {
 					StringBuilder sb = new StringBuilder();
@@ -599,9 +602,22 @@ public abstract class UrlReader<T> {
 	 * Returns the response code, or <code>-1</code> when the connection never
 	 * produced one. A connection that failed before the response line arrived,
 	 * or that is not HTTP at all, is not a 4xx and must stay retryable.
+	 *
+	 * <p>
+	 * A transport failure never produced a status line, so asking for one
+	 * sends the request again and blocks for another full timeout before
+	 * answering <code>-1</code> anyway. Such a failure is retryable whatever
+	 * the code, so skip the lookup. <code>ConnectException</code> extends
+	 * <code>SocketException</code> and is covered with it.
+	 * </p>
 	 */
-	private int _getResponseCode(URLConnection urlConnection) {
-		if (!(urlConnection instanceof HttpURLConnection)) {
+	private int _getResponseCode(
+		IOException ioException1, URLConnection urlConnection) {
+
+		if (ioException1 instanceof SocketException ||
+			ioException1 instanceof SocketTimeoutException ||
+			!(urlConnection instanceof HttpURLConnection)) {
+
 			return -1;
 		}
 
@@ -610,7 +626,7 @@ public abstract class UrlReader<T> {
 		try {
 			return httpURLConnection.getResponseCode();
 		}
-		catch (IOException ioException) {
+		catch (IOException ioException2) {
 			return -1;
 		}
 	}

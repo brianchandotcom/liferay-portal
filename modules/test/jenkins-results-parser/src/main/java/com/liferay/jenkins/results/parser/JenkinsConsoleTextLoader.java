@@ -94,7 +94,7 @@ public class JenkinsConsoleTextLoader {
 		if (buildURL.startsWith("file:") || buildURL.contains("mirrors")) {
 			try {
 				return JenkinsResultsParserUtil.toString(
-					buildURL + "/consoleText", false, true);
+					buildURL + "/consoleText", false, false);
 			}
 			catch (IOException ioException) {
 				throw new RuntimeException(ioException);

@@ -10,20 +10,26 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
+import com.liferay.portal.kernel.encryptor.EncryptorUtil;
 import com.liferay.portal.kernel.exception.CompanyWebIdException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
+import com.liferay.portal.kernel.security.auth.Authenticator;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -32,6 +38,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -75,7 +82,7 @@ public class AddVirtualInstanceBackgroundTaskExecutorTest {
 
 	@Test
 	public void testExecute() throws Exception {
-		BackgroundTask backgroundTask = _addBackgroundTask(null);
+		BackgroundTask backgroundTask = _addBackgroundTask(null, null);
 
 		Assert.assertEquals(
 			BackgroundTaskConstants.STATUS_SUCCESSFUL,
@@ -105,7 +112,7 @@ public class AddVirtualInstanceBackgroundTaskExecutorTest {
 		throws Exception {
 
 		BackgroundTask backgroundTask = _addBackgroundTask(
-			RandomTestUtil.randomString());
+			RandomTestUtil.randomString(), null);
 
 		Assert.assertEquals(
 			BackgroundTaskConstants.STATUS_FAILED, backgroundTask.getStatus());
@@ -121,16 +128,55 @@ public class AddVirtualInstanceBackgroundTaskExecutorTest {
 	}
 
 	@Test
-	public void testValidateWebIdWhenWebIdIsDuplicate() throws Exception {
+	public void testExecuteWhenDefaultAdminPasswordIsEncrypted()
+		throws Exception {
+
+		String defaultAdminPassword = RandomTestUtil.randomString();
+
+		Company defaultCompany = _companyLocalService.getCompany(
+			PortalUtil.getDefaultCompanyId());
+
+		BackgroundTask backgroundTask = _addBackgroundTask(
+			null,
+			EncryptorUtil.encrypt(
+				defaultCompany.getKeyObj(), defaultAdminPassword));
+
+		Assert.assertEquals(
+			BackgroundTaskConstants.STATUS_SUCCESSFUL,
+			backgroundTask.getStatus());
+
+		_company = _companyLocalService.getCompanyByWebId(_webId);
+
+		Map<String, Serializable> taskContextMap =
+			backgroundTask.getTaskContextMap();
+
+		Assert.assertNotEquals(
+			defaultAdminPassword, taskContextMap.get("defaultAdminPassword"));
+
+		String emailAddress =
+			PropsUtil.get(PropsKeys.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX) +
+				StringPool.AT + _virtualHostname;
+
+		Assert.assertEquals(
+			Authenticator.SUCCESS,
+			_userLocalService.authenticateByEmailAddress(
+				_company.getCompanyId(), emailAddress, defaultAdminPassword,
+				new HashMap<>(), new HashMap<>(), new HashMap<>()));
+	}
+
+	@Test
+	public void testValidateCompanyWhenWebIdIsDuplicate() throws Exception {
 		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
 
 		Assert.assertThrows(
 			CompanyWebIdException.class,
-			() -> _companyLocalService.validateWebId(company.getWebId()));
+			() -> _companyLocalService.validateCompany(
+				company.getWebId(), _virtualHostname, _virtualHostname, 0));
 	}
 
-	private BackgroundTask _addBackgroundTask(String defaultAdminEmailAddress)
+	private BackgroundTask _addBackgroundTask(
+			String defaultAdminEmailAddress, String defaultAdminPassword)
 		throws Exception {
 
 		Map<String, Serializable> taskContextMap =
@@ -138,6 +184,8 @@ public class AddVirtualInstanceBackgroundTaskExecutorTest {
 				"active", true
 			).put(
 				"defaultAdminEmailAddress", () -> defaultAdminEmailAddress
+			).put(
+				"defaultAdminPassword", () -> defaultAdminPassword
 			).put(
 				"maxUsers", 0
 			).put(
@@ -227,6 +275,9 @@ public class AddVirtualInstanceBackgroundTaskExecutorTest {
 
 	@Inject
 	private JSONFactory _jsonFactory;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 	@Inject
 	private UserNotificationEventLocalService

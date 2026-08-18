@@ -78,8 +78,7 @@ public class SLAInstanceResultWorkflowMetricsReindexer
 	}
 
 	private void _createDefaultDocuments(long companyId) {
-		if (!_searchCapabilities.isWorkflowMetricsSupported() ||
-			!_hasIndex(
+		if (!_hasIndex(
 				_indexNameBuilder.getIndexName(companyId) +
 					WorkflowMetricsIndexNameConstants.SUFFIX_PROCESS)) {
 

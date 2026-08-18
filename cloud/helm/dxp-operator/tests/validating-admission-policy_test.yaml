@@ -1,0 +1,51 @@
+release:
+    name: my-release
+    namespace: my-namespace
+suite: ValidatingAdmissionPolicy
+templates:
+    -   templates/validating-admission-policy.yaml
+tests:
+    -   asserts:
+            -   hasDocuments:
+                    count: 2
+        it: Renders the policy and its binding
+    -   asserts:
+            -   equal:
+                    path: metadata.name
+                    value: my-release-liferay-dxp-operator-statefulset-scale
+            -   equal:
+                    path: spec.failurePolicy
+                    value: Fail
+            -   equal:
+                    path: spec.paramKind.kind
+                    value: LiferayEnvironment
+            -   contains:
+                    content: statefulsets
+                    path: spec.matchConstraints.resourceRules[0].resources
+            -   contains:
+                    content: statefulsets/scale
+                    path: spec.matchConstraints.resourceRules[0].resources
+            -   equal:
+                    path: spec.matchConstraints.namespaceSelector.matchLabels["licensing.liferay.com/environment"]
+                    value: "true"
+            -   matchRegex:
+                    path: spec.matchConditions[0].expression
+                    pattern: system:serviceaccount:my-namespace:my-release-liferay-dxp-operator
+        documentSelector:
+            path: kind
+            value: ValidatingAdmissionPolicy
+        it: Enforces the licensed ceiling on labeled namespaces and exempts the operator
+    -   asserts:
+            -   equal:
+                    path: spec.policyName
+                    value: my-release-liferay-dxp-operator-statefulset-scale
+            -   contains:
+                    content: Deny
+                    path: spec.validationActions
+            -   equal:
+                    path: spec.paramRef.parameterNotFoundAction
+                    value: Allow
+        documentSelector:
+            path: kind
+            value: ValidatingAdmissionPolicyBinding
+        it: Binds the policy with Deny and allows workloads without a LiferayEnvironment

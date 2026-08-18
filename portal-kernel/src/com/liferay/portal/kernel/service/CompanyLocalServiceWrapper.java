@@ -813,31 +813,12 @@ public class CompanyLocalServiceWrapper
 	}
 
 	@Override
-	public void validateMaxUsers(int maxUsers)
-		throws com.liferay.portal.kernel.exception.CompanyMaxUsersException {
-
-		_companyLocalService.validateMaxUsers(maxUsers);
-	}
-
-	@Override
-	public void validateMx(long companyId, String mx)
+	public void validateCompany(
+			String webId, String virtualHostname, String mx, int maxUsers)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		_companyLocalService.validateMx(companyId, mx);
-	}
-
-	@Override
-	public void validateVirtualHost(String webId, String virtualHostname)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		_companyLocalService.validateVirtualHost(webId, virtualHostname);
-	}
-
-	@Override
-	public void validateWebId(String webId)
-		throws com.liferay.portal.kernel.exception.CompanyWebIdException {
-
-		_companyLocalService.validateWebId(webId);
+		_companyLocalService.validateCompany(
+			webId, virtualHostname, mx, maxUsers);
 	}
 
 	@Override
@@ -858,4 +839,4 @@ public class CompanyLocalServiceWrapper
 	private CompanyLocalService _companyLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1229719453
+// LIFERAY-SERVICE-BUILDER-HASH:-699430741

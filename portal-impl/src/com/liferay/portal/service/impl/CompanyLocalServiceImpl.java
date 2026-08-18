@@ -227,10 +227,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		String lowerCaseVirtualHostname = StringUtil.toLowerCase(
 			StringUtil.trim(virtualHostname));
 
-		validateWebId(webId);
-		validateVirtualHost(webId, lowerCaseVirtualHostname);
-		validateMx(-1, mx);
-		validateMaxUsers(maxUsers);
+		validateCompany(webId, lowerCaseVirtualHostname, mx, maxUsers);
 
 		if ((companyId == null) || (companyId == 0)) {
 			companyId = _getNextCompanyId();
@@ -1610,87 +1607,17 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	}
 
 	@Override
-	public void validateMaxUsers(int maxUsers) throws CompanyMaxUsersException {
-		if (maxUsers < 0) {
-			throw new CompanyMaxUsersException(
-				"Max users should be equal or greater than 0");
-		}
-	}
-
-	@Override
-	public void validateMx(long companyId, String mx) throws PortalException {
-		if (Validator.isNull(mx) || !Validator.isDomain(mx)) {
-			throw new CompanyMxException("Invalid domain " + mx);
-		}
-
-		String emailAddress =
-			PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX + "@" + mx;
-
-		EmailAddressValidator emailAddressValidator =
-			EmailAddressValidatorFactory.getInstance();
-
-		if (!emailAddressValidator.validate(companyId, emailAddress)) {
-			throw new CompanyMxException(
-				"Invalid email address " + emailAddress);
-		}
-	}
-
-	@Override
-	public void validateVirtualHost(String webId, String virtualHostname)
+	public void validateCompany(
+			String webId, String virtualHostname, String mx, int maxUsers)
 		throws PortalException {
 
-		try {
-			if (Validator.isNull(virtualHostname)) {
-				throw new CompanyVirtualHostException(
-					"Virtual hostname is null");
-			}
-			else if (virtualHostname.equals(_DEFAULT_VIRTUAL_HOST) &&
-					 !webId.equals(PropsValues.COMPANY_DEFAULT_WEB_ID)) {
+		String lowerCaseVirtualHostname = StringUtil.toLowerCase(
+			StringUtil.trim(virtualHostname));
 
-				throw new CompanyVirtualHostException(
-					"localhost can only be used with the default web ID " +
-						webId);
-			}
-			else if (!Validator.isDomain(virtualHostname) &&
-					 !Validator.isIPAddress(virtualHostname)) {
-
-				throw new CompanyVirtualHostException(
-					"Virtual hostname is invalid");
-			}
-
-			VirtualHost virtualHost = _virtualHostLocalService.fetchVirtualHost(
-				virtualHostname);
-
-			if (virtualHost == null) {
-				return;
-			}
-
-			Company virtualHostnameCompany =
-				companyPersistence.findByPrimaryKey(virtualHost.getCompanyId());
-
-			if (!webId.equals(virtualHostnameCompany.getWebId())) {
-				throw new CompanyVirtualHostException(
-					"Duplicate virtual hostname " + virtualHostname);
-			}
-		}
-		catch (CompanyVirtualHostException companyVirtualHostException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(companyVirtualHostException);
-			}
-
-			throw companyVirtualHostException;
-		}
-	}
-
-	@Override
-	public void validateWebId(String webId) throws CompanyWebIdException {
-		if (Validator.isNull(webId)) {
-			throw new CompanyWebIdException("Web ID is null");
-		}
-
-		if (companyPersistence.fetchByWebId(webId) != null) {
-			throw new CompanyWebIdException("Duplicate web ID " + webId);
-		}
+		validateWebId(webId);
+		validateVirtualHost(webId, lowerCaseVirtualHostname);
+		validateMx(-1, mx);
+		validateMaxUsers(maxUsers);
 	}
 
 	protected Company checkLogo(long companyId) throws PortalException {
@@ -2102,6 +2029,34 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		}
 	}
 
+	protected void validateMaxUsers(int maxUsers)
+		throws CompanyMaxUsersException {
+
+		if (maxUsers < 0) {
+			throw new CompanyMaxUsersException(
+				"Max users should be equal or greater than 0");
+		}
+	}
+
+	protected void validateMx(long companyId, String mx)
+		throws PortalException {
+
+		if (Validator.isNull(mx) || !Validator.isDomain(mx)) {
+			throw new CompanyMxException("Invalid domain " + mx);
+		}
+
+		String emailAddress =
+			PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX + "@" + mx;
+
+		EmailAddressValidator emailAddressValidator =
+			EmailAddressValidatorFactory.getInstance();
+
+		if (!emailAddressValidator.validate(companyId, emailAddress)) {
+			throw new CompanyMxException(
+				"Invalid email address " + emailAddress);
+		}
+	}
+
 	protected void validateName(long companyId, String name)
 		throws PortalException {
 
@@ -2109,6 +2064,62 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		if ((group != null) || Validator.isNull(name)) {
 			throw new CompanyNameException();
+		}
+	}
+
+	protected void validateVirtualHost(String webId, String virtualHostname)
+		throws PortalException {
+
+		try {
+			if (Validator.isNull(virtualHostname)) {
+				throw new CompanyVirtualHostException(
+					"Virtual hostname is null");
+			}
+			else if (virtualHostname.equals(_DEFAULT_VIRTUAL_HOST) &&
+					 !webId.equals(PropsValues.COMPANY_DEFAULT_WEB_ID)) {
+
+				throw new CompanyVirtualHostException(
+					"localhost can only be used with the default web ID " +
+						webId);
+			}
+			else if (!Validator.isDomain(virtualHostname) &&
+					 !Validator.isIPAddress(virtualHostname)) {
+
+				throw new CompanyVirtualHostException(
+					"Virtual hostname is invalid");
+			}
+
+			VirtualHost virtualHost = _virtualHostLocalService.fetchVirtualHost(
+				virtualHostname);
+
+			if (virtualHost == null) {
+				return;
+			}
+
+			Company virtualHostnameCompany =
+				companyPersistence.findByPrimaryKey(virtualHost.getCompanyId());
+
+			if (!webId.equals(virtualHostnameCompany.getWebId())) {
+				throw new CompanyVirtualHostException(
+					"Duplicate virtual hostname " + virtualHostname);
+			}
+		}
+		catch (CompanyVirtualHostException companyVirtualHostException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(companyVirtualHostException);
+			}
+
+			throw companyVirtualHostException;
+		}
+	}
+
+	protected void validateWebId(String webId) throws CompanyWebIdException {
+		if (Validator.isNull(webId)) {
+			throw new CompanyWebIdException("Web ID is null");
+		}
+
+		if (companyPersistence.fetchByWebId(webId) != null) {
+			throw new CompanyWebIdException("Duplicate web ID " + webId);
 		}
 	}
 

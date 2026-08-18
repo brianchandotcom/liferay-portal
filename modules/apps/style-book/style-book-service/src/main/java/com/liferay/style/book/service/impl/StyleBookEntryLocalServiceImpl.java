@@ -18,6 +18,11 @@ import com.liferay.portal.json.validator.JSONValidatorException;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.User;
@@ -38,6 +43,7 @@ import com.liferay.style.book.exception.DuplicateStyleBookEntryFrontendTokenExce
 import com.liferay.style.book.exception.DuplicateStyleBookEntryKeyException;
 import com.liferay.style.book.exception.DuplicateStyleBookEntryNameException;
 import com.liferay.style.book.exception.StyleBookEntryFrontendTokenDefinitionException;
+import com.liferay.style.book.exception.StyleBookEntryFrontendTokensValuesException;
 import com.liferay.style.book.exception.StyleBookEntryNameException;
 import com.liferay.style.book.exception.StyleBookEntryThemeIdException;
 import com.liferay.style.book.model.StyleBookEntry;
@@ -94,6 +100,8 @@ public class StyleBookEntryLocalServiceImpl
 		}
 
 		_validateStyleBookEntryKey(groupId, styleBookEntryKey);
+
+		_validateFrontendTokensValues(frontendTokensValues, null);
 
 		StyleBookEntry styleBookEntry = create();
 
@@ -520,6 +528,8 @@ public class StyleBookEntryLocalServiceImpl
 		StyleBookEntry styleBookEntry =
 			styleBookEntryPersistence.findByPrimaryKey(styleBookEntryId);
 
+		_validateFrontendTokensValues(frontendTokensValues, styleBookEntry);
+
 		styleBookEntry.setModifiedDate(new Date());
 		styleBookEntry.setFrontendTokensValues(frontendTokensValues);
 
@@ -607,6 +617,7 @@ public class StyleBookEntryLocalServiceImpl
 			styleBookEntryPersistence.findByPrimaryKey(styleBookEntryId);
 
 		_validate(styleBookEntry.getGroupId(), name, styleBookEntryId);
+		_validateFrontendTokensValues(frontendTokensValues, styleBookEntry);
 
 		if (Validator.isNull(styleBookEntryKey)) {
 			styleBookEntryKey = generateStyleBookEntryKey(
@@ -657,6 +668,7 @@ public class StyleBookEntryLocalServiceImpl
 			styleBookEntryPersistence.findByPrimaryKey(styleBookEntryId);
 
 		_validate(styleBookEntry.getGroupId(), name, styleBookEntryId);
+		_validateFrontendTokensValues(frontendTokensValues, styleBookEntry);
 
 		styleBookEntry.setFrontendTokensValues(frontendTokensValues);
 		styleBookEntry.setName(name);
@@ -795,6 +807,56 @@ public class StyleBookEntryLocalServiceImpl
 		}
 	}
 
+	private void _validateFrontendTokensValues(
+			String frontendTokensValues, StyleBookEntry styleBookEntry)
+		throws PortalException {
+
+		if (Validator.isBlank(frontendTokensValues) ||
+			((styleBookEntry != null) &&
+			 StringUtil.equals(
+				 styleBookEntry.getFrontendTokensValues(),
+				 frontendTokensValues))) {
+
+			return;
+		}
+
+		JSONObject frontendTokensValuesJSONObject;
+
+		try {
+			frontendTokensValuesJSONObject = _jsonFactory.createJSONObject(
+				frontendTokensValues);
+		}
+		catch (JSONException jsonException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to parse JSON", jsonException);
+			}
+
+			return;
+		}
+
+		for (String key : frontendTokensValuesJSONObject.keySet()) {
+			JSONObject frontendTokenValueJSONObject =
+				frontendTokensValuesJSONObject.getJSONObject(key);
+
+			if (frontendTokenValueJSONObject == null) {
+				continue;
+			}
+
+			String cssVariableMapping = frontendTokenValueJSONObject.getString(
+				"cssVariableMapping");
+			String value = frontendTokenValueJSONObject.getString("value");
+
+			if (cssVariableMapping.contains(StringPool.LESS_THAN) ||
+				value.contains(StringPool.LESS_THAN)) {
+
+				throw new StyleBookEntryFrontendTokensValuesException(
+					StringBundler.concat(
+						"Frontend token value \"", key,
+						"\" contains invalid characters"));
+			}
+		}
+	}
+
 	private void _validateStyleBookEntryKey(
 			long groupId, String styleBookEntryKey)
 		throws PortalException {
@@ -810,6 +872,9 @@ public class StyleBookEntryLocalServiceImpl
 		}
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		StyleBookEntryLocalServiceImpl.class);
+
 	@Reference
 	private CustomSQL _customSQL;
 
@@ -819,6 +884,9 @@ public class StyleBookEntryLocalServiceImpl
 	private final FrontendTokenDefinitionJSONValidator
 		_frontendTokenDefinitionJSONValidator =
 			new FrontendTokenDefinitionJSONValidator();
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private PortletFileRepository _portletFileRepository;

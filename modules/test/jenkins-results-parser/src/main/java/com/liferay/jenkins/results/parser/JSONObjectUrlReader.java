@@ -44,7 +44,7 @@ public class JSONObjectUrlReader extends BaseBodyUrlReader<JSONObject> {
 	 */
 	@Override
 	protected JSONObject parse(String content) throws IOException {
-		if (content.endsWith(_SUFFIX_TRUNCATED)) {
+		if (isTruncated(content)) {
 			return null;
 		}
 
@@ -57,9 +57,6 @@ public class JSONObjectUrlReader extends BaseBodyUrlReader<JSONObject> {
 				jsonException);
 		}
 	}
-
-	private static final String _SUFFIX_TRUNCATED =
-		"was truncated due to its size.";
 
 	private static volatile JSONObjectUrlReader _jsonObjectUrlReader =
 		new JSONObjectUrlReader();

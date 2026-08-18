@@ -28,7 +28,7 @@ public abstract class BaseBodyUrlReader<T> extends UrlReader<T> {
 		try (BufferedReader bufferedReader = new BufferedReader(
 				new FileReader(cachedFile))) {
 
-			return parse(_read(bufferedReader));
+			return parse(_readBody(bufferedReader));
 		}
 	}
 
@@ -45,7 +45,7 @@ public abstract class BaseBodyUrlReader<T> extends UrlReader<T> {
 			BufferedReader bufferedReader = new BufferedReader(
 				new InputStreamReader(inputStream))) {
 
-			content = _read(bufferedReader);
+			content = _readBody(bufferedReader);
 		}
 
 		if (expectResponse && JenkinsResultsParserUtil.isNullOrEmpty(content)) {
@@ -62,6 +62,15 @@ public abstract class BaseBodyUrlReader<T> extends UrlReader<T> {
 	}
 
 	/**
+	 * A body the server cut short is not a failed attempt, because another
+	 * attempt returns the same truncation. Readers that cannot represent one
+	 * answer null rather than parsing it.
+	 */
+	protected boolean isTruncated(String content) {
+		return content.endsWith(_SUFFIX_TRUNCATED);
+	}
+
+	/**
 	 * Turns a body that has already been read and accepted into the value the
 	 * caller asked for. Anything thrown here fails the attempt, which is what
 	 * puts a malformed response under the same retry policy as a transport
@@ -75,7 +84,7 @@ public abstract class BaseBodyUrlReader<T> extends UrlReader<T> {
 	 * has always been handed, so reading the bytes straight through would
 	 * change the returned content fleet wide.
 	 */
-	private String _read(BufferedReader bufferedReader) throws IOException {
+	private String _readBody(BufferedReader bufferedReader) throws IOException {
 		StringBuilder sb = new StringBuilder();
 
 		String line = bufferedReader.readLine();
@@ -89,5 +98,8 @@ public abstract class BaseBodyUrlReader<T> extends UrlReader<T> {
 
 		return sb.toString();
 	}
+
+	private static final String _SUFFIX_TRUNCATED =
+		"was truncated due to its size.";
 
 }

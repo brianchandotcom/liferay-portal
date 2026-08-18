@@ -435,7 +435,7 @@ public class JobHealthMonitorTest
 		testEquals(MonitorResult.Status.CRITICAL, monitorResult.getStatus());
 		testEquals(
 			"Unable to read http://test-9-1/job/generate-reports-controller: " +
-				"Unable to create JSON object",
+				"Unable to create a JSON object from the response body",
 			monitorResult.getMessage());
 	}
 

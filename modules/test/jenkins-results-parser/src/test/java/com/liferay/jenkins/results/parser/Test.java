@@ -63,6 +63,10 @@ public class Test {
 
 		Shell.setInstance(new Shell());
 
+		JSONArrayUrlReader.setInstance(new JSONArrayUrlReader());
+
+		JSONObjectUrlReader.setInstance(new JSONObjectUrlReader());
+
 		StreamUrlReader.setInstance(new StreamUrlReader());
 
 		TextUrlReader.setInstance(new TextUrlReader());
@@ -199,14 +203,21 @@ public class Test {
 	}
 
 	protected MockUrlReaders mockUrlReader() {
+		JSONArrayUrlReader jsonArrayUrlReader = Mockito.spy(
+			new JSONArrayUrlReader());
+		JSONObjectUrlReader jsonObjectUrlReader = Mockito.spy(
+			new JSONObjectUrlReader());
 		StreamUrlReader streamUrlReader = Mockito.spy(new StreamUrlReader());
 		TextUrlReader textUrlReader = Mockito.spy(new TextUrlReader());
 
+		JSONArrayUrlReader.setInstance(jsonArrayUrlReader);
+		JSONObjectUrlReader.setInstance(jsonObjectUrlReader);
 		StreamUrlReader.setInstance(streamUrlReader);
 		TextUrlReader.setInstance(textUrlReader);
 
 		MockUrlReaders mockUrlReaders = new MockUrlReaders(
-			streamUrlReader, textUrlReader);
+			jsonArrayUrlReader, jsonObjectUrlReader, streamUrlReader,
+			textUrlReader);
 
 		for (UrlReader<?> urlReader : mockUrlReaders.getUrlReaders()) {
 			try {
@@ -228,6 +239,17 @@ public class Test {
 			catch (IOException ioException) {
 				throw new RuntimeException(ioException);
 			}
+
+			// A retried read would otherwise sleep out the caller's retry
+			// period for real, which is minutes across a suite that exercises
+			// failure paths.
+
+			Mockito.doNothing(
+			).when(
+				urlReader
+			).sleep(
+				Mockito.anyLong()
+			);
 		}
 
 		return mockUrlReaders;

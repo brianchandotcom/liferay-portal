@@ -110,10 +110,8 @@ public class AddInstanceMVCActionCommand extends BaseMVCActionCommand {
 		String mx = ParamUtil.getString(actionRequest, "mx");
 		int maxUsers = ParamUtil.getInteger(actionRequest, "maxUsers");
 
-		_companyLocalService.validateWebId(webId);
-		_companyLocalService.validateVirtualHost(webId, virtualHostname);
-		_companyLocalService.validateMx(-1, mx);
-		_companyLocalService.validateMaxUsers(maxUsers);
+		_companyLocalService.validateCompany(
+			webId, virtualHostname, mx, maxUsers);
 
 		Map<String, Serializable> taskContextMap =
 			HashMapBuilder.<String, Serializable>put(

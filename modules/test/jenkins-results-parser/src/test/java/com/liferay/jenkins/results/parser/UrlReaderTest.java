@@ -11,10 +11,12 @@ import java.io.InputStream;
 
 import java.net.HttpURLConnection;
 import java.net.SocketTimeoutException;
+import java.net.URL;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -24,6 +26,14 @@ import org.mockito.Mockito;
  * @author Kenji Heigel
  */
 public class UrlReaderTest extends com.liferay.jenkins.results.parser.Test {
+
+	@After
+	@Override
+	public void tearDown() {
+		super.tearDown();
+
+		JenkinsMasterTestUtil.resetCaches();
+	}
 
 	@Test
 	public void testToInputStream() throws Exception {
@@ -105,6 +115,35 @@ public class UrlReaderTest extends com.liferay.jenkins.results.parser.Test {
 		}
 
 		verifyUrlReadCount(_MAX_RETRIES + 1, urlReaders, _URL);
+	}
+
+	/**
+	 * Resolving a client credentials authorization performs a token request, so
+	 * a URL that cannot carry the header must not resolve one.
+	 */
+	@Test
+	public void testToJSONObjectWhenURLIsFileAndAuthorizationIsClientCredentials()
+		throws Exception {
+
+		JenkinsMasterTestUtil.getJenkinsCohortProperties("test-9", 1);
+
+		MockUrlReaders urlReaders = mockUrlReader();
+
+		JSONObject jsonObject = new JSONObject();
+
+		jsonObject.put("id", 7800);
+
+		setUrlReaderOutput(String.valueOf(jsonObject), _URL_FILE, urlReaders);
+
+		JSONObject readJSONObject = JenkinsResultsParserUtil.toJSONObject(
+			_URL_FILE,
+			new JenkinsResultsParserUtil.ClientCredentialsHTTPAuthorization(
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				new URL("https://test.liferay.com/o/oauth2/token")));
+
+		Assert.assertEquals(7800, readJSONObject.getInt("id"));
+
+		verifyUrlReadCount(0, urlReaders, "/o/oauth2/token");
 	}
 
 	@Test
@@ -291,5 +330,7 @@ public class UrlReaderTest extends com.liferay.jenkins.results.parser.Test {
 	private static final String _STANDARD_OUT = "Hello, World!\n";
 
 	private static final String _URL = "http://test.liferay.com";
+
+	private static final String _URL_FILE = "file:/tmp/queue-item.json";
 
 }

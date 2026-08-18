@@ -98,13 +98,13 @@ public class BrokenLinkAssetSearcher {
 		int startPosition = Math.min(
 			pagination.getStartPosition(), _MAX_RESULT_WINDOW);
 
-		if ((startPosition < pagination.getStartPosition()) &&
+		if ((pagination.getStartPosition() >= _MAX_RESULT_WINDOW) &&
 			_log.isWarnEnabled()) {
 
 			_log.warn(
 				StringBundler.concat(
 					"Requested start position ", pagination.getStartPosition(),
-					" is beyond the maximum result window ", _MAX_RESULT_WINDOW,
+					" reaches the maximum result window ", _MAX_RESULT_WINDOW,
 					", so the page is empty"));
 		}
 

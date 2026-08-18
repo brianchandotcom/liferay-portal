@@ -46,9 +46,9 @@ public final class FIPSAuditFilter extends AbstractFilter {
 
 			_logger.error(
 				StringBundler.concat(
-					"Unable to write the event from the logger \"",
+					"Unable to write the log event from the logger \"",
 					logEvent.getLoggerName(),
-					"\" to the FIPS audit trail because it carries no \"",
+					"\" to the FIPS audit log because it carries no \"",
 					FIPSLog4jUtil.MARKER_NAME, "\" marker"));
 
 			return Result.DENY;
@@ -57,10 +57,10 @@ public final class FIPSAuditFilter extends AbstractFilter {
 		if (!_hasRecord(logEvent.getMessage())) {
 			_logger.error(
 				StringBundler.concat(
-					"Unable to write the event from the logger \"",
+					"Unable to write the log event from the logger \"",
 					logEvent.getLoggerName(),
-					"\" to the FIPS audit trail because its message does not ",
-					"carry a FIPS audit record"));
+					"\" to the FIPS audit log because its message carries no ",
+					"FIPS audit record"));
 
 			return Result.DENY;
 		}

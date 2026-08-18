@@ -425,10 +425,10 @@ public class JobHealthMonitorTest
 
 	@Test
 	public void testExecuteUnreadableResponse() throws Exception {
-		MockUrlReaders urlReaders = mockUrlReaders();
+		MockUrlReaders mockUrlReaders = mockUrlReaders();
 
 		setUrlReaderOutput(
-			RandomTestUtil.randomString(), _JOB_API_URL, urlReaders);
+			RandomTestUtil.randomString(), _JOB_API_URL, mockUrlReaders);
 
 		MonitorResult monitorResult = _execute(_newMonitorProperties());
 
@@ -536,9 +536,10 @@ public class JobHealthMonitorTest
 	}
 
 	private void _setJobJSONObject(JSONObject jobJSONObject) throws Exception {
-		MockUrlReaders urlReaders = mockUrlReaders();
+		MockUrlReaders mockUrlReaders = mockUrlReaders();
 
-		setUrlReaderOutput(jobJSONObject.toString(), _JOB_API_URL, urlReaders);
+		setUrlReaderOutput(
+			jobJSONObject.toString(), _JOB_API_URL, mockUrlReaders);
 	}
 
 	private void _testJobHealthMonitorExpectedIllegalArgumentException(

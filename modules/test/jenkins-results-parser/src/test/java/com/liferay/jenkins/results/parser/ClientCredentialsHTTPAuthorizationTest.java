@@ -30,7 +30,7 @@ public class ClientCredentialsHTTPAuthorizationTest
 
 	@Test
 	public void testInvalidateToken() throws Exception {
-		MockUrlReaders urlReaders = _mockTokenRequestUrlReader();
+		MockUrlReaders mockUrlReaders = _mockTokenRequestUrlReader();
 
 		JenkinsResultsParserUtil.ClientCredentialsHTTPAuthorization
 			clientCredentialsHTTPAuthorization =
@@ -43,12 +43,12 @@ public class ClientCredentialsHTTPAuthorizationTest
 		Assert.assertNotEquals(
 			authorization, clientCredentialsHTTPAuthorization.toString());
 
-		_verifyTokenRequestCount(2, urlReaders);
+		_verifyTokenRequestCount(2, mockUrlReaders);
 	}
 
 	@Test
 	public void testInvalidateTokenWhenAuthorizationIsStale() throws Exception {
-		MockUrlReaders urlReaders = _mockTokenRequestUrlReader();
+		MockUrlReaders mockUrlReaders = _mockTokenRequestUrlReader();
 
 		JenkinsResultsParserUtil.ClientCredentialsHTTPAuthorization
 			clientCredentialsHTTPAuthorization =
@@ -65,12 +65,12 @@ public class ClientCredentialsHTTPAuthorizationTest
 		Assert.assertEquals(
 			newAuthorization, clientCredentialsHTTPAuthorization.toString());
 
-		_verifyTokenRequestCount(2, urlReaders);
+		_verifyTokenRequestCount(2, mockUrlReaders);
 	}
 
 	@Test
 	public void testToStringCachesToken() throws Exception {
-		MockUrlReaders urlReaders = _mockTokenRequestUrlReader();
+		MockUrlReaders mockUrlReaders = _mockTokenRequestUrlReader();
 
 		JenkinsResultsParserUtil.ClientCredentialsHTTPAuthorization
 			clientCredentialsHTTPAuthorization =
@@ -81,12 +81,12 @@ public class ClientCredentialsHTTPAuthorizationTest
 		Assert.assertEquals(
 			authorization, clientCredentialsHTTPAuthorization.toString());
 
-		_verifyTokenRequestCount(1, urlReaders);
+		_verifyTokenRequestCount(1, mockUrlReaders);
 	}
 
 	@Test
 	public void testToStringRefreshesExpiredToken() throws Exception {
-		MockUrlReaders urlReaders = _mockTokenRequestUrlReader();
+		MockUrlReaders mockUrlReaders = _mockTokenRequestUrlReader();
 
 		JenkinsResultsParserUtil.ClientCredentialsHTTPAuthorization
 			clientCredentialsHTTPAuthorization =
@@ -101,13 +101,13 @@ public class ClientCredentialsHTTPAuthorizationTest
 		Assert.assertNotEquals(
 			authorization, clientCredentialsHTTPAuthorization.toString());
 
-		_verifyTokenRequestCount(2, urlReaders);
+		_verifyTokenRequestCount(2, mockUrlReaders);
 	}
 
 	private MockUrlReaders _mockTokenRequestUrlReader() throws Exception {
-		MockUrlReaders urlReaders = mockUrlReaders();
+		MockUrlReaders mockUrlReaders = mockUrlReaders();
 
-		for (UrlReader<?> urlReader : urlReaders.getUrlReaders()) {
+		for (UrlReader<?> urlReader : mockUrlReaders.getUrlReaders()) {
 			Mockito.doAnswer(
 				invocation -> mockURLConnection(
 					200,
@@ -129,7 +129,7 @@ public class ClientCredentialsHTTPAuthorizationTest
 			);
 		}
 
-		return urlReaders;
+		return mockUrlReaders;
 	}
 
 	private JenkinsResultsParserUtil.ClientCredentialsHTTPAuthorization
@@ -144,9 +144,10 @@ public class ClientCredentialsHTTPAuthorizationTest
 	}
 
 	private void _verifyTokenRequestCount(
-		int expectedCount, MockUrlReaders urlReaders) {
+		int expectedCount, MockUrlReaders mockUrlReaders) {
 
-		verifyUrlReadCount(expectedCount, urlReaders, "/o/oauth2/token");
+		verifyUrlReadAttemptCount(
+			expectedCount, mockUrlReaders, "/o/oauth2/token");
 	}
 
 }

@@ -401,7 +401,7 @@ public class Test {
 	 * reader to another. A retried read counts once per attempt, which is what
 	 * makes the retry policy assertable.
 	 */
-	protected void verifyUrlReadCount(
+	protected void verifyUrlReadAttemptCount(
 		int expectedCount, MockUrlReaders mockUrlReaders, String url) {
 
 		int count = 0;
@@ -412,9 +412,7 @@ public class Test {
 			for (Invocation invocation : mockingDetails.getInvocations()) {
 				Method method = invocation.getMethod();
 
-				String methodName = method.getName();
-
-				if (!methodName.equals("openURLConnection")) {
+				if (!method.equals(_openURLConnectionMethod)) {
 					continue;
 				}
 
@@ -431,6 +429,25 @@ public class Test {
 
 	protected List<File> dependenciesDirs = getDependenciesDirs(
 		getSimpleClassNames());
+
+	/**
+	 * Resolved once so that renaming the seam fails loudly here, rather than
+	 * silently matching nothing and letting every attempt count pass at zero.
+	 */
+	private static Method _getOpenURLConnectionMethod() {
+		try {
+			return UrlReader.class.getDeclaredMethod(
+				"openURLConnection", String.class, boolean.class,
+				JenkinsResultsParserUtil.HttpRequestMethod.class, String.class,
+				boolean.class, int.class, String.class);
+		}
+		catch (NoSuchMethodException noSuchMethodException) {
+			throw new ExceptionInInitializerError(noSuchMethodException);
+		}
+	}
+
+	private static final Method _openURLConnectionMethod =
+		_getOpenURLConnectionMethod();
 
 	private List<String> _simpleClassNames;
 

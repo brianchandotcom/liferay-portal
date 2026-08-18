@@ -11,8 +11,6 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
-import com.liferay.portal.kernel.exception.CompanyMaxUsersException;
-import com.liferay.portal.kernel.exception.CompanyWebIdException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.messaging.async.Async;
@@ -607,14 +605,9 @@ public interface CompanyLocalService
 		boolean sendPassword, boolean strangers, boolean strangersWithMx,
 		boolean strangersVerify, boolean siteLogo);
 
-	public void validateMaxUsers(int maxUsers) throws CompanyMaxUsersException;
-
-	public void validateMx(long companyId, String mx) throws PortalException;
-
-	public void validateVirtualHost(String webId, String virtualHostname)
+	public void validateCompany(
+			String webId, String virtualHostname, String mx, int maxUsers)
 		throws PortalException;
 
-	public void validateWebId(String webId) throws CompanyWebIdException;
-
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1079830893
+// LIFERAY-SERVICE-BUILDER-HASH:-1452198032

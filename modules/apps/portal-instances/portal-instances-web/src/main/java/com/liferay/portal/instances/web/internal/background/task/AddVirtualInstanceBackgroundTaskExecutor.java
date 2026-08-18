@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.backgroundtask.BaseBackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplay;
+import com.liferay.portal.kernel.encryptor.Encryptor;
 import com.liferay.portal.kernel.exception.CompanyMaxUsersException;
 import com.liferay.portal.kernel.exception.CompanyMxException;
 import com.liferay.portal.kernel.exception.CompanyVirtualHostException;
@@ -29,9 +30,11 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.CompanyService;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PortalInstances;
 
 import java.io.Serializable;
@@ -79,8 +82,9 @@ public class AddVirtualInstanceBackgroundTaskExecutor
 				PortalInstancesBackgroundTaskConstants.MAX_USERS));
 		boolean active = GetterUtil.getBoolean(
 			taskContextMap.get(PortalInstancesBackgroundTaskConstants.ACTIVE));
-		String defaultAdminPassword = (String)taskContextMap.get(
-			PortalInstancesBackgroundTaskConstants.DEFAULT_ADMIN_PASSWORD);
+		String defaultAdminPassword = _decryptDefaultAdminPassword(
+			(String)taskContextMap.get(
+				PortalInstancesBackgroundTaskConstants.DEFAULT_ADMIN_PASSWORD));
 		String defaultAdminScreenName = (String)taskContextMap.get(
 			PortalInstancesBackgroundTaskConstants.DEFAULT_ADMIN_SCREEN_NAME);
 		String defaultAdminEmailAddress = (String)taskContextMap.get(
@@ -160,6 +164,19 @@ public class AddVirtualInstanceBackgroundTaskExecutor
 		return super.handleException(backgroundTask, exception1);
 	}
 
+	private String _decryptDefaultAdminPassword(String defaultAdminPassword)
+		throws Exception {
+
+		if (Validator.isNull(defaultAdminPassword)) {
+			return null;
+		}
+
+		Company company = _companyLocalService.getCompanyById(
+			PortalInstances.getDefaultCompanyId());
+
+		return _encryptor.decrypt(company.getKeyObj(), defaultAdminPassword);
+	}
+
 	private String _getErrorMessageKey(Exception exception) {
 		Throwable throwable = exception;
 
@@ -225,7 +242,13 @@ public class AddVirtualInstanceBackgroundTaskExecutor
 		AddVirtualInstanceBackgroundTaskExecutor.class);
 
 	@Reference
+	private CompanyLocalService _companyLocalService;
+
+	@Reference
 	private CompanyService _companyService;
+
+	@Reference
+	private Encryptor _encryptor;
 
 	@Reference
 	private UserNotificationEventLocalService

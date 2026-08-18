@@ -11,6 +11,7 @@ import com.liferay.portal.instances.web.internal.constants.PortalInstancesBackgr
 import com.liferay.portal.instances.web.internal.constants.PortalInstancesPortletKeys;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
+import com.liferay.portal.kernel.encryptor.Encryptor;
 import com.liferay.portal.kernel.exception.CompanyMaxUsersException;
 import com.liferay.portal.kernel.exception.CompanyMxException;
 import com.liferay.portal.kernel.exception.CompanyVirtualHostException;
@@ -20,6 +21,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -29,7 +31,9 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.util.PortalInstances;
 
 import jakarta.portlet.ActionRequest;
 import jakarta.portlet.ActionResponse;
@@ -137,8 +141,9 @@ public class AddInstanceMVCActionCommand extends BaseMVCActionCommand {
 					actionRequest, "defaultAdminMiddleName", null)
 			).put(
 				PortalInstancesBackgroundTaskConstants.DEFAULT_ADMIN_PASSWORD,
-				() -> ParamUtil.getString(
-					actionRequest, "defaultAdminPassword", null)
+				() -> _encryptDefaultAdminPassword(
+					ParamUtil.getString(
+						actionRequest, "defaultAdminPassword", null))
 			).put(
 				PortalInstancesBackgroundTaskConstants.
 					DEFAULT_ADMIN_SCREEN_NAME,
@@ -169,6 +174,19 @@ public class AddInstanceMVCActionCommand extends BaseMVCActionCommand {
 			taskContextMap, new ServiceContext());
 	}
 
+	private String _encryptDefaultAdminPassword(String defaultAdminPassword)
+		throws Exception {
+
+		if (Validator.isNull(defaultAdminPassword)) {
+			return null;
+		}
+
+		Company company = _companyLocalService.getCompanyById(
+			PortalInstances.getDefaultCompanyId());
+
+		return _encryptor.encrypt(company.getKeyObj(), defaultAdminPassword);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		AddInstanceMVCActionCommand.class);
 
@@ -177,6 +195,9 @@ public class AddInstanceMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private Encryptor _encryptor;
 
 	@Reference
 	private JSONFactory _jsonFactory;

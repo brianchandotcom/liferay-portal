@@ -5,6 +5,8 @@
 
 package com.liferay.portal.instances.web.internal.notifications;
 
+import com.liferay.portal.kernel.util.StringUtil;
+
 /**
  * @author Luis Ortiz
  */
@@ -17,7 +19,9 @@ public enum PortalInstancesOperationType {
 		for (PortalInstancesOperationType portalInstancesOperationType :
 				values()) {
 
-			if (value.equals(portalInstancesOperationType.getValue())) {
+			if (StringUtil.equals(
+					value, portalInstancesOperationType.getValue())) {
+
 				return portalInstancesOperationType;
 			}
 		}

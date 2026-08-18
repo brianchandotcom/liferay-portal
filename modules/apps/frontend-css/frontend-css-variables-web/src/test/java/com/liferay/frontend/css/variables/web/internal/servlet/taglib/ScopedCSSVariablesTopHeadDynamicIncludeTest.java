@@ -11,6 +11,7 @@ import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -94,6 +95,67 @@ public class ScopedCSSVariablesTopHeadDynamicIncludeTest {
 		Assert.assertEquals(
 			_read("liferay_css_variables_1.html", true),
 			bufferCacheServletResponse.getString());
+	}
+
+	@Test
+	public void testIncludeEscapesCSSVariableKeysAndValues()
+		throws IOException {
+
+		ScopedCSSVariablesTopHeadDynamicInclude
+			scopedCSSVariablesTopHeadDynamicInclude =
+				new ScopedCSSVariablesTopHeadDynamicInclude();
+
+		ScopedCSSVariablesProvider scopedCSSVariablesProvider = Mockito.mock(
+			ScopedCSSVariablesProvider.class);
+
+		String xssContent = "</style><script>alert(1)</script>";
+
+		Collection<ScopedCSSVariables> scopedCSSVariablesCollection =
+			Arrays.asList(
+				new ScopedCSSVariables() {
+
+					@Override
+					public Map<String, String> getCSSVariables() {
+						return HashMapBuilder.put(
+							xssContent, RandomTestUtil.randomString()
+						).put(
+							RandomTestUtil.randomString(), xssContent
+						).build();
+					}
+
+					@Override
+					public String getScope() {
+						return RandomTestUtil.randomString();
+					}
+
+				});
+
+		Mockito.when(
+			scopedCSSVariablesProvider.getScopedCSSVariablesCollection(
+				Mockito.any(HttpServletRequest.class))
+		).thenReturn(
+			scopedCSSVariablesCollection
+		);
+
+		scopedCSSVariablesTopHeadDynamicInclude.setScopedCSSVariablesProviders(
+			Arrays.asList(scopedCSSVariablesProvider));
+
+		HttpServletRequest httpServletRequest = Mockito.mock(
+			HttpServletRequest.class);
+
+		HttpServletResponse httpServletResponse = Mockito.mock(
+			HttpServletResponse.class);
+
+		BufferCacheServletResponse bufferCacheServletResponse =
+			new BufferCacheServletResponse(httpServletResponse);
+
+		scopedCSSVariablesTopHeadDynamicInclude.include(
+			httpServletRequest, bufferCacheServletResponse,
+			"/html/common/themes/top_head.jsp#post");
+
+		String content = bufferCacheServletResponse.getString();
+
+		Assert.assertFalse(content, content.contains(xssContent));
 	}
 
 	@Test

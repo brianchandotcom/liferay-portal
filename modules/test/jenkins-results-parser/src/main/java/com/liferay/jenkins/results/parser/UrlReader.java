@@ -286,7 +286,11 @@ public abstract class UrlReader<T> {
 									clientId, clientSecret, tokenURL));
 				}
 
-				if (httpAuthorization != null) {
+				// Resolving a client credentials authorization performs a
+				// token request, so skip it for a URL that cannot carry the
+				// header.
+
+				if ((httpAuthorization != null) && !url.startsWith("file:")) {
 					authorization = httpAuthorization.toString();
 				}
 

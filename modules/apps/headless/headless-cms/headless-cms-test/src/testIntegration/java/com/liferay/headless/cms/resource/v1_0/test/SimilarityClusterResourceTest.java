@@ -7,6 +7,7 @@ package com.liferay.headless.cms.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.depot.constants.DepotConstants;
+import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.headless.cms.client.dto.v1_0.SimilarityCluster;
@@ -25,8 +26,13 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -293,6 +299,16 @@ public class SimilarityClusterResourceTest
 			String title, String content)
 		throws Exception {
 
+		return _addObjectEntry(
+			depotEntry, objectDefinition, title, content,
+			ServiceContextTestUtil.getServiceContext());
+	}
+
+	private ObjectEntry _addObjectEntry(
+			DepotEntry depotEntry, ObjectDefinition objectDefinition,
+			String title, String content, ServiceContext serviceContext)
+		throws Exception {
+
 		ObjectEntryFolder objectEntryFolder =
 			_objectEntryFolderLocalService.
 				getObjectEntryFolderByExternalReferenceCode(
@@ -314,7 +330,7 @@ public class SimilarityClusterResourceTest
 					"en_US", (Serializable)title
 				).build()
 			).build(),
-			ServiceContextTestUtil.getServiceContext());
+			serviceContext);
 	}
 
 	private DepotEntry _addSpaceDepotEntry(ServiceContext serviceContext)
@@ -419,13 +435,44 @@ public class SimilarityClusterResourceTest
 		ObjectDefinition objectDefinition =
 			_getBasicWebContentObjectDefinition();
 
-		_addObjectEntry(
+		ObjectEntry objectEntry = _addObjectEntry(
 			depotEntry, objectDefinition, _NEAR_DUPLICATE_TITLE,
 			_NEAR_DUPLICATE_CONTENT);
+
 		_addObjectEntry(
 			depotEntry, objectDefinition, _NEAR_DUPLICATE_TITLE,
 			_NEAR_DUPLICATE_CONTENT +
 				" You can also contact support for help.");
+
+		Page<SimilarityCluster> similarityClustersPage =
+			_getSimilarityClustersPage(groupId, null);
+
+		Assert.assertEquals(2, similarityClustersPage.getTotalCount());
+
+		List<SimilarityCluster> similarityClusters =
+			(List<SimilarityCluster>)similarityClustersPage.getItems();
+
+		_assertSimilarityCluster(
+			similarityClusters.get(0), 2,
+			new String[] {_NEAR_DUPLICATE_TITLE, _NEAR_DUPLICATE_TITLE});
+
+		// The CMS grants VIEW on every content to the user role and to the
+		// space member role, so hiding one asset takes revoking both
+
+		for (String name :
+				new String[] {
+					DepotRolesConstants.ASSET_LIBRARY_MEMBER, RoleConstants.USER
+				}) {
+
+			Role role = _roleLocalService.getRole(
+				testCompany.getCompanyId(), name);
+
+			_resourcePermissionLocalService.setResourcePermissions(
+				testCompany.getCompanyId(), objectDefinition.getClassName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(objectEntry.getObjectEntryId()),
+				role.getRoleId(), new String[0]);
+		}
 
 		String password = RandomTestUtil.randomString();
 
@@ -444,21 +491,17 @@ public class SimilarityClusterResourceTest
 				LocaleUtil.getDefault()
 			).build();
 
-		Page<SimilarityCluster> similarityClustersPage =
+		similarityClustersPage =
 			userSimilarityClusterResource.getSimilarityClustersPage(
 				groupId, null);
 
-		Assert.assertEquals(2, similarityClustersPage.getTotalCount());
+		Assert.assertEquals(0, similarityClustersPage.getTotalCount());
 
-		List<SimilarityCluster> similarityClusters =
+		similarityClusters =
 			(List<SimilarityCluster>)similarityClustersPage.getItems();
 
 		Assert.assertEquals(
-			similarityClusters.toString(), 1, similarityClusters.size());
-
-		_assertSimilarityCluster(
-			similarityClusters.get(0), 2,
-			new String[] {_NEAR_DUPLICATE_TITLE, _NEAR_DUPLICATE_TITLE});
+			similarityClusters.toString(), 0, similarityClusters.size());
 
 		_userLocalService.deleteUser(user);
 
@@ -567,6 +610,12 @@ public class SimilarityClusterResourceTest
 
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
 
 	@Inject
 	private UserLocalService _userLocalService;

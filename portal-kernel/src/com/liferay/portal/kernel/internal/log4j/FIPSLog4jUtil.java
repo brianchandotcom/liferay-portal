@@ -29,7 +29,9 @@ import org.apache.logging.log4j.message.ObjectMessage;
  */
 public class FIPSLog4jUtil {
 
-	public static final String MARKER_NAME = "FIPS_AUDIT";
+	public static Marker getMarker() {
+		return _marker;
+	}
 
 	public static void write(
 		Map<String, Object> fields, FIPSAuditEvent.Severity severity) {
@@ -95,6 +97,7 @@ public class FIPSLog4jUtil {
 	private static final Logger _logger = LogManager.getLogger(
 		FIPSLog4jUtil.class);
 
-	private static final Marker _marker = MarkerManager.getMarker(MARKER_NAME);
+	private static final Marker _marker = MarkerManager.getMarker(
+		"FIPS_AUDIT_MARKER");
 
 }

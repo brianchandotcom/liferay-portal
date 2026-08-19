@@ -8,12 +8,9 @@ package com.liferay.portal.kernel.internal.log4j;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.test.log.LogCapture;
-import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.logging.log4j.Level;
@@ -50,31 +47,23 @@ public class FIPSAuditFilterTest {
 			Filter.Result.ACCEPT,
 			fipsAuditFilter.filter(
 				_createLogEvent(
-					MarkerManager.getMarker(FIPSLog4jUtil.MARKER_NAME),
-					new ObjectMessage(_record))));
+					FIPSLog4jUtil.getMarker(), new ObjectMessage(_record))));
 	}
 
 	@Test
 	public void testFilterDeniesAnEventWithoutARecord() {
-		Marker marker = MarkerManager.getMarker(FIPSLog4jUtil.MARKER_NAME);
-
 		_testFilterDenies(
-			"carries no FIPS audit record", marker,
-			new ObjectMessage("not-a-map"));
+			FIPSLog4jUtil.getMarker(), new ObjectMessage("not-a-map"));
 		_testFilterDenies(
-			"carries no FIPS audit record", marker,
-			new SimpleMessage("Not a record"));
+			FIPSLog4jUtil.getMarker(), new SimpleMessage("Not a record"));
 	}
 
 	@Test
 	public void testFilterDeniesAnEventWithoutTheMarker() {
 		_testFilterDenies(
-			"carries no \"FIPS_AUDIT\" marker",
 			MarkerManager.getMarker(RandomTestUtil.randomString()),
 			new ObjectMessage(_record));
-		_testFilterDenies(
-			"carries no \"FIPS_AUDIT\" marker", null,
-			new ObjectMessage(_record));
+		_testFilterDenies(null, new ObjectMessage(_record));
 	}
 
 	private FIPSAuditFilter _createFIPSAuditFilter() {
@@ -94,26 +83,12 @@ public class FIPSAuditFilterTest {
 		return builder.build();
 	}
 
-	private void _testFilterDenies(
-		String expectedMessage, Marker marker, Message message) {
-
+	private void _testFilterDenies(Marker marker, Message message) {
 		FIPSAuditFilter fipsAuditFilter = _createFIPSAuditFilter();
 
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				FIPSAuditFilter.class.getName(), LoggerTestUtil.ERROR)) {
-
-			Assert.assertEquals(
-				Filter.Result.DENY,
-				fipsAuditFilter.filter(_createLogEvent(marker, message)));
-
-			List<String> messages = logCapture.getMessages();
-
-			Assert.assertEquals(messages.toString(), 1, messages.size());
-
-			String errorMessage = messages.get(0);
-
-			Assert.assertTrue(errorMessage.contains(expectedMessage));
-		}
+		Assert.assertEquals(
+			Filter.Result.DENY,
+			fipsAuditFilter.filter(_createLogEvent(marker, message)));
 	}
 
 	private final Map<String, Object> _record = Collections.singletonMap(

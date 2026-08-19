@@ -3257,7 +3257,7 @@ public abstract class BaseBuild implements Build {
 
 				content = JenkinsResultsParserUtil.toString(
 					JenkinsResultsParserUtil.getLocalURL(urlString), false,
-					maxRetries, retryPeriodSeconds, 0, true);
+					maxRetries, retryPeriodSeconds, 0, false);
 			}
 			catch (IOException ioException) {
 				if (required) {

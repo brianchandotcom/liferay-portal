@@ -746,7 +746,7 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 						getURL(), "/queue/item/", String.valueOf(queueId),
 						"/api/json?tree=actions[parameters[name,value]],",
 						"id,inQueueSince,task[name,url],url,why"),
-					false, 5000);
+					false, 0, 0, 5000);
 
 			if ((queueItemJSONObject == null) ||
 				!queueItemJSONObject.has("id")) {

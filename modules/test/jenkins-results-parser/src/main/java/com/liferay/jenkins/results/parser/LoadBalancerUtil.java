@@ -144,7 +144,7 @@ public class LoadBalancerUtil {
 
 			String propertiesString = JenkinsResultsParserUtil.toString(
 				JenkinsResultsParserUtil.getLocalURL(propertiesURL), false,
-				false);
+				true);
 
 			properties.load(new StringReader(propertiesString));
 		}

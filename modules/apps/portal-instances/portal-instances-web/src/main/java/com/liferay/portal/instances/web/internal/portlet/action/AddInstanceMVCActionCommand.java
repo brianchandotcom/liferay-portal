@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -72,12 +73,13 @@ public class AddInstanceMVCActionCommand extends BaseMVCActionCommand {
 		hideDefaultSuccessMessage(actionRequest);
 
 		try {
-			_addBackgroundTask(actionRequest);
+			String webId = _addBackgroundTask(actionRequest);
 
 			jsonObject.put(
 				"successMessage",
 				_language.format(
-					locale, "the-x-operation-has-started-successfully", "add"));
+					locale, "the-virtual-instance-x-is-being-added",
+					HtmlUtil.escape(webId), false));
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -92,7 +94,7 @@ public class AddInstanceMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, actionResponse, jsonObject);
 	}
 
-	private void _addBackgroundTask(ActionRequest actionRequest)
+	private String _addBackgroundTask(ActionRequest actionRequest)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -167,6 +169,8 @@ public class AddInstanceMVCActionCommand extends BaseMVCActionCommand {
 				StringPool.POUND + webId,
 			AddVirtualInstanceBackgroundTaskExecutor.class.getName(),
 			taskContextMap, new ServiceContext());
+
+		return webId;
 	}
 
 	private String _encryptDefaultAdminPassword(String defaultAdminPassword)

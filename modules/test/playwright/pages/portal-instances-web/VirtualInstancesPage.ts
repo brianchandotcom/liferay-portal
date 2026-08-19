@@ -197,6 +197,6 @@ export class VirtualInstancesPage {
 			await expect(
 				this.page.getByRole('row').filter({hasText: name})
 			).toBeVisible({timeout: 10 * 1000});
-		}).toPass({timeout: 300 * 1000});
+		}).toPass({timeout: 180 * 1000});
 	}
 }

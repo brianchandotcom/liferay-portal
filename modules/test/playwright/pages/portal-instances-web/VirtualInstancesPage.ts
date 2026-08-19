@@ -53,9 +53,7 @@ export class VirtualInstancesPage {
 			this.addInstanceFrame.getByLabel('Virtual Instance Initializer');
 		this.addInstanceWebIdField = this.addInstanceFrame.getByLabel('Web ID');
 		this.globalMenuPage = new GlobalMenuPage(page);
-		this.errorMessage = this.addInstanceFrame.getByText(
-			'Error:Please enter a valid'
-		);
+		this.errorMessage = this.addInstanceFrame.locator('.alert-danger');
 		this.errorMessageEmailAddress = this.addInstanceFrame.getByText(
 			'The Email Address field is required'
 		);

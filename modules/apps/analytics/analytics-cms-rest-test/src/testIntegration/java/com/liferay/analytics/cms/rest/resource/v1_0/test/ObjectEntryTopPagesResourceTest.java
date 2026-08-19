@@ -5,41 +5,35 @@
 
 package com.liferay.analytics.cms.rest.resource.v1_0.test;
 
-import com.liferay.analytics.cms.rest.dto.v1_0.Metric;
-import com.liferay.analytics.cms.rest.dto.v1_0.ObjectEntryTopPages;
-import com.liferay.analytics.cms.rest.dto.v1_0.TopPage;
-import com.liferay.analytics.cms.rest.resource.v1_0.ObjectEntryTopPagesResource;
+import com.liferay.analytics.cms.rest.client.dto.v1_0.Metric;
+import com.liferay.analytics.cms.rest.client.dto.v1_0.ObjectEntryTopPages;
+import com.liferay.analytics.cms.rest.client.dto.v1_0.TopPage;
+import com.liferay.analytics.cms.rest.client.resource.v1_0.ObjectEntryTopPagesResource;
+import com.liferay.analytics.test.util.AnalyticsCloudHttpServer;
 import com.liferay.analytics.test.util.AnalyticsCompanyConfigurationTemporarySwapper;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
-import com.liferay.object.exception.NoSuchObjectEntryException;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.rest.test.util.ObjectEntryTestUtil;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.MockHttp;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-
-import jakarta.ws.rs.BadRequestException;
 
 import java.io.Serializable;
 
@@ -92,6 +86,20 @@ public class ObjectEntryTopPagesResourceTest
 					"en_US", RandomTestUtil.randomString()
 				).build()
 			).build());
+
+		String password = RandomTestUtil.randomString();
+
+		_user = UserTestUtil.addUser(testCompany, password);
+
+		_userObjectEntryTopPagesResource = ObjectEntryTopPagesResource.builder(
+		).authentication(
+			_user.getEmailAddress(), password
+		).endpoint(
+			testCompany.getVirtualHostname(),
+			PortalUtil.getPortalServerPort(false), "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
 	}
 
 	@Override
@@ -104,67 +112,67 @@ public class ObjectEntryTopPagesResourceTest
 	}
 
 	private void _testGetObjectEntryTopPages() throws Exception {
-		try (AnalyticsCompanyConfigurationTemporarySwapper
+		try (AnalyticsCloudHttpServer analyticsCloudHttpServer =
+				new AnalyticsCloudHttpServer(
+					"/api/1.0/asset-metric/objectEntry/appears-on",
+					() -> JSONUtil.put(
+						"pages",
+						JSONUtil.putAll(
+							JSONUtil.put(
+								"canonicalUrl", "https://test.com/1"
+							).put(
+								"defaultMetric",
+								JSONUtil.put(
+									"metricType", "VIEWS"
+								).put(
+									"value", 12
+								)
+							).put(
+								"pageTitle", "Title 1"
+							).put(
+								"siteName", "Site 1"
+							),
+							JSONUtil.put(
+								"canonicalUrl", "https://test.com/2"
+							).put(
+								"defaultMetric",
+								JSONUtil.put(
+									"metricType", "VIEWS"
+								).put(
+									"value", 10
+								)
+							).put(
+								"pageTitle", "Title 2"
+							).put(
+								"siteName", "Site 1"
+							),
+							JSONUtil.put(
+								"canonicalUrl", "https://test.com/3"
+							).put(
+								"defaultMetric",
+								JSONUtil.put(
+									"metricType", "VIEWS"
+								).put(
+									"value", 9
+								)
+							).put(
+								"pageTitle", "Title 3"
+							).put(
+								"siteName", "Site 1"
+							))
+					).put(
+						"totalCount", 50
+					).toString());
+
+			AnalyticsCompanyConfigurationTemporarySwapper
 				analyticsCompanyConfigurationTemporarySwapper =
 					new AnalyticsCompanyConfigurationTemporarySwapper(
-						testCompany.getCompanyId())) {
-
-			ReflectionTestUtil.setFieldValue(
-				_objectEntryTopPagesResource, "_http",
-				new MockHttp(
-					Collections.singletonMap(
-						"/api/1.0/asset-metric/objectEntry/appears-on",
-						() -> JSONUtil.put(
-							"pages",
-							JSONUtil.putAll(
-								JSONUtil.put(
-									"canonicalUrl", "https://test.com/1"
-								).put(
-									"defaultMetric",
-									JSONUtil.put(
-										"metricType", "VIEWS"
-									).put(
-										"value", 12
-									)
-								).put(
-									"pageTitle", "Title 1"
-								).put(
-									"siteName", "Site 1"
-								),
-								JSONUtil.put(
-									"canonicalUrl", "https://test.com/2"
-								).put(
-									"defaultMetric",
-									JSONUtil.put(
-										"metricType", "VIEWS"
-									).put(
-										"value", 10
-									)
-								).put(
-									"pageTitle", "Title 2"
-								).put(
-									"siteName", "Site 1"
-								),
-								JSONUtil.put(
-									"canonicalUrl", "https://test.com/3"
-								).put(
-									"defaultMetric",
-									JSONUtil.put(
-										"metricType", "VIEWS"
-									).put(
-										"value", 9
-									)
-								).put(
-									"pageTitle", "Title 3"
-								).put(
-									"siteName", "Site 1"
-								))
-						).put(
-							"totalCount", 50
-						).toString())));
+						testCompany.getCompanyId(),
+						RandomTestUtil.randomString(), true,
+						analyticsCloudHttpServer.getURL())) {
 
 			ObjectEntryTopPages objectEntryTopPages =
-				_objectEntryTopPagesResource.getObjectEntryTopPages(
+				objectEntryTopPagesResource.getObjectEntryTopPages(
 					null, _objectEntry.getObjectEntryId(), 30);
 
 			TopPage[] topPages = objectEntryTopPages.getTopPages();
@@ -210,10 +218,6 @@ public class ObjectEntryTopPagesResourceTest
 			Assert.assertEquals("Title 3", topPage3.getPageTitle());
 			Assert.assertEquals("Site 1", topPage3.getSiteName());
 		}
-		finally {
-			ReflectionTestUtil.setFieldValue(
-				_objectEntryTopPagesResource, "_http", _http);
-		}
 	}
 
 	private void _testGetObjectEntryTopPagesWithInvalidObjectEntryId()
@@ -225,9 +229,9 @@ public class ObjectEntryTopPagesResourceTest
 						testCompany.getCompanyId(),
 						RandomTestUtil.randomString(), false)) {
 
-			Assert.assertThrows(
-				NoSuchObjectEntryException.class,
-				() -> _objectEntryTopPagesResource.getObjectEntryTopPages(
+			assertHttpResponseStatusCode(
+				404,
+				objectEntryTopPagesResource.getObjectEntryTopPagesHttpResponse(
 					null, RandomTestUtil.nextLong(), 30));
 		}
 	}
@@ -235,27 +239,17 @@ public class ObjectEntryTopPagesResourceTest
 	private void _testGetObjectEntryTopPagesWithoutViewPermission()
 		throws Exception {
 
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
 		try (AnalyticsCompanyConfigurationTemporarySwapper
 				analyticsCompanyConfigurationTemporarySwapper =
 					new AnalyticsCompanyConfigurationTemporarySwapper(
 						testCompany.getCompanyId(),
 						RandomTestUtil.randomString(), false)) {
 
-			_user = UserTestUtil.addUser();
-
-			PermissionThreadLocal.setPermissionChecker(
-				PermissionCheckerFactoryUtil.create(_user));
-
-			Assert.assertThrows(
-				PrincipalException.MustHavePermission.class,
-				() -> _objectEntryTopPagesResource.getObjectEntryTopPages(
-					null, _objectEntry.getObjectEntryId(), 30));
-		}
-		finally {
-			PermissionThreadLocal.setPermissionChecker(permissionChecker);
+			assertHttpResponseStatusCode(
+				404,
+				_userObjectEntryTopPagesResource.
+					getObjectEntryTopPagesHttpResponse(
+						null, _objectEntry.getObjectEntryId(), 30));
 		}
 	}
 
@@ -266,11 +260,15 @@ public class ObjectEntryTopPagesResourceTest
 				analyticsCompanyConfigurationTemporarySwapper =
 					new AnalyticsCompanyConfigurationTemporarySwapper(
 						testCompany.getCompanyId(),
-						RandomTestUtil.randomString(), false)) {
+						RandomTestUtil.randomString(), false);
+			LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.portal.vulcan.internal.jaxrs.exception.mapper." +
+					"WebApplicationExceptionMapper",
+				LoggerTestUtil.WARN)) {
 
-			Assert.assertThrows(
-				BadRequestException.class,
-				() -> _objectEntryTopPagesResource.getObjectEntryTopPages(
+			assertHttpResponseStatusCode(
+				400,
+				objectEntryTopPagesResource.getObjectEntryTopPagesHttpResponse(
 					testGroup.getGroupId(), _objectEntry.getObjectEntryId(),
 					30));
 		}
@@ -283,18 +281,14 @@ public class ObjectEntryTopPagesResourceTest
 	private DepotEntryLocalService _depotEntryLocalService;
 
 	@Inject
-	private Http _http;
-
-	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@DeleteAfterTestRun
 	private ObjectEntry _objectEntry;
 
-	@Inject
-	private ObjectEntryTopPagesResource _objectEntryTopPagesResource;
-
 	@DeleteAfterTestRun
 	private User _user;
+
+	private ObjectEntryTopPagesResource _userObjectEntryTopPagesResource;
 
 }

@@ -93,6 +93,8 @@ function combine_properties_files {
 function default_set_up {
 	update_portal_ext_properties
 
+	start_learn_resources_server
+
 	start_default_app_server
 
 	deploy_parent_project_osgi_modules
@@ -114,6 +116,8 @@ function default_set_up {
 
 function default_tear_down {
 	stop_default_app_server
+
+	stop_learn_resources_server
 }
 
 function delete_property {
@@ -644,6 +648,79 @@ function start_client_extension_spring_boot_application {
 	else
 		echo "The directory ${client_extension_dir} does not exist."
 	fi
+}
+
+function start_learn_resources_server {
+
+	# The portal resolves learn resources over HTTP, and with
+	# learn.resources.mode=dev it asks its own host on port 3062. Serve the
+	# repository's copies from here, where the app server runs, with the
+	# JDK's own static file server: this script's environment carries a JDK
+	# by construction, while node only exists inside the test runner's
+	# container, whose localhost the portal cannot reach.
+
+	local jwebserver=$(command -v jwebserver)
+
+	if [[ -z ${jwebserver} ]]
+	then
+		local java=$(command -v java)
+
+		if [[ -n ${java} ]]
+		then
+			jwebserver="$(dirname "$(readlink -f "${java}")")/jwebserver"
+		fi
+	fi
+
+	if [[ ! -x ${jwebserver} ]]
+	then
+		echo "Unable to find jwebserver."
+
+		exit 1
+	fi
+
+	local learn_resources_dir=${_PORTAL_PROJECT_DIR}/learn-resources/data
+
+	if [[ ! -d ${learn_resources_dir} ]]
+	then
+		echo "Unable to find ${learn_resources_dir}."
+
+		exit 1
+	fi
+
+	${jwebserver} -b 127.0.0.1 -d "${learn_resources_dir}" -p 3062 &
+
+	echo ${!} > /tmp/learn-resources-server.pid
+
+	local sleep_duration=30
+	local sleep_interval=1
+	local total_duration=0
+
+	while ! curl --fail --output /dev/null --silent "http://localhost:3062/object-web.json"
+	do
+		if [ ${total_duration} -ge ${sleep_duration} ]
+		then
+			echo "Unable to start the learn resources server."
+
+			exit 1
+		fi
+
+		sleep ${sleep_interval}
+
+		total_duration=$((total_duration + sleep_interval))
+	done
+
+	echo "Started the learn resources server on port 3062."
+}
+
+function stop_learn_resources_server {
+	if [[ ! -f /tmp/learn-resources-server.pid ]]
+	then
+		return 0
+	fi
+
+	kill $(cat /tmp/learn-resources-server.pid) 2>/dev/null
+
+	rm -f /tmp/learn-resources-server.pid
 }
 
 function start_default_app_server {

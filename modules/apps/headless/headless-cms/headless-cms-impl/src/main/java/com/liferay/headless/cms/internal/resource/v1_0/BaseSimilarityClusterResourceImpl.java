@@ -51,7 +51,7 @@ public abstract class BaseSimilarityClusterResourceImpl
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-cms/v1.0/similarity-clusters'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "List the clusters of CMS content whose main text overlaps significantly, paginated by asset. Content is compared within one language, so a translation is only ever compared against the same translation of other content, and clustering always spans the whole space, so a cluster's size never depends on the requested page. Omit assetLibraryId to span all accessible spaces."
+		description = "List the clusters of CMS content whose main text overlaps significantly, paginated by asset. Content is compared within one language, so a translation is only ever compared against the same translation of other content, and clustering always spans the whole space, so a cluster's size never depends on the requested page. Omit assetLibraryId to span all accessible spaces. Note that totalCount counts the clustered assets while the items are the clusters that hold them, so it is the number of assets that have a near duplicate rather than a page count, and a cluster that straddles a page boundary is returned on both pages with its full size."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -533,4 +533,4 @@ public abstract class BaseSimilarityClusterResourceImpl
 		LogFactoryUtil.getLog(BaseSimilarityClusterResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:-57917890
+// LIFERAY-REST-BUILDER-HASH:1405204259

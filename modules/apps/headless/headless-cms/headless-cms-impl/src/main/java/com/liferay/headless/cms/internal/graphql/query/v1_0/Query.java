@@ -115,7 +115,7 @@ public class Query {
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {similarityClusters(assetLibraryId: ___, page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
-		description = "List the clusters of CMS content whose main text overlaps significantly, paginated by asset. Content is compared within one language, so a translation is only ever compared against the same translation of other content, and clustering always spans the whole space, so a cluster's size never depends on the requested page. Omit assetLibraryId to span all accessible spaces."
+		description = "List the clusters of CMS content whose main text overlaps significantly, paginated by asset. Content is compared within one language, so a translation is only ever compared against the same translation of other content, and clustering always spans the whole space, so a cluster's size never depends on the requested page. Omit assetLibraryId to span all accessible spaces. Note that totalCount counts the clustered assets while the items are the clusters that hold them, so it is the number of assets that have a near duplicate rather than a page count, and a cluster that straddles a page boundary is returned on both pages with its full size."
 	)
 	public SimilarityClusterPage similarityClusters(
 			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
@@ -331,4 +331,4 @@ public class Query {
 	private com.liferay.portal.kernel.model.User _user;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1510934467
+// LIFERAY-REST-BUILDER-HASH:32974760

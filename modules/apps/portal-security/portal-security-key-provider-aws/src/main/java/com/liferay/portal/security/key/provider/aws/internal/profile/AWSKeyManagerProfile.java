@@ -296,7 +296,7 @@ public class AWSKeyManagerProfile implements KeyManagerProfile {
 		String keyARN = AWSARNUtil.resolve(
 			accountId, keyARNTemplate, CompanyConstants.SYSTEM,
 			StringPool.BLANK, region);
-		String keyOrigin;
+		String keyOrigin = null;
 
 		try {
 			keyOrigin = getKeyOrigin(keyARN, region, strictMode);

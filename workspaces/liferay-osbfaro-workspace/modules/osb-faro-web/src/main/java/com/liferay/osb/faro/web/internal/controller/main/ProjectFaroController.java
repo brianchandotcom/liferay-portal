@@ -1096,7 +1096,7 @@ public class ProjectFaroController extends BaseFaroController {
 	}
 
 	@Activate
-	protected void activateProvisionBackoffPortalCache() {
+	protected void activate() {
 		_provisionBackoffPortalCache =
 			(PortalCache<String, Long>)_multiVMPool.getPortalCache(
 				_PROVISION_BACKOFF_PORTAL_CACHE_NAME);
@@ -1126,7 +1126,7 @@ public class ProjectFaroController extends BaseFaroController {
 	}
 
 	@Deactivate
-	protected void deactivateProvisionBackoffPortalCache() {
+	protected void deactivate() {
 		_multiVMPool.removePortalCache(_PROVISION_BACKOFF_PORTAL_CACHE_NAME);
 	}
 
@@ -1186,16 +1186,15 @@ public class ProjectFaroController extends BaseFaroController {
 			return;
 		}
 
-		long retryAfterSeconds =
-			((retryAfterTime - now) + (Time.SECOND - 1)) / Time.SECOND;
-
 		throw new FaroException(
+			HashMapBuilder.<String, Object>put(
+				"Retry-After",
+				String.valueOf(
+					((retryAfterTime - now) + (Time.SECOND - 1)) / Time.SECOND)
+			).build(),
 			"Too many failed provisioning attempts for corp project UUID " +
 				corpProjectUuid,
-			Response.Status.TOO_MANY_REQUESTS,
-			HashMapBuilder.<String, Object>put(
-				"Retry-After", String.valueOf(retryAfterSeconds)
-			).build());
+			Response.Status.TOO_MANY_REQUESTS);
 	}
 
 	private void _clearProvisionBackoff(String corpProjectUuid) {

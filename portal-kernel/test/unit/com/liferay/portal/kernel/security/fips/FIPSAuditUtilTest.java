@@ -5,8 +5,10 @@
 
 package com.liferay.portal.kernel.security.fips;
 
+import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.internal.log4j.FIPSLog4jUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -87,6 +89,11 @@ public class FIPSAuditUtilTest {
 	@Before
 	public void setUp() {
 		Mockito.reset(_logger);
+
+		DCLSingleton<String> dclSingleton = ReflectionTestUtil.getFieldValue(
+			FIPSAuditUtil.class, "_deploymentInstanceIdDCLSingleton");
+
+		dclSingleton.destroy(null);
 
 		_safeCloseable = PropsValuesTestUtil.swapWithSafeCloseable(
 			"FIPS_AUDIT_DEPLOYMENT_INSTANCE_ID", RandomTestUtil.randomString());

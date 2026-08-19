@@ -97,7 +97,7 @@ public class BasePortalControllerBuildRunnerTest
 		Assert.assertFalse(
 			basePortalControllerBuildRunner.expirePreviousBuild());
 
-		verifyUrlReadAttemptCount(1, mockUrlReaders, "queue/api/json");
+		verifyUrlReaderAttemptCount(1, mockUrlReaders, "queue/api/json");
 	}
 
 	@Test

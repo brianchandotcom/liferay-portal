@@ -146,7 +146,7 @@ public class ClientCredentialsHTTPAuthorizationTest
 	private void _verifyTokenRequestCount(
 		int expectedCount, MockUrlReaders mockUrlReaders) {
 
-		verifyUrlReadAttemptCount(
+		verifyUrlReaderAttemptCount(
 			expectedCount, mockUrlReaders, "/o/oauth2/token");
 	}
 

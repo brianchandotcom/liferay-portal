@@ -185,28 +185,6 @@ public class Test {
 	 * code is legible while <code>getInputStream</code> throws.
 	 * </p>
 	 */
-	protected HttpURLConnection mockURLConnection(int responseCode)
-		throws IOException {
-
-		HttpURLConnection httpURLConnection = Mockito.mock(
-			HttpURLConnection.class);
-
-		Mockito.doThrow(
-			new IOException(
-				"Server returned HTTP response code: " + responseCode)
-		).when(
-			httpURLConnection
-		).getInputStream();
-
-		Mockito.doReturn(
-			responseCode
-		).when(
-			httpURLConnection
-		).getResponseCode();
-
-		return httpURLConnection;
-	}
-
 	protected HttpURLConnection mockURLConnection(
 			int responseCode, String content)
 		throws IOException {
@@ -366,7 +344,7 @@ public class Test {
 
 		for (UrlReader<?> urlReader : mockUrlReaders.getUrlReaders()) {
 			Mockito.doAnswer(
-				invocation -> mockURLConnection(responseCode)
+				invocation -> _mockURLConnection(responseCode)
 			).when(
 				urlReader
 			).openURLConnection(
@@ -413,7 +391,7 @@ public class Test {
 	 * reader to another. A retried read counts once per attempt, which is what
 	 * makes the retry policy assertable.
 	 */
-	protected void verifyUrlReadAttemptCount(
+	protected void verifyUrlReaderAttemptCount(
 		int expectedCount, MockUrlReaders mockUrlReaders, String url) {
 
 		int count = 0;
@@ -485,13 +463,36 @@ public class Test {
 		testEquals(1, count);
 	}
 
+	/**
+	 * Counting attempts cannot see how long the loop waited between them, so
+	 * an escalation that ran away would stay invisible. The durations are the
+	 * only thing that pins it.
+	 */
+	protected void verifyUrlReaderSleepDurations(
+		List<Long> expectedDurations, MockUrlReaders mockUrlReaders) {
+
+		List<Long> durations = new ArrayList<>();
+
+		for (UrlReader<?> urlReader : mockUrlReaders.getUrlReaders()) {
+			MockingDetails mockingDetails = Mockito.mockingDetails(urlReader);
+
+			for (Invocation invocation : mockingDetails.getInvocations()) {
+				Method method = invocation.getMethod();
+
+				if (!method.equals(_sleepMethod)) {
+					continue;
+				}
+
+				durations.add(invocation.getArgument(0));
+			}
+		}
+
+		testEquals(expectedDurations, durations);
+	}
+
 	protected List<File> dependenciesDirs = getDependenciesDirs(
 		getSimpleClassNames());
 
-	/**
-	 * Resolved once so that renaming the seam fails loudly here, rather than
-	 * silently matching nothing and letting every attempt count pass at zero.
-	 */
 	private static Method _getDoReadMethod() {
 		try {
 			return UrlReader.class.getDeclaredMethod(
@@ -517,9 +518,45 @@ public class Test {
 		}
 	}
 
+	private static Method _getSleepMethod() {
+		try {
+			return UrlReader.class.getDeclaredMethod("sleep", long.class);
+		}
+		catch (NoSuchMethodException noSuchMethodException) {
+			throw new ExceptionInInitializerError(noSuchMethodException);
+		}
+	}
+
+	/**
+	 * Resolved once so that renaming the seam fails loudly here, rather than
+	 * silently matching nothing and letting every attempt count pass at zero.
+	 */
+	private HttpURLConnection _mockURLConnection(int responseCode)
+		throws IOException {
+
+		HttpURLConnection httpURLConnection = Mockito.mock(
+			HttpURLConnection.class);
+
+		Mockito.doThrow(
+			new IOException(
+				"Server returned HTTP response code: " + responseCode)
+		).when(
+			httpURLConnection
+		).getInputStream();
+
+		Mockito.doReturn(
+			responseCode
+		).when(
+			httpURLConnection
+		).getResponseCode();
+
+		return httpURLConnection;
+	}
+
 	private static final Method _doReadMethod = _getDoReadMethod();
 	private static final Method _openURLConnectionMethod =
 		_getOpenURLConnectionMethod();
+	private static final Method _sleepMethod = _getSleepMethod();
 
 	private List<String> _simpleClassNames;
 

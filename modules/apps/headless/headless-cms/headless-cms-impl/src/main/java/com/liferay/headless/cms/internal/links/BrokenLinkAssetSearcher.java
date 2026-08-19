@@ -44,11 +44,12 @@ public class BrokenLinkAssetSearcher {
 	}
 
 	public long getCount(
-		long companyId, Long[] groupIds, Set<String> outboundLinkTokens) {
+		long companyId, Long[] groupIds, Set<String> outboundLinkTokens,
+		long userId) {
 
 		SearchResponse searchResponse = _searcher.search(
 			_getSearchRequestBuilder(
-				companyId, groupIds, outboundLinkTokens
+				companyId, groupIds, outboundLinkTokens, userId
 			).build());
 
 		return searchResponse.getCount();
@@ -80,10 +81,10 @@ public class BrokenLinkAssetSearcher {
 	public SearchResponse search(
 		long companyId, Long[] groupIds, String languageId,
 		Set<String> outboundLinkTokens, Pagination pagination, String search,
-		Sort[] sorts) {
+		Sort[] sorts, long userId) {
 
 		SearchRequestBuilder searchRequestBuilder = _getSearchRequestBuilder(
-			companyId, groupIds, outboundLinkTokens);
+			companyId, groupIds, outboundLinkTokens, userId);
 
 		int startPosition = Math.min(
 			pagination.getStartPosition(), _MAX_RESULT_WINDOW);
@@ -157,7 +158,8 @@ public class BrokenLinkAssetSearcher {
 	}
 
 	private SearchRequestBuilder _getSearchRequestBuilder(
-		long companyId, Long[] groupIds, Set<String> outboundLinkTokens) {
+		long companyId, Long[] groupIds, Set<String> outboundLinkTokens,
+		long userId) {
 
 		BooleanQuery booleanQuery = QueriesUtil.booleanQuery();
 
@@ -179,8 +181,11 @@ public class BrokenLinkAssetSearcher {
 		).query(
 			booleanQuery
 		).withSearchContext(
-			searchContext -> searchContext.setAttribute(
-				Field.STATUS, WorkflowConstants.STATUS_ANY)
+			searchContext -> {
+				searchContext.setAttribute(
+					Field.STATUS, WorkflowConstants.STATUS_ANY);
+				searchContext.setUserId(userId);
+			}
 		);
 	}
 

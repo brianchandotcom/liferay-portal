@@ -178,7 +178,7 @@ public class AssetStatisticsResourceImpl
 
 			return brokenLinkAssetSearcher.getCount(
 				contextCompany.getCompanyId(), selectedSpaceGroupIds,
-				expiredAssetObjectEntryIds.keySet());
+				expiredAssetObjectEntryIds.keySet(), contextUser.getUserId());
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {

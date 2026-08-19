@@ -117,7 +117,8 @@ public class BrokenLinkAssetResourceImpl
 		SearchResponse searchResponse = brokenLinkAssetSearcher.search(
 			contextCompany.getCompanyId(), selectedSpaceGroupIds,
 			contextAcceptLanguage.getPreferredLanguageId(),
-			expiredAssetObjectEntryIds.keySet(), pagination, search, sorts);
+			expiredAssetObjectEntryIds.keySet(), pagination, search, sorts,
+			contextUser.getUserId());
 
 		Map<Long, String> externalReferenceCodes = new HashMap<>();
 

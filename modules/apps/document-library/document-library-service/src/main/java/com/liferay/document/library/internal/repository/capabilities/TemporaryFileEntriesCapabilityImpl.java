@@ -5,20 +5,26 @@
 
 package com.liferay.document.library.internal.repository.capabilities;
 
+import com.liferay.change.tracking.model.CTCollection;
+import com.liferay.change.tracking.model.CTCollectionModel;
+import com.liferay.change.tracking.service.CTCollectionLocalServiceUtil;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppHelperLocalServiceUtil;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.repository.DocumentRepository;
 import com.liferay.portal.kernel.repository.capabilities.BulkOperationCapability;
 import com.liferay.portal.kernel.repository.capabilities.ConfigurationCapability;
@@ -31,6 +37,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntryThreadLocal;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -104,25 +111,51 @@ public class TemporaryFileEntriesCapabilityImpl
 
 	@Override
 	public void deleteExpiredTemporaryFileEntries() throws PortalException {
-		BulkOperationCapability bulkOperationCapability =
-			_documentRepository.getCapability(BulkOperationCapability.class);
+		Folder folder = _documentRepository.getFolder(
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
-		BulkOperationCapability.Filter<Date> bulkFilter =
-			new BulkOperationCapability.Filter<>(
-				BulkOperationCapability.Field.CreateDate.class,
-				BulkOperationCapability.Operator.LT,
-				new Date(
-					System.currentTimeMillis() -
-						getTemporaryFileEntriesTimeout()));
+		List<Long> ctCollectionIds = ListUtil.toList(
+			_getPublicationCTCollections(folder.getCompanyId()),
+			CTCollectionModel::getCtCollectionId);
 
-		_runWithoutSystemEvents(
-			() -> {
-				bulkOperationCapability.execute(
-					bulkFilter,
-					new DeleteExpiredTemporaryFilesRepositoryModelOperation());
+		ctCollectionIds.add(
+			CTCollectionThreadLocal.CT_COLLECTION_ID_PRODUCTION);
 
-				return null;
-			});
+		for (long ctCollectionId : ctCollectionIds) {
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+						ctCollectionId)) {
+
+				BulkOperationCapability bulkOperationCapability =
+					_documentRepository.getCapability(
+						BulkOperationCapability.class);
+
+				BulkOperationCapability.Filter<Date> bulkFilter =
+					new BulkOperationCapability.Filter<>(
+						BulkOperationCapability.Field.CreateDate.class,
+						BulkOperationCapability.Operator.LT,
+						new Date(
+							System.currentTimeMillis() -
+								getTemporaryFileEntriesTimeout()));
+
+				_runWithoutSystemEvents(
+					() -> {
+						bulkOperationCapability.execute(
+							bulkFilter,
+							new DeleteExpiredTemporaryFilesRepositoryModelOperation());
+
+						return null;
+					});
+			}
+			catch (PortalException portalException) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to delete expired temporary file entries in " +
+							"change tracking collection " + ctCollectionId,
+						portalException);
+				}
+			}
+		}
 	}
 
 	@Override
@@ -297,6 +330,16 @@ public class TemporaryFileEntriesCapabilityImpl
 			temporaryFileEntriesScope.getFolderPath());
 	}
 
+	private List<CTCollection> _getPublicationCTCollections(long companyId) {
+		return CTCollectionLocalServiceUtil.getCTCollections(
+			companyId,
+			new int[] {
+				WorkflowConstants.STATUS_DRAFT,
+				WorkflowConstants.STATUS_SCHEDULED
+			},
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
 	private Folder _getTempFolder(
 			TemporaryFileEntriesScope temporaryFileEntriesScope)
 		throws PortalException {
@@ -309,6 +352,17 @@ public class TemporaryFileEntriesCapabilityImpl
 		return _getDeepestFolder(
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			_getFolderPath(temporaryFileEntriesScope));
+	}
+
+	private boolean _isOwnedByCurrentCTCollection(Object model) {
+		if (!(model instanceof CTModel<?> ctModel) ||
+			(ctModel.getCtCollectionId() ==
+				CTCollectionThreadLocal.getCTCollectionId())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private void _runWithoutSystemEvents(
@@ -343,6 +397,10 @@ public class TemporaryFileEntriesCapabilityImpl
 
 		@Override
 		public void execute(FileEntry fileEntry) throws PortalException {
+			if (!_isOwnedByCurrentCTCollection(fileEntry.getModel())) {
+				return;
+			}
+
 			DLAppHelperLocalServiceUtil.deleteFileEntry(fileEntry);
 
 			_documentRepository.deleteFileEntry(fileEntry.getFileEntryId());

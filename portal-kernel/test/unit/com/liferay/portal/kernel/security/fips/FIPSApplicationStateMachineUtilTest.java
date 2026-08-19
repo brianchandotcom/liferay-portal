@@ -253,7 +253,7 @@ public class FIPSApplicationStateMachineUtilTest {
 
 		_assertEnvelope("severity", record, "INFO");
 		_assertField("from-state", record, "OPERATIONAL");
-		_assertField("initiating-actor", record, "OS signal");
+		_assertField("initiating-actor", record, "Operating system");
 		_assertField("to-state", record, "POWER_OFF");
 	}
 

@@ -133,7 +133,7 @@ public class FIPSApplicationStateMachineUtil {
 					}
 
 					try {
-						powerOff("OS signal");
+						powerOff("Operating system");
 					}
 					catch (Throwable throwable) {
 						if (_log.isDebugEnabled()) {

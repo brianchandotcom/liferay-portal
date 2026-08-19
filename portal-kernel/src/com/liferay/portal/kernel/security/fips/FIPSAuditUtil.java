@@ -5,6 +5,7 @@
 
 package com.liferay.portal.kernel.security.fips;
 
+import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.internal.log4j.FIPSLog4jUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -44,6 +45,8 @@ import java.util.concurrent.atomic.AtomicLong;
 public class FIPSAuditUtil {
 
 	public static void write(FIPSAuditEvent fipsAuditEvent) {
+		Provider provider = _getProvider();
+
 		FIPSAuditEvent.Severity severity = fipsAuditEvent.getSeverity();
 
 		FIPSLog4jUtil.write(
@@ -61,27 +64,9 @@ public class FIPSAuditUtil {
 			).put(
 				"fields", _normalizeTimestamps(fipsAuditEvent.getFields())
 			).put(
-				"provider-name",
-				() -> {
-					Provider provider = _getProvider();
-
-					if (provider == null) {
-						return "";
-					}
-
-					return provider.getName();
-				}
+				"provider-name", _getProviderName(provider)
 			).put(
-				"provider-version",
-				() -> {
-					Provider provider = _getProvider();
-
-					if (provider == null) {
-						return "";
-					}
-
-					return provider.getVersionStr();
-				}
+				"provider-version", _getProviderVersion(provider)
 			).put(
 				"severity", severity.name()
 			).put(
@@ -90,18 +75,7 @@ public class FIPSAuditUtil {
 			severity);
 	}
 
-	private static String _formatTimestamp(Instant instant) {
-		return _dateTimeFormatter.format(instant.atZone(ZoneOffset.UTC));
-	}
-
-	private static String _getDeploymentInstanceId() {
-		String deploymentInstanceId =
-			PropsValues.FIPS_AUDIT_DEPLOYMENT_INSTANCE_ID;
-
-		if (Validator.isNotNull(deploymentInstanceId)) {
-			return deploymentInstanceId;
-		}
-
+	private static String _deriveDeploymentInstanceId() {
 		Path path = Paths.get(
 			PropsValues.LIFERAY_HOME, "data",
 			"fips-audit-deployment-instance-id");
@@ -124,9 +98,25 @@ public class FIPSAuditUtil {
 		}
 		catch (IOException ioException) {
 			throw new UncheckedIOException(
-				"Unable to resolve the FIPS deployment instance ID",
+				"Unable to resolve the FIPS audit deployment instance ID",
 				ioException);
 		}
+	}
+
+	private static String _formatTimestamp(Instant instant) {
+		return _dateTimeFormatter.format(instant.atZone(ZoneOffset.UTC));
+	}
+
+	private static String _getDeploymentInstanceId() {
+		String deploymentInstanceId =
+			PropsValues.FIPS_AUDIT_DEPLOYMENT_INSTANCE_ID;
+
+		if (Validator.isNotNull(deploymentInstanceId)) {
+			return deploymentInstanceId;
+		}
+
+		return _deploymentInstanceIdDCLSingleton.getSingleton(
+			FIPSAuditUtil::_deriveDeploymentInstanceId);
 	}
 
 	private static Provider _getProvider() {
@@ -137,6 +127,22 @@ public class FIPSAuditUtil {
 		}
 
 		return providers[0];
+	}
+
+	private static String _getProviderName(Provider provider) {
+		if (provider == null) {
+			return "";
+		}
+
+		return provider.getName();
+	}
+
+	private static String _getProviderVersion(Provider provider) {
+		if (provider == null) {
+			return "";
+		}
+
+		return provider.getVersionStr();
 	}
 
 	private static Object _normalizeTimestamp(Object value) {
@@ -192,6 +198,8 @@ public class FIPSAuditUtil {
 
 	private static final DateTimeFormatter _dateTimeFormatter =
 		DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+	private static final DCLSingleton<String>
+		_deploymentInstanceIdDCLSingleton = new DCLSingleton<>();
 	private static final AtomicLong _eventSequence = new AtomicLong();
 
 }

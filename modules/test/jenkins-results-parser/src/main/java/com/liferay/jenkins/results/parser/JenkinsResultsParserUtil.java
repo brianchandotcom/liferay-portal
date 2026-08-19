@@ -3742,7 +3742,7 @@ public class JenkinsResultsParserUtil {
 				"Content-Type", "application/x-www-form-urlencoded");
 
 			return getJenkinsBuildQueueId(
-				UrlReader.getResponseHeader(
+				StreamUrlReader.getResponseHeader(
 					"Location", getJenkinsHTTPAuthorization(),
 					HttpRequestMethod.POST, sb.toString(), requestHeaders,
 					timeout,

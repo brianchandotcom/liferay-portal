@@ -43,92 +43,6 @@ import javax.net.ssl.SSLContext;
  */
 public abstract class UrlReader<T> {
 
-	public static String getResponseHeader(
-			String headerName, HTTPAuthorization httpAuthorization,
-			HttpRequestMethod httpRequestMethod, String postContent,
-			int timeout, String url)
-		throws IOException {
-
-		return getResponseHeader(
-			headerName, httpAuthorization, httpRequestMethod, postContent, null,
-			timeout, url);
-	}
-
-	public static String getResponseHeader(
-			String headerName, HTTPAuthorization httpAuthorization,
-			HttpRequestMethod httpRequestMethod, String postContent,
-			Map<String, String> requestHeaders, int timeout, String url)
-		throws IOException {
-
-		StreamUrlReader streamUrlReader = StreamUrlReader.getInstance();
-
-		return streamUrlReader.doGetResponseHeader(
-			headerName, httpAuthorization, httpRequestMethod, postContent,
-			requestHeaders, timeout, url);
-	}
-
-	protected String doGetResponseHeader(
-			String headerName, HTTPAuthorization httpAuthorization,
-			HttpRequestMethod httpRequestMethod, String postContent,
-			Map<String, String> requestHeaders, int timeout, String url)
-		throws IOException {
-
-		URL urlObject = new URL(JenkinsResultsParserUtil.fixURL(url));
-
-		HttpURLConnection httpURLConnection =
-			(HttpURLConnection)urlObject.openConnection();
-
-		if (timeout != 0) {
-			httpURLConnection.setConnectTimeout(timeout);
-			httpURLConnection.setReadTimeout(timeout);
-		}
-
-		if (httpRequestMethod != null) {
-			httpURLConnection.setRequestMethod(httpRequestMethod.name());
-		}
-
-		if (httpAuthorization != null) {
-			httpURLConnection.setRequestProperty(
-				"Authorization", httpAuthorization.toString());
-		}
-
-		if (requestHeaders != null) {
-			for (Map.Entry<String, String> requestHeader :
-					requestHeaders.entrySet()) {
-
-				httpURLConnection.setRequestProperty(
-					requestHeader.getKey(), requestHeader.getValue());
-			}
-		}
-
-		if (postContent != null) {
-			httpURLConnection.setDoOutput(true);
-
-			try (OutputStream outputStream =
-					httpURLConnection.getOutputStream()) {
-
-				outputStream.write(postContent.getBytes("UTF-8"));
-
-				outputStream.flush();
-			}
-		}
-
-		httpURLConnection.connect();
-
-		int responseCode = httpURLConnection.getResponseCode();
-
-		System.out.println(
-			JenkinsResultsParserUtil.combine(
-				"Response from ", url, ": ", String.valueOf(responseCode), " ",
-				httpURLConnection.getResponseMessage()));
-
-		if (responseCode >= 400) {
-			return null;
-		}
-
-		return httpURLConnection.getHeaderField(headerName);
-	}
-
 	/**
 	 * The <code>expectResponse</code> flag travels down to
 	 * <code>handleResponse</code> so a reader that validates the body knows
@@ -432,6 +346,10 @@ public abstract class UrlReader<T> {
 						for (int i = 0; i < retryCount; i++) {
 							retryPeriodOverride *= retryPeriodOverride;
 						}
+
+						retryPeriodOverride = Math.min(
+							retryPeriodOverride,
+							_SECONDS_RETRY_PERIOD_ESCALATION_MAX);
 					}
 
 					if (((maxRetries >= 0) && (retryCount >= maxRetries)) ||
@@ -630,6 +548,8 @@ public abstract class UrlReader<T> {
 			return -1;
 		}
 	}
+
+	private static final int _SECONDS_RETRY_PERIOD_ESCALATION_MAX = 60;
 
 	private static final int _SECONDS_RETRY_PERIOD_MAX = 60 * 30;
 

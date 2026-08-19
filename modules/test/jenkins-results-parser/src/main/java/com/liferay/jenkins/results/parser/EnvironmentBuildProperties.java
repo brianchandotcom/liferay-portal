@@ -226,7 +226,7 @@ public class EnvironmentBuildProperties extends Properties {
 		throws IOException {
 
 		return JenkinsResultsParserUtil.toString(
-			url, checkCache, 0, null, null, 0, 10 * 1000, null, true);
+			url, checkCache, 0, null, null, 0, 10 * 1000, null, false);
 	}
 
 	private static final Pattern _environmentBuildPropertiesFileNamePattern =

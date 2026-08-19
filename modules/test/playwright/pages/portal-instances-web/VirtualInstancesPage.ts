@@ -28,7 +28,7 @@ export class VirtualInstancesPage {
 	readonly errorMessagePassword: Locator;
 	readonly newVirtualInstanceButton: Locator;
 	readonly page: Page;
-	readonly successMessage: Locator;
+	readonly startMessage: Locator;
 
 	constructor(page: Page) {
 		this.addInstanceFrame = page.frameLocator(
@@ -67,8 +67,8 @@ export class VirtualInstancesPage {
 		);
 		this.newVirtualInstanceButton = page.getByRole('button', {name: 'Add'});
 		this.page = page;
-		this.successMessage = page.getByText(
-			'The Add operation has started successfully'
+		this.startMessage = page.getByText(
+			'is being added. You will be notified when it is ready.'
 		);
 	}
 
@@ -107,7 +107,7 @@ export class VirtualInstancesPage {
 		// Only wait for Virtual Instance creation if there are no errors
 
 		if (await this.errorMessage.isHidden()) {
-			await expect(this.successMessage).toBeVisible({
+			await expect(this.startMessage).toBeVisible({
 				timeout: 30 * 1000,
 			});
 

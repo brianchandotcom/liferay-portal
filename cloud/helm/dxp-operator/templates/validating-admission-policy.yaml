@@ -36,7 +36,8 @@ spec:
             messageExpression: >-
                 'replicas ' + string(variables.requestedReplicas) +
                 ' exceeds licensed maxClusterNodes ' + string(variables.maxClusterNodes) +
-                ' for StatefulSet ' + variables.workloadName
+                ' for StatefulSet "' + variables.workloadName + '"'
+            reason: Forbidden
     variables:
         -   expression: >-
                 has(params.status) && has(params.status.license) &&

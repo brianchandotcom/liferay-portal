@@ -218,7 +218,8 @@ public class SimilarityClusterResourceImpl
 			return documents;
 		}
 
-		TermsQuery termsQuery = QueriesUtil.terms(_FIELD_TEXT_SIMILARITY_KEYS);
+		TermsQuery termsQuery = QueriesUtil.terms(
+			SimilarityClusterUtil.FIELD_TEXT_SIMILARITY_KEYS);
 
 		termsQuery.addValues(sharedSimilarityKeys.toArray());
 
@@ -238,7 +239,10 @@ public class SimilarityClusterResourceImpl
 			).entryClassNames(
 				entryClassNames
 			).fetchSourceIncludes(
-				new String[] {"objectEntryId", _FIELD_TEXT_SIMILARITY_KEYS}
+				new String[] {
+					"objectEntryId",
+					SimilarityClusterUtil.FIELD_TEXT_SIMILARITY_KEYS
+				}
 			).size(
 				_MAX_CLUSTERED_DOCUMENTS
 			).withSearchContext(
@@ -260,7 +264,8 @@ public class SimilarityClusterResourceImpl
 		List<String> sharedSimilarityKeys = new ArrayList<>();
 
 		TermsAggregation termsAggregation = _aggregations.terms(
-			_SIMILARITY_KEYS_AGGREGATION_NAME, _FIELD_TEXT_SIMILARITY_KEYS);
+			_SIMILARITY_KEYS_AGGREGATION_NAME,
+			SimilarityClusterUtil.FIELD_TEXT_SIMILARITY_KEYS);
 
 		termsAggregation.setMinDocCount(2);
 		termsAggregation.setIncludeExcludeClause(
@@ -344,9 +349,6 @@ public class SimilarityClusterResourceImpl
 
 		return similarityCluster;
 	}
-
-	private static final String _FIELD_TEXT_SIMILARITY_KEYS =
-		"textSimilarityKeys";
 
 	private static final int _MAX_CLUSTERED_DOCUMENTS = 10000;
 

@@ -23,6 +23,9 @@ import java.util.Set;
  */
 public class SimilarityClusterUtil {
 
+	public static final String FIELD_TEXT_SIMILARITY_KEYS =
+		"textSimilarityKeys";
+
 	public static Map<Long, List<Long>> getClusters(
 		List<Document> documents, Set<String> sharedSimilarityKeys) {
 
@@ -39,7 +42,7 @@ public class SimilarityClusterUtil {
 			parentObjectEntryIds.putIfAbsent(objectEntryId, objectEntryId);
 
 			for (String similarityKey :
-					document.getStrings("textSimilarityKeys")) {
+					document.getStrings(FIELD_TEXT_SIMILARITY_KEYS)) {
 
 				if (!sharedSimilarityKeys.contains(similarityKey)) {
 					continue;

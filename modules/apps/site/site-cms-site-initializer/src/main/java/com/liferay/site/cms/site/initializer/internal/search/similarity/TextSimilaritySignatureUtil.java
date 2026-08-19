@@ -14,7 +14,6 @@ import com.dynatrace.hash4j.similarity.SuperMinHashVersion;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.DigesterUtil;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -45,17 +44,19 @@ public class TextSimilaritySignatureUtil {
 
 		for (int i = 0; i < _SIMILARITY_KEYS; i++) {
 			StringBundler sb = new StringBundler(
-				_SAMPLES_PER_SIMILARITY_KEY * 2);
+				(_SAMPLES_PER_SIMILARITY_KEY * 2) + 2);
+
+			sb.append("k");
+			sb.append(i);
 
 			for (int j = 0; j < _SAMPLES_PER_SIMILARITY_KEY; j++) {
+				sb.append(StringPool.UNDERLINE);
 				sb.append(
 					_similarityHashPolicy.getComponent(
 						signature, (i * _SAMPLES_PER_SIMILARITY_KEY) + j));
-				sb.append(StringPool.UNDERLINE);
 			}
 
-			similarityKeys[i] = StringBundler.concat(
-				"k", i, "_", DigesterUtil.digestHex(sb.toString()));
+			similarityKeys[i] = sb.toString();
 		}
 
 		return similarityKeys;

@@ -13,8 +13,6 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
-import com.liferay.portal.test.log.LogCapture;
-import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.ByteArrayOutputStream;
@@ -24,7 +22,6 @@ import java.nio.charset.StandardCharsets;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.logging.log4j.Level;
@@ -117,30 +114,8 @@ public class FIPSAuditNDJSONLayoutTest {
 
 	@Test
 	public void testToSerializableRejectsAForeignEvent() {
-		FIPSAuditNDJSONLayout fipsAuditNDJSONLayout =
-			_createFIPSAuditNDJSONLayout();
-
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				FIPSAuditNDJSONLayout.class.getName(), LoggerTestUtil.ERROR)) {
-
-			Assert.assertEquals(
-				"",
-				fipsAuditNDJSONLayout.toSerializable(
-					_createLogEvent(new ObjectMessage("not-a-map"))));
-			Assert.assertEquals(
-				"",
-				fipsAuditNDJSONLayout.toSerializable(
-					_createLogEvent(new SimpleMessage("Not a record"))));
-
-			List<String> messages = logCapture.getMessages();
-
-			Assert.assertEquals(messages.toString(), 2, messages.size());
-
-			for (String message : messages) {
-				Assert.assertTrue(
-					message.contains("carries no FIPS audit record"));
-			}
-		}
+		_testToSerializableThrows(new ObjectMessage("not-a-map"));
+		_testToSerializableThrows(new SimpleMessage("Not a record"));
 	}
 
 	@Test
@@ -209,6 +184,20 @@ public class FIPSAuditNDJSONLayoutTest {
 		Assert.assertEquals(
 			StringBundler.concat("{\"", key, "\":", valueJSON, "}\n"),
 			_toSerializable(Collections.singletonMap(key, value)));
+	}
+
+	private void _testToSerializableThrows(Message message) {
+		FIPSAuditNDJSONLayout fipsAuditNDJSONLayout =
+			_createFIPSAuditNDJSONLayout();
+
+		IllegalStateException illegalStateException = Assert.assertThrows(
+			IllegalStateException.class,
+			() -> fipsAuditNDJSONLayout.toSerializable(
+				_createLogEvent(message)));
+
+		String errorMessage = illegalStateException.getMessage();
+
+		Assert.assertTrue(errorMessage.contains("carries no FIPS audit event"));
 	}
 
 	private String _toSerializable(Map<String, Object> record) {

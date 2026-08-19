@@ -13,8 +13,6 @@ import java.nio.charset.StandardCharsets;
 
 import java.util.Map;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.Layout;
 import org.apache.logging.log4j.core.LogEvent;
 import org.apache.logging.log4j.core.config.Node;
@@ -47,13 +45,9 @@ public final class FIPSAuditNDJSONLayout extends AbstractStringLayout {
 	public void encode(
 		LogEvent logEvent, ByteBufferDestination byteBufferDestination) {
 
-		StringBuilder sb = getStringBuilder();
-
-		_generateNDJSONLog(logEvent, sb);
-
 		Encoder<StringBuilder> encoder = getStringBuilderEncoder();
 
-		encoder.encode(sb, byteBufferDestination);
+		encoder.encode(_toNDJSONLog(logEvent), byteBufferDestination);
 	}
 
 	@Override
@@ -63,9 +57,7 @@ public final class FIPSAuditNDJSONLayout extends AbstractStringLayout {
 
 	@Override
 	public String toSerializable(LogEvent logEvent) {
-		StringBuilder sb = getStringBuilder();
-
-		_generateNDJSONLog(logEvent, sb);
+		StringBuilder sb = _toNDJSONLog(logEvent);
 
 		return sb.toString();
 	}
@@ -85,34 +77,33 @@ public final class FIPSAuditNDJSONLayout extends AbstractStringLayout {
 		super(StandardCharsets.UTF_8);
 	}
 
-	private void _generateNDJSONLog(LogEvent logEvent, StringBuilder sb) {
+	private StringBuilder _toNDJSONLog(LogEvent logEvent) {
 		Message message = logEvent.getMessage();
 
-		Object record = null;
+		Object object = null;
 
 		if (message instanceof ObjectMessage) {
 			ObjectMessage objectMessage = (ObjectMessage)message;
 
-			record = objectMessage.getParameter();
+			object = objectMessage.getParameter();
 		}
 
-		if (!(record instanceof Map)) {
-			_logger.error(
+		if (!(object instanceof Map)) {
+			throw new IllegalStateException(
 				StringBundler.concat(
 					"Unable to write the log event from the logger \"",
 					logEvent.getLoggerName(),
 					"\" to the FIPS audit log because its message carries no ",
-					"FIPS audit record"));
-
-			return;
+					"FIPS audit event"));
 		}
 
-		sb.append(JSONFactoryUtil.createJSONObject((Map<?, ?>)record));
+		StringBuilder sb = getStringBuilder();
+
+		sb.append(JSONFactoryUtil.createJSONObject((Map<?, ?>)object));
 
 		sb.append(CharPool.NEW_LINE);
-	}
 
-	private static final Logger _logger = LogManager.getLogger(
-		FIPSAuditNDJSONLayout.class);
+		return sb;
+	}
 
 }

@@ -5,12 +5,8 @@
 
 package com.liferay.portal.kernel.internal.log4j;
 
-import com.liferay.petra.string.StringBundler;
-
 import java.util.Map;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.core.Filter;
 import org.apache.logging.log4j.core.LogEvent;
@@ -42,26 +38,20 @@ public final class FIPSAuditFilter extends AbstractFilter {
 		Marker marker = logEvent.getMarker();
 
 		if ((marker == null) ||
-			!marker.isInstanceOf(FIPSLog4jUtil.MARKER_NAME)) {
-
-			_logger.error(
-				StringBundler.concat(
-					"Unable to write the log event from the logger \"",
-					logEvent.getLoggerName(),
-					"\" to the FIPS audit log because it carries no \"",
-					FIPSLog4jUtil.MARKER_NAME, "\" marker"));
+			!marker.isInstanceOf(FIPSLog4jUtil.getMarker())) {
 
 			return Result.DENY;
 		}
 
-		if (!_hasRecord(logEvent.getMessage())) {
-			_logger.error(
-				StringBundler.concat(
-					"Unable to write the log event from the logger \"",
-					logEvent.getLoggerName(),
-					"\" to the FIPS audit log because its message carries no ",
-					"FIPS audit record"));
+		Message message = logEvent.getMessage();
 
+		if (!(message instanceof ObjectMessage)) {
+			return Result.DENY;
+		}
+
+		ObjectMessage objectMessage = (ObjectMessage)message;
+
+		if (!(objectMessage.getParameter() instanceof Map)) {
 			return Result.DENY;
 		}
 
@@ -81,18 +71,5 @@ public final class FIPSAuditFilter extends AbstractFilter {
 	private FIPSAuditFilter() {
 		super(Result.ACCEPT, Result.DENY);
 	}
-
-	private boolean _hasRecord(Message message) {
-		if (!(message instanceof ObjectMessage)) {
-			return false;
-		}
-
-		ObjectMessage objectMessage = (ObjectMessage)message;
-
-		return objectMessage.getParameter() instanceof Map;
-	}
-
-	private static final Logger _logger = LogManager.getLogger(
-		FIPSAuditFilter.class);
 
 }

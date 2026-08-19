@@ -6,10 +6,14 @@
 package com.liferay.portal.instances.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.counter.kernel.service.CounterLocalService;
+import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.exception.NoSuchCompanyException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -40,6 +44,8 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.springframework.mock.web.MockHttpServletResponse;
 
 /**
  * @author Luis Ortiz
@@ -89,6 +95,33 @@ public class AddInstanceMVCActionCommandTest {
 	}
 
 	@Test
+	public void testProcessActionWhenAddIsAlreadyRunning() throws Exception {
+		_backgroundTask = _addRunningBackgroundTask();
+
+		int backgroundTasksCount =
+			_backgroundTaskManager.getBackgroundTasksCount(
+				BackgroundTaskConstants.GROUP_ID_DEFAULT,
+				_TASK_EXECUTOR_CLASS_NAME);
+
+		JSONObject jsonObject = _getResponseJSONObject(
+			_processAction(TestPropsValues.getUser(), null));
+
+		Assert.assertEquals(
+			"A virtual instance with this web ID is already being added.",
+			jsonObject.getString("error"));
+
+		Assert.assertEquals(
+			backgroundTasksCount,
+			_backgroundTaskManager.getBackgroundTasksCount(
+				BackgroundTaskConstants.GROUP_ID_DEFAULT,
+				_TASK_EXECUTOR_CLASS_NAME));
+
+		Assert.assertThrows(
+			NoSuchCompanyException.class,
+			() -> _companyLocalService.getCompanyByWebId(_webId));
+	}
+
+	@Test
 	public void testProcessActionWhenUserIsNotOmniadmin() throws Exception {
 		int backgroundTasksCount =
 			_backgroundTaskManager.getBackgroundTasksCount(
@@ -110,6 +143,25 @@ public class AddInstanceMVCActionCommandTest {
 			() -> _companyLocalService.getCompanyByWebId(_webId));
 	}
 
+	private com.liferay.portal.background.task.model.BackgroundTask
+			_addRunningBackgroundTask()
+		throws Exception {
+
+		com.liferay.portal.background.task.model.BackgroundTask backgroundTask =
+			_backgroundTaskLocalService.createBackgroundTask(
+				_counterLocalService.increment());
+
+		backgroundTask.setCompanyId(TestPropsValues.getCompanyId());
+		backgroundTask.setCompleted(false);
+		backgroundTask.setGroupId(BackgroundTaskConstants.GROUP_ID_DEFAULT);
+		backgroundTask.setName("AddVirtualInstance#" + _webId);
+		backgroundTask.setStatus(BackgroundTaskConstants.STATUS_IN_PROGRESS);
+		backgroundTask.setTaskExecutorClassName(_TASK_EXECUTOR_CLASS_NAME);
+		backgroundTask.setUserId(TestPropsValues.getUserId());
+
+		return _backgroundTaskLocalService.updateBackgroundTask(backgroundTask);
+	}
+
 	private BackgroundTask _fetchBackgroundTask() {
 		for (BackgroundTask backgroundTask :
 				_backgroundTaskManager.getBackgroundTasks(
@@ -126,7 +178,20 @@ public class AddInstanceMVCActionCommandTest {
 		return null;
 	}
 
-	private void _processAction(User user, String defaultAdminPassword)
+	private JSONObject _getResponseJSONObject(
+			MockLiferayPortletActionResponse mockLiferayPortletActionResponse)
+		throws Exception {
+
+		MockHttpServletResponse mockHttpServletResponse =
+			(MockHttpServletResponse)
+				mockLiferayPortletActionResponse.getHttpServletResponse();
+
+		return JSONFactoryUtil.createJSONObject(
+			mockHttpServletResponse.getContentAsString());
+	}
+
+	private MockLiferayPortletActionResponse _processAction(
+			User user, String defaultAdminPassword)
 		throws Exception {
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
@@ -163,6 +228,8 @@ public class AddInstanceMVCActionCommandTest {
 
 		_mvcActionCommand.processAction(
 			mockLiferayPortletActionRequest, mockLiferayPortletActionResponse);
+
+		return mockLiferayPortletActionResponse;
 	}
 
 	private void _waitForCompletion(long backgroundTaskId) throws Exception {
@@ -187,6 +254,13 @@ public class AddInstanceMVCActionCommandTest {
 		"com.liferay.portal.instances.web.internal.background.task." +
 			"AddVirtualInstanceBackgroundTaskExecutor";
 
+	@DeleteAfterTestRun
+	private com.liferay.portal.background.task.model.BackgroundTask
+		_backgroundTask;
+
+	@Inject
+	private BackgroundTaskLocalService _backgroundTaskLocalService;
+
 	@Inject
 	private BackgroundTaskManager _backgroundTaskManager;
 
@@ -195,6 +269,9 @@ public class AddInstanceMVCActionCommandTest {
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
+
+	@Inject
+	private CounterLocalService _counterLocalService;
 
 	@Inject(filter = "mvc.command.name=/portal_instances/add_instance")
 	private MVCActionCommand _mvcActionCommand;

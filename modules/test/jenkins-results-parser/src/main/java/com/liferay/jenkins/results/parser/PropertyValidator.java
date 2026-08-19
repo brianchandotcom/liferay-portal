@@ -272,16 +272,18 @@ public class PropertyValidator {
 		return lineNumber;
 	}
 
-	private static List<File> _getPropertiesFiles(File jenkinsRepositoryDir) {
-		List<File> propertiesFiles = new ArrayList<>();
-
-		String[] propertiesFilePaths = {
+	private static String[] _getPropertiesFilePaths() {
+		return new String[] {
 			"build.properties", "commands/build-aws.properties",
 			"commands/build-db.properties", "commands/build-local.properties",
 			"commands/build-shared.properties"
 		};
+	}
 
-		for (String propertiesFilePath : propertiesFilePaths) {
+	private static List<File> _getPropertiesFiles(File jenkinsRepositoryDir) {
+		List<File> propertiesFiles = new ArrayList<>();
+
+		for (String propertiesFilePath : _getPropertiesFilePaths()) {
 			File propertiesFile = new File(
 				jenkinsRepositoryDir, propertiesFilePath);
 

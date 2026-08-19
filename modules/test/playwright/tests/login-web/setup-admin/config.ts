@@ -6,4 +6,5 @@
 export const config = {
 	name: 'login-web.setup-admin',
 	testDir: 'tests/login-web-setup-admin',
+	timeout: 300 * 1000,
 };

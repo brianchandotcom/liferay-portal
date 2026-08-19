@@ -61,7 +61,7 @@ public class FIPSLog4jUtil {
 		if (!_logger.isEnabled(level)) {
 			throw new IllegalStateException(
 				StringBundler.concat(
-					"Unable to write a FIPS audit record because the logger \"",
+					"Unable to write a FIPS audit event because the logger \"",
 					FIPSLog4jUtil.class.getName(),
 					"\" is disabled for the level \"", level,
 					"\". Check that the portal property ",
@@ -79,14 +79,14 @@ public class FIPSLog4jUtil {
 		if (!(appender instanceof RollingFileAppender)) {
 			throw new IllegalStateException(
 				StringBundler.concat(
-					"Unable to write a FIPS audit record because the appender ",
+					"Unable to write a FIPS audit event because the appender ",
 					"\"", _APPENDER_NAME, "\" is not configured"));
 		}
 
 		if (!(appender.getLayout() instanceof FIPSAuditNDJSONLayout)) {
 			throw new IllegalStateException(
 				StringBundler.concat(
-					"Unable to write a FIPS audit record because the appender ",
+					"Unable to write a FIPS audit event because the appender ",
 					"\"", _APPENDER_NAME, "\" does not render it with \"",
 					FIPSAuditNDJSONLayout.PLUGIN_NAME, "\""));
 		}

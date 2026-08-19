@@ -76,7 +76,7 @@ public class FIPSAuditEvent {
 				StringBundler.concat(
 					"Unable to write the FIPS audit field \"", key,
 					"\" because a null value is dropped from a FIPS audit ",
-					"record"));
+					"event"));
 		}
 
 		if (value instanceof Iterable) {
@@ -110,7 +110,7 @@ public class FIPSAuditEvent {
 				StringBundler.concat(
 					"Unable to write the FIPS audit field \"", key,
 					"\" because a sensitive security parameter must never ",
-					"reach a FIPS audit record"));
+					"reach a FIPS audit event"));
 		}
 	}
 

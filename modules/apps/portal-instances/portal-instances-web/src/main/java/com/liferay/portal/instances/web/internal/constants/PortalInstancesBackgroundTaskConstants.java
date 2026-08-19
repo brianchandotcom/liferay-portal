@@ -32,8 +32,6 @@ public class PortalInstancesBackgroundTaskConstants {
 
 	public static final String MX = "mx";
 
-	public static final String NAME_ADD_VIRTUAL_INSTANCE = "AddVirtualInstance";
-
 	public static final String SITE_INITIALIZER_KEY = "siteInitializerKey";
 
 	public static final String VIRTUAL_HOSTNAME = "virtualHostname";

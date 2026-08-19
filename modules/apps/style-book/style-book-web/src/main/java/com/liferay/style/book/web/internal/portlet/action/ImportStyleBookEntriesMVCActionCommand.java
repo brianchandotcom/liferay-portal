@@ -5,9 +5,9 @@
 
 package com.liferay.style.book.web.internal.portlet.action;
 
-import com.liferay.frontend.token.definition.FrontendToken;
 import com.liferay.frontend.token.definition.FrontendTokenDefinition;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
+import com.liferay.frontend.token.definition.util.FrontendTokenDefinitionUtil;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -32,10 +32,7 @@ import jakarta.portlet.ActionResponse;
 
 import java.io.File;
 
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -110,9 +107,8 @@ public class ImportStyleBookEntriesMVCActionCommand
 						StyleBookEntryZipProcessorImportResultEntry.Status.
 							INVALID) &&
 					(styleBookEntry != null) &&
-					!_isValidFrontendTokenDefinition(
-						_getFrontendTokenNames(
-							themeDisplay, styleBookEntry.getThemeId()),
+					!_isValidFrontendTokensValues(
+						_getFrontendTokenNames(styleBookEntry, themeDisplay),
 						styleBookEntry)) {
 
 					SessionMessages.add(
@@ -130,25 +126,16 @@ public class ImportStyleBookEntriesMVCActionCommand
 		sendRedirect(actionRequest, actionResponse);
 	}
 
-	private Set<String> _getFrontendTokenNames(
-		ThemeDisplay themeDisplay, String themeId) {
+	private List<String> _getFrontendTokenNames(
+		StyleBookEntry styleBookEntry, ThemeDisplay themeDisplay) {
 
-		Set<String> frontendTokenNames = new HashSet<>();
-
-		FrontendTokenDefinition frontendTokenDefinition =
+		FrontendTokenDefinition themeFrontendTokenDefinition =
 			_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
-				themeDisplay.getCompanyId(), themeId);
+				themeDisplay.getCompanyId(), styleBookEntry.getThemeId());
 
-		if (frontendTokenDefinition != null) {
-			Collection<FrontendToken> frontendTokens =
-				frontendTokenDefinition.getFrontendTokens();
-
-			for (FrontendToken frontendToken : frontendTokens) {
-				frontendTokenNames.add(frontendToken.getName());
-			}
-		}
-
-		return frontendTokenNames;
+		return FrontendTokenDefinitionUtil.getFrontendTokenNames(
+			themeFrontendTokenDefinition,
+			styleBookEntry.getFrontendTokenDefinition());
 	}
 
 	private List<StyleBookEntryZipProcessorImportResultEntry>
@@ -160,8 +147,8 @@ public class ImportStyleBookEntriesMVCActionCommand
 			userId, groupId, file, overwrite);
 	}
 
-	private boolean _isValidFrontendTokenDefinition(
-			Set<String> frontendTokenNames, StyleBookEntry styleBookEntry)
+	private boolean _isValidFrontendTokensValues(
+			List<String> frontendTokenNames, StyleBookEntry styleBookEntry)
 		throws JSONException {
 
 		JSONObject frontendTokensValuesJSONObject =

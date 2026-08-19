@@ -112,8 +112,7 @@ public class FIPSAuditFilterTest {
 
 			String errorMessage = messages.get(0);
 
-			Assert.assertTrue(
-				errorMessage, errorMessage.contains(expectedMessage));
+			Assert.assertTrue(errorMessage.contains(expectedMessage));
 		}
 	}
 

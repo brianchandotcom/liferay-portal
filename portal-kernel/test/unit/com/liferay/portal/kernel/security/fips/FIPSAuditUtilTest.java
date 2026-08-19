@@ -148,7 +148,6 @@ public class FIPSAuditUtilTest {
 			String timestamp = String.valueOf(record.get("timestamp"));
 
 			Assert.assertTrue(
-				timestamp,
 				timestamp.matches(
 					"\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z"));
 		}
@@ -188,7 +187,6 @@ public class FIPSAuditUtilTest {
 			Object deploymentInstanceId = record1.get("deployment-instance-id");
 
 			Assert.assertTrue(
-				String.valueOf(deploymentInstanceId),
 				Validator.isNotNull(String.valueOf(deploymentInstanceId)));
 
 			Map<String, Object> record2 = records.get(1);
@@ -225,7 +223,6 @@ public class FIPSAuditUtilTest {
 			Instant instant = Instant.parse(timestamp);
 
 			Assert.assertTrue(
-				timestamp,
 				Math.abs(System.currentTimeMillis() - instant.toEpochMilli()) <
 					Time.MINUTE);
 		}
@@ -341,8 +338,7 @@ public class FIPSAuditUtilTest {
 		long eventSequence1 = (Long)record1.get("event-sequence");
 		long eventSequence2 = (Long)record2.get("event-sequence");
 
-		Assert.assertEquals(
-			records.toString(), eventSequence1 + 1, eventSequence2);
+		Assert.assertEquals(eventSequence1 + 1, eventSequence2);
 	}
 
 	@Test

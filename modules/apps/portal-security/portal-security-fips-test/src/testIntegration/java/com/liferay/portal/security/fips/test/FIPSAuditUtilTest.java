@@ -55,8 +55,7 @@ public class FIPSAuditUtilTest {
 	public void testAuditLogFileExists() {
 		Path path = _getAuditLogPath();
 
-		Assert.assertTrue(
-			"Unable to find the FIPS audit log " + path, Files.exists(path));
+		Assert.assertTrue(Files.exists(path));
 	}
 
 	@Test
@@ -78,8 +77,7 @@ public class FIPSAuditUtilTest {
 	@Test
 	public void testAuditLogRecordsAreParseable() throws Exception {
 		for (String line : Files.readAllLines(_getAuditLogPath())) {
-			Assert.assertTrue(
-				"Blank line in the FIPS audit log", Validator.isNotNull(line));
+			Assert.assertTrue(Validator.isNotNull(line));
 
 			JSONFactoryUtil.createJSONObject(line);
 		}
@@ -91,9 +89,6 @@ public class FIPSAuditUtilTest {
 			String timestamp = jsonObject.getString("timestamp");
 
 			Assert.assertTrue(
-				StringBundler.concat(
-					"Noncanonical timestamp \"", timestamp,
-					"\" in the FIPS audit record ", jsonObject),
 				timestamp.matches(
 					"\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z"));
 		}
@@ -107,9 +102,7 @@ public class FIPSAuditUtilTest {
 			long eventSequence = jsonObject.getLong("event-sequence");
 
 			if (eventSequence > previousEventSequence) {
-				Assert.assertEquals(
-					String.valueOf(jsonObject), previousEventSequence + 1,
-					eventSequence);
+				Assert.assertEquals(previousEventSequence + 1, eventSequence);
 			}
 
 			previousEventSequence = eventSequence;
@@ -120,11 +113,7 @@ public class FIPSAuditUtilTest {
 	public void testAuditLogRecordsCarryTheCommonEnvelope() throws Exception {
 		for (JSONObject jsonObject : _getRecordJSONObjects()) {
 			for (String envelopeKey : _ENVELOPE_KEYS) {
-				Assert.assertTrue(
-					StringBundler.concat(
-						"Unable to find \"", envelopeKey,
-						"\" in the FIPS audit record ", jsonObject),
-					jsonObject.has(envelopeKey));
+				Assert.assertTrue(jsonObject.has(envelopeKey));
 			}
 		}
 	}
@@ -148,12 +137,8 @@ public class FIPSAuditUtilTest {
 					fieldsJSONObject.getString("to-state")));
 		}
 
-		Assert.assertTrue(
-			transitions.toString(),
-			transitions.contains("INITIALIZING to SELF_TEST"));
-		Assert.assertTrue(
-			transitions.toString(),
-			transitions.contains("SELF_TEST to OPERATIONAL"));
+		Assert.assertTrue(transitions.contains("INITIALIZING to SELF_TEST"));
+		Assert.assertTrue(transitions.contains("SELF_TEST to OPERATIONAL"));
 	}
 
 	private Path _getAuditLogPath() {

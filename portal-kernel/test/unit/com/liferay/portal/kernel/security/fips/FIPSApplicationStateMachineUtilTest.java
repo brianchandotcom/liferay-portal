@@ -269,7 +269,7 @@ public class FIPSApplicationStateMachineUtilTest {
 			FIPSApplicationState.POWER_OFF,
 			FIPSApplicationStateMachineUtil.getFIPSApplicationState());
 
-		Assert.assertTrue(_records.toString(), _records.isEmpty());
+		Assert.assertTrue(_records.isEmpty());
 	}
 
 	@Test
@@ -440,7 +440,7 @@ public class FIPSApplicationStateMachineUtilTest {
 	private void _assertEnvelope(
 		String key, Map<String, Object> record, String value) {
 
-		Assert.assertEquals(String.valueOf(record), value, record.get(key));
+		Assert.assertEquals(value, record.get(key));
 	}
 
 	private void _assertField(
@@ -448,7 +448,7 @@ public class FIPSApplicationStateMachineUtilTest {
 
 		Map<?, ?> fields = (Map<?, ?>)record.get("fields");
 
-		Assert.assertEquals(String.valueOf(record), value, fields.get(key));
+		Assert.assertEquals(value, fields.get(key));
 	}
 
 	private Map<String, Object> _getRecord() {
@@ -559,7 +559,7 @@ public class FIPSApplicationStateMachineUtilTest {
 			fromFIPSApplicationState,
 			FIPSApplicationStateMachineUtil.getFIPSApplicationState());
 
-		Assert.assertTrue(_records.toString(), _records.isEmpty());
+		Assert.assertTrue(_records.isEmpty());
 	}
 
 	private void _transition(FIPSApplicationState fipsApplicationState) {

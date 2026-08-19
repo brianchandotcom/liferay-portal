@@ -57,17 +57,25 @@ public abstract class BaseAWSSecretsManagerSecretProvider
 	public void deleteSecret(long companyId, String secretIdentifier)
 		throws SecretException {
 
-		Configuration configuration = _getConfiguration(companyId);
+		AWSSecretsManagerSecretProviderContext
+			awsSecretsManagerSecretProviderContext =
+				_getAWSSecretsManagerSecretProviderContext(companyId);
 
 		String secretARN = _resolveSecretARN(
-			companyId, configuration, secretIdentifier);
+			awsSecretsManagerSecretProviderContext, companyId,
+			secretIdentifier);
+
+		AWSClientManager<AWSSecretsManager> awsClientManager =
+			awsSecretsManagerSecretProviderContext.getAWSClientManager();
+		long recoveryWindowInDays =
+			awsSecretsManagerSecretProviderContext.getRecoveryWindowInDays();
 
 		try {
-			configuration._awsClientManager.execute(
+			awsClientManager.execute(
 				awsSecretsManager -> awsSecretsManager.deleteSecret(
 					new DeleteSecretRequest(
 					).withRecoveryWindowInDays(
-						configuration._recoveryWindowInDays
+						recoveryWindowInDays
 					).withSecretId(
 						secretARN
 					)));
@@ -80,10 +88,14 @@ public abstract class BaseAWSSecretsManagerSecretProvider
 
 	@Override
 	public ProviderStatus getProviderStatus() {
-		Configuration configuration = _configuration;
+		AWSSecretsManagerSecretProviderContext
+			awsSecretsManagerSecretProviderContext =
+				_awsSecretsManagerSecretProviderContext;
 
-		if ((configuration == null) || !configuration._enabled ||
-			Validator.isNull(configuration._region)) {
+		if ((awsSecretsManagerSecretProviderContext == null) ||
+			!awsSecretsManagerSecretProviderContext.isEnabled() ||
+			Validator.isNull(
+				awsSecretsManagerSecretProviderContext.getRegion())) {
 
 			return ProviderStatus.DEGRADED;
 		}
@@ -95,15 +107,22 @@ public abstract class BaseAWSSecretsManagerSecretProvider
 	public Secret getSecret(long companyId, String secretIdentifier)
 		throws SecretException {
 
-		Configuration configuration = _getConfiguration(companyId);
+		AWSSecretsManagerSecretProviderContext
+			awsSecretsManagerSecretProviderContext =
+				_getAWSSecretsManagerSecretProviderContext(companyId);
+
 		byte[] bytes = null;
 
 		String secretARN = _resolveSecretARN(
-			companyId, configuration, secretIdentifier);
+			awsSecretsManagerSecretProviderContext, companyId,
+			secretIdentifier);
+
+		AWSClientManager<AWSSecretsManager> awsClientManager =
+			awsSecretsManagerSecretProviderContext.getAWSClientManager();
 
 		try {
 			GetSecretValueResult getSecretValueResult =
-				configuration._awsClientManager.execute(
+				awsClientManager.execute(
 					awsSecretsManager -> awsSecretsManager.getSecretValue(
 						new GetSecretValueRequest(
 						).withSecretId(
@@ -135,17 +154,22 @@ public abstract class BaseAWSSecretsManagerSecretProvider
 	public List<String> getSecretIdentifiers(long companyId)
 		throws SecretException {
 
-		Configuration configuration = _getConfiguration(companyId);
+		AWSSecretsManagerSecretProviderContext
+			awsSecretsManagerSecretProviderContext =
+				_getAWSSecretsManagerSecretProviderContext(companyId);
 
 		String secretNamePrefix = _resolveSecretNamePrefix(
-			companyId, configuration);
+			awsSecretsManagerSecretProviderContext, companyId);
 
 		if (Validator.isNull(secretNamePrefix)) {
 			return new ArrayList<>();
 		}
 
+		AWSClientManager<AWSSecretsManager> awsClientManager =
+			awsSecretsManagerSecretProviderContext.getAWSClientManager();
+
 		try {
-			return configuration._awsClientManager.execute(
+			return awsClientManager.execute(
 				awsSecretsManager -> {
 					List<String> secretIdentifiers = new ArrayList<>();
 
@@ -195,19 +219,25 @@ public abstract class BaseAWSSecretsManagerSecretProvider
 	public void putSecret(long companyId, Secret secret)
 		throws SecretException {
 
-		byte[] bytes = secret.getBytes();
-
-		Configuration configuration = _getConfiguration(companyId);
+		AWSSecretsManagerSecretProviderContext
+			awsSecretsManagerSecretProviderContext =
+				_getAWSSecretsManagerSecretProviderContext(companyId);
 
 		KeyReference keyReference = secret.getKeyReference();
 
 		String secretARN = _resolveSecretARN(
-			companyId, configuration, keyReference.getIdentifier());
+			awsSecretsManagerSecretProviderContext, companyId,
+			keyReference.getIdentifier());
 
 		String secretName = _getSecretName(secretARN);
 
+		AWSClientManager<AWSSecretsManager> awsClientManager =
+			awsSecretsManagerSecretProviderContext.getAWSClientManager();
+
+		byte[] bytes = secret.getBytes();
+
 		try {
-			configuration._awsClientManager.execute(
+			awsClientManager.execute(
 				awsSecretsManager -> {
 					try {
 						awsSecretsManager.putSecretValue(
@@ -260,12 +290,15 @@ public abstract class BaseAWSSecretsManagerSecretProvider
 		boolean useFIPSEndpoint = GetterUtil.getBoolean(
 			properties.get("useFIPSEndpoint"));
 
-		Configuration configuration = _configuration;
+		AWSSecretsManagerSecretProviderContext
+			awsSecretsManagerSecretProviderContext =
+				_awsSecretsManagerSecretProviderContext;
 
 		AWSClientManager<AWSSecretsManager> awsClientManager = null;
 
-		if (configuration != null) {
-			awsClientManager = configuration._awsClientManager;
+		if (awsSecretsManagerSecretProviderContext != null) {
+			awsClientManager =
+				awsSecretsManagerSecretProviderContext.getAWSClientManager();
 		}
 
 		if (awsClientManager == null) {
@@ -278,10 +311,14 @@ public abstract class BaseAWSSecretsManagerSecretProvider
 			awsClientManager.updateConfiguration(region, useFIPSEndpoint);
 		}
 
-		_configuration = new Configuration(
-			accountId, awsClientManager,
-			new AWSSecretsManagerFIPSValidator(fipsEnforced, useFIPSEndpoint),
-			enabled, recoveryWindowInDays, region, secretARNTemplate);
+		region = awsClientManager.getRegion();
+
+		_awsSecretsManagerSecretProviderContext =
+			new AWSSecretsManagerSecretProviderContext(
+				accountId, awsClientManager,
+				new AWSSecretsManagerFIPSValidator(
+					fipsEnforced, useFIPSEndpoint),
+				enabled, recoveryWindowInDays, region, secretARNTemplate);
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
@@ -292,45 +329,21 @@ public abstract class BaseAWSSecretsManagerSecretProvider
 
 	@Deactivate
 	protected void deactivate() {
-		Configuration configuration = _configuration;
+		AWSSecretsManagerSecretProviderContext
+			awsSecretsManagerSecretProviderContext =
+				_awsSecretsManagerSecretProviderContext;
 
-		_configuration = null;
+		_awsSecretsManagerSecretProviderContext = null;
 
-		if (configuration != null) {
-			configuration._awsClientManager.close();
+		if (awsSecretsManagerSecretProviderContext != null) {
+			AWSClientManager<AWSSecretsManager> awsClientManager =
+				awsSecretsManagerSecretProviderContext.getAWSClientManager();
+
+			awsClientManager.close();
 		}
 	}
 
 	protected abstract String getProviderId();
-
-	protected static class Configuration {
-
-		public Configuration(
-			String accountId,
-			AWSClientManager<AWSSecretsManager> awsClientManager,
-			AWSSecretsManagerFIPSValidator awsSecretsManagerFIPSValidator,
-			boolean enabled, long recoveryWindowInDays, String region,
-			String secretARNTemplate) {
-
-			_accountId = accountId;
-			_awsClientManager = awsClientManager;
-			_awsSecretsManagerFIPSValidator = awsSecretsManagerFIPSValidator;
-			_enabled = enabled;
-			_recoveryWindowInDays = recoveryWindowInDays;
-			_region = region;
-			_secretARNTemplate = secretARNTemplate;
-		}
-
-		private final String _accountId;
-		private final AWSClientManager<AWSSecretsManager> _awsClientManager;
-		private final AWSSecretsManagerFIPSValidator
-			_awsSecretsManagerFIPSValidator;
-		private final boolean _enabled;
-		private final long _recoveryWindowInDays;
-		private final String _region;
-		private final String _secretARNTemplate;
-
-	}
 
 	private static AWSSecretsManager _buildAWSSecretsManager(
 		AWSCredentialsProvider awsCredentialsProvider,
@@ -354,6 +367,37 @@ public abstract class BaseAWSSecretsManagerSecretProvider
 		return awsSecretsManagerClientBuilder.build();
 	}
 
+	private AWSSecretsManagerSecretProviderContext
+			_getAWSSecretsManagerSecretProviderContext(long companyId)
+		throws SecretException {
+
+		AWSSecretsManagerSecretProviderContext
+			awsSecretsManagerSecretProviderContext =
+				_awsSecretsManagerSecretProviderContext;
+
+		if ((awsSecretsManagerSecretProviderContext == null) ||
+			!awsSecretsManagerSecretProviderContext.isEnabled()) {
+
+			throw new SecretException(
+				"Provider " + getProviderId() + " is not enabled");
+		}
+
+		if (!isAllowedCompany(companyId)) {
+			throw new SecretException(
+				StringBundler.concat(
+					"Provider ", getProviderId(),
+					" does not handle company ID ", companyId));
+		}
+
+		AWSSecretsManagerFIPSValidator awsSecretsManagerFIPSValidator =
+			awsSecretsManagerSecretProviderContext.
+				getAWSSecretsManagerFIPSValidator();
+
+		awsSecretsManagerFIPSValidator.validateEndpoint();
+
+		return awsSecretsManagerSecretProviderContext;
+	}
+
 	private byte[] _getBytes(
 			GetSecretValueResult getSecretValueResult, String secretARN)
 		throws SecretException {
@@ -374,28 +418,6 @@ public abstract class BaseAWSSecretsManagerSecretProvider
 			"AWS secret " + secretARN + " has no binary or string value");
 	}
 
-	private Configuration _getConfiguration(long companyId)
-		throws SecretException {
-
-		Configuration configuration = _configuration;
-
-		if ((configuration == null) || !configuration._enabled) {
-			throw new SecretException(
-				"Provider " + getProviderId() + " is not enabled");
-		}
-
-		if (!isAllowedCompany(companyId)) {
-			throw new SecretException(
-				StringBundler.concat(
-					"Provider ", getProviderId(),
-					" does not handle company ID ", companyId));
-		}
-
-		configuration._awsSecretsManagerFIPSValidator.validateEndpoint();
-
-		return configuration;
-	}
-
 	private String _getSecretName(String secretARN) {
 		int index = secretARN.indexOf(":secret:");
 
@@ -407,23 +429,34 @@ public abstract class BaseAWSSecretsManagerSecretProvider
 	}
 
 	private String _resolveSecretARN(
-		long companyId, Configuration configuration, String identifier) {
+		AWSSecretsManagerSecretProviderContext
+			awsSecretsManagerSecretProviderContext,
+		long companyId, String identifier) {
 
 		return AWSARNUtil.resolve(
-			configuration._accountId, configuration._secretARNTemplate,
-			companyId, identifier, configuration._region);
+			awsSecretsManagerSecretProviderContext.getAccountId(),
+			awsSecretsManagerSecretProviderContext.getSecretARNTemplate(),
+			companyId, identifier,
+			awsSecretsManagerSecretProviderContext.getRegion());
 	}
 
 	private String _resolveSecretNamePrefix(
-		long companyId, Configuration configuration) {
+		AWSSecretsManagerSecretProviderContext
+			awsSecretsManagerSecretProviderContext,
+		long companyId) {
 
-		if (Validator.isNull(configuration._secretARNTemplate)) {
+		if (Validator.isNull(
+				awsSecretsManagerSecretProviderContext.
+					getSecretARNTemplate())) {
+
 			return null;
 		}
 
 		String arn = AWSARNUtil.resolve(
-			configuration._accountId, configuration._secretARNTemplate,
-			companyId, StringPool.BLANK, configuration._region);
+			awsSecretsManagerSecretProviderContext.getAccountId(),
+			awsSecretsManagerSecretProviderContext.getSecretARNTemplate(),
+			companyId, StringPool.BLANK,
+			awsSecretsManagerSecretProviderContext.getRegion());
 
 		return _getSecretName(arn);
 	}
@@ -431,6 +464,7 @@ public abstract class BaseAWSSecretsManagerSecretProvider
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseAWSSecretsManagerSecretProvider.class);
 
-	private volatile Configuration _configuration;
+	private volatile AWSSecretsManagerSecretProviderContext
+		_awsSecretsManagerSecretProviderContext;
 
 }

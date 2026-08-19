@@ -67,7 +67,7 @@ public class AWSSecretsManagerSystemSecretProviderTest {
 
 	@Test
 	public void testDeleteSecret() throws Exception {
-		_setConfiguration(true, false, false);
+		_setAWSSecretsManagerSecretProviderContext(true, false, false);
 
 		_awsSecretsManagerSystemSecretProvider.deleteSecret(
 			CompanyConstants.SYSTEM, RandomTestUtil.randomString());
@@ -90,7 +90,7 @@ public class AWSSecretsManagerSystemSecretProviderTest {
 
 	@Test
 	public void testGetProviderStatus() {
-		_setConfiguration(true, false, false);
+		_setAWSSecretsManagerSecretProviderContext(true, false, false);
 
 		Assert.assertEquals(
 			ProviderStatus.OPERATIONAL,
@@ -99,7 +99,7 @@ public class AWSSecretsManagerSystemSecretProviderTest {
 
 	@Test
 	public void testGetSecret() throws Exception {
-		_setConfiguration(true, false, false);
+		_setAWSSecretsManagerSecretProviderContext(true, false, false);
 
 		byte[] expectedBytes = RandomTestUtil.randomBytes();
 
@@ -121,7 +121,7 @@ public class AWSSecretsManagerSystemSecretProviderTest {
 
 	@Test
 	public void testGetSecretIdentifiers() throws Exception {
-		_setConfiguration(true, false, false);
+		_setAWSSecretsManagerSecretProviderContext(true, false, false);
 
 		String secretIdentifier1 = RandomTestUtil.randomString();
 		String secretIdentifier2 = RandomTestUtil.randomString();
@@ -156,7 +156,7 @@ public class AWSSecretsManagerSystemSecretProviderTest {
 
 	@Test(expected = SecretException.class)
 	public void testGetSecretRejectsMissingValue() throws Exception {
-		_setConfiguration(true, false, false);
+		_setAWSSecretsManagerSecretProviderContext(true, false, false);
 
 		Mockito.when(
 			_awsSecretsManager.getSecretValue(
@@ -173,7 +173,7 @@ public class AWSSecretsManagerSystemSecretProviderTest {
 	public void testGetSecretRejectsUnderFIPSEnforcementWithoutFIPSEndpoint()
 		throws Exception {
 
-		_setConfiguration(true, true, false);
+		_setAWSSecretsManagerSecretProviderContext(true, true, false);
 
 		_awsSecretsManagerSystemSecretProvider.getSecret(
 			CompanyConstants.SYSTEM, RandomTestUtil.randomString());
@@ -181,7 +181,7 @@ public class AWSSecretsManagerSystemSecretProviderTest {
 
 	@Test(expected = SecretException.class)
 	public void testGetSecretWhenDisabled() throws Exception {
-		_setConfiguration(false, false, false);
+		_setAWSSecretsManagerSecretProviderContext(false, false, false);
 
 		_awsSecretsManagerSystemSecretProvider.getSecret(
 			CompanyConstants.SYSTEM, RandomTestUtil.randomString());
@@ -199,7 +199,7 @@ public class AWSSecretsManagerSystemSecretProviderTest {
 
 	@Test
 	public void testPutSecret() throws Exception {
-		_setConfiguration(true, false, false);
+		_setAWSSecretsManagerSecretProviderContext(true, false, false);
 
 		byte[] bytes = RandomTestUtil.randomBytes();
 
@@ -234,7 +234,7 @@ public class AWSSecretsManagerSystemSecretProviderTest {
 
 	@Test
 	public void testPutSecretCreatesSecretWithName() throws Exception {
-		_setConfiguration(true, false, false);
+		_setAWSSecretsManagerSecretProviderContext(true, false, false);
 
 		Mockito.when(
 			_awsSecretsManager.putSecretValue(
@@ -270,14 +270,15 @@ public class AWSSecretsManagerSystemSecretProviderTest {
 			createSecretRequest.getName());
 	}
 
-	private void _setConfiguration(
+	private void _setAWSSecretsManagerSecretProviderContext(
 		boolean enabled, boolean fipsEnforced, boolean useFIPSEndpoint) {
 
 		_recoveryWindowInDays = RandomTestUtil.randomLong();
 
 		ReflectionTestUtil.setFieldValue(
-			_awsSecretsManagerSystemSecretProvider, "_configuration",
-			new BaseAWSSecretsManagerSecretProvider.Configuration(
+			_awsSecretsManagerSystemSecretProvider,
+			"_awsSecretsManagerSecretProviderContext",
+			new AWSSecretsManagerSecretProviderContext(
 				null, _awsClientManager,
 				new AWSSecretsManagerFIPSValidator(
 					fipsEnforced, useFIPSEndpoint),

@@ -49,7 +49,7 @@ public final class FIPSAuditNDJSONLayout extends AbstractStringLayout {
 
 		StringBuilder sb = getStringBuilder();
 
-		_generateNDJSON(logEvent, sb);
+		_generateNDJSONLog(logEvent, sb);
 
 		Encoder<StringBuilder> encoder = getStringBuilderEncoder();
 
@@ -65,7 +65,7 @@ public final class FIPSAuditNDJSONLayout extends AbstractStringLayout {
 	public String toSerializable(LogEvent logEvent) {
 		StringBuilder sb = getStringBuilder();
 
-		_generateNDJSON(logEvent, sb);
+		_generateNDJSONLog(logEvent, sb);
 
 		return sb.toString();
 	}
@@ -85,7 +85,7 @@ public final class FIPSAuditNDJSONLayout extends AbstractStringLayout {
 		super(StandardCharsets.UTF_8);
 	}
 
-	private void _generateNDJSON(LogEvent logEvent, StringBuilder sb) {
+	private void _generateNDJSONLog(LogEvent logEvent, StringBuilder sb) {
 		Message message = logEvent.getMessage();
 
 		Object record = null;

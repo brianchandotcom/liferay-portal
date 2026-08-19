@@ -15,6 +15,7 @@ import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -254,6 +255,40 @@ public class UrlReaderTest extends com.liferay.jenkins.results.parser.Test {
 		verifyUrlReadAttemptCount(1, mockUrlReaders, _URL);
 	}
 
+	/**
+	 * A 403 from the GitHub API is the secondary rate limit rather than a
+	 * terminal 4xx, and the branch that tells them apart now reads the code
+	 * from the connection instead of matching the exception message.
+	 */
+	@Test
+	public void testToStringWhenResponseCodeIs403AndURLIsGitHubAPI()
+		throws Exception {
+
+		Properties buildProperties = new Properties();
+
+		buildProperties.setProperty(
+			"github.access.token", RandomTestUtil.randomString());
+
+		JenkinsResultsParserUtil.setBuildProperties(buildProperties);
+
+		MockUrlReaders mockUrlReaders = mockUrlReaders();
+
+		setUrlReaderResponseCode(403, _URL_GITHUB_API, mockUrlReaders);
+
+		try {
+			JenkinsResultsParserUtil.toString(_URL_GITHUB_API, false, 0, 0, 0);
+
+			Assert.fail(
+				"Expected a GitHubSecondaryRateLimitRuntimeException to " +
+					"reach the caller");
+		}
+		catch (GitHubSecondaryRateLimitRuntimeException
+					gitHubSecondaryRateLimitRuntimeException) {
+		}
+
+		verifyUrlReadAttemptCount(1, mockUrlReaders, _URL_GITHUB_API);
+	}
+
 	@Test
 	public void testToStringWhenResponseCodeIs404() throws Exception {
 		MockUrlReaders mockUrlReaders = mockUrlReaders();
@@ -267,6 +302,31 @@ public class UrlReaderTest extends com.liferay.jenkins.results.parser.Test {
 			Assert.fail("Expected an IOException to reach the caller");
 		}
 		catch (FileNotFoundException fileNotFoundException) {
+		}
+
+		verifyUrlReadAttemptCount(1, mockUrlReaders, _URL);
+	}
+
+	/**
+	 * A 422 is the one terminal 4xx that surfaces as a RuntimeException
+	 * instead of the IOException the rest throw, and the code deciding that
+	 * now comes from the connection rather than the exception message.
+	 */
+	@Test
+	public void testToStringWhenResponseCodeIs422() throws Exception {
+		MockUrlReaders mockUrlReaders = mockUrlReaders();
+
+		setUrlReaderResponseCode(422, _URL, mockUrlReaders);
+
+		try {
+			JenkinsResultsParserUtil.toString(_URL, false, _MAX_RETRIES, 0, 0);
+
+			Assert.fail("Expected a RuntimeException to reach the caller");
+		}
+		catch (RuntimeException runtimeException) {
+			Throwable throwable = runtimeException.getCause();
+
+			Assert.assertTrue(throwable instanceof IOException);
 		}
 
 		verifyUrlReadAttemptCount(1, mockUrlReaders, _URL);
@@ -387,5 +447,8 @@ public class UrlReaderTest extends com.liferay.jenkins.results.parser.Test {
 	private static final String _URL = "http://test.liferay.com";
 
 	private static final String _URL_FILE = "file:/tmp/queue-item.json";
+
+	private static final String _URL_GITHUB_API =
+		"https://api.github.com/repos/liferay/liferay-portal";
 
 }

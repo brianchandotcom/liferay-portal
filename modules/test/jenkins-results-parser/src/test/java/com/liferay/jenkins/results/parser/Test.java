@@ -61,11 +61,11 @@ public class Test {
 
 		jobs.clear();
 
-		Shell.setInstance(new Shell());
-
 		JSONArrayUrlReader.setInstance(new JSONArrayUrlReader());
 
 		JSONObjectUrlReader.setInstance(new JSONObjectUrlReader());
+
+		Shell.setInstance(new Shell());
 
 		StreamUrlReader.setInstance(new StreamUrlReader());
 
@@ -208,14 +208,14 @@ public class Test {
 	}
 
 	protected HttpURLConnection mockURLConnection(
-			int responseCode, String standardOut)
+			int responseCode, String content)
 		throws IOException {
 
 		HttpURLConnection httpURLConnection = Mockito.mock(
 			HttpURLConnection.class);
 
 		Mockito.doReturn(
-			new ByteArrayInputStream(standardOut.getBytes())
+			new ByteArrayInputStream(content.getBytes())
 		).when(
 			httpURLConnection
 		).getInputStream();

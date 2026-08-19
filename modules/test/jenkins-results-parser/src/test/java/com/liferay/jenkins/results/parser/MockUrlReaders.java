@@ -12,7 +12,7 @@ import java.util.List;
  * Holds one spy per reader type, so a test can stub every entry point at once
  * and still reach for the single reader whose attempts it wants to count.
  *
- * @author Kenji Heigel
+ * @author Calum Ragan
  */
 public class MockUrlReaders {
 

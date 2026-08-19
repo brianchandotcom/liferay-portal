@@ -6,6 +6,7 @@
 package com.liferay.headless.cms.internal.similarity;
 
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.document.Document;
 
 import java.util.ArrayList;
@@ -94,15 +95,22 @@ public class SimilarityClusterUtil {
 	private static Long _getRootObjectEntryId(
 		Long objectEntryId, Map<Long, Long> parentObjectEntryIds) {
 
-		Long parentObjectEntryId = parentObjectEntryIds.get(objectEntryId);
+		Long rootObjectEntryId = objectEntryId;
 
-		while (!parentObjectEntryId.equals(objectEntryId)) {
-			objectEntryId = parentObjectEntryId;
+		Long parentObjectEntryId = parentObjectEntryIds.get(rootObjectEntryId);
 
-			parentObjectEntryId = parentObjectEntryIds.get(objectEntryId);
+		while (!parentObjectEntryId.equals(rootObjectEntryId)) {
+			rootObjectEntryId = parentObjectEntryId;
+
+			parentObjectEntryId = parentObjectEntryIds.get(rootObjectEntryId);
 		}
 
-		return objectEntryId;
+		while (!objectEntryId.equals(rootObjectEntryId)) {
+			objectEntryId = parentObjectEntryIds.put(
+				objectEntryId, rootObjectEntryId);
+		}
+
+		return rootObjectEntryId;
 	}
 
 	private static Map<Long, List<Long>> _getSortedObjectEntryIdsByClusterId(
@@ -134,6 +142,31 @@ public class SimilarityClusterUtil {
 		return sortedObjectEntryIdsByClusterId;
 	}
 
+	private static void _mergeBoilerplateClusters(
+		Map<Long, List<String>> boilerplateSimilarityKeys,
+		Map<Long, Long> parentObjectEntryIds) {
+
+		Map<String, Long> objectEntryIdsBySimilarityKeys = new HashMap<>();
+
+		for (Map.Entry<Long, List<String>> entry :
+				boilerplateSimilarityKeys.entrySet()) {
+
+			List<String> similarityKeys = entry.getValue();
+
+			if (similarityKeys.size() < _MIN_SHARED_SIMILARITY_KEYS) {
+				continue;
+			}
+
+			Long objectEntryId = objectEntryIdsBySimilarityKeys.putIfAbsent(
+				StringUtil.merge(similarityKeys), entry.getKey());
+
+			if (objectEntryId != null) {
+				_mergeClusters(
+					objectEntryId, entry.getKey(), parentObjectEntryIds);
+			}
+		}
+	}
+
 	private static void _mergeClusters(
 		Long objectEntryId1, Long objectEntryId2,
 		Map<Long, Long> parentObjectEntryIds) {
@@ -152,11 +185,28 @@ public class SimilarityClusterUtil {
 		Map<String, List<Long>> objectEntryIdsBySimilarityKey,
 		Map<Long, Long> parentObjectEntryIds) {
 
+		Map<Long, List<String>> boilerplateSimilarityKeys =
+			new LinkedHashMap<>();
 		Map<Long, Map<Long, Integer>> sharedSimilarityKeyCounts =
 			new HashMap<>();
 
-		for (List<Long> objectEntryIds :
-				objectEntryIdsBySimilarityKey.values()) {
+		for (Map.Entry<String, List<Long>> entry :
+				objectEntryIdsBySimilarityKey.entrySet()) {
+
+			List<Long> objectEntryIds = entry.getValue();
+
+			if (objectEntryIds.size() > _MAX_SIMILARITY_KEY_ASSETS) {
+				for (Long objectEntryId : objectEntryIds) {
+					List<String> similarityKeys =
+						boilerplateSimilarityKeys.computeIfAbsent(
+							objectEntryId,
+							boilerplateObjectEntryId -> new ArrayList<>());
+
+					similarityKeys.add(entry.getKey());
+				}
+
+				continue;
+			}
 
 			for (int i = 0; i < objectEntryIds.size(); i++) {
 				for (int j = i + 1; j < objectEntryIds.size(); j++) {
@@ -175,7 +225,7 @@ public class SimilarityClusterUtil {
 					Map<Long, Integer> counts =
 						sharedSimilarityKeyCounts.computeIfAbsent(
 							Math.min(objectEntryId1, objectEntryId2),
-							key -> new HashMap<>());
+							objectEntryId -> new HashMap<>());
 
 					int count = counts.merge(
 						Math.max(objectEntryId1, objectEntryId2), 1,
@@ -189,7 +239,12 @@ public class SimilarityClusterUtil {
 				}
 			}
 		}
+
+		_mergeBoilerplateClusters(
+			boilerplateSimilarityKeys, parentObjectEntryIds);
 	}
+
+	private static final int _MAX_SIMILARITY_KEY_ASSETS = 500;
 
 	private static final int _MIN_SHARED_SIMILARITY_KEYS = 3;
 

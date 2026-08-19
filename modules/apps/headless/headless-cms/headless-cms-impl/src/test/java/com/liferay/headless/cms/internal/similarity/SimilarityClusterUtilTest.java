@@ -35,6 +35,34 @@ public class SimilarityClusterUtilTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
+	public void testGetClustersBoundedByAssetsSharingEverySimilarityKey() {
+		List<Document> documents = new ArrayList<>();
+
+		String[] similarityKeys = new String[32];
+
+		for (int i = 0; i < similarityKeys.length; i++) {
+			similarityKeys[i] = "k" + i;
+		}
+
+		for (long objectEntryId = 1; objectEntryId <= 10000; objectEntryId++) {
+			documents.add(_mockDocument(objectEntryId, similarityKeys));
+		}
+
+		Map<Long, List<Long>> objectEntryIdsByClusterId =
+			SimilarityClusterUtil.getClusters(
+				documents, _toSet(similarityKeys));
+
+		Assert.assertEquals(
+			objectEntryIdsByClusterId.toString(), 1,
+			objectEntryIdsByClusterId.size());
+		Assert.assertEquals(
+			10000,
+			objectEntryIdsByClusterId.get(
+				1L
+			).size());
+	}
+
+	@Test
 	public void testGetClustersChainsAssetsThroughSharedSimilarityKeys() {
 		Map<Long, List<Long>> objectEntryIdsByClusterId =
 			SimilarityClusterUtil.getClusters(
@@ -66,6 +94,22 @@ public class SimilarityClusterUtilTest {
 			objectEntryIdsByClusterId.size());
 		Assert.assertEquals(
 			Arrays.asList(1L, 2L), objectEntryIdsByClusterId.get(1L));
+	}
+
+	@Test
+	public void testGetClustersIgnoresOneSimilarityKeySharedByManyAssets() {
+		List<Document> documents = new ArrayList<>();
+
+		for (long objectEntryId = 1; objectEntryId <= 600; objectEntryId++) {
+			documents.add(_mockDocument(objectEntryId, "k0"));
+		}
+
+		Map<Long, List<Long>> objectEntryIdsByClusterId =
+			SimilarityClusterUtil.getClusters(documents, _toSet("k0"));
+
+		Assert.assertEquals(
+			objectEntryIdsByClusterId.toString(), 0,
+			objectEntryIdsByClusterId.size());
 	}
 
 	@Test

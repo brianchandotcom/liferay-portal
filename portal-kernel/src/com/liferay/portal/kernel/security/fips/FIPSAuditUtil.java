@@ -7,6 +7,7 @@ package com.liferay.portal.kernel.security.fips;
 
 import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.internal.log4j.FIPSLog4jUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
@@ -64,9 +65,11 @@ public class FIPSAuditUtil {
 			).put(
 				"fields", _normalizeTimestamps(fipsAuditEvent.getFields())
 			).put(
-				"provider-name", _getProviderName(provider)
+				"provider-name",
+				(provider == null) ? StringPool.BLANK : provider.getName()
 			).put(
-				"provider-version", _getProviderVersion(provider)
+				"provider-version",
+				(provider == null) ? StringPool.BLANK : provider.getVersionStr()
 			).put(
 				"severity", severity.name()
 			).put(
@@ -75,7 +78,11 @@ public class FIPSAuditUtil {
 			severity);
 	}
 
-	private static String _deriveDeploymentInstanceId() {
+	private static String _formatTimestamp(Instant instant) {
+		return _dateTimeFormatter.format(instant.atZone(ZoneOffset.UTC));
+	}
+
+	private static String _generateDeploymentInstanceId() {
 		Path path = Paths.get(
 			PropsValues.LIFERAY_HOME, "data",
 			"fips-audit-deployment-instance-id");
@@ -103,10 +110,6 @@ public class FIPSAuditUtil {
 		}
 	}
 
-	private static String _formatTimestamp(Instant instant) {
-		return _dateTimeFormatter.format(instant.atZone(ZoneOffset.UTC));
-	}
-
 	private static String _getDeploymentInstanceId() {
 		String deploymentInstanceId =
 			PropsValues.FIPS_AUDIT_DEPLOYMENT_INSTANCE_ID;
@@ -116,7 +119,7 @@ public class FIPSAuditUtil {
 		}
 
 		return _deploymentInstanceIdDCLSingleton.getSingleton(
-			FIPSAuditUtil::_deriveDeploymentInstanceId);
+			FIPSAuditUtil::_generateDeploymentInstanceId);
 	}
 
 	private static Provider _getProvider() {
@@ -127,22 +130,6 @@ public class FIPSAuditUtil {
 		}
 
 		return providers[0];
-	}
-
-	private static String _getProviderName(Provider provider) {
-		if (provider == null) {
-			return "";
-		}
-
-		return provider.getName();
-	}
-
-	private static String _getProviderVersion(Provider provider) {
-		if (provider == null) {
-			return "";
-		}
-
-		return provider.getVersionStr();
 	}
 
 	private static Object _normalizeTimestamp(Object value) {

@@ -5,10 +5,11 @@
 
 package com.liferay.portal.instances.web.internal.portlet.action;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.instances.web.internal.background.task.AddVirtualInstanceBackgroundTaskExecutor;
 import com.liferay.portal.instances.web.internal.constants.PortalInstancesBackgroundTaskConstants;
 import com.liferay.portal.instances.web.internal.constants.PortalInstancesPortletKeys;
+import com.liferay.portal.instances.web.internal.exception.VirtualInstanceAlreadyBeingAddedException;
+import com.liferay.portal.instances.web.internal.notifications.PortalInstancesOperationType;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.encryptor.Encryptor;
@@ -44,7 +45,6 @@ import jakarta.portlet.ActionResponse;
 import java.io.Serializable;
 
 import java.util.Locale;
-import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -117,7 +117,23 @@ public class AddInstanceMVCActionCommand extends BaseMVCActionCommand {
 		_companyLocalService.validateCompany(
 			webId, virtualHostname, mx, maxUsers);
 
-		Map<String, Serializable> taskContextMap =
+		String name = PortalInstancesOperationType.ADD.getBackgroundTaskName(
+			webId);
+		String taskExecutorClassName =
+			AddVirtualInstanceBackgroundTaskExecutor.class.getName();
+
+		int count = _backgroundTaskManager.getBackgroundTasksCount(
+			BackgroundTaskConstants.GROUP_ID_DEFAULT, name,
+			taskExecutorClassName, false);
+
+		if (count > 0) {
+			throw new VirtualInstanceAlreadyBeingAddedException(
+				"Virtual instance " + webId + " is already being added");
+		}
+
+		_backgroundTaskManager.addBackgroundTask(
+			themeDisplay.getUserId(), BackgroundTaskConstants.GROUP_ID_DEFAULT,
+			name, taskExecutorClassName,
 			HashMapBuilder.<String, Serializable>put(
 				PortalInstancesBackgroundTaskConstants.ACTIVE,
 				ParamUtil.getBoolean(actionRequest, "active")
@@ -161,14 +177,8 @@ public class AddInstanceMVCActionCommand extends BaseMVCActionCommand {
 				virtualHostname
 			).put(
 				PortalInstancesBackgroundTaskConstants.WEB_ID, webId
-			).build();
-
-		_backgroundTaskManager.addBackgroundTask(
-			themeDisplay.getUserId(), BackgroundTaskConstants.GROUP_ID_DEFAULT,
-			PortalInstancesBackgroundTaskConstants.NAME_ADD_VIRTUAL_INSTANCE +
-				StringPool.POUND + webId,
-			AddVirtualInstanceBackgroundTaskExecutor.class.getName(),
-			taskContextMap, new ServiceContext());
+			).build(),
+			new ServiceContext());
 
 		return webId;
 	}
@@ -201,6 +211,11 @@ public class AddInstanceMVCActionCommand extends BaseMVCActionCommand {
 		}
 		else if (exception instanceof PrincipalException.MustBeOmniadmin) {
 			return "you-must-be-an-admin-to-complete-this-action";
+		}
+		else if (exception instanceof
+					VirtualInstanceAlreadyBeingAddedException) {
+
+			return "a-virtual-instance-with-this-web-id-is-already-being-added";
 		}
 
 		return "an-unexpected-error-occurred";

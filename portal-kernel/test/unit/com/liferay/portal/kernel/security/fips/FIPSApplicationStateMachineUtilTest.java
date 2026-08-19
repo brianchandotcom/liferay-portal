@@ -10,7 +10,6 @@ import com.liferay.portal.kernel.internal.log4j.FIPSLog4jUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,8 +43,6 @@ public class FIPSApplicationStateMachineUtilTest {
 
 	@BeforeClass
 	public static void setUpClass() {
-		PropsUtil.get("fips.enabled");
-
 		_logger = Mockito.mock(Logger.class);
 
 		_logManagerMockedStatic = Mockito.mockStatic(
@@ -106,7 +103,7 @@ public class FIPSApplicationStateMachineUtilTest {
 			FIPSApplicationState.ERROR,
 			FIPSApplicationStateMachineUtil.getFIPSApplicationState());
 
-		Map<String, Object> record = _getRecord();
+		Map<String, Object> record = _getLastRecord();
 
 		_assertEnvelope("event-type", record, "fips-state-transition");
 		_assertEnvelope("severity", record, "CRITICAL");
@@ -186,7 +183,7 @@ public class FIPSApplicationStateMachineUtilTest {
 			FIPSApplicationState.OPERATIONAL,
 			FIPSApplicationStateMachineUtil.getFIPSApplicationState());
 
-		Map<String, Object> record = _getRecord();
+		Map<String, Object> record = _getLastRecord();
 
 		_assertEnvelope("severity", record, "INFO");
 		_assertField("crypto-officer-user-id", record, cryptoOfficerUserId);
@@ -207,7 +204,7 @@ public class FIPSApplicationStateMachineUtilTest {
 			FIPSApplicationState.POWER_OFF,
 			FIPSApplicationStateMachineUtil.getFIPSApplicationState());
 
-		Map<String, Object> record = _getRecord();
+		Map<String, Object> record = _getLastRecord();
 
 		_assertEnvelope("severity", record, "INFO");
 		_assertField("from-state", record, "OPERATIONAL");
@@ -228,7 +225,7 @@ public class FIPSApplicationStateMachineUtilTest {
 			FIPSApplicationState.QUIESCENT,
 			FIPSApplicationStateMachineUtil.getFIPSApplicationState());
 
-		Map<String, Object> record = _getRecord();
+		Map<String, Object> record = _getLastRecord();
 
 		_assertEnvelope("severity", record, "INFO");
 		_assertField("crypto-officer-user-id", record, cryptoOfficerUserId);
@@ -249,7 +246,7 @@ public class FIPSApplicationStateMachineUtilTest {
 			FIPSApplicationState.POWER_OFF,
 			FIPSApplicationStateMachineUtil.getFIPSApplicationState());
 
-		Map<String, Object> record = _getRecord();
+		Map<String, Object> record = _getLastRecord();
 
 		_assertEnvelope("severity", record, "INFO");
 		_assertField("from-state", record, "OPERATIONAL");
@@ -292,7 +289,10 @@ public class FIPSApplicationStateMachineUtilTest {
 			"message", _records.get(1),
 			"All checks and the validated provider self tests passed");
 		_assertField("to-state", _records.get(1), "OPERATIONAL");
+	}
 
+	@Test
+	public void testSelfTestWithFailure() {
 		_testSelfTest(new RuntimeException());
 		_testSelfTest(new SecurityException());
 	}
@@ -451,7 +451,7 @@ public class FIPSApplicationStateMachineUtilTest {
 		Assert.assertEquals(value, fields.get(key));
 	}
 
-	private Map<String, Object> _getRecord() {
+	private Map<String, Object> _getLastRecord() {
 		return _records.get(_records.size() - 1);
 	}
 

@@ -89,11 +89,7 @@ public final class FIPSAuditFilter extends AbstractFilter {
 
 		ObjectMessage objectMessage = (ObjectMessage)message;
 
-		if (objectMessage.getParameter() instanceof Map) {
-			return true;
-		}
-
-		return false;
+		return objectMessage.getParameter() instanceof Map;
 	}
 
 	private static final Logger _logger = LogManager.getLogger(

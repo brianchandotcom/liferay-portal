@@ -126,11 +126,11 @@ public class FIPSAuditNDJSONLayoutTest {
 			Assert.assertEquals(
 				"",
 				fipsAuditNDJSONLayout.toSerializable(
-					_createLogEvent(new SimpleMessage("Not a record"))));
+					_createLogEvent(new ObjectMessage("not-a-map"))));
 			Assert.assertEquals(
 				"",
 				fipsAuditNDJSONLayout.toSerializable(
-					_createLogEvent(new ObjectMessage("not-a-map"))));
+					_createLogEvent(new SimpleMessage("Not a record"))));
 
 			List<String> messages = logCapture.getMessages();
 

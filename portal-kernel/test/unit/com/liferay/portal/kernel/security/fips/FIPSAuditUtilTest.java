@@ -11,16 +11,17 @@ import com.liferay.portal.kernel.internal.log4j.FIPSLog4jUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.io.File;
 import java.io.IOException;
 
+import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 
 import java.security.Provider;
 import java.security.Security;
@@ -67,8 +68,6 @@ public class FIPSAuditUtilTest {
 
 	@BeforeClass
 	public static void setUpClass() {
-		PropsUtil.get("fips.enabled");
-
 		_logger = Mockito.mock(Logger.class);
 
 		_logManagerMockedStatic = Mockito.mockStatic(
@@ -90,6 +89,8 @@ public class FIPSAuditUtilTest {
 	public void setUp() {
 		Mockito.reset(_logger);
 
+		Security.insertProviderAt(_testProvider, 1);
+
 		DCLSingleton<String> dclSingleton = ReflectionTestUtil.getFieldValue(
 			FIPSAuditUtil.class, "_deploymentInstanceIdDCLSingleton");
 
@@ -103,6 +104,8 @@ public class FIPSAuditUtilTest {
 
 	@After
 	public void tearDown() {
+		Security.removeProvider(_TEST_PROVIDER_NAME);
+
 		_safeCloseable.close();
 	}
 
@@ -130,7 +133,7 @@ public class FIPSAuditUtilTest {
 
 			FIPSAuditUtil.write(fipsAuditEvent);
 
-			Map<String, Object> record = _getRecord(Level.ERROR);
+			Map<String, Object> record = _getLastRecord(Level.ERROR);
 
 			Assert.assertEquals("4743", record.get("cmvp-certificate-id"));
 			Assert.assertEquals(
@@ -143,12 +146,10 @@ public class FIPSAuditUtilTest {
 			Assert.assertEquals(fromState, fields.get("from-state"));
 			Assert.assertEquals(toState, fields.get("to-state"));
 
-			Provider provider = _getProvider();
-
 			Assert.assertEquals(
-				provider.getName(), record.get("provider-name"));
+				_TEST_PROVIDER_NAME, record.get("provider-name"));
 			Assert.assertEquals(
-				provider.getVersionStr(), record.get("provider-version"));
+				_TEST_PROVIDER_VERSION, record.get("provider-version"));
 
 			Assert.assertEquals("CRITICAL", record.get("severity"));
 
@@ -164,7 +165,8 @@ public class FIPSAuditUtilTest {
 	public void testWriteDerivesStableDeploymentInstanceIdWhenUnset()
 		throws Exception {
 
-		Path liferayHome = Files.createTempDirectory("fips-audit-test");
+		Path liferayHome = Files.createTempDirectory(
+			FIPSAuditUtilTest.class.getName());
 
 		try (SafeCloseable safeCloseable1 =
 				PropsValuesTestUtil.swapWithSafeCloseable(
@@ -223,7 +225,7 @@ public class FIPSAuditUtilTest {
 					RandomTestUtil.randomString(),
 					FIPSAuditEvent.Severity.INFO));
 
-			Map<String, Object> record = _getRecord(Level.INFO);
+			Map<String, Object> record = _getLastRecord(Level.INFO);
 
 			String timestamp = String.valueOf(record.get("timestamp"));
 
@@ -257,11 +259,9 @@ public class FIPSAuditUtilTest {
 
 		FIPSAuditUtil.write(fipsAuditEvent);
 
-		Map<String, Object> record = _getRecord(Level.INFO);
+		Map<String, Object> record = _getLastRecord(Level.INFO);
 
-		Provider provider = _getProvider();
-
-		Assert.assertEquals(provider.getName(), record.get("provider-name"));
+		Assert.assertEquals(_TEST_PROVIDER_NAME, record.get("provider-name"));
 
 		Map<?, ?> fields = (Map<?, ?>)record.get("fields");
 
@@ -298,7 +298,7 @@ public class FIPSAuditUtilTest {
 
 		FIPSAuditUtil.write(fipsAuditEvent);
 
-		Map<String, Object> record = _getRecord(Level.INFO);
+		Map<String, Object> record = _getLastRecord(Level.INFO);
 
 		Map<?, ?> fields = (Map<?, ?>)record.get("fields");
 
@@ -393,26 +393,34 @@ public class FIPSAuditUtilTest {
 	}
 
 	private void _delete(Path path) throws IOException {
-		File file = path.toFile();
+		Files.walkFileTree(
+			path,
+			new SimpleFileVisitor<Path>() {
 
-		File[] childFiles = file.listFiles();
+				@Override
+				public FileVisitResult postVisitDirectory(
+						Path path, IOException ioException)
+					throws IOException {
 
-		if (childFiles != null) {
-			for (File childFile : childFiles) {
-				_delete(childFile.toPath());
-			}
-		}
+					Files.delete(path);
 
-		Files.delete(path);
+					return FileVisitResult.CONTINUE;
+				}
+
+				@Override
+				public FileVisitResult visitFile(
+						Path path, BasicFileAttributes basicFileAttributes)
+					throws IOException {
+
+					Files.delete(path);
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
 	}
 
-	private Provider _getProvider() {
-		Provider[] providers = Security.getProviders();
-
-		return providers[0];
-	}
-
-	private Map<String, Object> _getRecord(Level level) {
+	private Map<String, Object> _getLastRecord(Level level) {
 		List<Map<String, Object>> records = _getRecords(level);
 
 		return records.get(records.size() - 1);
@@ -471,7 +479,7 @@ public class FIPSAuditUtilTest {
 		FIPSAuditUtil.write(
 			new FIPSAuditEvent(RandomTestUtil.randomString(), severity));
 
-		Map<String, Object> record = _getRecord(level);
+		Map<String, Object> record = _getLastRecord(level);
 
 		Assert.assertEquals(severity.name(), record.get("severity"));
 	}
@@ -486,7 +494,7 @@ public class FIPSAuditUtilTest {
 
 		FIPSAuditUtil.write(fipsAuditEvent);
 
-		Map<String, Object> record = _getRecord(Level.INFO);
+		Map<String, Object> record = _getLastRecord(Level.INFO);
 
 		Map<?, ?> fields = (Map<?, ?>)record.get("fields");
 
@@ -516,10 +524,25 @@ public class FIPSAuditUtilTest {
 		}
 	}
 
+	private static final String _TEST_PROVIDER_NAME = "TestProvider";
+
+	private static final String _TEST_PROVIDER_VERSION = "9.9";
+
 	private static Logger _logger;
 
 	private static MockedStatic<LogManager> _logManagerMockedStatic;
+	private static final Provider _testProvider = new TestProvider();
 
 	private SafeCloseable _safeCloseable;
+
+	private static class TestProvider extends Provider {
+
+		private TestProvider() {
+			super(
+				_TEST_PROVIDER_NAME, _TEST_PROVIDER_VERSION,
+				"Test provider for the FIPS audit envelope");
+		}
+
+	}
 
 }

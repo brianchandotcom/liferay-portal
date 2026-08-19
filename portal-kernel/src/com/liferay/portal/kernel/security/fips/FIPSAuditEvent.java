@@ -36,12 +36,10 @@ public class FIPSAuditEvent {
 		return _severity;
 	}
 
-	public FIPSAuditEvent put(String key, Object value) {
+	public void put(String key, Object value) {
 		_validate(key, value);
 
 		_fields.put(key, value);
-
-		return this;
 	}
 
 	public enum Severity {

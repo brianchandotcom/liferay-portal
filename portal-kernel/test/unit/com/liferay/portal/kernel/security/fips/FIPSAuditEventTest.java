@@ -57,24 +57,18 @@ public class FIPSAuditEventTest {
 
 		KeyPair keyPair = keyPairGenerator.generateKeyPair();
 
-		_testPutRejects(keyPair.getPrivate());
-		_testPutRejects(keyPair.getPublic());
+		String randomString = RandomTestUtil.randomString();
 
-		char[] chars = RandomTestUtil.randomString(
-		).toCharArray();
+		char[] chars = randomString.toCharArray();
 
 		_testPutRejects(RandomTestUtil.randomBytes());
 		_testPutRejects(chars);
+		_testPutRejects(keyPair.getPrivate());
+		_testPutRejects(keyPair.getPublic());
 		_testPutRejects(new PBEKeySpec(chars));
 	}
 
-	private void _testPutRejects(Object value) {
-		_testPutRejectsValue(value);
-		_testPutRejectsValue(Arrays.asList(value));
-		_testPutRejectsValue(Collections.singletonMap("nested", value));
-	}
-
-	private void _testPutRejectsValue(Object value) {
+	private void _assertPutRejects(Object value) {
 		FIPSAuditEvent fipsAuditEvent = new FIPSAuditEvent(
 			RandomTestUtil.randomString(), FIPSAuditEvent.Severity.INFO);
 
@@ -85,6 +79,12 @@ public class FIPSAuditEventTest {
 		Map<String, Object> fields = fipsAuditEvent.getFields();
 
 		Assert.assertTrue(fields.isEmpty());
+	}
+
+	private void _testPutRejects(Object value) {
+		_assertPutRejects(Arrays.asList(value));
+		_assertPutRejects(Collections.singletonMap("nested", value));
+		_assertPutRejects(value);
 	}
 
 }

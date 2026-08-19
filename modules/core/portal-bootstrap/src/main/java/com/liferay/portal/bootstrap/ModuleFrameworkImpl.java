@@ -358,7 +358,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		}
 
 		if (PropsValues.FIPS_ENABLED) {
-			FIPSApplicationStateMachineUtil.powerOff("Server shutdown");
+			FIPSApplicationStateMachineUtil.powerOff("Portal");
 		}
 	}
 

@@ -8,6 +8,7 @@ package com.liferay.portal.kernel.security.fips;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.PropsValues;
 
 import java.util.Map;
 import java.util.Set;
@@ -237,7 +238,9 @@ public class FIPSApplicationStateMachineUtil {
 			FIPSApplicationState.INITIALIZING);
 
 	static {
-		_registerShutdownHook();
+		if (PropsValues.FIPS_ENABLED) {
+			_registerShutdownHook();
+		}
 	}
 
 }

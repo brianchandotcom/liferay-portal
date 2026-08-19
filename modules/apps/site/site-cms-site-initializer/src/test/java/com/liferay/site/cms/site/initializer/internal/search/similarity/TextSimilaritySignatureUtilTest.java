@@ -5,9 +5,11 @@
 
 package com.liferay.site.cms.site.initializer.internal.search.similarity;
 
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 
 import org.junit.Assert;
@@ -40,6 +42,29 @@ public class TextSimilaritySignatureUtilTest {
 		Assert.assertArrayEquals(
 			TextSimilaritySignatureUtil.getSimilarityKeys(_A),
 			TextSimilaritySignatureUtil.getSimilarityKeys(_A));
+	}
+
+	@Test
+	public void testDeterministicAcrossDefaultLocales() {
+		Locale defaultLocale = LocaleUtil.getDefault();
+
+		try {
+			LocaleUtil.setDefault("en", "US", null);
+
+			String[] similarityKeys =
+				TextSimilaritySignatureUtil.getSimilarityKeys(_TURKISH);
+
+			LocaleUtil.setDefault("tr", "TR", null);
+
+			Assert.assertArrayEquals(
+				similarityKeys,
+				TextSimilaritySignatureUtil.getSimilarityKeys(_TURKISH));
+		}
+		finally {
+			LocaleUtil.setDefault(
+				defaultLocale.getLanguage(), defaultLocale.getCountry(),
+				defaultLocale.getVariant());
+		}
 	}
 
 	@Test
@@ -90,5 +115,10 @@ public class TextSimilaritySignatureUtilTest {
 		"The quarterly sales report shows strong revenue growth across the " +
 			"European market. Product categories in retail and wholesale " +
 				"increased during the last fiscal period.";
+
+	private static final String _TURKISH =
+		"KULLANICI ADINIZI VE \u0130NTERNET \u015E\u0130FREN\u0130Z\u0130 " +
+			"G\u0130R\u0130N VE OTURUM A\u00c7MAK \u0130\u00c7\u0130N " +
+				"\u0130LER\u0130 D\u00dc\u011eMES\u0130NE BASIN";
 
 }

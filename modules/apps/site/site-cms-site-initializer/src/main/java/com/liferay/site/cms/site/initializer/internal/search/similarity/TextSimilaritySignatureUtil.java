@@ -14,6 +14,8 @@ import com.dynatrace.hash4j.similarity.SuperMinHashVersion;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -65,7 +67,8 @@ public class TextSimilaritySignatureUtil {
 	private static Set<String> _getWordSequences(String text) {
 		Set<String> wordSequences = new HashSet<>();
 
-		String[] words = text.toLowerCase(
+		String[] words = StringUtil.toLowerCase(
+			text, LocaleUtil.ENGLISH
 		).replaceAll(
 			"[^\\p{L}\\p{Nd}]+", " "
 		).trim(

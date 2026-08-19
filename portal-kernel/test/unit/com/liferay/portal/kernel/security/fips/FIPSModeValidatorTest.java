@@ -6,14 +6,24 @@
 package com.liferay.portal.kernel.security.fips;
 
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.internal.security.fips.FIPSModeHelperUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import java.security.Provider;
 import java.security.Security;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -21,6 +31,9 @@ import java.util.function.Function;
 
 import org.junit.Assert;
 import org.junit.Test;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 /**
  * @author Caio Farias
@@ -101,6 +114,27 @@ public class FIPSModeValidatorTest {
 	}
 
 	@Test
+	public void testIsNotAllowedProviderName() {
+		Assert.assertFalse(
+			ReflectionTestUtil.invoke(
+				FIPSModeValidator.class, "_isNotAllowedProviderName",
+				new Class<?>[] {String.class}, "AmazonCorrettoCryptoProvider"));
+		Assert.assertFalse(
+			ReflectionTestUtil.invoke(
+				FIPSModeValidator.class, "_isNotAllowedProviderName",
+				new Class<?>[] {String.class}, "BCFIPS"));
+
+		Assert.assertTrue(
+			ReflectionTestUtil.invoke(
+				FIPSModeValidator.class, "_isNotAllowedProviderName",
+				new Class<?>[] {String.class}, RandomTestUtil.randomString()));
+		Assert.assertTrue(
+			ReflectionTestUtil.invoke(
+				FIPSModeValidator.class, "_isNotAllowedProviderName",
+				new Class<?>[] {String.class}, (Object)null));
+	}
+
+	@Test
 	public void testValidateAlgorithm() {
 		for (String algorithm : new String[] {"MD5", null}) {
 			FIPSModeValidator.validateAlgorithm(algorithm);
@@ -155,6 +189,90 @@ public class FIPSModeValidatorTest {
 	}
 
 	@Test
+	public void testValidateClusterProperties() throws Exception {
+		Path controlPath = Files.createTempFile(null, ".xml");
+		Path transportPath = Files.createTempFile(null, ".xml");
+
+		String transportKey =
+			PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_TRANSPORT + ".0";
+
+		String transportValue = PropsUtil.get(transportKey);
+
+		PropsUtil.set(transportKey, String.valueOf(transportPath));
+
+		try (SafeCloseable safeCloseable1 =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"CLUSTER_LINK_AUTH_KEYSTORE_TYPE", "PKCS12", false);
+			SafeCloseable safeCloseable2 =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL",
+					String.valueOf(controlPath), false);
+			SafeCloseable safeCloseable3 =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"CLUSTER_LINK_ENABLED", true);
+			SafeCloseable safeCloseable4 =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"FIPS_ENABLED", true)) {
+
+			String channelPropertiesXML = StringBundler.concat(
+				"<config>", FIPSModeTestUtil.XML_AUTH,
+				FIPSModeTestUtil.XML_SYM_ENCRYPT, "</config>");
+
+			Files.write(
+				controlPath,
+				channelPropertiesXML.getBytes(StandardCharsets.UTF_8));
+			Files.write(
+				transportPath,
+				channelPropertiesXML.getBytes(StandardCharsets.UTF_8));
+
+			ReflectionTestUtil.invoke(
+				FIPSModeValidator.class, "_validateClusterProperties",
+				new Class<?>[0]);
+
+			_assertClusterPropertiesSecurityException(
+				StringUtil.replace(
+					channelPropertiesXML, "sym_keylength=\"128\"",
+					"sym_keylength=\"64\""),
+				"Key size 64 is not allowed in FIPS mode", transportPath);
+
+			_assertClusterPropertiesSecurityException(
+				StringBundler.concat(
+					"<config>", FIPSModeTestUtil.XML_AUTH,
+					FIPSModeTestUtil.XML_ASYM_ENCRYPT, "</config>"),
+				"must encrypt intracluster traffic with \"SYM_ENCRYPT\" in " +
+					"FIPS mode, not [ASYM_ENCRYPT]",
+				transportPath);
+
+			Files.write(
+				transportPath,
+				channelPropertiesXML.getBytes(StandardCharsets.UTF_8));
+
+			_assertClusterPropertiesSecurityException(
+				StringUtil.replace(
+					channelPropertiesXML, FIPSModeTestUtil.AUTH_CLASS_NAME,
+					RandomTestUtil.randomString()),
+				String.valueOf(controlPath), controlPath);
+
+			try (SafeCloseable safeCloseable5 =
+					PropsValuesTestUtil.swapWithSafeCloseable(
+						"CLUSTER_LINK_AUTH_KEYSTORE_TYPE",
+						RandomTestUtil.randomString(), false)) {
+
+				_assertSecurityException(
+					"\"" + PropsKeys.CLUSTER_LINK_AUTH_KEYSTORE_TYPE +
+						"\" to be set to only",
+					"_validateClusterProperties", new Class<?>[0]);
+			}
+		}
+		finally {
+			Files.delete(controlPath);
+			Files.delete(transportPath);
+
+			PropsUtil.set(transportKey, transportValue);
+		}
+	}
+
+	@Test
 	public void testValidateFIPSProvider() {
 		_assertSecurityException(
 			"FIPS provider integrity failed:", "_validateFIPSProvider",
@@ -178,6 +296,322 @@ public class FIPSModeValidatorTest {
 		_assertSecurityException(
 			"There are no security providers", "_validateFIPSProvider",
 			new Class<?>[] {Provider[].class}, (Object)new Provider[0]);
+	}
+
+	@Test
+	public void testValidateIVSize() {
+		ReflectionTestUtil.invoke(
+			FIPSModeValidator.class, "_validateIVSize",
+			new Class<?>[] {int.class}, 16);
+
+		for (int ivSize : new int[] {0, 12}) {
+			_assertSecurityException(
+				"Initialization vector size " + ivSize +
+					" is not allowed in FIPS mode",
+				"_validateIVSize", new Class<?>[] {int.class}, ivSize);
+		}
+	}
+
+	@Test
+	public void testValidateJGroupsProfileAuthElement() {
+		Document document1 = ReflectionTestUtil.invoke(
+			FIPSModeHelperUtil.class, "_toDocument",
+			new Class<?>[] {String.class}, FIPSModeTestUtil.XML_AUTH);
+
+		Map<String, Element> securityElements1 = ReflectionTestUtil.invoke(
+			FIPSModeHelperUtil.class, "_getSecurityElements",
+			new Class<?>[] {Document.class}, document1);
+
+		ReflectionTestUtil.invoke(
+			FIPSModeValidator.class, "_validateJGroupsProfileAuthElement",
+			new Class<?>[] {Element.class, String.class},
+			securityElements1.get("AUTH"), RandomTestUtil.randomString());
+
+		for (String channelPropertiesXML :
+				new String[] {"<AUTH />", "<config />"}) {
+
+			FIPSModeTestUtil.assertSecurityException(
+				"must authenticate cluster members with \"" +
+					FIPSModeTestUtil.AUTH_CLASS_NAME + "\"",
+				() -> {
+					Document document2 = ReflectionTestUtil.invoke(
+						FIPSModeHelperUtil.class, "_toDocument",
+						new Class<?>[] {String.class}, channelPropertiesXML);
+
+					Map<String, Element> securityElements2 =
+						ReflectionTestUtil.invoke(
+							FIPSModeHelperUtil.class, "_getSecurityElements",
+							new Class<?>[] {Document.class}, document2);
+
+					ReflectionTestUtil.invoke(
+						FIPSModeValidator.class,
+						"_validateJGroupsProfileAuthElement",
+						new Class<?>[] {Element.class, String.class},
+						securityElements2.get("AUTH"),
+						RandomTestUtil.randomString());
+				});
+		}
+
+		FIPSModeTestUtil.assertSecurityException(
+			"must authenticate cluster members with \"" +
+				FIPSModeTestUtil.AUTH_CLASS_NAME + "\"",
+			() -> {
+				Document document3 = ReflectionTestUtil.invoke(
+					FIPSModeHelperUtil.class, "_toDocument",
+					new Class<?>[] {String.class},
+					StringUtil.replace(
+						FIPSModeTestUtil.XML_AUTH,
+						FIPSModeTestUtil.AUTH_CLASS_NAME,
+						RandomTestUtil.randomString()));
+
+				Map<String, Element> securityElements3 =
+					ReflectionTestUtil.invoke(
+						FIPSModeHelperUtil.class, "_getSecurityElements",
+						new Class<?>[] {Document.class}, document3);
+
+				ReflectionTestUtil.invoke(
+					FIPSModeValidator.class,
+					"_validateJGroupsProfileAuthElement",
+					new Class<?>[] {Element.class, String.class},
+					securityElements3.get("AUTH"),
+					RandomTestUtil.randomString());
+			});
+	}
+
+	@Test
+	public void testValidateJGroupsProfileEncryptElementNames() {
+		ReflectionTestUtil.invoke(
+			FIPSModeValidator.class,
+			"_validateJGroupsProfileEncryptElementNames",
+			new Class<?>[] {String.class, List.class},
+			RandomTestUtil.randomString(), List.of("SYM_ENCRYPT"));
+
+		_assertSecurityException(
+			"must encrypt intracluster traffic with \"SYM_ENCRYPT\" in FIPS " +
+				"mode, not []",
+			"_validateJGroupsProfileEncryptElementNames",
+			new Class<?>[] {String.class, List.class},
+			RandomTestUtil.randomString(), Collections.emptyList());
+
+		_assertSecurityException(
+			"must encrypt intracluster traffic with \"SYM_ENCRYPT\" in FIPS " +
+				"mode, not [ASYM_ENCRYPT]",
+			"_validateJGroupsProfileEncryptElementNames",
+			new Class<?>[] {String.class, List.class},
+			RandomTestUtil.randomString(), List.of("ASYM_ENCRYPT"));
+
+		_assertSecurityException(
+			"must encrypt intracluster traffic with \"SYM_ENCRYPT\" in FIPS " +
+				"mode, not [FUTURE_ENCRYPT]",
+			"_validateJGroupsProfileEncryptElementNames",
+			new Class<?>[] {String.class, List.class},
+			RandomTestUtil.randomString(), List.of("FUTURE_ENCRYPT"));
+
+		_assertSecurityException(
+			"must encrypt intracluster traffic with \"SYM_ENCRYPT\" in FIPS " +
+				"mode, not [SYM_ENCRYPT, ASYM_ENCRYPT]",
+			"_validateJGroupsProfileEncryptElementNames",
+			new Class<?>[] {String.class, List.class},
+			RandomTestUtil.randomString(),
+			List.of("SYM_ENCRYPT", "ASYM_ENCRYPT"));
+	}
+
+	@Test
+	public void testValidateJGroupsProfileSymEncryptElement() {
+		try (SafeCloseable safeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"FIPS_ENABLED", true)) {
+
+			Document document1 = ReflectionTestUtil.invoke(
+				FIPSModeHelperUtil.class, "_toDocument",
+				new Class<?>[] {String.class},
+				FIPSModeTestUtil.XML_SYM_ENCRYPT);
+
+			Map<String, Element> securityElements1 = ReflectionTestUtil.invoke(
+				FIPSModeHelperUtil.class, "_getSecurityElements",
+				new Class<?>[] {Document.class}, document1);
+
+			ReflectionTestUtil.invoke(
+				FIPSModeValidator.class,
+				"_validateJGroupsProfileSymEncryptElement",
+				new Class<?>[] {Element.class},
+				securityElements1.get("SYM_ENCRYPT"));
+
+			Document document2 = ReflectionTestUtil.invoke(
+				FIPSModeHelperUtil.class, "_toDocument",
+				new Class<?>[] {String.class}, "<config />");
+
+			Map<String, Element> securityElements2 = ReflectionTestUtil.invoke(
+				FIPSModeHelperUtil.class, "_getSecurityElements",
+				new Class<?>[] {Document.class}, document2);
+
+			ReflectionTestUtil.invoke(
+				FIPSModeValidator.class,
+				"_validateJGroupsProfileSymEncryptElement",
+				new Class<?>[] {Element.class},
+				securityElements2.get("SYM_ENCRYPT"));
+
+			FIPSModeTestUtil.assertSecurityException(
+				"Initialization vector size 0 is not allowed in FIPS mode",
+				() -> {
+					Document document6 = ReflectionTestUtil.invoke(
+						FIPSModeHelperUtil.class, "_toDocument",
+						new Class<?>[] {String.class},
+						StringUtil.removeSubstring(
+							FIPSModeTestUtil.XML_SYM_ENCRYPT,
+							"sym_iv_length=\"16\" "));
+
+					Map<String, Element> securityElements6 =
+						ReflectionTestUtil.invoke(
+							FIPSModeHelperUtil.class, "_getSecurityElements",
+							new Class<?>[] {Document.class}, document6);
+
+					ReflectionTestUtil.invoke(
+						FIPSModeValidator.class,
+						"_validateJGroupsProfileSymEncryptElement",
+						new Class<?>[] {Element.class},
+						securityElements6.get("SYM_ENCRYPT"));
+				});
+
+			FIPSModeTestUtil.assertSecurityException(
+				"Initialization vector size 12 is not allowed in FIPS mode",
+				() -> {
+					Document document7 = ReflectionTestUtil.invoke(
+						FIPSModeHelperUtil.class, "_toDocument",
+						new Class<?>[] {String.class},
+						StringUtil.replace(
+							FIPSModeTestUtil.XML_SYM_ENCRYPT,
+							"sym_iv_length=\"16\"", "sym_iv_length=\"12\""));
+
+					Map<String, Element> securityElements7 =
+						ReflectionTestUtil.invoke(
+							FIPSModeHelperUtil.class, "_getSecurityElements",
+							new Class<?>[] {Document.class}, document7);
+
+					ReflectionTestUtil.invoke(
+						FIPSModeValidator.class,
+						"_validateJGroupsProfileSymEncryptElement",
+						new Class<?>[] {Element.class},
+						securityElements7.get("SYM_ENCRYPT"));
+				});
+
+			FIPSModeTestUtil.assertSecurityException(
+				"Key size 64 is not allowed in FIPS mode",
+				() -> {
+					Document document5 = ReflectionTestUtil.invoke(
+						FIPSModeHelperUtil.class, "_toDocument",
+						new Class<?>[] {String.class},
+						StringUtil.replace(
+							FIPSModeTestUtil.XML_SYM_ENCRYPT,
+							"sym_keylength=\"128\"", "sym_keylength=\"64\""));
+
+					Map<String, Element> securityElements5 =
+						ReflectionTestUtil.invoke(
+							FIPSModeHelperUtil.class, "_getSecurityElements",
+							new Class<?>[] {Document.class}, document5);
+
+					ReflectionTestUtil.invoke(
+						FIPSModeValidator.class,
+						"_validateJGroupsProfileSymEncryptElement",
+						new Class<?>[] {Element.class},
+						securityElements5.get("SYM_ENCRYPT"));
+				});
+
+			String providerName = RandomTestUtil.randomString();
+
+			FIPSModeTestUtil.assertSecurityException(
+				"Security provider \"" + providerName +
+					"\" is not allowed in FIPS mode",
+				() -> {
+					Document document8 = ReflectionTestUtil.invoke(
+						FIPSModeHelperUtil.class, "_toDocument",
+						new Class<?>[] {String.class},
+						StringUtil.replace(
+							FIPSModeTestUtil.XML_SYM_ENCRYPT, "<SYM_ENCRYPT ",
+							"<SYM_ENCRYPT provider=\"" + providerName + "\" "));
+
+					Map<String, Element> securityElements8 =
+						ReflectionTestUtil.invoke(
+							FIPSModeHelperUtil.class, "_getSecurityElements",
+							new Class<?>[] {Document.class}, document8);
+
+					ReflectionTestUtil.invoke(
+						FIPSModeValidator.class,
+						"_validateJGroupsProfileSymEncryptElement",
+						new Class<?>[] {Element.class},
+						securityElements8.get("SYM_ENCRYPT"));
+				});
+
+			FIPSModeTestUtil.assertSecurityException(
+				"Transformation \"\" is not allowed",
+				() -> {
+					Document document3 = ReflectionTestUtil.invoke(
+						FIPSModeHelperUtil.class, "_toDocument",
+						new Class<?>[] {String.class},
+						StringUtil.removeSubstring(
+							FIPSModeTestUtil.XML_SYM_ENCRYPT,
+							"sym_algorithm=\"" +
+								FIPSModeTestUtil.TRANSFORMATION_SYM + "\" "));
+
+					Map<String, Element> securityElements3 =
+						ReflectionTestUtil.invoke(
+							FIPSModeHelperUtil.class, "_getSecurityElements",
+							new Class<?>[] {Document.class}, document3);
+
+					ReflectionTestUtil.invoke(
+						FIPSModeValidator.class,
+						"_validateJGroupsProfileSymEncryptElement",
+						new Class<?>[] {Element.class},
+						securityElements3.get("SYM_ENCRYPT"));
+				});
+
+			FIPSModeTestUtil.assertSecurityException(
+				"Transformation \"AES/ECB/NoPadding\" is not allowed",
+				() -> {
+					Document document4 = ReflectionTestUtil.invoke(
+						FIPSModeHelperUtil.class, "_toDocument",
+						new Class<?>[] {String.class},
+						StringUtil.replace(
+							FIPSModeTestUtil.XML_SYM_ENCRYPT,
+							"sym_algorithm=\"" +
+								FIPSModeTestUtil.TRANSFORMATION_SYM + "\"",
+							"sym_algorithm=\"AES/ECB/NoPadding\""));
+
+					Map<String, Element> securityElements4 =
+						ReflectionTestUtil.invoke(
+							FIPSModeHelperUtil.class, "_getSecurityElements",
+							new Class<?>[] {Document.class}, document4);
+
+					ReflectionTestUtil.invoke(
+						FIPSModeValidator.class,
+						"_validateJGroupsProfileSymEncryptElement",
+						new Class<?>[] {Element.class},
+						securityElements4.get("SYM_ENCRYPT"));
+				});
+
+			FIPSModeTestUtil.assertSecurityException(
+				"Transformation \"\" is not allowed",
+				() -> {
+					Document document3 = ReflectionTestUtil.invoke(
+						FIPSModeHelperUtil.class, "_toDocument",
+						new Class<?>[] {String.class},
+						StringUtil.removeSubstring(
+							FIPSModeTestUtil.XML_SYM_ENCRYPT,
+							"sym_algorithm=\"" +
+								FIPSModeTestUtil.TRANSFORMATION_SYM + "\" "));
+
+					Map<String, Element> securityElements3 =
+						ReflectionTestUtil.invoke(
+							FIPSModeHelperUtil.class, "_getSecurityElements",
+							new Class<?>[] {Document.class}, document3);
+
+					ReflectionTestUtil.invoke(
+						FIPSModeValidator.class,
+						"_validateJGroupsProfileSymEncryptElement",
+						new Class<?>[] {Element.class},
+						securityElements3.get("SYM_ENCRYPT"));
+				});
+		}
 	}
 
 	@Test
@@ -359,6 +793,23 @@ public class FIPSModeValidatorTest {
 	}
 
 	@Test
+	public void testValidateTransformation() {
+		ReflectionTestUtil.invoke(
+			FIPSModeValidator.class, "_validateTransformation",
+			new Class<?>[] {String.class}, FIPSModeTestUtil.TRANSFORMATION_SYM);
+
+		for (String transformation :
+				new String[] {
+					"AES", "RSA", "RSA/ECB/OAEPWithSHA-256AndMGF1Padding", null
+				}) {
+
+			_assertSecurityException(
+				"is not allowed in FIPS mode", "_validateTransformation",
+				new Class<?>[] {String.class}, transformation);
+		}
+	}
+
+	@Test
 	public void testValidateURL() {
 		for (String url :
 				new String[] {
@@ -386,6 +837,17 @@ public class FIPSModeValidatorTest {
 					() -> FIPSModeValidator.validateURL(url));
 			}
 		}
+	}
+
+	private void _assertClusterPropertiesSecurityException(
+			String channelPropertiesXML, String expectedMessage, Path path)
+		throws Exception {
+
+		Files.write(
+			path, channelPropertiesXML.getBytes(StandardCharsets.UTF_8));
+
+		_assertSecurityException(
+			expectedMessage, "_validateClusterProperties", new Class<?>[0]);
 	}
 
 	private void _assertSecurityException(

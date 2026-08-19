@@ -155,7 +155,7 @@ public class BuildQueueRebalancerTest
 
 		MockUrlReaders mockUrlReaders = mockUrlReaders();
 
-		setUrlReaderError(
+		setUrlReaderException(
 			new IOException("Connection refused"),
 			_BLACKLISTED_JENKINS_MASTER_NAME + ".liferay.com/queue/api/json",
 			mockUrlReaders);

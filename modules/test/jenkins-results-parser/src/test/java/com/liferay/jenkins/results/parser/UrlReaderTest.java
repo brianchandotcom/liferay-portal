@@ -113,7 +113,7 @@ public class UrlReaderTest extends com.liferay.jenkins.results.parser.Test {
 	public void testToJSONObjectWhenResponseCodeIs404() throws Exception {
 		MockUrlReaders mockUrlReaders = mockUrlReaders();
 
-		setUrlReaderError(
+		setUrlReaderException(
 			new FileNotFoundException(_URL), _URL, mockUrlReaders);
 
 		try {
@@ -198,7 +198,7 @@ public class UrlReaderTest extends com.liferay.jenkins.results.parser.Test {
 	public void testToStringWhenConnectionTimesOut() throws Exception {
 		MockUrlReaders mockUrlReaders = mockUrlReaders();
 
-		setUrlReaderError(
+		setUrlReaderException(
 			new SocketTimeoutException("Read timed out"), _URL, mockUrlReaders);
 
 		try {
@@ -258,7 +258,7 @@ public class UrlReaderTest extends com.liferay.jenkins.results.parser.Test {
 	public void testToStringWhenResponseCodeIs404() throws Exception {
 		MockUrlReaders mockUrlReaders = mockUrlReaders();
 
-		setUrlReaderError(
+		setUrlReaderException(
 			new FileNotFoundException(_URL), _URL, mockUrlReaders);
 
 		try {
@@ -294,7 +294,7 @@ public class UrlReaderTest extends com.liferay.jenkins.results.parser.Test {
 	public void testToStringWhenResponseCodeIsTerminal() throws Exception {
 		MockUrlReaders mockUrlReaders = mockUrlReaders();
 
-		setUrlReaderError(400, _URL, mockUrlReaders);
+		setUrlReaderResponseCode(400, _URL, mockUrlReaders);
 
 		try {
 			JenkinsResultsParserUtil.toString(_URL, false, _MAX_RETRIES, 0, 0);
@@ -367,7 +367,7 @@ public class UrlReaderTest extends com.liferay.jenkins.results.parser.Test {
 
 		MockUrlReaders mockUrlReaders = mockUrlReaders();
 
-		setUrlReaderError(responseCode, _URL, mockUrlReaders);
+		setUrlReaderResponseCode(responseCode, _URL, mockUrlReaders);
 
 		try {
 			JenkinsResultsParserUtil.toString(_URL, false, _MAX_RETRIES, 0, 0);

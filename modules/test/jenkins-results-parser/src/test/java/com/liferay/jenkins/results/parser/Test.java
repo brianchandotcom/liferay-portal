@@ -305,32 +305,10 @@ public class Test {
 	}
 
 	/**
-	 * Fails the attempt with a response code the retry policy can classify,
-	 * rather than a bare transport failure.
-	 */
-	protected void setUrlReaderError(
-			int responseCode, String url, MockUrlReaders mockUrlReaders)
-		throws Exception {
-
-		for (UrlReader<?> urlReader : mockUrlReaders.getUrlReaders()) {
-			Mockito.doAnswer(
-				invocation -> mockURLConnection(responseCode)
-			).when(
-				urlReader
-			).openURLConnection(
-				Mockito.any(), Mockito.anyBoolean(), Mockito.any(),
-				Mockito.any(), Mockito.anyBoolean(), Mockito.anyInt(),
-				Mockito.argThat(
-					readURL -> (readURL != null) && readURL.contains(url))
-			);
-		}
-	}
-
-	/**
 	 * Fails the attempt rather than the whole read, so the retry loop still
 	 * runs and a test can tell a terminal failure from a retried one.
 	 */
-	protected void setUrlReaderError(
+	protected void setUrlReaderException(
 			IOException ioException, String url, MockUrlReaders mockUrlReaders)
 		throws Exception {
 
@@ -349,12 +327,46 @@ public class Test {
 	}
 
 	protected void setUrlReaderOutput(
-			String standardOut, String url, MockUrlReaders mockUrlReaders)
+			long delayMillis, String standardOut, String url,
+			MockUrlReaders mockUrlReaders)
 		throws Exception {
 
 		for (UrlReader<?> urlReader : mockUrlReaders.getUrlReaders()) {
 			Mockito.doAnswer(
-				invocation -> mockURLConnection(200, standardOut)
+				invocation -> {
+					JenkinsResultsParserUtil.sleep(delayMillis);
+
+					return mockURLConnection(200, standardOut);
+				}
+			).when(
+				urlReader
+			).openURLConnection(
+				Mockito.any(), Mockito.anyBoolean(), Mockito.any(),
+				Mockito.any(), Mockito.anyBoolean(), Mockito.anyInt(),
+				Mockito.argThat(
+					readURL -> (readURL != null) && readURL.contains(url))
+			);
+		}
+	}
+
+	protected void setUrlReaderOutput(
+			String standardOut, String url, MockUrlReaders mockUrlReaders)
+		throws Exception {
+
+		setUrlReaderOutput(0, standardOut, url, mockUrlReaders);
+	}
+
+	/**
+	 * Fails the attempt with a response code the retry policy can classify,
+	 * rather than a bare transport failure.
+	 */
+	protected void setUrlReaderResponseCode(
+			int responseCode, String url, MockUrlReaders mockUrlReaders)
+		throws Exception {
+
+		for (UrlReader<?> urlReader : mockUrlReaders.getUrlReaders()) {
+			Mockito.doAnswer(
+				invocation -> mockURLConnection(responseCode)
 			).when(
 				urlReader
 			).openURLConnection(
@@ -427,6 +439,52 @@ public class Test {
 		testEquals(expectedCount, count);
 	}
 
+	/**
+	 * Asserts the arguments a read was issued with, rather than how many
+	 * attempts it took. Counts across every reader type and expects exactly
+	 * one match, since only the reader matching the call site records it.
+	 */
+	protected void verifyUrlReaderRead(
+		boolean checkCache, int maxRetries, int timeoutMillis,
+		MockUrlReaders mockUrlReaders) {
+
+		int count = 0;
+
+		for (UrlReader<?> urlReader : mockUrlReaders.getUrlReaders()) {
+			MockingDetails mockingDetails = Mockito.mockingDetails(urlReader);
+
+			for (Invocation invocation : mockingDetails.getInvocations()) {
+				Method method = invocation.getMethod();
+
+				if (!method.equals(_doReadMethod)) {
+					continue;
+				}
+
+				boolean invocationCheckCache = invocation.getArgument(0);
+
+				if (invocationCheckCache != checkCache) {
+					continue;
+				}
+
+				int invocationMaxRetries = invocation.getArgument(4);
+
+				if (invocationMaxRetries != maxRetries) {
+					continue;
+				}
+
+				int invocationTimeout = invocation.getArgument(7);
+
+				if (invocationTimeout != timeoutMillis) {
+					continue;
+				}
+
+				count++;
+			}
+		}
+
+		testEquals(1, count);
+	}
+
 	protected List<File> dependenciesDirs = getDependenciesDirs(
 		getSimpleClassNames());
 
@@ -434,6 +492,19 @@ public class Test {
 	 * Resolved once so that renaming the seam fails loudly here, rather than
 	 * silently matching nothing and letting every attempt count pass at zero.
 	 */
+	private static Method _getDoReadMethod() {
+		try {
+			return UrlReader.class.getDeclaredMethod(
+				"doRead", boolean.class, boolean.class,
+				JenkinsResultsParserUtil.HTTPAuthorization.class,
+				JenkinsResultsParserUtil.HttpRequestMethod.class, int.class,
+				String.class, int.class, int.class, String.class);
+		}
+		catch (NoSuchMethodException noSuchMethodException) {
+			throw new ExceptionInInitializerError(noSuchMethodException);
+		}
+	}
+
 	private static Method _getOpenURLConnectionMethod() {
 		try {
 			return UrlReader.class.getDeclaredMethod(
@@ -446,6 +517,7 @@ public class Test {
 		}
 	}
 
+	private static final Method _doReadMethod = _getDoReadMethod();
 	private static final Method _openURLConnectionMethod =
 		_getOpenURLConnectionMethod();
 

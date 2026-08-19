@@ -84,7 +84,7 @@ public class FIPSAuditEventTest {
 
 		Map<String, Object> fields = fipsAuditEvent.getFields();
 
-		Assert.assertTrue(String.valueOf(fields), fields.isEmpty());
+		Assert.assertTrue(fields.isEmpty());
 	}
 
 }

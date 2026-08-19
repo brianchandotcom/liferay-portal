@@ -17,6 +17,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -65,6 +66,12 @@ public class SimilarityClusterResourceImpl
 	public Page<SimilarityCluster> getSimilarityClustersPage(
 			Long assetLibraryId, Pagination pagination)
 		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-82226")) {
+
+			return Page.of(new ArrayList<>(), pagination, 0);
+		}
 
 		List<ObjectDefinition> objectDefinitions = _getCMSObjectDefinitions();
 

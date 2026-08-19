@@ -49,6 +49,7 @@ public class StylebookEntryStagedModelRepository
 			styleBookEntry.getExternalReferenceCode(), userId,
 			styleBookEntry.getGroupId(),
 			styleBookEntry.isDefaultStyleBookEntry(),
+			styleBookEntry.getFrontendTokenDefinition(),
 			styleBookEntry.getFrontendTokensValues(), styleBookEntry.getName(),
 			styleBookEntry.getStyleBookEntryKey(), styleBookEntry.getThemeId(),
 			serviceContext);
@@ -132,6 +133,7 @@ public class StylebookEntryStagedModelRepository
 			portletDataContext.getUserId(styleBookEntry.getUserUuid()),
 			styleBookEntry.getStyleBookEntryId(),
 			styleBookEntry.isDefaultStyleBookEntry(),
+			styleBookEntry.getFrontendTokenDefinition(),
 			styleBookEntry.getFrontendTokensValues(), styleBookEntry.getName(),
 			styleBookEntry.getStyleBookEntryKey(),
 			styleBookEntry.getPreviewFileEntryId(),

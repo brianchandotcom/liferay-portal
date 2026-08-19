@@ -52,14 +52,7 @@ public class FIPSAuditUtilTest {
 	}
 
 	@Test
-	public void testAuditLogFileExists() {
-		Path path = _getAuditLogPath();
-
-		Assert.assertTrue(Files.exists(path));
-	}
-
-	@Test
-	public void testAuditLogFileIsAccessibleByTheOwnerOnly() throws Exception {
+	public void testWriteCreatesAnOwnerOnlyAuditLogFile() throws Exception {
 		Path path = _getAuditLogPath();
 
 		FileSystem fileSystem = path.getFileSystem();
@@ -75,16 +68,14 @@ public class FIPSAuditUtilTest {
 	}
 
 	@Test
-	public void testAuditLogRecordsAreParseable() throws Exception {
-		for (String line : Files.readAllLines(_getAuditLogPath())) {
-			Assert.assertTrue(Validator.isNotNull(line));
+	public void testWriteCreatesTheAuditLogFile() {
+		Path path = _getAuditLogPath();
 
-			JSONFactoryUtil.createJSONObject(line);
-		}
+		Assert.assertTrue(Files.exists(path));
 	}
 
 	@Test
-	public void testAuditLogRecordsCarryACanonicalTimestamp() throws Exception {
+	public void testWriteProducesACanonicalTimestamp() throws Exception {
 		for (JSONObject jsonObject : _getRecordJSONObjects()) {
 			String timestamp = jsonObject.getString("timestamp");
 
@@ -95,22 +86,16 @@ public class FIPSAuditUtilTest {
 	}
 
 	@Test
-	public void testAuditLogRecordsCarryAContiguousSequence() throws Exception {
-		long previousEventSequence = 0;
+	public void testWriteProducesParseableRecords() throws Exception {
+		for (String line : Files.readAllLines(_getAuditLogPath())) {
+			Assert.assertTrue(Validator.isNotNull(line));
 
-		for (JSONObject jsonObject : _getRecordJSONObjects()) {
-			long eventSequence = jsonObject.getLong("event-sequence");
-
-			if (eventSequence > previousEventSequence) {
-				Assert.assertEquals(previousEventSequence + 1, eventSequence);
-			}
-
-			previousEventSequence = eventSequence;
+			JSONFactoryUtil.createJSONObject(line);
 		}
 	}
 
 	@Test
-	public void testAuditLogRecordsCarryTheCommonEnvelope() throws Exception {
+	public void testWriteProducesTheCommonEnvelope() throws Exception {
 		for (JSONObject jsonObject : _getRecordJSONObjects()) {
 			for (String envelopeKey : _ENVELOPE_KEYS) {
 				Assert.assertTrue(jsonObject.has(envelopeKey));
@@ -119,7 +104,7 @@ public class FIPSAuditUtilTest {
 	}
 
 	@Test
-	public void testAuditLogRecordsTheBootStateTransitions() throws Exception {
+	public void testWriteRecordsTheBootStateTransitions() throws Exception {
 		List<String> transitions = new ArrayList<>();
 
 		for (JSONObject jsonObject : _getRecordJSONObjects()) {
@@ -139,6 +124,21 @@ public class FIPSAuditUtilTest {
 
 		Assert.assertTrue(transitions.contains("INITIALIZING to SELF_TEST"));
 		Assert.assertTrue(transitions.contains("SELF_TEST to OPERATIONAL"));
+	}
+
+	@Test
+	public void testWriteSequencesRecordsContiguously() throws Exception {
+		long previousEventSequence = 0;
+
+		for (JSONObject jsonObject : _getRecordJSONObjects()) {
+			long eventSequence = jsonObject.getLong("event-sequence");
+
+			if (eventSequence > previousEventSequence) {
+				Assert.assertEquals(previousEventSequence + 1, eventSequence);
+			}
+
+			previousEventSequence = eventSequence;
+		}
 	}
 
 	private Path _getAuditLogPath() {

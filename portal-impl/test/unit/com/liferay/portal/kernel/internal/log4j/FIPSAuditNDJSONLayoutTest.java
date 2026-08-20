@@ -60,9 +60,9 @@ public class FIPSAuditNDJSONLayoutTest {
 	public void testEncode() {
 		Map<String, Object> fipsAuditLogEntry =
 			LinkedHashMapBuilder.<String, Object>put(
-				"event-type", "fips-state-transition"
+				RandomTestUtil.randomString(), RandomTestUtil.randomString()
 			).put(
-				"severity", "CRITICAL"
+				RandomTestUtil.randomString(), RandomTestUtil.randomString()
 			).build();
 
 		FIPSAuditNDJSONLayout fipsAuditNDJSONLayout =
@@ -77,7 +77,7 @@ public class FIPSAuditNDJSONLayoutTest {
 
 		Assert.assertEquals(
 			_toSerializable(fipsAuditLogEntry),
-			testByteBufferDestination.toString());
+			testByteBufferDestination.getString());
 	}
 
 	@Test
@@ -126,11 +126,11 @@ public class FIPSAuditNDJSONLayoutTest {
 	public void testToSerializableWritesEveryEntry() throws Exception {
 		Map<String, Object> fipsAuditLogEntry =
 			LinkedHashMapBuilder.<String, Object>put(
-				"event-type", "fips-state-transition"
+				RandomTestUtil.randomString(), RandomTestUtil.randomString()
 			).put(
-				"severity", "INFO"
+				RandomTestUtil.randomString(), RandomTestUtil.randomString()
 			).put(
-				"timestamp", "2026-08-04T12:00:00.000Z"
+				RandomTestUtil.randomString(), RandomTestUtil.randomString()
 			).build();
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
@@ -232,8 +232,7 @@ public class FIPSAuditNDJSONLayoutTest {
 			return _byteBuffer;
 		}
 
-		@Override
-		public String toString() {
+		public String getString() {
 			drain(_byteBuffer);
 
 			byte[] bytes = _byteArrayOutputStream.toByteArray();

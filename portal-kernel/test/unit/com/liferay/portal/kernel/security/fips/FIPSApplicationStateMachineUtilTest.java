@@ -107,14 +107,14 @@ public class FIPSApplicationStateMachineUtilTest {
 		Map<String, Object> fipsAuditLogEntry = _getLastFIPSAuditLogEntry();
 
 		_assertEnvelope(
-			"event-type", fipsAuditLogEntry, "fips-state-transition");
-		_assertEnvelope("severity", fipsAuditLogEntry, "CRITICAL");
-		_assertField("failed-step", fipsAuditLogEntry, failedStep);
-		_assertField("from-state", fipsAuditLogEntry, "OPERATIONAL");
+			fipsAuditLogEntry, "event-type", "fips-state-transition");
+		_assertEnvelope(fipsAuditLogEntry, "severity", "CRITICAL");
+		_assertField(fipsAuditLogEntry, "failed-step", failedStep);
+		_assertField(fipsAuditLogEntry, "from-state", "OPERATIONAL");
 		_assertField(
-			"provider-error-message", fipsAuditLogEntry,
+			fipsAuditLogEntry, "provider-error-message",
 			"The provider is unhappy");
-		_assertField("to-state", fipsAuditLogEntry, "ERROR");
+		_assertField(fipsAuditLogEntry, "to-state", "ERROR");
 	}
 
 	@Test
@@ -136,19 +136,19 @@ public class FIPSApplicationStateMachineUtilTest {
 		Assert.assertEquals(
 			_fipsAuditLogEntries.toString(), 2, _fipsAuditLogEntries.size());
 
-		_assertEnvelope("severity", _fipsAuditLogEntries.get(0), "INFO");
+		_assertEnvelope(_fipsAuditLogEntries.get(0), "severity", "INFO");
 		_assertField(
-			"crypto-officer-user-id", _fipsAuditLogEntries.get(0),
+			_fipsAuditLogEntries.get(0), "crypto-officer-user-id",
 			cryptoOfficerUserId);
 		_assertField(
-			"operation-type", _fipsAuditLogEntries.get(0), operationType);
-		_assertField("to-state", _fipsAuditLogEntries.get(0), "KEY_CSP_ENTRY");
+			_fipsAuditLogEntries.get(0), "operation-type", operationType);
+		_assertField(_fipsAuditLogEntries.get(0), "to-state", "KEY_CSP_ENTRY");
 		_assertField(
-			"from-state", _fipsAuditLogEntries.get(1), "KEY_CSP_ENTRY");
+			_fipsAuditLogEntries.get(1), "from-state", "KEY_CSP_ENTRY");
 		_assertField(
-			"message", _fipsAuditLogEntries.get(1),
+			_fipsAuditLogEntries.get(1), "message",
 			"The operation was completed successfully");
-		_assertField("to-state", _fipsAuditLogEntries.get(1), "OPERATIONAL");
+		_assertField(_fipsAuditLogEntries.get(1), "to-state", "OPERATIONAL");
 	}
 
 	@Test
@@ -170,13 +170,13 @@ public class FIPSApplicationStateMachineUtilTest {
 		Assert.assertEquals(
 			_fipsAuditLogEntries.toString(), 2, _fipsAuditLogEntries.size());
 
-		_assertEnvelope("severity", _fipsAuditLogEntries.get(1), "CRITICAL");
+		_assertEnvelope(_fipsAuditLogEntries.get(1), "severity", "CRITICAL");
 		_assertField(
-			"failed-step", _fipsAuditLogEntries.get(1), "Key or CSP entry");
+			_fipsAuditLogEntries.get(1), "failed-step", "Key or CSP entry");
 		_assertField(
-			"provider-error-message", _fipsAuditLogEntries.get(1),
+			_fipsAuditLogEntries.get(1), "provider-error-message",
 			"The key is unusable");
-		_assertField("to-state", _fipsAuditLogEntries.get(1), "ERROR");
+		_assertField(_fipsAuditLogEntries.get(1), "to-state", "ERROR");
 	}
 
 	@Test
@@ -195,12 +195,12 @@ public class FIPSApplicationStateMachineUtilTest {
 
 		Map<String, Object> fipsAuditLogEntry = _getLastFIPSAuditLogEntry();
 
-		_assertEnvelope("severity", fipsAuditLogEntry, "INFO");
+		_assertEnvelope(fipsAuditLogEntry, "severity", "INFO");
 		_assertField(
-			"crypto-officer-user-id", fipsAuditLogEntry, cryptoOfficerUserId);
-		_assertField("from-state", fipsAuditLogEntry, "QUIESCENT");
-		_assertField("reason", fipsAuditLogEntry, reason);
-		_assertField("to-state", fipsAuditLogEntry, "OPERATIONAL");
+			fipsAuditLogEntry, "crypto-officer-user-id", cryptoOfficerUserId);
+		_assertField(fipsAuditLogEntry, "from-state", "QUIESCENT");
+		_assertField(fipsAuditLogEntry, "reason", reason);
+		_assertField(fipsAuditLogEntry, "to-state", "OPERATIONAL");
 	}
 
 	@Test
@@ -217,10 +217,10 @@ public class FIPSApplicationStateMachineUtilTest {
 
 		Map<String, Object> fipsAuditLogEntry = _getLastFIPSAuditLogEntry();
 
-		_assertEnvelope("severity", fipsAuditLogEntry, "INFO");
-		_assertField("from-state", fipsAuditLogEntry, "OPERATIONAL");
-		_assertField("initiating-actor", fipsAuditLogEntry, initiatingActor);
-		_assertField("to-state", fipsAuditLogEntry, "POWER_OFF");
+		_assertEnvelope(fipsAuditLogEntry, "severity", "INFO");
+		_assertField(fipsAuditLogEntry, "from-state", "OPERATIONAL");
+		_assertField(fipsAuditLogEntry, "initiating-actor", initiatingActor);
+		_assertField(fipsAuditLogEntry, "to-state", "POWER_OFF");
 	}
 
 	@Test
@@ -238,19 +238,19 @@ public class FIPSApplicationStateMachineUtilTest {
 
 		Map<String, Object> fipsAuditLogEntry = _getLastFIPSAuditLogEntry();
 
-		_assertEnvelope("severity", fipsAuditLogEntry, "INFO");
+		_assertEnvelope(fipsAuditLogEntry, "severity", "INFO");
 		_assertField(
-			"crypto-officer-user-id", fipsAuditLogEntry, cryptoOfficerUserId);
-		_assertField("from-state", fipsAuditLogEntry, "OPERATIONAL");
-		_assertField("reason", fipsAuditLogEntry, reason);
-		_assertField("to-state", fipsAuditLogEntry, "QUIESCENT");
+			fipsAuditLogEntry, "crypto-officer-user-id", cryptoOfficerUserId);
+		_assertField(fipsAuditLogEntry, "from-state", "OPERATIONAL");
+		_assertField(fipsAuditLogEntry, "reason", reason);
+		_assertField(fipsAuditLogEntry, "to-state", "QUIESCENT");
 	}
 
 	@Test
 	public void testRegisterShutdownHook() {
 		_setFIPSApplicationState(FIPSApplicationState.OPERATIONAL);
 
-		Thread thread = _registerShutdownHook();
+		Thread thread = _getShutdownHook();
 
 		thread.run();
 
@@ -260,17 +260,17 @@ public class FIPSApplicationStateMachineUtilTest {
 
 		Map<String, Object> fipsAuditLogEntry = _getLastFIPSAuditLogEntry();
 
-		_assertEnvelope("severity", fipsAuditLogEntry, "INFO");
-		_assertField("from-state", fipsAuditLogEntry, "OPERATIONAL");
-		_assertField("initiating-actor", fipsAuditLogEntry, "Operating system");
-		_assertField("to-state", fipsAuditLogEntry, "POWER_OFF");
+		_assertEnvelope(fipsAuditLogEntry, "severity", "INFO");
+		_assertField(fipsAuditLogEntry, "from-state", "OPERATIONAL");
+		_assertField(fipsAuditLogEntry, "initiating-actor", "Operating system");
+		_assertField(fipsAuditLogEntry, "to-state", "POWER_OFF");
 	}
 
 	@Test
 	public void testRegisterShutdownHookWithPowerOffState() {
 		_setFIPSApplicationState(FIPSApplicationState.POWER_OFF);
 
-		Thread thread = _registerShutdownHook();
+		Thread thread = _getShutdownHook();
 
 		thread.run();
 
@@ -294,21 +294,21 @@ public class FIPSApplicationStateMachineUtilTest {
 		Assert.assertEquals(
 			_fipsAuditLogEntries.toString(), 2, _fipsAuditLogEntries.size());
 
-		_assertField("from-state", _fipsAuditLogEntries.get(0), "INITIALIZING");
+		_assertField(_fipsAuditLogEntries.get(0), "from-state", "INITIALIZING");
 		_assertField(
-			"message", _fipsAuditLogEntries.get(0),
+			_fipsAuditLogEntries.get(0), "message",
 			"The integrity checks were started");
-		_assertField("to-state", _fipsAuditLogEntries.get(0), "SELF_TEST");
+		_assertField(_fipsAuditLogEntries.get(0), "to-state", "SELF_TEST");
 		_assertField(
-			"message", _fipsAuditLogEntries.get(1),
+			_fipsAuditLogEntries.get(1), "message",
 			"All checks and the validated provider self tests passed");
-		_assertField("to-state", _fipsAuditLogEntries.get(1), "OPERATIONAL");
+		_assertField(_fipsAuditLogEntries.get(1), "to-state", "OPERATIONAL");
 	}
 
 	@Test
 	public void testSelfTestWithFailure() {
-		_testSelfTest(new RuntimeException());
-		_testSelfTest(new SecurityException());
+		_testSelfTestWithFailure(new RuntimeException());
+		_testSelfTestWithFailure(new SecurityException());
 	}
 
 	@Test
@@ -331,27 +331,36 @@ public class FIPSApplicationStateMachineUtilTest {
 			_fipsAuditLogEntries.toString(), 2, _fipsAuditLogEntries.size());
 
 		_assertField(
-			"crypto-officer-user-id", _fipsAuditLogEntries.get(0),
+			_fipsAuditLogEntries.get(0), "crypto-officer-user-id",
 			cryptoOfficerUserId);
-		_assertField("from-state", _fipsAuditLogEntries.get(0), "ERROR");
+		_assertField(_fipsAuditLogEntries.get(0), "from-state", "ERROR");
 		_assertField(
-			"recovery-action", _fipsAuditLogEntries.get(0), recoveryAction);
-		_assertField("to-state", _fipsAuditLogEntries.get(0), "SELF_TEST");
-		_assertField("to-state", _fipsAuditLogEntries.get(1), "OPERATIONAL");
+			_fipsAuditLogEntries.get(0), "recovery-action", recoveryAction);
+		_assertField(_fipsAuditLogEntries.get(0), "to-state", "SELF_TEST");
+		_assertField(_fipsAuditLogEntries.get(1), "to-state", "OPERATIONAL");
 	}
 
 	@Test
 	public void testTransition() {
+
+		// ERROR
+
 		_testTransition(
 			FIPSApplicationState.ERROR, FIPSApplicationState.POWER_OFF);
 		_testTransition(
 			FIPSApplicationState.ERROR, FIPSApplicationState.SELF_TEST);
+
+		// INITIALIZING
+
 		_testTransition(
 			FIPSApplicationState.INITIALIZING, FIPSApplicationState.ERROR);
 		_testTransition(
 			FIPSApplicationState.INITIALIZING, FIPSApplicationState.POWER_OFF);
 		_testTransition(
 			FIPSApplicationState.INITIALIZING, FIPSApplicationState.SELF_TEST);
+
+		// KEY_CSP_ENTRY
+
 		_testTransition(
 			FIPSApplicationState.KEY_CSP_ENTRY, FIPSApplicationState.ERROR);
 		_testTransition(
@@ -359,6 +368,9 @@ public class FIPSApplicationStateMachineUtilTest {
 			FIPSApplicationState.OPERATIONAL);
 		_testTransition(
 			FIPSApplicationState.KEY_CSP_ENTRY, FIPSApplicationState.POWER_OFF);
+
+		// OPERATIONAL
+
 		_testTransition(
 			FIPSApplicationState.OPERATIONAL, FIPSApplicationState.ERROR);
 		_testTransition(
@@ -370,6 +382,9 @@ public class FIPSApplicationStateMachineUtilTest {
 			FIPSApplicationState.OPERATIONAL, FIPSApplicationState.QUIESCENT);
 		_testTransition(
 			FIPSApplicationState.OPERATIONAL, FIPSApplicationState.SELF_TEST);
+
+		// QUIESCENT
+
 		_testTransition(
 			FIPSApplicationState.QUIESCENT, FIPSApplicationState.ERROR);
 		_testTransition(
@@ -378,6 +393,9 @@ public class FIPSApplicationStateMachineUtilTest {
 			FIPSApplicationState.QUIESCENT, FIPSApplicationState.OPERATIONAL);
 		_testTransition(
 			FIPSApplicationState.QUIESCENT, FIPSApplicationState.POWER_OFF);
+
+		// SELF_TEST
+
 		_testTransition(
 			FIPSApplicationState.SELF_TEST, FIPSApplicationState.ERROR);
 		_testTransition(
@@ -388,6 +406,9 @@ public class FIPSApplicationStateMachineUtilTest {
 
 	@Test
 	public void testTransitionWithIllegalState() {
+
+		// ERROR
+
 		_testTransitionWithIllegalState(
 			FIPSApplicationState.ERROR, FIPSApplicationState.ERROR);
 		_testTransitionWithIllegalState(
@@ -398,6 +419,9 @@ public class FIPSApplicationStateMachineUtilTest {
 			FIPSApplicationState.ERROR, FIPSApplicationState.OPERATIONAL);
 		_testTransitionWithIllegalState(
 			FIPSApplicationState.ERROR, FIPSApplicationState.QUIESCENT);
+
+		// INITIALIZING
+
 		_testTransitionWithIllegalState(
 			FIPSApplicationState.INITIALIZING,
 			FIPSApplicationState.INITIALIZING);
@@ -409,6 +433,9 @@ public class FIPSApplicationStateMachineUtilTest {
 			FIPSApplicationState.OPERATIONAL);
 		_testTransitionWithIllegalState(
 			FIPSApplicationState.INITIALIZING, FIPSApplicationState.QUIESCENT);
+
+		// KEY_CSP_ENTRY
+
 		_testTransitionWithIllegalState(
 			FIPSApplicationState.KEY_CSP_ENTRY,
 			FIPSApplicationState.INITIALIZING);
@@ -419,11 +446,17 @@ public class FIPSApplicationStateMachineUtilTest {
 			FIPSApplicationState.KEY_CSP_ENTRY, FIPSApplicationState.QUIESCENT);
 		_testTransitionWithIllegalState(
 			FIPSApplicationState.KEY_CSP_ENTRY, FIPSApplicationState.SELF_TEST);
+
+		// OPERATIONAL
+
 		_testTransitionWithIllegalState(
 			FIPSApplicationState.OPERATIONAL,
 			FIPSApplicationState.INITIALIZING);
 		_testTransitionWithIllegalState(
 			FIPSApplicationState.OPERATIONAL, FIPSApplicationState.OPERATIONAL);
+
+		// POWER_OFF
+
 		_testTransitionWithIllegalState(
 			FIPSApplicationState.POWER_OFF, FIPSApplicationState.ERROR);
 		_testTransitionWithIllegalState(
@@ -438,12 +471,18 @@ public class FIPSApplicationStateMachineUtilTest {
 			FIPSApplicationState.POWER_OFF, FIPSApplicationState.QUIESCENT);
 		_testTransitionWithIllegalState(
 			FIPSApplicationState.POWER_OFF, FIPSApplicationState.SELF_TEST);
+
+		// QUIESCENT
+
 		_testTransitionWithIllegalState(
 			FIPSApplicationState.QUIESCENT, FIPSApplicationState.INITIALIZING);
 		_testTransitionWithIllegalState(
 			FIPSApplicationState.QUIESCENT, FIPSApplicationState.QUIESCENT);
 		_testTransitionWithIllegalState(
 			FIPSApplicationState.QUIESCENT, FIPSApplicationState.SELF_TEST);
+
+		// SELF_TEST
+
 		_testTransitionWithIllegalState(
 			FIPSApplicationState.SELF_TEST, FIPSApplicationState.INITIALIZING);
 		_testTransitionWithIllegalState(
@@ -455,13 +494,13 @@ public class FIPSApplicationStateMachineUtilTest {
 	}
 
 	private void _assertEnvelope(
-		String key, Map<String, Object> fipsAuditLogEntry, String value) {
+		Map<String, Object> fipsAuditLogEntry, String key, String value) {
 
 		Assert.assertEquals(value, fipsAuditLogEntry.get(key));
 	}
 
 	private void _assertField(
-		String key, Map<String, Object> fipsAuditLogEntry, String value) {
+		Map<String, Object> fipsAuditLogEntry, String key, String value) {
 
 		Map<?, ?> fields = (Map<?, ?>)fipsAuditLogEntry.get("fields");
 
@@ -472,7 +511,7 @@ public class FIPSApplicationStateMachineUtilTest {
 		return _fipsAuditLogEntries.get(_fipsAuditLogEntries.size() - 1);
 	}
 
-	private Thread _registerShutdownHook() {
+	private Thread _getShutdownHook() {
 		try (MockedStatic<Runtime> runtimeMockedStatic = Mockito.mockStatic(
 				Runtime.class)) {
 
@@ -513,7 +552,7 @@ public class FIPSApplicationStateMachineUtilTest {
 		fipsApplicationStateAtomicReference.set(fipsApplicationState);
 	}
 
-	private void _testSelfTest(RuntimeException runtimeException) {
+	private void _testSelfTestWithFailure(RuntimeException runtimeException) {
 		_fipsAuditLogEntries.clear();
 
 		_setFIPSApplicationState(FIPSApplicationState.INITIALIZING);
@@ -532,10 +571,10 @@ public class FIPSApplicationStateMachineUtilTest {
 		Assert.assertEquals(
 			_fipsAuditLogEntries.toString(), 2, _fipsAuditLogEntries.size());
 
-		_assertEnvelope("severity", _fipsAuditLogEntries.get(1), "CRITICAL");
-		_assertField("failed-step", _fipsAuditLogEntries.get(1), "Self test");
-		_assertField("from-state", _fipsAuditLogEntries.get(1), "SELF_TEST");
-		_assertField("to-state", _fipsAuditLogEntries.get(1), "ERROR");
+		_assertEnvelope(_fipsAuditLogEntries.get(1), "severity", "CRITICAL");
+		_assertField(_fipsAuditLogEntries.get(1), "failed-step", "Self test");
+		_assertField(_fipsAuditLogEntries.get(1), "from-state", "SELF_TEST");
+		_assertField(_fipsAuditLogEntries.get(1), "to-state", "ERROR");
 	}
 
 	private void _testTransition(
@@ -556,12 +595,12 @@ public class FIPSApplicationStateMachineUtilTest {
 			_fipsAuditLogEntries.toString(), 1, _fipsAuditLogEntries.size());
 
 		_assertEnvelope(
-			"event-type", _fipsAuditLogEntries.get(0), "fips-state-transition");
+			_fipsAuditLogEntries.get(0), "event-type", "fips-state-transition");
 		_assertField(
-			"from-state", _fipsAuditLogEntries.get(0),
+			_fipsAuditLogEntries.get(0), "from-state",
 			fromFIPSApplicationState.name());
 		_assertField(
-			"to-state", _fipsAuditLogEntries.get(0),
+			_fipsAuditLogEntries.get(0), "to-state",
 			toFIPSApplicationState.name());
 	}
 

@@ -6,6 +6,7 @@
 package com.liferay.portal.security.fips.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -89,7 +90,14 @@ public class FIPSAuditUtilTest {
 
 		JSONObject jsonObject = _getJSONObject(eventType, jsonObjects);
 
-		for (String envelopeKey : _ENVELOPE_KEYS) {
+		for (String envelopeKey :
+				new String[] {
+					"cmvp-certificate-id", "deployment-instance-id",
+					"event-schema-version", "event-sequence", "event-type",
+					"fields", "provider-name", "provider-version", "severity",
+					"timestamp"
+				}) {
+
 			Assert.assertTrue(jsonObject.has(envelopeKey));
 		}
 
@@ -128,7 +136,7 @@ public class FIPSAuditUtilTest {
 
 		_assertBootStateTransitions(jsonObjects);
 		_assertCanonicalTimestamps(jsonObjects);
-		_assertContiguousEventSequences(jsonObjects);
+		_assertIncrementingEventSequences(jsonObjects);
 		_assertOneDeploymentInstanceId(jsonObjects);
 	}
 
@@ -295,22 +303,22 @@ public class FIPSAuditUtilTest {
 	}
 
 	private void _assertBootStateTransitions(List<JSONObject> jsonObjects) {
-		List<String> transitions = new ArrayList<>();
+		List<String> transitions = TransformUtil.transform(
+			jsonObjects,
+			jsonObject -> {
+				String eventType = jsonObject.getString("event-type");
 
-		for (JSONObject jsonObject : jsonObjects) {
-			String eventType = jsonObject.getString("event-type");
+				if (!eventType.equals("fips-state-transition")) {
+					return null;
+				}
 
-			if (!eventType.equals("fips-state-transition")) {
-				continue;
-			}
+				JSONObject fieldsJSONObject = jsonObject.getJSONObject(
+					"fields");
 
-			JSONObject fieldsJSONObject = jsonObject.getJSONObject("fields");
-
-			transitions.add(
-				StringBundler.concat(
+				return StringBundler.concat(
 					fieldsJSONObject.getString("from-state"), " to ",
-					fieldsJSONObject.getString("to-state")));
-		}
+					fieldsJSONObject.getString("to-state"));
+			});
 
 		Assert.assertTrue(transitions.contains("INITIALIZING to SELF_TEST"));
 		Assert.assertTrue(transitions.contains("SELF_TEST to OPERATIONAL"));
@@ -326,7 +334,9 @@ public class FIPSAuditUtilTest {
 		}
 	}
 
-	private void _assertContiguousEventSequences(List<JSONObject> jsonObjects) {
+	private void _assertIncrementingEventSequences(
+		List<JSONObject> jsonObjects) {
+
 		long previousEventSequence = 0;
 
 		for (JSONObject jsonObject : jsonObjects) {
@@ -398,11 +408,5 @@ public class FIPSAuditUtilTest {
 
 		return jsonObject.getLong("event-sequence");
 	}
-
-	private static final String[] _ENVELOPE_KEYS = {
-		"cmvp-certificate-id", "deployment-instance-id", "event-schema-version",
-		"event-sequence", "event-type", "fields", "provider-name",
-		"provider-version", "severity", "timestamp"
-	};
 
 }

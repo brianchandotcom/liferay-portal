@@ -68,7 +68,7 @@ public class FIPSAuditEventTest {
 		_testPutRejects(new PBEKeySpec(chars));
 	}
 
-	private void _assertPutRejects(Object value) {
+	private void _assertPutThrows(Object value) {
 		FIPSAuditEvent fipsAuditEvent = new FIPSAuditEvent(
 			RandomTestUtil.randomString(), FIPSAuditEvent.Severity.INFO);
 
@@ -82,10 +82,10 @@ public class FIPSAuditEventTest {
 	}
 
 	private void _testPutRejects(Object value) {
-		_assertPutRejects(Arrays.asList(value));
-		_assertPutRejects(Collections.singletonMap("nested", value));
-		_assertPutRejects(new Object[] {value});
-		_assertPutRejects(value);
+		_assertPutThrows(Arrays.asList(value));
+		_assertPutThrows(Collections.singletonMap("nested", value));
+		_assertPutThrows(new Object[] {value});
+		_assertPutThrows(value);
 	}
 
 }

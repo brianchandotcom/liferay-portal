@@ -47,7 +47,7 @@ public final class FIPSAuditNDJSONLayout extends AbstractStringLayout {
 
 		Encoder<StringBuilder> encoder = getStringBuilderEncoder();
 
-		encoder.encode(_toNDJSONLog(logEvent), byteBufferDestination);
+		encoder.encode(_toNDJSON(logEvent), byteBufferDestination);
 	}
 
 	@Override
@@ -57,7 +57,7 @@ public final class FIPSAuditNDJSONLayout extends AbstractStringLayout {
 
 	@Override
 	public String toSerializable(LogEvent logEvent) {
-		StringBuilder sb = _toNDJSONLog(logEvent);
+		StringBuilder sb = _toNDJSON(logEvent);
 
 		return sb.toString();
 	}
@@ -77,18 +77,18 @@ public final class FIPSAuditNDJSONLayout extends AbstractStringLayout {
 		super(StandardCharsets.UTF_8);
 	}
 
-	private StringBuilder _toNDJSONLog(LogEvent logEvent) {
+	private StringBuilder _toNDJSON(LogEvent logEvent) {
 		Message message = logEvent.getMessage();
 
-		Object object = null;
+		Object parameter = null;
 
 		if (message instanceof ObjectMessage) {
 			ObjectMessage objectMessage = (ObjectMessage)message;
 
-			object = objectMessage.getParameter();
+			parameter = objectMessage.getParameter();
 		}
 
-		if (!(object instanceof Map)) {
+		if (!(parameter instanceof Map)) {
 			throw new IllegalStateException(
 				StringBundler.concat(
 					"Unable to write the log event from the logger \"",
@@ -99,7 +99,7 @@ public final class FIPSAuditNDJSONLayout extends AbstractStringLayout {
 
 		StringBuilder sb = getStringBuilder();
 
-		sb.append(JSONFactoryUtil.createJSONObject((Map<?, ?>)object));
+		sb.append(JSONFactoryUtil.createJSONObject((Map<?, ?>)parameter));
 
 		sb.append(CharPool.NEW_LINE);
 

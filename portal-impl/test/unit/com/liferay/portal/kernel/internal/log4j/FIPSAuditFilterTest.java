@@ -53,9 +53,11 @@ public class FIPSAuditFilterTest {
 	@Test
 	public void testFilterDeniesAnEventWithoutARecord() {
 		_testFilterDenies(
-			FIPSLog4jUtil.getMarker(), new ObjectMessage("not-a-map"));
+			FIPSLog4jUtil.getMarker(),
+			new ObjectMessage(RandomTestUtil.randomString()));
 		_testFilterDenies(
-			FIPSLog4jUtil.getMarker(), new SimpleMessage("Not a record"));
+			FIPSLog4jUtil.getMarker(),
+			new SimpleMessage(RandomTestUtil.randomString()));
 	}
 
 	@Test

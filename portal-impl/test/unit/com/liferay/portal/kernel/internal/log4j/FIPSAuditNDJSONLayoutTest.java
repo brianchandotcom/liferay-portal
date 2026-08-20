@@ -114,8 +114,10 @@ public class FIPSAuditNDJSONLayoutTest {
 
 	@Test
 	public void testToSerializableRejectsAForeignEvent() {
-		_testToSerializableThrows(new ObjectMessage("not-a-map"));
-		_testToSerializableThrows(new SimpleMessage("Not a record"));
+		_testToSerializableThrows(
+			new ObjectMessage(RandomTestUtil.randomString()));
+		_testToSerializableThrows(
+			new SimpleMessage(RandomTestUtil.randomString()));
 	}
 
 	@Test

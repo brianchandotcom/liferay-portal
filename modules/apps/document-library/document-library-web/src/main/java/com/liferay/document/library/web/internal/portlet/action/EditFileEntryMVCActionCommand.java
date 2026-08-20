@@ -122,8 +122,11 @@ import jakarta.portlet.PortletRequest;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 
 import java.text.Format;
 
@@ -369,6 +372,23 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 		catch (Exception exception) {
 			_handleUploadException(
 				actionRequest, actionResponse, cmd, exception);
+		}
+	}
+
+	private FileEntry _addFileEntry(
+			String changeLog, String contentType, String description,
+			Date displayDate, Date expirationDate, String externalReferenceCode,
+			File file, long folderId, long repositoryId, Date reviewDate,
+			ServiceContext serviceContext, long size, String uniqueFileName,
+			String uniqueFileTitle)
+		throws IOException, PortalException {
+
+		try (InputStream inputStream = new FileInputStream(file)) {
+			return _dlAppService.addFileEntry(
+				externalReferenceCode, repositoryId, folderId, uniqueFileName,
+				contentType, uniqueFileTitle, StringPool.BLANK, description,
+				changeLog, inputStream, size, displayDate, expirationDate,
+				reviewDate, serviceContext);
 		}
 	}
 
@@ -1491,11 +1511,47 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 					themeDisplay.getScopeGroupId(), folderId,
 					FileUtil.stripExtension(sourceFileName));
 
-				fileEntry = _dlAppService.addFileEntry(
-					externalReferenceCode, repositoryId, folderId,
-					uniqueFileName, contentType, uniqueFileTitle,
-					StringPool.BLANK, description, changeLog, inputStream, size,
-					displayDate, expirationDate, reviewDate, serviceContext);
+				File file = uploadPortletRequest.getFile("file", true);
+
+				try {
+					fileEntry = _addFileEntry(
+						changeLog, contentType, description, displayDate,
+						expirationDate, externalReferenceCode, file, folderId,
+						repositoryId, reviewDate, serviceContext, size,
+						uniqueFileName, uniqueFileTitle);
+				}
+				catch (DDMFormValuesValidationException.RequiredValue
+							ddmFormValuesValidationException) {
+
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							"Adding file entry as a draft because a required " +
+								"field is missing",
+							ddmFormValuesValidationException);
+					}
+
+					Serializable validateDDMFormValues =
+						serviceContext.getAttribute("validateDDMFormValues");
+					int workflowAction = serviceContext.getWorkflowAction();
+
+					serviceContext.setAttribute(
+						"validateDDMFormValues", Boolean.FALSE);
+					serviceContext.setWorkflowAction(
+						WorkflowConstants.ACTION_SAVE_DRAFT);
+
+					try {
+						fileEntry = _addFileEntry(
+							changeLog, contentType, description, displayDate,
+							expirationDate, externalReferenceCode, file,
+							folderId, repositoryId, reviewDate, serviceContext,
+							size, uniqueFileName, uniqueFileTitle);
+					}
+					finally {
+						serviceContext.setAttribute(
+							"validateDDMFormValues", validateDDMFormValues);
+						serviceContext.setWorkflowAction(workflowAction);
+					}
+				}
 
 				JSONObject jsonObject = JSONUtil.put(
 					"fileEntryId", fileEntry.getFileEntryId());

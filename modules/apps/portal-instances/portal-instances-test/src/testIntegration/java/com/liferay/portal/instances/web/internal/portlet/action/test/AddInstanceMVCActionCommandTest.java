@@ -39,7 +39,6 @@ import java.io.Serializable;
 import java.util.Map;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -60,13 +59,6 @@ public class AddInstanceMVCActionCommandTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
-	@Before
-	public void setUp() throws Exception {
-		_webId = StringUtil.toLowerCase(RandomTestUtil.randomString());
-
-		_virtualHostname = _webId + ".com";
-	}
-
 	@Test
 	public void testProcessActionEncryptsDefaultAdminPassword()
 		throws Exception {
@@ -83,7 +75,7 @@ public class AddInstanceMVCActionCommandTest {
 			backgroundTask.getTaskContextMap();
 
 		Serializable storedDefaultAdminPassword = taskContextMap.get(
-			"defaultAdminPassword");
+			_DEFAULT_ADMIN_PASSWORD_KEY);
 
 		Assert.assertNotNull(storedDefaultAdminPassword);
 		Assert.assertNotEquals(
@@ -91,7 +83,7 @@ public class AddInstanceMVCActionCommandTest {
 
 		_waitForCompletion(backgroundTask.getBackgroundTaskId());
 
-		_company = _companyLocalService.getCompanyByWebId(_webId);
+		_company = _companyLocalService.getCompanyByWebId(_WEB_ID);
 	}
 
 	@Test
@@ -118,7 +110,7 @@ public class AddInstanceMVCActionCommandTest {
 
 		Assert.assertThrows(
 			NoSuchCompanyException.class,
-			() -> _companyLocalService.getCompanyByWebId(_webId));
+			() -> _companyLocalService.getCompanyByWebId(_WEB_ID));
 	}
 
 	@Test
@@ -140,7 +132,7 @@ public class AddInstanceMVCActionCommandTest {
 
 		Assert.assertThrows(
 			NoSuchCompanyException.class,
-			() -> _companyLocalService.getCompanyByWebId(_webId));
+			() -> _companyLocalService.getCompanyByWebId(_WEB_ID));
 	}
 
 	private com.liferay.portal.background.task.model.BackgroundTask
@@ -154,7 +146,7 @@ public class AddInstanceMVCActionCommandTest {
 		backgroundTask.setCompanyId(TestPropsValues.getCompanyId());
 		backgroundTask.setCompleted(false);
 		backgroundTask.setGroupId(BackgroundTaskConstants.GROUP_ID_DEFAULT);
-		backgroundTask.setName("AddVirtualInstance#" + _webId);
+		backgroundTask.setName("AddVirtualInstance#" + _WEB_ID);
 		backgroundTask.setStatus(BackgroundTaskConstants.STATUS_IN_PROGRESS);
 		backgroundTask.setTaskExecutorClassName(_TASK_EXECUTOR_CLASS_NAME);
 		backgroundTask.setUserId(TestPropsValues.getUserId());
@@ -170,7 +162,7 @@ public class AddInstanceMVCActionCommandTest {
 
 			String name = backgroundTask.getName();
 
-			if (name.endsWith("#" + _webId)) {
+			if (name.endsWith("#" + _WEB_ID)) {
 				return backgroundTask;
 			}
 		}
@@ -216,14 +208,14 @@ public class AddInstanceMVCActionCommandTest {
 			WebKeys.THEME_DISPLAY, themeDisplay);
 
 		mockLiferayPortletActionRequest.setParameter("maxUsers", "0");
-		mockLiferayPortletActionRequest.setParameter("mx", _virtualHostname);
+		mockLiferayPortletActionRequest.setParameter("mx", _VIRTUAL_HOSTNAME);
 		mockLiferayPortletActionRequest.setParameter(
-			"virtualHostname", _virtualHostname);
-		mockLiferayPortletActionRequest.setParameter("webId", _webId);
+			"virtualHostname", _VIRTUAL_HOSTNAME);
+		mockLiferayPortletActionRequest.setParameter("webId", _WEB_ID);
 
 		if (defaultAdminPassword != null) {
 			mockLiferayPortletActionRequest.setParameter(
-				"defaultAdminPassword", defaultAdminPassword);
+				_DEFAULT_ADMIN_PASSWORD_KEY, defaultAdminPassword);
 		}
 
 		_mvcActionCommand.processAction(
@@ -250,9 +242,18 @@ public class AddInstanceMVCActionCommandTest {
 			"Background task " + backgroundTaskId + " did not complete");
 	}
 
+	private static final String _DEFAULT_ADMIN_PASSWORD_KEY =
+		"defaultAdminPassword";
+
 	private static final String _TASK_EXECUTOR_CLASS_NAME =
 		"com.liferay.portal.instances.web.internal.background.task." +
 			"AddVirtualInstanceBackgroundTaskExecutor";
+
+	private static final String _VIRTUAL_HOSTNAME =
+		StringUtil.toLowerCase(RandomTestUtil.randomString()) + ".com";
+
+	private static final String _WEB_ID = StringUtil.toLowerCase(
+		RandomTestUtil.randomString());
 
 	@DeleteAfterTestRun
 	private com.liferay.portal.background.task.model.BackgroundTask
@@ -278,8 +279,5 @@ public class AddInstanceMVCActionCommandTest {
 
 	@DeleteAfterTestRun
 	private User _user;
-
-	private String _virtualHostname;
-	private String _webId;
 
 }

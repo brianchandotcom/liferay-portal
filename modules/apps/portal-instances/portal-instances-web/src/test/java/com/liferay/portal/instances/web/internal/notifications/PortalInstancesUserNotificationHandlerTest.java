@@ -81,8 +81,7 @@ public class PortalInstancesUserNotificationHandlerTest {
 
 		Mockito.when(
 			language.get(
-				Mockito.any(Locale.class),
-				Mockito.eq("please-enter-a-valid-web-id"))
+				Mockito.any(Locale.class), Mockito.eq(_ERROR_MESSAGE_KEY))
 		).thenReturn(
 			_ERROR_MESSAGE
 		);
@@ -113,8 +112,7 @@ public class PortalInstancesUserNotificationHandlerTest {
 			_portalInstancesUserNotificationHandler.getBody(
 				_createUserNotificationEvent(
 					PortalInstancesOperationType.ADD,
-					BackgroundTaskConstants.STATUS_FAILED,
-					"please-enter-a-valid-web-id"),
+					BackgroundTaskConstants.STATUS_FAILED, _ERROR_MESSAGE_KEY),
 				_serviceContext));
 	}
 
@@ -179,6 +177,9 @@ public class PortalInstancesUserNotificationHandlerTest {
 		"The virtual instance test was added successfully.";
 
 	private static final String _ERROR_MESSAGE = "Please enter a valid web ID.";
+
+	private static final String _ERROR_MESSAGE_KEY =
+		"please-enter-a-valid-web-id";
 
 	private static final String _NOT_ADDED_MESSAGE =
 		"The virtual instance test could not be added.";

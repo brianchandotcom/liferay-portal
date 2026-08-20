@@ -125,6 +125,8 @@ public class AddVirtualInstanceBackgroundTaskExecutorTest {
 		Assert.assertEquals(
 			"please-enter-a-valid-email-address",
 			payloadJSONObject.getString("errorMessage"));
+
+		_company = _companyLocalService.getCompanyByWebId(_webId);
 	}
 
 	@Test

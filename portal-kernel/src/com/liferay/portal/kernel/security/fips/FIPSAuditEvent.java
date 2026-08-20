@@ -7,6 +7,8 @@ package com.liferay.portal.kernel.security.fips;
 
 import com.liferay.petra.string.StringBundler;
 
+import java.lang.reflect.Array;
+
 import java.security.Key;
 import java.security.spec.KeySpec;
 
@@ -79,6 +81,14 @@ public class FIPSAuditEvent {
 					"event"));
 		}
 
+		if (_isSensitiveSecurityParameter(value)) {
+			throw new IllegalArgumentException(
+				StringBundler.concat(
+					"Unable to write the FIPS audit field \"", key,
+					"\" because a sensitive security parameter must never ",
+					"reach a FIPS audit event"));
+		}
+
 		if (value instanceof Iterable) {
 			for (Object curValue : (Iterable<?>)value) {
 				_validate(key, curValue);
@@ -97,20 +107,22 @@ public class FIPSAuditEvent {
 			return;
 		}
 
+		Class<?> valueClass = value.getClass();
+
+		if (valueClass.isArray()) {
+			for (int i = 0; i < Array.getLength(value); i++) {
+				_validate(key, Array.get(value, i));
+			}
+
+			return;
+		}
+
 		if (_isNonfiniteNumber(value)) {
 			throw new IllegalArgumentException(
 				StringBundler.concat(
 					"Unable to write the FIPS audit field \"", key,
 					"\" because the number \"", value,
 					"\" is not finite and has no JSON representation"));
-		}
-
-		if (_isSensitiveSecurityParameter(value)) {
-			throw new IllegalArgumentException(
-				StringBundler.concat(
-					"Unable to write the FIPS audit field \"", key,
-					"\" because a sensitive security parameter must never ",
-					"reach a FIPS audit event"));
 		}
 	}
 

@@ -10,12 +10,15 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.internal.log4j.FIPSLog4jUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
+
+import java.lang.reflect.Array;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -61,7 +64,8 @@ public class FIPSAuditUtil {
 		FIPSLog4jUtil.write(
 			LinkedHashMapBuilder.<String, Object>put(
 				"cmvp-certificate-id",
-				PropsValues.FIPS_AUDIT_PROVIDER_CMVP_CERTIFICATE_ID
+				GetterUtil.getString(
+					PropsValues.FIPS_AUDIT_PROVIDER_CMVP_CERTIFICATE_ID)
 			).put(
 				"deployment-instance-id", _getDeploymentInstanceId()
 			).put(
@@ -172,6 +176,18 @@ public class FIPSAuditUtil {
 						temporalAccessor, "\" because it carries no time zone"),
 					dateTimeException);
 			}
+		}
+
+		Class<?> valueClass = value.getClass();
+
+		if (valueClass.isArray()) {
+			List<Object> normalizedValues = new ArrayList<>();
+
+			for (int i = 0; i < Array.getLength(value); i++) {
+				normalizedValues.add(_normalizeTimestamp(Array.get(value, i)));
+			}
+
+			return normalizedValues;
 		}
 
 		return value;

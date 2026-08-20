@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.util.Time;
 import java.time.Instant;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
@@ -104,6 +105,26 @@ public class FIPSAuditUtilTest {
 		finally {
 			TimeZone.setDefault(timeZone);
 		}
+	}
+
+	@Test
+	public void testWriteNormalizesAFieldTimestampInAnArray() {
+		FIPSAuditEvent fipsAuditEvent = new FIPSAuditEvent(
+			RandomTestUtil.randomString(), FIPSAuditEvent.Severity.INFO);
+
+		fipsAuditEvent.put(
+			"provider-timestamps",
+			new Instant[] {Instant.parse("2026-05-06T14:19:23.471Z")});
+
+		FIPSAuditUtil.write(fipsAuditEvent);
+
+		Map<String, Object> fipsAuditLogEntry = _getLastFIPSAuditLogEntry();
+
+		Map<?, ?> fields = (Map<?, ?>)fipsAuditLogEntry.get("fields");
+
+		Assert.assertEquals(
+			Collections.singletonList("2026-05-06T14:19:23.471Z"),
+			fields.get("provider-timestamps"));
 	}
 
 	@Test

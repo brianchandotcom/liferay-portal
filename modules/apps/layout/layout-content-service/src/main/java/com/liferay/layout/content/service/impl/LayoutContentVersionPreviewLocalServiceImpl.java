@@ -5,12 +5,14 @@
 
 package com.liferay.layout.content.service.impl;
 
+import com.liferay.layout.content.exception.NoSuchLayoutContentVersionException;
 import com.liferay.layout.content.model.LayoutContentVersion;
 import com.liferay.layout.content.model.LayoutContentVersionPreview;
 import com.liferay.layout.content.service.base.LayoutContentVersionPreviewLocalServiceBaseImpl;
 import com.liferay.layout.content.service.persistence.LayoutContentVersionPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 
@@ -35,8 +37,12 @@ public class LayoutContentVersionPreviewLocalServiceImpl
 			long layoutContentVersionId, String segmentsExperienceERC)
 		throws PortalException {
 
-		LayoutContentVersion layoutContentVersion = _checkFeatureFlagEnabled(
-			layoutContentVersionId);
+		LayoutContentVersion layoutContentVersion =
+			_layoutContentVersionPersistence.findByPrimaryKey(
+				layoutContentVersionId);
+
+		FeatureFlagManagerUtil.checkEnabled(
+			layoutContentVersion.getCompanyId(), "LPD-10622");
 
 		LayoutContentVersionPreview layoutContentVersionPreview =
 			layoutContentVersionPreviewPersistence.create(
@@ -65,8 +71,10 @@ public class LayoutContentVersionPreviewLocalServiceImpl
 	}
 
 	@Override
-	public void deleteLayoutContentVersionPreviews(
-		long layoutContentVersionId) {
+	public void deleteLayoutContentVersionPreviews(long layoutContentVersionId)
+		throws PortalException {
+
+		_checkFeatureFlagEnabled(layoutContentVersionId);
 
 		layoutContentVersionPreviewPersistence.removeByLayoutContentVersionId(
 			layoutContentVersionId);
@@ -74,8 +82,11 @@ public class LayoutContentVersionPreviewLocalServiceImpl
 
 	@Override
 	public LayoutContentVersionPreview fetchLayoutContentVersionPreview(
-		String languageId, long layoutContentVersionId,
-		String segmentsExperienceERC) {
+			String languageId, long layoutContentVersionId,
+			String segmentsExperienceERC)
+		throws PortalException {
+
+		_checkFeatureFlagEnabled(layoutContentVersionId);
 
 		return layoutContentVersionPreviewPersistence.fetchByL_LCVI_SEERC(
 			languageId, layoutContentVersionId, segmentsExperienceERC);
@@ -83,10 +94,24 @@ public class LayoutContentVersionPreviewLocalServiceImpl
 
 	@Override
 	public List<LayoutContentVersionPreview> getLayoutContentVersionPreviews(
-		long layoutContentVersionId) {
+			long layoutContentVersionId)
+		throws PortalException {
+
+		_checkFeatureFlagEnabled(layoutContentVersionId);
 
 		return layoutContentVersionPreviewPersistence.
 			findByLayoutContentVersionId(layoutContentVersionId);
+	}
+
+	private void _checkFeatureFlagEnabled(long layoutContentVersionId)
+		throws NoSuchLayoutContentVersionException {
+
+		LayoutContentVersion layoutContentVersion =
+			_layoutContentVersionPersistence.findByPrimaryKey(
+				layoutContentVersionId);
+
+		FeatureFlagManagerUtil.checkEnabled(
+			layoutContentVersion.getCompanyId(), "LPD-10622");
 	}
 
 	@Reference

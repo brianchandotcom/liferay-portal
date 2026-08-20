@@ -44,7 +44,6 @@ import java.util.Map;
 
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -62,13 +61,6 @@ public class AddVirtualInstanceBackgroundTaskExecutorTest {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
-
-	@Before
-	public void setUp() throws Exception {
-		_webId = StringUtil.toLowerCase(RandomTestUtil.randomString());
-
-		_virtualHostname = _webId + ".com";
-	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -88,14 +80,14 @@ public class AddVirtualInstanceBackgroundTaskExecutorTest {
 			BackgroundTaskConstants.STATUS_SUCCESSFUL,
 			backgroundTask.getStatus());
 
-		_company = _companyLocalService.getCompanyByWebId(_webId);
+		_company = _companyLocalService.getCompanyByWebId(_WEB_ID);
 
 		JSONObject payloadJSONObject = _getPayloadJSONObject();
 
 		Assert.assertEquals(
 			BackgroundTaskConstants.LABEL_SUCCESSFUL,
 			payloadJSONObject.getString("status"));
-		Assert.assertEquals(_webId, payloadJSONObject.getString("webId"));
+		Assert.assertEquals(_WEB_ID, payloadJSONObject.getString("webId"));
 		Assert.assertEquals(
 			_company.getCompanyId(), payloadJSONObject.getLong("companyId"));
 
@@ -126,7 +118,7 @@ public class AddVirtualInstanceBackgroundTaskExecutorTest {
 			"please-enter-a-valid-email-address",
 			payloadJSONObject.getString("errorMessage"));
 
-		_company = _companyLocalService.getCompanyByWebId(_webId);
+		_company = _companyLocalService.getCompanyByWebId(_WEB_ID);
 	}
 
 	@Test
@@ -147,7 +139,7 @@ public class AddVirtualInstanceBackgroundTaskExecutorTest {
 			BackgroundTaskConstants.STATUS_SUCCESSFUL,
 			backgroundTask.getStatus());
 
-		_company = _companyLocalService.getCompanyByWebId(_webId);
+		_company = _companyLocalService.getCompanyByWebId(_WEB_ID);
 
 		Map<String, Serializable> taskContextMap =
 			backgroundTask.getTaskContextMap();
@@ -157,7 +149,7 @@ public class AddVirtualInstanceBackgroundTaskExecutorTest {
 
 		String emailAddress =
 			PropsUtil.get(PropsKeys.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX) +
-				StringPool.AT + _virtualHostname;
+				StringPool.AT + _VIRTUAL_HOSTNAME;
 
 		Assert.assertEquals(
 			Authenticator.SUCCESS,
@@ -174,7 +166,7 @@ public class AddVirtualInstanceBackgroundTaskExecutorTest {
 		Assert.assertThrows(
 			CompanyWebIdException.class,
 			() -> _companyLocalService.validateCompany(
-				company.getWebId(), _virtualHostname, _virtualHostname, 0));
+				company.getWebId(), _VIRTUAL_HOSTNAME, _VIRTUAL_HOSTNAME, 0));
 	}
 
 	private BackgroundTask _addBackgroundTask(
@@ -191,20 +183,20 @@ public class AddVirtualInstanceBackgroundTaskExecutorTest {
 			).put(
 				"maxUsers", 0
 			).put(
-				"mx", _virtualHostname
+				"mx", _VIRTUAL_HOSTNAME
 			).put(
 				"siteInitializerKey", StringPool.BLANK
 			).put(
-				"virtualHostname", _virtualHostname
+				"virtualHostname", _VIRTUAL_HOSTNAME
 			).put(
-				"webId", _webId
+				"webId", _WEB_ID
 			).build();
 
 		BackgroundTask backgroundTask =
 			_backgroundTaskManager.addBackgroundTask(
 				TestPropsValues.getUserId(),
 				BackgroundTaskConstants.GROUP_ID_DEFAULT,
-				"AddVirtualInstance#" + _webId,
+				"AddVirtualInstance#" + _WEB_ID,
 				"com.liferay.portal.instances.web.internal.background.task." +
 					"AddVirtualInstanceBackgroundTaskExecutor",
 				taskContextMap, new ServiceContext());
@@ -235,7 +227,7 @@ public class AddVirtualInstanceBackgroundTaskExecutorTest {
 
 			String webId = payloadJSONObject.getString("webId");
 
-			if (webId.equals(_webId)) {
+			if (webId.equals(_WEB_ID)) {
 				_userNotificationEvents.add(userNotificationEvent);
 
 				return payloadJSONObject;
@@ -243,7 +235,7 @@ public class AddVirtualInstanceBackgroundTaskExecutorTest {
 		}
 
 		throw new AssertionError(
-			"No user notification event was sent for web ID " + _webId);
+			"No user notification event was sent for web ID " + _WEB_ID);
 	}
 
 	private BackgroundTask _waitForCompletion(long backgroundTaskId)
@@ -266,6 +258,12 @@ public class AddVirtualInstanceBackgroundTaskExecutorTest {
 			"Background task " + backgroundTaskId + " did not complete");
 	}
 
+	private static final String _VIRTUAL_HOSTNAME =
+		StringUtil.toLowerCase(RandomTestUtil.randomString()) + ".com";
+
+	private static final String _WEB_ID = StringUtil.toLowerCase(
+		RandomTestUtil.randomString());
+
 	@Inject
 	private BackgroundTaskManager _backgroundTaskManager;
 
@@ -287,7 +285,5 @@ public class AddVirtualInstanceBackgroundTaskExecutorTest {
 
 	private final List<UserNotificationEvent> _userNotificationEvents =
 		new ArrayList<>();
-	private String _virtualHostname;
-	private String _webId;
 
 }

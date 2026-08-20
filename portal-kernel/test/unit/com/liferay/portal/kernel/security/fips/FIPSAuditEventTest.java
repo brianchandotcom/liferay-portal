@@ -84,6 +84,7 @@ public class FIPSAuditEventTest {
 	private void _testPutRejects(Object value) {
 		_assertPutRejects(Arrays.asList(value));
 		_assertPutRejects(Collections.singletonMap("nested", value));
+		_assertPutRejects(new Object[] {value});
 		_assertPutRejects(value);
 	}
 

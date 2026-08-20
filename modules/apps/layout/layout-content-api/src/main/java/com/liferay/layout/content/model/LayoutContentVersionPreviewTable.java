@@ -8,6 +8,7 @@ package com.liferay.layout.content.model;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.base.BaseTable;
 
+import java.sql.Clob;
 import java.sql.Types;
 
 import java.util.Date;
@@ -48,8 +49,8 @@ public class LayoutContentVersionPreviewTable
 	public final Column<LayoutContentVersionPreviewTable, Date> modifiedDate =
 		createColumn(
 			"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
-	public final Column<LayoutContentVersionPreviewTable, String> html =
-		createColumn("html", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<LayoutContentVersionPreviewTable, Clob> html =
+		createColumn("html", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 	public final Column<LayoutContentVersionPreviewTable, String> languageId =
 		createColumn(
 			"languageId", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
@@ -69,4 +70,4 @@ public class LayoutContentVersionPreviewTable
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:995143942
+// LIFERAY-SERVICE-BUILDER-HASH:827091743

@@ -29,7 +29,7 @@ create table LayoutContentVersionPreview (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	html VARCHAR(75) null,
+	html TEXT null,
 	languageId VARCHAR(75) null,
 	layoutContentVersionId LONG,
 	segmentsExperienceERC VARCHAR(75) null

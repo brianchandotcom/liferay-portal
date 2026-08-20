@@ -48,6 +48,14 @@ public class FIPSAuditUtil {
 	public static void write(FIPSAuditEvent fipsAuditEvent) {
 		Provider provider = _getProvider();
 
+		String providerName = StringPool.BLANK;
+		String providerVersion = StringPool.BLANK;
+
+		if (provider != null) {
+			providerName = provider.getName();
+			providerVersion = provider.getVersionStr();
+		}
+
 		FIPSAuditEvent.Severity severity = fipsAuditEvent.getSeverity();
 
 		FIPSLog4jUtil.write(
@@ -65,11 +73,9 @@ public class FIPSAuditUtil {
 			).put(
 				"fields", _normalizeTimestamps(fipsAuditEvent.getFields())
 			).put(
-				"provider-name",
-				(provider == null) ? StringPool.BLANK : provider.getName()
+				"provider-name", providerName
 			).put(
-				"provider-version",
-				(provider == null) ? StringPool.BLANK : provider.getVersionStr()
+				"provider-version", providerVersion
 			).put(
 				"severity", severity.name()
 			).put(

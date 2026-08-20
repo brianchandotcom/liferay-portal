@@ -40,18 +40,19 @@ public class FIPSAuditFilterTest {
 			CodeCoverageAssertor.INSTANCE, LiferayUnitTestRule.INSTANCE);
 
 	@Test
-	public void testFilterAcceptsARecord() {
+	public void testFilterAcceptsAFIPSAuditLogEntry() {
 		FIPSAuditFilter fipsAuditFilter = _createFIPSAuditFilter();
 
 		Assert.assertEquals(
 			Filter.Result.ACCEPT,
 			fipsAuditFilter.filter(
 				_createLogEvent(
-					FIPSLog4jUtil.getMarker(), new ObjectMessage(_record))));
+					FIPSLog4jUtil.getMarker(),
+					new ObjectMessage(_fipsAuditLogEntry))));
 	}
 
 	@Test
-	public void testFilterDeniesAnEventWithoutARecord() {
+	public void testFilterDeniesAnEventWithoutAFIPSAuditLogEntry() {
 		_testFilterDenies(
 			FIPSLog4jUtil.getMarker(),
 			new ObjectMessage(RandomTestUtil.randomString()));
@@ -64,8 +65,8 @@ public class FIPSAuditFilterTest {
 	public void testFilterDeniesAnEventWithoutTheMarker() {
 		_testFilterDenies(
 			MarkerManager.getMarker(RandomTestUtil.randomString()),
-			new ObjectMessage(_record));
-		_testFilterDenies(null, new ObjectMessage(_record));
+			new ObjectMessage(_fipsAuditLogEntry));
+		_testFilterDenies(null, new ObjectMessage(_fipsAuditLogEntry));
 	}
 
 	private FIPSAuditFilter _createFIPSAuditFilter() {
@@ -93,7 +94,8 @@ public class FIPSAuditFilterTest {
 			fipsAuditFilter.filter(_createLogEvent(marker, message)));
 	}
 
-	private final Map<String, Object> _record = Collections.singletonMap(
-		RandomTestUtil.randomString(), RandomTestUtil.randomString());
+	private final Map<String, Object> _fipsAuditLogEntry =
+		Collections.singletonMap(
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
 }

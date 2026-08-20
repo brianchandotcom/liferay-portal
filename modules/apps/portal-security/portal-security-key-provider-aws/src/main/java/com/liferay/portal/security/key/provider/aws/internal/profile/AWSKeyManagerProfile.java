@@ -114,10 +114,10 @@ public class AWSKeyManagerProfile implements KeyManagerProfile {
 					"export \"AWS_REGION\"");
 		}
 
-		String accountId = _awsKeyManagerProfileConfiguration.awsAccountId();
+		String awsAccountId = _awsKeyManagerProfileConfiguration.awsAccountId();
 
-		if (Validator.isNull(accountId)) {
-			accountId = AWSAccountUtil.getAccountId();
+		if (Validator.isNull(awsAccountId)) {
+			awsAccountId = AWSAccountUtil.getAccountId();
 		}
 
 		boolean strictMode = false;
@@ -126,48 +126,41 @@ public class AWSKeyManagerProfile implements KeyManagerProfile {
 			PropsValues.FIPS_ENABLED) {
 
 			strictMode = true;
-
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					StringBundler.concat(
-						"AWS profile: strict mode enabled; FIPS endpoint ",
-						"kms-fips.", region,
-						".amazonaws.com, enforcing FIPS approved key origins"));
-			}
 		}
 		else if (_log.isWarnEnabled()) {
 			_log.warn(
-				"AWS profile: standard mode; providers permit software " +
+				"AWS profile in standard mode; providers permit software " +
 					"backed CMKs, which is not strict mode compliant");
 		}
 
-		_verifyKMSKey(accountId, region, strictMode);
+		_verifyKMSKey(awsAccountId, region, strictMode);
 
 		_updateProviderConfiguration(
-			accountId, true,
+			awsAccountId, true,
 			AWSKMSCompanyCryptoProviderConfiguration.class.getName(), region,
 			strictMode);
 		_updateProviderConfiguration(
-			accountId, true,
+			awsAccountId, true,
 			AWSKMSSystemCryptoProviderConfiguration.class.getName(), region,
 			strictMode);
 
 		boolean secretsEnabled = !_isDBVaultLayer();
 
 		_updateProviderConfiguration(
-			accountId, secretsEnabled,
+			awsAccountId, secretsEnabled,
 			AWSSecretsManagerCompanySecretProviderConfiguration.class.getName(),
 			region, strictMode);
 		_updateProviderConfiguration(
-			accountId, secretsEnabled,
+			awsAccountId, secretsEnabled,
 			AWSSecretsManagerSystemSecretProviderConfiguration.class.getName(),
 			region, strictMode);
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
 				StringBundler.concat(
-					"AWS profile initialized {region=", region, ", accountId=",
-					accountId, ", strictMode=", strictMode, "}"));
+					"AWS profile initialized {region=", region,
+					", awsAccountId=", awsAccountId, ", strictMode=",
+					strictMode, "}"));
 		}
 	}
 
@@ -251,7 +244,7 @@ public class AWSKeyManagerProfile implements KeyManagerProfile {
 	}
 
 	private void _updateProviderConfiguration(
-			String accountId, boolean enabled, String pid, String region,
+			String awsAccountId, boolean enabled, String pid, String region,
 			boolean strictMode)
 		throws Exception {
 
@@ -264,8 +257,8 @@ public class AWSKeyManagerProfile implements KeyManagerProfile {
 			properties = new Hashtable<>();
 		}
 
-		if (accountId != null) {
-			properties.put("awsAccountId", accountId);
+		if (awsAccountId != null) {
+			properties.put("awsAccountId", awsAccountId);
 		}
 
 		properties.put("awsRegion", region);
@@ -277,7 +270,7 @@ public class AWSKeyManagerProfile implements KeyManagerProfile {
 	}
 
 	private void _verifyKMSKey(
-			String accountId, String region, boolean strictMode)
+			String awsAccountId, String region, boolean strictMode)
 		throws Exception {
 
 		String keyARNTemplate =
@@ -294,7 +287,7 @@ public class AWSKeyManagerProfile implements KeyManagerProfile {
 		}
 
 		String keyARN = AWSARNUtil.resolve(
-			accountId, keyARNTemplate, CompanyConstants.SYSTEM,
+			awsAccountId, keyARNTemplate, CompanyConstants.SYSTEM,
 			StringPool.BLANK, region);
 		String keyOrigin = null;
 

@@ -143,12 +143,12 @@ public class AWSKeyManagerProfileTest {
 		Map<String, Dictionary<String, Object>> capturedProperties =
 			_mockConfigurationAdmin();
 
-		String accountId = RandomTestUtil.randomString();
+		String awsAccountId = RandomTestUtil.randomString();
 
 		Mockito.when(
 			_awsKeyManagerProfileConfiguration.awsAccountId()
 		).thenReturn(
-			accountId
+			awsAccountId
 		);
 
 		String region = RandomTestUtil.randomString();
@@ -170,7 +170,7 @@ public class AWSKeyManagerProfileTest {
 		Dictionary<String, Object> cryptoProperties = capturedProperties.get(
 			AWSKMSSystemCryptoProviderConfiguration.class.getName());
 
-		Assert.assertEquals(accountId, cryptoProperties.get("awsAccountId"));
+		Assert.assertEquals(awsAccountId, cryptoProperties.get("awsAccountId"));
 		Assert.assertEquals(region, cryptoProperties.get("awsRegion"));
 		Assert.assertEquals(Boolean.TRUE, cryptoProperties.get("enabled"));
 

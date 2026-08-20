@@ -90,16 +90,16 @@ public class FIPSAuditUtilTest {
 
 		JSONObject jsonObject = _getJSONObject(eventType, jsonObjects);
 
-		for (String envelopeKey :
-				new String[] {
-					"cmvp-certificate-id", "deployment-instance-id",
-					"event-schema-version", "event-sequence", "event-type",
-					"fields", "provider-name", "provider-version", "severity",
-					"timestamp"
-				}) {
-
-			Assert.assertTrue(jsonObject.has(envelopeKey));
-		}
+		Assert.assertTrue(jsonObject.has("cmvp-certificate-id"));
+		Assert.assertTrue(jsonObject.has("deployment-instance-id"));
+		Assert.assertTrue(jsonObject.has("event-schema-version"));
+		Assert.assertTrue(jsonObject.has("event-sequence"));
+		Assert.assertTrue(jsonObject.has("event-type"));
+		Assert.assertTrue(jsonObject.has("fields"));
+		Assert.assertTrue(jsonObject.has("provider-name"));
+		Assert.assertTrue(jsonObject.has("provider-version"));
+		Assert.assertTrue(jsonObject.has("severity"));
+		Assert.assertTrue(jsonObject.has("timestamp"));
 
 		Assert.assertEquals(
 			GetterUtil.getString(

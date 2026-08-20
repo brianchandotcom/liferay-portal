@@ -10,6 +10,7 @@ import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryGroupRelLocalService;
 import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.test.util.DLAppTestUtil;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
@@ -17,12 +18,18 @@ import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationFactory;
+import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactoryUtil;
+import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.exception.LARTypeException;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
+import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
+import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalServiceUtil;
+import com.liferay.exportimport.kernel.service.ExportImportLocalServiceUtil;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.exportimport.test.util.lar.BaseExportImportTestCase;
 import com.liferay.fragment.constants.FragmentConstants;
@@ -39,6 +46,7 @@ import com.liferay.friendly.url.constants.FriendlyURLEntryConstants;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.journal.constants.JournalFolderConstants;
+import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.test.util.JournalTestUtil;
@@ -54,6 +62,7 @@ import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryCo
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
 import com.liferay.petra.io.StreamUtil;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.LayoutFriendlyURLsException;
 import com.liferay.portal.kernel.exception.LocaleException;
@@ -69,14 +78,18 @@ import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.model.Repository;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -104,6 +117,7 @@ import com.liferay.sites.kernel.util.Sites;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.io.Serializable;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -604,6 +618,92 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 		Assert.assertEquals(
 			fieldValueJSONObject.toString(), importedGroup.getGroupId(),
 			fieldValueJSONObject.getLong("groupId"));
+	}
+
+	@Test
+	@TestInfo("LPS-91735")
+	public void testExportImportGlobalDDMStructureViaInstances()
+		throws Exception {
+
+		Company company = _companyLocalService.getCompany(
+			TestPropsValues.getCompanyId());
+
+		Group companyGroup = company.getGroup();
+
+		_ddmStructure = DDMStructureTestUtil.addStructure(
+			companyGroup.getGroupId(), JournalArticle.class.getName());
+
+		User user = TestPropsValues.getUser();
+
+		Map<String, Serializable> exportLayoutSettingsMap =
+			ExportImportConfigurationSettingsMapFactoryUtil.
+				buildExportLayoutSettingsMap(
+					user, companyGroup.getGroupId(), false, new long[0],
+					HashMapBuilder.put(
+						PortletDataHandlerKeys.PORTLET_DATA,
+						new String[] {Boolean.TRUE.toString()}
+					).put(
+						PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE +
+							DLPortletKeys.DOCUMENT_LIBRARY,
+						new String[] {Boolean.FALSE.toString()}
+					).put(
+						PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE +
+							JournalPortletKeys.JOURNAL,
+						new String[] {Boolean.TRUE.toString()}
+					).put(
+						PortletDataHandlerKeys.PORTLET_DATA_ALL,
+						new String[] {Boolean.FALSE.toString()}
+					).build());
+
+		ExportImportConfiguration exportImportConfiguration =
+			ExportImportConfigurationLocalServiceUtil.
+				addDraftExportImportConfiguration(
+					user.getUserId(),
+					ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
+					exportLayoutSettingsMap);
+
+		larFile = ExportImportLocalServiceUtil.exportLayoutsAsFile(
+			exportImportConfiguration);
+
+		_company = CompanyTestUtil.addCompany(true);
+
+		User companyAdminUser = UserTestUtil.getAdminUser(
+			_company.getCompanyId());
+
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					_company.getCompanyId())) {
+
+			Group newCompanyGroup = _company.getGroup();
+
+			Map<String, Serializable> importLayoutSettingsMap =
+				ExportImportConfigurationSettingsMapFactoryUtil.
+					buildImportLayoutSettingsMap(
+						companyAdminUser, newCompanyGroup.getGroupId(), false,
+						null, getImportParameterMap());
+
+			ExportImportConfiguration importExportImportConfiguration =
+				ExportImportConfigurationLocalServiceUtil.
+					addDraftExportImportConfiguration(
+						companyAdminUser.getUserId(),
+						ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
+						importLayoutSettingsMap);
+
+			try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+					"com.liferay.exportimport", LoggerTestUtil.ERROR)) {
+
+				ExportImportLocalServiceUtil.importLayouts(
+					importExportImportConfiguration, larFile);
+
+				List<LogEntry> logEntries = logCapture.getLogEntries();
+
+				Assert.assertTrue(logEntries.toString(), logEntries.isEmpty());
+			}
+
+			Assert.assertNotNull(
+				DDMStructureLocalServiceUtil.fetchDDMStructureByUuidAndGroupId(
+					_ddmStructure.getUuid(), newCompanyGroup.getGroupId()));
+		}
 	}
 
 	@Test
@@ -1572,6 +1672,12 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutExportImportTest.class);
+
+	@DeleteAfterTestRun
+	private Company _company;
+
+	@DeleteAfterTestRun
+	private DDMStructure _ddmStructure;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

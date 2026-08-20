@@ -58,11 +58,12 @@ public class FIPSAuditNDJSONLayoutTest {
 
 	@Test
 	public void testEncode() {
-		Map<String, Object> record = LinkedHashMapBuilder.<String, Object>put(
-			"event-type", "fips-state-transition"
-		).put(
-			"severity", "CRITICAL"
-		).build();
+		Map<String, Object> fipsAuditLogEntry =
+			LinkedHashMapBuilder.<String, Object>put(
+				"event-type", "fips-state-transition"
+			).put(
+				"severity", "CRITICAL"
+			).build();
 
 		FIPSAuditNDJSONLayout fipsAuditNDJSONLayout =
 			_createFIPSAuditNDJSONLayout();
@@ -71,11 +72,12 @@ public class FIPSAuditNDJSONLayoutTest {
 			new TestByteBufferDestination();
 
 		fipsAuditNDJSONLayout.encode(
-			_createLogEvent(new ObjectMessage(record)),
+			_createLogEvent(new ObjectMessage(fipsAuditLogEntry)),
 			testByteBufferDestination);
 
 		Assert.assertEquals(
-			_toSerializable(record), testByteBufferDestination.toString());
+			_toSerializable(fipsAuditLogEntry),
+			testByteBufferDestination.toString());
 	}
 
 	@Test
@@ -122,20 +124,21 @@ public class FIPSAuditNDJSONLayoutTest {
 
 	@Test
 	public void testToSerializableWritesEveryEntry() throws Exception {
-		Map<String, Object> record = LinkedHashMapBuilder.<String, Object>put(
-			"event-type", "fips-state-transition"
-		).put(
-			"severity", "INFO"
-		).put(
-			"timestamp", "2026-08-04T12:00:00.000Z"
-		).build();
+		Map<String, Object> fipsAuditLogEntry =
+			LinkedHashMapBuilder.<String, Object>put(
+				"event-type", "fips-state-transition"
+			).put(
+				"severity", "INFO"
+			).put(
+				"timestamp", "2026-08-04T12:00:00.000Z"
+			).build();
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			_toSerializable(record));
+			_toSerializable(fipsAuditLogEntry));
 
-		Assert.assertEquals(record.size(), jsonObject.length());
+		Assert.assertEquals(fipsAuditLogEntry.size(), jsonObject.length());
 
-		for (Map.Entry<String, Object> entry : record.entrySet()) {
+		for (Map.Entry<String, Object> entry : fipsAuditLogEntry.entrySet()) {
 			Assert.assertEquals(
 				entry.getValue(), jsonObject.getString(entry.getKey()));
 		}
@@ -202,12 +205,12 @@ public class FIPSAuditNDJSONLayoutTest {
 		Assert.assertTrue(errorMessage.contains("carries no FIPS audit event"));
 	}
 
-	private String _toSerializable(Map<String, Object> record) {
+	private String _toSerializable(Map<String, Object> fipsAuditLogEntry) {
 		FIPSAuditNDJSONLayout fipsAuditNDJSONLayout =
 			_createFIPSAuditNDJSONLayout();
 
 		return fipsAuditNDJSONLayout.toSerializable(
-			_createLogEvent(new ObjectMessage(record)));
+			_createLogEvent(new ObjectMessage(fipsAuditLogEntry)));
 	}
 
 	private static class TestByteBufferDestination

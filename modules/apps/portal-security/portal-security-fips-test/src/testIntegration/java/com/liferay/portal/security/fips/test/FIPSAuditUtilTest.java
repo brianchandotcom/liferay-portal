@@ -368,14 +368,15 @@ public class FIPSAuditUtilTest {
 	private JSONObject _getJSONObject(
 		String eventType, List<JSONObject> jsonObjects) {
 
-		jsonObjects = ListUtil.filter(
+		List<JSONObject> eventTypeJSONObjects = ListUtil.filter(
 			jsonObjects,
 			jsonObject -> Objects.equals(
 				eventType, jsonObject.getString("event-type")));
 
-		Assert.assertEquals(jsonObjects.toString(), 1, jsonObjects.size());
+		Assert.assertEquals(
+			eventTypeJSONObjects.toString(), 1, eventTypeJSONObjects.size());
 
-		return jsonObjects.get(0);
+		return eventTypeJSONObjects.get(0);
 	}
 
 	private List<JSONObject> _getJSONObjects() throws Exception {

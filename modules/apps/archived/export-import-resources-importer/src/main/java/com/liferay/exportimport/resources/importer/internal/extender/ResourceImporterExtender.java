@@ -7,7 +7,9 @@ package com.liferay.exportimport.resources.importer.internal.extender;
 
 import com.liferay.exportimport.resources.importer.internal.messaging.DestinationNames;
 import com.liferay.exportimport.resources.importer.provider.ResourceImporterBundleProvider;
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import com.liferay.osgi.service.tracker.collections.EagerServiceTrackerCustomizer;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -22,9 +24,6 @@ import jakarta.servlet.ServletContext;
 
 import java.io.IOException;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -33,8 +32,6 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.util.tracker.ServiceTracker;
-import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Michael C. Han
@@ -46,28 +43,14 @@ public class ResourceImporterExtender {
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
 
-		_serviceTracker = ServiceTrackerFactory.create(
-			bundleContext, ResourceImporterBundleProvider.class,
+		_serviceTrackerList = ServiceTrackerListFactory.open(
+			bundleContext, ResourceImporterBundleProvider.class, null,
 			new ResourceImporterBundleProviderServiceTrackerCustomizer());
-
-		_serviceTracker.open();
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		for (ServiceRegistration<?> serviceRegistration :
-				_serviceRegistrations.values()) {
-
-			serviceRegistration.unregister();
-		}
-
-		_serviceRegistrations.clear();
-
-		_serviceTracker.close();
-
-		_serviceTracker = null;
-
-		_bundleContext = null;
+		_serviceTrackerList.close();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -81,18 +64,16 @@ public class ResourceImporterExtender {
 	@Reference
 	private MessageBus _messageBus;
 
-	private final Map<String, ServiceRegistration<ServletContext>>
-		_serviceRegistrations = new ConcurrentHashMap<>();
-	private ServiceTracker
-		<ResourceImporterBundleProvider, ResourceImporterBundleProvider>
-			_serviceTracker;
+	private ServiceTrackerList<ServiceRegistration<ServletContext>>
+		_serviceTrackerList;
 
 	private class ResourceImporterBundleProviderServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer
-			<ResourceImporterBundleProvider, ResourceImporterBundleProvider> {
+		implements EagerServiceTrackerCustomizer
+			<ResourceImporterBundleProvider,
+			 ServiceRegistration<ServletContext>> {
 
 		@Override
-		public ResourceImporterBundleProvider addingService(
+		public ServiceRegistration<ServletContext> addingService(
 			ServiceReference<ResourceImporterBundleProvider> serviceReference) {
 
 			if (!_clusterMasterExecutor.isMaster()) {
@@ -115,15 +96,14 @@ public class ResourceImporterExtender {
 						ServletContext.class, servletContext,
 						new HashMapDictionary<String, Object>());
 
-				_serviceRegistrations.put(
-					bundleSymbolicName, serviceRegistration);
-
 				Message message = new Message();
 
 				message.put("command", "deploy");
 				message.put("servletContextName", bundleSymbolicName);
 
 				_messageBus.sendMessage(DestinationNames.HOT_DEPLOY, message);
+
+				return serviceRegistration;
 			}
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
@@ -139,24 +119,19 @@ public class ResourceImporterExtender {
 		@Override
 		public void modifiedService(
 			ServiceReference<ResourceImporterBundleProvider> serviceReference,
-			ResourceImporterBundleProvider resourceImporterBundleProvider) {
+			ServiceRegistration<ServletContext> serviceRegistration) {
 		}
 
 		@Override
 		public void removedService(
 			ServiceReference<ResourceImporterBundleProvider> serviceReference,
-			ResourceImporterBundleProvider resourceImporterBundleProvider) {
+			ServiceRegistration<ServletContext> serviceRegistration) {
+
+			serviceRegistration.unregister();
 
 			Bundle bundle = serviceReference.getBundle();
 
 			String bundleSymbolicName = bundle.getSymbolicName();
-
-			ServiceRegistration<ServletContext> serviceRegistration =
-				_serviceRegistrations.remove(bundleSymbolicName);
-
-			if (serviceRegistration != null) {
-				serviceRegistration.unregister();
-			}
 
 			try {
 				PluginPackageUtil.unregisterInstalledPluginPackage(

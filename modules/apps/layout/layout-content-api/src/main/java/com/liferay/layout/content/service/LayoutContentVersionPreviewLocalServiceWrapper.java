@@ -51,6 +51,19 @@ public class LayoutContentVersionPreviewLocalServiceWrapper
 			addLayoutContentVersionPreview(layoutContentVersionPreview);
 	}
 
+	@Override
+	public com.liferay.layout.content.model.LayoutContentVersionPreview
+			addLayoutContentVersionPreview(
+				long userId, String html, String languageId,
+				long layoutContentVersionId, String segmentsExperienceERC)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutContentVersionPreviewLocalService.
+			addLayoutContentVersionPreview(
+				userId, html, languageId, layoutContentVersionId,
+				segmentsExperienceERC);
+	}
+
 	/**
 	 * Creates a new layout content version preview with the primary key. Does not add the layout content version preview to the database.
 	 *
@@ -116,6 +129,14 @@ public class LayoutContentVersionPreviewLocalServiceWrapper
 
 		return _layoutContentVersionPreviewLocalService.
 			deleteLayoutContentVersionPreview(layoutContentVersionPreviewId);
+	}
+
+	@Override
+	public void deleteLayoutContentVersionPreviews(long layoutContentVersionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_layoutContentVersionPreviewLocalService.
+			deleteLayoutContentVersionPreviews(layoutContentVersionId);
 	}
 
 	/**
@@ -244,6 +265,18 @@ public class LayoutContentVersionPreviewLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.layout.content.model.LayoutContentVersionPreview
+			fetchLayoutContentVersionPreview(
+				String languageId, long layoutContentVersionId,
+				String segmentsExperienceERC)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutContentVersionPreviewLocalService.
+			fetchLayoutContentVersionPreview(
+				languageId, layoutContentVersionId, segmentsExperienceERC);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -293,6 +326,16 @@ public class LayoutContentVersionPreviewLocalServiceWrapper
 
 		return _layoutContentVersionPreviewLocalService.
 			getLayoutContentVersionPreviews(start, end);
+	}
+
+	@Override
+	public java.util.List
+		<com.liferay.layout.content.model.LayoutContentVersionPreview>
+				getLayoutContentVersionPreviews(long layoutContentVersionId)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutContentVersionPreviewLocalService.
+			getLayoutContentVersionPreviews(layoutContentVersionId);
 	}
 
 	/**
@@ -372,4 +415,4 @@ public class LayoutContentVersionPreviewLocalServiceWrapper
 		_layoutContentVersionPreviewLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2134621249
+// LIFERAY-SERVICE-BUILDER-HASH:-1153939675

@@ -9,7 +9,6 @@ import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.internal.log4j.FIPSLog4jUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.PropsValues;
@@ -26,7 +25,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import java.security.Provider;
-import java.security.Security;
 
 import java.time.DateTimeException;
 import java.time.Instant;
@@ -49,7 +47,7 @@ import java.util.concurrent.atomic.AtomicLong;
 public class FIPSAuditUtil {
 
 	public static void write(FIPSAuditEvent fipsAuditEvent) {
-		Provider provider = _getProvider();
+		Provider provider = FIPSModeValidator.getProvider();
 
 		String providerName = StringPool.BLANK;
 		String providerVersion = StringPool.BLANK;
@@ -83,7 +81,7 @@ public class FIPSAuditUtil {
 			).put(
 				"severity", severity.name()
 			).put(
-				"timestamp", () -> _formatTimestamp(Instant.now())
+				"timestamp", _formatTimestamp(Instant.now())
 			).build(),
 			severity);
 	}
@@ -92,7 +90,19 @@ public class FIPSAuditUtil {
 		return _dateTimeFormatter.format(instant.atZone(ZoneOffset.UTC));
 	}
 
-	private static String _generateDeploymentInstanceId() {
+	private static String _getDeploymentInstanceId() {
+		String deploymentInstanceId =
+			PropsValues.FIPS_AUDIT_DEPLOYMENT_INSTANCE_ID;
+
+		if (Validator.isNotNull(deploymentInstanceId)) {
+			return deploymentInstanceId;
+		}
+
+		return _deploymentInstanceIdDCLSingleton.getSingleton(
+			FIPSAuditUtil::_getPersistedDeploymentInstanceId);
+	}
+
+	private static String _getPersistedDeploymentInstanceId() {
 		Path path = Paths.get(
 			PropsValues.LIFERAY_HOME, "data",
 			"fips-audit-deployment-instance-id");
@@ -118,28 +128,6 @@ public class FIPSAuditUtil {
 				"Unable to resolve the FIPS audit deployment instance ID",
 				ioException);
 		}
-	}
-
-	private static String _getDeploymentInstanceId() {
-		String deploymentInstanceId =
-			PropsValues.FIPS_AUDIT_DEPLOYMENT_INSTANCE_ID;
-
-		if (Validator.isNotNull(deploymentInstanceId)) {
-			return deploymentInstanceId;
-		}
-
-		return _deploymentInstanceIdDCLSingleton.getSingleton(
-			FIPSAuditUtil::_generateDeploymentInstanceId);
-	}
-
-	private static Provider _getProvider() {
-		Provider[] providers = Security.getProviders();
-
-		if (ArrayUtil.isEmpty(providers)) {
-			return null;
-		}
-
-		return providers[0];
 	}
 
 	private static Object _normalizeTimestamp(Object value) {

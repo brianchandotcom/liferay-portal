@@ -14,9 +14,7 @@ import com.liferay.portal.kernel.util.Time;
 
 import java.time.Instant;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
 
@@ -69,6 +67,12 @@ public class FIPSAuditUtilTest {
 	@Before
 	public void setUp() {
 		Mockito.reset(_logger);
+
+		Mockito.when(
+			_logger.isEnabled(Level.INFO)
+		).thenReturn(
+			true
+		);
 
 		_safeCloseable = PropsValuesTestUtil.swapWithSafeCloseable(
 			"FIPS_AUDIT_DEPLOYMENT_INSTANCE_ID", RandomTestUtil.randomString());
@@ -129,23 +133,11 @@ public class FIPSAuditUtilTest {
 
 	@Test
 	public void testWriteThrowsWhenAppenderIsMissing() {
-		Mockito.when(
-			_logger.isEnabled(Level.INFO)
-		).thenReturn(
-			true
-		);
-
 		_testWriteThrows();
 	}
 
 	@Test
 	public void testWriteThrowsWhenLayoutIsNotTheNDJSONLayout() {
-		Mockito.when(
-			_logger.isEnabled(Level.INFO)
-		).thenReturn(
-			true
-		);
-
 		RollingFileAppender rollingFileAppender = Mockito.mock(
 			RollingFileAppender.class);
 
@@ -172,8 +164,6 @@ public class FIPSAuditUtilTest {
 	}
 
 	private Map<String, Object> _getLastFIPSAuditLogEntry() {
-		List<Map<String, Object>> fipsAuditLogEntries = new ArrayList<>();
-
 		ArgumentCaptor<Message> argumentCaptor = ArgumentCaptor.forClass(
 			Message.class);
 
@@ -184,14 +174,9 @@ public class FIPSAuditUtilTest {
 			argumentCaptor.capture()
 		);
 
-		for (Message message : argumentCaptor.getAllValues()) {
-			ObjectMessage objectMessage = (ObjectMessage)message;
+		ObjectMessage objectMessage = (ObjectMessage)argumentCaptor.getValue();
 
-			fipsAuditLogEntries.add(
-				(Map<String, Object>)objectMessage.getParameter());
-		}
-
-		return fipsAuditLogEntries.get(fipsAuditLogEntries.size() - 1);
+		return (Map<String, Object>)objectMessage.getParameter();
 	}
 
 	private void _mockLogManager(RollingFileAppender rollingFileAppender) {

@@ -34,13 +34,14 @@ public class FIPSLog4jUtil {
 	}
 
 	public static void write(
-		Map<String, Object> fields, FIPSAuditEvent.Severity severity) {
+		Map<String, Object> fipsAuditLogEntry,
+		FIPSAuditEvent.Severity severity) {
 
 		Level level = _getLevel(severity);
 
 		_validate(level);
 
-		_logger.log(level, _marker, new ObjectMessage(fields));
+		_logger.log(level, _marker, new ObjectMessage(fipsAuditLogEntry));
 	}
 
 	private static Level _getLevel(FIPSAuditEvent.Severity severity) {

@@ -515,6 +515,17 @@ public class DBPartitionUtil {
 
 			DatabaseMetaData databaseMetaData = connection.getMetaData();
 
+			String escapeClause = StringPool.BLANK;
+
+			DB db = DBManagerUtil.getDB();
+
+			if ((db.getDBType() == DBType.DB2) ||
+				(db.getDBType() == DBType.ORACLE) ||
+				(db.getDBType() == DBType.SQLSERVER)) {
+
+				escapeClause = " escape '\\'";
+			}
+
 			try (ResultSet resultSet = databaseMetaData.getTables(
 					_dbPartitionDB.getCatalog(
 						connection, _defaultPartitionName),
@@ -542,6 +553,30 @@ public class DBPartitionUtil {
 								partitionName, tableName));
 
 						if (dbInspector.isPartitionedControlTable(tableName)) {
+							String whereClause = StringPool.BLANK;
+
+							if (StringUtil.equalsIgnoreCase(
+									tableName, "ClassName_")) {
+
+								whereClause = StringBundler.concat(
+									" where value not like '",
+									_CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION,
+									"%'");
+							}
+							else if (StringUtil.equalsIgnoreCase(
+										tableName, "ResourceAction")) {
+
+								whereClause = StringBundler.concat(
+									" where name not like '",
+									_CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION,
+									"%' and name not like ",
+									"'com.liferay.object#%' and name not like ",
+									"'com\\_liferay\\_object\\_web\\_internal",
+									"\\_object\\_definitions\\_portlet",
+									"\\_ObjectDefinitionsPortlet\\_%'",
+									escapeClause);
+							}
+
 							statement.executeUpdate(
 								_getCopyDataSQL(
 									_defaultPartitionName, partitionName,
@@ -549,7 +584,7 @@ public class DBPartitionUtil {
 									_getColumnNames(
 										connection, _defaultPartitionName,
 										tableName),
-									StringPool.BLANK));
+									whereClause));
 						}
 					}
 				}
@@ -1784,6 +1819,9 @@ public class DBPartitionUtil {
 
 		};
 	}
+
+	private static final String _CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION =
+		"com.liferay.object.model.ObjectDefinition#";
 
 	private static final String _QUARTZ_TABLE_NAME_PREFIX = GetterUtil.get(
 		PropsUtil.get("persisted.scheduler.org.quartz.jobStore.tablePrefix"),

@@ -87,14 +87,16 @@ public class EditOAuth2ApplicationTest extends BaseClientTestCase {
 			long oAuth2ApplicationId)
 		throws Exception {
 
+		String portletNamespace = PortalUtil.getPortletNamespace(_PORTLET_ID);
+
 		URI uri = new URI(
 			PortalUtil.getControlPanelFullURL(
 				TestPropsValues.getGroupId(), _PORTLET_ID,
 				HashMapBuilder.put(
-					"_" + _PORTLET_ID + "_mvcRenderCommandName",
+					portletNamespace + "mvcRenderCommandName",
 					new String[] {"/oauth2_provider/update_oauth2_application"}
 				).put(
-					"_" + _PORTLET_ID + "_oAuth2ApplicationId",
+					portletNamespace + "oAuth2ApplicationId",
 					new String[] {String.valueOf(oAuth2ApplicationId)}
 				).build()));
 
@@ -119,6 +121,9 @@ public class EditOAuth2ApplicationTest extends BaseClientTestCase {
 
 		Response response = invocationBuilder.get();
 
+		Assert.assertEquals(
+			Response.Status.OK.getStatusCode(), response.getStatus());
+
 		return response.readEntity(String.class);
 	}
 
@@ -141,8 +146,7 @@ public class EditOAuth2ApplicationTest extends BaseClientTestCase {
 		protected void prepareTest() throws Exception {
 			long companyId = TestPropsValues.getCompanyId();
 
-			_clientCredentialUser = _addUser(
-				companyId, RandomTestUtil.randomString());
+			_clientCredentialUser = _addUser(companyId);
 
 			OAuth2Application oAuth2Application = createOAuth2Application(
 				companyId, _clientCredentialUser, RandomTestUtil.randomString(),
@@ -151,7 +155,7 @@ public class EditOAuth2ApplicationTest extends BaseClientTestCase {
 
 			_oAuth2ApplicationId = oAuth2Application.getOAuth2ApplicationId();
 
-			_user = _addUser(companyId, _PASSWORD);
+			_user = _addUser(companyId);
 
 			Role role = RoleLocalServiceUtil.getRole(
 				companyId, RoleConstants.ADMINISTRATOR);
@@ -159,17 +163,15 @@ public class EditOAuth2ApplicationTest extends BaseClientTestCase {
 			UserLocalServiceUtil.addRoleUser(role.getRoleId(), _user);
 		}
 
-		private User _addUser(long companyId, String password)
-			throws Exception {
-
+		private User _addUser(long companyId) throws Exception {
 			User user = UserTestUtil.addUser(
-				CompanyLocalServiceUtil.getCompany(companyId), password);
+				CompanyLocalServiceUtil.getCompany(companyId), _PASSWORD);
 
 			autoCloseables.add(
 				() -> UserLocalServiceUtil.deleteUser(user.getUserId()));
 
-			// The screen name validator rejects an apostrophe, so bypass it to
-			// reach the state a liberal validator allows
+			// Bypass DefaultScreenNameValidator, which rejects an apostrophe,
+			// to reach the state LiberalScreenNameValidator allows
 
 			user.setScreenName(
 				RandomTestUtil.randomString() + StringPool.APOSTROPHE);

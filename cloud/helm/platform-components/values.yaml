@@ -336,6 +336,8 @@ operatorApplications:
     keda:
         chart: keda
         enabled: false
+        extraNamespaces:
+            -   kube-system
         name: keda
         namespace: keda-system
         repoURL: https://kedacore.github.io/charts

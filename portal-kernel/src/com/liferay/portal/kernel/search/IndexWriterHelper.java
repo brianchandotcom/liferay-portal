@@ -71,6 +71,8 @@ public interface IndexWriterHelper {
 	 *             com.liferay.portal.search.index.IndexStatusManager#isIndexReadOnly}
 	 */
 	@Deprecated
+	public boolean isIndexCommitImmediately();
+
 	public boolean isIndexReadOnly();
 
 	/**

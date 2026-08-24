@@ -137,6 +137,12 @@ public class IndexWriterHelperUtil {
 	 *             com.liferay.portal.search.index.IndexStatusManager#isIndexReadOnly}
 	 */
 	@Deprecated
+	public static boolean isIndexCommitImmediately() {
+		IndexWriterHelper indexWriterHelper = _getIndexWriterHelper();
+
+		return indexWriterHelper.isIndexCommitImmediately();
+	}
+
 	public static boolean isIndexReadOnly() {
 		IndexWriterHelper indexWriterHelper = _getIndexWriterHelper();
 

@@ -94,8 +94,7 @@ public class FIPSModeValidator {
 		_validateFIPSProvider(providers);
 		_validateProviders(providers);
 
-		_validateAllowedPropertyValues(
-			System::getProperty, _allowedSystemProperties);
+		_validateAllowedPropertyValues(System::getProperty);
 		_validatePortalProperties();
 		_validateRequiredPropertyValues(
 			Security::getProperty, _requiredSecurityProperties);
@@ -177,10 +176,11 @@ public class FIPSModeValidator {
 	}
 
 	private static void _validateAllowedPropertyValues(
-		Function<String, String> function,
-		Map<String, String[]> propertiesMap) {
+		Function<String, String> function) {
 
-		for (Map.Entry<String, String[]> entry : propertiesMap.entrySet()) {
+		for (Map.Entry<String, String[]> entry :
+				_allowedSystemProperties.entrySet()) {
+
 			_validateAllowedPropertyValues(
 				entry.getValue(), entry.getKey(),
 				StringUtil.removeChar(
@@ -536,21 +536,17 @@ public class FIPSModeValidator {
 		Map<String, String[]> propertiesMap) {
 
 		for (Map.Entry<String, String[]> entry : propertiesMap.entrySet()) {
-			_validateRequiredPropertyValues(
-				entry.getKey(), entry.getValue(),
-				StringUtil.removeChar(
-					function.apply(entry.getKey()), CharPool.SPACE));
-		}
-	}
+			String value = StringUtil.removeChar(
+				function.apply(entry.getKey()), CharPool.SPACE);
 
-	private static void _validateRequiredPropertyValues(
-		String key, String[] requiredValues, String value) {
+			for (String requiredValue : entry.getValue()) {
+				if (StringUtil.containsIgnoreCase(value, requiredValue)) {
+					continue;
+				}
 
-		for (String requiredValue : requiredValues) {
-			if (!StringUtil.containsIgnoreCase(value, requiredValue)) {
 				throw new SecurityException(
 					StringBundler.concat(
-						"FIPS mode requires the property \"", key,
+						"FIPS mode requires the property \"", entry.getKey(),
 						"\" to include \"", requiredValue, "\""));
 			}
 		}

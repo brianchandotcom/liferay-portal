@@ -170,9 +170,6 @@ public class EditOAuth2ApplicationTest extends BaseClientTestCase {
 			autoCloseables.add(
 				() -> UserLocalServiceUtil.deleteUser(user.getUserId()));
 
-			// Bypass DefaultScreenNameValidator, which rejects an apostrophe,
-			// to reach the state LiberalScreenNameValidator allows
-
 			user.setScreenName(
 				RandomTestUtil.randomString() + StringPool.APOSTROPHE);
 

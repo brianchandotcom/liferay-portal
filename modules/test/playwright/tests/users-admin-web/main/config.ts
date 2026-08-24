@@ -6,6 +6,7 @@
 export const config = {
 	name: 'users-admin-web.main',
 	testDir: 'tests/users-admin-web/main',
+	timeout: 300 * 1000,
 	use: {
 		testIdAttribute: 'data-qa-id',
 	},

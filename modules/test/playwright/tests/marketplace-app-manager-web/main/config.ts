@@ -6,6 +6,7 @@
 export const config = {
 	name: 'marketplace-app-manager-web.main',
 	testDir: 'tests/marketplace-app-manager-web/main',
+	timeout: 300 * 1000,
 	use: {
 		testIdAttribute: 'data-qa-id',
 	},

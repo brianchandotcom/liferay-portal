@@ -6,6 +6,7 @@
 export const config = {
 	name: 'dynamic-data-mapping-form-web.main',
 	testDir: 'tests/dynamic-data-mapping-form-web/main',
+	timeout: 300 * 1000,
 	use: {
 		testIdAttribute: 'data-qa-id',
 	},

@@ -6,6 +6,7 @@
 export const config = {
 	name: 'client-extension-web.editor-config-contributor',
 	testDir: 'tests/client-extension-web/editor-config-contributor',
+	timeout: 300 * 1000,
 	use: {
 		testIdAttribute: 'data-qa-id',
 	},

@@ -106,11 +106,6 @@ public class UrlReaderTest extends com.liferay.jenkins.results.parser.Test {
 		verifyUrlReaderAttemptCount(1, mockUrlReaders, _URL);
 	}
 
-	/**
-	 * The headline fix. Before the consolidation the outer catch replaced the
-	 * cause with RuntimeException("Unable to create JSON object"), so no caller
-	 * could tell a missing resource from a socket timeout.
-	 */
 	@Test
 	public void testToJSONObjectWhenResponseCodeIs404() throws Exception {
 		MockUrlReaders mockUrlReaders = mockUrlReaders();
@@ -156,10 +151,6 @@ public class UrlReaderTest extends com.liferay.jenkins.results.parser.Test {
 		verifyUrlReaderAttemptCount(_MAX_RETRIES + 1, mockUrlReaders, _URL);
 	}
 
-	/**
-	 * Resolving a client credentials authorization performs a token request, so
-	 * a URL that cannot carry the header must not resolve one.
-	 */
 	@Test
 	public void testToJSONObjectWhenURLIsFileAndAuthorizationIsClientCredentials()
 		throws Exception {
@@ -237,10 +228,6 @@ public class UrlReaderTest extends com.liferay.jenkins.results.parser.Test {
 		verifyUrlReaderAttemptCount(_MAX_RETRIES + 1, mockUrlReaders, _URL);
 	}
 
-	/**
-	 * A caller that does not expect a body still gets the empty string, so the
-	 * empty body rejection stays scoped to callers that asked for one.
-	 */
 	@Test
 	public void testToStringWhenResponseBodyIsEmptyAndNotExpected()
 		throws Exception {
@@ -257,11 +244,6 @@ public class UrlReaderTest extends com.liferay.jenkins.results.parser.Test {
 		verifyUrlReaderAttemptCount(1, mockUrlReaders, _URL);
 	}
 
-	/**
-	 * A 403 from the GitHub API is the secondary rate limit rather than a
-	 * terminal 4xx, and the branch that tells them apart now reads the code
-	 * from the connection instead of matching the exception message.
-	 */
 	@Test
 	public void testToStringWhenResponseCodeIs403AndURLIsGitHubAPI()
 		throws Exception {
@@ -293,12 +275,6 @@ public class UrlReaderTest extends com.liferay.jenkins.results.parser.Test {
 		verifyUrlReaderAttemptCount(1, mockUrlReaders, url);
 	}
 
-	/**
-	 * The escalation squares the period rather than doubling it, so an
-	 * uncapped run waits five, then twenty five, then six hundred and twenty
-	 * five seconds. Counting attempts cannot see that, so only the durations
-	 * pin the cap.
-	 */
 	@Test
 	public void testToStringWhenResponseCodeIs403AndURLIsGitHubAPIWithRetries()
 		throws Exception {
@@ -349,11 +325,6 @@ public class UrlReaderTest extends com.liferay.jenkins.results.parser.Test {
 		verifyUrlReaderAttemptCount(1, mockUrlReaders, _URL);
 	}
 
-	/**
-	 * A 422 is the one terminal 4xx that surfaces as a RuntimeException
-	 * instead of the IOException the rest throw, and the code deciding that
-	 * now comes from the connection rather than the exception message.
-	 */
 	@Test
 	public void testToStringWhenResponseCodeIs422() throws Exception {
 		MockUrlReaders mockUrlReaders = mockUrlReaders();
@@ -374,11 +345,6 @@ public class UrlReaderTest extends com.liferay.jenkins.results.parser.Test {
 		verifyUrlReaderAttemptCount(1, mockUrlReaders, _URL);
 	}
 
-	/**
-	 * A 403 carries the GitHub secondary rate limit and an expired Testray 2
-	 * token, and a 408 and a 429 are retryable by definition. A 5xx is not a
-	 * 4xx at all and keeps its retries.
-	 */
 	@Test
 	public void testToStringWhenResponseCodeIsRetryable() throws Exception {
 		_testToStringWhenResponseCodeIsRetryable(403);
@@ -387,11 +353,6 @@ public class UrlReaderTest extends com.liferay.jenkins.results.parser.Test {
 		_testToStringWhenResponseCodeIsRetryable(500);
 	}
 
-	/**
-	 * A 4xx that carries no remedy fails the whole read on the first attempt,
-	 * rather than spending the caller's retry budget on an answer that cannot
-	 * change.
-	 */
 	@Test
 	public void testToStringWhenResponseCodeIsTerminal() throws Exception {
 		MockUrlReaders mockUrlReaders = mockUrlReaders();
@@ -409,12 +370,6 @@ public class UrlReaderTest extends com.liferay.jenkins.results.parser.Test {
 		verifyUrlReaderAttemptCount(1, mockUrlReaders, _URL);
 	}
 
-	/**
-	 * A socket that never produced a status line has no code to read, and
-	 * asking for one sends the request again and blocks for another full
-	 * timeout before answering. The failure is retryable whatever the code, so
-	 * the lookup has to be skipped.
-	 */
 	@Test
 	public void testToStringWhenResponseNeverArrives() throws Exception {
 		MockUrlReaders mockUrlReaders = mockUrlReaders();

@@ -8,10 +8,6 @@ package com.liferay.jenkins.results.parser;
 import java.io.IOException;
 
 /**
- * Thrown when a server cuts a response body short. {@link UrlReader} treats
- * this as terminal rather than retrying it, because another attempt returns
- * the same truncation.
- *
  * @author Peter Yoo
  */
 public class TruncatedResponseException extends IOException {

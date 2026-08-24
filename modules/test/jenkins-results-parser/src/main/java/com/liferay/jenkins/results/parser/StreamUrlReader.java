@@ -129,12 +129,6 @@ public class StreamUrlReader extends UrlReader<InputStream> {
 		return new FileInputStream(cachedFile);
 	}
 
-	/**
-	 * The stream reader cannot validate the body without buffering it, so it
-	 * retries transport failures only. Writing the cache would require the same
-	 * buffering, which is why <code>cacheFileKey</code> and
-	 * <code>expectResponse</code> are both ignored here.
-	 */
 	@Override
 	protected InputStream handleResponse(
 			String cacheFileKey, boolean expectResponse,

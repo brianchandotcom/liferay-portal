@@ -38,11 +38,6 @@ public class JSONObjectUrlReader extends BaseBodyUrlReader<JSONObject> {
 		return true;
 	}
 
-	/**
-	 * Parsing inside the attempt is deliberate and load bearing, per LRCI-5564.
-	 * A malformed body is a failed attempt the retry loop can act on, which is
-	 * the whole reason the parse lives here rather than around the read.
-	 */
 	@Override
 	protected JSONObject parse(String content) throws IOException {
 		try {

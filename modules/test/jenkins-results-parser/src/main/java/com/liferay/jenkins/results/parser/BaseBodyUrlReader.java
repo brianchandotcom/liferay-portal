@@ -15,10 +15,6 @@ import java.io.InputStreamReader;
 import java.net.URLConnection;
 
 /**
- * Reads the whole body inside the attempt, so a response that arrives but is
- * unusable fails the same way a connection reset does and the retry loop in
- * {@link UrlReader} can act on it.
- *
  * @author Kenji Heigel
  */
 public abstract class BaseBodyUrlReader<T> extends UrlReader<T> {
@@ -61,39 +57,18 @@ public abstract class BaseBodyUrlReader<T> extends UrlReader<T> {
 		return _parseBody(content, String.valueOf(urlConnection.getURL()));
 	}
 
-	/**
-	 * A body the server cut short is not a failed attempt, because another
-	 * attempt returns the same truncation.
-	 */
 	protected boolean isTruncated(String content) {
 		String trimmedContent = content.trim();
 
 		return trimmedContent.endsWith("was truncated due to its size.");
 	}
 
-	/**
-	 * Whether a body the server cut short is unusable to this reader. A text
-	 * body stays usable when it is cut short, so the default is
-	 * <code>false</code>; a reader that has to parse the whole body overrides
-	 * this to <code>true</code>.
-	 */
 	protected boolean isTruncationFatal() {
 		return false;
 	}
 
-	/**
-	 * Turns a body that has already been read and accepted into the value the
-	 * caller asked for. Anything thrown here fails the attempt, which is what
-	 * puts a malformed response under the same retry policy as a transport
-	 * failure.
-	 */
 	protected abstract T parse(String content) throws IOException;
 
-	/**
-	 * Rejects a truncated body before parsing it, so a reader that cannot
-	 * represent one fails with a named exception rather than handing back
-	 * <code>null</code> for every caller to dereference.
-	 */
 	private T _parseBody(String content, String source) throws IOException {
 		if (isTruncationFatal() && isTruncated(content)) {
 			throw new TruncatedResponseException(source);
@@ -102,12 +77,6 @@ public abstract class BaseBodyUrlReader<T> extends UrlReader<T> {
 		return parse(content);
 	}
 
-	/**
-	 * Appends a newline per line rather than copying the stream verbatim. The
-	 * trailing newline and the normalized line endings are what every caller
-	 * has always been handed, so reading the bytes straight through would
-	 * change the returned content fleet wide.
-	 */
 	private String _readBody(BufferedReader bufferedReader) throws IOException {
 		StringBuilder sb = new StringBuilder();
 

@@ -43,12 +43,6 @@ import javax.net.ssl.SSLContext;
  */
 public abstract class UrlReader<T> {
 
-	/**
-	 * The <code>expectResponse</code> flag travels down to
-	 * <code>handleResponse</code> so a reader that validates the body knows
-	 * whether an empty one is a failed attempt or an acceptable answer. Readers
-	 * that never look at the body ignore it.
-	 */
 	protected T doRead(
 			boolean checkCache, boolean expectResponse,
 			HTTPAuthorization httpAuthorization,
@@ -201,10 +195,6 @@ public abstract class UrlReader<T> {
 								new ClientCredentialsHTTPAuthorization(
 									clientId, clientSecret, tokenURL));
 				}
-
-				// Resolving a client credentials authorization performs a
-				// token request, so skip it for a URL that cannot carry the
-				// header.
 
 				if ((httpAuthorization != null) && !url.startsWith("file:")) {
 					authorization = httpAuthorization.toString();
@@ -516,19 +506,6 @@ public abstract class UrlReader<T> {
 		JenkinsResultsParserUtil.sleep(duration);
 	}
 
-	/**
-	 * Returns the response code, or <code>-1</code> when the connection never
-	 * produced one. A connection that failed before the response line arrived,
-	 * or that is not HTTP at all, is not a 4xx and must stay retryable.
-	 *
-	 * <p>
-	 * A transport failure never produced a status line, so asking for one
-	 * sends the request again and blocks for another full timeout before
-	 * answering <code>-1</code> anyway. Such a failure is retryable whatever
-	 * the code, so skip the lookup. <code>ConnectException</code> extends
-	 * <code>SocketException</code> and is covered with it.
-	 * </p>
-	 */
 	private int _getResponseCode(
 		IOException ioException1, URLConnection urlConnection) {
 
@@ -555,17 +532,8 @@ public abstract class UrlReader<T> {
 
 	private static final Pattern _gitHubAPIURLPattern = Pattern.compile(
 		"https\\:\\/\\/api\\.github\\.com(.*)");
-
-	/**
-	 * A 4xx means the request will fail the same way every time, so it is
-	 * terminal. These three are the exceptions: 403 carries both the GitHub
-	 * secondary rate limit and the Testray 2 expired token, where a further
-	 * attempt is the entire remedy, and 408 and 429 are retryable by
-	 * definition.
-	 */
 	private static final List<Integer> _retryableResponseCodes = Arrays.asList(
 		403, 408, 429);
-
 	private static final Pattern _testray2URLPattern = Pattern.compile(
 		"(?<baseURL>https://webserver-testray2(-(?<lxcEnvironment>.+))?" +
 			"\\.lfr\\.cloud|https://testray\\.liferay\\.com).*");

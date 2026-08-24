@@ -174,12 +174,6 @@ public class Test {
 		return shell;
 	}
 
-	/**
-	 * Builds a connection whose body and response code the caller controls, so
-	 * a stub sits below the retry loop rather than replacing it. Each
-	 * invocation must produce a new connection, because the retry loop consumes
-	 * the input stream once per attempt.
-	 */
 	protected HttpURLConnection mockURLConnection(
 			int responseCode, String content)
 		throws IOException {
@@ -240,10 +234,6 @@ public class Test {
 				throw new RuntimeException(ioException);
 			}
 
-			// A retried read would otherwise sleep out the caller's retry
-			// period for real, which is minutes across a suite that exercises
-			// failure paths.
-
 			Mockito.doNothing(
 			).when(
 				urlReader
@@ -277,10 +267,6 @@ public class Test {
 		);
 	}
 
-	/**
-	 * Fails the attempt rather than the whole read, so the retry loop still
-	 * runs and a test can tell a terminal failure from a retried one.
-	 */
 	protected void setUrlReaderException(
 			IOException ioException, String url, MockUrlReaders mockUrlReaders)
 		throws Exception {
@@ -329,10 +315,6 @@ public class Test {
 		setUrlReaderOutput(0, standardOut, url, mockUrlReaders);
 	}
 
-	/**
-	 * Fails the attempt with a response code the retry policy can classify,
-	 * rather than a bare transport failure.
-	 */
 	protected void setUrlReaderResponseCode(
 			int responseCode, String url, MockUrlReaders mockUrlReaders)
 		throws Exception {
@@ -380,12 +362,6 @@ public class Test {
 			"${dependencies.url}/" + path);
 	}
 
-	/**
-	 * Counts attempts rather than logical reads, and counts them across every
-	 * reader type, so a test stays correct when a call is rerouted from one
-	 * reader to another. A retried read counts once per attempt, which is what
-	 * makes the retry policy assertable.
-	 */
 	protected void verifyUrlReaderAttemptCount(
 		int expectedCount, MockUrlReaders mockUrlReaders, String url) {
 
@@ -412,11 +388,6 @@ public class Test {
 		testEquals(expectedCount, count);
 	}
 
-	/**
-	 * Asserts the arguments a read was issued with, rather than how many
-	 * attempts it took. Counts across every reader type and expects exactly
-	 * one match, since only the reader matching the call site records it.
-	 */
 	protected void verifyUrlReaderRead(
 		boolean checkCache, int maxRetries, int timeoutMillis,
 		MockUrlReaders mockUrlReaders) {
@@ -458,11 +429,6 @@ public class Test {
 		testEquals(1, count);
 	}
 
-	/**
-	 * Counting attempts cannot see how long the loop waited between them, so
-	 * an escalation that ran away would stay invisible. The durations are the
-	 * only thing that pins it.
-	 */
 	protected void verifyUrlReaderSleepDurations(
 		List<Long> expectedDurations, MockUrlReaders mockUrlReaders) {
 
@@ -522,11 +488,6 @@ public class Test {
 		}
 	}
 
-	/**
-	 * Builds a connection that reports <code>responseCode</code> while
-	 * <code>getInputStream</code> throws, which is how a 4xx or a 5xx reaches
-	 * the retry loop.
-	 */
 	private HttpURLConnection _mockURLConnection(int responseCode)
 		throws IOException {
 
@@ -549,12 +510,7 @@ public class Test {
 		return httpURLConnection;
 	}
 
-	/**
-	 * Resolved once so that renaming a seam fails loudly here, rather than
-	 * silently matching nothing and letting every attempt count pass at zero.
-	 */
 	private static final Method _doReadMethod = _getDoReadMethod();
-
 	private static final Method _openURLConnectionMethod =
 		_getOpenURLConnectionMethod();
 	private static final Method _sleepMethod = _getSleepMethod();

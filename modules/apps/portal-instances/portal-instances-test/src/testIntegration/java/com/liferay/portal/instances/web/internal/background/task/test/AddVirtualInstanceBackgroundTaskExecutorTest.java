@@ -75,11 +75,11 @@ public class AddVirtualInstanceBackgroundTaskExecutorTest {
 		JSONObject payloadJSONObject = _getPayloadJSONObject();
 
 		Assert.assertEquals(
+			_company.getCompanyId(), payloadJSONObject.getLong("companyId"));
+		Assert.assertEquals(
 			BackgroundTaskConstants.LABEL_SUCCESSFUL,
 			payloadJSONObject.getString("status"));
 		Assert.assertEquals(_WEB_ID, payloadJSONObject.getString("webId"));
-		Assert.assertEquals(
-			_company.getCompanyId(), payloadJSONObject.getLong("companyId"));
 
 		JSONObject statusMessageJSONObject = _jsonFactory.createJSONObject(
 			backgroundTask.getStatusMessage());
@@ -102,11 +102,11 @@ public class AddVirtualInstanceBackgroundTaskExecutorTest {
 		JSONObject payloadJSONObject = _getPayloadJSONObject();
 
 		Assert.assertEquals(
-			BackgroundTaskConstants.LABEL_FAILED,
-			payloadJSONObject.getString("status"));
-		Assert.assertEquals(
 			"please-enter-a-valid-email-address",
 			payloadJSONObject.getString("errorMessage"));
+		Assert.assertEquals(
+			BackgroundTaskConstants.LABEL_FAILED,
+			payloadJSONObject.getString("status"));
 
 		_company = _companyLocalService.getCompanyByWebId(_WEB_ID);
 	}

@@ -45,7 +45,7 @@ export class VirtualInstancesPage {
 	readonly errorMessagePassword: Locator;
 	readonly newVirtualInstanceButton: Locator;
 	readonly page: Page;
-	readonly successMessage: Locator;
+	readonly startMessage: Locator;
 
 	constructor(page: Page) {
 		this.addInstanceFrame = page.frameLocator(
@@ -116,9 +116,7 @@ export class VirtualInstancesPage {
 		this.importInstanceWebIdField =
 			this.importInstanceFrame.getByLabel('Web ID');
 		this.globalMenuPage = new GlobalMenuPage(page);
-		this.errorMessage = this.addInstanceFrame.getByText(
-			'Error:Please enter a valid'
-		);
+		this.errorMessage = this.addInstanceFrame.locator('.alert-danger');
 		this.errorMessageEmailAddress = this.addInstanceFrame.getByText(
 			'The Email Address field is required'
 		);
@@ -132,8 +130,8 @@ export class VirtualInstancesPage {
 			.locator('[data-qa-id="creationMenuNewButton"]')
 			.filter({visible: true});
 		this.page = page;
-		this.successMessage = page.getByText(
-			'Your request completed successfully'
+		this.startMessage = page.getByText(
+			'is being added. You will be notified when it is ready.'
 		);
 	}
 
@@ -173,10 +171,11 @@ export class VirtualInstancesPage {
 		// Only wait for Virtual Instance creation if there are no errors
 
 		if (await this.errorMessage.isHidden()) {
-			await expect(await this.successMessage).toBeVisible({
-				timeout: 180 * 1000,
+			await expect(this.startMessage).toBeVisible({
+				timeout: 30 * 1000,
 			});
-			await this.page.locator('.alert').getByLabel('Close').click();
+
+			await this.waitForVirtualInstance(name);
 		}
 	}
 
@@ -229,6 +228,8 @@ export class VirtualInstancesPage {
 		]);
 
 		await this.page.waitForTimeout(1000);
+
+		await this.waitForVirtualInstance(name);
 	}
 
 	private async clickAddInstance() {
@@ -415,5 +416,19 @@ export class VirtualInstancesPage {
 		]);
 
 		await this.page.waitForTimeout(1000);
+	}
+
+	/**
+	 * The Add operation runs in a background task, so the row only shows up in
+	 * the list once the task completes.
+	 */
+	async waitForVirtualInstance(name: string) {
+		await expect(async () => {
+			await this.page.reload();
+
+			await expect(
+				this.page.getByRole('row').filter({hasText: name})
+			).toBeVisible({timeout: 10 * 1000});
+		}).toPass({timeout: 180 * 1000});
 	}
 }

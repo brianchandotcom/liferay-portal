@@ -179,11 +179,6 @@ public class Test {
 	 * a stub sits below the retry loop rather than replacing it. Each
 	 * invocation must produce a new connection, because the retry loop consumes
 	 * the input stream once per attempt.
-	 *
-	 * <p>
-	 * The overload without a body is how a 4xx or a 5xx arrives: the response
-	 * code is legible while <code>getInputStream</code> throws.
-	 * </p>
 	 */
 	protected HttpURLConnection mockURLConnection(
 			int responseCode, String content)
@@ -528,8 +523,9 @@ public class Test {
 	}
 
 	/**
-	 * Resolved once so that renaming the seam fails loudly here, rather than
-	 * silently matching nothing and letting every attempt count pass at zero.
+	 * Builds a connection that reports <code>responseCode</code> while
+	 * <code>getInputStream</code> throws, which is how a 4xx or a 5xx reaches
+	 * the retry loop.
 	 */
 	private HttpURLConnection _mockURLConnection(int responseCode)
 		throws IOException {
@@ -553,7 +549,12 @@ public class Test {
 		return httpURLConnection;
 	}
 
+	/**
+	 * Resolved once so that renaming a seam fails loudly here, rather than
+	 * silently matching nothing and letting every attempt count pass at zero.
+	 */
 	private static final Method _doReadMethod = _getDoReadMethod();
+
 	private static final Method _openURLConnectionMethod =
 		_getOpenURLConnectionMethod();
 	private static final Method _sleepMethod = _getSleepMethod();

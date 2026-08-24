@@ -1,6 +1,7 @@
 package v1alpha1
 
 import (
+	resource "k8s.io/apimachinery/pkg/api/resource"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
@@ -89,6 +90,10 @@ type LiferayEnvironmentSpec struct {
 	// +optional
 	EnvironmentName string `json:"environmentName,omitempty"`
 
+	// +kubebuilder:default={}
+	// +optional
+	MarketplaceVolume MarketplaceVolumeSpec `json:"marketplaceVolume"`
+
 	// +optional
 	Offline bool `json:"offline,omitempty"`
 
@@ -129,6 +134,20 @@ type LiferayEnvironmentStatus struct {
 
 	// +optional
 	UnreachableSince *metav1.Time `json:"unreachableSince,omitempty"`
+}
+
+type MarketplaceVolumeSpec struct {
+	// +kubebuilder:default=false
+	// +optional
+	Enabled bool `json:"enabled"`
+
+	// +kubebuilder:default="10Gi"
+	// +optional
+	Size resource.Quantity `json:"size"`
+
+	// +kubebuilder:default=""
+	// +optional
+	StorageClassName string `json:"storageClassName"`
 }
 
 type SecretKeyRef struct {

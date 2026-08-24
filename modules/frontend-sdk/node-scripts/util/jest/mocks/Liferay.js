@@ -300,6 +300,8 @@ const ThemeDisplay = {
 
 	getScopeGroupId: jest.fn(() => '20126'),
 
+	getTimeZone: jest.fn(() => 'UTC'),
+
 	getUserId: jest.fn(() => '20164'),
 
 	isSignedIn: jest.fn(() => true),

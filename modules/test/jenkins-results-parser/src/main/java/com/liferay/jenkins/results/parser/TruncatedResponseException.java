@@ -1,0 +1,23 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.jenkins.results.parser;
+
+import java.io.IOException;
+
+/**
+ * Thrown when a server cuts a response body short. {@link UrlReader} treats
+ * this as terminal rather than retrying it, because another attempt returns
+ * the same truncation.
+ *
+ * @author Peter Yoo
+ */
+public class TruncatedResponseException extends IOException {
+
+	public TruncatedResponseException(String source) {
+		super("Unable to read a complete response body from " + source);
+	}
+
+}

@@ -28,7 +28,7 @@ public abstract class BaseBodyUrlReader<T> extends UrlReader<T> {
 		try (BufferedReader bufferedReader = new BufferedReader(
 				new FileReader(cachedFile))) {
 
-			return parse(_readBody(bufferedReader));
+			return _parseBody(_readBody(bufferedReader), cachedFile.toString());
 		}
 	}
 
@@ -58,18 +58,27 @@ public abstract class BaseBodyUrlReader<T> extends UrlReader<T> {
 			JenkinsResultsParserUtil.saveToCacheFile(cacheFileKey, content);
 		}
 
-		return parse(content);
+		return _parseBody(content, String.valueOf(urlConnection.getURL()));
 	}
 
 	/**
 	 * A body the server cut short is not a failed attempt, because another
-	 * attempt returns the same truncation. Readers that cannot represent one
-	 * answer null rather than parsing it.
+	 * attempt returns the same truncation.
 	 */
 	protected boolean isTruncated(String content) {
 		String trimmedContent = content.trim();
 
 		return trimmedContent.endsWith("was truncated due to its size.");
+	}
+
+	/**
+	 * Whether a body the server cut short is unusable to this reader. A text
+	 * body stays usable when it is cut short, so the default is
+	 * <code>false</code>; a reader that has to parse the whole body overrides
+	 * this to <code>true</code>.
+	 */
+	protected boolean isTruncationFatal() {
+		return false;
 	}
 
 	/**
@@ -79,6 +88,19 @@ public abstract class BaseBodyUrlReader<T> extends UrlReader<T> {
 	 * failure.
 	 */
 	protected abstract T parse(String content) throws IOException;
+
+	/**
+	 * Rejects a truncated body before parsing it, so a reader that cannot
+	 * represent one fails with a named exception rather than handing back
+	 * <code>null</code> for every caller to dereference.
+	 */
+	private T _parseBody(String content, String source) throws IOException {
+		if (isTruncationFatal() && isTruncated(content)) {
+			throw new TruncatedResponseException(source);
+		}
+
+		return parse(content);
+	}
 
 	/**
 	 * Appends a newline per line rather than copying the stream verbatim. The

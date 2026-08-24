@@ -245,7 +245,9 @@ public abstract class UrlReader<T> {
 					cacheFileKey, expectResponse, urlConnection);
 			}
 			catch (IOException ioException1) {
-				if (ioException1 instanceof FileNotFoundException) {
+				if (ioException1 instanceof FileNotFoundException ||
+					ioException1 instanceof TruncatedResponseException) {
+
 					throw ioException1;
 				}
 

@@ -37,6 +37,11 @@ public class JSONObjectUrlReader extends BaseBodyUrlReader<JSONObject> {
 		_jsonObjectUrlReader = jsonObjectUrlReader;
 	}
 
+	@Override
+	protected boolean isTruncationFatal() {
+		return true;
+	}
+
 	/**
 	 * Parsing inside the attempt is deliberate and load bearing, per LRCI-5564.
 	 * A malformed body is a failed attempt the retry loop can act on, which is
@@ -44,10 +49,6 @@ public class JSONObjectUrlReader extends BaseBodyUrlReader<JSONObject> {
 	 */
 	@Override
 	protected JSONObject parse(String content) throws IOException {
-		if (isTruncated(content)) {
-			return null;
-		}
-
 		try {
 			return JenkinsResultsParserUtil.createJSONObject(content);
 		}

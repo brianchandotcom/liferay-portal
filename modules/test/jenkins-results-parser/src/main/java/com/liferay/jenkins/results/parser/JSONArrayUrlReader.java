@@ -36,6 +36,11 @@ public class JSONArrayUrlReader extends BaseBodyUrlReader<JSONArray> {
 		_jsonArrayUrlReader = jsonArrayUrlReader;
 	}
 
+	@Override
+	protected boolean isTruncationFatal() {
+		return true;
+	}
+
 	/**
 	 * Parsing inside the attempt gives the array reader the retry on a
 	 * malformed body that it never had, matching what LRCI-5564 established for
@@ -43,10 +48,6 @@ public class JSONArrayUrlReader extends BaseBodyUrlReader<JSONArray> {
 	 */
 	@Override
 	protected JSONArray parse(String content) throws IOException {
-		if (isTruncated(content)) {
-			return null;
-		}
-
 		try {
 			return new JSONArray(content);
 		}

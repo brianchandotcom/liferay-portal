@@ -203,23 +203,24 @@ public class FIPSModeValidator {
 				"\" to be set to only ", Arrays.toString(allowedValues)));
 	}
 
-	private static void _validateClusterChannelAuthElement(
+	private static void _validateClusterLinkChannelAuthElement(
 		Element authElement, String channelPropertiesLocation) {
 
 		String authClassName = authElement.getAttribute("auth_class");
 
-		if (authClassName.equals(_CLUSTER_CHANNEL_AUTH_CLASS_NAME)) {
+		if (authClassName.equals(_CLUSTER_LINK_CHANNEL_AUTH_CLASS_NAME)) {
 			return;
 		}
 
 		throw new SecurityException(
 			StringBundler.concat(
-				"The cluster channel properties \"", channelPropertiesLocation,
+				"The cluster link channel properties \"",
+				channelPropertiesLocation,
 				"\" must authenticate cluster members with \"",
-				_CLUSTER_CHANNEL_AUTH_CLASS_NAME, "\" in FIPS mode"));
+				_CLUSTER_LINK_CHANNEL_AUTH_CLASS_NAME, "\" in FIPS mode"));
 	}
 
-	private static void _validateClusterChannelConfiguration(
+	private static void _validateClusterLinkChannelConfiguration(
 		String channelPropertiesLocation) {
 
 		Document document = FIPSModeHelperUtil.readDocument(
@@ -237,16 +238,16 @@ public class FIPSModeValidator {
 			}
 
 			if (tagName.equals("AUTH")) {
-				_validateClusterChannelAuthElement(
+				_validateClusterLinkChannelAuthElement(
 					element, channelPropertiesLocation);
 			}
 			else if (tagName.equals("SYM_ENCRYPT")) {
-				_validateClusterChannelSymEncryptElement(element);
+				_validateClusterLinkChannelSymEncryptElement(element);
 			}
 			else {
 				throw new SecurityException(
 					StringBundler.concat(
-						"The cluster channel properties \"",
+						"The cluster link channel properties \"",
 						channelPropertiesLocation,
 						"\" must encrypt intracluster traffic with ",
 						"\"SYM_ENCRYPT\" in FIPS mode"));
@@ -254,7 +255,7 @@ public class FIPSModeValidator {
 		}
 	}
 
-	private static void _validateClusterChannelSymEncryptElement(
+	private static void _validateClusterLinkChannelSymEncryptElement(
 		Element symEncryptElement) {
 
 		String symAlgorithm = symEncryptElement.getAttribute("sym_algorithm");
@@ -284,7 +285,7 @@ public class FIPSModeValidator {
 		}
 	}
 
-	private static void _validateClusterProperties() {
+	private static void _validateClusterLinkConfiguration() {
 		if (!PropsValues.CLUSTER_LINK_ENABLED) {
 			return;
 		}
@@ -293,7 +294,7 @@ public class FIPSModeValidator {
 			new String[] {"PKCS12"}, PropsKeys.CLUSTER_LINK_AUTH_KEYSTORE_TYPE,
 			PropsUtil.get(PropsKeys.CLUSTER_LINK_AUTH_KEYSTORE_TYPE));
 
-		_validateClusterChannelConfiguration(
+		_validateClusterLinkChannelConfiguration(
 			GetterUtil.getString(
 				PropsUtil.get(
 					PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL)));
@@ -302,7 +303,7 @@ public class FIPSModeValidator {
 			PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_TRANSPORT, true);
 
 		for (Object channelPropertiesLocation : properties.values()) {
-			_validateClusterChannelConfiguration(
+			_validateClusterLinkChannelConfiguration(
 				GetterUtil.getString(channelPropertiesLocation));
 		}
 	}
@@ -502,7 +503,7 @@ public class FIPSModeValidator {
 			GetterUtil.getBoolean(
 				PropsUtil.get(PropsKeys.TUNNEL_UTIL_VERIFY_SSL_HOSTNAME)));
 
-		_validateClusterProperties();
+		_validateClusterLinkConfiguration();
 		_validatePasswordsEncryptionAlgorithm(
 			PropsUtil.get(PropsKeys.PASSWORDS_ENCRYPTION_ALGORITHM));
 		_validatePlaintextSecrets();
@@ -563,7 +564,7 @@ public class FIPSModeValidator {
 		}
 	}
 
-	private static final String _CLUSTER_CHANNEL_AUTH_CLASS_NAME =
+	private static final String _CLUSTER_LINK_CHANNEL_AUTH_CLASS_NAME =
 		"org.jgroups.auth.X509Token";
 
 	private static final int _PASSWORDS_ENCRYPTION_ALGORITHM_KEY_SIZE_MIN = 112;

@@ -53,7 +53,7 @@ public class FIPSModeHelperUtilTest {
 			Files.write(path, "<config><AUTH".getBytes(StandardCharsets.UTF_8));
 
 			FIPSModeTestUtil.assertSecurityException(
-				"Unable to parse the cluster channel properties",
+				"Unable to parse the cluster link channel properties",
 				() -> FIPSModeHelperUtil.readDocument(String.valueOf(path)));
 		}
 		finally {
@@ -61,7 +61,7 @@ public class FIPSModeHelperUtilTest {
 		}
 
 		FIPSModeTestUtil.assertSecurityException(
-			"Unable to read the cluster channel properties",
+			"Unable to read the cluster link channel properties",
 			() -> FIPSModeHelperUtil.readDocument(
 				RandomTestUtil.randomString()));
 	}

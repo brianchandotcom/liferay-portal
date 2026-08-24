@@ -7,6 +7,7 @@ package com.liferay.portal.instances.web.internal.background.task.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
@@ -42,7 +43,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -61,16 +61,6 @@ public class AddVirtualInstanceBackgroundTaskExecutorTest {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
-
-	@After
-	public void tearDown() throws Exception {
-		for (UserNotificationEvent userNotificationEvent :
-				_userNotificationEvents) {
-
-			_userNotificationEventLocalService.deleteUserNotificationEvent(
-				userNotificationEvent);
-		}
-	}
 
 	@Test
 	public void testExecute() throws Exception {
@@ -201,6 +191,10 @@ public class AddVirtualInstanceBackgroundTaskExecutorTest {
 					"AddVirtualInstanceBackgroundTaskExecutor",
 				taskContextMap, new ServiceContext());
 
+		_backgroundTasks.add(
+			_backgroundTaskLocalService.getBackgroundTask(
+				backgroundTask.getBackgroundTaskId()));
+
 		return _waitForCompletion(backgroundTask.getBackgroundTaskId());
 	}
 
@@ -265,7 +259,14 @@ public class AddVirtualInstanceBackgroundTaskExecutorTest {
 		RandomTestUtil.randomString());
 
 	@Inject
+	private BackgroundTaskLocalService _backgroundTaskLocalService;
+
+	@Inject
 	private BackgroundTaskManager _backgroundTaskManager;
+
+	@DeleteAfterTestRun
+	private final List<com.liferay.portal.background.task.model.BackgroundTask>
+		_backgroundTasks = new ArrayList<>();
 
 	@DeleteAfterTestRun
 	private Company _company;
@@ -283,6 +284,7 @@ public class AddVirtualInstanceBackgroundTaskExecutorTest {
 	private UserNotificationEventLocalService
 		_userNotificationEventLocalService;
 
+	@DeleteAfterTestRun
 	private final List<UserNotificationEvent> _userNotificationEvents =
 		new ArrayList<>();
 

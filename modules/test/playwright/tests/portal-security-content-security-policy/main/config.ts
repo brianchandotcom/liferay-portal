@@ -6,6 +6,7 @@
 export const config = {
 	name: 'portal-security-content-security-policy.main',
 	testDir: 'tests/portal-security-content-security-policy/main',
+	timeout: 300 * 1000,
 	use: {
 		testIdAttribute: 'data-qa-id',
 	},

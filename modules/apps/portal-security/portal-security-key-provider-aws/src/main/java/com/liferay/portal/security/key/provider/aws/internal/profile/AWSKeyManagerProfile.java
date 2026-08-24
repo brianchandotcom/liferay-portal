@@ -110,8 +110,8 @@ public class AWSKeyManagerProfile implements KeyManagerProfile {
 
 		if (Validator.isNull(region)) {
 			throw new IllegalStateException(
-				"Unable to resolve AWS region; configure \"aws-region\" or " +
-					"export \"AWS_REGION\"");
+				"Configure \"aws-region\" or export \"AWS_REGION\" because " +
+					"the AWS region could not be resolved");
 		}
 
 		String awsAccountId = _awsKeyManagerProfileConfiguration.awsAccountId();
@@ -210,9 +210,8 @@ public class AWSKeyManagerProfile implements KeyManagerProfile {
 		}
 		catch (Exception exception) {
 			throw new IllegalStateException(
-				"AWS credentials are not available via the default " +
-					"credential provider chain (env, EC2 instance profile, " +
-						"IRSA)",
+				"AWS credentials are not available from the default " +
+					"credential provider chain",
 				exception);
 		}
 	}
@@ -279,8 +278,8 @@ public class AWSKeyManagerProfile implements KeyManagerProfile {
 		if (Validator.isNull(keyARNTemplate)) {
 			if (strictMode) {
 				throw new IllegalStateException(
-					"Strict mode requires a CMK to verify; configure " +
-						"\"key-arn-template\"");
+					"Configure \"key-arn-template\" because strict mode " +
+						"requires a CMK to verify");
 			}
 
 			return;

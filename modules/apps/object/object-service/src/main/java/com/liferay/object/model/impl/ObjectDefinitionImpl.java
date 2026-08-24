@@ -105,6 +105,7 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 		if (_objectFieldBag == null) {
 			setObjectFieldBag(
 				new ObjectFieldBag(
+					isModifiableAndSystem(),
 					ObjectFieldLocalServiceUtil.getObjectFields(
 						getObjectDefinitionId())));
 		}

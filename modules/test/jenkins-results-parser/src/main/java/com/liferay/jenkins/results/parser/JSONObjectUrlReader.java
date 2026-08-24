@@ -18,10 +18,6 @@ import org.json.JSONObject;
  */
 public class JSONObjectUrlReader extends BaseBodyUrlReader<JSONObject> {
 
-	public static JSONObjectUrlReader getInstance() {
-		return _jsonObjectUrlReader;
-	}
-
 	public static JSONObject read(
 			boolean checkCache, HTTPAuthorization httpAuthorization,
 			HttpRequestMethod httpRequestMethod, int maxRetries,

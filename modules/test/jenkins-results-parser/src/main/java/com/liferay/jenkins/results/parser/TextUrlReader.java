@@ -15,10 +15,6 @@ import java.io.IOException;
  */
 public class TextUrlReader extends BaseBodyUrlReader<String> {
 
-	public static TextUrlReader getInstance() {
-		return _textUrlReader;
-	}
-
 	public static String read(
 			boolean checkCache, boolean expectResponse,
 			HTTPAuthorization httpAuthorization,

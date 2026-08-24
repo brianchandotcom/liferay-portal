@@ -25,10 +25,6 @@ import java.util.Map;
  */
 public class StreamUrlReader extends UrlReader<InputStream> {
 
-	public static StreamUrlReader getInstance() {
-		return _streamUrlReader;
-	}
-
 	public static String getResponseHeader(
 			String headerName, HTTPAuthorization httpAuthorization,
 			HttpRequestMethod httpRequestMethod, String postContent,

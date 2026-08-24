@@ -17,10 +17,6 @@ import org.json.JSONException;
  */
 public class JSONArrayUrlReader extends BaseBodyUrlReader<JSONArray> {
 
-	public static JSONArrayUrlReader getInstance() {
-		return _jsonArrayUrlReader;
-	}
-
 	public static JSONArray read(
 			boolean checkCache, HTTPAuthorization httpAuthorization,
 			int maxRetries, String postContent, int retryPeriod, int timeout,

@@ -36,6 +36,8 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -163,6 +165,10 @@ public class AddInstanceMVCActionCommandTest {
 			String name = backgroundTask.getName();
 
 			if (name.endsWith("#" + _WEB_ID)) {
+				_backgroundTasks.add(
+					_backgroundTaskLocalService.fetchBackgroundTask(
+						backgroundTask.getBackgroundTaskId()));
+
 				return backgroundTask;
 			}
 		}
@@ -261,6 +267,10 @@ public class AddInstanceMVCActionCommandTest {
 
 	@Inject
 	private BackgroundTaskManager _backgroundTaskManager;
+
+	@DeleteAfterTestRun
+	private final List<com.liferay.portal.background.task.model.BackgroundTask>
+		_backgroundTasks = new ArrayList<>();
 
 	@DeleteAfterTestRun
 	private Company _company;

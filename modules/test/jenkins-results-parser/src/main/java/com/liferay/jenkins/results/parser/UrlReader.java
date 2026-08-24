@@ -346,12 +346,10 @@ public abstract class UrlReader<T> {
 						retryPeriodOverride = retryPeriod;
 
 						for (int i = 0; i < retryCount; i++) {
-							retryPeriodOverride *= retryPeriodOverride;
+							retryPeriodOverride = Math.min(
+								retryPeriodOverride * retryPeriodOverride,
+								_SECONDS_RETRY_PERIOD_ESCALATION_MAX);
 						}
-
-						retryPeriodOverride = Math.min(
-							retryPeriodOverride,
-							_SECONDS_RETRY_PERIOD_ESCALATION_MAX);
 					}
 
 					if (((maxRetries >= 0) && (retryCount >= maxRetries)) ||

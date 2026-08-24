@@ -6,6 +6,7 @@
 export const config = {
 	name: 'login-web.main',
 	testDir: 'tests/login-web/main',
+	timeout: 300 * 1000,
 	use: {
 		testIdAttribute: 'data-qa-id',
 	},

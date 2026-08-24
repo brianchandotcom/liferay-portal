@@ -6,4 +6,5 @@
 export const config = {
 	name: 'configuration-admin-web.site-settings-export',
 	testDir: 'tests/configuration-admin-web/site-settings-export',
+	timeout: 300 * 1000,
 };

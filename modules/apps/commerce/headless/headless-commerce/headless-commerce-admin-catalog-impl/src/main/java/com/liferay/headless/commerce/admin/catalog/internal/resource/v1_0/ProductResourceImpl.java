@@ -112,6 +112,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
@@ -177,6 +178,71 @@ import org.osgi.service.component.annotations.ServiceScope;
 )
 @CTAware
 public class ProductResourceImpl extends BaseProductResourceImpl {
+
+	@Override
+	public void create(
+			Collection<Product> products, Map<String, Serializable> parameters)
+		throws Exception {
+
+		UnsafeFunction<Product, Product, Exception> productUnsafeFunction =
+			null;
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
+		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
+			productUnsafeFunction = product -> postProduct(product);
+		}
+
+		if (StringUtil.equalsIgnoreCase(createStrategy, "UPSERT")) {
+			String updateStrategy = (String)parameters.getOrDefault(
+				"updateStrategy", "UPDATE");
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
+				productUnsafeFunction = product -> {
+					try {
+						Product getProduct = getProductByExternalReferenceCode(
+							product.getExternalReferenceCode());
+
+						return patchProduct(getProduct.getProductId(), product);
+					}
+					catch (NoSuchModelException noSuchModelException) {
+						if (_log.isDebugEnabled()) {
+							_log.debug(noSuchModelException);
+						}
+
+						return postProduct(product);
+					}
+				};
+			}
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+				productUnsafeFunction =
+					product -> putProductByExternalReferenceCode(
+						product.getExternalReferenceCode(), product);
+			}
+		}
+
+		if (productUnsafeFunction == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" is not supported for Product");
+		}
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				products, productUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				products, productUnsafeFunction::apply);
+		}
+		else {
+			for (Product product : products) {
+				productUnsafeFunction.apply(product);
+			}
+		}
+	}
 
 	@Override
 	public void delete(

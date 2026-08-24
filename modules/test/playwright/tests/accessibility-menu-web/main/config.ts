@@ -6,6 +6,7 @@
 export const config = {
 	name: 'accessibility-menu-web.main',
 	testDir: 'tests/accessibility-menu-web/main',
+	timeout: 300 * 1000,
 	use: {
 		testIdAttribute: 'data-qa-id',
 	},

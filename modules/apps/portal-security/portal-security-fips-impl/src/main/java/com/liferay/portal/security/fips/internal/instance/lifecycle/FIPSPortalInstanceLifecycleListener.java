@@ -9,15 +9,22 @@ import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.PasswordPolicy;
+import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.PasswordPolicyLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.security.fips.constants.FIPSConstants;
+import com.liferay.portal.security.fips.constants.FIPSPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -41,6 +48,8 @@ public class FIPSPortalInstanceLifecycleListener
 
 		_addCryptoOfficerPasswordPolicy(companyId, user);
 		_addCryptoOfficerRole(companyId, user);
+
+		_checkResourcePermissions(companyId);
 	}
 
 	private void _addCryptoOfficerPasswordPolicy(long companyId, User user)
@@ -96,8 +105,65 @@ public class FIPSPortalInstanceLifecycleListener
 			null, RoleConstants.TYPE_REGULAR, null, null);
 	}
 
+	private void _checkResourcePermissions(long companyId) throws Exception {
+		Role role = _roleLocalService.fetchRole(
+			companyId, RoleConstants.CRYPTO_OFFICER);
+
+		if (role == null) {
+			return;
+		}
+
+		for (String actionKey :
+				new String[] {
+					ActionKeys.ACCESS_IN_CONTROL_PANEL, ActionKeys.VIEW
+				}) {
+
+			ResourcePermission resourcePermission =
+				_resourcePermissionLocalService.fetchResourcePermission(
+					companyId, _fipsAdminPortlet.getPortletName(),
+					ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),
+					role.getRoleId());
+
+			if ((resourcePermission != null) &&
+				resourcePermission.hasActionId(actionKey)) {
+
+				continue;
+			}
+
+			_resourcePermissionLocalService.addResourcePermission(
+				companyId, _fipsAdminPortlet.getPortletName(),
+				ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),
+				role.getRoleId(), actionKey);
+		}
+
+		ResourcePermission portalResourcePermission =
+			_resourcePermissionLocalService.fetchResourcePermission(
+				companyId, PortletKeys.PORTAL, ResourceConstants.SCOPE_COMPANY,
+				String.valueOf(companyId), role.getRoleId());
+
+		if ((portalResourcePermission != null) &&
+			portalResourcePermission.hasActionId(
+				ActionKeys.VIEW_CONTROL_PANEL)) {
+
+			return;
+		}
+
+		_resourcePermissionLocalService.addResourcePermission(
+			companyId, PortletKeys.PORTAL, ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(companyId), role.getRoleId(),
+			ActionKeys.VIEW_CONTROL_PANEL);
+	}
+
+	@Reference(
+		target = "(jakarta.portlet.name=" + FIPSPortletKeys.FIPS_ADMIN + ")"
+	)
+	private Portlet _fipsAdminPortlet;
+
 	@Reference
 	private PasswordPolicyLocalService _passwordPolicyLocalService;
+
+	@Reference
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
 	@Reference
 	private RoleLocalService _roleLocalService;

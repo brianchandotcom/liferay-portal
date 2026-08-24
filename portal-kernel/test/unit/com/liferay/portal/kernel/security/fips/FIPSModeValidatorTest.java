@@ -728,6 +728,22 @@ public class FIPSModeValidatorTest {
 	}
 
 	@Test
+	public void testValidateSessionTimeout() {
+		FIPSModeValidator.validateSessionTimeout(RandomTestUtil.randomInt());
+
+		try (SafeCloseable safeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"FIPS_ENABLED", true)) {
+
+			FIPSModeValidator.validateSessionTimeout(720);
+
+			FIPSModeTestUtil.assertSecurityException(
+				"Session timeout must not be greater than 12 hours",
+				() -> FIPSModeValidator.validateSessionTimeout(721));
+		}
+	}
+
+	@Test
 	public void testValidateURL() {
 		FIPSModeValidator.validateURL(
 			"ldap://" + RandomTestUtil.randomString());

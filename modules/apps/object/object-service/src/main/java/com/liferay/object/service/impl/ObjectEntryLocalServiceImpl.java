@@ -7008,6 +7008,26 @@ public class ObjectEntryLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		// The walk to the workflow's first task otherwise runs on another
+		// thread after this request is answered, so the task the caller looks
+		// for right after saving does not exist yet. Waiting for the walk
+		// makes the answer cover the task it creates.
+
+		Map<String, Serializable> workflowContext =
+			(Map<String, Serializable>)serviceContext.getAttribute(
+				"workflowContext");
+
+		if (workflowContext == null) {
+			workflowContext = new HashMap<>();
+		}
+
+		workflowContext.put(
+			WorkflowConstants.CONTEXT_WAIT_FOR_COMPLETION,
+			Boolean.TRUE.toString());
+
+		serviceContext.setAttribute(
+			"workflowContext", (Serializable)workflowContext);
+
 		WorkflowHandlerRegistryUtil.startWorkflowInstance(
 			objectEntry.getCompanyId(), objectEntry.getNonzeroGroupId(), userId,
 			className, objectEntry.getObjectEntryId(), objectEntry,

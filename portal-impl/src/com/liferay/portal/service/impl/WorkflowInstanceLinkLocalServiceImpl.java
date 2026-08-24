@@ -5,6 +5,7 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanReference;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil;
 import com.liferay.portal.kernel.workflow.WorkflowNode;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
+import com.liferay.portal.kernel.workflow.WorkflowWaitForCompletionThreadLocal;
 import com.liferay.portal.service.base.WorkflowInstanceLinkLocalServiceBaseImpl;
 
 import java.io.Serializable;
@@ -314,12 +316,19 @@ public class WorkflowInstanceLinkLocalServiceImpl
 		workflowContext.put(
 			WorkflowConstants.CONTEXT_GROUP_ID, String.valueOf(groupId));
 
-		WorkflowInstance workflowInstance =
-			WorkflowInstanceManagerUtil.startWorkflowInstance(
-				companyId, groupId, userId,
-				workflowDefinitionLink.getWorkflowDefinitionName(),
-				workflowDefinitionLink.getWorkflowDefinitionVersion(), null,
-				workflowContext, waitForCompletion);
+		WorkflowInstance workflowInstance = null;
+
+		try (SafeCloseable safeCloseable =
+				WorkflowWaitForCompletionThreadLocal.
+					setWaitForCompletionWithSafeCloseable(waitForCompletion)) {
+
+			workflowInstance =
+				WorkflowInstanceManagerUtil.startWorkflowInstance(
+					companyId, groupId, userId,
+					workflowDefinitionLink.getWorkflowDefinitionName(),
+					workflowDefinitionLink.getWorkflowDefinitionVersion(), null,
+					workflowContext, waitForCompletion);
+		}
 
 		addWorkflowInstanceLink(
 			userId, companyId, groupId, className, classPK,

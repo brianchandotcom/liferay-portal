@@ -29,7 +29,7 @@ public class X509TrustManagerImplTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void testX509TrustManagerImpl() {
+	public void testConstructor() {
 		Assert.assertNotNull(new X509TrustManagerImpl());
 
 		try (MockedStatic<FIPSModeValidator> fipsModeValidatorMockedStatic =

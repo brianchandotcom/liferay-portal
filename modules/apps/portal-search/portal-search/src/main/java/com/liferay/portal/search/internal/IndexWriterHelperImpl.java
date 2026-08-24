@@ -325,6 +325,11 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 	 */
 	@Deprecated
 	@Override
+	public boolean isIndexCommitImmediately() {
+		return _commitImmediately;
+	}
+
+	@Override
 	public boolean isIndexReadOnly() {
 		return _indexStatusManager.isIndexReadOnly();
 	}

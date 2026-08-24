@@ -6,3 +6,18 @@ liferay-default:
                     podIdentity:
                         provider: azure-workload
         type: keda
+    podSecurityContext:
+        fsGroup: 1000
+        runAsNonRoot: true
+        runAsUser: 1000
+        seccompProfile:
+            type: RuntimeDefault
+    securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+            drop:
+                -   ALL
+        runAsNonRoot: true
+        runAsUser: 1000
+        seccompProfile:
+            type: RuntimeDefault

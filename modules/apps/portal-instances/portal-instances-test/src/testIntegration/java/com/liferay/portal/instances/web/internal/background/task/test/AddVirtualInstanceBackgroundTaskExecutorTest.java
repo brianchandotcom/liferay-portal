@@ -7,9 +7,8 @@ package com.liferay.portal.instances.web.internal.background.task.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.background.task.model.BackgroundTask;
 import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.encryptor.EncryptorUtil;
 import com.liferay.portal.kernel.exception.CompanyWebIdException;
@@ -183,7 +182,7 @@ public class AddVirtualInstanceBackgroundTaskExecutorTest {
 			).build();
 
 		BackgroundTask backgroundTask =
-			_backgroundTaskManager.addBackgroundTask(
+			_backgroundTaskLocalService.addBackgroundTask(
 				TestPropsValues.getUserId(),
 				BackgroundTaskConstants.GROUP_ID_DEFAULT,
 				"AddVirtualInstance#" + _WEB_ID,
@@ -191,9 +190,7 @@ public class AddVirtualInstanceBackgroundTaskExecutorTest {
 					"AddVirtualInstanceBackgroundTaskExecutor",
 				taskContextMap, new ServiceContext());
 
-		_backgroundTasks.add(
-			_backgroundTaskLocalService.getBackgroundTask(
-				backgroundTask.getBackgroundTaskId()));
+		_backgroundTasks.add(backgroundTask);
 
 		return _waitForCompletion(backgroundTask.getBackgroundTaskId());
 	}
@@ -239,7 +236,8 @@ public class AddVirtualInstanceBackgroundTaskExecutorTest {
 
 		while (System.currentTimeMillis() < endTime) {
 			BackgroundTask backgroundTask =
-				_backgroundTaskManager.fetchBackgroundTask(backgroundTaskId);
+				_backgroundTaskLocalService.fetchBackgroundTask(
+					backgroundTaskId);
 
 			if ((backgroundTask != null) && backgroundTask.isCompleted()) {
 				return backgroundTask;
@@ -261,12 +259,8 @@ public class AddVirtualInstanceBackgroundTaskExecutorTest {
 	@Inject
 	private BackgroundTaskLocalService _backgroundTaskLocalService;
 
-	@Inject
-	private BackgroundTaskManager _backgroundTaskManager;
-
 	@DeleteAfterTestRun
-	private final List<com.liferay.portal.background.task.model.BackgroundTask>
-		_backgroundTasks = new ArrayList<>();
+	private final List<BackgroundTask> _backgroundTasks = new ArrayList<>();
 
 	@DeleteAfterTestRun
 	private Company _company;

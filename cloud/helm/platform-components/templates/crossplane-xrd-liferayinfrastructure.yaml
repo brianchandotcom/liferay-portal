@@ -99,6 +99,9 @@ spec:
                                         instanceType:
                                             minLength: 1
                                             type: string
+                                        restorePoint:
+                                            nullable: true
+                                            type: string
                                         storageGB:
                                             type: integer
                                         version:

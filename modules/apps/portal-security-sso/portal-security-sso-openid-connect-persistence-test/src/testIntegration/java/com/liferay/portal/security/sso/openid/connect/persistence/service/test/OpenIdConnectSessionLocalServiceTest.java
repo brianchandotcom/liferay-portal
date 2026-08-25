@@ -18,6 +18,8 @@ import com.liferay.portal.security.sso.openid.connect.persistence.service.OpenId
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.Collections;
+
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -37,6 +39,32 @@ public class OpenIdConnectSessionLocalServiceTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Test
+	public void testAddOpenIdConnectSessionWithBlankSessionId()
+		throws Exception {
+
+		long companyId = RandomTestUtil.randomLong();
+		String issuer = RandomTestUtil.randomString();
+		long userId1 = RandomTestUtil.randomLong();
+
+		OpenIdConnectSession openIdConnectSession1 = _addOpenIdConnectSession(
+			companyId, issuer, null, userId1);
+
+		long userId2 = RandomTestUtil.randomLong();
+
+		OpenIdConnectSession openIdConnectSession2 = _addOpenIdConnectSession(
+			companyId, issuer, null, userId2);
+
+		Assert.assertEquals(
+			openIdConnectSession1,
+			_openIdConnectSessionLocalService.getOpenIdConnectSession(
+				userId1, issuer));
+		Assert.assertEquals(
+			openIdConnectSession2,
+			_openIdConnectSessionLocalService.getOpenIdConnectSession(
+				userId2, issuer));
+	}
 
 	@Test
 	public void testFetchCurrentOpenIdConnectSession() throws Exception {
@@ -79,14 +107,86 @@ public class OpenIdConnectSessionLocalServiceTest {
 		}
 	}
 
+	@Test
+	public void testGetOpenIdConnectSessions() throws Exception {
+		long companyId = RandomTestUtil.randomLong();
+		String issuer = RandomTestUtil.randomString();
+		String sessionId = RandomTestUtil.randomString();
+
+		OpenIdConnectSession openIdConnectSession = _addOpenIdConnectSession(
+			companyId, issuer, sessionId, RandomTestUtil.randomLong());
+
+		_addOpenIdConnectSession(
+			companyId, issuer, RandomTestUtil.randomString(),
+			RandomTestUtil.randomLong());
+
+		Assert.assertEquals(
+			Collections.singletonList(openIdConnectSession),
+			_openIdConnectSessionLocalService.getOpenIdConnectSessions(
+				companyId, issuer, sessionId));
+	}
+
+	@Test
+	public void testGetOpenIdConnectSessionsWithBlankSessionId()
+		throws Exception {
+
+		long companyId = RandomTestUtil.randomLong();
+		String issuer = RandomTestUtil.randomString();
+
+		_addOpenIdConnectSession(
+			companyId, issuer, null, RandomTestUtil.randomLong());
+
+		Assert.assertEquals(
+			Collections.emptyList(),
+			_openIdConnectSessionLocalService.getOpenIdConnectSessions(
+				companyId, issuer, null));
+	}
+
+	@Test
+	public void testGetOpenIdConnectSessionsWithSessionIdSharedByCompanies()
+		throws Exception {
+
+		long companyId1 = RandomTestUtil.randomLong();
+		String issuer = RandomTestUtil.randomString();
+		String sessionId = RandomTestUtil.randomString();
+
+		OpenIdConnectSession openIdConnectSession1 = _addOpenIdConnectSession(
+			companyId1, issuer, sessionId, RandomTestUtil.randomLong());
+
+		long companyId2 = RandomTestUtil.randomLong();
+
+		OpenIdConnectSession openIdConnectSession2 = _addOpenIdConnectSession(
+			companyId2, issuer, sessionId, RandomTestUtil.randomLong());
+
+		Assert.assertEquals(
+			Collections.singletonList(openIdConnectSession1),
+			_openIdConnectSessionLocalService.getOpenIdConnectSessions(
+				companyId1, issuer, sessionId));
+		Assert.assertEquals(
+			Collections.singletonList(openIdConnectSession2),
+			_openIdConnectSessionLocalService.getOpenIdConnectSessions(
+				companyId2, issuer, sessionId));
+	}
+
 	private OpenIdConnectSession _addOpenIdConnectSession() throws Exception {
+		return _addOpenIdConnectSession(
+			RandomTestUtil.randomLong(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), TestPropsValues.getUserId());
+	}
+
+	private OpenIdConnectSession _addOpenIdConnectSession(
+		long companyId, String issuer, String sessionId, long userId) {
+
 		OpenIdConnectSession openIdConnectSession =
 			_openIdConnectSessionLocalService.createOpenIdConnectSession(
 				_counterLocalService.increment(
 					OpenIdConnectSession.class.getName()));
 
-		openIdConnectSession.setUserId(TestPropsValues.getUserId());
+		openIdConnectSession.setCompanyId(companyId);
+		openIdConnectSession.setUserId(userId);
 		openIdConnectSession.setAccessToken(RandomTestUtil.randomString());
+		openIdConnectSession.setIssuer(issuer);
+		openIdConnectSession.setSessionId(sessionId);
 
 		return _openIdConnectSessionLocalService.addOpenIdConnectSession(
 			openIdConnectSession);

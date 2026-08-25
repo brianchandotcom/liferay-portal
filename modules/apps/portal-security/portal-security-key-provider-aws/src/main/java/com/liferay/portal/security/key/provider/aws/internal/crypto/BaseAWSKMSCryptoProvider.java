@@ -408,7 +408,8 @@ public abstract class BaseAWSKMSCryptoProvider implements CryptoProvider {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		String accountId = GetterUtil.getString(properties.get("awsAccountId"));
+		String awsAccountId = GetterUtil.getString(
+			properties.get("awsAccountId"));
 		String cipherMode = GetterUtil.getString(
 			properties.get("cipherMode"), "AES_256_GCM");
 		boolean enabled = GetterUtil.getBoolean(properties.get("enabled"));
@@ -444,7 +445,7 @@ public abstract class BaseAWSKMSCryptoProvider implements CryptoProvider {
 		region = awsClientManager.getRegion();
 
 		_awsKMSCryptoProviderContext = new AWSKMSCryptoProviderContext(
-			accountId, awsClientManager,
+			awsAccountId, awsClientManager,
 			new AWSKMSFIPSValidator(cipherMode, fipsEnforced), enabled,
 			keyARNTemplate, pendingWindowInDays, region, useFIPSEndpoint);
 
@@ -589,7 +590,7 @@ public abstract class BaseAWSKMSCryptoProvider implements CryptoProvider {
 
 		try {
 			return AWSARNUtil.resolve(
-				awsKMSCryptoProviderContext.getAccountId(),
+				awsKMSCryptoProviderContext.getAwsAccountId(),
 				awsKMSCryptoProviderContext.getKeyARNTemplate(), companyId,
 				keyIdentifier, awsKMSCryptoProviderContext.getRegion());
 		}
@@ -708,7 +709,7 @@ public abstract class BaseAWSKMSCryptoProvider implements CryptoProvider {
 
 		return _getAliasName(
 			AWSARNUtil.resolve(
-				awsKMSCryptoProviderContext.getAccountId(),
+				awsKMSCryptoProviderContext.getAwsAccountId(),
 				awsKMSCryptoProviderContext.getKeyARNTemplate(), companyId,
 				StringPool.BLANK, awsKMSCryptoProviderContext.getRegion()));
 	}

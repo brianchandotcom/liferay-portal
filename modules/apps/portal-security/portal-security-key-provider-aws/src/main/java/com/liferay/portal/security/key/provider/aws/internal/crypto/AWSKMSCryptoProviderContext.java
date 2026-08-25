@@ -16,12 +16,12 @@ import com.liferay.portal.security.key.provider.aws.internal.util.AWSClientManag
 public class AWSKMSCryptoProviderContext {
 
 	public AWSKMSCryptoProviderContext(
-		String accountId, AWSClientManager<AWSKMS> awsClientManager,
+		String awsAccountId, AWSClientManager<AWSKMS> awsClientManager,
 		AWSKMSFIPSValidator awsKMSFIPSValidator, boolean enabled,
 		String keyARNTemplate, int pendingWindowInDays, String region,
 		boolean useFIPSEndpoint) {
 
-		_accountId = accountId;
+		_awsAccountId = awsAccountId;
 		_awsClientManager = awsClientManager;
 		_awsKMSFIPSValidator = awsKMSFIPSValidator;
 		_enabled = enabled;
@@ -31,8 +31,8 @@ public class AWSKMSCryptoProviderContext {
 		_useFIPSEndpoint = useFIPSEndpoint;
 	}
 
-	public String getAccountId() {
-		return _accountId;
+	public String getAwsAccountId() {
+		return _awsAccountId;
 	}
 
 	public AWSClientManager<AWSKMS> getAWSClientManager() {
@@ -63,7 +63,7 @@ public class AWSKMSCryptoProviderContext {
 		return _useFIPSEndpoint;
 	}
 
-	private final String _accountId;
+	private final String _awsAccountId;
 	private final AWSClientManager<AWSKMS> _awsClientManager;
 	private final AWSKMSFIPSValidator _awsKMSFIPSValidator;
 	private final boolean _enabled;

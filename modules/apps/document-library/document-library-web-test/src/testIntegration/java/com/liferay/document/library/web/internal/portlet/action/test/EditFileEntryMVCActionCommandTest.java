@@ -12,17 +12,21 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.document.library.test.util.DLAppTestUtil;
+import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
@@ -37,6 +41,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -49,6 +54,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -89,6 +95,31 @@ public class EditFileEntryMVCActionCommandTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+	}
+
+	@Test
+	public void testProcessActionAddDynamicWithoutRequiredDDMFormField()
+		throws Exception {
+
+		Folder folder = DLAppTestUtil.addFolder(_group.getGroupId());
+
+		String fileName = RandomTestUtil.randomString() + ".txt";
+
+		_processAction(
+			_getMockLiferayPortletActionRequest(
+				_getParameters(
+					Constants.ADD_DYNAMIC, folder.getFolderId(),
+					folder.getRepositoryId(), new String[0]),
+				fileName, _CONTENT_BYTES),
+			new MockLiferayPortletActionResponse());
+
+		FileEntry actualFileEntry = _dlAppLocalService.getFileEntryByFileName(
+			_group.getGroupId(), folder.getFolderId(), fileName);
+
+		FileVersion fileVersion = actualFileEntry.getFileVersion();
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED, fileVersion.getStatus());
 	}
 
 	@Test
@@ -389,16 +420,54 @@ public class EditFileEntryMVCActionCommandTest {
 		return mockMultipartHttpServletRequest;
 	}
 
+	private MockMultipartHttpServletRequest
+		_createMockMultipartHttpServletRequest(String fileName, byte[] bytes) {
+
+		MockMultipartHttpServletRequest mockMultipartHttpServletRequest =
+			new MockMultipartHttpServletRequest();
+
+		mockMultipartHttpServletRequest.setCharacterEncoding(StringPool.UTF8);
+
+		String boundary = "WebKitFormBoundary" + StringUtil.randomString();
+
+		mockMultipartHttpServletRequest.setContent(
+			_getFileContent(boundary, fileName, bytes));
+		mockMultipartHttpServletRequest.setContentType(
+			StringBundler.concat(
+				MediaType.MULTIPART_FORM_DATA_VALUE, "; boundary=", boundary));
+
+		return mockMultipartHttpServletRequest;
+	}
+
+	private byte[] _getFileContent(
+		String boundary, String fileName, byte[] bytes) {
+
+		String start = StringBundler.concat(
+			StringPool.DOUBLE_DASH, boundary,
+			"\r\nContent-Disposition: form-data; name=\"file\"; filename=\"",
+			fileName, "\"\r\nContent-Type: text/plain\r\n\r\n");
+		String end = StringBundler.concat(
+			"\r\n--", boundary, StringPool.DOUBLE_DASH);
+
+		return ArrayUtil.append(start.getBytes(), bytes, end.getBytes());
+	}
+
 	private InputStream _getInputStream() {
-		return new ByteArrayInputStream("test".getBytes());
+		return new ByteArrayInputStream(_CONTENT_BYTES);
 	}
 
 	private MockLiferayPortletActionRequest _getMockLiferayPortletActionRequest(
 			Map<String, String[]> parameters)
 		throws PortalException {
 
-		MockMultipartHttpServletRequest mockMultipartHttpServletRequest =
-			_createMockMultipartHttpServletRequest();
+		return _getMockLiferayPortletActionRequest(
+			parameters, _createMockMultipartHttpServletRequest());
+	}
+
+	private MockLiferayPortletActionRequest _getMockLiferayPortletActionRequest(
+			Map<String, String[]> parameters,
+			MockMultipartHttpServletRequest mockMultipartHttpServletRequest)
+		throws PortalException {
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			new MockLiferayPortletActionRequest(
@@ -422,6 +491,32 @@ public class EditFileEntryMVCActionCommandTest {
 
 		mockLiferayPortletActionRequest.setPortletSession(
 			new MockPortletSession());
+
+		return mockLiferayPortletActionRequest;
+	}
+
+	private MockLiferayPortletActionRequest _getMockLiferayPortletActionRequest(
+			Map<String, String[]> parameters, String fileName, byte[] bytes)
+		throws Exception {
+
+		MockMultipartHttpServletRequest mockMultipartHttpServletRequest =
+			_createMockMultipartHttpServletRequest(fileName, bytes);
+
+		mockMultipartHttpServletRequest.setAttribute(
+			WebKeys.CURRENT_URL, "/document_library/edit_file_entry");
+
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			_getMockLiferayPortletActionRequest(
+				parameters, mockMultipartHttpServletRequest);
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)mockLiferayPortletActionRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
+
+		themeDisplay.setLayout(layout);
+		themeDisplay.setLayoutSet(layout.getLayoutSet());
 
 		return mockLiferayPortletActionRequest;
 	}
@@ -454,6 +549,9 @@ public class EditFileEntryMVCActionCommandTest {
 			"repositoryId", new String[] {String.valueOf(repositoryId)}
 		).put(
 			"selectedFileName", tempFileEntryNames
+		).put(
+			"workflowAction",
+			new String[] {String.valueOf(WorkflowConstants.ACTION_PUBLISH)}
 		).build();
 	}
 
@@ -533,6 +631,8 @@ public class EditFileEntryMVCActionCommandTest {
 					return method.invoke(_portal, args);
 				}));
 	}
+
+	private static final byte[] _CONTENT_BYTES = "test".getBytes();
 
 	private static final String _TEMP_FOLDER_NAME =
 		"com.liferay.document.library.web.internal.portlet.action." +

@@ -163,6 +163,29 @@ public class EditFileEntryMVCActionCommandTest {
 	}
 
 	@Test
+	public void testProcessActionAddDynamicWithZeroByteFile() throws Exception {
+		Folder folder = DLAppTestUtil.addFolder(_group.getGroupId());
+
+		String fileName = RandomTestUtil.randomString() + ".txt";
+
+		_processAction(
+			_getMockLiferayPortletActionRequest(
+				_getParameters(
+					Constants.ADD_DYNAMIC, folder.getFolderId(),
+					folder.getRepositoryId(), new String[0]),
+				fileName, new byte[0]),
+			new MockLiferayPortletActionResponse());
+
+		FileEntry actualFileEntry = _dlAppLocalService.getFileEntryByFileName(
+			_group.getGroupId(), folder.getFolderId(), fileName);
+
+		FileVersion fileVersion = actualFileEntry.getFileVersion();
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED, fileVersion.getStatus());
+	}
+
+	@Test
 	public void testProcessActionAddMultipleFileEntries() throws Exception {
 		FileEntry tempFileEntry = TempFileEntryUtil.addTempFileEntry(
 			_group.getGroupId(), TestPropsValues.getUserId(), _TEMP_FOLDER_NAME,

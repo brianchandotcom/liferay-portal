@@ -5,10 +5,15 @@
 
 package com.liferay.osb.faro.web.internal.controller.main;
 
+import com.liferay.osb.faro.contacts.service.ContactsCardTemplateLocalService;
+import com.liferay.osb.faro.contacts.service.ContactsLayoutTemplateLocalService;
+import com.liferay.osb.faro.engine.client.ContactsEngineClient;
+import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.osb.faro.provisioning.client.constants.ProductConstants;
 import com.liferay.osb.faro.provisioning.client.internal.ProvisioningClientImpl;
 import com.liferay.osb.faro.provisioning.client.model.OSBAccountEntry;
 import com.liferay.osb.faro.provisioning.client.model.OSBOfferingEntry;
+import com.liferay.osb.faro.service.FaroProjectLocalService;
 import com.liferay.osb.faro.web.internal.exception.FaroException;
 import com.liferay.portal.cache.BasePortalCache;
 import com.liferay.portal.kernel.model.Group;
@@ -124,6 +129,114 @@ public class ProjectFaroControllerTest {
 			"4-EnterpriseLXCTest",
 			ProductConstants.PRODUCT_ENTRY_ID_LXC_ENTERPRISE);
 		_assert("5-ProLXCTest", ProductConstants.PRODUCT_ENTRY_ID_LXC_PRO);
+	}
+
+	@Test
+	public void testDeleteFaroProjectDeletesContactsAndFaroProject()
+		throws Exception {
+
+		ContactsCardTemplateLocalService contactsCardTemplateLocalService =
+			Mockito.mock(ContactsCardTemplateLocalService.class);
+		ContactsLayoutTemplateLocalService contactsLayoutTemplateLocalService =
+			Mockito.mock(ContactsLayoutTemplateLocalService.class);
+		ContactsEngineClient contactsEngineClient = Mockito.mock(
+			ContactsEngineClient.class);
+		FaroProjectLocalService faroProjectLocalService = Mockito.mock(
+			FaroProjectLocalService.class);
+
+		ReflectionTestUtils.setField(
+			_projectFaroController, "_contactsCardTemplateLocalService",
+			contactsCardTemplateLocalService);
+		ReflectionTestUtils.setField(
+			_projectFaroController, "_contactsLayoutTemplateLocalService",
+			contactsLayoutTemplateLocalService);
+		ReflectionTestUtils.setField(
+			_projectFaroController, "contactsEngineClient",
+			contactsEngineClient);
+		ReflectionTestUtils.setField(
+			_projectFaroController, "_faroProjectLocalService",
+			faroProjectLocalService);
+
+		long groupId = RandomTestUtil.randomLong();
+
+		FaroProject faroProject = Mockito.mock(FaroProject.class);
+
+		Mockito.when(
+			faroProject.getGroupId()
+		).thenReturn(
+			groupId
+		);
+
+		ReflectionTestUtils.invokeMethod(
+			_projectFaroController, "_deleteFaroProject", faroProject);
+
+		Mockito.verify(
+			contactsCardTemplateLocalService
+		).deleteContactsCardTemplates(
+			groupId
+		);
+
+		Mockito.verify(
+			contactsLayoutTemplateLocalService
+		).deleteContactsLayoutTemplates(
+			groupId
+		);
+
+		Mockito.verify(
+			contactsEngineClient
+		).deleteProject(
+			faroProject, true
+		);
+
+		Mockito.verify(
+			faroProjectLocalService
+		).deleteFaroProjectByGroupId(
+			groupId
+		);
+	}
+
+	@Test
+	public void testDeleteFaroProjectDeletesFaroProjectWhenContactsEngineClientFails()
+		throws Exception {
+
+		ContactsEngineClient contactsEngineClient = Mockito.mock(
+			ContactsEngineClient.class);
+		FaroProjectLocalService faroProjectLocalService = Mockito.mock(
+			FaroProjectLocalService.class);
+
+		Mockito.doThrow(
+			new RuntimeException()
+		).when(
+			contactsEngineClient
+		).deleteProject(
+			Mockito.any(FaroProject.class), Mockito.anyBoolean()
+		);
+
+		ReflectionTestUtils.setField(
+			_projectFaroController, "contactsEngineClient",
+			contactsEngineClient);
+		ReflectionTestUtils.setField(
+			_projectFaroController, "_faroProjectLocalService",
+			faroProjectLocalService);
+
+		long groupId = RandomTestUtil.randomLong();
+
+		FaroProject faroProject = Mockito.mock(FaroProject.class);
+
+		Mockito.when(
+			faroProject.getGroupId()
+		).thenReturn(
+			groupId
+		);
+
+		ReflectionTestUtils.invokeMethod(
+			_projectFaroController, "_deleteFaroProject", faroProject);
+
+		Mockito.verify(
+			faroProjectLocalService
+		).deleteFaroProjectByGroupId(
+			groupId
+		);
 	}
 
 	@Test

@@ -16,12 +16,13 @@ import com.liferay.portal.security.key.provider.aws.internal.util.AWSClientManag
 public class AWSSecretsManagerSecretProviderContext {
 
 	public AWSSecretsManagerSecretProviderContext(
-		String accountId, AWSClientManager<AWSSecretsManager> awsClientManager,
+		String awsAccountId,
+		AWSClientManager<AWSSecretsManager> awsClientManager,
 		AWSSecretsManagerFIPSValidator awsSecretsManagerFIPSValidator,
 		boolean enabled, long recoveryWindowInDays, String region,
 		String secretARNTemplate) {
 
-		_accountId = accountId;
+		_awsAccountId = awsAccountId;
 		_awsClientManager = awsClientManager;
 		_awsSecretsManagerFIPSValidator = awsSecretsManagerFIPSValidator;
 		_enabled = enabled;
@@ -30,8 +31,8 @@ public class AWSSecretsManagerSecretProviderContext {
 		_secretARNTemplate = secretARNTemplate;
 	}
 
-	public String getAccountId() {
-		return _accountId;
+	public String getAwsAccountId() {
+		return _awsAccountId;
 	}
 
 	public AWSClientManager<AWSSecretsManager> getAWSClientManager() {
@@ -58,7 +59,7 @@ public class AWSSecretsManagerSecretProviderContext {
 		return _enabled;
 	}
 
-	private final String _accountId;
+	private final String _awsAccountId;
 	private final AWSClientManager<AWSSecretsManager> _awsClientManager;
 	private final AWSSecretsManagerFIPSValidator
 		_awsSecretsManagerFIPSValidator;

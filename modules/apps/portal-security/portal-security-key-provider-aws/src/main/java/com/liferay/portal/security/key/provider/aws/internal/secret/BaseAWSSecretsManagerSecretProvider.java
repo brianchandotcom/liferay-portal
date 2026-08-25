@@ -278,7 +278,8 @@ public abstract class BaseAWSSecretsManagerSecretProvider
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		String accountId = GetterUtil.getString(properties.get("awsAccountId"));
+		String awsAccountId = GetterUtil.getString(
+			properties.get("awsAccountId"));
 		boolean enabled = GetterUtil.getBoolean(properties.get("enabled"));
 		boolean fipsEnforced = GetterUtil.getBoolean(
 			properties.get("fipsEnforced"));
@@ -315,7 +316,7 @@ public abstract class BaseAWSSecretsManagerSecretProvider
 
 		_awsSecretsManagerSecretProviderContext =
 			new AWSSecretsManagerSecretProviderContext(
-				accountId, awsClientManager,
+				awsAccountId, awsClientManager,
 				new AWSSecretsManagerFIPSValidator(
 					fipsEnforced, useFIPSEndpoint),
 				enabled, recoveryWindowInDays, region, secretARNTemplate);
@@ -434,7 +435,7 @@ public abstract class BaseAWSSecretsManagerSecretProvider
 		long companyId, String identifier) {
 
 		return AWSARNUtil.resolve(
-			awsSecretsManagerSecretProviderContext.getAccountId(),
+			awsSecretsManagerSecretProviderContext.getAwsAccountId(),
 			awsSecretsManagerSecretProviderContext.getSecretARNTemplate(),
 			companyId, identifier,
 			awsSecretsManagerSecretProviderContext.getRegion());
@@ -453,7 +454,7 @@ public abstract class BaseAWSSecretsManagerSecretProvider
 		}
 
 		String arn = AWSARNUtil.resolve(
-			awsSecretsManagerSecretProviderContext.getAccountId(),
+			awsSecretsManagerSecretProviderContext.getAwsAccountId(),
 			awsSecretsManagerSecretProviderContext.getSecretARNTemplate(),
 			companyId, StringPool.BLANK,
 			awsSecretsManagerSecretProviderContext.getRegion());

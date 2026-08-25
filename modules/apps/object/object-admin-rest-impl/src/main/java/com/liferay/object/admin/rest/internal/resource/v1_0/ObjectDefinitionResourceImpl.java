@@ -25,6 +25,7 @@ import com.liferay.object.admin.rest.internal.dto.v1_0.util.ObjectDefinitionSett
 import com.liferay.object.admin.rest.internal.dto.v1_0.util.ObjectFieldUtil;
 import com.liferay.object.admin.rest.internal.dto.v1_0.util.WorkflowDefinitionLinkUtil;
 import com.liferay.object.admin.rest.internal.odata.entity.v1_0.ObjectDefinitionEntityModel;
+import com.liferay.object.admin.rest.internal.resource.v1_0.util.ObjectDefinitionResourceUtil;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectActionResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectLayoutResource;
@@ -1014,8 +1015,11 @@ public class ObjectDefinitionResourceImpl
 			objectDefinition::getObjectDefinitionSettings);
 
 		if (objectDefinition.getObjectFields() != null) {
-			existingObjectDefinition.setObjectFields(
-				objectDefinition::getObjectFields);
+			ObjectField[] objectFields =
+				ObjectDefinitionResourceUtil.patchObjectFields(
+					existingObjectDefinition, objectDefinition);
+
+			existingObjectDefinition.setObjectFields(() -> objectFields);
 		}
 	}
 

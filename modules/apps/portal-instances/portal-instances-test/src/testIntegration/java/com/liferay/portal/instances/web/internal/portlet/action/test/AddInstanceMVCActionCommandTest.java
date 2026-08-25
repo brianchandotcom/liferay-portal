@@ -7,9 +7,8 @@ package com.liferay.portal.instances.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.counter.kernel.service.CounterLocalService;
+import com.liferay.portal.background.task.model.BackgroundTask;
 import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.exception.NoSuchCompanyException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -93,7 +92,7 @@ public class AddInstanceMVCActionCommandTest {
 		_backgroundTask = _addRunningBackgroundTask();
 
 		int backgroundTasksCount =
-			_backgroundTaskManager.getBackgroundTasksCount(
+			_backgroundTaskLocalService.getBackgroundTasksCount(
 				BackgroundTaskConstants.GROUP_ID_DEFAULT,
 				_TASK_EXECUTOR_CLASS_NAME);
 
@@ -106,7 +105,7 @@ public class AddInstanceMVCActionCommandTest {
 
 		Assert.assertEquals(
 			backgroundTasksCount,
-			_backgroundTaskManager.getBackgroundTasksCount(
+			_backgroundTaskLocalService.getBackgroundTasksCount(
 				BackgroundTaskConstants.GROUP_ID_DEFAULT,
 				_TASK_EXECUTOR_CLASS_NAME));
 
@@ -118,7 +117,7 @@ public class AddInstanceMVCActionCommandTest {
 	@Test
 	public void testProcessActionWhenUserIsNotOmniadmin() throws Exception {
 		int backgroundTasksCount =
-			_backgroundTaskManager.getBackgroundTasksCount(
+			_backgroundTaskLocalService.getBackgroundTasksCount(
 				BackgroundTaskConstants.GROUP_ID_DEFAULT,
 				_TASK_EXECUTOR_CLASS_NAME);
 
@@ -128,7 +127,7 @@ public class AddInstanceMVCActionCommandTest {
 
 		Assert.assertEquals(
 			backgroundTasksCount,
-			_backgroundTaskManager.getBackgroundTasksCount(
+			_backgroundTaskLocalService.getBackgroundTasksCount(
 				BackgroundTaskConstants.GROUP_ID_DEFAULT,
 				_TASK_EXECUTOR_CLASS_NAME));
 
@@ -137,37 +136,32 @@ public class AddInstanceMVCActionCommandTest {
 			() -> _companyLocalService.getCompanyByWebId(_WEB_ID));
 	}
 
-	private com.liferay.portal.background.task.model.BackgroundTask
-			_addRunningBackgroundTask()
-		throws Exception {
-
-		com.liferay.portal.background.task.model.BackgroundTask backgroundTask =
+	private BackgroundTask _addRunningBackgroundTask() throws Exception {
+		BackgroundTask backgroundTask =
 			_backgroundTaskLocalService.createBackgroundTask(
 				_counterLocalService.increment());
 
-		backgroundTask.setCompanyId(TestPropsValues.getCompanyId());
-		backgroundTask.setCompleted(false);
 		backgroundTask.setGroupId(BackgroundTaskConstants.GROUP_ID_DEFAULT);
-		backgroundTask.setName("AddVirtualInstance#" + _WEB_ID);
-		backgroundTask.setStatus(BackgroundTaskConstants.STATUS_IN_PROGRESS);
-		backgroundTask.setTaskExecutorClassName(_TASK_EXECUTOR_CLASS_NAME);
+		backgroundTask.setCompanyId(TestPropsValues.getCompanyId());
 		backgroundTask.setUserId(TestPropsValues.getUserId());
+		backgroundTask.setName("AddVirtualInstance#" + _WEB_ID);
+		backgroundTask.setTaskExecutorClassName(_TASK_EXECUTOR_CLASS_NAME);
+		backgroundTask.setCompleted(false);
+		backgroundTask.setStatus(BackgroundTaskConstants.STATUS_IN_PROGRESS);
 
 		return _backgroundTaskLocalService.updateBackgroundTask(backgroundTask);
 	}
 
 	private BackgroundTask _fetchBackgroundTask() {
 		for (BackgroundTask backgroundTask :
-				_backgroundTaskManager.getBackgroundTasks(
+				_backgroundTaskLocalService.getBackgroundTasks(
 					BackgroundTaskConstants.GROUP_ID_DEFAULT,
 					_TASK_EXECUTOR_CLASS_NAME)) {
 
 			String name = backgroundTask.getName();
 
 			if (name.endsWith("#" + _WEB_ID)) {
-				_backgroundTasks.add(
-					_backgroundTaskLocalService.fetchBackgroundTask(
-						backgroundTask.getBackgroundTaskId()));
+				_backgroundTasks.add(backgroundTask);
 
 				return backgroundTask;
 			}
@@ -235,7 +229,8 @@ public class AddInstanceMVCActionCommandTest {
 
 		while (System.currentTimeMillis() < endTime) {
 			BackgroundTask backgroundTask =
-				_backgroundTaskManager.fetchBackgroundTask(backgroundTaskId);
+				_backgroundTaskLocalService.fetchBackgroundTask(
+					backgroundTaskId);
 
 			if ((backgroundTask != null) && backgroundTask.isCompleted()) {
 				return;
@@ -259,18 +254,13 @@ public class AddInstanceMVCActionCommandTest {
 		RandomTestUtil.randomString());
 
 	@DeleteAfterTestRun
-	private com.liferay.portal.background.task.model.BackgroundTask
-		_backgroundTask;
+	private BackgroundTask _backgroundTask;
 
 	@Inject
 	private BackgroundTaskLocalService _backgroundTaskLocalService;
 
-	@Inject
-	private BackgroundTaskManager _backgroundTaskManager;
-
 	@DeleteAfterTestRun
-	private final List<com.liferay.portal.background.task.model.BackgroundTask>
-		_backgroundTasks = new ArrayList<>();
+	private final List<BackgroundTask> _backgroundTasks = new ArrayList<>();
 
 	@DeleteAfterTestRun
 	private Company _company;

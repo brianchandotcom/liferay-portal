@@ -99,6 +99,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
@@ -321,10 +322,12 @@ public class ProjectFaroController extends BaseFaroController {
 
 		_checkProvisionBackoff(corpProjectUuid);
 
+		FaroProject faroProject = null;
+
 		try {
 			User user = getUser();
 
-			FaroProject faroProject = _create(
+			faroProject = _create(
 				corpProjectName, corpProjectUuid,
 				emailAddressDomainsFaroParam.getValue(), friendlyURL,
 				incidentReportEmailAddressesFaroParam.getValue(), name,
@@ -363,10 +366,28 @@ public class ProjectFaroController extends BaseFaroController {
 
 			return projectDisplay;
 		}
-		catch (Exception exception) {
-			_putProvisionBackoff(corpProjectUuid, exception);
+		catch (Exception exception1) {
+			if (faroProject == null) {
+				_putProvisionBackoff(corpProjectUuid, exception1);
 
-			throw exception;
+				throw exception1;
+			}
+
+			_deleteFaroProject(faroProject);
+
+			Exception exception2 = exception1;
+
+			if (!(exception1 instanceof WebApplicationException)) {
+				_log.error(exception1);
+
+				exception2 = new FaroException(
+					exception1.getMessage(),
+					Response.Status.INTERNAL_SERVER_ERROR);
+			}
+
+			_putProvisionBackoff(corpProjectUuid, exception2);
+
+			throw exception2;
 		}
 	}
 
@@ -1338,6 +1359,25 @@ public class ProjectFaroController extends BaseFaroController {
 				faroProject.getGroupId(), faroProject.getFaroProjectId()));
 
 		return projectDisplay;
+	}
+
+	private void _deleteFaroProject(FaroProject faroProject)
+		throws PortalException {
+
+		long groupId = faroProject.getGroupId();
+
+		_contactsCardTemplateLocalService.deleteContactsCardTemplates(groupId);
+		_contactsLayoutTemplateLocalService.deleteContactsLayoutTemplates(
+			groupId);
+
+		try {
+			contactsEngineClient.deleteProject(faroProject, true);
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
+
+		_faroProjectLocalService.deleteFaroProjectByGroupId(groupId);
 	}
 
 	private String _getDeletionFailedErrorMessage(User user) {

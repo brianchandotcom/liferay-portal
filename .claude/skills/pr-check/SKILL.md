@@ -115,6 +115,8 @@ When the validation's **Command** is a build (gradle, ant, npm, jest), bound the
 
 Decide PASS/FAIL from the build tool's success markers in the captured output (`BUILD SUCCESSFUL` / `BUILD FAILED`, `Tests: N passed, M failed`, etc.). Apply only to build commands. Leave inert commands like `git status --porcelain` and `git diff --quiet` untouched.
 
+A Gradle task that reports `UP-TO-DATE` did not run. It replayed a verdict cached from an earlier build, and that build may have been made against a different tree. Treat the result as unverified whenever the tree moved since the last run — after a rebase, a fold, or a branch switch — and rerun the task with `--rerun` to force a genuine comparison. **Baseline** spells this out for its own seven projects, but the hazard belongs to every Gradle validation here, the compile ones included: a cached pass proves the code compiled at some point, not that it compiles now.
+
 When all validations pass, report `PASS`. When any fail, report `FAIL` and surface the failed validations.
 
 ## Results Summary

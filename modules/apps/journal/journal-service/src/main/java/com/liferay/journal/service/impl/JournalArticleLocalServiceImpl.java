@@ -4149,7 +4149,8 @@ public class JournalArticleLocalServiceImpl
 
 		List<JournalArticle> articleVersions =
 			journalArticlePersistence.findByG_A(
-				article.getGroupId(), article.getArticleId());
+				article.getGroupId(), article.getArticleId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null, false);
 
 		articleVersions = ListUtil.sort(
 			articleVersions, ArticleVersionComparator.getInstance(false));
@@ -4187,7 +4188,11 @@ public class JournalArticleLocalServiceImpl
 			articleVersion.setArticleId(trashArticleId);
 			articleVersion.setStatus(WorkflowConstants.STATUS_IN_TRASH);
 
-			journalArticlePersistence.update(articleVersion);
+			articleVersion = journalArticlePersistence.update(articleVersion);
+
+			if (article.equals(articleVersion)) {
+				article = articleVersion;
+			}
 		}
 
 		articleResource.setArticleId(trashArticleId);

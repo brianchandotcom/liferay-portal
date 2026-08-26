@@ -23,6 +23,7 @@ function categoryQuery(dataset) {
 }
 
 if (forumsCategoriesAdmin) {
+	const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 	const portalURL = Liferay.ThemeDisplay.getPortalURL();
 	const scopeGroupId = Liferay.ThemeDisplay.getScopeGroupId();
 	const clayIconsUrl =
@@ -85,7 +86,7 @@ if (forumsCategoriesAdmin) {
 	let canCreate = false;
 
 	const topLevelLabel =
-		forumsCategoriesAdmin.dataset.labelTopLevel || 'None (top-level)';
+		forumsCategoriesAdmin.dataset.labelTopLevel || 'None (Top Level)';
 
 	const {
 		category1Desc,
@@ -557,7 +558,7 @@ if (forumsCategoriesAdmin) {
 		const body = {
 			categoryDescription: description || '',
 			categoryName: name,
-			categoryName_i18n: {en_US: name},
+			categoryName_i18n: {[defaultLanguageId]: name},
 		};
 		if (erc) {
 			body.externalReferenceCode = erc;
@@ -594,7 +595,7 @@ if (forumsCategoriesAdmin) {
 		const body = {
 			categoryDescription: description || '',
 			categoryName: name,
-			categoryName_i18n: {en_US: name},
+			categoryName_i18n: {[defaultLanguageId]: name},
 		};
 
 		/* 0 unsets the relationship (promotes the category back to top-level) */

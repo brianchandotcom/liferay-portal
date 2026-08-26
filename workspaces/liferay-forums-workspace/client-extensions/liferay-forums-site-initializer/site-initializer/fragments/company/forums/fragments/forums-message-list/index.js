@@ -153,22 +153,19 @@ if (messageList) {
 			return messageList.dataset.labelJustNow || 'just now';
 		}
 		if (diff < 3600) {
-			return (messageList.dataset.labelXMinutesAgo || '{0}m ago').replace(
-				'{0}',
-				Math.floor(diff / 60)
-			);
+			return (
+				messageList.dataset.labelXMinutesAgo || '{0} minutes ago.'
+			).replace('{0}', Math.floor(diff / 60));
 		}
 		if (diff < 86400) {
-			return (messageList.dataset.labelXHoursAgo || '{0}h ago').replace(
-				'{0}',
-				Math.floor(diff / 3600)
-			);
+			return (
+				messageList.dataset.labelXHoursAgo || '{0} hours ago.'
+			).replace('{0}', Math.floor(diff / 3600));
 		}
 		if (diff < 2592000) {
-			return (messageList.dataset.labelXDaysAgo || '{0}d ago').replace(
-				'{0}',
-				Math.floor(diff / 86400)
-			);
+			return (
+				messageList.dataset.labelXDaysAgo || '{0} days ago.'
+			).replace('{0}', Math.floor(diff / 86400));
 		}
 
 		return new Date(dateStr).toLocaleDateString();
@@ -329,7 +326,7 @@ if (messageList) {
 		const allLabel =
 			messageList.dataset.labelAllCategories ||
 			messageList.dataset.labelAllMessages ||
-			'All Messages';
+			'All Discussions';
 		const activeLi = breadcrumbName.closest('li');
 
 		/* Drop ancestor crumbs from a previous render */
@@ -980,11 +977,11 @@ if (messageList) {
 							(replyCount === 1
 								? (
 										messageList.dataset.labelXReply ||
-										'{0} comment'
+										'{0} reply'
 									).replace('{0}', replyCount)
 								: (
 										messageList.dataset.labelXReplies ||
-										'{0} comments'
+										'{0} replies'
 									).replace('{0}', replyCount)) +
 							'</span>' +
 							'<span class="forums-message-card__meta-item">' +

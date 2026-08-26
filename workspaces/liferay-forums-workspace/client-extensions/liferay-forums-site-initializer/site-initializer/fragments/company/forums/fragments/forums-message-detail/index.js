@@ -351,17 +351,17 @@ if (messageDetail) {
 			}
 			if (diff < 3600) {
 				return (
-					messageDetail.dataset.labelXMinutesAgo || '{0}m ago'
+					messageDetail.dataset.labelXMinutesAgo || '{0} minutes ago.'
 				).replace('{0}', Math.floor(diff / 60));
 			}
 			if (diff < 86400) {
 				return (
-					messageDetail.dataset.labelXHoursAgo || '{0}h ago'
+					messageDetail.dataset.labelXHoursAgo || '{0} hours ago.'
 				).replace('{0}', Math.floor(diff / 3600));
 			}
 			if (diff < 2592000) {
 				return (
-					messageDetail.dataset.labelXDaysAgo || '{0}d ago'
+					messageDetail.dataset.labelXDaysAgo || '{0} days ago.'
 				).replace('{0}', Math.floor(diff / 86400));
 			}
 
@@ -1735,7 +1735,7 @@ if (messageDetail) {
 							flaggedBanner.id = 'forumsDetailFlaggedBanner';
 							flaggedBanner.className = 'alert alert-danger mt-3';
 							flaggedBanner.setAttribute('role', 'alert');
-							flaggedBanner.innerHTML = `<span class="alert-indicator"><svg class="lexicon-icon lexicon-icon-warning-full" role="presentation" viewBox="0 0 16 16" fill="currentColor"><path d="M16 14.5L8 1 0 14.5h16zM8 13c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm1-3H7V6h2v4z"/></svg></span><strong class="lead">${messageDetail.dataset.labelFlagged || 'Flagged'}: </strong>${messageDetail.dataset.labelFlaggedWarning || 'This message has been flagged and validated by moderators as inappropriate content.'}`;
+							flaggedBanner.innerHTML = `<span class="alert-indicator"><svg class="lexicon-icon lexicon-icon-warning-full" role="presentation" viewBox="0 0 16 16" fill="currentColor"><path d="M16 14.5L8 1 0 14.5h16zM8 13c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm1-3H7V6h2v4z"/></svg></span><strong class="lead">${messageDetail.dataset.labelFlagged || 'Flagged'}: </strong>${messageDetail.dataset.labelFlaggedWarning || 'This message has been flagged and validated as inappropriate content.'}`;
 
 							const titleRow = messageDetail.querySelector(
 								'.forums-message-detail__title-row'

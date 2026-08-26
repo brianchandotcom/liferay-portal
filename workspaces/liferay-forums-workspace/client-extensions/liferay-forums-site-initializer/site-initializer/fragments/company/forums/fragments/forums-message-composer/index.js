@@ -23,6 +23,7 @@ function categoryQuery(dataset) {
 }
 
 if (messageComposer) {
+	const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 	const portalURL = Liferay.ThemeDisplay.getPortalURL();
 	const scopeGroupId = Liferay.ThemeDisplay.getScopeGroupId();
 	const currentUserId = Liferay.ThemeDisplay.getUserId();
@@ -373,7 +374,7 @@ if (messageComposer) {
 						Liferay.Util.openToast({
 							message:
 								(messageComposer.dataset.labelFileTooLarge ||
-									'The file is too large.') +
+									'The file is too large (10 MB maximum).') +
 								' (' +
 								file.name +
 								')',
@@ -757,7 +758,7 @@ if (messageComposer) {
 			}
 			if (submitBtn) {
 				submitBtn.textContent =
-					messageComposer.dataset.labelSaveChanges || 'Save';
+					messageComposer.dataset.labelSave || 'Save';
 			}
 			loadCategories();
 		}
@@ -793,7 +794,7 @@ if (messageComposer) {
 			}
 			if (submitBtn) {
 				submitBtn.textContent =
-					messageComposer.dataset.labelSaveChanges || 'Save';
+					messageComposer.dataset.labelSave || 'Save';
 			}
 		}
 		else if (replyMode) {
@@ -834,8 +835,8 @@ if (messageComposer) {
 		else {
 			if (titleEl) {
 				titleEl.textContent =
-					messageComposer.dataset.labelNewForumThread ||
-					'New Forum Thread';
+					messageComposer.dataset.labelNewForumMessage ||
+					'New Discussion';
 			}
 			if (leftCol) {
 				leftCol.style.display = '';
@@ -1176,7 +1177,7 @@ if (messageComposer) {
 					const threadPatchPayload = {
 						keywords: tagsArray,
 						messageTitle: subject,
-						messageTitle_i18n: {en_US: subject},
+						messageTitle_i18n: {[defaultLanguageId]: subject},
 						question: isQuestion,
 						r_categoryThreads_c_forumCategoryId: parseInt(
 							selectedCategory,
@@ -1214,7 +1215,9 @@ if (messageComposer) {
 									r_categoryThreads_c_forumCategoryId:
 										parseInt(selectedCategory, 10),
 									subject,
-									subject_i18n: {en_US: subject},
+									subject_i18n: {
+										[defaultLanguageId]: subject,
+									},
 								}),
 								headers,
 								method: 'PATCH',
@@ -1256,7 +1259,7 @@ if (messageComposer) {
 						hideModal();
 						sessionStorage.setItem(
 							'forumsSuccessToast',
-							messageComposer.dataset.labelSuccess || 'Success!'
+							messageComposer.dataset.labelSuccess || 'Success'
 						);
 						spaNavigate(
 							window.location.pathname + window.location.search
@@ -1269,7 +1272,7 @@ if (messageComposer) {
 						}
 						submitBtn.disabled = false;
 						submitBtn.textContent =
-							messageComposer.dataset.labelSaveChanges || 'Save';
+							messageComposer.dataset.labelSave || 'Save';
 					});
 			}
 			else if (isReplyMode) {
@@ -1285,7 +1288,7 @@ if (messageComposer) {
 						: 0,
 					r_threadMessages_c_forumThreadId: parseInt(messageId, 10),
 					subject: 'Re: reply',
-					subject_i18n: {en_US: 'Re: reply'},
+					subject_i18n: {[defaultLanguageId]: 'Re: reply'},
 				};
 
 				Liferay.Util.fetch(
@@ -1364,7 +1367,7 @@ if (messageComposer) {
 				const messagePayload = {
 					keywords: tagsArray,
 					messageTitle: subject,
-					messageTitle_i18n: {en_US: subject},
+					messageTitle_i18n: {[defaultLanguageId]: subject},
 					priority:
 						canSetPriority && prioritySelect
 							? parseFloat(prioritySelect.value) || 0
@@ -1403,7 +1406,7 @@ if (messageComposer) {
 							),
 							r_threadMessages_c_forumThreadId: threadId,
 							subject,
-							subject_i18n: {en_US: subject},
+							subject_i18n: {[defaultLanguageId]: subject},
 						};
 
 						const promises = [];

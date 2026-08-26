@@ -14,10 +14,16 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.io.IOException;
+
+import java.net.SocketTimeoutException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -73,6 +79,11 @@ public class DSHttp {
 		}
 	}
 
+	private int _getAttempts(int httpTimeout) {
+		return Math.max(
+			1, Math.min(_MAX_ATTEMPTS, httpTimeout / _MINIMUM_TIMEOUT));
+	}
+
 	private String _getDocuSignAccessToken(
 			DigitalSignatureConfiguration digitalSignatureConfiguration)
 		throws Exception {
@@ -103,6 +114,31 @@ public class DSHttp {
 		}
 
 		return _jsonFactory.createJSONObject(new String(bytes));
+	}
+
+	private byte[] _invokeAsBytes(Http.Options options, int attempts)
+		throws Exception {
+
+		for (int i = 1; i < attempts; i++) {
+			try {
+				return _http.URLtoByteArray(options);
+			}
+			catch (IOException ioException) {
+				if (!_isSocketTimeout(ioException)) {
+					throw ioException;
+				}
+
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						StringBundler.concat(
+							"Retrying DocuSign call ", options.getLocation(),
+							" after attempt ", i, " of ", attempts,
+							" timed out"));
+				}
+			}
+		}
+
+		return _http.URLtoByteArray(options);
 	}
 
 	private byte[] _invokeAsBytes(
@@ -137,10 +173,35 @@ public class DSHttp {
 				"/restapi/v2.1/accounts/",
 				digitalSignatureConfiguration.apiAccountId(), "/", location));
 		options.setMethod(method);
-		options.setTimeout(digitalSignatureConfiguration.httpTimeout());
 
-		return _http.URLtoByteArray(options);
+		int attempts = _getAttempts(
+			digitalSignatureConfiguration.httpTimeout());
+
+		options.setTimeout(
+			digitalSignatureConfiguration.httpTimeout() / attempts);
+
+		return _invokeAsBytes(options, attempts);
 	}
+
+	private boolean _isSocketTimeout(IOException ioException) {
+		Throwable throwable = ioException;
+
+		while (throwable != null) {
+			if (throwable instanceof SocketTimeoutException) {
+				return true;
+			}
+
+			throwable = throwable.getCause();
+		}
+
+		return false;
+	}
+
+	private static final int _MAX_ATTEMPTS = 3;
+
+	private static final int _MINIMUM_TIMEOUT = 20000;
+
+	private static final Log _log = LogFactoryUtil.getLog(DSHttp.class);
 
 	@Reference
 	private Http _http;

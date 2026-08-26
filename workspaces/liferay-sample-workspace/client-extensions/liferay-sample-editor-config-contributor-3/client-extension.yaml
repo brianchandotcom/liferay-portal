@@ -3,6 +3,7 @@ assemble:
         into: static
 liferay-sample-editor-config-contributor-3:
     editorConfigKeys:
+        -   sampleReactCETPremiumEditor
         -   sampleReactCKEditor5ClassicEditor
     name: Liferay Sample Editor Config Contributor CKEditor 5 Timestamp
     type: editorConfigContributor

@@ -1,0 +1,104 @@
+[#function formatCount n]
+	[#if n gte 1000000]
+		[#return (n / 1000000)?string("0.#") + "M"]
+	[#elseif n gte 1000]
+		[#return (n / 1000)?string("0.#") + "K"]
+	[#else]
+		[#return n?c]
+	[/#if]
+[/#function]
+
+[#macro stat data label]
+	<div class="col">
+		<figure class="mb-0 py-3 text-center">
+			<span class="forums-hero__stat-value text-white">
+				[#if data?is_hash && data.totalCount??]
+					${formatCount(data.totalCount)}
+				[#else]
+					&mdash;
+				[/#if]
+			</span>
+
+			<figcaption class="text-white-50 text-uppercase small mt-1">${label}</figcaption>
+		</figure>
+	</div>
+[/#macro]
+
+[#assign scopeGroupId = themeDisplay.getScopeGroupId() /]
+[#assign scopeGroup = themeDisplay.getScopeGroup() /]
+[#assign sitePrefix = (themeDisplay.getPathFriendlyURLPublic()!"") + (scopeGroup.getFriendlyURL()!"") /]
+
+[#assign showSolutions = (configuration.showSolutions!true) /]
+[#assign showDiscussions = (configuration.showDiscussions!true) /]
+[#assign showMessages = (configuration.showMessages!true) /]
+[#assign showNewDiscussionButton = (configuration.showNewDiscussionButton!true) /]
+
+[#assign heroTitleText = (configuration.heroTitle!"") /]
+[#assign heroDescriptionText = (configuration.heroDescription!"") /]
+
+[#-- Each stat triggers a request only when it is shown. --]
+[#assign solutionsData = "" /]
+[#if showSolutions]
+	[#assign solutionsData = restClient.get("/c/forummessages/scopes/" + scopeGroupId + "?pageSize=1&page=1&filter=answer%20eq%20true")!"" /]
+[/#if]
+
+[#assign threadsData = "" /]
+[#if showDiscussions]
+	[#assign threadsData = restClient.get("/c/forumthreads/scopes/" + scopeGroupId + "?pageSize=1&page=1")!"" /]
+[/#if]
+
+[#assign messagesData = "" /]
+[#if showMessages]
+	[#assign messagesData = restClient.get("/c/forummessages/scopes/" + scopeGroupId + "?pageSize=1&page=1")!"" /]
+[/#if]
+
+<div class="forums-hero">
+	<div class="forums-hero__backdrop">
+		<div class="container">
+			<div class="justify-content-center row">
+				<div class="col-lg-8 text-center">
+					<h1 class="display-4 mb-2 text-white">
+						[#if heroTitleText?has_content]${heroTitleText}[#else]${languageUtil.get(locale, "forums-title")}[/#if]
+					</h1>
+
+					<p class="lead mb-4 text-white-50">
+						[#if heroDescriptionText?has_content]${heroDescriptionText}[#else]${languageUtil.get(locale, "forums-description")}[/#if]
+					</p>
+
+					<form action="${sitePrefix}/forums-messages" class="forums-hero__search input-group" method="get" role="search">
+						<div class="input-group-item">
+							<input type="search" name="q" class="form-control input-group-inset input-group-inset-after" aria-label="${languageUtil.get(locale, "search", "Search")}" placeholder="${languageUtil.get(locale, "search", "Search")}..." />
+
+							<div class="input-group-inset-item input-group-inset-item-after">
+								<button class="btn btn-unstyled" type="submit" aria-label="${languageUtil.get(locale, "search", "Search")}">
+									<svg class="lexicon-icon lexicon-icon-search" focusable="false" role="presentation">
+										<use href="${themeDisplay.getPathThemeImages()}/clay/icons.svg#search"></use>
+									</svg>
+								</button>
+							</div>
+						</div>
+					</form>
+
+					[#if showSolutions || showDiscussions || showMessages]
+						<div class="forums-hero__stats mb-4">
+							<div class="justify-content-center row">
+								[#if showSolutions][@stat solutionsData languageUtil.get(locale, "solutions") /][/#if]
+								[#if showDiscussions][@stat threadsData languageUtil.get(locale, "discussions", "Discussions") /][/#if]
+								[#if showMessages][@stat messagesData languageUtil.get(locale, "messages") /][/#if]
+							</div>
+						</div>
+					[/#if]
+
+					[#-- Visibility is resolved client-side (see index.js): server-side
+						 restClient actions do not reflect the viewing user's create
+						 permission in a normal page render. --]
+					[#if showNewDiscussionButton]
+						<a class="btn btn-lg btn-primary" href="${sitePrefix}/new-discussion" id="forumsHeroAskBtn" style="display: none;">
+							${languageUtil.get(locale, "new-forum-message")}
+						</a>
+					[/#if]
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,50 @@
+{
+	"active": true,
+	"defaultLanguageId": "en_US",
+	"enableCategorization": false,
+	"enableComments": false,
+	"enableIndexSearch": true,
+	"enableLocalization": false,
+	"externalReferenceCode": "FORUM-MESSAGE-ATTACHMENT",
+	"label": {
+		"en_US": "Forum Message Attachment"
+	},
+	"name": "ForumMessageAttachment",
+	"objectFields": [
+		{
+			"DBType": "Long",
+			"businessType": "Attachment",
+			"indexed": false,
+			"label": {
+				"en_US": "File"
+			},
+			"localized": false,
+			"name": "file",
+			"objectFieldSettings": [
+				{
+					"name": "acceptedFileExtensions",
+					"value": "*"
+				},
+				{
+					"name": "fileSource",
+					"value": "userComputerToDocumentsAndMedia"
+				},
+				{
+					"name": "maximumFileSize",
+					"value": 10
+				},
+				{
+					"name": "showFilesInLibrary",
+					"value": false
+				}
+			],
+			"required": true,
+			"type": "Long"
+		}
+	],
+	"objectFolderExternalReferenceCode": "FORUMS-FOLDER",
+	"pluralLabel": {
+		"en_US": "Forum Message Attachments"
+	},
+	"scope": "site"
+}

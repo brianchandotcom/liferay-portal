@@ -1,0 +1,22 @@
+{
+	"deletionType": "cascade",
+	"edge": false,
+	"externalReferenceCode": "REL-THREAD-MESSAGES",
+	"label": {
+		"en_US": "Thread Messages"
+	},
+	"name": "threadMessages",
+	"objectDefinitionExternalReferenceCode1": "FORUM-THREAD",
+	"objectDefinitionExternalReferenceCode2": "FORUM-MESSAGE",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:ForumThread$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:ForumMessage$]",
+	"objectDefinitionModifiable2": true,
+	"objectDefinitionName2": "ForumMessage",
+	"objectDefinitionScope2": "site",
+	"objectDefinitionSystem2": false,
+	"parameterObjectFieldId": 0,
+	"parameterObjectFieldName": "",
+	"reverse": false,
+	"system": false,
+	"type": "oneToMany"
+}

@@ -1,0 +1,191 @@
+[
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:ForumBan$]",
+		"roleName": "Site Member",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:ForumCategory$]",
+		"roleName": "Guest",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:ForumCategory$]",
+		"roleName": "Site Member",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:ForumMessage$]",
+		"roleName": "Guest",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:ForumMessage$]",
+		"roleName": "Site Member",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:ForumMessageAttachment$]",
+		"roleName": "Guest",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:ForumMessageAttachment$]",
+		"roleName": "Site Member",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:ForumNotification$]",
+		"roleName": "User",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:ForumSuspiciousActivity$]",
+		"roleName": "Site Member",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:ForumThread$]",
+		"roleName": "Guest",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:ForumThread$]",
+		"roleName": "Site Member",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:ForumThreadFlag$]",
+		"roleName": "Site Member",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:ForumVote$]",
+		"roleName": "Guest",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:ForumVote$]",
+		"roleName": "Site Member",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"ADD_OBJECT_ENTRY"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:ForumCategory$]",
+		"roleName": "User",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"ADD_OBJECT_ENTRY"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:ForumMessage$]",
+		"roleName": "User",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"ADD_OBJECT_ENTRY"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:ForumMessageAttachment$]",
+		"roleName": "User",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"ADD_OBJECT_ENTRY"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:ForumSubscription$]",
+		"roleName": "User",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"ADD_OBJECT_ENTRY"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:ForumThread$]",
+		"roleName": "User",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"ADD_OBJECT_ENTRY"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:ForumThreadFlag$]",
+		"roleName": "User",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"ADD_OBJECT_ENTRY"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:ForumVote$]",
+		"roleName": "User",
+		"scope": 1
+	}
+]

@@ -1,0 +1,44 @@
+{
+	"accountEntryRestricted": false,
+	"accountEntryRestrictedObjectFieldName": "",
+	"active": true,
+	"defaultLanguageId": "en_US",
+	"enableCategorization": true,
+	"enableComments": false,
+	"enableFormContainer": true,
+	"enableFriendlyURLCustomization": false,
+	"enableIndexSearch": true,
+	"enableLocalization": false,
+	"enableObjectEntryDraft": false,
+	"enableObjectEntryHistory": false,
+	"enableObjectEntrySchedule": false,
+	"enableObjectEntrySubscription": false,
+	"enableObjectEntryVersioning": false,
+	"externalReferenceCode": "FORUM-BAN",
+	"label": {
+		"en_US": "Forum Ban"
+	},
+	"modifiable": true,
+	"name": "ForumBan",
+	"objectFields": [
+		{
+			"DBType": "Long",
+			"businessType": "LongInteger",
+			"label": {
+				"en_US": "Ban User ID"
+			},
+			"name": "banUserId",
+			"required": true
+		}
+	],
+	"objectFolderExternalReferenceCode": "FORUMS-FOLDER",
+	"panelCategoryKey": "",
+	"parameterRequired": false,
+	"pluralLabel": {
+		"en_US": "Forum Bans"
+	},
+	"portlet": false,
+	"scope": "site",
+	"system": false,
+	"titleObjectFieldName": "externalReferenceCode"
+}

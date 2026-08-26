@@ -1,0 +1,103 @@
+<div class="forums-categories-admin" id="forumsCategoriesAdmin"
+	data-category-page-size="${configuration.categoryPageSize!"100"}"
+	data-category-sort="${configuration.categorySort!""}"
+	data-label-no-categories="${languageUtil.get(locale, "no-categories-found")}"
+	data-label-error-loading="${languageUtil.get(locale, "error-loading-categories")}"
+	data-label-delete="${languageUtil.get(locale, "delete")}"
+	data-label-confirm-delete="${languageUtil.get(locale, "confirm-delete-category")}"
+	data-label-failed-delete="${languageUtil.get(locale, "failed-to-delete-category")}"
+	data-label-error-delete="${languageUtil.get(locale, "error-deleting-category")}"
+	data-label-seeding="${languageUtil.get(locale, "seeding")}"
+	data-label-seed-default="${languageUtil.get(locale, "seed-default-categories")}"
+	data-label-error-creating="${languageUtil.get(locale, "error-creating-category")}"
+	data-label-unnamed="${languageUtil.get(locale, "unnamed")}"
+	data-label-no-permissions="${languageUtil.get(locale, "you-do-not-have-the-required-permissions-to-access-this-application")}"
+	data-label-edit="${languageUtil.get(locale, "edit")}"
+	data-label-save="${languageUtil.get(locale, "save")}"
+	data-label-cancel="${languageUtil.get(locale, "cancel")}"
+	data-label-error-updating="${languageUtil.get(locale, "error-updating-category")}"
+	data-label-category-name="${languageUtil.get(locale, "category-name")}"
+	data-label-description="${languageUtil.get(locale, "description")}"
+	data-label-parent-category="${languageUtil.get(locale, "parent-category")}"
+	data-label-top-level="${languageUtil.get(locale, "none")} (${languageUtil.get(locale, "top-level")})"
+	data-label-has-subcategories="${languageUtil.get(locale, "category-with-subcategories-cannot-be-nested")}"
+	data-label-confirm-delete-category-with-subcategories="${languageUtil.get(locale, "confirm-delete-category-with-subcategories")}">
+	<div class="container">
+		<div class="alert alert-warning" id="forumsCategoriesAdminNoPermissions" role="alert" style="display:none;">
+			${languageUtil.get(locale, "you-do-not-have-the-required-permissions-to-access-this-application")}
+		</div>
+	</div>
+
+	<div class="container">
+		<div class="panel panel-secondary forums-categories-admin__card" style="display:none;">
+			<div class="panel-body">
+				<h3 class="mb-4 text-dark">
+					${languageUtil.get(locale, "forum-categories-admin")}
+				</h3>
+
+				<div class="alert alert-info">
+					${languageUtil.get(locale, "forum-categories-admin-info")}
+				</div>
+
+			<div class="mb-4" id="forumsCategoriesAdminSeedSection" style="display:none;">
+					<button class="btn btn-primary" id="forumsCategoriesAdminSeedBtn">${languageUtil.get(locale, "seed-default-categories")}</button>
+				<span id="forumsCategoriesAdminSeedStatus" class="ml-2 text-success" style="display:none;" aria-live="polite">${languageUtil.get(locale, "seeding-complete")}</span>
+				</div>
+
+				<h4 class="text-dark" id="forumsCategoriesAdminAddHeading" style="display:none;">${languageUtil.get(locale, "add-custom-category")}</h4>
+
+				<form class="mb-4" id="forumsCategoriesAdminAddForm" style="display:none;">
+					<div class="align-items-end row">
+						<div class="col-md">
+							<div class="form-group mb-md-0">
+								<label for="forumsCategoriesAdminCatName">${languageUtil.get(locale, "category-name")}</label>
+
+								<input class="form-control" id="forumsCategoriesAdminCatName" required type="text" />
+							</div>
+						</div>
+
+						<div class="col-md">
+							<div class="form-group mb-md-0">
+								<label for="forumsCategoriesAdminCatDesc">${languageUtil.get(locale, "description")}</label>
+
+								<input class="form-control" id="forumsCategoriesAdminCatDesc" type="text" />
+							</div>
+						</div>
+
+						<div class="col-md">
+							<div class="form-group mb-md-0">
+								<label for="forumsCategoriesAdminCatParent">
+									${languageUtil.get(locale, "parent-category")}
+									<span class="font-weight-normal text-secondary">(${languageUtil.get(locale, "one-level-only")})</span>
+								</label>
+
+								<select class="form-control" id="forumsCategoriesAdminCatParent">
+
+									<!-- Populated by JS -->
+
+								</select>
+							</div>
+						</div>
+
+						<div class="col-md-auto">
+							<button type="submit" class="btn btn-outline-primary" id="forumsCategoriesAdminAddBtn">${languageUtil.get(locale, "add")}</button>
+						</div>
+					</div>
+				</form>
+
+				<h4 class="text-dark">${languageUtil.get(locale, "existing-categories")}</h4>
+
+				<div class="py-3 text-center" id="forumsCategoriesAdminLoading">
+					<span aria-hidden="true" class="loading-animation loading-animation-sm"></span>
+					<span class="sr-only">${languageUtil.get(locale, "loading")}</span>
+				</div>
+
+				<ul aria-live="polite" aria-relevant="additions removals" class="list-group" id="forumsCategoriesAdminCategoryList">
+
+					<!-- Populated by JS -->
+
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>

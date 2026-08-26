@@ -1,0 +1,22 @@
+{
+	"deletionType": "cascade",
+	"edge": false,
+	"externalReferenceCode": "REL-CATEGORY-THREADS",
+	"label": {
+		"en_US": "Category Threads"
+	},
+	"name": "categoryThreads",
+	"objectDefinitionExternalReferenceCode1": "FORUM-CATEGORY",
+	"objectDefinitionExternalReferenceCode2": "FORUM-THREAD",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:ForumCategory$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:ForumThread$]",
+	"objectDefinitionModifiable2": true,
+	"objectDefinitionName2": "ForumThread",
+	"objectDefinitionScope2": "site",
+	"objectDefinitionSystem2": false,
+	"parameterObjectFieldId": 0,
+	"parameterObjectFieldName": "",
+	"reverse": false,
+	"system": false,
+	"type": "oneToMany"
+}

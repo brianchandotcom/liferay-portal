@@ -1,0 +1,245 @@
+[#assign formMode = configuration.formMode!"modal" /]
+
+[#-- Reusable form-field macros so the modal and page layouts share one source --]
+[#macro subjectGroup]
+	<div class="form-group" id="forumsMessageComposerSubjectGroup">
+		<label for="forumsMessageComposerSubject" class="font-weight-bold">${languageUtil.get(locale, "subject")}</label>
+
+		<input type="text" class="form-control" id="forumsMessageComposerSubject" placeholder="${languageUtil.get(locale, "enter-a-descriptive-title")}" required maxlength="255" aria-describedby="forumsMessageComposerSubjectError" />
+
+		<div class="invalid-feedback" id="forumsMessageComposerSubjectError">${languageUtil.get(locale, "please-enter-a-subject")}</div>
+	</div>
+[/#macro]
+
+[#macro categoryGroup]
+	<div class="form-group" id="forumsMessageComposerCategoryGroup">
+		<label for="forumsMessageComposerCategory" class="font-weight-bold">${languageUtil.get(locale, "category")}</label>
+
+		<select class="form-control" id="forumsMessageComposerCategory" required aria-describedby="forumsMessageComposerCategoryError">
+			<option value="">${languageUtil.get(locale, "select-a-category")}</option>
+		</select>
+
+		<div class="invalid-feedback" id="forumsMessageComposerCategoryError">${languageUtil.get(locale, "please-select-a-category")}</div>
+	</div>
+[/#macro]
+
+[#macro tagsGroup]
+	<div class="form-group" id="forumsMessageComposerTagsGroup">
+		<label class="font-weight-bold" for="forumsMessageComposerTagsInput" id="forumsMessageComposerTagsLabel">${languageUtil.get(locale, "tags")}</label>
+
+		<div class="input-group" style="min-height: 2.125rem;">
+			<div class="input-group-item">
+				<div class="form-control form-control-tag-group input-group">
+					<div class="input-group-item">
+						<div class="input-group">
+							<div aria-labelledby="forumsMessageComposerTagsLabel" class="d-contents input-group-item input-group-item-shrink input-group-prepend" id="forumsMessageComposerTagsList" role="group"></div>
+							<div class="input-group-item input-group-prepend">
+								<input autocomplete="off" autocorrect="off" class="form-control-inset" id="forumsMessageComposerTagsInput" spellcheck="false" type="text" value="" />
+							</div>
+						</div>
+					</div>
+
+					<div class="sr-only">
+						<span>${languageUtil.get(locale, "press-backspace-to-delete-the-current-row")}</span>
+						<span aria-live="polite" aria-relevant="text"></span>
+					</div>
+				</div>
+			</div>
+
+			<div class="input-group-item input-group-item-shrink" style="display: none;">
+				<button class="btn btn-secondary" type="button" aria-haspopup="dialog" aria-label="${languageUtil.get(locale, "select-tags")}">${languageUtil.get(locale, "select-tags")}</button>
+			</div>
+		</div>
+	</div>
+[/#macro]
+
+[#macro questionGroup]
+	<div class="form-check form-group" id="forumsMessageComposerQuestionGroup">
+		<input checked class="form-check-input" id="forumsMessageComposerQuestion" type="checkbox" />
+
+		<label class="form-check-label" for="forumsMessageComposerQuestion">${languageUtil.get(locale, "mark-as-question")}</label>
+	</div>
+[/#macro]
+
+[#macro priorityGroup]
+	[#-- Mirrors the Message Boards thread-priority feature (Urgent 3.0 / Sticky 2.0 /
+		 Announcement 1.0). Hidden until the JS confirms the user has moderation-level
+		 permissions (see canSetPriority in index.js). --]
+	<div class="form-group" id="forumsMessageComposerPriorityGroup" style="display:none;">
+		<label for="forumsMessageComposerPriority" class="font-weight-bold">${languageUtil.get(locale, "priority")}</label>
+
+		<select class="form-control" id="forumsMessageComposerPriority">
+			<option value="0" selected>${languageUtil.get(locale, "none")}</option>
+			<option value="1">${languageUtil.get(locale, "announcement")}</option>
+			<option value="2">${languageUtil.get(locale, "sticky")}</option>
+			<option value="3">${languageUtil.get(locale, "urgent")}</option>
+		</select>
+	</div>
+[/#macro]
+
+[#macro subscribeGroup]
+	<div class="form-check form-group" id="forumsMessageComposerSubscribeGroup">
+		<input checked class="form-check-input" id="forumsMessageComposerSubscribe" type="checkbox" />
+
+		<label class="form-check-label" for="forumsMessageComposerSubscribe">${languageUtil.get(locale, "subscribe-to-this-message")}</label>
+	</div>
+[/#macro]
+
+[#macro bodyGroup]
+	<div class="form-group forums-message-composer__body-group" id="forumsMessageComposerBodyGroup">
+		<label for="forumsMessageComposerBody" class="font-weight-bold" id="forumsMessageComposerBodyLabel">${languageUtil.get(locale, "details")}</label>
+
+		<div class="forums-message-composer__editor-wrapper" id="${fragmentElementId}-forumsMessageComposerBody-wrapper">
+			[@liferay_layout["render-editor"] content="" name=fragmentElementId + "-forumsMessageComposerBody" label="" /]
+		</div>
+
+		<div class="invalid-feedback" id="forumsMessageComposerBodyError" style="display:none;" role="alert">${languageUtil.get(locale, "please-enter-some-content")}</div>
+	</div>
+[/#macro]
+
+[#macro attachmentsGroup]
+	<div class="form-group forums-message-composer__attachments-group" id="forumsMessageComposerAttachmentsGroup">
+		<label class="font-weight-bold">${languageUtil.get(locale, "attachments")}</label>
+
+		<input type="file" multiple class="forums-message-composer__file-input" id="forumsMessageComposerFileInput" hidden aria-hidden="true" />
+
+		<button class="btn btn-outline-secondary btn-sm forums-message-composer__attach-btn" id="forumsMessageComposerAttachBtn" type="button">
+			<svg class="lexicon-icon lexicon-icon-paperclip" focusable="false" role="presentation">
+				<use href="${themeDisplay.getPathThemeImages()}/clay/icons.svg#paperclip"></use>
+			</svg>
+
+			<span>${languageUtil.get(locale, "attach-files")}</span>
+		</button>
+
+		<div class="forums-message-composer__existing-files" id="forumsMessageComposerExistingFiles"></div>
+		<div class="forums-message-composer__pending-files" id="forumsMessageComposerPendingFiles"></div>
+	</div>
+[/#macro]
+
+[#macro statusAlerts]
+	<div aria-live="polite" class="alert alert-success mt-3" id="forumsMessageComposerSuccess" style="display:none;">
+		${languageUtil.get(locale, "post-submitted-successfully")}
+	</div>
+
+	<div class="alert alert-danger mt-3" id="forumsMessageComposerError" role="alert" style="display:none;">
+		${languageUtil.get(locale, "an-error-occurred")}
+	</div>
+[/#macro]
+
+<div
+	class="forums-message-composer forums-message-composer--${formMode}" id="forumsMessageComposer"
+	data-category-page-size="${configuration.categoryPageSize!"50"}"
+	data-category-sort="${configuration.categorySort!""}"
+	data-form-mode="${formMode}"
+	data-label-new-forum-message="New Discussion"
+	data-label-post-a-reply="${languageUtil.get(locale, "post-a-reply")}"
+	data-label-details="${languageUtil.get(locale, "details")}"
+	data-label-your-reply="${languageUtil.get(locale, "your-reply")}"
+	data-label-describe-question="${languageUtil.get(locale, "describe-your-question")}"
+	data-label-write-reply="${languageUtil.get(locale, "write-your-reply")}"
+	data-label-post="${languageUtil.get(locale, "post")}"
+	data-label-posting="${languageUtil.get(locale, "posting")}"
+	data-label-unnamed="${languageUtil.get(locale, "unnamed")}"
+	data-label-reply-posted="${languageUtil.get(locale, "reply-posted-successfully")}"
+	data-label-question-posted="${languageUtil.get(locale, "your-question-has-been-posted")}"
+	data-label-save="${languageUtil.get(locale, "save")}"
+	data-label-edit-topic="${languageUtil.get(locale, "edit-topic")}"
+	data-label-edit-reply="${languageUtil.get(locale, "edit-reply")}"
+	data-label-success="${languageUtil.get(locale, "success")}"
+	data-label-subscribe-to-this-message="${languageUtil.get(locale, "subscribe-to-this-message")}"
+	data-label-remove="${languageUtil.get(locale, "remove")}"
+	data-label-remove-attachment="${languageUtil.get(locale, "remove-file-x")}"
+	data-label-file-too-large="${languageUtil.get(locale, "the-file-is-too-large")}"
+	data-label-mention-no-users="${languageUtil.get(locale, "no-users-found")}"
+	data-label-banned-warning="${languageUtil.get(locale, "your-account-has-been-banned-from-participating-in-the-forums")}"
+>
+
+	[#if formMode == "page"]
+
+		<!-- Page mode: single-column form on its own screen -->
+
+		<div class="panel panel-secondary">
+			<div class="panel-body">
+				<h1 class="text-dark mb-4" id="forumsMessageComposerTitle">New Discussion</h1>
+
+				<form id="forumsMessageComposerForm" novalidate>
+					<div class="forums-message-composer__single-column" id="forumsMessageComposerLeftCol">
+						[@subjectGroup /]
+						[@categoryGroup /]
+						[@tagsGroup /]
+						[@priorityGroup /]
+						[@questionGroup /]
+						[@subscribeGroup /]
+						[@bodyGroup /]
+						[@attachmentsGroup /]
+					</div>
+				</form>
+
+				[@statusAlerts /]
+
+				<div class="forums-message-composer__page-footer">
+					<div class="btn-group-spaced" role="group">
+						<button type="button" class="btn btn-outline-secondary" id="forumsMessageComposerCancel">${languageUtil.get(locale, "cancel")}</button>
+						<button type="submit" form="forumsMessageComposerForm" class="btn btn-primary" id="forumsMessageComposerSubmit">${languageUtil.get(locale, "post")}</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	[#else]
+
+		<!-- Backdrop -->
+
+		<div class="fade modal-backdrop" id="forumsMessageComposerBackdrop" style="display:none;"></div>
+
+		<!-- Modal dialog (Clay modal) -->
+
+		<div aria-hidden="true" aria-labelledby="forumsMessageComposerTitle" aria-modal="true" class="modal fade forums-message-composer__modal" id="forumsMessageComposerModal" role="dialog" tabindex="-1">
+			<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="forumsMessageComposerTitle">New Discussion</h5>
+
+						<button type="button" class="close" id="forumsMessageComposerCloseBtn" aria-label="${languageUtil.get(locale, "close")}">
+							<svg class="lexicon-icon lexicon-icon-times" focusable="false" role="presentation">
+								<use href="${themeDisplay.getPathThemeImages()}/clay/icons.svg#times"></use>
+							</svg>
+						</button>
+					</div>
+
+					<div class="modal-body">
+						<form id="forumsMessageComposerForm" novalidate>
+							<div class="forums-message-composer__layout">
+								<div class="forums-message-composer__layout-left" id="forumsMessageComposerLeftCol">
+									[@subjectGroup /]
+									[@categoryGroup /]
+									[@tagsGroup /]
+									[@priorityGroup /]
+									[@questionGroup /]
+									[@subscribeGroup /]
+									[@attachmentsGroup /]
+								</div>
+
+								<div class="forums-message-composer__layout-right" id="forumsMessageComposerRightCol">
+									[@bodyGroup /]
+								</div>
+							</div>
+						</form>
+
+						[@statusAlerts /]
+					</div>
+
+					<div class="modal-footer">
+						<div class="modal-item-last">
+							<div class="btn-group-spaced" role="group">
+								<button type="button" class="btn btn-outline-secondary" id="forumsMessageComposerCancel">${languageUtil.get(locale, "cancel")}</button>
+								<button type="submit" form="forumsMessageComposerForm" class="btn btn-primary" id="forumsMessageComposerSubmit">${languageUtil.get(locale, "post")}</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	[/#if]
+</div>

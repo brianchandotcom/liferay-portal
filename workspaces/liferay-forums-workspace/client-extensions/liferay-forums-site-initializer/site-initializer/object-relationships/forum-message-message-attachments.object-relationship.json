@@ -1,0 +1,22 @@
+{
+	"deletionType": "cascade",
+	"edge": false,
+	"externalReferenceCode": "REL-MESSAGE-ATTACHMENTS",
+	"label": {
+		"en_US": "Message Attachments"
+	},
+	"name": "messageAttachments",
+	"objectDefinitionExternalReferenceCode1": "FORUM-MESSAGE",
+	"objectDefinitionExternalReferenceCode2": "FORUM-MESSAGE-ATTACHMENT",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:ForumMessage$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:ForumMessageAttachment$]",
+	"objectDefinitionModifiable2": true,
+	"objectDefinitionName2": "ForumMessageAttachment",
+	"objectDefinitionScope2": "site",
+	"objectDefinitionSystem2": false,
+	"parameterObjectFieldId": 0,
+	"parameterObjectFieldName": "",
+	"reverse": false,
+	"system": false,
+	"type": "oneToMany"
+}

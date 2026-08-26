@@ -1,0 +1,26 @@
+assemble:
+    -   fromTask: bootJar
+liferay-forums-etc-spring-boot-oaua:
+    .serviceAddress: localhost:58082
+    .serviceScheme: http
+    name: Liferay Forums Etc Spring Boot OAuth Application User Agent
+    scopes:
+        -   Liferay.Headless.Admin.Site.everything
+        -   Liferay.Headless.Admin.User.everything
+        -   Liferay.Headless.Object.everything
+        -   Liferay.Object.Admin.REST.everything
+        -   c_forummessage.everything
+        -   c_forumnotification.everything
+        -   c_forumsubscription.everything
+        -   c_forumthread.everything
+    type: oAuthApplicationUserAgent
+liferay-forums-etc-spring-boot-object-action-new-reply:
+    name: Liferay Forums Etc Spring Boot Object Action New Reply
+    oAuth2ApplicationExternalReferenceCode: liferay-forums-etc-spring-boot-oaua
+    resourcePath: /object-action/new-reply
+    type: objectAction
+liferay-forums-etc-spring-boot-object-action-updated-reply:
+    name: Liferay Forums Etc Spring Boot Object Action Updated Reply
+    oAuth2ApplicationExternalReferenceCode: liferay-forums-etc-spring-boot-oaua
+    resourcePath: /object-action/updated-reply
+    type: objectAction

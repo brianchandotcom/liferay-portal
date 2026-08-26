@@ -1,0 +1,300 @@
+body.has-edit-mode-menu #forumsDetailERC,
+body.has-edit-mode-menu #forumsDetailReplyERC {
+	display: block !important;
+}
+
+/* ---------- Title row ---------- */
+
+.forums-message-detail__title-row {
+	align-items: flex-start;
+	display: flex;
+	gap: 1rem;
+	justify-content: space-between;
+	margin-bottom: 1rem;
+}
+
+.forums-message-detail__title {
+	margin: 0;
+}
+
+/* Thread priority badge (Urgent / Sticky / Announcement) next to the title */
+
+.forums-message-detail__priority-badge {
+	align-items: center;
+	display: inline-flex;
+	font-size: 1rem;
+	font-weight: 600;
+	gap: 0.25rem;
+	margin-left: 0.75rem;
+	vertical-align: middle;
+	white-space: nowrap;
+}
+
+.forums-message-detail__priority-badge svg {
+	height: 16px;
+	width: 16px;
+}
+
+.forums-message-detail__op {
+	margin-bottom: 1.5rem;
+}
+
+.forums-message-detail__post-body,
+.forums-message-detail__reply-body {
+	color: var(--body-color, #272833);
+	line-height: 1.7;
+}
+
+.forums-message-detail__post-body {
+	font-size: 1rem;
+	margin-bottom: 1.5rem;
+}
+
+.forums-message-detail__reply-body {
+	margin-bottom: 0.75rem;
+}
+
+.forums-message-detail__reply-body > *:last-child {
+	margin-bottom: 0;
+}
+
+.forums-message-detail__post-body pre,
+.forums-message-detail__reply-body pre {
+	background-color: var(--gray-100, #f1f2f5);
+	border-radius: var(--border-radius, 0.25rem);
+	overflow-x: auto;
+	padding: 1rem;
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.forums-message-detail__post-body pre code,
+.forums-message-detail__reply-body pre code {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.forums-message-detail__post-body img,
+.forums-message-detail__reply-body img {
+	height: auto;
+	max-width: 100%;
+}
+
+/* ---------- Tags ---------- */
+
+.forums-message-detail__tags-bar {
+	align-items: center;
+	display: flex;
+	gap: var(--spacer-4, 1.5rem);
+	justify-content: space-between;
+	margin-bottom: var(--spacer-4, 1.5rem);
+}
+
+.forums-message-detail__tags {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.375rem;
+}
+
+.forums-message-detail__author-badge {
+	background-color: var(--blue-l5, #e5f1ff);
+	border-color: var(--blue-l5, #e5f1ff);
+	color: var(--blue-d2, #005fcc);
+}
+
+.forums-message-detail__solved-banner {
+	display: flex;
+}
+
+.forums-message-detail__tag {
+	background-color: var(--secondary-l3, #e7e7ed);
+	border-color: var(--secondary-l3, #e7e7ed);
+	color: var(--dark-d2, #111116);
+}
+
+.forums-message-detail__author-info {
+	align-items: center;
+	display: flex;
+	gap: 0.75rem;
+	margin-bottom: 1.5rem;
+}
+
+.forums-message-detail__post-actions,
+.forums-message-detail__reply-actions {
+	align-items: center;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+}
+
+.forums-message-detail__reply-content {
+	min-width: 0;
+}
+
+.forums-message-detail__reply-header {
+	align-items: center;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+	margin-bottom: 0.25rem;
+}
+
+.forums-message-detail__reply-actions {
+	gap: 1rem;
+}
+
+.forums-message-detail__reply-card .forums-vote__btn {
+	border-radius: 50%;
+}
+
+.forums-message-detail__reply-card {
+	padding: 1.25rem 0;
+}
+
+#forumsDetailReplyCards .forums-message-detail__reply-card {
+	border-top: 1px solid var(--gray-300, #cdced9);
+}
+
+.forums-message-detail__reply-card--solution {
+	background-color: var(--success-l2, #edf9f0);
+	border-radius: var(--border-radius-lg, 0.5rem);
+	padding: 1.25rem;
+}
+
+.forums-message-detail__reply-card--targeted {
+	animation: forums-reply-target-flash 2s ease forwards;
+	outline: 2px solid var(--primary, #0b5fff);
+	outline-offset: 2px;
+}
+
+@keyframes forums-reply-target-flash {
+	0%, 30% { outline-color: var(--primary, #0b5fff); }
+	100%    { outline-color: transparent; }
+}
+
+.forums-message-detail__solution-section,
+.forums-message-detail__replies-section {
+	margin-bottom: 1.5rem;
+}
+
+.forums-message-detail__section-header {
+	align-items: center;
+	display: flex;
+	font-size: 1rem;
+	font-weight: 600;
+	gap: 0.5rem;
+	margin-bottom: 0.75rem;
+}
+
+.forums-message-detail__answer-selected-by {
+	align-items: center;
+	color: var(--success, #287d3c);
+	display: inline-flex;
+	font-weight: 400;
+	gap: 0.25rem;
+	margin-left: auto;
+}
+
+.forums-message-detail__answer-selected-by-name {
+	font-weight: 600;
+}
+
+.forums-message-detail__topic-nav {
+	display: flex;
+	gap: 1.5rem;
+	justify-content: center;
+	margin-bottom: var(--spacer-4, 1.5rem);
+	margin-top: var(--spacer-5, 3rem);
+}
+
+.forums-skeleton-defs {
+	height: 0;
+	position: absolute;
+	width: 0;
+}
+
+.forums-skeleton-titlerow {
+	display: block;
+	margin-bottom: 1.5rem;
+	width: 100%;
+}
+
+.forums-skeleton-card {
+	margin-bottom: 1rem;
+	padding: 1.5rem 0;
+}
+
+.forums-skeleton-author {
+	align-items: center;
+	display: flex;
+	gap: 0.75rem;
+	margin-top: 1.25rem;
+}
+
+.forums-skeleton-avatar {
+	flex-shrink: 0;
+	height: 40px;
+	width: 40px;
+}
+
+.forums-skeleton-avatar--sm {
+	height: 32px;
+	width: 32px;
+}
+
+.forums-skeleton-fill {
+	display: block;
+	flex: 1;
+	min-width: 0;
+	width: 100%;
+}
+
+#forumsDetailLoading {
+	opacity: 1;
+	transition: opacity 0.25s ease-out;
+}
+
+#forumsDetailLoading.forums-skeleton--fade-out {
+	opacity: 0;
+}
+
+/* ---------- Attachments ---------- */
+.forums-message-detail__attachments {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+	margin: 0.75rem 0;
+}
+
+.forums-message-detail__attachment {
+	align-items: center;
+	display: inline-flex;
+}
+
+.forums-message-detail__attachment .forums-attachment-download {
+	align-items: center;
+	display: inline-flex;
+	gap: 0.375rem;
+	max-width: 18rem;
+}
+
+.forums-message-detail__attachment-name {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+/* User mentions rendered inside a topic/reply body. Authored in the OOTB
+   shape: a "@screenName" token wrapped in a <span class="lfr-ac-content">
+   (CKEditor 4). CKEditor 5 drops the span, leaving a bare "@screenName" text
+   token that reads fine unstyled; the notification microservice resolves the
+   visible token either way. */
+.forums-message-detail__post-body .lfr-ac-content,
+.forums-message-detail__reply-body .lfr-ac-content {
+	background: #f0f5ff;
+	border-radius: 0.25rem;
+	color: #0053f0;
+	font-weight: 600;
+	padding: 0 0.2em;
+	white-space: nowrap;
+}

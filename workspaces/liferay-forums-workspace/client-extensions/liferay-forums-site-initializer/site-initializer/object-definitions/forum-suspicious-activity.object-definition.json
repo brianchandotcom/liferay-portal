@@ -1,0 +1,71 @@
+{
+	"accountEntryRestricted": false,
+	"accountEntryRestrictedObjectFieldName": "",
+	"active": true,
+	"defaultLanguageId": "en_US",
+	"enableCategorization": true,
+	"enableComments": false,
+	"enableFormContainer": true,
+	"enableFriendlyURLCustomization": false,
+	"enableIndexSearch": true,
+	"enableLocalization": false,
+	"enableObjectEntryDraft": false,
+	"enableObjectEntryHistory": false,
+	"enableObjectEntrySchedule": false,
+	"enableObjectEntrySubscription": false,
+	"enableObjectEntryVersioning": false,
+	"externalReferenceCode": "FORUM-SUSPICIOUS-ACTIVITY",
+	"label": {
+		"en_US": "Forum Suspicious Activity"
+	},
+	"modifiable": true,
+	"name": "ForumSuspiciousActivity",
+	"objectFields": [
+		{
+			"DBType": "Long",
+			"businessType": "LongInteger",
+			"label": {
+				"en_US": "Message ID"
+			},
+			"name": "messageId",
+			"required": false
+		},
+		{
+			"DBType": "Long",
+			"businessType": "LongInteger",
+			"label": {
+				"en_US": "Message ID"
+			},
+			"name": "suspiciousMessageId",
+			"required": false
+		},
+		{
+			"DBType": "Clob",
+			"businessType": "LongText",
+			"label": {
+				"en_US": "Reason"
+			},
+			"name": "reason",
+			"required": false
+		},
+		{
+			"DBType": "Boolean",
+			"businessType": "Boolean",
+			"label": {
+				"en_US": "Validated"
+			},
+			"name": "validated",
+			"required": false
+		}
+	],
+	"objectFolderExternalReferenceCode": "FORUMS-FOLDER",
+	"panelCategoryKey": "",
+	"parameterRequired": false,
+	"pluralLabel": {
+		"en_US": "Forum Suspicious Activities"
+	},
+	"portlet": false,
+	"scope": "site",
+	"system": false,
+	"titleObjectFieldName": "externalReferenceCode"
+}

@@ -1,0 +1,147 @@
+[#assign forumsNewDiscussionURL = (themeDisplay.getPathFriendlyURLPublic()!"") + (themeDisplay.getScopeGroup().getFriendlyURL()!"") + "/new-discussion" /]
+<div
+	class="forums-message-list" id="forumsMessageList"
+	data-category-page-size="${configuration.categoryPageSize!"200"}"
+	data-category-sort="${configuration.categorySort!""}"
+	data-label-all-messages="${languageUtil.get(locale, "all-discussions")}"
+	data-label-category="${languageUtil.get(locale, "category")}"
+	data-label-no-messages="${languageUtil.get(locale, "no-messages-found")}"
+	data-label-untitled-message="${languageUtil.get(locale, "untitled-message")}"
+	data-label-unknown="${languageUtil.get(locale, "unknown")}"
+	data-label-solved="${languageUtil.get(locale, "solved")}"
+	data-label-delete="${languageUtil.get(locale, "delete")}"
+	data-label-unable-to-load="${languageUtil.get(locale, "unable-to-load-messages")}"
+	data-label-delete-topic="${languageUtil.get(locale, "delete-topic")}"
+	data-label-confirm-delete-topic="${languageUtil.get(locale, "confirm-delete-topic")}"
+	data-label-cancel="${languageUtil.get(locale, "cancel")}"
+	data-label-just-now="${languageUtil.get(locale, "just-now")}"
+	data-label-x-minutes-ago="${languageUtil.get(locale, "x-minutes-ago")}"
+	data-label-x-hours-ago="${languageUtil.get(locale, "x-hours-ago")}"
+	data-label-x-days-ago="${languageUtil.get(locale, "x-days-ago")}"
+	data-label-x-reply="${languageUtil.get(locale, "x-reply")}"
+	data-label-x-replies="${languageUtil.get(locale, "x-replies")}"
+	data-label-flagged="${languageUtil.get(locale, "flagged")}"
+	data-label-urgent="${languageUtil.get(locale, "urgent")}"
+	data-label-sticky="${languageUtil.get(locale, "sticky")}"
+	data-label-announcement="${languageUtil.get(locale, "announcement")}"
+	data-label-views="${languageUtil.get(locale, "views")}"
+	data-label-all-categories="${languageUtil.get(locale, "all-categories")}"
+	data-label-subcategories="${languageUtil.get(locale, "subcategories")}"
+	data-label-expand="${languageUtil.get(locale, "expand")}"
+	data-label-collapse="${languageUtil.get(locale, "collapse")}"
+	data-label-showing="${languageUtil.get(locale, "showing-x-of-x-items")}"
+>
+	<div class="panel-body">
+
+		<!-- Breadcrumb -->
+
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb" id="forumsMessageListBreadcrumb">
+				<li class="breadcrumb-item"><a class="breadcrumb-link" id="forumsMessageListBreadcrumbHome" href="#">${languageUtil.get(locale, "forums")}</a></li>
+				<li class="breadcrumb-item active"><a class="breadcrumb-link" aria-current="page" href="#" id="forumsMessageListCategoryName">${languageUtil.get(locale, "all-discussions")}</a></li>
+			</ol>
+		</nav>
+
+		<!-- Header row: Category name + search + CTA -->
+
+		<div class="forums-message-list__header">
+			<h2 class="mb-0 text-dark" id="forumsMessageListHeading">${languageUtil.get(locale, "all-discussions")}</h2>
+
+			<div class="forums-message-list__actions">
+				<select class="form-control forums-message-list__category-filter" id="forumsMessageListCategoryFilter" aria-label="${languageUtil.get(locale, "filter-by-category")}">
+					<option value="">${languageUtil.get(locale, "all-categories")}</option>
+				</select>
+
+				<div class="forums-message-list__search input-group" id="forumsMessageListSearch">
+					<div class="input-group-item">
+						<input type="text" class="form-control input-group-inset input-group-inset-after" id="forumsMessageListSearchInput" aria-label="${languageUtil.get(locale, "search-messages")}" />
+
+						<div class="input-group-inset-item input-group-inset-item-after">
+							<button class="btn btn-unstyled" type="button" id="forumsMessageListSearchBtn" aria-label="${languageUtil.get(locale, "search-messages")}">
+								<svg class="lexicon-icon lexicon-icon-search" focusable="false" role="presentation">
+									<use href="${themeDisplay.getPathThemeImages()}/clay/icons.svg#search"></use>
+								</svg>
+							</button>
+						</div>
+					</div>
+				</div>
+
+				<a href="${forumsNewDiscussionURL}" class="btn btn-primary text-nowrap" id="forumsMessageListAskBtn" style="display: none;">${languageUtil.get(locale, "new-forum-message")}</a>
+			</div>
+		</div>
+
+		<!-- Subcategories of the current category (hidden when there are none).
+			 Collapsed to two rows; the toggle appears only when there are more. -->
+		<div class="forums-message-list__subcategories mb-4" id="forumsMessageListSubcategories" style="display:none;">
+			<h3 class="h5 text-dark mb-3">${languageUtil.get(locale, "subcategories")}</h3>
+
+			<div class="row" id="forumsMessageListSubcategoriesRow"></div>
+			<div class="text-center">
+				<button aria-controls="forumsMessageListSubcategoriesRow" aria-expanded="false" class="btn btn-sm btn-unstyled forums-message-list__subcategories-toggle" id="forumsMessageListSubcategoriesToggle" style="display:none;" type="button">
+					<span id="forumsMessageListSubcategoriesToggleLabel">${languageUtil.get(locale, "expand")}</span>
+
+					<svg class="lexicon-icon" focusable="false" id="forumsMessageListSubcategoriesToggleIcon" role="presentation">
+						<use href="${themeDisplay.getPathThemeImages()}/clay/icons.svg#angle-down"></use>
+					</svg>
+				</button>
+			</div>
+		</div>
+
+		<!-- Tab filters -->
+
+		<ul class="mb-4 nav nav-tabs" id="forumsMessageListTabs" role="tablist">
+			<li class="nav-item" role="presentation">
+				<a class="nav-link active" href="#" data-sort="dateCreated:desc" role="tab" id="forumsTabRecent" aria-selected="true">${languageUtil.get(locale, "recent")}</a>
+			</li>
+			<li class="nav-item" role="presentation">
+				<a class="nav-link" href="#" data-sort="lastPostDate:desc" role="tab" id="forumsTabRecentActivity" aria-selected="false">${languageUtil.get(locale, "recent-activity")}</a>
+			</li>
+		</ul>
+
+		<!-- Showing x-y of total -->
+
+		<div class="mb-3 small text-secondary" id="forumsMessageListShowing" style="display:none;"></div>
+
+		<!-- Message cards -->
+
+		<div id="forumsMessageListCards">
+			<div id="forumsMessageListLoading" aria-busy="true" aria-label="${languageUtil.get(locale, "loading")}">
+				<svg aria-hidden="true" class="forums-skeleton-defs" focusable="false" height="0" width="0">
+					<defs>
+						<linearGradient id="forumsSkeletonGradientList" x1="0" x2="1" y1="0" y2="0">
+							<stop offset="0%" style="stop-color:var(--gray-200, #e7e7ed)" />
+							<stop offset="50%" style="stop-color:var(--gray-100, #f1f2f5)" />
+							<stop offset="100%" style="stop-color:var(--gray-200, #e7e7ed)" />
+
+							<animate attributeName="x1" dur="1.4s" repeatCount="indefinite" values="-1;1" />
+							<animate attributeName="x2" dur="1.4s" repeatCount="indefinite" values="0;2" />
+						</linearGradient>
+					</defs>
+				</svg>
+				[#list 1..4 as i]
+					<div class="forums-skeleton-card">
+						<svg aria-hidden="true" class="forums-skeleton-avatar" height="44" role="presentation" viewBox="0 0 44 44" width="44">
+							<circle cx="22" cy="22" fill="url(#forumsSkeletonGradientList)" r="22" />
+						</svg>
+
+						<svg aria-hidden="true" class="forums-skeleton-fill" height="74" preserveAspectRatio="none" role="presentation" viewBox="0 0 100 74">
+							<rect fill="url(#forumsSkeletonGradientList)" height="16" rx="2" width="68" x="0" y="0" />
+							<rect fill="url(#forumsSkeletonGradientList)" height="11" rx="2" width="100" x="0" y="26" />
+							<rect fill="url(#forumsSkeletonGradientList)" height="11" rx="2" width="82" x="0" y="44" />
+							<rect fill="url(#forumsSkeletonGradientList)" height="9" rx="2" width="12" x="0" y="64" />
+							<rect fill="url(#forumsSkeletonGradientList)" height="9" rx="2" width="12" x="18" y="64" />
+							<rect fill="url(#forumsSkeletonGradientList)" height="9" rx="2" width="12" x="36" y="64" />
+						</svg>
+					</div>
+				[/#list]
+			</div>
+		</div>
+
+		<!-- Pagination -->
+
+		<nav aria-label="${languageUtil.get(locale, "message-pagination")}" id="forumsMessageListPagination" class="mt-4" style="display:none;">
+			<ul class="justify-content-center pagination" id="forumsMessageListPaginationUl">
+			</ul>
+		</nav>
+	</div>
+</div>

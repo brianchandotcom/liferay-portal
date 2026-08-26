@@ -1,0 +1,21 @@
+{
+	"editorType": "richText",
+	"externalReferenceCode": "FORUM-NOTIFICATION-WEB-TEMPLATE",
+	"name": "Forum Notification Web",
+	"name_i18n": {
+		"en_US": "Forum Notification Web"
+	},
+	"objectDefinitionExternalReferenceCode": "FORUM-NOTIFICATION",
+	"recipientType": "term",
+	"recipients": [
+		{
+			"term": "[%FORUMNOTIFICATION_RECIPIENTUSERID%]"
+		}
+	],
+	"subject": {
+		"en_US": "[%FORUMNOTIFICATION_NOTIFICATIONSUBJECT%]"
+	},
+	"system": false,
+	"type": "userNotification",
+	"typeLabel": "User Notification"
+}

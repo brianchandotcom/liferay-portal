@@ -1,0 +1,12 @@
+{
+	"friendlyURL": "/new-discussion",
+	"friendlyURL_i18n": {
+		"en_US": "/new-discussion"
+	},
+	"hidden": true,
+	"name_i18n": {
+		"en_US": "New Discussion"
+	},
+	"private": false,
+	"type": "content"
+}

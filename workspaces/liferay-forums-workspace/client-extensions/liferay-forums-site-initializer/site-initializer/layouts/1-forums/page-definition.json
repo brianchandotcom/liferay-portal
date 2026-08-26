@@ -1,0 +1,56 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"indexed": true,
+					"layout": {
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragment": {
+								"key": "forums-hero"
+							},
+							"fragmentConfig": {
+							},
+							"fragmentFields": [
+							],
+							"indexed": true
+						},
+						"pageElements": [
+						],
+						"type": "Fragment"
+					}
+				],
+				"type": "Section"
+			},
+			{
+				"definition": {
+					"indexed": true,
+					"layout": {
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragment": {
+								"key": "forums-category-grid"
+							},
+							"fragmentConfig": {
+							},
+							"fragmentFields": [
+							],
+							"indexed": true
+						},
+						"type": "Fragment"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"version": 1.1
+}

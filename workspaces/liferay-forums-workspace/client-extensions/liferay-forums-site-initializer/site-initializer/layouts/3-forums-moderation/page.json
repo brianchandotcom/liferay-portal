@@ -1,0 +1,12 @@
+{
+	"friendlyURL": "/forums-moderation",
+	"friendlyURL_i18n": {
+		"en_US": "/forums-moderation"
+	},
+	"hidden": true,
+	"name_i18n": {
+		"en_US": "Forums Moderation"
+	},
+	"private": false,
+	"type": "content"
+}

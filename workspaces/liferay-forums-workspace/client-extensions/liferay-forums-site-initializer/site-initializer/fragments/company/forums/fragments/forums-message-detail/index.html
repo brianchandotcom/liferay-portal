@@ -1,0 +1,241 @@
+[#assign scopeGroup = themeDisplay.getScopeGroup() /]
+[#assign forumsHome = (themeDisplay.getPathFriendlyURLPublic()!"") + (scopeGroup.getFriendlyURL()!"") /]
+<div
+	class="forums-message-detail" id="forumsMessageDetail"
+	data-label-unknown="${languageUtil.get(locale, "unknown")}"
+	data-label-no-message="${languageUtil.get(locale, "no-message-selected")}"
+	data-label-untitled-message="${languageUtil.get(locale, "untitled-message")}"
+	data-label-category="${languageUtil.get(locale, "category")}"
+	data-label-upvote="${languageUtil.get(locale, "upvote")}"
+	data-label-downvote="${languageUtil.get(locale, "downvote")}"
+	data-label-accepted="${languageUtil.get(locale, "accepted")}"
+	data-label-mark-as-answer="${languageUtil.get(locale, "mark-as-answer")}"
+	data-label-delete="${languageUtil.get(locale, "delete")}"
+	data-label-reply="${languageUtil.get(locale, "reply")}"
+	data-label-comment="${languageUtil.get(locale, "comment")}"
+	data-label-delete-reply="${languageUtil.get(locale, "delete-reply")}"
+	data-label-edit-reply="${languageUtil.get(locale, "edit-reply")}"
+	data-label-options="${languageUtil.get(locale, "options")}"
+	data-label-delete-topic="${languageUtil.get(locale, "delete-topic")}"
+	data-label-confirm-delete-reply="${languageUtil.get(locale, "confirm-delete-reply")}"
+	data-label-confirm-delete-topic="${languageUtil.get(locale, "confirm-delete-topic")}"
+	data-label-download="${languageUtil.get(locale, "download")}"
+	data-label-could-not-download-file="${languageUtil.get(locale, "could-not-download-the-file")}"
+	data-label-cancel="${languageUtil.get(locale, "cancel")}"
+	data-label-unable-to-load-message="${languageUtil.get(locale, "unable-to-load-message")}"
+	data-label-unable-to-load-messages="${languageUtil.get(locale, "unable-to-load-messages")}"
+	data-label-flagged="${languageUtil.get(locale, "flagged")}"
+	data-label-urgent="${languageUtil.get(locale, "urgent")}"
+	data-label-sticky="${languageUtil.get(locale, "sticky")}"
+	data-label-announcement="${languageUtil.get(locale, "announcement")}"
+	data-label-reply-form-not-found="${languageUtil.get(locale, "reply-form-not-found")}"
+	data-label-just-now="${languageUtil.get(locale, "just-now")}"
+	data-label-x-minutes-ago="${languageUtil.get(locale, "x-minutes-ago")}"
+	data-label-x-hours-ago="${languageUtil.get(locale, "x-hours-ago")}"
+	data-label-x-days-ago="${languageUtil.get(locale, "x-days-ago")}"
+	data-label-accepted-solution="${languageUtil.get(locale, "x-accepted-solution")}"
+	data-label-accepted-solutions="${languageUtil.get(locale, "x-accepted-solutions")}"
+	data-label-answer-selected-by="${languageUtil.get(locale, "answer-selected-by-x", "Answer selected by {0}")}"
+	data-label-x-reply="${languageUtil.get(locale, "x-reply")}"
+	data-label-x-replies="${languageUtil.get(locale, "x-replies")}"
+	data-label-convert-to-question="${languageUtil.get(locale, "convert-to-question")}"
+	data-label-convert-to-message="${languageUtil.get(locale, "convert-to-discussion")}"
+	data-label-edit-topic="${languageUtil.get(locale, "edit-topic")}"
+	data-label-views="${languageUtil.get(locale, "views")}"
+	data-label-back-to-x="${languageUtil.get(locale, "back-to-x")}"
+	data-label-report-inappropriate-content="${languageUtil.get(locale, "report-inappropriate-content")}"
+	data-label-report-description="${languageUtil.get(locale, "report-description")}"
+	data-label-reason-for-report="${languageUtil.get(locale, "reason-for-report")}"
+	data-label-report="${languageUtil.get(locale, "report")}"
+	data-label-spam="${languageUtil.get(locale, "spam")}"
+	data-label-harmful-dangerous-acts="${languageUtil.get(locale, "harmful-dangerous-acts")}"
+	data-label-harassment-bullying="${languageUtil.get(locale, "harassment-bullying")}"
+	data-label-nudity-sexual-content="${languageUtil.get(locale, "nudity-sexual-content")}"
+	data-label-other="${languageUtil.get(locale, "other")}"
+	data-label-report-submitted="${languageUtil.get(locale, "report-submitted")}"
+	data-label-flagged-warning="${languageUtil.get(locale, "this-message-has-been-flagged-and-validated-as-inappropriate-content")}"
+	data-label-banned="${languageUtil.get(locale, "banned")}"
+	data-label-banned-warning="${languageUtil.get(locale, "your-account-has-been-banned-from-participating-in-the-forums")}"
+	data-label-subscribe="${languageUtil.get(locale, "subscribe")}"
+	data-label-unsubscribe="${languageUtil.get(locale, "unsubscribe")}"
+>
+	<div class="panel-body">
+
+		<!-- Breadcrumb -->
+
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb" id="forumsDetailBreadcrumb">
+				<li class="breadcrumb-item"><a class="breadcrumb-link" href="${forumsHome}">${languageUtil.get(locale, "forums")}</a></li>
+				<li class="breadcrumb-item"><a class="breadcrumb-link" href="#" id="forumsDetailBreadcrumbCategory">${languageUtil.get(locale, "category")}</a></li>
+				<li class="breadcrumb-item active"><a class="breadcrumb-link" aria-current="page" href="#" id="forumsDetailBreadcrumbMessage">${languageUtil.get(locale, "message")}</a></li>
+			</ol>
+		</nav>
+
+		<!-- Mappable Message ERC fields — visible in the Content Page Editor for mapping, hidden at runtime -->
+
+		<div id="forumsDetailERC" data-lfr-editable-id="forumsDetailERC" data-lfr-editable-type="text" style="display: none;">Mappable Message ERC</div>
+		<div id="forumsDetailReplyERC" data-lfr-editable-id="forumsDetailReplyERC" data-lfr-editable-type="text" style="display: none;">Mappable Reply ERC</div>
+
+		<!-- Message title + options -->
+
+		<div class="forums-message-detail__title-row">
+			<h1 class="forums-message-detail__title text-dark" id="forumsDetailTitle">${languageUtil.get(locale, "loading")}</h1>
+
+			<div class="dropdown" id="forumsDetailOptionsDropdown" style="display:none;">
+				<button class="component-action dropdown-toggle" type="button" id="forumsDetailOptions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-label="${languageUtil.get(locale, "options")}" title="${languageUtil.get(locale, "options")}">
+					<svg class="lexicon-icon lexicon-icon-ellipsis-v" role="presentation">
+						<use href="${themeDisplay.getPathThemeImages()}/clay/icons.svg#ellipsis-v"></use>
+					</svg>
+				</button>
+
+				<div aria-labelledby="forumsDetailOptions" class="dropdown-menu dropdown-menu-right">
+					<a class="dropdown-item" href="#" id="forumsDetailEditBtn" style="display:none;">${languageUtil.get(locale, "edit-topic")}</a>
+					<a class="dropdown-item" href="#" id="forumsDetailToggleQuestionBtn" style="display:none;"></a>
+					<a class="dropdown-item" href="#" id="forumsDetailFlagBtn">${languageUtil.get(locale, "flag-message")}</a>
+					<a class="dropdown-item" href="#" id="forumsDetailSubscribeBtn" style="display:none;"></a>
+					<a class="dropdown-item text-danger forums-delete-btn" href="#" id="forumsDetailDeleteBtn" style="display:none;">${languageUtil.get(locale, "delete-topic")}</a>
+				</div>
+			</div>
+		</div>
+
+		<!-- Author info (above the post body) -->
+
+		<div class="forums-message-detail__author-info" id="forumsDetailAuthorInfo" style="display:none;">
+			<span class="sticker sticker-circle sticker-lg sticker-outline-0" id="forumsDetailOPAvatar"></span>
+
+			<div>
+				<span class="d-block font-weight-bold text-dark" id="forumsDetailOPAuthor"></span>
+				<span class="d-block small text-secondary" id="forumsDetailOPDate"></span>
+			</div>
+		</div>
+
+		<!-- Solved indicator -->
+
+		<div class="alert alert-success align-items-center forums-message-detail__solved-banner" id="forumsDetailSolvedBanner" role="alert" style="display:none;">
+			<span class="alert-indicator mr-2">
+				<svg class="lexicon-icon lexicon-icon-check-circle-full" height="20" role="presentation" width="20">
+					<use href="${themeDisplay.getPathThemeImages()}/clay/icons.svg#check-circle-full"></use>
+				</svg>
+			</span>
+			<span>${languageUtil.get(locale, "topic-marked-as-solved")}</span>
+
+			<a href="#forumsDetailSolutionSection" class="alert-link ml-auto" id="forumsDetailViewSolution">${languageUtil.get(locale, "view-the-solution")} <span aria-hidden="true">&rsaquo;</span></a>
+		</div>
+
+		<!-- Skeleton loader -->
+
+		<div id="forumsDetailLoading" aria-busy="true" aria-label="${languageUtil.get(locale, "loading")}">
+			<svg aria-hidden="true" class="forums-skeleton-defs" focusable="false" height="0" width="0">
+				<defs>
+					<linearGradient id="forumsSkeletonGradientDetail" x1="0" x2="1" y1="0" y2="0">
+						<stop offset="0%" style="stop-color:var(--gray-200, #e7e7ed)" />
+						<stop offset="50%" style="stop-color:var(--gray-100, #f1f2f5)" />
+						<stop offset="100%" style="stop-color:var(--gray-200, #e7e7ed)" />
+
+						<animate attributeName="x1" dur="1.4s" repeatCount="indefinite" values="-1;1" />
+						<animate attributeName="x2" dur="1.4s" repeatCount="indefinite" values="0;2" />
+					</linearGradient>
+				</defs>
+			</svg>
+
+			<!-- Title row -->
+
+			<svg aria-hidden="true" class="forums-skeleton-titlerow" height="28" preserveAspectRatio="none" role="presentation" viewBox="0 0 100 28">
+				<rect fill="url(#forumsSkeletonGradientDetail)" height="22" rx="2" width="55" x="0" y="3" />
+				<rect fill="url(#forumsSkeletonGradientDetail)" height="24" rx="2" width="12" x="88" y="2" />
+			</svg>
+
+			<!-- Original post -->
+
+			<div class="forums-skeleton-card">
+				<svg aria-hidden="true" class="forums-skeleton-fill" height="86" preserveAspectRatio="none" role="presentation" viewBox="0 0 100 86">
+					<rect fill="url(#forumsSkeletonGradientDetail)" height="12" rx="2" width="98" x="0" y="0" />
+					<rect fill="url(#forumsSkeletonGradientDetail)" height="12" rx="2" width="95" x="0" y="22" />
+					<rect fill="url(#forumsSkeletonGradientDetail)" height="12" rx="2" width="72" x="0" y="44" />
+					<rect fill="url(#forumsSkeletonGradientDetail)" height="12" rx="2" width="48" x="0" y="66" />
+				</svg>
+
+				<div class="forums-skeleton-author">
+					<svg aria-hidden="true" class="forums-skeleton-avatar" height="40" role="presentation" viewBox="0 0 40 40" width="40">
+						<circle cx="20" cy="20" fill="url(#forumsSkeletonGradientDetail)" r="20" />
+					</svg>
+
+					<svg aria-hidden="true" class="forums-skeleton-fill" height="34" preserveAspectRatio="none" role="presentation" viewBox="0 0 100 34">
+						<rect fill="url(#forumsSkeletonGradientDetail)" height="11" rx="2" width="40" x="0" y="4" />
+						<rect fill="url(#forumsSkeletonGradientDetail)" height="9" rx="2" width="24" x="0" y="21" />
+					</svg>
+				</div>
+			</div>
+
+			<!-- Replies -->
+
+			[#list 1..2 as i]
+				<div class="forums-skeleton-card">
+					<svg aria-hidden="true" class="forums-skeleton-fill" height="40" preserveAspectRatio="none" role="presentation" viewBox="0 0 100 40">
+						<rect fill="url(#forumsSkeletonGradientDetail)" height="12" rx="2" width="78" x="0" y="0" />
+						<rect fill="url(#forumsSkeletonGradientDetail)" height="12" rx="2" width="58" x="0" y="22" />
+					</svg>
+
+					<div class="forums-skeleton-author">
+						<svg aria-hidden="true" class="forums-skeleton-avatar forums-skeleton-avatar--sm" height="32" role="presentation" viewBox="0 0 32 32" width="32">
+							<circle cx="16" cy="16" fill="url(#forumsSkeletonGradientDetail)" r="16" />
+						</svg>
+
+						<svg aria-hidden="true" class="forums-skeleton-fill" height="16" preserveAspectRatio="none" role="presentation" viewBox="0 0 100 16">
+							<rect fill="url(#forumsSkeletonGradientDetail)" height="11" rx="2" width="40" x="0" y="2" />
+						</svg>
+					</div>
+				</div>
+			[/#list]
+
+		</div>
+
+		<!-- Original Post -->
+
+		<div class="forums-message-detail__op" id="forumsDetailOP" style="display:none;">
+			<div class="forums-message-detail__post-body" id="forumsDetailOPBody"></div>
+			<div id="forumsDetailOPAttachments"></div>
+			<div class="forums-message-detail__tags-bar">
+				<div class="forums-message-detail__tags" id="forumsDetailOPTags" style="display:none;"></div>
+				<div class="forums-vote" id="forumsDetailOPVote"></div>
+			</div>
+
+			<div class="forums-message-detail__post-actions" id="forumsDetailOPActions">
+				<button class="btn btn-primary" id="forumsDetailReplyBtn" aria-label="${languageUtil.get(locale, "comment")}">${languageUtil.get(locale, "comment")}</button>
+			</div>
+		</div>
+
+		<!-- Accepted Solution Section -->
+
+		<div class="forums-message-detail__solution-section" id="forumsDetailSolutionSection" style="display:none;">
+			<div id="forumsDetailSolutionCards"></div>
+		</div>
+
+		<!-- Replies Section -->
+
+		<div class="forums-message-detail__replies-section" id="forumsDetailRepliesSection" style="display:none;">
+			<h2 class="forums-message-detail__section-header text-dark">
+				<svg class="lexicon-icon lexicon-icon-message" height="18" role="presentation" width="18">
+					<use href="${themeDisplay.getPathThemeImages()}/clay/icons.svg#message"></use>
+				</svg>
+
+				<span id="forumsDetailReplyCount"></span>
+			</h2>
+
+			<div id="forumsDetailReplyCards"></div>
+		</div>
+
+		<!-- Reply Pagination -->
+
+		<nav aria-label="${languageUtil.get(locale, "reply-pagination")}" id="forumsDetailReplyPagination" class="forums-message-detail__pagination" style="display:none;">
+			<ul class="justify-content-center pagination" id="forumsDetailReplyPaginationUl"></ul>
+		</nav>
+
+		<!-- Topic Navigation -->
+
+		<div class="forums-message-detail__topic-nav" id="forumsDetailTopicNav">
+			<a href="${forumsHome}" class="forums-message-detail__topic-nav-link" id="forumsDetailAllTopics">${languageUtil.get(locale, "go-to-x")?replace("{0}", languageUtil.get(locale, "forums"))}</a>
+			<a class="forums-message-detail__topic-nav-link" href="#" id="forumsDetailCategoryLink" style="display:none;"></a>
+		</div>
+	</div>
+</div>

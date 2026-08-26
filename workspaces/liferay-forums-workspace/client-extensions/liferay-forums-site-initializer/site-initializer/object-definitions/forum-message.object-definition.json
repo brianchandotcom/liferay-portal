@@ -1,0 +1,168 @@
+{
+	"accountEntryRestricted": false,
+	"accountEntryRestrictedObjectFieldName": "",
+	"active": true,
+	"defaultLanguageId": "en_US",
+	"enableCategorization": true,
+	"enableComments": false,
+	"enableFormContainer": true,
+	"enableFriendlyURLCustomization": false,
+	"enableIndexSearch": true,
+	"enableLocalization": true,
+	"enableObjectEntryDraft": false,
+	"enableObjectEntryHistory": false,
+	"enableObjectEntrySchedule": false,
+	"enableObjectEntrySubscription": false,
+	"enableObjectEntryVersioning": false,
+	"externalReferenceCode": "FORUM-MESSAGE",
+	"label": {
+		"en_US": "Forum Message"
+	},
+	"modifiable": true,
+	"name": "ForumMessage",
+	"objectFields": [
+		{
+			"DBType": "Long",
+			"businessType": "LongInteger",
+			"label": {
+				"en_US": "Class Name ID"
+			},
+			"name": "classNameId",
+			"required": false
+		},
+		{
+			"DBType": "Long",
+			"businessType": "LongInteger",
+			"label": {
+				"en_US": "Class PK"
+			},
+			"name": "classPK",
+			"required": false
+		},
+		{
+			"DBType": "Long",
+			"businessType": "LongInteger",
+			"label": {
+				"en_US": "Root Message ID"
+			},
+			"name": "rootMessageId",
+			"required": false
+		},
+		{
+			"DBType": "Long",
+			"businessType": "LongInteger",
+			"label": {
+				"en_US": "Parent Message ID"
+			},
+			"name": "parentMessageId",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"label": {
+				"en_US": "Tree Path"
+			},
+			"name": "treePath",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "Subject"
+			},
+			"localized": true,
+			"name": "subject",
+			"required": true
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"label": {
+				"en_US": "URL Subject"
+			},
+			"name": "urlSubject",
+			"required": false
+		},
+		{
+			"DBType": "Clob",
+			"businessType": "RichText",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "Body"
+			},
+			"name": "body",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"label": {
+				"en_US": "Format"
+			},
+			"name": "format",
+			"required": false
+		},
+		{
+			"DBType": "Boolean",
+			"businessType": "Boolean",
+			"label": {
+				"en_US": "Anonymous"
+			},
+			"name": "anonymous",
+			"required": false
+		},
+		{
+			"DBType": "BigDecimal",
+			"businessType": "PrecisionDecimal",
+			"label": {
+				"en_US": "Priority"
+			},
+			"name": "priority",
+			"required": false
+		},
+		{
+			"DBType": "Boolean",
+			"businessType": "Boolean",
+			"label": {
+				"en_US": "Allow Pingbacks"
+			},
+			"name": "allowPingbacks",
+			"required": false
+		},
+		{
+			"DBType": "Boolean",
+			"businessType": "Boolean",
+			"label": {
+				"en_US": "Answer"
+			},
+			"name": "answer",
+			"required": false
+		},
+		{
+			"DBType": "Integer",
+			"businessType": "Integer",
+			"label": {
+				"en_US": "Vote Score"
+			},
+			"name": "voteScore",
+			"required": false
+		}
+	],
+	"objectFolderExternalReferenceCode": "FORUMS-FOLDER",
+	"panelCategoryKey": "",
+	"parameterRequired": false,
+	"pluralLabel": {
+		"en_US": "Forum Messages"
+	},
+	"portlet": false,
+	"scope": "site",
+	"system": false,
+	"titleObjectFieldName": "subject"
+}

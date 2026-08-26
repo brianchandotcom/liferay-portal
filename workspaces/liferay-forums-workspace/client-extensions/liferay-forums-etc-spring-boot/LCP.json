@@ -1,0 +1,38 @@
+{
+	"cpu": 2,
+	"env": {
+		"JDK_JAVA_OPTIONS": "--add-opens=java.base/java.lang.invoke=ALL-UNNAMED",
+		"LIFERAY_ROUTES_CLIENT_EXTENSION": "/etc/liferay/lxc/ext-init-metadata",
+		"LIFERAY_ROUTES_DXP": "/etc/liferay/lxc/dxp-metadata"
+	},
+	"environments": {
+		"infra": {
+			"deploy": false
+		}
+	},
+	"id": "__PROJECT_ID__",
+	"kind": "Deployment",
+	"livenessProbe": {
+		"failureThreshold": 60,
+		"httpGet": {
+			"path": "/ready",
+			"port": 58082
+		},
+		"periodSeconds": 20,
+		"timeoutSeconds": 10
+	},
+	"loadBalancer": {
+		"targetPort": 58082
+	},
+	"memory": 512,
+	"readinessProbe": {
+		"failureThreshold": 60,
+		"httpGet": {
+			"path": "/ready",
+			"port": 58082
+		},
+		"periodSeconds": 20,
+		"timeoutSeconds": 10
+	},
+	"scale": 1
+}

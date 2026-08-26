@@ -1,0 +1,39 @@
+.forums-hero {
+	overflow: hidden;
+}
+
+.forums-hero__backdrop {
+	background-image: linear-gradient(
+		135deg,
+		var(--dark, #272833) 0%,
+		var(--primary-d2, #002b66) 100%
+	);
+	padding: 4rem 0 3rem;
+}
+
+.forums-hero__stat-value {
+	display: block;
+	font-size: 2.5rem;
+	font-weight: var(--font-weight-bolder, 700);
+	line-height: 1.2;
+}
+
+.forums-hero .text-white-50 {
+	color: var(--white, #fff) !important;
+	opacity: 0.5;
+}
+
+.forums-hero__search {
+	margin: 0 auto 2.5rem;
+	max-width: 560px;
+}
+
+@media (max-width: 767.98px) {
+	.forums-hero__backdrop {
+		padding: 2.5rem 0 2rem;
+	}
+
+	.forums-hero__stat-value {
+		font-size: 1.75rem;
+	}
+}

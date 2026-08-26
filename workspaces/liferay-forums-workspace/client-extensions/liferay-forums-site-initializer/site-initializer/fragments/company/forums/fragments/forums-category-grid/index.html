@@ -1,0 +1,94 @@
+[#assign scopeGroupId = themeDisplay.getScopeGroupId() /]
+[#assign scopeGroup = themeDisplay.getScopeGroup() /]
+[#assign maxCards = (configuration.pageSize!"12")?number /]
+[#--
+	Subcategories are intentionally capped at ONE level (see the MAX_DEPTH
+	constant in forums-categories-admin). Only top-level categories are shown
+	here; their subcategories are reached by drilling into the card. Fetch a
+	generous page so child counts can be computed, then cap the rendered cards
+	at the configured page size.
+--]
+[#-- A blank Category Query Sort omits the sort parameter, which is needed
+	 on databases that cannot sort on a Text object field. --]
+[#assign categoryPageSize = (configuration.categoryPageSize!"200") /]
+[#assign categorySort = (configuration.categorySort!"")?trim /]
+[#assign categoryQuery = "?pageSize=" + categoryPageSize /]
+[#if categorySort?has_content]
+	[#assign categoryQuery = categoryQuery + "&sort=" + categorySort /]
+[/#if]
+[#assign categoriesData = restClient.get("/c/forumcategories/scopes/" + scopeGroupId + categoryQuery)!"" /]
+[#assign baseHref = (themeDisplay.getPathFriendlyURLPublic()!"") + (scopeGroup.getFriendlyURL()!"") + (configuration.messagesURL!"/forums-messages") /]
+[#assign categoryIcons = {
+	"Best Practices": "star",
+	"Feature Requests": "signature",
+	"General Discussion": "blogs",
+	"Technical Help": "question-circle-full"
+} /]
+
+<div class="forums-category-grid">
+	<div class="container">
+		<h2 class="mb-5 text-center text-dark">
+			${languageUtil.get(locale, "browse-categories")}
+		</h2>
+
+		<div class="justify-content-center row">
+			[#assign shown = 0 /]
+			[#if categoriesData?is_hash && categoriesData.items?has_content]
+				[#list categoriesData.items as cat]
+					[#assign parentId = (cat["r_categorySubcategories_c_forumCategoryId"]!0) /]
+					[#if parentId == 0 && shown < maxCards]
+						[#assign shown = shown + 1 /]
+						[#assign subCount = 0 /]
+						[#list categoriesData.items as child]
+							[#if (child["r_categorySubcategories_c_forumCategoryId"]!0) == cat.id]
+								[#assign subCount = subCount + 1 /]
+							[/#if]
+						[/#list]
+						[#assign catName = cat.categoryName!"" /]
+						[#assign iconKey = categoryIcons[catName]!"comments" /]
+						<div class="col-lg-3 col-sm-6 mb-4">
+							<a class="card card-interactive card-interactive-secondary h-100 text-decoration-none forums-category-grid__card" href="${baseHref}?categoryId=${cat.id}">
+								<div class="card-body d-flex flex-column h-100 pb-4 pt-5 px-4">
+									<div class="forums-category-grid__card-icon sticker sticker-lg mb-3">
+										<span class="sticker-overlay">
+											<svg class="lexicon-icon lexicon-icon-${iconKey}" role="presentation">
+												<use href="${themeDisplay.getPathThemeImages()}/clay/icons.svg#${iconKey}"></use>
+											</svg>
+										</span>
+									</div>
+
+									<div class="card-title mb-2">
+										[#if cat.categoryName?has_content]
+											${cat.categoryName?html}
+										[#else]
+											${languageUtil.get(locale, "unnamed-category")}
+										[/#if]
+									</div>
+
+									<p class="card-text text-secondary forums-category-grid__card-desc">${(cat.categoryDescription!"")?html}</p>
+									[#if subCount > 0]
+										<div class="forums-category-grid__card-subcount mb-2">
+											<span class="label label-secondary">
+												<span class="label-item label-item-expand">${languageUtil.get(locale, "x-subcategories")?replace("{0}", subCount?string)}</span>
+											</span>
+										</div>
+									[/#if]
+									<span aria-hidden="true" class="forums-category-grid__card-arrow text-primary mt-auto align-self-end">
+										<svg class="lexicon-icon lexicon-icon-angle-right" role="presentation">
+											<use href="${themeDisplay.getPathThemeImages()}/clay/icons.svg#angle-right"></use>
+										</svg>
+									</span>
+								</div>
+							</a>
+						</div>
+					[/#if]
+				[/#list]
+			[/#if]
+			[#if shown == 0]
+				<div class="col-12 py-5 text-center text-secondary">
+					${languageUtil.get(locale, "no-categories-found")}
+				</div>
+			[/#if]
+		</div>
+	</div>
+</div>

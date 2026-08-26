@@ -1,0 +1,22 @@
+{
+	"deletionType": "cascade",
+	"edge": false,
+	"externalReferenceCode": "REL-MESSAGE-VOTES",
+	"label": {
+		"en_US": "Message Votes"
+	},
+	"name": "messageVotes",
+	"objectDefinitionExternalReferenceCode1": "FORUM-MESSAGE",
+	"objectDefinitionExternalReferenceCode2": "FORUM-VOTE",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:ForumMessage$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:ForumVote$]",
+	"objectDefinitionModifiable2": true,
+	"objectDefinitionName2": "ForumVote",
+	"objectDefinitionScope2": "site",
+	"objectDefinitionSystem2": false,
+	"parameterObjectFieldId": 0,
+	"parameterObjectFieldName": "",
+	"reverse": false,
+	"system": false,
+	"type": "oneToMany"
+}

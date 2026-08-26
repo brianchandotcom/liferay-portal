@@ -1,0 +1,80 @@
+{
+	"accountEntryRestricted": false,
+	"accountEntryRestrictedObjectFieldName": "",
+	"active": true,
+	"defaultLanguageId": "en_US",
+	"enableCategorization": false,
+	"enableComments": false,
+	"enableFormContainer": true,
+	"enableFriendlyURLCustomization": false,
+	"enableIndexSearch": true,
+	"enableLocalization": false,
+	"enableObjectEntryDraft": false,
+	"enableObjectEntryHistory": false,
+	"enableObjectEntrySchedule": false,
+	"enableObjectEntrySubscription": false,
+	"enableObjectEntryVersioning": false,
+	"externalReferenceCode": "FORUM-NOTIFICATION",
+	"label": {
+		"en_US": "Forum Notification"
+	},
+	"modifiable": true,
+	"name": "ForumNotification",
+	"objectFields": [
+		{
+			"DBType": "Long",
+			"businessType": "LongInteger",
+			"label": {
+				"en_US": "Recipient User ID"
+			},
+			"name": "recipientUserId",
+			"required": true
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"label": {
+				"en_US": "Recipient Email Address"
+			},
+			"name": "recipientEmailAddress",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"label": {
+				"en_US": "Subject"
+			},
+			"name": "notificationSubject",
+			"required": false
+		},
+		{
+			"DBType": "Clob",
+			"businessType": "LongText",
+			"label": {
+				"en_US": "Body"
+			},
+			"name": "notificationBody",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"label": {
+				"en_US": "URL"
+			},
+			"name": "notificationUrl",
+			"required": false
+		}
+	],
+	"objectFolderExternalReferenceCode": "FORUMS-FOLDER",
+	"panelCategoryKey": "",
+	"parameterRequired": false,
+	"pluralLabel": {
+		"en_US": "Forum Notifications"
+	},
+	"portlet": false,
+	"scope": "site",
+	"system": false,
+	"titleObjectFieldName": "notificationSubject"
+}

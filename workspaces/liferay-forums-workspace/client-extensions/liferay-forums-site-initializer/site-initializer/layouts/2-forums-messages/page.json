@@ -1,0 +1,12 @@
+{
+	"friendlyURL": "/forums-messages",
+	"friendlyURL_i18n": {
+		"en_US": "/forums-messages"
+	},
+	"hidden": true,
+	"name_i18n": {
+		"en_US": "Forums Messages"
+	},
+	"private": false,
+	"type": "content"
+}

@@ -1,0 +1,75 @@
+{
+	"accountEntryRestricted": false,
+	"accountEntryRestrictedObjectFieldName": "",
+	"active": true,
+	"defaultLanguageId": "en_US",
+	"enableCategorization": true,
+	"enableComments": false,
+	"enableFormContainer": true,
+	"enableFriendlyURLCustomization": false,
+	"enableIndexSearch": true,
+	"enableLocalization": true,
+	"enableObjectEntryDraft": false,
+	"enableObjectEntryHistory": false,
+	"enableObjectEntrySchedule": false,
+	"enableObjectEntrySubscription": false,
+	"enableObjectEntryVersioning": false,
+	"externalReferenceCode": "FORUM-CATEGORY",
+	"label": {
+		"en_US": "Forum Category"
+	},
+	"modifiable": true,
+	"name": "ForumCategory",
+	"objectFields": [
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "Name"
+			},
+			"localized": true,
+			"name": "categoryName",
+			"required": true
+		},
+		{
+			"DBType": "Clob",
+			"businessType": "RichText",
+			"label": {
+				"en_US": "Description"
+			},
+			"name": "categoryDescription",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"label": {
+				"en_US": "Display Style"
+			},
+			"name": "displayStyle",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"label": {
+				"en_US": "Friendly URL"
+			},
+			"name": "friendlyURL",
+			"required": false
+		}
+	],
+	"objectFolderExternalReferenceCode": "FORUMS-FOLDER",
+	"panelCategoryKey": "",
+	"parameterRequired": false,
+	"pluralLabel": {
+		"en_US": "Forum Categories"
+	},
+	"portlet": false,
+	"scope": "site",
+	"system": false,
+	"titleObjectFieldName": "categoryName"
+}

@@ -1,0 +1,29 @@
+{
+	"editorType": "richText",
+	"externalReferenceCode": "FORUM-NOTIFICATION-EMAIL-TEMPLATE",
+	"name": "Forum Notification Email",
+	"name_i18n": {
+		"en_US": "Forum Notification Email"
+	},
+	"objectDefinitionExternalReferenceCode": "FORUM-NOTIFICATION",
+	"recipientType": "email",
+	"recipients": [
+		{
+			"from": "forums-noreply@example.xyz",
+			"fromName": {
+				"en_US": "Community Forums"
+			},
+			"singleRecipient": true,
+			"to": {
+				"en_US": "[%FORUMNOTIFICATION_RECIPIENTEMAILADDRESS%]"
+			},
+			"toType": "email"
+		}
+	],
+	"subject": {
+		"en_US": "[%FORUMNOTIFICATION_NOTIFICATIONSUBJECT%]"
+	},
+	"system": false,
+	"type": "email",
+	"typeLabel": "Email"
+}

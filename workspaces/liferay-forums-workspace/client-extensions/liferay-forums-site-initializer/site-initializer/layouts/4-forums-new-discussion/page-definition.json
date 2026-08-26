@@ -1,0 +1,77 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragmentStyle": {
+						"paddingBottom": "4",
+						"paddingTop": "4"
+					},
+					"indexed": true,
+					"layout": {
+						"paddingBottom": 2,
+						"paddingTop": 2
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"indexed": true,
+							"layout": {
+								"widthType": "Fixed"
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "forums-message-composer"
+									},
+									"fragmentConfig": {
+										"formMode": "page"
+									},
+									"fragmentFields": [
+									],
+									"indexed": true
+								},
+								"type": "Fragment"
+							}
+						],
+						"type": "Section"
+					}
+				],
+				"type": "Section"
+			},
+			{
+				"definition": {
+					"indexed": false,
+					"layout": {
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"widgetInstance": {
+								"widgetConfig": {
+								},
+								"widgetName": "com_liferay_mentions_web_portlet_MentionsPortlet",
+								"widgetPermissions": [
+									{
+										"actionKeys": [
+											"VIEW"
+										],
+										"roleKey": "Site Member"
+									}
+								]
+							}
+						},
+						"type": "Widget"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"version": 1.1
+}

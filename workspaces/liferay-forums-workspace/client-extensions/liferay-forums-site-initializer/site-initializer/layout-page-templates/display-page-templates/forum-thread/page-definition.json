@@ -1,0 +1,233 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragmentStyle": {
+						"paddingBottom": "4",
+						"paddingTop": "4"
+					},
+					"indexed": true,
+					"layout": {
+						"paddingBottom": 2,
+						"paddingTop": 2
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"indexed": true,
+							"layout": {
+								"widthType": "Fixed"
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"gutters": true,
+									"indexed": true,
+									"modulesPerRow": 2,
+									"numberOfColumns": 2,
+									"reverseOrder": false,
+									"rowViewports": [
+										{
+											"id": "landscapeMobile",
+											"rowViewportDefinition": {
+												"modulesPerRow": 1
+											}
+										},
+										{
+											"id": "portraitMobile",
+											"rowViewportDefinition": {
+											}
+										},
+										{
+											"id": "tablet",
+											"rowViewportDefinition": {
+											}
+										}
+									],
+									"verticalAlignment": "top"
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"columnViewports": [
+												{
+													"columnViewportDefinition": {
+														"size": 12
+													},
+													"id": "landscapeMobile"
+												},
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "portraitMobile"
+												},
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "tablet"
+												}
+											],
+											"size": 8
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "forums-message-detail"
+													},
+													"fragmentConfig": {
+														"communityURL": "/forums",
+														"messagesURL": "/forums-messages",
+														"repliesPageSize": "10"
+													},
+													"fragmentFields": [
+														{
+															"id": "forumsDetailReplyERC",
+															"value": {
+																"fragmentLink": {
+																}
+															}
+														},
+														{
+															"id": "forumsDetailERC",
+															"value": {
+																"fragmentLink": {
+																},
+																"text": {
+																	"mapping": {
+																		"fieldKey": "ObjectEntry_externalReferenceCode",
+																		"itemReference": {
+																			"contextSource": "DisplayPageItem"
+																		}
+																	}
+																}
+															}
+														}
+													],
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "forums-message-composer"
+													},
+													"fragmentConfig": {
+													},
+													"fragmentFields": [
+													],
+													"indexed": true
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "Column"
+									},
+									{
+										"definition": {
+											"columnViewports": [
+												{
+													"columnViewportDefinition": {
+														"size": 12
+													},
+													"id": "landscapeMobile"
+												},
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "portraitMobile"
+												},
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "tablet"
+												}
+											],
+											"size": 4
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "forums-related-topics"
+													},
+													"fragmentConfig": {
+														"maxTopics": "5"
+													},
+													"fragmentFields": [
+														{
+															"id": "forumsRelatedTopicsReplyERC",
+															"value": {
+																"fragmentLink": {
+																}
+															}
+														},
+														{
+															"id": "forumsRelatedTopicsERC",
+															"value": {
+																"fragmentLink": {
+																},
+																"text": {
+																	"mapping": {
+																		"fieldKey": "ObjectEntry_externalReferenceCode",
+																		"itemReference": {
+																			"contextSource": "DisplayPageItem"
+																		}
+																	}
+																}
+															}
+														}
+													],
+													"indexed": true
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "Column"
+									}
+								],
+								"type": "Row"
+							}
+						],
+						"type": "Section"
+					}
+				],
+				"type": "Section"
+			},
+			{
+				"definition": {
+					"indexed": false,
+					"layout": {
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"widgetInstance": {
+								"widgetConfig": {
+								},
+								"widgetName": "com_liferay_mentions_web_portlet_MentionsPortlet",
+								"widgetPermissions": [
+									{
+										"actionKeys": [
+											"VIEW"
+										],
+										"roleKey": "Site Member"
+									}
+								]
+							}
+						},
+						"type": "Widget"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"version": 1.1
+}

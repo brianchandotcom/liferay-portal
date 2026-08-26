@@ -1,0 +1,14 @@
+[
+	{
+		"allowedServiceSignatures": [
+			"com.liferay.object.rest.internal.resource.v1_0.ObjectEntryResourceImpl#getScopeScopeKeyByExternalReferenceCode",
+			"com.liferay.object.rest.internal.resource.v1_0.ObjectEntryResourceImpl#getScopeScopeKeyPage"
+		],
+		"defaultSAPEntry": true,
+		"enabled": true,
+		"name": "FORUM_GUEST_ACCESS",
+		"title_i18n": {
+			"en_US": "Forum Guest Access - allows Guest to read forum object entries by scope"
+		}
+	}
+]

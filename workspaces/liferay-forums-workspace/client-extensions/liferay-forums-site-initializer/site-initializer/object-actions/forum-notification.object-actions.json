@@ -1,0 +1,31 @@
+{
+	"object-actions": [
+		{
+			"active": true,
+			"externalReferenceCode": "FORUM-NOTIFICATION-EMAIL-ACTION",
+			"label": "{\"en_US\": \"Send Forum Notification Email\"}",
+			"name": "ForumNotificationEmail",
+			"objectActionExecutorKey": "notification",
+			"objectActionTriggerKey": "onAfterAdd",
+			"parameters": {
+				"notificationTemplateExternalReferenceCode": "FORUM-NOTIFICATION-EMAIL-TEMPLATE",
+				"type": "email"
+			},
+			"system": false
+		},
+		{
+			"active": true,
+			"externalReferenceCode": "FORUM-NOTIFICATION-WEB-ACTION",
+			"label": "{\"en_US\": \"Send Forum Web Notification\"}",
+			"name": "ForumNotificationWeb",
+			"objectActionExecutorKey": "notification",
+			"objectActionTriggerKey": "onAfterAdd",
+			"parameters": {
+				"notificationTemplateExternalReferenceCode": "FORUM-NOTIFICATION-WEB-TEMPLATE",
+				"type": "userNotification"
+			},
+			"system": false
+		}
+	],
+	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:ForumNotification$]"
+}

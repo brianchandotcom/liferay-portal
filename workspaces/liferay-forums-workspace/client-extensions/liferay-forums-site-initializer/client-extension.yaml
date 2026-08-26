@@ -1,0 +1,13 @@
+liferay-forums-site-initializer:
+    name: Liferay Forums Site Initializer
+    oAuthApplicationHeadlessServer: liferay-forums-site-initializer-oahs
+    siteExternalReferenceCode: c7abedb1-2e8e-e8ac-723e-bd224c42725c
+    siteName: Forums
+    type: siteInitializer
+liferay-forums-site-initializer-oahs:
+    .serviceAddress: localhost:8080
+    .serviceScheme: http
+    name: Liferay Forums Site Initializer OAuth Application Headless Server
+    scopes:
+        -   Liferay.Headless.Site.everything
+    type: oAuthApplicationHeadlessServer

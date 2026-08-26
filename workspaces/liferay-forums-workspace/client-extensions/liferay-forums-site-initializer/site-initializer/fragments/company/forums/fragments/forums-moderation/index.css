@@ -1,0 +1,52 @@
+.forums-moderation {
+	padding: 1rem;
+}
+
+.forums-moderation__flag-item {
+	align-items: center;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.75rem;
+	justify-content: space-between;
+}
+
+.forums-moderation__flag-info {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	gap: 0.25rem;
+	min-width: 0;
+}
+
+.forums-moderation__message-title {
+	font-weight: 600;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.forums-moderation__flag-meta {
+	align-items: center;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+}
+
+.forums-moderation__flag-actions {
+	align-items: center;
+	display: flex;
+	flex-shrink: 0;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+}
+
+@media (max-width: 767.98px) {
+	.forums-moderation__flag-item {
+		align-items: flex-start;
+		flex-direction: column;
+	}
+
+	.forums-moderation__flag-actions {
+		width: 100%;
+	}
+}

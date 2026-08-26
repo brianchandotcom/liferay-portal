@@ -1,0 +1,88 @@
+<div class="forums-moderation" id="forumsModeration"
+	data-label-no-flags="${languageUtil.get(locale, "no-flags-found")}"
+	data-label-error-loading="${languageUtil.get(locale, "error-loading-flags")}"
+	data-label-delete="${languageUtil.get(locale, "delete")}"
+	data-label-confirm-dismiss="${languageUtil.get(locale, "confirm-dismiss-flag")}"
+	data-label-flag-validated="${languageUtil.get(locale, "flag-validated")}"
+	data-label-flag-dismissed="${languageUtil.get(locale, "flag-dismissed")}"
+	data-label-pending="${languageUtil.get(locale, "pending")}"
+	data-label-validated="${languageUtil.get(locale, "validated")}"
+	data-label-all="${languageUtil.get(locale, "all")}"
+	data-label-validate="${languageUtil.get(locale, "validate")}"
+	data-label-dismiss="${languageUtil.get(locale, "dismiss")}"
+	data-label-reported-by="${languageUtil.get(locale, "reported-by")}"
+	data-label-view-message="${languageUtil.get(locale, "view-message")}"
+	data-label-spam="${languageUtil.get(locale, "spam")}"
+	data-label-harmful-dangerous-acts="${languageUtil.get(locale, "harmful-dangerous-acts")}"
+	data-label-harassment-bullying="${languageUtil.get(locale, "harassment-bullying")}"
+	data-label-nudity-sexual-content="${languageUtil.get(locale, "nudity-sexual-content")}"
+	data-label-other="${languageUtil.get(locale, "other")}"
+	data-label-no-permissions="${languageUtil.get(locale, "you-do-not-have-the-required-permissions-to-access-this-application")}"
+	data-label-bans="${languageUtil.get(locale, "bans")}"
+	data-label-ban-author="${languageUtil.get(locale, "ban-author")}"
+	data-label-revoke-ban="${languageUtil.get(locale, "revoke-ban")}"
+	data-label-no-bans="${languageUtil.get(locale, "no-bans-found")}"
+	data-label-confirm-revoke-ban="${languageUtil.get(locale, "confirm-revoke-ban")}"
+	data-label-ban-revoked-successfully="${languageUtil.get(locale, "ban-revoked-successfully")}"
+	data-label-confirm-ban-user="${languageUtil.get(locale, "confirm-ban-user")}"
+	data-label-user-banned="${languageUtil.get(locale, "user-has-been-banned")}"
+	data-label-banned-on="${languageUtil.get(locale, "banned-on")}"
+	data-label-user-id="${languageUtil.get(locale, "user-id-label")}">
+	<div class="container">
+		<div class="alert alert-warning" id="forumsModNoPermissions" role="alert" style="display:none;">
+			${languageUtil.get(locale, "you-do-not-have-the-required-permissions-to-access-this-application")}
+		</div>
+	</div>
+
+	<div class="container">
+		<div class="panel panel-secondary forums-moderation__card" style="display:none;">
+			<div class="panel-body">
+				<h3 class="mb-4 text-dark">
+					${languageUtil.get(locale, "forum-moderation-queue")}
+				</h3>
+
+				<div class="alert alert-info">
+					${languageUtil.get(locale, "forum-moderation-info")}
+				</div>
+
+				<!-- Filter Tabs -->
+
+				<ul class="mb-4 nav nav-tabs" id="forumsModTabs" role="tablist">
+					<li class="nav-item" role="presentation">
+						<a class="nav-link active" href="#" data-filter="pending" id="forumsModTabPending" role="tab" aria-selected="true" aria-controls="forumsModFlagList">${languageUtil.get(locale, "pending")}</a>
+					</li>
+					<li class="nav-item" role="presentation">
+						<a class="nav-link" href="#" data-filter="validated" id="forumsModTabValidated" role="tab" aria-selected="false" aria-controls="forumsModFlagList">${languageUtil.get(locale, "validated")}</a>
+					</li>
+					<li class="nav-item" role="presentation">
+						<a class="nav-link" href="#" data-filter="all" id="forumsModTabAll" role="tab" aria-selected="false" aria-controls="forumsModFlagList">${languageUtil.get(locale, "all")}</a>
+					</li>
+					<li class="nav-item" role="presentation">
+						<a class="nav-link" href="#" data-filter="bans" id="forumsModTabBans" role="tab" aria-selected="false" aria-controls="forumsModFlagList">${languageUtil.get(locale, "bans")}</a>
+					</li>
+				</ul>
+
+				<!-- Loading -->
+
+				<div class="py-3 text-center" id="forumsModLoading">
+					<span aria-hidden="true" class="loading-animation loading-animation-sm"></span>
+					<span class="sr-only">${languageUtil.get(locale, "loading")}</span>
+				</div>
+
+				<!-- Flag List -->
+
+				<div aria-labelledby="forumsModTabPending" aria-live="polite" class="list-group mb-3" id="forumsModFlagList" role="tabpanel">
+
+					<!-- Populated by JS -->
+
+				</div>
+
+				<!-- Pagination -->
+
+				<nav aria-label="${languageUtil.get(locale, "moderation-pagination")}" id="forumsModPagination" class="mt-2" style="display:none;">
+					<ul class="justify-content-center pagination" id="forumsModPaginationUl"></ul>
+				</nav>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,462 @@
+[
+	{
+		"key": "forums-title",
+		"value": "{\"en_US\": \"Liferay Forums\"}"
+	},
+	{
+		"key": "forums-description",
+		"value": "{\"en_US\": \"Find answers, ask questions, and join the discussion.\"}"
+	},
+	{
+		"key": "new-forum-message",
+		"value": "{\"en_US\": \"New Discussion\"}"
+	},
+	{
+		"key": "solutions",
+		"value": "{\"en_US\": \"Solutions\"}"
+	},
+	{
+		"key": "discussions",
+		"value": "{\"en_US\": \"Discussions\"}"
+	},
+	{
+		"key": "forum-categories-admin",
+		"value": "{\"en_US\": \"Forum Categories Admin\"}"
+	},
+	{
+		"key": "forum-categories-admin-info",
+		"value": "{\"en_US\": \"Use this tool to manage Forum Categories. Only place this fragment on a hidden or admin-restricted page!\"}"
+	},
+	{
+		"key": "seed-default-categories",
+		"value": "{\"en_US\": \"Seed Default Categories\"}"
+	},
+	{
+		"key": "seeding-complete",
+		"value": "{\"en_US\": \"Seeding complete!\"}"
+	},
+	{
+		"key": "add-custom-category",
+		"value": "{\"en_US\": \"Add Custom Category\"}"
+	},
+	{
+		"key": "existing-categories",
+		"value": "{\"en_US\": \"Existing Categories\"}"
+	},
+	{
+		"key": "no-categories-found",
+		"value": "{\"en_US\": \"No categories found.\"}"
+	},
+	{
+		"key": "error-loading-categories",
+		"value": "{\"en_US\": \"Error loading categories.\"}"
+	},
+	{
+		"key": "confirm-delete-category",
+		"value": "{\"en_US\": \"Are you sure you want to delete this category?\"}"
+	},
+	{
+		"key": "failed-to-delete-category",
+		"value": "{\"en_US\": \"Failed to delete category.\"}"
+	},
+	{
+		"key": "error-deleting-category",
+		"value": "{\"en_US\": \"Error deleting category.\"}"
+	},
+	{
+		"key": "seeding",
+		"value": "{\"en_US\": \"Seeding...\"}"
+	},
+	{
+		"key": "error-creating-category",
+		"value": "{\"en_US\": \"Error creating category.\"}"
+	},
+	{
+		"key": "unnamed",
+		"value": "{\"en_US\": \"Unnamed\"}"
+	},
+	{
+		"key": "unnamed-category",
+		"value": "{\"en_US\": \"Unnamed Category\"}"
+	},
+	{
+		"key": "press-backspace-to-delete-the-current-row",
+		"value": "{\"en_US\": \"Press backspace to delete the current row.\"}"
+	},
+	{
+		"key": "post-a-reply",
+		"value": "{\"en_US\": \"Post a Reply\"}"
+	},
+	{
+		"key": "select-a-category",
+		"value": "{\"en_US\": \"Select a category...\"}"
+	},
+	{
+		"key": "enter-a-descriptive-title",
+		"value": "{\"en_US\": \"Enter a descriptive title...\"}"
+	},
+	{
+		"key": "mark-as-question",
+		"value": "{\"en_US\": \"Mark as a Question (can be marked as solved)\"}"
+	},
+	{
+		"key": "describe-your-question",
+		"value": "{\"en_US\": \"Describe your question or topic in detail...\"}"
+	},
+	{
+		"key": "please-enter-some-content",
+		"value": "{\"en_US\": \"Please enter some content.\"}"
+	},
+	{
+		"key": "posting",
+		"value": "{\"en_US\": \"Posting...\"}"
+	},
+	{
+		"key": "post-submitted-successfully",
+		"value": "{\"en_US\": \"Your post has been submitted successfully!\"}"
+	},
+	{
+		"key": "your-reply",
+		"value": "{\"en_US\": \"Your Reply\"}"
+	},
+	{
+		"key": "write-your-reply",
+		"value": "{\"en_US\": \"Write your reply...\"}"
+	},
+	{
+		"key": "reply-posted-successfully",
+		"value": "{\"en_US\": \"Reply posted successfully!\"}"
+	},
+	{
+		"key": "your-question-has-been-posted",
+		"value": "{\"en_US\": \"Your question has been posted!\"}"
+	},
+	{
+		"key": "related-topics",
+		"value": "{\"en_US\": \"Related Topics\"}"
+	},
+	{
+		"key": "no-related-topics-found",
+		"value": "{\"en_US\": \"No related topics found.\"}"
+	},
+	{
+		"key": "unable-to-load-related-topics",
+		"value": "{\"en_US\": \"Unable to load related topics.\"}"
+	},
+	{
+		"key": "flag-message",
+		"value": "{\"en_US\": \"Flag Message\"}"
+	},
+	{
+		"key": "topic-marked-as-solved",
+		"value": "{\"en_US\": \"This topic has been marked as solved.\"}"
+	},
+	{
+		"key": "view-the-solution",
+		"value": "{\"en_US\": \"View the Solution\"}"
+	},
+	{
+		"key": "go-to-x",
+		"value": "{\"en_US\": \"Go to {0}\"}"
+	},
+	{
+		"key": "comment",
+		"value": "{\"en_US\": \"Comment\"}"
+	},
+	{
+		"key": "no-message-selected",
+		"value": "{\"en_US\": \"No message selected.\"}"
+	},
+	{
+		"key": "untitled-message",
+		"value": "{\"en_US\": \"Untitled Message\"}"
+	},
+	{
+		"key": "upvote",
+		"value": "{\"en_US\": \"Upvote\"}"
+	},
+	{
+		"key": "downvote",
+		"value": "{\"en_US\": \"Downvote\"}"
+	},
+	{
+		"key": "delete-reply",
+		"value": "{\"en_US\": \"Delete Reply\"}"
+	},
+	{
+		"key": "delete-topic",
+		"value": "{\"en_US\": \"Delete Topic\"}"
+	},
+	{
+		"key": "confirm-delete-reply",
+		"value": "{\"en_US\": \"Deleting a reply is an action impossible to revert. It will not be possible to recover it.\"}"
+	},
+	{
+		"key": "confirm-delete-topic",
+		"value": "{\"en_US\": \"Deleting a topic is an action impossible to revert. All the replies in the topic will be removed and it will not be possible to recover them.\"}"
+	},
+	{
+		"key": "unable-to-load-message",
+		"value": "{\"en_US\": \"Unable to load message.\"}"
+	},
+	{
+		"key": "unable-to-load-messages",
+		"value": "{\"en_US\": \"Unable to load messages.\"}"
+	},
+	{
+		"key": "flagged",
+		"value": "{\"en_US\": \"Flagged\"}"
+	},
+	{
+		"key": "reply-form-not-found",
+		"value": "{\"en_US\": \"Reply form not found on this page. Please add the forums-message-composer fragment.\"}"
+	},
+	{
+		"key": "x-accepted-solution",
+		"value": "{\"en_US\": \"{0} accepted solution\"}"
+	},
+	{
+		"key": "x-accepted-solutions",
+		"value": "{\"en_US\": \"{0} accepted solutions\"}"
+	},
+	{
+		"key": "convert-to-question",
+		"value": "{\"en_US\": \"Convert to Question\"}"
+	},
+	{
+		"key": "convert-to-discussion",
+		"value": "{\"en_US\": \"Convert to Discussion\"}"
+	},
+	{
+		"key": "edit-reply",
+		"value": "{\"en_US\": \"Edit Reply\"}"
+	},
+	{
+		"key": "report-description",
+		"value": "{\"en_US\": \"You are about to report a violation of our Terms of Use. All reports are strictly confidential.\"}"
+	},
+	{
+		"key": "reason-for-report",
+		"value": "{\"en_US\": \"Reason for the Report\"}"
+	},
+	{
+		"key": "harassment-bullying",
+		"value": "{\"en_US\": \"Harassment or Bullying\"}"
+	},
+	{
+		"key": "nudity-sexual-content",
+		"value": "{\"en_US\": \"Nudity or Sexual Content\"}"
+	},
+	{
+		"key": "report-submitted",
+		"value": "{\"en_US\": \"Thank you! Your report has been submitted.\"}"
+	},
+	{
+		"key": "banned",
+		"value": "{\"en_US\": \"Banned\"}"
+	},
+	{
+		"key": "your-account-has-been-banned-from-participating-in-the-forums",
+		"value": "{\"en_US\": \"Your account has been banned from participating in the forums.\"}"
+	},
+	{
+		"key": "this-message-has-been-flagged-and-validated-as-inappropriate-content",
+		"value": "{\"en_US\": \"This message has been flagged and validated as inappropriate content.\"}"
+	},
+	{
+		"key": "all-discussions",
+		"value": "{\"en_US\": \"All Discussions\"}"
+	},
+	{
+		"key": "no-messages-found",
+		"value": "{\"en_US\": \"No messages found.\"}"
+	},
+	{
+		"key": "solved",
+		"value": "{\"en_US\": \"Solved\"}"
+	},
+	{
+		"key": "x-reply",
+		"value": "{\"en_US\": \"{0} reply\"}"
+	},
+	{
+		"key": "x-replies",
+		"value": "{\"en_US\": \"{0} replies\"}"
+	},
+	{
+		"key": "just-now",
+		"value": "{\"en_US\": \"just now\"}"
+	},
+	{
+		"key": "x-days-ago",
+		"value": "{\"en_US\": \"{0}d ago\"}"
+	},
+	{
+		"key": "forum-moderation-queue",
+		"value": "{\"en_US\": \"Forum Moderation Queue\"}"
+	},
+	{
+		"key": "forum-moderation-info",
+		"value": "{\"en_US\": \"Review flagged messages reported by community members. Only place this fragment on a hidden or admin-restricted page!\"}"
+	},
+	{
+		"key": "validated",
+		"value": "{\"en_US\": \"Validated\"}"
+	},
+	{
+		"key": "validate",
+		"value": "{\"en_US\": \"Validate\"}"
+	},
+	{
+		"key": "no-flags-found",
+		"value": "{\"en_US\": \"No flagged messages found.\"}"
+	},
+	{
+		"key": "error-loading-flags",
+		"value": "{\"en_US\": \"Error loading flagged messages.\"}"
+	},
+	{
+		"key": "confirm-dismiss-flag",
+		"value": "{\"en_US\": \"Are you sure you want to dismiss this flag?\"}"
+	},
+	{
+		"key": "flag-validated",
+		"value": "{\"en_US\": \"Flag has been validated.\"}"
+	},
+	{
+		"key": "flag-dismissed",
+		"value": "{\"en_US\": \"Flag has been dismissed.\"}"
+	},
+	{
+		"key": "reported-by",
+		"value": "{\"en_US\": \"Reported by {0}\"}"
+	},
+	{
+		"key": "bans",
+		"value": "{\"en_US\": \"Bans\"}"
+	},
+	{
+		"key": "ban-author",
+		"value": "{\"en_US\": \"Ban Author\"}"
+	},
+	{
+		"key": "revoke-ban",
+		"value": "{\"en_US\": \"Revoke Ban\"}"
+	},
+	{
+		"key": "no-bans-found",
+		"value": "{\"en_US\": \"No bans found.\"}"
+	},
+	{
+		"key": "confirm-revoke-ban",
+		"value": "{\"en_US\": \"Are you sure you want to revoke this ban?\"}"
+	},
+	{
+		"key": "ban-revoked-successfully",
+		"value": "{\"en_US\": \"Ban revoked successfully.\"}"
+	},
+	{
+		"key": "confirm-ban-user",
+		"value": "{\"en_US\": \"Are you sure you want to ban this user?\"}"
+	},
+	{
+		"key": "user-has-been-banned",
+		"value": "{\"en_US\": \"User has been banned.\"}"
+	},
+	{
+		"key": "banned-on",
+		"value": "{\"en_US\": \"Banned on: {0}\"}"
+	},
+	{
+		"key": "user-id-label",
+		"value": "{\"en_US\": \"User ID: {0}\"}"
+	},
+	{
+		"key": "subscribe-to-this-message",
+		"value": "{\"en_US\": \"Subscribe to this message\"}"
+	},
+	{
+		"key": "tags",
+		"value": "{\"en_US\": \"Tags\"}"
+	},
+	{
+		"key": "select-tags",
+		"value": "{\"en_US\": \"Select Tags\"}"
+	},
+	{
+		"key": "message-pagination",
+		"value": "{\"en_US\": \"Message Pagination\"}"
+	},
+	{
+		"key": "reply-pagination",
+		"value": "{\"en_US\": \"Reply Pagination\"}"
+	},
+	{
+		"key": "moderation-pagination",
+		"value": "{\"en_US\": \"Moderation Pagination\"}"
+	},
+	{
+		"key": "attach-files",
+		"value": "{\"en_US\": \"Attach Files\"}"
+	},
+	{
+		"key": "attachments",
+		"value": "{\"en_US\": \"Attachments\"}"
+	},
+	{
+		"key": "remove",
+		"value": "{\"en_US\": \"Remove\"}"
+	},
+	{
+		"key": "the-file-is-too-large",
+		"value": "{\"en_US\": \"The file is too large (10 MB maximum).\"}"
+	},
+	{
+		"key": "download",
+		"value": "{\"en_US\": \"Download\"}"
+	},
+	{
+		"key": "remove-file-x",
+		"value": "{\"en_US\": \"Remove {0}\"}"
+	},
+	{
+		"key": "could-not-download-the-file",
+		"value": "{\"en_US\": \"Could not download the file. Please try again.\"}"
+	},
+	{
+		"key": "priority",
+		"value": "{\"en_US\": \"Priority\"}"
+	},
+	{
+		"key": "none",
+		"value": "{\"en_US\": \"None\"}"
+	},
+	{
+		"key": "urgent",
+		"value": "{\"en_US\": \"Urgent\"}"
+	},
+	{
+		"key": "sticky",
+		"value": "{\"en_US\": \"Sticky\"}"
+	},
+	{
+		"key": "announcement",
+		"value": "{\"en_US\": \"Announcement\"}"
+	},
+	{
+		"key": "no-users-found",
+		"value": "{\"en_US\": \"No users found\"}"
+	},
+	{
+		"key": "one-level-only",
+		"value": "{\"en_US\": \"one level only\"}"
+	},
+	{
+		"key": "category-with-subcategories-cannot-be-nested",
+		"value": "{\"en_US\": \"This category has subcategories, so it must stay top-level.\"}"
+	},
+	{
+		"key": "confirm-delete-category-with-subcategories",
+		"value": "{\"en_US\": \"This category has {0} subcategories. Deleting it will also delete them and all of their topics. This action cannot be reverted.\"}"
+	}
+]

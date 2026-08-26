@@ -1,0 +1,12 @@
+{
+	"friendlyURL": "/forum-categories-admin",
+	"friendlyURL_i18n": {
+		"en_US": "/forum-categories-admin"
+	},
+	"hidden": true,
+	"name_i18n": {
+		"en_US": "Forum Categories Admin"
+	},
+	"private": false,
+	"type": "content"
+}

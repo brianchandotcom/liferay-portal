@@ -1,0 +1,27 @@
+{
+	"object-actions": [
+		{
+			"active": true,
+			"externalReferenceCode": "FORUM-MESSAGE-NEW-REPLY-ACTION",
+			"label": "{\"en_US\": \"Notify On New Reply\"}",
+			"name": "ForumMessageNewReply",
+			"objectActionExecutorKey": "function#liferay-forums-etc-spring-boot-object-action-new-reply",
+			"objectActionTriggerKey": "onAfterAdd",
+			"parameters": {
+			},
+			"system": false
+		},
+		{
+			"active": true,
+			"externalReferenceCode": "FORUM-MESSAGE-UPDATED-REPLY-ACTION",
+			"label": "{\"en_US\": \"Notify On Updated Reply\"}",
+			"name": "ForumMessageUpdatedReply",
+			"objectActionExecutorKey": "function#liferay-forums-etc-spring-boot-object-action-updated-reply",
+			"objectActionTriggerKey": "onAfterUpdate",
+			"parameters": {
+			},
+			"system": false
+		}
+	],
+	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:ForumMessage$]"
+}

@@ -1,0 +1,31 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"indexed": true,
+					"layout": {
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragment": {
+								"key": "forums-moderation"
+							},
+							"fragmentConfig": {
+							},
+							"fragmentFields": [
+							],
+							"indexed": true
+						},
+						"type": "Fragment"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"version": 1.1
+}

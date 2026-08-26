@@ -1,0 +1,226 @@
+.forums-message-list {
+	margin-bottom: var(--spacer-7, 6rem);
+}
+
+/* ---------- Header ---------- */
+
+.forums-message-list__header {
+	align-items: center;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1rem;
+	justify-content: space-between;
+	margin-bottom: 1.5rem;
+}
+
+.forums-message-list__actions {
+	align-items: center;
+	display: flex;
+	gap: 0.75rem;
+}
+
+.forums-message-list__category-filter {
+	max-width: 200px;
+}
+
+.forums-message-list__search {
+	max-width: 320px;
+}
+
+/* ---------- Subcategories ---------- */
+.forums-message-list__subcategory-card {
+	margin-bottom: 0.5rem
+}
+
+.forums-message-list__subcategory-card .card-body {
+	padding: 0.5rem 1rem;
+}
+
+.forums-message-list__subcategory-title {
+	color: var(--body-color, #272833);
+	font-size: 0.9375rem;
+	margin-bottom: 0.25rem;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+/* Two lines are reserved even when the description is short or absent, so
+   every card is the same height and the grid rows line up. */
+.forums-message-list__subcategory-desc {
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+	display: -webkit-box;
+	line-height: 1.3125rem;
+	margin-bottom: 0;
+	min-height: 2.625rem;
+	overflow: hidden;
+}
+
+.forums-message-list__subcategory-col--hidden {
+	display: none;
+}
+
+.forums-message-list__subcategories-toggle {
+	align-items: center;
+	color: var(--primary, #0b5fff);
+	display: inline-flex;
+	gap: 0.25rem;
+}
+
+.forums-message-list__subcategories-toggle svg {
+	height: 12px;
+	width: 12px;
+}
+
+.forums-message-card .card-body {
+	padding: 1.25rem 1.5rem;
+}
+
+.forums-message-card__avatar-col {
+	align-items: center;
+	flex-shrink: 0;
+	justify-content: center;
+	margin-right: 1.25rem;
+	text-align: center;
+	width: 96px;
+}
+
+.forums-message-card__username {
+	font-size: 0.8125rem;
+	font-weight: 600;
+	line-height: 1.2;
+	margin-top: 0.5rem;
+	max-width: 100%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.forums-message-card__title {
+	font-size: 1.0625rem;
+}
+
+.forums-message-card__title a {
+	color: var(--body-color, #272833);
+}
+
+.forums-message-card__title a:hover {
+	color: var(--primary, #0b5fff);
+}
+
+.forums-message-card__solved {
+	align-items: center;
+	display: inline-flex;
+	gap: 0.25rem;
+}
+
+.forums-message-card__solved svg {
+	height: 14px;
+	width: 14px;
+}
+
+.forums-message-card__preview {
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+	display: -webkit-box;
+	margin-bottom: 0.5rem;
+	overflow: hidden;
+}
+
+.forums-message-card__tags {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.25rem;
+	margin-bottom: 0.5rem;
+}
+
+.forums-message-card__tag {
+	background-color: var(--secondary-l3, #e7e7ed);
+	border-color: var(--secondary-l3, #e7e7ed);
+	color: var(--dark-d2, #111116);
+}
+
+.forums-message-card__meta {
+	align-items: center;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.25rem 1rem;
+}
+
+.forums-message-card__meta-item {
+	align-items: center;
+	display: inline-flex;
+	gap: 0.25rem;
+}
+
+.forums-message-card__meta-item svg {
+	height: 14px;
+	width: 14px;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 767.98px) {
+	.forums-message-list__header {
+		align-items: flex-start;
+		flex-direction: column;
+	}
+
+	.forums-message-list__actions {
+		flex-wrap: wrap;
+		width: 100%;
+	}
+
+	.forums-message-list__category-filter,
+	.forums-message-list__search {
+		flex: 1 1 100%;
+		max-width: none;
+	}
+
+	.forums-message-card__avatar-col {
+		align-items: center;
+		display: flex;
+		gap: 0.5rem;
+		width: auto;
+	}
+}
+
+.forums-skeleton-defs {
+	height: 0;
+	position: absolute;
+	width: 0;
+}
+
+.forums-skeleton-card {
+	align-items: flex-start;
+	border: 1px solid var(--gray-200, #e7e7ed);
+	border-radius: var(--border-radius, 0.25rem);
+	display: flex;
+	gap: 1rem;
+	margin-bottom: 0.75rem;
+	padding: 1.25rem 1.5rem;
+}
+
+.forums-skeleton-avatar {
+	flex-shrink: 0;
+	height: 44px;
+	width: 44px;
+}
+
+.forums-skeleton-fill {
+	display: block;
+	flex: 1;
+	height: 74px;
+	min-width: 0;
+	width: 100%;
+}
+
+#forumsMessageListLoading {
+	opacity: 1;
+	transition: opacity 0.25s ease-out;
+}
+
+#forumsMessageListLoading.forums-skeleton--fade-out {
+	opacity: 0;
+}

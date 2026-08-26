@@ -5,26 +5,26 @@
 				{
 					"dataType": "string",
 					"defaultValue": "10",
-					"label": "Replies Per Page",
+					"label": "replies-per-page",
 					"name": "repliesPageSize",
 					"type": "text"
 				},
 				{
 					"dataType": "string",
 					"defaultValue": "/forums",
-					"label": "Community Home URL",
+					"label": "community-home-url",
 					"name": "communityURL",
 					"type": "text"
 				},
 				{
 					"dataType": "string",
 					"defaultValue": "/forums-messages",
-					"label": "Messages Page URL",
+					"label": "messages-page-url",
 					"name": "messagesURL",
 					"type": "text"
 				}
 			],
-			"label": "Content"
+			"label": "content"
 		}
 	]
 }

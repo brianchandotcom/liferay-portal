@@ -5,123 +5,123 @@
 				{
 					"dataType": "string",
 					"defaultValue": "General Discussion",
-					"label": "Name",
+					"label": "name",
 					"name": "category1Name",
 					"type": "text"
 				},
 				{
 					"dataType": "string",
 					"defaultValue": "General topics and announcements",
-					"label": "Description",
+					"label": "description",
 					"name": "category1Desc",
 					"type": "text"
 				},
 				{
 					"dataType": "string",
 					"defaultValue": "FORUM-CAT-GENERAL-DISCUSSION",
-					"label": "External Reference Code (ERC)",
+					"label": "external-reference-code",
 					"name": "category1ERC",
 					"type": "text"
 				}
 			],
-			"label": "Default Category 1"
+			"label": "default-category-1"
 		},
 		{
 			"fields": [
 				{
 					"dataType": "string",
 					"defaultValue": "Technical Help",
-					"label": "Name",
+					"label": "name",
 					"name": "category2Name",
 					"type": "text"
 				},
 				{
 					"dataType": "string",
 					"defaultValue": "Troubleshooting, how-tos, and technical questions",
-					"label": "Description",
+					"label": "description",
 					"name": "category2Desc",
 					"type": "text"
 				},
 				{
 					"dataType": "string",
 					"defaultValue": "FORUM-CAT-TECHNICAL-HELP",
-					"label": "External Reference Code (ERC)",
+					"label": "external-reference-code",
 					"name": "category2ERC",
 					"type": "text"
 				}
 			],
-			"label": "Default Category 2"
+			"label": "default-category-2"
 		},
 		{
 			"fields": [
 				{
 					"dataType": "string",
 					"defaultValue": "Feature Requests",
-					"label": "Name",
+					"label": "name",
 					"name": "category3Name",
 					"type": "text"
 				},
 				{
 					"dataType": "string",
 					"defaultValue": "Suggest new features",
-					"label": "Description",
+					"label": "description",
 					"name": "category3Desc",
 					"type": "text"
 				},
 				{
 					"dataType": "string",
 					"defaultValue": "FORUM-CAT-FEATURE-REQUESTS",
-					"label": "External Reference Code (ERC)",
+					"label": "external-reference-code",
 					"name": "category3ERC",
 					"type": "text"
 				}
 			],
-			"label": "Default Category 3"
+			"label": "default-category-3"
 		},
 		{
 			"fields": [
 				{
 					"dataType": "string",
 					"defaultValue": "Best Practices",
-					"label": "Name",
+					"label": "name",
 					"name": "category4Name",
 					"type": "text"
 				},
 				{
 					"dataType": "string",
 					"defaultValue": "Tips, patterns, and recommendations",
-					"label": "Description",
+					"label": "description",
 					"name": "category4Desc",
 					"type": "text"
 				},
 				{
 					"dataType": "string",
 					"defaultValue": "FORUM-CAT-BEST-PRACTICES",
-					"label": "External Reference Code (ERC)",
+					"label": "external-reference-code",
 					"name": "category4ERC",
 					"type": "text"
 				}
 			],
-			"label": "Default Category 4"
+			"label": "default-category-4"
 		},
 		{
 			"fields": [
 				{
 					"dataType": "string",
 					"defaultValue": "100",
-					"label": "Category Query Page Size",
+					"label": "category-query-page-size",
 					"name": "categoryPageSize",
 					"type": "text"
 				},
 				{
 					"dataType": "string",
 					"defaultValue": "",
-					"label": "Category Query Sort (blank omits sorting)",
+					"label": "category-query-sort",
 					"name": "categorySort",
 					"type": "text"
 				}
 			],
-			"label": "Category Query"
+			"label": "category-query"
 		}
 	]
 }

@@ -458,5 +458,81 @@
 	{
 		"key": "confirm-delete-category-with-subcategories",
 		"value": "{\"en_US\": \"This category has {0} subcategories. Deleting it will also delete them and all of their topics. This action cannot be reverted.\"}"
+	},
+	{
+		"key": "category-query",
+		"value": "{\"en_US\": \"Category Query\"}"
+	},
+	{
+		"key": "category-query-page-size",
+		"value": "{\"en_US\": \"Category Query Page Size\"}"
+	},
+	{
+		"key": "category-query-sort",
+		"value": "{\"en_US\": \"Category Query Sort (blank omits sorting)\"}"
+	},
+	{
+		"key": "community-home-url",
+		"value": "{\"en_US\": \"Community Home URL\"}"
+	},
+	{
+		"key": "default-category-1",
+		"value": "{\"en_US\": \"Default Category 1\"}"
+	},
+	{
+		"key": "default-category-2",
+		"value": "{\"en_US\": \"Default Category 2\"}"
+	},
+	{
+		"key": "default-category-3",
+		"value": "{\"en_US\": \"Default Category 3\"}"
+	},
+	{
+		"key": "default-category-4",
+		"value": "{\"en_US\": \"Default Category 4\"}"
+	},
+	{
+		"key": "form-mode",
+		"value": "{\"en_US\": \"Form Mode (modal or page)\"}"
+	},
+	{
+		"key": "hero-description",
+		"value": "{\"en_US\": \"Hero Description\"}"
+	},
+	{
+		"key": "hero-title",
+		"value": "{\"en_US\": \"Hero Title\"}"
+	},
+	{
+		"key": "max-categories-to-show",
+		"value": "{\"en_US\": \"Max Categories to Show\"}"
+	},
+	{
+		"key": "max-related-topics",
+		"value": "{\"en_US\": \"Max Related Topics\"}"
+	},
+	{
+		"key": "messages-page-url",
+		"value": "{\"en_US\": \"Messages Page URL\"}"
+	},
+	{
+		"key": "replies-per-page",
+		"value": "{\"en_US\": \"Replies Per Page\"}"
+	},
+	{
+		"key": "show-discussions",
+		"value": "{\"en_US\": \"Show Discussions\"}"
+	},
+	{
+		"key": "show-messages",
+		"value": "{\"en_US\": \"Show Messages\"}"
+	},
+	{
+		"key": "show-new-discussion-button",
+		"value": "{\"en_US\": \"Show New Discussion Button\"}"
+	},
+	{
+		"key": "show-solutions",
+		"value": "{\"en_US\": \"Show Solutions\"}"
 	}
 ]

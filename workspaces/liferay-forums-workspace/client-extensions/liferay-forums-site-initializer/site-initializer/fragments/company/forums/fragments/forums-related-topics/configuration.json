@@ -5,12 +5,12 @@
 				{
 					"dataType": "string",
 					"defaultValue": "5",
-					"label": "Max Related Topics",
+					"label": "max-related-topics",
 					"name": "maxTopics",
 					"type": "text"
 				}
 			],
-			"label": "Content"
+			"label": "content"
 		}
 	]
 }

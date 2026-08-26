@@ -73,18 +73,17 @@ public class NotificationRecipientSettingLocalServiceTest {
 			notificationRecipientSettingsByName = _toMap(
 				notificationRecipientSettings);
 
-		Assert.assertEquals(
-			from,
+		NotificationRecipientSetting notificationRecipientSetting =
 			notificationRecipientSettingsByName.get(
-				NotificationRecipientSettingConstants.NAME_FROM
-			).getValue());
+				NotificationRecipientSettingConstants.NAME_FROM);
+
+		Assert.assertEquals(from, notificationRecipientSetting.getValue());
+
+		notificationRecipientSetting = notificationRecipientSettingsByName.get(
+			NotificationRecipientSettingConstants.NAME_FROM_NAME);
+
 		Assert.assertEquals(
-			fromName,
-			notificationRecipientSettingsByName.get(
-				NotificationRecipientSettingConstants.NAME_FROM_NAME
-			).getValue(
-				LocaleUtil.US
-			));
+			fromName, notificationRecipientSetting.getValue(LocaleUtil.US));
 	}
 
 	@Test
@@ -117,11 +116,13 @@ public class NotificationRecipientSettingLocalServiceTest {
 			notificationRecipientSettingsByName = _toMap(
 				notificationRecipientSettings);
 
+		NotificationRecipientSetting notificationRecipientSetting =
+			notificationRecipientSettingsByName.get(
+				NotificationRecipientSettingConstants.NAME_TO_TYPE);
+
 		Assert.assertEquals(
 			NotificationRecipientConstants.TYPE_SUBSCRIBERS,
-			notificationRecipientSettingsByName.get(
-				NotificationRecipientSettingConstants.NAME_TO_TYPE
-			).getValue());
+			notificationRecipientSetting.getValue());
 	}
 
 	private Map<String, NotificationRecipientSetting> _toMap(

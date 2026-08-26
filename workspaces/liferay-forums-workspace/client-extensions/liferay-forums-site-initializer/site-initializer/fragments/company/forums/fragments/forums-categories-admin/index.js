@@ -3,7 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-const forumsCategoriesAdmin = fragmentElement.querySelector('#forumsCategoriesAdmin');
+const forumsCategoriesAdmin = fragmentElement.querySelector(
+	'#forumsCategoriesAdmin'
+);
 
 /* Category query string. pageSize and sort come from fragment configuration;
    a blank sort omits the parameter entirely, which is needed on databases
@@ -12,17 +14,22 @@ const forumsCategoriesAdmin = fragmentElement.querySelector('#forumsCategoriesAd
 function categoryQuery(dataset) {
 	const size = dataset.categoryPageSize || '100';
 	const sort = (dataset.categorySort || '').trim();
-	return '?pageSize=' + encodeURIComponent(size)
-		+ (sort ? '&sort=' + encodeURIComponent(sort) : '');
+
+	return (
+		'?pageSize=' +
+		encodeURIComponent(size) +
+		(sort ? '&sort=' + encodeURIComponent(sort) : '')
+	);
 }
 
 if (forumsCategoriesAdmin) {
 	const portalURL = Liferay.ThemeDisplay.getPortalURL();
 	const scopeGroupId = Liferay.ThemeDisplay.getScopeGroupId();
-	const clayIconsUrl = Liferay.ThemeDisplay.getPathThemeImages() + '/clay/icons.svg';
+	const clayIconsUrl =
+		Liferay.ThemeDisplay.getPathThemeImages() + '/clay/icons.svg';
 	const headers = {
 		'Accept': 'application/json',
-		'Content-Type': 'application/json'
+		'Content-Type': 'application/json',
 	};
 
 	/* FK exposed by the ForumCategory self-relationship (0 / absent = top-level) */
@@ -34,57 +41,98 @@ if (forumsCategoriesAdmin) {
 	   Categories cut where permissions and audiences cut; tags handle topics. */
 	const MAX_DEPTH = 1;
 
-	const cardEl = forumsCategoriesAdmin.querySelector('.forums-categories-admin__card');
-	const noPermissionsEl = forumsCategoriesAdmin.querySelector('#forumsCategoriesAdminNoPermissions');
-	const seedSection = forumsCategoriesAdmin.querySelector('#forumsCategoriesAdminSeedSection');
-	const seedBtn = forumsCategoriesAdmin.querySelector('#forumsCategoriesAdminSeedBtn');
-	const seedStatus = forumsCategoriesAdmin.querySelector('#forumsCategoriesAdminSeedStatus');
-	const addHeading = forumsCategoriesAdmin.querySelector('#forumsCategoriesAdminAddHeading');
-	const addForm = forumsCategoriesAdmin.querySelector('#forumsCategoriesAdminAddForm');
-	const addName = forumsCategoriesAdmin.querySelector('#forumsCategoriesAdminCatName');
-	const addDesc = forumsCategoriesAdmin.querySelector('#forumsCategoriesAdminCatDesc');
-	const addParent = forumsCategoriesAdmin.querySelector('#forumsCategoriesAdminCatParent');
-	const addBtn = forumsCategoriesAdmin.querySelector('#forumsCategoriesAdminAddBtn');
-	const listEl = forumsCategoriesAdmin.querySelector('#forumsCategoriesAdminCategoryList');
-	const loadingEl = forumsCategoriesAdmin.querySelector('#forumsCategoriesAdminLoading');
+	const cardEl = forumsCategoriesAdmin.querySelector(
+		'.forums-categories-admin__card'
+	);
+	const noPermissionsEl = forumsCategoriesAdmin.querySelector(
+		'#forumsCategoriesAdminNoPermissions'
+	);
+	const seedSection = forumsCategoriesAdmin.querySelector(
+		'#forumsCategoriesAdminSeedSection'
+	);
+	const seedBtn = forumsCategoriesAdmin.querySelector(
+		'#forumsCategoriesAdminSeedBtn'
+	);
+	const seedStatus = forumsCategoriesAdmin.querySelector(
+		'#forumsCategoriesAdminSeedStatus'
+	);
+	const addHeading = forumsCategoriesAdmin.querySelector(
+		'#forumsCategoriesAdminAddHeading'
+	);
+	const addForm = forumsCategoriesAdmin.querySelector(
+		'#forumsCategoriesAdminAddForm'
+	);
+	const addName = forumsCategoriesAdmin.querySelector(
+		'#forumsCategoriesAdminCatName'
+	);
+	const addDesc = forumsCategoriesAdmin.querySelector(
+		'#forumsCategoriesAdminCatDesc'
+	);
+	const addParent = forumsCategoriesAdmin.querySelector(
+		'#forumsCategoriesAdminCatParent'
+	);
+	const addBtn = forumsCategoriesAdmin.querySelector(
+		'#forumsCategoriesAdminAddBtn'
+	);
+	const listEl = forumsCategoriesAdmin.querySelector(
+		'#forumsCategoriesAdminCategoryList'
+	);
+	const loadingEl = forumsCategoriesAdmin.querySelector(
+		'#forumsCategoriesAdminLoading'
+	);
 
 	/* Track whether the current user has create permission */
 	let canCreate = false;
 
-	const topLevelLabel = forumsCategoriesAdmin.dataset.labelTopLevel || 'None (top-level)';
+	const topLevelLabel =
+		forumsCategoriesAdmin.dataset.labelTopLevel || 'None (top-level)';
 
 	const {
-		category1Name, category1Desc, category1ERC,
-		category2Name, category2Desc, category2ERC,
-		category3Name, category3Desc, category3ERC,
-		category4Name, category4Desc, category4ERC,
-		category5Name, category5Desc, category5ERC
+		category1Desc,
+		category1ERC,
+		category1Name,
+		category2Desc,
+		category2ERC,
+		category2Name,
+		category3Desc,
+		category3ERC,
+		category3Name,
+		category4Desc,
+		category4ERC,
+		category4Name,
+		category5Desc,
+		category5ERC,
+		category5Name,
 	} = configuration;
 
 	const defaultCategories = [
-		{ name: category1Name, desc: category1Desc, erc: category1ERC },
-		{ name: category2Name, desc: category2Desc, erc: category2ERC },
-		{ name: category3Name, desc: category3Desc, erc: category3ERC },
-		{ name: category4Name, desc: category4Desc, erc: category4ERC },
-		{ name: category5Name, desc: category5Desc, erc: category5ERC }
-	].filter(function({name}) { return name; });
+		{description: category1Desc, erc: category1ERC, name: category1Name},
+		{description: category2Desc, erc: category2ERC, name: category2Name},
+		{description: category3Desc, erc: category3ERC, name: category3Name},
+		{description: category4Desc, erc: category4ERC, name: category4Name},
+		{description: category5Desc, erc: category5ERC, name: category5Name},
+	].filter(({name}) => {
+		return name;
+	});
 
 	/* --- Hierarchy helpers ---------------------------------------------- */
 
-	function getParentId(cat) {
+	const getParentId = function (cat) {
 		return Number(cat[PARENT_FK]) || 0;
-	}
+	};
 
 	/* Build {byId, childrenOf} from a flat category list.
 	   A category whose parent is missing — or whose parent is itself a child,
 	   which only the REST API can produce — is normalized to top-level so the
 	   UI stays coherent and never hides an entry. */
-	function buildTree(items) {
+	const buildTree = function (items) {
 		const byId = {};
-		items.forEach(function(cat) { byId[cat.id] = cat; });
+		items.forEach((cat) => {
+			byId[cat.id] = cat;
+		});
 
 		const depthOf = {};
-		items.forEach(function(cat) {
+		items.forEach((cat) => {
 			let depth = 0;
 			let pid = getParentId(cat);
 			let guard = 0;
@@ -97,24 +145,31 @@ if (forumsCategoriesAdmin) {
 		});
 
 		const childrenOf = {};
-		items.forEach(function(cat) {
+		items.forEach((cat) => {
 			let pid = getParentId(cat);
-			if (!pid || !byId[pid] || depthOf[cat.id] > MAX_DEPTH) pid = 0;
+			if (!pid || !byId[pid] || depthOf[cat.id] > MAX_DEPTH) {
+				pid = 0;
+			}
 			(childrenOf[pid] = childrenOf[pid] || []).push(cat);
 		});
 
-		return { byId, childrenOf };
-	}
+		return {byId, childrenOf};
+	};
 
-	function hasChildren(id, childrenOf) {
-		return (childrenOf[id] || []).length > 0;
-	}
+	const hasChildren = function (id, childrenOf) {
+		return !!(childrenOf[id] || []).length;
+	};
 
 	/* Fill a <select> with the categories eligible to be a parent.
 	   THIS IS WHERE THE CAP IS ENFORCED: only top-level categories are
 	   offered, so a new/edited category can never land deeper than
 	   MAX_DEPTH. Categories in excludeIds (the entry itself) are omitted. */
-	function populateParentSelect(selectEl, {childrenOf}, selectedId, excludeIds = []) {
+	const populateParentSelect = function (
+		selectEl,
+		{childrenOf},
+		selectedId,
+		excludeIds = []
+	) {
 		selectEl.innerHTML = '';
 
 		const topOption = document.createElement('option');
@@ -122,104 +177,165 @@ if (forumsCategoriesAdmin) {
 		topOption.textContent = topLevelLabel;
 		selectEl.appendChild(topOption);
 
-		(childrenOf[0] || []).forEach(function({id, categoryName}) {
-			if (excludeIds.indexOf(id) !== -1) return;
+		(childrenOf[0] || []).forEach(({categoryName, id}) => {
+			if (excludeIds.indexOf(id) !== -1) {
+				return;
+			}
 
 			const opt = document.createElement('option');
 			opt.value = id;
-			opt.textContent = categoryName || forumsCategoriesAdmin.dataset.labelUnnamed || 'Unnamed';
-			if (String(id) === String(selectedId)) opt.selected = true;
+			opt.textContent =
+				categoryName ||
+				forumsCategoriesAdmin.dataset.labelUnnamed ||
+				'Unnamed';
+			if (String(id) === String(selectedId)) {
+				opt.selected = true;
+			}
 			selectEl.appendChild(opt);
 		});
-	}
+	};
 
 	/* --- Data access ----------------------------------------------------- */
 
-	function loadCategories() {
-		if (loadingEl) loadingEl.style.display = 'block';
+	const loadCategories = function () {
+		if (loadingEl) {
+			loadingEl.style.display = 'block';
+		}
 		listEl.innerHTML = '';
 
-		Liferay.Util.fetch(portalURL + '/o/c/forumcategories/scopes/' + scopeGroupId + categoryQuery(forumsCategoriesAdmin.dataset), {
-			headers,
-			method: 'GET'
-		})
-		.then(function(r) { return r.json(); })
-		.then(function(data) {
-			if (loadingEl) loadingEl.style.display = 'none';
-
-			/* HATEOAS: check collection-level actions for create permission */
-			const {actions} = data;
-			canCreate = !!(actions && (actions['create'] || actions['post'] || actions['POST']));
-
-			if (canCreate) {
-				/* User has admin-level permissions — show the admin card */
-				if (noPermissionsEl) noPermissionsEl.style.display = 'none';
-				if (cardEl) cardEl.style.display = '';
-				if (seedSection) seedSection.style.display = '';
-				if (addHeading) addHeading.style.display = '';
-				if (addForm) addForm.style.display = '';
-			} else {
-				/* Non-privileged user — show the OOTB permissions warning */
-				if (cardEl) cardEl.style.display = 'none';
-				if (noPermissionsEl) noPermissionsEl.style.display = '';
-				return;
+		Liferay.Util.fetch(
+			portalURL +
+				'/o/c/forumcategories/scopes/' +
+				scopeGroupId +
+				categoryQuery(forumsCategoriesAdmin.dataset),
+			{
+				headers,
+				method: 'GET',
 			}
+		)
+			.then((r) => {
+				return r.json();
+			})
+			.then((data) => {
+				if (loadingEl) {
+					loadingEl.style.display = 'none';
+				}
 
-			const items = data.items || [];
-			const tree = buildTree(items);
+				/* HATEOAS: check collection-level actions for create permission */
+				const {actions} = data;
+				canCreate = !!(
+					actions &&
+					(actions['create'] || actions['post'] || actions['POST'])
+				);
 
-			/* Refresh the add-form parent picker with the current tree */
-			if (addParent) populateParentSelect(addParent, tree, '', []);
+				if (canCreate) {
 
-			if (items.length === 0) {
-				listEl.innerHTML = '<li class="list-group-item text-secondary">' + (forumsCategoriesAdmin.dataset.labelNoCategories || 'No categories found.') + '</li>';
-				return;
-			}
+					/* User has admin-level permissions — show the admin card */
+					if (noPermissionsEl) {
+						noPermissionsEl.style.display = 'none';
+					}
+					if (cardEl) {
+						cardEl.style.display = '';
+					}
+					if (seedSection) {
+						seedSection.style.display = '';
+					}
+					if (addHeading) {
+						addHeading.style.display = '';
+					}
+					if (addForm) {
+						addForm.style.display = '';
+					}
+				}
+				else {
 
-			/* Two tiers only: top-level categories, each followed by its children */
-			const {childrenOf} = tree;
-			(childrenOf[0] || []).forEach(function(cat) {
-				listEl.appendChild(renderCategoryItem(cat, 0, tree));
-				(childrenOf[cat.id] || []).forEach(function(child) {
-					listEl.appendChild(renderCategoryItem(child, 1, tree));
+					/* Non-privileged user — show the OOTB permissions warning */
+					if (cardEl) {
+						cardEl.style.display = 'none';
+					}
+					if (noPermissionsEl) {
+						noPermissionsEl.style.display = '';
+					}
+
+					return;
+				}
+
+				const items = data.items || [];
+				const tree = buildTree(items);
+
+				/* Refresh the add-form parent picker with the current tree */
+				if (addParent) {
+					populateParentSelect(addParent, tree, '', []);
+				}
+
+				if (!items.length) {
+					listEl.innerHTML =
+						'<li class="list-group-item text-secondary">' +
+						(forumsCategoriesAdmin.dataset.labelNoCategories ||
+							'No categories found.') +
+						'</li>';
+
+					return;
+				}
+
+				/* Two tiers only: top-level categories, each followed by its children */
+				const {childrenOf} = tree;
+				(childrenOf[0] || []).forEach((cat) => {
+					listEl.appendChild(renderCategoryItem(cat, 0, tree));
+					(childrenOf[cat.id] || []).forEach((child) => {
+						listEl.appendChild(renderCategoryItem(child, 1, tree));
+					});
 				});
-			});
-		})
-		.catch(function(err) {
-			if (loadingEl) loadingEl.style.display = 'none';
+			})
+			.catch((error) => {
+				if (loadingEl) {
+					loadingEl.style.display = 'none';
+				}
 
-			/* On error (e.g. 403), show the permissions warning */
-			if (cardEl) cardEl.style.display = 'none';
-			if (noPermissionsEl) noPermissionsEl.style.display = '';
-			console.error(err);
-		});
-	}
+				/* On error (e.g. 403), show the permissions warning */
+				if (cardEl) {
+					cardEl.style.display = 'none';
+				}
+				if (noPermissionsEl) {
+					noPermissionsEl.style.display = '';
+				}
+				console.error(error);
+			});
+	};
 
 	/* Build a single list row (with inline edit form) for one category */
-	function renderCategoryItem(cat, depth, tree) {
-		const {id, actions, categoryName, categoryDescription} = cat;
+	const renderCategoryItem = function (cat, depth, tree) {
+		const {actions, categoryDescription, categoryName, id} = cat;
 		const {childrenOf} = tree;
 
 		const li = document.createElement('li');
 		li.className = 'list-group-item flex-column align-items-start';
-		if (depth > 0) li.style.marginLeft = (depth * 1.5) + 'rem';
+		if (depth > 0) {
+			li.style.marginLeft = depth * 1.5 + 'rem';
+		}
 
 		const viewContainer = document.createElement('div');
-		viewContainer.className = 'd-flex justify-content-between align-items-center w-100';
+		viewContainer.className =
+			'd-flex justify-content-between align-items-center w-100';
 
 		const infoDiv = document.createElement('div');
 		infoDiv.className = 'd-flex flex-column flex-grow-1';
 
 		const nameSpan = document.createElement('span');
 		nameSpan.className = 'font-weight-bold';
-		nameSpan.textContent = categoryName || forumsCategoriesAdmin.dataset.labelUnnamed || 'Unnamed';
+		nameSpan.textContent =
+			categoryName ||
+			forumsCategoriesAdmin.dataset.labelUnnamed ||
+			'Unnamed';
 
 		const descSpan = document.createElement('span');
 		descSpan.className = 'text-secondary small';
 		descSpan.textContent = categoryDescription || '';
 
 		infoDiv.appendChild(nameSpan);
-		if (categoryDescription) infoDiv.appendChild(descSpan);
+		if (categoryDescription) {
+			infoDiv.appendChild(descSpan);
+		}
 
 		viewContainer.appendChild(infoDiv);
 
@@ -227,15 +343,25 @@ if (forumsCategoriesAdmin) {
 		actionsDiv.className = 'd-flex';
 
 		/* HATEOAS: only render edit button if the item-level actions include 'update' */
-		const updateAction = actions && (actions['update'] || actions['patch'] || actions['put'] || actions['PATCH'] || actions['PUT']);
+		const updateAction =
+			actions &&
+			(actions['update'] ||
+				actions['patch'] ||
+				actions['put'] ||
+				actions['PATCH'] ||
+				actions['PUT']);
 		let editBtn = null;
 		if (updateAction) {
 			editBtn = document.createElement('button');
 			editBtn.className = 'btn btn-sm btn-outline-secondary mr-2';
 			editBtn.title = forumsCategoriesAdmin.dataset.labelEdit || 'Edit';
-			editBtn.ariaLabel = forumsCategoriesAdmin.dataset.labelEdit || 'Edit';
+			editBtn.ariaLabel =
+				forumsCategoriesAdmin.dataset.labelEdit || 'Edit';
 			editBtn.setAttribute('data-tooltip-align', 'top');
-			editBtn.innerHTML = '<svg class="lexicon-icon lexicon-icon-pencil" role="presentation"><use href="' + clayIconsUrl + '#pencil"></use></svg>';
+			editBtn.innerHTML =
+				'<svg class="lexicon-icon lexicon-icon-pencil" role="presentation"><use href="' +
+				clayIconsUrl +
+				'#pencil"></use></svg>';
 			actionsDiv.appendChild(editBtn);
 		}
 
@@ -243,12 +369,21 @@ if (forumsCategoriesAdmin) {
 		if (actions && actions['delete']) {
 			const delBtn = document.createElement('button');
 			delBtn.className = 'btn btn-sm btn-outline-danger';
-			delBtn.title = forumsCategoriesAdmin.dataset.labelDelete || 'Delete';
-			delBtn.ariaLabel = forumsCategoriesAdmin.dataset.labelDelete || 'Delete';
+			delBtn.title =
+				forumsCategoriesAdmin.dataset.labelDelete || 'Delete';
+			delBtn.ariaLabel =
+				forumsCategoriesAdmin.dataset.labelDelete || 'Delete';
 			delBtn.setAttribute('data-tooltip-align', 'top');
-			delBtn.innerHTML = '<svg class="lexicon-icon lexicon-icon-trash" role="presentation"><use href="' + clayIconsUrl + '#trash"></use></svg>';
-			delBtn.addEventListener('click', function() {
-				deleteCategory(actions['delete'].href, id, (childrenOf[id] || []).length);
+			delBtn.innerHTML =
+				'<svg class="lexicon-icon lexicon-icon-trash" role="presentation"><use href="' +
+				clayIconsUrl +
+				'#trash"></use></svg>';
+			delBtn.addEventListener('click', () => {
+				deleteCategory(
+					actions['delete'].href,
+					id,
+					(childrenOf[id] || []).length
+				);
 			});
 			actionsDiv.appendChild(delBtn);
 		}
@@ -257,6 +392,7 @@ if (forumsCategoriesAdmin) {
 		li.appendChild(viewContainer);
 
 		if (updateAction && editBtn) {
+
 			/* A category that already has subcategories cannot itself be nested —
 			   doing so would push its children past MAX_DEPTH. */
 			const isParent = hasChildren(id, childrenOf);
@@ -270,40 +406,80 @@ if (forumsCategoriesAdmin) {
 			const nameFieldId = 'forumsCatEditName-' + id;
 			const descFieldId = 'forumsCatEditDesc-' + id;
 			const parentFieldId = 'forumsCatEditParent-' + id;
-			const {labelCategoryName, labelDescription, labelParentCategory, labelHasSubcategories} = forumsCategoriesAdmin.dataset;
+			const {
+				labelCategoryName,
+				labelDescription,
+				labelHasSubcategories,
+				labelParentCategory,
+			} = forumsCategoriesAdmin.dataset;
 			const labelName = labelCategoryName || 'Category Name';
 			const labelDesc = labelDescription || 'Description';
 			const labelParent = labelParentCategory || 'Parent Category';
-			const labelHasSubs = labelHasSubcategories || 'A category with subcategories cannot be nested.';
+			const labelHasSubs =
+				labelHasSubcategories ||
+				'A category with subcategories cannot be nested.';
 
 			const parentFieldHtml = isParent
 				? '<div class="form-group mb-3 mb-md-0">' +
-						'<span class="text-secondary small">' + Liferay.Util.escapeHTML(labelHasSubs) + '</span>' +
+					'<span class="text-secondary small">' +
+					Liferay.Util.escapeHTML(labelHasSubs) +
+					'</span>' +
 					'</div>'
 				: '<div class="form-group mb-3 mb-md-0">' +
-						'<label for="' + parentFieldId + '" class="sr-only">' + labelParent + '</label>' +
-						'<select class="form-control" id="' + parentFieldId + '" aria-label="' + labelParent + '"></select>' +
+					'<label for="' +
+					parentFieldId +
+					'" class="sr-only">' +
+					labelParent +
+					'</label>' +
+					'<select class="form-control" id="' +
+					parentFieldId +
+					'" aria-label="' +
+					labelParent +
+					'"></select>' +
 					'</div>';
 
-			editForm.innerHTML = '<div class="row align-items-end">' +
+			editForm.innerHTML =
+				'<div class="row align-items-end">' +
 				'<div class="col-12 col-md">' +
-					'<div class="form-group mb-3 mb-md-0">' +
-						'<label for="' + nameFieldId + '" class="sr-only">' + labelName + '</label>' +
-						'<input type="text" class="form-control" id="' + nameFieldId + '" aria-label="' + labelName + '" required>' +
-					'</div>' +
+				'<div class="form-group mb-3 mb-md-0">' +
+				'<label for="' +
+				nameFieldId +
+				'" class="sr-only">' +
+				labelName +
+				'</label>' +
+				'<input type="text" class="form-control" id="' +
+				nameFieldId +
+				'" aria-label="' +
+				labelName +
+				'" required>' +
+				'</div>' +
 				'</div>' +
 				'<div class="col-12 col-md">' +
-					'<div class="form-group mb-3 mb-md-0">' +
-						'<label for="' + descFieldId + '" class="sr-only">' + labelDesc + '</label>' +
-						'<input type="text" class="form-control" id="' + descFieldId + '" aria-label="' + labelDesc + '">' +
-					'</div>' +
+				'<div class="form-group mb-3 mb-md-0">' +
+				'<label for="' +
+				descFieldId +
+				'" class="sr-only">' +
+				labelDesc +
+				'</label>' +
+				'<input type="text" class="form-control" id="' +
+				descFieldId +
+				'" aria-label="' +
+				labelDesc +
+				'">' +
 				'</div>' +
-				'<div class="col-12 col-md">' + parentFieldHtml + '</div>' +
+				'</div>' +
+				'<div class="col-12 col-md">' +
+				parentFieldHtml +
+				'</div>' +
 				'<div class="col-12 col-md-auto mt-3 mt-md-0">' +
-					'<button type="submit" class="btn btn-primary mr-2">' + (forumsCategoriesAdmin.dataset.labelSave || 'Save') + '</button>' +
-					'<button type="button" class="btn btn-outline-secondary cancel-edit-btn">' + (forumsCategoriesAdmin.dataset.labelCancel || 'Cancel') + '</button>' +
+				'<button type="submit" class="btn btn-primary mr-2">' +
+				(forumsCategoriesAdmin.dataset.labelSave || 'Save') +
+				'</button>' +
+				'<button type="button" class="btn btn-outline-secondary cancel-edit-btn">' +
+				(forumsCategoriesAdmin.dataset.labelCancel || 'Cancel') +
+				'</button>' +
 				'</div>' +
-			'</div>';
+				'</div>';
 
 			const nameInput = editForm.querySelector('#' + nameFieldId);
 			const descInput = editForm.querySelector('#' + descFieldId);
@@ -311,41 +487,60 @@ if (forumsCategoriesAdmin) {
 			const cancelBtn = editForm.querySelector('.cancel-edit-btn');
 			const saveBtn = editForm.querySelector('button[type="submit"]');
 
-			editBtn.addEventListener('click', function() {
+			editBtn.addEventListener('click', () => {
 				nameInput.value = categoryName || '';
 				descInput.value = categoryDescription || '';
 				if (parentSelect) {
+
 					/* Exclude self; the picker already offers top-level only */
-					populateParentSelect(parentSelect, tree, getParentId(cat) || '', [id]);
+					populateParentSelect(
+						parentSelect,
+						tree,
+						getParentId(cat) || '',
+						[id]
+					);
 				}
 				viewContainer.style.display = 'none';
 				editContainer.style.display = 'block';
 			});
 
-			cancelBtn.addEventListener('click', function() {
+			cancelBtn.addEventListener('click', () => {
 				editContainer.style.display = 'none';
 				viewContainer.style.display = 'flex';
 			});
 
-			editForm.addEventListener('submit', function(e) {
-				e.preventDefault();
+			editForm.addEventListener('submit', (event) => {
+				event.preventDefault();
 				const newName = nameInput.value.trim();
 				const newDesc = descInput.value.trim();
+
 				/* A parent category keeps its top-level position */
 				const newParent = parentSelect ? parentSelect.value : '';
-				if (!newName) return;
+				if (!newName) {
+					return;
+				}
 
 				saveBtn.disabled = true;
 				cancelBtn.disabled = true;
 
-				updateCategory(updateAction.href, id, newName, newDesc, newParent)
-					.then(function() {
+				updateCategory(
+					updateAction.href,
+					id,
+					newName,
+					newDesc,
+					newParent
+				)
+					.then(() => {
+
 						/* Reload so the tree reflects any re-parenting */
 						loadCategories();
 					})
-					.catch(function(err) {
-						console.error(err);
-						alert(forumsCategoriesAdmin.dataset.labelErrorUpdating || 'Error updating category.');
+					.catch((error) => {
+						console.error(error);
+						alert(
+							forumsCategoriesAdmin.dataset.labelErrorUpdating ||
+								'Error updating category.'
+						);
 						saveBtn.disabled = false;
 						cancelBtn.disabled = false;
 					});
@@ -356,51 +551,73 @@ if (forumsCategoriesAdmin) {
 		}
 
 		return li;
-	}
+	};
 
-	function createCategory(name, desc, erc, parentId) {
+	const createCategory = function (name, description, erc, parentId) {
 		const body = {
+			categoryDescription: description || '',
 			categoryName: name,
-			categoryName_i18n: { en_US: name },
-			categoryDescription: desc || ''
+			categoryName_i18n: {en_US: name},
 		};
-		if (erc) body.externalReferenceCode = erc;
-		if (parentId) body[PARENT_FK] = parseInt(parentId, 10);
+		if (erc) {
+			body.externalReferenceCode = erc;
+		}
+		if (parentId) {
+			body[PARENT_FK] = parseInt(parentId, 10);
+		}
 
-		return Liferay.Util.fetch(portalURL + '/o/c/forumcategories/scopes/' + scopeGroupId, {
-			headers,
-			method: 'POST',
-			body: JSON.stringify(body)
-		}).then(function(r) {
-			if (!r.ok) throw new Error('Create failed');
+		return Liferay.Util.fetch(
+			portalURL + '/o/c/forumcategories/scopes/' + scopeGroupId,
+			{
+				body: JSON.stringify(body),
+				headers,
+				method: 'POST',
+			}
+		).then((r) => {
+			if (!r.ok) {
+				throw new Error('Create failed');
+			}
+
 			return r.json();
 		});
-	}
+	};
 
-	function updateCategory(updateUrl, id, name, desc, parentId) {
-		const url = updateUrl || (portalURL + '/o/c/forumcategories/' + id);
+	const updateCategory = function (
+		updateUrl,
+		id,
+		name,
+		description,
+		parentId
+	) {
+		const url = updateUrl || portalURL + '/o/c/forumcategories/' + id;
 
 		const body = {
+			categoryDescription: description || '',
 			categoryName: name,
-			categoryName_i18n: { en_US: name },
-			categoryDescription: desc || ''
+			categoryName_i18n: {en_US: name},
 		};
+
 		/* 0 unsets the relationship (promotes the category back to top-level) */
 		body[PARENT_FK] = parentId ? parseInt(parentId, 10) : 0;
 
 		return Liferay.Util.fetch(url, {
+			body: JSON.stringify(body),
 			headers,
 			method: 'PATCH',
-			body: JSON.stringify(body)
-		}).then(function(r) {
-			if (!r.ok) throw new Error('Update failed');
+		}).then((r) => {
+			if (!r.ok) {
+				throw new Error('Update failed');
+			}
+
 			return r.json();
 		});
-	}
+	};
 
-	function showConfirmModal(message, confirmLabel, onConfirm) {
+	const showConfirmModal = function (message, confirmLabel, onConfirm) {
 		const existing = document.getElementById('forumsCatAdminConfirmModal');
-		if (existing) existing.remove();
+		if (existing) {
+			existing.remove();
+		}
 
 		const modal = document.createElement('div');
 		modal.id = 'forumsCatAdminConfirmModal';
@@ -444,102 +661,151 @@ if (forumsCategoriesAdmin) {
 		document.body.appendChild(modal);
 		const previousFocus = document.activeElement;
 
-		function onKeydown(e) {
-			if (e.key === 'Escape') closeModal();
+		function onKeydown(event) {
+			if (event.key === 'Escape') {
+				closeModal();
+			}
 		}
 
 		function closeModal() {
 			document.removeEventListener('keydown', onKeydown);
 			modal.remove();
-			if (previousFocus) previousFocus.focus();
+			if (previousFocus) {
+				previousFocus.focus();
+			}
 		}
 
-		modal.querySelector('#forumsCatAdminConfirmCancel').addEventListener('click', closeModal);
-		modal.querySelector('#forumsCatAdminConfirmClose').addEventListener('click', closeModal);
-		modal.querySelector('#forumsCatAdminConfirmOk').addEventListener('click', function() {
-			closeModal();
-			onConfirm();
-		});
-		modal.addEventListener('click', function(e) {
-			if (e.target === modal) closeModal();
+		modal
+			.querySelector('#forumsCatAdminConfirmCancel')
+			.addEventListener('click', closeModal);
+		modal
+			.querySelector('#forumsCatAdminConfirmClose')
+			.addEventListener('click', closeModal);
+		modal
+			.querySelector('#forumsCatAdminConfirmOk')
+			.addEventListener('click', () => {
+				closeModal();
+				onConfirm();
+			});
+		modal.addEventListener('click', (event) => {
+			if (event.target === modal) {
+				closeModal();
+			}
 		});
 		document.addEventListener('keydown', onKeydown);
 
 		modal.querySelector('.modal-title').focus();
-	}
+	};
 
-	function deleteCategory(deleteUrl, id, subcategoryCount) {
-		let message = forumsCategoriesAdmin.dataset.labelConfirmDelete || 'Are you sure you want to delete this category?';
+	const deleteCategory = function (deleteUrl, id, subcategoryCount) {
+		let message =
+			forumsCategoriesAdmin.dataset.labelConfirmDelete ||
+			'Are you sure you want to delete this category?';
 
 		/* The self-relationship cascades: warn that the subtree goes too */
 		if (subcategoryCount > 0) {
-			const cascadeMsg = forumsCategoriesAdmin.dataset.labelConfirmDeleteCategoryWithSubcategories
-				|| 'This category has {0} subcategories. Deleting it will also delete them and all of their topics.';
+			const cascadeMsg =
+				forumsCategoriesAdmin.dataset
+					.labelConfirmDeleteCategoryWithSubcategories ||
+				'This category has {0} subcategories. Deleting it will also delete them and all of their topics.';
 			message = cascadeMsg.replace('{0}', subcategoryCount);
 		}
 
-		const confirmLabel = forumsCategoriesAdmin.dataset.labelDelete || 'Delete';
-		showConfirmModal(message, confirmLabel, function() {
-			const url = deleteUrl || (portalURL + '/o/c/forumcategories/' + id);
+		const confirmLabel =
+			forumsCategoriesAdmin.dataset.labelDelete || 'Delete';
+		showConfirmModal(message, confirmLabel, () => {
+			const url = deleteUrl || portalURL + '/o/c/forumcategories/' + id;
 			Liferay.Util.fetch(url, {
 				headers,
-				method: 'DELETE'
+				method: 'DELETE',
 			})
-			.then(function(r) {
-				if (r.ok) loadCategories();
-				else alert(forumsCategoriesAdmin.dataset.labelFailedDelete || 'Failed to delete category.');
-			})
-			.catch(function(err) {
-				console.error(err);
-				alert(forumsCategoriesAdmin.dataset.labelErrorDelete || 'Error deleting category.');
-			});
+				.then((r) => {
+					if (r.ok) {
+						loadCategories();
+					}
+					else {
+						alert(
+							forumsCategoriesAdmin.dataset.labelFailedDelete ||
+								'Failed to delete category.'
+						);
+					}
+				})
+				.catch((error) => {
+					console.error(error);
+					alert(
+						forumsCategoriesAdmin.dataset.labelErrorDelete ||
+							'Error deleting category.'
+					);
+				});
 		});
-	}
+	};
 
 	if (seedBtn) {
-		seedBtn.addEventListener('click', function() {
+		seedBtn.addEventListener('click', () => {
 			seedBtn.disabled = true;
-			seedBtn.textContent = forumsCategoriesAdmin.dataset.labelSeeding || 'Seeding...';
+			seedBtn.textContent =
+				forumsCategoriesAdmin.dataset.labelSeeding || 'Seeding...';
 
-			const promises = defaultCategories.map(function({name, desc, erc}) {
-				return createCategory(name, desc, erc).catch(function(e) { console.error(e); });
-			});
-
-			Promise.all(promises).then(function() {
-				seedBtn.disabled = false;
-				seedBtn.textContent = forumsCategoriesAdmin.dataset.labelSeedDefault || 'Seed Default Categories';
-				if (seedStatus) {
-					seedStatus.style.display = 'inline';
-					setTimeout(function() { seedStatus.style.display = 'none'; }, 3000);
+			const promises = defaultCategories.map(
+				({description, erc, name}) => {
+					return createCategory(name, description, erc).catch(
+						(event) => {
+							console.error(event);
+						}
+					);
 				}
-				loadCategories();
-			});
+			);
+
+			Promise.all(promises)
+				.then(() => {
+					seedBtn.disabled = false;
+					seedBtn.textContent =
+						forumsCategoriesAdmin.dataset.labelSeedDefault ||
+						'Seed Default Categories';
+					if (seedStatus) {
+						seedStatus.style.display = 'inline';
+						setTimeout(() => {
+							seedStatus.style.display = 'none';
+						}, 3000);
+					}
+					loadCategories();
+				})
+				.catch((error) => {
+					console.error('ForumsCategoriesAdmin seed error:', error);
+				});
 		});
 	}
 
 	if (addForm) {
-		addForm.addEventListener('submit', function(e) {
-			e.preventDefault();
+		addForm.addEventListener('submit', (event) => {
+			event.preventDefault();
 			const name = addName.value.trim();
-			const desc = addDesc.value.trim();
+			const description = addDesc.value.trim();
 			const parentId = addParent ? addParent.value : '';
 
-			if (!name) return;
+			if (!name) {
+				return;
+			}
 
 			addBtn.disabled = true;
-			createCategory(name, desc, null, parentId)
-			.then(function() {
-				addName.value = '';
-				addDesc.value = '';
-				if (addParent) addParent.value = '';
-				addBtn.disabled = false;
-				loadCategories();
-			})
-			.catch(function(err) {
-				console.error(err);
-				alert(forumsCategoriesAdmin.dataset.labelErrorCreating || 'Error creating category.');
-				addBtn.disabled = false;
-			});
+			createCategory(name, description, null, parentId)
+				.then(() => {
+					addName.value = '';
+					addDesc.value = '';
+					if (addParent) {
+						addParent.value = '';
+					}
+					addBtn.disabled = false;
+					loadCategories();
+				})
+				.catch((error) => {
+					console.error(error);
+					alert(
+						forumsCategoriesAdmin.dataset.labelErrorCreating ||
+							'Error creating category.'
+					);
+					addBtn.disabled = false;
+				});
 		});
 	}
 

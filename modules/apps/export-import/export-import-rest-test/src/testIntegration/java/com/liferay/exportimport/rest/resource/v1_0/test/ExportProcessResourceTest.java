@@ -117,6 +117,14 @@ public class ExportProcessResourceTest
 
 	@Override
 	@Test
+	public void testGetExportProcess() throws Exception {
+		super.testGetExportProcess();
+
+		_testGetExportProcessErrorMessageWhenStatusMessageIsNotJSON();
+	}
+
+	@Override
+	@Test
 	public void testGetExportProcessContent() throws Exception {
 		ObjectDefinition objectDefinition = _publishObjectDefinition(
 			ObjectDefinitionConstants.SCOPE_SITE);
@@ -181,30 +189,6 @@ public class ExportProcessResourceTest
 			exportProcess.getName() + ".lar", fileEntry.getTitle());
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
-	}
-
-	@Test
-	@TestInfo("LPD-102315")
-	public void testGetExportProcessErrorMessageWhenStatusMessageIsNotJSON()
-		throws Exception {
-
-		ExportProcess exportProcess = _addExportProcess(
-			testGroup.getGroupId(), RandomTestUtil.randomString(),
-			BackgroundTaskExecutorNames.LAYOUT_EXPORT_BACKGROUND_TASK_EXECUTOR);
-
-		_backgroundTaskLocalService.amendBackgroundTask(
-			exportProcess.getId(), null, BackgroundTaskConstants.STATUS_FAILED,
-			_STACK_TRACE_STATUS_MESSAGE, null);
-
-		ExportProcess failedExportProcess =
-			exportProcessResource.getExportProcess(exportProcess.getId());
-
-		String errorMessage = failedExportProcess.getErrorMessage();
-
-		Assert.assertNotEquals(_STACK_TRACE_STATUS_MESSAGE, errorMessage);
-		Assert.assertFalse(errorMessage, errorMessage.contains("\tat "));
-		Assert.assertFalse(errorMessage, errorMessage.contains(".java:"));
-		Assert.assertFalse(errorMessage, errorMessage.contains("java.lang."));
 	}
 
 	@Override
@@ -848,6 +832,29 @@ public class ExportProcessResourceTest
 		}
 
 		return objectDefinition;
+	}
+
+	@TestInfo("LPD-102315")
+	private void _testGetExportProcessErrorMessageWhenStatusMessageIsNotJSON()
+		throws Exception {
+
+		ExportProcess exportProcess = _addExportProcess(
+			testGroup.getGroupId(), RandomTestUtil.randomString(),
+			BackgroundTaskExecutorNames.LAYOUT_EXPORT_BACKGROUND_TASK_EXECUTOR);
+
+		_backgroundTaskLocalService.amendBackgroundTask(
+			exportProcess.getId(), null, BackgroundTaskConstants.STATUS_FAILED,
+			_STACK_TRACE_STATUS_MESSAGE, null);
+
+		ExportProcess failedExportProcess =
+			exportProcessResource.getExportProcess(exportProcess.getId());
+
+		String errorMessage = failedExportProcess.getErrorMessage();
+
+		Assert.assertNotEquals(_STACK_TRACE_STATUS_MESSAGE, errorMessage);
+		Assert.assertFalse(errorMessage, errorMessage.contains("\tat "));
+		Assert.assertFalse(errorMessage, errorMessage.contains(".java:"));
+		Assert.assertFalse(errorMessage, errorMessage.contains("java.lang."));
 	}
 
 	@TestInfo("LPD-90359")

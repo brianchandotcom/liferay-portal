@@ -33,7 +33,7 @@ public enum PortalInstancesOperationType {
 
 	public String getBackgroundTaskName(String webId) {
 		return StringBundler.concat(
-			StringUtil.upperCaseFirstLetter(_value), "VirtualInstance#", webId);
+			StringUtil.upperCaseFirstLetter(_value), "Instance#", webId);
 	}
 
 	public String getValue() {

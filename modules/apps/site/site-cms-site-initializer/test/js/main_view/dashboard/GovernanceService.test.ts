@@ -24,7 +24,7 @@ describe('GovernanceService.getAssetStatistics', () => {
 		);
 
 		expect(getSpy).toHaveBeenCalledWith(
-			'/o/headless-cms/v1.0/similarity-clusters?assetLibraryId=123&pageSize=1',
+			'/o/headless-cms/v1.0/similar-asset-groups?assetLibraryId=123&pageSize=1',
 			undefined
 		);
 	});
@@ -42,7 +42,7 @@ describe('GovernanceService.getAssetStatistics', () => {
 		);
 
 		expect(getSpy).toHaveBeenCalledWith(
-			'/o/headless-cms/v1.0/similarity-clusters?pageSize=1',
+			'/o/headless-cms/v1.0/similar-asset-groups?pageSize=1',
 			undefined
 		);
 	});
@@ -62,14 +62,14 @@ describe('GovernanceService.getAssetStatistics', () => {
 		);
 
 		expect(getSpy).toHaveBeenCalledWith(
-			'/o/headless-cms/v1.0/similarity-clusters?pageSize=1',
+			'/o/headless-cms/v1.0/similar-asset-groups?pageSize=1',
 			signal
 		);
 	});
 
 	it('counts the assets in similarity clusters as the duplicated count', async () => {
 		jest.spyOn(ApiHelper, 'get').mockImplementation(((url: string) => {
-			if (url.includes('similarity-clusters')) {
+			if (url.includes('similar-asset-groups')) {
 				return Promise.resolve({data: {totalCount: 5}, error: null});
 			}
 
@@ -83,7 +83,7 @@ describe('GovernanceService.getAssetStatistics', () => {
 
 	it('leaves the duplicated count unset when the clusters are unavailable', async () => {
 		jest.spyOn(ApiHelper, 'get').mockImplementation(((url: string) => {
-			if (url.includes('similarity-clusters')) {
+			if (url.includes('similar-asset-groups')) {
 				return Promise.resolve({data: null, error: 'Not Found'});
 			}
 

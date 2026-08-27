@@ -49,13 +49,13 @@ async function getAssetStatistics(
 ) {
 	const scope = assetLibraryId ? `assetLibraryId=${assetLibraryId}&` : '';
 
-	const [statistics, similarityClusters] = await Promise.all([
+	const [statistics, similarAssetGroups] = await Promise.all([
 		ApiHelper.get<AssetStatistics>(
 			`/o/headless-cms/v1.0/asset-statistics?${scope}`,
 			signal
 		),
 		ApiHelper.get<{totalCount: number}>(
-			`/o/headless-cms/v1.0/similarity-clusters?${scope}pageSize=1`,
+			`/o/headless-cms/v1.0/similar-asset-groups?${scope}pageSize=1`,
 			signal
 		),
 	]);
@@ -68,7 +68,7 @@ async function getAssetStatistics(
 		...statistics,
 		data: {
 			...statistics.data,
-			duplicatedCount: similarityClusters.data?.totalCount,
+			duplicatedCount: similarAssetGroups.data?.totalCount,
 		},
 	};
 }

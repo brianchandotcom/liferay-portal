@@ -150,12 +150,12 @@ const FrontendDataSetContent = ({
 	overrideEmptyResultView,
 	pagination,
 	portletId,
+	saveUserPreferencesURL,
 	searchAsYouType = false,
 	searchSuggestionsEnabled = false,
 	selectedItems: externalSelectedItems,
 	selectedItemsKey = 'id',
 	selectionType,
-	saveStartupSnapshotURL,
 	showBulkActionsManagementBar = true,
 	showBulkActionsManagementBarActions = true,
 	showManagementBar = true,
@@ -167,9 +167,9 @@ const FrontendDataSetContent = ({
 	snapshots = [],
 	snapshotsEnabled,
 	sorts: sortsProp = [],
-	startupSnapshot = null,
 	style = 'default',
 	uniformActionsDisplay,
+	userPreferences = null,
 	views,
 }: IFrontendDataSetProps) => {
 	const {fileDropSettings} = useContext(DnDContext);
@@ -649,17 +649,19 @@ const FrontendDataSetContent = ({
 			snapshots: parsedSnapshots,
 			snapshotsEnabled,
 			sorts,
-			startupSnapshot: startupSnapshot ?? null,
+			userPreferences: userPreferences ?? null,
 			views,
 			visibleFieldNames: initialVisibleFieldNames,
 		};
 
-		const matchedStartupSnapshot =
-			startupSnapshot?.erc &&
-			getSnapshotByERC(parsedSnapshots, startupSnapshot.erc);
+		const startupSnapshotERC = userPreferences?.startupSnapshotERC;
 
-		if (matchedStartupSnapshot && hasURLState()) {
-			initialViewsState.activeSnapshotERC = startupSnapshot.erc;
+		if (
+			startupSnapshotERC &&
+			getSnapshotByERC(parsedSnapshots, startupSnapshotERC) &&
+			hasURLState()
+		) {
+			initialViewsState.activeSnapshotERC = startupSnapshotERC;
 			initialViewsState.snapshotUpdated = true;
 		}
 
@@ -1974,7 +1976,7 @@ const FrontendDataSetContent = ({
 
 	const handleSnapshotChangeRef = useRef(handleSnapshotChange);
 	const hasURLStateRef = useRef(hasURLState);
-	const startupSnapshotAppliedRef = useRef(false);
+	const startupSnapshotERCAppliedRef = useRef(false);
 
 	useLayoutEffect(() => {
 		handleSnapshotChangeRef.current = handleSnapshotChange;
@@ -1982,31 +1984,31 @@ const FrontendDataSetContent = ({
 	});
 
 	useEffect(() => {
+		const startupSnapshotERC = userPreferences?.startupSnapshotERC;
+
 		if (
-			startupSnapshotAppliedRef.current ||
+			startupSnapshotERCAppliedRef.current ||
 			!globalFDSStateInitialized ||
-			!startupSnapshot?.erc
+			!startupSnapshotERC
 		) {
 			return;
 		}
 
-		startupSnapshotAppliedRef.current = true;
+		startupSnapshotERCAppliedRef.current = true;
 
-		const matchedStartupSnapshot = getSnapshotByERC(
-			viewsState.snapshots,
-			startupSnapshot.erc
-		);
-
-		if (!matchedStartupSnapshot || hasURLStateRef.current()) {
+		if (
+			!getSnapshotByERC(viewsState.snapshots, startupSnapshotERC) ||
+			hasURLStateRef.current()
+		) {
 			return;
 		}
 
 		handleSnapshotChangeRef.current({
 			defaultSnapshot: viewsState.defaultSnapshot,
 			snapshots: viewsState.snapshots,
-			value: startupSnapshot.erc,
+			value: startupSnapshotERC,
 		});
-	}, [globalFDSStateInitialized, startupSnapshot, viewsState]);
+	}, [globalFDSStateInitialized, userPreferences, viewsState]);
 
 	function toggleItemInlineEdit(itemKey: any) {
 		setItemsChanges(({[itemKey]: foundItem, ...itemsChanges}) => {
@@ -2273,7 +2275,7 @@ const FrontendDataSetContent = ({
 				openModal,
 				openSidePanel,
 				portletId,
-				saveStartupSnapshotURL
+				saveUserPreferencesURL
 				searchAsYouType,
 				searchParam: unfrozenGlobalFDSState.search.query,
 				searchSuggestionsEnabled,

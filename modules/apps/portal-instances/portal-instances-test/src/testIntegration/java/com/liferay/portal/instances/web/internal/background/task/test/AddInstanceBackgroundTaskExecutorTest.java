@@ -52,7 +52,7 @@ import org.junit.runner.RunWith;
  * @author Luis Ortiz
  */
 @RunWith(Arquillian.class)
-public class AddVirtualInstanceBackgroundTaskExecutorTest {
+public class AddInstanceBackgroundTaskExecutorTest {
 
 	@ClassRule
 	@Rule
@@ -185,9 +185,9 @@ public class AddVirtualInstanceBackgroundTaskExecutorTest {
 			_backgroundTaskLocalService.addBackgroundTask(
 				TestPropsValues.getUserId(),
 				BackgroundTaskConstants.GROUP_ID_DEFAULT,
-				"AddVirtualInstance#" + _WEB_ID,
+				"AddInstance#" + _WEB_ID,
 				"com.liferay.portal.instances.web.internal.background.task." +
-					"AddVirtualInstanceBackgroundTaskExecutor",
+					"AddInstanceBackgroundTaskExecutor",
 				taskContextMap, new ServiceContext());
 
 		_backgroundTasks.add(backgroundTask);

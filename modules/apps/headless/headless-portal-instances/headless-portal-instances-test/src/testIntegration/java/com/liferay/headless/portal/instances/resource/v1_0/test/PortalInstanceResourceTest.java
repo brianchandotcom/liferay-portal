@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
@@ -50,6 +52,8 @@ import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
+
+import java.io.IOException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -834,37 +838,65 @@ public class PortalInstanceResourceTest
 			return;
 		}
 
-		Configuration company1Configuration = _createScopedConfiguration(
-			HashMapDictionaryBuilder.<String, Object>put(
-				ExtendedObjectClassDefinition.Scope.COMPANY.getPropertyKey(),
-				companyId
-			).build());
-
-		Configuration company2Configuration = _createScopedConfiguration(
-			HashMapDictionaryBuilder.<String, Object>put(
-				ExtendedObjectClassDefinition.Scope.COMPANY.getPropertyKey(),
-				RandomTestUtil.randomLong()
-			).build());
-
-		Group group = _groupLocalService.getCompanyGroup(companyId);
-
-		Configuration groupConfiguration = _createScopedConfiguration(
-			HashMapDictionaryBuilder.<String, Object>put(
-				ExtendedObjectClassDefinition.Scope.COMPANY.getPropertyKey(),
-				companyId
-			).put(
-				ExtendedObjectClassDefinition.Scope.GROUP.getPropertyKey(),
-				group.getGroupId()
-			).build());
-
-		Configuration portletInstanceConfiguration = _createScopedConfiguration(
-			HashMapDictionaryBuilder.<String, Object>put(
-				ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE.
-					getPropertyKey(),
-				RandomTestUtil.randomString()
-			).build());
+		List<Configuration> configurations = new ArrayList<>();
 
 		try {
+			Configuration company1Configuration = _createScopedConfiguration(
+				HashMapDictionaryBuilder.<String, Object>put(
+					ExtendedObjectClassDefinition.Scope.COMPANY.
+						getPropertyKey(),
+					companyId
+				).build());
+
+			configurations.add(company1Configuration);
+
+			Configuration company2Configuration = _createScopedConfiguration(
+				HashMapDictionaryBuilder.<String, Object>put(
+					ExtendedObjectClassDefinition.Scope.COMPANY.
+						getPropertyKey(),
+					RandomTestUtil.randomLong()
+				).build());
+
+			configurations.add(company2Configuration);
+
+			Group group = _groupLocalService.getCompanyGroup(companyId);
+
+			Configuration groupConfiguration = _createScopedConfiguration(
+				HashMapDictionaryBuilder.<String, Object>put(
+					ExtendedObjectClassDefinition.Scope.COMPANY.
+						getPropertyKey(),
+					companyId
+				).put(
+					ExtendedObjectClassDefinition.Scope.GROUP.getPropertyKey(),
+					group.getGroupId()
+				).build());
+
+			configurations.add(groupConfiguration);
+
+			Configuration nonexistentGroupConfiguration =
+				_createScopedConfiguration(
+					HashMapDictionaryBuilder.<String, Object>put(
+						ExtendedObjectClassDefinition.Scope.COMPANY.
+							getPropertyKey(),
+						companyId
+					).put(
+						ExtendedObjectClassDefinition.Scope.GROUP.
+							getPropertyKey(),
+						RandomTestUtil.randomLong()
+					).build());
+
+			configurations.add(nonexistentGroupConfiguration);
+
+			Configuration portletInstanceConfiguration =
+				_createScopedConfiguration(
+					HashMapDictionaryBuilder.<String, Object>put(
+						ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE.
+							getPropertyKey(),
+						RandomTestUtil.randomString()
+					).build());
+
+			configurations.add(portletInstanceConfiguration);
+
 			PortalInstanceExport portalInstanceExport =
 				portalInstanceResource.postPortalInstanceExport(
 					_portalInstance.getPortalInstanceId());
@@ -889,12 +921,21 @@ public class PortalInstanceResourceTest
 					portletInstanceConfiguration.getPid()));
 			Assert.assertFalse(
 				configurationIds.contains(company2Configuration.getPid()));
+			Assert.assertFalse(
+				configurationIds.contains(
+					nonexistentGroupConfiguration.getPid()));
 		}
 		finally {
-			company1Configuration.delete();
-			company2Configuration.delete();
-			groupConfiguration.delete();
-			portletInstanceConfiguration.delete();
+			for (Configuration configuration : configurations) {
+				try {
+					configuration.delete();
+				}
+				catch (IOException ioException) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(ioException);
+					}
+				}
+			}
 
 			_dropExportedSchema(companyId);
 		}
@@ -1229,6 +1270,9 @@ public class PortalInstanceResourceTest
 	private static final String _CLASS_NAME_PORTAL_INSTANCE_RESOURCE_IMPL =
 		"com.liferay.headless.portal.instances.internal.resource.v1_0." +
 			"PortalInstanceResourceImpl";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		PortalInstanceResourceTest.class);
 
 	private static Company _company;
 

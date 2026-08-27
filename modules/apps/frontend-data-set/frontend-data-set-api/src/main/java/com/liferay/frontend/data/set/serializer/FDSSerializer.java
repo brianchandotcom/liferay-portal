@@ -93,7 +93,7 @@ public interface FDSSerializer {
 	public List<FDSSortItem> serializeSorts(
 		String fdsName, HttpServletRequest httpServletRequest);
 
-	public JSONObject serializeStartupSnapshot(
+	public JSONObject serializeUserPreferences(
 		String fdsName, HttpServletRequest httpServletRequest);
 
 	public JSONArray serializeViews(

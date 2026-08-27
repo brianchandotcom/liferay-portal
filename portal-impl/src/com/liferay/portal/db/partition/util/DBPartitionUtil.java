@@ -1584,7 +1584,7 @@ public class DBPartitionUtil {
 	}
 
 	private static boolean _isCopyableQuartzTable(String tableName) {
-		if (StringUtil.startsWith(tableName, _QUARTZ_TABLE_NAME_PREFIX) &&
+		if (StringUtil.startsWith(tableName, _TABLE_NAME_PREFIX_QUARTZ) &&
 			(StringUtil.endsWith(tableName, "JOB_DETAILS") ||
 			 StringUtil.endsWith(tableName, "TRIGGERS"))) {
 
@@ -1829,7 +1829,7 @@ public class DBPartitionUtil {
 	private static final String _RESOURCE_NAME_PREFIX_OBJECT_DEFINITION =
 		"com.liferay.object#";
 
-	private static final String _QUARTZ_TABLE_NAME_PREFIX = GetterUtil.get(
+	private static final String _TABLE_NAME_PREFIX_QUARTZ = GetterUtil.get(
 		PropsUtil.get("persisted.scheduler.org.quartz.jobStore.tablePrefix"),
 		"QUARTZ_");
 

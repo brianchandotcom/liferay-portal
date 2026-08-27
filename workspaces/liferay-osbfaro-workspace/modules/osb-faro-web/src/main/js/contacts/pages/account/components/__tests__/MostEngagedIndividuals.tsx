@@ -14,6 +14,7 @@ jest.mock('@liferay/frontend-data-set-web', () => ({
 
 jest.mock('react-router-dom', () => ({
 	...jest.requireActual('react-router-dom'),
+	useLocation: () => ({search: ''}),
 	useParams: jest.fn(),
 }));
 

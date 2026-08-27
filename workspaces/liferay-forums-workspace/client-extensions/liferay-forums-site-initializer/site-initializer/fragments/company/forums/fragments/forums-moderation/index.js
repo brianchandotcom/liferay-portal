@@ -389,17 +389,31 @@ if (forumsMod) {
 					item.appendChild(infoDiv);
 					item.appendChild(actionsDiv);
 					flagList.appendChild(item);
+
+					/* Names come from the forum's own Forum User object rather than
+					   from the user account API, so reading the ban list needs no
+					   permission over user accounts. Someone who has never posted
+					   here has no row, and the entry keeps showing its id. */
 					Liferay.Util.fetch(
 						portalURL +
-							'/o/headless-admin-user/v1.0/user-accounts/' +
-							banUserId,
+							'/o/c/forumusers/scopes/' +
+							scopeGroupId +
+							'?fields=firstName,lastName,screenName&pageSize=1&filter=' +
+							encodeURIComponent('forumUserId eq ' + banUserId),
 						{headers, method: 'GET'}
 					)
 						.then((r) => {
 							return r.json();
 						})
-						.then((u) => {
-							const n = displayName(u) || u.name;
+						.then((data) => {
+							const forumUser = (data.items || [])[0];
+							if (!forumUser) {
+								return;
+							}
+							const n =
+								[forumUser.firstName, forumUser.lastName]
+									.filter(Boolean)
+									.join(' ') || forumUser.screenName;
 							if (n) {
 								titleLink.textContent =
 									n + ' (ID: ' + banUserId + ')';

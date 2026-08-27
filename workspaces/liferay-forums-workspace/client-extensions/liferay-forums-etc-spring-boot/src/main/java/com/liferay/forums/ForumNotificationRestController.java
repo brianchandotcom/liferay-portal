@@ -8,6 +8,7 @@ package com.liferay.forums;
 import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 import com.liferay.forums.client.LiferayApiClient;
 import com.liferay.forums.service.ForumNotificationService;
+import com.liferay.forums.service.ForumUserService;
 import com.liferay.forums.service.MentionService;
 import com.liferay.forums.service.SubscriptionService;
 import com.liferay.petra.string.StringBundler;
@@ -62,6 +63,27 @@ public class ForumNotificationRestController extends BaseRestController {
 		_forumNotificationExecutor.execute(
 			() -> _fanOut(
 				"new-reply", () -> _processNewReply(json, authToken)));
+
+		return new ResponseEntity<>(json, HttpStatus.OK);
+	}
+
+	@PostMapping("/object-action/record-author")
+	public ResponseEntity<String> onRecordAuthor(
+			@AuthenticationPrincipal Jwt jwt, @RequestBody String json)
+		throws Exception {
+
+		String authToken = _authToken(jwt);
+
+		if (jwt != null) {
+			log(jwt, _log, json);
+		}
+		else if (_log.isInfoEnabled()) {
+			_log.info(json);
+		}
+
+		_forumNotificationExecutor.execute(
+			() -> _fanOut(
+				"record-author", () -> _processRecordAuthor(json, authToken)));
 
 		return new ResponseEntity<>(json, HttpStatus.OK);
 	}
@@ -403,6 +425,49 @@ public class ForumNotificationRestController extends BaseRestController {
 			recipientUserIds, authorUserId, siteId, authToken);
 	}
 
+	private void _processRecordAuthor(String json, String authToken) {
+		JSONObject payloadJSONObject = new JSONObject(json);
+
+		JSONObject dtoJSONObject = null;
+
+		for (String key : payloadJSONObject.keySet()) {
+			if (key.startsWith("objectEntryDTO")) {
+				dtoJSONObject = payloadJSONObject.optJSONObject(key);
+
+				break;
+			}
+		}
+
+		if (dtoJSONObject == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("onRecordAuthor: the payload carries no entry DTO");
+			}
+
+			return;
+		}
+
+		JSONObject creatorJSONObject = dtoJSONObject.optJSONObject("creator");
+
+		if (creatorJSONObject == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("onRecordAuthor: the entry DTO carries no creator");
+			}
+
+			return;
+		}
+
+		JSONObject objectEntryJSONObject = payloadJSONObject.optJSONObject(
+			"objectEntry");
+
+		long siteId = (objectEntryJSONObject != null) ?
+			objectEntryJSONObject.optLong("groupId", 0L) : 0L;
+
+		_forumUserService.upsert(
+			_resolveCreatorUserId(creatorJSONObject),
+			creatorJSONObject.optString("givenName", ""),
+			creatorJSONObject.optString("familyName", ""), siteId, authToken);
+	}
+
 	private void _processUpdatedReply(String json, String authToken) {
 		JSONObject payloadJSONObject = new JSONObject(json);
 
@@ -588,6 +653,9 @@ public class ForumNotificationRestController extends BaseRestController {
 
 	@Autowired
 	private ForumNotificationService _forumNotificationService;
+
+	@Autowired
+	private ForumUserService _forumUserService;
 
 	@Autowired
 	private LiferayApiClient _liferayApiClient;

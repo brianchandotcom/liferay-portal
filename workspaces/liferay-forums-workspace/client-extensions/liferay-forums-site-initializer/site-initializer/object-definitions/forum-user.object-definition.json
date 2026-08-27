@@ -1,0 +1,79 @@
+{
+	"accountEntryRestricted": false,
+	"accountEntryRestrictedObjectFieldName": "",
+	"active": true,
+	"defaultLanguageId": "en_US",
+	"enableCategorization": false,
+	"enableComments": false,
+	"enableFormContainer": true,
+	"enableFriendlyURLCustomization": false,
+	"enableIndexSearch": true,
+	"enableLocalization": false,
+	"enableObjectEntryDraft": false,
+	"enableObjectEntryHistory": false,
+	"enableObjectEntrySchedule": false,
+	"enableObjectEntrySubscription": false,
+	"enableObjectEntryVersioning": false,
+	"externalReferenceCode": "FORUM-USER",
+	"label": {
+		"en_US": "Forum User"
+	},
+	"modifiable": true,
+	"name": "ForumUser",
+	"objectFields": [
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": true,
+			"label": {
+				"en_US": "First Name"
+			},
+			"name": "firstName",
+			"required": false
+		},
+		{
+			"DBType": "Long",
+			"businessType": "LongInteger",
+			"indexed": true,
+			"indexedAsKeyword": true,
+			"label": {
+				"en_US": "Forum User Id"
+			},
+			"name": "forumUserId",
+			"required": true
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": true,
+			"label": {
+				"en_US": "Last Name"
+			},
+			"name": "lastName",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": true,
+			"label": {
+				"en_US": "Screen Name"
+			},
+			"name": "screenName",
+			"required": true
+		}
+	],
+	"objectFolderExternalReferenceCode": "FORUMS-FOLDER",
+	"panelCategoryKey": "",
+	"parameterRequired": false,
+	"pluralLabel": {
+		"en_US": "Forum Users"
+	},
+	"portlet": false,
+	"scope": "site",
+	"system": false,
+	"titleObjectFieldName": "screenName"
+}

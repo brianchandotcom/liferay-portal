@@ -1544,39 +1544,24 @@ if (messageComposer) {
 	/* ---------------------------------------------------------------------
 	   @mention picker
 
-	   Typing "@" in the body editor opens a caret-anchored dropdown of users
-	   served by the OOTB (hidden) Mentions portlet's resource phase. That
-	   portlet is embedded as a widget on every page that hosts this composer
-	   (see the site-initializer page definitions), so it counts as "on the
-	   page" and its serveResource can be invoked without a p_p_auth token --
-	   letting us build the resource URL as a plain string in JS. The finder
-	   honors the portal Social Interactions configuration, already excludes the
-	   current user and guests, and returns [{fullName, screenName,
-	   portraitHTML, mention}] (no user id and no email address, by design).
+	   Typing "@" in the body editor opens a caret-anchored dropdown of the
+	   people who have posted in this forum, read from the Forum User object.
+	   Nothing here reads user accounts, so mentioning needs no permission
+	   over them, and the list offers exactly the people the notification
+	   path can resolve.
 
 	   Selecting one inserts the OOTB mention shape -- the visible "@screenName"
 	   token, wrapped in a <span class="lfr-ac-content"> (CKEditor 4) or as a
 	   bare text token (CKEditor 5, which drops unknown spans on serialization).
 
 	   The visible "@screenName" token is the reliable channel across editor
-	   versions: the forums-microservice parses mentioned screen names with a
+	   versions: the microservice parses mentioned screen names with a
 	   boundary-anchored @screenName regex from the posted body and resolves
-	   them with a single site-scoped query (see MentionService), mirroring the
-	   platform's own DefaultMentionsMatcher.
+	   them against the same Forum User object.
 	   --------------------------------------------------------------------- */
 	(function setupMentions() {
 		const MENTION_MAX = 6;
 		let mentionAttached = false;
-
-		/* The OOTB Mentions portlet, embedded as an on-page widget. Its
-		   resource params are namespaced with "_<portletId>_". The finder
-		   permission-scopes its candidate list against a "discussion portlet";
-		   the page comments portlet is a sensible default and mirrors how OOTB
-		   comment mentions are scoped. */
-		const MENTIONS_ID = 'com_liferay_mentions_web_portlet_MentionsPortlet';
-		const MENTIONS_NS = '_' + MENTIONS_ID + '_';
-		const MENTIONS_DISCUSSION_PORTLET_ID =
-			'com_liferay_comment_page_comments_web_portlet_PageCommentsPortlet';
 
 		/* Track every global/document listener added below so they can all be
 		   removed on SPA navigation; otherwise each visit to this fragment would
@@ -1733,20 +1718,18 @@ if (messageComposer) {
 			let html = '';
 			currentItems.forEach((u, i) => {
 
-				/* fullName and screenName arrive already HTML-escaped from the
-				   Mentions portlet; insert them as-is (re-escaping would render
-				   visible entities). portraitHTML is ready-to-render markup. */
-				const {portraitHTML, screenName} = u;
-				const name = mentionDisplayName(u);
-				const screen = screenName ? '@' + screenName : '';
+				/* These are raw object field values now, so escape them. */
+				const name = Liferay.Util.escapeHTML(mentionDisplayName(u));
+				const screen = u.screenName
+					? Liferay.Util.escapeHTML('@' + u.screenName)
+					: '';
 				const initial = (name || '?').charAt(0).toUpperCase();
-				const avatar = portraitHTML
-					? portraitHTML
-					: '<span class="sticker sticker-circle sticker-sm sticker-outline-' +
-						(i % 10) +
-						'"><span class="sticker-overlay">' +
-						Liferay.Util.escapeHTML(initial) +
-						'</span></span>';
+				const avatar =
+					'<span class="sticker sticker-circle sticker-sm sticker-outline-' +
+					(i % 10) +
+					'"><span class="sticker-overlay">' +
+					Liferay.Util.escapeHTML(initial) +
+					'</span></span>';
 				html +=
 					'<button type="button" role="option" class="forums-mention-dropdown__item' +
 					(i === activeIndex ? ' is-active' : '') +
@@ -1776,28 +1759,29 @@ if (messageComposer) {
 		function searchUsers(query, editableEl) {
 			const reqId = ++lastReqId;
 
-			/* Invoke the embedded Mentions portlet's serveResource. The base is
-			   the current layout URL; because the portlet is on this page, no
-			   p_p_auth token is needed. Resource params are namespaced. The
-			   finder is Social Interactions-scoped and already excludes the
-			   current user and guests, so no client-side self-filtering. */
-			const base =
-				Liferay.ThemeDisplay.getLayoutRelativeURL() ||
-				window.location.pathname;
+			/* Candidates come from the forum's own Forum User object, so the
+			   composer never reads user accounts. Only people who have posted
+			   here have a record, which is also exactly who the notification
+			   path can resolve, so the list never offers someone who would
+			   not be notified. */
+			const typed = (query || '').replace(/'/g, "''");
+			const startsWith = function (field) {
+				return 'startswith(' + field + ",'" + typed + "')";
+			};
+			const filter = [
+				startsWith('screenName'),
+				startsWith('firstName'),
+				startsWith('lastName'),
+			].join(' or ');
 			const url =
-				base +
-				'?p_p_id=' +
-				MENTIONS_ID +
-				'&p_p_lifecycle=2' +
-				'&p_p_state=exclusive' +
-				'&' +
-				MENTIONS_NS +
-				'discussionPortletId=' +
-				encodeURIComponent(MENTIONS_DISCUSSION_PORTLET_ID) +
-				'&' +
-				MENTIONS_NS +
-				'query=' +
-				encodeURIComponent(query || '');
+				portalURL +
+				'/o/c/forumusers/scopes/' +
+				scopeGroupId +
+				'?fields=firstName,lastName,screenName,forumUserId' +
+				'&pageSize=' +
+				(MENTION_MAX + 1) +
+				'&filter=' +
+				encodeURIComponent(filter);
 			Liferay.Util.fetch(url, {headers, method: 'GET'})
 				.then((r) => {
 					return r.json();
@@ -1807,11 +1791,26 @@ if (messageComposer) {
 						return;
 					}
 
-					/* The Mentions portlet returns a plain JSON array. */
-					currentItems = (Array.isArray(data) ? data : []).slice(
-						0,
-						MENTION_MAX
+					const currentUserId = String(
+						Liferay.ThemeDisplay.getUserId()
 					);
+
+					/* The finder used to drop the current user itself; the
+					   object does not, so do it here. */
+					currentItems = (data.items || [])
+						.filter((u) => {
+							return String(u.forumUserId) !== currentUserId;
+						})
+						.map((u) => {
+							return {
+								fullName:
+									[u.firstName, u.lastName]
+										.filter(Boolean)
+										.join(' ') || u.screenName,
+								screenName: u.screenName,
+							};
+						})
+						.slice(0, MENTION_MAX);
 					activeIndex = currentItems.length ? 0 : -1;
 					renderDropdown(editableEl);
 				})
@@ -1868,7 +1867,8 @@ if (messageComposer) {
 			else if (typeof editor.getSelection === 'function') {
 
 				/* CKEditor 4: extend the range back over "@query", replace with
-				   the OOTB lfr-ac-content span. label is already HTML-escaped. */
+				   the OOTB lfr-ac-content span. The token is built from a raw
+				   object field, so escape it before it becomes markup. */
 				try {
 					const sel = editor.getSelection();
 					const [range] = sel.getRanges();
@@ -1881,7 +1881,7 @@ if (messageComposer) {
 					}
 					editor.insertHtml(
 						'<span class="lfr-ac-content">' +
-							label +
+							Liferay.Util.escapeHTML(label) +
 							'</span>&nbsp;'
 					);
 				}

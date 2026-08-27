@@ -13,11 +13,17 @@ liferay-forums-etc-spring-boot-oaua:
         -   c_forumnotification.everything
         -   c_forumsubscription.everything
         -   c_forumthread.everything
+        -   c_forumuser.everything
     type: oAuthApplicationUserAgent
 liferay-forums-etc-spring-boot-object-action-new-reply:
     name: Liferay Forums Etc Spring Boot Object Action New Reply
     oAuth2ApplicationExternalReferenceCode: liferay-forums-etc-spring-boot-oaua
     resourcePath: /object-action/new-reply
+    type: objectAction
+liferay-forums-etc-spring-boot-object-action-record-author:
+    name: Liferay Forums Etc Spring Boot Object Action Record Author
+    oAuth2ApplicationExternalReferenceCode: liferay-forums-etc-spring-boot-oaua
+    resourcePath: /object-action/record-author
     type: objectAction
 liferay-forums-etc-spring-boot-object-action-updated-reply:
     name: Liferay Forums Etc Spring Boot Object Action Updated Reply

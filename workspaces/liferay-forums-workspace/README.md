@@ -174,10 +174,10 @@ Topics can be prioritised the way legacy Message Boards prioritises threads.
 
 Members can mention each other in a topic or a reply.
 
-- **Composing.** Typing `@` opens a picker anchored at the caret. The candidates come from Liferay's own Mentions widget, which the initializer places on the pages that host the composer, so the forum does not query user accounts itself. The list already excludes the person composing and anyone browsing as a guest, and it carries a display name, a screen name and an avatar, with no user id and no email address.
-- **Who appears.** Visibility follows the instance's Social Interactions configuration, under Instance Settings. That is where to widen or narrow who can be mentioned: any user in the instance, members of the same sites, or connections only. No permission grant on user accounts is needed, and none should be added for this.
+- **Composing.** Typing `@` opens a picker anchored at the caret, listing the people who have posted in this forum. The candidates come from the forum's own Forum User record, so nothing here reads user accounts and mentioning needs no permission over them. The person composing is left out of their own list.
+- **Who appears.** A member gets a Forum User record the first time they post, written server side by an object action on topics and replies. So the picker offers exactly the people a mention can actually reach, and somebody who has never posted here is not offered.
 - **Storing.** A mention is stored as the visible `@screenName` token in the post body, which is the form that survives both the classic and the enhanced rich text editor.
-- **Notifying.** A mention notifies by email and in the notifications panel. The author, and anyone already being notified as a subscriber, are left out so nobody is told twice. Editing a post notifies only the people the edit newly mentioned.
+- **Notifying.** A mention notifies by email and in the notifications panel, resolved against the same Forum User record. The author, and anyone already being notified as a subscriber, are left out so nobody is told twice. Editing a post notifies only the people the edit newly mentioned.
 
 ---
 

@@ -13,6 +13,17 @@
 		},
 		{
 			"active": true,
+			"externalReferenceCode": "FORUM-MESSAGE-RECORD-AUTHOR-ACTION",
+			"label": "{\"en_US\": \"Record Author\"}",
+			"name": "ForumMessageRecordAuthor",
+			"objectActionExecutorKey": "function#liferay-forums-etc-spring-boot-object-action-record-author",
+			"objectActionTriggerKey": "onAfterAdd",
+			"parameters": {
+			},
+			"system": false
+		},
+		{
+			"active": true,
 			"externalReferenceCode": "FORUM-MESSAGE-UPDATED-REPLY-ACTION",
 			"label": "{\"en_US\": \"Notify On Updated Reply\"}",
 			"name": "ForumMessageUpdatedReply",

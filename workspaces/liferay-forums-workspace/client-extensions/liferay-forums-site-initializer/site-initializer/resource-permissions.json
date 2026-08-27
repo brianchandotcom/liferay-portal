@@ -112,6 +112,15 @@
 			"VIEW"
 		],
 		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:ForumUser$]",
+		"roleName": "User",
+		"scope": 1
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
 		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:ForumVote$]",
 		"roleName": "Guest",
 		"scope": 1

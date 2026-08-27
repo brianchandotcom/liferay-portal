@@ -1,0 +1,16 @@
+{
+	"object-actions": [
+		{
+			"active": true,
+			"externalReferenceCode": "FORUM-THREAD-RECORD-AUTHOR-ACTION",
+			"label": "{\"en_US\": \"Record Author\"}",
+			"name": "ForumThreadRecordAuthor",
+			"objectActionExecutorKey": "function#liferay-forums-etc-spring-boot-object-action-record-author",
+			"objectActionTriggerKey": "onAfterAdd",
+			"parameters": {
+			},
+			"system": false
+		}
+	],
+	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:ForumThread$]"
+}

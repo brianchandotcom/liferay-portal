@@ -50,29 +50,34 @@ public class StyleBookEntryImpl extends StyleBookEntryBaseImpl {
 	public void populateZipWriter(ZipWriter zipWriter, String path)
 		throws Exception {
 
+		String frontendTokenDefinition = getFrontendTokenDefinition();
+		FileEntry previewFileEntry = _getPreviewFileEntry();
+
 		JSONObject jsonObject = JSONUtil.put(
+			"frontendTokenDefinitionPath",
+			() -> {
+				if (Validator.isBlank(frontendTokenDefinition)) {
+					return null;
+				}
+
+				return "frontend-token-definition.json";
+			}
+		).put(
 			"frontendTokensValuesPath", "frontend-tokens-values.json"
 		).put(
 			"name", getName()
 		).put(
 			"themeId", getThemeId()
+		).put(
+			"thumbnailPath",
+			() -> {
+				if (previewFileEntry == null) {
+					return null;
+				}
+
+				return "thumbnail." + previewFileEntry.getExtension();
+			}
 		);
-
-		String frontendTokenDefinition = getFrontendTokenDefinition();
-
-		if (!Validator.isBlank(frontendTokenDefinition)) {
-			jsonObject.put(
-				"frontendTokenDefinitionPath",
-				"frontend-token-definition.json");
-		}
-
-		FileEntry previewFileEntry = _getPreviewFileEntry();
-
-		if (previewFileEntry != null) {
-			jsonObject.put(
-				"thumbnailPath",
-				"thumbnail." + previewFileEntry.getExtension());
-		}
 
 		path = path + StringPool.SLASH + getStyleBookEntryKey();
 

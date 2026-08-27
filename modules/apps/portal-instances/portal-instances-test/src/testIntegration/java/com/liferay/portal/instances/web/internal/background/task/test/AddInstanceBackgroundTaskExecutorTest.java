@@ -102,7 +102,7 @@ public class AddInstanceBackgroundTaskExecutorTest {
 
 		Assert.assertEquals(
 			"please-enter-a-valid-email-address",
-			payloadJSONObject.getString("errorMessage"));
+			payloadJSONObject.getString("errorMessageKey"));
 		Assert.assertEquals(
 			BackgroundTaskConstants.LABEL_FAILED,
 			payloadJSONObject.getString("status"));

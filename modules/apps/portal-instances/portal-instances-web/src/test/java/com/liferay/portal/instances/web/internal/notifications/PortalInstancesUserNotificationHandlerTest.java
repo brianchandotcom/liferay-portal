@@ -155,7 +155,7 @@ public class PortalInstancesUserNotificationHandlerTest {
 
 	private UserNotificationEvent _createUserNotificationEvent(
 		PortalInstancesOperationType portalInstancesOperationType, int status,
-		String errorMessage) {
+		String errorMessageKey) {
 
 		UserNotificationEvent userNotificationEvent =
 			new UserNotificationEventImpl();
@@ -163,8 +163,8 @@ public class PortalInstancesUserNotificationHandlerTest {
 		userNotificationEvent.setPayload(
 			String.valueOf(
 				PortalInstancesNotificationPayload.build(
-					0, errorMessage, portalInstancesOperationType, null, status,
-					_WEB_ID_MATCHING_LANGUAGE_KEY)));
+					0, errorMessageKey, portalInstancesOperationType, null,
+					status, _WEB_ID_MATCHING_LANGUAGE_KEY)));
 
 		return userNotificationEvent;
 	}

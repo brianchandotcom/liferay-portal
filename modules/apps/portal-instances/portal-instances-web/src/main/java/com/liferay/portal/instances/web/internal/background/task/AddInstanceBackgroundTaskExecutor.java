@@ -48,13 +48,13 @@ import org.osgi.service.component.annotations.Reference;
  * @author Luis Ortiz
  */
 @Component(
-	property = "background.task.executor.class.name=com.liferay.portal.instances.web.internal.background.task.AddVirtualInstanceBackgroundTaskExecutor",
+	property = "background.task.executor.class.name=com.liferay.portal.instances.web.internal.background.task.AddInstanceBackgroundTaskExecutor",
 	service = BackgroundTaskExecutor.class
 )
-public class AddVirtualInstanceBackgroundTaskExecutor
+public class AddInstanceBackgroundTaskExecutor
 	extends BaseBackgroundTaskExecutor {
 
-	public AddVirtualInstanceBackgroundTaskExecutor() {
+	public AddInstanceBackgroundTaskExecutor() {
 		setIsolationLevel(BackgroundTaskConstants.ISOLATION_LEVEL_TASK_NAME);
 	}
 
@@ -239,7 +239,7 @@ public class AddVirtualInstanceBackgroundTaskExecutor
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		AddVirtualInstanceBackgroundTaskExecutor.class);
+		AddInstanceBackgroundTaskExecutor.class);
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

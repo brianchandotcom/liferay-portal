@@ -144,7 +144,7 @@ public class AddInstanceMVCActionCommandTest {
 		backgroundTask.setGroupId(BackgroundTaskConstants.GROUP_ID_DEFAULT);
 		backgroundTask.setCompanyId(TestPropsValues.getCompanyId());
 		backgroundTask.setUserId(TestPropsValues.getUserId());
-		backgroundTask.setName("AddVirtualInstance#" + _WEB_ID);
+		backgroundTask.setName("AddInstance#" + _WEB_ID);
 		backgroundTask.setTaskExecutorClassName(_TASK_EXECUTOR_CLASS_NAME);
 		backgroundTask.setCompleted(false);
 		backgroundTask.setStatus(BackgroundTaskConstants.STATUS_IN_PROGRESS);
@@ -245,7 +245,7 @@ public class AddInstanceMVCActionCommandTest {
 
 	private static final String _TASK_EXECUTOR_CLASS_NAME =
 		"com.liferay.portal.instances.web.internal.background.task." +
-			"AddVirtualInstanceBackgroundTaskExecutor";
+			"AddInstanceBackgroundTaskExecutor";
 
 	private static final String _VIRTUAL_HOSTNAME =
 		StringUtil.toLowerCase(RandomTestUtil.randomString()) + ".com";

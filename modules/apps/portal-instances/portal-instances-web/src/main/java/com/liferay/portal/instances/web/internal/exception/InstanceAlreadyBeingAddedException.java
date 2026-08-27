@@ -10,9 +10,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author Luis Ortiz
  */
-public class VirtualInstanceAlreadyBeingAddedException extends PortalException {
+public class InstanceAlreadyBeingAddedException extends PortalException {
 
-	public VirtualInstanceAlreadyBeingAddedException(String msg) {
+	public InstanceAlreadyBeingAddedException(String msg) {
 		super(msg);
 	}
 

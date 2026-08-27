@@ -302,8 +302,6 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 			JournalArticleLocalServiceUtil.fetchJournalArticleByUuidAndGroupId(
 				journalArticle.getUuid(), importedGroup.getGroupId());
 
-		Assert.assertNotNull(importedJournalArticle);
-
 		String content = importedJournalArticle.getContent();
 
 		Assert.assertTrue(

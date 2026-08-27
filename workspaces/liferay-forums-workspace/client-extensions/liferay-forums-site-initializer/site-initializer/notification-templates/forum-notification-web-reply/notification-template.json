@@ -1,9 +1,9 @@
 {
 	"editorType": "richText",
-	"externalReferenceCode": "FORUM-NOTIFICATION-WEB-TEMPLATE",
-	"name": "Forum Notification Web",
+	"externalReferenceCode": "FORUM-NOTIFICATION-WEB-REPLY",
+	"name": "Forum Notification Web Reply",
 	"name_i18n": {
-		"en_US": "Forum Notification Web"
+		"en_US": "Forum Notification Web Reply"
 	},
 	"objectDefinitionExternalReferenceCode": "FORUM-NOTIFICATION",
 	"recipientType": "term",
@@ -13,7 +13,7 @@
 		}
 	],
 	"subject": {
-		"en_US": "[%FORUMNOTIFICATION_NOTIFICATIONSUBJECT%]"
+		"en_US": "Re: [%FORUMNOTIFICATION_TOPICTITLE%]"
 	},
 	"system": false,
 	"type": "userNotification",

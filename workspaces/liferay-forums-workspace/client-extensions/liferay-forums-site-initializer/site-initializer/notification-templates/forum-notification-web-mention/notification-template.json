@@ -1,0 +1,21 @@
+{
+	"editorType": "richText",
+	"externalReferenceCode": "FORUM-NOTIFICATION-WEB-MENTION",
+	"name": "Forum Notification Web Mention",
+	"name_i18n": {
+		"en_US": "Forum Notification Web Mention"
+	},
+	"objectDefinitionExternalReferenceCode": "FORUM-NOTIFICATION",
+	"recipientType": "term",
+	"recipients": [
+		{
+			"term": "[%FORUMNOTIFICATION_RECIPIENTUSERID%]"
+		}
+	],
+	"subject": {
+		"en_US": "[%FORUMNOTIFICATION_AUTHORNAME%] mentioned you in: [%FORUMNOTIFICATION_TOPICTITLE%]"
+	},
+	"system": false,
+	"type": "userNotification",
+	"typeLabel": "User Notification"
+}

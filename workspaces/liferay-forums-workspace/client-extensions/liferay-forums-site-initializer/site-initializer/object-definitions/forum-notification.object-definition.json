@@ -22,6 +22,51 @@
 	"name": "ForumNotification",
 	"objectFields": [
 		{
+			"DBType": "String",
+			"businessType": "Text",
+			"label": {
+				"en_US": "Author Name"
+			},
+			"name": "authorName",
+			"required": false
+		},
+		{
+			"DBType": "Clob",
+			"businessType": "LongText",
+			"label": {
+				"en_US": "Body Excerpt"
+			},
+			"name": "bodyExcerpt",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"label": {
+				"en_US": "Notification Kind"
+			},
+			"name": "notificationKind",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"label": {
+				"en_US": "URL"
+			},
+			"name": "notificationUrl",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"label": {
+				"en_US": "Recipient Email Address"
+			},
+			"name": "recipientEmailAddress",
+			"required": false
+		},
+		{
 			"DBType": "Long",
 			"businessType": "LongInteger",
 			"label": {
@@ -34,36 +79,9 @@
 			"DBType": "String",
 			"businessType": "Text",
 			"label": {
-				"en_US": "Recipient Email Address"
+				"en_US": "Topic Title"
 			},
-			"name": "recipientEmailAddress",
-			"required": false
-		},
-		{
-			"DBType": "String",
-			"businessType": "Text",
-			"label": {
-				"en_US": "Subject"
-			},
-			"name": "notificationSubject",
-			"required": false
-		},
-		{
-			"DBType": "Clob",
-			"businessType": "LongText",
-			"label": {
-				"en_US": "Body"
-			},
-			"name": "notificationBody",
-			"required": false
-		},
-		{
-			"DBType": "String",
-			"businessType": "Text",
-			"label": {
-				"en_US": "URL"
-			},
-			"name": "notificationUrl",
+			"name": "topicTitle",
 			"required": false
 		}
 	],

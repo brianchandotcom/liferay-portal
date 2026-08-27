@@ -2,26 +2,56 @@
 	"object-actions": [
 		{
 			"active": true,
-			"externalReferenceCode": "FORUM-NOTIFICATION-EMAIL-ACTION",
-			"label": "{\"en_US\": \"Send Forum Notification Email\"}",
-			"name": "ForumNotificationEmail",
+			"conditionExpression": "notificationKind == \"reply\"",
+			"externalReferenceCode": "FORUM-NOTIFICATION-EMAIL-REPLY-ACTION",
+			"label": "{\"en_US\": \"Send Reply Email\"}",
+			"name": "ForumNotificationEmailReply",
 			"objectActionExecutorKey": "notification",
 			"objectActionTriggerKey": "onAfterAdd",
 			"parameters": {
-				"notificationTemplateExternalReferenceCode": "FORUM-NOTIFICATION-EMAIL-TEMPLATE",
+				"notificationTemplateExternalReferenceCode": "FORUM-NOTIFICATION-EMAIL-REPLY",
 				"type": "email"
 			},
 			"system": false
 		},
 		{
 			"active": true,
-			"externalReferenceCode": "FORUM-NOTIFICATION-WEB-ACTION",
-			"label": "{\"en_US\": \"Send Forum Web Notification\"}",
-			"name": "ForumNotificationWeb",
+			"conditionExpression": "notificationKind == \"mention\"",
+			"externalReferenceCode": "FORUM-NOTIFICATION-EMAIL-MENTION-ACTION",
+			"label": "{\"en_US\": \"Send Mention Email\"}",
+			"name": "ForumNotificationEmailMention",
 			"objectActionExecutorKey": "notification",
 			"objectActionTriggerKey": "onAfterAdd",
 			"parameters": {
-				"notificationTemplateExternalReferenceCode": "FORUM-NOTIFICATION-WEB-TEMPLATE",
+				"notificationTemplateExternalReferenceCode": "FORUM-NOTIFICATION-EMAIL-MENTION",
+				"type": "email"
+			},
+			"system": false
+		},
+		{
+			"active": true,
+			"conditionExpression": "notificationKind == \"reply\"",
+			"externalReferenceCode": "FORUM-NOTIFICATION-WEB-REPLY-ACTION",
+			"label": "{\"en_US\": \"Send Reply Web Notification\"}",
+			"name": "ForumNotificationWebReply",
+			"objectActionExecutorKey": "notification",
+			"objectActionTriggerKey": "onAfterAdd",
+			"parameters": {
+				"notificationTemplateExternalReferenceCode": "FORUM-NOTIFICATION-WEB-REPLY",
+				"type": "userNotification"
+			},
+			"system": false
+		},
+		{
+			"active": true,
+			"conditionExpression": "notificationKind == \"mention\"",
+			"externalReferenceCode": "FORUM-NOTIFICATION-WEB-MENTION-ACTION",
+			"label": "{\"en_US\": \"Send Mention Web Notification\"}",
+			"name": "ForumNotificationWebMention",
+			"objectActionExecutorKey": "notification",
+			"objectActionTriggerKey": "onAfterAdd",
+			"parameters": {
+				"notificationTemplateExternalReferenceCode": "FORUM-NOTIFICATION-WEB-MENTION",
 				"type": "userNotification"
 			},
 			"system": false

@@ -1,9 +1,9 @@
 {
 	"editorType": "richText",
-	"externalReferenceCode": "FORUM-NOTIFICATION-EMAIL-TEMPLATE",
-	"name": "Forum Notification Email",
+	"externalReferenceCode": "FORUM-NOTIFICATION-EMAIL-MENTION",
+	"name": "Forum Notification Email Mention",
 	"name_i18n": {
-		"en_US": "Forum Notification Email"
+		"en_US": "Forum Notification Email Mention"
 	},
 	"objectDefinitionExternalReferenceCode": "FORUM-NOTIFICATION",
 	"recipientType": "email",
@@ -21,7 +21,7 @@
 		}
 	],
 	"subject": {
-		"en_US": "[%FORUMNOTIFICATION_NOTIFICATIONSUBJECT%]"
+		"en_US": "[%FORUMNOTIFICATION_AUTHORNAME%] mentioned you in: [%FORUMNOTIFICATION_TOPICTITLE%]"
 	},
 	"system": false,
 	"type": "email",

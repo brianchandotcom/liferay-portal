@@ -28,6 +28,7 @@ import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -304,11 +305,8 @@ public class ForumNotificationRestController extends BaseRestController {
 		}
 
 		_forumNotificationService.notifyAll(
-			recipients, siteId, author + " mentioned you in: " + messageTitle,
-			StringBundler.concat(
-				author, " mentioned you in \"", messageTitle, "\": ",
-				_truncate(bodyPreview, 300)),
-			url, authToken);
+			recipients, siteId, "mention", author, messageTitle,
+			_truncate(bodyPreview, 300), url, authToken);
 	}
 
 	private void _processNewReply(String json, String authToken) {
@@ -382,7 +380,7 @@ public class ForumNotificationRestController extends BaseRestController {
 						threadId);
 			}
 
-			messageTitle = "Forum Discussion";
+			messageTitle = _fallbackTopicTitle;
 		}
 
 		if (siteJSONObject == null) {
@@ -397,11 +395,8 @@ public class ForumNotificationRestController extends BaseRestController {
 		}
 
 		_forumNotificationService.notifyAll(
-			recipientUserIds, siteId, "Re: " + messageTitle,
-			StringBundler.concat(
-				replyAuthor, " posted a new reply to \"", messageTitle, "\": ",
-				_truncate(replyBody, 300)),
-			url, authToken);
+			recipientUserIds, siteId, "reply", replyAuthor, messageTitle,
+			_truncate(replyBody, 300), url, authToken);
 
 		_notifyMentions(
 			mentionedScreenNames, messageTitle, replyAuthor, replyBody, url,
@@ -475,7 +470,7 @@ public class ForumNotificationRestController extends BaseRestController {
 		String messageTitle = _fetchMessageTitle(threadId, authToken);
 
 		if (messageTitle == null) {
-			messageTitle = "Forum Discussion";
+			messageTitle = _fallbackTopicTitle;
 		}
 
 		JSONObject siteJSONObject = _fetchSite(dtoJSONObject, authToken);
@@ -515,7 +510,7 @@ public class ForumNotificationRestController extends BaseRestController {
 			}
 		}
 
-		return "A community member";
+		return _fallbackAuthorName;
 	}
 
 	private long _resolveCreatorUserId(JSONObject creatorJSONObject) {
@@ -580,6 +575,12 @@ public class ForumNotificationRestController extends BaseRestController {
 
 	private static final Log _log = LogFactory.getLog(
 		ForumNotificationRestController.class);
+
+	@Value("${forums.notification.fallback.author.name:A community member}")
+	private String _fallbackAuthorName;
+
+	@Value("${forums.notification.fallback.topic.title:Forum Discussion}")
+	private String _fallbackTopicTitle;
 
 	@Autowired
 	@Qualifier("forumNotificationExecutor")

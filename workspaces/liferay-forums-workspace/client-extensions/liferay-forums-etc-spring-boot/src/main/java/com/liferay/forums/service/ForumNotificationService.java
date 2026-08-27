@@ -39,8 +39,9 @@ import reactor.core.publisher.Mono;
 public class ForumNotificationService {
 
 	public void notifyAll(
-		List<Long> recipientUserIds, long siteId, String subject, String body,
-		String url, String authToken) {
+		List<Long> recipientUserIds, long siteId, String kind,
+		String authorName, String topicTitle, String bodyExcerpt, String url,
+		String authToken) {
 
 		if (recipientUserIds.isEmpty()) {
 			return;
@@ -67,7 +68,8 @@ public class ForumNotificationService {
 			userId -> _liferayApiClient.postAsync(
 				path, authToken,
 				_toPayload(
-					userId, emailAddresses.get(userId), subject, body, fullUrl)
+					userId, emailAddresses.get(userId), kind, authorName,
+					topicTitle, bodyExcerpt, fullUrl)
 			).flatMap(
 				response -> _purge(response, authToken)
 			).onErrorResume(
@@ -92,16 +94,16 @@ public class ForumNotificationService {
 			_log.error(
 				StringBundler.concat(
 					"Forum notification reached none of ",
-					recipientUserIds.size(), " recipient(s): subject=\"",
-					subject, "\""));
+					recipientUserIds.size(), " recipient(s): topic=\"",
+					topicTitle, "\""));
 		}
 		else {
 			if (_log.isInfoEnabled()) {
 				_log.info(
 					StringBundler.concat(
 						"Forum notification sent to ", successCount, "/",
-						recipientUserIds.size(), " recipient(s): subject=\"",
-						subject, "\""));
+						recipientUserIds.size(), " recipient(s): topic=\"",
+						topicTitle, "\""));
 			}
 		}
 	}
@@ -222,19 +224,23 @@ public class ForumNotificationService {
 	}
 
 	private String _toPayload(
-		long recipientUserId, String emailAddress, String subject, String body,
-		String url) {
+		long recipientUserId, String emailAddress, String kind,
+		String authorName, String topicTitle, String bodyExcerpt, String url) {
 
 		JSONObject payloadJSONObject = new JSONObject();
 
 		payloadJSONObject.put(
-			"notificationBody", body
+			"authorName", authorName
 		).put(
-			"notificationSubject", subject
+			"bodyExcerpt", bodyExcerpt
+		).put(
+			"notificationKind", kind
 		).put(
 			"notificationUrl", url
 		).put(
 			"recipientUserId", recipientUserId
+		).put(
+			"topicTitle", topicTitle
 		);
 
 		if ((emailAddress != null) && !emailAddress.isBlank()) {

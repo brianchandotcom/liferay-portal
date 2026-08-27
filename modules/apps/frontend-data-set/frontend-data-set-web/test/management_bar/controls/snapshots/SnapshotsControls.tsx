@@ -32,7 +32,7 @@ const mockFDSContext = {
 	namespace: 'testNamespace_',
 	onSnapshotChange: jest.fn(),
 	portletId: 'testPortlet',
-	saveStartupSnapshotURL: '/set-startup-snapshot-url',
+	saveUserPreferencesURL: '/save-user-preferences-url',
 };
 
 const ownedSnapshot = {erc: 'owned-erc', id: 1, label: 'Owned View'};
@@ -77,7 +77,7 @@ describe('SnapshotsControls action gating', () => {
 				snapshotUpdated: false,
 				snapshots: [{headerVisible: false, items: [ownedSnapshot]}],
 				sorts: [],
-				startupSnapshot: null,
+				userPreferences: null,
 				visibleFieldNames: {},
 			});
 		});
@@ -110,7 +110,7 @@ describe('SnapshotsControls action gating', () => {
 					},
 				],
 				sorts: [],
-				startupSnapshot: null,
+				userPreferences: null,
 				visibleFieldNames: {},
 			});
 		});
@@ -127,8 +127,8 @@ describe('SnapshotsControls action gating', () => {
 	});
 });
 
-describe('SnapshotsControls startup snapshot', () => {
-	it('sets the active view as the startup snapshot through the resource command', async () => {
+describe('SnapshotsControls startup view', () => {
+	it('sets the active view as the startup view through the resource command', async () => {
 		const {viewsDispatch} = renderSnapshotsControls({
 			activeSnapshotERC: ownedSnapshot.erc,
 			activeView: null,
@@ -137,32 +137,36 @@ describe('SnapshotsControls startup snapshot', () => {
 			snapshotUpdated: false,
 			snapshots: [{headerVisible: false, items: [ownedSnapshot]}],
 			sorts: [],
-			startupSnapshot: null,
+			userPreferences: null,
 			visibleFieldNames: {},
 		});
 
 		await openActionsDropdown();
 
-		fetch.mockResponseOnce('{}');
+		fetch.mockResponseOnce(
+			JSON.stringify({startupSnapshotERC: ownedSnapshot.erc})
+		);
 
 		await userEvent.click(await screen.findByText('set-as-startup-view'));
 
 		await waitFor(() =>
 			expect(fetch).toHaveBeenCalledWith(
-				'/set-startup-snapshot-url',
+				'/save-user-preferences-url',
 				expect.objectContaining({method: 'POST'})
 			)
 		);
 
 		await waitFor(() =>
 			expect(viewsDispatch).toHaveBeenCalledWith({
-				type: 'ADD_OR_UPDATE_STARTUP_SNAPSHOT',
-				value: {startupSnapshot: {erc: ownedSnapshot.erc}},
+				type: 'UPDATE_USER_PREFERENCES',
+				value: {
+					userPreferences: {startupSnapshotERC: ownedSnapshot.erc},
+				},
 			})
 		);
 	});
 
-	it('hides "Set as Startup View" when the active view is already the startup snapshot', async () => {
+	it('hides "Set as Startup View" when the active view is already the startup view', async () => {
 		renderSnapshotsControls({
 			activeSnapshotERC: ownedSnapshot.erc,
 			activeView: null,
@@ -171,7 +175,7 @@ describe('SnapshotsControls startup snapshot', () => {
 			snapshotUpdated: false,
 			snapshots: [{headerVisible: false, items: [ownedSnapshot]}],
 			sorts: [],
-			startupSnapshot: {erc: ownedSnapshot.erc},
+			userPreferences: {startupSnapshotERC: ownedSnapshot.erc},
 			visibleFieldNames: {},
 		});
 

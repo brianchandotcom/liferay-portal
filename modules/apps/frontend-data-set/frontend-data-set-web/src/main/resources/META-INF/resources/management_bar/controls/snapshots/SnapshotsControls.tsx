@@ -195,7 +195,7 @@ const SnapshotsControls = () => {
 		namespace,
 		onSnapshotChange,
 		portletId,
-		saveStartupSnapshotURL,
+		saveUserPreferencesURL,
 	} = useContext(FrontendDataSetContext);
 
 	const [
@@ -207,7 +207,7 @@ const SnapshotsControls = () => {
 			snapshotUpdated,
 			snapshots,
 			sorts,
-			startupSnapshot,
+			userPreferences,
 			visibleFieldNames,
 		},
 		viewsDispatch,
@@ -511,15 +511,18 @@ const SnapshotsControls = () => {
 			});
 	};
 
-	const setStartupSnapshot = () => {
-		if (!activeSnapshot || !saveStartupSnapshotURL) {
+	const setStartupSnapshotERC = () => {
+		if (!activeSnapshot || !saveUserPreferencesURL) {
 			return;
 		}
 
-		fetch(saveStartupSnapshotURL, {
+		fetch(saveUserPreferencesURL, {
 			body: new URLSearchParams({
-				dataSetSnapshotExternalReferenceCode: activeSnapshot.erc,
 				fdsName,
+				preferences: JSON.stringify({
+					...userPreferences,
+					startupSnapshotERC: activeSnapshot.erc,
+				}),
 			}),
 			method: 'POST',
 		})
@@ -528,6 +531,9 @@ const SnapshotsControls = () => {
 					return Promise.reject(new Error());
 				}
 
+				return response.json();
+			})
+			.then((nextUserPreferences) => {
 				openToast({
 					message: Liferay.Language.get(
 						'the-user-view-was-set-as-startup'
@@ -536,10 +542,8 @@ const SnapshotsControls = () => {
 				});
 
 				viewsDispatch({
-					type: EViewsActionTypes.ADD_OR_UPDATE_STARTUP_SNAPSHOT,
-					value: {
-						startupSnapshot: {erc: activeSnapshot.erc},
-					},
+					type: EViewsActionTypes.UPDATE_USER_PREFERENCES,
+					value: {userPreferences: nextUserPreferences},
 				});
 			})
 			.catch(() => {
@@ -692,7 +696,7 @@ const SnapshotsControls = () => {
 												{snapshot.label}
 
 												{snapshot.erc ===
-													startupSnapshot?.erc && (
+													userPreferences?.startupSnapshotERC && (
 													<ClayLabel
 														aria-hidden="true"
 														className="ml-2"
@@ -759,10 +763,11 @@ const SnapshotsControls = () => {
 						</ClayDropDown.Item>
 
 						{activeSnapshotERC &&
-							activeSnapshotERC !== startupSnapshot?.erc && (
+							activeSnapshotERC !==
+								userPreferences?.startupSnapshotERC && (
 								<ClayDropDown.Item
 									onClick={() => {
-										setStartupSnapshot();
+										setStartupSnapshotERC();
 
 										setActionsDropdownActive(false);
 									}}

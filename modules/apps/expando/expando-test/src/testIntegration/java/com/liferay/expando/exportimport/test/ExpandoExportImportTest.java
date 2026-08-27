@@ -14,6 +14,7 @@ import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.expando.kernel.model.adapter.StagedExpandoColumn;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalServiceUtil;
 import com.liferay.expando.kernel.service.ExpandoTableLocalServiceUtil;
+import com.liferay.expando.test.util.ExpandoTestUtil;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactoryUtil;
 import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
@@ -108,9 +109,8 @@ public class ExpandoExportImportTest extends BaseExportImportTestCase {
 
 		_expandoColumnName = RandomTestUtil.randomString();
 
-		ExpandoColumn expandoColumn = ExpandoColumnLocalServiceUtil.addColumn(
-			_expandoTable.getTableId(), _expandoColumnName,
-			ExpandoColumnConstants.STRING);
+		ExpandoColumn expandoColumn = ExpandoTestUtil.addColumn(
+			_expandoTable, _expandoColumnName, ExpandoColumnConstants.STRING);
 
 		StagedExpandoColumn stagedExpandoColumn = ModelAdapterUtil.adapt(
 			expandoColumn, ExpandoColumn.class, StagedExpandoColumn.class);

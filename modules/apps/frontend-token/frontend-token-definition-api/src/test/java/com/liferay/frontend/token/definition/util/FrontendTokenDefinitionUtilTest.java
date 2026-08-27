@@ -43,9 +43,9 @@ public class FrontendTokenDefinitionUtilTest {
 		_testGetFrontendTokenNamesWithInvalidCategories();
 		_testGetFrontendTokenNamesWithInvalidSetsAndTokens();
 		_testGetFrontendTokenNamesWithMalformedDefinition();
-		_testGetFrontendTokenNamesWithoutThemeDefinition();
 		_testGetFrontendTokenNamesWithThemeAndOwnDefinitions();
 		_testGetFrontendTokenNamesWithValidDefinition();
+		_testGetFrontendTokenNamesWithoutThemeDefinition();
 	}
 
 	private String _createFrontendTokenDefinitionJSON(

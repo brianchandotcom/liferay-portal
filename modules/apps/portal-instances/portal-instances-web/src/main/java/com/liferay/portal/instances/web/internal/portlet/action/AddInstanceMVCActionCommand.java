@@ -76,7 +76,7 @@ public class AddInstanceMVCActionCommand extends BaseMVCActionCommand {
 			String webId = _addBackgroundTask(actionRequest);
 
 			jsonObject.put(
-				"successMessage",
+				"startMessage",
 				_language.format(
 					locale, "the-virtual-instance-x-is-being-added",
 					HtmlUtil.escape(webId), false));

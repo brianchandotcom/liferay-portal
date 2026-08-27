@@ -362,14 +362,14 @@ public class ForumNotificationRestController extends BaseRestController {
 			siteId = _resolveSiteId(dtoJSONObject, siteJSONObject);
 		}
 
-		List<Long> subscribers = _subscriptionService.getSubscriberUserIds(
+		List<Long> recipientUserIds = _subscriptionService.getSubscriberUserIds(
 			threadId, siteId, authToken);
 
-		subscribers.removeIf(userId -> userId == authorUserId);
+		recipientUserIds.removeIf(userId -> userId == authorUserId);
 
 		Set<String> mentionedScreenNames = _extractCappedMentions(rawReplyBody);
 
-		if (subscribers.isEmpty() && mentionedScreenNames.isEmpty()) {
+		if (recipientUserIds.isEmpty() && mentionedScreenNames.isEmpty()) {
 			return;
 		}
 
@@ -397,7 +397,7 @@ public class ForumNotificationRestController extends BaseRestController {
 		}
 
 		_forumNotificationService.notifyAll(
-			subscribers, siteId, "Re: " + messageTitle,
+			recipientUserIds, siteId, "Re: " + messageTitle,
 			StringBundler.concat(
 				replyAuthor, " posted a new reply to \"", messageTitle, "\": ",
 				_truncate(replyBody, 300)),
@@ -405,7 +405,7 @@ public class ForumNotificationRestController extends BaseRestController {
 
 		_notifyMentions(
 			mentionedScreenNames, messageTitle, replyAuthor, replyBody, url,
-			subscribers, authorUserId, siteId, authToken);
+			recipientUserIds, authorUserId, siteId, authToken);
 	}
 
 	private void _processUpdatedReply(String json, String authToken) {

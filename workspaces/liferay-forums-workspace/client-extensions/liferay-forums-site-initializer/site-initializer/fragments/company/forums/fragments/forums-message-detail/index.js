@@ -2708,7 +2708,10 @@ if (messageDetail) {
 		if (replyBtn) {
 			replyBtn.addEventListener('click', () => {
 				if (typeof window.forumsOpenComposeModal === 'function') {
-					window.forumsOpenComposeModal({messageId});
+					window.forumsOpenComposeModal({
+						messageId,
+						subject: messageTitleText,
+					});
 				}
 				else {
 					alert(

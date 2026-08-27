@@ -470,6 +470,24 @@ if (messageComposer) {
 	let messageId = urlParams.get('messageId');
 	let categoryIdParam = urlParams.get('categoryId');
 	let isReplyMode = !!messageId;
+
+	/* Title of the topic being replied to. The reply's own subject field is
+	   required but never displayed, so it is derived from this rather than
+	   costing an extra request to look the topic up again. */
+	let replyParentTitle = '';
+
+	/* The subject column is varchar(280), and a topic title can fill it on its
+	   own, so the derived reply subject is cut to fit rather than rejected by
+	   the API. */
+	const truncateSubject = function (value) {
+		const MAX_SUBJECT_LENGTH = 280;
+
+		if (value.length <= MAX_SUBJECT_LENGTH) {
+			return value;
+		}
+
+		return value.slice(0, MAX_SUBJECT_LENGTH);
+	};
 	let parentMessageId = null;
 	let categoriesLoaded = false;
 	let isEditMode = false;
@@ -970,6 +988,10 @@ if (messageComposer) {
 		}
 		parentMessageId = optionParentMessageId || null;
 		isReplyMode = replyMode;
+
+		if (replyMode && subject) {
+			replyParentTitle = subject;
+		}
 		configureModal(replyMode);
 
 		if (isEditMode) {
@@ -1280,6 +1302,10 @@ if (messageComposer) {
 				submitBtn.textContent =
 					messageComposer.dataset.labelPosting || 'Posting...';
 
+				const replySubject = truncateSubject(
+					'Re: ' + (replyParentTitle || 'reply')
+				);
+
 				const replyPayload = {
 					body,
 					format: 'html',
@@ -1287,8 +1313,8 @@ if (messageComposer) {
 						? parseInt(parentMessageId, 10)
 						: 0,
 					r_threadMessages_c_forumThreadId: parseInt(messageId, 10),
-					subject: 'Re: reply',
-					subject_i18n: {[defaultLanguageId]: 'Re: reply'},
+					subject: replySubject,
+					subject_i18n: {[defaultLanguageId]: replySubject},
 				};
 
 				Liferay.Util.fetch(

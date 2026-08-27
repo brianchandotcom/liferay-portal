@@ -69,9 +69,9 @@ public class SubscriptionService {
 				break;
 			}
 
-			JSONObject jsonObject = new JSONObject(response);
+			JSONObject responseJSONObject = new JSONObject(response);
 
-			JSONArray itemsJSONArray = jsonObject.optJSONArray("items");
+			JSONArray itemsJSONArray = responseJSONObject.optJSONArray("items");
 
 			if ((itemsJSONArray == null) || itemsJSONArray.isEmpty()) {
 				break;
@@ -89,7 +89,7 @@ public class SubscriptionService {
 				}
 			}
 
-			if (page >= jsonObject.optLong("lastPage", 1)) {
+			if (page >= responseJSONObject.optLong("lastPage", 1)) {
 				break;
 			}
 

@@ -124,14 +124,14 @@ public class PortalInstancesUserNotificationHandler
 	}
 
 	private String _getErrorMessage(JSONObject jsonObject, Locale locale) {
-		String errorMessage = jsonObject.getString(
-			PortalInstancesNotificationPayload.ERROR_MESSAGE);
+		String errorMessageKey = jsonObject.getString(
+			PortalInstancesNotificationPayload.ERROR_MESSAGE_KEY);
 
-		if (Validator.isNull(errorMessage)) {
+		if (Validator.isNull(errorMessageKey)) {
 			return _language.get(locale, "an-unexpected-error-occurred");
 		}
 
-		return _language.get(locale, errorMessage);
+		return _language.get(locale, errorMessageKey);
 	}
 
 	@Reference

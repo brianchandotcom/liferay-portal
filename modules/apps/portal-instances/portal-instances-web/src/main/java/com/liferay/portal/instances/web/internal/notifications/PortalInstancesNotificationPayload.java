@@ -16,7 +16,7 @@ public class PortalInstancesNotificationPayload {
 
 	public static final String COMPANY_ID = "companyId";
 
-	public static final String ERROR_MESSAGE = "errorMessage";
+	public static final String ERROR_MESSAGE_KEY = "errorMessageKey";
 
 	public static final String OPERATION_TYPE = "operationType";
 
@@ -27,14 +27,14 @@ public class PortalInstancesNotificationPayload {
 	public static final String WEB_ID = "webId";
 
 	public static JSONObject build(
-		long companyId, String errorMessage,
+		long companyId, String errorMessageKey,
 		PortalInstancesOperationType portalInstancesOperationType,
 		String schemaName, int status, String webId) {
 
 		return JSONUtil.put(
 			COMPANY_ID, companyId
 		).put(
-			ERROR_MESSAGE, errorMessage
+			ERROR_MESSAGE_KEY, errorMessageKey
 		).put(
 			OPERATION_TYPE, portalInstancesOperationType.getValue()
 		).put(

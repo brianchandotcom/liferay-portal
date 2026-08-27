@@ -43,7 +43,7 @@ export default function ({namespace}) {
 					});
 
 					opener.Liferay.Util.openToast({
-						message: response.successMessage,
+						message: response.startMessage,
 						type: 'success',
 					});
 				}

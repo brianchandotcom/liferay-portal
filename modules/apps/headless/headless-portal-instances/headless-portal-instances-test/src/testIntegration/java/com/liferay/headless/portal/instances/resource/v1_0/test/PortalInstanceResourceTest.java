@@ -454,8 +454,7 @@ public class PortalInstanceResourceTest
 
 		String sql =
 			"drop schema if exists " +
-				DBPartitionUtil.DATABASE_EXPORTED_PARTITION_SCHEMA_NAME_PREFIX +
-					companyId;
+				DBPartitionUtil.getExportedPartitionName(companyId);
 
 		if (db.getDBType() == DBType.POSTGRESQL) {
 			sql = sql + " cascade";
@@ -480,9 +479,8 @@ public class PortalInstanceResourceTest
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
 					"select configurationId from ",
-					DBPartitionUtil.
-						DATABASE_EXPORTED_PARTITION_SCHEMA_NAME_PREFIX,
-					companyId, ".Configuration_"));
+					DBPartitionUtil.getExportedPartitionName(companyId),
+					".Configuration_"));
 
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
@@ -819,9 +817,7 @@ public class PortalInstanceResourceTest
 						_portalInstance.getPortalInstanceId());
 
 				Assert.assertEquals(
-					DBPartitionUtil.
-						DATABASE_EXPORTED_PARTITION_SCHEMA_NAME_PREFIX +
-							companyId,
+					DBPartitionUtil.getExportedPartitionName(companyId),
 					portalInstanceExport.getExportedPartitionName());
 				Assert.assertEquals(
 					Long.valueOf(companyId),
@@ -870,8 +866,7 @@ public class PortalInstanceResourceTest
 					_portalInstance.getPortalInstanceId());
 
 			Assert.assertEquals(
-				DBPartitionUtil.DATABASE_EXPORTED_PARTITION_SCHEMA_NAME_PREFIX +
-					companyId,
+				DBPartitionUtil.getExportedPartitionName(companyId),
 				portalInstanceExport.getExportedPartitionName());
 			Assert.assertEquals(
 				Long.valueOf(companyId),
@@ -963,8 +958,7 @@ public class PortalInstanceResourceTest
 		PortalInstanceImport portalInstanceImport = new PortalInstanceImport();
 
 		portalInstanceImport.setSchemaName(
-			DBPartitionUtil.DATABASE_EXPORTED_PARTITION_SCHEMA_NAME_PREFIX +
-				companyId);
+			DBPartitionUtil.getExportedPartitionName(companyId));
 		portalInstanceImport.setVirtualHost(
 			randomId + "." +
 				StringUtil.toLowerCase(RandomTestUtil.randomString(3)));
@@ -1022,9 +1016,8 @@ public class PortalInstanceResourceTest
 	private void _testPostPortalInstanceImportNonexistentDBPartition()
 		throws Exception {
 
-		String schemaName =
-			DBPartitionUtil.DATABASE_EXPORTED_PARTITION_SCHEMA_NAME_PREFIX +
-				RandomTestUtil.randomLong();
+		String schemaName = DBPartitionUtil.getExportedPartitionName(
+			RandomTestUtil.randomLong());
 
 		PortalInstanceImport portalInstanceImport = new PortalInstanceImport();
 
@@ -1071,8 +1064,7 @@ public class PortalInstanceResourceTest
 		PortalInstanceImport portalInstanceImport = new PortalInstanceImport();
 
 		portalInstanceImport.setSchemaName(
-			DBPartitionUtil.DATABASE_EXPORTED_PARTITION_SCHEMA_NAME_PREFIX +
-				companyId);
+			DBPartitionUtil.getExportedPartitionName(companyId));
 		portalInstanceImport.setVirtualHost(virtualHost);
 		portalInstanceImport.setWebId(randomId);
 
@@ -1101,8 +1093,8 @@ public class PortalInstanceResourceTest
 		PortalInstanceImport portalInstanceImport = new PortalInstanceImport();
 
 		portalInstanceImport.setSchemaName(
-			DBPartitionUtil.DATABASE_EXPORTED_PARTITION_SCHEMA_NAME_PREFIX +
-				RandomTestUtil.randomLong());
+			DBPartitionUtil.getExportedPartitionName(
+				RandomTestUtil.randomLong()));
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				_CLASS_NAME_PORTAL_INSTANCE_RESOURCE_IMPL,

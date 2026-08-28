@@ -15,6 +15,8 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.test.rule.FeatureFlag;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.translation.exception.XLIFFFileException;
@@ -105,6 +107,24 @@ public class XLIFFTranslationInfoItemFieldValuesImporterTest {
 	}
 
 	@Test
+	public void testImportXLIFF12PreservesInlineCodes() throws Exception {
+		InfoItemFieldValues infoItemFieldValues =
+			_xliffTranslationInfoItemFieldValuesImporter.
+				importInfoItemFieldValues(
+					_group.getGroupId(),
+					new InfoItemReference(JournalArticle.class.getName(), 122),
+					TranslationTestUtil.readFileToInputStream(
+						"test-journal-article-122-inline-codes-v12.xlf"));
+
+		InfoFieldValue<Object> infoFieldValue =
+			infoItemFieldValues.getInfoFieldValue("content");
+
+		Assert.assertEquals(
+			"<p>Hola <b>mundo</b> &amp; mas</p>",
+			infoFieldValue.getValue(LocaleUtil.SPAIN));
+	}
+
+	@Test
 	public void testImportXLIFF12VersionDocument() throws Exception {
 		InfoItemFieldValues infoItemFieldValues =
 			_xliffTranslationInfoItemFieldValuesImporter.
@@ -140,6 +160,17 @@ public class XLIFFTranslationInfoItemFieldValuesImporterTest {
 			infoItemFieldValues.getInfoFieldValues();
 
 		Assert.assertFalse(infoFieldValues.isEmpty());
+	}
+
+	@Test(expected = XLIFFFileException.MustBeValid.class)
+	public void testImportXLIFF20FailsFileInlineCodeWithoutOriginalData()
+		throws Exception {
+
+		_xliffTranslationInfoItemFieldValuesImporter.importInfoItemFieldValues(
+			_group.getGroupId(),
+			new InfoItemReference(JournalArticle.class.getName(), 122),
+			TranslationTestUtil.readFileToInputStream(
+				"test-journal-article-122-inline-codes-no-original-data.xlf"));
 	}
 
 	@Test(expected = XLIFFFileException.MustBeSupportedLanguage.class)
@@ -199,6 +230,74 @@ public class XLIFFTranslationInfoItemFieldValuesImporterTest {
 
 		Assert.assertEquals(
 			infoFieldValues.toString(), 1, infoFieldValues.size());
+	}
+
+	@FeatureFlags(featureFlags = @FeatureFlag("LPD-102730"))
+	@Test
+	public void testImportXLIFF20PreservesInlineCodes() throws Exception {
+		InfoItemFieldValues infoItemFieldValues =
+			_xliffTranslationInfoItemFieldValuesImporter.
+				importInfoItemFieldValues(
+					_group.getGroupId(),
+					new InfoItemReference(JournalArticle.class.getName(), 122),
+					TranslationTestUtil.readFileToInputStream(
+						"test-journal-article-122-inline-codes.xlf"));
+
+		Collection<InfoFieldValue<Object>> infoFieldValues =
+			infoItemFieldValues.getInfoFieldValues();
+
+		Assert.assertEquals(
+			infoFieldValues.toString(), 2, infoFieldValues.size());
+
+		InfoFieldValue<Object> contentInfoFieldValue =
+			infoItemFieldValues.getInfoFieldValue("content");
+
+		Assert.assertEquals(
+			"<p>Hola <b>mundo</b> &amp; mas</p>",
+			contentInfoFieldValue.getValue(LocaleUtil.SPAIN));
+
+		InfoFieldValue<Object> imageInfoFieldValue =
+			infoItemFieldValues.getInfoFieldValue("image");
+
+		Assert.assertEquals(
+			"<img src=\"/images/logo.png\"/>",
+			imageInfoFieldValue.getValue(LocaleUtil.SPAIN));
+	}
+
+	@FeatureFlags(
+		featureFlags = @FeatureFlag(enable = false, value = "LPD-102730")
+	)
+	@Test
+	public void testImportXLIFF20PreservesInlineCodesWithoutFeatureFlag()
+		throws Exception {
+
+		InfoItemFieldValues infoItemFieldValues =
+			_xliffTranslationInfoItemFieldValuesImporter.
+				importInfoItemFieldValues(
+					_group.getGroupId(),
+					new InfoItemReference(JournalArticle.class.getName(), 122),
+					TranslationTestUtil.readFileToInputStream(
+						"test-journal-article-122-inline-codes.xlf"));
+
+		Collection<InfoFieldValue<Object>> infoFieldValues =
+			infoItemFieldValues.getInfoFieldValues();
+
+		Assert.assertEquals(
+			infoFieldValues.toString(), 2, infoFieldValues.size());
+
+		InfoFieldValue<Object> contentInfoFieldValue =
+			infoItemFieldValues.getInfoFieldValue("content");
+
+		Assert.assertEquals(
+			"<p>Hola <b>mundo</b> &amp; mas</p>",
+			contentInfoFieldValue.getValue(LocaleUtil.SPAIN));
+
+		InfoFieldValue<Object> imageInfoFieldValue =
+			infoItemFieldValues.getInfoFieldValue("image");
+
+		Assert.assertEquals(
+			"<img src=\"/images/logo.png\"/>",
+			imageInfoFieldValue.getValue(LocaleUtil.SPAIN));
 	}
 
 	@Test

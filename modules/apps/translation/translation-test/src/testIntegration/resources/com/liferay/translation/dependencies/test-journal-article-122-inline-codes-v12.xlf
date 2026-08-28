@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+	<file datatype="html" original="com.liferay.journal.model.JournalArticle:122" source-language="en-US" target-language="es-ES" tool="Liferay">
+		<body>
+			<trans-unit id="JournalArticle_content">
+				<source xml:lang="en-US"><bpt id="1" rid="1">&lt;p&gt;</bpt>Hello <bpt id="2" rid="2">&lt;b&gt;</bpt>world<ept id="3" rid="2">&lt;/b&gt;</ept> <ph id="4">&amp;amp;</ph> more<ept id="5" rid="1">&lt;/p&gt;</ept></source>
+				<target xml:lang="es-ES"><bpt id="1" rid="1">&lt;p&gt;</bpt>Hola <bpt id="2" rid="2">&lt;b&gt;</bpt>mundo<ept id="3" rid="2">&lt;/b&gt;</ept> <ph id="4">&amp;amp;</ph> mas<ept id="5" rid="1">&lt;/p&gt;</ept></target>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

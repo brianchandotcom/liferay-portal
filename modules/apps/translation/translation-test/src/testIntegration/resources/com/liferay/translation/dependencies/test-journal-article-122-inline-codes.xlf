@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+
+<xliff srcLang="en-US" trgLang="es-ES" version="2.0" xmlns="urn:oasis:names:tc:xliff:document:2.0">
+	<file id="com.liferay.journal.model.JournalArticle:122">
+		<unit id="JournalArticle_content">
+			<originalData>
+				<data id="d1">&lt;p&gt;</data>
+				<data id="d2">&lt;/p&gt;</data>
+				<data id="d3">&lt;b&gt;</data>
+				<data id="d4">&lt;/b&gt;</data>
+				<data id="d5">&amp;amp;</data>
+			</originalData>
+			<segment>
+				<source><pc dataRefEnd="d2" dataRefStart="d1" id="1">Hello <pc dataRefEnd="d4" dataRefStart="d3" id="2">world</pc> <ph dataRef="d5" id="3"/> more</pc></source>
+				<target><pc dataRefEnd="d2" dataRefStart="d1" id="1">Hola <pc dataRefEnd="d4" dataRefStart="d3" id="2">mundo</pc> <ph dataRef="d5" id="3"/> mas</pc></target>
+			</segment>
+		</unit>
+		<unit id="JournalArticle_image">
+			<originalData>
+				<data id="d1">&lt;img src="/images/logo.png"/&gt;</data>
+			</originalData>
+			<segment>
+				<source><ph dataRef="d1" id="1"/></source>
+				<target><ph dataRef="d1" id="1"/></target>
+			</segment>
+		</unit>
+	</file>
+</xliff>

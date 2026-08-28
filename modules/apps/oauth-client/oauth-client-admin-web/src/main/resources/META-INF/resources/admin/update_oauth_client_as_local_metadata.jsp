@@ -39,8 +39,14 @@ renderResponse.setTitle((oAuthClientASLocalMetadata == null) ? LanguageUtil.get(
 
 				<liferay-ui:error exception="<%= OAuthClientASLocalMetadataIssuerException.class %>" message="oauth-client-as-local-metadata-issuer-cannot-be-empty" />
 
-				<liferay-ui:error exception="<%= OAuthClientASLocalMetadataLocalWellKnownURIException.class %>">
-					<liferay-ui:message arguments="<%= HtmlUtil.escape(((OAuthClientASLocalMetadataLocalWellKnownURIException)errorException).getMessage()) %>" key="oauth-client-as-local-metadata-invalid-https-uri-x" />
+				<liferay-ui:error exception="<%= OAuthClientASLocalMetadataLocalWellKnownURIException.MustBeValidHTTPSURL.class %>">
+					<liferay-ui:message arguments="<%= HtmlUtil.escape(((OAuthClientASLocalMetadataLocalWellKnownURIException.MustBeValidHTTPSURL)errorException).getMessage()) %>" key="oauth-client-as-local-metadata-invalid-https-uri-x" />
+				</liferay-ui:error>
+
+				<liferay-ui:error exception="<%= OAuthClientASLocalMetadataLocalWellKnownURIException.MustNotExceedMaximumLength.class %>" message="oauth-client-as-local-metadata-issuer-is-too-long" />
+
+				<liferay-ui:error exception="<%= OAuthClientASLocalMetadataLocalWellKnownURIException.MustProduceValidURI.class %>">
+					<liferay-ui:message arguments="<%= HtmlUtil.escape(((OAuthClientASLocalMetadataLocalWellKnownURIException.MustProduceValidURI)errorException).getMessage()) %>" key="oauth-client-as-local-metadata-invalid-https-uri-x" />
 				</liferay-ui:error>
 
 				<liferay-ui:error exception="<%= OAuthClientASLocalMetadataMetadataJSONException.class %>">

@@ -140,3 +140,24 @@ export async function createForumMember(
 
 	return {screenName, userAccount};
 }
+
+// Message Boards parity, which the list fragment mirrors: 3 Urgent, 2 Sticky,
+// 1 Announcement, and anything at or below 0 renders no badge at all.
+
+export const THREAD_PRIORITY = {
+	ANNOUNCEMENT: 1,
+	NONE: 0,
+	STICKY: 2,
+	URGENT: 3,
+};
+
+export const FORUMS_MESSAGES_PATH = '/web/forums/forums-messages';
+
+export const FORUMS_HOME_PATH = '/web/forums';
+
+// A thread's display page is reached through the object definition's friendly
+// URL separator rather than a page of its own.
+
+export function getThreadPath(friendlyUrlPath: string) {
+	return `/web/forums/c_forumthread/${friendlyUrlPath}`;
+}

@@ -104,7 +104,7 @@ public class ExamResultsRestController extends BaseRestController {
 			return ResponseEntity.ok(_process(jwt, multipartFile));
 		}
 		catch (Exception exception) {
-			_log.error(exception);
+			_log.error("Unable to import CSV", exception);
 
 			return ResponseEntity.status(
 				HttpStatus.INTERNAL_SERVER_ERROR
@@ -116,6 +116,7 @@ public class ExamResultsRestController extends BaseRestController {
 
 	private String _decode(byte[] bytes) {
 		CharBuffer charBuffer = CharBuffer.allocate(bytes.length);
+
 		CharsetDecoder charsetDecoder = StandardCharsets.UTF_8.newDecoder();
 
 		CoderResult coderResult = charsetDecoder.decode(
@@ -136,16 +137,33 @@ public class ExamResultsRestController extends BaseRestController {
 			String emailAddress, String examName, LocalDate localDate)
 		throws Exception {
 
-		MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
-
-		HexFormat hexFormat = HexFormat.of();
-
 		String keyString = StringBundler.concat(
 			StringUtil.toLowerCase(emailAddress.trim()), "|", examName.trim(),
 			"|", localDate);
 
+		MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
+
+		HexFormat hexFormat = HexFormat.of();
+
 		return hexFormat.formatHex(
 			messageDigest.digest(keyString.getBytes(StandardCharsets.UTF_8)));
+	}
+
+	private double _getScore(CSVRecord csvRecord) {
+		String scoreString = StringUtil.removeChar(
+			csvRecord.get(
+				7
+			).trim(),
+			'%');
+
+		if (!Validator.isNumber(scoreString)) {
+			throw new IllegalArgumentException(
+				StringBundler.concat(
+					"Score \"", scoreString, "\" in row ",
+					csvRecord.getRecordNumber() + 1, " is not a number"));
+		}
+
+		return GetterUtil.getDouble(scoreString);
 	}
 
 	private LocalDateTime _parseLocalDateTime(String value) {
@@ -161,11 +179,14 @@ public class ExamResultsRestController extends BaseRestController {
 		return (LocalDateTime)temporalAccessor;
 	}
 
-	private String _process(
-			@AuthenticationPrincipal Jwt jwt, MultipartFile multipartFile)
+	private String _process(Jwt jwt, MultipartFile multipartFile)
 		throws Exception {
 
-		try (CSVParser csvParser = CSVFormat.DEFAULT.withFirstRecordAsHeader(
+		try (CSVParser csvParser = CSVFormat.DEFAULT.builder(
+			).setHeader(
+			).setSkipHeaderRecord(
+				true
+			).build(
 			).parse(
 				new StringReader(_decode(multipartFile.getBytes()))
 			)) {
@@ -173,22 +194,22 @@ public class ExamResultsRestController extends BaseRestController {
 			JSONArray jsonArray = new JSONArray();
 
 			for (CSVRecord csvRecord : csvParser) {
-				String examName = csvRecord.get(
-					6
-				).trim();
-
-				examName = _examNames.getOrDefault(examName, examName);
-
-				String emailAddress = csvRecord.get(
-					2
-				).trim();
-
 				OffsetDateTime offsetDateTime = OffsetDateTime.of(
 					_parseLocalDateTime(
 						csvRecord.get(
 							10
 						).trim()),
 					ZoneOffset.UTC);
+
+				String emailAddress = csvRecord.get(
+					2
+				).trim();
+
+				String examName = csvRecord.get(
+					6
+				).trim();
+
+				examName = _examNames.getOrDefault(examName, examName);
 
 				jsonArray.put(
 					new JSONObject(
@@ -217,13 +238,7 @@ public class ExamResultsRestController extends BaseRestController {
 							"name", csvRecord.get(8)
 						)
 					).put(
-						"score",
-						GetterUtil.getDouble(
-							StringUtil.removeChar(
-								csvRecord.get(
-									7
-								).trim(),
-								'%'))
+						"score", _getScore(csvRecord)
 					).put(
 						"testName", examName
 					));

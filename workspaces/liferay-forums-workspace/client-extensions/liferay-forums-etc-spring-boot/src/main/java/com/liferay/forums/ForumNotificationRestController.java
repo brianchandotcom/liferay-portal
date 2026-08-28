@@ -6,6 +6,7 @@
 package com.liferay.forums;
 
 import com.liferay.client.extension.util.spring.boot3.BaseRestController;
+import com.liferay.client.extension.util.spring.boot3.client.LiferayOAuth2AccessTokenManager;
 import com.liferay.forums.client.LiferayApiClient;
 import com.liferay.forums.service.ForumNotificationService;
 import com.liferay.forums.service.ForumUserService;
@@ -51,7 +52,7 @@ public class ForumNotificationRestController extends BaseRestController {
 			@AuthenticationPrincipal Jwt jwt, @RequestBody String json)
 		throws Exception {
 
-		String authToken = _authToken(jwt);
+		String authToken = _serviceAuthToken();
 
 		if (jwt != null) {
 			log(jwt, _log, json);
@@ -72,7 +73,7 @@ public class ForumNotificationRestController extends BaseRestController {
 			@AuthenticationPrincipal Jwt jwt, @RequestBody String json)
 		throws Exception {
 
-		String authToken = _authToken(jwt);
+		String authToken = _serviceAuthToken();
 
 		if (jwt != null) {
 			log(jwt, _log, json);
@@ -93,7 +94,7 @@ public class ForumNotificationRestController extends BaseRestController {
 			@AuthenticationPrincipal Jwt jwt, @RequestBody String json)
 		throws Exception {
 
-		String authToken = _authToken(jwt);
+		String authToken = _serviceAuthToken();
 
 		if (jwt != null) {
 			log(jwt, _log, json);
@@ -107,14 +108,6 @@ public class ForumNotificationRestController extends BaseRestController {
 				"updated-reply", () -> _processUpdatedReply(json, authToken)));
 
 		return new ResponseEntity<>(json, HttpStatus.OK);
-	}
-
-	private String _authToken(Jwt jwt) {
-		if (jwt == null) {
-			return null;
-		}
-
-		return jwt.getTokenValue();
 	}
 
 	private Set<String> _capMentions(Set<String> mentionedScreenNames) {
@@ -612,6 +605,11 @@ public class ForumNotificationRestController extends BaseRestController {
 		return 0L;
 	}
 
+	private String _serviceAuthToken() {
+		return _liferayOAuth2AccessTokenManager.getTokenValue(
+			_OAUTH_APPLICATION_HEADLESS_SERVER_ERC);
+	}
+
 	private String _stripHtml(String html) {
 		if ((html == null) || html.isBlank()) {
 			return "";
@@ -638,6 +636,9 @@ public class ForumNotificationRestController extends BaseRestController {
 
 	private static final int _MAX_MENTIONS = 25;
 
+	private static final String _OAUTH_APPLICATION_HEADLESS_SERVER_ERC =
+		"liferay-forums-etc-spring-boot-oahs";
+
 	private static final Log _log = LogFactory.getLog(
 		ForumNotificationRestController.class);
 
@@ -659,6 +660,9 @@ public class ForumNotificationRestController extends BaseRestController {
 
 	@Autowired
 	private LiferayApiClient _liferayApiClient;
+
+	@Autowired
+	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;
 
 	@Autowired
 	private MentionService _mentionService;

@@ -1,5 +1,21 @@
 assemble:
     -   fromTask: bootJar
+liferay-forums-etc-spring-boot-oahs:
+    .serviceAddress: localhost:58082
+    .serviceScheme: http
+    name: Liferay Forums Etc Spring Boot OAuth Application Headless Server
+    scopes:
+        -   Liferay.Headless.Admin.Site.everything
+        -   Liferay.Headless.Admin.User.everything
+        -   Liferay.Headless.Object.everything
+        -   Liferay.Object.Admin.REST.everything
+        -   c_forummessage.everything
+        -   c_forumnotification.everything
+        -   c_forumsubscription.everything
+        -   c_forumthread.everything
+        -   c_forumuser.everything
+    type: oAuthApplicationHeadlessServer
+    userAccountScreenName: default-service-account
 liferay-forums-etc-spring-boot-oaua:
     .serviceAddress: localhost:58082
     .serviceScheme: http

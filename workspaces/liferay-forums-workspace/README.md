@@ -69,6 +69,12 @@ Then restart the service process. A service that is already running does not pic
 
 Both steps are needed once, on a new installation.
 
+### Upgrading an Install Created Earlier
+
+The initializer's permission step only adds and updates grants, so a grant removed from the source tree stays in place on a site that already applied it. A fresh install is unaffected.
+
+Earlier versions let every member add `ForumUser` and `ForumNotification` entries, because the service wrote those rows as the member who posted. The service now writes them as a service account, so members no longer need either grant, and leaving them in place would let a member address a notification to somebody else. On an install created before that change, revoke them: in Control Panel, under Objects, clear the permission that allows the User role to add entries on `ForumUser` and on `ForumNotification`. Members keep the rest of what they had, including reading `ForumUser` for the mention picker and adding and reading their own `ForumSubscription` rows.
+
 ### Applying a Change to an Existing Site
 
 The initializer creates pages when the site is created. Editing a page or a fragment and redeploying does not retrofit the change onto a site that already exists, so recreate the site to apply it:
@@ -248,6 +254,8 @@ The Spring Boot client extension works out **who** to notify. Liferay calls it t
 
 The service answers immediately and does the work on a background thread, so a member posting a reply is not kept waiting while recipients are resolved. If it is ever overloaded, the work runs on the calling thread rather than a notification being dropped. Every call it makes is bounded by a timeout, so a slow instance produces a logged failure rather than a stalled notification.
 
+The service acts as a service account when it writes back into Liferay, not as the member who posted. Recording an author, writing a notification row and reading a topic's subscribers are all things the forum does on a member's behalf rather than things the member does, so they are not permissions members hold: a member cannot address a notification to somebody else or read who else is subscribed. The account is `default-service-account`, named on the client extension's headless server OAuth entry.
+
 Delivery itself is Liferay's. There is no direct mail server connection: the email object action queues the message through the instance's own notification queue.
 
 Each row is deleted once its actions have run, so notification content is not left sitting in the object. That behaviour can be switched off where object actions are processed asynchronously.
@@ -274,6 +282,7 @@ The sender address and display name are the recipient settings on the email temp
 | `LIFERAY_BASE_URL` | `http://localhost:8080` | The instance the service validates tokens against and calls back into. |
 | `LIFERAY_DXP_HOST` | `localhost:8080` | Host used when running locally. Provided by the platform on PaaS. |
 | `LIFERAY_DXP_PROTOCOL` | `http` | Protocol paired with the host above. |
+| `LIFERAY_FORUMS_ETC_SPRING_BOOT_OAHS_CLIENT_SECRET` | none | Client credential for the service account the service writes as. Injected on PaaS and SaaS; needed only for local runs. |
 | `LIFERAY_HEADLESS_API_USER` | `test@liferay.com` | Credentials used only when no token is forwarded. |
 | `LIFERAY_HEADLESS_API_PASSWORD` | `test` | Password for the above. |
 | `FORUMS_SITE_BASE_URL` | `https://www.example.xyz` | Prepended to the link in a notification so it resolves to the deployed site. |

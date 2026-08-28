@@ -40,21 +40,16 @@ public class TranslationTestUtil {
 			Group group, DDMFormDeserializer ddmFormDeserializer)
 		throws Exception {
 
-		DDMFormDeserializerDeserializeRequest.Builder builder =
-			DDMFormDeserializerDeserializeRequest.Builder.newBuilder(
-				readFileToString("test-ddm-form.json"));
+		return _getJournalArticle(
+			group, ddmFormDeserializer, "test-journal-content.xml");
+	}
 
-		DDMFormDeserializerDeserializeResponse
-			ddmFormDeserializerDeserializeResponse =
-				ddmFormDeserializer.deserialize(builder.build());
+	public static JournalArticle getJournalArticleWithRichHTML(
+			Group group, DDMFormDeserializer ddmFormDeserializer)
+		throws Exception {
 
-		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
-			group.getGroupId(), JournalArticle.class.getName(),
-			ddmFormDeserializerDeserializeResponse.getDDMForm());
-
-		return JournalTestUtil.addArticleWithXMLContent(
-			group.getGroupId(), readFileToString("test-journal-content.xml"),
-			ddmStructure.getStructureKey(), null);
+		return _getJournalArticle(
+			group, ddmFormDeserializer, "test-journal-content-rich-html.xml");
 	}
 
 	public static InputStream readFileToInputStream(String fileName)
@@ -84,6 +79,28 @@ public class TranslationTestUtil {
 		return FileUtil.getBytes(
 			TranslationTestUtil.class,
 			"/com/liferay/translation/dependencies/" + fileName);
+	}
+
+	private static JournalArticle _getJournalArticle(
+			Group group, DDMFormDeserializer ddmFormDeserializer,
+			String contentFileName)
+		throws Exception {
+
+		DDMFormDeserializerDeserializeRequest.Builder builder =
+			DDMFormDeserializerDeserializeRequest.Builder.newBuilder(
+				readFileToString("test-ddm-form.json"));
+
+		DDMFormDeserializerDeserializeResponse
+			ddmFormDeserializerDeserializeResponse =
+				ddmFormDeserializer.deserialize(builder.build());
+
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+			group.getGroupId(), JournalArticle.class.getName(),
+			ddmFormDeserializerDeserializeResponse.getDDMForm());
+
+		return JournalTestUtil.addArticleWithXMLContent(
+			group.getGroupId(), readFileToString(contentFileName),
+			ddmStructure.getStructureKey(), null);
 	}
 
 	private static void _withUser(

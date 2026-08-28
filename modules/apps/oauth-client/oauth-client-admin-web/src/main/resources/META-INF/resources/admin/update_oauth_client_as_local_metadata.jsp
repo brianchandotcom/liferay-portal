@@ -43,6 +43,8 @@ renderResponse.setTitle((oAuthClientASLocalMetadata == null) ? LanguageUtil.get(
 					<liferay-ui:message arguments="<%= HtmlUtil.escape(((OAuthClientASLocalMetadataLocalWellKnownURIException)errorException).getMessage()) %>" key="oauth-client-as-local-metadata-invalid-https-uri-x" />
 				</liferay-ui:error>
 
+				<liferay-ui:error exception="<%= OAuthClientASLocalMetadataLocalWellKnownURILengthException.class %>" message="oauth-client-as-local-metadata-issuer-is-too-long" />
+
 				<liferay-ui:error exception="<%= OAuthClientASLocalMetadataMetadataJSONException.class %>">
 					<liferay-ui:message arguments="<%= HtmlUtil.escape(((OAuthClientASLocalMetadataMetadataJSONException)errorException).getMessage()) %>" key="oauth-client-as-local-metadata-invalid-metadata-json-x" />
 				</liferay-ui:error>

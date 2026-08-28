@@ -29,6 +29,7 @@ page import="com.liferay.oauth.client.persistence.exception.DuplicateOAuthClient
 page import="com.liferay.oauth.client.persistence.exception.DuplicateOAuthClientPRLocalMetadataException" %><%@
 page import="com.liferay.oauth.client.persistence.exception.OAuthClientASLocalMetadataIssuerException" %><%@
 page import="com.liferay.oauth.client.persistence.exception.OAuthClientASLocalMetadataLocalWellKnownURIException" %><%@
+page import="com.liferay.oauth.client.persistence.exception.OAuthClientASLocalMetadataLocalWellKnownURILengthException" %><%@
 page import="com.liferay.oauth.client.persistence.exception.OAuthClientASLocalMetadataMetadataJSONException" %><%@
 page import="com.liferay.oauth.client.persistence.exception.OAuthClientEntryAuthRequestParametersJSONException" %><%@
 page import="com.liferay.oauth.client.persistence.exception.OAuthClientEntryAuthServerWellKnownURIException" %><%@

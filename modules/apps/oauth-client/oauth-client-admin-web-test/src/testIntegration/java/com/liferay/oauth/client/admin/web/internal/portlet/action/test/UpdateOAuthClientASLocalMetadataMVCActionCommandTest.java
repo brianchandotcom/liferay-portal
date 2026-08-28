@@ -281,7 +281,7 @@ public class UpdateOAuthClientASLocalMetadataMVCActionCommandTest {
 		Assert.assertEquals(url, oidcProviderMetadata.getUserInfoEndpointURI());
 
 		Assert.assertEquals(
-			urlString + "/o/.well-known/oauth-authorization-server",
+			urlString + "/.well-known/oauth-authorization-server",
 			oAuthClientASLocalMetadata.getOAuthASLocalWellKnownURI());
 
 		AuthorizationServerMetadata authorizationServerMetadata =

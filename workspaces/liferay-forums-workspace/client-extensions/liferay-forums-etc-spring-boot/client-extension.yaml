@@ -5,14 +5,12 @@ liferay-forums-etc-spring-boot-oahs:
     .serviceScheme: http
     name: Liferay Forums Etc Spring Boot OAuth Application Headless Server
     scopes:
-        -   Liferay.Headless.Admin.Site.everything
-        -   Liferay.Headless.Admin.User.everything
-        -   Liferay.Headless.Object.everything
-        -   Liferay.Object.Admin.REST.everything
-        -   c_forummessage.everything
+        -   Liferay.Headless.Admin.Site.everything.read
+        -   Liferay.Headless.Admin.User.everything.read
+        -   Liferay.Object.Admin.REST.everything.read
         -   c_forumnotification.everything
-        -   c_forumsubscription.everything
-        -   c_forumthread.everything
+        -   c_forumsubscription.everything.read
+        -   c_forumthread.everything.read
         -   c_forumuser.everything
     type: oAuthApplicationHeadlessServer
     userAccountScreenName: default-service-account
@@ -21,15 +19,7 @@ liferay-forums-etc-spring-boot-oaua:
     .serviceScheme: http
     name: Liferay Forums Etc Spring Boot OAuth Application User Agent
     scopes:
-        -   Liferay.Headless.Admin.Site.everything
-        -   Liferay.Headless.Admin.User.everything
-        -   Liferay.Headless.Object.everything
-        -   Liferay.Object.Admin.REST.everything
-        -   c_forummessage.everything
-        -   c_forumnotification.everything
-        -   c_forumsubscription.everything
-        -   c_forumthread.everything
-        -   c_forumuser.everything
+        -   c_forumthread.everything.read
     type: oAuthApplicationUserAgent
 liferay-forums-etc-spring-boot-object-action-new-reply:
     name: Liferay Forums Etc Spring Boot Object Action New Reply

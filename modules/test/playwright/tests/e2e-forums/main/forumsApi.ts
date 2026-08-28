@@ -3,12 +3,19 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Browser} from '@playwright/test';
+import {Browser, Page, expect} from '@playwright/test';
 
-import {DataApiHelpers} from '../../../helpers/ApiHelpers';
+import {
+	DataApiHelpers,
+	clearAuthToken,
+	getHeader,
+	readAuthToken,
+} from '../../../helpers/ApiHelpers';
 import getRandomString from '../../../utils/getRandomString';
 
 export const FORUMS_SITE_EXTERNAL_REFERENCE_CODE = 'LIFERAY_FORUMS';
+
+export const FORUM_BAN_APPLICATION_NAME = 'c/forumbans';
 
 export const FORUM_CATEGORY_APPLICATION_NAME = 'c/forumcategories';
 
@@ -17,6 +24,9 @@ export const FORUM_MESSAGE_APPLICATION_NAME = 'c/forummessages';
 export const FORUM_NOTIFICATION_APPLICATION_NAME = 'c/forumnotifications';
 
 export const FORUM_SUBSCRIPTION_APPLICATION_NAME = 'c/forumsubscriptions';
+
+export const FORUM_SUSPICIOUS_ACTIVITY_APPLICATION_NAME =
+	'c/forumsuspiciousactivities';
 
 export const FORUM_THREAD_APPLICATION_NAME = 'c/forumthreads';
 
@@ -160,4 +170,45 @@ export const FORUMS_HOME_PATH = '/web/forums';
 
 export function getThreadPath(friendlyUrlPath: string) {
 	return `/web/forums/c_forumthread/${friendlyUrlPath}`;
+}
+
+export const FORUMS_MODERATION_PATH = '/web/forums/forums-moderation';
+
+export const FORUMS_NEW_DISCUSSION_PATH = '/web/forums/new-discussion';
+
+// performLoginViaApi resolves the password from a fixed map of predefined
+// users, so a member created by a test cannot use it. The rest matches it: the
+// auth token is cleared before the post and reread afterwards, or the session
+// keeps the previous user's token.
+
+export async function signInAs(
+	page: Page,
+	emailAddress: string,
+	password = 'test'
+) {
+	await page.goto('/');
+
+	clearAuthToken(page);
+
+	await expect
+		.poll(async () => {
+			const response = await page.request.post('/c/portal/login', {
+				data: new URLSearchParams({
+					login: emailAddress,
+					password,
+					rememberMe: 'true',
+				}).toString(),
+				headers: await getHeader(
+					page,
+					'application/x-www-form-urlencoded'
+				),
+			});
+
+			return response.status();
+		})
+		.toBe(200);
+
+	await page.goto('/');
+
+	await readAuthToken(page);
 }

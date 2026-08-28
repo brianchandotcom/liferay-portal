@@ -341,42 +341,38 @@ public class ResourceThresholdMonitorTest
 	}
 
 	@Test
-	public void testResourceThresholdMonitorInvalidMetric() {
-		_testResourceThresholdMonitorInvalidProperty(
-			"metric", RandomTestUtil.randomString());
-		_testResourceThresholdMonitorInvalidProperty("metric", "");
+	public void testNewMonitorInvalidMetric() {
+		_testNewMonitorInvalidProperty("metric", RandomTestUtil.randomString());
+		_testNewMonitorInvalidProperty("metric", "");
 	}
 
 	@Test
-	public void testResourceThresholdMonitorInvalidThreshold() {
-		_testResourceThresholdMonitorInvalidThreshold("critical", "-1");
-		_testResourceThresholdMonitorInvalidThreshold(
+	public void testNewMonitorInvalidThreshold() {
+		_testNewMonitorInvalidThreshold("critical", "-1");
+		_testNewMonitorInvalidThreshold(
 			"critical", RandomTestUtil.randomString());
-		_testResourceThresholdMonitorInvalidThreshold("warn", "-1");
-		_testResourceThresholdMonitorInvalidThreshold(
-			"warn", RandomTestUtil.randomString());
+		_testNewMonitorInvalidThreshold("warn", "-1");
+		_testNewMonitorInvalidThreshold("warn", RandomTestUtil.randomString());
 	}
 
 	@Test
-	public void testResourceThresholdMonitorMissingProperty() {
-		_testResourceThresholdMonitorMissingProperty("disk", "file.store");
-		_testResourceThresholdMonitorMissingProperty(
-			"executor.utilization", "label");
-		_testResourceThresholdMonitorMissingProperty("queue.depth", "label");
-		_testResourceThresholdMonitorMissingProperty("ram", "master.name");
+	public void testNewMonitorMissingProperty() {
+		_testNewMonitorMissingProperty("disk", "file.store");
+		_testNewMonitorMissingProperty("executor.utilization", "label");
+		_testNewMonitorMissingProperty("queue.depth", "label");
+		_testNewMonitorMissingProperty("ram", "master.name");
 	}
 
 	@Test
-	public void testResourceThresholdMonitorMissingThresholds() {
+	public void testNewMonitorMissingThresholds() {
 		Properties monitorProperties = _newMonitorProperties(
 			MonitorTestUtil.newJenkinsMasterName(), "ram");
 
-		_testResourceThresholdMonitorExpectedIllegalArgumentException(
-			monitorProperties);
+		_testNewMonitorExpectedIllegalArgumentException(monitorProperties);
 	}
 
 	@Test
-	public void testResourceThresholdMonitorMissingThresholdsMessage() {
+	public void testNewMonitorMissingThresholdsMessage() {
 		Properties monitorProperties = _newMonitorProperties(
 			MonitorTestUtil.newJenkinsMasterName(), "ram");
 
@@ -544,7 +540,7 @@ public class ResourceThresholdMonitorTest
 		testEquals(expectedStatus, monitorResult.getStatus());
 	}
 
-	private void _testResourceThresholdMonitorExpectedIllegalArgumentException(
+	private void _testNewMonitorExpectedIllegalArgumentException(
 		Properties monitorProperties) {
 
 		try {
@@ -556,9 +552,7 @@ public class ResourceThresholdMonitorTest
 		}
 	}
 
-	private void _testResourceThresholdMonitorInvalidProperty(
-		String name, String value) {
-
+	private void _testNewMonitorInvalidProperty(String name, String value) {
 		Properties monitorProperties = _newMonitorProperties(
 			MonitorTestUtil.newJenkinsMasterName(), "ram");
 
@@ -566,34 +560,27 @@ public class ResourceThresholdMonitorTest
 			"monitor[a].parameter[" + name + "]", value);
 		monitorProperties.setProperty("monitor[a].threshold[warn]", "80");
 
-		_testResourceThresholdMonitorExpectedIllegalArgumentException(
-			monitorProperties);
+		_testNewMonitorExpectedIllegalArgumentException(monitorProperties);
 	}
 
-	private void _testResourceThresholdMonitorInvalidThreshold(
-		String name, String value) {
-
+	private void _testNewMonitorInvalidThreshold(String name, String value) {
 		Properties monitorProperties = _newMonitorProperties(
 			MonitorTestUtil.newJenkinsMasterName(), "ram");
 
 		monitorProperties.setProperty(
 			"monitor[a].threshold[" + name + "]", value);
 
-		_testResourceThresholdMonitorExpectedIllegalArgumentException(
-			monitorProperties);
+		_testNewMonitorExpectedIllegalArgumentException(monitorProperties);
 	}
 
-	private void _testResourceThresholdMonitorMissingProperty(
-		String metric, String name) {
-
+	private void _testNewMonitorMissingProperty(String metric, String name) {
 		Properties monitorProperties = _newMonitorProperties(
 			MonitorTestUtil.newJenkinsMasterName(), metric);
 
 		monitorProperties.remove("monitor[a].parameter[" + name + "]");
 		monitorProperties.setProperty("monitor[a].threshold[warn]", "80");
 
-		_testResourceThresholdMonitorExpectedIllegalArgumentException(
-			monitorProperties);
+		_testNewMonitorExpectedIllegalArgumentException(monitorProperties);
 	}
 
 	private void _testUnknown(Properties monitorProperties) {

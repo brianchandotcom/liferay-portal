@@ -291,13 +291,13 @@ public class ForumNotificationRestController extends BaseRestController {
 		}
 	}
 
-	private void _notifyMentions(
+	private List<Long> _notifyMentions(
 		Set<String> mentionedScreenNames, String messageTitle, String author,
 		String bodyPreview, String url, List<Long> alreadyNotified,
 		long authorUserId, long siteId, String authToken) {
 
 		if (mentionedScreenNames.isEmpty()) {
-			return;
+			return List.of();
 		}
 
 		List<Long> mentioned = _mentionService.resolveMentions(
@@ -316,12 +316,14 @@ public class ForumNotificationRestController extends BaseRestController {
 		}
 
 		if (recipients.isEmpty()) {
-			return;
+			return List.of();
 		}
 
 		_forumNotificationService.notifyAll(
 			recipients, siteId, "mention", author, messageTitle,
 			_truncate(bodyPreview, 300), url, authToken);
+
+		return recipients;
 	}
 
 	private void _processNewReply(String json, String authToken) {
@@ -413,9 +415,14 @@ public class ForumNotificationRestController extends BaseRestController {
 			recipientUserIds, siteId, "reply", replyAuthor, messageTitle,
 			_truncate(replyBody, 300), url, authToken);
 
-		_notifyMentions(
+		List<Long> mentionRecipientUserIds = _notifyMentions(
 			mentionedScreenNames, messageTitle, replyAuthor, replyBody, url,
 			recipientUserIds, authorUserId, siteId, authToken);
+
+		_forumNotificationService.recordWebNotification(
+			_resolveMessageId(dtoJSONObject, payloadJSONObject),
+			recipientUserIds, mentionRecipientUserIds, replyAuthor,
+			messageTitle, _truncate(replyBody, 300), authToken);
 	}
 
 	private void _processRecordAuthor(String json, String authToken) {
@@ -541,9 +548,14 @@ public class ForumNotificationRestController extends BaseRestController {
 			_log.info("Constructed Display Page URL for Edited Reply: " + url);
 		}
 
-		_notifyMentions(
+		List<Long> mentionRecipientUserIds = _notifyMentions(
 			addedMentions, messageTitle, replyAuthor, replyBody, url, List.of(),
 			authorUserId, siteId, authToken);
+
+		_forumNotificationService.recordWebNotification(
+			_resolveMessageId(dtoJSONObject, payloadJSONObject), List.of(),
+			mentionRecipientUserIds, replyAuthor, messageTitle,
+			_truncate(replyBody, 300), authToken);
 	}
 
 	private String _resolveAuthorName(JSONObject creatorJSONObject) {
@@ -574,6 +586,27 @@ public class ForumNotificationRestController extends BaseRestController {
 	private long _resolveCreatorUserId(JSONObject creatorJSONObject) {
 		if (creatorJSONObject != null) {
 			return creatorJSONObject.optLong("id", 0L);
+		}
+
+		return 0L;
+	}
+
+	private long _resolveMessageId(
+		JSONObject dtoJSONObject, JSONObject payloadJSONObject) {
+
+		if (dtoJSONObject != null) {
+			long messageId = dtoJSONObject.optLong("id", 0L);
+
+			if (messageId > 0) {
+				return messageId;
+			}
+		}
+
+		JSONObject objectEntryJSONObject = payloadJSONObject.optJSONObject(
+			"objectEntry");
+
+		if (objectEntryJSONObject != null) {
+			return objectEntryJSONObject.optLong("id", 0L);
 		}
 
 		return 0L;

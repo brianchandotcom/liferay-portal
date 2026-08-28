@@ -5,15 +5,15 @@
 	"name_i18n": {
 		"en_US": "Forum Notification Web Reply"
 	},
-	"objectDefinitionExternalReferenceCode": "FORUM-NOTIFICATION",
+	"objectDefinitionExternalReferenceCode": "FORUM-MESSAGE",
 	"recipientType": "term",
 	"recipients": [
 		{
-			"term": "[%FORUMNOTIFICATION_RECIPIENTUSERID%]"
+			"term": "[%FORUMMESSAGE_NOTIFICATIONREPLYRECIPIENTIDS%]"
 		}
 	],
 	"subject": {
-		"en_US": "Re: [%FORUMNOTIFICATION_TOPICTITLE%]"
+		"en_US": "Re: [%FORUMMESSAGE_NOTIFICATIONTOPICTITLE%]"
 	},
 	"system": false,
 	"type": "userNotification",

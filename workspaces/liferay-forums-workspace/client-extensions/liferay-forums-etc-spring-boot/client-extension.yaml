@@ -8,6 +8,7 @@ liferay-forums-etc-spring-boot-oahs:
         -   Liferay.Headless.Admin.Site.everything.read
         -   Liferay.Headless.Admin.User.everything.read
         -   Liferay.Object.Admin.REST.everything.read
+        -   c_forummessage.everything
         -   c_forumnotification.everything
         -   c_forumsubscription.everything.read
         -   c_forumthread.everything.read

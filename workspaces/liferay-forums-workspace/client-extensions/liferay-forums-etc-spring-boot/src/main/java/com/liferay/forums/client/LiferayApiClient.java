@@ -114,6 +114,43 @@ public class LiferayApiClient {
 		return _baseUrl;
 	}
 
+	public String patch(String path, String authToken, Object jsonBody) {
+		if (_log.isDebugEnabled()) {
+			_log.debug("PATCH " + path);
+		}
+
+		try {
+			return _patch(
+				path, authToken, jsonBody
+			).block(
+				_requestTimeout
+			);
+		}
+		catch (WebClientResponseException webClientResponseException) {
+			if (_staleToken(webClientResponseException, authToken)) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"PATCH " + path +
+							" \u2192 401; retrying without the bearer token");
+				}
+
+				return _patch(
+					path, null, jsonBody
+				).block(
+					_requestTimeout
+				);
+			}
+
+			_log.error(
+				StringBundler.concat(
+					"PATCH ", path, " failed: ",
+					webClientResponseException.getStatusCode(), " ",
+					webClientResponseException.getResponseBodyAsString()));
+
+			throw webClientResponseException;
+		}
+	}
+
 	public String post(String path, String authToken, Object jsonBody) {
 		if (_log.isDebugEnabled()) {
 			_log.debug("POST " + path);
@@ -197,6 +234,22 @@ public class LiferayApiClient {
 			String.class
 		).block(
 			_requestTimeout
+		);
+	}
+
+	private Mono<String> _patch(
+		String path, String authToken, Object jsonBody) {
+
+		return _webClient.patch(
+		).uri(
+			path
+		).headers(
+			h -> _setAuthHeader(h, authToken)
+		).bodyValue(
+			jsonBody
+		).retrieve(
+		).bodyToMono(
+			String.class
 		);
 	}
 

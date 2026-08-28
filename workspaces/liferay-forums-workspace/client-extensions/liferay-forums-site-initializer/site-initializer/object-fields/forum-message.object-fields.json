@@ -1,0 +1,50 @@
+{
+	"object-fields": [
+		{
+			"businessType": "Text",
+			"indexed": false,
+			"label": {
+				"en_US": "Notification Author Name"
+			},
+			"name": "notificationAuthorName",
+			"required": false
+		},
+		{
+			"businessType": "LongText",
+			"indexed": false,
+			"label": {
+				"en_US": "Notification Body Excerpt"
+			},
+			"name": "notificationBodyExcerpt",
+			"required": false
+		},
+		{
+			"businessType": "Text",
+			"indexed": false,
+			"label": {
+				"en_US": "Notification Mention Recipient Ids"
+			},
+			"name": "notificationMentionRecipientIds",
+			"required": false
+		},
+		{
+			"businessType": "Text",
+			"indexed": false,
+			"label": {
+				"en_US": "Notification Reply Recipient Ids"
+			},
+			"name": "notificationReplyRecipientIds",
+			"required": false
+		},
+		{
+			"businessType": "Text",
+			"indexed": false,
+			"label": {
+				"en_US": "Notification Topic Title"
+			},
+			"name": "notificationTopicTitle",
+			"required": false
+		}
+	],
+	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:ForumMessage$]"
+}

@@ -32,6 +32,34 @@
 			"parameters": {
 			},
 			"system": false
+		},
+		{
+			"active": true,
+			"conditionExpression": "notificationReplyRecipientIds != \"\"",
+			"externalReferenceCode": "FORUM-MESSAGE-WEB-REPLY-ACTION",
+			"label": "{\"en_US\": \"Notify In App On Reply\"}",
+			"name": "ForumMessageWebReply",
+			"objectActionExecutorKey": "notification",
+			"objectActionTriggerKey": "onAfterUpdate",
+			"parameters": {
+				"notificationTemplateExternalReferenceCode": "FORUM-NOTIFICATION-WEB-REPLY",
+				"type": "userNotification"
+			},
+			"system": false
+		},
+		{
+			"active": true,
+			"conditionExpression": "notificationMentionRecipientIds != \"\"",
+			"externalReferenceCode": "FORUM-MESSAGE-WEB-MENTION-ACTION",
+			"label": "{\"en_US\": \"Notify In App On Mention\"}",
+			"name": "ForumMessageWebMention",
+			"objectActionExecutorKey": "notification",
+			"objectActionTriggerKey": "onAfterUpdate",
+			"parameters": {
+				"notificationTemplateExternalReferenceCode": "FORUM-NOTIFICATION-WEB-MENTION",
+				"type": "userNotification"
+			},
+			"system": false
 		}
 	],
 	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:ForumMessage$]"

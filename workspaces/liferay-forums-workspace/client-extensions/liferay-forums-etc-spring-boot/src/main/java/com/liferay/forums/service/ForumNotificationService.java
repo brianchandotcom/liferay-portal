@@ -108,6 +108,60 @@ public class ForumNotificationService {
 		}
 	}
 
+	// The in app notification is raised by an object action on the message
+	// itself, because a notification points at whatever object raised it and a
+	// member can open a message but not a notification row. Both recipient
+	// lists go in one patch: two patches would leave the first list in place
+	// and raise its notification a second time.
+
+	public void recordWebNotification(
+		long messageId, List<Long> replyRecipientUserIds,
+		List<Long> mentionRecipientUserIds, String authorName,
+		String topicTitle, String bodyExcerpt, String authToken) {
+
+		if ((messageId <= 0) ||
+			(replyRecipientUserIds.isEmpty() &&
+			 mentionRecipientUserIds.isEmpty())) {
+
+			return;
+		}
+
+		JSONObject payloadJSONObject = new JSONObject();
+
+		payloadJSONObject.put(
+			"notificationAuthorName", authorName
+		).put(
+			"notificationBodyExcerpt", bodyExcerpt
+		).put(
+			"notificationMentionRecipientIds",
+			_toIdList(mentionRecipientUserIds)
+		).put(
+			"notificationReplyRecipientIds", _toIdList(replyRecipientUserIds)
+		).put(
+			"notificationTopicTitle", topicTitle
+		);
+
+		try {
+			_liferayApiClient.patch(
+				"/o/c/forummessages/" + messageId, authToken,
+				payloadJSONObject.toString());
+
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					StringBundler.concat(
+						"Recorded in app recipients on message ", messageId,
+						": ", replyRecipientUserIds.size(), " reply, ",
+						mentionRecipientUserIds.size(), " mention"));
+			}
+		}
+		catch (Exception exception) {
+			_log.error(
+				StringBundler.concat(
+					"Unable to record in app recipients on message ", messageId,
+					": ", exception.getMessage()));
+		}
+	}
+
 	private String _encodeFilter(String filter) {
 		return URLEncoder.encode(
 			filter, StandardCharsets.UTF_8
@@ -221,6 +275,21 @@ public class ForumNotificationService {
 		}
 
 		return emailAddresses;
+	}
+
+	private String _toIdList(List<Long> userIds) {
+		StringBundler sb = new StringBundler(userIds.size() * 2);
+
+		for (Long userId : userIds) {
+			sb.append(userId);
+			sb.append(",");
+		}
+
+		if (sb.index() > 0) {
+			sb.setIndex(sb.index() - 1);
+		}
+
+		return sb.toString();
 	}
 
 	private String _toPayload(

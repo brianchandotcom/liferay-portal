@@ -32,7 +32,7 @@ const mockFDSContext = {
 	namespace: 'testNamespace_',
 	onSnapshotChange: jest.fn(),
 	portletId: 'testPortlet',
-	saveUserPreferencesURL: '/save-user-preferences-url',
+	updateUserPreferences: jest.fn(() => Promise.resolve()),
 };
 
 const ownedSnapshot = {erc: 'owned-erc', id: 1, label: 'Owned View'};
@@ -128,8 +128,8 @@ describe('SnapshotsControls action gating', () => {
 });
 
 describe('SnapshotsControls startup view', () => {
-	it('sets the active view as the startup view through the resource command', async () => {
-		const {viewsDispatch} = renderSnapshotsControls({
+	it('sets the active view as the startup view through the user preferences', async () => {
+		renderSnapshotsControls({
 			activeSnapshotERC: ownedSnapshot.erc,
 			activeView: null,
 			defaultSnapshot: {},
@@ -137,31 +137,17 @@ describe('SnapshotsControls startup view', () => {
 			snapshotUpdated: false,
 			snapshots: [{headerVisible: false, items: [ownedSnapshot]}],
 			sorts: [],
-			userPreferences: null,
+			userPreferences: {startupSnapshotERC: 'previous-erc'},
 			visibleFieldNames: {},
 		});
 
 		await openActionsDropdown();
 
-		fetch.mockResponseOnce(
-			JSON.stringify({startupSnapshotERC: ownedSnapshot.erc})
-		);
-
 		await userEvent.click(await screen.findByText('set-as-startup-view'));
 
 		await waitFor(() =>
-			expect(fetch).toHaveBeenCalledWith(
-				'/save-user-preferences-url',
-				expect.objectContaining({method: 'POST'})
-			)
-		);
-
-		await waitFor(() =>
-			expect(viewsDispatch).toHaveBeenCalledWith({
-				type: 'UPDATE_USER_PREFERENCES',
-				value: {
-					userPreferences: {startupSnapshotERC: ownedSnapshot.erc},
-				},
+			expect(mockFDSContext.updateUserPreferences).toHaveBeenCalledWith({
+				startupSnapshotERC: ownedSnapshot.erc,
 			})
 		);
 	});

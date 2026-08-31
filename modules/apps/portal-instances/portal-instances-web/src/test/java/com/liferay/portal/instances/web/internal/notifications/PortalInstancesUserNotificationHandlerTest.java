@@ -6,9 +6,11 @@
 package com.liferay.portal.instances.web.internal.notifications;
 
 import com.liferay.portal.instances.background.task.PortalInstancesOperationType;
+import com.liferay.portal.instances.background.task.constants.PortalInstancesBackgroundTaskConstants;
 import com.liferay.portal.instances.constants.PortalInstancesPortletKeys;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
@@ -163,9 +165,21 @@ public class PortalInstancesUserNotificationHandlerTest {
 
 		userNotificationEvent.setPayload(
 			String.valueOf(
-				PortalInstancesNotificationPayload.build(
-					0, errorMessageKey, portalInstancesOperationType, null,
-					status, _WEB_ID_MATCHING_LANGUAGE_KEY)));
+				JSONUtil.put(
+					PortalInstancesBackgroundTaskConstants.COMPANY_ID, 0
+				).put(
+					PortalInstancesBackgroundTaskConstants.ERROR_MESSAGE_KEY,
+					errorMessageKey
+				).put(
+					PortalInstancesBackgroundTaskConstants.OPERATION_TYPE,
+					portalInstancesOperationType.getValue()
+				).put(
+					PortalInstancesBackgroundTaskConstants.STATUS,
+					BackgroundTaskConstants.getStatusLabel(status)
+				).put(
+					PortalInstancesBackgroundTaskConstants.WEB_ID,
+					_WEB_ID_MATCHING_LANGUAGE_KEY
+				)));
 
 		return userNotificationEvent;
 	}

@@ -22,6 +22,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -31,11 +32,13 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
+import com.liferay.portal.kernel.scheduler.SchedulerJobConfiguration;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -43,6 +46,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
@@ -52,6 +56,8 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.site.constants.SitemapConstants;
 import com.liferay.site.manager.SitemapManager;
+import com.liferay.site.model.XMLSitemapRegenerationEntry;
+import com.liferay.site.service.XMLSitemapRegenerationEntryLocalService;
 import com.liferay.site.storage.helper.SitemapStorageHelper;
 
 import java.io.Serializable;
@@ -76,6 +82,7 @@ import org.junit.runner.RunWith;
  * @author Cheryl Tang
  */
 @RunWith(Arquillian.class)
+@Sync
 public class SitemapRegenerationSchedulerTest {
 
 	@ClassRule
@@ -108,6 +115,8 @@ public class SitemapRegenerationSchedulerTest {
 
 	@Before
 	public void setUp() throws Exception {
+		_deleteXMLSitemapRegenerationEntries();
+
 		_group = GroupTestUtil.addGroup();
 	}
 
@@ -115,8 +124,64 @@ public class SitemapRegenerationSchedulerTest {
 	public void tearDown() throws Exception {
 		_deleteRegenerateSitemapScheduledJobs();
 
+		_deleteXMLSitemapRegenerationEntries();
+
 		_sitemapStorageHelper.deleteSitemaps(
 			TestPropsValues.getCompanyId(), _group.getGroupId());
+	}
+
+	@Test
+	public void testDrainDiscardsEntriesWithDeletedGroups() throws Exception {
+		long companyId = TestPropsValues.getCompanyId();
+
+		_xmlSitemapRegenerationEntryLocalService.addXMLSitemapRegenerationEntry(
+			SitemapConstants.ASSET_TYPE_KEY_PAGES, companyId,
+			RandomTestUtil.randomLong());
+
+		UnsafeConsumer<Long, Exception> unsafeConsumer =
+			_schedulerJobConfiguration.getCompanyJobExecutorUnsafeConsumer();
+
+		unsafeConsumer.accept(companyId);
+
+		List<XMLSitemapRegenerationEntry> xmlSitemapRegenerationEntries =
+			_xmlSitemapRegenerationEntryLocalService.
+				getXMLSitemapRegenerationEntries(companyId);
+
+		Assert.assertTrue(
+			xmlSitemapRegenerationEntries.toString(),
+			xmlSitemapRegenerationEntries.isEmpty());
+
+		Assert.assertFalse(
+			_sitemapStorageHelper.hasSitemapFile(
+				companyId, _group.getGroupId()));
+	}
+
+	@Test
+	public void testDrainRegeneratesQueuedEntries() throws Exception {
+		LayoutTestUtil.addTypePortletLayout(_group);
+
+		long companyId = TestPropsValues.getCompanyId();
+
+		_xmlSitemapRegenerationEntryLocalService.addXMLSitemapRegenerationEntry(
+			SitemapConstants.ASSET_TYPE_KEY_PAGES, companyId,
+			_group.getGroupId());
+
+		UnsafeConsumer<Long, Exception> unsafeConsumer =
+			_schedulerJobConfiguration.getCompanyJobExecutorUnsafeConsumer();
+
+		unsafeConsumer.accept(companyId);
+
+		List<XMLSitemapRegenerationEntry> xmlSitemapRegenerationEntries =
+			_xmlSitemapRegenerationEntryLocalService.
+				getXMLSitemapRegenerationEntries(companyId);
+
+		Assert.assertTrue(
+			xmlSitemapRegenerationEntries.toString(),
+			xmlSitemapRegenerationEntries.isEmpty());
+
+		Assert.assertTrue(
+			_sitemapStorageHelper.hasSitemapFile(
+				companyId, _group.getGroupId()));
 	}
 
 	@Test
@@ -311,7 +376,7 @@ public class SitemapRegenerationSchedulerTest {
 		AssetTestUtil.addCategory(
 			_group.getGroupId(), assetVocabulary.getVocabularyId());
 
-		_assertRegenerateSitemapScheduledJob(
+		_assertXMLSitemapRegenerationEntry(
 			SitemapConstants.ASSET_TYPE_KEY_CATEGORIES);
 	}
 
@@ -323,7 +388,7 @@ public class SitemapRegenerationSchedulerTest {
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
-		_assertRegenerateSitemapScheduledJob(
+		_assertXMLSitemapRegenerationEntry(
 			SitemapConstants.ASSET_TYPE_KEY_WEB_CONTENT);
 	}
 
@@ -331,8 +396,32 @@ public class SitemapRegenerationSchedulerTest {
 	public void testScheduleRegenerateSitemapWithAddLayout() throws Exception {
 		LayoutTestUtil.addTypePortletLayout(_group);
 
-		_assertRegenerateSitemapScheduledJob(
+		_assertXMLSitemapRegenerationEntry(
 			SitemapConstants.ASSET_TYPE_KEY_PAGES);
+	}
+
+	@Test
+	public void testScheduleRegenerateSitemapWithAddLayoutCachedGenerationDisabled()
+		throws Exception {
+
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						_PID_SITEMAP_COMPANY_CONFIGURATION,
+						MapUtil.<String, Object>singletonDictionary(
+							"cachedGenerationEnabled", false))) {
+
+			LayoutTestUtil.addTypePortletLayout(_group);
+
+			List<XMLSitemapRegenerationEntry> xmlSitemapRegenerationEntries =
+				_getXMLSitemapRegenerationEntries(
+					SitemapConstants.ASSET_TYPE_KEY_PAGES, _group.getGroupId());
+
+			Assert.assertTrue(
+				xmlSitemapRegenerationEntries.toString(),
+				xmlSitemapRegenerationEntries.isEmpty());
+		}
 	}
 
 	@Test
@@ -346,8 +435,8 @@ public class SitemapRegenerationSchedulerTest {
 
 			_addObjectEntry(0);
 
-			_assertRegenerateSitemapScheduledJob(
-				SitemapConstants.ASSET_TYPE_KEY_OBJECT_ENTRIES);
+			_assertXMLSitemapRegenerationEntry(
+				SitemapConstants.ASSET_TYPE_KEY_OBJECT_ENTRIES, 0);
 		}
 	}
 
@@ -418,11 +507,11 @@ public class SitemapRegenerationSchedulerTest {
 		AssetCategory assetCategory = AssetTestUtil.addCategory(
 			_group.getGroupId(), assetVocabulary.getVocabularyId());
 
-		_deleteRegenerateSitemapScheduledJobs();
+		_deleteXMLSitemapRegenerationEntries();
 
 		_assetCategoryLocalService.deleteCategory(assetCategory);
 
-		_assertRegenerateSitemapScheduledJob(
+		_assertXMLSitemapRegenerationEntry(
 			SitemapConstants.ASSET_TYPE_KEY_CATEGORIES);
 	}
 
@@ -434,11 +523,11 @@ public class SitemapRegenerationSchedulerTest {
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
-		_deleteRegenerateSitemapScheduledJobs();
+		_deleteXMLSitemapRegenerationEntries();
 
 		_journalArticleLocalService.deleteArticle(journalArticle);
 
-		_assertRegenerateSitemapScheduledJob(
+		_assertXMLSitemapRegenerationEntry(
 			SitemapConstants.ASSET_TYPE_KEY_WEB_CONTENT);
 	}
 
@@ -448,11 +537,11 @@ public class SitemapRegenerationSchedulerTest {
 
 		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
 
-		_deleteRegenerateSitemapScheduledJobs();
+		_deleteXMLSitemapRegenerationEntries();
 
 		_layoutLocalService.deleteLayout(layout);
 
-		_assertRegenerateSitemapScheduledJob(
+		_assertXMLSitemapRegenerationEntry(
 			SitemapConstants.ASSET_TYPE_KEY_PAGES);
 	}
 
@@ -467,11 +556,11 @@ public class SitemapRegenerationSchedulerTest {
 					_getObjectEntryCompanyConfigurationTemporarySwapper(
 						ObjectDefinitionConstants.SCOPE_SITE)) {
 
-			_deleteRegenerateSitemapScheduledJobs();
+			_deleteXMLSitemapRegenerationEntries();
 
 			_objectEntryLocalService.deleteObjectEntry(objectEntry);
 
-			_assertRegenerateSitemapScheduledJob(
+			_assertXMLSitemapRegenerationEntry(
 				SitemapConstants.ASSET_TYPE_KEY_OBJECT_ENTRIES);
 		}
 	}
@@ -486,11 +575,11 @@ public class SitemapRegenerationSchedulerTest {
 		AssetCategory assetCategory = AssetTestUtil.addCategory(
 			_group.getGroupId(), assetVocabulary.getVocabularyId());
 
-		_deleteRegenerateSitemapScheduledJobs();
+		_deleteXMLSitemapRegenerationEntries();
 
 		_assetCategoryLocalService.updateAssetCategory(assetCategory);
 
-		_assertRegenerateSitemapScheduledJob(
+		_assertXMLSitemapRegenerationEntry(
 			SitemapConstants.ASSET_TYPE_KEY_CATEGORIES);
 	}
 
@@ -502,11 +591,11 @@ public class SitemapRegenerationSchedulerTest {
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
-		_deleteRegenerateSitemapScheduledJobs();
+		_deleteXMLSitemapRegenerationEntries();
 
 		JournalTestUtil.updateArticle(journalArticle);
 
-		_assertRegenerateSitemapScheduledJob(
+		_assertXMLSitemapRegenerationEntry(
 			SitemapConstants.ASSET_TYPE_KEY_WEB_CONTENT);
 	}
 
@@ -516,11 +605,11 @@ public class SitemapRegenerationSchedulerTest {
 
 		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
 
-		_deleteRegenerateSitemapScheduledJobs();
+		_deleteXMLSitemapRegenerationEntries();
 
 		_layoutLocalService.updateLayout(layout);
 
-		_assertRegenerateSitemapScheduledJob(
+		_assertXMLSitemapRegenerationEntry(
 			SitemapConstants.ASSET_TYPE_KEY_PAGES);
 	}
 
@@ -535,7 +624,7 @@ public class SitemapRegenerationSchedulerTest {
 					_getObjectEntryCompanyConfigurationTemporarySwapper(
 						ObjectDefinitionConstants.SCOPE_SITE)) {
 
-			_deleteRegenerateSitemapScheduledJobs();
+			_deleteXMLSitemapRegenerationEntries();
 
 			_objectEntryLocalService.updateObjectEntry(
 				TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
@@ -545,7 +634,7 @@ public class SitemapRegenerationSchedulerTest {
 				ServiceContextTestUtil.getServiceContext(
 					_group.getGroupId(), TestPropsValues.getUserId()));
 
-			_assertRegenerateSitemapScheduledJob(
+			_assertXMLSitemapRegenerationEntry(
 				SitemapConstants.ASSET_TYPE_KEY_OBJECT_ENTRIES);
 		}
 	}
@@ -571,19 +660,32 @@ public class SitemapRegenerationSchedulerTest {
 				_group.getGroupId(), TestPropsValues.getUserId()));
 	}
 
-	private void _assertRegenerateSitemapScheduledJob(String assetTypeKey)
+	private void _assertXMLSitemapRegenerationEntry(String assetTypeKey)
 		throws Exception {
 
-		List<SchedulerResponse> schedulerResponses =
-			_getRegenerateSitemapSchedulerResponses(assetTypeKey);
+		_assertXMLSitemapRegenerationEntry(assetTypeKey, _group.getGroupId());
+	}
+
+	private void _assertXMLSitemapRegenerationEntry(
+			String assetTypeKey, long groupId)
+		throws Exception {
+
+		List<XMLSitemapRegenerationEntry> xmlSitemapRegenerationEntries =
+			_getXMLSitemapRegenerationEntries(assetTypeKey, groupId);
 
 		Assert.assertEquals(
-			schedulerResponses.toString(), 1, schedulerResponses.size());
+			xmlSitemapRegenerationEntries.toString(), 1,
+			xmlSitemapRegenerationEntries.size());
 	}
 
 	private void _deleteRegenerateSitemapScheduledJobs() throws Exception {
 		_sitemapManager.deleteRegenerateSitemapScheduledJobs(
 			TestPropsValues.getCompanyId());
+	}
+
+	private void _deleteXMLSitemapRegenerationEntries() throws Exception {
+		_xmlSitemapRegenerationEntryLocalService.
+			deleteXMLSitemapRegenerationEntries(TestPropsValues.getCompanyId());
 	}
 
 	private Date _getNextFireDate(String assetTypeKey) throws Exception {
@@ -696,6 +798,27 @@ public class SitemapRegenerationSchedulerTest {
 		return calendar;
 	}
 
+	private List<XMLSitemapRegenerationEntry> _getXMLSitemapRegenerationEntries(
+			String assetTypeKey, long groupId)
+		throws Exception {
+
+		return TransformUtil.transform(
+			_xmlSitemapRegenerationEntryLocalService.
+				getXMLSitemapRegenerationEntries(
+					TestPropsValues.getCompanyId()),
+			xmlSitemapRegenerationEntry -> {
+				if ((xmlSitemapRegenerationEntry.getGroupId() != groupId) ||
+					!Objects.equals(
+						xmlSitemapRegenerationEntry.getAssetTypeKey(),
+						assetTypeKey)) {
+
+					return null;
+				}
+
+				return xmlSitemapRegenerationEntry;
+			});
+	}
+
 	private ObjectDefinition _publishObjectDefinition(String scope)
 		throws Exception {
 
@@ -783,6 +906,11 @@ public class SitemapRegenerationSchedulerTest {
 	@Inject
 	private SchedulerEngineHelper _schedulerEngineHelper;
 
+	@Inject(
+		filter = "component.name=com.liferay.site.internal.scheduler.XMLSitemapRegenerationSchedulerJobConfiguration"
+	)
+	private SchedulerJobConfiguration _schedulerJobConfiguration;
+
 	@Inject
 	private SitemapManager _sitemapManager;
 
@@ -791,5 +919,9 @@ public class SitemapRegenerationSchedulerTest {
 
 	@DeleteAfterTestRun
 	private ObjectDefinition _siteObjectDefinition;
+
+	@Inject
+	private XMLSitemapRegenerationEntryLocalService
+		_xmlSitemapRegenerationEntryLocalService;
 
 }

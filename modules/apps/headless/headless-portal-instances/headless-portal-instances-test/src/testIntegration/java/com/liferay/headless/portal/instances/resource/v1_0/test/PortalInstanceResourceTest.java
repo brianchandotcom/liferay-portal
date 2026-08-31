@@ -1016,10 +1016,10 @@ public class PortalInstanceResourceTest
 	private void _testPostPortalInstanceImportNonexistentDBPartition()
 		throws Exception {
 
-		PortalInstanceImport portalInstanceImport = new PortalInstanceImport();
-
 		String schemaName = DBPartitionUtil.getExportedPartitionName(
 			RandomTestUtil.randomLong());
+
+		PortalInstanceImport portalInstanceImport = new PortalInstanceImport();
 
 		portalInstanceImport.setSchemaName(schemaName);
 

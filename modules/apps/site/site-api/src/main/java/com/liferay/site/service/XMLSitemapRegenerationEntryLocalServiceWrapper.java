@@ -31,6 +31,15 @@ public class XMLSitemapRegenerationEntryLocalServiceWrapper
 			xmlSitemapRegenerationEntryLocalService;
 	}
 
+	@Override
+	public com.liferay.site.model.XMLSitemapRegenerationEntry
+		addXMLSitemapRegenerationEntry(
+			String assetTypeKey, long companyId, long groupId) {
+
+		return _xmlSitemapRegenerationEntryLocalService.
+			addXMLSitemapRegenerationEntry(assetTypeKey, companyId, groupId);
+	}
+
 	/**
 	 * Adds the xml sitemap regeneration entry to the database. Also notifies the appropriate model listeners.
 	 *
@@ -87,6 +96,12 @@ public class XMLSitemapRegenerationEntryLocalServiceWrapper
 
 		return _xmlSitemapRegenerationEntryLocalService.deletePersistedModel(
 			persistedModel);
+	}
+
+	@Override
+	public void deleteXMLSitemapRegenerationEntries(long companyId) {
+		_xmlSitemapRegenerationEntryLocalService.
+			deleteXMLSitemapRegenerationEntries(companyId);
 	}
 
 	/**
@@ -301,6 +316,14 @@ public class XMLSitemapRegenerationEntryLocalServiceWrapper
 			getXMLSitemapRegenerationEntries(start, end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.site.model.XMLSitemapRegenerationEntry>
+		getXMLSitemapRegenerationEntries(long companyId) {
+
+		return _xmlSitemapRegenerationEntryLocalService.
+			getXMLSitemapRegenerationEntries(companyId);
+	}
+
 	/**
 	 * Returns the number of xml sitemap regeneration entries.
 	 *
@@ -371,4 +394,4 @@ public class XMLSitemapRegenerationEntryLocalServiceWrapper
 		_xmlSitemapRegenerationEntryLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1015175663
+// LIFERAY-SERVICE-BUILDER-HASH:-657177356

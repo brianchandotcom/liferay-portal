@@ -36,6 +36,12 @@ public class XMLSitemapRegenerationEntryLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.site.service.impl.XMLSitemapRegenerationEntryLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static XMLSitemapRegenerationEntry addXMLSitemapRegenerationEntry(
+		String assetTypeKey, long companyId, long groupId) {
+
+		return getService().addXMLSitemapRegenerationEntry(
+			assetTypeKey, companyId, groupId);
+	}
 
 	/**
 	 * Adds the xml sitemap regeneration entry to the database. Also notifies the appropriate model listeners.
@@ -85,6 +91,10 @@ public class XMLSitemapRegenerationEntryLocalServiceUtil {
 		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
+	}
+
+	public static void deleteXMLSitemapRegenerationEntries(long companyId) {
+		getService().deleteXMLSitemapRegenerationEntries(companyId);
 	}
 
 	/**
@@ -263,6 +273,12 @@ public class XMLSitemapRegenerationEntryLocalServiceUtil {
 		return getService().getXMLSitemapRegenerationEntries(start, end);
 	}
 
+	public static List<XMLSitemapRegenerationEntry>
+		getXMLSitemapRegenerationEntries(long companyId) {
+
+		return getService().getXMLSitemapRegenerationEntries(companyId);
+	}
+
 	/**
 	 * Returns the number of xml sitemap regeneration entries.
 	 *
@@ -314,4 +330,4 @@ public class XMLSitemapRegenerationEntryLocalServiceUtil {
 			XMLSitemapRegenerationEntryLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:222492659
+// LIFERAY-SERVICE-BUILDER-HASH:2046409933

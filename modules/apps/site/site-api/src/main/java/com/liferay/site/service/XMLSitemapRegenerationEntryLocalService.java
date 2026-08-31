@@ -52,6 +52,8 @@ public interface XMLSitemapRegenerationEntryLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.site.service.impl.XMLSitemapRegenerationEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the xml sitemap regeneration entry local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link XMLSitemapRegenerationEntryLocalServiceUtil} if injection and service tracking are not available.
 	 */
+	public XMLSitemapRegenerationEntry addXMLSitemapRegenerationEntry(
+		String assetTypeKey, long companyId, long groupId);
 
 	/**
 	 * Adds the xml sitemap regeneration entry to the database. Also notifies the appropriate model listeners.
@@ -89,6 +91,8 @@ public interface XMLSitemapRegenerationEntryLocalService
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
+
+	public void deleteXMLSitemapRegenerationEntries(long companyId);
 
 	/**
 	 * Deletes the xml sitemap regeneration entry with the primary key from the database. Also notifies the appropriate model listeners.
@@ -232,6 +236,10 @@ public interface XMLSitemapRegenerationEntryLocalService
 	public List<XMLSitemapRegenerationEntry> getXMLSitemapRegenerationEntries(
 		int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<XMLSitemapRegenerationEntry> getXMLSitemapRegenerationEntries(
+		long companyId);
+
 	/**
 	 * Returns the number of xml sitemap regeneration entries.
 	 *
@@ -267,4 +275,4 @@ public interface XMLSitemapRegenerationEntryLocalService
 		XMLSitemapRegenerationEntry xmlSitemapRegenerationEntry);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1388992904
+// LIFERAY-SERVICE-BUILDER-HASH:-489898231

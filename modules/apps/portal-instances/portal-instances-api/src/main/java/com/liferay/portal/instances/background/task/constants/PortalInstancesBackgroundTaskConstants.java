@@ -12,6 +12,8 @@ public class PortalInstancesBackgroundTaskConstants {
 
 	public static final String ACTIVE = "active";
 
+	public static final String COMPANY_ID = "companyId";
+
 	public static final String DEFAULT_ADMIN_EMAIL_ADDRESS =
 		"defaultAdminEmailAddress";
 
@@ -28,11 +30,19 @@ public class PortalInstancesBackgroundTaskConstants {
 	public static final String DEFAULT_ADMIN_SCREEN_NAME =
 		"defaultAdminScreenName";
 
+	public static final String ERROR_MESSAGE_KEY = "errorMessageKey";
+
 	public static final String MAX_USERS = "maxUsers";
 
 	public static final String MX = "mx";
 
+	public static final String OPERATION_TYPE = "operationType";
+
+	public static final String SCHEMA_NAME = "schemaName";
+
 	public static final String SITE_INITIALIZER_KEY = "siteInitializerKey";
+
+	public static final String STATUS = "status";
 
 	public static final String VIRTUAL_HOSTNAME = "virtualHostname";
 

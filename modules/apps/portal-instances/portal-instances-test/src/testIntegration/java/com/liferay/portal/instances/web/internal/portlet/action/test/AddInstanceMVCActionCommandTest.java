@@ -84,7 +84,9 @@ public class AddInstanceMVCActionCommandTest {
 
 		_waitForCompletion(backgroundTask.getBackgroundTaskId());
 
-		_company = _companyLocalService.getCompanyByWebId(_WEB_ID);
+		Company company = _companyLocalService.getCompanyByWebId(_WEB_ID);
+
+		_companyLocalService.deleteCompany(company);
 	}
 
 	@Test
@@ -261,9 +263,6 @@ public class AddInstanceMVCActionCommandTest {
 
 	@DeleteAfterTestRun
 	private final List<BackgroundTask> _backgroundTasks = new ArrayList<>();
-
-	@DeleteAfterTestRun
-	private Company _company;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

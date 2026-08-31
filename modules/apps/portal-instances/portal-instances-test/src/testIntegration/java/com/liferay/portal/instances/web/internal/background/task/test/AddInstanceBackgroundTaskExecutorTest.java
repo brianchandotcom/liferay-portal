@@ -69,12 +69,12 @@ public class AddInstanceBackgroundTaskExecutorTest {
 			BackgroundTaskConstants.STATUS_SUCCESSFUL,
 			backgroundTask.getStatus());
 
-		_company = _companyLocalService.getCompanyByWebId(_WEB_ID);
+		Company company = _companyLocalService.getCompanyByWebId(_WEB_ID);
 
 		JSONObject payloadJSONObject = _getPayloadJSONObject();
 
 		Assert.assertEquals(
-			_company.getCompanyId(), payloadJSONObject.getLong("companyId"));
+			company.getCompanyId(), payloadJSONObject.getLong("companyId"));
 		Assert.assertEquals(
 			BackgroundTaskConstants.LABEL_SUCCESSFUL,
 			payloadJSONObject.getString("status"));
@@ -84,8 +84,10 @@ public class AddInstanceBackgroundTaskExecutorTest {
 			backgroundTask.getStatusMessage());
 
 		Assert.assertEquals(
-			_company.getCompanyId(),
+			company.getCompanyId(),
 			statusMessageJSONObject.getLong("companyId"));
+
+		_companyLocalService.deleteCompany(company);
 	}
 
 	@Test
@@ -107,7 +109,9 @@ public class AddInstanceBackgroundTaskExecutorTest {
 			BackgroundTaskConstants.LABEL_FAILED,
 			payloadJSONObject.getString("status"));
 
-		_company = _companyLocalService.getCompanyByWebId(_WEB_ID);
+		Company company = _companyLocalService.getCompanyByWebId(_WEB_ID);
+
+		_companyLocalService.deleteCompany(company);
 	}
 
 	@Test
@@ -128,7 +132,7 @@ public class AddInstanceBackgroundTaskExecutorTest {
 			BackgroundTaskConstants.STATUS_SUCCESSFUL,
 			backgroundTask.getStatus());
 
-		_company = _companyLocalService.getCompanyByWebId(_WEB_ID);
+		Company company = _companyLocalService.getCompanyByWebId(_WEB_ID);
 
 		Map<String, Serializable> taskContextMap =
 			backgroundTask.getTaskContextMap();
@@ -143,8 +147,10 @@ public class AddInstanceBackgroundTaskExecutorTest {
 		Assert.assertEquals(
 			Authenticator.SUCCESS,
 			_userLocalService.authenticateByEmailAddress(
-				_company.getCompanyId(), emailAddress, defaultAdminPassword,
+				company.getCompanyId(), emailAddress, defaultAdminPassword,
 				new HashMap<>(), new HashMap<>(), new HashMap<>()));
+
+		_companyLocalService.deleteCompany(company);
 	}
 
 	@Test
@@ -261,9 +267,6 @@ public class AddInstanceBackgroundTaskExecutorTest {
 
 	@DeleteAfterTestRun
 	private final List<BackgroundTask> _backgroundTasks = new ArrayList<>();
-
-	@DeleteAfterTestRun
-	private Company _company;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

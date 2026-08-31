@@ -5,6 +5,7 @@
 
 package com.liferay.portal.instances.web.internal.notifications;
 
+import com.liferay.portal.instances.background.task.PortalInstancesOperationType;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;

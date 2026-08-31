@@ -5,11 +5,11 @@
 
 package com.liferay.portal.instances.web.internal.portlet.action;
 
+import com.liferay.portal.instances.background.task.PortalInstancesOperationType;
+import com.liferay.portal.instances.background.task.constants.PortalInstancesBackgroundTaskConstants;
+import com.liferay.portal.instances.constants.PortalInstancesPortletKeys;
+import com.liferay.portal.instances.exception.PortalInstanceAlreadyBeingAddedException;
 import com.liferay.portal.instances.web.internal.background.task.AddInstanceBackgroundTaskExecutor;
-import com.liferay.portal.instances.web.internal.constants.PortalInstancesBackgroundTaskConstants;
-import com.liferay.portal.instances.web.internal.constants.PortalInstancesPortletKeys;
-import com.liferay.portal.instances.web.internal.exception.InstanceAlreadyBeingAddedException;
-import com.liferay.portal.instances.web.internal.notifications.PortalInstancesOperationType;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.encryptor.Encryptor;
@@ -127,7 +127,7 @@ public class AddInstanceMVCActionCommand extends BaseMVCActionCommand {
 			taskExecutorClassName, false);
 
 		if (count > 0) {
-			throw new InstanceAlreadyBeingAddedException(
+			throw new PortalInstanceAlreadyBeingAddedException(
 				"Virtual instance " + webId + " is already being added");
 		}
 
@@ -212,7 +212,9 @@ public class AddInstanceMVCActionCommand extends BaseMVCActionCommand {
 		else if (exception instanceof PrincipalException.MustBeOmniadmin) {
 			return "you-must-be-an-admin-to-complete-this-action";
 		}
-		else if (exception instanceof InstanceAlreadyBeingAddedException) {
+		else if (exception instanceof
+					PortalInstanceAlreadyBeingAddedException) {
+
 			return "a-virtual-instance-with-this-web-id-is-already-being-added";
 		}
 

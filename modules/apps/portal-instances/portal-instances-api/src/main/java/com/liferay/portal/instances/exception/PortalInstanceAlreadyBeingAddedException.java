@@ -3,16 +3,16 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.instances.web.internal.exception;
+package com.liferay.portal.instances.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Luis Ortiz
  */
-public class InstanceAlreadyBeingAddedException extends PortalException {
+public class PortalInstanceAlreadyBeingAddedException extends PortalException {
 
-	public InstanceAlreadyBeingAddedException(String msg) {
+	public PortalInstanceAlreadyBeingAddedException(String msg) {
 		super(msg);
 	}
 

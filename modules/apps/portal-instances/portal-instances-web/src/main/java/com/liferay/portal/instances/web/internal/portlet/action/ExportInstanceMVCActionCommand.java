@@ -5,8 +5,8 @@
 
 package com.liferay.portal.instances.web.internal.portlet.action;
 
+import com.liferay.portal.instances.constants.PortalInstancesPortletKeys;
 import com.liferay.portal.instances.exporter.PortalInstanceExporter;
-import com.liferay.portal.instances.web.internal.constants.PortalInstancesPortletKeys;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;

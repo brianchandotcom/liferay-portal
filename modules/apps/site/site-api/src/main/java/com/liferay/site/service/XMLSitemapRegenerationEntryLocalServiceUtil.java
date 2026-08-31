@@ -288,6 +288,10 @@ public class XMLSitemapRegenerationEntryLocalServiceUtil {
 		return getService().getXMLSitemapRegenerationEntriesCount();
 	}
 
+	public static int getXMLSitemapRegenerationEntriesCount(long companyId) {
+		return getService().getXMLSitemapRegenerationEntriesCount(companyId);
+	}
+
 	/**
 	 * Returns the xml sitemap regeneration entry with the primary key.
 	 *
@@ -330,4 +334,4 @@ public class XMLSitemapRegenerationEntryLocalServiceUtil {
 			XMLSitemapRegenerationEntryLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2046409933
+// LIFERAY-SERVICE-BUILDER-HASH:-1437437026

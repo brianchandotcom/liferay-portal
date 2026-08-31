@@ -5,6 +5,7 @@
 
 package com.liferay.portal.instances.internal.adder;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.instances.adder.PortalInstanceAdder;
 import com.liferay.portal.instances.background.task.PortalInstancesOperationType;
 import com.liferay.portal.instances.background.task.constants.PortalInstancesBackgroundTaskConstants;
@@ -23,6 +24,7 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PortalInstances;
 
@@ -56,8 +58,7 @@ public class PortalInstanceAdderImpl implements PortalInstanceAdder {
 		_companyLocalService.validateCompany(
 			webId, virtualHostname, mx, maxUsers);
 
-		String name = PortalInstancesOperationType.ADD.getBackgroundTaskName(
-			webId);
+		String name = _getBackgroundTaskName(webId);
 		String taskExecutorClassName =
 			AddPortalInstanceBackgroundTaskExecutor.class.getName();
 
@@ -135,6 +136,16 @@ public class PortalInstanceAdderImpl implements PortalInstanceAdder {
 		catch (EncryptorException encryptorException) {
 			throw new PortalException(encryptorException);
 		}
+	}
+
+	private String _getBackgroundTaskName(String webId) {
+		PortalInstancesOperationType portalInstancesOperationType =
+			PortalInstancesOperationType.ADD;
+
+		return StringBundler.concat(
+			StringUtil.upperCaseFirstLetter(
+				portalInstancesOperationType.getValue()),
+			"PortalInstance#", webId);
 	}
 
 	@Reference

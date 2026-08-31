@@ -16,6 +16,7 @@ import {
 	FORUM_MESSAGE_APPLICATION_NAME,
 	FORUM_SUSPICIOUS_ACTIVITY_APPLICATION_NAME,
 	FORUM_THREAD_APPLICATION_NAME,
+	THREAD_PRIORITY,
 	createForumMember,
 	getForumsSiteId,
 	requestAsUser,
@@ -117,7 +118,7 @@ test(
 test(
 	'A ban is not enforced when the reply is posted directly',
 	{
-		tag: ['@LPD-103732'],
+		tag: ['@LPD-101023'],
 	},
 	async ({apiHelpers, browser}) => {
 		test.fail();
@@ -188,5 +189,48 @@ test(
 		// longer be on it.
 
 		await expect(page.getByText(reason, {exact: true})).toHaveCount(0);
+	}
+);
+
+// The composer decides whether to show the priority select from the actions the
+// entry endpoint returns, so the check lives in the browser alone and a member
+// can mark a topic Urgent by posting one. This records the gap rather than
+// asserting the behaviour is correct.
+
+test(
+	'Thread priority is not enforced when the topic is posted directly',
+	{
+		tag: ['@LPD-101023'],
+	},
+	async ({apiHelpers, browser}) => {
+		test.fail();
+
+		const siteId = await getForumsSiteId(apiHelpers);
+
+		const category = await apiHelpers.objectEntry.postObjectEntry(
+			{
+				categoryDescription: 'Created by an end to end test',
+				categoryName: `Category ${getRandomString()}`,
+			},
+			FORUM_CATEGORY_APPLICATION_NAME,
+			siteId
+		);
+
+		const member = await createForumMember(apiHelpers, siteId, 'Member');
+
+		const {body, status} = await requestAsUser(browser, {
+			body: {
+				messageTitle: `Topic ${getRandomString()}`,
+				priority: THREAD_PRIORITY.URGENT,
+				r_categoryThreads_c_forumCategoryId: category.id,
+			},
+			emailAddress: member.userAccount.emailAddress,
+			method: 'POST',
+			path: `/o/${FORUM_THREAD_APPLICATION_NAME}/scopes/${siteId}`,
+		});
+
+		expect(status).toBe(200);
+
+		expect(body?.priority).not.toBe(THREAD_PRIORITY.URGENT);
 	}
 );

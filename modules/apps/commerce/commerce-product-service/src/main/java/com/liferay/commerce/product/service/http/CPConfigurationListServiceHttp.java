@@ -514,6 +514,50 @@ public class CPConfigurationListServiceHttp {
 		}
 	}
 
+	public static com.liferay.commerce.product.model.CPConfigurationList
+			updateCPConfigurationListExternalReferenceCode(
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long cpConfigurationListId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CPConfigurationListServiceUtil.class,
+				"updateCPConfigurationListExternalReferenceCode",
+				_updateCPConfigurationListExternalReferenceCodeParameterTypes10);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, externalReferenceCode, cpConfigurationListId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.commerce.product.model.CPConfigurationList)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		CPConfigurationListServiceHttp.class);
 
@@ -559,6 +603,9 @@ public class CPConfigurationListServiceHttp {
 			int.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
+	private static final Class<?>[]
+		_updateCPConfigurationListExternalReferenceCodeParameterTypes10 =
+			new Class[] {String.class, long.class};
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:12592093
+// LIFERAY-SERVICE-BUILDER-HASH:386627252

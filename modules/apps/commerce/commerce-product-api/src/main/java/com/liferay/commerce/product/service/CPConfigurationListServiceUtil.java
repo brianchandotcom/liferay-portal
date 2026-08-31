@@ -154,6 +154,15 @@ public class CPConfigurationListServiceUtil {
 			expirationDateMinute, neverExpire, serviceContext);
 	}
 
+	public static CPConfigurationList
+			updateCPConfigurationListExternalReferenceCode(
+				String externalReferenceCode, long cpConfigurationListId)
+		throws PortalException {
+
+		return getService().updateCPConfigurationListExternalReferenceCode(
+			externalReferenceCode, cpConfigurationListId);
+	}
+
 	public static CPConfigurationListService getService() {
 		return _serviceSnapshot.get();
 	}
@@ -164,4 +173,4 @@ public class CPConfigurationListServiceUtil {
 			CPConfigurationListService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:835338838
+// LIFERAY-SERVICE-BUILDER-HASH:-234756634

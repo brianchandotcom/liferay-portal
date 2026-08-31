@@ -8,7 +8,7 @@ package com.liferay.portal.instances.background.task.constants;
 /**
  * @author Luis Ortiz
  */
-public class PortalInstancesBackgroundTaskConstants {
+public class PortalInstanceBackgroundTaskConstants {
 
 	public static final String ACTIVE = "active";
 

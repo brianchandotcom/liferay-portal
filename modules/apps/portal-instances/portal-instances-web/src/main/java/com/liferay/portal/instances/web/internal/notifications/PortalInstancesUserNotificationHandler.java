@@ -7,8 +7,8 @@ package com.liferay.portal.instances.web.internal.notifications;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.instances.background.task.PortalInstancesOperationType;
-import com.liferay.portal.instances.background.task.constants.PortalInstancesBackgroundTaskConstants;
+import com.liferay.portal.instances.background.task.PortalInstanceOperationType;
+import com.liferay.portal.instances.background.task.constants.PortalInstanceBackgroundTaskConstants;
 import com.liferay.portal.instances.constants.PortalInstancesPortletKeys;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -90,18 +90,18 @@ public class PortalInstancesUserNotificationHandler
 	}
 
 	private String _getBody(JSONObject jsonObject, Locale locale) {
-		PortalInstancesOperationType portalInstancesOperationType =
-			PortalInstancesOperationType.parse(
+		PortalInstanceOperationType portalInstanceOperationType =
+			PortalInstanceOperationType.parse(
 				jsonObject.getString(
-					PortalInstancesBackgroundTaskConstants.OPERATION_TYPE));
+					PortalInstanceBackgroundTaskConstants.OPERATION_TYPE));
 
 		String status = jsonObject.getString(
-			PortalInstancesBackgroundTaskConstants.STATUS);
+			PortalInstanceBackgroundTaskConstants.STATUS);
 
-		if (portalInstancesOperationType == PortalInstancesOperationType.ADD) {
+		if (portalInstanceOperationType == PortalInstanceOperationType.ADD) {
 			String webId = HtmlUtil.escape(
 				jsonObject.getString(
-					PortalInstancesBackgroundTaskConstants.WEB_ID));
+					PortalInstanceBackgroundTaskConstants.WEB_ID));
 
 			if (status.equals(BackgroundTaskConstants.LABEL_SUCCESSFUL)) {
 				return _language.format(
@@ -121,13 +121,13 @@ public class PortalInstancesUserNotificationHandler
 		throw new IllegalArgumentException(
 			StringBundler.concat(
 				"No portal instances user notification found for operation ",
-				"type ", portalInstancesOperationType.getValue(),
-				" and status ", status));
+				"type ", portalInstanceOperationType.getValue(), " and status ",
+				status));
 	}
 
 	private String _getErrorMessage(JSONObject jsonObject, Locale locale) {
 		String errorMessageKey = jsonObject.getString(
-			PortalInstancesBackgroundTaskConstants.ERROR_MESSAGE_KEY);
+			PortalInstanceBackgroundTaskConstants.ERROR_MESSAGE_KEY);
 
 		if (Validator.isNull(errorMessageKey)) {
 			return _language.get(locale, "an-unexpected-error-occurred");

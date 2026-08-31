@@ -5,8 +5,8 @@
 
 package com.liferay.portal.instances.internal.background.task;
 
-import com.liferay.portal.instances.background.task.PortalInstancesOperationType;
-import com.liferay.portal.instances.background.task.constants.PortalInstancesBackgroundTaskConstants;
+import com.liferay.portal.instances.background.task.PortalInstanceOperationType;
+import com.liferay.portal.instances.background.task.constants.PortalInstanceBackgroundTaskConstants;
 import com.liferay.portal.instances.constants.PortalInstancesPortletKeys;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
@@ -70,35 +70,35 @@ public class AddPortalInstanceBackgroundTaskExecutor
 			backgroundTask.getTaskContextMap();
 
 		String webId = GetterUtil.getString(
-			taskContextMap.get(PortalInstancesBackgroundTaskConstants.WEB_ID));
+			taskContextMap.get(PortalInstanceBackgroundTaskConstants.WEB_ID));
 		String virtualHostname = GetterUtil.getString(
 			taskContextMap.get(
-				PortalInstancesBackgroundTaskConstants.VIRTUAL_HOSTNAME));
+				PortalInstanceBackgroundTaskConstants.VIRTUAL_HOSTNAME));
 		String mx = GetterUtil.getString(
-			taskContextMap.get(PortalInstancesBackgroundTaskConstants.MX));
+			taskContextMap.get(PortalInstanceBackgroundTaskConstants.MX));
 		int maxUsers = GetterUtil.getInteger(
 			taskContextMap.get(
-				PortalInstancesBackgroundTaskConstants.MAX_USERS));
+				PortalInstanceBackgroundTaskConstants.MAX_USERS));
 		boolean active = GetterUtil.getBoolean(
-			taskContextMap.get(PortalInstancesBackgroundTaskConstants.ACTIVE));
+			taskContextMap.get(PortalInstanceBackgroundTaskConstants.ACTIVE));
 		String defaultAdminPassword = _decryptDefaultAdminPassword(
 			(String)taskContextMap.get(
-				PortalInstancesBackgroundTaskConstants.DEFAULT_ADMIN_PASSWORD));
+				PortalInstanceBackgroundTaskConstants.DEFAULT_ADMIN_PASSWORD));
 		String defaultAdminScreenName = (String)taskContextMap.get(
-			PortalInstancesBackgroundTaskConstants.DEFAULT_ADMIN_SCREEN_NAME);
+			PortalInstanceBackgroundTaskConstants.DEFAULT_ADMIN_SCREEN_NAME);
 		String defaultAdminEmailAddress = (String)taskContextMap.get(
-			PortalInstancesBackgroundTaskConstants.DEFAULT_ADMIN_EMAIL_ADDRESS);
+			PortalInstanceBackgroundTaskConstants.DEFAULT_ADMIN_EMAIL_ADDRESS);
 		String defaultAdminFirstName = (String)taskContextMap.get(
-			PortalInstancesBackgroundTaskConstants.DEFAULT_ADMIN_FIRST_NAME);
+			PortalInstanceBackgroundTaskConstants.DEFAULT_ADMIN_FIRST_NAME);
 		String defaultAdminMiddleName = (String)taskContextMap.get(
-			PortalInstancesBackgroundTaskConstants.DEFAULT_ADMIN_MIDDLE_NAME);
+			PortalInstanceBackgroundTaskConstants.DEFAULT_ADMIN_MIDDLE_NAME);
 		String defaultAdminLastName = (String)taskContextMap.get(
-			PortalInstancesBackgroundTaskConstants.DEFAULT_ADMIN_LAST_NAME);
+			PortalInstanceBackgroundTaskConstants.DEFAULT_ADMIN_LAST_NAME);
 
 		Company company = PortalInstances.addCompany(
 			GetterUtil.getString(
 				taskContextMap.get(
-					PortalInstancesBackgroundTaskConstants.
+					PortalInstanceBackgroundTaskConstants.
 						SITE_INITIALIZER_KEY)),
 			() -> _companyService.addCompany(
 				null, webId, virtualHostname, mx, maxUsers, active,
@@ -118,7 +118,7 @@ public class AddPortalInstanceBackgroundTaskExecutor
 		}
 
 		JSONObject statusMessageJSONObject = JSONUtil.put(
-			PortalInstancesBackgroundTaskConstants.COMPANY_ID,
+			PortalInstanceBackgroundTaskConstants.COMPANY_ID,
 			company.getCompanyId());
 
 		return new BackgroundTaskResult(
@@ -148,7 +148,7 @@ public class AddPortalInstanceBackgroundTaskExecutor
 					BackgroundTaskConstants.STATUS_FAILED,
 					GetterUtil.getString(
 						taskContextMap.get(
-							PortalInstancesBackgroundTaskConstants.WEB_ID))));
+							PortalInstanceBackgroundTaskConstants.WEB_ID))));
 		}
 		catch (Exception exception2) {
 			_log.error("Unable to send failure user notification", exception2);
@@ -226,18 +226,18 @@ public class AddPortalInstanceBackgroundTaskExecutor
 		long companyId, String errorMessageKey, int status, String webId) {
 
 		return JSONUtil.put(
-			PortalInstancesBackgroundTaskConstants.COMPANY_ID, companyId
+			PortalInstanceBackgroundTaskConstants.COMPANY_ID, companyId
 		).put(
-			PortalInstancesBackgroundTaskConstants.ERROR_MESSAGE_KEY,
+			PortalInstanceBackgroundTaskConstants.ERROR_MESSAGE_KEY,
 			errorMessageKey
 		).put(
-			PortalInstancesBackgroundTaskConstants.OPERATION_TYPE,
-			PortalInstancesOperationType.ADD.getValue()
+			PortalInstanceBackgroundTaskConstants.OPERATION_TYPE,
+			PortalInstanceOperationType.ADD.getValue()
 		).put(
-			PortalInstancesBackgroundTaskConstants.STATUS,
+			PortalInstanceBackgroundTaskConstants.STATUS,
 			BackgroundTaskConstants.getStatusLabel(status)
 		).put(
-			PortalInstancesBackgroundTaskConstants.WEB_ID, webId
+			PortalInstanceBackgroundTaskConstants.WEB_ID, webId
 		);
 	}
 

@@ -26,8 +26,6 @@ import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
@@ -52,8 +50,6 @@ import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
-
-import java.io.IOException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -927,14 +923,7 @@ public class PortalInstanceResourceTest
 		}
 		finally {
 			for (Configuration configuration : configurations) {
-				try {
-					configuration.delete();
-				}
-				catch (IOException ioException) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(ioException);
-					}
-				}
+				configuration.delete();
 			}
 
 			_dropExportedSchema(companyId);
@@ -1270,9 +1259,6 @@ public class PortalInstanceResourceTest
 	private static final String _CLASS_NAME_PORTAL_INSTANCE_RESOURCE_IMPL =
 		"com.liferay.headless.portal.instances.internal.resource.v1_0." +
 			"PortalInstanceResourceImpl";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		PortalInstanceResourceTest.class);
 
 	private static Company _company;
 

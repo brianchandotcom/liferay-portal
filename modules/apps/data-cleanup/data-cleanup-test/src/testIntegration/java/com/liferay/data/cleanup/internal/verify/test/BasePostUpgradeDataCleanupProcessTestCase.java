@@ -11,13 +11,18 @@ import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeRunnable;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.model.ClassName;
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.module.util.BundleUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
+import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.lpkg.deployer.LPKGDeployer;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -29,8 +34,11 @@ import java.lang.reflect.Method;
 
 import java.sql.Connection;
 
+import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.junit.AfterClass;
@@ -78,6 +86,8 @@ public abstract class BasePostUpgradeDataCleanupProcessTestCase {
 
 		com.liferay.osgi.util.BundleUtil.refreshBundles(
 			bundleContext, Collections.singletonList(bundle));
+
+		_waitForRegistries();
 	}
 
 	protected void test(
@@ -180,6 +190,8 @@ public abstract class BasePostUpgradeDataCleanupProcessTestCase {
 			if (Objects.equals(bundle.getSymbolicName(), bundleName) &&
 				(bundle.getState() == Bundle.ACTIVE)) {
 
+				_snapshotRegistries();
+
 				bundle.uninstall();
 
 				com.liferay.osgi.util.BundleUtil.refreshBundles(
@@ -194,6 +206,26 @@ public abstract class BasePostUpgradeDataCleanupProcessTestCase {
 
 	protected static Connection connection;
 	protected static DBInspector dbInspector;
+
+	private Set<String> _getMissingEntries(
+		Collection<String> currentEntries, Set<String> snapshotEntries) {
+
+		Set<String> missingEntries = new HashSet<>(snapshotEntries);
+
+		missingEntries.removeAll(currentEntries);
+
+		return missingEntries;
+	}
+
+	private Set<String> _getPortletIds() {
+		Set<String> portletIds = new HashSet<>();
+
+		for (Portlet portlet : PortletLocalServiceUtil.getPortlets()) {
+			portletIds.add(portlet.getPortletId());
+		}
+
+		return portletIds;
+	}
 
 	private void _runPostUpgradeDataCleanUpVerifyProcess() throws Exception {
 		Bundle bundle = BundleUtil.getBundle(
@@ -215,7 +247,50 @@ public abstract class BasePostUpgradeDataCleanupProcessTestCase {
 		method.invoke(object);
 	}
 
+	private void _snapshotRegistries() {
+		_modelNames = new HashSet<>(ResourceActionsUtil.getModelNames());
+		_portletIds = _getPortletIds();
+		_portletNames = new HashSet<>(ResourceActionsUtil.getPortletNames());
+	}
+
+	private void _waitForRegistries() throws Exception {
+		long startTime = System.currentTimeMillis();
+
+		while (true) {
+			Set<String> missingModelNames = _getMissingEntries(
+				ResourceActionsUtil.getModelNames(), _modelNames);
+			Set<String> missingPortletIds = _getMissingEntries(
+				_getPortletIds(), _portletIds);
+			Set<String> missingPortletNames = _getMissingEntries(
+				ResourceActionsUtil.getPortletNames(), _portletNames);
+
+			if (missingModelNames.isEmpty() && missingPortletIds.isEmpty() &&
+				missingPortletNames.isEmpty()) {
+
+				return;
+			}
+
+			if ((System.currentTimeMillis() - startTime) > _TIMEOUT) {
+				throw new IllegalStateException(
+					StringBundler.concat(
+						"Unable to repopulate the resource action and portlet ",
+						"registries within ", _TIMEOUT / Time.SECOND,
+						" seconds: missing model names ", missingModelNames,
+						", missing portlet IDs ", missingPortletIds,
+						", and missing portlet names ", missingPortletNames));
+			}
+
+			Thread.sleep(500);
+		}
+	}
+
+	private static final long _TIMEOUT = Time.MINUTE * 5;
+
 	@Inject
 	private LPKGDeployer _lpkgDeployer;
+
+	private Set<String> _modelNames = Collections.emptySet();
+	private Set<String> _portletIds = Collections.emptySet();
+	private Set<String> _portletNames = Collections.emptySet();
 
 }

@@ -118,17 +118,48 @@ test(
 		const postResponse = await apiHelpers.postResponse(GPC_ENDPOINT);
 
 		expect(postResponse.status()).toBe(405);
-		expect(postResponse.headers()['allow']).toBe('GET');
+		expect(postResponse.headers()['allow']).toBe('GET, HEAD');
 
 		const putResponse = await apiHelpers.putResponse(GPC_ENDPOINT);
 
 		expect(putResponse.status()).toBe(405);
-		expect(putResponse.headers()['allow']).toBe('GET');
+		expect(putResponse.headers()['allow']).toBe('GET, HEAD');
 
 		const deleteResponse = await apiHelpers.delete(GPC_ENDPOINT);
 
 		expect(deleteResponse.status()).toBe(405);
-		expect(deleteResponse.headers()['allow']).toBe('GET');
+		expect(deleteResponse.headers()['allow']).toBe('GET, HEAD');
+	}
+);
+
+test(
+	'GPC well-known endpoint responds to HEAD like GET with an empty body',
+	{tag: '@LPD-102052'},
+	async ({browser}) => {
+		const context = await browser.newContext({storageState: undefined});
+
+		try {
+			const getResponse = await context.request.get(GPC_ENDPOINT);
+			const headResponse = await context.request.head(GPC_ENDPOINT);
+
+			expect(headResponse.status()).toBe(200);
+			expect(headResponse.headers()['content-type']).toContain(
+				'application/json'
+			);
+			expect(headResponse.headers()['content-type']).toBe(
+				getResponse.headers()['content-type']
+			);
+			expect(headResponse.headers()['cache-control']).toBe(
+				getResponse.headers()['cache-control']
+			);
+
+			const headResponseBody = await headResponse.body();
+
+			expect(headResponseBody.length).toBe(0);
+		}
+		finally {
+			await context.close();
+		}
 	}
 );
 

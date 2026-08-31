@@ -59,8 +59,10 @@ public class GlobalPrivacyControlWellKnownFilter extends BaseFilter {
 			HttpServletResponse httpServletResponse, FilterChain filterChain)
 		throws Exception {
 
-		if (!Objects.equals(httpServletRequest.getMethod(), "GET")) {
-			httpServletResponse.setHeader("Allow", "GET");
+		String method = httpServletRequest.getMethod();
+
+		if (!Objects.equals(method, "GET") && !Objects.equals(method, "HEAD")) {
+			httpServletResponse.setHeader("Allow", "GET, HEAD");
 			httpServletResponse.sendError(
 				HttpServletResponse.SC_METHOD_NOT_ALLOWED);
 
@@ -77,7 +79,7 @@ public class GlobalPrivacyControlWellKnownFilter extends BaseFilter {
 		JSONObject jsonObject = JSONUtil.put("gpc", enabled);
 
 		if (!enabled) {
-			_writeJSON(httpServletResponse, jsonObject.toString());
+			_writeJSON(httpServletResponse, jsonObject.toString(), method);
 
 			return;
 		}
@@ -99,11 +101,11 @@ public class GlobalPrivacyControlWellKnownFilter extends BaseFilter {
 				localDate.format(DateTimeFormatter.ISO_LOCAL_DATE));
 		}
 
-		_writeJSON(httpServletResponse, jsonObject.toString());
+		_writeJSON(httpServletResponse, jsonObject.toString(), method);
 	}
 
 	private void _writeJSON(
-			HttpServletResponse httpServletResponse, String json)
+			HttpServletResponse httpServletResponse, String json, String method)
 		throws Exception {
 
 		httpServletResponse.setCharacterEncoding(StringPool.UTF8);
@@ -111,7 +113,9 @@ public class GlobalPrivacyControlWellKnownFilter extends BaseFilter {
 		httpServletResponse.setHeader(HttpHeaders.CACHE_CONTROL, "no-cache");
 		httpServletResponse.setStatus(HttpServletResponse.SC_OK);
 
-		ServletResponseUtil.write(httpServletResponse, json);
+		if (Objects.equals(method, "GET")) {
+			ServletResponseUtil.write(httpServletResponse, json);
+		}
 
 		httpServletResponse.flushBuffer();
 	}

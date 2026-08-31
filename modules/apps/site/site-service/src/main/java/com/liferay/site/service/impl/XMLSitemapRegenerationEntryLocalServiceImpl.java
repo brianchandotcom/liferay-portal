@@ -6,12 +6,15 @@
 package com.liferay.site.service.impl;
 
 import com.liferay.portal.aop.AopService;
+import com.liferay.site.model.XMLSitemapRegenerationEntry;
 import com.liferay.site.service.base.XMLSitemapRegenerationEntryLocalServiceBaseImpl;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Shuyang Zhou
  */
 @Component(
 	property = "model.class.name=com.liferay.site.model.XMLSitemapRegenerationEntry",
@@ -19,4 +22,42 @@ import org.osgi.service.component.annotations.Component;
 )
 public class XMLSitemapRegenerationEntryLocalServiceImpl
 	extends XMLSitemapRegenerationEntryLocalServiceBaseImpl {
+
+	@Override
+	public XMLSitemapRegenerationEntry addXMLSitemapRegenerationEntry(
+		String assetTypeKey, long companyId, long groupId) {
+
+		XMLSitemapRegenerationEntry xmlSitemapRegenerationEntry =
+			xmlSitemapRegenerationEntryPersistence.fetchByG_C_A_First(
+				groupId, companyId, assetTypeKey, null);
+
+		if (xmlSitemapRegenerationEntry != null) {
+			return xmlSitemapRegenerationEntry;
+		}
+
+		xmlSitemapRegenerationEntry =
+			xmlSitemapRegenerationEntryPersistence.create(
+				counterLocalService.increment());
+
+		xmlSitemapRegenerationEntry.setGroupId(groupId);
+		xmlSitemapRegenerationEntry.setCompanyId(companyId);
+		xmlSitemapRegenerationEntry.setAssetTypeKey(assetTypeKey);
+
+		return xmlSitemapRegenerationEntryPersistence.update(
+			xmlSitemapRegenerationEntry);
+	}
+
+	@Override
+	public void deleteXMLSitemapRegenerationEntries(long companyId) {
+		xmlSitemapRegenerationEntryPersistence.removeByCompanyId(companyId);
+	}
+
+	@Override
+	public List<XMLSitemapRegenerationEntry> getXMLSitemapRegenerationEntries(
+		long companyId) {
+
+		return xmlSitemapRegenerationEntryPersistence.findByCompanyId(
+			companyId);
+	}
+
 }

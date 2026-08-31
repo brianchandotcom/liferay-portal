@@ -7,8 +7,8 @@ package com.liferay.portal.instances.internal.adder;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.instances.adder.PortalInstanceAdder;
-import com.liferay.portal.instances.background.task.PortalInstancesOperationType;
-import com.liferay.portal.instances.background.task.constants.PortalInstancesBackgroundTaskConstants;
+import com.liferay.portal.instances.background.task.PortalInstanceOperationType;
+import com.liferay.portal.instances.background.task.constants.PortalInstanceBackgroundTaskConstants;
 import com.liferay.portal.instances.exception.PortalInstanceAlreadyBeingAddedException;
 import com.liferay.portal.instances.internal.background.task.AddPortalInstanceBackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
@@ -76,43 +76,43 @@ public class PortalInstanceAdderImpl implements PortalInstanceAdder {
 				userId, BackgroundTaskConstants.GROUP_ID_DEFAULT, name,
 				taskExecutorClassName,
 				HashMapBuilder.<String, Serializable>put(
-					PortalInstancesBackgroundTaskConstants.ACTIVE, active
+					PortalInstanceBackgroundTaskConstants.ACTIVE, active
 				).put(
-					PortalInstancesBackgroundTaskConstants.
+					PortalInstanceBackgroundTaskConstants.
 						DEFAULT_ADMIN_EMAIL_ADDRESS,
 					defaultAdminEmailAddress
 				).put(
-					PortalInstancesBackgroundTaskConstants.
+					PortalInstanceBackgroundTaskConstants.
 						DEFAULT_ADMIN_FIRST_NAME,
 					defaultAdminFirstName
 				).put(
-					PortalInstancesBackgroundTaskConstants.
+					PortalInstanceBackgroundTaskConstants.
 						DEFAULT_ADMIN_LAST_NAME,
 					defaultAdminLastName
 				).put(
-					PortalInstancesBackgroundTaskConstants.
+					PortalInstanceBackgroundTaskConstants.
 						DEFAULT_ADMIN_MIDDLE_NAME,
 					defaultAdminMiddleName
 				).put(
-					PortalInstancesBackgroundTaskConstants.
+					PortalInstanceBackgroundTaskConstants.
 						DEFAULT_ADMIN_PASSWORD,
 					_encryptDefaultAdminPassword(defaultAdminPassword)
 				).put(
-					PortalInstancesBackgroundTaskConstants.
+					PortalInstanceBackgroundTaskConstants.
 						DEFAULT_ADMIN_SCREEN_NAME,
 					defaultAdminScreenName
 				).put(
-					PortalInstancesBackgroundTaskConstants.MAX_USERS, maxUsers
+					PortalInstanceBackgroundTaskConstants.MAX_USERS, maxUsers
 				).put(
-					PortalInstancesBackgroundTaskConstants.MX, mx
+					PortalInstanceBackgroundTaskConstants.MX, mx
 				).put(
-					PortalInstancesBackgroundTaskConstants.SITE_INITIALIZER_KEY,
+					PortalInstanceBackgroundTaskConstants.SITE_INITIALIZER_KEY,
 					siteInitializerKey
 				).put(
-					PortalInstancesBackgroundTaskConstants.VIRTUAL_HOSTNAME,
+					PortalInstanceBackgroundTaskConstants.VIRTUAL_HOSTNAME,
 					virtualHostname
 				).put(
-					PortalInstancesBackgroundTaskConstants.WEB_ID, webId
+					PortalInstanceBackgroundTaskConstants.WEB_ID, webId
 				).build(),
 				new ServiceContext());
 
@@ -139,12 +139,12 @@ public class PortalInstanceAdderImpl implements PortalInstanceAdder {
 	}
 
 	private String _getBackgroundTaskName(String webId) {
-		PortalInstancesOperationType portalInstancesOperationType =
-			PortalInstancesOperationType.ADD;
+		PortalInstanceOperationType portalInstanceOperationType =
+			PortalInstanceOperationType.ADD;
 
 		return StringBundler.concat(
 			StringUtil.upperCaseFirstLetter(
-				portalInstancesOperationType.getValue()),
+				portalInstanceOperationType.getValue()),
 			"PortalInstance#", webId);
 	}
 

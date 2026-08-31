@@ -10,19 +10,19 @@ import com.liferay.portal.kernel.util.StringUtil;
 /**
  * @author Luis Ortiz
  */
-public enum PortalInstancesOperationType {
+public enum PortalInstanceOperationType {
 
 	ADD("add"), COPY("copy"), DELETE("delete"), EXPORT("export"),
 	IMPORT("import");
 
-	public static PortalInstancesOperationType parse(String value) {
-		for (PortalInstancesOperationType portalInstancesOperationType :
+	public static PortalInstanceOperationType parse(String value) {
+		for (PortalInstanceOperationType portalInstanceOperationType :
 				values()) {
 
 			if (StringUtil.equals(
-					value, portalInstancesOperationType.getValue())) {
+					value, portalInstanceOperationType.getValue())) {
 
-				return portalInstancesOperationType;
+				return portalInstanceOperationType;
 			}
 		}
 
@@ -34,7 +34,7 @@ public enum PortalInstancesOperationType {
 		return _value;
 	}
 
-	private PortalInstancesOperationType(String value) {
+	private PortalInstanceOperationType(String value) {
 		_value = value;
 	}
 

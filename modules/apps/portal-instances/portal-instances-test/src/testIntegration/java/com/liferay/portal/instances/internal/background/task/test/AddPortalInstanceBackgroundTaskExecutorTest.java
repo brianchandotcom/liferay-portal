@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.instances.web.internal.background.task.test;
+package com.liferay.portal.instances.internal.background.task.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
@@ -52,7 +52,7 @@ import org.junit.runner.RunWith;
  * @author Luis Ortiz
  */
 @RunWith(Arquillian.class)
-public class AddInstanceBackgroundTaskExecutorTest {
+public class AddPortalInstanceBackgroundTaskExecutorTest {
 
 	@ClassRule
 	@Rule
@@ -191,9 +191,9 @@ public class AddInstanceBackgroundTaskExecutorTest {
 			_backgroundTaskLocalService.addBackgroundTask(
 				TestPropsValues.getUserId(),
 				BackgroundTaskConstants.GROUP_ID_DEFAULT,
-				"AddInstance#" + _WEB_ID,
-				"com.liferay.portal.instances.web.internal.background.task." +
-					"AddInstanceBackgroundTaskExecutor",
+				"AddPortalInstance#" + _WEB_ID,
+				"com.liferay.portal.instances.internal.background.task." +
+					"AddPortalInstanceBackgroundTaskExecutor",
 				taskContextMap, new ServiceContext());
 
 		_backgroundTasks.add(backgroundTask);

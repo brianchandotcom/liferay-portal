@@ -5,14 +5,9 @@
 
 package com.liferay.portal.instances.web.internal.portlet.action;
 
-import com.liferay.portal.instances.background.task.PortalInstancesOperationType;
-import com.liferay.portal.instances.background.task.constants.PortalInstancesBackgroundTaskConstants;
+import com.liferay.portal.instances.adder.PortalInstanceAdder;
 import com.liferay.portal.instances.constants.PortalInstancesPortletKeys;
 import com.liferay.portal.instances.exception.PortalInstanceAlreadyBeingAddedException;
-import com.liferay.portal.instances.web.internal.background.task.AddInstanceBackgroundTaskExecutor;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
-import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
-import com.liferay.portal.kernel.encryptor.Encryptor;
 import com.liferay.portal.kernel.exception.CompanyMaxUsersException;
 import com.liferay.portal.kernel.exception.CompanyMxException;
 import com.liferay.portal.kernel.exception.CompanyVirtualHostException;
@@ -22,27 +17,18 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.util.PortalInstances;
 
 import jakarta.portlet.ActionRequest;
 import jakarta.portlet.ActionResponse;
-
-import java.io.Serializable;
 
 import java.util.Locale;
 
@@ -73,7 +59,7 @@ public class AddInstanceMVCActionCommand extends BaseMVCActionCommand {
 		hideDefaultSuccessMessage(actionRequest);
 
 		try {
-			String webId = _addBackgroundTask(actionRequest);
+			String webId = _addPortalInstance(actionRequest);
 
 			jsonObject.put(
 				"startMessage",
@@ -94,106 +80,32 @@ public class AddInstanceMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, actionResponse, jsonObject);
 	}
 
-	private String _addBackgroundTask(ActionRequest actionRequest)
+	private String _addPortalInstance(ActionRequest actionRequest)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
-		if (!permissionChecker.isOmniadmin()) {
-			throw new PrincipalException.MustBeOmniadmin(permissionChecker);
-		}
-
 		String webId = ParamUtil.getString(actionRequest, "webId");
-		String virtualHostname = StringUtil.toLowerCase(
-			StringUtil.trim(
-				ParamUtil.getString(actionRequest, "virtualHostname")));
-		String mx = ParamUtil.getString(actionRequest, "mx");
-		int maxUsers = ParamUtil.getInteger(actionRequest, "maxUsers");
 
-		_companyLocalService.validateCompany(
-			webId, virtualHostname, mx, maxUsers);
-
-		String name = PortalInstancesOperationType.ADD.getBackgroundTaskName(
-			webId);
-		String taskExecutorClassName =
-			AddInstanceBackgroundTaskExecutor.class.getName();
-
-		int count = _backgroundTaskManager.getBackgroundTasksCount(
-			BackgroundTaskConstants.GROUP_ID_DEFAULT, name,
-			taskExecutorClassName, false);
-
-		if (count > 0) {
-			throw new PortalInstanceAlreadyBeingAddedException(
-				"Virtual instance " + webId + " is already being added");
-		}
-
-		_backgroundTaskManager.addBackgroundTask(
-			themeDisplay.getUserId(), BackgroundTaskConstants.GROUP_ID_DEFAULT,
-			name, taskExecutorClassName,
-			HashMapBuilder.<String, Serializable>put(
-				PortalInstancesBackgroundTaskConstants.ACTIVE,
-				ParamUtil.getBoolean(actionRequest, "active")
-			).put(
-				PortalInstancesBackgroundTaskConstants.
-					DEFAULT_ADMIN_EMAIL_ADDRESS,
-				() -> ParamUtil.getString(
-					actionRequest, "defaultAdminEmailAddress", null)
-			).put(
-				PortalInstancesBackgroundTaskConstants.DEFAULT_ADMIN_FIRST_NAME,
-				() -> ParamUtil.getString(
-					actionRequest, "defaultAdminFirstName", null)
-			).put(
-				PortalInstancesBackgroundTaskConstants.DEFAULT_ADMIN_LAST_NAME,
-				() -> ParamUtil.getString(
-					actionRequest, "defaultAdminLastName", null)
-			).put(
-				PortalInstancesBackgroundTaskConstants.
-					DEFAULT_ADMIN_MIDDLE_NAME,
-				() -> ParamUtil.getString(
-					actionRequest, "defaultAdminMiddleName", null)
-			).put(
-				PortalInstancesBackgroundTaskConstants.DEFAULT_ADMIN_PASSWORD,
-				() -> _encryptDefaultAdminPassword(
-					ParamUtil.getString(
-						actionRequest, "defaultAdminPassword", null))
-			).put(
-				PortalInstancesBackgroundTaskConstants.
-					DEFAULT_ADMIN_SCREEN_NAME,
-				() -> ParamUtil.getString(
-					actionRequest, "defaultAdminScreenName", null)
-			).put(
-				PortalInstancesBackgroundTaskConstants.MAX_USERS, maxUsers
-			).put(
-				PortalInstancesBackgroundTaskConstants.MX, mx
-			).put(
-				PortalInstancesBackgroundTaskConstants.SITE_INITIALIZER_KEY,
-				ParamUtil.getString(actionRequest, "siteInitializerKey")
-			).put(
-				PortalInstancesBackgroundTaskConstants.VIRTUAL_HOSTNAME,
-				virtualHostname
-			).put(
-				PortalInstancesBackgroundTaskConstants.WEB_ID, webId
-			).build(),
-			new ServiceContext());
+		_portalInstanceAdder.addPortalInstance(
+			themeDisplay.getUserId(), webId,
+			StringUtil.toLowerCase(
+				StringUtil.trim(
+					ParamUtil.getString(actionRequest, "virtualHostname"))),
+			ParamUtil.getString(actionRequest, "mx"),
+			ParamUtil.getInteger(actionRequest, "maxUsers"),
+			ParamUtil.getBoolean(actionRequest, "active"),
+			ParamUtil.getString(actionRequest, "defaultAdminPassword", null),
+			ParamUtil.getString(actionRequest, "defaultAdminScreenName", null),
+			ParamUtil.getString(
+				actionRequest, "defaultAdminEmailAddress", null),
+			ParamUtil.getString(actionRequest, "defaultAdminFirstName", null),
+			ParamUtil.getString(actionRequest, "defaultAdminMiddleName", null),
+			ParamUtil.getString(actionRequest, "defaultAdminLastName", null),
+			ParamUtil.getString(actionRequest, "siteInitializerKey"));
 
 		return webId;
-	}
-
-	private String _encryptDefaultAdminPassword(String defaultAdminPassword)
-		throws Exception {
-
-		if (Validator.isNull(defaultAdminPassword)) {
-			return null;
-		}
-
-		Company company = _companyLocalService.getCompanyById(
-			PortalInstances.getDefaultCompanyId());
-
-		return _encryptor.encrypt(company.getKeyObj(), defaultAdminPassword);
 	}
 
 	private String _getErrorMessageKey(Exception exception) {
@@ -225,18 +137,12 @@ public class AddInstanceMVCActionCommand extends BaseMVCActionCommand {
 		AddInstanceMVCActionCommand.class);
 
 	@Reference
-	private BackgroundTaskManager _backgroundTaskManager;
-
-	@Reference
-	private CompanyLocalService _companyLocalService;
-
-	@Reference
-	private Encryptor _encryptor;
-
-	@Reference
 	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private PortalInstanceAdder _portalInstanceAdder;
 
 }

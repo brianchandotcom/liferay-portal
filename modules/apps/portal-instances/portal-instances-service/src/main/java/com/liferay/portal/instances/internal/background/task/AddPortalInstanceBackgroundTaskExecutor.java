@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.instances.web.internal.background.task;
+package com.liferay.portal.instances.internal.background.task;
 
 import com.liferay.portal.instances.background.task.PortalInstancesOperationType;
 import com.liferay.portal.instances.background.task.constants.PortalInstancesBackgroundTaskConstants;
@@ -47,13 +47,13 @@ import org.osgi.service.component.annotations.Reference;
  * @author Luis Ortiz
  */
 @Component(
-	property = "background.task.executor.class.name=com.liferay.portal.instances.web.internal.background.task.AddInstanceBackgroundTaskExecutor",
+	property = "background.task.executor.class.name=com.liferay.portal.instances.internal.background.task.AddPortalInstanceBackgroundTaskExecutor",
 	service = BackgroundTaskExecutor.class
 )
-public class AddInstanceBackgroundTaskExecutor
+public class AddPortalInstanceBackgroundTaskExecutor
 	extends BaseBackgroundTaskExecutor {
 
-	public AddInstanceBackgroundTaskExecutor() {
+	public AddPortalInstanceBackgroundTaskExecutor() {
 		setIsolationLevel(BackgroundTaskConstants.ISOLATION_LEVEL_TASK_NAME);
 	}
 
@@ -251,7 +251,7 @@ public class AddInstanceBackgroundTaskExecutor
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		AddInstanceBackgroundTaskExecutor.class);
+		AddPortalInstanceBackgroundTaskExecutor.class);
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

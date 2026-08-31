@@ -116,9 +116,7 @@ public class AddInstanceBackgroundTaskExecutor
 					BackgroundTaskConstants.STATUS_SUCCESSFUL, webId));
 		}
 		catch (Exception exception) {
-			_log.error(
-				"Unable to send the virtual instance success notification",
-				exception);
+			_log.error("Unable to send success user notification", exception);
 		}
 
 		JSONObject statusMessageJSONObject = JSONUtil.put(
@@ -156,9 +154,7 @@ public class AddInstanceBackgroundTaskExecutor
 							PortalInstancesBackgroundTaskConstants.WEB_ID))));
 		}
 		catch (Exception exception2) {
-			_log.error(
-				"Unable to send the virtual instance failure notification",
-				exception2);
+			_log.error("Unable to send failure user notification", exception2);
 		}
 
 		return super.handleException(backgroundTask, exception1);

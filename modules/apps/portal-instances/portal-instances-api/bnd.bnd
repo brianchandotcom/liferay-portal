@@ -2,6 +2,7 @@ Bundle-Name: Liferay Portal Instances API
 Bundle-SymbolicName: com.liferay.portal.instances.api
 Bundle-Version: 12.0.1
 Export-Package:\
+	com.liferay.portal.instances.adder,\
 	com.liferay.portal.instances.background.task,\
 	com.liferay.portal.instances.background.task.constants,\
 	com.liferay.portal.instances.constants,\

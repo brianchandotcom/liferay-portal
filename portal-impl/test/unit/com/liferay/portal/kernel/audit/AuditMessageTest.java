@@ -31,6 +31,34 @@ public class AuditMessageTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
+	public void testCaptureRequestIdFromAuditRequestThreadLocal()
+		throws Exception {
+
+		AuditRequestThreadLocal auditRequestThreadLocal =
+			AuditRequestThreadLocal.getAuditThreadLocal();
+
+		String requestId = RandomTestUtil.randomString();
+
+		auditRequestThreadLocal.setRequestIdGenerated(true);
+		auditRequestThreadLocal.setRequestId(requestId);
+
+		try {
+			AuditMessage auditMessage = new AuditMessage(
+				RandomTestUtil.randomLong(), RandomTestUtil.randomLong(),
+				RandomTestUtil.randomLong(), RandomTestUtil.randomString(),
+				RandomTestUtil.nextDate(), JSONFactoryUtil.createJSONObject(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString());
+
+			Assert.assertEquals(requestId, auditMessage.getRequestId());
+			Assert.assertTrue(auditMessage.isRequestIdGenerated());
+		}
+		finally {
+			AuditRequestThreadLocal.removeAuditThreadLocal();
+		}
+	}
+
+	@Test
 	public void testToJSONObject() throws Exception {
 		long groupId = RandomTestUtil.randomLong();
 		Date timestampDate = RandomTestUtil.nextDate();

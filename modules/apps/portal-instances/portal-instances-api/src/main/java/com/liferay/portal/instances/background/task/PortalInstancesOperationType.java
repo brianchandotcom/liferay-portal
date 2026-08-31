@@ -5,7 +5,6 @@
 
 package com.liferay.portal.instances.background.task;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
 /**
@@ -29,11 +28,6 @@ public enum PortalInstancesOperationType {
 
 		throw new IllegalArgumentException(
 			"Unknown portal instances operation type \"" + value + "\"");
-	}
-
-	public String getBackgroundTaskName(String webId) {
-		return StringBundler.concat(
-			StringUtil.upperCaseFirstLetter(_value), "PortalInstance#", webId);
 	}
 
 	public String getValue() {

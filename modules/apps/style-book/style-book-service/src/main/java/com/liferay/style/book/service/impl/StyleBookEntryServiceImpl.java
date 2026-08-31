@@ -328,7 +328,7 @@ public class StyleBookEntryServiceImpl extends StyleBookEntryServiceBaseImpl {
 
 	@Override
 	public StyleBookEntry updateStyleBookEntry(
-			long styleBookEntryId, boolean defaultStylebookEntry,
+			long styleBookEntryId, boolean defaultStyleBookEntry,
 			String frontendTokensValues, String name, String styleBookEntryKey,
 			long previewFileEntryId, ServiceContext serviceContext)
 		throws PortalException {
@@ -341,7 +341,7 @@ public class StyleBookEntryServiceImpl extends StyleBookEntryServiceBaseImpl {
 			StyleBookActionKeys.MANAGE_STYLE_BOOK_ENTRIES);
 
 		return styleBookEntryLocalService.updateStyleBookEntry(
-			getUserId(), styleBookEntryId, defaultStylebookEntry,
+			getUserId(), styleBookEntryId, defaultStyleBookEntry,
 			frontendTokensValues, name, styleBookEntryKey, previewFileEntryId,
 			serviceContext);
 	}

@@ -8,7 +8,6 @@ package com.liferay.portal.instances.web.internal.background.task;
 import com.liferay.portal.instances.background.task.PortalInstancesOperationType;
 import com.liferay.portal.instances.background.task.constants.PortalInstancesBackgroundTaskConstants;
 import com.liferay.portal.instances.constants.PortalInstancesPortletKeys;
-import com.liferay.portal.instances.web.internal.notifications.PortalInstancesNotificationPayload;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
@@ -110,9 +109,8 @@ public class AddInstanceBackgroundTaskExecutor
 		try {
 			_sendUserNotificationEvent(
 				backgroundTask.getUserId(),
-				PortalInstancesNotificationPayload.build(
+				_getPayloadJSONObject(
 					company.getCompanyId(), null,
-					PortalInstancesOperationType.ADD, null,
 					BackgroundTaskConstants.STATUS_SUCCESSFUL, webId));
 		}
 		catch (Exception exception) {
@@ -120,7 +118,7 @@ public class AddInstanceBackgroundTaskExecutor
 		}
 
 		JSONObject statusMessageJSONObject = JSONUtil.put(
-			PortalInstancesNotificationPayload.COMPANY_ID,
+			PortalInstancesBackgroundTaskConstants.COMPANY_ID,
 			company.getCompanyId());
 
 		return new BackgroundTaskResult(
@@ -145,9 +143,8 @@ public class AddInstanceBackgroundTaskExecutor
 		try {
 			_sendUserNotificationEvent(
 				backgroundTask.getUserId(),
-				PortalInstancesNotificationPayload.build(
+				_getPayloadJSONObject(
 					0, _getErrorMessageKey(exception1),
-					PortalInstancesOperationType.ADD, null,
 					BackgroundTaskConstants.STATUS_FAILED,
 					GetterUtil.getString(
 						taskContextMap.get(
@@ -223,6 +220,25 @@ public class AddInstanceBackgroundTaskExecutor
 		}
 
 		return "an-unexpected-error-occurred";
+	}
+
+	private JSONObject _getPayloadJSONObject(
+		long companyId, String errorMessageKey, int status, String webId) {
+
+		return JSONUtil.put(
+			PortalInstancesBackgroundTaskConstants.COMPANY_ID, companyId
+		).put(
+			PortalInstancesBackgroundTaskConstants.ERROR_MESSAGE_KEY,
+			errorMessageKey
+		).put(
+			PortalInstancesBackgroundTaskConstants.OPERATION_TYPE,
+			PortalInstancesOperationType.ADD.getValue()
+		).put(
+			PortalInstancesBackgroundTaskConstants.STATUS,
+			BackgroundTaskConstants.getStatusLabel(status)
+		).put(
+			PortalInstancesBackgroundTaskConstants.WEB_ID, webId
+		);
 	}
 
 	private void _sendUserNotificationEvent(

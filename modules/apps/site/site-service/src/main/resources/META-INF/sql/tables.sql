@@ -12,3 +12,11 @@ create table SiteFriendlyURL (
 	languageId VARCHAR(75) null,
 	lastPublishDate DATE null
 );
+
+create table XMLSitemapRegenerationEntry (
+	mvccVersion LONG default 0 not null,
+	xmlSitemapRegenerationEntryId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	assetTypeKey VARCHAR(75) null
+);

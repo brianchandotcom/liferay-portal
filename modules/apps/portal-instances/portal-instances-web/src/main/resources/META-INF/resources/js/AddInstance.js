@@ -42,6 +42,9 @@ export default function ({namespace}) {
 						id: `${namespace}addSiteDialog`,
 					});
 
+					// XSS: response.startMessage is escaped by HtmlUtil.escape in
+					// AddInstanceMVCActionCommand
+
 					opener.Liferay.Util.openToast({
 						message: response.startMessage,
 						type: 'success',

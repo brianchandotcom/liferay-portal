@@ -5,8 +5,8 @@
 
 package com.liferay.portal.instances.web.internal.notifications;
 
-import com.liferay.portal.instances.background.task.PortalInstancesOperationType;
-import com.liferay.portal.instances.background.task.constants.PortalInstancesBackgroundTaskConstants;
+import com.liferay.portal.instances.background.task.PortalInstanceOperationType;
+import com.liferay.portal.instances.background.task.constants.PortalInstanceBackgroundTaskConstants;
 import com.liferay.portal.instances.constants.PortalInstancesPortletKeys;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
@@ -115,7 +115,7 @@ public class PortalInstancesUserNotificationHandlerTest {
 			_getExpectedBody(_NOT_ADDED_MESSAGE + " " + _ERROR_MESSAGE),
 			_portalInstancesUserNotificationHandler.getBody(
 				_createUserNotificationEvent(
-					PortalInstancesOperationType.ADD,
+					PortalInstanceOperationType.ADD,
 					BackgroundTaskConstants.STATUS_FAILED,
 					"please-enter-a-valid-web-id"),
 				_serviceContext));
@@ -129,7 +129,7 @@ public class PortalInstancesUserNotificationHandlerTest {
 			_getExpectedBody(_ADDED_MESSAGE),
 			_portalInstancesUserNotificationHandler.getBody(
 				_createUserNotificationEvent(
-					PortalInstancesOperationType.ADD,
+					PortalInstanceOperationType.ADD,
 					BackgroundTaskConstants.STATUS_SUCCESSFUL, null),
 				_serviceContext));
 	}
@@ -140,7 +140,7 @@ public class PortalInstancesUserNotificationHandlerTest {
 			IllegalArgumentException.class,
 			() -> _portalInstancesUserNotificationHandler.getBody(
 				_createUserNotificationEvent(
-					PortalInstancesOperationType.DELETE,
+					PortalInstanceOperationType.DELETE,
 					BackgroundTaskConstants.STATUS_SUCCESSFUL, null),
 				_serviceContext));
 	}
@@ -151,13 +151,13 @@ public class PortalInstancesUserNotificationHandlerTest {
 			_PORTLET_TITLE,
 			_portalInstancesUserNotificationHandler.getTitle(
 				_createUserNotificationEvent(
-					PortalInstancesOperationType.ADD,
+					PortalInstanceOperationType.ADD,
 					BackgroundTaskConstants.STATUS_SUCCESSFUL, null),
 				_serviceContext));
 	}
 
 	private UserNotificationEvent _createUserNotificationEvent(
-		PortalInstancesOperationType portalInstancesOperationType, int status,
+		PortalInstanceOperationType portalInstanceOperationType, int status,
 		String errorMessageKey) {
 
 		UserNotificationEvent userNotificationEvent =
@@ -166,18 +166,18 @@ public class PortalInstancesUserNotificationHandlerTest {
 		userNotificationEvent.setPayload(
 			String.valueOf(
 				JSONUtil.put(
-					PortalInstancesBackgroundTaskConstants.COMPANY_ID, 0
+					PortalInstanceBackgroundTaskConstants.COMPANY_ID, 0
 				).put(
-					PortalInstancesBackgroundTaskConstants.ERROR_MESSAGE_KEY,
+					PortalInstanceBackgroundTaskConstants.ERROR_MESSAGE_KEY,
 					errorMessageKey
 				).put(
-					PortalInstancesBackgroundTaskConstants.OPERATION_TYPE,
-					portalInstancesOperationType.getValue()
+					PortalInstanceBackgroundTaskConstants.OPERATION_TYPE,
+					portalInstanceOperationType.getValue()
 				).put(
-					PortalInstancesBackgroundTaskConstants.STATUS,
+					PortalInstanceBackgroundTaskConstants.STATUS,
 					BackgroundTaskConstants.getStatusLabel(status)
 				).put(
-					PortalInstancesBackgroundTaskConstants.WEB_ID,
+					PortalInstanceBackgroundTaskConstants.WEB_ID,
 					_WEB_ID_MATCHING_LANGUAGE_KEY
 				)));
 

@@ -13,8 +13,10 @@ import {
 	FORUM_CATEGORY_APPLICATION_NAME,
 	FORUM_THREAD_APPLICATION_NAME,
 	THREAD_PRIORITY,
+	createForumMember,
 	getForumsSiteId,
 	getThreadPath,
+	requestAsUser,
 } from './forumsApi';
 
 const test = mergeTests(dataApiHelpersTest, loginTest());
@@ -176,5 +178,53 @@ test(
 		await page.goto(getThreadPath(thread.friendlyUrlPath));
 
 		await expect(page.getByText(messageTitle).first()).toBeVisible();
+	}
+);
+
+// The priority rule is handed the entry's creator and no acting user, so it
+// cannot tell who is performing the write. On a create the two are the same
+// and the rule is exact. On a later change they are not, so a moderator
+// marking somebody else's topic is judged by the author's permissions and
+// refused. Recorded as a defect rather than asserted as correct behavior.
+
+test.fail(
+	'A moderator can raise the priority of a topic somebody else started',
+	{
+		tag: ['@LPD-101023'],
+	},
+	async ({apiHelpers, browser}) => {
+		const siteId = await getForumsSiteId(apiHelpers);
+
+		const author = await createForumMember(apiHelpers, siteId, 'Author');
+
+		const category = await apiHelpers.objectEntry.postObjectEntry(
+			{
+				categoryDescription: 'Created by an end to end test',
+				categoryName: `Category ${getRandomString()}`,
+			},
+			FORUM_CATEGORY_APPLICATION_NAME,
+			siteId
+		);
+
+		const created = await requestAsUser(browser, {
+			body: {
+				messageTitle: `Topic ${getRandomString()}`,
+				r_categoryThreads_c_forumCategoryId: category.id,
+			},
+			emailAddress: `${author.screenName}@liferay.com`,
+			method: 'POST',
+			path: `/o/c/forumthreads/scopes/${siteId}`,
+		});
+
+		expect(created.status).toBe(200);
+
+		const raised = await requestAsUser(browser, {
+			body: {priority: THREAD_PRIORITY.URGENT},
+			emailAddress: 'test@liferay.com',
+			method: 'PATCH',
+			path: `/o/c/forumthreads/${created.body.id}`,
+		});
+
+		expect(raised.status).toBe(200);
 	}
 );

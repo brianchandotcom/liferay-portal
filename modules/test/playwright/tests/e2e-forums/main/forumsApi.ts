@@ -67,7 +67,7 @@ export async function requestAsUser(
 	}: {
 		body?: unknown;
 		emailAddress: string;
-		method?: 'GET' | 'POST';
+		method?: 'GET' | 'PATCH' | 'POST';
 		password?: string;
 		path: string;
 	}

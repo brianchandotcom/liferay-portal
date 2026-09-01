@@ -241,6 +241,13 @@ public class BatchEnginePortletDataHandlerTest {
 			BatchEnginePortletDataHandlerTest.class);
 
 		_bundleContext = bundle.getBundleContext();
+
+		_objectFieldValueAttachmentDocsAndMedia =
+			DLTestUtil.randomTextFileBytes();
+		_objectFieldValueAttachmentShowFilesInDocsAndMedia =
+			DLTestUtil.randomTextFileBytes();
+		_objectFieldValueAttachmentUserComputer =
+			DLTestUtil.randomTextFileBytes();
 	}
 
 	@Test
@@ -3156,14 +3163,13 @@ public class BatchEnginePortletDataHandlerTest {
 			TestPropsValues.getCompanyId());
 
 		DLFileEntry dlFileEntry = _addDLFileEntry(
-			_OBJECT_FIELD_VALUE_ATTACHMENT_DOCS_AND_MEDIA,
-			company.getGroupId());
+			_objectFieldValueAttachmentDocsAndMedia, company.getGroupId());
 
 		FileEntry tempFileEntry1 = _addTempFileEntry(
-			_OBJECT_FIELD_VALUE_ATTACHMENT_SHOW_FILES_IN_DOCS_AND_MEDIA,
+			_objectFieldValueAttachmentShowFilesInDocsAndMedia,
 			objectDefinition);
 		FileEntry tempFileEntry2 = _addTempFileEntry(
-			_OBJECT_FIELD_VALUE_ATTACHMENT_USER_COMPUTER, objectDefinition);
+			_objectFieldValueAttachmentUserComputer, objectDefinition);
 
 		return _addObjectEntry(
 			groupId, objectDefinition,
@@ -3461,8 +3467,7 @@ public class BatchEnginePortletDataHandlerTest {
 			String content = StringUtil.read(dlFileEntry.getContentStream());
 
 			Assert.assertArrayEquals(
-				_OBJECT_FIELD_VALUE_ATTACHMENT_USER_COMPUTER,
-				content.getBytes());
+				_objectFieldValueAttachmentUserComputer, content.getBytes());
 		}
 	}
 
@@ -4592,16 +4597,6 @@ public class BatchEnginePortletDataHandlerTest {
 	private static final String _OBJECT_FIELD_NAME_TEXT =
 		"xText" + RandomTestUtil.randomString();
 
-	private static final byte[] _OBJECT_FIELD_VALUE_ATTACHMENT_DOCS_AND_MEDIA =
-		DLTestUtil.randomTextFileBytes();
-
-	private static final byte[]
-		_OBJECT_FIELD_VALUE_ATTACHMENT_SHOW_FILES_IN_DOCS_AND_MEDIA =
-			DLTestUtil.randomTextFileBytes();
-
-	private static final byte[] _OBJECT_FIELD_VALUE_ATTACHMENT_USER_COMPUTER =
-		DLTestUtil.randomTextFileBytes();
-
 	private static BundleContext _bundleContext;
 	private static final BiFunction
 		<FileEntry, Group, ObjectValuePair<String, Long>>
@@ -4609,6 +4604,9 @@ public class BatchEnginePortletDataHandlerTest {
 				(fileEntry, targetGroup) -> new ObjectValuePair<>(
 					fileEntry.getExternalReferenceCode(),
 					fileEntry.getGroupId());
+	private static byte[] _objectFieldValueAttachmentDocsAndMedia;
+	private static byte[] _objectFieldValueAttachmentShowFilesInDocsAndMedia;
+	private static byte[] _objectFieldValueAttachmentUserComputer;
 
 	@Inject
 	private AccountEntryLocalService _accountEntryLocalService;

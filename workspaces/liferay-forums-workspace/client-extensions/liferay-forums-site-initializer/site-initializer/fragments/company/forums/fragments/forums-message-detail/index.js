@@ -34,6 +34,44 @@ if (messageDetail) {
 	const clayIconsUrl =
 		Liferay.ThemeDisplay.getPathThemeImages() + '/clay/icons.svg';
 
+	/* A message body is rich text, so it is rendered as markup rather than as
+	   text. Parse it detached and drop every element and attribute that could
+	   execute before any of it reaches the document. */
+	const UNSAFE_ELEMENTS =
+		'base, embed, form, iframe, link, meta, object, script, style';
+	const UNSAFE_URL_SCHEMES = /^(?:data:text\/html|javascript:|vbscript:)/;
+	const sanitizeHTML = function (html) {
+		if (!html) {
+			return '';
+		}
+
+		const parsedDocument = new DOMParser().parseFromString(
+			html,
+			'text/html'
+		);
+
+		parsedDocument.body
+			.querySelectorAll(UNSAFE_ELEMENTS)
+			.forEach((element) => {
+				element.remove();
+			});
+
+		parsedDocument.body.querySelectorAll('*').forEach((element) => {
+			Array.from(element.attributes).forEach(({name, value}) => {
+				if (
+					name.toLowerCase().indexOf('on') === 0 ||
+					UNSAFE_URL_SCHEMES.test(
+						value.replace(/\s/g, '').toLowerCase()
+					)
+				) {
+					element.removeAttribute(name);
+				}
+			});
+		});
+
+		return parsedDocument.body.innerHTML;
+	};
+
 	/* DOM refs */
 	const titleEl = messageDetail.querySelector('#forumsDetailTitle');
 	const loadingEl = messageDetail.querySelector('#forumsDetailLoading');
@@ -282,8 +320,10 @@ if (messageDetail) {
 			if (loadingEl) {
 				loadingEl.innerHTML =
 					'<div class="forums-message-list__empty text-secondary text-center py-5">' +
-					(messageDetail.dataset.labelNoMessage ||
-						'No message selected.') +
+					Liferay.Util.escapeHTML(
+						messageDetail.dataset.labelNoMessage ||
+							'No message selected.'
+					) +
 					'</div>';
 			}
 
@@ -537,17 +577,17 @@ if (messageDetail) {
 				displayName(creator) ||
 				messageDetail.dataset.labelUnknown ||
 				'Unknown';
-			const body = replyBody || '';
+			const body = sanitizeHTML(replyBody);
 			const dateFull = fullDateTime(dateCreated);
 			const date =
 				'<time datetime="' +
-				dateCreated +
+				Liferay.Util.escapeHTML(dateCreated) +
 				'" title="' +
-				dateFull +
+				Liferay.Util.escapeHTML(dateFull) +
 				'" aria-label="' +
-				dateFull +
+				Liferay.Util.escapeHTML(dateFull) +
 				'">' +
-				timeAgo(dateCreated) +
+				Liferay.Util.escapeHTML(timeAgo(dateCreated)) +
 				'</time>';
 			const score = voteScore || 0;
 			const solClass = isSolution
@@ -1153,6 +1193,9 @@ if (messageDetail) {
 					'forumsDeleteModalHeading'
 				);
 
+				// XSS: every label is escaped by Liferay.Util.escapeHTML, and clayIconsUrl
+				// is escaped by construction, from Liferay.ThemeDisplay
+
 				modal.innerHTML = `
 			<div class="modal-dialog modal-dialog-sm modal-dialog-centered modal-danger">
 				<div class="modal-content">
@@ -1177,8 +1220,8 @@ if (messageDetail) {
 					<div class="modal-footer">
 						<div class="modal-item-last">
 							<div class="btn-group-spaced" role="group">
-								<button class="btn btn-secondary forums-delete-modal-close" type="button">${messageDetail.dataset.labelCancel || 'Cancel'}</button>
-								<button class="btn btn-danger" type="button" id="forumsDeleteModalConfirmBtn">${messageDetail.dataset.labelDelete || 'Delete'}</button>
+								<button class="btn btn-secondary forums-delete-modal-close" type="button">${Liferay.Util.escapeHTML(messageDetail.dataset.labelCancel || 'Cancel')}</button>
+								<button class="btn btn-danger" type="button" id="forumsDeleteModalConfirmBtn">${Liferay.Util.escapeHTML(messageDetail.dataset.labelDelete || 'Delete')}</button>
 							</div>
 						</div>
 					</div>
@@ -1390,10 +1433,11 @@ if (messageDetail) {
 					console.error('Download attachment error:', error);
 					if (Liferay.Util && Liferay.Util.openToast) {
 						Liferay.Util.openToast({
-							message:
+							message: Liferay.Util.escapeHTML(
 								messageDetail.dataset
 									.labelCouldNotDownloadFile ||
-								'Could not download the file. Please try again.',
+									'Could not download the file. Please try again.'
+							),
 							type: 'danger',
 						});
 					}
@@ -1422,7 +1466,7 @@ if (messageDetail) {
 				const bannedBanner = document.createElement('div');
 				bannedBanner.className = 'alert alert-danger mt-3';
 				bannedBanner.setAttribute('role', 'alert');
-				bannedBanner.innerHTML = `<span class="alert-indicator"><svg class="lexicon-icon lexicon-icon-warning-full" role="presentation" viewBox="0 0 16 16" fill="currentColor"><path d="M16 14.5L8 1 0 14.5h16zM8 13c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm1-3H7V6h2v4z"/></svg></span><strong class="lead">${messageDetail.dataset.labelBanned || 'Banned'}: </strong>${messageDetail.dataset.labelBannedWarning || 'Your account has been banned from participating in the forums.'}`;
+				bannedBanner.innerHTML = `<span class="alert-indicator"><svg class="lexicon-icon lexicon-icon-warning-full" role="presentation" viewBox="0 0 16 16" fill="currentColor"><path d="M16 14.5L8 1 0 14.5h16zM8 13c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm1-3H7V6h2v4z"/></svg></span><strong class="lead">${Liferay.Util.escapeHTML(messageDetail.dataset.labelBanned || 'Banned')}: </strong>${Liferay.Util.escapeHTML(messageDetail.dataset.labelBannedWarning || 'Your account has been banned from participating in the forums.')}`;
 
 				const titleRow = messageDetail.querySelector(
 					'.forums-message-detail__title-row'
@@ -1630,12 +1674,16 @@ if (messageDetail) {
 																	.labelUnsubscribedToast ||
 																'You have been unsubscribed from this message.';
 													Liferay.Util.openToast({
-														message: toastMsg,
-														title:
+														message:
+															Liferay.Util.escapeHTML(
+																toastMsg
+															),
+														title: Liferay.Util.escapeHTML(
 															messageDetail
 																.dataset
 																.labelSuccess ||
-															'Success',
+																'Success'
+														),
 														type: 'success',
 													});
 												}
@@ -1735,7 +1783,7 @@ if (messageDetail) {
 							flaggedBanner.id = 'forumsDetailFlaggedBanner';
 							flaggedBanner.className = 'alert alert-danger mt-3';
 							flaggedBanner.setAttribute('role', 'alert');
-							flaggedBanner.innerHTML = `<span class="alert-indicator"><svg class="lexicon-icon lexicon-icon-warning-full" role="presentation" viewBox="0 0 16 16" fill="currentColor"><path d="M16 14.5L8 1 0 14.5h16zM8 13c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm1-3H7V6h2v4z"/></svg></span><strong class="lead">${messageDetail.dataset.labelFlagged || 'Flagged'}: </strong>${messageDetail.dataset.labelFlaggedWarning || 'This message has been flagged and validated as inappropriate content.'}`;
+							flaggedBanner.innerHTML = `<span class="alert-indicator"><svg class="lexicon-icon lexicon-icon-warning-full" role="presentation" viewBox="0 0 16 16" fill="currentColor"><path d="M16 14.5L8 1 0 14.5h16zM8 13c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm1-3H7V6h2v4z"/></svg></span><strong class="lead">${Liferay.Util.escapeHTML(messageDetail.dataset.labelFlagged || 'Flagged')}: </strong>${Liferay.Util.escapeHTML(messageDetail.dataset.labelFlaggedWarning || 'This message has been flagged and validated as inappropriate content.')}`;
 
 							const titleRow = messageDetail.querySelector(
 								'.forums-message-detail__title-row'
@@ -1767,6 +1815,10 @@ if (messageDetail) {
 						const priorityBadgeHtml =
 							priorityBadge(messagePriority);
 						if (priorityBadgeHtml) {
+
+							// XSS: priorityBadgeHtml is escaped by Liferay.Util.escapeHTML in
+							// priorityBadge
+
 							titleEl.insertAdjacentHTML(
 								'beforeend',
 								priorityBadgeHtml
@@ -1868,8 +1920,11 @@ if (messageDetail) {
 					if (loadingEl) {
 						loadingEl.innerHTML =
 							'<div class="forums-message-list__empty text-secondary text-center py-5">' +
-							(messageDetail.dataset.labelUnableToLoadMessage ||
-								'Unable to load message.') +
+							Liferay.Util.escapeHTML(
+								messageDetail.dataset
+									.labelUnableToLoadMessage ||
+									'Unable to load message.'
+							) +
 							'</div>';
 					}
 					console.error('ForumsMessageDetail error:', error);
@@ -2001,10 +2056,16 @@ if (messageDetail) {
 								messageDetail.dataset.labelUnknown ||
 								'Unknown';
 							if (opBody) {
-								opBody.innerHTML = opMsgBody || '';
+
+								// XSS: opMsgBody is sanitized by sanitizeHTML
+
+								opBody.innerHTML = sanitizeHTML(opMsgBody);
 								formatMarkupCodeBlocks(opBody);
 							}
 							if (opAttachments) {
+
+								// XSS: renderAttachments escapes each name with Liferay.Util.escapeHTML
+
 								opAttachments.innerHTML =
 									renderAttachments(opMsg);
 							}
@@ -2055,6 +2116,9 @@ if (messageDetail) {
 										return `<span class="label label-lg forums-message-detail__tag"><span class="label-item label-item-expand">${Liferay.Util.escapeHTML(tag)}</span></span>`;
 									})
 									.join('');
+
+								// XSS: tagsHtml is escaped by Liferay.Util.escapeHTML where it is built
+
 								opTags.innerHTML = tagsHtml;
 								opTags.style.display = '';
 							}
@@ -2107,12 +2171,17 @@ if (messageDetail) {
 								const downvoteTitle =
 									messageDetail.dataset.labelDownvote ||
 									'Downvote';
+
+								// XSS: the vote titles are escaped by Liferay.Util.escapeHTML, the
+								// message id and score are integers, and clayIconsUrl and the icon
+								// names are escaped by construction
+
 								opVoteEl.innerHTML = `
-						<button class="btn-thumbs-up btn btn-monospaced btn-outline-borderless btn-outline-secondary forums-vote__btn forums-vote__btn--up${opUpActive}" type="button" aria-pressed="${opIsUpPressed}"${canVote ? ` data-vote-dir="up" data-message-id="${opMsgId}"` : ' disabled'} title="${upvoteTitle}">
+						<button class="btn-thumbs-up btn btn-monospaced btn-outline-borderless btn-outline-secondary forums-vote__btn forums-vote__btn--up${opUpActive}" type="button" aria-pressed="${opIsUpPressed}"${canVote ? ` data-vote-dir="up" data-message-id="${opMsgId}"` : ' disabled'} title="${Liferay.Util.escapeHTML(upvoteTitle)}">
 							<svg class="lexicon-icon lexicon-icon-${opUpIcon}" role="presentation"><use href="${clayIconsUrl}#${opUpIcon}"></use></svg>
 						</button>
 						<span class="font-weight-bold mx-2 forums-vote__score" data-vote-score="${opMsgId}">${opScore}</span>
-						<button class="btn-thumbs-down btn btn-monospaced btn-outline-borderless btn-outline-secondary forums-vote__btn forums-vote__btn--down${opDownActive}" type="button" aria-pressed="${opIsDownPressed}"${canVote ? ` data-vote-dir="down" data-message-id="${opMsgId}"` : ' disabled'} title="${downvoteTitle}">
+						<button class="btn-thumbs-down btn btn-monospaced btn-outline-borderless btn-outline-secondary forums-vote__btn forums-vote__btn--down${opDownActive}" type="button" aria-pressed="${opIsDownPressed}"${canVote ? ` data-vote-dir="down" data-message-id="${opMsgId}"` : ' disabled'} title="${Liferay.Util.escapeHTML(downvoteTitle)}">
 							<svg class="lexicon-icon lexicon-icon-${opDownIcon}" role="presentation"><use href="${clayIconsUrl}#${opDownIcon}"></use></svg>
 						</button>`;
 							}
@@ -2327,6 +2396,10 @@ if (messageDetail) {
 								solHtml += renderReplyCard(sol, true, 0);
 							});
 							if (solutionCards) {
+
+								// XSS: solHtml is sanitized by sanitizeHTML and escaped by
+								// Liferay.Util.escapeHTML in renderReplyCard
+
 								solutionCards.innerHTML = solHtml;
 								formatMarkupCodeBlocks(solutionCards);
 							}
@@ -2362,6 +2435,10 @@ if (messageDetail) {
 								opId
 							);
 							if (replyCards) {
+
+								// XSS: repHtml is sanitized by sanitizeHTML and escaped by
+								// Liferay.Util.escapeHTML in renderReplyCard
+
 								replyCards.innerHTML = repHtml;
 								formatMarkupCodeBlocks(replyCards);
 							}
@@ -2437,6 +2514,8 @@ if (messageDetail) {
 									.join('') +
 								`<li class="page-item${currentReplyPage >= lastPage ? ' disabled' : ''}"><a class="page-link" href="#" data-page="${currentReplyPage + 1}">&raquo;</a></li>`;
 
+							// XSS: pagHtml is escaped by construction, interpolating only integers
+
 							replyPaginationUl.innerHTML = pagHtml;
 
 							replyPaginationUl
@@ -2467,8 +2546,11 @@ if (messageDetail) {
 					if (loadingEl) {
 						loadingEl.innerHTML =
 							'<div class="forums-message-list__empty text-secondary text-center py-5">' +
-							(messageDetail.dataset.labelUnableToLoadMessages ||
-								'Unable to load messages.') +
+							Liferay.Util.escapeHTML(
+								messageDetail.dataset
+									.labelUnableToLoadMessages ||
+									'Unable to load messages.'
+							) +
 							'</div>';
 					}
 					console.error('ForumsMessageDetail messages error:', error);
@@ -2528,6 +2610,9 @@ if (messageDetail) {
 						return `<option value="${Liferay.Util.escapeHTML(value)}">${Liferay.Util.escapeHTML(label)}</option>`;
 					})
 					.join('');
+
+				// XSS: every label is escaped by Liferay.Util.escapeHTML, and optionsHtml
+				// is escaped where it is built
 
 				modal.innerHTML = `
 				<div class="modal-dialog modal-dialog-centered">
@@ -2682,10 +2767,11 @@ if (messageDetail) {
 										Liferay.Util.openToast
 									) {
 										Liferay.Util.openToast({
-											message:
+											message: Liferay.Util.escapeHTML(
 												messageDetail.dataset
 													.labelReportSubmitted ||
-												'Thank you! Your report has been submitted.',
+													'Thank you! Your report has been submitted.'
+											),
 											type: 'success',
 										});
 									}
@@ -2809,8 +2895,10 @@ if (messageDetail) {
 				if (loadingEl) {
 					loadingEl.innerHTML =
 						'<div class="forums-message-list__empty text-secondary text-center py-5">' +
-						(messageDetail.dataset.labelErcNotMapped ||
-							'Message ERC is not mapped.') +
+						Liferay.Util.escapeHTML(
+							messageDetail.dataset.labelErcNotMapped ||
+								'Message ERC is not mapped.'
+						) +
 						'</div>';
 				}
 			}

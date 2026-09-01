@@ -124,6 +124,8 @@ if (forumsMod) {
 		modal.setAttribute('aria-modal', 'true');
 		modal.setAttribute('aria-labelledby', 'forumsModConfirmHeading');
 
+		// XSS: every value is escaped by Liferay.Util.escapeHTML below
+
 		modal.innerHTML = `
 			<div class="modal-dialog modal-dialog-sm modal-dialog-centered modal-danger">
 				<div class="modal-content">
@@ -193,7 +195,10 @@ if (forumsMod) {
 
 	const showToast = function (message) {
 		if (Liferay.Util && Liferay.Util.openToast) {
-			Liferay.Util.openToast({message, type: 'success'});
+			Liferay.Util.openToast({
+				message: Liferay.Util.escapeHTML(message),
+				type: 'success',
+			});
 		}
 	};
 
@@ -256,6 +261,8 @@ if (forumsMod) {
 				(currentPage + 1) +
 				'" aria-label="Next page"><span aria-hidden="true">&raquo;</span></a></li>';
 
+			// XSS: pagHtml is escaped by construction, interpolating only integers
+
 			paginationUl.innerHTML = pagHtml;
 
 			paginationUl.querySelectorAll('.page-link').forEach((link) => {
@@ -307,7 +314,9 @@ if (forumsMod) {
 				if (!items.length) {
 					flagList.innerHTML =
 						'<div class="list-group-item text-secondary">' +
-						(forumsMod.dataset.labelNoBans || 'No bans found.') +
+						Liferay.Util.escapeHTML(
+							forumsMod.dataset.labelNoBans || 'No bans found.'
+						) +
 						'</div>';
 
 					return;
@@ -511,8 +520,10 @@ if (forumsMod) {
 				if (!items.length) {
 					flagList.innerHTML =
 						'<div class="list-group-item text-secondary">' +
-						(forumsMod.dataset.labelNoFlags ||
-							'No flagged messages found.') +
+						Liferay.Util.escapeHTML(
+							forumsMod.dataset.labelNoFlags ||
+								'No flagged messages found.'
+						) +
 						'</div>';
 
 					return;
@@ -837,9 +848,10 @@ if (forumsMod) {
 					Liferay.Util.openToast
 				) {
 					Liferay.Util.openToast({
-						message:
+						message: Liferay.Util.escapeHTML(
 							forumsMod.dataset.labelDisplayPageNotConfigured ||
-							'Display page is not configured for one or more messages.',
+								'Display page is not configured for one or more messages.'
+						),
 						type: 'danger',
 					});
 				}

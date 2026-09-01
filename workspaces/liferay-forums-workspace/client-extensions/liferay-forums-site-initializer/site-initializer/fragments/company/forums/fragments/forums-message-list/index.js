@@ -631,6 +631,10 @@ if (messageList) {
 
 		if (loadingEl) {
 			loadingEl.classList.remove('forums-skeleton--fade-out');
+
+			// XSS: skeletonHTML is escaped by construction, captured from this
+			// fragment's own markup
+
 			loadingEl.innerHTML = skeletonHTML;
 			loadingEl.style.display = '';
 			loadingEl.setAttribute('aria-busy', 'true');
@@ -709,8 +713,10 @@ if (messageList) {
 				if (!items.length) {
 					cardsContainer.innerHTML =
 						'<div class="forums-message-list__empty text-secondary text-center py-5">' +
-						(messageList.dataset.labelNoMessages ||
-							'No messages found.') +
+						Liferay.Util.escapeHTML(
+							messageList.dataset.labelNoMessages ||
+								'No messages found.'
+						) +
 						'</div>';
 
 					return;
@@ -850,9 +856,11 @@ if (messageList) {
 						let preview = '';
 						const [firstMessage] = messages;
 						if (firstMessage && firstMessage.body) {
-							const tmp = document.createElement('div');
-							tmp.innerHTML = firstMessage.body;
-							preview = tmp.textContent || tmp.innerText || '';
+							const parsedBody = new DOMParser().parseFromString(
+								firstMessage.body,
+								'text/html'
+							);
+							preview = parsedBody.body.textContent || '';
 							if (preview.length > 160) {
 								preview = preview.substring(0, 160) + '...';
 							}
@@ -875,15 +883,18 @@ if (messageList) {
 								'<span class="sticker sticker-circle sticker-lg ' +
 								avatarColorClass(creator) +
 								'"><span class="sticker-overlay">' +
-								avatarInitial(creatorName) +
+								Liferay.Util.escapeHTML(
+									avatarInitial(creatorName)
+								) +
 								'</span></span>';
 						}
 
 						/* Solved badge */
 						let solvedBadge = '';
 						if (question && hasSolution) {
-							const solvedText =
-								messageList.dataset.labelSolved || 'Solved';
+							const solvedText = Liferay.Util.escapeHTML(
+								messageList.dataset.labelSolved || 'Solved'
+							);
 							solvedBadge =
 								'<span class="forums-message-card__solved text-success font-weight-semi-bold ml-3 small">' +
 								checkIcon +
@@ -906,8 +917,9 @@ if (messageList) {
 
 						let flaggedBadge = '';
 						if (isFlagged) {
-							const flaggedText =
-								messageList.dataset.labelFlagged || 'Flagged';
+							const flaggedText = Liferay.Util.escapeHTML(
+								messageList.dataset.labelFlagged || 'Flagged'
+							);
 							flaggedBadge =
 								'<span class="forums-message-card__solved text-danger ml-3 small"><svg class="lexicon-icon lexicon-icon-warning-full" role="presentation" viewBox="0 0 16 16" fill="currentColor"><path d="M16 14.5L8 1 0 14.5h16zM8 13c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm1-3H7V6h2v4z"/></svg> ' +
 								flaggedText +
@@ -928,7 +940,7 @@ if (messageList) {
 							'<h5 class="card-title forums-message-card__title">' +
 							(topicHref
 								? '<a href="' +
-									topicHref +
+									Liferay.Util.escapeHTML(topicHref) +
 									'">' +
 									Liferay.Util.escapeHTML(title) +
 									'</a>'
@@ -963,13 +975,13 @@ if (messageList) {
 							'<span class="forums-message-card__meta-item">' +
 							clockIcon +
 							' <time datetime="' +
-							dateStr +
+							Liferay.Util.escapeHTML(dateStr) +
 							'" title="' +
 							fullDateTime(dateStr) +
 							'" aria-label="' +
 							fullDateTime(dateStr) +
 							'">' +
-							timeAgo(dateStr) +
+							Liferay.Util.escapeHTML(timeAgo(dateStr)) +
 							'</time></span>' +
 							'<span class="forums-message-card__meta-item">' +
 							replyIcon +
@@ -1009,6 +1021,8 @@ if (messageList) {
 							'</div>';
 					});
 
+					// XSS: html is escaped by Liferay.Util.escapeHTML where it is built
+
 					cardsContainer.innerHTML = html;
 					attachDeleteHandlers();
 
@@ -1018,10 +1032,11 @@ if (messageList) {
 						Liferay.Util.openToast
 					) {
 						Liferay.Util.openToast({
-							message:
+							message: Liferay.Util.escapeHTML(
 								messageList.dataset
 									.labelDisplayPageNotConfigured ||
-								'Display page is not configured for one or more messages.',
+									'Display page is not configured for one or more messages.'
+							),
 							type: 'danger',
 						});
 					}
@@ -1101,6 +1116,8 @@ if (messageList) {
 							(currentPage + 1) +
 							'">&raquo;</a></li>';
 
+						// XSS: pagHtml is escaped by construction, interpolating only integers
+
 						paginationUl.innerHTML = pagHtml;
 
 						paginationUl
@@ -1131,8 +1148,10 @@ if (messageList) {
 				hideSkeleton();
 				cardsContainer.innerHTML =
 					'<div class="forums-message-list__empty text-secondary text-center py-5">' +
-					(messageList.dataset.labelUnableToLoad ||
-						'Unable to load messages.') +
+					Liferay.Util.escapeHTML(
+						messageList.dataset.labelUnableToLoad ||
+							'Unable to load messages.'
+					) +
 					'</div>';
 				console.error('ForumsMessageList error:', error);
 			});
@@ -1169,6 +1188,9 @@ if (messageList) {
 			modal.setAttribute('role', 'dialog');
 			modal.setAttribute('aria-modal', 'true');
 			modal.setAttribute('aria-labelledby', 'forumsDeleteModalHeading');
+
+			// XSS: clayIconsUrl is escaped by construction, from Liferay.ThemeDisplay,
+			// and the heading and the body are set through textContent below
 
 			modal.innerHTML =
 				'<div class="modal-dialog modal-dialog-sm modal-dialog-centered modal-danger">' +

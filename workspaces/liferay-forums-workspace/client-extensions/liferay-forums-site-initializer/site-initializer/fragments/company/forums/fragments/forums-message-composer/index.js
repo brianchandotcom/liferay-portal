@@ -231,6 +231,10 @@ if (messageComposer) {
 			chip.className =
 				'label label-secondary label-dismissible forums-message-composer__pending-file';
 			const removeLabel = messageComposer.dataset.labelRemove || 'Remove';
+
+			// XSS: the file name and the remove label are escaped by
+			// Liferay.Util.escapeHTML below, and the index is an integer
+
 			chip.innerHTML =
 				'<span class="label-item label-item-expand">' +
 				Liferay.Util.escapeHTML(file.name) +
@@ -283,6 +287,9 @@ if (messageComposer) {
 					removeLabel +
 					'">×</button></span>';
 			}
+
+			// XSS: inner is escaped by Liferay.Util.escapeHTML where it is built
+
 			chip.innerHTML = inner;
 			existingFilesEl.appendChild(chip);
 		});
@@ -372,12 +379,13 @@ if (messageComposer) {
 				if (file.size > MAX_FILE_SIZE) {
 					if (Liferay.Util && Liferay.Util.openToast) {
 						Liferay.Util.openToast({
-							message:
+							message: Liferay.Util.escapeHTML(
 								(messageComposer.dataset.labelFileTooLarge ||
 									'The file is too large (10 MB maximum).') +
-								' (' +
-								file.name +
-								')',
+									' (' +
+									file.name +
+									')'
+							),
 							type: 'danger',
 						});
 					}
@@ -570,9 +578,13 @@ if (messageComposer) {
 		tagsArray.forEach((tag, index) => {
 			const span = document.createElement('span');
 			span.className = 'label label-secondary label-dismissible';
+
+			// XSS: the tag is escaped by Liferay.Util.escapeHTML below, and the
+			// index is an integer
+
 			span.innerHTML =
 				'<span class="label-item label-item-expand">' +
-				tag +
+				Liferay.Util.escapeHTML(tag) +
 				'</span>' +
 				'<span class="label-item label-item-after"><button class="close" type="button" data-tag-index="' +
 				index +
@@ -1109,9 +1121,10 @@ if (messageComposer) {
 			setTimeout(() => {
 				if (Liferay.Util && Liferay.Util.openToast) {
 					Liferay.Util.openToast({
-						message: pendingToast,
-						title:
-							messageComposer.dataset.labelSuccess || 'Success',
+						message: Liferay.Util.escapeHTML(pendingToast),
+						title: Liferay.Util.escapeHTML(
+							messageComposer.dataset.labelSuccess || 'Success'
+						),
 						type: 'success',
 					});
 				}
@@ -1143,9 +1156,11 @@ if (messageComposer) {
 			const body = getEditorData();
 
 			/* Strip HTML to check if it's completely empty */
-			const tempDiv = document.createElement('div');
-			tempDiv.innerHTML = body;
-			const textContent = tempDiv.textContent || tempDiv.innerText || '';
+			const parsedBody = new DOMParser().parseFromString(
+				body,
+				'text/html'
+			);
+			const textContent = parsedBody.body.textContent || '';
 
 			if (!textContent.trim()) {
 				if (bodyError) {
@@ -1498,10 +1513,11 @@ if (messageComposer) {
 										Liferay.Util.openToast
 									) {
 										Liferay.Util.openToast({
-											message:
+											message: Liferay.Util.escapeHTML(
 												messageComposer.dataset
 													.labelDisplayPageNotConfigured ||
-												'Message created, but the display page is not configured.',
+													'Message created, but the display page is not configured.'
+											),
 											type: 'danger',
 										});
 									}
@@ -1751,6 +1767,9 @@ if (messageComposer) {
 					'</span>' +
 					'</button>';
 			});
+
+			// XSS: html is escaped by Liferay.Util.escapeHTML where it is built
+
 			dropdown.innerHTML = html;
 			dropdown.style.display = 'block';
 			positionDropdown(editableEl);

@@ -88,8 +88,10 @@ if (relatedTopics && !document.body.classList.contains('has-edit-mode-menu')) {
 				if (!items.length) {
 					listEl.innerHTML =
 						'<div class="text-secondary text-center py-2">' +
-						(relatedTopics.dataset.labelNoRelated ||
-							'No related topics found.') +
+						Liferay.Util.escapeHTML(
+							relatedTopics.dataset.labelNoRelated ||
+								'No related topics found.'
+						) +
 						'</div>';
 
 					return;
@@ -120,8 +122,9 @@ if (relatedTopics && !document.body.classList.contains('has-edit-mode-menu')) {
 
 						let flaggedBadge = '';
 						if (isFlagged) {
-							const flaggedText =
-								relatedTopics.dataset.labelFlagged || 'Flagged';
+							const flaggedText = Liferay.Util.escapeHTML(
+								relatedTopics.dataset.labelFlagged || 'Flagged'
+							);
 							flaggedBadge =
 								'<span class="text-danger ml-2" style="font-size:0.85em"><svg class="lexicon-icon lexicon-icon-warning-full" role="presentation" viewBox="0 0 16 16" fill="currentColor" width="12" height="12"><path d="M16 14.5L8 1 0 14.5h16zM8 13c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm1-3H7V6h2v4z"/></svg> ' +
 								flaggedText +
@@ -140,7 +143,7 @@ if (relatedTopics && !document.body.classList.contains('has-edit-mode-menu')) {
 								friendlyUrlPath;
 							html +=
 								'<a href="' +
-								messageHref +
+								Liferay.Util.escapeHTML(messageHref) +
 								'" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">' +
 								'<span>' +
 								Liferay.Util.escapeHTML(title) +
@@ -161,6 +164,8 @@ if (relatedTopics && !document.body.classList.contains('has-edit-mode-menu')) {
 					}
 				);
 
+				// XSS: html is escaped by Liferay.Util.escapeHTML where it is built
+
 				listEl.innerHTML = html;
 
 				if (
@@ -169,10 +174,11 @@ if (relatedTopics && !document.body.classList.contains('has-edit-mode-menu')) {
 					Liferay.Util.openToast
 				) {
 					Liferay.Util.openToast({
-						message:
+						message: Liferay.Util.escapeHTML(
 							relatedTopics.dataset
 								.labelDisplayPageNotConfigured ||
-							'Display page is not configured for one or more messages.',
+								'Display page is not configured for one or more messages.'
+						),
 						type: 'danger',
 					});
 				}
@@ -183,8 +189,10 @@ if (relatedTopics && !document.body.classList.contains('has-edit-mode-menu')) {
 				}
 				listEl.innerHTML =
 					'<div class="text-secondary text-center py-2">' +
-					(relatedTopics.dataset.labelUnableToLoad ||
-						'Unable to load related topics.') +
+					Liferay.Util.escapeHTML(
+						relatedTopics.dataset.labelUnableToLoad ||
+							'Unable to load related topics.'
+					) +
 					'</div>';
 				console.error('ForumsRelatedTopics error:', error);
 			});
@@ -250,8 +258,10 @@ if (relatedTopics && !document.body.classList.contains('has-edit-mode-menu')) {
 				}
 				listEl.innerHTML =
 					'<div class="text-secondary text-center py-2">' +
-					(relatedTopics.dataset.labelErcNotMapped ||
-						'Message ERC is not mapped.') +
+					Liferay.Util.escapeHTML(
+						relatedTopics.dataset.labelErcNotMapped ||
+							'Message ERC is not mapped.'
+					) +
 					'</div>';
 			}
 			else {

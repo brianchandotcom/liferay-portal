@@ -272,8 +272,10 @@ if (forumsCategoriesAdmin) {
 				if (!items.length) {
 					listEl.innerHTML =
 						'<li class="list-group-item text-secondary">' +
-						(forumsCategoriesAdmin.dataset.labelNoCategories ||
-							'No categories found.') +
+						Liferay.Util.escapeHTML(
+							forumsCategoriesAdmin.dataset.labelNoCategories ||
+								'No categories found.'
+						) +
 						'</li>';
 
 					return;
@@ -359,6 +361,9 @@ if (forumsCategoriesAdmin) {
 			editBtn.ariaLabel =
 				forumsCategoriesAdmin.dataset.labelEdit || 'Edit';
 			editBtn.setAttribute('data-tooltip-align', 'top');
+
+			// XSS: clayIconsUrl is escaped by construction, from Liferay.ThemeDisplay
+
 			editBtn.innerHTML =
 				'<svg class="lexicon-icon lexicon-icon-pencil" role="presentation"><use href="' +
 				clayIconsUrl +
@@ -375,6 +380,9 @@ if (forumsCategoriesAdmin) {
 			delBtn.ariaLabel =
 				forumsCategoriesAdmin.dataset.labelDelete || 'Delete';
 			delBtn.setAttribute('data-tooltip-align', 'top');
+
+			// XSS: clayIconsUrl is escaped by construction, from Liferay.ThemeDisplay
+
 			delBtn.innerHTML =
 				'<svg class="lexicon-icon lexicon-icon-trash" role="presentation"><use href="' +
 				clayIconsUrl +
@@ -413,9 +421,15 @@ if (forumsCategoriesAdmin) {
 				labelHasSubcategories,
 				labelParentCategory,
 			} = forumsCategoriesAdmin.dataset;
-			const labelName = labelCategoryName || 'Category Name';
-			const labelDesc = labelDescription || 'Description';
-			const labelParent = labelParentCategory || 'Parent Category';
+			const labelName = Liferay.Util.escapeHTML(
+				labelCategoryName || 'Category Name'
+			);
+			const labelDesc = Liferay.Util.escapeHTML(
+				labelDescription || 'Description'
+			);
+			const labelParent = Liferay.Util.escapeHTML(
+				labelParentCategory || 'Parent Category'
+			);
 			const labelHasSubs =
 				labelHasSubcategories ||
 				'A category with subcategories cannot be nested.';
@@ -438,6 +452,9 @@ if (forumsCategoriesAdmin) {
 					labelParent +
 					'"></select>' +
 					'</div>';
+
+			// XSS: every label is escaped by Liferay.Util.escapeHTML above, and each
+			// field id is escaped by construction from the entry id
 
 			editForm.innerHTML =
 				'<div class="row align-items-end">' +
@@ -474,10 +491,14 @@ if (forumsCategoriesAdmin) {
 				'</div>' +
 				'<div class="col-12 col-md-auto mt-3 mt-md-0">' +
 				'<button type="submit" class="btn btn-primary mr-2">' +
-				(forumsCategoriesAdmin.dataset.labelSave || 'Save') +
+				Liferay.Util.escapeHTML(
+					forumsCategoriesAdmin.dataset.labelSave || 'Save'
+				) +
 				'</button>' +
 				'<button type="button" class="btn btn-outline-secondary cancel-edit-btn">' +
-				(forumsCategoriesAdmin.dataset.labelCancel || 'Cancel') +
+				Liferay.Util.escapeHTML(
+					forumsCategoriesAdmin.dataset.labelCancel || 'Cancel'
+				) +
 				'</button>' +
 				'</div>' +
 				'</div>';
@@ -630,6 +651,8 @@ if (forumsCategoriesAdmin) {
 		modal.setAttribute('role', 'dialog');
 		modal.setAttribute('aria-modal', 'true');
 		modal.setAttribute('aria-labelledby', 'forumsCatAdminConfirmHeading');
+
+		// XSS: every value is escaped by Liferay.Util.escapeHTML below
 
 		modal.innerHTML = `
 			<div class="modal-dialog modal-dialog-sm modal-dialog-centered modal-danger">

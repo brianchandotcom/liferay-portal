@@ -110,19 +110,15 @@ test(
 	}
 );
 
-// The composer disables its submit button, but nothing refuses the write, so a
-// banned member still posts through the API. This records the gap rather than
-// asserting the behaviour is correct; remove the annotation once the ban is
-// enforced where the entry is created.
+// An object validation rule refuses the write, so the ban holds whether the post
+// comes from the composer or straight from the endpoint.
 
 test(
-	'A ban is not enforced when the reply is posted directly',
+	'A ban is enforced when the reply is posted directly',
 	{
 		tag: ['@LPD-101023'],
 	},
 	async ({apiHelpers, browser}) => {
-		test.fail();
-
 		const siteId = await getForumsSiteId(apiHelpers);
 
 		const thread = await createThread(apiHelpers, siteId);
@@ -146,7 +142,25 @@ test(
 			path: `/o/${FORUM_MESSAGE_APPLICATION_NAME}/scopes/${siteId}`,
 		});
 
-		expect(status).toBe(403);
+		expect(status).toBe(400);
+
+		// A member who is not banned posting the same reply is what shows the
+		// rule refuses the ban rather than refusing everyone.
+
+		const allowed = await createForumMember(apiHelpers, siteId, 'Allowed');
+
+		const allowedReply = await requestAsUser(browser, {
+			body: {
+				body: '<p>Posted while not banned.</p>',
+				r_threadMessages_c_forumThreadId: thread.id,
+				subject: `Reply ${getRandomString()}`,
+			},
+			emailAddress: allowed.userAccount.emailAddress,
+			method: 'POST',
+			path: `/o/${FORUM_MESSAGE_APPLICATION_NAME}/scopes/${siteId}`,
+		});
+
+		expect(allowedReply.status).toBe(200);
 	}
 );
 
@@ -192,19 +206,16 @@ test(
 	}
 );
 
-// The composer decides whether to show the priority select from the actions the
-// entry endpoint returns, so the check lives in the browser alone and a member
-// can mark a topic Urgent by posting one. This records the gap rather than
-// asserting the behaviour is correct.
+// Priority is offered by the composer only to somebody who may add a ban, and an
+// object validation rule now holds a member to the same rule when the topic is
+// posted straight to the endpoint.
 
 test(
-	'Thread priority is not enforced when the topic is posted directly',
+	'Thread priority is enforced when the topic is posted directly',
 	{
 		tag: ['@LPD-101023'],
 	},
 	async ({apiHelpers, browser}) => {
-		test.fail();
-
 		const siteId = await getForumsSiteId(apiHelpers);
 
 		const category = await apiHelpers.objectEntry.postObjectEntry(
@@ -218,7 +229,7 @@ test(
 
 		const member = await createForumMember(apiHelpers, siteId, 'Member');
 
-		const {body, status} = await requestAsUser(browser, {
+		const {status} = await requestAsUser(browser, {
 			body: {
 				messageTitle: `Topic ${getRandomString()}`,
 				priority: THREAD_PRIORITY.URGENT,
@@ -229,8 +240,21 @@ test(
 			path: `/o/${FORUM_THREAD_APPLICATION_NAME}/scopes/${siteId}`,
 		});
 
-		expect(status).toBe(200);
+		expect(status).toBe(400);
 
-		expect(body?.priority).not.toBe(THREAD_PRIORITY.URGENT);
+		// The same member posting without a priority is what shows the rule
+		// refuses the priority rather than refusing the member.
+
+		const plain = await requestAsUser(browser, {
+			body: {
+				messageTitle: `Topic ${getRandomString()}`,
+				r_categoryThreads_c_forumCategoryId: category.id,
+			},
+			emailAddress: member.userAccount.emailAddress,
+			method: 'POST',
+			path: `/o/${FORUM_THREAD_APPLICATION_NAME}/scopes/${siteId}`,
+		});
+
+		expect(plain.status).toBe(200);
 	}
 );

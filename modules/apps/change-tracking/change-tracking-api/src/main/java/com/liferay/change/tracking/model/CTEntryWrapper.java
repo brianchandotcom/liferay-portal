@@ -449,6 +449,11 @@ public class CTEntryWrapper
 	}
 
 	@Override
+	public boolean shouldIndex() {
+		return model.shouldIndex();
+	}
+
+	@Override
 	public String toXmlString() {
 		return model.toXmlString();
 	}
@@ -464,4 +469,4 @@ public class CTEntryWrapper
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:307439152
+// LIFERAY-SERVICE-BUILDER-HASH:-1408848137

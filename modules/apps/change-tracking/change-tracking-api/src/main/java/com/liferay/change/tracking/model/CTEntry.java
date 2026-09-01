@@ -49,5 +49,7 @@ public interface CTEntry extends CTEntryModel, PersistedModel {
 
 	public String getUserName();
 
+	public boolean shouldIndex();
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:184654661
+// LIFERAY-SERVICE-BUILDER-HASH:-957160579

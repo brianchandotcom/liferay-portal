@@ -296,14 +296,16 @@ public class SitePageResourceImpl
 			String sitePageExternalReferenceCode)
 		throws Exception {
 
-		EnabledUtil.checkEnabled(contextCompany);
+		long groupId = GroupUtil.getGroupId(
+			true, contextCompany.getCompanyId(), siteExternalReferenceCode);
 
-		return _toSitePage(
-			SitePageUtil.getSitePageLayout(
-				GroupUtil.getGroupId(
-					true, contextCompany.getCompanyId(),
-					siteExternalReferenceCode),
-				sitePageExternalReferenceCode));
+		Layout layout = SitePageUtil.getSitePageLayout(
+			groupId, sitePageExternalReferenceCode);
+
+		EnabledUtil.checkGetSitePagesEnabled(
+			contextCompany, groupId, layout.isPrivateLayout());
+
+		return _toSitePage(layout);
 	}
 
 	@Override
@@ -313,10 +315,11 @@ public class SitePageResourceImpl
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		EnabledUtil.checkEnabled(contextCompany, privateLayout);
-
 		long groupId = GroupUtil.getGroupId(
 			true, contextCompany.getCompanyId(), siteExternalReferenceCode);
+
+		EnabledUtil.checkGetSitePagesEnabled(
+			contextCompany, groupId, privateLayout);
 
 		return SearchUtil.search(
 			null,

@@ -6,9 +6,14 @@
 package com.liferay.headless.admin.site.internal.util;
 
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 
 /**
  * @author Alejandro Tardín
@@ -55,9 +60,49 @@ public class EnabledUtil {
 		}
 	}
 
+	public static void checkGetSitePagesEnabled(
+			Company company, long groupId, boolean privateLayout)
+		throws PortalException {
+
+		if (LazyReferencingThreadLocal.isEnabled() ||
+			ExportImportThreadLocal.isExportInProcess() ||
+			ExportImportThreadLocal.isImportInProcess() ||
+			ExportImportThreadLocal.isStagingInProcess()) {
+
+			return;
+		}
+
+		if (!_hasExportImportPermission(groupId)) {
+			FeatureFlagManagerUtil.checkEnabled(
+				company.getCompanyId(), "LPD-35443");
+		}
+
+		if (privateLayout) {
+			FeatureFlagManagerUtil.checkEnabled(
+				company.getCompanyId(), "LPD-38869");
+		}
+	}
+
 	public static void checkPageSpecificationVersionEnabled(Company company) {
 		FeatureFlagManagerUtil.checkEnabled(
 			company.getCompanyId(), "LPD-10622");
+	}
+
+	private static boolean _hasExportImportPermission(long groupId)
+		throws PortalException {
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if (GroupPermissionUtil.contains(
+				permissionChecker, groupId, ActionKeys.EXPORT_IMPORT_LAYOUTS) ||
+			GroupPermissionUtil.contains(
+				permissionChecker, groupId, ActionKeys.PUBLISH_STAGING)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 }

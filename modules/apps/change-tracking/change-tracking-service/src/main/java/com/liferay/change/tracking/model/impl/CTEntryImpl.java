@@ -7,12 +7,13 @@ package com.liferay.change.tracking.model.impl;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.IndexableAware;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 
 /**
  * @author Daniel Kocsis
  */
-public class CTEntryImpl extends CTEntryBaseImpl {
+public class CTEntryImpl extends CTEntryBaseImpl implements IndexableAware {
 
 	@Override
 	public String getUserName() {
@@ -23,6 +24,11 @@ public class CTEntryImpl extends CTEntryBaseImpl {
 		}
 
 		return user.getFullName();
+	}
+
+	@Override
+	public boolean shouldIndex() {
+		return false;
 	}
 
 }

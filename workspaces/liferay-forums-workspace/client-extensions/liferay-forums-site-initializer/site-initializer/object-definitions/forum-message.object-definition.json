@@ -201,6 +201,21 @@
 		}
 	],
 	"objectFolderExternalReferenceCode": "FORUMS-FOLDER",
+	"objectValidationRules": [
+		{
+			"active": true,
+			"engine": "function#liferay-forums-etc-spring-boot-object-validation-rule-ban",
+			"errorLabel": {
+				"en_US": "Your account has been banned from participating in the forums."
+			},
+			"externalReferenceCode": "FORUM-MESSAGE-BAN-VALIDATION",
+			"name": {
+				"en_US": "Ban Enforcement"
+			},
+			"outputType": "fullValidation",
+			"script": ""
+		}
+	],
 	"panelCategoryKey": "",
 	"parameterRequired": false,
 	"pluralLabel": {

@@ -75,6 +75,31 @@ The initializer's permission step only adds and updates grants, so a grant remov
 
 Earlier versions let every member add `ForumUser` and `ForumNotification` entries, because the service wrote those rows as the member who posted. The service now writes them as a service account, so members no longer need either grant, and leaving them in place would let a member address a notification to somebody else. On an install created before that change, revoke them: in Control Panel, under Objects, clear the permission that allows the User role to add entries on `ForumUser` and on `ForumNotification`. Members keep the rest of what they had, including reading `ForumUser` for the mention picker and adding and reading their own `ForumSubscription` rows.
 
+### Validation Rules on an Install Created Earlier
+
+The ban and the thread priority are refused by object validation rules, which the initializer creates with the object definition. Definitions are company scoped and survive the site, so on an install that already has them the rules are not created and both checks stay browser only.
+
+Add them once, per rule, naming the object they guard:
+
+```bash
+curl --request POST --user test@liferay.com:test \
+  --header "Content-Type: application/json" \
+  --url "http://localhost:8080/o/object-admin/v1.0/object-definitions/by-external-reference-code/FORUM-MESSAGE/object-validation-rules" \
+  --data '{
+    "active": true,
+    "engine": "function#liferay-forums-etc-spring-boot-object-validation-rule-ban",
+    "errorLabel": {"en_US": "Your account has been banned from participating in the forums."},
+    "externalReferenceCode": "FORUM-MESSAGE-BAN-VALIDATION",
+    "name": {"en_US": "Ban Enforcement"},
+    "outputType": "fullValidation",
+    "script": ""
+  }'
+```
+
+`FORUM-THREAD` needs the same ban rule plus the priority one, whose engine is `function#liferay-forums-etc-spring-boot-object-validation-rule-priority`. The exact payloads are in `object-definitions/forum-message.object-definition.json` and `object-definitions/forum-thread.object-definition.json`, under `objectValidationRules`.
+
+The rules call the Spring Boot client extension, so it has to be deployed and running before they are created; a rule whose engine is not registered is refused.
+
 ### Applying a Change to an Existing Site
 
 The initializer creates pages when the site is created. Editing a page or a fragment and redeploying does not retrofit the change onto a site that already exists, so recreate the site to apply it:

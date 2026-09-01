@@ -108,6 +108,34 @@
 		}
 	],
 	"objectFolderExternalReferenceCode": "FORUMS-FOLDER",
+	"objectValidationRules": [
+		{
+			"active": true,
+			"engine": "function#liferay-forums-etc-spring-boot-object-validation-rule-ban",
+			"errorLabel": {
+				"en_US": "Your account has been banned from participating in the forums."
+			},
+			"externalReferenceCode": "FORUM-THREAD-BAN-VALIDATION",
+			"name": {
+				"en_US": "Ban Enforcement"
+			},
+			"outputType": "fullValidation",
+			"script": ""
+		},
+		{
+			"active": true,
+			"engine": "function#liferay-forums-etc-spring-boot-object-validation-rule-priority",
+			"errorLabel": {
+				"en_US": "You are not allowed to set the priority of a discussion."
+			},
+			"externalReferenceCode": "FORUM-THREAD-PRIORITY-VALIDATION",
+			"name": {
+				"en_US": "Thread Priority Enforcement"
+			},
+			"outputType": "fullValidation",
+			"script": ""
+		}
+	],
 	"panelCategoryKey": "",
 	"parameterRequired": false,
 	"pluralLabel": {

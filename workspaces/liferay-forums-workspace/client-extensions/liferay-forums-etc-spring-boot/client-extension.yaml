@@ -8,6 +8,7 @@ liferay-forums-etc-spring-boot-oahs:
         -   Liferay.Headless.Admin.Site.everything.read
         -   Liferay.Headless.Admin.User.everything.read
         -   Liferay.Object.Admin.REST.everything.read
+        -   c_forumban.everything.read
         -   c_forummessage.everything
         -   c_forumnotification.everything
         -   c_forumsubscription.everything.read
@@ -37,3 +38,18 @@ liferay-forums-etc-spring-boot-object-action-updated-reply:
     oAuth2ApplicationExternalReferenceCode: liferay-forums-etc-spring-boot-oaua
     resourcePath: /object-action/updated-reply
     type: objectAction
+liferay-forums-etc-spring-boot-object-validation-rule-ban:
+    allowedObjectDefinitionNames:
+        -   C_ForumMessage
+        -   C_ForumThread
+    name: Liferay Forums Etc Spring Boot Object Validation Rule Ban
+    oAuth2ApplicationExternalReferenceCode: liferay-forums-etc-spring-boot-oaua
+    resourcePath: /object-validation-rule/ban
+    type: objectValidationRule
+liferay-forums-etc-spring-boot-object-validation-rule-priority:
+    allowedObjectDefinitionNames:
+        -   C_ForumThread
+    name: Liferay Forums Etc Spring Boot Object Validation Rule Priority
+    oAuth2ApplicationExternalReferenceCode: liferay-forums-etc-spring-boot-oaua
+    resourcePath: /object-validation-rule/priority
+    type: objectValidationRule

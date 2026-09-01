@@ -70,14 +70,25 @@ public class ObjectValidationRuleRestController extends BaseRestController {
 
 		JSONObject payloadJSONObject = new JSONObject(json);
 
-		if (payloadJSONObject.optDouble("priority", 0) <= 0) {
+		double priority = payloadJSONObject.optDouble("priority", 0);
+
+		if (priority <= 0) {
+			return _respond(payloadJSONObject, true);
+		}
+
+		String authToken = _serviceAuthToken();
+
+		if (_forumModerationService.isThreadPriorityUnchanged(
+				payloadJSONObject.optString("externalReferenceCode"), priority,
+				authToken)) {
+
 			return _respond(payloadJSONObject, true);
 		}
 
 		long creatorUserId = _resolveCreatorUserId(payloadJSONObject);
 
 		boolean allowed = _forumModerationService.canAddForumBan(
-			creatorUserId, _serviceAuthToken());
+			creatorUserId, authToken);
 
 		if (!allowed && _log.isInfoEnabled()) {
 			_log.info("Refused a thread priority set by user " + creatorUserId);

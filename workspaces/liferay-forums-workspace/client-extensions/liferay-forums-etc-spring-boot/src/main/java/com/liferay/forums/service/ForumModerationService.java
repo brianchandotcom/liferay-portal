@@ -107,6 +107,63 @@ public class ForumModerationService {
 		}
 	}
 
+	// A write that leaves the priority alone is not a priority decision, so
+	// it must not be judged as one. The payload names the entry's creator
+	// rather than whoever is writing now, so judging every write would refuse
+	// a later edit of somebody else's prioritized thread, and would refuse the
+	// updates a site deletion cascades.
+
+	public boolean isThreadPriorityUnchanged(
+		String externalReferenceCode, double priority, String authToken) {
+
+		if ((externalReferenceCode == null) ||
+			externalReferenceCode.isEmpty()) {
+
+			return false;
+		}
+
+		long siteId = resolveSiteId(authToken);
+
+		if (siteId <= 0) {
+
+			// Without a site scope the stored value cannot be read, and
+			// assuming it is unchanged would wave the entry through.
+
+			return false;
+		}
+
+		try {
+			JSONObject threadJSONObject = new JSONObject(
+				_liferayApiClient.get(
+					StringBundler.concat(
+						"/o/c/forumthreads/scopes/", siteId,
+						"/by-external-reference-code/",
+						_encode(externalReferenceCode), "?fields=priority"),
+					authToken));
+
+			if (threadJSONObject.optDouble("priority", -1) == priority) {
+				return true;
+			}
+
+			return false;
+		}
+		catch (Exception exception) {
+
+			// A thread that is being created has nothing stored yet, which
+			// arrives here as a 404. Treat that, and any failed lookup, as a
+			// change so the permission check still runs.
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"Unable to read the stored priority of thread ",
+						externalReferenceCode, ": ", exception.getMessage()));
+			}
+
+			return false;
+		}
+	}
+
 	public long resolveSiteId(String authToken) {
 		try {
 			return new JSONObject(

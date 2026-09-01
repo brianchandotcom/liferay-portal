@@ -158,6 +158,9 @@ public class AssetEntryResourceTest extends BaseAssetEntryResourceTestCase {
 			String.valueOf(notGuestViewableBlogsEntry.getEntryId()),
 			guestRole.getRoleId(), ActionKeys.VIEW);
 
+		BlogsEntry guestViewableBlogsEntry = _addBlogsEntry(
+			testGroup.getGroupId());
+
 		AssetEntryResource nestedFieldsAssetEntryResource =
 			AssetEntryResource.builder(
 			).authentication(
@@ -174,9 +177,6 @@ public class AssetEntryResourceTest extends BaseAssetEntryResourceTestCase {
 				Pagination.of(1, 50), null);
 
 		List<AssetEntry> assetEntries = (List<AssetEntry>)page.getItems();
-
-		BlogsEntry guestViewableBlogsEntry = _addBlogsEntry(
-			testGroup.getGroupId());
 
 		AssetEntry guestViewableAssetEntry = _getAssetEntry(
 			assetEntries, guestViewableBlogsEntry.getEntryId());

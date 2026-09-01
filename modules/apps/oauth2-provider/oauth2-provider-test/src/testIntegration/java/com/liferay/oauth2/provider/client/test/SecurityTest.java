@@ -317,11 +317,10 @@ public class SecurityTest extends BaseClientTestCase {
 				_user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD,
 				null);
 
-		Response response = getCodeFunction(
-			authorizeRequestFunction, true
-		).apply(
-			invocationBuilderFunction
-		);
+		Function<Function<WebTarget, Invocation.Builder>, Response>
+			codeFunction = getCodeFunction(authorizeRequestFunction, true);
+
+		Response response = codeFunction.apply(invocationBuilderFunction);
 
 		URI uri = response.getLocation();
 
@@ -382,13 +381,13 @@ public class SecurityTest extends BaseClientTestCase {
 				entry.getKey(), (Object[])entry.getValue());
 		}
 
-		Invocation.Builder invocationBuilder =
+		Function<WebTarget, Invocation.Builder> invocationBuilderFunction =
 			getAuthenticatedInvocationBuilderFunction(
 				_user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD,
-				null
-			).apply(
-				webTarget
-			);
+				null);
+
+		Invocation.Builder invocationBuilder = invocationBuilderFunction.apply(
+			webTarget);
 
 		return getBodyAsString(invocationBuilder.get());
 	}

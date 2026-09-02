@@ -372,6 +372,9 @@ public class LayoutServiceContextHelperImpl
 
 			ThemeDisplay themeDisplay = ThemeDisplayFactory.create();
 
+			// Set attributes first that other methods (getCDNBaseURL and
+			// setLookAndFeel) depend on
+
 			themeDisplay.setCompany(company);
 			themeDisplay.setPortalDomain(company.getVirtualHostname());
 

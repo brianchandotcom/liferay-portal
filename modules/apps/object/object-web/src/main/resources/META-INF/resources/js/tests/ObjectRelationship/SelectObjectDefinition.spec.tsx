@@ -178,7 +178,7 @@ describe('SelectObjectDefinition', () => {
 	});
 
 	it('renders the hint while more object definitions can be loaded', async () => {
-		mockPage({lastPage: 10, once: false, totalCount: 200});
+		mockPage({lastPage: 2, once: false, totalCount: 200});
 
 		renderSelectObjectDefinition();
 
@@ -252,7 +252,7 @@ describe('SelectObjectDefinition', () => {
 	});
 
 	it('updates the hint when the search is cleared', async () => {
-		mockPage({items: [OBJECT_DEFINITION], lastPage: 10, totalCount: 200});
+		mockPage({items: [OBJECT_DEFINITION], lastPage: 2, totalCount: 200});
 
 		renderSelectObjectDefinition();
 
@@ -276,7 +276,7 @@ describe('SelectObjectDefinition', () => {
 
 		mockPage({
 			items: [OBJECT_DEFINITION],
-			lastPage: 10,
+			lastPage: 2,
 			once: false,
 			totalCount: 200,
 		});

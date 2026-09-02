@@ -234,21 +234,6 @@ public class TaskAssigneeResourceTest extends BaseTaskAssigneeResourceTestCase {
 
 		long groupId = depotEntry.getGroupId();
 
-		String lastName = RandomTestUtil.randomString();
-
-		User administratorUser = _addUser(
-			groupId, RandomTestUtil.randomString(), lastName);
-
-		Role administratorRole = _roleLocalService.getRole(
-			TestPropsValues.getCompanyId(), RoleConstants.ADMINISTRATOR);
-
-		_roleLocalService.addUserRoles(
-			administratorUser.getUserId(),
-			new long[] {administratorRole.getRoleId()});
-
-		User assignableUser = _addUser(
-			groupId, RandomTestUtil.randomString(), lastName);
-
 		User spaceAdministratorUser = UserTestUtil.addUser(
 			testCompany, PropsValues.DEFAULT_ADMIN_PASSWORD);
 
@@ -277,6 +262,21 @@ public class TaskAssigneeResourceTest extends BaseTaskAssigneeResourceTestCase {
 			).locale(
 				LocaleUtil.getDefault()
 			).build();
+
+		String lastName = RandomTestUtil.randomString();
+
+		User administratorUser = _addUser(
+			groupId, RandomTestUtil.randomString(), lastName);
+
+		Role administratorRole = _roleLocalService.getRole(
+			TestPropsValues.getCompanyId(), RoleConstants.ADMINISTRATOR);
+
+		_roleLocalService.addUserRoles(
+			administratorUser.getUserId(),
+			new long[] {administratorRole.getRoleId()});
+
+		User assignableUser = _addUser(
+			groupId, RandomTestUtil.randomString(), lastName);
 
 		long[] taskAssigneeIds = _getTaskAssigneeIds(
 			spaceAdministratorTaskAssigneeResource.getTaskAssigneesPage(

@@ -38,11 +38,12 @@ public class PortalInstanceManagerImpl implements PortalInstanceManager {
 
 	@Override
 	public long addPortalInstance(
-			long userId, String webId, String virtualHostname, String mx,
-			int maxUsers, boolean active, String defaultAdminPassword,
-			String defaultAdminScreenName, String defaultAdminEmailAddress,
-			String defaultAdminFirstName, String defaultAdminMiddleName,
-			String defaultAdminLastName, String siteInitializerKey)
+			boolean active, String defaultAdminEmailAddress,
+			String defaultAdminFirstName, String defaultAdminLastName,
+			String defaultAdminMiddleName, String defaultAdminPassword,
+			String defaultAdminScreenName, int maxUsers, String mx,
+			String siteInitializerKey, long userId, String virtualHostname,
+			String webId)
 		throws PortalException {
 
 		PermissionChecker permissionChecker =

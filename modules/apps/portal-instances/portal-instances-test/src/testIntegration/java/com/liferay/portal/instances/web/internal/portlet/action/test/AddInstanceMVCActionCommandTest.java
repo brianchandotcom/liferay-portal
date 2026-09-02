@@ -70,8 +70,6 @@ public class AddInstanceMVCActionCommandTest {
 
 		BackgroundTask backgroundTask = _fetchBackgroundTask();
 
-		Assert.assertNotNull(backgroundTask);
-
 		Map<String, Serializable> taskContextMap =
 			backgroundTask.getTaskContextMap();
 

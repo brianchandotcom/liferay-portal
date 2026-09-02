@@ -59,7 +59,9 @@ public class AddInstanceMVCActionCommand extends BaseMVCActionCommand {
 		Locale locale = actionRequest.getLocale();
 
 		try {
-			String webId = _addPortalInstance(actionRequest);
+			String webId = ParamUtil.getString(actionRequest, "webId");
+
+			_addPortalInstance(actionRequest, webId);
 
 			jsonObject.put(
 				"startMessage",
@@ -80,13 +82,11 @@ public class AddInstanceMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, actionResponse, jsonObject);
 	}
 
-	private String _addPortalInstance(ActionRequest actionRequest)
+	private void _addPortalInstance(ActionRequest actionRequest, String webId)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
-
-		String webId = ParamUtil.getString(actionRequest, "webId");
 
 		_portalInstanceManager.addPortalInstance(
 			themeDisplay.getUserId(), webId,
@@ -104,8 +104,6 @@ public class AddInstanceMVCActionCommand extends BaseMVCActionCommand {
 			ParamUtil.getString(actionRequest, "defaultAdminMiddleName", null),
 			ParamUtil.getString(actionRequest, "defaultAdminLastName", null),
 			ParamUtil.getString(actionRequest, "siteInitializerKey"));
-
-		return webId;
 	}
 
 	private String _getErrorMessageKey(Exception exception) {

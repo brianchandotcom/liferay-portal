@@ -115,9 +115,9 @@ public class PortalInstancesUserNotificationHandlerTest {
 			_getExpectedBody(_NOT_ADDED_MESSAGE + " " + _ERROR_MESSAGE),
 			_portalInstancesUserNotificationHandler.getBody(
 				_createUserNotificationEvent(
+					"please-enter-a-valid-web-id",
 					PortalInstanceOperationType.ADD,
-					BackgroundTaskConstants.STATUS_FAILED,
-					"please-enter-a-valid-web-id"),
+					BackgroundTaskConstants.STATUS_FAILED),
 				_serviceContext));
 	}
 
@@ -129,8 +129,8 @@ public class PortalInstancesUserNotificationHandlerTest {
 			_getExpectedBody(_ADDED_MESSAGE),
 			_portalInstancesUserNotificationHandler.getBody(
 				_createUserNotificationEvent(
-					PortalInstanceOperationType.ADD,
-					BackgroundTaskConstants.STATUS_SUCCESSFUL, null),
+					null, PortalInstanceOperationType.ADD,
+					BackgroundTaskConstants.STATUS_SUCCESSFUL),
 				_serviceContext));
 	}
 
@@ -140,8 +140,8 @@ public class PortalInstancesUserNotificationHandlerTest {
 			IllegalArgumentException.class,
 			() -> _portalInstancesUserNotificationHandler.getBody(
 				_createUserNotificationEvent(
-					PortalInstanceOperationType.DELETE,
-					BackgroundTaskConstants.STATUS_SUCCESSFUL, null),
+					null, PortalInstanceOperationType.DELETE,
+					BackgroundTaskConstants.STATUS_SUCCESSFUL),
 				_serviceContext));
 	}
 
@@ -151,14 +151,14 @@ public class PortalInstancesUserNotificationHandlerTest {
 			_PORTLET_TITLE,
 			_portalInstancesUserNotificationHandler.getTitle(
 				_createUserNotificationEvent(
-					PortalInstanceOperationType.ADD,
-					BackgroundTaskConstants.STATUS_SUCCESSFUL, null),
+					null, PortalInstanceOperationType.ADD,
+					BackgroundTaskConstants.STATUS_SUCCESSFUL),
 				_serviceContext));
 	}
 
 	private UserNotificationEvent _createUserNotificationEvent(
-		PortalInstanceOperationType portalInstanceOperationType, int status,
-		String errorMessageKey) {
+		String errorMessageKey,
+		PortalInstanceOperationType portalInstanceOperationType, int status) {
 
 		UserNotificationEvent userNotificationEvent =
 			new UserNotificationEventImpl();

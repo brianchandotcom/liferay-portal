@@ -12,8 +12,7 @@ import com.liferay.portal.kernel.util.StringUtil;
  */
 public enum PortalInstanceOperationType {
 
-	ADD("add"), COPY("copy"), DELETE("delete"), EXPORT("export"),
-	IMPORT("import");
+	ADD("add"), DELETE("delete");
 
 	public static PortalInstanceOperationType parse(String value) {
 		for (PortalInstanceOperationType portalInstanceOperationType :

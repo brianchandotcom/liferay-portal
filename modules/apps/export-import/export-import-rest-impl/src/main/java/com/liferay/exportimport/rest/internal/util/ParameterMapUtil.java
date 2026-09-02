@@ -233,7 +233,7 @@ public class ParameterMapUtil {
 			});
 
 		_addSiteExternalReferenceCodes(
-			exportProcessRequest.getSiteExternalReferenceCodes(), parameterMap);
+			importProcessRequest.getSiteExternalReferenceCodes(), parameterMap);
 
 		parameterMap.put(
 			PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_SETTINGS,

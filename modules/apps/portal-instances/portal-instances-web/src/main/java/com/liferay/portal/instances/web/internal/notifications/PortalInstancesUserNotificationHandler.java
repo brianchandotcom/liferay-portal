@@ -95,7 +95,7 @@ public class PortalInstancesUserNotificationHandler
 				jsonObject.getString(
 					PortalInstanceBackgroundTaskConstants.OPERATION_TYPE));
 
-		String status = jsonObject.getString(
+		int status = jsonObject.getInt(
 			PortalInstanceBackgroundTaskConstants.STATUS);
 
 		if (portalInstanceOperationType == PortalInstanceOperationType.ADD) {
@@ -103,13 +103,13 @@ public class PortalInstancesUserNotificationHandler
 				jsonObject.getString(
 					PortalInstanceBackgroundTaskConstants.WEB_ID));
 
-			if (status.equals(BackgroundTaskConstants.LABEL_SUCCESSFUL)) {
+			if (status == BackgroundTaskConstants.STATUS_SUCCESSFUL) {
 				return _language.format(
 					locale, "the-virtual-instance-x-was-added-successfully",
 					webId, false);
 			}
 
-			if (status.equals(BackgroundTaskConstants.LABEL_FAILED)) {
+			if (status == BackgroundTaskConstants.STATUS_FAILED) {
 				return StringBundler.concat(
 					_language.format(
 						locale, "the-virtual-instance-x-could-not-be-added",
@@ -122,7 +122,8 @@ public class PortalInstancesUserNotificationHandler
 			StringBundler.concat(
 				"No portal instances user notification found for operation ",
 				"type ", portalInstanceOperationType.getValue(), " and status ",
-				status));
+				status, " (", BackgroundTaskConstants.getStatusLabel(status),
+				")"));
 	}
 
 	private String _getErrorMessage(JSONObject jsonObject, Locale locale) {

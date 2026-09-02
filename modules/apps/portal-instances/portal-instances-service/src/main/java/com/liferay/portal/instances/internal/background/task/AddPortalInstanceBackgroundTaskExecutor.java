@@ -234,8 +234,7 @@ public class AddPortalInstanceBackgroundTaskExecutor
 			PortalInstanceBackgroundTaskConstants.OPERATION_TYPE,
 			PortalInstanceOperationType.ADD.getValue()
 		).put(
-			PortalInstanceBackgroundTaskConstants.STATUS,
-			BackgroundTaskConstants.getStatusLabel(status)
+			PortalInstanceBackgroundTaskConstants.STATUS, status
 		).put(
 			PortalInstanceBackgroundTaskConstants.WEB_ID, webId
 		);

@@ -54,9 +54,9 @@ public class AddInstanceMVCActionCommand extends BaseMVCActionCommand {
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
-		Locale locale = actionRequest.getLocale();
-
 		hideDefaultSuccessMessage(actionRequest);
+
+		Locale locale = actionRequest.getLocale();
 
 		try {
 			String webId = _addPortalInstance(actionRequest);
@@ -121,13 +121,13 @@ public class AddInstanceMVCActionCommand extends BaseMVCActionCommand {
 		else if (exception instanceof CompanyWebIdException) {
 			return "please-enter-a-valid-web-id";
 		}
-		else if (exception instanceof PrincipalException.MustBeOmniadmin) {
-			return "you-must-be-an-admin-to-complete-this-action";
-		}
 		else if (exception instanceof
 					PortalInstanceAlreadyBeingAddedException) {
 
 			return "a-virtual-instance-with-this-web-id-is-already-being-added";
+		}
+		else if (exception instanceof PrincipalException.MustBeOmniadmin) {
+			return "you-must-be-an-admin-to-complete-this-action";
 		}
 
 		return "an-unexpected-error-occurred";

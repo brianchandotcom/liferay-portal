@@ -16,7 +16,9 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.language.LanguageImpl;
 import com.liferay.portal.model.impl.UserNotificationEventImpl;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -84,29 +86,32 @@ public class PortalInstancesUserNotificationHandlerTest {
 		throws Exception {
 
 		Language language = Mockito.mock(Language.class);
+		String message1 = RandomTestUtil.randomString();
 
 		Mockito.when(
 			language.format(
 				Mockito.any(Locale.class),
 				Mockito.eq("the-virtual-instance-x-could-not-be-added"),
-				Mockito.eq(_WEB_ID_MATCHING_LANGUAGE_KEY), Mockito.eq(false))
+				Mockito.eq(_WEB_ID), Mockito.eq(false))
 		).thenReturn(
-			_NOT_ADDED_MESSAGE
+			message1
 		);
+
+		String message2 = RandomTestUtil.randomString();
 
 		Mockito.when(
 			language.get(
 				Mockito.any(Locale.class),
 				Mockito.eq("please-enter-a-valid-web-id"))
 		).thenReturn(
-			_ERROR_MESSAGE
+			message2
 		);
 
 		ReflectionTestUtil.setFieldValue(
 			_portalInstancesUserNotificationHandler, "_language", language);
 
 		Assert.assertEquals(
-			_getExpectedBody(_NOT_ADDED_MESSAGE + " " + _ERROR_MESSAGE),
+			_getExpectedBody(message1 + " " + message2),
 			_portalInstancesUserNotificationHandler.getBody(
 				_createUserNotificationEvent(
 					"please-enter-a-valid-web-id",
@@ -120,21 +125,22 @@ public class PortalInstancesUserNotificationHandlerTest {
 		throws Exception {
 
 		Language language = Mockito.mock(Language.class);
+		String message = RandomTestUtil.randomString();
 
 		Mockito.when(
 			language.format(
 				Mockito.any(Locale.class),
 				Mockito.eq("the-virtual-instance-x-was-added-successfully"),
-				Mockito.eq(_WEB_ID_MATCHING_LANGUAGE_KEY), Mockito.eq(false))
+				Mockito.eq(_WEB_ID), Mockito.eq(false))
 		).thenReturn(
-			_ADDED_MESSAGE
+			message
 		);
 
 		ReflectionTestUtil.setFieldValue(
 			_portalInstancesUserNotificationHandler, "_language", language);
 
 		Assert.assertEquals(
-			_getExpectedBody(_ADDED_MESSAGE),
+			_getExpectedBody(message),
 			_portalInstancesUserNotificationHandler.getBody(
 				_createUserNotificationEvent(
 					null, PortalInstanceOperationType.ADD,
@@ -184,8 +190,7 @@ public class PortalInstancesUserNotificationHandlerTest {
 				).put(
 					PortalInstanceBackgroundTaskConstants.STATUS, status
 				).put(
-					PortalInstanceBackgroundTaskConstants.WEB_ID,
-					_WEB_ID_MATCHING_LANGUAGE_KEY
+					PortalInstanceBackgroundTaskConstants.WEB_ID, _WEB_ID
 				)));
 
 		return userNotificationEvent;
@@ -197,17 +202,9 @@ public class PortalInstancesUserNotificationHandlerTest {
 			_PORTLET_TITLE, body);
 	}
 
-	private static final String _ADDED_MESSAGE =
-		"The virtual instance test was added successfully.";
+	private static final String _PORTLET_TITLE = RandomTestUtil.randomString();
 
-	private static final String _ERROR_MESSAGE = "Please enter a valid web ID.";
-
-	private static final String _NOT_ADDED_MESSAGE =
-		"The virtual instance test could not be added.";
-
-	private static final String _PORTLET_TITLE = "Virtual Instances";
-
-	private static final String _WEB_ID_MATCHING_LANGUAGE_KEY = "test";
+	private static final String _WEB_ID = StringUtil.randomId();
 
 	private PortalInstancesUserNotificationHandler
 		_portalInstancesUserNotificationHandler;

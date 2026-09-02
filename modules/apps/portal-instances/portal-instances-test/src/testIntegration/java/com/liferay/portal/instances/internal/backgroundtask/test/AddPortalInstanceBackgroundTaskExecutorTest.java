@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.encryptor.EncryptorUtil;
 import com.liferay.portal.kernel.exception.CompanyWebIdException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
@@ -48,6 +49,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
+
 /**
  * @author Luis Ortiz
  */
@@ -71,14 +75,18 @@ public class AddPortalInstanceBackgroundTaskExecutorTest {
 
 		Company company = _companyLocalService.getCompanyByWebId(_WEB_ID);
 
-		JSONObject payloadJSONObject = _getPayloadJSONObject();
-
-		Assert.assertEquals(
-			company.getCompanyId(), payloadJSONObject.getLong("companyId"));
-		Assert.assertEquals(
-			BackgroundTaskConstants.LABEL_SUCCESSFUL,
-			payloadJSONObject.getString("status"));
-		Assert.assertEquals(_WEB_ID, payloadJSONObject.getString("webId"));
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"companyId", company.getCompanyId()
+			).put(
+				"operationType", "add"
+			).put(
+				"status", BackgroundTaskConstants.STATUS_SUCCESSFUL
+			).put(
+				"webId", _WEB_ID
+			).toString(),
+			_getUserNotificationEventJSONObject().toString(),
+			JSONCompareMode.STRICT);
 
 		JSONObject statusMessageJSONObject = _jsonFactory.createJSONObject(
 			backgroundTask.getStatusMessage());
@@ -100,14 +108,20 @@ public class AddPortalInstanceBackgroundTaskExecutorTest {
 		Assert.assertEquals(
 			BackgroundTaskConstants.STATUS_FAILED, backgroundTask.getStatus());
 
-		JSONObject payloadJSONObject = _getPayloadJSONObject();
-
-		Assert.assertEquals(
-			"please-enter-a-valid-email-address",
-			payloadJSONObject.getString("errorMessageKey"));
-		Assert.assertEquals(
-			BackgroundTaskConstants.LABEL_FAILED,
-			payloadJSONObject.getString("status"));
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"companyId", 0L
+			).put(
+				"errorMessageKey", "please-enter-a-valid-email-address"
+			).put(
+				"operationType", "add"
+			).put(
+				"status", BackgroundTaskConstants.STATUS_FAILED
+			).put(
+				"webId", _WEB_ID
+			).toString(),
+			_getUserNotificationEventJSONObject().toString(),
+			JSONCompareMode.STRICT);
 
 		Company company = _companyLocalService.getCompanyByWebId(_WEB_ID);
 
@@ -201,7 +215,7 @@ public class AddPortalInstanceBackgroundTaskExecutorTest {
 		return _waitForCompletion(backgroundTask.getBackgroundTaskId());
 	}
 
-	private JSONObject _getPayloadJSONObject() throws Exception {
+	private JSONObject _getUserNotificationEventJSONObject() throws Exception {
 		List<UserNotificationEvent> userNotificationEvents =
 			_userNotificationEventLocalService.getUserNotificationEvents(
 				TestPropsValues.getUserId(),
@@ -219,15 +233,18 @@ public class AddPortalInstanceBackgroundTaskExecutorTest {
 				continue;
 			}
 
-			JSONObject payloadJSONObject = _jsonFactory.createJSONObject(
-				userNotificationEvent.getPayload());
+			JSONObject userNotificationEventJSONObject =
+				_jsonFactory.createJSONObject(
+					userNotificationEvent.getPayload());
 
-			String webId = payloadJSONObject.getString("webId");
+			if (StringUtil.equals(
+					JSONUtil.getValueAsString(
+						userNotificationEventJSONObject, "Object/webId"),
+					_WEB_ID)) {
 
-			if (webId.equals(_WEB_ID)) {
 				_userNotificationEvents.add(userNotificationEvent);
 
-				return payloadJSONObject;
+				return userNotificationEventJSONObject;
 			}
 		}
 

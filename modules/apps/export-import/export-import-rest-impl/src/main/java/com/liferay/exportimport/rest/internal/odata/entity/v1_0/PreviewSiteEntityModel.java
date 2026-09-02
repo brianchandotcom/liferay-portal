@@ -12,14 +12,6 @@ import com.liferay.portal.odata.entity.StringEntityField;
 import java.util.Map;
 
 /**
- * Declares the fields a site preview can be sorted on.
- *
- * <p>
- * Vulcan resolves the <code>sort</code> query parameter into a
- * <code>Sort[]</code> only for a resource that answers with an entity model, so
- * a resource without one silently ignores every sort it is given.
- * </p>
- *
  * @author Petteri Karttunen
  */
 public class PreviewSiteEntityModel implements EntityModel {

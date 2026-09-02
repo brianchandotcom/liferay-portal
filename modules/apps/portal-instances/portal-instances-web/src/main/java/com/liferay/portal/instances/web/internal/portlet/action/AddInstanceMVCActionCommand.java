@@ -5,9 +5,9 @@
 
 package com.liferay.portal.instances.web.internal.portlet.action;
 
-import com.liferay.portal.instances.adder.PortalInstanceAdder;
 import com.liferay.portal.instances.constants.PortalInstancesPortletKeys;
 import com.liferay.portal.instances.exception.PortalInstanceAlreadyBeingAddedException;
+import com.liferay.portal.instances.manager.PortalInstanceManager;
 import com.liferay.portal.kernel.exception.CompanyMaxUsersException;
 import com.liferay.portal.kernel.exception.CompanyMxException;
 import com.liferay.portal.kernel.exception.CompanyVirtualHostException;
@@ -88,7 +88,7 @@ public class AddInstanceMVCActionCommand extends BaseMVCActionCommand {
 
 		String webId = ParamUtil.getString(actionRequest, "webId");
 
-		_portalInstanceAdder.addPortalInstance(
+		_portalInstanceManager.addPortalInstance(
 			themeDisplay.getUserId(), webId,
 			StringUtil.toLowerCase(
 				StringUtil.trim(
@@ -143,6 +143,6 @@ public class AddInstanceMVCActionCommand extends BaseMVCActionCommand {
 	private Language _language;
 
 	@Reference
-	private PortalInstanceAdder _portalInstanceAdder;
+	private PortalInstanceManager _portalInstanceManager;
 
 }

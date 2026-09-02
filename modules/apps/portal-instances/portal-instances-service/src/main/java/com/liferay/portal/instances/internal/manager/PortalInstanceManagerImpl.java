@@ -3,14 +3,14 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.instances.internal.adder;
+package com.liferay.portal.instances.internal.manager;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.instances.adder.PortalInstanceAdder;
 import com.liferay.portal.instances.backgroundtask.PortalInstanceOperationType;
 import com.liferay.portal.instances.backgroundtask.constants.PortalInstanceBackgroundTaskConstants;
 import com.liferay.portal.instances.exception.PortalInstanceAlreadyBeingAddedException;
 import com.liferay.portal.instances.internal.backgroundtask.AddPortalInstanceBackgroundTaskExecutor;
+import com.liferay.portal.instances.manager.PortalInstanceManager;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
@@ -36,8 +36,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Luis Ortiz
  */
-@Component(service = PortalInstanceAdder.class)
-public class PortalInstanceAdderImpl implements PortalInstanceAdder {
+@Component(service = PortalInstanceManager.class)
+public class PortalInstanceManagerImpl implements PortalInstanceManager {
 
 	@Override
 	public long addPortalInstance(

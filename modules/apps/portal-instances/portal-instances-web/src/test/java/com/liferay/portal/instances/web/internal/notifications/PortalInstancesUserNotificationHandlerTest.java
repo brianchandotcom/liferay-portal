@@ -182,8 +182,7 @@ public class PortalInstancesUserNotificationHandlerTest {
 					PortalInstanceBackgroundTaskConstants.OPERATION_TYPE,
 					portalInstanceOperationType.getValue()
 				).put(
-					PortalInstanceBackgroundTaskConstants.STATUS,
-					BackgroundTaskConstants.getStatusLabel(status)
+					PortalInstanceBackgroundTaskConstants.STATUS, status
 				).put(
 					PortalInstanceBackgroundTaskConstants.WEB_ID,
 					_WEB_ID_MATCHING_LANGUAGE_KEY

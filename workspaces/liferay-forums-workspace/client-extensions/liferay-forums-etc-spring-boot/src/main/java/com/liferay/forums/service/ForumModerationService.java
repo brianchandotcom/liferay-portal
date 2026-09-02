@@ -31,21 +31,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class ForumModerationService {
 
-	// A validation runs before anything is written, so a moderator is
-	// recognized the same way the composer recognizes one: by whether they may
-	// add a ban. Reading the grant table is the closest a service account can
-	// get to that, since it cannot ask the endpoint on the member's behalf.
-
 	public boolean canAddForumBan(long userId, String authToken) {
 		if (userId <= 0) {
 			return false;
 		}
 
 		Set<String> roleNames = _fetchRoleNames(userId, authToken);
-
-		// An administrator bypasses the grant table entirely, so no listing of
-		// it can show them. The composer offers the control to them for the
-		// same reason: the endpoint reports the action as available.
 
 		if (roleNames.contains(_ADMINISTRATOR_ROLE_NAME)) {
 			return true;
@@ -68,10 +59,6 @@ public class ForumModerationService {
 		long siteId = resolveSiteId(authToken);
 
 		if (siteId <= 0) {
-
-			// Failing open would let a ban be bypassed by whatever broke the
-			// site lookup, so an unresolved site counts as banned.
-
 			_log.error(
 				"Unable to check the ban for user " + userId +
 					" without a site scope");
@@ -107,12 +94,6 @@ public class ForumModerationService {
 		}
 	}
 
-	// A write that leaves the priority alone is not a priority decision, so
-	// it must not be judged as one. The payload names the entry's creator
-	// rather than whoever is writing now, so judging every write would refuse
-	// a later edit of somebody else's prioritized thread, and would refuse the
-	// updates a site deletion cascades.
-
 	public boolean isThreadPriorityUnchanged(
 		String externalReferenceCode, double priority, String authToken) {
 
@@ -125,10 +106,6 @@ public class ForumModerationService {
 		long siteId = resolveSiteId(authToken);
 
 		if (siteId <= 0) {
-
-			// Without a site scope the stored value cannot be read, and
-			// assuming it is unchanged would wave the entry through.
-
 			return false;
 		}
 
@@ -148,11 +125,6 @@ public class ForumModerationService {
 			return false;
 		}
 		catch (Exception exception) {
-
-			// A thread that is being created has nothing stored yet, which
-			// arrives here as a 404. Treat that, and any failed lookup, as a
-			// change so the permission check still runs.
-
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					StringBundler.concat(

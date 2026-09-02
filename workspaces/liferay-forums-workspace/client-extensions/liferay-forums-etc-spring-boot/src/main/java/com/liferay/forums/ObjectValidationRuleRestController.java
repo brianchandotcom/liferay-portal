@@ -31,9 +31,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ObjectValidationRuleRestController extends BaseRestController {
 
-	// The composer disables its submit button for a banned member, which stops
-	// nothing outside the browser. This runs before the entry is written.
-
 	@PostMapping("/ban")
 	public ResponseEntity<String> ban(
 		@AuthenticationPrincipal Jwt jwt, @RequestBody String json) {
@@ -55,10 +52,6 @@ public class ObjectValidationRuleRestController extends BaseRestController {
 
 		return _respond(payloadJSONObject, !banned);
 	}
-
-	// Priority is offered by the composer only to somebody who may add a ban,
-	// so that is what decides it here too rather than a rule invented for the
-	// server.
 
 	@PostMapping("/priority")
 	public ResponseEntity<String> priority(

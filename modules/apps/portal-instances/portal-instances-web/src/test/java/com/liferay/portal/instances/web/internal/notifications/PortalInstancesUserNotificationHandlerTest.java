@@ -58,20 +58,32 @@ public class PortalInstancesUserNotificationHandlerTest {
 		_serviceContext.setLanguageId("en_US");
 		_serviceContext.setRequest(new MockHttpServletRequest());
 
+		_portalInstancesUserNotificationHandler =
+			new PortalInstancesUserNotificationHandler();
+
 		ReflectionTestUtil.setFieldValue(
 			_portalInstancesUserNotificationHandler, "_jsonFactory",
 			new JSONFactoryImpl());
 
-		Language language = Mockito.mock(Language.class);
+		Portal portal = Mockito.mock(Portal.class);
 
 		Mockito.when(
-			language.format(
-				Mockito.any(Locale.class),
-				Mockito.eq("the-virtual-instance-x-was-added-successfully"),
-				Mockito.eq(_WEB_ID_MATCHING_LANGUAGE_KEY), Mockito.eq(false))
+			portal.getPortletTitle(
+				Mockito.eq(PortalInstancesPortletKeys.PORTAL_INSTANCES),
+				Mockito.any(Locale.class))
 		).thenReturn(
-			_ADDED_MESSAGE
+			_PORTLET_TITLE
 		);
+
+		ReflectionTestUtil.setFieldValue(
+			_portalInstancesUserNotificationHandler, "_portal", portal);
+	}
+
+	@Test
+	public void testGetBodyWhenOperationTypeIsAddAndStatusIsFailed()
+		throws Exception {
+
+		Language language = Mockito.mock(Language.class);
 
 		Mockito.when(
 			language.format(
@@ -93,24 +105,6 @@ public class PortalInstancesUserNotificationHandlerTest {
 		ReflectionTestUtil.setFieldValue(
 			_portalInstancesUserNotificationHandler, "_language", language);
 
-		Portal portal = Mockito.mock(Portal.class);
-
-		Mockito.when(
-			portal.getPortletTitle(
-				Mockito.eq(PortalInstancesPortletKeys.PORTAL_INSTANCES),
-				Mockito.any(Locale.class))
-		).thenReturn(
-			_PORTLET_TITLE
-		);
-
-		ReflectionTestUtil.setFieldValue(
-			_portalInstancesUserNotificationHandler, "_portal", portal);
-	}
-
-	@Test
-	public void testGetBodyWhenOperationTypeIsAddAndStatusIsFailed()
-		throws Exception {
-
 		Assert.assertEquals(
 			_getExpectedBody(_NOT_ADDED_MESSAGE + " " + _ERROR_MESSAGE),
 			_portalInstancesUserNotificationHandler.getBody(
@@ -124,6 +118,20 @@ public class PortalInstancesUserNotificationHandlerTest {
 	@Test
 	public void testGetBodyWhenOperationTypeIsAddAndStatusIsSuccessful()
 		throws Exception {
+
+		Language language = Mockito.mock(Language.class);
+
+		Mockito.when(
+			language.format(
+				Mockito.any(Locale.class),
+				Mockito.eq("the-virtual-instance-x-was-added-successfully"),
+				Mockito.eq(_WEB_ID_MATCHING_LANGUAGE_KEY), Mockito.eq(false))
+		).thenReturn(
+			_ADDED_MESSAGE
+		);
+
+		ReflectionTestUtil.setFieldValue(
+			_portalInstancesUserNotificationHandler, "_language", language);
 
 		Assert.assertEquals(
 			_getExpectedBody(_ADDED_MESSAGE),
@@ -202,10 +210,8 @@ public class PortalInstancesUserNotificationHandlerTest {
 
 	private static final String _WEB_ID_MATCHING_LANGUAGE_KEY = "test";
 
-	private static final PortalInstancesUserNotificationHandler
-		_portalInstancesUserNotificationHandler =
-			new PortalInstancesUserNotificationHandler();
-
+	private PortalInstancesUserNotificationHandler
+		_portalInstancesUserNotificationHandler;
 	private ServiceContext _serviceContext;
 
 }

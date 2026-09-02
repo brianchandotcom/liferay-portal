@@ -448,7 +448,7 @@ public class ImportPreviewResourceTest
 
 	private ImportPreview _postImportPreview(File file) throws Exception {
 		return importPreviewResource.postImportPreview(
-			null,
+			0L, null, null,
 			HashMapBuilder.put(
 				"file", file
 			).build());

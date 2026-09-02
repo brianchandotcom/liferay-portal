@@ -441,6 +441,16 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		return includesJobProperties;
 	}
 
+	protected List<PathMatcher> getExcludesPathMatchers(
+		List<JobProperty> excludesJobProperties) {
+
+		return getPathMatchers(excludesJobProperties);
+	}
+
+	protected List<PathMatcher> getFilterPathMatchers() {
+		return getPathMatchers(getFilterJobProperties());
+	}
+
 	protected List<PathMatcher> getIncludesPathMatchers() {
 		if (!isRootCauseAnalysis()) {
 			return getIncludePathMatchers(getIncludesJobProperties());
@@ -814,10 +824,9 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 		long start = System.currentTimeMillis();
 
-		List<PathMatcher> excludesPathMatchers = getPathMatchers(
+		List<PathMatcher> excludesPathMatchers = getExcludesPathMatchers(
 			getExcludesJobProperties());
-		List<PathMatcher> filterPathMatchers = getPathMatchers(
-			getFilterJobProperties());
+		List<PathMatcher> filterPathMatchers = getFilterPathMatchers();
 
 		for (final File javaTestClassFile : _javaTestClassFiles) {
 			if (JenkinsResultsParserUtil.isFileExcluded(
@@ -878,13 +887,12 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 		long start = System.currentTimeMillis();
 
-		List<PathMatcher> filterPathMatchers = getPathMatchers(
-			getFilterJobProperties());
+		List<PathMatcher> filterPathMatchers = getFilterPathMatchers();
 
 		List<JobProperty> excludesJobProperties =
 			jUnitTestSelector.getExcludesJobProperties();
 
-		List<PathMatcher> excludesPathMatchers = getPathMatchers(
+		List<PathMatcher> excludesPathMatchers = getExcludesPathMatchers(
 			excludesJobProperties);
 
 		recordJobProperties(excludesJobProperties);

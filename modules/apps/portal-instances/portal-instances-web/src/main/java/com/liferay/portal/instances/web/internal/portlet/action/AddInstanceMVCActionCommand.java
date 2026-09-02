@@ -89,21 +89,22 @@ public class AddInstanceMVCActionCommand extends BaseMVCActionCommand {
 			WebKeys.THEME_DISPLAY);
 
 		_portalInstanceManager.addPortalInstance(
-			themeDisplay.getUserId(), webId,
-			StringUtil.toLowerCase(
-				StringUtil.trim(
-					ParamUtil.getString(actionRequest, "virtualHostname"))),
-			ParamUtil.getString(actionRequest, "mx"),
-			ParamUtil.getInteger(actionRequest, "maxUsers"),
 			ParamUtil.getBoolean(actionRequest, "active"),
-			ParamUtil.getString(actionRequest, "defaultAdminPassword", null),
-			ParamUtil.getString(actionRequest, "defaultAdminScreenName", null),
 			ParamUtil.getString(
 				actionRequest, "defaultAdminEmailAddress", null),
 			ParamUtil.getString(actionRequest, "defaultAdminFirstName", null),
-			ParamUtil.getString(actionRequest, "defaultAdminMiddleName", null),
 			ParamUtil.getString(actionRequest, "defaultAdminLastName", null),
-			ParamUtil.getString(actionRequest, "siteInitializerKey"));
+			ParamUtil.getString(actionRequest, "defaultAdminMiddleName", null),
+			ParamUtil.getString(actionRequest, "defaultAdminPassword", null),
+			ParamUtil.getString(actionRequest, "defaultAdminScreenName", null),
+			ParamUtil.getInteger(actionRequest, "maxUsers"),
+			ParamUtil.getString(actionRequest, "mx"),
+			ParamUtil.getString(actionRequest, "siteInitializerKey"),
+			themeDisplay.getUserId(),
+			StringUtil.toLowerCase(
+				StringUtil.trim(
+					ParamUtil.getString(actionRequest, "virtualHostname"))),
+			webId);
 	}
 
 	private String _getErrorMessageKey(Exception exception) {

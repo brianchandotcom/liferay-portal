@@ -5,8 +5,8 @@
 
 package com.liferay.portal.instances.web.internal.notifications;
 
-import com.liferay.portal.instances.background.task.PortalInstanceOperationType;
-import com.liferay.portal.instances.background.task.constants.PortalInstanceBackgroundTaskConstants;
+import com.liferay.portal.instances.backgroundtask.PortalInstanceOperationType;
+import com.liferay.portal.instances.backgroundtask.constants.PortalInstanceBackgroundTaskConstants;
 import com.liferay.portal.instances.constants.PortalInstancesPortletKeys;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;

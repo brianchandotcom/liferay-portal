@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.instances.internal.background.task;
+package com.liferay.portal.instances.internal.backgroundtask;
 
-import com.liferay.portal.instances.background.task.PortalInstanceOperationType;
-import com.liferay.portal.instances.background.task.constants.PortalInstanceBackgroundTaskConstants;
+import com.liferay.portal.instances.backgroundtask.PortalInstanceOperationType;
+import com.liferay.portal.instances.backgroundtask.constants.PortalInstanceBackgroundTaskConstants;
 import com.liferay.portal.instances.constants.PortalInstancesPortletKeys;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Luis Ortiz
  */
 @Component(
-	property = "background.task.executor.class.name=com.liferay.portal.instances.internal.background.task.AddPortalInstanceBackgroundTaskExecutor",
+	property = "background.task.executor.class.name=com.liferay.portal.instances.internal.backgroundtask.AddPortalInstanceBackgroundTaskExecutor",
 	service = BackgroundTaskExecutor.class
 )
 public class AddPortalInstanceBackgroundTaskExecutor

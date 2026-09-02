@@ -7,10 +7,10 @@ package com.liferay.portal.instances.internal.adder;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.instances.adder.PortalInstanceAdder;
-import com.liferay.portal.instances.background.task.PortalInstanceOperationType;
-import com.liferay.portal.instances.background.task.constants.PortalInstanceBackgroundTaskConstants;
+import com.liferay.portal.instances.backgroundtask.PortalInstanceOperationType;
+import com.liferay.portal.instances.backgroundtask.constants.PortalInstanceBackgroundTaskConstants;
 import com.liferay.portal.instances.exception.PortalInstanceAlreadyBeingAddedException;
-import com.liferay.portal.instances.internal.background.task.AddPortalInstanceBackgroundTaskExecutor;
+import com.liferay.portal.instances.internal.backgroundtask.AddPortalInstanceBackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;

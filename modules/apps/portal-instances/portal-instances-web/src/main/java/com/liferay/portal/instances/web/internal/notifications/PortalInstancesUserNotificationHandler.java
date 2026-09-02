@@ -7,8 +7,8 @@ package com.liferay.portal.instances.web.internal.notifications;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.instances.background.task.PortalInstanceOperationType;
-import com.liferay.portal.instances.background.task.constants.PortalInstanceBackgroundTaskConstants;
+import com.liferay.portal.instances.backgroundtask.PortalInstanceOperationType;
+import com.liferay.portal.instances.backgroundtask.constants.PortalInstanceBackgroundTaskConstants;
 import com.liferay.portal.instances.constants.PortalInstancesPortletKeys;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.json.JSONFactory;

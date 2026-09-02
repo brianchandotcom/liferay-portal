@@ -3,8 +3,8 @@ Bundle-SymbolicName: com.liferay.portal.instances.api
 Bundle-Version: 12.0.1
 Export-Package:\
 	com.liferay.portal.instances.adder,\
-	com.liferay.portal.instances.background.task,\
-	com.liferay.portal.instances.background.task.constants,\
+	com.liferay.portal.instances.backgroundtask,\
+	com.liferay.portal.instances.backgroundtask.constants,\
 	com.liferay.portal.instances.constants,\
 	com.liferay.portal.instances.exception,\
 	com.liferay.portal.instances.exporter

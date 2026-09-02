@@ -246,7 +246,7 @@ public class AddInstanceMVCActionCommandTest {
 	}
 
 	private static final String _TASK_EXECUTOR_CLASS_NAME =
-		"com.liferay.portal.instances.internal.background.task." +
+		"com.liferay.portal.instances.internal.backgroundtask." +
 			"AddPortalInstanceBackgroundTaskExecutor";
 
 	private static final String _VIRTUAL_HOSTNAME =

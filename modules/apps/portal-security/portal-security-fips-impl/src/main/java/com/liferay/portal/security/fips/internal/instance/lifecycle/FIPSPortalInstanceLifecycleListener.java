@@ -47,9 +47,8 @@ public class FIPSPortalInstanceLifecycleListener
 		User user = _userLocalService.addDefaultServiceAccountUser(companyId);
 
 		_addCryptoOfficerPasswordPolicy(companyId, user);
-
-		_addCryptoOfficerResourcePermissions(companyId);
-		_addCryptoOfficerRole(companyId, user);
+		_addCryptoOfficerResourcePermissions(
+			companyId, _addCryptoOfficerRole(companyId, user));
 	}
 
 	private void _addCryptoOfficerPasswordPolicy(long companyId, User user)
@@ -90,15 +89,8 @@ public class FIPSPortalInstanceLifecycleListener
 			defaultPasswordPolicy.getResetTicketMaxAge(), new ServiceContext());
 	}
 
-	private void _addCryptoOfficerResourcePermissions(long companyId)
+	private void _addCryptoOfficerResourcePermissions(long companyId, Role role)
 		throws Exception {
-
-		Role role = _roleLocalService.fetchRole(
-			companyId, RoleConstants.CRYPTO_OFFICER);
-
-		if (role == null) {
-			return;
-		}
 
 		_addResourcePermission(
 			ActionKeys.ACCESS_IN_CONTROL_PANEL, companyId,
@@ -110,17 +102,17 @@ public class FIPSPortalInstanceLifecycleListener
 			ActionKeys.VIEW_CONTROL_PANEL, companyId, PortletKeys.PORTAL, role);
 	}
 
-	private void _addCryptoOfficerRole(long companyId, User user)
+	private Role _addCryptoOfficerRole(long companyId, User user)
 		throws Exception {
 
 		Role role = _roleLocalService.fetchRole(
 			companyId, RoleConstants.CRYPTO_OFFICER);
 
 		if (role != null) {
-			return;
+			return role;
 		}
 
-		_roleLocalService.addRole(
+		return _roleLocalService.addRole(
 			null, user.getUserId(), null, 0, RoleConstants.CRYPTO_OFFICER, null,
 			null, RoleConstants.TYPE_REGULAR, null, null);
 	}

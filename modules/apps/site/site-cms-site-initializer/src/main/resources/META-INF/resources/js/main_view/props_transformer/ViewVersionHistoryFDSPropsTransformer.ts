@@ -67,8 +67,7 @@ export default function ViewVersionHistoryFDSPropsTransformer({
 			if (action?.data?.id === 'compare') {
 				return {
 					...action,
-					isVisible: (item: any) =>
-						Boolean(!item?.file) &&
+					isVisible: () =>
 						additionalProps.objectEntryVersionsCount > 1,
 				};
 			}

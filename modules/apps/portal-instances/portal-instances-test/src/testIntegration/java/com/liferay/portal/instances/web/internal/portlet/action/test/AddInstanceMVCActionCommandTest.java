@@ -89,7 +89,7 @@ public class AddInstanceMVCActionCommandTest {
 
 	@Test
 	public void testProcessActionWhenAddIsAlreadyRunning() throws Exception {
-		_backgroundTask = _addRunningBackgroundTask();
+		_backgroundTask = _addBackgroundTask();
 
 		int backgroundTasksCount =
 			_backgroundTaskLocalService.getBackgroundTasksCount(
@@ -136,7 +136,7 @@ public class AddInstanceMVCActionCommandTest {
 			() -> _companyLocalService.getCompanyByWebId(_WEB_ID));
 	}
 
-	private BackgroundTask _addRunningBackgroundTask() throws Exception {
+	private BackgroundTask _addBackgroundTask() throws Exception {
 		BackgroundTask backgroundTask =
 			_backgroundTaskLocalService.createBackgroundTask(
 				_counterLocalService.increment());

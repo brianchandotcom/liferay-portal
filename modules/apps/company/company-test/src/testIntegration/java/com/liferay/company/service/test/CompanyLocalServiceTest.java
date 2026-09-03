@@ -1334,6 +1334,15 @@ public class CompanyLocalServiceTest {
 	}
 
 	@Test
+	public void testValidateCompany() throws Exception {
+		String virtualHostName =
+			StringUtil.toLowerCase(RandomTestUtil.randomString()) + ".com";
+
+		_companyLocalService.validateCompany(
+			StringUtil.randomId(), virtualHostName, virtualHostName, 0);
+	}
+
+	@Test
 	public void testValidateCompanyWhenWebIdIsDuplicate() throws Exception {
 		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());

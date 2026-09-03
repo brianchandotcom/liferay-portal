@@ -424,6 +424,31 @@ describe('List', () => {
 			);
 		});
 
+		it('should pass the cmpProjects filter to FrontendDataSet', () => {
+			renderList();
+
+			const filters = JSON.parse(
+				screen.getByTestId('fds-filters').textContent
+			);
+
+			const cmpProjectsFilter = filters.find(
+				(filter: {apiURL: string; id: string; label: string}) =>
+					filter.id === 'cmpProjects/id'
+			);
+
+			expect(cmpProjectsFilter).toBeDefined();
+			expect(cmpProjectsFilter.label).toBe('CMP Projects');
+			expect(cmpProjectsFilter.apiURL).toContain(
+				'asset-summary-cmp-projects'
+			);
+
+			const groupedFilters = JSON.parse(
+				screen.getByTestId('fds-grouped-filters').textContent
+			);
+
+			expect(groupedFilters[0].filters).toContain('cmpProjects/id');
+		});
+
 		it('should pass the mimeType filter to FrontendDataSet', () => {
 			renderList();
 
@@ -644,6 +669,7 @@ describe('List', () => {
 				'objectType',
 				'tags/id',
 				'categories/id',
+				'cmpProjects/id',
 				'mimeType',
 			]);
 		});
@@ -868,6 +894,7 @@ describe('List', () => {
 					'objectType',
 					'tags/id',
 					'categories/id',
+					'cmpProjects/id',
 					'mimeType',
 				]);
 			});

@@ -31,6 +31,9 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -101,11 +104,27 @@ public class AddPortalInstanceBackgroundTaskExecutorTest {
 	public void testExecuteWhenDefaultAdminEmailAddressIsInvalid()
 		throws Exception {
 
-		BackgroundTask backgroundTask = _addBackgroundTask(
-			RandomTestUtil.randomString(), null);
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.portal.background.task.internal.messaging." +
+					"BackgroundTaskMessageListener",
+				LoggerTestUtil.ERROR)) {
 
-		Assert.assertEquals(
-			BackgroundTaskConstants.STATUS_FAILED, backgroundTask.getStatus());
+			BackgroundTask backgroundTask = _addBackgroundTask(
+				RandomTestUtil.randomString(), null);
+
+			Assert.assertEquals(
+				BackgroundTaskConstants.STATUS_FAILED,
+				backgroundTask.getStatus());
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
+
+			LogEntry logEntry = logEntries.get(0);
+
+			Assert.assertEquals(
+				"Unable to execute background task", logEntry.getMessage());
+		}
 
 		JSONAssert.assertEquals(
 			JSONUtil.put(

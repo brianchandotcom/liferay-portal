@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -91,7 +92,17 @@ public class SiteImporterImpl implements SiteImporter {
 				continue;
 			}
 
-			Group group = _fetchSite(portletDataContext, larSite);
+			Group group = null;
+
+			try {
+				group = _fetchSite(portletDataContext, larSite);
+			}
+			catch (PrincipalException principalException) {
+				_log.error(
+					"Unable to import site " +
+						larSite.getExternalReferenceCode(),
+					principalException);
+			}
 
 			if (group == null) {
 				continue;

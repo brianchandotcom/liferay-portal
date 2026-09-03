@@ -286,7 +286,9 @@ public class SiteImporterTest {
 					ActionKeys.EXPORT_IMPORT_LAYOUTS)
 			);
 
-			try {
+			try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+					SiteImporterImpl.class.getName(), LoggerTestUtil.ERROR)) {
+
 				_siteImporter.importSites(
 					_portletDataContext,
 					(sitePortletDataContext, userId) -> Assert.fail(
@@ -294,11 +296,21 @@ public class SiteImporterTest {
 							ActionKeys.EXPORT_IMPORT_LAYOUTS + "\" permission"),
 					_USER_ID);
 
-				Assert.fail("No exception was thrown");
-			}
-			catch (PrincipalException principalException) {
+				List<LogEntry> logEntries = logCapture.getLogEntries();
+
+				Assert.assertEquals(
+					logEntries.toString(), 1, logEntries.size());
+
+				LogEntry logEntry = logEntries.get(0);
+
+				Assert.assertSame(
+					PrincipalException.MustHavePermission.class,
+					logEntry.getThrowable(
+					).getClass());
 			}
 		}
+
+		Mockito.verifyNoInteractions(_exportImportReportEntryLocalService);
 	}
 
 	@Test

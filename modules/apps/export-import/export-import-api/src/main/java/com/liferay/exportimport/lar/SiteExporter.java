@@ -7,6 +7,7 @@ package com.liferay.exportimport.lar;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.xml.Element;
 
 /**
@@ -15,7 +16,8 @@ import com.liferay.portal.kernel.xml.Element;
 public interface SiteExporter {
 
 	public void addSitesElement(
-		PortletDataContext portletDataContext, Element element);
+			PortletDataContext portletDataContext, Element element)
+		throws PortalException;
 
 	public void exportSites(
 			PortletDataContext portletDataContext,

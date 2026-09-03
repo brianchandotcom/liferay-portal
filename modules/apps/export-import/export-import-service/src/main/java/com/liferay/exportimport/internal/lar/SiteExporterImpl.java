@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupService;
@@ -38,7 +39,8 @@ public class SiteExporterImpl implements SiteExporter {
 
 	@Override
 	public void addSitesElement(
-		PortletDataContext portletDataContext, Element element) {
+			PortletDataContext portletDataContext, Element element)
+		throws PortalException {
 
 		if (!SiteExportImportParameterUtil.isSiteExportImportEnabled(
 				portletDataContext.getCompanyId()) ||
@@ -67,10 +69,11 @@ public class SiteExporterImpl implements SiteExporter {
 				group = _fetchSite(
 					portletDataContext, selectedSiteExternalReferenceCode);
 			}
-			catch (PortalException portalException) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(portalException);
-				}
+			catch (PrincipalException principalException) {
+				_log.error(
+					"Unable to export site " +
+						selectedSiteExternalReferenceCode,
+					principalException);
 			}
 
 			if (group == null) {
@@ -128,8 +131,18 @@ public class SiteExporterImpl implements SiteExporter {
 		for (String selectedSiteExternalReferenceCode :
 				selectedSiteExternalReferenceCodes) {
 
-			Group group = _fetchSite(
-				portletDataContext, selectedSiteExternalReferenceCode);
+			Group group = null;
+
+			try {
+				group = _fetchSite(
+					portletDataContext, selectedSiteExternalReferenceCode);
+			}
+			catch (PrincipalException principalException) {
+				_log.error(
+					"Unable to export site " +
+						selectedSiteExternalReferenceCode,
+					principalException);
+			}
 
 			if (group == null) {
 				continue;

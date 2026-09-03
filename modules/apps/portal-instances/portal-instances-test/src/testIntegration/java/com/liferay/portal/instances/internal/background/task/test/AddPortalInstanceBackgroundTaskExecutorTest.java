@@ -11,7 +11,6 @@ import com.liferay.portal.background.task.model.BackgroundTask;
 import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.encryptor.EncryptorUtil;
-import com.liferay.portal.kernel.exception.CompanyWebIdException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -165,17 +164,6 @@ public class AddPortalInstanceBackgroundTaskExecutorTest {
 				new HashMap<>(), new HashMap<>(), new HashMap<>()));
 
 		_companyLocalService.deleteCompany(company);
-	}
-
-	@Test
-	public void testValidateCompanyWhenWebIdIsDuplicate() throws Exception {
-		Company company = _companyLocalService.getCompany(
-			TestPropsValues.getCompanyId());
-
-		Assert.assertThrows(
-			CompanyWebIdException.class,
-			() -> _companyLocalService.validateCompany(
-				company.getWebId(), _VIRTUAL_HOSTNAME, _VIRTUAL_HOSTNAME, 0));
 	}
 
 	private BackgroundTask _addBackgroundTask(

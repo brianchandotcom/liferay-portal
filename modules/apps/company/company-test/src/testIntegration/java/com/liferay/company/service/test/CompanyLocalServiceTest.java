@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.exception.CompanyMaxUsersException;
 import com.liferay.portal.kernel.exception.CompanyMxException;
 import com.liferay.portal.kernel.exception.CompanyNameException;
 import com.liferay.portal.kernel.exception.CompanyVirtualHostException;
+import com.liferay.portal.kernel.exception.CompanyWebIdException;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.NoSuchVirtualHostException;
 import com.liferay.portal.kernel.exception.RequiredCompanyException;
@@ -89,6 +90,7 @@ import com.liferay.portal.kernel.test.util.DataCleanupTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -1329,6 +1331,20 @@ public class CompanyLocalServiceTest {
 
 			safeCloseable.close();
 		}
+	}
+
+	@Test
+	public void testValidateCompanyWhenWebIdIsDuplicate() throws Exception {
+		Company company = _companyLocalService.getCompany(
+			TestPropsValues.getCompanyId());
+
+		String virtualHostName =
+			StringUtil.toLowerCase(RandomTestUtil.randomString()) + ".com";
+
+		Assert.assertThrows(
+			CompanyWebIdException.class,
+			() -> _companyLocalService.validateCompany(
+				company.getWebId(), virtualHostName, virtualHostName, 0));
 	}
 
 	private static Company _addCompany() throws Exception {

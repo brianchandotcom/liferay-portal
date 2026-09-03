@@ -7,6 +7,7 @@ package com.liferay.exportimport.rest.client.serdes.v1_0;
 
 import com.liferay.exportimport.rest.client.dto.v1_0.ImportPreview;
 import com.liferay.exportimport.rest.client.dto.v1_0.PreviewPortletDataHandlerSection;
+import com.liferay.exportimport.rest.client.dto.v1_0.PreviewSite;
 import com.liferay.exportimport.rest.client.json.BaseJSONParser;
 
 import jakarta.annotation.Generated;
@@ -156,6 +157,26 @@ public class ImportPreviewSerDes {
 			sb.append("]");
 		}
 
+		if (importPreview.getPreviewSites() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"previewSites\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < importPreview.getPreviewSites().length; i++) {
+				sb.append(String.valueOf(importPreview.getPreviewSites()[i]));
+
+				if ((i + 1) < importPreview.getPreviewSites().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -236,6 +257,15 @@ public class ImportPreviewSerDes {
 					importPreview.getPreviewPortletDataHandlerSections()));
 		}
 
+		if (importPreview.getPreviewSites() == null) {
+			map.put("previewSites", null);
+		}
+		else {
+			map.put(
+				"previewSites",
+				String.valueOf(importPreview.getPreviewSites()));
+		}
+
 		return map;
 	}
 
@@ -276,6 +306,9 @@ public class ImportPreviewSerDes {
 						jsonParserFieldName,
 						"previewPortletDataHandlerSections")) {
 
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "previewSites")) {
 				return false;
 			}
 
@@ -345,6 +378,22 @@ public class ImportPreviewSerDes {
 
 					importPreview.setPreviewPortletDataHandlerSections(
 						previewPortletDataHandlerSectionsArray);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "previewSites")) {
+				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					PreviewSite[] previewSitesArray =
+						new PreviewSite[jsonParserFieldValues.length];
+
+					for (int i = 0; i < previewSitesArray.length; i++) {
+						previewSitesArray[i] = PreviewSiteSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					importPreview.setPreviewSites(previewSitesArray);
 				}
 			}
 		}
@@ -428,4 +477,4 @@ public class ImportPreviewSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:810142079
+// LIFERAY-REST-BUILDER-HASH:-1149020420

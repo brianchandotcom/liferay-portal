@@ -26,13 +26,22 @@ if (messageList) {
 	const pathFriendlyURLPublic =
 		Liferay.ThemeDisplay.getPathFriendlyURLPublic();
 	let sitePrefix = '';
+
 	if (pathFriendlyURLPublic) {
 		const pubPath = pathFriendlyURLPublic + '/';
+
 		const {pathname} = window.location;
-		if (pathname.indexOf(pubPath) === 0) {
-			const rest = pathname.substring(pubPath.length);
+		const localeMatch = pathname.match(
+			/^\/[a-zA-Z]{2}(?:-[a-zA-Z]{2})?(?=\/)/
+		);
+		const localePrefix = localeMatch ? localeMatch[0] : '';
+		const pathAfterLocale = pathname.substring(localePrefix.length);
+
+		if (pathAfterLocale.indexOf(pubPath) === 0) {
+			const rest = pathAfterLocale.substring(pubPath.length);
 			const slugEnd = rest.indexOf('/');
 			const siteSlug = slugEnd === -1 ? rest : rest.substring(0, slugEnd);
+
 			sitePrefix = pathFriendlyURLPublic + '/' + siteSlug;
 		}
 	}

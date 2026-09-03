@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 public class ExportImportSiteProviderImpl implements ExportImportSiteProvider {
 
 	@Override
-	public int getChildSiteCount(Group group) {
+	public int getChildGroupCount(Group group) {
 		if (group == null) {
 			return 0;
 		}
@@ -96,7 +96,7 @@ public class ExportImportSiteProviderImpl implements ExportImportSiteProvider {
 	}
 
 	@Override
-	public List<Group> getSupportedSites(
+	public List<Group> getSupportedGroups(
 			long companyId, String keywords,
 			OrderByComparator<Group> orderByComparator)
 		throws PortalException {

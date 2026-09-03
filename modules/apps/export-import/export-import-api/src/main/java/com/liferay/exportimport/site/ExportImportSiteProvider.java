@@ -17,13 +17,13 @@ import java.util.Locale;
  */
 public interface ExportImportSiteProvider {
 
-	public int getChildSiteCount(Group group);
+	public int getChildGroupCount(Group group);
 
 	public String getDescriptiveName(Group group, Locale locale);
 
 	public String getPath(Group group, Locale locale);
 
-	public List<Group> getSupportedSites(
+	public List<Group> getSupportedGroups(
 			long companyId, String keywords,
 			OrderByComparator<Group> orderByComparator)
 		throws PortalException;

@@ -70,7 +70,7 @@ public class PreviewSiteResourceImpl extends BasePreviewSiteResourceImpl {
 		Function<Group, String> descriptiveNameFunction =
 			_getDescriptiveNameFunction();
 
-		List<Group> groups = _exportImportSiteProvider.getSupportedSites(
+		List<Group> groups = _exportImportSiteProvider.getSupportedGroups(
 			contextCompany.getCompanyId(), search,
 			_getOrderByComparator(sorts));
 
@@ -82,7 +82,7 @@ public class PreviewSiteResourceImpl extends BasePreviewSiteResourceImpl {
 				group -> new PreviewSite() {
 					{
 						setChildSiteCount(
-							() -> _exportImportSiteProvider.getChildSiteCount(
+							() -> _exportImportSiteProvider.getChildGroupCount(
 								group));
 						setDescriptiveName(
 							() -> descriptiveNameFunction.apply(group));

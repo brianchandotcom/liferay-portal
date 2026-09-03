@@ -75,12 +75,12 @@ public class ExportImportSiteProviderImplTest {
 	}
 
 	@Test
-	public void testGetChildSiteCountLeavesOutUnsupportedChildSites() {
-		Group group = _mockSite();
+	public void testGetChildGroupCountLeavesOutUnsupportedChildGroups() {
+		Group group = _mockGroup();
 
-		Group childGroup = _mockSite();
+		Group childGroup = _mockGroup();
 
-		Group inactiveChildGroup = _mockSite();
+		Group inactiveChildGroup = _mockGroup();
 
 		Mockito.when(
 			inactiveChildGroup.isActive()
@@ -96,20 +96,20 @@ public class ExportImportSiteProviderImplTest {
 		);
 
 		Assert.assertEquals(
-			1, _exportImportSiteProviderImpl.getChildSiteCount(group));
+			1, _exportImportSiteProviderImpl.getChildGroupCount(group));
 	}
 
 	@Test
-	public void testGetChildSiteCountWhenGroupIsNull() {
+	public void testGetChildGroupCountWhenGroupIsNull() {
 		Assert.assertEquals(
-			0, _exportImportSiteProviderImpl.getChildSiteCount(null));
+			0, _exportImportSiteProviderImpl.getChildGroupCount(null));
 	}
 
 	@Test
 	public void testGetDescriptiveNameWhenDescriptiveNameIsUnavailable()
 		throws Exception {
 
-		Group group = _mockSite();
+		Group group = _mockGroup();
 
 		Mockito.when(
 			group.getDescriptiveName(LocaleUtil.US)
@@ -131,7 +131,7 @@ public class ExportImportSiteProviderImplTest {
 
 	@Test
 	public void testGetPathWhenGroupIsGlobal() throws Exception {
-		Group companyGroup = _mockGlobalSite();
+		Group companyGroup = _mockGlobalGroup();
 
 		Assert.assertEquals(
 			"Global",
@@ -147,11 +147,11 @@ public class ExportImportSiteProviderImplTest {
 
 	@Test
 	public void testGetPathWhenGroupSitsBelowAnother() throws Exception {
-		_mockGlobalSite();
+		_mockGlobalGroup();
 
-		Group parentGroup = _mockNamedSite("EMEA");
+		Group parentGroup = _mockNamedGroup("EMEA");
 
-		Group group = _mockNamedSite("News");
+		Group group = _mockNamedGroup("News");
 
 		Mockito.when(
 			group.getAncestors()
@@ -165,12 +165,12 @@ public class ExportImportSiteProviderImplTest {
 	}
 
 	@Test
-	public void testGetSupportedSitesLeavesOutUnsupportedSites()
+	public void testGetSupportedGroupsLeavesOutUnsupportedGroups()
 		throws Exception {
 
-		Group group = _mockNamedSite("EMEA");
+		Group group = _mockNamedGroup("EMEA");
 
-		Group stagedGroup = _mockNamedSite("Support");
+		Group stagedGroup = _mockNamedGroup("Support");
 
 		Mockito.when(
 			stagedGroup.isStaged()
@@ -182,15 +182,15 @@ public class ExportImportSiteProviderImplTest {
 
 		Assert.assertEquals(
 			Arrays.asList(group),
-			_exportImportSiteProviderImpl.getSupportedSites(
+			_exportImportSiteProviderImpl.getSupportedGroups(
 				_COMPANY_ID, null, null));
 	}
 
 	@Test
-	public void testGetSupportedSitesWithOrderByComparator() throws Exception {
-		Group group = _mockNamedSite("EMEA");
+	public void testGetSupportedGroupsWithOrderByComparator() throws Exception {
+		Group group = _mockNamedGroup("EMEA");
 
-		Group otherGroup = _mockNamedSite("Support");
+		Group otherGroup = _mockNamedGroup("Support");
 
 		_setUpSearch(group, otherGroup);
 
@@ -199,7 +199,7 @@ public class ExportImportSiteProviderImplTest {
 
 		Assert.assertEquals(
 			Arrays.asList(group, otherGroup),
-			_exportImportSiteProviderImpl.getSupportedSites(
+			_exportImportSiteProviderImpl.getSupportedGroups(
 				_COMPANY_ID, null, orderByComparator));
 
 		Mockito.verify(
@@ -212,8 +212,8 @@ public class ExportImportSiteProviderImplTest {
 	}
 
 	@Test
-	public void testGetSupportedSitesWithSearch() throws Exception {
-		Group group = _mockNamedSite("EMEA");
+	public void testGetSupportedGroupsWithSearch() throws Exception {
+		Group group = _mockNamedGroup("EMEA");
 
 		Mockito.when(
 			_groupService.search(
@@ -226,13 +226,13 @@ public class ExportImportSiteProviderImplTest {
 
 		Assert.assertEquals(
 			Arrays.asList(group),
-			_exportImportSiteProviderImpl.getSupportedSites(
+			_exportImportSiteProviderImpl.getSupportedGroups(
 				_COMPANY_ID, "EMEA", null));
 	}
 
 	@Test
 	public void testIsSupportedWhenGroupIsCMS() {
-		Group group = _mockSite();
+		Group group = _mockGroup();
 
 		Mockito.when(
 			group.isCMS()
@@ -245,7 +245,7 @@ public class ExportImportSiteProviderImplTest {
 
 	@Test
 	public void testIsSupportedWhenGroupIsCompanyGroup() {
-		Group group = _mockSite();
+		Group group = _mockGroup();
 
 		Mockito.when(
 			_stagingGroupHelper.isCompanyGroup(group)
@@ -258,7 +258,7 @@ public class ExportImportSiteProviderImplTest {
 
 	@Test
 	public void testIsSupportedWhenGroupIsDepot() {
-		Group group = _mockSite();
+		Group group = _mockGroup();
 
 		Mockito.when(
 			group.isDepot()
@@ -271,7 +271,7 @@ public class ExportImportSiteProviderImplTest {
 
 	@Test
 	public void testIsSupportedWhenGroupIsGlobal() {
-		Group group = _mockSite();
+		Group group = _mockGroup();
 
 		Mockito.when(
 			group.getClassNameId()
@@ -290,7 +290,7 @@ public class ExportImportSiteProviderImplTest {
 
 	@Test
 	public void testIsSupportedWhenGroupIsInactive() {
-		Group group = _mockSite();
+		Group group = _mockGroup();
 
 		Mockito.when(
 			group.isActive()
@@ -303,7 +303,7 @@ public class ExportImportSiteProviderImplTest {
 
 	@Test
 	public void testIsSupportedWhenGroupIsLayoutPrototype() {
-		Group group = _mockSite();
+		Group group = _mockGroup();
 
 		Mockito.when(
 			group.isLayoutPrototype()
@@ -316,7 +316,7 @@ public class ExportImportSiteProviderImplTest {
 
 	@Test
 	public void testIsSupportedWhenGroupIsLayoutSetPrototype() {
-		Group group = _mockSite();
+		Group group = _mockGroup();
 
 		Mockito.when(
 			group.isLayoutSetPrototype()
@@ -329,7 +329,7 @@ public class ExportImportSiteProviderImplTest {
 
 	@Test
 	public void testIsSupportedWhenGroupIsNotASite() {
-		Group group = _mockSite();
+		Group group = _mockGroup();
 
 		Mockito.when(
 			group.isSite()
@@ -347,7 +347,7 @@ public class ExportImportSiteProviderImplTest {
 
 	@Test
 	public void testIsSupportedWhenGroupIsOrganizationSite() {
-		Group group = _mockSite();
+		Group group = _mockGroup();
 
 		Mockito.when(
 			group.getClassNameId()
@@ -367,12 +367,12 @@ public class ExportImportSiteProviderImplTest {
 	@Test
 	public void testIsSupportedWhenGroupIsSite() {
 		Assert.assertTrue(
-			_exportImportSiteProviderImpl.isSupported(_mockSite()));
+			_exportImportSiteProviderImpl.isSupported(_mockGroup()));
 	}
 
 	@Test
 	public void testIsSupportedWhenGroupIsStaged() {
-		Group group = _mockSite();
+		Group group = _mockGroup();
 
 		Mockito.when(
 			group.isStaged()
@@ -385,7 +385,7 @@ public class ExportImportSiteProviderImplTest {
 
 	@Test
 	public void testIsSupportedWhenGroupIsStagingGroup() {
-		Group group = _mockSite();
+		Group group = _mockGroup();
 
 		Mockito.when(
 			group.isStagingGroup()
@@ -396,8 +396,8 @@ public class ExportImportSiteProviderImplTest {
 		Assert.assertFalse(_exportImportSiteProviderImpl.isSupported(group));
 	}
 
-	private Group _mockGlobalSite() throws Exception {
-		Group companyGroup = _mockNamedSite("Global");
+	private Group _mockGlobalGroup() throws Exception {
+		Group companyGroup = _mockNamedGroup("Global");
 
 		Mockito.when(
 			companyGroup.isCompany()
@@ -414,25 +414,7 @@ public class ExportImportSiteProviderImplTest {
 		return companyGroup;
 	}
 
-	private Group _mockNamedSite(String descriptiveName) throws Exception {
-		Group group = _mockSite();
-
-		Mockito.when(
-			group.getGroupId()
-		).thenReturn(
-			_groupId++
-		);
-
-		Mockito.when(
-			group.getDescriptiveName(LocaleUtil.US)
-		).thenReturn(
-			descriptiveName
-		);
-
-		return group;
-	}
-
-	private Group _mockSite() {
+	private Group _mockGroup() {
 		Group group = Mockito.mock(Group.class);
 
 		Mockito.when(
@@ -451,6 +433,24 @@ public class ExportImportSiteProviderImplTest {
 			group.isSite()
 		).thenReturn(
 			true
+		);
+
+		return group;
+	}
+
+	private Group _mockNamedGroup(String descriptiveName) throws Exception {
+		Group group = _mockGroup();
+
+		Mockito.when(
+			group.getGroupId()
+		).thenReturn(
+			_groupId++
+		);
+
+		Mockito.when(
+			group.getDescriptiveName(LocaleUtil.US)
+		).thenReturn(
+			descriptiveName
 		);
 
 		return group;

@@ -95,7 +95,7 @@ public class SiteImporterImpl implements SiteImporter {
 			Group group = null;
 
 			try {
-				group = _fetchSite(portletDataContext, larSite);
+				group = _fetchGroup(portletDataContext, larSite);
 			}
 			catch (PrincipalException principalException) {
 				_log.error(
@@ -187,7 +187,7 @@ public class SiteImporterImpl implements SiteImporter {
 		return sitePortletDataContext;
 	}
 
-	private Group _fetchSite(
+	private Group _fetchGroup(
 			PortletDataContext portletDataContext, LARSite larSite)
 		throws Exception {
 

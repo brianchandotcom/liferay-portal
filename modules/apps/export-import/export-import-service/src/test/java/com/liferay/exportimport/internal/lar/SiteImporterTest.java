@@ -122,14 +122,15 @@ public class SiteImporterTest {
 				Mockito.anyLong(), Mockito.anyLong(), Mockito.any(),
 				Mockito.any(), Mockito.any())
 		).thenAnswer(
-			invocation -> _mockSitePortletDataContext(invocation.getArgument(2))
+			invocation -> _mockGroupPortletDataContext(
+				invocation.getArgument(2))
 		);
 	}
 
 	@Test
 	public void testImportSitesWhenManifestHasHeader() throws Exception {
 		_setUpLARSites(_createLARSite("site", null));
-		_setUpSites("site");
+		_setUpGroups("site");
 
 		_importSites("site");
 
@@ -179,7 +180,7 @@ public class SiteImporterTest {
 	@Test
 	public void testImportSitesWhenParentSiteIsBelowTheSite() throws Exception {
 		_setUpLARSites(_createLARSite("child", "parent"));
-		_setUpSites("child", "parent");
+		_setUpGroups("child", "parent");
 
 		Mockito.when(
 			_groupLocalService.updateGroup(
@@ -221,7 +222,7 @@ public class SiteImporterTest {
 		throws Exception {
 
 		_setUpLARSites(_createLARSite("carried", null));
-		_setUpSites("carried");
+		_setUpGroups("carried");
 
 		Assert.assertEquals(
 			Arrays.asList("carried"), _importSites("carried", "missing"));
@@ -256,7 +257,7 @@ public class SiteImporterTest {
 		throws Exception {
 
 		_setUpLARSites(_createLARSite("site", null));
-		_setUpSites("site");
+		_setUpGroups("site");
 
 		Mockito.when(
 			_portletDataContext.getParameterMap()
@@ -317,7 +318,7 @@ public class SiteImporterTest {
 	public void testImportSitesWhenSiteIsNotMovable() throws Exception {
 		_setUpLARSites(
 			_createLARSite("child", "parent"), _createLARSite("other", null));
-		_setUpSites("child", "parent", "other");
+		_setUpGroups("child", "parent", "other");
 
 		Mockito.when(
 			_groupLocalService.updateGroup(
@@ -345,7 +346,7 @@ public class SiteImporterTest {
 		_setUpLARSites(
 			_createLARSite("selected", null),
 			_createLARSite("unselected", null));
-		_setUpSites("selected", "unselected");
+		_setUpGroups("selected", "unselected");
 
 		Assert.assertEquals(
 			Arrays.asList("selected"), _importSites("selected"));
@@ -357,7 +358,7 @@ public class SiteImporterTest {
 	public void testImportSitesWhenSiteIsNotSupported() throws Exception {
 		_setUpLARSites(_createLARSite("site", null));
 
-		Group group = _setUpSites("site");
+		Group group = _setUpGroups("site");
 
 		Mockito.when(
 			_exportImportSiteProvider.isSupported(group)
@@ -397,7 +398,7 @@ public class SiteImporterTest {
 
 	@Test
 	public void testUpdateParentSite() throws Exception {
-		Group parentGroup = _mockSite(0);
+		Group parentGroup = _mockGroup(0);
 
 		Mockito.when(
 			parentGroup.getGroupId()
@@ -412,7 +413,7 @@ public class SiteImporterTest {
 			parentGroup
 		);
 
-		Group group = _mockSite(0);
+		Group group = _mockGroup(0);
 
 		_updateParentSite(_createLARSite("child", "parent"), group);
 
@@ -448,7 +449,7 @@ public class SiteImporterTest {
 		_runWithExpectedWarn(
 			DuplicateGroupException.class,
 			() -> _updateParentSite(
-				_createLARSite("child", "parent"), _mockSite(0)));
+				_createLARSite("child", "parent"), _mockGroup(0)));
 
 		_verifyReportEntry(
 			"child", ExportImportReportEntryConstants.TYPE_WARNING,
@@ -472,7 +473,7 @@ public class SiteImporterTest {
 		_runWithExpectedWarn(
 			GroupKeyException.class,
 			() -> _updateParentSite(
-				_createLARSite("child", "parent"), _mockSite(0)));
+				_createLARSite("child", "parent"), _mockGroup(0)));
 
 		_verifyReportEntry(
 			"child", ExportImportReportEntryConstants.TYPE_WARNING,
@@ -483,7 +484,7 @@ public class SiteImporterTest {
 	public void testUpdateParentSiteWhenParentSiteExternalReferenceCodeIsNull()
 		throws Exception {
 
-		_updateParentSite(_createLARSite("child", null), _mockSite(0));
+		_updateParentSite(_createLARSite("child", null), _mockGroup(0));
 
 		Mockito.verifyNoInteractions(_groupLocalService);
 		Mockito.verifyNoInteractions(_exportImportReportEntryLocalService);
@@ -493,7 +494,7 @@ public class SiteImporterTest {
 	public void testUpdateParentSiteWhenParentSiteIsAlreadyTheParent()
 		throws Exception {
 
-		Group parentGroup = _mockSite(0);
+		Group parentGroup = _mockGroup(0);
 
 		Mockito.when(
 			parentGroup.getGroupId()
@@ -509,7 +510,7 @@ public class SiteImporterTest {
 		);
 
 		_updateParentSite(
-			_createLARSite("child", "parent"), _mockSite(_PARENT_GROUP_ID));
+			_createLARSite("child", "parent"), _mockGroup(_PARENT_GROUP_ID));
 
 		_verifyNoSiteWasMoved();
 
@@ -520,7 +521,7 @@ public class SiteImporterTest {
 	public void testUpdateParentSiteWhenParentSiteIsBelowTheSite()
 		throws Exception {
 
-		Group parentGroup = _mockSite(0);
+		Group parentGroup = _mockGroup(0);
 
 		Mockito.when(
 			parentGroup.getGroupId()
@@ -546,7 +547,7 @@ public class SiteImporterTest {
 				_GROUP_ID, _PARENT_GROUP_ID)
 		);
 
-		_updateParentSite(_createLARSite("child", "parent"), _mockSite(0));
+		_updateParentSite(_createLARSite("child", "parent"), _mockGroup(0));
 
 		_verifyReportEntry(
 			"child", ExportImportReportEntryConstants.TYPE_WARNING,
@@ -557,7 +558,7 @@ public class SiteImporterTest {
 	public void testUpdateParentSiteWhenParentSiteIsMissing() throws Exception {
 		LARSite larSite = _createLARSite("child", "parent");
 
-		_updateParentSite(larSite, _mockSite(0));
+		_updateParentSite(larSite, _mockGroup(0));
 
 		_verifyReportEntry(
 			"child", ExportImportReportEntryConstants.TYPE_WARNING,
@@ -626,7 +627,7 @@ public class SiteImporterTest {
 		return _importSites(true);
 	}
 
-	private Group _mockSite(long parentGroupId) {
+	private Group _mockGroup(long parentGroupId) {
 		Group group = Mockito.mock(Group.class);
 
 		Mockito.when(
@@ -644,7 +645,7 @@ public class SiteImporterTest {
 		return group;
 	}
 
-	private PortletDataContext _mockSitePortletDataContext(
+	private PortletDataContext _mockGroupPortletDataContext(
 		Map<String, String[]> parameterMap) {
 
 		PortletDataContext portletDataContext = Mockito.mock(
@@ -694,38 +695,13 @@ public class SiteImporterTest {
 		}
 	}
 
-	private void _setUpLARSites(LARSite... larSites) throws Exception {
-		Mockito.when(
-			_larSiteReader.getLARSites(_portletDataContext)
-		).thenReturn(
-			ListUtil.fromArray(larSites)
-		);
-	}
-
-	private void _setUpParentSite() throws Exception {
-		Group parentGroup = _mockSite(0);
-
-		Mockito.when(
-			parentGroup.getGroupId()
-		).thenReturn(
-			_PARENT_GROUP_ID
-		);
-
-		Mockito.when(
-			_groupLocalService.fetchGroupByExternalReferenceCode(
-				"parent", _COMPANY_ID)
-		).thenReturn(
-			parentGroup
-		);
-	}
-
-	private Group _setUpSites(String... externalReferenceCodes)
+	private Group _setUpGroups(String... externalReferenceCodes)
 		throws Exception {
 
 		Group group = null;
 
 		for (String externalReferenceCode : externalReferenceCodes) {
-			group = _mockSite(0);
+			group = _mockGroup(0);
 
 			Mockito.when(
 				_groupLocalService.fetchGroupByExternalReferenceCode(
@@ -743,6 +719,31 @@ public class SiteImporterTest {
 		}
 
 		return group;
+	}
+
+	private void _setUpLARSites(LARSite... larSites) throws Exception {
+		Mockito.when(
+			_larSiteReader.getLARSites(_portletDataContext)
+		).thenReturn(
+			ListUtil.fromArray(larSites)
+		);
+	}
+
+	private void _setUpParentSite() throws Exception {
+		Group parentGroup = _mockGroup(0);
+
+		Mockito.when(
+			parentGroup.getGroupId()
+		).thenReturn(
+			_PARENT_GROUP_ID
+		);
+
+		Mockito.when(
+			_groupLocalService.fetchGroupByExternalReferenceCode(
+				"parent", _COMPANY_ID)
+		).thenReturn(
+			parentGroup
+		);
 	}
 
 	private void _updateParentSite(LARSite larSite, Group group) {

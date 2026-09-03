@@ -66,7 +66,7 @@ public class SiteExporterImpl implements SiteExporter {
 			Group group = null;
 
 			try {
-				group = _fetchSite(
+				group = _fetchGroup(
 					portletDataContext, selectedSiteExternalReferenceCode);
 			}
 			catch (PrincipalException principalException) {
@@ -88,7 +88,7 @@ public class SiteExporterImpl implements SiteExporter {
 			siteElement.addAttribute(
 				"child-site-count",
 				String.valueOf(
-					_exportImportSiteProvider.getChildSiteCount(group)));
+					_exportImportSiteProvider.getChildGroupCount(group)));
 			siteElement.addAttribute(
 				"descriptive-name",
 				_exportImportSiteProvider.getDescriptiveName(group, locale));
@@ -134,7 +134,7 @@ public class SiteExporterImpl implements SiteExporter {
 			Group group = null;
 
 			try {
-				group = _fetchSite(
+				group = _fetchGroup(
 					portletDataContext, selectedSiteExternalReferenceCode);
 			}
 			catch (PrincipalException principalException) {
@@ -176,7 +176,7 @@ public class SiteExporterImpl implements SiteExporter {
 		return sitePortletDataContext;
 	}
 
-	private Group _fetchSite(
+	private Group _fetchGroup(
 			PortletDataContext portletDataContext, String externalReferenceCode)
 		throws PortalException {
 

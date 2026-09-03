@@ -6,6 +6,7 @@
 package com.liferay.exportimport.internal.util;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.HashMap;
@@ -107,8 +108,8 @@ public class LARManifestPathUtilTest {
 		return portletDataContext;
 	}
 
-	private static final long _SCOPE_GROUP_ID = 1;
+	private static final long _SCOPE_GROUP_ID = RandomTestUtil.randomLong();
 
-	private static final long _SOURCE_GROUP_ID = 2;
+	private static final long _SOURCE_GROUP_ID = RandomTestUtil.randomLong();
 
 }

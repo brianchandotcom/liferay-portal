@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -765,21 +766,23 @@ public class SiteImporterTest {
 		);
 	}
 
-	private static final long _COMPANY_ID = 1;
+	private static final long _COMPANY_ID = RandomTestUtil.randomLong();
 
-	private static final long _GROUP_ID = 2;
+	private static final long _GROUP_ID = RandomTestUtil.randomLong();
 
-	private static final long _PARENT_GROUP_ID = 3;
+	private static final long _PARENT_GROUP_ID = RandomTestUtil.randomLong();
 
-	private static final long _SOURCE_COMPANY_GROUP_ID = 20;
+	private static final long _SOURCE_COMPANY_GROUP_ID =
+		RandomTestUtil.randomLong();
 
-	private static final long _SOURCE_COMPANY_ID = 10;
+	private static final long _SOURCE_COMPANY_ID = RandomTestUtil.randomLong();
 
-	private static final long _SOURCE_GROUP_ID = 5;
+	private static final long _SOURCE_GROUP_ID = RandomTestUtil.randomLong();
 
-	private static final long _SOURCE_USER_PERSONAL_SITE_GROUP_ID = 30;
+	private static final long _SOURCE_USER_PERSONAL_SITE_GROUP_ID =
+		RandomTestUtil.randomLong();
 
-	private static final long _USER_ID = 4;
+	private static final long _USER_ID = RandomTestUtil.randomLong();
 
 	private ExportImportReportEntryLocalService
 		_exportImportReportEntryLocalService;

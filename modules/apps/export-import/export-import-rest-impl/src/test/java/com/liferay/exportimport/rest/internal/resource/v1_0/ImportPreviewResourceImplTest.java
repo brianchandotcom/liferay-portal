@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -113,7 +114,7 @@ public class ImportPreviewResourceImplTest {
 		}
 	}
 
-	private static final long _COMPANY_ID = 1;
+	private static final long _COMPANY_ID = RandomTestUtil.randomLong();
 
 	private FileEntry _fileEntry;
 	private ImportPreviewResourceImpl _importPreviewResourceImpl;

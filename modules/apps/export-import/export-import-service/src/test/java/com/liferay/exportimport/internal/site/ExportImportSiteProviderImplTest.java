@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -457,13 +458,16 @@ public class ExportImportSiteProviderImplTest {
 		);
 	}
 
-	private static final long _COMPANY_CLASS_NAME_ID = 10;
+	private static final long _COMPANY_CLASS_NAME_ID =
+		RandomTestUtil.randomLong();
 
-	private static final long _COMPANY_ID = 1;
+	private static final long _COMPANY_ID = RandomTestUtil.randomLong();
 
-	private static final long _GROUP_CLASS_NAME_ID = 20;
+	private static final long _GROUP_CLASS_NAME_ID =
+		RandomTestUtil.randomLong();
 
-	private static final long _ORGANIZATION_CLASS_NAME_ID = 30;
+	private static final long _ORGANIZATION_CLASS_NAME_ID =
+		RandomTestUtil.randomLong();
 
 	private ExportImportSiteProviderImpl _exportImportSiteProviderImpl;
 	private long _groupId = 1;

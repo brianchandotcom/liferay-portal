@@ -7,8 +7,8 @@ package com.liferay.exportimport.site;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.util.OrderByComparator;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
@@ -24,7 +24,8 @@ public interface ExportImportSiteProvider {
 	public String getPath(Group group, Locale locale);
 
 	public List<Group> getSupportedSites(
-			long companyId, String search, Comparator<Group> comparator)
+			long companyId, String keywords,
+			OrderByComparator<Group> orderByComparator)
 		throws PortalException;
 
 	public boolean isSupported(Group group);

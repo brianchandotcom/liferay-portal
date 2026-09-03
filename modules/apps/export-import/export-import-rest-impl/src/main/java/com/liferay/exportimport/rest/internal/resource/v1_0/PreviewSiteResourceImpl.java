@@ -15,6 +15,8 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.comparator.GroupDescriptiveNameComparator;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -23,7 +25,6 @@ import com.liferay.staging.StagingGroupHelper;
 import jakarta.ws.rs.NotFoundException;
 import jakarta.ws.rs.core.MultivaluedMap;
 
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -71,7 +72,7 @@ public class PreviewSiteResourceImpl extends BasePreviewSiteResourceImpl {
 
 		List<Group> groups = _exportImportSiteProvider.getSupportedSites(
 			contextCompany.getCompanyId(), search,
-			_getDescriptiveNameComparator(descriptiveNameFunction, sorts));
+			_getOrderByComparator(sorts));
 
 		return Page.of(
 			transform(
@@ -96,14 +97,19 @@ public class PreviewSiteResourceImpl extends BasePreviewSiteResourceImpl {
 			pagination, groups.size());
 	}
 
-	private Comparator<Group> _getDescriptiveNameComparator(
-		Function<Group, String> descriptiveNameFunction, Sort[] sorts) {
+	private Function<Group, String> _getDescriptiveNameFunction() {
+		Map<Long, String> descriptiveNames = new HashMap<>();
 
-		Comparator<Group> comparator = Comparator.comparing(
-			descriptiveNameFunction, String.CASE_INSENSITIVE_ORDER);
+		return group -> descriptiveNames.computeIfAbsent(
+			group.getGroupId(),
+			groupId -> _exportImportSiteProvider.getDescriptiveName(
+				group, contextAcceptLanguage.getPreferredLocale()));
+	}
 
+	private OrderByComparator<Group> _getOrderByComparator(Sort[] sorts) {
 		if (ArrayUtil.isEmpty(sorts)) {
-			return comparator;
+			return new GroupDescriptiveNameComparator(
+				true, contextAcceptLanguage.getPreferredLocale());
 		}
 
 		Sort sort = sorts[0];
@@ -112,20 +118,8 @@ public class PreviewSiteResourceImpl extends BasePreviewSiteResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		if (sort.isReverse()) {
-			return comparator.reversed();
-		}
-
-		return comparator;
-	}
-
-	private Function<Group, String> _getDescriptiveNameFunction() {
-		Map<Long, String> descriptiveNames = new HashMap<>();
-
-		return group -> descriptiveNames.computeIfAbsent(
-			group.getGroupId(),
-			groupId -> _exportImportSiteProvider.getDescriptiveName(
-				group, contextAcceptLanguage.getPreferredLocale()));
+		return new GroupDescriptiveNameComparator(
+			!sort.isReverse(), contextAcceptLanguage.getPreferredLocale());
 	}
 
 	private static final EntityModel _entityModel =

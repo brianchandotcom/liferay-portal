@@ -15,12 +15,13 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.comparator.GroupDescriptiveNameComparator;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.staging.StagingGroupHelper;
 
 import java.util.Arrays;
-import java.util.Comparator;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -186,20 +187,28 @@ public class ExportImportSiteProviderImplTest {
 	}
 
 	@Test
-	public void testGetSupportedSitesWithComparator() throws Exception {
+	public void testGetSupportedSitesWithOrderByComparator() throws Exception {
 		Group group = _mockNamedSite("EMEA");
 
 		Group otherGroup = _mockNamedSite("Support");
 
 		_setUpSearch(group, otherGroup);
 
+		OrderByComparator<Group> orderByComparator =
+			new GroupDescriptiveNameComparator(false, LocaleUtil.US);
+
 		Assert.assertEquals(
-			Arrays.asList(otherGroup, group),
+			Arrays.asList(group, otherGroup),
 			_exportImportSiteProviderImpl.getSupportedSites(
-				_COMPANY_ID, null,
-				Comparator.comparingLong(
-					Group::getGroupId
-				).reversed()));
+				_COMPANY_ID, null, orderByComparator));
+
+		Mockito.verify(
+			_groupService
+		).search(
+			Mockito.anyLong(), Mockito.any(long[].class), Mockito.isNull(),
+			Mockito.any(), Mockito.anyInt(), Mockito.anyInt(),
+			Mockito.same(orderByComparator)
+		);
 	}
 
 	@Test
@@ -452,7 +461,7 @@ public class ExportImportSiteProviderImplTest {
 			_groupService.search(
 				Mockito.anyLong(), Mockito.any(long[].class), Mockito.isNull(),
 				Mockito.any(), Mockito.anyInt(), Mockito.anyInt(),
-				Mockito.isNull())
+				Mockito.any())
 		).thenReturn(
 			ListUtil.fromArray(groups)
 		);

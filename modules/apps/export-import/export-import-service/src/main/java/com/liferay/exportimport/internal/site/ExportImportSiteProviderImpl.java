@@ -18,12 +18,12 @@ import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.staging.StagingGroupHelper;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
@@ -97,25 +97,20 @@ public class ExportImportSiteProviderImpl implements ExportImportSiteProvider {
 
 	@Override
 	public List<Group> getSupportedSites(
-			long companyId, String search, Comparator<Group> comparator)
+			long companyId, String keywords,
+			OrderByComparator<Group> orderByComparator)
 		throws PortalException {
 
-		List<Group> groups = _groupService.search(
-			companyId, _getSupportedClassNameIds(), search,
-			LinkedHashMapBuilder.<String, Object>put(
-				"active", Boolean.TRUE
-			).put(
-				"site", Boolean.TRUE
-			).build(),
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-
-		groups = ListUtil.filter(groups, this::isSupported);
-
-		if (comparator == null) {
-			return groups;
-		}
-
-		return ListUtil.sort(groups, comparator);
+		return ListUtil.filter(
+			_groupService.search(
+				companyId, _getSupportedClassNameIds(), keywords,
+				LinkedHashMapBuilder.<String, Object>put(
+					"active", Boolean.TRUE
+				).put(
+					"site", Boolean.TRUE
+				).build(),
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, orderByComparator),
+			this::isSupported);
 	}
 
 	@Override

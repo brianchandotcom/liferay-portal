@@ -4,14 +4,8 @@
 	<file id="com.liferay.journal.model.JournalArticle:122">
 		<unit id="JournalArticle_content">
 			<segment>
-				<source>
-					<pc id="1">Hello <pc id="2">world</pc>
-					</pc>
-				</source>
-				<target>
-					<pc id="1">Hola <pc id="2">mundo</pc>
-					</pc>
-				</target>
+				<source><pc id="1">Hello <pc id="2">world</pc></pc></source>
+				<target><pc id="1">Hola <pc id="2">mundo</pc></pc></target>
 			</segment>
 		</unit>
 	</file>

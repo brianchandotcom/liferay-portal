@@ -162,6 +162,30 @@ public class XLIFFTranslationInfoItemFieldValuesImporterTest {
 		Assert.assertFalse(infoFieldValues.isEmpty());
 	}
 
+	@FeatureFlags(
+		featureFlags = @FeatureFlag(enable = false, value = "LPD-102730")
+	)
+	@Test
+	public void testImportXLIFF20DropsDatalessInlineCodesWithoutFeatureFlag()
+		throws Exception {
+
+		InfoItemFieldValues infoItemFieldValues =
+			_xliffTranslationInfoItemFieldValuesImporter.
+				importInfoItemFieldValues(
+					_group.getGroupId(),
+					new InfoItemReference(JournalArticle.class.getName(), 122),
+					TranslationTestUtil.readFileToInputStream(
+						"test-journal-article-122-inline-codes-no-original-" +
+							"data.xlf"));
+
+		InfoFieldValue<Object> contentInfoFieldValue =
+			infoItemFieldValues.getInfoFieldValue("content");
+
+		Assert.assertEquals(
+			"Hola mundo", contentInfoFieldValue.getValue(LocaleUtil.SPAIN));
+	}
+
+	@FeatureFlags(featureFlags = @FeatureFlag("LPD-102730"))
 	@Test(expected = XLIFFFileException.MustBeValid.class)
 	public void testImportXLIFF20FailsFileInlineCodeWithoutOriginalData()
 		throws Exception {

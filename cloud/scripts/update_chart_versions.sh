@@ -32,7 +32,7 @@ function main {
 }
 
 function _check_chart_yaml {
-	local helm_dir="${1}"
+	local helm_dir=${1}
 
 	local helm_chart_yaml="${helm_dir}/Chart.yaml"
 
@@ -60,7 +60,10 @@ function _check_chart_yaml {
 
 	if [[ "${commit_count}" -gt 0 ]]
 	then
-		git --no-pager log --date=short --format="%h %ad %an %s" "${blame_sha}..HEAD" -- "${helm_dir}"
+		git --no-pager log \
+			--date=short \
+			--format="%h %ad %an %s" \
+			"${blame_sha}..HEAD" -- "${helm_dir}"
 
 		echo "The version in ${helm_chart_yaml} is outdated." >&2
 		echo "" >&2

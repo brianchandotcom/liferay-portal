@@ -66,7 +66,7 @@ function main {
 }
 
 function _bump_bootstrap_version {
-	local bootstrap_name="${1}"
+	local bootstrap_name=${1}
 
 	_BUMPED_BOOTSTRAPS+=("${bootstrap_name}")
 
@@ -146,7 +146,7 @@ function _bump_operator_version {
 }
 
 function _check_bootstrap {
-	local bootstrap_name="${1}"
+	local bootstrap_name=${1}
 
 	shift
 
@@ -220,8 +220,8 @@ function _has_modified_bootstraps {
 }
 
 function _record_bootstrap_file_update {
-	local bootstrap_name="${1}"
-	local file="${2}"
+	local bootstrap_name=${1}
+	local file=${2}
 
 	shift 2
 
@@ -238,7 +238,7 @@ function _record_bootstrap_file_update {
 }
 
 function _record_modified_bootstrap {
-	local bootstrap_name="${1}"
+	local bootstrap_name=${1}
 
 	if has_array_element "${bootstrap_name}" "${_BUMPED_BOOTSTRAPS[@]}" "${_MODIFIED_BOOTSTRAPS[@]}"
 	then
@@ -250,7 +250,7 @@ function _record_modified_bootstrap {
 
 function _update_chart_versions_json {
 	local chart_name="liferay-${1}"
-	local new_version="${2}"
+	local new_version=${2}
 
 	local chart_versions_json_file="${_SCRIPTS_DIR}/chart_versions.json"
 
@@ -261,7 +261,7 @@ function _update_chart_versions_json {
 }
 
 function _update_default_chart_version {
-	local helm_chart_yaml="${1}"
+	local helm_chart_yaml=${1}
 
 	local helm_chart_name
 
@@ -309,8 +309,8 @@ function _update_default_versions {
 }
 
 function _update_platform_components_target_revision {
-	local chart_repository_name="${1}"
-	local new_version="${2}"
+	local chart_repository_name=${1}
+	local new_version=${2}
 
 	local platform_components_values_yaml="${_ROOT_CLOUD_DIR}/helm/platform-components/values.yaml"
 
@@ -323,7 +323,7 @@ function _update_platform_components_target_revision {
 }
 
 function _update_platform_target_revision {
-	local new_version="${1}"
+	local new_version=${1}
 
 	local platform_values_yaml="${_ROOT_CLOUD_DIR}/helm/platform/values.yaml"
 
@@ -336,9 +336,9 @@ function _update_platform_target_revision {
 }
 
 function _update_resources_tfvars {
-	local cloud="${1}"
-	local variable_name="${2}"
-	local new_version="${3}"
+	local cloud=${1}
+	local variable_name=${2}
+	local new_version=${3}
 
 	local resources_tfvars_file="${_ROOT_CLOUD_DIR}/terraform/${cloud}/gitops/resources/terraform.tfvars"
 
@@ -352,13 +352,19 @@ function _update_resources_tfvars {
 }
 
 function _write_chart_versions_json {
-	local chart_name="${1}"
-	local new_version="${2}"
-	local chart_versions_json_file="${3}"
+	local chart_name=${1}
+	local new_version=${2}
+	local chart_versions_json_file=${3}
 
 	local updated_chart_versions_json
 
-	updated_chart_versions_json=$(jq --arg chart_name "${chart_name}" --arg version "${new_version}" --tab '.[$chart_name] = $version' "${chart_versions_json_file}")
+	updated_chart_versions_json=$( \
+		jq \
+			--arg chart_name "${chart_name}" \
+			--arg version "${new_version}" \
+			--tab \
+			'.[$chart_name] = $version' \
+			"${chart_versions_json_file}")
 
 	printf '%s' "${updated_chart_versions_json}" > "${chart_versions_json_file}"
 }

@@ -15,7 +15,7 @@ _ROOT_CLOUD_DIR=$(cd "${_SCRIPTS_DIR}/.." && pwd)
 readonly _MAXIMUM_PASSES _ROOT_CLOUD_DIR _SCRIPTS_DIR
 
 function bump_chart_version {
-	local chart_dir="${1}"
+	local chart_dir=${1}
 
 	local helm_chart_yaml="${chart_dir}/Chart.yaml"
 
@@ -77,14 +77,14 @@ function count_pass {
 }
 
 function get_file_checksum {
-	local file="${1}"
+	local file=${1}
 
 	md5sum "${file}" | awk '{print $1}'
 }
 
 function git_blame_line {
-	local pattern="${1}"
-	local git_path="${2}"
+	local pattern=${1}
+	local git_path=${2}
 
 	local blame_line
 
@@ -94,8 +94,8 @@ function git_blame_line {
 }
 
 function git_blame_sha {
-	local pattern="${1}"
-	local git_path="${2}"
+	local pattern=${1}
+	local git_path=${2}
 
 	local blame_line
 
@@ -109,7 +109,7 @@ function git_blame_sha {
 }
 
 function has_array_element {
-	local element="${1}"
+	local element=${1}
 
 	shift
 
@@ -136,7 +136,7 @@ function has_modified_charts {
 }
 
 function is_commit {
-	local sha="${1}"
+	local sha=${1}
 
 	if [ -z "${sha}" ]
 	then
@@ -152,7 +152,7 @@ function is_commit {
 }
 
 function record_chart_file_update {
-	local file="${1}"
+	local file=${1}
 
 	shift
 
@@ -169,7 +169,7 @@ function record_chart_file_update {
 }
 
 function _record_modified_chart_dir {
-	local file="${1}"
+	local file=${1}
 
 	local chart_dir
 
@@ -192,9 +192,9 @@ function _record_modified_chart_dir {
 }
 
 function _update_chart_dependency_version {
-	local chart_name="${1}"
-	local current_chart_yaml="${2}"
-	local new_version="${3}"
+	local chart_name=${1}
+	local current_chart_yaml=${2}
+	local new_version=${3}
 
 	local subchart_dir
 

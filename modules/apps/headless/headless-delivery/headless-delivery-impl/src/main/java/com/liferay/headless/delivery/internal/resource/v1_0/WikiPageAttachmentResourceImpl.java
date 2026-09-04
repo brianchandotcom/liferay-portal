@@ -50,6 +50,10 @@ public class WikiPageAttachmentResourceImpl
 			_wikiPageService.getLatestPageByExternalReferenceCode(
 				siteId, wikiPageExternalReferenceCode);
 
+		_wikiPageModelResourcePermission.check(
+			PermissionThreadLocal.getPermissionChecker(), wikiPage,
+			ActionKeys.DELETE);
+
 		FileEntry fileEntry =
 			wikiPage.getAttachmentsFileEntryByExternalReferenceCode(
 				siteId, externalReferenceCode);

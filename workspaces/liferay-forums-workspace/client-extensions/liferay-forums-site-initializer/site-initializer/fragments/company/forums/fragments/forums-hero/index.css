@@ -23,9 +23,70 @@
 	opacity: 0.5;
 }
 
-.forums-hero__search {
+.forums-hero__search-wrapper {
 	margin: 0 auto 2.5rem;
 	max-width: 560px;
+	position: relative;
+}
+
+.forums-hero__search {
+	margin: 0;
+}
+
+.forums-hero__search-suggestions {
+	background-color: var(--white, #fff);
+	border-radius: var(--border-radius, 0.25rem);
+	box-shadow: var(--shadow, 0 0.5rem 1rem rgba(0, 0, 0, 0.15));
+	left: 0;
+	margin-top: 0.25rem;
+	max-height: 320px;
+	overflow-y: auto;
+	position: absolute;
+	right: 0;
+	text-align: left;
+	top: 100%;
+	z-index: 10;
+}
+
+.forums-hero__search-suggestion {
+	align-items: center;
+	color: var(--dark, #272833);
+	display: flex;
+	gap: 0.75rem;
+	padding: 0.625rem 1rem;
+	text-decoration: none;
+}
+
+.forums-hero__search-suggestion:hover,
+.forums-hero__search-suggestion:focus,
+.forums-hero__search-suggestion--active {
+	background-color: var(--gray-100, #f1f2f5);
+	color: var(--dark, #272833);
+}
+
+.forums-hero__search-suggestion-icon {
+	color: var(--gray-500, #98999e);
+	flex: 0 0 auto;
+	height: 16px;
+	width: 16px;
+}
+
+.forums-hero__search-suggestion-text {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.forums-hero__search-suggestion-text mark {
+	background-color: transparent;
+	color: inherit;
+	font-weight: var(--font-weight-bolder, 700);
+	padding: 0;
+}
+
+.forums-hero__search-suggestions-message {
+	color: var(--gray-600, #6b6c7e);
+	padding: 0.5rem 1rem;
 }
 
 @media (max-width: 767.98px) {

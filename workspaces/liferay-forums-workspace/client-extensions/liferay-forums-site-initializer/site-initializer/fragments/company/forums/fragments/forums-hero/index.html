@@ -52,7 +52,12 @@
 	[#assign messagesData = restClient.get("/c/forummessages/scopes/" + scopeGroupId + "?pageSize=1&page=1")!"" /]
 [/#if]
 
-<div class="forums-hero">
+<div
+	class="forums-hero" id="forumsHero"
+	data-label-no-results-found="${languageUtil.get(locale, "no-results-found", "No results found")}"
+	data-label-searching="${languageUtil.get(locale, "searching", "Searching...")}"
+	data-site-prefix="${sitePrefix}"
+>
 	<div class="forums-hero__backdrop">
 		<div class="container">
 			<div class="justify-content-center row">
@@ -65,19 +70,23 @@
 						[#if heroDescriptionText?has_content]${heroDescriptionText}[#else]${languageUtil.get(locale, "forums-description")}[/#if]
 					</p>
 
-					<form action="${sitePrefix}/forums-messages" class="forums-hero__search input-group" method="get" role="search">
-						<div class="input-group-item">
-							<input type="search" name="q" class="form-control input-group-inset input-group-inset-after" aria-label="${languageUtil.get(locale, "search", "Search")}" placeholder="${languageUtil.get(locale, "search", "Search")}..." />
+					<div class="forums-hero__search-wrapper" id="forumsHeroSearchWrapper">
+						<form action="${sitePrefix}/forums-messages" class="forums-hero__search input-group" method="get" role="search">
+							<div class="input-group-item">
+								<input type="search" name="q" id="forumsHeroSearchInput" class="form-control input-group-inset input-group-inset-after" aria-autocomplete="list" aria-controls="forumsHeroSearchSuggestions" aria-expanded="false" aria-label="${languageUtil.get(locale, "search", "Search")}" autocomplete="off" placeholder="${languageUtil.get(locale, "search", "Search")}..." />
 
-							<div class="input-group-inset-item input-group-inset-item-after">
-								<button class="btn btn-unstyled" type="submit" aria-label="${languageUtil.get(locale, "search", "Search")}">
-									<svg class="lexicon-icon lexicon-icon-search" focusable="false" role="presentation">
-										<use href="${themeDisplay.getPathThemeImages()}/clay/icons.svg#search"></use>
-									</svg>
-								</button>
+								<div class="input-group-inset-item input-group-inset-item-after">
+									<button class="btn btn-unstyled" type="submit" aria-label="${languageUtil.get(locale, "search", "Search")}">
+										<svg class="lexicon-icon lexicon-icon-search" focusable="false" role="presentation">
+											<use href="${themeDisplay.getPathThemeImages()}/clay/icons.svg#search"></use>
+										</svg>
+									</button>
+								</div>
 							</div>
-						</div>
-					</form>
+						</form>
+
+						<div class="forums-hero__search-suggestions" id="forumsHeroSearchSuggestions" role="listbox" style="display: none;"></div>
+					</div>
 
 					[#if showSolutions || showDiscussions || showMessages]
 						<div class="forums-hero__stats mb-4">

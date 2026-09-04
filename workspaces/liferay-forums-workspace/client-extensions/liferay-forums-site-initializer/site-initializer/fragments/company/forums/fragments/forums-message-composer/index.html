@@ -131,7 +131,7 @@
 	data-category-page-size="${configuration.categoryPageSize!"50"}"
 	data-category-sort="${configuration.categorySort!""}"
 	data-form-mode="${formMode}"
-	data-label-new-forum-message="New Discussion"
+	data-label-new-forum-message="${languageUtil.get(locale, "new-forum-message")}"
 	data-label-post-a-reply="${languageUtil.get(locale, "post-a-reply")}"
 	data-label-details="${languageUtil.get(locale, "details")}"
 	data-label-your-reply="${languageUtil.get(locale, "your-reply")}"
@@ -158,7 +158,7 @@
 
 		<div class="panel panel-secondary">
 			<div class="panel-body">
-				<h1 class="text-dark mb-4" id="forumsMessageComposerTitle">New Discussion</h1>
+				<h1 class="text-dark mb-4" id="forumsMessageComposerTitle">${languageUtil.get(locale, "new-forum-message")}</h1>
 
 				<form id="forumsMessageComposerForm" novalidate>
 					<div class="forums-message-composer__single-column" id="forumsMessageComposerLeftCol">
@@ -196,7 +196,7 @@
 			<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title" id="forumsMessageComposerTitle">New Discussion</h5>
+						<h5 class="modal-title" id="forumsMessageComposerTitle">${languageUtil.get(locale, "new-forum-message")}</h5>
 
 						<button type="button" class="close" id="forumsMessageComposerCloseBtn" aria-label="${languageUtil.get(locale, "close")}">
 							<svg class="lexicon-icon lexicon-icon-times" focusable="false" role="presentation">

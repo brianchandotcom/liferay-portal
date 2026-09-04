@@ -448,7 +448,8 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 				properties.put(
 					propertyName,
 					JenkinsResultsParserUtil.getBuildProperty(
-						"portal.build.properties[" + propertyName + "]"));
+						"portal.build.properties[" + propertyName + "]",
+						getUpstreamBranchName()));
 			}
 
 			JenkinsResultsParserUtil.writePropertiesFile(

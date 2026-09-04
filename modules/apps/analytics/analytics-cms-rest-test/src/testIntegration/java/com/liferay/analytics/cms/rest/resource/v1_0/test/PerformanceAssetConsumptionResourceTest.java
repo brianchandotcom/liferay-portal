@@ -73,6 +73,7 @@ public class PerformanceAssetConsumptionResourceTest
 		_testGetPerformanceAssetConsumptionGroupByStructure();
 		_testGetPerformanceAssetConsumptionResponse();
 		_testGetPerformanceAssetConsumptionURL();
+		_testGetPerformanceAssetConsumptionWithCMPProjectIds();
 		_testGetPerformanceAssetConsumptionWithDepotEntryMemberUser();
 		_testGetPerformanceAssetConsumptionWithInvalidGroupBy();
 	}
@@ -140,8 +141,8 @@ public class PerformanceAssetConsumptionResourceTest
 			PerformanceAssetConsumption performanceAssetConsumption =
 				performanceAssetConsumptionResource.
 					getPerformanceAssetConsumption(
-						null, null, "structure", RandomTestUtil.nextInt(), null,
-						null, null, Pagination.of(1, 10));
+						null, null, null, "structure", RandomTestUtil.nextInt(),
+						null, null, null, Pagination.of(1, 10));
 
 			PerformanceAssetConsumptionItem[] performanceAssetConsumptionItems =
 				performanceAssetConsumption.
@@ -222,8 +223,8 @@ public class PerformanceAssetConsumptionResourceTest
 			PerformanceAssetConsumption performanceAssetConsumption =
 				performanceAssetConsumptionResource.
 					getPerformanceAssetConsumption(
-						null, null, "category", RandomTestUtil.nextInt(), null,
-						null, null, Pagination.of(1, 10));
+						null, null, null, "category", RandomTestUtil.nextInt(),
+						null, null, null, Pagination.of(1, 10));
 
 			PerformanceAssetConsumptionItem[] performanceAssetConsumptionItems =
 				performanceAssetConsumption.
@@ -282,7 +283,7 @@ public class PerformanceAssetConsumptionResourceTest
 			long vocabularyId = RandomTestUtil.nextLong();
 
 			performanceAssetConsumptionResource.getPerformanceAssetConsumption(
-				categoryId,
+				categoryId, null,
 				TransformUtil.transformToArray(
 					_depotEntries, DepotEntry::getDepotEntryId, Long.class),
 				"tag", rangeKey, objectDefinition.getObjectDefinitionId(),
@@ -305,6 +306,38 @@ public class PerformanceAssetConsumptionResourceTest
 			_assertParameter(String.valueOf(tagId), "tagId", location);
 			_assertParameter(
 				String.valueOf(vocabularyId), "vocabularyId", location);
+		}
+	}
+
+	private void _testGetPerformanceAssetConsumptionWithCMPProjectIds()
+		throws Exception {
+
+		try (AnalyticsCloudHttpServer analyticsCloudHttpServer =
+				new AnalyticsCloudHttpServer(
+					"/api/1.0/asset-metric/objectEntry/asset-consumption",
+					() -> "{}");
+
+			AnalyticsCompanyConfigurationTemporarySwapper
+				analyticsCompanyConfigurationTemporarySwapper =
+					new AnalyticsCompanyConfigurationTemporarySwapper(
+						testCompany.getCompanyId(),
+						RandomTestUtil.randomString(), true,
+						analyticsCloudHttpServer.getURL())) {
+
+			PerformanceAssetConsumption performanceAssetConsumption =
+				performanceAssetConsumptionResource.
+					getPerformanceAssetConsumption(
+						null, new Long[] {RandomTestUtil.randomLong()},
+						TransformUtil.transformToArray(
+							_depotEntries, DepotEntry::getDepotEntryId,
+							Long.class),
+						"category", RandomTestUtil.nextInt(), null, null, null,
+						Pagination.of(1, 10));
+
+			Assert.assertEquals(
+				0, (long)performanceAssetConsumption.getTotalCount());
+
+			Assert.assertNull(analyticsCloudHttpServer.getLocation());
 		}
 	}
 
@@ -337,7 +370,7 @@ public class PerformanceAssetConsumptionResourceTest
 						depotEntryIds ->
 							performanceAssetConsumptionResource.
 								getPerformanceAssetConsumption(
-									null, depotEntryIds, "tag",
+									null, null, depotEntryIds, "tag",
 									RandomTestUtil.nextInt(), null, null, null,
 									com.liferay.portal.vulcan.pagination.
 										Pagination.of(1, 10)));
@@ -347,7 +380,7 @@ public class PerformanceAssetConsumptionResourceTest
 						depotEntryIds ->
 							performanceAssetConsumptionResource.
 								getPerformanceAssetConsumption(
-									null, depotEntryIds, "tag",
+									null, null, depotEntryIds, "tag",
 									RandomTestUtil.nextInt(), null, null, null,
 									com.liferay.portal.vulcan.pagination.
 										Pagination.of(1, 10)));
@@ -357,7 +390,7 @@ public class PerformanceAssetConsumptionResourceTest
 						depotEntryIds ->
 							performanceAssetConsumptionResource.
 								getPerformanceAssetConsumption(
-									null, depotEntryIds, "tag",
+									null, null, depotEntryIds, "tag",
 									RandomTestUtil.nextInt(), null, null, null,
 									com.liferay.portal.vulcan.pagination.
 										Pagination.of(1, 10)));
@@ -383,7 +416,7 @@ public class PerformanceAssetConsumptionResourceTest
 				HttpURLConnection.HTTP_BAD_REQUEST,
 				performanceAssetConsumptionResource.
 					getPerformanceAssetConsumptionHttpResponse(
-						null, null, RandomTestUtil.randomString(),
+						null, null, null, RandomTestUtil.randomString(),
 						RandomTestUtil.nextInt(), null, null, null,
 						Pagination.of(1, 10)));
 		}

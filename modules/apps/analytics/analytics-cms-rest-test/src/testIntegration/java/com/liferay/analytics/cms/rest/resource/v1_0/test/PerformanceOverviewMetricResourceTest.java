@@ -66,6 +66,7 @@ public class PerformanceOverviewMetricResourceTest
 	public void testGetPerformanceOverviewMetric() throws Exception {
 		_testGetPerformanceOverviewMetric();
 		_testGetPerformanceOverviewMetricWithAnalyticsCloudNotConnected();
+		_testGetPerformanceOverviewMetricWithCMPProjectIds();
 		_testGetPerformanceOverviewMetricWithDepotEntryMemberUser();
 	}
 
@@ -163,6 +164,7 @@ public class PerformanceOverviewMetricResourceTest
 
 			PerformanceOverviewMetric performanceOverviewMetric =
 				performanceOverviewMetricResource.getPerformanceOverviewMetric(
+					null,
 					TransformUtil.transformToArray(
 						_depotEntries, DepotEntry::getDepotEntryId, Long.class),
 					RandomTestUtil.nextInt());
@@ -201,10 +203,40 @@ public class PerformanceOverviewMetricResourceTest
 				HttpURLConnection.HTTP_FORBIDDEN,
 				performanceOverviewMetricResource.
 					getPerformanceOverviewMetricHttpResponse(
+						null,
 						TransformUtil.transformToArray(
 							_depotEntries, DepotEntry::getDepotEntryId,
 							Long.class),
 						RandomTestUtil.nextInt()));
+		}
+	}
+
+	private void _testGetPerformanceOverviewMetricWithCMPProjectIds()
+		throws Exception {
+
+		try (AnalyticsCloudHttpServer analyticsCloudHttpServer =
+				new AnalyticsCloudHttpServer(
+					"/api/1.0/asset-metric/objectEntry" +
+						"/performance-overview-metric",
+					() -> "{}");
+
+			AnalyticsCompanyConfigurationTemporarySwapper
+				analyticsCompanyConfigurationTemporarySwapper =
+					new AnalyticsCompanyConfigurationTemporarySwapper(
+						testCompany.getCompanyId(),
+						RandomTestUtil.randomString(), true,
+						analyticsCloudHttpServer.getURL())) {
+
+			PerformanceOverviewMetric performanceOverviewMetric =
+				performanceOverviewMetricResource.getPerformanceOverviewMetric(
+					new Long[] {RandomTestUtil.randomLong()},
+					TransformUtil.transformToArray(
+						_depotEntries, DepotEntry::getDepotEntryId, Long.class),
+					RandomTestUtil.nextInt());
+
+			Assert.assertNull(performanceOverviewMetric.getViewsMetric());
+
+			Assert.assertNull(analyticsCloudHttpServer.getLocation());
 		}
 	}
 
@@ -238,21 +270,24 @@ public class PerformanceOverviewMetricResourceTest
 						depotEntryIds ->
 							performanceOverviewMetricResource.
 								getPerformanceOverviewMetric(
-									depotEntryIds, RandomTestUtil.nextInt()));
+									null, depotEntryIds,
+									RandomTestUtil.nextInt()));
 					DepotEntryTestUtil.assertNoRequest(
 						analyticsCloudHttpServer,
 						new DepotEntry[] {_depotEntries.get(0)},
 						depotEntryIds ->
 							performanceOverviewMetricResource.
 								getPerformanceOverviewMetric(
-									depotEntryIds, RandomTestUtil.nextInt()));
+									null, depotEntryIds,
+									RandomTestUtil.nextInt()));
 					DepotEntryTestUtil.assertNoRequest(
 						analyticsCloudHttpServer,
 						_depotEntries.toArray(new DepotEntry[0]),
 						depotEntryIds ->
 							performanceOverviewMetricResource.
 								getPerformanceOverviewMetric(
-									depotEntryIds, RandomTestUtil.nextInt()));
+									null, depotEntryIds,
+									RandomTestUtil.nextInt()));
 
 					return null;
 				});

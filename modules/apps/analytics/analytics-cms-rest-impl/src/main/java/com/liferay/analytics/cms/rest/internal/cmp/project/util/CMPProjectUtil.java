@@ -80,6 +80,17 @@ public class CMPProjectUtil {
 		return filteredCMPProjectIds.toArray(new Long[0]);
 	}
 
+	public static Long[] getFilteredCMPProjectIds(
+			String actionId, Long[] cmpProjectIds)
+		throws PortalException {
+
+		if (ArrayUtil.isEmpty(cmpProjectIds)) {
+			return null;
+		}
+
+		return getCMPProjectIds(actionId, cmpProjectIds);
+	}
+
 	public static String getFilterString(
 		Long[] cmpProjectIds, String filterString) {
 
@@ -100,6 +111,18 @@ public class CMPProjectUtil {
 
 		return StringBundler.concat(
 			"(", filterString, ") and ", cmpProjectFilterString);
+	}
+
+	public static boolean hasNoVisibleCMPProjects(
+		Long[] filteredCMPProjectIds) {
+
+		if ((filteredCMPProjectIds != null) &&
+			ArrayUtil.isEmpty(filteredCMPProjectIds)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(CMPProjectUtil.class);

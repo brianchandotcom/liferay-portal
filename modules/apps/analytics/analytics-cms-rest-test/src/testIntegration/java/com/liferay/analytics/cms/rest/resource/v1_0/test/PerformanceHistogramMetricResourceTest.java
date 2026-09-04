@@ -67,6 +67,7 @@ public class PerformanceHistogramMetricResourceTest
 	public void testGetPerformanceHistogramMetric() throws Exception {
 		_testGetPerformanceHistogramMetric();
 		_testGetPerformanceHistogramMetricWithAnalyticsCloudNotConnected();
+		_testGetPerformanceHistogramMetricWithCMPProjectIds();
 		_testGetPerformanceHistogramMetricWithDepotEntryMemberUser();
 	}
 
@@ -123,6 +124,7 @@ public class PerformanceHistogramMetricResourceTest
 			PerformanceHistogramMetric performanceHistogramMetric =
 				performanceHistogramMetricResource.
 					getPerformanceHistogramMetric(
+						null,
 						TransformUtil.transformToArray(
 							_depotEntries, DepotEntry::getDepotEntryId,
 							Long.class),
@@ -164,10 +166,43 @@ public class PerformanceHistogramMetricResourceTest
 				HttpURLConnection.HTTP_FORBIDDEN,
 				performanceHistogramMetricResource.
 					getPerformanceHistogramMetricHttpResponse(
+						null,
 						TransformUtil.transformToArray(
 							_depotEntries, DepotEntry::getDepotEntryId,
 							Long.class),
 						RandomTestUtil.nextInt(), "downloadsMetric"));
+		}
+	}
+
+	private void _testGetPerformanceHistogramMetricWithCMPProjectIds()
+		throws Exception {
+
+		try (AnalyticsCloudHttpServer analyticsCloudHttpServer =
+				new AnalyticsCloudHttpServer(
+					"/api/1.0/asset-metric/objectEntry" +
+						"/performance-overview-metric/histogram",
+					() -> "{}");
+
+			AnalyticsCompanyConfigurationTemporarySwapper
+				analyticsCompanyConfigurationTemporarySwapper =
+					new AnalyticsCompanyConfigurationTemporarySwapper(
+						testCompany.getCompanyId(),
+						RandomTestUtil.randomString(), true,
+						analyticsCloudHttpServer.getURL())) {
+
+			PerformanceHistogramMetric performanceHistogramMetric =
+				performanceHistogramMetricResource.
+					getPerformanceHistogramMetric(
+						new Long[] {RandomTestUtil.randomLong()},
+						TransformUtil.transformToArray(
+							_depotEntries, DepotEntry::getDepotEntryId,
+							Long.class),
+						RandomTestUtil.nextInt(), "viewsMetric");
+
+			Assert.assertEquals(
+				0, performanceHistogramMetric.getHistograms().length);
+
+			Assert.assertNull(analyticsCloudHttpServer.getLocation());
 		}
 	}
 
@@ -201,7 +236,8 @@ public class PerformanceHistogramMetricResourceTest
 						depotEntryIds ->
 							performanceHistogramMetricResource.
 								getPerformanceHistogramMetric(
-									depotEntryIds, RandomTestUtil.nextInt(),
+									null, depotEntryIds,
+									RandomTestUtil.nextInt(),
 									"downloadsMetric"));
 					DepotEntryTestUtil.assertNoRequest(
 						analyticsCloudHttpServer,
@@ -209,7 +245,8 @@ public class PerformanceHistogramMetricResourceTest
 						depotEntryIds ->
 							performanceHistogramMetricResource.
 								getPerformanceHistogramMetric(
-									depotEntryIds, RandomTestUtil.nextInt(),
+									null, depotEntryIds,
+									RandomTestUtil.nextInt(),
 									"downloadsMetric"));
 					DepotEntryTestUtil.assertNoRequest(
 						analyticsCloudHttpServer,
@@ -217,7 +254,8 @@ public class PerformanceHistogramMetricResourceTest
 						depotEntryIds ->
 							performanceHistogramMetricResource.
 								getPerformanceHistogramMetric(
-									depotEntryIds, RandomTestUtil.nextInt(),
+									null, depotEntryIds,
+									RandomTestUtil.nextInt(),
 									"downloadsMetric"));
 
 					return null;

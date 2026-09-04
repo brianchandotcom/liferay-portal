@@ -75,6 +75,7 @@ public class PerformanceMetricResourceTest
 			"location", "downloadsMetric",
 			"/api/1.0/asset-metric/objectEntry/geolocation");
 		_testGetPerformanceMetricWithAnalyticsCloudNotConnected();
+		_testGetPerformanceMetricWithCMPProjectIds();
 		_testGetPerformanceMetricWithDepotEntryMemberUser();
 		_testGetPerformanceMetricWithInvalidMetricType();
 		_testGetPerformanceMetricWithNoData();
@@ -90,6 +91,7 @@ public class PerformanceMetricResourceTest
 			"location", "downloadsMetric",
 			"/api/1.0/asset-metric/objectEntry/geolocation/export");
 		_testGetPerformanceMetricExportWithAnalyticsCloudNotConnected();
+		_testGetPerformanceMetricExportWithCMPProjectIds();
 		_testGetPerformanceMetricExportWithDepotEntryMemberUser();
 		_testGetPerformanceMetricExportWithInvalidMetricType();
 	}
@@ -176,7 +178,7 @@ public class PerformanceMetricResourceTest
 			).toString(),
 			metricType, path, rangeKey,
 			depotEntryIds -> performanceMetricResource.getPerformanceMetric(
-				depotEntryIds, groupBy, metricType, rangeKey));
+				null, depotEntryIds, groupBy, metricType, rangeKey));
 
 		Assert.assertEquals(metricType, performanceMetric.getMetricType());
 
@@ -209,6 +211,7 @@ public class PerformanceMetricResourceTest
 			HttpInvoker.HttpResponse httpResponse =
 				performanceMetricResource.
 					getPerformanceMetricExportHttpResponse(
+						null,
 						TransformUtil.transformToArray(
 							_depotEntries, DepotEntry::getDepotEntryId,
 							Long.class),
@@ -246,10 +249,36 @@ public class PerformanceMetricResourceTest
 				HttpURLConnection.HTTP_FORBIDDEN,
 				performanceMetricResource.
 					getPerformanceMetricExportHttpResponse(
+						null,
 						TransformUtil.transformToArray(
 							_depotEntries, DepotEntry::getDepotEntryId,
 							Long.class),
 						"categories", "viewsMetric", RandomTestUtil.nextInt()));
+		}
+	}
+
+	private void _testGetPerformanceMetricExportWithCMPProjectIds()
+		throws Exception {
+
+		try (AnalyticsCloudHttpServer analyticsCloudHttpServer =
+				new AnalyticsCloudHttpServer(
+					"/api/1.0/asset-metric/objectEntry/categories/export",
+					() -> "{}");
+
+			AnalyticsCompanyConfigurationTemporarySwapper
+				analyticsCompanyConfigurationTemporarySwapper =
+					new AnalyticsCompanyConfigurationTemporarySwapper(
+						testCompany.getCompanyId(),
+						RandomTestUtil.randomString(), true,
+						analyticsCloudHttpServer.getURL())) {
+
+			performanceMetricResource.getPerformanceMetricExport(
+				new Long[] {RandomTestUtil.randomLong()},
+				TransformUtil.transformToArray(
+					_depotEntries, DepotEntry::getDepotEntryId, Long.class),
+				"categories", "viewsMetric", RandomTestUtil.nextInt());
+
+			Assert.assertNull(analyticsCloudHttpServer.getLocation());
 		}
 	}
 
@@ -280,24 +309,24 @@ public class PerformanceMetricResourceTest
 						depotEntryIds ->
 							performanceMetricResource.
 								getPerformanceMetricExport(
-									depotEntryIds, "categories", "viewsMetric",
-									RandomTestUtil.nextInt()));
+									null, depotEntryIds, "categories",
+									"viewsMetric", RandomTestUtil.nextInt()));
 					DepotEntryTestUtil.assertNoRequest(
 						analyticsCloudHttpServer,
 						new DepotEntry[] {_depotEntries.get(0)},
 						depotEntryIds ->
 							performanceMetricResource.
 								getPerformanceMetricExport(
-									depotEntryIds, "categories", "viewsMetric",
-									RandomTestUtil.nextInt()));
+									null, depotEntryIds, "categories",
+									"viewsMetric", RandomTestUtil.nextInt()));
 					DepotEntryTestUtil.assertNoRequest(
 						analyticsCloudHttpServer,
 						_depotEntries.toArray(new DepotEntry[0]),
 						depotEntryIds ->
 							performanceMetricResource.
 								getPerformanceMetricExport(
-									depotEntryIds, "categories", "viewsMetric",
-									RandomTestUtil.nextInt()));
+									null, depotEntryIds, "categories",
+									"viewsMetric", RandomTestUtil.nextInt()));
 
 					return null;
 				});
@@ -320,6 +349,7 @@ public class PerformanceMetricResourceTest
 				HttpURLConnection.HTTP_BAD_REQUEST,
 				performanceMetricResource.
 					getPerformanceMetricExportHttpResponse(
+						null,
 						TransformUtil.transformToArray(
 							_depotEntries, DepotEntry::getDepotEntryId,
 							Long.class),
@@ -344,9 +374,35 @@ public class PerformanceMetricResourceTest
 			assertHttpResponseStatusCode(
 				HttpURLConnection.HTTP_FORBIDDEN,
 				performanceMetricResource.getPerformanceMetricHttpResponse(
+					null,
 					TransformUtil.transformToArray(
 						_depotEntries, DepotEntry::getDepotEntryId, Long.class),
 					"categories", "viewsMetric", RandomTestUtil.nextInt()));
+		}
+	}
+
+	private void _testGetPerformanceMetricWithCMPProjectIds() throws Exception {
+		try (AnalyticsCloudHttpServer analyticsCloudHttpServer =
+				new AnalyticsCloudHttpServer(
+					"/api/1.0/asset-metric/objectEntry/categories", () -> "{}");
+
+			AnalyticsCompanyConfigurationTemporarySwapper
+				analyticsCompanyConfigurationTemporarySwapper =
+					new AnalyticsCompanyConfigurationTemporarySwapper(
+						testCompany.getCompanyId(),
+						RandomTestUtil.randomString(), true,
+						analyticsCloudHttpServer.getURL())) {
+
+			PerformanceMetric performanceMetric =
+				performanceMetricResource.getPerformanceMetric(
+					new Long[] {RandomTestUtil.randomLong()},
+					TransformUtil.transformToArray(
+						_depotEntries, DepotEntry::getDepotEntryId, Long.class),
+					"categories", "viewsMetric", RandomTestUtil.nextInt());
+
+			Assert.assertEquals(0, performanceMetric.getMetrics().length);
+
+			Assert.assertNull(analyticsCloudHttpServer.getLocation());
 		}
 	}
 
@@ -375,22 +431,22 @@ public class PerformanceMetricResourceTest
 						analyticsCloudHttpServer, null,
 						depotEntryIds ->
 							performanceMetricResource.getPerformanceMetric(
-								depotEntryIds, "categories", "viewsMetric",
-								RandomTestUtil.nextInt()));
+								null, depotEntryIds, "categories",
+								"viewsMetric", RandomTestUtil.nextInt()));
 					DepotEntryTestUtil.assertNoRequest(
 						analyticsCloudHttpServer,
 						new DepotEntry[] {_depotEntries.get(0)},
 						depotEntryIds ->
 							performanceMetricResource.getPerformanceMetric(
-								depotEntryIds, "categories", "viewsMetric",
-								RandomTestUtil.nextInt()));
+								null, depotEntryIds, "categories",
+								"viewsMetric", RandomTestUtil.nextInt()));
 					DepotEntryTestUtil.assertNoRequest(
 						analyticsCloudHttpServer,
 						_depotEntries.toArray(new DepotEntry[0]),
 						depotEntryIds ->
 							performanceMetricResource.getPerformanceMetric(
-								depotEntryIds, "categories", "viewsMetric",
-								RandomTestUtil.nextInt()));
+								null, depotEntryIds, "categories",
+								"viewsMetric", RandomTestUtil.nextInt()));
 
 					return null;
 				});
@@ -412,6 +468,7 @@ public class PerformanceMetricResourceTest
 			assertHttpResponseStatusCode(
 				HttpURLConnection.HTTP_BAD_REQUEST,
 				performanceMetricResource.getPerformanceMetricHttpResponse(
+					null,
 					TransformUtil.transformToArray(
 						_depotEntries, DepotEntry::getDepotEntryId, Long.class),
 					RandomTestUtil.randomString(),
@@ -433,7 +490,7 @@ public class PerformanceMetricResourceTest
 			metricType, "/api/1.0/asset-metric/objectEntry/geolocation",
 			rangeKey,
 			depotEntryIds -> performanceMetricResource.getPerformanceMetric(
-				depotEntryIds, "location", metricType, rangeKey));
+				null, depotEntryIds, "location", metricType, rangeKey));
 
 		Assert.assertEquals(metricType, performanceMetric.getMetricType());
 

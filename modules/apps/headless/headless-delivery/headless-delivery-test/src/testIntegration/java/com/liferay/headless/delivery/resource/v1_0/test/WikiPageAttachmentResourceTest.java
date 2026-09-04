@@ -120,6 +120,29 @@ public class WikiPageAttachmentResourceTest
 					testDeleteSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode_getSiteId(),
 					previousWikiPage.getExternalReferenceCode(),
 					newWikiPageAttachment.getExternalReferenceCode()));
+
+		// Wiki page attachment without delete permission
+
+		WikiPage siteWikiPage = _addWikiPage();
+
+		WikiPageAttachment siteWikiPageAttachment = _addWikiPageAttachment(
+			siteWikiPage);
+
+		WikiPageAttachmentResource siteMemberWikiPageAttachmentResource =
+			_getSiteMemberWikiPageAttachmentResource();
+
+		assertHttpResponseStatusCode(
+			403,
+			siteMemberWikiPageAttachmentResource.
+				deleteSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCodeHttpResponse(
+					siteWikiPage.getGroupId(),
+					siteWikiPage.getExternalReferenceCode(),
+					siteWikiPageAttachment.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			200,
+			wikiPageAttachmentResource.getWikiPageAttachmentHttpResponse(
+				siteWikiPageAttachment.getId()));
 	}
 
 	@Override
@@ -468,10 +491,10 @@ public class WikiPageAttachmentResourceTest
 		serviceContext.setCommand("update");
 		serviceContext.setScopeGroupId(testGroup.getGroupId());
 
-		return _addWikiPageAttachment(serviceContext);
+		return _addWikiPageAttachment(_addWikiPage(serviceContext));
 	}
 
-	private WikiPageAttachment _addWikiPageAttachment() throws Exception {
+	private WikiPage _addWikiPage() throws Exception {
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setAddGroupPermissions(true);
@@ -479,17 +502,24 @@ public class WikiPageAttachmentResourceTest
 		serviceContext.setCommand("update");
 		serviceContext.setScopeGroupId(testGroup.getGroupId());
 
-		return _addWikiPageAttachment(serviceContext);
+		return _addWikiPage(serviceContext);
 	}
 
-	private WikiPageAttachment _addWikiPageAttachment(
-			ServiceContext serviceContext)
+	private WikiPage _addWikiPage(ServiceContext serviceContext)
 		throws Exception {
 
-		WikiPage wikiPage = WikiPageLocalServiceUtil.addPage(
+		return WikiPageLocalServiceUtil.addPage(
 			TestPropsValues.getUserId(), _wikiPage.getNodeId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), false, serviceContext);
+	}
+
+	private WikiPageAttachment _addWikiPageAttachment() throws Exception {
+		return _addWikiPageAttachment(_addWikiPage());
+	}
+
+	private WikiPageAttachment _addWikiPageAttachment(WikiPage wikiPage)
+		throws Exception {
 
 		return wikiPageAttachmentResource.postWikiPageWikiPageAttachment(
 			wikiPage.getResourcePrimKey(), randomWikiPageAttachment(),

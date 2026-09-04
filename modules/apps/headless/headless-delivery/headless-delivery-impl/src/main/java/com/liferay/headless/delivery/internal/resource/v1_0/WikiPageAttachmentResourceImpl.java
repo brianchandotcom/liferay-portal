@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
@@ -61,6 +62,13 @@ public class WikiPageAttachmentResourceImpl
 	public void deleteWikiPageAttachment(Long wikiPageAttachmentId)
 		throws Exception {
 
+		FileEntry fileEntry = _portletFileRepository.getPortletFileEntry(
+			wikiPageAttachmentId);
+
+		_wikiPageModelResourcePermission.check(
+			PermissionThreadLocal.getPermissionChecker(),
+			_getWikiPageResourcePrimKey(fileEntry), ActionKeys.DELETE);
+
 		_portletFileRepository.deletePortletFileEntry(wikiPageAttachmentId);
 	}
 
@@ -86,8 +94,14 @@ public class WikiPageAttachmentResourceImpl
 	public WikiPageAttachment getWikiPageAttachment(Long wikiPageAttachmentId)
 		throws Exception {
 
-		return _toWikiPageAttachment(
-			_portletFileRepository.getPortletFileEntry(wikiPageAttachmentId));
+		FileEntry fileEntry = _portletFileRepository.getPortletFileEntry(
+			wikiPageAttachmentId);
+
+		_wikiPageModelResourcePermission.check(
+			PermissionThreadLocal.getPermissionChecker(),
+			_getWikiPageResourcePrimKey(fileEntry), ActionKeys.VIEW);
+
+		return _toWikiPageAttachment(fileEntry);
 	}
 
 	@Override
@@ -146,6 +160,15 @@ public class WikiPageAttachmentResourceImpl
 				wikiPage.getResourcePrimKey(), WikiConstants.SERVICE_NAME,
 				folder.getFolderId(), binaryFile.getInputStream(),
 				binaryFile.getFileName(), binaryFile.getContentType(), true));
+	}
+
+	private long _getWikiPageResourcePrimKey(FileEntry fileEntry)
+		throws Exception {
+
+		Folder folder = _portletFileRepository.getPortletFolder(
+			fileEntry.getFolderId());
+
+		return GetterUtil.getLong(folder.getName());
 	}
 
 	private WikiPageAttachment _toWikiPageAttachment(FileEntry fileEntry)

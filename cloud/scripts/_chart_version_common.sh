@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+SCRIPTS_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+
+ROOT_CLOUD_DIR=$(cd "${SCRIPTS_DIR}/.." && pwd)
+
 _BUMPED_CHART_DIRS=()
 
 _MAXIMUM_PASSES=16
@@ -8,11 +12,7 @@ _MODIFIED_CHART_DIRS=()
 
 _PASSES=0
 
-_SCRIPTS_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
-
-_ROOT_CLOUD_DIR=$(cd "${_SCRIPTS_DIR}/.." && pwd)
-
-readonly _MAXIMUM_PASSES _ROOT_CLOUD_DIR _SCRIPTS_DIR
+readonly ROOT_CLOUD_DIR SCRIPTS_DIR _MAXIMUM_PASSES
 
 function bump_chart_version {
 	local chart_dir=${1}
@@ -175,7 +175,7 @@ function _record_modified_chart_dir {
 
 	chart_dir=$(cd "$(dirname "${file}")" && pwd)
 
-	while [[ "${chart_dir}" == "${_ROOT_CLOUD_DIR}"/* ]]
+	while [[ "${chart_dir}" == "${ROOT_CLOUD_DIR}"/* ]]
 	do
 		if [ -f "${chart_dir}/Chart.yaml" ]
 		then
@@ -237,5 +237,5 @@ function _update_chart_dependency_version {
 				--expression "/name: ${chart_name}\$/,/version: / s/version: .*/version: ${new_version}/" \
 				--in-place \
 				"${chart_yaml_file}"
-	done < <(find "${_ROOT_CLOUD_DIR}" -name "Chart.yaml" -type f)
+	done < <(find "${ROOT_CLOUD_DIR}" -name "Chart.yaml" -type f)
 }

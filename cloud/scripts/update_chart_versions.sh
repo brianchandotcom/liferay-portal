@@ -11,7 +11,7 @@ function main {
 
 	if [[ "${#}" -eq 0 ]]
 	then
-		for chart_dir in "${_ROOT_CLOUD_DIR}"/helm/*/
+		for chart_dir in "${ROOT_CLOUD_DIR}"/helm/*/
 		do
 			if [ -f "${chart_dir}Chart.yaml" ]
 			then

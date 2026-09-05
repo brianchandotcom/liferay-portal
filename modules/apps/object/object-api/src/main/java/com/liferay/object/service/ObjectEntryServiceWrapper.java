@@ -161,6 +161,25 @@ public class ObjectEntryServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.object.model.ObjectEntry>
+			getObjectEntriesNotInStatus(
+				long groupId, long objectDefinitionId, int status, int start,
+				int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectEntryService.getObjectEntriesNotInStatus(
+			groupId, objectDefinitionId, status, start, end);
+	}
+
+	@Override
+	public int getObjectEntriesNotInStatusCount(
+		long groupId, long objectDefinitionId, int status) {
+
+		return _objectEntryService.getObjectEntriesNotInStatusCount(
+			groupId, objectDefinitionId, status);
+	}
+
+	@Override
 	public com.liferay.object.model.ObjectEntry getObjectEntry(
 			long objectEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -352,4 +371,4 @@ public class ObjectEntryServiceWrapper
 	private ObjectEntryService _objectEntryService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-29569206
+// LIFERAY-SERVICE-BUILDER-HASH:1648447153

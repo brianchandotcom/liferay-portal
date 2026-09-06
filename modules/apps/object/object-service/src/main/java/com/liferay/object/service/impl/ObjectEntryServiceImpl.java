@@ -313,11 +313,8 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			long objectDefinitionId)
 		throws PortalException {
 
-		ObjectDefinition objectDefinition =
-			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
-
-		return ModelResourcePermissionRegistryUtil.getModelResourcePermission(
-			objectDefinition.getClassName());
+		return _getModelResourcePermission(
+			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId));
 	}
 
 	@Override
@@ -348,6 +345,43 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 
 				return null;
 			});
+	}
+
+	@Override
+	public List<ObjectEntry> getObjectEntriesNotInStatus(
+			long groupId, long objectDefinitionId, int status, int start,
+			int end)
+		throws PortalException {
+
+		List<ObjectEntry> objectEntries =
+			objectEntryPersistence.findByG_ODI_NotS(
+				groupId, objectDefinitionId, status, start, end);
+
+		if (!ObjectEntryThreadLocal.isSkipObjectEntryResourcePermission()) {
+			ObjectDefinition objectDefinition =
+				_objectDefinitionPersistence.findByPrimaryKey(
+					objectDefinitionId);
+
+			ModelResourcePermission<ObjectEntry> modelResourcePermission =
+				_getModelResourcePermission(objectDefinition);
+
+			for (ObjectEntry objectEntry : objectEntries) {
+				objectEntry.setObjectDefinition(objectDefinition);
+
+				_checkPermission(
+					ActionKeys.VIEW, modelResourcePermission, objectEntry);
+			}
+		}
+
+		return objectEntries;
+	}
+
+	@Override
+	public int getObjectEntriesNotInStatusCount(
+		long groupId, long objectDefinitionId, int status) {
+
+		return objectEntryPersistence.countByG_ODI_NotS(
+			groupId, objectDefinitionId, status);
 	}
 
 	@Override
@@ -745,8 +779,16 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			String actionId, long objectDefinitionId, ObjectEntry objectEntry)
 		throws PortalException {
 
-		ModelResourcePermission<ObjectEntry> modelResourcePermission =
-			getModelResourcePermission(objectDefinitionId);
+		_checkPermission(
+			actionId, getModelResourcePermission(objectDefinitionId),
+			objectEntry);
+	}
+
+	private void _checkPermission(
+			String actionId,
+			ModelResourcePermission<ObjectEntry> modelResourcePermission,
+			ObjectEntry objectEntry)
+		throws PortalException {
 
 		if (objectEntry.isRootDescendantNode() &&
 			(actionId.equals(ActionKeys.DELETE) ||
@@ -759,6 +801,13 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 
 		modelResourcePermission.check(
 			getPermissionChecker(), objectEntry, actionId);
+	}
+
+	private ModelResourcePermission<ObjectEntry> _getModelResourcePermission(
+		ObjectDefinition objectDefinition) {
+
+		return ModelResourcePermissionRegistryUtil.getModelResourcePermission(
+			objectDefinition.getClassName());
 	}
 
 	private ObjectEntry _getRootObjectEntry(

@@ -146,6 +146,22 @@ public class ObjectEntryServiceUtil {
 			groupId, objectDefinitionId, status, start, end);
 	}
 
+	public static List<ObjectEntry> getObjectEntriesNotInStatus(
+			long groupId, long objectDefinitionId, int status, int start,
+			int end)
+		throws PortalException {
+
+		return getService().getObjectEntriesNotInStatus(
+			groupId, objectDefinitionId, status, start, end);
+	}
+
+	public static int getObjectEntriesNotInStatusCount(
+		long groupId, long objectDefinitionId, int status) {
+
+		return getService().getObjectEntriesNotInStatusCount(
+			groupId, objectDefinitionId, status);
+	}
+
 	public static ObjectEntry getObjectEntry(long objectEntryId)
 		throws PortalException {
 
@@ -311,4 +327,4 @@ public class ObjectEntryServiceUtil {
 		new Snapshot<>(ObjectEntryServiceUtil.class, ObjectEntryService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1323039996
+// LIFERAY-SERVICE-BUILDER-HASH:-99622791

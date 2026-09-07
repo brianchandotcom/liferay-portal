@@ -1,0 +1,50 @@
+{
+	"active": true,
+	"defaultLanguageId": "en_US",
+	"enableCategorization": false,
+	"enableComments": false,
+	"enableIndexSearch": true,
+	"enableLocalization": false,
+	"externalReferenceCode": "C2M0_FORUM_MESSAGE_ATTACHMENT",
+	"label": {
+		"en_US": "C2M0 Forum Message Attachment"
+	},
+	"name": "C2M0ForumMessageAttachment",
+	"objectFields": [
+		{
+			"DBType": "Long",
+			"businessType": "Attachment",
+			"indexed": false,
+			"label": {
+				"en_US": "File"
+			},
+			"localized": false,
+			"name": "file",
+			"objectFieldSettings": [
+				{
+					"name": "acceptedFileExtensions",
+					"value": "*"
+				},
+				{
+					"name": "fileSource",
+					"value": "userComputerToDocumentsAndMedia"
+				},
+				{
+					"name": "maximumFileSize",
+					"value": 10
+				},
+				{
+					"name": "showFilesInLibrary",
+					"value": false
+				}
+			],
+			"required": true,
+			"type": "Long"
+		}
+	],
+	"objectFolderExternalReferenceCode": "C2M0_FORUMS",
+	"pluralLabel": {
+		"en_US": "C2M0 Forum Message Attachments"
+	},
+	"scope": "site"
+}

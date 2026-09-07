@@ -1,0 +1,98 @@
+{
+	"accountEntryRestricted": false,
+	"accountEntryRestrictedObjectFieldName": "",
+	"active": true,
+	"defaultLanguageId": "en_US",
+	"enableCategorization": false,
+	"enableComments": false,
+	"enableFormContainer": true,
+	"enableFriendlyURLCustomization": false,
+	"enableIndexSearch": true,
+	"enableLocalization": false,
+	"enableObjectEntryDraft": false,
+	"enableObjectEntryHistory": false,
+	"enableObjectEntrySchedule": false,
+	"enableObjectEntrySubscription": false,
+	"enableObjectEntryVersioning": false,
+	"externalReferenceCode": "C2M0_FORUM_NOTIFICATION",
+	"label": {
+		"en_US": "C2M0 Forum Notification"
+	},
+	"modifiable": true,
+	"name": "C2M0ForumNotification",
+	"objectFields": [
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"label": {
+				"en_US": "Author Name"
+			},
+			"name": "authorName",
+			"required": false
+		},
+		{
+			"DBType": "Clob",
+			"businessType": "LongText",
+			"label": {
+				"en_US": "Body Excerpt"
+			},
+			"name": "bodyExcerpt",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"label": {
+				"en_US": "Notification Kind"
+			},
+			"name": "notificationKind",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"label": {
+				"en_US": "URL"
+			},
+			"name": "notificationUrl",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"label": {
+				"en_US": "Recipient Email Address"
+			},
+			"name": "recipientEmailAddress",
+			"required": false
+		},
+		{
+			"DBType": "Long",
+			"businessType": "LongInteger",
+			"label": {
+				"en_US": "Recipient User ID"
+			},
+			"name": "recipientUserId",
+			"required": true
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"label": {
+				"en_US": "Topic Title"
+			},
+			"name": "topicTitle",
+			"required": false
+		}
+	],
+	"objectFolderExternalReferenceCode": "C2M0_FORUMS",
+	"panelCategoryKey": "",
+	"parameterRequired": false,
+	"pluralLabel": {
+		"en_US": "C2M0 Forum Notifications"
+	},
+	"portlet": false,
+	"scope": "site",
+	"system": false,
+	"titleObjectFieldName": "notificationSubject"
+}

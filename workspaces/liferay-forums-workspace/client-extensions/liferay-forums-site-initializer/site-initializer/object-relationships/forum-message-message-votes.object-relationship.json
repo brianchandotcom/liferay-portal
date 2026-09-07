@@ -1,0 +1,22 @@
+{
+	"deletionType": "cascade",
+	"edge": false,
+	"externalReferenceCode": "C2M0_FORUM_MESSAGE_TO_C2M0_FORUM_VOTES",
+	"label": {
+		"en_US": "C2M0 Forum Message to C2M0 Forum Votes"
+	},
+	"name": "c2m0ForumMessageToC2M0ForumVotes",
+	"objectDefinitionExternalReferenceCode1": "C2M0_FORUM_MESSAGE",
+	"objectDefinitionExternalReferenceCode2": "C2M0_FORUM_VOTE",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:C2M0ForumMessage$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:C2M0ForumVote$]",
+	"objectDefinitionModifiable2": true,
+	"objectDefinitionName2": "C2M0ForumVote",
+	"objectDefinitionScope2": "site",
+	"objectDefinitionSystem2": false,
+	"parameterObjectFieldId": 0,
+	"parameterObjectFieldName": "",
+	"reverse": false,
+	"system": false,
+	"type": "oneToMany"
+}

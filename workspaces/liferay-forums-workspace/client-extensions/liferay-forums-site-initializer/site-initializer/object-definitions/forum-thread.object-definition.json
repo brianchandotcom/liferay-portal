@@ -1,0 +1,148 @@
+{
+	"accountEntryRestricted": false,
+	"accountEntryRestrictedObjectFieldName": "",
+	"active": true,
+	"defaultLanguageId": "en_US",
+	"enableCategorization": true,
+	"enableComments": false,
+	"enableFormContainer": true,
+	"enableFriendlyURLCustomization": false,
+	"enableIndexSearch": true,
+	"enableLocalization": true,
+	"enableObjectEntryDraft": false,
+	"enableObjectEntryHistory": false,
+	"enableObjectEntrySchedule": false,
+	"enableObjectEntrySubscription": false,
+	"enableObjectEntryVersioning": false,
+	"externalReferenceCode": "C2M0_FORUM_THREAD",
+	"label": {
+		"en_US": "C2M0 Forum Thread"
+	},
+	"modifiable": true,
+	"name": "C2M0ForumThread",
+	"objectFields": [
+		{
+			"DBType": "Long",
+			"businessType": "LongInteger",
+			"label": {
+				"en_US": "Category ID"
+			},
+			"name": "categoryId",
+			"required": false
+		},
+		{
+			"DBType": "Long",
+			"businessType": "LongInteger",
+			"label": {
+				"en_US": "Root Message ID"
+			},
+			"name": "rootMessageId",
+			"required": false
+		},
+		{
+			"DBType": "Long",
+			"businessType": "LongInteger",
+			"label": {
+				"en_US": "Root Message User ID"
+			},
+			"name": "rootMessageUserId",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "Title"
+			},
+			"localized": true,
+			"name": "messageTitle",
+			"required": false
+		},
+		{
+			"DBType": "Long",
+			"businessType": "LongInteger",
+			"label": {
+				"en_US": "Last Post By User ID"
+			},
+			"name": "lastPostByUserId",
+			"required": false
+		},
+		{
+			"DBType": "Date",
+			"businessType": "Date",
+			"label": {
+				"en_US": "Last Post Date"
+			},
+			"name": "lastPostDate",
+			"required": false
+		},
+		{
+			"DBType": "BigDecimal",
+			"businessType": "PrecisionDecimal",
+			"label": {
+				"en_US": "Priority"
+			},
+			"name": "priority",
+			"required": false
+		},
+		{
+			"DBType": "Boolean",
+			"businessType": "Boolean",
+			"label": {
+				"en_US": "Question"
+			},
+			"name": "question",
+			"required": false
+		},
+		{
+			"DBType": "Integer",
+			"businessType": "Integer",
+			"label": {
+				"en_US": "View Count"
+			},
+			"name": "viewCount",
+			"required": false
+		}
+	],
+	"objectFolderExternalReferenceCode": "C2M0_FORUMS",
+	"objectValidationRules": [
+		{
+			"active": true,
+			"engine": "function#liferay-forums-etc-spring-boot-object-validation-rule-ban",
+			"errorLabel": {
+				"en_US": "Your account has been banned from participating in the forums."
+			},
+			"externalReferenceCode": "FORUM-THREAD-BAN-VALIDATION",
+			"name": {
+				"en_US": "Ban Enforcement"
+			},
+			"outputType": "fullValidation",
+			"script": ""
+		},
+		{
+			"active": true,
+			"engine": "function#liferay-forums-etc-spring-boot-object-validation-rule-priority",
+			"errorLabel": {
+				"en_US": "You are not allowed to set the priority of a discussion."
+			},
+			"externalReferenceCode": "FORUM-THREAD-PRIORITY-VALIDATION",
+			"name": {
+				"en_US": "Thread Priority Enforcement"
+			},
+			"outputType": "fullValidation",
+			"script": ""
+		}
+	],
+	"panelCategoryKey": "",
+	"parameterRequired": false,
+	"pluralLabel": {
+		"en_US": "C2M0 Forum Threads"
+	},
+	"portlet": false,
+	"scope": "site",
+	"system": false,
+	"titleObjectFieldName": "messageTitle"
+}

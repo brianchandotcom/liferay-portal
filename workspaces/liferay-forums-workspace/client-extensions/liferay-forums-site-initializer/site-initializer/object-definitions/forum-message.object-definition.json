@@ -1,0 +1,228 @@
+{
+	"accountEntryRestricted": false,
+	"accountEntryRestrictedObjectFieldName": "",
+	"active": true,
+	"defaultLanguageId": "en_US",
+	"enableCategorization": true,
+	"enableComments": false,
+	"enableFormContainer": true,
+	"enableFriendlyURLCustomization": false,
+	"enableIndexSearch": true,
+	"enableLocalization": true,
+	"enableObjectEntryDraft": false,
+	"enableObjectEntryHistory": false,
+	"enableObjectEntrySchedule": false,
+	"enableObjectEntrySubscription": false,
+	"enableObjectEntryVersioning": false,
+	"externalReferenceCode": "C2M0_FORUM_MESSAGE",
+	"label": {
+		"en_US": "C2M0 Forum Message"
+	},
+	"modifiable": true,
+	"name": "C2M0ForumMessage",
+	"objectFields": [
+		{
+			"DBType": "Long",
+			"businessType": "LongInteger",
+			"label": {
+				"en_US": "Class Name ID"
+			},
+			"name": "classNameId",
+			"required": false
+		},
+		{
+			"DBType": "Long",
+			"businessType": "LongInteger",
+			"label": {
+				"en_US": "Class PK"
+			},
+			"name": "classPK",
+			"required": false
+		},
+		{
+			"DBType": "Long",
+			"businessType": "LongInteger",
+			"label": {
+				"en_US": "Root Message ID"
+			},
+			"name": "rootMessageId",
+			"required": false
+		},
+		{
+			"DBType": "Long",
+			"businessType": "LongInteger",
+			"label": {
+				"en_US": "Parent Message ID"
+			},
+			"name": "parentMessageId",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"label": {
+				"en_US": "Tree Path"
+			},
+			"name": "treePath",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "Subject"
+			},
+			"localized": true,
+			"name": "subject",
+			"required": true
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"label": {
+				"en_US": "URL Subject"
+			},
+			"name": "urlSubject",
+			"required": false
+		},
+		{
+			"DBType": "Clob",
+			"businessType": "RichText",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "Body"
+			},
+			"name": "body",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"label": {
+				"en_US": "Format"
+			},
+			"name": "format",
+			"required": false
+		},
+		{
+			"DBType": "Boolean",
+			"businessType": "Boolean",
+			"label": {
+				"en_US": "Anonymous"
+			},
+			"name": "anonymous",
+			"required": false
+		},
+		{
+			"DBType": "BigDecimal",
+			"businessType": "PrecisionDecimal",
+			"label": {
+				"en_US": "Priority"
+			},
+			"name": "priority",
+			"required": false
+		},
+		{
+			"DBType": "Boolean",
+			"businessType": "Boolean",
+			"label": {
+				"en_US": "Allow Pingbacks"
+			},
+			"name": "allowPingbacks",
+			"required": false
+		},
+		{
+			"DBType": "Boolean",
+			"businessType": "Boolean",
+			"label": {
+				"en_US": "Answer"
+			},
+			"name": "answer",
+			"required": false
+		},
+		{
+			"DBType": "Integer",
+			"businessType": "Integer",
+			"label": {
+				"en_US": "Vote Score"
+			},
+			"name": "voteScore",
+			"required": false
+		},
+		{
+			"businessType": "Text",
+			"indexed": false,
+			"label": {
+				"en_US": "Notification Author Name"
+			},
+			"name": "notificationAuthorName",
+			"required": false
+		},
+		{
+			"businessType": "LongText",
+			"indexed": false,
+			"label": {
+				"en_US": "Notification Body Excerpt"
+			},
+			"name": "notificationBodyExcerpt",
+			"required": false
+		},
+		{
+			"businessType": "Text",
+			"indexed": false,
+			"label": {
+				"en_US": "Notification Mention Recipient Ids"
+			},
+			"name": "notificationMentionRecipientIds",
+			"required": false
+		},
+		{
+			"businessType": "Text",
+			"indexed": false,
+			"label": {
+				"en_US": "Notification Reply Recipient Ids"
+			},
+			"name": "notificationReplyRecipientIds",
+			"required": false
+		},
+		{
+			"businessType": "Text",
+			"indexed": false,
+			"label": {
+				"en_US": "Notification Topic Title"
+			},
+			"name": "notificationTopicTitle",
+			"required": false
+		}
+	],
+	"objectFolderExternalReferenceCode": "C2M0_FORUMS",
+	"objectValidationRules": [
+		{
+			"active": true,
+			"engine": "function#liferay-forums-etc-spring-boot-object-validation-rule-ban",
+			"errorLabel": {
+				"en_US": "Your account has been banned from participating in the forums."
+			},
+			"externalReferenceCode": "FORUM-MESSAGE-BAN-VALIDATION",
+			"name": {
+				"en_US": "Ban Enforcement"
+			},
+			"outputType": "fullValidation",
+			"script": ""
+		}
+	],
+	"panelCategoryKey": "",
+	"parameterRequired": false,
+	"pluralLabel": {
+		"en_US": "C2M0 Forum Messages"
+	},
+	"portlet": false,
+	"scope": "site",
+	"system": false,
+	"titleObjectFieldName": "subject"
+}

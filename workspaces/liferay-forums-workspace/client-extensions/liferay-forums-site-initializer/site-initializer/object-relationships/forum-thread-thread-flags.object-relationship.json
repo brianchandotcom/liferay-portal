@@ -1,0 +1,22 @@
+{
+	"deletionType": "cascade",
+	"edge": false,
+	"externalReferenceCode": "C2M0_FORUM_THREAD_TO_C2M0_FORUM_THREAD_FLAGS",
+	"label": {
+		"en_US": "C2M0 Forum Thread to C2M0 Forum Thread Flags"
+	},
+	"name": "c2m0ForumThreadToC2M0ForumThreadFlags",
+	"objectDefinitionExternalReferenceCode1": "C2M0_FORUM_THREAD",
+	"objectDefinitionExternalReferenceCode2": "C2M0_FORUM_THREAD_FLAG",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:C2M0ForumThread$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:C2M0ForumThreadFlag$]",
+	"objectDefinitionModifiable2": true,
+	"objectDefinitionName2": "C2M0ForumThreadFlag",
+	"objectDefinitionScope2": "site",
+	"objectDefinitionSystem2": false,
+	"parameterObjectFieldId": 0,
+	"parameterObjectFieldName": "",
+	"reverse": false,
+	"system": false,
+	"type": "oneToMany"
+}

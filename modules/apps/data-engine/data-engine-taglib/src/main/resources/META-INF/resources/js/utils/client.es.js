@@ -91,18 +91,26 @@ export function confirmDelete(endpoint) {
 		});
 }
 
-export function request(endpoint, method = 'GET') {
-	return fetch(getURL(endpoint), {
-		headers: HEADERS,
-		method,
-	});
-}
-
 export function getItem(endpoint) {
 	return fetch(getURL(endpoint), {
 		headers: HEADERS,
 		method: 'GET',
 	}).then((response) => response.json());
+}
+
+export function getItems(baseURL, keywords = '', {signal} = {}) {
+	return fetchItem(getURL(baseURL, {keywords, page: 1, pageSize: 250}), {
+		headers: HEADERS,
+		method: 'GET',
+		signal,
+	}).then(({items = [], totalCount = 0}) => ({items, totalCount}));
+}
+
+export function request(endpoint, method = 'GET') {
+	return fetch(getURL(endpoint), {
+		headers: HEADERS,
+		method,
+	});
 }
 
 export function updateItem(endpoint, item, params) {

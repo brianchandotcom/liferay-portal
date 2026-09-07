@@ -5,6 +5,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayEmptyState from '@clayui/empty-state';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {
 	DRAG_TYPES,
 	EVENT_TYPES,
@@ -13,29 +14,57 @@ import {
 } from 'data-engine-js-components-web';
 import React, {useState} from 'react';
 
+import useSearchFieldSets from '../../hooks/useSearchFieldSets.es';
 import {getLocalizedValue, getPluralMessage, sub} from '../../utils/lang.es';
-import {getSearchRegex} from '../../utils/search.es';
 import FieldType from '../field-types/FieldType.es';
 import FieldSetModal from './FieldSetModal';
 import useDeleteFieldSet from './actions/useDeleteFieldSet.es';
 import usePropagateFieldSet from './actions/usePropagateFieldSet.es';
 
+function getFieldSetLabel(fieldSet) {
+	return (
+		getLocalizedValue(fieldSet.defaultLanguageId, fieldSet.name ?? {}) ?? ''
+	);
+}
+
 function getSortedFieldsets(fieldsets) {
 	return fieldsets.sort((a, b) => {
-		const localizedValueA = getLocalizedValue(a.defaultLanguageId, a.name);
-		const localizedValueB = getLocalizedValue(b.defaultLanguageId, b.name);
+		const localizedValueA = getFieldSetLabel(a);
+		const localizedValueB = getFieldSetLabel(b);
 
 		return localizedValueA.localeCompare(localizedValueB);
 	});
 }
 
-function getFilteredFieldsets(fieldsets, keywords) {
-	const regex = getSearchRegex(keywords);
-	const filteredFieldsets = fieldsets.filter(({defaultLanguageId, name}) =>
-		regex.test(getLocalizedValue(defaultLanguageId, name))
+function matchesSearchTerm(fieldSet, lowerCaseSearchTerm) {
+	const label = getFieldSetLabel(fieldSet);
+
+	return label.toLowerCase().includes(lowerCaseSearchTerm);
+}
+
+function getMergedFieldsets(fieldSets, searchResults, searchTerm) {
+	const lowerCaseSearchTerm = searchTerm.toLowerCase();
+
+	const storeFieldSetsById = new Map(
+		fieldSets.map((fieldSet) => [fieldSet.id, fieldSet])
 	);
 
-	return getSortedFieldsets(filteredFieldsets);
+	const mergedFieldSetsById = new Map();
+
+	(searchResults ?? []).forEach((fieldSet) => {
+		mergedFieldSetsById.set(
+			fieldSet.id,
+			storeFieldSetsById.get(fieldSet.id) ?? fieldSet
+		);
+	});
+
+	fieldSets.forEach((fieldSet) => {
+		if (matchesSearchTerm(fieldSet, lowerCaseSearchTerm)) {
+			mergedFieldSetsById.set(fieldSet.id, fieldSet);
+		}
+	});
+
+	return [...mergedFieldSetsById.values()];
 }
 
 export default function FieldSetList({searchTerm}) {
@@ -45,7 +74,22 @@ export default function FieldSetList({searchTerm}) {
 	const dispatch = useForm();
 	const deleteFieldSet = useDeleteFieldSet();
 	const propagateFieldSet = usePropagateFieldSet();
-	const filteredFieldsets = getFilteredFieldsets(fieldSets, searchTerm);
+
+	const trimmedSearchTerm = searchTerm ? searchTerm.trim() : '';
+
+	const {
+		hasError,
+		isLoading,
+		isTruncated,
+		removeSearchResult,
+		searchResults,
+	} = useSearchFieldSets(trimmedSearchTerm);
+
+	const filteredFieldsets = getSortedFieldsets(
+		trimmedSearchTerm
+			? getMergedFieldsets(fieldSets, searchResults, trimmedSearchTerm)
+			: [...fieldSets]
+	);
 
 	const fieldSetsInUse = new Set();
 	dataDefinition.dataDefinitionFields.forEach(
@@ -55,6 +99,16 @@ export default function FieldSetList({searchTerm}) {
 			}
 		}
 	);
+
+	const deleteFieldSetAndSearchResult = async (fieldSet) => {
+		const deleted = await deleteFieldSet(fieldSet);
+
+		if (deleted) {
+			removeSearchResult(fieldSet.id);
+		}
+
+		return deleted;
+	};
 
 	const toggleFieldSet = (fieldSet) => {
 		setModalState(({isVisible}) => ({
@@ -76,11 +130,13 @@ export default function FieldSetList({searchTerm}) {
 
 	return (
 		<>
-			{filteredFieldsets.length ? (
+			{!!filteredFieldsets.length || isLoading ? (
 				<>
 					<CreateNewFieldsetButton />
 
 					<div className="mt-3">
+						{isLoading && <ClayLoadingIndicator small />}
+
 						{filteredFieldsets.map((fieldSet) => {
 							const actions = [
 								{
@@ -111,7 +167,8 @@ export default function FieldSetList({searchTerm}) {
 														'this-action-may-erase-data-permanently'
 													),
 											},
-											onPropagate: deleteFieldSet,
+											onPropagate:
+												deleteFieldSetAndSearchResult,
 										}),
 									name: Liferay.Language.get('delete'),
 								},
@@ -122,10 +179,7 @@ export default function FieldSetList({searchTerm}) {
 								fieldSet.dataDefinitionFields.length
 							);
 							const disabled = fieldSetsInUse.has(fieldSet.id);
-							const label = getLocalizedValue(
-								fieldSet.defaultLanguageId,
-								fieldSet.name
-							);
+							const label = getFieldSetLabel(fieldSet);
 							const onDoubleClick = () => {
 								dispatch({
 									payload: {fieldSet},
@@ -147,17 +201,36 @@ export default function FieldSetList({searchTerm}) {
 								/>
 							);
 						})}
+
+						{!isLoading && isTruncated && (
+							<p className="text-3 text-secondary">
+								{Liferay.Language.get(
+									'refine-the-search-criteria-to-reduce-results'
+								)}
+							</p>
+						)}
 					</div>
 				</>
 			) : (
 				<div className="mt-2">
-					{searchTerm ? (
+					{hasError ? (
+						<ClayEmptyState
+							description={Liferay.Language.get(
+								'an-unexpected-error-occurred'
+							)}
+							imgSrc={`${themeDisplay.getPathThemeImages()}/states/search_state.svg`}
+							small
+							title={Liferay.Language.get(
+								'unable-to-load-content'
+							)}
+						/>
+					) : trimmedSearchTerm ? (
 						<ClayEmptyState
 							description={sub(
 								Liferay.Language.get(
 									'there-are-no-results-for-x'
 								),
-								[searchTerm]
+								[trimmedSearchTerm]
 							)}
 							imgSrc={`${themeDisplay.getPathThemeImages()}/states/search_state.svg`}
 							small

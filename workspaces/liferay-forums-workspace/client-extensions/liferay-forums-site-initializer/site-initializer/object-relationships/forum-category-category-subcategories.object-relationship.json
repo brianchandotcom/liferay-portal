@@ -5,7 +5,7 @@
 	"label": {
 		"en_US": "C2M0 Forum Category to C2M0 Forum Subcategories"
 	},
-	"name": "c2m0ForumCategoryToC2M0ForumSubcategories",
+	"name": "c2m0CategoryToC2M0Subcategories",
 	"objectDefinitionExternalReferenceCode1": "C2M0_FORUM_CATEGORY",
 	"objectDefinitionExternalReferenceCode2": "C2M0_FORUM_CATEGORY",
 	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:C2M0ForumCategory$]",

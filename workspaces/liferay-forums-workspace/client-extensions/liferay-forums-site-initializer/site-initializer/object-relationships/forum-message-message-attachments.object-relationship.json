@@ -5,7 +5,7 @@
 	"label": {
 		"en_US": "C2M0 Forum Message to C2M0 Forum Message Attachments"
 	},
-	"name": "c2m0ForumMessageToC2M0ForumMessageAttachments",
+	"name": "c2m0MessageToC2M0MessageAttachments",
 	"objectDefinitionExternalReferenceCode1": "C2M0_FORUM_MESSAGE",
 	"objectDefinitionExternalReferenceCode2": "C2M0_FORUM_MESSAGE_ATTACHMENT",
 	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:C2M0ForumMessage$]",

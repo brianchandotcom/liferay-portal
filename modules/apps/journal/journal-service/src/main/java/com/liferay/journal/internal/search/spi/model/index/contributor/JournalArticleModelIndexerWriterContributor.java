@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.batch.BatchIndexingHelper;
@@ -34,8 +35,10 @@ import com.liferay.portal.search.indexer.IndexerDocumentBuilder;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.index.contributor.helper.IndexerWriterMode;
 
+import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Objects;
+import java.util.Map;
 
 /**
  * @author Lourdes Fernández Besada
@@ -152,7 +155,9 @@ public class JournalArticleModelIndexerWriterContributor
 			_fetchLatestIndexableArticleVersion(
 				journalArticle.getResourcePrimKey());
 
-		if (journalArticle.getId() == latestIndexableArticle.getId()) {
+		if ((latestIndexableArticle != null) &&
+			(journalArticle.getId() == latestIndexableArticle.getId())) {
+
 			return IndexerWriterMode.UPDATE;
 		}
 
@@ -242,6 +247,46 @@ public class JournalArticleModelIndexerWriterContributor
 		return latestIndexableArticle;
 	}
 
+	private Collection<JournalArticle> _getReindexableArticles(
+		JournalArticle article) {
+
+		Map<Long, JournalArticle> reindexableArticles = new LinkedHashMap<>();
+
+		List<JournalArticle> articles = _journalArticleLocalService.getArticles(
+			article.getGroupId(), article.getArticleId(), QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, ArticleVersionComparator.getInstance(false));
+
+		for (int[] statuses : _REINDEXABLE_STATUSES) {
+			boolean latest = true;
+
+			for (JournalArticle versionArticle : articles) {
+				if (!_hasStatus(versionArticle, statuses)) {
+					continue;
+				}
+
+				reindexableArticles.put(versionArticle.getId(), versionArticle);
+
+				if (!latest || (article.getId() != versionArticle.getId())) {
+					break;
+				}
+
+				latest = false;
+			}
+		}
+
+		reindexableArticles.remove(article.getId());
+
+		return reindexableArticles.values();
+	}
+
+	private boolean _hasStatus(JournalArticle article, int[] statuses) {
+		if (ArrayUtil.contains(statuses, WorkflowConstants.STATUS_ANY)) {
+			return true;
+		}
+
+		return ArrayUtil.contains(statuses, article.getStatus());
+	}
+
 	private void _reindexOtherArticleVersions(JournalArticle journalArticle) {
 		if (PortalUtil.getClassNameId(DDMStructure.class) ==
 				journalArticle.getClassNameId()) {
@@ -249,30 +294,40 @@ public class JournalArticleModelIndexerWriterContributor
 			return;
 		}
 
-		List<JournalArticle> journalArticles =
-			_journalArticleLocalService.getArticles(
-				journalArticle.getGroupId(), journalArticle.getArticleId(),
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				ArticleVersionComparator.getInstance(false));
-
 		Indexer<JournalArticle> indexer =
 			IndexerRegistryUtil.nullSafeGetIndexer(JournalArticle.class);
 
-		for (JournalArticle versionJournalArticle : journalArticles) {
-			if (Objects.equals(
-					versionJournalArticle.getId(), journalArticle.getId())) {
-
-				continue;
-			}
+		for (JournalArticle reindexableArticle :
+				_getReindexableArticles(journalArticle)) {
 
 			try {
-				indexer.reindex(versionJournalArticle, false);
+				indexer.reindex(reindexableArticle, false);
 			}
 			catch (SearchException searchException) {
 				throw new SystemException(searchException);
 			}
 		}
 	}
+
+	private static final int[][] _REINDEXABLE_STATUSES = {
+
+		// JournalUtil#isHead
+
+		{WorkflowConstants.STATUS_APPROVED, WorkflowConstants.STATUS_IN_TRASH},
+
+		// JournalUtil#isHeadListable
+
+		{
+			WorkflowConstants.STATUS_APPROVED,
+			WorkflowConstants.STATUS_IN_TRASH,
+			WorkflowConstants.STATUS_SCHEDULED
+		},
+
+		// JournalUtil#isLatestArticle
+
+		{WorkflowConstants.STATUS_ANY}
+
+	};
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalArticleModelIndexerWriterContributor.class);

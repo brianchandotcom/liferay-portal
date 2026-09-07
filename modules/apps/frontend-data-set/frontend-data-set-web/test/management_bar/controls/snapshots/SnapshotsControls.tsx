@@ -127,8 +127,8 @@ describe('SnapshotsControls action gating', () => {
 	});
 });
 
-describe('SnapshotsControls startup view', () => {
-	it('sets the active view as the startup view through the user preferences', async () => {
+describe('SnapshotsControls initial view', () => {
+	it('sets the active view as the initial view through the user preferences', async () => {
 		renderSnapshotsControls({
 			activeSnapshotERC: ownedSnapshot.erc,
 			activeView: null,
@@ -137,22 +137,22 @@ describe('SnapshotsControls startup view', () => {
 			snapshotUpdated: false,
 			snapshots: [{headerVisible: false, items: [ownedSnapshot]}],
 			sorts: [],
-			userPreferences: {startupSnapshotERC: 'previous-erc'},
+			userPreferences: {initialDataSetSnapshotERC: 'previous-erc'},
 			visibleFieldNames: {},
 		});
 
 		await openActionsDropdown();
 
-		await userEvent.click(await screen.findByText('set-as-startup-view'));
+		await userEvent.click(await screen.findByText('set-as-initial-view'));
 
 		await waitFor(() =>
 			expect(mockFDSContext.updateUserPreferences).toHaveBeenCalledWith({
-				startupSnapshotERC: ownedSnapshot.erc,
+				initialDataSetSnapshotERC: ownedSnapshot.erc,
 			})
 		);
 	});
 
-	it('hides "Set as Startup View" when the active view is already the startup view', async () => {
+	it('hides "Set as Initial View" when the active view is already the initial view', async () => {
 		renderSnapshotsControls({
 			activeSnapshotERC: ownedSnapshot.erc,
 			activeView: null,
@@ -161,7 +161,7 @@ describe('SnapshotsControls startup view', () => {
 			snapshotUpdated: false,
 			snapshots: [{headerVisible: false, items: [ownedSnapshot]}],
 			sorts: [],
-			userPreferences: {startupSnapshotERC: ownedSnapshot.erc},
+			userPreferences: {initialDataSetSnapshotERC: ownedSnapshot.erc},
 			visibleFieldNames: {},
 		});
 
@@ -169,7 +169,7 @@ describe('SnapshotsControls startup view', () => {
 
 		expect(await screen.findByText('save-view-as')).toBeInTheDocument();
 		expect(
-			screen.queryByText('set-as-startup-view')
+			screen.queryByText('set-as-initial-view')
 		).not.toBeInTheDocument();
 	});
 });

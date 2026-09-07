@@ -658,14 +658,15 @@ const FrontendDataSetContent = ({
 			visibleFieldNames: initialVisibleFieldNames,
 		};
 
-		const startupSnapshotERC = userPreferences?.startupSnapshotERC;
+		const initialDataSetSnapshotERC =
+			userPreferences?.initialDataSetSnapshotERC;
 
 		if (
-			startupSnapshotERC &&
-			getSnapshotByERC(parsedSnapshots, startupSnapshotERC) &&
+			initialDataSetSnapshotERC &&
+			getSnapshotByERC(parsedSnapshots, initialDataSetSnapshotERC) &&
 			hasURLState()
 		) {
-			initialViewsState.activeSnapshotERC = startupSnapshotERC;
+			initialViewsState.activeSnapshotERC = initialDataSetSnapshotERC;
 			initialViewsState.snapshotUpdated = true;
 		}
 
@@ -2011,7 +2012,7 @@ const FrontendDataSetContent = ({
 
 	const handleSnapshotChangeRef = useRef(handleSnapshotChange);
 	const hasURLStateRef = useRef(hasURLState);
-	const startupSnapshotERCAppliedRef = useRef(false);
+	const initialDataSetSnapshotERCAppliedRef = useRef(false);
 
 	useLayoutEffect(() => {
 		handleSnapshotChangeRef.current = handleSnapshotChange;
@@ -2019,20 +2020,24 @@ const FrontendDataSetContent = ({
 	});
 
 	useEffect(() => {
-		const startupSnapshotERC = userPreferences?.startupSnapshotERC;
+		const initialDataSetSnapshotERC =
+			userPreferences?.initialDataSetSnapshotERC;
 
 		if (
-			startupSnapshotERCAppliedRef.current ||
+			initialDataSetSnapshotERCAppliedRef.current ||
 			!globalFDSStateInitialized ||
-			!startupSnapshotERC
+			!initialDataSetSnapshotERC
 		) {
 			return;
 		}
 
-		startupSnapshotERCAppliedRef.current = true;
+		initialDataSetSnapshotERCAppliedRef.current = true;
 
 		if (
-			!getSnapshotByERC(viewsState.snapshots, startupSnapshotERC) ||
+			!getSnapshotByERC(
+				viewsState.snapshots,
+				initialDataSetSnapshotERC
+			) ||
 			hasURLStateRef.current()
 		) {
 			return;
@@ -2041,7 +2046,7 @@ const FrontendDataSetContent = ({
 		handleSnapshotChangeRef.current({
 			defaultSnapshot: viewsState.defaultSnapshot,
 			snapshots: viewsState.snapshots,
-			value: startupSnapshotERC,
+			value: initialDataSetSnapshotERC,
 		});
 	}, [globalFDSStateInitialized, userPreferences, viewsState]);
 

@@ -128,7 +128,7 @@ describe('SnapshotsControls action gating', () => {
 });
 
 describe('SnapshotsControls initial view', () => {
-	it('sets the active view as the initial view through the user preferences', async () => {
+	it('sets the active view as the initial view through the preferences', async () => {
 		renderSnapshotsControls({
 			activeSnapshotERC: ownedSnapshot.erc,
 			activeView: null,
